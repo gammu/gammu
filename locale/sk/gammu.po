@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-08-17 13:45+0200\n"
+"POT-Creation-Date: 2010-08-18 14:07+0200\n"
 "PO-Revision-Date: 2010-08-17 20:54+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
@@ -2318,7 +2318,7 @@ msgstr "Lithium Polymer"
 msgid "NiMH"
 msgstr "NiMH"
 
-#: gammu/misc.c:166
+#: gammu/misc.c:261
 msgid "Not logged to network!\n"
 msgstr "Nie je prihlásený do siete!\n"
 
@@ -2753,7 +2753,7 @@ msgstr "adresa \"%s\", port %i"
 msgid "Second proxy"
 msgstr "Druhá proxy"
 
-#: gammu/misc.c:1455 gammu/misc.c:1462 gammu/misc.c:1497 gammu/misc.c:1510
+#: gammu/misc.c:1475 gammu/misc.c:1482 gammu/misc.c:1517 gammu/misc.c:1530
 msgid "Bearer"
 msgstr "Doručiteľ"
 

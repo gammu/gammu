@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.28.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-07-26 17:06+0300\n"
+"POT-Creation-Date: 2010-08-18 14:07+0300\n"
 "PO-Revision-Date: 2010-07-30 22:25+0200\n"
 "Last-Translator: Robert Readman <robert_readman@hotmail.com>\n"
 "Language-Team: none\n"
@@ -26,15 +26,15 @@ msgstr "GAMMU"
 
 #. type: TH
 #: docs/user/gammu.1:1
-#, no-wrap
-msgid "Jul  1 2010"
+#, fuzzy, no-wrap
+msgid "Jul 27 2010"
 msgstr "Jul  1 2010"
 
 #. type: TH
 #: docs/user/gammu.1:1
-#, no-wrap
-msgid "Gammu 1.27.96"
-msgstr "Gammu 1.27.96"
+#, fuzzy, no-wrap
+msgid "Gammu 1.28.90"
+msgstr "Gammu 1.28.0"
 
 #. type: TH
 #: docs/user/gammu.1:1 docs/user/gammurc.5:1 docs/user/gammu-smsdrc.5:1
@@ -304,13 +304,13 @@ msgstr ""
 "after B<length> seconds."
 
 #. type: TP
-#: docs/user/gammu.1:94 docs/user/gammu.1:2043 docs/user/gammu.1:2421
+#: docs/user/gammu.1:94 docs/user/gammu.1:2043 docs/user/gammu.1:2425
 #, no-wrap
 msgid "B<monitor>I< [times]>"
 msgstr "B<monitor>I< [times]>"
 
 #. type: Plain text
-#: docs/user/gammu.1:98 docs/user/gammu.1:2047 docs/user/gammu.1:2425
+#: docs/user/gammu.1:98 docs/user/gammu.1:2047 docs/user/gammu.1:2429
 msgid ""
 "Get phone status and writes continuously to standard output. Press Ctrl+C to "
 "break this state."
@@ -926,7 +926,7 @@ msgstr ""
 #: docs/user/gammu.1:2206 docs/user/gammu.1:2214 docs/user/gammu.1:2223
 #: docs/user/gammu.1:2232 docs/user/gammu.1:2241 docs/user/gammu.1:2270
 #: docs/user/gammu.1:2278 docs/user/gammu.1:2287 docs/user/gammu.1:2296
-#: docs/user/gammu.1:2487 docs/user/gammu.1:2496
+#: docs/user/gammu.1:2491 docs/user/gammu.1:2500
 msgid ""
 "For description of shared parameters see B<Common parameters for sendsms and "
 "savesms>."
@@ -1262,13 +1262,13 @@ msgstr ""
 "Picture Image and saved with text) or Alcatel format and send/save over SMS."
 
 #. type: TP
-#: docs/user/gammu.1:457 docs/user/gammu.1:2478
+#: docs/user/gammu.1:457 docs/user/gammu.1:2482
 #, no-wrap
 msgid "B<savesms PROFILE>I< [-folder id] [-unread] [-read] [-unsent] [-sent] [-sender number] [-smsname name] [-smscset number] [-smscnumber number] [-reply] [-maxsms num] [-name name] [-bitmap bitmap] [-ringtone ringtone]>"
 msgstr "B<savesms PROFILE>I< [-folder id] [-unread] [-read] [-unsent] [-sent] [-sender number] [-smsname name] [-smscset number] [-smscnumber number] [-reply] [-maxsms num] [-name name] [-bitmap bitmap] [-ringtone ringtone]>"
 
 #. type: Plain text
-#: docs/user/gammu.1:463 docs/user/gammu.1:2484
+#: docs/user/gammu.1:463 docs/user/gammu.1:2488
 msgid ""
 "Read ringtone (RTTL) format, bitmap (Picture Image size) and name, format "
 "into Smart Messaging profile and send/save as SMS. Please note, that this "
@@ -1657,13 +1657,13 @@ msgstr ""
 "B<savesms PICTURE>."
 
 #. type: TP
-#: docs/user/gammu.1:666 docs/user/gammu.1:2489
+#: docs/user/gammu.1:666 docs/user/gammu.1:2493
 #, no-wrap
 msgid "B<sendsms PROFILE>I< destination [-report] [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [-save [-folder number]] [-smscset number] [-smscnumber number] [-reply] [-maxsms num] [-name name] [-bitmap bitmap] [-ringtone ringtone]>"
 msgstr "B<sendsms PROFILE>I< destination [-report] [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [-save [-folder number]] [-smscset number] [-smscnumber number] [-reply] [-maxsms num] [-name name] [-bitmap bitmap] [-ringtone ringtone]>"
 
 #. type: Plain text
-#: docs/user/gammu.1:669 docs/user/gammu.1:2492
+#: docs/user/gammu.1:669 docs/user/gammu.1:2496
 msgid ""
 "Sends a message, for description of message specific parameters see "
 "B<savesms PROFILE>."
@@ -2994,13 +2994,13 @@ msgid "Retrieves selected calendar entries from phone."
 msgstr "Retrieves selected calendar entries from phone."
 
 #. type: TP
-#: docs/user/gammu.1:1415 docs/user/gammu.1:2432
+#: docs/user/gammu.1:1415 docs/user/gammu.1:2436
 #, no-wrap
 msgid "B<getcalendarsettings>"
 msgstr "B<getcalendarsettings>"
 
 #. type: Plain text
-#: docs/user/gammu.1:1419 docs/user/gammu.1:2436
+#: docs/user/gammu.1:1419 docs/user/gammu.1:2440
 msgid ""
 "Displays calendar settings like first day of week or automatic deleting of "
 "old entries."
@@ -3266,19 +3266,19 @@ msgstr ""
 "You can get this name using this option."
 
 #. type: TP
-#: docs/user/gammu.1:1903 docs/user/gammu.1:2530
+#: docs/user/gammu.1:1903 docs/user/gammu.1:2534
 #, no-wrap
 msgid "B<nokiagetscreendump>"
 msgstr "B<nokiagetscreendump>"
 
 #. type: TP
-#: docs/user/gammu.1:1911 docs/user/gammu.1:2533
+#: docs/user/gammu.1:1911 docs/user/gammu.1:2537
 #, no-wrap
 msgid "B<nokiagetvoicerecord>I< location>"
 msgstr "B<nokiagetvoicerecord>I< location>"
 
 #. type: Plain text
-#: docs/user/gammu.1:1917 docs/user/gammu.1:2539
+#: docs/user/gammu.1:1917 docs/user/gammu.1:2543
 msgid ""
 "Get voice record from location and save to WAV file. File is coded using GSM "
 "6.10 codec (available for example in win32). Name of file is like name of "
@@ -3289,7 +3289,7 @@ msgstr ""
 "voice record in phone."
 
 #. type: Plain text
-#: docs/user/gammu.1:1921 docs/user/gammu.1:2543
+#: docs/user/gammu.1:1921 docs/user/gammu.1:2547
 msgid ""
 "Created WAV files require GSM 6.10 codec to be played. In Win XP it's "
 "included by Microsoft. If you deleted it by accident in this operating "
@@ -3300,52 +3300,52 @@ msgstr ""
 "system, make such steps:"
 
 #. type: Plain text
-#: docs/user/gammu.1:1923 docs/user/gammu.1:2545
+#: docs/user/gammu.1:1923 docs/user/gammu.1:2549
 msgid "1. Control Panel"
 msgstr "1. Control Panel"
 
 #. type: Plain text
-#: docs/user/gammu.1:1925 docs/user/gammu.1:2547
+#: docs/user/gammu.1:1925 docs/user/gammu.1:2551
 msgid "2. Add hardware"
 msgstr "2. Add hardware"
 
 #. type: Plain text
-#: docs/user/gammu.1:1927 docs/user/gammu.1:2549
+#: docs/user/gammu.1:1927 docs/user/gammu.1:2553
 msgid "3. click Next"
 msgstr "3. click Next"
 
 #. type: Plain text
-#: docs/user/gammu.1:1929 docs/user/gammu.1:2551
+#: docs/user/gammu.1:1929 docs/user/gammu.1:2555
 msgid "4. select \"Yes. I have already connected the hardware\""
 msgstr "4. select \"Yes. I have already connected the hardware\""
 
 #. type: Plain text
-#: docs/user/gammu.1:1931 docs/user/gammu.1:2553
+#: docs/user/gammu.1:1931 docs/user/gammu.1:2557
 msgid "5. select \"Add a new hardware device\""
 msgstr "5. select \"Add a new hardware device\""
 
 #. type: Plain text
-#: docs/user/gammu.1:1933 docs/user/gammu.1:2555
+#: docs/user/gammu.1:1933 docs/user/gammu.1:2559
 msgid "6. select \"Install the hardware that I manually select from a list\""
 msgstr "6. select \"Install the hardware that I manually select from a list\""
 
 #. type: Plain text
-#: docs/user/gammu.1:1935 docs/user/gammu.1:2557
+#: docs/user/gammu.1:1935 docs/user/gammu.1:2561
 msgid "7. select \"Sound, video and game controllers\""
 msgstr "7. select \"Sound, video and game controllers\""
 
 #. type: Plain text
-#: docs/user/gammu.1:1937 docs/user/gammu.1:2559
+#: docs/user/gammu.1:1937 docs/user/gammu.1:2563
 msgid "8. select \"Audio codecs\""
 msgstr "8. select \"Audio codecs\""
 
 #. type: Plain text
-#: docs/user/gammu.1:1939 docs/user/gammu.1:2561
+#: docs/user/gammu.1:1939 docs/user/gammu.1:2565
 msgid "9.  select \"windows\\esystem32\" directory and file \"mmdriver.inf\""
 msgstr "9.  select \"windows\\esystem32\" directory and file \"mmdriver.inf\""
 
 #. type: Plain text
-#: docs/user/gammu.1:1941 docs/user/gammu.1:2563
+#: docs/user/gammu.1:1941 docs/user/gammu.1:2567
 msgid ""
 "10. if You will be asked for file msgsm32.acm, it should unpacked from "
 "Windows CD"
@@ -3354,7 +3354,7 @@ msgstr ""
 "Windows CD"
 
 #. type: Plain text
-#: docs/user/gammu.1:1943 docs/user/gammu.1:2565
+#: docs/user/gammu.1:1943 docs/user/gammu.1:2569
 msgid ""
 "11. now You can be asked if want to install unsigned driver (YES), about "
 "select codec configuration (select what you want) and rebotting PC (make it)"
@@ -3363,7 +3363,7 @@ msgstr ""
 "select codec configuration (select what you want) and rebotting PC (make it)"
 
 #. type: TP
-#: docs/user/gammu.1:1944 docs/user/gammu.1:2566
+#: docs/user/gammu.1:1944 docs/user/gammu.1:2570
 #, no-wrap
 msgid "B<nokiamakecamerashoot>"
 msgstr "B<nokiamakecamerashoot>"
@@ -3411,13 +3411,13 @@ msgid "Reset counters from netmonitor test 36 in Nokia DCT3 phones."
 msgstr "Reset counters from netmonitor test 36 in Nokia DCT3 phones."
 
 #. type: TP
-#: docs/user/gammu.1:1965 docs/user/gammu.1:2426
+#: docs/user/gammu.1:1965 docs/user/gammu.1:2430
 #, no-wrap
 msgid "B<nokiasecuritycode>"
 msgstr "B<nokiasecuritycode>"
 
 #. type: Plain text
-#: docs/user/gammu.1:1968 docs/user/gammu.1:2429
+#: docs/user/gammu.1:1968 docs/user/gammu.1:2433
 msgid "Get/reset to \"12345\" security code"
 msgstr "Get/reset to \"12345\" security code"
 
@@ -3456,75 +3456,75 @@ msgid "B<nokiasetoperatorname>I< [networkcode name]>"
 msgstr "B<nokiasetoperatorname>I< [networkcode name]>"
 
 #. type: TP
-#: docs/user/gammu.1:1985 docs/user/gammu.1:2569
+#: docs/user/gammu.1:1985 docs/user/gammu.1:2573
 #, no-wrap
 msgid "B<nokiasetphonemenus>"
 msgstr "B<nokiasetphonemenus>"
 
 #. type: Plain text
-#: docs/user/gammu.1:1988 docs/user/gammu.1:2572
+#: docs/user/gammu.1:1988 docs/user/gammu.1:2576
 msgid "Enable all (?) possible menus for DCT3 Nokia phones:"
 msgstr "Enable all (?) possible menus for DCT3 Nokia phones:"
 
 #. type: Plain text
-#: docs/user/gammu.1:1990 docs/user/gammu.1:2004 docs/user/gammu.1:2574
-#: docs/user/gammu.1:2588
+#: docs/user/gammu.1:1990 docs/user/gammu.1:2004 docs/user/gammu.1:2578
+#: docs/user/gammu.1:2592
 msgid "1. ALS (Alternative Line Service) option menu"
 msgstr "1. ALS (Alternative Line Service) option menu"
 
 #. type: Plain text
-#: docs/user/gammu.1:1992 docs/user/gammu.1:2576
+#: docs/user/gammu.1:1992 docs/user/gammu.1:2580
 msgid "2. vibra menu for 3210"
 msgstr "2. vibra menu for 3210"
 
 #. type: Plain text
-#: docs/user/gammu.1:1994 docs/user/gammu.1:2578
+#: docs/user/gammu.1:1994 docs/user/gammu.1:2582
 msgid "3. 3315 features in 3310 5.45 and higher"
 msgstr "3. 3315 features in 3310 5.45 and higher"
 
 #. type: Plain text
-#: docs/user/gammu.1:1996 docs/user/gammu.1:2580
+#: docs/user/gammu.1:1996 docs/user/gammu.1:2584
 msgid "4. two additional games (React and Logic) for 3210 5.31 and higher"
 msgstr "4. two additional games (React and Logic) for 3210 5.31 and higher"
 
 #. type: Plain text
-#: docs/user/gammu.1:1998 docs/user/gammu.1:2582
+#: docs/user/gammu.1:1998 docs/user/gammu.1:2586
 msgid "5. WellMate menu for 6150"
 msgstr "5. WellMate menu for 6150"
 
 #. type: Plain text
-#: docs/user/gammu.1:2000 docs/user/gammu.1:2584
+#: docs/user/gammu.1:2000 docs/user/gammu.1:2588
 msgid "6. NetMonitor"
 msgstr "6. NetMonitor"
 
 #. type: Plain text
-#: docs/user/gammu.1:2002 docs/user/gammu.1:2586
+#: docs/user/gammu.1:2002 docs/user/gammu.1:2590
 msgid "and for DCT4:"
 msgstr "and for DCT4:"
 
 #. type: Plain text
-#: docs/user/gammu.1:2006 docs/user/gammu.1:2590
+#: docs/user/gammu.1:2006 docs/user/gammu.1:2594
 msgid "2. Bluetooth, WAP bookmarks and settings menu, ... (6310i)"
 msgstr "2. Bluetooth, WAP bookmarks and settings menu, ... (6310i)"
 
 #. type: Plain text
-#: docs/user/gammu.1:2008 docs/user/gammu.1:2592
+#: docs/user/gammu.1:2008 docs/user/gammu.1:2596
 msgid "3. GPRS Always Online"
 msgstr "3. GPRS Always Online"
 
 #. type: Plain text
-#: docs/user/gammu.1:2010 docs/user/gammu.1:2594
+#: docs/user/gammu.1:2010 docs/user/gammu.1:2598
 msgid "..."
 msgstr "..."
 
 #. type: TP
-#: docs/user/gammu.1:2011 docs/user/gammu.1:2595
+#: docs/user/gammu.1:2011 docs/user/gammu.1:2599
 #, no-wrap
 msgid "B<nokiasetvibralevel>I< level>"
 msgstr "B<nokiasetvibralevel>I< level>"
 
 #. type: Plain text
-#: docs/user/gammu.1:2014 docs/user/gammu.1:2598
+#: docs/user/gammu.1:2014 docs/user/gammu.1:2602
 msgid "Set vibra power to \"level\" (given in percent)"
 msgstr "Set vibra power to \"level\" (given in percent)"
 
@@ -3731,18 +3731,29 @@ msgstr "Phone information"
 
 #. type: TP
 #: docs/user/gammu.1:2404
+#, fuzzy, no-wrap
+msgid "B<battery>"
+msgstr "B<CheckBattery>"
+
+#. type: Plain text
+#: docs/user/gammu.1:2407
+msgid "Displays information about battery and power source."
+msgstr ""
+
+#. type: TP
+#: docs/user/gammu.1:2408
 #, no-wrap
 msgid "B<getdisplaystatus>"
 msgstr "B<getdisplaystatus>"
 
 #. type: TP
-#: docs/user/gammu.1:2407
+#: docs/user/gammu.1:2411
 #, no-wrap
 msgid "B<getlocation>"
 msgstr "B<getlocation>"
 
 #. type: Plain text
-#: docs/user/gammu.1:2412
+#: docs/user/gammu.1:2416
 msgid ""
 "Gets network information from phone (same as networkinfo)  and prints "
 "location (latitude and longitude) based on information from OpenCellID "
@@ -3753,144 +3764,144 @@ msgstr ""
 "E<lt>http://opencellid.orgE<gt>."
 
 #. type: TP
-#: docs/user/gammu.1:2413
+#: docs/user/gammu.1:2417
 #, no-wrap
 msgid "B<getsecuritystatus>"
 msgstr "B<getsecuritystatus>"
 
 #. type: Plain text
-#: docs/user/gammu.1:2416
+#: docs/user/gammu.1:2420
 msgid "Show, if phone wait for security code (like PIN, PUK, etc.) or not"
 msgstr "Show, if phone wait for security code (like PIN, PUK, etc.) or not"
 
 #. type: TP
-#: docs/user/gammu.1:2417
+#: docs/user/gammu.1:2421
 #, no-wrap
 msgid "B<identify>"
 msgstr "B<identify>"
 
 #. type: Plain text
-#: docs/user/gammu.1:2420
+#: docs/user/gammu.1:2424
 msgid "Show the most important phone data."
 msgstr "Show the most important phone data."
 
 #. type: SS
-#: docs/user/gammu.1:2431
+#: docs/user/gammu.1:2435
 #, no-wrap
 msgid "Phone settings"
 msgstr "Phone settings"
 
 #. type: TP
-#: docs/user/gammu.1:2437
+#: docs/user/gammu.1:2441
 #, no-wrap
 msgid "B<getprofile>I< start [stop]>"
 msgstr "B<getprofile>I< start [stop]>"
 
 #. type: TP
-#: docs/user/gammu.1:2440
+#: docs/user/gammu.1:2444
 #, no-wrap
 msgid "B<resetphonesettings PHONE|DEV|UIF|ALL|FACTORY>"
 msgstr "B<resetphonesettings PHONE|DEV|UIF|ALL|FACTORY>"
 
 #. type: Plain text
-#: docs/user/gammu.1:2443
+#: docs/user/gammu.1:2447
 msgid "Reset phone settings. I<BE CAREFULL !!!!>"
 msgstr "Reset phone settings. I<BE CAREFULL !!!!>"
 
 #. type: Plain text
-#: docs/user/gammu.1:2445
+#: docs/user/gammu.1:2449
 msgid "B<PHONE:>"
 msgstr "B<PHONE:>"
 
 #. type: Plain text
-#: docs/user/gammu.1:2448
+#: docs/user/gammu.1:2452
 msgid "B<DEV:>"
 msgstr "B<DEV:>"
 
 #. type: Plain text
-#: docs/user/gammu.1:2451
+#: docs/user/gammu.1:2455
 msgid "B<ALL:>"
 msgstr "B<ALL:>"
 
 #. type: Plain text
-#: docs/user/gammu.1:2453
+#: docs/user/gammu.1:2457
 msgid "Clear user settings"
 msgstr "Clear user settings"
 
 #. type: Plain text
-#: docs/user/gammu.1:2455
+#: docs/user/gammu.1:2459
 msgid "* removes or set logos to default"
 msgstr "* removes or set logos to default"
 
 #. type: Plain text
-#: docs/user/gammu.1:2457
+#: docs/user/gammu.1:2461
 msgid "* set default phonebook and other menu settings"
 msgstr "* set default phonebook and other menu settings"
 
 #. type: Plain text
-#: docs/user/gammu.1:2459
+#: docs/user/gammu.1:2463
 msgid "* clear T9 words,"
 msgstr "* clear T9 words,"
 
 #. type: Plain text
-#: docs/user/gammu.1:2461
+#: docs/user/gammu.1:2465
 msgid "* clear call register info"
 msgstr "* clear call register info"
 
 #. type: Plain text
-#: docs/user/gammu.1:2463
+#: docs/user/gammu.1:2467
 msgid "* set default profiles settings"
 msgstr "* set default profiles settings"
 
 #. type: Plain text
-#: docs/user/gammu.1:2465
+#: docs/user/gammu.1:2469
 msgid "* clear user ringtones"
 msgstr "* clear user ringtones"
 
 #. type: Plain text
-#: docs/user/gammu.1:2467
+#: docs/user/gammu.1:2471
 msgid "B<UIF:>"
 msgstr "B<UIF:>"
 
 #. type: Plain text
-#: docs/user/gammu.1:2469
+#: docs/user/gammu.1:2473
 msgid "* changes like after B<ALL>"
 msgstr "* changes like after B<ALL>"
 
 #. type: Plain text
-#: docs/user/gammu.1:2471
+#: docs/user/gammu.1:2475
 msgid "* disables netmon and PPS (all \"hidden\" menus)"
 msgstr "* disables netmon and PPS (all \"hidden\" menus)"
 
 #. type: Plain text
-#: docs/user/gammu.1:2473
+#: docs/user/gammu.1:2477
 msgid "B<FACTORY:>"
 msgstr "B<FACTORY:>"
 
 #. type: Plain text
-#: docs/user/gammu.1:2475
+#: docs/user/gammu.1:2479
 msgid "* changes like after B<UIF>"
 msgstr "* changes like after B<UIF>"
 
 #. type: Plain text
-#: docs/user/gammu.1:2477
+#: docs/user/gammu.1:2481
 msgid "* clear date/time"
 msgstr "* clear date/time"
 
 #. type: SS
-#: docs/user/gammu.1:2499
+#: docs/user/gammu.1:2503
 #, no-wrap
 msgid "Dumps decoding"
 msgstr "Dumps decoding"
 
 #. type: TP
-#: docs/user/gammu.1:2500
+#: docs/user/gammu.1:2504
 #, no-wrap
 msgid "B<decodebinarydump>I< file [phonemodel]>"
 msgstr "B<decodebinarydump>I< file [phonemodel]>"
 
 #. type: Plain text
-#: docs/user/gammu.1:2505
+#: docs/user/gammu.1:2509
 msgid ""
 "Decodes a dump made by Gammu with B<logformat> se to B<binary> (see "
 "I<README> for info about this method of reporting bugs)."
@@ -3899,20 +3910,20 @@ msgstr ""
 "I<README> for info about this method of reporting bugs)."
 
 #. type: Plain text
-#: docs/user/gammu.1:2507
+#: docs/user/gammu.1:2511
 msgid ""
 "This option is available only if Gammu was compiled with debuging options."
 msgstr ""
 "This option is available only if Gammu was compiled with debuging options."
 
 #. type: TP
-#: docs/user/gammu.1:2509
+#: docs/user/gammu.1:2513
 #, no-wrap
 msgid "B<decodesniff MBUS2|IRDA>I< file [phonemodel]>"
 msgstr "B<decodesniff MBUS2|IRDA>I< file [phonemodel]>"
 
 #. type: Plain text
-#: docs/user/gammu.1:2513
+#: docs/user/gammu.1:2517
 msgid ""
 "Option available only, if Gammu was compiled with debug. Allows to decode "
 "sniffs. See I</docs/develop/develop.txt> for more details."
@@ -3921,19 +3932,19 @@ msgstr ""
 "sniffs. See I</docs/develop/develop.txt> for more details."
 
 #. type: SS
-#: docs/user/gammu.1:2515
+#: docs/user/gammu.1:2519
 #, no-wrap
 msgid "Functions that don't fit elsewhere"
 msgstr "Functions that don't fit elsewhere"
 
 #. type: TP
-#: docs/user/gammu.1:2516
+#: docs/user/gammu.1:2520
 #, no-wrap
 msgid "B<batch>I< [file]>"
 msgstr "B<batch>I< [file]>"
 
 #. type: Plain text
-#: docs/user/gammu.1:2521
+#: docs/user/gammu.1:2525
 msgid ""
 "Starts Gammu in a batch mode. In this mode you can issue several commands "
 "each on one line. Lines starting with # are treated as a comments."
@@ -3942,7 +3953,7 @@ msgstr ""
 "each on one line. Lines starting with # are treated as a comments."
 
 #. type: Plain text
-#: docs/user/gammu.1:2525
+#: docs/user/gammu.1:2529
 msgid ""
 "By default, commands are read from standard input, but you can optionally "
 "specify a file from where they would be read (special case - means standard "
@@ -3953,98 +3964,98 @@ msgstr ""
 "input)."
 
 #. type: TP
-#: docs/user/gammu.1:2526
+#: docs/user/gammu.1:2530
 #, no-wrap
 msgid "B<entersecuritycode PIN|PUK|PIN2|PUK2|PHONE|NETWORK>I< code|->"
 msgstr "B<entersecuritycode PIN|PUK|PIN2|PUK2|PHONE|NETWORK>I< code|->"
 
 #. type: Plain text
-#: docs/user/gammu.1:2529
+#: docs/user/gammu.1:2533
 msgid ""
 "Allow to enter security code from PC. When code is -, it is read from stdin."
 msgstr ""
 "Allow to enter security code from PC. When code is -, it is read from stdin."
 
 #. type: TP
-#: docs/user/gammu.1:2599
+#: docs/user/gammu.1:2603
 #, no-wrap
 msgid "B<presskeysequence>I< mMnNpPuUdD+-123456789*0#gGrRE<lt>E<gt>[]hHcCjJfFoOmMdD@>"
 msgstr "B<presskeysequence>I< mMnNpPuUdD+-123456789*0#gGrRE<lt>E<gt>[]hHcCjJfFoOmMdD@>"
 
 #. type: Plain text
-#: docs/user/gammu.1:2602
+#: docs/user/gammu.1:2606
 msgid "Press specified key sequence on phone keyboard"
 msgstr "Press specified key sequence on phone keyboard"
 
 #. type: Plain text
-#: docs/user/gammu.1:2604
+#: docs/user/gammu.1:2608
 msgid "B<mM> - Menu"
 msgstr "B<mM> - Menu"
 
 #. type: Plain text
-#: docs/user/gammu.1:2606
+#: docs/user/gammu.1:2610
 msgid "B<nN> - Names key"
 msgstr "B<nN> - Names key"
 
 #. type: Plain text
-#: docs/user/gammu.1:2608
+#: docs/user/gammu.1:2612
 msgid "B<pP> - Power"
 msgstr "B<pP> - Power"
 
 #. type: Plain text
-#: docs/user/gammu.1:2610
+#: docs/user/gammu.1:2614
 msgid "B<uU> - Up"
 msgstr "B<uU> - Up"
 
 #. type: Plain text
-#: docs/user/gammu.1:2612
+#: docs/user/gammu.1:2616
 msgid "B<dD> - Down"
 msgstr "B<dD> - Down"
 
 #. type: Plain text
-#: docs/user/gammu.1:2614
+#: docs/user/gammu.1:2618
 msgid "B<+-> - +-"
 msgstr "B<+-> - +-"
 
 #. type: Plain text
-#: docs/user/gammu.1:2616
+#: docs/user/gammu.1:2620
 msgid "B<gG> - Green"
 msgstr "B<gG> - Green"
 
 #. type: Plain text
-#: docs/user/gammu.1:2618
+#: docs/user/gammu.1:2622
 msgid "B<rR> - Red"
 msgstr "B<rR> - Red"
 
 #. type: Plain text
-#: docs/user/gammu.1:2620
+#: docs/user/gammu.1:2624
 msgid "B<123456789*0#> is numeric keyboard"
 msgstr "B<123456789*0#> is numeric keyboard"
 
 #. type: TP
-#: docs/user/gammu.1:2621
+#: docs/user/gammu.1:2625
 #, no-wrap
 msgid "B<reset SOFT|HARD>"
 msgstr "B<reset SOFT|HARD>"
 
 #. type: Plain text
-#: docs/user/gammu.1:2624
+#: docs/user/gammu.1:2628
 msgid "Make phone reset: soft (without asking for PIN) or hard (with PIN)."
 msgstr "Make phone reset: soft (without asking for PIN) or hard (with PIN)."
 
 #. type: Plain text
-#: docs/user/gammu.1:2626
+#: docs/user/gammu.1:2630
 msgid "I<Note:> some phones will make hard reset even with B<SOFT> option."
 msgstr "I<Note:> some phones will make hard reset even with B<SOFT> option."
 
 #. type: TP
-#: docs/user/gammu.1:2627
+#: docs/user/gammu.1:2631
 #, no-wrap
 msgid "B<searchphone>I< [-debug]>"
 msgstr "B<searchphone>I< [-debug]>"
 
 #. type: Plain text
-#: docs/user/gammu.1:2633
+#: docs/user/gammu.1:2637
 msgid ""
 "Attempts to search for a connected phone. Please note that this can take a "
 "very long time, but in case you have no clue how to configure phone "
@@ -4055,19 +4066,19 @@ msgstr ""
 "connection, this is a convenient way to find working setup for Gammu."
 
 #. type: SS
-#: docs/user/gammu.1:2634
+#: docs/user/gammu.1:2638
 #, no-wrap
 msgid "Gammu information"
 msgstr "Gammu information"
 
 #. type: TP
-#: docs/user/gammu.1:2635
+#: docs/user/gammu.1:2639
 #, no-wrap
 msgid "B<checkversion>I< [STABLE]>"
 msgstr "B<checkversion>I< [STABLE]>"
 
 #. type: Plain text
-#: docs/user/gammu.1:2640
+#: docs/user/gammu.1:2644
 msgid ""
 "Checks whether there is newer Gammu version available online (if Gammu has "
 "been compiled with CURL). If you pass additional parameter B<STABLE>, only "
@@ -4078,24 +4089,24 @@ msgstr ""
 "stable versions will be checked."
 
 #. type: TP
-#: docs/user/gammu.1:2641
+#: docs/user/gammu.1:2645
 #, no-wrap
 msgid "B<features>"
 msgstr "B<features>"
 
 #. type: Plain text
-#: docs/user/gammu.1:2644
+#: docs/user/gammu.1:2648
 msgid "Print information about compiled in features."
 msgstr "Print information about compiled in features."
 
 #. type: TP
-#: docs/user/gammu.1:2645
+#: docs/user/gammu.1:2649
 #, no-wrap
 msgid "B<help>I< [topic]>"
 msgstr "B<help>I< [topic]>"
 
 #. type: Plain text
-#: docs/user/gammu.1:2649
+#: docs/user/gammu.1:2653
 msgid ""
 "Print help. By default general help is printed, but you can also specify a "
 "help category to get more detailed help on some topic."
@@ -4104,295 +4115,295 @@ msgstr ""
 "help category to get more detailed help on some topic."
 
 #. type: TP
-#: docs/user/gammu.1:2650
+#: docs/user/gammu.1:2654
 #, no-wrap
 msgid "B<version>"
 msgstr "B<version>"
 
 #. type: Plain text
-#: docs/user/gammu.1:2653
+#: docs/user/gammu.1:2657
 msgid "Print version information and license."
 msgstr "Print version information and license."
 
 #. type: SH
-#: docs/user/gammu.1:2655
+#: docs/user/gammu.1:2659
 #, no-wrap
 msgid "FILES"
 msgstr "FILES"
 
 #. type: Plain text
-#: docs/user/gammu.1:2659
+#: docs/user/gammu.1:2663
 msgid "I<~/.gammurc>"
 msgstr "I<~/.gammurc>"
 
 #. type: Plain text
-#: docs/user/gammu.1:2661
+#: docs/user/gammu.1:2665
 msgid "I</usr/share/doc/gammu/*>"
 msgstr "I</usr/share/doc/gammu/*>"
 
 #. type: Plain text
-#: docs/user/gammu.1:2663
+#: docs/user/gammu.1:2667
 msgid "I</dev/ircomm?>"
 msgstr "I</dev/ircomm?>"
 
 #. type: Plain text
-#: docs/user/gammu.1:2665
+#: docs/user/gammu.1:2669
 msgid "I</dev/ttyS?>"
 msgstr "I</dev/ttyS?>"
 
 #. type: Plain text
-#: docs/user/gammu.1:2667
+#: docs/user/gammu.1:2671
 msgid "I</dev/ttyACM?>"
 msgstr "I</dev/ttyACM?>"
 
 #. type: SH
-#: docs/user/gammu.1:2668
+#: docs/user/gammu.1:2672
 #, no-wrap
 msgid "RETURN VALUES"
 msgstr "RETURN VALUES"
 
 #. type: Plain text
-#: docs/user/gammu.1:2673
+#: docs/user/gammu.1:2677
 msgid ""
 "gammu returns 0 on success. In case of failure non zero code is returned."
 msgstr ""
 "gammu returns 0 on success. In case of failure non zero code is returned."
 
 #. type: SS
-#: docs/user/gammu.1:2674
+#: docs/user/gammu.1:2678
 #, no-wrap
 msgid "1"
 msgstr "1"
 
 #. type: Plain text
-#: docs/user/gammu.1:2676
+#: docs/user/gammu.1:2680
 msgid "Out of memory or other critical error."
 msgstr "Out of memory or other critical error."
 
 #. type: SS
-#: docs/user/gammu.1:2677
+#: docs/user/gammu.1:2681
 #, no-wrap
 msgid "2"
 msgstr "2"
 
 #. type: Plain text
-#: docs/user/gammu.1:2679
+#: docs/user/gammu.1:2683
 msgid "Invalid command line parameters."
 msgstr "Invalid command line parameters."
 
 #. type: SS
-#: docs/user/gammu.1:2680
+#: docs/user/gammu.1:2684
 #, no-wrap
 msgid "3"
 msgstr "3"
 
 #. type: Plain text
-#: docs/user/gammu.1:2682
+#: docs/user/gammu.1:2686
 msgid "Failed to open file specified on command line."
 msgstr "Failed to open file specified on command line."
 
 #. type: SS
-#: docs/user/gammu.1:2683
+#: docs/user/gammu.1:2687
 #, no-wrap
 msgid "4"
 msgstr "4"
 
 #. type: Plain text
-#: docs/user/gammu.1:2685
+#: docs/user/gammu.1:2689
 msgid "Program was interrupted."
 msgstr "Program was interrupted."
 
 #. type: SS
-#: docs/user/gammu.1:2686
+#: docs/user/gammu.1:2690
 #, no-wrap
 msgid "98"
 msgstr "98"
 
 #. type: Plain text
-#: docs/user/gammu.1:2688
+#: docs/user/gammu.1:2692
 msgid "Gammu library version mismatch."
 msgstr "Gammu library version mismatch."
 
 #. type: SS
-#: docs/user/gammu.1:2689
+#: docs/user/gammu.1:2693
 #, no-wrap
 msgid "99"
 msgstr "99"
 
 #. type: Plain text
-#: docs/user/gammu.1:2691
+#: docs/user/gammu.1:2695
 msgid "Functionality has been moved. For example to gammu-smsd(1)."
 msgstr "Functionality has been moved. For example to gammu-smsd(1)."
 
 #. type: Plain text
-#: docs/user/gammu.1:2694
+#: docs/user/gammu.1:2698
 msgid ""
 "Errors codes greater than 100 map to the GSM_Error values increased by 100:"
 msgstr ""
 "Errors codes greater than 100 map to the GSM_Error values increased by 100:"
 
 #. type: SS
-#: docs/user/gammu.1:2695
+#: docs/user/gammu.1:2699
 #, no-wrap
 msgid "101"
 msgstr "101"
 
 #. type: Plain text
-#: docs/user/gammu.1:2697
+#: docs/user/gammu.1:2701
 msgid "No error."
 msgstr "No error."
 
 #. type: SS
-#: docs/user/gammu.1:2697
+#: docs/user/gammu.1:2701
 #, no-wrap
 msgid "102"
 msgstr "102"
 
 #. type: Plain text
-#: docs/user/gammu.1:2699
+#: docs/user/gammu.1:2703
 msgid "Error opening device. Unknown, busy or no permissions."
 msgstr "Error opening device. Unknown, busy or no permissions."
 
 #. type: SS
-#: docs/user/gammu.1:2699
+#: docs/user/gammu.1:2703
 #, no-wrap
 msgid "103"
 msgstr "103"
 
 #. type: Plain text
-#: docs/user/gammu.1:2701
+#: docs/user/gammu.1:2705
 msgid "Error opening device, it is locked."
 msgstr "Error opening device, it is locked."
 
 #. type: SS
-#: docs/user/gammu.1:2701
+#: docs/user/gammu.1:2705
 #, no-wrap
 msgid "104"
 msgstr "104"
 
 #. type: Plain text
-#: docs/user/gammu.1:2703
+#: docs/user/gammu.1:2707
 msgid "Error opening device, it doesn't exist."
 msgstr "Error opening device, it doesn't exist."
 
 #. type: SS
-#: docs/user/gammu.1:2703
+#: docs/user/gammu.1:2707
 #, no-wrap
 msgid "105"
 msgstr "105"
 
 #. type: Plain text
-#: docs/user/gammu.1:2705
+#: docs/user/gammu.1:2709
 msgid "Error opening device, it is already opened by other application."
 msgstr "Error opening device, it is already opened by other application."
 
 #. type: SS
-#: docs/user/gammu.1:2705
+#: docs/user/gammu.1:2709
 #, no-wrap
 msgid "106"
 msgstr "106"
 
 #. type: Plain text
-#: docs/user/gammu.1:2707
+#: docs/user/gammu.1:2711
 msgid "Error opening device, you don't have permissions."
 msgstr "Error opening device, you don't have permissions."
 
 #. type: SS
-#: docs/user/gammu.1:2707
+#: docs/user/gammu.1:2711
 #, no-wrap
 msgid "107"
 msgstr "107"
 
 #. type: Plain text
-#: docs/user/gammu.1:2709
+#: docs/user/gammu.1:2713
 msgid "Error opening device. No required driver in operating system."
 msgstr "Error opening device. No required driver in operating system."
 
 #. type: SS
-#: docs/user/gammu.1:2709
+#: docs/user/gammu.1:2713
 #, no-wrap
 msgid "108"
 msgstr "108"
 
 #. type: Plain text
-#: docs/user/gammu.1:2711
+#: docs/user/gammu.1:2715
 msgid "Error opening device. Some hardware not connected/wrongly configured."
 msgstr "Error opening device. Some hardware not connected/wrongly configured."
 
 #. type: SS
-#: docs/user/gammu.1:2711
+#: docs/user/gammu.1:2715
 #, no-wrap
 msgid "109"
 msgstr "109"
 
 #. type: Plain text
-#: docs/user/gammu.1:2713
+#: docs/user/gammu.1:2717
 msgid "Error setting device DTR or RTS."
 msgstr "Error setting device DTR or RTS."
 
 #. type: SS
-#: docs/user/gammu.1:2713
+#: docs/user/gammu.1:2717
 #, no-wrap
 msgid "110"
 msgstr "110"
 
 #. type: Plain text
-#: docs/user/gammu.1:2715
+#: docs/user/gammu.1:2719
 msgid "Error setting device speed. Maybe speed not supported."
 msgstr "Error setting device speed. Maybe speed not supported."
 
 #. type: SS
-#: docs/user/gammu.1:2715
+#: docs/user/gammu.1:2719
 #, no-wrap
 msgid "111"
 msgstr "111"
 
 #. type: Plain text
-#: docs/user/gammu.1:2717
+#: docs/user/gammu.1:2721
 msgid "Error writing to the device."
 msgstr "Error writing to the device."
 
 #. type: SS
-#: docs/user/gammu.1:2717
+#: docs/user/gammu.1:2721
 #, no-wrap
 msgid "112"
 msgstr "112"
 
 #. type: Plain text
-#: docs/user/gammu.1:2719
+#: docs/user/gammu.1:2723
 msgid "Error during reading from the device."
 msgstr "Error during reading from the device."
 
 #. type: SS
-#: docs/user/gammu.1:2719
+#: docs/user/gammu.1:2723
 #, no-wrap
 msgid "113"
 msgstr "113"
 
 #. type: Plain text
-#: docs/user/gammu.1:2721
+#: docs/user/gammu.1:2725
 msgid "Can't set parity on the device."
 msgstr "Can't set parity on the device."
 
 #. type: SS
-#: docs/user/gammu.1:2721
+#: docs/user/gammu.1:2725
 #, no-wrap
 msgid "114"
 msgstr "114"
 
 #. type: Plain text
-#: docs/user/gammu.1:2723
+#: docs/user/gammu.1:2727
 msgid "No response in specified timeout. Probably phone not connected."
 msgstr "No response in specified timeout. Probably phone not connected."
 
 #. type: SS
-#: docs/user/gammu.1:2723
+#: docs/user/gammu.1:2727
 #, no-wrap
 msgid "115"
 msgstr "115"
 
 #. type: Plain text
-#: docs/user/gammu.1:2725
+#: docs/user/gammu.1:2729
 msgid ""
 "Frame not requested right now. See E<lt>http://wammu.eu/support/bugs/E<gt> "
 "for information how to report it."
@@ -4401,13 +4412,13 @@ msgstr ""
 "for information how to report it."
 
 #. type: SS
-#: docs/user/gammu.1:2725
+#: docs/user/gammu.1:2729
 #, no-wrap
 msgid "116"
 msgstr "116"
 
 #. type: Plain text
-#: docs/user/gammu.1:2727
+#: docs/user/gammu.1:2731
 msgid ""
 "Unknown response from phone. See E<lt>http://wammu.eu/support/bugs/E<gt> for "
 "information how to report it."
@@ -4416,13 +4427,13 @@ msgstr ""
 "information how to report it."
 
 #. type: SS
-#: docs/user/gammu.1:2727
+#: docs/user/gammu.1:2731
 #, no-wrap
 msgid "117"
 msgstr "117"
 
 #. type: Plain text
-#: docs/user/gammu.1:2729
+#: docs/user/gammu.1:2733
 msgid ""
 "Unknown frame. See E<lt>http://wammu.eu/support/bugs/E<gt> for information "
 "how to report it."
@@ -4431,35 +4442,35 @@ msgstr ""
 "how to report it."
 
 #. type: SS
-#: docs/user/gammu.1:2729
+#: docs/user/gammu.1:2733
 #, no-wrap
 msgid "118"
 msgstr "118"
 
 #. type: Plain text
-#: docs/user/gammu.1:2731
+#: docs/user/gammu.1:2735
 msgid "Unknown connection type string. Check config file."
 msgstr "Unknown connection type string. Check config file."
 
 #. type: SS
-#: docs/user/gammu.1:2731
+#: docs/user/gammu.1:2735
 #, no-wrap
 msgid "119"
 msgstr "119"
 
 #. type: Plain text
-#: docs/user/gammu.1:2733
+#: docs/user/gammu.1:2737
 msgid "Unknown model type string. Check config file."
 msgstr "Unknown model type string. Check config file."
 
 #. type: SS
-#: docs/user/gammu.1:2733
+#: docs/user/gammu.1:2737
 #, no-wrap
 msgid "120"
 msgstr "120"
 
 #. type: Plain text
-#: docs/user/gammu.1:2735
+#: docs/user/gammu.1:2739
 msgid ""
 "Some functions not available for your system (disabled in config or not "
 "implemented)."
@@ -4468,159 +4479,159 @@ msgstr ""
 "implemented)."
 
 #. type: SS
-#: docs/user/gammu.1:2735
+#: docs/user/gammu.1:2739
 #, no-wrap
 msgid "121"
 msgstr "121"
 
 #. type: Plain text
-#: docs/user/gammu.1:2737
+#: docs/user/gammu.1:2741
 msgid "Function not supported by phone."
 msgstr "Function not supported by phone."
 
 #. type: SS
-#: docs/user/gammu.1:2737
+#: docs/user/gammu.1:2741
 #, no-wrap
 msgid "122"
 msgstr "122"
 
 #. type: Plain text
-#: docs/user/gammu.1:2739
+#: docs/user/gammu.1:2743
 msgid "Entry is empty."
 msgstr "Entry is empty."
 
 #. type: SS
-#: docs/user/gammu.1:2739
+#: docs/user/gammu.1:2743
 #, no-wrap
 msgid "123"
 msgstr "123"
 
 #. type: Plain text
-#: docs/user/gammu.1:2741
+#: docs/user/gammu.1:2745
 msgid "Security error. Maybe no PIN?"
 msgstr "Security error. Maybe no PIN?"
 
 #. type: SS
-#: docs/user/gammu.1:2741
+#: docs/user/gammu.1:2745
 #, no-wrap
 msgid "124"
 msgstr "124"
 
 #. type: Plain text
-#: docs/user/gammu.1:2743
+#: docs/user/gammu.1:2747
 msgid "Invalid location. Maybe too high?"
 msgstr "Invalid location. Maybe too high?"
 
 #. type: SS
-#: docs/user/gammu.1:2743
+#: docs/user/gammu.1:2747
 #, no-wrap
 msgid "125"
 msgstr "125"
 
 #. type: Plain text
-#: docs/user/gammu.1:2745
+#: docs/user/gammu.1:2749
 msgid "Functionality not implemented. You are welcome to help authors with it."
 msgstr ""
 "Functionality not implemented. You are welcome to help authors with it."
 
 #. type: SS
-#: docs/user/gammu.1:2745
+#: docs/user/gammu.1:2749
 #, no-wrap
 msgid "126"
 msgstr "126"
 
 #. type: Plain text
-#: docs/user/gammu.1:2747
+#: docs/user/gammu.1:2751
 msgid "Memory full."
 msgstr "Memory full."
 
 #. type: SS
-#: docs/user/gammu.1:2747
+#: docs/user/gammu.1:2751
 #, no-wrap
 msgid "127"
 msgstr "127"
 
 #. type: Plain text
-#: docs/user/gammu.1:2749
+#: docs/user/gammu.1:2753
 msgid "Unknown error."
 msgstr "Unknown error."
 
 #. type: SS
-#: docs/user/gammu.1:2749
+#: docs/user/gammu.1:2753
 #, no-wrap
 msgid "128"
 msgstr "128"
 
 #. type: Plain text
-#: docs/user/gammu.1:2751
+#: docs/user/gammu.1:2755
 msgid "Can not open specified file."
 msgstr "Can not open specified file."
 
 #. type: SS
-#: docs/user/gammu.1:2751
+#: docs/user/gammu.1:2755
 #, no-wrap
 msgid "129"
 msgstr "129"
 
 #. type: Plain text
-#: docs/user/gammu.1:2753
+#: docs/user/gammu.1:2757
 msgid "More memory required..."
 msgstr "More memory required..."
 
 #. type: SS
-#: docs/user/gammu.1:2753
+#: docs/user/gammu.1:2757
 #, no-wrap
 msgid "130"
 msgstr "130"
 
 #. type: Plain text
-#: docs/user/gammu.1:2755
+#: docs/user/gammu.1:2759
 msgid "Operation not allowed by phone."
 msgstr "Operation not allowed by phone."
 
 #. type: SS
-#: docs/user/gammu.1:2755
+#: docs/user/gammu.1:2759
 #, no-wrap
 msgid "131"
 msgstr "131"
 
 #. type: Plain text
-#: docs/user/gammu.1:2757
+#: docs/user/gammu.1:2761
 msgid ""
 "No SMSC number given. Provide it manually or use the one configured in phone."
 msgstr ""
 "No SMSC number given. Provide it manually or use the one configured in phone."
 
 #. type: SS
-#: docs/user/gammu.1:2757
+#: docs/user/gammu.1:2761
 #, no-wrap
 msgid "132"
 msgstr "132"
 
 #. type: Plain text
-#: docs/user/gammu.1:2759
+#: docs/user/gammu.1:2763
 msgid "You're inside phone menu (maybe editing?). Leave it and try again."
 msgstr "You're inside phone menu (maybe editing?). Leave it and try again."
 
 #. type: SS
-#: docs/user/gammu.1:2759
+#: docs/user/gammu.1:2763
 #, no-wrap
 msgid "133"
 msgstr "133"
 
 #. type: Plain text
-#: docs/user/gammu.1:2761
+#: docs/user/gammu.1:2765
 msgid "Phone is not connected."
 msgstr "Phone is not connected."
 
 #. type: SS
-#: docs/user/gammu.1:2761
+#: docs/user/gammu.1:2765
 #, no-wrap
 msgid "134"
 msgstr "134"
 
 #. type: Plain text
-#: docs/user/gammu.1:2763
+#: docs/user/gammu.1:2767
 msgid ""
 "Function is currently being implemented. If you want to help, please contact "
 "authors."
@@ -4629,35 +4640,35 @@ msgstr ""
 "authors."
 
 #. type: SS
-#: docs/user/gammu.1:2763
+#: docs/user/gammu.1:2767
 #, no-wrap
 msgid "135"
 msgstr "135"
 
 #. type: Plain text
-#: docs/user/gammu.1:2765
+#: docs/user/gammu.1:2769
 msgid "Phone is disabled and connected to charger."
 msgstr "Phone is disabled and connected to charger."
 
 #. type: SS
-#: docs/user/gammu.1:2765
+#: docs/user/gammu.1:2769
 #, no-wrap
 msgid "136"
 msgstr "136"
 
 #. type: Plain text
-#: docs/user/gammu.1:2767
+#: docs/user/gammu.1:2771
 msgid "File format not supported by Gammu."
 msgstr "File format not supported by Gammu."
 
 #. type: SS
-#: docs/user/gammu.1:2767
+#: docs/user/gammu.1:2771
 #, no-wrap
 msgid "137"
 msgstr "137"
 
 #. type: Plain text
-#: docs/user/gammu.1:2769
+#: docs/user/gammu.1:2773
 msgid ""
 "Nobody is perfect, some bug appeared in protocol implementation. Please "
 "contact authors."
@@ -4666,360 +4677,360 @@ msgstr ""
 "contact authors."
 
 #. type: SS
-#: docs/user/gammu.1:2769
+#: docs/user/gammu.1:2773
 #, no-wrap
 msgid "138"
 msgstr "138"
 
 #. type: Plain text
-#: docs/user/gammu.1:2771
+#: docs/user/gammu.1:2775
 msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
 msgstr "Transfer was cancelled by phone, maybe you pressed cancel on phone."
 
 #. type: SS
-#: docs/user/gammu.1:2771
+#: docs/user/gammu.1:2775
 #, no-wrap
 msgid "139"
 msgstr "139"
 
 #. type: Plain text
-#: docs/user/gammu.1:2773
+#: docs/user/gammu.1:2777
 msgid "Phone module need to send another answer frame."
 msgstr "Phone module need to send another answer frame."
 
 #. type: SS
-#: docs/user/gammu.1:2773
+#: docs/user/gammu.1:2777
 #, no-wrap
 msgid "140"
 msgstr "140"
 
 #. type: Plain text
-#: docs/user/gammu.1:2775
+#: docs/user/gammu.1:2779
 msgid "Current connection type doesn't support called function."
 msgstr "Current connection type doesn't support called function."
 
 #. type: SS
-#: docs/user/gammu.1:2775
+#: docs/user/gammu.1:2779
 #, no-wrap
 msgid "141"
 msgstr "141"
 
 #. type: Plain text
-#: docs/user/gammu.1:2777
+#: docs/user/gammu.1:2781
 msgid "CRC error."
 msgstr "CRC error."
 
 #. type: SS
-#: docs/user/gammu.1:2777
+#: docs/user/gammu.1:2781
 #, no-wrap
 msgid "142"
 msgstr "142"
 
 #. type: Plain text
-#: docs/user/gammu.1:2779
+#: docs/user/gammu.1:2783
 msgid "Invalid date or time specified."
 msgstr "Invalid date or time specified."
 
 #. type: SS
-#: docs/user/gammu.1:2779
+#: docs/user/gammu.1:2783
 #, no-wrap
 msgid "143"
 msgstr "143"
 
 #. type: Plain text
-#: docs/user/gammu.1:2781
+#: docs/user/gammu.1:2785
 msgid "Phone memory error, maybe it is read only."
 msgstr "Phone memory error, maybe it is read only."
 
 #. type: SS
-#: docs/user/gammu.1:2781
+#: docs/user/gammu.1:2785
 #, no-wrap
 msgid "144"
 msgstr "144"
 
 #. type: Plain text
-#: docs/user/gammu.1:2783
+#: docs/user/gammu.1:2787
 msgid "Invalid data given to phone."
 msgstr "Invalid data given to phone."
 
 #. type: SS
-#: docs/user/gammu.1:2783
+#: docs/user/gammu.1:2787
 #, no-wrap
 msgid "145"
 msgstr "145"
 
 #. type: Plain text
-#: docs/user/gammu.1:2785
+#: docs/user/gammu.1:2789
 msgid "File with specified name already exists."
 msgstr "File with specified name already exists."
 
 #. type: SS
-#: docs/user/gammu.1:2785
+#: docs/user/gammu.1:2789
 #, no-wrap
 msgid "146"
 msgstr "146"
 
 #. type: Plain text
-#: docs/user/gammu.1:2787
+#: docs/user/gammu.1:2791
 msgid "File with specified name doesn't exist."
 msgstr "File with specified name doesn't exist."
 
 #. type: SS
-#: docs/user/gammu.1:2787
+#: docs/user/gammu.1:2791
 #, no-wrap
 msgid "147"
 msgstr "147"
 
 #. type: Plain text
-#: docs/user/gammu.1:2789
+#: docs/user/gammu.1:2793
 msgid "You have to give folder name and not file name."
 msgstr "You have to give folder name and not file name."
 
 #. type: SS
-#: docs/user/gammu.1:2789
+#: docs/user/gammu.1:2793
 #, no-wrap
 msgid "148"
 msgstr "148"
 
 #. type: Plain text
-#: docs/user/gammu.1:2791
+#: docs/user/gammu.1:2795
 msgid "You have to give file name and not folder name."
 msgstr "You have to give file name and not folder name."
 
 #. type: SS
-#: docs/user/gammu.1:2791
+#: docs/user/gammu.1:2795
 #, no-wrap
 msgid "149"
 msgstr "149"
 
 #. type: Plain text
-#: docs/user/gammu.1:2793
+#: docs/user/gammu.1:2797
 msgid "Can not access SIM card."
 msgstr "Can not access SIM card."
 
 #. type: SS
-#: docs/user/gammu.1:2793
+#: docs/user/gammu.1:2797
 #, no-wrap
 msgid "150"
 msgstr "150"
 
 #. type: Plain text
-#: docs/user/gammu.1:2795
+#: docs/user/gammu.1:2799
 msgid "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
 msgstr ""
 "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
 
 #. type: SS
-#: docs/user/gammu.1:2795
+#: docs/user/gammu.1:2799
 #, no-wrap
 msgid "151"
 msgstr "151"
 
 #. type: Plain text
-#: docs/user/gammu.1:2797
+#: docs/user/gammu.1:2801
 msgid "Only part of folder has been listed."
 msgstr "Only part of folder has been listed."
 
 #. type: SS
-#: docs/user/gammu.1:2797
+#: docs/user/gammu.1:2801
 #, no-wrap
 msgid "152"
 msgstr "152"
 
 #. type: Plain text
-#: docs/user/gammu.1:2799
+#: docs/user/gammu.1:2803
 msgid "Folder must be empty."
 msgstr "Folder must be empty."
 
 #. type: SS
-#: docs/user/gammu.1:2799
+#: docs/user/gammu.1:2803
 #, no-wrap
 msgid "153"
 msgstr "153"
 
 #. type: Plain text
-#: docs/user/gammu.1:2801
+#: docs/user/gammu.1:2805
 msgid "Data were converted."
 msgstr "Data were converted."
 
 #. type: SS
-#: docs/user/gammu.1:2801
+#: docs/user/gammu.1:2805
 #, no-wrap
 msgid "154"
 msgstr "154"
 
 #. type: Plain text
-#: docs/user/gammu.1:2803
+#: docs/user/gammu.1:2807
 msgid "Gammu is not configured."
 msgstr "Gammu is not configured."
 
 #. type: SS
-#: docs/user/gammu.1:2803
+#: docs/user/gammu.1:2807
 #, no-wrap
 msgid "155"
 msgstr "155"
 
 #. type: Plain text
-#: docs/user/gammu.1:2805
+#: docs/user/gammu.1:2809
 msgid "Wrong folder used."
 msgstr "Wrong folder used."
 
 #. type: SS
-#: docs/user/gammu.1:2805
+#: docs/user/gammu.1:2809
 #, no-wrap
 msgid "156"
 msgstr "156"
 
 #. type: Plain text
-#: docs/user/gammu.1:2807
+#: docs/user/gammu.1:2811
 msgid "Internal phone error."
 msgstr "Internal phone error."
 
 #. type: SS
-#: docs/user/gammu.1:2807
+#: docs/user/gammu.1:2811
 #, no-wrap
 msgid "157"
 msgstr "157"
 
 #. type: Plain text
-#: docs/user/gammu.1:2809
+#: docs/user/gammu.1:2813
 msgid "Error writing file to disk."
 msgstr "Error writing file to disk."
 
 #. type: SS
-#: docs/user/gammu.1:2809
+#: docs/user/gammu.1:2813
 #, no-wrap
 msgid "158"
 msgstr "158"
 
 #. type: Plain text
-#: docs/user/gammu.1:2811
+#: docs/user/gammu.1:2815
 msgid "No such section exists."
 msgstr "No such section exists."
 
 #. type: SS
-#: docs/user/gammu.1:2811
+#: docs/user/gammu.1:2815
 #, no-wrap
 msgid "159"
 msgstr "159"
 
 #. type: Plain text
-#: docs/user/gammu.1:2813
+#: docs/user/gammu.1:2817
 msgid "Using default values."
 msgstr "Using default values."
 
 #. type: SS
-#: docs/user/gammu.1:2813
+#: docs/user/gammu.1:2817
 #, no-wrap
 msgid "160"
 msgstr "160"
 
 #. type: Plain text
-#: docs/user/gammu.1:2815
+#: docs/user/gammu.1:2819
 msgid "Corrupted data returned by phone."
 msgstr "Corrupted data returned by phone."
 
 #. type: SS
-#: docs/user/gammu.1:2815
+#: docs/user/gammu.1:2819
 #, no-wrap
 msgid "161"
 msgstr "161"
 
 #. type: Plain text
-#: docs/user/gammu.1:2817
+#: docs/user/gammu.1:2821
 msgid "Bad feature string in configuration."
 msgstr "Bad feature string in configuration."
 
 #. type: SS
-#: docs/user/gammu.1:2817
+#: docs/user/gammu.1:2821
 #, no-wrap
 msgid "162"
 msgstr "162"
 
 #. type: Plain text
-#: docs/user/gammu.1:2819
+#: docs/user/gammu.1:2823
 msgid "Desired functionality has been disabled on compile time."
 msgstr "Desired functionality has been disabled on compile time."
 
 #. type: SS
-#: docs/user/gammu.1:2819
+#: docs/user/gammu.1:2823
 #, no-wrap
 msgid "163"
 msgstr "163"
 
 #. type: Plain text
-#: docs/user/gammu.1:2821
+#: docs/user/gammu.1:2825
 msgid "Bluetooth configuration requires channel option."
 msgstr "Bluetooth configuration requires channel option."
 
 #. type: SS
-#: docs/user/gammu.1:2821
+#: docs/user/gammu.1:2825
 #, no-wrap
 msgid "164"
 msgstr "164"
 
 #. type: Plain text
-#: docs/user/gammu.1:2823
+#: docs/user/gammu.1:2827
 msgid "Service is not runnig."
 msgstr "Service is not runnig."
 
 #. type: SS
-#: docs/user/gammu.1:2823
+#: docs/user/gammu.1:2827
 #, no-wrap
 msgid "165"
 msgstr "165"
 
 #. type: Plain text
-#: docs/user/gammu.1:2825
+#: docs/user/gammu.1:2829
 msgid "Service configuration is missing."
 msgstr "Service configuration is missing."
 
 #. type: SS
-#: docs/user/gammu.1:2825
+#: docs/user/gammu.1:2829
 #, no-wrap
 msgid "166"
 msgstr "166"
 
 #. type: Plain text
-#: docs/user/gammu.1:2827
+#: docs/user/gammu.1:2831
 msgid "Command rejected because device was busy. Wait and restart."
 msgstr "Command rejected because device was busy. Wait and restart."
 
 #. type: SS
-#: docs/user/gammu.1:2827
+#: docs/user/gammu.1:2831
 #, no-wrap
 msgid "167"
 msgstr "167"
 
 #. type: Plain text
-#: docs/user/gammu.1:2829
+#: docs/user/gammu.1:2833
 msgid "Could not connect to the server."
 msgstr "Could not connect to the server."
 
 #. type: SS
-#: docs/user/gammu.1:2829
+#: docs/user/gammu.1:2833
 #, no-wrap
 msgid "168"
 msgstr "168"
 
 #. type: Plain text
-#: docs/user/gammu.1:2831
+#: docs/user/gammu.1:2835
 msgid "Could not resolve the host name."
 msgstr "Could not resolve the host name."
 
 #. type: SS
-#: docs/user/gammu.1:2831
+#: docs/user/gammu.1:2835
 #, no-wrap
 msgid "169"
 msgstr "169"
 
 #. type: Plain text
-#: docs/user/gammu.1:2833
+#: docs/user/gammu.1:2837
 msgid "Failed to get SMSC number from phone."
 msgstr "Failed to get SMSC number from phone."
 
 #. type: SH
-#: docs/user/gammu.1:2834 docs/user/gammurc.5:220 docs/user/gammu-smsdrc.5:432
+#: docs/user/gammu.1:2838 docs/user/gammurc.5:220 docs/user/gammu-smsdrc.5:432
 #: docs/user/gammu-smsd.1:77 docs/user/gammu-smsd-inject.1:36
 #: docs/user/gammu-smsd-files.7:75 docs/user/gammu-smsd-tables.7:395
 #: docs/user/gammu-smsd-run.7:93
@@ -5028,13 +5039,13 @@ msgid "EXAMPLE"
 msgstr "EXAMPLE"
 
 #. type: SS
-#: docs/user/gammu.1:2837
+#: docs/user/gammu.1:2841
 #, no-wrap
 msgid "Configuration"
 msgstr "Configuration"
 
 #. type: Plain text
-#: docs/user/gammu.1:2842
+#: docs/user/gammu.1:2846
 msgid ""
 "To check it out, you need to have configuration file for gammu, see gammurc"
 "(5) for more details about it."
@@ -5043,68 +5054,68 @@ msgstr ""
 "(5) for more details about it."
 
 #. type: SS
-#: docs/user/gammu.1:2843
+#: docs/user/gammu.1:2847
 #, no-wrap
 msgid "Sending messages"
 msgstr "Sending messages"
 
 #. type: TP
-#: docs/user/gammu.1:2845
+#: docs/user/gammu.1:2849
 #, no-wrap
 msgid "Save text message up to standard 160 chars:"
 msgstr "Save text message up to standard 160 chars:"
 
 #. type: Plain text
-#: docs/user/gammu.1:2853
+#: docs/user/gammu.1:2857
 #, no-wrap
 msgid "echo \"All your base are belong to us\" | gammu savesms TEXT\n"
 msgstr "echo \"All your base are belong to us\" | gammu savesms TEXT\n"
 
 #. type: Plain text
-#: docs/user/gammu.1:2859 docs/user/gammu.1:2884 docs/user/gammu.1:2896
+#: docs/user/gammu.1:2863 docs/user/gammu.1:2888 docs/user/gammu.1:2900
 #: docs/user/gammu-smsd-inject.1:56 docs/user/gammu-smsd-inject.1:81
 #: docs/user/gammu-smsd-inject.1:93
 msgid "or"
 msgstr "or"
 
 #. type: Plain text
-#: docs/user/gammu.1:2865
+#: docs/user/gammu.1:2869
 #, no-wrap
 msgid "gammu savesms TEXT -text \"All your base are belong to us\"\n"
 msgstr "gammu savesms TEXT -text \"All your base are belong to us\"\n"
 
 #. type: TP
-#: docs/user/gammu.1:2870
+#: docs/user/gammu.1:2874
 #, no-wrap
 msgid "Save long text message:"
 msgstr "Save long text message:"
 
 #. type: Plain text
-#: docs/user/gammu.1:2878
+#: docs/user/gammu.1:2882
 #, no-wrap
 msgid "echo \"All your base are belong to us\" | gammu savesms TEXT -len 400\n"
 msgstr "echo \"All your base are belong to us\" | gammu savesms TEXT -len 400\n"
 
 #. type: Plain text
-#: docs/user/gammu.1:2890
+#: docs/user/gammu.1:2894
 #, no-wrap
 msgid "gammu savesms TEXT -len 400 -text \"All your base are belong to us\"\n"
 msgstr "gammu savesms TEXT -len 400 -text \"All your base are belong to us\"\n"
 
 #. type: Plain text
-#: docs/user/gammu.1:2902
+#: docs/user/gammu.1:2906
 #, no-wrap
 msgid "gammu savesms EMS -text \"All your base are belong to us\"\n"
 msgstr "gammu savesms EMS -text \"All your base are belong to us\"\n"
 
 #. type: TP
-#: docs/user/gammu.1:2907
+#: docs/user/gammu.1:2911
 #, no-wrap
 msgid "Save some funky message with predefined sound and animation from 2 bitmaps:"
 msgstr "Save some funky message with predefined sound and animation from 2 bitmaps:"
 
 #. type: Plain text
-#: docs/user/gammu.1:2916
+#: docs/user/gammu.1:2920
 #, no-wrap
 msgid ""
 "gammu savesms EMS -text \"Greetings\" -defsound 1 -text \"from Gammu\"\n"
@@ -5114,13 +5125,13 @@ msgstr ""
 "-tone10 axelf.txt -animation 2 file1.bmp file2.bmp\n"
 
 #. type: TP
-#: docs/user/gammu.1:2921
+#: docs/user/gammu.1:2925
 #, no-wrap
 msgid "Save protected message with ringtone:"
 msgstr "Save protected message with ringtone:"
 
 #. type: Plain text
-#: docs/user/gammu.1:2930
+#: docs/user/gammu.1:2934
 #, no-wrap
 msgid ""
 "gammu savesms EMS -protected 2 -variablebitmaplong ala.bmp\n"
@@ -5130,13 +5141,13 @@ msgstr ""
 "-toneSElong axelf.txt -toneSE ring.txt\n"
 
 #. type: SS
-#: docs/user/gammu.1:2935
+#: docs/user/gammu.1:2939
 #, no-wrap
 msgid "Backups"
 msgstr "Backups"
 
 #. type: Plain text
-#: docs/user/gammu.1:2945
+#: docs/user/gammu.1:2949
 msgid ""
 "If you will backup settings to Gammu text file, it will be possible to edit "
 "it. It's easy: many things in this file will be written double - once in "
@@ -5157,7 +5168,7 @@ msgstr ""
 "ASCII and ASCII -E<gt> Unicode is done)."
 
 #. type: Plain text
-#: docs/user/gammu.1:2949
+#: docs/user/gammu.1:2953
 msgid ""
 "You can use any editor with regular expressions function to edit backup text "
 "file. Examples of such editors can be vim E<lt>http://www.vim.org/E<gt> or "
@@ -5170,29 +5181,29 @@ msgstr ""
 "expressions."
 
 #. type: TP
-#: docs/user/gammu.1:2950
+#: docs/user/gammu.1:2954
 #, no-wrap
 msgid "Remove info about voice tags"
 msgstr "Remove info about voice tags"
 
 #. type: Plain text
-#: docs/user/gammu.1:2954
+#: docs/user/gammu.1:2958
 msgid "Find: ^Entry\\e([0-9][0-9]\\e)VoiceTag = \\e(.*\\e)\\en"
 msgstr "Find: ^Entry\\e([0-9][0-9]\\e)VoiceTag = \\e(.*\\e)\\en"
 
 #. type: Plain text
-#: docs/user/gammu.1:2956
+#: docs/user/gammu.1:2960
 msgid "Replace:"
 msgstr "Replace:"
 
 #. type: TP
-#: docs/user/gammu.1:2957
+#: docs/user/gammu.1:2961
 #, no-wrap
 msgid "Change all numbers starting from +3620, +3630, +3660, +3670 to +3620"
 msgstr "Change all numbers starting from +3620, +3630, +3660, +3670 to +3620"
 
 #. type: Plain text
-#: docs/user/gammu.1:2961
+#: docs/user/gammu.1:2965
 msgid ""
 "Find: Type = NumberGeneral\\enEntry\\e([0-9][0-9]\\e)Text = \"\\e+36\\e"
 "(20\\e|30\\e|60\\e|70\\e)\\en"
@@ -5201,18 +5212,18 @@ msgstr ""
 "(20\\e|30\\e|60\\e|70\\e)\\en"
 
 #. type: Plain text
-#: docs/user/gammu.1:2963
+#: docs/user/gammu.1:2967
 msgid "Replace: Type = NumberMobile\\enEntry\\e1Text = \"\\e+3620"
 msgstr "Replace: Type = NumberMobile\\enEntry\\e1Text = \"\\e+3620"
 
 #. type: TP
-#: docs/user/gammu.1:2964
+#: docs/user/gammu.1:2968
 #, no-wrap
 msgid "Change phone numbers type to mobile for numbers starting from +3620, +3630,... and removing the corresponding TextUnicode line"
 msgstr "Change phone numbers type to mobile for numbers starting from +3620, +3630,... and removing the corresponding TextUnicode line"
 
 #. type: Plain text
-#: docs/user/gammu.1:2968
+#: docs/user/gammu.1:2972
 msgid ""
 "Find: Type = NumberGeneral\\enEntry\\e([0-9][0-9]\\e)Text = \"\\e+36\\e"
 "([2367]0\\e)\\e([^\\e\"]*\\e)\"\\enEntry\\e([0-9][0-9]\\e)TextUnicode = \\e"
@@ -5223,12 +5234,12 @@ msgstr ""
 "([^\\en]*\\e)\\en"
 
 #. type: Plain text
-#: docs/user/gammu.1:2970
+#: docs/user/gammu.1:2974
 msgid "Replace: Type = NumberMobile\\enEntry\\e1Text = \"\\e+36\\e2\\e3\"\\en"
 msgstr "Replace: Type = NumberMobile\\enEntry\\e1Text = \"\\e+36\\e2\\e3\"\\en"
 
 #. type: SH
-#: docs/user/gammu.1:2972 docs/user/gammurc.5:314 docs/user/gammu-smsdrc.5:510
+#: docs/user/gammu.1:2976 docs/user/gammurc.5:314 docs/user/gammu-smsdrc.5:510
 #: docs/user/gammu-smsd.1:207 docs/user/gammu-smsd-inject.1:136
 #: docs/user/gammu-smsd-monitor.1:45 docs/user/jadmaker.1:30
 #: docs/user/gammu-config.1:28 docs/user/gammu-smsd-files.7:112
@@ -5240,7 +5251,7 @@ msgid "COPYRIGHT"
 msgstr "COPYRIGHT"
 
 #. type: Plain text
-#: docs/user/gammu.1:2976
+#: docs/user/gammu.1:2980
 msgid ""
 "Copyright \\(co 2003 - 2010 Marcin Wiacek, Michal Cihar and other authors.  "
 "License GPLv2: GNU GPL version 2 E<lt>http://www.gnu.org/licenses/old-"
@@ -5251,7 +5262,7 @@ msgstr ""
 "licenses/gpl-2.0.htmlE<gt>"
 
 #. type: Plain text
-#: docs/user/gammu.1:2979 docs/user/gammurc.5:320 docs/user/gammu-smsdrc.5:516
+#: docs/user/gammu.1:2983 docs/user/gammurc.5:320 docs/user/gammu-smsdrc.5:516
 #: docs/user/gammu-smsd.1:213 docs/user/gammu-smsd-inject.1:142
 #: docs/user/gammu-smsd-monitor.1:51 docs/user/jadmaker.1:35
 #: docs/user/gammu-config.1:33 docs/user/gammu-smsd-files.7:118
@@ -5266,7 +5277,7 @@ msgstr ""
 "NO WARRANTY, to the extent permitted by law."
 
 #. type: SH
-#: docs/user/gammu.1:2980 docs/user/gammurc.5:320 docs/user/gammu-smsdrc.5:516
+#: docs/user/gammu.1:2984 docs/user/gammurc.5:320 docs/user/gammu-smsdrc.5:516
 #: docs/user/gammu-smsd.1:213 docs/user/gammu-smsd-inject.1:142
 #: docs/user/gammu-smsd-monitor.1:51 docs/user/jadmaker.1:24
 #: docs/user/gammu-config.1:23 docs/user/gammu-smsd-files.7:118
@@ -5278,19 +5289,19 @@ msgid "REPORTING BUGS"
 msgstr "REPORTING BUGS"
 
 #. type: Plain text
-#: docs/user/gammu.1:2985
-msgid ""
-"There are definitely many bugs, reporting to author is welcome. Please "
-"include some useful information when sending bug reports (especially debug "
-"logs, operating system, it's version and phone information are needed)."
-msgstr ""
-"There are definitely many bugs, reporting to author is welcome. Please "
-"include some useful information when sending bug reports (especially debug "
-"logs, operating system, it's version and phone information are needed)."
-
-#. type: Plain text
 #: docs/user/gammu.1:2989
 msgid ""
+"There are definitely many bugs, reporting to author is welcome. Please "
+"include some useful information when sending bug reports (especially debug "
+"logs, operating system, it's version and phone information are needed)."
+msgstr ""
+"There are definitely many bugs, reporting to author is welcome. Please "
+"include some useful information when sending bug reports (especially debug "
+"logs, operating system, it's version and phone information are needed)."
+
+#. type: Plain text
+#: docs/user/gammu.1:2993
+msgid ""
 "To generate debug log, enable it in gammurc (alternatively you can do it on "
 "command line using -d textall -f /tmp/gammu.log):"
 msgstr ""
@@ -5298,7 +5309,7 @@ msgstr ""
 "command line using -d textall -f /tmp/gammu.log):"
 
 #. type: Plain text
-#: docs/user/gammu.1:2998
+#: docs/user/gammu.1:3002
 #, no-wrap
 msgid ""
 "[gammu]\n"
@@ -5312,7 +5323,7 @@ msgstr ""
 "logformat = textall\n"
 
 #. type: Plain text
-#: docs/user/gammu.1:3006
+#: docs/user/gammu.1:3010
 msgid ""
 "With this settings, Gammu generates /tmp/gammu.log on each connection to "
 "phone and stores dump of communication there. You can also find some hints "
@@ -5323,7 +5334,7 @@ msgstr ""
 "for improving support for your phone in this log."
 
 #. type: Plain text
-#: docs/user/gammu.1:3008
+#: docs/user/gammu.1:3012
 msgid ""
 "See E<lt>http://wammu.eu/support/bugs/E<gt> for more information on "
 "reporting bugs."
@@ -5332,7 +5343,7 @@ msgstr ""
 "reporting bugs."
 
 #. type: Plain text
-#: docs/user/gammu.1:3010 docs/user/gammurc.5:321 docs/user/gammu-smsdrc.5:518
+#: docs/user/gammu.1:3014 docs/user/gammurc.5:321 docs/user/gammu-smsdrc.5:518
 #: docs/user/gammu-smsd.1:215 docs/user/gammu-smsd-inject.1:144
 #: docs/user/gammu-smsd-monitor.1:53 docs/user/jadmaker.1:26
 #: docs/user/gammu-config.1:25 docs/user/gammu-smsd-files.7:119
@@ -5343,7 +5354,7 @@ msgid "Please report bugs to E<lt>http://bugs.cihar.comE<gt>."
 msgstr "Please report bugs to E<lt>http://bugs.cihar.comE<gt>."
 
 #. type: SH
-#: docs/user/gammu.1:3011 docs/user/gammurc.5:312 docs/user/gammu-smsdrc.5:508
+#: docs/user/gammu.1:3015 docs/user/gammurc.5:312 docs/user/gammu-smsdrc.5:508
 #: docs/user/gammu-smsd.1:205 docs/user/gammu-smsd-inject.1:134
 #: docs/user/gammu-smsd-monitor.1:43 docs/user/gammu-smsd-files.7:110
 #: docs/user/gammu-smsd-mysql.7:19 docs/user/gammu-smsd-pgsql.7:19
@@ -5354,13 +5365,13 @@ msgid "AUTHOR"
 msgstr "AUTHOR"
 
 #. type: Plain text
-#: docs/user/gammu.1:3015
+#: docs/user/gammu.1:3019
 msgid "You can contact authors on E<lt>gammu-users@lists.sourceforge.netE<gt>."
 msgstr ""
 "You can contact authors on E<lt>gammu-users@lists.sourceforge.netE<gt>."
 
 #. type: Plain text
-#: docs/user/gammu.1:3021
+#: docs/user/gammu.1:3025
 msgid ""
 "I<Michal Cihar> E<lt>michal@cihar.comE<gt> is current project maintainer and "
 "contributor of most of AT and OBEX code."
@@ -5369,27 +5380,27 @@ msgstr ""
 "contributor of most of AT and OBEX code."
 
 #. type: Plain text
-#: docs/user/gammu.1:3026
+#: docs/user/gammu.1:3030
 msgid ""
 "I<Marcin Wiacek> E<lt>marcin@mwiacek.comE<gt> is project iniciator and "
 "contributor of most Nokia code."
 msgstr ""
 "I<Marcin Wiacek> E<lt>marcin@mwiacek.comE<gt> is project iniciator and "
 "contributor of most Nokia code."
-
-#. type: Plain text
-#: docs/user/gammu.1:3032
-msgid ""
-"As this project grew from Gnokii, we would like to thanks all Gnokii "
-"developers, especially I<Pavel Janik>, I<Pawel Kot> and I<Manfred Jonsson> "
-"(see CREDITS from Gnokii for all their contributor)."
-msgstr ""
-"As this project grew from Gnokii, we would like to thanks all Gnokii "
-"developers, especially I<Pavel Janik>, I<Pawel Kot> and I<Manfred Jonsson> "
-"(see CREDITS from Gnokii for all their contributor)."
 
 #. type: Plain text
 #: docs/user/gammu.1:3036
+msgid ""
+"As this project grew from Gnokii, we would like to thanks all Gnokii "
+"developers, especially I<Pavel Janik>, I<Pawel Kot> and I<Manfred Jonsson> "
+"(see CREDITS from Gnokii for all their contributor)."
+msgstr ""
+"As this project grew from Gnokii, we would like to thanks all Gnokii "
+"developers, especially I<Pavel Janik>, I<Pawel Kot> and I<Manfred Jonsson> "
+"(see CREDITS from Gnokii for all their contributor)."
+
+#. type: Plain text
+#: docs/user/gammu.1:3040
 msgid ""
 "Many other people have helped with various features, check ChangeLog for "
 "more details."
@@ -5398,7 +5409,7 @@ msgstr ""
 "more details."
 
 #. type: SH
-#: docs/user/gammu.1:3037 docs/user/gammurc.5:310 docs/user/gammu-smsdrc.5:503
+#: docs/user/gammu.1:3041 docs/user/gammurc.5:310 docs/user/gammu-smsdrc.5:503
 #: docs/user/gammu-smsd.1:196 docs/user/gammu-smsd-inject.1:132
 #: docs/user/gammu-smsd-monitor.1:41 docs/user/jadmaker.1:27
 #: docs/user/gammu-config.1:26 docs/user/gammu-smsd-files.7:108
@@ -5410,12 +5421,12 @@ msgid "SEE ALSO"
 msgstr "SEE ALSO"
 
 #. type: Plain text
-#: docs/user/gammu.1:3041
+#: docs/user/gammu.1:3045
 msgid "gammu-smsd(1), gammu-smsd-inject(1), gammurc(5), jadmaker(1)"
 msgstr "gammu-smsd(1), gammu-smsd-inject(1), gammurc(5), jadmaker(1)"
 
 #. type: Plain text
-#: docs/user/gammu.1:3043
+#: docs/user/gammu.1:3047
 msgid ""
 "Some more hints can be found in README file or on wiki E<lt>http://www.gammu."
 "org/E<gt>."
@@ -5424,22 +5435,22 @@ msgstr ""
 "org/E<gt>."
 
 #. type: Plain text
-#: docs/user/gammu.1:3045
+#: docs/user/gammu.1:3049
 msgid "Related programs which can be used with GSM modem:"
 msgstr "Related programs which can be used with GSM modem:"
 
 #. type: Plain text
-#: docs/user/gammu.1:3047
+#: docs/user/gammu.1:3051
 msgid "cu(1), gnokii(1), minicom(1)"
 msgstr "cu(1), gnokii(1), minicom(1)"
 
 #. type: Plain text
-#: docs/user/gammu.1:3049
+#: docs/user/gammu.1:3053
 msgid "Graphical interfaces for Gammu:"
 msgstr "Graphical interfaces for Gammu:"
 
 #. type: Plain text
-#: docs/user/gammu.1:3051
+#: docs/user/gammu.1:3055
 msgid "wammu(1), gmobilemedia(1)"
 msgstr "wammu(1), gmobilemedia(1)"
 
@@ -10083,6 +10094,9 @@ msgstr ""
 #: README:127
 msgid "# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us"
 msgstr "# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us"
+
+#~ msgid "Gammu 1.27.96"
+#~ msgstr "Gammu 1.27.96"
 
 #~ msgid "Gammu All Mobile Management Utilities - Installation\n"
 #~ msgstr "Gammu All Mobile Management Utilities - Installation\n"
