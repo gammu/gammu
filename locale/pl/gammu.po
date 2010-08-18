@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Gammu 1.28.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-08-17 13:45+0200\n"
-"PO-Revision-Date: 2009-06-03 16:35+0200\n"
-"Last-Translator: Potwór Jaworny <sklep@szybkieczytanie.net>\n"
+"PO-Revision-Date: 2010-08-17 14:07+0200\n"
+"Last-Translator: Maciej Szeptuch <matthiaspriv@gmail.com>\n"
 "Language-Team: Language =pl\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Pootle 1.2.1\n"
+"X-Generator: Pootle 2.0.5\n"
 
 #: gammu/backup.c:33 gammu/backup.c:56 gammu/backup.c:79 gammu/backup.c:100
 #: helper/message-cmdline.c:372 helper/message-cmdline.c:396
@@ -54,7 +54,7 @@ msgstr "Nie znaleziono wpisu książki telefonicznej w pliku"
 #: gammu/backup.c:151 helper/message-cmdline.c:551
 #, fuzzy, c-format
 msgid "Unknown memory type: \"%s\"\n"
-msgstr "BŁĄD: nieznany typ pamięci {(}\"%s\")\n"
+msgstr "BŁĄD: nieznany typ pamięci(\"%s\")\n"
 
 #: gammu/backup.c:165
 #, c-format
@@ -443,13 +443,13 @@ msgstr "Czy przywrócić Punkty GPRS w telefonie?"
 #: gammu/memory.c:172
 #, fuzzy, c-format
 msgid "Unknown memory type (\"%s\")\n"
-msgstr "BŁĄD: nieznany typ pamięci {(}\"%s\")\n"
+msgstr "BŁĄD: nieznany typ pamięci (\"%s\")\n"
 
 #: gammu/backup.c:1577 gammu/memory.c:74 gammu/misc.c:712 gammu/misc.c:741
 #: helper/message-cmdline.c:1031
 #, fuzzy, c-format
 msgid "Unknown parameter (\"%s\")\n"
-msgstr "BŁĄD: nieznany typ pamięci {(}\"%s\")\n"
+msgstr "BŁĄD: nieznany typ pamięci (\"%s\")\n"
 
 #: gammu/backup.c:1605 gammu/backup.c:1633
 #, c-format
@@ -1174,7 +1174,7 @@ msgstr "Przekroczono limit czasu"
 #: gammu/depend/nokia/dct4.c:374
 #, fuzzy, c-format
 msgid "Unknown (%x)"
-msgstr "Nieznany błąd."
+msgstr "Nieznany błąd(%x)."
 
 #: gammu/depend/nokia/dct4.c:376
 msgid " (startup)"

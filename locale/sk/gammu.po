@@ -8,22 +8,22 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-08-17 13:45+0200\n"
-"PO-Revision-Date: 2010-06-29 15:59+0200\n"
-"Last-Translator: Michal <michal@cihar.com>\n"
+"PO-Revision-Date: 2010-08-17 20:54+0200\n"
+"Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Pootle 2.0.1\n"
+"X-Generator: Pootle 2.0.5\n"
 
 #: gammu/backup.c:33 gammu/backup.c:56 gammu/backup.c:79 gammu/backup.c:100
 #: helper/message-cmdline.c:372 helper/message-cmdline.c:396
 #: helper/message-cmdline.c:440 helper/message-cmdline.c:477
 #: helper/message-cmdline.c:500
 msgid "Where is backup filename and location?"
-msgstr "Aký je názov záložného súboru a jeho umiestnenie?"
+msgstr "Kde je umiestnený záložný súbor a jeho názov?"
 
 #: gammu/backup.c:47 helper/message-cmdline.c:488
 msgid "Calendar note not found in file"
@@ -58,7 +58,7 @@ msgstr "Neznámy typ pamäte: \"%s\"\n"
 #: gammu/backup.c:165
 #, c-format
 msgid "Unknown backup format: \"%s\"\n"
-msgstr ""
+msgstr "Neznámy formát zálohy: \"%s\"\n"
 
 #: gammu/backup.c:171
 msgid "Error while opening file for writing!\n"
@@ -69,9 +69,8 @@ msgid "Error while writing file!\n"
 msgstr "Chyba pri zápise do súboru!\n"
 
 #: gammu/backup.c:178
-#, fuzzy
 msgid "Error while closing file!\n"
-msgstr "Chyba pri zápise do súboru!\n"
+msgstr "Chyba pri uzatváraní súboru!\n"
 
 #: gammu/backup.c:218 gammu/backup.c:373 gammu/backup.c:445 gammu/backup.c:480
 #: gammu/backup.c:514 gammu/backup.c:582 gammu/backup.c:619 gammu/backup.c:656
@@ -111,7 +110,7 @@ msgstr "Prerušíte stlačením Ctrl+C ..."
 
 #: gammu/backup.c:321
 msgid "Use Unicode subformat of backup file?"
-msgstr ""
+msgstr "Použiť formát Unicode pre súbor so zálohami?"
 
 #: gammu/backup.c:353
 msgid "Checking phone phonebook"
@@ -300,7 +299,7 @@ msgstr ""
 
 #: gammu/backup.c:956
 msgid "Use addnew command if you just want to add some entries to your phone."
-msgstr ""
+msgstr "Na pridanie nových položiek do telefónu použite príkaz addnew."
 
 #: gammu/backup.c:964
 msgid "Restore phone caller groups and logos?"
@@ -474,9 +473,8 @@ msgid "Add phone ToDo?"
 msgstr "Pridať úlohy?"
 
 #: gammu/backup.c:1712
-#, fuzzy
 msgid "Add notes to phone?"
-msgstr "Odoslať súbor do telefónu"
+msgstr "Pridať do telefónu poznámky?"
 
 #: gammu/backup.c:1735
 msgid "Add phone WAP bookmarks?"
@@ -560,7 +558,7 @@ msgstr "Budík"
 
 #: gammu/calendar.c:46
 msgid "Shopping"
-msgstr ""
+msgstr "Nakupovanie"
 
 #: gammu/calendar.c:49
 msgid "Daily alarm"
@@ -931,9 +929,8 @@ msgid "Start time"
 msgstr "Začiatok"
 
 #: gammu/calendar.c:746
-#, fuzzy
 msgid "Completed time"
-msgstr "Dokončené"
+msgstr "Čas dokončenia"
 
 #: gammu/calendar.c:751
 msgid "Completed"
@@ -1255,7 +1252,7 @@ msgstr "mV"
 
 #: gammu/depend/nokia/dct4.c:1038
 msgid "Battery voltage, scaled:"
-msgstr ""
+msgstr "Napätie batérie, zväčšené:"
 
 #: gammu/depend/nokia/dct4.c:1039
 msgid "Charger voltage:"
@@ -1292,9 +1289,8 @@ msgid "Headset interconnection:"
 msgstr "Pripojenie headsetu:"
 
 #: gammu/depend/nokia/dct4.c:1044
-#, fuzzy
 msgid "Hook interconnection:"
-msgstr "Pripojenie k telefónu"
+msgstr "Pripojenie zavesenia:"
 
 #: gammu/depend/nokia/dct4.c:1045
 msgid "Light sensor:"
@@ -1310,11 +1306,11 @@ msgstr "Teplota VCXO:"
 
 #: gammu/depend/nokia/dct4.c:1048
 msgid "Resistive keyboard 1/headint2:"
-msgstr ""
+msgstr "Odporová klávesnica 1/headint2:"
 
 #: gammu/depend/nokia/dct4.c:1049
 msgid "Resistive keyboard 1/auxdet:"
-msgstr ""
+msgstr "Odporová klávesnica 1/auxdet:"
 
 #: gammu/depend/nokia/dct4.c:1050
 msgid "Initial battery voltage:"
@@ -1428,7 +1424,7 @@ msgstr " (ID zoznamu konverzácií)"
 
 #: gammu/depend/nokia/dct4.c:1387
 msgid " (Instant Messaging service list ID ?)"
-msgstr ""
+msgstr "(ID servisného zoznamu okamžitého spracovania správ)"
 
 #: gammu/depend/nokia/dct4.c:1388
 msgid " (presence list ID ?)"
@@ -1625,7 +1621,7 @@ msgstr "Siete pre %s:"
 #: gammu/gammu.c:83
 #, c-format
 msgid "Unknown country name: %s."
-msgstr ""
+msgstr "Unknown country name: %s."
 
 #: gammu/gammu.c:88 gammu/gammu.c:736 gammu/misc.c:48
 msgid "Network"
@@ -2210,9 +2206,8 @@ msgid "Packet network state"
 msgstr "Stav siete"
 
 #: gammu/misc.c:75
-#, fuzzy
 msgid "Packet network"
-msgstr "domáca sieť"
+msgstr "Paketová sieť"
 
 #: gammu/misc.c:90 gammu/misc.c:1530
 msgid "GPRS"
@@ -2226,6 +2221,7 @@ msgstr "pripojené"
 msgid "detached"
 msgstr "odpojené"
 
+<<<<<<< HEAD
 #: gammu/misc.c:106
 msgid "Battery level"
 msgstr "Stav batérie"
@@ -2323,10 +2319,9 @@ msgstr "Lithium Polymer"
 msgid "NiMH"
 msgstr "NiMH"
 
-#: gammu/misc.c:261
-#, fuzzy
+#: gammu/misc.c:166
 msgid "Not logged to network!\n"
-msgstr "neprihlásený do siete"
+msgstr "Nie je prihlásený do siete!\n"
 
 #: gammu/misc.c:272
 msgid "Wrong network code from phone!\n"
@@ -2708,93 +2703,92 @@ msgstr "Vymazať kalendár?"
 
 #: gammu/misc.c:1377
 msgid "Delete phone todos?"
-msgstr ""
+msgstr "Odstrániť úlohy?"
 
 #: gammu/misc.c:1401
 msgid "Delete phone notes?"
-msgstr ""
+msgstr "Odstrániť poznámky?"
 
 #: gammu/misc.c:1419
 msgid "Delete phone WAP bookmarks?"
-msgstr ""
+msgstr "Odstrániť WAP záložky?"
 
 #: gammu/misc.c:1446
 msgid "Delete all phone FM radio stations?"
-msgstr ""
+msgstr "Vymazať všetky FM stanice?"
 
 #: gammu/misc.c:1458 gammu/misc.c:1460
-#, fuzzy
 msgid "Connection type"
-msgstr "&Pripojiť"
+msgstr "Typ pripojenia"
 
 #: gammu/misc.c:1458
 msgid "Continuous"
-msgstr ""
+msgstr "Nepretržité"
 
 #: gammu/misc.c:1460
 msgid "Temporary"
-msgstr ""
+msgstr "Dočasné"
 
 #: gammu/misc.c:1463 gammu/misc.c:1465
 msgid "Connection security"
-msgstr ""
+msgstr "Zabezpečenie pripojenia"
 
 #: gammu/misc.c:1463 gammu/misc.c:2066
 msgid "On"
-msgstr ""
+msgstr "Zapnuté"
 
 #: gammu/misc.c:1465 gammu/misc.c:2052
 msgid "Off"
-msgstr ""
+msgstr "Vypnuté"
 
 #: gammu/misc.c:1467
 msgid "Proxy"
-msgstr ""
+msgstr "Proxy"
 
 #: gammu/misc.c:1468 gammu/misc.c:1471
 #, c-format
 msgid "address \"%s\", port %i"
-msgstr ""
+msgstr "adresa \"%s\", port %i"
 
 #: gammu/misc.c:1470
 msgid "Second proxy"
-msgstr ""
+msgstr "Druhá proxy"
 
-#: gammu/misc.c:1475 gammu/misc.c:1482 gammu/misc.c:1517 gammu/misc.c:1530
+#: gammu/misc.c:1455 gammu/misc.c:1462 gammu/misc.c:1497 gammu/misc.c:1510
 msgid "Bearer"
-msgstr ""
+msgstr "Doručiteľ"
 
 #: gammu/misc.c:1475
 msgid "SMS"
-msgstr ""
+msgstr "SMS"
 
 #: gammu/misc.c:1478
 msgid "Server number"
-msgstr ""
+msgstr "Číslo serveru"
 
 #: gammu/misc.c:1479 gammu/misc.c:1525 gammu/misc.c:1526
 msgid "Service number"
-msgstr ""
+msgstr "Číslo služby"
 
 #: gammu/misc.c:1482
 msgid "Data (CSD)"
-msgstr ""
+msgstr "Data (CSD)"
 
 #: gammu/misc.c:1485
 msgid "Dial-up number"
-msgstr ""
+msgstr "Číslo na vytočenie"
 
 #: gammu/misc.c:1486 gammu/misc.c:1522 gammu/misc.c:1523 gammu/misc.c:1544
 msgid "IP address"
-msgstr ""
+msgstr "IP adresa"
 
 #: gammu/misc.c:1488 gammu/misc.c:1490 gammu/misc.c:1534 gammu/misc.c:1536
 msgid "Login type"
-msgstr ""
+msgstr "Typ prihlásenia"
 
 #: gammu/misc.c:1488 gammu/misc.c:1534
 msgid "Manual"
-msgstr ""
+msgstr "Manuálne"
 
 #: gammu/misc.c:1490 gammu/misc.c:1536
 msgid "Automatic"
@@ -2802,7 +2796,7 @@ msgstr "Automatický"
 
 #: gammu/misc.c:1493 gammu/misc.c:1495 gammu/misc.c:1539 gammu/misc.c:1541
 msgid "Authentication type"
-msgstr ""
+msgstr "Typ autentifikácie"
 
 #: gammu/misc.c:1493 gammu/misc.c:1539
 msgid "Normal"
@@ -2810,31 +2804,31 @@ msgstr "Normálna"
 
 #: gammu/misc.c:1495 gammu/misc.c:1541
 msgid "Secure"
-msgstr ""
+msgstr "Zabezpečené"
 
 #: gammu/misc.c:1498 gammu/misc.c:1500
 msgid "Data call type"
-msgstr ""
+msgstr "Typ dátového hovoru"
 
 #: gammu/misc.c:1498
 msgid "ISDN"
-msgstr ""
+msgstr "ISDN"
 
 #: gammu/misc.c:1500
 msgid "Analogue"
-msgstr ""
+msgstr "Analógový"
 
 #: gammu/misc.c:1504 gammu/misc.c:1507 gammu/misc.c:1510
 msgid "Data call speed"
-msgstr ""
+msgstr "Rychlosť dátového volania"
 
 #: gammu/misc.c:1510 gammu/misc.c:2068
 msgid "Auto"
-msgstr ""
+msgstr "Automatický"
 
 #: gammu/misc.c:1513 gammu/misc.c:1545
 msgid "User name"
-msgstr ""
+msgstr "Užívateľské meno"
 
 #: gammu/misc.c:1514 gammu/misc.c:1546 gammu/misc.c:1573 gammu/misc.c:1623
 msgid "Password"
@@ -2842,37 +2836,37 @@ msgstr "Heslo"
 
 #: gammu/misc.c:1517
 msgid "USSD"
-msgstr ""
+msgstr "USSD"
 
 #: gammu/misc.c:1520
 msgid "Service code"
-msgstr ""
+msgstr "Servisný kód"
 
 #: gammu/misc.c:1522 gammu/misc.c:1525
 msgid "Address type"
-msgstr ""
+msgstr "Typ adresy"
 
 #: gammu/misc.c:1543
 msgid "Access point"
-msgstr ""
+msgstr "Prístupový bod"
 
 #: gammu/misc.c:1566 gammu/misc.c:1587 gammu/misc.c:1615 gammu/misc.c:1628
 #: gammu/misc.c:1660
 #, c-format
 msgid "Set %i"
-msgstr ""
+msgstr "Nastavenie %i"
 
 #: gammu/misc.c:1572 gammu/misc.c:1622
 msgid "User"
-msgstr ""
+msgstr "Užívateľ"
 
 #: gammu/misc.c:1574
 msgid "Phonebook database"
-msgstr ""
+msgstr "Databáza kontaktov"
 
 #: gammu/misc.c:1575
 msgid "Calendar database"
-msgstr ""
+msgstr "Databáza kalendára"
 
 #: gammu/misc.c:1576
 msgid "Server"
@@ -2880,207 +2874,207 @@ msgstr "Server"
 
 #: gammu/misc.c:1577
 msgid "Sync. phonebook"
-msgstr ""
+msgstr "Synchronizácia kontaktov"
 
 #: gammu/misc.c:1580
 msgid "Sync. calendar"
-msgstr ""
+msgstr "Synchronizácia kalendára"
 
 #: gammu/misc.c:1585 gammu/misc.c:1626
 msgid "Connection set name"
-msgstr ""
+msgstr "Názov pripojenia"
 
 #: gammu/misc.c:1621 gammu/misc.c:1671
 msgid "Homepage"
-msgstr ""
+msgstr "Domovská stránka"
 
 #: gammu/misc.c:1665
 msgid "active"
-msgstr ""
+msgstr "aktívne"
 
 #: gammu/misc.c:1669
 msgid "Read only"
-msgstr ""
+msgstr "Iba na čítanie"
 
 #: gammu/misc.c:1694
 msgid "Startup logo"
-msgstr ""
+msgstr "Úvodné logo"
 
 #: gammu/misc.c:1695
 msgid "Operator logo"
-msgstr ""
+msgstr "Logo operátora"
 
 #: gammu/misc.c:1696 helper/message-display.c:428
 msgid "Picture"
-msgstr ""
+msgstr "Obrázok"
 
 #: gammu/misc.c:1697
 msgid "Caller group logo"
-msgstr ""
+msgstr "Logo skupiny"
 
 #: gammu/misc.c:1700
 #, c-format
 msgid ", width %i, height %i\n"
-msgstr ""
+msgstr ", šírka %i, výška %i\n"
 
 #: gammu/misc.c:1717
 #, c-format
 msgid "What format of output file logo (\"%s\") ?\n"
-msgstr ""
+msgstr "V akom formáte sa má uložiť výstupné logo (\"%s\") ?\n"
 
 #: gammu/misc.c:1742
 #, c-format
 msgid "What format of output ringtone file (\"%s\") ?\n"
-msgstr ""
+msgstr "V akom formáte sa má uložiť zvonenie (\"%s\") ?\n"
 
 #: gammu/misc.c:1762
 #, c-format
 msgid "Unknown key/function name: \"%c\"\n"
-msgstr ""
+msgstr "Neznámy názov klávesy/funkcie: \"%c\"\n"
 
 #: gammu/misc.c:1792 gammu/misc.c:1830
 #, c-format
 msgid "What type of categories do you want to get (\"%s\") ?\n"
-msgstr ""
+msgstr "Aký typ kategórie chcete načítať (\"%s\") ?\n"
 
 #: gammu/misc.c:1868
 #, c-format
 msgid "What type of category do you want to add (\"%s\") ?\n"
-msgstr ""
+msgstr "Aký typ kategórie chcete pridať (\"%s\") ?\n"
 
 #: gammu/misc.c:1876
 #, c-format
 msgid "Text too long, truncating to %d chars!\n"
-msgstr ""
+msgstr "Text je príliš dlhý, skracujem na %d znakov!\n"
 
 #: gammu/misc.c:1915
 msgid "Invalid security code type"
-msgstr ""
+msgstr "Chybný typ bezpečnostného kódu"
 
 #: gammu/misc.c:1920
 #, c-format
 msgid "Enter %s code: "
-msgstr ""
+msgstr "Zadajte %s kód: "
 
 #: gammu/misc.c:1932
 msgid "No PIN code entered!"
-msgstr ""
+msgstr "Nebol zadaný žiadny PIN kód!"
 
 #: gammu/misc.c:1974
 msgid " (default name)"
-msgstr ""
+msgstr " (predvolený názov)"
 
 #: gammu/misc.c:1975
 msgid " (Head set profile)"
-msgstr ""
+msgstr " (profil pre head set)"
 
 #: gammu/misc.c:1976
 msgid " (Car kit profile)"
-msgstr ""
+msgstr " (profil do auta)"
 
 #: gammu/misc.c:1985 helper/memory-display.c:105
 msgid "Ringtone ID"
-msgstr ""
+msgstr "ID zvonenia"
 
 #: gammu/misc.c:1987
 msgid "Message alert tone ID"
-msgstr ""
+msgstr "ID tónu oznámenia správy"
 
 #: gammu/misc.c:1997
 msgid "Call alert for"
-msgstr ""
+msgstr "Upozornenie na hovor pre"
 
 #: gammu/misc.c:2018
 msgid "Screen saver number"
-msgstr ""
+msgstr "Číslo šetriča obrazovky"
 
 #: gammu/misc.c:2021
 msgid "Incoming call alert"
-msgstr ""
+msgstr "Upozernenie na prichádzajúci hovor"
 
 #: gammu/misc.c:2022
 msgid "Ringtone volume"
-msgstr ""
+msgstr "Hlasistosť zvonenia"
 
 #: gammu/misc.c:2023
 msgid "Vibrating alert"
-msgstr ""
+msgstr "Vibračné upozornenie"
 
 #: gammu/misc.c:2024
 msgid "Message alert tone"
-msgstr ""
+msgstr "Tón upozornenia na správu"
 
 #: gammu/misc.c:2025
 msgid "Keypad tones"
-msgstr ""
+msgstr "Tóny klávesnice"
 
 #: gammu/misc.c:2026
 msgid "Warning (games) tones"
-msgstr ""
+msgstr "Tóny upozornenia (hry)"
 
 #: gammu/misc.c:2027 helper/message-display.c:424
 msgid "Screen saver"
-msgstr ""
+msgstr "Šetrič obrazovky"
 
 #: gammu/misc.c:2028
 msgid "Screen saver timeout"
-msgstr ""
+msgstr "Doba aktivácie šetriča obrazovky"
 
 #: gammu/misc.c:2029
 msgid "Automatic answer"
-msgstr ""
+msgstr "Automatická odpoveď"
 
 #: gammu/misc.c:2030
 msgid "Lights"
-msgstr ""
+msgstr "Svetlá"
 
 #: gammu/misc.c:2038
 msgid "Level 1"
-msgstr ""
+msgstr "Úroveň 1"
 
 #: gammu/misc.c:2040
 msgid "Level 2"
-msgstr ""
+msgstr "Úroveň 2"
 
 #: gammu/misc.c:2042
 msgid "Level 3"
-msgstr ""
+msgstr "Úroveň 3"
 
 #: gammu/misc.c:2043
 msgid "Level 4"
-msgstr ""
+msgstr "Úroveň 4"
 
 #: gammu/misc.c:2044
 msgid "Level 5"
-msgstr ""
+msgstr "Úroveň 5"
 
 #: gammu/misc.c:2053
 msgid "Ringing"
-msgstr ""
+msgstr "Zvonenie"
 
 #: gammu/misc.c:2055
 msgid "Beep once"
-msgstr ""
+msgstr "Pípnuť raz"
 
 #: gammu/misc.c:2056
 msgid "Ring once"
-msgstr ""
+msgstr "Zazvoniť raz"
 
 #: gammu/misc.c:2057 gammu/misc.c:2061
 msgid "Ascending"
-msgstr ""
+msgstr "vzostupné"
 
 #: gammu/misc.c:2058
 msgid "Caller groups"
-msgstr ""
+msgstr "Skupiny"
 
 #: gammu/misc.c:2059
 msgid "Standard"
-msgstr ""
+msgstr "Štandardné"
 
 #: gammu/misc.c:2060
 msgid "Special"
-msgstr ""
+msgstr "Špeciálne"
 
 #: gammu/misc.c:2062
 msgid "Personal"
@@ -3088,166 +3082,166 @@ msgstr "Osobné"
 
 #: gammu/misc.c:2067
 msgid "Vibrate first"
-msgstr ""
+msgstr "Najprv vibrovať"
 
 #: gammu/misc.c:2104
 msgid " speed dial not assigned"
-msgstr ""
+msgstr " rychlé vytáčanie nie je priradené"
 
 #: gammu/misc.c:2135
 #, c-format
 msgid "What type of reset phone settings (\"%s\") ?\n"
-msgstr ""
+msgstr "Aký typ resetu nastavení telefónu previesť (\"%s\") ?\n"
 
 #: gammu/misc.c:2169
 msgid "Currently shown on the display"
-msgstr ""
+msgstr "Zobrazené na displeji"
 
 #: gammu/misc.c:2173
 msgid "Call active"
-msgstr ""
+msgstr "Hovor je aktívny"
 
 #: gammu/misc.c:2174
 msgid "Unread SMS"
-msgstr ""
+msgstr "Neprečítaná SMS"
 
 #: gammu/misc.c:2175
 msgid "Voice call"
-msgstr ""
+msgstr "Hlasový hovor"
 
 #: gammu/misc.c:2176
 msgid "Fax call"
-msgstr ""
+msgstr "Faxový hovor"
 
 #: gammu/misc.c:2177
 msgid "Data call"
-msgstr ""
+msgstr "Datový hovor"
 
 #: gammu/misc.c:2178
 msgid "Keypad locked"
-msgstr ""
+msgstr "Klávesnica uzamknutá"
 
 #: gammu/misc.c:2179
 msgid "SMS memory full"
-msgstr ""
+msgstr "Pamäť pre SMS je plná"
 
 #: gammu/misc.c:2216
 msgid "Station name"
-msgstr ""
+msgstr "Názov stanice"
 
 #: gammu/misc.c:2217
 msgid "Frequency"
-msgstr ""
+msgstr "Frakvencia"
 
 #: gammu/misc.c:2235
 #, c-format
 msgid "Unknown divert action (\"%s\")\n"
-msgstr ""
+msgstr "Neznáma akcia presmerovania (\"%s\")\n"
 
 #: gammu/misc.c:2244
 #, c-format
 msgid "Unknown divert type (\"%s\")\n"
-msgstr ""
+msgstr "Neznámy typ presmerovania (\"%s\")\n"
 
 #: gammu/misc.c:2253
 #, c-format
 msgid "Unknown call type (\"%s\")\n"
-msgstr ""
+msgstr "Neznámy typ hovoru (\"%s\")\n"
 
 #: gammu/misc.c:2262
 msgid "Query:"
-msgstr ""
+msgstr "Otázka:"
 
 #: gammu/misc.c:2264 gammu/misc.c:2277
 msgid "Divert type"
-msgstr ""
+msgstr "Typ presmerovania"
 
 #: gammu/misc.c:2275
 msgid "Changed:"
-msgstr ""
+msgstr "Zmenené:"
 
 #: gammu/misc.c:2281
 msgid "when busy"
-msgstr ""
+msgstr "ak je obsadené"
 
 #: gammu/misc.c:2282
 msgid "when not answered"
-msgstr ""
+msgstr "ak neodpovedá"
 
 #: gammu/misc.c:2283
 msgid "when phone off or no coverage"
-msgstr ""
+msgstr "ak je telefón vypnutý alebo mimo dosah"
 
 #: gammu/misc.c:2284
 msgid "all types of diverts"
-msgstr ""
+msgstr "všetky typy presmerovaní"
 
 #: gammu/misc.c:2285 gammu/misc.c:2294 gammu/misc.c:2307
 #, c-format
 msgid "unknown %i"
-msgstr ""
+msgstr "neznámy %i"
 
 #: gammu/misc.c:2288 gammu/misc.c:2302
 msgid "Call type"
-msgstr ""
+msgstr "Typ hovoru"
 
 #: gammu/misc.c:2290 gammu/misc.c:2304
 msgid "voice"
-msgstr ""
+msgstr "hlas"
 
 #: gammu/misc.c:2291 gammu/misc.c:2305 helper/message-display.c:120
 msgid "fax"
-msgstr ""
+msgstr "fax"
 
 #: gammu/misc.c:2292 gammu/misc.c:2306
 msgid "data"
-msgstr ""
+msgstr "data"
 
 #: gammu/misc.c:2293
 msgid "data & fax & voice"
-msgstr ""
+msgstr "data & fax & hlas"
 
 #: gammu/misc.c:2297
 msgid "Response:"
-msgstr ""
+msgstr "Odpoveď:"
 
 #: gammu/mms.c:49
 msgid "Do you want to save this MMS file?"
-msgstr ""
+msgstr "Chcete uložiť tento MMS súbor?"
 
 #: gammu/mms.c:53 gammu/mms.c:134
 #, c-format
 msgid "Error while saving to file %s!\n"
-msgstr ""
+msgstr "Chyba pii ukladaní do súboru %s!\n"
 
 #: gammu/mms.c:55 gammu/mms.c:136
 #, c-format
 msgid "Saved to file %s\n"
-msgstr ""
+msgstr "Uložené do súboru %s\n"
 
 #: gammu/mms.c:65
 msgid "Some MMS file features unknown for Gammu decoder"
-msgstr ""
+msgstr "Niektoré vlastnosti MMS súboru nie sú známe dekóderu Gammu "
 
 #: gammu/mms.c:73 gammu/mms.c:81 gammu/mms.c:89
 msgid "phone "
-msgstr ""
+msgstr "telefón"
 
 #: gammu/mms.c:79
 msgid "Recipient"
-msgstr ""
+msgstr "Príjemca"
 
 #: gammu/mms.c:87
 msgid "CC"
-msgstr ""
+msgstr "CC"
 
 #: gammu/mms.c:94
 msgid "Message type"
-msgstr ""
+msgstr "Typ správy"
 
 #: gammu/mms.c:97 helper/message-display.c:462
 msgid "Subject"
-msgstr ""
+msgstr "Predmet"
 
 #: gammu/mms.c:100
 msgid "Delivery report"
@@ -3255,29 +3249,29 @@ msgstr "Potvrdenie o doručení"
 
 #: gammu/mms.c:107 gammu/mms.c:110
 msgid "Content type"
-msgstr ""
+msgstr "Typ obsahu"
 
 #: gammu/mms.c:114
 #, c-format
 msgid " (%s in SMIL)"
-msgstr ""
+msgstr " (%s in SMIL)"
 
 #: gammu/mms.c:130
 msgid "Do you want to save this attachment?"
-msgstr ""
+msgstr "Chcete túto prílohu uložiť?"
 
 #: gammu/mms.c:170
 #, c-format
 msgid "Folder %s\n"
-msgstr ""
+msgstr "Priečinok %s\n"
 
 #: gammu/mms.c:171
 msgid "  File filesystem ID"
-msgstr ""
+msgstr " ID súboru"
 
 #: gammu/nokia.c:43
 msgid "It can be RTTL ringtone only used with this option"
-msgstr ""
+msgstr "Len zvonenie typu RTTL môže byť použité s touto vlastnosťou"
 
 #: gammu/nokia.c:54
 #, c-format
@@ -3287,24 +3281,24 @@ msgstr ""
 #: gammu/nokia.c:63
 #, c-format
 msgid "length=%i notes, but you will enter only first 50 tones."
-msgstr ""
+msgstr "dĺžka=%i záznamov, ale vy zadáte len prvých 50 tónov."
 
 #: gammu/nokia.c:66
 msgid "This ringtone in Nokia Composer in phone should look:"
-msgstr ""
+msgstr "Toto zvonenie by v Noka Composere v telefóne malo vyzerať:"
 
 #: gammu/nokia.c:105
 msgid "To enter it please press:"
-msgstr ""
+msgstr "Na zadanie prosím stlačte:"
 
 #: gammu/nokia.c:124
 msgid "(longer)"
-msgstr ""
+msgstr "(dlhší)"
 
 #: gammu/nokia.c:252
 #, c-format
 msgid "Checking %s\n"
-msgstr ""
+msgstr "Kontrolujem %s\n"
 
 #: gammu/nokia.c:257
 msgid "  Only part handled!"
