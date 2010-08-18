@@ -451,6 +451,7 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_MINGW OR
     MACRO_TUNE_COMPILER("-Wpointer-arith")
     MACRO_TUNE_COMPILER("-Wshadow")
     MACRO_TUNE_COMPILER("-Wstrict-prototypes")
+    MACRO_TUNE_COMPILER("-Wsign-compare")
 #   We need some typecasting (especially for iconv)
 #    MACRO_TUNE_COMPILER("-Wcast-qual")
 
