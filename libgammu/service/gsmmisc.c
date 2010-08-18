@@ -49,7 +49,7 @@ static struct keys_table_position Keys[] = {
 GSM_Error MakeKeySequence(char *text, GSM_KeyCode *KeyCode, size_t *Length)
 {
 	int 		i,j;
-	unsigned char 	key;
+	char key;
 
 	for (i=0;i<(int)(strlen(text));i++) {
 		key 	   = text[i];

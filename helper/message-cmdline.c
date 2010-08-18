@@ -112,7 +112,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 	GSM_NetworkInfo			NetInfo;
 	GSM_MMSIndicator		MMSInfo;
 	FILE 				*ReplaceFileHadle,*f;
-	char				ReplaceBuffer2	[200],ReplaceBuffer[200];
+	unsigned char			ReplaceBuffer2	[200],ReplaceBuffer[200];
 	char				InputBuffer	[SEND_SAVE_SMS_BUFFER_SIZE/2+1];
 	unsigned char			Buffer		[GSM_MAX_MULTI_SMS][SEND_SAVE_SMS_BUFFER_SIZE];
 	int				chars_read		= 0;
