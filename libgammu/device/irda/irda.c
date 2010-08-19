@@ -34,6 +34,7 @@
 #  include <sys/poll.h>
 #  include <sys/socket.h>
 #  include <sys/ioctl.h>
+typedef int SOCKET;
 #else
 #  define WIN32_LEAN_AND_MEAN
 #  include <windows.h>
@@ -46,7 +47,7 @@
 #include "../devfunc.h"
 #include "irda.h"
 
-static gboolean irda_discover_device(GSM_StateMachine *state, int *fd)
+static gboolean irda_discover_device(GSM_StateMachine *state, SOCKET *fd)
 {
 	GSM_Device_IrdaData 	*d = &state->Device.Data.Irda;
 	struct irda_device_list	*list;
@@ -136,7 +137,7 @@ static gboolean irda_discover_device(GSM_StateMachine *state, int *fd)
 static GSM_Error irda_open (GSM_StateMachine *s)
 {
     	GSM_Device_IrdaData 	*d = &s->Device.Data.Irda;
-    	int			fd = -1;
+	SOCKET			fd = -1;
 	gboolean			failed;
 #ifdef WIN32
     	int 			Enable9WireMode = 1;
