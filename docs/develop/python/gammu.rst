@@ -1115,7 +1115,7 @@ Message processing
 
     :param MessageInfo: Description of message, see :ref:`sms_info_obj`
     :type MessageInfo: dict
-    :return: Dictionary with raw message, see :ref:`sms_obj`
+    :return: List of dictionaries with raw message, see :ref:`sms_obj`
     :rtype: dict
 
 .. function:: DecodePDU(Data, SMSC = False)

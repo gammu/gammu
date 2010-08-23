@@ -13,6 +13,10 @@ All the objects basically map to C structures, so you might also refer to
 SMS Object
 ----------
 
+Object describing single SMS message in a way GSM network handles is (140
+bytes of data). You can construct it from :ref:`sms_info_obj` using
+:meth:`gammu.EncodeSMS`.
+
 Message dictionary can consist of following fields:
 
 .. attribute:: SMSC
