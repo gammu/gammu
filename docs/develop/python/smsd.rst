@@ -84,7 +84,7 @@
 
         Injects SMS message into outgoing messages queue in SMSD.
 
-        :param Message: Nessage to inject (can be multipart)
-        :type Message: list
+        :param Message: Message to inject (can be multipart)
+        :type Message: list of :ref:`sms_obj`
         :return: ID of inserted message
         :rtype: string
