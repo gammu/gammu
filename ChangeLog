@@ -30,6 +30,7 @@ ChangeLog
 [-] * Fail to send SMS without set SMSC.
 [-] * Avoid updating SMSD backend frequently than StatusFrequency defines.
 [-] * Store SIM phonebook to vCard on backup (bug #1281).
+[-] * Fixed waiting for multipart messages (bug #1279).
     
 20100712 - 1.28.0
 

@@ -1222,7 +1222,7 @@ gboolean SMSD_CheckMultipart(GSM_SMSDConfig *Config, GSM_SMSDService *Service, G
 {
 	gboolean same_id;
 	/* Does the message have UDH (is multipart)? */
-	if (MultiSMS->SMS[0].UDH.Type != UDH_NoUDH) {
+	if (MultiSMS->SMS[0].UDH.Type == UDH_NoUDH) {
 		return TRUE;
 	}
 
@@ -1230,7 +1230,7 @@ gboolean SMSD_CheckMultipart(GSM_SMSDConfig *Config, GSM_SMSDService *Service, G
 	same_id = (Config->IncompleteMessageID == MultiSMS->SMS[0].UDH.ID16bit || Config->IncompleteMessageID == MultiSMS->SMS[0].UDH.ID8bit);
 
 	/* Check if we have all parts */
-	if (MultiSMS->SMS[0].UDH.AllParts != MultiSMS->Number) {
+	if (MultiSMS->SMS[0].UDH.AllParts == MultiSMS->Number) {
 		goto success;
 	}
 
