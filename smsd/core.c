@@ -1538,8 +1538,7 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 		while (!Config->shutdown) {
 			/* Update timestamp for SMS in backend */
 			Service->RefreshSendStatus(Config, Config->SMSID);
-			/* Update timestamp for phone in backend */
-			Service->RefreshPhoneStatus(Config);
+
 			GSM_GetCurrentDateTime(&Date);
 			z = Date.Second;
 			while (z == Date.Second) {

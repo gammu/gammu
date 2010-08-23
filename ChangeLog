@@ -28,6 +28,7 @@ ChangeLog
 [-] * Simplify handling text comment in SMS backup to keep new lines.
 [+] * New command gammu battery.
 [-] * Fail to send SMS without set SMSC.
+[-] * Avoid updating SMSD backend frequently than StatusFrequency defines.
     
 20100712 - 1.28.0
 
