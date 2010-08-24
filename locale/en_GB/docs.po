@@ -3731,9 +3731,9 @@ msgstr "Phone information"
 
 #. type: TP
 #: docs/user/gammu.1:2404
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "B<battery>"
-msgstr "B<CheckBattery>"
+msgstr "B<battery>"
 
 #. type: Plain text
 #: docs/user/gammu.1:2407
