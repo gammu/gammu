@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.28.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-08-18 14:07+0300\n"
-"PO-Revision-Date: 2010-07-30 22:25+0200\n"
+"PO-Revision-Date: 2010-08-24 11:13+0200\n"
 "Last-Translator: Robert Readman <robert_readman@hotmail.com>\n"
 "Language-Team: none\n"
 "Language: en_GB\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Pootle 2.0.1\n"
+"X-Generator: Pootle 2.0.5\n"
 
 #. type: TH
 #: docs/user/gammu.1:1
@@ -26,15 +26,15 @@ msgstr "GAMMU"
 
 #. type: TH
 #: docs/user/gammu.1:1
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Jul 27 2010"
-msgstr "Jul  1 2010"
+msgstr "Jul 27 2010"
 
 #. type: TH
 #: docs/user/gammu.1:1
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Gammu 1.28.90"
-msgstr "Gammu 1.28.0"
+msgstr "Gammu 1.28.90"
 
 #. type: TH
 #: docs/user/gammu.1:1 docs/user/gammurc.5:1 docs/user/gammu-smsdrc.5:1
@@ -3731,14 +3731,14 @@ msgstr "Phone information"
 
 #. type: TP
 #: docs/user/gammu.1:2404
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "B<battery>"
-msgstr "B<CheckBattery>"
+msgstr "B<battery>"
 
 #. type: Plain text
 #: docs/user/gammu.1:2407
 msgid "Displays information about battery and power source."
-msgstr ""
+msgstr "Displays information about battery and power source."
 
 #. type: TP
 #: docs/user/gammu.1:2408
