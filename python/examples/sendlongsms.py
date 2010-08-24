@@ -29,7 +29,7 @@ sm.Init()
 # Create SMS info structure
 smsinfo = {
     'Class': 1,
-    'UnicodeCoding': False,
+    'Unicode': False,
     'Entries':  [
         {
             'ID': 'ConcatenatedTextLong',
