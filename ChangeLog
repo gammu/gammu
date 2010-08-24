@@ -31,6 +31,7 @@ ChangeLog
 [-] * Avoid updating SMSD backend frequently than StatusFrequency defines.
 [-] * Store SIM phonebook to vCard on backup (bug #1281).
 [-] * Fixed waiting for multipart messages (bug #1279).
+[-] * Fixed crash on too long GPRS access point names in backup (bug #1267).
     
 20100712 - 1.28.0
 

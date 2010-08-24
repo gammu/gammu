@@ -226,15 +226,25 @@ static GSM_Error SaveBackupBase64(FILE *file, char *myname, unsigned char *data,
 	return error;
 }
 
-static gboolean ReadBackupText(INI_Section *file_info, char *section, char *myname, char *myvalue, gboolean UseUnicode)
+#define ReadBackupText(file_info, section, myname, myvalue, UseUnicode) ReadBackupTextLen(file_info, section, myname, myvalue, sizeof(myvalue), UseUnicode)
+
+static gboolean ReadBackupTextLen(INI_Section *file_info, char *section, char *myname, char *myvalue, size_t maxlen, gboolean UseUnicode)
 {
-	unsigned char paramname[10000],*readvalue;
+	unsigned char paramname[10000],*readvalue, *decodedvalue;
+	gboolean ret = TRUE;
 
 	if (UseUnicode) {
 		EncodeUnicode(paramname,myname,strlen(myname));
 		readvalue = INI_GetValue(file_info, section, paramname, UseUnicode);
 		if (readvalue!=NULL) {
-			CopyUnicodeString(myvalue,DecodeUnicodeSpecialChars(readvalue+2));
+			decodedvalue = DecodeUnicodeSpecialChars(readvalue+2);
+			if ((UnicodeLength(decodedvalue) + 1) * 2 >= maxlen) {
+				decodedvalue[maxlen - 1] = 0;
+				decodedvalue[maxlen - 2] = 0;
+				dbgprintf(NULL, "String too long!\n");
+				ret = FALSE;
+			}
+			CopyUnicodeString(myvalue, decodedvalue);
 			myvalue[UnicodeLength(myvalue)*2-2]=0;
 			myvalue[UnicodeLength(myvalue)*2-1]=0;
 
@@ -242,7 +252,7 @@ static gboolean ReadBackupText(INI_Section *file_info, char *section, char *myna
 		} else {
 			myvalue[0]=0;
 			myvalue[1]=0;
-			return FALSE;
+			ret = FALSE;
 		}
 	} else {
 		strcpy(paramname,myname);
@@ -250,7 +260,11 @@ static gboolean ReadBackupText(INI_Section *file_info, char *section, char *myna
 		readvalue = ReadCFGText(file_info, section, paramname, UseUnicode);
 		if (readvalue!=NULL) {
 			dbgprintf(NULL, "Cfg read: %s %ld\n",readvalue,(long)strlen(readvalue));
-			DecodeHexBin (myvalue, readvalue, strlen(readvalue));
+			if (strlen(readvalue) >= maxlen - 1) {
+				ret = FALSE;
+				dbgprintf(NULL, "String too long!\n");
+			}
+			DecodeHexBin (myvalue, readvalue, MIN(strlen(readvalue), maxlen - 1));
 			myvalue[strlen(readvalue)/2]=0;
 			myvalue[strlen(readvalue)/2+1]=0;
 			dbgprintf(NULL, "Cfg decoded: %s\n",DecodeUnicodeString(myvalue));
@@ -262,11 +276,11 @@ static gboolean ReadBackupText(INI_Section *file_info, char *section, char *myna
 			} else {
 				myvalue[0]=0;
 				myvalue[1]=0;
-				return FALSE;
+				ret = FALSE;
 			}
 		}
 	}
-	return TRUE;
+	return ret;
 }
 
 static GSM_Error SaveVCalDateTime(FILE *file, GSM_DateTime *dt, gboolean UseUnicode)
