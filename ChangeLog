@@ -33,6 +33,7 @@ ChangeLog
 [-] * Fixed waiting for multipart messages (bug #1279).
 [-] * Fixed crash on too long GPRS access point names in backup (bug #1267).
 [-] * Fallback to using SMSC from phone in SMSD if none provided.
+[-] * Improved guessing of HEX/GSM charsets for phone number in AT engine.
     
 20100712 - 1.28.0
 
