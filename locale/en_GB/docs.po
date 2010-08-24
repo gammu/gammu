@@ -3738,7 +3738,7 @@ msgstr "B<battery>"
 #. type: Plain text
 #: docs/user/gammu.1:2407
 msgid "Displays information about battery and power source."
-msgstr ""
+msgstr "Displays information about battery and power source."
 
 #. type: TP
 #: docs/user/gammu.1:2408
