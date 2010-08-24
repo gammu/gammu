@@ -1322,7 +1322,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 	if (compose_type == COMPOSE_TEXT) {
 		if (! HasText) {
 			if (isatty(fileno(stdin))) {
-				printf(_("Enter message text and press %s:\n"),
+				printf(_("Enter the message text and press %s:\n"),
 #ifdef WIN32
 					"Ctrl+Z"
 #else
