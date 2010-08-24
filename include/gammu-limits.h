@@ -304,6 +304,21 @@
  */
 #define GSM_MAX_USSD_LENGTH 999
 
+/**
+ * Maximal length of GPRS access point URL.
+ *
+ * \ingroup Limits
+ */
+#define GSM_MAX_GPRS_AP_NAME_LENGTH 149
+
+/**
+ * Maximal length of GPRS access point URL.
+ *
+ * \ingroup Limits
+ */
+#define GSM_MAX_GPRS_AP_URL_LENGTH 249
+
+
 #endif
 
 /* Editor configuration

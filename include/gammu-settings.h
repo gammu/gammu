@@ -1,7 +1,7 @@
 /**
  * \file gammu-settings.h
  * \author Michal Čihař
- * 
+ *
  * Phone settings data and functions.
  */
 #ifndef __gammu_settings_h
@@ -145,8 +145,8 @@ typedef struct {
 typedef struct {
 	int Location;
 	gboolean Active;
-	unsigned char Name[300];
-	unsigned char URL[500];
+	unsigned char Name[(GSM_MAX_GPRS_AP_NAME_LENGTH + 1) * 2];
+	unsigned char URL[(GSM_MAX_GPRS_AP_URL_LENGTH + 1) * 2];
 } GSM_GPRSAccessPoint;
 
 typedef enum {
