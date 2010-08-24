@@ -21,7 +21,7 @@ int main(int argc, char **argv)
 	GSM_SetDebugFileDescriptor(stderr, FALSE, debug_info);
 	GSM_SetDebugLevel("textall", debug_info);
 
-	error = GSM_ReadBackupFile(argv[2], &backup, GSM_GuessBackupFormat(argv[2], FALSE));
+	error = GSM_ReadBackupFile(argv[1], &backup, GSM_GuessBackupFormat(argv[1], FALSE));
 	gammu_test_result(error, "Read backup");
 
     GSM_FreeBackup(&backup);
