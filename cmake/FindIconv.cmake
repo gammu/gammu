@@ -7,16 +7,16 @@
 #  ICONV_SECOND_ARGUMENT_IS_CONST - the second argument for iconv() is const
 # 
 include(CheckCCompilerFlag)
-include(CheckCXXSourceCompiles)
+include(CheckCSourceCompiles)
 
 IF (ICONV_INCLUDE_DIR AND ICONV_LIBRARIES)
   # Already in cache, be silent
   SET(ICONV_FIND_QUIETLY TRUE)
 ENDIF (ICONV_INCLUDE_DIR AND ICONV_LIBRARIES)
 
-FIND_PATH(ICONV_INCLUDE_DIR iconv.h) 
+FIND_PATH(ICONV_INCLUDE_DIR iconv.h HINTS /sw/include/ PATHS /opt/local) 
  
-FIND_LIBRARY(ICONV_LIBRARIES NAMES iconv libiconv c)
+FIND_LIBRARY(ICONV_LIBRARIES NAMES iconv libiconv c PATHS /opt/local)
  
 IF(ICONV_INCLUDE_DIR AND ICONV_LIBRARIES) 
    SET(ICONV_FOUND TRUE) 

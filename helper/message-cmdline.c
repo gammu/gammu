@@ -1322,7 +1322,13 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 	if (compose_type == COMPOSE_TEXT) {
 		if (! HasText) {
 			if (isatty(fileno(stdin))) {
-				printf("%s\n", _("Enter message text and press ^D:"));
+				printf(_("Enter the message text and press %s:\n"),
+#ifdef WIN32
+					"Ctrl+Z"
+#else
+					"Ctrl+D"
+#endif
+				);
 			}
 			chars_read = fread(InputBuffer, 1, SEND_SAVE_SMS_BUFFER_SIZE/2, stdin);
 			/* Zero terminate string */

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-08-17 13:45+0200\n"
+"POT-Creation-Date: 2010-08-24 12:01+0200\n"
 "PO-Revision-Date: 2009-03-23 19:23+0200\n"
 "Last-Translator: Sergio Martín <ser.martin@wanadoo.es>\n"
 "Language-Team: Español\n"
@@ -3845,33 +3845,34 @@ msgid "Too long SMS name (\"%s\"), ignored\n"
 msgstr "Nombre SMS demasiado largo (\"%s\"), ignorado\n"
 
 #: helper/message-cmdline.c:1325
-msgid "Enter message text and press ^D:"
+#, fuzzy, c-format
+msgid "Enter the message text and press %s:\n"
 msgstr "Introduzca el texto del mensaje y pulse ^D:"
 
-#: helper/message-cmdline.c:1337
+#: helper/message-cmdline.c:1343
 msgid "No chars read, assuming it is okay!"
 msgstr ""
 
-#: helper/message-cmdline.c:1357
+#: helper/message-cmdline.c:1363
 msgid "No network code"
 msgstr "No hay código de red"
 
-#: helper/message-cmdline.c:1363
+#: helper/message-cmdline.c:1369
 #, fuzzy
 msgid "You have to set network code!"
 msgstr "No hay código de red"
 
-#: helper/message-cmdline.c:1402
+#: helper/message-cmdline.c:1408
 #, c-format
 msgid "Ringtone too long. %i percent part cut\n"
 msgstr "Tono demasiado largo. %i por ciento cortado\n"
 
-#: helper/message-cmdline.c:1413
+#: helper/message-cmdline.c:1419
 #, fuzzy, c-format
 msgid "There are %i SMS messages packed and the limit is %i. Exiting\n"
 msgstr "Hay %i SMS guardados y un límite de %i. Saliendo\n"
 
-#: helper/message-cmdline.c:1423
+#: helper/message-cmdline.c:1429
 msgid "Use -smscnumber option to give SMSC number"
 msgstr "Use la opción -smsscnumber para indicar el número de SMSC"
 

@@ -402,6 +402,25 @@ INLINE gboolean ATGEN_HasOnlyHexChars(const char *text, const size_t length)
 }
 
 /**
+ * Checks whether string contains only digits.
+ *
+ * \param text String to check.
+ *
+ * \return True when text does not contain non digits chars.
+ */
+INLINE gboolean ATGEN_HasOnlyDigits(const char *text, const size_t length)
+{
+	size_t i = 0;
+
+	for (i = 0; i < length; i++) {
+		if (!isdigit((int)text[i])) {
+			return FALSE;
+		}
+	}
+	return TRUE;
+}
+
+/**
  * Detects whether given text can be UCS2.
  *
  * \param s State machine structure.
@@ -429,6 +448,19 @@ INLINE gboolean ATGEN_IsHex(const char *text, const size_t length)
 	return (length > 4) &&
 		(length % 2 == 0) &&
 		ATGEN_HasOnlyHexChars(text, length);
+}
+
+/**
+ * Detects whether given text can be phone number.
+ *
+ * \param s State machine structure.
+ * \param len Length of string.
+ * \param text Text.
+ * \return True when text can be HEX.
+ */
+INLINE gboolean ATGEN_IsNumber(const char *text, const size_t length)
+{
+	return ATGEN_HasOnlyDigits(text, length);
 }
 
 /**
@@ -556,7 +588,7 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
 	unsigned char *buffer;
 	GSM_AT_Charset charset;
 	GSM_Phone_ATGENData 	*Priv 	= &s->Phone.Data.Priv.ATGEN;
-	gboolean is_hex, is_ucs;
+	gboolean is_hex, is_ucs, is_number;
 
 	/* Default to charset from state machine */
 	charset = s->Phone.Data.Priv.ATGEN.Charset;
@@ -565,10 +597,25 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
 	if (guess) {
 		is_hex = ATGEN_IsHex(input, length);
 		is_ucs = ATGEN_IsUCS2(input, length);
+		is_number = ATGEN_IsNumber(input, length);
 		/* Are there HEX only chars? */
 		if  (charset == AT_CHARSET_HEX
 			&& ! is_hex) {
 			charset = AT_CHARSET_GSM;
+		}
+		/* Should be HEX encoded, but is a phone number */
+		if  (charset == AT_CHARSET_HEX && is_number) {
+			/* Check whether it would not be number hex decoded as well */
+			buffer = (unsigned char *)malloc(length);
+
+			if (buffer == NULL) {
+				return ERR_MOREMEMORY;
+			}
+ 			DecodeHexBin(buffer, input, length);
+			if (!ATGEN_IsNumber(buffer, strlen(buffer))) {
+				charset = AT_CHARSET_GSM;
+			}
+			free(buffer);
 		}
 		/*
 		 * Motorola sometimes replies in UCS2 while there is HEX chosen.

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-08-17 13:45+0200\n"
+"POT-Creation-Date: 2010-08-24 12:01+0200\n"
 "PO-Revision-Date: 2009-02-19 00:16+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: none\n"
@@ -3731,32 +3731,33 @@ msgid "Too long SMS name (\"%s\"), ignored\n"
 msgstr ""
 
 #: helper/message-cmdline.c:1325
-msgid "Enter message text and press ^D:"
+#, c-format
+msgid "Enter the message text and press %s:\n"
 msgstr ""
 
-#: helper/message-cmdline.c:1337
+#: helper/message-cmdline.c:1343
 msgid "No chars read, assuming it is okay!"
 msgstr ""
 
-#: helper/message-cmdline.c:1357
+#: helper/message-cmdline.c:1363
 msgid "No network code"
 msgstr ""
 
-#: helper/message-cmdline.c:1363
+#: helper/message-cmdline.c:1369
 msgid "You have to set network code!"
 msgstr ""
 
-#: helper/message-cmdline.c:1402
+#: helper/message-cmdline.c:1408
 #, c-format
 msgid "Ringtone too long. %i percent part cut\n"
 msgstr ""
 
-#: helper/message-cmdline.c:1413
+#: helper/message-cmdline.c:1419
 #, c-format
 msgid "There are %i SMS messages packed and the limit is %i. Exiting\n"
 msgstr ""
 
-#: helper/message-cmdline.c:1423
+#: helper/message-cmdline.c:1429
 msgid "Use -smscnumber option to give SMSC number"
 msgstr ""
 

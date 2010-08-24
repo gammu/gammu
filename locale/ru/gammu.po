@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.28.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-08-17 13:45+0200\n"
+"POT-Creation-Date: 2010-08-24 12:01+0200\n"
 "PO-Revision-Date: 2008-01-27 17:07+0100\n"
 "Last-Translator: Даниил Аплеев <apleev@mail.ru>\n"
 "Language-Team: Language =ru\n"
@@ -2768,7 +2768,7 @@ msgstr ""
 
 #: gammu/misc.c:579
 msgid "Todos"
-msgstr ""
+msgstr "Список дел"
 
 #: gammu/misc.c:583
 #, fuzzy
@@ -4202,35 +4202,36 @@ msgid "Too long SMS name (\"%s\"), ignored\n"
 msgstr "Слишком длинное название SMS (\"%s\"); проигнорировано\n"
 
 #: helper/message-cmdline.c:1325
-msgid "Enter message text and press ^D:"
+#, c-format
+msgid "Enter the message text and press %s:\n"
 msgstr ""
 
-#: helper/message-cmdline.c:1337
+#: helper/message-cmdline.c:1343
 msgid "No chars read, assuming it is okay!"
 msgstr ""
 
-#: helper/message-cmdline.c:1357
+#: helper/message-cmdline.c:1363
 #, fuzzy
 msgid "No network code"
 msgstr "Отсутствует код сети\n"
 
-#: helper/message-cmdline.c:1363
+#: helper/message-cmdline.c:1369
 #, fuzzy
 msgid "You have to set network code!"
 msgstr "Отсутствует код сети\n"
 
-#: helper/message-cmdline.c:1402
+#: helper/message-cmdline.c:1408
 #, fuzzy, c-format
 msgid "Ringtone too long. %i percent part cut\n"
 msgstr ""
 "Предупреждение: рингтон слишком длинный. Укоротите его на %i процентов\n"
 
-#: helper/message-cmdline.c:1413
+#: helper/message-cmdline.c:1419
 #, fuzzy, c-format
 msgid "There are %i SMS messages packed and the limit is %i. Exiting\n"
 msgstr "Упаковано %i SMS, а предел - %i. Выполняется выход\n"
 
-#: helper/message-cmdline.c:1423
+#: helper/message-cmdline.c:1429
 #, fuzzy
 msgid "Use -smscnumber option to give SMSC number"
 msgstr "Чтобы указать число SMSC, используйте параметр -smscnumber\n"

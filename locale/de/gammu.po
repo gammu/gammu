@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.28.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-08-17 13:45+0200\n"
+"POT-Creation-Date: 2010-08-24 12:01+0200\n"
 "PO-Revision-Date: 2010-06-18 19:43+0200\n"
 "Last-Translator:  <canin@in.com>\n"
 "Language-Team: Language =de\n"
@@ -3768,32 +3768,33 @@ msgid "Too long SMS name (\"%s\"), ignored\n"
 msgstr "Zu langer SMS-Name (\"%s\"), ignoriert\n"
 
 #: helper/message-cmdline.c:1325
-msgid "Enter message text and press ^D:"
+#, fuzzy, c-format
+msgid "Enter the message text and press %s:\n"
 msgstr "Nachricht eingeben und Strg-D drücken zum Abschliessen:"
 
-#: helper/message-cmdline.c:1337
+#: helper/message-cmdline.c:1343
 msgid "No chars read, assuming it is okay!"
 msgstr "Keine Zeichen gelesen. Nehme an, dies ist OK!"
 
-#: helper/message-cmdline.c:1357
+#: helper/message-cmdline.c:1363
 msgid "No network code"
 msgstr "Kein Netz-Code"
 
-#: helper/message-cmdline.c:1363
+#: helper/message-cmdline.c:1369
 msgid "You have to set network code!"
 msgstr "Sie müssen den  Netz-Code angeben!"
 
-#: helper/message-cmdline.c:1402
+#: helper/message-cmdline.c:1408
 #, c-format
 msgid "Ringtone too long. %i percent part cut\n"
 msgstr "Warnung: der Klingelton ist zu lang. %i Prozent werden abgeschnitten\n"
 
-#: helper/message-cmdline.c:1413
+#: helper/message-cmdline.c:1419
 #, c-format
 msgid "There are %i SMS messages packed and the limit is %i. Exiting\n"
 msgstr "Es gibt %i gepackte SMS, Obergrenze ist %i. Abbruch\n"
 
-#: helper/message-cmdline.c:1423
+#: helper/message-cmdline.c:1429
 msgid "Use -smscnumber option to give SMSC number"
 msgstr "Verwenden Sie die -smscnumber Option, um die SMSC-Nummer anzugeben"
 

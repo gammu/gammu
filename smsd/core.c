@@ -1501,9 +1501,13 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 		strcpy(Config->prevSMSID, Config->SMSID);
 	}
 	for (i = 0; i < sms.Number; i++) {
-		if (sms.SMS[i].SMSC.Location == 1) {
-			if (Config->SMSC.Location == 0) {
-				Config->SMSC.Location = 1;
+		if (sms.SMS[i].SMSC.Location == 0 && UnicodeLength(sms.SMS[i].SMSC.Number) == 0) {
+			SMSD_Log(DEBUG_INFO, Config, "Message without SMSC, assuming you want to use the one from phone");
+			sms.SMS[i].SMSC.Location = 1;
+		}
+		if (sms.SMS[i].SMSC.Location != 0) {
+			if (Config->SMSC.Location != sms.SMS[i].SMSC.Location) {
+				Config->SMSC.Location = sms.SMS[i].SMSC.Location;
 				error = GSM_GetSMSC(Config->gsm,&Config->SMSC);
 				if (error!=ERR_NONE) {
 					SMSD_Log(DEBUG_ERROR, Config, "Error getting SMSC from phone");

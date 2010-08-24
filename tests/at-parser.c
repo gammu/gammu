@@ -143,6 +143,25 @@ int main(int argc UNUSED, char **argv UNUSED)
 				 "@s", buffer, BUFFER_SIZE);
 	gammu_test_result(error, "@s");
 
+	Priv->Charset = AT_CHARSET_HEX;
+	error = ATGEN_ParseReply(s, "+CSCA: \"971555515515\",145",
+				 "+CSCA: @p, @i", buffer, BUFFER_SIZE, &i);
+	gammu_test_result(error, "+CSCA: @p, @i");
+	test_result((strcmp(DecodeUnicodeString(buffer), "971555515515") == 0));
+	error = ATGEN_ParseReply(s, "+CSCA: \"393731353535353135353135\",145",
+				 "+CSCA: @p, @i", buffer, BUFFER_SIZE, &i);
+	gammu_test_result(error, "+CSCA: @p, @i");
+	test_result((strcmp(DecodeUnicodeString(buffer), "971555515515") == 0));
+	error = ATGEN_ParseReply(s, "+CSCA: \"+971555515515\",145",
+				 "+CSCA: @p, @i", buffer, BUFFER_SIZE, &i);
+	gammu_test_result(error, "+CSCA: @p, @i");
+	test_result((strcmp(DecodeUnicodeString(buffer), "+971555515515") == 0));
+	error = ATGEN_ParseReply(s, "+CSCA: \"2b393731353535353135353135\",145",
+				 "+CSCA: @p, @i", buffer, BUFFER_SIZE, &i);
+	gammu_test_result(error, "+CSCA: @p, @i");
+	test_result((strcmp(DecodeUnicodeString(buffer), "+971555515515") == 0));
+
+
 	/* Free state machine */
 	GSM_FreeStateMachine(s);
 

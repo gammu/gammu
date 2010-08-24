@@ -50,7 +50,6 @@ msgstr ""
 msgid "Gammu Documentation"
 msgstr ""
 
-# type: SH
 #. type: SH
 #: docs/user/gammu.1:3 docs/user/gammurc.5:2 docs/user/gammu-smsdrc.5:2
 #: docs/user/gammu-smsd.1:2 docs/user/gammu-smsd-inject.1:2
@@ -61,7 +60,7 @@ msgstr ""
 #: docs/user/gammu-smsd-null.7:2 docs/user/gammu-smsd-run.7:2
 #, no-wrap
 msgid "NAME"
-msgstr ""
+msgstr "ИМЯ"
 
 # type: Plain text
 #. type: Plain text
@@ -69,7 +68,6 @@ msgstr ""
 msgid "Gammu - Does some neat things with your cellular phone or modem."
 msgstr ""
 
-# type: SH
 #. type: SH
 #: docs/user/gammu.1:8 docs/user/gammurc.5:7 docs/user/gammu-smsdrc.5:7
 #: docs/user/gammu-smsd.1:4 docs/user/gammu-smsd-inject.1:4
@@ -77,7 +75,7 @@ msgstr ""
 #: docs/user/gammu-config.1:4
 #, no-wrap
 msgid "SYNOPSIS"
-msgstr ""
+msgstr "КРАТКИЙ ОБЗОР"
 
 # type: Plain text
 #. type: Plain text
@@ -85,7 +83,6 @@ msgstr ""
 msgid "Usage: gammu [I<parameters>] E<lt>commandE<gt> [I<options>]"
 msgstr ""
 
-# type: SH
 #. type: SH
 #: docs/user/gammu.1:13 docs/user/gammurc.5:20 docs/user/gammu-smsdrc.5:9
 #: docs/user/gammu-smsd.1:7 docs/user/gammu-smsd-inject.1:9
@@ -96,7 +93,7 @@ msgstr ""
 #: docs/user/gammu-smsd-null.7:6 docs/user/gammu-smsd-run.7:6
 #, no-wrap
 msgid "DESCRIPTION"
-msgstr ""
+msgstr "ОПИСАНИЕ"
 
 #. type: Plain text
 #: docs/user/gammu.1:19
@@ -105,12 +102,11 @@ msgid ""
 "supported, for actual listing see E<lt>http://wammu.eu/phones/E<gt>."
 msgstr ""
 
-# type: SH
 #. type: SH
 #: docs/user/gammu.1:21
 #, no-wrap
 msgid "OPTIONS"
-msgstr ""
+msgstr "НАСТРОЙКИ"
 
 # type: Plain text
 #. type: Plain text
@@ -5243,7 +5239,6 @@ msgid ""
 "NO WARRANTY, to the extent permitted by law."
 msgstr ""
 
-# type: SH
 #. type: SH
 #: docs/user/gammu.1:2984 docs/user/gammurc.5:320 docs/user/gammu-smsdrc.5:516
 #: docs/user/gammu-smsd.1:213 docs/user/gammu-smsd-inject.1:142
@@ -5254,7 +5249,7 @@ msgstr ""
 #: docs/user/gammu-smsd-null.7:24 docs/user/gammu-smsd-run.7:128
 #, no-wrap
 msgid "REPORTING BUGS"
-msgstr ""
+msgstr "СООБЩЕНИЯ ОБ ОШИБКАХ"
 
 # type: Plain text
 #. type: Plain text
@@ -5311,7 +5306,6 @@ msgstr ""
 msgid "Please report bugs to E<lt>http://bugs.cihar.comE<gt>."
 msgstr ""
 
-# type: SH
 #. type: SH
 #: docs/user/gammu.1:3015 docs/user/gammurc.5:312 docs/user/gammu-smsdrc.5:508
 #: docs/user/gammu-smsd.1:205 docs/user/gammu-smsd-inject.1:134
@@ -5321,7 +5315,7 @@ msgstr ""
 #: docs/user/gammu-smsd-null.7:16 docs/user/gammu-smsd-run.7:120
 #, no-wrap
 msgid "AUTHOR"
-msgstr ""
+msgstr "АВТОР"
 
 # type: Plain text
 #. type: Plain text
@@ -5362,7 +5356,6 @@ msgid ""
 "more details."
 msgstr ""
 
-# type: SH
 #. type: SH
 #: docs/user/gammu.1:3041 docs/user/gammurc.5:310 docs/user/gammu-smsdrc.5:503
 #: docs/user/gammu-smsd.1:196 docs/user/gammu-smsd-inject.1:132
@@ -5373,7 +5366,7 @@ msgstr ""
 #: docs/user/gammu-smsd-null.7:14 docs/user/gammu-smsd-run.7:118
 #, no-wrap
 msgid "SEE ALSO"
-msgstr ""
+msgstr "СМОТРИТЕ ТАКЖЕ"
 
 # type: Plain text
 #. type: Plain text
@@ -7930,11 +7923,10 @@ msgstr ""
 msgid "B<-h, --help>"
 msgstr ""
 
-# type: Plain text
 #. type: Plain text
 #: docs/user/jadmaker.1:17 docs/user/gammu-config.1:16
 msgid "Show summary of options."
-msgstr ""
+msgstr "Показать список опций."
 
 # type: TP
 #. type: TP
