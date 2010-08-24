@@ -43,6 +43,7 @@ set (PYTHON_GAMMU_SRC
     src/smsd.c
     src/misc.c
     src/errors.c
+    src/data.c
     src/convertors/backup.c
     src/convertors/base.c
     src/convertors/bitmap.c

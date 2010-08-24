@@ -31,6 +31,22 @@ const unsigned char *GSM_GetNetworkName(const char *NetworkCode);
 const unsigned char *GSM_GetCountryName(const char *CountryCode);
 
 /**
+ * List of network codes, even elements contain code,
+ * odd elements contain name.
+ *
+ * \ingroup Info
+ */
+extern const char *GSM_Networks[];
+
+/**
+ * List of country codes, even elements contain code,
+ * odd elements contain name.
+ *
+ * \ingroup Info
+ */
+extern const char *GSM_Countries[];
+
+/**
  * Status of network logging
  *
  * \ingroup Info

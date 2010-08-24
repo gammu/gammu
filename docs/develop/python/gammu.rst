@@ -1285,3 +1285,14 @@ Backup reading and writing
     :type Filename: string
     :return: List of messages read from file
     :rtype: list
+
+Various data
+------------
+
+.. data:: GSMNetworks
+
+   Dictionary with GSM network codes.
+
+.. data:: GSMCountries
+
+   Dictionary with GSM country codes.

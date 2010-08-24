@@ -40,6 +40,9 @@
 /* Error objects */
 #include "errors.h"
 
+/* Data objects */
+#include "data.h"
+
 /* Other useful stuff */
 #include "misc.h"
 
@@ -6345,6 +6348,9 @@ PyMODINIT_FUNC init_gammu(void) {
 
     /* Define errors */
     if (!gammu_create_errors(d)) return;
+
+    /* Define data */
+    if (!gammu_create_data(d)) return;
 
     /* Check for errors */
     if (PyErr_Occurred()) {

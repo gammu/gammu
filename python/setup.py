@@ -266,6 +266,7 @@ gammumodule = Extension('gammu._gammu',
     include_dirs = ['.'],
     sources = [
         'gammu/src/errors.c',
+        'gammu/src/data.c',
         'gammu/src/misc.c',
         'gammu/src/convertors/misc.c',
         'gammu/src/convertors/string.c',

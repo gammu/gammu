@@ -59,8 +59,6 @@
 
 static void ListNetworks(int argc, char *argv[])
 {
-	extern unsigned char *GSM_Networks[];
-	extern unsigned char *GSM_Countries[];
 	int i = 0;
 	char country[4] = "";
 
