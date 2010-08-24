@@ -41,6 +41,25 @@ if (WITH_BACKUP)
     add_test(backup-comment "${GAMMU_TEST_PATH}/backup-comment${GAMMU_TEST_SUFFIX}")
 endif (WITH_BACKUP)
 
+# Backup reading
+if (WITH_BACKUP)
+    add_executable(read-backup read-backup.c)
+    target_link_libraries (read-backup libGammu ${LIBINTL_LIBRARIES})
+
+    # List test cases
+    file(GLOB BACKUPS
+        RELATIVE "${Gammu_SOURCE_DIR}/tests/backups"
+        "${Gammu_SOURCE_DIR}/tests/backups/*.backup")
+    list(SORT BACKUPS)
+
+    foreach(TESTBACKUP ${BACKUPS})
+        string(REPLACE .backup "" TESTNAME ${TESTBACKUP})
+        add_test("read-backup-${TESTNAME}"
+            "${GAMMU_TEST_PATH}/read-backup${GAMMU_TEST_SUFFIX}"
+            "${Gammu_SOURCE_DIR}/tests/backups/${TESTBACKUP}")
+    endforeach(TESTBACKUP $BACKUPS)
+endif (WITH_BACKUP)
+
 # Basic check for statemachine functionality
 add_executable(statemachine-init statemachine-init.c)
 target_link_libraries(statemachine-init libGammu ${LIBINTL_LIBRARIES})
