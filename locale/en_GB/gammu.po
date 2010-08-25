@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.27.96\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-08-24 12:01+0200\n"
+"POT-Creation-Date: 2010-08-25 15:33+0200\n"
 "PO-Revision-Date: 2010-07-01 14:12+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -1609,106 +1609,106 @@ msgstr "ID of new file is \"%s\"\n"
 msgid "ID of new folder is \"%s\"\n"
 msgstr "ID of new folder is \"%s\"\n"
 
-#: gammu/gammu.c:75
+#: gammu/gammu.c:73
 #, c-format
 msgid "Networks for %s:"
 msgstr "Networks for %s:"
 
-#: gammu/gammu.c:83
+#: gammu/gammu.c:81
 #, c-format
 msgid "Unknown country name: %s."
 msgstr "Unknown country name: %s."
 
-#: gammu/gammu.c:88 gammu/gammu.c:736 gammu/misc.c:48
+#: gammu/gammu.c:86 gammu/gammu.c:734 gammu/misc.c:48
 msgid "Network"
 msgstr "Network"
 
-#: gammu/gammu.c:88 gammu/message.c:200 gammu/misc.c:907 gammu/misc.c:1074
+#: gammu/gammu.c:86 gammu/message.c:200 gammu/misc.c:907 gammu/misc.c:1074
 #: gammu/misc.c:1811 gammu/misc.c:1850 gammu/misc.c:2115 gammu/mms.c:112
 #: helper/memory-display.c:137 helper/message-display.c:235
 msgid "Name"
 msgstr "Name"
 
-#: gammu/gammu.c:107
+#: gammu/gammu.c:105
 #, c-format
 msgid "[Gammu version %s built %s on %s using %s]"
 msgstr "[Gammu version %s built %s on %s using %s]"
 
-#: gammu/gammu.c:116
+#: gammu/gammu.c:114
 msgid "Compiled in features:"
 msgstr "Compiled in features:"
 
-#: gammu/gammu.c:118
+#: gammu/gammu.c:116
 msgid "Protocols"
 msgstr "Protocols"
 
-#: gammu/gammu.c:186
+#: gammu/gammu.c:184
 msgid "Phones"
 msgstr "Phones"
 
-#: gammu/gammu.c:231
+#: gammu/gammu.c:229
 msgid "Miscellaneous"
 msgstr "Miscellaneous"
 
-#: gammu/gammu.c:312
+#: gammu/gammu.c:310
 #, c-format
 msgid "There is newer stable Gammu version available! (%s instead of %s)\n"
 msgstr "There is newer stable Gammu version available! (%s instead of %s)\n"
 
-#: gammu/gammu.c:330
+#: gammu/gammu.c:328
 #, c-format
 msgid "There is newer testing Gammu version available! (%s instead of %s)\n"
 msgstr "There is newer testing Gammu version available! (%s instead of %s)\n"
 
-#: gammu/gammu.c:343
+#: gammu/gammu.c:341
 msgid ""
 "Copyright (C) 2003 - 2010 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
 "Copyright (C) 2003 - 2010 Michal Cihar <michal@cihar.com> and other authors."
+
+#: gammu/gammu.c:345
+msgid ""
+"License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
+"GPL/2.0/>."
+msgstr ""
+"License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
+"GPL/2.0/>."
 
 #: gammu/gammu.c:347
-msgid ""
-"License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
-"GPL/2.0/>."
-msgstr ""
-"License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
-"GPL/2.0/>."
-
-#: gammu/gammu.c:349
 msgid "This is free software: you are free to change and redistribute it."
 msgstr "This is free software: you are free to change and redistribute it."
 
-#: gammu/gammu.c:351
+#: gammu/gammu.c:349
 msgid "There is NO WARRANTY, to the extent permitted by law."
 msgstr "There is NO WARRANTY, to the extent permitted by law."
 
-#: gammu/gammu.c:355
+#: gammu/gammu.c:353
 msgid "Check <http://wammu.eu/gammu/> for updates."
 msgstr "Check <http://wammu.eu/gammu/> for updates."
 
-#: gammu/gammu.c:381
+#: gammu/gammu.c:379
 msgid "standard input"
 msgstr "standard input"
 
-#: gammu/gammu.c:392
+#: gammu/gammu.c:390
 #, c-format
 msgid "Batch file could not be opened: %s\n"
 msgstr "Batch file could not be opened: %s\n"
 
-#: gammu/gammu.c:403
+#: gammu/gammu.c:401
 msgid "Error reading batch! Terminating.\n"
 msgstr "Error reading batch! Terminating.\n"
 
-#: gammu/gammu.c:405
+#: gammu/gammu.c:403
 msgid "Batch processed, terminating.\n"
 msgstr "Batch processed, terminating.\n"
 
-#: gammu/gammu.c:442
+#: gammu/gammu.c:440
 #, c-format
 msgid "Executing batch \"%s\" - command %i: %s\n"
 msgstr "Executing batch \"%s\" - command %i: %s\n"
 
-#: gammu/gammu.c:465
+#: gammu/gammu.c:463
 msgid ""
 "SMS daemon is now in separate binary, please use gammu-smsd-inject instead "
 "of gammu sendsmsdsms!"
@@ -1716,7 +1716,7 @@ msgstr ""
 "SMS daemon is now in separate binary, please use gammu-smsd-inject instead "
 "of gammu sendsmsdsms!"
 
-#: gammu/gammu.c:472
+#: gammu/gammu.c:470
 msgid ""
 "SMS daemon is now in separate binary, please use gammu-smsd instead of gammu "
 "smsd!"
@@ -1724,115 +1724,115 @@ msgstr ""
 "SMS daemon is now in separate binary, please use gammu-smsd instead of gammu "
 "smsd!"
 
-#: gammu/gammu.c:716
+#: gammu/gammu.c:714
 msgid "Calls"
 msgstr "Calls"
 
-#: gammu/gammu.c:717
+#: gammu/gammu.c:715
 msgid "SMS and EMS"
 msgstr "SMS and EMS"
 
-#: gammu/gammu.c:718
+#: gammu/gammu.c:716
 msgid "Memory (phonebooks and calls)"
 msgstr "Memory (phonebooks and calls)"
 
-#: gammu/gammu.c:719
+#: gammu/gammu.c:717
 msgid "Filesystem"
 msgstr "Filesystem"
 
-#: gammu/gammu.c:720
+#: gammu/gammu.c:718
 msgid "Logo and pictures"
 msgstr "Logo and pictures"
 
-#: gammu/gammu.c:721
+#: gammu/gammu.c:719
 msgid "Ringtones"
 msgstr "Ringtones"
 
-#: gammu/gammu.c:722
+#: gammu/gammu.c:720
 msgid "Calendar notes"
 msgstr "Calendar notes"
 
-#: gammu/gammu.c:723
+#: gammu/gammu.c:721
 msgid "To do lists"
 msgstr "To do lists"
 
-#: gammu/gammu.c:724
+#: gammu/gammu.c:722
 msgid "Notes"
 msgstr "Notes"
 
-#: gammu/gammu.c:725
+#: gammu/gammu.c:723
 msgid "Date, time and alarms"
 msgstr "Date, time and alarms"
 
-#: gammu/gammu.c:726
+#: gammu/gammu.c:724
 msgid "Categories"
 msgstr "Categories"
 
-#: gammu/gammu.c:728
+#: gammu/gammu.c:726
 msgid "Backing up and restoring"
 msgstr "Backing up and restoring"
 
-#: gammu/gammu.c:731
+#: gammu/gammu.c:729
 msgid "Nokia specific"
 msgstr "Nokia specific"
 
-#: gammu/gammu.c:734
+#: gammu/gammu.c:732
 msgid "Siemens specific"
 msgstr "Siemens specific"
 
-#: gammu/gammu.c:737
+#: gammu/gammu.c:735
 msgid "WAP settings and bookmarks"
 msgstr "WAP settings and bookmarks"
 
-#: gammu/gammu.c:738
+#: gammu/gammu.c:736
 msgid "MMS and MMS settings"
 msgstr "MMS and MMS settings"
 
-#: gammu/gammu.c:739
+#: gammu/gammu.c:737
 msgid "Phone tests"
 msgstr "Phone tests"
 
-#: gammu/gammu.c:740
+#: gammu/gammu.c:738
 msgid "FM radio"
 msgstr "FM radio"
 
-#: gammu/gammu.c:741
+#: gammu/gammu.c:739
 msgid "Phone information"
 msgstr "Phone information"
 
-#: gammu/gammu.c:742
+#: gammu/gammu.c:740
 msgid "Phone settings"
 msgstr "Phone settings"
 
-#: gammu/gammu.c:744
+#: gammu/gammu.c:742
 msgid "Dumps decoding"
 msgstr "Dumps decoding"
 
-#: gammu/gammu.c:746
+#: gammu/gammu.c:744
 msgid "Functions that don't fit elsewhere"
 msgstr "Functions that don't fit elsewhere"
 
-#: gammu/gammu.c:747
+#: gammu/gammu.c:745
 msgid "Gammu information"
 msgstr "Gammu information"
 
-#: gammu/gammu.c:763
+#: gammu/gammu.c:761
 msgid "Usage: gammu [parameters] <command> [options]"
 msgstr "Usage: gammu [parameters] <command> [options]"
 
-#: gammu/gammu.c:764
+#: gammu/gammu.c:762
 msgid "Parameters before command configure gammu behaviour:"
 msgstr "Parameters before command configure gammu behaviour:"
 
-#: gammu/gammu.c:765
+#: gammu/gammu.c:763
 msgid "-c / --config <filename> ... name of configuration file"
 msgstr "-c / --config <filename> ... name of configuration file"
 
-#: gammu/gammu.c:766
+#: gammu/gammu.c:764
 msgid "-s / --section <confign> ... section of config file to use, eg. 42"
 msgstr "-s / --section <confign> ... section of config file to use, eg. 42"
 
-#: gammu/gammu.c:767
+#: gammu/gammu.c:765
 msgid ""
 "-d / --debug <level> ... debug level (nothing|text|textall|textalldate|"
 "binary|errors)"
@@ -1840,15 +1840,15 @@ msgstr ""
 "-d / --debug <level> ... debug level (nothing|text|textall|textalldate|"
 "binary|errors)"
 
-#: gammu/gammu.c:768
+#: gammu/gammu.c:766
 msgid "-f / --debug-file <filename> ... file for logging debug messages"
 msgstr "-f / --debug-file <filename> ... file for logging debug messages"
 
-#: gammu/gammu.c:770
+#: gammu/gammu.c:768
 msgid "Commands can be specified with or without leading --."
 msgstr "Commands can be specified with or without leading --."
 
-#: gammu/gammu.c:773
+#: gammu/gammu.c:771
 msgid ""
 "For more details, call help on specific topic (gammu --help topic). Topics "
 "are:"
@@ -1856,11 +1856,11 @@ msgstr ""
 "For more details, call help on specific topic (gammu --help topic). Topics "
 "are:"
 
-#: gammu/gammu.c:871
+#: gammu/gammu.c:869
 msgid "Unknown help topic specified!"
 msgstr "Unknown help topic specified!"
 
-#: gammu/gammu.c:875
+#: gammu/gammu.c:873
 #, c-format
 msgid ""
 "Gammu commands, topic: %s\n"
@@ -1869,60 +1869,60 @@ msgstr ""
 "Gammu commands, topic: %s\n"
 "\n"
 
-#: gammu/gammu.c:966
+#: gammu/gammu.c:964
 #, c-format
 msgid "More parameters required (function requires %d)\n"
 msgstr "More parameters required (function requires %d)\n"
 
-#: gammu/gammu.c:969
+#: gammu/gammu.c:967
 #, c-format
 msgid "More parameters required (function requires %d to %d)\n"
 msgstr "More parameters required (function requires %d to %d)\n"
 
-#: gammu/gammu.c:975 gammu/gammu.c:996
+#: gammu/gammu.c:973 gammu/gammu.c:994
 msgid "Parameters help"
 msgstr "Parameters help"
 
-#: gammu/gammu.c:987
+#: gammu/gammu.c:985
 #, c-format
 msgid "Too many parameters (function accepts %d)\n"
 msgstr "Too many parameters (function accepts %d)\n"
 
-#: gammu/gammu.c:990
+#: gammu/gammu.c:988
 #, c-format
 msgid "Too many parameters (function accepts %d to %d)\n"
 msgstr "Too many parameters (function accepts %d to %d)\n"
 
-#: gammu/gammu.c:1017
+#: gammu/gammu.c:1015
 msgid "Bad option!"
 msgstr "Bad option!"
 
-#: gammu/gammu.c:1098
+#: gammu/gammu.c:1096
 msgid "Configuration could not be parsed!"
 msgstr "Configuration could not be parsed!"
 
-#: gammu/gammu.c:1100
+#: gammu/gammu.c:1098
 msgid "No configuration file found!"
 msgstr "No configuration file found!"
 
-#: gammu/gammu.c:1120
+#: gammu/gammu.c:1118
 msgid "Failed to allocate memory, aborting!\n"
 msgstr "Failed to allocate memory, aborting!\n"
 
-#: gammu/gammu.c:1151
+#: gammu/gammu.c:1149
 msgid "Too few parameters!"
 msgstr "Too few parameters!"
 
-#: gammu/gammu.c:1164
+#: gammu/gammu.c:1162
 #, c-format
 msgid "Failed to read [gammu%d] section from configuration file (gammurc)!\n"
 msgstr "Failed to read [gammu%d] section from configuration file (gammurc)!\n"
 
-#: gammu/gammu.c:1166 gammu/gammu.c:1177
+#: gammu/gammu.c:1164 gammu/gammu.c:1175
 msgid "No configuration read, using builtin defaults!"
 msgstr "No configuration read, using builtin defaults!"
 
-#: gammu/gammu.c:1216
+#: gammu/gammu.c:1214
 #, c-format
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"

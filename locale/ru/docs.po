@@ -5204,7 +5204,6 @@ msgstr ""
 msgid "Replace: Type = NumberMobile\\enEntry\\e1Text = \"\\e+36\\e2\\e3\"\\en"
 msgstr ""
 
-# type: SH
 #. type: SH
 #: docs/user/gammu.1:2976 docs/user/gammurc.5:314 docs/user/gammu-smsdrc.5:510
 #: docs/user/gammu-smsd.1:207 docs/user/gammu-smsd-inject.1:136
@@ -5215,7 +5214,7 @@ msgstr ""
 #: docs/user/gammu-smsd-null.7:18 docs/user/gammu-smsd-run.7:122
 #, no-wrap
 msgid "COPYRIGHT"
-msgstr ""
+msgstr "COPYRIGHT"
 
 #. type: Plain text
 #: docs/user/gammu.1:2980
@@ -7916,12 +7915,11 @@ msgid ""
 "starting with two dashes (`-'). A summary of options is included below."
 msgstr ""
 
-# type: TP
 #. type: TP
 #: docs/user/jadmaker.1:14 docs/user/gammu-config.1:13
 #, no-wrap
 msgid "B<-h, --help>"
-msgstr ""
+msgstr "B<-h, --help>"
 
 #. type: Plain text
 #: docs/user/jadmaker.1:17 docs/user/gammu-config.1:16
@@ -7954,11 +7952,10 @@ msgstr ""
 msgid "Define URL to be included in JAD file."
 msgstr ""
 
-# type: Plain text
 #. type: Plain text
 #: docs/user/jadmaker.1:29 docs/user/gammu-config.1:28
 msgid "gammu(1)"
-msgstr ""
+msgstr "gammu(1)"
 
 # type: Plain text
 #. type: Plain text
@@ -9840,7 +9837,7 @@ msgstr ""
 #. type: Plain text
 #: README:127
 msgid "# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us"
-msgstr ""
+msgstr "# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us"
 
 #, fuzzy
 #~ msgid "make test"
