@@ -3482,7 +3482,7 @@ msgstr "Dátum a čas"
 #: helper/memory-display.c:65 helper/memory-display.c:69
 #: helper/memory-display.c:78 helper/memory-display.c:89
 msgid "Caller group"
-msgstr ""
+msgstr "Skupina"
 
 #: helper/memory-display.c:70
 msgid "Caller group number too high, please increase buffer in sources!"
