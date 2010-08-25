@@ -3689,7 +3689,7 @@ msgstr "V súbore nebola nájdená záložka"
 
 #: helper/message-cmdline.c:407
 msgid "WAP settings not found in file"
-msgstr ""
+msgstr "V súbore neboli nájdené nastavenia WAP"
 
 #: helper/message-cmdline.c:428
 msgid "Sorry. For now there is only support for GPRS or DATA bearers end"
