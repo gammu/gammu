@@ -3676,7 +3676,7 @@ msgstr "Kde je počet rámcov?"
 
 #: helper/message-cmdline.c:325
 msgid "Too many animation frames!"
-msgstr ""
+msgstr "Príliš veľa obrázkov v animácií!"
 
 #: helper/message-cmdline.c:356
 #, c-format
