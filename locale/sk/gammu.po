@@ -3310,7 +3310,7 @@ msgstr "Chyba pri pridávaní zoznamu skladieb"
 #: gammu/nokia.c:383
 #, c-format
 msgid "Writing file %s:"
-msgstr ""
+msgstr " Zapisujem súbor%s:"
 
 #: gammu/nokia.c:438
 msgid ""
