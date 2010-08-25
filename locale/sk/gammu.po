@@ -3598,7 +3598,7 @@ msgstr "Štát"
 
 #: helper/memory-display.c:147
 msgid "Zip code"
-msgstr ""
+msgstr "Smerovacie číslo"
 
 #: helper/memory-display.c:148
 msgid "Country"
