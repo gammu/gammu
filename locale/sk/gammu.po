@@ -3370,7 +3370,7 @@ msgstr "Pridávam \"%s\""
 #: gammu/nokia.c:741
 #, c-format
 msgid " version %s"
-msgstr ""
+msgstr " verzia %s"
 
 #: gammu/nokia.c:742
 #, c-format
