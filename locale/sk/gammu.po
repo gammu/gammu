@@ -3626,7 +3626,7 @@ msgstr "Krajina pracoviska"
 
 #: helper/memory-display.c:154
 msgid "Custom text 1"
-msgstr ""
+msgstr "Osobné info 1"
 
 #: helper/memory-display.c:155
 msgid "Custom text 2"
