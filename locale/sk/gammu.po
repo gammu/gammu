@@ -3437,8 +3437,8 @@ msgstr[2] ""
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d hodiny"
+msgstr[1] "%d hodín"
 msgstr[2] ""
 
 #: helper/formats.h:5
