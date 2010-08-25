@@ -3546,7 +3546,7 @@ msgstr "Poštová adresa"
 
 #: helper/memory-display.c:132
 msgid "Work snail address"
-msgstr ""
+msgstr "Pracovná poštová adresa"
 
 #: helper/memory-display.c:133
 msgid "Email address 1"
