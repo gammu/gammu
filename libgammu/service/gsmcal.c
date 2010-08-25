@@ -1860,7 +1860,6 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(GSM_Debug_Info *di, char *Buffer, size_t *Po
 				Calendar->EntriesNum++;
 			}
 			if ((ReadVCALText(Line, "DESCRIPTION", Buff, CalVer == Mozilla_iCalendar))) {
-				CopyUnicodeString(Buff,DecodeUnicodeSpecialChars(Buff));
 				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_DESCRIPTION;
 				CopyUnicodeString(Calendar->Entries[Calendar->EntriesNum].Text,
 					DecodeUnicodeSpecialChars(Buff));
