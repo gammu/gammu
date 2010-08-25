@@ -3534,7 +3534,7 @@ msgstr "Číslo do práce"
 
 #: helper/memory-display.c:128
 msgid "Pager number"
-msgstr ""
+msgstr "Číslo na pager"
 
 #: helper/memory-display.c:129
 msgid "Other number"
