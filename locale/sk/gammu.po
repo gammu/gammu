@@ -3582,7 +3582,7 @@ msgstr "Firma"
 
 #: helper/memory-display.c:143
 msgid "Job title"
-msgstr ""
+msgstr "Funkcia"
 
 #: helper/memory-display.c:144
 msgid "Street address"
