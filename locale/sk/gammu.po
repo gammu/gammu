@@ -3697,7 +3697,7 @@ msgstr "Prepáčte, momentálne sú podporované len GPRS a dátové prenosy"
 
 #: helper/message-cmdline.c:451
 msgid "MMS settings not found in file"
-msgstr ""
+msgstr "V súbore neboli nájdené nastavenia MMS"
 
 #: helper/message-cmdline.c:465
 msgid "Sorry. No GPRS bearer found in MMS settings"
