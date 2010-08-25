@@ -3516,7 +3516,7 @@ msgstr "Obľúbené číslo pre správy"
 
 #: helper/memory-display.c:121
 msgid "General number"
-msgstr ""
+msgstr "Všeobecné číslo"
 
 #: helper/memory-display.c:123
 #, fuzzy
