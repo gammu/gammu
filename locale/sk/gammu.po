@@ -3685,7 +3685,7 @@ msgstr "Súbor \"%s\"\n"
 
 #: helper/message-cmdline.c:383
 msgid "Bookmark not found in file"
-msgstr ""
+msgstr "V súbore nebola nájdená záložka"
 
 #: helper/message-cmdline.c:407
 msgid "WAP settings not found in file"
