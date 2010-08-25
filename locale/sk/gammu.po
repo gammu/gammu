@@ -3453,8 +3453,8 @@ msgstr[2] ""
 #, c-format
 msgid "%d week"
 msgid_plural "%d weeks"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d týždne"
+msgstr[1] "%d týždne"
 msgstr[2] ""
 
 #: helper/formats.h:7
