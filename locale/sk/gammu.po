@@ -3396,7 +3396,7 @@ msgstr "Zapisujem JAR súbor:"
 
 #: gammu/nokia.c:976
 msgid "Writing file:"
-msgstr ""
+msgstr "Zapisujem súbor:"
 
 #: gammu/search.c:145
 #, c-format
