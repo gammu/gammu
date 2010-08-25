@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-08-25 15:33+0200\n"
-"PO-Revision-Date: 2010-08-25 21:40+0200\n"
+"PO-Revision-Date: 2010-08-25 21:44+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -3275,7 +3275,7 @@ msgstr "Len zvonenie typu RTTL môže byť použité s touto vlastnosťou"
 #: gammu/nokia.c:54
 #, c-format
 msgid "Ringtone \"%s\" (tempo = %i Beats Per Minute)"
-msgstr ""
+msgstr "Zvonenie \"%s\" (tempo = %i =Uderov za minútu)"
 
 #: gammu/nokia.c:63
 #, c-format
