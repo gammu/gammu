@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-08-25 15:33+0200\n"
-"PO-Revision-Date: 2010-08-25 22:10+0200\n"
+"PO-Revision-Date: 2010-08-25 22:11+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -3336,7 +3336,7 @@ msgstr "Chyba pri otváraní súboru %s\n"
 
 #: gammu/nokia.c:591 gammu/nokia.c:665
 msgid "Folder not found. Probably function not supported!"
-msgstr ""
+msgstr "Adresár nenájdený. Táto funkcia nie je pravdepodobne podporovaná."
 
 #: gammu/nokia.c:614
 msgid "Searching for phone folder: "
