@@ -869,6 +869,7 @@ gboolean SMSD_CheckSecurity(GSM_SMSDConfig *Config)
 	/* Unknown error */
 	if (error != ERR_NONE) {
 		SMSD_LogError(DEBUG_ERROR, Config, "Error getting security status", error);
+		SMSD_Log(DEBUG_ERROR, Config, "You might want to set CheckSecurity = 0 to avoid checking security status");
 		return FALSE;
 	}
 
