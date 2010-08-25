@@ -3586,7 +3586,7 @@ msgstr "Funkcia"
 
 #: helper/memory-display.c:144
 msgid "Street address"
-msgstr ""
+msgstr "Adresa ulice"
 
 #: helper/memory-display.c:145
 msgid "City"
