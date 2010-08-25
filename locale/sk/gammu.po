@@ -3550,7 +3550,7 @@ msgstr "Pracovná poštová adresa"
 
 #: helper/memory-display.c:133
 msgid "Email address 1"
-msgstr ""
+msgstr "Email 1"
 
 #: helper/memory-display.c:134
 msgid "Email address 2"
