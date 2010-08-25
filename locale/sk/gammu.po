@@ -3365,7 +3365,7 @@ msgstr "V JAD súbore nie je informácie o veľkosti JAR. Pridané."
 #: gammu/nokia.c:740
 #, c-format
 msgid "Adding \"%s\""
-msgstr ""
+msgstr "Pridávam \"%s\""
 
 #: gammu/nokia.c:741
 #, c-format
