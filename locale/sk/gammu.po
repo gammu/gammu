@@ -3554,7 +3554,7 @@ msgstr "Email 1"
 
 #: helper/memory-display.c:134
 msgid "Email address 2"
-msgstr ""
+msgstr "Email 2"
 
 #: helper/memory-display.c:135
 msgid "URL address"
