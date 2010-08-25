@@ -3578,7 +3578,7 @@ msgstr "Prezívka"
 
 #: helper/memory-display.c:142
 msgid "Company"
-msgstr ""
+msgstr "Firma"
 
 #: helper/memory-display.c:143
 msgid "Job title"
