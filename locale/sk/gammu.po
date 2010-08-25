@@ -3610,7 +3610,7 @@ msgstr "Pracovná adresa"
 
 #: helper/memory-display.c:150
 msgid "Work city"
-msgstr ""
+msgstr "Mesto práce"
 
 #: helper/memory-display.c:151
 msgid "Work state"
