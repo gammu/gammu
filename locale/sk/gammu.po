@@ -3348,7 +3348,7 @@ msgstr "V JAD súbore nie sú žiade informácie o výrobcovi."
 
 #: gammu/nokia.c:696
 msgid "No name info in JAD file"
-msgstr ""
+msgstr "V JAD súbore nie je meno."
 
 #: gammu/nokia.c:701
 msgid "No JAR URL info in JAD file"
