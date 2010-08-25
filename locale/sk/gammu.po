@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-08-25 15:33+0200\n"
-"PO-Revision-Date: 2010-08-25 22:11+0200\n"
+"PO-Revision-Date: 2010-08-25 22:12+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -3340,7 +3340,7 @@ msgstr "Adresár nenájdený. Táto funkcia nie je pravdepodobne podporovaná."
 
 #: gammu/nokia.c:614
 msgid "Searching for phone folder: "
-msgstr "Hľadám adresr v telefóne: "
+msgstr "Hľadám adresár v telefóne: "
 
 #: gammu/nokia.c:691
 msgid "No vendor info in JAD file"
