@@ -3305,7 +3305,7 @@ msgstr " Spracovaná len časť!"
 
 #: gammu/nokia.c:336
 msgid "  Problem with adding playlist"
-msgstr ""
+msgstr "Chya pri pridávaní zoznamu skladieb"
 
 #: gammu/nokia.c:383
 #, c-format
