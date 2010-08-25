@@ -3659,7 +3659,7 @@ msgstr "Aký formát sms správy (\"%s\") ?\n"
 
 #: helper/message-cmdline.c:232 helper/message-cmdline.c:249
 msgid "Where are parameters?"
-msgstr ""
+msgstr "Kde sú parametre?"
 
 #: helper/message-cmdline.c:263
 msgid "Where is ringtone filename?"
