@@ -3646,7 +3646,7 @@ msgstr "ID pre Push to talk"
 
 #: helper/memory-display.c:161
 msgid "unknown field type"
-msgstr ""
+msgstr "neznámy typ položky"
 
 #: helper/message-cmdline.c:183
 msgid "Not enough parameters!"
