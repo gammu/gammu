@@ -3622,7 +3622,7 @@ msgstr "Smerovacie číslo na pracovisko"
 
 #: helper/memory-display.c:153
 msgid "Work country"
-msgstr ""
+msgstr "Krajina pracoviska"
 
 #: helper/memory-display.c:154
 msgid "Custom text 1"
