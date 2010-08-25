@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-08-25 15:33+0200\n"
-"PO-Revision-Date: 2010-08-25 22:26+0200\n"
+"PO-Revision-Date: 2010-08-25 22:30+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -3360,7 +3360,7 @@ msgstr "Deklarovaná veľkosť JAR súboru je iná ako reálna. Opravené."
 
 #: gammu/nokia.c:731
 msgid "No JAR size info in JAD file. Added by Gammu."
-msgstr ""
+msgstr "V JAD súbore nie je informácie o veľkosti JAR. Pridané."
 
 #: gammu/nokia.c:740
 #, c-format
