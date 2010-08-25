@@ -3530,7 +3530,7 @@ msgstr "Sériové číslo (IMEI)"
 
 #: helper/memory-display.c:125
 msgid "Work number"
-msgstr ""
+msgstr "Číslo do práce"
 
 #: helper/memory-display.c:128
 msgid "Pager number"
