@@ -3634,7 +3634,7 @@ msgstr "Osobné info 2"
 
 #: helper/memory-display.c:156
 msgid "Custom text 3"
-msgstr ""
+msgstr "Osobné info 3"
 
 #: helper/memory-display.c:157
 msgid "Custom text 4"
