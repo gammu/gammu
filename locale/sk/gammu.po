@@ -3590,7 +3590,7 @@ msgstr "Adresa ulice"
 
 #: helper/memory-display.c:145
 msgid "City"
-msgstr ""
+msgstr "MEsto"
 
 #: helper/memory-display.c:146
 msgid "State"
