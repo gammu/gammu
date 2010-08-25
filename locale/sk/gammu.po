@@ -3508,7 +3508,7 @@ msgstr "Fotka"
 
 #: helper/memory-display.c:118
 msgid "Displaying not supported"
-msgstr ""
+msgstr "Zobrazenie nie je podporované"
 
 #: helper/memory-display.c:120
 msgid "Favorite messaging number"
