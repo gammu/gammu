@@ -3500,7 +3500,7 @@ msgstr "Názov obrázku"
 
 #: helper/memory-display.c:115
 msgid "Picture ID"
-msgstr ""
+msgstr "ID obrázku"
 
 #: helper/memory-display.c:118
 msgid "Photo"
