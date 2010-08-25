@@ -3566,7 +3566,7 @@ msgstr "Priezvisko"
 
 #: helper/memory-display.c:139
 msgid "First name"
-msgstr ""
+msgstr "Krstné meno"
 
 #: helper/memory-display.c:140
 msgid "Formal name"
