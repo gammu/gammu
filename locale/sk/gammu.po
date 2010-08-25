@@ -3461,8 +3461,8 @@ msgstr[2] ""
 #, c-format
 msgid "%d year"
 msgid_plural "%d years"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d roky"
+msgstr[1] "%d roky"
 msgstr[2] ""
 
 #: helper/memory-display.c:29
