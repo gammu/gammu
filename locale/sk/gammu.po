@@ -3477,7 +3477,7 @@ msgstr "%02i:%02i:%02i\n"
 
 #: helper/memory-display.c:37
 msgid "Date and time"
-msgstr ""
+msgstr "Dátum a čas"
 
 #: helper/memory-display.c:65 helper/memory-display.c:69
 #: helper/memory-display.c:78 helper/memory-display.c:89
