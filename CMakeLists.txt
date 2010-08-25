@@ -442,10 +442,7 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_MINGW OR
     MACRO_TUNE_COMPILER("-Wfloat-equal")
     MACRO_TUNE_COMPILER("-Wbad-function-cast")
     MACRO_TUNE_COMPILER("-Wmissing-format-attribute")
-    # Broken for now
-    if (NOT CLANG_COMPILER)
-        MACRO_TUNE_COMPILER("-Wmissing-noreturn")
-    endif (NOT CLANG_COMPILER)
+    MACRO_TUNE_COMPILER("-Wmissing-noreturn")
 #   This should be enabled and only public functions exported, but it is far future
 #    MACRO_TUNE_COMPILER("-Wmissing-prototypes")
     MACRO_TUNE_COMPILER("-Wpointer-arith")
