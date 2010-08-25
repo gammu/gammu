@@ -3614,7 +3614,7 @@ msgstr "Mesto práce"
 
 #: helper/memory-display.c:151
 msgid "Work state"
-msgstr ""
+msgstr "Štát pracoviska"
 
 #: helper/memory-display.c:152
 msgid "Work zip code"
