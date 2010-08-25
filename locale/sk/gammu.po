@@ -3504,7 +3504,7 @@ msgstr "ID obrázku"
 
 #: helper/memory-display.c:118
 msgid "Photo"
-msgstr ""
+msgstr "Fotka"
 
 #: helper/memory-display.c:118
 msgid "Displaying not supported"
