@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-08-25 15:33+0200\n"
-"PO-Revision-Date: 2010-08-25 22:52+0200\n"
+"PO-Revision-Date: 2010-08-25 22:53+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -3681,7 +3681,7 @@ msgstr "Príliš veľa obrázkov v animácií!"
 #: helper/message-cmdline.c:356
 #, c-format
 msgid "File \"%s\"\n"
-msgstr ""
+msgstr "S[bor \"%s\"\n"
 
 #: helper/message-cmdline.c:383
 msgid "Bookmark not found in file"
