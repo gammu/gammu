@@ -3672,7 +3672,7 @@ msgstr "Kde je meno súboru loga?"
 
 #: helper/message-cmdline.c:317
 msgid "Where is number of frames?"
-msgstr ""
+msgstr "Kde je počet rámcov?"
 
 #: helper/message-cmdline.c:325
 msgid "Too many animation frames!"
