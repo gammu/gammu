@@ -3405,7 +3405,7 @@ msgstr "Pripájam \"%s\" k zariadeniu \"%s\"\n"
 
 #: gammu/search.c:182 gammu/search.c:189
 msgid "Error creating thread\n"
-msgstr ""
+msgstr "Chyba pri vytváraní vlákna\n"
 
 #: helper/cmdline.c:23
 #, fuzzy, c-format
