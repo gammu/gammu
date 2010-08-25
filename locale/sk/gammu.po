@@ -3340,7 +3340,7 @@ msgstr "Adresár nenájdený. Táto funkcia nie je pravdepodobne podporovaná."
 
 #: gammu/nokia.c:614
 msgid "Searching for phone folder: "
-msgstr ""
+msgstr "Hľadám adresr v telefóne: "
 
 #: gammu/nokia.c:691
 msgid "No vendor info in JAD file"
