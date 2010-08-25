@@ -3379,7 +3379,7 @@ msgstr " vytvoril %s\n"
 
 #: gammu/nokia.c:793 gammu/nokia.c:845
 msgid "Application already exists. Deleting by Gammu."
-msgstr ""
+msgstr "Aplikácia už existuje. Mažem"
 
 #: gammu/nokia.c:826 gammu/nokia.c:859
 #, c-format
