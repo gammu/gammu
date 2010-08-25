@@ -3384,7 +3384,7 @@ msgstr "Aplikácia už existuje. Mažem"
 #: gammu/nokia.c:826 gammu/nokia.c:859
 #, c-format
 msgid "  Deleting %s\n"
-msgstr ""
+msgstr "  Odstraňujem %s\n"
 
 #: gammu/nokia.c:882
 msgid "Writing JAD file:"
