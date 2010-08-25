@@ -3562,7 +3562,7 @@ msgstr "URL adresa"
 
 #: helper/memory-display.c:138
 msgid "Last name"
-msgstr ""
+msgstr "Priezvisko"
 
 #: helper/memory-display.c:139
 msgid "First name"
