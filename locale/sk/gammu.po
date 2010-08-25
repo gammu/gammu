@@ -3467,7 +3467,7 @@ msgstr[2] ""
 
 #: helper/memory-display.c:29
 msgid "Call length"
-msgstr ""
+msgstr "Dĺžka hovoru"
 
 #. l10n: Call length format string hour:minute:second
 #: helper/memory-display.c:31
