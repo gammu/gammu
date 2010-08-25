@@ -3388,7 +3388,7 @@ msgstr "  Odstraňujem %s\n"
 
 #: gammu/nokia.c:882
 msgid "Writing JAD file:"
-msgstr ""
+msgstr "Zapisujem JAD súbor:"
 
 #: gammu/nokia.c:901
 msgid "Writing JAR file:"
