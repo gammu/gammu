@@ -3574,7 +3574,7 @@ msgstr "Formálne meno"
 
 #: helper/memory-display.c:141
 msgid "Nick name"
-msgstr ""
+msgstr "Prezívka"
 
 #: helper/memory-display.c:142
 msgid "Company"
