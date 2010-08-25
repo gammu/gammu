@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-08-25 15:33+0200\n"
-"PO-Revision-Date: 2010-08-25 22:51+0200\n"
+"PO-Revision-Date: 2010-08-25 22:52+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -3668,7 +3668,7 @@ msgstr "Kde je meno súboru zvonenia?"
 #: helper/message-cmdline.c:281 helper/message-cmdline.c:299
 #: helper/message-cmdline.c:350
 msgid "Where is logo filename?"
-msgstr ""
+msgstr "Kde je meno súboru loga?"
 
 #: helper/message-cmdline.c:317
 msgid "Where is number of frames?"
