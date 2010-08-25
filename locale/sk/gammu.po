@@ -3594,7 +3594,7 @@ msgstr "Mesto"
 
 #: helper/memory-display.c:146
 msgid "State"
-msgstr "Stav"
+msgstr "Štát"
 
 #: helper/memory-display.c:147
 msgid "Zip code"
