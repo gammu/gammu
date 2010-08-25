@@ -3650,7 +3650,7 @@ msgstr "neznámy typ položky"
 
 #: helper/message-cmdline.c:183
 msgid "Not enough parameters!"
-msgstr ""
+msgstr "Príliš málo parametrov1"
 
 #: helper/message-cmdline.c:207
 #, c-format
