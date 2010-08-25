@@ -3602,7 +3602,7 @@ msgstr "Smerovacie číslo"
 
 #: helper/memory-display.c:148
 msgid "Country"
-msgstr ""
+msgstr "Krajina"
 
 #: helper/memory-display.c:149
 msgid "Work street address"
