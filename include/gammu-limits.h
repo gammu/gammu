@@ -105,7 +105,7 @@
  *
  * \ingroup Limits
  */
-#define GSM_MAX_CALENDAR_TEXT_LENGTH 256
+#define GSM_MAX_CALENDAR_TEXT_LENGTH 4096
 
 /**
  * Maximal length of text in calendar.
