@@ -3663,7 +3663,7 @@ msgstr "Kde sú parametre?"
 
 #: helper/message-cmdline.c:263
 msgid "Where is ringtone filename?"
-msgstr ""
+msgstr "Kde je meno súboru zvonenia?"
 
 #: helper/message-cmdline.c:281 helper/message-cmdline.c:299
 #: helper/message-cmdline.c:350
