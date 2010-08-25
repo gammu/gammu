@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-08-25 15:33+0200\n"
-"PO-Revision-Date: 2010-08-25 22:02+0200\n"
+"PO-Revision-Date: 2010-08-25 22:03+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -3310,7 +3310,7 @@ msgstr "Chyba pri pridávaní zoznamu skladieb"
 #: gammu/nokia.c:383
 #, c-format
 msgid "Writing file %s:"
-msgstr " Zapisujem súbor%s:"
+msgstr "Zapisujem súbor %s:"
 
 #: gammu/nokia.c:438
 msgid ""
