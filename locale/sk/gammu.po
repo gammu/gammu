@@ -3330,9 +3330,9 @@ msgid "What folder type (\"%s\") ?\n"
 msgstr "Aký typ adresára (\"%s\") ?\n"
 
 #: gammu/nokia.c:556 gammu/nokia.c:563 gammu/nokia.c:570
-#, fuzzy, c-format
+#, c-format
 msgid "Can not open file %s\n"
-msgstr "Súbor nie je možné otvoriť."
+msgstr "Chyba pri otváraní súboru %s\n"
 
 #: gammu/nokia.c:591 gammu/nokia.c:665
 msgid "Folder not found. Probably function not supported!"
