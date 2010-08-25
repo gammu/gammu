@@ -3496,7 +3496,7 @@ msgstr "ID užívateľa"
 
 #: helper/memory-display.c:112
 msgid "Picture name"
-msgstr ""
+msgstr "Názov obrázku"
 
 #: helper/memory-display.c:115
 msgid "Picture ID"
