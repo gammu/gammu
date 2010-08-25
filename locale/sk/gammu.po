@@ -3681,7 +3681,7 @@ msgstr "Príliš veľa obrázkov v animácií!"
 #: helper/message-cmdline.c:356
 #, c-format
 msgid "File \"%s\"\n"
-msgstr "S[bor \"%s\"\n"
+msgstr "Súbor \"%s\"\n"
 
 #: helper/message-cmdline.c:383
 msgid "Bookmark not found in file"
