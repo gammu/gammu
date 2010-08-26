@@ -3418,7 +3418,7 @@ msgid "Parameter is not a number: %s\n"
 msgstr "Parameter \"%s\" je neznámy\n"
 
 #: helper/formats.h:2
-#, c-format
+#, c-format, fuzzy
 msgid "%d second"
 msgid_plural "%d seconds"
 msgstr[0] "%d sekundy"
@@ -3426,7 +3426,7 @@ msgstr[1] "%d sekúnd"
 msgstr[2] ""
 
 #: helper/formats.h:3
-#, c-format
+#, c-format, fuzzy
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d minúty"
@@ -3434,7 +3434,7 @@ msgstr[1] "%d minút"
 msgstr[2] ""
 
 #: helper/formats.h:4
-#, c-format
+#, c-format, fuzzy
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d hodiny"
@@ -3442,7 +3442,7 @@ msgstr[1] "%d hodín"
 msgstr[2] ""
 
 #: helper/formats.h:5
-#, c-format
+#, c-format, fuzzy
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] "%d dni"
@@ -3450,7 +3450,7 @@ msgstr[1] "%d dní"
 msgstr[2] ""
 
 #: helper/formats.h:6
-#, c-format
+#, c-format, fuzzy
 msgid "%d week"
 msgid_plural "%d weeks"
 msgstr[0] "%d týždne"
@@ -3458,7 +3458,7 @@ msgstr[1] "%d týždne"
 msgstr[2] ""
 
 #: helper/formats.h:7
-#, c-format
+#, c-format, fuzzy
 msgid "%d year"
 msgid_plural "%d years"
 msgstr[0] "%d roky"
