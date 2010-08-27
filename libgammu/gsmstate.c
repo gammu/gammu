@@ -827,7 +827,7 @@ int GSM_ReadDevice (GSM_StateMachine *s, gboolean waitforreply)
 	int		res=0,count=0,i=0;
 
 	if (!GSM_IsConnected(s)) {
-		return ERR_NOTCONNECTED;
+		return -1;
 	}
 
 	GSM_GetCurrentDateTime (&Date);
