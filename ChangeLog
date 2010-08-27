@@ -19,6 +19,8 @@ the issue.
 ChangeLog
 =========
     
+2010???? - 1.28.91
+    
 20100827 - 1.28.90
 
 [-] * Fixed handling of empty reply on CREG/CGREG (bug #1245).
