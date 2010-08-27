@@ -14,7 +14,7 @@
 
 #include <locale.h>
 
-#ifdef GETTEXTLIBS_FOUND
+#ifdef LIBINTL_LIB_FOUND
 #include <libintl.h>
 #define _(x) gettext(x)
 #else

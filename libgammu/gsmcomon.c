@@ -40,7 +40,7 @@ GSM_Error NotSupportedFunction(void)
  *
  * @param path Optional path to locales, can be NULL.
  */
-#ifdef GETTEXTLIBS_FOUND
+#ifdef LIBINTL_LIB_FOUND
 void GSM_InitLocales(const char *path) {
 	setlocale(LC_ALL, "");
 	if (path == NULL || strlen(path) == 0) {

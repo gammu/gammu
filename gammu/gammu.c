@@ -233,7 +233,7 @@ static void Features(int argc UNUSED, char *argv[]UNUSED)
 #ifdef GSM_ENABLE_BACKUP
 	printf("  - %s\n", "BACKUP");
 #endif
-#ifdef GETTEXTLIBS_FOUND
+#ifdef LIBINTL_LIB_FOUND
 	printf("  - %s\n", "GETTEXT");
 #endif
 #ifdef ICONV_FOUND
@@ -1100,7 +1100,7 @@ int main(int argc, char *argv[])
 	}
 	locales_path = INI_GetValue(cfg, "gammu", "gammuloc", FALSE);
 	GSM_InitLocales(locales_path);
-#ifdef GETTEXTLIBS_FOUND
+#ifdef LIBINTL_LIB_FOUND
 	if (locales_path != NULL) {
 		bindtextdomain("gammu", locales_path);
 	} else {
