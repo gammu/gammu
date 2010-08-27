@@ -38,9 +38,9 @@ msgstr "27. červenec, 2010"
 # type: TH
 #. type: TH
 #: docs/user/gammu.1:1
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Gammu 1.28.90"
-msgstr "Gammu 1.28.0"
+msgstr "Gammu 1.28.90"
 
 # type: TH
 #. type: TH
