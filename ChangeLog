@@ -22,6 +22,7 @@ ChangeLog
 2010???? - 1.28.91
 
 [-] * Fixed locales compliation/support.
+[-] * Set memory to use for MPBR/SBNR/SPBR commands as well (bug #1128).
     
 20100827 - 1.28.90
 

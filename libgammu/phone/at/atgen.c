@@ -3848,6 +3848,16 @@ GSM_Error ATGEN_PrivGetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, int 
 
 	if (entry->Location == 0x00) return ERR_INVALIDLOCATION;
 
+	error = ATGEN_GetManufacturer(s);
+	if (error != ERR_NONE) return error;
+
+	error = ATGEN_SetPBKMemory(s, entry->MemoryType);
+	if (error != ERR_NONE) return error;
+
+	/* For reading we prefer unicode */
+	error = ATGEN_SetCharset(s, AT_PREF_CHARSET_UNICODE);
+	if (error != ERR_NONE) return error;
+
 	if (entry->MemoryType == MEM_ME) {
 		if (Priv->PBKSBNR == 0) {
 			ATGEN_CheckSBNR(s);
@@ -3880,16 +3890,6 @@ GSM_Error ATGEN_PrivGetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, int 
 			goto read_memory;
 		}
 	}
-
-	error = ATGEN_GetManufacturer(s);
-	if (error != ERR_NONE) return error;
-
-	error = ATGEN_SetPBKMemory(s, entry->MemoryType);
-	if (error != ERR_NONE) return error;
-
-	/* For reading we prefer unicode */
-	error = ATGEN_SetCharset(s, AT_PREF_CHARSET_UNICODE);
-	if (error != ERR_NONE) return error;
 
 	if (Priv->FirstMemoryEntry == -1) {
 		error = ATGEN_GetMemoryInfo(s, NULL, AT_First);
