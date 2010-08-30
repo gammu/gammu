@@ -916,7 +916,11 @@ GSM_Error ATGEN_ReplyGetMessageList(GSM_Protocol_Message msg, GSM_StateMachine *
 	case AT_Reply_Error:
 		return ERR_NOTSUPPORTED;
  	case AT_Reply_CMSError:
-		return ATGEN_HandleCMSError(s);
+		if (Priv->ErrorCode == 320 || Priv->ErrorCode == 500) {
+			return ERR_EMPTY;
+		} else {
+			return ATGEN_HandleCMSError(s);
+		}
 	case AT_Reply_CMEError:
 		return ATGEN_HandleCMEError(s);
 	default:
