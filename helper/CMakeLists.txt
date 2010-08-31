@@ -42,8 +42,8 @@ target_link_libraries (messagedisplay memorydisplay)
 
 # Tune options for found libraries
 if (LIBINTL_LIB_FOUND AND LIBINTL_LIBRARIES)
-    target_link_libraries (messagedisplay ${GETTEXT_LIBRARIES})
-    target_link_libraries (printing ${GETTEXT_LIBRARIES})
+    target_link_libraries (messagedisplay ${LIBINTL_LIBRARIES})
+    target_link_libraries (printing ${LIBINTL_LIBRARIES})
     include_directories (${GETTEXT_INCLUDE_DIR})
 endif (LIBINTL_LIB_FOUND AND LIBINTL_LIBRARIES)
 
