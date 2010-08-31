@@ -213,10 +213,10 @@ if (PYTHON_EXECUTABLE)
         OUTPUT_VARIABLE PYTHON_MAJOR_VERSION
         OUTPUT_STRIP_TRAILING_WHITESPACE
         )
-    if (${PYTHON_MAJOR_VERSION} GREATER 2)
+    if ("${PYTHON_MAJOR_VERSION}" GREATER 2)
         message("Python 3.x is not currently supported!")
         set (WITH_PYTHON FALSE CACHE BOOL "Build Python bindings" FORCE)
-    endif (${PYTHON_MAJOR_VERSION} GREATER 2)
+    endif ("${PYTHON_MAJOR_VERSION}" GREATER 2)
 endif (PYTHON_EXECUTABLE)
 
 # Packages in sources
