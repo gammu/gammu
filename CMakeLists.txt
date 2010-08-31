@@ -708,28 +708,37 @@ configure_file ("${Gammu_SOURCE_DIR}/cmake/templates/gammu-smsd-uninstalled.pc.c
 if (WIN32 AND NOT CYGWIN)
     # MySQL
     if (MYSQL_FOUND)
-        ADD_DLL("libmysql.dll" "${MYSQL_LIBRARIES}")
+        foreach(lib ${WIN_LIB_MYSQL})
+            ADD_DLL("${lib}" "${MYSQL_LIBRARIES}")
+        endforeach(lib ${WIN_LIB_MYSQL})
     endif (MYSQL_FOUND)
 
     # PostgreSQL and dependencies
     if (POSTGRES_FOUND)
-        ADD_DLL("libpq.dll" "${POSTGRES_LIBRARY}")
+        foreach(lib ${WIN_LIB_PGSQL})
+            ADD_DLL("${lib}" "${POSTGRES_LIBRARY}")
+        endforeach(lib ${WIN_LIB_PGSQL})
     endif (POSTGRES_FOUND)
 
     # iconv and dependencies
     if (ICONV_FOUND)
-       ADD_DLL("libiconv-2.dll" "${ICONV_LIBRARIES}")
+        foreach(lib ${WIN_LIB_ICONV})
+            ADD_DLL("${lib}" "${ICONV_LIBRARIES}")
+        endforeach(lib ${WIN_LIB_ICONV})
     endif (ICONV_FOUND)
 
     # Gettext and dependencies
     if (LIBINTL_LIB_FOUND)
-        ADD_DLL("libintl-8.dll" "${LIBINTL_LIBRARY}")
+        foreach(lib ${WIN_LIB_INTL})
+            ADD_DLL("${lib}" "${LIBINTL_LIBRARY}")
+        endforeach(lib ${WIN_LIB_INTL})
     endif (LIBINTL_LIB_FOUND)
 
     # Curl and dependencies
     if (CURL_FOUND)
-        ADD_DLL("libcurl-4.dll" "${CURL_LIBRARIES}")
-        ADD_DLL("mgwz.dll" "${CURL_LIBRARIES}")
+        foreach(lib ${WIN_LIB_CURL})
+            ADD_DLL("${lib}" "${CURL_LIBRARIES}")
+        endforeach(lib ${WIN_LIB_CURL})
     endif (CURL_FOUND)
 
     install (FILES ${WIN32_INSTALL_DLL}
