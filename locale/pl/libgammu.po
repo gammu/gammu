@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libGammu 1.28.90\n"
+"Project-Id-Version: libGammu 1.28.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-07-01 14:12+0200\n"
+"POT-Creation-Date: 2010-08-31 14:14+0200\n"
 "PO-Revision-Date: 2010-08-17 14:02+0200\n"
 "Last-Translator: Maciej Szeptuch <matthiaspriv@gmail.com>\n"
 "Language-Team: Language =pl\n"
@@ -361,7 +361,8 @@ msgstr "Wybierz sekcję konfiguracji"
 #: libgammu/gsmcomon.c:149
 #, fuzzy
 msgid "Command rejected because device was busy. Wait and restart."
-msgstr "Polecenie odrzucone - urządzenie zajęte. Spróbuj jeszcze raz za chwilę."
+msgstr ""
+"Polecenie odrzucone - urządzenie zajęte. Spróbuj jeszcze raz za chwilę."
 
 #: libgammu/gsmcomon.c:150
 #, fuzzy

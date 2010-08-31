@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-08-25 15:33+0200\n"
+"POT-Creation-Date: 2010-08-31 14:14+0200\n"
 "PO-Revision-Date: 2009-01-27 14:28+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -18,13 +18,13 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: gammu/backup.c:33 gammu/backup.c:56 gammu/backup.c:79 gammu/backup.c:100
-#: helper/message-cmdline.c:372 helper/message-cmdline.c:396
-#: helper/message-cmdline.c:440 helper/message-cmdline.c:477
-#: helper/message-cmdline.c:500
+#: helper/message-cmdline.c:373 helper/message-cmdline.c:397
+#: helper/message-cmdline.c:441 helper/message-cmdline.c:478
+#: helper/message-cmdline.c:501
 msgid "Where is backup filename and location?"
 msgstr ""
 
-#: gammu/backup.c:47 helper/message-cmdline.c:488
+#: gammu/backup.c:47 helper/message-cmdline.c:489
 msgid "Calendar note not found in file"
 msgstr ""
 
@@ -40,16 +40,16 @@ msgstr ""
 msgid "Todo note not found in file"
 msgstr ""
 
-#: gammu/backup.c:121 helper/message-cmdline.c:524
+#: gammu/backup.c:121 helper/message-cmdline.c:525
 msgid "Where is backup filename and location and memory type?"
 msgstr ""
 
-#: gammu/backup.c:134 gammu/backup.c:145 helper/message-cmdline.c:536
-#: helper/message-cmdline.c:546
+#: gammu/backup.c:134 gammu/backup.c:145 helper/message-cmdline.c:537
+#: helper/message-cmdline.c:547
 msgid "Phonebook entry not found in file"
 msgstr ""
 
-#: gammu/backup.c:151 helper/message-cmdline.c:551
+#: gammu/backup.c:151 helper/message-cmdline.c:552
 #, c-format
 msgid "Unknown memory type: \"%s\"\n"
 msgstr ""
@@ -63,7 +63,7 @@ msgstr ""
 msgid "Error while opening file for writing!\n"
 msgstr ""
 
-#: gammu/backup.c:175 gammu/files.c:444 helper/message-cmdline.c:1109
+#: gammu/backup.c:175 gammu/files.c:444 helper/message-cmdline.c:1110
 msgid "Error while writing file!\n"
 msgstr ""
 
@@ -437,7 +437,7 @@ msgid "Unknown memory type (\"%s\")\n"
 msgstr ""
 
 #: gammu/backup.c:1577 gammu/memory.c:74 gammu/misc.c:712 gammu/misc.c:741
-#: helper/message-cmdline.c:1031
+#: helper/message-cmdline.c:1032
 #, c-format
 msgid "Unknown parameter (\"%s\")\n"
 msgstr ""
@@ -1591,7 +1591,7 @@ msgid "What file type (\"%s\") ?\n"
 msgstr ""
 
 #: gammu/files.c:736 gammu/misc.c:1273 gammu/nokia.c:955
-#: helper/message-cmdline.c:1306
+#: helper/message-cmdline.c:1307
 msgid "Parameter missing!"
 msgstr ""
 
@@ -3611,141 +3611,141 @@ msgstr ""
 msgid "unknown field type"
 msgstr ""
 
-#: helper/message-cmdline.c:183
+#: helper/message-cmdline.c:184
 msgid "Not enough parameters!"
 msgstr ""
 
-#: helper/message-cmdline.c:207
+#: helper/message-cmdline.c:208
 #, c-format
 msgid "What format of sms (\"%s\") ?\n"
 msgstr ""
 
-#: helper/message-cmdline.c:232 helper/message-cmdline.c:249
+#: helper/message-cmdline.c:233 helper/message-cmdline.c:250
 msgid "Where are parameters?"
 msgstr ""
 
-#: helper/message-cmdline.c:263
+#: helper/message-cmdline.c:264
 msgid "Where is ringtone filename?"
 msgstr ""
 
-#: helper/message-cmdline.c:281 helper/message-cmdline.c:299
-#: helper/message-cmdline.c:350
+#: helper/message-cmdline.c:282 helper/message-cmdline.c:300
+#: helper/message-cmdline.c:351
 msgid "Where is logo filename?"
 msgstr ""
 
-#: helper/message-cmdline.c:317
+#: helper/message-cmdline.c:318
 msgid "Where is number of frames?"
 msgstr ""
 
-#: helper/message-cmdline.c:325
+#: helper/message-cmdline.c:326
 msgid "Too many animation frames!"
 msgstr ""
 
-#: helper/message-cmdline.c:356
+#: helper/message-cmdline.c:357
 #, c-format
 msgid "File \"%s\"\n"
 msgstr ""
 
-#: helper/message-cmdline.c:383
+#: helper/message-cmdline.c:384
 msgid "Bookmark not found in file"
 msgstr ""
 
-#: helper/message-cmdline.c:407
+#: helper/message-cmdline.c:408
 msgid "WAP settings not found in file"
 msgstr ""
 
-#: helper/message-cmdline.c:428
+#: helper/message-cmdline.c:429
 msgid "Sorry. For now there is only support for GPRS or DATA bearers end"
 msgstr ""
 
-#: helper/message-cmdline.c:451
+#: helper/message-cmdline.c:452
 msgid "MMS settings not found in file"
 msgstr ""
 
-#: helper/message-cmdline.c:465
+#: helper/message-cmdline.c:466
 msgid "Sorry. No GPRS bearer found in MMS settings"
 msgstr ""
 
-#: helper/message-cmdline.c:511
+#: helper/message-cmdline.c:512
 msgid "ToDo note not found in file"
 msgstr ""
 
-#: helper/message-cmdline.c:573
+#: helper/message-cmdline.c:574
 msgid "Backup functionality not compiled in!"
 msgstr ""
 
-#: helper/message-cmdline.c:1054
+#: helper/message-cmdline.c:1055
 #, fuzzy, c-format
 msgid "Wrong message length (\"%s\")\n"
 msgstr "Запис на съобщение(я)..."
 
-#: helper/message-cmdline.c:1077
+#: helper/message-cmdline.c:1078
 #, c-format
 msgid "Unknown GSM network code (\"%s\")\n"
 msgstr ""
 
-#: helper/message-cmdline.c:1096
+#: helper/message-cmdline.c:1097
 #, c-format
 msgid "You have to give number between 1 and 7 (\"%s\")\n"
 msgstr ""
 
-#: helper/message-cmdline.c:1134
+#: helper/message-cmdline.c:1135
 #, c-format
 msgid "Unknown validity string (\"%s\")\n"
 msgstr ""
 
-#: helper/message-cmdline.c:1172
+#: helper/message-cmdline.c:1173
 #, c-format
 msgid "You have to give number of EMS frames between 1 and 4 (\"%s\")\n"
 msgstr ""
 
-#: helper/message-cmdline.c:1197
+#: helper/message-cmdline.c:1198
 #, c-format
 msgid "Can't open file \"%s\"\n"
 msgstr ""
 
-#: helper/message-cmdline.c:1246
+#: helper/message-cmdline.c:1247
 #, c-format
 msgid "Unknown parameter (\"%c\")\n"
 msgstr ""
 
-#: helper/message-cmdline.c:1251
+#: helper/message-cmdline.c:1252
 msgid "Last parameter wasn't text"
 msgstr ""
 
-#: helper/message-cmdline.c:1285
+#: helper/message-cmdline.c:1286
 #, c-format
 msgid "Too long SMS name (\"%s\"), ignored\n"
 msgstr ""
 
-#: helper/message-cmdline.c:1325
+#: helper/message-cmdline.c:1326
 #, c-format
 msgid "Enter the message text and press %s:\n"
 msgstr ""
 
-#: helper/message-cmdline.c:1343
+#: helper/message-cmdline.c:1344
 msgid "No chars read, assuming it is okay!"
 msgstr ""
 
-#: helper/message-cmdline.c:1363
+#: helper/message-cmdline.c:1364
 msgid "No network code"
 msgstr ""
 
-#: helper/message-cmdline.c:1369
+#: helper/message-cmdline.c:1370
 msgid "You have to set network code!"
 msgstr ""
 
-#: helper/message-cmdline.c:1408
+#: helper/message-cmdline.c:1409
 #, c-format
 msgid "Ringtone too long. %i percent part cut\n"
 msgstr ""
 
-#: helper/message-cmdline.c:1419
+#: helper/message-cmdline.c:1420
 #, c-format
 msgid "There are %i SMS messages packed and the limit is %i. Exiting\n"
 msgstr ""
 
-#: helper/message-cmdline.c:1429
+#: helper/message-cmdline.c:1430
 msgid "Use -smscnumber option to give SMSC number"
 msgstr ""
 

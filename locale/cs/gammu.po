@@ -6,9 +6,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu 1.28.90\n"
+"Project-Id-Version: Gammu 1.28.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-08-25 15:33+0200\n"
+"POT-Creation-Date: 2010-08-31 14:14+0200\n"
 "PO-Revision-Date: 2010-07-22 13:57+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -20,13 +20,13 @@ msgstr ""
 "X-Generator: Pootle 2.0.1\n"
 
 #: gammu/backup.c:33 gammu/backup.c:56 gammu/backup.c:79 gammu/backup.c:100
-#: helper/message-cmdline.c:372 helper/message-cmdline.c:396
-#: helper/message-cmdline.c:440 helper/message-cmdline.c:477
-#: helper/message-cmdline.c:500
+#: helper/message-cmdline.c:373 helper/message-cmdline.c:397
+#: helper/message-cmdline.c:441 helper/message-cmdline.c:478
+#: helper/message-cmdline.c:501
 msgid "Where is backup filename and location?"
 msgstr "Kde je jméno souboru zálohy a umístění?"
 
-#: gammu/backup.c:47 helper/message-cmdline.c:488
+#: gammu/backup.c:47 helper/message-cmdline.c:489
 msgid "Calendar note not found in file"
 msgstr "V souboru nebyl nalezen žádný záznam kalendáře"
 
@@ -42,16 +42,16 @@ msgstr "V souboru nebyla nalezena žádná poznámka"
 msgid "Todo note not found in file"
 msgstr "V souboru nebyl nalezen žádný úkol"
 
-#: gammu/backup.c:121 helper/message-cmdline.c:524
+#: gammu/backup.c:121 helper/message-cmdline.c:525
 msgid "Where is backup filename and location and memory type?"
 msgstr "Kde je jméno souboru zálohy, umístění a typ paměti?"
 
-#: gammu/backup.c:134 gammu/backup.c:145 helper/message-cmdline.c:536
-#: helper/message-cmdline.c:546
+#: gammu/backup.c:134 gammu/backup.c:145 helper/message-cmdline.c:537
+#: helper/message-cmdline.c:547
 msgid "Phonebook entry not found in file"
 msgstr "V souboru nebyl nalezen žádný kontakt"
 
-#: gammu/backup.c:151 helper/message-cmdline.c:551
+#: gammu/backup.c:151 helper/message-cmdline.c:552
 #, c-format
 msgid "Unknown memory type: \"%s\"\n"
 msgstr "Neznámý typ paměti: \"%s\"\n"
@@ -65,7 +65,7 @@ msgstr "Neznámý formát zálohy: \"%s\"\n"
 msgid "Error while opening file for writing!\n"
 msgstr "Chyba při otevírání souboru pro zápis!\n"
 
-#: gammu/backup.c:175 gammu/files.c:444 helper/message-cmdline.c:1109
+#: gammu/backup.c:175 gammu/files.c:444 helper/message-cmdline.c:1110
 msgid "Error while writing file!\n"
 msgstr "Chyba při zápisu do souboru!\n"
 
@@ -446,7 +446,7 @@ msgid "Unknown memory type (\"%s\")\n"
 msgstr "Neznámý typ paměti (\"%s\")\n"
 
 #: gammu/backup.c:1577 gammu/memory.c:74 gammu/misc.c:712 gammu/misc.c:741
-#: helper/message-cmdline.c:1031
+#: helper/message-cmdline.c:1032
 #, c-format
 msgid "Unknown parameter (\"%s\")\n"
 msgstr "Neznámý parametr (\"%s\")\n"
@@ -1600,7 +1600,7 @@ msgid "What file type (\"%s\") ?\n"
 msgstr "Jaký typ souboru (\"%s\") ?\n"
 
 #: gammu/files.c:736 gammu/misc.c:1273 gammu/nokia.c:955
-#: helper/message-cmdline.c:1306
+#: helper/message-cmdline.c:1307
 msgid "Parameter missing!"
 msgstr "Chybí parametr!"
 
@@ -3653,141 +3653,141 @@ msgstr "ID pro Push to talk"
 msgid "unknown field type"
 msgstr "neznámý typ položky"
 
-#: helper/message-cmdline.c:183
+#: helper/message-cmdline.c:184
 msgid "Not enough parameters!"
 msgstr "Příliš málo parametrů!"
 
-#: helper/message-cmdline.c:207
+#: helper/message-cmdline.c:208
 #, c-format
 msgid "What format of sms (\"%s\") ?\n"
 msgstr "Jaký je formát sms (\"%s\") ?\n"
 
-#: helper/message-cmdline.c:232 helper/message-cmdline.c:249
+#: helper/message-cmdline.c:233 helper/message-cmdline.c:250
 msgid "Where are parameters?"
 msgstr "Kde jsou parametry?"
 
-#: helper/message-cmdline.c:263
+#: helper/message-cmdline.c:264
 msgid "Where is ringtone filename?"
 msgstr "Kde je jméno souboru vyzvánění?"
 
-#: helper/message-cmdline.c:281 helper/message-cmdline.c:299
-#: helper/message-cmdline.c:350
+#: helper/message-cmdline.c:282 helper/message-cmdline.c:300
+#: helper/message-cmdline.c:351
 msgid "Where is logo filename?"
 msgstr "Kde je jméno souboru loga?"
 
-#: helper/message-cmdline.c:317
+#: helper/message-cmdline.c:318
 msgid "Where is number of frames?"
 msgstr "Kde je počet rámců?"
 
-#: helper/message-cmdline.c:325
+#: helper/message-cmdline.c:326
 msgid "Too many animation frames!"
 msgstr "Přiliš mnoho obrázků v animaci!"
 
-#: helper/message-cmdline.c:356
+#: helper/message-cmdline.c:357
 #, c-format
 msgid "File \"%s\"\n"
 msgstr "Soubor \"%s\"\n"
 
-#: helper/message-cmdline.c:383
+#: helper/message-cmdline.c:384
 msgid "Bookmark not found in file"
 msgstr "V souboru nebyla nalezena žádná záložka"
 
-#: helper/message-cmdline.c:407
+#: helper/message-cmdline.c:408
 msgid "WAP settings not found in file"
 msgstr "V souboru nebylo nalezena žádné nastavení pro WAP"
 
-#: helper/message-cmdline.c:428
+#: helper/message-cmdline.c:429
 msgid "Sorry. For now there is only support for GPRS or DATA bearers end"
 msgstr "Omlouváme se, ale podporovány jsou pouze GPRS a DATA přenosy"
 
-#: helper/message-cmdline.c:451
+#: helper/message-cmdline.c:452
 msgid "MMS settings not found in file"
 msgstr "V souboru nebylo nalezena žádné nastavení pro MMS"
 
-#: helper/message-cmdline.c:465
+#: helper/message-cmdline.c:466
 msgid "Sorry. No GPRS bearer found in MMS settings"
 msgstr "Omlouváme se, ale nebyl nalezen žádný GPRS přenos v nastaveních MMS"
 
-#: helper/message-cmdline.c:511
+#: helper/message-cmdline.c:512
 msgid "ToDo note not found in file"
 msgstr "V souboru nebyl nalezen žádný úkol"
 
-#: helper/message-cmdline.c:573
+#: helper/message-cmdline.c:574
 msgid "Backup functionality not compiled in!"
 msgstr "Podpora pro zálohy nebyla zkompilována!"
 
-#: helper/message-cmdline.c:1054
+#: helper/message-cmdline.c:1055
 #, c-format
 msgid "Wrong message length (\"%s\")\n"
 msgstr "Chybná délka zprávy (\"%s\")\n"
 
-#: helper/message-cmdline.c:1077
+#: helper/message-cmdline.c:1078
 #, c-format
 msgid "Unknown GSM network code (\"%s\")\n"
 msgstr "Neznámý kód GSM sítě (\"%s\")\n"
 
-#: helper/message-cmdline.c:1096
+#: helper/message-cmdline.c:1097
 #, c-format
 msgid "You have to give number between 1 and 7 (\"%s\")\n"
 msgstr "Musíte zadat číslo mezi 1 a 7 (\"%s\")\n"
 
-#: helper/message-cmdline.c:1134
+#: helper/message-cmdline.c:1135
 #, c-format
 msgid "Unknown validity string (\"%s\")\n"
 msgstr "Neznámý text platnosti (\"%s\")\n"
 
-#: helper/message-cmdline.c:1172
+#: helper/message-cmdline.c:1173
 #, c-format
 msgid "You have to give number of EMS frames between 1 and 4 (\"%s\")\n"
 msgstr "Musíte zadat počet EMS snímků mezi 1 a 4 (\"%s\")\n"
 
-#: helper/message-cmdline.c:1197
+#: helper/message-cmdline.c:1198
 #, c-format
 msgid "Can't open file \"%s\"\n"
 msgstr "Nepodařilo se otevřít soubor \"%s\"\n"
 
-#: helper/message-cmdline.c:1246
+#: helper/message-cmdline.c:1247
 #, c-format
 msgid "Unknown parameter (\"%c\")\n"
 msgstr "Neznámý parametr (\"%c\")\n"
 
-#: helper/message-cmdline.c:1251
+#: helper/message-cmdline.c:1252
 msgid "Last parameter wasn't text"
 msgstr "Poslední parametr nebyl text"
 
-#: helper/message-cmdline.c:1285
+#: helper/message-cmdline.c:1286
 #, c-format
 msgid "Too long SMS name (\"%s\"), ignored\n"
 msgstr "Příliš dlouhé jméno SMS zprávy (\"%s\"), ignoruji\n"
 
-#: helper/message-cmdline.c:1325
+#: helper/message-cmdline.c:1326
 #, fuzzy, c-format
 msgid "Enter the message text and press %s:\n"
 msgstr "Zadejte zprávu a stiskněte ^D:"
 
-#: helper/message-cmdline.c:1343
+#: helper/message-cmdline.c:1344
 msgid "No chars read, assuming it is okay!"
 msgstr "Nebyly načteny žádné znaky, předpokládám, že to je v pořádku!"
 
-#: helper/message-cmdline.c:1363
+#: helper/message-cmdline.c:1364
 msgid "No network code"
 msgstr "Žádný kód sítě"
 
-#: helper/message-cmdline.c:1369
+#: helper/message-cmdline.c:1370
 msgid "You have to set network code!"
 msgstr "Musíte nastavit kód sítě!"
 
-#: helper/message-cmdline.c:1408
+#: helper/message-cmdline.c:1409
 #, c-format
 msgid "Ringtone too long. %i percent part cut\n"
 msgstr "Vyzvánění je příliš dlouhé. Zkráceno o %i procent\n"
 
-#: helper/message-cmdline.c:1419
+#: helper/message-cmdline.c:1420
 #, c-format
 msgid "There are %i SMS messages packed and the limit is %i. Exiting\n"
 msgstr "Bylo vytvořeno %i SMS zpráv a limit je %i. Končím\n"
 
-#: helper/message-cmdline.c:1429
+#: helper/message-cmdline.c:1430
 msgid "Use -smscnumber option to give SMSC number"
 msgstr "Pro zadání čísla SMSC použijte parametr -smscnumber"
 
