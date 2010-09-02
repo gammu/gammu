@@ -203,7 +203,11 @@ breathe_default_project = 'api'
 
 man_pages = [
     ('smsd/files', 'gammu-smsd-files', 'gammu-smsd(1) backend using filesystem as a message storage', u'Michal Čihař <michal@cihar.com>', 7),
-    ('smsd/tables', 'gammu-smsd-tables', ' description of tables for database backends of gammu-smsd(1)', u'Michal Čihař <michal@cihar.com>', 7),
+    ('smsd/tables', 'gammu-smsd-tables', 'description of tables for database backends of gammu-smsd(1)', u'Michal Čihař <michal@cihar.com>', 7),
+    ('smsd/mysql', 'gammu-smsd-mysql', 'gammu-smsd(1) backend using MySQL database server as a message storage', u'Michal Čihař <michal@cihar.com>', 7),
+    ('smsd/pgsql', 'gammu-smsd-pgsql', 'gammu-smsd(1) backend using PostgreSQL database server as a message storage', u'Michal Čihař <michal@cihar.com>', 7),
+    ('smsd/dbi', 'gammu-smsd-dbi', 'gammu-smsd(1) backend using DBI abstraction layer to use any supported database as a message storage', u'Michal Čihař <michal@cihar.com>', 7),
+    ('smsd/null', 'gammu-smsd-null', 'gammu-smsd(1) backend not storing messages', u'Michal Čihař <michal@cihar.com>', 7),
     ('smsd/config', 'gammu-smsdrc', 'gammu-smsd(1) configuration file', u'Michal Čihař <michal@cihar.com>', 5),
 ]
 

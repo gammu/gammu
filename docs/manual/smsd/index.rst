@@ -12,21 +12,3 @@ this storage.
     config
     backends
     code
-
-
-
-Database based services
-+++++++++++++++++++++++
-
-All database based services share same (or similar) database schema. Currently
-following databases are supported:
-
-* MySQL
-* PostgreSQL
-* libDBI driver, which can connect to various other databases
-
-Null service
-++++++++++++
-
-This service is there primarily for testing purposes, as it does not store
-messages at all.

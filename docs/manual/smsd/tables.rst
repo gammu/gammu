@@ -1,3 +1,5 @@
+.. _smsd_tables:
+
 SMSD Database Structure
 =======================
 
