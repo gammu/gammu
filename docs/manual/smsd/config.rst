@@ -1,0 +1,470 @@
+.. _smsdconfig:
+
+SMSD Configuration File
+=======================
+
+Description
+-----------
+
+gammu-smsd reads configuration from a config file. It's location can be
+specified on command line, otherwise default path ``/etc/gammu-smsdrc``
+is used.
+
+This file use ini file syntax, with comment parts being marked with both ``;`` and
+``#``. Sections of config file are identified in square brackets line ``[this]``. All
+key values are case insensitive.
+
+Configuration file of gammu-smsd consists of at least two sections - :config:section:`[gammu]`
+and :config:section:`[smsd]`.
+
+.. config:section:: [gammu]
+
+    The :config:section:`[gammu]` section is configuration of a phone connection and is same as
+    described in gammurc(5) with the only exception that logfile is ignored and
+    common logging for gammu library and SMS daemon is used. However the logformat
+    directive still configures how much messages gammu emits.
+
+.. config:section:: [smsd]
+
+    The :config:section:`[smsd]` section configures SMS daemon itself, which are described in
+    following subsections. First general parameters of SMS daemon are listed and
+    then specific parameters for storage backends.
+
+.. config:section:: [include_numbers]
+
+    List of numbers from which accept messages, see :ref:`message_filtering`.
+
+.. config:section:: [exclude_numbers]
+
+    List of numbers from which reject messages, see :ref:`message_filtering`.
+
+.. config:section:: [include_smsc]
+
+    List of SMSC numbers from which accept messages, see :ref:`message_filtering`.
+
+.. config:section:: [exclude_smsc]
+
+    List of SMSC numbers from which reject messages, see :ref:`message_filtering`.
+
+General parameters of SMS daemon
+--------------------------------
+
+.. config:option:: Service
+
+    SMSD service to use, one of FILES, NULL, MYSQL, PGSQL, DBI (depends on compiled
+    in support for backends).
+
+    ``FILES``  
+        stores messages in files, see :ref:`smsd_files` for details
+    ``NULL``
+        does not store messages at all, see gammu\-smsd\-null(7) for details
+    ``MYSQL``
+        stores messages in MySQL database, see gammu\-smsd\-mysql(7) for details
+    ``PGSQL``
+        stores messages in PostgreSQL database, see gammu\-smsd\-pgsql(7) for details
+    ``DBI``
+        stores messages in any database supported by libdbi, this includes
+        MSSQL, MySQL, PostgreSQL or SQLite databases, see gammu\-smsd\-dbi(7) for
+        details
+
+.. config:option:: PIN
+
+    PIN for SIM card. This is optional, but you should set it if your phone after
+    power on requires PIN.
+
+.. config:option:: NetworkCode
+
+    Network personalisation password. This is optional, but some phones require it
+    after power on.
+
+.. config:option:: PhoneCode
+
+    Phone lock password. This is optional, but some phones require it after power
+    on.
+
+.. config:option:: LogFile
+
+    File where SMSD actions are being logged. You can also use special value
+    ``syslog`` which will send all messages to syslog daemon. On Windows another
+    special value ``eventlog`` exists, which will send logs to Windows Event Log.
+
+    If you run SMSD as a system daemon (or service), it is recommended to use
+    absolute path to log file as startup directory might be different than you
+    expect.
+
+    Default is to provide no logging.
+
+.. config:option:: DebugLevel
+
+    Debug level for SMSD. The integer value should be sum of all flags you
+    want to enable. 
+
+    1
+        enables basic debugging information
+    2
+        enables logging of SQL queries of service backends
+    4
+        enables logging of gammu debug information
+
+    Generally to get as much debug information as possible, use 255.
+
+    Default is 0, what should mean no extra information.
+
+.. config:option:: CommTimeout 
+
+    How many seconds should SMSD wait after there is no message in outbox.
+
+    Default is 30.
+
+.. config:option:: SendTimeout
+
+    Shows how many seconds SMSD should wait for network answer during sending 
+    sms. If nothing happen during this time, sms will be resent.
+
+    Default is 30.
+
+.. config:option:: MaxRetries
+
+    How many times will SMSD try to resend message if sending fails.
+
+    Default is 1.
+
+.. config:option:: ReceiveFrequency 
+
+    The number of seconds between testing for received SMSes, when the phone is
+    busy sending SMSes. Normally a test for received SMSes is done every
+    CommTimeout seconds and after each sent SMS. 
+
+    Default is 0 (not used).
+
+.. config:option:: StatusFrequency 
+
+    The number of seconds between refreshing phone status (battery, signal) stored
+    in shared memory and possibly in service backends. Use 0 to disable.
+
+    Default is 15.
+
+.. config:option:: LoopSleep
+
+    The number of seconds how long will SMSD sleep before checking for some
+    activity. Please note that setting this to higher value than 1 will have
+    effects to other time based configurations, because they will be effectively
+    rounded to multiply of this value.
+
+    Default is 1.
+
+.. config:option:: MultipartTimeout
+
+    The number of seconds how long will SMSD wait for all parts of multipart
+    message. If all parts won't arrive in time, parts will be processed as separate
+    messages.
+
+    Default is 600 (10 minutes).
+
+.. config:option:: CheckSecurity
+
+    Whether to check if phone wants to enter PIN.
+
+    Default is 1 (enabled).
+
+.. config:option:: CheckBattery
+
+    Whether to check phone battery state periodically.
+
+    Default is 1 (enabled).
+
+.. config:option:: CheckSignal
+
+    Whether to check signal level periodically.
+
+    Default is 1 (enabled).
+
+.. config:option:: ResetFrequency
+
+    The number of seconds between performing a preventive soft reset in order to
+    minimize the cases of hanging phones e.g. Nokia 5110 will sometimes freeze to
+    a state when only after unmounting the battery the phone will be functional
+    again.
+
+    Default is 0 (not used).
+
+.. config:option:: DeliveryReport
+
+    Whether delivery reports should be used, one of ``no``, ``log``, ``sms``.
+
+    ``log``
+        one line log entry, 
+    ``sms``
+        store in inbox as a received SMS
+    ``no``
+        no delivery reports
+
+    Default is ``no``.
+
+.. config:option:: DeliveryReportDelay
+
+    Delay in seconds how long is still delivery report considered valid. This
+    depends on brokeness of your network (delivery report should have same
+    timestamp as sent message). Increase this if delivery reports are not paired
+    with sent messages.
+
+    Default is 600 (10 minutes).
+
+.. config:option:: PhoneID
+
+    String with info about phone used for sending/receiving. This can be useful if
+    you want to run several SMS daemons.
+
+    When you set PhoneID, all messages (including injected ones) will be marked by
+    this string and it allow more SMS daemons to share single database. This
+    option has actually no effect of FILES backend service.
+
+.. config:option:: RunOnReceive
+
+    Executes a program after receiving message. 
+
+    This parameter is executed through shell, so you might need to escape some
+    special characters and you can include any number of parameters. Additionally
+    parameters with identifiers of received messages are appended to the command
+    line. The identifiers depend on used service backend, typically it is ID of
+    inserted row for database backends or file name for file based backends.
+
+    Gammu SMSD waits for the script to terminate. If you make some time consuming
+    there, it will make SMSD not receive new messages. However to limit breakage
+    from this situation, the waiting time is limited to two minutes. After this
+    time SMSD will continue in normal operation and might execute your script
+    again.
+
+    The process has available lot of information about received message in 
+    environment, check gammu\-smsd\-run(7) for more details.
+
+.. config:option:: IncludeNumbersFile
+
+    File with list of numbers which are accepted by SMSD. The file contains one
+    number per line, blank lines are ignored. The file is read at startup and is
+    reread only when configuration is being reread. See Message filtering for
+    details.
+
+.. config:option:: ExcludeNumbersFile
+
+    File with list of numbers which are not accepted by SMSD. The file contains
+    one number per line, blank lines are ignored. The file is read at startup and
+    is reread only when configuration is being reread. See Message filtering for
+    details.
+
+.. config:option:: IncludeSMSCFile
+
+    File with list of SMSC numbers which are accepted by SMSD. The file contains
+    one number per line, blank lines are ignored. The file is read at startup and
+    is reread only when configuration is being reread. See Message filtering for
+    details.
+
+.. config:option:: ExcludeSMSCFile
+
+    File with list of SMSC numbers which are not accepted by SMSD. The file
+    contains one number per line, blank lines are ignored. The file is read at
+    startup and is reread only when configuration is being reread. See Message
+    filtering for details.
+
+.. config:option:: BackendRetries
+
+    How many times will SMSD backend retry operation.
+
+    The implementation on different backends is different, for database backends
+    it generally means how many times it will try to reconnect to the server.
+
+    Default is 10.
+
+
+Database backends options
+-------------------------
+
+All DBI, MYSQL and PGSQL backends (see  gammu\-smsd\-mysql(7),
+gammu\-smsd\-pgsql(7), gammu\-smsd\-dbi(7)) for their documentation) supports
+same options for configuring connection to a database:
+
+.. config:option:: User
+
+    User name used for connection to a database.
+
+.. config:option:: Password
+
+    Password used for connection to a database.
+
+.. config:option:: PC
+
+    Database server address. It can also contain port or socket path after
+    semicolon, for example localhost:/path/to/socket.
+
+.. config:option:: Database
+
+    Name of database to use. Please note that you should create tables in this
+    database before using gammu\-smsd. SQL files for creating needed tables are
+    included in documentation.
+
+.. config:option:: SkipSMSCNumber
+
+    When you send sms from some SMS centere you can have delivery reports from
+    other SMSC number. You can set here number of this SMSC used by you and Gammu
+    will not check it's number during assigning reports to sent SMS.
+
+.. config:option:: Driver
+
+    DBI driver to use. Depends on what DBI drivers you have installed, DBI
+    supports: mysql, freetds (provides access to MS SQL Server and Sybase), pgsql,
+    sqlite, sqlite3, firebird and ingres, msql and oracle drivers are under
+    development.
+
+.. config:option:: DriversPath
+
+    Path, where DBI drivers are stored, this usually does not have to be set if
+    you have properly installed drivers.
+
+.. config:option:: DBDir
+
+    Database directory for some (currently only sqlite) DBI drivers. Set here path
+    where sqlite database files are stored.
+
+Files backend options
++++++++++++++++++++++
+
+The FILES backend accepts following configuration options. See
+gammu\-smsd\-files(7) for more detailed service backend description. Please note
+that all path should contain trailing path separator (/ on Unix systems):
+
+.. config:option:: InboxPath
+
+    Where the received SMSes are stored.
+
+    Default is current directory.
+
+.. config:option:: OutboxPath
+
+    Where SMSes to be sent should be placed.
+
+    Default is current directory.
+
+.. config:option:: SentSMSPath
+
+    Where the transmitted SMSes are placed, if same as OutBoxPath transmitted
+    messages are deleted.
+
+    Default is to delete transmitted messages.
+
+.. config:option:: ErrorSMSPath
+
+    Where SMSes with error in transmission is placed.
+
+    Default is same as SentSMSPath.
+
+.. config:option:: InboxFormat
+
+    The format in which the SMS will be stored: ``detail``, ``unicode``, ``standard``.
+
+    ``detail``   
+        format used for message backup by gammu(1)
+    ``unicode``
+        message text stored in unicode (UTF-16)
+    ``standard``
+        message text stored in system charset
+
+    The ``standard`` and ``unicode`` settings do not apply for 8-bit messages, which
+    are always written raw as they are received with extension .bin.
+
+    Default is ``unicode``.
+
+.. config:option:: OutboxFormat
+
+    The format in which messages created by gammu-smsd-inject(1) will be stored,
+    it accepts same values as InboxFormat.
+
+    Default is ``detail`` if Gammu is compiled in with backup functions, ``unicode``
+    otherwise.
+
+.. config:option:: TransmitFormat
+
+    The format for transmitting the SMS: ``auto``, ``unicode``, ``7bit``. 
+
+    Default is ``auto``.
+
+.. _message_filtering:
+
+Message filtering
+-----------------
+
+SMSD allows to process only limited subset of incoming messages. You can define
+filters for sender number in :config:section:`[include_numbers]` and
+:config:section:`[exclude_numbers]` sections or using
+:config:option:`IncludeNumbersFile` and :config:option:`ExcludeNumbersFile`
+directives. 
+
+If :config:section:`[include_numbers]` section exists, all values (keys are
+ignored) from it are used as allowed phone numbers and no other message is
+processed. On the other side, in :config:section:`[exclude_numbers]` you can
+specify numbers which you want to skip.
+
+Lists from both sources are merged together. If there is any number in include
+list, only include list is used and only messages in this list are being
+accepted. If include list is empty, exclude list can be used to ignore
+messages from some numbers. If both lists are empty, all messages are
+accepted.
+
+Similar filtering rules can be used for SMSC number filtering, they just use
+different set of configuration options - :config:section:`[include_smsc]` and
+:config:section:`[exclude_smsc]` sections or :config:option:`IncludeSMSCFile`
+and :config:option:`ExcludeSMSCFile` directives.
+
+Examples
+--------
+
+There is more complete example available in Gammu documentation. Please note
+that for simplicity following examples do not include :config:section:`[gammu]`
+section, you can look into gammurc(5) for some examples how it can look like.
+
+SMSD configuration file for FILES backend could look like:
+
+.. code-block:: ini
+
+    [smsd]
+    Service = files
+    PIN = 1234
+    LogFile = syslog
+    InboxPath = /var/spool/sms/inbox/
+    OutboPpath = /var/spool/sms/outbox/
+    SentSMSPath = /var/spool/sms/sent/
+    ErrorSMSPath = /var/spool/sms/error/
+
+If you want to use MYSQL backend, you will need something like this:
+
+.. code-block:: ini
+
+    [smsd]
+    Service = mysql
+    PIN = 1234
+    LogFile = syslog
+    User = smsd
+    Password = smsd
+    PC = localhost
+    Database = smsd
+
+Process only messages from 123456 number:
+
+.. code-block:: ini
+
+    [include_numbers]
+    number1 = 123456
+
+Do not process messages from evil number 666:
+
+.. code-block:: ini
+
+    [exclude_numbers]
+    number1 = 666
+
+Enabling debugging:
+
+.. code-block:: ini
+
+    [smsd]
+    debuglevel = 255
+    logfile = smsd.log
