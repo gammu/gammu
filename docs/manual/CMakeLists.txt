@@ -8,16 +8,13 @@ file(GLOB_RECURSE DOCSRC RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "*.rst")
 
 set (DEVELDOCS
     ${DOCSRC}
-    sms/charset.txt
-    sms/convert.txt
-    sms/readme
-    sounds/readme
-    sounds/ring2.txt
     examples/Makefile
     examples/phone-info.c
     examples/sms-send.c
     examples/smsd.c
     examples/sms-read.c
+    examples/long-sms.c
+    examples/custom-config.c
     )
 
 foreach (DOC ${DEVELDOCS})
@@ -25,19 +22,20 @@ foreach (DOC ${DEVELDOCS})
     install (
         FILES ${DOC}
         DESTINATION "${INSTALL_DOC_DIR}/devel/${DIRNAME}"
-        COMPONENT "develdocs"
+        COMPONENT "manual"
         )
 endforeach (DOC)
 
 find_program(SPHINX_BUILD_EXECUTABLE NAMES sphinx-build
-    DOC "Sphinx tool for generating Gammu developer documentation <http://sphinx.pocoo.org/>")
+    DOC "Sphinx tool for generating Gammu documentation <http://sphinx.pocoo.org/>")
 
 if (SPHINX_BUILD_EXECUTABLE)
     set (SPHINX_PAPER_SIZE "a4" CACHE STRING "Paper size for Sphinx LaTeX output")
     configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/conf.py" "${CMAKE_CURRENT_BINARY_DIR}/conf.py" @ONLY)
     macro(sphinxdoc _format)
-        add_custom_target (devdoc-${_format} ${PYTHON_EXECUTABLE} ${SPHINX_BUILD_EXECUTABLE}
+        add_custom_target (manual-${_format} ${PYTHON_EXECUTABLE} ${SPHINX_BUILD_EXECUTABLE}
                 -c ${CMAKE_CURRENT_BINARY_DIR}/
+                -n
                 -b ${_format}
                 -D latex_paper_size=${SPHINX_PAPER_SIZE}
                 ${CMAKE_CURRENT_SOURCE_DIR}/
@@ -48,4 +46,5 @@ if (SPHINX_BUILD_EXECUTABLE)
     sphinxdoc(html)
     sphinxdoc(htmlhelp)
     sphinxdoc(latex)
+    sphinxdoc(man)
 endif (SPHINX_BUILD_EXECUTABLE)

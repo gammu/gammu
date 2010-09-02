@@ -1109,7 +1109,7 @@ regardless what backu format says.
 HELP['clearall'] = '''Deletes all private data from the phone.
 ''' 
 HELP['decodesniff'] = '''Option available only, if Gammu was compiled with debug. Allows to decode
-sniffs. See \\fI/docs/develop/develop.txt\\fR for more details.
+sniffs. See \\fI/docs/manual/\\fR for more details.
 ''' 
 HELP['decodebinarydump'] = '''Decodes a dump made by Gammu with 
 \\fBlogformat\\fR se to \\fBbinary\\fR (see \\fIREADME\\fR for

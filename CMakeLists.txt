@@ -692,7 +692,7 @@ add_custom_target (interndoc ${DOXYGEN_EXECUTABLE} doxygen/Doxyfile-internal
 # CPP check
 find_program(CPPCHECK_EXECUTABLE NAMES cppcheck
     DOC "cppcheck - code checking tool")
-add_custom_target (cppcheck ${CPPCHECK_EXECUTABLE} -a -f -q "${Gammu_SOURCE_DIR}/gammu" "${Gammu_SOURCE_DIR}/smsd" "${Gammu_SOURCE_DIR}/helper" "${Gammu_SOURCE_DIR}/libgammu" "${Gammu_SOURCE_DIR}/python/gammu/src" "${Gammu_SOURCE_DIR}/tests" "${Gammu_SOURCE_DIR}/docs/develop/examples" "${Gammu_SOURCE_DIR}/contrib/smscgi"
+add_custom_target (cppcheck ${CPPCHECK_EXECUTABLE} -a -f -q "${Gammu_SOURCE_DIR}/gammu" "${Gammu_SOURCE_DIR}/smsd" "${Gammu_SOURCE_DIR}/helper" "${Gammu_SOURCE_DIR}/libgammu" "${Gammu_SOURCE_DIR}/python/gammu/src" "${Gammu_SOURCE_DIR}/tests" "${Gammu_SOURCE_DIR}/docs/manual/examples" "${Gammu_SOURCE_DIR}/contrib/smscgi"
     COMMENT "Checking C code")
 
 
@@ -790,7 +790,7 @@ set (CPACK_RPM_PACKAGE_GROUP "Applications/Communications")
 endif (EXISTS "/etc/SuSE-release")
 
 # Components
-set (CPACK_COMPONENTS_ALL gammu library smsd headers utils manpages docs pkgconfig gnapplet examples develdocs)
+set (CPACK_COMPONENTS_ALL gammu library smsd headers utils manpages docs pkgconfig gnapplet examples manual)
 if (WITH_PYTHON)
     list (APPEND CPACK_COMPONENTS_ALL python)
 endif (WITH_PYTHON)
@@ -808,7 +808,7 @@ set (CPACK_COMPONENT_DOCS_DISPLAY_NAME "User Documentation")
 set (CPACK_COMPONENT_PKGCONFIG_DISPLAY_NAME "Pkg-config Data")
 set (CPACK_COMPONENT_GNAPPLET_DISPLAY_NAME "Applet for Symbian Phones")
 set (CPACK_COMPONENT_EXAMPLES_DISPLAY_NAME "Examples Using Gammu")
-set (CPACK_COMPONENT_DEVELDOCS_DISPLAY_NAME "Developer Documentation")
+set (CPACK_COMPONENT_MANUAL_DISPLAY_NAME "Gammu Manual")
 set (CPACK_COMPONENT_PYTHON_DISPLAY_NAME "Python Module")
 set (CPACK_COMPONENT_MEDIA_DISPLAY_NAME "Media Files")
 
@@ -826,7 +826,7 @@ set (CPACK_COMPONENT_DOCS_DESCRIPTION "User documentation in text files.")
 set (CPACK_COMPONENT_PKGCONFIG_DESCRIPTION "Data for pkg-config program (automatic finding of compiler parameters for libraries).")
 set (CPACK_COMPONENT_GNAPPLET_DESCRIPTION "Applet for Symbian phones, install it to phone to communicate with them using Gammu.")
 set (CPACK_COMPONENT_EXAMPLES_DESCRIPTION "Examples showing how to use Gammu, in PHP, Perl or C.")
-set (CPACK_COMPONENT_DEVELDOCS_DESCRIPTION "Developer documentation.")
+set (CPACK_COMPONENT_MANUAL_DESCRIPTION "User and Developer Manual")
 set (CPACK_COMPONENT_PYTHON_DESCRIPTION "Python module for Gammu.")
 set (CPACK_COMPONENT_MEDIA_DESCRIPTION "Various media files which can be used with Gammu.")
 
@@ -856,7 +856,7 @@ set (CPACK_COMPONENT_PKGCONFIG_GROUP "Development")
 set (CPACK_COMPONENT_MANPAGES_GROUP "Documentation")
 set (CPACK_COMPONENT_DOCS_GROUP "Documentation")
 set (CPACK_COMPONENT_EXAMPLES_GROUP "Documentation")
-set (CPACK_COMPONENT_DEVELDOCS_GROUP "Documentation")
+set (CPACK_COMPONENT_MANUAL_GROUP "Documentation")
 set (CPACK_COMPONENT_MEDIA_GROUP "Documentation")
 
 set (CPACK_ALL_INSTALL_TYPES Standard Developer Full)
@@ -871,7 +871,7 @@ set (CPACK_COMPONENT_DOCS_INSTALL_TYPES Standard Developer Full)
 set (CPACK_COMPONENT_PKGCONFIG_INSTALL_TYPES Developer Full)
 set (CPACK_COMPONENT_GNAPPLET_INSTALL_TYPES Standard Developer Full)
 set (CPACK_COMPONENT_EXAMPLES_INSTALL_TYPES Developer Full)
-set (CPACK_COMPONENT_DEVELDOCS_INSTALL_TYPES Developer Full)
+set (CPACK_COMPONENT_MANUAL_INSTALL_TYPES Developer Full)
 set (CPACK_COMPONENT_PYTHON_INSTALL_TYPES Developer Full)
 set (CPACK_COMPONENT_MEDIA_INSTALL_TYPES Full)
 
@@ -919,7 +919,7 @@ if(INSTALL_DOC)
         )
 
     add_subdirectory(docs/config)
-    add_subdirectory(docs/develop)
+    add_subdirectory(docs/manual)
     add_subdirectory(docs/sql)
     add_subdirectory(docs/user)
 endif(INSTALL_DOC)

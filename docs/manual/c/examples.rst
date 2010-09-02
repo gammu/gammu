@@ -1,7 +1,7 @@
 Examples
 ========
 
-All these examples are also available in docs/develop/examples/
+All these examples are also available in docs/manual/examples/
 directory in Gammu sources.
 
 Getting phone information

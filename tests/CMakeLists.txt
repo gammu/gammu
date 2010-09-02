@@ -809,17 +809,17 @@ foreach(TESTINIFILE ${INIFILES})
 endforeach(TESTINIFILE $INIFILES)
 
 # Examples
-add_executable(phone-info "${Gammu_SOURCE_DIR}/docs/develop/examples/phone-info.c")
+add_executable(phone-info "${Gammu_SOURCE_DIR}/docs/manual/examples/phone-info.c")
 target_link_libraries(phone-info libGammu ${LIBINTL_LIBRARIES})
-add_executable(custom-config "${Gammu_SOURCE_DIR}/docs/develop/examples/custom-config.c")
+add_executable(custom-config "${Gammu_SOURCE_DIR}/docs/manual/examples/custom-config.c")
 target_link_libraries(custom-config libGammu ${LIBINTL_LIBRARIES})
-add_executable(sms-send "${Gammu_SOURCE_DIR}/docs/develop/examples/sms-send.c")
+add_executable(sms-send "${Gammu_SOURCE_DIR}/docs/manual/examples/sms-send.c")
 target_link_libraries(sms-send libGammu ${LIBINTL_LIBRARIES})
-add_executable(long-sms "${Gammu_SOURCE_DIR}/docs/develop/examples/long-sms.c")
+add_executable(long-sms "${Gammu_SOURCE_DIR}/docs/manual/examples/long-sms.c")
 target_link_libraries(long-sms libGammu ${LIBINTL_LIBRARIES})
-add_executable(sms-read "${Gammu_SOURCE_DIR}/docs/develop/examples/sms-read.c")
+add_executable(sms-read "${Gammu_SOURCE_DIR}/docs/manual/examples/sms-read.c")
 target_link_libraries(sms-read libGammu ${LIBINTL_LIBRARIES})
-add_executable(smsd "${Gammu_SOURCE_DIR}/docs/develop/examples/smsd.c")
+add_executable(smsd "${Gammu_SOURCE_DIR}/docs/manual/examples/smsd.c")
 target_link_libraries(smsd libGammu ${LIBINTL_LIBRARIES} gsmsd)
 
 # Examples tests, works with dummy phone
