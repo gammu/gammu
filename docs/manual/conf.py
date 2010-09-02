@@ -21,13 +21,14 @@ import sys, os
 # absolute, like shown here.
 sys.path.insert(0, '@CMAKE_CURRENT_BINARY_DIR@/../../python')
 sys.path.append('@Gammu_SOURCE_DIR@/external/breathe')
+sys.path.append('@CMAKE_CURRENT_SOURCE_DIR@')
 
 # General configuration
 # ---------------------
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.autodoc', 'breathe']
+extensions = ['sphinx.ext.autodoc', 'breathe', 'configext']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['@CMAKE_CURRENT_SOURCE_DIR@/doc/.templates']
@@ -198,4 +199,10 @@ breathe_projects = {
     }
 
 breathe_default_project = 'api'
+
+
+man_pages = [
+    ('smsd/files', 'gammu-smsd-files', 'gammu-smsd(1) backend using filesystem as a message storage', u'Michal Čihař <michal@cihar.com>', 7),
+    ('smsd/config', 'gammu-smsdrc', 'gammu-smsd(1) configuration file', u'Michal Čihař <michal@cihar.com>', 5),
+]
 
