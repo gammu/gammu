@@ -236,7 +236,7 @@ General parameters of SMS daemon
     again.
 
     The process has available lot of information about received message in 
-    environment, check gammu\-smsd\-run(7) for more details.
+    environment, check :ref:`smsd_run` for more details.
 
 .. config:option:: IncludeNumbersFile
 
