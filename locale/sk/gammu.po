@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-08-31 14:14+0200\n"
-"PO-Revision-Date: 2010-08-25 22:54+0200\n"
+"PO-Revision-Date: 2010-09-02 20:55+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -2201,9 +2201,8 @@ msgid "Name in phone"
 msgstr "Názov v telefóne"
 
 #: gammu/misc.c:62
-#, fuzzy
 msgid "Packet network state"
-msgstr "Stav siete"
+msgstr "Stav paketovej siete"
 
 #: gammu/misc.c:75
 msgid "Packet network"
@@ -3408,14 +3407,14 @@ msgid "Error creating thread\n"
 msgstr "Chyba pri vytváraní vlákna\n"
 
 #: helper/cmdline.c:23
-#, fuzzy, c-format
+#, c-format
 msgid "Number out of range: %s\n"
-msgstr "Predvoľba čísel"
+msgstr "Číslo je mimo povolený rozsah: %s\n"
 
 #: helper/cmdline.c:28
-#, fuzzy, c-format
+#, c-format
 msgid "Parameter is not a number: %s\n"
-msgstr "Parameter \"%s\" je neznámy\n"
+msgstr "Parameter \"%s\" nie je číslo \n"
 
 #: helper/formats.h:2
 #, fuzzy, c-format
@@ -3519,14 +3518,12 @@ msgid "General number"
 msgstr "Všeobecné číslo"
 
 #: helper/memory-display.c:123
-#, fuzzy
 msgid "Mobile number (work)"
-msgstr "Sériové číslo (IMEI)"
+msgstr "Číslo na mobil (do práce)"
 
 #: helper/memory-display.c:124
-#, fuzzy
 msgid "Mobile number (home)"
-msgstr "Sériové číslo (IMEI)"
+msgstr "Číslo na mobil (domov)"
 
 #: helper/memory-display.c:125
 msgid "Work number"
@@ -3701,15 +3698,15 @@ msgstr "V súbore neboli nájdené nastavenia MMS"
 
 #: helper/message-cmdline.c:466
 msgid "Sorry. No GPRS bearer found in MMS settings"
-msgstr ""
+msgstr "Prepáčte. V nastaveniach MMS nebol nájdený žiaden GPRS prenos"
 
 #: helper/message-cmdline.c:512
 msgid "ToDo note not found in file"
-msgstr ""
+msgstr "V súbore nebola nájdená úloha"
 
 #: helper/message-cmdline.c:574
 msgid "Backup functionality not compiled in!"
-msgstr ""
+msgstr "Podpora pre zálohovanie nebola skompilovaná!"
 
 #: helper/message-cmdline.c:1055
 #, c-format
@@ -3719,118 +3716,117 @@ msgstr "Chybná dĺžka správy (\"%s\")\n"
 #: helper/message-cmdline.c:1078
 #, c-format
 msgid "Unknown GSM network code (\"%s\")\n"
-msgstr ""
+msgstr "Neznámy kód GSM siete (\"%s\")\n"
 
 #: helper/message-cmdline.c:1097
 #, c-format
 msgid "You have to give number between 1 and 7 (\"%s\")\n"
-msgstr ""
+msgstr "Musíte zadať číslo medzi 1 až 7 (\"%s\")\n"
 
 #: helper/message-cmdline.c:1135
 #, c-format
 msgid "Unknown validity string (\"%s\")\n"
-msgstr ""
+msgstr "Neznáma text platnosti (\"%s\")\n"
 
 #: helper/message-cmdline.c:1173
 #, c-format
 msgid "You have to give number of EMS frames between 1 and 4 (\"%s\")\n"
-msgstr ""
+msgstr "Musíte zadať počet EMS snímkov medzi 1 až 4 (\"%s\")\n"
 
 #: helper/message-cmdline.c:1198
 #, c-format
 msgid "Can't open file \"%s\"\n"
-msgstr ""
+msgstr "Nepodarilo sa otvoriť súbor \"%s\"\n"
 
 #: helper/message-cmdline.c:1247
 #, c-format
 msgid "Unknown parameter (\"%c\")\n"
-msgstr ""
+msgstr "Neznámy parameter (\"%c\")\n"
 
 #: helper/message-cmdline.c:1252
 msgid "Last parameter wasn't text"
-msgstr ""
+msgstr "Posledný parameter nebol text"
 
 #: helper/message-cmdline.c:1286
 #, c-format
 msgid "Too long SMS name (\"%s\"), ignored\n"
-msgstr ""
+msgstr "Príliš dlhý názov SMS správy (\"%s\"), ignorované\n"
 
 #: helper/message-cmdline.c:1326
 #, c-format
 msgid "Enter the message text and press %s:\n"
-msgstr ""
+msgstr "Zadajte text správy a stlačte %s:\n"
 
 #: helper/message-cmdline.c:1344
 msgid "No chars read, assuming it is okay!"
-msgstr ""
+msgstr "Nenačítané žiadne znaky, predpokladám že je to v poriadku!"
 
 #: helper/message-cmdline.c:1364
 msgid "No network code"
-msgstr ""
+msgstr "Žiaden kód siete"
 
 #: helper/message-cmdline.c:1370
 msgid "You have to set network code!"
-msgstr ""
+msgstr "Musíte nastaviť kód siete!"
 
 #: helper/message-cmdline.c:1409
 #, c-format
 msgid "Ringtone too long. %i percent part cut\n"
-msgstr ""
+msgstr "Zvonenie je príliš dlhé. Skrátené o %i percent\n"
 
 #: helper/message-cmdline.c:1420
 #, c-format
 msgid "There are %i SMS messages packed and the limit is %i. Exiting\n"
-msgstr ""
+msgstr "Zkomprimovaných %i SMS správ a limit je %i. Končím\n"
 
 #: helper/message-cmdline.c:1430
 msgid "Use -smscnumber option to give SMSC number"
-msgstr ""
+msgstr "Na zadanie čísla SMSC použite voľbu -smscnumber"
 
 #: helper/message-display.c:26
 #, c-format
 msgid "Location %i, folder \"%s\""
-msgstr ""
+msgstr "Umiestnenie %i, zložka \"%s\""
 
 #: helper/message-display.c:33
 msgid "SIM memory"
-msgstr ""
+msgstr "SIM pamäť"
 
 #: helper/message-display.c:36
 msgid "phone memory"
-msgstr ""
+msgstr "pamäť telefónu"
 
 #: helper/message-display.c:39
 msgid "phone or SIM memory"
-msgstr ""
+msgstr "pamäť telefónu alebo SIM karty"
 
 #: helper/message-display.c:46
 msgid "Inbox folder"
-msgstr ""
+msgstr "Doručené správy"
 
 #: helper/message-display.c:114
 msgid "mobile"
-msgstr ""
+msgstr "mobil"
 
 #: helper/message-display.c:117
 msgid "work"
-msgstr ""
+msgstr "práca"
 
 #: helper/message-display.c:123
 msgid "home"
-msgstr ""
+msgstr "domov"
 
 #: helper/message-display.c:126
 msgid "pager"
-msgstr ""
+msgstr "pager"
 
 #: helper/message-display.c:129
-#, fuzzy
 msgid "general"
-msgstr "Všeobecné"
+msgstr "všeobecné"
 
 #: helper/message-display.c:148
 msgid "SMS status report"
-msgstr ""
+msgstr "Informácie o stave SMS"
 
 #: helper/message-display.c:152 helper/message-display.c:164
 #: helper/message-display.c:216 helper/message-display.c:231
@@ -3844,238 +3840,239 @@ msgstr "Prečítané"
 
 #: helper/message-display.c:154 helper/message-display.c:274
 msgid "UnRead"
-msgstr ""
+msgstr "Neprečítané"
 
 #: helper/message-display.c:155 helper/message-display.c:275
 msgid "UnSent"
-msgstr ""
+msgstr "Neodoslané"
 
 #: helper/message-display.c:159 helper/message-display.c:262
 msgid "Remote number"
 msgid_plural "Remote numbers"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Vzdialené čísla"
+msgstr[1] "Vzdialených čísel"
+msgstr[2] "Vzdialeným číslam"
 
 #: helper/message-display.c:163 helper/message-display.c:228
 msgid "Reference number"
-msgstr ""
+msgstr "Referenčné číslo"
 
 #: helper/message-display.c:165 helper/message-display.c:213
 msgid "SMSC number"
-msgstr ""
+msgstr "SMSC číslo"
 
 #: helper/message-display.c:166
 msgid "SMSC response"
-msgstr ""
+msgstr "SMSC odpoveď"
 
 #: helper/message-display.c:167
 msgid "Delivery status"
-msgstr ""
+msgstr "Stav doručenia"
 
 #: helper/message-display.c:168
 msgid "Details"
-msgstr ""
+msgstr "Detaily"
 
 #: helper/message-display.c:171 helper/message-display.c:176
 msgid "Temporary error, "
-msgstr ""
+msgstr "Dočasná chyba, "
 
 #: helper/message-display.c:173
 msgid "Permanent error, "
-msgstr ""
+msgstr "Trvalá chyba, "
 
 #: helper/message-display.c:179
 msgid "SM received by the SME"
-msgstr ""
+msgstr "SM bola prijatá cez SME"
 
 #: helper/message-display.c:180
 msgid ""
 "SM forwarded by the SC to the SME but the SC is unable to confirm delivery"
 msgstr ""
+"SM preposlaná pomocou SC na SME ale SC nie je schopné potvrdiť doručenie"
 
 #: helper/message-display.c:181
 msgid "SM replaced by the SC"
-msgstr ""
+msgstr "SM nahradená SC"
 
 #: helper/message-display.c:182 helper/message-display.c:198
 msgid "Congestion"
-msgstr ""
+msgstr "Zahltenie"
 
 #: helper/message-display.c:183 helper/message-display.c:199
 msgid "SME busy"
-msgstr ""
+msgstr "SME je zaneprázdnené"
 
 #: helper/message-display.c:184 helper/message-display.c:200
 msgid "No response from SME"
-msgstr ""
+msgstr "Žiadna odpoveď od SME"
 
 #: helper/message-display.c:185 helper/message-display.c:201
 msgid "Service rejected"
-msgstr ""
+msgstr "Služba odmietnutá"
 
 #: helper/message-display.c:186 helper/message-display.c:192
 #: helper/message-display.c:202
 msgid "Quality of service not available"
-msgstr ""
+msgstr "Kvalita služby nie je dostupná"
 
 #: helper/message-display.c:187 helper/message-display.c:203
 msgid "Error in SME"
-msgstr ""
+msgstr "Chyba v SME"
 
 #: helper/message-display.c:188
 msgid "Remote procedure error"
-msgstr ""
+msgstr "Chyba vzdialenej procedúry"
 
 #: helper/message-display.c:189
 msgid "Incompatibile destination"
-msgstr ""
+msgstr "Nekompatibilný cieľ"
 
 #: helper/message-display.c:190
 msgid "Connection rejected by SME"
-msgstr ""
+msgstr "SME odmietlo spojenie"
 
 #: helper/message-display.c:191
 msgid "Not obtainable"
-msgstr ""
+msgstr "Nedá sa získať"
 
 #: helper/message-display.c:193
 msgid "No internetworking available"
-msgstr ""
+msgstr "Nie je dostupné pripojenie k internetu"
 
 #: helper/message-display.c:194
 msgid "SM Validity Period Expired"
-msgstr ""
+msgstr "Vypršala doba platnosti SM"
 
 #: helper/message-display.c:195
 msgid "SM deleted by originating SME"
-msgstr ""
+msgstr "SM zmazaná odosielajúcim SME"
 
 #: helper/message-display.c:196
 msgid "SM Deleted by SC Administration"
-msgstr ""
+msgstr "SM vymazaná správcom SC"
 
 #: helper/message-display.c:197
 msgid "SM does not exist"
-msgstr ""
+msgstr "SM neexistuje"
 
 #: helper/message-display.c:204
 #, c-format
 msgid "Reserved/Specific to SC: %x"
-msgstr ""
+msgstr "Rezervované/Závislé na SC: %x"
 
 #: helper/message-display.c:209 helper/message-display.c:226
 msgid "SMS message"
-msgstr ""
+msgstr "SMS správa"
 
 #: helper/message-display.c:211
 msgid "Saved"
-msgstr ""
+msgstr "Uložené"
 
 #: helper/message-display.c:214
 msgid " (set for reply)"
-msgstr ""
+msgstr " (nastavené pre odpoveď)"
 
 #: helper/message-display.c:223
 msgid "SMS replacing ID"
-msgstr ""
+msgstr "SMS nahradzuje ID"
 
 #: helper/message-display.c:238
 msgid "Class"
-msgstr ""
+msgstr "Trieda"
 
 #: helper/message-display.c:240
 msgid "Coding"
-msgstr ""
+msgstr "Kódovanie"
 
 #: helper/message-display.c:243
 msgid "Unicode (no compression)"
-msgstr ""
+msgstr "Unicode (bez kompresie)"
 
 #: helper/message-display.c:246
 msgid "Unicode (compression)"
-msgstr ""
+msgstr "Unicode (s kompresiou)"
 
 #: helper/message-display.c:249
 msgid "Default GSM alphabet (no compression)"
-msgstr ""
+msgstr "Východzia GSM abeceda (bez kompresie)"
 
 #: helper/message-display.c:252
 msgid "Default GSM alphabet (compression)"
-msgstr ""
+msgstr "Východzia GSM abeceda (s kompresie)"
 
 #. l10n: 8-bit message coding
 #: helper/message-display.c:256
 msgid "8-bit"
-msgstr ""
+msgstr "8-bitové"
 
 #: helper/message-display.c:279
 msgid "User Data Header"
-msgstr ""
+msgstr "Uživateľská hlavička dát"
 
 #: helper/message-display.c:281 helper/message-display.c:282
 msgid "Concatenated (linked) message"
-msgstr ""
+msgstr "Zreťazená (spojená) správa"
 
 #: helper/message-display.c:283
 msgid "Disables voice indicator"
-msgstr ""
+msgstr "Vypína hlasovú indikáciu"
 
 #: helper/message-display.c:284
 msgid "Enables voice indicator"
-msgstr ""
+msgstr "Zapína hlasovú indikáciu"
 
 #: helper/message-display.c:285
 msgid "Disables fax indicator"
-msgstr ""
+msgstr "Vypína indikáciu faxu"
 
 #: helper/message-display.c:286
 msgid "Enables fax indicator"
-msgstr ""
+msgstr "Zapína indikáciu faxu"
 
 #: helper/message-display.c:287
 msgid "Disables email indicator"
-msgstr ""
+msgstr "Vypína indikáciu emailu"
 
 #: helper/message-display.c:288
 msgid "Enables email indicator"
-msgstr ""
+msgstr "Zapína indikáciu emailu"
 
 #: helper/message-display.c:289
 msgid "Void SMS"
-msgstr ""
+msgstr "Prázdna SMS"
 
 #: helper/message-display.c:290
 msgid "Nokia WAP bookmark"
-msgstr ""
+msgstr "Nokia WAP záložka"
 
 #: helper/message-display.c:291
 msgid "Nokia operator logo"
-msgstr ""
+msgstr "Logo operátora Nokia"
 
 #: helper/message-display.c:292
 msgid "Nokia WAP bookmark or WAP/MMS settings"
-msgstr ""
+msgstr "Nokia WAP záložka alebo WAP/MMS nastavenia"
 
 #: helper/message-display.c:293 helper/message-display.c:294
 msgid "Nokia ringtone"
-msgstr ""
+msgstr "Zvonenie Nokia"
 
 #: helper/message-display.c:295
 msgid "Nokia GSM operator logo"
-msgstr ""
+msgstr "Nokia GSM logo operátora"
 
 #: helper/message-display.c:296
 msgid "Nokia caller logo"
-msgstr ""
+msgstr "Nokia logo volajúceho"
 
 #: helper/message-display.c:297
 msgid "Nokia profile"
-msgstr ""
+msgstr "Profil Noka"
 
 #: helper/message-display.c:298
 msgid "Nokia calendar note"
-msgstr ""
+msgstr "Nokia kalendár"
 
 #: helper/message-display.c:299
 msgid "Nokia phonebook entry"
@@ -4083,123 +4080,124 @@ msgstr ""
 
 #: helper/message-display.c:300
 msgid "User UDH"
-msgstr ""
+msgstr "Užívateľské UDH"
 
 #: helper/message-display.c:301
 msgid "MMS indicator"
-msgstr ""
+msgstr "MMS indikátor"
 
 #: helper/message-display.c:305
 #, c-format
 msgid ", ID (8 bit) %i"
-msgstr ""
+msgstr ", ID (8 bitové) %i"
 
 #: helper/message-display.c:306
 #, c-format
 msgid ", ID (16 bit) %i"
-msgstr ""
+msgstr ", ID (16 bitové) %i"
 
 #: helper/message-display.c:309
 #, c-format
 msgid ", part %i of %i"
-msgstr ""
+msgstr ", časť %i z %i"
 
 #: helper/message-display.c:311
 #, c-format
 msgid ", %i parts"
-msgstr ""
+msgstr ", %i časti"
 
 #: helper/message-display.c:323
 msgid "Siemens file"
-msgstr ""
+msgstr "Siemens súbor"
 
 #: helper/message-display.c:326
 msgid "8 bit SMS, cannot be displayed here"
-msgstr ""
+msgstr "8 bit SMS, nemôže byť zobrazený"
 
 #: helper/message-display.c:332
 #, c-format
 msgid "Unknown PDU type: 0x%x\n"
-msgstr ""
+msgstr "Neznámy typ PDU : 0x%x\n"
 
 #: helper/message-display.c:379
 msgid ""
 "Some details were ignored (unknown or not implemented in decoding functions)"
 msgstr ""
+"niektoré detaily boli ignorované (neznáme alebo neiplementované funkcie "
+"dekódovania)"
 
 #: helper/message-display.c:384
 msgid "Siemens OTA file"
-msgstr ""
+msgstr "Siemens OTA súbor"
 
 #: helper/message-display.c:386
 msgid " - VCARD"
-msgstr ""
+msgstr " - VCARD"
 
 #: helper/message-display.c:400
 #, c-format
 msgid "Ringtone \"%s\"\n"
-msgstr ""
+msgstr "Zvonenie \"%s\"\n"
 
 #: helper/message-display.c:405
 msgid "Do you want to play it?"
-msgstr ""
+msgstr "Naozaj chcete prehrať?"
 
 #: helper/message-display.c:410
 msgid "Caller logo"
-msgstr ""
+msgstr "Logo skupiny"
 
 #: helper/message-display.c:414
 #, c-format
 msgid "Operator logo for %s network"
-msgstr ""
+msgstr "Logo operátora pre %s sieť"
 
 #: helper/message-display.c:434
 msgid "Profile"
-msgstr ""
+msgstr "Profil"
 
 #: helper/message-display.c:455
 msgid "EMS sound ID"
-msgstr ""
+msgstr "ID EMS zvuku"
 
 #: helper/message-display.c:458
 msgid "EMS animation ID"
-msgstr ""
+msgstr "ID EMS animácie"
 
 #: helper/message-display.c:464
-#, fuzzy
 msgid "Message size"
-msgstr "Správy"
+msgstr "Veľkosť správy"
 
 #. l10n: Generic prefix for error messages
 #: helper/message-display.c:497 helper/printing.c:18
 msgid "Error"
-msgstr ""
+msgstr "Chyba"
 
 #: helper/message-display.c:530
 msgid "Data PDU"
-msgstr ""
+msgstr "PDU dát"
 
 #: helper/message-display.c:531
 msgid "Number of bits"
-msgstr ""
+msgstr "Počet bitov"
 
 #: helper/message-display.c:533
 msgid "UDH"
-msgstr ""
+msgstr "UDH"
 
 #: helper/message-display.c:549
 msgid "Whole PDU"
-msgstr ""
+msgstr "Celé PDU"
 
 #. l10n: Generic prefix for warning messages
 #: helper/printing.c:34
 msgid "Warning"
-msgstr ""
+msgstr "Varovanie"
 
 #. l10n: Generic prefix for informational messages
 #: helper/printing.c:50
 msgid "Information"
-msgstr ""
+msgstr "Informácia"
 
 #~ msgid "Never version of firmware is available!\n"
 #~ msgstr "Je dostupná novšia verzia firmware!\n"
