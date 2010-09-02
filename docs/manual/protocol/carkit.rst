@@ -46,16 +46,8 @@ Initiation
     Ack from phone
 1F0400 78 0004 0102 0801 117C
     Status 0x08, 0x01 from phone
-1F0400 78 0004 0102 0801 117C
-    
-1F0400 78 0004 0102 0801 117C
-    
 1F0400 DA 0002 0002 12D3
     Type => 0xDA, data => 0x00, 0x02
-1F0400 DA 0002 0002 12D3
-    
-1F0400 DA 0002 0002 12D3
-    
 1F0004 79 0005 0201 0164 00 0504 
     Enable carkit mode from PC
 1F0004 79 0005 0201 0164 00 0607
@@ -76,16 +68,9 @@ Incoming call
 
 1F0400 78 0004 0102 0701 197B
     Status 0x07, 0x01 from phone
-1F0400 78 0004 0102 0701 197B
-    
-1F0400 78 0004 0102 0701 197B
-    
 1F0400 78 0004 0102 0E03 1A73
     Status 0x0E, 0x03 from phone
-1F0400 78 0004 0102 0E03 1A73
-    
-1F0400 78 0004 0102 0E03 1A73
-    
+
 Status type 0x07 with status 0x01 means mute external audio equipment. Status type 0x0E with status 0x03 means audio amplifier on.
 
 Connected
@@ -106,42 +91,22 @@ Initiation with connected phone
     Ack from phone
 1F0400 78 0004 0102 0E03 1C75
     Status 0x0E, 0x03 from phone
-1F0400 78 0004 0102 0E03 1C75 
-    
-1F0400 78 0004 0102 0E03 1C75
-    
 1F0400 78 0004 0102 0701 1D7F
     Status 0x07, 0x01 from phone
-1F0400 78 0004 0102 0701 1D7F
-    
-1F0400 78 0004 0102 0701 1D7F
-    
 1F0004 79 0012 0201 0206 00 5620 3037 2E30 300A 4846 5532 00 0249
     HFU-2 Version from PC
 1F0400 7F 0266
     Ack from phone
 1F0400 78 0004 0102 0801 1E73
     Status 0x08, 0x01 from phone
-1F0400 78 0004 0102 0801 1E73
-    
-1F0400 78 0004 0102 0801 1E73
-    
 1F0004 79 0005 0201 0164 0003 02
     Enable carkit mode from PC
 1F0400 7F 0367
     Ack from phone
 1F0400 78 0004 0102 0E03 1F76
     Status 0x0E, 0x03 from phone
-1F0400 78 0004 0102 0E03 1F76
-    
-1F0400 78 0004 0102 0E03 1F76
-    
 1F0400 78 0004 0102 0701 2042
     Status 0x07, 0x01 from phone
-1F0400 78 0004 0102 0701 2042
-    
-1F0400 78 0004 0102 0701 2042
-    
 1F0004 78 0003 0201 03 0464
     Status confirm from PC
 1F0400 7F 0460
@@ -152,10 +117,6 @@ Disconnected
 
 1F04 0078 0004 0102 0700 2142
     Status 0x07, 0x00
-1F04 0078 0004 0102 0700 2142
-    
-1F04 0078 0004 0102 0700 2142
-    
 
 Incoming SMS
 ~~~~~~~~~~~~
@@ -165,10 +126,7 @@ FCF0 F0F0 F0F0 F0F0 F0F0 F0F0 F0F0 F0F0 F0F0 F0F0 F0F0 F0F0 F0F0 F0F0 F0F0 F0F0 
 1F0400 78 0004 0102 0E03 254C
     Status 0x0E, 0x03 from phone
 F0F0F0F0
-    
-1F0400 78 0004 0102 0E03 254C
-    
-1F0400 78 0004 0102 0E03 254C
+    Initiation of bit length from phone
     
 Phone connected to CARC91
 +++++++++++++++++++++++++
@@ -373,30 +331,18 @@ Initiation
     Ack from phone
 1F0400 78 0004 0128 0B00 0E4B 
     Status 0x0B, 0x00 from phone
-1F0400 78 0004 0128 0B00 0E4B 
-    
-1F0400 78 0004 0128 0B00 0E4B 
-    
 1F0004 79 0012 0201 0206 0056 2030 372E 3030 0A48 4655 3200 0D46  
     HFU-2 version from PC
 1F0400 7F 0E6A 
     Ack from phone
 1F0400 DA 0004 0028 0000 0FE2
-    
-1F0400 DA 0004 0028 0000 0FE2
-    
-1F0400 DA 0004 0028 0000 0FE2
-    
+    ?
 1F0004 79 0005 0201 0164 00 1716
     Enable carkit mode from PC
 1F0400 7F 1773
     Ack from phone
 1F0400 78 0004 0128 0B00 1055
     Status 0x0B, 0x00 from phone
-1F0400 78 0004 0128 0B00 1055
-    
-1F0400 78 0004 0128 0B00 1055
-    
 1F0004 78 0003 0201 03 1878
     Status confirm from PC
 1F0400 7F 1A7E
@@ -438,7 +384,6 @@ Initiation with connected phone
     Status 0x09, 0x00
 1F0400 78 0004 0128 0701 1D55
     Status 0x07, 0x01
-
 1F0004 D0 0001 04 00CE
     Power up from HFU-2
 1F0400 D0 0001 05 74BB
@@ -558,7 +503,7 @@ Initiation
 1F0400 7F 0460
     Ack from phone
 1F0400 DA 0004 0028 0000 2FC2
-    
+    ?
 1F0004 7F 2F4B
     Ack from HFU-2
 
@@ -668,7 +613,7 @@ Initiation with connected phone
 1F0400 7F 0561
     Ack from phone
 1F0400 DA 0004 0028 0000 5EB3
-    
+    ?
 1F0004 7F 5E3A
     Ack from HFU-2
 
