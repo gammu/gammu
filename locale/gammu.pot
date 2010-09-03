@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.28.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-08-31 14:14+0200\n"
+"POT-Creation-Date: 2010-09-03 14:46+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3711,6 +3711,14 @@ msgstr ""
 #: helper/message-cmdline.c:1326
 #, c-format
 msgid "Enter the message text and press %s:\n"
+msgstr ""
+
+#: helper/message-cmdline.c:1328
+msgid "Ctrl+Z"
+msgstr ""
+
+#: helper/message-cmdline.c:1330
+msgid "Ctrl+D"
 msgstr ""
 
 #: helper/message-cmdline.c:1344

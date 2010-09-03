@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.28.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-08-31 14:14+0200\n"
+"POT-Creation-Date: 2010-09-03 14:46+0200\n"
 "PO-Revision-Date: 2008-01-27 17:07+0100\n"
 "Last-Translator: Даниил Аплеев <apleev@mail.ru>\n"
 "Language-Team: Language =ru\n"
@@ -4204,6 +4204,14 @@ msgstr "Слишком длинное название SMS (\"%s\"); проиг�
 #: helper/message-cmdline.c:1326
 #, c-format
 msgid "Enter the message text and press %s:\n"
+msgstr ""
+
+#: helper/message-cmdline.c:1328
+msgid "Ctrl+Z"
+msgstr ""
+
+#: helper/message-cmdline.c:1330
+msgid "Ctrl+D"
 msgstr ""
 
 #: helper/message-cmdline.c:1344
