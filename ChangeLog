@@ -24,6 +24,7 @@ ChangeLog
 [-] * Fixed locales compliation/support.
 [-] * Set memory to use for MPBR/SBNR/SPBR commands as well (bug #1128).
 [-] * Handle errors from CMGL same way as from CMGR (bug #1211).
+[-] * Fixed parsing of AT+CPMS=? reply (bug #1296).
     
 20100827 - 1.28.90
 
