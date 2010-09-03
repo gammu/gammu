@@ -162,7 +162,9 @@ htmlhelp_basename = 'gammudoc'
 # ------------------------
 
 # The paper size ('letter' or 'a4').
-#latex_paper_size = 'letter'
+latex_elements = {
+    'papersize': 'a4',
+}
 
 # The font size ('10pt', '11pt' or '12pt').
 #latex_font_size = '10pt'
@@ -170,8 +172,8 @@ htmlhelp_basename = 'gammudoc'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, document class [howto/manual]).
 latex_documents = [
-  ('index', 'gammu.tex', ur'Gammu Documentation',
-   ur'Michal Čihař <michal@cihar.com>', 'manual'),
+  ('contents', 'gammu.tex', ur'Gammu Manual',
+   ur'Michal Čihař <michal@cihar.com>', 'manual', True),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -189,7 +191,7 @@ latex_documents = [
 #latex_appendices = []
 
 # If false, no module index is generated.
-#latex_use_modindex = True
+latex_domain_indices = True
 
 # Options for breathe extension
 # -----------------------------
