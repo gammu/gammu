@@ -1325,9 +1325,9 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			if (isatty(fileno(stdin))) {
 				printf(_("Enter the message text and press %s:\n"),
 #ifdef WIN32
-					"Ctrl+Z"
+					_("Ctrl+Z")
 #else
-					"Ctrl+D"
+					_("Ctrl+D")
 #endif
 				);
 			}
