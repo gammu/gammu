@@ -8,14 +8,15 @@ msgstr ""
 "Project-Id-Version: gammu 1.27.96\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-08-31 14:14+0200\n"
-"PO-Revision-Date: 2010-07-01 14:12+0200\n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2010-09-03 14:25+0200\n"
+"Last-Translator: Robert Readman <robert_readman@hotmail.com>\n"
 "Language-Team: none\n"
 "Language: en_GB\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Pootle 2.0.5\n"
 
 #: gammu/backup.c:33 gammu/backup.c:56 gammu/backup.c:79 gammu/backup.c:100
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -3739,9 +3740,9 @@ msgid "Too long SMS name (\"%s\"), ignored\n"
 msgstr "Too long SMS name (\"%s\"), ignored\n"
 
 #: helper/message-cmdline.c:1326
-#, fuzzy, c-format
+#, c-format
 msgid "Enter the message text and press %s:\n"
-msgstr "Enter message text and press ^D:"
+msgstr "Enter the message text and press %s:\n"
 
 #: helper/message-cmdline.c:1344
 msgid "No chars read, assuming it is okay!"
