@@ -1,5 +1,5 @@
-Welcome to Gammu's documentation!
-=================================
+Gammu Manual
+============
 
 `Gammu library`_ and `python-gammu`_ provide you way to communicate with
 your cell phone using standard API. This documentation explains both
@@ -9,20 +9,17 @@ You can also learn something about :doc:`internal/index` and also about
 :doc:`protocol/index`.
 
 
-Contents
---------
+Continue reading
+----------------
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 1
 
-    project/index
+    contents
+    project/about
+    smsd/index
     python/index
     c/index
-    internal/index
-    formats/index
-    smsd/index
-    testing/index
-    protocol/index
 
 Indices and tables
 ------------------
