@@ -82,6 +82,10 @@ GSM_Error ATGEN_ReplyGetSMSMemories(GSM_Protocol_Message msg, GSM_StateMachine *
 		Priv->SIMSaveSMS = AT_NOTAVAILABLE;
 
 		Line = GetLineString(msg.Buffer, &Priv->Lines, 2);
+		/* Skip empty line in response */
+		if (strcmp(Line, "") == 0) {
+			Line = GetLineString(msg.Buffer, &Priv->Lines, 3);
+		}
 		if (strcmp(Line, "+CPMS: ") == 0 && Priv->Manufacturer == AT_Samsung) {
 			smprintf(s, "Assuming broken Samsung response, both memories available!\n");
 			Priv->PhoneSMSMemory = AT_AVAILABLE;
