@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.27.96\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-09-03 14:46+0200\n"
-"PO-Revision-Date: 2010-09-06 20:58+0200\n"
+"PO-Revision-Date: 2010-09-06 20:59+0200\n"
 "Last-Translator: Robert Readman <robert_readman@hotmail.com>\n"
 "Language-Team: none\n"
 "Language: en_GB\n"
@@ -3750,7 +3750,7 @@ msgstr "Ctrl+Z"
 
 #: helper/message-cmdline.c:1330
 msgid "Ctrl+D"
-msgstr ""
+msgstr "Ctrl+D"
 
 #: helper/message-cmdline.c:1344
 msgid "No chars read, assuming it is okay!"
