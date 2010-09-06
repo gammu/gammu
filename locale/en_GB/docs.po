@@ -10000,15 +10000,14 @@ msgstr ""
 
 #. type: Plain text
 #: README:91
-#, fuzzy
 msgid ""
 "If you intend to use libGammu in your application, all you should need is to "
 "#include <gammu.h> and then use Gammu functions. You can check docs/"
 "examples/ for some small example applications."
 msgstr ""
 "If you intend to use libGammu in your application, all you should need is to "
-"#include <gammu.h> and then use Gammu functions. You can check docs/develop/"
-"examples/ for some small example applications."
+"#include <gammu.h> and then use Gammu functions. You can check "
+"docs/examples/ for some small example applications."
 
 #. type: Plain text
 #: README:95
