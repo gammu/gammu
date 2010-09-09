@@ -11,6 +11,7 @@
 #include <gammu-config.h>
 
 #include <ctype.h>
+#include <string.h>
 
 #ifdef LIBUSB_FOUND
 #include <libusb.h>
@@ -21,6 +22,8 @@
 #include "usb.h"
 
 #include "../../gsmcomon.h"
+
+#include "../../../helper/string.h"
 
 /**
  * Nokia USB vendor ID.
@@ -128,7 +131,7 @@ GSM_Error GSM_USB_Error(GSM_StateMachine *s, enum libusb_error code)
 	}
 }
 
-GSM_Error GSM_USB_ParseDevice(GSM_StateMachine *s, int *vendor, int *product, int *bus, int *deviceid)
+GSM_Error GSM_USB_ParseDevice(GSM_StateMachine *s, int *vendor, int *product, int *bus, int *deviceid, char **serial)
 {
 	char *endptr, *next;
 	int num;
@@ -137,8 +140,26 @@ GSM_Error GSM_USB_ParseDevice(GSM_StateMachine *s, int *vendor, int *product, in
 	*product = -1;
 	*bus = -1;
 	*deviceid = -1;
+	*serial = NULL;
 
-	if (s->CurrentConfig->Device[0] == 0 || !isdigit(s->CurrentConfig->Device[0])) {
+	if (s->CurrentConfig->Device[0] == 0) {
+		return ERR_NONE;
+	}
+
+	if (strncasecmp(s->CurrentConfig->Device, "serial:", 7) == 0) {
+		*serial = s->CurrentConfig->Device + 7;
+	} else if (strncasecmp(s->CurrentConfig->Device, "serial :", 8) == 0) {
+		*serial = s->CurrentConfig->Device + 8;
+	}
+	if (*serial != NULL) {
+		while (isspace(**serial) && **serial != 0) {
+			*serial = *serial + 1;
+		}
+		smprintf(s, "Will search for serial = %s\n", *serial);
+		return ERR_NONE;
+	}
+
+	if (!isdigit(s->CurrentConfig->Device[0])) {
 		return ERR_NONE;
 	}
 
@@ -196,11 +217,13 @@ GSM_Error GSM_USB_Probe(GSM_StateMachine *s, GSM_USB_Match_Function matcher)
 	struct libusb_config_descriptor *config;
 	GSM_Error error;
 	int vendor = -1, product = -1, bus = -1, deviceid = -1;
+	char *serial = NULL;
+	char buffer[300];
 	gboolean do_match;
 
 	/* Device selection */
-	GSM_USB_ParseDevice(s, &vendor, &product, &bus, &deviceid);
-	do_match = (vendor != -1 || product != -1 || bus != -1 || deviceid != -1);
+	GSM_USB_ParseDevice(s, &vendor, &product, &bus, &deviceid, &serial);
+	do_match = (vendor != -1 || product != -1 || bus != -1 || deviceid != -1 || serial != NULL);
 
 	cnt = libusb_get_device_list(d->context, &devs);
 	if (cnt < 0) {
@@ -238,6 +261,20 @@ GSM_Error GSM_USB_Probe(GSM_StateMachine *s, GSM_USB_Match_Function matcher)
 			if (deviceid != -1 && deviceid != libusb_get_device_address(dev)) {
 				smprintf(s, "Device address does not match requested %d, ignoring\n", deviceid);
 				continue;
+			}
+			if (serial != NULL && desc.iSerialNumber) {
+				rc = libusb_open(dev, &d->handle);
+				if (rc != 0) {
+					smprintf(s, "Failed to read serial!\n");
+				} else {
+					libusb_get_string_descriptor_ascii(d->handle, desc.iSerialNumber, buffer, sizeof(buffer) - 1);
+					smprintf(s, "Device serial: %s\n", buffer);
+					libusb_close(d->handle);
+					if (strcasecmp(buffer, serial) != 0) {
+						smprintf(s, "Device serial does not match requested %s, ignoring\n", serial);
+						continue;
+					}
+				}
 			}
 		}
 
