@@ -226,6 +226,8 @@ static size_t SMSDPgSQL_Escape(GSM_SMSDConfig * Config, char *to, char *from)
 static GSM_Error SMSDPgSQL_InitAfterConnect(GSM_SMSDConfig * Config)
 {
 	unsigned char buf2[200];
+	char send[4];
+	char receive[4];
 
 	PGresult *Res;
 
@@ -245,10 +247,17 @@ static GSM_Error SMSDPgSQL_InitAfterConnect(GSM_SMSDConfig * Config)
 		strcat(buf2 + strlen(buf2), GetCompiler());
 	}
 
+	Config->send ? strcpy(send,"yes") : strcpy(send,"no");
+	Config->receive ? strcpy(receive,"yes") : strcpy(receive,"no");
 	if (SMSDPgSQL_Query(Config, &Res,
 		"INSERT INTO phones (IMEI, ID, Send, Receive, InsertIntoDB, TimeOut, Client, Battery, Signal) "
-		"VALUES ('%s', '%s', 'yes', 'yes', now(), now() + interval '10 seconds', '%s', -1, -1)",
-		Config->Status->IMEI, Config->PhoneID, buf2) != ERR_NONE) {
+		"VALUES ('%s', '%s', '%s', '%s', now(), now() + interval '10 seconds', '%s', -1, -1)",
+		Config->Status->IMEI,
+		Config->PhoneID,
+		send,
+		receive,
+		buf2
+	) != ERR_NONE) {
 			SMSD_Log(DEBUG_INFO, Config, "Error inserting into database (%s)", __FUNCTION__);
 			return ERR_UNKNOWN;
 	}

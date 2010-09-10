@@ -222,6 +222,8 @@ static GSM_Error SMSDMySQL_InitAfterConnect(GSM_SMSDConfig *Config)
 {
 	char query[400];
 	char client_name[200];
+	char send[4];
+	char receive[4];
 
 	snprintf(query, sizeof(query), "DELETE FROM `phones` WHERE `IMEI` = '%s'", Config->Status->IMEI);
 	if (SMSDMySQL_Query(Config, query) != ERR_NONE) {
@@ -232,9 +234,16 @@ static GSM_Error SMSDMySQL_InitAfterConnect(GSM_SMSDConfig *Config)
 	snprintf(client_name, sizeof(client_name), "Gammu %s, %s, %s", VERSION, GetOS(), GetCompiler());
 
 	SMSD_Log(DEBUG_INFO, Config, "Communication established");
+	Config->send ? strcpy(send,"yes") : strcpy(send,"no");
+	Config->receive ? strcpy(receive,"yes") : strcpy(receive,"no");
 	snprintf(query, sizeof(query),
-		"INSERT INTO `phones` (`IMEI`,`ID`,`Send`,`Receive`,`InsertIntoDB`,`TimeOut`,`Client`, `Battery`, `Signal`) VALUES ('%s','%s','yes','yes',NOW(),(NOW() + INTERVAL 10 SECOND)+0,'%s', -1, -1)",
-		Config->Status->IMEI, Config->PhoneID, client_name);
+		"INSERT INTO `phones` (`IMEI`,`ID`,`Send`,`Receive`,`InsertIntoDB`,`TimeOut`,`Client`, `Battery`, `Signal`) VALUES ('%s','%s','%s','%s',NOW(),DATE_ADD(NOW(), INTERVAL 10 SECOND),'%s', -1, -1)",
+		Config->Status->IMEI,
+		Config->PhoneID,
+		send,
+		receive,
+		client_name
+	);
 	if (SMSDMySQL_Query(Config, query) != ERR_NONE) {
 		SMSD_Log(DEBUG_INFO, Config, "Error inserting phone info into database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
@@ -401,7 +410,7 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 		}
 		locations_pos += sprintf((*Locations) + locations_pos, "%lu ", (long)new_id);
 
-		sprintf(buf, "UPDATE phones SET Received = Received + 1 WHERE IMEI = '%s'", Config->Status->IMEI);
+		sprintf(buf, "UPDATE `phones` SET `Received` = `Received` + 1 WHERE `IMEI` = '%s'", Config->Status->IMEI);
 		if (SMSDMySQL_Query(Config, buf) != ERR_NONE) {
 			SMSD_Log(DEBUG_INFO, Config, "Error updating number of received messages (%s)", __FUNCTION__);
 	    		mysql_free_result(Res);
@@ -436,7 +445,7 @@ static GSM_Error SMSDMySQL_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 	int 			i;
 	gboolean			found = FALSE;
 
-	if (SMSDMySQL_Store(Config, "SELECT ID,InsertIntoDB,SendingDateTime,SenderID FROM `outbox` WHERE SendingDateTime < NOW() AND SendingTimeOut < NOW()", &Res) != ERR_NONE) {
+	if (SMSDMySQL_Store(Config, "SELECT `ID`,`InsertIntoDB`,`SendingDateTime`,`SenderID` FROM `outbox` WHERE SendingDateTime < NOW() AND SendingTimeOut < NOW() LIMIT 10", &Res) != ERR_NONE) {
 		SMSD_Log(DEBUG_INFO, Config, "Error reading message to send from database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
@@ -791,7 +800,7 @@ static GSM_Error SMSDMySQL_AddSentSMSInfo(GSM_MultiSMSMessage *sms, GSM_SMSDConf
 		SMSD_Log(DEBUG_INFO, Config, "Error writing sent item to database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
-	snprintf(query, sizeof(query), "UPDATE `phones` SET `Sent`= `Sent` + 1 WHERE IMEI = '%s'", Config->Status->IMEI);
+	snprintf(query, sizeof(query), "UPDATE `phones` SET `Sent`= `Sent` + 1 WHERE `IMEI` = '%s'", Config->Status->IMEI);
 	if (SMSDMySQL_Query(Config, query) != ERR_NONE) {
 		SMSD_Log(DEBUG_INFO, Config, "Error updating number of sent messages (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;

@@ -63,6 +63,8 @@ struct _GSM_SMSDConfig {
 	gboolean checksecurity;
 	gboolean checkbattery;
 	gboolean checksignal;
+	gboolean send;
+	gboolean receive;
 	unsigned int maxretries;
 	int backend_retries;
 
