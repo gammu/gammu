@@ -275,6 +275,18 @@ General parameters of SMS daemon
 
     Default is 10.
 
+.. config:option:: Send
+
+    Whether to enable sending of messages.
+
+    Default is True.
+
+.. config:option:: Receive
+
+    Whether to enable receiving of messages.
+
+    Default is True.
+
 
 Database backends options
 -------------------------
