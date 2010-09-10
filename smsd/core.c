@@ -1707,6 +1707,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 	GSM_Error		error;
 	int                     errors = -1, initerrors=0;
  	time_t			lastreceive = 0, lastreset = time(NULL), lastnothingsent = 0, laststatus = 0;
+	time_t			lastloop = 0;
 	int i;
 	gboolean first_start = TRUE, force_reset = FALSE;
 
@@ -1738,6 +1739,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 	Config->SendingSMSStatus = ERR_UNKNOWN;
 
 	while (!Config->shutdown) {
+		lastloop = time(NULL);
 		/* There were errors in communication - try to recover */
 		if (errors > 2 || first_start || force_reset) {
 			/* Should we disconnect from phone? */
@@ -1857,7 +1859,11 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 		}
 
 		/* Sleep some time before another loop */
-		sleep(Config->loopsleep);
+		if (Config->loopsleep <= 1) {
+			sleep(1);
+		} else if (difftime(time(NULL), lastloop) < Config->loopsleep) {
+			sleep(Config->loopsleep - difftime(time(NULL), lastloop));
+		}
 	}
 	Service->Free(Config);
 
