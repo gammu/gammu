@@ -36,7 +36,7 @@ unsigned char GSM_MakeSMSIDFromTime(void)
 
 void GSM_Find_Free_Used_SMS2(GSM_Debug_Info *di, GSM_Coding_Type Coding,GSM_SMSMessage SMS, size_t *UsedText, size_t *FreeText, size_t *FreeBytes)
 {
-	size_t UsedBytes;
+	size_t UsedBytes = 0;
 
 	switch (Coding) {
 	case SMS_Coding_Default_No_Compression:
@@ -156,7 +156,7 @@ void GSM_MakeMultiPartSMS(GSM_Debug_Info *di, GSM_MultiSMSMessage	*SMS,
 			  int			Class,
 			  unsigned char		ReplaceMessage)
 {
-	size_t 		Len,UsedText,CopiedText,CopiedSMSText;
+	size_t 		Len,UsedText = 0,CopiedText = 0,CopiedSMSText = 0;
 	int		j;
 	unsigned char 	UDHID;
 	GSM_DateTime 	Date;
