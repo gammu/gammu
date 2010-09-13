@@ -1707,7 +1707,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 	GSM_Error		error;
 	int                     errors = -1, initerrors=0;
  	time_t			lastreceive = 0, lastreset = time(NULL), lastnothingsent = 0, laststatus = 0;
-	time_t			lastloop = 0;
+	time_t			lastloop = 0, current_time;
 	int i;
 	gboolean first_start = TRUE, force_reset = FALSE;
 
@@ -1831,32 +1831,38 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 
 		}
 
+
 		/* time for preventive reset */
-		if (Config->resetfrequency > 0 && difftime(time(NULL), lastreset) >= Config->resetfrequency) {
+		current_time = time(NULL);
+		if (Config->resetfrequency > 0 && difftime(current_time, lastreset) >= Config->resetfrequency) {
 			force_reset = TRUE;
 			continue;
 		}
 
 		/* Send any queued messages */
-		if (Config->send && (difftime(time(NULL), lastnothingsent) >= Config->commtimeout)) {
+		current_time = time(NULL);
+		if (Config->send && (difftime(current_time, lastnothingsent) >= Config->commtimeout)) {
 			error = SMSD_SendSMS(Config, Service);
 			if (error == ERR_EMPTY) {
-				lastnothingsent = time(NULL);
+				lastnothingsent = current_time;
 			}
 			/* We don't care about other errors here, they are handled in SMSD_SendSMS */
 		}
+
 		/* Refresh phone status in shared memory and in service */
-		if ((Config->statusfrequency > 0) && (difftime(time(NULL), laststatus) >= Config->statusfrequency)) {
+		current_time = time(NULL);
+		if ((Config->statusfrequency > 0) && (difftime(current_time, laststatus) >= Config->statusfrequency)) {
 			SMSD_PhoneStatus(Config);
-			laststatus = time(NULL);
+			laststatus = current_time;
 			Service->RefreshPhoneStatus(Config);
 		}
 
 		/* Sleep some time before another loop */
+		current_time = time(NULL);
 		if (Config->loopsleep <= 1) {
 			sleep(1);
-		} else if (difftime(time(NULL), lastloop) < Config->loopsleep) {
-			sleep(Config->loopsleep - difftime(time(NULL), lastloop));
+		} else if (difftime(current_time, lastloop) < Config->loopsleep) {
+			sleep(Config->loopsleep - difftime(current_time, lastloop));
 		}
 	}
 	Service->Free(Config);
