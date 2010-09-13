@@ -1807,10 +1807,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 		}
 
 		/* Should we receive? */
-		if (
-			Config->receive &&
-			((difftime(time(NULL), lastreceive) >= Config->receivefrequency) || (Config->SendingSMSStatus != ERR_NONE))
-		) {
+		if (Config->receive && ((difftime(time(NULL), lastreceive) >= Config->receivefrequency) || (Config->SendingSMSStatus != ERR_NONE))) {
 	 		lastreceive = time(NULL);
 
 			/* Do we need to check security? */
@@ -1841,10 +1838,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 		}
 
 		/* Send any queued messages */
-		if (
-			Config->send &&
-			(difftime(time(NULL), lastnothingsent) >= Config->commtimeout)
-		) {
+		if (Config->send && (difftime(time(NULL), lastnothingsent) >= Config->commtimeout)) {
 			error = SMSD_SendSMS(Config, Service);
 			if (error == ERR_EMPTY) {
 				lastnothingsent = time(NULL);
