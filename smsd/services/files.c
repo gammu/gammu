@@ -10,11 +10,11 @@
 #include <assert.h>
 
 #ifdef WIN32
-#  include <io.h>
+#include <io.h>
 #endif
 #if defined HAVE_DIRENT_H && defined HAVE_SCANDIR && defined HAVE_ALPHASORT
-#  define HAVE_DIRBROWSING
-#  include <dirent.h>
+#define HAVE_DIRBROWSING
+#include <dirent.h>
 #endif
 
 #include "../core.h"
@@ -28,37 +28,38 @@
 	if (fwrite(data, size, count, file) != count) goto fail;
 
 /* Save SMS from phone (called Inbox sms - it's in phone Inbox) somewhere */
-static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char **Locations)
+static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig * Config, char **Locations)
 {
-	GSM_Error	error = ERR_NONE;
-	int 		i,j;
-	unsigned char 	FileName[100], FullName[400], ext[4], buffer[64],buffer2[400];
-	gboolean		done;
-	FILE 		*file;
-	size_t		locations_size = 0, locations_pos = 0;
+	GSM_Error error = ERR_NONE;
+	int i, j;
+	unsigned char FileName[100], FullName[400], ext[4], buffer[64], buffer2[400];
+	gboolean done;
+	FILE *file;
+	size_t locations_size = 0, locations_pos = 0;
 #ifdef GSM_ENABLE_BACKUP
-	GSM_SMS_Backup 	backup;
+	GSM_SMS_Backup backup;
 #endif
 	*Locations = NULL;
 
-	j 	= 0;
-	done 	= FALSE;
-	for (i=0;i<sms->Number && !done;i++) {
+	j = 0;
+	done = FALSE;
+	for (i = 0; i < sms->Number && !done; i++) {
 		strcpy(ext, "txt");
-		if (sms->SMS[i].Coding == SMS_Coding_8bit) strcpy(ext, "bin");
-		DecodeUnicode(sms->SMS[i].Number,buffer2);
+		if (sms->SMS[i].Coding == SMS_Coding_8bit)
+			strcpy(ext, "bin");
+		DecodeUnicode(sms->SMS[i].Number, buffer2);
 		/* we loop on yy for the first SMS assuming that if xxxx_yy_00.ext is absent,
 		   any xxxx_yy_01,02, must be garbage, that can be overwritten */
 		file = NULL;
 		do {
 			sprintf(FileName,
 				"IN%02d%02d%02d_%02d%02d%02d_%02i_%s_%02i.%s",
-				sms->SMS[i].DateTime.Year, sms->SMS[i].DateTime.Month,  sms->SMS[i].DateTime.Day,
-				sms->SMS[i].DateTime.Hour, sms->SMS[i].DateTime.Minute, sms->SMS[i].DateTime.Second,
-				j, buffer2, i, ext);
+				sms->SMS[i].DateTime.Year, sms->SMS[i].DateTime.Month, sms->SMS[i].DateTime.Day,
+				sms->SMS[i].DateTime.Hour, sms->SMS[i].DateTime.Minute, sms->SMS[i].DateTime.Second, j, buffer2, i, ext);
 			strcpy(FullName, Config->inboxpath);
 			strcat(FullName, FileName);
-			if (file) fclose(file);
+			if (file)
+				fclose(file);
 			file = fopen(FullName, "r");
 		} while ((i == 0) && file != NULL && (++j < 100));
 
@@ -74,14 +75,12 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 		if ((sms->SMS[i].PDU == SMS_Status_Report) && strcasecmp(Config->deliveryreport, "log") == 0) {
 			strcpy(buffer, DecodeUnicodeString(sms->SMS[i].Number));
 			SMSD_Log(DEBUG_NOTICE, Config, "Delivery report: %s to %s, message reference 0x%02x",
-				DecodeUnicodeString(sms->SMS[i].Text),
-				buffer,
-				sms->SMS[i].MessageReference);
+				 DecodeUnicodeString(sms->SMS[i].Text), buffer, sms->SMS[i].MessageReference);
 		} else {
 			if (locations_pos + strlen(FileName) + 2 >= locations_size) {
 				locations_size += strlen(FileName) + 30;
 				*Locations = (char *)realloc(*Locations, locations_size);
-				assert (*Locations != NULL);
+				assert(*Locations != NULL);
 				if (locations_pos == 0) {
 					*Locations[0] = 0;
 				}
@@ -95,7 +94,9 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 				SMSD_Log(DEBUG_ERROR, Config, "Saving in detail format not compiled in!");
 
 #else
-				for (j=0;j<sms->Number;j++) backup.SMS[j] = &sms->SMS[j];
+				for (j = 0; j < sms->Number; j++) {
+					backup.SMS[j] = &sms->SMS[j];
+				}
 				backup.SMS[sms->Number] = NULL;
 				error = GSM_AddSMSBackupFile(FullName, &backup);
 				done = TRUE;
@@ -110,18 +111,18 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 				switch (sms->SMS[i].Coding) {
 					case SMS_Coding_Unicode_No_Compression:
 					case SMS_Coding_Default_No_Compression:
-						DecodeUnicode(sms->SMS[i].Text,buffer2);
+						DecodeUnicode(sms->SMS[i].Text, buffer2);
 						if (strcasecmp(Config->inboxformat, "unicode") == 0) {
 							buffer[0] = 0xFE;
 							buffer[1] = 0xFF;
-							chk_fwrite(buffer,1,2,file);
-							chk_fwrite(sms->SMS[i].Text,1,strlen(buffer2)*2,file);
+							chk_fwrite(buffer, 1, 2, file);
+							chk_fwrite(sms->SMS[i].Text, 1, strlen(buffer2) * 2, file);
 						} else {
-							chk_fwrite(buffer2,1,strlen(buffer2),file);
+							chk_fwrite(buffer2, 1, strlen(buffer2), file);
 						}
 						break;
 					case SMS_Coding_8bit:
-						chk_fwrite(sms->SMS[i].Text,1,(size_t)sms->SMS[i].Length,file);
+						chk_fwrite(sms->SMS[i].Text, 1, (size_t) sms->SMS[i].Length, file);
 					default:
 						break;
 				}
@@ -132,7 +133,7 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 				return error;
 			}
 
-			SMSD_Log(DEBUG_INFO, Config, "%s %s", (sms->SMS[i].PDU == SMS_Status_Report ? "Delivery report": "Received"), FileName);
+			SMSD_Log(DEBUG_INFO, Config, "%s %s", (sms->SMS[i].PDU == SMS_Status_Report ? "Delivery report" : "Received"), FileName);
 		}
 	}
 	return ERR_NONE;
@@ -151,43 +152,43 @@ fail:
  * e.g. OUTG20040620_193810_123_+4512345678_xpq.txtdf
  * is a flash text SMS requesting delivery reports
  */
-static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *ID)
+static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig * Config, char *ID)
 {
-  	GSM_MultiPartSMSInfo		SMSInfo;
-	GSM_WAPBookmark			Bookmark;
- 	char 			FileName[100],FullName[400];
-	unsigned char			Buffer[(GSM_MAX_SMS_LENGTH*GSM_MAX_MULTI_SMS+1)*2];
- 	unsigned char			Buffer2[(GSM_MAX_SMS_LENGTH*GSM_MAX_MULTI_SMS+1)*2];
-  	FILE				*File;
- 	int				i, len, phlen;
-	char				*pos1, *pos2, *options = NULL;
+	GSM_MultiPartSMSInfo SMSInfo;
+	GSM_WAPBookmark Bookmark;
+	char FileName[100], FullName[400];
+	unsigned char Buffer[(GSM_MAX_SMS_LENGTH * GSM_MAX_MULTI_SMS + 1) * 2];
+	unsigned char Buffer2[(GSM_MAX_SMS_LENGTH * GSM_MAX_MULTI_SMS + 1) * 2];
+	FILE *File;
+	int i, len, phlen;
+	char *pos1, *pos2, *options = NULL;
 	gboolean backup = FALSE;
 #ifdef GSM_ENABLE_BACKUP
 	GSM_SMS_Backup smsbackup;
 	GSM_Error error;
 #endif
 #ifdef WIN32
-  	struct _finddata_t 		c_file;
-  	intptr_t			hFile;
+	struct _finddata_t c_file;
+	intptr_t hFile;
 
 	strcpy(FullName, Config->outboxpath);
 	strcat(FullName, "OUT*.txt*");
 	hFile = _findfirst(FullName, &c_file);
-  	if (hFile == -1 ) {
+	if (hFile == -1) {
 		strcpy(FullName, Config->outboxpath);
 		strcat(FullName, "OUT*.smsbackup*");
 		hFile = _findfirst(FullName, &c_file);
 		backup = TRUE;
 	}
-  	if (hFile == -1 ) {
-  		return ERR_EMPTY;
-  	} else {
-  		strcpy(FileName, c_file.name);
-  	}
-  	_findclose(hFile);
+	if (hFile == -1) {
+		return ERR_EMPTY;
+	} else {
+		strcpy(FileName, c_file.name);
+	}
+	_findclose(hFile);
 #elif defined(HAVE_DIRBROWSING)
 	struct dirent **namelist = NULL;
-	int cur_file ,num_files;
+	int cur_file, num_files;
 	char *pos;
 
 	strcpy(FullName, Config->outboxpath);
@@ -223,7 +224,7 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 	}
 	/* Remember file name */
 	if (cur_file < num_files) {
-		strcpy(FileName,namelist[cur_file]->d_name);
+		strcpy(FileName, namelist[cur_file]->d_name);
 	}
 	/* Free scandir result */
 	for (i = 0; i < num_files; i++) {
@@ -278,35 +279,36 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 		if (File == NULL) {
 			return ERR_CANTOPENFILE;
 		}
-		len  = fread(Buffer, 1, sizeof(Buffer)-2, File);
+		len = fread(Buffer, 1, sizeof(Buffer) - 2, File);
 		fclose(File);
 
-		if ((len <  2) ||
-				(len >= 2  && ((Buffer[0] != 0xFF || Buffer[1] != 0xFE) &&
-				(Buffer[0] != 0xFE || Buffer[1] != 0xFF)))) {
-			if (len > GSM_MAX_SMS_LENGTH*GSM_MAX_MULTI_SMS) len = GSM_MAX_SMS_LENGTH*GSM_MAX_MULTI_SMS;
+		if ((len < 2) || (len >= 2 && ((Buffer[0] != 0xFF || Buffer[1] != 0xFE) && (Buffer[0] != 0xFE || Buffer[1] != 0xFF)))) {
+			if (len > GSM_MAX_SMS_LENGTH * GSM_MAX_MULTI_SMS)
+				len = GSM_MAX_SMS_LENGTH * GSM_MAX_MULTI_SMS;
 			EncodeUnicode(Buffer2, Buffer, len);
-			len = len*2;
+			len = len * 2;
 			memmove(Buffer, Buffer2, len);
-			Buffer[len] 	= 0;
-			Buffer[len+1] 	= 0;
+			Buffer[len] = 0;
+			Buffer[len + 1] = 0;
 		} else {
-			Buffer[len] 	= 0;
-			Buffer[len+1] 	= 0;
+			Buffer[len] = 0;
+			Buffer[len + 1] = 0;
 			/* Possibly convert byte order */
-			ReadUnicodeFile(Buffer2,Buffer);
+			ReadUnicodeFile(Buffer2, Buffer);
 		}
 
 		GSM_ClearMultiPartSMSInfo(&SMSInfo);
 		sms->Number = 0;
 
-		SMSInfo.ReplaceMessage  	= 0;
-		SMSInfo.Entries[0].Buffer	= Buffer2;
-		SMSInfo.Class			= -1;
-		SMSInfo.EntriesNum		= 1;
-		Config->currdeliveryreport	= -1;
-		if (strchr(options, 'd')) Config->currdeliveryreport	= 1;
-		if (strchr(options, 'f')) SMSInfo.Class 		= 0; /* flash SMS */
+		SMSInfo.ReplaceMessage = 0;
+		SMSInfo.Entries[0].Buffer = Buffer2;
+		SMSInfo.Class = -1;
+		SMSInfo.EntriesNum = 1;
+		Config->currdeliveryreport = -1;
+		if (strchr(options, 'd'))
+			Config->currdeliveryreport = 1;
+		if (strchr(options, 'f'))
+			SMSInfo.Class = 0;	/* flash SMS */
 
 		if (strcasecmp(Config->transmitformat, "unicode") == 0) {
 			SMSInfo.Entries[0].ID = SMS_ConcatenatedTextLong;
@@ -319,36 +321,49 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 			SMSInfo.Entries[0].ID = SMS_ConcatenatedAutoTextLong;
 		}
 
-		if (strchr(options, 'b')) { // WAP bookmark as title,URL
-			SMSInfo.Entries[0].Buffer		= NULL;
-			SMSInfo.Entries[0].Bookmark		= &Bookmark;
-			SMSInfo.Entries[0].ID			= SMS_NokiaWAPBookmarkLong;
-			SMSInfo.Entries[0].Bookmark->Location	= 0;
+		if (strchr(options, 'b')) {	// WAP bookmark as title,URL
+			SMSInfo.Entries[0].Buffer = NULL;
+			SMSInfo.Entries[0].Bookmark = &Bookmark;
+			SMSInfo.Entries[0].ID = SMS_NokiaWAPBookmarkLong;
+			SMSInfo.Entries[0].Bookmark->Location = 0;
 			pos2 = mywstrstr(Buffer2, "\0,");
 			if (pos2 == NULL) {
 				pos2 = Buffer2;
 			} else {
-				*pos2 = '\0'; pos2++; *pos2 = '\0'; pos2++; // replace comma by zero
+				*pos2 = '\0';
+				pos2++;
+				*pos2 = '\0';
+				pos2++;	// replace comma by zero
 			}
 
 			len = UnicodeLength(Buffer2);
-			if (len > 50) len = 50;
+			if (len > 50) {
+				len = 50;
+			}
 			memmove(&SMSInfo.Entries[0].Bookmark->Title, Buffer2, len * 2);
 			pos1 = &SMSInfo.Entries[0].Bookmark->Title[0] + len * 2;
-			*pos1 = '\0'; pos1++; *pos1 = '\0';
+			*pos1 = '\0';
+			pos1++;
+			*pos1 = '\0';
 
 			len = UnicodeLength(pos2);
-			if (len > 255) len = 255;
+			if (len > 255) {
+				len = 255;
+			}
 			memmove(&SMSInfo.Entries[0].Bookmark->Address, pos2, len * 2);
 			pos1 = &SMSInfo.Entries[0].Bookmark->Address[0] + len * 2;
-			*pos1 = '\0'; pos1++; *pos1 = '\0';
+			*pos1 = '\0';
+			pos1++;
+			*pos1 = '\0';
 		}
 
-		GSM_EncodeMultiPartSMS(GSM_GetDebug(Config->gsm), &SMSInfo,sms);
+		GSM_EncodeMultiPartSMS(GSM_GetDebug(Config->gsm), &SMSInfo, sms);
 
 		strcpy(ID, FileName);
 		pos1 = FileName;
-		for (i = 1; i <= 3 && pos1 != NULL ; i++) pos1 = strchr(++pos1, '_');
+		for (i = 1; i <= 3 && pos1 != NULL; i++) {
+			pos1 = strchr(++pos1, '_');
+		}
 		if (pos1 != NULL) {
 			/* OUT<priority><date>_<time>_<serialno>_<phone number>_<anything>.txt */
 			pos2 = strchr(++pos1, '_');
@@ -377,52 +392,40 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 			return ERR_UNKNOWN;
 		}
 
-		for (len=0;len<sms->Number;len++) {
+		for (len = 0; len < sms->Number; len++) {
 			EncodeUnicode(sms->SMS[len].Number, pos1, phlen);
 		}
 	}
 
 	if (sms->Number != 0) {
-		DecodeUnicode(sms->SMS[0].Number,Buffer);
-		if (options != NULL && strchr(options, 'b')) { // WAP bookmark as title,URL
+		DecodeUnicode(sms->SMS[0].Number, Buffer);
+		if (options != NULL && strchr(options, 'b')) {	// WAP bookmark as title,URL
 			SMSD_Log(DEBUG_NOTICE, Config, "Found %i sms to \"%s\" with bookmark \"%s\" cod %i lgt %i udh: t %i l %i dlr: %i fls: %i",
-				sms->Number,
-				Buffer,
-				DecodeUnicodeString(SMSInfo.Entries[0].Bookmark->Address),
-				sms->SMS[0].Coding,
-				sms->SMS[0].Length,
-				sms->SMS[0].UDH.Type,
-				sms->SMS[0].UDH.Length,
-				Config->currdeliveryreport,
-				SMSInfo.Class);
+				 sms->Number,
+				 Buffer,
+				 DecodeUnicodeString(SMSInfo.Entries[0].Bookmark->Address),
+				 sms->SMS[0].Coding, sms->SMS[0].Length, sms->SMS[0].UDH.Type, sms->SMS[0].UDH.Length, Config->currdeliveryreport, SMSInfo.Class);
 		} else {
 			SMSD_Log(DEBUG_NOTICE, Config, "Found %i sms to \"%s\" with text \"%s\" cod %i lgt %i udh: t %i l %i dlr: %i fls: %i",
-				sms->Number,
-				Buffer,
-				DecodeUnicodeString(sms->SMS[0].Text),
-				sms->SMS[0].Coding,
-				sms->SMS[0].Length,
-				sms->SMS[0].UDH.Type,
-				sms->SMS[0].UDH.Length,
-				Config->currdeliveryreport,
-				sms->SMS[0].Class);
+				 sms->Number,
+				 Buffer,
+				 DecodeUnicodeString(sms->SMS[0].Text),
+				 sms->SMS[0].Coding, sms->SMS[0].Length, sms->SMS[0].UDH.Type, sms->SMS[0].UDH.Length, Config->currdeliveryreport, sms->SMS[0].Class);
 		}
 	} else {
 		SMSD_Log(DEBUG_NOTICE, Config, "error: SMS-count = 0");
 	}
 
-  	return ERR_NONE;
+	return ERR_NONE;
 }
 
 /* After sending SMS is moved to Sent Items or Error Items. */
-static GSM_Error SMSDFiles_MoveSMS(GSM_MultiSMSMessage *sms UNUSED,
-		GSM_SMSDConfig *Config, char *ID,
-		gboolean alwaysDelete, gboolean sent)
+static GSM_Error SMSDFiles_MoveSMS(GSM_MultiSMSMessage * sms UNUSED, GSM_SMSDConfig * Config, char *ID, gboolean alwaysDelete, gboolean sent)
 {
-	FILE 	*oFile,*iFile;
-	size_t	ilen = 0, olen = 0;
-	char 	Buffer[(GSM_MAX_SMS_LENGTH*GSM_MAX_MULTI_SMS+1)*2],ifilename[400],ofilename[400];
-	const char	*sourcepath, *destpath;
+	FILE *oFile, *iFile;
+	size_t ilen = 0, olen = 0;
+	char Buffer[(GSM_MAX_SMS_LENGTH * GSM_MAX_MULTI_SMS + 1) * 2], ifilename[400], ofilename[400];
+	const char *sourcepath, *destpath;
 
 	sourcepath = Config->outboxpath;
 	if (sent) {
@@ -470,17 +473,17 @@ static GSM_Error SMSDFiles_MoveSMS(GSM_MultiSMSMessage *sms UNUSED,
 }
 
 /* Adds SMS to Outbox */
-static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *NewID)
+static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig * Config, char *NewID)
 {
-	int 		i,j;
-	unsigned char 	FileName[100], FullName[400], ext[17], buffer[64],buffer2[400];
-	FILE 		*file;
+	int i, j;
+	unsigned char FileName[100], FullName[400], ext[17], buffer[64], buffer2[400];
+	FILE *file;
 	time_t rawtime;
-	struct tm* timeinfo;
+	struct tm *timeinfo;
 
 #ifdef GSM_ENABLE_BACKUP
-	GSM_Error	error;
-	GSM_SMS_Backup 	backup;
+	GSM_Error error;
+	GSM_SMS_Backup backup;
 #endif
 
 	j = 0;
@@ -493,22 +496,17 @@ static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 		} else {
 			strcpy(ext, "txt");
 		}
-		DecodeUnicode(sms->SMS[i].Number,buffer2);
+		DecodeUnicode(sms->SMS[i].Number, buffer2);
 
 		file = NULL;
 		do {
 			sprintf(FileName,
 				"OUTC%04d%02d%02d_%02d%02d%02d_00_%s_sms%d.%s",
-				1900 + timeinfo->tm_year,
-				timeinfo->tm_mon,
-				timeinfo->tm_mday,
-				timeinfo->tm_hour,
-				timeinfo->tm_min,
-				timeinfo->tm_sec,
-				buffer2, j, ext);
+				1900 + timeinfo->tm_year, timeinfo->tm_mon, timeinfo->tm_mday, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, buffer2, j, ext);
 			strcpy(FullName, Config->outboxpath);
 			strcat(FullName, FileName);
-			if (file) fclose(file);
+			if (file)
+				fclose(file);
 			file = fopen(FullName, "r");
 		} while (file != NULL && (++j < 100));
 
@@ -549,7 +547,7 @@ static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 					if (strcasecmp(Config->outboxformat, "unicode") == 0) {
 						buffer[0] = 0xFE;
 						buffer[1] = 0xFF;
-						chk_fwrite(buffer,1,2,file);
+						chk_fwrite(buffer, 1, 2, file);
 						chk_fwrite(sms->SMS[i].Text, 1, UnicodeLength(sms->SMS[i].Text) * 2, file);
 					} else {
 						DecodeUnicode(sms->SMS[i].Text, buffer2);
@@ -557,7 +555,7 @@ static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 					}
 					break;
 				case SMS_Coding_8bit:
-					chk_fwrite(sms->SMS[i].Text, 1, (size_t)sms->SMS[i].Length, file);
+					chk_fwrite(sms->SMS[i].Text, 1, (size_t) sms->SMS[i].Length, file);
 				default:
 					break;
 			}
@@ -576,33 +574,27 @@ fail:
 	return ERR_WRITING_FILE;
 }
 
-static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage *sms UNUSED,
-		GSM_SMSDConfig *Config, char *ID UNUSED,
-		int Part, GSM_SMSDSendingError err, int TPMR)
+static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage * sms UNUSED, GSM_SMSDConfig * Config, char *ID UNUSED, int Part, GSM_SMSDSendingError err, int TPMR)
 {
 	if (err == SMSD_SEND_OK) {
 		SMSD_Log(DEBUG_INFO, Config, "Transmitted %s (%s: %i) to %s, message reference 0x%02x",
-				Config->SMSID,
-				(Part == sms->Number ? "total" : "part"),
-				Part,
-				DecodeUnicodeString(sms->SMS[0].Number),
-				TPMR);
+			 Config->SMSID, (Part == sms->Number ? "total" : "part"), Part, DecodeUnicodeString(sms->SMS[0].Number), TPMR);
 	}
 
-  	return ERR_NONE;
+	return ERR_NONE;
 }
 
 GSM_SMSDService SMSDFiles = {
-	NONEFUNCTION,			/* Init 		*/
-	NONEFUNCTION,			/* Free 		*/
-	NONEFUNCTION,			/* InitAfterConnect 	*/
+	NONEFUNCTION,		/* Init                 */
+	NONEFUNCTION,		/* Free                 */
+	NONEFUNCTION,		/* InitAfterConnect     */
 	SMSDFiles_SaveInboxSMS,
 	SMSDFiles_FindOutboxSMS,
 	SMSDFiles_MoveSMS,
 	SMSDFiles_CreateOutboxSMS,
 	SMSDFiles_AddSentSMSInfo,
-	NOTIMPLEMENTED,			/* RefreshSendStatus	*/
-	NOTIMPLEMENTED			/* RefreshPhoneStatus	*/
+	NOTIMPLEMENTED,		/* RefreshSendStatus    */
+	NOTIMPLEMENTED		/* RefreshPhoneStatus   */
 };
 
 /* How should editor handle tabs in this file? Add editor commands here.

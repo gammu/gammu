@@ -8,16 +8,16 @@
 #include "../core.h"
 
 GSM_SMSDService SMSDNull = {
-	NONEFUNCTION,			/* Init 		*/
-	NONEFUNCTION,			/* Free 		*/
-	NONEFUNCTION,			/* InitAfterConnect 	*/
-	NONEFUNCTION,			/* SaveInboxSMS		*/
-	EMPTYFUNCTION,			/* FindOutboxSMS	*/
-	NONEFUNCTION,			/* MoveSMS		*/
-	NONEFUNCTION,			/* CreateOutboxSMS	*/
-	NONEFUNCTION,			/* AddSentSMSInfo	*/
-	NOTIMPLEMENTED,			/* RefreshSendStatus	*/
-	NOTIMPLEMENTED			/* RefreshPhoneStatus	*/
+	NONEFUNCTION,		/* Init                 */
+	NONEFUNCTION,		/* Free                 */
+	NONEFUNCTION,		/* InitAfterConnect     */
+	NONEFUNCTION,		/* SaveInboxSMS         */
+	EMPTYFUNCTION,		/* FindOutboxSMS        */
+	NONEFUNCTION,		/* MoveSMS              */
+	NONEFUNCTION,		/* CreateOutboxSMS      */
+	NONEFUNCTION,		/* AddSentSMSInfo       */
+	NOTIMPLEMENTED,		/* RefreshSendStatus    */
+	NOTIMPLEMENTED		/* RefreshPhoneStatus   */
 };
 
 /* How should editor handle tabs in this file? Add editor commands here.
