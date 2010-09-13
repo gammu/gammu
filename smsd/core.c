@@ -1,5 +1,5 @@
-/* (c) 2002-2004 by Marcin Wiacek and Joergen Thomsen */
-/* (c) 2009 Michal Cihar */
+/* Copyright (c) 2002-2004 by Marcin Wiacek and Joergen Thomsen */
+/* Copyright (c) 2009-2010 Michal Cihar */
 
 #include <string.h>
 #include <signal.h>
