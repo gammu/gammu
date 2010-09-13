@@ -1142,7 +1142,7 @@ static GSM_Error N6510_ReplyGetBatteryCharge(GSM_Protocol_Message msg, GSM_State
 {
 	GSM_Phone_Data *Data = &s->Phone.Data;
 
-    	Data->BatteryCharge->BatteryPercent 	= ((int)(msg.Buffer[9]*100/7));
+	Data->BatteryCharge->BatteryPercent 	= ((int)(msg.Buffer[9]*100/msg.Buffer[8]));
     	Data->BatteryCharge->ChargeState 	= 0;
 
 	smprintf(s, "Battery level received: %i\n",
