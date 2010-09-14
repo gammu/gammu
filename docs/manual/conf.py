@@ -28,7 +28,7 @@ sys.path.append('@CMAKE_CURRENT_SOURCE_DIR@')
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.autodoc', 'breathe', 'configext']
+extensions = ['sphinx.ext.autodoc', 'breathe', 'configext', 'sphinx.ext.graphviz']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['@CMAKE_CURRENT_SOURCE_DIR@/doc/.templates']

@@ -134,3 +134,33 @@ The lifetime of ID for incoming messages:
 
     * :c:func:`GSM_SMSDService::SaveInboxSMS` generates the message
     * :ref:`smsd_run` uses this ID
+
+Message sending workflow
+++++++++++++++++++++++++
+
+.. graphviz::
+
+   digraph foo {
+      "new message" [shape=box];
+      "message in storage" [shape=box];
+      "message sent" [shape=box];
+      "error sending message" [shape=box];
+      "new message" -> "manually created SMS";
+      "new message" -> "CreateOutboxSMS";
+      "manually created SMS" -> "message in storage";
+      "CreateOutboxSMS" -> "message in storage"
+      "message in storage" -> "FindOutboxSMS";
+      "FindOutboxSMS" -> "AddSentSMSInfo(ERROR)" [label="Error retrieving message", style=dotted];
+      "FindOutboxSMS" -> "check duplicates";
+      "check duplicates" -> "RefreshSendStatus" [label="Message is being sent"];
+      "check duplicates" -> "AddSentSMSInfo(ERROR)" [label="Too many retries", style=dotted];
+      "RefreshSendStatus" -> "AddSentSMSInfo(ERROR)" [label="Error sending message", style=dotted];
+      "RefreshSendStatus" -> "AddSentSMSInfo(OK)";
+      "AddSentSMSInfo(OK)" -> "MoveSMS(noforce, OK)";
+      "MoveSMS(noforce, OK)" -> "MoveSMS(force, ERR)" [label="Error moving message", style=dotted];
+      "AddSentSMSInfo(OK)" -> "MoveSMS(force, ERR)" [label="Error storing info", style=dotted];
+      "AddSentSMSInfo(ERROR)" -> "MoveSMS(force, ERR)";
+      "MoveSMS(noforce, OK)" -> "message sent";
+      "MoveSMS(force, ERR)" -> "error sending message";
+   }
+
