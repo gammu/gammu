@@ -4,7 +4,7 @@ Files backend
 =============
 
 FILES backend stores all data on a filesystem in folders defined by
-configuration (see :ref:`smsdconfig` for description of configuration options).
+configuration (see :ref:`gammu-smsdrc` for description of configuration options).
 
 Receiving of messages
 +++++++++++++++++++++

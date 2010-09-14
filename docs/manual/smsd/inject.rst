@@ -45,7 +45,7 @@ Examples
 --------
 
 To check it out, you need to have configuration file for SMSD, see
-gammu-smsdrc(5) for more details about it.
+:ref:`gammu-smsdrc` for more details about it.
 
 Inject text message up to standard 160 chars:
 

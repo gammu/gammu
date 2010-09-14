@@ -1,4 +1,4 @@
-.. _smsdconfig:
+.. _gammu-smsdrc:
 
 SMSD Configuration File
 =======================

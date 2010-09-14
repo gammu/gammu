@@ -6,7 +6,7 @@ RunOnReceive Directive
 Description
 -----------
 
-Gammu SMSD can be configured by RunOnReceive directive (see :ref:`smsdconfig`
+Gammu SMSD can be configured by RunOnReceive directive (see :ref:`gammu-smsdrc`
 for details) to run defined program after receiving message. 
     
 This parameter is executed through shell, so you might need to escape some

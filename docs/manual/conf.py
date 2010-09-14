@@ -214,5 +214,6 @@ man_pages = [
     ('smsd/config', 'gammu-smsdrc', 'gammu-smsd(1) configuration file', u'Michal Čihař <michal@cihar.com>', 5),
     ('smsd/inject', 'gammu-smsd-inject', 'Inject messages into queue of SMS daemon for Gammu', u'Michal Čihař <michal@cihar.com>', 1),
     ('smsd/monitor', 'gammu-smsd-monitor', 'Monitor state of SMS daemon for Gammu', u'Michal Čihař <michal@cihar.com>', 1),
+    ('smsd/smsd', 'gammu-smsd', 'SMS daemon for Gammu', u'Michal Čihař <michal@cihar.com>', 1),
 ]
 
