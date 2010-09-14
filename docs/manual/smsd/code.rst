@@ -45,7 +45,7 @@ in ``GSM_SMSDService`` structure:
 
     :param sms: Message data to save
     :param Config: Pointer to SMSD configuration data
-    :param Locations: Newly allocation pointer to string with locations identifying saved messages.
+    :param Locations: Newly allocation pointer to string with IDs identifying saved messages.
     :return: Error code.
 
 .. c:function:: GSM_Error	GSM_SMSDService::FindOutboxSMS      (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *ID)
@@ -103,3 +103,28 @@ in ``GSM_SMSDService`` structure:
 
     :param Config: Pointer to SMSD configuration data
     :return: Error code.
+
+Message ID
+++++++++++
+
+You might have noticed that message ID is often used in the API. The primary
+reason for this is that it is usually easier for backend to handle message
+just by it's internal identification instead of handling message data from
+:c:type:`GSM_MultiSMSMessage`.
+
+The lifetime of ID for sent message:
+
+    * :c:func:`GSM_SMSDService::CreateOutboxSMS` or direct manipulation
+      with backend storage creates new ID
+    * :c:func:`GSM_SMSDService::FindOutboxSMS` returns ID of message to
+      process
+    * :c:func:`GSM_SMSDService::AddSentSMSInfo` and
+      :c:func:`GSM_SMSDService::RefreshSendStatus` are then notified using
+      this ID about sending of the message
+    * :c:func:`GSM_SMSDService::MoveSMS` then moves the message based on
+      ID to sent items
+
+The lifetime of ID for incoming messages:
+
+    * :c:func:`GSM_SMSDService::SaveInboxSMS` generates the message
+    * :ref:`smsd_run` uses this ID
