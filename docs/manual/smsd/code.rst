@@ -136,7 +136,7 @@ The lifetime of ID for incoming messages:
     * :ref:`smsd_run` uses this ID
 
 Message Sending Workflow
-++++++++++++++++++++++++
+------------------------
 
 .. graphviz::
 
@@ -168,7 +168,7 @@ Message Sending Workflow
    }
 
 Message Receiving Workflow
-++++++++++++++++++++++++++
+--------------------------
 
 .. graphviz::
 
