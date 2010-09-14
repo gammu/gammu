@@ -135,12 +135,12 @@ The lifetime of ID for incoming messages:
     * :c:func:`GSM_SMSDService::SaveInboxSMS` generates the message
     * :ref:`smsd_run` uses this ID
 
-Message sending workflow
+Message Sending Workflow
 ++++++++++++++++++++++++
 
 .. graphviz::
 
-   digraph foo {
+   digraph smsdsending {
       "new message" [shape=box];
       "message in storage" [shape=box];
       "message sent" [shape=box];
@@ -167,3 +167,27 @@ Message sending workflow
       "MoveSMS(force, ERR)" -> "error sending message";
    }
 
+Message Receiving Workflow
+++++++++++++++++++++++++++
+
+.. graphviz::
+
+   digraph smsdreceiving {
+       "received message" [shape=box];
+       "ignored message" [shape=box];
+       "failed message" [shape=box];
+       "waiting message" [shape=box];
+       "processed message" [shape=box];
+       "received message" -> "GSM_GetNextSMS";
+       "GSM_GetNextSMS" -> "SMSD_ValidMessage";
+       "SMSD_ValidMessage" -> "GSM_LinkSMS";
+       "SMSD_ValidMessage" -> "ignored message" [label="Not valid", style=dotted];
+       "GSM_LinkSMS" -> "SMSD_CheckMultipart";
+       "SMSD_CheckMultipart" -> "SaveInboxSMS";
+       "SMSD_CheckMultipart" -> "waiting message" [label="Not all parts", style=dotted];
+       "SaveInboxSMS" -> "SMSD_RunOnReceive" [label="Locations are passed here"];
+       "SaveInboxSMS" -> "failed message" [label="Error", style=dotted];
+       "SMSD_RunOnReceive" -> "GSM_DeleteSMS";
+       "GSM_DeleteSMS" -> "processed message"
+       "GSM_DeleteSMS" -> "failed message" [label="Error", style=dotted];
+   }
