@@ -174,6 +174,8 @@ latex_elements = {
 latex_documents = [
   ('contents', 'gammu.tex', ur'Gammu Manual',
    ur'Michal Čihař <michal@cihar.com>', 'manual', True),
+  ('smsd/index', 'smsd.tex', ur'Gammu SMSD Daemon Manual',
+   ur'Michal Čihař <michal@cihar.com>', 'manual', True),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
