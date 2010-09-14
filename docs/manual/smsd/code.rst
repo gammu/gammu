@@ -150,15 +150,18 @@ Message sending workflow
       "manually created SMS" -> "message in storage";
       "CreateOutboxSMS" -> "message in storage"
       "message in storage" -> "FindOutboxSMS";
-      "FindOutboxSMS" -> "AddSentSMSInfo(ERROR)" [label="Error retrieving message", style=dotted];
+      "FindOutboxSMS" -> "AddSentSMSInfo(ERROR)" [label="Error", style=dotted];
       "FindOutboxSMS" -> "check duplicates";
-      "check duplicates" -> "RefreshSendStatus" [label="Message is being sent"];
       "check duplicates" -> "AddSentSMSInfo(ERROR)" [label="Too many retries", style=dotted];
-      "RefreshSendStatus" -> "AddSentSMSInfo(ERROR)" [label="Error sending message", style=dotted];
+      "check duplicates" -> "GSM_SendSMS"; 
+      "GSM_SendSMS" -> "RefreshSendStatus";
+      "GSM_SendSMS" -> "AddSentSMSInfo(ERROR)" [label="Error", style=dotted];
+      "RefreshSendStatus" -> "RefreshSendStatus" [label="Sending"];
+      "RefreshSendStatus" -> "AddSentSMSInfo(ERROR)" [label="Timeout", style=dotted];
       "RefreshSendStatus" -> "AddSentSMSInfo(OK)";
       "AddSentSMSInfo(OK)" -> "MoveSMS(noforce, OK)";
-      "MoveSMS(noforce, OK)" -> "MoveSMS(force, ERR)" [label="Error moving message", style=dotted];
-      "AddSentSMSInfo(OK)" -> "MoveSMS(force, ERR)" [label="Error storing info", style=dotted];
+      "MoveSMS(noforce, OK)" -> "MoveSMS(force, ERR)" [label="Error", style=dotted];
+      "AddSentSMSInfo(OK)" -> "MoveSMS(force, ERR)" [label="Error", style=dotted];
       "AddSentSMSInfo(ERROR)" -> "MoveSMS(force, ERR)";
       "MoveSMS(noforce, OK)" -> "message sent";
       "MoveSMS(force, ERR)" -> "error sending message";
