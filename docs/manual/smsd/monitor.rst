@@ -8,7 +8,7 @@ gammu-smsd-monitor
 Synopsis
 --------
 
-gammu-smsd-inject [`OPTION`]...
+gammu-smsd-monitor [`OPTION`]...
 
 Description
 -----------
