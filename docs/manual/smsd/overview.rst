@@ -21,16 +21,16 @@ picture.
        "gammu-smsd-monitor" [shape=box];
        "Service\nstorage" [shape=doublecircle];
        "Kalkun" [shape=box, style=dotted];
-       "gammu-smsd" -> "GSM modem" [label="Outgoing messages"];
-       "GSM modem" -> "gammu-smsd" [label="Incoming messages"];
-       "gammu-smsd" -> "Service\nstorage" [label="Save messages"];
-       "Service\nstorage" -> "gammu-smsd" [label="Read messages"];
+       "gammu-smsd" -> "GSM modem" [label="Outgoing"];
+       "GSM modem" -> "gammu-smsd" [label="Incoming"];
+       "gammu-smsd" -> "Service\nstorage" [label="Save"];
+       "Service\nstorage" -> "gammu-smsd" [label="Read"];
        "gammu-smsd" -> "Run on receive" [label="Execute"];
-       "Service\nstorage" -> "Run on receive" [label="Read message"];
-       "Kalkun" -> "Service\nstorage" [label="Inject messages"];
-       "Service\nstorage" -> "Kalkun" [label="Read messages"];
-       "gammu-smsd-inject" -> "Service\nstorage" [label="Inject messages"];
-       "gammu-smsd" -> "gammu-smsd-monitor" [label="Monitor state"];
+       "Service\nstorage" -> "Run on receive" [label="Read"];
+       "Kalkun" -> "Service\nstorage" [label="Inject"];
+       "Service\nstorage" -> "Kalkun" [label="Read"];
+       "gammu-smsd-inject" -> "Service\nstorage" [label="Inject"];
+       "gammu-smsd" -> "gammu-smsd-monitor" [label="Monitor"];
    }
 
 SMSD operation
