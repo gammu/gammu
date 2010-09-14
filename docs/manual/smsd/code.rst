@@ -4,7 +4,19 @@ Developer documentation
 Backend services
 ----------------
 
-Each service needs to support few operations:
+The backend service is responsible for storing received messages and giving
+the SMSD core messages to send. It is solely up to them how the message will
+be stored, for example currently Gammu includes backends to store messages on
+filesystem (:ref:`smsd_files`), various databases (:ref:`smsd_mysql`,
+:ref:`smsd_pgsql`, :ref:`smsd_dbi`) or backend which does not store anything
+at all (:ref:`smsd_null`).
+
+
+Backend interface
++++++++++++++++++
+
+Each backend service needs to support several operations, which are exported
+in ``GSM_SMSDService`` structure:
 
 .. c:function:: GSM_Error	GSM_SMSDService::Init 	      (GSM_SMSDConfig *Config)
 

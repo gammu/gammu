@@ -1,3 +1,5 @@
+.. _smsd_mysql:
+
 MySQL Backend
 =============
 

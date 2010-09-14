@@ -9,7 +9,7 @@ describes general database structure and required tables.
 More SMS daemons can share single database. If you do not specify PhoneID in
 their configuration, all are treated equally and you have no guarantee which
 one sends outgoing message. If you configure PhoneID and use it when inserting
-message to the ``outbox`` table (gammu\-smsd\-inject(1) does this), each SMS
+message to the ``outbox`` table (:manpage:`gammu-smsd-inject(1)` does this), each SMS
 daemon will have separate outbox queue.
 
 Receiving of messages
