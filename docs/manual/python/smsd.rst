@@ -4,10 +4,10 @@
 .. module:: gammu.smsd
     :synopsis: Provides access to Gammu SMSD functions.
 
-:class:`gammu.smsd.SMSD`
-------------------------
+:class:`SMSD`
+-------------
 
-.. class:: gammu.smsd.SMSD(Config)
+.. class:: SMSD(Config)
     
     SMSD main class, that is used for communication with phone.
         
