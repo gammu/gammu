@@ -9,6 +9,7 @@ this storage.
     :maxdepth: 2
 
     overview
+    usage
     config
     run
     backends
