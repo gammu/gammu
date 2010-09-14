@@ -14,6 +14,7 @@ Gammu Documentation Contents
     smsd/index
     testing/index
     protocol/index
+    glossary
 
 Indices and tables
 ------------------
