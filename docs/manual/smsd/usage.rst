@@ -15,7 +15,7 @@ Creating Messages to Send
 -------------------------
 
 Creating of messages to send heavily depends on service backend you use. Most
-of them support :program:`gammu-smsd-inject`, which can be used to construct
+of them support :ref:`gammu-smsd-inject`, which can be used to construct
 the message, or you can just insert message manually to the backend storage.
 
 Alternatively you can use :c:func:`SMSD_InjectSMS` (from C) or using
@@ -30,10 +30,25 @@ your own program to do any message processing, see :ref:`smsd_run`.
 Monitoring SMSD Status
 ----------------------
 
-You can use :program:`gammu-smsd-monitor` to monitor status of SMSD. It uses
+You can use :ref:`gammu-smsd-monitor` to monitor status of SMSD. It uses
 shared memory segment to get current status of running SMSD.
 
 Alternatively you can get the same functionality from libGammu using
 :c:func:`SMSD_GetStatus` or python-gammu using
 :meth:`gammu.smsd.SMSD.GetStatus`.
 
+Reporting Bugs
+--------------
+
+Please report bugs to <http://bugs.cihar.com>.
+
+Before reporting a bug, please enable verbose logging in SMSD configuration:
+
+
+.. code-block:: ini
+
+    [smsd]
+    debuglevel = 255
+    logfile = smsd.log
+
+and include this verbose log within bug report.

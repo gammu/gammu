@@ -10,6 +10,7 @@ this storage.
 
     overview
     usage
+    manual
     config
     run
     backends

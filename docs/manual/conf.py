@@ -212,5 +212,7 @@ man_pages = [
     ('smsd/run', 'gammu-smsd-run', 'documentation for RunOnReceive directive', u'Michal Čihař <michal@cihar.com>', 7),
     ('smsd/null', 'gammu-smsd-null', 'gammu-smsd(1) backend not storing messages', u'Michal Čihař <michal@cihar.com>', 7),
     ('smsd/config', 'gammu-smsdrc', 'gammu-smsd(1) configuration file', u'Michal Čihař <michal@cihar.com>', 5),
+    ('smsd/inject', 'gammu-smsd-inject', 'Inject messages into queue of SMS daemon for Gammu', u'Michal Čihař <michal@cihar.com>', 1),
+    ('smsd/monitor', 'gammu-smsd-monitor', 'Monitor state of SMS daemon for Gammu', u'Michal Čihař <michal@cihar.com>', 1),
 ]
 
