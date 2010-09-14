@@ -8,12 +8,30 @@ this storage.
 Overall schema
 --------------
 
+The interactions of SMS Daemon and related components can be seen on following
+picture.
 
-.. figure:: smsd-interactions.png
-   :alt: SMSD interactions
+.. graphviz::
 
-   Interaction of SMSD programs
-
+   digraph smsdinteractions {
+       "gammu-smsd-inject" [shape=box];
+       "gammu-smsd" [shape=box];
+       "Run on receive" [shape=box, style=dotted];
+       "GSM modem" [shape=box, style=dashed];
+       "gammu-smsd-monitor" [shape=box];
+       "Service\nstorage" [shape=doublecircle];
+       "Kalkun" [shape=box, style=dotted];
+       "gammu-smsd" -> "GSM modem" [label="Outgoing messages"];
+       "GSM modem" -> "gammu-smsd" [label="Incoming messages"];
+       "gammu-smsd" -> "Service\nstorage" [label="Save messages"];
+       "Service\nstorage" -> "gammu-smsd" [label="Read messages"];
+       "gammu-smsd" -> "Run on receive" [label="Execute"];
+       "Service\nstorage" -> "Run on receive" [label="Read message"];
+       "Kalkun" -> "Service\nstorage" [label="Inject messages"];
+       "Service\nstorage" -> "Kalkun" [label="Read messages"];
+       "gammu-smsd-inject" -> "Service\nstorage" [label="Inject messages"];
+       "gammu-smsd" -> "gammu-smsd-monitor" [label="Monitor state"];
+   }
 
 SMSD operation
 --------------
