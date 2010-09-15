@@ -8,20 +8,13 @@ file(GLOB_RECURSE DOCSRC RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "*.rst")
 
 set (DEVELDOCS
     ${DOCSRC}
-    examples/Makefile
-    examples/phone-info.c
-    examples/sms-send.c
-    examples/smsd.c
-    examples/sms-read.c
-    examples/long-sms.c
-    examples/custom-config.c
     )
 
 foreach (DOC ${DEVELDOCS})
     get_filename_component(DIRNAME ${DOC} PATH)
     install (
         FILES ${DOC}
-        DESTINATION "${INSTALL_DOC_DIR}/devel/${DIRNAME}"
+        DESTINATION "${INSTALL_DOC_DIR}/manual/${DIRNAME}"
         COMPONENT "manual"
         )
 endforeach (DOC)
