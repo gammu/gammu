@@ -229,7 +229,8 @@ GSM_Error MOTOROLA_ReplyGetMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachine
 
 		return ERR_NONE;
 	case AT_Reply_Error:
-		return ERR_UNKNOWN;
+		/* The phone returns simply ERROR on empty entry */
+		return ERR_EMPTY;
 	case AT_Reply_CMSError:
 	        return ATGEN_HandleCMSError(s);
 	case AT_Reply_CMEError:
