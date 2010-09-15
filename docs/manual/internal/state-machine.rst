@@ -24,6 +24,6 @@ To see how it operates, following figure shows example of what happens when
         "Phone.Functions.DispatchMessage" -> "GSM_DispatchMessage";
         "GSM_DispatchMessage" -> "Phone.Functions.ReplyFunctions[]()";
         "Phone.Functions.ReplyFunctions[]()" -> "Phone.Functions.GetModel";
-        "Phone.Functions.ReplyFunctions[]()" -> "GSM_GetModel";
+        "Phone.Functions.GetModel" -> "GSM_GetModel";
    }
 
