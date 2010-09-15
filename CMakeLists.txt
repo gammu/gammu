@@ -920,6 +920,7 @@ if(INSTALL_DOC)
 
     add_subdirectory(docs/config)
     add_subdirectory(docs/manual)
+    add_subdirectory(docs/examples)
     add_subdirectory(docs/sql)
     add_subdirectory(docs/user)
 endif(INSTALL_DOC)
