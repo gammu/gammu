@@ -16,10 +16,11 @@ Continue reading
     :maxdepth: 1
 
     contents
-    project/about
+    project/index
     smsd/index
     python/index
     c/index
+    internal/index
 
 Indices and tables
 ------------------
