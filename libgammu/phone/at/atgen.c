@@ -3455,7 +3455,7 @@ GSM_Error ATGEN_GetMemoryInfo(GSM_StateMachine *s, GSM_MemoryStatus *Status, GSM
 	 */
 	smprintf(s, "Getting memory information\n");
 	if (Status != NULL && Status->MemoryType == MEM_ME && Priv->PBK_MPBR == AT_AVAILABLE) {
-		ATGEN_WaitForAutoLen(s, "AT+MPBR?\r", 0x00, 10, ID_GetMemoryStatus);
+		ATGEN_WaitForAutoLen(s, "AT+MPBR=?\r", 0x00, 10, ID_GetMemoryStatus);
 	} else {
 		ATGEN_WaitForAutoLen(s, "AT+CPBR=?\r", 0x00, 10, ID_GetMemoryStatus);
 	}
