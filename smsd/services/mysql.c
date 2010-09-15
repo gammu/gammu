@@ -210,8 +210,8 @@ static GSM_Error SMSDMySQL_InitAfterConnect(GSM_SMSDConfig * Config)
 {
 	char query[400];
 	char client_name[200];
-	char send[4];
-	char receive[4];
+	char enable_send[4];
+	char enable_receive[4];
 
 	snprintf(query, sizeof(query), "DELETE FROM `phones` WHERE `IMEI` = '%s'", Config->Status->IMEI);
 	if (SMSDMySQL_Query(Config, query) != ERR_NONE) {
@@ -222,11 +222,11 @@ static GSM_Error SMSDMySQL_InitAfterConnect(GSM_SMSDConfig * Config)
 	snprintf(client_name, sizeof(client_name), "Gammu %s, %s, %s", VERSION, GetOS(), GetCompiler());
 
 	SMSD_Log(DEBUG_INFO, Config, "Communication established");
-	Config->send ? strcpy(send, "yes") : strcpy(send, "no");
-	Config->receive ? strcpy(receive, "yes") : strcpy(receive, "no");
+	Config->enable_send ? strcpy(enable_send, "yes") : strcpy(enable_send, "no");
+	Config->enable_receive ? strcpy(enable_receive, "yes") : strcpy(enable_receive, "no");
 	snprintf(query, sizeof(query),
 		 "INSERT INTO `phones` (`IMEI`,`ID`,`Send`,`Receive`,`InsertIntoDB`,`TimeOut`,`Client`, `Battery`, `Signal`) VALUES ('%s','%s','%s','%s',NOW(),DATE_ADD(NOW(), INTERVAL 10 SECOND),'%s', -1, -1)",
-		 Config->Status->IMEI, Config->PhoneID, send, receive, client_name);
+		 Config->Status->IMEI, Config->PhoneID, enable_send, enable_receive, client_name);
 	if (SMSDMySQL_Query(Config, query) != ERR_NONE) {
 		SMSD_Log(DEBUG_INFO, Config, "Error inserting phone info into database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
