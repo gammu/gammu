@@ -28,6 +28,7 @@ ChangeLog
 [+] * Implemented matching by serial number.
 [+] * SMSD can now be configured just for sending/receiving.
 [-] * Fixed battery status for S40 phones (bug #1301).
+[-] * Improved compatibility with Motorola phonebook (bug #1128).
     
 20100827 - 1.28.90
 
