@@ -9,3 +9,4 @@ historical reasons. Before digging into source code, you should look at
     :maxdepth: 2
 
     reply
+    state-machine
