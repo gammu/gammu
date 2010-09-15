@@ -31,7 +31,7 @@ sys.path.append('@CMAKE_CURRENT_SOURCE_DIR@')
 extensions = ['sphinx.ext.autodoc', 'breathe', 'configext', 'sphinx.ext.graphviz']
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['@CMAKE_CURRENT_SOURCE_DIR@/doc/.templates']
+templates_path = ['@CMAKE_CURRENT_SOURCE_DIR@/.templates']
 
 # The suffix of source filenames.
 source_suffix = '.rst'
