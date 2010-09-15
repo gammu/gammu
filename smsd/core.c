@@ -682,8 +682,8 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 	Config->checksecurity = INI_GetBool(Config->smsdcfgfile, "smsd", "checksecurity", TRUE);
 	Config->checksignal = INI_GetBool(Config->smsdcfgfile, "smsd", "checksignal", TRUE);
 	Config->checkbattery = INI_GetBool(Config->smsdcfgfile, "smsd", "checkbattery", TRUE);
-	Config->send = INI_GetBool(Config->smsdcfgfile, "smsd", "send", TRUE);
-	Config->receive = INI_GetBool(Config->smsdcfgfile, "smsd", "receive", TRUE);
+	Config->enable_send = INI_GetBool(Config->smsdcfgfile, "smsd", "send", TRUE);
+	Config->enable_receive = INI_GetBool(Config->smsdcfgfile, "smsd", "receive", TRUE);
 	Config->resetfrequency = INI_GetInt(Config->smsdcfgfile, "smsd", "resetfrequency", 0);
 	Config->multiparttimeout = INI_GetInt(Config->smsdcfgfile, "smsd", "multiparttimeout", 600);
 	Config->maxretries = INI_GetInt(Config->smsdcfgfile, "smsd", "maxretries", 1);
@@ -1807,7 +1807,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 		}
 
 		/* Should we receive? */
-		if (Config->receive && ((difftime(time(NULL), lastreceive) >= Config->receivefrequency) || (Config->SendingSMSStatus != ERR_NONE))) {
+		if (Config->enable_receive && ((difftime(time(NULL), lastreceive) >= Config->receivefrequency) || (Config->SendingSMSStatus != ERR_NONE))) {
 	 		lastreceive = time(NULL);
 
 			/* Do we need to check security? */
@@ -1841,7 +1841,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 
 		/* Send any queued messages */
 		current_time = time(NULL);
-		if (Config->send && (difftime(current_time, lastnothingsent) >= Config->commtimeout)) {
+		if (Config->enable_send && (difftime(current_time, lastnothingsent) >= Config->commtimeout)) {
 			error = SMSD_SendSMS(Config, Service);
 			if (error == ERR_EMPTY) {
 				lastnothingsent = current_time;
