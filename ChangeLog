@@ -19,7 +19,7 @@ the issue.
 ChangeLog
 =========
     
-2010???? - 1.28.91
+20100916 - 1.28.91
 
 [-] * Fixed locales compliation/support.
 [-] * Set memory to use for MPBR/SBNR/SPBR commands as well (bug #1128).
@@ -29,6 +29,7 @@ ChangeLog
 [+] * SMSD can now be configured just for sending/receiving.
 [-] * Fixed battery status for S40 phones (bug #1301).
 [-] * Improved compatibility with Motorola phonebook (bug #1128).
+[+] * Lot of documentation improvements, check <http://wammu.eu/docs/devel/docs/>.
     
 20100827 - 1.28.90
 
