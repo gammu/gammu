@@ -148,7 +148,7 @@ endif (UNIX)
 
 if (LIBINTL_LIB_FOUND AND LIBINTL_LIBRARIES)
     target_link_libraries (libGammu ${LIBINTL_LIBRARIES})
-    include_directories (${GETTEXT_INCLUDE_DIR})
+    include_directories (${LIBINTL_INCLUDE_DIR})
 endif (LIBINTL_LIB_FOUND AND LIBINTL_LIBRARIES)
 
 # dirent emulation layer

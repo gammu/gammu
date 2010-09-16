@@ -44,7 +44,7 @@ target_link_libraries (messagedisplay memorydisplay)
 if (LIBINTL_LIB_FOUND AND LIBINTL_LIBRARIES)
     target_link_libraries (messagedisplay ${LIBINTL_LIBRARIES})
     target_link_libraries (printing ${LIBINTL_LIBRARIES})
-    include_directories (${GETTEXT_INCLUDE_DIR})
+    include_directories (${LIBINTL_INCLUDE_DIR})
 endif (LIBINTL_LIB_FOUND AND LIBINTL_LIBRARIES)
 
 if(WIN32 AND NOT CMAKE_COMPILER_IS_MINGW AND NOT CMAKE_COMPILER_IS_CYGWIN)

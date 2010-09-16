@@ -60,7 +60,7 @@ include_directories (
 # Tune options for found libraries
 if (LIBINTL_LIB_FOUND AND LIBINTL_LIBRARIES)
     target_link_libraries (gammu ${LIBINTL_LIBRARIES})
-    include_directories (${GETTEXT_INCLUDE_DIR})
+    include_directories (${LIBINTL_INCLUDE_DIR})
 endif (LIBINTL_LIB_FOUND AND LIBINTL_LIBRARIES)
 
 if (CURL_FOUND)
