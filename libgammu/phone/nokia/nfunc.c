@@ -351,6 +351,8 @@ static gboolean N71_65_PB_CopyString(GSM_StateMachine     *s,
 	entry->Entries[entry->EntriesNum].Text[length] = 0;
 	entry->Entries[entry->EntriesNum].Text[length + 1] = 0;
 
+	smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
+
 	return TRUE;
 }
 
@@ -426,7 +428,6 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			if (! N71_65_PB_CopyString(s, entry, Block+6, Block[5]))
 				return ERR_UNKNOWNRESPONSE;
 			entry->Entries[entry->EntriesNum].EntryType=Type;
-			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
 			entry->EntriesNum ++;
 		}
 	}
@@ -573,7 +574,6 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			entry->Entries[entry->EntriesNum].EntryType=Type;
 			if (! N71_65_PB_CopyString(s, entry, Block+10, Block[9]))
 				return ERR_UNKNOWNRESPONSE;
-			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
 			/* DCT3 phones like 6210 */
 			entry->Entries[entry->EntriesNum].VoiceTag = Block[7];
 #ifdef DEBUG
@@ -621,7 +621,6 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			entry->Entries[entry->EntriesNum].EntryType=Type;
 			if (! N71_65_PB_CopyString(s, entry, Block+10, Block[9]))
 				return ERR_UNKNOWNRESPONSE;
-			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
 			entry->EntriesNum ++;
 			continue;
 		}
@@ -632,7 +631,6 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			if (! N71_65_PB_CopyString(s, entry, Block+6, Block[5]))
 				return ERR_UNKNOWNRESPONSE;
 			entry->Entries[entry->EntriesNum].EntryType=Type;
-			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
 			entry->EntriesNum ++;
 			continue;
 		}
@@ -641,7 +639,6 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			if (! N71_65_PB_CopyString(s, entry, Block+6, Block[5]))
 				return ERR_UNKNOWNRESPONSE;
 			entry->Entries[entry->EntriesNum].EntryType=Type;
-			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
 			entry->EntriesNum ++;
 			continue;
 		}
@@ -650,7 +647,6 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			if (! N71_65_PB_CopyString(s, entry, Block+6, Block[5]))
 				return ERR_UNKNOWNRESPONSE;
 			entry->Entries[entry->EntriesNum].EntryType=Type;
-			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
 			entry->EntriesNum ++;
 			continue;
 		}
@@ -659,7 +655,6 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			if (! N71_65_PB_CopyString(s, entry, Block+6, Block[5]))
 				return ERR_UNKNOWNRESPONSE;
 			entry->Entries[entry->EntriesNum].EntryType=Type;
-			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
 			entry->EntriesNum ++;
 			continue;
 		}
@@ -668,7 +663,6 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			if (! N71_65_PB_CopyString(s, entry, Block+6, Block[5]))
 				return ERR_UNKNOWNRESPONSE;
 			entry->Entries[entry->EntriesNum].EntryType=Type;
-			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
 			entry->EntriesNum ++;
 			continue;
 		}
@@ -677,7 +671,6 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			if (! N71_65_PB_CopyString(s, entry, Block+6, Block[5]))
 				return ERR_UNKNOWNRESPONSE;
 			entry->Entries[entry->EntriesNum].EntryType=Type;
-			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
 			entry->EntriesNum ++;
 			continue;
 		}
@@ -686,7 +679,6 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			if (! N71_65_PB_CopyString(s, entry, Block+6, Block[5]))
 				return ERR_UNKNOWNRESPONSE;
 			entry->Entries[entry->EntriesNum].EntryType=Type;
-			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
 			entry->EntriesNum ++;
 			continue;
 		}
@@ -695,7 +687,6 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			if (! N71_65_PB_CopyString(s, entry, Block+6, Block[5]))
 				return ERR_UNKNOWNRESPONSE;
 			entry->Entries[entry->EntriesNum].EntryType=Type;
-			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
 			entry->EntriesNum ++;
 			continue;
 		}
@@ -704,7 +695,6 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			if (! N71_65_PB_CopyString(s, entry, Block+6, Block[5]))
 				return ERR_UNKNOWNRESPONSE;
 			entry->Entries[entry->EntriesNum].EntryType=Type;
-			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
 			entry->EntriesNum ++;
 			continue;
 		}
@@ -713,7 +703,6 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			if (! N71_65_PB_CopyString(s, entry, Block+6, Block[5]))
 				return ERR_UNKNOWNRESPONSE;
 			entry->Entries[entry->EntriesNum].EntryType=Type;
-			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
 			entry->EntriesNum ++;
 			continue;
 		}
@@ -866,7 +855,6 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			if (! N71_65_PB_CopyString(s, entry, Block+6, Block[5]))
 				return ERR_UNKNOWNRESPONSE;
 			entry->Entries[entry->EntriesNum].EntryType=PBK_PushToTalkID;
-			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
 			entry->EntriesNum ++;
 			continue;
 		}
