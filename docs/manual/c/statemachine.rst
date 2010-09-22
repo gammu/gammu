@@ -27,20 +27,6 @@ State machine
 
     Terminates connection.
 
-.. code-block:: rst
-
-    .. doxygenfunction:: GSM_ReadDevice
-    .. doxygenfunction:: GSM_IsConnected
-    .. doxygenfunction:: GSM_FindGammuRC
-    .. doxygenfunction:: GSM_ReadConfig
-    .. doxygenfunction:: GSM_GetConfig
-    .. doxygenfunction:: GSM_GetConfigNum
-    .. doxygenfunction:: GSM_SetConfigNum
-    .. doxygenfunction:: GSM_AllocStateMachine
-    .. doxygenfunction:: GSM_FreeStateMachine
-    .. doxygenfunction:: GSM_GetUsedConnection
-    .. doxygenstruct:: GSM_Config
-
 .. c:type:: GSM_StateMachine
 
     Private structure holding information about phone connection. Should
@@ -66,4 +52,16 @@ State machine
     :returns: void
  
     Type of callback function for logging.
+
+.. doxygenfunction:: GSM_ReadDevice
+.. doxygenfunction:: GSM_IsConnected
+.. doxygenfunction:: GSM_FindGammuRC
+.. doxygenfunction:: GSM_ReadConfig
+.. doxygenfunction:: GSM_GetConfig
+.. doxygenfunction:: GSM_GetConfigNum
+.. doxygenfunction:: GSM_SetConfigNum
+.. doxygenfunction:: GSM_AllocStateMachine
+.. doxygenfunction:: GSM_FreeStateMachine
+.. doxygenfunction:: GSM_GetUsedConnection
+.. doxygenstruct:: GSM_Config
 
