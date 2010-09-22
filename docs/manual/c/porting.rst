@@ -24,23 +24,23 @@ API, which has to be done for various reasons:
 Changes you have to do in your code
 -----------------------------------
 
-Bellow examples expect sm to be state machine structure in your current
+Bellow examples expect ``sm`` to be state machine structure in your current
 code, change it to appropriate variable name if it differs.
 
-1. Use pointer to GSM_StateMachine instead of it. API now do not expose
+1. Use pointer to :c:type:`GSM_StateMachine` instead of it. API now do not expose
    this structure, so you will get compiler error. You should allocate
-   this pointer by GSM_AllocStateMachine() and free by
-   GSM_FreeStateMachine().
+   this pointer by :c:func:`GSM_AllocStateMachine` and free by
+   :c:func:`GSM_FreeStateMachine`.
 
-2. Change all phone functions from sm.Phone.Functions->SomeFunction to
-   GSM_SomeFunction. Only functions which results were stored inside
+2. Change all phone functions from ``sm.Phone.Functions->SomeFunction`` to
+   ``GSM_SomeFunction``. Only functions which results were stored inside
    state machine structure have changed signature to include results of
    the operation.
 
-3. All callbacks are set by function GSM_Set*Callback instead of
+3. All callbacks are set by function ``GSM_Set*Callback`` instead of
    directly accessing structure.
 
-4. Some function have been renamed to follow GSM_* naming conventions.
+4. Some function have been renamed to follow ``GSM_*`` naming conventions.
 
 As there might be some functions still missing from new API, don't
 hesitate to contact author or ask on mailing list if you miss something.
