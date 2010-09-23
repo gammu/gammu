@@ -64,3 +64,9 @@ distclean:
 $(BUILD_DIR):
 	@echo 'You should run configure before running make!'
 	@exit 1
+
+# Developer commands
+
+update-man:
+	@make -C build manual-man
+	@cp build/docs/manual/man/* docs/user/
