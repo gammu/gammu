@@ -88,8 +88,7 @@ List of SMSC numbers from which reject messages, see \fI\%Message filtering\fP.
 .TP
 .B Service
 .
-SMSD service to use, one of FILES, NULL, MYSQL, PGSQL, DBI (depends on compiled
-in support for backends).
+SMSD service to use, one of following choices:
 .INDENT 7.0
 .TP
 .B \fBFILES\fP
@@ -114,6 +113,10 @@ stores messages in any database supported by libdbi, this includes
 MSSQL, MySQL, PostgreSQL or SQLite databases, see \fIgammu\-smsd\-dbi\fP for
 details
 .UNINDENT
+.IP Note
+.
+Availability of backends depends on platform and compile time configuration.
+.RE
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -405,9 +408,9 @@ Default is True.
 .UNINDENT
 .SH DATABASE BACKENDS OPTIONS
 .sp
-All DBI, MYSQL and PGSQL backends (see  gammu\-smsd\-mysql(7),
-gammu\-smsd\-pgsql(7), gammu\-smsd\-dbi(7)) for their documentation) supports
-same options for configuring connection to a database:
+All DBI, MYSQL and PGSQL backends (see \fIgammu\-smsd\-mysql\fP,
+\fIgammu\-smsd\-pgsql\fP, \fIgammu\-smsd\-dbi\fP for their documentation)
+supports same options for configuring connection to a database:
 .INDENT 0.0
 .TP
 .B User
