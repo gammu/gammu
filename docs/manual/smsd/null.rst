@@ -1,4 +1,4 @@
-.. _smsd_null:
+.. _gammu-smsd-null:
 
 Null Backend
 ============

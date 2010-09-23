@@ -55,16 +55,16 @@ General parameters of SMS daemon
     in support for backends).
 
     ``FILES``  
-        stores messages in files, see :ref:`smsd_files` for details
+        stores messages in files, see :ref:`gammu-smsd-files` for details
     ``NULL``
-        does not store messages at all, see gammu\-smsd\-null(7) for details
+        does not store messages at all, see :ref:`gammu-smsd-null` for details
     ``MYSQL``
-        stores messages in MySQL database, see gammu\-smsd\-mysql(7) for details
+        stores messages in MySQL database, see :ref:`gammu-smsd-mysql` for details
     ``PGSQL``
-        stores messages in PostgreSQL database, see gammu\-smsd\-pgsql(7) for details
+        stores messages in PostgreSQL database, see :ref:`gammu-smsd-pgsql` for details
     ``DBI``
         stores messages in any database supported by libdbi, this includes
-        MSSQL, MySQL, PostgreSQL or SQLite databases, see gammu\-smsd\-dbi(7) for
+        MSSQL, MySQL, PostgreSQL or SQLite databases, see :ref:`gammu-smsd-dbi` for
         details
 
 .. config:option:: PIN

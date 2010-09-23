@@ -1,4 +1,4 @@
-.. _smsd_files:
+.. _gammu-smsd-files:
 
 Files backend
 =============

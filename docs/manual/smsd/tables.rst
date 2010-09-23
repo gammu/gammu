@@ -1,4 +1,4 @@
-.. _smsd_tables:
+.. _gammu-smsd-tables:
 
 SMSD Database Structure
 =======================
