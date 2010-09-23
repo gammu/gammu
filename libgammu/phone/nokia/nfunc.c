@@ -407,7 +407,8 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 		bs = 256*Block[2]+Block[3];
 		if (bs == 0) break;
 #ifdef DEBUG
-		smprintf(s, "Phonebook entry block - length %i\n", bs-6);
+		smprintf(s, "Phonebook entry block 0x%02x - length %i\n",
+		         Block[0], bs-6);
 		if (GSM_GetDI(s)->dl == DL_TEXTALL || GSM_GetDI(s)->dl == DL_TEXTALLDATE)
 			DumpMessage(&s->di, Block+0, bs-1);
 #endif
@@ -446,7 +447,8 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 		}
 		bs = 256*Block[2]+Block[3];
 #ifdef DEBUG
-		smprintf(s, "Phonebook entry block - length %i\n", bs-6);
+		smprintf(s, "Phonebook entry block 0x%02x - length %i\n",
+		         Block[0], bs-6);
 		if (s->di.dl == DL_TEXTALL || s->di.dl == DL_TEXTALLDATE) DumpMessage(&s->di, Block+0, bs-1);
 #endif
 		if (entry->EntriesNum >= GSM_PHONEBOOK_ENTRIES) {
@@ -834,7 +836,10 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			entry->Entries[Block[5]-1].SMSList[i]   = Block[9];
 			continue;
 		}
-		if (Block[0] == N7110_PBK_UNKNOWN1 || Block[0] == N7110_PBK_UNKNOWN2 || Block[0] == N7110_PBK_UNKNOWN3) {
+		if (Block[0] == N7110_PBK_UNKNOWN1
+		    || Block[0] == N7110_PBK_UNKNOWN2
+		    || Block[0] == N7110_PBK_UNKNOWN3
+		    || Block[0] == N6303_PBK_UNKNOWN1) {
 			smprintf(s,"Unknown entry type 0x%02x data length %d\n", Block[0], bs-6);
 			continue;
 		}
