@@ -192,10 +192,10 @@ Fields description:
     when this record expires
 
 ``Send`` (boolean)
-    indicates whether SMSD is sending messages
+    indicates whether SMSD is sending messages, depends on configuration directive :config:option:`Send`
 
 ``Receive`` (boolean)
-    indicates whether SMSD is receiving messages
+    indicates whether SMSD is receiving messages, depends on configuration directive :config:option:`Receive`
 
 ``IMEI`` (text)
     IMEI of phone
