@@ -1,230 +1,236 @@
-.TH GAMMU-SMSD 1 "February 8, 2010" "Gammu 1.28.0" "Gammu Documentation"
+.TH "GAMMU-SMSD" "1" "September 23, 2010" "1.28.92" "Gammu"
 .SH NAME
-gammu\-smsd \- SMS daemon for Gammu
+gammu-smsd \- SMS daemon for Gammu
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.\" Man page generated from reStructeredText.
+.
 .SH SYNOPSIS
-.B gammu\-smsd
-[\fIOPTION\fR]...
+.sp
+gammu\-smsd [\fIOPTION\fP]...
 .SH DESCRIPTION
-This manual page documents briefly the
-.B gammu\-smsd
-command.
-.PP
-\fBgammu\-smsd\fP is a program that periodically scans GSM modem for received
-messages, stores them in defined storage and also sends messages enqueued in
-this storage.
-.PP
-The daemon can reload configuration file after sending hangup signal
-(SIGHUP) and properly terminates itself on SIGINT and SIGTERM.
-.PP
+.sp
+This manual page documents briefly the \fBgammu\-smsd\fP command.
+.sp
+\fBgammu\-smsd\fP is a program that periodically scans GSM modem for
+received messages, stores them in defined storage and also sends messages
+enqueued in this storage.
+.sp
+The daemon can reload configuration file after sending hangup signal (SIGHUP)
+and properly terminates itself on SIGINT and SIGTERM.
+.sp
 Program accepts following options (please note that long options might be not
 accepted on some platforms):
+.INDENT 0.0
 .TP
-\fB\-h\fR, \fB\-\-help\fR
+.B \-h, \-\-help
+.sp
 Shows help.
+.UNINDENT
+.INDENT 0.0
 .TP
-\fB\-v\fR, \fB\-\-version\fR
+.B \-v, \-\-version
+.sp
 Shows version information and compiled in features.
+.UNINDENT
+.INDENT 0.0
 .TP
-\fB\-c\fR, \fB\-\-config\fR=\fIfile\fR
-Configuration file to use, default is /etc/gammu\-smsdrc, on Windows there is
-no default and configuration file path has to be always specified.
-
+.B \-c, \-\-config=file
+.sp
+Configuration file to use, default is /etc/gammu\-smsdrc, on Windows there
+is no default and configuration file path has to be always specified.
+.sp
 If you run SMSD as a system daemon (or service), it is recommended to use
-absolute path to log file as startup directory might be different than you
-expect.
-
-See gammu-smsdrc(5) for config file documentation.
+absolute path to configuration file as startup directory might be
+different than you expect.
+.sp
+See \fIgammu\-smsdrc\fP for configuration file documentation.
+.UNINDENT
+.INDENT 0.0
 .TP
-\fB\-p\fR, \fB\-\-pid\fR=\fIfile\fR
+.B \-p, \-\-pid=file
+.sp
 Lock file for storing pid, empty for no locking. Not supported on Windows.
+.UNINDENT
+.INDENT 0.0
 .TP
-\fB\-U\fR, \fB\-\-user\fR=\fIuser\fR
+.B \-U, \-\-user=user
+.sp
 Drop daemon privileges to chosed user after starting.
+.UNINDENT
+.INDENT 0.0
 .TP
-\fB\-G\fR, \fB\-\-group\fR=\fIgroup\fR
+.B \-G, \-\-group=group
+.sp
 Drop daemon privileges to chosen group after starting.
+.UNINDENT
+.INDENT 0.0
 .TP
-\fB\-d\fR, \fB\-\-daemon\fR
+.B \-d, \-\-daemon
+.sp
 Daemonize program on startup. Not supported on Windows.
+.UNINDENT
+.INDENT 0.0
 .TP
-\fB\-i\fR, \fB\-\-install\-service\fR
+.B \-i, \-\-install\-service
+.sp
 Installs SMSD as a Windows service.
+.UNINDENT
+.INDENT 0.0
 .TP
-\fB\-u\fR, \fB\-\-uninstall\-service\fR
+.B \-u, \-\-uninstall\-service
+.sp
 Uninstalls SMSD as a Windows service.
+.UNINDENT
+.INDENT 0.0
 .TP
-\fB\-s\fR, \fB\-\-start\-service\fR
+.B \-s, \-\-start\-service
+.sp
 Starts SMSD Windows service.
+.UNINDENT
+.INDENT 0.0
 .TP
-\fB\-k\fR, \fB\-\-stop\-service\fR
+.B \-k, \-\-stop\-service
+.sp
 Stops SMSD Windows service.
+.UNINDENT
+.INDENT 0.0
 .TP
-\fB\-f\fR, \fB\-\-max-failures\fR=\fIcount\fR
+.B \-f, \-\-max\-failures=count
+.sp
 Terminate after defined number of failures. Use 0 to not terminate (this is default).
+.UNINDENT
+.INDENT 0.0
 .TP
-\fB\-X\fR, \fB\-\-suicide\fR=\fIseconds\fR
+.B \-X, \-\-suicide=seconds
+.sp
 Kills itself after number of seconds.
+.UNINDENT
+.INDENT 0.0
 .TP
-\fB\-S\fR, \fB\-\-run\-service\fR
+.B \-S, \-\-run\-service
+.sp
 Runs pogram as SMSD Windows service. This should not be used manually, but
 only Windows Service manager should use this command.
+.UNINDENT
+.INDENT 0.0
 .TP
-\fB\-n\fR, \fB\-\-service\-name\fR=\fIname\fR
-Defines name of a Windows service. Each service requires an unique name, so if
-you want to run several SMSD instances, you have to name each service
-differently. Default is "GammuSMSD".
-
-.SH EXAMPLE
-
+.B \-n, \-\-service\-name=name
+.sp
+Defines name of a Windows service. Each service requires an unique name,
+so if you want to run several SMSD instances, you have to name each
+service differently. Default is "GammuSMSD".
+.UNINDENT
+.SH EXAMPLES
 .SS Linux/Unix Examples
-
-.TP
+.sp
 Start SMSD as a daemon on Linux:
-
-.RS
 .sp
 .nf
-.ne 7
+.ft C
 gammu\-smsd \-\-config /etc/gammu\-smsdrc \-\-pid /var/run/gammu\-smsd.pid \-\-daemon
+.ft P
 .fi
 .sp
-.RE
-.PP
-
-.TP
 Start SMSD as a daemon on Linux with reduced privileges:
-
-.RS
 .sp
 .nf
-.ne 7
+.ft C
 gammu\-smsd \-\-config /etc/gammu\-smsdrc \-\-pid /var/run/gammu\-smsd.pid \-\-daemon \-\-user gammu \-\-group gammu
+.ft P
 .fi
+.SS SMSD as a system wide daemon
 .sp
-.RE
-.PP
-
-.TP
-SMSD as a system wide daemon
-
 To use SMSD as a daemon, you might want to use init script which is shipped
 with Gammu in contrib/init directory. It is not installed by default, either
 install it manually or check INSTALL file for instructions.
-
+.sp
 Under Windows 7 you might need to disable UAC (user account control) before
 you will be able to install SMSD service.
-
 .SS Windows Service Examples
-
-.TP
+.sp
 Install Gammu SMSD Windows service:
-
-.RS
 .sp
 .nf
-.ne 7
-gammu\-smsd.exe \-c c:\\Gammu\\smsdrc \-i
+.ft C
+gammu\-smsd.exe \-c c:\eGammu\esmsdrc \-i
+.ft P
 .fi
 .sp
-.RE
-.PP
-
-.TP
 Install two instances of SMSD Windows service:
-
-.RS
 .sp
 .nf
-.ne 7
-gammu\-smsd.exe \-c c:\\Gammu\\smsdrc\-1 \-n Gammu\-first\-phone \-i
+.ft C
+gammu\-smsd.exe \-c c:\eGammu\esmsdrc\-1 \-n Gammu\-first\-phone \-i
 
-gammu\-smsd.exe \-c c:\\Gammu\\smsdrc\-2 \-n Gammu\-second\-phone \-i
+gammu\-smsd.exe \-c c:\eGammu\esmsdrc\-2 \-n Gammu\-second\-phone \-i
+.ft P
 .fi
 .sp
-.RE
-.PP
-
-.TP
 To uninstall a Windows service:
-
-.RS
 .sp
 .nf
-.ne 7
+.ft C
 gammu\-smsd.exe \-u
+.ft P
 .fi
-.sp
-.RE
-.PP
-
 .SS Troubleshooting Windows Service
-
+.sp
 If Gammu fails to start as a Windows service (you will usually get "Error
 1053: The service did not respond to the start or control request in a timely
 fashion"), first check your SMSD logs. If they do not contain any useful hint,
 try starting SMSD manually with exactly same parameters as you installed the
 service (without \-i).
-
-.TP
+.sp
 For example the command line can look like:
-
-.RS
 .sp
 .nf
-.ne 7
+.ft C
 gammu\-smsd.exe \-c smsdrc
+.ft P
 .fi
 .sp
-.RE
-.PP
-
-.PP
 You now should be able to get errors from SMSD even if it fails to start as a
 service.
-
 .SH KNOWN LIMITATIONS
-
+.sp
 You can not use same phone by more programs in same time. However in case you
-did not enable locking in [gammu] section, it might be able to start the
-communication with phone from more programs. In this case neither of the
-programs will probably work.
-
+did not enable locking in \fB[gammu]\fP section, it might be able
+to start the communication with phone from more programs. In this case neither
+of the programs will probably work.
+.sp
 There is no way to detect that SMS message is reply to another by looking at
 message headers. The only way to achieve this is to add some token to the
 message and let the user include it in the message on reply.
-
-.SH SEE ALSO
-gammu\-smsdrc(5), gammu(1), gammu\-smsd\-inject(1), gammu\-smsd\-monitor(1)
-
-Documentation for different backends:
-
-gammu\-smsd\-files(7), gammu\-smsd\-mysql(7), gammu\-smsd\-pgsql(7), gammu\-smsd\-dbi(7), gammu\-smsd\-tables(7), gammu\-smsd\-null(7), gammu\-smsd\-run(7)
-
-For web based frontend to SMSD database (currently only MySQL is being
-supported), please check Kalkun - <http://kalkun.sourceforge.net/>.
 .SH AUTHOR
-gammu\-smsd and this manual page were written by Michal Cihar <michal@cihar.com>.
+Michal Čihař <michal@cihar.com>
 .SH COPYRIGHT
-Copyright \(co 2009 Michal Cihar and other authors.
-License GPLv2: GNU GPL version 2 <http://www.gnu.org/licenses/old\-licenses/gpl\-2.0.html>
-.br
-This is free software: you are free to change and redistribute it.
-There is NO WARRANTY, to the extent permitted by law.
-.SH REPORTING BUGS
-Please report bugs to <http://bugs.cihar.com>.
-
-Before reporting a bug, please enable verbose logging in SMSD configuration:
-
-.RS
-.sp
-.nf
-.ne 7
-[smsd]
-debuglevel = 255
-logfile = smsd.log
-.fi
-.sp
-.RE
-.PP
-
-and include this verbose log within bug report.
+2009-2010, Michal Čihař <michal@cihar.com>
+.\" Generated by docutils manpage writer.
+.\" 
+.

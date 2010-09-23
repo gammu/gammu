@@ -1,119 +1,139 @@
-.TH GAMMU-SMSD-FILES 7 "January  8, 2009" "Gammu 1.23.0" "Gammu Documentation"
+.TH "GAMMU-SMSD-FILES" "7" "September 23, 2010" "1.28.92" "Gammu"
 .SH NAME
-
-gammu\-smsd\-files - gammu\-smsd(1) backend using filesystem as a message storage
-
-.SH DESCRIPTION
-gammu\-smsd(1) supports several backends. Actual backend is chosen in
-a config file gammu\-smsdrc(5).
-
+gammu-smsd-files \- gammu-smsd(1) backend using filesystem as a message storage
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.\" Man page generated from reStructeredText.
+.
+.sp
 FILES backend stores all data on a filesystem in folders defined by
-configuration (see gammu\-smsdrc(5) for description of configuration options).
-
-.SS Receiving of messages
-
+configuration (see \fIgammu\-smsdrc\fP for description of configuration options).
+.SH RECEIVING OF MESSAGES
+.sp
 Received messages are stored in a folder defined by configuration. The
-filename will be IN<date>_<time>_<serialno>_<phone_number>_<sequence>.<ext>,
-for example NN20021130_021531_00_+45409000931640979_00.txt.
-
+filename will be \fBIN<date>_<time>_<serialno>_<phone_number>_<sequence>.<ext>\fP,
+for example \fBNN20021130_021531_00_+45409000931640979_00.txt\fP.
+.sp
 Explanation of fields:
-
-\fB<date>\fR - date in format YYYYMMDD
-.br
-\fB<time>\fR - time in format HHMMSS
-.br
-\fB<serialno>\fR - order of a message (in case more messages were received at
-same time), in format NN
-.br
-\fB<sequence>\fR - part of the message for multipart messages, in format NN
-.br
-\fB<ext>\fR - txt for text message, 8-bit messages are stored with bin
-extension
-
+.INDENT 0.0
+.TP
+.B \fB<date>\fP
+.sp
+date in format \fBYYYYMMDD\fP
+.TP
+.B \fB<time>\fP
+.sp
+time in format \fBHHMMSS\fP
+.TP
+.B \fB<serialno>\fP
+.sp
+order of a message (in case more messages were received at same time), in format \fBNN\fP
+.TP
+.B \fB<sequence>\fP
+.sp
+part of the message for multipart messages, in format \fBNN\fP
+.TP
+.B \fB<ext>\fP
+.sp
+\fBtxt\fP for text message, 8\-bit messages are stored with \fBbin\fP extension, \fBsmsbackup\fP for \fIsmsbackup\fP
+.UNINDENT
+.sp
 The content of the file is content of the message and the format is defined by
-configuration directive InboxFormat (see gammu-smsdrc(5)).
-
-.SS Transmitting of messages
-
+configuration directive InboxFormat (see gammu\-smsdrc(5)).
+.SH TRANSMITTING OF MESSAGES
+.sp
 Transmitted messages are read from a folder defined by configuration. The
 filename should be one of the following formats:
-
-- OUT<phone_number>.<ext><options>
-.br
-- OUT<priority>_<phone_number>_<serialno>.<ext><options>
-.br
-- OUT<priority><date>_<time>_<serialno>_<phone_number>_<anything>.<ext><options>
-
+.INDENT 0.0
+.IP \(bu 2
+.
+\fBOUT<phone_number>.<ext><options>\fP
+.IP \(bu 2
+.
+\fBOUT<priority>_<phone_number>_<serialno>.<ext><options>\fP
+.IP \(bu 2
+.
+\fBOUT<priority><date>_<time>_<serialno>_<phone_number>_<anything>.<ext><options>\fP
+.UNINDENT
+.sp
 Explanation of fields:
-
-\fB<priority>\fR - an alphabetic character (A-Z) A = highest priority
-.br
-\fB<ext>\fR - txt for normal text SMS, smsbackup for SMS backup format used 
-by Gammu
-.br
-\fB<options>\fR - Options appended to the extension applying to text SMS:
- \fBd\fR - delivery report requested
- \fBf\fR - flash SMS
- \fBb\fR - WAP bookmark as name,URL
-
+.INDENT 0.0
+.TP
+.B \fB<priority>\fP
+.sp
+an alphabetic character (A\-Z) A = highest priority
+.TP
+.B \fB<ext>\fP
+.sp
+\fBtxt\fP for normal text SMS, \fBsmsbackup\fP for \fIsmsbackup\fP
+.TP
+.B \fB<options>\fP
+.sp
+Options appended to the extension applying to text SMS:
+.INDENT 7.0
+.INDENT 3.5
+.INDENT 0.0
+.TP
+.B \fBd\fP
+.sp
+delivery report requested
+.TP
+.B \fBf\fP
+.sp
+flash SMS
+.TP
+.B \fBb\fP
+.sp
+WAP bookmark as name,URL
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.sp
 For example OUTG20040620_193810_123_+4512345678_xpq.txtdf is a flash text SMS
 requesting delivery reports.
-
+.sp
 Other fields are same as for received messages.
-
+.sp
 SMSes will be transmitted sequentially based on the file name. The contents of
 the file is the SMS to be transmitted (in Unicode or standard character set).
-
+.sp
 The contents of the file is the SMS to be transmitted (in Unicode or standard
 character set), for WAP bookmarks it is split on as Name,URL, for text
-messages whole file content is used. 
-
+messages whole file content is used.
+.sp
 Please note that if file is not in Unicode, encoding is detected based on
 locales, which do not have to be configured if SMSD is running from init
 script. If this is your case, please add locales definition to init script.
-
-.SH EXAMPLE
-
-Example of the 'detail' inbox format:
-
-.RS
-.sp
-.nf
-.ne 7
-[SMSBackup000]
-#ABCDEFGHIJKLMNOPQRSTUVWXYZ
-#
-SMSC = "+4540590000"
-SMSCUnicode = 002B0034003500340030003500390030003000300030
-Sent = 20021201T025023
-State = UnRead
-Number = "+4522706947"
-NumberUnicode = 002B0034003500320032003700300036003900340037
-Name = ""
-NameUnicode =
-Text00 = 004100420043004400450046004700480049004A004B004C004D004E004F0050005100520053005400550056005700580059005A000A
-Coding = Default
-Folder = 1
-Length = 27
-Class = \-1
-ReplySMSC = False
-RejectDuplicates = True
-ReplaceMessage = 0
-MessageReference = 0
-.fi
-.sp
-.RE
-.PP
-
-.SH SEE ALSO
-gammu\-smsd(1), gammu\-smsdrc(5), gammu(1), gammurc(5)
 .SH AUTHOR
-gammu\-smsd and this manual page were written by Michal Cihar <michal@cihar.com>.
+Michal Čihař <michal@cihar.com>
 .SH COPYRIGHT
-Copyright \(co 2009 Michal Cihar and other authors.
-License GPLv2: GNU GPL version 2 <http://www.gnu.org/licenses/old\-licenses/gpl\-2.0.html>
-.br
-This is free software: you are free to change and redistribute it.
-There is NO WARRANTY, to the extent permitted by law.
-.SH REPORTING BUGS
-Please report bugs to <http://bugs.cihar.com>.
+2009-2010, Michal Čihař <michal@cihar.com>
+.\" Generated by docutils manpage writer.
+.\" 
+.

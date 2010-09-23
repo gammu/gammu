@@ -1,131 +1,136 @@
-.TH GAMMU-SMSD-RUN 7 "January 25, 2010" "Gammu 1.28.0" "Gammu Documentation"
+.TH "GAMMU-SMSD-RUN" "7" "September 23, 2010" "1.28.92" "Gammu"
 .SH NAME
-
-gammu\-smsd\-run - documentation for RunOnReceive directive
-
+gammu-smsd-run \- documentation for RunOnReceive directive
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.\" Man page generated from reStructeredText.
+.
 .SH DESCRIPTION
-
-Gammu SMSD can be configured by RunOnReceive directive (see gammu\-smsdrc(5)
-for details) to run defined program after receiving message. 
-    
+.sp
+Gammu SMSD can be configured by RunOnReceive directive (see \fIgammu\-smsdrc\fP
+for details) to run defined program after receiving message.
+.sp
 This parameter is executed through shell, so you might need to escape some
 special characters and you can include any number of parameters. Additionally
 parameters with identifiers of received messages are appended to the command
 line. The identifiers depend on used service backend, typically it is ID of
 inserted row for database backends or file name for file based backends.
-
+.sp
 Gammu SMSD waits for the script to terminate. If you make some time consuming
 there, it will make SMSD not receive new messages. However to limit breakage
 from this situation, the waiting time is limited to two minutes. After this
 time SMSD will continue in normal operation and might execute your script
 again.
-
 .SH ENVIRONMENT
-
-Program is executed with environment which contains lot of information about
+.sp
+program is executed with environment which contains lot of information about
 the message. You can use it together with NULL service (see
-gammu\-smsd\-null(7)) to implement completely own processing of messages.
-
+\fIgammu\-smsd\-null\fP) to implement completely own processing of messages.
 .SS Global variables
-
+.INDENT 0.0
 .TP
-.BI SMS_MESSAGES
-
+.B SMS_MESSAGES
+.
 Number of physical messages received.
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI DECODED_PARTS
-
+.B DECODED_PARTS
+.
 Number of decoded message parts.
-
+.UNINDENT
 .SS Per message variables
-
-The variables further described as SMS_1_... are generated for each physical
+.sp
+The variables further described as \fBSMS_1_...\fP are generated for each physical
 message, where 1 is replaced by current number of message.
-
+.INDENT 0.0
 .TP
-.BI SMS_1_CLASS
-
+.B SMS_1_CLASS
+.
 Class of message.
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI SMS_1_NUMBER
-
+.B SMS_1_NUMBER
+.
 Sender number.
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI SMS_1_TEXT
-
-Message text. Text is not available for 8-bit binary messages.
-
+.B SMS_1_TEXT
+.
+Message text. Text is not available for 8\-bit binary messages.
+.UNINDENT
 .SS Per part variables
-
-The variables further described as DECODED_1_... are generated for each message
+.sp
+The variables further described as \fBDECODED_1_...\fP are generated for each message
 part, where 1 is replaced by current number of part. Set are only those
 variables whose content is present in the message.
-
+.INDENT 0.0
 .TP
-.BI DECODED_1_TEXT
-
+.B DECODED_1_TEXT
+.
 Decoded long message text.
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI DECODED_1_MMS_SENDER
-
+.B DECODED_1_MMS_SENDER
+.
 Sender of MMS indication message.
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI DECODED_1_MMS_TITLE
-
+.B DECODED_1_MMS_TITLE
+.
 title of MMS indication message.
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI DECODED_1_MMS_ADDRESS
-
+.B DECODED_1_MMS_ADDRESS
+.
 Address (URL) of MMS from MMS indication message.
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI DECODED_1_MMS_SIZE
-
+.B DECODED_1_MMS_SIZE
+.
 Size of MMS as specified in MMS indication message.
-
-
-.SH EXAMPLE
-
+.UNINDENT
+.SH EXAMPLES
 .SS Passing MMS indication parameters to external program
-
+.sp
 Following script (if used as RunOnReceive handler) will write information
 about each received MMS indication to the log file. Just replace echo command
 with your own program to do custom processing.
-
-.RS
-.sp
-.nf
-.ne 7
-#!/bin/sh
-if [ $DECODED_PARTS \-eq 0 ] ; then
-    # No decoded parts, nothing to process
-    exit
-fi
-if [ "$DECODED_1_MMS_ADDRESS" ] ; then
-    echo "$DECODED_1_MMS_ADDRESS" "$DECODED_1_MMS_SENDER" "$DECODED_1_MMS_TITLE" >> /tmp/smsd-mms.log
-fi
-.fi
-.sp
-.RE
-.PP
-
-.SH SEE ALSO
-gammu\-smsd(1), gammu\-smsdrc(5), gammu(1), gammurc(5)
 .SH AUTHOR
-gammu\-smsd and this manual page were written by Michal Cihar <michal@cihar.com>.
+Michal Čihař <michal@cihar.com>
 .SH COPYRIGHT
-Copyright \(co 2010 Michal Cihar and other authors.
-License GPLv2: GNU GPL version 2 <http://www.gnu.org/licenses/old\-licenses/gpl\-2.0.html>
-.br
-This is free software: you are free to change and redistribute it.
-There is NO WARRANTY, to the extent permitted by law.
-.SH REPORTING BUGS
-Please report bugs to <http://bugs.cihar.com>.
-
-
+2009-2010, Michal Čihař <michal@cihar.com>
+.\" Generated by docutils manpage writer.
+.\" 
+.
