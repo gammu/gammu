@@ -329,6 +329,34 @@ size_t N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_
 }
 
 /**
+ * Copy string to GSM_MemoryEntry
+ *
+ * Return false on failure
+ */
+static gboolean N71_65_PB_CopyString(GSM_StateMachine     *s,
+                                     GSM_MemoryEntry      *entry,
+                                     const unsigned char  *src,
+                                     unsigned char         length)
+{
+	if ((length & 1) != 0) {
+		smprintf(s, "String length not even\n");
+		return FALSE;
+	}
+	if (length/2 > GSM_PHONEBOOK_TEXT_LENGTH) {
+		smprintf(s, "Too long text\n");
+		return FALSE;
+	}
+	memcpy(entry->Entries[entry->EntriesNum].Text, src, length);
+	/* Zero terminate the string */
+	entry->Entries[entry->EntriesNum].Text[length] = 0;
+	entry->Entries[entry->EntriesNum].Text[length + 1] = 0;
+
+	smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
+
+	return TRUE;
+}
+
+/**
  * Decodes nokia phonebook.
  *
  * \bug Type casting MemoryType to int is ugly.
@@ -397,19 +425,9 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 		}
 		if (Type != 0) {
 			found=TRUE;
-			if (Block[5]/2>GSM_PHONEBOOK_TEXT_LENGTH) {
-				smprintf(s, "Too long text\n");
+			if (! N71_65_PB_CopyString(s, entry, Block+6, Block[5]))
 				return ERR_UNKNOWNRESPONSE;
-			}
-			/* No text? */
-			if (Block[5] < 2) {
-				entry->Entries[entry->EntriesNum].Text[0] = 0;
-				entry->Entries[entry->EntriesNum].Text[1] = 0;
-			} else {
-				memcpy(entry->Entries[entry->EntriesNum].Text,Block+6,Block[5]);
-			}
 			entry->Entries[entry->EntriesNum].EntryType=Type;
-			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
 			entry->EntriesNum ++;
 		}
 	}
@@ -554,12 +572,8 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 				return ERR_UNKNOWNRESPONSE;
 			}
 			entry->Entries[entry->EntriesNum].EntryType=Type;
-			if (Block[9]/2>GSM_PHONEBOOK_TEXT_LENGTH) {
-				smprintf(s, "Too long text\n");
+			if (! N71_65_PB_CopyString(s, entry, Block+10, Block[9]))
 				return ERR_UNKNOWNRESPONSE;
-			}
-			memcpy(entry->Entries[entry->EntriesNum].Text,Block+10,Block[9]);
-			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
 			/* DCT3 phones like 6210 */
 			entry->Entries[entry->EntriesNum].VoiceTag = Block[7];
 #ifdef DEBUG
@@ -605,12 +619,8 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 				return ERR_UNKNOWNRESPONSE;
 			}
 			entry->Entries[entry->EntriesNum].EntryType=Type;
-			if (Block[9]/2>GSM_PHONEBOOK_TEXT_LENGTH) {
-				smprintf(s, "Too long text\n");
+			if (! N71_65_PB_CopyString(s, entry, Block+10, Block[9]))
 				return ERR_UNKNOWNRESPONSE;
-			}
-			memcpy(entry->Entries[entry->EntriesNum].Text,Block+10,Block[9]);
-			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
 			entry->EntriesNum ++;
 			continue;
 		}
@@ -618,121 +628,81 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 
 		if ((Block[0] == S4030_PBK_POSTAL_EXTADDRESS) && (foundbb5add==TRUE)) {
 			Type = PBK_Text_Custom1;    	smprintf(s,"Address extension ? ");
-			if (Block[5]/2>GSM_PHONEBOOK_TEXT_LENGTH) {
-				smprintf(s, "Too long text\n");
+			if (! N71_65_PB_CopyString(s, entry, Block+6, Block[5]))
 				return ERR_UNKNOWNRESPONSE;
-			}
-			memcpy(entry->Entries[entry->EntriesNum].Text,Block+6,Block[5]);
 			entry->Entries[entry->EntriesNum].EntryType=Type;
-			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
 			entry->EntriesNum ++;
 			continue;
 		}
 		if ((Block[0] == S4030_PBK_POSTAL_STREET) && (foundbb5add==TRUE)) {
 			Type = PBK_Text_StreetAddress;  smprintf(s,"Street ");
-			if (Block[5]/2>GSM_PHONEBOOK_TEXT_LENGTH) {
-				smprintf(s, "Too long text\n");
+			if (! N71_65_PB_CopyString(s, entry, Block+6, Block[5]))
 				return ERR_UNKNOWNRESPONSE;
-			}
-			memcpy(entry->Entries[entry->EntriesNum].Text,Block+6,Block[5]);
 			entry->Entries[entry->EntriesNum].EntryType=Type;
-			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
 			entry->EntriesNum ++;
 			continue;
 		}
 		if ((Block[0] == S4030_PBK_POSTAL_CITY) && (foundbb5add==TRUE)) {
 			Type = PBK_Text_City;    	smprintf(s,"City ");
-			if (Block[5]/2>GSM_PHONEBOOK_TEXT_LENGTH) {
-				smprintf(s, "Too long text\n");
+			if (! N71_65_PB_CopyString(s, entry, Block+6, Block[5]))
 				return ERR_UNKNOWNRESPONSE;
-			}
-			memcpy(entry->Entries[entry->EntriesNum].Text,Block+6,Block[5]);
 			entry->Entries[entry->EntriesNum].EntryType=Type;
-			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
 			entry->EntriesNum ++;
 			continue;
 		}
 		if ((Block[0] == S4030_PBK_POSTAL_STATE) && (foundbb5add==TRUE)) {
 			Type = PBK_Text_State;    	smprintf(s,"State ");
-			if (Block[5]/2>GSM_PHONEBOOK_TEXT_LENGTH) {
-				smprintf(s, "Too long text\n");
+			if (! N71_65_PB_CopyString(s, entry, Block+6, Block[5]))
 				return ERR_UNKNOWNRESPONSE;
-			}
-			memcpy(entry->Entries[entry->EntriesNum].Text,Block+6,Block[5]);
 			entry->Entries[entry->EntriesNum].EntryType=Type;
-			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
 			entry->EntriesNum ++;
 			continue;
 		}
 		if ((Block[0] == S4030_PBK_POSTAL_POSTAL) && (foundbb5add==TRUE)) {
 			Type = PBK_Text_Postal;    	smprintf(s,"Postal ");
-			if (Block[5]/2>GSM_PHONEBOOK_TEXT_LENGTH) {
-				smprintf(s, "Too long text\n");
+			if (! N71_65_PB_CopyString(s, entry, Block+6, Block[5]))
 				return ERR_UNKNOWNRESPONSE;
-			}
-			memcpy(entry->Entries[entry->EntriesNum].Text,Block+6,Block[5]);
 			entry->Entries[entry->EntriesNum].EntryType=Type;
-			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
 			entry->EntriesNum ++;
 			continue;
 		}
 		if ((Block[0] == S4030_PBK_POSTAL_COUNTRY) && (foundbb5add==TRUE)) {
 			Type = PBK_Text_Country;    	smprintf(s,"Country ");
-			if (Block[5]/2>GSM_PHONEBOOK_TEXT_LENGTH) {
-				smprintf(s, "Too long text\n");
+			if (! N71_65_PB_CopyString(s, entry, Block+6, Block[5]))
 				return ERR_UNKNOWNRESPONSE;
-			}
-			memcpy(entry->Entries[entry->EntriesNum].Text,Block+6,Block[5]);
 			entry->Entries[entry->EntriesNum].EntryType=Type;
-			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
 			entry->EntriesNum ++;
 			continue;
 		}
 		if (Block[0] == S4030_PBK_FORMALNAME) {
 			Type = PBK_Text_FormalName;    	smprintf(s,"FormalName ");
-			if (Block[5]/2>GSM_PHONEBOOK_TEXT_LENGTH) {
-				smprintf(s, "Too long text\n");
+			if (! N71_65_PB_CopyString(s, entry, Block+6, Block[5]))
 				return ERR_UNKNOWNRESPONSE;
-			}
-			memcpy(entry->Entries[entry->EntriesNum].Text,Block+6,Block[5]);
 			entry->Entries[entry->EntriesNum].EntryType=Type;
-			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
 			entry->EntriesNum ++;
 			continue;
 		}
 		if (Block[0] == S4030_PBK_JOBTITLE) {
 			Type = PBK_Text_JobTitle;    	smprintf(s,"JobTitle ");
-			if (Block[5]/2>GSM_PHONEBOOK_TEXT_LENGTH) {
-				smprintf(s, "Too long text\n");
+			if (! N71_65_PB_CopyString(s, entry, Block+6, Block[5]))
 				return ERR_UNKNOWNRESPONSE;
-			}
-			memcpy(entry->Entries[entry->EntriesNum].Text,Block+6,Block[5]);
 			entry->Entries[entry->EntriesNum].EntryType=Type;
-			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
 			entry->EntriesNum ++;
 			continue;
 		}
 		if (Block[0] == S4030_PBK_COMPANY) {
 			Type = PBK_Text_Company;    	smprintf(s,"Company ");
-			if (Block[5]/2>GSM_PHONEBOOK_TEXT_LENGTH) {
-				smprintf(s, "Too long text\n");
+			if (! N71_65_PB_CopyString(s, entry, Block+6, Block[5]))
 				return ERR_UNKNOWNRESPONSE;
-			}
-			memcpy(entry->Entries[entry->EntriesNum].Text,Block+6,Block[5]);
 			entry->Entries[entry->EntriesNum].EntryType=Type;
-			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
 			entry->EntriesNum ++;
 			continue;
 		}
 		if (Block[0] == S4030_PBK_NICKNAME) {
 			Type = PBK_Text_NickName;    	smprintf(s,"NickName ");
-			if (Block[5]/2>GSM_PHONEBOOK_TEXT_LENGTH) {
-				smprintf(s, "Too long text\n");
+			if (! N71_65_PB_CopyString(s, entry, Block+6, Block[5]))
 				return ERR_UNKNOWNRESPONSE;
-			}
-			memcpy(entry->Entries[entry->EntriesNum].Text,Block+6,Block[5]);
 			entry->Entries[entry->EntriesNum].EntryType=Type;
-			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
 			entry->EntriesNum ++;
 			continue;
 		}
@@ -882,13 +852,9 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 		}
 		if (Block[0] == N6510_PBK_PUSHTOTALK_ID) {
 			smprintf(s,"SIP Address (Push to Talk address)\n");
-			if (Block[5]/2>GSM_PHONEBOOK_TEXT_LENGTH) {
-				smprintf(s, "Too long text\n");
+			if (! N71_65_PB_CopyString(s, entry, Block+6, Block[5]))
 				return ERR_UNKNOWNRESPONSE;
-			}
-			memcpy(entry->Entries[entry->EntriesNum].Text,Block+6,Block[5]);
 			entry->Entries[entry->EntriesNum].EntryType=PBK_PushToTalkID;
-			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
 			entry->EntriesNum ++;
 			continue;
 		}
