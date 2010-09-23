@@ -209,7 +209,7 @@ Default is 1.
 .
 The number of seconds between testing for received SMSes, when the phone is
 busy sending SMSes. Normally a test for received SMSes is done every
-CommTimeout seconds and after each sent SMS.
+\fI\%CommTimeout\fP seconds and after each sent SMS.
 .sp
 Default is 0 (not used).
 .UNINDENT
@@ -320,7 +320,7 @@ you want to run several SMS daemons.
 .sp
 When you set PhoneID, all messages (including injected ones) will be marked by
 this string and it allow more SMS daemons to share single database. This
-option has actually no effect of FILES backend service.
+option has actually no effect of \fIgammu\-smsd\-files\fP.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -428,7 +428,7 @@ Password used for connection to a database.
 .B PC
 .
 Database server address. It can also contain port or socket path after
-semicolon, for example localhost:/path/to/socket.
+semicolon, for example \fBlocalhost:/path/to/socket\fP.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -451,9 +451,9 @@ will not check it\(aqs number during assigning reports to sent SMS.
 .B Driver
 .
 DBI driver to use. Depends on what DBI drivers you have installed, DBI
-supports: mysql, freetds (provides access to MS SQL Server and Sybase), pgsql,
-sqlite, sqlite3, firebird and ingres, msql and oracle drivers are under
-development.
+supports: \fBmysql\fP, \fBfreetds\fP (provides access to MS SQL Server and
+Sybase), \fBpgsql\fP, \fBsqlite\fP, \fBsqlite3\fP, \fBfirebird\fP and \fBingres\fP,
+\fBmsql\fP and \fBoracle\fP drivers are under development.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -472,7 +472,7 @@ where sqlite database files are stored.
 .SS Files backend options
 .sp
 The FILES backend accepts following configuration options. See
-gammu\-smsd\-files(7) for more detailed service backend description. Please note
+\fIgammu\-smsd\-files\fP for more detailed service backend description. Please note
 that all path should contain trailing path separator (/ on Unix systems):
 .INDENT 0.0
 .TP
@@ -494,7 +494,7 @@ Default is current directory.
 .TP
 .B SentSMSPath
 .
-Where the transmitted SMSes are placed, if same as OutBoxPath transmitted
+Where the transmitted SMSes are placed, if same as \fI\%OutboxPath\fP transmitted
 messages are deleted.
 .sp
 Default is to delete transmitted messages.
@@ -505,7 +505,7 @@ Default is to delete transmitted messages.
 .
 Where SMSes with error in transmission is placed.
 .sp
-Default is same as SentSMSPath.
+Default is same as \fI\%SentSMSPath\fP.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -536,7 +536,7 @@ Default is \fBunicode\fP.
 .TP
 .B OutboxFormat
 .
-The format in which messages created by gammu\-smsd\-inject(1) will be stored,
+The format in which messages created by \fIgammu\-smsd\-inject\fP will be stored,
 it accepts same values as InboxFormat.
 .sp
 Default is \fBdetail\fP if Gammu is compiled in with backup functions, \fBunicode\fP

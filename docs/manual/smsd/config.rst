@@ -136,7 +136,7 @@ General parameters of SMS daemon
 
     The number of seconds between testing for received SMSes, when the phone is
     busy sending SMSes. Normally a test for received SMSes is done every
-    CommTimeout seconds and after each sent SMS. 
+    :config:option:`CommTimeout` seconds and after each sent SMS. 
 
     Default is 0 (not used).
 
@@ -220,7 +220,7 @@ General parameters of SMS daemon
 
     When you set PhoneID, all messages (including injected ones) will be marked by
     this string and it allow more SMS daemons to share single database. This
-    option has actually no effect of FILES backend service.
+    option has actually no effect of :ref:`gammu-smsd-files`.
 
 .. config:option:: RunOnReceive
 
@@ -309,12 +309,12 @@ supports same options for configuring connection to a database:
 .. config:option:: PC
 
     Database server address. It can also contain port or socket path after
-    semicolon, for example localhost:/path/to/socket.
+    semicolon, for example ``localhost:/path/to/socket``.
 
 .. config:option:: Database
 
     Name of database to use. Please note that you should create tables in this
-    database before using gammu\-smsd. SQL files for creating needed tables are
+    database before using gammu-smsd. SQL files for creating needed tables are
     included in documentation.
 
 .. config:option:: SkipSMSCNumber
@@ -326,9 +326,9 @@ supports same options for configuring connection to a database:
 .. config:option:: Driver
 
     DBI driver to use. Depends on what DBI drivers you have installed, DBI
-    supports: mysql, freetds (provides access to MS SQL Server and Sybase), pgsql,
-    sqlite, sqlite3, firebird and ingres, msql and oracle drivers are under
-    development.
+    supports: ``mysql``, ``freetds`` (provides access to MS SQL Server and
+    Sybase), ``pgsql``, ``sqlite``, ``sqlite3``, ``firebird`` and ``ingres``,
+    ``msql`` and ``oracle`` drivers are under development.
 
 .. config:option:: DriversPath
 
@@ -344,7 +344,7 @@ Files backend options
 +++++++++++++++++++++
 
 The FILES backend accepts following configuration options. See
-gammu\-smsd\-files(7) for more detailed service backend description. Please note
+:ref:`gammu-smsd-files` for more detailed service backend description. Please note
 that all path should contain trailing path separator (/ on Unix systems):
 
 .. config:option:: InboxPath
@@ -361,7 +361,7 @@ that all path should contain trailing path separator (/ on Unix systems):
 
 .. config:option:: SentSMSPath
 
-    Where the transmitted SMSes are placed, if same as OutBoxPath transmitted
+    Where the transmitted SMSes are placed, if same as :config:option:`OutboxPath` transmitted
     messages are deleted.
 
     Default is to delete transmitted messages.
@@ -370,7 +370,7 @@ that all path should contain trailing path separator (/ on Unix systems):
 
     Where SMSes with error in transmission is placed.
 
-    Default is same as SentSMSPath.
+    Default is same as :config:option:`SentSMSPath`.
 
 .. config:option:: InboxFormat
 
@@ -390,7 +390,7 @@ that all path should contain trailing path separator (/ on Unix systems):
 
 .. config:option:: OutboxFormat
 
-    The format in which messages created by gammu-smsd-inject(1) will be stored,
+    The format in which messages created by :ref:`gammu-smsd-inject` will be stored,
     it accepts same values as InboxFormat.
 
     Default is ``detail`` if Gammu is compiled in with backup functions, ``unicode``
