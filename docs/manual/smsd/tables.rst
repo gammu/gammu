@@ -192,10 +192,10 @@ Fields description:
     when this record expires
 
 ``Send`` (boolean)
-    currently always true
+    indicates whether SMSD is sending messages
 
 ``Receive`` (boolean)
-    currently always true
+    indicates whether SMSD is receiving messages
 
 ``IMEI`` (text)
     IMEI of phone
