@@ -38,3 +38,5 @@ if ! grep -q " - $version" ChangeLog ; then
 2010???? - '"$version"'
     ' ChangeLog
 fi
+
+make update-man
