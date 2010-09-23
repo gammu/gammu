@@ -51,8 +51,7 @@ General parameters of SMS daemon
 
 .. config:option:: Service
 
-    SMSD service to use, one of FILES, NULL, MYSQL, PGSQL, DBI (depends on compiled
-    in support for backends).
+    SMSD service to use, one of following choices:
 
     ``FILES``  
         stores messages in files, see :ref:`gammu-smsd-files` for details
@@ -66,6 +65,10 @@ General parameters of SMS daemon
         stores messages in any database supported by libdbi, this includes
         MSSQL, MySQL, PostgreSQL or SQLite databases, see :ref:`gammu-smsd-dbi` for
         details
+
+    .. note::
+        
+        Availability of backends depends on platform and compile time configuration.
 
 .. config:option:: PIN
 
