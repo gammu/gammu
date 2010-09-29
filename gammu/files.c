@@ -31,7 +31,7 @@
 /**
  * Displays status of filesystem (if available).
  */
-GSM_Error PrintFileSystemStatus(void)
+static GSM_Error PrintFileSystemStatus(void)
 {
 	GSM_FileSystemStatus Status;
 	GSM_Error error;
@@ -341,7 +341,7 @@ void GetFolderListing(int argc UNUSED, char *argv[])
 	GSM_Terminate();
 }
 
-void GetOneFile(GSM_File * File, gboolean newtime, int i)
+static void GetOneFile(GSM_File * File, gboolean newtime, int i)
 {
 	GSM_Error error;
 	FILE *file;
@@ -412,6 +412,19 @@ void GetOneFile(GSM_File * File, gboolean newtime, int i)
 			}
 		}
 		Print_Error(error);
+	}
+	t_time2 = time(NULL);
+	diff = t_time2 - t_time1;
+	if ((diff > 0) && (File->Used > 0))
+	{
+		fprintf(stderr, "\r");
+		if (Size != 0) {
+			fprintf(stderr, _("%i percent"),
+				(int)(File->Used * 100 / Size));
+		}
+		fprintf(stderr, _(" done. %lu Bytes in %li seconds"
+				  ", %lu Bytes/sec"),
+			(long unsigned int) File->Used, diff, File->Used / diff);
 	}
 	fprintf(stderr, "\n");
 	fflush(stderr);
