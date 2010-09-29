@@ -138,7 +138,7 @@ gboolean SMSDDBI_GetBool(GSM_SMSDConfig * Config, dbi_result res, const char *fi
 				return TRUE;
 			}
 			if (strcasecmp(value, "no") == 0 || strcasecmp(value, "FALSE") == 0 || strcasecmp(value, "n") == 0 || strcasecmp(value, "f") == 0) {
-				return TRUE;
+				return FALSE;
 			}
 			if (strcasecmp(value, "default") == 0) {
 				return -1;
