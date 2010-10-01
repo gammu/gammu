@@ -56,7 +56,8 @@ in ``GSM_SMSDService`` structure:
     :param Config: Pointer to SMSD configuration data
     :param ID: Identification of found message will be stored here, this
         should be unique for different message, so that repeated attempts to
-        send same message can be detected by SMSD core.
+        send same message can be detected by SMSD core. Empty string avoids 
+        this check.
     :return: Error code.
 
 .. c:function:: GSM_Error	GSM_SMSDService::MoveSMS  	      (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *ID, gboolean alwaysDelete, gboolean sent)

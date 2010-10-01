@@ -1484,7 +1484,7 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 		return ERR_NONE;
 	}
 
-	if (strcmp(Config->prevSMSID, Config->SMSID) == 0) {
+	if (Config->SMSID[0] != 0 && strcmp(Config->prevSMSID, Config->SMSID) == 0) {
 		SMSD_Log(DEBUG_NOTICE, Config, "Same message as previous one: %s", Config->SMSID);
 		Config->retries++;
 		if (Config->retries > Config->maxretries) {
