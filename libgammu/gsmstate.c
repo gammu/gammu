@@ -99,6 +99,7 @@ static const GSM_ConnectionInfo GSM_Connections[] = {
 	{"dlr3", GCT_FBUS2DLR3, FALSE},
 	{"fbusdlr3", GCT_FBUS2DLR3, FALSE},
 	{"dku5", GCT_DKU5FBUS2, FALSE},
+	{"fbusdku5", GCT_DKU5FBUS2, FALSE},
 	{"dku5fbus", GCT_DKU5FBUS2, FALSE},
 	{"ark3116fbus", GCT_DKU5FBUS2, TRUE},
 #ifdef WIN32
