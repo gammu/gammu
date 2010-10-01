@@ -685,12 +685,13 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 	Config->enable_send = INI_GetBool(Config->smsdcfgfile, "smsd", "send", TRUE);
 	Config->enable_receive = INI_GetBool(Config->smsdcfgfile, "smsd", "receive", TRUE);
 	Config->resetfrequency = INI_GetInt(Config->smsdcfgfile, "smsd", "resetfrequency", 0);
+	Config->hardresetfrequency = INI_GetInt(Config->smsdcfgfile, "smsd", "hardresetfrequency", 0);
 	Config->multiparttimeout = INI_GetInt(Config->smsdcfgfile, "smsd", "multiparttimeout", 600);
 	Config->maxretries = INI_GetInt(Config->smsdcfgfile, "smsd", "maxretries", 1);
 	Config->backend_retries = INI_GetInt(Config->smsdcfgfile, "smsd", "backendretries", 10);
 
-	SMSD_Log(DEBUG_NOTICE, Config, "commtimeout=%i, sendtimeout=%i, receivefrequency=%i, resetfrequency=%i",
-			Config->commtimeout, Config->sendtimeout, Config->receivefrequency, Config->resetfrequency);
+	SMSD_Log(DEBUG_NOTICE, Config, "commtimeout=%i, sendtimeout=%i, receivefrequency=%i, resetfrequency=%i, hardresetfrequency=%i",
+			Config->commtimeout, Config->sendtimeout, Config->receivefrequency, Config->resetfrequency, Config->hardresetfrequency);
 	SMSD_Log(DEBUG_NOTICE, Config, "checks: security=%d, battery=%d, signal=%d",
 			Config->checksecurity, Config->checkbattery, Config->checksignal);
 
@@ -1706,10 +1707,10 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 	GSM_SMSDService		*Service;
 	GSM_Error		error;
 	int                     errors = -1, initerrors=0;
- 	time_t			lastreceive = 0, lastreset = time(NULL), lastnothingsent = 0, laststatus = 0;
+ 	time_t			lastreceive = 0, lastreset = time(NULL), lasthardreset = time(NULL), lastnothingsent = 0, laststatus = 0;
 	time_t			lastloop = 0, current_time;
 	int i;
-	gboolean first_start = TRUE, force_reset = FALSE;
+	gboolean first_start = TRUE, force_reset = FALSE, force_hard_reset = FALSE;
 
 	Config->failure = ERR_NONE;
 	Config->exit_on_failure = exit_on_failure;
@@ -1741,10 +1742,10 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 	while (!Config->shutdown) {
 		lastloop = time(NULL);
 		/* There were errors in communication - try to recover */
-		if (errors > 2 || first_start || force_reset) {
+		if (errors > 2 || first_start || force_reset || force_hard_reset) {
 			/* Should we disconnect from phone? */
 			if (GSM_IsConnected(Config->gsm)) {
-				if (! force_reset) {
+				if (! force_reset && ! force_hard_reset) {
 					SMSD_Log(DEBUG_INFO, Config, "Already hit %d errors", errors);
 				}
 				SMSD_LogError(DEBUG_INFO, Config, "Terminating communication", error);
@@ -1788,10 +1789,17 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 
 				if (initerrors > 3 || force_reset ) {
 					error = GSM_Reset(Config->gsm, FALSE); /* soft reset */
-					SMSD_LogError(DEBUG_INFO, Config, "Reset return code", error);
+					SMSD_LogError(DEBUG_INFO, Config, "Soft reset return code", error);
 					lastreset = time(NULL);
 					sleep(5);
 					force_reset = FALSE;
+				}
+				if (force_hard_reset) {
+					error = GSM_Reset(Config->gsm, TRUE); /* hard reset */
+					SMSD_LogError(DEBUG_INFO, Config, "Hard reset return code", error);
+					lasthardreset = time(NULL);
+					sleep(5);
+					force_hard_reset = FALSE;
 				}
 				break;
 			case ERR_DEVICEOPENERROR:
@@ -1836,6 +1844,10 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 		current_time = time(NULL);
 		if (Config->resetfrequency > 0 && difftime(current_time, lastreset) >= Config->resetfrequency) {
 			force_reset = TRUE;
+			continue;
+		}
+		if (Config->hardresetfrequency > 0 && difftime(current_time, lasthardreset) >= Config->hardresetfrequency) {
+			force_hard_reset = TRUE;
 			continue;
 		}
 

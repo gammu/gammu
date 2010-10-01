@@ -191,6 +191,17 @@ General parameters of SMS daemon
 
     Default is 0 (not used).
 
+.. config:option:: HardResetFrequency
+
+    .. warning::
+
+       For some phones hard reset means deleting all data in it.
+
+    The number of seconds between performing a preventive hard reset in order to
+    minimize the cases of hanging phones.
+
+    Default is 0 (not used).
+
 .. config:option:: DeliveryReport
 
     Whether delivery reports should be used, one of ``no``, ``log``, ``sms``.

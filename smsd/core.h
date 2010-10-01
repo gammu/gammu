@@ -56,6 +56,7 @@ struct _GSM_SMSDConfig {
 	unsigned int loopsleep;
 	int deliveryreportdelay;
 	unsigned int	resetfrequency;
+	unsigned int	hardresetfrequency;
 	unsigned int multiparttimeout;
 	const char   *deliveryreport, *logfilename,  *PINCode, *NetworkCode, *PhoneCode;
 	const char	*PhoneID;
