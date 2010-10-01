@@ -367,7 +367,7 @@ int DecodeWithHexBinAlphabet (unsigned char mychar)
 	return -1;
 }
 
-unsigned char EncodeWithHexBinAlphabet (int digit)
+inline char EncodeWithHexBinAlphabet (int digit)
 {
 	if (digit >= 0 && digit <= 9) return '0'+(digit);
 	if (digit >=10 && digit <=15) return 'A'+(digit-10);
@@ -392,15 +392,7 @@ void DecodeHexUnicode (unsigned char *dest, const char *src, size_t len)
 
 void EncodeHexUnicode (char *dest, const unsigned char *src, size_t len)
 {
-	size_t i, current = 0;
-
-	for (i = 0; i < len; i++) {
-		dest[current++] = EncodeWithHexBinAlphabet(src[2*i] >> 4);
-		dest[current++] = EncodeWithHexBinAlphabet(src[2*i] & 0x0f);
-		dest[current++] = EncodeWithHexBinAlphabet(src[2*i+1] >> 4);
-		dest[current++] = EncodeWithHexBinAlphabet(src[2*i+1] & 0x0f);
-	}
-	dest[current++] = 0;
+	EncodeHexBin(dest, src, len * 2);
 }
 
 gboolean DecodeHexBin (unsigned char *dest, const unsigned char *src, int len)
@@ -417,15 +409,15 @@ gboolean DecodeHexBin (unsigned char *dest, const unsigned char *src, int len)
 	return TRUE;
 }
 
-void EncodeHexBin (unsigned char *dest, const unsigned char *src, int len)
+void EncodeHexBin (char *dest, const unsigned char *src, size_t len)
 {
-	int i,current=0;
+	size_t i, outpos = 0;
 
 	for (i = 0; i < len; i++) {
-		dest[current++] = EncodeWithHexBinAlphabet(src[i] >> 0x04);
-		dest[current++] = EncodeWithHexBinAlphabet(src[i] & 0x0f);
+		dest[outpos++] = EncodeWithHexBinAlphabet(src[i] >> 4);
+		dest[outpos++] = EncodeWithHexBinAlphabet(src[i] & 0xF);
 	}
-	dest[current++] = 0;
+	dest[outpos++] = 0;
 }
 
 /* ETSI GSM 03.38, section 6.2.1: Default alphabet for SMS messages */

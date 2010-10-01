@@ -148,7 +148,7 @@ typedef int intptr_t;
 /**
  * Encodes text to hexadecimal binary representation.
  */
-void EncodeHexBin(unsigned char *dest, const unsigned char *src, int len);
+void EncodeHexBin(char *dest, const unsigned char *src, size_t len);
 
 /**
  * Returns TRUE if firmware version is newer.
