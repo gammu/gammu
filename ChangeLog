@@ -25,6 +25,8 @@ ChangeLog
 [+] * Gammu now supports freedesktop.org/XDG specs for config file
       locations and reads ~/.config/gammu/config.
 [-] * Increase timeout for AT+CMGL (bug #1317).
+[+] * Added support for optional delivery report parts as defined by
+      ETSI 123 040, section 9.2.2.3 (bug #1304).
     
 20100916 - 1.28.91
 

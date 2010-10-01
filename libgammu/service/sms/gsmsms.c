@@ -365,12 +365,13 @@ GSM_Error GSM_DecodeSMSFrameStatusReportData(GSM_Debug_Info *di, GSM_SMSMessage 
 GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, const unsigned char *buffer, size_t length, size_t *final_pos, gboolean SMSC)
 {
 	size_t pos = 0;
-	int type;
+	int type, tp_pi;
 	int vpf = 0;
 	int udh = 0;
 	int i,w;
 	unsigned char	output[161];
 	int			datalength;
+	gboolean have_data = FALSE;
 
 	/* Set some sane data */
 	GSM_SetDefaultReceivedSMSData(SMS);
@@ -503,6 +504,37 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, const unsi
 		/* Status */
 		GSM_DecodeSMSStatusReportData(di, SMS, buffer[pos]);
 		pos++;
+
+		/* Optional part coming from ETSI 123 040, section 9.2.2.3 */
+		/* We ignore 0xff, because some buggy phones pad SMS with it */
+		if (pos < length && buffer[pos] != 0xff) {
+			/* TP-Parameter-Indicator */
+			tp_pi = buffer[pos];
+			pos++;
+
+			/* We have TP-PID */
+			if (tp_pi & 1) {
+				smfprintf(di, "SMS PID: 0x%02X\n", buffer[pos]);
+				if (buffer[pos] > 0x40 && buffer[pos] < 0x48) {
+					SMS->ReplaceMessage = buffer[pos] - 0x40;
+				}
+				pos++;
+			}
+
+			/* We have TP-DCS */
+			if (tp_pi & 2) {
+				smfprintf(di, "SMS DCS: 0x%02X\n", buffer[pos]);
+				SMS->Coding = GSM_GetMessageCoding(di, buffer[pos]);
+				pos++;
+			} else {
+				SMS->Coding = GSM_GetMessageCoding(di, 0);
+			}
+
+			/* We have TP-UDL */
+			if (tp_pi & 4) {
+				have_data = TRUE;
+			}
+		}
 	}
 
 	/* Validity period */
@@ -528,7 +560,7 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, const unsi
 	}
 
 	/* Data */
-	if (SMS->PDU == SMS_Submit || SMS->PDU == SMS_Deliver) {
+	if (SMS->PDU == SMS_Submit || SMS->PDU == SMS_Deliver || have_data) {
 		datalength = buffer[pos];
 		if (SMS->Coding == SMS_Coding_Default_No_Compression) {
 			datalength = (datalength * 7) / 8;
