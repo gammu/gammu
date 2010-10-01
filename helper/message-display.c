@@ -520,7 +520,7 @@ GSM_Error DisplaySMSFrame(GSM_SMSMessage *SMS, GSM_StateMachine *sm)
         for(i=SMS->UDH.Length;i<length;i++) {
 		req[i-SMS->UDH.Length]=buffer[PHONE_SMSSubmit.Text+i];
 	}
-        EncodeHexBin(hexmsg, req, length-SMS->UDH.Length);
+        EncodeHexBin(hexmsg, req, MAX(0, length-SMS->UDH.Length));
 
         for(i=0;i<SMS->UDH.Length;i++) {
 		req[i]=buffer[PHONE_SMSSubmit.Text+i];
