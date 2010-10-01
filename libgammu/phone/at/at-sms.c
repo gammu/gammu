@@ -1088,10 +1088,10 @@ GSM_Error ATGEN_GetSMSList(GSM_StateMachine *s, gboolean first)
 	if (Priv->SMSMode == SMS_AT_TXT) {
 		ATGEN_WaitForAutoLen(s, "AT+CMGL=\"ALL\"\r", 0x00, 500, ID_GetSMSMessage);
 	} else {
-		ATGEN_WaitForAutoLen(s, "AT+CMGL=4\r", 0x00, 20, ID_GetSMSMessage);
+		ATGEN_WaitForAutoLen(s, "AT+CMGL=4\r", 0x00, 500, ID_GetSMSMessage);
 	}
 	if (error == ERR_NOTSUPPORTED) {
-		ATGEN_WaitForAutoLen(s, "AT+CMGL\r", 0x00, 5, ID_GetSMSMessage);
+		ATGEN_WaitForAutoLen(s, "AT+CMGL\r", 0x00, 500, ID_GetSMSMessage);
 	}
 	/*
 	 * We did not read anything, but it is correct, indicate that

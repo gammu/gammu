@@ -24,6 +24,7 @@ ChangeLog
 [+] * New SMSD config option HardResetFrequency.
 [+] * Gammu now supports freedesktop.org/XDG specs for config file
       locations and reads ~/.config/gammu/config.
+[-] * Increase timeout for AT+CMGL (bug #1317).
     
 20100916 - 1.28.91
 
