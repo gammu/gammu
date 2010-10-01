@@ -93,14 +93,20 @@ static const GSM_ConnectionInfo GSM_Connections[] = {
 
 	/* cables */
 	{"mbus", GCT_MBUS2, FALSE},
+
 	{"fbus", GCT_FBUS2, FALSE},
+
 	{"fbususb", GCT_FBUS2USB, FALSE},
+
 	{"fbuspl2303", GCT_FBUS2PL2303, FALSE},
+
 	{"dlr3", GCT_FBUS2DLR3, FALSE},
 	{"fbusdlr3", GCT_FBUS2DLR3, FALSE},
+
 	{"dku5", GCT_DKU5FBUS2, FALSE},
 	{"fbusdku5", GCT_DKU5FBUS2, FALSE},
 	{"dku5fbus", GCT_DKU5FBUS2, FALSE},
+
 	{"ark3116fbus", GCT_DKU5FBUS2, TRUE},
 #ifdef WIN32
 	{"dku2", GCT_DKU2PHONET, FALSE},
