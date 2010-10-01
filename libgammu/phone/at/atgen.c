@@ -4095,12 +4095,12 @@ GSM_Error ATGEN_DialVoice(GSM_StateMachine *s, char *number, GSM_CallShowNumber 
 	}
 	smprintf(s, "Making voice call\n");
 	length = sprintf(buffer, "ATDT%s;\r", number);
-	ATGEN_WaitFor(s, buffer, length, 0x00, 20, ID_DialVoice);
+	ATGEN_WaitFor(s, buffer, length, 0x00, 100, ID_DialVoice);
 
 	if (error == ERR_INVALIDLOCATION || error == ERR_UNKNOWN) {
 		smprintf(s, "Making voice call without forcing to tone dial\n");
 		length = sprintf(buffer, "ATD%s;\r", number);
-		ATGEN_WaitFor(s, buffer, length, 0x00, 20, ID_DialVoice);
+		ATGEN_WaitFor(s, buffer, length, 0x00, 100, ID_DialVoice);
 	}
 	return error;
 }
