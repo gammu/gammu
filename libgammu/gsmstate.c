@@ -40,6 +40,7 @@
 #define FALLBACK_GAMMURC "/etc/gammurc"
 #define GAMMURC_NAME "/.gammurc"
 #endif
+#define XDG_GAMMURC_NAME "/gammu/config"
 
 /* Win32 compatibility */
 #ifndef PATH_MAX
@@ -1104,6 +1105,27 @@ GSM_Error GSM_FindGammuRC (INI_Section **result, const char *force_config)
 		if (error == ERR_NONE) return ERR_NONE;
 	}
 #endif
+
+	/* XDG paths */
+	envpath = getenv("XDG_CONFIG_HOME");
+	if (envpath) {
+		strcpy(configfile, envpath);
+		strcat(configfile, XDG_GAMMURC_NAME);
+
+		error = GSM_TryReadGammuRC(configfile, result);
+		if (error == ERR_NONE) return ERR_NONE;
+	} else {
+		envpath  = getenv("HOME");
+		if (envpath) {
+			strcpy(configfile, envpath);
+			strcat(configfile, "/.config");
+			strcat(configfile, XDG_GAMMURC_NAME);
+
+			error = GSM_TryReadGammuRC(configfile, result);
+			if (error == ERR_NONE) return ERR_NONE;
+		}
+	}
+
 	/* Try home from environment */
 	envpath  = getenv("HOME");
 	if (envpath) {
