@@ -1104,14 +1104,10 @@ GSM_Error GSM_FindGammuRC (INI_Section **result, const char *force_config)
 		if (error == ERR_NONE) return ERR_NONE;
 	}
 #endif
-
-	/* Reset as we're using strcat */
-	configfile[0] = 0;
-
-	/* Try user home */
+	/* Try home from environment */
 	envpath  = getenv("HOME");
 	if (envpath) {
-		strcat(configfile, envpath);
+		strcpy(configfile, envpath);
 		strcat(configfile, GAMMURC_NAME);
 
 		error = GSM_TryReadGammuRC(configfile, result);
@@ -1119,9 +1115,10 @@ GSM_Error GSM_FindGammuRC (INI_Section **result, const char *force_config)
 	}
 
 #if defined(HAVE_GETPWUID) && defined(HAVE_GETUID)
+	/* Tru home from passwd */
 	pwent = getpwuid(getuid());
 	if (pwent != NULL) {
-		strcat(configfile, pwent->pw_dir);
+		strcpy(configfile, pwent->pw_dir);
 		strcat(configfile, GAMMURC_NAME);
 
 		error = GSM_TryReadGammuRC(configfile, result);
