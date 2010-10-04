@@ -3413,6 +3413,7 @@ GSM_Error ATGEN_GetMemoryInfo(GSM_StateMachine *s, GSM_MemoryStatus *Status, GSM
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	gboolean		free_read = FALSE;
 	size_t len;
+	int step = 20;
 
 	/* This can be NULL at this point */
 	if (Status != NULL) {
@@ -3482,15 +3483,23 @@ GSM_Error ATGEN_GetMemoryInfo(GSM_StateMachine *s, GSM_MemoryStatus *Status, GSM
 
 	while (1) {
 		/* Calculate end of next request */
-		end	= start + 20;
+		end	= start + step;
 		if (end > memory_end)
 			end = memory_end;
 
 		/* Read next interval */
-		len = sprintf(req, "AT+CPBR=%i,%i\r", start, end);
+		if (start == end) {
+			len = sprintf(req, "AT+CPBR=%i\r", start);
+		} else {
+			len = sprintf(req, "AT+CPBR=%i,%i\r", start, end);
+		}
 		ATGEN_WaitFor(s, req, len, 0x00, 20, ID_GetMemoryStatus);
 
-		if (error == ERR_EMPTY) {
+		if (error == ERR_SECURITYERROR) {
+			/* Some Samsung phones fail to read more entries at once */
+			step = 0;
+			continue;
+		} else if (error == ERR_EMPTY) {
 			Priv->NextMemoryEntry = start;
 			if (NeededInfo == AT_NextEmpty) {
 				return ERR_NONE;
