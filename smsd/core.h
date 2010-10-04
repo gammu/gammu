@@ -46,8 +46,35 @@ typedef enum {
 	SMSD_LOG_EVENTLOG
 } SMSD_LogType;
 
+typedef enum {
+	SMSD_SEND_OK = 1,
+	SMSD_SEND_SENDING_ERROR,
+	SMSD_SEND_DELIVERY_PENDING,
+	SMSD_SEND_DELIVERY_FAILED,
+	SMSD_SEND_DELIVERY_OK,
+	SMSD_SEND_DELIVERY_UNKNOWN,
+	SMSD_SEND_ERROR
+} GSM_SMSDSendingError;
+
+typedef struct {
+	GSM_Error	(*Init) 	      (GSM_SMSDConfig *Config);
+	GSM_Error	(*Free) 	      (GSM_SMSDConfig *Config);
+	GSM_Error	(*InitAfterConnect)   (GSM_SMSDConfig *Config);
+	GSM_Error	(*SaveInboxSMS)       (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char **Locations);
+	GSM_Error	(*FindOutboxSMS)      (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *ID);
+	GSM_Error	(*MoveSMS)  	      (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *ID, gboolean alwaysDelete, gboolean sent);
+	GSM_Error	(*CreateOutboxSMS)    (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *NewID);
+	GSM_Error	(*AddSentSMSInfo)     (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *ID, int Part, GSM_SMSDSendingError err, int TPMR);
+	GSM_Error	(*RefreshSendStatus)  (GSM_SMSDConfig *Config, char *ID);
+	/**
+	 * Updates phone status in service backend. Please note that
+	 * this can not talk to the phone.
+	 */
+	GSM_Error	(*RefreshPhoneStatus) (GSM_SMSDConfig *Config);
+} GSM_SMSDService;
+
 struct _GSM_SMSDConfig {
-	const char	*Service;
+	const char	*ServiceName;
 	const char *program_name;
 	/* general options */
 	GSM_StringArray IncludeNumbersList, ExcludeNumbersList;
@@ -180,34 +207,8 @@ struct _GSM_SMSDConfig {
 	HANDLE map_handle;
 #endif
 	GSM_SMSDStatus *Status;
+	GSM_SMSDService		*Service;
 };
-
-typedef enum {
-	SMSD_SEND_OK = 1,
-	SMSD_SEND_SENDING_ERROR,
-	SMSD_SEND_DELIVERY_PENDING,
-	SMSD_SEND_DELIVERY_FAILED,
-	SMSD_SEND_DELIVERY_OK,
-	SMSD_SEND_DELIVERY_UNKNOWN,
-	SMSD_SEND_ERROR
-} GSM_SMSDSendingError;
-
-typedef struct {
-	GSM_Error	(*Init) 	      (GSM_SMSDConfig *Config);
-	GSM_Error	(*Free) 	      (GSM_SMSDConfig *Config);
-	GSM_Error	(*InitAfterConnect)   (GSM_SMSDConfig *Config);
-	GSM_Error	(*SaveInboxSMS)       (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char **Locations);
-	GSM_Error	(*FindOutboxSMS)      (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *ID);
-	GSM_Error	(*MoveSMS)  	      (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *ID, gboolean alwaysDelete, gboolean sent);
-	GSM_Error	(*CreateOutboxSMS)    (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *NewID);
-	GSM_Error	(*AddSentSMSInfo)     (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *ID, int Part, GSM_SMSDSendingError err, int TPMR);
-	GSM_Error	(*RefreshSendStatus)  (GSM_SMSDConfig *Config, char *ID);
-	/**
-	 * Updates phone status in service backend. Please note that
-	 * this can not talk to the phone.
-	 */
-	GSM_Error	(*RefreshPhoneStatus) (GSM_SMSDConfig *Config);
-} GSM_SMSDService;
 
 extern GSM_Error SMSD_NoneFunction		(void);
 extern GSM_Error SMSD_EmptyFunction		(void);

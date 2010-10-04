@@ -234,12 +234,12 @@ void SMSD_Terminate(GSM_SMSDConfig *Config, const char *msg, GSM_Error error, gb
 	}
 }
 
-GSM_Error SMSD_Init(GSM_SMSDConfig *Config, GSM_SMSDService *Service) {
+GSM_Error SMSD_Init(GSM_SMSDConfig *Config) {
 	GSM_Error error;
 
 	if (Config->connected) return ERR_NONE;
 
-	error = Service->Init(Config);
+	error = Config->Service->Init(Config);
 	if (error == ERR_NONE) {
 		Config->connected = TRUE;
 	}
@@ -369,6 +369,7 @@ GSM_SMSDConfig *SMSD_NewConfig(const char *name)
 	Config->log_handle = NULL;
 	Config->log_type = SMSD_LOG_NONE;
 	Config->debug_level = 0;
+	Config->ServiceName = NULL;
 	Config->Service = NULL;
 
 	/* Prepare lists */
@@ -389,43 +390,44 @@ GSM_SMSDConfig *SMSD_NewConfig(const char *name)
 /**
  * Returns SMSD service based on configuration.
  */
-GSM_Error SMSGetService(GSM_SMSDConfig *Config, GSM_SMSDService **Service)
+GSM_Error SMSGetService(GSM_SMSDConfig *Config)
 {
-	if (Config->Service == NULL) {
-		return ERR_UNCONFIGURED;
+	if (Config->ServiceName == NULL) {
+		SMSD_Log(DEBUG_ERROR, Config, "No SMSD service configured, please set service to use in configuration file!");
+		return ERR_NOSERVICE;
 	}
-	if (strcasecmp(Config->Service, "FILES") == 0) {
+	if (strcasecmp(Config->ServiceName, "FILES") == 0) {
 		SMSD_Log(DEBUG_NOTICE, Config, "Using FILES service");
-		*Service = &SMSDFiles;
-	} else if (strcasecmp(Config->Service, "NULL") == 0) {
+		Config->Service = &SMSDFiles;
+	} else if (strcasecmp(Config->ServiceName, "NULL") == 0) {
 		SMSD_Log(DEBUG_NOTICE, Config, "Using NULL service");
-		*Service = &SMSDNull;
-	} else if (strcasecmp(Config->Service, "DBI") == 0) {
+		Config->Service = &SMSDNull;
+	} else if (strcasecmp(Config->ServiceName, "DBI") == 0) {
 #ifdef LIBDBI_FOUND
 		SMSD_Log(DEBUG_NOTICE, Config, "Using DBI service");
-		*Service = &SMSDDBI;
+		Config->Service = &SMSDDBI;
 #else
 		SMSD_Log(DEBUG_ERROR, Config, "DBI service was not compiled in!");
 		return ERR_DISABLED;
 #endif
-	} else if (strcasecmp(Config->Service, "MYSQL") == 0) {
+	} else if (strcasecmp(Config->ServiceName, "MYSQL") == 0) {
 #ifdef HAVE_MYSQL_MYSQL_H
 		SMSD_Log(DEBUG_NOTICE, Config, "Using MYSQL service");
-		*Service = &SMSDMySQL;
+		Config->Service = &SMSDMySQL;
 #else
 		SMSD_Log(DEBUG_ERROR, Config, "MYSQL service was not compiled in!");
 		return ERR_DISABLED;
 #endif
-	} else if (strcasecmp(Config->Service, "PGSQL") == 0) {
+	} else if (strcasecmp(Config->ServiceName, "PGSQL") == 0) {
 #ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
 		SMSD_Log(DEBUG_NOTICE, Config, "Using PGSQL service");
-		*Service = &SMSDPgSQL;
+		Config->Service = &SMSDPgSQL;
 #else
 		SMSD_Log(DEBUG_ERROR, Config, "PGSQL service was not compiled in!");
 		return ERR_DISABLED;
 #endif
 	} else {
-		SMSD_Log(DEBUG_ERROR, Config, "Unknown SMSD service type: \"%s\"", Config->Service);
+		SMSD_Log(DEBUG_ERROR, Config, "Unknown SMSD service type: \"%s\"", Config->ServiceName);
 		return ERR_UNCONFIGURED;
 	}
 	return ERR_NONE;
@@ -434,13 +436,10 @@ GSM_Error SMSGetService(GSM_SMSDConfig *Config, GSM_SMSDService **Service)
 
 void SMSD_FreeConfig(GSM_SMSDConfig *Config)
 {
-	GSM_SMSDService	*Service;
-	GSM_Error error;
-
-	error = SMSGetService(Config, &Service);
-	if (error == ERR_NONE && Config->connected) {
-		Service->Free(Config);
+	if (Config->Service != NULL && Config->connected) {
+		Config->Service->Free(Config);
 		Config->connected = FALSE;
+		Config->Service = NULL;
 	}
 
 	SMSD_CloseLog(Config);
@@ -653,10 +652,12 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 		return error;
 	}
 
-	Config->Service = INI_GetValue(Config->smsdcfgfile, "smsd", "service", FALSE);
-	if (Config->Service == NULL) {
-		SMSD_Log(DEBUG_ERROR, Config, "No SMSD service configured, please set service to use in configuration file!");
-		return ERR_NOSERVICE;
+	Config->ServiceName = INI_GetValue(Config->smsdcfgfile, "smsd", "service", FALSE);
+
+	/* Get service object */
+	error = SMSGetService(Config);
+	if (error != ERR_NONE) {
+		return error;
 	}
 
 	SMSD_Log(DEBUG_NOTICE, Config, "Configuring Gammu SMSD...");
@@ -749,7 +750,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 		Config->SMSC.Location     = 0;
 	}
 
-	if (!strcasecmp(Config->Service,"FILES")) {
+	if (!strcasecmp(Config->ServiceName,"FILES")) {
 		Config->inboxpath=INI_GetValue(Config->smsdcfgfile, "smsd", "inboxpath", FALSE);
 		if (Config->inboxpath == NULL) Config->inboxpath = emptyPath;
 
@@ -807,7 +808,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 #endif
 
 #ifdef LIBDBI_FOUND
-	if (!strcasecmp(Config->Service,"DBI")) {
+	if (!strcasecmp(Config->ServiceName,"DBI")) {
 		Config->driver = INI_GetValue(Config->smsdcfgfile, "smsd", "driver", FALSE);
 		if (Config->driver == NULL) Config->driver="mysql";
 		Config->dbdir = INI_GetValue(Config->smsdcfgfile, "smsd", "dbdir", FALSE);
@@ -1152,7 +1153,7 @@ gboolean SMSD_RunOnReceive(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, cha
 /**
  * Checks whether we are allowed to accept a message from number.
  */
-gboolean SMSD_CheckRemoteNumber(GSM_SMSDConfig *Config, GSM_SMSDService *Service, const char *number)
+gboolean SMSD_CheckRemoteNumber(GSM_SMSDConfig *Config, const char *number)
 {
 	if (Config->IncludeNumbersList.used > 0) {
 		if (GSM_StringArray_Find(&(Config->IncludeNumbersList), number)) {
@@ -1174,7 +1175,7 @@ gboolean SMSD_CheckRemoteNumber(GSM_SMSDConfig *Config, GSM_SMSDService *Service
 /**
  * Checks whether we are allowed to accept a message from number.
  */
-gboolean SMSD_CheckSMSCNumber(GSM_SMSDConfig *Config, GSM_SMSDService *Service, const char *number)
+gboolean SMSD_CheckSMSCNumber(GSM_SMSDConfig *Config, const char *number)
 {
 	if (Config->IncludeSMSCList.used > 0) {
 		if (GSM_StringArray_Find(&(Config->IncludeSMSCList), number)) {
@@ -1196,7 +1197,7 @@ gboolean SMSD_CheckSMSCNumber(GSM_SMSDConfig *Config, GSM_SMSDService *Service, 
 /**
  * Performs checks whether given message is valid to be received by SMSD.
  */
-gboolean SMSD_ValidMessage(GSM_SMSDConfig *Config, GSM_SMSDService *Service, GSM_MultiSMSMessage *sms)
+gboolean SMSD_ValidMessage(GSM_SMSDConfig *Config, GSM_MultiSMSMessage *sms)
 {
 	char buffer[100];
 
@@ -1206,13 +1207,13 @@ gboolean SMSD_ValidMessage(GSM_SMSDConfig *Config, GSM_SMSDService *Service, GSM
 	}
 	/* Check SMSC number if we want to handle it */
 	DecodeUnicode(sms->SMS[0].SMSC.Number, buffer);
-	if (!SMSD_CheckSMSCNumber(Config, Service, buffer)) {
+	if (!SMSD_CheckSMSCNumber(Config, buffer)) {
 		SMSD_Log(DEBUG_NOTICE, Config, "Message excluded because of SMSC: %s", buffer);
 		return FALSE;
 	}
 	/* Check sender number if we want to handle it */
 	DecodeUnicode(sms->SMS[0].Number, buffer);
-	if (!SMSD_CheckRemoteNumber(Config, Service, buffer)) {
+	if (!SMSD_CheckRemoteNumber(Config, buffer)) {
 		SMSD_Log(DEBUG_NOTICE, Config, "Message excluded because of sender: %s", buffer);
 		return FALSE;
 	}
@@ -1226,7 +1227,7 @@ gboolean SMSD_ValidMessage(GSM_SMSDConfig *Config, GSM_SMSDService *Service, GSM
  *
  * Stores message in the backend and executes RunOnReceive.
  */
-GSM_Error SMSD_ProcessSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service, GSM_MultiSMSMessage *sms)
+GSM_Error SMSD_ProcessSMS(GSM_SMSDConfig *Config, GSM_MultiSMSMessage *sms)
 {
 	GSM_Error error = ERR_NONE;
 	char *locations = NULL;
@@ -1234,7 +1235,7 @@ GSM_Error SMSD_ProcessSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service, GSM_
 	/* Increase message counter */
 	Config->Status->Received += sms->Number;
 	/* Send message to the backend */
-	error = Service->SaveInboxSMS(sms, Config, &locations);
+	error = Config->Service->SaveInboxSMS(sms, Config, &locations);
 	/* RunOnReceive handling */
 	if (Config->RunOnReceive != NULL && error == ERR_NONE) {
 		SMSD_RunOnReceive(sms, Config, locations);
@@ -1247,7 +1248,7 @@ GSM_Error SMSD_ProcessSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service, GSM_
 /**
  * Checks whether to process current (possibly) multipart message.
  */
-gboolean SMSD_CheckMultipart(GSM_SMSDConfig *Config, GSM_SMSDService *Service, GSM_MultiSMSMessage *MultiSMS)
+gboolean SMSD_CheckMultipart(GSM_SMSDConfig *Config, GSM_MultiSMSMessage *MultiSMS)
 {
 	gboolean same_id;
 	/* Does the message have UDH (is multipart)? */
@@ -1306,7 +1307,7 @@ success:
  *
  * It tries to link multipart messages together if possible.
  */
-gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
+gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config)
 {
 	gboolean start;
 	GSM_MultiSMSMessage sms;
@@ -1327,7 +1328,7 @@ gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 			case ERR_EMPTY:
 				break;
 			case ERR_NONE:
-				if (SMSD_ValidMessage(Config, Service, &sms)) {
+				if (SMSD_ValidMessage(Config, &sms)) {
 					if (allocated <= GetSMSNumber + 2) {
 						GetSMSData = (GSM_MultiSMSMessage **)realloc(GetSMSData, (allocated + 20) * sizeof(GSM_MultiSMSMessage *));
 						if (GetSMSData == NULL) {
@@ -1379,12 +1380,12 @@ gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 	/* Process messages */
 	for (i = 0; SortedSMS[i] != NULL; i++) {
 		/* Check multipart message parts */
-		if (!SMSD_CheckMultipart(Config, Service, SortedSMS[i])) {
+		if (!SMSD_CheckMultipart(Config, SortedSMS[i])) {
 			goto cleanup;
 		}
 
 		/* Actually process the message */
-		error = SMSD_ProcessSMS(Config, Service, SortedSMS[i]);
+		error = SMSD_ProcessSMS(Config, SortedSMS[i]);
 		if (error != ERR_NONE) {
 			SMSD_LogError(DEBUG_INFO, Config, "Error processing SMS", error);
 			return FALSE;
@@ -1416,7 +1417,7 @@ cleanup:
  * Checks whether there are some messages to process and calls
  * SMSD_ReadDeleteSMS to process them.
  */
-gboolean SMSD_CheckSMSStatus(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
+gboolean SMSD_CheckSMSStatus(GSM_SMSDConfig *Config)
 {
 	GSM_SMSMemoryStatus	SMSStatus;
 	GSM_Error		error;
@@ -1443,7 +1444,7 @@ gboolean SMSD_CheckSMSStatus(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 
 	/* Yes. We have SMS in phone */
 	if (new_message) {
-		return SMSD_ReadDeleteSMS(Config,Service);
+		return SMSD_ReadDeleteSMS(Config);
 	}
 
 	return TRUE;
@@ -1476,7 +1477,7 @@ void SMSD_PhoneStatus(GSM_SMSDConfig *Config) {
 /**
  * Sends a sms message which is provided by the service backend.
  */
-GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
+GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config)
 {
 	GSM_MultiSMSMessage  	sms;
 	GSM_DateTime         	Date;
@@ -1489,7 +1490,7 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 		GSM_SetDefaultSMSData(&sms.SMS[i]);
 	}
 
-	error = Service->FindOutboxSMS(&sms, Config, Config->SMSID);
+	error = Config->Service->FindOutboxSMS(&sms, Config, Config->SMSID);
 
 	if (error == ERR_EMPTY || error == ERR_NOTSUPPORTED) {
 		/* No outbox sms */
@@ -1500,9 +1501,9 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 		SMSD_Log(DEBUG_INFO, Config, "Error in outbox on '%s'", Config->SMSID);
 		for (i=0;i<sms.Number;i++) {
 			Config->Status->Failed++;
-			Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_ERROR, -1);
+			Config->Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_ERROR, -1);
 		}
-		Service->MoveSMS(&sms,Config, Config->SMSID, TRUE,FALSE);
+		Config->Service->MoveSMS(&sms,Config, Config->SMSID, TRUE,FALSE);
 		return error;
 	}
 
@@ -1519,9 +1520,9 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 			SMSD_Log(DEBUG_INFO, Config, "Moved to errorbox: %s", Config->SMSID);
 			for (i=0;i<sms.Number;i++) {
 				Config->Status->Failed++;
-				Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_ERROR, -1);
+				Config->Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_ERROR, -1);
 			}
-			Service->MoveSMS(&sms,Config, Config->SMSID, TRUE,FALSE);
+			Config->Service->MoveSMS(&sms,Config, Config->SMSID, TRUE,FALSE);
 			return ERR_UNKNOWN;
 		}
 	} else {
@@ -1570,7 +1571,7 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 		j    = 0;
 		while (!Config->shutdown) {
 			/* Update timestamp for SMS in backend */
-			Service->RefreshSendStatus(Config, Config->SMSID);
+			Config->Service->RefreshSendStatus(Config, Config->SMSID);
 
 			GSM_GetCurrentDateTime(&Date);
 			z = Date.Second;
@@ -1595,26 +1596,26 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 			goto failure_unsent;
 		}
 		Config->Status->Sent++;
-		error = Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_OK, Config->TPMR);
+		error = Config->Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_OK, Config->TPMR);
 		if (error != ERR_NONE) {
 			goto failure_sent;
 		}
 	}
 	strcpy(Config->prevSMSID, "");
-	error = Service->MoveSMS(&sms,Config, Config->SMSID, FALSE, TRUE);
+	error = Config->Service->MoveSMS(&sms,Config, Config->SMSID, FALSE, TRUE);
 	if (error != ERR_NONE) {
 		SMSD_LogError(DEBUG_ERROR, Config, "Error moving message", error);
-		Service->MoveSMS(&sms,Config, Config->SMSID, TRUE, FALSE);
+		Config->Service->MoveSMS(&sms,Config, Config->SMSID, TRUE, FALSE);
 	}
 	return ERR_NONE;
 failure_unsent:
 	Config->Status->Failed++;
-	Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i + 1, SMSD_SEND_SENDING_ERROR, Config->TPMR);
-	Service->MoveSMS(&sms,Config, Config->SMSID, TRUE, FALSE);
+	Config->Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i + 1, SMSD_SEND_SENDING_ERROR, Config->TPMR);
+	Config->Service->MoveSMS(&sms,Config, Config->SMSID, TRUE, FALSE);
 	return ERR_UNKNOWN;
 failure_sent:
-	if (Service->MoveSMS(&sms,Config, Config->SMSID, FALSE, TRUE) != ERR_NONE) {
-		Service->MoveSMS(&sms,Config, Config->SMSID, TRUE, FALSE);
+	if (Config->Service->MoveSMS(&sms,Config, Config->SMSID, FALSE, TRUE) != ERR_NONE) {
+		Config->Service->MoveSMS(&sms,Config, Config->SMSID, TRUE, FALSE);
 	}
 	return ERR_UNKNOWN;
 }
@@ -1729,7 +1730,6 @@ GSM_Error SMSD_FreeSharedMemory(GSM_SMSDConfig *Config, gboolean writable)
  */
 GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int max_failures)
 {
-	GSM_SMSDService		*Service;
 	GSM_Error		error;
 	int                     errors = -1, initerrors=0;
  	time_t			lastreceive = 0, lastreset = time(NULL), lasthardreset = time(NULL), lastnothingsent = 0, laststatus = 0;
@@ -1740,15 +1740,8 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 	Config->failure = ERR_NONE;
 	Config->exit_on_failure = exit_on_failure;
 
-	/* Get service */
-	error = SMSGetService(Config, &Service);
-	if (error!=ERR_NONE) {
-		SMSD_Terminate(Config, "Failed to setup SMSD service", error, TRUE, -1);
-		goto done;
-	}
-
 	/* Init service */
-	error = SMSD_Init(Config, Service);
+	error = SMSD_Init(Config);
 	if (error!=ERR_NONE) {
 		SMSD_Terminate(Config, "Initialisation failed, stopping Gammu smsd", error, TRUE, -1);
 		goto done;
@@ -1801,7 +1794,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 					if (GSM_GetIMEI(Config->gsm, Config->Status->IMEI) != ERR_NONE) {
 						errors++;
 					} else {
-						error = Service->InitAfterConnect(Config);
+						error = Config->Service->InitAfterConnect(Config);
 						if (error!=ERR_NONE) {
 							SMSD_Terminate(Config, "Post initialisation failed, stopping Gammu smsd", error, TRUE, -1);
 							goto done_connected;
@@ -1855,7 +1848,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 			initerrors = 0;
 
 			/* read all incoming SMS */
-			if (!SMSD_CheckSMSStatus(Config,Service)) {
+			if (!SMSD_CheckSMSStatus(Config)) {
 				errors++;
 				continue;
 			} else {
@@ -1879,7 +1872,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 		/* Send any queued messages */
 		current_time = time(NULL);
 		if (Config->enable_send && (difftime(current_time, lastnothingsent) >= Config->commtimeout)) {
-			error = SMSD_SendSMS(Config, Service);
+			error = SMSD_SendSMS(Config);
 			if (error == ERR_EMPTY) {
 				lastnothingsent = current_time;
 			}
@@ -1891,7 +1884,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 		if ((Config->statusfrequency > 0) && (difftime(current_time, laststatus) >= Config->statusfrequency)) {
 			SMSD_PhoneStatus(Config);
 			laststatus = current_time;
-			Service->RefreshPhoneStatus(Config);
+			Config->Service->RefreshPhoneStatus(Config);
 		}
 
 		/* Sleep some time before another loop */
@@ -1902,7 +1895,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 			sleep(Config->loopsleep - difftime(current_time, lastloop));
 		}
 	}
-	Service->Free(Config);
+	Config->Service->Free(Config);
 
 done_connected:
 	/* Free shared memory */
@@ -1922,19 +1915,16 @@ done:
  */
 GSM_Error SMSD_InjectSMS(GSM_SMSDConfig		*Config, GSM_MultiSMSMessage *sms, char *NewID)
 {
-	GSM_SMSDService		*Service;
 	GSM_Error error;
 
-	/* Get service object */
-	error = SMSGetService(Config, &Service);
-	if (error != ERR_NONE) return ERR_UNKNOWN;
-
 	/* Initialize service */
-	error = SMSD_Init(Config, Service);
-	if (error != ERR_NONE) return ERR_UNKNOWN;
+	error = SMSD_Init(Config);
+	if (error != ERR_NONE) {
+		return error;
+	}
 
 	/* Store message in outbox */
-	error = Service->CreateOutboxSMS(sms, Config, NewID);
+	error = Config->Service->CreateOutboxSMS(sms, Config, NewID);
 	return error;
 }
 
