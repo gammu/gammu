@@ -195,7 +195,8 @@ General parameters of SMS daemon
 
     .. warning::
 
-       For some phones hard reset means deleting all data in it.
+       For some phones hard reset means deleting all data in it. Use 
+       :config:option:`ResetFrequency`, unless you know what you are doing.
 
     The number of seconds between performing a preventive hard reset in order to
     minimize the cases of hanging phones.
