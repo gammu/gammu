@@ -19,7 +19,7 @@ the issue.
 ChangeLog
 =========
     
-2010???? - 1.28.92
+20101004 - 1.28.92
 
 [+] * New SMSD config option HardResetFrequency.
 [+] * Gammu now supports freedesktop.org/XDG specs for config file
