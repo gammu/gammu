@@ -1898,6 +1898,7 @@ GSM_Error SMSD_GetStatus(GSM_SMSDConfig *Config, GSM_SMSDStatus *status)
  */
 GSM_Error SMSD_ReadDatabaseConfiguration(GSM_SMSDConfig *Config)
 {
+#if defined(HAVE_MYSQL_MYSQL_H) || defined(HAVE_POSTGRESQL_LIBPQ_FE_H) || defined(LIBDBI_FOUND)
 	Config->user = INI_GetValue(Config->smsdcfgfile, "smsd", "user", FALSE);
 	if (Config->user == NULL) {
 		Config->user="root";
@@ -1921,6 +1922,7 @@ GSM_Error SMSD_ReadDatabaseConfiguration(GSM_SMSDConfig *Config)
 	if (Config->database == NULL) {
 		Config->database="sms";
 	}
+#endif
 
 	return ERR_NONE;
 }
