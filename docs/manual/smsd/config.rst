@@ -317,10 +317,18 @@ supports same options for configuring connection to a database:
 
     Password used for connection to a database.
 
-.. config:option:: PC
+.. config:option:: Host
 
     Database server address. It can also contain port or socket path after
     semicolon, for example ``localhost:/path/to/socket``.
+
+    .. versionadded:: 1.28.92
+
+.. config:option:: PC
+
+    Synonym for :config:option:`Host`.
+
+    .. deprecated:: 1.28.92
 
 .. config:option:: Database
 

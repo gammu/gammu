@@ -63,7 +63,7 @@ static GSM_Error SMSDMySQL_Init(GSM_SMSDConfig * Config)
 	char *pport;
 	char *socketname = NULL;
 
-	pport = strstr(Config->PC, ":");
+	pport = strstr(Config->host, ":");
 	if (pport) {
 		*pport++ = '\0';
 		/* Is it port or socket? */
@@ -75,7 +75,7 @@ static GSM_Error SMSDMySQL_Init(GSM_SMSDConfig * Config)
 	}
 
 	mysql_init(&Config->DBConnMySQL);
-	if (!mysql_real_connect(&Config->DBConnMySQL, Config->PC, Config->user, Config->password, Config->database, port, socketname, 0)) {
+	if (!mysql_real_connect(&Config->DBConnMySQL, Config->host, Config->user, Config->password, Config->database, port, socketname, 0)) {
 		SMSD_Log(DEBUG_ERROR, Config, "Error connecting to database!");
 		SMSDMySQL_LogError(Config);
 		return ERR_UNKNOWN;
@@ -123,7 +123,7 @@ static GSM_Error SMSDMySQL_Init(GSM_SMSDConfig * Config)
 	}
 	mysql_free_result(Res);
 	mysql_query(&Config->DBConnMySQL, "SET NAMES utf8;");
-	SMSD_Log(DEBUG_INFO, Config, "Connected to Database: %s on %s", Config->database, Config->PC);
+	SMSD_Log(DEBUG_INFO, Config, "Connected to Database: %s on %s", Config->database, Config->host);
 	return ERR_NONE;
 }
 

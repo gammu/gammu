@@ -1908,9 +1908,13 @@ GSM_Error SMSD_ReadDatabaseConfiguration(GSM_SMSDConfig *Config)
 		Config->password="";
 	}
 
-	Config->PC = INI_GetValue(Config->smsdcfgfile, "smsd", "pc", FALSE);
-	if (Config->PC == NULL) {
-		Config->PC="localhost";
+	Config->host = INI_GetValue(Config->smsdcfgfile, "smsd", "host", FALSE);
+	if (Config->host == NULL) {
+		/* Backward compatibility */
+		Config->host = INI_GetValue(Config->smsdcfgfile, "smsd", "pc", FALSE);
+	}
+	if (Config->host == NULL) {
+		Config->host="localhost";
 	}
 
 	Config->database = INI_GetValue(Config->smsdcfgfile, "smsd", "database", FALSE);

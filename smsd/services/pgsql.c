@@ -99,13 +99,13 @@ static GSM_Error SMSDPgSQL_Connect(GSM_SMSDConfig * Config)
 	unsigned int port = 5432;
 	char *pport;
 
-	pport = strstr(Config->PC, ":");
+	pport = strstr(Config->host, ":");
 	if (pport) {
 		*pport++ = '\0';
 		port = atoi(pport);
 	}
 
-	sprintf(buf, "host = '%s' user = '%s' password = '%s' dbname = '%s' port = %d", Config->PC, Config->user, Config->password, Config->database, port);
+	sprintf(buf, "host = '%s' user = '%s' password = '%s' dbname = '%s' port = %d", Config->host, Config->user, Config->password, Config->database, port);
 
 	SMSDPgSQL_Free(Config);
 	Config->DBConnPgSQL = PQconnectdb(buf);

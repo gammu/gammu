@@ -141,7 +141,7 @@ struct _GSM_SMSDConfig {
 	/**
 	 * Address of the database (eg. hostname).
 	 */
-	const char	*PC;
+	const char	*host;
         char 		DT[25];
 	char		CreatorID[200];
 #endif

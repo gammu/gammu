@@ -262,7 +262,7 @@ static GSM_Error SMSDDBI_Connect(GSM_SMSDConfig * Config)
 		SMSDDBI_Free(Config);
 		return ERR_UNKNOWN;
 	}
-	if (dbi_conn_set_option(Config->DBConnDBI, "host", Config->PC) != 0) {
+	if (dbi_conn_set_option(Config->DBConnDBI, "host", Config->host) != 0) {
 		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to set host!");
 		SMSDDBI_Free(Config);
 		return ERR_UNKNOWN;
@@ -430,7 +430,7 @@ static GSM_Error SMSDDBI_Init(GSM_SMSDConfig * Config)
 		return ERR_UNKNOWN;
 	}
 
-	SMSD_Log(DEBUG_INFO, Config, "Connected to Database %s: %s on %s", Config->driver, Config->database, Config->PC);
+	SMSD_Log(DEBUG_INFO, Config, "Connected to Database %s: %s on %s", Config->driver, Config->database, Config->host);
 
 	return ERR_NONE;
 }

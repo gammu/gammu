@@ -27,6 +27,7 @@ ChangeLog
 [-] * Increase timeout for AT+CMGL (bug #1317).
 [+] * Added support for optional delivery report parts as defined by
       ETSI 123 040, section 9.2.2.3 (bug #1304).
+[+] * SMSD database host configuration is now named "host" not "PC".
     
 20100916 - 1.28.91
 
