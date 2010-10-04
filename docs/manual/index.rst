@@ -1,12 +1,13 @@
 The Gammu Manual
 ================
 
-`Gammu library`_ and `python-gammu`_ provide you way to communicate with
-your cell phone using standard API. This documentation explains both
-:doc:`python/index` and :doc:`c/api`.
+Gammu is a project providing abstraction layer for cell phones access. It
+covers wide range of phones, mostly focusing on AT compatible phones and Nokia
+phones.
 
-You can also learn something about :doc:`internal/index` and also about
-:doc:`protocol/index`.
+This manual describes all parts of Gammu, starting with information about
+:ref:`project`, going through API documentation for both :ref:`python` and
+:ref:`libgammu` and covering :ref:`smsd` as well.
 
 
 Continue reading
@@ -29,7 +30,3 @@ Full content
     :maxdepth: 3
 
     contents
-
-
-.. _python-gammu: http://wammu.eu/python-gammu/
-.. _Gammu library: http://wammu.eu/libgammu/
