@@ -324,59 +324,59 @@ static GSM_Error N6510_SetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 
 static GSM_Error N6510_ReplyGetNetworkInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	int		current = msg.Buffer[7]+7, tmp;
+	int		current = msg.Buffer[7]+7, pos;
 	GSM_Phone_Data	*Data = &s->Phone.Data;
-#ifdef DEBUG
-	char		name[100];
-	GSM_NetworkInfo NetInfo;
+	GSM_NetworkInfo network_info_local, *network_info;
 
-	if (msg.Buffer[3] == 0xf0) return ERR_NOTSUPPORTED;
+	if (msg.Buffer[3] == 0xf0) {
+		return ERR_NOTSUPPORTED;
+	}
 
-	smprintf(s, "Network status            : ");
+	if (Data->RequestID == ID_GetNetworkInfo) {
+		network_info = Data->NetworkInfo;
+	} else {
+		network_info = &network_info_local;
+	}
+
+	network_info->NetworkName[0] = 0x00;
+	network_info->NetworkName[1] = 0x00;
+
 	switch (msg.Buffer[8]) {
-		case 0x00 : smprintf(s, "home network\n");		break;
-		case 0x01 : smprintf(s, "roaming network\n");      	break;
-		case 0x04 : smprintf(s, "not logged");		  	break;
-		case 0x06 : smprintf(s, "SIM card rejected\n");		break;
-		case 0x09 : smprintf(s, "not logged");		  	break;
-		default	  : smprintf(s, "unknown %i!\n",msg.Buffer[8]); break;
+		case 0x00:
+			smprintf(s, "home network\n");
+			network_info->State = GSM_HomeNetwork;
+			break;
+		case 0x01:
+			smprintf(s, "roaming network\n");
+			network_info->State = GSM_RoamingNetwork;
+			break;
+		case 0x04:
+			smprintf(s, "not logged");
+			network_info->State = GSM_NoNetwork;
+			break;
+		case 0x06:
+			smprintf(s, "SIM card rejected\n");
+			network_info->State = GSM_RegistrationDenied;
+			break;
+		case 0x09:
+			smprintf(s, "not logged");
+			network_info->State = GSM_NoNetwork;
+			break;
+		default:
+			smprintf(s, "unknown %i!\n",msg.Buffer[8]);
+			network_info->State = GSM_NetworkStatusUnknown;
 	}
-	if (msg.Buffer[8]==0x00 || msg.Buffer[8] == 0x01) {
-		NOKIA_DecodeNetworkCode(msg.Buffer + (current + 7),NetInfo.NetworkCode);
-		smprintf(s, "Network code              : %s\n", NetInfo.NetworkCode);
-		smprintf(s, "Network name for Gammu    : %s ",
-			DecodeUnicodeString(GSM_GetNetworkName(NetInfo.NetworkCode)));
-		smprintf(s, "(%s)\n",DecodeUnicodeString(GSM_GetCountryName(NetInfo.NetworkCode)));
-
-		sprintf(NetInfo.LAC, "%02X%02X", msg.Buffer[current+1], msg.Buffer[current+2]);
-		smprintf(s, "LAC                       : %s\n", NetInfo.LAC);
-
-		sprintf(NetInfo.CID, "%02X%02X", msg.Buffer[current+5], msg.Buffer[current+6]);
-		smprintf(s, "CID                       : %s\n", NetInfo.CID);
-
-		tmp = 10;
-		NOKIA_GetUnicodeString(s, &tmp, msg.Buffer,name,TRUE);
-		smprintf(s, "Network name for phone    : %s\n",DecodeUnicodeString(name));
-	}
-#endif
-	if (Data->RequestID==ID_GetNetworkInfo) {
-		Data->NetworkInfo->NetworkName[0] = 0x00;
-		Data->NetworkInfo->NetworkName[1] = 0x00;
-		Data->NetworkInfo->State 	  = 0;
-		switch (msg.Buffer[8]) {
-			case 0x00: Data->NetworkInfo->State = GSM_HomeNetwork;		break;
-			case 0x01: Data->NetworkInfo->State = GSM_RoamingNetwork;	break;
-			case 0x04:
-			case 0x06:
-			case 0x09: Data->NetworkInfo->State = GSM_NoNetwork;		break;
-		}
-		if (Data->NetworkInfo->State == GSM_HomeNetwork || Data->NetworkInfo->State == GSM_RoamingNetwork) {
-			tmp = 10;
-			NOKIA_GetUnicodeString(s, &tmp, msg.Buffer,Data->NetworkInfo->NetworkName,TRUE);
-			sprintf(Data->NetworkInfo->LAC,	"%02X%02X", 	msg.Buffer[current+1], msg.Buffer[current+2]);
-			sprintf(Data->NetworkInfo->CID, "%02X%02X", 	msg.Buffer[current+5], msg.Buffer[current+6]);
-			NOKIA_DecodeNetworkCode(msg.Buffer + (current+7),Data->NetworkInfo->NetworkCode);
-		}
+	if (network_info->State == GSM_HomeNetwork || network_info->State == GSM_RoamingNetwork) {
+		pos = 10;
+		NOKIA_GetUnicodeString(s, &pos, msg.Buffer, network_info->NetworkName, TRUE);
+		smprintf(s, "Network name: %s ", DecodeUnicodeString(network_info->NetworkName));
+		NOKIA_DecodeNetworkCode(msg.Buffer + (current + 7), network_info->NetworkCode);
+		smprintf(s, "Network code: %s\n", network_info->NetworkCode);
+		smprintf(s, "Network name in libGammu: %s ", DecodeUnicodeString(GSM_GetNetworkName(network_info->NetworkCode)));
+		sprintf(network_info->LAC, "%02X%02X", msg.Buffer[current+1], msg.Buffer[current+2]);
+		smprintf(s, "LAC: %s\n", network_info->LAC);
+		sprintf(network_info->CID, "%02X%02X", msg.Buffer[current+5], msg.Buffer[current+6]);
+		smprintf(s, "CID: %s\n", network_info->CID);
 	}
 	return ERR_NONE;
 }
