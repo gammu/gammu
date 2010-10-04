@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSDRC" "5" "October 01, 2010" "1.28.92" "Gammu"
+.TH "GAMMU-SMSDRC" "5" "October 04, 2010" "1.28.92" "Gammu"
 .SH NAME
 gammu-smsdrc \- gammu-smsd(1) configuration file
 .
@@ -438,10 +438,20 @@ Password used for connection to a database.
 .UNINDENT
 .INDENT 0.0
 .TP
-.B PC
+.B Host
 .
 Database server address. It can also contain port or socket path after
 semicolon, for example \fBlocalhost:/path/to/socket\fP.
+.sp
+New in version 1.28.92.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B PC
+.
+Synonym for \fI\%Host\fP.
+.sp
+Deprecated since version 1.28.92.
 .UNINDENT
 .INDENT 0.0
 .TP
