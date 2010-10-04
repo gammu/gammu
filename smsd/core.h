@@ -71,6 +71,10 @@ typedef struct {
 	 * this can not talk to the phone.
 	 */
 	GSM_Error	(*RefreshPhoneStatus) (GSM_SMSDConfig *Config);
+	/**
+	 * Reads configuration specific for this backend.
+	 */
+	GSM_Error	(*ReadConfiguration) (GSM_SMSDConfig *Config);
 } GSM_SMSDService;
 
 struct _GSM_SMSDConfig {
@@ -214,6 +218,8 @@ extern GSM_Error SMSD_NoneFunction		(void);
 extern GSM_Error SMSD_EmptyFunction		(void);
 extern GSM_Error SMSD_NotImplementedFunction	(void);
 extern GSM_Error SMSD_NotSupportedFunction	(void);
+extern GSM_Error SMSD_ReadDatabaseConfiguration(GSM_SMSDConfig *Config);
+
 
 #define NONEFUNCTION 	(void *) SMSD_NoneFunction
 #define EMPTYFUNCTION 	(void *) SMSD_EmptyFunction

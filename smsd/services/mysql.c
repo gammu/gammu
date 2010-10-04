@@ -794,7 +794,8 @@ GSM_SMSDService SMSDMySQL = {
 	SMSDMySQL_CreateOutboxSMS,
 	SMSDMySQL_AddSentSMSInfo,
 	SMSDMySQL_RefreshSendStatus,
-	SMSDMySQL_RefreshPhoneStatus
+	SMSDMySQL_RefreshPhoneStatus,
+	SMSD_ReadDatabaseConfiguration
 };
 
 #endif

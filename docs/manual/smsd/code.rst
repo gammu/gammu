@@ -107,6 +107,13 @@ in ``GSM_SMSDService`` structure:
     :param Config: Pointer to SMSD configuration data
     :return: Error code.
 
+.. c:function:: GSM_Error	GSM_SMSDService::ReadConfiguration (GSM_SMSDConfig *Config)
+
+    Reads configuration specific for this backend.
+
+    :param Config: Pointer to SMSD configuration data
+    :return: Error code.
+
 Message ID
 ++++++++++
 

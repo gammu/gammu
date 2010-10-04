@@ -584,6 +584,57 @@ static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage * sms UNUSED, GSM_
 	return ERR_NONE;
 }
 
+GSM_Error SMSDFiles_ReadConfiguration(GSM_SMSDConfig *Config)
+{
+	static unsigned char	emptyPath[1] = "\0";
+
+	Config->inboxpath=INI_GetValue(Config->smsdcfgfile, "smsd", "inboxpath", FALSE);
+	if (Config->inboxpath == NULL) Config->inboxpath = emptyPath;
+
+	Config->inboxformat=INI_GetValue(Config->smsdcfgfile, "smsd", "inboxformat", FALSE);
+	if (Config->inboxformat == NULL ||
+			(strcasecmp(Config->inboxformat, "detail") != 0 &&
+			strcasecmp(Config->inboxformat, "standard") != 0 &&
+			strcasecmp(Config->inboxformat, "unicode") != 0)) {
+		Config->inboxformat = "standard";
+	}
+	SMSD_Log(DEBUG_NOTICE, Config, "Inbox is \"%s\" with format \"%s\"", Config->inboxpath, Config->inboxformat);
+
+
+	Config->outboxpath=INI_GetValue(Config->smsdcfgfile, "smsd", "outboxpath", FALSE);
+	if (Config->outboxpath == NULL) Config->outboxpath = emptyPath;
+
+	Config->transmitformat=INI_GetValue(Config->smsdcfgfile, "smsd", "transmitformat", FALSE);
+	if (Config->transmitformat == NULL || (strcasecmp(Config->transmitformat, "auto") != 0 && strcasecmp(Config->transmitformat, "unicode") != 0)) {
+		Config->transmitformat = "7bit";
+	}
+	Config->outboxformat=INI_GetValue(Config->smsdcfgfile, "smsd", "outboxformat", FALSE);
+	if (Config->outboxformat == NULL ||
+			(strcasecmp(Config->outboxformat, "detail") != 0 &&
+			strcasecmp(Config->outboxformat, "standard") != 0 &&
+			strcasecmp(Config->outboxformat, "unicode") != 0)) {
+#ifdef GSM_ENABLE_BACKUP
+		Config->outboxformat = "detail";
+#else
+		Config->outboxformat = "standard";
+#endif
+	}
+	SMSD_Log(DEBUG_NOTICE, Config, "Outbox is \"%s\" with format \"%s\" and transmission format \"%s\"",
+		Config->outboxpath,
+		Config->outboxformat,
+		Config->transmitformat);
+
+	Config->sentsmspath=INI_GetValue(Config->smsdcfgfile, "smsd", "sentsmspath", FALSE);
+	if (Config->sentsmspath == NULL) Config->sentsmspath = Config->outboxpath;
+	SMSD_Log(DEBUG_NOTICE, Config, "Sent SMS moved to \"%s\"",Config->sentsmspath);
+
+	Config->errorsmspath=INI_GetValue(Config->smsdcfgfile, "smsd", "errorsmspath", FALSE);
+	if (Config->errorsmspath == NULL) Config->errorsmspath = Config->sentsmspath;
+	SMSD_Log(DEBUG_NOTICE, Config, "SMS with errors moved to \"%s\"",Config->errorsmspath);
+
+	return ERR_NONE;
+}
+
 GSM_SMSDService SMSDFiles = {
 	NONEFUNCTION,		/* Init                 */
 	NONEFUNCTION,		/* Free                 */
@@ -594,7 +645,8 @@ GSM_SMSDService SMSDFiles = {
 	SMSDFiles_CreateOutboxSMS,
 	SMSDFiles_AddSentSMSInfo,
 	NOTIMPLEMENTED,		/* RefreshSendStatus    */
-	NOTIMPLEMENTED		/* RefreshPhoneStatus   */
+	NOTIMPLEMENTED,		/* RefreshPhoneStatus   */
+	SMSDFiles_ReadConfiguration
 };
 
 /* How should editor handle tabs in this file? Add editor commands here.

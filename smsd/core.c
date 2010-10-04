@@ -580,7 +580,6 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 	GSM_Config 		smsdcfg;
 	GSM_Config 		*gammucfg;
 	unsigned char		*str;
-	static unsigned char	emptyPath[1] = "\0";
 	GSM_Error		error;
 #ifdef HAVE_SHM
 	char			fullpath[PATH_MAX + 1];
@@ -750,73 +749,9 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 		Config->SMSC.Location     = 0;
 	}
 
-	if (!strcasecmp(Config->ServiceName,"FILES")) {
-		Config->inboxpath=INI_GetValue(Config->smsdcfgfile, "smsd", "inboxpath", FALSE);
-		if (Config->inboxpath == NULL) Config->inboxpath = emptyPath;
-
-		Config->inboxformat=INI_GetValue(Config->smsdcfgfile, "smsd", "inboxformat", FALSE);
-		if (Config->inboxformat == NULL ||
-				(strcasecmp(Config->inboxformat, "detail") != 0 &&
-				strcasecmp(Config->inboxformat, "standard") != 0 &&
-				strcasecmp(Config->inboxformat, "unicode") != 0)) {
-			Config->inboxformat = "standard";
-		}
-		SMSD_Log(DEBUG_NOTICE, Config, "Inbox is \"%s\" with format \"%s\"", Config->inboxpath, Config->inboxformat);
-
-
-		Config->outboxpath=INI_GetValue(Config->smsdcfgfile, "smsd", "outboxpath", FALSE);
-		if (Config->outboxpath == NULL) Config->outboxpath = emptyPath;
-
-		Config->transmitformat=INI_GetValue(Config->smsdcfgfile, "smsd", "transmitformat", FALSE);
-		if (Config->transmitformat == NULL || (strcasecmp(Config->transmitformat, "auto") != 0 && strcasecmp(Config->transmitformat, "unicode") != 0)) {
-			Config->transmitformat = "7bit";
-		}
-		Config->outboxformat=INI_GetValue(Config->smsdcfgfile, "smsd", "outboxformat", FALSE);
-		if (Config->outboxformat == NULL ||
-				(strcasecmp(Config->outboxformat, "detail") != 0 &&
-				strcasecmp(Config->outboxformat, "standard") != 0 &&
-				strcasecmp(Config->outboxformat, "unicode") != 0)) {
-#ifdef GSM_ENABLE_BACKUP
-			Config->outboxformat = "detail";
-#else
-			Config->outboxformat = "standard";
-#endif
-		}
-		SMSD_Log(DEBUG_NOTICE, Config, "Outbox is \"%s\" with format \"%s\" and transmission format \"%s\"",
-			Config->outboxpath,
-			Config->outboxformat,
-			Config->transmitformat);
-
-		Config->sentsmspath=INI_GetValue(Config->smsdcfgfile, "smsd", "sentsmspath", FALSE);
-		if (Config->sentsmspath == NULL) Config->sentsmspath = Config->outboxpath;
-		SMSD_Log(DEBUG_NOTICE, Config, "Sent SMS moved to \"%s\"",Config->sentsmspath);
-
-		Config->errorsmspath=INI_GetValue(Config->smsdcfgfile, "smsd", "errorsmspath", FALSE);
-		if (Config->errorsmspath == NULL) Config->errorsmspath = Config->sentsmspath;
-		SMSD_Log(DEBUG_NOTICE, Config, "SMS with errors moved to \"%s\"",Config->errorsmspath);
-	}
-
-#if defined(HAVE_MYSQL_MYSQL_H) || defined(HAVE_POSTGRESQL_LIBPQ_FE_H) || defined(LIBDBI_FOUND)
-	Config->user = INI_GetValue(Config->smsdcfgfile, "smsd", "user", FALSE);
-	if (Config->user == NULL) Config->user="root";
-	Config->password = INI_GetValue(Config->smsdcfgfile, "smsd", "password", FALSE);
-	if (Config->password == NULL) Config->password="";
-	Config->PC = INI_GetValue(Config->smsdcfgfile, "smsd", "pc", FALSE);
-	if (Config->PC == NULL) Config->PC="localhost";
-	Config->database = INI_GetValue(Config->smsdcfgfile, "smsd", "database", FALSE);
-	if (Config->database == NULL) Config->database="sms";
-#endif
-
-#ifdef LIBDBI_FOUND
-	if (!strcasecmp(Config->ServiceName,"DBI")) {
-		Config->driver = INI_GetValue(Config->smsdcfgfile, "smsd", "driver", FALSE);
-		if (Config->driver == NULL) Config->driver="mysql";
-		Config->dbdir = INI_GetValue(Config->smsdcfgfile, "smsd", "dbdir", FALSE);
-		if (Config->dbdir == NULL) Config->dbdir="./";
-		Config->driverspath = INI_GetValue(Config->smsdcfgfile, "smsd", "driverspath", FALSE);
-		/* This one can be NULL */
-	}
-#endif
+	/* Read service specific configuration */
+	error = Config->Service->ReadConfiguration(Config);
+	if (error != ERR_NONE) return error;
 
 	/* Process include section in config file */
 	error = SMSD_LoadIniNumbersList(Config, &(Config->IncludeNumbersList), "include_numbers");
@@ -1955,6 +1890,34 @@ GSM_Error SMSD_GetStatus(GSM_SMSDConfig *Config, GSM_SMSDStatus *status)
 	if (error != ERR_NONE) {
 		return error;
 	}
+	return ERR_NONE;
+}
+
+/**
+ * Reads common options for database backends.
+ */
+GSM_Error SMSD_ReadDatabaseConfiguration(GSM_SMSDConfig *Config)
+{
+	Config->user = INI_GetValue(Config->smsdcfgfile, "smsd", "user", FALSE);
+	if (Config->user == NULL) {
+		Config->user="root";
+	}
+
+	Config->password = INI_GetValue(Config->smsdcfgfile, "smsd", "password", FALSE);
+	if (Config->password == NULL) {
+		Config->password="";
+	}
+
+	Config->PC = INI_GetValue(Config->smsdcfgfile, "smsd", "pc", FALSE);
+	if (Config->PC == NULL) {
+		Config->PC="localhost";
+	}
+
+	Config->database = INI_GetValue(Config->smsdcfgfile, "smsd", "database", FALSE);
+	if (Config->database == NULL) {
+		Config->database="sms";
+	}
+
 	return ERR_NONE;
 }
 

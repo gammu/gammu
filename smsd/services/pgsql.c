@@ -911,7 +911,8 @@ GSM_SMSDService SMSDPgSQL = {
 	SMSDPgSQL_CreateOutboxSMS,
 	SMSDPgSQL_AddSentSMSInfo,
 	SMSDPgSQL_RefreshSendStatus,
-	SMSDPgSQL_RefreshPhoneStatus
+	SMSDPgSQL_RefreshPhoneStatus,
+	SMSD_ReadDatabaseConfiguration
 };
 
 #endif

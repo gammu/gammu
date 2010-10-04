@@ -1182,6 +1182,28 @@ static GSM_Error SMSDDBI_RefreshPhoneStatus(GSM_SMSDConfig * Config)
 	return ERR_NONE;
 }
 
+
+GSM_Error SMSDDBI_ReadConfiguration(GSM_SMSDConfig *Config)
+{
+	GSM_Error error;
+
+	error = SMSD_ReadDatabaseConfiguration(Config);
+	if (error != ERR_NONE) {
+		return error;
+	}
+
+	Config->driver = INI_GetValue(Config->smsdcfgfile, "smsd", "driver", FALSE);
+	if (Config->driver == NULL) Config->driver="mysql";
+
+	Config->dbdir = INI_GetValue(Config->smsdcfgfile, "smsd", "dbdir", FALSE);
+	if (Config->dbdir == NULL) Config->dbdir="./";
+
+	Config->driverspath = INI_GetValue(Config->smsdcfgfile, "smsd", "driverspath", FALSE);
+	/* This one can be NULL */
+
+	return ERR_NONE;
+}
+
 GSM_SMSDService SMSDDBI = {
 	SMSDDBI_Init,
 	SMSDDBI_Free,
@@ -1192,7 +1214,8 @@ GSM_SMSDService SMSDDBI = {
 	SMSDDBI_CreateOutboxSMS,
 	SMSDDBI_AddSentSMSInfo,
 	SMSDDBI_RefreshSendStatus,
-	SMSDDBI_RefreshPhoneStatus
+	SMSDDBI_RefreshPhoneStatus,
+	SMSDDBI_ReadConfiguration
 };
 
 /* How should editor hadle tabs in this file? Add editor commands here.

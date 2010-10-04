@@ -17,7 +17,8 @@ GSM_SMSDService SMSDNull = {
 	NONEFUNCTION,		/* CreateOutboxSMS      */
 	NONEFUNCTION,		/* AddSentSMSInfo       */
 	NOTIMPLEMENTED,		/* RefreshSendStatus    */
-	NOTIMPLEMENTED		/* RefreshPhoneStatus   */
+	NOTIMPLEMENTED,		/* RefreshPhoneStatus   */
+	NONEFUNCTION		/* ReadConfiguration    */
 };
 
 /* How should editor handle tabs in this file? Add editor commands here.
