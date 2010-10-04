@@ -4169,7 +4169,6 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 
 	{N6510_ReplyGetNetworkInfo,	  "\x0A",0x03,0x01,ID_GetNetworkInfo	  },
 	{N6510_ReplyGetNetworkInfo,	  "\x0A",0x03,0x01,ID_IncomingFrame	  },
-	{N6510_ReplyGetNetworkInfo,	  "\x0A",0x03,0xf0,ID_IncomingFrame	  },
 	{N6510_ReplyLogIntoNetwork,	  "\x0A",0x03,0x02,ID_IncomingFrame	  },
 	{N6510_ReplyGetSignalQuality,	  "\x0A",0x03,0x0C,ID_GetSignalQuality	  },
 	{NoneReply,			  "\x0A",0x03,0x16,ID_IncomingFrame	  },
@@ -4178,6 +4177,8 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N6510_ReplyGetOperatorLogo,	  "\x0A",0x03,0x24,ID_GetBitmap		  },
 	{N6510_ReplyGetOperatorLogo,	  "\x0A",0x03,0xf0,ID_GetBitmap		  },
 	{N6510_ReplySetOperatorLogo,	  "\x0A",0x03,0x26,ID_SetBitmap		  },
+	/* This needs to be last of type */
+	{N6510_ReplyGetNetworkInfo,	  "\x0A",0x03,0xf0,ID_IncomingFrame	  },
 
 	{NoneReply,			  "\x0B",0x03,0x01,ID_PlayTone		  },
 	{NoneReply,			  "\x0B",0x03,0x15,ID_PlayTone		  },
