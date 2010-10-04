@@ -1,5 +1,5 @@
-Gammu Manual
-============
+The Gammu Manual
+================
 
 `Gammu library`_ and `python-gammu`_ provide you way to communicate with
 your cell phone using standard API. This documentation explains both
