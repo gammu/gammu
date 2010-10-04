@@ -19,6 +19,8 @@ the issue.
 ChangeLog
 =========
     
+2010???? - 1.28.93
+    
 20101004 - 1.28.92
 
 [+] * New SMSD config option HardResetFrequency.
