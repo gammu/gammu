@@ -511,6 +511,70 @@ GSM_Error SMSD_LoadNumbersFile(GSM_SMSDConfig *Config, GSM_StringArray *Array, c
 	return ERR_NONE;
 }
 
+/**
+ * Configures SMSD logging.
+ *
+ * \param Config SMSD configuration data.
+ * \param uselog Whether to log errors to configured log.
+ */
+GSM_Error SMSD_ConfigureLogging(GSM_SMSDConfig *Config, gboolean uselog)
+{
+	int fd;
+
+	/* No logging configured */
+	if (Config->logfilename == NULL) {
+		return ERR_NONE;
+	}
+
+	if (!uselog) {
+		Config->log_type = SMSD_LOG_FILE;
+		Config->use_stderr = FALSE;
+		fd = dup(1);
+		if (fd < 0) {
+			return ERR_CANTOPENFILE;
+		}
+		Config->log_handle = fdopen(fd, "a");
+		Config->use_timestamps = FALSE;
+#ifdef HAVE_WINDOWS_EVENT_LOG
+	} else if (strcmp(Config->logfilename, "eventlog") == 0) {
+		Config->log_type = SMSD_LOG_EVENTLOG;
+		Config->log_handle = eventlog_init();
+		Config->use_stderr = TRUE;
+#endif
+#ifdef HAVE_SYSLOG
+	} else if (strcmp(Config->logfilename, "syslog") == 0) {
+		Config->log_type = SMSD_LOG_SYSLOG;
+		openlog(Config->program_name, LOG_PID, LOG_DAEMON);
+		Config->use_stderr = TRUE;
+#endif
+	} else {
+		Config->log_type = SMSD_LOG_FILE;
+		if (strcmp(Config->logfilename, "stderr") == 0) {
+			fd = dup(2);
+			if (fd < 0) {
+				return ERR_CANTOPENFILE;
+			}
+			Config->log_handle = fdopen(fd, "a");
+			Config->use_stderr = FALSE;
+		} else if (strcmp(Config->logfilename, "stdout") == 0) {
+			fd = dup(1);
+			if (fd < 0) {
+				return ERR_CANTOPENFILE;
+			}
+			Config->log_handle = fdopen(fd, "a");
+			Config->use_stderr = FALSE;
+		} else {
+			Config->log_handle = fopen(Config->logfilename, "a");
+			Config->use_stderr = TRUE;
+		}
+		if (Config->log_handle == NULL) {
+			fprintf(stderr, "Can't open log file \"%s\"\n", Config->logfilename);
+			return ERR_CANTOPENFILE;
+		}
+		fprintf(stderr, "Log filename is \"%s\"\n",Config->logfilename);
+	}
+	return ERR_NONE;
+}
 
 GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean uselog)
 {
@@ -519,7 +583,6 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 	unsigned char		*str;
 	static unsigned char	emptyPath[1] = "\0";
 	GSM_Error		error;
-	int			fd;
 #ifdef HAVE_SHM
 	char			fullpath[PATH_MAX + 1];
 #endif
@@ -578,54 +641,16 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 	}
 
 	str = INI_GetValue(Config->smsdcfgfile, "smsd", "debuglevel", FALSE);
-	if (str)
+	if (str) {
 		Config->debug_level = atoi(str);
-	else
+	} else {
 		Config->debug_level = 0;
+	}
 
 	Config->logfilename=INI_GetValue(Config->smsdcfgfile, "smsd", "logfile", FALSE);
-	if (Config->logfilename != NULL) {
-		if (!uselog) {
-			Config->log_type = SMSD_LOG_FILE;
-			Config->use_stderr = FALSE;
-			fd = dup(1);
-			if (fd < 0) return ERR_CANTOPENFILE;
-			Config->log_handle = fdopen(fd, "a");
-			Config->use_timestamps = FALSE;
-#ifdef HAVE_WINDOWS_EVENT_LOG
-		} else if (strcmp(Config->logfilename, "eventlog") == 0) {
-			Config->log_type = SMSD_LOG_EVENTLOG;
-			Config->log_handle = eventlog_init();
-			Config->use_stderr = TRUE;
-#endif
-#ifdef HAVE_SYSLOG
-		} else if (strcmp(Config->logfilename, "syslog") == 0) {
-			Config->log_type = SMSD_LOG_SYSLOG;
-			openlog(Config->program_name, LOG_PID, LOG_DAEMON);
-			Config->use_stderr = TRUE;
-#endif
-		} else {
-			Config->log_type = SMSD_LOG_FILE;
-			if (strcmp(Config->logfilename, "stderr") == 0) {
-				fd = dup(2);
-				if (fd < 0) return ERR_CANTOPENFILE;
-				Config->log_handle = fdopen(fd, "a");
-				Config->use_stderr = FALSE;
-			} else if (strcmp(Config->logfilename, "stdout") == 0) {
-				fd = dup(1);
-				if (fd < 0) return ERR_CANTOPENFILE;
-				Config->log_handle = fdopen(fd, "a");
-				Config->use_stderr = FALSE;
-			} else {
-				Config->log_handle = fopen(Config->logfilename, "a");
-				Config->use_stderr = TRUE;
-			}
-			if (Config->log_handle == NULL) {
-				fprintf(stderr, "Can't open log file \"%s\"\n", Config->logfilename);
-				return ERR_CANTOPENFILE;
-			}
-			fprintf(stderr, "Log filename is \"%s\"\n",Config->logfilename);
-		}
+	error = SMSD_ConfigureLogging(Config, uselog);
+	if (error != ERR_NONE) {
+		return error;
 	}
 
 	Config->Service = INI_GetValue(Config->smsdcfgfile, "smsd", "service", FALSE);
