@@ -1,3 +1,5 @@
+.. _python:
+
 python-gammu API
 ================
 

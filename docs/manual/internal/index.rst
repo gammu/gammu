@@ -1,3 +1,5 @@
+.. _internal:
+
 Gammu internals
 ===============
 

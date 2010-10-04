@@ -12,22 +12,24 @@ You can also learn something about :doc:`internal/index` and also about
 Continue reading
 ----------------
 
-.. toctree::
-    :maxdepth: 1
+.. hlist::
+    :columns: 2
 
-    contents
-    project/index
-    smsd/index
-    python/index
-    c/index
-    internal/index
+    * :ref:`project` -- learn about Gammu project
+    * :ref:`smsd` -- comprehensive SMSD documentation
+    * :ref:`python` -- use Gammu functionality from Python
+    * :ref:`libgammu` -- use Gammu functionality from C
+    * :ref:`internal` -- learn about Gammu internals
+    * :ref:`protocols` -- learn about phone protocols
 
-Indices and tables
+Full content
 ------------------
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+.. toctree::
+    :maxdepth: 3
+
+    contents
+
 
 .. _python-gammu: http://wammu.eu/python-gammu/
 .. _Gammu library: http://wammu.eu/libgammu/

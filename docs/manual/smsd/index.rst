@@ -1,3 +1,5 @@
+.. _smsd:
+
 SMS Daemon
 ==========
 

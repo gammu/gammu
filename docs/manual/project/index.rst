@@ -1,3 +1,5 @@
+.. _project:
+
 Gammu project
 =============
 
