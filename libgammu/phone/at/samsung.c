@@ -675,6 +675,10 @@ GSM_Error SAMSUNG_ORG_ReplyGetCalendarStatus(GSM_Protocol_Message msg, GSM_State
 		}
 	}
 
+	if (strcmp(GetLineString(msg.Buffer, &Priv->Lines, 2), "OK") == 0) {
+		return ERR_NOTSUPPORTED;
+	}
+
 	error = ATGEN_ParseReply(s,
 		GetLineString(msg.Buffer, &Priv->Lines, 2),
 		"+ORGI: @i, @i, @i, @i, @i",
