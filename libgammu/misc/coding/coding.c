@@ -367,7 +367,7 @@ int DecodeWithHexBinAlphabet (unsigned char mychar)
 	return -1;
 }
 
-inline char EncodeWithHexBinAlphabet (int digit)
+char EncodeWithHexBinAlphabet (int digit)
 {
 	if (digit >= 0 && digit <= 9) return '0'+(digit);
 	if (digit >=10 && digit <=15) return 'A'+(digit-10);
