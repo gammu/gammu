@@ -115,6 +115,21 @@ message data to other program.
         $PROGRAM < $INBOX/$ID
     done
 
+Passing message text to program
++++++++++++++++++++++++++++++++
+
+Following script (if used as :config:option:`RunOnReceive` handler) passes
+message text and sender to external program.
+
+.. code-block:: sh
+
+    #!/bin/sh
+    PROGRAM=/bin/echo
+    for i in `seq $SMS_MESSAGES` ; do
+        eval "$PROGRAM \"\${SMS_${i}_NUMBER}\" \"\${SMS_${i}_TEXT}\""
+    done
+
+
 Passing MMS indication parameters to external program
 +++++++++++++++++++++++++++++++++++++++++++++++++++++
 
