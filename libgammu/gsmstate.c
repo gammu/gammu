@@ -47,7 +47,10 @@
 #define PATH_MAX (MAX_PATH)
 #endif
 
-
+/**
+ * Returns current debuging descriptor. It honors use_global
+ * flag.
+ */
 GSM_Debug_Info *GSM_GetDI(GSM_StateMachine *s)
 {
 	GSM_Debug_Info *curdi;
