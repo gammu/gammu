@@ -6,8 +6,9 @@ RunOnReceive Directive
 Description
 -----------
 
-Gammu SMSD can be configured by RunOnReceive directive (see :ref:`gammu-smsdrc`
-for details) to run defined program after receiving message. 
+Gammu SMSD can be configured by :config:option:`RunOnReceive` directive (see
+:ref:`gammu-smsdrc` for details) to run defined program after receiving
+message. 
     
 This parameter is executed through shell, so you might need to escape some
 special characters and you can include any number of parameters. Additionally
@@ -88,17 +89,43 @@ variables whose content is present in the message.
 Examples
 --------
 
+Activating RunOnReceive
++++++++++++++++++++++++
+
+To activate this feature you need to set :config:option:`RunOnReceive` in
+the :ref:`gammu-smsdrc`.
+
+.. code-block:: ini
+
+    [smsd]
+    RunOnReceive = /path/to/script.sh
+
+Processing messages from the files backend
+++++++++++++++++++++++++++++++++++++++++++
+
+Following script (if used as :config:option:`RunOnReceive` handler) passes
+message data to other program.
+
+.. code-block:: sh
+
+    #!/bin/sh
+    INBOX=/path/to/smsd/inbox
+    PROGRAM=/bin/cat
+    for ID in "$@" ; do
+        $PROGRAM < $INBOX/$ID
+    done
+
 Passing MMS indication parameters to external program
 +++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-Following script (if used as RunOnReceive handler) will write information
-about each received MMS indication to the log file. Just replace echo command
-with your own program to do custom processing.
+Following script (if used as :config:option:`RunOnReceive` handler) will write
+information about each received MMS indication to the log file. Just replace
+echo command with your own program to do custom processing.
 
-.. code-block: sh
+.. code-block:: sh
 
     #!/bin/sh
-    if [ $DECODED_PARTS \-eq 0 ] ; then
+    if [ $DECODED_PARTS -eq 0 ] ; then
         # No decoded parts, nothing to process
         exit
     fi
