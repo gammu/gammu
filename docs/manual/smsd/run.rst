@@ -104,7 +104,7 @@ Processing messages from the files backend
 ++++++++++++++++++++++++++++++++++++++++++
 
 Following script (if used as :config:option:`RunOnReceive` handler) passes
-message data to other program.
+message data to other program. This works only with the :ref:`gammu-smsd-files`.
 
 .. code-block:: sh
 
