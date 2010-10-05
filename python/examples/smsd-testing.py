@@ -99,7 +99,7 @@ if __name__ == '__main__':
             retries += 1
 
         if status['Sent'] != 2:
-            raise Exception('Messages were not sent!')
+            raise Exception('Messages were not sent as expected (sent = %d)!' % status['Sent'])
 
         time.sleep(1)
 
