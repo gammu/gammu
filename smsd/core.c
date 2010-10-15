@@ -365,6 +365,7 @@ GSM_SMSDConfig *SMSD_NewConfig(const char *name)
 	Config->gammu_log_buffer = NULL;
 	Config->gammu_log_buffer_size = 0;
 	Config->logfilename = NULL;
+	Config->RunOnFailure = NULL;
 	Config->smsdcfgfile = NULL;
 	Config->log_handle = NULL;
 	Config->log_type = SMSD_LOG_NONE;
@@ -734,6 +735,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 	SMSD_Log(DEBUG_NOTICE, Config, "phoneid = %s", Config->PhoneID);
 
 	Config->RunOnReceive = INI_GetValue(Config->smsdcfgfile, "smsd", "runonreceive", FALSE);
+	Config->RunOnFailure = INI_GetValue(Config->smsdcfgfile, "smsd", "runonfailure", FALSE);
 
 	str = INI_GetValue(Config->smsdcfgfile, "smsd", "smsc", FALSE);
 	if (str) {
@@ -880,25 +882,26 @@ gboolean SMSD_CheckSecurity(GSM_SMSDConfig *Config)
 }
 
 /**
- * Prepares a command line for RunOnReceive command.
+ * Prepares a command line for RunOn() function to execute user command.
  */
-char *SMSD_RunOnReceiveCommand(GSM_SMSDConfig *Config, const char *locations)
+char *SMSD_RunOnCommand(const char *locations, const char *command)
 {
 	char *result;
+	int len;
 
-	assert(Config->RunOnReceive != NULL);
+	assert(command != NULL);
 
 	if (locations == NULL) {
-		return strdup(Config->RunOnReceive);
+		result =  strdup(command);
+		assert(result != NULL);
+		return result;
 	}
 
-	result = (char *)malloc(strlen(locations) + strlen(Config->RunOnReceive) + 20);
+	len = strlen(locations) + strlen(command) + 4;
+	result = (char *)malloc(len);
 	assert(result != NULL);
 
-	result[0] = 0;
-	strcat(result, Config->RunOnReceive);
-	strcat(result, " ");
-	strcat(result, locations);
+	snprintf(result, len, "%s %s", command, locations);
 	return result;
 }
 
@@ -909,7 +912,7 @@ char *SMSD_RunOnReceiveCommand(GSM_SMSDConfig *Config, const char *locations)
 /**
  * Fills in environment with information about messages.
  */
-void SMSD_RunOnReceiveEnvironment(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *locations)
+void SMSD_RunOnReceiveEnvironment(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, const char *locations)
 {
 	GSM_MultiPartSMSInfo SMSInfo;
 	char buffer[100], name[100];
@@ -968,23 +971,25 @@ void SMSD_RunOnReceiveEnvironment(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Conf
 }
 
 #ifdef WIN32
-gboolean SMSD_RunOnReceive(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *locations)
+gboolean SMSD_RunOn(const char *command, GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, const char *locations)
 {
 	BOOL ret;
 	STARTUPINFO si;
 	PROCESS_INFORMATION pi;
 	char *cmdline;
 
-	cmdline = SMSD_RunOnReceiveCommand(Config, locations);
+	cmdline = SMSD_RunOnCommand(locations, command);
 
 	/* Prepare environment */
-	SMSD_RunOnReceiveEnvironment(sms, Config, locations);
+	if (sms != NULL) {
+		SMSD_RunOnReceiveEnvironment(sms, Config, locations);
+	}
 
 	ZeroMemory(&si, sizeof(si));
 	si.cb = sizeof(si);
 	ZeroMemory(&pi, sizeof(pi));
 
-	SMSD_Log(DEBUG_INFO, Config, "Starting run on receive: %s", cmdline);
+	SMSD_Log(DEBUG_INFO, Config, "Starting run on command: %s", cmdline);
 
 	ret = CreateProcess(NULL,     /* No module name (use command line) */
 			cmdline,	/* Command line */
@@ -1008,7 +1013,7 @@ gboolean SMSD_RunOnReceive(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, cha
 }
 #else
 
-gboolean SMSD_RunOnReceive(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *locations)
+gboolean SMSD_RunOn(const char *command, GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, const char *locations)
 {
 	int pid;
 	int i;
@@ -1062,10 +1067,12 @@ gboolean SMSD_RunOnReceive(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, cha
 	/* we are the child */
 
 	/* Prepare environment */
-	SMSD_RunOnReceiveEnvironment(sms, Config, locations);
+	if (sms != NULL) {
+		SMSD_RunOnReceiveEnvironment(sms, Config, locations);
+	}
 
 	/* Calculate command line */
-	cmdline = SMSD_RunOnReceiveCommand(Config, locations);
+	cmdline = SMSD_RunOnCommand(locations, command);
 	SMSD_Log(DEBUG_INFO, Config, "Starting run on receive: %s", cmdline);
 
 	/* Close all file descriptors */
@@ -1173,7 +1180,7 @@ GSM_Error SMSD_ProcessSMS(GSM_SMSDConfig *Config, GSM_MultiSMSMessage *sms)
 	error = Config->Service->SaveInboxSMS(sms, Config, &locations);
 	/* RunOnReceive handling */
 	if (Config->RunOnReceive != NULL && error == ERR_NONE) {
-		SMSD_RunOnReceive(sms, Config, locations);
+		SMSD_RunOn(Config->RunOnReceive, sms, Config, locations);
 	}
 	/* Free memory allocated by SaveInboxSMS */
 	free(locations);
@@ -1544,6 +1551,9 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config)
 	}
 	return ERR_NONE;
 failure_unsent:
+	if (Config->RunOnFailure != NULL) {
+		SMSD_RunOn(Config->RunOnFailure, NULL, Config, Config->SMSID);
+	}
 	Config->Status->Failed++;
 	Config->Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i + 1, SMSD_SEND_SENDING_ERROR, Config->TPMR);
 	Config->Service->MoveSMS(&sms,Config, Config->SMSID, TRUE, FALSE);
@@ -1721,6 +1731,10 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 			}
 			SMSD_Log(DEBUG_INFO, Config, "Starting phone communication...");
 			error = GSM_InitConnection_Log(Config->gsm, 2, SMSD_Log_Function, Config);
+			/* run on error */
+			if (error != ERR_NONE && Config->RunOnFailure != NULL) {
+				SMSD_RunOn(Config->RunOnFailure, NULL, Config, "INIT");
+			}
 			switch (error) {
 			case ERR_NONE:
 				GSM_SetSendSMSStatusCallback(Config->gsm, SMSD_SendSMSStatusCallback, Config);
@@ -1731,6 +1745,9 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 					} else {
 						error = Config->Service->InitAfterConnect(Config);
 						if (error!=ERR_NONE) {
+							if (Config->RunOnFailure != NULL) {
+								SMSD_RunOn(Config->RunOnFailure, NULL, Config, "INIT");
+							}
 							SMSD_Terminate(Config, "Post initialisation failed, stopping Gammu smsd", error, TRUE, -1);
 							goto done_connected;
 						}

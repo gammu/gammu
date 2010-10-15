@@ -92,6 +92,7 @@ struct _GSM_SMSDConfig {
 	const char   *deliveryreport, *logfilename,  *PINCode, *NetworkCode, *PhoneCode;
 	const char	*PhoneID;
 	const char   *RunOnReceive;
+	const char   *RunOnFailure; /* run this command on phone communication failure */
 	gboolean checksecurity;
 	gboolean checkbattery;
 	gboolean checksignal;
