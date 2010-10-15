@@ -253,6 +253,17 @@ General parameters of SMS daemon
     The process has available lot of information about received message in 
     environment, check :ref:`smsd_run` for more details.
 
+.. config:option:: RunOnFailure
+
+    Executes a program on failure.
+
+    This can be used to proactively react on some failures or to interactively
+    detect failure of sending message.
+
+    The program will receive optional parameter, which can currently be either
+    ``INIT`` (meaning failure during phone initialization) or message ID,
+    which would indicate error while sending the message.
+
 .. config:option:: IncludeNumbersFile
 
     File with list of numbers which are accepted by SMSD. The file contains one
