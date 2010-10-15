@@ -193,6 +193,8 @@ General parameters of SMS daemon
 
 .. config:option:: HardResetFrequency
 
+    .. versionadded:: 1.28.92
+
     .. warning::
 
        For some phones hard reset means deleting all data in it. Use 
