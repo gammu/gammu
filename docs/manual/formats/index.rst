@@ -7,5 +7,6 @@ formats for storing some data.
 .. toctree::
     :maxdepth: 2
 
+    ini
     smsbackup
     backup

@@ -25,9 +25,7 @@ Description
 :ref:`gammu` reads configuration from a config file. It's location is determined
 on runtime, see above for search paths.
 
-This file use ini file syntax, with comment parts being marked with both ``;`` and
-``#``. Sections of config file are identified in square brackets line ``[this]``. All
-key values are case insensitive.
+This file use ini file syntax, see :ref:`ini`.
 
 Configuration file for gammu can contain several sections - ``[gammu]``, ``[gammu1]``,
 ``[gammuN]``, ... Each section configures one connection setup and in default mode

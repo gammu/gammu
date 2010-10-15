@@ -10,9 +10,7 @@ gammu-smsd reads configuration from a config file. It's location can be
 specified on command line, otherwise default path ``/etc/gammu-smsdrc``
 is used.
 
-This file use ini file syntax, with comment parts being marked with both ``;`` and
-``#``. Sections of config file are identified in square brackets line ``[this]``. All
-key values are case insensitive.
+This file use ini file syntax, see :ref:`ini`.
 
 Configuration file of gammu-smsd consists of at least two sections -
 :config:section:`[gammu]` and :config:section:`[smsd]`.
