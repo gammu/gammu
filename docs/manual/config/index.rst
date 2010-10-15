@@ -30,7 +30,7 @@ This file use ini file syntax, see :ref:`ini`.
 Configuration file for gammu can contain several sections - ``[gammu]``, ``[gammu1]``,
 ``[gammuN]``, ... Each section configures one connection setup and in default mode
 gammu tries all of them in numerical order. You can also specify which
-configuration section to use by giving it's number (``[gammu]`` has number 0) as a
+configuration section to use by giving it's number (:config:section:`[gammu]` has number 0) as a
 parameter to :ref:`gammu` and it will then use only this section.
 
 .. config:section:: [gammu]
