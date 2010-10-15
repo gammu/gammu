@@ -255,6 +255,8 @@ General parameters of SMS daemon
 
 .. config:option:: RunOnFailure
 
+    .. versionadded:: 1.28.93
+
     Executes a program on failure.
 
     This can be used to proactively react on some failures or to interactively

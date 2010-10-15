@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSDRC" "5" "October 04, 2010" "1.28.93" "Gammu"
+.TH "GAMMU-SMSDRC" "5" "October 15, 2010" "1.28.93" "Gammu"
 .SH NAME
 gammu-smsdrc \- gammu-smsd(1) configuration file
 .
@@ -283,7 +283,8 @@ Default is 0 (not used).
 .B HardResetFrequency
 .IP Warning
 .
-For some phones hard reset means deleting all data in it.
+For some phones hard reset means deleting all data in it. Use
+\fI\%ResetFrequency\fP, unless you know what you are doing.
 .RE
 .sp
 The number of seconds between performing a preventive hard reset in order to
@@ -355,6 +356,21 @@ again.
 .sp
 The process has available lot of information about received message in
 environment, check \fIsmsd_run\fP for more details.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B RunOnFailure
+.
+New in version 1.28.93.
+.sp
+Executes a program on failure.
+.sp
+This can be used to proactively react on some failures or to interactively
+detect failure of sending message.
+.sp
+The program will receive optional parameter, which can currently be either
+\fBINIT\fP (meaning failure during phone initialization) or message ID,
+which would indicate error while sending the message.
 .UNINDENT
 .INDENT 0.0
 .TP

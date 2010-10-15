@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSD-RUN" "7" "October 04, 2010" "1.28.93" "Gammu"
+.TH "GAMMU-SMSD-RUN" "7" "October 15, 2010" "1.28.93" "Gammu"
 .SH NAME
 gammu-smsd-run \- documentation for RunOnReceive directive
 .
@@ -32,8 +32,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .
 .SH DESCRIPTION
 .sp
-Gammu SMSD can be configured by RunOnReceive directive (see \fIgammu\-smsdrc\fP
-for details) to run defined program after receiving message.
+Gammu SMSD can be configured by \fBRunOnReceive\fP directive (see
+\fIgammu\-smsdrc\fP for details) to run defined program after receiving
+message.
 .sp
 This parameter is executed through shell, so you might need to escape some
 special characters and you can include any number of parameters. Additionally
@@ -122,11 +123,64 @@ Address (URL) of MMS from MMS indication message.
 Size of MMS as specified in MMS indication message.
 .UNINDENT
 .SH EXAMPLES
+.SS Activating RunOnReceive
+.sp
+To activate this feature you need to set \fBRunOnReceive\fP in
+the \fIgammu\-smsdrc\fP.
+.sp
+.nf
+.ft C
+[smsd]
+RunOnReceive = /path/to/script.sh
+.ft P
+.fi
+.SS Processing messages from the files backend
+.sp
+Following script (if used as \fBRunOnReceive\fP handler) passes
+message data to other program. This works only with the \fIgammu\-smsd\-files\fP.
+.sp
+.nf
+.ft C
+#!/bin/sh
+INBOX=/path/to/smsd/inbox
+PROGRAM=/bin/cat
+for ID in "$@" ; do
+    $PROGRAM < $INBOX/$ID
+done
+.ft P
+.fi
+.SS Passing message text to program
+.sp
+Following script (if used as \fBRunOnReceive\fP handler) passes
+message text and sender to external program.
+.sp
+.nf
+.ft C
+#!/bin/sh
+PROGRAM=/bin/echo
+for i in \(gaseq $SMS_MESSAGES\(ga ; do
+    eval "$PROGRAM \e"\e${SMS_${i}_NUMBER}\e" \e"\e${SMS_${i}_TEXT}\e""
+done
+.ft P
+.fi
 .SS Passing MMS indication parameters to external program
 .sp
-Following script (if used as RunOnReceive handler) will write information
-about each received MMS indication to the log file. Just replace echo command
-with your own program to do custom processing.
+Following script (if used as \fBRunOnReceive\fP handler) will write
+information about each received MMS indication to the log file. Just replace
+echo command with your own program to do custom processing.
+.sp
+.nf
+.ft C
+#!/bin/sh
+if [ $DECODED_PARTS \-eq 0 ] ; then
+    # No decoded parts, nothing to process
+    exit
+fi
+if [ "$DECODED_1_MMS_ADDRESS" ] ; then
+    echo "$DECODED_1_MMS_ADDRESS" "$DECODED_1_MMS_SENDER" "$DECODED_1_MMS_TITLE" >> /tmp/smsd\-mms.log
+fi
+.ft P
+.fi
 .SH AUTHOR
 Michal Čihař <michal@cihar.com>
 .SH COPYRIGHT
