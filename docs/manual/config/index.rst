@@ -22,7 +22,7 @@ On Microsoft Windows:
 Description
 -----------
 
-gammu(1) reads configuration from a config file. It's location is determined
+:ref:`gammu` reads configuration from a config file. It's location is determined
 on runtime, see above for search paths.
 
 This file use ini file syntax, with comment parts being marked with both ``;`` and
