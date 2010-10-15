@@ -567,7 +567,14 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, const unsi
 			if ((buffer[pos] * 7) % 8 != 0) {
 				datalength++;
 			}
+		} else if (SMS->Coding == SMS_Coding_Unicode_Compression) {
+			smfprintf(di, "Compressed unicode messages not yet supported!\n");
+			return ERR_NOTSUPPORTED;
+		} else if (SMS->Coding == SMS_Coding_Default_Compression) {
+			smfprintf(di, "Compressed 7-bit messages not yet supported!\n");
+			return ERR_NOTSUPPORTED;
 		}
+
 		if (pos + datalength >= length) {
 			smfprintf(di, "Ran out of buffer when parsing PDU!\n");
 			return ERR_CORRUPTED;
