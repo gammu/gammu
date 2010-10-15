@@ -50,8 +50,6 @@ Device connection parameters
 
     ``fbus``           
         serial FBUS connection
-    ``fbususb``        
-        FBUS over USB cable (experimental, for Nokia cables on Linux, including DKU-2)
     ``dlr3``           
         DLR-3 and compatible cables
     ``dku2``           
