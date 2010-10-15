@@ -20,6 +20,8 @@ ChangeLog
 =========
     
 2010???? - 1.28.93
+
+[+] * New SMSD configuration RunOnFailure.
     
 20101004 - 1.28.92
 
