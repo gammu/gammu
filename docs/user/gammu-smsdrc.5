@@ -40,17 +40,14 @@ This file use ini file syntax, with comment parts being marked with both \fB;\fP
 \fB#\fP. Sections of config file are identified in square brackets line \fB[this]\fP. All
 key values are case insensitive.
 .sp
-Configuration file of gammu\-smsd consists of at least two sections \- \fI\%[gammu]\fP
-and \fI\%[smsd]\fP.
-.INDENT 0.0
-.TP
-.B [gammu]
-.
-The \fI\%[gammu]\fP section is configuration of a phone connection and is same as
-described in gammurc(5) with the only exception that logfile is ignored and
-common logging for gammu library and SMS daemon is used. However the logformat
-directive still configures how much messages gammu emits.
-.UNINDENT
+Configuration file of gammu\-smsd consists of at least two sections \-
+\fB[gammu]\fP and \fI\%[smsd]\fP.
+.sp
+The \fB[gammu]\fP section is configuration of a phone connection
+and is same as described in \fIgammurc\fP with the only exception that
+\fBLogFile\fP is ignored and common logging for gammu library and
+SMS daemon is used. However the \fBLogFormat\fP directive still
+configures how much messages gammu emits.
 .INDENT 0.0
 .TP
 .B [smsd]
@@ -617,7 +614,7 @@ and \fI\%ExcludeSMSCFile\fP directives.
 .SH EXAMPLES
 .sp
 There is more complete example available in Gammu documentation. Please note
-that for simplicity following examples do not include \fI\%[gammu]\fP
+that for simplicity following examples do not include \fB[gammu]\fP
 section, you can look into gammurc(5) for some examples how it can look like.
 .sp
 SMSD configuration file for FILES backend could look like:

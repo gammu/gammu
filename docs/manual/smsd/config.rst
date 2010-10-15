@@ -14,15 +14,14 @@ This file use ini file syntax, with comment parts being marked with both ``;`` a
 ``#``. Sections of config file are identified in square brackets line ``[this]``. All
 key values are case insensitive.
 
-Configuration file of gammu-smsd consists of at least two sections - :config:section:`[gammu]`
-and :config:section:`[smsd]`.
+Configuration file of gammu-smsd consists of at least two sections -
+:config:section:`[gammu]` and :config:section:`[smsd]`.
 
-.. config:section:: [gammu]
-
-    The :config:section:`[gammu]` section is configuration of a phone connection and is same as
-    described in gammurc(5) with the only exception that logfile is ignored and
-    common logging for gammu library and SMS daemon is used. However the logformat
-    directive still configures how much messages gammu emits.
+The :config:section:`[gammu]` section is configuration of a phone connection
+and is same as described in :ref:`gammurc` with the only exception that
+:config:option:`LogFile` is ignored and common logging for gammu library and
+SMS daemon is used. However the :config:option:`LogFormat` directive still
+configures how much messages gammu emits.
 
 .. config:section:: [smsd]
 

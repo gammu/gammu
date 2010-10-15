@@ -1,300 +1,406 @@
-.TH GAMMURC 5 "March 16, 2010" "Gammu 1.28.0" "Gammu Documentation"
+.TH "GAMMURC" "5" "October 15, 2010" "1.28.93" "Gammu"
 .SH NAME
-
-.P
-gammurc - gammu(1) configuration file 
-
+gammurc \- gammu(1) configuration file
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.\" Man page generated from reStructeredText.
+.
 .SH SYNOPSIS
-On Linux, MacOS X, BSD and other Unix-like systems:
-
-.I $XDG_CONFIG_HOME/gammu/config
-or
-.I ~/.config/gammu/config
-or
-.I ~/.gammurc
-or
-.I /etc/gammurc
-
+.sp
+On Linux, MacOS X, BSD and other Unix\-like systems, the config file is
+searched in following order:
+.INDENT 0.0
+.IP 1. 3
+.
+\fB$XDG_CONFIG_HOME/gammu/config\fP
+.IP 2. 3
+.
+\fB~/.config/gammu/config\fP
+.IP 3. 3
+.
+\fB~/.gammurc\fP
+.IP 4. 3
+.
+\fB/etc/gammurc\fP
+.UNINDENT
+.sp
 On Microsoft Windows:
-
-.I C:\\\\Documents and Settings\\\\username\\\\Application Data\\\\gammurc
-or
-.I .\\\\gammurc
-
+.INDENT 0.0
+.IP 1. 3
+.
+\fB$PROFILE\eApplication Data\egammurc\fP
+.IP 2. 3
+.
+\fB.\egammurc\fP
+.UNINDENT
 .SH DESCRIPTION
-gammu(1) reads configuration from a config file. It's location is determined
-on runtime. On Unix systems, it first tries ~/.gammurc and then falls back to
-/etc/gammurc.
-
-On Windows, user configuration is tried at profile/Application Data/gammurc
-and then gammu falls back to current directory (./gammurc).
-
-This file use ini file syntax, with comment parts being marked with both ; and
-#. Sections of config file are identified in square brackets line [this]. All
+.sp
+gammu(1) reads configuration from a config file. It\(aqs location is determined
+on runtime, see above for search paths.
+.sp
+This file use ini file syntax, with comment parts being marked with both \fB;\fP and
+\fB#\fP. Sections of config file are identified in square brackets line \fB[this]\fP. All
 key values are case insensitive.
-
-Configuration file for gammu can contain several sections - [gammu], [gammu1],
-[gammuN], ... Each section configures one connection setup and in default mode
+.sp
+Configuration file for gammu can contain several sections \- \fB[gammu]\fP, \fB[gammu1]\fP,
+\fB[gammuN]\fP, ... Each section configures one connection setup and in default mode
 gammu tries all of them in numerical order. You can also specify which
-configuration section to use by giving it's number ([gammu] has number 0) as a
-parameter to gammu(1) and it will then use only this section.
-
+configuration section to use by giving it\(aqs number (\fB[gammu]\fP has number 0) as a
+parameter to \fIgammu\fP and it will then use only this section.
+.INDENT 0.0
 .TP
-.BI Connection
-
+.B [gammu]
+.UNINDENT
+.sp
+This section is read by default unless you specify other on command line.
+.SS Device connection parameters
+.INDENT 0.0
+.TP
+.B Connection
+.
 Protocol which will be used to talk to your phone.
-
+.sp
 For Nokia cables you want to use one of following:
-
-\fBfbus\fR           - serial FBUS connection
-.br
-\fBfbususb\fR        - FBUS over USB cable (experimental, for Nokia cables on Linux, including DKU-2)
-.br
-\fBdlr3\fR           - DLR-3 and compatible cables
-.br
-\fBdku2\fR           - DKU-2 and compatible cables
-.br
-\fBdku5\fR           - DKU-5 and compatible cables
-.br
-\fBmbus\fR           - serial MBUS connection
-
-If you use some non original cable, you might need to append \-nodtr (eg. for
-ARK3116 based cables) or \-nopower, but Gammu should be able to detect this
-automatically.
-
-For non-Nokia phones connected using cable you generally want:
-
-\fBat\fR             - generic AT commands based connection
-
-You can optionally specify speed of the connection, eg. at19200, but it is
-not needed for modern USB cables.
-
-For IrDA connections use one of following:
-
-\fBirdaphonet\fR     - Phonet connection for Nokia phones.
-.br
-\fBirdaat\fR         - AT commands connection for most of phones (this is not supported on Linux).
-.br
-\fBirdaobex\fR       - OBEX (IrMC or file transfer) connection for most of phones.
-.br
-\fBirdagnapbus\fR    - GNapplet based connection for Symbian phones
-
-For Bluetooth connection use one of following:
-
-\fBbluephonet\fR     - Phonet connection for Nokia phones.
-.br
-\fBblueat\fR         - AT commands connection for most of phones.
-.br
-\fBblueobex\fR       - OBEX (IrMC or file transfer) connection for most of phones.
-.br
-\fBbluerfgnapbus\fR  - GNapplet based connection for Symbian phones
-
+.INDENT 7.0
 .TP
-.BI Device
-
-Device node or address of phone. It depends on used connection. 
-
+.B \fBfbus\fP
+.sp
+serial FBUS connection
+.TP
+.B \fBfbususb\fP
+.sp
+FBUS over USB cable (experimental, for Nokia cables on Linux, including DKU\-2)
+.TP
+.B \fBdlr3\fP
+.sp
+DLR\-3 and compatible cables
+.TP
+.B \fBdku2\fP
+.sp
+DKU\-2 and compatible cables
+.TP
+.B \fBdku5\fP
+.sp
+DKU\-5 and compatible cables
+.TP
+.B \fBmbus\fP
+.sp
+serial MBUS connection
+.UNINDENT
+.sp
+If you use some non original cable, you might need to append \fB\-nodtr\fP (eg. for
+ARK3116 based cables) or \fB\-nopower\fP, but Gammu should be able to detect this
+automatically.
+.sp
+For non\-Nokia phones connected using cable you generally want:
+.INDENT 7.0
+.TP
+.B \fBat\fP
+.sp
+generic AT commands based connection
+.UNINDENT
+.sp
+You can optionally specify speed of the connection, eg. \fBat19200\fP, but it is
+not needed for modern USB cables.
+.sp
+For IrDA connections use one of following:
+.INDENT 7.0
+.TP
+.B \fBirdaphonet\fP
+.sp
+Phonet connection for Nokia phones.
+.TP
+.B \fBirdaat\fP
+.sp
+AT commands connection for most of phones (this is not supported on Linux).
+.TP
+.B \fBirdaobex\fP
+.sp
+OBEX (IrMC or file transfer) connection for most of phones.
+.TP
+.B \fBirdagnapbus\fP
+.sp
+GNapplet based connection for Symbian phones
+.UNINDENT
+.sp
+For Bluetooth connection use one of following:
+.INDENT 7.0
+.TP
+.B \fBbluephonet\fP
+.sp
+Phonet connection for Nokia phones.
+.TP
+.B \fBblueat\fP
+.sp
+AT commands connection for most of phones.
+.TP
+.B \fBblueobex\fP
+.sp
+OBEX (IrMC or file transfer) connection for most of phones.
+.TP
+.B \fBbluerfgnapbus\fP
+.sp
+GNapplet based connection for Symbian phones
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B Device
+.
+Device node or address of phone. It depends on used connection.
+.sp
 For cables or emulated serial ports, you enter device name (for example
-/dev/ttyS0, /dev/ttyACM0, /dev/ircomm0, /dev/rfcomm0 on Linux, /dev/cuad0 on
-FreeBSD or COM1: on Windows). The special exception are DKU-2 and DKU-5 cables
-on Windows, where the device is automatically detected from driver information
-and this parameters is ignored.
-
+\fB/dev/ttyS0\fP, \fB/dev/ttyACM0\fP, \fB/dev/ircomm0\fP, \fB/dev/rfcomm0\fP on Linux,
+\fB/dev/cuad0\fP on FreeBSD or COM1: on Windows). The special exception are
+DKU\-2 and DKU\-5 cables on Windows, where the device is automatically detected
+from driver information and this parameters is ignored.
+.sp
 For USB connections (currently only fbususb and dku2 on Linux), you can
 specify to which USB device Gammu should connect. You can either provide
 vendor/product IDs or device address on USB:
-
-    Device = 0x1234:0x5678  # Match device by vendor and product id
-    Device = 0x1234:-1      # Match device by vendor id
-    Device = 1.10           # Match device by usb bus and device address
-    Device = 10             # Match device by usb device address
-    Device = serial:123456  # Match device by serial string
-
+.sp
+.nf
+.ft C
+Device = 0x1234:0x5678  # Match device by vendor and product id
+Device = 0x1234:\-1      # Match device by vendor id
+Device = 1.10           # Match device by usb bus and device address
+Device = 10             # Match device by usb device address
+Device = serial:123456  # Match device by serial string
+.ft P
+.fi
+.sp
 For Bluetooth connection you have to enter Bluetooth address of your phone
-(you can list Bluetooth devices in range on Linux using "hcitool scan"
+(you can list Bluetooth devices in range on Linux using \fBhcitool scan\fP
 command). Optionally you can also force Gammu to use specified channel by
-includig channel number after slash.
-
+including channel number after slash.
+.sp
 Before using Gammu, your device should be paired with computer or you should
 have set up automatic pairing.
-
+.sp
 For IrDA connections, this parameters is not used at all.
-
+.sp
 If IrDA does not work on Linux, you might need to bring up the interface and
 enable discovery (you need to run these commands as root):
-
-    ip l s dev irda0 up
-    sysctl net.irda.discovery=1
-
+.sp
+.nf
+.ft C
+ip l s dev irda0 up
+sysctl net.irda.discovery=1
+.ft P
+.fi
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI Port
-
+.B Port
+.
 Alias for Device, kept for backward compatibility.
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI Model
-
+.B Model
+.
 Do not use this parameter unless really needed! The only use case for this is
-when Gammu does not know your phone and misdetects it's features.
-
+when Gammu does not know your phone and misdetects it\(aqs features.
+.sp
 The only special case for using model is to force special type of OBEX
 connection instead of letting Gammu try the best suited for selected
 operation:
-
-\fBobexfs\fR - force using of file browsing service (file system support)
-.br
-\fBobexirmc\fR - force using of IrMC service (contacts, calendar and notes
-support)
-.br
-\fBobexnone\fR - none service chosen, this has only limited use for sending
-file (\fBsendfile\fR command)
-
+.INDENT 7.0
 .TP
-.BI SynchronizeTime
-
-If you want to set time from computer to phone during starting connection.
-
+.B \fBobexfs\fP
+.sp
+force using of file browsing service (file system support)
 .TP
-.BI StartInfo 
-
-This option allow to set, that you want (setting "yes") to see message on the
-phone screen or phone should enable light for a moment during starting
-connection. Phone will not beep during starting connection with this 
-option. This works only with some Nokia phones.
-
+.B \fBobexirmc\fP
+.sp
+force using of IrMC service (contacts, calendar and notes support)
 .TP
-.BI GammuCoding
-
-Forces using specified codepage (for example "1250" will force CP-1250 or
-"utf8" for UTF-8). This should not be needed in most cases, Gammu should detect
-it according to your locales.
-
+.B \fBobexnone\fP
+.sp
+none service chosen, this has only limited use for sending file (\fBsendfile\fP command)
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI GammuLoc
-
-Path to directory with localisation files (the directory should contain
-LANG/LC_MESSAGES/gammu.mo). If gammu is properly installed it should find
-these files automatically.
-
-.TP
-.BI LogFile
-
-Path to file where information about communication will be stored.
-
-.TP
-.BI LogFormat
-
-Determines what all will be logged to LogFile. Possible values are:
-
-\fBnothing\fR     - no debug level
-.br
-\fBtext\fR        - transmission dump in text format
-.br
-\fBtextall\fR     - all possible info in text format
-.br
-\fBtextalldate\fR - all possible info in text format, with time stamp
-.br
-\fBerrors\fR      - errors in text format
-.br
-\fBerrorsdate\fR  - errors in text format, with time stamp
-.br
-\fBbinary\fR      - transmission dump in binary format
-
-For debugging use either \fBtextalldate\fR or \fBtextall\fR, it contains all
-needed information to diagnose problems.
-
-.TP
-.BI Features
-
-Custom features for phone. This can be used as override when values coded in
-common/gsmphones.c are bad or missing. Consult include/gammu-info.h for
-possible values (all GSM_Feature values without leading F_ prefix). Please
-report correct values to Gammu authors.
-
-.TP
-.BI Use_Locking
-
+.B Use_Locking
+.
 On Posix systems, you might want to lock serial device when it is being used
-using UUCP-style lock files. Enabling this option (setting to yes) will make
+using UUCP\-style lock files. Enabling this option (setting to yes) will make
 Gammu honor these locks and create it on startup. On most distributions you
 need additional privileges to use locking (eg. you need to be member of uucp
 group).
-
+.sp
 This option has no meaning on Windows.
-
-.SH EXAMPLE
-
+.UNINDENT
+.SS Connection options
+.INDENT 0.0
+.TP
+.B SynchronizeTime
+.
+If you want to set time from computer to phone during starting connection.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B StartInfo
+.
+This option allow to set, that you want (setting \fByes\fP) to see message on the
+phone screen or phone should enable light for a moment during starting
+connection. Phone will not beep during starting connection with this
+option. This works only with some Nokia phones.
+.UNINDENT
+.SS Debugging options
+.INDENT 0.0
+.TP
+.B LogFile
+.
+Path to file where information about communication will be stored.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B LogFormat
+.
+Determines what all will be logged to \fI\%LogFile\fP. Possible values are:
+.INDENT 7.0
+.TP
+.B \fBnothing\fP
+.sp
+no debug level
+.TP
+.B \fBtext\fP
+.sp
+transmission dump in text format
+.TP
+.B \fBtextall\fP
+.sp
+all possible info in text format
+.TP
+.B \fBtextalldate\fP
+.sp
+all possible info in text format, with time stamp
+.TP
+.B \fBerrors\fP
+.sp
+errors in text format
+.TP
+.B \fBerrorsdate\fP
+.sp
+errors in text format, with time stamp
+.TP
+.B \fBbinary\fP
+.sp
+transmission dump in binary format
+.UNINDENT
+.sp
+For debugging use either \fBtextalldate\fP or \fBtextall\fP, it contains all
+needed information to diagnose problems.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B Features
+.
+Custom features for phone. This can be used as override when values coded
+in \fBcommon/gsmphones.c\fP are bad or missing. Consult
+\fBinclude/gammu\-info.h\fP for possible values (all GSM_Feature values
+without leading \fBF_\fP prefix). Please report correct values to Gammu
+authors.
+.UNINDENT
+.SS Locales and character set options
+.INDENT 0.0
+.TP
+.B GammuCoding
+.
+Forces using specified codepage (for example \fB1250\fP will force CP\-1250 or
+\fButf8\fP for UTF\-8). This should not be needed, Gammu detects it according
+to your locales.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B GammuLoc
+.
+Path to directory with localisation files (the directory should contain
+\fBLANG/LC_MESSAGES/gammu.mo\fP). If gammu is properly installed it should find
+these files automatically.
+.UNINDENT
+.SH EXAMPLES
+.sp
 There is more complete example available in Gammu documentation.
-
-Gammu configuration for Nokia phone using DLR-3 cable:
-
-.RS
+.SS Connection examples
+.sp
+Gammu configuration for Nokia phone using DLR\-3 cable:
 .sp
 .nf
-.ne 7
+.ft C
 [gammu]
 device = /dev/ttyACM0
 connection = dlr3
+.ft P
 .fi
 .sp
-.RE
-.PP
-
-Gammu configuration for Sony-Ericsson phone (or any other AT compatible
+Gammu configuration for Sony\-Ericsson phone (or any other AT compatible
 phone) connected using USB cable:
-
-.RS
 .sp
 .nf
-.ne 7
+.ft C
 [gammu]
 device = /dev/ttyACM0
 connection = at
+.ft P
 .fi
 .sp
-.RE
-.PP
-
-Gammu configuration for Sony-Ericsson (or any other AT compatible
+Gammu configuration for Sony\-Ericsson (or any other AT compatible
 phone) connected using bluetooth:
-
-.RS
 .sp
 .nf
-.ne 7
+.ft C
 [gammu]
 device = B0:0B:00:00:FA:CE
 connection = blueat
+.ft P
 .fi
 .sp
-.RE
-.PP
-
 Gammu configuration for phone which needs to manually adjust Bluetooth channel to use channel 42:
-
-.RS
 .sp
 .nf
-.ne 7
+.ft C
 [gammu]
 device = B0:0B:00:00:FA:CE/42
 connection = blueat
+.ft P
 .fi
-.sp
-.RE
-.PP
-
 .SS Working with multiple phones
-
+.sp
 Gammu can be configured for multiple phones (however only one connection
-is used at one time, you can choose which one to use with \-\-section
+is used at one time, you can choose which one to use with \fB\-\-section\fP
 parameter). Configuration for phones on three serial ports would look
 like following:
-
-.RS
 .sp
 .nf
-.ne 7
+.ft C
 [gammu]
 device = /dev/ttyS0
 connection = at
@@ -306,21 +412,12 @@ connection = at
 [gammmu2]
 device = /dev/ttyS2
 connection = at
+.ft P
 .fi
-.sp
-.RE
-.PP
-
-
-.SH SEE ALSO
-gammu\-smsd(1), gammu(1), gammurc(5)
 .SH AUTHOR
-gammu\-smsd and this manual page were written by Michal Cihar <michal@cihar.com>.
+Michal Čihař <michal@cihar.com>
 .SH COPYRIGHT
-Copyright \(co 2009 Michal Cihar and other authors.
-License GPLv2: GNU GPL version 2 <http://www.gnu.org/licenses/old\-licenses/gpl\-2.0.html>
-.br
-This is free software: you are free to change and redistribute it.
-There is NO WARRANTY, to the extent permitted by law.
-.SH REPORTING BUGS
-Please report bugs to <http://bugs.cihar.com>.
+2009-2010, Michal Čihař <michal@cihar.com>
+.\" Generated by docutils manpage writer.
+.\" 
+.

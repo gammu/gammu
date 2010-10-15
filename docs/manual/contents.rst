@@ -11,6 +11,7 @@ Gammu Documentation Contents
     c/index
     internal/index
     formats/index
+    gammu/index
     smsd/index
     testing/index
     protocol/index

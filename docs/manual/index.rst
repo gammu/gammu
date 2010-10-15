@@ -18,6 +18,7 @@ Continue reading
 
     * :ref:`project` -- learn about Gammu project
     * :ref:`smsd` -- comprehensive SMSD documentation
+    * :ref:`gammu` -- the Gammu utility
     * :ref:`python` -- use Gammu functionality from Python
     * :ref:`libgammu` -- use Gammu functionality from C
     * :ref:`internal` -- learn about Gammu internals
