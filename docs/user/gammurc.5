@@ -60,17 +60,15 @@ On Microsoft Windows:
 .UNINDENT
 .SH DESCRIPTION
 .sp
-gammu(1) reads configuration from a config file. It\(aqs location is determined
+\fIgammu\fP reads configuration from a config file. It\(aqs location is determined
 on runtime, see above for search paths.
 .sp
-This file use ini file syntax, with comment parts being marked with both \fB;\fP and
-\fB#\fP. Sections of config file are identified in square brackets line \fB[this]\fP. All
-key values are case insensitive.
+This file use ini file syntax, see \fIini\fP.
 .sp
 Configuration file for gammu can contain several sections \- \fB[gammu]\fP, \fB[gammu1]\fP,
 \fB[gammuN]\fP, ... Each section configures one connection setup and in default mode
 gammu tries all of them in numerical order. You can also specify which
-configuration section to use by giving it\(aqs number (\fB[gammu]\fP has number 0) as a
+configuration section to use by giving it\(aqs number (\fI\%[gammu]\fP has number 0) as a
 parameter to \fIgammu\fP and it will then use only this section.
 .INDENT 0.0
 .TP
@@ -91,10 +89,6 @@ For Nokia cables you want to use one of following:
 .B \fBfbus\fP
 .sp
 serial FBUS connection
-.TP
-.B \fBfbususb\fP
-.sp
-FBUS over USB cable (experimental, for Nokia cables on Linux, including DKU\-2)
 .TP
 .B \fBdlr3\fP
 .sp
@@ -284,7 +278,7 @@ Path to file where information about communication will be stored.
 .TP
 .B LogFormat
 .
-Determines what all will be logged to \fI\%LogFile\fP. Possible values are:
+Determines what all will be logged to \fBLogFile\fP. Possible values are:
 .INDENT 7.0
 .TP
 .B \fBnothing\fP

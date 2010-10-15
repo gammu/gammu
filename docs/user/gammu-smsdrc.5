@@ -36,16 +36,14 @@ gammu\-smsd reads configuration from a config file. It\(aqs location can be
 specified on command line, otherwise default path \fB/etc/gammu\-smsdrc\fP
 is used.
 .sp
-This file use ini file syntax, with comment parts being marked with both \fB;\fP and
-\fB#\fP. Sections of config file are identified in square brackets line \fB[this]\fP. All
-key values are case insensitive.
+This file use ini file syntax, see \fIini\fP.
 .sp
 Configuration file of gammu\-smsd consists of at least two sections \-
 \fB[gammu]\fP and \fI\%[smsd]\fP.
 .sp
 The \fB[gammu]\fP section is configuration of a phone connection
 and is same as described in \fIgammurc\fP with the only exception that
-\fBLogFile\fP is ignored and common logging for gammu library and
+\fI\%LogFile\fP is ignored and common logging for gammu library and
 SMS daemon is used. However the \fBLogFormat\fP directive still
 configures how much messages gammu emits.
 .INDENT 0.0
