@@ -415,15 +415,12 @@ static void GetOneFile(GSM_File * File, gboolean newtime, int i)
 	}
 	t_time2 = time(NULL);
 	diff = t_time2 - t_time1;
-	if ((diff > 0) && (File->Used > 0))
-	{
+	if ((diff > 0) && (File->Used > 0)) {
 		fprintf(stderr, "\r");
 		if (Size != 0) {
-			fprintf(stderr, _("%i percent"),
-				(int)(File->Used * 100 / Size));
+			fprintf(stderr, _("%i percent"), (int)(File->Used * 100 / Size));
 		}
-		fprintf(stderr, _(" done. %lu Bytes in %li seconds"
-				  ", %lu Bytes/sec"),
+		fprintf(stderr, _(" done. %lu Bytes in %li seconds, %lu Bytes/sec"),
 			(long unsigned int) File->Used, diff, File->Used / diff);
 	}
 	fprintf(stderr, "\n");
