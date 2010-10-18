@@ -8,7 +8,9 @@ gammu-smsd
 Synopsis
 --------
 
-gammu-smsd [`OPTION`]...
+.. code-block:: text
+
+    gammu-smsd [OPTION]...
 
 
 Description

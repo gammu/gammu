@@ -8,7 +8,9 @@ gammu-smsd-inject
 Synopsis
 --------
 
-gammu-smsd-inject [`OPTION`]... MESSAGETYPE RECIPIENT [`MESSAGE_PARAMETER`]...
+.. code-block:: text
+
+    gammu-smsd-inject [OPTION]... MESSAGETYPE RECIPIENT [MESSAGE_PARAMETER]...
 
 Description
 -----------

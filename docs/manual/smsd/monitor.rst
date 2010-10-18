@@ -8,7 +8,9 @@ gammu-smsd-monitor
 Synopsis
 --------
 
-gammu-smsd-monitor [`OPTION`]...
+.. code-block:: text
+
+    gammu-smsd-monitor [OPTION]...
 
 Description
 -----------
