@@ -231,7 +231,7 @@ General parameters of SMS daemon
 
     When you set PhoneID, all messages (including injected ones) will be marked by
     this string and it allow more SMS daemons to share single database. This
-    option has actually no effect of :ref:`gammu-smsd-files`.
+    option has actually no effect with :ref:`gammu-smsd-files`.
 
 .. config:option:: RunOnReceive
 
