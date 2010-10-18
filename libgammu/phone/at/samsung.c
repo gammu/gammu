@@ -460,15 +460,15 @@ GSM_Error SAMSUNG_CheckCalendar(GSM_StateMachine *s)
 
 	smprintf(s, "Checking for supported calendar commands\n");
 
-	ATGEN_WaitForAutoLen(s, "AT+ORGI?\r", 0x00, 10, ID_GetProtocol);
-	if (error == ERR_NONE) {
-		Priv->SamsungCalendar = SAMSUNG_ORG;
-		return ERR_NONE;
-	}
-
 	ATGEN_WaitForAutoLen(s, "AT+SSHT?\r", 0x00, 10, ID_GetProtocol);
 	if (error == ERR_NONE) {
 		Priv->SamsungCalendar = SAMSUNG_SSH;
+		return ERR_NONE;
+	}
+
+	ATGEN_WaitForAutoLen(s, "AT+ORGI?\r", 0x00, 10, ID_GetProtocol);
+	if (error == ERR_NONE) {
+		Priv->SamsungCalendar = SAMSUNG_ORG;
 		return ERR_NONE;
 	}
 
