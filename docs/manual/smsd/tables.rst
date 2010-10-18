@@ -373,13 +373,15 @@ Injecting long message using SQL
 ++++++++++++++++++++++++++++++++
 
 Inserting multipart messages is a bit more tricky, you need to construct also
-UDH header and store it hexadecimally written into UDH field.
+UDH header and store it hexadecimally written into UDH field. Unless you have 
+a good reason to do this manually, use :ref:`gammu-smsd-inject`.
 
-For long text message, the UDH starts with 050003 followed by byte as a message
-reference (you can put anything there, but it should be different for each
-message, D3 in following example), byte for number of messages (02 in example,
-it should be unique for each message you send to same phone number) and byte
-for number of current message (01 for first message, 02 for second, etc.).
+For long text message, the UDH starts with ``050003`` followed by byte as a
+message reference (you can put anything there, but it should be different for
+each message, ``D3`` in following example), byte for number of messages (``02``
+in example, it should be unique for each message you send to same phone number)
+and byte for number of current message (``01`` for first message, ``02`` for
+second, etc.).
 
 For example long text message of two parts could look like following:
 
