@@ -637,9 +637,11 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 				break;
 
 			case SMS_Coding_8bit:
+				strcat(buffer, "\"\"");
 				break;
 
 			default:
+				strcat(buffer, "\"\"");
 				break;
 		}
 

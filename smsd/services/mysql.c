@@ -388,9 +388,11 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfi
 				break;
 
 			case SMS_Coding_8bit:
+				strcat(buffer, "\"\"");
 				break;
 
 			default:
+				strcat(buffer, "\"\"");
 				break;
 		}
 
