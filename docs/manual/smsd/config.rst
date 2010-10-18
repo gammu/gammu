@@ -265,6 +265,8 @@ General parameters of SMS daemon
     ``INIT`` (meaning failure during phone initialization) or message ID,
     which would indicate error while sending the message.
 
+    .. note:: The environment with message (as is in :config:option:`RunOnReceive`) is not passed to the command.
+
 .. config:option:: IncludeNumbersFile
 
     File with list of numbers which are accepted by SMSD. The file contains one
