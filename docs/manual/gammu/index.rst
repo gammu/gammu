@@ -2545,21 +2545,23 @@ that this can take a very long time, but in case you have no clue how to
 configure phone connection, this is a convenient way to find working setup for
 Gammu.
 
-.SS "Gammu information
-.TP
+Gammu information
+-----------------
+
 .. option:: --checkversion [STABLE]
-Checks whether there is newer Gammu version
-available online (if Gammu has been compiled with CURL). If you pass
-additional parameter \fBSTABLE\fR, only stable versions will be checked.
 
-.TP
+    Checks whether there is newer Gammu version
+    available online (if Gammu has been compiled with CURL). If you pass
+    additional parameter ``STABLE``, only stable versions will be checked.
+
 .. option:: --features
-Print information about compiled in features.
 
-.TP
+    Print information about compiled in features.
+
 .. option:: --help [topic]
-Print help. By default general help is printed, but you can
-also specify a help category to get more detailed help on some topic.
+
+    Print help. By default general help is printed, but you can
+    also specify a help category to get more detailed help on some topic.
 
 .. option:: --version
 
