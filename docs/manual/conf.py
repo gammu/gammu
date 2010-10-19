@@ -218,5 +218,6 @@ man_pages = [
     ('smsd/monitor', 'gammu-smsd-monitor', 'Monitor state of SMS daemon for Gammu', u'Michal Čihař <michal@cihar.com>', 1),
     ('smsd/smsd', 'gammu-smsd', 'SMS daemon for Gammu', u'Michal Čihař <michal@cihar.com>', 1),
     ('config/index', 'gammurc', 'gammu(1) configuration file', u'Michal Čihař <michal@cihar.com>', 5),
+    ('gammu/index', 'gammu', 'Does some neat things with your cellular phone or modem.', 1),
 ]
 
