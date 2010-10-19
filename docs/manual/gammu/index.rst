@@ -195,7 +195,7 @@ _________________________________________
 
 .. option:: -sender number
 
-    set sender number (default: ``Gammu``)
+    set sender number (default: ``Gammu```)
 
 .. option:: -report
 
@@ -262,128 +262,124 @@ encoding for some characters in GSM Default Alphabet (it is needed for ``^`` ``{
 are transliterated to closest ASCII equivalent (accents are removed).
 Remaining not known characters are replaced by question mark.
 
-.TP
 .. option:: --addsms folder file [-yes]
-Adds SMSes from file (format like backupsms uses) to
-selected folder in phone.
-.TP
+
+    Adds SMSes from file (format like backupsms uses) to
+    selected folder in phone.
+
 .. option:: --addsmsfolder name
 
-.TP
 .. option:: --backupsms file [-yes|-all]
-Stores all SMSes from phone to file. 
 
-Use -yes for answering yes to all questions (backup all messages and 
-delete them from phone), or -all to just backup all folders while keeping
-messages in phone.
+    Stores all SMSes from phone to file. 
 
-.TP
+    Use -yes for answering yes to all questions (backup all messages and 
+    delete them from phone), or -all to just backup all folders while keeping
+    messages in phone.
+
 .. option:: --deleteallsms folder
-Delete all SMS from specified SMS folder.
 
-.TP
+    Delete all SMS from specified SMS folder.
+
 .. option:: --deletesms folder start [stop]
-Delete SMS from phone. See description for \fBgetsms\fR for info about
-sms folders naming convention. 
 
-Locations are numerated from 1.
+    Delete SMS from phone. See description for \fBgetsms\fR for info about
+    sms folders naming convention. 
 
-.TP
+    Locations are numerated from 1.
+
 .. option:: --displaysms ... (options like in sendsms)
 
-Displays PDU data of encoded SMS messages. It accepts same parameters and 
-behaves same like sendsms.
+    Displays PDU data of encoded SMS messages. It accepts same parameters and 
+    behaves same like sendsms.
 
-.TP
 .. option:: --getallsms -pbk
-Get all SMS from phone. In some phones you will have also SMS templates
-and info about locations used to save Picture Images. With each sms you
-will see location. If you want to get such sms from phone alone, use
-\fBgammu getsms 0 location\fR
 
-.TP
+    Get all SMS from phone. In some phones you will have also SMS templates
+    and info about locations used to save Picture Images. With each sms you
+    will see location. If you want to get such sms from phone alone, use
+    \fBgammu getsms 0 location\fR
+
 .. option:: --geteachsms -pbk
-Similiary to \fBgetallsms\fR. Difference is, that
-links all concatenated sms
 
-.TP
+    Similiary to \fBgetallsms\fR. Difference is, that
+    links all concatenated sms
+
 .. option:: --getsms folder start [stop]
-Get SMS. 
 
-Locations are numerated from 1.
+    Get SMS. 
 
-Folder 0 means that sms is being read from "flat" memory (all sms from all
-folders have unique numbers). It's sometimes emulated by Gammu. You 
-can use it with all phones.
+    Locations are numerated from 1.
 
-Other folders like 1, 2, etc. match folders in phone such as Inbox, Outbox, etc.
-and each sms has unique number in his folder. Name of folders can
-depend on your phone (the most often 1="Inbox", 2="Outbox", etc.).
-This method is not supported by all phones (for example, not supported
-by Nokia 3310, 5110, 6110). If work with your phone, use
-\fBgetsmsfolders\fR to get folders list.
+    Folder 0 means that sms is being read from "flat" memory (all sms from all
+    folders have unique numbers). It's sometimes emulated by Gammu. You 
+    can use it with all phones.
 
-.TP
+    Other folders like 1, 2, etc. match folders in phone such as Inbox, Outbox, etc.
+    and each sms has unique number in his folder. Name of folders can
+    depend on your phone (the most often 1="Inbox", 2="Outbox", etc.).
+    This method is not supported by all phones (for example, not supported
+    by Nokia 3310, 5110, 6110). If work with your phone, use
+    \fBgetsmsfolders\fR to get folders list.
+
 .. option:: --getsmsc [start [stop]]
-Get SMSC settings from SIM card. 
 
-Locations are numerated from 1.
+    Get SMSC settings from SIM card. 
 
-.TP
+    Locations are numerated from 1.
+
 .. option:: --getsmsfolders
-Get names for SMS folders in phone
 
-.TP
+    Get names for SMS folders in phone
+
 .. option:: --nokiagett9
-This option should display T9 dictionary content from
-DCT4 phones.
 
-.TP
+    This option should display T9 dictionary content from
+    DCT4 phones.
+
 .. option:: --restoresms file [-yes]
-Restores SMSes from file (format like backupsms uses) to
-selected folder in phone. Please note that this overwrites existing
-messages in phone (if it supports it).
-.TP
+
+    Restores SMSes from file (format like backupsms uses) to
+    selected folder in phone. Please note that this overwrites existing
+    messages in phone (if it supports it).
+
 .. option:: --savesms ANIMATION frames file1 file2... [-folder id] [-unread] [-read] [-unsent] [-sent] [-sender number] [-smsname name] [-smscset number] [-smscnumber number] [-reply] [-maxsms num]
-Save an animation as a SMS. You need to give
-number of frames and picture for each frame. Each picture can be in any
-picture format which Gammu supports (B/W bmp, gif, wbmp, nol, nlm...).
 
+    Save an animation as a SMS. You need to give
+    number of frames and picture for each frame. Each picture can be in any
+    picture format which Gammu supports (B/W bmp, gif, wbmp, nol, nlm...).
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+    For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
 
-
-.TP
 .. option:: --savesms BOOKMARK file location [-folder id] [-unread] [-read] [-unsent] [-sent] [-sender number] [-smsname name] [-smscset number] [-smscnumber number] [-reply] [-maxsms num]
-Read WAP bookmark from file created by \fBbackup\fR option and saves in
-Nokia format as SMS
 
+    Read WAP bookmark from file created by \fBbackup\fR option and saves in
+    Nokia format as SMS
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+    For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
 
-
-.TP
 .. option:: --savesms CALENDAR file location [-folder id] [-unread] [-read] [-unsent] [-sent] [-sender number] [-smsname name] [-smscset number] [-smscnumber number] [-reply] [-maxsms num]
-Read calendar note from file created by \fBbackup\fR option and saves in
-VCALENDAR 1.0 format as SMS. The location identifies position of calendar item 
-to be read in backup file (usually 1, but can be useful in case the backup contains 
-more items).
+
+    Read calendar note from file created by \fBbackup\fR option and saves in
+    VCALENDAR 1.0 format as SMS. The location identifies position of calendar item 
+    to be read in backup file (usually 1, but can be useful in case the backup contains 
+    more items).
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+    For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
 
 
-.TP
 .. option:: --savesms CALLER file [-folder id] [-unread] [-read] [-unsent] [-sent] [-sender number] [-smsname name] [-smscset number] [-smscnumber number] [-reply] [-maxsms num]
-Save caller logo as sms in Nokia (Smart Messaging)
-format - size 72x14, two colors.
 
-Please note, that it isn't designed for colour logos available for example in
-DCT4/TIKU - you need to put bitmap file there inside phone using filesystem
-commands.
+    Save caller logo as sms in Nokia (Smart Messaging)
+    format - size 72x14, two colors.
+
+    Please note, that it isn't designed for colour logos available for example in
+    DCT4/TIKU - you need to put bitmap file there inside phone using filesystem
+    commands.
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+    For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
 
 
 .TP
