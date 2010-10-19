@@ -417,3 +417,8 @@ For example long text message of two parts could look like following:
         <ID_OF_INSERTED_RECORD_IN_OUBOX_TABLE>,
         'Default_No_Compression'
     )
+
+.. note::
+
+    Adding UDH means that you have less space for text, in above example you 
+    can use only 153 characters in single message.
