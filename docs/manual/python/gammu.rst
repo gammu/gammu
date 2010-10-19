@@ -904,9 +904,11 @@ This module wraps all python-gammu functionality.
    .. method:: SetIncomingCallback(Callback)
       
       Sets callback function which is called whenever any (enabled) incoming event appears. Please note that you have to enable each event type by calling SetIncoming* functions.
+
+      The callback function needs to accept three parameters: StateMachine object, event type and it's data in dictionary.
       
       :param Callback: callback function or None for disabling
-      :type Callback: function, it will get three params: StateMachine object, event type and it's data in dictionary
+      :type Callback: function
       :return: None
       :rtype: None
       
@@ -1241,8 +1243,8 @@ Backup reading and writing
     :type Filename: string
     :param Backup: Backup data, see :func:`ReadBackup` for description
     :type Backup: dict
-    :param Format: File format to use (default is AutoUnicode)
-    :type Format: string (Auto, AutoUnicode, LMB, VCalendar, VCard, LDIF, ICS, Gammu, GammuUnicode)
+    :param Format: File format to use (``Auto``, ``AutoUnicode``, ``LMB``, ``VCalendar``, ``VCard``, ``LDIF``, ``ICS``, ``Gammu``, ``GammuUnicode``, the default is ``AutoUnicode``)
+    :type Format: string
     :return: None
     :rtype: None
 
@@ -1252,8 +1254,8 @@ Backup reading and writing
 
     :param Filename: Name of file where backup is stored
     :type Filename: string
-    :param Format: File format to use (default is AutoUnicode)
-    :type Format: string (Auto, AutoUnicode, LMB, VCalendar, VCard, LDIF, ICS, Gammu, GammuUnicode)
+    :param Format: File format to use (``Auto``, ``AutoUnicode``, ``LMB``, ``VCalendar``, ``VCard``, ``LDIF``, ``ICS``, ``Gammu``, ``GammuUnicode``, the default is ``AutoUnicode``)
+    :type Format: string
     :return: Dictionary of read entries, it contains following keys, each might be empty:
 
          * IMEI
