@@ -2567,7 +2567,7 @@ also specify a help category to get more detailed help on some topic.
 
 
 Return values
-=============
++++++++++++++
 
 gammu returns 0 on success. In case of failure non zero code is 
 returned. 
