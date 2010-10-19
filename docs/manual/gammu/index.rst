@@ -195,7 +195,7 @@ _________________________________________
 
 .. option:: -sender number
 
-    set sender number (default: "Gammu")
+    set sender number (default: ``Gammu``)
 
 .. option:: -report
 
@@ -257,8 +257,8 @@ be given as such to the message.
 
 Should the message be sent in GSM Default Alphabet, Gammu will try to convert
 all characters to keep message readable. Gammu does support multi byte
-encoding for some characters in GSM Default Alphabet (it is needed for ^ { }
-\\ [ ] ~ |). The characters which are not present in GSM Default Alphabet
+encoding for some characters in GSM Default Alphabet (it is needed for ``^`` ``{`` ``}``
+``\`` ``[`` ``]`` ``~`` ``|``). The characters which are not present in GSM Default Alphabet
 are transliterated to closest ASCII equivalent (accents are removed).
 Remaining not known characters are replaced by question mark.
 
