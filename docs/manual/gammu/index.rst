@@ -665,6 +665,34 @@ ____________
 Memory (phonebooks and calls) commands
 --------------------------------------
 
+Memory types
+____________
+
+Gammu recognizes following memory types:
+
+``DC``
+     Dialled calls
+``MC``
+     Missed calls
+``RC``
+     Received calls
+``ON``
+     Own numbers
+``VM``
+     voice mailbox
+``SM``
+     SIM phonebook
+``ME``
+     phone internal phonebook
+``FD``
+     fixed dialling
+``SL``
+     sent SMS log
+
+
+Memory commands
+_______________
+
 .. option:: deleteallmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL
 
     Deletes all entries from specified memory type.
@@ -683,25 +711,6 @@ Memory (phonebooks and calls) commands
     Get memory location from phone. 
 
     Locations are numerated from 1.
-
-    ``DC``
-         Dialled calls
-    ``MC``
-         Missed calls
-    ``RC``
-         Received calls
-    ``ON``
-         Own numbers
-    ``VM``
-         voice mailbox
-    ``SM``
-         SIM phonebook
-    ``ME``
-         phone internal phonebook
-    ``FD``
-         fixed dialling
-    ``SL``
-         sent SMS log
 
 .. option:: getspeeddial start [stop]
 
