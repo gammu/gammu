@@ -142,6 +142,8 @@ almost every usage. See EXAMPLE section for some hints on usage.
 There is also an option to use gammu-smsd(1) when you want to send or 
 receive more messages and process them automatically.
 
+.. _Common parameters for sendsms and savesms:
+
 Common parameters for sendsms and savesms
 _________________________________________
 
@@ -349,14 +351,14 @@ Remaining not known characters are replaced by question mark.
     number of frames and picture for each frame. Each picture can be in any
     picture format which Gammu supports (B/W bmp, gif, wbmp, nol, nlm...).
 
-    For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+    For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 .. option:: --savesms BOOKMARK file location [-folder id] [-unread] [-read] [-unsent] [-sent] [-sender number] [-smsname name] [-smscset number] [-smscnumber number] [-reply] [-maxsms num]
 
     Read WAP bookmark from file created by \fBbackup\fR option and saves in
     Nokia format as SMS
 
-    For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+    For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 .. option:: --savesms CALENDAR file location [-folder id] [-unread] [-read] [-unsent] [-sent] [-sender number] [-smsname name] [-smscset number] [-smscnumber number] [-reply] [-maxsms num]
 
@@ -366,7 +368,7 @@ Remaining not known characters are replaced by question mark.
     more items).
 
 
-    For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+    For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .. option:: --savesms CALLER file [-folder id] [-unread] [-read] [-unsent] [-sent] [-sender number] [-smsname name] [-smscset number] [-smscnumber number] [-reply] [-maxsms num]
@@ -379,10 +381,9 @@ Remaining not known characters are replaced by question mark.
     commands.
 
 
-    For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+    For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
-.TP
 .. option:: --savesms EMS [-folder id] [-unread] [-read] [-unsent] [-sent] [-sender number] [-smsname name] [-smscset number] [-smscnumber number] [-reply] [-maxsms num] [-unicode] [-16bit] [-format lcrasbiut] [-text text] [-unicodefiletext file] [-defsound ID] [-defanimation ID] [-tone10 file] [-tone10long file] [-tone12 file] [-tone12long file] [-toneSE file] [-toneSElong file] [-fixedbitmap file] [-variablebitmap file] [-variablebitmaplong file] [-animation frames file1 ...] [-protected number]
 
 Saves EMS sequence. All parameters after \fB-unread\fR (like \fB-defsound\fR) can be used few times.
@@ -439,7 +440,7 @@ will create EMS sequence with text "Greetings" and default sound 1 and text "fro
 ala.bmp and axelf.txt will be "protected
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -451,7 +452,7 @@ MMS from given URL and display it.
 Please note that you should provide valid smil data on that URL.
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -459,7 +460,7 @@ For description of shared parameters see \fBCommon parameters for sendsms and sa
 Saves a message with MMS configuration. The
 configuration will be read from Gammu backup file from given location.
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -473,7 +474,7 @@ DCT4/TIKU - you need to put bitmap file there inside phone using filesystem
 commands.
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -484,7 +485,7 @@ into bitmap in Smart Messaging (72x28, 2 colors, called often Picture Image
 and saved with text) or Alcatel format and send/save over SMS.
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -495,7 +496,7 @@ Smart Messaging profile and send/save as SMS. Please note, that this format is
 abandomed by Nokia and supported by some (older) devices only like Nokia 3310.
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -510,7 +511,7 @@ in 2 SMS), but decoded only by newer phones (like 33xx)
 it correctly later in phone composer (for example, in 33xx)
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -518,7 +519,7 @@ For description of shared parameters see \fBCommon parameters for sendsms and sa
 Saves a SMS template (for Alcatel phones).
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -575,7 +576,7 @@ there is example file (\fIreplace.txt\fR), which will change all "a" chars to "1
 \fIExample:\fR echo some_text | gammu savesms TEXT
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -583,7 +584,7 @@ For description of shared parameters see \fBCommon parameters for sendsms and sa
 Saves a message with a todo entry. The content will
 be read from any backup format which Gammu supports and from given location.
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -595,7 +596,7 @@ to be read in backup file (usually 1, but can be useful in case the backup conta
 more items).
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -604,7 +605,7 @@ Saves a SMS with a WAP indication for given
 URL and title.
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -612,7 +613,7 @@ For description of shared parameters see \fBCommon parameters for sendsms and sa
 Read WAP settings from file created by \fBbackup\fR option and saves in Nokia format as SMS
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -621,7 +622,7 @@ Sends a message, for description of message specific parameters see \fBsavesms A
 
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -630,7 +631,7 @@ Sends a message, for description of message specific parameters see \fBsavesms B
 
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -639,7 +640,7 @@ Sends a message, for description of message specific parameters see \fBsavesms C
 
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -648,7 +649,7 @@ Sends a message, for description of message specific parameters see \fBsavesms C
 
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -657,7 +658,7 @@ Sends a message, for description of message specific parameters see \fBsavesms E
 
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -666,7 +667,7 @@ Sends a message, for description of message specific parameters see \fBsavesms M
 
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -675,7 +676,7 @@ Sends a message, for description of message specific parameters see \fBsavesms M
 
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -684,7 +685,7 @@ Sends a message, for description of message specific parameters see \fBsavesms O
 
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -693,7 +694,7 @@ Sends a message, for description of message specific parameters see \fBsavesms P
 
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -702,7 +703,7 @@ Sends a message, for description of message specific parameters see \fBsavesms P
 
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -711,7 +712,7 @@ Sends a message, for description of message specific parameters see \fBsavesms R
 
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -720,7 +721,7 @@ Sends a message, for description of message specific parameters see \fBsavesms S
 
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -729,7 +730,7 @@ Sends a message, for description of message specific parameters see \fBsavesms T
 
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -738,7 +739,7 @@ Sends a message, for description of message specific parameters see \fBsavesms T
 
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -747,7 +748,7 @@ Sends a message, for description of message specific parameters see \fBsavesms V
 
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -756,7 +757,7 @@ Sends a message, for description of message specific parameters see \fBsavesms W
 
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -765,7 +766,7 @@ Sends a message, for description of message specific parameters see \fBsavesms W
 
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -908,7 +909,7 @@ to be read in backup file (usually 1, but can be useful in case the backup conta
 more items).
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -922,7 +923,7 @@ Sends a message, for description of message specific parameters see \fBsavesms V
 
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 
@@ -1093,7 +1094,7 @@ number of frames and picture for each frame. Each picture can be in any
 picture format which Gammu supports (B/W bmp, gif, wbmp, nol, nlm...).
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -1106,7 +1107,7 @@ DCT4/TIKU - you need to put bitmap file there inside phone using filesystem
 commands.
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -1120,7 +1121,7 @@ DCT4/TIKU - you need to put bitmap file there inside phone using filesystem
 commands.
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -1131,7 +1132,7 @@ into bitmap in Smart Messaging (72x28, 2 colors, called often Picture Image
 and saved with text) or Alcatel format and send/save over SMS.
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -1140,7 +1141,7 @@ Sends a message, for description of message specific parameters see \fBsavesms A
 
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -1149,7 +1150,7 @@ Sends a message, for description of message specific parameters see \fBsavesms C
 
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -1158,7 +1159,7 @@ Sends a message, for description of message specific parameters see \fBsavesms O
 
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -1167,7 +1168,7 @@ Sends a message, for description of message specific parameters see \fBsavesms P
 
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -1318,7 +1319,7 @@ in 2 SMS), but decoded only by newer phones (like 33xx)
 it correctly later in phone composer (for example, in 33xx)
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -1327,7 +1328,7 @@ Sends a message, for description of message specific parameters see \fBsavesms R
 
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -1438,7 +1439,7 @@ to be read in backup file (usually 1, but can be useful in case the backup conta
 more items).
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -1447,7 +1448,7 @@ Sends a message, for description of message specific parameters see \fBsavesms C
 
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 
@@ -1547,7 +1548,7 @@ backup to vCalendar, you need following command:
 Saves a message with a todo entry. The content will
 be read from any backup format which Gammu supports and from given location.
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -1556,7 +1557,7 @@ Sends a message, for description of message specific parameters see \fBsavesms T
 
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 
@@ -2120,7 +2121,7 @@ Read WAP bookmark from file created by \fBbackup\fR option and saves in
 Nokia format as SMS
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -2129,7 +2130,7 @@ Saves a SMS with a WAP indication for given
 URL and title.
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -2137,7 +2138,7 @@ For description of shared parameters see \fBCommon parameters for sendsms and sa
 Read WAP settings from file created by \fBbackup\fR option and saves in Nokia format as SMS
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -2146,7 +2147,7 @@ Sends a message, for description of message specific parameters see \fBsavesms B
 
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -2155,7 +2156,7 @@ Sends a message, for description of message specific parameters see \fBsavesms W
 
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -2164,7 +2165,7 @@ Sends a message, for description of message specific parameters see \fBsavesms W
 
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 
@@ -2193,7 +2194,7 @@ MMS from given URL and display it.
 Please note that you should provide valid smil data on that URL.
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -2201,7 +2202,7 @@ For description of shared parameters see \fBCommon parameters for sendsms and sa
 Saves a message with MMS configuration. The
 configuration will be read from Gammu backup file from given location.
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -2210,7 +2211,7 @@ Sends a message, for description of message specific parameters see \fBsavesms M
 
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -2219,7 +2220,7 @@ Sends a message, for description of message specific parameters see \fBsavesms M
 
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 
@@ -2400,7 +2401,7 @@ Smart Messaging profile and send/save as SMS. Please note, that this format is
 abandomed by Nokia and supported by some (older) devices only like Nokia 3310.
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 .TP
@@ -2409,7 +2410,7 @@ Sends a message, for description of message specific parameters see \fBsavesms P
 
 
 
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
 
 
