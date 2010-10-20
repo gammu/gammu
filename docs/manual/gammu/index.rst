@@ -89,11 +89,6 @@ Calls
     timeout 
         timeout when the diversion will happen
 
-
-.. option:: --getspeeddial start [stop]
-
-    Gets speed dial choices.
-
 .. option:: --getussd code
 
     Retrieves USSD information - dials a service number and reads response.
@@ -259,20 +254,7 @@ encoding for some characters in GSM Default Alphabet (it is needed for ``^`` ``{
 are transliterated to closest ASCII equivalent (accents are removed).
 Remaining not known characters are replaced by question mark.
 
-.. option:: --addsms folder file [-yes]
-
-    Adds SMSes from file (format like backupsms uses) to
-    selected folder in phone.
-
 .. option:: --addsmsfolder name
-
-.. option:: --backupsms file [-yes|-all]
-
-    Stores all SMSes from phone to file. 
-
-    Use -yes for answering yes to all questions (backup all messages and 
-    delete them from phone), or -all to just backup all folders while keeping
-    messages in phone.
 
 .. option:: --deleteallsms folder
 
@@ -328,12 +310,6 @@ Remaining not known characters are replaced by question mark.
 .. option:: --getsmsfolders
 
     Get names for SMS folders in phone
-
-.. option:: --restoresms file [-yes]
-
-    Restores SMSes from file (format like backupsms uses) to
-    selected folder in phone. Please note that this overwrites existing
-    messages in phone (if it supports it).
 
 .. option:: --savesms ANIMATION frames file1 file2... [-folder id] [-unread] [-read] [-unsent] [-sent] [-sender number] [-smsname name] [-smscset number] [-smscnumber number] [-reply] [-maxsms num]
 
