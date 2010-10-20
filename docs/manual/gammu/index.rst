@@ -1243,7 +1243,7 @@ Nokia specific
 
     First line is ``#EXTM3U``, next lines contain  names of files (``b:\file1.mp3``,
     ``b:\folder1\file2.mp3``, etc.). File needs t have ``\r\n`` terminated lines. So
-    just run unix2dos on the resulting file before uploading it your your phone.
+    just run :program:`unix2dos` on the resulting file before uploading it your your phone.
 
 
 .. option:: --nokiacomposer file
