@@ -909,18 +909,24 @@ Samsung).
 
 .. option:: playsavedringtone number
 
-    Play one of "built" ringtones. This option is available for DCT4 phones. For getting ringtones list use getringtoneslist.
+    Play one of built-in ringtones. This option is available for DCT4 phones.
+    For getting ringtones list use :option:`gammu getringtoneslist`.
 
 .. option:: setringtone file [-location location] [-scale] [-name name]
 
     Set ringtone in phone. When don't give location, it will be written
     "with preview" (in phones supporting this feature like 61xx or 6210).
-    When use RTTL ringtones, give location and use \fB-scale\fR, there will be written
-    scale info with each note. It will avoid scale problems available during
-    editing ringtone in composer from phone menu (for example, in N33xx).
 
-    \fITIP:\fR when use ~ char in ringtone name, in some phones (like 
-    33xx) name will blink later in phone menus
+    .. option:: -scale
+
+        Scale information will be added to each note of RTTL ringtone. It will
+        avoid scale problems available during editing ringtone in composer
+        from phone menu (for example, in Nokia 33xx).
+
+    .. note:: 
+       
+        When use ``~`` char in ringtone name, in some phones (like 33xx) name
+        will blink later in phone menus.
 
 
 Calendar notes commands
@@ -989,8 +995,10 @@ Date, time and alarm commands
     note, that this option doesn't show clock on phone screen. It only set
     date and time.
 
-    \fITIP:\fR you can make such synchronization each time, when will connect
-    your phone and use Gammu. See :ref:`gammurc` for details.
+    .. note::
+       
+       You can make such synchronization each time, when will connect your
+       phone and use Gammu. See :config:option:`SynchronizeTime` in :ref:`gammurc` for details.
 
 
 Categories commands
