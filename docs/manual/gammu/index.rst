@@ -579,7 +579,8 @@ ____________
 
 .. option:: --sendsms TYPE destination [savesms options]
 
-    Sends a message, for description of message specific parameters see :option:`gammu --savesms`.
+    Sends a message to a ``destination`` number, for description of message
+    specific parameters see :option:`gammu --savesms`.
 
 .. option:: --setsmsc location number
 
