@@ -132,6 +132,57 @@ almost every usage. See EXAMPLE section for some hints on usage.
 There is also an option to use :ref:`gammu-smsd` when you want to send or 
 receive more messages and process them automatically.
 
+Introduction to SMS formats
+___________________________
+
+Gammu has support for many SMS formats like:
+
+Nokia Smart Messaging
+    used for monochromatic picture images, downloadable profiles, monochromatic operator logos, monochromatic caller logos and monophonic ringtones
+Linked SMS
+    both with 8 and 16-bit identification numbers in headers
+EMS
+    this is SMS format used for saving monochromatic images, monophonic ringtones, animations, text formatting and others
+MMS notifications
+    contains links where phone should download MMS
+Alcatel logo messages
+    proprietary format for logos
+
+
+You need to ensure that the target phone supports message type you want to
+send. Otherwise the phone will not be able to display it or will even crash,
+because firmware of phone did not expect this possibility.
+
+Encoding chars in SMS text
+__________________________
+
+Text in SMS can be coded using two ways:
+
+with \fBGSM Default Alphabet\fR - in single SMS you can have maximally 160 chars (Gammu doesn't support compressing such texts according to GSM standards, but it isn't big limit, because there are no phones supporting them), but they're from limited set:
+
+* all Latin small and large
+* all digits
+* some Greek
+* some other national
+* some symbols like  @ ! " # & / ( ) % * + = - , . : ; < > ?
+* few others
+
+with \fBUnicode\fR - in single SMS you can save at most 70 chars, but these can be
+any chars including all national and special ones. Please note, that some
+older phones might have problems displaying such message.
+
+Gammu tries to do the best to handle non ASCII characters in your message.
+Everything is internally handled in Unicode (the input is converted depending
+on your locales configuration) and in case message uses Unicode the text will
+be given as such to the message. 
+
+Should the message be sent in GSM Default Alphabet, Gammu will try to convert
+all characters to keep message readable. Gammu does support multi byte
+encoding for some characters in GSM Default Alphabet (it is needed for ``^`` ``{`` ``}``
+``\`` ``[`` ``]`` ``~`` ``|``). The characters which are not present in GSM Default Alphabet
+are transliterated to closest ASCII equivalent (accents are removed).
+Remaining not known characters are replaced by question mark.
+
 .. _Common parameters for sendsms and savesms:
 
 Common parameters for sendsms and savesms
@@ -205,56 +256,8 @@ _________________________________________
 
     will also save message which is being sent
 
-Introduction to SMS formats
-___________________________
-
-Gammu has support for many SMS formats like:
-
-Nokia Smart Messaging
-    used for monochromatic picture images, downloadable profiles, monochromatic operator logos, monochromatic caller logos and monophonic ringtones
-Linked SMS
-    both with 8 and 16-bit identification numbers in headers
-EMS
-    this is SMS format used for saving monochromatic images, monophonic ringtones, animations, text formatting and others
-MMS notifications
-    contains links where phone should download MMS
-Alcatel logo messages
-    proprietary format for logos
-
-
-You need to ensure that the target phone supports message type you want to
-send. Otherwise the phone will not be able to display it or will even crash,
-because firmware of phone did not expect this possibility.
-
-Encoding chars in SMS text
-__________________________
-
-Text in SMS can be coded using two ways:
-
-with \fBGSM Default Alphabet\fR - in single SMS you can have maximally 160 chars (Gammu doesn't support compressing such texts according to GSM standards, but it isn't big limit, because there are no phones supporting them), but they're from limited set:
-
-* all Latin small and large
-* all digits
-* some Greek
-* some other national
-* some symbols like  @ ! " # & / ( ) % * + = - , . : ; < > ?
-* few others
-
-with \fBUnicode\fR - in single SMS you can save at most 70 chars, but these can be
-any chars including all national and special ones. Please note, that some
-older phones might have problems displaying such message.
-
-Gammu tries to do the best to handle non ASCII characters in your message.
-Everything is internally handled in Unicode (the input is converted depending
-on your locales configuration) and in case message uses Unicode the text will
-be given as such to the message. 
-
-Should the message be sent in GSM Default Alphabet, Gammu will try to convert
-all characters to keep message readable. Gammu does support multi byte
-encoding for some characters in GSM Default Alphabet (it is needed for ``^`` ``{`` ``}``
-``\`` ``[`` ``]`` ``~`` ``|``). The characters which are not present in GSM Default Alphabet
-are transliterated to closest ASCII equivalent (accents are removed).
-Remaining not known characters are replaced by question mark.
+SMS commands
+____________
 
 .. option:: --addsmsfolder name
 
@@ -724,7 +727,7 @@ Remaining not known characters are replaced by question mark.
 
 
 Memory (phonebooks and calls)
------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. option:: --deleteallmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL
 
@@ -775,7 +778,7 @@ Memory (phonebooks and calls)
     Ctrl+C.
 
 Filesystem
-----------
+~~~~~~~~~~
 
 Gammu allows to access phones using native protocol (Nokias) or OBEX. Your
 phone can also support usb storage, which is handled on the operating system
@@ -851,7 +854,7 @@ level and Gammu does not use that.
 
 
 Logo and pictures
------------------
+~~~~~~~~~~~~~~~~~
 
 These options are mainly (there are few exceptions) for monochromatic logos and
 images available in older phones. Recognized file formats: xpm (only saving),
@@ -932,7 +935,7 @@ In new models all bitmaps are saved in filesystem and should go into filesystem 
     Sets wallpaper in phone.
 
 Ringtones
----------
+~~~~~~~~~
 
 Ringtones are mostly supported only for older phones. For recent phones you
 usually just upload them to some folder in phone filesystem.
@@ -980,7 +983,7 @@ Samsung).
 
 
 Calendar notes
---------------
+~~~~~~~~~~~~~~
 
 In Nokia 3310, 3315 and 3330 these are named "Reminders" and have some limitations (depending on phone firmware version).
 
@@ -998,7 +1001,7 @@ In Nokia 3310, 3315 and 3330 these are named "Reminders" and have some limitatio
 
 
 To do lists
------------
+~~~~~~~~~~~
 
 .. option:: --deletetodo start [stop]
 
@@ -1013,7 +1016,7 @@ To do lists
     Retrieves selected todo entries from phone.
 
 Notes
------
+~~~~~
 
 .. option:: --getallnotes
 
@@ -1024,7 +1027,7 @@ Notes
 
 
 Date, time and alarms
----------------------
+~~~~~~~~~~~~~~~~~~~~~
 
 .. option:: --getalarm [start]
 
@@ -1050,7 +1053,7 @@ Date, time and alarms
 
 
 Categories
-----------
+~~~~~~~~~~
 
 ..note:: Categories are supported only on few phones (Alcatel).
 
@@ -1066,7 +1069,7 @@ Categories
 
 
 Backing up and restoring
-------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. option:: --addnew file [-yes] [-memory ME|SM|..]
 
@@ -1186,7 +1189,7 @@ Backing up and restoring
 
 
 Nokia specific
---------------
+~~~~~~~~~~~~~~
 
 .. option:: --nokiaaddfile APPLICATION|GAME file [-readonly] [-overwrite] [-overwriteall]
 
@@ -1348,7 +1351,7 @@ Nokia specific
 
 
 Siemens specific
-----------------
+~~~~~~~~~~~~~~~~
 
 .. option:: --siemensnetmonact netmon_type
 
@@ -1360,7 +1363,7 @@ Siemens specific
 .. option:: --siemenssatnetmon
 
 Network
--------
+~~~~~~~
 
 .. option:: --getgprspoint start [stop]
 
@@ -1375,7 +1378,7 @@ Network
 .. option:: --setautonetworklogin
 
 WAP settings and bookmarks
---------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. option:: --deletewapbookmark start [stop]
 
@@ -1400,7 +1403,7 @@ WAP settings and bookmarks
     Locations are numerated from 1.
 
 MMS and MMS settings
---------------------
+~~~~~~~~~~~~~~~~~~~~
 
 .. option:: --getallmms [-save]
 
@@ -1414,14 +1417,14 @@ MMS and MMS settings
 
 
 FM radio
---------
+~~~~~~~~
 
 .. option:: --getfmstation start [stop]
 
     Show info about FM stations in phone
 
 Phone information
------------------
+~~~~~~~~~~~~~~~~~
 
 .. option:: --battery
 
@@ -1450,7 +1453,7 @@ Phone information
 
 
 Phone settings
---------------
+~~~~~~~~~~~~~~
 
 .. option:: --getcalendarsettings
 
@@ -1495,7 +1498,7 @@ Phone settings
 
 
 Dumps decoding
---------------
+~~~~~~~~~~~~~~
 
 .. note:: These commands are available only if Gammu was compiled with debugging options.
 
@@ -1509,7 +1512,7 @@ Dumps decoding
     Allows to decode sniffs. See :ref:`Discovering protocol` for more details.
 
 Other functions
----------------
+~~~~~~~~~~~~~~~
 
 .. option:: --entersecuritycode PIN|PUK|PIN2|PUK2|PHONE|NETWORK code|-
 
@@ -1551,7 +1554,7 @@ Other functions
     .. warning:: Some phones will reset user data on ``HARD`` reset.
 
 Batch mode
-----------
+~~~~~~~~~~
 
 .. option:: --batch [file]
 
@@ -1564,7 +1567,7 @@ Batch mode
     input).
 
 Configuration
--------------
+~~~~~~~~~~~~~
 
 .. option:: --searchphone [-debug]
 
@@ -1574,7 +1577,7 @@ Configuration
     Gammu.
 
 Gammu information
------------------
+~~~~~~~~~~~~~~~~~
 
 .. option:: --checkversion [STABLE]
 
@@ -1762,13 +1765,13 @@ Examples
 ++++++++
 
 Configuration
--------------
+~~~~~~~~~~~~~
 
 To check it out, you need to have configuration file for gammu, see 
 :ref:`gammurc` for more details about it.
 
 Sending messages
-----------------
+~~~~~~~~~~~~~~~~
 
 Save text message up to standard 160 chars:
 
@@ -1813,7 +1816,7 @@ Save protected message with ringtone:
     gammu savesms EMS -protected 2 -variablebitmaplong ala.bmp -toneSElong axelf.txt -toneSE ring.txt
 
 Uploading files to Nokia
-------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 Add Alien to applications in your phone (you need to have files Alien.JAD and Alien.JAR in current directory):
 
@@ -1829,7 +1832,7 @@ Add file.mid to ringtones folder:
 
 
 Reporting bugs
---------------
+~~~~~~~~~~~~~~
 
 There are definitely many bugs, reporting to author is welcome. Please include
 some useful information when sending bug reports (especially debug logs,
