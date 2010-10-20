@@ -779,10 +779,11 @@ level and Gammu does not use that.
 
     Display info about all folders and files in phone memory/memory card. By default there is tree displayed, you can change it:
 
-    .B -flatall
-    there are displayed full file/folder details like ID (first parameter in line)
+    .. option:: -flatall
 
-    .B -flat
+        there are displayed full file/folder details like ID (first parameter in line)
+
+    .. option:: -flat
 
     .. note:: In some phones (like N6230) content of some folders (with more files) can be cut (only part of files will be displayed) for example on infrared connection. This is not Gammu issue, but phone firmware problem.
 
