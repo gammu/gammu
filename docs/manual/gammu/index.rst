@@ -969,8 +969,10 @@ Notes commands
 
     Reads all notes from the phone.
 
-    Note: Not all phones supports this function, especially most Sony Ericsson 
-    phones even if they have notes inside phone.
+    .. note:: 
+        
+        Not all phones supports this function, especially most Sony Ericsson
+        phones even if they have notes inside phone.
 
 
 Date, time and alarm commands
