@@ -1397,8 +1397,6 @@ WAP settings and bookmarks
 
     Locations are numerated from 1.
 
-.TP
-
 MMS and MMS settings
 --------------------
 
