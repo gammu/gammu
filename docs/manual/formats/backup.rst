@@ -1,3 +1,4 @@
+.. _gammu-backup:
 .. _backup:
 
 Backup Format
