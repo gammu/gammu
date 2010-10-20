@@ -1075,7 +1075,7 @@ Backing up and restoring commands
 
 .. option:: restore file [-yes]
 
-    Restore settings written in file created using \fBbackup\fR option. 
+    Restore settings written in file created using :option:`gammu backup` command. 
 
     Please note that restoring deletes all current content in phone. If you
     want only to add entries to phone, use addnew.
