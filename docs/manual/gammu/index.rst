@@ -191,11 +191,6 @@ encoding for some characters in GSM Default Alphabet (it is needed for ``^`` ``{
 are transliterated to closest ASCII equivalent (accents are removed).
 Remaining not known characters are replaced by question mark.
 
-.. _Common parameters for sendsms and savesms:
-
-Common parameters for sendsms and savesms
-_________________________________________
-
 SMS commands
 ____________
 
