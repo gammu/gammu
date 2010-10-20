@@ -1497,20 +1497,16 @@ Phone settings
 Dumps decoding
 --------------
 
+.. note:: These commands are available only if Gammu was compiled with debugging options.
+
 .. option:: --decodebinarydump file [phonemodel]
 
     Decodes a dump made by Gammu with 
-    \fBlogformat\fR se to \fBbinary\fR (see \fIREADME\fR for
-    info about this method of reporting bugs).
-
-    This option is available only if Gammu was compiled with debuging options.
-
+    :config:option:`LogFormat` set to ``binary``.
 
 .. option:: --decodesniff MBUS2|IRDA file [phonemodel]
 
-    Option available only, if Gammu was compiled with debug. Allows to decode
-    sniffs. See \fI/docs/manual/\fR for more details.
-
+    Allows to decode sniffs. See :ref:`Discovering protocol` for more details.
 
 Other functions
 ---------------

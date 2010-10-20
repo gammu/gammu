@@ -1,3 +1,5 @@
+.. _Discovering protocol:
+
 Discovering protocol
 ====================
 
