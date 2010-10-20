@@ -139,7 +139,9 @@ _________________________________________
 
 .. option:: -smscset number
 
-    SMSC will be taken from set \fBnumber\fR. Default set: 1
+    SMSC number will be taken from phone stored SMSC configuration ``number``. 
+    
+    Default: 1
 
 .. option:: -smscnumber number
 
@@ -160,7 +162,7 @@ _________________________________________
 
     Folders are numerated from 1.
 
-    The most often folder 1 = "Inbox", 2 = "Outbox",etc. Use \fBgetsmsfolders\fR to get folder list.
+    The most often folder 1 = "Inbox", 2 = "Outbox",etc. Use :option:`gammu --getsmsfolders` to get folder list.
 
 .. option:: -unread
 
@@ -187,7 +189,7 @@ _________________________________________
 
 .. option:: -sender number
 
-    set sender number (default: ``Gammu```)
+    set sender number (default: ``Gammu``)
 
 .. option:: -report
 
