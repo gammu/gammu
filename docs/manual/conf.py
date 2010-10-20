@@ -35,7 +35,7 @@ def gammu_process_link(self, env, refnode, has_explicit_title, title, target):
     return title, target
 
 sphinx.domains.std.option_desc_re = re.compile(
-    r'^((?:/|-|--)?[-_a-zA-Z0-9]+)(\s*.*?)(?=,\s+(?:/|-|--)|$)')
+    r'((?:/|-|--|^)[-_a-zA-Z0-9]+)(\s*.*?)(?=,\s+(?:/|-|--)|$)')
 sphinx.domains.std.OptionXRefRole.process_link = gammu_process_link
 
 # If your extensions are in another directory, add it here. If the directory
