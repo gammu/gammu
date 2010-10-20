@@ -1241,8 +1241,11 @@ Nokia specific commands
 
     Takes output or set netmonitor for Nokia DCT3 phones.
 
-    \fITIP:\fR For more info about this option, please visit
-    \fIhttp://www.mwiacek.com\fR and read netmonitor manual.
+    .. seealso::
+       
+        For more info about this option, please visit 
+        `Marcin's page <http://www.mwiacek.com/>`_ and read netmonitor manual
+        there.
 
     \fITIP:\fR test \fB243\fR enables all tests (after using command
     \fBgammu nokianetmonitor 243\fR in some phones like 6210 or 9210 have to
