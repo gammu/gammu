@@ -1,3055 +1,2695 @@
-.TH "GAMMU" "1" "Oct 15 2010" "Gammu 1.28.93" "Gammu Documentation"
-
-.SH "NAME"
-
-.P
-Gammu - Does some neat things with your cellular phone or modem.
-
-.SH "SYNOPSIS"
-.P
-Usage: gammu [\fIparameters\fP] <command> [\fIoptions\fP]
-
-
-.SH "DESCRIPTION"
-.P
-
-.P
+.TH "GAMMU" "1" "October 20, 2010" "1.28.93" "Gammu"
+.SH NAME
+gammu \- Does some neat things with your cellular phone or modem.
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.\" Man page generated from reStructeredText.
+.
+.SH SYNOPSIS
+.sp
+.nf
+.ft C
+gammu [parameters] <command> [options]
+.ft P
+.fi
+.sp
+Commands actually indicate which operation should Gammu perform. They can be
+specified with or without leading \fB\-\-\fP.
+.SH DESCRIPTION
+.sp
 This program is a tool for mobile phones. Many vendors and phones
-are supported, for actual listing see <http://wammu.eu/phones/>.
-
-
-.SH "OPTIONS"
-.P
+are supported, for actual listing see \fI\%Gammu Phones Database\fP.
+.SS Options
+.sp
 Parameters before command configure gammu behaviour:
-.br
-\-c / \-\-config <filename> ... name of configuration file
-.br
-\-s / \-\-section <confign> ... section of config file to use, eg. 42
-.br
-\-d / \-\-debug <level> ... debug level (see gammurc(5) for possible values)
-.br
-\-f / \-\-debug\-file <filename> ... file for logging debug messages
-
-
-.SS "Commands"
-.P
-Commands can be specified with or without leading \-\-.
-
-
-.SS "Calls"
+.INDENT 0.0
 .TP
-.BI "answercall" " [id]"
+.B \-c, \-\-config <filename>
+.sp
+name of configuration file
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-s, \-\-section <confign>
+.sp
+section of config file to use, eg. 42
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-d, \-\-debug <level>
+.sp
+debug level (see \fIgammurc\fP for possible values)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-f, \-\-debug\-file <filename>
+.sp
+file for logging debug messages
+.UNINDENT
+.SS Call commands
+.INDENT 0.0
+.TP
+.B answercall [id]
+.sp
 Answer incoming call.
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "cancelcall" " [id]"
+.B cancelcall [id]
+.sp
 Cancel incoming call
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "canceldiverts"
+.B canceldiverts
+.
 Cancel all existing call diverts.
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "conferencecall" " id"
+.B conferencecall id
+.sp
 Initiates a conference call.
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "dialvoice" " number [show|hide]"
+.B dialvoice number [show|hide]
+.sp
 Make voice call from SIM card line set in phone.
-
-\fBshow|hide\fR - optional parameter whether to disable call number indication.
-
+.sp
+\fBshow|hide\fP \- optional parameter whether to disable call number indication.
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "divert" " get|set all|busy|noans|outofreach all|voice|fax|data [number timeout]"
+.B divert get|set all|busy|noans|outofreach all|voice|fax|data [number timeout]
+.sp
 Manage or display call diverts.
-
-\fBget|set\fR - whether to get divert information or to set it.
-
-\fBall|busy|noans|outofreach\fR - condition when apply divert
-
-\fBall|voice|fax|data\fR - call type when apply divert
-
-number - number where to divert
-
-timeout - timeout when the diversion will happen
-
-
+.INDENT 7.0
 .TP
-.BI "getspeeddial" " start [stop]"
-Gets speed dial choices.
-
+.B \fBget\fP or \fBset\fP
+.sp
+whether to get divert information or to set it.
 .TP
-.BI "getussd" " code"
-Retrieves USSD information - dials a service number and reads response.
-
+.B \fBall\fP or \fBbusy\fP or \fBnoans\fP or \fBoutofreach\fP
+.sp
+condition when apply divert
 .TP
-.BI "holdcall" " id"
+.B \fBall\fP or \fBvoice\fP or \fBfax\fP or \fBdata\fP
+.sp
+call type when apply divert
+.TP
+.B number
+.
+number where to divert
+.TP
+.B timeout
+.
+timeout when the diversion will happen
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B getussd code
+.sp
+Retrieves USSD information \- dials a service number and reads response.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B holdcall id
+.sp
 Holds call.
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "maketerminatedcall" " number length [show|hide]"
-Make voice call from SIM card line set in phone which will 
-be terminated after \fBlength\fR seconds.
-
+.B maketerminatedcall number length [show|hide]
+.sp
+Make voice call from SIM card line set in phone which will
+be terminated after \fBlength\fP seconds.
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "monitor" " [times]"
-Get phone status and writes continuously to standard output. Press Ctrl+C
-to break this state.
-
-.TP
-.BI "senddtmf" " sequence"
+.B senddtmf sequence
+.sp
 Plays DTMF sequence. In some phones available only during calls
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "splitcall" " id"
+.B splitcall id
+.sp
 Splits call.
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "switchcall" " [id]"
+.B switchcall [id]
+.sp
 Switches call.
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "transfercall" " [id]"
+.B transfercall [id]
+.sp
 Transfers call.
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "unholdcall" " id"
+.B unholdcall id
+.sp
 Unholds call.
-
-
-.SS "SMS and EMS"
-.P
-
+.UNINDENT
+.SS SMS and EMS commands
+.sp
 Sending messages might look a bit complicated on first attempt to use.
 But be patient, the command line has been written in order to allow
 almost every usage. See EXAMPLE section for some hints on usage.
-
-There is also an option to use gammu-smsd(1) when you want to send or 
+.sp
+There is also an option to use \fIgammu\-smsd\fP when you want to send or
 receive more messages and process them automatically.
-
-.TP
-\fBCommon parameters for sendsms and savesms\fR
-
-\fB\-smscset number\fR - SMSC will be taken from set \fBnumber\fR. Default set: 1
-
-\fB\-smscnumber number\fR - SMSC number
-
-\fB\-reply\fR - reply SMSC is set
-
-\fB\-maxnum number\fR - Limit maximal number of messages which will be
-created. If there are more messages, Gammu will terminate with failure.
-
-\fB\-folder number\fR - save to specified folder. 
-
-Folders are numerated from 1.
-
-The most often folder 1 = "Inbox", 2 = "Outbox",etc. Use \fBgetsmsfolders\fR to get folder list.
-
-\fB\-unread\fR - makes message unread. In some phones (like 6210) you won't see 
-unread sms envelope after saving such sms. In some phones with internal 
-SMS memory (like 6210) after using it with folder 1 SIM SMS memory will be used
-
-\fB\-read\fR - makes message read. In some phones with internal
-SMS memory (like 6210) after using it with folder 1 SIM SMS memory will be used
-
-\fB\-unsent\fR - makes message unsent
-
-\fB\-sent\fR - makes message sent
-
-\fB\-sender number\fR - set sender number
-
-\fB\-smsname name\fR - set message name
-
-\fB\-sender number\fR - set sender number (default: "Gammu")
-
-\fB\-report\fR - request delivery report for message
-
-\fB\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX\fR - sets how long will be the
-message valid (SMSC will the discard the message after this time if it could
-not deliver it).
-
-\fB\-save\fR - will also save message which is being sent
-
-.TP
-\fBIntroduction to SMS formats\fR
-
+.SS Introduction to SMS formats
+.sp
 Gammu has support for many SMS formats like:
-
-\fBNokia Smart Messaging\fR (used for monochromatic picture images, downloadable profiles, monochromatic operator logos, monochromatic caller logos and monophonic ringtones)
-
-\fBLinked SMS\fR (both with 8 and 16-bit identification numbers in headers)
-
-\fBEMS\fR (this is SMS format used for saving monochromatic images, monophonic ringtones, animations, text formatting and others)
-
-\fBMMS notifications\fR
-
-\fBAlcatel logo messages\fR
-
-
+.INDENT 0.0
+.TP
+.B Nokia Smart Messaging
+.
+used for monochromatic picture images, downloadable profiles, monochromatic operator logos, monochromatic caller logos and monophonic ringtones
+.TP
+.B Linked SMS
+.
+both with 8 and 16\-bit identification numbers in headers
+.TP
+.B EMS
+.
+this is SMS format used for saving monochromatic images, monophonic ringtones, animations, text formatting and others
+.TP
+.B MMS notifications
+.
+contains links where phone should download MMS
+.TP
+.B Alcatel logo messages
+.
+proprietary format for logos
+.UNINDENT
+.sp
 You need to ensure that the target phone supports message type you want to
 send. Otherwise the phone will not be able to display it or will even crash,
 because firmware of phone did not expect this possibility.
-
-.TP
-\fBEncoding chars in SMS text\fR
-
+.SS Encoding chars in SMS text
+.sp
 Text in SMS can be coded using two ways:
-
-with \fBGSM Default Alphabet\fR - in single SMS you can have maximally 160 chars (Gammu doesn't support compressing such texts according to GSM standards, but it isn't big limit, because there are no phones supporting them), but they're from limited set:
-
-  * all Latin small and large
-
-  * all digits
-
-  * some Greek
-
-  * some other national
-
-  * some symbols like  @ ! " # & / ( ) % * + = - , . : ; < > ?
-
-  * few others
-
-with \fBUnicode\fR - in single SMS you can save at most 70 chars, but these can be
+.SS GSM Default Alphabet
+.sp
+With \fIGSM Default Alphabet\fP you can fit at most 160 chars into single SMS
+(Gammu doesn\(aqt support compressing such texts according to GSM standards, but
+it isn\(aqt big limit, because there are no phones supporting them), but they\(aqre
+from limited set:
+.INDENT 0.0
+.IP \(bu 2
+.
+all Latin small and large
+.IP \(bu 2
+.
+all digits
+.IP \(bu 2
+.
+some Greek
+.IP \(bu 2
+.
+some other national
+.IP \(bu 2
+.
+some symbols like  @\ ! " # & / ( )\ % * + = \- , .\ :\ ; < >\ ?
+.IP \(bu 2
+.
+few others
+.UNINDENT
+.SS Unicode
+.sp
+With \fIUnicode\fP single SMS can contain at most 70 chars, but these can be
 any chars including all national and special ones. Please note, that some
 older phones might have problems displaying such message.
-
+.SS Conversion
+.sp
 Gammu tries to do the best to handle non ASCII characters in your message.
 Everything is internally handled in Unicode (the input is converted depending
 on your locales configuration) and in case message uses Unicode the text will
-be given as such to the message. 
-
+be given as such to the message.
+.sp
 Should the message be sent in GSM Default Alphabet, Gammu will try to convert
 all characters to keep message readable. Gammu does support multi byte
-encoding for some characters in GSM Default Alphabet (it is needed for ^ { }
-\\ [ ] ~ |). The characters which are not present in GSM Default Alphabet
+encoding for some characters in GSM Default Alphabet (it is needed for \fB^\fP \fB{\fP \fB}\fP
+\fB\e\fP \fB[\fP \fB]\fP \fB~\fP \fB|\fP). The characters which are not present in GSM Default Alphabet
 are transliterated to closest ASCII equivalent (accents are removed).
 Remaining not known characters are replaced by question mark.
-
+.SS SMS commands
+.INDENT 0.0
 .TP
-.BI "addsms" " folder file [\-yes]"
-Adds SMSes from file (format like backupsms uses) to
-selected folder in phone.
+.B addsmsfolder name
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "addsmsfolder" " name"
-
-.TP
-.BI "backupsms" " file [\-yes|\-all]"
-Stores all SMSes from phone to file. 
-
-Use \-yes for answering yes to all questions (backup all messages and 
-delete them from phone), or \-all to just backup all folders while keeping
-messages in phone.
-
-.TP
-.BI "deleteallsms" " folder"
+.B deleteallsms folder
+.sp
 Delete all SMS from specified SMS folder.
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "deletesms" " folder start [stop]"
-Delete SMS from phone. See description for \fBgetsms\fR for info about
-sms folders naming convention. 
-
+.B deletesms folder start [stop]
+.sp
+Delete SMS from phone. See description for \fI\%gammu getsms\fP for info about
+sms folders naming convention.
+.sp
 Locations are numerated from 1.
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "displaysms" " ... (options like in sendsms)"
-
-Displays PDU data of encoded SMS messages. It accepts same parameters and 
+.B displaysms ... (options like in sendsms)
+.sp
+Displays PDU data of encoded SMS messages. It accepts same parameters and
 behaves same like sendsms.
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "getallsms" " \-pbk"
+.B getallsms \-pbk
+.sp
 Get all SMS from phone. In some phones you will have also SMS templates
 and info about locations used to save Picture Images. With each sms you
 will see location. If you want to get such sms from phone alone, use
-\fBgammu getsms 0 location\fR
-
+\fI\%gammu getsms\fP.
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "geteachsms" " \-pbk"
-Similiary to \fBgetallsms\fR. Difference is, that
+.B geteachsms \-pbk
+.sp
+Similiary to \fI\%gammu getallsms\fP. Difference is, that
 links all concatenated sms
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "getsms" " folder start [stop]"
-Get SMS. 
-
+.B getsms folder start [stop]
+.sp
+Get SMS.
+.sp
 Locations are numerated from 1.
-
+.sp
 Folder 0 means that sms is being read from "flat" memory (all sms from all
-folders have unique numbers). It's sometimes emulated by Gammu. You 
+folders have unique numbers). It\(aqs sometimes emulated by Gammu. You
 can use it with all phones.
-
+.sp
 Other folders like 1, 2, etc. match folders in phone such as Inbox, Outbox, etc.
 and each sms has unique number in his folder. Name of folders can
 depend on your phone (the most often 1="Inbox", 2="Outbox", etc.).
 This method is not supported by all phones (for example, not supported
 by Nokia 3310, 5110, 6110). If work with your phone, use
-\fBgetsmsfolders\fR to get folders list.
-
+\fI\%gammu getsmsfolders\fP to get folders list.
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "getsmsc" " [start [stop]]"
-Get SMSC settings from SIM card. 
-
+.B getsmsc [start [stop]]
+.sp
+Get SMSC settings from SIM card.
+.sp
 Locations are numerated from 1.
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "getsmsfolders"
+.B getsmsfolders
+.
 Get names for SMS folders in phone
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "nokiagett9"
-This option should display T9 dictionary content from
-DCT4 phones.
-
+.B savesms TYPE [type parameters] [type options] [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]
+.sp
+Saves SMS to phone, see bellow for \fBTYPE\fP options.
+.INDENT 7.0
+.INDENT 3.5
+.INDENT 0.0
 .TP
-.BI "restoresms" " file [\-yes]"
-Restores SMSes from file (format like backupsms uses) to
-selected folder in phone. Please note that this overwrites existing
-messages in phone (if it supports it).
+.B \-smscset number
+.sp
+SMSC number will be taken from phone stored SMSC configuration \fBnumber\fP.
+.sp
+Default: 1
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "savesms ANIMATION" " frames file1 file2... [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+.B \-smscnumber number
+.sp
+SMSC number
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-reply
+.
+reply SMSC is set
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-maxnum number
+.sp
+Limit maximal number of messages which will be
+created. If there are more messages, Gammu will terminate with failure.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-folder number
+.sp
+save to specified folder.
+.sp
+Folders are numerated from 1.
+.sp
+The most often folder 1 = "Inbox", 2 = "Outbox",etc. Use \fI\%gammu getsmsfolders\fP to get folder list.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-unread
+.
+makes message unread. In some phones (like 6210) you won\(aqt see
+unread sms envelope after saving such sms. In some phones with internal
+SMS memory (like 6210) after using it with folder 1 SIM SMS memory will be used
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-read
+.
+makes message read. In some phones with internal
+SMS memory (like 6210) after using it with folder 1 SIM SMS memory will be used
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-unsent
+.
+makes message unsent
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-sent
+.
+makes message sent
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-smsname name
+.sp
+set message name
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-sender number
+.sp
+set sender number (default: \fBGammu\fP)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-maxsms num
+.sp
+maximal number of SMS messages to create
+.UNINDENT
+.sp
+Types of messages:
+.INDENT 0.0
+.TP
+.B ANIMATION frames file1 file2...
+.sp
 Save an animation as a SMS. You need to give
 number of frames and picture for each frame. Each picture can be in any
 picture format which Gammu supports (B/W bmp, gif, wbmp, nol, nlm...).
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "savesms BOOKMARK" " file location [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
-Read WAP bookmark from file created by \fBbackup\fR option and saves in
+.B BOOKMARK file location
+.sp
+Read WAP bookmark from file created by \fI\%gammu backup\fP command and saves in
 Nokia format as SMS
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "savesms CALENDAR" " file location [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
-Read calendar note from file created by \fBbackup\fR option and saves in
-VCALENDAR 1.0 format as SMS. The location identifies position of calendar item 
-to be read in backup file (usually 1, but can be useful in case the backup contains 
+.B CALENDAR file location
+.sp
+Read calendar note from file created by \fI\%gammu backup\fP command and saves in
+VCALENDAR 1.0 format as SMS. The location identifies position of calendar item
+to be read in backup file (usually 1, but can be useful in case the backup contains
 more items).
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "savesms CALLER" " file [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+.B CALLER file
+.sp
 Save caller logo as sms in Nokia (Smart Messaging)
-format - size 72x14, two colors.
-
-Please note, that it isn't designed for colour logos available for example in
-DCT4/TIKU - you need to put bitmap file there inside phone using filesystem
+format \- size 72x14, two colors.
+.sp
+Please note, that it isn\(aqt designed for colour logos available for example in
+DCT4/TIKU \- you need to put bitmap file there inside phone using filesystem
 commands.
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "savesms EMS" " [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-unicode] [\-16bit] [\-format lcrasbiut] [\-text text] [\-unicodefiletext file] [\-defsound ID] [\-defanimation ID] [\-tone10 file] [\-tone10long file] [\-tone12 file] [\-tone12long file] [\-toneSE file] [\-toneSElong file] [\-fixedbitmap file] [\-variablebitmap file] [\-variablebitmaplong file] [\-animation frames file1 ...] [\-protected number]"
-
-Saves EMS sequence. All parameters after \fB\-unread\fR (like \fB\-defsound\fR) can be used few times.
-
-\fB\-text\fR - adds text
-
-\fB\-unicodefiletext\fR - adds text from Unicode file
-
-\fB\-defanimation\fR - adds default animation with ID specified by user.ID for different phones are different.
-
-\fB\-animation\fR - adds "frames" frames read from file1, file2, etc.
-
-\fB\-defsound\fR - adds default sound with ID specified by user. ID for different phones are different.
-
-\fB\-tone10\fR - adds IMelody version 1.0 read from RTTL or other compatible file
-
-\fB\-tone10long\fR - IMelody version 1.0 saved in one of few SMS with UPI. Phones compatible with UPI (like SonyEricsson phones) will read such ringtone as one
-
-\fB\-tone12\fR - adds IMelody version 1.2 read from RTTL or other compatible file
-
-\fB\-tone12long\fR - IMelody version 1.2 saved in one of few SMS with UPI. Phones compatible with UPI (like SonyEricsson phones) will read such ringtone as one
-
-\fB\-toneSE\fR - adds IMelody in "short" form supported by SonyEricsson phones
-
-\fB\-toneSElong\fR - add SonyEricsson IMelody saved in one or few SMS with UPI
-
-\fB\-variablebitmap\fR - bitmap in any size saved in one SMS
-
-\fB\-variablebitmaplong\fR - bitmap with maximal size 96x128 saved in one or few sms
-
-\fB\-fixedbitmap\fR - bitmap 16x16 or 32x32
-
-\fB\-protected\fR - all ringtones and bitmaps after this parameter (excluding default ringtones and logos) will be "protected" (in phones compatible with ODI like SonyEricsson products it won't be possible to forward them from phone menu)
-
-\fB\-16bit\fR - Gammu uses SMS headers with 16-bit numbers for saving linking info in SMS (it means less chars available for user in each SMS)
-
-\fB\-format\fR lcrasbiut - last text will be formatted. You can use combinations of chars:
-    l - left aligned
-    c - centered
-    r - right aligned
-    a - large font
-    s - small font
-    b - bold font
-    i - italic font
-    u - underlined font
-    t - strikethrough font
-
-\fIExample:\fR gammu savesms EMS \-text "Greetings" \-defsound 1 \-text "from Gammu" \-tone10 axelf.txt \-animation 2 file1.bmp file2.bmp
-
-will create EMS sequence with text "Greetings" and default sound 1 and text "from Gammu" and ringtone axelf.txt and 2 frame animation read from (1'st frame) file1.bmp and (2'nd frame) file2.bmp
-
-\fIExample:\fR gammu savesms EMS \-protected 2 \-variablebitmaplong ala.bmp \-toneSElong axelf.txt \-toneSE ring.txt
-
-ala.bmp and axelf.txt will be "protected"
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
+.B EMS [\-unicode] [\-16bit] [\-format lcrasbiut] [\-text text] [\-unicodefiletext file] [\-defsound ID] [\-defanimation ID] [\-tone10 file] [\-tone10long file] [\-tone12 file] [\-tone12long file] [\-toneSE file] [\-toneSElong file] [\-fixedbitmap file] [\-variablebitmap file] [\-variablebitmaplong file] [\-animation frames file1 ...] [\-protected number]
+.sp
+Saves EMS sequence. All format specific parameters (like \fI\%-defsound\fP) can be used few times.
+.INDENT 7.0
 .TP
-.BI "savesms MMSINDICATOR" " URL Title Sender [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
-
+.B \-text
+.
+adds text
+.UNINDENT
+.INDENT 7.0
+.TP
+.B \-unicodefiletext
+.
+adds text from Unicode file
+.UNINDENT
+.INDENT 7.0
+.TP
+.B \-defanimation
+.
+adds default animation with ID specified by user. ID for different phones are different.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B \-animation
+.
+adds "frames" frames read from file1, file2, etc.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B \-defsound
+.
+adds default sound with ID specified by user. ID for different phones are different.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B \-tone10
+.
+adds IMelody version 1.0 read from RTTL or other compatible file
+.UNINDENT
+.INDENT 7.0
+.TP
+.B \-tone10long
+.
+IMelody version 1.0 saved in one of few SMS with UPI. Phones
+compatible with UPI (like Sony\-Ericsson phones) will read such
+ringtone as one
+.UNINDENT
+.INDENT 7.0
+.TP
+.B \-tone12
+.
+adds IMelody version 1.2 read from RTTL or other compatible file
+.UNINDENT
+.INDENT 7.0
+.TP
+.B \-tone12long
+.
+IMelody version 1.2 saved in one of few SMS with UPI. Phones
+compatible with UPI (like Sony\-Ericsson phones) will read such
+ringtone as one
+.UNINDENT
+.INDENT 7.0
+.TP
+.B \-toneSE
+.
+adds IMelody in "short" form supported by Sony\-Ericsson phones
+.UNINDENT
+.INDENT 7.0
+.TP
+.B \-toneSElong
+.
+add Sony\-Ericsson IMelody saved in one or few SMS with UPI
+.UNINDENT
+.INDENT 7.0
+.TP
+.B \-variablebitmap
+.
+bitmap in any size saved in one SMS
+.UNINDENT
+.INDENT 7.0
+.TP
+.B \-variablebitmaplong
+.
+bitmap with maximal size 96x128 saved in one or few sms
+.UNINDENT
+.INDENT 7.0
+.TP
+.B \-fixedbitmap
+.
+bitmap 16x16 or 32x32
+.UNINDENT
+.INDENT 7.0
+.TP
+.B \-protected
+.
+all ringtones and bitmaps after this parameter (excluding default
+ringtones and logos) will be "protected" (in phones compatible with
+ODI like SonyEricsson products it won\(aqt be possible to forward them
+from phone menu)
+.UNINDENT
+.INDENT 7.0
+.TP
+.B \-16bit
+.
+Gammu uses SMS headers with 16\-bit numbers for saving linking info
+in SMS (it means less chars available for user in each SMS)
+.UNINDENT
+.INDENT 7.0
+.TP
+.B \-format lcrasbiut
+.sp
+last text will be formatted. You can use combinations of chars:
+.TS
+center;
+|l|l|.
+_
+T{
+Character
+T}	T{
+Formating
+T}
+_
+T{
+\fBl\fP
+T}	T{
+left aligned
+T}
+_
+T{
+\fBc\fP
+T}	T{
+centered
+T}
+_
+T{
+\fBr\fP
+T}	T{
+right aligned
+T}
+_
+T{
+\fBa\fP
+T}	T{
+large font
+T}
+_
+T{
+\fBs\fP
+T}	T{
+small font
+T}
+_
+T{
+\fBb\fP
+T}	T{
+bold font
+T}
+_
+T{
+\fBi\fP
+T}	T{
+italic font
+T}
+_
+T{
+\fBu\fP
+T}	T{
+underlined font
+T}
+_
+T{
+\fBt\fP
+T}	T{
+strikethrough font
+T}
+_
+.TE
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B MMSINDICATOR URL Title Sender
+.sp
 Saves a message with MMS indication. The recipient phone will then download
 MMS from given URL and display it.
-
+.sp
 Please note that you should provide valid smil data on that URL.
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "savesms MMSSETTINGS" " file location  [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+.B MMSSETTINGS file location
+.sp
 Saves a message with MMS configuration. The
 configuration will be read from Gammu backup file from given location.
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "savesms OPERATOR" " file [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-netcode netcode] [\-biglogo]"
-Save operator logo as sms in Nokia (Smart
-Messaging) format - size 72x14 or 78x21 after using \fB\-biglogo\fR, all in
-two colors.
-
-Please note, that it isn't designed for colour logos available for example in
-DCT4/TIKU - you need to put bitmap file there inside phone using filesystem
-commands.
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
+.B OPERATOR file  [\-netcode netcode] [\-biglogo]
+.sp
+Save operator logo as sms in Nokia (Smart Messaging) format \- size
+72x14 in two colors.
+.INDENT 7.0
 .TP
-.BI "savesms PICTURE" " file [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-text text] [\-unicode] [\-alcatelbmmi]"
-
+.B \-biglogo
+.
+Use 78x21 formatted logo instead of standard 72x14.
+.UNINDENT
+.IP Note
+.
+This isn\(aqt designed for colour logos available for example in newer
+phones \- you need to put bitmap file there inside phone using
+filesystem commands.
+.RE
+.UNINDENT
+.INDENT 0.0
+.TP
+.B PICTURE file  [\-text text] [\-unicode] [\-alcatelbmmi]
+.sp
 Read bitmap from 2 colors file (bmp, nlm, nsl, ngg, nol, wbmp, etc.), format
 into bitmap in Smart Messaging (72x28, 2 colors, called often Picture Image
 and saved with text) or Alcatel format and send/save over SMS.
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "savesms PROFILE" " [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-name name] [\-bitmap bitmap] [\-ringtone ringtone]"
-
+.B PROFILE  [\-name name] [\-bitmap bitmap] [\-ringtone ringtone]
+.sp
 Read ringtone (RTTL) format, bitmap (Picture Image size) and name, format into
 Smart Messaging profile and send/save as SMS. Please note, that this format is
 abandomed by Nokia and supported by some (older) devices only like Nokia 3310.
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "savesms RINGTONE" " file [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-long] [\-scale]"
+.B RINGTONE file  [\-long] [\-scale]
+.sp
 Read RTTL ringtone from file and save as SMS
 into SIM/phone memory. Ringtone is saved in Nokia (Smart Messaging) format.
-
-\fB\-long\fR - ringtone is saved using Profile style. It can be longer (and saved
+.INDENT 7.0
+.TP
+.B \-long
+.
+ringtone is saved using Profile style. It can be longer (and saved
 in 2 SMS), but decoded only by newer phones (like 33xx)
-
-\fB\-scale\fR - ringtone will have Scale info for each note. It will allow to edit
+.UNINDENT
+.INDENT 7.0
+.TP
+.B \-scale
+.
+ringtone will have Scale info for each note. It will allow to edit
 it correctly later in phone composer (for example, in 33xx)
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "savesms SMSTEMPLATE" " [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-unicode] [\-text text] [\-unicodefiletext file] [\-defsound ID] [\-defanimation ID] [\-tone10 file] [\-tone10long file] [\-tone12 file] [\-tone12long file] [\-toneSE file] [\-toneSElong file] [\-variablebitmap file] [\-variablebitmaplong file] [\-animation frames file1 ...]"
+.B SMSTEMPLATE  [\-unicode] [\-text text] [\-unicodefiletext file] [\-defsound ID] [\-defanimation ID] [\-tone10 file] [\-tone10long file] [\-tone12 file] [\-tone12long file] [\-toneSE file] [\-toneSElong file] [\-variablebitmap file] [\-variablebitmaplong file] [\-animation frames file1 ...]
+.sp
 Saves a SMS template (for Alcatel phones).
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "savesms TEXT" " [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-inputunicode] [\-16bit] [\-flash] [\-len len] [\-autolen len] [\-unicode] [\-enablevoice] [\-disablevoice] [\-enablefax] [\-disablefax] [\-enableemail] [\-disableemail] [\-voidsms] [\-replacemessages ID] [\-replacefile file] [\-text msgtext] [\-textutf8 msgtext]"
-Take text from stdin (or commandline if \-text 
+.B TEXT  [\-inputunicode] [\-16bit] [\-flash] [\-len len] [\-autolen len] [\-unicode] [\-enablevoice] [\-disablevoice] [\-enablefax] [\-disablefax] [\-enableemail] [\-disableemail] [\-voidsms] [\-replacemessages ID] [\-replacefile file] [\-text msgtext] [\-textutf8 msgtext]
+.sp
+Take text from stdin (or commandline if \-text
 specified) and save as text SMS into SIM/phone memory.
-
-\fB\-flash\fR - Class 0 SMS (should be displayed after receiving on recipients' phone display after receiving without entering Inbox)
-
-\fB\-len len\fR - specify, how many chars will be read. When use this
-option and text will be longer than 1 SMS, will be split into more
-linked SMS
-
-\fB\-autolen len\fR - specify, how many chars will be read. When use this
-option and text will be longer than 1 SMS, will be split into more
-linked SMS.Coding type (SMS default alphabet/Unicode) is set according
-to input text
-
-\fB\-enablevoice\fR | \fB\-disablevoice\fR | \fB\-enablefax \fR |
-\fB\-disablefax \fR | \fB\-enableemail \fR | \fB\-disableemail \fR -
-sms will set such indicators. Text will be cut to 1 sms.
-
-\fB\-voidsms\fR - many phones after receiving it won't display anything,
-only beep, vibrate or turn on light. Text will be cut to 1 sms.
-
-\fB\-unicode\fR - SMS will be saved in Unicode format
-
-\fB\-inputunicode\fR - input text is in Unicode.
-
-\fB\-text\fR - get text from command line instead of stdin.
-
-\fB\-textutf8\fR - get text in UTF-8 from command line instead of stdin.
-
-\fB\-16bit\fR - Gammu uses SMS headers with 16-bit numbers for saving linking info in SMS (it means less chars available for user in each SMS)
-
-\fITIP:\fR
-You can create Unicode file using WordPad in Windows (during saving select
-"Unicode Text Document" format). In Unix can use for example YUdit.
-
-\fB\-replacemessages ID\fR - \fBID\fR can be 1..7. When you will use option and
-send more single SMS to one recipient with the same ID, each another SMS will
-replace each previous with the same ID
-
-\fB\-replacefile file\fR  - when you want, you can make file in such format:
-\fBsrc_unicode_char1, dest_unicode_char1, src_unicode_char2, dest_unicode_char2\fR
-(everything in one line). After reading text for SMS from stdin there will
-be made translation and each src char will be converted to dest char. In docs
-there is example file (\fIreplace.txt\fR), which will change all "a" chars to "1"
-
-\fITIP:\fR when use ~ char in sms text and \fB\-unicode\fR option
-(Unicode coding required), text of sms after ~ char will blink in some phones
-(like N33xx)
-
-\fIExample:\fR echo some_text | gammu savesms TEXT
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
+.INDENT 7.0
 .TP
-.BI "savesms TODO" " file location [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+.B \-flash
+.
+Class 0 SMS (should be displayed after receiving on recipients\(aq phone display after receiving without entering Inbox)
+.UNINDENT
+.INDENT 7.0
+.TP
+.B \-len len
+.sp
+specify, how many chars will be read. When use this option and text
+will be longer than 1 SMS, will be split into more linked SMS
+.UNINDENT
+.INDENT 7.0
+.TP
+.B \-autolen len
+.sp
+specify, how many chars will be read. When use this option and text
+will be longer than 1 SMS, will be split into more linked
+SMS.Coding type (SMS default alphabet/Unicode) is set according to
+input text
+.UNINDENT
+.INDENT 7.0
+.TP
+.B \-enablevoice
+.
+sms will set voice mail indicator. Text will be cut to 1 sms.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B \-disablevoice
+.
+sms will not set voice mail indicator. Text will be cut to 1 sms.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B \-enablefax
+.
+sms will set fax indicator. Text will be cut to 1 sms.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B \-disablefax
+.
+sms will not set fax indicator. Text will be cut to 1 sms.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B \-enableemail
+.
+sms will set email indicator. Text will be cut to 1 sms.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B \-disableemail
+.
+sms will not set email indicator. Text will be cut to 1 sms.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B \-voidsms
+.
+many phones after receiving it won\(aqt display anything, only beep,
+vibrate or turn on light. Text will be cut to 1 sms.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B \-unicode
+.
+SMS will be saved in Unicode format
+.IP Note
+.
+The \fB~\fP char in SMS text and \fI\%-unicode\fP option
+(Unicode coding required) can cause text of SMS after \fB~\fP
+char  blink in some phones (like Nokia 33xx).
+.RE
+.UNINDENT
+.INDENT 7.0
+.TP
+.B \-inputunicode
+.
+input text is in Unicode.
+.IP Note
+.
+You can create Unicode file using WordPad in Windows (during
+saving select "Unicode Text Document" format). In Unix can use
+for example YUdit or vim.
+.RE
+.UNINDENT
+.INDENT 7.0
+.TP
+.B \-text
+.
+get text from command line instead of stdin.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B \-textutf8
+.
+get text in UTF\-8 from command line instead of stdin.
+.IP Note
+.
+Gammu detects your locales and uses by default encoding based
+on this. Use this option only when you know the input will be
+in UTF\-8 in all cases.
+.RE
+.UNINDENT
+.INDENT 7.0
+.TP
+.B \-16bit
+.
+Gammu uses SMS headers with 16\-bit numbers for saving linking info
+in SMS (it means less chars available for user in each SMS)
+.UNINDENT
+.INDENT 7.0
+.TP
+.B \-replacemessages ID
+.sp
+\fBID\fP can be 1..7. When you will use option and send more single
+SMS to one recipient with the same ID, each another SMS will
+replace each previous with the same ID
+.UNINDENT
+.INDENT 7.0
+.TP
+.B \-replacefile file
+.sp
+when you want, you can make file in such format:
+\fBsrc_unicode_char1, dest_unicode_char1, src_unicode_char2, dest_unicode_char2\fP
+(everything in one line). After reading text
+for SMS from stdin there will be made translation and each src char
+will be converted to dest char. In docs there is example file
+(\fBreplace.txt\fP), which will change all "a" chars to "1
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B TODO file location
+.sp
 Saves a message with a todo entry. The content will
 be read from any backup format which Gammu supports and from given location.
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "savesms VCARD10|VCARD21" " file SM|ME location [\-nokia] [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
-Read phonebook entry from file created by \fBbackup\fR option and saves in
-VCARD 1.0 (only name and default number) or VCARD 2.1 (all entry details with
-all numbers, text and name) format as SMS. The location identifies position of contact item 
-to be read in backup file (usually 1, but can be useful in case the backup contains 
-more items).
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
+.B VCARD10|VCARD21 file SM|ME location [\-nokia]
+.sp
+Read phonebook entry from file created by \fI\%gammu backup\fP
+command and saves in VCARD 1.0 (only name and default number) or VCARD
+2.1 (all entry details with all numbers, text and name) format as SMS.
+The location identifies position of contact item to be read in backup
+file (usually 1, but can be useful in case the backup contains more
+items).
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "savesms WAPINDICATOR" " URL Title [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+.B WAPINDICATOR URL Title
+.sp
 Saves a SMS with a WAP indication for given
 URL and title.
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "savesms WAPSETTINGS" " file location DATA|GPRS [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
-Read WAP settings from file created by \fBbackup\fR option and saves in Nokia format as SMS
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
+.B WAPSETTINGS file location DATA|GPRS
+.sp
+Read WAP settings from file created by \fI\%gammu backup\fP command
+and saves in Nokia format as SMS
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "sendsms ANIMATION" " destination frames file1 file2... [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
-Sends a message, for description of message specific parameters see \fBsavesms ANIMATION\fR.
-
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
+.B sendsms TYPE destination [type parameters] [type options] [\-smscset number] [\-smscnumber number] [\-reply] [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]]
+.sp
+Sends a message to a \fBdestination\fP number, most parameters are same as for \fI\%gammu savesms\fP.
+.INDENT 7.0
 .TP
-.BI "sendsms BOOKMARK" " destination file location [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
-Sends a message, for description of message specific parameters see \fBsavesms BOOKMARK\fR.
-
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
+.B \-save
+.
+will also save message which is being sent
+.UNINDENT
+.INDENT 7.0
 .TP
-.BI "sendsms CALENDAR" " destination file location [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
-Sends a message, for description of message specific parameters see \fBsavesms CALENDAR\fR.
-
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
+.B \-report
+.
+request delivery report for message
+.UNINDENT
+.INDENT 7.0
 .TP
-.BI "sendsms CALLER" " destination file [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
-Sends a message, for description of message specific parameters see \fBsavesms CALLER\fR.
-
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
+.B \-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX
+.sp
+sets how long will be the
+message valid (SMSC will the discard the message after this time if it could
+not deliver it).
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "sendsms EMS" " destination [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-unicode] [\-16bit] [\-format lcrasbiut] [\-text text] [\-unicodefiletext file] [\-defsound ID] [\-defanimation ID] [\-tone10 file] [\-tone10long file] [\-tone12 file] [\-tone12long file] [\-toneSE file] [\-toneSElong file] [\-fixedbitmap file] [\-variablebitmap file] [\-variablebitmaplong file] [\-animation frames file1 ...] [\-protected number]"
-Sends a message, for description of message specific parameters see \fBsavesms EMS\fR.
-
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
-.TP
-.BI "sendsms MMSINDICATOR" " destination URL Title Sender [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
-Sends a message, for description of message specific parameters see \fBsavesms MMSINDICATOR\fR.
-
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
-.TP
-.BI "sendsms MMSSETTINGS" " destination file location [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
-Sends a message, for description of message specific parameters see \fBsavesms MMSSETTINGS\fR.
-
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
-.TP
-.BI "sendsms OPERATOR" " destination file [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-netcode netcode] [\-biglogo]"
-Sends a message, for description of message specific parameters see \fBsavesms OPERATOR\fR.
-
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
-.TP
-.BI "sendsms PICTURE" " destination file [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-text text] [\-unicode] [\-alcatelbmmi]"
-Sends a message, for description of message specific parameters see \fBsavesms PICTURE\fR.
-
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
-.TP
-.BI "sendsms PROFILE" " destination [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-name name] [\-bitmap bitmap] [\-ringtone ringtone]"
-Sends a message, for description of message specific parameters see \fBsavesms PROFILE\fR.
-
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
-.TP
-.BI "sendsms RINGTONE" " destination file [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-long] [\-scale]"
-Sends a message, for description of message specific parameters see \fBsavesms RINGTONE\fR.
-
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
-.TP
-.BI "sendsms SMSTEMPLATE" " destination [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-unicode] [\-text text] [\-unicodefiletext file] [\-defsound ID] [\-defanimation ID] [\-tone10 file] [\-tone10long file] [\-tone12 file] [\-tone12long file] [\-toneSE file] [\-toneSElong file] [\-variablebitmap file] [\-variablebitmaplong file] [\-animation frames file1 ...]"
-Sends a message, for description of message specific parameters see \fBsavesms SMSTEMPLATE\fR.
-
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
-.TP
-.BI "sendsms TEXT" " destination [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-inputunicode] [\-16bit] [\-flash] [\-len len] [\-autolen len] [\-unicode] [\-enablevoice] [\-disablevoice] [\-enablefax] [\-disablefax] [\-enableemail] [\-disableemail] [\-voidsms] [\-replacemessages ID] [\-replacefile file] [\-text msgtext] [\-textutf8 msgtext]"
-Sends a message, for description of message specific parameters see \fBsavesms TEXT\fR.
-
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
-.TP
-.BI "sendsms TODO" " destination file location [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
-Sends a message, for description of message specific parameters see \fBsavesms TODO\fR.
-
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
-.TP
-.BI "sendsms VCARD10|VCARD21" " destination file SM|ME location [\-nokia] [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
-Sends a message, for description of message specific parameters see \fBsavesms VCARD10|VCARD21\fR.
-
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
-.TP
-.BI "sendsms WAPINDICATOR" " destination URL Title [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
-Sends a message, for description of message specific parameters see \fBsavesms WAPINDICATOR\fR.
-
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
-.TP
-.BI "sendsms WAPSETTINGS" " destination file location DATA|GPRS [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
-Sends a message, for description of message specific parameters see \fBsavesms WAPSETTINGS\fR.
-
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
-.TP
-.BI "setsmsc" " location number"
+.B setsmsc location number
+.sp
 Set SMSC settings on SIM card. This keeps all SMSC configuration
 intact, it just changes the SMSC number.
-
+.sp
 Locations are numerated from 1.
-
-
-.SS "Memory (phonebooks and calls)"
+.UNINDENT
+.SS Memory (phonebooks and calls) commands
+.SS Memory types
+.sp
+Gammu recognizes following memory types:
+.INDENT 0.0
 .TP
-.BI "addcategory TODO|PHONEBOOK" " text"
-
+.B \fBDC\fP
+.sp
+Dialled calls
 .TP
-.BI "addnew" " file [\-yes] [\-memory ME|SM|..]"
-Adds data written in file created using \fBbackup option\fR. All things
-backup'ed by \fBbackup\fR can be restored (when made backup to Gammu text
-file).
-
-Please note that this adds all content of backup file to phone and
-does not care about current data in the phone (no duplicates are 
-detected).
-
-Use \-yes parameter to answer yes to all questions (you want to automatically 
-restore all data).
-
-Use \-memory parameter to force usage of defined memory type for storing entries 
-regardless what backu format says.
-
+.B \fBMC\fP
+.sp
+Missed calls
 .TP
-.BI "backup" " file [\-yes]"
-Backup your phone to file. It's possible to backup (depends on phone and backup format):
-
-* phonebook from SIM and phone memory
-.br
-* calendar notes
-.br
-* SMSC settings
-.br
-* operator logo
-.br
-* startup (static) logo or startup text
-.br
-* WAP bookmarks
-.br
-* WAP settings
-.br
-* caller logos and groups
-.br
-* user ringtones
-.br
-
-There are various backup formats supported and the backup format is guessed
-based on file extension:
-
-* .lmb - Nokia backup, supports contacts, caller logos and startup logo.
-.br
-* .vcs - vCalendar, supports calendar and todo.
-.br
-* .vcf - vCard, supports contacts.
-.br
-* .ldif - LDAP import, supports contacts.
-.br
-* .ics - iCalendar, supports calendar and todo.
-.br
-* Any other extension is Gammu backup file and it supports all data mentioned above.
-
-See \fBEXAMPLE\fR section for some hints on manipulating Gammu backup format.
-
-
+.B \fBRC\fP
+.sp
+Received calls
 .TP
-.BI "clearall"
-Deletes all private data from the phone.
-
+.B \fBON\fP
+.sp
+Own numbers
 .TP
-.BI "deleteallmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL"
+.B \fBVM\fP
+.sp
+voice mailbox
+.TP
+.B \fBSM\fP
+.sp
+SIM phonebook
+.TP
+.B \fBME\fP
+.sp
+phone internal phonebook
+.TP
+.B \fBFD\fP
+.sp
+fixed dialling
+.TP
+.B \fBSL\fP
+.sp
+sent SMS log
+.UNINDENT
+.SS Memory commands
+.INDENT 0.0
+.TP
+.B deleteallmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL
+.sp
 Deletes all entries from specified memory type.
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "deletememory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL" " start [stop]"
+.B deletememory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL start [stop]
+.sp
 Deletes entries in specified range from specified memory type.
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "getallcategory TODO|PHONEBOOK"
-
-.TP
-.BI "getallmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL"
+.B getallmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL
+.sp
 Get all memory locations from phone. For memory
-types see \fBgetmemory\fR.
+types see \fI\%getmemory\fP.
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "getcategory TODO|PHONEBOOK" " start [stop]"
-
-.TP
-.BI "getmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL" " start [stop [\-nonempty]]"
-Get memory location from phone. 
-
+.B getmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL start [stop [\-nonempty]]
+.sp
+Get memory location from phone.
+.sp
 Locations are numerated from 1.
-
-\fBDC\fR = Dialled calls
-.br
-\fBMC\fR = Missed calls
-.br
-\fBRC\fR = Received calls
-.br
-\fBON\fR = Own numbers
-.br
-\fBVM\fR = voice mailbox
-.br
-\fBSM\fR = SIM phonebook
-.br
-\fBME\fR = phone internal phonebook
-.br
-\fBFD\fR = fixed dialling
-.br
-\fBSL\fR = sent SMS log
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "getspeeddial" " start [stop]"
+.B getspeeddial start [stop]
+.sp
 Gets speed dial choices.
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "listmemorycategory" " text|number"
-
-.TP
-.BI "nokiagetpbkfeatures" " memorytype"
-
-.TP
-.BI "restore" " file [\-yes]"
-Restore settings written in file created using \fBbackup\fR option. 
-
-Please note that restoring deletes all current content in phone. If you
-want only to add entries to phone, use addnew.
-
-In some phones restoring calendar notes will not show error, but won't
-be done, when phone doesn't have set clock inside.
-
-.TP
-.BI "savefile VCARD10|VCARD21" " target.vcf file SM|ME location"
-Allows to convert between various backup formats which gammu
-supports for phonebook events. The file type is guessed (for input file
-guess is based on extension and file content, for output solely on 
-extension).
-
-For example if you want to convert single entry from gammu native 
-backup to vCard, you need following command:
-
-    gammu savefile CALENDAR output.vcf myPhonebook.backup ME 42
-
-.TP
-.BI "savesms VCARD10|VCARD21" " file SM|ME location [\-nokia] [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
-Read phonebook entry from file created by \fBbackup\fR option and saves in
-VCARD 1.0 (only name and default number) or VCARD 2.1 (all entry details with
-all numbers, text and name) format as SMS. The location identifies position of contact item 
-to be read in backup file (usually 1, but can be useful in case the backup contains 
-more items).
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
-.TP
-.BI "searchmemory" " text"
+.B searchmemory text
+.sp
 Scans all memory entries for given text. It performs
 case insensitive substring lookup. You can interrupt searching by pressing
 Ctrl+C.
-.TP
-.BI "sendsms VCARD10|VCARD21" " destination file SM|ME location [\-nokia] [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
-Sends a message, for description of message specific parameters see \fBsavesms VCARD10|VCARD21\fR.
-
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
-
-.SS "Filesystem"
-.P
-
+.UNINDENT
+.SS Filesystem commands
+.sp
 Gammu allows to access phones using native protocol (Nokias) or OBEX. Your
 phone can also support usb storage, which is handled on the operating system
 level and Gammu does not use that.
-
+.INDENT 0.0
 .TP
-.BI "addfile" " folderID name [\-type JAR|BMP|PNG|GIF|JPG|MIDI|WBMP|AMR|3GP|NRT] [\-readonly] [\-protected] [\-system] [\-hidden] [\-newtime]"
+.B addfile folderID name [\-type JAR|BMP|PNG|GIF|JPG|MIDI|WBMP|AMR|3GP|NRT] [\-readonly] [\-protected] [\-system] [\-hidden] [\-newtime]
+.sp
 Add file with specified name to folder with specified folder ID.
-
-.B \-type 
-- file type was required for filesystem 1 in Nokia phones (current filesystem 2 doesn't need this)
-
-.B \-readonly, \-protected, \-system, \-hidden
-- you can set readonly, protected (file can't be for example forwarded from phone menu), system and hidden (file is hidden from phone menu) file attributes
-
-.B \-newtime 
-- after using it date/time of file modification will be set to moment of uploading 
-
-
+.INDENT 7.0
 .TP
-.BI "addfolder" " parentfolderID name"
+.B \-type
+.
+File type was required for filesystem 1 in Nokia phones (current filesystem 2 doesn\(aqt need this).
+.UNINDENT
+.INDENT 7.0
+.TP
+.B \-readonly
+.
+Sets the read only attribute.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B \-protected
+.
+Sets the protected attribute (file can\(aqt be for example forwarded
+from phone menu).
+.UNINDENT
+.INDENT 7.0
+.TP
+.B \-system
+.
+Sets the system attribute.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B \-hidden
+.
+Sets the hidden attribute (file is hidden from phone menu).
+.UNINDENT
+.INDENT 7.0
+.TP
+.B \-newtime
+.
+After using it date/time of file modification will be set to moment of uploading.
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B addfolder parentfolderID name
+.sp
 Create a folder in phone with specified name in a
 folder with specified folder ID.
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "deletefiles" " fileID"
+.B deletefiles fileID
+.sp
 Delete files with given IDs.
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "deletefolder" " name"
+.B deletefolder name
+.sp
 Delete folder with given ID.
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "getfilefolder" " fileID, fileID, ..."
+.B getfilefolder fileID, fileID, ...
+.sp
 Retrieve files or all files from folder with given IDs from a phone filesytem.
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "getfiles" " fileID, fileID, ..."
+.B getfiles fileID, fileID, ...
+.sp
 Retrieve files with given IDs from a phone filesytem.
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "getfilesystem" " [\-flatall|\-flat]"
+.B getfilesystem [\-flatall|\-flat]
+.sp
 Display info about all folders and files in phone memory/memory card. By default there is tree displayed, you can change it:
-
+.INDENT 7.0
+.TP
 .B \-flatall
+.
 there are displayed full file/folder details like ID (first parameter in line)
-
+.UNINDENT
+.INDENT 7.0
+.TP
 .B \-flat
-
-Please note, that in some phones (like N6230) content of some folders (with more files) can be cut (only part of files will be displayed) for example on infrared connection. This is not Gammu issue, but phone firmware problem.
-
+.UNINDENT
+.IP Note
+.
+In some phones (like N6230) content of some folders (with more files) can be cut (only part of files will be displayed) for example on infrared connection. This is not Gammu issue, but phone firmware problem.
+.RE
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "getfilesystemstatus"
-Display info filesystem status - number of
+.B getfilesystemstatus
+.
+Display info filesystem status \- number of
 bytes available, used or used by some specific content.
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "getfolderlisting" " folderID"
-
-Display files and folders available in folder with given folder ID. You can get ID's using getfilesystem \-flatall.
-
+.B getfolderlisting folderID
+.sp
+Display files and folders available in folder with given folder ID. You can get ID\(aqs using getfilesystem \-flatall.
+.sp
 Please note, that in some phones (like N6230) content of some folders (with more files) can be cut (only part of files will be displayed) for example on infrared connection. This is not Gammu issue, but phone firmware problem.
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "getrootfolders"
-
+.B getrootfolders
+.
 Display info about drives available in phone/memory card.
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "nokiaaddfile APPLICATION|GAME" " file [\-readonly] [\-overwrite] [\-overwriteall]"
-Install the *.jar/*.jad file pair of a midlet in the application or game menu of the phone. You need to specify filename without the jar/jad suffix, both will be added automatically.
-
-The option
-.I \-overwrite
-deletes the application's .jad and .jar files bevor installing, but doesn't delete the application data. Option
-.I \-overwriteall
-will also delete all data. Both these options work only for Application or Game upload.
-
-\fIExample:\fR gammu nokiaaddfile Application Alien will read Alien.JAD and Alien.JAR and add to Applications
-
-\fIExample:\fR gammu nokiaaddfile Tones file.mid will read file.mid and add to Tones folder
-
-You can use jadmaker(1) to generate a .jad file from a .jar file.
-
-.TP
-.BI "nokiaaddfile GALLERY|GALLERY2|CAMERA|TONES|TONES2|RECORDS|VIDEO|PLAYLIST|MEMORYCARD" " file [\-name name] [\-protected] [\-readonly] [\-system] [\-hidden] [\-newtime]"
-
-.TP
-.BI "nokiaaddplaylists"
-
-Goes through phone memory and generated playlist for all music files found.
-
-To manually manage playlists:
-
-    gammu addfile a:\\predefplaylist filename.m3u
-
-Will add playlist filename.m3u
-
-    gammu getfilesystem
-
-Will get list of all files (including names of files with playlists)
-
-    gammu deletefiles a:\\predefplaylist\\filename.m3u
-
-Will delete playlist filename.m3u
-
-Format of m3u playlist is easy (standard mp3 playlist):
-
-First line is #EXTM3U, next lines contain  names of files (b:\\file1.mp3,
-b:\\folder1\\file2.mp3, etc.). File needs t have '\\r\\n' terminated lines. So
-just run unix2dos on the resulting file before uploading it your your phone.
-
-.TP
-.BI "sendfile" " name"
-Sends file to a phone. It's up to phone to decide where
+.B sendfile name
+.sp
+Sends file to a phone. It\(aqs up to phone to decide where
 to store this file and how to handle it (for example when you send vCard or
 vCalendar, most of phones will offer you to import it.
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "setfileattrib" " folderID [\-system] [\-readonly] [\-hidden] [\-protected]"
-
-
-.SS "Logo and pictures"
-.P
-
+.B setfileattrib folderID [\-system] [\-readonly] [\-hidden] [\-protected]
+.UNINDENT
+.SS Logo and pictures commands
+.sp
 These options are mainly (there are few exceptions) for monochromatic logos and
 images available in older phones. Recognized file formats: xpm (only saving),
-2-colors bmp, nlm, nsl, ngg, nol, wbmp, gif (for Samsung).
-
+2\-colors bmp, nlm, nsl, ngg, nol, wbmp, gif (for Samsung).
+.sp
 In new models all bitmaps are saved in filesystem and should go into filesystem section
-
+.INDENT 0.0
 .TP
-.BI "copybitmap" " inputfile [outputfile [OPERATOR|PICTURE|STARTUP|CALLER]]"
+.B copybitmap inputfile [outputfile [OPERATOR|PICTURE|STARTUP|CALLER]]
+.sp
 Allow to convert logos files to another. When give ONLY inputfile, output will
 be written to stdout using ASCII art. When give output file and format, in
 some file formats (like NLM) will be set indicator informing about logo type
 to given.
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "getbitmap CALLER" " location [file]"
-Get caller group logo from phone. Locations 1-5.
-
+.B getbitmap TYPE [type options]
+.sp
+Reads bitmap from phone, following types are supported:
+.INDENT 7.0
 .TP
-.BI "getbitmap DEALER"
-In some models it's possible to save dealer welcome note - text displayed
-during enabling phone, which can't be edited from phone menu.  Here you can
+.B CALLER location [file]
+.sp
+Get caller group logo from phone. Locations 1\-5.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B DEALER
+.
+In some models it\(aqs possible to save dealer welcome note \- text displayed
+during enabling phone, which can\(aqt be edited from phone menu.  Here you can
 get it.
-
+.UNINDENT
+.INDENT 7.0
 .TP
-.BI "getbitmap OPERATOR" " [file]"
+.B OPERATOR [file]
+.sp
 Get operator logo (picture displayed instead of operator name) from phone.
-
+.UNINDENT
+.INDENT 7.0
 .TP
-.BI "getbitmap PICTURE" " location [file]"
+.B PICTURE location [file]
+.sp
 Get Picture Image from phone.
-
+.UNINDENT
+.INDENT 7.0
 .TP
-.BI "getbitmap STARTUP" " [file]"
+.B STARTUP [file]
+.sp
 Get static startup logo from phone. Allow to save it in file.
-
+.UNINDENT
+.INDENT 7.0
 .TP
-.BI "getbitmap TEXT"
+.B TEXT
+.
 Get startup text from phone.
-
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "savesms ANIMATION" " frames file1 file2... [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
-Save an animation as a SMS. You need to give
-number of frames and picture for each frame. Each picture can be in any
-picture format which Gammu supports (B/W bmp, gif, wbmp, nol, nlm...).
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
+.B setbitmap TYPE [type options]
+.sp
+Sets bitmap in phone, following types are supported:
+.INDENT 7.0
 .TP
-.BI "savesms CALLER" " file [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
-Save caller logo as sms in Nokia (Smart Messaging)
-format - size 72x14, two colors.
-
-Please note, that it isn't designed for colour logos available for example in
-DCT4/TIKU - you need to put bitmap file there inside phone using filesystem
-commands.
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
-.TP
-.BI "savesms OPERATOR" " file [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-netcode netcode] [\-biglogo]"
-Save operator logo as sms in Nokia (Smart
-Messaging) format - size 72x14 or 78x21 after using \fB\-biglogo\fR, all in
-two colors.
-
-Please note, that it isn't designed for colour logos available for example in
-DCT4/TIKU - you need to put bitmap file there inside phone using filesystem
-commands.
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
-.TP
-.BI "savesms PICTURE" " file [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-text text] [\-unicode] [\-alcatelbmmi]"
-
-Read bitmap from 2 colors file (bmp, nlm, nsl, ngg, nol, wbmp, etc.), format
-into bitmap in Smart Messaging (72x28, 2 colors, called often Picture Image
-and saved with text) or Alcatel format and send/save over SMS.
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
-.TP
-.BI "sendsms ANIMATION" " destination frames file1 file2... [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
-Sends a message, for description of message specific parameters see \fBsavesms ANIMATION\fR.
-
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
-.TP
-.BI "sendsms CALLER" " destination file [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
-Sends a message, for description of message specific parameters see \fBsavesms CALLER\fR.
-
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
-.TP
-.BI "sendsms OPERATOR" " destination file [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-netcode netcode] [\-biglogo]"
-Sends a message, for description of message specific parameters see \fBsavesms OPERATOR\fR.
-
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
-.TP
-.BI "sendsms PICTURE" " destination file [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-text text] [\-unicode] [\-alcatelbmmi]"
-Sends a message, for description of message specific parameters see \fBsavesms PICTURE\fR.
-
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
-.TP
-.BI "setbitmap CALLER" " location [file]"
+.B CALLER location [file]
+.sp
 Set caller logo.
+.UNINDENT
+.INDENT 7.0
 .TP
-.BI "setbitmap COLOUROPERATOR" " [fileID [netcode]]"
+.B COLOUROPERATOR [fileID [netcode]]
+.sp
 Sets color operator logo in phone.
+.UNINDENT
+.INDENT 7.0
 .TP
-.BI "setbitmap COLOURSTARTUP" " [fileID]"
-
+.B COLOURSTARTUP [fileID]
+.UNINDENT
+.INDENT 7.0
 .TP
-.BI "setbitmap DEALER" " text"
+.B DEALER text
+.sp
 Sets welcome message configured by dealer, which usually can not be changed in phone menus.
+.UNINDENT
+.INDENT 7.0
 .TP
-.BI "setbitmap OPERATOR" " [file [netcode]]"
-Set operator logo in phone. When won't give file and netcode, operator logo
+.B OPERATOR [file [netcode]]
+.sp
+Set operator logo in phone. When won\(aqt give file and netcode, operator logo
 will be removed from phone. When will give only filename, operator logo will
-be displayed for your current GSM operator. When give additionally network
-code, it will be displayed for this operator: \fBgammu setbitmap OPERATOR file "260 02"\fR
-
+be displayed for your current GSM operator. When you give additionally network
+code, it will be displayed for this operator.
+.UNINDENT
+.INDENT 7.0
 .TP
-.BI "setbitmap PICTURE" " file location [text]"
+.B PICTURE file location [text]
+.sp
 Sets picture image in phone.
+.UNINDENT
+.INDENT 7.0
 .TP
-.BI "setbitmap STARTUP" " file|1|2|3"
+.B STARTUP file|1|2|3
+.sp
 Set startup logo in phone. It can be static (then you will have to give file
 name) or one of predefined animated (only some phones like Nokia 3310 or 3330
 supports it, use location 1, 2 or 3 for these).
-
+.UNINDENT
+.INDENT 7.0
 .TP
-.BI "setbitmap TEXT" " text"
+.B TEXT text
+.sp
 Sets startup text in phone.
+.UNINDENT
+.INDENT 7.0
 .TP
-.BI "setbitmap WALLPAPER" " fileID"
+.B WALLPAPER fileID
+.sp
 Sets wallpaper in phone.
-
-.SS "Ringtones"
-.P
-
+.UNINDENT
+.UNINDENT
+.SS Ringtones commands
+.sp
 Ringtones are mostly supported only for older phones. For recent phones you
 usually just upload them to some folder in phone filesystem.
-
+.sp
 There are recognized various file formats by options described below: rttl,
 binary format created for Gammu, mid (saving), re (reading), ott, communicator,
 ringtones format found in fkn.pl, wav (saving), ime/imy (saving), rng, mmf (for
 Samsung).
-
-
+.INDENT 0.0
 .TP
-.BI "addnew" " file [\-yes] [\-memory ME|SM|..]"
-Adds data written in file created using \fBbackup option\fR. All things
-backup'ed by \fBbackup\fR can be restored (when made backup to Gammu text
-file).
-
-Please note that this adds all content of backup file to phone and
-does not care about current data in the phone (no duplicates are 
-detected).
-
-Use \-yes parameter to answer yes to all questions (you want to automatically 
-restore all data).
-
-Use \-memory parameter to force usage of defined memory type for storing entries 
-regardless what backu format says.
-
-.TP
-.BI "backup" " file [\-yes]"
-Backup your phone to file. It's possible to backup (depends on phone and backup format):
-
-* phonebook from SIM and phone memory
-.br
-* calendar notes
-.br
-* SMSC settings
-.br
-* operator logo
-.br
-* startup (static) logo or startup text
-.br
-* WAP bookmarks
-.br
-* WAP settings
-.br
-* caller logos and groups
-.br
-* user ringtones
-.br
-
-There are various backup formats supported and the backup format is guessed
-based on file extension:
-
-* .lmb - Nokia backup, supports contacts, caller logos and startup logo.
-.br
-* .vcs - vCalendar, supports calendar and todo.
-.br
-* .vcf - vCard, supports contacts.
-.br
-* .ldif - LDAP import, supports contacts.
-.br
-* .ics - iCalendar, supports calendar and todo.
-.br
-* Any other extension is Gammu backup file and it supports all data mentioned above.
-
-See \fBEXAMPLE\fR section for some hints on manipulating Gammu backup format.
-
-
-.TP
-.BI "clearall"
-Deletes all private data from the phone.
-
-.TP
-.BI "copyringtone" " source destination [RTTL|BINARY]"
+.B copyringtone source destination [RTTL|BINARY]
+.sp
 Copy source ringtone to destination.
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "getphoneringtone" " location [file]"
-
+.B getphoneringtone location [file]
+.sp
 Get one of "default" ringtones and saves into file
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "getringtone" " location [file]"
-Get ringtone from phone in RTTL or BINARY format. 
-
+.B getringtone location [file]
+.sp
+Get ringtone from phone in RTTL or BINARY format.
+.sp
 Locations are numerated from 1.
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "getringtoneslist"
-
+.B getringtoneslist
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "nokiacomposer" " file"
-Show, how to enter RTTL ringtone in composer existing in many Nokia phones
-(and how should it look like).
-
-.TP
-.BI "playringtone" " file"
+.B playringtone file
+.sp
 Play aproximation of ringtone over phone buzzer. File can be in RTTL or BINARY (Nokia DCT3) format.
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "playsavedringtone" " number"
-
-Play one of "built" ringtones. This option is available for DCT4 phones. For getting ringtones list use getringtoneslist.
-
+.B playsavedringtone number
+.sp
+Play one of built\-in ringtones. This option is available for DCT4 phones.
+For getting ringtones list use \fI\%gammu getringtoneslist\fP.
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "restore" " file [\-yes]"
-Restore settings written in file created using \fBbackup\fR option. 
-
-Please note that restoring deletes all current content in phone. If you
-want only to add entries to phone, use addnew.
-
-In some phones restoring calendar notes will not show error, but won't
-be done, when phone doesn't have set clock inside.
-
-.TP
-.BI "savesms RINGTONE" " file [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-long] [\-scale]"
-Read RTTL ringtone from file and save as SMS
-into SIM/phone memory. Ringtone is saved in Nokia (Smart Messaging) format.
-
-\fB\-long\fR - ringtone is saved using Profile style. It can be longer (and saved
-in 2 SMS), but decoded only by newer phones (like 33xx)
-
-\fB\-scale\fR - ringtone will have Scale info for each note. It will allow to edit
-it correctly later in phone composer (for example, in 33xx)
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
-.TP
-.BI "sendsms RINGTONE" " destination file [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-long] [\-scale]"
-Sends a message, for description of message specific parameters see \fBsavesms RINGTONE\fR.
-
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
-.TP
-.BI "setringtone" " file [\-location location] [\-scale] [\-name name]"
-Set ringtone in phone. When don't give location, it will be written
+.B setringtone file [\-location location] [\-scale] [\-name name]
+.sp
+Set ringtone in phone. When don\(aqt give location, it will be written
 "with preview" (in phones supporting this feature like 61xx or 6210).
-When use RTTL ringtones, give location and use \fB\-scale\fR, there will be written
-scale info with each note. It will avoid scale problems available during
-editing ringtone in composer from phone menu (for example, in N33xx).
-
-\fITIP:\fR when use ~ char in ringtone name, in some phones (like 
-33xx) name will blink later in phone menus
-
-
-.SS "Calendar notes"
-.P
-
+.INDENT 7.0
+.TP
+.B \-scale
+.
+Scale information will be added to each note of RTTL ringtone. It will
+avoid scale problems available during editing ringtone in composer
+from phone menu (for example, in Nokia 33xx).
+.UNINDENT
+.IP Note
+.
+When use \fB~\fP char in ringtone name, in some phones (like 33xx) name
+will blink later in phone menus.
+.RE
+.UNINDENT
+.SS Calendar notes commands
+.sp
 In Nokia 3310, 3315 and 3330 these are named "Reminders" and have some limitations (depending on phone firmware version).
-
+.INDENT 0.0
 .TP
-.BI "addnew" " file [\-yes] [\-memory ME|SM|..]"
-Adds data written in file created using \fBbackup option\fR. All things
-backup'ed by \fBbackup\fR can be restored (when made backup to Gammu text
-file).
-
-Please note that this adds all content of backup file to phone and
-does not care about current data in the phone (no duplicates are 
-detected).
-
-Use \-yes parameter to answer yes to all questions (you want to automatically 
-restore all data).
-
-Use \-memory parameter to force usage of defined memory type for storing entries 
-regardless what backu format says.
-
+.B deletecalendar start [stop]
+.sp
+Deletes selected calendar entries in phone.
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "backup" " file [\-yes]"
-Backup your phone to file. It's possible to backup (depends on phone and backup format):
-
-* phonebook from SIM and phone memory
-.br
-* calendar notes
-.br
-* SMSC settings
-.br
-* operator logo
-.br
-* startup (static) logo or startup text
-.br
-* WAP bookmarks
-.br
-* WAP settings
-.br
-* caller logos and groups
-.br
-* user ringtones
-.br
-
-There are various backup formats supported and the backup format is guessed
-based on file extension:
-
-* .lmb - Nokia backup, supports contacts, caller logos and startup logo.
-.br
-* .vcs - vCalendar, supports calendar and todo.
-.br
-* .vcf - vCard, supports contacts.
-.br
-* .ldif - LDAP import, supports contacts.
-.br
-* .ics - iCalendar, supports calendar and todo.
-.br
-* Any other extension is Gammu backup file and it supports all data mentioned above.
-
-See \fBEXAMPLE\fR section for some hints on manipulating Gammu backup format.
-
-
-.TP
-.BI "clearall"
-Deletes all private data from the phone.
-
-.TP
-.BI "deletecalendar" " start [stop]"
-Deletes selected calendar entries in phone. 
-.TP
-.BI "getallcalendar"
+.B getallcalendar
+.
 Retrieves all calendar entries from phone.
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "getcalendar" " start [stop]"
+.B getcalendar start [stop]
+.sp
 Retrieves selected calendar entries from phone.
+.UNINDENT
+.SS To do list commands
+.INDENT 0.0
 .TP
-.BI "getcalendarsettings"
-Displays calendar settings like first day of
-week or automatic deleting of old entries.
-
+.B deletetodo start [stop]
+.sp
+Deletes selected todo entries in phone.
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "restore" " file [\-yes]"
-Restore settings written in file created using \fBbackup\fR option. 
-
-Please note that restoring deletes all current content in phone. If you
-want only to add entries to phone, use addnew.
-
-In some phones restoring calendar notes will not show error, but won't
-be done, when phone doesn't have set clock inside.
-
-.TP
-.BI "savefile CALENDAR" " target.vcs file location"
-Allows to convert between various backup formats which gammu
-supports for calendar events. The file type is guessed (for input file
-guess is based on extension and file content, for output solely on 
-extension).
-
-For example if you want to convert single entry from gammu native 
-backup to vCalendar, you need following command:
-
-    gammu savefile CALENDAR output.vcs myCalendar.backup 260
-
-.TP
-.BI "savesms CALENDAR" " file location [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
-Read calendar note from file created by \fBbackup\fR option and saves in
-VCALENDAR 1.0 format as SMS. The location identifies position of calendar item 
-to be read in backup file (usually 1, but can be useful in case the backup contains 
-more items).
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
-.TP
-.BI "sendsms CALENDAR" " destination file location [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
-Sends a message, for description of message specific parameters see \fBsavesms CALENDAR\fR.
-
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
-
-.SS "To do lists"
-.TP
-.BI "addcategory TODO|PHONEBOOK" " text"
-
-.TP
-.BI "addnew" " file [\-yes] [\-memory ME|SM|..]"
-Adds data written in file created using \fBbackup option\fR. All things
-backup'ed by \fBbackup\fR can be restored (when made backup to Gammu text
-file).
-
-Please note that this adds all content of backup file to phone and
-does not care about current data in the phone (no duplicates are 
-detected).
-
-Use \-yes parameter to answer yes to all questions (you want to automatically 
-restore all data).
-
-Use \-memory parameter to force usage of defined memory type for storing entries 
-regardless what backu format says.
-
-.TP
-.BI "backup" " file [\-yes]"
-Backup your phone to file. It's possible to backup (depends on phone and backup format):
-
-* phonebook from SIM and phone memory
-.br
-* calendar notes
-.br
-* SMSC settings
-.br
-* operator logo
-.br
-* startup (static) logo or startup text
-.br
-* WAP bookmarks
-.br
-* WAP settings
-.br
-* caller logos and groups
-.br
-* user ringtones
-.br
-
-There are various backup formats supported and the backup format is guessed
-based on file extension:
-
-* .lmb - Nokia backup, supports contacts, caller logos and startup logo.
-.br
-* .vcs - vCalendar, supports calendar and todo.
-.br
-* .vcf - vCard, supports contacts.
-.br
-* .ldif - LDAP import, supports contacts.
-.br
-* .ics - iCalendar, supports calendar and todo.
-.br
-* Any other extension is Gammu backup file and it supports all data mentioned above.
-
-See \fBEXAMPLE\fR section for some hints on manipulating Gammu backup format.
-
-
-.TP
-.BI "clearall"
-Deletes all private data from the phone.
-
-.TP
-.BI "deletetodo" " start [stop]"
-Deletes selected todo entries in phone. 
-.TP
-.BI "getallcategory TODO|PHONEBOOK"
-
-.TP
-.BI "getalltodo"
+.B getalltodo
+.
 Retrieves all todo entries from phone.
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "getcategory TODO|PHONEBOOK" " start [stop]"
-
-.TP
-.BI "gettodo" " start [stop]"
+.B gettodo start [stop]
+.sp
 Retrieves selected todo entries from phone.
+.UNINDENT
+.SS Notes commands
+.INDENT 0.0
 .TP
-.BI "listtodocategory" " text|number"
-
-.TP
-.BI "restore" " file [\-yes]"
-Restore settings written in file created using \fBbackup\fR option. 
-
-Please note that restoring deletes all current content in phone. If you
-want only to add entries to phone, use addnew.
-
-In some phones restoring calendar notes will not show error, but won't
-be done, when phone doesn't have set clock inside.
-
-.TP
-.BI "savefile TODO" " target.vcs file location"
-Allows to convert between various backup formats which gammu
-supports for todo events. The file type is guessed (for input file
-guess is based on extension and file content, for output solely on 
-extension).
-
-For example if you want to convert single entry from gammu native 
-backup to vCalendar, you need following command:
-
-    gammu savefile CALENDAR output.vcs myCalendar.backup 260
-
-.TP
-.BI "savesms TODO" " file location [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
-Saves a message with a todo entry. The content will
-be read from any backup format which Gammu supports and from given location.
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
-.TP
-.BI "sendsms TODO" " destination file location [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
-Sends a message, for description of message specific parameters see \fBsavesms TODO\fR.
-
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
-
-.SS "Notes"
-.TP
-.BI "getallnotes"
+.B getallnotes
+.
 Reads all notes from the phone.
-
-Note: Not all phones supports this function, especially most Sony Ericsson 
+.IP Note
+.
+Not all phones supports this function, especially most Sony Ericsson
 phones even if they have notes inside phone.
-
-
-.SS "Date, time and alarms"
+.RE
+.UNINDENT
+.SS Date, time and alarm commands
+.INDENT 0.0
 .TP
-.BI "getalarm" " [start]"
+.B getalarm [start]
+.sp
 Get alarm from phone, if no location is specified,
 1 is used.
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "getdatetime"
+.B getdatetime
+.
 Get date and time from phone
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "setalarm" " hour minute"
+.B setalarm hour minute
+.sp
 Sets repeating alarm in phone on selected time.
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "setdatetime" " [HH:MM[:SS]] [YYYY/MM/DD]"
-Set date and time in phone to date and time set in computer. Please 
-note, that this option doesn't show clock on phone screen. It only set
+.B setdatetime [HH:MM[:SS]] [YYYY/MM/DD]
+.sp
+Set date and time in phone to date and time set in computer. Please
+note, that this option doesn\(aqt show clock on phone screen. It only set
 date and time.
-
-\fITIP:\fR you can make such synchronization each time, when will connect
-your phone and use Gammu. See gammurc(5) for details.
-
-
-.SS "Categories"
+.IP Note
+.
+You can make such synchronization each time, when will connect your
+phone and use Gammu. See \fBSynchronizeTime\fP in \fIgammurc\fP for details.
+.RE
+.UNINDENT
+.SS Categories commands
+.sp
+..note:: Categories are supported only on few phones (Alcatel).
+.INDENT 0.0
 .TP
-.BI "addcategory TODO|PHONEBOOK" " text"
-
+.B addcategory TODO|PHONEBOOK text
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "addnew" " file [\-yes] [\-memory ME|SM|..]"
-Adds data written in file created using \fBbackup option\fR. All things
-backup'ed by \fBbackup\fR can be restored (when made backup to Gammu text
+.B getallcategory TODO|PHONEBOOK
+.UNINDENT
+.INDENT 0.0
+.TP
+.B getcategory TODO|PHONEBOOK start [stop]
+.UNINDENT
+.INDENT 0.0
+.TP
+.B listmemorycategory text|number
+.UNINDENT
+.INDENT 0.0
+.TP
+.B listtodocategory text|number
+.UNINDENT
+.SS Backing up and restoring commands
+.INDENT 0.0
+.TP
+.B addnew file [\-yes] [\-memory ME|SM|..]
+.sp
+Adds data written in file created using \fI\%gammu backup\fP command. All things
+backed up \fI\%gammu backup\fP can be restored (when made backup to Gammu text
 file).
-
+.sp
 Please note that this adds all content of backup file to phone and
-does not care about current data in the phone (no duplicates are 
+does not care about current data in the phone (no duplicates are
 detected).
-
-Use \-yes parameter to answer yes to all questions (you want to automatically 
+.sp
+Use \-yes parameter to answer yes to all questions (you want to automatically
 restore all data).
-
-Use \-memory parameter to force usage of defined memory type for storing entries 
+.sp
+Use \-memory parameter to force usage of defined memory type for storing entries
 regardless what backu format says.
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "backup" " file [\-yes]"
-Backup your phone to file. It's possible to backup (depends on phone and backup format):
-
-* phonebook from SIM and phone memory
-.br
-* calendar notes
-.br
-* SMSC settings
-.br
-* operator logo
-.br
-* startup (static) logo or startup text
-.br
-* WAP bookmarks
-.br
-* WAP settings
-.br
-* caller logos and groups
-.br
-* user ringtones
-.br
-
-There are various backup formats supported and the backup format is guessed
-based on file extension:
-
-* .lmb - Nokia backup, supports contacts, caller logos and startup logo.
-.br
-* .vcs - vCalendar, supports calendar and todo.
-.br
-* .vcf - vCard, supports contacts.
-.br
-* .ldif - LDAP import, supports contacts.
-.br
-* .ics - iCalendar, supports calendar and todo.
-.br
-* Any other extension is Gammu backup file and it supports all data mentioned above.
-
-See \fBEXAMPLE\fR section for some hints on manipulating Gammu backup format.
-
-
-.TP
-.BI "clearall"
-Deletes all private data from the phone.
-
-.TP
-.BI "getallcategory TODO|PHONEBOOK"
-
-.TP
-.BI "getcategory TODO|PHONEBOOK" " start [stop]"
-
-.TP
-.BI "listmemorycategory" " text|number"
-
-.TP
-.BI "listtodocategory" " text|number"
-
-.TP
-.BI "restore" " file [\-yes]"
-Restore settings written in file created using \fBbackup\fR option. 
-
-Please note that restoring deletes all current content in phone. If you
-want only to add entries to phone, use addnew.
-
-In some phones restoring calendar notes will not show error, but won't
-be done, when phone doesn't have set clock inside.
-
-
-.SS "Backing up and restoring"
-.TP
-.BI "addnew" " file [\-yes] [\-memory ME|SM|..]"
-Adds data written in file created using \fBbackup option\fR. All things
-backup'ed by \fBbackup\fR can be restored (when made backup to Gammu text
-file).
-
-Please note that this adds all content of backup file to phone and
-does not care about current data in the phone (no duplicates are 
-detected).
-
-Use \-yes parameter to answer yes to all questions (you want to automatically 
-restore all data).
-
-Use \-memory parameter to force usage of defined memory type for storing entries 
-regardless what backu format says.
-
-.TP
-.BI "addsms" " folder file [\-yes]"
+.B addsms folder file [\-yes]
+.sp
 Adds SMSes from file (format like backupsms uses) to
 selected folder in phone.
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "backup" " file [\-yes]"
-Backup your phone to file. It's possible to backup (depends on phone and backup format):
-
-* phonebook from SIM and phone memory
-.br
-* calendar notes
-.br
-* SMSC settings
-.br
-* operator logo
-.br
-* startup (static) logo or startup text
-.br
-* WAP bookmarks
-.br
-* WAP settings
-.br
-* caller logos and groups
-.br
-* user ringtones
-.br
-
+.B backup file [\-yes]
+.sp
+Backup your phone to file. It\(aqs possible to backup (depends on phone and backup format):
+.INDENT 7.0
+.IP \(bu 2
+.
+phonebook from SIM and phone memory
+.IP \(bu 2
+.
+calendar notes
+.IP \(bu 2
+.
+SMSC settings
+.IP \(bu 2
+.
+operator logo
+.IP \(bu 2
+.
+startup (static) logo or startup text
+.IP \(bu 2
+.
+WAP bookmarks
+.IP \(bu 2
+.
+WAP settings
+.IP \(bu 2
+.
+caller logos and groups
+.IP \(bu 2
+.
+user ringtones
+.UNINDENT
+.sp
 There are various backup formats supported and the backup format is guessed
 based on file extension:
-
-* .lmb - Nokia backup, supports contacts, caller logos and startup logo.
-.br
-* .vcs - vCalendar, supports calendar and todo.
-.br
-* .vcf - vCard, supports contacts.
-.br
-* .ldif - LDAP import, supports contacts.
-.br
-* .ics - iCalendar, supports calendar and todo.
-.br
-* Any other extension is Gammu backup file and it supports all data mentioned above.
-
-See \fBEXAMPLE\fR section for some hints on manipulating Gammu backup format.
-
-
+.INDENT 7.0
+.IP \(bu 2
+.
+.lmb \- Nokia backup, supports contacts, caller logos and startup logo.
+.IP \(bu 2
+.
+.vcs \- vCalendar, supports calendar and todo.
+.IP \(bu 2
+.
+.vcf \- vCard, supports contacts.
+.IP \(bu 2
+.
+.ldif \- LDAP import, supports contacts.
+.IP \(bu 2
+.
+.ics \- iCalendar, supports calendar and todo.
+.IP \(bu 2
+.
+Any other extension is Gammu backup file and it supports all data mentioned above, see \fIgammu\-backup\fP for more details.
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "backupsms" " file [\-yes|\-all]"
-Stores all SMSes from phone to file. 
-
-Use \-yes for answering yes to all questions (backup all messages and 
+.B backupsms file [\-yes|\-all]
+.sp
+Stores all SMSes from phone to file.
+.sp
+Use \-yes for answering yes to all questions (backup all messages and
 delete them from phone), or \-all to just backup all folders while keeping
 messages in phone.
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "restore" " file [\-yes]"
-Restore settings written in file created using \fBbackup\fR option. 
-
+.B restore file [\-yes]
+.sp
+Restore settings written in file created using \fI\%gammu backup\fP command.
+.sp
 Please note that restoring deletes all current content in phone. If you
 want only to add entries to phone, use addnew.
-
-In some phones restoring calendar notes will not show error, but won't
-be done, when phone doesn't have set clock inside.
-
+.sp
+In some phones restoring calendar notes will not show error, but won\(aqt
+be done, when phone doesn\(aqt have set clock inside.
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "restoresms" " file [\-yes]"
+.B restoresms file [\-yes]
+.sp
 Restores SMSes from file (format like backupsms uses) to
 selected folder in phone. Please note that this overwrites existing
 messages in phone (if it supports it).
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "savefile BOOKMARK" " target.url file location"
+.B savefile TYPE [type options]
+.sp
+Coverts between various file formats supported by Gammu, following types
+are supported:
+.INDENT 7.0
+.TP
+.B BOOKMARK target.url file location
+.sp
 Converts backup format supported by
 Gammu to vBookmark file.
+.UNINDENT
+.INDENT 7.0
 .TP
-.BI "savefile CALENDAR" " target.vcs file location"
+.B CALENDAR target.vcs file location
+.sp
 Allows to convert between various backup formats which gammu
 supports for calendar events. The file type is guessed (for input file
-guess is based on extension and file content, for output solely on 
+guess is based on extension and file content, for output solely on
 extension).
-
-For example if you want to convert single entry from gammu native 
-backup to vCalendar, you need following command:
-
-    gammu savefile CALENDAR output.vcs myCalendar.backup 260
-
+.UNINDENT
+.INDENT 7.0
 .TP
-.BI "savefile TODO" " target.vcs file location"
+.B TODO target.vcs file location
+.sp
 Allows to convert between various backup formats which gammu
 supports for todo events. The file type is guessed (for input file
-guess is based on extension and file content, for output solely on 
+guess is based on extension and file content, for output solely on
 extension).
-
-For example if you want to convert single entry from gammu native 
-backup to vCalendar, you need following command:
-
-    gammu savefile CALENDAR output.vcs myCalendar.backup 260
-
+.UNINDENT
+.INDENT 7.0
 .TP
-.BI "savefile VCARD10|VCARD21" " target.vcf file SM|ME location"
+.B VCARD10|VCARD21 target.vcf file SM|ME location
+.sp
 Allows to convert between various backup formats which gammu
 supports for phonebook events. The file type is guessed (for input file
-guess is based on extension and file content, for output solely on 
+guess is based on extension and file content, for output solely on
 extension).
-
-For example if you want to convert single entry from gammu native 
-backup to vCard, you need following command:
-
-    gammu savefile CALENDAR output.vcf myPhonebook.backup ME 42
-
-
-.SS "Nokia specific"
+.UNINDENT
+.UNINDENT
+.SS Nokia specific commands
+.INDENT 0.0
 .TP
-.BI "nokiaaddfile APPLICATION|GAME" " file [\-readonly] [\-overwrite] [\-overwriteall]"
-Install the *.jar/*.jad file pair of a midlet in the application or game menu of the phone. You need to specify filename without the jar/jad suffix, both will be added automatically.
-
-The option
-.I \-overwrite
-deletes the application's .jad and .jar files bevor installing, but doesn't delete the application data. Option
-.I \-overwriteall
-will also delete all data. Both these options work only for Application or Game upload.
-
-\fIExample:\fR gammu nokiaaddfile Application Alien will read Alien.JAD and Alien.JAR and add to Applications
-
-\fIExample:\fR gammu nokiaaddfile Tones file.mid will read file.mid and add to Tones folder
-
+.B nokiaaddfile TYPE [type options]
+.sp
+Uploads file to phone to specific location for the type:
+.INDENT 7.0
+.TP
+.B APPLICATION|GAME file [\-readonly] [\-overwrite] [\-overwriteall]
+.sp
+Install the \fB*.jar/*.jad\fP file pair of a midlet in the application or
+game menu of the phone. You need to specify filename without the jar/jad
+suffix, both will be added automatically.
+.INDENT 7.0
+.TP
+.B \-overwrite
+.
+Delete the application\(aqs .jad and .jar files before installing, but
+doesn\(aqt delete the application data.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B \-overwriteall
+.
+Delete the application (same as \fI\%-overwrite\fP) and all it\(aqs
+data.
+.UNINDENT
+.sp
 You can use jadmaker(1) to generate a .jad file from a .jar file.
-
+.UNINDENT
+.INDENT 7.0
 .TP
-.BI "nokiaaddfile GALLERY|GALLERY2|CAMERA|TONES|TONES2|RECORDS|VIDEO|PLAYLIST|MEMORYCARD" " file [\-name name] [\-protected] [\-readonly] [\-system] [\-hidden] [\-newtime]"
-
+.B GALLERY|GALLERY2|CAMERA|TONES|TONES2|RECORDS|VIDEO|PLAYLIST|MEMORYCARD file [\-name name] [\-protected] [\-readonly] [\-system] [\-hidden] [\-newtime]
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "nokiaaddplaylists"
-
+.B nokiaaddplaylists
+.
 Goes through phone memory and generated playlist for all music files found.
-
+.sp
 To manually manage playlists:
-
-    gammu addfile a:\\predefplaylist filename.m3u
-
+.sp
+.nf
+.ft C
+gammu addfile a:\e\epredefplaylist filename.m3u
+.ft P
+.fi
+.sp
 Will add playlist filename.m3u
-
-    gammu getfilesystem
-
+.sp
+.nf
+.ft C
+gammu getfilesystem
+.ft P
+.fi
+.sp
 Will get list of all files (including names of files with playlists)
-
-    gammu deletefiles a:\\predefplaylist\\filename.m3u
-
+.sp
+.nf
+.ft C
+gammu deletefiles a:\e\epredefplaylist\e\efilename.m3u
+.ft P
+.fi
+.sp
 Will delete playlist filename.m3u
-
+.sp
 Format of m3u playlist is easy (standard mp3 playlist):
-
-First line is #EXTM3U, next lines contain  names of files (b:\\file1.mp3,
-b:\\folder1\\file2.mp3, etc.). File needs t have '\\r\\n' terminated lines. So
-just run unix2dos on the resulting file before uploading it your your phone.
-
+.sp
+First line is \fB#EXTM3U\fP, next lines contain  names of files (\fBb:\efile1.mp3\fP,
+\fBb:\efolder1\efile2.mp3\fP, etc.). File needs t have \fB\er\en\fP terminated lines. So
+just run \fBunix2dos\fP on the resulting file before uploading it your your phone.
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "nokiacomposer" " file"
+.B nokiacomposer file
+.sp
 Show, how to enter RTTL ringtone in composer existing in many Nokia phones
 (and how should it look like).
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "nokiadebug" " filename [[v11\-22] [,v33\-44]...]"
-
+.B nokiadebug filename [[v11\-22] [,v33\-44]...]
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "nokiadisplayoutput"
-
+.B nokiadisplayoutput
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "nokiadisplaytest" " number"
-
+.B nokiadisplaytest number
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "nokiagetadc"
-
+.B nokiagetadc
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "nokiagetoperatorname"
-6110.c phones have place for name for one GSM network (of course, with flashing it's
+.B nokiagetoperatorname
+.
+6110.c phones have place for name for one GSM network (of course, with flashing it\(aqs
 possible to change all names, but Gammu is not flasher ;\-)). You can get this
 name using this option.
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "nokiagetpbkfeatures" " memorytype"
-
+.B nokiagetpbkfeatures memorytype
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "nokiagetscreendump"
-
+.B nokiagetscreendump
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "nokiagett9"
+.B nokiagett9
+.
 This option should display T9 dictionary content from
 DCT4 phones.
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "nokiagetvoicerecord" " location"
-
+.B nokiagetvoicerecord location
+.sp
 Get voice record from location and save to WAV file. File is
 coded using GSM 6.10 codec (available for example in win32). Name
 of file is like name of voice record in phone.
-
-Created WAV files require GSM 6.10 codec to be played. In Win XP it's included
+.sp
+Created WAV files require GSM 6.10 codec to be played. In Win XP it\(aqs included
 by Microsoft. If you deleted it by accident in this operating system, make such
 steps:
-
-1. Control Panel
-.br
-2. Add hardware
-.br
-3. click Next
-.br
-4. select "Yes. I have already connected the hardware"
-.br
-5. select "Add a new hardware device"
-.br
-6. select "Install the hardware that I manually select from a list"
-.br
-7. select "Sound, video and game controllers"
-.br
-8. select "Audio codecs"
-.br
-9.  select "windows\\system32" directory and file "mmdriver.inf"
-.br
-10. if You will be asked for file msgsm32.acm, it should unpacked from Windows CD
-.br
-11. now You can be asked if want to install unsigned driver (YES), about select codec configuration (select what you want) and rebotting PC (make it)
-
+.INDENT 7.0
+.IP 1. 4
+.
+Control Panel
+.IP 2. 4
+.
+Add hardware
+.IP 3. 4
+.
+click Next
+.IP 4. 4
+.
+select "Yes. I have already connected the hardware
+.IP 5. 4
+.
+select "Add a new hardware device
+.IP 6. 4
+.
+select "Install the hardware that I manually select from a list
+.IP 7. 4
+.
+select "Sound, video and game controllers
+.IP 8. 4
+.
+select "Audio codecs
+.IP 9. 4
+.
+select "windows\esystem32" directory and file "mmdriver.inf
+.IP 10. 4
+.
+if You will be asked for file msgsm32.acm, it should unpacked from Windows CD
+.IP 11. 4
+.
+now You can be asked if want to install unsigned driver (YES), about select codec configuration (select what you want) and rebotting PC (make it)
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "nokiamakecamerashoot"
-
+.B nokiamakecamerashoot
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "nokianetmonitor" " test"
+.B nokianetmonitor test
+.sp
 Takes output or set netmonitor for Nokia DCT3 phones.
-
-\fITIP:\fR For more info about this option, please visit
-\fIhttp://www.mwiacek.com\fR and read netmonitor manual.
-
-\fITIP:\fR test \fB243\fR enables all tests (after using command
-\fBgammu nokianetmonitor 243\fR in some phones like 6210 or 9210 have to
-reboot them to see netmonitor menu)
-
+.IP "See also"
+.sp
+For more info about this option, please visit
+\fI\%Marcin's page\fP and read netmonitor manual
+there.
+.RE
+.IP Note
+.
+test \fB243\fP enables all tests (after using command
+\fBgammu nokianetmonitor 243\fP in some phones like 6210 or 9210 have to reboot
+them to see netmonitor menu)
+.RE
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "nokianetmonitor36"
+.B nokianetmonitor36
+.
 Reset counters from netmonitor test 36 in Nokia DCT3 phones.
-
-\fITIP:\fR For more info about this option, please visit
-\fIhttp://www.mwiacek.com\fR and read netmonitor manual.
-
+.IP "See also"
+.sp
+For more info about this option, please visit
+\fI\%Marcin's page\fP and read netmonitor manual
+there.
+.RE
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "nokiasecuritycode"
+.B nokiasecuritycode
+.
 Get/reset to "12345" security code
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "nokiaselftests"
-
+.B nokiaselftests
+.
 Perform tests for Nokia DCT3 phones.
-
-Note: EEPROM test can show an error when your phone has an EEPROM in 
-flash (like 82xx/7110/62xx/33xx). The clock test will show an error 
-when the phone doesn?t have an internal battery for the clock (like
-3xxx).
-
+.IP Note
+.
+EEPROM test can show an error when your phone has an EEPROM in flash
+(like 82xx/7110/62xx/33xx). The clock test will show an error when the
+phone doesn?t have an internal battery for the clock (like 3xxx).
+.RE
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "nokiasetlights" " keypad|display|torch on|off"
-
+.B nokiasetlights keypad|display|torch on|off
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "nokiasetoperatorname" " [networkcode name]"
-
+.B nokiasetoperatorname [networkcode name]
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "nokiasetphonemenus"
+.B nokiasetphonemenus
+.
 Enable all (?) possible menus for DCT3 Nokia phones:
-
-1. ALS (Alternative Line Service) option menu
-.br
-2. vibra menu for 3210
-.br
-3. 3315 features in 3310 5.45 and higher
-.br
-4. two additional games (React and Logic) for 3210 5\.31 and higher
-.br
-5. WellMate menu for 6150
-.br
-6. NetMonitor
-
+.INDENT 7.0
+.IP 1. 3
+.
+ALS (Alternative Line Service) option menu
+.IP 2. 3
+.
+vibra menu for 3210
+.IP 3. 3
+.
+3315 features in 3310 5.45 and higher
+.IP 4. 3
+.
+two additional games (React and Logic) for 3210 5.31 and higher
+.IP 5. 3
+.
+WellMate menu for 6150
+.IP 6. 3
+.
+NetMonitor
+.UNINDENT
+.sp
 and for DCT4:
-
-1. ALS (Alternative Line Service) option menu
-.br
-2. Bluetooth, WAP bookmarks and settings menu, ... (6310i)
-.br
-3. GPRS Always Online
-.br
- ...
-
+.INDENT 7.0
+.IP 1. 3
+.
+ALS (Alternative Line Service) option menu
+.IP 2. 3
+.
+Bluetooth, WAP bookmarks and settings menu, ... (6310i)
+.IP 3. 3
+.
+GPRS Always Online
+.IP 4. 3
+.
+...
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "nokiasetvibralevel" " level"
+.B nokiasetvibralevel level
+.sp
 Set vibra power to "level" (given in percent)
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "nokiatuneradio"
-
+.B nokiatuneradio
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "nokiavibratest"
-
-
-.SS "Siemens specific"
+.B nokiavibratest
+.UNINDENT
+.SS Siemens specific commands
+.INDENT 0.0
 .TP
-.BI "siemensnetmonact" " netmon_type"
-
+.B siemensnetmonact netmon_type
+.sp
 Enables network monitor in Siemens phone. Currently known values for type
 are 1 for full and 2 for simple mode.
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "siemensnetmonitor" " test"
-
+.B siemensnetmonitor test
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "siemenssatnetmon"
-
-
-.SS "Network"
+.B siemenssatnetmon
+.UNINDENT
+.SS Network commands
+.INDENT 0.0
 .TP
-.BI "getgprspoint" " start [stop]"
-
+.B getgprspoint start [stop]
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "listnetworks" " [country]"
+.B listnetworks [country]
+.sp
 Show names/codes of GSM networks known for Gammu
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "monitor" " [times]"
-Get phone status and writes continuously to standard output. Press Ctrl+C
-to break this state.
-
-.TP
-.BI "networkinfo"
+.B networkinfo
+.
 Show information about network status from the phone.
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "nokiadebug" " filename [[v11\-22] [,v33\-44]...]"
-
+.B setautonetworklogin
+.UNINDENT
+.SS WAP settings and bookmarks commands
+.INDENT 0.0
 .TP
-.BI "nokiagetoperatorname"
-6110.c phones have place for name for one GSM network (of course, with flashing it's
-possible to change all names, but Gammu is not flasher ;\-)). You can get this
-name using this option.
-
-.TP
-.BI "nokianetmonitor" " test"
-Takes output or set netmonitor for Nokia DCT3 phones.
-
-\fITIP:\fR For more info about this option, please visit
-\fIhttp://www.mwiacek.com\fR and read netmonitor manual.
-
-\fITIP:\fR test \fB243\fR enables all tests (after using command
-\fBgammu nokianetmonitor 243\fR in some phones like 6210 or 9210 have to
-reboot them to see netmonitor menu)
-
-.TP
-.BI "nokiasetoperatorname" " [networkcode name]"
-
-.TP
-.BI "setautonetworklogin"
-
-.TP
-.BI "siemensnetmonact" " netmon_type"
-
-Enables network monitor in Siemens phone. Currently known values for type
-are 1 for full and 2 for simple mode.
-.TP
-.BI "siemensnetmonitor" " test"
-
-.TP
-.BI "siemenssatnetmon"
-
-
-.SS "WAP settings and bookmarks"
-.TP
-.BI "addnew" " file [\-yes] [\-memory ME|SM|..]"
-Adds data written in file created using \fBbackup option\fR. All things
-backup'ed by \fBbackup\fR can be restored (when made backup to Gammu text
-file).
-
-Please note that this adds all content of backup file to phone and
-does not care about current data in the phone (no duplicates are 
-detected).
-
-Use \-yes parameter to answer yes to all questions (you want to automatically 
-restore all data).
-
-Use \-memory parameter to force usage of defined memory type for storing entries 
-regardless what backu format says.
-
-.TP
-.BI "backup" " file [\-yes]"
-Backup your phone to file. It's possible to backup (depends on phone and backup format):
-
-* phonebook from SIM and phone memory
-.br
-* calendar notes
-.br
-* SMSC settings
-.br
-* operator logo
-.br
-* startup (static) logo or startup text
-.br
-* WAP bookmarks
-.br
-* WAP settings
-.br
-* caller logos and groups
-.br
-* user ringtones
-.br
-
-There are various backup formats supported and the backup format is guessed
-based on file extension:
-
-* .lmb - Nokia backup, supports contacts, caller logos and startup logo.
-.br
-* .vcs - vCalendar, supports calendar and todo.
-.br
-* .vcf - vCard, supports contacts.
-.br
-* .ldif - LDAP import, supports contacts.
-.br
-* .ics - iCalendar, supports calendar and todo.
-.br
-* Any other extension is Gammu backup file and it supports all data mentioned above.
-
-See \fBEXAMPLE\fR section for some hints on manipulating Gammu backup format.
-
-
-.TP
-.BI "clearall"
-Deletes all private data from the phone.
-
-.TP
-.BI "deletewapbookmark" " start [stop]"
-Delete WAP bookmarks from phone. 
-
+.B deletewapbookmark start [stop]
+.sp
+Delete WAP bookmarks from phone.
+.sp
 Locations are numerated from 1.
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "getchatsettings" " start [stop]"
-
+.B getchatsettings start [stop]
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "getsyncmlsettings" " start [stop]"
-
+.B getsyncmlsettings start [stop]
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "getwapbookmark" " start [stop]"
-Get WAP bookmarks from phone. 
-
+.B getwapbookmark start [stop]
+.sp
+Get WAP bookmarks from phone.
+.sp
 Locations are numerated from 1.
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "getwapsettings" " start [stop]"
-Get WAP settings from phone. 
-
+.B getwapsettings start [stop]
+.sp
+Get WAP settings from phone.
+.sp
 Locations are numerated from 1.
-
+.UNINDENT
+.SS MMS and MMS settings commands
+.INDENT 0.0
 .TP
-.BI "restore" " file [\-yes]"
-Restore settings written in file created using \fBbackup\fR option. 
-
-Please note that restoring deletes all current content in phone. If you
-want only to add entries to phone, use addnew.
-
-In some phones restoring calendar notes will not show error, but won't
-be done, when phone doesn't have set clock inside.
-
+.B getallmms [\-save]
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "savefile BOOKMARK" " target.url file location"
-Converts backup format supported by
-Gammu to vBookmark file.
+.B geteachmms [\-save]
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "savesms BOOKMARK" " file location [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
-Read WAP bookmark from file created by \fBbackup\fR option and saves in
-Nokia format as SMS
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
+.B getmmsfolders
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "savesms WAPINDICATOR" " URL Title [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
-Saves a SMS with a WAP indication for given
-URL and title.
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
+.B getmmssettings start [stop]
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "savesms WAPSETTINGS" " file location DATA|GPRS [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
-Read WAP settings from file created by \fBbackup\fR option and saves in Nokia format as SMS
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
+.B readmmsfile file [\-save]
+.UNINDENT
+.SS FM radio commands
+.INDENT 0.0
 .TP
-.BI "sendsms BOOKMARK" " destination file location [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
-Sends a message, for description of message specific parameters see \fBsavesms BOOKMARK\fR.
-
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
-.TP
-.BI "sendsms WAPINDICATOR" " destination URL Title [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
-Sends a message, for description of message specific parameters see \fBsavesms WAPINDICATOR\fR.
-
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
-.TP
-.BI "sendsms WAPSETTINGS" " destination file location DATA|GPRS [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
-Sends a message, for description of message specific parameters see \fBsavesms WAPSETTINGS\fR.
-
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
-
-.SS "MMS and MMS settings"
-.TP
-.BI "getallmms" " [\-save]"
-
-.TP
-.BI "geteachmms" " [\-save]"
-
-.TP
-.BI "getmmsfolders"
-
-.TP
-.BI "getmmssettings" " start [stop]"
-
-.TP
-.BI "readmmsfile" " file [\-save]"
-
-.TP
-.BI "savesms MMSINDICATOR" " URL Title Sender [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
-
-Saves a message with MMS indication. The recipient phone will then download
-MMS from given URL and display it.
-
-Please note that you should provide valid smil data on that URL.
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
-.TP
-.BI "savesms MMSSETTINGS" " file location  [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
-Saves a message with MMS configuration. The
-configuration will be read from Gammu backup file from given location.
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
-.TP
-.BI "sendsms MMSINDICATOR" " destination URL Title Sender [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
-Sends a message, for description of message specific parameters see \fBsavesms MMSINDICATOR\fR.
-
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
-.TP
-.BI "sendsms MMSSETTINGS" " destination file location [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
-Sends a message, for description of message specific parameters see \fBsavesms MMSSETTINGS\fR.
-
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
-
-.SS "Phone tests"
-.TP
-.BI "nokiadisplaytest" " number"
-
-.TP
-.BI "nokiagetadc"
-
-.TP
-.BI "nokiaselftests"
-
-Perform tests for Nokia DCT3 phones.
-
-Note: EEPROM test can show an error when your phone has an EEPROM in 
-flash (like 82xx/7110/62xx/33xx). The clock test will show an error 
-when the phone doesn?t have an internal battery for the clock (like
-3xxx).
-
-.TP
-.BI "nokiasetlights" " keypad|display|torch on|off"
-
-.TP
-.BI "nokiavibratest"
-
-
-.SS "FM radio"
-.TP
-.BI "addnew" " file [\-yes] [\-memory ME|SM|..]"
-Adds data written in file created using \fBbackup option\fR. All things
-backup'ed by \fBbackup\fR can be restored (when made backup to Gammu text
-file).
-
-Please note that this adds all content of backup file to phone and
-does not care about current data in the phone (no duplicates are 
-detected).
-
-Use \-yes parameter to answer yes to all questions (you want to automatically 
-restore all data).
-
-Use \-memory parameter to force usage of defined memory type for storing entries 
-regardless what backu format says.
-
-.TP
-.BI "backup" " file [\-yes]"
-Backup your phone to file. It's possible to backup (depends on phone and backup format):
-
-* phonebook from SIM and phone memory
-.br
-* calendar notes
-.br
-* SMSC settings
-.br
-* operator logo
-.br
-* startup (static) logo or startup text
-.br
-* WAP bookmarks
-.br
-* WAP settings
-.br
-* caller logos and groups
-.br
-* user ringtones
-.br
-
-There are various backup formats supported and the backup format is guessed
-based on file extension:
-
-* .lmb - Nokia backup, supports contacts, caller logos and startup logo.
-.br
-* .vcs - vCalendar, supports calendar and todo.
-.br
-* .vcf - vCard, supports contacts.
-.br
-* .ldif - LDAP import, supports contacts.
-.br
-* .ics - iCalendar, supports calendar and todo.
-.br
-* Any other extension is Gammu backup file and it supports all data mentioned above.
-
-See \fBEXAMPLE\fR section for some hints on manipulating Gammu backup format.
-
-
-.TP
-.BI "clearall"
-Deletes all private data from the phone.
-
-.TP
-.BI "getfmstation" " start [stop]"
+.B getfmstation start [stop]
+.sp
 Show info about FM stations in phone
-
+.UNINDENT
+.SS Phone information commands
+.INDENT 0.0
 .TP
-.BI "nokiatuneradio"
-
-.TP
-.BI "restore" " file [\-yes]"
-Restore settings written in file created using \fBbackup\fR option. 
-
-Please note that restoring deletes all current content in phone. If you
-want only to add entries to phone, use addnew.
-
-In some phones restoring calendar notes will not show error, but won't
-be done, when phone doesn't have set clock inside.
-
-
-.SS "Phone information"
-.TP
-.BI "battery"
+.B battery
+.
 Displays information about battery and power source.
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "getdisplaystatus"
-
+.B getdisplaystatus
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "getlocation"
+.B getlocation
+.
 Gets network information from phone (same as networkinfo)
-and prints location (latitude and longitude) based on information from 
-OpenCellID <http://opencellid.org>.
-
+and prints location (latitude and longitude) based on information from
+\fI\%OpenCellID\fP.
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "getsecuritystatus"
+.B getsecuritystatus
+.
 Show, if phone wait for security code (like PIN, PUK, etc.) or not
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "identify"
+.B identify
+.
 Show the most important phone data.
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "monitor" " [times]"
+.B monitor [times]
+.sp
 Get phone status and writes continuously to standard output. Press Ctrl+C
 to break this state.
-
+.UNINDENT
+.SS Phone settings commands
+.INDENT 0.0
 .TP
-.BI "nokiasecuritycode"
-Get/reset to "12345" security code
-
-
-.SS "Phone settings"
-.TP
-.BI "getcalendarsettings"
+.B getcalendarsettings
+.
 Displays calendar settings like first day of
 week or automatic deleting of old entries.
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "getprofile" " start [stop]"
-
+.B getprofile start [stop]
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "resetphonesettings PHONE|DEV|UIF|ALL|FACTORY"
-Reset phone settings. \fIBE CAREFULL !!!!\fR
-
-\fBPHONE:\fR
-.br
-
-\fBDEV:\fR
-.br
-
-\fBALL:\fR 
-
-Clear user settings
-.br
-* removes or set logos to default
-.br
-* set default phonebook and other menu settings
-.br
-* clear T9 words,
-.br
-* clear call register info
-.br
-* set default profiles settings 
-.br
-* clear user ringtones
-
-\fBUIF:\fR
-.br
-* changes like after \fBALL\fR
-.br
-* disables netmon and PPS (all "hidden" menus)
-
-\fBFACTORY:\fR
-.br
-* changes like after \fBUIF\fR
-.br
-* clear date/time
-
+.B resetphonesettings PHONE|DEV|UIF|ALL|FACTORY
+.IP Warning
+.
+This will delete user data, be careful.
+.RE
+.sp
+Reset phone settings.
+.INDENT 7.0
 .TP
-.BI "savesms PROFILE" " [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-name name] [\-bitmap bitmap] [\-ringtone ringtone]"
-
-Read ringtone (RTTL) format, bitmap (Picture Image size) and name, format into
-Smart Messaging profile and send/save as SMS. Please note, that this format is
-abandomed by Nokia and supported by some (older) devices only like Nokia 3310.
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
+.B \fBPHONE\fP
+.sp
+Clear phone settings.
 .TP
-.BI "sendsms PROFILE" " destination [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-name name] [\-bitmap bitmap] [\-ringtone ringtone]"
-Sends a message, for description of message specific parameters see \fBsavesms PROFILE\fR.
-
-
-
-For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
-
-
-
-.SS "Dumps decoding"
+.B \fBDEV\fP
+.sp
+Clear device settings.
 .TP
-.BI "decodebinarydump" " file [phonemodel]"
-Decodes a dump made by Gammu with 
-\fBlogformat\fR se to \fBbinary\fR (see \fIREADME\fR for
-info about this method of reporting bugs).
-
-This option is available only if Gammu was compiled with debuging options.
-
-
+.B \fBALL\fP
+.sp
+Clear user settings.
+.INDENT 7.0
+.IP \(bu 2
+.
+removes or set logos to default
+.IP \(bu 2
+.
+set default phonebook and other menu settings
+.IP \(bu 2
+.
+clear T9 words,
+.IP \(bu 2
+.
+clear call register info
+.IP \(bu 2
+.
+set default profiles settings
+.IP \(bu 2
+.
+clear user ringtones
+.UNINDENT
 .TP
-.BI "decodesniff MBUS2|IRDA" " file [phonemodel]"
-Option available only, if Gammu was compiled with debug. Allows to decode
-sniffs. See \fI/docs/manual/\fR for more details.
-
-
-.SS "Functions that don't fit elsewhere"
+.B \fBUIF\fP
+.sp
+Clear user settings and disables hidden menus.
+.INDENT 7.0
+.IP \(bu 2
+.
+changes like after \fBALL\fP
+.IP \(bu 2
+.
+disables netmon and PPS (all "hidden" menus)
+.UNINDENT
 .TP
-.BI "batch" " [file]"
+.B \fBFACTORY\fP
+.sp
+Reset to factory defaults.
+.INDENT 7.0
+.IP \(bu 2
+.
+changes like after \fBUIF\fP
+.IP \(bu 2
+.
+clear date/time
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.SS Dumps decoding commands
+.IP Note
+.
+These commands are available only if Gammu was compiled with debugging options.
+.RE
+.INDENT 0.0
+.TP
+.B decodebinarydump file [phonemodel]
+.sp
+Decodes a dump made by Gammu with
+\fBLogFormat\fP set to \fBbinary\fP.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B decodesniff MBUS2|IRDA file [phonemodel]
+.sp
+Allows to decode sniffs. See \fIDiscovering protocol\fP for more details.
+.UNINDENT
+.SS Other commands
+.INDENT 0.0
+.TP
+.B entersecuritycode PIN|PUK|PIN2|PUK2|PHONE|NETWORK code|\-
+.sp
+Allow to enter security code from PC. When code is \fB\-\fP, it is read from stdin.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B presskeysequence mMnNpPuUdD+\-123456789*0#gGrR<>[]hHcCjJfFoOmMdD@
+.sp
+Press specified key sequence on phone keyboard
+.INDENT 7.0
+.TP
+.B \fBmM\fP
+.sp
+Menu
+.TP
+.B \fBnN\fP
+.sp
+Names key
+.TP
+.B \fBpP\fP
+.sp
+Power
+.TP
+.B \fBuU\fP
+.sp
+Up
+.TP
+.B \fBdD\fP
+.sp
+Down
+.TP
+.B \fB+\-\fP
+.sp
++\-
+.TP
+.B \fBgG\fP
+.sp
+Green
+.TP
+.B \fBrR\fP
+.sp
+Red
+.TP
+.B \fB123456789*0#\fP
+.sp
+numeric keyboard
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B reset SOFT|HARD
+.sp
+Make phone reset:
+.INDENT 7.0
+.TP
+.B \fBSOFT\fP
+.sp
+without asking for PIN
+.TP
+.B \fBHARD\fP
+.sp
+with asking for PIN
+.UNINDENT
+.IP Note
+.
+Some phones will ask for PIN even with \fBSOFT\fP option.
+.RE
+.IP Warning
+.
+Some phones will reset user data on \fBHARD\fP reset.
+.RE
+.UNINDENT
+.SS Batch mode commands
+.INDENT 0.0
+.TP
+.B batch [file]
+.sp
 Starts Gammu in a batch mode. In this mode you can issue
 several commands each on one line. Lines starting with # are treated as a
 comments.
-
+.sp
 By default, commands are read from standard input, but you can optionally
-specify a file from where they would be read (special case - means standard
+specify a file from where they would be read (special case \fB\-\fP means standard
 input).
-
+.UNINDENT
+.SS Configuration commands
+.INDENT 0.0
 .TP
-.BI "entersecuritycode PIN|PUK|PIN2|PUK2|PHONE|NETWORK" " code|\-"
-Allow to enter security code from PC. When code is \-, it is read from stdin.
-
-.TP
-.BI "nokiagetscreendump"
-
-.TP
-.BI "nokiagetvoicerecord" " location"
-
-Get voice record from location and save to WAV file. File is
-coded using GSM 6.10 codec (available for example in win32). Name
-of file is like name of voice record in phone.
-
-Created WAV files require GSM 6.10 codec to be played. In Win XP it's included
-by Microsoft. If you deleted it by accident in this operating system, make such
-steps:
-
-1. Control Panel
-.br
-2. Add hardware
-.br
-3. click Next
-.br
-4. select "Yes. I have already connected the hardware"
-.br
-5. select "Add a new hardware device"
-.br
-6. select "Install the hardware that I manually select from a list"
-.br
-7. select "Sound, video and game controllers"
-.br
-8. select "Audio codecs"
-.br
-9.  select "windows\\system32" directory and file "mmdriver.inf"
-.br
-10. if You will be asked for file msgsm32.acm, it should unpacked from Windows CD
-.br
-11. now You can be asked if want to install unsigned driver (YES), about select codec configuration (select what you want) and rebotting PC (make it)
-
-.TP
-.BI "nokiamakecamerashoot"
-
-.TP
-.BI "nokiasetphonemenus"
-Enable all (?) possible menus for DCT3 Nokia phones:
-
-1. ALS (Alternative Line Service) option menu
-.br
-2. vibra menu for 3210
-.br
-3. 3315 features in 3310 5.45 and higher
-.br
-4. two additional games (React and Logic) for 3210 5\.31 and higher
-.br
-5. WellMate menu for 6150
-.br
-6. NetMonitor
-
-and for DCT4:
-
-1. ALS (Alternative Line Service) option menu
-.br
-2. Bluetooth, WAP bookmarks and settings menu, ... (6310i)
-.br
-3. GPRS Always Online
-.br
- ...
-
-.TP
-.BI "nokiasetvibralevel" " level"
-Set vibra power to "level" (given in percent)
-
-.TP
-.BI "presskeysequence" " mMnNpPuUdD+\-123456789*0#gGrR<>[]hHcCjJfFoOmMdD@"
-Press specified key sequence on phone keyboard
-
-\fBmM\fR - Menu
-.br
-\fBnN\fR - Names key
-.br
-\fBpP\fR - Power
-.br
-\fBuU\fR - Up
-.br
-\fBdD\fR - Down
-.br
-\fB+\-\fR - +\-
-.br
-\fBgG\fR - Green
-.br
-\fBrR\fR - Red
-.br
-\fB123456789*0#\fR is numeric keyboard
-
-.TP
-.BI "reset SOFT|HARD"
-Make phone reset: soft (without asking for PIN) or hard (with PIN).
-
-\fINote:\fR some phones will make hard reset even with \fBSOFT\fR option.
-
-.TP
-.BI "searchphone" " [\-debug]"
+.B searchphone [\-debug]
+.sp
 Attempts to search for a connected phone. Please note
 that this can take a very long time, but in case you have no clue how to
 configure phone connection, this is a convenient way to find working setup for
 Gammu.
-
-.SS "Gammu information"
+.UNINDENT
+.SS Gammu information commands
+.INDENT 0.0
 .TP
-.BI "checkversion" " [STABLE]"
+.B checkversion [STABLE]
+.sp
 Checks whether there is newer Gammu version
 available online (if Gammu has been compiled with CURL). If you pass
-additional parameter \fBSTABLE\fR, only stable versions will be checked.
-
+additional parameter \fBSTABLE\fP, only stable versions will be checked.
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "features"
+.B features
+.
 Print information about compiled in features.
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "help" " [topic]"
+.B help [topic]
+.sp
 Print help. By default general help is printed, but you can
 also specify a help category to get more detailed help on some topic.
-
+.UNINDENT
+.INDENT 0.0
 .TP
-.BI "version"
+.B version
+.
 Print version information and license.
-
-
-.SH "FILES"
-
-.P 
-\fI~/.gammurc\fP
-.br
-\fI/usr/share/doc/gammu/*\fP
-.br
-\fI/dev/ircomm?\fP
-.br
-\fI/dev/ttyS?\fP
-.br
-\fI/dev/ttyACM?\fP
-
-.SH "RETURN VALUES"
-
-.P 
-gammu returns 0 on success. In case of failure non zero code is 
-returned. 
-
-.SS 1
+.UNINDENT
+.SH RETURN VALUES
+.sp
+gammu returns 0 on success. In case of failure non zero code is
+returned.
+.INDENT 0.0
+.TP
+.B 1
+.
 Out of memory or other critical error.
-
-.SS 2
+.TP
+.B 2
+.
 Invalid command line parameters.
-
-.SS 3
+.TP
+.B 3
+.
 Failed to open file specified on command line.
-
-.SS 4
+.TP
+.B 4
+.
 Program was interrupted.
-
-.SS 98
+.TP
+.B 98
+.
 Gammu library version mismatch.
-
-.SS 99
-Functionality has been moved. For example to gammu-smsd(1).
-
-Errors codes greater than 100 map to the GSM_Error 
+.TP
+.B 99
+.
+Functionality has been moved. For example to \fIgammu\-smsd\fP.
+.UNINDENT
+.sp
+Errors codes greater than 100 map to the GSM_Error
 values increased by 100:
-
-.SS 101
+.INDENT 0.0
+.TP
+.B 101
+.
 No error.
-.SS 102
+.TP
+.B 102
+.
 Error opening device. Unknown, busy or no permissions.
-.SS 103
+.TP
+.B 103
+.
 Error opening device, it is locked.
-.SS 104
-Error opening device, it doesn't exist.
-.SS 105
+.TP
+.B 104
+.
+Error opening device, it doesn\(aqt exist.
+.TP
+.B 105
+.
 Error opening device, it is already opened by other application.
-.SS 106
-Error opening device, you don't have permissions.
-.SS 107
+.TP
+.B 106
+.
+Error opening device, you don\(aqt have permissions.
+.TP
+.B 107
+.
 Error opening device. No required driver in operating system.
-.SS 108
+.TP
+.B 108
+.
 Error opening device. Some hardware not connected/wrongly configured.
-.SS 109
+.TP
+.B 109
+.
 Error setting device DTR or RTS.
-.SS 110
+.TP
+.B 110
+.
 Error setting device speed. Maybe speed not supported.
-.SS 111
+.TP
+.B 111
+.
 Error writing to the device.
-.SS 112
+.TP
+.B 112
+.
 Error during reading from the device.
-.SS 113
-Can't set parity on the device.
-.SS 114
+.TP
+.B 113
+.
+Can\(aqt set parity on the device.
+.TP
+.B 114
+.
 No response in specified timeout. Probably phone not connected.
-.SS 115
-Frame not requested right now. See <http://wammu.eu/support/bugs/> for information how to report it.
-.SS 116
-Unknown response from phone. See <http://wammu.eu/support/bugs/> for information how to report it.
-.SS 117
-Unknown frame. See <http://wammu.eu/support/bugs/> for information how to report it.
-.SS 118
+.TP
+.B 115
+.
+Frame not requested right now. See <\fI\%http://wammu.eu/support/bugs/\fP> for information how to report it.
+.TP
+.B 116
+.
+Unknown response from phone. See <\fI\%http://wammu.eu/support/bugs/\fP> for information how to report it.
+.TP
+.B 117
+.
+Unknown frame. See <\fI\%http://wammu.eu/support/bugs/\fP> for information how to report it.
+.TP
+.B 118
+.
 Unknown connection type string. Check config file.
-.SS 119
+.TP
+.B 119
+.
 Unknown model type string. Check config file.
-.SS 120
+.TP
+.B 120
+.
 Some functions not available for your system (disabled in config or not implemented).
-.SS 121
+.TP
+.B 121
+.
 Function not supported by phone.
-.SS 122
+.TP
+.B 122
+.
 Entry is empty.
-.SS 123
+.TP
+.B 123
+.
 Security error. Maybe no PIN?
-.SS 124
+.TP
+.B 124
+.
 Invalid location. Maybe too high?
-.SS 125
+.TP
+.B 125
+.
 Functionality not implemented. You are welcome to help authors with it.
-.SS 126
+.TP
+.B 126
+.
 Memory full.
-.SS 127
+.TP
+.B 127
+.
 Unknown error.
-.SS 128
+.TP
+.B 128
+.
 Can not open specified file.
-.SS 129
+.TP
+.B 129
+.
 More memory required...
-.SS 130
+.TP
+.B 130
+.
 Operation not allowed by phone.
-.SS 131
+.TP
+.B 131
+.
 No SMSC number given. Provide it manually or use the one configured in phone.
-.SS 132
-You're inside phone menu (maybe editing?). Leave it and try again.
-.SS 133
+.TP
+.B 132
+.
+You\(aqre inside phone menu (maybe editing?). Leave it and try again.
+.TP
+.B 133
+.
 Phone is not connected.
-.SS 134
+.TP
+.B 134
+.
 Function is currently being implemented. If you want to help, please contact authors.
-.SS 135
+.TP
+.B 135
+.
 Phone is disabled and connected to charger.
-.SS 136
+.TP
+.B 136
+.
 File format not supported by Gammu.
-.SS 137
+.TP
+.B 137
+.
 Nobody is perfect, some bug appeared in protocol implementation. Please contact authors.
-.SS 138
+.TP
+.B 138
+.
 Transfer was canceled by phone, maybe you pressed cancel on phone.
-.SS 139
+.TP
+.B 139
+.
 Phone module need to send another answer frame.
-.SS 140
-Current connection type doesn't support called function.
-.SS 141
+.TP
+.B 140
+.
+Current connection type doesn\(aqt support called function.
+.TP
+.B 141
+.
 CRC error.
-.SS 142
+.TP
+.B 142
+.
 Invalid date or time specified.
-.SS 143
+.TP
+.B 143
+.
 Phone memory error, maybe it is read only.
-.SS 144
+.TP
+.B 144
+.
 Invalid data given to phone.
-.SS 145
+.TP
+.B 145
+.
 File with specified name already exists.
-.SS 146
-File with specified name doesn't exist.
-.SS 147
+.TP
+.B 146
+.
+File with specified name doesn\(aqt exist.
+.TP
+.B 147
+.
 You have to give folder name and not file name.
-.SS 148
+.TP
+.B 148
+.
 You have to give file name and not folder name.
-.SS 149
+.TP
+.B 149
+.
 Can not access SIM card.
-.SS 150
+.TP
+.B 150
+.
 Wrong GNAPPLET version in phone. Use version from currently used Gammu.
-.SS 151
+.TP
+.B 151
+.
 Only part of folder has been listed.
-.SS 152
+.TP
+.B 152
+.
 Folder must be empty.
-.SS 153
+.TP
+.B 153
+.
 Data were converted.
-.SS 154
+.TP
+.B 154
+.
 Gammu is not configured.
-.SS 155
+.TP
+.B 155
+.
 Wrong folder used.
-.SS 156
+.TP
+.B 156
+.
 Internal phone error.
-.SS 157
+.TP
+.B 157
+.
 Error writing file to disk.
-.SS 158
+.TP
+.B 158
+.
 No such section exists.
-.SS 159
+.TP
+.B 159
+.
 Using default values.
-.SS 160
+.TP
+.B 160
+.
 Corrupted data returned by phone.
-.SS 161
+.TP
+.B 161
+.
 Bad feature string in configuration.
-.SS 162
+.TP
+.B 162
+.
 Desired functionality has been disabled on compile time.
-.SS 163
+.TP
+.B 163
+.
 Bluetooth configuration requires channel option.
-.SS 164
-Service is not runnig.
-.SS 165
+.TP
+.B 164
+.
+Service is not running.
+.TP
+.B 165
+.
 Service configuration is missing.
-.SS 166
+.TP
+.B 166
+.
 Command rejected because device was busy. Wait and restart.
-.SS 167
+.TP
+.B 167
+.
 Could not connect to the server.
-.SS 168
+.TP
+.B 168
+.
 Could not resolve the host name.
-.SS 169
+.TP
+.B 169
+.
 Failed to get SMSC number from phone.
-
-.SH "EXAMPLE"
-
-
+.UNINDENT
+.SH EXAMPLES
 .SS Configuration
-
-.P 
-To check it out, you need to have configuration file for gammu, see 
-gammurc(5) for more details about it.
-
+.sp
+To check it out, you need to have configuration file for gammu, see
+\fIgammurc\fP for more details about it.
 .SS Sending messages
-
-.TP
+.sp
 Save text message up to standard 160 chars:
-
-.RS
 .sp
 .nf
-.ne 7
+.ft C
 echo "All your base are belong to us" | gammu savesms TEXT
+.ft P
 .fi
 .sp
-.RE
-.PP
-
-or 
-
-.RS
-.sp
-.nf
-.ne 7
-gammu savesms TEXT \-text "All your base are belong to us"
-.fi
-.sp
-.RE
-.PP
-
-.TP
-Save long text message:
-
-.RS
-.sp
-.nf
-.ne 7
-echo "All your base are belong to us" | gammu savesms TEXT \-len 400
-.fi
-.sp
-.RE
-.PP
-
-or 
-
-.RS
-.sp
-.nf
-.ne 7
-gammu savesms TEXT \-len 400 \-text "All your base are belong to us"
-.fi
-.sp
-.RE
-.PP
-
 or
-
-.RS
 .sp
 .nf
-.ne 7
-gammu savesms EMS \-text "All your base are belong to us"
+.ft C
+gammu savesms TEXT \-text "All your base are belong to us
+.ft P
 .fi
 .sp
-.RE
-.PP
-
-.TP
+Save long text message:
+.sp
+.nf
+.ft C
+echo "All your base are belong to us" | gammu savesms TEXT \-len 400
+.ft P
+.fi
+.sp
+or
+.sp
+.nf
+.ft C
+gammu savesms TEXT \-len 400 \-text "All your base are belong to us
+.ft P
+.fi
+.sp
+or
+.sp
+.nf
+.ft C
+gammu savesms EMS \-text "All your base are belong to us
+.ft P
+.fi
+.sp
 Save some funky message with predefined sound and animation from 2 bitmaps:
-
-.RS
 .sp
 .nf
-.ne 7
-gammu savesms EMS \-text "Greetings" \-defsound 1 \-text "from Gammu"
-\-tone10 axelf.txt \-animation 2 file1.bmp file2.bmp
+.ft C
+gammu savesms EMS \-text "Greetings" \-defsound 1 \-text "from Gammu \-tone10 axelf.txt \-animation 2 file1.bmp file2.bmp
+.ft P
 .fi
 .sp
-.RE
-.PP
-
-.TP
 Save protected message with ringtone:
-
-.RS
 .sp
 .nf
-.ne 7
-gammu savesms EMS \-protected 2 \-variablebitmaplong ala.bmp
-\-toneSElong axelf.txt \-toneSE ring.txt
+.ft C
+gammu savesms EMS \-protected 2 \-variablebitmaplong ala.bmp \-toneSElong axelf.txt \-toneSE ring.txt
+.ft P
+.fi
+.SS Uploading files to Nokia
+.sp
+Add Alien to applications in your phone (you need to have files Alien.JAD and Alien.JAR in current directory):
+.sp
+.nf
+.ft C
+gammu nokiaaddfile APPLICATION Alien
+.ft P
 .fi
 .sp
-.RE
-.PP
-
-.SS Backups
-
-If you will backup settings to Gammu text file, it will be possible to edit
-it. It's easy: many things in this file will be written double - once in Unicode,
-once in ASCII. When you will remove Unicode version Gammu will use ASCII
-on \fBrestore\fR (and you can easy edit ASCII text) and will convert it
-according to your OS locale. When will be available Unicode version of text,
-it will be used instead of ASCII (useful with Unicode phones - it isn't important,
-what locale is set in computer and no conversion Unicode \-> ASCII and ASCII \->
-Unicode is done).
-
-You can use any editor with regular expressions function to edit backup text
-file. Examples of such editors can be vim <http://www.vim.org/> or TextPad
-<http://www.textpad.com/> which both do support regular expressions.
-
-.TP
-Remove info about voice tags
-
-Find: ^Entry\\([0\-9][0\-9]\\)VoiceTag = \\(.*\\)\\n
-
-Replace:
-
-.TP
-Change all numbers starting from +3620, +3630, +3660, +3670 to +3620
-
-Find: Type = NumberGeneral\\nEntry\\([0\-9][0\-9]\\)Text = "\\+36\\(20\\|30\\|60\\|70\\)\\n
-
-Replace: Type = NumberMobile\\nEntry\\1Text = "\\+3620
-
-.TP
-Change phone numbers type to mobile for numbers starting from +3620, +3630,... and removing the corresponding TextUnicode line
-
-Find: Type = NumberGeneral\\nEntry\\([0\-9][0\-9]\\)Text = "\\+36\\([2367]0\\)\\([^\\"]*\\)"\\nEntry\\([0\-9][0\-9]\\)TextUnicode = \\([^\\n]*\\)\\n
-
-Replace: Type = NumberMobile\\nEntry\\1Text = "\\+36\\2\\3"\\n
-
-
-.SH "COPYRIGHT"
-
-Copyright \(co 2003 - 2010 Marcin Wiacek, Michal Cihar and other authors.
-License GPLv2: GNU GPL version 2 <http://www.gnu.org/licenses/old\-licenses/gpl\-2.0.html>
-.br
-This is free software: you are free to change and redistribute it.
-There is NO WARRANTY, to the extent permitted by law.
-
-.SH "REPORTING BUGS"
-
+Add file.mid to ringtones folder:
+.sp
+.nf
+.ft C
+gammu nokiaaddfile TONES file.mid
+.ft P
+.fi
+.SS Setting operator logo
+.sp
+Set logo for network \fB230 03\fP (Vodafone CZ):
+.sp
+.nf
+.ft C
+gammu setbitmap OPERATOR ala.bmp "230 03"
+.ft P
+.fi
+.SS Converting file formats
+.sp
+Convert single entry (at position 260) from gammu native backup to vCalendar:
+.sp
+.nf
+.ft C
+gammu savefile CALENDAR output.vcs myCalendar.backup 260
+.ft P
+.fi
+.SS Reporting bugs
+.sp
 There are definitely many bugs, reporting to author is welcome. Please include
 some useful information when sending bug reports (especially debug logs,
-operating system, it's version and phone information are needed).
-
-.P
-To generate debug log, enable it in gammurc (alternatively you can
-do it on command line using \-d textall \-f /tmp/gammu.log):
-
-.RS
+operating system, it\(aqs version and phone information are needed).
+.sp
+To generate debug log, enable it in gammurc:
 .sp
 .nf
-.ne 7
+.ft C
 [gammu]
 YOUR CONNECTION SETTINGS
 logfile = /tmp/gammu.log
 logformat = textall
+.ft P
 .fi
 .sp
-.RE
-.PP
-
+Alternatively you can specify logging on command line:
+.sp
+.nf
+.ft C
+gammu \-d textall \-f /tmp/gammu.log ...
+.ft P
+.fi
+.sp
 With this settings, Gammu generates /tmp/gammu.log on each connection to
 phone and stores dump of communication there. You can also find some
 hints for improving support for your phone in this log.
-
-See <http://wammu.eu/support/bugs/> for more information on reporting bugs.
-
-Please report bugs to <http://bugs.cihar.com>.
-
-.SH "AUTHOR"
-
-.P 
-You can contact authors on <gammu-users@lists.sourceforge.net>.
-
-.P 
-\fIMichal Cihar\fR
-<michal@cihar.com>
-is current project maintainer and contributor of most of AT and OBEX
-code.
-
-.P 
-\fIMarcin Wiacek\fR
-<marcin@mwiacek.com>
-is project iniciator and contributor of most Nokia code.
-
-.P
-As this project grew from Gnokii, we would like to thanks all Gnokii
-developers, especially \fIPavel Janik\fR, \fIPawel Kot\fR
-and \fIManfred Jonsson\fR (see CREDITS from Gnokii for all their
-contributor).
-
-.P
-Many other people have helped with various features, check ChangeLog for
-more details.
-
-.SH "SEE ALSO"
-
-.P
-gammu\-smsd(1), gammu\-smsd\-inject(1), gammurc(5), jadmaker(1)
-
-Some more hints can be found in README file or on wiki <http://www.gammu.org/>.
-
-Related programs which can be used with GSM modem:
-
-cu(1), gnokii(1), minicom(1)
-
-Graphical interfaces for Gammu:
-
-wammu(1), gmobilemedia(1)
-
+.sp
+See <\fI\%http://wammu.eu/support/bugs/\fP> for more information on reporting bugs.
+.sp
+Please report bugs to \fI\%Gammu bug tracker\fP.
+.SH AUTHOR
+Michal Čihař <michal@cihar.com>
+.SH COPYRIGHT
+2009-2010, Michal Čihař <michal@cihar.com>
+.\" Generated by docutils manpage writer.
+.\" 
+.

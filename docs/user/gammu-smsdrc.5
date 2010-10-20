@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSDRC" "5" "October 15, 2010" "1.28.93" "Gammu"
+.TH "GAMMU-SMSDRC" "5" "October 20, 2010" "1.28.93" "Gammu"
 .SH NAME
 gammu-smsdrc \- gammu-smsd(1) configuration file
 .
@@ -331,7 +331,7 @@ you want to run several SMS daemons.
 .sp
 When you set PhoneID, all messages (including injected ones) will be marked by
 this string and it allow more SMS daemons to share single database. This
-option has actually no effect of \fIgammu\-smsd\-files\fP.
+option has actually no effect with \fIgammu\-smsd\-files\fP.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -368,6 +368,10 @@ detect failure of sending message.
 The program will receive optional parameter, which can currently be either
 \fBINIT\fP (meaning failure during phone initialization) or message ID,
 which would indicate error while sending the message.
+.IP Note
+.
+The environment with message (as is in \fI\%RunOnReceive\fP) is not passed to the command.
+.RE
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -552,7 +556,7 @@ The format in which the SMS will be stored: \fBdetail\fP, \fBunicode\fP, \fBstan
 .TP
 .B \fBdetail\fP
 .sp
-format used for message backup by gammu(1)
+format used for message backup by \fIgammu\fP, see \fISMS Backup Format\fP.
 .TP
 .B \fBunicode\fP
 .sp
@@ -613,7 +617,7 @@ and \fI\%ExcludeSMSCFile\fP directives.
 .sp
 There is more complete example available in Gammu documentation. Please note
 that for simplicity following examples do not include \fB[gammu]\fP
-section, you can look into gammurc(5) for some examples how it can look like.
+section, you can look into \fIgammurc\fP for some examples how it can look like.
 .sp
 SMSD configuration file for FILES backend could look like:
 .sp

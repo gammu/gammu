@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSD-INJECT" "1" "October 15, 2010" "1.28.93" "Gammu"
+.TH "GAMMU-SMSD-INJECT" "1" "October 20, 2010" "1.28.93" "Gammu"
 .SH NAME
 gammu-smsd-inject \- Inject messages into queue of SMS daemon for Gammu
 .
@@ -32,7 +32,11 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .
 .SH SYNOPSIS
 .sp
-gammu\-smsd\-inject [\fIOPTION\fP]... MESSAGETYPE RECIPIENT [\fIMESSAGE_PARAMETER\fP]...
+.nf
+.ft C
+gammu\-smsd\-inject [OPTION]... MESSAGETYPE RECIPIENT [MESSAGE_PARAMETER]...
+.ft P
+.fi
 .SH DESCRIPTION
 .sp
 This manual page documents briefly the \fBgammu\-smsd\-inject\fP command.
@@ -65,9 +69,8 @@ Configuration file to use, default is /etc/gammu\-smsdrc, on Windows there
 is no default and configuration file path has to be always specified.
 .UNINDENT
 .sp
-For description of message types and their parameters, please check
-\fIgammu(1)\fP.  The options are identical to ones you can use for gammu
-sendsms.
+For description of message types and their parameters, please check documentation
+for \fIgammu savesms\fP.
 .SH EXAMPLES
 .sp
 To check it out, you need to have configuration file for SMSD, see

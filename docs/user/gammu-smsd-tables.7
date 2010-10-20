@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSD-TABLES" "7" "October 15, 2010" "1.28.93" "Gammu"
+.TH "GAMMU-SMSD-TABLES" "7" "October 20, 2010" "1.28.93" "Gammu"
 .SH NAME
 gammu-smsd-tables \- description of tables for database backends of gammu-smsd(1)
 .
@@ -476,13 +476,15 @@ INSERT INTO outbox (
 .SS Injecting long message using SQL
 .sp
 Inserting multipart messages is a bit more tricky, you need to construct also
-UDH header and store it hexadecimally written into UDH field.
+UDH header and store it hexadecimally written into UDH field. Unless you have
+a good reason to do this manually, use \fIgammu\-smsd\-inject\fP.
 .sp
-For long text message, the UDH starts with 050003 followed by byte as a message
-reference (you can put anything there, but it should be different for each
-message, D3 in following example), byte for number of messages (02 in example,
-it should be unique for each message you send to same phone number) and byte
-for number of current message (01 for first message, 02 for second, etc.).
+For long text message, the UDH starts with \fB050003\fP followed by byte as a
+message reference (you can put anything there, but it should be different for
+each message, \fBD3\fP in following example), byte for number of messages (\fB02\fP
+in example, it should be unique for each message you send to same phone number)
+and byte for number of current message (\fB01\fP for first message, \fB02\fP for
+second, etc.).
 .sp
 For example long text message of two parts could look like following:
 .sp
@@ -520,6 +522,11 @@ INSERT INTO outbox_multipart (
 )
 .ft P
 .fi
+.IP Note
+.
+Adding UDH means that you have less space for text, in above example you
+can use only 153 characters in single message.
+.RE
 .SH AUTHOR
 Michal Čihař <michal@cihar.com>
 .SH COPYRIGHT
