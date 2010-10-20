@@ -854,8 +854,8 @@ In new models all bitmaps are saved in filesystem and should go into filesystem 
 
     Set operator logo in phone. When won't give file and netcode, operator logo
     will be removed from phone. When will give only filename, operator logo will
-    be displayed for your current GSM operator. When give additionally network
-    code, it will be displayed for this operator: \fBgammu setbitmap OPERATOR file "260 02"\fR
+    be displayed for your current GSM operator. When you give additionally network
+    code, it will be displayed for this operator.
 
 .. option:: setbitmap PICTURE file location [text]
 
@@ -1771,6 +1771,14 @@ Add file.mid to ringtones folder:
     
     gammu nokiaaddfile TONES file.mid
 
+Setting operator logo
+---------------------
+
+Set logo for network ``230 03`` (Vodafone CZ):
+
+.. code-block:: sh
+
+    gammu setbitmap OPERATOR ala.bmp "230 03"
 
 Reporting bugs
 --------------
