@@ -207,7 +207,7 @@ ____________
 
 .. option:: deletesms folder start [stop]
 
-    Delete SMS from phone. See description for \fBgetsms\fR for info about
+    Delete SMS from phone. See description for :option:`gammu getsms` for info about
     sms folders naming convention. 
 
     Locations are numerated from 1.
@@ -222,11 +222,11 @@ ____________
     Get all SMS from phone. In some phones you will have also SMS templates
     and info about locations used to save Picture Images. With each sms you
     will see location. If you want to get such sms from phone alone, use
-    \fBgammu getsms 0 location\fR
+    :option:`gammu getsms`.
 
 .. option:: geteachsms -pbk
 
-    Similiary to \fBgetallsms\fR. Difference is, that
+    Similiary to :option:`gammu getallsms`. Difference is, that
     links all concatenated sms
 
 .. option:: getsms folder start [stop]
@@ -244,7 +244,7 @@ ____________
     depend on your phone (the most often 1="Inbox", 2="Outbox", etc.).
     This method is not supported by all phones (for example, not supported
     by Nokia 3310, 5110, 6110). If work with your phone, use
-    \fBgetsmsfolders\fR to get folders list.
+    :option:`gammu getsmsfolders` to get folders list.
 
 .. option:: getsmsc [start [stop]]
 
@@ -334,7 +334,7 @@ ____________
 
     .. option:: CALENDAR file location 
 
-        Read calendar note from file created by \fBbackup\fR option and saves in
+        Read calendar note from file created by :option:`gammu backup` option and saves in
         VCALENDAR 1.0 format as SMS. The location identifies position of calendar item 
         to be read in backup file (usually 1, but can be useful in case the backup contains 
         more items).
@@ -353,50 +353,97 @@ ____________
 
     .. option:: EMS [-unicode] [-16bit] [-format lcrasbiut] [-text text] [-unicodefiletext file] [-defsound ID] [-defanimation ID] [-tone10 file] [-tone10long file] [-tone12 file] [-tone12long file] [-toneSE file] [-toneSElong file] [-fixedbitmap file] [-variablebitmap file] [-variablebitmaplong file] [-animation frames file1 ...] [-protected number]
 
-        Saves EMS sequence. All parameters after \fB-unread\fR (like \fB-defsound\fR) can be used few times.
+        Saves EMS sequence. All format specific parameters (like :option:`-defsound`) can be used few times.
 
-        \fB-text\fR - adds text
+        .. option:: -text
 
-        \fB-unicodefiletext\fR - adds text from Unicode file
+            adds text
 
-        \fB-defanimation\fR - adds default animation with ID specified by user.ID for different phones are different.
+        .. option:: -unicodefiletext
 
-        \fB-animation\fR - adds "frames" frames read from file1, file2, etc.
+            adds text from Unicode file
 
-        \fB-defsound\fR - adds default sound with ID specified by user. ID for different phones are different.
+        .. option:: -defanimation
 
-        \fB-tone10\fR - adds IMelody version 1.0 read from RTTL or other compatible file
+            adds default animation with ID specified by user. ID for different phones are different.
 
-        \fB-tone10long\fR - IMelody version 1.0 saved in one of few SMS with UPI. Phones compatible with UPI (like SonyEricsson phones) will read such ringtone as one
+        .. option:: -animation
 
-        \fB-tone12\fR - adds IMelody version 1.2 read from RTTL or other compatible file
+            adds "frames" frames read from file1, file2, etc.
 
-        \fB-tone12long\fR - IMelody version 1.2 saved in one of few SMS with UPI. Phones compatible with UPI (like SonyEricsson phones) will read such ringtone as one
+        .. option:: -defsound
 
-        \fB-toneSE\fR - adds IMelody in "short" form supported by SonyEricsson phones
+            adds default sound with ID specified by user. ID for different phones are different.
 
-        \fB-toneSElong\fR - add SonyEricsson IMelody saved in one or few SMS with UPI
+        .. option:: -tone10
 
-        \fB-variablebitmap\fR - bitmap in any size saved in one SMS
+            adds IMelody version 1.0 read from RTTL or other compatible file
 
-        \fB-variablebitmaplong\fR - bitmap with maximal size 96x128 saved in one or few sms
+        .. option:: -tone10long
 
-        \fB-fixedbitmap\fR - bitmap 16x16 or 32x32
+            IMelody version 1.0 saved in one of few SMS with UPI. Phones
+            compatible with UPI (like Sony-Ericsson phones) will read such
+            ringtone as one
 
-        \fB-protected\fR - all ringtones and bitmaps after this parameter (excluding default ringtones and logos) will be "protected" (in phones compatible with ODI like SonyEricsson products it won't be possible to forward them from phone menu)
+        .. option:: -tone12
 
-        \fB-16bit\fR - Gammu uses SMS headers with 16-bit numbers for saving linking info in SMS (it means less chars available for user in each SMS)
+            adds IMelody version 1.2 read from RTTL or other compatible file
 
-        \fB-format\fR lcrasbiut - last text will be formatted. You can use combinations of chars:
-            l - left aligned
-            c - centered
-            r - right aligned
-            a - large font
-            s - small font
-            b - bold font
-            i - italic font
-            u - underlined font
-            t - strikethrough font
+        .. option:: -tone12long
+
+            IMelody version 1.2 saved in one of few SMS with UPI. Phones
+            compatible with UPI (like Sony-Ericsson phones) will read such
+            ringtone as one
+
+        .. option:: -toneSE
+
+            adds IMelody in "short" form supported by Sony-Ericsson phones
+
+        .. option:: -toneSElong
+
+            add Sony-Ericsson IMelody saved in one or few SMS with UPI
+
+        .. option:: -variablebitmap
+
+            bitmap in any size saved in one SMS
+
+        .. option:: -variablebitmaplong
+
+            bitmap with maximal size 96x128 saved in one or few sms
+
+        .. option:: -fixedbitmap
+
+            bitmap 16x16 or 32x32
+
+        .. option:: -protected
+
+            all ringtones and bitmaps after this parameter (excluding default
+            ringtones and logos) will be "protected" (in phones compatible with
+            ODI like SonyEricsson products it won't be possible to forward them
+            from phone menu)
+
+        .. option:: -16bit
+
+            Gammu uses SMS headers with 16-bit numbers for saving linking info
+            in SMS (it means less chars available for user in each SMS)
+
+        .. option:: -format lcrasbiut 
+           
+            last text will be formatted. You can use combinations of chars:
+
+            =========  ==================
+            Character  Formating
+            =========  ==================
+            ``l``      left aligned
+            ``c``      centered
+            ``r``      right aligned
+            ``a``      large font
+            ``s``      small font
+            ``b``      bold font
+            ``i``      italic font
+            ``u``      underlined font
+            ``t``      strikethrough font
+            =========  ==================
 
 
     .. option:: MMSINDICATOR URL Title Sender 
@@ -442,11 +489,15 @@ ____________
         Read RTTL ringtone from file and save as SMS
         into SIM/phone memory. Ringtone is saved in Nokia (Smart Messaging) format.
 
-        \fB-long\fR - ringtone is saved using Profile style. It can be longer (and saved
-        in 2 SMS), but decoded only by newer phones (like 33xx)
+        .. option:: -long
 
-        \fB-scale\fR - ringtone will have Scale info for each note. It will allow to edit
-        it correctly later in phone composer (for example, in 33xx)
+            ringtone is saved using Profile style. It can be longer (and saved
+            in 2 SMS), but decoded only by newer phones (like 33xx)
+
+        .. option:: -scale
+
+            ringtone will have Scale info for each note. It will allow to edit
+            it correctly later in phone composer (for example, in 33xx)
 
 
     .. option:: SMSTEMPLATE  [-unicode] [-text text] [-unicodefiletext file] [-defsound ID] [-defanimation ID] [-tone10 file] [-tone10long file] [-tone12 file] [-tone12long file] [-toneSE file] [-toneSElong file] [-variablebitmap file] [-variablebitmaplong file] [-animation frames file1 ...]
@@ -459,51 +510,93 @@ ____________
         Take text from stdin (or commandline if -text 
         specified) and save as text SMS into SIM/phone memory.
 
-        \fB-flash\fR - Class 0 SMS (should be displayed after receiving on recipients' phone display after receiving without entering Inbox)
+        .. option:: -flash
 
-        \fB-len len\fR - specify, how many chars will be read. When use this
-        option and text will be longer than 1 SMS, will be split into more
-        linked SMS
+            Class 0 SMS (should be displayed after receiving on recipients' phone display after receiving without entering Inbox)
 
-        \fB-autolen len\fR - specify, how many chars will be read. When use this
-        option and text will be longer than 1 SMS, will be split into more
-        linked SMS.Coding type (SMS default alphabet/Unicode) is set according
-        to input text
+        .. option:: -len len
 
-        \fB-enablevoice\fR | \fB-disablevoice\fR | \fB-enablefax \fR |
-        \fB-disablefax \fR | \fB-enableemail \fR | \fB-disableemail \fR -
-        sms will set such indicators. Text will be cut to 1 sms.
+            specify, how many chars will be read. When use this option and text
+            will be longer than 1 SMS, will be split into more linked SMS
 
-        \fB-voidsms\fR - many phones after receiving it won't display anything,
-        only beep, vibrate or turn on light. Text will be cut to 1 sms.
+        .. option:: -autolen len
 
-        \fB-unicode\fR - SMS will be saved in Unicode format
+            specify, how many chars will be read. When use this option and text
+            will be longer than 1 SMS, will be split into more linked
+            SMS.Coding type (SMS default alphabet/Unicode) is set according to
+            input text
 
-        \fB-inputunicode\fR - input text is in Unicode.
+        .. option:: -enablevoice
 
-        \fB-text\fR - get text from command line instead of stdin.
+            sms will set voice mail indicator. Text will be cut to 1 sms.
 
-        \fB-textutf8\fR - get text in UTF-8 from command line instead of stdin.
+        .. option:: -disablevoice
 
-        \fB-16bit\fR - Gammu uses SMS headers with 16-bit numbers for saving linking info in SMS (it means less chars available for user in each SMS)
+            sms will not set voice mail indicator. Text will be cut to 1 sms.
 
-        \fITIP:\fR
-        You can create Unicode file using WordPad in Windows (during saving select
-        "Unicode Text Document" format). In Unix can use for example YUdit.
+        .. option:: -enablefax
 
-        \fB-replacemessages ID\fR - \fBID\fR can be 1..7. When you will use option and
-        send more single SMS to one recipient with the same ID, each another SMS will
-        replace each previous with the same ID
+            sms will set fax indicator. Text will be cut to 1 sms.
 
-        \fB-replacefile file\fR  - when you want, you can make file in such format:
-        \fBsrc_unicode_char1, dest_unicode_char1, src_unicode_char2, dest_unicode_char2\fR
-        (everything in one line). After reading text for SMS from stdin there will
-        be made translation and each src char will be converted to dest char. In docs
-        there is example file (\fIreplace.txt\fR), which will change all "a" chars to "1
+        .. option:: -disablefax
 
-        \fITIP:\fR when use ~ char in sms text and \fB-unicode\fR option
-        (Unicode coding required), text of sms after ~ char will blink in some phones
-        (like N33xx)
+            sms will not set fax indicator. Text will be cut to 1 sms.
+
+        .. option:: -enableemail
+
+            sms will set email indicator. Text will be cut to 1 sms.
+
+        .. option:: -disableemail
+
+            sms will not set email indicator. Text will be cut to 1 sms.
+
+        .. option:: -voidsms
+
+            many phones after receiving it won't display anything, only beep,
+            vibrate or turn on light. Text will be cut to 1 sms.
+
+        .. option:: -unicode
+
+            SMS will be saved in Unicode format
+
+        .. option:: -inputunicode
+
+            input text is in Unicode.
+
+        .. option:: -text
+
+            get text from command line instead of stdin.
+
+        .. option:: -textutf8
+
+            get text in UTF-8 from command line instead of stdin.
+
+            \fITIP:\fR
+            You can create Unicode file using WordPad in Windows (during saving select
+            "Unicode Text Document" format). In Unix can use for example YUdit.
+
+        .. option:: -16bit
+
+            Gammu uses SMS headers with 16-bit numbers for saving linking info in SMS (it means less chars available for user in each SMS)
+
+        .. option:: -replacemessages ID
+
+            ``ID`` can be 1..7. When you will use option and send more single
+            SMS to one recipient with the same ID, each another SMS will
+            replace each previous with the same ID
+
+        .. option:: -replacefile file
+           
+            when you want, you can make file in such format:
+            \fBsrc_unicode_char1, dest_unicode_char1, src_unicode_char2,
+            dest_unicode_char2\fR (everything in one line). After reading text
+            for SMS from stdin there will be made translation and each src char
+            will be converted to dest char. In docs there is example file
+            (\fIreplace.txt\fR), which will change all "a" chars to "1
+
+            \fITIP:\fR when use ~ char in sms text and \fB-unicode\fR option
+            (Unicode coding required), text of sms after ~ char will blink in some phones
+            (like N33xx)
 
     .. option:: TODO file location 
 
@@ -512,11 +605,11 @@ ____________
 
     .. option:: VCARD10|VCARD21 file SM|ME location [-nokia] 
 
-        Read phonebook entry from file created by \fBbackup\fR option and saves in
-        VCARD 1.0 (only name and default number) or VCARD 2.1 (all entry details with
-        all numbers, text and name) format as SMS. The location identifies position of contact item 
-        to be read in backup file (usually 1, but can be useful in case the backup contains 
-        more items).
+        Read phonebook entry from file created by :option:`gammu backup` option
+        and saves in VCARD 1.0 (only name and default number) or VCARD 2.1 (all
+        entry details with all numbers, text and name) format as SMS. The
+        location identifies position of contact item to be read in backup file
+        (usually 1, but can be useful in case the backup contains more items).
 
 
     .. option:: WAPINDICATOR URL Title 
@@ -527,7 +620,7 @@ ____________
 
     .. option:: WAPSETTINGS file location DATA|GPRS 
 
-        Read WAP settings from file created by \fBbackup\fR option and saves in Nokia format as SMS
+        Read WAP settings from file created by :option:`gammu backup` option and saves in Nokia format as SMS
 
 
 .. option:: sendsms TYPE destination [type parameters] [type options] [-smscset number] [-smscnumber number] [-reply] [-report] [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [-save [-folder number]]
