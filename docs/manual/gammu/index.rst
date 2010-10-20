@@ -13,6 +13,9 @@ Synopsis
 
     gammu [parameters] <command> [options]
 
+Commands actually indicate which operation should Gammu perform. They can be
+specified with or without leading ``--``.
+
 Description
 +++++++++++
 
@@ -42,15 +45,8 @@ Parameters before command configure gammu behaviour:
    file for logging debug messages
 
 
-Commands
---------
-
-Commands actually indicate which operation should Gammu perform. They can be
-specified with or without leading ``--``.
-
-
-Calls
-~~~~~
+Call commands
+-------------
 
 .. option:: --answercall [id]
 
@@ -122,8 +118,8 @@ Calls
 
     Unholds call.
 
-SMS and EMS
-~~~~~~~~~~~
+SMS and EMS commands
+--------------------
 
 Sending messages might look a bit complicated on first attempt to use.
 But be patient, the command line has been written in order to allow
@@ -726,8 +722,8 @@ ____________
     Locations are numerated from 1.
 
 
-Memory (phonebooks and calls)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Memory (phonebooks and calls) commands
+--------------------------------------
 
 .. option:: --deleteallmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL
 
@@ -777,8 +773,8 @@ Memory (phonebooks and calls)
     case insensitive substring lookup. You can interrupt searching by pressing
     Ctrl+C.
 
-Filesystem
-~~~~~~~~~~
+Filesystem commands
+-------------------
 
 Gammu allows to access phones using native protocol (Nokias) or OBEX. Your
 phone can also support usb storage, which is handled on the operating system
@@ -853,8 +849,8 @@ level and Gammu does not use that.
 .. option:: --setfileattrib folderID [-system] [-readonly] [-hidden] [-protected]
 
 
-Logo and pictures
-~~~~~~~~~~~~~~~~~
+Logo and pictures commands
+--------------------------
 
 These options are mainly (there are few exceptions) for monochromatic logos and
 images available in older phones. Recognized file formats: xpm (only saving),
@@ -934,8 +930,8 @@ In new models all bitmaps are saved in filesystem and should go into filesystem 
 
     Sets wallpaper in phone.
 
-Ringtones
-~~~~~~~~~
+Ringtones commands
+------------------
 
 Ringtones are mostly supported only for older phones. For recent phones you
 usually just upload them to some folder in phone filesystem.
@@ -982,8 +978,8 @@ Samsung).
     33xx) name will blink later in phone menus
 
 
-Calendar notes
-~~~~~~~~~~~~~~
+Calendar notes commands
+-----------------------
 
 In Nokia 3310, 3315 and 3330 these are named "Reminders" and have some limitations (depending on phone firmware version).
 
@@ -1000,8 +996,8 @@ In Nokia 3310, 3315 and 3330 these are named "Reminders" and have some limitatio
     Retrieves selected calendar entries from phone.
 
 
-To do lists
-~~~~~~~~~~~
+To do list commands
+-------------------
 
 .. option:: --deletetodo start [stop]
 
@@ -1015,8 +1011,8 @@ To do lists
 
     Retrieves selected todo entries from phone.
 
-Notes
-~~~~~
+Notes commands
+--------------
 
 .. option:: --getallnotes
 
@@ -1026,8 +1022,8 @@ Notes
     phones even if they have notes inside phone.
 
 
-Date, time and alarms
-~~~~~~~~~~~~~~~~~~~~~
+Date, time and alarm commands
+-----------------------------
 
 .. option:: --getalarm [start]
 
@@ -1052,8 +1048,8 @@ Date, time and alarms
     your phone and use Gammu. See :ref:`gammurc` for details.
 
 
-Categories
-~~~~~~~~~~
+Categories commands
+-------------------
 
 ..note:: Categories are supported only on few phones (Alcatel).
 
@@ -1068,8 +1064,8 @@ Categories
 .. option:: --listtodocategory text|number
 
 
-Backing up and restoring
-~~~~~~~~~~~~~~~~~~~~~~~~
+Backing up and restoring commands
+---------------------------------
 
 .. option:: --addnew file [-yes] [-memory ME|SM|..]
 
@@ -1188,8 +1184,8 @@ Backing up and restoring
         gammu savefile CALENDAR output.vcf myPhonebook.backup ME 42
 
 
-Nokia specific
-~~~~~~~~~~~~~~
+Nokia specific commands
+-----------------------
 
 .. option:: --nokiaaddfile APPLICATION|GAME file [-readonly] [-overwrite] [-overwriteall]
 
@@ -1350,8 +1346,8 @@ Nokia specific
 .. option:: --nokiavibratest
 
 
-Siemens specific
-~~~~~~~~~~~~~~~~
+Siemens specific commands
+-------------------------
 
 .. option:: --siemensnetmonact netmon_type
 
@@ -1362,8 +1358,8 @@ Siemens specific
 
 .. option:: --siemenssatnetmon
 
-Network
-~~~~~~~
+Network commands
+----------------
 
 .. option:: --getgprspoint start [stop]
 
@@ -1377,8 +1373,8 @@ Network
 
 .. option:: --setautonetworklogin
 
-WAP settings and bookmarks
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+WAP settings and bookmarks commands
+-----------------------------------
 
 .. option:: --deletewapbookmark start [stop]
 
@@ -1402,8 +1398,8 @@ WAP settings and bookmarks
 
     Locations are numerated from 1.
 
-MMS and MMS settings
-~~~~~~~~~~~~~~~~~~~~
+MMS and MMS settings commands
+-----------------------------
 
 .. option:: --getallmms [-save]
 
@@ -1416,15 +1412,15 @@ MMS and MMS settings
 .. option:: --readmmsfile file [-save]
 
 
-FM radio
-~~~~~~~~
+FM radio commands
+-----------------
 
 .. option:: --getfmstation start [stop]
 
     Show info about FM stations in phone
 
-Phone information
-~~~~~~~~~~~~~~~~~
+Phone information commands
+--------------------------
 
 .. option:: --battery
 
@@ -1452,8 +1448,8 @@ Phone information
     to break this state.
 
 
-Phone settings
-~~~~~~~~~~~~~~
+Phone settings commands
+-----------------------
 
 .. option:: --getcalendarsettings
 
@@ -1497,8 +1493,8 @@ Phone settings
         * clear date/time
 
 
-Dumps decoding
-~~~~~~~~~~~~~~
+Dumps decoding commands
+-----------------------
 
 .. note:: These commands are available only if Gammu was compiled with debugging options.
 
@@ -1511,8 +1507,8 @@ Dumps decoding
 
     Allows to decode sniffs. See :ref:`Discovering protocol` for more details.
 
-Other functions
-~~~~~~~~~~~~~~~
+Other commands
+--------------
 
 .. option:: --entersecuritycode PIN|PUK|PIN2|PUK2|PHONE|NETWORK code|-
 
@@ -1553,8 +1549,8 @@ Other functions
     .. note:: Some phones will ask for PIN even with ``SOFT`` option.
     .. warning:: Some phones will reset user data on ``HARD`` reset.
 
-Batch mode
-~~~~~~~~~~
+Batch mode commands
+-------------------
 
 .. option:: --batch [file]
 
@@ -1566,8 +1562,8 @@ Batch mode
     specify a file from where they would be read (special case ``-`` means standard
     input).
 
-Configuration
-~~~~~~~~~~~~~
+Configuration commands
+----------------------
 
 .. option:: --searchphone [-debug]
 
@@ -1576,8 +1572,8 @@ Configuration
     configure phone connection, this is a convenient way to find working setup for
     Gammu.
 
-Gammu information
-~~~~~~~~~~~~~~~~~
+Gammu information commands
+--------------------------
 
 .. option:: --checkversion [STABLE]
 
@@ -1765,13 +1761,13 @@ Examples
 ++++++++
 
 Configuration
-~~~~~~~~~~~~~
+-------------
 
 To check it out, you need to have configuration file for gammu, see 
 :ref:`gammurc` for more details about it.
 
 Sending messages
-~~~~~~~~~~~~~~~~
+----------------
 
 Save text message up to standard 160 chars:
 
@@ -1816,7 +1812,7 @@ Save protected message with ringtone:
     gammu savesms EMS -protected 2 -variablebitmaplong ala.bmp -toneSElong axelf.txt -toneSE ring.txt
 
 Uploading files to Nokia
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 Add Alien to applications in your phone (you need to have files Alien.JAD and Alien.JAR in current directory):
 
@@ -1832,7 +1828,7 @@ Add file.mid to ringtones folder:
 
 
 Reporting bugs
-~~~~~~~~~~~~~~
+--------------
 
 There are definitely many bugs, reporting to author is welcome. Please include
 some useful information when sending bug reports (especially debug logs,
