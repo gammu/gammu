@@ -461,13 +461,18 @@ ____________
 
     .. option:: OPERATOR file  [-netcode netcode] [-biglogo]
 
-        Save operator logo as sms in Nokia (Smart
-        Messaging) format - size 72x14 or 78x21 after using \fB-biglogo\fR, all in
-        two colors.
+        Save operator logo as sms in Nokia (Smart Messaging) format - size
+        72x14 in two colors.
 
-        Please note, that it isn't designed for colour logos available for example in
-        DCT4/TIKU - you need to put bitmap file there inside phone using filesystem
-        commands.
+        .. option:: -biglogo
+
+            Use 78x21 formatted logo instead of standard 72x14.
+
+        .. note:: 
+           
+           This isn't designed for colour logos available for example in newer
+           phones - you need to put bitmap file there inside phone using
+           filesystem commands.
 
 
     .. option:: PICTURE file  [-text text] [-unicode] [-alcatelbmmi]
@@ -559,9 +564,21 @@ ____________
 
             SMS will be saved in Unicode format
 
+            .. note:: 
+
+                The ``~`` char in SMS text and :option:`-unicode` option
+                (Unicode coding required) can cause text of SMS after ``~``
+                char  blink in some phones (like Nokia 33xx).
+
         .. option:: -inputunicode
 
             input text is in Unicode.
+
+            .. note::
+
+                You can create Unicode file using WordPad in Windows (during
+                saving select "Unicode Text Document" format). In Unix can use
+                for example YUdit or vim.
 
         .. option:: -text
 
@@ -571,13 +588,16 @@ ____________
 
             get text in UTF-8 from command line instead of stdin.
 
-            \fITIP:\fR
-            You can create Unicode file using WordPad in Windows (during saving select
-            "Unicode Text Document" format). In Unix can use for example YUdit.
+            .. note::
+
+                Gammu detects your locales and uses by default encoding based
+                on this. Use this option only when you know the input will be
+                in UTF-8 in all cases.
 
         .. option:: -16bit
 
-            Gammu uses SMS headers with 16-bit numbers for saving linking info in SMS (it means less chars available for user in each SMS)
+            Gammu uses SMS headers with 16-bit numbers for saving linking info
+            in SMS (it means less chars available for user in each SMS)
 
         .. option:: -replacemessages ID
 
@@ -588,15 +608,11 @@ ____________
         .. option:: -replacefile file
            
             when you want, you can make file in such format:
-            \fBsrc_unicode_char1, dest_unicode_char1, src_unicode_char2,
-            dest_unicode_char2\fR (everything in one line). After reading text
+            ``src_unicode_char1, dest_unicode_char1, src_unicode_char2, dest_unicode_char2``
+            (everything in one line). After reading text
             for SMS from stdin there will be made translation and each src char
             will be converted to dest char. In docs there is example file
-            (\fIreplace.txt\fR), which will change all "a" chars to "1
-
-            \fITIP:\fR when use ~ char in sms text and \fB-unicode\fR option
-            (Unicode coding required), text of sms after ~ char will blink in some phones
-            (like N33xx)
+            (``replace.txt``), which will change all "a" chars to "1
 
     .. option:: TODO file location 
 
@@ -663,7 +679,7 @@ Memory (phonebooks and calls) commands
 .. option:: getallmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL
 
     Get all memory locations from phone. For memory
-    types see \fBgetmemory\fR.
+    types see :option:`getmemory`.
 
 .. option:: getmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL start [stop [-nonempty]]
 
