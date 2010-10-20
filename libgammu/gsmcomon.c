@@ -144,7 +144,7 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{ERR_BADFEATURE, "BADFEATURE",		N_("Bad feature string in configuration.")},
 	{ERR_DISABLED, "DISABLED",		N_("Desired functionality has been disabled on compile time.")},
 	{ERR_SPECIFYCHANNEL, "SPECIFYCHANNEL", N_("Bluetooth configuration requires channel option.")},
-	{ERR_NOTRUNNING, "NOTRUNNING", N_("Service is not runnig.")},
+	{ERR_NOTRUNNING, "NOTRUNNING", N_("Service is not running.")},
 	{ERR_NOSERVICE, "NOSERVICE", N_("Service configuration is missing.")},
 	{ERR_BUSY, "BUSY", N_("Command rejected because device was busy. Wait and restart.")},
 	{ERR_COULDNT_CONNECT, "COULDNT_CONNECT", N_("Could not connect to the server.")},

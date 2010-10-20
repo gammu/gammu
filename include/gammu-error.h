@@ -282,7 +282,7 @@ typedef enum {
 	 */
 	ERR_SPECIFYCHANNEL,
 	/**
-	 * Service is not runnig.
+	 * Service is not running.
 	 */
 	ERR_NOTRUNNING,
 	/**

@@ -1747,7 +1747,7 @@ values increased by 100:
 163
     Bluetooth configuration requires channel option.
 164
-    Service is not runnig.
+    Service is not running.
 165
     Service configuration is missing.
 166
