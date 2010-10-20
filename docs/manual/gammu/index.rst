@@ -397,14 +397,6 @@ Remaining not known characters are replaced by question mark.
         u - underlined font
         t - strikethrough font
 
-    \fIExample:\fR gammu savesms EMS -text "Greetings" -defsound 1 -text "from Gammu" -tone10 axelf.txt -animation 2 file1.bmp file2.bmp
-
-    will create EMS sequence with text "Greetings" and default sound 1 and text "from Gammu" and ringtone axelf.txt and 2 frame animation read from (1'st frame) file1.bmp and (2'nd frame) file2.bmp
-
-    \fIExample:\fR gammu savesms EMS -protected 2 -variablebitmaplong ala.bmp -toneSElong axelf.txt -toneSE ring.txt
-
-    ala.bmp and axelf.txt will be "protected
-
 
     For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
@@ -533,9 +525,6 @@ Remaining not known characters are replaced by question mark.
     \fITIP:\fR when use ~ char in sms text and \fB-unicode\fR option
     (Unicode coding required), text of sms after ~ char will blink in some phones
     (like N33xx)
-
-    \fIExample:\fR echo some_text | gammu savesms TEXT
-
 
     For description of shared parameters see :ref:`Common parameters for sendsms and savesms`.
 
@@ -1207,10 +1196,6 @@ Nokia specific
     .I -overwriteall
     will also delete all data. Both these options work only for Application or Game upload.
 
-    \fIExample:\fR gammu nokiaaddfile Application Alien will read Alien.JAD and Alien.JAR and add to Applications
-
-    \fIExample:\fR gammu nokiaaddfile Tones file.mid will read file.mid and add to Tones folder
-
     You can use jadmaker(1) to generate a .jad file from a .jar file.
 
 .. option:: --nokiaaddfile GALLERY|GALLERY2|CAMERA|TONES|TONES2|RECORDS|VIDEO|PLAYLIST|MEMORYCARD file [-name name] [-protected] [-readonly] [-system] [-hidden] [-newtime]
@@ -1828,6 +1813,21 @@ Save protected message with ringtone:
 .. code-block:: sh
 
     gammu savesms EMS -protected 2 -variablebitmaplong ala.bmp -toneSElong axelf.txt -toneSE ring.txt
+
+Uploading files to Nokia
+------------------------
+
+Add Alien to applications in your phone (you need to have files Alien.JAD and Alien.JAR in current directory):
+
+.. code-block:: sh
+
+    gammu nokiaaddfile APPLICATION Alien
+
+Add file.mid to ringtones folder:
+
+.. code-block:: sh
+    
+    gammu nokiaaddfile TONES file.mid
 
 
 Reporting bugs
