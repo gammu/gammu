@@ -129,7 +129,7 @@ Sending messages might look a bit complicated on first attempt to use.
 But be patient, the command line has been written in order to allow
 almost every usage. See EXAMPLE section for some hints on usage.
 
-There is also an option to use gammu-smsd(1) when you want to send or 
+There is also an option to use :ref:`gammu-smsd` when you want to send or 
 receive more messages and process them automatically.
 
 .. _Common parameters for sendsms and savesms:
@@ -1055,7 +1055,7 @@ Date, time and alarms
     date and time.
 
     \fITIP:\fR you can make such synchronization each time, when will connect
-    your phone and use Gammu. See gammurc(5) for details.
+    your phone and use Gammu. See :ref:`gammurc` for details.
 
 
 Categories
@@ -1630,7 +1630,7 @@ returned.
 98
     Gammu library version mismatch.
 99
-    Functionality has been moved. For example to gammu-smsd(1).
+    Functionality has been moved. For example to :ref:`gammu-smsd`.
 
 Errors codes greater than 100 map to the GSM_Error 
 values increased by 100:
