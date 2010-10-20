@@ -1837,8 +1837,7 @@ There are definitely many bugs, reporting to author is welcome. Please include
 some useful information when sending bug reports (especially debug logs,
 operating system, it's version and phone information are needed).
 
-To generate debug log, enable it in gammurc (alternatively you can
-do it on command line using -d textall -f /tmp/gammu.log):
+To generate debug log, enable it in gammurc:
 
 .. code-block:: ini
 
@@ -1846,6 +1845,12 @@ do it on command line using -d textall -f /tmp/gammu.log):
     YOUR CONNECTION SETTINGS
     logfile = /tmp/gammu.log
     logformat = textall
+
+Alternatively you can specify logging on command line:
+
+.. code-block:: sh
+
+   gammu -d textall -f /tmp/gammu.log ...
 
 With this settings, Gammu generates /tmp/gammu.log on each connection to
 phone and stores dump of communication there. You can also find some
