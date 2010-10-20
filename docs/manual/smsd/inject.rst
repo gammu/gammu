@@ -39,9 +39,8 @@ accepted on some platforms):
     Configuration file to use, default is /etc/gammu-smsdrc, on Windows there
     is no default and configuration file path has to be always specified.
 
-For description of message types and their parameters, please check
-:manpage:`gammu(1)`.  The options are identical to ones you can use for gammu
-sendsms.
+For description of message types and their parameters, please check documentation
+for :option:`gammu savesms`.
 
 Examples
 --------

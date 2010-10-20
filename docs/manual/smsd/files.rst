@@ -27,7 +27,7 @@ Explanation of fields:
     ``txt`` for text message, 8-bit messages are stored with ``bin`` extension, ``smsbackup`` for :ref:`smsbackup`
 
 The content of the file is content of the message and the format is defined by
-configuration directive InboxFormat (see gammu-smsdrc(5)).
+configuration directive :config:option:`InboxFormat` (see :ref:`gammu-smsdrc`).
 
 Transmitting of messages
 ++++++++++++++++++++++++

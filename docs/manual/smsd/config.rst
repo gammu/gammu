@@ -411,7 +411,7 @@ that all path should contain trailing path separator (/ on Unix systems):
     The format in which the SMS will be stored: ``detail``, ``unicode``, ``standard``.
 
     ``detail``   
-        format used for message backup by gammu(1)
+        format used for message backup by :ref:`gammu`, see :ref:`SMS Backup Format`.
     ``unicode``
         message text stored in unicode (UTF-16)
     ``standard``
@@ -468,7 +468,7 @@ Examples
 
 There is more complete example available in Gammu documentation. Please note
 that for simplicity following examples do not include :config:section:`[gammu]`
-section, you can look into gammurc(5) for some examples how it can look like.
+section, you can look into :ref:`gammurc` for some examples how it can look like.
 
 SMSD configuration file for FILES backend could look like:
 

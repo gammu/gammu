@@ -1,4 +1,5 @@
 .. _smsbackup:
+.. _SMS Backup Format:
 
 SMS Backup Format
 =================
