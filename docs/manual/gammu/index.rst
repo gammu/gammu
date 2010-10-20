@@ -1853,4 +1853,4 @@ hints for improving support for your phone in this log.
 
 See <http://wammu.eu/support/bugs/> for more information on reporting bugs.
 
-Please report bugs to <http://bugs.cihar.com>.
+Please report bugs to <http://bugs.cihar.com/>.
