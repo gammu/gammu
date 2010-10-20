@@ -831,70 +831,78 @@ In new models all bitmaps are saved in filesystem and should go into filesystem 
     some file formats (like NLM) will be set indicator informing about logo type
     to given.
 
-.. option:: getbitmap CALLER location [file]
+.. option:: getbitmap TYPE [type options]
 
-    Get caller group logo from phone. Locations 1-5.
+    Reads bitmap from phone, following types are supported:
 
-.. option:: getbitmap DEALER
+    .. option:: CALLER location [file]
 
-    In some models it's possible to save dealer welcome note - text displayed
-    during enabling phone, which can't be edited from phone menu.  Here you can
-    get it.
+        Get caller group logo from phone. Locations 1-5.
 
-.. option:: getbitmap OPERATOR [file]
+    .. option:: DEALER
 
-    Get operator logo (picture displayed instead of operator name) from phone.
+        In some models it's possible to save dealer welcome note - text displayed
+        during enabling phone, which can't be edited from phone menu.  Here you can
+        get it.
 
-.. option:: getbitmap PICTURE location [file]
+    .. option:: OPERATOR [file]
 
-    Get Picture Image from phone.
+        Get operator logo (picture displayed instead of operator name) from phone.
 
-.. option:: getbitmap STARTUP [file]
+    .. option:: PICTURE location [file]
 
-    Get static startup logo from phone. Allow to save it in file.
+        Get Picture Image from phone.
 
-.. option:: getbitmap TEXT
+    .. option:: STARTUP [file]
 
-    Get startup text from phone.
+        Get static startup logo from phone. Allow to save it in file.
 
-.. option:: setbitmap CALLER location [file]
+    .. option:: TEXT
 
-    Set caller logo.
+        Get startup text from phone.
 
-.. option:: setbitmap COLOUROPERATOR [fileID [netcode]]
+.. option:: setbitmap TYPE [type options]
 
-    Sets color operator logo in phone.
+    Sets bitmap in phone, following types are supported:
 
-.. option:: setbitmap COLOURSTARTUP [fileID]
+    .. option:: CALLER location [file]
 
-.. option:: setbitmap DEALER text
+        Set caller logo.
 
-    Sets welcome message configured by dealer, which usually can not be changed in phone menus.
+    .. option:: COLOUROPERATOR [fileID [netcode]]
 
-.. option:: setbitmap OPERATOR [file [netcode]]
+        Sets color operator logo in phone.
 
-    Set operator logo in phone. When won't give file and netcode, operator logo
-    will be removed from phone. When will give only filename, operator logo will
-    be displayed for your current GSM operator. When you give additionally network
-    code, it will be displayed for this operator.
+    .. option:: COLOURSTARTUP [fileID]
 
-.. option:: setbitmap PICTURE file location [text]
+    .. option:: DEALER text
 
-    Sets picture image in phone.
+        Sets welcome message configured by dealer, which usually can not be changed in phone menus.
 
-.. option:: setbitmap STARTUP file|1|2|3
+    .. option:: OPERATOR [file [netcode]]
 
-    Set startup logo in phone. It can be static (then you will have to give file
-    name) or one of predefined animated (only some phones like Nokia 3310 or 3330
-    supports it, use location 1, 2 or 3 for these).
+        Set operator logo in phone. When won't give file and netcode, operator logo
+        will be removed from phone. When will give only filename, operator logo will
+        be displayed for your current GSM operator. When you give additionally network
+        code, it will be displayed for this operator.
 
-.. option:: setbitmap TEXT text
+    .. option:: PICTURE file location [text]
 
-    Sets startup text in phone.
+        Sets picture image in phone.
 
-.. option:: setbitmap WALLPAPER fileID
+    .. option:: STARTUP file|1|2|3
 
-    Sets wallpaper in phone.
+        Set startup logo in phone. It can be static (then you will have to give file
+        name) or one of predefined animated (only some phones like Nokia 3310 or 3330
+        supports it, use location 1, 2 or 3 for these).
+
+    .. option:: TEXT text
+
+        Sets startup text in phone.
+
+    .. option:: WALLPAPER fileID
+
+        Sets wallpaper in phone.
 
 Ringtones commands
 ------------------
@@ -1112,52 +1120,36 @@ Backing up and restoring commands
     selected folder in phone. Please note that this overwrites existing
     messages in phone (if it supports it).
 
-.. option:: savefile BOOKMARK target.url file location
+.. option:: savefile TYPE [type options]
 
-    Converts backup format supported by
-    Gammu to vBookmark file.
+    Coverts between various file formats supported by Gammu, following types
+    are supported:
 
-.. option:: savefile CALENDAR target.vcs file location
+    .. option:: BOOKMARK target.url file location
 
-    Allows to convert between various backup formats which gammu
-    supports for calendar events. The file type is guessed (for input file
-    guess is based on extension and file content, for output solely on 
-    extension).
+        Converts backup format supported by
+        Gammu to vBookmark file.
 
-    For example if you want to convert single entry from gammu native 
-    backup to vCalendar, you need following command:
+    .. option:: CALENDAR target.vcs file location
 
-    .. code-block:: sh
+        Allows to convert between various backup formats which gammu
+        supports for calendar events. The file type is guessed (for input file
+        guess is based on extension and file content, for output solely on 
+        extension).
 
-        gammu savefile CALENDAR output.vcs myCalendar.backup 260
+    .. option:: TODO target.vcs file location
 
-.. option:: savefile TODO target.vcs file location
+        Allows to convert between various backup formats which gammu
+        supports for todo events. The file type is guessed (for input file
+        guess is based on extension and file content, for output solely on 
+        extension).
 
-    Allows to convert between various backup formats which gammu
-    supports for todo events. The file type is guessed (for input file
-    guess is based on extension and file content, for output solely on 
-    extension).
+    .. option:: VCARD10|VCARD21 target.vcf file SM|ME location
 
-    For example if you want to convert single entry from gammu native 
-    backup to vCalendar, you need following command:
-
-    .. code-block:: sh
-
-        gammu savefile CALENDAR output.vcs myCalendar.backup 260
-
-.. option:: savefile VCARD10|VCARD21 target.vcf file SM|ME location
-
-    Allows to convert between various backup formats which gammu
-    supports for phonebook events. The file type is guessed (for input file
-    guess is based on extension and file content, for output solely on 
-    extension).
-
-    For example if you want to convert single entry from gammu native 
-    backup to vCard, you need following command:
-
-    .. code-block:: sh
-
-        gammu savefile CALENDAR output.vcf myPhonebook.backup ME 42
+        Allows to convert between various backup formats which gammu
+        supports for phonebook events. The file type is guessed (for input file
+        guess is based on extension and file content, for output solely on 
+        extension).
 
 
 Nokia specific commands
@@ -1825,6 +1817,16 @@ Set logo for network ``230 03`` (Vodafone CZ):
 .. code-block:: sh
 
     gammu setbitmap OPERATOR ala.bmp "230 03"
+
+Converting file formats
+-----------------------
+
+Convert single entry (at position 260) from gammu native backup to vCalendar:
+
+.. code-block:: sh
+
+    gammu savefile CALENDAR output.vcs myCalendar.backup 260
+
 
 Reporting bugs
 --------------
