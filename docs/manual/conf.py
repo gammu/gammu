@@ -16,6 +16,13 @@
 
 import sys, os
 
+# Change what .. option:: parses
+import sphinx.domains.std
+import re
+
+sphinx.domains.std.option_desc_re = re.compile(
+    r'^((?:/|-|--)?[-_a-zA-Z0-9]+)(\s*.*?)(?=,\s+(?:/|-|--)|$)')
+
 # If your extensions are in another directory, add it here. If the directory
 # is relative to the documentation root, use os.path.abspath to make it
 # absolute, like shown here.
