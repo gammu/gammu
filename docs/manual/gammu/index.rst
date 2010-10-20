@@ -1461,41 +1461,37 @@ Phone settings
 
 .. option:: --resetphonesettings PHONE|DEV|UIF|ALL|FACTORY
 
-    Reset phone settings. \fIBE CAREFULL !!!!\fR
+    .. warning:: This will delete user data, be careful.
 
-    \fBPHONE:\fR
-    .br
+    Reset phone settings.
 
-    \fBDEV:\fR
-    .br
+    ``PHONE``
+        Clear phone settings.
 
-    \fBALL:\fR 
+    ``DEV``
+        Clear device settings.
 
-    Clear user settings
-    .br
-    * removes or set logos to default
-    .br
-    * set default phonebook and other menu settings
-    .br
-    * clear T9 words,
-    .br
-    * clear call register info
-    .br
-    * set default profiles settings 
-    .br
-    * clear user ringtones
+    ``ALL``
+        Clear user settings.
 
-    \fBUIF:\fR
-    .br
-    * changes like after \fBALL\fR
-    .br
-    * disables netmon and PPS (all "hidden" menus)
+        * removes or set logos to default
+        * set default phonebook and other menu settings
+        * clear T9 words,
+        * clear call register info
+        * set default profiles settings 
+        * clear user ringtones
 
-    \fBFACTORY:\fR
-    .br
-    * changes like after \fBUIF\fR
-    .br
-    * clear date/time
+    ``UIF``
+        Clear user settings and disables hidden menus.
+
+        * changes like after ``ALL``
+        * disables netmon and PPS (all "hidden" menus)
+
+    ``FACTORY``
+        Reset to factory defaults.
+
+        * changes like after ``UIF``
+        * clear date/time
 
 
 Dumps decoding
