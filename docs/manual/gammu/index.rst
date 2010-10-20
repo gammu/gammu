@@ -17,7 +17,7 @@ Description
 +++++++++++
 
 This program is a tool for mobile phones. Many vendors and phones
-are supported, for actual listing see <http://wammu.eu/phones/>.
+are supported, for actual listing see `Gammu Phones Database <http://wammu.eu/phones/>`_.
 
 
 Options
@@ -1448,7 +1448,7 @@ Phone information
 
     Gets network information from phone (same as networkinfo)
     and prints location (latitude and longitude) based on information from 
-    OpenCellID <http://opencellid.org>.
+    `OpenCellID <http://opencellid.org>`_.
 
 .. option:: --getsecuritystatus
 
@@ -1853,4 +1853,4 @@ hints for improving support for your phone in this log.
 
 See <http://wammu.eu/support/bugs/> for more information on reporting bugs.
 
-Please report bugs to <http://bugs.cihar.com/>.
+Please report bugs to `Gammu bug tracker <http://bugs.cihar.com/>`_.
