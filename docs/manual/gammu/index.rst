@@ -48,29 +48,29 @@ Parameters before command configure gammu behaviour:
 Call commands
 -------------
 
-.. option:: --answercall [id]
+.. option:: answercall [id]
 
    Answer incoming call.
 
-.. option:: --cancelcall [id]
+.. option:: cancelcall [id]
 
     Cancel incoming call
 
-.. option:: --canceldiverts
+.. option:: canceldiverts
 
     Cancel all existing call diverts.
 
-.. option:: --conferencecall id
+.. option:: conferencecall id
 
     Initiates a conference call.
 
-.. option:: --dialvoice number [show|hide]
+.. option:: dialvoice number [show|hide]
 
     Make voice call from SIM card line set in phone.
 
     ``show|hide`` - optional parameter whether to disable call number indication.
 
-.. option:: --divert get|set all|busy|noans|outofreach all|voice|fax|data [number timeout]
+.. option:: divert get|set all|busy|noans|outofreach all|voice|fax|data [number timeout]
 
     Manage or display call diverts.
 
@@ -85,36 +85,36 @@ Call commands
     timeout 
         timeout when the diversion will happen
 
-.. option:: --getussd code
+.. option:: getussd code
 
     Retrieves USSD information - dials a service number and reads response.
 
-.. option:: --holdcall id
+.. option:: holdcall id
 
     Holds call.
 
-.. option:: --maketerminatedcall number length [show|hide]
+.. option:: maketerminatedcall number length [show|hide]
 
     Make voice call from SIM card line set in phone which will 
     be terminated after ``length`` seconds.
 
-.. option:: --senddtmf sequence
+.. option:: senddtmf sequence
 
     Plays DTMF sequence. In some phones available only during calls
 
-.. option:: --splitcall id
+.. option:: splitcall id
 
     Splits call.
 
-.. option:: --switchcall [id]
+.. option:: switchcall [id]
 
     Switches call.
 
-.. option:: --transfercall [id]
+.. option:: transfercall [id]
 
     Transfers call.
 
-.. option:: --unholdcall id
+.. option:: unholdcall id
 
     Unholds call.
 
@@ -199,37 +199,37 @@ _________________________________________
 SMS commands
 ____________
 
-.. option:: --addsmsfolder name
+.. option:: addsmsfolder name
 
-.. option:: --deleteallsms folder
+.. option:: deleteallsms folder
 
     Delete all SMS from specified SMS folder.
 
-.. option:: --deletesms folder start [stop]
+.. option:: deletesms folder start [stop]
 
     Delete SMS from phone. See description for \fBgetsms\fR for info about
     sms folders naming convention. 
 
     Locations are numerated from 1.
 
-.. option:: --displaysms ... (options like in sendsms)
+.. option:: displaysms ... (options like in sendsms)
 
     Displays PDU data of encoded SMS messages. It accepts same parameters and 
     behaves same like sendsms.
 
-.. option:: --getallsms -pbk
+.. option:: getallsms -pbk
 
     Get all SMS from phone. In some phones you will have also SMS templates
     and info about locations used to save Picture Images. With each sms you
     will see location. If you want to get such sms from phone alone, use
     \fBgammu getsms 0 location\fR
 
-.. option:: --geteachsms -pbk
+.. option:: geteachsms -pbk
 
     Similiary to \fBgetallsms\fR. Difference is, that
     links all concatenated sms
 
-.. option:: --getsms folder start [stop]
+.. option:: getsms folder start [stop]
 
     Get SMS. 
 
@@ -246,17 +246,17 @@ ____________
     by Nokia 3310, 5110, 6110). If work with your phone, use
     \fBgetsmsfolders\fR to get folders list.
 
-.. option:: --getsmsc [start [stop]]
+.. option:: getsmsc [start [stop]]
 
     Get SMSC settings from SIM card. 
 
     Locations are numerated from 1.
 
-.. option:: --getsmsfolders
+.. option:: getsmsfolders
 
     Get names for SMS folders in phone
 
-.. option:: --savesms TYPE [type parameters] [type options] [-folder id] [-unread] [-read] [-unsent] [-sent] [-sender number] [-smsname name] [-smscset number] [-smscnumber number] [-reply] [-maxsms num]
+.. option:: savesms TYPE [type parameters] [type options] [-folder id] [-unread] [-read] [-unsent] [-sent] [-sender number] [-smsname name] [-smscset number] [-smscnumber number] [-reply] [-maxsms num]
 
    Saves SMS to phone, see bellow for ``TYPE`` options.
 
@@ -285,7 +285,7 @@ ____________
 
         Folders are numerated from 1.
 
-        The most often folder 1 = "Inbox", 2 = "Outbox",etc. Use :option:`gammu --getsmsfolders` to get folder list.
+        The most often folder 1 = "Inbox", 2 = "Outbox",etc. Use :option:`gammu getsmsfolders` to get folder list.
 
     .. option:: -unread
 
@@ -328,7 +328,7 @@ ____________
 
     .. option:: BOOKMARK file location 
 
-        Read WAP bookmark from file created by :option:`gammu --backup` option and saves in
+        Read WAP bookmark from file created by :option:`gammu backup` option and saves in
         Nokia format as SMS
 
 
@@ -530,9 +530,9 @@ ____________
         Read WAP settings from file created by \fBbackup\fR option and saves in Nokia format as SMS
 
 
-.. option:: --sendsms TYPE destination [type parameters] [type options] [-smscset number] [-smscnumber number] [-reply] [-report] [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [-save [-folder number]]
+.. option:: sendsms TYPE destination [type parameters] [type options] [-smscset number] [-smscnumber number] [-reply] [-report] [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [-save [-folder number]]
 
-    Sends a message to a ``destination`` number, most parameters are same as for :option:`gammu --savesms`.
+    Sends a message to a ``destination`` number, most parameters are same as for :option:`gammu savesms`.
 
     .. option:: -save
 
@@ -548,7 +548,7 @@ ____________
         message valid (SMSC will the discard the message after this time if it could
         not deliver it).
 
-.. option:: --setsmsc location number
+.. option:: setsmsc location number
 
     Set SMSC settings on SIM card. This keeps all SMSC configuration
     intact, it just changes the SMSC number.
@@ -559,20 +559,20 @@ ____________
 Memory (phonebooks and calls) commands
 --------------------------------------
 
-.. option:: --deleteallmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL
+.. option:: deleteallmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL
 
     Deletes all entries from specified memory type.
 
-.. option:: --deletememory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL start [stop]
+.. option:: deletememory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL start [stop]
 
     Deletes entries in specified range from specified memory type.
 
-.. option:: --getallmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL
+.. option:: getallmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL
 
     Get all memory locations from phone. For memory
     types see \fBgetmemory\fR.
 
-.. option:: --getmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL start [stop [-nonempty]]
+.. option:: getmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL start [stop [-nonempty]]
 
     Get memory location from phone. 
 
@@ -597,11 +597,11 @@ Memory (phonebooks and calls) commands
     ``SL``
          sent SMS log
 
-.. option:: --getspeeddial start [stop]
+.. option:: getspeeddial start [stop]
 
     Gets speed dial choices.
 
-.. option:: --searchmemory text
+.. option:: searchmemory text
 
     Scans all memory entries for given text. It performs
     case insensitive substring lookup. You can interrupt searching by pressing
@@ -614,7 +614,7 @@ Gammu allows to access phones using native protocol (Nokias) or OBEX. Your
 phone can also support usb storage, which is handled on the operating system
 level and Gammu does not use that.
 
-.. option:: --addfile folderID name [-type JAR|BMP|PNG|GIF|JPG|MIDI|WBMP|AMR|3GP|NRT] [-readonly] [-protected] [-system] [-hidden] [-newtime]
+.. option:: addfile folderID name [-type JAR|BMP|PNG|GIF|JPG|MIDI|WBMP|AMR|3GP|NRT] [-readonly] [-protected] [-system] [-hidden] [-newtime]
 
     Add file with specified name to folder with specified folder ID.
 
@@ -627,28 +627,28 @@ level and Gammu does not use that.
     .B -newtime 
     - after using it date/time of file modification will be set to moment of uploading 
 
-.. option:: --addfolder parentfolderID name
+.. option:: addfolder parentfolderID name
 
     Create a folder in phone with specified name in a
     folder with specified folder ID.
 
-.. option:: --deletefiles fileID
+.. option:: deletefiles fileID
 
     Delete files with given IDs.
 
-.. option:: --deletefolder name
+.. option:: deletefolder name
 
     Delete folder with given ID.
 
-.. option:: --getfilefolder fileID, fileID, ...
+.. option:: getfilefolder fileID, fileID, ...
 
     Retrieve files or all files from folder with given IDs from a phone filesytem.
 
-.. option:: --getfiles fileID, fileID, ...
+.. option:: getfiles fileID, fileID, ...
 
     Retrieve files with given IDs from a phone filesytem.
 
-.. option:: --getfilesystem [-flatall|-flat]
+.. option:: getfilesystem [-flatall|-flat]
 
     Display info about all folders and files in phone memory/memory card. By default there is tree displayed, you can change it:
 
@@ -659,28 +659,28 @@ level and Gammu does not use that.
 
     .. note:: In some phones (like N6230) content of some folders (with more files) can be cut (only part of files will be displayed) for example on infrared connection. This is not Gammu issue, but phone firmware problem.
 
-.. option:: --getfilesystemstatus
+.. option:: getfilesystemstatus
 
     Display info filesystem status - number of
     bytes available, used or used by some specific content.
 
-.. option:: --getfolderlisting folderID
+.. option:: getfolderlisting folderID
 
     Display files and folders available in folder with given folder ID. You can get ID's using getfilesystem -flatall.
 
     Please note, that in some phones (like N6230) content of some folders (with more files) can be cut (only part of files will be displayed) for example on infrared connection. This is not Gammu issue, but phone firmware problem.
 
-.. option:: --getrootfolders
+.. option:: getrootfolders
 
     Display info about drives available in phone/memory card.
 
-.. option:: --sendfile name
+.. option:: sendfile name
 
     Sends file to a phone. It's up to phone to decide where
     to store this file and how to handle it (for example when you send vCard or
     vCalendar, most of phones will offer you to import it.
 
-.. option:: --setfileattrib folderID [-system] [-readonly] [-hidden] [-protected]
+.. option:: setfileattrib folderID [-system] [-readonly] [-hidden] [-protected]
 
 
 Logo and pictures commands
@@ -692,75 +692,75 @@ images available in older phones. Recognized file formats: xpm (only saving),
 
 In new models all bitmaps are saved in filesystem and should go into filesystem section
 
-.. option:: --copybitmap inputfile [outputfile [OPERATOR|PICTURE|STARTUP|CALLER]]
+.. option:: copybitmap inputfile [outputfile [OPERATOR|PICTURE|STARTUP|CALLER]]
 
     Allow to convert logos files to another. When give ONLY inputfile, output will
     be written to stdout using ASCII art. When give output file and format, in
     some file formats (like NLM) will be set indicator informing about logo type
     to given.
 
-.. option:: --getbitmap CALLER location [file]
+.. option:: getbitmap CALLER location [file]
 
     Get caller group logo from phone. Locations 1-5.
 
-.. option:: --getbitmap DEALER
+.. option:: getbitmap DEALER
 
     In some models it's possible to save dealer welcome note - text displayed
     during enabling phone, which can't be edited from phone menu.  Here you can
     get it.
 
-.. option:: --getbitmap OPERATOR [file]
+.. option:: getbitmap OPERATOR [file]
 
     Get operator logo (picture displayed instead of operator name) from phone.
 
-.. option:: --getbitmap PICTURE location [file]
+.. option:: getbitmap PICTURE location [file]
 
     Get Picture Image from phone.
 
-.. option:: --getbitmap STARTUP [file]
+.. option:: getbitmap STARTUP [file]
 
     Get static startup logo from phone. Allow to save it in file.
 
-.. option:: --getbitmap TEXT
+.. option:: getbitmap TEXT
 
     Get startup text from phone.
 
-.. option:: --setbitmap CALLER location [file]
+.. option:: setbitmap CALLER location [file]
 
     Set caller logo.
 
-.. option:: --setbitmap COLOUROPERATOR [fileID [netcode]]
+.. option:: setbitmap COLOUROPERATOR [fileID [netcode]]
 
     Sets color operator logo in phone.
 
-.. option:: --setbitmap COLOURSTARTUP [fileID]
+.. option:: setbitmap COLOURSTARTUP [fileID]
 
-.. option:: --setbitmap DEALER text
+.. option:: setbitmap DEALER text
 
     Sets welcome message configured by dealer, which usually can not be changed in phone menus.
 
-.. option:: --setbitmap OPERATOR [file [netcode]]
+.. option:: setbitmap OPERATOR [file [netcode]]
 
     Set operator logo in phone. When won't give file and netcode, operator logo
     will be removed from phone. When will give only filename, operator logo will
     be displayed for your current GSM operator. When give additionally network
     code, it will be displayed for this operator: \fBgammu setbitmap OPERATOR file "260 02"\fR
 
-.. option:: --setbitmap PICTURE file location [text]
+.. option:: setbitmap PICTURE file location [text]
 
     Sets picture image in phone.
 
-.. option:: --setbitmap STARTUP file|1|2|3
+.. option:: setbitmap STARTUP file|1|2|3
 
     Set startup logo in phone. It can be static (then you will have to give file
     name) or one of predefined animated (only some phones like Nokia 3310 or 3330
     supports it, use location 1, 2 or 3 for these).
 
-.. option:: --setbitmap TEXT text
+.. option:: setbitmap TEXT text
 
     Sets startup text in phone.
 
-.. option:: --setbitmap WALLPAPER fileID
+.. option:: setbitmap WALLPAPER fileID
 
     Sets wallpaper in phone.
 
@@ -776,31 +776,31 @@ ringtones format found in fkn.pl, wav (saving), ime/imy (saving), rng, mmf (for
 Samsung).
 
 
-.. option:: --copyringtone source destination [RTTL|BINARY]
+.. option:: copyringtone source destination [RTTL|BINARY]
 
     Copy source ringtone to destination.
 
-.. option:: --getphoneringtone location [file]
+.. option:: getphoneringtone location [file]
 
     Get one of "default" ringtones and saves into file
 
-.. option:: --getringtone location [file]
+.. option:: getringtone location [file]
 
     Get ringtone from phone in RTTL or BINARY format. 
 
     Locations are numerated from 1.
 
-.. option:: --getringtoneslist
+.. option:: getringtoneslist
 
-.. option:: --playringtone file
+.. option:: playringtone file
 
     Play aproximation of ringtone over phone buzzer. File can be in RTTL or BINARY (Nokia DCT3) format.
 
-.. option:: --playsavedringtone number
+.. option:: playsavedringtone number
 
     Play one of "built" ringtones. This option is available for DCT4 phones. For getting ringtones list use getringtoneslist.
 
-.. option:: --setringtone file [-location location] [-scale] [-name name]
+.. option:: setringtone file [-location location] [-scale] [-name name]
 
     Set ringtone in phone. When don't give location, it will be written
     "with preview" (in phones supporting this feature like 61xx or 6210).
@@ -817,15 +817,15 @@ Calendar notes commands
 
 In Nokia 3310, 3315 and 3330 these are named "Reminders" and have some limitations (depending on phone firmware version).
 
-.. option:: --deletecalendar start [stop]
+.. option:: deletecalendar start [stop]
 
     Deletes selected calendar entries in phone. 
 
-.. option:: --getallcalendar
+.. option:: getallcalendar
 
     Retrieves all calendar entries from phone.
 
-.. option:: --getcalendar start [stop]
+.. option:: getcalendar start [stop]
 
     Retrieves selected calendar entries from phone.
 
@@ -833,22 +833,22 @@ In Nokia 3310, 3315 and 3330 these are named "Reminders" and have some limitatio
 To do list commands
 -------------------
 
-.. option:: --deletetodo start [stop]
+.. option:: deletetodo start [stop]
 
     Deletes selected todo entries in phone. 
 
-.. option:: --getalltodo
+.. option:: getalltodo
 
     Retrieves all todo entries from phone.
 
-.. option:: --gettodo start [stop]
+.. option:: gettodo start [stop]
 
     Retrieves selected todo entries from phone.
 
 Notes commands
 --------------
 
-.. option:: --getallnotes
+.. option:: getallnotes
 
     Reads all notes from the phone.
 
@@ -859,20 +859,20 @@ Notes commands
 Date, time and alarm commands
 -----------------------------
 
-.. option:: --getalarm [start]
+.. option:: getalarm [start]
 
     Get alarm from phone, if no location is specified,
     1 is used.
 
-.. option:: --getdatetime
+.. option:: getdatetime
 
     Get date and time from phone
 
-.. option:: --setalarm hour minute
+.. option:: setalarm hour minute
 
     Sets repeating alarm in phone on selected time.
 
-.. option:: --setdatetime [HH:MM[:SS]] [YYYY/MM/DD]
+.. option:: setdatetime [HH:MM[:SS]] [YYYY/MM/DD]
 
     Set date and time in phone to date and time set in computer. Please 
     note, that this option doesn't show clock on phone screen. It only set
@@ -887,24 +887,24 @@ Categories commands
 
 ..note:: Categories are supported only on few phones (Alcatel).
 
-.. option:: --addcategory TODO|PHONEBOOK text
+.. option:: addcategory TODO|PHONEBOOK text
 
-.. option:: --getallcategory TODO|PHONEBOOK
+.. option:: getallcategory TODO|PHONEBOOK
 
-.. option:: --getcategory TODO|PHONEBOOK start [stop]
+.. option:: getcategory TODO|PHONEBOOK start [stop]
 
-.. option:: --listmemorycategory text|number
+.. option:: listmemorycategory text|number
 
-.. option:: --listtodocategory text|number
+.. option:: listtodocategory text|number
 
 
 Backing up and restoring commands
 ---------------------------------
 
-.. option:: --addnew file [-yes] [-memory ME|SM|..]
+.. option:: addnew file [-yes] [-memory ME|SM|..]
 
-    Adds data written in file created using :option:`gammu --backup` command. All things
-    backed up :option:`gammu --backup` can be restored (when made backup to Gammu text
+    Adds data written in file created using :option:`gammu backup` command. All things
+    backed up :option:`gammu backup` can be restored (when made backup to Gammu text
     file).
 
     Please note that this adds all content of backup file to phone and
@@ -917,12 +917,12 @@ Backing up and restoring commands
     Use -memory parameter to force usage of defined memory type for storing entries 
     regardless what backu format says.
 
-.. option:: --addsms folder file [-yes]
+.. option:: addsms folder file [-yes]
 
     Adds SMSes from file (format like backupsms uses) to
     selected folder in phone.
 
-.. option:: --backup file [-yes]
+.. option:: backup file [-yes]
 
     Backup your phone to file. It's possible to backup (depends on phone and backup format):
 
@@ -946,7 +946,7 @@ Backing up and restoring commands
     * .ics - iCalendar, supports calendar and todo.
     * Any other extension is Gammu backup file and it supports all data mentioned above, see :ref:`gammu-backup` for more details.
 
-.. option:: --backupsms file [-yes|-all]
+.. option:: backupsms file [-yes|-all]
 
     Stores all SMSes from phone to file. 
 
@@ -954,7 +954,7 @@ Backing up and restoring commands
     delete them from phone), or -all to just backup all folders while keeping
     messages in phone.
 
-.. option:: --restore file [-yes]
+.. option:: restore file [-yes]
 
     Restore settings written in file created using \fBbackup\fR option. 
 
@@ -964,18 +964,18 @@ Backing up and restoring commands
     In some phones restoring calendar notes will not show error, but won't
     be done, when phone doesn't have set clock inside.
 
-.. option:: --restoresms file [-yes]
+.. option:: restoresms file [-yes]
 
     Restores SMSes from file (format like backupsms uses) to
     selected folder in phone. Please note that this overwrites existing
     messages in phone (if it supports it).
 
-.. option:: --savefile BOOKMARK target.url file location
+.. option:: savefile BOOKMARK target.url file location
 
     Converts backup format supported by
     Gammu to vBookmark file.
 
-.. option:: --savefile CALENDAR target.vcs file location
+.. option:: savefile CALENDAR target.vcs file location
 
     Allows to convert between various backup formats which gammu
     supports for calendar events. The file type is guessed (for input file
@@ -989,7 +989,7 @@ Backing up and restoring commands
 
         gammu savefile CALENDAR output.vcs myCalendar.backup 260
 
-.. option:: --savefile TODO target.vcs file location
+.. option:: savefile TODO target.vcs file location
 
     Allows to convert between various backup formats which gammu
     supports for todo events. The file type is guessed (for input file
@@ -1003,7 +1003,7 @@ Backing up and restoring commands
 
         gammu savefile CALENDAR output.vcs myCalendar.backup 260
 
-.. option:: --savefile VCARD10|VCARD21 target.vcf file SM|ME location
+.. option:: savefile VCARD10|VCARD21 target.vcf file SM|ME location
 
     Allows to convert between various backup formats which gammu
     supports for phonebook events. The file type is guessed (for input file
@@ -1021,7 +1021,7 @@ Backing up and restoring commands
 Nokia specific commands
 -----------------------
 
-.. option:: --nokiaaddfile APPLICATION|GAME file [-readonly] [-overwrite] [-overwriteall]
+.. option:: nokiaaddfile APPLICATION|GAME file [-readonly] [-overwrite] [-overwriteall]
 
     Install the ``*.jar/*.jad`` file pair of a midlet in the application or game menu of the phone. You need to specify filename without the jar/jad suffix, both will be added automatically.
 
@@ -1033,9 +1033,9 @@ Nokia specific commands
 
     You can use jadmaker(1) to generate a .jad file from a .jar file.
 
-.. option:: --nokiaaddfile GALLERY|GALLERY2|CAMERA|TONES|TONES2|RECORDS|VIDEO|PLAYLIST|MEMORYCARD file [-name name] [-protected] [-readonly] [-system] [-hidden] [-newtime]
+.. option:: nokiaaddfile GALLERY|GALLERY2|CAMERA|TONES|TONES2|RECORDS|VIDEO|PLAYLIST|MEMORYCARD file [-name name] [-protected] [-readonly] [-system] [-hidden] [-newtime]
 
-.. option:: --nokiaaddplaylists
+.. option:: nokiaaddplaylists
 
     Goes through phone memory and generated playlist for all music files found.
 
@@ -1066,35 +1066,35 @@ Nokia specific commands
     just run :program:`unix2dos` on the resulting file before uploading it your your phone.
 
 
-.. option:: --nokiacomposer file
+.. option:: nokiacomposer file
 
     Show, how to enter RTTL ringtone in composer existing in many Nokia phones
     (and how should it look like).
 
-.. option:: --nokiadebug filename [[v11-22] [,v33-44]...]
+.. option:: nokiadebug filename [[v11-22] [,v33-44]...]
 
-.. option:: --nokiadisplayoutput
+.. option:: nokiadisplayoutput
 
-.. option:: --nokiadisplaytest number
+.. option:: nokiadisplaytest number
 
-.. option:: --nokiagetadc
+.. option:: nokiagetadc
 
-.. option:: --nokiagetoperatorname
+.. option:: nokiagetoperatorname
 
     6110.c phones have place for name for one GSM network (of course, with flashing it's
     possible to change all names, but Gammu is not flasher ;-)). You can get this
     name using this option.
 
-.. option:: --nokiagetpbkfeatures memorytype
+.. option:: nokiagetpbkfeatures memorytype
 
-.. option:: --nokiagetscreendump
+.. option:: nokiagetscreendump
 
-.. option:: --nokiagett9
+.. option:: nokiagett9
 
     This option should display T9 dictionary content from
     DCT4 phones.
 
-.. option:: --nokiagetvoicerecord location
+.. option:: nokiagetvoicerecord location
 
     Get voice record from location and save to WAV file. File is
     coded using GSM 6.10 codec (available for example in win32). Name
@@ -1116,9 +1116,9 @@ Nokia specific commands
     10. if You will be asked for file msgsm32.acm, it should unpacked from Windows CD
     11. now You can be asked if want to install unsigned driver (YES), about select codec configuration (select what you want) and rebotting PC (make it)
 
-.. option:: --nokiamakecamerashoot
+.. option:: nokiamakecamerashoot
 
-.. option:: --nokianetmonitor test
+.. option:: nokianetmonitor test
 
     Takes output or set netmonitor for Nokia DCT3 phones.
 
@@ -1129,18 +1129,18 @@ Nokia specific commands
     \fBgammu nokianetmonitor 243\fR in some phones like 6210 or 9210 have to
     reboot them to see netmonitor menu)
 
-.. option:: --nokianetmonitor36
+.. option:: nokianetmonitor36
 
     Reset counters from netmonitor test 36 in Nokia DCT3 phones.
 
     \fITIP:\fR For more info about this option, please visit
     \fIhttp://www.mwiacek.com\fR and read netmonitor manual.
 
-.. option:: --nokiasecuritycode
+.. option:: nokiasecuritycode
 
     Get/reset to "12345" security code
 
-.. option:: --nokiaselftests
+.. option:: nokiaselftests
 
     Perform tests for Nokia DCT3 phones.
 
@@ -1149,11 +1149,11 @@ Nokia specific commands
     when the phone doesn?t have an internal battery for the clock (like
     3xxx).
 
-.. option:: --nokiasetlights keypad|display|torch on|off
+.. option:: nokiasetlights keypad|display|torch on|off
 
-.. option:: --nokiasetoperatorname [networkcode name]
+.. option:: nokiasetoperatorname [networkcode name]
 
-.. option:: --nokiasetphonemenus
+.. option:: nokiasetphonemenus
 
     Enable all (?) possible menus for DCT3 Nokia phones:
 
@@ -1171,62 +1171,62 @@ Nokia specific commands
     3. GPRS Always Online
     4. ...
 
-.. option:: --nokiasetvibralevel level
+.. option:: nokiasetvibralevel level
 
     Set vibra power to "level" (given in percent)
 
-.. option:: --nokiatuneradio
+.. option:: nokiatuneradio
 
-.. option:: --nokiavibratest
+.. option:: nokiavibratest
 
 
 Siemens specific commands
 -------------------------
 
-.. option:: --siemensnetmonact netmon_type
+.. option:: siemensnetmonact netmon_type
 
     Enables network monitor in Siemens phone. Currently known values for type
     are 1 for full and 2 for simple mode.
 
-.. option:: --siemensnetmonitor test
+.. option:: siemensnetmonitor test
 
-.. option:: --siemenssatnetmon
+.. option:: siemenssatnetmon
 
 Network commands
 ----------------
 
-.. option:: --getgprspoint start [stop]
+.. option:: getgprspoint start [stop]
 
-.. option:: --listnetworks [country]
+.. option:: listnetworks [country]
 
     Show names/codes of GSM networks known for Gammu
 
-.. option:: --networkinfo
+.. option:: networkinfo
 
     Show information about network status from the phone.
 
-.. option:: --setautonetworklogin
+.. option:: setautonetworklogin
 
 WAP settings and bookmarks commands
 -----------------------------------
 
-.. option:: --deletewapbookmark start [stop]
+.. option:: deletewapbookmark start [stop]
 
     Delete WAP bookmarks from phone. 
 
     Locations are numerated from 1.
 
-.. option:: --getchatsettings start [stop]
+.. option:: getchatsettings start [stop]
 
-.. option:: --getsyncmlsettings start [stop]
+.. option:: getsyncmlsettings start [stop]
 
-.. option:: --getwapbookmark start [stop]
+.. option:: getwapbookmark start [stop]
 
     Get WAP bookmarks from phone. 
 
     Locations are numerated from 1.
 
-.. option:: --getwapsettings start [stop]
+.. option:: getwapsettings start [stop]
 
     Get WAP settings from phone. 
 
@@ -1235,48 +1235,48 @@ WAP settings and bookmarks commands
 MMS and MMS settings commands
 -----------------------------
 
-.. option:: --getallmms [-save]
+.. option:: getallmms [-save]
 
-.. option:: --geteachmms [-save]
+.. option:: geteachmms [-save]
 
-.. option:: --getmmsfolders
+.. option:: getmmsfolders
 
-.. option:: --getmmssettings start [stop]
+.. option:: getmmssettings start [stop]
 
-.. option:: --readmmsfile file [-save]
+.. option:: readmmsfile file [-save]
 
 
 FM radio commands
 -----------------
 
-.. option:: --getfmstation start [stop]
+.. option:: getfmstation start [stop]
 
     Show info about FM stations in phone
 
 Phone information commands
 --------------------------
 
-.. option:: --battery
+.. option:: battery
 
     Displays information about battery and power source.
 
-.. option:: --getdisplaystatus
+.. option:: getdisplaystatus
 
-.. option:: --getlocation
+.. option:: getlocation
 
     Gets network information from phone (same as networkinfo)
     and prints location (latitude and longitude) based on information from 
     `OpenCellID <http://opencellid.org>`_.
 
-.. option:: --getsecuritystatus
+.. option:: getsecuritystatus
 
     Show, if phone wait for security code (like PIN, PUK, etc.) or not
 
-.. option:: --identify
+.. option:: identify
 
     Show the most important phone data.
 
-.. option:: --monitor [times]
+.. option:: monitor [times]
 
     Get phone status and writes continuously to standard output. Press Ctrl+C
     to break this state.
@@ -1285,14 +1285,14 @@ Phone information commands
 Phone settings commands
 -----------------------
 
-.. option:: --getcalendarsettings
+.. option:: getcalendarsettings
 
     Displays calendar settings like first day of
     week or automatic deleting of old entries.
 
-.. option:: --getprofile start [stop]
+.. option:: getprofile start [stop]
 
-.. option:: --resetphonesettings PHONE|DEV|UIF|ALL|FACTORY
+.. option:: resetphonesettings PHONE|DEV|UIF|ALL|FACTORY
 
     .. warning:: This will delete user data, be careful.
 
@@ -1332,23 +1332,23 @@ Dumps decoding commands
 
 .. note:: These commands are available only if Gammu was compiled with debugging options.
 
-.. option:: --decodebinarydump file [phonemodel]
+.. option:: decodebinarydump file [phonemodel]
 
     Decodes a dump made by Gammu with 
     :config:option:`LogFormat` set to ``binary``.
 
-.. option:: --decodesniff MBUS2|IRDA file [phonemodel]
+.. option:: decodesniff MBUS2|IRDA file [phonemodel]
 
     Allows to decode sniffs. See :ref:`Discovering protocol` for more details.
 
 Other commands
 --------------
 
-.. option:: --entersecuritycode PIN|PUK|PIN2|PUK2|PHONE|NETWORK code|-
+.. option:: entersecuritycode PIN|PUK|PIN2|PUK2|PHONE|NETWORK code|-
 
     Allow to enter security code from PC. When code is ``-``, it is read from stdin.
 
-.. option:: --presskeysequence mMnNpPuUdD+-123456789*0#gGrR<>[]hHcCjJfFoOmMdD@
+.. option:: presskeysequence mMnNpPuUdD+-123456789*0#gGrR<>[]hHcCjJfFoOmMdD@
 
     Press specified key sequence on phone keyboard
 
@@ -1371,7 +1371,7 @@ Other commands
     ``123456789*0#``
         numeric keyboard
 
-.. option:: --reset SOFT|HARD
+.. option:: reset SOFT|HARD
 
     Make phone reset: 
     
@@ -1386,7 +1386,7 @@ Other commands
 Batch mode commands
 -------------------
 
-.. option:: --batch [file]
+.. option:: batch [file]
 
     Starts Gammu in a batch mode. In this mode you can issue
     several commands each on one line. Lines starting with # are treated as a
@@ -1399,7 +1399,7 @@ Batch mode commands
 Configuration commands
 ----------------------
 
-.. option:: --searchphone [-debug]
+.. option:: searchphone [-debug]
 
     Attempts to search for a connected phone. Please note
     that this can take a very long time, but in case you have no clue how to
@@ -1409,22 +1409,22 @@ Configuration commands
 Gammu information commands
 --------------------------
 
-.. option:: --checkversion [STABLE]
+.. option:: checkversion [STABLE]
 
     Checks whether there is newer Gammu version
     available online (if Gammu has been compiled with CURL). If you pass
     additional parameter ``STABLE``, only stable versions will be checked.
 
-.. option:: --features
+.. option:: features
 
     Print information about compiled in features.
 
-.. option:: --help [topic]
+.. option:: help [topic]
 
     Print help. By default general help is printed, but you can
     also specify a help category to get more detailed help on some topic.
 
-.. option:: --version
+.. option:: version
 
     Print version information and license.
 
