@@ -1247,16 +1247,21 @@ Nokia specific commands
         `Marcin's page <http://www.mwiacek.com/>`_ and read netmonitor manual
         there.
 
-    \fITIP:\fR test \fB243\fR enables all tests (after using command
-    \fBgammu nokianetmonitor 243\fR in some phones like 6210 or 9210 have to
-    reboot them to see netmonitor menu)
+    .. note:: 
+       
+       test ``243`` enables all tests (after using command 
+       :command:`gammu nokianetmonitor 243` in some phones like 6210 or 9210 have to reboot
+       them to see netmonitor menu)
 
 .. option:: nokianetmonitor36
 
     Reset counters from netmonitor test 36 in Nokia DCT3 phones.
 
-    \fITIP:\fR For more info about this option, please visit
-    \fIhttp://www.mwiacek.com\fR and read netmonitor manual.
+    .. seealso::
+       
+        For more info about this option, please visit 
+        `Marcin's page <http://www.mwiacek.com/>`_ and read netmonitor manual
+        there.
 
 .. option:: nokiasecuritycode
 
@@ -1266,10 +1271,11 @@ Nokia specific commands
 
     Perform tests for Nokia DCT3 phones.
 
-    Note: EEPROM test can show an error when your phone has an EEPROM in 
-    flash (like 82xx/7110/62xx/33xx). The clock test will show an error 
-    when the phone doesn?t have an internal battery for the clock (like
-    3xxx).
+    .. note::
+       
+       EEPROM test can show an error when your phone has an EEPROM in flash
+       (like 82xx/7110/62xx/33xx). The clock test will show an error when the
+       phone doesn?t have an internal battery for the clock (like 3xxx).
 
 .. option:: nokiasetlights keypad|display|torch on|off
 
