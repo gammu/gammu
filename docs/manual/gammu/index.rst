@@ -1144,13 +1144,19 @@ Nokia specific commands
 
 .. option:: nokiaaddfile APPLICATION|GAME file [-readonly] [-overwrite] [-overwriteall]
 
-    Install the ``*.jar/*.jad`` file pair of a midlet in the application or game menu of the phone. You need to specify filename without the jar/jad suffix, both will be added automatically.
+    Install the ``*.jar/*.jad`` file pair of a midlet in the application or
+    game menu of the phone. You need to specify filename without the jar/jad
+    suffix, both will be added automatically.
 
-    The option
-    .I -overwrite
-    deletes the application's .jad and .jar files bevor installing, but doesn't delete the application data. Option
-    .I -overwriteall
-    will also delete all data. Both these options work only for Application or Game upload.
+    .. option:: -overwrite
+    
+        Delete the application's .jad and .jar files before installing, but
+        doesn't delete the application data.
+
+    .. option:: -overwriteall
+    
+        Delete the application (same as :option:`-overwrite`) and all it's
+        data.
 
     You can use jadmaker(1) to generate a .jad file from a .jar file.
 
