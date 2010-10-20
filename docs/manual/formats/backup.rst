@@ -28,7 +28,7 @@ Remove info about voice tags
 
 Find::
 
-    ^Entry\\([0-9][0-9]\\)VoiceTag = \\(.*\\)\\n
+    ^Entry\([0-9][0-9]\)VoiceTag = \(.*\)\n
 
 Replace::
 
@@ -38,18 +38,18 @@ Change all numbers starting from +3620, +3630, +3660, +3670 to +3620
 
 Find::
 
-    Type = NumberGeneral\\nEntry\\([0-9][0-9]\\)Text = "\\+36\\(20\\|30\\|60\\|70\\)\\n
+    Type = NumberGeneral\nEntry\([0-9][0-9]\)Text = "\+36\(20\|30\|60\|70\)\n
 
 Replace::
 
-    Type = NumberMobile\\nEntry\\1Text = "\\+3620
+    Type = NumberMobile\nEntry\1Text = "\+3620
 
 Change phone numbers type to mobile for numbers starting from +3620, +3630,... and removing the corresponding TextUnicode line
 
 Find::
 
-    Type = NumberGeneral\\nEntry\\([0-9][0-9]\\)Text = "\\+36\\([2367]0\\)\\([^\\"]*\\)"\\nEntry\\([0-9][0-9]\\)TextUnicode = \\([^\\n]*\\)\\n
+    Type = NumberGeneral\nEntry\([0-9][0-9]\)Text = "\+36\([2367]0\)\([^\"]*\)"\nEntry\([0-9][0-9]\)TextUnicode = \([^\n]*\)\n
 
 Replace::
 
-    Type = NumberMobile\\nEntry\\1Text = "\\+36\\2\\3"\\n
+    Type = NumberMobile\nEntry\1Text = "\+36\2\3"\n
