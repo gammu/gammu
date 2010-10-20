@@ -38,7 +38,7 @@ Parameters before command configure gammu behaviour:
 
 .. option:: -d, --debug <level>
    
-   debug level (see :ref:`gammurc` for possible values)
+   debug level (see :config:option:`LogFormat` in :ref:`gammurc` for possible values)
 
 .. option:: -f, --debug-file <filename>
    
@@ -1839,7 +1839,7 @@ There are definitely many bugs, reporting to author is welcome. Please include
 some useful information when sending bug reports (especially debug logs,
 operating system, it's version and phone information are needed).
 
-To generate debug log, enable it in gammurc:
+To generate debug log, enable it in :ref:`gammurc`:
 
 .. code-block:: ini
 
