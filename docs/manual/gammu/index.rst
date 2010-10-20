@@ -1540,9 +1540,15 @@ Other functions
 
 .. option:: --reset SOFT|HARD
 
-    Make phone reset: soft (without asking for PIN) or hard (with PIN).
+    Make phone reset: 
+    
+    ``SOFT``
+        without asking for PIN
+    ``HARD``
+        with asking for PIN
 
-    \fINote:\fR some phones will make hard reset even with \fBSOFT\fR option.
+    .. note:: Some phones will ask for PIN even with ``SOFT`` option.
+    .. warning:: Some phones will reset user data on ``HARD`` reset.
 
 Batch mode
 ----------
