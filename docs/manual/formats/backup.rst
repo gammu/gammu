@@ -21,8 +21,8 @@ what locale is set in computer and no conversion Unicode -> ASCII and ASCII ->
 Unicode is done).
 
 You can use any editor with regular expressions function to edit backup text
-file. Examples of such editors can be vim <http://www.vim.org/> or TextPad
-<http://www.textpad.com/> which both do support regular expressions.
+file. Examples of such editors can be `vim <http://www.vim.org/>`_ or 
+`TextPad <http://www.textpad.com/>`_ which both do support regular expressions.
 
 Remove info about voice tags
 
