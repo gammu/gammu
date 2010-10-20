@@ -729,14 +729,30 @@ level and Gammu does not use that.
 
     Add file with specified name to folder with specified folder ID.
 
-    .B -type 
-    - file type was required for filesystem 1 in Nokia phones (current filesystem 2 doesn't need this)
+    .. option:: -type 
 
-    .B -readonly, -protected, -system, -hidden
-    - you can set readonly, protected (file can't be for example forwarded from phone menu), system and hidden (file is hidden from phone menu) file attributes
+       File type was required for filesystem 1 in Nokia phones (current filesystem 2 doesn't need this).
 
-    .B -newtime 
-    - after using it date/time of file modification will be set to moment of uploading 
+    .. option:: -readonly
+ 
+       Sets the read only attribute.
+
+    .. option:: -protected
+ 
+       Sets the protected attribute (file can't be for example forwarded
+       from phone menu).
+
+    .. option:: -system
+ 
+       Sets the system attribute.
+
+    .. option:: -hidden
+
+       Sets the hidden attribute (file is hidden from phone menu).
+
+    .. option:: -newtime 
+
+        After using it date/time of file modification will be set to moment of uploading.
 
 .. option:: addfolder parentfolderID name
 
