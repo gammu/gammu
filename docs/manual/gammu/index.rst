@@ -1155,25 +1155,29 @@ Backing up and restoring commands
 Nokia specific commands
 -----------------------
 
-.. option:: nokiaaddfile APPLICATION|GAME file [-readonly] [-overwrite] [-overwriteall]
+.. option:: nokiaaddfile TYPE [type options]
 
-    Install the ``*.jar/*.jad`` file pair of a midlet in the application or
-    game menu of the phone. You need to specify filename without the jar/jad
-    suffix, both will be added automatically.
+    Uploads file to phone to specific location for the type:
 
-    .. option:: -overwrite
-    
-        Delete the application's .jad and .jar files before installing, but
-        doesn't delete the application data.
+    .. option:: APPLICATION|GAME file [-readonly] [-overwrite] [-overwriteall]
 
-    .. option:: -overwriteall
-    
-        Delete the application (same as :option:`-overwrite`) and all it's
-        data.
+        Install the ``*.jar/*.jad`` file pair of a midlet in the application or
+        game menu of the phone. You need to specify filename without the jar/jad
+        suffix, both will be added automatically.
 
-    You can use jadmaker(1) to generate a .jad file from a .jar file.
+        .. option:: -overwrite
+        
+            Delete the application's .jad and .jar files before installing, but
+            doesn't delete the application data.
 
-.. option:: nokiaaddfile GALLERY|GALLERY2|CAMERA|TONES|TONES2|RECORDS|VIDEO|PLAYLIST|MEMORYCARD file [-name name] [-protected] [-readonly] [-system] [-hidden] [-newtime]
+        .. option:: -overwriteall
+        
+            Delete the application (same as :option:`-overwrite`) and all it's
+            data.
+
+        You can use jadmaker(1) to generate a .jad file from a .jar file.
+
+    .. option:: GALLERY|GALLERY2|CAMERA|TONES|TONES2|RECORDS|VIDEO|PLAYLIST|MEMORYCARD file [-name name] [-protected] [-readonly] [-system] [-hidden] [-newtime]
 
 .. option:: nokiaaddplaylists
 
