@@ -20,8 +20,23 @@ import sys, os
 import sphinx.domains.std
 import re
 
+def gammu_process_link(self, env, refnode, has_explicit_title, title, target):
+    program = env.temp_data.get('std:program')
+    if not has_explicit_title:
+        if ' ' in title and not (title.startswith('/') or
+                                 title.startswith('-')):
+            program, target = re.split(' (?=-|--|/)?', title, 1)
+            program = sphinx.domains.std.ws_re.sub('-', program)
+            target = target.strip()
+    elif ' ' in target:
+        program, target = re.split(' (?=-|--|/)?', target, 1)
+        program = sphinx.domains.std.ws_re.sub('-', program)
+    refnode['refprogram'] = program
+    return title, target
+
 sphinx.domains.std.option_desc_re = re.compile(
     r'^((?:/|-|--)?[-_a-zA-Z0-9]+)(\s*.*?)(?=,\s+(?:/|-|--)|$)')
+sphinx.domains.std.OptionXRefRole.process_link = gammu_process_link
 
 # If your extensions are in another directory, add it here. If the directory
 # is relative to the documentation root, use os.path.abspath to make it
