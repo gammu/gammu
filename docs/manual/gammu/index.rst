@@ -328,13 +328,13 @@ ____________
 
     .. option:: BOOKMARK file location 
 
-        Read WAP bookmark from file created by :option:`gammu backup` option and saves in
+        Read WAP bookmark from file created by :option:`gammu backup` command and saves in
         Nokia format as SMS
 
 
     .. option:: CALENDAR file location 
 
-        Read calendar note from file created by :option:`gammu backup` option and saves in
+        Read calendar note from file created by :option:`gammu backup` command and saves in
         VCALENDAR 1.0 format as SMS. The location identifies position of calendar item 
         to be read in backup file (usually 1, but can be useful in case the backup contains 
         more items).
@@ -621,11 +621,12 @@ ____________
 
     .. option:: VCARD10|VCARD21 file SM|ME location [-nokia] 
 
-        Read phonebook entry from file created by :option:`gammu backup` option
-        and saves in VCARD 1.0 (only name and default number) or VCARD 2.1 (all
-        entry details with all numbers, text and name) format as SMS. The
-        location identifies position of contact item to be read in backup file
-        (usually 1, but can be useful in case the backup contains more items).
+        Read phonebook entry from file created by :option:`gammu backup`
+        command and saves in VCARD 1.0 (only name and default number) or VCARD
+        2.1 (all entry details with all numbers, text and name) format as SMS.
+        The location identifies position of contact item to be read in backup
+        file (usually 1, but can be useful in case the backup contains more
+        items).
 
 
     .. option:: WAPINDICATOR URL Title 
@@ -636,7 +637,8 @@ ____________
 
     .. option:: WAPSETTINGS file location DATA|GPRS 
 
-        Read WAP settings from file created by :option:`gammu backup` option and saves in Nokia format as SMS
+        Read WAP settings from file created by :option:`gammu backup` command
+        and saves in Nokia format as SMS
 
 
 .. option:: sendsms TYPE destination [type parameters] [type options] [-smscset number] [-smscnumber number] [-reply] [-report] [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [-save [-folder number]]
