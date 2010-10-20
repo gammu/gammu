@@ -1513,7 +1513,7 @@ Other functions
 
 .. option:: --entersecuritycode PIN|PUK|PIN2|PUK2|PHONE|NETWORK code|-
 
-    Allow to enter security code from PC. When code is -, it is read from stdin.
+    Allow to enter security code from PC. When code is ``-``, it is read from stdin.
 
 .. option:: --presskeysequence mMnNpPuUdD+-123456789*0#gGrR<>[]hHcCjJfFoOmMdD@
 
@@ -1560,7 +1560,7 @@ Batch mode
     comments.
 
     By default, commands are read from standard input, but you can optionally
-    specify a file from where they would be read (special case - means standard
+    specify a file from where they would be read (special case ``-`` means standard
     input).
 
 Configuration
