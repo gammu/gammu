@@ -154,7 +154,13 @@ __________________________
 
 Text in SMS can be coded using two ways:
 
-with \fBGSM Default Alphabet\fR - in single SMS you can have maximally 160 chars (Gammu doesn't support compressing such texts according to GSM standards, but it isn't big limit, because there are no phones supporting them), but they're from limited set:
+GSM Default Alphabet
+~~~~~~~~~~~~~~~~~~~~
+
+With `GSM Default Alphabet` you can fit at most 160 chars into single SMS
+(Gammu doesn't support compressing such texts according to GSM standards, but
+it isn't big limit, because there are no phones supporting them), but they're
+from limited set:
 
 * all Latin small and large
 * all digits
@@ -163,9 +169,15 @@ with \fBGSM Default Alphabet\fR - in single SMS you can have maximally 160 chars
 * some symbols like  @ ! " # & / ( ) % * + = - , . : ; < > ?
 * few others
 
-with \fBUnicode\fR - in single SMS you can save at most 70 chars, but these can be
+Unicode
+~~~~~~~
+
+With `Unicode` single SMS can contain at most 70 chars, but these can be
 any chars including all national and special ones. Please note, that some
 older phones might have problems displaying such message.
+
+Conversion
+~~~~~~~~~~
 
 Gammu tries to do the best to handle non ASCII characters in your message.
 Everything is internally handled in Unicode (the input is converted depending
