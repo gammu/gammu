@@ -437,6 +437,9 @@ GSM_PhoneModel allmodels[] = {
 	{"J700",	  "SAMSUNG SGH-J700" , "",			   {F_NO_ATOBEX, 0}},
 	{"D980",	  "SAMSUNG SGH-D980" , "",			   {F_NO_ATOBEX, 0}},
 
+	/* Philips */
+	{"Xenium 9@9d",	  "Xenium 9@9d", "",				   {F_OBEX, 0}},
+
 	/* Ericsson/Sony Ericsson */
 	{"T28s",	"1101101-BVT28s","",				   {F_OBEX, 0}},
 	{"R320s" ,	"1101201-BV R320s","",				   {F_OBEX, 0}},
