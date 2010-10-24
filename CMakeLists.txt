@@ -240,7 +240,9 @@ else (CMAKE_CROSSCOMPILING AND MINGW)
     set (CMAKE_EXTRA_INCLUDE_FILES)
 endif (CMAKE_CROSSCOMPILING AND MINGW)
 
+set (CMAKE_EXTRA_INCLUDE_FILES stdio.h)
 check_type_size (ssize_t HAVE_SSIZE_T)
+set (CMAKE_EXTRA_INCLUDE_FILES)
 check_type_size(intptr_t HAVE_INTPTR_T)
 
 check_c_source_compiles ("
