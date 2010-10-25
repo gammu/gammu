@@ -665,6 +665,8 @@ ____________
 Memory (phonebooks and calls) commands
 --------------------------------------
 
+.. _memory types:
+
 Memory types
 ____________
 
@@ -697,18 +699,25 @@ _______________
 
     Deletes all entries from specified memory type.
 
+    For memory types description see :ref:`memory types`.
+
 .. option:: deletememory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL start [stop]
 
     Deletes entries in specified range from specified memory type.
 
+    For memory types description see :ref:`memory types`.
+
 .. option:: getallmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL
 
-    Get all memory locations from phone. For memory
-    types see :option:`getmemory`.
+    Get all memory locations from phone. 
+    
+    For memory types description see :ref:`memory types`.
 
 .. option:: getmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL start [stop [-nonempty]]
 
     Get memory location from phone. 
+
+    For memory types description see :ref:`memory types`.
 
     Locations are numerated from 1.
 
@@ -720,7 +729,7 @@ _______________
 
     Scans all memory entries for given text. It performs
     case insensitive substring lookup. You can interrupt searching by pressing
-    Ctrl+C.
+    :kbd:`Ctrl+C`.
 
 Filesystem commands
 -------------------
@@ -1431,7 +1440,7 @@ Phone information commands
 
 .. option:: monitor [times]
 
-    Get phone status and writes continuously to standard output. Press Ctrl+C
+    Get phone status and writes continuously to standard output. Press :kbd:`Ctrl+C`
     to break this state.
 
 
