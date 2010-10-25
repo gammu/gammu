@@ -35,6 +35,7 @@ if (SPHINX_BUILD_EXECUTABLE)
                 ${CMAKE_CURRENT_BINARY_DIR}/${_format}
             DEPENDS ${PYFILES} ${PYTHON_GAMMU_SRC}
             COMMENT "Generating Sphinx documentation (${_format})")
+        add_dependencies(manual-${_format} apidoc)
     endmacro(sphinxdoc _format)
     sphinxdoc(html)
     sphinxdoc(htmlhelp)
