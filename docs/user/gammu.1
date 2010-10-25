@@ -1,4 +1,4 @@
-.TH "GAMMU" "1" "October 20, 2010" "1.28.93" "Gammu"
+.TH "GAMMU" "1" "October 25, 2010" "1.28.93" "Gammu"
 .SH NAME
 gammu \- Does some neat things with your cellular phone or modem.
 .
@@ -63,7 +63,7 @@ section of config file to use, eg. 42
 .TP
 .B \-d, \-\-debug <level>
 .sp
-debug level (see \fIgammurc\fP for possible values)
+debug level (see \fBLogFormat\fP in \fIgammurc\fP for possible values)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -984,25 +984,32 @@ sent SMS log
 .B deleteallmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL
 .sp
 Deletes all entries from specified memory type.
+.sp
+For memory types description see \fI\%Memory types\fP.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B deletememory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL start [stop]
 .sp
 Deletes entries in specified range from specified memory type.
+.sp
+For memory types description see \fI\%Memory types\fP.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B getallmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL
 .sp
-Get all memory locations from phone. For memory
-types see \fI\%getmemory\fP.
+Get all memory locations from phone.
+.sp
+For memory types description see \fI\%Memory types\fP.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B getmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL start [stop [\-nonempty]]
 .sp
 Get memory location from phone.
+.sp
+For memory types description see \fI\%Memory types\fP.
 .sp
 Locations are numerated from 1.
 .UNINDENT
@@ -1018,7 +1025,7 @@ Gets speed dial choices.
 .sp
 Scans all memory entries for given text. It performs
 case insensitive substring lookup. You can interrupt searching by pressing
-Ctrl+C.
+\fBCtrl+C\fP.
 .UNINDENT
 .SS Filesystem commands
 .sp
@@ -1632,7 +1639,7 @@ Delete the application (same as \fI\%-overwrite\fP) and all it\(aqs
 data.
 .UNINDENT
 .sp
-You can use jadmaker(1) to generate a .jad file from a .jar file.
+You can use \fIjadmaker\fP to generate a .jad file from a .jar file.
 .UNINDENT
 .INDENT 7.0
 .TP
@@ -2019,7 +2026,7 @@ Show the most important phone data.
 .TP
 .B monitor [times]
 .sp
-Get phone status and writes continuously to standard output. Press Ctrl+C
+Get phone status and writes continuously to standard output. Press \fBCtrl+C\fP
 to break this state.
 .UNINDENT
 .SS Phone settings commands
@@ -2660,7 +2667,7 @@ There are definitely many bugs, reporting to author is welcome. Please include
 some useful information when sending bug reports (especially debug logs,
 operating system, it\(aqs version and phone information are needed).
 .sp
-To generate debug log, enable it in gammurc:
+To generate debug log, enable it in \fIgammurc\fP:
 .sp
 .nf
 .ft C
