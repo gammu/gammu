@@ -1184,7 +1184,7 @@ Nokia specific commands
             Delete the application (same as :option:`-overwrite`) and all it's
             data.
 
-        You can use jadmaker(1) to generate a .jad file from a .jar file.
+        You can use :ref:`jadmaker` to generate a .jad file from a .jar file.
 
     .. option:: GALLERY|GALLERY2|CAMERA|TONES|TONES2|RECORDS|VIDEO|PLAYLIST|MEMORYCARD file [-name name] [-protected] [-readonly] [-system] [-hidden] [-newtime]
 

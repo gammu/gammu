@@ -14,6 +14,7 @@ Gammu Documentation Contents
     config/index
     gammu/index
     smsd/index
+    utils/index
     testing/index
     protocol/index
     glossary
