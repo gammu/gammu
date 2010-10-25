@@ -93,17 +93,17 @@ Device connection parameters
 
 .. config:option:: Device
 
-    .. versionadded: 1.27.95
+    .. versionadded:: 1.27.95
 
     Device node or address of phone. It depends on used connection. 
 
-    For cables or emulated serial ports, you enter device name (for example
+    For **cables** or emulated serial ports, you enter device name (for example
     ``/dev/ttyS0``, ``/dev/ttyACM0``, ``/dev/ircomm0``, ``/dev/rfcomm0`` on Linux,
     ``/dev/cuad0`` on FreeBSD or COM1: on Windows). The special exception are
     DKU-2 and DKU-5 cables on Windows, where the device is automatically detected
     from driver information and this parameters is ignored.
 
-    For USB connections (currently only fbususb and dku2 on Linux), you can
+    For **USB** connections (currently only fbususb and dku2 on Linux), you can
     specify to which USB device Gammu should connect. You can either provide
     vendor/product IDs or device address on USB::
 
@@ -113,25 +113,27 @@ Device connection parameters
         Device = 10             # Match device by usb device address
         Device = serial:123456  # Match device by serial string
 
-    For Bluetooth connection you have to enter Bluetooth address of your phone
-    (you can list Bluetooth devices in range on Linux using :program:`hcitool scan`
+    For **Bluetooth** connection you have to enter Bluetooth address of your phone
+    (you can list Bluetooth devices in range on Linux using :command:`hcitool scan`
     command). Optionally you can also force Gammu to use specified channel by
     including channel number after slash.
 
     Before using Gammu, your device should be paired with computer or you should
     have set up automatic pairing.
 
-    For IrDA connections, this parameters is not used at all.
+    For **IrDA** connections, this parameters is not used at all.
 
     If IrDA does not work on Linux, you might need to bring up the interface and
-    enable discovery (you need to run these commands as root)::
+    enable discovery (you need to run these commands as root):
+
+    .. code-block:: sh
 
         ip l s dev irda0 up
         sysctl net.irda.discovery=1
 
 .. config:option:: Port
 
-    .. deprecated: 1.27.95
+    .. deprecated:: 1.27.95
 
     Alias for Device, kept for backward compatibility.
 
