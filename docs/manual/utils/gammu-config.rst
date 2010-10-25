@@ -15,7 +15,7 @@ Synopsis
 Description
 -----------
 
-Script to help configuring gammu.
+Script to help configuring :ref:`gammu`.
 
 This program follows the usual GNU command line syntax, with long options
 starting with two dashes (``-``). A summary of options is included below.
