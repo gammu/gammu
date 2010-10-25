@@ -25,6 +25,8 @@ Description
 :ref:`gammu` reads configuration from a config file. It's location is determined
 on runtime, see above for search paths.
 
+You can use :ref:`gammu-config` to generate configuration file.
+
 This file use ini file syntax, see :ref:`ini`.
 
 Configuration file for gammu can contain several sections - ``[gammu]``, ``[gammu1]``,
