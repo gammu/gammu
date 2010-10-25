@@ -23,7 +23,7 @@ find_program(SPHINX_BUILD_EXECUTABLE NAMES sphinx-build
     DOC "Sphinx tool for generating Gammu documentation <http://sphinx.pocoo.org/>")
 
 if (SPHINX_BUILD_EXECUTABLE)
-    set (SPHINX_PAPER_SIZE "a4" CACHE STRING "Paper size for Sphinx LaTeX output")
+    set (SPHINX_PAPER_SIZE "a4" CACHE STRING "Paper size for Sphinx LaTeX/PDF/PS output")
     configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/conf.py" "${CMAKE_CURRENT_BINARY_DIR}/conf.py" @ONLY)
     macro(sphinxdoc _format)
         add_custom_target (manual-${_format} ${PYTHON_EXECUTABLE} ${SPHINX_BUILD_EXECUTABLE}
@@ -40,4 +40,12 @@ if (SPHINX_BUILD_EXECUTABLE)
     sphinxdoc(htmlhelp)
     sphinxdoc(latex)
     sphinxdoc(man)
+    add_custom_target(manual-pdf
+        yes '' | make all-pdf
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/latex)
+    add_custom_target(manual-ps
+        yes '' | make all-ps
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/latex)
+    add_dependencies(manual-pdf manual-latex)
+    add_dependencies(manual-ps manual-latex)
 endif (SPHINX_BUILD_EXECUTABLE)
