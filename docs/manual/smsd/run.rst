@@ -147,3 +147,32 @@ echo command with your own program to do custom processing.
     if [ "$DECODED_1_MMS_ADDRESS" ] ; then
         echo "$DECODED_1_MMS_ADDRESS" "$DECODED_1_MMS_SENDER" "$DECODED_1_MMS_TITLE" >> /tmp/smsd-mms.log
     fi
+
+Processing message text in Python
++++++++++++++++++++++++++++++++++
+
+Following script (if used as :config:option:`RunOnReceive` handler) written
+in Python will concatenate all text from received message:
+
+.. code-block:: python
+
+    #!/usr/bin/python
+    import os
+    import sys
+
+    numparts = int(os.environ['DECODED_PARTS'])
+
+    # Are there any decoded parts?
+    if numparts == 0:
+        print('No decoded parts!')
+        sys.exit(1)
+
+    # Get all text parts
+    text = ''
+    for i in range(1, numparts + 1):
+        varname = 'DECODED_%d_TEXT' % i
+        if varname in os.environ:
+            text = text + os.environ[varname]
+
+    # Do something with the text
+    print('Number %s have sent text: %s' % (os.environ['SMS_1_NUMBER'], text))
