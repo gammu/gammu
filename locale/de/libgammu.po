@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: libGammu 1.28.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-09-03 14:46+0200\n"
-"PO-Revision-Date: 2010-10-29 20:31+0200\n"
+"PO-Revision-Date: 2010-10-29 20:32+0200\n"
 "Last-Translator:  <canin@in.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -223,7 +223,7 @@ msgstr "Das Telefon-Modul muss einen weiteren Antwort-Frame senden."
 #: libgammu/gsmcomon.c:123
 msgid "Current connection type doesn't support called function."
 msgstr ""
-"Der gegenwärtige Verbindungstyp unterstützt nicht die aufgerufenen Funktion."
+"Der gegenwärtige Verbindungstyp unterstützt nicht die aufgerufene Funktion."
 
 #: libgammu/gsmcomon.c:124
 msgid "CRC error."
