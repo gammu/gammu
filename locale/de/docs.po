@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.28.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-09-03 14:46+0300\n"
-"PO-Revision-Date: 2010-10-29 20:54+0200\n"
+"PO-Revision-Date: 2010-10-29 20:56+0200\n"
 "Last-Translator:  <canin@in.com>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -278,7 +278,7 @@ msgstr "number - Nummer, zu der umgeleitet wird."
 #. type: Plain text
 #: docs/user/gammu.1:75
 msgid "timeout - timeout when the diversion will happen"
-msgstr "timeout - Zeit bis zur Rufumleitung"
+msgstr "timeout - Zeitspanne, bis die Rufumleitung aktiv wird"
 
 # type: TP
 #. type: TP
