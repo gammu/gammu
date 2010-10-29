@@ -107,8 +107,8 @@ msgid ""
 "Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
 "report it."
 msgstr ""
-"Unbekannter Rückantwort-Frame vom Telefon. Lesen Sie bitte unter <http://"
-"cihar.com/gammu/report> wo dieser Fehler zu melden ist."
+"Unbekannter Rückantwort-Frame vom Telefon. Lesen Sie bitte unter "
+"<http://wammu.eu/support/bugs/> wo dieser Fehler zu melden ist."
 
 #: libgammu/gsmcomon.c:101
 msgid "Unknown connection type string. Check config file."
