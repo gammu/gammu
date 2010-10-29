@@ -211,7 +211,7 @@ msgstr "Alle Rufumleitungen beenden."
 #: docs/user/gammu.1:52
 #, no-wrap
 msgid "B<conferencecall>I< id>"
-msgstr ""
+msgstr "B<conferencecall>I< id>"
 
 #. type: Plain text
 #: docs/user/gammu.1:55
