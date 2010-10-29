@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.28.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-09-03 14:46+0300\n"
-"PO-Revision-Date: 2010-10-29 20:49+0200\n"
+"PO-Revision-Date: 2010-10-29 20:50+0200\n"
 "Last-Translator:  <canin@in.com>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -223,7 +223,7 @@ msgstr "Beginnt eine Konferenzschaltung"
 #: docs/user/gammu.1:56
 #, no-wrap
 msgid "B<dialvoice>I< number [show|hide]>"
-msgstr ""
+msgstr "B<dialvoice>I< number [show|hide]>"
 
 # type: Plain text
 #. type: Plain text
