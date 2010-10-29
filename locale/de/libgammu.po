@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: libGammu 1.28.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-09-03 14:46+0200\n"
-"PO-Revision-Date: 2010-10-29 20:33+0200\n"
+"PO-Revision-Date: 2010-10-29 20:35+0200\n"
 "Last-Translator:  <canin@in.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -326,7 +326,7 @@ msgstr "Der Dienst läuft nicht."
 
 #: libgammu/gsmcomon.c:148
 msgid "Service configuration is missing."
-msgstr "Der Dienst ist nich konfiguriert."
+msgstr "Der Dienst ist nicht konfiguriert."
 
 #: libgammu/gsmcomon.c:149
 msgid "Command rejected because device was busy. Wait and restart."
