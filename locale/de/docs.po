@@ -356,7 +356,7 @@ msgstr ""
 #: docs/user/gammu.1:99
 #, no-wrap
 msgid "B<senddtmf>I< sequence>"
-msgstr ""
+msgstr "B<senddtmf>I< sequence>"
 
 # type: Plain text
 #. type: Plain text
