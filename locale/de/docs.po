@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.28.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-09-03 14:46+0300\n"
-"PO-Revision-Date: 2010-10-29 20:48+0200\n"
+"PO-Revision-Date: 2010-10-29 20:49+0200\n"
 "Last-Translator:  <canin@in.com>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -200,7 +200,7 @@ msgstr "Eingehenden Anruf abweisen."
 #: docs/user/gammu.1:48
 #, no-wrap
 msgid "B<canceldiverts>"
-msgstr ""
+msgstr "B<canceldiverts>"
 
 #. type: Plain text
 #: docs/user/gammu.1:51
