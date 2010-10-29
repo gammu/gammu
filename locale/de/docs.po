@@ -381,7 +381,7 @@ msgstr "Teilt das Gespräch auf."
 #: docs/user/gammu.1:107
 #, no-wrap
 msgid "B<switchcall>I< [id]>"
-msgstr ""
+msgstr "B<switchcall>I< [id]>"
 
 #. type: Plain text
 #: docs/user/gammu.1:110
