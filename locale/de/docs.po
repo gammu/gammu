@@ -408,7 +408,7 @@ msgstr "B<unholdcall>I< id>"
 #. type: Plain text
 #: docs/user/gammu.1:118
 msgid "Unholds call."
-msgstr "Nimmt gehaltetens Gespräch wieder auf."
+msgstr "Nimmt gehaltenes Gespräch wieder auf."
 
 #. type: SS
 #: docs/user/gammu.1:120
