@@ -310,7 +310,7 @@ msgstr ""
 #: docs/user/gammu.1:85
 #, no-wrap
 msgid "B<holdcall>I< id>"
-msgstr ""
+msgstr "B<holdcall>I< id>"
 
 #. type: Plain text
 #: docs/user/gammu.1:88
