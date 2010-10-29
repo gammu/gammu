@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.28.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-09-03 14:46+0300\n"
-"PO-Revision-Date: 2010-10-29 21:01+0200\n"
+"PO-Revision-Date: 2010-10-29 21:02+0200\n"
 "Last-Translator:  <canin@in.com>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -392,7 +392,7 @@ msgstr "Schaltet das Gespräch um."
 #: docs/user/gammu.1:111
 #, no-wrap
 msgid "B<transfercall>I< [id]>"
-msgstr ""
+msgstr "B<transfercall>I< [id]>"
 
 #. type: Plain text
 #: docs/user/gammu.1:114
