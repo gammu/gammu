@@ -285,7 +285,7 @@ msgstr "timeout - Zeitspanne, bis die Rufumleitung aktiv wird"
 #: docs/user/gammu.1:77 docs/user/gammu.1:851
 #, no-wrap
 msgid "B<getspeeddial>I< start [stop]>"
-msgstr ""
+msgstr "B<getspeeddial>I< start [stop]>"
 
 #. type: Plain text
 #: docs/user/gammu.1:80 docs/user/gammu.1:854
