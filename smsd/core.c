@@ -1916,40 +1916,6 @@ GSM_Error SMSD_GetStatus(GSM_SMSDConfig *Config, GSM_SMSDStatus *status)
 	return ERR_NONE;
 }
 
-/**
- * Reads common options for database backends.
- */
-GSM_Error SMSD_ReadDatabaseConfiguration(GSM_SMSDConfig *Config)
-{
-#if defined(HAVE_MYSQL_MYSQL_H) || defined(HAVE_POSTGRESQL_LIBPQ_FE_H) || defined(LIBDBI_FOUND)
-	Config->user = INI_GetValue(Config->smsdcfgfile, "smsd", "user", FALSE);
-	if (Config->user == NULL) {
-		Config->user="root";
-	}
-
-	Config->password = INI_GetValue(Config->smsdcfgfile, "smsd", "password", FALSE);
-	if (Config->password == NULL) {
-		Config->password="";
-	}
-
-	Config->host = INI_GetValue(Config->smsdcfgfile, "smsd", "host", FALSE);
-	if (Config->host == NULL) {
-		/* Backward compatibility */
-		Config->host = INI_GetValue(Config->smsdcfgfile, "smsd", "pc", FALSE);
-	}
-	if (Config->host == NULL) {
-		Config->host="localhost";
-	}
-
-	Config->database = INI_GetValue(Config->smsdcfgfile, "smsd", "database", FALSE);
-	if (Config->database == NULL) {
-		Config->database="sms";
-	}	
-#endif
-
-	return ERR_NONE;
-}
-
 GSM_Error SMSD_NoneFunction(void)
 {
 	return ERR_NONE;

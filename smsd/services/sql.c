@@ -940,6 +940,37 @@ static GSM_Error SMSDSQL_RefreshPhoneStatus(GSM_SMSDConfig * Config)
 	return ERR_NONE;
 }
 
+/**
+ * Reads common options for database backends.
+ */
+GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
+{
+	Config->user = INI_GetValue(Config->smsdcfgfile, "smsd", "user", FALSE);
+	if (Config->user == NULL) {
+		Config->user="root";
+	}
+
+	Config->password = INI_GetValue(Config->smsdcfgfile, "smsd", "password", FALSE);
+	if (Config->password == NULL) {
+		Config->password="";
+	}
+
+	Config->host = INI_GetValue(Config->smsdcfgfile, "smsd", "host", FALSE);
+	if (Config->host == NULL) {
+		/* Backward compatibility */
+		Config->host = INI_GetValue(Config->smsdcfgfile, "smsd", "pc", FALSE);
+	}
+	if (Config->host == NULL) {
+		Config->host="localhost";
+	}
+
+	Config->database = INI_GetValue(Config->smsdcfgfile, "smsd", "database", FALSE);
+	if (Config->database == NULL) {
+		Config->database="sms";
+	}	
+	return ERR_NONE;
+}
+
 GSM_SMSDService SMSDSQL = {
 	SMSDSQL_Init,
 	SMSDSQL_Free,
@@ -951,7 +982,7 @@ GSM_SMSDService SMSDSQL = {
 	SMSDSQL_AddSentSMSInfo,
 	SMSDSQL_RefreshSendStatus,
 	SMSDSQL_RefreshPhoneStatus,
-	SMSD_ReadDatabaseConfiguration
+	SMSDSQL_ReadConfiguration
 };
 
 /* How should editor hadle tabs in this file? Add editor commands here.

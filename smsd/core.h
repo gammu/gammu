@@ -195,7 +195,6 @@ extern GSM_Error SMSD_NoneFunction		(void);
 extern GSM_Error SMSD_EmptyFunction		(void);
 extern GSM_Error SMSD_NotImplementedFunction	(void);
 extern GSM_Error SMSD_NotSupportedFunction	(void);
-extern GSM_Error SMSD_ReadDatabaseConfiguration(GSM_SMSDConfig *Config);
 
 
 #define NONEFUNCTION 	(void *) SMSD_NoneFunction
