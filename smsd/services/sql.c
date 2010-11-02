@@ -36,6 +36,8 @@ const char now_plus_sqlite[] = "datetime('now', '+%d seconds')";
 const char now_plus_freetds[] = "DATEADD('second', %d, CURRENT_TIMESTAMP)";
 const char now_plus_fallback[] = "NOW() + INTERVAL %d SECOND";
 
+const char *SMSDSQL_coding2string(int);
+
 static const char *SMSDSQL_NowPlus(GSM_SMSDConfig * Config, int seconds)
 {
 	const char *driver_name;
@@ -115,6 +117,190 @@ static GSM_Error SMSDSQL_Query(GSM_SMSDConfig * Config, const char *query, SQL_r
 		}
 	}
 	return ERR_TIMEOUT;
+}
+
+static GSM_Error SMSDSQL_NamedQuery(GSM_SMSDConfig * Config, const char *sql_query, GSM_SMSMessage *sms, 
+	const SQL_Var *params, SQL_result * res)
+{
+	char buff[65536], *ptr, c, static_buff[8192];
+	char *buffer2;
+	const char *to_print, *q = sql_query;
+	int int_to_print;
+	int numeric; 
+	int n, argc = 0;
+	time_t timestamp;
+	struct tm * timestruct; 
+	struct GSM_SMSDdbobj *db = Config->db;
+
+	if (params != NULL) {
+		while (params[argc].type != SQL_TYPE_NONE) argc++;
+	}
+
+	ptr = buff;
+	
+	do {
+		if (*q != '%') {
+			*ptr++ = *q;
+			continue;
+		}
+		c = *(++q);
+		if( c >= '0' && c <= '9'){
+			n = atoi(q) - 1;
+			if (n < argc && n >= 0) {
+				switch(params[n].type){
+					case SQL_TYPE_INT:
+						ptr += sprintf(ptr, "%i", params[n].v.i);
+						break;
+					case SQL_TYPE_STRING:
+						buffer2 = db->QuoteString(&db->conn, params[n].v.s);	 
+						memcpy(ptr, buffer2, strlen(buffer2));
+						ptr += strlen(buffer2);
+						free(buffer2);
+						break;
+					default:
+						SMSD_Log(DEBUG_ERROR, Config, "SQL: unknown type: %i (application bug) in query: `%s`", params[n].type, sql_query);
+						return ERR_UNKNOWN;
+						break;
+				}
+			} else {
+				SMSD_Log(DEBUG_ERROR, Config, "SQL: wrong number of parameter: %i (max %i) in query: `%s`", n+1, argc, sql_query);
+				return ERR_UNKNOWN;
+			}
+			/* jump to first non-numeric char */
+			while(*q >= '0' && *q <= '9') q++;
+			q--;	
+			continue;
+		}
+		numeric = 0;
+		to_print = NULL;
+		switch (c) {
+			case 'I':
+				to_print = Config->Status->IMEI;
+				break;
+			case 'P':
+				to_print = Config->PhoneID;
+				break;
+			case 'N':
+				snprintf(static_buff, sizeof(static_buff), "Gammu %s, %s, %s", VERSION, GetOS(), GetCompiler());
+				to_print = static_buff;
+				break;
+			case 'A':
+				to_print = Config->CreatorID;
+				break;
+			default:
+				if (sms != NULL) {
+					switch (c) {
+						case 'R':
+							to_print = sms->Number;
+							break;
+						case 'F':
+							EncodeUTF8(static_buff, sms->SMSC.Number);
+							to_print = static_buff;
+							break;
+						case 'u':
+							if (sms->UDH.Type != UDH_NoUDH) {
+								EncodeHexBin(static_buff, sms->UDH.Text, sms->UDH.Length);
+								to_print = static_buff;
+							}
+							break;
+						case 'x':
+							int_to_print =  sms->Class;
+							numeric = 1;
+							break;
+						case 'c':
+							to_print = SMSDSQL_coding2string(sms->Coding);
+							break;
+						case 't':
+							int_to_print =  sms->MessageReference;
+							numeric = 1;
+							break;
+						case 'E':
+							switch (sms->Coding) {
+								case SMS_Coding_Unicode_No_Compression:
+									case SMS_Coding_Default_No_Compression:
+									EncodeHexUnicode(static_buff, sms->Text, UnicodeLength(sms->Text));
+									break;
+									case SMS_Coding_8bit:
+									EncodeHexBin(static_buff, sms->Text, sms->Length);
+									break;
+									default:
+									*static_buff = '\0';
+									break;
+							}
+							to_print = static_buff;
+							break;
+						case 'T':
+							switch (sms->Coding) {
+								case SMS_Coding_Unicode_No_Compression:
+								case SMS_Coding_Default_No_Compression:
+									EncodeUTF8(static_buff, sms->Text);
+									to_print = static_buff;
+									break;
+									default:
+									to_print = "";
+									break;
+							}
+							break;
+						case 'V':
+							if (sms->SMSC.Validity.Format == SMS_Validity_RelativeFormat) {
+								int_to_print = sms->SMSC.Validity.Relative;
+							} else {
+								int_to_print =  -1;
+							}
+							numeric = 1;
+							break;
+						case 'C':
+							timestamp = Fill_Time_T(sms->SMSCTime);
+							if (strcmp(db->DriverName, "pgsql") == 0) {
+								timestruct = gmtime(&timestamp);
+								strftime(static_buff, sizeof(static_buff), "%Y-%m-%d %H:%M:%S GMT", timestruct);
+							} else {
+								timestruct = localtime(&timestamp);
+								strftime(static_buff, sizeof(static_buff), "%Y-%m-%d %H:%M:%S", timestruct);
+							}
+							to_print = static_buff;
+							break;
+						case 'd':
+							timestamp = Fill_Time_T(sms->DateTime);
+							if (strcmp(db->DriverName, "pgsql") == 0) {
+								timestruct = gmtime(&timestamp);
+								strftime(static_buff, sizeof(static_buff), "%Y-%m-%d %H:%M:%S GMT", timestruct);
+							} else {
+								timestruct = localtime(&timestamp);
+								strftime(static_buff, sizeof(static_buff), "%Y-%m-%d %H:%M:%S", timestruct);
+							}
+							to_print = static_buff;
+							break;
+						case 'e':
+							int_to_print = sms->DeliveryStatus;
+							numeric = 1;
+							break;
+						default:
+							SMSD_Log(DEBUG_ERROR, Config, "SQL: uexpected char '%c' in query: %s", c, sql_query);
+							return ERR_UNKNOWN;
+						
+					} /* end of switch */
+				} else {
+					SMSD_Log(DEBUG_ERROR, Config, "Syntax error in query.. uexpected char '%c' in query: %s", c, sql_query);
+					return ERR_UNKNOWN;
+				}
+				break;
+		} /* end of switch */
+		if (numeric) {
+			ptr += sprintf(ptr, "%i", int_to_print);
+		} else if (to_print != NULL) {
+			buffer2 = db->QuoteString(&db->conn, to_print);	 
+			memcpy(ptr, buffer2, strlen(buffer2));
+			ptr += strlen(buffer2);
+			free(buffer2);
+		} else {
+			memcpy(ptr, "NULL", 4);
+			ptr += 4;
+		}
+	} while (*(++q) != '\0');
+	*ptr = '\0';
+	return SMSDSQL_Query(Config, buff, res);
+	
 }
 
 static GSM_Error SMSDSQL_CheckTable(GSM_SMSDConfig * Config, const char *table)
@@ -924,14 +1110,19 @@ static GSM_Error SMSDSQL_AddSentSMSInfo(GSM_MultiSMSMessage * sms, GSM_SMSDConfi
 static GSM_Error SMSDSQL_RefreshPhoneStatus(GSM_SMSDConfig * Config)
 {
 	SQL_result Res;
+	SQL_Var vars[3] = {
+		{SQL_TYPE_INT, { .i = Config->Status->Charge.BatteryPercent}},
+		{SQL_TYPE_INT, { .i = Config->Status->Network.SignalPercent}},
+		{SQL_TYPE_NONE}};
 	struct GSM_SMSDdbobj *db = Config->db;
 
-	char buffer[500];
+	char buffer[200];
 
-	sprintf(buffer,
-		"UPDATE phones SET TimeOut= %s, Battery = %d, Signal = %d WHERE IMEI = '%s'",
-		SMSDSQL_NowPlus(Config, 10), Config->Status->Charge.BatteryPercent, Config->Status->Network.SignalPercent, Config->Status->IMEI);
-	if (SMSDSQL_Query(Config, buffer, &Res) != ERR_NONE) {
+	strcpy(buffer, "UPDATE phones SET TimeOut= ");
+	strcat(buffer, SMSDSQL_NowPlus(Config, 10));
+	strcat(buffer, ", Battery = %1, Signal = %2 WHERE IMEI = %I");
+	
+	if (SMSDSQL_NamedQuery(Config, buffer, NULL, vars, &Res) != ERR_NONE) {
 		SMSD_Log(DEBUG_INFO, Config, "Error writing to database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}

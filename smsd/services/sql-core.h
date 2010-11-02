@@ -66,6 +66,22 @@ typedef enum {
 	SQL_LOCKED
 } SQL_Error;
 
+typedef enum {
+	SQL_TYPE_NONE,
+	SQL_TYPE_INT,
+	SQL_TYPE_STRING
+} SQL_Type;
+
+typedef union {
+	const char *s;
+	int i;
+} SQL_Val;
+
+typedef struct {
+	SQL_Type type;
+	SQL_Val v;
+} SQL_Var;
+
 /* incomplete declaration - cyclic occurence of GSM_SMSDConfig */
 struct GSM_SMSDConfig;
 
