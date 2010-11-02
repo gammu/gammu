@@ -100,6 +100,7 @@ static SQL_Error SMSDMySQL_Connect(GSM_SMSDConfig * Config)
 {
 
 	unsigned int port = 0;
+	int error;
 	char *pport;
 	char *socketname = NULL;
 	struct GSM_SMSDdbobj *db = Config->db;
@@ -119,6 +120,10 @@ static SQL_Error SMSDMySQL_Connect(GSM_SMSDConfig * Config)
 	if (!mysql_real_connect(&db->conn.my, Config->host, Config->user, Config->password, Config->database, port, socketname, 0)) {
 		SMSD_Log(DEBUG_ERROR, Config, "Error connecting to database!");
 		SMSDMySQL_LogError(Config);
+		error = mysql_errno(&db->conn.my);
+		if (error == 2003 || error == 2002) { /* cant connect through socket */
+			return SQL_TIMEOUT;
+		}
 		return SQL_FAIL;
 	}
 
@@ -130,9 +135,14 @@ static SQL_Error SMSDMySQL_Connect(GSM_SMSDConfig * Config)
 static SQL_Error SMSDMySQL_Query(GSM_SMSDConfig * Config, const char *query, SQL_result *res)
 {
 	struct GSM_SMSDdbobj *db = Config->db;
+	int error;
 
 	if (mysql_query(&db->conn.my, query) != 0) {
 		SMSDMySQL_LogError(Config);
+		error = mysql_errno(&db->conn.my);
+		if (error == 2006 || error == 2013 || error == 2012) { /* connection lost */
+			return SQL_TIMEOUT;
+		}
 		return SQL_FAIL;	
 	}
 	
