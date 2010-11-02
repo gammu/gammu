@@ -9,15 +9,15 @@ msgstr ""
 "Project-Id-Version: libGammu 1.28.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-09-03 14:46+0200\n"
-"PO-Revision-Date: 2010-05-25 09:50+0200\n"
-"Last-Translator:  <torsten.funck@googlemail.com>\n"
+"PO-Revision-Date: 2010-10-29 20:35+0200\n"
+"Last-Translator:  <canin@in.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Pootle 2.0.1\n"
+"X-Generator: Pootle 2.0.5\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
@@ -26,7 +26,7 @@ msgstr "Kein Fehler."
 #: libgammu/gsmcomon.c:85
 msgid "Error opening device. Unknown, busy or no permissions."
 msgstr ""
-"Fehler beim Öffnen des Gerätes. Unbekannt, Belegt oder keine Berechtigung"
+"Fehler beim Öffnen des Gerätes. Unbekannt, belegt oder keine Berechtigung"
 
 #: libgammu/gsmcomon.c:86
 msgid "Error opening device, it is locked."
@@ -92,23 +92,23 @@ msgid ""
 "information how to report it."
 msgstr ""
 "Rückantwort vom Telefon im Moment nicht angefordert. Lesen Sie bitte unter "
-"<http://cihar.com/gammu/report> wo dieser Fehler zu melden ist."
+"<http://wammu.eu/support/bugs/> wo dieser Fehler zu melden ist."
 
 #: libgammu/gsmcomon.c:99
 msgid ""
 "Unknown response from phone. See <http://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
-"Unbekannte Rückantwort vom Telefon. Lesen Sie bitte unter <http://cihar.com/"
-"gammu/report> wo dieser Fehler zu melden ist."
+"Unbekannte Rückantwort vom Telefon. Lesen Sie bitte unter "
+"<http://wammu.eu/support/bugs/> wo dieser Fehler zu melden ist."
 
 #: libgammu/gsmcomon.c:100
 msgid ""
 "Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
 "report it."
 msgstr ""
-"Unbekannter Rückantwort-Frame vom Telefon. Lesen Sie bitte unter <http://"
-"cihar.com/gammu/report> wo dieser Fehler zu melden ist."
+"Unbekannter Rückantwort-Frame vom Telefon. Lesen Sie bitte unter "
+"<http://wammu.eu/support/bugs/> wo dieser Fehler zu melden ist."
 
 #: libgammu/gsmcomon.c:101
 msgid "Unknown connection type string. Check config file."
@@ -146,8 +146,8 @@ msgstr "Ungültige Speicherstelle. Vielleicht zu hoch?"
 #: libgammu/gsmcomon.c:108
 msgid "Functionality not implemented. You are welcome to help authors with it."
 msgstr ""
-"Die Funktion ist (noch) nicht implementiert. Sie können sich bitte an den "
-"Autor wenden, wenn Sie dazu beitragen möchten."
+"Die Funktion ist (noch) nicht implementiert. Wenden Sie sich bitte an den "
+"Autor, wenn Sie dazu beitragen möchten."
 
 #: libgammu/gsmcomon.c:109
 msgid "Memory full."
@@ -173,8 +173,8 @@ msgstr "Funktion wird vom Telefon nicht erlaubt."
 msgid ""
 "No SMSC number given. Provide it manually or use the one configured in phone."
 msgstr ""
-"Keien SMC- Nummer angegeben. Bitte von Hand eingeben oder die im Telefon "
-"konfigurierte verwenden."
+"Keine SMSC- Nummer angegeben. Bitte tragen Sie sie manuell ein, oder "
+"verwenden Sie die im Telefon konfigurierte."
 
 #: libgammu/gsmcomon.c:115
 msgid "You're inside phone menu (maybe editing?). Leave it and try again."
@@ -191,8 +191,8 @@ msgid ""
 "Function is currently being implemented. If you want to help, please contact "
 "authors."
 msgstr ""
-"Die Funktionwird gerade implementiert. Sie können sich bitte an den Autor "
-"wenden, wenn Sie Hilfe benötigen."
+"Die Funktion wird gerade implementiert. Wenden Sie sich bitte an den Autor, "
+"wenn Sie Hilfe benötigen."
 
 #: libgammu/gsmcomon.c:118
 msgid "Phone is disabled and connected to charger."
@@ -207,7 +207,7 @@ msgid ""
 "Nobody is perfect, some bug appeared in protocol implementation. Please "
 "contact authors."
 msgstr ""
-"Nobody is perfect, ein Fehler ist in der Protokollimplemetierung "
+"Nobody is perfect, ein Fehler ist in der Protokollimplementierung "
 "aufgetreten. Bitte wenden Sie sich an den Autor."
 
 #: libgammu/gsmcomon.c:121
@@ -223,7 +223,7 @@ msgstr "Das Telefon-Modul muss einen weiteren Antwort-Frame senden."
 #: libgammu/gsmcomon.c:123
 msgid "Current connection type doesn't support called function."
 msgstr ""
-"Der gegenwärtige Verbindungstyp unterstützt nicht die aufgerufenen Funktion."
+"Der gegenwärtige Verbindungstyp unterstützt nicht die aufgerufene Funktion."
 
 #: libgammu/gsmcomon.c:124
 msgid "CRC error."
@@ -235,7 +235,7 @@ msgstr "Ungültiges Datum oder Zeit angegeben."
 
 #: libgammu/gsmcomon.c:126
 msgid "Phone memory error, maybe it is read only."
-msgstr "Telefonspeicherfehler, möglicherweise nur lesbar."
+msgstr "Telefonspeicherfehler, möglicherweise ist es nur lesbar."
 
 #: libgammu/gsmcomon.c:127
 msgid "Invalid data given to phone."
@@ -326,7 +326,7 @@ msgstr "Der Dienst läuft nicht."
 
 #: libgammu/gsmcomon.c:148
 msgid "Service configuration is missing."
-msgstr "Der Dienst ist nich konfiguriert."
+msgstr "Der Dienst ist nicht konfiguriert."
 
 #: libgammu/gsmcomon.c:149
 msgid "Command rejected because device was busy. Wait and restart."
