@@ -191,7 +191,8 @@ static GSM_Error SMSDSQL_NamedQuery(GSM_SMSDConfig * Config, const char *sql_que
 				if (sms != NULL) {
 					switch (c) {
 						case 'R':
-							to_print = sms->Number;
+							EncodeUTF8(static_buff, sms->Number);
+							to_print = static_buff;
 							break;
 						case 'F':
 							EncodeUTF8(static_buff, sms->SMSC.Number);
@@ -201,6 +202,8 @@ static GSM_Error SMSDSQL_NamedQuery(GSM_SMSDConfig * Config, const char *sql_que
 							if (sms->UDH.Type != UDH_NoUDH) {
 								EncodeHexBin(static_buff, sms->UDH.Text, sms->UDH.Length);
 								to_print = static_buff;
+							}else{
+								to_print = "";
 							}
 							break;
 						case 'x':
@@ -442,31 +445,29 @@ static GSM_Error SMSDSQL_Init(GSM_SMSDConfig * Config)
 
 static GSM_Error SMSDSQL_InitAfterConnect(GSM_SMSDConfig * Config)
 {
-	char buf[600];
-	const char *enable_send;
-	char client_name[200];
-	const char *enable_receive;
+	char q[600];
 
 	SQL_result Res;
 	struct GSM_SMSDdbobj *db = Config->db;
+	SQL_Var vars[3] = {{SQL_TYPE_STRING}, {SQL_TYPE_STRING}, {SQL_TYPE_NONE}};
 
-	sprintf(buf, "DELETE FROM phones WHERE IMEI = '%s'", Config->Status->IMEI);
-
-	if (SMSDSQL_Query(Config, buf, &Res) != ERR_NONE) {
+	if (SMSDSQL_NamedQuery(Config, "DELETE FROM phones WHERE IMEI = %I", NULL, NULL, &Res) != ERR_NONE) {
 		SMSD_Log(DEBUG_INFO, Config, "Error deleting from database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 	db->FreeResult(Res);
-	snprintf(client_name, sizeof(client_name), "Gammu %s, %s, %s", VERSION, GetOS(), GetCompiler());
 
 	SMSD_Log(DEBUG_INFO, Config, "Communication established");
-	enable_send = Config->enable_send ? "yes" : "no";
-	enable_receive = Config->enable_receive ? "yes" : "no";
-	sprintf(buf,
-		"INSERT INTO phones (IMEI, ID, Send, Receive, InsertIntoDB, TimeOut, Client, Battery, Signal) VALUES ('%s', '%s', '%s', '%s', %s, %s, '%s', -1, -1)",
-		Config->Status->IMEI, Config->PhoneID, enable_send, enable_receive, SMSDSQL_Now(Config), SMSDSQL_NowPlus(Config, 10), client_name);
+	vars[0].v.s = Config->enable_send ? "yes" : "no";
+	vars[1].v.s = Config->enable_receive ? "yes" : "no";
+	
+	strcpy(q, "INSERT INTO phones (IMEI, ID, Send, Receive, InsertIntoDB, TimeOut, Client, Battery, Signal) VALUES (%I, %P, %1, %2, ");
+	strcat(q, SMSDSQL_Now(Config));
+	strcat(q, ", ");
+	strcat(q, SMSDSQL_NowPlus(Config, 10));
+	strcat(q, ", %N, -1, -1)");
 
-	if (SMSDSQL_Query(Config, buf, &Res) != ERR_NONE) {
+	if (SMSDSQL_NamedQuery(Config, q, NULL, vars, &Res) != ERR_NONE) {
 		SMSD_Log(DEBUG_INFO, Config, "Error inserting into database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
@@ -479,38 +480,36 @@ static GSM_Error SMSDSQL_InitAfterConnect(GSM_SMSDConfig * Config)
 static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig * Config, char **Locations)
 {
 	SQL_result Res;
+	SQL_Var vars[3];
 	struct GSM_SMSDdbobj *db = Config->db;
-	char *encoded_text;
+	const char *q, *status;
 
-	char buffer[10000];
+	char buffer[64];
 	char smstext[3 * GSM_MAX_SMS_LENGTH + 1];
+	char destinationnumber[3 * GSM_MAX_NUMBER_LENGTH + 1];
+	char smsc_message[3 * GSM_MAX_NUMBER_LENGTH + 1];
 	int i;
 	time_t t_time1, t_time2;
 	gboolean found;
 	long diff;
 	unsigned long long new_id;
 	size_t locations_size = 0, locations_pos = 0;
-	const char *state, *smsc, *coding;
-	char smsc_message[GSM_MAX_NUMBER_LENGTH + 1];
-	char destinationnumber[GSM_MAX_NUMBER_LENGTH + 1];
-	time_t timestamp;
-	struct tm *timestruct;
+	const char *state, *smsc;
 
 	*Locations = NULL;
 
 	for (i = 0; i < sms->Number; i++) {
 		EncodeUTF8(smstext, sms->SMS[i].Text);
-		EncodeUTF8(smsc_message, sms->SMS[i].SMSC.Number);
 		EncodeUTF8(destinationnumber, sms->SMS[i].Number);
+		EncodeUTF8(smsc_message, sms->SMS[i].SMSC.Number);
 		if (sms->SMS[i].PDU == SMS_Status_Report) {
 			SMSD_Log(DEBUG_INFO, Config, "Delivery report: %s to %s", smstext, destinationnumber);
 
-			sprintf(buffer,
-				"SELECT ID, Status, SendingDateTime, DeliveryDateTime, SMSCNumber "
+			q = "SELECT ID, Status, SendingDateTime, DeliveryDateTime, SMSCNumber "
 				"FROM sentitems WHERE "
 				"DeliveryDateTime IS NULL AND "
-				"SenderID = '%s' AND TPMR = %i AND DestinationNumber = '%s'", Config->PhoneID, sms->SMS[i].MessageReference, destinationnumber);
-			if (SMSDSQL_Query(Config, buffer, &Res) != ERR_NONE) {
+				"SenderID = %P AND TPMR = %t AND DestinationNumber = %R";
+			if (SMSDSQL_NamedQuery(Config, q, &sms->SMS[i], NULL, &Res) != ERR_NONE) {
 				SMSD_Log(DEBUG_INFO, Config, "Error reading from database (%s)", __FUNCTION__);
 				return ERR_UNKNOWN;
 			}
@@ -547,36 +546,29 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 			}
 
 			if (found) {
-				strcpy(buffer, "UPDATE sentitems SET ");
 				if (!strcmp(smstext, "Delivered")) {
-					strcat(buffer, "DeliveryDateTime = '");
-					timestamp = Fill_Time_T(sms->SMS[i].SMSCTime);
-					if (strcmp(db->DriverName, "pgsql") == 0) {
-						timestruct = gmtime(&timestamp);
-						strftime(buffer + strlen(buffer), sizeof(buffer) - strlen(buffer), "%Y-%m-%d %H:%M:%S GMT", timestruct);
-					} else {
-						timestruct = localtime(&timestamp);
-						strftime(buffer + strlen(buffer), sizeof(buffer) - strlen(buffer), "%Y-%m-%d %H:%M:%S", timestruct);
-					}
-					strcat(buffer, "', ");
+					q = "UPDATE sentitems SET DeliveryDateTime = %C, Status = %1, StatusError = %e WHERE ID = %2 AND TPMR = %t";
+				} else {
+					q = "UPDATE sentitems SET Status = %1, StatusError = %e WHERE ID = %2 AND TPMR = %t";
 				}
-				strcat(buffer, "Status = '");
-
+				
 				if (!strcmp(smstext, "Delivered")) {
-					strcat(buffer, "DeliveryOK");
+					status = "DeliveryOK";
 				} else if (!strcmp(smstext, "Failed")) {
-					strcat(buffer, "DeliveryFailed");
+					status = "DeliveryFailed";
 				} else if (!strcmp(smstext, "Pending")) {
-					strcat(buffer, "DeliveryPending");
+					status = "DeliveryPending";
 				} else if (!strcmp(smstext, "Unknown")) {
-					strcat(buffer, "DeliveryUnknown");
+					status =  "DeliveryUnknown";
 				}
 
-				sprintf(buffer + strlen(buffer),
-					"', StatusError = %i WHERE ID = %ld AND TPMR = %i",
-					sms->SMS[i].DeliveryStatus, (long)db->GetNumber(Res, 0), sms->SMS[i].MessageReference);
+				vars[0].type = SQL_TYPE_STRING;
+				vars[0].v.s = status;			/* Status */
+				vars[1].type = SQL_TYPE_INT;
+				vars[1].v.i = (long)db->GetNumber(Res, 0); /* ID */
+				vars[2].type = SQL_TYPE_NONE;
 
-				if (SMSDSQL_Query(Config, buffer, &Res) != ERR_NONE) {
+				if (SMSDSQL_NamedQuery(Config, q, &sms->SMS[i], vars, &Res) != ERR_NONE) {
 					SMSD_Log(DEBUG_INFO, Config, "Error writing to database (%s)", __FUNCTION__);
 					return ERR_UNKNOWN;
 				}
@@ -587,51 +579,19 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 
 		if (sms->SMS[i].PDU != SMS_Deliver)
 			continue;
-		buffer[0] = 0;
-		sprintf(buffer + strlen(buffer), "INSERT INTO inbox "
+		
+		q = "INSERT INTO inbox "
 			"(ReceivingDateTime, Text, SenderNumber, Coding, SMSCNumber, UDH, "
-			"Class, TextDecoded, RecipientID) VALUES ('%04d-%02d-%02d %02d:%02d:%02d', '", sms->SMS[i].DateTime.Year, sms->SMS[i].DateTime.Month,
+			"Class, TextDecoded, RecipientID) VALUES (%1, %E, %R, %c, %F, %u, %x, %T, %P)";
+		
+		snprintf(buffer, sizeof(buffer), "%04d-%02d-%02d %02d:%02d:%02d", sms->SMS[i].DateTime.Year, sms->SMS[i].DateTime.Month,
 			sms->SMS[i].DateTime.Day, sms->SMS[i].DateTime.Hour, sms->SMS[i].DateTime.Minute, sms->SMS[i].DateTime.Second);
+				
+		vars[0].type = SQL_TYPE_STRING;
+		vars[0].v.s = buffer;			/* Status */
+		vars[1].type = SQL_TYPE_NONE;
 
-		switch (sms->SMS[i].Coding) {
-			case SMS_Coding_Unicode_No_Compression:
-
-			case SMS_Coding_Default_No_Compression:
-				EncodeHexUnicode(buffer + strlen(buffer), sms->SMS[i].Text, UnicodeLength(sms->SMS[i].Text));
-				break;
-
-			case SMS_Coding_8bit:
-				EncodeHexBin(buffer + strlen(buffer), sms->SMS[i].Text, sms->SMS[i].Length);
-
-			default:
-				break;
-		}
-
-		coding = SMSDSQL_coding2string(sms->SMS[i].Coding);
-
-		sprintf(buffer + strlen(buffer), "','%s', '%s', '%s', '", destinationnumber, coding, smsc_message);
-
-		if (sms->SMS[i].UDH.Type != UDH_NoUDH) {
-			EncodeHexBin(buffer + strlen(buffer), sms->SMS[i].UDH.Text, sms->SMS[i].UDH.Length);
-		}
-
-		sprintf(buffer + strlen(buffer), "' ,%i ,", sms->SMS[i].Class);
-
-		switch (sms->SMS[i].Coding) {
-
-			case SMS_Coding_Unicode_No_Compression:
-			case SMS_Coding_Default_No_Compression:
-				encoded_text = db->QuoteString(&db->conn, smstext);
-				strcat(buffer, encoded_text);
-				free(encoded_text);
-				break;
-			default:
-				strcat(buffer, "''");
-				break;
-		}
-
-		sprintf(buffer + strlen(buffer), ",'%s')", Config->PhoneID);
-		if (SMSDSQL_Query(Config, buffer, &Res) != ERR_NONE) {
+		if (SMSDSQL_NamedQuery(Config, q, &sms->SMS[i], vars, &Res) != ERR_NONE) {
 			SMSD_Log(DEBUG_INFO, Config, "Error writing to database (%s)", __FUNCTION__);
 			return ERR_UNKNOWN;
 		}
@@ -657,8 +617,8 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 			locations_pos += sprintf((*Locations) + locations_pos, "%lu ", (long)new_id);
 		}
 
-		sprintf(buffer, "UPDATE phones SET Received = Received + 1 WHERE IMEI = '%s'", Config->Status->IMEI);
-		if (SMSDSQL_Query(Config, buffer, &Res) != ERR_NONE) {
+		q = "UPDATE phones SET Received = Received + 1 WHERE IMEI = %I";
+		if (SMSDSQL_NamedQuery(Config, q, &sms->SMS[i], NULL, &Res) != ERR_NONE) {
 			SMSD_Log(DEBUG_INFO, Config, "Error updating number of received messages (%s)", __FUNCTION__);
 			return ERR_UNKNOWN;
 		}
@@ -675,13 +635,20 @@ static GSM_Error SMSDSQL_RefreshSendStatus(GSM_SMSDConfig * Config, char *ID)
 	unsigned int locktime;
 	SQL_result Res;
 	struct GSM_SMSDdbobj *db = Config->db;
+	SQL_Var vars[2] = {
+		{SQL_TYPE_STRING, { .s = ID}},
+		{SQL_TYPE_NONE}};
 
 	locktime = Config->loopsleep * 8; /* reserve 8 sec per message */
 	locktime = locktime < 60 ? 60 : locktime; /* Minimum time reserve is 60 sec */ 
 
-	sprintf(buffer, "UPDATE outbox SET SendingTimeOut = %s "
-		"WHERE ID = '%s' AND (SendingTimeOut < %s OR SendingTimeOut IS NULL)", SMSDSQL_NowPlus(Config, locktime), ID, SMSDSQL_Now(Config));
-	if (SMSDSQL_Query(Config, buffer, &Res) != ERR_NONE) {
+	strcpy(buffer, "UPDATE outbox SET SendingTimeOut = ");
+	strcat(buffer, SMSDSQL_NowPlus(Config, locktime));
+	strcat(buffer, " WHERE ID = %1 AND (SendingTimeOut < ");
+	strcat(buffer, SMSDSQL_Now(Config));
+	strcat(buffer, " OR SendingTimeOut IS NULL)");
+
+	if (SMSDSQL_NamedQuery(Config, buffer, NULL, vars, &Res) != ERR_NONE) {
 		SMSD_Log(DEBUG_INFO, Config, "Error writing to database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
@@ -713,25 +680,28 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 	const char *text_decoded;
 	const char *destination;
 	const char *udh;
+	const char *q;
 	size_t udh_len;
 	unsigned int limit = 1;
-
-	char *encoded_text;
+	SQL_Var vars[2];
 
 	struct tm *timestruct;
 
-	encoded_text = db->QuoteString(&db->conn, Config->PhoneID);
 	/* Min. limit is 8 SMS, limit grows with higher loopsleep setting  Max. limit is 30 messages.*/
 	limit = Config->loopsleep>1 ? Config->loopsleep * 4 : 8;
 	limit = limit>30 ? 30 : limit;
 
-	sprintf(buf, "SELECT ID, InsertIntoDB, SendingDateTime, SenderID FROM outbox "
-		"WHERE SendingDateTime < %s AND SendingTimeOut < %s"
-		" AND ( SenderID is NULL OR SenderID = '' OR SenderID = %s ) ORDER BY InsertIntoDB ASC LIMIT %i", 
-		SMSDSQL_Now(Config), SMSDSQL_Now(Config), encoded_text, limit);
-	free(encoded_text);
+	strcpy(buf, "SELECT ID, InsertIntoDB, SendingDateTime, SenderID FROM outbox WHERE SendingDateTime < ");
+	strcat(buf, SMSDSQL_Now(Config));
+	strcat(buf, " AND SendingTimeOut < ");
+	strcat(buf, SMSDSQL_Now(Config));
+	strcat(buf, " AND ( SenderID is NULL OR SenderID = '' OR SenderID = %P ) ORDER BY InsertIntoDB ASC LIMIT %1"); 
 
-	if (SMSDSQL_Query(Config, buf, &Res) != ERR_NONE) {
+	vars[0].type = SQL_TYPE_INT;
+	vars[0].v.i = limit;
+	vars[1].type = SQL_TYPE_NONE;
+
+	if (SMSDSQL_NamedQuery(Config, buf, NULL, vars, &Res) != ERR_NONE) {
 		SMSD_Log(DEBUG_INFO, Config, "Error reading from database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
@@ -773,15 +743,19 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 	}
 
 	for (i = 1; i < GSM_MAX_MULTI_SMS + 1; i++) {
+		vars[0].type = SQL_TYPE_STRING;
+		vars[0].v.s = ID;
+		vars[1].type = SQL_TYPE_INT;
+		vars[1].v.i = i;
+		vars[2].type = SQL_TYPE_NONE;
 		if (i == 1) {
-			sprintf(buf,
-				"SELECT Text, Coding, UDH, Class, TextDecoded, ID, DestinationNumber, MultiPart, "
-				"RelativeValidity, DeliveryReport, CreatorID FROM outbox WHERE ID='%s'", ID);
+			q = "SELECT Text, Coding, UDH, Class, TextDecoded, ID, DestinationNumber, MultiPart, "
+				"RelativeValidity, DeliveryReport, CreatorID FROM outbox WHERE ID=%1";
 		} else {
-			sprintf(buf, "SELECT Text, Coding, UDH, Class, TextDecoded, ID, SequencePosition " 
-				"FROM outbox_multipart WHERE ID='%s' AND SequencePosition=%i", ID, i);
+			q = "SELECT Text, Coding, UDH, Class, TextDecoded, ID, SequencePosition " 
+				"FROM outbox_multipart WHERE ID=%1 AND SequencePosition=%2";
 		}
-		if (SMSDSQL_Query(Config, buf, &Res) != ERR_NONE) {
+		if (SMSDSQL_NamedQuery(Config, q, NULL, vars, &Res) != ERR_NONE) {
 			SMSD_Log(DEBUG_INFO, Config, "Error reading from database (%s)", __FUNCTION__);
 			return ERR_UNKNOWN;
 		}
@@ -874,19 +848,24 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 /* After sending SMS is moved to Sent Items or Error Items. */
 static GSM_Error SMSDSQL_MoveSMS(GSM_MultiSMSMessage * sms UNUSED, GSM_SMSDConfig * Config, char *ID, gboolean alwaysDelete UNUSED, gboolean sent UNUSED)
 {
-	char buffer[10000];
 	SQL_result Res;
+	const char *q;
+	SQL_Var vars[2];
 	struct GSM_SMSDdbobj *db = Config->db;
 
-	sprintf(buffer, "DELETE FROM outbox WHERE ID = '%s'", ID);
-	if (SMSDSQL_Query(Config, buffer, &Res) != ERR_NONE) {
+	vars[0].type = SQL_TYPE_STRING;
+	vars[0].v.s = ID;
+	vars[1].type = SQL_TYPE_NONE;
+
+	q = "DELETE FROM outbox WHERE ID = %1";
+	if (SMSDSQL_NamedQuery(Config, q, NULL, vars, &Res) != ERR_NONE) {
 		SMSD_Log(DEBUG_INFO, Config, "Error deleting from database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 	db->FreeResult(Res);
 
-	sprintf(buffer, "DELETE FROM outbox_multipart WHERE ID = '%s'", ID);
-	if (SMSDSQL_Query(Config, buffer, &Res) != ERR_NONE) {
+	q = "DELETE FROM outbox_multipart WHERE ID = %1";
+	if (SMSDSQL_NamedQuery(Config, q, NULL, vars, &Res) != ERR_NONE) {
 		SMSD_Log(DEBUG_INFO, Config, "Error deleting from database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
@@ -898,88 +877,45 @@ static GSM_Error SMSDSQL_MoveSMS(GSM_MultiSMSMessage * sms UNUSED, GSM_SMSDConfi
 /* Adds SMS to Outbox */
 static GSM_Error SMSDSQL_CreateOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig * Config, char *NewID)
 {
-	char buffer[10000], buffer2[400];
-	int i, relative_validity;
+	char buffer[1000], creator[200];
+	int i;
 	unsigned int ID = 0;
 	SQL_result Res;
+	SQL_Var vars[6];
 	struct GSM_SMSDdbobj *db = Config->db;
-	char *encoded_text;
-	const char *coding;
+	const char *report, *multipart;
+		
+	sprintf(creator, "Gammu %s",VERSION); /* %1 */
+	report = (sms->SMS[i].PDU == SMS_Status_Report) ? "yes": "default"; /* %2 */
+	multipart = (sms->Number == 1) ? "FALSE" : "TRUE"; /* %3 */
 
 	for (i = 0; i < sms->Number; i++) {
 		buffer[0] = 0;
 		if (i == 0) {
 			strcpy(buffer, "INSERT INTO outbox (CreatorID, SenderID, DeliveryReport, MultiPart, InsertIntoDB, "
-				"Text, DestinationNumber, RelativeValidity, Coding, UDH, Class, TextDecoded) VALUES (");
+				"Text, DestinationNumber, RelativeValidity, Coding, UDH, Class, TextDecoded) VALUES "
+				"(%1, %P, %2, %3, ");
+			strcat(buffer, SMSDSQL_Now(Config));
+			strcat(buffer, ", %E, %R, %V, %c, %u, %x, %T)");
+			
 		} else {
 			strcpy(buffer, "INSERT INTO outbox_multipart (SequencePosition, Text, Coding, UDH, Class, TextDecoded, ID) "
-				"VALUES (");
+				"VALUES (%4, %E, %c, %u, %x, %T, %5)");
 		}
 
-		if (i == 0) {
-			sprintf(buffer + strlen(buffer), "'Gammu %s', '%s', '%s', '%s', %s", 
-				VERSION, 
-				Config->PhoneID,
-				(sms->SMS[i].PDU == SMS_Status_Report) ? "yes": "default",
-				(sms->Number == 1) ? "FALSE" : "TRUE",
-				SMSDSQL_Now(Config));
-		} else {
-			sprintf(buffer + strlen(buffer), "%i", i + 1);
-		}
-		strcat(buffer, ", '");
+		vars[0].type = SQL_TYPE_STRING;
+		vars[0].v.s = creator;
+		vars[1].type = SQL_TYPE_STRING;
+		vars[1].v.s = report;
+		vars[2].type = SQL_TYPE_STRING;
+		vars[2].v.s = multipart;
+		vars[3].type = SQL_TYPE_INT;
+		vars[3].v.i = i+1;
+		vars[4].type = SQL_TYPE_INT;
+		vars[4].v.i = ID;
+		vars[5].type = SQL_TYPE_NONE;
 
-		switch (sms->SMS[i].Coding) {
-			case SMS_Coding_Unicode_No_Compression:
-			case SMS_Coding_Default_No_Compression:
-				EncodeHexUnicode(buffer + strlen(buffer), sms->SMS[i].Text, UnicodeLength(sms->SMS[i].Text));
-				break;
-			case SMS_Coding_8bit:
-				EncodeHexBin(buffer + strlen(buffer), sms->SMS[i].Text, sms->SMS[i].Length);
-
-			default:
-				break;
-		}
-
-		sprintf(buffer + strlen(buffer), "', ");
-		if (i == 0) {
-
-			if (sms->SMS[i].SMSC.Validity.Format == SMS_Validity_RelativeFormat) {
-				relative_validity =  sms->SMS[i].SMSC.Validity.Relative;
-			} else {
-				relative_validity = -1;
-			}
-			sprintf(buffer + strlen(buffer), "'%s', %i, ", DecodeUnicodeString(sms->SMS[i].Number), relative_validity);
-		}
-
-		coding = SMSDSQL_coding2string(sms->SMS[i].Coding);
-
-		
-		sprintf(buffer + strlen(buffer), "'%s','", coding);
-
-		if (sms->SMS[i].UDH.Type != UDH_NoUDH) {
-			EncodeHexBin(buffer + strlen(buffer), sms->SMS[i].UDH.Text, sms->SMS[i].UDH.Length);
-		}
-
-		sprintf(buffer + strlen(buffer), "', %i, ", sms->SMS[i].Class);
-		switch (sms->SMS[i].Coding) {
-			case SMS_Coding_Unicode_No_Compression:
-			case SMS_Coding_Default_No_Compression:
-				EncodeUTF8(buffer2, sms->SMS[i].Text);
-				encoded_text = db->QuoteString(&db->conn, buffer2);
-				strcat(buffer, encoded_text);
-				free(encoded_text);
-				break;
-
-			default:
-				strcat(buffer, "''");
-				break;
-		}
-
-		if (i != 0) {
-			sprintf(buffer + strlen(buffer), ", %u", ID);
-		}
-		strcat(buffer, ")");
-		if (SMSDSQL_Query(Config, buffer, &Res) != ERR_NONE) {
+		if (SMSDSQL_NamedQuery(Config, buffer, &sms->SMS[i], vars, &Res) != ERR_NONE) {
 			SMSD_Log(DEBUG_INFO, Config, "Error writing to database (%s)", __FUNCTION__);
 			return ERR_UNKNOWN;
 		}
@@ -1003,13 +939,11 @@ static GSM_Error SMSDSQL_AddSentSMSInfo(GSM_MultiSMSMessage * sms, GSM_SMSDConfi
 	SQL_result Res;
 	struct GSM_SMSDdbobj *db = Config->db;
 
-	char buffer[10000], buffer2[400];
-	char *encoded_text;
-	const char *message_state;
+	char buffer[1000];
+	const char *message_state, *q;
+	SQL_Var vars[6];
 	char smsc[GSM_MAX_NUMBER_LENGTH + 1];
 	char destination[GSM_MAX_NUMBER_LENGTH + 1];
-	const char *coding;
-	int query_pos, relative_validity;
 
 	EncodeUTF8(smsc, sms->SMS[Part - 1].SMSC.Number);
 	EncodeUTF8(destination, sms->SMS[Part - 1].Number);
@@ -1034,71 +968,34 @@ static GSM_Error SMSDSQL_AddSentSMSInfo(GSM_MultiSMSMessage * sms, GSM_SMSDConfi
 		message_state = "Error";
 	}
 
-	buffer[0] = 0;
-	query_pos = 0;
-	query_pos += snprintf(buffer + query_pos, sizeof(buffer) - query_pos,
+	strcpy(buffer,
 		"INSERT INTO sentitems "
 		"(CreatorID,ID,SequencePosition,Status,SendingDateTime, SMSCNumber, TPMR, "
 		"SenderID,Text,DestinationNumber,Coding,UDH,Class,TextDecoded,InsertIntoDB,RelativeValidity) VALUES (");
-	query_pos += snprintf(buffer + query_pos, sizeof(buffer) - query_pos,
-		"'%s','%s','%i','%s',%s,'%s','%i','%s','",
-		Config->CreatorID, ID, Part, message_state, SMSDSQL_Now(Config), DecodeUnicodeString(sms->SMS[Part - 1].SMSC.Number), TPMR, 
-		Config->PhoneID);
-
-	switch (sms->SMS[Part - 1].Coding) {
-		case SMS_Coding_Unicode_No_Compression:
-
-		case SMS_Coding_Default_No_Compression:
-			EncodeHexUnicode(buffer + strlen(buffer), sms->SMS[Part - 1].Text, UnicodeLength(sms->SMS[Part - 1].Text));
-			break;
-
-		case SMS_Coding_8bit:
-			EncodeHexBin(buffer + strlen(buffer), sms->SMS[Part - 1].Text, sms->SMS[Part - 1].Length);
-
-		default:
-			break;
-	}
-
-	coding = SMSDSQL_coding2string(sms->SMS[Part - 1].Coding);
-
-	sprintf(buffer + strlen(buffer), "', '%s', '%s', '", destination, coding);
-
-	if (sms->SMS[Part - 1].UDH.Type != UDH_NoUDH) {
-		EncodeHexBin(buffer + strlen(buffer), sms->SMS[Part - 1].UDH.Text, sms->SMS[Part - 1].UDH.Length);
-	}
-
-	sprintf(buffer + strlen(buffer), "', %i, ", sms->SMS[Part - 1].Class);
-
-	switch (sms->SMS[Part - 1].Coding) {
-		case SMS_Coding_Unicode_No_Compression:
-		case SMS_Coding_Default_No_Compression:
-			EncodeUTF8(buffer2, sms->SMS[Part - 1].Text);
-			encoded_text = db->QuoteString(&db->conn, buffer2);
-			strcat(buffer, encoded_text);
-			free(encoded_text);
-			break;
-
-		default:
-			strcat(buffer, "''");
-			break;
-	}
-
-	if (sms->SMS[Part - 1].SMSC.Validity.Format == SMS_Validity_RelativeFormat) {
-		relative_validity = sms->SMS[Part - 1].SMSC.Validity.Relative;
-	} else {
-		relative_validity = -1;
-	}
-
-	sprintf(buffer + strlen(buffer), ", '%s', %i)", Config->DT, relative_validity);
-
-	if (SMSDSQL_Query(Config, buffer, &Res) != ERR_NONE) {
+	strcat(buffer, "%A, %1, %2, %3, ");
+	strcat(buffer, SMSDSQL_Now(Config));
+	strcat(buffer, ", %F, %4, %P, %E, %R, %c, %u, %x, %T, %5, %V)");
+	/* 1 = ID, 2 = SequencePosition, 3 = Status, 4 = TPMR, 5 = insertintodb */
+	vars[0].type = SQL_TYPE_STRING;
+	vars[0].v.s = ID;
+	vars[1].type = SQL_TYPE_INT;
+	vars[1].v.i = Part;
+	vars[2].type = SQL_TYPE_STRING;
+	vars[2].v.s = message_state;
+	vars[3].type = SQL_TYPE_INT;
+	vars[3].v.i = TPMR;
+	vars[4].type = SQL_TYPE_STRING;
+	vars[4].v.s = Config->DT;
+	vars[5].type = SQL_TYPE_NONE;
+	
+	if (SMSDSQL_NamedQuery(Config, buffer, &sms->SMS[Part - 1], vars, &Res) != ERR_NONE) {
 		SMSD_Log(DEBUG_INFO, Config, "Error writing to database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 	db->FreeResult(Res);
 
-	sprintf(buffer, "UPDATE phones SET Sent= Sent + 1 WHERE IMEI = '%s'", Config->Status->IMEI);
-	if (SMSDSQL_Query(Config, buffer, &Res) != ERR_NONE) {
+	q = "UPDATE phones SET Sent= Sent + 1 WHERE IMEI = %I";
+	if (SMSDSQL_NamedQuery(Config, q, &sms->SMS[Part - 1], NULL, &Res) != ERR_NONE) {
 		SMSD_Log(DEBUG_INFO, Config, "Error updating number of sent messages (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
