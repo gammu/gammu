@@ -119,6 +119,18 @@ static GSM_Error SMSDSQL_Query(GSM_SMSDConfig * Config, const char *query, SQL_r
 	return ERR_TIMEOUT;
 }
 
+void SMSDSQL_Time2String(struct GSM_SMSDdbobj *db, time_t timestamp, char *static_buff, size_t size)
+{
+	struct tm *timestruct;
+	if (strcmp(db->DriverName, "pgsql") == 0) {
+		timestruct = gmtime(&timestamp);
+		strftime(static_buff, size, "%Y-%m-%d %H:%M:%S GMT", timestruct);
+	} else {
+		timestruct = localtime(&timestamp);
+		strftime(static_buff, size, "%Y-%m-%d %H:%M:%S", timestruct);
+	}
+}
+
 static GSM_Error SMSDSQL_NamedQuery(GSM_SMSDConfig * Config, const char *sql_query, GSM_SMSMessage *sms, 
 	const SQL_Var *params, SQL_result * res)
 {
@@ -128,8 +140,6 @@ static GSM_Error SMSDSQL_NamedQuery(GSM_SMSDConfig * Config, const char *sql_que
 	int int_to_print;
 	int numeric; 
 	int n, argc = 0;
-	time_t timestamp;
-	struct tm * timestruct; 
 	struct GSM_SMSDdbobj *db = Config->db;
 
 	if (params != NULL) {
@@ -239,7 +249,7 @@ static GSM_Error SMSDSQL_NamedQuery(GSM_SMSDConfig * Config, const char *sql_que
 									EncodeUTF8(static_buff, sms->Text);
 									to_print = static_buff;
 									break;
-									default:
+								default:
 									to_print = "";
 									break;
 							}
@@ -253,25 +263,11 @@ static GSM_Error SMSDSQL_NamedQuery(GSM_SMSDConfig * Config, const char *sql_que
 							numeric = 1;
 							break;
 						case 'C':
-							timestamp = Fill_Time_T(sms->SMSCTime);
-							if (strcmp(db->DriverName, "pgsql") == 0) {
-								timestruct = gmtime(&timestamp);
-								strftime(static_buff, sizeof(static_buff), "%Y-%m-%d %H:%M:%S GMT", timestruct);
-							} else {
-								timestruct = localtime(&timestamp);
-								strftime(static_buff, sizeof(static_buff), "%Y-%m-%d %H:%M:%S", timestruct);
-							}
+							SMSDSQL_Time2String(db, Fill_Time_T(sms->SMSCTime), static_buff, sizeof(static_buff));
 							to_print = static_buff;
 							break;
 						case 'd':
-							timestamp = Fill_Time_T(sms->DateTime);
-							if (strcmp(db->DriverName, "pgsql") == 0) {
-								timestruct = gmtime(&timestamp);
-								strftime(static_buff, sizeof(static_buff), "%Y-%m-%d %H:%M:%S GMT", timestruct);
-							} else {
-								timestruct = localtime(&timestamp);
-								strftime(static_buff, sizeof(static_buff), "%Y-%m-%d %H:%M:%S", timestruct);
-							}
+							SMSDSQL_Time2String(db, Fill_Time_T(sms->DateTime), static_buff, sizeof(static_buff));
 							to_print = static_buff;
 							break;
 						case 'e':
@@ -484,7 +480,6 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 	struct GSM_SMSDdbobj *db = Config->db;
 	const char *q, *status;
 
-	char buffer[64];
 	char smstext[3 * GSM_MAX_SMS_LENGTH + 1];
 	char destinationnumber[3 * GSM_MAX_NUMBER_LENGTH + 1];
 	char smsc_message[3 * GSM_MAX_NUMBER_LENGTH + 1];
@@ -582,16 +577,9 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 		
 		q = "INSERT INTO inbox "
 			"(ReceivingDateTime, Text, SenderNumber, Coding, SMSCNumber, UDH, "
-			"Class, TextDecoded, RecipientID) VALUES (%1, %E, %R, %c, %F, %u, %x, %T, %P)";
-		
-		snprintf(buffer, sizeof(buffer), "%04d-%02d-%02d %02d:%02d:%02d", sms->SMS[i].DateTime.Year, sms->SMS[i].DateTime.Month,
-			sms->SMS[i].DateTime.Day, sms->SMS[i].DateTime.Hour, sms->SMS[i].DateTime.Minute, sms->SMS[i].DateTime.Second);
-				
-		vars[0].type = SQL_TYPE_STRING;
-		vars[0].v.s = buffer;			/* Status */
-		vars[1].type = SQL_TYPE_NONE;
+			"Class, TextDecoded, RecipientID) VALUES (%d, %E, %R, %c, %F, %u, %x, %T, %P)";
 
-		if (SMSDSQL_NamedQuery(Config, q, &sms->SMS[i], vars, &Res) != ERR_NONE) {
+		if (SMSDSQL_NamedQuery(Config, q, &sms->SMS[i], NULL, &Res) != ERR_NONE) {
 			SMSD_Log(DEBUG_INFO, Config, "Error writing to database (%s)", __FUNCTION__);
 			return ERR_UNKNOWN;
 		}
@@ -685,8 +673,6 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 	unsigned int limit = 1;
 	SQL_Var vars[2];
 
-	struct tm *timestruct;
-
 	/* Min. limit is 8 SMS, limit grows with higher loopsleep setting  Max. limit is 30 messages.*/
 	limit = Config->loopsleep>1 ? Config->loopsleep * 4 : 8;
 	limit = limit>30 ? 30 : limit;
@@ -713,13 +699,7 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 			return ERR_UNKNOWN;
 		}
 		sprintf(ID, "%ld", (long)db->GetNumber(Res, 0));
-		if (strcmp(db->DriverName, "pgsql") == 0) {
-			timestruct = gmtime(&timestamp);
-			strftime(Config->DT, sizeof(Config->DT), "%Y-%m-%d %H:%M:%S GMT", timestruct);
-		} else {
-			timestruct = localtime(&timestamp);
-			strftime(Config->DT, sizeof(Config->DT), "%Y-%m-%d %H:%M:%S", timestruct);
-		}
+		SMSDSQL_Time2String(db, timestamp, Config->DT, sizeof(Config->DT));
 		sender_id = db->GetString(Res, 3);
 		if (sender_id == NULL || strlen(sender_id) == 0 || !strcmp(sender_id, Config->PhoneID)) {
 			if (SMSDSQL_RefreshSendStatus(Config, ID) == ERR_NONE) {
@@ -971,8 +951,8 @@ static GSM_Error SMSDSQL_AddSentSMSInfo(GSM_MultiSMSMessage * sms, GSM_SMSDConfi
 	strcpy(buffer,
 		"INSERT INTO sentitems "
 		"(CreatorID,ID,SequencePosition,Status,SendingDateTime, SMSCNumber, TPMR, "
-		"SenderID,Text,DestinationNumber,Coding,UDH,Class,TextDecoded,InsertIntoDB,RelativeValidity) VALUES (");
-	strcat(buffer, "%A, %1, %2, %3, ");
+		"SenderID,Text,DestinationNumber,Coding,UDH,Class,TextDecoded,InsertIntoDB,RelativeValidity) "
+		" VALUES (%A, %1, %2, %3, ");
 	strcat(buffer, SMSDSQL_Now(Config));
 	strcat(buffer, ", %F, %4, %P, %E, %R, %c, %u, %x, %T, %5, %V)");
 	/* 1 = ID, 2 = SequencePosition, 3 = Status, 4 = TPMR, 5 = insertintodb */
