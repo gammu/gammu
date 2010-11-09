@@ -1,4 +1,4 @@
-.TH "GAMMURC" "5" "October 25, 2010" "1.28.93" "Gammu"
+.TH "GAMMURC" "5" "November 09, 2010" "1.28.93" "Gammu"
 .SH NAME
 gammurc \- gammu(1) configuration file
 .
@@ -62,6 +62,8 @@ On Microsoft Windows:
 .sp
 \fIgammu\fP reads configuration from a config file. It\(aqs location is determined
 on runtime, see above for search paths.
+.sp
+You can use \fIgammu\-config\fP to generate configuration file.
 .sp
 This file use ini file syntax, see \fIini\fP.
 .sp
@@ -166,15 +168,17 @@ GNapplet based connection for Symbian phones
 .TP
 .B Device
 .
+New in version 1.27.95.
+.sp
 Device node or address of phone. It depends on used connection.
 .sp
-For cables or emulated serial ports, you enter device name (for example
+For \fBcables\fP or emulated serial ports, you enter device name (for example
 \fB/dev/ttyS0\fP, \fB/dev/ttyACM0\fP, \fB/dev/ircomm0\fP, \fB/dev/rfcomm0\fP on Linux,
 \fB/dev/cuad0\fP on FreeBSD or COM1: on Windows). The special exception are
 DKU\-2 and DKU\-5 cables on Windows, where the device is automatically detected
 from driver information and this parameters is ignored.
 .sp
-For USB connections (currently only fbususb and dku2 on Linux), you can
+For \fBUSB\fP connections (currently only fbususb and dku2 on Linux), you can
 specify to which USB device Gammu should connect. You can either provide
 vendor/product IDs or device address on USB:
 .sp
@@ -188,7 +192,7 @@ Device = serial:123456  # Match device by serial string
 .ft P
 .fi
 .sp
-For Bluetooth connection you have to enter Bluetooth address of your phone
+For \fBBluetooth\fP connection you have to enter Bluetooth address of your phone
 (you can list Bluetooth devices in range on Linux using \fBhcitool scan\fP
 command). Optionally you can also force Gammu to use specified channel by
 including channel number after slash.
@@ -196,7 +200,7 @@ including channel number after slash.
 Before using Gammu, your device should be paired with computer or you should
 have set up automatic pairing.
 .sp
-For IrDA connections, this parameters is not used at all.
+For \fBIrDA\fP connections, this parameters is not used at all.
 .sp
 If IrDA does not work on Linux, you might need to bring up the interface and
 enable discovery (you need to run these commands as root):
@@ -212,6 +216,8 @@ sysctl net.irda.discovery=1
 .TP
 .B Port
 .
+Deprecated since version 1.27.95.
+.sp
 Alias for Device, kept for backward compatibility.
 .UNINDENT
 .INDENT 0.0
@@ -278,7 +284,7 @@ Path to file where information about communication will be stored.
 .TP
 .B LogFormat
 .
-Determines what all will be logged to \fBLogFile\fP. Possible values are:
+Determines what all will be logged to \fI\%LogFile\fP. Possible values are:
 .INDENT 7.0
 .TP
 .B \fBnothing\fP
