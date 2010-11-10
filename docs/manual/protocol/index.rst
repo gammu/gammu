@@ -17,3 +17,4 @@ Phone Protocols
     samsung
     samsung-gt
     sonim
+    m-obex
