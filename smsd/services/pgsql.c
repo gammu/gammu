@@ -310,6 +310,7 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfi
 			if (found) {
 				strcpy(buffer, "UPDATE sentitems SET ");
 
+				sprintf(buffer3, "%s", DecodeUnicodeString(sms->SMS[i].Text));
 				if (!strcmp(buffer3, "Delivered")) {
 					strcat(buffer, "DeliveryDateTime = ");
 
@@ -321,7 +322,6 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfi
 				}
 				strcat(buffer, "Status = '");
 
-				sprintf(buffer3, "%s", DecodeUnicodeString(sms->SMS[i].Text));
 				if (!strcmp(buffer3, "Delivered")) {
 					sprintf(buffer + strlen(buffer), "DeliveryOK");
 				} else if (!strcmp(buffer3, "Failed")) {
