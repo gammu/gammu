@@ -2005,6 +2005,15 @@ GSM_Error OBEXGEN_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 
 	if (Entry->MemoryType != MEM_ME) return ERR_NOTSUPPORTED;
 
+	/* Encode vCard */
+	error = GSM_EncodeVCARD(&(s->di), req, sizeof(req), &size, Entry, TRUE, SonyEricsson_VCard21);
+	if (error != ERR_NONE) return error;
+
+	/* Handle m-obex case */
+	if (Priv->Service == OBEX_m_OBEX) {
+		return MOBEX_UpdateEntry(s, "m-obex/contacts/write", Entry->Location, req);
+	}
+
 	/* We need IrMC service for this */
 	error = OBEXGEN_Connect(s, OBEX_IRMC);
 	if (error != ERR_NONE) return error;
@@ -2014,10 +2023,6 @@ GSM_Error OBEXGEN_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 		error = OBEXGEN_GetPbInformation(s, NULL, NULL);
 		if (error != ERR_NONE) return error;
 	}
-
-	/* Encode vCard */
-	error = GSM_EncodeVCARD(&(s->di), req, sizeof(req), &size, Entry, TRUE, SonyEricsson_VCard21);
-	if (error != ERR_NONE) return error;
 
 	/* Use correct function according to supported IEL */
 	if (Priv->PbCap.IEL == 0x8 || Priv->PbCap.IEL == 0x10) {
@@ -2449,6 +2454,15 @@ GSM_Error OBEXGEN_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 	GSM_Error		error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 
+	/* Encode vCalendar */
+	error = GSM_EncodeVCALENDAR(req, sizeof(req), &size, Entry, TRUE, SonyEricsson_VCalendar);
+	if (error != ERR_NONE) return error;
+
+	/* Handle m-obex case */
+	if (Priv->Service == OBEX_m_OBEX) {
+		return MOBEX_UpdateEntry(s, "m-obex/calendar/write", Entry->Location, req);
+	}
+
 	/* We need IrMC service for this */
 	error = OBEXGEN_Connect(s, OBEX_IRMC);
 	if (error != ERR_NONE) return error;
@@ -2458,10 +2472,6 @@ GSM_Error OBEXGEN_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 		error = OBEXGEN_GetCalInformation(s, NULL, NULL);
 		if (error != ERR_NONE) return error;
 	}
-
-	/* Encode vCalendar */
-	error = GSM_EncodeVCALENDAR(req, sizeof(req), &size, Entry, TRUE, SonyEricsson_VCalendar);
-	if (error != ERR_NONE) return error;
 
 	/* Use correct function according to supported IEL */
 	if (Priv->CalCap.IEL == 0x8 || Priv->CalCap.IEL == 0x10) {
