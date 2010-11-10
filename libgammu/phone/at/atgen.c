@@ -3844,7 +3844,12 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 		return ERR_UNKNOWNRESPONSE;
 	case AT_Reply_CMEError:
-		return ATGEN_HandleCMEError(s);
+		error = ATGEN_HandleCMEError(s);
+		if (error == ERR_MEMORY) {
+			smprintf(s, "Assuming that memory error means empty entry\n");
+			return ERR_EMPTY;
+		}
+		return error;
 	case AT_Reply_Error:
  		smprintf(s, "Error - too high location ?\n");
 		return ERR_INVALIDLOCATION;
