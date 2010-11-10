@@ -692,7 +692,7 @@ GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos,
 			error = OBEXGEN_Connect(s,OBEX_None);
 			if (error != ERR_NONE) return error;
 		} else {
-			if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_BrowsingFolders) {
+			if (Priv->Service == OBEX_BrowsingFolders) {
 				error = OBEXGEN_ChangeToFilePath(s, File->ID_FullName, FALSE, NULL);
 				if (error != ERR_NONE) return error;
 			}
@@ -714,7 +714,7 @@ GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos,
 		}
 	}
 
-	if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_BrowsingFolders || s->Phone.Data.Priv.OBEXGEN.Service == OBEX_m_OBEX) {
+	if (Priv->Service == OBEX_BrowsingFolders || Priv->Service == OBEX_m_OBEX) {
 		/* connection ID block */
 		req[Current++] = 0xCB; /* ID */
 		req[Current++] = 0x00; req[Current++] = 0x00;
@@ -726,7 +726,7 @@ GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos,
 		OBEXAddBlock(req, &Current, 0x4C, Priv->m_obex_appdata, Priv->m_obex_appdata_len);
 	}
 
-	j = s->Phone.Data.Priv.OBEXGEN.FrameSize - Current - 20;
+	j = Priv->FrameSize - Current - 20;
 	if (j > 1000) j = 1000;
 
 	if (File->Used - *Pos < j) {
@@ -873,7 +873,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, gb
 			File->Folder = FALSE;
 
 			if (File->ID_FullName[0] == 0x00 && File->ID_FullName[1] == 0x00) {
-				if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_BrowsingFolders) {
+				if (Priv->Service == OBEX_BrowsingFolders) {
 					/* No file name? Grab OBEX capabilities in browse mode */
 					smprintf(s, "No filename requested, grabbing OBEX capabilities as obex-capability.xml\n");
 					EncodeUnicode(File->Name, "obex-capability.xml", 19);
@@ -881,7 +881,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, gb
 
 					/* Type block */
 					OBEXAddBlock(req, &Current, 0x42, req2, strlen(req2));
-				} else if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_IRMC) {
+				} else if (Priv->Service == OBEX_IRMC) {
 					/* No file name? Grab devinfo in IrMC mode */
 					smprintf(s, "No filename requested, grabbing device information as devinfo.txt\n");
 					EncodeUnicode(File->Name, "devinfo.txt", 19);
@@ -893,7 +893,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, gb
 					return ERR_NOTSUPPORTED;
 				}
 			} else {
-				if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_BrowsingFolders) {
+				if (Priv->Service == OBEX_BrowsingFolders) {
 					error = OBEXGEN_ChangeToFilePath(s, File->ID_FullName, TRUE, req2);
 					if (error != ERR_NONE) return error;
 				} else {
@@ -910,9 +910,9 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, gb
 		}
 	}
 
-	s->Phone.Data.Priv.OBEXGEN.FileLastPart = FALSE;
+	Priv->FileLastPart = FALSE;
 
-	if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_BrowsingFolders || s->Phone.Data.Priv.OBEXGEN.Service == OBEX_m_OBEX) {
+	if (Priv->Service == OBEX_BrowsingFolders || Priv->Service == OBEX_m_OBEX) {
 		/* connection ID block */
 		req[Current++] = 0xCB; /* ID */
 		req[Current++] = 0x00; req[Current++] = 0x00;
@@ -937,9 +937,9 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, gb
 	}
 	if (error != ERR_NONE) return error;
 
-	while (!s->Phone.Data.Priv.OBEXGEN.FileLastPart) {
+	while (!Priv->FileLastPart) {
 		Current = 0;
-		if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_BrowsingFolders || s->Phone.Data.Priv.OBEXGEN.Service == OBEX_m_OBEX) {
+		if (Priv->Service == OBEX_BrowsingFolders || Priv->Service == OBEX_m_OBEX) {
 			/* connection ID block */
 			req[Current++] = 0xCB; /* ID */
 			req[Current++] = 0x00; req[Current++] = 0x00;
@@ -1000,7 +1000,7 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, gboolea
 	if (error != ERR_NONE) return error;
 
 	/* We can browse files only when using browse service */
-	if (s->Phone.Data.Priv.OBEXGEN.Service != OBEX_BrowsingFolders) {
+	if (Priv->Service != OBEX_BrowsingFolders) {
 		return ERR_NOTSUPPORTED;
 	}
 
