@@ -195,8 +195,13 @@ GSM_Error OBEXGEN_Connect(GSM_StateMachine *s, OBEX_Service service)
 		OBEXAddBlock(req, &Current, 0x46, req2, 16);
 		break;
 	case OBEX_m_OBEX:
-		/* \todo mobex: Need to figure out how to initiate this service */
-		return ERR_NOTIMPLEMENTED;
+		/* IrMC Service UUID */
+		req2[0] = 'M'; req2[1] = 'O'; req2[2] = 'B';
+		req2[3] = 'E'; req2[4] = 'X';
+
+		/* Target block */
+		OBEXAddBlock(req, &Current, 0x46, req2, 5);
+		break;
 	}
 
 	/* Remember current service */
