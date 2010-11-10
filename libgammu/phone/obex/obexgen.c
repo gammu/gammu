@@ -194,6 +194,9 @@ GSM_Error OBEXGEN_Connect(GSM_StateMachine *s, OBEX_Service service)
 		/* Target block */
 		OBEXAddBlock(req, &Current, 0x46, req2, 16);
 		break;
+	case OBEX_m_OBEX:
+		/* mobex: Need to figure out how to initiate this service */
+		return ERR_NOTIMPLEMENTED;
 	}
 
 	/* Remember current service */
@@ -295,6 +298,9 @@ GSM_Error OBEXGEN_Initialise(GSM_StateMachine *s)
 		service_forced = TRUE;
 	} else if (strcmp(s->CurrentConfig->Model, "seobex") == 0) {
 		Priv->InitialService = OBEX_IRMC;
+		service_forced = TRUE;
+	} else if (strcmp(s->CurrentConfig->Model, "mobex") == 0) {
+		Priv->InitialService = OBEX_m_OBEX;
 		service_forced = TRUE;
 	} else if (strcmp(s->CurrentConfig->Model, "obexnone") == 0) {
 		Priv->InitialService = OBEX_None;
@@ -696,7 +702,7 @@ GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos,
 		}
 	}
 
-	if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_BrowsingFolders) {
+	if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_BrowsingFolders || s->Phone.Data.Priv.OBEXGEN.Service == OBEX_m_OBEX) {
 		/* connection ID block */
 		req[Current++] = 0xCB; /* ID */
 		req[Current++] = 0x00; req[Current++] = 0x00;
@@ -888,7 +894,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, gb
 
 	s->Phone.Data.Priv.OBEXGEN.FileLastPart = FALSE;
 
-	if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_BrowsingFolders) {
+	if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_BrowsingFolders || s->Phone.Data.Priv.OBEXGEN.Service == OBEX_m_OBEX) {
 		/* connection ID block */
 		req[Current++] = 0xCB; /* ID */
 		req[Current++] = 0x00; req[Current++] = 0x00;
@@ -910,7 +916,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, gb
 
 	while (!s->Phone.Data.Priv.OBEXGEN.FileLastPart) {
 		Current = 0;
- 	    	if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_BrowsingFolders) {
+		if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_BrowsingFolders || s->Phone.Data.Priv.OBEXGEN.Service == OBEX_m_OBEX) {
 			/* connection ID block */
 			req[Current++] = 0xCB; /* ID */
 			req[Current++] = 0x00; req[Current++] = 0x00;

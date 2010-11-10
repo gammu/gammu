@@ -154,6 +154,8 @@ Device connection parameters
         force using of IrMC service (contacts, calendar and notes support)
     ``obexnone`` 
         none service chosen, this has only limited use for sending file (``sendfile`` command)
+    ``mobex``
+        m-obex service for Samsung phones
 
 .. config:option:: Use_Locking
 

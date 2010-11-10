@@ -40,6 +40,10 @@ typedef enum {
 	 * Browsing for folders.
 	 */
 	OBEX_BrowsingFolders,
+	/**
+	 * m-obex service for Samsung phones.
+	 */
+	OBEX_m_OBEX,
 } OBEX_Service;
 
 /**
