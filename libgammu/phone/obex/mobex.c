@@ -27,6 +27,8 @@
 #include "obexfunc.h"
 #include "obexgen.h"
 
+#include <string.h>
+
 #ifdef GSM_ENABLE_OBEXGEN
 
 /**
@@ -67,6 +69,27 @@ GSM_Error MOBEX_GetStatus(GSM_StateMachine *s, const char *path, int *free_recor
     *free_records = total - *used;
 
     free(buffer);
+    return ERR_NONE;
+}
+
+GSM_Error MOBEX_CreateEntry(GSM_StateMachine *s, const char *path, const char *data)
+{
+    GSM_Error error;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+    char appdata[] = {'\x01'};
+
+    Priv->m_obex_appdata = appdata;
+    Priv->m_obex_appdata_len = 1;
+
+    error = OBEXGEN_SetFile(s, path, data, strlen(data), FALSE);
+
+    Priv->m_obex_appdata = NULL;
+    Priv->m_obex_appdata_len = 0;
+
+    if (error != ERR_NONE) {
+        return error;
+    }
+
     return ERR_NONE;
 }
 
