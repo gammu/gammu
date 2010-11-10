@@ -23,6 +23,8 @@
 # define GSM_USED_OBEX
 #endif
 
+#include "../obex/obexgen.h"
+
 /**
  * Determines which mode is phone currently using.
  */
@@ -67,6 +69,10 @@ typedef struct {
 	 * Whether AT*EBCA failed.
 	 */
 	gboolean EBCAFailed;
+	/**
+	 * Which service is used for contacts/calendar/etc.
+	 */
+	OBEX_Service DataService;
 } GSM_Phone_ATOBEXData;
 #endif
 /*@}*/

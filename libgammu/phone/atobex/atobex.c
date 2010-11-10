@@ -190,6 +190,7 @@ GSM_Error ATOBEX_Initialise(GSM_StateMachine *s)
 
 	/* This can be filled in by AT module init */
 	Priv->HasOBEX = ATOBEX_OBEX_None;
+	Priv->DataService = OBEX_None;
 
 	/* Init AT module */
 	/* This also enables ATOBEX_OBEX_CPROT0 if available */
@@ -199,16 +200,21 @@ GSM_Error ATOBEX_Initialise(GSM_StateMachine *s)
 	/* Does phone have support for AT+MODE=22 switching? */
 	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_MODE22)) {
 		Priv->HasOBEX = ATOBEX_OBEX_MODE22;
+		Priv->DataService = OBEX_IRMC;
 	} else if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_XLNK)) {
 		Priv->HasOBEX = ATOBEX_OBEX_XLNK;
+		Priv->DataService = OBEX_IRMC;
 	} else if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SQWE)) {
 		Priv->HasOBEX = ATOBEX_OBEX_SQWE;
+		Priv->DataService = OBEX_IRMC;
 	} else if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CPROT)) {
 		Priv->HasOBEX = ATOBEX_OBEX_CPROT0;
+		Priv->DataService = OBEX_IRMC;
 	} else {
 		if (PrivAT->Mode) {
 			smprintf(s, "Guessed mode style switching\n");
 			Priv->HasOBEX = ATOBEX_OBEX_MODE22;
+			Priv->DataService = OBEX_IRMC;
 		}
 	}
 
@@ -217,6 +223,7 @@ GSM_Error ATOBEX_Initialise(GSM_StateMachine *s)
 		error = GSM_WaitFor (s, "AT*EOBEX=?\r", 11, 0x00, 4, ID_SetOBEX);
 		if (error == ERR_NONE) {
 			Priv->HasOBEX = ATOBEX_OBEX_EOBEX;
+			Priv->DataService = OBEX_IRMC;
 		}
 	}
 
@@ -670,9 +677,10 @@ GSM_Error ATOBEX_AddFolder(GSM_StateMachine *s, GSM_File *File)
 GSM_Error ATOBEX_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Status)
 {
 	GSM_Error 		error;
+	GSM_Phone_ATOBEXData	*Priv = &s->Phone.Data.Priv.ATOBEX;
 
 	if (Status->MemoryType == MEM_ME) {
-		if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE)
+		if ((error = ATOBEX_SetOBEXMode(s, Priv->DataService))!= ERR_NONE)
 			goto atgen;
 		return OBEXGEN_GetMemoryStatus(s, Status);
 	}
@@ -685,9 +693,10 @@ atgen:
 GSM_Error ATOBEX_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
 	GSM_Error 		error;
+	GSM_Phone_ATOBEXData	*Priv = &s->Phone.Data.Priv.ATOBEX;
 
 	if (entry->MemoryType == MEM_ME) {
-		if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE)
+		if ((error = ATOBEX_SetOBEXMode(s, Priv->DataService))!= ERR_NONE)
 			goto atgen;
 		return OBEXGEN_GetMemory(s, entry);
 	}
@@ -700,9 +709,10 @@ atgen:
 GSM_Error ATOBEX_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry, gboolean start)
 {
 	GSM_Error 		error;
+	GSM_Phone_ATOBEXData	*Priv = &s->Phone.Data.Priv.ATOBEX;
 
 	if (entry->MemoryType == MEM_ME) {
-		if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE)
+		if ((error = ATOBEX_SetOBEXMode(s, Priv->DataService))!= ERR_NONE)
 			goto atgen;
 		return OBEXGEN_GetNextMemory(s, entry, start);
 	}
@@ -715,9 +725,10 @@ atgen:
 GSM_Error ATOBEX_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
 	GSM_Error 		error;
+	GSM_Phone_ATOBEXData	*Priv = &s->Phone.Data.Priv.ATOBEX;
 
 	if (entry->MemoryType == MEM_ME) {
-		if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE)
+		if ((error = ATOBEX_SetOBEXMode(s, Priv->DataService))!= ERR_NONE)
 			goto atgen;
 		return OBEXGEN_SetMemory(s, entry);
 	}
@@ -730,9 +741,10 @@ atgen:
 GSM_Error ATOBEX_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
 	GSM_Error 		error;
+	GSM_Phone_ATOBEXData	*Priv = &s->Phone.Data.Priv.ATOBEX;
 
 	if (entry->MemoryType == MEM_ME) {
-		if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE)
+		if ((error = ATOBEX_SetOBEXMode(s, Priv->DataService))!= ERR_NONE)
 			goto atgen;
 		return OBEXGEN_AddMemory(s, entry);
 	}
@@ -745,9 +757,10 @@ atgen:
 GSM_Error ATOBEX_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
 	GSM_Error 		error;
+	GSM_Phone_ATOBEXData	*Priv = &s->Phone.Data.Priv.ATOBEX;
 
 	if (entry->MemoryType == MEM_ME) {
-		if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE)
+		if ((error = ATOBEX_SetOBEXMode(s, Priv->DataService))!= ERR_NONE)
 			goto atgen;
 		return OBEXGEN_DeleteMemory(s, entry);
 	}
@@ -760,9 +773,10 @@ atgen:
 GSM_Error ATOBEX_DeleteAllMemory(GSM_StateMachine *s, GSM_MemoryType type)
 {
 	GSM_Error 		error;
+	GSM_Phone_ATOBEXData	*Priv = &s->Phone.Data.Priv.ATOBEX;
 
 	if (type == MEM_ME) {
-		if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE)
+		if ((error = ATOBEX_SetOBEXMode(s, Priv->DataService))!= ERR_NONE)
 			goto atgen;
 		return OBEXGEN_DeleteAllMemory(s, type);
 	}
@@ -782,168 +796,189 @@ atgen:
 GSM_Error ATOBEX_GetToDoStatus(GSM_StateMachine *s, GSM_ToDoStatus *status)
 {
 	GSM_Error 		error;
+	GSM_Phone_ATOBEXData	*Priv = &s->Phone.Data.Priv.ATOBEX;
 
-	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, Priv->DataService))!= ERR_NONE) return error;
 	return OBEXGEN_GetTodoStatus(s, status);
 }
 
 GSM_Error ATOBEX_GetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 {
 	GSM_Error 		error;
+	GSM_Phone_ATOBEXData	*Priv = &s->Phone.Data.Priv.ATOBEX;
 
-	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, Priv->DataService))!= ERR_NONE) return error;
 	return OBEXGEN_GetTodo(s, ToDo);
 }
 
 GSM_Error ATOBEX_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, gboolean start)
 {
 	GSM_Error 		error;
+	GSM_Phone_ATOBEXData	*Priv = &s->Phone.Data.Priv.ATOBEX;
 
-	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, Priv->DataService))!= ERR_NONE) return error;
 	return OBEXGEN_GetNextTodo(s, ToDo, start);
 }
 
 GSM_Error ATOBEX_DeleteAllToDo (GSM_StateMachine *s)
 {
 	GSM_Error 		error;
+	GSM_Phone_ATOBEXData	*Priv = &s->Phone.Data.Priv.ATOBEX;
 
-	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, Priv->DataService))!= ERR_NONE) return error;
 	return OBEXGEN_DeleteAllTodo(s);
 }
 
 GSM_Error ATOBEX_AddToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 {
 	GSM_Error 		error;
+	GSM_Phone_ATOBEXData	*Priv = &s->Phone.Data.Priv.ATOBEX;
 
-	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, Priv->DataService))!= ERR_NONE) return error;
 	return OBEXGEN_AddTodo(s, ToDo);
 }
 
 GSM_Error ATOBEX_SetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 {
 	GSM_Error 		error;
+	GSM_Phone_ATOBEXData	*Priv = &s->Phone.Data.Priv.ATOBEX;
 
-	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, Priv->DataService))!= ERR_NONE) return error;
 	return OBEXGEN_SetTodo(s, ToDo);
 }
 
 GSM_Error ATOBEX_DeleteToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 {
 	GSM_Error 		error;
+	GSM_Phone_ATOBEXData	*Priv = &s->Phone.Data.Priv.ATOBEX;
 
-	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, Priv->DataService))!= ERR_NONE) return error;
 	return OBEXGEN_DeleteTodo(s, ToDo);
 }
 
 GSM_Error ATOBEX_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *status)
 {
 	GSM_Error 		error;
+	GSM_Phone_ATOBEXData	*Priv = &s->Phone.Data.Priv.ATOBEX;
 
-	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, Priv->DataService))!= ERR_NONE) return error;
 	return OBEXGEN_GetCalendarStatus(s, status);
 }
 
 GSM_Error ATOBEX_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
 	GSM_Error 		error;
+	GSM_Phone_ATOBEXData	*Priv = &s->Phone.Data.Priv.ATOBEX;
 
-	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, Priv->DataService))!= ERR_NONE) return error;
 	return OBEXGEN_GetCalendar(s, Note);
 }
 
 GSM_Error ATOBEX_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, gboolean start)
 {
 	GSM_Error 		error;
+	GSM_Phone_ATOBEXData	*Priv = &s->Phone.Data.Priv.ATOBEX;
 
-	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, Priv->DataService))!= ERR_NONE) return error;
 	return OBEXGEN_GetNextCalendar(s, Note, start);
 }
 
 GSM_Error ATOBEX_DeleteCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
 	GSM_Error 		error;
+	GSM_Phone_ATOBEXData	*Priv = &s->Phone.Data.Priv.ATOBEX;
 
-	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, Priv->DataService))!= ERR_NONE) return error;
 	return OBEXGEN_DeleteCalendar(s, Note);
 }
 
 GSM_Error ATOBEX_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
 	GSM_Error 		error;
+	GSM_Phone_ATOBEXData	*Priv = &s->Phone.Data.Priv.ATOBEX;
 
-	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, Priv->DataService))!= ERR_NONE) return error;
 	return OBEXGEN_AddCalendar(s, Note);
 }
 
 GSM_Error ATOBEX_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
 	GSM_Error 		error;
+	GSM_Phone_ATOBEXData	*Priv = &s->Phone.Data.Priv.ATOBEX;
 
-	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, Priv->DataService))!= ERR_NONE) return error;
 	return OBEXGEN_SetCalendar(s, Note);
 }
 
 GSM_Error ATOBEX_DeleteAllCalendar (GSM_StateMachine *s)
 {
 	GSM_Error 		error;
+	GSM_Phone_ATOBEXData	*Priv = &s->Phone.Data.Priv.ATOBEX;
 
-	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, Priv->DataService))!= ERR_NONE) return error;
 	return OBEXGEN_DeleteAllCalendar(s);
 }
 
 GSM_Error ATOBEX_GetNoteStatus(GSM_StateMachine *s, GSM_ToDoStatus *status)
 {
 	GSM_Error 		error;
+	GSM_Phone_ATOBEXData	*Priv = &s->Phone.Data.Priv.ATOBEX;
 
-	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, Priv->DataService))!= ERR_NONE) return error;
 	return OBEXGEN_GetNoteStatus(s, status);
 }
 
 GSM_Error ATOBEX_GetNote (GSM_StateMachine *s, GSM_NoteEntry *Note)
 {
 	GSM_Error 		error;
+	GSM_Phone_ATOBEXData	*Priv = &s->Phone.Data.Priv.ATOBEX;
 
-	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, Priv->DataService))!= ERR_NONE) return error;
 	return OBEXGEN_GetNote(s, Note);
 }
 
 GSM_Error ATOBEX_GetNextNote(GSM_StateMachine *s, GSM_NoteEntry *Note, gboolean start)
 {
 	GSM_Error 		error;
+	GSM_Phone_ATOBEXData	*Priv = &s->Phone.Data.Priv.ATOBEX;
 
-	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, Priv->DataService))!= ERR_NONE) return error;
 	return OBEXGEN_GetNextNote(s, Note, start);
 }
 
 GSM_Error ATOBEX_DeleteAllNotes(GSM_StateMachine *s)
 {
 	GSM_Error 		error;
+	GSM_Phone_ATOBEXData	*Priv = &s->Phone.Data.Priv.ATOBEX;
 
-	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, Priv->DataService))!= ERR_NONE) return error;
 	return OBEXGEN_DeleteAllNotes(s);
 }
 
 GSM_Error ATOBEX_AddNote (GSM_StateMachine *s, GSM_NoteEntry *Note)
 {
 	GSM_Error 		error;
+	GSM_Phone_ATOBEXData	*Priv = &s->Phone.Data.Priv.ATOBEX;
 
-	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, Priv->DataService))!= ERR_NONE) return error;
 	return OBEXGEN_AddNote(s, Note);
 }
 
 GSM_Error ATOBEX_SetNote (GSM_StateMachine *s, GSM_NoteEntry *Note)
 {
 	GSM_Error 		error;
+	GSM_Phone_ATOBEXData	*Priv = &s->Phone.Data.Priv.ATOBEX;
 
-	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, Priv->DataService))!= ERR_NONE) return error;
 	return OBEXGEN_SetNote(s, Note);
 }
 
 GSM_Error ATOBEX_DeleteNote (GSM_StateMachine *s, GSM_NoteEntry *Note)
 {
 	GSM_Error 		error;
+	GSM_Phone_ATOBEXData	*Priv = &s->Phone.Data.Priv.ATOBEX;
 
-	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, Priv->DataService))!= ERR_NONE) return error;
 	return OBEXGEN_DeleteNote(s, Note);
 }
 
