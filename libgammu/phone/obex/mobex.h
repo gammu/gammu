@@ -31,6 +31,11 @@ GSM_Error MOBEX_CreateEntry(GSM_StateMachine *s, const char *path, int *location
  * Updates an entry.
  */
 GSM_Error MOBEX_UpdateEntry(GSM_StateMachine *s, const char *path, const int location, const char *data);
+
+/**
+ * Reads memory entry using m-obex.
+ */
+GSM_Error MOBEX_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry);
 #endif
 /*@}*/
 /*@}*/

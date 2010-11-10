@@ -121,6 +121,52 @@ GSM_Error MOBEX_UpdateEntry(GSM_StateMachine *s, const char *path, const int loc
     return ERR_NONE;
 }
 
+GSM_Error MOBEX_GetEntry(GSM_StateMachine *s, const char *path, const int location, char **data)
+{
+    GSM_Error error;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+    char appdata[] = {'\x01', 0, 0};
+
+    appdata[1] = (location  && 0xff00) >> 8;
+    appdata[2] = (location  && 0xff);
+
+    Priv->m_obex_appdata = appdata;
+    Priv->m_obex_appdata_len = 3;
+
+    error = OBEXGEN_GetTextFile(s, path, data);
+
+    Priv->m_obex_appdata = NULL;
+    Priv->m_obex_appdata_len = 0;
+
+    if (error != ERR_NONE) {
+        return error;
+    }
+
+    return ERR_NONE;
+}
+
+GSM_Error MOBEX_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
+{
+    GSM_Error error;
+    char *data = NULL;
+    size_t pos = 0;
+
+
+    error = MOBEX_GetEntry(s, "m-obex/contacts/read", Entry->Location, &data);
+    if (error != ERR_NONE) {
+        free(data);
+        return error;
+    }
+
+	error = GSM_DecodeVCARD(&(s->di), data, &pos, Entry, SonyEricsson_VCard21_Phone);
+	free(data);
+	data = NULL;
+	if (error != ERR_NONE) {
+        return error;
+    }
+
+    return ERR_NONE;
+}
 #endif
 
 /*@}*/
