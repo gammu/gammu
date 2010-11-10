@@ -283,12 +283,17 @@ option. This works only with some Nokia phones.
 .B LogFile
 .
 Path to file where information about communication will be stored.
+.IP Note
+.
+For most debug levels (excluding \fBerrors\fP) the log file is overwritten on
+each execution.
+.RE
 .UNINDENT
 .INDENT 0.0
 .TP
 .B LogFormat
 .
-Determines what all will be logged to \fI\%LogFile\fP. Possible values are:
+Determines what all will be logged to \fBLogFile\fP. Possible values are:
 .INDENT 7.0
 .TP
 .B \fBnothing\fP
