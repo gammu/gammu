@@ -105,7 +105,7 @@ Request
 *CB* 00 00 00 00
     Session Id
 *42* 00 18 6D 2D 6F 62 65 78 2F 63 6F 6E 74 61 63 74 73 2F 6C 6F 61 64 00
-    m-obex Command: m-obex/contacts/list
+    m-obex Command: m-obex/contacts/load
 *4C* 00 06 01 00 00
     First Byte unknown. Last two bytes: increment until all contacts recieved
 
