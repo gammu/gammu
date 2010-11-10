@@ -33,6 +33,7 @@
 #include "../../service/gsmmisc.h"
 #include "../../protocol/obex/obex.h"
 #include "obexfunc.h"
+#include "mobex.h"
 #include "../../../helper/string.h"
 
 #ifdef GSM_ENABLE_OBEXGEN
@@ -1682,7 +1683,13 @@ GSM_Error OBEXGEN_GetPbInformation(GSM_StateMachine *s, int *free_records, int *
  */
 GSM_Error OBEXGEN_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Status)
 {
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+
 	if (Status->MemoryType != MEM_ME) return ERR_NOTSUPPORTED;
+
+	if (Priv->Service == OBEX_m_OBEX) {
+		return MOBEX_GetStatus(s, "m-obex/contacts/count", &(Status->MemoryFree), &(Status->MemoryUsed));
+	}
 
 	return OBEXGEN_GetPbInformation(s, &(Status->MemoryFree), &(Status->MemoryUsed));
 
@@ -2134,6 +2141,10 @@ GSM_Error OBEXGEN_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Sta
 {
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 	GSM_Error 	error;
+
+	if (Priv->Service == OBEX_m_OBEX) {
+		return MOBEX_GetStatus(s, "m-obex/calendar/count", &(Status->Free), &(Status->Used));
+	}
 
 	error = OBEXGEN_InitCalLUID(s);
 	if (error != ERR_NONE) return error;
