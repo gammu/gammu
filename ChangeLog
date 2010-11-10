@@ -24,6 +24,7 @@ ChangeLog
 [+] * New SMSD configuration RunOnFailure.
 [-] * Fix invalid SQL when storing 8bit SMS (bug #1329).
 [-] * Probe if phone supports m-obex protocol (bug #1286).
+[+] * Experimental support fo m-obex protocol (bug #1286).
     
 20101004 - 1.28.92
 
