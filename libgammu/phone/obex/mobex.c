@@ -26,6 +26,7 @@
 #include "../../protocol/obex/obex.h"
 #include "obexfunc.h"
 #include "obexgen.h"
+#include "mobex.h"
 
 #include <string.h>
 

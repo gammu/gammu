@@ -22,6 +22,10 @@
  */
 GSM_Error MOBEX_GetStatus(GSM_StateMachine *s, const char *path, int *free_records, int *used);
 
+/**
+ * Creates an entry.
+ */
+GSM_Error MOBEX_CreateEntry(GSM_StateMachine *s, const char *path, const char *data);
 #endif
 /*@}*/
 /*@}*/
