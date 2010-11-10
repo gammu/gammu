@@ -264,6 +264,7 @@ GSM_Error OBEXGEN_InitialiseVars(GSM_StateMachine *s)
 	Priv->NoteOffsets = NULL;
 	Priv->m_obex_appdata = NULL;
 	Priv->m_obex_appdata_len = 0;
+        Priv->m_obex_getnextid = 0;
 
 	IRMC_InitCapabilities(&(Priv->NoteCap));
 	IRMC_InitCapabilities(&(Priv->PbCap));
@@ -1863,6 +1864,12 @@ GSM_Error OBEXGEN_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry, gbo
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 	GSM_Error 	error = ERR_EMPTY;;
 
+
+	/* Handle m-obex case */
+	if (Priv->Service == OBEX_m_OBEX) {
+		return MOBEX_GetNextMemory(s, Entry, start);
+	}
+
 	/* Get  location */
 	if (start) {
 		Entry->Location = 1;
@@ -2320,6 +2327,11 @@ GSM_Error OBEXGEN_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry,
 {
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 	GSM_Error 	error = ERR_EMPTY;;
+
+	/* Handle m-obex case */
+	if (Priv->Service == OBEX_m_OBEX) {
+		return MOBEX_GetNextCalendar(s, Entry, start);
+	}
 
 	/* Get  location */
 	if (start) {

@@ -38,9 +38,19 @@ GSM_Error MOBEX_UpdateEntry(GSM_StateMachine *s, const char *path, const int loc
 GSM_Error MOBEX_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry);
 
 /**
+ * Reads next memory entry using m-obex.
+ */
+GSM_Error MOBEX_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry, gboolean start);
+
+/**
  * Reads calendar entry using m-obex.
  */
 GSM_Error MOBEX_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry);
+
+/**
+ * Reads next calendar entry using m-obex.
+ */
+GSM_Error MOBEX_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry, gboolean start);
 #endif
 /*@}*/
 /*@}*/

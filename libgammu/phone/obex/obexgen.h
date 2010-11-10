@@ -245,6 +245,10 @@ typedef struct {
 	 * m-obex location of newly created entry.
 	 */
 	int				m_obex_newid;
+	/**
+	 * m-obex counter for GetNext*
+	 */
+        int				m_obex_getnextid;
 } GSM_Phone_OBEXGENData;
 
 GSM_Error OBEXGEN_GetBinaryFile(GSM_StateMachine *s, const char *FileName, unsigned char ** Buffer, int *len);
