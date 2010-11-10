@@ -229,6 +229,10 @@ typedef struct {
 	 * Devinfo data.
 	 */
 	char				*OBEXDevinfo;
+	/**
+	 * m-obex return code.
+	 */
+	int				m_obex_error;
 } GSM_Phone_OBEXGENData;
 
 #endif

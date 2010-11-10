@@ -585,6 +585,15 @@ static GSM_Error OBEXGEN_ReplyAddFilePart(GSM_Protocol_Message msg, GSM_StateMac
 				while(1) {
 					if (pos2 >= len2) break;
 					switch (msg.Buffer[Pos + 3 + pos2]) {
+						case 0x00:
+							if (Priv->Service == OBEX_m_OBEX) {
+								Priv->m_obex_error = msg.Buffer[Pos + 3 + pos2 + 1];
+								smprintf(s, " m-obex error=\"%d\"", Priv->m_obex_error);
+								/* This field has fixed size */
+								pos2 += 2;
+								continue;
+							}
+							break;
 						case 0x01:
 							NewLUID = (char *)malloc(msg.Buffer[Pos + 3 + pos2 + 1]+1);
 							memcpy(NewLUID,msg.Buffer + Pos + 3 + pos2 + 2, msg.Buffer[Pos + 3 + pos2 + 1]);
