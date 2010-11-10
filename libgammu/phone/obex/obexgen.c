@@ -2283,6 +2283,11 @@ GSM_Error OBEXGEN_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 	GSM_Error 	error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 
+	/* Handle m-obex case */
+	if (Priv->Service == OBEX_m_OBEX) {
+		return MOBEX_GetCalendar(s, Entry);
+	}
+
 	/* We need IrMC service for this */
 	error = OBEXGEN_Connect(s, OBEX_IRMC);
 	if (error != ERR_NONE) return error;

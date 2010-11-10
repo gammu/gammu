@@ -167,6 +167,30 @@ GSM_Error MOBEX_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 
     return ERR_NONE;
 }
+
+GSM_Error MOBEX_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
+{
+    GSM_Error error;
+    char *data = NULL;
+    size_t pos = 0;
+	GSM_ToDoEntry	ToDo;
+
+
+    error = MOBEX_GetEntry(s, "m-obex/calendar/read", Entry->Location, &data);
+    if (error != ERR_NONE) {
+        free(data);
+        return error;
+    }
+
+	error = GSM_DecodeVCALENDAR_VTODO(&(s->di), data, &pos, Entry, &ToDo, SonyEricsson_VCalendar, SonyEricsson_VToDo);
+	free(data);
+	data = NULL;
+	if (error != ERR_NONE) {
+        return error;
+    }
+
+    return ERR_NONE;
+}
 #endif
 
 /*@}*/
