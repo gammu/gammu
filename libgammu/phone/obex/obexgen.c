@@ -662,6 +662,10 @@ static GSM_Error OBEXGEN_ReplyAddFilePart(GSM_Protocol_Message msg, GSM_StateMac
 				 */
 				Pos += 5;
 				break;
+			case 0x49:
+				/* ID of newly created m-obex entry */
+				Priv->m_obex_newid = msg.Buffer[Pos+3]*256 + msg.Buffer[Pos+4];
+				Pos += 5;
 			case 0xcb:
 				/* Skip Connection ID (we ignore this for now) */
 				Pos += 5;
@@ -1893,7 +1897,7 @@ GSM_Error OBEXGEN_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 
 	/* Handle m-obex case */
 	if (Priv->Service == OBEX_m_OBEX) {
-		return MOBEX_CreateEntry(s, "m-obex/contacts/create", req);
+		return MOBEX_CreateEntry(s, "m-obex/contacts/create", &(Entry->Location), req);
 	}
 
 	/* We need IrMC service for this */
@@ -2344,7 +2348,7 @@ GSM_Error OBEXGEN_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 
 	/* Handle m-obex case */
 	if (Priv->Service == OBEX_m_OBEX) {
-		return MOBEX_CreateEntry(s, "m-obex/calendar/create", req);
+		return MOBEX_CreateEntry(s, "m-obex/calendar/create", &(Entry->Location), req);
 	}
 
 	/* We need IrMC service for this */

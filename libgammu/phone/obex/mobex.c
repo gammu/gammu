@@ -73,12 +73,13 @@ GSM_Error MOBEX_GetStatus(GSM_StateMachine *s, const char *path, int *free_recor
     return ERR_NONE;
 }
 
-GSM_Error MOBEX_CreateEntry(GSM_StateMachine *s, const char *path, const char *data)
+GSM_Error MOBEX_CreateEntry(GSM_StateMachine *s, const char *path, int *location, const char *data)
 {
     GSM_Error error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
     char appdata[] = {'\x01'};
 
+    Priv->m_obex_newid = -1;
     Priv->m_obex_appdata = appdata;
     Priv->m_obex_appdata_len = 1;
 
@@ -90,6 +91,8 @@ GSM_Error MOBEX_CreateEntry(GSM_StateMachine *s, const char *path, const char *d
     if (error != ERR_NONE) {
         return error;
     }
+
+    *location = Priv->m_obex_newid;
 
     return ERR_NONE;
 }

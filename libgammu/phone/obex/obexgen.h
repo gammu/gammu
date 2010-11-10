@@ -241,6 +241,10 @@ typedef struct {
 	 * m-obex application data content.
 	 */
 	unsigned char			*m_obex_appdata;
+	/**
+	 * m-obex location of newly created entry.
+	 */
+	int				m_obex_newid;
 } GSM_Phone_OBEXGENData;
 
 GSM_Error OBEXGEN_GetBinaryFile(GSM_StateMachine *s, const char *FileName, unsigned char ** Buffer, int *len);
