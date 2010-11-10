@@ -1241,25 +1241,34 @@ GSM_Error OBEXGEN_GetFile(GSM_StateMachine *s, const char *FileName, unsigned ch
 }
 
 /**
+ * Grabs complete single binary file
+ */
+GSM_Error OBEXGEN_GetBinaryFile(GSM_StateMachine *s, const char *FileName, char ** Buffer, int *len)
+{
+	GSM_Error error = ERR_NONE;
+
+	/* Grab complete file */
+	error = OBEXGEN_GetFile(s, FileName, (unsigned char **)Buffer, len);
+	if (error != ERR_NONE) return error;
+
+	/* Return data we got */
+	smprintf(s, "Got %d data\n", *len);
+	*Buffer = (unsigned char *)realloc(*Buffer, *len + 1);
+	if (*Buffer == NULL) {
+		return ERR_MOREMEMORY;
+	}
+	(*Buffer)[*len] = 0;
+	return ERR_NONE;
+}
+
+/**
  * Grabs complete single text file
  */
 GSM_Error OBEXGEN_GetTextFile(GSM_StateMachine *s, const char *FileName, char ** Buffer)
 {
-	GSM_Error error = ERR_NONE;
 	int len;
 
-	/* Grab complete file */
-	error = OBEXGEN_GetFile(s, FileName, (unsigned char **)Buffer, &len);
-	if (error != ERR_NONE) return error;
-
-	/* Return data we got */
-	smprintf(s, "Got %d data\n", len);
-	*Buffer = (unsigned char *)realloc(*Buffer, len + 1);
-	if (*Buffer == NULL) {
-		return ERR_MOREMEMORY;
-	}
-	(*Buffer)[len] = 0;
-	return ERR_NONE;
+	return OBEXGEN_GetBinaryFile(s, FileName, Buffer, &len);
 }
 
 /**
