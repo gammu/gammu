@@ -5267,6 +5267,7 @@ GSM_Error ATGEN_ReplyCheckSyncML(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	if (strstr("MOBEXSTART", GetLineString(msg.Buffer, &Priv->Lines, 2)) != NULL) {
 		smprintf(s, "Automatically enabling F_MOBEX, please report bug if it causes problems\n");
 		GSM_AddPhoneFeature(s->Phone.Data.ModelInfo, F_MOBEX);
+		GSM_AddPhoneFeature(s->Phone.Data.ModelInfo, F_OBEX);
 	}
 
 	return ERR_NONE;
