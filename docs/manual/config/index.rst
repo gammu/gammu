@@ -189,6 +189,11 @@ Debugging options
 
     Path to file where information about communication will be stored.
 
+    .. note::
+
+        For most debug levels (excluding ``errors``) the log file is overwritten on
+        each execution.
+
 .. config:option:: LogFormat
 
     Determines what all will be logged to :config:option:`LogFile`. Possible values are:
