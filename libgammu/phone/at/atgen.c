@@ -5538,6 +5538,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReply,		"AT+MODE=22" 	 	,0x00,0x00,ID_SetOBEX		 },
 {ATGEN_GenericReply,		"AT+XLNK" 	 	,0x00,0x00,ID_SetOBEX		 },
 {ATGEN_GenericReply,		"AT^SQWE=3" 	 	,0x00,0x00,ID_SetOBEX		 },
+{ATGEN_GenericReply,		"AT+SYNCML=MOBEXSTART" 	,0x00,0x00,ID_SetOBEX		 },
 {ATGEN_GenericReply,		"AT^SQWE=0" 	 	,0x00,0x00,ID_SetOBEX		 },
 {ATGEN_SQWEReply,		"AT^SQWE?" 	 	,0x00,0x00,ID_GetProtocol	 },
 
