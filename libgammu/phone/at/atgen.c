@@ -2378,7 +2378,7 @@ GSM_Error ATGEN_GetIMEI (GSM_StateMachine *s)
 
 	if (s->Phone.Data.IMEI[0] != 0) return ERR_NONE;
 	smprintf(s, "Getting IMEI\n");
-	ATGEN_WaitForAutoLen(s, "AT+CGSN\r", 0x00, 2, ID_GetIMEI);
+	ATGEN_WaitForAutoLen(s, "AT+CGSN\r", 0x00, 20, ID_GetIMEI);
 
 	return error;
 }
