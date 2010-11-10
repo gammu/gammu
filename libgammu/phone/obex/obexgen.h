@@ -233,6 +233,14 @@ typedef struct {
 	 * m-obex return code.
 	 */
 	int				m_obex_error;
+	/**
+	 * m-obex application data length.
+	 */
+	int				m_obex_appdata_len;
+	/**
+	 * m-obex application data content.
+	 */
+	unsigned char			*m_obex_appdata;
 } GSM_Phone_OBEXGENData;
 
 #endif

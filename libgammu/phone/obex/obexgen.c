@@ -257,6 +257,8 @@ GSM_Error OBEXGEN_InitialiseVars(GSM_StateMachine *s)
 	Priv->NoteData = NULL;
 	Priv->NoteCount = -1;
 	Priv->NoteOffsets = NULL;
+	Priv->m_obex_appdata = NULL;
+	Priv->m_obex_appdata_len = 0;
 
 	IRMC_InitCapabilities(&(Priv->NoteCap));
 	IRMC_InitCapabilities(&(Priv->PbCap));
@@ -681,6 +683,7 @@ GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos,
 	int		Current = 0;
 	unsigned char 		req[2000];
 	unsigned char		hard_delete_header[2] = {'\x12', '\x0'};
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 
 	s->Phone.Data.File = File;
 
@@ -716,6 +719,11 @@ GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos,
 		req[Current++] = 0xCB; /* ID */
 		req[Current++] = 0x00; req[Current++] = 0x00;
 		req[Current++] = 0x00; req[Current++] = 0x01;
+	}
+
+	/* Include m-obex application data */
+	if (Priv->Service == OBEX_m_OBEX && Priv->m_obex_appdata != NULL && Priv->m_obex_appdata_len != 0) {
+		OBEXAddBlock(req, &Current, 0x4C, Priv->m_obex_appdata, Priv->m_obex_appdata_len);
 	}
 
 	j = s->Phone.Data.Priv.OBEXGEN.FrameSize - Current - 20;
@@ -844,6 +852,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, gb
 	GSM_Error		error;
 	unsigned char 		req[2000], req2[200];
 	int			retries;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 
 	s->Phone.Data.File 	= File;
 	File->ReadOnly 		= FALSE;
@@ -910,6 +919,11 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, gb
 		req[Current++] = 0x00; req[Current++] = 0x01;
 	}
 
+	/* Include m-obex application data */
+	if (Priv->Service == OBEX_m_OBEX && Priv->m_obex_appdata != NULL && Priv->m_obex_appdata_len != 0) {
+		OBEXAddBlock(req, &Current, 0x4C, Priv->m_obex_appdata, Priv->m_obex_appdata_len);
+	}
+
 	smprintf(s, "Getting first file part\n");
 	retries = 0;
 	while (retries < 5) {
@@ -930,6 +944,10 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, gb
 			req[Current++] = 0xCB; /* ID */
 			req[Current++] = 0x00; req[Current++] = 0x00;
 			req[Current++] = 0x00; req[Current++] = 0x01;
+		}
+		/* Include m-obex application data */
+		if (Priv->Service == OBEX_m_OBEX && Priv->m_obex_appdata != NULL && Priv->m_obex_appdata_len != 0) {
+			OBEXAddBlock(req, &Current, 0x4C, Priv->m_obex_appdata, Priv->m_obex_appdata_len);
 		}
 		smprintf(s, "Getting next file part\n");
 		/* We retry for ERR_PERMISSION, because it can be caused by database locked error */
