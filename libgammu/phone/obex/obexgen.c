@@ -38,7 +38,6 @@
 #ifdef GSM_ENABLE_OBEXGEN
 
 /* Forward definitions */
-GSM_Error OBEXGEN_GetTextFile(GSM_StateMachine *s, const char *FileName, char ** Buffer);
 GSM_Error OBEXGEN_GetModel(GSM_StateMachine *s);
 
 /**
@@ -1261,7 +1260,7 @@ GSM_Error OBEXGEN_GetFile(GSM_StateMachine *s, const char *FileName, unsigned ch
 /**
  * Grabs complete single binary file
  */
-GSM_Error OBEXGEN_GetBinaryFile(GSM_StateMachine *s, const char *FileName, char ** Buffer, int *len)
+GSM_Error OBEXGEN_GetBinaryFile(GSM_StateMachine *s, const char *FileName, unsigned char ** Buffer, int *len)
 {
 	GSM_Error error = ERR_NONE;
 
@@ -1286,7 +1285,7 @@ GSM_Error OBEXGEN_GetTextFile(GSM_StateMachine *s, const char *FileName, char **
 {
 	int len;
 
-	return OBEXGEN_GetBinaryFile(s, FileName, Buffer, &len);
+	return OBEXGEN_GetBinaryFile(s, FileName, (unsigned char **)Buffer, &len);
 }
 
 /**

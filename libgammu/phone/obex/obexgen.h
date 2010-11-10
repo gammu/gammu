@@ -243,6 +243,9 @@ typedef struct {
 	unsigned char			*m_obex_appdata;
 } GSM_Phone_OBEXGENData;
 
+GSM_Error OBEXGEN_GetBinaryFile(GSM_StateMachine *s, const char *FileName, unsigned char ** Buffer, int *len);
+GSM_Error OBEXGEN_GetTextFile(GSM_StateMachine *s, const char *FileName, char ** Buffer);
+
 #endif
 /*@}*/
 /*@}*/
