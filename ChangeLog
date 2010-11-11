@@ -27,6 +27,7 @@ ChangeLog
 [+] * Experimental support fo m-obex protocol (bug #1286).
 [-] * Fix detection of delivery reports in MySQL and PostgreSQL backends
       (bug #313).
+[+] * Include udev rules for Nokia phones (bug #1251).
     
 20101004 - 1.28.92
 

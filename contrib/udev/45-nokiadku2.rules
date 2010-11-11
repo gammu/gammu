@@ -1,0 +1,15 @@
+# udev rules file for nokia dku2 devices (udev >= 0.98)
+# Put it to /etc/udev/rules.d/ directory
+# Taken from http://git.savannah.gnu.org/cgit/gnokii.git/tree/Docs/sample/45-nokiadku2.rules
+#
+
+ACTION!="add", GOTO="nokiadku2_rules_end"
+SUBSYSTEM=="usb", GOTO="nokiadku2_rules"
+# This one is for the old kernels
+SUBSYSTEM=="usb_device", GOTO="nokiadku2_rules"
+GOTO="nokiadku2_rules_end"
+
+LABEL="nokiadku2_rules"
+ATTRS{manufacturer}=="Nokia", MODE="0660", GROUP="plugdev"
+
+LABEL="nokiadku2_rules_end"
