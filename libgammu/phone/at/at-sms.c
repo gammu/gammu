@@ -834,6 +834,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 			}
 			return ERR_NONE;
 		default:
+			smprintf(s, "Internal error - SMS mode not set!\n");
 			return ERR_BUG;
 		}
 		break;
@@ -1710,6 +1711,7 @@ GSM_Error ATGEN_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 			len = sprintf(buffer, "AT+CMGW=\"%s\",,\"%s\"\r",DecodeUnicodeString(sms->Number),statetxt);
 		}
 	default:
+		smprintf(s, "Internal error - SMS mode not set!\n");
 		return ERR_BUG;
 	}
 	Phone->SaveSMSMessage = sms;
@@ -1853,6 +1855,7 @@ GSM_Error ATGEN_SendSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 		len = sprintf(buffer, "AT+CMGS=\"%s\"\r",DecodeUnicodeString(sms->Number));
 		break;
 	default:
+		smprintf(s, "Internal error - SMS mode not set!\n");
 		return ERR_BUG;
 	}
 
