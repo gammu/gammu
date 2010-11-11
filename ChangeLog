@@ -29,6 +29,7 @@ ChangeLog
       (bug #313).
 [+] * Include udev rules for Nokia phones (bug #1251).
 [-] * Fix parsing LG VX9200 reply on getting battery state (bug #1264).
+[-] * Fix handling of SMS text mode (bug #1189).
     
 20101004 - 1.28.92
 
