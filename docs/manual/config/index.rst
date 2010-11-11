@@ -93,6 +93,20 @@ Device connection parameters
     ``bluerfgnapbus``  
         GNapplet based connection for Symbian phones
 
+    .. note::
+
+        On Linux systems, you might lack permissions for some device nodes.
+        You might need to be member of some group (eg. :samp:`plugdev` or
+        :samp:`dialout`) or or add special udev rules to enable you access
+        these devices as non-root.
+        
+        For Nokia phones you can put follofing file (also available in sources
+        as :file:`contrib/udev/45-nokiadku2.rules`) as
+        :file:`/etc/udev/rules.d/45-nokiadku2.rules`:
+
+        .. literalinclude:: ../../../contrib/udev/45-nokiadku2.rules
+           :language: sh
+
 .. config:option:: Device
 
     .. versionadded:: 1.27.95
