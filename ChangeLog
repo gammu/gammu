@@ -28,6 +28,7 @@ ChangeLog
 [-] * Fix detection of delivery reports in MySQL and PostgreSQL backends
       (bug #313).
 [+] * Include udev rules for Nokia phones (bug #1251).
+[-] * Fix parsing LG VX9200 reply on getting battery state (bug #1264).
     
 20101004 - 1.28.92
 
