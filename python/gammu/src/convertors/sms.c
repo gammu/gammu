@@ -522,53 +522,25 @@ char *SMSTypeToString(GSM_SMSMessageType type)
 
 GSM_Coding_Type StringToSMSCoding(const char *s)
 {
-	/* Maintain those without compression for backward compatibility */
-	if (strcmp("Unicode", s) == 0)
-		return SMS_Coding_Unicode_No_Compression;
-	else if (strcmp("Unicode_No_Compression", s) == 0)
-		return SMS_Coding_Unicode_No_Compression;
-	else if (strcmp("Unicode_Compression", s) == 0)
-		return SMS_Coding_Unicode_Compression;
-	else if (strcmp("Default", s) == 0)
-		return SMS_Coding_Default_No_Compression;
-	else if (strcmp("Default_No_Compression", s) == 0)
-		return SMS_Coding_Default_No_Compression;
-	else if (strcmp("Default_Compression", s) == 0)
-		return SMS_Coding_Default_Compression;
-	else if (strcmp("8bit", s) == 0)
-		return SMS_Coding_8bit;
+	GSM_Coding_Type t;
 
-	PyErr_Format(PyExc_ValueError, "Bad value for SMSCoding: '%s'", s);
-	return 0;
+	t = GSM_StringToSMSCoding(s);
+
+	if (t == 0) {
+		PyErr_Format(PyExc_ValueError, "Bad value for SMSCoding: '%s'", s);
+	}
+
+	return t;
 }
 
 char *SMSCodingToString(GSM_Coding_Type type)
 {
-	char *s = NULL;
+	char *s;
 
-	switch (type) {
-		case SMS_Coding_Unicode_No_Compression:
-			s = strdup("Unicode_No_Compression");
-			break;
-		case SMS_Coding_Unicode_Compression:
-			s = strdup("Unicode_Compression");
-			break;
-		case SMS_Coding_Default_No_Compression:
-			s = strdup("Default_No_Compression");
-			break;
-		case SMS_Coding_Default_Compression:
-			s = strdup("Default_Compression");
-			break;
-		case SMS_Coding_8bit:
-			s = strdup("8bit");
-			break;
-	}
+	s = GSM_SMSCodingToString(type);
 
 	if (s == NULL) {
-		PyErr_Format(PyExc_ValueError,
-			     "Bad value for Coding_Type from Gammu: '%d'",
-			     type);
-		return NULL;
+		PyErr_Format(PyExc_ValueError, "Bad value for Coding_Type from Gammu: '%d'", type);
 	}
 
 	return s;
