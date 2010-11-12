@@ -3773,10 +3773,9 @@ static GSM_Error ReadSMSBackupEntry(INI_Section *file_info, char *section, GSM_S
 	SMS->Coding  = SMS_Coding_8bit;
 	readvalue = ReadCFGText(file_info, section, buffer, FALSE);
 	if (readvalue!=NULL) {
-		if (strcasecmp(readvalue,"Unicode") == 0) {
-			SMS->Coding = SMS_Coding_Unicode_No_Compression;
-		} else if (strcasecmp(readvalue,"Default") == 0) {
-			SMS->Coding = SMS_Coding_Default_No_Compression;
+		SMS->Coding = GSM_StringToSMSCoding(readvalue);
+		if (SMS->Coding == 0) {
+			SMS->Coding  = SMS_Coding_8bit;
 		}
 	}
 	readbuffer = ReadLinkedBackupText(file_info, section, "Text", FALSE);
@@ -3919,6 +3918,7 @@ static GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
 {
 	int 		i=0;
 	unsigned char 	buffer[10000]={0};
+	char *s;
 	GSM_DateTime	DT;
 	GSM_Error error;
 
@@ -3985,12 +3985,9 @@ static GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
 				break;
 		}
 		SaveLinkedBackupText(file, "Text", buffer, FALSE);
-		switch (backup->SMS[i]->Coding) {
-			case SMS_Coding_Unicode_No_Compression	: fprintf(file,"Coding = Unicode\n"); 	break;
-			case SMS_Coding_Default_No_Compression	: fprintf(file,"Coding = Default\n"); 	break;
-			case SMS_Coding_8bit			: fprintf(file,"Coding = 8bit\n"); 	break;
-			default					: break;
-		}
+		s = GSM_SMSCodingToString(backup->SMS[i]->Coding);
+		fprintf(file, "Coding = %s\n", s);
+		free(s);
 		fprintf(file,"Folder = %i\n",backup->SMS[i]->Folder);
 		fprintf(file,"Length = %i\n",backup->SMS[i]->Length);
 		fprintf(file,"Class = %i\n",backup->SMS[i]->Class);
