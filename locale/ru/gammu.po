@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu 1.28.91\n"
+"Project-Id-Version: Gammu 1.28.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-09-03 14:46+0200\n"
+"POT-Creation-Date: 2010-11-14 19:15+0100\n"
 "PO-Revision-Date: 2008-01-27 17:07+0100\n"
 "Last-Translator: Даниил Аплеев <apleev@mail.ru>\n"
 "Language-Team: Language =ru\n"
@@ -65,7 +65,7 @@ msgstr "Неизвестный параметр \"%s\""
 msgid "Error while opening file for writing!\n"
 msgstr "Ошибка записи в устройство."
 
-#: gammu/backup.c:175 gammu/files.c:444 helper/message-cmdline.c:1110
+#: gammu/backup.c:175 gammu/files.c:454 helper/message-cmdline.c:1110
 #, fuzzy
 msgid "Error while writing file!\n"
 msgstr "Ошибка записи в устройство."
@@ -102,8 +102,8 @@ msgstr "Чтение"
 #: gammu/backup.c:1499 gammu/backup.c:1524 gammu/backup.c:1614
 #: gammu/backup.c:1642 gammu/backup.c:1675 gammu/backup.c:1699
 #: gammu/backup.c:1721 gammu/backup.c:1745 gammu/backupsms.c:108
-#: gammu/files.c:386 gammu/files.c:594 gammu/misc.c:107 gammu/misc.c:598
-#: gammu/misc.c:603 gammu/misc.c:1315 gammu/mms.c:183
+#: gammu/files.c:386 gammu/files.c:421 gammu/files.c:604 gammu/misc.c:107
+#: gammu/misc.c:598 gammu/misc.c:603 gammu/misc.c:1315 gammu/mms.c:183
 #, fuzzy, c-format
 msgid "%i percent"
 msgstr "%c  %i процент"
@@ -342,7 +342,7 @@ msgstr "Восстановление групп и логотипов абоне
 #: gammu/backup.c:1445 gammu/backup.c:1498 gammu/backup.c:1523
 #: gammu/backup.c:1613 gammu/backup.c:1641 gammu/backup.c:1674
 #: gammu/backup.c:1698 gammu/backup.c:1720 gammu/backup.c:1744
-#: gammu/files.c:743
+#: gammu/files.c:753
 #, fuzzy
 msgid "Writing:"
 msgstr "Встреча"
@@ -1747,12 +1747,12 @@ msgstr "Загружается \"%s\"\n"
 msgid "Is a folder. Please give only file names."
 msgstr "это каталог. Вводите только имена файлов\n"
 
-#: gammu/files.c:399 gammu/files.c:606
+#: gammu/files.c:399 gammu/files.c:616
 #, c-format
 msgid " (%02i:%02i minutes left)"
 msgstr " (осталось %02i:%02i минут)"
 
-#: gammu/files.c:410 gammu/files.c:617
+#: gammu/files.c:410 gammu/files.c:627
 #, fuzzy
 msgid ""
 "File checksum calculated by phone doesn't match with value calculated by "
@@ -1762,33 +1762,38 @@ msgstr ""
 "совпадают с суммами, вычисленными в Gammu. Файл повреждён, или это ошибка "
 "Gammu\n"
 
-#: gammu/files.c:442
+#: gammu/files.c:423
+#, c-format
+msgid " done. %lu Bytes in %li seconds, %lu Bytes/sec"
+msgstr ""
+
+#: gammu/files.c:452
 #, c-format
 msgid "  Saving to %s\n"
 msgstr "  Сохранение в %s\n"
 
-#: gammu/files.c:692 gammu/nokia.c:946
+#: gammu/files.c:702 gammu/nokia.c:946
 #, c-format
 msgid "Parameter \"%s\" unknown\n"
 msgstr "Параметр \"%s\" неизвестен\n"
 
-#: gammu/files.c:727
+#: gammu/files.c:737
 #, c-format
 msgid "What file type (\"%s\") ?\n"
 msgstr "Тип файла (\"%s\")?\n"
 
-#: gammu/files.c:736 gammu/misc.c:1273 gammu/nokia.c:955
+#: gammu/files.c:746 gammu/misc.c:1273 gammu/nokia.c:955
 #: helper/message-cmdline.c:1307
 #, fuzzy
 msgid "Parameter missing!"
 msgstr "Отсутствует параметр ...\n"
 
-#: gammu/files.c:745
+#: gammu/files.c:755
 #, fuzzy, c-format
 msgid "ID of new file is \"%s\"\n"
 msgstr "Время телефона - %s\n"
 
-#: gammu/files.c:766
+#: gammu/files.c:776
 #, fuzzy, c-format
 msgid "ID of new folder is \"%s\"\n"
 msgstr "Заметки продавца \"%s\"\n"

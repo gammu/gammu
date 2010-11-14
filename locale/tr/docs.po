@@ -5,16 +5,16 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu-docs 1.28.91\n"
+"Project-Id-Version: Gammu-docs 1.28.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-09-03 14:46+0300\n"
 "PO-Revision-Date: 2010-09-03 14:46+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: tr\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. type: TH
@@ -147,7 +147,7 @@ msgstr ""
 #: docs/user/gammu.1:39
 #, no-wrap
 msgid "Calls"
-msgstr ""
+msgstr "Çağrılar"
 
 #. type: TP
 #: docs/user/gammu.1:40
@@ -582,7 +582,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:209
 #, no-wrap
-msgid "  * some symbols like  @! \" # & / ( )% * + = - , .:; E<lt> E<gt>?\n"
+msgid "  * some symbols like  @ ! \" # & / ( ) % * + = - , . : ; E<lt> E<gt> ?\n"
 msgstr ""
 
 #. type: Plain text
@@ -2481,7 +2481,7 @@ msgstr ""
 #: docs/user/gammu.1:1189
 #, no-wrap
 msgid "Ringtones"
-msgstr ""
+msgstr "Zil sesi"
 
 #. type: Plain text
 #: docs/user/gammu.1:1194
@@ -3340,7 +3340,7 @@ msgstr ""
 #: docs/user/gammu.1:2403
 #, no-wrap
 msgid "Phone information"
-msgstr ""
+msgstr "Telefon bilgisi"
 
 #. type: TP
 #: docs/user/gammu.1:2404

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.28.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-09-03 14:46+0200\n"
+"POT-Creation-Date: 2010-11-14 19:15+0100\n"
 "PO-Revision-Date: 2010-09-03 14:46+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -63,7 +63,7 @@ msgstr ""
 msgid "Error while opening file for writing!\n"
 msgstr ""
 
-#: gammu/backup.c:175 gammu/files.c:444 helper/message-cmdline.c:1110
+#: gammu/backup.c:175 gammu/files.c:454 helper/message-cmdline.c:1110
 msgid "Error while writing file!\n"
 msgstr ""
 
@@ -94,8 +94,8 @@ msgstr ""
 #: gammu/backup.c:1499 gammu/backup.c:1524 gammu/backup.c:1614
 #: gammu/backup.c:1642 gammu/backup.c:1675 gammu/backup.c:1699
 #: gammu/backup.c:1721 gammu/backup.c:1745 gammu/backupsms.c:108
-#: gammu/files.c:386 gammu/files.c:594 gammu/misc.c:107 gammu/misc.c:598
-#: gammu/misc.c:603 gammu/misc.c:1315 gammu/mms.c:183
+#: gammu/files.c:386 gammu/files.c:421 gammu/files.c:604 gammu/misc.c:107
+#: gammu/misc.c:598 gammu/misc.c:603 gammu/misc.c:1315 gammu/mms.c:183
 #, c-format
 msgid "%i percent"
 msgstr ""
@@ -270,11 +270,11 @@ msgstr ""
 #: gammu/backup.c:941 gammu/backup.c:1560 gammu/calendar.c:237
 #: gammu/calendar.c:820
 msgid "Phone"
-msgstr ""
+msgstr "Telefon"
 
 #: gammu/backup.c:942 gammu/backup.c:1563 gammu/misc.c:410
 msgid "IMEI"
-msgstr ""
+msgstr "IMEI"
 
 #: gammu/backup.c:943
 msgid "File created by"
@@ -306,7 +306,7 @@ msgstr ""
 #: gammu/backup.c:1445 gammu/backup.c:1498 gammu/backup.c:1523
 #: gammu/backup.c:1613 gammu/backup.c:1641 gammu/backup.c:1674
 #: gammu/backup.c:1698 gammu/backup.c:1720 gammu/backup.c:1744
-#: gammu/files.c:743
+#: gammu/files.c:753
 msgid "Writing:"
 msgstr ""
 
@@ -520,7 +520,7 @@ msgstr ""
 
 #: gammu/calendar.c:25
 msgid "Call"
-msgstr ""
+msgstr "Ara"
 
 #: gammu/calendar.c:28
 msgid "Meeting"
@@ -544,7 +544,7 @@ msgstr ""
 
 #: gammu/calendar.c:43 gammu/calendar.c:756
 msgid "Alarm"
-msgstr ""
+msgstr "Alarm"
 
 #: gammu/calendar.c:46
 msgid "Shopping"
@@ -636,7 +636,7 @@ msgstr ""
 
 #: gammu/calendar.c:156
 msgid "Start"
-msgstr ""
+msgstr "Başlat"
 
 #: gammu/calendar.c:163
 msgid "Stop"
@@ -663,7 +663,7 @@ msgstr ""
 #: gammu/calendar.c:993 gammu/message.c:207 gammu/misc.c:1071
 #: helper/memory-display.c:130 helper/message-display.c:430
 msgid "Text"
-msgstr ""
+msgstr "Metin"
 
 #: gammu/calendar.c:222 gammu/calendar.c:825
 msgid "Description"
@@ -678,7 +678,7 @@ msgstr ""
 #: gammu/memory.c:145 gammu/message.c:197 gammu/misc.c:1807 gammu/misc.c:1840
 #: gammu/misc.c:2101 gammu/misc.c:2210
 msgid "Location"
-msgstr ""
+msgstr "Konum"
 
 #: gammu/calendar.c:242 gammu/calendar.c:776 helper/memory-display.c:61
 msgid "Private"
@@ -686,11 +686,11 @@ msgstr ""
 
 #: gammu/calendar.c:244
 msgid "Yes"
-msgstr ""
+msgstr "Evet"
 
 #: gammu/calendar.c:244
 msgid "No"
-msgstr ""
+msgstr "Yok"
 
 #: gammu/calendar.c:256 gammu/calendar.c:262 gammu/calendar.c:267
 #: gammu/calendar.c:805 gammu/calendar.c:811
@@ -851,7 +851,7 @@ msgstr ""
 
 #: gammu/calendar.c:542 gammu/calendar.c:545 gammu/mms.c:95
 msgid "Date"
-msgstr ""
+msgstr "Tarih"
 
 #: gammu/calendar.c:543
 msgid "Every day"
@@ -886,7 +886,7 @@ msgstr ""
 
 #: gammu/calendar.c:713
 msgid "Priority"
-msgstr ""
+msgstr "Öncelik"
 
 #: gammu/calendar.c:716
 msgid "Low"
@@ -902,12 +902,12 @@ msgstr ""
 
 #: gammu/calendar.c:725
 msgid "None"
-msgstr ""
+msgstr "Hiç"
 
 #: gammu/calendar.c:729 gammu/message.c:110 gammu/misc.c:2032
 #: gammu/misc.c:2075
 msgid "Unknown"
-msgstr ""
+msgstr "Bilinmeyen"
 
 #: gammu/calendar.c:736
 msgid "Due time"
@@ -923,7 +923,7 @@ msgstr ""
 
 #: gammu/calendar.c:751
 msgid "Completed"
-msgstr ""
+msgstr "Tamamlandı"
 
 #: gammu/calendar.c:786 gammu/calendar.c:791 helper/memory-display.c:44
 #: helper/memory-display.c:54 helper/memory-display.c:56
@@ -1197,7 +1197,7 @@ msgstr ""
 
 #: gammu/depend/nokia/dct4.c:872
 msgid "Bluetooth"
-msgstr ""
+msgstr "Bluetooth"
 
 #: gammu/depend/nokia/dct4.c:888
 msgid "UEM"
@@ -1523,7 +1523,7 @@ msgstr ""
 
 #: gammu/files.c:160 gammu/files.c:173 gammu/files.c:199 gammu/files.c:324
 msgid "Folder"
-msgstr ""
+msgstr "Klasör"
 
 #: gammu/files.c:184 gammu/files.c:315
 msgid "File;"
@@ -1557,43 +1557,48 @@ msgstr ""
 msgid "Is a folder. Please give only file names."
 msgstr ""
 
-#: gammu/files.c:399 gammu/files.c:606
+#: gammu/files.c:399 gammu/files.c:616
 #, c-format
 msgid " (%02i:%02i minutes left)"
 msgstr ""
 
-#: gammu/files.c:410 gammu/files.c:617
+#: gammu/files.c:410 gammu/files.c:627
 msgid ""
 "File checksum calculated by phone doesn't match with value calculated by "
 "Gammu. File is damaged or there is a error in Gammu."
 msgstr ""
 
-#: gammu/files.c:442
+#: gammu/files.c:423
+#, c-format
+msgid " done. %lu Bytes in %li seconds, %lu Bytes/sec"
+msgstr ""
+
+#: gammu/files.c:452
 #, c-format
 msgid "  Saving to %s\n"
 msgstr ""
 
-#: gammu/files.c:692 gammu/nokia.c:946
+#: gammu/files.c:702 gammu/nokia.c:946
 #, c-format
 msgid "Parameter \"%s\" unknown\n"
 msgstr ""
 
-#: gammu/files.c:727
+#: gammu/files.c:737
 #, c-format
 msgid "What file type (\"%s\") ?\n"
 msgstr ""
 
-#: gammu/files.c:736 gammu/misc.c:1273 gammu/nokia.c:955
+#: gammu/files.c:746 gammu/misc.c:1273 gammu/nokia.c:955
 #: helper/message-cmdline.c:1307
 msgid "Parameter missing!"
 msgstr ""
 
-#: gammu/files.c:745
+#: gammu/files.c:755
 #, c-format
 msgid "ID of new file is \"%s\"\n"
 msgstr ""
 
-#: gammu/files.c:766
+#: gammu/files.c:776
 #, c-format
 msgid "ID of new folder is \"%s\"\n"
 msgstr ""
@@ -1616,7 +1621,7 @@ msgstr ""
 #: gammu/misc.c:1811 gammu/misc.c:1850 gammu/misc.c:2115 gammu/mms.c:112
 #: helper/memory-display.c:137 helper/message-display.c:235
 msgid "Name"
-msgstr ""
+msgstr "Adı"
 
 #: gammu/gammu.c:105
 #, c-format
@@ -1708,7 +1713,7 @@ msgstr ""
 
 #: gammu/gammu.c:714
 msgid "Calls"
-msgstr ""
+msgstr "Çağrılar"
 
 #: gammu/gammu.c:715
 msgid "SMS and EMS"
@@ -1728,7 +1733,7 @@ msgstr ""
 
 #: gammu/gammu.c:719
 msgid "Ringtones"
-msgstr ""
+msgstr "Zil sesi"
 
 #: gammu/gammu.c:720
 msgid "Calendar notes"
@@ -1780,7 +1785,7 @@ msgstr ""
 
 #: gammu/gammu.c:739
 msgid "Phone information"
-msgstr ""
+msgstr "Telefon bilgisi"
 
 #: gammu/gammu.c:740
 msgid "Phone settings"
@@ -1984,7 +1989,7 @@ msgstr ""
 
 #: gammu/message.c:101
 msgid "Not supported"
-msgstr ""
+msgstr "Desteklenmiyor"
 
 #: gammu/message.c:113
 msgid "Service reply"
@@ -1997,7 +2002,7 @@ msgstr ""
 
 #: gammu/message.c:202 gammu/misc.c:2116 gammu/misc.c:2313
 msgid "Number"
-msgstr ""
+msgstr "Numara"
 
 #: gammu/message.c:203
 msgid "Default number"
@@ -2098,7 +2103,7 @@ msgstr ""
 
 #: gammu/message.c:597
 msgid "SIM"
-msgstr ""
+msgstr "SIM"
 
 #: gammu/message.c:599
 msgid "phone"
@@ -2344,27 +2349,27 @@ msgstr ""
 
 #: gammu/misc.c:379
 msgid "Device"
-msgstr ""
+msgstr "Cihaz"
 
 #: gammu/misc.c:383 gammu/search.c:89
 msgid "Manufacturer"
-msgstr ""
+msgstr "Üretici"
 
 #: gammu/misc.c:386 gammu/search.c:101
 msgid "Model"
-msgstr ""
+msgstr "Model"
 
 #: gammu/misc.c:392
 msgid "Firmware"
-msgstr ""
+msgstr "Ürün bilgisi"
 
 #: gammu/misc.c:404
 msgid "Hardware"
-msgstr ""
+msgstr "Bilgisayar parçası"
 
 #: gammu/misc.c:415
 msgid "Original IMEI"
-msgstr ""
+msgstr "Orijinal IMEI"
 
 #: gammu/misc.c:422
 msgid "Manufactured"
@@ -2372,11 +2377,11 @@ msgstr ""
 
 #: gammu/misc.c:428
 msgid "Product code"
-msgstr ""
+msgstr "Ürün Kodu"
 
 #: gammu/misc.c:438
 msgid "SIM IMSI"
-msgstr ""
+msgstr "SIM IMSI"
 
 #: gammu/misc.c:486
 msgid "Call info"
@@ -2462,11 +2467,11 @@ msgstr ""
 
 #: gammu/misc.c:579
 msgid "Todos"
-msgstr ""
+msgstr "Yapılacaklar"
 
 #: gammu/misc.c:583
 msgid "Calendar"
-msgstr ""
+msgstr "Takvim"
 
 #: gammu/misc.c:592
 msgid "Signal strength"
@@ -2606,7 +2611,7 @@ msgstr ""
 
 #: gammu/misc.c:1050 gammu/misc.c:1579 gammu/misc.c:1582 gammu/mms.c:104
 msgid "disabled"
-msgstr ""
+msgstr "etkin değil"
 
 #: gammu/misc.c:1053
 msgid "Bitmap ID"
@@ -2682,7 +2687,7 @@ msgstr ""
 
 #: gammu/misc.c:1458 gammu/misc.c:1460
 msgid "Connection type"
-msgstr ""
+msgstr "Bağlantı tipi"
 
 #: gammu/misc.c:1458
 msgid "Continuous"
@@ -2755,7 +2760,7 @@ msgstr ""
 
 #: gammu/misc.c:1490 gammu/misc.c:1536
 msgid "Automatic"
-msgstr ""
+msgstr "Otomatik"
 
 #: gammu/misc.c:1493 gammu/misc.c:1495 gammu/misc.c:1539 gammu/misc.c:1541
 msgid "Authentication type"
@@ -2763,7 +2768,7 @@ msgstr ""
 
 #: gammu/misc.c:1493 gammu/misc.c:1539
 msgid "Normal"
-msgstr ""
+msgstr "Normal"
 
 #: gammu/misc.c:1495 gammu/misc.c:1541
 msgid "Secure"
@@ -2795,7 +2800,7 @@ msgstr ""
 
 #: gammu/misc.c:1514 gammu/misc.c:1546 gammu/misc.c:1573 gammu/misc.c:1623
 msgid "Password"
-msgstr ""
+msgstr "Şifre"
 
 #: gammu/misc.c:1517
 msgid "USSD"
@@ -2833,7 +2838,7 @@ msgstr ""
 
 #: gammu/misc.c:1576
 msgid "Server"
-msgstr ""
+msgstr "Sunucu"
 
 #: gammu/misc.c:1577
 msgid "Sync. phonebook"
@@ -3208,7 +3213,7 @@ msgstr ""
 
 #: gammu/mms.c:100
 msgid "Delivery report"
-msgstr ""
+msgstr "İletim raporu"
 
 #: gammu/mms.c:107 gammu/mms.c:110
 msgid "Content type"
@@ -3546,7 +3551,7 @@ msgstr ""
 
 #: helper/memory-display.c:146
 msgid "State"
-msgstr ""
+msgstr "Estado"
 
 #: helper/memory-display.c:147
 msgid "Zip code"
@@ -3795,11 +3800,11 @@ msgstr ""
 #: helper/message-display.c:216 helper/message-display.c:231
 #: helper/message-display.c:272
 msgid "Sent"
-msgstr ""
+msgstr "Gönder"
 
 #: helper/message-display.c:153 helper/message-display.c:273
 msgid "Read"
-msgstr ""
+msgstr "Oku"
 
 #: helper/message-display.c:154 helper/message-display.c:274
 msgid "UnRead"
