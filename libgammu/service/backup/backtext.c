@@ -95,8 +95,6 @@ static unsigned char *ReadCFGText(INI_Section *cfg, const unsigned char *section
 		if (retval != NULL) return DecodeUnicodeString(retval);
 		return NULL;
 	} else {
-		strcpy(Buffer,section);
-		strcpy(Buffer2,key);
 		return INI_GetValue(cfg,section,key,Unicode);
 	}
 }
