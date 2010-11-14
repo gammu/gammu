@@ -3707,12 +3707,8 @@ static GSM_Error ReadSMSBackupEntry(INI_Section *file_info, char *section, GSM_S
 	SMS->SMSC.Location = 0;
 	sprintf(buffer,"SMSC");
 	ReadBackupText(file_info, section, buffer, SMS->SMSC.Number, FALSE);
-	sprintf(buffer,"ReplySMSC");
 	SMS->ReplyViaSameSMSC = INI_GetBool(file_info, section, "ReplySMSC", FALSE);
-	sprintf(buffer,"Class");
-	SMS->Class = -1;
-	readvalue = ReadCFGText(file_info, section, buffer, FALSE);
-	if (readvalue!=NULL) SMS->Class = atoi(readvalue);
+	SMS->Class = INI_GetInt(file_info, section, "Class", -1);
 	sprintf(buffer,"Sent");
 	readvalue = ReadCFGText(file_info, section, buffer, FALSE);
 	if (readvalue != NULL && ReadVCALDateTime(readvalue, &SMS->DateTime)) {
@@ -3733,20 +3729,9 @@ static GSM_Error ReadSMSBackupEntry(INI_Section *file_info, char *section, GSM_S
 	if (readvalue != NULL) {
 		ReadVCALDateTime(readvalue, &SMS->DateTime);
 	}
-	sprintf(buffer,"RejectDuplicates");
-	SMS->RejectDuplicates = FALSE;
-	readvalue = ReadCFGText(file_info, section, buffer, FALSE);
-	if (readvalue!=NULL) {
-		if (strcasecmp(readvalue,"True") == 0) SMS->RejectDuplicates = TRUE;
-	}
-	sprintf(buffer,"ReplaceMessage");
-	SMS->ReplaceMessage = 0;
-	readvalue = ReadCFGText(file_info, section, buffer, FALSE);
-	if (readvalue!=NULL) SMS->ReplaceMessage = atoi(readvalue);
-	sprintf(buffer,"MessageReference");
-	SMS->MessageReference = 0;
-	readvalue = ReadCFGText(file_info, section, buffer, FALSE);
-	if (readvalue!=NULL) SMS->MessageReference = atoi(readvalue);
+	SMS->RejectDuplicates = INI_GetBool(file_info, section, "RejectDuplicates", FALSE);
+	SMS->ReplaceMessage = INI_GetInt(file_info, section, "ReplaceMessage", 0);
+	SMS->MessageReference = INI_GetInt(file_info, section, "MessageReference", 0);
 	sprintf(buffer,"State");
 	SMS->State = SMS_UnRead;
 	readvalue = ReadCFGText(file_info, section, buffer, FALSE);
@@ -3759,10 +3744,7 @@ static GSM_Error ReadSMSBackupEntry(INI_Section *file_info, char *section, GSM_S
 	ReadBackupText(file_info, section, buffer, SMS->Number, FALSE);
 	sprintf(buffer,"Name");
 	ReadBackupText(file_info, section, buffer, SMS->Name, FALSE);
-	sprintf(buffer,"Length");
-	SMS->Length = 0;
-	readvalue = ReadCFGText(file_info, section, buffer, FALSE);
-	if (readvalue!=NULL) SMS->Length = atoi(readvalue);
+	SMS->Length = INI_GetInt(file_info, section, "Length", 0);
 	sprintf(buffer,"Coding");
 	SMS->Coding  = SMS_Coding_8bit;
 	readvalue = ReadCFGText(file_info, section, buffer, FALSE);
@@ -3802,9 +3784,7 @@ static GSM_Error ReadSMSBackupEntry(INI_Section *file_info, char *section, GSM_S
 	}
 	free(readbuffer);
 	readbuffer=NULL;
-	sprintf(buffer,"Folder");
-	readvalue = ReadCFGText(file_info, section, buffer, FALSE);
-	if (readvalue!=NULL) SMS->Folder = atoi(readvalue);
+	SMS->Folder = INI_GetInt(file_info, section, "Folder", SMS->Folder);
 	SMS->UDH.Type		= UDH_NoUDH;
 	SMS->UDH.Length 	= 0;
 	SMS->UDH.ID8bit	  	= -1;
