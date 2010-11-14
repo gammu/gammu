@@ -87,11 +87,11 @@ GSM_Error FindBackupChecksum(char *FileName, gboolean UseUnicode, char *checksum
 
 static unsigned char *ReadCFGText(INI_Section *cfg, const unsigned char *section, const unsigned char *key, const gboolean Unicode)
 {
-	unsigned char Buffer2[500],*retval;
+	unsigned char unicode_key[500],*retval;
 
 	if (Unicode) {
-		EncodeUnicode(Buffer2,key,strlen(key));
-		retval = INI_GetValue(cfg,section,Buffer2,Unicode);
+		EncodeUnicode(unicode_key,key,strlen(key));
+		retval = INI_GetValue(cfg,section,unicode_key,Unicode);
 		if (retval != NULL) return DecodeUnicodeString(retval);
 		return NULL;
 	} else {
