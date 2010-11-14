@@ -226,7 +226,7 @@ static GSM_Error SaveBackupBase64(FILE *file, char *myname, unsigned char *data,
 
 #define ReadBackupText(file_info, section, myname, myvalue, UseUnicode) ReadBackupTextLen(file_info, section, myname, myvalue, sizeof(myvalue), UseUnicode)
 
-static gboolean ReadBackupTextLen(INI_Section *file_info, char *section, char *myname, char *myvalue, size_t maxlen, gboolean UseUnicode)
+static gboolean ReadBackupTextLen(INI_Section *file_info, const char *section, const char *myname, char *myvalue, const size_t maxlen, const gboolean UseUnicode)
 {
 	unsigned char paramname[10000],*readvalue, *decodedvalue;
 	gboolean ret = TRUE;
