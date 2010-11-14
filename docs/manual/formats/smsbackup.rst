@@ -9,9 +9,17 @@ where Gammu is running.
 
 This file use ini file syntax, see :ref:`ini`.
 
-The file consists of unlimited number of sections, each is for one message and
-it's name is formatted like ``SMSBackup001``. The numbering of messages must
-be consistent - Gammu stops to read the file on first skipped number.
+Sections
+--------
+
+The file consists of sections, whose name starts with ``SMSBackup``. When
+creating the backup file, three digits are appended to this text defining
+order. While reading the backup, any part after ``SMSBackup`` text is ignored
+and everything which begins with this is processed. So you can as well give
+the section name ``SMSBackupFoo`` and it will be processed.
+
+The number of messages in backup file is currently limited by
+:c:data:`GSM_BACKUP_MAX_SMS` (100000 at time of writing this document).
 
 Example
 -------
