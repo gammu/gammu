@@ -3708,11 +3708,7 @@ static GSM_Error ReadSMSBackupEntry(INI_Section *file_info, char *section, GSM_S
 	sprintf(buffer,"SMSC");
 	ReadBackupText(file_info, section, buffer, SMS->SMSC.Number, FALSE);
 	sprintf(buffer,"ReplySMSC");
-	SMS->ReplyViaSameSMSC = FALSE;
-	readvalue = ReadCFGText(file_info, section, buffer, FALSE);
-	if (readvalue!=NULL) {
-		if (strcasecmp(readvalue,"True") == 0) SMS->ReplyViaSameSMSC = TRUE;
-	}
+	SMS->ReplyViaSameSMSC = INI_GetBool(file_info, section, "ReplySMSC", FALSE);
 	sprintf(buffer,"Class");
 	SMS->Class = -1;
 	readvalue = ReadCFGText(file_info, section, buffer, FALSE);
