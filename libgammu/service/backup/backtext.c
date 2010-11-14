@@ -3714,7 +3714,7 @@ static GSM_Error ReadSMSBackupEntry(INI_Section *file_info, char *section, GSM_S
 	if (readvalue != NULL && ReadVCALDateTime(readvalue, &SMS->DateTime)) {
 		SMS->PDU = SMS_Deliver;
 	}
-	readvalue = ReadCFGText(file_info, buffer, "PDU", FALSE);
+	readvalue = ReadCFGText(file_info, section, "PDU", FALSE);
 	if (readvalue != NULL) {
 		if (strcmp(readvalue, "Deliver") == 0) {
 			SMS->PDU = SMS_Deliver;
