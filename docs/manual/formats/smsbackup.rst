@@ -21,6 +21,32 @@ the section name ``SMSBackupFoo`` and it will be processed.
 The number of messages in backup file is currently limited by
 :c:data:`GSM_BACKUP_MAX_SMS` (100000 at time of writing this document).
 
+``SMSBackup`` section
++++++++++++++++++++++
+
+Each section interprets one physical SMS message (eg. one message part in case
+of multipart messages).
+
+Decoded text
+~~~~~~~~~~~~
+
+For SMS backups created by Gammu, there is a decoded text as a comment just
+after the section name:
+
+.. code-block:: ini
+
+    [SMSBackup001]
+    ; This is message text
+
+The text can be split to more lines if it is too long or of original message
+included new lines.
+
+.. note::
+
+    This is easiest way to get message text, however also the least reliable
+    one, because it is stored in the comments in the file.
+
+
 Example
 -------
 
