@@ -24,9 +24,6 @@
 #include <assert.h>
 #ifdef WIN32
 #include <windows.h>
-#ifndef __GNUC__
-#pragma comment(lib, "libsql.lib")
-#endif
 #endif
 
 #include "../core.h"
@@ -139,7 +136,7 @@ static GSM_Error SMSDSQL_NamedQuery(GSM_SMSDConfig * Config, const char *sql_que
 	const SQL_Var *params, SQL_result * res)
 {
 	char buff[65536], *ptr, c, static_buff[8192];
-	char *buffer2;
+	char *buffer2, *end;
 	const char *to_print, *q = sql_query;
 	int int_to_print;
 	int numeric; 
@@ -159,7 +156,7 @@ static GSM_Error SMSDSQL_NamedQuery(GSM_SMSDConfig * Config, const char *sql_que
 		}
 		c = *(++q);
 		if( c >= '0' && c <= '9'){
-			n = atoi(q) - 1;
+			n = strtoul(q, &end, 10) - 1; 
 			if (n < argc && n >= 0) {
 				switch(params[n].type){
 					case SQL_TYPE_INT:
@@ -173,16 +170,14 @@ static GSM_Error SMSDSQL_NamedQuery(GSM_SMSDConfig * Config, const char *sql_que
 						break;
 					default:
 						SMSD_Log(DEBUG_ERROR, Config, "SQL: unknown type: %i (application bug) in query: `%s`", params[n].type, sql_query);
-						return ERR_UNKNOWN;
+						return ERR_BUG;
 						break;
 				}
 			} else {
 				SMSD_Log(DEBUG_ERROR, Config, "SQL: wrong number of parameter: %i (max %i) in query: `%s`", n+1, argc, sql_query);
 				return ERR_UNKNOWN;
 			}
-			/* jump to first non-numeric char */
-			while(*q >= '0' && *q <= '9') q++;
-			q--;	
+			q = end - 1;	
 			continue;
 		}
 		numeric = 0;
