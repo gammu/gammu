@@ -535,15 +535,16 @@ GSM_Coding_Type StringToSMSCoding(const char *s)
 
 char *SMSCodingToString(GSM_Coding_Type type)
 {
-	char *s;
+	const char *s;
 
 	s = GSM_SMSCodingToString(type);
 
 	if (s == NULL) {
 		PyErr_Format(PyExc_ValueError, "Bad value for Coding_Type from Gammu: '%d'", type);
+		return NULL;
 	}
 
-	return s;
+	return strdup(s);
 }
 
 GSM_SMS_State StringToSMSState(const char *s)

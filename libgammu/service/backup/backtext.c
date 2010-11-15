@@ -3884,7 +3884,7 @@ static GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
 {
 	int 		i=0;
 	unsigned char 	buffer[10000]={0};
-	char *s;
+	const char *s;
 	GSM_DateTime	DT;
 	GSM_Error error;
 
@@ -3953,7 +3953,6 @@ static GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
 		SaveLinkedBackupText(file, "Text", buffer, FALSE);
 		s = GSM_SMSCodingToString(backup->SMS[i]->Coding);
 		fprintf(file, "Coding = %s\n", s);
-		free(s);
 		fprintf(file,"Folder = %i\n",backup->SMS[i]->Folder);
 		fprintf(file,"Length = %i\n",backup->SMS[i]->Length);
 		fprintf(file,"Class = %i\n",backup->SMS[i]->Class);

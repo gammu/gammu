@@ -1087,29 +1087,22 @@ GSM_Coding_Type GSM_StringToSMSCoding(const char *s)
 	return 0;
 }
 
-char *GSM_SMSCodingToString(GSM_Coding_Type type)
+const char *GSM_SMSCodingToString(GSM_Coding_Type type)
 {
-	char *s = NULL;
-
 	switch (type) {
 		case SMS_Coding_Unicode_No_Compression:
-			s = strdup("Unicode_No_Compression");
-			break;
+			return "Unicode_No_Compression";
 		case SMS_Coding_Unicode_Compression:
-			s = strdup("Unicode_Compression");
-			break;
+			return "Unicode_Compression";
 		case SMS_Coding_Default_No_Compression:
-			s = strdup("Default_No_Compression");
-			break;
+			return "Default_No_Compression";
 		case SMS_Coding_Default_Compression:
-			s = strdup("Default_Compression");
-			break;
+			return "Default_Compression";
 		case SMS_Coding_8bit:
-			s = strdup("8bit");
-			break;
+			return "8bit";
 	}
 
-	return s;
+	return NULL;
 }
 
 /* How should editor hadle tabs in this file? Add editor commands here.

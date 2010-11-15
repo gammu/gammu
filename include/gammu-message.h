@@ -327,10 +327,9 @@ typedef enum {
 /**
  * Converts SMS coding to string.
  *
- * \return Pointer to newly allocated memory, caller is responsible for
- * freeing it up. NULL on failure.
+ * \return Pointer to static string, NULL on failure.
  */
-char *GSM_SMSCodingToString(GSM_Coding_Type type);
+const char *GSM_SMSCodingToString(GSM_Coding_Type type);
 
 /**
  * Converts SMS coding to type.
