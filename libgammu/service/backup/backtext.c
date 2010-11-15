@@ -87,16 +87,14 @@ GSM_Error FindBackupChecksum(char *FileName, gboolean UseUnicode, char *checksum
 
 static unsigned char *ReadCFGText(INI_Section *cfg, const unsigned char *section, const unsigned char *key, const gboolean Unicode)
 {
-	unsigned char Buffer[500],Buffer2[500],*retval;
+	unsigned char unicode_key[500],*retval;
 
 	if (Unicode) {
-		EncodeUnicode(Buffer2,key,strlen(key));
-		retval = INI_GetValue(cfg,section,Buffer2,Unicode);
+		EncodeUnicode(unicode_key,key,strlen(key));
+		retval = INI_GetValue(cfg,section,unicode_key,Unicode);
 		if (retval != NULL) return DecodeUnicodeString(retval);
 		return NULL;
 	} else {
-		strcpy(Buffer,section);
-		strcpy(Buffer2,key);
 		return INI_GetValue(cfg,section,key,Unicode);
 	}
 }
@@ -228,7 +226,7 @@ static GSM_Error SaveBackupBase64(FILE *file, char *myname, unsigned char *data,
 
 #define ReadBackupText(file_info, section, myname, myvalue, UseUnicode) ReadBackupTextLen(file_info, section, myname, myvalue, sizeof(myvalue), UseUnicode)
 
-static gboolean ReadBackupTextLen(INI_Section *file_info, char *section, char *myname, char *myvalue, size_t maxlen, gboolean UseUnicode)
+static gboolean ReadBackupTextLen(INI_Section *file_info, const char *section, const char *myname, char *myvalue, const size_t maxlen, const gboolean UseUnicode)
 {
 	unsigned char paramname[10000],*readvalue, *decodedvalue;
 	gboolean ret = TRUE;
@@ -3701,30 +3699,20 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 
 static GSM_Error ReadSMSBackupEntry(INI_Section *file_info, char *section, GSM_SMSMessage *SMS)
 {
-	unsigned char buffer[10000]={0}, *readvalue=NULL, *readbuffer=NULL;
+	unsigned char *readvalue=NULL, *readbuffer=NULL;
 
 	GSM_SetDefaultSMSData(SMS);
 
 	SMS->PDU = SMS_Submit;
 	SMS->SMSC.Location = 0;
-	sprintf(buffer,"SMSC");
-	ReadBackupText(file_info, section, buffer, SMS->SMSC.Number, FALSE);
-	sprintf(buffer,"ReplySMSC");
-	SMS->ReplyViaSameSMSC = FALSE;
-	readvalue = ReadCFGText(file_info, section, buffer, FALSE);
-	if (readvalue!=NULL) {
-		if (strcasecmp(readvalue,"True") == 0) SMS->ReplyViaSameSMSC = TRUE;
-	}
-	sprintf(buffer,"Class");
-	SMS->Class = -1;
-	readvalue = ReadCFGText(file_info, section, buffer, FALSE);
-	if (readvalue!=NULL) SMS->Class = atoi(readvalue);
-	sprintf(buffer,"Sent");
-	readvalue = ReadCFGText(file_info, section, buffer, FALSE);
+	ReadBackupText(file_info, section, "SMSC", SMS->SMSC.Number, FALSE);
+	SMS->ReplyViaSameSMSC = INI_GetBool(file_info, section, "ReplySMSC", FALSE);
+	SMS->Class = INI_GetInt(file_info, section, "Class", -1);
+	readvalue = ReadCFGText(file_info, section, "Sent", FALSE);
 	if (readvalue != NULL && ReadVCALDateTime(readvalue, &SMS->DateTime)) {
 		SMS->PDU = SMS_Deliver;
 	}
-	readvalue = ReadCFGText(file_info, buffer, "PDU", FALSE);
+	readvalue = ReadCFGText(file_info, section, "PDU", FALSE);
 	if (readvalue != NULL) {
 		if (strcmp(readvalue, "Deliver") == 0) {
 			SMS->PDU = SMS_Deliver;
@@ -3734,49 +3722,29 @@ static GSM_Error ReadSMSBackupEntry(INI_Section *file_info, char *section, GSM_S
 			SMS->PDU = SMS_Status_Report;
 		}
 	}
-	sprintf(buffer,"DateTime");
-	readvalue = ReadCFGText(file_info, section, buffer, FALSE);
+	readvalue = ReadCFGText(file_info, section, "DateTime", FALSE);
 	if (readvalue != NULL) {
 		ReadVCALDateTime(readvalue, &SMS->DateTime);
 	}
-	sprintf(buffer,"RejectDuplicates");
-	SMS->RejectDuplicates = FALSE;
-	readvalue = ReadCFGText(file_info, section, buffer, FALSE);
-	if (readvalue!=NULL) {
-		if (strcasecmp(readvalue,"True") == 0) SMS->RejectDuplicates = TRUE;
-	}
-	sprintf(buffer,"ReplaceMessage");
-	SMS->ReplaceMessage = 0;
-	readvalue = ReadCFGText(file_info, section, buffer, FALSE);
-	if (readvalue!=NULL) SMS->ReplaceMessage = atoi(readvalue);
-	sprintf(buffer,"MessageReference");
-	SMS->MessageReference = 0;
-	readvalue = ReadCFGText(file_info, section, buffer, FALSE);
-	if (readvalue!=NULL) SMS->MessageReference = atoi(readvalue);
-	sprintf(buffer,"State");
+	SMS->RejectDuplicates = INI_GetBool(file_info, section, "RejectDuplicates", FALSE);
+	SMS->ReplaceMessage = INI_GetInt(file_info, section, "ReplaceMessage", 0);
+	SMS->MessageReference = INI_GetInt(file_info, section, "MessageReference", 0);
 	SMS->State = SMS_UnRead;
-	readvalue = ReadCFGText(file_info, section, buffer, FALSE);
+	readvalue = ReadCFGText(file_info, section, "State", FALSE);
 	if (readvalue!=NULL) {
 		if (strcasecmp(readvalue,"Read") == 0)		SMS->State = SMS_Read;
 		else if (strcasecmp(readvalue,"Sent") == 0)	SMS->State = SMS_Sent;
 		else if (strcasecmp(readvalue,"UnSent") == 0)	SMS->State = SMS_UnSent;
 	}
-	sprintf(buffer,"Number");
-	ReadBackupText(file_info, section, buffer, SMS->Number, FALSE);
-	sprintf(buffer,"Name");
-	ReadBackupText(file_info, section, buffer, SMS->Name, FALSE);
-	sprintf(buffer,"Length");
-	SMS->Length = 0;
-	readvalue = ReadCFGText(file_info, section, buffer, FALSE);
-	if (readvalue!=NULL) SMS->Length = atoi(readvalue);
-	sprintf(buffer,"Coding");
+	ReadBackupText(file_info, section, "Number", SMS->Number, FALSE);
+	ReadBackupText(file_info, section, "Name", SMS->Name, FALSE);
+	SMS->Length = INI_GetInt(file_info, section, "Length", 0);
 	SMS->Coding  = SMS_Coding_8bit;
-	readvalue = ReadCFGText(file_info, section, buffer, FALSE);
+	readvalue = ReadCFGText(file_info, section, "Coding", FALSE);
 	if (readvalue!=NULL) {
-		if (strcasecmp(readvalue,"Unicode") == 0) {
-			SMS->Coding = SMS_Coding_Unicode_No_Compression;
-		} else if (strcasecmp(readvalue,"Default") == 0) {
-			SMS->Coding = SMS_Coding_Default_No_Compression;
+		SMS->Coding = GSM_StringToSMSCoding(readvalue);
+		if (SMS->Coding == 0) {
+			SMS->Coding  = SMS_Coding_8bit;
 		}
 	}
 	readbuffer = ReadLinkedBackupText(file_info, section, "Text", FALSE);
@@ -3809,17 +3777,14 @@ static GSM_Error ReadSMSBackupEntry(INI_Section *file_info, char *section, GSM_S
 	}
 	free(readbuffer);
 	readbuffer=NULL;
-	sprintf(buffer,"Folder");
-	readvalue = ReadCFGText(file_info, section, buffer, FALSE);
-	if (readvalue!=NULL) SMS->Folder = atoi(readvalue);
+	SMS->Folder = INI_GetInt(file_info, section, "Folder", SMS->Folder);
 	SMS->UDH.Type		= UDH_NoUDH;
 	SMS->UDH.Length 	= 0;
 	SMS->UDH.ID8bit	  	= -1;
 	SMS->UDH.ID16bit	= -1;
 	SMS->UDH.PartNumber	= -1;
 	SMS->UDH.AllParts	= -1;
-	sprintf(buffer,"UDH");
-	readvalue = ReadCFGText(file_info, section, buffer, FALSE);
+	readvalue = ReadCFGText(file_info, section, "UDH", FALSE);
 	if (readvalue!=NULL) {
 		DecodeHexBin (SMS->UDH.Text, readvalue, strlen(readvalue));
 		SMS->UDH.Length = strlen(readvalue)/2;
@@ -3919,6 +3884,7 @@ static GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
 {
 	int 		i=0;
 	unsigned char 	buffer[10000]={0};
+	char *s;
 	GSM_DateTime	DT;
 	GSM_Error error;
 
@@ -3985,12 +3951,9 @@ static GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
 				break;
 		}
 		SaveLinkedBackupText(file, "Text", buffer, FALSE);
-		switch (backup->SMS[i]->Coding) {
-			case SMS_Coding_Unicode_No_Compression	: fprintf(file,"Coding = Unicode\n"); 	break;
-			case SMS_Coding_Default_No_Compression	: fprintf(file,"Coding = Default\n"); 	break;
-			case SMS_Coding_8bit			: fprintf(file,"Coding = 8bit\n"); 	break;
-			default					: break;
-		}
+		s = GSM_SMSCodingToString(backup->SMS[i]->Coding);
+		fprintf(file, "Coding = %s\n", s);
+		free(s);
 		fprintf(file,"Folder = %i\n",backup->SMS[i]->Folder);
 		fprintf(file,"Length = %i\n",backup->SMS[i]->Length);
 		fprintf(file,"Class = %i\n",backup->SMS[i]->Class);

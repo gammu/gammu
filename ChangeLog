@@ -23,6 +23,13 @@ ChangeLog
 
 [+] * New SMSD configuration RunOnFailure.
 [-] * Fix invalid SQL when storing 8bit SMS (bug #1329).
+[-] * Probe if phone supports m-obex protocol (bug #1286).
+[+] * Experimental support fo m-obex protocol (bug #1286).
+[-] * Fix detection of delivery reports in MySQL and PostgreSQL backends
+      (bug #313).
+[+] * Include udev rules for Nokia phones (bug #1251).
+[-] * Fix parsing LG VX9200 reply on getting battery state (bug #1264).
+[-] * Fix handling of SMS text mode (bug #1189).
     
 20101004 - 1.28.92
 

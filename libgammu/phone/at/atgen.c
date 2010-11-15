@@ -2040,6 +2040,13 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 #endif
 	}
 
+	if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NO_ATSYNCML)) {
+		smprintf(s, "Checking for SYNCML/OBEX support\n");
+		/* We don't care about error here */
+		ATGEN_WaitForAutoLen(s, "AT+SYNCML?\r", 0x00, 20, ID_SetOBEX);
+		error = ERR_NONE;
+	}
+
 #ifdef GSM_ENABLE_ATOBEX
 	if (Priv->Manufacturer == AT_Siemens) {
 		ATGEN_WaitForAutoLen(s, "AT^SQWE?\r", 0x00, 3, ID_GetProtocol);
@@ -2371,7 +2378,7 @@ GSM_Error ATGEN_GetIMEI (GSM_StateMachine *s)
 
 	if (s->Phone.Data.IMEI[0] != 0) return ERR_NONE;
 	smprintf(s, "Getting IMEI\n");
-	ATGEN_WaitForAutoLen(s, "AT+CGSN\r", 0x00, 2, ID_GetIMEI);
+	ATGEN_WaitForAutoLen(s, "AT+CGSN\r", 0x00, 20, ID_GetIMEI);
 
 	return error;
 }
@@ -3837,7 +3844,12 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 		return ERR_UNKNOWNRESPONSE;
 	case AT_Reply_CMEError:
-		return ATGEN_HandleCMEError(s);
+		error = ATGEN_HandleCMEError(s);
+		if (error == ERR_MEMORY) {
+			smprintf(s, "Assuming that memory error means empty entry\n");
+			return ERR_EMPTY;
+		}
+		return error;
 	case AT_Reply_Error:
  		smprintf(s, "Error - too high location ?\n");
 		return ERR_INVALIDLOCATION;
@@ -4839,7 +4851,15 @@ GSM_Error ATGEN_ReplyGetBatteryCharge(GSM_Protocol_Message msg, GSM_StateMachine
 				&bcl);
 
 			if (error != ERR_NONE) {
-				return error;
+				/* LG phones reply just with value */
+				error = ATGEN_ParseReply(s,
+					GetLineString(msg.Buffer, &Priv->Lines, 2),
+					"@i, @i",
+					&bcs,
+					&bcl);
+				if (error != ERR_NONE) {
+					return error;
+				}
 			}
 			BatteryCharge->BatteryPercent = bcl;
 
@@ -5240,6 +5260,33 @@ GSM_Error ATGEN_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, gboolean Press)
 }
 
 /**
+ * Check what kind of protocols switching is supported.
+ */
+GSM_Error ATGEN_ReplyCheckSyncML(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
+
+	switch (Priv->ReplyState) {
+		case AT_Reply_OK:
+			break;
+		case AT_Reply_CMSError:
+			return ATGEN_HandleCMSError(s);
+		case AT_Reply_CMEError:
+			return ATGEN_HandleCMEError(s);
+		default:
+			return ERR_UNKNOWNRESPONSE;
+	}
+
+	if (strstr("MOBEXSTART", GetLineString(msg.Buffer, &Priv->Lines, 2)) != NULL) {
+		smprintf(s, "Automatically enabling F_MOBEX, please report bug if it causes problems\n");
+		GSM_AddPhoneFeature(s->Phone.Data.ModelInfo, F_MOBEX);
+		GSM_AddPhoneFeature(s->Phone.Data.ModelInfo, F_OBEX);
+	}
+
+	return ERR_NONE;
+}
+
+/**
  * Detects what additional protocols are being supported
  */
 GSM_Error ATGEN_ReplyCheckProt(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -5340,6 +5387,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReply,		"AT+CKPD="		,0x00,0x00,ID_PressKey		 },
 {ATGEN_ReplyGetSIMIMSI,		"AT+CIMI" 	 	,0x00,0x00,ID_GetSIMIMSI	 },
 {ATGEN_ReplyCheckProt,		"AT+CPROT=?" 	 	,0x00,0x00,ID_SetOBEX		 },
+{ATGEN_ReplyCheckSyncML,	"AT+SYNCML?" 	 	,0x00,0x00,ID_SetOBEX		 },
 {ATGEN_GenericReply,		"AT+XLNK=?" 	 	,0x00,0x00,ID_SetOBEX		 },
 
 {ATGEN_ReplyGetCNMIMode,	"AT+CNMI=?"		,0x00,0x00,ID_GetCNMIMode	 },
@@ -5503,6 +5551,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReply,		"AT+MODE=22" 	 	,0x00,0x00,ID_SetOBEX		 },
 {ATGEN_GenericReply,		"AT+XLNK" 	 	,0x00,0x00,ID_SetOBEX		 },
 {ATGEN_GenericReply,		"AT^SQWE=3" 	 	,0x00,0x00,ID_SetOBEX		 },
+{ATGEN_GenericReply,		"AT+SYNCML=MOBEXSTART" 	,0x00,0x00,ID_SetOBEX		 },
 {ATGEN_GenericReply,		"AT^SQWE=0" 	 	,0x00,0x00,ID_SetOBEX		 },
 {ATGEN_SQWEReply,		"AT^SQWE?" 	 	,0x00,0x00,ID_GetProtocol	 },
 

@@ -23,6 +23,8 @@
 # define GSM_USED_OBEX
 #endif
 
+#include "../obex/obexgen.h"
+
 /**
  * Determines which mode is phone currently using.
  */
@@ -47,7 +49,9 @@ typedef enum {
 	ATOBEX_OBEX_MODE22, /**< Switch using AT+MODE=22 */
 	ATOBEX_OBEX_XLNK, /**< Switch using AT+XLNK */
 	ATOBEX_OBEX_SQWE, /**< Switch using AT^SQWE */
+	ATOBEX_OBEX_MOBEX, /**< Switch using AT+SYNCML=MOBEXSTART */
 } GSM_ATOBEX_OBEX;
+
 /**
  * ATOBEX driver private data.
  */
@@ -67,6 +71,10 @@ typedef struct {
 	 * Whether AT*EBCA failed.
 	 */
 	gboolean EBCAFailed;
+	/**
+	 * Which service is used for contacts/calendar/etc.
+	 */
+	OBEX_Service DataService;
 } GSM_Phone_ATOBEXData;
 #endif
 /*@}*/

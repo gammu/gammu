@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-09-03 14:46+0200\n"
+"POT-Creation-Date: 2010-11-14 19:15+0100\n"
 "PO-Revision-Date: 2010-02-20 13:07+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: none\n"
@@ -295,7 +295,8 @@ msgid "Bluetooth configuration requires channel option."
 msgstr "תצורת ה־Bluetooth דורשת אפשרות ערוץ."
 
 #: libgammu/gsmcomon.c:147
-msgid "Service is not runnig."
+#, fuzzy
+msgid "Service is not running."
 msgstr "השירות אינו פעיל."
 
 #: libgammu/gsmcomon.c:148
@@ -330,19 +331,19 @@ msgstr "תבניות"
 msgid "Personal"
 msgstr "אישי"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1961 libgammu/phone/nokia/nfunc.c:1144
+#: libgammu/phone/nokia/dct3/n6110.c:1961 libgammu/phone/nokia/nfunc.c:1115
 msgid "Car"
 msgstr "רכב"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1963 libgammu/phone/nokia/nfunc.c:1146
+#: libgammu/phone/nokia/dct3/n6110.c:1963 libgammu/phone/nokia/nfunc.c:1117
 msgid "Headset"
 msgstr "אוזניה"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1969 libgammu/phone/nokia/nfunc.c:1134
+#: libgammu/phone/nokia/dct3/n6110.c:1969 libgammu/phone/nokia/nfunc.c:1105
 msgid "General"
 msgstr "כללי"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1971 libgammu/phone/nokia/nfunc.c:1136
+#: libgammu/phone/nokia/dct3/n6110.c:1971 libgammu/phone/nokia/nfunc.c:1107
 msgid "Silent"
 msgstr "שקט"
 
@@ -374,35 +375,35 @@ msgstr "פריטים שנשלחו"
 msgid "Saved items"
 msgstr "פריטים שנשמרו"
 
-#: libgammu/phone/nokia/nfunc.c:950
+#: libgammu/phone/nokia/nfunc.c:921
 msgid "Family"
 msgstr "משפחה"
 
-#: libgammu/phone/nokia/nfunc.c:952
+#: libgammu/phone/nokia/nfunc.c:923
 msgid "VIP"
 msgstr "אח\"מים"
 
-#: libgammu/phone/nokia/nfunc.c:954
+#: libgammu/phone/nokia/nfunc.c:925
 msgid "Friends"
 msgstr "חברים"
 
-#: libgammu/phone/nokia/nfunc.c:956
+#: libgammu/phone/nokia/nfunc.c:927
 msgid "Colleagues"
 msgstr "שותפים לעבודה"
 
-#: libgammu/phone/nokia/nfunc.c:958
+#: libgammu/phone/nokia/nfunc.c:929
 msgid "Other"
 msgstr "אחר"
 
-#: libgammu/phone/nokia/nfunc.c:1138
+#: libgammu/phone/nokia/nfunc.c:1109
 msgid "Meeting"
 msgstr "פגישה"
 
-#: libgammu/phone/nokia/nfunc.c:1140
+#: libgammu/phone/nokia/nfunc.c:1111
 msgid "Outdoor"
 msgstr "מחוץ למבנה"
 
-#: libgammu/phone/nokia/nfunc.c:1142
+#: libgammu/phone/nokia/nfunc.c:1113
 msgid "Pager"
 msgstr "זימונית"
 

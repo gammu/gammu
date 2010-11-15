@@ -186,7 +186,7 @@ void GetEachMMS(int argc, char *argv[])
 		fprintf(stderr, "%c",13);
 
 		if (GSM_IsPhoneFeatureAvailable(GSM_GetModelInfo(gsm), F_SERIES40_30)) {
-			memcpy(File.Buffer,File.Buffer+176,File.Used-176);
+			memmove(File.Buffer,File.Buffer+176,File.Used-176);
 			File.Used-=176;
 			File.Buffer = realloc(File.Buffer,File.Used);
 		}

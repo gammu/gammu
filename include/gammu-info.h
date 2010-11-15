@@ -654,6 +654,14 @@ typedef enum {
 	 * tell so.
 	 */
 	F_SIEMENS_PBK,
+	/**
+	 * Disable AT+SYNCML probing.
+	 */
+	F_NO_ATSYNCML,
+	/**
+	 * Phone supports m-obex (usually Samsung phones).
+	 */
+	F_MOBEX,
 
 	/**
 	 * Just marker of highest feature code, should not be used.

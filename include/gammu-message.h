@@ -325,6 +325,19 @@ typedef enum {
 } GSM_Coding_Type;
 
 /**
+ * Converts SMS coding to string.
+ *
+ * \return Pointer to newly allocated memory, caller is responsible for
+ * freeing it up. NULL on failure.
+ */
+char *GSM_SMSCodingToString(GSM_Coding_Type type);
+
+/**
+ * Converts SMS coding to type.
+ */
+GSM_Coding_Type GSM_StringToSMSCoding(const char *s);
+
+/**
  * Types of UDH (User Data Header).
  *
  * \ingroup SMS

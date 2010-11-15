@@ -68,6 +68,7 @@ set (LIBRARY_SRC
     phone/nokia/nfunc.c
     phone/nokia/nfuncold.c
     phone/obex/obexgen.c
+    phone/obex/mobex.c
     phone/symbian/gnapgen.c)
 
 if (WITH_BACKUP)

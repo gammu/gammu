@@ -115,6 +115,8 @@ GSM_FeatureName AllFeatureNames[] = {
 	{"SMS_NO_ME", F_SMS_NO_ME},
 	{"SMS_NO_SM", F_SMS_NO_SM},
 	{"SIEMENS_PBK", F_SIEMENS_PBK},
+	{"NO_ATSYNCML", F_NO_ATSYNCML},
+	{"MOBEX", F_MOBEX},
 	{"", 0},
 };
 
@@ -416,7 +418,8 @@ GSM_PhoneModel allmodels[] = {
 	{"S45"	,	  "6618" ,	  "",				   {0}},
 	{"ME45" ,	  "3618" ,	  "",				   {0}},
 	{"S55" ,	  "S55" ,	  "",				   {0}},
-	{"S65" ,	  "S65" ,	  "SIEMENS S65",		   {0}},
+	{"S65" ,	  "S65" ,	  "SIEMENS S65",		   {F_SIEMENS_PBK, 0}},
+	{"S68",		  "S68",	  "",				   {F_OBEX,F_SQWE, 0}},
 	{"MC75" ,	  "MC75",	  "",				   {F_NO_ATOBEX, 0}},
 	{"AX75",	  "AX75",	  "SIEMENS AX75",		   {F_SIEMENS_PBK, 0}},
 

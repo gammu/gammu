@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu 1.28.91\n"
+"Project-Id-Version: Gammu 1.28.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-09-03 14:46+0200\n"
+"POT-Creation-Date: 2010-11-15 10:00+0100\n"
 "PO-Revision-Date: 2010-06-18 19:43+0200\n"
 "Last-Translator:  <canin@in.com>\n"
 "Language-Team: Language =de\n"
@@ -64,7 +64,7 @@ msgstr "Unbekanntes Backupformat: \"%s\"\n"
 msgid "Error while opening file for writing!\n"
 msgstr "Konnte Datei nicht zum Schreiben öffnen!\n"
 
-#: gammu/backup.c:175 gammu/files.c:444 helper/message-cmdline.c:1110
+#: gammu/backup.c:175 gammu/files.c:454 helper/message-cmdline.c:1110
 msgid "Error while writing file!\n"
 msgstr "Fehler beim Schreiben der Datei!\n"
 
@@ -96,7 +96,7 @@ msgstr "Lese:"
 #: gammu/backup.c:1499 gammu/backup.c:1524 gammu/backup.c:1614
 #: gammu/backup.c:1642 gammu/backup.c:1675 gammu/backup.c:1699
 #: gammu/backup.c:1721 gammu/backup.c:1745 gammu/backupsms.c:108
-#: gammu/files.c:386 gammu/files.c:594 gammu/misc.c:107 gammu/misc.c:598
+#: gammu/files.c:386 gammu/files.c:604 gammu/misc.c:107 gammu/misc.c:598
 #: gammu/misc.c:603 gammu/misc.c:1315 gammu/mms.c:183
 #, c-format
 msgid "%i percent"
@@ -314,7 +314,7 @@ msgstr "Telefon-Betreiberlogos wiederherstellen?"
 #: gammu/backup.c:1445 gammu/backup.c:1498 gammu/backup.c:1523
 #: gammu/backup.c:1613 gammu/backup.c:1641 gammu/backup.c:1674
 #: gammu/backup.c:1698 gammu/backup.c:1720 gammu/backup.c:1744
-#: gammu/files.c:743
+#: gammu/files.c:753
 msgid "Writing:"
 msgstr "Schreibe:"
 
@@ -1577,12 +1577,12 @@ msgstr "Hole \"%s\"\n"
 msgid "Is a folder. Please give only file names."
 msgstr "Ist ein Ordner. Bitte nur Dateinamen angeben."
 
-#: gammu/files.c:399 gammu/files.c:606
+#: gammu/files.c:399 gammu/files.c:616
 #, c-format
 msgid " (%02i:%02i minutes left)"
 msgstr " (%02i:%02i Minuten übrig)"
 
-#: gammu/files.c:410 gammu/files.c:617
+#: gammu/files.c:410 gammu/files.c:627
 msgid ""
 "File checksum calculated by phone doesn't match with value calculated by "
 "Gammu. File is damaged or there is a error in Gammu."
@@ -1591,32 +1591,42 @@ msgstr ""
 "ermittelten überein. Entweder ist die Datei defkt oder in Gammu ist ein "
 "Fehler aufgetreten."
 
-#: gammu/files.c:442
+#: gammu/files.c:421
+#, fuzzy, c-format
+msgid "%i percent done."
+msgstr "%i Prozent"
+
+#: gammu/files.c:423
+#, c-format
+msgid "%lu Bytes in %li seconds, %lu Bytes/sec"
+msgstr ""
+
+#: gammu/files.c:452
 #, c-format
 msgid "  Saving to %s\n"
 msgstr "  Speichere nach %s\n"
 
-#: gammu/files.c:692 gammu/nokia.c:946
+#: gammu/files.c:702 gammu/nokia.c:946
 #, c-format
 msgid "Parameter \"%s\" unknown\n"
 msgstr "Der Parameter \"%s\" ist unbekannt\n"
 
-#: gammu/files.c:727
+#: gammu/files.c:737
 #, c-format
 msgid "What file type (\"%s\") ?\n"
 msgstr "Welcher Dateityp (\"%s\")?\n"
 
-#: gammu/files.c:736 gammu/misc.c:1273 gammu/nokia.c:955
+#: gammu/files.c:746 gammu/misc.c:1273 gammu/nokia.c:955
 #: helper/message-cmdline.c:1307
 msgid "Parameter missing!"
 msgstr "Parameter fehlt!"
 
-#: gammu/files.c:745
+#: gammu/files.c:755
 #, c-format
 msgid "ID of new file is \"%s\"\n"
 msgstr "Die ID der neuen Datei ist \"%s\"\n"
 
-#: gammu/files.c:766
+#: gammu/files.c:776
 #, c-format
 msgid "ID of new folder is \"%s\"\n"
 msgstr "Die ID des neuen Ordners ist \"%s\"\n"

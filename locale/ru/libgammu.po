@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libGammu 1.28.91\n"
+"Project-Id-Version: libGammu 1.28.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-09-03 14:46+0200\n"
+"POT-Creation-Date: 2010-11-14 19:15+0100\n"
 "PO-Revision-Date: 2008-01-27 17:07+0100\n"
 "Last-Translator: Даниил Аплеев <apleev@mail.ru>\n"
 "Language-Team: Language =ru\n"
@@ -330,7 +330,7 @@ msgid "Bluetooth configuration requires channel option."
 msgstr ""
 
 #: libgammu/gsmcomon.c:147
-msgid "Service is not runnig."
+msgid "Service is not running."
 msgstr ""
 
 #: libgammu/gsmcomon.c:148
@@ -370,19 +370,19 @@ msgstr ", %i шаблонов"
 msgid "Personal"
 msgstr "Личный"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1961 libgammu/phone/nokia/nfunc.c:1144
+#: libgammu/phone/nokia/dct3/n6110.c:1961 libgammu/phone/nokia/nfunc.c:1115
 msgid "Car"
 msgstr "Машина"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1963 libgammu/phone/nokia/nfunc.c:1146
+#: libgammu/phone/nokia/dct3/n6110.c:1963 libgammu/phone/nokia/nfunc.c:1117
 msgid "Headset"
 msgstr "Гарнитура"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1969 libgammu/phone/nokia/nfunc.c:1134
+#: libgammu/phone/nokia/dct3/n6110.c:1969 libgammu/phone/nokia/nfunc.c:1105
 msgid "General"
 msgstr "Основной"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1971 libgammu/phone/nokia/nfunc.c:1136
+#: libgammu/phone/nokia/dct3/n6110.c:1971 libgammu/phone/nokia/nfunc.c:1107
 msgid "Silent"
 msgstr "Тихо"
 
@@ -414,35 +414,35 @@ msgstr "Переданные"
 msgid "Saved items"
 msgstr "Сохранённые"
 
-#: libgammu/phone/nokia/nfunc.c:950
+#: libgammu/phone/nokia/nfunc.c:921
 msgid "Family"
 msgstr "Семья"
 
-#: libgammu/phone/nokia/nfunc.c:952
+#: libgammu/phone/nokia/nfunc.c:923
 msgid "VIP"
 msgstr "VIP"
 
-#: libgammu/phone/nokia/nfunc.c:954
+#: libgammu/phone/nokia/nfunc.c:925
 msgid "Friends"
 msgstr "Друзья"
 
-#: libgammu/phone/nokia/nfunc.c:956
+#: libgammu/phone/nokia/nfunc.c:927
 msgid "Colleagues"
 msgstr "Коллеги"
 
-#: libgammu/phone/nokia/nfunc.c:958
+#: libgammu/phone/nokia/nfunc.c:929
 msgid "Other"
 msgstr "Другие"
 
-#: libgammu/phone/nokia/nfunc.c:1138
+#: libgammu/phone/nokia/nfunc.c:1109
 msgid "Meeting"
 msgstr "Встреча"
 
-#: libgammu/phone/nokia/nfunc.c:1140
+#: libgammu/phone/nokia/nfunc.c:1111
 msgid "Outdoor"
 msgstr "На улице"
 
-#: libgammu/phone/nokia/nfunc.c:1142
+#: libgammu/phone/nokia/nfunc.c:1113
 msgid "Pager"
 msgstr "Пейджер"
 

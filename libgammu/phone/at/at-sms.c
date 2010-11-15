@@ -310,7 +310,9 @@ GSM_Error ATGEN_GetSMSMode(GSM_StateMachine *s)
 	}
 
 	/* Prefer PDU mode for most phones */
-	if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_USE_SMSTEXTMODE)) {
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_USE_SMSTEXTMODE)) {
+		smprintf(s, "Forcibily enabled SMS text mode\n");
+	} else {
 		smprintf(s, "Trying SMS PDU mode\n");
 		ATGEN_WaitForAutoLen(s, "AT+CMGF=0\r", 0x00, 9, ID_GetSMSMode);
 
@@ -832,6 +834,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 			}
 			return ERR_NONE;
 		default:
+			smprintf(s, "Internal error - SMS mode not set!\n");
 			return ERR_BUG;
 		}
 		break;
@@ -1707,7 +1710,9 @@ GSM_Error ATGEN_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 		} else {
 			len = sprintf(buffer, "AT+CMGW=\"%s\",,\"%s\"\r",DecodeUnicodeString(sms->Number),statetxt);
 		}
+		break;
 	default:
+		smprintf(s, "Internal error - SMS mode not set!\n");
 		return ERR_BUG;
 	}
 	Phone->SaveSMSMessage = sms;
@@ -1851,6 +1856,7 @@ GSM_Error ATGEN_SendSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 		len = sprintf(buffer, "AT+CMGS=\"%s\"\r",DecodeUnicodeString(sms->Number));
 		break;
 	default:
+		smprintf(s, "Internal error - SMS mode not set!\n");
 		return ERR_BUG;
 	}
 

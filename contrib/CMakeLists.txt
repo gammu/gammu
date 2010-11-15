@@ -15,6 +15,7 @@ else (BASH_BIN)
 endif (BASH_BIN)
 
 option(INSTALL_LSB_INIT "Install LSB compatible init script for Gammu" OFF)
+option(INSTALL_UDEV_RULES "Install udev rules for Gammu" OFF)
 
 set (SYMBIAN_FILES
     symbian/readme.txt
@@ -87,6 +88,16 @@ if (INSTALL_LSB_INIT)
 else (INSTALL_LSB_INIT)
     message (STATUS "Init script not being installed, install it by -DINSTALL_LSB_INIT=ON")
 endif (INSTALL_LSB_INIT)
+
+if (INSTALL_UDEV_RULES)
+    install (
+        FILES contrib/udev/45-nokiadku2.rules
+        DESTINATION "/etc/udev/rules.d"
+        COMPONENT "udev"
+        )
+else (INSTALL_UDEV_RULES)
+    message (STATUS "Udev rules not being installed, install it by -DINSTALL_UDEV_RULES=ON")
+endif (INSTALL_UDEV_RULES)
 
 # Build some examples
 # We do not install them intentionally, just check whether they still compile

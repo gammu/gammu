@@ -33,12 +33,12 @@
 #include "../../service/gsmmisc.h"
 #include "../../protocol/obex/obex.h"
 #include "obexfunc.h"
+#include "mobex.h"
 #include "../../../helper/string.h"
 
 #ifdef GSM_ENABLE_OBEXGEN
 
 /* Forward definitions */
-GSM_Error OBEXGEN_GetTextFile(GSM_StateMachine *s, const char *FileName, char ** Buffer);
 GSM_Error OBEXGEN_GetModel(GSM_StateMachine *s);
 
 /**
@@ -194,6 +194,14 @@ GSM_Error OBEXGEN_Connect(GSM_StateMachine *s, OBEX_Service service)
 		/* Target block */
 		OBEXAddBlock(req, &Current, 0x46, req2, 16);
 		break;
+	case OBEX_m_OBEX:
+		/* IrMC Service UUID */
+		req2[0] = 'M'; req2[1] = 'O'; req2[2] = 'B';
+		req2[3] = 'E'; req2[4] = 'X';
+
+		/* Target block */
+		OBEXAddBlock(req, &Current, 0x46, req2, 5);
+		break;
 	}
 
 	/* Remember current service */
@@ -254,6 +262,9 @@ GSM_Error OBEXGEN_InitialiseVars(GSM_StateMachine *s)
 	Priv->NoteData = NULL;
 	Priv->NoteCount = -1;
 	Priv->NoteOffsets = NULL;
+	Priv->m_obex_appdata = NULL;
+	Priv->m_obex_appdata_len = 0;
+        Priv->m_obex_getnextid = 0;
 
 	IRMC_InitCapabilities(&(Priv->NoteCap));
 	IRMC_InitCapabilities(&(Priv->PbCap));
@@ -295,6 +306,9 @@ GSM_Error OBEXGEN_Initialise(GSM_StateMachine *s)
 		service_forced = TRUE;
 	} else if (strcmp(s->CurrentConfig->Model, "seobex") == 0) {
 		Priv->InitialService = OBEX_IRMC;
+		service_forced = TRUE;
+	} else if (strcmp(s->CurrentConfig->Model, "mobex") == 0) {
+		Priv->InitialService = OBEX_m_OBEX;
 		service_forced = TRUE;
 	} else if (strcmp(s->CurrentConfig->Model, "obexnone") == 0) {
 		Priv->InitialService = OBEX_None;
@@ -579,6 +593,15 @@ static GSM_Error OBEXGEN_ReplyAddFilePart(GSM_Protocol_Message msg, GSM_StateMac
 				while(1) {
 					if (pos2 >= len2) break;
 					switch (msg.Buffer[Pos + 3 + pos2]) {
+						case 0x00:
+							if (Priv->Service == OBEX_m_OBEX) {
+								Priv->m_obex_error = msg.Buffer[Pos + 3 + pos2 + 1];
+								smprintf(s, " m-obex error=\"%d\"", Priv->m_obex_error);
+								/* This field has fixed size */
+								pos2 += 2;
+								continue;
+							}
+							break;
 						case 0x01:
 							NewLUID = (char *)malloc(msg.Buffer[Pos + 3 + pos2 + 1]+1);
 							memcpy(NewLUID,msg.Buffer + Pos + 3 + pos2 + 2, msg.Buffer[Pos + 3 + pos2 + 1]);
@@ -645,6 +668,10 @@ static GSM_Error OBEXGEN_ReplyAddFilePart(GSM_Protocol_Message msg, GSM_StateMac
 				 */
 				Pos += 5;
 				break;
+			case 0x49:
+				/* ID of newly created m-obex entry */
+				Priv->m_obex_newid = msg.Buffer[Pos+3]*256 + msg.Buffer[Pos+4];
+				Pos += 5;
 			case 0xcb:
 				/* Skip Connection ID (we ignore this for now) */
 				Pos += 5;
@@ -666,6 +693,7 @@ GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos,
 	int		Current = 0;
 	unsigned char 		req[2000];
 	unsigned char		hard_delete_header[2] = {'\x12', '\x0'};
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 
 	s->Phone.Data.File = File;
 
@@ -674,7 +702,7 @@ GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos,
 			error = OBEXGEN_Connect(s,OBEX_None);
 			if (error != ERR_NONE) return error;
 		} else {
-			if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_BrowsingFolders) {
+			if (Priv->Service == OBEX_BrowsingFolders) {
 				error = OBEXGEN_ChangeToFilePath(s, File->ID_FullName, FALSE, NULL);
 				if (error != ERR_NONE) return error;
 			}
@@ -696,14 +724,19 @@ GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos,
 		}
 	}
 
-	if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_BrowsingFolders) {
+	if (Priv->Service == OBEX_BrowsingFolders || Priv->Service == OBEX_m_OBEX) {
 		/* connection ID block */
 		req[Current++] = 0xCB; /* ID */
 		req[Current++] = 0x00; req[Current++] = 0x00;
 		req[Current++] = 0x00; req[Current++] = 0x01;
 	}
 
-	j = s->Phone.Data.Priv.OBEXGEN.FrameSize - Current - 20;
+	/* Include m-obex application data */
+	if (Priv->Service == OBEX_m_OBEX && Priv->m_obex_appdata != NULL && Priv->m_obex_appdata_len != 0) {
+		OBEXAddBlock(req, &Current, 0x4C, Priv->m_obex_appdata, Priv->m_obex_appdata_len);
+	}
+
+	j = Priv->FrameSize - Current - 20;
 	if (j > 1000) j = 1000;
 
 	if (File->Used - *Pos < j) {
@@ -829,6 +862,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, gb
 	GSM_Error		error;
 	unsigned char 		req[2000], req2[200];
 	int			retries;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 
 	s->Phone.Data.File 	= File;
 	File->ReadOnly 		= FALSE;
@@ -849,7 +883,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, gb
 			File->Folder = FALSE;
 
 			if (File->ID_FullName[0] == 0x00 && File->ID_FullName[1] == 0x00) {
-				if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_BrowsingFolders) {
+				if (Priv->Service == OBEX_BrowsingFolders) {
 					/* No file name? Grab OBEX capabilities in browse mode */
 					smprintf(s, "No filename requested, grabbing OBEX capabilities as obex-capability.xml\n");
 					EncodeUnicode(File->Name, "obex-capability.xml", 19);
@@ -857,7 +891,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, gb
 
 					/* Type block */
 					OBEXAddBlock(req, &Current, 0x42, req2, strlen(req2));
-				} else if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_IRMC) {
+				} else if (Priv->Service == OBEX_IRMC) {
 					/* No file name? Grab devinfo in IrMC mode */
 					smprintf(s, "No filename requested, grabbing device information as devinfo.txt\n");
 					EncodeUnicode(File->Name, "devinfo.txt", 19);
@@ -869,7 +903,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, gb
 					return ERR_NOTSUPPORTED;
 				}
 			} else {
-				if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_BrowsingFolders) {
+				if (Priv->Service == OBEX_BrowsingFolders) {
 					error = OBEXGEN_ChangeToFilePath(s, File->ID_FullName, TRUE, req2);
 					if (error != ERR_NONE) return error;
 				} else {
@@ -886,13 +920,18 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, gb
 		}
 	}
 
-	s->Phone.Data.Priv.OBEXGEN.FileLastPart = FALSE;
+	Priv->FileLastPart = FALSE;
 
-	if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_BrowsingFolders) {
+	if (Priv->Service == OBEX_BrowsingFolders || Priv->Service == OBEX_m_OBEX) {
 		/* connection ID block */
 		req[Current++] = 0xCB; /* ID */
 		req[Current++] = 0x00; req[Current++] = 0x00;
 		req[Current++] = 0x00; req[Current++] = 0x01;
+	}
+
+	/* Include m-obex application data */
+	if (Priv->Service == OBEX_m_OBEX && Priv->m_obex_appdata != NULL && Priv->m_obex_appdata_len != 0) {
+		OBEXAddBlock(req, &Current, 0x4C, Priv->m_obex_appdata, Priv->m_obex_appdata_len);
 	}
 
 	smprintf(s, "Getting first file part\n");
@@ -908,13 +947,17 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, gb
 	}
 	if (error != ERR_NONE) return error;
 
-	while (!s->Phone.Data.Priv.OBEXGEN.FileLastPart) {
+	while (!Priv->FileLastPart) {
 		Current = 0;
- 	    	if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_BrowsingFolders) {
+		if (Priv->Service == OBEX_BrowsingFolders || Priv->Service == OBEX_m_OBEX) {
 			/* connection ID block */
 			req[Current++] = 0xCB; /* ID */
 			req[Current++] = 0x00; req[Current++] = 0x00;
 			req[Current++] = 0x00; req[Current++] = 0x01;
+		}
+		/* Include m-obex application data */
+		if (Priv->Service == OBEX_m_OBEX && Priv->m_obex_appdata != NULL && Priv->m_obex_appdata_len != 0) {
+			OBEXAddBlock(req, &Current, 0x4C, Priv->m_obex_appdata, Priv->m_obex_appdata_len);
 		}
 		smprintf(s, "Getting next file part\n");
 		/* We retry for ERR_PERMISSION, because it can be caused by database locked error */
@@ -967,7 +1010,7 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, gboolea
 	if (error != ERR_NONE) return error;
 
 	/* We can browse files only when using browse service */
-	if (s->Phone.Data.Priv.OBEXGEN.Service != OBEX_BrowsingFolders) {
+	if (Priv->Service != OBEX_BrowsingFolders) {
 		return ERR_NOTSUPPORTED;
 	}
 
@@ -1226,25 +1269,34 @@ GSM_Error OBEXGEN_GetFile(GSM_StateMachine *s, const char *FileName, unsigned ch
 }
 
 /**
+ * Grabs complete single binary file
+ */
+GSM_Error OBEXGEN_GetBinaryFile(GSM_StateMachine *s, const char *FileName, unsigned char ** Buffer, int *len)
+{
+	GSM_Error error = ERR_NONE;
+
+	/* Grab complete file */
+	error = OBEXGEN_GetFile(s, FileName, (unsigned char **)Buffer, len);
+	if (error != ERR_NONE) return error;
+
+	/* Return data we got */
+	smprintf(s, "Got %d data\n", *len);
+	*Buffer = (unsigned char *)realloc(*Buffer, *len + 1);
+	if (*Buffer == NULL) {
+		return ERR_MOREMEMORY;
+	}
+	(*Buffer)[*len] = 0;
+	return ERR_NONE;
+}
+
+/**
  * Grabs complete single text file
  */
 GSM_Error OBEXGEN_GetTextFile(GSM_StateMachine *s, const char *FileName, char ** Buffer)
 {
-	GSM_Error error = ERR_NONE;
 	int len;
 
-	/* Grab complete file */
-	error = OBEXGEN_GetFile(s, FileName, (unsigned char **)Buffer, &len);
-	if (error != ERR_NONE) return error;
-
-	/* Return data we got */
-	smprintf(s, "Got %d data\n", len);
-	*Buffer = (unsigned char *)realloc(*Buffer, len + 1);
-	if (*Buffer == NULL) {
-		return ERR_MOREMEMORY;
-	}
-	(*Buffer)[len] = 0;
-	return ERR_NONE;
+	return OBEXGEN_GetBinaryFile(s, FileName, (unsigned char **)Buffer, &len);
 }
 
 /**
@@ -1641,7 +1693,13 @@ GSM_Error OBEXGEN_GetPbInformation(GSM_StateMachine *s, int *free_records, int *
  */
 GSM_Error OBEXGEN_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Status)
 {
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+
 	if (Status->MemoryType != MEM_ME) return ERR_NOTSUPPORTED;
+
+	if (Priv->Service == OBEX_m_OBEX) {
+		return MOBEX_GetStatus(s, "m-obex/contacts/count", &(Status->MemoryFree), &(Status->MemoryUsed));
+	}
 
 	return OBEXGEN_GetPbInformation(s, &(Status->MemoryFree), &(Status->MemoryUsed));
 
@@ -1773,6 +1831,11 @@ GSM_Error OBEXGEN_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 
 	if (Entry->MemoryType != MEM_ME) return ERR_NOTSUPPORTED;
 
+	/* Handle m-obex case */
+	if (Priv->Service == OBEX_m_OBEX) {
+		return MOBEX_GetMemory(s, Entry);
+	}
+
 	/* We need IrMC service for this */
 	error = OBEXGEN_Connect(s, OBEX_IRMC);
 	if (error != ERR_NONE) return error;
@@ -1800,6 +1863,12 @@ GSM_Error OBEXGEN_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry, gbo
 {
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 	GSM_Error 	error = ERR_EMPTY;;
+
+
+	/* Handle m-obex case */
+	if (Priv->Service == OBEX_m_OBEX) {
+		return MOBEX_GetNextMemory(s, Entry, start);
+	}
 
 	/* Get  location */
 	if (start) {
@@ -1839,6 +1908,15 @@ GSM_Error OBEXGEN_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 
 	if (Entry->MemoryType != MEM_ME) return ERR_NOTSUPPORTED;
 
+	/* Encode vCard */
+	error = GSM_EncodeVCARD(&(s->di), req, sizeof(req), &size, Entry, TRUE, SonyEricsson_VCard21);
+	if (error != ERR_NONE) return error;
+
+	/* Handle m-obex case */
+	if (Priv->Service == OBEX_m_OBEX) {
+		return MOBEX_CreateEntry(s, "m-obex/contacts/create", &(Entry->Location), req);
+	}
+
 	/* We need IrMC service for this */
 	error = OBEXGEN_Connect(s, OBEX_IRMC);
 	if (error != ERR_NONE) return error;
@@ -1848,10 +1926,6 @@ GSM_Error OBEXGEN_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 		error = OBEXGEN_GetPbInformation(s, NULL, NULL);
 		if (error != ERR_NONE) return error;
 	}
-
-	/* Encode vCard */
-	error = GSM_EncodeVCARD(&(s->di), req, sizeof(req), &size, Entry, TRUE, SonyEricsson_VCard21);
-	if (error != ERR_NONE) return error;
 
 	/* Use correct function according to supported IEL */
 	if (Priv->PbCap.IEL == 0x8 || Priv->PbCap.IEL == 0x10) {
@@ -1952,6 +2026,15 @@ GSM_Error OBEXGEN_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 
 	if (Entry->MemoryType != MEM_ME) return ERR_NOTSUPPORTED;
 
+	/* Encode vCard */
+	error = GSM_EncodeVCARD(&(s->di), req, sizeof(req), &size, Entry, TRUE, SonyEricsson_VCard21);
+	if (error != ERR_NONE) return error;
+
+	/* Handle m-obex case */
+	if (Priv->Service == OBEX_m_OBEX) {
+		return MOBEX_UpdateEntry(s, "m-obex/contacts/write", Entry->Location, req);
+	}
+
 	/* We need IrMC service for this */
 	error = OBEXGEN_Connect(s, OBEX_IRMC);
 	if (error != ERR_NONE) return error;
@@ -1961,10 +2044,6 @@ GSM_Error OBEXGEN_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 		error = OBEXGEN_GetPbInformation(s, NULL, NULL);
 		if (error != ERR_NONE) return error;
 	}
-
-	/* Encode vCard */
-	error = GSM_EncodeVCARD(&(s->di), req, sizeof(req), &size, Entry, TRUE, SonyEricsson_VCard21);
-	if (error != ERR_NONE) return error;
 
 	/* Use correct function according to supported IEL */
 	if (Priv->PbCap.IEL == 0x8 || Priv->PbCap.IEL == 0x10) {
@@ -2094,6 +2173,10 @@ GSM_Error OBEXGEN_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Sta
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 	GSM_Error 	error;
 
+	if (Priv->Service == OBEX_m_OBEX) {
+		return MOBEX_GetStatus(s, "m-obex/calendar/count", &(Status->Free), &(Status->Used));
+	}
+
 	error = OBEXGEN_InitCalLUID(s);
 	if (error != ERR_NONE) return error;
 
@@ -2212,6 +2295,11 @@ GSM_Error OBEXGEN_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 	GSM_Error 	error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 
+	/* Handle m-obex case */
+	if (Priv->Service == OBEX_m_OBEX) {
+		return MOBEX_GetCalendar(s, Entry);
+	}
+
 	/* We need IrMC service for this */
 	error = OBEXGEN_Connect(s, OBEX_IRMC);
 	if (error != ERR_NONE) return error;
@@ -2239,6 +2327,11 @@ GSM_Error OBEXGEN_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry,
 {
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 	GSM_Error 	error = ERR_EMPTY;;
+
+	/* Handle m-obex case */
+	if (Priv->Service == OBEX_m_OBEX) {
+		return MOBEX_GetNextCalendar(s, Entry, start);
+	}
 
 	/* Get  location */
 	if (start) {
@@ -2276,6 +2369,15 @@ GSM_Error OBEXGEN_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 	GSM_Error		error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 
+	/* Encode vCalendar */
+	error = GSM_EncodeVCALENDAR(req, sizeof(req), &size, Entry, TRUE, SonyEricsson_VCalendar);
+	if (error != ERR_NONE) return error;
+
+	/* Handle m-obex case */
+	if (Priv->Service == OBEX_m_OBEX) {
+		return MOBEX_CreateEntry(s, "m-obex/calendar/create", &(Entry->Location), req);
+	}
+
 	/* We need IrMC service for this */
 	error = OBEXGEN_Connect(s, OBEX_IRMC);
 	if (error != ERR_NONE) return error;
@@ -2285,10 +2387,6 @@ GSM_Error OBEXGEN_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 		error = OBEXGEN_GetCalInformation(s, NULL, NULL);
 		if (error != ERR_NONE) return error;
 	}
-
-	/* Encode vCalendar */
-	error = GSM_EncodeVCALENDAR(req, sizeof(req), &size, Entry, TRUE, SonyEricsson_VCalendar);
-	if (error != ERR_NONE) return error;
 
 	/* Use correct function according to supported IEL */
 	if (Priv->CalCap.IEL == 0x8 || Priv->CalCap.IEL == 0x10) {
@@ -2387,6 +2485,15 @@ GSM_Error OBEXGEN_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 	GSM_Error		error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 
+	/* Encode vCalendar */
+	error = GSM_EncodeVCALENDAR(req, sizeof(req), &size, Entry, TRUE, SonyEricsson_VCalendar);
+	if (error != ERR_NONE) return error;
+
+	/* Handle m-obex case */
+	if (Priv->Service == OBEX_m_OBEX) {
+		return MOBEX_UpdateEntry(s, "m-obex/calendar/write", Entry->Location, req);
+	}
+
 	/* We need IrMC service for this */
 	error = OBEXGEN_Connect(s, OBEX_IRMC);
 	if (error != ERR_NONE) return error;
@@ -2396,10 +2503,6 @@ GSM_Error OBEXGEN_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 		error = OBEXGEN_GetCalInformation(s, NULL, NULL);
 		if (error != ERR_NONE) return error;
 	}
-
-	/* Encode vCalendar */
-	error = GSM_EncodeVCALENDAR(req, sizeof(req), &size, Entry, TRUE, SonyEricsson_VCalendar);
-	if (error != ERR_NONE) return error;
 
 	/* Use correct function according to supported IEL */
 	if (Priv->CalCap.IEL == 0x8 || Priv->CalCap.IEL == 0x10) {

@@ -5,7 +5,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu-docs 1.28.91\n"
+"Project-Id-Version: Gammu-docs 1.28.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-09-03 14:46+0300\n"
 "PO-Revision-Date: 2010-10-29 21:04+0200\n"
@@ -173,7 +173,7 @@ msgstr "Anrufe"
 # die uebersetzung von einem befehl oder tag, je nach text... kann super sein oder missverstaendlich. da rot markiert, duerfte eine funktionalitaet gegeben sein?
 #. type: TP
 #: docs/user/gammu.1:40
-#, no-wrap, fuzzy
+#, fuzzy, no-wrap
 msgid "B<answercall>I< [id]>"
 msgstr "B<answercall>I< [id]>"
 
@@ -230,8 +230,7 @@ msgstr "B<dialvoice>I< number [show|hide]>"
 #: docs/user/gammu.1:59
 msgid "Make voice call from SIM card line set in phone."
 msgstr ""
-"Anruf von der Leitung, die auf der SIM-Karte im Mobiltelefon eingestellt "
-"ist."
+"Anruf von der Leitung, die auf der SIM-Karte im Mobiltelefon eingestellt ist."
 
 #. type: Plain text
 #: docs/user/gammu.1:61
@@ -246,9 +245,7 @@ msgstr ""
 #: docs/user/gammu.1:62
 #, no-wrap
 msgid "B<divert>I< get|set all|busy|noans|outofreach all|voice|fax|data [number timeout]>"
-msgstr ""
-"B<divert>I< get|set all|busy|noans|outofreach all|voice|fax|data [number "
-"timeout]>"
+msgstr "B<divert>I< get|set all|busy|noans|outofreach all|voice|fax|data [number timeout]>"
 
 #. type: Plain text
 #: docs/user/gammu.1:65
@@ -7591,12 +7588,11 @@ msgstr ""
 msgid "gammu-smsd.exe -u\n"
 msgstr ""
 
-# type: SS
 #. type: SS
 #: docs/user/gammu-smsd.1:160
 #, no-wrap
 msgid "Troubleshooting Windows Service"
-msgstr ""
+msgstr "Erste Hilfe bei Windows-Problemen"
 
 #. type: Plain text
 #: docs/user/gammu-smsd.1:167

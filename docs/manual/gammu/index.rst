@@ -443,11 +443,11 @@ ____________
 
     .. option:: MMSINDICATOR URL Title Sender 
 
-        Saves a message with MMS indication. The recipient phone will then download
-        MMS from given URL and display it.
-
-        Please note that you should provide valid smil data on that URL.
-
+        Creates a MMS indication SMS. It contains URL where the actual MMS
+        payload is stored which needs to be SMIL encoded. The phone usually 
+        downloads the MMS data using special APN, which does not count to
+        transmitted data, however there might be limitations which URLs can
+        be accessed.
 
     .. option:: MMSSETTINGS file location  
 

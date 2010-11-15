@@ -40,6 +40,10 @@ typedef enum {
 	 * Browsing for folders.
 	 */
 	OBEX_BrowsingFolders,
+	/**
+	 * m-obex service for Samsung phones.
+	 */
+	OBEX_m_OBEX,
 } OBEX_Service;
 
 /**
@@ -225,7 +229,31 @@ typedef struct {
 	 * Devinfo data.
 	 */
 	char				*OBEXDevinfo;
+	/**
+	 * m-obex return code.
+	 */
+	int				m_obex_error;
+	/**
+	 * m-obex application data length.
+	 */
+	int				m_obex_appdata_len;
+	/**
+	 * m-obex application data content.
+	 */
+	unsigned char			*m_obex_appdata;
+	/**
+	 * m-obex location of newly created entry.
+	 */
+	int				m_obex_newid;
+	/**
+	 * m-obex counter for GetNext*
+	 */
+        int				m_obex_getnextid;
 } GSM_Phone_OBEXGENData;
+
+GSM_Error OBEXGEN_GetBinaryFile(GSM_StateMachine *s, const char *FileName, unsigned char ** Buffer, int *len);
+GSM_Error OBEXGEN_GetTextFile(GSM_StateMachine *s, const char *FileName, char ** Buffer);
+GSM_Error OBEXGEN_SetFile(GSM_StateMachine *s, const char *FileName, const unsigned char *Buffer, size_t Length, gboolean HardDelete);
 
 #endif
 /*@}*/

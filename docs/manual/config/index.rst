@@ -133,6 +133,20 @@ Device connection parameters
         ip l s dev irda0 up
         sysctl net.irda.discovery=1
 
+    .. note::
+
+        On Linux systems, you might lack permissions for some device nodes.
+        You might need to be member of some group (eg. :samp:`plugdev` or
+        :samp:`dialout`) or or add special udev rules to enable you access
+        these devices as non-root.
+
+        For Nokia phones you can put follofing file (also available in sources
+        as :file:`contrib/udev/45-nokiadku2.rules`) as
+        :file:`/etc/udev/rules.d/45-nokiadku2.rules`:
+
+        .. literalinclude:: ../../../contrib/udev/45-nokiadku2.rules
+           :language: sh
+
 .. config:option:: Port
 
     .. deprecated:: 1.27.95
@@ -154,6 +168,8 @@ Device connection parameters
         force using of IrMC service (contacts, calendar and notes support)
     ``obexnone`` 
         none service chosen, this has only limited use for sending file (``sendfile`` command)
+    ``mobex``
+        m-obex service for Samsung phones
 
 .. config:option:: Use_Locking
 
@@ -186,6 +202,11 @@ Debugging options
 .. config:option:: LogFile
 
     Path to file where information about communication will be stored.
+
+    .. note::
+
+        For most debug levels (excluding ``errors``) the log file is overwritten on
+        each execution.
 
 .. config:option:: LogFormat
 
