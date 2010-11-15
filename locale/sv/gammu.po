@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-11-14 19:15+0100\n"
+"POT-Creation-Date: 2010-11-15 10:00+0100\n"
 "PO-Revision-Date: 2009-02-19 00:16+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: none\n"
@@ -96,8 +96,8 @@ msgstr ""
 #: gammu/backup.c:1499 gammu/backup.c:1524 gammu/backup.c:1614
 #: gammu/backup.c:1642 gammu/backup.c:1675 gammu/backup.c:1699
 #: gammu/backup.c:1721 gammu/backup.c:1745 gammu/backupsms.c:108
-#: gammu/files.c:386 gammu/files.c:421 gammu/files.c:604 gammu/misc.c:107
-#: gammu/misc.c:598 gammu/misc.c:603 gammu/misc.c:1315 gammu/mms.c:183
+#: gammu/files.c:386 gammu/files.c:604 gammu/misc.c:107 gammu/misc.c:598
+#: gammu/misc.c:603 gammu/misc.c:1315 gammu/mms.c:183
 #, c-format
 msgid "%i percent"
 msgstr ""
@@ -1580,9 +1580,14 @@ msgid ""
 "Gammu. File is damaged or there is a error in Gammu."
 msgstr ""
 
+#: gammu/files.c:421
+#, c-format
+msgid "%i percent done."
+msgstr ""
+
 #: gammu/files.c:423
 #, c-format
-msgid " done. %lu Bytes in %li seconds, %lu Bytes/sec"
+msgid "%lu Bytes in %li seconds, %lu Bytes/sec"
 msgstr ""
 
 #: gammu/files.c:452

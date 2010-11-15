@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-11-14 19:15+0100\n"
+"POT-Creation-Date: 2010-11-15 10:00+0100\n"
 "PO-Revision-Date: 2009-03-23 19:23+0200\n"
 "Last-Translator: Sergio Martín <ser.martin@wanadoo.es>\n"
 "Language-Team: Español\n"
@@ -100,8 +100,8 @@ msgstr "Leyendo: "
 #: gammu/backup.c:1499 gammu/backup.c:1524 gammu/backup.c:1614
 #: gammu/backup.c:1642 gammu/backup.c:1675 gammu/backup.c:1699
 #: gammu/backup.c:1721 gammu/backup.c:1745 gammu/backupsms.c:108
-#: gammu/files.c:386 gammu/files.c:421 gammu/files.c:604 gammu/misc.c:107
-#: gammu/misc.c:598 gammu/misc.c:603 gammu/misc.c:1315 gammu/mms.c:183
+#: gammu/files.c:386 gammu/files.c:604 gammu/misc.c:107 gammu/misc.c:598
+#: gammu/misc.c:603 gammu/misc.c:1315 gammu/mms.c:183
 #, c-format
 msgid "%i percent"
 msgstr "%i por ciento"
@@ -1617,9 +1617,14 @@ msgstr ""
 "calculado por Gammu. El fichero puede estar dañado o puede ser un error de "
 "Gammu."
 
+#: gammu/files.c:421
+#, fuzzy, c-format
+msgid "%i percent done."
+msgstr "%i por ciento"
+
 #: gammu/files.c:423
 #, c-format
-msgid " done. %lu Bytes in %li seconds, %lu Bytes/sec"
+msgid "%lu Bytes in %li seconds, %lu Bytes/sec"
 msgstr ""
 
 #: gammu/files.c:452

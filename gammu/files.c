@@ -418,9 +418,9 @@ static void GetOneFile(GSM_File * File, gboolean newtime, int i)
 	if ((diff > 0) && (File->Used > 0)) {
 		fprintf(stderr, "\r");
 		if (Size != 0) {
-			fprintf(stderr, _("%i percent"), (int)(File->Used * 100 / Size));
+			fprintf(stderr, _("%i percent done."), (int)(File->Used * 100 / Size));
 		}
-		fprintf(stderr, _(" done. %lu Bytes in %li seconds, %lu Bytes/sec"),
+		fprintf(stderr, _("%lu Bytes in %li seconds, %lu Bytes/sec"),
 			(long unsigned int) File->Used, diff, File->Used / diff);
 	}
 	fprintf(stderr, "\n");
