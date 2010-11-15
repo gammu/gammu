@@ -1592,7 +1592,7 @@ msgstr "%i procent hotovo."
 #: gammu/files.c:423
 #, c-format
 msgid "%lu Bytes in %li seconds, %lu Bytes/sec"
-msgstr ""
+msgstr "%lu bajtů za %li sekund, %lu bajtů za sekundu"
 
 #: gammu/files.c:452
 #, c-format
