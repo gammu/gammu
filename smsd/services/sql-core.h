@@ -27,7 +27,7 @@
 #include <sys/types.h>
 #endif
 
-
+/* sql result structures */
 typedef union {
 #ifdef LIBDBI_FOUND
 	dbi_result dbi;
@@ -35,18 +35,19 @@ typedef union {
 #ifdef HAVE_MYSQL_MYSQL_H
 	struct __mysql {
 		MYSQL_RES *res;
-		MYSQL_ROW row;
+		MYSQL_ROW row; /* keep in memory actual row */
 		MYSQL * con;	
 	} my;
 #endif
 #ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
 	struct __pg {
 		PGresult *res;
-		int iter;
+		int iter; /* libpq does not have nexrow .. */ 
 	} pg;
 #endif
 } SQL_result;
 
+/* sql connection structures */
 typedef union __sql_conn {
 #ifdef LIBDBI_FOUND
 	dbi_conn dbi; /* dbi driver */
@@ -59,24 +60,28 @@ typedef union __sql_conn {
 #endif
 } SQL_conn;
 
+/* SQL errors */
 typedef enum {
-	SQL_OK,
-	SQL_TIMEOUT,
-	SQL_FAIL,
-	SQL_LOCKED
+	SQL_OK, /* all ok */
+	SQL_TIMEOUT, /* query or connection timeout */
+	SQL_FAIL, /* query failed */
+	SQL_LOCKED /* locked table - currently unused */
 } SQL_Error;
 
+/* types passed to NamedQuery */
 typedef enum {
-	SQL_TYPE_NONE,
-	SQL_TYPE_INT,
-	SQL_TYPE_STRING
+	SQL_TYPE_NONE, /* used at end of array */
+	SQL_TYPE_INT, /* argument is type int */
+	SQL_TYPE_STRING /* argument is pointer to char */
 } SQL_Type;
 
+/* NamedQuery SQL parameter value as part of SQL_Var */
 typedef union {
 	const char *s;
 	int i;
 } SQL_Val;
 
+/* NamedQuery SQL parameter passed by caller function */
 typedef struct {
 	SQL_Type type;
 	SQL_Val v;
@@ -86,8 +91,8 @@ typedef struct {
  * NOTE: parameter sequence in select queries are mandatory !!!
  */
 enum {
-	SQL_QUERY_DELETE_PHONE,
-	SQL_QUERY_INSERT_PHONE,
+	SQL_QUERY_DELETE_PHONE, /* after-initialization phone deleting */
+	SQL_QUERY_INSERT_PHONE, /* insert phone */
 	SQL_QUERY_SAVE_INBOX_SMS_SELECT,
 	SQL_QUERY_SAVE_INBOX_SMS_UPDATE_DELIVERED,
 	SQL_QUERY_SAVE_INBOX_SMS_UPDATE,
@@ -130,6 +135,7 @@ struct GSM_SMSDdbobj {
 	SQL_conn conn;
 };
 
+/* database backends */
 #ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
 extern struct GSM_SMSDdbobj SMSDPgSQL;
 #endif
