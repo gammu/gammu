@@ -443,7 +443,7 @@ static GSM_Error SMSDSQL_InitAfterConnect(GSM_SMSDConfig * Config)
 /* Save SMS from phone (called Inbox sms - it's in phone Inbox) somewhere */
 static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig * Config, char **Locations)
 {
-	SQL_result Res;
+	SQL_result Res, Res2;
 	SQL_Var vars[3];
 	struct GSM_SMSDdbobj *db = Config->db;
 	const char *q, *status;
@@ -527,10 +527,11 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 				vars[1].v.i = (long)db->GetNumber(Res, 0); /* ID */
 				vars[2].type = SQL_TYPE_NONE;
 
-				if (SMSDSQL_NamedQuery(Config, q, &sms->SMS[i], vars, &Res) != ERR_NONE) {
+				if (SMSDSQL_NamedQuery(Config, q, &sms->SMS[i], vars, &Res2) != ERR_NONE) {
 					SMSD_Log(DEBUG_INFO, Config, "Error writing to database (%s)", __FUNCTION__);
 					return ERR_UNKNOWN;
 				}
+				db->FreeResult(Res2);
 			}
 			db->FreeResult(Res);
 			continue;
@@ -565,11 +566,11 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 			locations_pos += sprintf((*Locations) + locations_pos, "%lu ", (long)new_id);
 		}
 
-		if (SMSDSQL_NamedQuery(Config, SMSDSQL_queries[SQL_QUERY_UPDATE_RECEIVED], &sms->SMS[i], NULL, &Res) != ERR_NONE) {
+		if (SMSDSQL_NamedQuery(Config, SMSDSQL_queries[SQL_QUERY_UPDATE_RECEIVED], &sms->SMS[i], NULL, &Res2) != ERR_NONE) {
 			SMSD_Log(DEBUG_INFO, Config, "Error updating number of received messages (%s)", __FUNCTION__);
 			return ERR_UNKNOWN;
 		}
-		db->FreeResult(Res);
+		db->FreeResult(Res2);
 
 	}
 
