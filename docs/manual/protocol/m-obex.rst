@@ -10,7 +10,7 @@ This is an attempt to document the m-obex protocol. It is a obex-variation by Sa
 
 This documentation is by no means complete but is only a reference for the samsyncro implementation. As I don't know the obex protocol I can't say in which parts it differs from the standard-obex. The only thing I found strange is the fact, that you will always get 0xA0 as a response. Wich means Ok, sucess in obex. If there was an error you will find it's error code in the 0x42 header. If this is a normal behavior: Why are there so many response codes defined?
 
-The information about the protocol was gained by listening to the transfered data from Samsungs New PC Studio to a SGH-F480i mobile.
+The information about the protocol was gained by listening to the transfered data from Samsungs New PC Studio to a SGH-F480i and B2100 mobile.
 
 Requirements
 ------------
