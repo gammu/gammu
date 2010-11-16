@@ -134,7 +134,7 @@ GSM_Error ATOBEX_SetOBEXMode(GSM_StateMachine *s, OBEX_Service service)
 			break;
 		case ATOBEX_OBEX_TSSPCSW:
 			/* Samsung extension */
-			error = GSM_WaitFor (s, "AT$TSSPCSW=1\r", 21, 0x00, 20, ID_SetOBEX);
+			error = GSM_WaitFor (s, "AT$TSSPCSW=1\r", 13, 0x00, 20, ID_SetOBEX);
 			break;
 		case ATOBEX_OBEX_None:
 			break;
