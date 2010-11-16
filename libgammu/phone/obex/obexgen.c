@@ -814,7 +814,8 @@ GSM_Error OBEXGEN_SendFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, in
  */
 static GSM_Error OBEXGEN_ReplyGetFilePart(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	size_t old,Pos=0;
+	size_t old,Pos=0,len2,pos2;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 
 	/* Non standard Sharp GX reply */
 	if (msg.Type == 0x80) {
@@ -856,6 +857,28 @@ static GSM_Error OBEXGEN_ReplyGetFilePart(GSM_Protocol_Message msg, GSM_StateMac
 			case 0xcb:
 				/* Skip Connection ID (we ignore this for now) */
 				Pos += 5;
+				break;
+			case 0x4C:
+				smprintf(s, "Application data received:");
+				len2 =  msg.Buffer[Pos+1] * 256 + msg.Buffer[Pos+2];
+				pos2 = 0;
+				while(1) {
+					if (pos2 >= len2) break;
+					switch (msg.Buffer[Pos + 3 + pos2]) {
+						case 0x00:
+							if (Priv->Service == OBEX_m_OBEX) {
+								Priv->m_obex_error = msg.Buffer[Pos + 3 + pos2 + 1];
+								smprintf(s, " m-obex error=\"%d\"", Priv->m_obex_error);
+								/* This field has fixed size */
+								pos2 += 2;
+								continue;
+							}
+							break;
+					}
+					pos2 += 2 + msg.Buffer[Pos + 3 + pos2 + 1];
+				}
+				smprintf(s, "\n");
+				Pos += len2;
 				break;
 			default:
 				Pos+=msg.Buffer[Pos+1]*256+msg.Buffer[Pos+2];
