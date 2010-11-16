@@ -592,31 +592,9 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 				break;
 		}
 
-		sprintf(buffer + strlen(buffer), "','%s','", destinationnumber);
-
-		switch (sms->SMS[i].Coding) {
-			case SMS_Coding_Unicode_No_Compression:
-				strcat(buffer, "Unicode_No_Compression");
-				break;
-
-			case SMS_Coding_Unicode_Compression:
-				strcat(buffer, "Unicode_Compression");
-				break;
-
-			case SMS_Coding_Default_No_Compression:
-				strcat(buffer, "Default_No_Compression");
-				break;
-
-			case SMS_Coding_Default_Compression:
-				strcat(buffer, "Default_Compression");
-				break;
-
-			case SMS_Coding_8bit:
-				strcat(buffer, "8bit");
-				break;
-		}
-
-		sprintf(buffer + strlen(buffer), "','%s'", smsc_message);
+		sprintf(buffer + strlen(buffer), "','%s'", destinationnumber);
+		sprintf(buffer + strlen(buffer), ",'%s'", GSM_SMSCodingToString(sms->SMS[i].Coding));
+		sprintf(buffer + strlen(buffer), ",'%s'", smsc_message);
 
 		strcat(buffer, ",'");
 		if (sms->SMS[i].UDH.Type != UDH_NoUDH) {

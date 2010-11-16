@@ -341,31 +341,9 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfi
 				break;
 		}
 
-		sprintf(buffer + strlen(buffer), "','%s','", DecodeUnicodeString(sms->SMS[i].Number));
-
-		switch (sms->SMS[i].Coding) {
-			case SMS_Coding_Unicode_No_Compression:
-				sprintf(buffer + strlen(buffer), "Unicode_No_Compression");
-				break;
-
-			case SMS_Coding_Unicode_Compression:
-				sprintf(buffer + strlen(buffer), "Unicode_Compression");
-				break;
-
-			case SMS_Coding_Default_No_Compression:
-				sprintf(buffer + strlen(buffer), "Default_No_Compression");
-				break;
-
-			case SMS_Coding_Default_Compression:
-				sprintf(buffer + strlen(buffer), "Default_Compression");
-				break;
-
-			case SMS_Coding_8bit:
-				sprintf(buffer + strlen(buffer), "8bit");
-				break;
-		}
-
-		sprintf(buffer + strlen(buffer), "','%s'", DecodeUnicodeString(sms->SMS[i].SMSC.Number));
+		sprintf(buffer + strlen(buffer), "','%s'", DecodeUnicodeString(sms->SMS[i].Number));
+		sprintf(buffer + strlen(buffer), ",'%s'", GSM_SMSCodingToString(sms->SMS[i].Coding));
+		sprintf(buffer + strlen(buffer), ",'%s'", DecodeUnicodeString(sms->SMS[i].SMSC.Number));
 
 		if (sms->SMS[i].UDH.Type == UDH_NoUDH) {
 			sprintf(buffer + strlen(buffer), ",''");
