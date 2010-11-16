@@ -370,8 +370,7 @@ static GSM_Error SMSDSQL_Init(GSM_SMSDConfig * Config)
 
 	db = Config->db;
 
-	error = db->Connect(Config);
-	if (error != SQL_OK)
+	if (db->Connect(Config) != SQL_OK)
 		return ERR_UNKNOWN;
 
 	error = SMSDSQL_CheckTable(Config, "outbox");
@@ -419,7 +418,7 @@ static GSM_Error SMSDSQL_InitAfterConnect(GSM_SMSDConfig * Config)
 {
 	SQL_result Res;
 	struct GSM_SMSDdbobj *db = Config->db;
-	SQL_Var vars[3] = {{SQL_TYPE_STRING}, {SQL_TYPE_STRING}, {SQL_TYPE_NONE}};
+	SQL_Var vars[3] = {{SQL_TYPE_STRING, {NULL}}, {SQL_TYPE_STRING, {NULL}}, {SQL_TYPE_NONE, {NULL}}};
 
 	if (SMSDSQL_NamedQuery(Config, SMSDSQL_queries[SQL_QUERY_DELETE_PHONE], NULL, NULL, &Res) != ERR_NONE) {
 		SMSD_Log(DEBUG_INFO, Config, "Error deleting from database (%s)", __FUNCTION__);
@@ -584,7 +583,7 @@ static GSM_Error SMSDSQL_RefreshSendStatus(GSM_SMSDConfig * Config, char *ID)
 	struct GSM_SMSDdbobj *db = Config->db;
 	SQL_Var vars[2] = {
 		{SQL_TYPE_STRING, { .s = ID}},
-		{SQL_TYPE_NONE}};
+		{SQL_TYPE_NONE, {NULL}}};
 
 	locktime = Config->loopsleep * 8; /* reserve 8 sec per message */
 	locktime = locktime < 60 ? 60 : locktime; /* Minimum time reserve is 60 sec */ 
@@ -807,10 +806,10 @@ static GSM_Error SMSDSQL_CreateOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConf
 	const char *report, *multipart, *q;
 		
 	sprintf(creator, "Gammu %s",VERSION); /* %1 */
-	report = (sms->SMS[i].PDU == SMS_Status_Report) ? "yes": "default"; /* %2 */
 	multipart = (sms->Number == 1) ? "FALSE" : "TRUE"; /* %3 */
 
 	for (i = 0; i < sms->Number; i++) {
+		report = (sms->SMS[i].PDU == SMS_Status_Report) ? "yes": "default"; /* %2 */
 		if (i == 0) {
 			q = SMSDSQL_queries[SQL_QUERY_CREATE_OUTBOX];
 		} else {
@@ -915,7 +914,7 @@ static GSM_Error SMSDSQL_RefreshPhoneStatus(GSM_SMSDConfig * Config)
 	SQL_Var vars[3] = {
 		{SQL_TYPE_INT, { .i = Config->Status->Charge.BatteryPercent}},
 		{SQL_TYPE_INT, { .i = Config->Status->Network.SignalPercent}},
-		{SQL_TYPE_NONE}};
+		{SQL_TYPE_NONE, {NULL}}};
 	struct GSM_SMSDdbobj *db = Config->db;
 
 	if (SMSDSQL_NamedQuery(Config, SMSDSQL_queries[SQL_QUERY_REFRESH_PHONE_STATUS], NULL, vars, &Res) != ERR_NONE) {
