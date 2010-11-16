@@ -1300,6 +1300,9 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 
 			}
 		}
+		/* Free allocated memory */
+		free(line1);
+		free(line2);
 	}
 
 	Priv->ReplyState 	= AT_Reply_Unknown;
