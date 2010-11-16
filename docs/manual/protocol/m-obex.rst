@@ -1,7 +1,7 @@
 m-obex protocol used by some Samsung mobiles
 ============================================
 
-This document is copied from <http://code.google.com/p/samsyncro/wiki/mobex>.
+This document is copied from <http://code.google.com/p/samsyncro/wiki/mobex> and extended.
 
 Introduction
 ------------
@@ -24,6 +24,10 @@ Starting the obex server
 To start the obex server you have to send this AT command first::
 
     AT+SYNCML=MOBEXSTART
+
+Some phones seem to start with following command::
+
+    AT$TSSPCSW=1
 
 Obex commands
 -------------
