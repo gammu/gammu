@@ -2316,6 +2316,11 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 
 	loc = sms->SMS[0].Location;
 
+	if (FFF->Used < 96) {
+		smprintf(s, "Too short message data!");
+		return ERR_CORRUPTED;
+	}
+
 	/* Copy recipient/sender number */
 	/* Data we get from PDU seem to be bogus */
 	/* This might be later overwriten using tags at the end of file */
