@@ -941,6 +941,8 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, gb
 				} else {
 					return ERR_NOTSUPPORTED;
 				}
+			} else if (Priv->Service == OBEX_m_OBEX) {
+				OBEXAddBlock(req, &Current, 0x42, DecodeUnicodeString(File->ID_FullName), UnicodeLength(File->ID_FullName)) + 1);
 			} else {
 				if (Priv->Service == OBEX_BrowsingFolders) {
 					error = OBEXGEN_ChangeToFilePath(s, File->ID_FullName, TRUE, req2);
