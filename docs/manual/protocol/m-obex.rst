@@ -122,7 +122,8 @@ Answer
 *4C* 00 05 00 02
     Indicates if these are the last contacts
 *49* 08 B4 00 0A 00 .....
-    Contacts in VCard format. The first two bytes of an item are the id of the contact. Bytes 3 and 4: unknown. The vcard starts with byte 5.
+    Contacts in VCard format. The first two bytes of an item are the id of the contact. Bytes 3 and 4: length of vard. The vcard starts with byte 5.
+    There are more vcards (usually 4-5) in one response.
 
 To get all contacts the request have to be sent several times. The last two bytes must be incremented by every call.
 
