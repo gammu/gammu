@@ -2043,7 +2043,7 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 #endif
 	}
 
-	if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NO_ATSYNCML)) {
+	if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_MOBEX) && !GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_TSSPCSW) && !GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NO_ATSYNCML)) {
 		smprintf(s, "Checking for SYNCML/OBEX support\n");
 		/* We don't care about error here */
 		ATGEN_WaitForAutoLen(s, "AT+SYNCML=?\r", 0x00, 20, ID_SetOBEX);
