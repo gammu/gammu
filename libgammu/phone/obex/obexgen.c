@@ -910,6 +910,13 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, gb
 	File->System		= FALSE;
 	File->ModifiedEmpty	= TRUE;
 
+	if (Priv->Service == OBEX_BrowsingFolders || Priv->Service == OBEX_m_OBEX) {
+		/* connection ID block */
+		req[Current++] = 0xCB; /* ID */
+		req[Current++] = 0x00; req[Current++] = 0x00;
+		req[Current++] = 0x00; req[Current++] = 0x01;
+	}
+
 	if (File->Used == 0x00) {
 		if (FolderList) {
 			/* Type block */
@@ -962,13 +969,6 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, gb
 	}
 
 	Priv->FileLastPart = FALSE;
-
-	if (Priv->Service == OBEX_BrowsingFolders || Priv->Service == OBEX_m_OBEX) {
-		/* connection ID block */
-		req[Current++] = 0xCB; /* ID */
-		req[Current++] = 0x00; req[Current++] = 0x00;
-		req[Current++] = 0x00; req[Current++] = 0x01;
-	}
 
 	/* Include m-obex application data */
 	if (Priv->Service == OBEX_m_OBEX && Priv->m_obex_appdata != NULL && Priv->m_obex_appdata_len != 0) {
