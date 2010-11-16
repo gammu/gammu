@@ -264,10 +264,13 @@ GSM_Error OBEXGEN_InitialiseVars(GSM_StateMachine *s)
 	Priv->NoteOffsets = NULL;
 	Priv->m_obex_appdata = NULL;
 	Priv->m_obex_appdata_len = 0;
-        Priv->m_obex_getnextid = 0;
+        Priv->m_obex_calendar_nextid = 0;
+        Priv->m_obex_calendar_nexterror = 0;
         Priv->m_obex_calendar_buffer = NULL;
         Priv->m_obex_calendar_buffer_pos = 0;
         Priv->m_obex_calendar_buffer_size = 0;
+        Priv->m_obex_contacts_nextid = 0;
+        Priv->m_obex_contacts_nexterror = 0;
         Priv->m_obex_contacts_buffer = NULL;
         Priv->m_obex_contacts_buffer_pos = 0;
         Priv->m_obex_contacts_buffer_size = 0;

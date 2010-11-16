@@ -246,9 +246,21 @@ typedef struct {
 	 */
 	int				m_obex_newid;
 	/**
-	 * m-obex counter for GetNext*
+	 * m-obex counter for reading contacts
 	 */
-        int				m_obex_getnextid;
+        int				m_obex_contacts_nextid;
+	/**
+	 * last error of m-obex reading contacts operation.
+	 */
+        int				m_obex_contacts_nexterror;
+	/**
+	 * m-obex counter for reading calendar
+	 */
+        int				m_obex_calendar_nextid;
+	/**
+	 * last error of m-obex reading calendar operation.
+	 */
+        int				m_obex_calendar_nexterror;
 	/**
 	 * m-obex contacts buffer.
 	 */
