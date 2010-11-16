@@ -192,7 +192,7 @@ GSM_Error MOBEX_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 	return ERR_NONE;
 }
 
-GSM_Error MOBEX_GetNextEntry(GSM_StateMachine *s, const char *path, const gboolean start, char **data)
+GSM_Error MOBEX_GetNextEntry(GSM_StateMachine *s, const char *path, const gboolean start, unsigned char **data, int *pos, int *size, char **entry, int *location)
 {
 	GSM_Error error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
@@ -200,22 +200,43 @@ GSM_Error MOBEX_GetNextEntry(GSM_StateMachine *s, const char *path, const gboole
 
 	if (start) {
 		Priv->m_obex_getnextid = 0;
+		free(*data);
+		*data = NULL;
+		*pos = 0;
+		*size = 0;
 	}
 
-	appdata[1] = (Priv->m_obex_getnextid && 0xff00) >> 8;
-	appdata[2] = (Priv->m_obex_getnextid && 0xff);
-
-	Priv->m_obex_appdata = appdata;
-	Priv->m_obex_appdata_len = 3;
-
-	error = OBEXGEN_GetTextFile(s, path, data);
-
-	Priv->m_obex_appdata = NULL;
-	Priv->m_obex_appdata_len = 0;
-
-	if (error != ERR_NONE) {
-		return error;
+	/* Increment to next */
+	if (*data != NULL) {
+		*pos += (*data[*pos + 2] << 8) + *data[*pos + 3];
 	}
+
+	/* Need to fetch new data */
+	if (*pos >= *size) {
+		appdata[1] = (Priv->m_obex_getnextid && 0xff00) >> 8;
+		appdata[2] = (Priv->m_obex_getnextid && 0xff);
+
+		Priv->m_obex_appdata = appdata;
+		Priv->m_obex_appdata_len = 3;
+
+		error = OBEXGEN_GetBinaryFile(s, path, data, size);
+
+		Priv->m_obex_appdata = NULL;
+		Priv->m_obex_appdata_len = 0;
+
+		if (error != ERR_NONE) {
+			return error;
+		}
+	}
+
+	/* Nothing to return */
+	if (*pos + 4 > *size) {
+		return ERR_EMPTY;
+	}
+
+	/* Return values */
+	*entry = *data + *pos + 4;
+	*location = (*data[*pos + 0] << 8) + *data[*pos + 1];
 
 	return ERR_NONE;
 }
@@ -223,24 +244,20 @@ GSM_Error MOBEX_GetNextEntry(GSM_StateMachine *s, const char *path, const gboole
 GSM_Error MOBEX_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry, gboolean start)
 {
 	GSM_Error error;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 	char *data = NULL;
 	size_t pos = 0;
 
 
-	error = MOBEX_GetNextEntry(s, "m-obex/contacts/load", start, &data);
-	if (error != ERR_NONE) {
-		free(data);
-		return error;
-	}
-
-	error = GSM_DecodeVCARD(&(s->di), data + 4, &pos, Entry, SonyEricsson_VCard21_Phone);
-	free(data);
-	data = NULL;
+	error = MOBEX_GetNextEntry(s, "m-obex/contacts/load", start, &Priv->m_obex_contacts_buffer, &Priv->m_obex_contacts_buffer_pos, &Priv->m_obex_contacts_buffer_size, &data, &(Entry->Location));
 	if (error != ERR_NONE) {
 		return error;
 	}
 
-	Entry->Location = (data[0] << 8) + data[1];
+	error = GSM_DecodeVCARD(&(s->di), data, &pos, Entry, SonyEricsson_VCard21_Phone);
+	if (error != ERR_NONE) {
+		return error;
+	}
 
 	return ERR_NONE;
 }
@@ -248,24 +265,20 @@ GSM_Error MOBEX_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry, gbool
 GSM_Error MOBEX_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry, gboolean start)
 {
 	GSM_Error error;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 	char *data = NULL;
 	size_t pos = 0;
 	GSM_ToDoEntry	ToDo;
 
-	error = MOBEX_GetNextEntry(s, "m-obex/calendar/load", start, &data);
+	error = MOBEX_GetNextEntry(s, "m-obex/calendar/load", start, &Priv->m_obex_calendar_buffer, &Priv->m_obex_calendar_buffer_pos, &Priv->m_obex_calendar_buffer_size, &data, &(Entry->Location));
 	if (error != ERR_NONE) {
-		free(data);
 		return error;
 	}
 
 	error = GSM_DecodeVCALENDAR_VTODO(&(s->di), data, &pos, Entry, &ToDo, SonyEricsson_VCalendar, SonyEricsson_VToDo);
-	free(data);
-	data = NULL;
 	if (error != ERR_NONE) {
 		return error;
 	}
-
-	Entry->Location = (data[0] << 8) + data[1];
 
 	return ERR_NONE;
 }

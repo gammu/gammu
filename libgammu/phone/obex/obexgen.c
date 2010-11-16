@@ -265,6 +265,12 @@ GSM_Error OBEXGEN_InitialiseVars(GSM_StateMachine *s)
 	Priv->m_obex_appdata = NULL;
 	Priv->m_obex_appdata_len = 0;
         Priv->m_obex_getnextid = 0;
+        Priv->m_obex_calendar_buffer = NULL;
+        Priv->m_obex_calendar_buffer_pos = 0;
+        Priv->m_obex_calendar_buffer_size = 0;
+        Priv->m_obex_contacts_buffer = NULL;
+        Priv->m_obex_contacts_buffer_pos = 0;
+        Priv->m_obex_contacts_buffer_size = 0;
 
 	IRMC_InitCapabilities(&(Priv->NoteCap));
 	IRMC_InitCapabilities(&(Priv->PbCap));
@@ -402,6 +408,11 @@ void OBEXGEN_FreeVars(GSM_StateMachine *s)
 	Priv->OBEXCapability=NULL;
 	free(Priv->OBEXDevinfo);
 	Priv->OBEXDevinfo=NULL;
+
+        free(Priv->m_obex_calendar_buffer);
+        Priv->m_obex_calendar_buffer = NULL;
+        free(Priv->m_obex_calendar_buffer);
+        Priv->m_obex_contacts_buffer = NULL;
 }
 
 /**
