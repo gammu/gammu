@@ -5299,6 +5299,9 @@ GSM_Error ATGEN_ReplyCheckSyncML(GSM_Protocol_Message msg, GSM_StateMachine *s)
 GSM_Error ATGEN_ReplyCheckTSSPCSW(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
+	char protocol_version[100] = {'\0'};
+	int protocol_id = 0, protocol_level = 0;
+	GSM_Error error;
 
 	switch (Priv->ReplyState) {
 		case AT_Reply_OK:
@@ -5311,7 +5314,15 @@ GSM_Error ATGEN_ReplyCheckTSSPCSW(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			return ERR_UNKNOWNRESPONSE;
 	}
 
-	if (strstr("1", GetLineString(msg.Buffer, &Priv->Lines, 2)) != NULL) {
+	error = ATGEN_ParseReply(s, GetLineString(msg.Buffer, &Priv->Lines, 2),
+		"+TSSPCSW: @i, @r, @i",
+		&protocol_id,
+		protocol_version, sizeof(protocol_version),
+		&protocol_level);
+	if (error != ERR_NONE) {
+		return error;
+	}
+	if (protocol_id == 1) {
 		smprintf(s, "Automatically enabling F_TSSPCSW, please report bug if it causes problems\n");
 		GSM_AddPhoneFeature(s->Phone.Data.ModelInfo, F_TSSPCSW);
 		GSM_AddPhoneFeature(s->Phone.Data.ModelInfo, F_OBEX);
