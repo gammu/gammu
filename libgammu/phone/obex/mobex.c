@@ -46,7 +46,7 @@ GSM_Error MOBEX_GetStatus(GSM_StateMachine *s, const char *path, int *free_recor
 	char appdata[] = {'\x01'};
 
 	Priv->m_obex_appdata = appdata;
-	Priv->m_obex_appdata_len = 1;
+	Priv->m_obex_appdata_len = sizeof(appdata);
 
 	error = OBEXGEN_GetBinaryFile(s, path, &buffer, &len);
 
@@ -81,7 +81,7 @@ GSM_Error MOBEX_CreateEntry(GSM_StateMachine *s, const char *path, int *location
 
 	Priv->m_obex_newid = -1;
 	Priv->m_obex_appdata = appdata;
-	Priv->m_obex_appdata_len = 1;
+	Priv->m_obex_appdata_len = sizeof(appdata);
 
 	error = OBEXGEN_SetFile(s, path, data, strlen(data), FALSE);
 
@@ -107,7 +107,7 @@ GSM_Error MOBEX_UpdateEntry(GSM_StateMachine *s, const char *path, const int loc
 	appdata[2] = (location  && 0xff);
 
 	Priv->m_obex_appdata = appdata;
-	Priv->m_obex_appdata_len = 3;
+	Priv->m_obex_appdata_len = sizeof(appdata);
 
 	error = OBEXGEN_SetFile(s, path, data, strlen(data), FALSE);
 
@@ -131,7 +131,7 @@ GSM_Error MOBEX_GetEntry(GSM_StateMachine *s, const char *path, const int locati
 	appdata[2] = (location  && 0xff);
 
 	Priv->m_obex_appdata = appdata;
-	Priv->m_obex_appdata_len = 3;
+	Priv->m_obex_appdata_len = sizeof(appdata);
 
 	error = OBEXGEN_GetTextFile(s, path, data);
 
@@ -196,7 +196,7 @@ GSM_Error MOBEX_GetNextEntry(GSM_StateMachine *s, const char *path, const gboole
 {
 	GSM_Error error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
-	char appdata[] = {'\x01', 0, 0};
+	char appdata[] = {'\x01', 0, 0, '\x0a'};
 
 	if (start) {
 		*nextid = 0;
@@ -223,7 +223,7 @@ GSM_Error MOBEX_GetNextEntry(GSM_StateMachine *s, const char *path, const gboole
 		appdata[2] = (*nextid && 0xff);
 
 		Priv->m_obex_appdata = appdata;
-		Priv->m_obex_appdata_len = 3;
+		Priv->m_obex_appdata_len = sizeof(appdata);
 
 		error = OBEXGEN_GetBinaryFile(s, path, data, size);
 
