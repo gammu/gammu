@@ -199,6 +199,8 @@ GSM_Error OBEXGEN_Connect(GSM_StateMachine *s, OBEX_Service service)
 		req2[0] = 'M'; req2[1] = 'O'; req2[2] = 'B';
 		req2[3] = 'E'; req2[4] = 'X';
 
+		req[0] = 0x11; /* Phones seem to require OBEX 1.1 */
+
 		/* Target block */
 		OBEXAddBlock(req, &Current, 0x46, req2, 5);
 		break;
