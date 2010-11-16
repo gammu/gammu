@@ -5422,7 +5422,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_ReplyGetSIMIMSI,		"AT+CIMI" 	 	,0x00,0x00,ID_GetSIMIMSI	 },
 {ATGEN_ReplyCheckProt,		"AT+CPROT=?" 	 	,0x00,0x00,ID_SetOBEX		 },
 {ATGEN_ReplyCheckSyncML,	"AT+SYNCML=?" 	 	,0x00,0x00,ID_SetOBEX		 },
-{ATGEN_ReplyCheckTSSPCSW,	"AT+TSSPCSW=?" 	 	,0x00,0x00,ID_SetOBEX		 },
+{ATGEN_ReplyCheckTSSPCSW,	"AT$TSSPCSW=?" 	 	,0x00,0x00,ID_SetOBEX		 },
 {ATGEN_GenericReply,		"AT+XLNK=?" 	 	,0x00,0x00,ID_SetOBEX		 },
 
 {ATGEN_ReplyGetCNMIMode,	"AT+CNMI=?"		,0x00,0x00,ID_GetCNMIMode	 },
