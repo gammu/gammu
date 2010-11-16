@@ -3626,7 +3626,7 @@ GSM_Reply_Function OBEXGENReplyFunctions[] = {
 };
 
 GSM_Phone_Functions OBEXGENPhone = {
-	"obex|seobex|obexfs|obexirmc|obexnone",
+	"obex|seobex|obexfs|obexirmc|obexnone|mobex",
 	OBEXGENReplyFunctions,
 	OBEXGEN_Initialise,
 	OBEXGEN_Terminate,
