@@ -1,14 +1,18 @@
 Gammu Testsuite
 ===============
 
-Gammu comes with testsuite which should be run after build. You can do this
-using ``make test``. CMake build system uses for testing CTest, which also
-includes option to connect to dashboard and submit test results there, so that
-they can be reviewed and fixed by others. To participate in this testing, you
-need just to run 'make Experimental'. It will compile current version, run
-tests and submit data to dashboard:
+Gammu comes with quite big test suite. It covers some basic low level
+functions, handling replies from the phone and also does testing of command
+line utilities and SMSD.
 
-http://cdash.cihar.com/index.php?project=Gammu
+
+Running the tests
+-----------------
+
+You can run the test suite this using ``make test``. CMake build system uses for
+testing CTest, which also includes option to connect to dashboard and submit
+test results there, so that they can be reviewed and fixed by others. To
+participate in this testing, you need just to run ``make Experimental``.
 
 There are some more options for testing:
 
@@ -32,6 +36,23 @@ Nightly testing
     ``make NightlyMemoryCheck`` to test with valgrind. Also you can enable
     coverage tests as described above.
 
+Collecting results
+------------------
+
+The tests are ran daily on several platforms and you can find the
+results on `dashboard <https://cdash.cihar.com/index.php?project=Gammu>`_.
+
+You are welcome to join this effort, all you need is to setup job to pull
+current Gammu sources and execute the test suite every day (the preferred time
+it 3:00 CET)::
+
+    git pull
+    make -C build-configure Nightly
+
+or also with checking for memory leaks::
+
+    git pull
+    make -C build-configure NightlyMemCheck
 
 Testing of SMSD
 ---------------
@@ -74,3 +95,54 @@ Testing of data parsing
 
 The :file:`tests` directory contains various tests which just try to parse
 various file formats supported by libGammu.
+
+Configuration of the test suite
+-------------------------------
+
+You can pass various parameters to configure the test suite:
+
+Programs used for testing
++++++++++++++++++++++++++
+
+``SH_BIN``
+    Path to the :program:`sh` program
+``BASH_BIN``
+    Path to the :program:`bash` program
+``SQLITE_BIN``
+    Path to the :program:`sqlite3` program
+``SED_BIN``
+    Path to the :program:`sed` program
+``MYSQL_BIN``
+    Path to the :program:`mysql` program
+``PSQL_BIN``
+    Path to the :program:`psql` program
+
+Limiting testsuite
+++++++++++++++++++
+
+``ONLINE_TESTING``
+    Enable testing of parts which use remote servers, requires connection to interned
+``PSQL_TESTING``
+    Enable testing of PostgreSQL SMSD backend, requires configured PostgreSQL database
+``MYSQL_TESTING``
+    Enable testing of MySQL SMSD backend, requires configured MySQL database
+
+Database backends configuration
++++++++++++++++++++++++++++++++
+
+``PSQL_HOST``
+    Host to use for PostgreSQL tests (default: ``127.0.0.1``)
+``PSQL_DATABASE``
+    Database to use for PostgreSQL tests (default: ``smsd``)
+``PSQL_USER``
+    User to use for PostgreSQL tests (default: ``smsd``)
+``PSQL_PASSWORD``
+    Password to use for PostgreSQL tests (default: ``smsd``)
+``MYSQL_HOST``
+    Host to use for MySQL tests (default: ``127.0.0.1``)
+``MYSQL_DATABASE``
+    Database to use for MySQL tests (default: ``smsd``)
+``MYSQL_USER``
+    User to use for MySQL tests (default: ``smsd``)
+``MYSQL_PASSWORD``
+    Password to use for MySQL tests (default: ``smsd``)
