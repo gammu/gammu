@@ -11,8 +11,8 @@
 #  include <fcntl.h>
 #  define THREAD_RETURN void *
 #  define THREAD_RETURN_VAL NULL
-#endif
-#ifdef WIN32
+#elif defined(WIN32)
+#  define HAVE_WIN32_THREADS
 #  define WIN32_LEAN_AND_MEAN
 #  include <windows.h>
 #  define THREAD_RETURN DWORD
@@ -25,7 +25,7 @@
 #include "../helper/formats.h"
 #include "../helper/string.h"
 
-#if defined(WIN32) || defined(HAVE_PTHREAD)
+#if defined(HAVE_WIN32_THREADS) || defined(HAVE_PTHREAD)
 /**
  * Structure to hold information about connection for searching.
  */
@@ -204,7 +204,7 @@ void SearchPhone(int argc, char *argv[])
 	if (argc == 3 && strcasecmp(argv[2], "-debug") == 0)
 		SearchOutput = TRUE;
 
-#ifdef WIN32
+#ifdef HAVE_WIN32_THREADS
 	SearchDevices[dev].Device[0] = 0;
 	sprintf(SearchDevices[dev].Connections[0].Connection, "irdaphonet");
 	sprintf(SearchDevices[dev].Connections[1].Connection, "irdaat");
@@ -279,7 +279,7 @@ void SearchPhone(int argc, char *argv[])
 #endif
 	for (i = 0; i < dev; i++)
 		MakeSearchThread(i);
-#ifdef WIN32
+#ifdef HAVE_WIN32_THREADS
 	WaitForMultipleObjects(dev, Threads, TRUE, INFINITE);
 #else
 	for (i = 0; i < dev; i++)
