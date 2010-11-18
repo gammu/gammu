@@ -259,6 +259,20 @@ database, eg. MySQL.
 The rest of the compilation should be pretty same as on Linux, see Linux
 section for more details about compile time options.
 
+If you get some errors while linking with iconv, it is caused by two
+incompatible iconv libraries available on the system. You can override the
+library name:
+
+.. code-block:: sh
+
+   cmake -D ICONV_LIBRARIES="/opt/local/lib/libiconv.dylib" ..
+
+Or completely disable iconv support:
+
+.. code-block:: sh
+
+   cmake -DWITH_Iconv=OFF ..
+
 
 Cross compilation for Windows on Linux
 ======================================
