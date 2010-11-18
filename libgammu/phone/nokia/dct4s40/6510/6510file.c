@@ -2317,7 +2317,7 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 	loc = sms->SMS[0].Location;
 
 	if (FFF->Used < 96) {
-		smprintf(s, "Too short message data!");
+		smprintf(s, "Too short message data!\n");
 		return ERR_CORRUPTED;
 	}
 
