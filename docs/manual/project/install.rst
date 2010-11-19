@@ -358,3 +358,11 @@ For CURL support, you need curl-7.19.0-devel-mingw32.zip from
 
 .. _CMake: http://www.cmake.org/
 
+Debugging build failures
+========================
+
+If there is some build failure (eg. some dependencies are not correctly
+detected), please attach :file:`CMakeCache.txt`,
+:file:`CMakeFiles/CMakeError.log` and :file:`CMakeFiles/CMakeOutput.log` files
+to the report. It will help diagnose what was detected on the system and
+possibly fix these errors.
