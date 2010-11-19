@@ -4115,6 +4115,7 @@ GSM_Error ATGEN_DialVoice(GSM_StateMachine *s, char *number, GSM_CallShowNumber 
 	char buffer[GSM_MAX_NUMBER_LENGTH + 6] = {'\0'};
 	size_t length = 0;
 	int oldretry;
+	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
 	if (ShowNumber != GSM_CALL_DefaultNumberPresence) {
 		return ERR_NOTSUPPORTED;
@@ -4134,7 +4135,7 @@ GSM_Error ATGEN_DialVoice(GSM_StateMachine *s, char *number, GSM_CallShowNumber 
 		length = sprintf(buffer, "ATD%s;\r", number);
 		ATGEN_WaitFor(s, buffer, length, 0x00, 100, ID_DialVoice);
 	}
-	if (error == ERR_TIMEOUT && Priv->Manufacturer = AT_Samsung) {
+	if (error == ERR_TIMEOUT && Priv->Manufacturer == AT_Samsung) {
 		smprintf(s, "Assuming voice call succeeded even without reply from phone\n");
 		return ERR_NONE;
 	}
