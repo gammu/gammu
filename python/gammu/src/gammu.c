@@ -605,7 +605,7 @@ StateMachine_ReadConfig(StateMachineObject *self, PyObject *args, PyObject *kwds
 static char StateMachine_Init__doc__[] =
 "Init(Replies)\n\n"
 "Initialises the connection with phone.\n\n"
-"@param Replies: Number of replies to wait for on each request. Defaults to 3.\n"
+"@param Replies: Number of replies to wait for on each request. Defaults to 1.\n"
 "@type Replies: int\n"
 "@return: None\n"
 "@rtype: None\n"
@@ -615,7 +615,7 @@ static PyObject *
 StateMachine_Init(StateMachineObject *self, PyObject *args, PyObject *kwds)
 {
     GSM_Error           error;
-    int                 replies = 3;
+    int                 replies = 1;
     static char         *kwlist[] = {"Replies", NULL};
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "|I", kwlist, &replies))

@@ -14,7 +14,7 @@ State machine
 .. c:function:: GSM_Error GSM_InitConnection(GSM_StateMachine * s, int ReplyNum)
 
     :param s: State machine data
-    :param ReplyNum: Number of replies to await (usually 3).
+    :param ReplyNum: Number of replies to await (usually 1). Higher value makes sense only on unreliable links.
     :return: Error code
 
     Initiates connection.

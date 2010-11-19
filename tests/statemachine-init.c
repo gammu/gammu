@@ -35,7 +35,7 @@ void single_check(const char *device, const char *connection, const char *model,
 	smcfg->PhoneFeatures[1] = 0;
 	GSM_SetConfigNum(s, 1);
 
-	error = GSM_InitConnection(s, 3);
+	error = GSM_InitConnection(s, 1);
 	test_result(error == expected);
 
 	/* Free state machine */

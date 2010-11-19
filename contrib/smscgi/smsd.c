@@ -102,7 +102,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 		/* ------------------------------------------------------------ reconnect */
 		sleep(3); /* wait 30 seconds before retry */
 		/* try to reconnect */
-		error = GSM_InitConnection(s, 3);
+		error = GSM_InitConnection(s, 1);
 		if(error != ERR_NONE) {
 			continue; /* retry */
 		}

@@ -124,8 +124,8 @@ int main(int argc UNUSED, char **argv UNUSED)
 	GSM_SetConfigNum(s, 1);
 
 	/* Connect to phone */
-	/* 3 means number of replies you want to wait for */
-	error = GSM_InitConnection(s, 3);
+	/* 1 means number of replies you want to wait for */
+	error = GSM_InitConnection(s, 1);
 	error_handler();
 
 	/* Set callback for message sending */
