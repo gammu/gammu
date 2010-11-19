@@ -4134,6 +4134,10 @@ GSM_Error ATGEN_DialVoice(GSM_StateMachine *s, char *number, GSM_CallShowNumber 
 		length = sprintf(buffer, "ATD%s;\r", number);
 		ATGEN_WaitFor(s, buffer, length, 0x00, 100, ID_DialVoice);
 	}
+	if (error == ERR_TIMEOUT && Priv->Manufacturer = AT_Samsung) {
+		smprintf(s, "Assuming voice call succeeded even without reply from phone\n");
+		return ERR_NONE;
+	}
 	s->ReplyNum = oldretry;
 	return error;
 }
