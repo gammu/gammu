@@ -4114,6 +4114,7 @@ GSM_Error ATGEN_DialVoice(GSM_StateMachine *s, char *number, GSM_CallShowNumber 
 	GSM_Error error;
 	char buffer[GSM_MAX_NUMBER_LENGTH + 6] = {'\0'};
 	size_t length = 0;
+	int oldretry;
 
 	if (ShowNumber != GSM_CALL_DefaultNumberPresence) {
 		return ERR_NOTSUPPORTED;
@@ -4121,6 +4122,9 @@ GSM_Error ATGEN_DialVoice(GSM_StateMachine *s, char *number, GSM_CallShowNumber 
 	if (strlen(number) > GSM_MAX_NUMBER_LENGTH) {
 		return ERR_MOREMEMORY;
 	}
+
+	oldretry = s->ReplyNum;
+	s->ReplyNum = 1;
 	smprintf(s, "Making voice call\n");
 	length = sprintf(buffer, "ATDT%s;\r", number);
 	ATGEN_WaitFor(s, buffer, length, 0x00, 100, ID_DialVoice);
@@ -4130,6 +4134,7 @@ GSM_Error ATGEN_DialVoice(GSM_StateMachine *s, char *number, GSM_CallShowNumber 
 		length = sprintf(buffer, "ATD%s;\r", number);
 		ATGEN_WaitFor(s, buffer, length, 0x00, 100, ID_DialVoice);
 	}
+	s->ReplyNum = oldretry;
 	return error;
 }
 
