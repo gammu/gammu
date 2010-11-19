@@ -23,13 +23,13 @@ void single_check(const char *string, int vendor_match, int product_match, int b
 {
 	cfg->Device = strdup(string);
 	GSM_USB_ParseDevice(s,  &vendor, &product, &bus, &deviceid, &serial);
-	free(cfg->Device);
-	cfg->Device = NULL;
 	test_result(vendor == vendor_match);
 	test_result(product == product_match);
 	test_result(bus == bus_match);
 	test_result(deviceid == deviceid_match);
 	test_result((serial == NULL && serial_match == NULL) || strcmp(serial, serial_match) == 0);
+	free(cfg->Device);
+	cfg->Device = NULL;
 }
 
 int main(int argc UNUSED, char **argv UNUSED)
