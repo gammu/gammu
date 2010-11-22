@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.28.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-11-15 10:00+0100\n"
-"PO-Revision-Date: 2010-11-22 06:46+0200\n"
+"PO-Revision-Date: 2010-11-22 06:47+0200\n"
 "Last-Translator:  <simbolonsihar@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -2693,7 +2693,7 @@ msgstr "Parameter tidak dikenali (\"%s\")"
 
 #: gammu/misc.c:1344
 msgid "Delete phone phonebook?"
-msgstr ""
+msgstr "Hapus daftar kontak dari telepon?"
 
 #: gammu/misc.c:1345
 msgid "Delete SIM phonebook?"
