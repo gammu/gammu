@@ -1947,7 +1947,7 @@ msgstr "Versi libGammu.so berbeda dengan versi Gammu (%s)\n"
 #: gammu/memory.c:357
 #, c-format
 msgid "Memory %s, Location %i\n"
-msgstr ""
+msgstr "Memori %s, Lokasi %i\n"
 
 #: gammu/memory.c:84
 msgid ""
