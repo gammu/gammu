@@ -2399,7 +2399,7 @@ msgstr "Alat"
 
 #: gammu/misc.c:383 gammu/search.c:89
 msgid "Manufacturer"
-msgstr ""
+msgstr "Pabrikan"
 
 #: gammu/misc.c:386 gammu/search.c:101
 msgid "Model"
