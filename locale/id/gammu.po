@@ -2896,7 +2896,7 @@ msgstr "sinkronisasi kalender"
 
 #: gammu/misc.c:1585 gammu/misc.c:1626
 msgid "Connection set name"
-msgstr ""
+msgstr "Nama koneksi"
 
 #: gammu/misc.c:1621 gammu/misc.c:1671
 msgid "Homepage"
