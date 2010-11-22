@@ -2749,7 +2749,7 @@ msgstr "Keamanan koneksi"
 
 #: gammu/misc.c:1463 gammu/misc.c:2066
 msgid "On"
-msgstr ""
+msgstr "On"
 
 #: gammu/misc.c:1465 gammu/misc.c:2052
 msgid "Off"
