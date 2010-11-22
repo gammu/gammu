@@ -4189,7 +4189,7 @@ msgstr "UDH"
 
 #: helper/message-display.c:549
 msgid "Whole PDU"
-msgstr ""
+msgstr "Semua PDU"
 
 #. l10n: Generic prefix for warning messages
 #: helper/printing.c:34
