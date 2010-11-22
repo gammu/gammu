@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.28.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-11-15 10:00+0100\n"
-"PO-Revision-Date: 2010-11-22 06:51+0200\n"
+"PO-Revision-Date: 2010-11-22 06:52+0200\n"
 "Last-Translator:  <simbolonsihar@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -2810,7 +2810,7 @@ msgstr "otomatis"
 
 #: gammu/misc.c:1493 gammu/misc.c:1495 gammu/misc.c:1539 gammu/misc.c:1541
 msgid "Authentication type"
-msgstr ""
+msgstr "tipe autentikasi"
 
 #: gammu/misc.c:1493 gammu/misc.c:1539
 msgid "Normal"
