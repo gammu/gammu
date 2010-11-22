@@ -2778,7 +2778,7 @@ msgstr "SMS"
 
 #: gammu/misc.c:1478
 msgid "Server number"
-msgstr ""
+msgstr "nomor server"
 
 #: gammu/misc.c:1479 gammu/misc.c:1525 gammu/misc.c:1526
 msgid "Service number"
