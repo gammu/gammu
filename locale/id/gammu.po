@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.28.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-11-15 10:00+0100\n"
-"PO-Revision-Date: 2010-11-22 06:41+0200\n"
+"PO-Revision-Date: 2010-11-22 06:42+0200\n"
 "Last-Translator:  <simbolonsihar@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -2592,7 +2592,7 @@ msgstr "format, nada dering \"%s\"\n"
 #: gammu/misc.c:881
 #, c-format
 msgid "What type of reset do you want (\"%s\") ?\n"
-msgstr ""
+msgstr "Tipe reset apa yang Anda inginkan (\"%s\") ?\n"
 
 #: gammu/misc.c:908 gammu/misc.c:955 helper/message-display.c:463
 msgid "Address"
