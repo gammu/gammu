@@ -2423,7 +2423,7 @@ msgstr "Pabrikan"
 
 #: gammu/misc.c:428
 msgid "Product code"
-msgstr ""
+msgstr "Kode produk"
 
 #: gammu/misc.c:438
 msgid "SIM IMSI"
