@@ -2375,7 +2375,7 @@ msgstr "Gagal menemukan nbSamples di balasan OpenCellID!\n"
 
 #: gammu/misc.c:344
 msgid "Failed to parse nbSamples from OpenCellID reply!\n"
-msgstr ""
+msgstr "Gagal mengolah nbSamples di balasan OpenCellID!\n"
 
 #: gammu/misc.c:355
 msgid "Latitude"
