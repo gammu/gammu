@@ -2347,7 +2347,7 @@ msgstr "Permintaan untuk informasi dari OpenCellID gagal!\n"
 
 #: gammu/misc.c:306
 msgid "Failed to find latitude in OpenCellID reply!\n"
-msgstr "Gagal menemukan latitude di balasan OpenCellID!\n"
+msgstr "Gagal menemukan lintang di balasan OpenCellID!\n"
 
 #: gammu/misc.c:311
 msgid "Failed to parse latitude from OpenCellID reply!\n"
