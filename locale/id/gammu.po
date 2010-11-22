@@ -2167,7 +2167,7 @@ msgstr "....menunggu balasan jaringan"
 #: gammu/message.c:630
 #, c-format
 msgid "Sending SMS %i/%i"
-msgstr ""
+msgstr "Pengiriman SMS %i/%i"
 
 #: gammu/message.c:649
 msgid "Something went wrong, uknown message operation!\n"
