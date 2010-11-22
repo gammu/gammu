@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.28.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-11-15 10:00+0100\n"
-"PO-Revision-Date: 2010-11-22 05:53+0200\n"
+"PO-Revision-Date: 2010-11-22 05:54+0200\n"
 "Last-Translator:  <simbolonsihar@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1972,7 +1972,7 @@ msgstr "Isian kosong"
 #: gammu/memory.c:120
 #, c-format
 msgid "%i entries empty, %i entries filled\n"
-msgstr ""
+msgstr "%i isian kosong, %i isian diisi\n"
 
 #: gammu/message.c:36
 msgid "SMS message received"
