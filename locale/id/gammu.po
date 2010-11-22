@@ -2278,7 +2278,7 @@ msgstr "Voltase pengisian"
 
 #: gammu/misc.c:137
 msgid "Charge current"
-msgstr ""
+msgstr "Pengisiaan saat ini"
 
 #: gammu/misc.c:138 gammu/misc.c:143
 #, c-format
