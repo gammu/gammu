@@ -2737,7 +2737,7 @@ msgstr "Tipe koneksi"
 
 #: gammu/misc.c:1458
 msgid "Continuous"
-msgstr ""
+msgstr "Bersambung"
 
 #: gammu/misc.c:1460
 msgid "Temporary"
