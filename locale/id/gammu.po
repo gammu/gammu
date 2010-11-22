@@ -1774,7 +1774,7 @@ msgstr "Catatan kalender"
 
 #: gammu/gammu.c:721
 msgid "To do lists"
-msgstr ""
+msgstr "List pengerjaan"
 
 #: gammu/gammu.c:722
 msgid "Notes"
