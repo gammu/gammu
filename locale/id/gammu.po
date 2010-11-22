@@ -2287,7 +2287,7 @@ msgstr "%i mA"
 
 #: gammu/misc.c:142
 msgid "Phone current"
-msgstr ""
+msgstr "Telepon saat ini"
 
 #: gammu/misc.c:147
 msgid "Charge state"
