@@ -1914,7 +1914,7 @@ msgstr "Pilihan buruk"
 
 #: gammu/gammu.c:1096
 msgid "Configuration could not be parsed!"
-msgstr ""
+msgstr "Konfigurasi tidak dapat diolah"
 
 #: gammu/gammu.c:1098
 msgid "No configuration file found!"
