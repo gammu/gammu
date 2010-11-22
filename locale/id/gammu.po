@@ -4177,7 +4177,7 @@ msgstr "Kesalahan"
 
 #: helper/message-display.c:530
 msgid "Data PDU"
-msgstr ""
+msgstr "Data PDU"
 
 #: helper/message-display.c:531
 msgid "Number of bits"
