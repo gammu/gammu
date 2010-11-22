@@ -2189,7 +2189,7 @@ msgstr "Status jaringan"
 
 #: gammu/misc.c:37 gammu/misc.c:64
 msgid "home network"
-msgstr ""
+msgstr "Jaringan rumah"
 
 #: gammu/misc.c:38 gammu/misc.c:65
 msgid "roaming network"
