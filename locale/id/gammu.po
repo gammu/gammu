@@ -2265,7 +2265,7 @@ msgstr "Suhu telepon"
 
 #: gammu/misc.c:127
 msgid "Battery voltage"
-msgstr ""
+msgstr "Voltase baterai"
 
 #: gammu/misc.c:128 gammu/misc.c:133
 #, c-format
