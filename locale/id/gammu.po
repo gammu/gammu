@@ -2566,7 +2566,7 @@ msgstr "%i template"
 
 #: gammu/misc.c:641
 msgid "Leaving monitor mode..."
-msgstr ""
+msgstr "keluar dari modus monitor"
 
 #: gammu/misc.c:669
 msgid "Smart Messaging"
