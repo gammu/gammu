@@ -2201,7 +2201,7 @@ msgstr "Meminta jaringan"
 
 #: gammu/misc.c:40 gammu/misc.c:67
 msgid "not logged into network"
-msgstr ""
+msgstr "Tidak tercatat dalam jaringan"
 
 #: gammu/misc.c:41 gammu/misc.c:68
 msgid "registration to network denied"
