@@ -1962,6 +1962,8 @@ msgid ""
 "You will have null names in entries. Upgrade firmware in phone to higher "
 "than 6.00"
 msgstr ""
+"Anda akan mendapatkan nama yang kosong di isian. Upgrade firmware di telepon "
+"ke versi > 6.00"
 
 #: gammu/memory.c:108 gammu/misc.c:1848 gammu/misc.c:2213
 msgid "Entry is empty"
