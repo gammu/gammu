@@ -1822,7 +1822,7 @@ msgstr "Informasi telepon"
 
 #: gammu/gammu.c:740
 msgid "Phone settings"
-msgstr ""
+msgstr "Pengaturan telepon"
 
 #: gammu/gammu.c:742
 msgid "Dumps decoding"
