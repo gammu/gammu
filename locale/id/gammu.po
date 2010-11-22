@@ -2230,7 +2230,7 @@ msgstr "GPRS"
 
 #: gammu/misc.c:93
 msgid "attached"
-msgstr ""
+msgstr "Dipasang"
 
 #: gammu/misc.c:96
 msgid "detached"
