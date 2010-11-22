@@ -2842,7 +2842,7 @@ msgstr "auto"
 
 #: gammu/misc.c:1513 gammu/misc.c:1545
 msgid "User name"
-msgstr ""
+msgstr "nama user"
 
 #: gammu/misc.c:1514 gammu/misc.c:1546 gammu/misc.c:1573 gammu/misc.c:1623
 msgid "Password"
