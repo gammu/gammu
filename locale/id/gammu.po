@@ -2454,7 +2454,7 @@ msgstr "Panggilan dimulai"
 
 #: gammu/misc.c:495
 msgid "end of call (unknown side)"
-msgstr ""
+msgstr "Akhir panggilan (bagian tidak dikenali)"
 
 #: gammu/misc.c:496
 msgid "call end from our side"
