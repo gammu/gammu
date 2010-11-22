@@ -2794,7 +2794,7 @@ msgstr "Nomor Dial-up"
 
 #: gammu/misc.c:1486 gammu/misc.c:1522 gammu/misc.c:1523 gammu/misc.c:1544
 msgid "IP address"
-msgstr ""
+msgstr "IP address"
 
 #: gammu/misc.c:1488 gammu/misc.c:1490 gammu/misc.c:1534 gammu/misc.c:1536
 msgid "Login type"
