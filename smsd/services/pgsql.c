@@ -219,7 +219,8 @@ struct GSM_SMSDdbobj SMSDPgSQL = {
 	SMSDPgSQL_GetDate,
 	SMSDPgSQL_GetBool,
 	SMSDPgSQL_QuoteString,
-	NULL
+	NULL,
+	{.pg = NULL}
 };
 
 #endif

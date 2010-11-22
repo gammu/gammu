@@ -108,7 +108,7 @@ static GSM_Error SMSDSQL_Query(GSM_SMSDConfig * Config, const char *query, SQL_r
 		}
 		/* We will try to reconnect */
 		SMSD_Log(DEBUG_INFO, Config, "reconnecting to database!");
-		error = ERR_UNKNOWN;
+		error = SQL_TIMEOUT;
 		while (error != SQL_OK && attempts >= Config->backend_retries) {
 			SMSD_Log(DEBUG_INFO, Config, "Reconnecting after %d seconds...", attempts * attempts);
 			sleep(attempts * attempts);
@@ -517,7 +517,9 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 				} else if (!strcmp(smstext, "Pending")) {
 					status = "DeliveryPending";
 				} else if (!strcmp(smstext, "Unknown")) {
-					status =  "DeliveryUnknown";
+					status = "DeliveryUnknown";
+				} else {
+					status = "";
 				}
 
 				vars[0].type = SQL_TYPE_STRING;
@@ -1010,6 +1012,10 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 	if (Config->database == NULL) {
 		Config->database="sms";
 	}
+	
+	Config->driverspath = INI_GetValue(Config->smsdcfgfile, "smsd", "driverspath", FALSE);
+	
+	Config->dbdir = INI_GetValue(Config->smsdcfgfile, "smsd", "dbdir", FALSE);
 
 	if (Config->driver == NULL) {
 		SMSD_Log(DEBUG_ERROR, Config, "No database driver selected. Must be native_mysql, native_pgsql or DBI one.");

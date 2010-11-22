@@ -53,7 +53,7 @@ typedef union __sql_conn {
 	dbi_conn dbi; /* dbi driver */
 #endif
 #ifdef HAVE_MYSQL_MYSQL_H
-	MYSQL my; /* mysql driver */
+	MYSQL *my; /* mysql driver */
 #endif
 #ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
 	PGconn *pg; /* pgsql driver */
