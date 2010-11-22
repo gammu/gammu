@@ -2596,7 +2596,7 @@ msgstr "Tipe reset apa yang Anda inginkan (\"%s\") ?\n"
 
 #: gammu/misc.c:908 gammu/misc.c:955 helper/message-display.c:463
 msgid "Address"
-msgstr ""
+msgstr "Alamat"
 
 #: gammu/misc.c:950
 #, c-format
