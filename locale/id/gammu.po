@@ -1838,7 +1838,7 @@ msgstr "Informasi gammu"
 
 #: gammu/gammu.c:761
 msgid "Usage: gammu [parameters] <command> [options]"
-msgstr ""
+msgstr "Penggunaan: gammu [parameter] <command> [opsi]"
 
 # type: Plain text
 #: gammu/gammu.c:762
