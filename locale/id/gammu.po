@@ -1798,7 +1798,7 @@ msgstr "Spesifik Nokia"
 
 #: gammu/gammu.c:732
 msgid "Siemens specific"
-msgstr ""
+msgstr "Spesifik Siemens"
 
 #: gammu/gammu.c:735
 msgid "WAP settings and bookmarks"
