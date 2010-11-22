@@ -2019,7 +2019,7 @@ msgstr ""
 
 #: gammu/message.c:98
 msgid "Another client replied"
-msgstr ""
+msgstr "Klien yang lain membalas"
 
 #: gammu/message.c:101
 msgid "Not supported"
