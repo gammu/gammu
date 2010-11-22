@@ -2701,7 +2701,7 @@ msgstr "Hapus daftar kontak dari SIM?"
 
 #: gammu/misc.c:1346
 msgid "Delete missed calls?"
-msgstr ""
+msgstr "Hapus panggilan gagal?"
 
 #: gammu/misc.c:1347
 msgid "Delete dialled calls?"
