@@ -1758,7 +1758,7 @@ msgstr "Memori (buku telepon dan panggilan)"
 
 #: gammu/gammu.c:717
 msgid "Filesystem"
-msgstr ""
+msgstr "File sistem"
 
 #: gammu/gammu.c:718
 msgid "Logo and pictures"
