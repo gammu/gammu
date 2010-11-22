@@ -2633,7 +2633,7 @@ msgstr "Nada dering"
 #: gammu/misc.c:1028
 #, c-format
 msgid "(file with ID %i)\n"
-msgstr ""
+msgstr "(file dengan ID %i)\n"
 
 #. l10n: Ringtone name and ID format
 #: gammu/misc.c:1037
