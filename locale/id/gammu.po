@@ -1847,7 +1847,7 @@ msgstr "Parameter sebelum perintah mengkonfigurasi perilaku gammu:"
 
 #: gammu/gammu.c:763
 msgid "-c / --config <filename> ... name of configuration file"
-msgstr ""
+msgstr "-c / --config <namafile> ... nama file konfigurasi"
 
 #: gammu/gammu.c:764
 msgid "-s / --section <confign> ... section of config file to use, eg. 42"
