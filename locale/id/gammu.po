@@ -2862,7 +2862,7 @@ msgstr "tipe alamat"
 
 #: gammu/misc.c:1543
 msgid "Access point"
-msgstr ""
+msgstr "Access point"
 
 #: gammu/misc.c:1566 gammu/misc.c:1587 gammu/misc.c:1615 gammu/misc.c:1628
 #: gammu/misc.c:1660
