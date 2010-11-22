@@ -2574,7 +2574,7 @@ msgstr "Smart Messaging"
 
 #: gammu/misc.c:670
 msgid "Nokia binary"
-msgstr ""
+msgstr "Nokia binary"
 
 #: gammu/misc.c:671
 msgid "MIDI"
