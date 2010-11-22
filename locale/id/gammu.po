@@ -2916,7 +2916,7 @@ msgstr "logo startup"
 
 #: gammu/misc.c:1695
 msgid "Operator logo"
-msgstr ""
+msgstr "logo operator"
 
 #: gammu/misc.c:1696 helper/message-display.c:428
 msgid "Picture"
