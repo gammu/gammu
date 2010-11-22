@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.28.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-11-15 10:00+0100\n"
-"PO-Revision-Date: 2010-11-22 06:19+0200\n"
+"PO-Revision-Date: 2010-11-22 06:20+0200\n"
 "Last-Translator:  <simbolonsihar@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -2181,7 +2181,7 @@ msgstr "Nomor folder terlalu tinggi (maks. %i)\n"
 #: gammu/message.c:691
 #, c-format
 msgid "Deleting SMS from \"%s\" folder: "
-msgstr ""
+msgstr "Menghapus SMS dari folder \"%s\" "
 
 #: gammu/misc.c:35
 msgid "Network state"
