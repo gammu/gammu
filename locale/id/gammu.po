@@ -2327,7 +2327,7 @@ msgstr "Lithium Ion"
 
 #: gammu/misc.c:182
 msgid "Lithium Polymer"
-msgstr ""
+msgstr "Lithium Polymer"
 
 #: gammu/misc.c:185
 msgid "NiMH"
