@@ -2766,7 +2766,7 @@ msgstr "alamat \"%s\", port %i"
 
 #: gammu/misc.c:1470
 msgid "Second proxy"
-msgstr ""
+msgstr "Detik proxy"
 
 #: gammu/misc.c:1475 gammu/misc.c:1482 gammu/misc.c:1517 gammu/misc.c:1530
 msgid "Bearer"
