@@ -2214,7 +2214,7 @@ msgstr "Tidak dikenali"
 
 #: gammu/misc.c:58 gammu/misc.c:85
 msgid "Name in phone"
-msgstr ""
+msgstr "Nama di telepon"
 
 #: gammu/misc.c:62
 msgid "Packet network state"
