@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.28.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-11-15 10:00+0100\n"
-"PO-Revision-Date: 2010-11-22 05:45+0200\n"
+"PO-Revision-Date: 2010-11-22 05:46+0200\n"
 "Last-Translator:  <simbolonsihar@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1994,7 +1994,7 @@ msgstr "Pesan CB diterima"
 #: gammu/message.c:78
 #, c-format
 msgid "Channel %i, text \"%s\"\n"
-msgstr ""
+msgstr "Channel %i, teks \"%s\"\n"
 
 #: gammu/message.c:84
 msgid "USSD received"
