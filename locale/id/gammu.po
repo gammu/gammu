@@ -2089,7 +2089,7 @@ msgstr ", memori telepon"
 
 #: gammu/message.c:509
 msgid ", phone or SIM memory"
-msgstr ""
+msgstr ", telepon atau memori SIM"
 
 #: gammu/message.c:512 gammu/mms.c:30
 msgid ", Inbox folder"
