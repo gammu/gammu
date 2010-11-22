@@ -2709,7 +2709,7 @@ msgstr "Hapus panggilan keluar?"
 
 #: gammu/misc.c:1348
 msgid "Delete received calls?"
-msgstr ""
+msgstr "Hapus panggilan masuk?"
 
 #: gammu/misc.c:1353
 msgid "Delete phone calendar notes?"
