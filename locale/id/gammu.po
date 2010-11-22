@@ -2774,7 +2774,7 @@ msgstr "Bearer"
 
 #: gammu/misc.c:1475
 msgid "SMS"
-msgstr ""
+msgstr "SMS"
 
 #: gammu/misc.c:1478
 msgid "Server number"
