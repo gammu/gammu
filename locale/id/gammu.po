@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.28.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-11-15 10:00+0100\n"
-"PO-Revision-Date: 2010-11-22 06:29+0200\n"
+"PO-Revision-Date: 2010-11-22 06:30+0200\n"
 "Last-Translator:  <simbolonsihar@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -2371,7 +2371,7 @@ msgstr "Gagal mengolah rentang di balasan OpenCellID!\n"
 
 #: gammu/misc.c:339
 msgid "Failed to find nbSamples in OpenCellID reply!\n"
-msgstr ""
+msgstr "Gagal menemukan nbSamples di balasan OpenCellID!\n"
 
 #: gammu/misc.c:344
 msgid "Failed to parse nbSamples from OpenCellID reply!\n"
