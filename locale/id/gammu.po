@@ -2786,7 +2786,7 @@ msgstr "nomor layanan"
 
 #: gammu/misc.c:1482
 msgid "Data (CSD)"
-msgstr ""
+msgstr "Data (CSD)"
 
 #: gammu/misc.c:1485
 msgid "Dial-up number"
