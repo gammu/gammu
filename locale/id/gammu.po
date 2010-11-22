@@ -2176,7 +2176,7 @@ msgstr "Ada yang salah, operasi pesan tidak dikenali!\n"
 #: gammu/message.c:685
 #, c-format
 msgid "Too high folder number (max. %i)\n"
-msgstr ""
+msgstr "Nomor folder terlalu tinggi (maks. %i)\n"
 
 #: gammu/message.c:691
 #, c-format
