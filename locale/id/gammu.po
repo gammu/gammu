@@ -2391,7 +2391,7 @@ msgstr "Rentang"
 
 #: gammu/misc.c:358
 msgid "Number of samples"
-msgstr ""
+msgstr "Jumlah sampel"
 
 #: gammu/misc.c:379
 msgid "Device"
