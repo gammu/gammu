@@ -2705,7 +2705,7 @@ msgstr "Hapus panggilan gagal?"
 
 #: gammu/misc.c:1347
 msgid "Delete dialled calls?"
-msgstr ""
+msgstr "Hapus panggilan keluar?"
 
 #: gammu/misc.c:1348
 msgid "Delete received calls?"
