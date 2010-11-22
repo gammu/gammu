@@ -1918,7 +1918,7 @@ msgstr "Terlalu banyak parameter (Fungsi menerima %d hingga %d)\n"
 
 #: gammu/gammu.c:1015
 msgid "Bad option!"
-msgstr "Pilihan buruk"
+msgstr "Pilihan buruk!"
 
 #: gammu/gammu.c:1096
 msgid "Configuration could not be parsed!"
