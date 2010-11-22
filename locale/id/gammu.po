@@ -2471,7 +2471,7 @@ msgstr "Panggilan dipasang. Menunggu jawaban"
 
 #: gammu/misc.c:499
 msgid "call held"
-msgstr ""
+msgstr "Panggilan ditahan"
 
 #: gammu/misc.c:500
 msgid "call resumed"
