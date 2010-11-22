@@ -2475,7 +2475,7 @@ msgstr "Panggilan ditahan"
 
 #: gammu/misc.c:500
 msgid "call resumed"
-msgstr ""
+msgstr "Panggilan dikembalikan"
 
 #: gammu/misc.c:501
 msgid "call switched"
