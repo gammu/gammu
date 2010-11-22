@@ -2242,7 +2242,7 @@ msgstr "Tingkat baterai"
 
 #: gammu/misc.c:111
 msgid "Battery capacity"
-msgstr ""
+msgstr "Kapasitas baterai"
 
 #: gammu/misc.c:112
 #, c-format
