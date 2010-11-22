@@ -2283,7 +2283,7 @@ msgstr "Pengisiaan saat ini"
 #: gammu/misc.c:138 gammu/misc.c:143
 #, c-format
 msgid "%i mA"
-msgstr ""
+msgstr "%i mA"
 
 #: gammu/misc.c:142
 msgid "Phone current"
