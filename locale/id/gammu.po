@@ -2436,7 +2436,7 @@ msgstr "Info panggilan"
 #: gammu/misc.c:489
 #, c-format
 msgid "ID %i, "
-msgstr ""
+msgstr "ID %i, "
 
 #: gammu/misc.c:492
 #, c-format
