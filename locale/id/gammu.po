@@ -1766,7 +1766,7 @@ msgstr "Logo dan gambar"
 
 #: gammu/gammu.c:719
 msgid "Ringtones"
-msgstr ""
+msgstr "Nada dering"
 
 #: gammu/gammu.c:720
 msgid "Calendar notes"
