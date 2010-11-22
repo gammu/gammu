@@ -2665,7 +2665,7 @@ msgstr "ID bitmap"
 
 #: gammu/misc.c:1066
 msgid "No operator logo in phone"
-msgstr ""
+msgstr "Logo operator tidak ada di telepon"
 
 #: gammu/misc.c:1072 gammu/mms.c:71 helper/message-display.c:461
 msgid "Sender"
