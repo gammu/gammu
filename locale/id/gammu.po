@@ -2407,7 +2407,7 @@ msgstr "Model"
 
 #: gammu/misc.c:392
 msgid "Firmware"
-msgstr ""
+msgstr "Firmware"
 
 #: gammu/misc.c:404
 msgid "Hardware"
