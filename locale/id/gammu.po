@@ -1980,7 +1980,7 @@ msgstr "Pesan SMS diterima"
 
 #: gammu/message.c:40
 msgid "We already have one pending, ignoring this one!"
-msgstr ""
+msgstr "Kita telah menerima pesan tertunda, mengabaikan pesan ini!"
 
 #: gammu/message.c:62 gammu/message.c:277
 #, c-format
