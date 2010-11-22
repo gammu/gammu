@@ -2697,7 +2697,7 @@ msgstr "Hapus daftar kontak dari telepon?"
 
 #: gammu/misc.c:1345
 msgid "Delete SIM phonebook?"
-msgstr ""
+msgstr "Hapus daftar kontak dari SIM?"
 
 #: gammu/misc.c:1346
 msgid "Delete missed calls?"
