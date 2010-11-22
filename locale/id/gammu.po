@@ -2115,7 +2115,7 @@ msgstr ""
 
 #: gammu/message.c:568
 msgid "Message number"
-msgstr ""
+msgstr "Nomor pesan"
 
 #: gammu/message.c:573
 msgid "Number of messages"
