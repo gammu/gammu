@@ -2497,7 +2497,7 @@ msgstr "masuk modus monitor"
 
 #: gammu/misc.c:556
 msgid "Enabling info about incoming SMS"
-msgstr "mengaktifkan info tentang SMS masuk"
+msgstr "mengaktifkan info SMS masuk"
 
 #: gammu/misc.c:558
 msgid "Enabling info about incoming CB"
