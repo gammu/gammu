@@ -2118,7 +2118,7 @@ msgstr "..OK"
 #: gammu/message.c:532
 #, c-format
 msgid "..error %i"
-msgstr ""
+msgstr "..error %i"
 
 #: gammu/message.c:535
 #, c-format
