@@ -1900,7 +1900,7 @@ msgstr "Dibutuhkan lebih banyak dibutukan (fungsi dibutuhkan %d)\n"
 #: gammu/gammu.c:967
 #, c-format
 msgid "More parameters required (function requires %d to %d)\n"
-msgstr ""
+msgstr "Dibutuhkan lebih banyak dibutukan (fungsi dibutuhkan %d hingga %d)\n"
 
 #: gammu/gammu.c:973 gammu/gammu.c:994
 msgid "Parameters help"
