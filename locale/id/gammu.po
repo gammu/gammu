@@ -2802,7 +2802,7 @@ msgstr "tipe login"
 
 #: gammu/misc.c:1488 gammu/misc.c:1534
 msgid "Manual"
-msgstr ""
+msgstr "manual"
 
 #: gammu/misc.c:1490 gammu/misc.c:1536
 msgid "Automatic"
