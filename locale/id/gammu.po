@@ -1989,7 +1989,7 @@ msgstr "Kosong"
 
 #: gammu/message.c:77
 msgid "CB message received"
-msgstr "CB message diterima"
+msgstr "Pesan CB diterima"
 
 #: gammu/message.c:78
 #, c-format
