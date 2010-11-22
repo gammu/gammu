@@ -1834,7 +1834,7 @@ msgstr "Fungsi yang tidak sesuai dimana pun"
 
 #: gammu/gammu.c:745
 msgid "Gammu information"
-msgstr ""
+msgstr "Informasi gammu"
 
 #: gammu/gammu.c:761
 msgid "Usage: gammu [parameters] <command> [options]"
