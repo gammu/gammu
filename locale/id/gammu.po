@@ -1790,7 +1790,7 @@ msgstr "Kategori"
 
 #: gammu/gammu.c:726
 msgid "Backing up and restoring"
-msgstr ""
+msgstr "Backing up dan restoring"
 
 #: gammu/gammu.c:729
 msgid "Nokia specific"
