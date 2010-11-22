@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.28.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-11-15 10:00+0100\n"
-"PO-Revision-Date: 2010-11-22 06:48+0200\n"
+"PO-Revision-Date: 2010-11-22 06:49+0200\n"
 "Last-Translator:  <simbolonsihar@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -2729,7 +2729,7 @@ msgstr "Hapus bookmark WAP telepon?"
 
 #: gammu/misc.c:1446
 msgid "Delete all phone FM radio stations?"
-msgstr ""
+msgstr "Hapus seluruh stasiun radio FM telepon?"
 
 #: gammu/misc.c:1458 gammu/misc.c:1460
 msgid "Connection type"
