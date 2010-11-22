@@ -2526,7 +2526,7 @@ msgstr "Kekuatan sinyal"
 #: gammu/misc.c:593
 #, c-format
 msgid "%i dBm"
-msgstr ""
+msgstr "%i dBm"
 
 #: gammu/misc.c:597
 msgid "Network level"
