@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.28.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-11-15 10:00+0100\n"
-"PO-Revision-Date: 2010-11-22 06:33+0200\n"
+"PO-Revision-Date: 2010-11-22 06:34+0200\n"
 "Last-Translator:  <simbolonsihar@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -2463,7 +2463,7 @@ msgstr "Panggilan berakhir dari sisi kita"
 #: gammu/misc.c:497
 #, c-format
 msgid "call end from remote side (code %i)\n"
-msgstr ""
+msgstr "Panggilan berakhir dari sisi luar (kode %i)\n"
 
 #: gammu/misc.c:498
 msgid "call established. Waiting for answer"
