@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.28.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-11-15 10:00+0100\n"
-"PO-Revision-Date: 2010-11-22 06:27+0200\n"
+"PO-Revision-Date: 2010-11-22 06:28+0200\n"
 "Last-Translator:  <simbolonsihar@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -2351,7 +2351,7 @@ msgstr "Gagal menemukan latitude di balasan OpenCellID!\n"
 
 #: gammu/misc.c:311
 msgid "Failed to parse latitude from OpenCellID reply!\n"
-msgstr ""
+msgstr "Gagal mengolah lintang dari balasan OpenCellID!\n"
 
 #: gammu/misc.c:317
 msgid "Failed to find longitude in OpenCellID reply!\n"
