@@ -2363,7 +2363,7 @@ msgstr "Gagal menemukan bujur di balasan OpenCellID!\n"
 
 #: gammu/misc.c:328
 msgid "Failed to find range in OpenCellID reply!\n"
-msgstr ""
+msgstr "Gagal menemukan rentang di balasan OpenCellID!\n"
 
 #: gammu/misc.c:333
 msgid "Failed to parse range from OpenCellID reply!\n"
