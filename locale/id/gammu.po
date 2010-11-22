@@ -1981,7 +1981,7 @@ msgstr ""
 #: gammu/message.c:62 gammu/message.c:277
 #, c-format
 msgid "Location %i\n"
-msgstr ""
+msgstr "Lokasi %i\n"
 
 #: gammu/message.c:63 gammu/message.c:278
 msgid "Empty"
