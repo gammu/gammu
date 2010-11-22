@@ -2431,7 +2431,7 @@ msgstr "SIM IMSI"
 
 #: gammu/misc.c:486
 msgid "Call info"
-msgstr ""
+msgstr "Info panggilan"
 
 #: gammu/misc.c:489
 #, c-format
