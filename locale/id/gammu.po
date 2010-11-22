@@ -2924,7 +2924,7 @@ msgstr "gambar"
 
 #: gammu/misc.c:1697
 msgid "Caller group logo"
-msgstr ""
+msgstr "logo grup pemanggil"
 
 #: gammu/misc.c:1700
 #, c-format
