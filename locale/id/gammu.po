@@ -2097,7 +2097,7 @@ msgstr ""
 
 #: gammu/message.c:513
 msgid ", Outbox folder"
-msgstr ""
+msgstr ", Folder outbox"
 
 #: gammu/message.c:529
 msgid "..OK"
