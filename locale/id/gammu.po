@@ -2339,7 +2339,7 @@ msgstr "Tidak tercatat di jaringan!\n"
 
 #: gammu/misc.c:272
 msgid "Wrong network code from phone!\n"
-msgstr ""
+msgstr "Kode jaringan dari telepon salah!\n"
 
 #: gammu/misc.c:300
 msgid "Request for information from OpenCellID failed!\n"
