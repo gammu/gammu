@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.28.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-11-15 10:00+0100\n"
-"PO-Revision-Date: 2010-11-22 06:23+0200\n"
+"PO-Revision-Date: 2010-11-22 06:24+0200\n"
 "Last-Translator:  <simbolonsihar@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -2295,7 +2295,7 @@ msgstr "Status pengisian"
 
 #: gammu/misc.c:150
 msgid "powered from battery"
-msgstr ""
+msgstr "menggunakan tenaga baterai"
 
 #: gammu/misc.c:153
 msgid "battery connected, but not powered from battery"
