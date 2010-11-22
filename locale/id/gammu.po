@@ -2185,7 +2185,7 @@ msgstr "Menghapus SMS dari folder \"%s\" "
 
 #: gammu/misc.c:35
 msgid "Network state"
-msgstr ""
+msgstr "Status jaringan"
 
 #: gammu/misc.c:37 gammu/misc.c:64
 msgid "home network"
