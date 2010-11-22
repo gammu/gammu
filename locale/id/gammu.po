@@ -2003,7 +2003,7 @@ msgstr ""
 #: gammu/message.c:85 helper/message-display.c:150
 #: helper/message-display.c:270
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: gammu/message.c:89
 msgid "No action needed"
