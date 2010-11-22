@@ -2291,7 +2291,7 @@ msgstr "Telepon saat ini"
 
 #: gammu/misc.c:147
 msgid "Charge state"
-msgstr ""
+msgstr "Status pengisian"
 
 #: gammu/misc.c:150
 msgid "powered from battery"
