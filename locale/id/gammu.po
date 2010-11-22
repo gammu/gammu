@@ -2615,7 +2615,7 @@ msgstr "Lokasi maksimal untuk logo pemanggil adalah 5"
 #: gammu/misc.c:992
 #, c-format
 msgid "What type of logo do you want to get (\"%s\") ?\n"
-msgstr ""
+msgstr "Tipe logo apa yang Anda ingin dapatkan (\"%s\") ?\n"
 
 #: gammu/misc.c:1008
 msgid "Group name"
