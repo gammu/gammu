@@ -2679,7 +2679,7 @@ msgstr "Teks pembuka adalah \"%s\"\n"
 #: gammu/misc.c:1081
 #, c-format
 msgid "Dealer note text is \"%s\"\n"
-msgstr ""
+msgstr "Teks dealer adalah \"%s\"\n"
 
 #: gammu/misc.c:1219
 #, c-format
