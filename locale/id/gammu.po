@@ -2299,7 +2299,7 @@ msgstr "menggunakan tenaga baterai"
 
 #: gammu/misc.c:153
 msgid "battery connected, but not powered from battery"
-msgstr ""
+msgstr "baterai terhubung, tetapi tidak menggunakan baterai"
 
 #: gammu/misc.c:156
 msgid "battery connected and is being charged"
