@@ -2247,7 +2247,7 @@ msgstr "Kapasitas baterai"
 #: gammu/misc.c:112
 #, c-format
 msgid "%i mAh"
-msgstr ""
+msgstr "%i mAh"
 
 #: gammu/misc.c:116
 msgid "Battery temperature"
