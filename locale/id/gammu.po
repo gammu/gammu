@@ -2027,7 +2027,7 @@ msgstr "Tidak didukung"
 
 #: gammu/message.c:113
 msgid "Service reply"
-msgstr ""
+msgstr "Balasan layanan"
 
 #: gammu/message.c:160
 #, c-format
