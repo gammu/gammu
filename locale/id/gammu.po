@@ -2251,7 +2251,7 @@ msgstr "%i mAh"
 
 #: gammu/misc.c:116
 msgid "Battery temperature"
-msgstr ""
+msgstr "Suhu baterai"
 
 #. l10n: This means degrees Celsius
 #: gammu/misc.c:118 gammu/misc.c:123
