@@ -2822,7 +2822,7 @@ msgstr "aman"
 
 #: gammu/misc.c:1498 gammu/misc.c:1500
 msgid "Data call type"
-msgstr ""
+msgstr "tipe data panggilan"
 
 #: gammu/misc.c:1498
 msgid "ISDN"
