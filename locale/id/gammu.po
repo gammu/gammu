@@ -2379,7 +2379,7 @@ msgstr "Gagal mengolah nbSamples di balasan OpenCellID!\n"
 
 #: gammu/misc.c:355
 msgid "Latitude"
-msgstr ""
+msgstr "Lintang"
 
 #: gammu/misc.c:356
 msgid "Longitude"
