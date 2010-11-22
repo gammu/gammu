@@ -2770,7 +2770,7 @@ msgstr "Detik proxy"
 
 #: gammu/misc.c:1475 gammu/misc.c:1482 gammu/misc.c:1517 gammu/misc.c:1530
 msgid "Bearer"
-msgstr ""
+msgstr "Bearer"
 
 #: gammu/misc.c:1475
 msgid "SMS"
