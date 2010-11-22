@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.28.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-11-15 10:00+0100\n"
-"PO-Revision-Date: 2010-11-22 05:50+0200\n"
+"PO-Revision-Date: 2010-11-22 05:51+0200\n"
 "Last-Translator:  <simbolonsihar@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1941,7 +1941,7 @@ msgstr "Konfigurasi tidak terbaca, menggunakan konfigurasi awal"
 #, c-format
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
-msgstr ""
+msgstr "Versi libGammu.so berbeda dengan versi Gammu (%s)\n"
 
 #: gammu/memory.c:41 gammu/memory.c:95 gammu/memory.c:113 gammu/memory.c:240
 #: gammu/memory.c:357
