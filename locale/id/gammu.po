@@ -2080,7 +2080,7 @@ msgstr "Waktu maksimum"
 
 #: gammu/message.c:353 gammu/message.c:428 gammu/message.c:702
 msgid "Corrupted message, skipping"
-msgstr ""
+msgstr "Pesan bermasalah, diabaikan"
 
 #: gammu/message.c:367 gammu/message.c:486
 #, c-format
