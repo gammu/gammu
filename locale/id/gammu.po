@@ -2359,7 +2359,7 @@ msgstr "Gagal menemukan bujur di balasan OpenCellID!\n"
 
 #: gammu/misc.c:322
 msgid "Failed to parse longitude from OpenCellID reply!\n"
-msgstr "Gagal menemukan rentang di balasan OpenCellID!\n"
+msgstr "Gagal menemukan bujur di balasan OpenCellID!\n"
 
 #: gammu/misc.c:328
 msgid "Failed to find range in OpenCellID reply!\n"
