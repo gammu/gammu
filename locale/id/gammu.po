@@ -2757,7 +2757,7 @@ msgstr "Off"
 
 #: gammu/misc.c:1467
 msgid "Proxy"
-msgstr ""
+msgstr "Proxy"
 
 #: gammu/misc.c:1468 gammu/misc.c:1471
 #, c-format
