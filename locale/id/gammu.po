@@ -4185,7 +4185,7 @@ msgstr "Jumlah bit"
 
 #: helper/message-display.c:533
 msgid "UDH"
-msgstr ""
+msgstr "UDH"
 
 #: helper/message-display.c:549
 msgid "Whole PDU"
