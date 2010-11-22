@@ -2834,7 +2834,7 @@ msgstr "analog"
 
 #: gammu/misc.c:1504 gammu/misc.c:1507 gammu/misc.c:1510
 msgid "Data call speed"
-msgstr ""
+msgstr "kecepatan data panggilan"
 
 #: gammu/misc.c:1510 gammu/misc.c:2068
 msgid "Auto"
