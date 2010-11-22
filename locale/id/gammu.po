@@ -2717,7 +2717,7 @@ msgstr "Hapus catatan kalender telepon?"
 
 #: gammu/misc.c:1377
 msgid "Delete phone todos?"
-msgstr ""
+msgstr "Hapus todos telepon?"
 
 #: gammu/misc.c:1401
 msgid "Delete phone notes?"
