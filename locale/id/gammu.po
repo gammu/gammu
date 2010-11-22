@@ -2479,7 +2479,7 @@ msgstr "Panggilan dikembalikan"
 
 #: gammu/misc.c:501
 msgid "call switched"
-msgstr ""
+msgstr "Panggilan ditukar"
 
 #: gammu/misc.c:508
 #, c-format
