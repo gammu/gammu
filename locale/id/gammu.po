@@ -2657,7 +2657,7 @@ msgstr "Diaktifkan"
 
 #: gammu/misc.c:1050 gammu/misc.c:1579 gammu/misc.c:1582 gammu/mms.c:104
 msgid "disabled"
-msgstr ""
+msgstr "Dinonaktifkan"
 
 #: gammu/misc.c:1053
 msgid "Bitmap ID"
