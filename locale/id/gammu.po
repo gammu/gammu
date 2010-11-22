@@ -2458,7 +2458,7 @@ msgstr "Akhir panggilan (bagian tidak dikenali)"
 
 #: gammu/misc.c:496
 msgid "call end from our side"
-msgstr ""
+msgstr "Panggilan berakhir dari sisi kita"
 
 #: gammu/misc.c:497
 #, c-format
