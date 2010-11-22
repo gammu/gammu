@@ -1914,7 +1914,7 @@ msgstr "Terlalu banyak parameter (Fungsi menerima %d)\n"
 #: gammu/gammu.c:988
 #, c-format
 msgid "Too many parameters (function accepts %d to %d)\n"
-msgstr ""
+msgstr "Terlalu banyak parameter (Fungsi menerima %d hingga %d)\n"
 
 #: gammu/gammu.c:1015
 msgid "Bad option!"
