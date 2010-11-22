@@ -2908,7 +2908,7 @@ msgstr "aktif"
 
 #: gammu/misc.c:1669
 msgid "Read only"
-msgstr ""
+msgstr "hanya dibaca"
 
 #: gammu/misc.c:1694
 msgid "Startup logo"
