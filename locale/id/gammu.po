@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.28.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-11-15 10:00+0100\n"
-"PO-Revision-Date: 2010-11-22 06:15+0200\n"
+"PO-Revision-Date: 2010-11-22 06:16+0200\n"
 "Last-Translator:  <simbolonsihar@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -2076,7 +2076,7 @@ msgstr "Keabsahan"
 
 #: gammu/message.c:233
 msgid "Maximum time"
-msgstr ""
+msgstr "Waktu maksimum"
 
 #: gammu/message.c:353 gammu/message.c:428 gammu/message.c:702
 msgid "Corrupted message, skipping"
