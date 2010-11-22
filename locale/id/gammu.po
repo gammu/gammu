@@ -2323,7 +2323,7 @@ msgstr "jenis baterai"
 
 #: gammu/misc.c:179
 msgid "Lithium Ion"
-msgstr ""
+msgstr "Lithium Ion"
 
 #: gammu/misc.c:182
 msgid "Lithium Polymer"
