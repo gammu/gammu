@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.28.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-11-15 10:00+0100\n"
-"PO-Revision-Date: 2010-11-22 06:20+0200\n"
+"PO-Revision-Date: 2010-11-22 06:21+0200\n"
 "Last-Translator:  <simbolonsihar@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -2205,7 +2205,7 @@ msgstr "Tidak tercatat dalam jaringan"
 
 #: gammu/misc.c:41 gammu/misc.c:68
 msgid "registration to network denied"
-msgstr ""
+msgstr "Registrasi ke jaringan ditolak"
 
 #: gammu/misc.c:42 gammu/misc.c:44 gammu/misc.c:69 gammu/misc.c:71
 #: gammu/misc.c:169 gammu/misc.c:191
