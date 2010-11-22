@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.28.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-11-15 10:00+0100\n"
-"PO-Revision-Date: 2010-11-22 06:44+0200\n"
+"PO-Revision-Date: 2010-11-22 06:45+0200\n"
 "Last-Translator:  <simbolonsihar@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -2674,7 +2674,7 @@ msgstr "Pengirim"
 #: gammu/misc.c:1078
 #, c-format
 msgid "Welcome note text is \"%s\"\n"
-msgstr ""
+msgstr "Teks pembuka adalah \"%s\"\n"
 
 #: gammu/misc.c:1081
 #, c-format
