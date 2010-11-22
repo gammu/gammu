@@ -2395,7 +2395,7 @@ msgstr "Jumlah sampel"
 
 #: gammu/misc.c:379
 msgid "Device"
-msgstr ""
+msgstr "Alat"
 
 #: gammu/misc.c:383 gammu/search.c:89
 msgid "Manufacturer"
