@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.28.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-11-15 10:00+0100\n"
-"PO-Revision-Date: 2010-11-22 06:50+0200\n"
+"PO-Revision-Date: 2010-11-22 06:51+0200\n"
 "Last-Translator:  <simbolonsihar@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -2778,7 +2778,7 @@ msgstr "SMS"
 
 #: gammu/misc.c:1478
 msgid "Server number"
-msgstr "nomor server"
+msgstr "nomor penyedia layanan"
 
 #: gammu/misc.c:1479 gammu/misc.c:1525 gammu/misc.c:1526
 msgid "Service number"
