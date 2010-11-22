@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: Gammu 1.28.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-11-15 10:00+0100\n"
-"PO-Revision-Date: 2010-06-16 01:43+0200\n"
-"Last-Translator:  <jack.hakim@yahoo.com>\n"
+"PO-Revision-Date: 2010-11-22 04:44+0200\n"
+"Last-Translator:  <simbolonsihar@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Pootle 2.0.1\n"
+"X-Generator: Pootle 2.0.5\n"
 
 #: gammu/backup.c:33 gammu/backup.c:56 gammu/backup.c:79 gammu/backup.c:100
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -4164,7 +4164,7 @@ msgstr "ID Suara EMS"
 
 #: helper/message-display.c:458
 msgid "EMS animation ID"
-msgstr ""
+msgstr "ID Animasi EMS"
 
 #: helper/message-display.c:464
 msgid "Message size"
