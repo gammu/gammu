@@ -2872,7 +2872,7 @@ msgstr "Atur %i"
 
 #: gammu/misc.c:1572 gammu/misc.c:1622
 msgid "User"
-msgstr ""
+msgstr "Pengguna"
 
 #: gammu/misc.c:1574
 msgid "Phonebook database"
