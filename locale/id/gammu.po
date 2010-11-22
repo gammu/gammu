@@ -2128,7 +2128,7 @@ msgstr "Jika ingin keluar, tekan Ctrl+C"
 #: gammu/message.c:589
 #, c-format
 msgid "Saving SMS %i/%i\n"
-msgstr ""
+msgstr "Menyimpan SMS %i/%i\n"
 
 #: gammu/message.c:592
 #, c-format
