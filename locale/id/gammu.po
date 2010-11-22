@@ -1967,7 +1967,7 @@ msgstr ""
 
 #: gammu/memory.c:108 gammu/misc.c:1848 gammu/misc.c:2213
 msgid "Entry is empty"
-msgstr ""
+msgstr "Isian kosong"
 
 #: gammu/memory.c:120
 #, c-format
