@@ -2753,7 +2753,7 @@ msgstr "On"
 
 #: gammu/misc.c:1465 gammu/misc.c:2052
 msgid "Off"
-msgstr ""
+msgstr "Off"
 
 #: gammu/misc.c:1467
 msgid "Proxy"
