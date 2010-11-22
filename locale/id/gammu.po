@@ -1770,7 +1770,7 @@ msgstr "Nada dering"
 
 #: gammu/gammu.c:720
 msgid "Calendar notes"
-msgstr ""
+msgstr "Catatan kalender"
 
 #: gammu/gammu.c:721
 msgid "To do lists"
