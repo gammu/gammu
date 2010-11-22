@@ -2315,7 +2315,7 @@ msgstr "baterai tidak terhubung"
 
 #: gammu/misc.c:165
 msgid "detected power failure"
-msgstr ""
+msgstr "kegagalan sumber daya"
 
 #: gammu/misc.c:176
 msgid "Battery type"
