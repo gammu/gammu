@@ -1786,7 +1786,7 @@ msgstr "Tanggal, waktu dan alarm"
 
 #: gammu/gammu.c:724
 msgid "Categories"
-msgstr ""
+msgstr "Kategori"
 
 #: gammu/gammu.c:726
 msgid "Backing up and restoring"
