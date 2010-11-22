@@ -2367,7 +2367,7 @@ msgstr "Gagal menemukan rentang di balasan OpenCellID!\n"
 
 #: gammu/misc.c:333
 msgid "Failed to parse range from OpenCellID reply!\n"
-msgstr ""
+msgstr "Gagal mengolah rentang di balasan OpenCellID!\n"
 
 #: gammu/misc.c:339
 msgid "Failed to find nbSamples in OpenCellID reply!\n"
