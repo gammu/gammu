@@ -2403,7 +2403,7 @@ msgstr "Pabrikan"
 
 #: gammu/misc.c:386 gammu/search.c:101
 msgid "Model"
-msgstr ""
+msgstr "Model"
 
 #: gammu/misc.c:392
 msgid "Firmware"
