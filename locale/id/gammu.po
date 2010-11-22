@@ -2818,7 +2818,7 @@ msgstr "Normal"
 
 #: gammu/misc.c:1495 gammu/misc.c:1541
 msgid "Secure"
-msgstr ""
+msgstr "aman"
 
 #: gammu/misc.c:1498 gammu/misc.c:1500
 msgid "Data call type"
