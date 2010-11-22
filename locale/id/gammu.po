@@ -2521,7 +2521,7 @@ msgstr "Kalender"
 
 #: gammu/misc.c:592
 msgid "Signal strength"
-msgstr ""
+msgstr "Kekuatan sinyal"
 
 #: gammu/misc.c:593
 #, c-format
