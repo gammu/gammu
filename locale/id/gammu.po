@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.28.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-11-15 10:00+0100\n"
-"PO-Revision-Date: 2010-11-22 05:48+0200\n"
+"PO-Revision-Date: 2010-11-22 05:49+0200\n"
 "Last-Translator:  <simbolonsihar@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1931,7 +1931,7 @@ msgstr "Parameter terlalu sedikit!"
 #: gammu/gammu.c:1162
 #, c-format
 msgid "Failed to read [gammu%d] section from configuration file (gammurc)!\n"
-msgstr ""
+msgstr "Gagal membaca bagian [gammu%d] dari file konfigurasi (gammurc)!\n"
 
 #: gammu/gammu.c:1164 gammu/gammu.c:1175
 msgid "No configuration read, using builtin defaults!"
