@@ -2493,7 +2493,7 @@ msgstr "gratis %3d"
 
 #: gammu/misc.c:546
 msgid "Entering monitor mode..."
-msgstr ""
+msgstr "masuk modus monitor"
 
 #: gammu/misc.c:556
 msgid "Enabling info about incoming SMS"
