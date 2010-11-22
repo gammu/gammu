@@ -2838,7 +2838,7 @@ msgstr "kecepatan data panggilan"
 
 #: gammu/misc.c:1510 gammu/misc.c:2068
 msgid "Auto"
-msgstr ""
+msgstr "auto"
 
 #: gammu/misc.c:1513 gammu/misc.c:1545
 msgid "User name"
