@@ -2830,7 +2830,7 @@ msgstr "ISDN"
 
 #: gammu/misc.c:1500
 msgid "Analogue"
-msgstr ""
+msgstr "analog"
 
 #: gammu/misc.c:1504 gammu/misc.c:1507 gammu/misc.c:1510
 msgid "Data call speed"
