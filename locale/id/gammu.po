@@ -2311,7 +2311,7 @@ msgstr "baterai terhubung dan sedang terisi penuh"
 
 #: gammu/misc.c:162
 msgid "battery not connected"
-msgstr ""
+msgstr "baterai tidak terhubung"
 
 #: gammu/misc.c:165
 msgid "detected power failure"
