@@ -2411,7 +2411,7 @@ msgstr "Firmware"
 
 #: gammu/misc.c:404
 msgid "Hardware"
-msgstr ""
+msgstr "Hardware"
 
 #: gammu/misc.c:415
 msgid "Original IMEI"
