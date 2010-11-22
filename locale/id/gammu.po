@@ -2745,7 +2745,7 @@ msgstr "Sementara"
 
 #: gammu/misc.c:1463 gammu/misc.c:1465
 msgid "Connection security"
-msgstr ""
+msgstr "Keamanan koneksi"
 
 #: gammu/misc.c:1463 gammu/misc.c:2066
 msgid "On"
