@@ -1762,7 +1762,7 @@ msgstr "File sistem"
 
 #: gammu/gammu.c:718
 msgid "Logo and pictures"
-msgstr ""
+msgstr "Logo dan gambar"
 
 #: gammu/gammu.c:719
 msgid "Ringtones"
