@@ -2383,7 +2383,7 @@ msgstr "Lintang"
 
 #: gammu/misc.c:356
 msgid "Longitude"
-msgstr ""
+msgstr "Bujur"
 
 #: gammu/misc.c:357
 #, fuzzy
