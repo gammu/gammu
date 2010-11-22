@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.28.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-11-15 10:00+0100\n"
-"PO-Revision-Date: 2010-11-22 06:37+0200\n"
+"PO-Revision-Date: 2010-11-22 06:38+0200\n"
 "Last-Translator:  <simbolonsihar@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -2513,7 +2513,7 @@ msgstr "mengaktifkan info USSD"
 
 #: gammu/misc.c:579
 msgid "Todos"
-msgstr ""
+msgstr "Todos"
 
 #: gammu/misc.c:583
 msgid "Calendar"
