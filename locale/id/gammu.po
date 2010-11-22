@@ -1782,7 +1782,7 @@ msgstr "Catatan"
 
 #: gammu/gammu.c:723
 msgid "Date, time and alarms"
-msgstr ""
+msgstr "Tanggal, waktu dan alarm"
 
 #: gammu/gammu.c:724
 msgid "Categories"
