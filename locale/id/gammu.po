@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.28.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-11-15 10:00+0100\n"
-"PO-Revision-Date: 2010-11-22 06:54+0200\n"
+"PO-Revision-Date: 2010-11-22 06:55+0200\n"
 "Last-Translator:  <simbolonsihar@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -2900,7 +2900,7 @@ msgstr "Nama koneksi"
 
 #: gammu/misc.c:1621 gammu/misc.c:1671
 msgid "Homepage"
-msgstr ""
+msgstr "Homepage"
 
 #: gammu/misc.c:1665
 msgid "active"
