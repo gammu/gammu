@@ -1926,7 +1926,7 @@ msgstr "Gagal mengalokasikan memori, diabaikan!\n"
 
 #: gammu/gammu.c:1149
 msgid "Too few parameters!"
-msgstr ""
+msgstr "Parameter terlalu sedikit!"
 
 #: gammu/gammu.c:1162
 #, c-format
