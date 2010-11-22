@@ -1976,7 +1976,7 @@ msgstr "%i isian kosong, %i isian diisi\n"
 
 #: gammu/message.c:36
 msgid "SMS message received"
-msgstr ""
+msgstr "Pesan SMS diterima"
 
 #: gammu/message.c:40
 msgid "We already have one pending, ignoring this one!"
