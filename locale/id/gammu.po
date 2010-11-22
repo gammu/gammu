@@ -2085,7 +2085,7 @@ msgstr ""
 
 #: gammu/message.c:508
 msgid ", phone memory"
-msgstr ""
+msgstr ", memori telepon"
 
 #: gammu/message.c:509
 msgid ", phone or SIM memory"
