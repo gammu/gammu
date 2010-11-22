@@ -2557,7 +2557,7 @@ msgstr "%i lokasi"
 
 #: gammu/misc.c:620
 msgid "Phone SMS status"
-msgstr ""
+msgstr "Status SMS telepon"
 
 #: gammu/misc.c:628
 #, c-format
