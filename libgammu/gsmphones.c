@@ -117,6 +117,7 @@ GSM_FeatureName AllFeatureNames[] = {
 	{"SIEMENS_PBK", F_SIEMENS_PBK},
 	{"NO_ATSYNCML", F_NO_ATSYNCML},
 	{"MOBEX", F_MOBEX},
+	{"TSSPCSW", F_TSSPCSW},
 	{"", 0},
 };
 

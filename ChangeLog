@@ -30,6 +30,7 @@ ChangeLog
 [+] * Include udev rules for Nokia phones (bug #1251).
 [-] * Fix parsing LG VX9200 reply on getting battery state (bug #1264).
 [-] * Fix handling of SMS text mode (bug #1189).
+[!] * Default to no retries of the send commands on the link.
     
 20101004 - 1.28.92
 

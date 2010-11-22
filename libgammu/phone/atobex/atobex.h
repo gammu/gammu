@@ -50,6 +50,7 @@ typedef enum {
 	ATOBEX_OBEX_XLNK, /**< Switch using AT+XLNK */
 	ATOBEX_OBEX_SQWE, /**< Switch using AT^SQWE */
 	ATOBEX_OBEX_MOBEX, /**< Switch using AT+SYNCML=MOBEXSTART */
+	ATOBEX_OBEX_TSSPCSW, /**< Switch using AT$TSSPCSW=1 */
 } GSM_ATOBEX_OBEX;
 
 /**

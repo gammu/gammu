@@ -281,7 +281,7 @@ void GSM_Init(gboolean checkerror)
 		return;
 
 	/* Connect to phone */
-	error = GSM_InitConnection(gsm, 3);
+	error = GSM_InitConnection(gsm, 1);
 	if (checkerror)
 		Print_Error(error);
 

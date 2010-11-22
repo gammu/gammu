@@ -1,7 +1,7 @@
 m-obex protocol used by some Samsung mobiles
 ============================================
 
-This document is copied from <http://code.google.com/p/samsyncro/wiki/mobex>.
+This document is copied from <http://code.google.com/p/samsyncro/wiki/mobex> and extended.
 
 Introduction
 ------------
@@ -10,7 +10,7 @@ This is an attempt to document the m-obex protocol. It is a obex-variation by Sa
 
 This documentation is by no means complete but is only a reference for the samsyncro implementation. As I don't know the obex protocol I can't say in which parts it differs from the standard-obex. The only thing I found strange is the fact, that you will always get 0xA0 as a response. Wich means Ok, sucess in obex. If there was an error you will find it's error code in the 0x42 header. If this is a normal behavior: Why are there so many response codes defined?
 
-The information about the protocol was gained by listening to the transfered data from Samsungs New PC Studio to a SGH-F480i mobile.
+The information about the protocol was gained by listening to the transfered data from Samsungs New PC Studio to a SGH-F480i and B2100 mobile.
 
 Requirements
 ------------
@@ -24,6 +24,10 @@ Starting the obex server
 To start the obex server you have to send this AT command first::
 
     AT+SYNCML=MOBEXSTART
+
+Some phones seem to start with following command::
+
+    AT$TSSPCSW=1
 
 Obex commands
 -------------
@@ -118,7 +122,8 @@ Answer
 *4C* 00 05 00 02
     Indicates if these are the last contacts
 *49* 08 B4 00 0A 00 .....
-    Contacts in VCard format. The first two bytes of an item are the id of the contact. Bytes 3 and 4: unknown. The vcard starts with byte 5.
+    Contacts in VCard format. The first two bytes of an item are the id of the contact. Bytes 3 and 4: length of vard. The vcard starts with byte 5.
+    There are more vcards (usually 4-5) in one response.
 
 To get all contacts the request have to be sent several times. The last two bytes must be incremented by every call.
 

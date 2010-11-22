@@ -147,7 +147,7 @@ GSM_Error OBEXGEN_Connect(GSM_StateMachine *s, OBEX_Service service)
 	unsigned char 	req[200] = {
 		0x10,			/* Version 1.0 			*/
 		0x00,			/* no flags 			*/
-		0x04,0x00};		/* 0x2000 max size of packet 	*/
+		0x20,0x00};		/* 0x2000 max size of packet 	*/
 
 	/* Are we requsted for initial service? */
 	if (service == 0) {
@@ -198,6 +198,8 @@ GSM_Error OBEXGEN_Connect(GSM_StateMachine *s, OBEX_Service service)
 		/* IrMC Service UUID */
 		req2[0] = 'M'; req2[1] = 'O'; req2[2] = 'B';
 		req2[3] = 'E'; req2[4] = 'X';
+
+		req[0] = 0x11; /* Phones seem to require OBEX 1.1 */
 
 		/* Target block */
 		OBEXAddBlock(req, &Current, 0x46, req2, 5);
@@ -264,7 +266,16 @@ GSM_Error OBEXGEN_InitialiseVars(GSM_StateMachine *s)
 	Priv->NoteOffsets = NULL;
 	Priv->m_obex_appdata = NULL;
 	Priv->m_obex_appdata_len = 0;
-        Priv->m_obex_getnextid = 0;
+        Priv->m_obex_calendar_nextid = 0;
+        Priv->m_obex_calendar_nexterror = 0;
+        Priv->m_obex_calendar_buffer = NULL;
+        Priv->m_obex_calendar_buffer_pos = 0;
+        Priv->m_obex_calendar_buffer_size = 0;
+        Priv->m_obex_contacts_nextid = 0;
+        Priv->m_obex_contacts_nexterror = 0;
+        Priv->m_obex_contacts_buffer = NULL;
+        Priv->m_obex_contacts_buffer_pos = 0;
+        Priv->m_obex_contacts_buffer_size = 0;
 
 	IRMC_InitCapabilities(&(Priv->NoteCap));
 	IRMC_InitCapabilities(&(Priv->PbCap));
@@ -402,6 +413,11 @@ void OBEXGEN_FreeVars(GSM_StateMachine *s)
 	Priv->OBEXCapability=NULL;
 	free(Priv->OBEXDevinfo);
 	Priv->OBEXDevinfo=NULL;
+
+        free(Priv->m_obex_calendar_buffer);
+        Priv->m_obex_calendar_buffer = NULL;
+        free(Priv->m_obex_calendar_buffer);
+        Priv->m_obex_contacts_buffer = NULL;
 }
 
 /**
@@ -803,7 +819,8 @@ GSM_Error OBEXGEN_SendFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, in
  */
 static GSM_Error OBEXGEN_ReplyGetFilePart(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	size_t old,Pos=0;
+	size_t old,Pos=0,len2,pos2;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 
 	/* Non standard Sharp GX reply */
 	if (msg.Type == 0x80) {
@@ -846,6 +863,28 @@ static GSM_Error OBEXGEN_ReplyGetFilePart(GSM_Protocol_Message msg, GSM_StateMac
 				/* Skip Connection ID (we ignore this for now) */
 				Pos += 5;
 				break;
+			case 0x4C:
+				smprintf(s, "Application data received:");
+				len2 =  msg.Buffer[Pos+1] * 256 + msg.Buffer[Pos+2];
+				pos2 = 0;
+				while(1) {
+					if (pos2 >= len2) break;
+					switch (msg.Buffer[Pos + 3 + pos2]) {
+						case 0x00:
+							if (Priv->Service == OBEX_m_OBEX) {
+								Priv->m_obex_error = msg.Buffer[Pos + 3 + pos2 + 1];
+								smprintf(s, " m-obex error=\"%d\"", Priv->m_obex_error);
+								/* This field has fixed size */
+								pos2 += 2;
+								continue;
+							}
+							break;
+					}
+					pos2 += 2 + msg.Buffer[Pos + 3 + pos2 + 1];
+				}
+				smprintf(s, "\n");
+				Pos += len2;
+				break;
 			default:
 				Pos+=msg.Buffer[Pos+1]*256+msg.Buffer[Pos+2];
 				break;
@@ -870,6 +909,13 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, gb
 	File->Hidden		= FALSE;
 	File->System		= FALSE;
 	File->ModifiedEmpty	= TRUE;
+
+	if (Priv->Service == OBEX_BrowsingFolders || Priv->Service == OBEX_m_OBEX) {
+		/* connection ID block */
+		req[Current++] = 0xCB; /* ID */
+		req[Current++] = 0x00; req[Current++] = 0x00;
+		req[Current++] = 0x00; req[Current++] = 0x01;
+	}
 
 	if (File->Used == 0x00) {
 		if (FolderList) {
@@ -902,6 +948,8 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, gb
 				} else {
 					return ERR_NOTSUPPORTED;
 				}
+			} else if (Priv->Service == OBEX_m_OBEX) {
+				OBEXAddBlock(req, &Current, 0x42, DecodeUnicodeString(File->ID_FullName), UnicodeLength(File->ID_FullName) + 1);
 			} else {
 				if (Priv->Service == OBEX_BrowsingFolders) {
 					error = OBEXGEN_ChangeToFilePath(s, File->ID_FullName, TRUE, req2);
@@ -921,13 +969,6 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, gb
 	}
 
 	Priv->FileLastPart = FALSE;
-
-	if (Priv->Service == OBEX_BrowsingFolders || Priv->Service == OBEX_m_OBEX) {
-		/* connection ID block */
-		req[Current++] = 0xCB; /* ID */
-		req[Current++] = 0x00; req[Current++] = 0x00;
-		req[Current++] = 0x00; req[Current++] = 0x01;
-	}
 
 	/* Include m-obex application data */
 	if (Priv->Service == OBEX_m_OBEX && Priv->m_obex_appdata != NULL && Priv->m_obex_appdata_len != 0) {
@@ -3626,7 +3667,7 @@ GSM_Reply_Function OBEXGENReplyFunctions[] = {
 };
 
 GSM_Phone_Functions OBEXGENPhone = {
-	"obex|seobex|obexfs|obexirmc|obexnone",
+	"obex|seobex|obexfs|obexirmc|obexnone|mobex",
 	OBEXGENReplyFunctions,
 	OBEXGEN_Initialise,
 	OBEXGEN_Terminate,

@@ -227,6 +227,10 @@ breathe_projects = {
 breathe_default_project = 'api'
 
 
+breathe_domain_by_extension = {
+    "h" : "c",
+    }
+
 man_pages = [
     ('smsd/files', 'gammu-smsd-files', 'gammu-smsd(1) backend using filesystem as a message storage', u'Michal Čihař <michal@cihar.com>', 7),
     ('smsd/tables', 'gammu-smsd-tables', 'description of tables for database backends of gammu-smsd(1)', u'Michal Čihař <michal@cihar.com>', 7),

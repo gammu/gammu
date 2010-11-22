@@ -246,9 +246,45 @@ typedef struct {
 	 */
 	int				m_obex_newid;
 	/**
-	 * m-obex counter for GetNext*
+	 * m-obex counter for reading contacts
 	 */
-        int				m_obex_getnextid;
+        int				m_obex_contacts_nextid;
+	/**
+	 * last error of m-obex reading contacts operation.
+	 */
+        int				m_obex_contacts_nexterror;
+	/**
+	 * m-obex counter for reading calendar
+	 */
+        int				m_obex_calendar_nextid;
+	/**
+	 * last error of m-obex reading calendar operation.
+	 */
+        int				m_obex_calendar_nexterror;
+	/**
+	 * m-obex contacts buffer.
+	 */
+	unsigned char			*m_obex_contacts_buffer;
+	/**
+	 * m-obex contacts buffer position.
+	 */
+	int				m_obex_contacts_buffer_pos;
+	/**
+	 * m-obex contacts buffer size.
+	 */
+	int				m_obex_contacts_buffer_size;
+	/**
+	 * m-obex calendar buffer.
+	 */
+	unsigned char			*m_obex_calendar_buffer;
+	/**
+	 * m-obex calendar buffer position.
+	 */
+	int				m_obex_calendar_buffer_pos;
+	/**
+	 * m-obex calendar buffer size.
+	 */
+	int				m_obex_calendar_buffer_size;
 } GSM_Phone_OBEXGENData;
 
 GSM_Error OBEXGEN_GetBinaryFile(GSM_StateMachine *s, const char *FileName, unsigned char ** Buffer, int *len);

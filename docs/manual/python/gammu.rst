@@ -673,7 +673,7 @@ This module wraps all python-gammu functionality.
       
       Initialises the connection with phone.
       
-      :param Replies: Number of replies to wait for on each request. Defaults to 3.
+      :param Replies: Number of replies to wait for on each request. Defaults to 1. Higher value makes sense only on unreliable links.
       :type Replies: int
       :return: None
       :rtype: None

@@ -79,12 +79,12 @@ Now think about the configuration file.  To use the default
     /* We care onlu about first configuration */
     GSM_SetConfigNum(s, 1);
 
-OK, now initialise the connection (3 means number of replies you want to wait
+OK, now initialise the connection (1 means number of replies you want to wait
 for in case of failure):
 
 .. code-block:: c
 
-    error = GSM_InitConnection(s, 3);
+    error = GSM_InitConnection(s, 1);
     check_error(error);
 
 Now you are ready to communicate with the phone, for example you can read
