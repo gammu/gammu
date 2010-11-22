@@ -1818,7 +1818,7 @@ msgstr "Radio FM"
 
 #: gammu/gammu.c:739
 msgid "Phone information"
-msgstr ""
+msgstr "Informasi telepon"
 
 #: gammu/gammu.c:740
 msgid "Phone settings"
