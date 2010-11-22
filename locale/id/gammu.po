@@ -2218,7 +2218,7 @@ msgstr "Nama di telepon"
 
 #: gammu/misc.c:62
 msgid "Packet network state"
-msgstr ""
+msgstr "Status paket jaringan"
 
 #: gammu/misc.c:75
 msgid "Packet network"
