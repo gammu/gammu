@@ -2011,7 +2011,7 @@ msgstr "Tidak dibutuhkan aksi"
 
 #: gammu/message.c:92
 msgid "Action needed"
-msgstr ""
+msgstr "Aksi dibutuhkan"
 
 #: gammu/message.c:95
 msgid "Terminated"
