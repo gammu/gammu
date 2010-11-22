@@ -2040,7 +2040,7 @@ msgstr "Nomor"
 
 #: gammu/message.c:203
 msgid "Default number"
-msgstr ""
+msgstr "Nomor awal"
 
 #: gammu/message.c:205
 msgid "Format"
