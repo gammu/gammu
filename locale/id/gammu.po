@@ -2489,7 +2489,7 @@ msgstr "digunakan %3d"
 #: gammu/misc.c:510
 #, c-format
 msgid "%3d free"
-msgstr ""
+msgstr "gratis %3d"
 
 #: gammu/misc.c:546
 msgid "Entering monitor mode..."
