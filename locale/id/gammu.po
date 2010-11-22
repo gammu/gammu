@@ -2578,7 +2578,7 @@ msgstr "Nokia binary"
 
 #: gammu/misc.c:671
 msgid "MIDI"
-msgstr ""
+msgstr "MIDI"
 
 #: gammu/misc.c:672
 msgid "SMAF (MMF)"
