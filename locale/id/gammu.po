@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.28.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-11-15 10:00+0100\n"
-"PO-Revision-Date: 2010-11-22 05:47+0200\n"
+"PO-Revision-Date: 2010-11-22 05:48+0200\n"
 "Last-Translator:  <simbolonsihar@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1922,7 +1922,7 @@ msgstr "File konfigurasi tidak ditemukan"
 
 #: gammu/gammu.c:1118
 msgid "Failed to allocate memory, aborting!\n"
-msgstr ""
+msgstr "Gagal mengalokasikan memori, diabaikan!\n"
 
 #: gammu/gammu.c:1149
 msgid "Too few parameters!"
