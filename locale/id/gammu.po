@@ -2210,7 +2210,7 @@ msgstr "Registrasi ke jaringan ditolak"
 #: gammu/misc.c:42 gammu/misc.c:44 gammu/misc.c:69 gammu/misc.c:71
 #: gammu/misc.c:169 gammu/misc.c:191
 msgid "unknown"
-msgstr ""
+msgstr "Tidak dikenali"
 
 #: gammu/misc.c:58 gammu/misc.c:85
 msgid "Name in phone"
