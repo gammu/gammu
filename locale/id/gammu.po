@@ -2450,7 +2450,7 @@ msgstr "Panggilan keluar from \"%s\"\n"
 
 #: gammu/misc.c:494
 msgid "call started"
-msgstr ""
+msgstr "Panggilan dimulai"
 
 #: gammu/misc.c:495
 msgid "end of call (unknown side)"
