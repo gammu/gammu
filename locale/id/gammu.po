@@ -2119,7 +2119,7 @@ msgstr ""
 
 #: gammu/message.c:573
 msgid "Number of messages"
-msgstr ""
+msgstr "Jumlah pesan"
 
 #: gammu/message.c:584 gammu/message.c:624
 msgid "If you want break, press Ctrl+C..."
