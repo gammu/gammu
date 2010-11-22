@@ -2197,7 +2197,7 @@ msgstr "Roaming jaringan"
 
 #: gammu/misc.c:39 gammu/misc.c:66
 msgid "requesting network"
-msgstr ""
+msgstr "Meminta jaringan"
 
 #: gammu/misc.c:40 gammu/misc.c:67
 msgid "not logged into network"
