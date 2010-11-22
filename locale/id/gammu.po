@@ -2007,7 +2007,7 @@ msgstr "Status"
 
 #: gammu/message.c:89
 msgid "No action needed"
-msgstr ""
+msgstr "Tidak dibutuhkan aksi"
 
 #: gammu/message.c:92
 msgid "Action needed"
