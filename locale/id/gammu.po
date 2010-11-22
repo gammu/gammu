@@ -2725,7 +2725,7 @@ msgstr "Hapus catatan telepon?"
 
 #: gammu/misc.c:1419
 msgid "Delete phone WAP bookmarks?"
-msgstr ""
+msgstr "Hapus bookmark WAP telepon?"
 
 #: gammu/misc.c:1446
 msgid "Delete all phone FM radio stations?"
