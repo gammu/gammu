@@ -2741,7 +2741,7 @@ msgstr "Bersambung"
 
 #: gammu/misc.c:1460
 msgid "Temporary"
-msgstr ""
+msgstr "Sementara"
 
 #: gammu/misc.c:1463 gammu/misc.c:1465
 msgid "Connection security"
