@@ -2044,7 +2044,7 @@ msgstr ""
 
 #: gammu/message.c:205
 msgid "Format"
-msgstr ""
+msgstr "Format"
 
 #: gammu/message.c:208
 msgid "Fax"
