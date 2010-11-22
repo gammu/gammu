@@ -2427,7 +2427,7 @@ msgstr "Kode produk"
 
 #: gammu/misc.c:438
 msgid "SIM IMSI"
-msgstr ""
+msgstr "SIM IMSI"
 
 #: gammu/misc.c:486
 msgid "Call info"
