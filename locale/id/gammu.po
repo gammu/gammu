@@ -2501,7 +2501,7 @@ msgstr "mengaktifkan info SMS masuk"
 
 #: gammu/misc.c:558
 msgid "Enabling info about incoming CB"
-msgstr "mengaktifkan info tentang CB masuk"
+msgstr "mengaktifkan info CB masuk"
 
 #: gammu/misc.c:560
 msgid "Enabling info about calls"
