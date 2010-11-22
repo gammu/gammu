@@ -2858,7 +2858,7 @@ msgstr "Kode layanan"
 
 #: gammu/misc.c:1522 gammu/misc.c:1525
 msgid "Address type"
-msgstr ""
+msgstr "tipe alamat"
 
 #: gammu/misc.c:1543
 msgid "Access point"
