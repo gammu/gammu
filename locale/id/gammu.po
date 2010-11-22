@@ -2335,7 +2335,7 @@ msgstr "NiMH"
 
 #: gammu/misc.c:261
 msgid "Not logged to network!\n"
-msgstr ""
+msgstr "Tidak tercatat di jaringan!\n"
 
 #: gammu/misc.c:272
 msgid "Wrong network code from phone!\n"
