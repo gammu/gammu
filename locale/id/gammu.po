@@ -2904,7 +2904,7 @@ msgstr "Homepage"
 
 #: gammu/misc.c:1665
 msgid "active"
-msgstr ""
+msgstr "aktif"
 
 #: gammu/misc.c:1669
 msgid "Read only"
