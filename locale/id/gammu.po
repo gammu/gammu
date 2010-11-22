@@ -2441,7 +2441,7 @@ msgstr "ID %i, "
 #: gammu/misc.c:492
 #, c-format
 msgid "incoming call from \"%s\"\n"
-msgstr "Panggilan masukl from \"%s\"\n"
+msgstr "Panggilan masuk from \"%s\"\n"
 
 #: gammu/misc.c:493
 #, c-format
