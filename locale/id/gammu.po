@@ -2876,7 +2876,7 @@ msgstr "Pengguna"
 
 #: gammu/misc.c:1574
 msgid "Phonebook database"
-msgstr ""
+msgstr "database daftarkontak"
 
 #: gammu/misc.c:1575
 msgid "Calendar database"
