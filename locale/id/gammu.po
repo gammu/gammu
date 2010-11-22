@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.28.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-11-15 10:00+0100\n"
-"PO-Revision-Date: 2010-11-22 06:17+0200\n"
+"PO-Revision-Date: 2010-11-22 06:18+0200\n"
 "Last-Translator:  <simbolonsihar@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -2162,7 +2162,7 @@ msgstr "Pengiriman sms dari folder \"%s\", lokasi %i\n"
 
 #: gammu/message.c:609 gammu/message.c:635
 msgid "....waiting for network answer"
-msgstr ""
+msgstr "....menunggu balasan jaringan"
 
 #: gammu/message.c:630
 #, c-format
