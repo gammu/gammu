@@ -2303,7 +2303,7 @@ msgstr "baterai terhubung, tetapi tidak menggunakan baterai"
 
 #: gammu/misc.c:156
 msgid "battery connected and is being charged"
-msgstr ""
+msgstr "baterai terhubung dan sedang terisi penuh"
 
 #: gammu/misc.c:159
 msgid "battery connected and is fully charged"
