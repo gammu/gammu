@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.28.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-11-15 10:00+0100\n"
-"PO-Revision-Date: 2010-11-22 06:42+0200\n"
+"PO-Revision-Date: 2010-11-22 06:43+0200\n"
 "Last-Translator:  <simbolonsihar@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -2610,7 +2610,7 @@ msgstr "(aktif)"
 
 #: gammu/misc.c:979 gammu/misc.c:1136
 msgid "Maximal location for caller logo can be 5"
-msgstr ""
+msgstr "Lokasi maksimal untuk logo pemanggil adalah 5"
 
 #: gammu/misc.c:992
 #, c-format
