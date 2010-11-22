@@ -2509,7 +2509,7 @@ msgstr "mengaktifkan info panggilan"
 
 #: gammu/misc.c:562
 msgid "Enabling info about USSD"
-msgstr ""
+msgstr "mengaktifkan info USSD"
 
 #: gammu/misc.c:579
 msgid "Todos"
