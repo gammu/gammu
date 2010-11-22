@@ -2234,7 +2234,7 @@ msgstr "Dipasang"
 
 #: gammu/misc.c:96
 msgid "detached"
-msgstr ""
+msgstr "Dilepas"
 
 #: gammu/misc.c:106
 msgid "Battery level"
