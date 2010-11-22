@@ -2530,7 +2530,7 @@ msgstr "%i dBm"
 
 #: gammu/misc.c:597
 msgid "Network level"
-msgstr ""
+msgstr "Tingkat jaringan"
 
 #: gammu/misc.c:602
 msgid "Bit error rate"
