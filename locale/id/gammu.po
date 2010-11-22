@@ -1985,7 +1985,7 @@ msgstr ""
 
 #: gammu/message.c:63 gammu/message.c:278
 msgid "Empty"
-msgstr ""
+msgstr "Kosong"
 
 #: gammu/message.c:77
 msgid "CB message received"
