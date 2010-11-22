@@ -2023,7 +2023,7 @@ msgstr "Klien yang lain membalas"
 
 #: gammu/message.c:101
 msgid "Not supported"
-msgstr ""
+msgstr "Tidak didukung"
 
 #: gammu/message.c:113
 msgid "Service reply"
