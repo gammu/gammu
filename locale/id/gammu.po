@@ -2733,7 +2733,7 @@ msgstr "Hapus seluruh stasiun radio FM telepon?"
 
 #: gammu/misc.c:1458 gammu/misc.c:1460
 msgid "Connection type"
-msgstr ""
+msgstr "Tipe koneksi"
 
 #: gammu/misc.c:1458
 msgid "Continuous"
