@@ -462,6 +462,8 @@ gboolean INI_IsTrue(const char *value)
 {
 	if (strcasecmp(value, "true") == 0) return TRUE;
 	if (strcasecmp(value, "yes") == 0) return TRUE;
+	if (strcasecmp(value, "y") == 0) return TRUE;
+	if (strcasecmp(value, "t") == 0) return TRUE;
 	if (strcasecmp(value, "1") == 0) return TRUE;
 	return FALSE;
 }
