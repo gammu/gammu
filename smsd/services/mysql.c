@@ -119,17 +119,17 @@ static SQL_Error SMSDMySQL_Connect(GSM_SMSDConfig * Config)
 	}
 	if (db->conn.my == NULL) {
 		db->conn.my = malloc(sizeof(MYSQL));
+		mysql_init(db->conn.my);
 	}
 	if (db->conn.my == NULL) {
 		SMSD_Log(DEBUG_ERROR, Config, "MySQL allocation failed!");
 		return SQL_FAIL;
 	}
-	mysql_init(db->conn.my);
 	if (!mysql_real_connect(db->conn.my, Config->host, Config->user, Config->password, Config->database, port, socketname, 0)) {
 		SMSD_Log(DEBUG_ERROR, Config, "Error connecting to database!");
 		SMSDMySQL_LogError(Config);
 		error = mysql_errno(db->conn.my);
-		if (error == 2003 || error == 2002) { /* cant connect through socket */
+		if (error == 2006 || error == 2003 || error == 2002) { /* cant connect through socket */
 			return SQL_TIMEOUT;
 		}
 		return SQL_FAIL;
