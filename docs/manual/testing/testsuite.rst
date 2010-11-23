@@ -67,8 +67,11 @@ Testing of SMSD
 ---------------
 
 SMSD tests are performed using :doc:`dummy-driver` and uses file backend and
-sqlite database by default (if Gammu is compiled with libdbi). Testing of
-additional database backends must be enabled separately:
+sqlite database by default. For this you nee Gammu compiled with libdbi, have
+installed sqlite driver for libdbi and have :program:`sqlite3` binary available
+on the syste,.
+
+Testing of additional database backends must be enabled separately:
 
 ``MYSQL_TESTING``:
     you need to have setup MySQL server with database where SMSD can play.
