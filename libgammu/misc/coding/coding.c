@@ -38,86 +38,84 @@
 #include "coding.h"
 
 /* function changes #10 #13 chars to \n \r */
-char *EncodeUnicodeSpecialChars(const unsigned char *buffer)
+unsigned char *EncodeUnicodeSpecialChars(unsigned char *dest, const unsigned char *buffer)
 {
 	int 			Pos=0, Pos2=0;
-	static unsigned char	Buf[20000];
 
 	while (buffer[Pos*2]!=0x00 || buffer[Pos*2+1]!=0x00) {
 		if (buffer[Pos*2] == 0x00 && buffer[Pos*2+1] == 10) {
-			Buf[Pos2*2]   = 0x00;
-			Buf[Pos2*2+1] = '\\';
+			dest[Pos2*2]   = 0x00;
+			dest[Pos2*2+1] = '\\';
 			Pos2++;
-			Buf[Pos2*2]   = 0x00;
-			Buf[Pos2*2+1] = 'n';
+			dest[Pos2*2]   = 0x00;
+			dest[Pos2*2+1] = 'n';
 			Pos2++;
 		} else if (buffer[Pos*2] == 0x00 && buffer[Pos*2+1] == 13) {
-			Buf[Pos2*2]   = 0x00;
-			Buf[Pos2*2+1] = '\\';
+			dest[Pos2*2]   = 0x00;
+			dest[Pos2*2+1] = '\\';
 			Pos2++;
-			Buf[Pos2*2]   = 0x00;
-			Buf[Pos2*2+1] = 'r';
+			dest[Pos2*2]   = 0x00;
+			dest[Pos2*2+1] = 'r';
 			Pos2++;
 		} else if (buffer[Pos*2] == 0x00 && buffer[Pos*2+1] == '\\') {
-			Buf[Pos2*2]   = 0x00;
-			Buf[Pos2*2+1] = '\\';
+			dest[Pos2*2]   = 0x00;
+			dest[Pos2*2+1] = '\\';
 			Pos2++;
-			Buf[Pos2*2]   = 0x00;
-			Buf[Pos2*2+1] = '\\';
+			dest[Pos2*2]   = 0x00;
+			dest[Pos2*2+1] = '\\';
 			Pos2++;
 		} else if (buffer[Pos*2] == 0x00 && buffer[Pos*2+1] == ';') {
-			Buf[Pos2*2]   = 0x00;
-			Buf[Pos2*2+1] = '\\';
+			dest[Pos2*2]   = 0x00;
+			dest[Pos2*2+1] = '\\';
 			Pos2++;
-			Buf[Pos2*2]   = 0x00;
-			Buf[Pos2*2+1] = ';';
+			dest[Pos2*2]   = 0x00;
+			dest[Pos2*2+1] = ';';
 			Pos2++;
 		} else if (buffer[Pos*2] == 0x00 && buffer[Pos*2+1] == ',') {
-			Buf[Pos2*2]   = 0x00;
-			Buf[Pos2*2+1] = '\\';
+			dest[Pos2*2]   = 0x00;
+			dest[Pos2*2+1] = '\\';
 			Pos2++;
-			Buf[Pos2*2]   = 0x00;
-			Buf[Pos2*2+1] = ',';
+			dest[Pos2*2]   = 0x00;
+			dest[Pos2*2+1] = ',';
 			Pos2++;
 		} else {
-			Buf[Pos2*2]   = buffer[Pos*2];
-			Buf[Pos2*2+1] = buffer[Pos*2+1];
+			dest[Pos2*2]   = buffer[Pos*2];
+			dest[Pos2*2+1] = buffer[Pos*2+1];
 			Pos2++;
 		}
 		Pos++;
 	}
-	Buf[Pos2*2]   = 0;
-	Buf[Pos2*2+1] = 0;
-	return Buf;
+	dest[Pos2*2]   = 0;
+	dest[Pos2*2+1] = 0;
+	return dest;
 }
 
 /* function changes #10 #13 chars to \n \r */
-char *EncodeSpecialChars(const char *buffer)
+char *EncodeSpecialChars(char *dest, const char *buffer)
 {
 	int 			Pos=0, Pos2=0;
-	static unsigned char	Buf[10000];
 
 	while (buffer[Pos]!=0x00) {
 		switch (buffer[Pos]) {
 		case 10:
-			Buf[Pos2++] = '\\';
-			Buf[Pos2++] = 'n';
+			dest[Pos2++] = '\\';
+			dest[Pos2++] = 'n';
 			break;
 		case 13:
-			Buf[Pos2++] = '\\';
-			Buf[Pos2++] = 'r';
+			dest[Pos2++] = '\\';
+			dest[Pos2++] = 'r';
 			break;
 		case '\\':
-			Buf[Pos2++] = '\\';
-			Buf[Pos2++] = '\\';
+			dest[Pos2++] = '\\';
+			dest[Pos2++] = '\\';
 			break;
 		default:
-			Buf[Pos2++] = buffer[Pos];
+			dest[Pos2++] = buffer[Pos];
 		}
 		Pos++;
 	}
-	Buf[Pos2] = 0;
-	return Buf;
+	dest[Pos2] = 0;
+	return dest;
 }
 
 char *DecodeUnicodeSpecialChars(const unsigned char *buffer)
