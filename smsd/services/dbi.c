@@ -34,6 +34,7 @@ long long SMSDDBI_GetNumber(SQL_result rc, unsigned int field)
 	unsigned int type;
 	dbi_result res = rc.dbi;
 
+	field++;
 	type = dbi_result_get_field_type_idx(res, field);
 	SMSDDBI.error = NULL;
 
@@ -76,7 +77,7 @@ time_t SMSDDBI_GetDate(SQL_result rc, unsigned int field)
 	const char *date;
 	dbi_result res = rc.dbi;
 
-
+	field++;
 	type = dbi_result_get_field_type_idx(res, field);
 	SMSDDBI.error = NULL;
 
@@ -113,6 +114,7 @@ gboolean SMSDDBI_GetBool(SQL_result rc, unsigned int field)
 	int num;
 	dbi_result res = rc.dbi;
 
+	field++;
 	type = dbi_result_get_field_type_idx(res, field);
 
 	switch (type) {
@@ -148,7 +150,7 @@ gboolean SMSDDBI_GetBool(SQL_result rc, unsigned int field)
 
 const char *SMSDDBI_GetString(SQL_result res, unsigned int col)
 {
-	return dbi_result_get_string_idx(res.dbi, col);
+	return dbi_result_get_string_idx(res.dbi, col+1);
 }
 
 static void SMSDDBI_LogError(GSM_SMSDConfig * Config)
@@ -172,7 +174,7 @@ void SMSDDBI_Callback(dbi_conn Conn, void *Config)
 void SMSDDBI_Free(SQL_conn *conn)
 {
 	if (conn->dbi != NULL) {
-		dbi_conn_close(&conn->dbi);
+		dbi_conn_close(conn->dbi);
 		dbi_shutdown();
 		conn->dbi = NULL;
 	}
@@ -201,6 +203,8 @@ static SQL_Error SMSDDBI_Connect(GSM_SMSDConfig * Config)
 		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to init %s driver!", Config->driver);
 		dbi_shutdown();
 		return SQL_FAIL;
+	} else {
+		SMSD_Log(DEBUG_SQL, Config, "Using DBI driver '%s'", db->DriverName);
 	}
 
 	dbi_conn_error_handler(db->conn.dbi, SMSDDBI_Callback, Config);
