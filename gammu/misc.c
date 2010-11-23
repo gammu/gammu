@@ -968,6 +968,7 @@ void GetBitmap(int argc, char *argv[])
 	int			location=0, Handle, Size;
  	GSM_AllRingtonesInfo 	Info = {0, NULL};
 	unsigned char		buffer[10];
+	const unsigned char *ringtonename;
 	GSM_Error error;
 
 	if (strcasecmp(argv[2],"STARTUP") == 0) {
@@ -1032,14 +1033,13 @@ void GetBitmap(int argc, char *argv[])
 			error = ERR_NONE;
 
 			printf(LISTFORMAT, _("Ringtone"));
-			if (UnicodeLength(GSM_GetRingtoneName(&Info,MultiBitmap.Bitmap[0].RingtoneID))!=0) {
+			ringtonename = GSM_GetRingtoneName(&Info, MultiBitmap.Bitmap[0].RingtoneID);
+			if (ringtonename != NULL) {
 				/* l10n: Ringtone name and ID format */
-				printf(_("\"%s\" (ID %i)\n"),
-					DecodeUnicodeConsole(GSM_GetRingtoneName(&Info,MultiBitmap.Bitmap[0].RingtoneID)),
-					MultiBitmap.Bitmap[0].RingtoneID);
+				printf(_("\"%s\" (ID %i)\n"), DecodeUnicodeConsole(ringtonename), MultiBitmap.Bitmap[0].RingtoneID);
 			} else {
 				/* l10n: Ringtone ID format */
-				printf(_("ID %i\n"),MultiBitmap.Bitmap[0].RingtoneID);
+				printf(_("ID %i\n"), MultiBitmap.Bitmap[0].RingtoneID);
 			}
 
 			if (Info.Ringtone) free(Info.Ringtone);
@@ -1952,6 +1952,7 @@ void GetProfile(int argc, char *argv[])
 	GSM_Bitmap		caller[5];
 	gboolean			callerinit[5],special;
  	GSM_AllRingtonesInfo 	Info = {0, NULL};
+	const unsigned char *ringtonename;
 	GSM_Error error;
 
 	GetStartStop(&start, &stop, 2, argc, argv);
@@ -1986,10 +1987,13 @@ void GetProfile(int argc, char *argv[])
 				} else {
 					printf(LISTFORMAT, _("Message alert tone ID"));
 				}
-				if (UnicodeLength(GSM_GetRingtoneName(&Info,Profile.FeatureValue[j]))!=0) {
-					printf("\"%s\"\n",DecodeUnicodeConsole(GSM_GetRingtoneName(&Info,Profile.FeatureValue[j])));
+				ringtonename = GSM_GetRingtoneName(&Info, Profile.FeatureValue[j]);
+				if (ringtonename != NULL) {
+					/* l10n: Ringtone name and ID format */
+					printf(_("\"%s\" (ID %i)\n"), DecodeUnicodeConsole(ringtonename), Profile.FeatureValue[j]);
 				} else {
-					printf("%i\n",Profile.FeatureValue[j]);
+					/* l10n: Ringtone ID format */
+					printf(_("ID %i\n"), Profile.FeatureValue[j]);
 				}
 				break;
 			case Profile_CallerGroups:
