@@ -515,6 +515,9 @@ const char *GetOS(void)
 #endif
 	static char 	Buffer[100] = {0x00};
 
+	/* Value was already calculated */
+	if (Buffer[0] != 0) return Buffer;
+
 #ifdef WIN32
 	memset(&Ver,0,sizeof(OSVERSIONINFOEX));
 	Ver.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
@@ -625,6 +628,9 @@ const char *GetOS(void)
 const char *GetCompiler(void)
 {
 	static char Buffer[100] = {0x00};
+
+	/* Value was already calculated */
+	if (Buffer[0] != 0) return Buffer;
 
 #ifdef _MSC_VER
 	if (_MSC_VER == 1200) { /* ? */
