@@ -9,12 +9,21 @@ line utilities and SMSD.
 Running the tests
 -----------------
 
-You can run the test suite this using ``make test``. CMake build system uses for
-testing CTest, which also includes option to connect to dashboard and submit
-test results there, so that they can be reviewed and fixed by others. To
-participate in this testing, you need just to run ``make Experimental``.
+You can run the test suite this using ``make test``. CMake build system uses
+for testing CTest, which also includes option to connect to dashboard and
+submit test results there, so that they can be reviewed and fixed by others. To
+participate in this testing, you need just to run ``make Experimental`` which
+also does submission to the dashboard.
 
 There are some more options for testing:
+
+``make test``
+
+    Runs testsuite with no uploading of results.
+
+``make Experimental``
+
+    Runs testsuite and uploads results to the dashboard.
 
 ``make ExperimentalMemCheck``
 
