@@ -662,6 +662,11 @@ gboolean ReadVCALText(char *Buffer, const char *Start, unsigned char *Value, con
 						Value[(2 * j) + 1] == 'N')
 						) {
 				Value[(2 * i) + 1] = '\n';
+			} else if (Value[(2 * j)] == 0 && (
+						Value[(2 * j) + 1] == 'r' ||
+						Value[(2 * j) + 1] == 'R')
+						) {
+				Value[(2 * i) + 1] = '\r';
 			} else if (Value[(2 * j)] == 0 && Value[(2 * j) + 1] == '\\') {
 				Value[(2 * i) + 1] = '\\';
 			} else if (Value[(2 * j)] == 0 && Value[(2 * j) + 1] == ';') {
