@@ -34,8 +34,6 @@ const char now_plus_sqlite[] = "datetime('now', '+%d seconds')";
 const char now_plus_freetds[] = "DATEADD('second', %d, CURRENT_TIMESTAMP)";
 const char now_plus_fallback[] = "NOW() + INTERVAL %d SECOND";
 
-const char *SMSDSQL_coding2string(int);
-
 /* configurable SQL queries */
 const char * SMSDSQL_queries[SQL_QUERY_LAST_NO];
 
@@ -220,7 +218,7 @@ static GSM_Error SMSDSQL_NamedQuery(GSM_SMSDConfig * Config, const char *sql_que
 							numeric = 1;
 							break;
 						case 'c':
-							to_print = SMSDSQL_coding2string(sms->Coding);
+							to_print = GSM_SMSCodingToString(sms->Coding);
 							break;
 						case 't':
 							int_to_print =  sms->MessageReference;
@@ -318,33 +316,6 @@ static GSM_Error SMSDSQL_CheckTable(GSM_SMSDConfig * Config, const char *table)
 	db->FreeResult(res);
 	return ERR_NONE;
 }
-
-const char *SMSDSQL_coding2string(int coding)
-{
-	switch (coding) {
-		case SMS_Coding_Unicode_No_Compression:
-			return "Unicode_No_Compression";
-			break;
-
-		case SMS_Coding_Unicode_Compression:
-			return "Unicode_Compression";
-			break;
-
-		case SMS_Coding_Default_No_Compression:
-			return "Default_No_Compression";
-			break;
-
-		case SMS_Coding_Default_Compression:
-			return "Default_Compression";
-			break;
-
-		case SMS_Coding_8bit:
-			return  "8bit";
-			break;
-	}
-	return "";
-}
-
 
 /* Disconnects from a database */
 static GSM_Error SMSDSQL_Free(GSM_SMSDConfig * Config)
