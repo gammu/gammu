@@ -24,6 +24,8 @@
 #include <assert.h>
 #ifdef WIN32
 #include <windows.h>
+#define strncasecmp strnicmp
+#define strcasecmp stricmp
 #endif
 
 #include "../core.h"
@@ -42,15 +44,15 @@ static const char *SMSDSQL_NowPlus(GSM_SMSDConfig * Config, int seconds)
 	const char *driver_name;
 	static char result[100];
 
-	driver_name = Config->db->DriverName;
+	driver_name = Config->driver;
 
-	if (strcmp(driver_name, "mysql") == 0) {
+	if (strcasecmp(driver_name, "mysql") == 0 || strcasecmp(driver_name, "native_mysql") == 0) {
 		sprintf(result, now_plus_mysql, seconds);
-	} else if (strcmp(driver_name, "pgsql") == 0) {
+	} else if (strcasecmp(driver_name, "pgsql") == 0 || strcasecmp(driver_name, "native_pgsql") == 0) {
 		sprintf(result, now_plus_pgsql, seconds);
-	} else if (strncmp(driver_name, "sqlite", 6) == 0) {
+	} else if (strncasecmp(driver_name, "sqlite", 6) == 0) {
 		sprintf(result, now_plus_sqlite, seconds);
-	} else if (strcmp(driver_name, "freetds") == 0) {
+	} else if (strcasecmp(driver_name, "freetds") == 0) {
 		sprintf(result, now_plus_freetds, seconds);
 	} else {
 		sprintf(result, now_plus_fallback, seconds);
@@ -68,15 +70,15 @@ static const char *SMSDSQL_Now(GSM_SMSDConfig * Config)
 {
 	const char *driver_name;
 
-	driver_name = Config->db->DriverName;
+	driver_name = Config->driver;
 
-	if (strcmp(driver_name, "mysql") == 0) {
+	if (strcasecmp(driver_name, "mysql") == 0 || strcasecmp(driver_name, "native_mysql") == 0) {
 		return now_mysql;
-	} else if (strcmp(driver_name, "pgsql") == 0) {
+	} else if (strcasecmp(driver_name, "pgsql") == 0 || strcasecmp(driver_name, "native_pgsql") == 0) {
 		return now_pgsql;
-	} else if (strncmp(driver_name, "sqlite", 6) == 0) {
+	} else if (strncasecmp(driver_name, "sqlite", 6) == 0) {
 		return now_sqlite;
-	} else if (strcmp(driver_name, "freetds") == 0) {
+	} else if (strcasecmp(driver_name, "freetds") == 0) {
 		return now_freetds;
 	} else {
 		return now_fallback;
@@ -100,14 +102,14 @@ static GSM_Error SMSDSQL_Query(GSM_SMSDConfig * Config, const char *query, SQL_r
 			continue;
 		}
 
-		SMSD_Log(DEBUG_INFO, Config, "SQL failed: %s", query);
+		SMSD_Log(DEBUG_INFO, Config, "SQL failed (timeout): %s", query);
 		if (attempts >= Config->backend_retries) {
 			return ERR_TIMEOUT;
 		}
 		/* We will try to reconnect */
 		SMSD_Log(DEBUG_INFO, Config, "reconnecting to database!");
 		error = SQL_TIMEOUT;
-		while (error != SQL_OK && attempts >= Config->backend_retries) {
+		while (error != SQL_OK && attempts <= Config->backend_retries) {
 			SMSD_Log(DEBUG_INFO, Config, "Reconnecting after %d seconds...", attempts * attempts);
 			sleep(attempts * attempts);
 			db->Free(&db->conn);
