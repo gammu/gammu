@@ -355,6 +355,7 @@ void InitLines(GSM_CutLines *lines)
 {
 	lines->numbers = NULL;
 	lines->allocated = 0;
+	lines->retval = NULL;
 }
 
 void FreeLines(GSM_CutLines *lines)
@@ -362,6 +363,8 @@ void FreeLines(GSM_CutLines *lines)
 	free(lines->numbers);
 	lines->numbers = NULL;
 	lines->allocated = 0;
+	free(lines->retval);
+	lines->retval = NULL;
 }
 
 void SplitLines(const char *message, const int messagesize, GSM_CutLines *lines,
@@ -446,28 +449,38 @@ rollback_quote:
 	}
 }
 
-const char *GetLineString(const char *message, const GSM_CutLines *lines, int start)
+const char *GetLineStringPos(const char *message, const GSM_CutLines *lines, int start)
 {
-	static char *retval = NULL;
-	int len=0;
-
 	if (message == NULL) {
-		free(retval);
-		retval = NULL;
 		return NULL;
 	}
+
+	return message + lines->numbers[start * 2 - 2];
+}
+
+const char *GetLineString(const char *message, GSM_CutLines *lines, int start)
+{
+	int len=0;
+	const char *pos;
+
+	pos = GetLineStringPos(message, lines, start);
+	if (pos == NULL) {
+		return NULL;
+	}
+
 	len = GetLineLength(message, lines, start);
-	retval = (char *)realloc(retval, len + 1);
-	if (retval == NULL) {
+
+	lines->retval = (char *)realloc(lines->retval, len + 1);
+	if (lines->retval == NULL) {
 		dbgprintf(NULL, "Allocation failed!\n");
 		return NULL;
 	}
 
-	memcpy(retval, message + lines->numbers[start * 2 - 2], len);
+	memcpy(lines->retval, pos, len);
 
-	retval[len] = '\0';
+	lines->retval[len] = '\0';
 
-	return retval;
+	return lines->retval;
 }
 
 int GetLineLength(const char *message UNUSED, const GSM_CutLines *lines, int start)
@@ -477,8 +490,16 @@ int GetLineLength(const char *message UNUSED, const GSM_CutLines *lines, int sta
 
 void CopyLineString(char *dest, const char *src, const GSM_CutLines *lines, int start)
 {
-	int len = GetLineLength(src, lines, start);
-	memcpy(dest, GetLineString(src, lines, start), len);
+	int len;
+	const char *pos;
+
+	len = GetLineLength(src, lines, start);
+	pos = GetLineStringPos(src, lines, start);
+	if (pos == NULL) {
+		dest[0] = '\0';
+		return;
+	}
+	memcpy(dest, pos, len);
 	dest[len] = '\0';
 }
 
@@ -493,6 +514,9 @@ const char *GetOS(void)
 #  endif
 #endif
 	static char 	Buffer[100] = {0x00};
+
+	/* Value was already calculated */
+	if (Buffer[0] != 0) return Buffer;
 
 #ifdef WIN32
 	memset(&Ver,0,sizeof(OSVERSIONINFOEX));
@@ -604,6 +628,9 @@ const char *GetOS(void)
 const char *GetCompiler(void)
 {
 	static char Buffer[100] = {0x00};
+
+	/* Value was already calculated */
+	if (Buffer[0] != 0) return Buffer;
 
 #ifdef _MSC_VER
 	if (_MSC_VER == 1200) { /* ? */

@@ -9,12 +9,21 @@ line utilities and SMSD.
 Running the tests
 -----------------
 
-You can run the test suite this using ``make test``. CMake build system uses for
-testing CTest, which also includes option to connect to dashboard and submit
-test results there, so that they can be reviewed and fixed by others. To
-participate in this testing, you need just to run ``make Experimental``.
+You can run the test suite this using ``make test``. CMake build system uses
+for testing CTest, which also includes option to connect to dashboard and
+submit test results there, so that they can be reviewed and fixed by others. To
+participate in this testing, you need just to run ``make Experimental`` which
+also does submission to the dashboard.
 
 There are some more options for testing:
+
+``make test``
+
+    Runs testsuite with no uploading of results.
+
+``make Experimental``
+
+    Runs testsuite and uploads results to the dashboard.
 
 ``make ExperimentalMemCheck``
 
@@ -58,8 +67,11 @@ Testing of SMSD
 ---------------
 
 SMSD tests are performed using :doc:`dummy-driver` and uses file backend and
-sqlite database by default (if Gammu is compiled with libdbi). Testing of
-additional database backends must be enabled separately:
+sqlite database by default. For this you nee Gammu compiled with libdbi, have
+installed sqlite driver for libdbi and have :program:`sqlite3` binary available
+on the syste,.
+
+Testing of additional database backends must be enabled separately:
 
 ``MYSQL_TESTING``:
     you need to have setup MySQL server with database where SMSD can play.

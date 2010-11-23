@@ -18,7 +18,7 @@ int main(int argc, char **argv)
 
 	/* Check parameters */
 	if (argc != 2) {
-		printf("Not enough parameters!\nUsage: initfile ini_file\n");
+		printf("Not enough parameters!\nUsage: inifile ini_file\n");
 		return 1;
 	}
 

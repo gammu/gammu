@@ -171,7 +171,7 @@ typedef struct {
 	 */
 	int Group;
 	int ID;
-	char Name[30 * 2];
+	unsigned char Name[30 * 2];
 } GSM_RingtoneInfo;
 
 typedef struct {
@@ -232,7 +232,10 @@ GSM_Error GSM_SaveRingtoneWav(FILE * file, GSM_Ringtone * ringtone);
 
 GSM_Error GSM_SaveRingtoneRttl(FILE * file, GSM_Ringtone * ringtone);
 
-char *GSM_GetRingtoneName(GSM_AllRingtonesInfo * Info, int ID);
+/**
+ * Returns ringtone name, NULL if not found.
+ */
+const unsigned char *GSM_GetRingtoneName(const GSM_AllRingtonesInfo * Info, const int ID);
 
 int GSM_RTTLGetTempo(int Beats);
 

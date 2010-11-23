@@ -162,7 +162,8 @@ char *ReadLinkedBackupText(INI_Section *file_info, const char *section, const ch
 
 static GSM_Error SaveBackupText(FILE *file, const char *myname, const char *myvalue, const gboolean UseUnicode)
 {
-	unsigned char buffer[10000]={0}, buffer2[10000]={0};
+	char buffer[10000]={0};
+	unsigned char buffer2[10000]={0};
 
 	if (myname[0] == 0x00) {
 		if (UseUnicode) {
@@ -171,20 +172,23 @@ static GSM_Error SaveBackupText(FILE *file, const char *myname, const char *myva
 		} else fprintf(file,"%s",myvalue);
 	} else {
 		if (UseUnicode) {
-			sprintf(buffer,"%s = \"",myname);
-			EncodeUnicode(buffer2,buffer,strlen(buffer));
-			chk_fwrite(buffer2,1,strlen(buffer)*2,file);
+			sprintf(buffer, "%s = \"", myname);
+			EncodeUnicode(buffer2, buffer, strlen(buffer));
+			chk_fwrite(buffer2, 1, UnicodeLength(buffer2) * 2, file);
 
-			chk_fwrite(EncodeUnicodeSpecialChars(myvalue),1,UnicodeLength(EncodeUnicodeSpecialChars(myvalue))*2,file);
+			EncodeUnicodeSpecialChars(buffer2, myvalue);
+			chk_fwrite(buffer2, 1, UnicodeLength(buffer2) * 2, file);
 
 			sprintf(buffer,"\"%c%c",13,10);
-			EncodeUnicode(buffer2,buffer,strlen(buffer));
-			chk_fwrite(buffer2,1,strlen(buffer)*2,file);
+			EncodeUnicode(buffer2, buffer, strlen(buffer));
+			chk_fwrite(buffer2, 1, UnicodeLength(buffer2) * 2, file);
+
 		} else {
-			sprintf(buffer,"%s = \"%s\"%c%c",myname,EncodeSpecialChars(DecodeUnicodeString(myvalue)),13,10);
-			fprintf(file,"%s",buffer);
-			EncodeHexBin(buffer,myvalue,UnicodeLength(myvalue)*2);
-			fprintf(file,"%sUnicode = %s%c%c",myname,buffer,13,10);
+			EncodeSpecialChars(buffer, DecodeUnicodeString(myvalue));
+			sprintf(buffer, "%s = \"%s\"%c%c", myname, buffer, 13, 10);
+			fprintf(file, "%s", buffer);
+			EncodeHexBin(buffer, myvalue, UnicodeLength(myvalue) * 2);
+			fprintf(file, "%sUnicode = %s%c%c", myname, buffer, 13, 10);
 		}
 	}
 	return ERR_NONE;
@@ -228,14 +232,14 @@ static GSM_Error SaveBackupBase64(FILE *file, char *myname, unsigned char *data,
 
 static gboolean ReadBackupTextLen(INI_Section *file_info, const char *section, const char *myname, char *myvalue, const size_t maxlen, const gboolean UseUnicode)
 {
-	unsigned char paramname[10000],*readvalue, *decodedvalue;
+	unsigned char paramname[10000],*readvalue, decodedvalue[10000];
 	gboolean ret = TRUE;
 
 	if (UseUnicode) {
 		EncodeUnicode(paramname,myname,strlen(myname));
 		readvalue = INI_GetValue(file_info, section, paramname, UseUnicode);
 		if (readvalue!=NULL) {
-			decodedvalue = DecodeUnicodeSpecialChars(readvalue+2);
+			DecodeUnicodeSpecialChars(decodedvalue, readvalue+2);
 			if ((UnicodeLength(decodedvalue) + 1) * 2 >= maxlen) {
 				decodedvalue[maxlen - 1] = 0;
 				decodedvalue[maxlen - 2] = 0;
@@ -270,7 +274,8 @@ static gboolean ReadBackupTextLen(INI_Section *file_info, const char *section, c
 			strcpy(paramname,myname);
 			readvalue = ReadCFGText(file_info, section, paramname, UseUnicode);
 			if (readvalue!=NULL) {
-				EncodeUnicode(myvalue,DecodeSpecialChars(readvalue+1),strlen(DecodeSpecialChars(readvalue+1))-1);
+				DecodeSpecialChars(decodedvalue, readvalue + 1);
+				EncodeUnicode(myvalue, decodedvalue, strlen(decodedvalue) - 1);
 			} else {
 				myvalue[0]=0;
 				myvalue[1]=0;

@@ -1711,18 +1711,17 @@ unsigned char GSM_EncodeEMSSound(GSM_Ringtone ringtone, unsigned char *package, 
 	return NrNotes;
 }
 
-char *GSM_GetRingtoneName(GSM_AllRingtonesInfo *Info, int ID)
+const unsigned char *GSM_GetRingtoneName(const GSM_AllRingtonesInfo *Info, const int ID)
 {
 	int 		i;
-	static char 	ala[2];
 
-	for (i=0;i<Info->Number;i++) {
-		if (Info->Ringtone[i].ID == ID) return Info->Ringtone[i].Name;
+	for (i = 0; i < Info->Number; i++) {
+		if (Info->Ringtone[i].ID == ID) {
+			return Info->Ringtone[i].Name;
+		}
 	}
 
-	ala[0] = 0;
-	ala[1] = 0;
-	return ala;
+	return NULL;
 }
 
 /* How should editor hadle tabs in this file? Add editor commands here.

@@ -42,8 +42,8 @@ void 		ReverseUnicodeString		(unsigned char *String);
 void 		DecodeUnicodeSpecialNOKIAChars	(unsigned char *dest, const unsigned char *src, int len);
 void 		EncodeUnicodeSpecialNOKIAChars	(unsigned char *dest, const unsigned char *src, int len);
 
-char 		*EncodeUnicodeSpecialChars	(const unsigned char *buffer);
-char 		*DecodeUnicodeSpecialChars	(const unsigned char *buffer);
+unsigned char *EncodeUnicodeSpecialChars(unsigned char *dest, const unsigned char *buffer);
+unsigned char *DecodeUnicodeSpecialChars(unsigned char *dest, const unsigned char *buffer);
 
 /* ------------------------------- BCD ------------------------------------- */
 unsigned char	EncodeWithBCDAlphabet		(int value);
@@ -153,8 +153,8 @@ GSM_Error GSM_GetVCSLine(char **OutBuffer, char *Buffer, size_t *Pos, size_t Max
  */
 GSM_Error MyGetLine(char *Buffer, size_t *Pos, char *OutBuffer, size_t MaxLen, size_t MaxOutLen, gboolean MergeLines);
 
-char *EncodeSpecialChars(const char *buffer);
-char *DecodeSpecialChars(const char *buffer);
+char *EncodeSpecialChars(char *dest, const char *buffer);
+char *DecodeSpecialChars(char *dest, const char *buffer);
 
 #ifdef ICONV_FOUND
 
