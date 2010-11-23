@@ -38,6 +38,12 @@ int main(int argc, char **argv)
     boolval = INI_GetBool(ini, "section", "notexistingval", TRUE);
     test_result(boolval == TRUE);
 
+    boolval = INI_GetBool(ini, "section", "intval", FALSE);
+    test_result(boolval == FALSE);
+
+    boolval = INI_GetBool(ini, "section", "intval", TRUE);
+    test_result(boolval == TRUE);
+
     strval = INI_GetValue(ini, "section", "val1", FALSE);
     test_result(strval != NULL);
     test_result(strcmp(strval, "ABCDE abcde") == 0);
