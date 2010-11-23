@@ -232,14 +232,14 @@ static GSM_Error SaveBackupBase64(FILE *file, char *myname, unsigned char *data,
 
 static gboolean ReadBackupTextLen(INI_Section *file_info, const char *section, const char *myname, char *myvalue, const size_t maxlen, const gboolean UseUnicode)
 {
-	unsigned char paramname[10000],*readvalue, *decodedvalue;
+	unsigned char paramname[10000],*readvalue, decodedvalue[10000];
 	gboolean ret = TRUE;
 
 	if (UseUnicode) {
 		EncodeUnicode(paramname,myname,strlen(myname));
 		readvalue = INI_GetValue(file_info, section, paramname, UseUnicode);
 		if (readvalue!=NULL) {
-			decodedvalue = DecodeUnicodeSpecialChars(readvalue+2);
+			DecodeUnicodeSpecialChars(decodedvalue, readvalue+2);
 			if ((UnicodeLength(decodedvalue) + 1) * 2 >= maxlen) {
 				decodedvalue[maxlen - 1] = 0;
 				decodedvalue[maxlen - 2] = 0;
@@ -274,7 +274,8 @@ static gboolean ReadBackupTextLen(INI_Section *file_info, const char *section, c
 			strcpy(paramname,myname);
 			readvalue = ReadCFGText(file_info, section, paramname, UseUnicode);
 			if (readvalue!=NULL) {
-				EncodeUnicode(myvalue,DecodeSpecialChars(readvalue+1),strlen(DecodeSpecialChars(readvalue+1))-1);
+				DecodeSpecialChars(decodedvalue, readvalue + 1);
+				EncodeUnicode(myvalue, decodedvalue, strlen(decodedvalue) - 1);
 			} else {
 				myvalue[0]=0;
 				myvalue[1]=0;
