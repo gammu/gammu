@@ -1224,6 +1224,9 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 								goto end;
 							}
 							inp += length;
+						} else {
+							free(buffer);
+							buffer = NULL;
 						}
 						break;
 					case '@':
