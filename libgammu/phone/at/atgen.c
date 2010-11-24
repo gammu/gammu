@@ -856,11 +856,15 @@ GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned c
 
 	/* Strip possible leading comma */
 	if (*pos == ',') pos++;
+	if (input[0] == 0) return ERR_EMPTY;
 	if (input[strlen(pos) - 1] == ',') input[strlen(pos) - 1] = 0;
+	if (input[0] == 0) return ERR_EMPTY;
 
 	/* Strip possible quotes */
 	if (*pos == '"') pos++;
+	if (input[0] == 0) return ERR_EMPTY;
 	if (input[strlen(pos) - 1] == '"') input[strlen(pos) - 1] = 0;
+	if (input[0] == 0) return ERR_EMPTY;
 
 	/* Convert to normal charset */
 	error = ATGEN_DecodeText(s,
