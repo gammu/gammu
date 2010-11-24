@@ -614,6 +614,17 @@
    fun:PyString_FromString
    fun:initposix
 }
+
+{
+   operator module
+   Memcheck:Leak
+   fun:malloc
+   fun:PyObject_Malloc
+   fun:PyString_FromString
+   fun:PyDict_SetItemString
+   fun:Py_InitModule4_64
+   fun:initoperator
+
 {
    1,000 bytes in 2 blocks are still reachable
    Memcheck:Leak
