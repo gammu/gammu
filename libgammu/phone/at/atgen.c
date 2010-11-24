@@ -1202,7 +1202,7 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 						length = ATGEN_GrabString(s, inp, &buffer);
 						/* Fix up reply from broken phones which split
 						 * date to two strings */
-						if ( *(inp + length) == ',' &&
+						if (length > 0 &&  *(inp + length) == ',' &&
 								strchr(buffer, ',') == NULL
 								) {
 							length++;
