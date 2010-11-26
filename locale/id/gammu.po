@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: Gammu 1.28.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-11-15 10:00+0100\n"
-"PO-Revision-Date: 2010-06-16 01:43+0200\n"
-"Last-Translator:  <jack.hakim@yahoo.com>\n"
+"PO-Revision-Date: 2010-11-22 06:55+0200\n"
+"Last-Translator:  <simbolonsihar@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Pootle 2.0.1\n"
+"X-Generator: Pootle 2.0.5\n"
 
 #: gammu/backup.c:33 gammu/backup.c:56 gammu/backup.c:79 gammu/backup.c:100
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -474,7 +474,7 @@ msgstr "Tambahkan agenda telepon?"
 
 #: gammu/backup.c:1712
 msgid "Add notes to phone?"
-msgstr ""
+msgstr "Tambah catatan ke telepon?"
 
 #: gammu/backup.c:1735
 msgid "Add phone WAP bookmarks?"
@@ -1592,7 +1592,7 @@ msgstr "%i persen"
 #: gammu/files.c:423
 #, c-format
 msgid "%lu Bytes in %li seconds, %lu Bytes/sec"
-msgstr ""
+msgstr "%lu Bytes dalam %li detik, %lu Bytes/detik"
 
 #: gammu/files.c:452
 #, c-format
@@ -1750,7 +1750,7 @@ msgstr "Panggilan"
 
 #: gammu/gammu.c:715
 msgid "SMS and EMS"
-msgstr ""
+msgstr "SMS dan EMS"
 
 #: gammu/gammu.c:716
 msgid "Memory (phonebooks and calls)"
@@ -1758,124 +1758,130 @@ msgstr "Memori (buku telepon dan panggilan)"
 
 #: gammu/gammu.c:717
 msgid "Filesystem"
-msgstr ""
+msgstr "File sistem"
 
 #: gammu/gammu.c:718
 msgid "Logo and pictures"
-msgstr ""
+msgstr "Logo dan gambar"
 
 #: gammu/gammu.c:719
 msgid "Ringtones"
-msgstr ""
+msgstr "Nada dering"
 
 #: gammu/gammu.c:720
 msgid "Calendar notes"
-msgstr ""
+msgstr "Catatan kalender"
 
 #: gammu/gammu.c:721
 msgid "To do lists"
-msgstr ""
+msgstr "List pengerjaan"
 
 #: gammu/gammu.c:722
 msgid "Notes"
-msgstr ""
+msgstr "Catatan"
 
 #: gammu/gammu.c:723
 msgid "Date, time and alarms"
-msgstr ""
+msgstr "Tanggal, waktu dan alarm"
 
 #: gammu/gammu.c:724
 msgid "Categories"
-msgstr ""
+msgstr "Kategori"
 
 #: gammu/gammu.c:726
 msgid "Backing up and restoring"
-msgstr ""
+msgstr "Backing up dan restoring"
 
 #: gammu/gammu.c:729
 msgid "Nokia specific"
-msgstr ""
+msgstr "Spesifik Nokia"
 
 #: gammu/gammu.c:732
 msgid "Siemens specific"
-msgstr ""
+msgstr "Spesifik Siemens"
 
 #: gammu/gammu.c:735
 msgid "WAP settings and bookmarks"
-msgstr ""
+msgstr "Pengaturan WAP dan bookmark"
 
 #: gammu/gammu.c:736
 msgid "MMS and MMS settings"
-msgstr ""
+msgstr "MMS dan pengaturan MMS"
 
 #: gammu/gammu.c:737
 msgid "Phone tests"
-msgstr ""
+msgstr "Tes telepon"
 
 #: gammu/gammu.c:738
 msgid "FM radio"
-msgstr ""
+msgstr "Radio FM"
 
 #: gammu/gammu.c:739
 msgid "Phone information"
-msgstr ""
+msgstr "Informasi telepon"
 
 #: gammu/gammu.c:740
 msgid "Phone settings"
-msgstr ""
+msgstr "Pengaturan telepon"
 
 #: gammu/gammu.c:742
 msgid "Dumps decoding"
-msgstr ""
+msgstr "Tumpukan sedang didecode"
 
 #: gammu/gammu.c:744
 msgid "Functions that don't fit elsewhere"
-msgstr ""
+msgstr "Fungsi yang tidak sesuai dimana pun"
 
 #: gammu/gammu.c:745
 msgid "Gammu information"
-msgstr ""
+msgstr "Informasi gammu"
 
 #: gammu/gammu.c:761
 msgid "Usage: gammu [parameters] <command> [options]"
-msgstr ""
+msgstr "Penggunaan: gammu [parameter] <command> [opsi]"
 
 # type: Plain text
 #: gammu/gammu.c:762
 msgid "Parameters before command configure gammu behaviour:"
-msgstr ""
+msgstr "Parameter sebelum perintah mengkonfigurasi perilaku gammu:"
 
 #: gammu/gammu.c:763
 msgid "-c / --config <filename> ... name of configuration file"
-msgstr ""
+msgstr "-c / --config <namafile> ... nama file konfigurasi"
 
 #: gammu/gammu.c:764
 msgid "-s / --section <confign> ... section of config file to use, eg. 42"
 msgstr ""
+"-s / --section <confign> ... bagian dari file config yang akan digunakan, "
+"contoh 42"
 
 #: gammu/gammu.c:765
 msgid ""
 "-d / --debug <level> ... debug level (nothing|text|textall|textalldate|"
 "binary|errors)"
 msgstr ""
+"-d / --debug <level> ... debug level "
+"(nothing|text|textall|textalldate|binary|errors)"
 
 #: gammu/gammu.c:766
 msgid "-f / --debug-file <filename> ... file for logging debug messages"
-msgstr ""
+msgstr "-f / --debug-file <filename> ... file untuk mencatat pesan kesalahan"
 
 #: gammu/gammu.c:768
 msgid "Commands can be specified with or without leading --."
-msgstr ""
+msgstr "Perintah dapat diikuti dengan atau tanpa awalan --"
 
 #: gammu/gammu.c:771
 msgid ""
 "For more details, call help on specific topic (gammu --help topic). Topics "
 "are:"
 msgstr ""
+"Untuk lebih jelasnya, panggil bantuan pada topik yang spesifik (gammu "
+"--topik bantuan). Topiknya adalah:"
 
 #: gammu/gammu.c:869
 msgid "Unknown help topic specified!"
-msgstr ""
+msgstr "Topik bantuan tidak dikenali"
 
 #: gammu/gammu.c:873
 #, c-format
@@ -1883,156 +1889,162 @@ msgid ""
 "Gammu commands, topic: %s\n"
 "\n"
 msgstr ""
+"Perintah Gammu, topik: %s\n"
+"\n"
 
 #: gammu/gammu.c:964
 #, c-format
 msgid "More parameters required (function requires %d)\n"
-msgstr ""
+msgstr "Dibutuhkan lebih banyak dibutukan (fungsi dibutuhkan %d)\n"
 
 #: gammu/gammu.c:967
 #, c-format
 msgid "More parameters required (function requires %d to %d)\n"
-msgstr ""
+msgstr "Dibutuhkan lebih banyak dibutukan (fungsi dibutuhkan %d hingga %d)\n"
 
 #: gammu/gammu.c:973 gammu/gammu.c:994
 msgid "Parameters help"
-msgstr ""
+msgstr "Parameter bantuan"
 
 #: gammu/gammu.c:985
 #, c-format
 msgid "Too many parameters (function accepts %d)\n"
-msgstr ""
+msgstr "Terlalu banyak parameter (Fungsi menerima %d)\n"
 
 #: gammu/gammu.c:988
 #, c-format
 msgid "Too many parameters (function accepts %d to %d)\n"
-msgstr ""
+msgstr "Terlalu banyak parameter (Fungsi menerima %d hingga %d)\n"
 
 #: gammu/gammu.c:1015
 msgid "Bad option!"
-msgstr ""
+msgstr "Pilihan buruk!"
 
 #: gammu/gammu.c:1096
 msgid "Configuration could not be parsed!"
-msgstr ""
+msgstr "Konfigurasi tidak dapat diolah"
 
 #: gammu/gammu.c:1098
 msgid "No configuration file found!"
-msgstr ""
+msgstr "File konfigurasi tidak ditemukan"
 
 #: gammu/gammu.c:1118
 msgid "Failed to allocate memory, aborting!\n"
-msgstr ""
+msgstr "Gagal mengalokasikan memori, diabaikan!\n"
 
 #: gammu/gammu.c:1149
 msgid "Too few parameters!"
-msgstr ""
+msgstr "Parameter terlalu sedikit!"
 
 #: gammu/gammu.c:1162
 #, c-format
 msgid "Failed to read [gammu%d] section from configuration file (gammurc)!\n"
-msgstr ""
+msgstr "Gagal membaca bagian [gammu%d] dari file konfigurasi (gammurc)!\n"
 
 #: gammu/gammu.c:1164 gammu/gammu.c:1175
 msgid "No configuration read, using builtin defaults!"
-msgstr ""
+msgstr "Konfigurasi tidak terbaca, menggunakan konfigurasi awal"
 
 #: gammu/gammu.c:1214
 #, c-format
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
-msgstr ""
+msgstr "Versi libGammu.so berbeda dengan versi Gammu (%s)\n"
 
 #: gammu/memory.c:41 gammu/memory.c:95 gammu/memory.c:113 gammu/memory.c:240
 #: gammu/memory.c:357
 #, c-format
 msgid "Memory %s, Location %i\n"
-msgstr ""
+msgstr "Memori %s, Lokasi %i\n"
 
 #: gammu/memory.c:84
 msgid ""
 "You will have null names in entries. Upgrade firmware in phone to higher "
 "than 4.06"
 msgstr ""
+"Anda akan mendapatkan nama yang kosong di isian. Upgrade firmware di telepon "
+"ke versi > 4.06"
 
 #: gammu/memory.c:90
 msgid ""
 "You will have null names in entries. Upgrade firmware in phone to higher "
 "than 6.00"
 msgstr ""
+"Anda akan mendapatkan nama yang kosong di isian. Upgrade firmware di telepon "
+"ke versi > 6.00"
 
 #: gammu/memory.c:108 gammu/misc.c:1848 gammu/misc.c:2213
 msgid "Entry is empty"
-msgstr ""
+msgstr "Isian kosong"
 
 #: gammu/memory.c:120
 #, c-format
 msgid "%i entries empty, %i entries filled\n"
-msgstr ""
+msgstr "%i isian kosong, %i isian diisi\n"
 
 #: gammu/message.c:36
 msgid "SMS message received"
-msgstr ""
+msgstr "Pesan SMS diterima"
 
 #: gammu/message.c:40
 msgid "We already have one pending, ignoring this one!"
-msgstr ""
+msgstr "Kita telah menerima pesan tertunda, mengabaikan pesan ini!"
 
 #: gammu/message.c:62 gammu/message.c:277
 #, c-format
 msgid "Location %i\n"
-msgstr ""
+msgstr "Lokasi %i\n"
 
 #: gammu/message.c:63 gammu/message.c:278
 msgid "Empty"
-msgstr ""
+msgstr "Kosong"
 
 #: gammu/message.c:77
 msgid "CB message received"
-msgstr ""
+msgstr "Pesan CB diterima"
 
 #: gammu/message.c:78
 #, c-format
 msgid "Channel %i, text \"%s\"\n"
-msgstr ""
+msgstr "Channel %i, teks \"%s\"\n"
 
 #: gammu/message.c:84
 msgid "USSD received"
-msgstr ""
+msgstr "USSD diterima"
 
 #: gammu/message.c:85 helper/message-display.c:150
 #: helper/message-display.c:270
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: gammu/message.c:89
 msgid "No action needed"
-msgstr ""
+msgstr "Tidak dibutuhkan aksi"
 
 #: gammu/message.c:92
 msgid "Action needed"
-msgstr ""
+msgstr "Aksi dibutuhkan"
 
 #: gammu/message.c:95
 msgid "Terminated"
-msgstr ""
+msgstr "Dihentikan"
 
 #: gammu/message.c:98
 msgid "Another client replied"
-msgstr ""
+msgstr "Klien yang lain membalas"
 
 #: gammu/message.c:101
 msgid "Not supported"
-msgstr ""
+msgstr "Tidak didukung"
 
 #: gammu/message.c:113
 msgid "Service reply"
-msgstr ""
+msgstr "Balasan layanan"
 
 #: gammu/message.c:160
 #, c-format
 msgid "Invalid SMSC location: %s\n"
-msgstr ""
+msgstr "Lokasi SMSC tidak benar: %s\n"
 
 #: gammu/message.c:202 gammu/misc.c:2116 gammu/misc.c:2313
 msgid "Number"
@@ -2040,19 +2052,19 @@ msgstr "Nomor"
 
 #: gammu/message.c:203
 msgid "Default number"
-msgstr ""
+msgstr "Nomor awal"
 
 #: gammu/message.c:205
 msgid "Format"
-msgstr ""
+msgstr "Format"
 
 #: gammu/message.c:208
 msgid "Fax"
-msgstr ""
+msgstr "Fax"
 
 #: gammu/message.c:209
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 #: gammu/message.c:210
 msgid "Pager"
@@ -2060,80 +2072,80 @@ msgstr "Pager"
 
 #: gammu/message.c:214
 msgid "Validity"
-msgstr ""
+msgstr "Keabsahan"
 
 #: gammu/message.c:233
 msgid "Maximum time"
-msgstr ""
+msgstr "Waktu maksimum"
 
 #: gammu/message.c:353 gammu/message.c:428 gammu/message.c:702
 msgid "Corrupted message, skipping"
-msgstr ""
+msgstr "Pesan bermasalah, diabaikan"
 
 #: gammu/message.c:367 gammu/message.c:486
 #, c-format
 msgid "%i SMS parts in %i SMS sequences"
-msgstr ""
+msgstr "%i bagian SMS di %i urutan SMS"
 
 #: gammu/message.c:418
 msgid "SMS counter overflow"
-msgstr ""
+msgstr "pencacah SMS di atas batas atas"
 
 #: gammu/message.c:507
 msgid ", SIM memory"
-msgstr ""
+msgstr ", memori SIM"
 
 #: gammu/message.c:508
 msgid ", phone memory"
-msgstr ""
+msgstr ", memori telepon"
 
 #: gammu/message.c:509
 msgid ", phone or SIM memory"
-msgstr ""
+msgstr ", telepon atau memori SIM"
 
 #: gammu/message.c:512 gammu/mms.c:30
 msgid ", Inbox folder"
-msgstr ""
+msgstr ", Folder inbox"
 
 #: gammu/message.c:513
 msgid ", Outbox folder"
-msgstr ""
+msgstr ", Folder outbox"
 
 #: gammu/message.c:529
 msgid "..OK"
-msgstr ""
+msgstr "..OK"
 
 #: gammu/message.c:532
 #, c-format
 msgid "..error %i"
-msgstr ""
+msgstr "..error %i"
 
 #: gammu/message.c:535
 #, c-format
 msgid ", message reference=%d"
-msgstr ""
+msgstr ", referensi pesan=%d"
 
 #: gammu/message.c:568
 msgid "Message number"
-msgstr ""
+msgstr "Nomor pesan"
 
 #: gammu/message.c:573
 msgid "Number of messages"
-msgstr ""
+msgstr "Jumlah pesan"
 
 #: gammu/message.c:584 gammu/message.c:624
 msgid "If you want break, press Ctrl+C..."
-msgstr ""
+msgstr "Jika ingin keluar, tekan Ctrl+C"
 
 #: gammu/message.c:589
 #, c-format
 msgid "Saving SMS %i/%i\n"
-msgstr ""
+msgstr "Menyimpan SMS %i/%i\n"
 
 #: gammu/message.c:592
 #, c-format
 msgid "Saved in folder number %d \"%s\", location %i"
-msgstr ""
+msgstr "tersimpan di folder telepon %d \"%s\", lokasi %i"
 
 #: gammu/message.c:597
 msgid "SIM"
@@ -2141,368 +2153,367 @@ msgstr "SIM"
 
 #: gammu/message.c:599
 msgid "phone"
-msgstr ""
+msgstr "telepon"
 
 #: gammu/message.c:603
 #, c-format
 msgid "Sending sms from folder \"%s\", location %i\n"
-msgstr ""
+msgstr "Pengiriman sms dari folder \"%s\", lokasi %i\n"
 
 #: gammu/message.c:609 gammu/message.c:635
 msgid "....waiting for network answer"
-msgstr ""
+msgstr "....menunggu balasan jaringan"
 
 #: gammu/message.c:630
 #, c-format
 msgid "Sending SMS %i/%i"
-msgstr ""
+msgstr "Pengiriman SMS %i/%i"
 
 #: gammu/message.c:649
 msgid "Something went wrong, uknown message operation!\n"
-msgstr ""
+msgstr "Ada yang salah, operasi pesan tidak dikenali!\n"
 
 #: gammu/message.c:685
 #, c-format
 msgid "Too high folder number (max. %i)\n"
-msgstr ""
+msgstr "Nomor folder terlalu tinggi (maks. %i)\n"
 
 #: gammu/message.c:691
 #, c-format
 msgid "Deleting SMS from \"%s\" folder: "
-msgstr ""
+msgstr "Menghapus SMS dari folder \"%s\" "
 
 #: gammu/misc.c:35
 msgid "Network state"
-msgstr ""
+msgstr "Status jaringan"
 
 #: gammu/misc.c:37 gammu/misc.c:64
 msgid "home network"
-msgstr ""
+msgstr "Jaringan rumah"
 
 #: gammu/misc.c:38 gammu/misc.c:65
 msgid "roaming network"
-msgstr ""
+msgstr "Roaming jaringan"
 
 #: gammu/misc.c:39 gammu/misc.c:66
 msgid "requesting network"
-msgstr ""
+msgstr "Meminta jaringan"
 
 #: gammu/misc.c:40 gammu/misc.c:67
 msgid "not logged into network"
-msgstr ""
+msgstr "Tidak tercatat dalam jaringan"
 
 #: gammu/misc.c:41 gammu/misc.c:68
 msgid "registration to network denied"
-msgstr ""
+msgstr "Registrasi ke jaringan ditolak"
 
 #: gammu/misc.c:42 gammu/misc.c:44 gammu/misc.c:69 gammu/misc.c:71
 #: gammu/misc.c:169 gammu/misc.c:191
 msgid "unknown"
-msgstr ""
+msgstr "Tidak dikenali"
 
 #: gammu/misc.c:58 gammu/misc.c:85
 msgid "Name in phone"
-msgstr ""
+msgstr "Nama di telepon"
 
 #: gammu/misc.c:62
 msgid "Packet network state"
-msgstr ""
+msgstr "Status paket jaringan"
 
 #: gammu/misc.c:75
 msgid "Packet network"
-msgstr ""
+msgstr "paket jaringan"
 
 #: gammu/misc.c:90 gammu/misc.c:1530
 msgid "GPRS"
-msgstr ""
+msgstr "GPRS"
 
 #: gammu/misc.c:93
 msgid "attached"
-msgstr ""
+msgstr "Dipasang"
 
 #: gammu/misc.c:96
 msgid "detached"
-msgstr ""
+msgstr "Dilepas"
 
 #: gammu/misc.c:106
 msgid "Battery level"
-msgstr ""
+msgstr "Tingkat baterai"
 
 #: gammu/misc.c:111
 msgid "Battery capacity"
-msgstr ""
+msgstr "Kapasitas baterai"
 
 #: gammu/misc.c:112
 #, c-format
 msgid "%i mAh"
-msgstr ""
+msgstr "%i mAh"
 
 #: gammu/misc.c:116
 msgid "Battery temperature"
-msgstr ""
+msgstr "Suhu baterai"
 
 #. l10n: This means degrees Celsius
 #: gammu/misc.c:118 gammu/misc.c:123
 #, c-format
 msgid "%i C"
-msgstr ""
+msgstr "%i C"
 
 #: gammu/misc.c:122
 msgid "Phone temperature"
-msgstr ""
+msgstr "Suhu telepon"
 
 #: gammu/misc.c:127
 msgid "Battery voltage"
-msgstr ""
+msgstr "Voltase baterai"
 
 #: gammu/misc.c:128 gammu/misc.c:133
 #, c-format
 msgid "%i mV"
-msgstr ""
+msgstr "%i mV"
 
 #: gammu/misc.c:132
 msgid "Charge voltage"
-msgstr ""
+msgstr "Voltase pengisian"
 
 #: gammu/misc.c:137
 msgid "Charge current"
-msgstr ""
+msgstr "Pengisiaan saat ini"
 
 #: gammu/misc.c:138 gammu/misc.c:143
 #, c-format
 msgid "%i mA"
-msgstr ""
+msgstr "%i mA"
 
 #: gammu/misc.c:142
 msgid "Phone current"
-msgstr ""
+msgstr "Telepon saat ini"
 
 #: gammu/misc.c:147
 msgid "Charge state"
-msgstr ""
+msgstr "Status pengisian"
 
 #: gammu/misc.c:150
 msgid "powered from battery"
-msgstr ""
+msgstr "menggunakan tenaga baterai"
 
 #: gammu/misc.c:153
 msgid "battery connected, but not powered from battery"
-msgstr ""
+msgstr "baterai terhubung, tetapi tidak menggunakan baterai"
 
 #: gammu/misc.c:156
 msgid "battery connected and is being charged"
-msgstr ""
+msgstr "baterai terhubung dan sedang diisi"
 
 #: gammu/misc.c:159
 msgid "battery connected and is fully charged"
-msgstr ""
+msgstr "baterai terhubung dan sedang terisi penuh"
 
 #: gammu/misc.c:162
 msgid "battery not connected"
-msgstr ""
+msgstr "baterai tidak terhubung"
 
 #: gammu/misc.c:165
 msgid "detected power failure"
-msgstr ""
+msgstr "kegagalan sumber daya"
 
 #: gammu/misc.c:176
 msgid "Battery type"
-msgstr ""
+msgstr "jenis baterai"
 
 #: gammu/misc.c:179
 msgid "Lithium Ion"
-msgstr ""
+msgstr "Lithium Ion"
 
 #: gammu/misc.c:182
 msgid "Lithium Polymer"
-msgstr ""
+msgstr "Lithium Polymer"
 
 #: gammu/misc.c:185
 msgid "NiMH"
-msgstr ""
+msgstr "NiMH"
 
 #: gammu/misc.c:261
 msgid "Not logged to network!\n"
-msgstr ""
+msgstr "Tidak tercatat di jaringan!\n"
 
 #: gammu/misc.c:272
 msgid "Wrong network code from phone!\n"
-msgstr ""
+msgstr "Kode jaringan dari telepon salah!\n"
 
 #: gammu/misc.c:300
 msgid "Request for information from OpenCellID failed!\n"
-msgstr ""
+msgstr "Permintaan untuk informasi dari OpenCellID gagal!\n"
 
 #: gammu/misc.c:306
 msgid "Failed to find latitude in OpenCellID reply!\n"
-msgstr ""
+msgstr "Gagal menemukan lintang di balasan OpenCellID!\n"
 
 #: gammu/misc.c:311
 msgid "Failed to parse latitude from OpenCellID reply!\n"
-msgstr ""
+msgstr "Gagal mengolah lintang dari balasan OpenCellID!\n"
 
 #: gammu/misc.c:317
 msgid "Failed to find longitude in OpenCellID reply!\n"
-msgstr ""
+msgstr "Gagal menemukan bujur di balasan OpenCellID!\n"
 
 #: gammu/misc.c:322
 msgid "Failed to parse longitude from OpenCellID reply!\n"
-msgstr ""
+msgstr "Gagal menemukan bujur di balasan OpenCellID!\n"
 
 #: gammu/misc.c:328
 msgid "Failed to find range in OpenCellID reply!\n"
-msgstr ""
+msgstr "Gagal menemukan rentang di balasan OpenCellID!\n"
 
 #: gammu/misc.c:333
 msgid "Failed to parse range from OpenCellID reply!\n"
-msgstr ""
+msgstr "Gagal mengolah rentang di balasan OpenCellID!\n"
 
 #: gammu/misc.c:339
 msgid "Failed to find nbSamples in OpenCellID reply!\n"
-msgstr ""
+msgstr "Gagal menemukan nbSamples di balasan OpenCellID!\n"
 
 #: gammu/misc.c:344
 msgid "Failed to parse nbSamples from OpenCellID reply!\n"
-msgstr ""
+msgstr "Gagal mengolah nbSamples di balasan OpenCellID!\n"
 
 #: gammu/misc.c:355
 msgid "Latitude"
-msgstr ""
+msgstr "Lintang"
 
 #: gammu/misc.c:356
 msgid "Longitude"
-msgstr ""
+msgstr "Bujur"
 
 #: gammu/misc.c:357
-#, fuzzy
 msgid "Range"
-msgstr "Membaca"
+msgstr "Rentang"
 
 #: gammu/misc.c:358
 msgid "Number of samples"
-msgstr ""
+msgstr "Jumlah sampel"
 
 #: gammu/misc.c:379
 msgid "Device"
-msgstr ""
+msgstr "Alat"
 
 #: gammu/misc.c:383 gammu/search.c:89
 msgid "Manufacturer"
-msgstr ""
+msgstr "Pabrikan"
 
 #: gammu/misc.c:386 gammu/search.c:101
 msgid "Model"
-msgstr ""
+msgstr "Model"
 
 #: gammu/misc.c:392
 msgid "Firmware"
-msgstr ""
+msgstr "Firmware"
 
 #: gammu/misc.c:404
 msgid "Hardware"
-msgstr ""
+msgstr "Hardware"
 
 #: gammu/misc.c:415
 msgid "Original IMEI"
-msgstr ""
+msgstr "IMEI orisinal"
 
 #: gammu/misc.c:422
 msgid "Manufactured"
-msgstr ""
+msgstr "Pabrikan"
 
 #: gammu/misc.c:428
 msgid "Product code"
-msgstr ""
+msgstr "Kode produk"
 
 #: gammu/misc.c:438
 msgid "SIM IMSI"
-msgstr ""
+msgstr "SIM IMSI"
 
 #: gammu/misc.c:486
 msgid "Call info"
-msgstr ""
+msgstr "Info panggilan"
 
 #: gammu/misc.c:489
 #, c-format
 msgid "ID %i, "
-msgstr ""
+msgstr "ID %i, "
 
 #: gammu/misc.c:492
 #, c-format
 msgid "incoming call from \"%s\"\n"
-msgstr ""
+msgstr "Panggilan masuk from \"%s\"\n"
 
 #: gammu/misc.c:493
 #, c-format
 msgid "outgoing call to \"%s\"\n"
-msgstr ""
+msgstr "Panggilan keluar from \"%s\"\n"
 
 #: gammu/misc.c:494
 msgid "call started"
-msgstr ""
+msgstr "Panggilan dimulai"
 
 #: gammu/misc.c:495
 msgid "end of call (unknown side)"
-msgstr ""
+msgstr "Akhir panggilan (bagian tidak dikenali)"
 
 #: gammu/misc.c:496
 msgid "call end from our side"
-msgstr ""
+msgstr "Panggilan berakhir dari sisi kita"
 
 #: gammu/misc.c:497
 #, c-format
 msgid "call end from remote side (code %i)\n"
-msgstr ""
+msgstr "Panggilan berakhir dari sisi luar (kode %i)\n"
 
 #: gammu/misc.c:498
 msgid "call established. Waiting for answer"
-msgstr ""
+msgstr "Panggilan dipasang. Menunggu jawaban"
 
 #: gammu/misc.c:499
 msgid "call held"
-msgstr ""
+msgstr "Panggilan ditahan"
 
 #: gammu/misc.c:500
 msgid "call resumed"
-msgstr ""
+msgstr "Panggilan dikembalikan"
 
 #: gammu/misc.c:501
 msgid "call switched"
-msgstr ""
+msgstr "Panggilan ditukar"
 
 #: gammu/misc.c:508
 #, c-format
 msgid "%3d used"
-msgstr ""
+msgstr "digunakan %3d"
 
 #: gammu/misc.c:510
 #, c-format
 msgid "%3d free"
-msgstr ""
+msgstr "gratis %3d"
 
 #: gammu/misc.c:546
 msgid "Entering monitor mode..."
-msgstr ""
+msgstr "masuk modus monitor"
 
 #: gammu/misc.c:556
 msgid "Enabling info about incoming SMS"
-msgstr ""
+msgstr "mengaktifkan info SMS masuk"
 
 #: gammu/misc.c:558
 msgid "Enabling info about incoming CB"
-msgstr ""
+msgstr "mengaktifkan info CB masuk"
 
 #: gammu/misc.c:560
 msgid "Enabling info about calls"
-msgstr ""
+msgstr "mengaktifkan info panggilan"
 
 #: gammu/misc.c:562
 msgid "Enabling info about USSD"
-msgstr ""
+msgstr "mengaktifkan info USSD"
 
 #: gammu/misc.c:579
 msgid "Todos"
-msgstr ""
+msgstr "Todos"
 
 #: gammu/misc.c:583
 msgid "Calendar"
@@ -2510,296 +2521,296 @@ msgstr "Kalender"
 
 #: gammu/misc.c:592
 msgid "Signal strength"
-msgstr ""
+msgstr "Kekuatan sinyal"
 
 #: gammu/misc.c:593
 #, c-format
 msgid "%i dBm"
-msgstr ""
+msgstr "%i dBm"
 
 #: gammu/misc.c:597
 msgid "Network level"
-msgstr ""
+msgstr "Tingkat jaringan"
 
 #: gammu/misc.c:602
 msgid "Bit error rate"
-msgstr ""
+msgstr "tingkat error bit"
 
 #: gammu/misc.c:610
 msgid "SIM SMS status"
-msgstr ""
+msgstr "Status SMS SIM"
 
 #: gammu/misc.c:611 gammu/misc.c:621
 #, c-format
 msgid "%i used"
-msgstr ""
+msgstr "%i digunakan"
 
 #: gammu/misc.c:613 gammu/misc.c:623
 #, c-format
 msgid "%i unread"
-msgstr ""
+msgstr "%i belum dibaca"
 
 #: gammu/misc.c:615 gammu/misc.c:625
 #, c-format
 msgid "%i locations"
-msgstr ""
+msgstr "%i lokasi"
 
 #: gammu/misc.c:620
 msgid "Phone SMS status"
-msgstr ""
+msgstr "Status SMS telepon"
 
 #: gammu/misc.c:628
 #, c-format
 msgid "%i templates"
-msgstr ""
+msgstr "%i template"
 
 #: gammu/misc.c:641
 msgid "Leaving monitor mode..."
-msgstr ""
+msgstr "keluar dari modus monitor"
 
 #: gammu/misc.c:669
 msgid "Smart Messaging"
-msgstr ""
+msgstr "Smart Messaging"
 
 #: gammu/misc.c:670
 msgid "Nokia binary"
-msgstr ""
+msgstr "Nokia binary"
 
 #: gammu/misc.c:671
 msgid "MIDI"
-msgstr ""
+msgstr "MIDI"
 
 #: gammu/misc.c:672
 msgid "SMAF (MMF)"
-msgstr ""
+msgstr "SMAF (MMF)"
 
 #: gammu/misc.c:674
 #, c-format
 msgid " format, ringtone \"%s\"\n"
-msgstr ""
+msgstr "format, nada dering \"%s\"\n"
 
 #: gammu/misc.c:881
 #, c-format
 msgid "What type of reset do you want (\"%s\") ?\n"
-msgstr ""
+msgstr "Tipe reset apa yang Anda inginkan (\"%s\") ?\n"
 
 #: gammu/misc.c:908 gammu/misc.c:955 helper/message-display.c:463
 msgid "Address"
-msgstr ""
+msgstr "Alamat"
 
 #: gammu/misc.c:950
 #, c-format
 msgid "%i. Access point %i"
-msgstr ""
+msgstr "%i. Access point %i"
 
 #: gammu/misc.c:952 gammu/misc.c:1476 gammu/misc.c:1483 gammu/misc.c:1518
 #: gammu/misc.c:1531 gammu/misc.c:1570 gammu/misc.c:1619 gammu/misc.c:1973
 msgid " (active)"
-msgstr ""
+msgstr "(aktif)"
 
 #: gammu/misc.c:979 gammu/misc.c:1136
 msgid "Maximal location for caller logo can be 5"
-msgstr ""
+msgstr "Lokasi maksimal untuk logo pemanggil adalah 5"
 
 #: gammu/misc.c:992
 #, c-format
 msgid "What type of logo do you want to get (\"%s\") ?\n"
-msgstr ""
+msgstr "Tipe logo apa yang Anda ingin dapatkan (\"%s\") ?\n"
 
 #: gammu/misc.c:1008
 msgid "Group name"
-msgstr ""
+msgstr "Nama grup"
 
 #: gammu/misc.c:1009 gammu/misc.c:1012
 msgid "default"
-msgstr ""
+msgstr "awal"
 
 #: gammu/misc.c:1012 gammu/misc.c:1014 gammu/misc.c:1027 gammu/misc.c:1034
 #: helper/memory-display.c:100
 msgid "Ringtone"
-msgstr ""
+msgstr "Nada dering"
 
 #: gammu/misc.c:1028
 #, c-format
 msgid "(file with ID %i)\n"
-msgstr ""
+msgstr "(file dengan ID %i)\n"
 
 #. l10n: Ringtone name and ID format
 #: gammu/misc.c:1037
 #, c-format
 msgid "\"%s\" (ID %i)\n"
-msgstr ""
+msgstr "\"%s\" (ID %i)\n"
 
 #. l10n: Ringtone ID format
 #: gammu/misc.c:1042
 #, c-format
 msgid "ID %i\n"
-msgstr ""
+msgstr "ID %i\n"
 
 #: gammu/misc.c:1048 gammu/misc.c:1050
 msgid "Bitmap"
-msgstr ""
+msgstr "Bitmap"
 
 #: gammu/misc.c:1048 gammu/misc.c:1578 gammu/misc.c:1581 gammu/mms.c:102
 msgid "enabled"
-msgstr ""
+msgstr "Diaktifkan"
 
 #: gammu/misc.c:1050 gammu/misc.c:1579 gammu/misc.c:1582 gammu/mms.c:104
 msgid "disabled"
-msgstr ""
+msgstr "Dinonaktifkan"
 
 #: gammu/misc.c:1053
 msgid "Bitmap ID"
-msgstr ""
+msgstr "ID bitmap"
 
 #: gammu/misc.c:1066
 msgid "No operator logo in phone"
-msgstr ""
+msgstr "Logo operator tidak ada di telepon"
 
 #: gammu/misc.c:1072 gammu/mms.c:71 helper/message-display.c:461
 msgid "Sender"
-msgstr ""
+msgstr "Pengirim"
 
 #: gammu/misc.c:1078
 #, c-format
 msgid "Welcome note text is \"%s\"\n"
-msgstr ""
+msgstr "Teks pembuka adalah \"%s\"\n"
 
 #: gammu/misc.c:1081
 #, c-format
 msgid "Dealer note text is \"%s\"\n"
-msgstr ""
+msgstr "Teks dealer adalah \"%s\"\n"
 
 #: gammu/misc.c:1219
 #, c-format
 msgid "What type of logo do you want to set (\"%s\") ?\n"
-msgstr ""
+msgstr "Tipe logo apa yang Anda inginkan untuk diatur (\"%s\") ?\n"
 
 #: gammu/misc.c:1260
 #, c-format
 msgid "Unknown parameter (\"%s\")"
-msgstr ""
+msgstr "Parameter tidak dikenali (\"%s\")"
 
 #: gammu/misc.c:1344
 msgid "Delete phone phonebook?"
-msgstr ""
+msgstr "Hapus daftar kontak dari telepon?"
 
 #: gammu/misc.c:1345
 msgid "Delete SIM phonebook?"
-msgstr ""
+msgstr "Hapus daftar kontak dari SIM?"
 
 #: gammu/misc.c:1346
 msgid "Delete missed calls?"
-msgstr ""
+msgstr "Hapus panggilan gagal?"
 
 #: gammu/misc.c:1347
 msgid "Delete dialled calls?"
-msgstr ""
+msgstr "Hapus panggilan keluar?"
 
 #: gammu/misc.c:1348
 msgid "Delete received calls?"
-msgstr ""
+msgstr "Hapus panggilan masuk?"
 
 #: gammu/misc.c:1353
 msgid "Delete phone calendar notes?"
-msgstr ""
+msgstr "Hapus catatan kalender telepon?"
 
 #: gammu/misc.c:1377
 msgid "Delete phone todos?"
-msgstr ""
+msgstr "Hapus todos telepon?"
 
 #: gammu/misc.c:1401
 msgid "Delete phone notes?"
-msgstr ""
+msgstr "Hapus catatan telepon?"
 
 #: gammu/misc.c:1419
 msgid "Delete phone WAP bookmarks?"
-msgstr ""
+msgstr "Hapus bookmark WAP telepon?"
 
 #: gammu/misc.c:1446
 msgid "Delete all phone FM radio stations?"
-msgstr ""
+msgstr "Hapus seluruh stasiun radio FM telepon?"
 
 #: gammu/misc.c:1458 gammu/misc.c:1460
 msgid "Connection type"
-msgstr ""
+msgstr "Tipe koneksi"
 
 #: gammu/misc.c:1458
 msgid "Continuous"
-msgstr ""
+msgstr "Bersambung"
 
 #: gammu/misc.c:1460
 msgid "Temporary"
-msgstr ""
+msgstr "Sementara"
 
 #: gammu/misc.c:1463 gammu/misc.c:1465
 msgid "Connection security"
-msgstr ""
+msgstr "Keamanan koneksi"
 
 #: gammu/misc.c:1463 gammu/misc.c:2066
 msgid "On"
-msgstr ""
+msgstr "On"
 
 #: gammu/misc.c:1465 gammu/misc.c:2052
 msgid "Off"
-msgstr ""
+msgstr "Off"
 
 #: gammu/misc.c:1467
 msgid "Proxy"
-msgstr ""
+msgstr "Proxy"
 
 #: gammu/misc.c:1468 gammu/misc.c:1471
 #, c-format
 msgid "address \"%s\", port %i"
-msgstr ""
+msgstr "alamat \"%s\", port %i"
 
 #: gammu/misc.c:1470
 msgid "Second proxy"
-msgstr ""
+msgstr "Detik proxy"
 
 #: gammu/misc.c:1475 gammu/misc.c:1482 gammu/misc.c:1517 gammu/misc.c:1530
 msgid "Bearer"
-msgstr ""
+msgstr "Bearer"
 
 #: gammu/misc.c:1475
 msgid "SMS"
-msgstr ""
+msgstr "SMS"
 
 #: gammu/misc.c:1478
 msgid "Server number"
-msgstr ""
+msgstr "nomor penyedia layanan"
 
 #: gammu/misc.c:1479 gammu/misc.c:1525 gammu/misc.c:1526
 msgid "Service number"
-msgstr ""
+msgstr "nomor layanan"
 
 #: gammu/misc.c:1482
 msgid "Data (CSD)"
-msgstr ""
+msgstr "Data (CSD)"
 
 #: gammu/misc.c:1485
 msgid "Dial-up number"
-msgstr ""
+msgstr "Nomor Dial-up"
 
 #: gammu/misc.c:1486 gammu/misc.c:1522 gammu/misc.c:1523 gammu/misc.c:1544
 msgid "IP address"
-msgstr ""
+msgstr "IP address"
 
 #: gammu/misc.c:1488 gammu/misc.c:1490 gammu/misc.c:1534 gammu/misc.c:1536
 msgid "Login type"
-msgstr ""
+msgstr "tipe login"
 
 #: gammu/misc.c:1488 gammu/misc.c:1534
 msgid "Manual"
-msgstr ""
+msgstr "manual"
 
 #: gammu/misc.c:1490 gammu/misc.c:1536
 msgid "Automatic"
-msgstr ""
+msgstr "otomatis"
 
 #: gammu/misc.c:1493 gammu/misc.c:1495 gammu/misc.c:1539 gammu/misc.c:1541
 msgid "Authentication type"
-msgstr ""
+msgstr "tipe autentikasi"
 
 #: gammu/misc.c:1493 gammu/misc.c:1539
 msgid "Normal"
@@ -2807,113 +2818,113 @@ msgstr "Normal"
 
 #: gammu/misc.c:1495 gammu/misc.c:1541
 msgid "Secure"
-msgstr ""
+msgstr "aman"
 
 #: gammu/misc.c:1498 gammu/misc.c:1500
 msgid "Data call type"
-msgstr ""
+msgstr "tipe data panggilan"
 
 #: gammu/misc.c:1498
 msgid "ISDN"
-msgstr ""
+msgstr "ISDN"
 
 #: gammu/misc.c:1500
 msgid "Analogue"
-msgstr ""
+msgstr "analog"
 
 #: gammu/misc.c:1504 gammu/misc.c:1507 gammu/misc.c:1510
 msgid "Data call speed"
-msgstr ""
+msgstr "kecepatan data panggilan"
 
 #: gammu/misc.c:1510 gammu/misc.c:2068
 msgid "Auto"
-msgstr ""
+msgstr "auto"
 
 #: gammu/misc.c:1513 gammu/misc.c:1545
 msgid "User name"
-msgstr ""
+msgstr "nama user"
 
 #: gammu/misc.c:1514 gammu/misc.c:1546 gammu/misc.c:1573 gammu/misc.c:1623
 msgid "Password"
-msgstr ""
+msgstr "kata sandi"
 
 #: gammu/misc.c:1517
 msgid "USSD"
-msgstr ""
+msgstr "USSD"
 
 #: gammu/misc.c:1520
 msgid "Service code"
-msgstr ""
+msgstr "Kode layanan"
 
 #: gammu/misc.c:1522 gammu/misc.c:1525
 msgid "Address type"
-msgstr ""
+msgstr "tipe alamat"
 
 #: gammu/misc.c:1543
 msgid "Access point"
-msgstr ""
+msgstr "Access point"
 
 #: gammu/misc.c:1566 gammu/misc.c:1587 gammu/misc.c:1615 gammu/misc.c:1628
 #: gammu/misc.c:1660
 #, c-format
 msgid "Set %i"
-msgstr ""
+msgstr "Atur %i"
 
 #: gammu/misc.c:1572 gammu/misc.c:1622
 msgid "User"
-msgstr ""
+msgstr "Pengguna"
 
 #: gammu/misc.c:1574
 msgid "Phonebook database"
-msgstr ""
+msgstr "database daftarkontak"
 
 #: gammu/misc.c:1575
 msgid "Calendar database"
-msgstr ""
+msgstr "database kalender"
 
 #: gammu/misc.c:1576
 msgid "Server"
-msgstr ""
+msgstr "server"
 
 #: gammu/misc.c:1577
 msgid "Sync. phonebook"
-msgstr ""
+msgstr "sinkronisasi daftar kontak"
 
 #: gammu/misc.c:1580
 msgid "Sync. calendar"
-msgstr ""
+msgstr "sinkronisasi kalender"
 
 #: gammu/misc.c:1585 gammu/misc.c:1626
 msgid "Connection set name"
-msgstr ""
+msgstr "Nama koneksi"
 
 #: gammu/misc.c:1621 gammu/misc.c:1671
 msgid "Homepage"
-msgstr ""
+msgstr "Homepage"
 
 #: gammu/misc.c:1665
 msgid "active"
-msgstr ""
+msgstr "aktif"
 
 #: gammu/misc.c:1669
 msgid "Read only"
-msgstr ""
+msgstr "hanya dibaca"
 
 #: gammu/misc.c:1694
 msgid "Startup logo"
-msgstr ""
+msgstr "logo startup"
 
 #: gammu/misc.c:1695
 msgid "Operator logo"
-msgstr ""
+msgstr "logo operator"
 
 #: gammu/misc.c:1696 helper/message-display.c:428
 msgid "Picture"
-msgstr ""
+msgstr "gambar"
 
 #: gammu/misc.c:1697
 msgid "Caller group logo"
-msgstr ""
+msgstr "logo grup pemanggil"
 
 #: gammu/misc.c:1700
 #, c-format
@@ -4164,7 +4175,7 @@ msgstr "ID Suara EMS"
 
 #: helper/message-display.c:458
 msgid "EMS animation ID"
-msgstr ""
+msgstr "ID Animasi EMS"
 
 #: helper/message-display.c:464
 msgid "Message size"
@@ -4177,19 +4188,19 @@ msgstr "Kesalahan"
 
 #: helper/message-display.c:530
 msgid "Data PDU"
-msgstr ""
+msgstr "Data PDU"
 
 #: helper/message-display.c:531
 msgid "Number of bits"
-msgstr ""
+msgstr "Jumlah bit"
 
 #: helper/message-display.c:533
 msgid "UDH"
-msgstr ""
+msgstr "UDH"
 
 #: helper/message-display.c:549
 msgid "Whole PDU"
-msgstr ""
+msgstr "Semua PDU"
 
 #. l10n: Generic prefix for warning messages
 #: helper/printing.c:34

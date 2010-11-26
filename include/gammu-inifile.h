@@ -143,17 +143,18 @@ gboolean INI_GetBool(INI_Section *cfg,
 
 
 /**
- * Checks whether value can be evaluated as true.
+ * Converts value to boolean.
  *
- * It just takes the string and checks whether there is true/yes/1.
+ * It just takes the string and checks whether there is true/yes/t/y/1
+ * or false/no/f/n/0.
  *
  * \ingroup INI
  *
  * \param value String to parse.
  *
- * \return Boolean value.
+ * \return Boolean value, -1 on failure.
  */
-gboolean INI_IsTrue(const char *value);
+gboolean GSM_StringToBool(const char *value);
 
 #endif
 

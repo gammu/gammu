@@ -18,7 +18,7 @@ int main(int argc, char **argv)
 
 	/* Check parameters */
 	if (argc != 2) {
-		printf("Not enough parameters!\nUsage: initfile ini_file\n");
+		printf("Not enough parameters!\nUsage: inifile ini_file\n");
 		return 1;
 	}
 
@@ -34,6 +34,15 @@ int main(int argc, char **argv)
 
     boolval = INI_GetBool(ini, "section", "falseval", TRUE);
     test_result(boolval == FALSE);
+
+    boolval = INI_GetBool(ini, "section", "notexistingval", TRUE);
+    test_result(boolval == TRUE);
+
+    boolval = INI_GetBool(ini, "section", "intval", FALSE);
+    test_result(boolval == FALSE);
+
+    boolval = INI_GetBool(ini, "section", "intval", TRUE);
+    test_result(boolval == TRUE);
 
     strval = INI_GetValue(ini, "section", "val1", FALSE);
     test_result(strval != NULL);

@@ -340,10 +340,15 @@ int INI_GetInt(INI_Section *cfg, const unsigned char *section, const unsigned ch
 gboolean INI_GetBool(INI_Section *cfg, const unsigned char *section, const unsigned char *key, gboolean fallback)
 {
 	char *str;
+	gboolean ret;
 
 	str = (char *)INI_GetValue(cfg, section, key, FALSE);
 	if (str) {
-		return INI_IsTrue(str);
+		ret = GSM_StringToBool(str);
+		if (ret == -1) {
+			return fallback;
+		}
+		return ret;
 	} else {
 		return fallback;
 	}
@@ -458,12 +463,19 @@ void INI_Free(INI_Section *head)
 	}
 }
 
-gboolean INI_IsTrue(const char *value)
+gboolean GSM_StringToBool(const char *value)
 {
 	if (strcasecmp(value, "true") == 0) return TRUE;
 	if (strcasecmp(value, "yes") == 0) return TRUE;
+	if (strcasecmp(value, "y") == 0) return TRUE;
+	if (strcasecmp(value, "t") == 0) return TRUE;
 	if (strcasecmp(value, "1") == 0) return TRUE;
-	return FALSE;
+	if (strcasecmp(value, "false") == 0) return FALSE;
+	if (strcasecmp(value, "no") == 0) return FALSE;
+	if (strcasecmp(value, "f") == 0) return FALSE;
+	if (strcasecmp(value, "n") == 0) return FALSE;
+	if (strcasecmp(value, "0") == 0) return FALSE;
+	return -1;
 }
 
 /* How should editor hadle tabs in this file? Add editor commands here.

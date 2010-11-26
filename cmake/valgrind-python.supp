@@ -574,6 +574,16 @@
 {
    Dont know ;-)
    Memcheck:Leak
+    fun:malloc
+    fun:PyObject_Malloc
+    fun:PyObject_Realloc
+    fun:PyNode_AddChild
+    fun:PyParser_AddToken
+    fun:parsetok
+}
+{
+   Dont know ;-)
+   Memcheck:Leak
    fun:malloc
    fun:fill_free_list
    fun:PyInt_FromLong
@@ -604,6 +614,17 @@
    fun:PyString_FromString
    fun:initposix
 }
+
+{
+   operator module
+   Memcheck:Leak
+   fun:malloc
+   fun:PyObject_Malloc
+   fun:PyString_FromString
+   fun:PyDict_SetItemString
+   fun:Py_InitModule4_64
+   fun:initoperator
+
 {
    1,000 bytes in 2 blocks are still reachable
    Memcheck:Leak
@@ -2310,6 +2331,33 @@
     fun:PyString_FromString
     fun:PyDict_SetItemString
     fun:gammu_create_errors
+}
+{
+    python-gammu exceptions
+    Memcheck:Leak
+    fun:malloc
+    fun:PyObject_Malloc
+    fun:PyString_FromStringAndSize
+    fun:PyString_FromFormatV
+    fun:PyString_FromFormat
+    fun:gammu_create_errors
+}
+{
+    python-gammu exceptions
+    Memcheck:Leak
+    fun:malloc
+    fun:PyObject_Malloc
+    fun:PyString_FromString
+    fun:PyDict_SetItemString
+    fun:gammu_create_data
+}
+{
+    python-gammu exceptions
+    Memcheck:Leak
+    fun:malloc
+    fun:PyObject_Malloc
+    fun:PyString_FromString
+    fun:gammu_create_data
 }
 {
     python-gammu exceptions

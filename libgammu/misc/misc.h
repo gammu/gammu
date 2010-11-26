@@ -40,6 +40,10 @@ typedef struct {
 	 * Number of currently allocated entries.
 	 */
 	int allocated;
+	/**
+	 * Storage for return value.
+	 */
+	char *retval;
 } GSM_CutLines;
 
 /**
@@ -54,7 +58,7 @@ void SplitLines(const char *message, const int messagesize, GSM_CutLines *lines,
  * @param lines Parsed lines information.
  * @param start Which line we want.
  */
-const char *GetLineString(const char *message, const GSM_CutLines *lines, int start);
+const char *GetLineString(const char *message, GSM_CutLines *lines, int start);
 
 /**
  * Returns line length.
