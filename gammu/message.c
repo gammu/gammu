@@ -28,6 +28,7 @@
 #include "../helper/cmdline.h"
 
 volatile gboolean 			wasincomingsms 		= FALSE;
+volatile int num_replies = 0;
 
 GSM_MultiSMSMessage		IncomingSMSData;
 
@@ -117,13 +118,15 @@ void IncomingUSSD(GSM_StateMachine *sm UNUSED, GSM_USSDMessage ussd, void *user_
 void IncomingUSSD2(GSM_StateMachine *sm, GSM_USSDMessage ussd, void * user_data)
 {
 	IncomingUSSD(sm, ussd, user_data);
-
-	gshutdown = TRUE;
+	num_replies++;
 }
 
 void GetUSSD(int argc UNUSED, char *argv[])
 {
 	GSM_Error error;
+	int last_replies;
+	time_t last_reply;
+
 	GSM_Init(TRUE);
 
 	signal(SIGINT, interrupt);
@@ -142,7 +145,22 @@ void GetUSSD(int argc UNUSED, char *argv[])
 	}
 	Print_Error(error);
 
-	while (!gshutdown) GSM_ReadDevice(gsm, FALSE);
+	num_replies = 0;
+	last_replies = 0;
+	last_reply = time(NULL);
+	while (!gshutdown) {
+		if (num_replies != last_replies) {
+			last_replies = num_replies;
+			last_reply = time(NULL);
+		} else if (num_replies == 0 && difftime(time(NULL), last_reply) > 60) {
+			/* Wait one minute for reply */
+			gshutdown = TRUE;
+		} else if (num_replies > 0 && difftime(time(NULL), last_reply) > 30) {
+			/* Wait for consequent replies for 30 seconds */
+			gshutdown = TRUE;
+		}
+		GSM_ReadDevice(gsm, FALSE);
+	}
 
 	error=GSM_SetIncomingUSSD(gsm, FALSE);
 	Print_Error(error);
