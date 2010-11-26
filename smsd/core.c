@@ -1700,7 +1700,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 
 	Config->running = TRUE;
 
-	Config->SendingSMSStatus = ERR_UNKNOWN;
+	Config->SendingSMSStatus = ERR_NONE;
 
 	while (!Config->shutdown) {
 		lastloop = time(NULL);
