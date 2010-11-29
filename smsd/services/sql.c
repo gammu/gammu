@@ -37,7 +37,7 @@ const char now_plus_freetds[] = "DATEADD('second', %d, CURRENT_TIMESTAMP)";
 const char now_plus_fallback[] = "NOW() + INTERVAL %d SECOND";
 
 /* configurable SQL queries */
-const char * SMSDSQL_queries[SQL_QUERY_LAST_NO];
+char * SMSDSQL_queries[SQL_QUERY_LAST_NO];
 
 static const char *SMSDSQL_NowPlus(GSM_SMSDConfig * Config, int seconds)
 {
@@ -322,8 +322,14 @@ static GSM_Error SMSDSQL_CheckTable(GSM_SMSDConfig * Config, const char *table)
 /* Disconnects from a database */
 static GSM_Error SMSDSQL_Free(GSM_SMSDConfig * Config)
 {
+	int i;
 	SMSD_Log(DEBUG_SQL, Config, "Disconnecting from SQL database.");
 	Config->db->Free(&Config->db->conn);
+	/* free configuration */
+	for(i = 0; i < SQL_QUERY_LAST_NO; i++){
+		free(SMSDSQL_queries[i]);
+		SMSDSQL_queries[i] = NULL;
+	}
 	return ERR_NONE;
 }
 
@@ -597,7 +603,7 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 	const char *q;
 	size_t udh_len;
 	unsigned int limit = 1;
-	SQL_Var vars[2];
+	SQL_Var vars[3];
 
 	/* Min. limit is 8 SMS, limit grows with higher loopsleep setting  Max. limit is 30 messages.*/
 	limit = Config->loopsleep>1 ? Config->loopsleep * 4 : 8;
@@ -918,7 +924,7 @@ GSM_Error SMSDSQL_option(GSM_SMSDConfig *Config, int optint, const char *option,
 	buffer = INI_GetValue(Config->smsdcfgfile, "sql", option, FALSE);
 	/* found? */
 	if (buffer != NULL){
-		SMSDSQL_queries[optint] = buffer;
+		SMSDSQL_queries[optint] = strdup(buffer); /* avoid to double free */
 		return ERR_NONE;
 	}
 
