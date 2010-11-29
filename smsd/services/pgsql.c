@@ -34,6 +34,8 @@ time_t SMSDPgSQL_GetDate(SQL_result rc, unsigned int field)
 	date = PQgetvalue(rc.pg.res, rc.pg.iter, field);
 	/* windows has not strptime() */
 	ret = sscanf(date, "%u-%u-%u %u:%u:%u", &t.tm_year, &t.tm_mon, &t.tm_mday, &t.tm_hour, &t.tm_min, &t.tm_sec);
+	t.tm_year -= 1900;
+	t.tm_mon--;
 	t.tm_isdst = -1;
 #ifdef HAVE_STRUCT_TM_TM_ZONE
 	t.tm_gmtoff = 0;
@@ -115,7 +117,7 @@ void SMSDPgSQL_FreeResult(SQL_result res)
 
 int SMSDPgSQL_NextRow(SQL_result *res)
 {
-	if(PQntuples(res->pg.res) < ++res->pg.iter)
+	if(PQntuples(res->pg.res) > ++(res->pg.iter))
 		return 1;
 	else
 		return 0;
