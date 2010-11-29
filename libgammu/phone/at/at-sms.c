@@ -559,7 +559,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 			GSM_SetDefaultReceivedSMSData(sms);
 			error = ATGEN_ParseReply(s,
 					GetLineString(msg.Buffer, &Priv->Lines, 2),
-					"+CMGR: @r, @p @d",
+					"+CMGR: @r, @p, @d",
 					buffer, sizeof(buffer), sms->Number, sizeof(sms->Number),
 					&sms->DateTime, sizeof(sms->DateTime));
 

@@ -110,7 +110,7 @@ msgstr "PILIHAN"
 #. type: Plain text
 #: docs/user/gammu.1:24
 msgid "Parameters before command configure gammu behaviour:"
-msgstr ""
+msgstr "Parameter sebelum perintah mengkonfigurasi perilaku gammu:"
 
 # type: Plain text
 #. type: Plain text
@@ -147,11 +147,10 @@ msgstr ""
 msgid "Commands"
 msgstr ""
 
-# type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:37
 msgid "Commands can be specified with or without leading --."
-msgstr ""
+msgstr "Perintah dapat diikuti dengan atau tanpa awalan --"
 
 #. type: SS
 #: docs/user/gammu.1:39
@@ -384,12 +383,11 @@ msgstr ""
 msgid "Unholds call."
 msgstr ""
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:120
 #, no-wrap
 msgid "SMS and EMS"
-msgstr ""
+msgstr "SMS dan EMS"
 
 # type: Plain text
 #. type: Plain text
@@ -2123,12 +2121,11 @@ msgid ""
 "substring lookup. You can interrupt searching by pressing Ctrl+C."
 msgstr ""
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:910
 #, no-wrap
 msgid "Filesystem"
-msgstr ""
+msgstr "File sistem"
 
 #. type: Plain text
 #: docs/user/gammu.1:916
@@ -2457,12 +2454,11 @@ msgstr ""
 msgid "B<setfileattrib>I< folderID [-system] [-readonly] [-hidden] [-protected]>"
 msgstr ""
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:1028
 #, no-wrap
 msgid "Logo and pictures"
-msgstr ""
+msgstr "Logo dan gambar"
 
 #. type: Plain text
 #: docs/user/gammu.1:1034
@@ -2689,12 +2685,11 @@ msgstr ""
 msgid "Sets wallpaper in phone."
 msgstr ""
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:1189
 #, no-wrap
 msgid "Ringtones"
-msgstr ""
+msgstr "Nada dering"
 
 #. type: Plain text
 #: docs/user/gammu.1:1194
@@ -2828,12 +2823,11 @@ msgid ""
 "will blink later in phone menus"
 msgstr ""
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:1340
 #, no-wrap
 msgid "Calendar notes"
-msgstr ""
+msgstr "Catatan kalender"
 
 #. type: Plain text
 #: docs/user/gammu.1:1344
@@ -2922,12 +2916,11 @@ msgstr ""
 msgid "    gammu savefile CALENDAR output.vcs myCalendar.backup 260\n"
 msgstr ""
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:1463
 #, no-wrap
 msgid "To do lists"
-msgstr ""
+msgstr "List pengerjaan"
 
 # type: TP
 #. type: TP
@@ -2987,12 +2980,11 @@ msgid ""
 "extension and file content, for output solely on extension)."
 msgstr ""
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:1586
 #, no-wrap
 msgid "Notes"
-msgstr ""
+msgstr "Catatan"
 
 # type: TP
 #. type: TP
@@ -3013,12 +3005,11 @@ msgid ""
 "phones even if they have notes inside phone."
 msgstr ""
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:1595
 #, no-wrap
 msgid "Date, time and alarms"
-msgstr ""
+msgstr "Tanggal, waktu dan alarm"
 
 # type: TP
 #. type: TP
@@ -3083,19 +3074,17 @@ msgid ""
 "phone and use Gammu. See gammurc(5) for details."
 msgstr ""
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:1618
 #, no-wrap
 msgid "Categories"
-msgstr ""
+msgstr "Kategori"
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:1706
 #, no-wrap
 msgid "Backing up and restoring"
-msgstr ""
+msgstr "Backing up dan restoring"
 
 # type: TP
 #. type: TP
@@ -3109,12 +3098,11 @@ msgstr ""
 msgid "Converts backup format supported by Gammu to vBookmark file."
 msgstr ""
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:1832
 #, no-wrap
 msgid "Nokia specific"
-msgstr ""
+msgstr "Spesifik Nokia"
 
 # type: TP
 #. type: TP
@@ -3448,12 +3436,11 @@ msgstr ""
 msgid "B<nokiavibratest>"
 msgstr ""
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:2022
 #, no-wrap
 msgid "Siemens specific"
-msgstr ""
+msgstr "Spesifik Siemens"
 
 #. type: TP
 #: docs/user/gammu.1:2023 docs/user/gammu.1:2078
@@ -3527,12 +3514,11 @@ msgstr ""
 msgid "B<setautonetworklogin>"
 msgstr ""
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:2090
 #, no-wrap
 msgid "WAP settings and bookmarks"
-msgstr ""
+msgstr "Pengaturan WAP dan bookmark"
 
 # type: TP
 #. type: TP
@@ -3587,12 +3573,11 @@ msgstr ""
 msgid "Get WAP settings from phone."
 msgstr ""
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:2244
 #, no-wrap
 msgid "MMS and MMS settings"
-msgstr ""
+msgstr "MMS dan pengaturan MMS"
 
 # type: TP
 #. type: TP
@@ -3629,19 +3614,17 @@ msgstr ""
 msgid "B<readmmsfile>I< file [-save]>"
 msgstr ""
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:2299
 #, no-wrap
 msgid "Phone tests"
-msgstr ""
+msgstr "Tes telepon"
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:2323
 #, no-wrap
 msgid "FM radio"
-msgstr ""
+msgstr "Radio FM"
 
 # type: TP
 #. type: TP
@@ -3656,12 +3639,11 @@ msgstr ""
 msgid "Show info about FM stations in phone"
 msgstr ""
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:2403
 #, no-wrap
 msgid "Phone information"
-msgstr ""
+msgstr "Informasi telepon"
 
 #. type: TP
 #: docs/user/gammu.1:2404
@@ -3721,12 +3703,11 @@ msgstr ""
 msgid "Show the most important phone data."
 msgstr ""
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:2435
 #, no-wrap
 msgid "Phone settings"
-msgstr ""
+msgstr "Pengaturan telepon"
 
 # type: TP
 #. type: TP
@@ -3843,12 +3824,11 @@ msgstr ""
 msgid "* clear date/time"
 msgstr ""
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:2503
 #, no-wrap
 msgid "Dumps decoding"
-msgstr ""
+msgstr "Tumpukan sedang didecode"
 
 # type: TP
 #. type: TP
@@ -3884,12 +3864,11 @@ msgid ""
 "sniffs. See I</docs/develop/develop.txt> for more details."
 msgstr ""
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:2519
 #, no-wrap
 msgid "Functions that don't fit elsewhere"
-msgstr ""
+msgstr "Fungsi yang tidak sesuai dimana pun"
 
 # type: TP
 #. type: TP
@@ -4026,12 +4005,11 @@ msgid ""
 "connection, this is a convenient way to find working setup for Gammu."
 msgstr ""
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:2638
 #, no-wrap
 msgid "Gammu information"
-msgstr ""
+msgstr "Informasi gammu"
 
 #. type: TP
 #: docs/user/gammu.1:2639

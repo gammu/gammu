@@ -856,11 +856,15 @@ GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned c
 
 	/* Strip possible leading comma */
 	if (*pos == ',') pos++;
+	if (input[0] == 0) return ERR_EMPTY;
 	if (input[strlen(pos) - 1] == ',') input[strlen(pos) - 1] = 0;
+	if (input[0] == 0) return ERR_EMPTY;
 
 	/* Strip possible quotes */
 	if (*pos == '"') pos++;
+	if (input[0] == 0) return ERR_EMPTY;
 	if (input[strlen(pos) - 1] == '"') input[strlen(pos) - 1] = 0;
+	if (input[0] == 0) return ERR_EMPTY;
 
 	/* Convert to normal charset */
 	error = ATGEN_DecodeText(s,
@@ -1198,7 +1202,7 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 						length = ATGEN_GrabString(s, inp, &buffer);
 						/* Fix up reply from broken phones which split
 						 * date to two strings */
-						if ( *(inp + length) == ',' &&
+						if (length > 0 &&  *(inp + length) == ',' &&
 								strchr(buffer, ',') == NULL
 								) {
 							length++;
@@ -1220,6 +1224,9 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 								goto end;
 							}
 							inp += length;
+						} else {
+							free(buffer);
+							buffer = NULL;
 						}
 						break;
 					case '@':
@@ -5059,8 +5066,6 @@ GSM_Error ATGEN_Terminate(GSM_StateMachine *s)
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
 	FreeLines(&Priv->Lines);
-	/* Free static buffer inside GetLineString */
-	GetLineString(NULL, NULL, 0);
 	free(Priv->file.Buffer);
 	Priv->file.Buffer = NULL;
 	free(Priv->SMSCache);
