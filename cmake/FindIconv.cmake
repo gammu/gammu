@@ -14,6 +14,20 @@ IF (ICONV_INCLUDE_DIR AND ICONV_LIBRARIES)
   SET(ICONV_FIND_QUIETLY TRUE)
 ENDIF (ICONV_INCLUDE_DIR AND ICONV_LIBRARIES)
 
+IF(APPLE)
+    FIND_PATH(ICONV_INCLUDE_DIR iconv.h
+             PATHS
+             /opt/local/include/
+             NO_CMAKE_SYSTEM_PATH
+    )
+
+    FIND_LIBRARY(ICONV_LIBRARIES NAMES iconv libiconv c
+             PATHS
+             /opt/local/lib/
+             NO_CMAKE_SYSTEM_PATH
+    )
+ENDIF(APPLE)
+
 FIND_PATH(ICONV_INCLUDE_DIR iconv.h PATHS /opt/local/include /sw/include)
 
 string(REGEX REPLACE "(.*)/include/?" "\\1" ICONV_INCLUDE_BASE_DIR "${ICONV_INCLUDE_DIR}")
