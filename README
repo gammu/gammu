@@ -19,6 +19,9 @@ More information
 On <http://www.gammu.org/> there is wiki and bug tracker, current Gammu
 maintainer keeps information available on <http://wammu.eu/gammu/>.
 
+There is also Gammu manual available in docs/manual. You can build HTML
+version of it using make manual-html.
+
 
 Downloading
 ===========
