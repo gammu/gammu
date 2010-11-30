@@ -60,6 +60,17 @@ docs directory
 Documentation for both end users and developers as well as SQL scripts
 for creating SMSD database.
 
+``config``
+    configuration file samples
+``examples``
+    examples using libGammu
+``manual``
+    sources of The Gammu Manual which you are reading
+``sql``
+    SQL scripts to create table structures for :ref:`smsd`
+``user``
+    user documentation like man pages
+
 admin directory
 ---------------
 

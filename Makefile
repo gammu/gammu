@@ -27,6 +27,24 @@ pydoc: $(BUILD_DIR)
 pydoc-html: $(BUILD_DIR)
 	$(MAKE) -C $(BUILD_DIR) pydoc-html
 
+manual-html: $(BUILD_DIR)
+	$(MAKE) -C $(BUILD_DIR) manual-html
+
+manual-ps: $(BUILD_DIR)
+	$(MAKE) -C $(BUILD_DIR) manual-ps
+
+manual-latex: $(BUILD_DIR)
+	$(MAKE) -C $(BUILD_DIR) manual-latex
+
+manual-man: $(BUILD_DIR)
+	$(MAKE) -C $(BUILD_DIR) manual-man
+
+manual-htmlhelp: $(BUILD_DIR)
+	$(MAKE) -C $(BUILD_DIR) manual-htmlhelp
+
+manual-pdf: $(BUILD_DIR)
+	$(MAKE) -C $(BUILD_DIR) manual-pdf
+
 cppcheck: $(BUILD_DIR)
 	$(MAKE) -C $(BUILD_DIR) cppcheck
 

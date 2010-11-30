@@ -12,4 +12,5 @@ Gammu project
     localization
     testing
     coding-style
+    documentation
     directories
