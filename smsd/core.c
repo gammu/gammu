@@ -49,14 +49,8 @@
 #include "core.h"
 #include "services/files.h"
 #include "services/null.h"
-#ifdef HAVE_MYSQL_MYSQL_H
-#  include "services/mysql.h"
-#endif
-#ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
-#  include "services/pgsql.h"
-#endif
-#ifdef LIBDBI_FOUND
-#  include "services/dbi.h"
+#if defined(HAVE_MYSQL_MYSQL_H) || defined(HAVE_POSTGRESQL_LIBPQ_FE_H) || defined(LIBDBI_FOUND)
+#include "services/sql.h"
 #endif
 
 #ifdef HAVE_WINDOWS_EVENT_LOG
@@ -403,30 +397,42 @@ GSM_Error SMSGetService(GSM_SMSDConfig *Config)
 	} else if (strcasecmp(Config->ServiceName, "NULL") == 0) {
 		SMSD_Log(DEBUG_NOTICE, Config, "Using NULL service");
 		Config->Service = &SMSDNull;
-	} else if (strcasecmp(Config->ServiceName, "DBI") == 0) {
+#if defined(LIBDBI_FOUND) || defined(HAVE_MYSQL_MYSQL_H) || defined(HAVE_POSTGRESQL_LIBPQ_FE_H)
+	} else if (strcasecmp(Config->ServiceName, "SQL") == 0) {
+		SMSD_Log(DEBUG_NOTICE, Config, "Using SQL service");
+		Config->Service = &SMSDSQL;
+		Config->driver = INI_GetValue(Config->smsdcfgfile, "smsd", "driver", FALSE);
+#else
+		SMSD_Log(DEBUG_ERROR, Config, "SQL service was not compiled in!");
+		return ERR_DISABLED;
+#endif
+	} else if(!strcasecmp("mysql", Config->ServiceName) || !strcasecmp("pgsql", Config->ServiceName) || !strcasecmp("dbi", Config->ServiceName)) {
+		SMSD_Log(DEBUG_ERROR, Config, "%s service is deprecated. Please use SQL service with correct driver.", Config->ServiceName);
+		if (strcasecmp(Config->ServiceName, "DBI") == 0) {
 #ifdef LIBDBI_FOUND
-		SMSD_Log(DEBUG_NOTICE, Config, "Using DBI service");
-		Config->Service = &SMSDDBI;
+			Config->Service = &SMSDSQL;
+			Config->driver = INI_GetValue(Config->smsdcfgfile, "smsd", "driver", FALSE);
 #else
-		SMSD_Log(DEBUG_ERROR, Config, "DBI service was not compiled in!");
-		return ERR_DISABLED;
+			SMSD_Log(DEBUG_ERROR, Config, "DBI service was not compiled in!");
+			return ERR_DISABLED;
 #endif
-	} else if (strcasecmp(Config->ServiceName, "MYSQL") == 0) {
+		} else if (strcasecmp(Config->ServiceName, "MYSQL") == 0) {
 #ifdef HAVE_MYSQL_MYSQL_H
-		SMSD_Log(DEBUG_NOTICE, Config, "Using MYSQL service");
-		Config->Service = &SMSDMySQL;
+			Config->Service = &SMSDSQL;
+			Config->driver = "native_mysql";
 #else
-		SMSD_Log(DEBUG_ERROR, Config, "MYSQL service was not compiled in!");
-		return ERR_DISABLED;
+			SMSD_Log(DEBUG_ERROR, Config, "MYSQL service was not compiled in!");
+			return ERR_DISABLED;
 #endif
-	} else if (strcasecmp(Config->ServiceName, "PGSQL") == 0) {
+		} else if (strcasecmp(Config->ServiceName, "PGSQL") == 0) {
 #ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
-		SMSD_Log(DEBUG_NOTICE, Config, "Using PGSQL service");
-		Config->Service = &SMSDPgSQL;
+			Config->Service = &SMSDSQL;
+			Config->driver = "native_pgsql";
 #else
-		SMSD_Log(DEBUG_ERROR, Config, "PGSQL service was not compiled in!");
-		return ERR_DISABLED;
+			SMSD_Log(DEBUG_ERROR, Config, "PGSQL service was not compiled in!");
+			return ERR_DISABLED;
 #endif
+		}
 	} else {
 		SMSD_Log(DEBUG_ERROR, Config, "Unknown SMSD service type: \"%s\"", Config->ServiceName);
 		return ERR_UNCONFIGURED;
@@ -1907,40 +1913,6 @@ GSM_Error SMSD_GetStatus(GSM_SMSDConfig *Config, GSM_SMSDStatus *status)
 	if (error != ERR_NONE) {
 		return error;
 	}
-	return ERR_NONE;
-}
-
-/**
- * Reads common options for database backends.
- */
-GSM_Error SMSD_ReadDatabaseConfiguration(GSM_SMSDConfig *Config)
-{
-#if defined(HAVE_MYSQL_MYSQL_H) || defined(HAVE_POSTGRESQL_LIBPQ_FE_H) || defined(LIBDBI_FOUND)
-	Config->user = INI_GetValue(Config->smsdcfgfile, "smsd", "user", FALSE);
-	if (Config->user == NULL) {
-		Config->user="root";
-	}
-
-	Config->password = INI_GetValue(Config->smsdcfgfile, "smsd", "password", FALSE);
-	if (Config->password == NULL) {
-		Config->password="";
-	}
-
-	Config->host = INI_GetValue(Config->smsdcfgfile, "smsd", "host", FALSE);
-	if (Config->host == NULL) {
-		/* Backward compatibility */
-		Config->host = INI_GetValue(Config->smsdcfgfile, "smsd", "pc", FALSE);
-	}
-	if (Config->host == NULL) {
-		Config->host="localhost";
-	}
-
-	Config->database = INI_GetValue(Config->smsdcfgfile, "smsd", "database", FALSE);
-	if (Config->database == NULL) {
-		Config->database="sms";
-	}
-#endif
-
 	return ERR_NONE;
 }
 

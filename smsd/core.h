@@ -3,24 +3,12 @@
 #include <gammu.h>
 #include <gammu-smsd.h>
 
-#ifdef HAVE_MYSQL_MYSQL_H
-#ifdef WIN32
-#  include <winsock2.h>
-#endif
-#include <mysql.h>
-#include <mysqld_error.h>
-#endif
-
-#ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
-#  include <libpq-fe.h>
-#endif
-
-#ifdef LIBDBI_FOUND
-#include <dbi/dbi.h>
-#endif
-
 #ifdef HAVE_SHM
 #include <sys/types.h>
+#endif
+/* definition of dbobject */
+#if defined(HAVE_MYSQL_MYSQL_H) || defined(HAVE_POSTGRESQL_LIBPQ_FE_H) || defined(LIBDBI_FOUND)
+#include "services/sql-core.h"
 #endif
 
 #define SMSD_SHM_KEY (0xface)
@@ -145,20 +133,8 @@ struct _GSM_SMSDConfig {
 	const char	*host;
         char 		DT[25];
 	char		CreatorID[200];
-#endif
-
-#ifdef HAVE_MYSQL_MYSQL_H
-       /* MySQL db connection */
-       MYSQL DBConnMySQL;
-#endif
-
-#ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
-       /* PostgreSQL db connection */
-       PGconn *DBConnPgSQL;
-#endif
-
-#ifdef LIBDBI_FOUND
-	dbi_conn DBConnDBI;
+	/* database data structure */
+	struct GSM_SMSDdbobj *db;
 #endif
 
 	INI_Section 		*smsdcfgfile;
@@ -219,7 +195,6 @@ extern GSM_Error SMSD_NoneFunction		(void);
 extern GSM_Error SMSD_EmptyFunction		(void);
 extern GSM_Error SMSD_NotImplementedFunction	(void);
 extern GSM_Error SMSD_NotSupportedFunction	(void);
-extern GSM_Error SMSD_ReadDatabaseConfiguration(GSM_SMSDConfig *Config);
 
 
 #define NONEFUNCTION 	(void *) SMSD_NoneFunction

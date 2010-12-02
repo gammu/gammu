@@ -10,6 +10,7 @@ outgoing ones).
     :maxdepth: 2
 
     files
+    sql
     mysql
     pgsql
     dbi
