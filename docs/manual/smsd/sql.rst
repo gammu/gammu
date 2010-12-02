@@ -19,7 +19,7 @@ Common for all backends:
 * :config:option:`Password` - password for connecting to database
 * :config:option:`Host` - database host
 * :config:option:`Database` - database name
-* :config:option:`Driver` - native_mysql, native_pgsql or DBI one
+* :config:option:`Driver` - ``native_mysql``, ``native_pgsql`` or DBI one
 
 Specific for DBI:
 
