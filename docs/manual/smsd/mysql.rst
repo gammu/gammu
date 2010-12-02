@@ -8,3 +8,5 @@ defined by configuration (see :ref:`gammu-smsdrc` for description of configurati
 options).
 
 For tables description see :ref:`gammu-smsd-tables`.
+
+This backend is based on :ref:`gammu-smsd-sql`.

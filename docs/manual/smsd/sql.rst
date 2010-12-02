@@ -1,3 +1,4 @@
+.. _gammu-smsd-sql:
 
 SQL Service
 ===========
