@@ -54,14 +54,28 @@ General parameters of SMS daemon
         stores messages in files, see :ref:`gammu-smsd-files` for details
     ``NULL``
         does not store messages at all, see :ref:`gammu-smsd-null` for details
+    ``SQL``
+        stores messages in SQL database, see :ref:`gammu-smsd-sql` for details
     ``MYSQL``
+        synonym for :config:option:`Service` = ``SQL`` and :config:option:`Driver` = ``native_mysql``
+
         stores messages in MySQL database, see :ref:`gammu-smsd-mysql` for details
+
+        .. deprecated:: 1.28.93
     ``PGSQL``
+        synonym for :config:option:`Service` = ``SQL`` and :config:option:`Driver` = ``native_mysql``
+
         stores messages in PostgreSQL database, see :ref:`gammu-smsd-pgsql` for details
+
+        .. deprecated:: 1.28.93
     ``DBI``
+        synonym for :config:option:`Service` = ``SQL`` and :config:option:`Driver` = DBI driver
+
         stores messages in any database supported by libdbi, this includes
         MSSQL, MySQL, PostgreSQL or SQLite databases, see :ref:`gammu-smsd-dbi` for
         details
+
+        .. deprecated:: 1.28.93
 
     .. note::
         
@@ -359,7 +373,11 @@ supports same options for configuring connection to a database:
 
 .. config:option:: Driver
 
-    DBI driver to use. Depends on what DBI drivers you have installed, DBI
+    SQL driver to use. 
+
+    Can be either one of native drivers (``native_mysql`` or ``native_pgsql``) or DBI driver.
+    
+    Depends on what DBI drivers you have installed, DBI
     supports: ``mysql``, ``freetds`` (provides access to MS SQL Server and
     Sybase), ``pgsql``, ``sqlite``, ``sqlite3``, ``firebird`` and ``ingres``,
     ``msql`` and ``oracle`` drivers are under development.

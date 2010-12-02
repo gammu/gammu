@@ -4,26 +4,26 @@ SQL Service
 ===========
 
 SQL service stores all its data in database. It can use one of these SQL backends 
-(configuration option driver in smsd section):
+(configuration option :config:option:`Driver` in smsd section):
 
-* native_mysql
-* native_pgsql
+* ``native_mysql``
+* ``native_pgsql``
 * drivers supported by DBI
 
 SQL connection parameters
 -------------------------
 Common for all queries:
 
-* user - user connecting to database
-* password - password for connecting to database
-* host - database host
-* database - database name
-* driver - native_mysql, native_pgsql or DBI one
+* :config:option:`User` - user connecting to database
+* :config:option:`Password` - password for connecting to database
+* :config:option:`Host` - database host
+* :config:option:`Database` - database name
+* :config:option:`Driver` - native_mysql, native_pgsql or DBI one
 
 Specific for DBI:
 
-* driverspath - path to DBI drivers
-* dbdir sqlite/sqlite3 directory with database
+* :config:option:`DriversPath` - path to DBI drivers
+* :config:option:`DBDir` - sqlite/sqlite3 directory with database
 
 SQL Queries
 -----------
