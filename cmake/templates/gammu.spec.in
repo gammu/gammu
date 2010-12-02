@@ -365,6 +365,8 @@ fi
 %_mandir/man1/gammu-config.1*
 %_mandir/man1/jadmaker.1*
 %_mandir/man5/gammurc.5*
+%_mandir/man5/gammu-backup.5*
+%_mandir/man5/gammu-smsbackup.5*
 %lang(cs) %dir %_mandir/cs
 %lang(cs) %dir %_mandir/cs/man5
 %lang(cs) %dir %_mandir/cs/man1
