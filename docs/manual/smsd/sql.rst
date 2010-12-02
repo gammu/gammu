@@ -5,29 +5,34 @@ SQL Service
 
 SQL service stores all its data in database. It can use one of these SQL backends 
 (configuration option driver in smsd section):
- * native_mysql
- * native_pgsql
- * drivers supported by DBI
+
+* native_mysql
+* native_pgsql
+* drivers supported by DBI
 
 SQL connection parameters
 -------------------------
 Common for all queries:
- * user - user connecting to database
- * password - password for connecting to database
- * host - database host
- * database - database name
- * driver - native_mysql, native_pgsql or DBI one
+
+* user - user connecting to database
+* password - password for connecting to database
+* host - database host
+* database - database name
+* driver - native_mysql, native_pgsql or DBI one
+
 Specific for DBI:
- * driverspath - path to DBI drivers
- * dbdir sqlite/sqlite3 directory with database
+
+* driverspath - path to DBI drivers
+* dbdir sqlite/sqlite3 directory with database
 
 SQL Queries
 -----------
 Almost all queries are configurable. You can edit it in [sql] section. There are variables
 used in SQL queries. We can separate it to three groups:
- * phone specific, which can be used in every query
- * SMS specific, which can be used in queries which works with SMS messages
- * query specific, which are numeric and are specific only for a few queries
+
+* phone specific, which can be used in every query
+* SMS specific, which can be used in queries which works with SMS messages
+* query specific, which are numeric and are specific only for a few queries
 
 +-----------+-----------------+------------------------------------------------------------------+
 | Parameter |	SMS Specific? |	Description				       	                 |
@@ -112,24 +117,24 @@ Configurable queries
 --------------------
 All configurable queries can be set in [sql] section. sequence of rows in selects are mandatory.
 
- * delete_phone - deletes phone from database
- * insert_phone - inserts phone to database
- * save_inbox_sms_select - select message for update delivery status
- * save_inbox_sms_update_delivered - update message delivery status if message was delivered
- * save_inbox_sms_update - update message if there is an delivery error
- * save_inbox_sms_insert - insert received message
- * update_received - update statistics after receiving message
- * refresh_send_status - update messages in outbox
- * find_outbox_sms_id - find sms messages for sending
- * find_outbox_body - select body of message
- * find_outbox_multipart - select remaining parts of sms message
- * delete_outbox - remove messages from outbox after threir successful send
- * delete_outbox_multipart - remove messages from outbox_multipart after threir successful send
- * create_outbox - create message (insert to outbox)
- * create_outbox_multipart - create message remaining parts
- * add_sent_info - insert to sentitems 
- * update_sent - update sent statistics after sending message
- * refresh_phone_status - update phone status (battery, signal)
+* delete_phone - deletes phone from database
+* insert_phone - inserts phone to database
+* save_inbox_sms_select - select message for update delivery status
+* save_inbox_sms_update_delivered - update message delivery status if message was delivered
+* save_inbox_sms_update - update message if there is an delivery error
+* save_inbox_sms_insert - insert received message
+* update_received - update statistics after receiving message
+* refresh_send_status - update messages in outbox
+* find_outbox_sms_id - find sms messages for sending
+* find_outbox_body - select body of message
+* find_outbox_multipart - select remaining parts of sms message
+* delete_outbox - remove messages from outbox after threir successful send
+* delete_outbox_multipart - remove messages from outbox_multipart after threir successful send
+* create_outbox - create message (insert to outbox)
+* create_outbox_multipart - create message remaining parts
+* add_sent_info - insert to sentitems 
+* update_sent - update sent statistics after sending message
+* refresh_phone_status - update phone status (battery, signal)
 
 Default SQL queries
 -------------------
