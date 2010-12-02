@@ -24,11 +24,10 @@
 #include <assert.h>
 #ifdef WIN32
 #include <windows.h>
-#define strncasecmp strnicmp
-#define strcasecmp stricmp
 #endif
 
 #include "../core.h"
+#include "../../helper/string.h"
 
 const char now_plus_mysql[] = "(NOW() + INTERVAL %d SECOND) + 0";
 const char now_plus_pgsql[] = "now() + interval '%d seconds'";
@@ -95,7 +94,7 @@ static GSM_Error SMSDSQL_Query(GSM_SMSDConfig * Config, const char *query, SQL_r
 		error = db->Query(Config, query, res);
 		if (error == SQL_OK)
 			return ERR_NONE;
-		
+
 		if (error != SQL_TIMEOUT){
 			SMSD_Log(DEBUG_INFO, Config, "SQL failure: %s", db->error);
 			sleep(attempts * attempts);
@@ -132,14 +131,14 @@ void SMSDSQL_Time2String(struct GSM_SMSDdbobj *db, time_t timestamp, char *stati
 	}
 }
 
-static GSM_Error SMSDSQL_NamedQuery(GSM_SMSDConfig * Config, const char *sql_query, GSM_SMSMessage *sms, 
+static GSM_Error SMSDSQL_NamedQuery(GSM_SMSDConfig * Config, const char *sql_query, GSM_SMSMessage *sms,
 	const SQL_Var *params, SQL_result * res)
 {
 	char buff[65536], *ptr, c, static_buff[8192];
 	char *buffer2, *end;
 	const char *to_print, *q = sql_query;
 	int int_to_print;
-	int numeric; 
+	int numeric;
 	int n, argc = 0;
 	struct GSM_SMSDdbobj *db = Config->db;
 
@@ -148,7 +147,7 @@ static GSM_Error SMSDSQL_NamedQuery(GSM_SMSDConfig * Config, const char *sql_que
 	}
 
 	ptr = buff;
-	
+
 	do {
 		if (*q != '%') {
 			*ptr++ = *q;
@@ -156,14 +155,14 @@ static GSM_Error SMSDSQL_NamedQuery(GSM_SMSDConfig * Config, const char *sql_que
 		}
 		c = *(++q);
 		if( c >= '0' && c <= '9'){
-			n = strtoul(q, &end, 10) - 1; 
+			n = strtoul(q, &end, 10) - 1;
 			if (n < argc && n >= 0) {
 				switch(params[n].type){
 					case SQL_TYPE_INT:
 						ptr += sprintf(ptr, "%i", params[n].v.i);
 						break;
 					case SQL_TYPE_STRING:
-						buffer2 = db->QuoteString(&db->conn, params[n].v.s);	 
+						buffer2 = db->QuoteString(&db->conn, params[n].v.s);
 						memcpy(ptr, buffer2, strlen(buffer2));
 						ptr += strlen(buffer2);
 						free(buffer2);
@@ -177,7 +176,7 @@ static GSM_Error SMSDSQL_NamedQuery(GSM_SMSDConfig * Config, const char *sql_que
 				SMSD_Log(DEBUG_ERROR, Config, "SQL: wrong number of parameter: %i (max %i) in query: `%s`", n+1, argc, sql_query);
 				return ERR_UNKNOWN;
 			}
-			q = end - 1;	
+			q = end - 1;
 			continue;
 		}
 		numeric = 0;
@@ -276,7 +275,7 @@ static GSM_Error SMSDSQL_NamedQuery(GSM_SMSDConfig * Config, const char *sql_que
 						default:
 							SMSD_Log(DEBUG_ERROR, Config, "SQL: uexpected char '%c' in query: %s", c, sql_query);
 							return ERR_UNKNOWN;
-						
+
 					} /* end of switch */
 				} else {
 					SMSD_Log(DEBUG_ERROR, Config, "Syntax error in query.. uexpected char '%c' in query: %s", c, sql_query);
@@ -287,7 +286,7 @@ static GSM_Error SMSDSQL_NamedQuery(GSM_SMSDConfig * Config, const char *sql_que
 		if (numeric) {
 			ptr += sprintf(ptr, "%i", int_to_print);
 		} else if (to_print != NULL) {
-			buffer2 = db->QuoteString(&db->conn, to_print);	 
+			buffer2 = db->QuoteString(&db->conn, to_print);
 			memcpy(ptr, buffer2, strlen(buffer2));
 			ptr += strlen(buffer2);
 			free(buffer2);
@@ -298,7 +297,7 @@ static GSM_Error SMSDSQL_NamedQuery(GSM_SMSDConfig * Config, const char *sql_que
 	} while (*(++q) != '\0');
 	*ptr = '\0';
 	return SMSDSQL_Query(Config, buff, res);
-	
+
 }
 
 static GSM_Error SMSDSQL_CheckTable(GSM_SMSDConfig * Config, const char *table)
@@ -340,7 +339,7 @@ static GSM_Error SMSDSQL_Init(GSM_SMSDConfig * Config)
 	int version;
 	GSM_Error error;
 	struct GSM_SMSDdbobj *db;
-	
+
 #ifdef WIN32
 	_tzset();
 #else
@@ -488,7 +487,7 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 				} else {
 					q = SMSDSQL_queries[SQL_QUERY_SAVE_INBOX_SMS_UPDATE];
 				}
-				
+
 				if (!strcmp(smstext, "Delivered")) {
 					status = "DeliveryOK";
 				} else if (!strcmp(smstext, "Failed")) {
@@ -519,7 +518,7 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 
 		if (sms->SMS[i].PDU != SMS_Deliver)
 			continue;
-		
+
 		if (SMSDSQL_NamedQuery(Config, SMSDSQL_queries[SQL_QUERY_SAVE_INBOX_SMS_INSERT], &sms->SMS[i], NULL, &Res) != ERR_NONE) {
 			SMSD_Log(DEBUG_INFO, Config, "Error writing to database (%s)", __FUNCTION__);
 			return ERR_UNKNOWN;
@@ -567,7 +566,7 @@ static GSM_Error SMSDSQL_RefreshSendStatus(GSM_SMSDConfig * Config, char *ID)
 		{SQL_TYPE_NONE, {NULL}}};
 
 	locktime = Config->loopsleep * 8; /* reserve 8 sec per message */
-	locktime = locktime < 60 ? 60 : locktime; /* Minimum time reserve is 60 sec */ 
+	locktime = locktime < 60 ? 60 : locktime; /* Minimum time reserve is 60 sec */
 
 	if (SMSDSQL_NamedQuery(Config, SMSDSQL_queries[SQL_QUERY_REFRESH_SEND_STATUS], NULL, vars, &Res) != ERR_NONE) {
 		SMSD_Log(DEBUG_INFO, Config, "Error writing to database (%s)", __FUNCTION__);
@@ -783,7 +782,7 @@ static GSM_Error SMSDSQL_CreateOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConf
 	SQL_Var vars[6];
 	struct GSM_SMSDdbobj *db = Config->db;
 	const char *report, *multipart, *q;
-		
+
 	sprintf(creator, "Gammu %s",VERSION); /* %1 */
 	multipart = (sms->Number == 1) ? "FALSE" : "TRUE"; /* %3 */
 
@@ -871,7 +870,7 @@ static GSM_Error SMSDSQL_AddSentSMSInfo(GSM_MultiSMSMessage * sms, GSM_SMSDConfi
 	vars[4].type = SQL_TYPE_STRING;
 	vars[4].v.s = Config->DT;
 	vars[5].type = SQL_TYPE_NONE;
-	
+
 	if (SMSDSQL_NamedQuery(Config, SMSDSQL_queries[SQL_QUERY_ADD_SENT_INFO], &sms->SMS[Part - 1], vars, &Res) != ERR_NONE) {
 		SMSD_Log(DEBUG_INFO, Config, "Error writing to database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
@@ -905,7 +904,7 @@ static GSM_Error SMSDSQL_RefreshPhoneStatus(GSM_SMSDConfig * Config)
 	return ERR_NONE;
 }
 
-/* 
+/*
  * better strcat... shows where is the bug
  */
 #define STRCAT_MAX 32
@@ -937,12 +936,12 @@ GSM_Error SMSDSQL_option(GSM_SMSDConfig *Config, int optint, const char *option,
 		to_alloc += len[i];
 	}
 	va_end(ap);
-	
+
 	if (i == STRCAT_MAX) {
 		SMSD_Log(DEBUG_ERROR, Config, "STRCAT_MAX too small.. consider increase this value for option %s", option);
 		return ERR_UNKNOWN;
 	}
-	
+
 	buffer = malloc(to_alloc+1);
 	if (buffer == NULL){
 		SMSD_Log(DEBUG_ERROR, Config, "Insufficient memory problem for option %s", option);
@@ -965,7 +964,7 @@ GSM_Error SMSDSQL_option(GSM_SMSDConfig *Config, int optint, const char *option,
 GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 {
 	int locktime;
-	
+
 	Config->user = INI_GetValue(Config->smsdcfgfile, "smsd", "user", FALSE);
 	if (Config->user == NULL) {
 		Config->user="root";
@@ -989,9 +988,9 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 	if (Config->database == NULL) {
 		Config->database="sms";
 	}
-	
+
 	Config->driverspath = INI_GetValue(Config->smsdcfgfile, "smsd", "driverspath", FALSE);
-	
+
 	Config->dbdir = INI_GetValue(Config->smsdcfgfile, "smsd", "dbdir", FALSE);
 
 	if (Config->driver == NULL) {
@@ -1002,7 +1001,7 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 	Config->db = NULL;
 #ifdef HAVE_MYSQL_MYSQL_H
 	if (!strcasecmp(Config->driver, "native_mysql"))
-		Config->db = &SMSDMySQL; 
+		Config->db = &SMSDMySQL;
 #endif
 #ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
 	if (!strcasecmp(Config->driver, "native_pgsql"))
@@ -1016,16 +1015,16 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 		return ERR_UNKNOWN;
 #endif
 	}
-		
+
 	locktime = Config->loopsleep * 8; /* reserve 8 sec per message */
-	locktime = locktime < 60 ? 60 : locktime; /* Minimum time reserve is 60 sec */ 
-	
-	if (SMSDSQL_option(Config, SQL_QUERY_DELETE_PHONE, "delete_phone", 
+	locktime = locktime < 60 ? 60 : locktime; /* Minimum time reserve is 60 sec */
+
+	if (SMSDSQL_option(Config, SQL_QUERY_DELETE_PHONE, "delete_phone",
 		"DELETE FROM phones WHERE IMEI = %I", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
-	
-	if (SMSDSQL_option(Config, SQL_QUERY_INSERT_PHONE, "insert_phone", 
+
+	if (SMSDSQL_option(Config, SQL_QUERY_INSERT_PHONE, "insert_phone",
 		"INSERT INTO phones (IMEI, ID, Send, Receive, InsertIntoDB, "
 			"TimeOut, Client, Battery, Signal) VALUES (%I, %P, %1, %2, ",
 			SMSDSQL_Now(Config),
@@ -1035,38 +1034,38 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 		return ERR_UNKNOWN;
 	}
 
-	if (SMSDSQL_option(Config, SQL_QUERY_SAVE_INBOX_SMS_SELECT, "save_inbox_sms_select", 
+	if (SMSDSQL_option(Config, SQL_QUERY_SAVE_INBOX_SMS_SELECT, "save_inbox_sms_select",
 		"SELECT ID, Status, SendingDateTime, DeliveryDateTime, SMSCNumber "
 			"FROM sentitems WHERE "
 			"DeliveryDateTime IS NULL AND "
 			"SenderID = %P AND TPMR = %t AND DestinationNumber = %R", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
-	
-	if (SMSDSQL_option(Config, SQL_QUERY_SAVE_INBOX_SMS_UPDATE_DELIVERED, "save_inbox_sms_update_delivered", 
-		"UPDATE sentitems " 
+
+	if (SMSDSQL_option(Config, SQL_QUERY_SAVE_INBOX_SMS_UPDATE_DELIVERED, "save_inbox_sms_update_delivered",
+		"UPDATE sentitems "
 			"SET DeliveryDateTime = %C, Status = %1, StatusError = %e WHERE ID = %2 AND TPMR = %t", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
-	
-	if (SMSDSQL_option(Config, SQL_QUERY_SAVE_INBOX_SMS_UPDATE, "save_inbox_sms_update", 
+
+	if (SMSDSQL_option(Config, SQL_QUERY_SAVE_INBOX_SMS_UPDATE, "save_inbox_sms_update",
 		"UPDATE sentitems SET Status = %1, StatusError = %e WHERE ID = %2 AND TPMR = %t", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
 
-	if (SMSDSQL_option(Config, SQL_QUERY_SAVE_INBOX_SMS_INSERT, "save_inbox_sms_insert", 
+	if (SMSDSQL_option(Config, SQL_QUERY_SAVE_INBOX_SMS_INSERT, "save_inbox_sms_insert",
 		"INSERT INTO inbox "
 			"(ReceivingDateTime, Text, SenderNumber, Coding, SMSCNumber, UDH, "
 			"Class, TextDecoded, RecipientID) VALUES (%d, %E, %R, %c, %F, %u, %x, %T, %P)", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
 
-	if (SMSDSQL_option(Config, SQL_QUERY_UPDATE_RECEIVED, "update_received", 
+	if (SMSDSQL_option(Config, SQL_QUERY_UPDATE_RECEIVED, "update_received",
 		"UPDATE phones SET Received = Received + 1 WHERE IMEI = %I", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
-	
-	if (SMSDSQL_option(Config, SQL_QUERY_REFRESH_SEND_STATUS, "reresh_send_status", 
+
+	if (SMSDSQL_option(Config, SQL_QUERY_REFRESH_SEND_STATUS, "reresh_send_status",
 		"UPDATE outbox SET SendingTimeOut = ",
 			SMSDSQL_NowPlus(Config, locktime),
 			" WHERE ID = %1 AND (SendingTimeOut < ",
@@ -1075,38 +1074,38 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 		return ERR_UNKNOWN;
 	}
 
-	if (SMSDSQL_option(Config, SQL_QUERY_FIND_OUTBOX_SMS_ID, "find_outbox_sms_id", 
+	if (SMSDSQL_option(Config, SQL_QUERY_FIND_OUTBOX_SMS_ID, "find_outbox_sms_id",
 		"SELECT ID, InsertIntoDB, SendingDateTime, SenderID FROM outbox WHERE SendingDateTime < ",
 			SMSDSQL_Now(Config),
 			" AND SendingTimeOut < ",
 			SMSDSQL_Now(Config),
-			" AND ( SenderID is NULL OR SenderID = '' OR SenderID = %P ) ORDER BY InsertIntoDB ASC LIMIT %1", NULL) != ERR_NONE) { 
+			" AND ( SenderID is NULL OR SenderID = '' OR SenderID = %P ) ORDER BY InsertIntoDB ASC LIMIT %1", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
 
-	if (SMSDSQL_option(Config, SQL_QUERY_FIND_OUTBOX_BODY, "find_outbox_body", 
+	if (SMSDSQL_option(Config, SQL_QUERY_FIND_OUTBOX_BODY, "find_outbox_body",
 		"SELECT Text, Coding, UDH, Class, TextDecoded, ID, DestinationNumber, MultiPart, "
 			"RelativeValidity, DeliveryReport, CreatorID FROM outbox WHERE ID=%1", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
-	
-	if (SMSDSQL_option(Config, SQL_QUERY_FIND_OUTBOX_MULTIPART, "find_outbox_multipart", 
-		"SELECT Text, Coding, UDH, Class, TextDecoded, ID, SequencePosition " 
+
+	if (SMSDSQL_option(Config, SQL_QUERY_FIND_OUTBOX_MULTIPART, "find_outbox_multipart",
+		"SELECT Text, Coding, UDH, Class, TextDecoded, ID, SequencePosition "
 			"FROM outbox_multipart WHERE ID=%1 AND SequencePosition=%2", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
-	
-	if (SMSDSQL_option(Config, SQL_QUERY_DELETE_OUTBOX, "delete_outbox", 
+
+	if (SMSDSQL_option(Config, SQL_QUERY_DELETE_OUTBOX, "delete_outbox",
 		"DELETE FROM outbox WHERE ID=%1", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
-	
-	if (SMSDSQL_option(Config, SQL_QUERY_DELETE_OUTBOX_MULTIPART, "delete_outbox_multipart", 
+
+	if (SMSDSQL_option(Config, SQL_QUERY_DELETE_OUTBOX_MULTIPART, "delete_outbox_multipart",
 		"DELETE FROM outbox_multipart WHERE ID=%1", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
-	
-	if (SMSDSQL_option(Config, SQL_QUERY_CREATE_OUTBOX, "create_outbox", 
+
+	if (SMSDSQL_option(Config, SQL_QUERY_CREATE_OUTBOX, "create_outbox",
 		"INSERT INTO outbox (CreatorID, SenderID, DeliveryReport, MultiPart, InsertIntoDB, "
 			"Text, DestinationNumber, RelativeValidity, Coding, UDH, Class, TextDecoded) VALUES "
 			"(%1, %P, %2, %3, ",
@@ -1114,14 +1113,14 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 			", %E, %R, %V, %c, %u, %x, %T)", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
-	
-	if (SMSDSQL_option(Config, SQL_QUERY_CREATE_OUTBOX_MULTIPART, "create_outbox_multipart", 
+
+	if (SMSDSQL_option(Config, SQL_QUERY_CREATE_OUTBOX_MULTIPART, "create_outbox_multipart",
 		"INSERT INTO outbox_multipart "
 			"(SequencePosition, Text, Coding, UDH, Class, TextDecoded, ID) VALUES (%4, %E, %c, %u, %x, %T, %5)", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
-	
-	if (SMSDSQL_option(Config, SQL_QUERY_ADD_SENT_INFO, "add_sent_info", 
+
+	if (SMSDSQL_option(Config, SQL_QUERY_ADD_SENT_INFO, "add_sent_info",
 		"INSERT INTO sentitems "
 			"(CreatorID,ID,SequencePosition,Status,SendingDateTime, SMSCNumber, TPMR, "
 			"SenderID,Text,DestinationNumber,Coding,UDH,Class,TextDecoded,InsertIntoDB,RelativeValidity) "
@@ -1131,18 +1130,18 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 		return ERR_UNKNOWN;
 	}
 
-	if (SMSDSQL_option(Config, SQL_QUERY_UPDATE_SENT, "update_sent", 
+	if (SMSDSQL_option(Config, SQL_QUERY_UPDATE_SENT, "update_sent",
 		"UPDATE phones SET Sent= Sent + 1 WHERE IMEI = %I", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
 
-	if (SMSDSQL_option(Config, SQL_QUERY_REFRESH_PHONE_STATUS, "refresh_phone_status", 
+	if (SMSDSQL_option(Config, SQL_QUERY_REFRESH_PHONE_STATUS, "refresh_phone_status",
 			"UPDATE phones SET TimeOut= ",
 			SMSDSQL_NowPlus(Config, 10),
 			", Battery = %1, Signal = %2 WHERE IMEI = %I", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
-		
+
 	return ERR_NONE;
 }
 
