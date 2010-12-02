@@ -1,5 +1,4 @@
-.. _smsbackup:
-.. _SMS Backup Format:
+.. _gammu-smsbackup:
 
 SMS Backup Format
 =================

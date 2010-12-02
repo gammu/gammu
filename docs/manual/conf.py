@@ -247,6 +247,7 @@ man_pages = [
     ('config/index', 'gammurc', 'gammu(1) configuration file', u'Michal Čihař <michal@cihar.com>', 5),
     ('gammu/index', 'gammu', 'Does some neat things with your cellular phone or modem.', u'Michal Čihař <michal@cihar.com>', 1),
     ('formats/backup', 'gammu-backup', 'gammu(1) backup file format.', u'Michal Čihař <michal@cihar.com>', 5),
+    ('formats/smsbackup', 'gammu-smsbackup', 'gammu(1) SMS backup file format.', u'Michal Čihař <michal@cihar.com>', 5),
     ('utils/jadmaker', 'jadmaker', 'JAD File Generator', u'Michal Čihař <michal@cihar.com>', 1),
     ('utils/gammu-config', 'gammu-config', 'Gammu configurator', u'Michal Čihař <michal@cihar.com>', 1),
 ]

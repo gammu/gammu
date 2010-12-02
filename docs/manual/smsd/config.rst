@@ -436,7 +436,7 @@ that all path should contain trailing path separator (/ on Unix systems):
     The format in which the SMS will be stored: ``detail``, ``unicode``, ``standard``.
 
     ``detail``   
-        format used for message backup by :ref:`gammu`, see :ref:`SMS Backup Format`.
+        format used for message backup by :ref:`gammu`, see :ref:`gammu-smsbackup`.
     ``unicode``
         message text stored in unicode (UTF-16)
     ``standard``

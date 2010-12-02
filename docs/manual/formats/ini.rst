@@ -4,7 +4,7 @@ INI file format
 ===============
 
 The INI file format is widely used in Gammu, for both configuration (see
-:ref:`gammurc`) and storing data (see :ref:`backup` and :ref:`smsbackup`).
+:ref:`gammurc`) and storing data (see :ref:`gammu-backup` and :ref:`gammu-smsbackup`).
 
 This file use ini file syntax, with comment parts being marked with both ``;``
 and ``#``. Sections of config file are identified in square brackets line

@@ -24,7 +24,7 @@ Explanation of fields:
 ``<sequence>``
     part of the message for multipart messages, in format ``NN``
 ``<ext>``
-    ``txt`` for text message, 8-bit messages are stored with ``bin`` extension, ``smsbackup`` for :ref:`smsbackup`
+    ``txt`` for text message, 8-bit messages are stored with ``bin`` extension, ``smsbackup`` for :ref:`gammu-smsbackup`
 
 The content of the file is content of the message and the format is defined by
 configuration directive :config:option:`InboxFormat` (see :ref:`gammu-smsdrc`).
@@ -44,7 +44,7 @@ Explanation of fields:
 ``<priority>``
     an alphabetic character (A-Z) A = highest priority
 ``<ext>``
-    ``txt`` for normal text SMS, ``smsbackup`` for :ref:`smsbackup`
+    ``txt`` for normal text SMS, ``smsbackup`` for :ref:`gammu-smsbackup`
 ``<options>``
     Options appended to the extension applying to text SMS:
 
