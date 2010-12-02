@@ -6,9 +6,9 @@ SQL Service
 SQL service stores all its data in database. It can use one of these SQL backends 
 (configuration option :config:option:`Driver` in smsd section):
 
-* ``native_mysql``
-* ``native_pgsql``
-* drivers supported by DBI
+* ``native_mysql`` for :ref:`gammu-smsd-mysql`
+* ``native_pgsql`` for :ref:`gammu-smsd-pgsql`
+* drivers supported by DBI for :ref:`gammu-smsd-dbi`
 
 SQL connection parameters
 -------------------------
