@@ -40,7 +40,7 @@ char *strchrnul(char *s, int find)
 #endif
 
 
-#ifndef HAVE_STRNCASECMP
+#ifdef INTERNAL_STRNCASECMP
 #define TOLOWER(Ch) (isupper (Ch) ? tolower (Ch) : (Ch))
 /**
  * Case insensitive string comparator
@@ -71,7 +71,7 @@ int strncasecmp (const char *s1, const char *s2, size_t n)
 #undef TOLOWER
 #endif
 
-#ifndef HAVE_STRCASECMP
+#ifdef INTERNAL_STRCASECMP
 #define TOLOWER(Ch) (isupper (Ch) ? tolower (Ch) : (Ch))
 /**
  * Case insensitive string comparator

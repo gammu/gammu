@@ -83,6 +83,8 @@ check_symbol_exists (__clang__ "" CLANG_COMPILER)
 # Configuration checks
 check_symbol_exists (strncasecmp "string.h" HAVE_STRNCASECMP)
 check_symbol_exists (strcasecmp "string.h" HAVE_STRCASECMP)
+check_symbol_exists (_strnicmp "string.h" HAVE_STRNICMP)
+check_symbol_exists (_stricmp "string.h" HAVE_STRICMP)
 check_function_exists (strcasestr HAVE_STRCASESTR)
 check_function_exists (strchrnul HAVE_STRCHRNUL)
 check_function_exists (strtoull HAVE_STRTOULL)

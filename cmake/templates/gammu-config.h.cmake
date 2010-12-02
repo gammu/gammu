@@ -259,6 +259,12 @@
 #ifndef HAVE_STRCASECMP
 #cmakedefine HAVE_STRCASECMP 
 #endif
+#ifndef HAVE_STRNICMP
+#cmakedefine HAVE_STRNICMP 
+#endif
+#ifndef HAVE_STRICMP
+#cmakedefine HAVE_STRICMP 
+#endif
 #ifndef HAVE_STRCASESTR
 #cmakedefine HAVE_STRCASESTR 
 #endif
