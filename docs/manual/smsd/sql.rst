@@ -12,7 +12,8 @@ SQL service stores all its data in database. It can use one of these SQL backend
 
 SQL connection parameters
 -------------------------
-Common for all queries:
+
+Common for all backends:
 
 * :config:option:`User` - user connecting to database
 * :config:option:`Password` - password for connecting to database
@@ -27,6 +28,7 @@ Specific for DBI:
 
 SQL Queries
 -----------
+
 Almost all queries are configurable. You can edit it in :config:section:`[sql]` section. There are variables
 used in SQL queries. We can separate it to three groups:
 
