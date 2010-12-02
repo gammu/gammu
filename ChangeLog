@@ -32,6 +32,8 @@ ChangeLog
 [-] * Fix handling of SMS text mode (bug #1189).
 [!] * Default to no retries of the send commands on the link.
 [-] * Wait for more USSD replies on getussd command (bug #1346).
+[!] * New unified SQL SMSD backend handling all SQL databases.
+[+] * SQL queries in SQL SMSD backend can be configured.
     
 20101004 - 1.28.92
 
