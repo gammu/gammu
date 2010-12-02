@@ -229,13 +229,13 @@ static GSM_Error SMSDSQL_NamedQuery(GSM_SMSDConfig * Config, const char *sql_que
 						case 'E':
 							switch (sms->Coding) {
 								case SMS_Coding_Unicode_No_Compression:
-									case SMS_Coding_Default_No_Compression:
+								case SMS_Coding_Default_No_Compression:
 									EncodeHexUnicode(static_buff, sms->Text, UnicodeLength(sms->Text));
 									break;
-									case SMS_Coding_8bit:
+								case SMS_Coding_8bit:
 									EncodeHexBin(static_buff, sms->Text, sms->Length);
 									break;
-									default:
+								default:
 									*static_buff = '\0';
 									break;
 							}
