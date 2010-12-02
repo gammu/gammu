@@ -685,11 +685,9 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 			udh_len = strlen(udh);
 		}
 
-		sms->SMS[sms->Number].Coding = SMS_Coding_8bit;
-		if (strcmp(coding, "Unicode_No_Compression") == 0) {
-			sms->SMS[sms->Number].Coding = SMS_Coding_Unicode_No_Compression;
-		} else if (strcmp(coding, "Default_No_Compression") == 0) {
-			sms->SMS[sms->Number].Coding = SMS_Coding_Default_No_Compression;
+		sms->SMS[sms->Number].Coding = GSM_StringToSMSCoding(coding);
+		if (sms->SMS[sms->Number].Coding == 0) {
+			sms->SMS[sms->Number].Coding = SMS_Coding_8bit;
 		}
 
 		if (text == NULL || text_len == 0) {
