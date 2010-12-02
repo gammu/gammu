@@ -27,7 +27,7 @@ Specific for DBI:
 
 SQL Queries
 -----------
-Almost all queries are configurable. You can edit it in [sql] section. There are variables
+Almost all queries are configurable. You can edit it in :config:section:`[sql]` section. There are variables
 used in SQL queries. We can separate it to three groups:
 
 * phone specific, which can be used in every query
