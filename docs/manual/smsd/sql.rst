@@ -71,48 +71,6 @@ used in SQL queries. We can separate it to three groups:
 | %V	    |      yes	      | relative validity                                                |
 +-----------+-----------------+------------------------------------------------------------------+
 
-
-Query specific parameters
--------------------------
-INSERT_PHONE
- 1) enable send (yes or no) - configuration option Send
- 2) enable receive (yes or no)  - configuration option Receive
-
-SAVE_INBOX_SMS_UPDATE_DELIVERED, SAVE_INBOX_SMS_UPDATE
- 1) delivery status returned by GSM network
- 2) ID of message
-
-REFRESH_SEND_STATUS
- 1) ID of message
-
-FIND_OUTBOX_SMS
- 1) limit of sms messages sended in one walk in loop
-
-FIND_OUTBOX_BODY, FIND_OUTBOX_MULTIPART
- 1) ID of message
- 2) number of multipart message
-
-DELETE_OUTBOX, DELETE_OUTBOX_MULTIPART
- 1) ID of message
-
-CREATE_OUTBOX, CREATE_OUTBOX_MULTIPART
- 1) creator of message
- 2) delivery status report - yes/default
- 3) multipart - FALSE/TRUE
- 4) Part (part number)
- 5) id of message
-
-ADD_SENT_INFO
- 1) ID of sms message
- 2) part number (for multipart sms)
- 3) message state (SendingError, Error, SendingOK, SendingOKNoReport)
- 4) message reference (TPMR)
- 5) time when inserted in db
-
-REFRESH_PHONE_STATUS
- 1) battery percent
- 2) signal percent
-
 .. _configurable-queries:
 
 Configurable queries
@@ -144,6 +102,13 @@ are selected for default queries during initialization.
         INSERT INTO phones (IMEI, ID, Send, Receive, InsertIntoDB, TimeOut, Client, Battery, Signal) 
         VALUES (%I, %P, %1, %2, NOW(), (NOW() + INTERVAL 10 SECOND) + 0, %N, -1, -1)"
 
+    Query specific parameters:
+
+    ``%1``
+        enable send (yes or no) - configuration option Send
+    ``%2``
+        enable receive (yes or no)  - configuration option Receive
+
 .. config:option:: save_inbox_sms_select
 
     Select message for update delivery status.
@@ -165,6 +130,13 @@ are selected for default queries during initialization.
 
         UPDATE sentitems SET DeliveryDateTime = %C, Status = %1, StatusError = %e WHERE ID = %2 AND TPMR = %t
 
+    Query specific parameters:
+
+    ``%1``
+        delivery status returned by GSM network
+    ``%2``
+        ID of message
+
 .. config:option:: save_inbox_sms_update
 
     Update message if there is an delivery error.
@@ -175,6 +147,12 @@ are selected for default queries during initialization.
 
         UPDATE sentitems SET Status = %1, StatusError = %e WHERE ID = %2 AND TPMR = %t
 
+    Query specific parameters:
+
+    ``%1``
+        delivery status returned by GSM network
+    ``%2``
+        ID of message
 .. config:option:: save_inbox_sms_insert
 
     Insert received message.
@@ -207,6 +185,11 @@ are selected for default queries during initialization.
         UPDATE outbox SET SendingTimeOut = (NOW() + INTERVAL locktime SECOND) + 0 
         WHERE ID = %1 AND (SendingTimeOut < NOW() OR SendingTimeOut IS NULL)
 
+    Query specific parameters:
+
+    ``%1``
+        ID of message
+
 .. config:option:: find_outbox_sms_id
 
     Find sms messages for sending.
@@ -219,6 +202,11 @@ are selected for default queries during initialization.
         WHERE SendingDateTime < NOW() AND SendingTimeOut <  NOW() AND 
         ( SenderID is NULL OR SenderID = '' OR SenderID = %P ) ORDER BY InsertIntoDB ASC LIMIT %1"
 
+    Query specific parameters:
+
+    ``%1``
+        limit of sms messages sended in one walk in loop
+
 .. config:option:: find_outbox_body
 
     Select body of message.
@@ -229,6 +217,11 @@ are selected for default queries during initialization.
 
         SELECT Text, Coding, UDH, Class, TextDecoded, ID, DestinationNumber, MultiPart, 
         RelativeValidity, DeliveryReport, CreatorID FROM outbox WHERE ID=%1
+
+    Query specific parameters:
+
+    ``%1``
+        ID of message
 
 .. config:option:: find_outbox_multipart
 
@@ -241,6 +234,13 @@ are selected for default queries during initialization.
         SELECT Text, Coding, UDH, Class, TextDecoded, ID, SequencePosition 
         FROM outbox_multipart WHERE ID=%1 AND SequencePosition=%2"
 
+    Query specific parameters:
+
+    ``%1``
+        ID of message
+    ``%2``
+        Number of multipart message
+
 .. config:option:: delete_outbox
 
     Remove messages from outbox after threir successful send.
@@ -251,6 +251,11 @@ are selected for default queries during initialization.
 
         DELETE FROM outbox WHERE ID=%1
 
+    Query specific parameters:
+
+    ``%1``
+        ID of message
+
 .. config:option:: delete_outbox_multipart
 
     Remove messages from outbox_multipart after threir successful send.
@@ -260,6 +265,11 @@ are selected for default queries during initialization.
     .. code-block:: sql
 
         DELETE FROM outbox_multipart WHERE ID=%1
+
+    Query specific parameters:
+
+    ``%1``
+        ID of message
 
 .. config:option:: create_outbox
 
@@ -273,6 +283,19 @@ are selected for default queries during initialization.
         InsertIntoDB, Text, DestinationNumber, RelativeValidity, Coding, UDH, Class, 
         TextDecoded) VALUES (%1, %P, %2, %3, NOW(), %E, %R, %V, %c, %u, %x, %T)
 
+    Query specific parameters:
+
+    ``%1``
+        creator of message
+    ``%2``
+        delivery status report - yes/default
+    ``%3``
+        multipart - FALSE/TRUE
+    ``%4``
+        Part (part number)
+    ``%5``
+        ID of message
+
 .. config:option:: create_outbox_multipart
 
     Create message remaining parts.
@@ -283,6 +306,19 @@ are selected for default queries during initialization.
 
         INSERT INTO outbox_multipart (SequencePosition, Text, Coding, UDH, Class, 
         TextDecoded, ID) VALUES (%4, %E, %c, %u, %x, %T, %5)
+
+    Query specific parameters:
+
+    ``%1``
+        creator of message
+    ``%2``
+        delivery status report - yes/default
+    ``%3``
+        multipart - FALSE/TRUE
+    ``%4``
+        Part (part number)
+    ``%5``
+        ID of message
 
 .. config:option:: add_sent_info
 
@@ -296,6 +332,19 @@ are selected for default queries during initialization.
         SMSCNumber, TPMR, SenderID,Text,DestinationNumber,Coding,UDH,Class,TextDecoded,
         InsertIntoDB,RelativeValidity) 
         VALUES (%A, %1, %2, %3, NOW(), %F, %4, %P, %E, %R, %c, %u, %x, %T, %5, %V)
+
+    Query specific parameters:
+
+    ``%1``
+        ID of sms message
+    ``%2``
+        part number (for multipart sms)
+    ``%3``
+        message state (SendingError, Error, SendingOK, SendingOKNoReport)
+    ``%4``
+        message reference (TPMR)
+    ``%5``
+        time when inserted in db
 
 .. config:option:: update_sent
 
@@ -317,3 +366,10 @@ are selected for default queries during initialization.
 
         UPDATE phones SET TimeOut= (NOW() + INTERVAL 10 SECOND) + 0, 
         Battery = %1, Signal = %2 WHERE IMEI = %I"
+
+    Query specific parameters:
+
+    ``%1``
+        battery percent
+    ``%2``
+        signal percent
