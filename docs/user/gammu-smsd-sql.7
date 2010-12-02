@@ -1,0 +1,685 @@
+.TH "GAMMU-SMSD-SQL" "7" "December 02, 2010" "1.28.93" "Gammu"
+.SH NAME
+gammu-smsd-sql \- gammu-smsd(1) backend using SQL abstraction layer to use any supported database as a message storage
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.\" Man page generated from reStructeredText.
+.
+.sp
+SQL service stores all its data in database. It can use one of these SQL backends
+(configuration option \fBDriver\fP in smsd section):
+.INDENT 0.0
+.IP \(bu 2
+.
+\fBnative_mysql\fP for \fIgammu\-smsd\-mysql\fP
+.IP \(bu 2
+.
+\fBnative_pgsql\fP for \fIgammu\-smsd\-pgsql\fP
+.IP \(bu 2
+.
+drivers supported by DBI for \fIgammu\-smsd\-dbi\fP
+.UNINDENT
+.SH SQL CONNECTION PARAMETERS
+.sp
+Common for all backends:
+.INDENT 0.0
+.IP \(bu 2
+.
+\fBUser\fP \- user connecting to database
+.IP \(bu 2
+.
+\fBPassword\fP \- password for connecting to database
+.IP \(bu 2
+.
+\fBHost\fP \- database host
+.IP \(bu 2
+.
+\fBDatabase\fP \- database name
+.IP \(bu 2
+.
+\fBDriver\fP \- native_mysql, native_pgsql or DBI one
+.UNINDENT
+.sp
+Specific for DBI:
+.INDENT 0.0
+.IP \(bu 2
+.
+\fBDriversPath\fP \- path to DBI drivers
+.IP \(bu 2
+.
+\fBDBDir\fP \- sqlite/sqlite3 directory with database
+.UNINDENT
+.SH SQL QUERIES
+.sp
+Almost all queries are configurable. You can edit it in \fB[sql]\fP section. There are variables
+used in SQL queries. We can separate it to three groups:
+.INDENT 0.0
+.IP \(bu 2
+.
+phone specific, which can be used in every query
+.IP \(bu 2
+.
+SMS specific, which can be used in queries which works with SMS messages
+.IP \(bu 2
+.
+query specific, which are numeric and are specific only for a few queries
+.UNINDENT
+.TS
+center;
+|l|l|l|.
+_
+T{
+Parameter
+T}	T{
+SMS Specific?
+T}	T{
+Description
+T}
+_
+T{
+\fB%I\fP
+T}	T{
+no
+T}	T{
+provides IMEI of phone
+T}
+_
+T{
+\fB%P\fP
+T}	T{
+no
+T}	T{
+provides PHONE ID (hostname)
+T}
+_
+T{
+\fB%N\fP
+T}	T{
+no
+T}	T{
+client name (eg. Gammu 1.12.3)
+T}
+_
+T{
+\fB%R\fP
+T}	T{
+yes
+T}	T{
+in received sms (insert to inbox, delivery notifications)
+it provides sender number, else it provides destination number
+T}
+_
+T{
+\fB%C\fP
+T}	T{
+yes
+T}	T{
+provides delivery datetime
+T}
+_
+T{
+\fB%e\fP
+T}	T{
+yes
+T}	T{
+provides delivery status on receiving or status error on sending
+T}
+_
+T{
+\fB%t\fP
+T}	T{
+yes
+T}	T{
+message reference
+T}
+_
+T{
+\fB%d\fP
+T}	T{
+yes
+T}	T{
+receiving datetime for received sms
+T}
+_
+T{
+\fB%E\fP
+T}	T{
+yes
+T}	T{
+encoded text of SMS
+T}
+_
+T{
+\fB%c\fP
+T}	T{
+yes
+T}	T{
+SMS coding (ie 8bit or UnicodeNoCompression)
+T}
+_
+T{
+\fB%F\fP
+T}	T{
+yes
+T}	T{
+sms centre number
+T}
+_
+T{
+\fB%u\fP
+T}	T{
+yes
+T}	T{
+UDH header
+T}
+_
+T{
+\fB%x\fP
+T}	T{
+yes
+T}	T{
+class
+T}
+_
+T{
+\fB%T\fP
+T}	T{
+yes
+T}	T{
+decoded SMS text
+T}
+_
+T{
+\fB%A\fP
+T}	T{
+yes
+T}	T{
+CreatorID of SMS (sending sms)
+T}
+_
+T{
+\fB%V\fP
+T}	T{
+yes
+T}	T{
+relative validity
+T}
+_
+.TE
+.SH CONFIGURABLE QUERIES
+.sp
+All configurable queries can be set in \fB[sql]\fP section. Sequence of rows in selects are mandatory.
+.sp
+All default queries noted here are noted for MySQL. Actual time and time addition
+are selected for default queries during initialization.
+.INDENT 0.0
+.TP
+.B delete_phone
+.
+Deletes phone from database.
+.sp
+Default value:
+.sp
+.nf
+.ft C
+DELETE FROM phones WHERE IMEI = %I
+.ft P
+.fi
+.UNINDENT
+.INDENT 0.0
+.TP
+.B insert_phone
+.
+Inserts phone to database.
+.sp
+Default value:
+.sp
+.nf
+.ft C
+INSERT INTO phones (IMEI, ID, Send, Receive, InsertIntoDB, TimeOut, Client, Battery, Signal)
+VALUES (%I, %P, %1, %2, NOW(), (NOW() + INTERVAL 10 SECOND) + 0, %N, \-1, \-1)
+.ft P
+.fi
+.sp
+Query specific parameters:
+.INDENT 7.0
+.TP
+.B \fB%1\fP
+.sp
+enable send (yes or no) \- configuration option Send
+.TP
+.B \fB%2\fP
+.sp
+enable receive (yes or no)  \- configuration option Receive
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B save_inbox_sms_select
+.
+Select message for update delivery status.
+.sp
+Default value:
+.sp
+.nf
+.ft C
+SELECT ID, Status, SendingDateTime, DeliveryDateTime, SMSCNumber FROM sentitems
+WHERE DeliveryDateTime IS NULL AND SenderID = %P AND TPMR = %t AND DestinationNumber = %R
+.ft P
+.fi
+.UNINDENT
+.INDENT 0.0
+.TP
+.B save_inbox_sms_update_delivered
+.
+Update message delivery status if message was delivered.
+.sp
+Default value:
+.sp
+.nf
+.ft C
+UPDATE sentitems SET DeliveryDateTime = %C, Status = %1, StatusError = %e WHERE ID = %2 AND TPMR = %t
+.ft P
+.fi
+.sp
+Query specific parameters:
+.INDENT 7.0
+.TP
+.B \fB%1\fP
+.sp
+delivery status returned by GSM network
+.TP
+.B \fB%2\fP
+.sp
+ID of message
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B save_inbox_sms_update
+.
+Update message if there is an delivery error.
+.sp
+Default value:
+.sp
+.nf
+.ft C
+UPDATE sentitems SET Status = %1, StatusError = %e WHERE ID = %2 AND TPMR = %t
+.ft P
+.fi
+.sp
+Query specific parameters:
+.INDENT 7.0
+.TP
+.B \fB%1\fP
+.sp
+delivery status returned by GSM network
+.TP
+.B \fB%2\fP
+.sp
+ID of message
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B save_inbox_sms_insert
+.
+Insert received message.
+.sp
+Default value:
+.sp
+.nf
+.ft C
+INSERT INTO inbox (ReceivingDateTime, Text, SenderNumber, Coding, SMSCNumber, UDH,
+Class, TextDecoded, RecipientID) VALUES (%d, %E, %R, %c, %F, %u, %x, %T, %P)
+.ft P
+.fi
+.UNINDENT
+.INDENT 0.0
+.TP
+.B update_received
+.
+Update statistics after receiving message.
+.sp
+Default value:
+.sp
+.nf
+.ft C
+UPDATE phones SET Received = Received + 1 WHERE IMEI = %I
+.ft P
+.fi
+.UNINDENT
+.INDENT 0.0
+.TP
+.B reresh_send_status
+.
+Update messages in outbox.
+.sp
+Default value:
+.sp
+.nf
+.ft C
+UPDATE outbox SET SendingTimeOut = (NOW() + INTERVAL locktime SECOND) + 0
+WHERE ID = %1 AND (SendingTimeOut < NOW() OR SendingTimeOut IS NULL)
+.ft P
+.fi
+.sp
+Query specific parameters:
+.INDENT 7.0
+.TP
+.B \fB%1\fP
+.sp
+ID of message
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B find_outbox_sms_id
+.
+Find sms messages for sending.
+.sp
+Default value:
+.sp
+.nf
+.ft C
+SELECT ID, InsertIntoDB, SendingDateTime, SenderID FROM outbox
+WHERE SendingDateTime < NOW() AND SendingTimeOut <  NOW() AND
+( SenderID is NULL OR SenderID = \(aq\(aq OR SenderID = %P ) ORDER BY InsertIntoDB ASC LIMIT %1
+.ft P
+.fi
+.sp
+Query specific parameters:
+.INDENT 7.0
+.TP
+.B \fB%1\fP
+.sp
+limit of sms messages sended in one walk in loop
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B find_outbox_body
+.
+Select body of message.
+.sp
+Default value:
+.sp
+.nf
+.ft C
+SELECT Text, Coding, UDH, Class, TextDecoded, ID, DestinationNumber, MultiPart,
+RelativeValidity, DeliveryReport, CreatorID FROM outbox WHERE ID=%1
+.ft P
+.fi
+.sp
+Query specific parameters:
+.INDENT 7.0
+.TP
+.B \fB%1\fP
+.sp
+ID of message
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B find_outbox_multipart
+.
+Select remaining parts of sms message.
+.sp
+Default value:
+.sp
+.nf
+.ft C
+SELECT Text, Coding, UDH, Class, TextDecoded, ID, SequencePosition
+FROM outbox_multipart WHERE ID=%1 AND SequencePosition=%2
+.ft P
+.fi
+.sp
+Query specific parameters:
+.INDENT 7.0
+.TP
+.B \fB%1\fP
+.sp
+ID of message
+.TP
+.B \fB%2\fP
+.sp
+Number of multipart message
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B delete_outbox
+.
+Remove messages from outbox after threir successful send.
+.sp
+Default value:
+.sp
+.nf
+.ft C
+DELETE FROM outbox WHERE ID=%1
+.ft P
+.fi
+.sp
+Query specific parameters:
+.INDENT 7.0
+.TP
+.B \fB%1\fP
+.sp
+ID of message
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B delete_outbox_multipart
+.
+Remove messages from outbox_multipart after threir successful send.
+.sp
+Default value:
+.sp
+.nf
+.ft C
+DELETE FROM outbox_multipart WHERE ID=%1
+.ft P
+.fi
+.sp
+Query specific parameters:
+.INDENT 7.0
+.TP
+.B \fB%1\fP
+.sp
+ID of message
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B create_outbox
+.
+Create message (insert to outbox).
+.sp
+Default value:
+.sp
+.nf
+.ft C
+INSERT INTO outbox (CreatorID, SenderID, DeliveryReport, MultiPart,
+InsertIntoDB, Text, DestinationNumber, RelativeValidity, Coding, UDH, Class,
+TextDecoded) VALUES (%1, %P, %2, %3, NOW(), %E, %R, %V, %c, %u, %x, %T)
+.ft P
+.fi
+.sp
+Query specific parameters:
+.INDENT 7.0
+.TP
+.B \fB%1\fP
+.sp
+creator of message
+.TP
+.B \fB%2\fP
+.sp
+delivery status report \- yes/default
+.TP
+.B \fB%3\fP
+.sp
+multipart \- FALSE/TRUE
+.TP
+.B \fB%4\fP
+.sp
+Part (part number)
+.TP
+.B \fB%5\fP
+.sp
+ID of message
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B create_outbox_multipart
+.
+Create message remaining parts.
+.sp
+Default value:
+.sp
+.nf
+.ft C
+INSERT INTO outbox_multipart (SequencePosition, Text, Coding, UDH, Class,
+TextDecoded, ID) VALUES (%4, %E, %c, %u, %x, %T, %5)
+.ft P
+.fi
+.sp
+Query specific parameters:
+.INDENT 7.0
+.TP
+.B \fB%1\fP
+.sp
+creator of message
+.TP
+.B \fB%2\fP
+.sp
+delivery status report \- yes/default
+.TP
+.B \fB%3\fP
+.sp
+multipart \- FALSE/TRUE
+.TP
+.B \fB%4\fP
+.sp
+Part (part number)
+.TP
+.B \fB%5\fP
+.sp
+ID of message
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B add_sent_info
+.
+Insert to sentitems.
+.sp
+Default value:
+.sp
+.nf
+.ft C
+INSERT INTO sentitems (CreatorID,ID,SequencePosition,Status,SendingDateTime,
+SMSCNumber, TPMR, SenderID,Text,DestinationNumber,Coding,UDH,Class,TextDecoded,
+InsertIntoDB,RelativeValidity)
+VALUES (%A, %1, %2, %3, NOW(), %F, %4, %P, %E, %R, %c, %u, %x, %T, %5, %V)
+.ft P
+.fi
+.sp
+Query specific parameters:
+.INDENT 7.0
+.TP
+.B \fB%1\fP
+.sp
+ID of sms message
+.TP
+.B \fB%2\fP
+.sp
+part number (for multipart sms)
+.TP
+.B \fB%3\fP
+.sp
+message state (SendingError, Error, SendingOK, SendingOKNoReport)
+.TP
+.B \fB%4\fP
+.sp
+message reference (TPMR)
+.TP
+.B \fB%5\fP
+.sp
+time when inserted in db
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B update_sent
+.
+Update sent statistics after sending message.
+.sp
+Default value:
+.sp
+.nf
+.ft C
+UPDATE phones SET Sent= Sent + 1 WHERE IMEI = %I
+.ft P
+.fi
+.UNINDENT
+.INDENT 0.0
+.TP
+.B refresh_phone_status
+.
+Update phone status (battery, signal).
+.sp
+Default value:
+.sp
+.nf
+.ft C
+UPDATE phones SET TimeOut= (NOW() + INTERVAL 10 SECOND) + 0,
+Battery = %1, Signal = %2 WHERE IMEI = %I
+.ft P
+.fi
+.sp
+Query specific parameters:
+.INDENT 7.0
+.TP
+.B \fB%1\fP
+.sp
+battery percent
+.TP
+.B \fB%2\fP
+.sp
+signal percent
+.UNINDENT
+.UNINDENT
+.SH AUTHOR
+Michal Čihař <michal@cihar.com>
+.SH COPYRIGHT
+2009-2010, Michal Čihař <michal@cihar.com>
+.\" Generated by docutils manpage writer.
+.\" 
+.
