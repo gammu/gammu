@@ -13,7 +13,8 @@ is used.
 This file use ini file syntax, see :ref:`ini`.
 
 Configuration file of gammu-smsd consists of at least two sections -
-:config:section:`[gammu]` and :config:section:`[smsd]`.
+:config:section:`[gammu]` and :config:section:`[smsd]`. For :ref:`gammu-smsd-sql`
+you can also use :config:section:`[sql]`.
 
 The :config:section:`[gammu]` section is configuration of a phone connection
 and is same as described in :ref:`gammurc` with the only exception that
@@ -42,6 +43,12 @@ configures how much messages gammu emits.
 .. config:section:: [exclude_smsc]
 
     List of SMSC numbers from which reject messages, see :ref:`message_filtering`.
+
+.. config:section:: [sql]
+
+    Configure SQL queries used by :ref:`gammu-smsd-sql`, you usually don't have to modify them.
+
+    .. seealso:: :ref:`configurable-queries`
 
 General parameters of SMS daemon
 --------------------------------

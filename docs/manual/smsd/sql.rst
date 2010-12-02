@@ -113,153 +113,207 @@ REFRESH_PHONE_STATUS
  1) battery percent
  2) signal percent
 
+.. _configurable-queries:
+
 Configurable queries
 --------------------
-All configurable queries can be set in [sql] section. sequence of rows in selects are mandatory.
 
-* delete_phone - deletes phone from database
-* insert_phone - inserts phone to database
-* save_inbox_sms_select - select message for update delivery status
-* save_inbox_sms_update_delivered - update message delivery status if message was delivered
-* save_inbox_sms_update - update message if there is an delivery error
-* save_inbox_sms_insert - insert received message
-* update_received - update statistics after receiving message
-* refresh_send_status - update messages in outbox
-* find_outbox_sms_id - find sms messages for sending
-* find_outbox_body - select body of message
-* find_outbox_multipart - select remaining parts of sms message
-* delete_outbox - remove messages from outbox after threir successful send
-* delete_outbox_multipart - remove messages from outbox_multipart after threir successful send
-* create_outbox - create message (insert to outbox)
-* create_outbox_multipart - create message remaining parts
-* add_sent_info - insert to sentitems 
-* update_sent - update sent statistics after sending message
-* refresh_phone_status - update phone status (battery, signal)
+All configurable queries can be set in :config:section:`[sql]` section. Sequence of rows in selects are mandatory.
 
-Default SQL queries
--------------------
-All queries noted here are noted for mysql. Actual time and time addition 
+All default queries noted here are noted for MySQL. Actual time and time addition 
 are selected for default queries during initialization.
 
-*delete_phone* 
+.. config:option:: delete_phone
 
-::
+    Deletes phone from database.
 
-	DELETE FROM phones WHERE IMEI = %I
+    Default value:
 
-*insert_phone*
+    .. code-block:: sql
 
-::
+        DELETE FROM phones WHERE IMEI = %I
 
-	INSERT INTO phones (IMEI, ID, Send, Receive, InsertIntoDB, TimeOut, Client, Battery, Signal) 
-	VALUES (%I, %P, %1, %2, NOW(), (NOW() + INTERVAL 10 SECOND) + 0, %N, -1, -1)"
+.. config:option:: insert_phone
 
-*save_inbox_sms_select* 
+    Inserts phone to database.
 
-::
+    Default value:
 
-	SELECT ID, Status, SendingDateTime, DeliveryDateTime, SMSCNumber FROM sentitems 
-	WHERE DeliveryDateTime IS NULL AND SenderID = %P AND TPMR = %t AND DestinationNumber = %R
+    .. code-block:: sql
 
-*save_inbox_sms_update_delivered*
+        INSERT INTO phones (IMEI, ID, Send, Receive, InsertIntoDB, TimeOut, Client, Battery, Signal) 
+        VALUES (%I, %P, %1, %2, NOW(), (NOW() + INTERVAL 10 SECOND) + 0, %N, -1, -1)"
 
-::
+.. config:option:: save_inbox_sms_select
 
-	UPDATE sentitems SET DeliveryDateTime = %C, Status = %1, StatusError = %e WHERE ID = %2 AND TPMR = %t
+    Select message for update delivery status.
 
-*save_inbox_sms_update*
+    Default value:
 
-::
+    .. code-block:: sql
 
-	UPDATE sentitems SET Status = %1, StatusError = %e WHERE ID = %2 AND TPMR = %t
+        SELECT ID, Status, SendingDateTime, DeliveryDateTime, SMSCNumber FROM sentitems 
+        WHERE DeliveryDateTime IS NULL AND SenderID = %P AND TPMR = %t AND DestinationNumber = %R
 
-*save_inbox_sms_insert*
+.. config:option:: save_inbox_sms_update_delivered
 
-::
+    Update message delivery status if message was delivered.
 
-	INSERT INTO inbox (ReceivingDateTime, Text, SenderNumber, Coding, SMSCNumber, UDH, 
-	Class, TextDecoded, RecipientID) VALUES (%d, %E, %R, %c, %F, %u, %x, %T, %P)
+    Default value:
 
-*update_received*
+    .. code-block:: sql
 
-::
+        UPDATE sentitems SET DeliveryDateTime = %C, Status = %1, StatusError = %e WHERE ID = %2 AND TPMR = %t
 
-	UPDATE phones SET Received = Received + 1 WHERE IMEI = %I
+.. config:option:: save_inbox_sms_update
 
-*reresh_send_status*
+    Update message if there is an delivery error.
 
-::
+    Default value:
 
-	UPDATE outbox SET SendingTimeOut = (NOW() + INTERVAL locktime SECOND) + 0 
-	WHERE ID = %1 AND (SendingTimeOut < NOW() OR SendingTimeOut IS NULL)
+    .. code-block:: sql
 
-*find_outbox_sms_id* 
+        UPDATE sentitems SET Status = %1, StatusError = %e WHERE ID = %2 AND TPMR = %t
 
-::
+.. config:option:: save_inbox_sms_insert
 
-	SELECT ID, InsertIntoDB, SendingDateTime, SenderID FROM outbox 
-	WHERE SendingDateTime < NOW() AND SendingTimeOut <  NOW() AND 
-	( SenderID is NULL OR SenderID = '' OR SenderID = %P ) ORDER BY InsertIntoDB ASC LIMIT %1"
+    Insert received message.
 
-*find_outbox_body*
+    Default value:
 
-::
+    .. code-block:: sql
 
-	SELECT Text, Coding, UDH, Class, TextDecoded, ID, DestinationNumber, MultiPart, 
-	RelativeValidity, DeliveryReport, CreatorID FROM outbox WHERE ID=%1
+        INSERT INTO inbox (ReceivingDateTime, Text, SenderNumber, Coding, SMSCNumber, UDH, 
+        Class, TextDecoded, RecipientID) VALUES (%d, %E, %R, %c, %F, %u, %x, %T, %P)
 
-*find_outbox_multipart*
+.. config:option:: update_received
 
-::
+    Update statistics after receiving message.
 
-	SELECT Text, Coding, UDH, Class, TextDecoded, ID, SequencePosition 
-	FROM outbox_multipart WHERE ID=%1 AND SequencePosition=%2"
+    Default value:
 
-*delete_outbox*
+    .. code-block:: sql
 
-::
+        UPDATE phones SET Received = Received + 1 WHERE IMEI = %I
 
-	DELETE FROM outbox WHERE ID=%1
+.. config:option:: reresh_send_status
 
-*delete_outbox_multipart*
+    Update messages in outbox.
 
-::
+    Default value:
 
-	DELETE FROM outbox_multipart WHERE ID=%1
+    .. code-block:: sql
 
-*create_outbox*
+        UPDATE outbox SET SendingTimeOut = (NOW() + INTERVAL locktime SECOND) + 0 
+        WHERE ID = %1 AND (SendingTimeOut < NOW() OR SendingTimeOut IS NULL)
 
-::
+.. config:option:: find_outbox_sms_id
 
-	INSERT INTO outbox (CreatorID, SenderID, DeliveryReport, MultiPart, 
-	InsertIntoDB, Text, DestinationNumber, RelativeValidity, Coding, UDH, Class, 
-	TextDecoded) VALUES (%1, %P, %2, %3, NOW(), %E, %R, %V, %c, %u, %x, %T)
+    Find sms messages for sending.
 
-*create_outbox_multipart*
+    Default value:
 
-::
+    .. code-block:: sql
 
-	INSERT INTO outbox_multipart (SequencePosition, Text, Coding, UDH, Class, 
-	TextDecoded, ID) VALUES (%4, %E, %c, %u, %x, %T, %5)
+        SELECT ID, InsertIntoDB, SendingDateTime, SenderID FROM outbox 
+        WHERE SendingDateTime < NOW() AND SendingTimeOut <  NOW() AND 
+        ( SenderID is NULL OR SenderID = '' OR SenderID = %P ) ORDER BY InsertIntoDB ASC LIMIT %1"
 
-*add_sent_info*
+.. config:option:: find_outbox_body
 
-::
+    Select body of message.
 
-	INSERT INTO sentitems (CreatorID,ID,SequencePosition,Status,SendingDateTime,
-	SMSCNumber, TPMR, SenderID,Text,DestinationNumber,Coding,UDH,Class,TextDecoded,
-	InsertIntoDB,RelativeValidity) 
-	VALUES (%A, %1, %2, %3, NOW(), %F, %4, %P, %E, %R, %c, %u, %x, %T, %5, %V)
+    Default value:
 
-*update_sent*
+    .. code-block:: sql
 
-::
+        SELECT Text, Coding, UDH, Class, TextDecoded, ID, DestinationNumber, MultiPart, 
+        RelativeValidity, DeliveryReport, CreatorID FROM outbox WHERE ID=%1
 
-	 UPDATE phones SET Sent= Sent + 1 WHERE IMEI = %I
+.. config:option:: find_outbox_multipart
 
-*refresh_phone_status*
+    Select remaining parts of sms message.
 
-::
+    Default value:
 
-	UPDATE phones SET TimeOut= (NOW() + INTERVAL 10 SECOND) + 0, 
-	Battery = %1, Signal = %2 WHERE IMEI = %I"
+    .. code-block:: sql
+
+        SELECT Text, Coding, UDH, Class, TextDecoded, ID, SequencePosition 
+        FROM outbox_multipart WHERE ID=%1 AND SequencePosition=%2"
+
+.. config:option:: delete_outbox
+
+    Remove messages from outbox after threir successful send.
+
+    Default value:
+
+    .. code-block:: sql
+
+        DELETE FROM outbox WHERE ID=%1
+
+.. config:option:: delete_outbox_multipart
+
+    Remove messages from outbox_multipart after threir successful send.
+
+    Default value:
+
+    .. code-block:: sql
+
+        DELETE FROM outbox_multipart WHERE ID=%1
+
+.. config:option:: create_outbox
+
+    Create message (insert to outbox).
+
+    Default value:
+
+    .. code-block:: sql
+
+        INSERT INTO outbox (CreatorID, SenderID, DeliveryReport, MultiPart, 
+        InsertIntoDB, Text, DestinationNumber, RelativeValidity, Coding, UDH, Class, 
+        TextDecoded) VALUES (%1, %P, %2, %3, NOW(), %E, %R, %V, %c, %u, %x, %T)
+
+.. config:option:: create_outbox_multipart
+
+    Create message remaining parts.
+
+    Default value:
+
+    .. code-block:: sql
+
+        INSERT INTO outbox_multipart (SequencePosition, Text, Coding, UDH, Class, 
+        TextDecoded, ID) VALUES (%4, %E, %c, %u, %x, %T, %5)
+
+.. config:option:: add_sent_info
+
+    Insert to sentitems.
+
+    Default value:
+
+    .. code-block:: sql
+
+        INSERT INTO sentitems (CreatorID,ID,SequencePosition,Status,SendingDateTime,
+        SMSCNumber, TPMR, SenderID,Text,DestinationNumber,Coding,UDH,Class,TextDecoded,
+        InsertIntoDB,RelativeValidity) 
+        VALUES (%A, %1, %2, %3, NOW(), %F, %4, %P, %E, %R, %c, %u, %x, %T, %5, %V)
+
+.. config:option:: update_sent
+
+    Update sent statistics after sending message.
+
+    Default value:
+
+    .. code-block:: sql
+
+         UPDATE phones SET Sent= Sent + 1 WHERE IMEI = %I
+
+.. config:option:: refresh_phone_status
+
+    Update phone status (battery, signal).
+
+    Default value:
+
+    .. code-block:: sql
+
+        UPDATE phones SET TimeOut= (NOW() + INTERVAL 10 SECOND) + 0, 
+        Battery = %1, Signal = %2 WHERE IMEI = %I"
