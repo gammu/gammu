@@ -100,7 +100,7 @@ are selected for default queries during initialization.
     .. code-block:: sql
 
         INSERT INTO phones (IMEI, ID, Send, Receive, InsertIntoDB, TimeOut, Client, Battery, Signal) 
-        VALUES (%I, %P, %1, %2, NOW(), (NOW() + INTERVAL 10 SECOND) + 0, %N, -1, -1)"
+        VALUES (%I, %P, %1, %2, NOW(), (NOW() + INTERVAL 10 SECOND) + 0, %N, -1, -1)
 
     Query specific parameters:
 
@@ -200,7 +200,7 @@ are selected for default queries during initialization.
 
         SELECT ID, InsertIntoDB, SendingDateTime, SenderID FROM outbox 
         WHERE SendingDateTime < NOW() AND SendingTimeOut <  NOW() AND 
-        ( SenderID is NULL OR SenderID = '' OR SenderID = %P ) ORDER BY InsertIntoDB ASC LIMIT %1"
+        ( SenderID is NULL OR SenderID = '' OR SenderID = %P ) ORDER BY InsertIntoDB ASC LIMIT %1
 
     Query specific parameters:
 
@@ -232,7 +232,7 @@ are selected for default queries during initialization.
     .. code-block:: sql
 
         SELECT Text, Coding, UDH, Class, TextDecoded, ID, SequencePosition 
-        FROM outbox_multipart WHERE ID=%1 AND SequencePosition=%2"
+        FROM outbox_multipart WHERE ID=%1 AND SequencePosition=%2
 
     Query specific parameters:
 
@@ -365,7 +365,7 @@ are selected for default queries during initialization.
     .. code-block:: sql
 
         UPDATE phones SET TimeOut= (NOW() + INTERVAL 10 SECOND) + 0, 
-        Battery = %1, Signal = %2 WHERE IMEI = %I"
+        Battery = %1, Signal = %2 WHERE IMEI = %I
 
     Query specific parameters:
 
