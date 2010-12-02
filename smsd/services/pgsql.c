@@ -30,7 +30,7 @@ time_t SMSDPgSQL_GetDate(SQL_result rc, unsigned int field)
 	const char *date;
 	struct tm t;
 	int ret;
-	
+
 	date = PQgetvalue(rc.pg.res, rc.pg.iter, field);
 	/* windows has not strptime() */
 	ret = sscanf(date, "%u-%u-%u %u:%u:%u", &t.tm_year, &t.tm_mon, &t.tm_mday, &t.tm_hour, &t.tm_min, &t.tm_sec);
@@ -45,20 +45,14 @@ time_t SMSDPgSQL_GetDate(SQL_result rc, unsigned int field)
 		return mktime(&t);
 	}
 	SMSDPgSQL.error = "Failed to process date!";
-	return -1;	
+	return -1;
 }
 
 gboolean SMSDPgSQL_GetBool(SQL_result rc, unsigned int field)
 {
 	const char *value;
 	value = PQgetvalue(rc.pg.res, rc.pg.iter, field);
-	if (strcasecmp(value, "yes") == 0 || strcasecmp(value, "TRUE") == 0 || strcasecmp(value, "y") == 0 || strcasecmp(value, "t") == 0) {
-		return TRUE;
-	}
-	if (strcasecmp(value, "no") == 0 || strcasecmp(value, "FALSE") == 0 || strcasecmp(value, "n") == 0 || strcasecmp(value, "f") == 0) {
-		return FALSE;
-	}
-	return -1;
+	return GSM_StringToBool(value);
 }
 
 const char *SMSDPgSQL_GetString(SQL_result rc, unsigned int field)
@@ -180,7 +174,7 @@ char * SMSDPgSQL_QuoteString(SQL_conn *conn, const char *from)
 
 unsigned long SMSDPgSQL_NumRows(SQL_result Res)
 {
-	return PQntuples(Res.pg.res); 
+	return PQntuples(Res.pg.res);
 }
 
 
@@ -193,7 +187,7 @@ unsigned long long SMSDPgSQL_SeqID(SQL_conn *conn, const char *seq_id)
 {
 	unsigned long id;
 	char buff[100];
-	PGresult *rc; 
+	PGresult *rc;
 	int Status;
 
 	snprintf(buff, sizeof(buff), "SELECT currval('%s')", seq_id);

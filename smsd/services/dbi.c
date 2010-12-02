@@ -130,17 +130,7 @@ gboolean SMSDDBI_GetBool(SQL_result rc, unsigned int field)
 			}
 		case DBI_TYPE_STRING:
 			value = dbi_result_get_string_idx(res, field);
-			if (strcasecmp(value, "yes") == 0 || strcasecmp(value, "TRUE") == 0 || strcasecmp(value, "y") == 0 || strcasecmp(value, "t") == 0) {
-				return TRUE;
-			}
-			if (strcasecmp(value, "no") == 0 || strcasecmp(value, "FALSE") == 0 || strcasecmp(value, "n") == 0 || strcasecmp(value, "f") == 0) {
-				return FALSE;
-			}
-			if (strcasecmp(value, "default") == 0) {
-				return -1;
-			}
-			SMSDDBI.error = "Failed to process gboolean";
-			return -1;
+			return GSM_StringToBool(value);
 		case DBI_TYPE_ERROR:
 		default:
 			SMSDDBI.error = "Wrong gboolean field type!";

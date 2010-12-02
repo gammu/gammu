@@ -37,7 +37,7 @@ time_t SMSDMySQL_GetDate(SQL_result rc, unsigned int field)
 	const char *date;
 	int ret;
 	struct tm t;
-	
+
 	SMSDMySQL.error = NULL;
 	date = rc.my.row[field];
 	/* windows has not strptime() */
@@ -59,18 +59,12 @@ time_t SMSDMySQL_GetDate(SQL_result rc, unsigned int field)
 gboolean SMSDMySQL_GetBool(SQL_result rc, unsigned int field)
 {
 	const char *value = rc.my.row[field];
-	
+
 	SMSDMySQL.error = NULL;
 	if(atoi(value) > 0){
 		return TRUE;
 	}
-	if (strcasecmp(value, "yes") == 0 || strcasecmp(value, "TRUE") == 0 || strcasecmp(value, "y") == 0 || strcasecmp(value, "t") == 0) {
-		return TRUE;
-	}
-	if (strcasecmp(value, "no") == 0 || strcasecmp(value, "FALSE") == 0 || strcasecmp(value, "n") == 0 || strcasecmp(value, "f") == 0) {
-		return FALSE;
-	}
-	return FALSE;
+	return GSM_StringToBool(value);
 }
 
 const char *SMSMySQL_GetString(SQL_result res, unsigned int col)
@@ -151,12 +145,12 @@ static SQL_Error SMSDMySQL_Query(GSM_SMSDConfig * Config, const char *query, SQL
 		if (error == 2006 || error == 2013 || error == 2012) { /* connection lost */
 			return SQL_TIMEOUT;
 		}
-		return SQL_FAIL;	
+		return SQL_FAIL;
 	}
-	
+
 	res->my.res = mysql_store_result(db->conn.my);
-	res->my.row = NULL; 
-	res->my.con = db->conn.my; 
+	res->my.row = NULL;
+	res->my.con = db->conn.my;
 
 	return SQL_OK;
 }
@@ -185,7 +179,7 @@ char * SMSDMySQL_QuoteString(SQL_conn *conn, const char *string)
 	char *buff;
 	int len = strlen(string);
 	buff = malloc(len*2+3);
-	
+
 	buff[0] = '\'';
 	buff[1] = '\0';
 	mysql_real_escape_string(conn->my, buff+1, string, len);
