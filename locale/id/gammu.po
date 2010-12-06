@@ -1949,7 +1949,7 @@ msgstr "Konfigurasi tidak terbaca, menggunakan konfigurasi awal"
 #, c-format
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
-msgstr "Versi libGammu.so berbeda dengan versi Gammu (%s)\n"
+msgstr "Versi libGammu.so (%s) berbeda dengan versi Gammu (%s)\n"
 
 #: gammu/memory.c:41 gammu/memory.c:95 gammu/memory.c:113 gammu/memory.c:240
 #: gammu/memory.c:357
