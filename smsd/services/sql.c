@@ -1065,7 +1065,7 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 		return ERR_UNKNOWN;
 	}
 
-	if (SMSDSQL_option(Config, SQL_QUERY_REFRESH_SEND_STATUS, "reresh_send_status",
+	if (SMSDSQL_option(Config, SQL_QUERY_REFRESH_SEND_STATUS, "refresh_send_status",
 		"UPDATE outbox SET SendingTimeOut = ",
 			SMSDSQL_NowPlus(Config, locktime),
 			" WHERE ID = %1 AND (SendingTimeOut < ",

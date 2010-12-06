@@ -176,7 +176,7 @@ are selected for default queries during initialization.
 
         UPDATE phones SET Received = Received + 1 WHERE IMEI = %I
 
-.. config:option:: reresh_send_status
+.. config:option:: refresh_send_status
 
     Update messages in outbox.
 
