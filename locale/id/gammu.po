@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.28.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-11-29 10:09+0100\n"
-"PO-Revision-Date: 2010-12-06 10:59+0200\n"
+"PO-Revision-Date: 2010-12-06 11:00+0200\n"
 "Last-Translator: sihar <simbolonsihar@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -2934,7 +2934,7 @@ msgstr ", lebar %i, tinggi %i\n"
 #: gammu/misc.c:1717
 #, c-format
 msgid "What format of output file logo (\"%s\") ?\n"
-msgstr ""
+msgstr "Apa format logo (\"%s\") ?\n"
 
 #: gammu/misc.c:1742
 #, c-format
