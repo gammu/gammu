@@ -1,14 +1,14 @@
 python-gammu
 ============
 
-Python bingings for Gammu library are now part of Gammu source package
+Python bindings for Gammu library are now part of Gammu source package
 (in python subdirectory).  They are built automatically if you have
 installed Python with all needed tools.
 
 Homepage
 ========
 
-<http://cihar.com/gammu/python>
+<http://wammu.eu/python-gammu/>
 
 License
 =======
@@ -22,12 +22,13 @@ Please see included python documentation:
 >>> import gammu
 >>> help(gammu)
 
-Alternatively you can use epydoc to generate browsable version, which is
-also available on-line at <http://cihar.com/gammu/python/docs>.
+Alternatively you can use Sphinx to generate browsable version, which is
+also available on-line at <http://wammu.eu/docs/manual/>.
 
-Bug reporting
-=============
+Feedback and bug reports
+========================
 
-Please report found bugs to <http://bugs.cihar.com>.
+Any feedback is welcome, see <http://wammu.eu/support/> for information
+how to contact developers.
 
 # vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us

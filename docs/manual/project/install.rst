@@ -366,3 +366,10 @@ detected), please attach :file:`CMakeCache.txt`,
 :file:`CMakeFiles/CMakeError.log` and :file:`CMakeFiles/CMakeOutput.log` files
 to the report. It will help diagnose what was detected on the system and
 possibly fix these errors.
+
+Debugging crashes
+=================
+
+To debug program crashes, you might want to build Gammu with
+``-DENABLE_PROTECTION=OFF``, otherwise debugging tools are somehow confused
+with protections GCC makes and produce bogus back traces.
