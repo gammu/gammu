@@ -328,6 +328,8 @@ like following:
 Fully documented example
 ++++++++++++++++++++++++
 
+You can find this sample file as :file:`docs/config/gammurc` in Gammu sources.
+
 .. literalinclude:: ../../../docs/config/gammurc
    :language: ini
 
