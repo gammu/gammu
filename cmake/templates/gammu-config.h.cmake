@@ -4,8 +4,8 @@
 /* -------------------------- Gammu specific ---------------------------- */
 
 /* Version of package */
-#define VERSION "@VERSION@"
-#define VERSION_NUM @VERSION_NUM@
+#define GAMMU_VERSION "@GAMMU_VERSION@"
+#define GAMMU_VERSION_NUM @GAMMU_VERSION_NUM@
 
 /* Define if want DEBUG info */
 #cmakedefine DEBUG
