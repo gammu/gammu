@@ -317,24 +317,33 @@ void SMSD_Log(SMSD_DebugLevel level, GSM_SMSDConfig *Config, const char *format,
 	}
 }
 
+/**
+ * Function used for passing log from libGammu to SMSD log.
+ */
 void SMSD_Log_Function(const char *text, void *data)
 {
 	GSM_SMSDConfig *Config = (GSM_SMSDConfig *)data;
 	size_t pos;
 	size_t newsize;
 
+	/* Dump the buffer if we got \n */
 	if (strcmp("\n", text) == 0) {
 		SMSD_Log(DEBUG_GAMMU, Config, "gammu: %s", Config->gammu_log_buffer);
 		Config->gammu_log_buffer[0] = 0;
 		return;
 	}
 
+	/* Find out current position in the buffer */
 	if (Config->gammu_log_buffer == NULL) {
 		pos = 0;
 	} else {
 		pos = strlen(Config->gammu_log_buffer);
 	}
+
+	/* Calculate how much memory we need */
 	newsize = pos + strlen(text) + 1;
+
+	/* Reallocate buffer if needed */
 	if (newsize > Config->gammu_log_buffer_size) {
 		newsize += 50;
 		Config->gammu_log_buffer = realloc(Config->gammu_log_buffer, newsize);
@@ -342,6 +351,7 @@ void SMSD_Log_Function(const char *text, void *data)
 		Config->gammu_log_buffer_size = newsize;
 	}
 
+	/* Copy new text to the log buffer */
 	strcpy(Config->gammu_log_buffer + pos, text);
 }
 
