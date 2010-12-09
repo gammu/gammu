@@ -355,6 +355,9 @@ void SMSD_Log_Function(const char *text, void *data)
 	strcpy(Config->gammu_log_buffer + pos, text);
 }
 
+/**
+ * Allocates and clears new SMSD configuration structure.
+ */
 GSM_SMSDConfig *SMSD_NewConfig(const char *name)
 {
 	GSM_SMSDConfig *Config;
@@ -450,7 +453,9 @@ GSM_Error SMSGetService(GSM_SMSDConfig *Config)
 	return ERR_NONE;
 }
 
-
+/**
+ * Frees any data allocated under SMSD configuration.
+ */
 void SMSD_FreeConfig(GSM_SMSDConfig *Config)
 {
 	if (Config->Service != NULL && Config->connected) {
@@ -592,6 +597,9 @@ GSM_Error SMSD_ConfigureLogging(GSM_SMSDConfig *Config, gboolean uselog)
 	return ERR_NONE;
 }
 
+/**
+ * Reads configuration file and feeds it's content into SMSD configuration structure.
+ */
 GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean uselog)
 {
 	GSM_Config 		smsdcfg;
@@ -987,6 +995,12 @@ void SMSD_RunOnReceiveEnvironment(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Conf
 }
 
 #ifdef WIN32
+
+/**
+ * Executes external command.
+ *
+ * This is Windows variant.
+ */
 gboolean SMSD_RunOn(const char *command, GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, const char *locations)
 {
 	BOOL ret;
@@ -1029,6 +1043,11 @@ gboolean SMSD_RunOn(const char *command, GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 }
 #else
 
+/**
+ * Executes external command.
+ *
+ * This is POSIX variant.
+ */
 gboolean SMSD_RunOn(const char *command, GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, const char *locations)
 {
 	int pid;
