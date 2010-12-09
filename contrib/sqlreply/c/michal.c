@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
 #ifdef WIN32
 #  include <windows.h>
@@ -79,11 +81,11 @@ int check_if_avail(unsigned char *buf)
 
 void execute_one_action(unsigned char *buf3)
 {
-	unsigned char buf4[5000];
-	unsigned char *b;
-	int	 num,num2,i;
+	char buf4[5000];
+	char *b;
+	int	 num,num2;
 	char 	 *args[10];
-	unsigned char buffe[10][200];
+	char buffe[10][200];
 
 	buf4[0]     = 0;
 	b 	    = buf3;
@@ -150,8 +152,8 @@ void execute_one_action(unsigned char *buf3)
 
 void execute_all_actions(unsigned char *buf)
 {
-	int 		i;
-	unsigned char 	buf3[5000];
+	size_t		i;
+	char 	buf3[5000];
 
 	buf3[0] = 0;
 	for (i=0;i<strlen(buf);i++) {
@@ -166,10 +168,11 @@ void execute_all_actions(unsigned char *buf)
 	if (buf3[0] != 0) execute_one_action(buf3);
 }
 
-void execute_actions()
+void execute_actions(void)
 {
-	int 		first,i,j;
-	unsigned char 	buf3[5000],buf4[5000];
+	int 		first,j;
+    size_t i;
+	char 	buf3[5000],buf4[5000];
 
 	//we search for select part
 	first   = 0;
@@ -224,7 +227,7 @@ void execute_actions()
 	mysql_free_result(Res3);
 }
 
-void main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
 	unsigned char buf[5000];
 
@@ -238,23 +241,23 @@ void main(int argc, char *argv[])
 
 	if (argc < 4) {
 		printf("Usage: PC User Password Database\n");
-		return;
+		return 2;
 	}
 
 	//connect
 	if (!mysql_real_connect(&DB,argv[1],argv[2],argv[3],argv[4],0,NULL,0)) {
 		printf("I can't read rules & actions database");
-		return;
+		return 2;
 	}
 
 	while (TRUE) {
 		//search for rules ID
 		sprintf(buf, "select ID from rules group by ID");
 		if (mysql_real_query(&DB,buf,strlen(buf))) {
-			return;
+			return 1;
 		}
 		if (!(Res = mysql_store_result(&DB))) {
-			return;
+			return 1;
 		}
 		while ((Row = mysql_fetch_row(Res))) {
 			//search for all rules with some ID and check them inside
@@ -264,10 +267,10 @@ void main(int argc, char *argv[])
 			//yes, we execute actions
 			sprintf(buf, "SELECT ID,ActionID,User,User2,Pass,Pass2,DB,DB2,PC,PC2,SQL,User3,Pass3,DB3,PC3 FROM `actions` WHERE ID='%s'",Row[0]);
 			if (mysql_real_query(&DB,buf,strlen(buf))) {
-				return;
+				return 1;
 			}
 			if (!(Res2 = mysql_store_result(&DB))) {
-				return;
+				return 1;
 			}
 			while ((Row2 = mysql_fetch_row(Res2))) {
 				//we don't have two parts
@@ -285,5 +288,5 @@ void main(int argc, char *argv[])
 #endif
 	}
 
-	return;
+	return 0;
 }
