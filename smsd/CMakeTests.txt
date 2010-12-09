@@ -72,7 +72,7 @@ if (WITH_BACKUP)
         add_test(${PROGRAM}-help "${CMAKE_CURRENT_BINARY_DIR}/${PROGRAM}${GAMMU_TEST_SUFFIX}" --help)
         add_test(${PROGRAM}-version "${CMAKE_CURRENT_BINARY_DIR}/${PROGRAM}${GAMMU_TEST_SUFFIX}" --version)
         set_tests_properties(${PROGRAM}-version PROPERTIES
-            PASS_REGULAR_EXPRESSION "${VERSION}"
+            PASS_REGULAR_EXPRESSION "${GAMMU_VERSION}"
             )
         add_test(${PROGRAM}-fail "${CMAKE_CURRENT_BINARY_DIR}/${PROGRAM}${GAMMU_TEST_SUFFIX}" --nonsense)
         set_tests_properties(

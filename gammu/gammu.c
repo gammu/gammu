@@ -103,7 +103,7 @@ static void ListNetworks(int argc, char *argv[])
 static void PrintVersion(void)
 {
 	printf(_("[Gammu version %s built %s on %s using %s]"),
-	       VERSION, __TIME__, __DATE__, GetCompiler());
+	       GAMMU_VERSION, __TIME__, __DATE__, GetCompiler());
 	printf("\n\n");
 }
 
@@ -306,9 +306,9 @@ static void CheckVersion(int argc, char *argv[])
 
 			new_version[i] = 0;
 
-			if (VersionToInt(new_version) > VersionToInt(VERSION)) {
+			if (VersionToInt(new_version) > VersionToInt(GAMMU_VERSION)) {
 				printf_info(_("There is newer stable Gammu version available! (%s instead of %s)\n"),
-				       new_version, VERSION);
+				       new_version, GAMMU_VERSION);
 			}
 		}
 	}
@@ -324,9 +324,9 @@ static void CheckVersion(int argc, char *argv[])
 
 			new_version[i] = 0;
 
-			if (VersionToInt(new_version) > VersionToInt(VERSION)) {
+			if (VersionToInt(new_version) > VersionToInt(GAMMU_VERSION)) {
 				printf_info(_("There is newer testing Gammu version available! (%s instead of %s)\n"),
-				       new_version, VERSION);
+				       new_version, GAMMU_VERSION);
 			}
 		}
 	}
@@ -1210,9 +1210,9 @@ int main(int argc, char *argv[])
 	}
 
 	/* Check used version vs. compiled */
-	if (!strcasecmp(GetGammuVersion(), VERSION) == 0) {
+	if (!strcasecmp(GetGammuVersion(), GAMMU_VERSION) == 0) {
 		printf_err(_("Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"),
-			   GetGammuVersion(), VERSION);
+			   GetGammuVersion(), GAMMU_VERSION);
 		Terminate(98);
 	}
 

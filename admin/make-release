@@ -9,7 +9,7 @@ repo=gammu
 #toolchain=cmake/Toolchain-mingw32msvc.cmake
 toolchain=cmake/Toolchain-mingw32.cmake
 
-version=`sed -n 's/set (VERSION "\([^"]*\)".*)/\1/p' CMakeLists.txt`
+version=`sed -n 's/set (GAMMU_VERSION "\([^"]*\)".*)/\1/p' CMakeLists.txt`
 
 srcdir=`pwd`
 if [ -f ~/.id/codesigning.spc -a "x$NO_SIGN" = "x" ] ; then

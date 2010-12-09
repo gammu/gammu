@@ -1,5 +1,5 @@
 Name:               gammu
-Version:            @VERSION@
+Version:            @GAMMU_VERSION@
 Release:            1
 # Set to 0 to disable bluetooth support
 %if 0%{?opensuse_bs} && 0%{?sles_version} == 9
@@ -238,11 +238,11 @@ Currently supported phones include:
 This package contains Gammu SMS Daemon and tool to inject messages 
 into the queue.
 
-%package -n libGammu@SOVERSION@
+%package -n libGammu@GAMMU_SOVERSION@
 Summary:    Mobile phone management library
 Group:      System/Libraries
 
-%description -n libGammu@SOVERSION@
+%description -n libGammu@GAMMU_SOVERSION@
 Gammu is command line utility and library to work with mobile phones
 from many vendors. Support for different models differs, but basic
 functions should work with majority of them. Program can work with
@@ -260,11 +260,11 @@ Currently supported phones include:
 
 This package contains Gammu shared library.
 
-%package -n libgsmsd@SOVERSION@
+%package -n libgsmsd@GAMMU_SOVERSION@
 Summary:    SMS daemon helper library
 Group:      System/Libraries
 
-%description -n libgsmsd@SOVERSION@
+%description -n libgsmsd@GAMMU_SOVERSION@
 Gammu is command line utility and library to work with mobile phones
 from many vendors. Support for different models differs, but basic
 functions should work with majority of them. Program can work with
@@ -313,13 +313,13 @@ make -C build-dir install DESTDIR=%buildroot
 cat libgammu.lang >> %{name}.lang
 install -m644 docs/config/smsdrc %buildroot/etc/gammu-smsdrc
 
-%post -n libGammu@SOVERSION@ -p /sbin/ldconfig
+%post -n libGammu@GAMMU_SOVERSION@ -p /sbin/ldconfig
 
-%post -n libgsmsd@SOVERSION@ -p /sbin/ldconfig
+%post -n libgsmsd@GAMMU_SOVERSION@ -p /sbin/ldconfig
 
-%postun -n libGammu@SOVERSION@ -p /sbin/ldconfig
+%postun -n libGammu@GAMMU_SOVERSION@ -p /sbin/ldconfig
 
-%postun -n libgsmsd@SOVERSION@ -p /sbin/ldconfig
+%postun -n libgsmsd@GAMMU_SOVERSION@ -p /sbin/ldconfig
 
 %post smsd
 %if 0%{?mandriva_version}
@@ -393,11 +393,11 @@ fi
 %attr(755,root,root) %config /etc/init.d/gammu-smsd
 %config /etc/gammu-smsdrc
 
-%files -n libGammu@SOVERSION@
+%files -n libGammu@GAMMU_SOVERSION@
 %defattr(-,root,root)
 %_libdir/libGammu*.so.*
 
-%files -n libgsmsd@SOVERSION@
+%files -n libgsmsd@GAMMU_SOVERSION@
 %defattr(-,root,root)
 %_libdir/libgsmsd*.so.*
 

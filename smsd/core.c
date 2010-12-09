@@ -1641,7 +1641,7 @@ GSM_Error SMSD_InitSharedMemory(GSM_SMSDConfig *Config, gboolean writable)
 		Config->Status->Version = SMSD_SHM_VERSION;
 		strcpy(Config->Status->PhoneID, Config->PhoneID);
 		sprintf(Config->Status->Client, "Gammu %s on %s compiler %s",
-			VERSION,
+			GAMMU_VERSION,
 			GetOS(),
 			GetCompiler());
 		memset(&Config->Status->Charge, 0, sizeof(GSM_BatteryCharge));

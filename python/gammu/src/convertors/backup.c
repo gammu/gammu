@@ -187,7 +187,7 @@ int BackupFromPython(PyObject * dict, GSM_Backup * backup)
 	s = GetCharFromDict(dict, "Creator");
 	if (s == 0) {
 		PyErr_Clear();
-		strcpy(backup->Creator, "python-gammu " VERSION);
+		strcpy(backup->Creator, "python-gammu " GAMMU_VERSION);
 	} else {
 		len = strlen(s);
 		if (len > 50 - 1)

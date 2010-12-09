@@ -4,7 +4,7 @@
 set -e
 
 LOCS=`ls locale/*/gammu.po | sed 's@.*/\(.*\)/[^/]*@\1@'`
-ver=`sed -n 's/set (VERSION "\([^"]*\)".*)/\1/p' CMakeLists.txt`
+ver=`sed -n 's/set (GAMMU_VERSION "\([^"]*\)".*)/\1/p' CMakeLists.txt`
 
 po4a \
     --msgid-bugs-address michal@cihar.com \

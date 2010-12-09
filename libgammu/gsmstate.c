@@ -690,7 +690,7 @@ GSM_Error GSM_InitConnection_Log(GSM_StateMachine *s, int ReplyNum, GSM_Log_Func
 		}
 
 		smprintf_level(s, D_ERROR, "[Gammu            - %s built %s %s using %s]\n",
-				VERSION,
+				GAMMU_VERSION,
 				__TIME__,
 				__DATE__,
 				GetCompiler()
@@ -711,8 +711,8 @@ GSM_Error GSM_InitConnection_Log(GSM_StateMachine *s, int ReplyNum, GSM_Log_Func
 		}
 
 		if (GSM_GetDI(s)->dl == DL_BINARY) {
-			smprintf(s,"%c",((unsigned char)strlen(VERSION)));
-			smprintf(s,"%s",VERSION);
+			smprintf(s,"%c",((unsigned char)strlen(GAMMU_VERSION)));
+			smprintf(s,"%s",GAMMU_VERSION);
 		}
 
 		error = GSM_RegisterAllConnections(s, s->CurrentConfig->Connection);

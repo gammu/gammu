@@ -5,6 +5,6 @@ includedir=${prefix}/@INSTALL_INC_DIR@
 
 Name: gammu
 Description: Gammu library
-Version: @VERSION@
+Version: @GAMMU_VERSION@
 Libs: -L${libdir} -lGammu -lm @GAMMU_PRIVATE_LIBS@
 Cflags: -I${includedir}

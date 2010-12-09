@@ -15,7 +15,7 @@ reset SOFT
 
 add_test(gammu-help "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" help)
 set_tests_properties(gammu-help PROPERTIES
-    PASS_REGULAR_EXPRESSION "${VERSION}"
+    PASS_REGULAR_EXPRESSION "${GAMMU_VERSION}"
     )
 add_test(gammu-features "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" features)
 add_test(gammu-version "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" version)

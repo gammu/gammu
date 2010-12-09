@@ -189,7 +189,7 @@ static GSM_Error SMSDSQL_NamedQuery(GSM_SMSDConfig * Config, const char *sql_que
 				to_print = Config->PhoneID;
 				break;
 			case 'N':
-				snprintf(static_buff, sizeof(static_buff), "Gammu %s, %s, %s", VERSION, GetOS(), GetCompiler());
+				snprintf(static_buff, sizeof(static_buff), "Gammu %s, %s, %s", GAMMU_VERSION, GetOS(), GetCompiler());
 				to_print = static_buff;
 				break;
 			case 'A':
@@ -783,7 +783,7 @@ static GSM_Error SMSDSQL_CreateOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConf
 	struct GSM_SMSDdbobj *db = Config->db;
 	const char *report, *multipart, *q;
 
-	sprintf(creator, "Gammu %s",VERSION); /* %1 */
+	sprintf(creator, "Gammu %s",GAMMU_VERSION); /* %1 */
 	multipart = (sms->Number == 1) ? "FALSE" : "TRUE"; /* %3 */
 
 	for (i = 0; i < sms->Number; i++) {

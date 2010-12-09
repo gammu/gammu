@@ -199,7 +199,7 @@ const char *GetGammuLocalePath(void)
 
 const char *GetGammuVersion(void)
 {
-	static const char Buffer[] = VERSION;
+	static const char Buffer[] = GAMMU_VERSION;
 	return Buffer;
 }
 

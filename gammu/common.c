@@ -234,7 +234,7 @@ GSM_Error GSM_ReadHTTPFile(const char *url, GSM_File *file)
 	if (dl_handle == NULL) return FALSE;
 
 	curl_easy_setopt(dl_handle, CURLOPT_URL, url);
-	curl_easy_setopt(dl_handle, CURLOPT_USERAGENT, "Gammu/" VERSION);
+	curl_easy_setopt(dl_handle, CURLOPT_USERAGENT, "Gammu/" GAMMU_VERSION);
 	curl_easy_setopt(dl_handle, CURLOPT_WRITEFUNCTION, write_mem);
 	curl_easy_setopt(dl_handle, CURLOPT_WRITEDATA, file);
 	curl_easy_setopt(dl_handle, CURLOPT_FOLLOWLOCATION, 1);

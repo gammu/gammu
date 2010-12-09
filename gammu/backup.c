@@ -302,7 +302,7 @@ void DoBackup(int argc, char *argv[])
 	GSM_ClearBackup(&Backup);
 	GSM_GetBackupFormatFeatures(GSM_GuessBackupFormat(argv[2], FALSE),&Info);
 
-	sprintf(Backup.Creator,"Gammu %s",VERSION);
+	sprintf(Backup.Creator, "Gammu %s", GAMMU_VERSION);
 	if (strlen(GetOS()) != 0) {
 		strcat(Backup.Creator+strlen(Backup.Creator),", ");
 		strcat(Backup.Creator+strlen(Backup.Creator),GetOS());

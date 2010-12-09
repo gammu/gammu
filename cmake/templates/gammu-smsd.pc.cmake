@@ -6,6 +6,6 @@ includedir=${prefix}/@INSTALL_INC_DIR@
 Name: gammu-smsd
 Description: Gammu SMSD library
 Requires: gammu
-Version: @VERSION@
+Version: @GAMMU_VERSION@
 Libs: -L${libdir} -lgsmsd -lm @SMSD_PRIVATE_LIBS@
 Cflags: -I${includedir}

@@ -73,7 +73,7 @@ copyright = u'2009-2010, Michal Čihař <michal@cihar.com>'
 # built documents.
 #
 # The short X.Y version.
-version = '@VERSION@'
+version = '@GAMMU_VERSION@'
 # The full version, including alpha/beta/rc tags.
 release = version
 

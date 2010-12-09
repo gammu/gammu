@@ -1,6 +1,6 @@
 /**
  * \mainpage Gammu internals
- * \version @VERSION@
+ * \version @GAMMU_VERSION@
  * \author Michal Čihař
  *
  * \b Gammu is library for communicating with (mostly) GSM phones.
