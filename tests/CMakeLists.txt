@@ -997,10 +997,3 @@ if (NOT WIN32)
         message("/var/lock is not writable, skipping locking tests!")
     endif (VAR_LOCK_WRITABLE EQUAL 0)
 endif (NOT WIN32)
-
-# Test for build sqlreply code
-if (MYSQL_FOUND)
-    add_executable(sqlreply-michal "${Gammu_SOURCE_DIR}/contrib/sqlreply/c/michal.c")
-    target_link_libraries (sqlreply-michal ${MYSQL_LIBRARIES})
-    include_directories (${MYSQL_INCLUDE_DIR})
-endif (MYSQL_FOUND)

@@ -103,3 +103,4 @@ endif (INSTALL_UDEV_RULES)
 # We do not install them intentionally, just check whether they still compile
 add_subdirectory(smscgi)
 add_subdirectory(convert)
+add_subdirectory(sqlreply)
