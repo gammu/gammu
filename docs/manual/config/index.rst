@@ -240,7 +240,7 @@ Debugging options
 
     Custom features for phone. This can be used as override when values coded
     in ``common/gsmphones.c`` are bad or missing. Consult
-    ``include/gammu-info.h`` for possible values (all GSM_Feature values
+    ``include/gammu-info.h`` for possible values (all :c:type:`GSM_Feature` values
     without leading ``F_`` prefix). Please report correct values to Gammu
     authors.
 
