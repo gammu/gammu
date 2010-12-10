@@ -161,7 +161,7 @@ typedef enum {
 } GSM_DateFormat;
 
 typedef struct {
-	unsigned char DateSeparator;
+	char DateSeparator;
 	GSM_DateFormat DateFormat;
 	gboolean AMPMTime;
 } GSM_Locale;
