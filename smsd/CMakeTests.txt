@@ -32,7 +32,7 @@ if (WITH_BACKUP)
             FAIL_REGULAR_EXPRESSION "DBI error"
             )
         if (HAVE_ALARM)
-            add_test("smsd-daemon-${_driver}" "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/.smsdrc" -X 10)
+            add_test("smsd-daemon-${_driver}" "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/.smsdrc" -X 10 -p ${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/smsd.pid)
             set_tests_properties("smsd-daemon-${_driver}" PROPERTIES
                 FAIL_REGULAR_EXPRESSION "DBI error;SQL failed"
                 )

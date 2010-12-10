@@ -8,6 +8,10 @@ SERVICE="$1"
 
 TEST_MATCH=";999999999999999;3;9;0;100;42"
 
+if [ "@HAVE_KILL@" -eq 1 ] ; then
+    SMSD_EXTRA_PARAMS="-p @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/smsd.pid"
+fi
+
 echo "NOTICE: This test is quite tricky about timing, if you run it on really slow platform, it might fail."
 echo "NOTICE: Testing service $SERVICE"
 
@@ -175,7 +179,7 @@ esac
 @CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-inject@GAMMU_TEST_SUFFIX@ -c "$CONFIG_PATH" TEXT 123465 -text "Lorem ipsum." &
 @CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-inject@GAMMU_TEST_SUFFIX@ -c "$CONFIG_PATH" TEXT 123465 -text "Lorem ipsum."
 
-@CMAKE_CURRENT_BINARY_DIR@/gammu-smsd@GAMMU_TEST_SUFFIX@ -c "$CONFIG_PATH" &
+@CMAKE_CURRENT_BINARY_DIR@/gammu-smsd@GAMMU_TEST_SUFFIX@ -c "$CONFIG_PATH" $SMSD_EXTRA_PARAMS &
 SMSD_PID=$!
 
 sleep 10
