@@ -176,7 +176,7 @@ void execute_all_actions(unsigned char *buf)
 
 void execute_actions(void)
 {
-	int first, j;
+	int first, j = 0;
 	size_t i;
 	char buf3[5000], buf4[5000];
 
