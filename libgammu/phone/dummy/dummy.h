@@ -41,6 +41,7 @@
 typedef struct {
 	FILE *log_file;
 	GSM_SMSC SMSC;
+	GSM_Locale locale;
 	DIR *dir[DUMMY_MAX_FS_DEPTH + 1];
 	char dirnames[DUMMY_MAX_FS_DEPTH + 1][PATH_MAX];
 	int fs_depth;

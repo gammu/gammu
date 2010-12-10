@@ -360,6 +360,10 @@ GSM_Error DUMMY_Initialise(GSM_StateMachine *s)
 
 	s->Phone.Data.VerNum = GAMMU_VERSION_NUM;
 
+	Priv->locale.AMPMTime = FALSE;
+	Priv->locale.DateFormat = GSM_Date_DDMMYYYY;
+	Priv->locale.DateSeparator = '.';
+
 	return ERR_NONE;
 }
 
@@ -1752,12 +1756,16 @@ GSM_Error DUMMY_DeleteAllNote(GSM_StateMachine *s)
 
 GSM_Error DUMMY_GetLocale(GSM_StateMachine *s, GSM_Locale *locale)
 {
-	return ERR_NOTIMPLEMENTED;
+	GSM_Phone_DUMMYData *Priv = &s->Phone.Data.Priv.DUMMY;
+	*locale = Priv->locale;
+	return ERR_NONE;
 }
 
 GSM_Error DUMMY_SetLocale(GSM_StateMachine *s, GSM_Locale *locale)
 {
-	return ERR_NOTIMPLEMENTED;
+	GSM_Phone_DUMMYData *Priv = &s->Phone.Data.Priv.DUMMY;
+	Priv->locale = *locale;
+	return ERR_NONE;
 }
 
 GSM_Error DUMMY_GetFileSystemStatus(GSM_StateMachine *s, GSM_FileSystemStatus *Status)
