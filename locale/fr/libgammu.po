@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-11-15 10:00+0100\n"
+"POT-Creation-Date: 2010-12-11 22:13+0100\n"
 "PO-Revision-Date: 2009-06-01 14:02+0200\n"
 "Last-Translator: Cédric Corazza <cedric.corazza@wanadoo.fr>\n"
 "Language-Team: none\n"
-"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Pootle 1.2.1\n"
 
@@ -354,7 +354,7 @@ msgstr ""
 msgid "Unknown error description."
 msgstr "La description de l'erreur est inconnue."
 
-#: libgammu/phone/dummy/dummy.c:583
+#: libgammu/phone/dummy/dummy.c:587
 msgid "Templates"
 msgstr "Modèles"
 

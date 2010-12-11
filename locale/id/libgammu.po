@@ -4,16 +4,16 @@
 # Automatically generated, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: libGammu 1.28.93\n"
+"Project-Id-Version: libGammu 1.28.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-11-15 10:00+0100\n"
+"POT-Creation-Date: 2010-12-11 22:13+0100\n"
 "PO-Revision-Date: 2010-03-17 17:52+0200\n"
 "Last-Translator: Azhari Harahap <azhari.harahap@yahoo.com>\n"
 "Language-Team: none\n"
-"Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: id\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Pootle 2.0.1\n"
 
@@ -336,7 +336,7 @@ msgstr "Gagal mengambil nomor SMSC dari telepon."
 msgid "Unknown error description."
 msgstr "Deskripsi kesalahan tidak diketahui."
 
-#: libgammu/phone/dummy/dummy.c:583
+#: libgammu/phone/dummy/dummy.c:587
 msgid "Templates"
 msgstr "Template-template"
 

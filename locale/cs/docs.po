@@ -8,16 +8,16 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu-docs 1.28.93\n"
+"Project-Id-Version: Gammu-docs 1.28.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-09-03 14:46+0300\n"
 "PO-Revision-Date: 2010-08-27 13:36+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
-"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: cs\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Generator: Pootle 2.0.5\n"
 
@@ -5584,11 +5584,11 @@ msgstr "Změnit všechna čísla začínající na +3620, +3630, +3660, +3670 na
 #. type: Plain text
 #: docs/user/gammu.1:2965
 msgid ""
-"Find: Type = NumberGeneral\\enEntry\\e([0-9][0-9]\\e)Text = \"\\e+36\\e"
-"(20\\e|30\\e|60\\e|70\\e)\\en"
+"Find: Type = NumberGeneral\\enEntry\\e([0-9][0-9]\\e)Text = \"\\e+36\\e(20"
+"\\e|30\\e|60\\e|70\\e)\\en"
 msgstr ""
-"Hledat: Type = NumberGeneral\\enEntry\\e([0-9][0-9]\\e)Text = \"\\e+36\\e"
-"(20\\e|30\\e|60\\e|70\\e)\\en"
+"Hledat: Type = NumberGeneral\\enEntry\\e([0-9][0-9]\\e)Text = \"\\e+36\\e(20"
+"\\e|30\\e|60\\e|70\\e)\\en"
 
 # type: Plain text
 #. type: Plain text
@@ -5619,8 +5619,8 @@ msgstr ""
 #: docs/user/gammu.1:2974
 msgid "Replace: Type = NumberMobile\\enEntry\\e1Text = \"\\e+36\\e2\\e3\"\\en"
 msgstr ""
-"Nahradit: Replace: Type = NumberMobile\\enEntry\\e1Text = \"\\e"
-"+36\\e2\\e3\"\\en"
+"Nahradit: Replace: Type = NumberMobile\\enEntry\\e1Text = \"\\e+36\\e2\\e3"
+"\"\\en"
 
 # type: SH
 #. type: SH
@@ -11438,9 +11438,9 @@ msgstr "# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us"
 #~ "zip, gettext-0.14.4-dep.zip, gettext-0.14.4-lib.zip from <http://gnuwin32."
 #~ "sourceforge.net/>. Unpack these to same directory."
 #~ msgstr ""
-#~ "Pro podporu překladu programu potřebujete gettext-0.14.4-bin.zip, "
-#~ "gettext-0.14.4-dep.zip, gettext-0.14.4-lib.zip z <http://gnuwin32."
-#~ "sourceforge.net/>. Rozbalte je všechny do jednoho adresáře."
+#~ "Pro podporu překladu programu potřebujete gettext-0.14.4-bin.zip, gettext-"
+#~ "0.14.4-dep.zip, gettext-0.14.4-lib.zip z <http://gnuwin32.sourceforge.net/"
+#~ ">. Rozbalte je všechny do jednoho adresáře."
 
 #~ msgid "CURL\n"
 #~ msgstr "CURL\n"
