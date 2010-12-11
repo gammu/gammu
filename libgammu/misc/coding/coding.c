@@ -479,44 +479,44 @@ static unsigned char GSM_DefaultAlphabetCharsExtension[][4] =
 
 void DecodeDefault (unsigned char *dest, const unsigned char *src, size_t len, gboolean UseExtensions, unsigned char *ExtraAlphabet)
 {
-	size_t 	i,current=0,j;
+	size_t 	pos,current=0,i;
 	gboolean	FoundSpecial = FALSE;
 
 #ifdef DEBUG
 	DumpMessageText(&GSM_global_debug, src, len);
 #endif
 
-	for (i = 0; i < len; i++) {
+	for (pos = 0; pos < len; pos++) {
 		FoundSpecial = FALSE;
-		if ((i < (len-1)) && UseExtensions) {
-			j=0;
-			while (GSM_DefaultAlphabetCharsExtension[j][0]!=0x00) {
-				if (GSM_DefaultAlphabetCharsExtension[j][0]==src[i] &&
-				    GSM_DefaultAlphabetCharsExtension[j][1]==src[i+1]) {
+		if ((pos < (len-1)) && UseExtensions) {
+			i=0;
+			while (GSM_DefaultAlphabetCharsExtension[i][0]!=0x00) {
+				if (GSM_DefaultAlphabetCharsExtension[i][0]==src[pos] &&
+				    GSM_DefaultAlphabetCharsExtension[i][1]==src[pos+1]) {
 					FoundSpecial = TRUE;
-					dest[current++] = GSM_DefaultAlphabetCharsExtension[j][2];
-					dest[current++] = GSM_DefaultAlphabetCharsExtension[j][3];
-					i++;
+					dest[current++] = GSM_DefaultAlphabetCharsExtension[i][2];
+					dest[current++] = GSM_DefaultAlphabetCharsExtension[i][3];
+					pos++;
 					break;
 				}
-				j++;
+				i++;
 			}
 		}
        		if (ExtraAlphabet!=NULL && !FoundSpecial) {
-			j = 0;
-			while (ExtraAlphabet[j] != 0x00 || ExtraAlphabet[j+1] != 0x00 || ExtraAlphabet[j+2] != 0x00) {
-				if (ExtraAlphabet[j] == src[i]) {
-					dest[current++] = ExtraAlphabet[j+1];
-					dest[current++] = ExtraAlphabet[j+2];
+			i = 0;
+			while (ExtraAlphabet[i] != 0x00 || ExtraAlphabet[i+1] != 0x00 || ExtraAlphabet[i+2] != 0x00) {
+				if (ExtraAlphabet[i] == src[pos]) {
+					dest[current++] = ExtraAlphabet[i+1];
+					dest[current++] = ExtraAlphabet[i+2];
 					FoundSpecial 	= TRUE;
                             		break;
                         	}
-                        	j=j+3;
+                        	i=i+3;
                     	}
                 }
 		if (!FoundSpecial) {
-			dest[current++] = GSM_DefaultAlphabetUnicode[src[i]][0];
-			dest[current++] = GSM_DefaultAlphabetUnicode[src[i]][1];
+			dest[current++] = GSM_DefaultAlphabetUnicode[src[pos]][0];
+			dest[current++] = GSM_DefaultAlphabetUnicode[src[pos]][1];
 		}
 	}
 	dest[current++]=0;
