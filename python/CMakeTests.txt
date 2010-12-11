@@ -36,11 +36,15 @@ add_test("py-pdu-decode"  ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/pdu-
 
 configure_file("examples/sms-encode-decode.py" "${CMAKE_CURRENT_BINARY_DIR}/test-sms-encode-decode.py" COPY_ONLY)
 add_test("py-sms-encode-decode" ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/test-sms-encode-decode.py")
-set_tests_properties("py-sms-encode-decode" PROPERTIES PASS_REGULAR_EXPRESSION "Comparsion: True")
+set_tests_properties("py-sms-encode-decode" PROPERTIES FAIL_REGULAR_EXPRESSION "Comparsion: False")
 
 configure_file("examples/sms-encode-decode-unicode.py" "${CMAKE_CURRENT_BINARY_DIR}/test-sms-encode-decode-unicode.py" COPY_ONLY)
 add_test("py-sms-encode-decode-unicode" ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/test-sms-encode-decode-unicode.py")
-set_tests_properties("py-sms-encode-decode-unicode" PROPERTIES PASS_REGULAR_EXPRESSION "Comparsion: True")
+set_tests_properties("py-sms-encode-decode-unicode" PROPERTIES FAIL_REGULAR_EXPRESSION "Comparsion: False")
+
+configure_file("examples/sms-encode-decode-gsm.py" "${CMAKE_CURRENT_BINARY_DIR}/test-sms-encode-decode-gsm.py" COPY_ONLY)
+add_test("py-sms-encode-decode-gsm" ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/test-sms-encode-decode-gsm.py")
+set_tests_properties("py-sms-encode-decode-gsm" PROPERTIES FAIL_REGULAR_EXPRESSION "Comparsion: False")
 
 configure_file("examples/sms-link.py" "${CMAKE_CURRENT_BINARY_DIR}/test-sms-link.py" COPY_ONLY)
 add_test("py-sms-link" ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/test-sms-link.py")

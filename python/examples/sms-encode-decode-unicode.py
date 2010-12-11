@@ -12,10 +12,10 @@ txt = u'.........1ě........2..ř......3...žš....4....ý....5....á....6....á
 # SMS info about message
 smsinfo = {'Entries':[{'ID': 'ConcatenatedTextLong', 'Buffer': txt}], 'Unicode': True}
 
-# encode SMS
+# encode SMSes
 sms = gammu.EncodeSMS(smsinfo)
 
-# decode back SMS
+# decode back SMSes
 decodedsms = gammu.DecodeSMS(sms)
 
 # show results
