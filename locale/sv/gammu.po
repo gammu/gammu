@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-11-29 10:09+0100\n"
+"POT-Creation-Date: 2010-12-11 22:13+0100\n"
 "PO-Revision-Date: 2009-02-19 00:16+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: none\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 1.1.0\n"
 
@@ -1665,8 +1665,8 @@ msgstr "Diverse"
 #, c-format
 msgid "There is newer stable Gammu version available! (%s instead of %s)\n"
 msgstr ""
-"Det finns en nyare stabil version av Gammu tillgänglig! (%s istället för %"
-"s)\n"
+"Det finns en nyare stabil version av Gammu tillgänglig! (%s istället för "
+"%s)\n"
 
 #: gammu/gammu.c:328
 #, c-format
