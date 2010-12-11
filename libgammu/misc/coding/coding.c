@@ -502,7 +502,7 @@ void DecodeDefault (unsigned char *dest, const unsigned char *src, size_t len, g
 			}
 		}
        		if (ExtraAlphabet!=NULL) {
-			for (i = 0; ExtraAlphabet[i] != 0x00 || ExtraAlphabet[i+1] != 0x00 || ExtraAlphabet[i+2] != 0x00; i += 3) {
+			for (i = 0; ExtraAlphabet[i] != 0x00; i += 3) {
 				if (ExtraAlphabet[i] == src[pos]) {
 					dest[current++] = ExtraAlphabet[i+1];
 					dest[current++] = ExtraAlphabet[i+2];
@@ -510,7 +510,7 @@ void DecodeDefault (unsigned char *dest, const unsigned char *src, size_t len, g
                         	}
                     	}
 			/* Skip rest if we've found something */
-			if (ExtraAlphabet[i] != 0x00 || ExtraAlphabet[i+1] != 0x00 || ExtraAlphabet[i+2] != 0x00) {
+			if (ExtraAlphabet[i] != 0x00) {
 				continue;
 			}
                 }
