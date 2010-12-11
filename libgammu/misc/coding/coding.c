@@ -459,22 +459,22 @@ static unsigned char GSM_DefaultAlphabetUnicode[128+1][2] =
  * 0x1b, 0x65) are visible as one single additional char (for example,
  * 0x1b, 0x65 gives Euro char saved in Unicode as 0x20, 0xAC)
  * This table contains:
- * 1. two first chars means sequence of chars from GSM default alphabet
+ * 1. two first char means second char from the sequence of chars from GSM default alphabet (first being 0x1b)
  * 2. two second is target (encoded) char saved in Unicode
  */
-static unsigned char GSM_DefaultAlphabetCharsExtension[][4] =
+static unsigned char GSM_DefaultAlphabetCharsExtension[][3] =
 {
-	{0x1b,0x0a,0x00,0x0c},	/* \r	*/
-	{0x1b,0x14,0x00,0x5e},	/* ^	*/
-	{0x1b,0x28,0x00,0x7b},	/* {	*/
-	{0x1b,0x29,0x00,0x7d},	/* }	*/
-	{0x1b,0x2f,0x00,0x5c},	/* \	*/
-	{0x1b,0x3c,0x00,0x5b},	/* [	*/
-	{0x1b,0x3d,0x00,0x7E},	/* ~	*/
-	{0x1b,0x3e,0x00,0x5d},	/* ]	*/
-	{0x1b,0x40,0x00,0x7C},	/* |	*/
-	{0x1b,0x65,0x20,0xAC},	/* Euro */
-	{0x00,0x00,0x00,0x00}
+	{0x0a,0x00,0x0c},	/* \r	*/
+	{0x14,0x00,0x5e},	/* ^	*/
+	{0x28,0x00,0x7b},	/* {	*/
+	{0x29,0x00,0x7d},	/* }	*/
+	{0x2f,0x00,0x5c},	/* \	*/
+	{0x3c,0x00,0x5b},	/* [	*/
+	{0x3d,0x00,0x7E},	/* ~	*/
+	{0x3e,0x00,0x5d},	/* ]	*/
+	{0x40,0x00,0x7C},	/* |	*/
+	{0x65,0x20,0xAC},	/* Euro */
+	{0x00,0x00,0x00}
 };
 
 void DecodeDefault (unsigned char *dest, const unsigned char *src, size_t len, gboolean UseExtensions, unsigned char *ExtraAlphabet)
@@ -486,12 +486,11 @@ void DecodeDefault (unsigned char *dest, const unsigned char *src, size_t len, g
 #endif
 
 	for (pos = 0; pos < len; pos++) {
-		if ((pos < (len - 1)) && UseExtensions) {
+		if ((pos < (len - 1)) && UseExtensions && src[pos] == 0x1b) {
 			for (i = 0; GSM_DefaultAlphabetCharsExtension[i][0] != 0x00; i++) {
-				if (GSM_DefaultAlphabetCharsExtension[i][0] == src[pos] &&
-				    GSM_DefaultAlphabetCharsExtension[i][1] == src[pos+1]) {
+				if (GSM_DefaultAlphabetCharsExtension[i][0] == src[pos + 1]) {
+					dest[current++] = GSM_DefaultAlphabetCharsExtension[i][1];
 					dest[current++] = GSM_DefaultAlphabetCharsExtension[i][2];
-					dest[current++] = GSM_DefaultAlphabetCharsExtension[i][3];
 					pos++;
 					break;
 				}
@@ -553,10 +552,10 @@ void EncodeDefault(unsigned char *dest, const unsigned char *src, size_t *len, g
 		FoundSpecial = FALSE;
 		j = 0;
 		while (GSM_DefaultAlphabetCharsExtension[j][0]!=0x00 && UseExtensions) {
-			if (src[i*2] 	== GSM_DefaultAlphabetCharsExtension[j][2] &&
-			    src[i*2+1] 	== GSM_DefaultAlphabetCharsExtension[j][3]) {
+			if (src[i*2] 	== GSM_DefaultAlphabetCharsExtension[j][1] &&
+			    src[i*2+1] 	== GSM_DefaultAlphabetCharsExtension[j][2]) {
+				dest[current++] = 0x1b;
 				dest[current++] = GSM_DefaultAlphabetCharsExtension[j][0];
-				dest[current++] = GSM_DefaultAlphabetCharsExtension[j][1];
 				FoundSpecial 	= TRUE;
 				break;
 			}
@@ -631,8 +630,8 @@ void FindDefaultAlphabetLen(const unsigned char *src, size_t *srclen, size_t *sm
 		FoundSpecial = FALSE;
 		j = 0;
 		while (GSM_DefaultAlphabetCharsExtension[j][0]!=0x00) {
-			if (src[i*2] 	== GSM_DefaultAlphabetCharsExtension[j][2] &&
-			    src[i*2+1] 	== GSM_DefaultAlphabetCharsExtension[j][3]) {
+			if (src[i*2] 	== GSM_DefaultAlphabetCharsExtension[j][1] &&
+			    src[i*2+1] 	== GSM_DefaultAlphabetCharsExtension[j][2]) {
 				FoundSpecial = TRUE;
 				if (current+2 > maxlen) {
 					*srclen = i;
