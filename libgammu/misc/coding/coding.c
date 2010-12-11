@@ -480,40 +480,42 @@ static unsigned char GSM_DefaultAlphabetCharsExtension[][4] =
 void DecodeDefault (unsigned char *dest, const unsigned char *src, size_t len, gboolean UseExtensions, unsigned char *ExtraAlphabet)
 {
 	size_t 	pos,current=0,i;
-	gboolean	FoundSpecial = FALSE;
 
 #ifdef DEBUG
 	DumpMessageText(&GSM_global_debug, src, len);
 #endif
 
 	for (pos = 0; pos < len; pos++) {
-		FoundSpecial = FALSE;
 		if ((pos < (len-1)) && UseExtensions) {
 			for (i = 0; GSM_DefaultAlphabetCharsExtension[i][0] != 0x00; i++) {
 				if (GSM_DefaultAlphabetCharsExtension[i][0] == src[pos] &&
 				    GSM_DefaultAlphabetCharsExtension[i][1] == src[pos+1]) {
-					FoundSpecial = TRUE;
 					dest[current++] = GSM_DefaultAlphabetCharsExtension[i][2];
 					dest[current++] = GSM_DefaultAlphabetCharsExtension[i][3];
 					pos++;
 					break;
 				}
 			}
+			/* Skip rest if we've found something */
+			if (GSM_DefaultAlphabetCharsExtension[i][0] != 0x00) {
+				continue;
+			}
 		}
-       		if (ExtraAlphabet!=NULL && !FoundSpecial) {
+       		if (ExtraAlphabet!=NULL) {
 			for (i = 0; ExtraAlphabet[i] != 0x00 || ExtraAlphabet[i+1] != 0x00 || ExtraAlphabet[i+2] != 0x00; i += 3) {
 				if (ExtraAlphabet[i] == src[pos]) {
 					dest[current++] = ExtraAlphabet[i+1];
 					dest[current++] = ExtraAlphabet[i+2];
-					FoundSpecial 	= TRUE;
                             		break;
                         	}
                     	}
+			/* Skip rest if we've found something */
+			if (ExtraAlphabet[i] != 0x00 || ExtraAlphabet[i+1] != 0x00 || ExtraAlphabet[i+2] != 0x00) {
+				continue;
+			}
                 }
-		if (!FoundSpecial) {
-			dest[current++] = GSM_DefaultAlphabetUnicode[src[pos]][0];
-			dest[current++] = GSM_DefaultAlphabetUnicode[src[pos]][1];
-		}
+		dest[current++] = GSM_DefaultAlphabetUnicode[src[pos]][0];
+		dest[current++] = GSM_DefaultAlphabetUnicode[src[pos]][1];
 	}
 	dest[current++]=0;
 	dest[current++]=0;
