@@ -489,29 +489,25 @@ void DecodeDefault (unsigned char *dest, const unsigned char *src, size_t len, g
 	for (pos = 0; pos < len; pos++) {
 		FoundSpecial = FALSE;
 		if ((pos < (len-1)) && UseExtensions) {
-			i=0;
-			while (GSM_DefaultAlphabetCharsExtension[i][0]!=0x00) {
-				if (GSM_DefaultAlphabetCharsExtension[i][0]==src[pos] &&
-				    GSM_DefaultAlphabetCharsExtension[i][1]==src[pos+1]) {
+			for (i = 0; GSM_DefaultAlphabetCharsExtension[i][0] != 0x00; i++) {
+				if (GSM_DefaultAlphabetCharsExtension[i][0] == src[pos] &&
+				    GSM_DefaultAlphabetCharsExtension[i][1] == src[pos+1]) {
 					FoundSpecial = TRUE;
 					dest[current++] = GSM_DefaultAlphabetCharsExtension[i][2];
 					dest[current++] = GSM_DefaultAlphabetCharsExtension[i][3];
 					pos++;
 					break;
 				}
-				i++;
 			}
 		}
        		if (ExtraAlphabet!=NULL && !FoundSpecial) {
-			i = 0;
-			while (ExtraAlphabet[i] != 0x00 || ExtraAlphabet[i+1] != 0x00 || ExtraAlphabet[i+2] != 0x00) {
+			for (i = 0; ExtraAlphabet[i] != 0x00 || ExtraAlphabet[i+1] != 0x00 || ExtraAlphabet[i+2] != 0x00; i += 3) {
 				if (ExtraAlphabet[i] == src[pos]) {
 					dest[current++] = ExtraAlphabet[i+1];
 					dest[current++] = ExtraAlphabet[i+2];
 					FoundSpecial 	= TRUE;
                             		break;
                         	}
-                        	i=i+3;
                     	}
                 }
 		if (!FoundSpecial) {
