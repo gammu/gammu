@@ -1522,7 +1522,7 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			} else {
 				DecodeHexBin(decoded, hex_encoded, strlen(hex_encoded));
 			}
-			DecodeDefault(ussd.Text, decoded, strlen(decoded), FALSE, NULL);
+			DecodeDefault(ussd.Text, decoded, strlen(decoded), TRUE, NULL);
 		} else {
 			ATGEN_ParseReply(s, pos,
 					"+CUSD: @i, @s @0",

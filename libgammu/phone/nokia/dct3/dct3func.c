@@ -135,7 +135,7 @@ GSM_Error DCT3_ReplyIncomingCB(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	while (i!=0) {
 		if (Buffer[i] == 13) i = i - 1; else break;
 	}
-	DecodeDefault(CB.Text, Buffer, i + 1, FALSE, NULL);
+	DecodeDefault(CB.Text, Buffer, i + 1, TRUE, NULL);
 	smprintf(s, "Channel %i, text \"%s\"\n",CB.Channel,DecodeUnicodeString(CB.Text));
 	if (s->Phone.Data.EnableIncomingCB && s->User.IncomingCB!=NULL) {
 		s->User.IncomingCB(s,CB, s->User.IncomingCBUserData);

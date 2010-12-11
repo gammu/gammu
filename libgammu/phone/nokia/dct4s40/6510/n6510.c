@@ -804,7 +804,7 @@ GSM_Error N6510_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
  				output[i++] = 0;
  				output[i++] = 0; /* Length - later changed */
  				GSM_UnpackEightBitsToSeven(0, msg.Length-282, msg.Length-304, msg.Buffer+282,output2);
- 				DecodeDefault(output+i, output2, msg.Length - 282, TRUE);
+ 				DecodeDefault(output+i, output2, msg.Length - 282, TRUE, NULL);
  				output[i - 1] = UnicodeLength(output+i) * 2;
  				i = i + output[i-1];
  			}
