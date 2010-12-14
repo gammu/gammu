@@ -2032,9 +2032,8 @@ msgid "Another client replied"
 msgstr "Outro cliente retornou"
 
 #: gammu/message.c:102
-#, fuzzy
 msgid "Not supported"
-msgstr "Identificação[id] não suportada: %s"
+msgstr "Identificação[id] não suportada."
 
 #: gammu/message.c:114
 msgid "Service reply"
