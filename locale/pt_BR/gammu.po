@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-12-11 22:13+0100\n"
-"PO-Revision-Date: 2010-12-14 17:26+0200\n"
+"PO-Revision-Date: 2010-12-14 17:27+0200\n"
 "Last-Translator:  <gsavix@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
@@ -3452,8 +3452,8 @@ msgstr[1] "%d minutos"
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d hora"
+msgstr[1] "%d horas"
 
 #: helper/formats.h:5
 #, c-format
