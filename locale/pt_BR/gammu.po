@@ -3459,8 +3459,8 @@ msgstr[1] "%d horas"
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d dia"
+msgstr[1] "%d dias"
 
 #: helper/formats.h:6
 #, c-format
