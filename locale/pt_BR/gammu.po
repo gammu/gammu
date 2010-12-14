@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-12-11 22:13+0100\n"
-"PO-Revision-Date: 2010-12-14 17:22+0200\n"
+"PO-Revision-Date: 2010-12-14 17:24+0200\n"
 "Last-Translator:  <gsavix@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
@@ -1290,9 +1290,8 @@ msgid "Headset interconnection:"
 msgstr "Conexão Fone de Ouvido"
 
 #: gammu/depend/nokia/dct4.c:1044
-#, fuzzy
 msgid "Hook interconnection:"
-msgstr "Conexão"
+msgstr "InterConexão"
 
 #: gammu/depend/nokia/dct4.c:1045
 msgid "Light sensor:"
