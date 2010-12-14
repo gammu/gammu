@@ -3445,8 +3445,8 @@ msgstr[1] "%d segundos"
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d minuto"
+msgstr[1] "%d minutos"
 
 #: helper/formats.h:4
 #, c-format
