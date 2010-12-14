@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-12-11 22:13+0100\n"
-"PO-Revision-Date: 2010-12-14 17:25+0200\n"
+"PO-Revision-Date: 2010-12-14 17:26+0200\n"
 "Last-Translator:  <gsavix@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
@@ -3438,8 +3438,8 @@ msgstr "Parâmetro não é um número: %s\n"
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d segundo"
+msgstr[1] "%d segundos"
 
 #: helper/formats.h:3
 #, c-format
