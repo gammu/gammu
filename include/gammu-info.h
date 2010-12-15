@@ -749,12 +749,22 @@ gboolean GSM_AddPhoneFeature(GSM_PhoneModel * model, GSM_Feature feature);
 /**
  * Reads manufacturer from phone.
  *
+ * \param s State machine pointer.
+ * \param value Pointer where to store manufacturer name
+ *
+ * \return Error code.
+ *
  * \ingroup Info
  */
 GSM_Error GSM_GetManufacturer(GSM_StateMachine * s, char *value);
 
 /**
  * Reads model from phone.
+ *
+ * \param s State machine pointer.
+ * \param value Pointer where to store model name
+ *
+ * \return Error code.
  *
  * \ingroup Info
  */
@@ -763,12 +773,23 @@ GSM_Error GSM_GetModel(GSM_StateMachine * s, char *value);
 /**
  * Reads model info from state machine.
  *
+ * \param s State machine pointer.
+ *
+ * \return Pointer to phone information structure.
+ *
  * \ingroup Info
  */
 GSM_PhoneModel *GSM_GetModelInfo(GSM_StateMachine * s);
 
 /**
  * Reads firmware information from phone.
+ *
+ * \param s State machine pointer.
+ * \param value Pointer where to store revision text
+ * \param date Pointer where to store revision date
+ * \param num Pointer where to store revision number
+ *
+ * \return Error code.
  *
  * \ingroup Info
  */
