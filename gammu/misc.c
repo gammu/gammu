@@ -683,21 +683,21 @@ void GetRingtone(int argc, char *argv[])
 
 void GetRingtonesList(int argc UNUSED, char *argv[] UNUSED)
 {
- 	GSM_AllRingtonesInfo 	Info = {0, NULL};
+	GSM_AllRingtonesInfo 	Info = {0, NULL};
 	GSM_Error error;
 	int			i;
 
 	GSM_Init(TRUE);
 
 	error=GSM_GetRingtonesInfo(gsm,&Info);
- 	if (error != ERR_NONE && Info.Ringtone) free(Info.Ringtone);
+	if (error != ERR_NONE && Info.Ringtone) free(Info.Ringtone);
 	Print_Error(error);
 
 	GSM_Terminate();
 
 	for (i=0;i<Info.Number;i++) printf("%i. \"%s\"\n",i+1,DecodeUnicodeConsole(Info.Ringtone[i].Name));
 
- 	if (Info.Ringtone) free(Info.Ringtone);
+	if (Info.Ringtone) free(Info.Ringtone);
 }
 
 void DialVoice(int argc, char *argv[])
@@ -966,7 +966,7 @@ void GetBitmap(int argc, char *argv[])
 	GSM_File		File;
 	GSM_MultiBitmap 	MultiBitmap;
 	int			location=0, Handle, Size;
- 	GSM_AllRingtonesInfo 	Info = {0, NULL};
+	GSM_AllRingtonesInfo 	Info = {0, NULL};
 	unsigned char		buffer[10];
 	const unsigned char *ringtonename;
 	GSM_Error error;
@@ -1350,17 +1350,17 @@ void ClearAll(int argc UNUSED, char *argv[] UNUSED)
 	DoClear = FALSE;
 	error = GSM_GetNextCalendar(gsm,&Calendar,TRUE);
 	if (error == ERR_NONE) {
- 		if (answer_yes("%s", _("Delete phone calendar notes?"))) DoClear = TRUE;
+		if (answer_yes("%s", _("Delete phone calendar notes?"))) DoClear = TRUE;
 	}
 	if (DoClear) {
 		fprintf(stderr, LISTFORMAT, _("Deleting"));
 		error=GSM_DeleteAllCalendar(gsm);
 		if (error == ERR_NOTSUPPORTED || error == ERR_NOTIMPLEMENTED) {
- 			while (1) {
+			while (1) {
 				error = GSM_GetNextCalendar(gsm,&Calendar,TRUE);
 				if (error != ERR_NONE) break;
 				error = GSM_DeleteCalendar(gsm,&Calendar);
- 				Print_Error(error);
+				Print_Error(error);
 				fprintf(stderr, "*");
 			}
 			fprintf(stderr, "\n");
@@ -1380,11 +1380,11 @@ void ClearAll(int argc UNUSED, char *argv[] UNUSED)
 		fprintf(stderr, LISTFORMAT, _("Deleting"));
 		error=GSM_DeleteAllToDo(gsm);
 		if (error == ERR_NOTSUPPORTED || error == ERR_NOTIMPLEMENTED) {
- 			while (1) {
+			while (1) {
 				error = GSM_GetNextToDo(gsm,&ToDo,TRUE);
 				if (error != ERR_NONE) break;
 				error = GSM_DeleteToDo(gsm,&ToDo);
- 				Print_Error(error);
+				Print_Error(error);
 				fprintf(stderr, "*");
 			}
 			fprintf(stderr, "\n");
@@ -1444,10 +1444,10 @@ void ClearAll(int argc UNUSED, char *argv[] UNUSED)
 	error=GSM_GetFMStation(gsm,&Station);
 	if (error == ERR_NONE || error == ERR_EMPTY) {
 	 	if (answer_yes("%s", _("Delete all phone FM radio stations?"))) {
- 			error=GSM_ClearFMStations(gsm);
- 			Print_Error(error);
+			error=GSM_ClearFMStations(gsm);
+			Print_Error(error);
 		}
- 	}
+	}
 
 	GSM_Terminate();
 }
@@ -1951,7 +1951,7 @@ void GetProfile(int argc, char *argv[])
 	int			start,stop,i,j,k;
 	GSM_Bitmap		caller[5];
 	gboolean			callerinit[5],special;
- 	GSM_AllRingtonesInfo 	Info = {0, NULL};
+	GSM_AllRingtonesInfo 	Info = {0, NULL};
 	const unsigned char *ringtonename;
 	GSM_Error error;
 
@@ -2145,7 +2145,7 @@ void ResetPhoneSettings(int argc UNUSED, char *argv[])
 	error=GSM_ResetPhoneSettings(gsm,Type);
 	Print_Error(error);
 
- 	GSM_Terminate();
+	GSM_Terminate();
 }
 
 void SendDTMF(int argc UNUSED, char *argv[])
@@ -2156,7 +2156,7 @@ void SendDTMF(int argc UNUSED, char *argv[])
 	error=GSM_SendDTMF(gsm,argv[2]);
 	Print_Error(error);
 
- 	GSM_Terminate();
+	GSM_Terminate();
 }
 
 void GetDisplayStatus(int argc UNUSED, char *argv[] UNUSED)
@@ -2198,7 +2198,7 @@ void GetDisplayStatus(int argc UNUSED, char *argv[] UNUSED)
 		}
 	}
 
- 	GSM_Terminate();
+	GSM_Terminate();
 }
 
 void SetAutoNetworkLogin(int argc UNUSED, char *argv[] UNUSED)
@@ -2209,7 +2209,7 @@ void SetAutoNetworkLogin(int argc UNUSED, char *argv[] UNUSED)
 	error=GSM_SetAutoNetworkLogin(gsm);
 	Print_Error(error);
 
- 	GSM_Terminate();
+	GSM_Terminate();
 }
 
 void GetFMStation(int argc, char *argv[])
