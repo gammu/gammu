@@ -2172,15 +2172,29 @@ void GetDisplayStatus(int argc UNUSED, char *argv[] UNUSED)
 
 	printf(LISTFORMAT "\n", _("Currently shown on the display"));
 
-	for (i=0;i<Features.Number;i++) {
+	for (i = 0; i < Features.Number; i++) {
 		switch(Features.Feature[i]) {
-		case GSM_CallActive	: printf("%s\n", _("Call active"));	break;
-		case GSM_UnreadSMS	: printf("%s\n", _("Unread SMS"));	break;
-		case GSM_VoiceCall	: printf("%s\n", _("Voice call"));	break;
-		case GSM_FaxCall	: printf("%s\n", _("Fax call"));	break;
-		case GSM_DataCall	: printf("%s\n", _("Data call"));	break;
-		case GSM_KeypadLocked	: printf("%s\n", _("Keypad locked"));	break;
-		case GSM_SMSMemoryFull	: printf("%s\n", _("SMS memory full"));
+			case GSM_CallActive:
+				printf("%s\n", _("Call active"));
+				break;
+			case GSM_UnreadSMS:
+				printf("%s\n", _("Unread SMS"));
+				break;
+			case GSM_VoiceCall:
+				printf("%s\n", _("Voice call"));
+				break;
+			case GSM_FaxCall:
+				printf("%s\n", _("Fax call"));
+				break;
+			case GSM_DataCall:
+				printf("%s\n", _("Data call"));
+				break;
+			case GSM_KeypadLocked:
+				printf("%s\n", _("Keypad locked"));
+				break;
+			case GSM_SMSMemoryFull:
+				printf("%s\n", _("SMS memory full"));
+				break;
 		}
 	}
 
