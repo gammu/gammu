@@ -2215,7 +2215,7 @@ void GetFMStation(int argc, char *argv[])
 		switch (error) {
 		case ERR_EMPTY:
 			printf("%s\n", _("Entry is empty"));
-		    	break;
+			break;
 		case ERR_NONE:
 			printf(LISTFORMAT "\"%s\"\n", _("Station name"), DecodeUnicodeConsole(Station.StationName));
 			printf(LISTFORMAT "%.1f MHz\n", _("Frequency"), Station.Frequency);
@@ -2231,91 +2231,138 @@ void CallDivert(int argc, char *argv[])
 {
 	GSM_Error error;
 	GSM_MultiCallDivert cd;
+	gboolean get = FALSE;
 	int i;
 
-	     if (strcasecmp("get",	argv[2]) == 0) {}
-	else if (strcasecmp("set",	argv[2]) == 0) {}
-	else {
-		printf(_("Unknown divert action (\"%s\")\n"),argv[2]);
+	if (strcasecmp("get", argv[2]) == 0) {
+		get = TRUE;
+	} else if (strcasecmp("set", argv[2]) == 0) {
+		get = FALSE;
+	} else {
+		printf(_("Unknown divert action (\"%s\")\n"), argv[2]);
 		Terminate(2);
 	}
 
-	     if (strcasecmp("all"       , argv[3]) == 0) {cd.Request.DivertType = GSM_DIVERT_AllTypes  ;}
-	else if (strcasecmp("busy"      , argv[3]) == 0) {cd.Request.DivertType = GSM_DIVERT_Busy      ;}
-	else if (strcasecmp("noans"     , argv[3]) == 0) {cd.Request.DivertType = GSM_DIVERT_NoAnswer  ;}
-	else if (strcasecmp("outofreach", argv[3]) == 0) {cd.Request.DivertType = GSM_DIVERT_OutOfReach;}
-	else {
-		printf(_("Unknown divert type (\"%s\")\n"),argv[3]);
+	if (strcasecmp("all", argv[3]) == 0) {
+		cd.Request.DivertType = GSM_DIVERT_AllTypes;
+	} else if (strcasecmp("busy", argv[3]) == 0) {
+		cd.Request.DivertType = GSM_DIVERT_Busy;
+	} else if (strcasecmp("noans", argv[3]) == 0) {
+		cd.Request.DivertType = GSM_DIVERT_NoAnswer;
+	} else if (strcasecmp("outofreach", argv[3]) == 0) {
+		cd.Request.DivertType = GSM_DIVERT_OutOfReach;
+	} else {
+		printf(_("Unknown divert type (\"%s\")\n"), argv[3]);
 		Terminate(2);
 	}
 
-	     if (strcasecmp("all"  , argv[4]) == 0) {cd.Request.CallType = GSM_DIVERT_AllCalls  ;}
-	else if (strcasecmp("voice", argv[4]) == 0) {cd.Request.CallType = GSM_DIVERT_VoiceCalls;}
-	else if (strcasecmp("fax"  , argv[4]) == 0) {cd.Request.CallType = GSM_DIVERT_FaxCalls  ;}
-	else if (strcasecmp("data" , argv[4]) == 0) {cd.Request.CallType = GSM_DIVERT_DataCalls ;}
-	else {
-		printf(_("Unknown call type (\"%s\")\n"),argv[4]);
+	if (strcasecmp("all", argv[4]) == 0) {
+		cd.Request.CallType = GSM_DIVERT_AllCalls;
+	} else if (strcasecmp("voice", argv[4]) == 0) {
+		cd.Request.CallType = GSM_DIVERT_VoiceCalls;
+	} else if (strcasecmp("fax", argv[4]) == 0) {
+		cd.Request.CallType = GSM_DIVERT_FaxCalls;
+	} else if (strcasecmp("data", argv[4]) == 0) {
+		cd.Request.CallType = GSM_DIVERT_DataCalls;
+	} else {
+		printf(_("Unknown call type (\"%s\")\n"), argv[4]);
 		Terminate(2);
 	}
 
 	GSM_Init(TRUE);
 
-	if (strcasecmp("get", argv[2]) == 0) {
+	if (get) {
 		error = GSM_GetCallDivert(gsm,&cd);
-	    	Print_Error(error);
+		Print_Error(error);
 		printf("%s", _("Query:"));
 		printf("\n");
 		printf("  " LISTFORMAT, _("Divert type"));
 	} else {
 		cd.Request.Number[0] = 0;
 		cd.Request.Number[1] = 0;
-		if (argc > 5) EncodeUnicode(cd.Request.Number,argv[5],strlen(argv[5]));
+		if (argc > 5) {
+			EncodeUnicode(cd.Request.Number,argv[5],strlen(argv[5]));
+		}
 
 		cd.Request.Timeout = 0;
-		if (argc > 6) cd.Request.Timeout = GetInt(argv[6]);
+		if (argc > 6) {
+			cd.Request.Timeout = GetInt(argv[6]);
+		}
 
 		error = GSM_SetCallDivert(gsm,&cd);
-	    	Print_Error(error);
+		Print_Error(error);
 		printf("%s", _("Changed:"));
 		printf("\n");
 		printf("  " LISTFORMAT, _("Divert type"));
 	}
 
-      	switch (cd.Request.DivertType) {
-   		case GSM_DIVERT_Busy      : printf("%s", _("when busy"));				break;
-	        case GSM_DIVERT_NoAnswer  : printf("%s", _("when not answered"));			break;
-      	        case GSM_DIVERT_OutOfReach: printf("%s", _("when phone off or no coverage"));	break;
-                case GSM_DIVERT_AllTypes  : printf("%s", _("all types of diverts"));			break;
-                default		          : printf(_("unknown %i"),cd.Request.DivertType);			break;
-        }
+	switch (cd.Request.DivertType) {
+		case GSM_DIVERT_Busy:
+			printf("%s", _("when busy"));
+			break;
+		case GSM_DIVERT_NoAnswer:
+			printf("%s", _("when not answered"));
+			break;
+		case GSM_DIVERT_OutOfReach:
+			printf("%s", _("when phone off or no coverage"));
+			break;
+		case GSM_DIVERT_AllTypes:
+			printf("%s", _("all types of diverts"));
+			break;
+		default:
+			printf(_("unknown %i"),cd.Request.DivertType);
+			break;
+	}
 	printf("\n");
+
 	printf("  " LISTFORMAT, _("Call type"));
 	switch (cd.Request.CallType) {
-	 	case GSM_DIVERT_VoiceCalls: printf("%s", _("voice"));				break;
-                case GSM_DIVERT_FaxCalls  : printf("%s", _("fax"));				break;
-                case GSM_DIVERT_DataCalls : printf("%s", _("data"));		 		break;
-		case GSM_DIVERT_AllCalls  : printf("%s", _("data & fax & voice"));		break;
-                default                   : printf(_("unknown %i"),cd.Request.CallType);   		break;
-        }
+		case GSM_DIVERT_VoiceCalls:
+			printf("%s", _("voice"));
+			break;
+		case GSM_DIVERT_FaxCalls:
+			printf("%s", _("fax"));
+			break;
+		case GSM_DIVERT_DataCalls:
+			printf("%s", _("data"));
+			break;
+		case GSM_DIVERT_AllCalls:
+			printf("%s", _("data & fax & voice"));
+			break;
+		default:
+			printf(_("unknown %i"),cd.Request.CallType);
+			break;
+	}
 	printf("\n");
+
 	printf("%s", _("Response:"));
 	printf("\n");
 
-	for (i=0;i<cd.Response.EntriesNum;i++) {
+	for (i = 0; i < cd.Response.EntriesNum; i++) {
 		printf("\n");
 		printf("  " LISTFORMAT, _("Call type"));
-        	switch (cd.Response.Entries[i].CallType) {
-                	case GSM_DIVERT_VoiceCalls: printf("%s", _("voice"));		 	break;
-                	case GSM_DIVERT_FaxCalls  : printf("%s", _("fax"));		 	break;
-                	case GSM_DIVERT_DataCalls : printf("%s", _("data"));		 	break;
-                	default                   : printf(_("unknown %i"),cd.Response.Entries[i].CallType);break;
-              	}
+		switch (cd.Response.Entries[i].CallType) {
+			case GSM_DIVERT_VoiceCalls:
+				printf("%s", _("voice"));
+				break;
+			case GSM_DIVERT_FaxCalls:
+				printf("%s", _("fax"));
+				break;
+			case GSM_DIVERT_DataCalls:
+				printf("%s", _("data"));
+				break;
+			default:
+				printf(_("unknown %i"),cd.Response.Entries[i].CallType);
+				break;
+		}
 		printf("\n");
+
 		printf("  " LISTFORMAT, _("Timeout"));
 		PRINTSECONDS(cd.Response.Entries[i].Timeout);
 		printf("\n");
-                printf("  "LISTFORMAT "%s\n", _("Number"),DecodeUnicodeString(cd.Response.Entries[i].Number));
-        }
+
+		printf("  " LISTFORMAT "%s\n", _("Number"), DecodeUnicodeString(cd.Response.Entries[i].Number));
+	}
 	printf("\n");
 
 	GSM_Terminate();
