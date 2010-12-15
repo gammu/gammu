@@ -276,7 +276,10 @@ gammu_test(deletefiles "" incoming/test.vcf dir2/dir2-5/file5)
 gammu_test(addfolder "" "/" "foobar")
 gammu_test(deletefolder "" "foobar")
 gammu_test(getfolderlisting "dir2/dir2-5" "dir2")
+
 gammu_test(divert "" get all all)
+gammu_test(getwapbookmark "wammu.eu" 1 2)
+gammu_test_fail(getwapbookmark "Entry is empty" 3)
 
 if (ONLINE_TESTING AND CURL_FOUND)
     gammu_test(checkversion "")
