@@ -22,7 +22,6 @@ MACRO(GETTEXT_CREATE_TRANSLATIONS _potFile _firstPoFile)
 
    SET(_gmoFiles)
    GET_FILENAME_COMPONENT(_potBasename ${_potFile} NAME_WE)
-   GET_FILENAME_COMPONENT(_absPotFile ${_potFile} ABSOLUTE)
 
    SET(_addToAll)
    IF(${_firstPoFile} STREQUAL "ALL")
@@ -40,9 +39,8 @@ MACRO(GETTEXT_CREATE_TRANSLATIONS _potFile _firstPoFile)
       file(MAKE_DIRECTORY "${_gmoFilePath}")
       ADD_CUSTOM_COMMAND( 
          OUTPUT ${_gmoFile} 
-         COMMAND ${GETTEXT_MSGMERGE_EXECUTABLE} --quiet --update --backup=none ${_absFile} ${_absPotFile}
          COMMAND ${GETTEXT_MSGFMT_EXECUTABLE} -o ${_gmoFile} ${_absFile}
-         DEPENDS ${_absPotFile} ${_absFile} 
+         DEPENDS ${_absFile} 
       )
 
       INSTALL(FILES ${_gmoFile} DESTINATION ${INSTALL_LOC_DIR}/${_lang}/LC_MESSAGES RENAME ${_potBasename}.mo COMPONENT "locales") 
