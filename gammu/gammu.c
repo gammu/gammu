@@ -703,8 +703,8 @@ static GSM_Parameters Parameters[] = {
 	{"nokiasetphonemenus",	0, 0, NokiaSetPhoneMenus,	{H_Nokia,H_Other,0},		""},
 #endif
 #ifdef DEBUG
-	{"decodesniff",		2, 3, decodesniff,		{H_Decode,0},			"MBUS2|IRDA file [phonemodel]"},
-	{"decodebinarydump",		1, 2, decodebinarydump,		{H_Decode,0},			"file [phonemodel]"},
+	{"decodesniff",		2, 3, DecodeSniff,		{H_Decode,0},			"MBUS2|IRDA file [phonemodel]"},
+	{"decodebinarydump",		1, 2, DecodeBinaryDump,		{H_Decode,0},			"file [phonemodel]"},
 #endif
 	{"batch",			0, 1, RunBatch,			{H_Other,0},			"[file]"},
 	{"",				0, 0, NULL,			{0}, ""}

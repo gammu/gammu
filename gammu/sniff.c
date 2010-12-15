@@ -246,7 +246,7 @@ static void prepareStateMachine(void)
 	Phone->RequestID		= ID_EachFrame;
 }
 
-void decodesniff(int argc, char *argv[])
+void DecodeSniff(int argc, char *argv[])
 {
 	GSM_ConnectionType	Protocol = GCT_MBUS2;
 	unsigned char 		Buffer[65536]={'\0'},Buffer2[65536]={'\0'};
@@ -345,7 +345,7 @@ void decodesniff(int argc, char *argv[])
 	fclose(file);
 }
 
-void decodebinarydump(int argc, char *argv[])
+void DecodeBinaryDump(int argc, char *argv[])
 {
 	FILE			*file;
 	GSM_Protocol_Message	msg;
