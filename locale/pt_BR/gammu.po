@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-12-11 22:13+0100\n"
+"POT-Creation-Date: 2010-12-15 10:26+0100\n"
 "PO-Revision-Date: 2010-12-14 17:32+0200\n"
 "Last-Translator:  <gsavix@gmail.com>\n"
 "Language-Team: none\n"
@@ -1586,7 +1586,6 @@ msgstr ""
 
 #: gammu/files.c:421
 #, c-format
-#, c-format
 msgid "%i percent done."
 msgstr "%i por cento feito."
 
@@ -1687,8 +1686,8 @@ msgid ""
 "License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
 "GPL/2.0/>."
 msgstr ""
-"License GPLv2: GNU GPL versão 2 "
-"<http://creativecommons.org/licenses/GPL/2.0/>."
+"License GPLv2: GNU GPL versão 2 <http://creativecommons.org/licenses/GPL/2.0/"
+">."
 
 #: gammu/gammu.c:347
 msgid "This is free software: you are free to change and redistribute it."
@@ -1855,8 +1854,8 @@ msgid ""
 "-d / --debug <level> ... debug level (nothing|text|textall|textalldate|"
 "binary|errors)"
 msgstr ""
-"-d / --debug <level> ... nível debug "
-"(nothing|text|textall|textalldate|binary|errors)"
+"-d / --debug <level> ... nível debug (nothing|text|textall|textalldate|"
+"binary|errors)"
 
 #: gammu/gammu.c:766
 msgid "-f / --debug-file <filename> ... file for logging debug messages"
@@ -1947,7 +1946,8 @@ msgstr "Nenhuma configuração lida, usando padrões da compilação!"
 #, c-format
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
-msgstr "Versão da libGammu.so instalada (%s) é diferente da versão do Gammu (%s)\n"
+msgstr ""
+"Versão da libGammu.so instalada (%s) é diferente da versão do Gammu (%s)\n"
 
 #: gammu/memory.c:41 gammu/memory.c:95 gammu/memory.c:113 gammu/memory.c:240
 #: gammu/memory.c:357
@@ -3344,7 +3344,6 @@ msgstr "Qual tipo de pasta (\"%s\")?\n"
 
 #: gammu/nokia.c:556 gammu/nokia.c:563 gammu/nokia.c:570
 #, c-format
-#, c-format
 msgid "Can not open file %s\n"
 msgstr "Não conseguiu abrir arquivo!%s\n"
 
@@ -3425,7 +3424,6 @@ msgstr "Erro criando tarefa\n"
 
 #: helper/cmdline.c:23
 #, c-format
-#, c-format
 msgid "Number out of range: %s\n"
 msgstr "Número fora de intervalo: %s\n"
 
@@ -3498,8 +3496,7 @@ msgstr "Grupo Chamada"
 #: helper/memory-display.c:70
 msgid "Caller group number too high, please increase buffer in sources!"
 msgstr ""
-"Número do Grupo de Chamada muito alto, por favor aumente o buffer nos "
-"fontes!"
+"Número do Grupo de Chamada muito alto, por favor aumente o buffer nos fontes!"
 
 #: helper/memory-display.c:109
 msgid "User ID"
@@ -3721,7 +3718,6 @@ msgid "Backup functionality not compiled in!"
 msgstr "Funcionalidade Cópia Segurança / Backup não foi ativada na compilação!"
 
 #: helper/message-cmdline.c:1055
-#, c-format
 #, c-format
 msgid "Wrong message length (\"%s\")\n"
 msgstr "Tamanho de mensagem errado (\"%s\")\n"
