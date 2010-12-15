@@ -2327,7 +2327,7 @@ void CancelAllDiverts(int argc UNUSED, char *argv[] UNUSED)
 	GSM_Init(TRUE);
 
 	error = GSM_CancelAllDiverts(gsm);
-    	Print_Error(error);
+	Print_Error(error);
 
 	GSM_Terminate();
 }
