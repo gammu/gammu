@@ -1019,6 +1019,23 @@ GSM_Error DUMMY_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *ma
 	return ERR_NOTIMPLEMENTED;
 }
 
+GSM_Error DUMMY_GetWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *bookmark)
+{
+	switch (bookmark->Location) {
+		case 1:
+			EncodeUnicode(bookmark->Address, "http://blog.cihar.com/", 22);
+			EncodeUnicode(bookmark->Title, "Michals weblog", 14);
+			return ERR_NONE;
+		case 2:
+			EncodeUnicode(bookmark->Address, "http://wammu.eu/", 16);
+			EncodeUnicode(bookmark->Title, "Wammu website", 13);
+			return ERR_NONE;
+		default:
+			return ERR_EMPTY;
+
+	}
+}
+
 GSM_Error DUMMY_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 {
 	return ERR_NOTIMPLEMENTED;
@@ -1913,7 +1930,7 @@ GSM_Phone_Functions DUMMYPhone = {
 	NOTSUPPORTED,			/* 	GetRingtonesInfo	*/
 	NOTSUPPORTED,			/* 	DeleteUserRingtones	*/
 	NOTSUPPORTED,			/* 	PlayTone		*/
-	NOTSUPPORTED,			/* 	GetWAPBookmark		*/
+	DUMMY_GetWAPBookmark,
 	NOTSUPPORTED,			/* 	SetWAPBookmark		*/
 	NOTSUPPORTED,			/* 	DeleteWAPBookmark	*/
 	NOTSUPPORTED,			/* 	GetWAPSettings		*/
