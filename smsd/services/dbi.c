@@ -29,7 +29,7 @@
 
 #include "../core.h"
 
-long long SMSDDBI_GetNumber(SQL_result rc, unsigned int field)
+long long SMSDDBI_GetNumber(GSM_SMSDConfig * Config, SQL_result rc, unsigned int field)
 {
 	unsigned int type;
 	dbi_result res = rc.dbi;
@@ -69,7 +69,7 @@ long long SMSDDBI_GetNumber(SQL_result rc, unsigned int field)
 	}
 }
 
-time_t SMSDDBI_GetDate(SQL_result rc, unsigned int field)
+time_t SMSDDBI_GetDate(GSM_SMSDConfig * Config, SQL_result rc, unsigned int field)
 {
 	unsigned int type;
 	struct tm timestruct;
@@ -84,7 +84,7 @@ time_t SMSDDBI_GetDate(SQL_result rc, unsigned int field)
 	switch (type) {
 		case DBI_TYPE_INTEGER:
 		case DBI_TYPE_DECIMAL:
-			return SMSDDBI_GetNumber(rc, field);
+			return SMSDDBI_GetNumber(Config, rc, field);
 		case DBI_TYPE_STRING:
 			date = dbi_result_get_string_idx(res, field);
 			parse_res = strptime(date, "%Y-%m-%d %H:%M:%S", &timestruct);
@@ -107,7 +107,7 @@ time_t SMSDDBI_GetDate(SQL_result rc, unsigned int field)
 	}
 }
 
-gboolean SMSDDBI_GetBool(SQL_result rc, unsigned int field)
+gboolean SMSDDBI_GetBool(GSM_SMSDConfig * Config, SQL_result rc, unsigned int field)
 {
 	unsigned int type;
 	const char *value;
@@ -120,7 +120,7 @@ gboolean SMSDDBI_GetBool(SQL_result rc, unsigned int field)
 	switch (type) {
 		case DBI_TYPE_INTEGER:
 		case DBI_TYPE_DECIMAL:
-			num = SMSDDBI_GetNumber(rc, field);
+			num = SMSDDBI_GetNumber(Config, rc, field);
 			if (num == -1) {
 				return -1;
 			} else if (num == 0) {
@@ -138,7 +138,7 @@ gboolean SMSDDBI_GetBool(SQL_result rc, unsigned int field)
 	}
 }
 
-const char *SMSDDBI_GetString(SQL_result res, unsigned int col)
+const char *SMSDDBI_GetString(GSM_SMSDConfig * Config, SQL_result res, unsigned int col)
 {
 	return dbi_result_get_string_idx(res.dbi, col+1);
 }
@@ -161,7 +161,7 @@ void SMSDDBI_Callback(dbi_conn Conn, void *Config)
 }
 
 /* Disconnects from a database */
-void SMSDDBI_Free(SQL_conn *conn)
+void SMSDDBI_Free(GSM_SMSDConfig * Config, SQL_conn *conn)
 {
 	if (conn->dbi != NULL) {
 		dbi_conn_close(conn->dbi);
@@ -201,43 +201,43 @@ static SQL_Error SMSDDBI_Connect(GSM_SMSDConfig * Config)
 
 	if (dbi_conn_set_option(db->conn.dbi, "sqlite_dbdir", Config->dbdir) != 0) {
 		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to set sqlite_dbdir!");
-		SMSDDBI_Free(&db->conn);
+		SMSDDBI_Free(Config, &db->conn);
 		return SQL_FAIL;
 	}
 	if (dbi_conn_set_option(db->conn.dbi, "sqlite3_dbdir", Config->dbdir) != 0) {
 		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to set sqlite3_dbdir!");
-		SMSDDBI_Free(&db->conn);
+		SMSDDBI_Free(Config, &db->conn);
 		return SQL_FAIL;
 	}
 	if (dbi_conn_set_option(db->conn.dbi, "host", Config->host) != 0) {
 		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to set host!");
-		SMSDDBI_Free(&db->conn);
+		SMSDDBI_Free(Config, &db->conn);
 		return SQL_FAIL;
 	}
 	if (dbi_conn_set_option(db->conn.dbi, "username", Config->user) != 0) {
 		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to set username!");
-		SMSDDBI_Free(&db->conn);
+		SMSDDBI_Free(Config, &db->conn);
 		return SQL_FAIL;
 	}
 	if (dbi_conn_set_option(db->conn.dbi, "password", Config->password) != 0) {
 		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to set password!");
-		SMSDDBI_Free(&db->conn);
+		SMSDDBI_Free(Config, &db->conn);
 		return SQL_FAIL;
 	}
 	if (dbi_conn_set_option(db->conn.dbi, "dbname", Config->database) != 0) {
 		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to set dbname!");
-		SMSDDBI_Free(&db->conn);
+		SMSDDBI_Free(Config, &db->conn);
 		return SQL_FAIL;
 	}
 	if (dbi_conn_set_option(db->conn.dbi, "encoding", "UTF-8") != 0) {
 		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to set encoding!");
-		SMSDDBI_Free(&db->conn);
+		SMSDDBI_Free(Config, &db->conn);
 		return SQL_FAIL;
 	}
 
 	if (dbi_conn_connect(db->conn.dbi) != 0) {
 		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to connect!");
-		SMSDDBI_Free(&db->conn);
+		SMSDDBI_Free(Config, &db->conn);
 		return SQL_FAIL;
 	}
 	Config->db = db;
@@ -291,25 +291,25 @@ static SQL_Error SMSDDBI_Query(GSM_SMSDConfig * Config, const char *query, SQL_r
 }
 
 /* free sql results */
-void SMSDDBI_FreeResult(SQL_result res)
+void SMSDDBI_FreeResult(GSM_SMSDConfig * Config, SQL_result res)
 {
 	dbi_result_free(res.dbi);
 }
 
 /* set pointer to next row */
-int SMSDDBI_NextRow(SQL_result *res)
+int SMSDDBI_NextRow(GSM_SMSDConfig * Config, SQL_result *res)
 {
 	return dbi_result_next_row(res->dbi);
 }
 /* quote strings */
-char * SMSDDBI_QuoteString(SQL_conn *conn, const char *string)
+char * SMSDDBI_QuoteString(GSM_SMSDConfig * Config, SQL_conn *conn, const char *string)
 {
 	char *encoded_text = NULL;
 	dbi_conn_quote_string_copy(conn->dbi, string, &encoded_text);
 	return encoded_text;
 }
 /* LAST_INSERT_ID */
-unsigned long long SMSDDBI_SeqID(SQL_conn *conn, const char *id)
+unsigned long long SMSDDBI_SeqID(GSM_SMSDConfig * Config, SQL_conn *conn, const char *id)
 {
 	unsigned long long new_id;
 	new_id = dbi_conn_sequence_last(conn->dbi, NULL);
@@ -319,12 +319,12 @@ unsigned long long SMSDDBI_SeqID(SQL_conn *conn, const char *id)
 	return new_id;
 }
 
-unsigned long SMSDDBI_AffectedRows(SQL_result Res)
+unsigned long SMSDDBI_AffectedRows(GSM_SMSDConfig * Config, SQL_result Res)
 {
 	return dbi_result_get_numrows_affected(Res.dbi);
 }
 
-unsigned long SMSDDBI_NumRows(SQL_result Res)
+unsigned long SMSDDBI_NumRows(GSM_SMSDConfig * Config, SQL_result Res)
 {
 	return dbi_result_get_numrows(Res.dbi);
 }

@@ -1,8 +1,8 @@
 /* drivers for sql service
  *
- * MySQL (C) 2004 by Marcin Wiacek 
+ * MySQL (C) 2004 by Marcin Wiacek
  * PostgreSQL (C) 2006 by Andrea Riciputi
- * DBI (C) 2009 by Michal Čihař 
+ * DBI (C) 2009 by Michal Čihař
  *
  */
 
@@ -36,13 +36,13 @@ typedef union {
 	struct __mysql {
 		MYSQL_RES *res;
 		MYSQL_ROW row; /* keep in memory actual row */
-		MYSQL * con;	
+		MYSQL * con;
 	} my;
 #endif
 #ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
 	struct __pg {
 		PGresult *res;
-		int iter; /* libpq does not have nexrow .. */ 
+		int iter; /* libpq does not have nexrow .. */
 	} pg;
 #endif
 } SQL_result;
@@ -87,7 +87,7 @@ typedef struct {
 	SQL_Val v;
 } SQL_Var;
 
-/* configurable queries 
+/* configurable queries
  * NOTE: parameter sequence in select queries are mandatory !!!
  */
 enum {
@@ -120,17 +120,17 @@ struct GSM_SMSDdbobj {
 	const char *DriverName;
 	SQL_Error (* Connect)(GSM_SMSDConfig *);
 	SQL_Error (* Query)(GSM_SMSDConfig *, const char *, SQL_result *res);
-	void (* Free)(SQL_conn *); /* = close() */
-	void (* FreeResult)(SQL_result);
-	int (* NextRow)(SQL_result *);
-	unsigned long long (* SeqID)(SQL_conn *conn, const char *);
-	unsigned long (* AffectedRows)(SQL_result);
-	unsigned long (* NumRows)(SQL_result);
-	const char * (* GetString)(SQL_result, unsigned int);
-	long long (* GetNumber)(SQL_result, unsigned int);
-	time_t (* GetDate)(SQL_result, unsigned int);
-	gboolean (* GetBool)(SQL_result, unsigned int);
-	char * (* QuoteString)(SQL_conn *conn, const char *);
+	void (* Free)(GSM_SMSDConfig *, SQL_conn *); /* = close() */
+	void (* FreeResult)(GSM_SMSDConfig *, SQL_result);
+	int (* NextRow)(GSM_SMSDConfig *, SQL_result *);
+	unsigned long long (* SeqID)(GSM_SMSDConfig *, SQL_conn *conn, const char *);
+	unsigned long (* AffectedRows)(GSM_SMSDConfig *, SQL_result);
+	unsigned long (* NumRows)(GSM_SMSDConfig *, SQL_result);
+	const char * (* GetString)(GSM_SMSDConfig *, SQL_result, unsigned int);
+	long long (* GetNumber)(GSM_SMSDConfig *, SQL_result, unsigned int);
+	time_t (* GetDate)(GSM_SMSDConfig *, SQL_result, unsigned int);
+	gboolean (* GetBool)(GSM_SMSDConfig *, SQL_result, unsigned int);
+	char * (* QuoteString)(GSM_SMSDConfig *, SQL_conn *conn, const char *);
 	const char *error;
 	SQL_conn conn;
 };

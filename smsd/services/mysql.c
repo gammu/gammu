@@ -22,17 +22,17 @@
 #include "../core.h"
 //#include "sql.h"
 
-long long SMSDMySQL_GetNumber(SQL_result rc, unsigned int field)
+long long SMSDMySQL_GetNumber(GSM_SMSDConfig * Config, SQL_result rc, unsigned int field)
 {
 	return atoi(rc.my.row[field]);
 }
 
-const char *SMSDMySQL_GetString(SQL_result rc, unsigned int field)
+const char *SMSDMySQL_GetString(GSM_SMSDConfig * Config, SQL_result rc, unsigned int field)
 {
 	return rc.my.row[field];
 }
 
-time_t SMSDMySQL_GetDate(SQL_result rc, unsigned int field)
+time_t SMSDMySQL_GetDate(GSM_SMSDConfig * Config, SQL_result rc, unsigned int field)
 {
 	const char *date;
 	int ret;
@@ -56,7 +56,7 @@ time_t SMSDMySQL_GetDate(SQL_result rc, unsigned int field)
 	return -1;
 }
 
-gboolean SMSDMySQL_GetBool(SQL_result rc, unsigned int field)
+gboolean SMSDMySQL_GetBool(GSM_SMSDConfig * Config, SQL_result rc, unsigned int field)
 {
 	const char *value = rc.my.row[field];
 
@@ -67,14 +67,14 @@ gboolean SMSDMySQL_GetBool(SQL_result rc, unsigned int field)
 	return GSM_StringToBool(value);
 }
 
-const char *SMSMySQL_GetString(SQL_result res, unsigned int col)
+const char *SMSMySQL_GetString(GSM_SMSDConfig * Config, SQL_result res, unsigned int col)
 {
 	SMSDMySQL.error = NULL;
 	return res.my.row[col];
 }
 
 /* Disconnects from a database */
-void SMSDMySQL_Free(SQL_conn *conn)
+void SMSDMySQL_Free(GSM_SMSDConfig * Config, SQL_conn *conn)
 {
 	mysql_close(conn->my);
 	free(conn->my);
@@ -156,13 +156,13 @@ static SQL_Error SMSDMySQL_Query(GSM_SMSDConfig * Config, const char *query, SQL
 }
 
 /* free mysql results */
-void SMSDMySQL_FreeResult(SQL_result res)
+void SMSDMySQL_FreeResult(GSM_SMSDConfig * Config, SQL_result res)
 {
 	mysql_free_result(res.my.res);
 }
 
 /* set pointer to next row */
-int SMSDMySQL_NextRow(SQL_result *res)
+int SMSDMySQL_NextRow(GSM_SMSDConfig * Config, SQL_result *res)
 {
 	MYSQL_ROW row;
 	row = mysql_fetch_row(res->my.res);
@@ -174,7 +174,7 @@ int SMSDMySQL_NextRow(SQL_result *res)
 }
 
 /* quote strings */
-char * SMSDMySQL_QuoteString(SQL_conn *conn, const char *string)
+char * SMSDMySQL_QuoteString(GSM_SMSDConfig * Config, SQL_conn *conn, const char *string)
 {
 	char *buff;
 	int len = strlen(string);
@@ -188,17 +188,17 @@ char * SMSDMySQL_QuoteString(SQL_conn *conn, const char *string)
 }
 
 /* LAST_INSERT_ID */
-unsigned long long SMSDMySQL_SeqID(SQL_conn *conn, const char *dummy)
+unsigned long long SMSDMySQL_SeqID(GSM_SMSDConfig * Config, SQL_conn *conn, const char *dummy)
 {
 	return mysql_insert_id(conn->my);
 }
 
-unsigned long SMSDMySQL_AffectedRows(SQL_result Res)
+unsigned long SMSDMySQL_AffectedRows(GSM_SMSDConfig * Config, SQL_result Res)
 {
 	return mysql_affected_rows(Res.my.con);
 }
 
-unsigned long SMSDMySQL_NumRows(SQL_result Res)
+unsigned long SMSDMySQL_NumRows(GSM_SMSDConfig * Config, SQL_result Res)
 {
 	return mysql_num_rows(Res.my.res);
 }
