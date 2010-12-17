@@ -1078,7 +1078,7 @@ Backing up and restoring commands
 
 .. option:: addsms folder file [-yes]
 
-    Adds SMSes from file (format like :option:`backupsms` uses) to
+    Adds SMSes from file (format like :option:`gammu backupsms` uses) to
     selected folder in phone.
 
 .. option:: backup file [-yes]
@@ -1118,14 +1118,14 @@ Backing up and restoring commands
     Restore settings written in file created using :option:`gammu backup` command. 
 
     Please note that restoring deletes all current content in phone. If you
-    want only to add entries to phone, use :option:`addnew`.
+    want only to add entries to phone, use :option:`gammu addnew`.
 
     In some phones restoring calendar notes will not show error, but won't
     be done, when phone doesn't have set clock inside.
 
 .. option:: restoresms file [-yes]
 
-    Restores SMSes from file (format like :option:`backupsms` uses) to
+    Restores SMSes from file (format like :option:`gammu backupsms` uses) to
     selected folder in phone. Please note that this overwrites existing
     messages in phone (if it supports it).
 
@@ -1160,17 +1160,17 @@ Backing up and restoring commands
         guess is based on extension and file content, for output solely on 
         extension).
 
-    .. seealso:: :option:`convertbackup`
+    .. seealso:: :option:`gammu convertbackup`
 
 .. option:: convertbackup source.file output.file
 
-    Converts backup between formats supported by Gammu. Unlike
-    :option:`savefile`, this does not give you any options what to convert, it
-    simply takes converts all what can be saved into output file.
-
-    .. seealso:: :option:`savefile`
-
     .. versionadded:: 1.28.94
+
+    Converts backup between formats supported by Gammu. Unlike 
+    :option:`gammu savefile`, this does not give you any options what to
+    convert, it simply takes converts all what can be saved into output file.
+
+    .. seealso:: :option:`gammu savefile`
 
 
 Nokia specific commands
@@ -1848,7 +1848,8 @@ Set logo for network ``230 03`` (Vodafone CZ):
 Converting file formats
 -----------------------
 
-The formats conversion can done using :option:`savefile` or :option:`convertbackup` command.
+The formats conversion can done using :option:`gammu savefile` or
+:option:`gammu convertbackup` commands.
 
 Convert single entry (at position 260) from :ref:`gammu-backup` to vCalendar:
 
