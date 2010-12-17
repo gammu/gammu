@@ -1170,6 +1170,8 @@ Backing up and restoring commands
 
     .. seealso:: :option:`savefile`
 
+    .. newin:: 1.28.94
+
 
 Nokia specific commands
 -----------------------
