@@ -1,4 +1,4 @@
-.TH "GAMMU" "1" "December 09, 2010" "1.28.94" "Gammu"
+.TH "GAMMU" "1" "December 17, 2010" "1.28.94" "Gammu"
 .SH NAME
 gammu \- Does some neat things with your cellular phone or modem.
 .
@@ -1480,7 +1480,7 @@ regardless what backu format says.
 .TP
 .B addsms folder file [\-yes]
 .sp
-Adds SMSes from file (format like backupsms uses) to
+Adds SMSes from file (format like \fI\%gammu backupsms\fP uses) to
 selected folder in phone.
 .UNINDENT
 .INDENT 0.0
@@ -1545,7 +1545,7 @@ Any other extension is Gammu backup file and it supports all data mentioned abov
 .TP
 .B backupsms file [\-yes|\-all]
 .sp
-Stores all SMSes from phone to file.
+Stores all SMSes from phone to file into \fIgammu\-smsbackup\fP.
 .sp
 Use \-yes for answering yes to all questions (backup all messages and
 delete them from phone), or \-all to just backup all folders while keeping
@@ -1558,7 +1558,7 @@ messages in phone.
 Restore settings written in file created using \fI\%gammu backup\fP command.
 .sp
 Please note that restoring deletes all current content in phone. If you
-want only to add entries to phone, use addnew.
+want only to add entries to phone, use \fI\%gammu addnew\fP.
 .sp
 In some phones restoring calendar notes will not show error, but won\(aqt
 be done, when phone doesn\(aqt have set clock inside.
@@ -1567,7 +1567,7 @@ be done, when phone doesn\(aqt have set clock inside.
 .TP
 .B restoresms file [\-yes]
 .sp
-Restores SMSes from file (format like backupsms uses) to
+Restores SMSes from file (format like \fI\%gammu backupsms\fP uses) to
 selected folder in phone. Please note that this overwrites existing
 messages in phone (if it supports it).
 .UNINDENT
@@ -1575,7 +1575,7 @@ messages in phone (if it supports it).
 .TP
 .B savefile TYPE [type options]
 .sp
-Coverts between various file formats supported by Gammu, following types
+Converts between various file formats supported by Gammu, following types
 are supported:
 .INDENT 7.0
 .TP
@@ -1611,6 +1611,24 @@ supports for phonebook events. The file type is guessed (for input file
 guess is based on extension and file content, for output solely on
 extension).
 .UNINDENT
+.IP "See also"
+.sp
+\fI\%gammu convertbackup\fP
+.RE
+.UNINDENT
+.INDENT 0.0
+.TP
+.B convertbackup source.file output.file
+.sp
+New in version 1.28.94.
+.sp
+Converts backup between formats supported by Gammu. Unlike
+\fI\%gammu savefile\fP, this does not give you any options what to
+convert, it simply takes converts all what can be saved into output file.
+.IP "See also"
+.sp
+\fI\%gammu savefile\fP
+.RE
 .UNINDENT
 .SS Nokia specific commands
 .INDENT 0.0
@@ -2655,11 +2673,30 @@ gammu setbitmap OPERATOR ala.bmp "230 03"
 .fi
 .SS Converting file formats
 .sp
-Convert single entry (at position 260) from gammu native backup to vCalendar:
+The formats conversion can done using \fI\%gammu savefile\fP or
+\fI\%gammu convertbackup\fP commands.
+.sp
+Convert single entry (at position 260) from \fIgammu\-backup\fP to vCalendar:
 .sp
 .nf
 .ft C
 gammu savefile CALENDAR output.vcs myCalendar.backup 260
+.ft P
+.fi
+.sp
+Convert first phonebook entry from \fIgammu\-backup\fP to vCard:
+.sp
+.nf
+.ft C
+gammu savefile VCARD21 output.vcf phone.backup ME 1
+.ft P
+.fi
+.sp
+Convert all contacts from backup to vCard:
+.sp
+.nf
+.ft C
+gammu convertbackup phone.backup output.vcf
 .ft P
 .fi
 .SS Reporting bugs
