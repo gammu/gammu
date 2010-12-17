@@ -52,6 +52,7 @@ time_t SMSDMySQL_GetDate(GSM_SMSDConfig * Config, SQL_result rc, unsigned int fi
 	if (ret == 6) {
 		return mktime(&t);
 	}
+	SMSD_Log(DEBUG_ERROR, Config, "Failed to parse date: %s", date);
 	SMSDMySQL.error = "Failed to process date!";
 	return -1;
 }

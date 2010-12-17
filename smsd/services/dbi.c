@@ -96,6 +96,7 @@ time_t SMSDDBI_GetDate(GSM_SMSDConfig * Config, SQL_result rc, unsigned int fiel
 			if (parse_res != NULL && *parse_res == 0) {
 				return mktime(&timestruct);
 			}
+			SMSD_Log(DEBUG_ERROR, Config, "Failed to parse date: %s", date);
 			SMSDDBI.error = "Failed to process date";
 			return -1;
 		case DBI_TYPE_DATETIME:
