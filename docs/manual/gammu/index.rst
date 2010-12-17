@@ -1160,6 +1160,12 @@ Backing up and restoring commands
         guess is based on extension and file content, for output solely on 
         extension).
 
+.. option:: convertbackup source.file output.file
+
+    Converts backup between formats supported by Gammu. Unlike
+    :option:`savefile`, this does not give you any options what to convert, it
+    simply takes converts all what can be saved into output file.
+
 
 Nokia specific commands
 -----------------------
