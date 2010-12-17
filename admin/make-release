@@ -82,7 +82,9 @@ echo "Creating release $version from $checkout"
 git clone $srcdir $repo-$version
 cd $repo-$version
 git checkout $checkout
-rm -rf .git
+git submodule update --init
+find . -type d -name .git | xargs -r rm -rf
+find . -type f -name .gitignore | xargs -r rm -f
 cd ..
 
 echo 'Creating source tarballs...'
