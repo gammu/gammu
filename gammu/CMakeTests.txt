@@ -83,12 +83,14 @@ if (WITH_BACKUP)
         get_filename_component(TESTNAME "${VCF}" NAME_WE)
         add_test(gammu-savefile-vcf1-${TESTNAME} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" savefile VCARD10 ${TESTNAME}.1.vcf ${VCF} ME 1)
         add_test(gammu-savefile-vcf2-${TESTNAME} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" savefile VCARD21 ${TESTNAME}.2.vcf ${VCF} ME 1)
+        add_test(gammu-convertbackup-${TESTNAME} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" convertbackup ${VCF} ${TESTNAME}.3.vcf)
     endforeach(VCF)
 
     file(GLOB VFORMATS "${CMAKE_CURRENT_SOURCE_DIR}/../tests/vnote/*.vnt")
     foreach(VNT ${VFORMATS})
         get_filename_component(TESTNAME "${VNT}" NAME_WE)
         add_test(gammu-savefile-vnt-${TESTNAME} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" savefile NOTE ${TESTNAME}.2.vnt ${VNT} 1)
+        add_test(gammu-convertbackup-${TESTNAME} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" convertbackup ${VNT} ${TESTNAME}.3.vnt)
     endforeach(VNT)
 
     file(GLOB VFORMATS
@@ -108,6 +110,7 @@ if (WITH_BACKUP)
                 gammu-savefile-vcs-todo-${TESTNAME}
                 PROPERTIES WILL_FAIL TRUE)
         endif (TESTNAME MATCHES "dtstart|rrule|UK32Holidays|badline|rrule-1|p990|k770|outlook")
+        add_test(gammu-convertbackup-${TESTNAME} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" convertbackup ${VCS} ${TESTNAME}.3.vcs)
     endforeach(VCS)
 endif (WITH_BACKUP)
 

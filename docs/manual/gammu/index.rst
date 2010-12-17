@@ -1836,7 +1836,7 @@ Set logo for network ``230 03`` (Vodafone CZ):
 Converting file formats
 -----------------------
 
-The formats conversion can done using :option:`savefile` command.
+The formats conversion can done using :option:`savefile` or :option:`convertbackup` command.
 
 Convert single entry (at position 260) from :ref:`gammu-backup` to vCalendar:
 
@@ -1849,6 +1849,12 @@ Convert first phonebook entry from :ref:`gammu-backup` to vCard:
 .. code-block:: sh
 
     gammu savefile VCARD21 output.vcf phone.backup ME 1
+
+Convert all contacts from backup to vCard:
+
+.. code-block:: sh
+
+    gammu convertbackup phone.backup output.vcf
 
 
 Reporting bugs

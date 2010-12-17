@@ -17,6 +17,22 @@
 #include "../helper/string.h"
 #include "../helper/cmdline.h"
 
+/**
+ * Converts between two backup formats.
+ */
+void ConvertBackup(int argc, char *argv[])
+{
+	GSM_Backup Backup;
+	GSM_Error error;
+
+	error = GSM_ReadBackupFile(argv[2], &Backup, GSM_GuessBackupFormat(argv[2], FALSE));
+	Print_Error(error);
+
+	error = GSM_SaveBackupFile(argv[3], &Backup, GSM_GuessBackupFormat(argv[3], FALSE));
+	GSM_FreeBackup(&Backup);
+	Print_Error(error);
+}
+
 void SaveFile(int argc, char *argv[])
 {
 	GSM_Error error;
