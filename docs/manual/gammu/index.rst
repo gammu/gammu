@@ -1131,7 +1131,7 @@ Backing up and restoring commands
 
 .. option:: savefile TYPE [type options]
 
-    Coverts between various file formats supported by Gammu, following types
+    Converts between various file formats supported by Gammu, following types
     are supported:
 
     .. option:: BOOKMARK target.url file location
