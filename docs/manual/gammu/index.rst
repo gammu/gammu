@@ -1840,6 +1840,12 @@ Convert single entry (at position 260) from gammu native backup to vCalendar:
 
     gammu savefile CALENDAR output.vcs myCalendar.backup 260
 
+Convert first phonebook entry from :ref:`gammu-backup` to vCard:
+
+.. code-block:: sh
+
+    gammu savefile VCARD21 output.vcf phone.backup ME 1
+
 
 Reporting bugs
 --------------
