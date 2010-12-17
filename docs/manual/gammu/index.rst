@@ -1834,7 +1834,7 @@ Set logo for network ``230 03`` (Vodafone CZ):
 Converting file formats
 -----------------------
 
-Convert single entry (at position 260) from gammu native backup to vCalendar:
+Convert single entry (at position 260) from :ref:`gammu-backup` to vCalendar:
 
 .. code-block:: sh
 
