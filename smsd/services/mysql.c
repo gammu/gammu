@@ -76,9 +76,11 @@ const char *SMSMySQL_GetString(GSM_SMSDConfig * Config, SQL_result res, unsigned
 /* Disconnects from a database */
 void SMSDMySQL_Free(GSM_SMSDConfig * Config)
 {
-	mysql_close(Config->db->conn.my);
-	free(Config->db->conn.my);
-	Config->db->conn.my = NULL;
+	if (Config->db->conn.my != NULL) {
+		mysql_close(Config->db->conn.my);
+		free(Config->db->conn.my);
+		Config->db->conn.my = NULL;
+	}
 }
 
 static int SMSDMySQL_LogError(GSM_SMSDConfig * Config)
