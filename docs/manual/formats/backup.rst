@@ -52,3 +52,5 @@ Find::
 Replace::
 
     Type = NumberMobile\nEntry\1Text = "\+36\2\3"\n
+
+.. seealso:: :ref:`converting-formats`

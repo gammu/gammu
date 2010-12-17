@@ -1831,8 +1831,12 @@ Set logo for network ``230 03`` (Vodafone CZ):
 
     gammu setbitmap OPERATOR ala.bmp "230 03"
 
+.. _converting-formats:
+
 Converting file formats
 -----------------------
+
+The formats conversion can done using :option:`savefile` command.
 
 Convert single entry (at position 260) from :ref:`gammu-backup` to vCalendar:
 
