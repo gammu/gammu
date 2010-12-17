@@ -38,7 +38,6 @@ time_t SMSDMySQL_GetDate(GSM_SMSDConfig * Config, SQL_result rc, unsigned int fi
 	int ret;
 	struct tm t;
 
-	SMSDMySQL.error = NULL;
 	date = rc.my.row[field];
 	/* windows has not strptime() */
 	ret = sscanf(date, "%u-%u-%u %u:%u:%u", &t.tm_year, &t.tm_mon, &t.tm_mday, &t.tm_hour, &t.tm_min, &t.tm_sec);
@@ -53,7 +52,6 @@ time_t SMSDMySQL_GetDate(GSM_SMSDConfig * Config, SQL_result rc, unsigned int fi
 		return mktime(&t);
 	}
 	SMSD_Log(DEBUG_ERROR, Config, "Failed to parse date: %s", date);
-	SMSDMySQL.error = "Failed to process date!";
 	return -1;
 }
 
@@ -61,7 +59,6 @@ gboolean SMSDMySQL_GetBool(GSM_SMSDConfig * Config, SQL_result rc, unsigned int 
 {
 	const char *value = rc.my.row[field];
 
-	SMSDMySQL.error = NULL;
 	if(atoi(value) > 0){
 		return TRUE;
 	}
@@ -70,7 +67,6 @@ gboolean SMSDMySQL_GetBool(GSM_SMSDConfig * Config, SQL_result rc, unsigned int 
 
 const char *SMSMySQL_GetString(GSM_SMSDConfig * Config, SQL_result res, unsigned int col)
 {
-	SMSDMySQL.error = NULL;
 	return res.my.row[col];
 }
 
@@ -221,7 +217,6 @@ struct GSM_SMSDdbobj SMSDMySQL = {
 	SMSDMySQL_GetDate,
 	SMSDMySQL_GetBool,
 	SMSDMySQL_QuoteString,
-	NULL,
 	{.my = NULL}
 };
 

@@ -96,7 +96,7 @@ static GSM_Error SMSDSQL_Query(GSM_SMSDConfig * Config, const char *query, SQL_r
 			return ERR_NONE;
 
 		if (error != SQL_TIMEOUT){
-			SMSD_Log(DEBUG_INFO, Config, "SQL failure: %s", db->error);
+			SMSD_Log(DEBUG_INFO, Config, "SQL failure: %d", error);
 			sleep(attempts * attempts);
 			continue;
 		}

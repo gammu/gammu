@@ -36,7 +36,6 @@ long long SMSDDBI_GetNumber(GSM_SMSDConfig * Config, SQL_result rc, unsigned int
 
 	field++;
 	type = dbi_result_get_field_type_idx(res, field);
-	SMSDDBI.error = NULL;
 
 	switch (type) {
 		case DBI_TYPE_INTEGER:
@@ -52,7 +51,7 @@ long long SMSDDBI_GetNumber(GSM_SMSDConfig * Config, SQL_result rc, unsigned int
 			} else if ((type & DBI_INTEGER_SIZEMASK) == DBI_INTEGER_SIZE8) {
 				return dbi_result_get_longlong_idx(res, field);
 			}
-			SMSDDBI.error = "Wrong integer field subtype!";
+			SMSD_Log(DEBUG_ERROR, Config, "Wrong integer field subtype from DBI: %d", type);
 			return -1;
 		case DBI_TYPE_DECIMAL:
 			type = dbi_result_get_field_attribs_idx(res, field);
@@ -61,10 +60,10 @@ long long SMSDDBI_GetNumber(GSM_SMSDConfig * Config, SQL_result rc, unsigned int
 			} else if ((type & DBI_DECIMAL_SIZEMASK) == DBI_DECIMAL_SIZE8) {
 				return dbi_result_get_longlong_idx(res, field);
 			}
-			SMSDDBI.error = "Wrong decimal field subtype!";
+			SMSD_Log(DEBUG_ERROR, Config, "Wrong decimal field subtype from DBI: %d", type);
 			return -1;
 		default:
-			SMSDDBI.error = "Wrong field type! (not INTEGER nor DECIMAL)";
+			SMSD_Log(DEBUG_ERROR, Config, "Wrong field type for number (not INTEGER nor DECIMAL) from DBI: %d", type);
 			return -1;
 	}
 }
@@ -79,7 +78,6 @@ time_t SMSDDBI_GetDate(GSM_SMSDConfig * Config, SQL_result rc, unsigned int fiel
 
 	field++;
 	type = dbi_result_get_field_type_idx(res, field);
-	SMSDDBI.error = NULL;
 
 	switch (type) {
 		case DBI_TYPE_INTEGER:
@@ -97,13 +95,12 @@ time_t SMSDDBI_GetDate(GSM_SMSDConfig * Config, SQL_result rc, unsigned int fiel
 				return mktime(&timestruct);
 			}
 			SMSD_Log(DEBUG_ERROR, Config, "Failed to parse date: %s", date);
-			SMSDDBI.error = "Failed to process date";
 			return -1;
 		case DBI_TYPE_DATETIME:
 			return dbi_result_get_datetime_idx(res, field);
 		case DBI_TYPE_ERROR:
 		default:
-			SMSDDBI.error = "Wrong date field type!";
+			SMSD_Log(DEBUG_ERROR, Config, "Wrong field type for date from DBI: %d", type);
 			return -1;
 	}
 }
@@ -134,7 +131,7 @@ gboolean SMSDDBI_GetBool(GSM_SMSDConfig * Config, SQL_result rc, unsigned int fi
 			return GSM_StringToBool(value);
 		case DBI_TYPE_ERROR:
 		default:
-			SMSDDBI.error = "Wrong gboolean field type!";
+			SMSD_Log(DEBUG_ERROR, Config, "Wrong field type for boolean from DBI: %d", type);
 			return -1;
 	}
 }
@@ -345,7 +342,6 @@ struct GSM_SMSDdbobj SMSDDBI = {
 	SMSDDBI_GetDate,
 	SMSDDBI_GetBool,
 	SMSDDBI_QuoteString,
-	NULL,
 	{.dbi = NULL}
 };
 
