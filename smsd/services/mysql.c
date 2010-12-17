@@ -74,11 +74,11 @@ const char *SMSMySQL_GetString(GSM_SMSDConfig * Config, SQL_result res, unsigned
 }
 
 /* Disconnects from a database */
-void SMSDMySQL_Free(GSM_SMSDConfig * Config, SQL_conn *conn)
+void SMSDMySQL_Free(GSM_SMSDConfig * Config)
 {
-	mysql_close(conn->my);
-	free(conn->my);
-	conn->my = NULL;
+	mysql_close(Config->db->conn.my);
+	free(Config->db->conn.my);
+	Config->db->conn.my = NULL;
 }
 
 static int SMSDMySQL_LogError(GSM_SMSDConfig * Config)
@@ -188,9 +188,9 @@ char * SMSDMySQL_QuoteString(GSM_SMSDConfig * Config, SQL_conn *conn, const char
 }
 
 /* LAST_INSERT_ID */
-unsigned long long SMSDMySQL_SeqID(GSM_SMSDConfig * Config, SQL_conn *conn, const char *dummy)
+unsigned long long SMSDMySQL_SeqID(GSM_SMSDConfig * Config, const char *dummy)
 {
-	return mysql_insert_id(conn->my);
+	return mysql_insert_id(Config->db->conn.my);
 }
 
 unsigned long SMSDMySQL_AffectedRows(GSM_SMSDConfig * Config, SQL_result Res)

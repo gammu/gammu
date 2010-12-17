@@ -161,12 +161,12 @@ void SMSDDBI_Callback(dbi_conn Conn, void *Config)
 }
 
 /* Disconnects from a database */
-void SMSDDBI_Free(GSM_SMSDConfig * Config, SQL_conn *conn)
+void SMSDDBI_Free(GSM_SMSDConfig * Config)
 {
-	if (conn->dbi != NULL) {
-		dbi_conn_close(conn->dbi);
+	if (Config->db->conn.dbi != NULL) {
+		dbi_conn_close(Config->db->conn.dbi);
 		dbi_shutdown();
-		conn->dbi = NULL;
+		Config->db->conn.dbi = NULL;
 	}
 }
 
@@ -201,43 +201,43 @@ static SQL_Error SMSDDBI_Connect(GSM_SMSDConfig * Config)
 
 	if (dbi_conn_set_option(db->conn.dbi, "sqlite_dbdir", Config->dbdir) != 0) {
 		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to set sqlite_dbdir!");
-		SMSDDBI_Free(Config, &db->conn);
+		SMSDDBI_Free(Config);
 		return SQL_FAIL;
 	}
 	if (dbi_conn_set_option(db->conn.dbi, "sqlite3_dbdir", Config->dbdir) != 0) {
 		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to set sqlite3_dbdir!");
-		SMSDDBI_Free(Config, &db->conn);
+		SMSDDBI_Free(Config);
 		return SQL_FAIL;
 	}
 	if (dbi_conn_set_option(db->conn.dbi, "host", Config->host) != 0) {
 		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to set host!");
-		SMSDDBI_Free(Config, &db->conn);
+		SMSDDBI_Free(Config);
 		return SQL_FAIL;
 	}
 	if (dbi_conn_set_option(db->conn.dbi, "username", Config->user) != 0) {
 		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to set username!");
-		SMSDDBI_Free(Config, &db->conn);
+		SMSDDBI_Free(Config);
 		return SQL_FAIL;
 	}
 	if (dbi_conn_set_option(db->conn.dbi, "password", Config->password) != 0) {
 		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to set password!");
-		SMSDDBI_Free(Config, &db->conn);
+		SMSDDBI_Free(Config);
 		return SQL_FAIL;
 	}
 	if (dbi_conn_set_option(db->conn.dbi, "dbname", Config->database) != 0) {
 		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to set dbname!");
-		SMSDDBI_Free(Config, &db->conn);
+		SMSDDBI_Free(Config);
 		return SQL_FAIL;
 	}
 	if (dbi_conn_set_option(db->conn.dbi, "encoding", "UTF-8") != 0) {
 		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to set encoding!");
-		SMSDDBI_Free(Config, &db->conn);
+		SMSDDBI_Free(Config);
 		return SQL_FAIL;
 	}
 
 	if (dbi_conn_connect(db->conn.dbi) != 0) {
 		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to connect!");
-		SMSDDBI_Free(Config, &db->conn);
+		SMSDDBI_Free(Config);
 		return SQL_FAIL;
 	}
 	Config->db = db;
@@ -309,12 +309,12 @@ char * SMSDDBI_QuoteString(GSM_SMSDConfig * Config, SQL_conn *conn, const char *
 	return encoded_text;
 }
 /* LAST_INSERT_ID */
-unsigned long long SMSDDBI_SeqID(GSM_SMSDConfig * Config, SQL_conn *conn, const char *id)
+unsigned long long SMSDDBI_SeqID(GSM_SMSDConfig * Config, const char *id)
 {
 	unsigned long long new_id;
-	new_id = dbi_conn_sequence_last(conn->dbi, NULL);
+	new_id = dbi_conn_sequence_last(Config->db->conn.dbi, NULL);
 	if (new_id == 0) {
-		new_id = dbi_conn_sequence_last(conn->dbi, id);
+		new_id = dbi_conn_sequence_last(Config->db->conn.dbi, id);
 	}
 	return new_id;
 }

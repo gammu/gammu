@@ -111,7 +111,7 @@ static GSM_Error SMSDSQL_Query(GSM_SMSDConfig * Config, const char *query, SQL_r
 		while (error != SQL_OK && attempts <= Config->backend_retries) {
 			SMSD_Log(DEBUG_INFO, Config, "Reconnecting after %d seconds...", attempts * attempts);
 			sleep(attempts * attempts);
-			db->Free(Config, &db->conn);
+			db->Free(Config);
 			error = db->Connect(Config);
 			attempts++;
 		}
@@ -311,7 +311,7 @@ static GSM_Error SMSDSQL_CheckTable(GSM_SMSDConfig * Config, const char *table)
 	error = SMSDSQL_Query(Config, buffer, &res);
 	if (error != ERR_NONE) {
 		SMSD_Log(DEBUG_ERROR, Config, "Table %s not found, disconnecting!", table);
-		db->Free(Config, &db->conn);
+		db->Free(Config);
 		return ERR_UNKNOWN;
 	}
 	db->FreeResult(Config, res);
@@ -323,7 +323,7 @@ static GSM_Error SMSDSQL_Free(GSM_SMSDConfig * Config)
 {
 	int i;
 	SMSD_Log(DEBUG_SQL, Config, "Disconnecting from SQL database.");
-	Config->db->Free(Config, &Config->db->conn);
+	Config->db->Free(Config);
 	/* free configuration */
 	for(i = 0; i < SQL_QUERY_LAST_NO; i++){
 		free(SMSDSQL_queries[i]);
@@ -365,25 +365,25 @@ static GSM_Error SMSDSQL_Init(GSM_SMSDConfig * Config)
 		return error;
 
 	if (SMSDSQL_Query(Config, "SELECT Version FROM gammu", &res) != ERR_NONE) {
-		db->Free(Config, &db->conn);
+		db->Free(Config);
 		return ERR_UNKNOWN;
 	}
 	if (db->NumRows(Config, res) != 1) {
 		SMSD_Log(DEBUG_ERROR, Config, "No Version information in table gammu!");
 		db->FreeResult(Config, res);
-		db->Free(Config, &db->conn);
+		db->Free(Config);
 		return ERR_UNKNOWN;
 	}
 	if (db->NextRow(Config, &res) != 1) {
 		SMSD_Log(DEBUG_ERROR, Config, "Failed to seek to first row!");
 		db->FreeResult(Config, res);
-		db->Free(Config, &db->conn);
+		db->Free(Config);
 		return ERR_UNKNOWN;
 	}
 	version = db->GetNumber(Config, res, 0);
 	db->FreeResult(Config, res);
 	if (SMSD_CheckDBVersion(Config, version) != ERR_NONE) {
-		db->Free(Config, &db->conn);
+		db->Free(Config);
 		return ERR_UNKNOWN;
 	}
 
@@ -524,7 +524,7 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 			return ERR_UNKNOWN;
 		}
 
-		new_id = db->SeqID(Config, &db->conn, "inbox_id_seq");
+		new_id = db->SeqID(Config, "inbox_id_seq");
 		if (new_id == 0) {
 			SMSD_Log(DEBUG_INFO, Config, "Failed to get inserted row ID (%s)", __FUNCTION__);
 			return ERR_UNKNOWN;
@@ -811,7 +811,7 @@ static GSM_Error SMSDSQL_CreateOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConf
 			return ERR_UNKNOWN;
 		}
 		if (i == 0) {
-			ID = db->SeqID(Config, &db->conn, "outbox_id_seq");
+			ID = db->SeqID(Config, "outbox_id_seq");
 			if (ID == 0) {
 				SMSD_Log(DEBUG_INFO, Config, "Failed to get inserted row ID (%s)", __FUNCTION__);
 				return ERR_UNKNOWN;

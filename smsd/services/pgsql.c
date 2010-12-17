@@ -61,11 +61,11 @@ const char *SMSDPgSQL_GetString(GSM_SMSDConfig * Config, SQL_result rc, unsigned
 }
 
 /* Disconnects from a database */
-void SMSDPgSQL_Free(GSM_SMSDConfig * Config, SQL_conn *conn)
+void SMSDPgSQL_Free(GSM_SMSDConfig * Config)
 {
-	if (conn->pg != NULL) {
-		PQfinish(conn->pg);
-		conn->pg = NULL;
+	if (Config->db->conn.pg != NULL) {
+		PQfinish(Config->db->conn.pg);
+		Config->db->conn.pg = NULL;
 	}
 }
 
@@ -87,7 +87,7 @@ static SQL_Error SMSDPgSQL_Connect(GSM_SMSDConfig * Config)
 
 	sprintf(buf, "host = '%s' user = '%s' password = '%s' dbname = '%s' port = %d", Config->host, Config->user, Config->password, Config->database, port);
 
-	SMSDPgSQL_Free(Config, &db->conn);
+	SMSDPgSQL_Free(Config);
 	db->conn.pg = PQconnectdb(buf);
 	if (PQstatus(db->conn.pg) != CONNECTION_OK) {
 		SMSD_Log(DEBUG_ERROR, Config, "Error connecting to database: %s", PQerrorMessage(db->conn.pg));
@@ -183,7 +183,7 @@ unsigned long SMSDPgSQL_AffectedRows(GSM_SMSDConfig * Config, SQL_result Res)
 	return atoi(PQcmdTuples(Res.pg.res));
 }
 
-unsigned long long SMSDPgSQL_SeqID(GSM_SMSDConfig * Config, SQL_conn *conn, const char *seq_id)
+unsigned long long SMSDPgSQL_SeqID(GSM_SMSDConfig * Config, const char *seq_id)
 {
 	unsigned long id;
 	char buff[100];
@@ -191,7 +191,7 @@ unsigned long long SMSDPgSQL_SeqID(GSM_SMSDConfig * Config, SQL_conn *conn, cons
 	int Status;
 
 	snprintf(buff, sizeof(buff), "SELECT currval('%s')", seq_id);
-	rc = PQexec(conn->pg, buff);
+	rc = PQexec(Config->db->conn.pg, buff);
 	if ((rc == NULL) || ((Status = PQresultStatus(rc)) != PGRES_COMMAND_OK && (Status != PGRES_TUPLES_OK))) {
 		return 0;
 	}

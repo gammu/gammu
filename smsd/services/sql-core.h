@@ -120,10 +120,10 @@ struct GSM_SMSDdbobj {
 	const char *DriverName;
 	SQL_Error (* Connect)(GSM_SMSDConfig *);
 	SQL_Error (* Query)(GSM_SMSDConfig *, const char *, SQL_result *res);
-	void (* Free)(GSM_SMSDConfig *, SQL_conn *); /* = close() */
+	void (* Free)(GSM_SMSDConfig *); /* = close() */
 	void (* FreeResult)(GSM_SMSDConfig *, SQL_result);
 	int (* NextRow)(GSM_SMSDConfig *, SQL_result *);
-	unsigned long long (* SeqID)(GSM_SMSDConfig *, SQL_conn *conn, const char *);
+	unsigned long long (* SeqID)(GSM_SMSDConfig *, const char *);
 	unsigned long (* AffectedRows)(GSM_SMSDConfig *, SQL_result);
 	unsigned long (* NumRows)(GSM_SMSDConfig *, SQL_result);
 	const char * (* GetString)(GSM_SMSDConfig *, SQL_result, unsigned int);
