@@ -1078,7 +1078,7 @@ Backing up and restoring commands
 
 .. option:: addsms folder file [-yes]
 
-    Adds SMSes from file (format like backupsms uses) to
+    Adds SMSes from file (format like :option:`backupsms` uses) to
     selected folder in phone.
 
 .. option:: backup file [-yes]
@@ -1107,7 +1107,7 @@ Backing up and restoring commands
 
 .. option:: backupsms file [-yes|-all]
 
-    Stores all SMSes from phone to file. 
+    Stores all SMSes from phone to file into :ref:`gammu-smsbackup`. 
 
     Use -yes for answering yes to all questions (backup all messages and 
     delete them from phone), or -all to just backup all folders while keeping
@@ -1118,14 +1118,14 @@ Backing up and restoring commands
     Restore settings written in file created using :option:`gammu backup` command. 
 
     Please note that restoring deletes all current content in phone. If you
-    want only to add entries to phone, use addnew.
+    want only to add entries to phone, use :option:`addnew`.
 
     In some phones restoring calendar notes will not show error, but won't
     be done, when phone doesn't have set clock inside.
 
 .. option:: restoresms file [-yes]
 
-    Restores SMSes from file (format like backupsms uses) to
+    Restores SMSes from file (format like :option:`backupsms` uses) to
     selected folder in phone. Please note that this overwrites existing
     messages in phone (if it supports it).
 
