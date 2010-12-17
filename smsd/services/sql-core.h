@@ -131,7 +131,6 @@ struct GSM_SMSDdbobj {
 	time_t (* GetDate)(GSM_SMSDConfig *, SQL_result, unsigned int);
 	gboolean (* GetBool)(GSM_SMSDConfig *, SQL_result, unsigned int);
 	char * (* QuoteString)(GSM_SMSDConfig *, SQL_conn *conn, const char *);
-	SQL_conn conn;
 };
 
 /* database backends */

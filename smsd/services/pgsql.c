@@ -63,9 +63,9 @@ const char *SMSDPgSQL_GetString(GSM_SMSDConfig * Config, SQL_result rc, unsigned
 /* Disconnects from a database */
 void SMSDPgSQL_Free(GSM_SMSDConfig * Config)
 {
-	if (Config->db->conn.pg != NULL) {
-		PQfinish(Config->db->conn.pg);
-		Config->db->conn.pg = NULL;
+	if (Config->conn.pg != NULL) {
+		PQfinish(Config->conn.pg);
+		Config->conn.pg = NULL;
 	}
 }
 
@@ -74,7 +74,6 @@ static SQL_Error SMSDPgSQL_Connect(GSM_SMSDConfig * Config)
 {
 	unsigned char buf[400];
 	PGresult *Res;
-	struct GSM_SMSDdbobj *db = (struct GSM_SMSDdbobj *)Config->db;
 
 	unsigned int port = 5432;
 	char *pport;
@@ -88,17 +87,17 @@ static SQL_Error SMSDPgSQL_Connect(GSM_SMSDConfig * Config)
 	sprintf(buf, "host = '%s' user = '%s' password = '%s' dbname = '%s' port = %d", Config->host, Config->user, Config->password, Config->database, port);
 
 	SMSDPgSQL_Free(Config);
-	db->conn.pg = PQconnectdb(buf);
-	if (PQstatus(db->conn.pg) != CONNECTION_OK) {
-		SMSD_Log(DEBUG_ERROR, Config, "Error connecting to database: %s", PQerrorMessage(db->conn.pg));
-		PQfinish(db->conn.pg);
+	Config->conn.pg = PQconnectdb(buf);
+	if (PQstatus(Config->conn.pg) != CONNECTION_OK) {
+		SMSD_Log(DEBUG_ERROR, Config, "Error connecting to database: %s", PQerrorMessage(Config->conn.pg));
+		PQfinish(Config->conn.pg);
 		return SQL_FAIL;
 	}
 
-	Res = PQexec(db->conn.pg, "SET NAMES UTF8");
+	Res = PQexec(Config->conn.pg, "SET NAMES UTF8");
 	PQclear(Res);
 	SMSD_Log(DEBUG_INFO, Config, "Connected to database: %s on %s. Server version: %d Protocol: %d",
-		 PQdb(db->conn.pg), PQhost(db->conn.pg), PQserverVersion(db->conn.pg), PQprotocolVersion(db->conn.pg));
+		 PQdb(Config->conn.pg), PQhost(Config->conn.pg), PQserverVersion(Config->conn.pg), PQprotocolVersion(Config->conn.pg));
 
 	return SQL_OK;
 }
@@ -119,9 +118,8 @@ int SMSDPgSQL_NextRow(GSM_SMSDConfig * Config, SQL_result *res)
 
 static void SMSDPgSQL_LogError(GSM_SMSDConfig * Config, PGresult * Res)
 {
-	struct GSM_SMSDdbobj *db = Config->db;
 	if (Res == NULL) {
-		SMSD_Log(DEBUG_INFO, Config, "Error: %s", PQerrorMessage(db->conn.pg));
+		SMSD_Log(DEBUG_INFO, Config, "Error: %s", PQerrorMessage(Config->conn.pg));
 	} else {
 		SMSD_Log(DEBUG_INFO, Config, "Error: %s", PQresultErrorMessage(Res));
 	}
@@ -129,10 +127,9 @@ static void SMSDPgSQL_LogError(GSM_SMSDConfig * Config, PGresult * Res)
 
 static SQL_Error SMSDPgSQL_Query(GSM_SMSDConfig * Config, const char *query, SQL_result * Res)
 {
-	struct GSM_SMSDdbobj *db = Config->db;
 	ExecStatusType Status = PGRES_COMMAND_OK;
 
-	Res->pg.res = PQexec(db->conn.pg, query);
+	Res->pg.res = PQexec(Config->conn.pg, query);
 	Res->pg.iter = -1;
 	if ((Res->pg.res == NULL) || ((Status = PQresultStatus(Res->pg.res)) != PGRES_COMMAND_OK && (Status != PGRES_TUPLES_OK))) {
 		SMSDPgSQL_LogError(Config, Res->pg.res);
@@ -140,10 +137,10 @@ static SQL_Error SMSDPgSQL_Query(GSM_SMSDConfig * Config, const char *query, SQL
 		/* Check for reconnect */
 		if ((Res->pg.res == NULL) || (Status == PGRES_FATAL_ERROR)) {
 			/* Dirty hack */
-			Res->pg.res = PQexec(db->conn.pg, "SELECT 42");
+			Res->pg.res = PQexec(Config->conn.pg, "SELECT 42");
 			if (Res->pg.res != NULL)
 				PQclear(Res->pg.res);
-			if (PQstatus(db->conn.pg) != CONNECTION_OK) {
+			if (PQstatus(Config->conn.pg) != CONNECTION_OK) {
 				return SQL_TIMEOUT;
 			} else {
 				return SQL_FAIL;
@@ -191,7 +188,7 @@ unsigned long long SMSDPgSQL_SeqID(GSM_SMSDConfig * Config, const char *seq_id)
 	int Status;
 
 	snprintf(buff, sizeof(buff), "SELECT currval('%s')", seq_id);
-	rc = PQexec(Config->db->conn.pg, buff);
+	rc = PQexec(Config->conn.pg, buff);
 	if ((rc == NULL) || ((Status = PQresultStatus(rc)) != PGRES_COMMAND_OK && (Status != PGRES_TUPLES_OK))) {
 		return 0;
 	}
@@ -215,7 +212,6 @@ struct GSM_SMSDdbobj SMSDPgSQL = {
 	SMSDPgSQL_GetDate,
 	SMSDPgSQL_GetBool,
 	SMSDPgSQL_QuoteString,
-	{.pg = NULL}
 };
 
 #endif

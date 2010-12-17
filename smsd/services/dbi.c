@@ -145,7 +145,7 @@ static void SMSDDBI_LogError(GSM_SMSDConfig * Config)
 {
 	int rc;
 	const char *msg;
-	rc = dbi_conn_error(((struct GSM_SMSDdbobj *)Config->db)->conn.dbi, &msg);
+	rc = dbi_conn_error(Config->conn.dbi, &msg);
 	if (rc == -1) {
 		SMSD_Log(DEBUG_ERROR, Config, "Unknown DBI error!");
 	} else {
@@ -161,10 +161,10 @@ void SMSDDBI_Callback(dbi_conn Conn, void *Config)
 /* Disconnects from a database */
 void SMSDDBI_Free(GSM_SMSDConfig * Config)
 {
-	if (Config->db->conn.dbi != NULL) {
-		dbi_conn_close(Config->db->conn.dbi);
+	if (Config->conn.dbi != NULL) {
+		dbi_conn_close(Config->conn.dbi);
 		dbi_shutdown();
-		Config->db->conn.dbi = NULL;
+		Config->conn.dbi = NULL;
 	}
 }
 
@@ -185,9 +185,9 @@ static SQL_Error SMSDDBI_Connect(GSM_SMSDConfig * Config)
 		return SQL_FAIL;
 	}
 
-	db->conn.dbi = dbi_conn_new(Config->driver);
-	db->DriverName = dbi_driver_get_name(dbi_conn_get_driver(db->conn.dbi));
-	if (db->conn.dbi == NULL) {
+	Config->conn.dbi = dbi_conn_new(Config->driver);
+	db->DriverName = dbi_driver_get_name(dbi_conn_get_driver(Config->conn.dbi));
+	if (Config->conn.dbi == NULL) {
 		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to init %s driver!", Config->driver);
 		dbi_shutdown();
 		return SQL_FAIL;
@@ -195,45 +195,45 @@ static SQL_Error SMSDDBI_Connect(GSM_SMSDConfig * Config)
 		SMSD_Log(DEBUG_SQL, Config, "Using DBI driver '%s'", db->DriverName);
 	}
 
-	dbi_conn_error_handler(db->conn.dbi, SMSDDBI_Callback, Config);
+	dbi_conn_error_handler(Config->conn.dbi, SMSDDBI_Callback, Config);
 
-	if (dbi_conn_set_option(db->conn.dbi, "sqlite_dbdir", Config->dbdir) != 0) {
+	if (dbi_conn_set_option(Config->conn.dbi, "sqlite_dbdir", Config->dbdir) != 0) {
 		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to set sqlite_dbdir!");
 		SMSDDBI_Free(Config);
 		return SQL_FAIL;
 	}
-	if (dbi_conn_set_option(db->conn.dbi, "sqlite3_dbdir", Config->dbdir) != 0) {
+	if (dbi_conn_set_option(Config->conn.dbi, "sqlite3_dbdir", Config->dbdir) != 0) {
 		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to set sqlite3_dbdir!");
 		SMSDDBI_Free(Config);
 		return SQL_FAIL;
 	}
-	if (dbi_conn_set_option(db->conn.dbi, "host", Config->host) != 0) {
+	if (dbi_conn_set_option(Config->conn.dbi, "host", Config->host) != 0) {
 		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to set host!");
 		SMSDDBI_Free(Config);
 		return SQL_FAIL;
 	}
-	if (dbi_conn_set_option(db->conn.dbi, "username", Config->user) != 0) {
+	if (dbi_conn_set_option(Config->conn.dbi, "username", Config->user) != 0) {
 		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to set username!");
 		SMSDDBI_Free(Config);
 		return SQL_FAIL;
 	}
-	if (dbi_conn_set_option(db->conn.dbi, "password", Config->password) != 0) {
+	if (dbi_conn_set_option(Config->conn.dbi, "password", Config->password) != 0) {
 		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to set password!");
 		SMSDDBI_Free(Config);
 		return SQL_FAIL;
 	}
-	if (dbi_conn_set_option(db->conn.dbi, "dbname", Config->database) != 0) {
+	if (dbi_conn_set_option(Config->conn.dbi, "dbname", Config->database) != 0) {
 		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to set dbname!");
 		SMSDDBI_Free(Config);
 		return SQL_FAIL;
 	}
-	if (dbi_conn_set_option(db->conn.dbi, "encoding", "UTF-8") != 0) {
+	if (dbi_conn_set_option(Config->conn.dbi, "encoding", "UTF-8") != 0) {
 		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to set encoding!");
 		SMSDDBI_Free(Config);
 		return SQL_FAIL;
 	}
 
-	if (dbi_conn_connect(db->conn.dbi) != 0) {
+	if (dbi_conn_connect(Config->conn.dbi) != 0) {
 		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to connect!");
 		SMSDDBI_Free(Config);
 		return SQL_FAIL;
@@ -246,18 +246,17 @@ static SQL_Error SMSDDBI_Query(GSM_SMSDConfig * Config, const char *query, SQL_r
 {
 	const char *msg;
 	int rc;
-	struct GSM_SMSDdbobj *db = Config->db;
 
 	res->dbi = NULL;
 
 	SMSD_Log(DEBUG_SQL, Config, "Execute SQL: %s", query);
-	res->dbi = dbi_conn_query(db->conn.dbi, query);
+	res->dbi = dbi_conn_query(Config->conn.dbi, query);
 	if (res->dbi != NULL)
 		return SQL_OK;
 
 	SMSD_Log(DEBUG_INFO, Config, "SQL failed: %s", query);
 	/* Black magic to decide whether we should bail out or attempt to retry */
-	rc = dbi_conn_error(db->conn.dbi, &msg);
+	rc = dbi_conn_error(Config->conn.dbi, &msg);
 	if (rc != -1) {
 		SMSD_Log(DEBUG_INFO, Config, "SQL failure: %s", msg);
 		if (strstr(msg, "syntax") != NULL) {
@@ -310,9 +309,9 @@ char * SMSDDBI_QuoteString(GSM_SMSDConfig * Config, SQL_conn *conn, const char *
 unsigned long long SMSDDBI_SeqID(GSM_SMSDConfig * Config, const char *id)
 {
 	unsigned long long new_id;
-	new_id = dbi_conn_sequence_last(Config->db->conn.dbi, NULL);
+	new_id = dbi_conn_sequence_last(Config->conn.dbi, NULL);
 	if (new_id == 0) {
-		new_id = dbi_conn_sequence_last(Config->db->conn.dbi, id);
+		new_id = dbi_conn_sequence_last(Config->conn.dbi, id);
 	}
 	return new_id;
 }
@@ -342,7 +341,6 @@ struct GSM_SMSDdbobj SMSDDBI = {
 	SMSDDBI_GetDate,
 	SMSDDBI_GetBool,
 	SMSDDBI_QuoteString,
-	{.dbi = NULL}
 };
 
 /* How should editor hadle tabs in this file? Add editor commands here.

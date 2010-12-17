@@ -162,7 +162,7 @@ static GSM_Error SMSDSQL_NamedQuery(GSM_SMSDConfig * Config, const char *sql_que
 						ptr += sprintf(ptr, "%i", params[n].v.i);
 						break;
 					case SQL_TYPE_STRING:
-						buffer2 = db->QuoteString(Config, &db->conn, params[n].v.s);
+						buffer2 = db->QuoteString(Config, &Config->conn, params[n].v.s);
 						memcpy(ptr, buffer2, strlen(buffer2));
 						ptr += strlen(buffer2);
 						free(buffer2);
@@ -286,7 +286,7 @@ static GSM_Error SMSDSQL_NamedQuery(GSM_SMSDConfig * Config, const char *sql_que
 		if (numeric) {
 			ptr += sprintf(ptr, "%i", int_to_print);
 		} else if (to_print != NULL) {
-			buffer2 = db->QuoteString(Config, &db->conn, to_print);
+			buffer2 = db->QuoteString(Config, &Config->conn, to_print);
 			memcpy(ptr, buffer2, strlen(buffer2));
 			ptr += strlen(buffer2);
 			free(buffer2);

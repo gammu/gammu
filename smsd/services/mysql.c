@@ -73,10 +73,10 @@ const char *SMSMySQL_GetString(GSM_SMSDConfig * Config, SQL_result res, unsigned
 /* Disconnects from a database */
 void SMSDMySQL_Free(GSM_SMSDConfig * Config)
 {
-	if (Config->db->conn.my != NULL) {
-		mysql_close(Config->db->conn.my);
-		free(Config->db->conn.my);
-		Config->db->conn.my = NULL;
+	if (Config->conn.my != NULL) {
+		mysql_close(Config->conn.my);
+		free(Config->conn.my);
+		Config->conn.my = NULL;
 	}
 }
 
@@ -84,9 +84,9 @@ static int SMSDMySQL_LogError(GSM_SMSDConfig * Config)
 {
 	int mysql_err;
 
-	mysql_err = mysql_errno(Config->db->conn.my);
+	mysql_err = mysql_errno(Config->conn.my);
 
-	SMSD_Log(DEBUG_ERROR, Config, "Error code: %d, Error: %s", mysql_err, mysql_error(Config->db->conn.my));
+	SMSD_Log(DEBUG_ERROR, Config, "Error code: %d, Error: %s", mysql_err, mysql_error(Config->conn.my));
 
 	return mysql_err;
 }
@@ -98,7 +98,6 @@ static SQL_Error SMSDMySQL_Connect(GSM_SMSDConfig * Config)
 	int error;
 	char *pport;
 	char *socketname = NULL;
-	struct GSM_SMSDdbobj *db = Config->db;
 
 	pport = strstr(Config->host, ":");
 	if (pport) {
@@ -110,46 +109,45 @@ static SQL_Error SMSDMySQL_Connect(GSM_SMSDConfig * Config)
 			socketname = pport;
 		}
 	}
-	if (db->conn.my == NULL) {
-		db->conn.my = malloc(sizeof(MYSQL));
-		mysql_init(db->conn.my);
+	if (Config->conn.my == NULL) {
+		Config->conn.my = malloc(sizeof(MYSQL));
+		mysql_init(Config->conn.my);
 	}
-	if (db->conn.my == NULL) {
+	if (Config->conn.my == NULL) {
 		SMSD_Log(DEBUG_ERROR, Config, "MySQL allocation failed!");
 		return SQL_FAIL;
 	}
-	if (!mysql_real_connect(db->conn.my, Config->host, Config->user, Config->password, Config->database, port, socketname, 0)) {
+	if (!mysql_real_connect(Config->conn.my, Config->host, Config->user, Config->password, Config->database, port, socketname, 0)) {
 		SMSD_Log(DEBUG_ERROR, Config, "Error connecting to database!");
 		SMSDMySQL_LogError(Config);
-		error = mysql_errno(db->conn.my);
+		error = mysql_errno(Config->conn.my);
 		if (error == 2006 || error == 2003 || error == 2002) { /* cant connect through socket */
 			return SQL_TIMEOUT;
 		}
 		return SQL_FAIL;
 	}
 
-	mysql_query(db->conn.my, "SET NAMES utf8;");
+	mysql_query(Config->conn.my, "SET NAMES utf8;");
 	SMSD_Log(DEBUG_INFO, Config, "Connected to Database: %s on %s", Config->database, Config->host);
 	return SQL_OK;
 }
 
 static SQL_Error SMSDMySQL_Query(GSM_SMSDConfig * Config, const char *query, SQL_result *res)
 {
-	struct GSM_SMSDdbobj *db = Config->db;
 	int error;
 
-	if (mysql_query(db->conn.my, query) != 0) {
+	if (mysql_query(Config->conn.my, query) != 0) {
 		SMSDMySQL_LogError(Config);
-		error = mysql_errno(db->conn.my);
+		error = mysql_errno(Config->conn.my);
 		if (error == 2006 || error == 2013 || error == 2012) { /* connection lost */
 			return SQL_TIMEOUT;
 		}
 		return SQL_FAIL;
 	}
 
-	res->my.res = mysql_store_result(db->conn.my);
+	res->my.res = mysql_store_result(Config->conn.my);
 	res->my.row = NULL;
-	res->my.con = db->conn.my;
+	res->my.con = Config->conn.my;
 
 	return SQL_OK;
 }
@@ -189,7 +187,7 @@ char * SMSDMySQL_QuoteString(GSM_SMSDConfig * Config, SQL_conn *conn, const char
 /* LAST_INSERT_ID */
 unsigned long long SMSDMySQL_SeqID(GSM_SMSDConfig * Config, const char *dummy)
 {
-	return mysql_insert_id(Config->db->conn.my);
+	return mysql_insert_id(Config->conn.my);
 }
 
 unsigned long SMSDMySQL_AffectedRows(GSM_SMSDConfig * Config, SQL_result Res)
@@ -217,7 +215,6 @@ struct GSM_SMSDdbobj SMSDMySQL = {
 	SMSDMySQL_GetDate,
 	SMSDMySQL_GetBool,
 	SMSDMySQL_QuoteString,
-	{.my = NULL}
 };
 
 #endif

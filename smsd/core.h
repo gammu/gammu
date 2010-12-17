@@ -135,6 +135,7 @@ struct _GSM_SMSDConfig {
 	char		CreatorID[200];
 	/* database data structure */
 	struct GSM_SMSDdbobj *db;
+	SQL_conn conn;
 #endif
 
 	INI_Section 		*smsdcfgfile;
