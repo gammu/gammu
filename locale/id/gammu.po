@@ -715,7 +715,7 @@ msgstr "Mengulangi"
 #, c-format
 msgid "for %d time "
 msgid_plural "for %d times "
-msgstr[0] "Tunggal untuk %d waktu Jamak untuk %d waktu"
+msgstr[0] "Jamak untuk %d waktu"
 
 #: gammu/calendar.c:317
 msgid "forever"
