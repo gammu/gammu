@@ -10,7 +10,7 @@
 int main(int argc UNUSED, char **argv UNUSED)
 {
 	test_result(SMSDSQL_ParseDate(NULL, "2005-05-24 22:53:30") == 1116971610L);
-	test_result(SMSDSQL_ParseDate(NULL, "0000-00-00 00:00:00") == -1);
+	test_result(SMSDSQL_ParseDate(NULL, "0000-00-00 00:00:00") == -2);
 	return 0;
 }
 

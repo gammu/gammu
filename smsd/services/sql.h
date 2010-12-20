@@ -7,6 +7,11 @@
 
 extern GSM_SMSDService SMSDSQL;
 
+/**
+ * Parses date string into time_t.
+ *
+ * \return Negative value on failure, -2 for special date "0000-00-00 00:00:00"
+ */
 time_t SMSDSQL_ParseDate(GSM_SMSDConfig * Config, const char *date);
 
 #endif

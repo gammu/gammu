@@ -122,7 +122,9 @@ static GSM_Error SMSDSQL_Query(GSM_SMSDConfig * Config, const char *query, SQL_r
 void SMSDSQL_Time2String(struct GSM_SMSDdbobj *db, time_t timestamp, char *static_buff, size_t size)
 {
 	struct tm *timestruct;
-	if (strcmp(db->DriverName, "pgsql") == 0) {
+	if (timestamp == -2) {
+		strcpy(static_buff, "0000-00-00 00:00:00");
+	} else if (strcmp(db->DriverName, "pgsql") == 0) {
 		timestruct = gmtime(&timestamp);
 		strftime(static_buff, size, "%Y-%m-%d %H:%M:%S GMT", timestruct);
 	} else {
@@ -464,7 +466,7 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 
 				if (strcmp(state, "SendingOK") == 0 || strcmp(state, "DeliveryPending") == 0) {
 					t_time1 = db->GetDate(Config, Res, 2);
-					if (t_time1 == -1) {
+					if (t_time1 < 0) {
 						SMSD_Log(DEBUG_ERROR, Config, "Invalid SendingDateTime -1 for SMS TPMR=%i", sms->SMS[i].MessageReference);
 						return ERR_UNKNOWN;
 					}
@@ -1149,6 +1151,10 @@ time_t SMSDSQL_ParseDate(GSM_SMSDConfig * Config, const char *date)
 {
 	char *parse_res;
 	struct tm timestruct;
+
+	if (strcmp(date, "0000-00-00 00:00:00") == 0) {
+		return -2;
+	}
 
 	parse_res = strptime(date, "%Y-%m-%d %H:%M:%S", &timestruct);
 
