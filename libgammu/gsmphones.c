@@ -118,6 +118,7 @@ GSM_FeatureName AllFeatureNames[] = {
 	{"NO_ATSYNCML", F_NO_ATSYNCML},
 	{"MOBEX", F_MOBEX},
 	{"TSSPCSW", F_TSSPCSW},
+	{"DISABLE_GETNEXT", F_DISABLE_GETNEXT},
 	{"", 0},
 };
 

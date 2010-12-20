@@ -666,6 +666,10 @@ typedef enum {
 	 * Phone supports m-obex (usually Samsung phones) using AT$TSSPCSW=1.
 	 */
 	F_TSSPCSW,
+	/**
+	 * Disable GetNext* operations on the dummy phone.
+	 */
+	F_DISABLE_GETNEXT,
 
 	/**
 	 * Just marker of highest feature code, should not be used.

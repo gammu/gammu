@@ -54,3 +54,11 @@ Filesystem
 
 Filesystem is stored in :file:`fs` directory. You can create another
 subdirectories there.
+
+Other features
+--------------
+
+By specifying :config:option:`Features` you can configure some specific behavior:
+
+``DISABLE_GETNEXT``
+    Makes the dummy driver fail all GetNext* calls as not supported.

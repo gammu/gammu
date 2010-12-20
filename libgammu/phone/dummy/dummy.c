@@ -595,6 +595,10 @@ GSM_Error DUMMY_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, gboole
 {
 	char dirname[20]={0};
 
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_DISABLE_GETNEXT)) {
+		return ERR_NOTSUPPORTED;
+	}
+
 	if (start) {
 		sms->SMS[0].Folder = 1;
 		sms->SMS[0].Location = 0;
@@ -1218,6 +1222,10 @@ GSM_Error DUMMY_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, gboolean 
 	struct stat sb;
 	int i;
 
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_DISABLE_GETNEXT)) {
+		return ERR_NOTSUPPORTED;
+	}
+
 	if (start) {
 		for (i = 0; i < DUMMY_MAX_FS_DEPTH; i++) {
 			if (Priv->dir[i] != NULL) {
@@ -1419,6 +1427,10 @@ GSM_Error DUMMY_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry, gbool
 {
 	char dirname[20]={0};
 
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_DISABLE_GETNEXT)) {
+		return ERR_NOTSUPPORTED;
+	}
+
 	if (start) {
 		entry->Location = 0;
 	}
@@ -1528,6 +1540,10 @@ GSM_Error DUMMY_GetToDo(GSM_StateMachine *s, GSM_ToDoEntry *entry)
 
 GSM_Error DUMMY_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *entry, gboolean start)
 {
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_DISABLE_GETNEXT)) {
+		return ERR_NOTSUPPORTED;
+	}
+
 	if (start) {
 		entry->Location = 0;
 	}
@@ -1628,6 +1644,10 @@ GSM_Error DUMMY_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *entry)
 
 GSM_Error DUMMY_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *entry, gboolean start)
 {
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_DISABLE_GETNEXT)) {
+		return ERR_NOTSUPPORTED;
+	}
+
 	if (start) {
 		entry->Location = 0;
 	}
@@ -1740,6 +1760,10 @@ GSM_Error DUMMY_GetNote(GSM_StateMachine *s, GSM_NoteEntry *entry)
 
 GSM_Error DUMMY_GetNextNote(GSM_StateMachine *s, GSM_NoteEntry *entry, gboolean start)
 {
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_DISABLE_GETNEXT)) {
+		return ERR_NOTSUPPORTED;
+	}
+
 	if (start) {
 		entry->Location = 0;
 	}
