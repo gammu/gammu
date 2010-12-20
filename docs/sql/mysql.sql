@@ -225,3 +225,56 @@ CREATE INDEX sentitems_sender ON sentitems(SenderID);
 -- Dumping data for table `sentitems`
 -- 
 
+
+-- 
+-- Triggers for setting default timestamps
+-- 
+
+DELIMITER //
+
+CREATE TRIGGER inbox_timestamp BEFORE INSERT ON inbox
+FOR EACH ROW
+BEGIN
+    IF NEW.ReceivingDateTime = '0000-00-00 00:00:00' THEN
+        SET NEW.ReceivingDateTime = CURRENT_TIMESTAMP();
+    END IF;
+END;//
+
+CREATE TRIGGER outbox_timestamp BEFORE INSERT ON outbox
+FOR EACH ROW
+BEGIN
+    IF NEW.InsertIntoDB = '0000-00-00 00:00:00' THEN
+        SET NEW.InsertIntoDB = CURRENT_TIMESTAMP();
+    END IF;
+    IF NEW.SendingDateTime = '0000-00-00 00:00:00' THEN
+        SET NEW.SendingDateTime = CURRENT_TIMESTAMP();
+    END IF;
+    IF NEW.SendingTimeOut = '0000-00-00 00:00:00' THEN
+        SET NEW.SendingTimeOut = CURRENT_TIMESTAMP();
+    END IF;
+END;//
+
+CREATE TRIGGER phones_timestamp BEFORE INSERT ON phones
+FOR EACH ROW
+BEGIN
+    IF NEW.InsertIntoDB = '0000-00-00 00:00:00' THEN
+        SET NEW.InsertIntoDB = CURRENT_TIMESTAMP();
+    END IF;
+    IF NEW.TimeOut = '0000-00-00 00:00:00' THEN
+        SET NEW.TimeOut = CURRENT_TIMESTAMP();
+    END IF;
+END;//
+
+CREATE TRIGGER sentitems_timestamp BEFORE INSERT ON sentitems
+FOR EACH ROW
+BEGIN
+    IF NEW.InsertIntoDB = '0000-00-00 00:00:00' THEN
+        SET NEW.InsertIntoDB = CURRENT_TIMESTAMP();
+    END IF;
+    IF NEW.SendingDateTime = '0000-00-00 00:00:00' THEN
+        SET NEW.SendingDateTime = CURRENT_TIMESTAMP();
+    END IF;
+END;//
+
+DELIMITER ;
+

@@ -317,6 +317,11 @@ History
 
 History of schema versions:
 
+12
+    the changes only affect MySQL structure changing default values for
+    timestamps from ``0000-00-00 00:00:00`` to ``CURRENT_TIMESTAMP()`` by 
+    using triggers, to update to this version, just execute triggers 
+    definition at the end of SQL file.
 11
     all fields for storing message text are no longer limited to 160 chars,
     but are arbitrary length text fields (1.25.92)
