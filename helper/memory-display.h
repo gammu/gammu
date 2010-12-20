@@ -6,6 +6,7 @@
 
 GSM_Error PrintMemoryEntry(GSM_MemoryEntry *entry, GSM_StateMachine *sm);
 GSM_Error PrintMemorySubEntry(GSM_SubMemoryEntry *entry, GSM_StateMachine *sm);
+GSM_Error PrintMemoryEntryLocation(GSM_MemoryEntry *entry, GSM_StateMachine *sm);
 
 extern GSM_AllRingtonesInfo 	ringtones_info;
 

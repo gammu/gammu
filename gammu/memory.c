@@ -8,6 +8,7 @@
 
 #include "common.h"
 #include "memory.h"
+#include "backup.h"
 #include "../helper/formats.h"
 #include "../helper/memory-display.h"
 #include "../helper/printing.h"
@@ -16,36 +17,27 @@
 
 void GetAllMemory(int argc UNUSED, char *argv[])
 {
-	GSM_MemoryEntry		Entry;
-	gboolean			start = TRUE;
 	GSM_Error error;
+	GSM_MemoryType MemoryType;
 
 	signal(SIGINT, interrupt);
 	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
 
-	Entry.MemoryType = GSM_StringToMemoryType(argv[2]);
-	Entry.Location = 0;
+	MemoryType = GSM_StringToMemoryType(argv[2]);
 
-	if (Entry.MemoryType == 0) {
+	if (MemoryType == 0) {
 		printf_err(_("Unknown memory type (\"%s\")\n"),argv[2]);
 		Terminate(2);
 	}
 
 	GSM_Init(TRUE);
 
-	while (!gshutdown) {
-		error = GSM_GetNextMemory(gsm, &Entry, start);
-		if (error == ERR_EMPTY) break;
-		if (error != ERR_NONE && ringtones_info.Ringtone) free(ringtones_info.Ringtone);
-		Print_Error(error);
-		printf(_("Memory %s, Location %i\n"),argv[2],Entry.Location);
-		error = PrintMemoryEntry(&Entry, gsm);
-		GSM_FreeMemoryEntry(&Entry);
-		Print_Error(error);
- 		start = FALSE;
-	}
+	error = ReadPhonebook(NULL, MemoryType, NULL, 0, PrintMemoryEntryLocation, FALSE);
+	Print_Error(error);
 
- 	if (ringtones_info.Ringtone) free(ringtones_info.Ringtone);
+ 	if (ringtones_info.Ringtone) {
+		free(ringtones_info.Ringtone);
+	}
 
 	GSM_Terminate();
 }

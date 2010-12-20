@@ -179,6 +179,12 @@ GSM_Error PrintMemoryEntry(GSM_MemoryEntry *entry, GSM_StateMachine *sm)
 	return ERR_NONE;
 }
 
+GSM_Error PrintMemoryEntryLocation(GSM_MemoryEntry *entry, GSM_StateMachine *sm)
+{
+	printf(_("Memory %s, Location %i\n"), GSM_MemoryTypeToString(entry->MemoryType), entry->Location);
+	return PrintMemoryEntry(entry, sm);
+}
+
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:
  */
