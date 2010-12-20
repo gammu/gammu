@@ -198,7 +198,7 @@ void SaveFile(int argc, char *argv[])
 /**
  * Reads phone phonebook, optionally asking question whether to read it.
  */
-GSM_Error ReadPhonebook(GSM_MemoryEntry **Phonebook, GSM_MemoryType MemoryType, const char *question, int max_entries, ReadPhonebookCallback callback)
+GSM_Error ReadPhonebook(GSM_MemoryEntry **Phonebook, GSM_MemoryType MemoryType, const char *question, int max_entries, ReadPhonebookCallback callback, gboolean progress)
 {
 	GSM_MemoryStatus MemStatus;
 	GSM_MemoryEntry Pbk;
@@ -236,14 +236,16 @@ GSM_Error ReadPhonebook(GSM_MemoryEntry **Phonebook, GSM_MemoryType MemoryType, 
 
 	if (UseNext) {
 		used 		= 0;
-		fprintf(stderr, LISTFORMAT, _("Reading"));
+		if (progress) {
+			fprintf(stderr, LISTFORMAT, _("Reading"));
+		}
 		error = ERR_NONE;
 		while (error == ERR_NONE) {
-			if (used >= max_entries) {
-				printf("\n   %s\n", _("Only part of data saved, please increase the limit."));
-				break;
-			}
 			if (Phonebook != NULL) {
+				if (used >= max_entries) {
+					printf("\n   %s\n", _("Only part of data saved, please increase the limit."));
+					break;
+				}
 				Phonebook[used] = malloc(sizeof(GSM_MemoryEntry));
 				if (Phonebook[used] == NULL) {
 					Print_Error(ERR_MOREMEMORY);
@@ -252,26 +254,30 @@ GSM_Error ReadPhonebook(GSM_MemoryEntry **Phonebook, GSM_MemoryType MemoryType, 
 				*Phonebook[used] = Pbk;
 			}
 			if (callback != NULL) {
-				error = callback(&Pbk);
+				error = callback(&Pbk, gsm);
 				Print_Error(error);
 			}
 			used++;
 			error = GSM_GetNextMemory(gsm, &Pbk, FALSE);
-			if (MemStatus.MemoryUsed == 0) {
-				fprintf(stderr, "*");
-			} else {
-				fprintf(stderr, "\r   ");
-				fprintf(stderr, "%s ", _("Reading:"));
-				fprintf(stderr, _("%i percent"),
-					used * 100 / MemStatus.MemoryUsed);
+			if (progress) {
+				if (MemStatus.MemoryUsed == 0) {
+					fprintf(stderr, "*");
+				} else {
+					fprintf(stderr, "\r   ");
+					fprintf(stderr, "%s ", _("Reading:"));
+					fprintf(stderr, _("%i percent"),
+						used * 100 / MemStatus.MemoryUsed);
+				}
 			}
 			if (gshutdown) {
 				GSM_Terminate();
 				Terminate(4);
 			}
 		}
-		fprintf(stderr, "\n");
-		fflush(stderr);
+		if (progress) {
+			fprintf(stderr, "\n");
+			fflush(stderr);
+		}
 	} else {
 		i		= 1;
 		used 		= 0;
@@ -280,11 +286,11 @@ GSM_Error ReadPhonebook(GSM_MemoryEntry **Phonebook, GSM_MemoryType MemoryType, 
 			error = GSM_GetMemory(gsm, &Pbk);
 			if (error != ERR_EMPTY) {
 				Print_Error(error);
-				if (used >= max_entries) {
-					printf("\n   %s\n", _("Only part of data saved, please increase the limit."));
-					break;
-				}
 				if (Phonebook != NULL) {
+					if (used >= max_entries) {
+						printf("\n   %s\n", _("Only part of data saved, please increase the limit."));
+						break;
+					}
 					Phonebook[used] = malloc(sizeof(GSM_MemoryEntry));
 					if (Phonebook[used] == NULL) {
 						Print_Error(ERR_MOREMEMORY);
@@ -293,23 +299,27 @@ GSM_Error ReadPhonebook(GSM_MemoryEntry **Phonebook, GSM_MemoryType MemoryType, 
 					*Phonebook[used] = Pbk;
 				}
 				if (callback != NULL) {
-					error = callback(&Pbk);
+					error = callback(&Pbk, gsm);
 					Print_Error(error);
 				}
 				used++;
 			}
-			fprintf(stderr, "\r   ");
-			fprintf(stderr, "%s ", _("Reading:"));
-			fprintf(stderr, _("%i percent"),
-				used * 100 / MemStatus.MemoryUsed);
+			if (progress) {
+				fprintf(stderr, "\r   ");
+				fprintf(stderr, "%s ", _("Reading:"));
+				fprintf(stderr, _("%i percent"),
+					used * 100 / MemStatus.MemoryUsed);
+			}
 			i++;
 			if (gshutdown) {
 				GSM_Terminate();
 				Terminate(4);
 			}
 		}
-		fprintf(stderr, "\n");
-		fflush(stderr);
+		if (progress) {
+			fprintf(stderr, "\n");
+			fflush(stderr);
+		}
 	}
 	return ERR_NONE;
 }
@@ -391,12 +401,12 @@ void DoBackup(int argc, char *argv[])
 
 	if (Info.PhonePhonebook) {
 		printf("%s\n", _("Checking phone phonebook"));
-		ReadPhonebook(Backup.PhonePhonebook, MEM_ME, _("Backup phone phonebook?"), GSM_BACKUP_MAX_PHONEPHONEBOOK, NULL);
+		ReadPhonebook(Backup.PhonePhonebook, MEM_ME, _("Backup phone phonebook?"), GSM_BACKUP_MAX_PHONEPHONEBOOK, NULL, TRUE);
 	}
 
 	if (Info.SIMPhonebook) {
 		printf("%s\n", _("Checking SIM phonebook"));
-		ReadPhonebook(Backup.SIMPhonebook, MEM_SM, _("Backup SIM phonebook?"), GSM_BACKUP_MAX_SIMPHONEBOOK, NULL);
+		ReadPhonebook(Backup.SIMPhonebook, MEM_SM, _("Backup SIM phonebook?"), GSM_BACKUP_MAX_SIMPHONEBOOK, NULL, TRUE);
 	}
 
 	DoBackupPart = FALSE;
