@@ -198,7 +198,7 @@ void SaveFile(int argc, char *argv[])
 /**
  * Reads phone phonebook, optionally asking question whether to read it.
  */
-GSM_Error ReadPhonebook(GSM_MemoryEntry **Phonebook, GSM_MemoryType MemoryType, const char *question, int max_entries)
+GSM_Error ReadPhonebook(GSM_MemoryEntry **Phonebook, GSM_MemoryType MemoryType, const char *question, int max_entries, ReadPhonebookCallback callback)
 {
 	GSM_MemoryStatus MemStatus;
 	GSM_MemoryEntry Pbk;
@@ -243,12 +243,18 @@ GSM_Error ReadPhonebook(GSM_MemoryEntry **Phonebook, GSM_MemoryType MemoryType, 
 				printf("\n   %s\n", _("Only part of data saved, please increase the limit."));
 				break;
 			}
-			Phonebook[used] = malloc(sizeof(GSM_MemoryEntry));
-			if (Phonebook[used] == NULL) {
-				Print_Error(ERR_MOREMEMORY);
+			if (Phonebook != NULL) {
+				Phonebook[used] = malloc(sizeof(GSM_MemoryEntry));
+				if (Phonebook[used] == NULL) {
+					Print_Error(ERR_MOREMEMORY);
+				}
+				Phonebook[used+1] = NULL;
+				*Phonebook[used] = Pbk;
 			}
-			Phonebook[used+1] = NULL;
-			*Phonebook[used] = Pbk;
+			if (callback != NULL) {
+				error = callback(&Pbk);
+				Print_Error(error);
+			}
 			used++;
 			error = GSM_GetNextMemory(gsm, &Pbk, FALSE);
 			if (MemStatus.MemoryUsed == 0) {
@@ -278,12 +284,18 @@ GSM_Error ReadPhonebook(GSM_MemoryEntry **Phonebook, GSM_MemoryType MemoryType, 
 					printf("\n   %s\n", _("Only part of data saved, please increase the limit."));
 					break;
 				}
-				Phonebook[used] = malloc(sizeof(GSM_MemoryEntry));
-				if (Phonebook[used] == NULL) {
-					Print_Error(ERR_MOREMEMORY);
+				if (Phonebook != NULL) {
+					Phonebook[used] = malloc(sizeof(GSM_MemoryEntry));
+					if (Phonebook[used] == NULL) {
+						Print_Error(ERR_MOREMEMORY);
+					}
+					Phonebook[used+1] = NULL;
+					*Phonebook[used] = Pbk;
 				}
-				Phonebook[used+1] = NULL;
-				*Phonebook[used] = Pbk;
+				if (callback != NULL) {
+					error = callback(&Pbk);
+					Print_Error(error);
+				}
 				used++;
 			}
 			fprintf(stderr, "\r   ");
@@ -379,12 +391,12 @@ void DoBackup(int argc, char *argv[])
 
 	if (Info.PhonePhonebook) {
 		printf("%s\n", _("Checking phone phonebook"));
-		ReadPhonebook(Backup.PhonePhonebook, MEM_ME, _("Backup phone phonebook?"), GSM_BACKUP_MAX_PHONEPHONEBOOK);
+		ReadPhonebook(Backup.PhonePhonebook, MEM_ME, _("Backup phone phonebook?"), GSM_BACKUP_MAX_PHONEPHONEBOOK, NULL);
 	}
 
 	if (Info.SIMPhonebook) {
 		printf("%s\n", _("Checking SIM phonebook"));
-		ReadPhonebook(Backup.SIMPhonebook, MEM_SM, _("Backup SIM phonebook?"), GSM_BACKUP_MAX_SIMPHONEBOOK);
+		ReadPhonebook(Backup.SIMPhonebook, MEM_SM, _("Backup SIM phonebook?"), GSM_BACKUP_MAX_SIMPHONEBOOK, NULL);
 	}
 
 	DoBackupPart = FALSE;
