@@ -221,6 +221,7 @@ GSM_Error ReadPhonebook(GSM_MemoryEntry **Phonebook, GSM_MemoryType MemoryType, 
 			UseNext = TRUE;
 		}
 	} else {
+		MemStatus.MemoryUsed = 0;
 		UseNext = TRUE;
 		error = GSM_GetNextMemory(gsm, &Pbk, TRUE);
 		if (error != ERR_NONE) {
@@ -250,7 +251,14 @@ GSM_Error ReadPhonebook(GSM_MemoryEntry **Phonebook, GSM_MemoryType MemoryType, 
 			*Phonebook[used] = Pbk;
 			used++;
 			error = GSM_GetNextMemory(gsm, &Pbk, FALSE);
-			fprintf(stderr, "*");
+			if (MemStatus.MemoryUsed == 0) {
+				fprintf(stderr, "*");
+			} else {
+				fprintf(stderr, "\r   ");
+				fprintf(stderr, "%s ", _("Reading:"));
+				fprintf(stderr, _("%i percent"),
+					used * 100 / MemStatus.MemoryUsed);
+			}
 			if (gshutdown) {
 				GSM_Terminate();
 				Terminate(4);
