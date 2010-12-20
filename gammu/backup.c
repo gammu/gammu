@@ -1562,6 +1562,7 @@ void AddNew(int argc, char *argv[])
 	GSM_ToDoStatus		ToDoStatus;
 	GSM_NoteEntry		Note;
 	GSM_CalendarEntry	Calendar;
+	GSM_CalendarStatus	CalendarStatus;
 	GSM_WAPBookmark		Bookmark;
 	GSM_MemoryType		MemoryType = 0;
 	int			i, max;
@@ -1677,8 +1678,8 @@ void AddNew(int argc, char *argv[])
 	}
 	if (Backup.Calendar[0] != NULL) {
 		Calendar.Location = 1;
-		error = GSM_GetNextCalendar(gsm,&Calendar,TRUE);
-		if (error == ERR_NONE || error == ERR_INVALIDLOCATION || error == ERR_EMPTY) {
+		error = GSM_GetCalendarStatus(gsm,&CalendarStatus);
+		if (error == ERR_NONE) {
 			if (answer_yes("%s", _("Add phone calendar notes?"))) {
 				max = 0;
 				while (Backup.Calendar[max]!=NULL) max++;
