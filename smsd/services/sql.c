@@ -1160,7 +1160,10 @@ time_t SMSDSQL_ParseDate(GSM_SMSDConfig * Config, const char *date)
 	if (parse_res != NULL && *parse_res == 0) {
 		return mktime(&timestruct);
 	}
-	SMSD_Log(DEBUG_ERROR, Config, "Failed to parse date: %s", date);
+	/* Used during testing */
+	if (Config != NULL) {
+		SMSD_Log(DEBUG_ERROR, Config, "Failed to parse date: %s", date);
+	}
 	return -1;
 }
 

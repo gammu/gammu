@@ -34,6 +34,25 @@ add_executable(array-test array-test.c)
 target_link_libraries (array-test array)
 add_test(array "${GAMMU_TEST_PATH}/array-test${GAMMU_TEST_SUFFIX}")
 
+# SQL backend date parsing
+if (HAVE_MYSQL_MYSQL_H OR LIBDBI_FOUND OR HAVE_POSTGRESQL_LIBPQ_FE_H)
+    if (LIBDBI_FOUND)
+        include_directories (${LIBDBI_INCLUDE_DIR})
+    endif (LIBDBI_FOUND)
+
+    if (MYSQL_FOUND)
+        include_directories (${MYSQL_INCLUDE_DIR})
+    endif (MYSQL_FOUND)
+
+    if (POSTGRES_FOUND)
+        include_directories (${POSTGRES_INCLUDE_DIR})
+    endif (POSTGRES_FOUND)
+
+    add_executable(sql-parse-date sql-parse-date.c)
+    target_link_libraries (sql-parse-date gsmsd)
+    add_test(sql-parse-date "${GAMMU_TEST_PATH}/sql-parse-date${GAMMU_TEST_SUFFIX}")
+endif (HAVE_MYSQL_MYSQL_H OR LIBDBI_FOUND OR HAVE_POSTGRESQL_LIBPQ_FE_H)
+
 # Backup comments
 if (WITH_BACKUP)
     add_executable(backup-comment backup-comment.c)
