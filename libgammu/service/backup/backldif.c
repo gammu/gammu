@@ -29,6 +29,10 @@ GSM_Error SaveLDIF(const char *FileName, GSM_Backup *backup)
 {
 	int 		i, j;
 	FILE 		*file;
+	gboolean had_dn = FALSE;
+	int firstname = -1, lastname = -1;
+	unsigned char Text[(GSM_PHONEBOOK_TEXT_LENGTH + 1) * 4];
+	size_t pos;
 
 	file = fopen(FileName, "wb");
 	if (file == NULL) return ERR_CANTOPENFILE;
@@ -39,10 +43,42 @@ GSM_Error SaveLDIF(const char *FileName, GSM_Backup *backup)
 			switch (backup->PhonePhonebook[i]->Entries[j].EntryType) {
 			case PBK_Text_Name:
 				SaveLDIFText(file, "dn", backup->PhonePhonebook[i]->Entries[j].Text);
+				had_dn = TRUE;
+				break;
+			case PBK_Text_FirstName:
+				firstname = j;
+				break;
+			case PBK_Text_LastName:
+				lastname = j;
 				break;
 			default:
 				break;
 			}
+		}
+		/* Save name if it is composed from parts */
+		if (!had_dn && (firstname != -1 || lastname != -1)) {
+			pos = 0;
+
+			if (firstname != -1) {
+				CopyUnicodeString(Text + 2 * pos, backup->PhonePhonebook[i]->Entries[firstname].Text);
+				pos += UnicodeLength(backup->PhonePhonebook[i]->Entries[firstname].Text);
+			}
+			Text[2*pos] = 0;
+			Text[2*pos + 1] = 0;
+			pos++;
+
+			if (lastname != -1) {
+				if (firstname != -1) {
+					Text[2*(pos - 1) + 1] = ' ';
+				}
+				CopyUnicodeString(Text + 2 * pos, backup->PhonePhonebook[i]->Entries[lastname].Text);
+				pos += UnicodeLength(backup->PhonePhonebook[i]->Entries[lastname].Text);
+			}
+			Text[2*pos] = 0;
+			Text[2*pos + 1] = 0;
+			pos++;
+
+			SaveLDIFText(file, "dn", Text);
 		}
 		fprintf(file, "objectclass: top%c%c",13,10);
 		fprintf(file, "objectclass: person%c%c",13,10);
