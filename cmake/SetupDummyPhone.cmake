@@ -50,6 +50,15 @@ gammuloc = /dev/null
 logformat = textall
 logfile = ${CMAKE_CURRENT_BINARY_DIR}/gammu.log
 
+[gammu2]
+model = dummy
+features = DISABLE_GETNEXT
+connection = none
+port = ${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy
+gammuloc = /dev/null
+logformat = textall
+logfile = ${CMAKE_CURRENT_BINARY_DIR}/gammu.log
+
 [gammu99]
 model = dummy
 connection = none

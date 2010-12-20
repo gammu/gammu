@@ -138,6 +138,10 @@ macro (gammu_test _name _expression)
         set_tests_properties("gammu-dummy-${_name}${__extraname}" PROPERTIES
             PASS_REGULAR_EXPRESSION "${_expression}"
             )
+        add_test("gammu-dummy-nonext-${_name}${__extraname}" "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" -s 2 -c "${CMAKE_CURRENT_BINARY_DIR}/.gammurc" "${_name}" ${ARGN})
+        set_tests_properties("gammu-dummy-nonext-${_name}${__extraname}" PROPERTIES
+            PASS_REGULAR_EXPRESSION "${_expression}"
+            )
     endif (WITH_BACKUP)
 endmacro (gammu_test _name _expression)
 
@@ -162,6 +166,11 @@ macro (gammu_test_fail _name _expression)
         endif (${_params_count} GREATER 0)
         add_test("gammu-dummy-fail-${_name}${__extraname}" "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/.gammurc" "${_name}" ${ARGN})
         set_tests_properties("gammu-dummy-fail-${_name}${__extraname}" PROPERTIES
+            FAIL_REGULAR_EXPRESSION "${_expression}"
+            WILL_FAIL TRUE
+            )
+        add_test("gammu-dummy-nonext-fail-${_name}${__extraname}" "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" -s 2 -c "${CMAKE_CURRENT_BINARY_DIR}/.gammurc" "${_name}" ${ARGN})
+        set_tests_properties("gammu-dummy-nonext-fail-${_name}${__extraname}" PROPERTIES
             FAIL_REGULAR_EXPRESSION "${_expression}"
             WILL_FAIL TRUE
             )
