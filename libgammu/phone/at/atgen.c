@@ -361,6 +361,18 @@ GSM_Error ATGEN_HandleCMSError(GSM_StateMachine *s)
 		case 304:
 			return ERR_NOTSUPPORTED;
 		case 305:
+		case 514:
+		case 515:
+		case 516:
+		case 517:
+		case 519:
+		case 520:
+		case 538:
+		case 549:
+		case 550:
+		case 551:
+		case 553:
+		case 554:
 			return ERR_BUG;
 		case 302:
 		case 311:
