@@ -5,12 +5,6 @@ Recently there has been added dummy driver to Gammu, which emulates all
 operations on filesystem. It is used by :doc:`testsuite`, but it is also very
 helpful for application developers, because they can test the functionality
 without using real phone and avoiding risk of corrupting data in the phone.
-To use dummy driver, you need something like following in :file:`~/.gammurc`::
-
-    [gammu]
-    model = dummy
-    connection = none
-    port = /path/to/direcotry/
 
 Filesystem structure
 --------------------
@@ -65,3 +59,25 @@ By specifying :config:option:`Features` you can configure some specific behavior
     exception of GetNextSMS* and GetNextFile*).
 ``DISABLE_GETNEXTSMS``
     Makes the dummy driver fail all GetNextSMS* calls as not supported.
+
+Examples
+--------
+
+To use dummy driver, you need something like following in :file:`~/.gammurc`::
+
+.. code-block:: ini
+
+    [gammu]
+    model = dummy
+    connection = none
+    port = /path/to/direcotry/
+
+For disabling GetNext* functions within dummy driver, you need something like following in :file:`~/.gammurc`::
+
+.. code-block:: ini
+
+    [gammu]
+    model = dummy
+    connection = none
+    features = DISABLE_GETNEXT
+    port = /path/to/direcotry/
