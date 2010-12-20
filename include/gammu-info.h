@@ -670,6 +670,10 @@ typedef enum {
 	 * Disable GetNext* operations on the dummy phone.
 	 */
 	F_DISABLE_GETNEXT,
+	/**
+	 * Disable GetNextSMS operations on the dummy phone.
+	 */
+	F_DISABLE_GETNEXTSMS,
 
 	/**
 	 * Just marker of highest feature code, should not be used.

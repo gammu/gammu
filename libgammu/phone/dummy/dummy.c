@@ -595,7 +595,7 @@ GSM_Error DUMMY_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, gboole
 {
 	char dirname[20]={0};
 
-	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_DISABLE_GETNEXT)) {
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_DISABLE_GETNEXTSMS)) {
 		return ERR_NOTSUPPORTED;
 	}
 

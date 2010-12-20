@@ -61,4 +61,7 @@ Other features
 By specifying :config:option:`Features` you can configure some specific behavior:
 
 ``DISABLE_GETNEXT``
-    Makes the dummy driver fail all GetNext* calls as not supported.
+    Makes the dummy driver fail all GetNext* calls as not supported (with
+    exception of GetNextSMS* and GetNextFile*).
+``DISABLE_GETNEXTSMS``
+    Makes the dummy driver fail all GetNextSMS* calls as not supported.
