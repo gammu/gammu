@@ -620,7 +620,7 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 	while (db->NextRow(Config, &Res)) {
 		timestamp = db->GetDate(Config, Res, 1);
 		if (timestamp == -1) {
-			SMSD_Log(DEBUG_INFO, Config, "Invalid date -1 for InsertIntoDB.");
+			SMSD_Log(DEBUG_INFO, Config, "Invalid date for InsertIntoDB.");
 			return ERR_UNKNOWN;
 		}
 		sprintf(ID, "%ld", (long)db->GetNumber(Config, Res, 0));
