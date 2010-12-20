@@ -6,6 +6,9 @@
  *
  */
 
+#ifndef __sql_core_h_
+#define __sql_core_h_
+
 #ifdef WIN32
 #  include <winsock2.h>
 #endif
@@ -144,6 +147,7 @@ extern struct GSM_SMSDdbobj SMSDMySQL;
 
 #ifdef LIBDBI_FOUND
 extern struct GSM_SMSDdbobj SMSDDBI;
+#endif
 #endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.

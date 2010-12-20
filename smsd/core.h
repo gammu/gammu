@@ -1,5 +1,8 @@
 /* (c) 2002-2004 by Marcin Wiacek and Joergen Thomsen */
 
+#ifndef __core_h_
+#define __core_h_
+
 #include <gammu.h>
 #include <gammu-smsd.h>
 
@@ -219,6 +222,8 @@ GSM_Error SMSD_CheckDBVersion(GSM_SMSDConfig *Config, int version);
  * \param rc Program return code, will be passed to exit (if enabled).
  */
 void SMSD_Terminate(GSM_SMSDConfig *Config, const char *msg, GSM_Error error, gboolean exitprogram, int rc);
+
+#endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:

@@ -1,5 +1,8 @@
 /* (c) 2002-2004 by Marcin Wiacek and Joergen Thomsen */
 
+#ifndef __log_h_
+#define __log_h_
+
 #include <gammu-smsd.h>
 
 /**
@@ -17,6 +20,8 @@ void SMSD_Log(int level, GSM_SMSDConfig *Config, const char *format, ...);
  * Logs a message to SMSD log with description of OS specific error code.
  */
 void SMSD_LogErrno(GSM_SMSDConfig *Config, const char *message);
+
+#endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:
