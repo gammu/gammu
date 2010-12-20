@@ -24,6 +24,9 @@ ChangeLog
 [+] * New convertbackup command to convert between backup formats.
 [+] * Changed database structure to version 12, you need to upgrade it.
 [-] * Try harder to find dn for LDIF export (bug #1363).
+[-] * Various minor fixes in SMSD SQL backend.
+[-] * Improved test suite coverage.
+[-] * Improved dummy driver to allow more testing.
     
 20101202 - 1.28.93
 
