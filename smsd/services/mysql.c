@@ -1,13 +1,8 @@
 /* (c) 2004 by Marcin Wiacek */
 
-#define _XOPEN_SOURCE
-#define _BSD_SOURCE
-#include <time.h>
-
 #include <gammu.h>
 
 #ifdef HAVE_MYSQL_MYSQL_H
-#include "../../helper/strptime.h"
 #include <string.h>
 #include <stdio.h>
 #include <errno.h>

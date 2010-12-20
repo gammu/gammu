@@ -11,9 +11,9 @@
 
 #define _XOPEN_SOURCE
 #define _BSD_SOURCE
-#include "../../helper/strptime.h"
 #include <time.h>
 #include <gammu.h>
+#include "../../helper/strptime.h"
 
 #include <stdarg.h>
 #include <stdlib.h>

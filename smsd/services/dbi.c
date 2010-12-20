@@ -8,13 +8,7 @@
  * Licensed under GNU GPL version 2 or later
  */
 
-#define _XOPEN_SOURCE
-#define _BSD_SOURCE
-#include <time.h>
-
 #include <gammu.h>
-
-#include "../../helper/strptime.h"
 
 #include <stdlib.h>
 #include <string.h>
