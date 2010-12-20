@@ -216,6 +216,10 @@ GSM_Error ReadPhonebook(GSM_MemoryEntry **Phonebook, GSM_MemoryType MemoryType, 
 		if (MemStatus.MemoryUsed == 0) {
 			return ERR_NONE;
 		}
+		error = GSM_GetNextMemory(gsm, &Pbk, TRUE);
+		if (error == ERR_NONE) {
+			UseNext = TRUE;
+		}
 	} else {
 		UseNext = TRUE;
 		error = GSM_GetNextMemory(gsm, &Pbk, TRUE);
