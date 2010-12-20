@@ -30,6 +30,7 @@
 #endif
 
 #include "../core.h"
+#include "sql.h"
 
 long long SMSDDBI_GetNumber(GSM_SMSDConfig * Config, SQL_result rc, unsigned int field)
 {
@@ -73,8 +74,6 @@ long long SMSDDBI_GetNumber(GSM_SMSDConfig * Config, SQL_result rc, unsigned int
 time_t SMSDDBI_GetDate(GSM_SMSDConfig * Config, SQL_result rc, unsigned int field)
 {
 	unsigned int type;
-	struct tm timestruct;
-	char *parse_res;
 	const char *date;
 	dbi_result res = rc.dbi;
 
@@ -87,17 +86,7 @@ time_t SMSDDBI_GetDate(GSM_SMSDConfig * Config, SQL_result rc, unsigned int fiel
 			return SMSDDBI_GetNumber(Config, rc, field);
 		case DBI_TYPE_STRING:
 			date = dbi_result_get_string_idx(res, field);
-			parse_res = strptime(date, "%Y-%m-%d %H:%M:%S", &timestruct);
-			timestruct.tm_isdst = 0;
-#ifdef HAVE_STRUCT_TM_TM_ZONE
-			timestruct.tm_gmtoff = 0;
-			timestruct.tm_zone = NULL;
-#endif
-			if (parse_res != NULL && *parse_res == 0) {
-				return mktime(&timestruct);
-			}
-			SMSD_Log(DEBUG_ERROR, Config, "Failed to parse date: %s", date);
-			return -1;
+			return SMSDSQL_ParseDate(Config, date);
 		case DBI_TYPE_DATETIME:
 			return dbi_result_get_datetime_idx(res, field);
 		case DBI_TYPE_ERROR:

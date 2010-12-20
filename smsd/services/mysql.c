@@ -23,7 +23,7 @@
 #endif
 
 #include "../core.h"
-//#include "sql.h"
+#include "sql.h"
 
 long long SMSDMySQL_GetNumber(GSM_SMSDConfig * Config, SQL_result rc, unsigned int field)
 {
@@ -38,21 +38,9 @@ const char *SMSDMySQL_GetString(GSM_SMSDConfig * Config, SQL_result rc, unsigned
 time_t SMSDMySQL_GetDate(GSM_SMSDConfig * Config, SQL_result rc, unsigned int field)
 {
 	const char *date;
-	char *parse_res;
-	struct tm timestruct;
 
 	date = rc.my.row[field];
-	parse_res = strptime(date, "%Y-%m-%d %H:%M:%S", &timestruct);
-	timestruct.tm_isdst = 0;
-#ifdef HAVE_STRUCT_TM_TM_ZONE
-	timestruct.tm_gmtoff = 0;
-	timestruct.tm_zone = NULL;
-#endif
-	if (parse_res != NULL && *parse_res == 0) {
-		return mktime(&timestruct);
-	}
-	SMSD_Log(DEBUG_ERROR, Config, "Failed to parse date: %s", date);
-	return -1;
+	return SMSDSQL_ParseDate(Config, date);
 }
 
 gboolean SMSDMySQL_GetBool(GSM_SMSDConfig * Config, SQL_result rc, unsigned int field)

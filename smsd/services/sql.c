@@ -1145,6 +1145,25 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 	return ERR_NONE;
 }
 
+time_t SMSDSQL_ParseDate(GSM_SMSDConfig * Config, const char *date)
+{
+	char *parse_res;
+	struct tm timestruct;
+
+	parse_res = strptime(date, "%Y-%m-%d %H:%M:%S", &timestruct);
+
+	timestruct.tm_isdst = 0;
+#ifdef HAVE_STRUCT_TM_TM_ZONE
+	timestruct.tm_gmtoff = 0;
+	timestruct.tm_zone = NULL;
+#endif
+	if (parse_res != NULL && *parse_res == 0) {
+		return mktime(&timestruct);
+	}
+	SMSD_Log(DEBUG_ERROR, Config, "Failed to parse date: %s", date);
+	return -1;
+}
+
 GSM_SMSDService SMSDSQL = {
 	SMSDSQL_Init,
 	SMSDSQL_Free,
