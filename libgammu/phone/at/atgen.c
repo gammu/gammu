@@ -378,6 +378,8 @@ GSM_Error ATGEN_HandleCMSError(GSM_StateMachine *s)
 		case 321:
 		case 516:
 			return ERR_INVALIDLOCATION;
+		case 535:
+			return ERR_BUSY;
 		default:
 			return ERR_UNKNOWN;
 	}
