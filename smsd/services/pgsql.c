@@ -1,5 +1,9 @@
 /* (c) 2006 by Andrea Riciputi */
 
+#define _XOPEN_SOURCE
+#define _BSD_SOURCE
+#include <time.h>
+
 #include <gammu.h>
 
 #ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
@@ -28,21 +32,18 @@ long long SMSDPgSQL_GetNumber(GSM_SMSDConfig * Config, SQL_result rc, unsigned i
 time_t SMSDPgSQL_GetDate(GSM_SMSDConfig * Config, SQL_result rc, unsigned int field)
 {
 	const char *date;
-	struct tm t;
-	int ret;
+	char *parse_res;
+	struct tm timestruct;
 
 	date = PQgetvalue(rc.pg.res, rc.pg.iter, field);
-	/* windows has not strptime() */
-	ret = sscanf(date, "%u-%u-%u %u:%u:%u", &t.tm_year, &t.tm_mon, &t.tm_mday, &t.tm_hour, &t.tm_min, &t.tm_sec);
-	t.tm_year -= 1900;
-	t.tm_mon--;
-	t.tm_isdst = -1;
+	parse_res = strptime(date, "%Y-%m-%d %H:%M:%S", &timestruct);
+	timestruct.tm_isdst = 0;
 #ifdef HAVE_STRUCT_TM_TM_ZONE
-	t.tm_gmtoff = 0;
-	t.tm_zone = NULL;
+	timestruct.tm_gmtoff = 0;
+	timestruct.tm_zone = NULL;
 #endif
-	if (ret == 6) {
-		return mktime(&t);
+	if (parse_res != NULL && *parse_res == 0) {
+		return mktime(&timestruct);
 	}
 	SMSD_Log(DEBUG_ERROR, Config, "Failed to parse date: %s", date);
 	return -1;
