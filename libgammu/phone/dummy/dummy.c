@@ -1222,10 +1222,6 @@ GSM_Error DUMMY_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, gboolean 
 	struct stat sb;
 	int i;
 
-	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_DISABLE_GETNEXT)) {
-		return ERR_NOTSUPPORTED;
-	}
-
 	if (start) {
 		for (i = 0; i < DUMMY_MAX_FS_DEPTH; i++) {
 			if (Priv->dir[i] != NULL) {
