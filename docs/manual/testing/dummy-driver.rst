@@ -63,7 +63,7 @@ By specifying :config:option:`Features` you can configure some specific behavior
 Examples
 --------
 
-To use dummy driver, you need something like following in :file:`~/.gammurc`::
+To use dummy driver, you need something like following in :file:`~/.gammurc`:
 
 .. code-block:: ini
 
@@ -72,7 +72,7 @@ To use dummy driver, you need something like following in :file:`~/.gammurc`::
     connection = none
     port = /path/to/direcotry/
 
-For disabling GetNext* functions within dummy driver, you need something like following in :file:`~/.gammurc`::
+For disabling GetNext* functions within dummy driver, you need something like following in :file:`~/.gammurc`:
 
 .. code-block:: ini
 
