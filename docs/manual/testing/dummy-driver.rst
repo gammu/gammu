@@ -1,3 +1,5 @@
+.. _dummy-driver:
+
 Dummy Driver
 ============
 
