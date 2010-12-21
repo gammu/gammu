@@ -66,7 +66,7 @@ or also with checking for memory leaks::
 Testing of SMSD
 ---------------
 
-SMSD tests are performed using :doc:`dummy-driver` and uses file backend and
+SMSD tests are performed using :ref:`dummy-driver` and uses file backend and
 sqlite database by default. For this you nee Gammu compiled with libdbi, have
 installed sqlite driver for libdbi and have :program:`sqlite3` binary available
 on the syste,.
@@ -82,7 +82,7 @@ Testing of additional database backends must be enabled separately:
 Testing of command line utility
 -------------------------------
 
-Gammu command line tests are performed using :doc:`dummy-driver` where
+Gammu command line tests are performed using :ref:`dummy-driver` where
 required. It covers most of command line interface, but some parts need to be
 explicitly enabled:
 
@@ -92,7 +92,7 @@ explicitly enabled:
 Testing of Python interface
 ---------------------------
 
-Python module tests are performed using :doc:`dummy-driver` where required. It
+Python module tests are performed using :ref:`dummy-driver` where required. It
 does also cover testing of SMSD interface, which is done using libdbi(sqlite)
 driver.
 
