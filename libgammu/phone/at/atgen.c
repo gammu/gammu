@@ -363,7 +363,6 @@ GSM_Error ATGEN_HandleCMSError(GSM_StateMachine *s)
 		case 305:
 		case 514:
 		case 515:
-		case 516:
 		case 517:
 		case 519:
 		case 520:
