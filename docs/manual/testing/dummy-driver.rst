@@ -1,16 +1,19 @@
 Dummy Driver
 ============
 
-Recently there has been added dummy driver to Gammu, which emulates all
-operations on filesystem. It is used by :doc:`testsuite`, but it is also very
-helpful for application developers, because they can test the functionality
-without using real phone and avoiding risk of corrupting data in the phone.
+.. versionadded:: 1.22.93
+
+The ``dummy`` driver in Gammu emulates all operations on filesystem. It is
+used by :doc:`testsuite`, but it is also very helpful for application
+developers, because they can test the functionality without using real phone
+and avoiding risk of corrupting data in the phone.
 
 Filesystem structure
 --------------------
 
-The dummy driver emulates all phone functionality on filesystem. The ``port``
-configuration directive sets top level directory, where all data are stored.
+The dummy driver emulates all phone functionality on filesystem. The
+:config:option:`Device` configuration directive sets top level directory,
+where all data are stored.
 
 This directory contains file :file:`operations.log`, where are logged
 operations which do not modify any data in the dummy phone (eg. sending
@@ -70,7 +73,7 @@ To use dummy driver, you need something like following in :file:`~/.gammurc`:
     [gammu]
     model = dummy
     connection = none
-    port = /path/to/direcotry/
+    device = /path/to/directory/
 
 For disabling GetNext* functions within dummy driver, you need something like following in :file:`~/.gammurc`:
 
@@ -80,4 +83,4 @@ For disabling GetNext* functions within dummy driver, you need something like fo
     model = dummy
     connection = none
     features = DISABLE_GETNEXT
-    port = /path/to/direcotry/
+    device = /path/to/directory/
