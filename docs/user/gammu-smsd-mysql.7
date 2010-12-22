@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSD-MYSQL" "7" "December 17, 2010" "1.28.94" "Gammu"
+.TH "GAMMU-SMSD-MYSQL" "7" "December 22, 2010" "1.28.94" "Gammu"
 .SH NAME
 gammu-smsd-mysql \- gammu-smsd(1) backend using MySQL database server as a message storage
 .
@@ -38,6 +38,23 @@ options).
 For tables description see \fIgammu\-smsd\-tables\fP.
 .sp
 This backend is based on \fIgammu\-smsd\-sql\fP.
+.SH PRIVILEGES
+.sp
+The user accessing the database does not need much privileges, the following
+privleges should be enough:
+.sp
+.nf
+.ft C
+GRANT USAGE ON *.* TO \(aqsmsd\(aq@\(aqlocalhost\(aq IDENTIFIED BY \(aqpassword\(aq;
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON \(gasmsd\(ga.* TO \(aqsmsd\(aq@\(aqlocalhost\(aq;
+.ft P
+.fi
+.IP Note
+.
+For creating the SQL tables you need more privileges, especially for
+creating triggers, which are used for some functionality.
+.RE
 .SH AUTHOR
 Michal Čihař <michal@cihar.com>
 .SH COPYRIGHT

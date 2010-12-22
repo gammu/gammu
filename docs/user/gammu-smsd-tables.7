@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSD-TABLES" "7" "December 17, 2010" "1.28.94" "Gammu"
+.TH "GAMMU-SMSD-TABLES" "7" "December 22, 2010" "1.28.94" "Gammu"
 .SH NAME
 gammu-smsd-tables \- description of tables for database backends of gammu-smsd(1)
 .
@@ -415,6 +415,13 @@ Not used by SMSD currently, included only for application usage.
 .sp
 History of schema versions:
 .INDENT 0.0
+.TP
+.B 12
+.
+the changes only affect MySQL structure changing default values for
+timestamps from \fB0000\-00\-00 00:00:00\fP to \fBCURRENT_TIMESTAMP()\fP by
+using triggers, to update to this version, just execute triggers
+definition at the end of SQL file.
 .TP
 .B 11
 .
