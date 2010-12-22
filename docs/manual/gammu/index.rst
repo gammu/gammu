@@ -1811,7 +1811,7 @@ or
 
 .. code-block:: sh
 
-    gammu savesms TEXT -text "All your base are belong to us
+    gammu savesms TEXT -text "All your base are belong to us"
 
 Save long text message:
 
@@ -1823,13 +1823,13 @@ or
 
 .. code-block:: sh
 
-    gammu savesms TEXT -len 400 -text "All your base are belong to us
+    gammu savesms TEXT -len 400 -text "All your base are belong to us"
 
 or
 
 .. code-block:: sh
 
-    gammu savesms EMS -text "All your base are belong to us
+    gammu savesms EMS -text "All your base are belong to us"
 
 Save some funky message with predefined sound and animation from 2 bitmaps:
 
