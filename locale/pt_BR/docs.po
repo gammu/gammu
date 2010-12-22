@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.28.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-09-03 14:46+0300\n"
-"PO-Revision-Date: 2010-12-22 14:33+0200\n"
+"PO-Revision-Date: 2010-12-22 14:34+0200\n"
 "Last-Translator: gilberto dos santos alves <gsavix@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
@@ -28,9 +28,9 @@ msgstr "GAMMU"
 # type: TH
 #. type: TH
 #: docs/user/gammu.1:1
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Jul 27 2010"
-msgstr "27 de Janeiro de 2009"
+msgstr "22 de dezembro de 2010"
 
 #. type: TH
 #: docs/user/gammu.1:1
