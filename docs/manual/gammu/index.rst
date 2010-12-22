@@ -173,8 +173,12 @@ Unicode
 ~~~~~~~
 
 With `Unicode` single SMS can contain at most 70 chars, but these can be
-any chars including all national and special ones. Please note, that some
-older phones might have problems displaying such message.
+any chars including all national and special ones. 
+
+.. warning::
+   
+   Please note, that some older phones might have problems displaying such
+   message.
 
 Conversion
 ~~~~~~~~~~
@@ -340,9 +344,11 @@ ____________
         Save caller logo as sms in Nokia (Smart Messaging)
         format - size 72x14, two colors.
 
-        Please note, that it isn't designed for colour logos available for example in
-        DCT4/TIKU - you need to put bitmap file there inside phone using filesystem
-        commands.
+        .. warning:: 
+           
+           Please note, that it isn't designed for colour logos available for
+           example in DCT4/TIKU - you need to put bitmap file there inside
+           phone using filesystem commands.
 
 
 
@@ -480,8 +486,12 @@ ____________
     .. option:: PROFILE  [-name name] [-bitmap bitmap] [-ringtone ringtone]
 
         Read ringtone (RTTL) format, bitmap (Picture Image size) and name, format into
-        Smart Messaging profile and send/save as SMS. Please note, that this format is
-        abandomed by Nokia and supported by some (older) devices only like Nokia 3310.
+        Smart Messaging profile and send/save as SMS. 
+        
+        .. warning::
+           
+           Please note, that this format is abandoned by Nokia and supported
+           by some (older) devices only like Nokia 3310.
 
 
     .. option:: RINGTONE file  [-long] [-scale]
@@ -809,7 +819,12 @@ level and Gammu does not use that.
 
     Display files and folders available in folder with given folder ID. You can get ID's using getfilesystem -flatall.
 
-    Please note, that in some phones (like N6230) content of some folders (with more files) can be cut (only part of files will be displayed) for example on infrared connection. This is not Gammu issue, but phone firmware problem.
+    .. warning::
+       
+       Please note, that in some phones (like N6230) content of some folders
+       (with more files) can be cut (only part of files will be displayed) for
+       example on infrared connection. This is not Gammu issue, but phone
+       firmware problem.
 
 .. option:: getrootfolders
 
@@ -1127,10 +1142,13 @@ Backing up and restoring commands
     be done, when phone doesn't have set clock inside.
 
 .. option:: restoresms file [-yes]
+    
+    .. warning:: 
+       
+       Please note that this overwrites existing messages in phone (if it supports it).
 
     Restores SMSes from file (format like :option:`gammu backupsms` uses) to
-    selected folder in phone. Please note that this overwrites existing
-    messages in phone (if it supports it).
+    selected folder in phone. 
 
 .. option:: savefile TYPE [type options]
 
@@ -1578,10 +1596,13 @@ Configuration commands
 
 .. option:: searchphone [-debug]
 
-    Attempts to search for a connected phone. Please note
-    that this can take a very long time, but in case you have no clue how to
-    configure phone connection, this is a convenient way to find working setup for
-    Gammu.
+    Attempts to search for a connected phone. 
+    
+    .. warning:: 
+       
+       Please note that this can take a very long time, but in case you have
+       no clue how to configure phone connection, this is a convenient way to
+       find working setup for Gammu.
 
 Gammu information commands
 --------------------------

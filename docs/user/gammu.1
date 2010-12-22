@@ -250,8 +250,12 @@ few others
 .SS Unicode
 .sp
 With \fIUnicode\fP single SMS can contain at most 70 chars, but these can be
-any chars including all national and special ones. Please note, that some
-older phones might have problems displaying such message.
+any chars including all national and special ones.
+.IP Warning
+.
+Please note, that some older phones might have problems displaying such
+message.
+.RE
 .SS Conversion
 .sp
 Gammu tries to do the best to handle non ASCII characters in your message.
@@ -462,10 +466,12 @@ more items).
 .sp
 Save caller logo as sms in Nokia (Smart Messaging)
 format \- size 72x14, two colors.
-.sp
-Please note, that it isn\(aqt designed for colour logos available for example in
-DCT4/TIKU \- you need to put bitmap file there inside phone using filesystem
-commands.
+.IP Warning
+.
+Please note, that it isn\(aqt designed for colour logos available for
+example in DCT4/TIKU \- you need to put bitmap file there inside
+phone using filesystem commands.
+.RE
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -697,8 +703,12 @@ and saved with text) or Alcatel format and send/save over SMS.
 .B PROFILE  [\-name name] [\-bitmap bitmap] [\-ringtone ringtone]
 .sp
 Read ringtone (RTTL) format, bitmap (Picture Image size) and name, format into
-Smart Messaging profile and send/save as SMS. Please note, that this format is
-abandomed by Nokia and supported by some (older) devices only like Nokia 3310.
+Smart Messaging profile and send/save as SMS.
+.IP Warning
+.
+Please note, that this format is abandoned by Nokia and supported
+by some (older) devices only like Nokia 3310.
+.RE
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1139,8 +1149,13 @@ bytes available, used or used by some specific content.
 .B getfolderlisting folderID
 .sp
 Display files and folders available in folder with given folder ID. You can get ID\(aqs using getfilesystem \-flatall.
-.sp
-Please note, that in some phones (like N6230) content of some folders (with more files) can be cut (only part of files will be displayed) for example on infrared connection. This is not Gammu issue, but phone firmware problem.
+.IP Warning
+.
+Please note, that in some phones (like N6230) content of some folders
+(with more files) can be cut (only part of files will be displayed) for
+example on infrared connection. This is not Gammu issue, but phone
+firmware problem.
+.RE
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1568,10 +1583,13 @@ be done, when phone doesn\(aqt have set clock inside.
 .INDENT 0.0
 .TP
 .B restoresms file [\-yes]
+.IP Warning
+.
+Please note that this overwrites existing messages in phone (if it supports it).
+.RE
 .sp
 Restores SMSes from file (format like \fI\%gammu backupsms\fP uses) to
-selected folder in phone. Please note that this overwrites existing
-messages in phone (if it supports it).
+selected folder in phone.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -2241,10 +2259,13 @@ input).
 .TP
 .B searchphone [\-debug]
 .sp
-Attempts to search for a connected phone. Please note
-that this can take a very long time, but in case you have no clue how to
-configure phone connection, this is a convenient way to find working setup for
-Gammu.
+Attempts to search for a connected phone.
+.IP Warning
+.
+Please note that this can take a very long time, but in case you have
+no clue how to configure phone connection, this is a convenient way to
+find working setup for Gammu.
+.RE
 .UNINDENT
 .SS Gammu information commands
 .INDENT 0.0
