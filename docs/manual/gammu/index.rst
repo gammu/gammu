@@ -1115,10 +1115,13 @@ Backing up and restoring commands
 
 .. option:: restore file [-yes]
 
+    .. warning:: 
+       
+        Please note that restoring deletes all current content in phone. If you
+        want only to add entries to phone, use :option:`gammu addnew`.
+
     Restore settings written in file created using :option:`gammu backup` command. 
 
-    Please note that restoring deletes all current content in phone. If you
-    want only to add entries to phone, use :option:`gammu addnew`.
 
     In some phones restoring calendar notes will not show error, but won't
     be done, when phone doesn't have set clock inside.
