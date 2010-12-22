@@ -55,6 +55,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	single_check("/NONEXISTING/DEVICE/NODE", "at", "", ERR_DEVICENOTEXIST);
 	single_check("/NONEXISTING/DEVICE/NODE", "at-nodtr", "", ERR_DEVICENOTEXIST);
 	single_check("/NONEXISTING/DEVICE/NODE", "at19200-nopower", "", ERR_DEVICENOTEXIST);
+	single_check("/NONEXISTING/DEVICE/NODE", "at115200", "", ERR_DEVICENOTEXIST);
 	single_check("/NONEXISTING/DEVICE/NODE", "at", "at", ERR_DEVICENOTEXIST);
 	single_check("/NONEXISTING/DEVICE/NODE", "at", "atobex", ERR_DEVICENOTEXIST);
 	single_check(NUL, "at", "", ERR_DEVICEREADERROR);
