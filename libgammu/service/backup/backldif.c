@@ -88,11 +88,11 @@ GSM_Error SaveLDIF(const char *FileName, GSM_Backup *backup)
 		for (j=0;j<backup->PhonePhonebook[i]->EntriesNum;j++) {
 			switch (backup->PhonePhonebook[i]->Entries[j].EntryType) {
 			case PBK_Text_Postal:
-				SaveLDIFText(file, "HomePostalAddress", backup->PhonePhonebook[i]->Entries[j].Text);
+				SaveLDIFText(file, "homePostalAddress", backup->PhonePhonebook[i]->Entries[j].Text);
 				break;
 			case PBK_Text_WorkPostal:
 				/* This does not conform to standard, but I think it's better to have it saved */
-				SaveLDIFText(file, "WorkPostalAddress", backup->PhonePhonebook[i]->Entries[j].Text);
+				SaveLDIFText(file, "workPostalAddress", backup->PhonePhonebook[i]->Entries[j].Text);
 				break;
 			case PBK_Text_URL:
 				SaveLDIFText(file, "homeurl", backup->PhonePhonebook[i]->Entries[j].Text);
@@ -194,7 +194,7 @@ GSM_Error SaveLDIF(const char *FileName, GSM_Backup *backup)
 				SaveLDIFText(file, "sn", backup->PhonePhonebook[i]->Entries[j].Text);
 				break;
 			case PBK_Text_FirstName:
-				SaveLDIFText(file, "cn", backup->PhonePhonebook[i]->Entries[j].Text);
+				SaveLDIFText(file, "givenName", backup->PhonePhonebook[i]->Entries[j].Text);
 				break;
 			case PBK_Text_NickName:
 				SaveLDIFText(file, "nickname", backup->PhonePhonebook[i]->Entries[j].Text);
