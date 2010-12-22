@@ -25,6 +25,7 @@ ChangeLog
 [+] * Changed database structure to version 12, you need to upgrade it.
 [-] * Try harder to find dn for LDIF export (bug #1363).
 [-] * Better names for some fields in LDIF export (bug #1363).
+[-] * Implement parsing of LDIF for all fields we save (bug #1363).
 [-] * Various minor fixes in SMSD SQL backend.
 [-] * Improved test suite coverage.
 [-] * Improved dummy driver to allow more testing.

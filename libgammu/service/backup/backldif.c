@@ -286,7 +286,12 @@ static GSM_Error GSM_DecodeLDIFEntry(char *Buffer, size_t *Pos, GSM_MemoryEntry 
 			}
 			if (ReadLDIFText(Line, "givenName", Buff)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
-				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Name;
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_FirstName;
+				Pbk->EntriesNum++;
+			}
+			if (ReadLDIFText(Line, "sn", Buff)) {
+				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_LastName;
 				Pbk->EntriesNum++;
 			}
 			if (ReadLDIFText(Line, "telephoneNumber", Buff)) {
@@ -329,19 +334,64 @@ static GSM_Error GSM_DecodeLDIFEntry(char *Buffer, size_t *Pos, GSM_MemoryEntry 
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Note;
 				Pbk->EntriesNum++;
 			}
-			if (ReadLDIFText(Line, "HomePostalAddress", Buff)) {
+			if (ReadLDIFText(Line, "homePostalAddress", Buff)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Postal;
 				Pbk->EntriesNum++;
 			}
-			if (ReadLDIFText(Line, "womePostalAddress", Buff)) {
+			if (ReadLDIFText(Line, "mozillaHomeLocalityName", Buff)) {
+				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_City;
+				Pbk->EntriesNum++;
+			}
+			if (ReadLDIFText(Line, "mozillaHomeState", Buff)) {
+				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_State;
+				Pbk->EntriesNum++;
+			}
+			if (ReadLDIFText(Line, "mozillaHomePostalCode", Buff)) {
+				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Zip;
+				Pbk->EntriesNum++;
+			}
+			if (ReadLDIFText(Line, "mozillaHomeCountryName", Buff)) {
+				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Country;
+				Pbk->EntriesNum++;
+			}
+			if (ReadLDIFText(Line, "workPostalAddress", Buff)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_WorkPostal;
+				Pbk->EntriesNum++;
+			}
+			if (ReadLDIFText(Line, "workLocalityName", Buff)) {
+				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_WorkCity;
+				Pbk->EntriesNum++;
+			}
+			if (ReadLDIFText(Line, "workState", Buff)) {
+				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_WorkState;
+				Pbk->EntriesNum++;
+			}
+			if (ReadLDIFText(Line, "workPostalCode", Buff)) {
+				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_WorkZip;
+				Pbk->EntriesNum++;
+			}
+			if (ReadLDIFText(Line, "workCountryName", Buff)) {
+				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_WorkCountry;
 				Pbk->EntriesNum++;
 			}
 			if (ReadLDIFText(Line, "mail", Buff)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Email;
+				Pbk->EntriesNum++;
+			}
+			if (ReadLDIFText(Line, "mozillaSecondEmail", Buff)) {
+				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Email2;
 				Pbk->EntriesNum++;
 			}
 			if (ReadLDIFText(Line, "homeurl", Buff)) {
@@ -354,7 +404,41 @@ static GSM_Error GSM_DecodeLDIFEntry(char *Buffer, size_t *Pos, GSM_MemoryEntry 
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_LUID;
 				Pbk->EntriesNum++;
 			}
-			/* FIXME: add rest */
+			if (ReadLDIFText(Line, "custom1", Buff)) {
+				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Custom1;
+				Pbk->EntriesNum++;
+			}
+			if (ReadLDIFText(Line, "custom2", Buff)) {
+				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Custom2;
+				Pbk->EntriesNum++;
+			}
+			if (ReadLDIFText(Line, "custom3", Buff)) {
+				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Custom3;
+				Pbk->EntriesNum++;
+			}
+			if (ReadLDIFText(Line, "custom4", Buff)) {
+				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Custom4;
+				Pbk->EntriesNum++;
+			}
+			if (ReadLDIFText(Line, "o", Buff)) {
+				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Company;
+				Pbk->EntriesNum++;
+			}
+			if (ReadLDIFText(Line, "title", Buff)) {
+				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_JobTitle;
+				Pbk->EntriesNum++;
+			}
+			if (ReadLDIFText(Line, "nickname", Buff)) {
+				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_NickName;
+				Pbk->EntriesNum++;
+			}
 			break;
 		}
 	}
