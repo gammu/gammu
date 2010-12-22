@@ -23,6 +23,12 @@ add_executable(statemachine-alloc statemachine-alloc.c)
 target_link_libraries(statemachine-alloc libGammu ${LIBINTL_LIBRARIES})
 add_test(statemachine-alloc "${GAMMU_TEST_PATH}/statemachine-alloc${GAMMU_TEST_SUFFIX}")
 
+if (BLUETOOTH_RF_SEARCHING)
+    add_executable(bluetooth_checkservicename bluetooth_checkservicename.c)
+    target_link_libraries(bluetooth_checkservicename libGammu ${LIBINTL_LIBRARIES})
+    add_test(bluetooth_checkservicename "${GAMMU_TEST_PATH}/bluetooth_checkservicename${GAMMU_TEST_SUFFIX}")
+endif (BLUETOOTH_RF_SEARCHING)
+
 # Basic check for sizes
 add_executable(sizes sizes.c)
 add_test(sizes "${GAMMU_TEST_PATH}/sizes${GAMMU_TEST_SUFFIX}")
