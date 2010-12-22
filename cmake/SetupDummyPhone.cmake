@@ -39,6 +39,42 @@ configure_file("${Gammu_SOURCE_DIR}/tests/vcal/rrule-1.0.vcs" "${CMAKE_CURRENT_B
 configure_file("${Gammu_SOURCE_DIR}/tests/vcal/dtstart.ics" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/calendar/22" COPY_ONLY)
 configure_file("${Gammu_SOURCE_DIR}/tests/vcal/02.vcs" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/todo/3" COPY_ONLY)
 configure_file("${Gammu_SOURCE_DIR}/tests/vcal/01.ics" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/todo/22" COPY_ONLY)
+file(REMOVE_RECURSE "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy-nonext")
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy-nonext")
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy-nonext/sms/1")
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy-nonext/sms/2")
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy-nonext/sms/3")
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy-nonext/sms/4")
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy-nonext/sms/5")
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy-nonext/pbk/ME")
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy-nonext/pbk/SM")
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy-nonext/calendar")
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy-nonext/todo")
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy-nonext/note")
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy-nonext/fs/dir1/dir1-2/dir1-2-3")
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy-nonext/fs/dir2/dir2-4")
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy-nonext/fs/dir2/dir2-5")
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy-nonext/fs/testdir")
+file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy-nonext/fs/dir2/dir2-5/file1" "This is testing file1!")
+file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy-nonext/fs/dir2/dir2-5/file2" "This is testing file2!")
+file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy-nonext/fs/dir2/dir2-5/file3" "This is testing file3!")
+file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy-nonext/fs/dir2/dir2-5/file4" "This is testing file4!")
+file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy-nonext/fs/file5" "This is testing file5!")
+file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy-nonext/fs/dir2/file5" "This is testing file6!")
+configure_file("${Gammu_SOURCE_DIR}/tests/at-sms-encode/01.backup" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy-nonext/sms/1/1" COPY_ONLY)
+configure_file("${Gammu_SOURCE_DIR}/tests/at-sms-encode/90.backup" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy-nonext/sms/2/10" COPY_ONLY)
+configure_file("${Gammu_SOURCE_DIR}/tests/at-sms-encode/99.backup" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy-nonext/sms/3/42" COPY_ONLY)
+configure_file("${Gammu_SOURCE_DIR}/tests/at-sms-encode/80.backup" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy-nonext/sms/4/15" COPY_ONLY)
+configure_file("${Gammu_SOURCE_DIR}/tests/smsbackups/mms-part.smsbackup" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy-nonext/sms/4/20" COPY_ONLY)
+configure_file("${Gammu_SOURCE_DIR}/tests/smsbackups/mms-part2.smsbackup" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy-nonext/sms/4/21" COPY_ONLY)
+configure_file("${Gammu_SOURCE_DIR}/tests/vcards/private.vcf" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy-nonext/pbk/ME/1" COPY_ONLY)
+configure_file("${Gammu_SOURCE_DIR}/tests/vcards/yahoo.vcf" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy-nonext/pbk/ME/101" COPY_ONLY)
+configure_file("${Gammu_SOURCE_DIR}/tests/vcards/photo.vcf" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy-nonext/pbk/ME/103" COPY_ONLY)
+configure_file("${Gammu_SOURCE_DIR}/tests/vcards/many-lines.vcf" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy-nonext/pbk/SM/1" COPY_ONLY)
+configure_file("${Gammu_SOURCE_DIR}/tests/vcal/rrule-1.0.vcs" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy-nonext/calendar/2" COPY_ONLY)
+configure_file("${Gammu_SOURCE_DIR}/tests/vcal/dtstart.ics" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy-nonext/calendar/22" COPY_ONLY)
+configure_file("${Gammu_SOURCE_DIR}/tests/vcal/02.vcs" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy-nonext/todo/3" COPY_ONLY)
+configure_file("${Gammu_SOURCE_DIR}/tests/vcal/01.ics" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy-nonext/todo/22" COPY_ONLY)
 
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/.gammurc" "
 # Generated gammurc for test purposes
@@ -54,7 +90,7 @@ logfile = ${CMAKE_CURRENT_BINARY_DIR}/gammu.log
 model = dummy
 features = DISABLE_GETNEXT
 connection = none
-port = ${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy
+port = ${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy-nonext
 gammuloc = /dev/null
 logformat = textall
 logfile = ${CMAKE_CURRENT_BINARY_DIR}/gammu.log
