@@ -477,7 +477,7 @@ msgstr "Aufgabe hinzufügen?"
 
 #: gammu/backup.c:1712
 msgid "Add notes to phone?"
-msgstr "Notizen auf das Telefon übertragen"
+msgstr "Notizen auf das Telefon übertragen?"
 
 #: gammu/backup.c:1735
 msgid "Add phone WAP bookmarks?"
