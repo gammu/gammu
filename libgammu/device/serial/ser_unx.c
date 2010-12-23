@@ -170,15 +170,19 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 {
 	GSM_Device_SerialData   *d = &s->Device.Data.Serial;
 	struct termios	  	t;
-	int			i;
+	int orig_errno;
 
 	/* O_NONBLOCK MUST is required to avoid waiting for DCD */
 	d->hPhone = open(s->CurrentConfig->Device, O_RDWR | O_NOCTTY | O_NONBLOCK);
 	if (d->hPhone < 0) {
-		i = errno;
+		orig_errno = errno;
 		GSM_OSErrorInfo(s,"open in serial_open");
-		if (i == ENOENT) return ERR_DEVICENOTEXIST;		/* no such file or directory */
-		if (i == EACCES) return ERR_DEVICENOPERMISSION;	/* permission denied */
+		if (orig_errno == ENOENT) {
+			return ERR_DEVICENOTEXIST;		/* no such file or directory */
+		}
+		if (orig_errno == EACCES) {
+			return ERR_DEVICENOPERMISSION;	/* permission denied */
+		}
 		return ERR_DEVICEOPENERROR;
 	}
 
@@ -194,7 +198,7 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 	if (tcgetattr(d->hPhone, &d->old_settings) == -1) {
 		close(d->hPhone);
 		GSM_OSErrorInfo(s,"tcgetattr in serial_open");
-		return ERR_DEVICEREADERROR;
+		return ERR_DEVICEOPENERROR;
 	}
 
 	if (tcflush(d->hPhone, TCIOFLUSH) == -1) {
@@ -237,7 +241,7 @@ static GSM_Error serial_setparity(GSM_StateMachine *s, gboolean parity)
 
 	if (tcgetattr(d->hPhone, &t)) {
 		GSM_OSErrorInfo(s,"tcgetattr in serial_setparity");
-		return ERR_DEVICEREADERROR;
+		return ERR_DEVICEPARITYERROR;
 	}
 
 	if (parity) {
@@ -268,7 +272,7 @@ static GSM_Error serial_setdtrrts(GSM_StateMachine *s, gboolean dtr, gboolean rt
 
 	if (tcgetattr(d->hPhone, &t)) {
 		GSM_OSErrorInfo(s,"tcgetattr in serial_setdtrrts");
-		return ERR_DEVICEREADERROR;
+		return ERR_DEVICEDTRRTSERROR;
 	}
 
 #ifdef CRTSCTS
