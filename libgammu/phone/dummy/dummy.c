@@ -436,6 +436,7 @@ GSM_Error DUMMY_GetFirmware(GSM_StateMachine *s)
 {
 	strcpy(s->Phone.Data.Version, GAMMU_VERSION);
 	strcpy(s->Phone.Data.VerDate, __DATE__);
+	GSM_CreateFirmwareNumber(s);
 	return ERR_NONE;
 }
 
