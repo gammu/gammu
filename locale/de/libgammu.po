@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: libGammu 1.28.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-12-15 10:26+0100\n"
-"PO-Revision-Date: 2010-10-29 20:35+0200\n"
-"Last-Translator:  <canin@in.com>\n"
+"PO-Revision-Date: 2010-12-23 23:18+0200\n"
+"Last-Translator:  <elrond+gammu.org@samba-tng.org>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -321,7 +321,6 @@ msgid "Bluetooth configuration requires channel option."
 msgstr "Bluetooth Konfiguration benötigt \"Channel\" Angabe."
 
 #: libgammu/gsmcomon.c:147
-#, fuzzy
 msgid "Service is not running."
 msgstr "Der Dienst läuft nicht."
 
