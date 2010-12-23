@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.28.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-12-15 11:14+0100\n"
-"PO-Revision-Date: 2010-12-24 00:16+0200\n"
+"PO-Revision-Date: 2010-12-24 00:59+0200\n"
 "Last-Translator:  <elrond+gammu.org@samba-tng.org>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -1591,9 +1591,9 @@ msgstr ""
 "Fehler aufgetreten."
 
 #: gammu/files.c:421
-#, fuzzy, c-format
+#, c-format
 msgid "%i percent done."
-msgstr "%i Prozent"
+msgstr "%i Prozent erledigt."
 
 #: gammu/files.c:423
 #, c-format
