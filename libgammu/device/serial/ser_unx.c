@@ -195,143 +195,143 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 		close(d->hPhone);
 		GSM_OSErrorInfo(s,"tcgetattr in serial_open");
 		return ERR_DEVICEREADERROR;
-    	}
+	}
 
-    	if (tcflush(d->hPhone, TCIOFLUSH) == -1) {
+	if (tcflush(d->hPhone, TCIOFLUSH) == -1) {
 		serial_close(s);
 		GSM_OSErrorInfo(s,"tcflush in serial_open");
 		return ERR_DEVICEOPENERROR;
-    	}
+	}
 
 	/* Use previous settings as start */
 	t = d->old_settings;
 
 	/* Opening without parity */
-    	t.c_iflag       = IGNPAR;
-    	t.c_oflag       = 0;
-    	/* disconnect line, 8 bits, enable receiver,
-     	 * ignore modem lines,lower modem line after disconnect
-     	 */
-    	t.c_cflag       = B0 | CS8 | CREAD | CLOCAL | HUPCL;
-    	/* enable hardware (RTS/CTS) flow control (NON POSIX) 	*/
-    	/* t.c_cflag 	|= CRTSCTS;			  	*/
-    	t.c_lflag       = 0;
-    	t.c_cc[VMIN]    = 1;
-    	t.c_cc[VTIME]   = 0;
+	t.c_iflag       = IGNPAR;
+	t.c_oflag       = 0;
+	/* disconnect line, 8 bits, enable receiver,
+	 * ignore modem lines,lower modem line after disconnect
+	 */
+	t.c_cflag       = B0 | CS8 | CREAD | CLOCAL | HUPCL;
+	/* enable hardware (RTS/CTS) flow control (NON POSIX) 	*/
+	/* t.c_cflag 	|= CRTSCTS;			  	*/
+	t.c_lflag       = 0;
+	t.c_cc[VMIN]    = 1;
+	t.c_cc[VTIME]   = 0;
 
-    	if (tcsetattr(d->hPhone, TCSANOW, &t) == -1) {
+	if (tcsetattr(d->hPhone, TCSANOW, &t) == -1) {
 		serial_close(s);
 		GSM_OSErrorInfo(s,"tcsetattr in serial_open");
 		return ERR_DEVICEOPENERROR;
-    	}
+	}
 
-    	return ERR_NONE;
+	return ERR_NONE;
 }
 
 static GSM_Error serial_setparity(GSM_StateMachine *s, gboolean parity)
 {
-    	GSM_Device_SerialData   *d = &s->Device.Data.Serial;
-    	struct termios	  	t;
+	GSM_Device_SerialData   *d = &s->Device.Data.Serial;
+	struct termios	  	t;
 
 	assert(d->hPhone >= 0);
 
-    	if (tcgetattr(d->hPhone, &t)) {
+	if (tcgetattr(d->hPhone, &t)) {
 		GSM_OSErrorInfo(s,"tcgetattr in serial_setparity");
 		return ERR_DEVICEREADERROR;
-    	}
+	}
 
-    	if (parity) {
+	if (parity) {
 		t.c_cflag |= (PARENB | PARODD);
 		t.c_iflag = 0;
-    	} else {
+	} else {
 		t.c_iflag = IGNPAR;
-    	}
+	}
 
-    	if (tcsetattr(d->hPhone, TCSANOW, &t) == -1){
+	if (tcsetattr(d->hPhone, TCSANOW, &t) == -1){
 		serial_close(s);
 		GSM_OSErrorInfo(s,"tcsetattr in serial_setparity");
 		return ERR_DEVICEPARITYERROR;
-    	}
+	}
 
-    	return ERR_NONE;
+	return ERR_NONE;
 }
 
 static GSM_Error serial_setdtrrts(GSM_StateMachine *s, gboolean dtr, gboolean rts)
 {
-    	GSM_Device_SerialData   *d = &s->Device.Data.Serial;
-    	struct termios	  	t;
-    	unsigned int	    	flags;
+	GSM_Device_SerialData   *d = &s->Device.Data.Serial;
+	struct termios	  	t;
+	unsigned int	    	flags;
 
 	if (s->SkipDtrRts) return ERR_NONE;
 
 	assert(d->hPhone >= 0);
 
-    	if (tcgetattr(d->hPhone, &t)) {
+	if (tcgetattr(d->hPhone, &t)) {
 		GSM_OSErrorInfo(s,"tcgetattr in serial_setdtrrts");
 		return ERR_DEVICEREADERROR;
-    	}
+	}
 
 #ifdef CRTSCTS
-    	/* Disabling hardware flow control */
-    	t.c_cflag &= ~CRTSCTS;
+	/* Disabling hardware flow control */
+	t.c_cflag &= ~CRTSCTS;
 #endif
 
-    	if (tcsetattr(d->hPhone, TCSANOW, &t) == -1) {
+	if (tcsetattr(d->hPhone, TCSANOW, &t) == -1) {
 		serial_close(s);
 		GSM_OSErrorInfo(s,"tcsetattr in serial_setdtrrts");
 		return ERR_DEVICEDTRRTSERROR;
-    	}
+	}
 
-    	flags = TIOCM_DTR;
-    	if (dtr) {
+	flags = TIOCM_DTR;
+	if (dtr) {
 		ioctl(d->hPhone, TIOCMBIS, &flags);
 	} else {
 		ioctl(d->hPhone, TIOCMBIC, &flags);
 	}
 
-    	flags = TIOCM_RTS;
-    	if (rts) {
+	flags = TIOCM_RTS;
+	if (rts) {
 		ioctl(d->hPhone, TIOCMBIS, &flags);
 	} else {
 		ioctl(d->hPhone, TIOCMBIC, &flags);
 	}
 
-    	flags = 0;
-    	ioctl(d->hPhone, TIOCMGET, &flags);
+	flags = 0;
+	ioctl(d->hPhone, TIOCMGET, &flags);
 
-    	smprintf(s, "Serial device:");
-    	smprintf(s, " DTR is %s",       flags & TIOCM_DTR ? "up" : "down");
-    	smprintf(s, ", RTS is %s",      flags & TIOCM_RTS ? "up" : "down");
-    	smprintf(s, ", CAR is %s",      flags & TIOCM_CAR ? "up" : "down");
-    	smprintf(s, ", CTS is %s\n",    flags & TIOCM_CTS ? "up" : "down");
+	smprintf(s, "Serial device:");
+	smprintf(s, " DTR is %s",       flags & TIOCM_DTR ? "up" : "down");
+	smprintf(s, ", RTS is %s",      flags & TIOCM_RTS ? "up" : "down");
+	smprintf(s, ", CAR is %s",      flags & TIOCM_CAR ? "up" : "down");
+	smprintf(s, ", CTS is %s\n",    flags & TIOCM_CTS ? "up" : "down");
 
-    	if (((flags & TIOCM_DTR) == TIOCM_DTR) != dtr) {
+	if (((flags & TIOCM_DTR) == TIOCM_DTR) != dtr) {
 		smprintf(s, "Setting DTR failed, disabling setting of DTR/RTS signals.\n");
 		s->SkipDtrRts = TRUE;
 	}
 
-    	if (((flags & TIOCM_RTS) == TIOCM_RTS) != rts) {
+	if (((flags & TIOCM_RTS) == TIOCM_RTS) != rts) {
 		smprintf(s, "Setting RTS failed, disabling setting of DTR/RTS signals.\n");
 		s->SkipDtrRts = TRUE;
 	}
 
-    	return ERR_NONE;
+	return ERR_NONE;
 }
 
 static GSM_Error serial_setspeed(GSM_StateMachine *s, int speed)
 {
-    	GSM_Device_SerialData 	*d = &s->Device.Data.Serial;
-    	struct termios  	t;
+	GSM_Device_SerialData 	*d = &s->Device.Data.Serial;
+	struct termios  	t;
 	baud_record		*curr = baud_table;
 
 	if (s->SkipDtrRts) return ERR_NONE;
 
 	assert(d->hPhone >= 0);
 
-    	if (tcgetattr(d->hPhone, &t)) {
+	if (tcgetattr(d->hPhone, &t)) {
 		GSM_OSErrorInfo(s,"tcgetattr in serial_setspeed");
 		return ERR_DEVICEREADERROR;
-    	}
+	}
 
 	while (curr->value != speed) {
 		curr++;
@@ -345,52 +345,52 @@ static GSM_Error serial_setspeed(GSM_StateMachine *s, int speed)
 		}
 	}
 
-    	smprintf(s, "Setting speed to %d\n", curr->value);
+	smprintf(s, "Setting speed to %d\n", curr->value);
 
-    	cfsetispeed(&t, curr->code);
-    	cfsetospeed(&t, curr->code);
+	cfsetispeed(&t, curr->code);
+	cfsetospeed(&t, curr->code);
 
-    	if (tcsetattr(d->hPhone, TCSADRAIN, &t) == -1) {
+	if (tcsetattr(d->hPhone, TCSADRAIN, &t) == -1) {
 		serial_close(s);
 		GSM_OSErrorInfo(s,"tcsetattr in serial_setspeed");
 		return ERR_DEVICECHANGESPEEDERROR;
-    	}
+	}
 
-    	return ERR_NONE;
+	return ERR_NONE;
 }
 
 static int serial_read(GSM_StateMachine *s, void *buf, size_t nbytes)
 {
-    	GSM_Device_SerialData 		*d = &s->Device.Data.Serial;
-    	struct timeval  		timeout2;
-    	fd_set	  			readfds;
-    	int	     			actual = 0;
+	GSM_Device_SerialData 		*d = &s->Device.Data.Serial;
+	struct timeval  		timeout2;
+	fd_set	  			readfds;
+	int	     			actual = 0;
 
 	assert(d->hPhone >= 0);
 
-    	FD_ZERO(&readfds);
-    	FD_SET(d->hPhone, &readfds);
+	FD_ZERO(&readfds);
+	FD_SET(d->hPhone, &readfds);
 
-    	timeout2.tv_sec     = 0;
-    	timeout2.tv_usec    = 50000;
+	timeout2.tv_sec     = 0;
+	timeout2.tv_usec    = 50000;
 
-    	if (select(d->hPhone+1, &readfds, NULL, NULL, &timeout2)) {
+	if (select(d->hPhone+1, &readfds, NULL, NULL, &timeout2)) {
 		actual = read(d->hPhone, buf, nbytes);
 		if (actual == -1) GSM_OSErrorInfo(s,"serial_read");
-    	}
-    	return actual;
+	}
+	return actual;
 }
 
 static int serial_write(GSM_StateMachine *s, const void *buf, size_t nbytes)
 {
-    	GSM_Device_SerialData   *d = &s->Device.Data.Serial;
-    	int		     	ret;
-    	size_t		  	actual = 0;
+	GSM_Device_SerialData   *d = &s->Device.Data.Serial;
+	int		     	ret;
+	size_t		  	actual = 0;
 	const unsigned char *buffer = (const unsigned char *)buf; /* Just to have correct type */
 
 	assert(d->hPhone >= 0);
 
-    	do {
+	do {
 		ret = write(d->hPhone, buffer, nbytes - actual);
 		if (ret < 0) {
 			if (errno == EAGAIN) {
@@ -406,19 +406,19 @@ static int serial_write(GSM_StateMachine *s, const void *buf, size_t nbytes)
 		}
 		actual  += ret;
 		buffer  += ret;
-    		if (s->ConnectionType == GCT_FBUS2PL2303) usleep(1000);
-    	} while (actual < nbytes);
-    	return actual;
+		if (s->ConnectionType == GCT_FBUS2PL2303) usleep(1000);
+	} while (actual < nbytes);
+	return actual;
 }
 
 GSM_Device_Functions SerialDevice = {
-    	serial_open,
-    	serial_close,
-    	serial_setparity,
-    	serial_setdtrrts,
-    	serial_setspeed,
-    	serial_read,
-    	serial_write
+	serial_open,
+	serial_close,
+	serial_setparity,
+	serial_setdtrrts,
+	serial_setspeed,
+	serial_read,
+	serial_write
 };
 
 #endif
