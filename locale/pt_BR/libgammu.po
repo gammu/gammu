@@ -8,14 +8,15 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-12-15 10:26+0100\n"
-"PO-Revision-Date: 2009-01-27 14:28+0100\n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2010-12-27 15:43+0200\n"
+"Last-Translator: gilberto dos santos alves <gsavix@gmail.com>\n"
 "Language-Team: none\n"
-"Language: \n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Pootle 2.0.5\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
@@ -134,8 +135,7 @@ msgstr "Localização inválida. Pode ser muito alta?"
 #: libgammu/gsmcomon.c:108
 msgid "Functionality not implemented. You are welcome to help authors with it."
 msgstr ""
-"Funcionalidade não implementada. Você é incentivado(a) a ajudar os autores "
-"nessa tarefa."
+"Funcionalidade não implementada. Você é pode ajudar os autores nessa tarefa."
 
 #: libgammu/gsmcomon.c:109
 msgid "Memory full."
