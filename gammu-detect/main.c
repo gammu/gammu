@@ -26,13 +26,14 @@
 #include <stdarg.h>
 #include <signal.h>
 
-#include <gammu-misc.h> /* For PRINTF_STYLE */
+#include <gammu.h> /* For PRINTF_STYLE and locales */
+#include "../helper/locales.h" /* For gettext */
 
 gint verbose = 0;
 
 static GOptionEntry entries[] =
 {
-  { "verbose", 'v', 0, G_OPTION_ARG_NONE, &verbose, "Be verbose", NULL },
+  { "verbose", 'v', 0, G_OPTION_ARG_NONE, &verbose, N_("Be verbose"), NULL },
   { NULL, 0, 0, G_OPTION_ARG_NONE, NULL, "", NULL }
 };
 
@@ -140,16 +141,43 @@ main (int argc, char *argv[])
 	const char *subsys[2] = { "tty", NULL };
 	GList *list, *iter;
     GError *error = NULL;
+    GSM_Error gerror;
+    INI_Section *cfg = NULL;
+    char *locales_path = NULL;
 
     GOptionContext *context;
+
+	gerror = GSM_FindGammuRC(&cfg, NULL);
+    if (gerror == ERR_NONE) {
+        locales_path = INI_GetValue(cfg, "gammu", "gammuloc", FALSE);
+    } else {
+        locales_path = NULL;
+    }
+	GSM_InitLocales(locales_path);
+#ifdef LIBINTL_LIB_FOUND
+	if (locales_path != NULL) {
+		bindtextdomain("gammu", locales_path);
+	} else {
+#if defined(LOCALE_PATH)
+		bindtextdomain("gammu", LOCALE_PATH);
+#else
+		bindtextdomain("gammu", ".");
+#endif
+	}
+	textdomain("gammu");
+#endif
+
+    if (cfg != NULL) {
+        INI_Free(cfg);
+    }
 
 	g_type_init ();
 
     context = g_option_context_new("");
-    g_option_context_add_main_entries (context, entries, NULL);
+    g_option_context_add_main_entries (context, entries, "gammu");
     if (!g_option_context_parse (context, &argc, &argv, &error))
     {
-        g_print ("option parsing failed: %s\n", error->message);
+        g_print (_("option parsing failed: %s\n"), error->message);
         exit (1);
     }
 

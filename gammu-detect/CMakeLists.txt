@@ -5,7 +5,7 @@ pkg_check_modules(GLIB glib-2.0)
 
 if (GLIB_FOUND AND GUDEV_FOUND)
     add_executable(gammu-detect "main.c")
-    target_link_libraries (gammu-detect ${GLIB_LIBRARIES} ${GUDEV_LIBRARIES})
+    target_link_libraries (gammu-detect ${GLIB_LIBRARIES} ${GUDEV_LIBRARIES} libGammu)
     include_directories(${GLIB_INCLUDE_DIRS} ${GUDEV_INCLUDE_DIRS})
     include_directories (
         "${Gammu_BINARY_DIR}/include"
