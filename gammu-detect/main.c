@@ -169,7 +169,7 @@ int main(int argc, char *argv[])
 	context = g_option_context_new("");
 	g_option_context_add_main_entries(context, entries, "gammu");
 	if (!g_option_context_parse(context, &argc, &argv, &error)) {
-		g_print(_("option parsing failed: %s\n"), error->message);
+		g_printerr(_("option parsing failed: %s\n"), error->message);
 		exit(1);
 	}
 
