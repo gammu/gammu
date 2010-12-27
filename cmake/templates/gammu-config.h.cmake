@@ -1,5 +1,5 @@
-#ifndef _config_h_
-#define _config_h_
+#ifndef _gammu_config_h_
+#define _gammu_config_h_
 
 /* -------------------------- Gammu specific ---------------------------- */
 
