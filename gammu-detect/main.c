@@ -123,30 +123,6 @@ dump_device_and_parent (GUdevDevice *device, guint indent)
 	}
 }
 
-static void
-handle_uevent (GUdevClient *client,
-               const char *action,
-               GUdevDevice *device,
-               gpointer user_data)
-{
-	const char *expected_subsys = user_data;
-	const char *subsys;
-
-	g_return_if_fail (client != NULL);
-	g_return_if_fail (action != NULL);
-	g_return_if_fail (device != NULL);
-
-	/* A bit paranoid */
-	subsys = g_udev_device_get_subsystem (device);
-	g_return_if_fail (subsys != NULL);
-
-	g_return_if_fail (!strcmp (subsys, expected_subsys));
-
-	g_print ("---- (EVENT: %s) ----\n", action);
-	dump_device_and_parent (device, 0);
-	g_print ("\n");
-}
-
 int
 main (int argc, char *argv[])
 {
@@ -167,7 +143,6 @@ main (int argc, char *argv[])
 
 	subsys[0] = argv[1];
 	client = g_udev_client_new (subsys);
-	g_signal_connect (client, "uevent", G_CALLBACK (handle_uevent), (gpointer) subsys[0]);
 
 	list = g_udev_client_query_by_subsystem (client, subsys[0]);
 	for (iter = list; iter; iter = g_list_next (iter)) {
