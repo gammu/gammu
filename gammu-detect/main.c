@@ -94,7 +94,7 @@ dump_device_and_parent (GUdevDevice *device, guint indent)
 	println (indent, "Seq Num:  %lld", g_udev_device_get_seqnum (device));
 	println (indent, "Dev File: %s", g_udev_device_get_device_file (device));
 
-	println (indent, "");
+	println (indent, " ");
 	println (indent, "Properties:");
 
 	/* Get longest property name length for alignment */
@@ -114,7 +114,7 @@ dump_device_and_parent (GUdevDevice *device, guint indent)
 		println (indent + 2, "%s", propstr);
 	}
 
-	println (indent, "");
+	println (indent, " ");
 
 	parent = g_udev_device_get_parent (device);
 	if (parent) {
