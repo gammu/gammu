@@ -22,6 +22,7 @@ Currently it supports following devices:
 
 * USB devices using udev
 * Serial ports using udev
+* Bluetooth devices using Bluez
 
 This program follows the usual GNU command line syntax, with long options
 starting with two dashes (``-``). A summary of options is included below.
@@ -37,3 +38,7 @@ starting with two dashes (``-``). A summary of options is included below.
 .. option:: -u, --no-udev
 
     Disables scanning of udev.
+
+.. option:: -b, --no-bluez
+
+    Disables scanning using Bluez.

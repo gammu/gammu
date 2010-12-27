@@ -49,6 +49,9 @@ USB devices using udev
 .IP \(bu 2
 .
 Serial ports using udev
+.IP \(bu 2
+.
+Bluetooth devices using Bluez
 .UNINDENT
 .sp
 This program follows the usual GNU command line syntax, with long options
@@ -70,6 +73,12 @@ Show debugging output for detecting devices.
 .B \-u, \-\-no\-udev
 .sp
 Disables scanning of udev.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-b, \-\-no\-bluez
+.sp
+Disables scanning using Bluez.
 .UNINDENT
 .SH AUTHOR
 Michal Čihař <michal@cihar.com>
