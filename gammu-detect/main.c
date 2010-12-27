@@ -26,6 +26,8 @@
 #include <stdarg.h>
 #include <signal.h>
 
+#include <gammu-misc.h> /* For PRINTF_STYLE */
+
 static GMainLoop *loop = NULL;
 
 static void
@@ -51,12 +53,13 @@ setup_signals (void)
 	sigaction (SIGINT,  &action, NULL);
 }
 
+PRINTF_STYLE(2, 3)
 static void
 println (guint indent, const char *fmt, ...)
 {
 	va_list args;
 	char real_fmt[1000];
-	int i;
+	guint i;
 
 	g_return_if_fail (fmt != NULL);
 	g_return_if_fail (indent < sizeof (real_fmt) - 2 - strlen (fmt));
