@@ -63,6 +63,8 @@ General parameters of SMS daemon
         does not store messages at all, see :ref:`gammu-smsd-null` for details
     ``SQL``
         stores messages in SQL database, see :ref:`gammu-smsd-sql` for details
+
+        .. versionadded:: 1.28.93
     ``MYSQL``
         synonym for :config:option:`Service` = ``SQL`` and :config:option:`Driver` = ``native_mysql``
 
