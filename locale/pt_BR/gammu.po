@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-12-15 11:14+0100\n"
-"PO-Revision-Date: 2010-12-14 17:32+0200\n"
-"Last-Translator:  <gsavix@gmail.com>\n"
+"PO-Revision-Date: 2010-12-27 16:01+0200\n"
+"Last-Translator: gilberto dos santos alves <gsavix@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -82,7 +82,7 @@ msgstr "A ler"
 
 #: gammu/backup.c:222 gammu/backup.c:250
 msgid "Only part of data saved, please increase the limit."
-msgstr "Dados parcialmente salvos, por favor aumentar o limite %s."
+msgstr "Somente parte dos dados foram guardados, por favor aumente o limite."
 
 #: gammu/backup.c:262 gammu/backup.c:424 gammu/mms.c:182
 msgid "Reading:"
@@ -1847,7 +1847,7 @@ msgstr "-c / --config <filename> ... nome do arquivo de configuração"
 
 #: gammu/gammu.c:764
 msgid "-s / --section <confign> ... section of config file to use, eg. 42"
-msgstr "-s / --section <confign> ...seção do arquivo de configuração , ex. 11"
+msgstr "-s / --section <confign> ...seção do arquivo de configuração, Ex. 42"
 
 #: gammu/gammu.c:765
 msgid ""
