@@ -156,7 +156,7 @@ static void device_dump_config(GUdevDevice * device)
 	} else {
 		name = NULL;
 	}
-	print_config(device_name, name);
+	print_config(device_name, name, "at");
 	g_free(device_name);
 	g_free(name);
 }
