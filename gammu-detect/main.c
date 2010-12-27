@@ -14,6 +14,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  * Copyright (C) 2009 Red Hat, Inc.
+ * Copyright (c) 2010 Michal Cihar <michal@cihar.com>
  */
 
 #include <glib.h>
