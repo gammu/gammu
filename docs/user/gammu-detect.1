@@ -34,12 +34,17 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-gammu\-detect [\-d|\-\-debug]
+gammu\-detect [OPTIONS]
 .ft P
 .fi
 .SH DESCRIPTION
 .sp
 Script to detect available devices, which might be suitable for \fIgammu\fP.
+.IP Note
+.
+This program lists all devices, which might be suitable, it does not do
+any probing on device itself.
+.RE
 .sp
 Currently it supports following devices:
 .INDENT 0.0
@@ -80,6 +85,59 @@ Disables scanning of udev.
 .sp
 Disables scanning using Bluez.
 .UNINDENT
+.SH OUTPUT
+.sp
+The output of \fI\%gammu-detect\fP is configuration file for Gammu (see
+\fIgammurc\fP) with configuration section for every device which might be
+used with \fIgammu\fP.
+.IP Note
+.
+You can choose which section to use by \fIgammu \-s\fP.
+.RE
+.sp
+When invoked as \fI\%gammu-detect -d\fP, also all examined devices are
+listed as comments in the output.
+.SH EXAMPLE
+.sp
+.nf
+.ft C
+; gammu\-detect output
+[gammu]
+device = /dev/ttyACM0
+name = Nokia E52
+connection = at
+
+[gammu1]
+device = /dev/ttyACM1
+name = Nokia E52
+connection = at
+
+[gammu2]
+device = /dev/ttyS0
+name = Phone on serial port 0
+connection = at
+
+[gammu3]
+device = /dev/ttyS1
+name = Phone on serial port 1
+connection = at
+
+[gammu4]
+device = /dev/ttyS2
+name = Phone on serial port 2
+connection = at
+
+[gammu5]
+device = /dev/ttyS3
+name = Phone on serial port 3
+connection = at
+
+[gammu6]
+device = 5C:57:C8:BB:BB:BB
+name = Nokia E52
+connection = bluephonet
+.ft P
+.fi
 .SH AUTHOR
 Michal Čihař <michal@cihar.com>
 .SH COPYRIGHT
