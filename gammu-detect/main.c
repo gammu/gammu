@@ -48,7 +48,16 @@ static GOptionEntry entries[] = {
 
 void print_config(const gchar *device, const gchar *name, const gchar *connection)
 {
-	g_print("[gammu]\n");
+	static gint section = 0;
+
+	if (section == 0) {
+		g_print("[gammu]\n");
+	} else {
+		g_print("[gammu%d]\n", section);
+	}
+
+	section++;
+
 	g_print("device = %s\n", device);
 	if (name != NULL) {
 		g_print("name = %s\n", name);
