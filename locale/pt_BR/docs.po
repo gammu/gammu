@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.28.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-09-03 14:46+0300\n"
-"PO-Revision-Date: 2010-12-27 15:58+0200\n"
+"PO-Revision-Date: 2010-12-27 15:59+0200\n"
 "Last-Translator: gilberto dos santos alves <gsavix@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
@@ -11102,7 +11102,8 @@ msgstr ""
 "gerar a documentação usando Doxygen. Documentação da API pode ser gerada "
 "com o comando make apidoc durante o \"build\" ou você pode ver online em "
 "<http://wammu.eu/docs/devel/api/>. A documentação interna igualmente pode "
-"ser gerada com o comando make interndoc"
+"ser gerada com o comando make interndoc e está disponível em "
+"<http://wammu.eu/docs/devel/itenrnals/>."
 
 #. type: Plain text
 #: README:91
