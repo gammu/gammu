@@ -250,5 +250,6 @@ man_pages = [
     ('formats/smsbackup', 'gammu-smsbackup', 'gammu(1) SMS backup file format.', u'Michal Čihař <michal@cihar.com>', 5),
     ('utils/jadmaker', 'jadmaker', 'JAD File Generator', u'Michal Čihař <michal@cihar.com>', 1),
     ('utils/gammu-config', 'gammu-config', 'Gammu configurator', u'Michal Čihař <michal@cihar.com>', 1),
+    ('utils/gammu-detect', 'gammu-detect', 'Gammu device detection', u'Michal Čihař <michal@cihar.com>', 1),
 ]
 
