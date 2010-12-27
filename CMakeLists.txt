@@ -913,6 +913,8 @@ add_subdirectory(smsd)
 
 add_subdirectory(gammu)
 
+add_subdirectory(gammu-detect)
+
 add_subdirectory(locale)
 
 add_subdirectory(utils)
