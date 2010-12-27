@@ -832,7 +832,7 @@ void GSM_ToDo_AdjustDate(GSM_ToDoEntry *note, GSM_DeltaTime *delta)
 	}
 }
 
-GSM_Error GSM_EncodeVCALENDAR(char *Buffer, const size_t buff_len, size_t *Length, GSM_CalendarEntry *note, gboolean header, GSM_VCalendarVersion Version)
+GSM_Error GSM_EncodeVCALENDAR(char *Buffer, const size_t buff_len, size_t *Length, GSM_CalendarEntry *note, const gboolean header, const GSM_VCalendarVersion Version)
 {
 	GSM_DateTime 	deltatime;
 	char 		dtstr[20];
