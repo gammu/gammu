@@ -78,7 +78,8 @@ println (guint indent, const char *fmt, ...)
 static void
 dump_device_and_parent (GUdevDevice *device, guint indent)
 {
-	const char **list, **iter;
+	const gchar* const * list;
+	const gchar* const * iter;
 	GUdevDevice *parent;
 	char propstr[500];
 	guint32 namelen = 0, i;
