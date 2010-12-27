@@ -4,6 +4,8 @@
 gammu-detect
 ============
 
+.. versionadded:: 1.28.95
+
 .. program:: gammu-detect
 
 Synopsis
