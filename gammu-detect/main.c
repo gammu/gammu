@@ -105,6 +105,40 @@ static void dump_device_and_parent(GUdevDevice * device, guint indent)
 	}
 }
 
+static gboolean device_is_serial(GUdevDevice * device)
+{
+	GUdevDevice *parent;
+	parent = g_udev_device_get_parent(device);
+	if (parent) {
+		/* Serial driver */
+		if (g_strcmp0(g_udev_device_get_name(parent), "serial8250") == 0) {
+			g_object_unref(parent);
+			return TRUE;
+		}
+		g_object_unref(parent);
+	}
+	return FALSE;
+}
+
+static gboolean device_is_valid(GUdevDevice * device)
+{
+	if (device_is_serial(device)) {
+		return TRUE;
+	}
+	return FALSE;
+}
+
+static void device_dump_config(GUdevDevice * device)
+{
+	g_print("[gammu]\n");
+	g_print("device = /dev/%s\n", g_udev_device_get_name(device));
+	if (device_is_serial(device)) {
+		g_print("name = ");
+		g_print(_("Phone on serial port %s\n"), g_udev_device_get_number(device));
+	}
+	g_print("\n");
+}
+
 int main(int argc, char *argv[])
 {
 	GUdevClient *client;
@@ -155,7 +189,9 @@ int main(int argc, char *argv[])
 	list = g_udev_client_query_by_subsystem(client, subsys[0]);
 	for (iter = list; iter; iter = g_list_next(iter)) {
 		dump_device_and_parent(G_UDEV_DEVICE(iter->data), 0);
-		g_print("\n");
+		if (device_is_valid(G_UDEV_DEVICE(iter->data))) {
+			device_dump_config(G_UDEV_DEVICE(iter->data));
+		}
 		g_object_unref(G_UDEV_DEVICE(iter->data));
 	}
 
