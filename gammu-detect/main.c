@@ -36,29 +36,6 @@ static GOptionEntry entries[] = {
 	{NULL, 0, 0, G_OPTION_ARG_NONE, NULL, "", NULL}
 };
 
-static GMainLoop *loop = NULL;
-
-static void signal_handler(int signo)
-{
-	if (signo == SIGINT || signo == SIGTERM) {
-		g_message("Caught signal %d, shutting down...", signo);
-		g_main_loop_quit(loop);
-	}
-}
-
-static void setup_signals(void)
-{
-	struct sigaction action;
-	sigset_t mask;
-
-	sigemptyset(&mask);
-	action.sa_handler = signal_handler;
-	action.sa_mask = mask;
-	action.sa_flags = 0;
-	sigaction(SIGTERM, &action, NULL);
-	sigaction(SIGINT, &action, NULL);
-}
-
 PRINTF_STYLE(2, 3)
 static void println(guint indent, const char *fmt, ...)
 {
@@ -172,10 +149,6 @@ int main(int argc, char *argv[])
 		g_printerr(_("option parsing failed: %s\n"), error->message);
 		exit(1);
 	}
-
-	loop = g_main_loop_new(NULL, FALSE);
-
-	setup_signals();
 
 	client = g_udev_client_new(subsys);
 
