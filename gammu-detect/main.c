@@ -66,18 +66,18 @@ static void dump_device_and_parent(GUdevDevice * device, guint indent)
 	guint32 namelen = 0, i;
 
 	println(indent, "------------------------------------------------------");
-	println(indent, "Name:     %s", g_udev_device_get_name(device));
-	println(indent, "Type:     %s", g_udev_device_get_devtype(device));
-	println(indent, "Subsys:   %s", g_udev_device_get_subsystem(device));
-	println(indent, "Number:   %s", g_udev_device_get_number(device));
-	println(indent, "Path:     %s", g_udev_device_get_sysfs_path(device));
-	println(indent, "Driver:   %s", g_udev_device_get_driver(device));
-	println(indent, "Action:   %s", g_udev_device_get_action(device));
-	println(indent, "Seq Num:  %lld", g_udev_device_get_seqnum(device));
-	println(indent, "Dev File: %s", g_udev_device_get_device_file(device));
+	println(indent, _("Name:     %s"), g_udev_device_get_name(device));
+	println(indent, _("Type:     %s"), g_udev_device_get_devtype(device));
+	println(indent, _("Subsys:   %s"), g_udev_device_get_subsystem(device));
+	println(indent, _("Number:   %s"), g_udev_device_get_number(device));
+	println(indent, _("Path:     %s"), g_udev_device_get_sysfs_path(device));
+	println(indent, _("Driver:   %s"), g_udev_device_get_driver(device));
+	println(indent, _("Action:   %s"), g_udev_device_get_action(device));
+	println(indent, _("Seq Num:  %lld"), g_udev_device_get_seqnum(device));
+	println(indent, _("Dev File: %s"), g_udev_device_get_device_file(device));
 
 	println(indent, " ");
-	println(indent, "Properties:");
+	println(indent, _("Properties:"));
 
 	/* Get longest property name length for alignment */
 	list = g_udev_device_get_property_keys(device);
