@@ -219,7 +219,7 @@ msgstr "Data ou hora inválida foi especificada"
 
 #: libgammu/gsmcomon.c:126
 msgid "Phone memory error, maybe it is read only."
-msgstr "Erro de memória do telefone, pode ser (só leitura)"
+msgstr "Erro de memória do telefone, pode ser só leitura."
 
 #: libgammu/gsmcomon.c:127
 msgid "Invalid data given to phone."
