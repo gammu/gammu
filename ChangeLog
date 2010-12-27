@@ -19,7 +19,7 @@ the issue.
 ChangeLog
 =========
     
-2010???? - 1.28.94
+20101227 - 1.28.94
 
 [+] * New convertbackup command to convert between backup formats.
 [+] * Changed database structure to version 12, you need to upgrade it.
