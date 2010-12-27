@@ -29,10 +29,10 @@
 #include <gammu.h>		/* For PRINTF_STYLE and locales */
 #include "../helper/locales.h"	/* For gettext */
 
-gint verbose = 0;
+gint debug = 0;
 
 static GOptionEntry entries[] = {
-	{"verbose", 'v', 0, G_OPTION_ARG_NONE, &verbose, N_("Be verbose"), NULL},
+	{"debug", 'd', 0, G_OPTION_ARG_NONE, &debug, N_("Show debug output"), NULL},
 	{NULL, 0, 0, G_OPTION_ARG_NONE, NULL, "", NULL}
 };
 
@@ -76,7 +76,7 @@ static void println(guint indent, const char *fmt, ...)
 	real_fmt[i + 2 + strlen(fmt) + 1] = '\0';
 
 	va_start(args, fmt);
-	if (verbose) vprintf(real_fmt, args);
+	if (debug) vprintf(real_fmt, args);
 	va_end(args);
 }
 
