@@ -11,6 +11,9 @@ if (GLIB_FOUND AND GUDEV_FOUND)
     if (GUDEV_FOUND)
         list(APPEND DETECT_SRC "udev.c")
     endif (GUDEV_FOUND)
+    if (BLUEZ_FOUND)
+        list(APPEND DETECT_SRC "bluez.c")
+    endif (BLUEZ_FOUND)
 
     add_executable(gammu-detect ${DETECT_SRC})
     target_link_libraries (gammu-detect ${GLIB_LIBRARIES} libGammu)
@@ -19,6 +22,10 @@ if (GLIB_FOUND AND GUDEV_FOUND)
         target_link_libraries (gammu-detect ${GUDEV_LIBRARIES})
         include_directories(${GUDEV_INCLUDE_DIRS})
     endif (GUDEV_FOUND)
+    if (BLUEZ_FOUND)
+        target_link_libraries (gammu-detect ${BLUEZ_LIBRARIES})
+        include_directories (${BLUEZ_INCLUDE_DIR})
+    endif (BLUEZ_FOUND)
 
     include_directories (
         "${Gammu_BINARY_DIR}/include"

@@ -32,16 +32,25 @@
 #ifdef GUDEV_FOUND
 #include "udev.h"
 #endif
+#ifdef BLUEZ_FOUND
+#include "bluez.h"
+#endif
 
 gint debug = 0;
 #ifdef GUDEV_FOUND
 gint no_udev = 0;
+#endif
+#ifdef BLUEZ_FOUND
+gint no_bluez = 0;
 #endif
 
 static GOptionEntry entries[] = {
 	{"debug", 'd', 0, G_OPTION_ARG_NONE, &debug, N_("Show debugging output for detecting devices."), NULL},
 #ifdef GUDEV_FOUND
 	{"no-udev", 'u', 0, G_OPTION_ARG_NONE, &no_udev, N_("Disables scanning of udev."), NULL},
+#endif
+#ifdef BLUEZ_FOUND
+	{"no-bluez", 'b', 0, G_OPTION_ARG_NONE, &no_bluez, N_("Disables scanning using Bluez."), NULL},
 #endif
 	{NULL, 0, 0, G_OPTION_ARG_NONE, NULL, "", NULL}
 };
@@ -113,6 +122,11 @@ int main(int argc, char *argv[])
 #ifdef GUDEV_FOUND
 	if (!no_udev) {
 		udev_detect();
+	}
+#endif
+#ifdef BLUEZ_FOUND
+	if (!no_bluez) {
+		bluez_detect();
 	}
 #endif
 

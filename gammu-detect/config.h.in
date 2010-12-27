@@ -3,4 +3,6 @@
 
 #cmakedefine GUDEV_FOUND
 
+#cmakedefine BLUEZ_FOUND
+
 #endif
