@@ -127,13 +127,8 @@ int
 main (int argc, char *argv[])
 {
 	GUdevClient *client;
-	const char *subsys[2] = { NULL, NULL };
+	const char *subsys[2] = { "serial", NULL };
 	GList *list, *iter;
-
-	if (argc != 2) {
-		g_warning ("Usage: %s [subsystem]", argv[0]);
-		return 1;
-	}
 
 	g_type_init ();
 
@@ -141,7 +136,6 @@ main (int argc, char *argv[])
 
 	setup_signals ();
 
-	subsys[0] = argv[1];
 	client = g_udev_client_new (subsys);
 
 	list = g_udev_client_query_by_subsystem (client, subsys[0]);
