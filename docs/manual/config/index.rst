@@ -26,8 +26,8 @@ Gammu requires configuration to be able to properly talk to your phone.
 :ref:`gammu` reads configuration from a config file. It's location is determined
 on runtime, see above for search paths.
 
-You can use :ref:`gammu-config` to generate configuration file or start from 
-:ref:`Fully documented example`.
+You can use :ref:`gammu-config` or :ref:`gammu-detect` to generate
+configuration file or start from :ref:`Fully documented example`.
 
 For hints about configuring your phone, you can check Gammu Phone
 Database <http://wammu.eu/phones/> to see what user users
