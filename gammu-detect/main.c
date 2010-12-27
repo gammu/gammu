@@ -63,20 +63,20 @@ PRINTF_STYLE(2, 3)
 static void println(guint indent, const char *fmt, ...)
 {
 	va_list args;
-	char real_fmt[1000];
+	char real_fmt[1000] = "; ";
 	guint i;
 
 	g_return_if_fail(fmt != NULL);
 	g_return_if_fail(indent < sizeof(real_fmt) - 2 - strlen(fmt));
 
 	for (i = 0; i < indent; i++)
-		real_fmt[i] = ' ';
-	strcpy(&real_fmt[i], fmt);
-	real_fmt[i + strlen(fmt)] = '\n';
-	real_fmt[i + strlen(fmt) + 1] = '\0';
+		real_fmt[i + 2] = ' ';
+	strcpy(&real_fmt[i + 2], fmt);
+	real_fmt[i + 2 + strlen(fmt)] = '\n';
+	real_fmt[i + 2 + strlen(fmt) + 1] = '\0';
 
 	va_start(args, fmt);
-	vprintf(real_fmt, args);
+	if (verbose) vprintf(real_fmt, args);
 	va_end(args);
 }
 
