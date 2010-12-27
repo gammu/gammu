@@ -167,7 +167,7 @@ msgstr ""
 #: libgammu/gsmcomon.c:115
 msgid "You're inside phone menu (maybe editing?). Leave it and try again."
 msgstr ""
-"Você está dentro do menu telefone (pode ser editando?).Retorne e tente "
+"Você está dentro do menu telefone (pode ser editando?). Retorne e tente "
 "novamente."
 
 #: libgammu/gsmcomon.c:116
