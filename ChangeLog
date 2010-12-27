@@ -20,6 +20,8 @@ ChangeLog
 =========
     
 2011???? - 1.28.95
+
+[-] * Fix decoding of SMS without date on DCT4 phones (bug #1368).
     
 20101227 - 1.28.94
 
