@@ -28,6 +28,15 @@
 
 #include <gammu-misc.h> /* For PRINTF_STYLE */
 
+gint verbose = 0;
+
+static GOptionEntry entries[] =
+{
+  { "verbose", 'v', 0, G_OPTION_ARG_NONE, &verbose, "Be verbose", NULL },
+  { NULL, 0, 0, G_OPTION_ARG_NONE, NULL, "", NULL }
+};
+
+
 static GMainLoop *loop = NULL;
 
 static void
@@ -130,8 +139,19 @@ main (int argc, char *argv[])
 	GUdevClient *client;
 	const char *subsys[2] = { "tty", NULL };
 	GList *list, *iter;
+    GError *error = NULL;
+
+    GOptionContext *context;
 
 	g_type_init ();
+
+    context = g_option_context_new("");
+    g_option_context_add_main_entries (context, entries, NULL);
+    if (!g_option_context_parse (context, &argc, &argv, &error))
+    {
+        g_print ("option parsing failed: %s\n", error->message);
+        exit (1);
+    }
 
 	loop = g_main_loop_new (NULL, FALSE);
 
