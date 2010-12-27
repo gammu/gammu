@@ -105,6 +105,21 @@ static void dump_device_and_parent(GUdevDevice * device, guint indent)
 	}
 }
 
+static gboolean device_is_acm(GUdevDevice * device)
+{
+	GUdevDevice *parent;
+	parent = g_udev_device_get_parent(device);
+	if (parent) {
+		/* Serial driver */
+		if (g_strcmp0(g_udev_device_get_driver(parent), "cdc_acm") == 0) {
+			g_object_unref(parent);
+			return TRUE;
+		}
+		g_object_unref(parent);
+	}
+	return FALSE;
+}
+
 static gboolean device_is_serial(GUdevDevice * device)
 {
 	GUdevDevice *parent;
@@ -125,6 +140,9 @@ static gboolean device_is_valid(GUdevDevice * device)
 	if (device_is_serial(device)) {
 		return TRUE;
 	}
+	if (device_is_acm(device)) {
+		return TRUE;
+	}
 	return FALSE;
 }
 
@@ -135,6 +153,11 @@ static void device_dump_config(GUdevDevice * device)
 	if (device_is_serial(device)) {
 		g_print("name = ");
 		g_print(_("Phone on serial port %s\n"), g_udev_device_get_number(device));
+	}
+	if (device_is_acm(device)) {
+		g_print("name = %s %s\n",
+			g_udev_device_get_property(device, "ID_VENDOR"),
+			g_udev_device_get_property(device, "ID_MODEL"));
 	}
 	g_print("\n");
 }
