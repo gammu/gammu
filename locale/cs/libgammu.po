@@ -4,9 +4,9 @@
 # Michal Čihař <michal@cihar.com>, 20, 2009, 2010.
 msgid ""
 msgstr ""
-"Project-Id-Version: libGammu 1.28.94\n"
+"Project-Id-Version: libGammu 1.28.95\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-12-15 10:26+0100\n"
+"POT-Creation-Date: 2010-12-27 19:36+0100\n"
 "PO-Revision-Date: 2010-04-23 13:41+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -332,7 +332,7 @@ msgstr "Nepodařilo se z telefonu načíst číslo SMS centra."
 msgid "Unknown error description."
 msgstr "Neznámý popis chyby."
 
-#: libgammu/phone/dummy/dummy.c:587
+#: libgammu/phone/dummy/dummy.c:588
 msgid "Templates"
 msgstr "Šablony"
 

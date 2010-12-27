@@ -6,9 +6,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libGammu 1.28.94\n"
+"Project-Id-Version: libGammu 1.28.95\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-12-15 10:26+0100\n"
+"POT-Creation-Date: 2010-12-27 19:36+0100\n"
 "PO-Revision-Date: 2010-12-23 23:18+0200\n"
 "Last-Translator:  <elrond+gammu.org@samba-tng.org>\n"
 "Language-Team: Language =de\n"
@@ -350,7 +350,7 @@ msgstr "Konnte keine SMSC-Nummer vom Telefon erhalten."
 msgid "Unknown error description."
 msgstr "Unbekannte Fehlerbeschreibung."
 
-#: libgammu/phone/dummy/dummy.c:587
+#: libgammu/phone/dummy/dummy.c:588
 msgid "Templates"
 msgstr "Vorlagen"
 
