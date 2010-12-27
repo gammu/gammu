@@ -25,15 +25,6 @@
 extern char *strcasestr(const char *s, const char *find);
 #endif
 
-#ifndef HAVE_STRCASECMP
-/**
- * Case insensitive string comparing, libc compatibility.
- *
- * \ingroup Unicode
- */
-extern int strcasecmp(const char *s1, const char *s2);
-#endif
-
 #ifndef HAVE_STRCHRNUL
 extern char *strchrnul(char *s, int find);
 #endif
@@ -48,10 +39,15 @@ extern int strncasecmp (const char *s1, const char *s2, size_t n);
 #endif
 
 #ifndef HAVE_STRCASECMP
-#ifdef HAVE_STRNICMP
-#define strncasecmp _strnicmp
+#ifdef HAVE_STRICMP
+#define strcasecmp _stricmp
 #else
 # define INTERNAL_STRCASECMP
+/**
+ * Case insensitive string comparing, libc compatibility.
+ *
+ * \ingroup Unicode
+ */
 extern int strcasecmp (const char *s1, const char *s2);
 #endif
 #endif
