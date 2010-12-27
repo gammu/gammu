@@ -128,7 +128,7 @@ int
 main (int argc, char *argv[])
 {
 	GUdevClient *client;
-	const char *subsys[2] = { "serial", NULL };
+	const char *subsys[2] = { "tty", NULL };
 	GList *list, *iter;
 
 	g_type_init ();
