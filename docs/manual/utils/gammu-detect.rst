@@ -34,3 +34,6 @@ starting with two dashes (``-``). A summary of options is included below.
 
     Show debugging output for detecting devices.
 
+.. option:: -u, --no-udev
+
+    Disables scanning of udev.
