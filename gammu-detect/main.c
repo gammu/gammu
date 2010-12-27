@@ -146,7 +146,5 @@ main (int argc, char *argv[])
 		g_object_unref (G_UDEV_DEVICE (iter->data));
 	}
 
-	g_main_loop_run (loop);
-
 	return 0;
 }
