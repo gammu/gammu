@@ -4,7 +4,9 @@
 
 #ifdef WIN32
 #include <windows.h>
+#ifndef __GNUC__
 #pragma comment(lib, "libmysql.lib")
+#endif
 #include <mysql.h>
 #include <mysqld_error.h>
 #include <process.h>
