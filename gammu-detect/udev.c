@@ -127,18 +127,21 @@ static gboolean device_is_valid(GUdevDevice * device)
 
 static void device_dump_config(GUdevDevice * device)
 {
-	g_print("[gammu]\n");
-	g_print("device = /dev/%s\n", g_udev_device_get_name(device));
+    gchar *device_name, *name;
+    device_name = g_strdup_printf("/dev/%s", g_udev_device_get_name(device));
+
 	if (device_is_serial(device)) {
-		g_print("name = ");
-		g_print(_("Phone on serial port %s\n"), g_udev_device_get_number(device));
-	}
-	if (device_is_acm(device)) {
-		g_print("name = %s %s\n",
+		name = g_strdup_printf(_("Phone on serial port %s"), g_udev_device_get_number(device));
+	} else if (device_is_acm(device)) {
+		name = g_strdup_printf("%s %s",
 			g_udev_device_get_property(device, "ID_VENDOR"),
 			g_udev_device_get_property(device, "ID_MODEL"));
-	}
-	g_print("\n");
+	} else {
+        name = NULL;
+    }
+    print_config(device_name, name);
+    g_free(device_name);
+    g_free(name);
 }
 
 void udev_detect(void)
