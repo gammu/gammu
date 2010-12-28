@@ -555,6 +555,27 @@ GSM_Error SAMSUNG_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		/* Empty entry */
 		if (strcmp(str, "OK") == 0) return ERR_EMPTY;
 
+		/* Philips has it's SPBR as well, but different reply */
+		if ( Priv->Manufacturer == AT_Philips) {
+			error = ATGEN_ParseReply(s,
+						GetLineString(msg.Buffer, &Priv->Lines, 2),
+						"+SPBR: @i, @u, @e",
+						&Memory->Location,
+						Memory->Entries[0].Text, sizeof(Memory->Entries[0].Text),
+						Memory->Entries[1].Text, sizeof(Memory->Entries[1].Text));
+			if (error == ERR_NONE) {
+				/* Set name type */
+				Memory->Entries[0].EntryType = PBK_Text_Name;
+
+				/* Set number type */
+				Memory->Entries[1].EntryType = PBK_Number_General;
+				Memory->Entries[1].VoiceTag = 0;
+				Memory->Entries[1].SMSList[0] = 0;
+
+				return ERR_NONE;
+			}
+		}
+
 		/*
 		 * Parse reply string
 		 *
