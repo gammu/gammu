@@ -1761,6 +1761,10 @@ GSM_Error ATGEN_ReplyGetManufacturer(GSM_Protocol_Message msg, GSM_StateMachine 
 			strcpy(s->Phone.Data.Manufacturer,"Samsung");
 			Priv->Manufacturer = AT_Samsung;
 		}
+		if (strstr(msg.Buffer,"philips")) {
+			strcpy(s->Phone.Data.Manufacturer,"Philips");
+			Priv->Manufacturer = AT_Philips;
+		}
 		if (strstr(msg.Buffer,"Mitsubishi")) {
 			strcpy(s->Phone.Data.Manufacturer,"Mitsubishi");
 			Priv->Manufacturer = AT_Mitsubishi;
