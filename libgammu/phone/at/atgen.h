@@ -437,6 +437,7 @@ GSM_Error ATGEN_DispatchMessage	(GSM_StateMachine *s);
  *
  * \par Parser tokens:
  * - \b \@i - Number, expects pointer to int.
+ * - \b \@n - Quoted number, expects pointer to int.
  * - \b \@I - Optional number (string can be empty), expects pointer to int.
  * - \b \@l - Number, expects pointer to long int.
  * - \b \@s - String, will be converted from phone encoding, stripping

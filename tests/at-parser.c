@@ -163,11 +163,11 @@ int main(int argc UNUSED, char **argv UNUSED)
 
 	error = ATGEN_ParseReply(s,
 				"+SPBR:\"1\",\"Алина\",\"+79164108633\"",
-				"+SPBR: @i, @u, @e",
+				"+SPBR: @n, @u, @e",
 				&i,
 				buffer, BUFFER_SIZE,
 				buffer, BUFFER_SIZE);
-	gammu_test_result(error, "+SPBR: @i, @u, @e");
+	gammu_test_result(error, "+SPBR: @ni, @u, @e");
 	test_result((strcmp(DecodeUnicodeString(buffer), "+79164108633") == 0));
 
 	/* Free state machine */

@@ -559,7 +559,7 @@ GSM_Error SAMSUNG_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		if ( Priv->Manufacturer == AT_Philips) {
 			error = ATGEN_ParseReply(s,
 						GetLineString(msg.Buffer, &Priv->Lines, 2),
-						"+SPBR: @i, @u, @e",
+						"+SPBR: @n, @u, @e",
 						&Memory->Location,
 						Memory->Entries[0].Text, sizeof(Memory->Entries[0].Text),
 						Memory->Entries[1].Text, sizeof(Memory->Entries[1].Text));
