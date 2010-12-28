@@ -1134,6 +1134,17 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 						}
 						inp += length;
 						break;
+					case 'u':
+						out_s = va_arg(ap, char *);
+						storage_size = va_arg(ap, size_t);
+						length = ATGEN_GrabString(s, inp, &buffer);
+						smprintf(s, "Parsed utf-8 string  \"%s\"\n", buffer);
+						DecodeUTF8(out_s, buffer, strlen(buffer));
+						smprintf(s, "utf-8 string with length decoded as \"%s\"\n", DecodeUnicodeString(out_s));
+						free(buffer);
+						buffer = NULL;
+						inp += length;
+						break;
 					case 'T':
 						out_s = va_arg(ap, char *);
 						storage_size = va_arg(ap, size_t);
