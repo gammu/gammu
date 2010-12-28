@@ -23,7 +23,7 @@ Script to detect available devices, which might be suitable for :ref:`gammu`.
 .. note::
 
     This program lists all devices, which might be suitable, it does not do
-    any probing on device itself.
+    any probing on devices them self.
 
 Currently it supports following devices:
 
