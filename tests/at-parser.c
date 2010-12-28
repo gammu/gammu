@@ -163,7 +163,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 
 	error = ATGEN_ParseReply(s,
 				"+SPBR:\"1\",\"Алина\",\"+79164108633\"",
-				"+SPBR: @n, @u, @e",
+				"+SPBR: @n, @u, @p",
 				&i,
 				buffer, BUFFER_SIZE,
 				buffer, BUFFER_SIZE);
