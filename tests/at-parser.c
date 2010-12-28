@@ -161,6 +161,14 @@ int main(int argc UNUSED, char **argv UNUSED)
 	gammu_test_result(error, "+CSCA: @p, @i");
 	test_result((strcmp(DecodeUnicodeString(buffer), "+971555515515") == 0));
 
+	error = ATGEN_ParseReply(s,
+				"+SPBR:\"1\",\"Алина\",\"+79164108633\"",
+				"+SPBR: @i, @u, @e",
+				&i,
+				buffer, BUFFER_SIZE,
+				buffer, BUFFER_SIZE);
+	gammu_test_result(error, "+SPBR: @i, @u, @e");
+	test_result((strcmp(DecodeUnicodeString(buffer), "+79164108633") == 0));
 
 	/* Free state machine */
 	GSM_FreeStateMachine(s);
