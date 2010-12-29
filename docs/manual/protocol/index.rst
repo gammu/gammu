@@ -18,3 +18,8 @@ Phone Protocols
     samsung-gt
     sonim
     m-obex
+
+.. note::
+
+    You can also find documentation for some protocols and vendor extensions
+    in separate git repository at http://gitorious.org/gammu/gsm-docs
