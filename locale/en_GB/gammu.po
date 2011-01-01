@@ -1514,7 +1514,7 @@ msgstr "Name:     %s"
 #: gammu-detect/udev.c:68
 #, c-format
 msgid "Type:     %s"
-msgstr ""
+msgstr "Type:     %s"
 
 #: gammu-detect/udev.c:69
 #, c-format
