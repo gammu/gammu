@@ -1547,9 +1547,9 @@ msgid "Seq Num:  %lld"
 msgstr "Seq Num:  %lld"
 
 #: gammu-detect/udev.c:75
-#, fuzzy, c-format
+#, c-format
 msgid "Dev File: %s"
-msgstr "Filename: %s"
+msgstr "Dev File: %s"
 
 #: gammu-detect/udev.c:78
 msgid "Properties:"
