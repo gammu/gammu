@@ -1553,7 +1553,7 @@ msgstr "Dev File: %s"
 
 #: gammu-detect/udev.c:78
 msgid "Properties:"
-msgstr ""
+msgstr "Properties:"
 
 #: gammu-detect/udev.c:153
 #, c-format
