@@ -1499,7 +1499,7 @@ msgstr "Disables scanning of udev."
 
 #: gammu-detect/main.c:53
 msgid "Disables scanning using Bluez."
-msgstr ""
+msgstr "Disables scanning using Bluez."
 
 #: gammu-detect/main.c:118
 #, c-format
