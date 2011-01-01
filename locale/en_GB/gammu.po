@@ -1544,7 +1544,7 @@ msgstr "Action:   %s"
 #: gammu-detect/udev.c:74
 #, c-format
 msgid "Seq Num:  %lld"
-msgstr ""
+msgstr "Seq Num:  %lld"
 
 #: gammu-detect/udev.c:75
 #, fuzzy, c-format
