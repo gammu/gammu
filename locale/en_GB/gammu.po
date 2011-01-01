@@ -1522,9 +1522,9 @@ msgid "Subsys:   %s"
 msgstr "Subsys:   %s"
 
 #: gammu-detect/udev.c:70
-#, fuzzy, c-format
+#, c-format
 msgid "Number:   %s"
-msgstr "Number of bits"
+msgstr "Number:   %s"
 
 #: gammu-detect/udev.c:71
 #, c-format
