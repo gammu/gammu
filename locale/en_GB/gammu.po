@@ -1652,9 +1652,9 @@ msgstr ""
 "Gammu. File is damaged or there is a error in Gammu."
 
 #: gammu/files.c:421
-#, fuzzy, c-format
+#, c-format
 msgid "%i percent done."
-msgstr "%i percent"
+msgstr "%i percent done."
 
 #: gammu/files.c:423
 #, c-format
