@@ -1529,7 +1529,7 @@ msgstr "Number:   %s"
 #: gammu-detect/udev.c:71
 #, c-format
 msgid "Path:     %s"
-msgstr ""
+msgstr "Path:     %s"
 
 #: gammu-detect/udev.c:72
 #, fuzzy, c-format
