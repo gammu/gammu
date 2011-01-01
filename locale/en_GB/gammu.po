@@ -1532,9 +1532,9 @@ msgid "Path:     %s"
 msgstr "Path:     %s"
 
 #: gammu-detect/udev.c:72
-#, fuzzy, c-format
+#, c-format
 msgid "Driver:   %s"
-msgstr "Driver to use"
+msgstr "Driver:   %s"
 
 #: gammu-detect/udev.c:73
 #, fuzzy, c-format
