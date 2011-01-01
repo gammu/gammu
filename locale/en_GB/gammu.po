@@ -1537,9 +1537,9 @@ msgid "Driver:   %s"
 msgstr "Driver:   %s"
 
 #: gammu-detect/udev.c:73
-#, fuzzy, c-format
+#, c-format
 msgid "Action:   %s"
-msgstr "Location %d"
+msgstr "Action:   %s"
 
 #: gammu-detect/udev.c:74
 #, c-format
