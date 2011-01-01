@@ -1495,7 +1495,7 @@ msgstr "Show debugging output for detecting devices."
 
 #: gammu-detect/main.c:50
 msgid "Disables scanning of udev."
-msgstr ""
+msgstr "Disables scanning of udev."
 
 #: gammu-detect/main.c:53
 msgid "Disables scanning using Bluez."
