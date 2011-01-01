@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.27.96\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-12-27 19:36+0100\n"
-"PO-Revision-Date: 2010-07-21 19:50+0200\n"
+"PO-Revision-Date: 2011-01-01 10:44+0200\n"
 "Last-Translator: Robert Readman <robert_readman@hotmail.com>\n"
 "Language-Team: none\n"
 "Language: en_GB\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Pootle 2.0.1\n"
+"X-Generator: Pootle 2.0.5\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
@@ -299,9 +299,8 @@ msgid "Bluetooth configuration requires channel option."
 msgstr "Bluetooth configuration requires channel option."
 
 #: libgammu/gsmcomon.c:147
-#, fuzzy
 msgid "Service is not running."
-msgstr "Service is not runnig."
+msgstr "Service is not running."
 
 #: libgammu/gsmcomon.c:148
 msgid "Service configuration is missing."
