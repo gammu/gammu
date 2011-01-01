@@ -183,7 +183,15 @@ time_t Fill_Time_T(GSM_DateTime DT)
 	tm_starttime.tm_hour 	= DT.Hour;
 	tm_starttime.tm_min  	= DT.Minute;
 	tm_starttime.tm_sec  	= DT.Second;
-	tm_starttime.tm_isdst	= -1;
+
+	tzset();
+
+	tm_starttime.tm_isdst	= daylight;
+#ifdef HAVE_STRUCT_TM_TM_ZONE
+	/* No time zone information */
+	tm_starttime.tm_gmtoff = timezone;
+	tm_starttime.tm_zone = *tzname;
+#endif
 
 	return mktime(&tm_starttime);
 }

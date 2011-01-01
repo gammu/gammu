@@ -1156,13 +1156,15 @@ time_t SMSDSQL_ParseDate(GSM_SMSDConfig * Config, const char *date)
 		return -2;
 	}
 
-	/* We don't know anything about DST */
-	timestruct.tm_isdst = -1;
+	tzset();
+
+	timestruct.tm_isdst	= daylight;
 #ifdef HAVE_STRUCT_TM_TM_ZONE
 	/* No time zone information */
-	timestruct.tm_gmtoff = 0;
-	timestruct.tm_zone = NULL;
+	timestruct.tm_gmtoff = timezone;
+	timestruct.tm_zone = *tzname;
 #endif
+
 	parse_res = strptime(date, "%Y-%m-%d %H:%M:%S", &timestruct);
 
 	if (parse_res != NULL && *parse_res == 0) {
