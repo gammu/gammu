@@ -1509,7 +1509,7 @@ msgstr "option parsing failed: %s\n"
 #: gammu-detect/udev.c:67
 #, c-format
 msgid "Name:     %s"
-msgstr ""
+msgstr "Name:     %s"
 
 #: gammu-detect/udev.c:68
 #, c-format
