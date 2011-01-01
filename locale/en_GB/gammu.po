@@ -1659,7 +1659,7 @@ msgstr "%i percent done."
 #: gammu/files.c:423
 #, c-format
 msgid "%lu Bytes in %li seconds, %lu Bytes/sec"
-msgstr ""
+msgstr "%lu Bytes in %li seconds, %lu Bytes/sec"
 
 #: gammu/files.c:452
 #, c-format
