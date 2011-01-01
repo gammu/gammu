@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.27.96\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-12-27 19:36+0100\n"
-"PO-Revision-Date: 2010-09-06 20:59+0200\n"
+"PO-Revision-Date: 2011-01-01 10:43+0200\n"
 "Last-Translator: Robert Readman <robert_readman@hotmail.com>\n"
 "Language-Team: none\n"
 "Language: en_GB\n"
@@ -1491,7 +1491,7 @@ msgstr "ERROR: unknown memory type (\"%s\")\n"
 
 #: gammu-detect/main.c:48
 msgid "Show debugging output for detecting devices."
-msgstr ""
+msgstr "Show debugging output for detecting devices."
 
 #: gammu-detect/main.c:50
 msgid "Disables scanning of udev."
