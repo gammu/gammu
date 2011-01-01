@@ -66,7 +66,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Gammu'
-copyright = u'2009-2010, Michal Čihař <michal@cihar.com>'
+copyright = u'2009-2011, Michal Čihař <michal@cihar.com>'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
