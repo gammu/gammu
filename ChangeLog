@@ -25,6 +25,8 @@ ChangeLog
 [+] * Added gammu-detect tool to detect available devices on system.
 [-] * Fixed parsing of Philips reply to SPBR (bug #1366).
 [-] * Fixed testsuite not to depend on system timezone.
+[-] * Check if phone is waiting for requested security code before
+      entering.
     
 20101227 - 1.28.94
 

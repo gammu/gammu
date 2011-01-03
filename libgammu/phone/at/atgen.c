@@ -4212,6 +4212,7 @@ GSM_Error ATGEN_ReplyEnterSecurityCode(GSM_Protocol_Message msg UNUSED, GSM_Stat
 GSM_Error ATGEN_EnterSecurityCode(GSM_StateMachine *s, GSM_SecurityCode Code)
 {
 	GSM_Error error;
+	GSM_SecurityCodeType Status;
 	unsigned char req[GSM_SECURITY_CODE_LEN + 12] = {'\0'};
 	size_t len;
 
@@ -4219,6 +4220,14 @@ GSM_Error ATGEN_EnterSecurityCode(GSM_StateMachine *s, GSM_SecurityCode Code)
 			s->Phone.Data.Priv.ATGEN.Manufacturer == AT_Siemens) {
 		len = sprintf(req, "AT+CPIN2=\"%s\"\r", Code.Code);
 	} else {
+		error = ATGEN_GetSecurityStatus(s, &Status);
+		if (error != ERR_NONE) {
+			return error;
+		}
+		if (Status != Code.Type) {
+			smprintf(s, "Phone is expecting different security code!\n");
+			return ERR_SECURITYERROR;
+		}
 		len = sprintf(req, "AT+CPIN=\"%s\"\r" , Code.Code);
 	}
 	smprintf(s, "Entering security code\n");
