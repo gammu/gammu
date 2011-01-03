@@ -53,7 +53,7 @@ gint show_version = 0;
 
 static GOptionEntry entries[] = {
 	{"debug", 'd', 0, G_OPTION_ARG_NONE, &debug, N_("Show debugging output for detecting devices."), NULL},
-	{"version", 'v', 0, G_OPTION_ARG_NONE, &show_version, N_("Show version information."), NULL},
+	{"version", 'v', 0, G_OPTION_ARG_NONE, &show_version, N_("Show version information and compiled in features."), NULL},
 #ifdef GUDEV_FOUND
 	{"no-udev", 'u', 0, G_OPTION_ARG_NONE, &no_udev, N_("Disables scanning of udev."), NULL},
 #endif

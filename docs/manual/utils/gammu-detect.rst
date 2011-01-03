@@ -32,6 +32,12 @@ Currently it supports following devices:
 * Serial ports on Windows
 * Bluetooth devices using Bluez
 
+.. note::
+
+    Supported devices depend on platform you are using and compiled in
+    features. You can find out what is actually compiled in by running 
+    :option:`gammu-detect -v`.
+
 This program follows the usual GNU command line syntax, with long options
 starting with two dashes (``-``). A summary of options is included below.
 
@@ -43,6 +49,10 @@ starting with two dashes (``-``). A summary of options is included below.
 
     Show debugging output for detecting devices.
 
+.. option:: -v, --version
+
+    Show version information and compiled in features.
+
 .. option:: -u, --no-udev
 
     Disables scanning of udev.
@@ -50,6 +60,10 @@ starting with two dashes (``-``). A summary of options is included below.
 .. option:: -b, --no-bluez
 
     Disables scanning using Bluez.
+
+.. option:: -w, --no-win32-serial
+   
+    Disables scanning of Windows serial ports.
 
 Output
 ------
