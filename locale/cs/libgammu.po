@@ -1,13 +1,14 @@
 # libGammu translation.
 # Copyright (C) 2003 - 2009 Michal Čihař
 # This file is distributed under the same license as the Gammu package.
-# Michal Čihař <michal@cihar.com>, 20, 2009, 2010.
+# Michal Čihař <michal@cihar.com>, 20, 2009, 2010, 2011.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: libGammu 1.28.95\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-12-27 19:36+0100\n"
-"PO-Revision-Date: 2010-04-23 13:41+0200\n"
+"PO-Revision-Date: 2011-01-03 14:34+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -302,7 +303,6 @@ msgid "Bluetooth configuration requires channel option."
 msgstr "Nastavení bluetooth potřebuje zadat kanál."
 
 #: libgammu/gsmcomon.c:147
-#, fuzzy
 msgid "Service is not running."
 msgstr "Služba není spuštěna."
 
