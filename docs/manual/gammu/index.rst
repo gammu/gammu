@@ -1366,7 +1366,7 @@ Nokia specific commands
     1. ALS (Alternative Line Service) option menu
     2. Bluetooth, WAP bookmarks and settings menu, ... (6310i)
     3. GPRS Always Online
-    4. ...
+    4. and others...
 
 .. option:: nokiasetvibralevel level
 
