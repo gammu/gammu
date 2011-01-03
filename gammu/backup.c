@@ -969,13 +969,13 @@ gboolean ReadBackup(const char *filename, GSM_Backup *Backup)
 	if (Backup->DateTimeAvailable) {
 		fprintf(stderr, LISTFORMAT "%s\n", _("Time of backup"), OSDateTime(Backup->DateTime, FALSE));
 	}
-	if (Backup->Model[0]!=0) {
+	if (Backup->Model[0] != 0) {
 		fprintf(stderr, LISTFORMAT "%s\n", _("Phone"), Backup->Model);
 	}
-	if (Backup->IMEI[0]!=0) {
+	if (Backup->IMEI[0] != 0) {
 		fprintf(stderr, LISTFORMAT "%s\n", _("IMEI"), Backup->IMEI);
 	}
-	if (Backup->Creator[0]!=0) {
+	if (Backup->Creator[0] != 0) {
 		fprintf(stderr, LISTFORMAT "%s\n", _("File created by"), Backup->Creator);
 	}
 
