@@ -89,14 +89,13 @@ SMS specific, which can be used in queries which works with SMS messages
 .
 query specific, which are numeric and are specific only for a few queries
 .UNINDENT
+.SS Global Parameters
 .TS
 center;
-|l|l|l|.
+|l|l|.
 _
 T{
 Parameter
-T}	T{
-SMS Specific?
 T}	T{
 Description
 T}
@@ -104,15 +103,11 @@ _
 T{
 \fB%I\fP
 T}	T{
-no
-T}	T{
 provides IMEI of phone
 T}
 _
 T{
 \fB%P\fP
-T}	T{
-no
 T}	T{
 provides PHONE ID (hostname)
 T}
@@ -120,15 +115,23 @@ _
 T{
 \fB%N\fP
 T}	T{
-no
-T}	T{
 client name (eg. Gammu 1.12.3)
+T}
+_
+.TE
+.SS SMS Specific Parameters
+.TS
+center;
+|l|l|.
+_
+T{
+Parameter
+T}	T{
+Description
 T}
 _
 T{
 \fB%R\fP
-T}	T{
-yes
 T}	T{
 in received sms (insert to inbox, delivery notifications)
 it provides sender number, else it provides destination number
@@ -137,15 +140,11 @@ _
 T{
 \fB%C\fP
 T}	T{
-yes
-T}	T{
 provides delivery datetime
 T}
 _
 T{
 \fB%e\fP
-T}	T{
-yes
 T}	T{
 provides delivery status on receiving or status error on sending
 T}
@@ -153,15 +152,11 @@ _
 T{
 \fB%t\fP
 T}	T{
-yes
-T}	T{
 message reference
 T}
 _
 T{
 \fB%d\fP
-T}	T{
-yes
 T}	T{
 receiving datetime for received sms
 T}
@@ -169,15 +164,11 @@ _
 T{
 \fB%E\fP
 T}	T{
-yes
-T}	T{
 encoded text of SMS
 T}
 _
 T{
 \fB%c\fP
-T}	T{
-yes
 T}	T{
 SMS coding (ie 8bit or UnicodeNoCompression)
 T}
@@ -185,15 +176,11 @@ _
 T{
 \fB%F\fP
 T}	T{
-yes
-T}	T{
 sms centre number
 T}
 _
 T{
 \fB%u\fP
-T}	T{
-yes
 T}	T{
 UDH header
 T}
@@ -201,15 +188,11 @@ _
 T{
 \fB%x\fP
 T}	T{
-yes
-T}	T{
 class
 T}
 _
 T{
 \fB%T\fP
-T}	T{
-yes
 T}	T{
 decoded SMS text
 T}
@@ -217,15 +200,11 @@ _
 T{
 \fB%A\fP
 T}	T{
-yes
-T}	T{
 CreatorID of SMS (sending sms)
 T}
 _
 T{
 \fB%V\fP
-T}	T{
-yes
 T}	T{
 relative validity
 T}
