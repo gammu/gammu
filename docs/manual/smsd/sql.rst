@@ -26,6 +26,8 @@ Specific for DBI:
 * :config:option:`DriversPath` - path to DBI drivers
 * :config:option:`DBDir` - sqlite/sqlite3 directory with database
 
+.. seealso:: The variables are fully described in :ref:`gammurc` documentation.
+
 SQL Queries
 -----------
 
