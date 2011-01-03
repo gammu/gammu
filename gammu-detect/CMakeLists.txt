@@ -15,6 +15,9 @@ if (GLIB_FOUND AND GOBJECT_FOUND)
     if (BLUEZ_FOUND)
         list(APPEND DETECT_SRC "bluez.c")
     endif (BLUEZ_FOUND)
+    if (WIN32)
+        list(APPEND DETECT_SRC "win32-serial.c")
+    endif (WIN32)
 
     add_executable(gammu-detect ${DETECT_SRC})
     target_link_libraries (gammu-detect ${GLIB_LIBRARIES} ${GOBJECT_LIBRARIES} libGammu)
@@ -31,6 +34,9 @@ if (GLIB_FOUND AND GOBJECT_FOUND)
         target_link_libraries (gammu-detect ${LIBINTL_LIBRARIES})
         include_directories (${LIBINTL_INCLUDE_DIR})
     endif (LIBINTL_LIB_FOUND AND LIBINTL_LIBRARIES)
+    if (WIN32)
+        target_link_libraries (gammu-detect string)
+    endif (WIN32)
 
     include_directories (
         "${Gammu_BINARY_DIR}/include"

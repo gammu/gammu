@@ -35,6 +35,9 @@
 #ifdef BLUEZ_FOUND
 #include "bluez.h"
 #endif
+#ifdef WIN32
+#include "win32-serial.h"
+#endif
 
 gint debug = 0;
 #ifdef GUDEV_FOUND
@@ -42,6 +45,9 @@ gint no_udev = 0;
 #endif
 #ifdef BLUEZ_FOUND
 gint no_bluez = 0;
+#endif
+#ifdef WIN32
+gint no_win32_serial = 0;
 #endif
 gint show_version = 0;
 
@@ -53,6 +59,9 @@ static GOptionEntry entries[] = {
 #endif
 #ifdef BLUEZ_FOUND
 	{"no-bluez", 'b', 0, G_OPTION_ARG_NONE, &no_bluez, N_("Disables scanning using Bluez."), NULL},
+#endif
+#ifdef WIN32
+	{"no-win32-serial", 'w', 0, G_OPTION_ARG_NONE, &no_win32_serial, N_("Disables scanning of Windows serial ports."), NULL},
 #endif
 	{NULL, 0, 0, G_OPTION_ARG_NONE, NULL, "", NULL}
 };
@@ -70,6 +79,9 @@ void print_version(void)
 #endif
 #ifdef BLUEZ_FOUND
 	printf("  - %s\n", _("Bluez probing"));
+#endif
+#ifdef WIN32
+	printf("  - %s\n", _("Windows serial prot probing"));
 #endif
 	printf("\n");
 	printf("%s\n", _("Copyright (C) 2010 - 2011 Michal Cihar <michal@cihar.com> and other authors."));
@@ -159,6 +171,11 @@ int main(int argc, char *argv[])
 #ifdef BLUEZ_FOUND
 	if (!no_bluez) {
 		bluez_detect();
+	}
+#endif
+#ifdef WIN32
+	if (!no_win32_serial) {
+		win32_serial_detect();
 	}
 #endif
 

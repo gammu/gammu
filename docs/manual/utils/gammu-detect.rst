@@ -29,6 +29,7 @@ Currently it supports following devices:
 
 * USB devices using udev
 * Serial ports using udev
+* Serial ports on Windows
 * Bluetooth devices using Bluez
 
 This program follows the usual GNU command line syntax, with long options
