@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.28.95\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-03 10:37+0100\n"
-"PO-Revision-Date: 2011-01-03 10:33+0100\n"
+"PO-Revision-Date: 2011-01-03 10:39+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -1564,51 +1564,44 @@ msgstr ""
 #: gammu-detect/main.c:145
 #, c-format
 msgid "option parsing failed: %s\n"
-msgstr ""
+msgstr "selhalo zpracování parametrů: %s\n"
 
 #: gammu-detect/udev.c:67
-#, fuzzy
 msgid "Name:"
-msgstr "Jméno"
+msgstr "Jméno:"
 
 #: gammu-detect/udev.c:68
-#, fuzzy
 msgid "Type:"
-msgstr "Typ"
+msgstr "Typ:"
 
 #: gammu-detect/udev.c:69
-#, fuzzy
 msgid "Subsystem:"
-msgstr "Soubory"
+msgstr "Subsystém:"
 
 #: gammu-detect/udev.c:70
-#, fuzzy
 msgid "Number:"
-msgstr "Číslo"
+msgstr "Číslo:"
 
 #: gammu-detect/udev.c:71
 msgid "Path:"
-msgstr ""
+msgstr "Cesta:"
 
 # type: TP
 #: gammu-detect/udev.c:72
-#, fuzzy
 msgid "Driver:"
-msgstr "B<Driver>"
+msgstr "Ovladač:"
 
 #: gammu-detect/udev.c:73
-#, fuzzy
 msgid "Sequential Number:"
-msgstr "Obecné číslo"
+msgstr "Sekvenční číslo:"
 
 #: gammu-detect/udev.c:74
-#, fuzzy
 msgid "Device File:"
-msgstr "Jméno souboru: %s"
+msgstr "Jméno zařízení:"
 
 #: gammu-detect/udev.c:77
 msgid "Properties:"
-msgstr ""
+msgstr "Vlastnosti:"
 
 #: gammu-detect/udev.c:170
 #, c-format
