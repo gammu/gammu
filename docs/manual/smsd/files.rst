@@ -55,10 +55,10 @@ Explanation of fields:
         ``b`` 
             WAP bookmark as name,URL
 
+Other fields are same as for received messages.
+
 For example OUTG20040620_193810_123_+4512345678_xpq.txtdf is a flash text SMS
 requesting delivery reports.
-
-Other fields are same as for received messages.
 
 SMSes will be transmitted sequentially based on the file name. The contents of
 the file is the SMS to be transmitted (in Unicode or standard character set).
