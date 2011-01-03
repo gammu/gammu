@@ -984,10 +984,18 @@ void Restore(int argc, char *argv[])
 	error = GSM_ReadBackupFile(argv[2],&Backup,GSM_GuessBackupFormat(argv[2], FALSE));
 	Print_Error(error);
 
-	if (Backup.DateTimeAvailable) 	fprintf(stderr, LISTFORMAT "%s\n", _("Time of backup"),OSDateTime(Backup.DateTime,FALSE));
-	if (Backup.Model[0]!=0) 	fprintf(stderr, LISTFORMAT "%s\n", _("Phone"),Backup.Model);
-	if (Backup.IMEI[0]!=0) 		fprintf(stderr, LISTFORMAT "%s\n", _("IMEI"),Backup.IMEI);
-	if (Backup.Creator[0]!=0) 	fprintf(stderr, LISTFORMAT "%s\n", _("File created by"),Backup.Creator);
+	if (Backup.DateTimeAvailable) {
+		fprintf(stderr, LISTFORMAT "%s\n", _("Time of backup"), OSDateTime(Backup.DateTime, FALSE));
+	}
+	if (Backup.Model[0]!=0) {
+		fprintf(stderr, LISTFORMAT "%s\n", _("Phone"), Backup.Model);
+	}
+	if (Backup.IMEI[0]!=0) {
+		fprintf(stderr, LISTFORMAT "%s\n", _("IMEI"), Backup.IMEI);
+	}
+	if (Backup.Creator[0]!=0) {
+		fprintf(stderr, LISTFORMAT "%s\n", _("File created by"), Backup.Creator);
+	}
 
 	if (argc == 4 && strcasecmp(argv[3],"-yes") == 0) always_answer_yes = TRUE;
 
