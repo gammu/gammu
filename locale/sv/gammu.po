@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-12-27 19:36+0100\n"
+"POT-Creation-Date: 2011-01-03 10:28+0100\n"
 "PO-Revision-Date: 2009-02-19 00:16+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: none\n"
@@ -104,8 +104,8 @@ msgstr ""
 
 #: gammu/backup.c:366 gammu/backup.c:988 gammu/backup.c:1634
 #: gammu/calendar.c:632 gammu/calendar.c:882 gammu/calendar.c:957
-#: gammu/calendar.c:982 gammu/memory.c:24 gammu/memory.c:309
-#: gammu/memory.c:373 gammu/message.c:133 gammu/misc.c:205 gammu/misc.c:545
+#: gammu/calendar.c:982 gammu/memory.c:24 gammu/memory.c:313
+#: gammu/memory.c:377 gammu/message.c:133 gammu/misc.c:205 gammu/misc.c:545
 msgid "Press Ctrl+C to break..."
 msgstr ""
 
@@ -431,13 +431,13 @@ msgstr ""
 msgid "Restore phone GPRS Points?"
 msgstr ""
 
-#: gammu/backup.c:1624 gammu/memory.c:29 gammu/memory.c:56 gammu/memory.c:128
-#: gammu/memory.c:164
+#: gammu/backup.c:1624 gammu/memory.c:29 gammu/memory.c:60 gammu/memory.c:132
+#: gammu/memory.c:168
 #, c-format
 msgid "Unknown memory type (\"%s\")\n"
 msgstr ""
 
-#: gammu/backup.c:1628 gammu/memory.c:66 gammu/misc.c:712 gammu/misc.c:741
+#: gammu/backup.c:1628 gammu/memory.c:70 gammu/misc.c:712 gammu/misc.c:741
 #: helper/message-cmdline.c:1032
 #, c-format
 msgid "Unknown parameter (\"%s\")\n"
@@ -678,7 +678,7 @@ msgstr "LUID"
 
 #: gammu/calendar.c:232 gammu/calendar.c:599 gammu/calendar.c:643
 #: gammu/calendar.c:687 gammu/calendar.c:711 gammu/calendar.c:830
-#: gammu/memory.c:137 gammu/message.c:215 gammu/misc.c:1807 gammu/misc.c:1840
+#: gammu/memory.c:141 gammu/message.c:215 gammu/misc.c:1807 gammu/misc.c:1840
 #: gammu/misc.c:2105 gammu/misc.c:2228
 msgid "Location"
 msgstr "Plats"
@@ -879,11 +879,11 @@ msgstr ""
 msgid "Week starts on %s"
 msgstr "Veckan börjar på %s"
 
-#: gammu/calendar.c:693 gammu/memory.c:146
+#: gammu/calendar.c:693 gammu/memory.c:150
 msgid "Entry was empty"
 msgstr ""
 
-#: gammu/calendar.c:695 gammu/memory.c:148
+#: gammu/calendar.c:695 gammu/memory.c:152
 msgid "Entry was deleted"
 msgstr ""
 
@@ -938,7 +938,7 @@ msgstr "Kategori"
 msgid "Contact"
 msgstr "Kontakt"
 
-#: gammu/calendar.c:900 gammu/memory.c:313 gammu/memory.c:390
+#: gammu/calendar.c:900 gammu/memory.c:317 gammu/memory.c:394
 #, c-format
 msgid "Search text too long, truncating to %d chars!\n"
 msgstr "Söktexten är för lång, kapar av till %d tecken!\n"
@@ -1491,19 +1491,76 @@ msgstr ""
 msgid "ERROR: unknown memory type (\"%s\")\n"
 msgstr ""
 
-#: gammu-detect/main.c:48
+#: gammu-detect/main.c:49
 msgid "Show debugging output for detecting devices."
 msgstr ""
 
 #: gammu-detect/main.c:50
+#, fuzzy
+msgid "Show version information."
+msgstr "Telefoninformation"
+
+#: gammu-detect/main.c:52
 msgid "Disables scanning of udev."
 msgstr ""
 
-#: gammu-detect/main.c:53
+#: gammu-detect/main.c:55
 msgid "Disables scanning using Bluez."
 msgstr ""
 
-#: gammu-detect/main.c:118
+#: gammu-detect/main.c:62
+#, fuzzy, c-format
+msgid "Gammu-detect version %s\n"
+msgstr "Gammu version"
+
+#: gammu-detect/main.c:63
+#, fuzzy, c-format
+msgid "Built %s on %s using %s\n"
+msgstr "[Gammu version %s, byggdes %s på %s med %s]"
+
+#: gammu-detect/main.c:65
+#, fuzzy, c-format
+msgid "Compiled in features:\n"
+msgstr "Funktioner inkompilerade:"
+
+#: gammu-detect/main.c:67
+msgid "udev probing"
+msgstr ""
+
+#: gammu-detect/main.c:70
+msgid "Bluez probing"
+msgstr ""
+
+#: gammu-detect/main.c:73
+#, c-format
+msgid ""
+"Copyright (C) 2010 - 2011 Michal Cihar <michal@cihar.com> and other "
+"authors.\n"
+msgstr ""
+
+#: gammu-detect/main.c:75
+#, c-format
+msgid ""
+"License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
+"GPL/2.0/>.\n"
+msgstr ""
+
+#: gammu-detect/main.c:76
+#, c-format
+msgid "This is free software: you are free to change and redistribute it.\n"
+msgstr ""
+
+#: gammu-detect/main.c:77
+#, c-format
+msgid "There is NO WARRANTY, to the extent permitted by law.\n"
+msgstr ""
+
+#: gammu-detect/main.c:79
+#, c-format
+msgid "Check <http://wammu.eu/gammu/> for updates.\n"
+msgstr ""
+
+#: gammu-detect/main.c:143
 #, c-format
 msgid "option parsing failed: %s\n"
 msgstr ""
@@ -1545,7 +1602,7 @@ msgstr ""
 
 #: gammu-detect/udev.c:74
 #, c-format
-msgid "Seq Num:  %lld"
+msgid "Seq Num:  %ld"
 msgstr ""
 
 #  msgid "Finished %s"
@@ -1558,9 +1615,14 @@ msgstr "Filnamn: %s"
 msgid "Properties:"
 msgstr ""
 
-#: gammu-detect/udev.c:153
+#: gammu-detect/udev.c:171
 #, fuzzy, c-format
 msgid "Phone on serial port %s"
+msgstr "Telefonport"
+
+#: gammu-detect/udev.c:173
+#, fuzzy, c-format
+msgid "Phone on USB serial port %s %s"
 msgstr "Telefonport"
 
 #: gammu/files.c:48
@@ -2002,29 +2064,29 @@ msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
 msgstr ""
 
-#: gammu/memory.c:76
+#: gammu/memory.c:80
 msgid ""
 "You will have null names in entries. Upgrade firmware in phone to higher "
 "than 4.06"
 msgstr ""
 
-#: gammu/memory.c:82
+#: gammu/memory.c:86
 msgid ""
 "You will have null names in entries. Upgrade firmware in phone to higher "
 "than 6.00"
 msgstr ""
 
-#: gammu/memory.c:87 gammu/memory.c:105 gammu/memory.c:232 gammu/memory.c:349
+#: gammu/memory.c:91 gammu/memory.c:109 gammu/memory.c:236 gammu/memory.c:353
 #: helper/memory-display.c:184
 #, c-format
 msgid "Memory %s, Location %i\n"
 msgstr ""
 
-#: gammu/memory.c:100 gammu/misc.c:1848 gammu/misc.c:2231
+#: gammu/memory.c:104 gammu/misc.c:1848 gammu/misc.c:2231
 msgid "Entry is empty"
 msgstr "Posten är tom"
 
-#: gammu/memory.c:112
+#: gammu/memory.c:116
 #, c-format
 msgid "%i entries empty, %i entries filled\n"
 msgstr ""
