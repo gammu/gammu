@@ -71,7 +71,7 @@ static void dump_device_and_parent(GUdevDevice * device, guint indent)
 	println(indent, _("Path:     %s"), g_udev_device_get_sysfs_path(device));
 	println(indent, _("Driver:   %s"), g_udev_device_get_driver(device));
 	println(indent, _("Action:   %s"), g_udev_device_get_action(device));
-	println(indent, _("Seq Num:  %lld"), g_udev_device_get_seqnum(device));
+	println(indent, _("Seq Num:  %ld"), g_udev_device_get_seqnum(device));
 	println(indent, _("Dev File: %s"), g_udev_device_get_device_file(device));
 
 	println(indent, " ");
