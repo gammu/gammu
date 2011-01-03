@@ -39,7 +39,7 @@ void win32_serial_detect(void)
     chars = QueryDosDevice(NULL, buffer, sizeof(buffer));
 
     if (chars) {
-        for (i = 0; buffer[i] != 0 && i < chars; i += strlen(buffer + i)) {
+        for (i = 0; buffer[i] != 0 && i < chars; i += strlen(buffer + i) + 1) {
             if (strncasecmp(buffer + i, "com", 3) == 0) {
                 name = g_strdup_printf(_("Phone on serial port %s"), buffer + i);
                 print_config(buffer + i, name, "at");
