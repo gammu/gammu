@@ -959,6 +959,35 @@ void DoBackup(int argc, char *argv[])
     	GSM_FreeBackup(&Backup);
 }
 
+gboolean ReadBackup(const char *filename, GSM_Backup *Backup)
+{
+	GSM_Error error;
+
+	error = GSM_ReadBackupFile(filename, Backup, GSM_GuessBackupFormat(filename, FALSE));
+	Print_Error(error);
+
+	if (Backup->DateTimeAvailable) {
+		fprintf(stderr, LISTFORMAT "%s\n", _("Time of backup"), OSDateTime(Backup->DateTime, FALSE));
+	}
+	if (Backup->Model[0]!=0) {
+		fprintf(stderr, LISTFORMAT "%s\n", _("Phone"), Backup->Model);
+	}
+	if (Backup->IMEI[0]!=0) {
+		fprintf(stderr, LISTFORMAT "%s\n", _("IMEI"), Backup->IMEI);
+	}
+	if (Backup->Creator[0]!=0) {
+		fprintf(stderr, LISTFORMAT "%s\n", _("File created by"), Backup->Creator);
+	}
+
+	if (Backup->MD5Calculated[0] != 0 && strcmp(Backup->MD5Original, Backup->MD5Calculated) != 0) {
+		if (!answer_yes(_("Checksum in backup file do not match (original: %s, new: %s). Continue?"), Backup->MD5Original, Backup->MD5Calculated)) {
+			return FALSE;
+		}
+	}
+
+	return TRUE;
+}
+
 void Restore(int argc, char *argv[])
 {
 	GSM_Error error;
@@ -981,28 +1010,10 @@ void Restore(int argc, char *argv[])
 	gboolean			Past = TRUE, First;
 	gboolean			Found, DoRestore;
 
-	error = GSM_ReadBackupFile(argv[2],&Backup,GSM_GuessBackupFormat(argv[2], FALSE));
-	Print_Error(error);
-
-	if (Backup.DateTimeAvailable) {
-		fprintf(stderr, LISTFORMAT "%s\n", _("Time of backup"), OSDateTime(Backup.DateTime, FALSE));
-	}
-	if (Backup.Model[0]!=0) {
-		fprintf(stderr, LISTFORMAT "%s\n", _("Phone"), Backup.Model);
-	}
-	if (Backup.IMEI[0]!=0) {
-		fprintf(stderr, LISTFORMAT "%s\n", _("IMEI"), Backup.IMEI);
-	}
-	if (Backup.Creator[0]!=0) {
-		fprintf(stderr, LISTFORMAT "%s\n", _("File created by"), Backup.Creator);
-	}
-
 	if (argc == 4 && strcasecmp(argv[3],"-yes") == 0) always_answer_yes = TRUE;
 
-	if (Backup.MD5Calculated[0]!=0) {
-		if (strcmp(Backup.MD5Original,Backup.MD5Calculated)) {
-			if (!answer_yes(_("Checksum in backup file do not match (original: %s, new: %s). Continue?"), Backup.MD5Original, Backup.MD5Calculated)) return;
-		}
+	if (!ReadBackup(argv[2], &Backup)) {
+		return;
 	}
 
 	GSM_Init(TRUE);
@@ -1609,19 +1620,6 @@ void AddNew(int argc, char *argv[])
 	GSM_MemoryType		MemoryType = 0;
 	int			i, max;
 
-	error=GSM_ReadBackupFile(argv[2],&Backup,GSM_GuessBackupFormat(argv[2], FALSE));
-	if (error!=ERR_NOTIMPLEMENTED) Print_Error(error);
-
-	if (Backup.DateTimeAvailable) {
-		fprintf(stderr, LISTFORMAT "%s\n", _("Time of backup"),OSDateTime(Backup.DateTime,FALSE));
-	}
-	if (Backup.Model[0]!=0) {
-		fprintf(stderr, LISTFORMAT "%s\n", _("Phone"),Backup.Model);
-	}
-	if (Backup.IMEI[0]!=0) {
-		fprintf(stderr, LISTFORMAT "%s\n", _("IMEI"),Backup.IMEI);
-	}
-
 	for (i = 3; i < argc; i++) {
 		if (strcasecmp(argv[i],"-yes") == 0) {
 			always_answer_yes = TRUE;
@@ -1636,6 +1634,10 @@ void AddNew(int argc, char *argv[])
 			printf_err(_("Unknown parameter (\"%s\")\n"), argv[i]);
 			Terminate(2);
 		}
+	}
+
+	if (!ReadBackup(argv[2], &Backup)) {
+		return;
 	}
 
 	signal(SIGINT, interrupt);
