@@ -163,7 +163,7 @@ Device connection parameters
 
     .. deprecated:: 1.27.95
 
-    Alias for Device, kept for backward compatibility.
+    Alias for :config:option:`Device`, kept for backward compatibility.
 
 .. config:option:: Model
 
