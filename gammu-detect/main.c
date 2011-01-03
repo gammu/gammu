@@ -81,7 +81,7 @@ void print_version(void)
 	printf("  - %s\n", _("Bluez probing"));
 #endif
 #ifdef WIN32
-	printf("  - %s\n", _("Windows serial prot probing"));
+	printf("  - %s\n", _("Windows serial port probing"));
 #endif
 	printf("\n");
 	printf("%s\n", _("Copyright (C) 2010 - 2011 Michal Cihar <michal@cihar.com> and other authors."));

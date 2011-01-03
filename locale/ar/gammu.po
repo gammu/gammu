@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.28.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-01-03 14:32+0100\n"
+"POT-Creation-Date: 2011-01-03 14:39+0100\n"
 "PO-Revision-Date: 2010-09-03 14:46+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -1523,7 +1523,7 @@ msgid "Bluez probing"
 msgstr ""
 
 #: gammu-detect/main.c:84
-msgid "Windows serial prot probing"
+msgid "Windows serial port probing"
 msgstr ""
 
 #: gammu-detect/main.c:87
