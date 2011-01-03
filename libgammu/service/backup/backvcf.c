@@ -19,7 +19,7 @@
 #define chk_fwrite(data, size, count, file) \
 	if (fwrite(data, size, count, file) != count) goto fail;
 
-GSM_Error SaveVCard(char *FileName, GSM_Backup *backup)
+GSM_Error SaveVCard(const char *FileName, GSM_Backup *backup)
 {
 	int 		i;
 	size_t Length = 0;
@@ -65,7 +65,7 @@ fail:
 	return ERR_WRITING_FILE;
 }
 
-GSM_Error LoadVCard(char *FileName, GSM_Backup *backup)
+GSM_Error LoadVCard(const char *FileName, GSM_Backup *backup)
 {
 	GSM_File 		File;
 	GSM_Error		error;

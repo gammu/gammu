@@ -56,7 +56,7 @@ fail:
 	return ERR_WRITING_FILE;
 }
 
-GSM_Error LoadVNT(char *FileName, GSM_Backup *backup)
+GSM_Error LoadVNT(const char *FileName, GSM_Backup *backup)
 {
 	GSM_File 		File;
 	GSM_Error		error;

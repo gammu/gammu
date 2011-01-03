@@ -28,7 +28,7 @@
 #define chk_fwrite(data, size, count, file) \
 	if (fwrite(data, size, count, file) != count) goto fail;
 
-GSM_Error FindBackupChecksum(char *FileName, gboolean UseUnicode, char *checksum)
+GSM_Error FindBackupChecksum(const char *FileName, gboolean UseUnicode, char *checksum)
 {
 	INI_Section		*file_info, *h;
 	INI_Entry		*e;
@@ -1584,7 +1584,7 @@ static GSM_Error SaveGPRSPointEntry(FILE *file, GSM_GPRSAccessPoint *GPRSPoint, 
 	return ERR_NONE;
 }
 
-GSM_Error SaveBackup(char *FileName, GSM_Backup *backup, gboolean UseUnicode)
+GSM_Error SaveBackup(const char *FileName, GSM_Backup *backup, gboolean UseUnicode)
 {
 	int 		i=0;
 	unsigned char 	buffer[1000]={0},checksum[200]={0};
@@ -3135,7 +3135,7 @@ static void ReadNoteEntry(INI_Section *file_info, char *section, GSM_NoteEntry *
 	ReadBackupText(file_info, section, buffer, Note->Text,UseUnicode);
 }
 
-GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
+GSM_Error LoadBackup(const char *FileName, GSM_Backup *backup)
 {
 	INI_Section		*file_info, *h;
 	char			buffer[100]={0}, *readvalue=NULL;
@@ -3808,7 +3808,7 @@ static GSM_Error ReadSMSBackupEntry(INI_Section *file_info, char *section, GSM_S
 	return ERR_NONE;
 }
 
-static GSM_Error GSM_ReadSMSBackupTextFile(char *FileName, GSM_SMS_Backup *backup)
+static GSM_Error GSM_ReadSMSBackupTextFile(const char *FileName, GSM_SMS_Backup *backup)
 {
 	INI_Section	*file_info, *h;
 	char		*readvalue=NULL;
@@ -3849,7 +3849,7 @@ done:
 	return error;
 }
 
-GSM_Error GSM_ReadSMSBackupFile(char *FileName, GSM_SMS_Backup *backup)
+GSM_Error GSM_ReadSMSBackupFile(const char *FileName, GSM_SMS_Backup *backup)
 {
 	FILE *file;
 
@@ -3983,7 +3983,7 @@ static GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
 	return ERR_NONE;
 }
 
-GSM_Error GSM_AddSMSBackupFile(char *FileName, GSM_SMS_Backup *backup)
+GSM_Error GSM_AddSMSBackupFile(const char *FileName, GSM_SMS_Backup *backup)
 {
 	FILE *file;
 

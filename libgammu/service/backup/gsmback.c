@@ -187,7 +187,7 @@ GSM_Error GSM_SaveBackupFile(char *FileName, GSM_Backup *backup, GSM_BackupForma
 	}
 }
 
-GSM_Error GSM_ReadBackupFile(char *FileName, GSM_Backup *backup, GSM_BackupFormat Format)
+GSM_Error GSM_ReadBackupFile(const char *FileName, GSM_Backup *backup, GSM_BackupFormat Format)
 {
 	GSM_ClearBackup(backup);
 

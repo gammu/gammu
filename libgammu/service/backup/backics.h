@@ -7,8 +7,8 @@
 #include <gammu-backup.h>
 
 #ifdef GSM_ENABLE_BACKUP
-GSM_Error SaveICS(char *FileName, GSM_Backup *backup);
-GSM_Error LoadICS(char *FileName, GSM_Backup *backup);
+GSM_Error SaveICS(const char *FileName, GSM_Backup *backup);
+GSM_Error LoadICS(const char *FileName, GSM_Backup *backup);
 #endif
 
 #endif

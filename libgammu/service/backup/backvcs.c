@@ -19,7 +19,7 @@
 #define chk_fwrite(data, size, count, file) \
 	if (fwrite(data, size, count, file) != count) goto fail;
 
-GSM_Error SaveVCalendar(char *FileName, GSM_Backup *backup)
+GSM_Error SaveVCalendar(const char *FileName, GSM_Backup *backup)
 {
 	int 		i;
 	size_t Length = 0;
@@ -71,7 +71,7 @@ fail:
 	return ERR_WRITING_FILE;
 }
 
-GSM_Error LoadVCalendarPrivate(char *FileName, GSM_Backup *backup, GSM_VCalendarVersion CalVer, GSM_VToDoVersion ToDoVer)
+GSM_Error LoadVCalendarPrivate(const char *FileName, GSM_Backup *backup, GSM_VCalendarVersion CalVer, GSM_VToDoVersion ToDoVer)
 {
 	GSM_File 		File;
 	GSM_Error		error;
@@ -132,7 +132,7 @@ GSM_Error LoadVCalendarPrivate(char *FileName, GSM_Backup *backup, GSM_VCalendar
 	return error;
 }
 
-GSM_Error LoadVCalendar(char *FileName, GSM_Backup *backup)
+GSM_Error LoadVCalendar(const char *FileName, GSM_Backup *backup)
 {
 	return LoadVCalendarPrivate(FileName, backup, Nokia_VCalendar, Nokia_VToDo);
 }

@@ -8,8 +8,8 @@
 #include <gammu-backup.h>
 
 #ifdef GSM_ENABLE_BACKUP
-GSM_Error LoadBackup(char *FileName, GSM_Backup *backup);
-GSM_Error SaveBackup(char *FileName, GSM_Backup *backup, gboolean UseUnicode);
+GSM_Error LoadBackup(const char *FileName, GSM_Backup *backup);
+GSM_Error SaveBackup(const char *FileName, GSM_Backup *backup, gboolean UseUnicode);
 #endif
 
 #endif

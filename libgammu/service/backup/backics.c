@@ -20,7 +20,7 @@
 #define chk_fwrite(data, size, count, file) \
 	if (fwrite(data, size, count, file) != count) goto fail;
 
-GSM_Error SaveICS(char *FileName, GSM_Backup *backup)
+GSM_Error SaveICS(const char *FileName, GSM_Backup *backup)
 {
 	int 		i;
 	size_t Length = 0;
@@ -72,7 +72,7 @@ fail:
 	return ERR_WRITING_FILE;
 }
 
-GSM_Error LoadICS(char *FileName, GSM_Backup *backup)
+GSM_Error LoadICS(const char *FileName, GSM_Backup *backup)
 {
 	return LoadVCalendarPrivate(FileName, backup, Mozilla_iCalendar, Mozilla_VToDo);
 }

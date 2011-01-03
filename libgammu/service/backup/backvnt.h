@@ -11,8 +11,8 @@
 #include <gammu-backup.h>
 
 #ifdef GSM_ENABLE_BACKUP
-GSM_Error SaveVNT(char *FileName, GSM_Backup *backup);
-GSM_Error LoadVNT(char *FileName, GSM_Backup *backup);
+GSM_Error SaveVNT(const char *FileName, GSM_Backup *backup);
+GSM_Error LoadVNT(const char *FileName, GSM_Backup *backup);
 #endif
 
 #endif

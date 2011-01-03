@@ -144,7 +144,7 @@ fail:
 	return ERR_WRITING_FILE;
 }
 
-GSM_Error SaveLMB(char *FileName, GSM_Backup *backup)
+GSM_Error SaveLMB(const char *FileName, GSM_Backup *backup)
 {
 	FILE 	*file;
 	int 	i;
@@ -401,7 +401,7 @@ static GSM_Error LoadLMBPbkEntry(unsigned char *buffer, unsigned char *buffer2, 
 	return ERR_NONE;
 }
 
-GSM_Error LoadLMB(char *FileName, GSM_Backup *backup)
+GSM_Error LoadLMB(const char *FileName, GSM_Backup *backup)
 {
 #ifdef DEBUG
 	int 		i;
