@@ -984,9 +984,6 @@ void Restore(int argc, char *argv[])
 	error = GSM_ReadBackupFile(argv[2],&Backup,GSM_GuessBackupFormat(argv[2], FALSE));
 	Print_Error(error);
 
-	signal(SIGINT, interrupt);
-	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
-
 	if (Backup.DateTimeAvailable) 	fprintf(stderr, LISTFORMAT "%s\n", _("Time of backup"),OSDateTime(Backup.DateTime,FALSE));
 	if (Backup.Model[0]!=0) 	fprintf(stderr, LISTFORMAT "%s\n", _("Phone"),Backup.Model);
 	if (Backup.IMEI[0]!=0) 		fprintf(stderr, LISTFORMAT "%s\n", _("IMEI"),Backup.IMEI);
@@ -1004,6 +1001,9 @@ void Restore(int argc, char *argv[])
 
 	printf("%s\n", _("Please note that restoring data will cause existing data in phone to be deleted."));
 	printf("%s\n", _("Use addnew command if you just want to add some entries to your phone."));
+
+	signal(SIGINT, interrupt);
+	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
 
 	DoRestore = FALSE;
 	if (Backup.CallerLogos[0] != NULL) {
