@@ -3073,9 +3073,10 @@ static void ReadProfileEntry(INI_Section *file_info, char *section, GSM_Profile 
 	}
 }
 
-static void ReadFMStationEntry(INI_Section *file_info, char *section, GSM_FMStation *FMStation, gboolean UseUnicode)
+static GSM_Error ReadFMStationEntry(INI_Section *file_info, char *section, GSM_FMStation *FMStation, gboolean UseUnicode)
 {
 	unsigned char buffer[10000]={0}, *readvalue=NULL;
+	char *endptr;
 
 	FMStation->Location  = 0;
 	FMStation->Frequency = 0;
@@ -3089,7 +3090,13 @@ static void ReadFMStationEntry(INI_Section *file_info, char *section, GSM_FMStat
 
 	sprintf(buffer,"Frequency");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
-	if (readvalue!=NULL) StringToDouble(readvalue, &FMStation->Frequency);
+	if (readvalue != NULL) {
+		FMStation->Frequency = strtod(readvalue, &endptr);
+		if (*endptr != 0) {
+			return ERR_FILENOTSUPPORTED;
+		}
+	}
+	return ERR_NONE;
 }
 
 static void ReadGPRSPointEntry(INI_Section *file_info, char *section, GSM_GPRSAccessPoint *GPRSPoint, gboolean UseUnicode)
@@ -3514,7 +3521,10 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 				return ERR_MOREMEMORY;
 			}
 			backup->FMStation[num]->Location = num + 1;
-			ReadFMStationEntry(file_info, h->SectionName, backup->FMStation[num],UseUnicode);
+			error = ReadFMStationEntry(file_info, h->SectionName, backup->FMStation[num],UseUnicode);
+			if (error != ERR_NONE) {
+				return error;
+			}
 			num++;
                 }
         }
