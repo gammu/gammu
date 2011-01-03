@@ -4,6 +4,29 @@ pkg_check_modules(GUDEV gudev-1.0)
 pkg_check_modules(GLIB glib-2.0)
 pkg_check_modules(GOBJECT gobject-2.0)
 
+# Find Glib/Gobject even if pkg-config is not working (eg. cross compiling to Windows)
+if (NOT GLIB_FOUND)
+    find_library(GLIB_LIBRARIES NAMES glib-2.0)
+    string (REGEX REPLACE "/[^/]*$" "" GLIB_LIBRARIES_DIR ${GLIB_LIBRARIES})
+
+    find_path(GLIB_INCLUDE_DIR NAMES glib.h PATH_SUFFIXES glib-2.0)
+    find_path(GLIB_CONFIG_INCLUDE_DIR NAMES glibconfig.h PATHS ${GLIB_LIBRARIES_DIR} PATH_SUFFIXES glib-2.0/include)
+
+    if (GLIB_INCLUDE_DIR AND GLIB_CONFIG_INCLUDE_DIR AND GLIB_LIBRARIES)
+        set(GLIB_FOUND TRUE)
+        set(GLIB_INCLUDE_DIRS ${GLIB_INCLUDE_DIR} ${GLIB_CONFIG_INCLUDE_DIR})
+    endif (GLIB_INCLUDE_DIR AND GLIB_CONFIG_INCLUDE_DIR AND GLIB_LIBRARIES)
+endif (NOT GLIB_FOUND)
+
+if (NOT GOBJECT_FOUND)
+    find_path(GOBJECT_INCLUDE_DIRS NAMES glib-object.h PATH_SUFFIXES glib-2.0)
+
+    find_library(GOBJECT_LIBRARIES NAMES gobject-2.0)
+    if (GOBJECT_INCLUDE_DIRS AND GOBJECT_LIBRARIES)
+        set(GOBJECT_FOUND TRUE)
+    endif (GOBJECT_INCLUDE_DIRS AND GOBJECT_LIBRARIES)
+endif (NOT GOBJECT_FOUND)
+
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/config.h)
 
 if (GLIB_FOUND AND GOBJECT_FOUND)
