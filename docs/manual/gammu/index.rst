@@ -1059,7 +1059,9 @@ Date, time and alarm commands
 Categories commands
 -------------------
 
-..note:: Categories are supported only on few phones (Alcatel).
+.. note:: 
+   
+    Categories are supported only on few phones (Alcatel).
 
 .. option:: addcategory TODO|PHONEBOOK text
 
