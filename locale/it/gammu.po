@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.28.95\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-01-03 10:32+0100\n"
+"POT-Creation-Date: 2011-01-03 10:37+0100\n"
 "PO-Revision-Date: 2009-03-14 15:31+0200\n"
 "Last-Translator: soft developer <soft-developer@live.com>\n"
 "Language-Team: Language =it\n"
@@ -1722,60 +1722,53 @@ msgid "option parsing failed: %s\n"
 msgstr "Impossibile aprire il file \"%s\"\n"
 
 #: gammu-detect/udev.c:67
-#, fuzzy, c-format
-msgid "Name:     %s"
-msgstr "Nome      : \"%s\"\n"
+#, fuzzy
+msgid "Name:"
+msgstr "Nome"
 
 #: gammu-detect/udev.c:68
-#, fuzzy, c-format
-msgid "Type:     %s"
-msgstr "Firmware           : %s"
+#, fuzzy
+msgid "Type:"
+msgstr "Tipo"
 
 #: gammu-detect/udev.c:69
-#, c-format
-msgid "Subsys:   %s"
+msgid "Subsystem:"
 msgstr ""
 
 #: gammu-detect/udev.c:70
-#, fuzzy, c-format
-msgid "Number:   %s"
-msgstr " Numero \"%s\""
+#, fuzzy
+msgid "Number:"
+msgstr "Novembre"
 
 #: gammu-detect/udev.c:71
-#, fuzzy, c-format
-msgid "Path:     %s"
-msgstr "Hardware           : %s\n"
+msgid "Path:"
+msgstr ""
 
 #: gammu-detect/udev.c:72
-#, fuzzy, c-format
-msgid "Driver:   %s"
+#, fuzzy
+msgid "Driver:"
 msgstr "Driver da utilizzare"
 
 #: gammu-detect/udev.c:73
-#, fuzzy, c-format
-msgid "Action:   %s"
-msgstr "Locazione : %i\n"
+#, fuzzy
+msgid "Sequential Number:"
+msgstr "Numero principale "
 
 #: gammu-detect/udev.c:74
-#, c-format
-msgid "Seq Num:  %ld"
-msgstr ""
-
-#: gammu-detect/udev.c:75
-#, fuzzy, c-format
-msgid "Dev File: %s"
+#, fuzzy
+msgid "Device File:"
 msgstr "Nome file: %s"
 
-#: gammu-detect/udev.c:78
+#: gammu-detect/udev.c:77
 msgid "Properties:"
 msgstr ""
 
-#: gammu-detect/udev.c:171
+#: gammu-detect/udev.c:170
 #, fuzzy, c-format
 msgid "Phone on serial port %s"
 msgstr "Telefono"
 
-#: gammu-detect/udev.c:173
+#: gammu-detect/udev.c:172
 #, fuzzy, c-format
 msgid "Phone on USB serial port %s %s"
 msgstr "Telefono"
@@ -4772,6 +4765,26 @@ msgstr ""
 #, fuzzy
 msgid "Information"
 msgstr "Locazione %i\n"
+
+#, fuzzy
+#~ msgid "Name:     %s"
+#~ msgstr "Nome      : \"%s\"\n"
+
+#, fuzzy
+#~ msgid "Type:     %s"
+#~ msgstr "Firmware           : %s"
+
+#, fuzzy
+#~ msgid "Number:   %s"
+#~ msgstr " Numero \"%s\""
+
+#, fuzzy
+#~ msgid "Path:     %s"
+#~ msgstr "Hardware           : %s\n"
+
+#, fuzzy
+#~ msgid "Action:   %s"
+#~ msgstr "Locazione : %i\n"
 
 #, fuzzy
 #~ msgid "Compiled in features:\n"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.28.95\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-01-03 10:32+0100\n"
+"POT-Creation-Date: 2011-01-03 10:37+0100\n"
 "PO-Revision-Date: 2010-08-17 14:07+0200\n"
 "Last-Translator: Maciej Szeptuch <matthiaspriv@gmail.com>\n"
 "Language-Team: Language =pl\n"
@@ -1577,60 +1577,53 @@ msgid "option parsing failed: %s\n"
 msgstr ""
 
 #: gammu-detect/udev.c:67
-#, fuzzy, c-format
-msgid "Name:     %s"
-msgstr "   Numer      : %s\n"
+#, fuzzy
+msgid "Name:"
+msgstr "Nazwa"
 
 #: gammu-detect/udev.c:68
-#, fuzzy, c-format
-msgid "Type:     %s"
-msgstr "   Numer      : %s\n"
+#, fuzzy
+msgid "Type:"
+msgstr "Typ"
 
 #: gammu-detect/udev.c:69
-#, c-format
-msgid "Subsys:   %s"
+msgid "Subsystem:"
 msgstr ""
 
 #: gammu-detect/udev.c:70
-#, fuzzy, c-format
-msgid "Number:   %s"
+#, fuzzy
+msgid "Number:"
 msgstr "   Numer      : %s\n"
 
 #: gammu-detect/udev.c:71
-#, fuzzy, c-format
-msgid "Path:     %s"
-msgstr "   Numer      : %s\n"
+msgid "Path:"
+msgstr ""
 
 #: gammu-detect/udev.c:72
-#, fuzzy, c-format
-msgid "Driver:   %s"
+#, fuzzy
+msgid "Driver:"
 msgstr "Sterownik do użycia"
 
 #: gammu-detect/udev.c:73
-#, fuzzy, c-format
-msgid "Action:   %s"
-msgstr "Położenie: %d"
+#, fuzzy
+msgid "Sequential Number:"
+msgstr "   Numer      : %s\n"
 
 #: gammu-detect/udev.c:74
-#, c-format
-msgid "Seq Num:  %ld"
-msgstr ""
-
-#: gammu-detect/udev.c:75
-#, fuzzy, c-format
-msgid "Dev File: %s"
+#, fuzzy
+msgid "Device File:"
 msgstr "Nazwa pliku: %s"
 
-#: gammu-detect/udev.c:78
+#: gammu-detect/udev.c:77
 msgid "Properties:"
 msgstr ""
 
-#: gammu-detect/udev.c:171
+#: gammu-detect/udev.c:170
 #, fuzzy, c-format
 msgid "Phone on serial port %s"
 msgstr "Port telefonu"
 
-#: gammu-detect/udev.c:173
+#: gammu-detect/udev.c:172
 #, fuzzy, c-format
 msgid "Phone on USB serial port %s %s"
 msgstr "Port telefonu"
@@ -4441,6 +4434,26 @@ msgstr "Ostrzeżenie"
 #, fuzzy
 msgid "Information"
 msgstr "Lokalizacja"
+
+#, fuzzy
+#~ msgid "Name:     %s"
+#~ msgstr "   Numer      : %s\n"
+
+#, fuzzy
+#~ msgid "Type:     %s"
+#~ msgstr "   Numer      : %s\n"
+
+#, fuzzy
+#~ msgid "Number:   %s"
+#~ msgstr "   Numer      : %s\n"
+
+#, fuzzy
+#~ msgid "Path:     %s"
+#~ msgstr "   Numer      : %s\n"
+
+#, fuzzy
+#~ msgid "Action:   %s"
+#~ msgstr "Położenie: %d"
 
 #, fuzzy
 #~ msgid "Compiled in features:\n"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-01-03 10:32+0100\n"
+"POT-Creation-Date: 2011-01-03 10:37+0100\n"
 "PO-Revision-Date: 2009-03-23 19:23+0200\n"
 "Last-Translator: Sergio Martín <ser.martin@wanadoo.es>\n"
 "Language-Team: Español\n"
@@ -1591,61 +1591,55 @@ msgid "option parsing failed: %s\n"
 msgstr "No fue posible procesar el archivo de configuración \"%s\"\n"
 
 #: gammu-detect/udev.c:67
-#, c-format
-msgid "Name:     %s"
-msgstr ""
+#, fuzzy
+msgid "Name:"
+msgstr "Nombre"
 
 #: gammu-detect/udev.c:68
-#, c-format
-msgid "Type:     %s"
-msgstr ""
+#, fuzzy
+msgid "Type:"
+msgstr "Tipo"
 
 #: gammu-detect/udev.c:69
-#, c-format
-msgid "Subsys:   %s"
-msgstr ""
+#, fuzzy
+msgid "Subsystem:"
+msgstr "Sistema de archivos"
 
 #: gammu-detect/udev.c:70
-#, fuzzy, c-format
-msgid "Number:   %s"
-msgstr "Número de bits"
+#, fuzzy
+msgid "Number:"
+msgstr "Número"
 
 #: gammu-detect/udev.c:71
-#, c-format
-msgid "Path:     %s"
+msgid "Path:"
 msgstr ""
 
 #: gammu-detect/udev.c:72
-#, fuzzy, c-format
-msgid "Driver:   %s"
+#, fuzzy
+msgid "Driver:"
 msgstr "Controlador que usar"
 
 #: gammu-detect/udev.c:73
-#, fuzzy, c-format
-msgid "Action:   %s"
-msgstr "Localización %d"
-
-#: gammu-detect/udev.c:74
-#, c-format
-msgid "Seq Num:  %ld"
-msgstr ""
+#, fuzzy
+msgid "Sequential Number:"
+msgstr "Número general"
 
 #  msgid "Finished %s"
-#: gammu-detect/udev.c:75
-#, fuzzy, c-format
-msgid "Dev File: %s"
+#: gammu-detect/udev.c:74
+#, fuzzy
+msgid "Device File:"
 msgstr "Nombre: %s"
 
-#: gammu-detect/udev.c:78
+#: gammu-detect/udev.c:77
 msgid "Properties:"
 msgstr ""
 
-#: gammu-detect/udev.c:171
+#: gammu-detect/udev.c:170
 #, fuzzy, c-format
 msgid "Phone on serial port %s"
 msgstr "Puerto del teléfono"
 
-#: gammu-detect/udev.c:173
+#: gammu-detect/udev.c:172
 #, fuzzy, c-format
 msgid "Phone on USB serial port %s %s"
 msgstr "Puerto del teléfono"
@@ -4416,6 +4410,14 @@ msgstr "Advertencia"
 #: helper/printing.c:50
 msgid "Information"
 msgstr "Información"
+
+#, fuzzy
+#~ msgid "Number:   %s"
+#~ msgstr "Número de bits"
+
+#, fuzzy
+#~ msgid "Action:   %s"
+#~ msgstr "Localización %d"
 
 #, fuzzy
 #~ msgid "Compiled in features:\n"

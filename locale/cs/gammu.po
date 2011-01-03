@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.28.95\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-01-03 10:32+0100\n"
+"POT-Creation-Date: 2011-01-03 10:37+0100\n"
 "PO-Revision-Date: 2011-01-03 10:33+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -1567,60 +1567,55 @@ msgid "option parsing failed: %s\n"
 msgstr ""
 
 #: gammu-detect/udev.c:67
-#, fuzzy, c-format
-msgid "Name:     %s"
-msgstr "Jméno   : \"%s\"\n"
+#, fuzzy
+msgid "Name:"
+msgstr "Jméno"
 
 #: gammu-detect/udev.c:68
-#, fuzzy, c-format
-msgid "Type:     %s"
-msgstr "   Číslo      : %\n"
+#, fuzzy
+msgid "Type:"
+msgstr "Typ"
 
 #: gammu-detect/udev.c:69
-#, c-format
-msgid "Subsys:   %s"
-msgstr ""
+#, fuzzy
+msgid "Subsystem:"
+msgstr "Soubory"
 
 #: gammu-detect/udev.c:70
-#, fuzzy, c-format
-msgid "Number:   %s"
-msgstr "   Číslo      : %\n"
+#, fuzzy
+msgid "Number:"
+msgstr "Číslo"
 
 #: gammu-detect/udev.c:71
-#, fuzzy, c-format
-msgid "Path:     %s"
-msgstr "Osobní           : %s\n"
-
-#: gammu-detect/udev.c:72
-#, fuzzy, c-format
-msgid "Driver:   %s"
-msgstr "Zvolte ovladač"
-
-#: gammu-detect/udev.c:73
-#, fuzzy, c-format
-msgid "Action:   %s"
-msgstr "Pozice: %i\n"
-
-#: gammu-detect/udev.c:74
-#, c-format
-msgid "Seq Num:  %ld"
+msgid "Path:"
 msgstr ""
 
-#: gammu-detect/udev.c:75
-#, fuzzy, c-format
-msgid "Dev File: %s"
+# type: TP
+#: gammu-detect/udev.c:72
+#, fuzzy
+msgid "Driver:"
+msgstr "B<Driver>"
+
+#: gammu-detect/udev.c:73
+#, fuzzy
+msgid "Sequential Number:"
+msgstr "Obecné číslo"
+
+#: gammu-detect/udev.c:74
+#, fuzzy
+msgid "Device File:"
 msgstr "Jméno souboru: %s"
 
-#: gammu-detect/udev.c:78
+#: gammu-detect/udev.c:77
 msgid "Properties:"
 msgstr ""
 
-#: gammu-detect/udev.c:171
+#: gammu-detect/udev.c:170
 #, c-format
 msgid "Phone on serial port %s"
 msgstr "Telefon na sériovém portu %s"
 
-#: gammu-detect/udev.c:173
+#: gammu-detect/udev.c:172
 #, c-format
 msgid "Phone on USB serial port %s %s"
 msgstr "Telefon na USB sériovém portu %s %s"
@@ -4326,6 +4321,30 @@ msgstr "Varování"
 #: helper/printing.c:50
 msgid "Information"
 msgstr "Informace"
+
+#, fuzzy
+#~ msgid "Name:     %s"
+#~ msgstr "Jméno   : \"%s\"\n"
+
+#, fuzzy
+#~ msgid "Type:     %s"
+#~ msgstr "   Číslo      : %\n"
+
+#, fuzzy
+#~ msgid "Number:   %s"
+#~ msgstr "   Číslo      : %\n"
+
+#, fuzzy
+#~ msgid "Path:     %s"
+#~ msgstr "Osobní           : %s\n"
+
+#, fuzzy
+#~ msgid "Driver:   %s"
+#~ msgstr "Zvolte ovladač"
+
+#, fuzzy
+#~ msgid "Action:   %s"
+#~ msgstr "Pozice: %i\n"
 
 #~ msgid "Compiled in features:\n"
 #~ msgstr "Zakompilované vlastnosti:\n"

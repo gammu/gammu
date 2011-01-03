@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.28.95\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-01-03 10:32+0100\n"
+"POT-Creation-Date: 2011-01-03 10:37+0100\n"
 "PO-Revision-Date: 2008-01-27 17:07+0100\n"
 "Last-Translator: Даниил Аплеев <apleev@mail.ru>\n"
 "Language-Team: Language =ru\n"
@@ -1732,60 +1732,53 @@ msgid "option parsing failed: %s\n"
 msgstr "Не удаётся открыть файл \"%s\"\n"
 
 #: gammu-detect/udev.c:67
-#, fuzzy, c-format
-msgid "Name:     %s"
-msgstr "Имя     : \"%s\"\n"
+#, fuzzy
+msgid "Name:"
+msgstr "Имя"
 
 #: gammu-detect/udev.c:68
-#, fuzzy, c-format
-msgid "Type:     %s"
-msgstr "Заданное время : %s\n"
+#, fuzzy
+msgid "Type:"
+msgstr "Тип"
 
 #: gammu-detect/udev.c:69
-#, c-format
-msgid "Subsys:   %s"
+msgid "Subsystem:"
 msgstr ""
 
 #: gammu-detect/udev.c:70
-#, fuzzy, c-format
-msgid "Number:   %s"
-msgstr " Номер \"%s\""
+#, fuzzy
+msgid "Number:"
+msgstr "ноября"
 
 #: gammu-detect/udev.c:71
-#, fuzzy, c-format
-msgid "Path:     %s"
-msgstr "Личный           : \"%s\"\n"
+msgid "Path:"
+msgstr ""
 
 #: gammu-detect/udev.c:72
-#, fuzzy, c-format
-msgid "Driver:   %s"
+#, fuzzy
+msgid "Driver:"
 msgstr "Использовать драйвер"
 
 #: gammu-detect/udev.c:73
-#, fuzzy, c-format
-msgid "Action:   %s"
-msgstr "Ячейка    : %i\n"
+#, fuzzy
+msgid "Sequential Number:"
+msgstr "Основной        "
 
 #: gammu-detect/udev.c:74
-#, c-format
-msgid "Seq Num:  %ld"
-msgstr ""
-
-#: gammu-detect/udev.c:75
-#, fuzzy, c-format
-msgid "Dev File: %s"
+#, fuzzy
+msgid "Device File:"
 msgstr "Имя файла: %s"
 
-#: gammu-detect/udev.c:78
+#: gammu-detect/udev.c:77
 msgid "Properties:"
 msgstr ""
 
-#: gammu-detect/udev.c:171
+#: gammu-detect/udev.c:170
 #, fuzzy, c-format
 msgid "Phone on serial port %s"
 msgstr "Порт телефона"
 
-#: gammu-detect/udev.c:173
+#: gammu-detect/udev.c:172
 #, fuzzy, c-format
 msgid "Phone on USB serial port %s %s"
 msgstr "Порт телефона"
@@ -4828,6 +4821,26 @@ msgstr "Встреча"
 #, fuzzy
 msgid "Information"
 msgstr "Местонахождение %i\n"
+
+#, fuzzy
+#~ msgid "Name:     %s"
+#~ msgstr "Имя     : \"%s\"\n"
+
+#, fuzzy
+#~ msgid "Type:     %s"
+#~ msgstr "Заданное время : %s\n"
+
+#, fuzzy
+#~ msgid "Number:   %s"
+#~ msgstr " Номер \"%s\""
+
+#, fuzzy
+#~ msgid "Path:     %s"
+#~ msgstr "Личный           : \"%s\"\n"
+
+#, fuzzy
+#~ msgid "Action:   %s"
+#~ msgstr "Ячейка    : %i\n"
 
 #, fuzzy
 #~ msgid "Compiled in features:\n"

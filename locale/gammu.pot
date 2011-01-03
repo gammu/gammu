@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.28.95\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-01-03 10:32+0100\n"
+"POT-Creation-Date: 2011-01-03 10:37+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1547,60 +1547,47 @@ msgid "option parsing failed: %s\n"
 msgstr ""
 
 #: gammu-detect/udev.c:67
-#, c-format
-msgid "Name:     %s"
+msgid "Name:"
 msgstr ""
 
 #: gammu-detect/udev.c:68
-#, c-format
-msgid "Type:     %s"
+msgid "Type:"
 msgstr ""
 
 #: gammu-detect/udev.c:69
-#, c-format
-msgid "Subsys:   %s"
+msgid "Subsystem:"
 msgstr ""
 
 #: gammu-detect/udev.c:70
-#, c-format
-msgid "Number:   %s"
+msgid "Number:"
 msgstr ""
 
 #: gammu-detect/udev.c:71
-#, c-format
-msgid "Path:     %s"
+msgid "Path:"
 msgstr ""
 
 #: gammu-detect/udev.c:72
-#, c-format
-msgid "Driver:   %s"
+msgid "Driver:"
 msgstr ""
 
 #: gammu-detect/udev.c:73
-#, c-format
-msgid "Action:   %s"
+msgid "Sequential Number:"
 msgstr ""
 
 #: gammu-detect/udev.c:74
-#, c-format
-msgid "Seq Num:  %ld"
+msgid "Device File:"
 msgstr ""
 
-#: gammu-detect/udev.c:75
-#, c-format
-msgid "Dev File: %s"
-msgstr ""
-
-#: gammu-detect/udev.c:78
+#: gammu-detect/udev.c:77
 msgid "Properties:"
 msgstr ""
 
-#: gammu-detect/udev.c:171
+#: gammu-detect/udev.c:170
 #, c-format
 msgid "Phone on serial port %s"
 msgstr ""
 
-#: gammu-detect/udev.c:173
+#: gammu-detect/udev.c:172
 #, c-format
 msgid "Phone on USB serial port %s %s"
 msgstr ""

@@ -64,15 +64,14 @@ static void dump_device_and_parent(GUdevDevice * device, guint indent)
 	guint32 namelen = 0, i;
 
 	println(indent, "------------------------------------------------------");
-	println(indent, _("Name:     %s"), g_udev_device_get_name(device));
-	println(indent, _("Type:     %s"), g_udev_device_get_devtype(device));
-	println(indent, _("Subsys:   %s"), g_udev_device_get_subsystem(device));
-	println(indent, _("Number:   %s"), g_udev_device_get_number(device));
-	println(indent, _("Path:     %s"), g_udev_device_get_sysfs_path(device));
-	println(indent, _("Driver:   %s"), g_udev_device_get_driver(device));
-	println(indent, _("Action:   %s"), g_udev_device_get_action(device));
-	println(indent, _("Seq Num:  %ld"), g_udev_device_get_seqnum(device));
-	println(indent, _("Dev File: %s"), g_udev_device_get_device_file(device));
+	println(indent, "%-20s %s", _("Name:"), g_udev_device_get_name(device));
+	println(indent, "%-20s %s", _("Type:"), g_udev_device_get_devtype(device));
+	println(indent, "%-20s %s", _("Subsystem:"), g_udev_device_get_subsystem(device));
+	println(indent, "%-20s %s", _("Number:"), g_udev_device_get_number(device));
+	println(indent, "%-20s %s", _("Path:"), g_udev_device_get_sysfs_path(device));
+	println(indent, "%-20s %s", _("Driver:"), g_udev_device_get_driver(device));
+	println(indent, "%-20s %ld", _("Sequential Number:"), g_udev_device_get_seqnum(device));
+	println(indent, "%-20s %s", _("Device File:"), g_udev_device_get_device_file(device));
 
 	println(indent, " ");
 	println(indent, _("Properties:"));

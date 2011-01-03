@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-01-03 10:32+0100\n"
+"POT-Creation-Date: 2011-01-03 10:37+0100\n"
 "PO-Revision-Date: 2009-01-27 14:28+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -1555,60 +1555,52 @@ msgid "option parsing failed: %s\n"
 msgstr ""
 
 #: gammu-detect/udev.c:67
-#, c-format
-msgid "Name:     %s"
-msgstr ""
+#, fuzzy
+msgid "Name:"
+msgstr "Nimi"
 
 #: gammu-detect/udev.c:68
-#, c-format
-msgid "Type:     %s"
-msgstr ""
+#, fuzzy
+msgid "Type:"
+msgstr "Tyyppi"
 
 #: gammu-detect/udev.c:69
-#, c-format
-msgid "Subsys:   %s"
+msgid "Subsystem:"
 msgstr ""
 
 #: gammu-detect/udev.c:70
-#, fuzzy, c-format
-msgid "Number:   %s"
+#, fuzzy
+msgid "Number:"
 msgstr "Numero"
 
 #: gammu-detect/udev.c:71
-#, c-format
-msgid "Path:     %s"
+msgid "Path:"
 msgstr ""
 
 #: gammu-detect/udev.c:72
-#, fuzzy, c-format
-msgid "Driver:   %s"
+#, fuzzy
+msgid "Driver:"
 msgstr "Käytä ajuria"
 
 #: gammu-detect/udev.c:73
-#, c-format
-msgid "Action:   %s"
+msgid "Sequential Number:"
 msgstr ""
 
 #: gammu-detect/udev.c:74
-#, c-format
-msgid "Seq Num:  %ld"
-msgstr ""
-
-#: gammu-detect/udev.c:75
-#, fuzzy, c-format
-msgid "Dev File: %s"
+#, fuzzy
+msgid "Device File:"
 msgstr "Tiedosto: %s"
 
-#: gammu-detect/udev.c:78
+#: gammu-detect/udev.c:77
 msgid "Properties:"
 msgstr ""
 
-#: gammu-detect/udev.c:171
+#: gammu-detect/udev.c:170
 #, fuzzy, c-format
 msgid "Phone on serial port %s"
 msgstr "Puhelin"
 
-#: gammu-detect/udev.c:173
+#: gammu-detect/udev.c:172
 #, fuzzy, c-format
 msgid "Phone on USB serial port %s %s"
 msgstr "Puhelin"
@@ -4286,3 +4278,7 @@ msgstr ""
 #: helper/printing.c:50
 msgid "Information"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Number:   %s"
+#~ msgstr "Numero"

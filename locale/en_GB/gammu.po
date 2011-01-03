@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.27.96\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-01-03 10:32+0100\n"
+"POT-Creation-Date: 2011-01-03 10:37+0100\n"
 "PO-Revision-Date: 2011-01-01 10:44+0200\n"
 "Last-Translator: Robert Readman <robert_readman@hotmail.com>\n"
 "Language-Team: none\n"
@@ -1561,60 +1561,54 @@ msgid "option parsing failed: %s\n"
 msgstr "option parsing failed: %s\n"
 
 #: gammu-detect/udev.c:67
-#, c-format
-msgid "Name:     %s"
-msgstr "Name:     %s"
+#, fuzzy
+msgid "Name:"
+msgstr "Name"
 
 #: gammu-detect/udev.c:68
-#, c-format
-msgid "Type:     %s"
-msgstr "Type:     %s"
+#, fuzzy
+msgid "Type:"
+msgstr "Type"
 
 #: gammu-detect/udev.c:69
-#, c-format
-msgid "Subsys:   %s"
+#, fuzzy
+msgid "Subsystem:"
 msgstr "Subsys:   %s"
 
 #: gammu-detect/udev.c:70
-#, c-format
-msgid "Number:   %s"
-msgstr "Number:   %s"
+#, fuzzy
+msgid "Number:"
+msgstr "Number"
 
 #: gammu-detect/udev.c:71
-#, c-format
-msgid "Path:     %s"
-msgstr "Path:     %s"
+msgid "Path:"
+msgstr ""
 
 #: gammu-detect/udev.c:72
-#, c-format
-msgid "Driver:   %s"
-msgstr "Driver:   %s"
+#, fuzzy
+msgid "Driver:"
+msgstr "B<Driver>"
 
 #: gammu-detect/udev.c:73
-#, c-format
-msgid "Action:   %s"
-msgstr "Action:   %s"
+#, fuzzy
+msgid "Sequential Number:"
+msgstr "General number"
 
 #: gammu-detect/udev.c:74
-#, fuzzy, c-format
-msgid "Seq Num:  %ld"
-msgstr "Seq Num:  %lld"
-
-#: gammu-detect/udev.c:75
-#, c-format
-msgid "Dev File: %s"
+#, fuzzy
+msgid "Device File:"
 msgstr "Dev File: %s"
 
-#: gammu-detect/udev.c:78
+#: gammu-detect/udev.c:77
 msgid "Properties:"
 msgstr "Properties:"
 
-#: gammu-detect/udev.c:171
+#: gammu-detect/udev.c:170
 #, c-format
 msgid "Phone on serial port %s"
 msgstr "Phone on serial port %s"
 
-#: gammu-detect/udev.c:173
+#: gammu-detect/udev.c:172
 #, fuzzy, c-format
 msgid "Phone on USB serial port %s %s"
 msgstr "Phone on serial port %s"
@@ -4307,6 +4301,28 @@ msgstr "Warning"
 #: helper/printing.c:50
 msgid "Information"
 msgstr "Information"
+
+#~ msgid "Name:     %s"
+#~ msgstr "Name:     %s"
+
+#~ msgid "Type:     %s"
+#~ msgstr "Type:     %s"
+
+#~ msgid "Number:   %s"
+#~ msgstr "Number:   %s"
+
+#~ msgid "Path:     %s"
+#~ msgstr "Path:     %s"
+
+#~ msgid "Driver:   %s"
+#~ msgstr "Driver:   %s"
+
+#~ msgid "Action:   %s"
+#~ msgstr "Action:   %s"
+
+#, fuzzy
+#~ msgid "Seq Num:  %ld"
+#~ msgstr "Seq Num:  %lld"
 
 #, fuzzy
 #~ msgid "Compiled in features:\n"

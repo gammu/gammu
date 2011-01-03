@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.28.95\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-01-03 10:32+0100\n"
+"POT-Creation-Date: 2011-01-03 10:37+0100\n"
 "PO-Revision-Date: 2010-12-24 00:59+0200\n"
 "Last-Translator:  <elrond+gammu.org@samba-tng.org>\n"
 "Language-Team: Language =de\n"
@@ -1572,61 +1572,55 @@ msgid "option parsing failed: %s\n"
 msgstr "Die Konfigurationsdatei \"%s\" konnte nicht ausgelesen werden\n"
 
 #: gammu-detect/udev.c:67
-#, fuzzy, c-format
-msgid "Name:     %s"
-msgstr "Name    : \"%{s}\"\n"
+#, fuzzy
+msgid "Name:"
+msgstr "Name"
 
 #: gammu-detect/udev.c:68
-#, fuzzy, c-format
-msgid "Type:     %s"
-msgstr "Frist        : %s\n"
+#, fuzzy
+msgid "Type:"
+msgstr "Typ"
 
 #: gammu-detect/udev.c:69
-#, c-format
-msgid "Subsys:   %s"
-msgstr ""
+#, fuzzy
+msgid "Subsystem:"
+msgstr "Dateisystem"
 
 #: gammu-detect/udev.c:70
-#, fuzzy, c-format
-msgid "Number:   %s"
-msgstr " Nummer \"%s\""
+#, fuzzy
+msgid "Number:"
+msgstr "Nummer"
 
 #: gammu-detect/udev.c:71
-#, fuzzy, c-format
-msgid "Path:     %s"
-msgstr "Privat       : %s\n"
+msgid "Path:"
+msgstr ""
 
 #: gammu-detect/udev.c:72
-#, fuzzy, c-format
-msgid "Driver:   %s"
+#, fuzzy
+msgid "Driver:"
 msgstr "Zu verwendender Treiber"
 
 #: gammu-detect/udev.c:73
-#, fuzzy, c-format
-msgid "Action:   %s"
-msgstr "Speicherplatz: %i\n"
-
-#: gammu-detect/udev.c:74
-#, c-format
-msgid "Seq Num:  %ld"
-msgstr ""
+#, fuzzy
+msgid "Sequential Number:"
+msgstr "Allgemeine Nummer "
 
 #  msgid "Finished %s"
-#: gammu-detect/udev.c:75
-#, fuzzy, c-format
-msgid "Dev File: %s"
+#: gammu-detect/udev.c:74
+#, fuzzy
+msgid "Device File:"
 msgstr "Dateiname: %s"
 
-#: gammu-detect/udev.c:78
+#: gammu-detect/udev.c:77
 msgid "Properties:"
 msgstr ""
 
-#: gammu-detect/udev.c:171
+#: gammu-detect/udev.c:170
 #, fuzzy, c-format
 msgid "Phone on serial port %s"
 msgstr "Telefon-Port"
 
-#: gammu-detect/udev.c:173
+#: gammu-detect/udev.c:172
 #, fuzzy, c-format
 msgid "Phone on USB serial port %s %s"
 msgstr "Telefon-Port"
@@ -4341,6 +4335,26 @@ msgstr "Warnung"
 #: helper/printing.c:50
 msgid "Information"
 msgstr "Information"
+
+#, fuzzy
+#~ msgid "Name:     %s"
+#~ msgstr "Name    : \"%{s}\"\n"
+
+#, fuzzy
+#~ msgid "Type:     %s"
+#~ msgstr "Frist        : %s\n"
+
+#, fuzzy
+#~ msgid "Number:   %s"
+#~ msgstr " Nummer \"%s\""
+
+#, fuzzy
+#~ msgid "Path:     %s"
+#~ msgstr "Privat       : %s\n"
+
+#, fuzzy
+#~ msgid "Action:   %s"
+#~ msgstr "Speicherplatz: %i\n"
 
 #, fuzzy
 #~ msgid "Compiled in features:\n"
