@@ -26,6 +26,10 @@ if (GLIB_FOUND AND GUDEV_FOUND)
         target_link_libraries (gammu-detect ${BLUEZ_LIBRARIES})
         include_directories (${BLUEZ_INCLUDE_DIR})
     endif (BLUEZ_FOUND)
+    if (LIBINTL_LIB_FOUND AND LIBINTL_LIBRARIES)
+        target_link_libraries (gammu-detect ${LIBINTL_LIBRARIES})
+        include_directories (${LIBINTL_INCLUDE_DIR})
+    endif (LIBINTL_LIB_FOUND AND LIBINTL_LIBRARIES)
 
     include_directories (
         "${Gammu_BINARY_DIR}/include"
