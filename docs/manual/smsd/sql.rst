@@ -173,6 +173,7 @@ are selected for default queries during initialization.
         delivery status returned by GSM network
     ``%2``
         ID of message
+
 .. config:option:: save_inbox_sms_insert
 
     Insert received message.
