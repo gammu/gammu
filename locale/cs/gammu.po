@@ -2,14 +2,14 @@
 # Copyright (C) 2003 - 2009 Michal Čihař
 # This file is distributed under the same license as the Gammu package.
 # Michal <michal@cihar.com>, 20, 2010.
-# Michal Čihař <michal@cihar.com>, 2010.
+# Michal Čihař <michal@cihar.com>, 2010, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.28.95\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-01-03 10:28+0100\n"
-"PO-Revision-Date: 2010-11-15 11:02+0200\n"
+"POT-Creation-Date: 2011-01-03 10:32+0100\n"
+"PO-Revision-Date: 2011-01-03 10:33+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -1495,81 +1495,73 @@ msgstr "CHYBA: neznámý typ paměti (\"%s\")\n"
 
 #: gammu-detect/main.c:49
 msgid "Show debugging output for detecting devices."
-msgstr ""
+msgstr "Zobrazí ladicí výstup při detekci zařízení."
 
 #: gammu-detect/main.c:50
-#, fuzzy
 msgid "Show version information."
 msgstr "Zobrazí verzi programu."
 
 #: gammu-detect/main.c:52
 msgid "Disables scanning of udev."
-msgstr ""
+msgstr "Vypne prohledávání udevu."
 
 #: gammu-detect/main.c:55
 msgid "Disables scanning using Bluez."
-msgstr ""
+msgstr "Vypne prohledávání bluetooth pomocí Bluez."
 
 #: gammu-detect/main.c:62
-#, fuzzy, c-format
-msgid "Gammu-detect version %s\n"
-msgstr "Verze Gammu"
+#, c-format
+msgid "Gammu-detect version %s"
+msgstr "Gammu-detect verze %s"
 
-#: gammu-detect/main.c:63
-#, fuzzy, c-format
-msgid "Built %s on %s using %s\n"
-msgstr "[Gammu verze %s zkompilovaná v %s dne %s za použití %s]"
+#: gammu-detect/main.c:64
+#, c-format
+msgid "Built %s on %s using %s"
+msgstr "Zkompilováno dne %s v %s za použití %s"
 
-#: gammu-detect/main.c:65
-#, fuzzy, c-format
-msgid "Compiled in features:\n"
+#: gammu-detect/main.c:67 gammu/gammu.c:114
+msgid "Compiled in features:"
 msgstr "Zakompilované vlastnosti:"
 
-#: gammu-detect/main.c:67
+#: gammu-detect/main.c:69
 msgid "udev probing"
-msgstr ""
+msgstr "prohledávání udevu"
 
-#: gammu-detect/main.c:70
+#: gammu-detect/main.c:72
 msgid "Bluez probing"
-msgstr ""
-
-#: gammu-detect/main.c:73
-#, fuzzy, c-format
-msgid ""
-"Copyright (C) 2010 - 2011 Michal Cihar <michal@cihar.com> and other "
-"authors.\n"
-msgstr ""
-"Copyright (C) 2003 - 2010 Michal Čihař <michal@cihar.com> a další autoři."
+msgstr "prohledávání Bluez"
 
 #: gammu-detect/main.c:75
-#, fuzzy, c-format
+msgid ""
+"Copyright (C) 2010 - 2011 Michal Cihar <michal@cihar.com> and other authors."
+msgstr ""
+"Copyright (C) 2010 - 2011 Michal Čihař <michal@cihar.com> a další autoři."
+
+#: gammu-detect/main.c:77 gammu/gammu.c:345
 msgid ""
 "License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
-"GPL/2.0/>.\n"
+"GPL/2.0/>."
 msgstr ""
 "Licence GPLv2: GNU GPL verze 2 <http://creativecommons.org/licenses/GPL/2.0/"
 ">."
 
 # type: Plain text
-#: gammu-detect/main.c:76
-#, fuzzy, c-format
-msgid "This is free software: you are free to change and redistribute it.\n"
+#: gammu-detect/main.c:78 gammu/gammu.c:347
+msgid "This is free software: you are free to change and redistribute it."
 msgstr ""
 "Tento program je svobodný software: můžete jej volně šířit a modifikovat."
 
 # type: Plain text
-#: gammu-detect/main.c:77
-#, fuzzy, c-format
-msgid "There is NO WARRANTY, to the extent permitted by law.\n"
+#: gammu-detect/main.c:79 gammu/gammu.c:349
+msgid "There is NO WARRANTY, to the extent permitted by law."
 msgstr "Není poskytována ŽÁDNÁ ZÁRUKA, a to v míře povolené platným zákonem."
 
-#: gammu-detect/main.c:79
-#, fuzzy, c-format
-msgid "Check <http://wammu.eu/gammu/> for updates.\n"
+#: gammu-detect/main.c:81 gammu/gammu.c:353
+msgid "Check <http://wammu.eu/gammu/> for updates."
 msgstr ""
 "Podívejte se na <http://wammu.eu/gammu/> pro infromace o aktuální verzi."
 
-#: gammu-detect/main.c:143
+#: gammu-detect/main.c:145
 #, c-format
 msgid "option parsing failed: %s\n"
 msgstr ""
@@ -1624,14 +1616,14 @@ msgid "Properties:"
 msgstr ""
 
 #: gammu-detect/udev.c:171
-#, fuzzy, c-format
+#, c-format
 msgid "Phone on serial port %s"
-msgstr "Port telefonu"
+msgstr "Telefon na sériovém portu %s"
 
 #: gammu-detect/udev.c:173
-#, fuzzy, c-format
+#, c-format
 msgid "Phone on USB serial port %s %s"
-msgstr "Port telefonu"
+msgstr "Telefon na USB sériovém portu %s %s"
 
 #: gammu/files.c:48
 msgid "Phone memory"
@@ -1789,10 +1781,6 @@ msgstr "Jméno"
 msgid "[Gammu version %s built %s on %s using %s]"
 msgstr "[Gammu verze %s zkompilovaná v %s dne %s za použití %s]"
 
-#: gammu/gammu.c:114
-msgid "Compiled in features:"
-msgstr "Zakompilované vlastnosti:"
-
 #: gammu/gammu.c:116
 msgid "Protocols"
 msgstr "Protokoly"
@@ -1820,30 +1808,6 @@ msgid ""
 "Copyright (C) 2003 - 2010 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
 "Copyright (C) 2003 - 2010 Michal Čihař <michal@cihar.com> a další autoři."
-
-#: gammu/gammu.c:345
-msgid ""
-"License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
-"GPL/2.0/>."
-msgstr ""
-"Licence GPLv2: GNU GPL verze 2 <http://creativecommons.org/licenses/GPL/2.0/"
-">."
-
-# type: Plain text
-#: gammu/gammu.c:347
-msgid "This is free software: you are free to change and redistribute it."
-msgstr ""
-"Tento program je svobodný software: můžete jej volně šířit a modifikovat."
-
-# type: Plain text
-#: gammu/gammu.c:349
-msgid "There is NO WARRANTY, to the extent permitted by law."
-msgstr "Není poskytována ŽÁDNÁ ZÁRUKA, a to v míře povolené platným zákonem."
-
-#: gammu/gammu.c:353
-msgid "Check <http://wammu.eu/gammu/> for updates."
-msgstr ""
-"Podívejte se na <http://wammu.eu/gammu/> pro infromace o aktuální verzi."
 
 #: gammu/gammu.c:379
 msgid "standard input"
@@ -4362,6 +4326,34 @@ msgstr "Varování"
 #: helper/printing.c:50
 msgid "Information"
 msgstr "Informace"
+
+#~ msgid "Compiled in features:\n"
+#~ msgstr "Zakompilované vlastnosti:\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
+#~ "GPL/2.0/>.\n"
+#~ msgstr ""
+#~ "Licence GPLv2: GNU GPL verze 2 <http://creativecommons.org/licenses/"
+#~ "GPL/2.0/>."
+
+# type: Plain text
+#, fuzzy
+#~ msgid "This is free software: you are free to change and redistribute it.\n"
+#~ msgstr ""
+#~ "Tento program je svobodný software: můžete jej volně šířit a modifikovat."
+
+# type: Plain text
+#, fuzzy
+#~ msgid "There is NO WARRANTY, to the extent permitted by law.\n"
+#~ msgstr ""
+#~ "Není poskytována ŽÁDNÁ ZÁRUKA, a to v míře povolené platným zákonem."
+
+#, fuzzy
+#~ msgid "Check <http://wammu.eu/gammu/> for updates.\n"
+#~ msgstr ""
+#~ "Podívejte se na <http://wammu.eu/gammu/> pro infromace o aktuální verzi."
 
 #~ msgid "Never version of firmware is available!\n"
 #~ msgstr "Je dostupná novější verze firmware!\n"

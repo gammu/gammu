@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-01-03 10:28+0100\n"
+"POT-Creation-Date: 2011-01-03 10:32+0100\n"
 "PO-Revision-Date: 2009-03-23 19:23+0200\n"
 "Last-Translator: Sergio Martín <ser.martin@wanadoo.es>\n"
 "Language-Team: Español\n"
@@ -1539,59 +1539,53 @@ msgstr ""
 
 #: gammu-detect/main.c:62
 #, fuzzy, c-format
-msgid "Gammu-detect version %s\n"
+msgid "Gammu-detect version %s"
 msgstr "versión Gammu"
 
-#: gammu-detect/main.c:63
+#: gammu-detect/main.c:64
 #, fuzzy, c-format
-msgid "Built %s on %s using %s\n"
+msgid "Built %s on %s using %s"
 msgstr "[Versión de Gammu %s compilación %s/%s utilizando %s]"
 
-#: gammu-detect/main.c:65
-#, fuzzy, c-format
-msgid "Compiled in features:\n"
+#: gammu-detect/main.c:67 gammu/gammu.c:114
+msgid "Compiled in features:"
 msgstr "Características en la compilación:"
 
-#: gammu-detect/main.c:67
+#: gammu-detect/main.c:69
 msgid "udev probing"
 msgstr ""
 
-#: gammu-detect/main.c:70
+#: gammu-detect/main.c:72
 msgid "Bluez probing"
 msgstr ""
 
-#: gammu-detect/main.c:73
-#, c-format
+#: gammu-detect/main.c:75
 msgid ""
-"Copyright (C) 2010 - 2011 Michal Cihar <michal@cihar.com> and other "
-"authors.\n"
+"Copyright (C) 2010 - 2011 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
 
-#: gammu-detect/main.c:75
-#, c-format
+#: gammu-detect/main.c:77 gammu/gammu.c:345
 msgid ""
 "License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
-"GPL/2.0/>.\n"
+"GPL/2.0/>."
 msgstr ""
 
-#: gammu-detect/main.c:76
-#, fuzzy, c-format
-msgid "This is free software: you are free to change and redistribute it.\n"
+#: gammu-detect/main.c:78 gammu/gammu.c:347
+#, fuzzy
+msgid "This is free software: you are free to change and redistribute it."
 msgstr ""
 "Este programa es software libre.__ Puede redistribuir copias según los "
 "términos de"
 
-#: gammu-detect/main.c:77
-#, fuzzy, c-format
-msgid "There is NO WARRANTY, to the extent permitted by law.\n"
+#: gammu-detect/main.c:79 gammu/gammu.c:349
+msgid "There is NO WARRANTY, to the extent permitted by law."
 msgstr "No existe ninguna garantía, hasta los límites permitidos por la ley."
 
-#: gammu-detect/main.c:79
-#, c-format
-msgid "Check <http://wammu.eu/gammu/> for updates.\n"
+#: gammu-detect/main.c:81 gammu/gammu.c:353
+msgid "Check <http://wammu.eu/gammu/> for updates."
 msgstr ""
 
-#: gammu-detect/main.c:143
+#: gammu-detect/main.c:145
 #, fuzzy, c-format
 msgid "option parsing failed: %s\n"
 msgstr "No fue posible procesar el archivo de configuración \"%s\"\n"
@@ -1818,10 +1812,6 @@ msgstr "Nombre"
 msgid "[Gammu version %s built %s on %s using %s]"
 msgstr "[Versión de Gammu %s compilación %s/%s utilizando %s]"
 
-#: gammu/gammu.c:114
-msgid "Compiled in features:"
-msgstr "Características en la compilación:"
-
 #: gammu/gammu.c:116
 msgid "Protocols"
 msgstr "Protocolos"
@@ -1849,27 +1839,6 @@ msgstr ""
 #: gammu/gammu.c:341
 msgid ""
 "Copyright (C) 2003 - 2010 Michal Cihar <michal@cihar.com> and other authors."
-msgstr ""
-
-#: gammu/gammu.c:345
-msgid ""
-"License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
-"GPL/2.0/>."
-msgstr ""
-
-#: gammu/gammu.c:347
-#, fuzzy
-msgid "This is free software: you are free to change and redistribute it."
-msgstr ""
-"Este programa es software libre.__ Puede redistribuir copias según los "
-"términos de"
-
-#: gammu/gammu.c:349
-msgid "There is NO WARRANTY, to the extent permitted by law."
-msgstr "No existe ninguna garantía, hasta los límites permitidos por la ley."
-
-#: gammu/gammu.c:353
-msgid "Check <http://wammu.eu/gammu/> for updates."
 msgstr ""
 
 #: gammu/gammu.c:379
@@ -4447,6 +4416,21 @@ msgstr "Advertencia"
 #: helper/printing.c:50
 msgid "Information"
 msgstr "Información"
+
+#, fuzzy
+#~ msgid "Compiled in features:\n"
+#~ msgstr "Características en la compilación:"
+
+#, fuzzy
+#~ msgid "This is free software: you are free to change and redistribute it.\n"
+#~ msgstr ""
+#~ "Este programa es software libre.__ Puede redistribuir copias según los "
+#~ "términos de"
+
+#, fuzzy
+#~ msgid "There is NO WARRANTY, to the extent permitted by law.\n"
+#~ msgstr ""
+#~ "No existe ninguna garantía, hasta los límites permitidos por la ley."
 
 #~ msgid "Never version of firmware is available!\n"
 #~ msgstr "Nueva versión de firmware disponible.\n"

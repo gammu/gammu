@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.27.96\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-01-03 10:28+0100\n"
+"POT-Creation-Date: 2011-01-03 10:32+0100\n"
 "PO-Revision-Date: 2011-01-01 10:44+0200\n"
 "Last-Translator: Robert Readman <robert_readman@hotmail.com>\n"
 "Language-Team: none\n"
@@ -1508,60 +1508,54 @@ msgstr "Disables scanning using Bluez."
 
 #: gammu-detect/main.c:62
 #, fuzzy, c-format
-msgid "Gammu-detect version %s\n"
+msgid "Gammu-detect version %s"
 msgstr "Gammu version"
 
-#: gammu-detect/main.c:63
+#: gammu-detect/main.c:64
 #, fuzzy, c-format
-msgid "Built %s on %s using %s\n"
+msgid "Built %s on %s using %s"
 msgstr "[Gammu version %s built %s on %s using %s]"
 
-#: gammu-detect/main.c:65
-#, fuzzy, c-format
-msgid "Compiled in features:\n"
+#: gammu-detect/main.c:67 gammu/gammu.c:114
+msgid "Compiled in features:"
 msgstr "Compiled in features:"
 
-#: gammu-detect/main.c:67
+#: gammu-detect/main.c:69
 msgid "udev probing"
 msgstr ""
 
-#: gammu-detect/main.c:70
+#: gammu-detect/main.c:72
 msgid "Bluez probing"
 msgstr ""
 
-#: gammu-detect/main.c:73
-#, fuzzy, c-format
+#: gammu-detect/main.c:75
+#, fuzzy
 msgid ""
-"Copyright (C) 2010 - 2011 Michal Cihar <michal@cihar.com> and other "
-"authors.\n"
+"Copyright (C) 2010 - 2011 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
 "Copyright (C) 2003 - 2010 Michal Cihar <michal@cihar.com> and other authors."
 
-#: gammu-detect/main.c:75
-#, fuzzy, c-format
+#: gammu-detect/main.c:77 gammu/gammu.c:345
 msgid ""
 "License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
-"GPL/2.0/>.\n"
+"GPL/2.0/>."
 msgstr ""
 "License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
 "GPL/2.0/>."
 
-#: gammu-detect/main.c:76
-#, fuzzy, c-format
-msgid "This is free software: you are free to change and redistribute it.\n"
+#: gammu-detect/main.c:78 gammu/gammu.c:347
+msgid "This is free software: you are free to change and redistribute it."
 msgstr "This is free software: you are free to change and redistribute it."
 
-#: gammu-detect/main.c:77
-#, fuzzy, c-format
-msgid "There is NO WARRANTY, to the extent permitted by law.\n"
+#: gammu-detect/main.c:79 gammu/gammu.c:349
+msgid "There is NO WARRANTY, to the extent permitted by law."
 msgstr "There is NO WARRANTY, to the extent permitted by law."
 
-#: gammu-detect/main.c:79
-#, fuzzy, c-format
-msgid "Check <http://wammu.eu/gammu/> for updates.\n"
+#: gammu-detect/main.c:81 gammu/gammu.c:353
+msgid "Check <http://wammu.eu/gammu/> for updates."
 msgstr "Check <http://wammu.eu/gammu/> for updates."
 
-#: gammu-detect/main.c:143
+#: gammu-detect/main.c:145
 #, c-format
 msgid "option parsing failed: %s\n"
 msgstr "option parsing failed: %s\n"
@@ -1781,10 +1775,6 @@ msgstr "Name"
 msgid "[Gammu version %s built %s on %s using %s]"
 msgstr "[Gammu version %s built %s on %s using %s]"
 
-#: gammu/gammu.c:114
-msgid "Compiled in features:"
-msgstr "Compiled in features:"
-
 #: gammu/gammu.c:116
 msgid "Protocols"
 msgstr "Protocols"
@@ -1812,26 +1802,6 @@ msgid ""
 "Copyright (C) 2003 - 2010 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
 "Copyright (C) 2003 - 2010 Michal Cihar <michal@cihar.com> and other authors."
-
-#: gammu/gammu.c:345
-msgid ""
-"License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
-"GPL/2.0/>."
-msgstr ""
-"License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
-"GPL/2.0/>."
-
-#: gammu/gammu.c:347
-msgid "This is free software: you are free to change and redistribute it."
-msgstr "This is free software: you are free to change and redistribute it."
-
-#: gammu/gammu.c:349
-msgid "There is NO WARRANTY, to the extent permitted by law."
-msgstr "There is NO WARRANTY, to the extent permitted by law."
-
-#: gammu/gammu.c:353
-msgid "Check <http://wammu.eu/gammu/> for updates."
-msgstr "Check <http://wammu.eu/gammu/> for updates."
 
 #: gammu/gammu.c:379
 msgid "standard input"
@@ -4337,3 +4307,27 @@ msgstr "Warning"
 #: helper/printing.c:50
 msgid "Information"
 msgstr "Information"
+
+#, fuzzy
+#~ msgid "Compiled in features:\n"
+#~ msgstr "Compiled in features:"
+
+#, fuzzy
+#~ msgid ""
+#~ "License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
+#~ "GPL/2.0/>.\n"
+#~ msgstr ""
+#~ "License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
+#~ "GPL/2.0/>."
+
+#, fuzzy
+#~ msgid "This is free software: you are free to change and redistribute it.\n"
+#~ msgstr "This is free software: you are free to change and redistribute it."
+
+#, fuzzy
+#~ msgid "There is NO WARRANTY, to the extent permitted by law.\n"
+#~ msgstr "There is NO WARRANTY, to the extent permitted by law."
+
+#, fuzzy
+#~ msgid "Check <http://wammu.eu/gammu/> for updates.\n"
+#~ msgstr "Check <http://wammu.eu/gammu/> for updates."

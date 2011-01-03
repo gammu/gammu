@@ -59,10 +59,12 @@ static GOptionEntry entries[] = {
 
 void print_version(void)
 {
-	printf(_("Gammu-detect version %s\n"), GAMMU_VERSION);
-	printf(_("Built %s on %s using %s\n"), __TIME__, __DATE__, GetCompiler());
+	printf(_("Gammu-detect version %s"), GAMMU_VERSION);
 	printf("\n");
-	printf(_("Compiled in features:\n"));
+	printf(_("Built %s on %s using %s"), __TIME__, __DATE__, GetCompiler());
+	printf("\n");
+	printf("\n");
+	printf("%s\n", _("Compiled in features:"));
 #ifdef GUDEV_FOUND
 	printf("  - %s\n", _("udev probing"));
 #endif
@@ -70,13 +72,13 @@ void print_version(void)
 	printf("  - %s\n", _("Bluez probing"));
 #endif
 	printf("\n");
-	printf(_("Copyright (C) 2010 - 2011 Michal Cihar <michal@cihar.com> and other authors.\n"));
+	printf("%s\n", _("Copyright (C) 2010 - 2011 Michal Cihar <michal@cihar.com> and other authors."));
 	printf("\n");
-	printf(_("License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/GPL/2.0/>.\n"));
-	printf(_("This is free software: you are free to change and redistribute it.\n"));
-	printf(_("There is NO WARRANTY, to the extent permitted by law.\n"));
+	printf("%s\n", _("License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/GPL/2.0/>."));
+	printf("%s\n", _("This is free software: you are free to change and redistribute it."));
+	printf("%s\n", _("There is NO WARRANTY, to the extent permitted by law."));
 	printf("\n");
-	printf(_("Check <http://wammu.eu/gammu/> for updates.\n"));
+	printf("%s\n", _("Check <http://wammu.eu/gammu/> for updates."));
 	printf("\n");
 }
 

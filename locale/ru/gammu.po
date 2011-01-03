@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.28.95\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-01-03 10:28+0100\n"
+"POT-Creation-Date: 2011-01-03 10:32+0100\n"
 "PO-Revision-Date: 2008-01-27 17:07+0100\n"
 "Last-Translator: Даниил Аплеев <apleev@mail.ru>\n"
 "Language-Team: Language =ru\n"
@@ -1680,59 +1680,53 @@ msgstr ""
 
 #: gammu-detect/main.c:62
 #, fuzzy, c-format
-msgid "Gammu-detect version %s\n"
+msgid "Gammu-detect version %s"
 msgstr "Версия Gammu"
 
-#: gammu-detect/main.c:63
+#: gammu-detect/main.c:64
 #, fuzzy, c-format
-msgid "Built %s on %s using %s\n"
+msgid "Built %s on %s using %s"
 msgstr ""
 "[Gammu, версия %s, сборка %s %s]\n"
 "\n"
 
-#: gammu-detect/main.c:65
-#, fuzzy, c-format
-msgid "Compiled in features:\n"
-msgstr "Рабочие функции:"
+#: gammu-detect/main.c:67 gammu/gammu.c:114
+msgid "Compiled in features:"
+msgstr ""
 
-#: gammu-detect/main.c:67
+#: gammu-detect/main.c:69
 msgid "udev probing"
 msgstr ""
 
-#: gammu-detect/main.c:70
+#: gammu-detect/main.c:72
 msgid "Bluez probing"
 msgstr ""
 
-#: gammu-detect/main.c:73
-#, fuzzy, c-format
+#: gammu-detect/main.c:75
+#, fuzzy
 msgid ""
-"Copyright (C) 2010 - 2011 Michal Cihar <michal@cihar.com> and other "
-"authors.\n"
+"Copyright (C) 2010 - 2011 Michal Cihar <michal@cihar.com> and other authors."
 msgstr "Copyright \\(co 2003 - 2008 Michal Cihar E<lt>I<michal@cihar.com>E<gt>"
 
-#: gammu-detect/main.c:75
-#, c-format
+#: gammu-detect/main.c:77 gammu/gammu.c:345
 msgid ""
 "License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
-"GPL/2.0/>.\n"
+"GPL/2.0/>."
 msgstr ""
 
-#: gammu-detect/main.c:76
-#, c-format
-msgid "This is free software: you are free to change and redistribute it.\n"
+#: gammu-detect/main.c:78 gammu/gammu.c:347
+msgid "This is free software: you are free to change and redistribute it."
 msgstr ""
 
-#: gammu-detect/main.c:77
-#, c-format
-msgid "There is NO WARRANTY, to the extent permitted by law.\n"
+#: gammu-detect/main.c:79 gammu/gammu.c:349
+msgid "There is NO WARRANTY, to the extent permitted by law."
 msgstr ""
 
-#: gammu-detect/main.c:79
-#, c-format
-msgid "Check <http://wammu.eu/gammu/> for updates.\n"
+#: gammu-detect/main.c:81 gammu/gammu.c:353
+msgid "Check <http://wammu.eu/gammu/> for updates."
 msgstr ""
 
-#: gammu-detect/main.c:143
+#: gammu-detect/main.c:145
 #, fuzzy, c-format
 msgid "option parsing failed: %s\n"
 msgstr "Не удаётся открыть файл \"%s\"\n"
@@ -1968,10 +1962,6 @@ msgstr ""
 "[Gammu, версия %s, сборка %s %s]\n"
 "\n"
 
-#: gammu/gammu.c:114
-msgid "Compiled in features:"
-msgstr ""
-
 #: gammu/gammu.c:116
 msgid "Protocols"
 msgstr ""
@@ -1999,24 +1989,6 @@ msgstr "ИНФО: Есть более новая тестовая версия G
 #: gammu/gammu.c:341
 msgid ""
 "Copyright (C) 2003 - 2010 Michal Cihar <michal@cihar.com> and other authors."
-msgstr ""
-
-#: gammu/gammu.c:345
-msgid ""
-"License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
-"GPL/2.0/>."
-msgstr ""
-
-#: gammu/gammu.c:347
-msgid "This is free software: you are free to change and redistribute it."
-msgstr ""
-
-#: gammu/gammu.c:349
-msgid "There is NO WARRANTY, to the extent permitted by law."
-msgstr ""
-
-#: gammu/gammu.c:353
-msgid "Check <http://wammu.eu/gammu/> for updates."
 msgstr ""
 
 #: gammu/gammu.c:379
@@ -4856,6 +4828,10 @@ msgstr "Встреча"
 #, fuzzy
 msgid "Information"
 msgstr "Местонахождение %i\n"
+
+#, fuzzy
+#~ msgid "Compiled in features:\n"
+#~ msgstr "Рабочие функции:"
 
 #, fuzzy
 #~ msgid "Never version of firmware is available!\n"
