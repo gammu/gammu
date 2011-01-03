@@ -5,7 +5,7 @@ pkg_check_modules(GLIB glib-2.0)
 
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/config.h)
 
-if (GLIB_FOUND AND GUDEV_FOUND)
+if (GLIB_FOUND)
     set(DETECT_SRC "main.c")
 
     if (GUDEV_FOUND)
@@ -35,5 +35,5 @@ if (GLIB_FOUND AND GUDEV_FOUND)
         "${Gammu_BINARY_DIR}/include"
         "${CMAKE_CURRENT_BINARY_DIR}"
         )
-endif (GLIB_FOUND AND GUDEV_FOUND)
+endif (GLIB_FOUND)
 
