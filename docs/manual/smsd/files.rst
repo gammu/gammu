@@ -10,7 +10,7 @@ Receiving of messages
 +++++++++++++++++++++
 
 Received messages are stored in a folder defined by configuration. The
-filename will be ``IN<date>_<time>_<serialno>_<phone_number>_<sequence>.<ext>``,
+filename will be ``IN<date>_<time>_<serial>_<sender>_<sequence>.<ext>``,
 for example ``NN20021130_021531_00_+45409000931640979_00.txt``.
 
 Explanation of fields:
@@ -19,7 +19,9 @@ Explanation of fields:
     date in format ``YYYYMMDD``
 ``<time>``
     time in format ``HHMMSS``
-``<serialno>``
+``<sender>``
+    sender number
+``<serial>``
     order of a message (in case more messages were received at same time), in format ``NN``
 ``<sequence>``
     part of the message for multipart messages, in format ``NN``
@@ -35,25 +37,29 @@ Transmitting of messages
 Transmitted messages are read from a folder defined by configuration. The
 filename should be one of the following formats:
 
-- ``OUT<phone_number>.<ext><options>``
-- ``OUT<priority>_<phone_number>_<serialno>.<ext><options>``
-- ``OUT<priority><date>_<time>_<serialno>_<phone_number>_<anything>.<ext><options>``
+- ``OUT<recipient>.<ext>``
+- ``OUT<priority>_<recipient>_<serial>.<ext>``
+- ``OUT<priority><date>_<time>_<serial>_<recipient>_<note>.<ext>``
 
 Explanation of fields:
 
+``<recipient>``
+    recipient number where to send message
 ``<priority>``
     an alphabetic character (A-Z) A = highest priority
 ``<ext>``
     ``txt`` for normal text SMS, ``smsbackup`` for :ref:`gammu-smsbackup`
-``<options>``
-    Options appended to the extension applying to text SMS:
+``<note>``
+    any artibrary text which is ignored
 
-        ``d`` 
-            delivery report requested
-        ``f`` 
-            flash SMS
-        ``b`` 
-            WAP bookmark as name,URL
+For text messages, you can additionally append flags to extension:
+
+    ``d`` 
+        delivery report requested
+    ``f`` 
+        flash SMS
+    ``b`` 
+        WAP bookmark as name,URL
 
 Other fields are same as for received messages.
 
