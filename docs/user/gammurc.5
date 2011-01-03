@@ -197,26 +197,6 @@ Device = 10             # Match device by usb device address
 Device = serial:123456  # Match device by serial string
 .ft P
 .fi
-.sp
-For \fBBluetooth\fP connection you have to enter Bluetooth address of your phone
-(you can list Bluetooth devices in range on Linux using \fBhcitool scan\fP
-command). Optionally you can also force Gammu to use specified channel by
-including channel number after slash.
-.sp
-Before using Gammu, your device should be paired with computer or you should
-have set up automatic pairing.
-.sp
-For \fBIrDA\fP connections, this parameters is not used at all.
-.sp
-If IrDA does not work on Linux, you might need to bring up the interface and
-enable discovery (you need to run these commands as root):
-.sp
-.nf
-.ft C
-ip l s dev irda0 up
-sysctl net.irda.discovery=1
-.ft P
-.fi
 .IP Note
 .
 On Linux systems, you might lack permissions for some device nodes.
@@ -248,6 +228,32 @@ LABEL="nokiadku2_rules_end"
 
 .ft P
 .fi
+.RE
+.sp
+For \fBBluetooth\fP connection you have to enter Bluetooth address of your phone
+(you can list Bluetooth devices in range on Linux using \fBhcitool scan\fP
+command). Optionally you can also force Gammu to use specified channel by
+including channel number after slash.
+.sp
+Before using Gammu, your device should be paired with computer or you should
+have set up automatic pairing.
+.sp
+For \fBIrDA\fP connections, this parameters is not used at all.
+.sp
+If IrDA does not work on Linux, you might need to bring up the interface and
+enable discovery (you need to run these commands as root):
+.sp
+.nf
+.ft C
+ip l s dev irda0 up
+sysctl net.irda.discovery=1
+.ft P
+.fi
+.IP Note
+.
+Native IrDA is not supported on Linux, you need to setup virtual
+serial port for it (eg. \fB/dev/ircomm0\(ga) and use it same way as cable.
+This can be usually achieved by loading module \(ga\(gaircomm\-tty\fP.
 .RE
 .UNINDENT
 .INDENT 0.0
@@ -331,7 +337,7 @@ each execution.
 .TP
 .B LogFormat
 .
-Determines what all will be logged to \fBLogFile\fP. Possible values are:
+Determines what all will be logged to \fI\%LogFile\fP. Possible values are:
 .INDENT 7.0
 .TP
 .B \fBnothing\fP

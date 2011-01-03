@@ -121,6 +121,20 @@ Device connection parameters
         Device = 10             # Match device by usb device address
         Device = serial:123456  # Match device by serial string
 
+    .. note::
+
+        On Linux systems, you might lack permissions for some device nodes.
+        You might need to be member of some group (eg. :samp:`plugdev` or
+        :samp:`dialout`) or or add special udev rules to enable you access
+        these devices as non-root.
+
+        For Nokia phones you can put follofing file (also available in sources
+        as :file:`contrib/udev/45-nokiadku2.rules`) as
+        :file:`/etc/udev/rules.d/45-nokiadku2.rules`:
+
+        .. literalinclude:: ../../../contrib/udev/45-nokiadku2.rules
+           :language: sh
+
     For **Bluetooth** connection you have to enter Bluetooth address of your phone
     (you can list Bluetooth devices in range on Linux using :command:`hcitool scan`
     command). Optionally you can also force Gammu to use specified channel by
@@ -141,17 +155,9 @@ Device connection parameters
 
     .. note::
 
-        On Linux systems, you might lack permissions for some device nodes.
-        You might need to be member of some group (eg. :samp:`plugdev` or
-        :samp:`dialout`) or or add special udev rules to enable you access
-        these devices as non-root.
-
-        For Nokia phones you can put follofing file (also available in sources
-        as :file:`contrib/udev/45-nokiadku2.rules`) as
-        :file:`/etc/udev/rules.d/45-nokiadku2.rules`:
-
-        .. literalinclude:: ../../../contrib/udev/45-nokiadku2.rules
-           :language: sh
+        Native IrDA is not supported on Linux, you need to setup virtual
+        serial port for it (eg. ``/dev/ircomm0`) and use it same way as cable.
+        This can be usually achieved by loading module ``ircomm-tty``.
 
 .. config:option:: Port
 
