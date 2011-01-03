@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-01-03 10:37+0100\n"
+"POT-Creation-Date: 2011-01-03 14:29+0100\n"
 "PO-Revision-Date: 2010-12-27 16:01+0200\n"
 "Last-Translator: gilberto dos santos alves <gsavix@gmail.com>\n"
 "Language-Team: none\n"
@@ -1493,53 +1493,62 @@ msgstr "Desconhecido"
 msgid "ERROR: unknown memory type (\"%s\")\n"
 msgstr "ERROR: tipo de memória desconhecido (\"%s\")\n"
 
-#: gammu-detect/main.c:49
+#: gammu-detect/main.c:55
 msgid "Show debugging output for detecting devices."
 msgstr ""
 
-#: gammu-detect/main.c:50
+# type: Plain text
+#: gammu-detect/main.c:56
 #, fuzzy
-msgid "Show version information."
-msgstr "Exibe a versão do programa"
+msgid "Show version information and compiled in features."
+msgstr "Apresenta informação da versão e das funcionalidades compiladas."
 
-#: gammu-detect/main.c:52
+#: gammu-detect/main.c:58
 msgid "Disables scanning of udev."
 msgstr ""
 
-#: gammu-detect/main.c:55
+#: gammu-detect/main.c:61
 msgid "Disables scanning using Bluez."
 msgstr ""
 
-#: gammu-detect/main.c:62
+#: gammu-detect/main.c:64
+msgid "Disables scanning of Windows serial ports."
+msgstr ""
+
+#: gammu-detect/main.c:71
 #, fuzzy, c-format
 msgid "Gammu-detect version %s"
 msgstr "Versão do Gammu"
 
-#: gammu-detect/main.c:64
+#: gammu-detect/main.c:73
 #, fuzzy, c-format
 msgid "Built %s on %s using %s"
 msgstr "[Gammu versão %s construída %s em %s usando %s]"
 
-#: gammu-detect/main.c:67 gammu/gammu.c:114
+#: gammu-detect/main.c:76 gammu/gammu.c:114
 msgid "Compiled in features:"
 msgstr "Configuração da Compilação:"
 
-#: gammu-detect/main.c:69
+#: gammu-detect/main.c:78
 msgid "udev probing"
 msgstr ""
 
-#: gammu-detect/main.c:72
+#: gammu-detect/main.c:81
 msgid "Bluez probing"
 msgstr ""
 
-#: gammu-detect/main.c:75
+#: gammu-detect/main.c:84
+msgid "Windows serial prot probing"
+msgstr ""
+
+#: gammu-detect/main.c:87
 #, fuzzy
 msgid ""
 "Copyright (C) 2010 - 2011 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
 "Copyright (C) 2003 - 2010 Michal Cihar <michal@cihar.com> e outros autores."
 
-#: gammu-detect/main.c:77 gammu/gammu.c:345
+#: gammu-detect/main.c:89 gammu/gammu.c:345
 msgid ""
 "License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
 "GPL/2.0/>."
@@ -1547,20 +1556,20 @@ msgstr ""
 "License GPLv2: GNU GPL versão 2 <http://creativecommons.org/licenses/GPL/2.0/"
 ">."
 
-#: gammu-detect/main.c:78 gammu/gammu.c:347
+#: gammu-detect/main.c:90 gammu/gammu.c:347
 msgid "This is free software: you are free to change and redistribute it."
 msgstr ""
 "Este é um software livre e você é livre para trocá-lo ou redistribuí-lo."
 
-#: gammu-detect/main.c:79 gammu/gammu.c:349
+#: gammu-detect/main.c:91 gammu/gammu.c:349
 msgid "There is NO WARRANTY, to the extent permitted by law."
 msgstr "Não há GARANTIA, até a extensão permitida pela lei."
 
-#: gammu-detect/main.c:81 gammu/gammu.c:353
+#: gammu-detect/main.c:93 gammu/gammu.c:353
 msgid "Check <http://wammu.eu/gammu/> for updates."
 msgstr "Veja <http://wammu.eu/gammu/> para atualizações."
 
-#: gammu-detect/main.c:145
+#: gammu-detect/main.c:157
 #, c-format
 msgid "option parsing failed: %s\n"
 msgstr ""
@@ -1609,7 +1618,7 @@ msgstr "Nome arquvivo: %s"
 msgid "Properties:"
 msgstr ""
 
-#: gammu-detect/udev.c:170
+#: gammu-detect/udev.c:170 gammu-detect/win32-serial.c:44
 #, fuzzy, c-format
 msgid "Phone on serial port %s"
 msgstr "Porta do telefone"
@@ -4316,6 +4325,10 @@ msgstr "Aviso"
 #: helper/printing.c:50
 msgid "Information"
 msgstr "Informação"
+
+#, fuzzy
+#~ msgid "Show version information."
+#~ msgstr "Exibe a versão do programa"
 
 #, fuzzy
 #~ msgid "Number:   %s"

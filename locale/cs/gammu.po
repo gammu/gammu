@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.28.95\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-01-03 10:37+0100\n"
+"POT-Creation-Date: 2011-01-03 14:29+0100\n"
 "PO-Revision-Date: 2011-01-03 10:39+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -1493,51 +1493,62 @@ msgstr "Neznámé číslo"
 msgid "ERROR: unknown memory type (\"%s\")\n"
 msgstr "CHYBA: neznámý typ paměti (\"%s\")\n"
 
-#: gammu-detect/main.c:49
+#: gammu-detect/main.c:55
 msgid "Show debugging output for detecting devices."
 msgstr "Zobrazí ladicí výstup při detekci zařízení."
 
-#: gammu-detect/main.c:50
-msgid "Show version information."
-msgstr "Zobrazí verzi programu."
+# type: Plain text
+#: gammu-detect/main.c:56
+#, fuzzy
+msgid "Show version information and compiled in features."
+msgstr "Zobrazí informace o verzi a zakompilované funkcionalitě."
 
-#: gammu-detect/main.c:52
+#: gammu-detect/main.c:58
 msgid "Disables scanning of udev."
 msgstr "Vypne prohledávání udevu."
 
-#: gammu-detect/main.c:55
+#: gammu-detect/main.c:61
 msgid "Disables scanning using Bluez."
 msgstr "Vypne prohledávání bluetooth pomocí Bluez."
 
-#: gammu-detect/main.c:62
+#: gammu-detect/main.c:64
+#, fuzzy
+msgid "Disables scanning of Windows serial ports."
+msgstr "Vypne prohledávání udevu."
+
+#: gammu-detect/main.c:71
 #, c-format
 msgid "Gammu-detect version %s"
 msgstr "Gammu-detect verze %s"
 
-#: gammu-detect/main.c:64
+#: gammu-detect/main.c:73
 #, c-format
 msgid "Built %s on %s using %s"
 msgstr "Zkompilováno dne %s v %s za použití %s"
 
-#: gammu-detect/main.c:67 gammu/gammu.c:114
+#: gammu-detect/main.c:76 gammu/gammu.c:114
 msgid "Compiled in features:"
 msgstr "Zakompilované vlastnosti:"
 
-#: gammu-detect/main.c:69
+#: gammu-detect/main.c:78
 msgid "udev probing"
 msgstr "prohledávání udevu"
 
-#: gammu-detect/main.c:72
+#: gammu-detect/main.c:81
 msgid "Bluez probing"
 msgstr "prohledávání Bluez"
 
-#: gammu-detect/main.c:75
+#: gammu-detect/main.c:84
+msgid "Windows serial prot probing"
+msgstr ""
+
+#: gammu-detect/main.c:87
 msgid ""
 "Copyright (C) 2010 - 2011 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
 "Copyright (C) 2010 - 2011 Michal Čihař <michal@cihar.com> a další autoři."
 
-#: gammu-detect/main.c:77 gammu/gammu.c:345
+#: gammu-detect/main.c:89 gammu/gammu.c:345
 msgid ""
 "License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
 "GPL/2.0/>."
@@ -1546,22 +1557,22 @@ msgstr ""
 ">."
 
 # type: Plain text
-#: gammu-detect/main.c:78 gammu/gammu.c:347
+#: gammu-detect/main.c:90 gammu/gammu.c:347
 msgid "This is free software: you are free to change and redistribute it."
 msgstr ""
 "Tento program je svobodný software: můžete jej volně šířit a modifikovat."
 
 # type: Plain text
-#: gammu-detect/main.c:79 gammu/gammu.c:349
+#: gammu-detect/main.c:91 gammu/gammu.c:349
 msgid "There is NO WARRANTY, to the extent permitted by law."
 msgstr "Není poskytována ŽÁDNÁ ZÁRUKA, a to v míře povolené platným zákonem."
 
-#: gammu-detect/main.c:81 gammu/gammu.c:353
+#: gammu-detect/main.c:93 gammu/gammu.c:353
 msgid "Check <http://wammu.eu/gammu/> for updates."
 msgstr ""
 "Podívejte se na <http://wammu.eu/gammu/> pro infromace o aktuální verzi."
 
-#: gammu-detect/main.c:145
+#: gammu-detect/main.c:157
 #, c-format
 msgid "option parsing failed: %s\n"
 msgstr "selhalo zpracování parametrů: %s\n"
@@ -1603,7 +1614,7 @@ msgstr "Jméno zařízení:"
 msgid "Properties:"
 msgstr "Vlastnosti:"
 
-#: gammu-detect/udev.c:170
+#: gammu-detect/udev.c:170 gammu-detect/win32-serial.c:44
 #, c-format
 msgid "Phone on serial port %s"
 msgstr "Telefon na sériovém portu %s"
@@ -4314,6 +4325,9 @@ msgstr "Varování"
 #: helper/printing.c:50
 msgid "Information"
 msgstr "Informace"
+
+#~ msgid "Show version information."
+#~ msgstr "Zobrazí verzi programu."
 
 #, fuzzy
 #~ msgid "Name:     %s"
