@@ -32,7 +32,11 @@ void GetAllMemory(int argc UNUSED, char *argv[])
 
 	GSM_Init(TRUE);
 
+#ifdef GSM_ENABLE_BACKUP
 	error = ReadPhonebook(NULL, MemoryType, NULL, 0, PrintMemoryEntryLocation, FALSE);
+#else
+	error = ERR_DISABLED;
+#endif
 	Print_Error(error);
 
  	if (ringtones_info.Ringtone) {
