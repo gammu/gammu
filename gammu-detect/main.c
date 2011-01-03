@@ -43,9 +43,11 @@ gint no_udev = 0;
 #ifdef BLUEZ_FOUND
 gint no_bluez = 0;
 #endif
+gint show_version = 0;
 
 static GOptionEntry entries[] = {
 	{"debug", 'd', 0, G_OPTION_ARG_NONE, &debug, N_("Show debugging output for detecting devices."), NULL},
+	{"version", 'v', 0, G_OPTION_ARG_NONE, &show_version, N_("Show version information."), NULL},
 #ifdef GUDEV_FOUND
 	{"no-udev", 'u', 0, G_OPTION_ARG_NONE, &no_udev, N_("Disables scanning of udev."), NULL},
 #endif
@@ -54,6 +56,29 @@ static GOptionEntry entries[] = {
 #endif
 	{NULL, 0, 0, G_OPTION_ARG_NONE, NULL, "", NULL}
 };
+
+void print_version(void)
+{
+	printf(_("Gammu-detect version %s\n"), GAMMU_VERSION);
+	printf(_("Built %s on %s using %s\n"), __TIME__, __DATE__, GetCompiler());
+	printf("\n");
+	printf(_("Compiled in features:\n"));
+#ifdef GUDEV_FOUND
+	printf("  - %s\n", _("udev probing"));
+#endif
+#ifdef BLUEZ_FOUND
+	printf("  - %s\n", _("Bluez probing"));
+#endif
+	printf("\n");
+	printf(_("Copyright (C) 2010 - 2011 Michal Cihar <michal@cihar.com> and other authors.\n"));
+	printf("\n");
+	printf(_("License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/GPL/2.0/>.\n"));
+	printf(_("This is free software: you are free to change and redistribute it.\n"));
+	printf(_("There is NO WARRANTY, to the extent permitted by law.\n"));
+	printf("\n");
+	printf(_("Check <http://wammu.eu/gammu/> for updates.\n"));
+	printf("\n");
+}
 
 void print_config(const gchar *device, const gchar *name, const gchar *connection)
 {
@@ -117,6 +142,11 @@ int main(int argc, char *argv[])
 	if (!g_option_context_parse(context, &argc, &argv, &error)) {
 		g_printerr(_("option parsing failed: %s\n"), error->message);
 		exit(1);
+	}
+
+	if (show_version) {
+		print_version();
+		return 0;
 	}
 
 #ifdef GUDEV_FOUND
