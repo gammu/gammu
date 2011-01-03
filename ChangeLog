@@ -24,6 +24,7 @@ ChangeLog
 [-] * Fix decoding of SMS without date on DCT4 phones (bug #1368).
 [+] * Added gammu-detect tool to detect available devices on system.
 [-] * Fixed parsing of Philips reply to SPBR (bug #1366).
+[-] * Fixed testsuite not to depend on system timezone.
     
 20101227 - 1.28.94
 
