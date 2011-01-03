@@ -76,20 +76,21 @@ Specific for DBI:
 .UNINDENT
 .SH SQL QUERIES
 .sp
-Almost all queries are configurable. You can edit it in \fB[sql]\fP section. There are variables
-used in SQL queries. We can separate it to three groups:
+Almost all queries are configurable. You can edit them in
+\fB[sql]\fP section. There are several variables used in SQL
+queries. We can separate them into three groups:
 .INDENT 0.0
 .IP \(bu 2
 .
-phone specific, which can be used in every query
+phone specific, which can be used in every query, see \fI\%Phone Specific Parameters\fP
 .IP \(bu 2
 .
-SMS specific, which can be used in queries which works with SMS messages
+SMS specific, which can be used in queries which works with SMS messages, see \fI\%SMS Specific Parameters\fP
 .IP \(bu 2
 .
-query specific, which are numeric and are specific only for a few queries
+query specific, which are numeric and are specific only for given query (or set of queries), see \fI\%Configurable queries\fP
 .UNINDENT
-.SS Global Parameters
+.SS Phone Specific Parameters
 .TS
 center;
 |l|l|.
@@ -103,13 +104,13 @@ _
 T{
 \fB%I\fP
 T}	T{
-provides IMEI of phone
+IMEI of phone
 T}
 _
 T{
 \fB%P\fP
 T}	T{
-provides PHONE ID (hostname)
+PHONE ID (hostname)
 T}
 _
 T{
@@ -133,20 +134,19 @@ _
 T{
 \fB%R\fP
 T}	T{
-in received sms (insert to inbox, delivery notifications)
-it provides sender number, else it provides destination number
+remote number [1]
 T}
 _
 T{
 \fB%C\fP
 T}	T{
-provides delivery datetime
+delivery datetime
 T}
 _
 T{
 \fB%e\fP
 T}	T{
-provides delivery status on receiving or status error on sending
+delivery status on receiving or status error on sending
 T}
 _
 T{
@@ -210,6 +210,9 @@ relative validity
 T}
 _
 .TE
+.IP [1] 5
+.
+Sender number for received messages (insert to inbox or delivery notifications), destination otherwise.
 .SH CONFIGURABLE QUERIES
 .sp
 All configurable queries can be set in \fB[sql]\fP section. Sequence of rows in selects are mandatory.

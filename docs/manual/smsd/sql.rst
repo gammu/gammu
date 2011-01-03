@@ -29,25 +29,30 @@ Specific for DBI:
 SQL Queries
 -----------
 
-Almost all queries are configurable. You can edit it in :config:section:`[sql]` section. There are variables
-used in SQL queries. We can separate it to three groups:
+Almost all queries are configurable. You can edit them in
+:config:section:`[sql]` section. There are several variables used in SQL
+queries. We can separate them into three groups:
 
-* phone specific, which can be used in every query
-* SMS specific, which can be used in queries which works with SMS messages
-* query specific, which are numeric and are specific only for a few queries
+* phone specific, which can be used in every query, see :ref:`Phone Specific Parameters`
+* SMS specific, which can be used in queries which works with SMS messages, see :ref:`SMS Specific Parameters`
+* query specific, which are numeric and are specific only for given query (or set of queries), see :ref:`Configurable queries`
 
-Global Parameters 
-+++++++++++++++++
+.. _Phone Specific Parameters:
+
+Phone Specific Parameters 
++++++++++++++++++++++++++
 
 +-----------+------------------------------------------------------------------+
 | Parameter |    Description                                                   |
 +===========+==================================================================+
-| ``%I``    | provides IMEI of phone                                           |
+| ``%I``    | IMEI of phone                                                    |
 +-----------+------------------------------------------------------------------+
-| ``%P``    | provides PHONE ID (hostname)                                     |
+| ``%P``    | PHONE ID (hostname)                                              |
 +-----------+------------------------------------------------------------------+
 | ``%N``    | client name (eg. Gammu 1.12.3)                                   |
 +-----------+------------------------------------------------------------------+
+
+.. _SMS Specific Parameters:
 
 SMS Specific Parameters
 +++++++++++++++++++++++
@@ -55,12 +60,11 @@ SMS Specific Parameters
 +-----------+------------------------------------------------------------------+
 | Parameter |    Description                                                   |
 +===========+==================================================================+
-| ``%R``    | in received sms (insert to inbox, delivery notifications)        |
-|           | it provides sender number, else it provides destination number   |
+| ``%R``    | remote number [#f1]_                                             |
 +-----------+------------------------------------------------------------------+
-| ``%C``    | provides delivery datetime                                       |
+| ``%C``    | delivery datetime                                                |
 +-----------+------------------------------------------------------------------+
-| ``%e``    | provides delivery status on receiving or status error on sending |
+| ``%e``    | delivery status on receiving or status error on sending          |
 +-----------+------------------------------------------------------------------+
 | ``%t``    | message reference                                                |
 +-----------+------------------------------------------------------------------+
@@ -83,7 +87,9 @@ SMS Specific Parameters
 | ``%V``    | relative validity                                                |
 +-----------+------------------------------------------------------------------+
 
-.. _configurable-queries:
+.. [#f1] Sender number for received messages (insert to inbox or delivery notifications), destination otherwise.
+
+.. _Configurable queries:
 
 Configurable queries
 --------------------

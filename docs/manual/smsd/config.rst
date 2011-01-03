@@ -48,7 +48,7 @@ configures how much messages gammu emits.
 
     Configure SQL queries used by :ref:`gammu-smsd-sql`, you usually don't have to modify them.
 
-    .. seealso:: :ref:`configurable-queries`
+    .. seealso:: :ref:`Configurable queries`
 
 General parameters of SMS daemon
 --------------------------------
