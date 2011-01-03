@@ -12,7 +12,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *
- * Copyright (c) 2010 Michal Cihar <michal@cihar.com>
+ * Copyright (c) 2010 - 2011 Michal Cihar <michal@cihar.com>
  */
 
 #include <glib.h>
