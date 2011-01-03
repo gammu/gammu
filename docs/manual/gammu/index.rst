@@ -1115,11 +1115,11 @@ Backing up and restoring commands
     There are various backup formats supported and the backup format is guessed
     based on file extension:
 
-    * .lmb - Nokia backup, supports contacts, caller logos and startup logo.
-    * .vcs - vCalendar, supports calendar and todo.
-    * .vcf - vCard, supports contacts.
-    * .ldif - LDAP import, supports contacts.
-    * .ics - iCalendar, supports calendar and todo.
+    * ``.lmb`` - Nokia backup, supports contacts, caller logos and startup logo.
+    * ``.vcs`` - vCalendar, supports calendar and todo.
+    * ``.vcf`` - vCard, supports contacts.
+    * ``.ldif`` - LDAP import, supports contacts.
+    * ``.ics`` - iCalendar, supports calendar and todo.
     * Any other extension is Gammu backup file and it supports all data mentioned above, see :ref:`gammu-backup` for more details.
 
 .. option:: backupsms file [-yes|-all]
