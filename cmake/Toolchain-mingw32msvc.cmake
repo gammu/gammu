@@ -23,6 +23,7 @@ set(WIN_LIB_INTL libintl-8.dll)
 set(WIN_LIB_CURL libcurl-4.dll mgwz.dll)
 set(WIN_LIB_MYSQL libmysql.dll)
 set(WIN_LIB_PGSQL libpq.dll)
+set(WIN_LIB_GLIB libglib-2.0-0.dll libgobject-2.0-0.dll libiconv-2.dll libgthread-2.0-0.dll)
 
 # Disable pkg-config lookups
 set(PKG_CONFIG_EXECUTABLE /bin/false)
