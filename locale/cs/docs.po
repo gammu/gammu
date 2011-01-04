@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.28.95\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-04 07:35+0100\n"
-"PO-Revision-Date: 2011-01-04 07:43+0100\n"
+"PO-Revision-Date: 2011-01-04 10:24+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -113,6 +113,8 @@ msgid ""
 "See docs/manual/project/install.rst for installation guide or see chapter "
 "\"Compiling Gammu\" in The Gammu Manual."
 msgstr ""
+"Více informací o kompilaci nalezete v docs/manual-cs/project/install.rst "
+"nebo si přečtěte kapitolu \"Kompilace Gammu\" v Manuálu Gammu."
 
 # type: TP
 #. type: Plain text
@@ -202,15 +204,15 @@ msgstr ""
 # type: Plain text
 #. type: Attribute :ref:
 #: docs/manual/config/index.rst:26
-#, fuzzy, no-wrap
+#, no-wrap
 #| msgid "gammu-smsd(1) reads configuration from a config file. It's location can be specified on command line, otherwise default path /etc/gammu-smsdrc is used."
 msgid "`gammu` reads configuration from a config file. It's location is determined"
-msgstr "gammu-smsd(1) čte konfiguraci z konfiguračního souboru. Jeho umístění může být zadáno na příkazové řádce, jinak se použije /etc/gammu-smsdrc."
+msgstr "`gammu` čte konfiguraci z konfiguračního souboru. Jeho umístění"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:28
 msgid "on runtime, see above for search paths."
-msgstr ""
+msgstr "je vyhledáno při spuštění, vyhledávací cesty jsou uvedeny výše."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:31
@@ -361,66 +363,66 @@ msgstr "``fbus``           \n"
 # type: Plain text
 #. type: Plain text
 #: docs/manual/config/index.rst:59
-#, fuzzy, no-wrap
+#, no-wrap
 #| msgid "B<fbus> - serial FBUS connection"
 msgid "serial FBUS connection\n"
-msgstr "B<fbus> - sériové připojení protokolem FBUS"
+msgstr "sériové připojení protokolem FBUS\n"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:60
 #, no-wrap
 msgid "``dlr3``           \n"
-msgstr ""
+msgstr "``dlr3``           \n"
 
 # type: Plain text
 #. type: Plain text
 #: docs/manual/config/index.rst:61
-#, fuzzy, no-wrap
+#, no-wrap
 #| msgid "B<dlr3> - DLR-3 and compatible cables"
 msgid "DLR-3 and compatible cables\n"
-msgstr "B<dlr3> - DLR-3 a kompatibilní kabely"
+msgstr "DLR-3 a kompatibilní kabely\n"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:62
 #, no-wrap
 msgid "``dku2``           \n"
-msgstr ""
+msgstr "``dku2``           \n"
 
 # type: Plain text
 #. type: Plain text
 #: docs/manual/config/index.rst:63
-#, fuzzy, no-wrap
+#, no-wrap
 #| msgid "B<dku2> - DKU-2 and compatible cables"
 msgid "DKU-2 and compatible cables\n"
-msgstr "B<dku2> - DKU-2 a kompatibilní kabely"
+msgstr "DKU-2 a kompatibilní kabely\n"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:64
 #, no-wrap
 msgid "``dku5``           \n"
-msgstr ""
+msgstr "``dku5``           \n"
 
 # type: Plain text
 #. type: Plain text
 #: docs/manual/config/index.rst:65
-#, fuzzy, no-wrap
+#, no-wrap
 #| msgid "B<dku5> - DKU-5 and compatible cables"
 msgid "DKU-5 and compatible cables\n"
-msgstr "B<dku5> - DKU-5 a kompatibilní kabely"
+msgstr "DKU-5 a kompatibilní kabely\n"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:66
 #, no-wrap
 msgid "``mbus``           \n"
-msgstr ""
+msgstr "``mbus``           \n"
 
 # type: Plain text
 #. type: Plain text
 #: docs/manual/config/index.rst:67
-#, fuzzy, no-wrap
+#, no-wrap
 #| msgid "B<mbus> - serial MBUS connection"
 msgid "serial MBUS connection\n"
-msgstr "B<mbus> - sériové připojení protokolem MBUS"
+msgstr "sériové připojení protokolem MBUS\n"
 
 # type: Plain text
 #. type: Plain text
@@ -451,15 +453,15 @@ msgstr ""
 #: docs/manual/config/index.rst:75
 #, no-wrap
 msgid "``at``             \n"
-msgstr ""
+msgstr "``at``             \n"
 
 # type: Plain text
 #. type: Plain text
 #: docs/manual/config/index.rst:76
-#, fuzzy, no-wrap
+#, no-wrap
 #| msgid "B<at> - generic AT commands based connection"
 msgid "generic AT commands based connection\n"
-msgstr "B<at> - obecné připojení používající AT příkazy"
+msgstr "obecné připojení používající AT příkazy\n"
 
 # type: Plain text
 #. type: Plain text
@@ -485,57 +487,57 @@ msgstr "Pro připojení pomocí IrDA použijte jednu z následujících možnost
 #: docs/manual/config/index.rst:83
 #, no-wrap
 msgid "``irdaphonet``     \n"
-msgstr ""
+msgstr "``irdaphonet``     \n"
 
 # type: Plain text
 #. type: Plain text
 #: docs/manual/config/index.rst:84 docs/manual/config/index.rst:95
-#, fuzzy, no-wrap
+#, no-wrap
 #| msgid "B<irdaphonet> - Phonet connection for Nokia phones."
 msgid "Phonet connection for Nokia phones.\n"
-msgstr "B<irdaphonet> - protokol Phonet používaný telefony Nokia"
+msgstr "protokol Phonet používaný telefony Nokia\n"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:85
 #, no-wrap
 msgid "``irdaat``         \n"
-msgstr ""
+msgstr "``irdaat``         \n"
 
 # type: Plain text
 #. type: Plain text
 #: docs/manual/config/index.rst:86
-#, fuzzy, no-wrap
+#, no-wrap
 #| msgid "B<irdaat> - AT commands connection for most of phones (this is not supported on Linux)."
 msgid "AT commands connection for most of phones (this is not supported on Linux).\n"
-msgstr "B<irdaat> - AT příkazy pro připojení k většině telefonů (toto není podporované na Linuxu)."
+msgstr "AT příkazy pro připojení k většině telefonů (toto není podporované na Linuxu).\n"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:87
 #, no-wrap
 msgid "``irdaobex``       \n"
-msgstr ""
+msgstr "``irdaobex``       \n"
 
 # type: Plain text
 #. type: Plain text
 #: docs/manual/config/index.rst:88 docs/manual/config/index.rst:99
-#, fuzzy, no-wrap
+#, no-wrap
 #| msgid "B<irdaobex> - OBEX (IrMC or file transfer) connection for most of phones."
 msgid "OBEX (IrMC or file transfer) connection for most of phones.\n"
-msgstr "B<irdaobex> - připojení protokolem OBEX (IrMC nebo přenos souborů), použitelné pro většinu telefonů."
+msgstr "připojení protokolem OBEX (IrMC nebo přenos souborů), použitelné pro většinu telefonů.\n"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:89
 #, no-wrap
 msgid "``irdagnapbus``    \n"
-msgstr ""
+msgstr "``irdagnapbus``    \n"
 
 # type: Plain text
 #. type: Plain text
 #: docs/manual/config/index.rst:90 docs/manual/config/index.rst:101
-#, fuzzy, no-wrap
+#, no-wrap
 #| msgid "B<irdagnapbus> - GNapplet based connection for Symbian phones"
 msgid "GNapplet based connection for Symbian phones\n"
-msgstr "B<irdagnapbus> - připojení k GNappletu běžícím na telefonech se Symbianem."
+msgstr "připojení k GNappletu běžícím na telefonech se Symbianem.\n"
 
 # type: Plain text
 #. type: Plain text
@@ -548,41 +550,40 @@ msgstr ""
 #: docs/manual/config/index.rst:94
 #, no-wrap
 msgid "``bluephonet``     \n"
-msgstr ""
+msgstr "``bluephonet``     \n"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:96
 #, no-wrap
 msgid "``blueat``         \n"
-msgstr ""
+msgstr "``blueat``         \n"
 
 # type: Plain text
 #. type: Plain text
 #: docs/manual/config/index.rst:97
-#, fuzzy, no-wrap
+#, no-wrap
 #| msgid "B<blueat> - AT commands connection for most of phones."
 msgid "AT commands connection for most of phones.\n"
-msgstr "B<blueat> - AT příkazy pro připojení k většině telefonů."
+msgstr "AT příkazy pro připojení k většině telefonů.\n"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:98
 #, no-wrap
 msgid "``blueobex``       \n"
-msgstr ""
+msgstr "``blueobex``       \n"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:100
 #, no-wrap
 msgid "``bluerfgnapbus``  \n"
-msgstr ""
+msgstr "``bluerfgnapbus``  \n"
 
 # type: TP
 #. type: Plain text
 #: docs/manual/config/index.rst:103
-#, fuzzy
 #| msgid "B<Device>"
 msgid "Device"
-msgstr "B<Device>"
+msgstr "Device"
 
 #. type: Labeled list
 #: docs/manual/config/index.rst:104 docs/manual/smsd/config.rst:67
@@ -592,15 +593,14 @@ msgstr "B<Device>"
 #: docs/manual/utils/gammu-detect.rst:7
 #, no-wrap
 msgid ".. versionadded"
-msgstr ""
+msgstr ".. versionadded"
 
 # type: TH
 #. type: Plain text
 #: docs/manual/config/index.rst:105 docs/manual/config/index.rst:165
-#, fuzzy
 #| msgid "Gammu 1.27.96"
 msgid "1.27.95"
-msgstr "Gammu 1.27.96"
+msgstr "1.27.95"
 
 # type: Plain text
 #. type: Plain text
@@ -613,7 +613,6 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/manual/config/index.rst:113
-#, fuzzy
 #| msgid ""
 #| "For cables or emulated serial ports, you enter device name (for example /"
 #| "dev/ttyS0, /dev/ttyACM0, /dev/ircomm0, /dev/rfcomm0 on Linux, /dev/cuad0 "
@@ -627,11 +626,11 @@ msgid ""
 "are DKU-2 and DKU-5 cables on Windows, where the device is automatically "
 "detected from driver information and this parameters is ignored."
 msgstr ""
-"Pro kabely nebo emulovaný sériový port zadejte jméno zařízení (například /"
-"dev/ttyS0, /dev/ttyACM0, /dev/ircomm0, /dev/rfcomm0 na Linuxu, /dev/cuad0 na "
-"FreeBSD nebo COM1: na Windows). Speciální výjjímkou jsou DKU-2 a DKU-5 "
-"kabely na Windows, kde je zařízení automaticky zjištěno z informací ovladače "
-"a tento parametr je ignorován."
+"Pro **kabely** nebo emulovaný sériový port zadejte jméno zařízení (například "
+"``/dev/ttyS0``, ``/dev/ttyACM0``, ``/dev/ircomm0``, ``/dev/rfcomm0`` na "
+"Linuxu, ``/dev/cuad0`` na FreeBSD nebo ``COM1:`` na Windows). Speciální "
+"výjjímkou jsou DKU-2 a DKU-5 kabely na Windows, kde je zařízení automaticky "
+"zjištěno z informací ovladače a tento parametr je ignorován."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:116
