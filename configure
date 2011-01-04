@@ -27,6 +27,7 @@ Usage: ./configure [options]
 --prefix=<path>     installation prefix
 --enable-shared     enables shared build
 --enable-debug      enables debug build
+--enable-tiger      enables Mac OS X 10.4 (Tiger) build
 --enable-backup     enable backup support
 --enable-win32      enable mingw crosscomilation
 --enable-protection enable compile time protections
@@ -54,6 +55,7 @@ CMAKE_CROSS=
 CMAKE_PROTECTION=
 CMAKE_PYTHON=
 CMAKE_GNAP=
+CMAKE_TIGER=
 
 # process command line
 while [ "$#" -gt 0 ] ; do
@@ -100,6 +102,9 @@ while [ "$#" -gt 0 ] ; do
         --without-gnapplet)
             CMAKE_GNAP="-DINSTALL_GNAPPLET=OFF"
             ;;
+        --enable-tiger)
+            CMAKE_TIGER="-DENABLE_TIGER=ON"
+            ;;
         --build=*)
             ;;
         --disable-dependency-tracking)
@@ -136,4 +141,4 @@ fi
 cd "$BUILD_DIR"
 
 # invoke cmake to do configuration
-cmake $SOURCE_DIR $CMAKE_PREFIX $CMAKE_SHARED $CMAKE_DEBUG $CMAKE_BACKUP $CMAKE_CROSS $CMAKE_PROTECTION $CMAKE_PYTHON $CMAKE_GNAP
+cmake $SOURCE_DIR $CMAKE_PREFIX $CMAKE_SHARED $CMAKE_DEBUG $CMAKE_BACKUP $CMAKE_CROSS $CMAKE_PROTECTION $CMAKE_PYTHON $CMAKE_GNAP $CMAKE_TIGER
