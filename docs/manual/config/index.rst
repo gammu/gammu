@@ -107,7 +107,7 @@ Device connection parameters
 
     For **cables** or emulated serial ports, you enter device name (for example
     ``/dev/ttyS0``, ``/dev/ttyACM0``, ``/dev/ircomm0``, ``/dev/rfcomm0`` on Linux,
-    ``/dev/cuad0`` on FreeBSD or COM1: on Windows). The special exception are
+    ``/dev/cuad0`` on FreeBSD or ``COM1:`` on Windows). The special exception are
     DKU-2 and DKU-5 cables on Windows, where the device is automatically detected
     from driver information and this parameters is ignored.
 
