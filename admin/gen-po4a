@@ -1,0 +1,3 @@
+#!/bin/sh
+
+find docs/manual/ -name *.rst | while read f; do echo "[type: text] $f \$lang:docs/manual-\$lang/`echo $f|sed 's@docs/manual/@@'`" ; done
