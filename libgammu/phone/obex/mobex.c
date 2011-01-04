@@ -66,7 +66,7 @@ GSM_Error MOBEX_GetStatus(GSM_StateMachine *s, const char *path, int *free_recor
 
 	total = (buffer[0] << 8) + buffer[1];
 
-	*used = (buffer[1] << 8) + buffer[3];
+	*used = (buffer[2] << 8) + buffer[3];
 	*free_records = total - *used;
 
 	free(buffer);
@@ -103,8 +103,8 @@ GSM_Error MOBEX_UpdateEntry(GSM_StateMachine *s, const char *path, const int loc
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 	char appdata[] = {'\x01', 0, 0};
 
-	appdata[1] = (location  && 0xff00) >> 8;
-	appdata[2] = (location  && 0xff);
+	appdata[1] = (location  & 0xff00) >> 8;
+	appdata[2] = (location  & 0xff);
 
 	Priv->m_obex_appdata = appdata;
 	Priv->m_obex_appdata_len = sizeof(appdata);
@@ -127,8 +127,8 @@ GSM_Error MOBEX_GetEntry(GSM_StateMachine *s, const char *path, const int locati
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 	char appdata[] = {'\x01', 0, 0};
 
-	appdata[1] = (location  && 0xff00) >> 8;
-	appdata[2] = (location  && 0xff);
+	appdata[1] = (location  & 0xff00) >> 8;
+	appdata[2] = (location  & 0xff);
 
 	Priv->m_obex_appdata = appdata;
 	Priv->m_obex_appdata_len = sizeof(appdata);
@@ -196,7 +196,7 @@ GSM_Error MOBEX_GetNextEntry(GSM_StateMachine *s, const char *path, const gboole
 {
 	GSM_Error error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
-	char appdata[] = {'\x01', 0, 0, '\x0a'};
+	char appdata[] = {'\x01', 0, 0};
 
 	if (start) {
 		*nextid = 0;
@@ -205,22 +205,28 @@ GSM_Error MOBEX_GetNextEntry(GSM_StateMachine *s, const char *path, const gboole
 		*data = NULL;
 		*pos = 0;
 		*size = 0;
-	} else {
-		*nextid += 1;
 	}
 
 	/* Increment to next */
 	if (*data != NULL) {
-		*pos += (*data[*pos + 2] << 8) + *data[*pos + 3];
+		*pos += ((*data)[*pos + 2] << 8) + (*data)[*pos + 3];
+		/* To take in account the space used by the ID and the size 
+		 * of the record */
+		*pos += 4;
 	}
 
 	/* Need to fetch new data */
 	if (*pos >= *size) {
+		/* Increment mobex fetch ID only if we really fetch informations */
+		if (! start) {
+			(*nextid)++;
+		}
 		if (*nexterror == 0) {
 			return ERR_EMPTY;
 		}
-		appdata[1] = (*nextid && 0xff00) >> 8;
-		appdata[2] = (*nextid && 0xff);
+		appdata[1] = (*nextid & 0xff00) >> 8;
+		appdata[2] = (*nextid & 0xff);
+		*pos = 0;
 
 		Priv->m_obex_appdata = appdata;
 		Priv->m_obex_appdata_len = sizeof(appdata);
@@ -244,7 +250,7 @@ GSM_Error MOBEX_GetNextEntry(GSM_StateMachine *s, const char *path, const gboole
 
 	/* Return values */
 	*entry = *data + *pos + 4;
-	*location = (*data[*pos + 0] << 8) + *data[*pos + 1];
+	*location = ((*data)[*pos + 0] << 8) + (*data)[*pos + 1];
 
 	return ERR_NONE;
 }
@@ -257,12 +263,26 @@ GSM_Error MOBEX_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry, gbool
 	size_t pos = 0;
 
 
-	error = MOBEX_GetNextEntry(s, "m-obex/contacts/load", start, &Priv->m_obex_contacts_nextid, &Priv->m_obex_contacts_nexterror, &Priv->m_obex_contacts_buffer, &Priv->m_obex_contacts_buffer_pos, &Priv->m_obex_contacts_buffer_size, &data, &(Entry->Location));
+	error = MOBEX_GetNextEntry(s, "m-obex/contacts/load",
+			start, &Priv->m_obex_contacts_nextid, &Priv->m_obex_contacts_nexterror,
+			&Priv->m_obex_contacts_buffer, &Priv->m_obex_contacts_buffer_pos,
+			&Priv->m_obex_contacts_buffer_size, &data, &(Entry->Location));
+
+	smprintf(s, "Error: %d\n", error);
 	if (error != ERR_NONE) {
 		return error;
 	}
 
 	error = GSM_DecodeVCARD(&(s->di), data, &pos, Entry, SonyEricsson_VCard21_Phone);
+	/* If we have room in the buffer and next chars are \r and \n then
+	 * skip them they have been left by the VCARD parsing
+	 */
+
+	if ((pos < (Priv->m_obex_contacts_buffer_size + 2)) &&
+				data[pos] == 0x0D && data[pos + 1] == 0x0A) {
+		pos += 2;
+	}
+
 	if (error != ERR_NONE) {
 		return error;
 	}

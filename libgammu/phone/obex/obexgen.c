@@ -914,7 +914,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, gb
 		/* connection ID block */
 		req[Current++] = 0xCB; /* ID */
 		req[Current++] = 0x00; req[Current++] = 0x00;
-		req[Current++] = 0x00; req[Current++] = 0x01;
+		req[Current++] = 0x00; req[Current++] = 0x10;
 	}
 
 	if (File->Used == 0x00) {
@@ -1321,7 +1321,7 @@ GSM_Error OBEXGEN_GetBinaryFile(GSM_StateMachine *s, const char *FileName, unsig
 	if (error != ERR_NONE) return error;
 
 	/* Return data we got */
-	smprintf(s, "Got %d data\n", *len);
+	smprintf(s, "Got %d bytes of data\n", *len);
 	*Buffer = (unsigned char *)realloc(*Buffer, *len + 1);
 	if (*Buffer == NULL) {
 		return ERR_MOREMEMORY;
@@ -1928,6 +1928,7 @@ GSM_Error OBEXGEN_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry, gbo
 		if (Priv->ReadPhonebook == Priv->PbCount) {
 			return ERR_EMPTY;
 		}
+		smprintf(s, "Here ?\n");
 
 		error = OBEXGEN_GetMemory(s, Entry);
 		if (error == ERR_NONE) {
