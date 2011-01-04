@@ -179,7 +179,7 @@ Device connection parameters
     ``obexirmc`` 
         force using of IrMC service (contacts, calendar and notes support)
     ``obexnone`` 
-        none service chosen, this has only limited use for sending file (``sendfile`` command)
+        none service chosen, this has only limited use for sending file (:option:`gammu sendfile` command)
     ``mobex``
         m-obex service for Samsung phones
 
