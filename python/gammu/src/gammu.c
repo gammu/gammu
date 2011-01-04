@@ -18,8 +18,7 @@
  */
 
 /* Python-gammu configuration */
-
-/* Python includes */
+#include <strings.h>
 #include <Python.h>
 
 /* Gammu includes */

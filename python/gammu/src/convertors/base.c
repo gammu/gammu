@@ -19,7 +19,7 @@
  */
 
 /* Basic getters from Python objects */
-
+#include <strings.h>
 #include "convertors.h"
 #include "misc.h"
 
