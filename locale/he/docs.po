@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.28.95\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-01-04 07:25+0100\n"
+"POT-Creation-Date: 2011-01-04 10:40+0100\n"
 "PO-Revision-Date: 2010-02-20 13:09+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: none\n"
@@ -518,9 +518,10 @@ msgstr ""
 msgid ""
 "For **cables** or emulated serial ports, you enter device name (for example "
 "``/dev/ttyS0``, ``/dev/ttyACM0``, ``/dev/ircomm0``, ``/dev/rfcomm0`` on "
-"Linux, ``/dev/cuad0`` on FreeBSD or COM1: on Windows). The special exception "
-"are DKU-2 and DKU-5 cables on Windows, where the device is automatically "
-"detected from driver information and this parameters is ignored."
+"Linux, ``/dev/cuad0`` on FreeBSD or ``COM1:`` on Windows). The special "
+"exception are DKU-2 and DKU-5 cables on Windows, where the device is "
+"automatically detected from driver information and this parameters is "
+"ignored."
 msgstr ""
 
 #. type: Plain text
@@ -810,8 +811,8 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/config/index.rst:183
 msgid ""
-"none service chosen, this has only limited use for sending file "
-"(``sendfile`` command)"
+"none service chosen, this has only limited use for sending file (:option:"
+"`gammu sendfile` command)"
 msgstr ""
 
 #. type: Plain text
@@ -1146,9 +1147,9 @@ msgstr ""
 #: docs/manual/config/index.rst:317
 msgid ""
 "Gammu can be configured for multiple phones (however only one connection is "
-"used at one time, you can choose which one to use with ``--section`` "
-"parameter). Configuration for phones on three serial ports would look like "
-"following:"
+"used at one time, you can choose which one to use with :option:`gammu --"
+"section` parameter). Configuration for phones on three serial ports would "
+"look like following:"
 msgstr ""
 
 #. type: Plain text
