@@ -202,6 +202,7 @@ GSM_Error ReadPhonebook(GSM_MemoryEntry **Phonebook, GSM_MemoryType MemoryType, 
 {
 	GSM_MemoryStatus MemStatus;
 	GSM_MemoryEntry Pbk;
+	memset(&Pbk, 0, sizeof(GSM_MemoryEntry));
 	GSM_Error error;
 	gboolean UseNext = FALSE;
 	int i, used;
