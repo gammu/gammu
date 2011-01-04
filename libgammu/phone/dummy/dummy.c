@@ -59,14 +59,14 @@
 
 GSM_Error DUMMY_Error(GSM_StateMachine *s, const char *message)
 {
-	int i;
-	i = errno;
+	int tmp_errno;
+	tmp_errno = errno;
 	GSM_OSErrorInfo(s, message);
-	if (i == ENOENT) {
+	if (tmp_errno == ENOENT) {
 		return ERR_EMPTY;
-	} else if (i == EACCES) {
+	} else if (tmp_errno == EACCES) {
 		return ERR_PERMISSION;
-	} else if (i == EEXIST) {
+	} else if (tmp_errno == EEXIST) {
 		return ERR_FILEALREADYEXIST;
 	} else {
 		return ERR_UNKNOWN;
