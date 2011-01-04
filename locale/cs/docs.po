@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.28.95\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-04 07:35+0100\n"
-"PO-Revision-Date: 2011-01-04 07:35+0100\n"
+"PO-Revision-Date: 2011-01-04 07:43+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -67,7 +67,7 @@ msgstr "Více informací"
 #. type: Plain text
 #: README:20
 msgid "You can find more information on <http://wammu.eu/gammu/>."
-msgstr ""
+msgstr "Více informací naleznete na <http://cs.wammu.eu/gammu/>."
 
 #. type: Plain text
 #: README:24
@@ -81,7 +81,7 @@ msgstr ""
 #: README:27
 #, no-wrap
 msgid "Feedback and bug reports"
-msgstr ""
+msgstr "Zpětná vazba a hlášení chyb"
 
 #. type: Plain text
 #: README:31
@@ -117,18 +117,15 @@ msgstr ""
 # type: TP
 #. type: Plain text
 #: docs/manual/config/index.rst:2
-#, fuzzy
-#| msgid "I<~/.gammurc>"
 msgid "_gammurc:"
-msgstr "I<~/.gammurc>"
+msgstr "_gammurc:"
 
 # type: TH
 #. type: Title =
 #: docs/manual/config/index.rst:4
-#, fuzzy, no-wrap
-#| msgid "Gammu configurator 0.3"
+#, no-wrap
 msgid "Gammu Configuration File"
-msgstr "Gammu configurator 0.3"
+msgstr "Konfigurační soubor Gammu"
 
 #. type: Title -
 #: docs/manual/config/index.rst:7 docs/manual/smsd/inject.rst:9
@@ -137,16 +134,16 @@ msgstr "Gammu configurator 0.3"
 #: docs/manual/utils/jadmaker.rst:9 docs/manual/utils/gammu-detect.rst:12
 #, no-wrap
 msgid "Synopsis"
-msgstr ""
+msgstr "Syntaxe"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:11
-#, fuzzy
-#| msgid "On Linux, MacOS X, BSD and other Unix-like systems:"
 msgid ""
 "On Linux, MacOS X, BSD and other Unix-like systems, the config file is "
 "searched in following order:"
-msgstr "Na Linuxu, MacOS X, BSD a dalších systéme Unixového typu:"
+msgstr ""
+"Na Linuxu, MacOS X, BSD a dalších systéme Unixového typu je soubor "
+"vyhledáván v následujícím pořadí:"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:13
@@ -193,10 +190,9 @@ msgstr "``.\\gammurc``"
 #: docs/manual/smsd/monitor.rst:16 docs/manual/smsd/smsd.rst:17
 #: docs/manual/gammu/index.rst:20 docs/manual/utils/gammu-config.rst:16
 #: docs/manual/utils/jadmaker.rst:16 docs/manual/utils/gammu-detect.rst:19
-#, fuzzy, no-wrap
-#| msgid "Description of tables"
+#, no-wrap
 msgid "Description"
-msgstr "Popis tabulek"
+msgstr "Popis"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:26
