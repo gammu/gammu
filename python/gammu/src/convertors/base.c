@@ -19,9 +19,11 @@
  */
 
 /* Basic getters from Python objects */
-#include <strings.h>
 #include "convertors.h"
 #include "misc.h"
+
+/* Strings */
+#include <strings.h>
 
 gboolean BoolFromPython(PyObject * o, const char *key)
 {

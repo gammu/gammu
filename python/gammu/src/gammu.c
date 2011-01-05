@@ -18,7 +18,6 @@
  */
 
 /* Python-gammu configuration */
-#include <strings.h>
 #include <Python.h>
 
 /* Gammu includes */
@@ -27,6 +26,9 @@
 
 /* Locales */
 #include <locale.h>
+
+/* Strings */
+#include <strings.h>
 
 /* For locking */
 #ifdef WITH_THREAD
