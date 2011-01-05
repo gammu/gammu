@@ -814,7 +814,7 @@ out:
 int GSM_PackSemiOctetNumber(const unsigned char *Number, unsigned char *Output, gboolean semioctet)
 {
 	unsigned char	format;
-	int		length, i;
+	int		length, i, skip = 0;
 	unsigned char    *buffer;
 
 	length = UnicodeLength(Number);
@@ -827,8 +827,16 @@ int GSM_PackSemiOctetNumber(const unsigned char *Number, unsigned char *Output, 
 	DecodeUnicode(Number, buffer);
 
 	/* Checking for format number */
-	if (buffer[0] == '+' || (buffer[0] == '0' && buffer[1] == '0')) {
+	if (buffer[0] == '+') {
 		format = NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN;
+		skip = 1;
+	} else if (buffer[0] == '0' && buffer[1] == '0') {
+		format = NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN;
+		skip = 2;
+	} else if (buffer[0] == '+' && buffer[1] == '0' && buffer[2] == '0') {
+		/* This is obviously wrong, but try to cope with that */
+		format = NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN;
+		skip = 3;
 	} else {
 		format = NUMBER_UNKNOWN_NUMBERING_PLAN_ISDN;
 	}
@@ -853,8 +861,8 @@ int GSM_PackSemiOctetNumber(const unsigned char *Number, unsigned char *Output, 
 		if (strlen(buffer)==7) length--;
 		break;
 	case NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN:
-		length--;
-		EncodeBCD (Output+1, buffer+1, length, TRUE);
+		length -= skip;
+		EncodeBCD (Output+1, buffer + skip, length, TRUE);
 		break;
 	default:
 		EncodeBCD (Output+1, buffer, length, TRUE);

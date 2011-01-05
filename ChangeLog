@@ -27,6 +27,8 @@ ChangeLog
 [-] * Fixed testsuite not to depend on system timezone.
 [-] * Check if phone is waiting for requested security code before
       entering.
+[-] * Fixup invalid international numbers with double prefix (+00) in
+      SMS (bug #1364).
     
 20101227 - 1.28.94
 
