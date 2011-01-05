@@ -674,6 +674,10 @@ typedef enum {
 	 * Disable GetNextSMS operations on the dummy phone.
 	 */
 	F_DISABLE_GETNEXTSMS,
+	/**
+	 * CMGL hangs, so should not be used.
+	 */
+	F_DISABLE_CMGL,
 
 	/**
 	 * Just marker of highest feature code, should not be used.

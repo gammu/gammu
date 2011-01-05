@@ -1032,6 +1032,10 @@ GSM_Error ATGEN_GetSMSList(GSM_StateMachine *s, gboolean first)
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 	int used = 0;
 
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_DISABLE_CMGL)) {
+		return ERR_NOTSUPPORTED;
+	}
+
 	/* Set mode of SMS */
 	error = ATGEN_GetSMSMode(s);
 

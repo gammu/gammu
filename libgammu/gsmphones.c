@@ -120,6 +120,7 @@ GSM_FeatureName AllFeatureNames[] = {
 	{"TSSPCSW", F_TSSPCSW},
 	{"DISABLE_GETNEXT", F_DISABLE_GETNEXT},
 	{"DISABLE_GETNEXTSMS", F_DISABLE_GETNEXTSMS},
+	{"DISABLE_CMGL", F_DISABLE_CMGL},
 	{"", 0},
 };
 
@@ -443,7 +444,7 @@ GSM_PhoneModel allmodels[] = {
 	{"D357",	  "SGH-D357" ,	  "",				   {F_EXTRA_PBK_FIELD, 0}},
 	{"J750",	  "SGH-J750" ,	  "",				   {F_NO_ATOBEX, 0}},
 	{"J700",	  "SGH-J700" ,	  "",				   {F_NO_ATOBEX, 0}},
-	{"J700",	  "SAMSUNG SGH-J700" , "",			   {F_NO_ATOBEX, 0}},
+	{"J700",	  "SAMSUNG SGH-J700" , "",			   {F_NO_ATOBEX, F_DISABLE_CMGL, 0}},
 	{"D980",	  "SAMSUNG SGH-D980" , "",			   {F_NO_ATOBEX, 0}},
 
 	/* Philips */
