@@ -210,7 +210,7 @@ GSM_Error MOBEX_GetNextEntry(GSM_StateMachine *s, const char *path, const gboole
 	/* Increment to next */
 	if (*data != NULL) {
 		*pos += ((*data)[*pos + 2] << 8) + (*data)[*pos + 3];
-		/* To take in account the space used by the ID and the size 
+		/* To take in account the space used by the ID and the size
 		 * of the record */
 		*pos += 4;
 	}
@@ -260,7 +260,7 @@ GSM_Error MOBEX_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry, gbool
 	GSM_Error error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 	char *data = NULL;
-	size_t pos = 0;
+	ssize_t pos = 0;
 
 
 	error = MOBEX_GetNextEntry(s, "m-obex/contacts/load",
