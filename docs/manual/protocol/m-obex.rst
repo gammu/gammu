@@ -121,9 +121,10 @@ Answer
     Length of sent data
 *4C* 00 05 00 02
     Indicates if these are the last contacts
-*49* 08 B4 00 0A 00 .....
-    Contacts in VCard format. The first two bytes of an item are the id of the contact. Bytes 3 and 4: length of vard. The vcard starts with byte 5.
-    There are more vcards (usually 4-5) in one response.
+*49* 07 41 01 10 01 8D ...."
+    The first byte is unknown but all answers have this byte, then byte 2 and 3 contains the length of the answer, bytes 4 and 5 are the ID of the first entry bytes 6 and 7 are the length of this entry.
+
+    In one response more than 1 vcard can be returned in this case, entries are separated by 4 bytes with the following meaning: bytes 1 and 2 ID of the entry, bytes 3 and 4: length of the entry.
 
 To get all contacts the request have to be sent several times. The last two bytes must be incremented by every call.
 
