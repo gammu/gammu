@@ -824,8 +824,7 @@ int GSM_PackSemiOctetNumber(const unsigned char *Number, unsigned char *Output, 
 		return 0;
 	}
 
-	memset(buffer, 0, length + 2);
-	memcpy(buffer, DecodeUnicodeString(Number), length + 1);
+	DecodeUnicode(Number, buffer);
 
 	/* Checking for format number */
 	if (buffer[0] == '+' || (buffer[0] == '0' && buffer[1] == '0')) {
