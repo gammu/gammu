@@ -1928,7 +1928,6 @@ GSM_Error OBEXGEN_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry, gbo
 		if (Priv->ReadPhonebook == Priv->PbCount) {
 			return ERR_EMPTY;
 		}
-		smprintf(s, "Here ?\n");
 
 		error = OBEXGEN_GetMemory(s, Entry);
 		if (error == ERR_NONE) {
