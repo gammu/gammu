@@ -29,6 +29,8 @@ ChangeLog
       entering.
 [-] * Fixup invalid international numbers with double prefix (+00) in
       SMS (bug #1364).
+[-] * Fixed m-obex protocol implementation, thanks to Matthieu Patou (bug #1375).
+[-] * Fixed build on Mac OS X, thanks to Matthieu Patou (bug #1374).
     
 20101227 - 1.28.94
 
