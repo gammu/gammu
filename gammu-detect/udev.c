@@ -70,7 +70,7 @@ static void dump_device_and_parent(GUdevDevice * device, guint indent)
 	println(indent, "%-20s %s", _("Number:"), g_udev_device_get_number(device));
 	println(indent, "%-20s %s", _("Path:"), g_udev_device_get_sysfs_path(device));
 	println(indent, "%-20s %s", _("Driver:"), g_udev_device_get_driver(device));
-	println(indent, "%-20s %ld", _("Sequential Number:"), g_udev_device_get_seqnum(device));
+	println(indent, "%-20s %lld", _("Sequential Number:"), g_udev_device_get_seqnum(device));
 	println(indent, "%-20s %s", _("Device File:"), g_udev_device_get_device_file(device));
 
 	println(indent, " ");
