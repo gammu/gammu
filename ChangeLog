@@ -31,6 +31,7 @@ ChangeLog
       SMS (bug #1364).
 [-] * Fixed m-obex protocol implementation, thanks to Matthieu Patou (bug #1375).
 [-] * Fixed build on Mac OS X, thanks to Matthieu Patou (bug #1374).
+[-] * Fixed decoding of some SMS messages on S40 phones (bug #1243).
     
 20101227 - 1.28.94
 

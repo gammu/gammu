@@ -2377,6 +2377,10 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 	while (pos < FFF->Used) {
 		unknown = FALSE;
 		if (pos + 1 >= FFF->Used) {
+			if (pos + 1 == FFF->Used && FFF->Buffer[pos] == 0x00) {
+				smprintf(s, "File padded with 0x00, assuming it is okay\n");
+				break;
+			}
 			smprintf(s, "ERROR: Reach end of file before type of block!\n");
 			return ERR_BUG;
 		}
