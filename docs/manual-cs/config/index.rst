@@ -165,7 +165,7 @@ Parametry připojení
 
     .. deprecated::     1.27.95
 
-    Alias for :config:option:`Device`, kept for backward compatibility.
+    Stejné jako :config:option:`Device`, zachováno kvůli zpětné kompatibilitě.
 
 .. config:option:: Model
 
@@ -181,10 +181,10 @@ Parametry připojení
     ``obexirmc``
         vynutí použití služby IrMC (kontakty, kalendář a poznámky)
     ``obexnone``
-        none service chosen, this has only limited use for sending file
-        (:option:`gammu sendfile` command)
+        nebube vybrána žádná služba, toto má jen omezené použití pro posílání
+        souborů (příkaz :option:`gammu sendfile`)
     ``mobex``
-        m-obex service for Samsung phones
+        služba m-obex pro telefony Samsung
 
 .. config:option:: Use_Locking
 
@@ -204,10 +204,10 @@ Parametry připojení
 
 .. config:option:: StartInfo
 
-    This option allow to set, that you want (setting ``yes``) to see message on
-    the phone screen or phone should enable light for a moment during starting
-    connection. Phone will not beep during starting connection with this
-    option. This works only with some Nokia phones.
+    Tato volba umožní nastavit (při nastavení na ``yes``) zobrazení zprávy na
+    displeji telefonu nebo rozsvítit jeho podsvícení při připojení. Telefon
+    nebude během připojení vydávat žádné zvuky. Tato volba funguje jen s
+    některými telefony Nokia.
 
 
 Ladicí parametry
@@ -224,8 +224,8 @@ Ladicí parametry
 
 .. config:option:: LogFormat
 
-    Determines what all will be logged to :config:option:`LogFile`. Possible
-    values are:
+    Určuje co vše se bude logovat do souboru :config:option:`LogFile`. Možné
+    hodnoty jsou:
 
     ``nothing``     
         žádné ladicí zprávy
@@ -258,15 +258,15 @@ Locales and character set options
 
 .. config:option:: GammuCoding
 
-    Forces using specified codepage (for example ``1250`` will force CP-1250 or
-    ``utf8`` for UTF-8). This should not be needed, Gammu detects it according
-    to your locales.
+    Vynutí použití zadaného kódování (například ``1250`` vynutí CP-1250 nebo
+    ``utf8`` pro UTF-8). Tato volba by obvykle neměla být potřeba, Gammu
+    kódování zjištuje podle nastavených locales.
 
 .. config:option:: GammuLoc
 
-    Path to directory with localisation files (the directory should contain
-    ``LANG/LC_MESSAGES/gammu.mo``). If gammu is properly installed it should
-    find these files automatically.
+    Cesta k adresáři s lokalizačními soubory (adresář by měl obsahovat
+    ``LANG/LC_MESSAGES/gammu.mo``). Pokud je gammu správně instalované, mělo
+    bypřeklady najít automaticky.
 
 Příklady
 ----------
@@ -306,10 +306,10 @@ kanálu 42:
 Práce s více telefony
 +++++++++++++++++++++++
 
-Gammu can be configured for multiple phones (however only one connection is
-used at one time, you can choose which one to use with :option:`gammu
---section` parameter). Configuration for phones on three serial ports would
-look like following:
+Gammu může být nastaveno pro práci s více telefony najedou (ale jen jedno
+připojení v jeden okamžik, to zvolíte parametrem :option:`gammu
+--section`). Nastavení telefonů na třech sériových portech by vypadalo
+následovně:
 
 .. code-block:: ini
 
