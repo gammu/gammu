@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.25.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-12-27 19:36+0100\n"
-"PO-Revision-Date: 2011-01-06 10:07+0200\n"
+"PO-Revision-Date: 2011-01-06 10:08+0200\n"
 "Last-Translator:  <dmusuda@gmail.com>\n"
 "Language-Team: none\n"
 "Language: sw\n"
@@ -33,7 +33,7 @@ msgstr "Kuna shida kufungua kifaa. Kimefungwa"
 
 #: libgammu/gsmcomon.c:87
 msgid "Error opening device, it doesn't exist."
-msgstr ""
+msgstr "Kuna shida kufungua kifaa. Haipo"
 
 #: libgammu/gsmcomon.c:88
 msgid "Error opening device, it is already opened by other application."
