@@ -268,14 +268,9 @@ set (CMAKE_EXTRA_INCLUDE_FILES stdio.h)
 check_type_size (ssize_t HAVE_SSIZE_T)
 set (CMAKE_EXTRA_INCLUDE_FILES)
 if (HAVE_UNISTD_H)
-    check_c_source_compiles ("
-#include <unistd.h>
-
-int main(void) {
-    intptr_t t;
-    return 0;
-}
-"  HAVE_INTPTR_T)
+    set (CMAKE_EXTRA_INCLUDE_FILES unistd.h)
+    check_type_size(intptr_t HAVE_INTPTR_T)
+    set (CMAKE_EXTRA_INCLUDE_FILES)
 else(HAVE_UNISTD_H)
     check_type_size(intptr_t HAVE_INTPTR_T)
 endif (HAVE_UNISTD_H)
