@@ -1,0 +1,7 @@
+#!/bin/sh
+
+pref=`python-config --prefix`
+pyver=`python  -c "import sys; print('.'.join([str(x) for x in sys.version_info[:2]]))"`
+# Fixed because I compile with python 2.6
+pyver=2.6
+ln -s /usr/lib/python$pyver/site-packages/gammu /Library/Python/$pyver/site-packages
