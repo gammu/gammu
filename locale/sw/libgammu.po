@@ -29,7 +29,7 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:86
 msgid "Error opening device, it is locked."
-msgstr ""
+msgstr "Kuna shida kufungua kifaa. Kimefungwa"
 
 #: libgammu/gsmcomon.c:87
 msgid "Error opening device, it doesn't exist."
