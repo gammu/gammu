@@ -41,7 +41,7 @@ GSM_Error MOBEX_GetStatus(GSM_StateMachine *s, const char *path, int *free_recor
 {
 	GSM_Error error;
 	unsigned char *buffer = NULL;
-	int len = 0, total;
+	size_t len = 0, total;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 	char appdata[] = {'\x01'};
 
@@ -59,7 +59,7 @@ GSM_Error MOBEX_GetStatus(GSM_StateMachine *s, const char *path, int *free_recor
 	}
 
 	if (len < 2) {
-		smprintf(s, "Unknown length of data file: %d\n", len);
+		smprintf(s, "Unknown length of data file: %ld\n", (long int)len);
 		free(buffer);
 		return ERR_UNKNOWNRESPONSE;
 	}
@@ -192,7 +192,7 @@ GSM_Error MOBEX_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 	return ERR_NONE;
 }
 
-GSM_Error MOBEX_GetNextEntry(GSM_StateMachine *s, const char *path, const gboolean start, int *nextid, int *nexterror, unsigned char **data, int *pos, int *size, char **entry, int *location)
+GSM_Error MOBEX_GetNextEntry(GSM_StateMachine *s, const char *path, const gboolean start, int *nextid, int *nexterror, unsigned char **data, size_t *pos, size_t *size, char **entry, int *location)
 {
 	GSM_Error error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;

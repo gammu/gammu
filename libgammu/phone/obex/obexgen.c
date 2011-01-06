@@ -1278,7 +1278,7 @@ GSM_Error OBEXGEN_AddFolder(GSM_StateMachine *s, GSM_File *File)
 /**
  * Grabs complete single file
  */
-GSM_Error OBEXGEN_GetFile(GSM_StateMachine *s, const char *FileName, unsigned char ** Buffer, int *len)
+GSM_Error OBEXGEN_GetFile(GSM_StateMachine *s, const char *FileName, unsigned char ** Buffer, size_t *len)
 {
 	GSM_Error error = ERR_NONE;
 	GSM_File File;
@@ -1312,7 +1312,7 @@ GSM_Error OBEXGEN_GetFile(GSM_StateMachine *s, const char *FileName, unsigned ch
 /**
  * Grabs complete single binary file
  */
-GSM_Error OBEXGEN_GetBinaryFile(GSM_StateMachine *s, const char *FileName, unsigned char ** Buffer, int *len)
+GSM_Error OBEXGEN_GetBinaryFile(GSM_StateMachine *s, const char *FileName, unsigned char ** Buffer, size_t *len)
 {
 	GSM_Error error = ERR_NONE;
 
@@ -1321,7 +1321,7 @@ GSM_Error OBEXGEN_GetBinaryFile(GSM_StateMachine *s, const char *FileName, unsig
 	if (error != ERR_NONE) return error;
 
 	/* Return data we got */
-	smprintf(s, "Got %d bytes of data\n", *len);
+	smprintf(s, "Got %ld bytes of data\n", (long int)*len);
 	*Buffer = (unsigned char *)realloc(*Buffer, *len + 1);
 	if (*Buffer == NULL) {
 		return ERR_MOREMEMORY;
@@ -1335,7 +1335,7 @@ GSM_Error OBEXGEN_GetBinaryFile(GSM_StateMachine *s, const char *FileName, unsig
  */
 GSM_Error OBEXGEN_GetTextFile(GSM_StateMachine *s, const char *FileName, char ** Buffer)
 {
-	int len;
+	size_t len;
 
 	return OBEXGEN_GetBinaryFile(s, FileName, (unsigned char **)Buffer, &len);
 }

@@ -287,7 +287,7 @@ typedef struct {
 	size_t				m_obex_calendar_buffer_size;
 } GSM_Phone_OBEXGENData;
 
-GSM_Error OBEXGEN_GetBinaryFile(GSM_StateMachine *s, const char *FileName, unsigned char ** Buffer, int *len);
+GSM_Error OBEXGEN_GetBinaryFile(GSM_StateMachine *s, const char *FileName, unsigned char ** Buffer, size_t *len);
 GSM_Error OBEXGEN_GetTextFile(GSM_StateMachine *s, const char *FileName, char ** Buffer);
 GSM_Error OBEXGEN_SetFile(GSM_StateMachine *s, const char *FileName, const unsigned char *Buffer, size_t Length, gboolean HardDelete);
 
