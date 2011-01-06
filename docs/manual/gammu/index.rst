@@ -1357,7 +1357,7 @@ Nokia specific commands
     1. ALS (Alternative Line Service) option menu
     2. vibra menu for 3210
     3. 3315 features in 3310 5.45 and higher
-    4. two additional games (React and Logic) for 3210 5\.31 and higher
+    4. two additional games (React and Logic) for 3210 5.31 and higher
     5. WellMate menu for 6150
     6. NetMonitor
 
