@@ -34,7 +34,7 @@ install (
     )
 
 # This should match list in admin/po4a.config
-foreach(LANG cs de es id it pl ru)
+foreach(LANG cs de es fr id it pl ru zh_CN af bg ca el et fi gl he hu ko nl pt_BR sk sv zh_TW da sw en_GB tr ar)
 
     file(GLOB MAN1_PAGES "${LANG}/*.1")
 

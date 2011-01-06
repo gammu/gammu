@@ -367,13 +367,6 @@ fi
 %_mandir/man5/gammurc.5*
 %_mandir/man5/gammu-backup.5*
 %_mandir/man5/gammu-smsbackup.5*
-%lang(cs) %dir %_mandir/cs
-%lang(cs) %dir %_mandir/cs/man5
-%lang(cs) %dir %_mandir/cs/man1
-%lang(cs) %_mandir/cs/man1/gammu.1*
-%lang(cs) %_mandir/cs/man1/gammu-config.1*
-%lang(cs) %_mandir/cs/man1/jadmaker.1*
-%lang(cs) %_mandir/cs/man5/gammurc.5*
 
 %files smsd
 %defattr(-,root,root)
@@ -383,13 +376,6 @@ fi
 %_mandir/man1/gammu-smsd*
 %_mandir/man7/gammu-smsd*
 %_mandir/man5/gammu-smsd*
-%lang(cs) %dir %_mandir/cs
-%lang(cs) %dir %_mandir/cs/man7
-%lang(cs) %dir %_mandir/cs/man5
-%lang(cs) %dir %_mandir/cs/man1
-%lang(cs) %_mandir/cs/man1/gammu-smsd*
-%lang(cs) %_mandir/cs/man7/gammu-smsd*
-%lang(cs) %_mandir/cs/man5/gammu-smsd*
 %attr(755,root,root) %config /etc/init.d/gammu-smsd
 %config /etc/gammu-smsdrc
 
