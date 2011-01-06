@@ -27,5 +27,3 @@ Zpětná vazba a hlášení chyb
 
 Jakákoliv zpětná vazba je vítána, informace jak kontaktovat vývojáře
 naleznete na <http://cs.wammu.eu/support/>.
-
-# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us

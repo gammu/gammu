@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.28.95\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-01-06 11:46+0100\n"
+"POT-Creation-Date: 2011-01-06 16:39+0100\n"
 "PO-Revision-Date: 2010-09-06 20:58+0200\n"
 "Last-Translator: Robert Readman <robert_readman@hotmail.com>\n"
 "Language-Team: none\n"
@@ -81,7 +81,7 @@ msgid "Feedback and bug reports"
 msgstr ""
 
 #. type: Plain text
-#: README:31
+#: README:30
 #, fuzzy
 msgid ""
 "Any feedback is welcome, see <http://wammu.eu/support/> for information how "
@@ -89,11 +89,6 @@ msgid ""
 msgstr ""
 "Unknown frame. See E<lt>http://wammu.eu/support/bugs/E<gt> for information "
 "how to report it."
-
-#. type: delimited block *
-#: README:32 docs/manual/project/directories.rst:194
-msgid "# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us"
-msgstr "# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us"
 
 #. type: Title =
 #: INSTALL:2
@@ -21646,6 +21641,11 @@ msgstr ""
 #: docs/manual/project/directories.rst:193
 msgid "Unsupported applications built on top of libGammu.dll on Windows."
 msgstr ""
+
+#. type: delimited block *
+#: docs/manual/project/directories.rst:194
+msgid "# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us"
+msgstr "# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us"
 
 #. type: Title =
 #: docs/manual/project/about.rst:2
