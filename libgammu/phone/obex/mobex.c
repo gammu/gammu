@@ -260,7 +260,7 @@ GSM_Error MOBEX_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry, gbool
 	GSM_Error error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 	char *data = NULL;
-	ssize_t pos = 0;
+	size_t pos = 0;
 
 
 	error = MOBEX_GetNextEntry(s, "m-obex/contacts/load",
