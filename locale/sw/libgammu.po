@@ -41,7 +41,7 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:89
 msgid "Error opening device, you don't have permissions."
-msgstr ""
+msgstr "Kuna shida kufungua kifaa. Hauna ruhusa"
 
 #: libgammu/gsmcomon.c:90
 msgid "Error opening device. No required driver in operating system."
