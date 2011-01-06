@@ -1,6 +1,6 @@
 Gammu (Gammu All Mobile Management Utilities) @GAMMU_VERSION@
 
-Gammu is command line utility and library to work with mobile phones
+Gammu is a command line utility and library to work with mobile phones
 from many vendors. Support for different models differs, but basic
 functions should work with majority of them. Program can work with
 contacts, messages (SMS, EMS and MMS), calendar, todos, filesystem,
