@@ -16,10 +16,29 @@ static GSM_Reply_Function NAUTOReplyFunctions[] = {
 	{NULL,				"\x00",0x00,0x00,ID_None			}
 };
 
+/**
+ * Some phones/cables need some time to initialize, this function gives
+ * them the time while not slowing down the usual case (GetModel is
+ * anyway later called).
+ */
+static GSM_Error NAUTO_Initialise(GSM_StateMachine *s)
+{
+	GSM_Error error = ERR_TIMEOUT;
+	int repeats = 3;
+
+	while (repeats > 0 && error == ERR_TIMEOUT) {
+		error = DCT3DCT4_GetModel(s);
+		if (error == ERR_NONE) return ERR_NONE;
+		repeats--;
+	}
+
+	return error;
+}
+
 GSM_Phone_Functions NAUTOPhone = {
 	"NAUTO",
 	NAUTOReplyFunctions,
-	NONEFUNCTION,			/*	Initialise		*/
+	NAUTO_Initialise,			/*	Initialise		*/
 	NONEFUNCTION,			/*	Terminate 		*/
 	GSM_DispatchMessage,
 	NOTSUPPORTED,			/* 	ShowStartInfo		*/
