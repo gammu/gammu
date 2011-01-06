@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.28.95\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-01-04 10:40+0100\n"
+"POT-Creation-Date: 2011-01-06 11:46+0100\n"
 "PO-Revision-Date: 2009-01-07 18:00+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -165,9 +165,9 @@ msgstr ""
 #: docs/manual/smsd/monitor.rst:16 docs/manual/smsd/smsd.rst:17
 #: docs/manual/gammu/index.rst:20 docs/manual/utils/gammu-config.rst:16
 #: docs/manual/utils/jadmaker.rst:16 docs/manual/utils/gammu-detect.rst:19
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "Description"
-msgstr ""
+msgstr "Описание         : \"%s\"\n"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:26
@@ -228,7 +228,6 @@ msgstr "Информация о телефоне"
 #. type: Plain text
 #: docs/manual/config/index.rst:45
 #, fuzzy
-#| msgid "gammu(1)"
 msgid "[gammu]"
 msgstr "gammu(1)"
 
@@ -491,7 +490,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/config/index.rst:103
 msgid "Device"
-msgstr ""
+msgstr "Устройство"
 
 #. type: Labeled list
 #: docs/manual/config/index.rst:104 docs/manual/smsd/config.rst:67
@@ -747,7 +746,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/config/index.rst:163
 msgid "Port"
-msgstr ""
+msgstr "Порт"
 
 #. type: Labeled list
 #: docs/manual/config/index.rst:164 docs/manual/smsd/config.rst:73
@@ -765,7 +764,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/config/index.rst:169 docs/manual/python/gammu.rst:1263
 msgid "Model"
-msgstr ""
+msgstr "Модель"
 
 # type: Plain text
 #. type: Plain text
@@ -1458,7 +1457,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:90
 msgid "Note:"
-msgstr ""
+msgstr "Заметки:"
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:91
@@ -2753,7 +2752,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:484
 #, fuzzy, no-wrap
-#| msgid "No error."
 msgid "other: error\n"
 msgstr "Нет ошибки."
 
@@ -3931,7 +3929,6 @@ msgstr ""
 #. type: Title +
 #: docs/manual/protocol/samsung.rst:5
 #, fuzzy, no-wrap
-#| msgid "Phone information"
 msgid "Get organizer information"
 msgstr "Информация о телефоне"
 
@@ -4360,7 +4357,7 @@ msgstr ""
 
 # type: SS
 #. type: Title +
-#: docs/manual/protocol/samsung.rst:295 docs/manual/protocol/m-obex.rst:393
+#: docs/manual/protocol/samsung.rst:295 docs/manual/protocol/m-obex.rst:394
 #: docs/manual/testing/dummy-driver.rst:37
 #, no-wrap
 msgid "Notes"
@@ -4568,7 +4565,7 @@ msgstr ""
 #: docs/manual/protocol/m-obex.rst:73
 #, no-wrap
 msgid "Contacts"
-msgstr ""
+msgstr "Контакты"
 
 #. type: Title +
 #: docs/manual/protocol/m-obex.rst:76
@@ -4578,11 +4575,11 @@ msgstr ""
 
 #. type: Title ~
 #: docs/manual/protocol/m-obex.rst:79 docs/manual/protocol/m-obex.rst:106
-#: docs/manual/protocol/m-obex.rst:139 docs/manual/protocol/m-obex.rst:171
-#: docs/manual/protocol/m-obex.rst:199 docs/manual/protocol/m-obex.rst:226
-#: docs/manual/protocol/m-obex.rst:252 docs/manual/protocol/m-obex.rst:277
-#: docs/manual/protocol/m-obex.rst:301 docs/manual/protocol/m-obex.rst:330
-#: docs/manual/protocol/m-obex.rst:356 docs/manual/protocol/m-obex.rst:381
+#: docs/manual/protocol/m-obex.rst:140 docs/manual/protocol/m-obex.rst:172
+#: docs/manual/protocol/m-obex.rst:200 docs/manual/protocol/m-obex.rst:227
+#: docs/manual/protocol/m-obex.rst:253 docs/manual/protocol/m-obex.rst:278
+#: docs/manual/protocol/m-obex.rst:302 docs/manual/protocol/m-obex.rst:331
+#: docs/manual/protocol/m-obex.rst:357 docs/manual/protocol/m-obex.rst:382
 #, no-wrap
 msgid "Request"
 msgstr ""
@@ -4603,11 +4600,11 @@ msgstr ""
 
 #. type: Title ~
 #: docs/manual/protocol/m-obex.rst:91 docs/manual/protocol/m-obex.rst:117
-#: docs/manual/protocol/m-obex.rst:154 docs/manual/protocol/m-obex.rst:186
-#: docs/manual/protocol/m-obex.rst:210 docs/manual/protocol/m-obex.rst:237
-#: docs/manual/protocol/m-obex.rst:263 docs/manual/protocol/m-obex.rst:287
-#: docs/manual/protocol/m-obex.rst:316 docs/manual/protocol/m-obex.rst:345
-#: docs/manual/protocol/m-obex.rst:367
+#: docs/manual/protocol/m-obex.rst:155 docs/manual/protocol/m-obex.rst:187
+#: docs/manual/protocol/m-obex.rst:211 docs/manual/protocol/m-obex.rst:238
+#: docs/manual/protocol/m-obex.rst:264 docs/manual/protocol/m-obex.rst:288
+#: docs/manual/protocol/m-obex.rst:317 docs/manual/protocol/m-obex.rst:346
+#: docs/manual/protocol/m-obex.rst:368
 #, no-wrap
 msgid "Answer"
 msgstr ""
@@ -4627,7 +4624,7 @@ msgid ""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:103 docs/manual/protocol/m-obex.rst:274
+#: docs/manual/protocol/m-obex.rst:103 docs/manual/protocol/m-obex.rst:275
 #, no-wrap
 msgid "List all"
 msgstr ""
@@ -4647,7 +4644,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:127
+#: docs/manual/protocol/m-obex.rst:126
 #, no-wrap
 msgid ""
 "*A0* 08 C1\n"
@@ -4656,33 +4653,38 @@ msgid ""
 "    Length of sent data\n"
 "*4C* 00 05 00 02\n"
 "    Indicates if these are the last contacts\n"
-"*49* 08 B4 00 0A 00 .....\n"
-"    Contacts in VCard format. The first two bytes of an item are the id of the contact. Bytes 3 and 4: length of vard. The vcard starts with byte 5.\n"
-"    There are more vcards (usually 4-5) in one response.\n"
+"*49* 07 41 01 10 01 8D ....\"\n"
+"    The first byte is unknown but all answers have this byte, then byte 2 and 3 contains the length of the answer, bytes 4 and 5 are the ID of the first entry bytes 6 and 7 are the length of this entry.\n"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:129
+#: docs/manual/protocol/m-obex.rst:128
+#, no-wrap
+msgid "    In one response more than 1 vcard can be returned in this case, entries are separated by 4 bytes with the following meaning: bytes 1 and 2 ID of the entry, bytes 3 and 4: length of the entry.\n"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/protocol/m-obex.rst:130
 msgid ""
 "To get all contacts the request have to be sent several times. The last two "
 "bytes must be incremented by every call."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:131
+#: docs/manual/protocol/m-obex.rst:132
 msgid ""
 "The end of the contacts list is reached if the header 0x4C is 0. The header "
 "will be 4C 00 05 00 00."
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:134
+#: docs/manual/protocol/m-obex.rst:135
 #, no-wrap
 msgid "Create a contact"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:137 docs/manual/protocol/m-obex.rst:169
+#: docs/manual/protocol/m-obex.rst:138 docs/manual/protocol/m-obex.rst:170
 msgid ""
 "Beware: This is a put operation and is performed in some obex "
 "implementations in several packages (for example 0x02, 0x02, 0x82). But I "
@@ -4691,7 +4693,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:152
+#: docs/manual/protocol/m-obex.rst:153
 #, no-wrap
 msgid ""
 "*82* 00 88\n"
@@ -4709,7 +4711,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:163
+#: docs/manual/protocol/m-obex.rst:164
 #, no-wrap
 msgid ""
 "*A0* 00 12\n"
@@ -4723,13 +4725,13 @@ msgid ""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:166
+#: docs/manual/protocol/m-obex.rst:167
 #, no-wrap
 msgid "Update a contact"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:184
+#: docs/manual/protocol/m-obex.rst:185
 #, no-wrap
 msgid ""
 "*82* 00 8D\n"
@@ -4747,7 +4749,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:191
+#: docs/manual/protocol/m-obex.rst:192
 #, no-wrap
 msgid ""
 "*A0* 00 08\n"
@@ -4757,18 +4759,18 @@ msgid ""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:194
+#: docs/manual/protocol/m-obex.rst:195
 #, no-wrap
 msgid "Read one contact"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:197
+#: docs/manual/protocol/m-obex.rst:198
 msgid "There is also the possibility to read exactly one contact."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:208
+#: docs/manual/protocol/m-obex.rst:209
 #, no-wrap
 msgid ""
 "*83* 00 26\n"
@@ -4782,7 +4784,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:219
+#: docs/manual/protocol/m-obex.rst:220
 #, no-wrap
 msgid ""
 "*A0* 00 C4\n"
@@ -4796,18 +4798,18 @@ msgid ""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:221
+#: docs/manual/protocol/m-obex.rst:222
 #, no-wrap
 msgid "Delete contact"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:224
+#: docs/manual/protocol/m-obex.rst:225
 msgid "To delete a contact you only have to know it's id."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:235
+#: docs/manual/protocol/m-obex.rst:236
 #, no-wrap
 msgid ""
 "*82* 00 28\n"
@@ -4821,7 +4823,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:243 docs/manual/protocol/m-obex.rst:350
+#: docs/manual/protocol/m-obex.rst:244 docs/manual/protocol/m-obex.rst:351
 #, no-wrap
 msgid ""
 "*A0* 00 08\n"
@@ -4831,7 +4833,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:246 docs/manual/testing/dummy-driver.rst:42
+#: docs/manual/protocol/m-obex.rst:247 docs/manual/testing/dummy-driver.rst:42
 #: docs/manual/python/objects.rst:419 docs/manual/python/gammu.rst:1267
 #: docs/manual/c/calendar.rst:2
 #, fuzzy, no-wrap
@@ -4839,13 +4841,13 @@ msgid "Calendar"
 msgstr "Nokia: заметка в календаре"
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:249
+#: docs/manual/protocol/m-obex.rst:250
 #, no-wrap
 msgid "Get count"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:261
+#: docs/manual/protocol/m-obex.rst:262
 #, no-wrap
 msgid ""
 "*83* 00 25\n"
@@ -4859,7 +4861,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:272
+#: docs/manual/protocol/m-obex.rst:273
 #, no-wrap
 msgid ""
 "A0 00 1C\n"
@@ -4873,7 +4875,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:284
+#: docs/manual/protocol/m-obex.rst:285
 #, no-wrap
 msgid ""
 "*83* 00 20\n"
@@ -4885,7 +4887,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:296
+#: docs/manual/protocol/m-obex.rst:297
 #, no-wrap
 msgid ""
 "*A0* 00 C0\n"
@@ -4899,13 +4901,13 @@ msgid ""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:298
+#: docs/manual/protocol/m-obex.rst:299
 #, no-wrap
 msgid "Create"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:314
+#: docs/manual/protocol/m-obex.rst:315
 #, no-wrap
 msgid ""
 "*82* 00 CC\n"
@@ -4923,7 +4925,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:325
+#: docs/manual/protocol/m-obex.rst:326
 #, no-wrap
 msgid ""
 "*A0* 00 12\n"
@@ -4937,13 +4939,13 @@ msgid ""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:327
+#: docs/manual/protocol/m-obex.rst:328
 #, no-wrap
 msgid "Update"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:343
+#: docs/manual/protocol/m-obex.rst:344
 #, no-wrap
 msgid ""
 "*82* 00 F7\n"
@@ -4961,13 +4963,13 @@ msgid ""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:353
+#: docs/manual/protocol/m-obex.rst:354
 #, no-wrap
 msgid "Read"
-msgstr ""
+msgstr "Прочитанные"
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:365
+#: docs/manual/protocol/m-obex.rst:366
 #, no-wrap
 msgid ""
 "*83* 00 26\n"
@@ -4981,7 +4983,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:376
+#: docs/manual/protocol/m-obex.rst:377
 #, no-wrap
 msgid ""
 "*A0* 00 C0\n"
@@ -4995,13 +4997,13 @@ msgid ""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:378
+#: docs/manual/protocol/m-obex.rst:379
 #, no-wrap
 msgid "Delete"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:390
+#: docs/manual/protocol/m-obex.rst:391
 #, no-wrap
 msgid ""
 "*82* 00 28\n"
@@ -5015,56 +5017,56 @@ msgid ""
 msgstr ""
 
 #. type: Title -
-#: docs/manual/protocol/m-obex.rst:397
+#: docs/manual/protocol/m-obex.rst:398
 #, no-wrap
 msgid "Tasks"
 msgstr ""
 
 #. type: Title -
-#: docs/manual/protocol/m-obex.rst:401
+#: docs/manual/protocol/m-obex.rst:402
 #, no-wrap
 msgid "Files"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:404
+#: docs/manual/protocol/m-obex.rst:405
 msgid ""
 "To get the file structure on the mobile, there are two commands. One that "
 "lists all subdirectories and one that lists all files."
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:406
+#: docs/manual/protocol/m-obex.rst:407
 #, no-wrap
 msgid "List directories"
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:409
+#: docs/manual/protocol/m-obex.rst:410
 #, no-wrap
 msgid "List files"
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:412
+#: docs/manual/protocol/m-obex.rst:413
 #, no-wrap
 msgid "Get file"
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:415
+#: docs/manual/protocol/m-obex.rst:416
 #, no-wrap
 msgid "Create file"
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:418
+#: docs/manual/protocol/m-obex.rst:419
 #, no-wrap
 msgid "Delete file"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:422
+#: docs/manual/protocol/m-obex.rst:423
 #, no-wrap
 msgid ""
 "SMS\n"
@@ -5072,36 +5074,36 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:426
+#: docs/manual/protocol/m-obex.rst:427
 msgid "0x01: Inbox 0x08: Outbox"
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:428
+#: docs/manual/protocol/m-obex.rst:429
 #, no-wrap
 msgid "Get sms count"
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:431
+#: docs/manual/protocol/m-obex.rst:432
 #, no-wrap
 msgid "List all sms"
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:434
+#: docs/manual/protocol/m-obex.rst:435
 #, no-wrap
 msgid "Send sms"
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:437
+#: docs/manual/protocol/m-obex.rst:438
 #, no-wrap
 msgid "Create sms"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:439
+#: docs/manual/protocol/m-obex.rst:440
 msgid ""
 "I don't think this is possible. At least I didn't find the function in New "
 "PC Studio. So sadly there will be no backup of sms messages."
@@ -5226,7 +5228,7 @@ msgstr ""
 #: docs/manual/protocol/carkit.rst:354 docs/manual/protocol/carkit.rst:511
 #, no-wrap
 msgid "Incoming call"
-msgstr ""
+msgstr "Входящий звонок"
 
 #. type: Plain text
 #: docs/manual/protocol/carkit.rst:73
@@ -5250,7 +5252,7 @@ msgstr ""
 #: docs/manual/protocol/carkit.rst:368 docs/manual/protocol/carkit.rst:541
 #, no-wrap
 msgid "Connected"
-msgstr ""
+msgstr "Подключен"
 
 #. type: Plain text
 #: docs/manual/protocol/carkit.rst:80 docs/manual/protocol/carkit.rst:200
@@ -11806,7 +11808,6 @@ msgstr ""
 #: docs/manual/smsd/tables.rst:35 docs/manual/gammu/index.rst:7
 #: docs/manual/python/gammu.rst:5
 #, fuzzy, no-wrap
-#| msgid "gammu(1)"
 msgid "gammu"
 msgstr "gammu(1)"
 
@@ -13241,7 +13242,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/smsd/config.rst:94
 #, fuzzy
-#| msgid "OPTIONS"
 msgid "PIN"
 msgstr "НАСТРОЙКИ"
 
@@ -13780,7 +13780,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/smsd/config.rst:331
 msgid "Send"
-msgstr ""
+msgstr "Отправить"
 
 #. type: Plain text
 #: docs/manual/smsd/config.rst:333
@@ -13827,8 +13827,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/smsd/config.rst:351
+#, fuzzy
 msgid "User"
-msgstr ""
+msgstr "Пользовательский UDH"
 
 # type: Plain text
 #. type: Plain text
@@ -13839,7 +13840,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/smsd/config.rst:355
 msgid "Password"
-msgstr ""
+msgstr "Пароль"
 
 # type: Plain text
 #. type: Plain text
@@ -14643,7 +14644,6 @@ msgstr ""
 #: docs/manual/smsd/smsd.rst:32 docs/manual/utils/gammu-config.rst:24
 #: docs/manual/utils/jadmaker.rst:25 docs/manual/utils/gammu-detect.rst:45
 #, fuzzy
-#| msgid "B<-h, --help>"
 msgid "-h, --help"
 msgstr "B<-h, --help>"
 
@@ -15631,7 +15631,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/gammu/index.rst:2
 #, fuzzy
-#| msgid "gammu(1)"
 msgid "_gammu:"
 msgstr "gammu(1)"
 
@@ -16041,7 +16040,7 @@ msgstr ""
 #: docs/manual/c/hints.rst:140 docs/manual/c/unicode.rst:2
 #, no-wrap
 msgid "Unicode"
-msgstr ""
+msgstr "Юникод"
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:177
@@ -16254,8 +16253,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:271 docs/manual/python/objects.rst:216
+#, fuzzy
 msgid "SMSC number"
-msgstr ""
+msgstr "Номер SMSC        : \"%s\"\n"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:273
@@ -18933,14 +18933,13 @@ msgstr ""
 #. type: Title -
 #: docs/manual/gammu/index.rst:1454
 #, fuzzy, no-wrap
-#| msgid "Phone information"
 msgid "Phone information commands"
 msgstr "Информация о телефоне"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1457
 msgid "battery"
-msgstr ""
+msgstr "батарея"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1459
@@ -19391,7 +19390,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/gammu/index.rst:1610
 #, fuzzy, no-wrap
-#| msgid "Gammu is not configured."
 msgid "Gammu information commands"
 msgstr "Gammu не настроена."
 
@@ -21981,7 +21979,7 @@ msgstr ""
 #: docs/manual/testing/dummy-driver.rst:25 docs/manual/c/message.rst:2
 #, no-wrap
 msgid "Messages"
-msgstr ""
+msgstr "Сообщения"
 
 #. type: Plain text
 #: docs/manual/testing/dummy-driver.rst:29
@@ -22553,7 +22551,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:23
 msgid "SMSC"
-msgstr ""
+msgstr "SMS-центр"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:25
@@ -22564,7 +22562,7 @@ msgstr ""
 #: docs/manual/python/objects.rst:27 docs/manual/python/objects.rst:214
 #: docs/manual/python/objects.rst:391
 msgid "Number"
-msgstr ""
+msgstr "Номер"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:29
@@ -22575,7 +22573,7 @@ msgstr ""
 #: docs/manual/python/objects.rst:31 docs/manual/python/objects.rst:218
 #: docs/manual/python/objects.rst:734
 msgid "Name"
-msgstr ""
+msgstr "Имя"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:34
@@ -22599,7 +22597,7 @@ msgstr ""
 #: docs/manual/internal/reply.rst:25
 #, no-wrap
 msgid "Text"
-msgstr ""
+msgstr "Текст"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:42
@@ -22609,7 +22607,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:44 docs/manual/python/objects.rst:738
 msgid "Folder"
-msgstr ""
+msgstr "Папка"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:46
@@ -22621,7 +22619,7 @@ msgstr ""
 #: docs/manual/python/objects.rst:442 docs/manual/python/objects.rst:537
 #: docs/manual/python/objects.rst:632
 msgid "Location"
-msgstr ""
+msgstr "Местонахождение"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:50
@@ -22660,8 +22658,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:64 docs/manual/python/objects.rst:272
+#, fuzzy
 msgid "Class"
-msgstr ""
+msgstr "Позвонить\n"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:66 docs/manual/python/objects.rst:274
@@ -22701,7 +22700,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:80 docs/manual/c/memory.rst:2
 #, fuzzy
-#| msgid "Memory full."
 msgid "Memory"
 msgstr "Память заполнена."
 
@@ -22716,7 +22714,7 @@ msgstr ""
 #: docs/manual/python/objects.rst:541 docs/manual/python/objects.rst:595
 #: docs/manual/python/objects.rst:660 docs/manual/python/objects.rst:746
 msgid "Type"
-msgstr ""
+msgstr "Тип"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:86
@@ -22742,8 +22740,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:93
+#, fuzzy
 msgid "Coding"
-msgstr ""
+msgstr "Чтение"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:95
@@ -22807,7 +22806,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:115
 msgid "State"
-msgstr ""
+msgstr "Состояние"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:117
@@ -23104,8 +23103,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:235
+#, fuzzy
 msgid "Validity"
-msgstr ""
+msgstr "Достоверность  : "
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:237
@@ -23165,7 +23165,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:268
 #, fuzzy
-#| msgid "Unknown error."
 msgid "Unknown"
 msgstr "Неизвестная ошибка."
 
@@ -23431,7 +23430,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:351
 msgid "Left"
-msgstr ""
+msgstr "По левому краю"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:353 docs/manual/python/objects.rst:357
@@ -23440,49 +23439,48 @@ msgstr ""
 #: docs/manual/python/objects.rst:377 docs/manual/python/objects.rst:381
 #: docs/manual/python/objects.rst:385
 #, fuzzy
-#| msgid "Phone information"
 msgid "Text formatting"
 msgstr "Информация о телефоне"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:355
 msgid "Right"
-msgstr ""
+msgstr "По правому краю"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:359
 msgid "Center"
-msgstr ""
+msgstr "По центру"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:363
 msgid "Large"
-msgstr ""
+msgstr "Крупный"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:367
 msgid "Small"
-msgstr ""
+msgstr "Мелкий"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:371
 msgid "Bold"
-msgstr ""
+msgstr "Жирный"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:375
 msgid "Italic"
-msgstr ""
+msgstr "Курсив"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:379
 msgid "Underlined"
-msgstr ""
+msgstr "Подчёркнутый"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:383
 msgid "Strikethrough"
-msgstr ""
+msgstr "Зачёркнутый"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:387 docs/manual/python/objects.rst:775
@@ -23512,8 +23510,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:399 docs/manual/c/bitmap.rst:2
+#, fuzzy
 msgid "Bitmap"
-msgstr ""
+msgstr "ID рисунка  : %i\n"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:401
@@ -23763,7 +23762,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:479
 msgid "Priority"
-msgstr ""
+msgstr "Приоритет"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:481
@@ -23897,7 +23896,7 @@ msgstr ""
 #: docs/manual/python/objects.rst:526 docs/manual/python/objects.rst:621
 #: docs/manual/python/objects.rst:715
 msgid "Value"
-msgstr ""
+msgstr "Значение"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:528 docs/manual/python/objects.rst:623
@@ -24390,8 +24389,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:730
+#, fuzzy
 msgid "Used"
-msgstr ""
+msgstr "Пользовательский UDH"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:732
@@ -27781,7 +27781,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/gammu.rst:1055
 #, fuzzy
-#| msgid "Phone information"
 msgid "Get version information."
 msgstr "Информация о телефоне"
 
@@ -27853,7 +27852,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/gammu.rst:1083
 #, fuzzy
-#| msgid "No error."
 msgid "errors"
 msgstr "Нет ошибки."
 
@@ -28178,7 +28176,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/gammu.rst:1262
 msgid "IMEI"
-msgstr ""
+msgstr "IMEI"
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:1264
@@ -29034,7 +29032,6 @@ msgstr ""
 #. type: Title =
 #: docs/manual/formats/index.rst:2
 #, fuzzy, no-wrap
-#| msgid "File format not supported by Gammu."
 msgid "File formats used by Gammu"
 msgstr "Данный формат файлов не поддерживается в Gammu."
 
@@ -29455,7 +29452,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/c/examples.rst:8
 #, fuzzy, no-wrap
-#| msgid "Phone information"
 msgid "Getting phone information"
 msgstr "Информация о телефоне"
 
@@ -29703,9 +29699,9 @@ msgstr ""
 
 #. type: Title =
 #: docs/manual/c/misc.rst:2
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Заметки (различные)\n"
 
 #. type: Plain text
 #: docs/manual/c/misc.rst:5
@@ -29824,9 +29820,9 @@ msgstr ""
 
 #. type: Title =
 #: docs/manual/c/datetime.rst:2
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "Date and time"
-msgstr ""
+msgstr "Дата и время     : %s\n"
 
 #. type: Plain text
 #: docs/manual/c/datetime.rst:5
@@ -30443,8 +30439,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/c/category.rst:2
+#, fuzzy
 msgid "Category"
-msgstr ""
+msgstr "Категория    : %i\n"
 
 #. type: delimited block =
 #: docs/manual/c/category.rst:5
@@ -31718,8 +31715,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/c/smsd.rst:2
+#, fuzzy
 msgid "SMSD"
-msgstr ""
+msgstr "SMS-центр"
 
 #. type: delimited block =
 #: docs/manual/c/smsd.rst:5
@@ -32456,8 +32454,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/utils/gammu-detect.rst:55
+#, fuzzy
 msgid "Show version information and compiled in features."
-msgstr ""
+msgstr "Показать версию программы."
 
 #. type: Plain text
 #: docs/manual/utils/gammu-detect.rst:57

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.28.95\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-01-04 10:40+0100\n"
+"POT-Creation-Date: 2011-01-06 11:46+0100\n"
 "PO-Revision-Date: 2009-01-07 18:00+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -48,7 +48,6 @@ msgstr ""
 #. type: Title =
 #: README:17
 #, fuzzy, no-wrap
-#| msgid "Phone information"
 msgid "More information"
 msgstr "Informasi telepon"
 
@@ -104,7 +103,6 @@ msgstr ""
 #. type: Title =
 #: docs/manual/config/index.rst:4
 #, fuzzy, no-wrap
-#| msgid "Gammu information"
 msgid "Gammu Configuration File"
 msgstr "Informasi gammu"
 
@@ -167,7 +165,7 @@ msgstr ""
 #: docs/manual/utils/jadmaker.rst:16 docs/manual/utils/gammu-detect.rst:19
 #, no-wrap
 msgid "Description"
-msgstr ""
+msgstr "Pengertian"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:26
@@ -488,7 +486,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/config/index.rst:103
 msgid "Device"
-msgstr ""
+msgstr "Alat"
 
 #. type: Labeled list
 #: docs/manual/config/index.rst:104 docs/manual/smsd/config.rst:67
@@ -762,7 +760,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/config/index.rst:169 docs/manual/python/gammu.rst:1263
 msgid "Model"
-msgstr ""
+msgstr "Model"
 
 # type: Plain text
 #. type: Plain text
@@ -1301,7 +1299,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:48
 #, fuzzy, no-wrap
-#| msgid "Gammu information"
 msgid "0x01: Call Information\n"
 msgstr "Informasi gammu"
 
@@ -1456,7 +1453,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:90
 #, fuzzy
-#| msgid "Notes"
 msgid "Note:"
 msgstr "Catatan"
 
@@ -1809,7 +1805,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:192
 #, fuzzy, no-wrap
-#| msgid "Phone tests"
 msgid "0x04: Phone Status\n"
 msgstr "Tes telepon"
 
@@ -1859,7 +1854,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:203
 #, fuzzy, no-wrap
-#| msgid "Phone settings"
 msgid "0x05: Profile settings\n"
 msgstr "Pengaturan telepon"
 
@@ -2690,7 +2684,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:471 docs/manual/protocol/n7110.rst:219
 #, fuzzy, no-wrap
-#| msgid "Calendar notes"
 msgid "0x13: Calendar notes\n"
 msgstr "Catatan kalender"
 
@@ -2756,7 +2749,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:484
 #, fuzzy, no-wrap
-#| msgid "No error."
 msgid "other: error\n"
 msgstr "Tidak ada Kesalahan"
 
@@ -3934,7 +3926,6 @@ msgstr ""
 #. type: Title +
 #: docs/manual/protocol/samsung.rst:5
 #, fuzzy, no-wrap
-#| msgid "Phone information"
 msgid "Get organizer information"
 msgstr "Informasi telepon"
 
@@ -4362,7 +4353,7 @@ msgid "OK"
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/samsung.rst:295 docs/manual/protocol/m-obex.rst:393
+#: docs/manual/protocol/samsung.rst:295 docs/manual/protocol/m-obex.rst:394
 #: docs/manual/testing/dummy-driver.rst:37
 #, no-wrap
 msgid "Notes"
@@ -4570,7 +4561,7 @@ msgstr ""
 #: docs/manual/protocol/m-obex.rst:73
 #, no-wrap
 msgid "Contacts"
-msgstr ""
+msgstr "Kontak"
 
 #. type: Title +
 #: docs/manual/protocol/m-obex.rst:76
@@ -4580,11 +4571,11 @@ msgstr ""
 
 #. type: Title ~
 #: docs/manual/protocol/m-obex.rst:79 docs/manual/protocol/m-obex.rst:106
-#: docs/manual/protocol/m-obex.rst:139 docs/manual/protocol/m-obex.rst:171
-#: docs/manual/protocol/m-obex.rst:199 docs/manual/protocol/m-obex.rst:226
-#: docs/manual/protocol/m-obex.rst:252 docs/manual/protocol/m-obex.rst:277
-#: docs/manual/protocol/m-obex.rst:301 docs/manual/protocol/m-obex.rst:330
-#: docs/manual/protocol/m-obex.rst:356 docs/manual/protocol/m-obex.rst:381
+#: docs/manual/protocol/m-obex.rst:140 docs/manual/protocol/m-obex.rst:172
+#: docs/manual/protocol/m-obex.rst:200 docs/manual/protocol/m-obex.rst:227
+#: docs/manual/protocol/m-obex.rst:253 docs/manual/protocol/m-obex.rst:278
+#: docs/manual/protocol/m-obex.rst:302 docs/manual/protocol/m-obex.rst:331
+#: docs/manual/protocol/m-obex.rst:357 docs/manual/protocol/m-obex.rst:382
 #, no-wrap
 msgid "Request"
 msgstr ""
@@ -4605,11 +4596,11 @@ msgstr ""
 
 #. type: Title ~
 #: docs/manual/protocol/m-obex.rst:91 docs/manual/protocol/m-obex.rst:117
-#: docs/manual/protocol/m-obex.rst:154 docs/manual/protocol/m-obex.rst:186
-#: docs/manual/protocol/m-obex.rst:210 docs/manual/protocol/m-obex.rst:237
-#: docs/manual/protocol/m-obex.rst:263 docs/manual/protocol/m-obex.rst:287
-#: docs/manual/protocol/m-obex.rst:316 docs/manual/protocol/m-obex.rst:345
-#: docs/manual/protocol/m-obex.rst:367
+#: docs/manual/protocol/m-obex.rst:155 docs/manual/protocol/m-obex.rst:187
+#: docs/manual/protocol/m-obex.rst:211 docs/manual/protocol/m-obex.rst:238
+#: docs/manual/protocol/m-obex.rst:264 docs/manual/protocol/m-obex.rst:288
+#: docs/manual/protocol/m-obex.rst:317 docs/manual/protocol/m-obex.rst:346
+#: docs/manual/protocol/m-obex.rst:368
 #, no-wrap
 msgid "Answer"
 msgstr ""
@@ -4629,7 +4620,7 @@ msgid ""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:103 docs/manual/protocol/m-obex.rst:274
+#: docs/manual/protocol/m-obex.rst:103 docs/manual/protocol/m-obex.rst:275
 #, no-wrap
 msgid "List all"
 msgstr ""
@@ -4649,7 +4640,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:127
+#: docs/manual/protocol/m-obex.rst:126
 #, no-wrap
 msgid ""
 "*A0* 08 C1\n"
@@ -4658,33 +4649,38 @@ msgid ""
 "    Length of sent data\n"
 "*4C* 00 05 00 02\n"
 "    Indicates if these are the last contacts\n"
-"*49* 08 B4 00 0A 00 .....\n"
-"    Contacts in VCard format. The first two bytes of an item are the id of the contact. Bytes 3 and 4: length of vard. The vcard starts with byte 5.\n"
-"    There are more vcards (usually 4-5) in one response.\n"
+"*49* 07 41 01 10 01 8D ....\"\n"
+"    The first byte is unknown but all answers have this byte, then byte 2 and 3 contains the length of the answer, bytes 4 and 5 are the ID of the first entry bytes 6 and 7 are the length of this entry.\n"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:129
+#: docs/manual/protocol/m-obex.rst:128
+#, no-wrap
+msgid "    In one response more than 1 vcard can be returned in this case, entries are separated by 4 bytes with the following meaning: bytes 1 and 2 ID of the entry, bytes 3 and 4: length of the entry.\n"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/protocol/m-obex.rst:130
 msgid ""
 "To get all contacts the request have to be sent several times. The last two "
 "bytes must be incremented by every call."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:131
+#: docs/manual/protocol/m-obex.rst:132
 msgid ""
 "The end of the contacts list is reached if the header 0x4C is 0. The header "
 "will be 4C 00 05 00 00."
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:134
+#: docs/manual/protocol/m-obex.rst:135
 #, no-wrap
 msgid "Create a contact"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:137 docs/manual/protocol/m-obex.rst:169
+#: docs/manual/protocol/m-obex.rst:138 docs/manual/protocol/m-obex.rst:170
 msgid ""
 "Beware: This is a put operation and is performed in some obex "
 "implementations in several packages (for example 0x02, 0x02, 0x82). But I "
@@ -4693,7 +4689,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:152
+#: docs/manual/protocol/m-obex.rst:153
 #, no-wrap
 msgid ""
 "*82* 00 88\n"
@@ -4711,7 +4707,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:163
+#: docs/manual/protocol/m-obex.rst:164
 #, no-wrap
 msgid ""
 "*A0* 00 12\n"
@@ -4725,13 +4721,13 @@ msgid ""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:166
+#: docs/manual/protocol/m-obex.rst:167
 #, no-wrap
 msgid "Update a contact"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:184
+#: docs/manual/protocol/m-obex.rst:185
 #, no-wrap
 msgid ""
 "*82* 00 8D\n"
@@ -4749,7 +4745,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:191
+#: docs/manual/protocol/m-obex.rst:192
 #, no-wrap
 msgid ""
 "*A0* 00 08\n"
@@ -4759,18 +4755,18 @@ msgid ""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:194
+#: docs/manual/protocol/m-obex.rst:195
 #, no-wrap
 msgid "Read one contact"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:197
+#: docs/manual/protocol/m-obex.rst:198
 msgid "There is also the possibility to read exactly one contact."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:208
+#: docs/manual/protocol/m-obex.rst:209
 #, no-wrap
 msgid ""
 "*83* 00 26\n"
@@ -4784,7 +4780,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:219
+#: docs/manual/protocol/m-obex.rst:220
 #, no-wrap
 msgid ""
 "*A0* 00 C4\n"
@@ -4798,18 +4794,18 @@ msgid ""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:221
+#: docs/manual/protocol/m-obex.rst:222
 #, no-wrap
 msgid "Delete contact"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:224
+#: docs/manual/protocol/m-obex.rst:225
 msgid "To delete a contact you only have to know it's id."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:235
+#: docs/manual/protocol/m-obex.rst:236
 #, no-wrap
 msgid ""
 "*82* 00 28\n"
@@ -4823,7 +4819,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:243 docs/manual/protocol/m-obex.rst:350
+#: docs/manual/protocol/m-obex.rst:244 docs/manual/protocol/m-obex.rst:351
 #, no-wrap
 msgid ""
 "*A0* 00 08\n"
@@ -4833,22 +4829,21 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:246 docs/manual/testing/dummy-driver.rst:42
+#: docs/manual/protocol/m-obex.rst:247 docs/manual/testing/dummy-driver.rst:42
 #: docs/manual/python/objects.rst:419 docs/manual/python/gammu.rst:1267
 #: docs/manual/c/calendar.rst:2
 #, fuzzy, no-wrap
-#| msgid "Calendar notes"
 msgid "Calendar"
 msgstr "Catatan kalender"
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:249
+#: docs/manual/protocol/m-obex.rst:250
 #, no-wrap
 msgid "Get count"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:261
+#: docs/manual/protocol/m-obex.rst:262
 #, no-wrap
 msgid ""
 "*83* 00 25\n"
@@ -4862,7 +4857,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:272
+#: docs/manual/protocol/m-obex.rst:273
 #, no-wrap
 msgid ""
 "A0 00 1C\n"
@@ -4876,7 +4871,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:284
+#: docs/manual/protocol/m-obex.rst:285
 #, no-wrap
 msgid ""
 "*83* 00 20\n"
@@ -4888,7 +4883,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:296
+#: docs/manual/protocol/m-obex.rst:297
 #, no-wrap
 msgid ""
 "*A0* 00 C0\n"
@@ -4902,13 +4897,13 @@ msgid ""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:298
+#: docs/manual/protocol/m-obex.rst:299
 #, no-wrap
 msgid "Create"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:314
+#: docs/manual/protocol/m-obex.rst:315
 #, no-wrap
 msgid ""
 "*82* 00 CC\n"
@@ -4926,7 +4921,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:325
+#: docs/manual/protocol/m-obex.rst:326
 #, no-wrap
 msgid ""
 "*A0* 00 12\n"
@@ -4940,13 +4935,13 @@ msgid ""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:327
+#: docs/manual/protocol/m-obex.rst:328
 #, no-wrap
 msgid "Update"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:343
+#: docs/manual/protocol/m-obex.rst:344
 #, no-wrap
 msgid ""
 "*82* 00 F7\n"
@@ -4964,13 +4959,13 @@ msgid ""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:353
+#: docs/manual/protocol/m-obex.rst:354
 #, no-wrap
 msgid "Read"
-msgstr ""
+msgstr "Sudah dibaca"
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:365
+#: docs/manual/protocol/m-obex.rst:366
 #, no-wrap
 msgid ""
 "*83* 00 26\n"
@@ -4984,7 +4979,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:376
+#: docs/manual/protocol/m-obex.rst:377
 #, no-wrap
 msgid ""
 "*A0* 00 C0\n"
@@ -4998,13 +4993,13 @@ msgid ""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:378
+#: docs/manual/protocol/m-obex.rst:379
 #, no-wrap
 msgid "Delete"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:390
+#: docs/manual/protocol/m-obex.rst:391
 #, no-wrap
 msgid ""
 "*82* 00 28\n"
@@ -5018,57 +5013,56 @@ msgid ""
 msgstr ""
 
 #. type: Title -
-#: docs/manual/protocol/m-obex.rst:397
+#: docs/manual/protocol/m-obex.rst:398
 #, no-wrap
 msgid "Tasks"
 msgstr ""
 
 #. type: Title -
-#: docs/manual/protocol/m-obex.rst:401
+#: docs/manual/protocol/m-obex.rst:402
 #, fuzzy, no-wrap
-#| msgid "Filesystem"
 msgid "Files"
 msgstr "File sistem"
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:404
+#: docs/manual/protocol/m-obex.rst:405
 msgid ""
 "To get the file structure on the mobile, there are two commands. One that "
 "lists all subdirectories and one that lists all files."
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:406
+#: docs/manual/protocol/m-obex.rst:407
 #, no-wrap
 msgid "List directories"
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:409
+#: docs/manual/protocol/m-obex.rst:410
 #, no-wrap
 msgid "List files"
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:412
+#: docs/manual/protocol/m-obex.rst:413
 #, no-wrap
 msgid "Get file"
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:415
+#: docs/manual/protocol/m-obex.rst:416
 #, no-wrap
 msgid "Create file"
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:418
+#: docs/manual/protocol/m-obex.rst:419
 #, no-wrap
 msgid "Delete file"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:422
+#: docs/manual/protocol/m-obex.rst:423
 #, no-wrap
 msgid ""
 "SMS\n"
@@ -5076,36 +5070,36 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:426
+#: docs/manual/protocol/m-obex.rst:427
 msgid "0x01: Inbox 0x08: Outbox"
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:428
+#: docs/manual/protocol/m-obex.rst:429
 #, no-wrap
 msgid "Get sms count"
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:431
+#: docs/manual/protocol/m-obex.rst:432
 #, no-wrap
 msgid "List all sms"
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:434
+#: docs/manual/protocol/m-obex.rst:435
 #, no-wrap
 msgid "Send sms"
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:437
+#: docs/manual/protocol/m-obex.rst:438
 #, no-wrap
 msgid "Create sms"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:439
+#: docs/manual/protocol/m-obex.rst:440
 msgid ""
 "I don't think this is possible. At least I didn't find the function in New "
 "PC Studio. So sadly there will be no backup of sms messages."
@@ -5170,7 +5164,6 @@ msgstr ""
 #. type: Title +
 #: docs/manual/protocol/carkit.rst:27 docs/manual/protocol/carkit.rst:319
 #, fuzzy, no-wrap
-#| msgid "Phone is not connected."
 msgid "Phone connected to PC"
 msgstr "Telepon tidak terhubung."
 
@@ -5309,7 +5302,6 @@ msgstr ""
 #: docs/manual/protocol/carkit.rst:116 docs/manual/protocol/carkit.rst:260
 #: docs/manual/protocol/carkit.rst:461 docs/manual/protocol/carkit.rst:621
 #, fuzzy, no-wrap
-#| msgid "Phone is not connected."
 msgid "Disconnected"
 msgstr "Telepon tidak terhubung."
 
@@ -5343,7 +5335,6 @@ msgstr ""
 #. type: Title +
 #: docs/manual/protocol/carkit.rst:132 docs/manual/protocol/carkit.rst:476
 #, fuzzy, no-wrap
-#| msgid "Phone is not connected."
 msgid "Phone connected to CARC91"
 msgstr "Telepon tidak terhubung."
 
@@ -7468,7 +7459,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/protocol/n7110.rst:683
 #, fuzzy, no-wrap
-#| msgid "Phone settings"
 msgid "0x7a: settings\n"
 msgstr "Pengaturan telepon"
 
@@ -8376,7 +8366,6 @@ msgstr ""
 #. type: Title =
 #: docs/manual/protocol/index.rst:4
 #, fuzzy, no-wrap
-#| msgid "Phone tests"
 msgid "Phone Protocols"
 msgstr "Tes telepon"
 
@@ -8425,7 +8414,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/protocol/samsung-gt.rst:5
 #, fuzzy, no-wrap
-#| msgid "Calendar notes"
 msgid "Calendar Entries"
 msgstr "Catatan kalender"
 
@@ -8664,7 +8652,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/protocol/samsung-gt.rst:128
 #, fuzzy, no-wrap
-#| msgid "Notes"
 msgid "Memo Notes"
 msgstr "Catatan"
 
@@ -8769,7 +8756,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/protocol/nokia-s40-sms.rst:15
 #, fuzzy
-#| msgid "Service is not runnig."
 msgid "rest is not known"
 msgstr "Layanan tidak berjalan."
 
@@ -8863,7 +8849,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/protocol/nokia-s40-sms.rst:74
 #, fuzzy
-#| msgid "Phone tests"
 msgid "To test:"
 msgstr "Tes telepon"
 
@@ -8881,7 +8866,6 @@ msgstr ""
 #. type: Labeled list
 #: docs/manual/protocol/sonim.rst:4
 #, fuzzy, no-wrap
-#| msgid "Filesystem"
 msgid "Filesystem access"
 msgstr "File sistem"
 
@@ -10062,7 +10046,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/protocol/n6510.rst:736
 #, fuzzy
-#| msgid "FM radio"
 msgid "0x3E: FM Radio"
 msgstr "Radio FM"
 
@@ -10385,7 +10368,6 @@ msgstr ""
 #. type: Labeled list
 #: docs/manual/protocol/tdma_5120.rst:50
 #, fuzzy, no-wrap
-#| msgid "Service configuration is missing."
 msgid "get configuration pins"
 msgstr "Layanan konfigurasi hilang."
 
@@ -11003,7 +10985,6 @@ msgstr ""
 #: docs/manual/smsd/sql.rst:325 docs/manual/smsd/sql.rst:349
 #: docs/manual/smsd/sql.rst:375 docs/manual/smsd/sql.rst:385
 #, fuzzy
-#| msgid "Using default values."
 msgid "Default value:"
 msgstr "Gunakan nilai default."
 
@@ -13259,7 +13240,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/smsd/config.rst:94
 #, fuzzy
-#| msgid "OPTIONS"
 msgid "PIN"
 msgstr "PILIHAN"
 
@@ -13274,7 +13254,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/smsd/config.rst:99
 #, fuzzy
-#| msgid "Network"
 msgid "NetworkCode"
 msgstr "Jaringan"
 
@@ -13289,7 +13268,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/smsd/config.rst:104
 #, fuzzy
-#| msgid "Phone tests"
 msgid "PhoneCode"
 msgstr "Tes telepon"
 
@@ -13409,7 +13387,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/smsd/config.rst:150
 #, fuzzy
-#| msgid "Categories"
 msgid "MaxRetries"
 msgstr "Kategori"
 
@@ -13802,7 +13779,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/smsd/config.rst:331
 msgid "Send"
-msgstr ""
+msgstr "Kirim"
 
 #. type: Plain text
 #: docs/manual/smsd/config.rst:333
@@ -13850,7 +13827,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/smsd/config.rst:351
 msgid "User"
-msgstr ""
+msgstr "Pengguna"
 
 # type: Plain text
 #. type: Plain text
@@ -13861,7 +13838,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/smsd/config.rst:355
 msgid "Password"
-msgstr ""
+msgstr "kata sandi"
 
 # type: Plain text
 #. type: Plain text
@@ -14387,7 +14364,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/smsd/overview.rst:45
 #, fuzzy
-#| msgid "Phone is not connected."
 msgid "Try to connect to phone if not connected."
 msgstr "Telepon tidak terhubung."
 
@@ -15668,7 +15644,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/gammu/index.rst:18
 #, fuzzy
-#| msgid "Commands can be specified with or without leading --."
 msgid ""
 "Commands actually indicate which operation should Gammu perform. They can be "
 "specified with or without leading ``--``."
@@ -15948,7 +15923,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/gammu/index.rst:122
 #, fuzzy, no-wrap
-#| msgid "SMS and EMS"
 msgid "SMS and EMS commands"
 msgstr "SMS dan EMS"
 
@@ -16062,7 +16036,7 @@ msgstr ""
 #: docs/manual/c/hints.rst:140 docs/manual/c/unicode.rst:2
 #, no-wrap
 msgid "Unicode"
-msgstr ""
+msgstr "Unicode"
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:177
@@ -16108,7 +16082,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/gammu/index.rst:199
 #, fuzzy
-#| msgid "SMS and EMS"
 msgid "SMS commands"
 msgstr "SMS dan EMS"
 
@@ -16310,7 +16283,6 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:284
 #, fuzzy
-#| msgid "Can not open specified file."
 msgid "save to specified folder."
 msgstr "Tidak dapat membuka file yang ditentukan."
 
@@ -17151,7 +17123,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/gammu/index.rst:676
 #, fuzzy, no-wrap
-#| msgid "Memory (phonebooks and calls)"
 msgid "Memory (phonebooks and calls) commands"
 msgstr "Memori (buku telepon dan panggilan)"
 
@@ -17273,7 +17244,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/gammu/index.rst:745
 #, fuzzy, no-wrap
-#| msgid "Filesystem"
 msgid "Filesystem commands"
 msgstr "File sistem"
 
@@ -17330,7 +17300,6 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:769
 #, fuzzy
-#| msgid "Filesystem"
 msgid "-system"
 msgstr "File sistem"
 
@@ -17456,7 +17425,6 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:814
 #, fuzzy
-#| msgid "Filesystem"
 msgid "getfilesystemstatus"
 msgstr "File sistem"
 
@@ -17521,7 +17489,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/gammu/index.rst:843
 #, fuzzy, no-wrap
-#| msgid "Logo and pictures"
 msgid "Logo and pictures commands"
 msgstr "Logo dan gambar"
 
@@ -17737,7 +17704,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/gammu/index.rst:932
 #, fuzzy, no-wrap
-#| msgid "Ringtones"
 msgid "Ringtones commands"
 msgstr "Nada dering"
 
@@ -17793,7 +17759,6 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:958
 #, fuzzy
-#| msgid "Ringtones"
 msgid "getringtoneslist"
 msgstr "Nada dering"
 
@@ -17852,7 +17817,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/gammu/index.rst:986
 #, fuzzy, no-wrap
-#| msgid "Calendar notes"
 msgid "Calendar notes commands"
 msgstr "Catatan kalender"
 
@@ -17896,7 +17860,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/gammu/index.rst:1004
 #, fuzzy, no-wrap
-#| msgid "To do lists"
 msgid "To do list commands"
 msgstr "List pengerjaan"
 
@@ -17956,7 +17919,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/gammu/index.rst:1032
 #, fuzzy, no-wrap
-#| msgid "Date, time and alarms"
 msgid "Date, time and alarm commands"
 msgstr "Tanggal, waktu dan alarm"
 
@@ -18018,7 +17980,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/gammu/index.rst:1060
 #, fuzzy, no-wrap
-#| msgid "Categories"
 msgid "Categories commands"
 msgstr "Kategori"
 
@@ -18055,7 +18016,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/gammu/index.rst:1078
 #, fuzzy, no-wrap
-#| msgid "Backing up and restoring"
 msgid "Backing up and restoring commands"
 msgstr "Backing up dan restoring"
 
@@ -18127,14 +18087,12 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1107
 #, fuzzy
-#| msgid "Calendar notes"
 msgid "calendar notes"
 msgstr "Catatan kalender"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1108
 #, fuzzy
-#| msgid "MMS and MMS settings"
 msgid "SMSC settings"
 msgstr "MMS dan pengaturan MMS"
 
@@ -18151,14 +18109,12 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1111
 #, fuzzy
-#| msgid "WAP settings and bookmarks"
 msgid "WAP bookmarks"
 msgstr "Pengaturan WAP dan bookmark"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1112
 #, fuzzy
-#| msgid "Phone settings"
 msgid "WAP settings"
 msgstr "Pengaturan telepon"
 
@@ -18170,7 +18126,6 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1114
 #, fuzzy
-#| msgid "Ringtones"
 msgid "user ringtones"
 msgstr "Nada dering"
 
@@ -18372,7 +18327,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/gammu/index.rst:1200
 #, fuzzy, no-wrap
-#| msgid "Nokia specific"
 msgid "Nokia specific commands"
 msgstr "Spesifik Nokia"
 
@@ -18463,7 +18417,6 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1241
 #, fuzzy
-#| msgid "Filesystem"
 msgid "gammu getfilesystem"
 msgstr "File sistem"
 
@@ -18815,7 +18768,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/gammu/index.rst:1381
 #, fuzzy, no-wrap
-#| msgid "Siemens specific"
 msgid "Siemens specific commands"
 msgstr "Spesifik Siemens"
 
@@ -18844,7 +18796,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/gammu/index.rst:1393
 #, fuzzy, no-wrap
-#| msgid "Network"
 msgid "Network commands"
 msgstr "Jaringan"
 
@@ -18867,7 +18818,6 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1402
 #, fuzzy
-#| msgid "Network"
 msgid "networkinfo"
 msgstr "Jaringan"
 
@@ -18884,7 +18834,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/gammu/index.rst:1408
 #, fuzzy, no-wrap
-#| msgid "WAP settings and bookmarks"
 msgid "WAP settings and bookmarks commands"
 msgstr "Pengaturan WAP dan bookmark"
 
@@ -18934,7 +18883,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/gammu/index.rst:1433
 #, fuzzy, no-wrap
-#| msgid "MMS and MMS settings"
 msgid "MMS and MMS settings commands"
 msgstr "MMS dan pengaturan MMS"
 
@@ -18966,7 +18914,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/gammu/index.rst:1447
 #, fuzzy, no-wrap
-#| msgid "FM radio"
 msgid "FM radio commands"
 msgstr "Radio FM"
 
@@ -18984,7 +18931,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/gammu/index.rst:1454
 #, fuzzy, no-wrap
-#| msgid "Phone information"
 msgid "Phone information commands"
 msgstr "Informasi telepon"
 
@@ -19053,7 +18999,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/gammu/index.rst:1483
 #, fuzzy, no-wrap
-#| msgid "Phone settings"
 msgid "Phone settings commands"
 msgstr "Pengaturan telepon"
 
@@ -19087,7 +19032,6 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1497
 #, fuzzy
-#| msgid "Phone settings"
 msgid "Reset phone settings."
 msgstr "Pengaturan telepon"
 
@@ -19099,7 +19043,6 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1500
 #, fuzzy
-#| msgid "Phone settings"
 msgid "Clear phone settings."
 msgstr "Pengaturan telepon"
 
@@ -19196,7 +19139,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/gammu/index.rst:1528
 #, fuzzy, no-wrap
-#| msgid "Dumps decoding"
 msgid "Dumps decoding commands"
 msgstr "Tumpukan sedang didecode"
 
@@ -19442,7 +19384,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/gammu/index.rst:1610
 #, fuzzy, no-wrap
-#| msgid "Gammu information"
 msgid "Gammu information commands"
 msgstr "Informasi gammu"
 
@@ -21111,7 +21052,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/project/install.rst:127
 #, fuzzy
-#| msgid "Phone tests"
 msgid "make test"
 msgstr "Tes telepon"
 
@@ -22000,7 +21940,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/testing/dummy-driver.rst:14
 #, fuzzy, no-wrap
-#| msgid "Filesystem"
 msgid "Filesystem structure"
 msgstr "File sistem"
 
@@ -22032,7 +21971,7 @@ msgstr ""
 #: docs/manual/testing/dummy-driver.rst:25 docs/manual/c/message.rst:2
 #, no-wrap
 msgid "Messages"
-msgstr ""
+msgstr "Pesan"
 
 #. type: Plain text
 #: docs/manual/testing/dummy-driver.rst:29
@@ -22613,7 +22552,7 @@ msgstr ""
 #: docs/manual/python/objects.rst:27 docs/manual/python/objects.rst:214
 #: docs/manual/python/objects.rst:391
 msgid "Number"
-msgstr ""
+msgstr "Nomor"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:29
@@ -22624,7 +22563,7 @@ msgstr ""
 #: docs/manual/python/objects.rst:31 docs/manual/python/objects.rst:218
 #: docs/manual/python/objects.rst:734
 msgid "Name"
-msgstr ""
+msgstr "Nama"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:34
@@ -22636,7 +22575,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:36
 msgid "UDH"
-msgstr ""
+msgstr "UDH"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:38
@@ -22648,7 +22587,7 @@ msgstr ""
 #: docs/manual/internal/reply.rst:25
 #, no-wrap
 msgid "Text"
-msgstr ""
+msgstr "Teks"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:42
@@ -22658,7 +22597,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:44 docs/manual/python/objects.rst:738
 msgid "Folder"
-msgstr ""
+msgstr "Folder"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:46
@@ -22670,7 +22609,7 @@ msgstr ""
 #: docs/manual/python/objects.rst:442 docs/manual/python/objects.rst:537
 #: docs/manual/python/objects.rst:632
 msgid "Location"
-msgstr ""
+msgstr "Lokasi"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:50
@@ -22750,7 +22689,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:80 docs/manual/c/memory.rst:2
 #, fuzzy
-#| msgid "Memory full."
 msgid "Memory"
 msgstr "Memori penuh."
 
@@ -22765,7 +22703,7 @@ msgstr ""
 #: docs/manual/python/objects.rst:541 docs/manual/python/objects.rst:595
 #: docs/manual/python/objects.rst:660 docs/manual/python/objects.rst:746
 msgid "Type"
-msgstr ""
+msgstr "Tipe"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:86
@@ -23019,7 +22957,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:179
 #, fuzzy
-#| msgid "Ringtones"
 msgid "``NokiaRingtone``"
 msgstr "Nada dering"
 
@@ -23109,7 +23046,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:220
 #, fuzzy
-#| msgid "Bad feature string in configuration."
 msgid "Name of the SMSC configuration"
 msgstr "Fitur string buruk dalam konfigurasi."
 
@@ -23126,7 +23062,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:226
 msgid "Format"
-msgstr ""
+msgstr "Format"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:228
@@ -23156,7 +23092,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:235
 msgid "Validity"
-msgstr ""
+msgstr "Keabsahan"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:237
@@ -23216,7 +23152,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:268
 #, fuzzy
-#| msgid "Unknown error."
 msgid "Unknown"
 msgstr "Kesalahan tidak diketahui."
 
@@ -23482,7 +23417,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:351
 msgid "Left"
-msgstr ""
+msgstr "Kiri"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:353 docs/manual/python/objects.rst:357
@@ -23491,44 +23426,43 @@ msgstr ""
 #: docs/manual/python/objects.rst:377 docs/manual/python/objects.rst:381
 #: docs/manual/python/objects.rst:385
 #, fuzzy
-#| msgid "Phone information"
 msgid "Text formatting"
 msgstr "Informasi telepon"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:355
 msgid "Right"
-msgstr ""
+msgstr "Kanan"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:359
 msgid "Center"
-msgstr ""
+msgstr "Tengah"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:363
 msgid "Large"
-msgstr ""
+msgstr "Besar"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:367
 msgid "Small"
-msgstr ""
+msgstr "Kecil"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:371
 msgid "Bold"
-msgstr ""
+msgstr "Tebal"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:375
 msgid "Italic"
-msgstr ""
+msgstr "Miring"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:379
 msgid "Underlined"
-msgstr ""
+msgstr "Garis Bawah"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:383
@@ -23553,7 +23487,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:395 docs/manual/c/ringtone.rst:2
 #, fuzzy
-#| msgid "Ringtones"
 msgid "Ringtone"
 msgstr "Nada dering"
 
@@ -23565,7 +23498,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:399 docs/manual/c/bitmap.rst:2
 msgid "Bitmap"
-msgstr ""
+msgstr "Bitmap"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:401
@@ -23585,7 +23518,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:407 docs/manual/c/settings.rst:2
 #, fuzzy
-#| msgid "Phone settings"
 msgid "Settings"
 msgstr "Pengaturan telepon"
 
@@ -23816,7 +23748,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:479
 msgid "Priority"
-msgstr ""
+msgstr "Prioritas"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:481
@@ -23950,7 +23882,7 @@ msgstr ""
 #: docs/manual/python/objects.rst:526 docs/manual/python/objects.rst:621
 #: docs/manual/python/objects.rst:715
 msgid "Value"
-msgstr ""
+msgstr "Nilai"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:528 docs/manual/python/objects.rst:623
@@ -23966,7 +23898,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/python/objects.rst:532
 #, fuzzy, no-wrap
-#| msgid "Calendar notes"
 msgid "Calendar Object"
 msgstr "Catatan kalender"
 
@@ -24002,7 +23933,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/python/objects.rst:592
 #, fuzzy, no-wrap
-#| msgid "Calendar notes"
 msgid "Calendar Entries Object"
 msgstr "Catatan kalender"
 
@@ -24591,7 +24521,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:787
 #, fuzzy
-#| msgid "Filesystem"
 msgid "System"
 msgstr "File sistem"
 
@@ -24756,7 +24685,6 @@ msgstr ""
 #. type: delimited block =
 #: docs/manual/python/data.rst:17
 #, fuzzy
-#| msgid "Calendar notes"
 msgid "CalendarTypes"
 msgstr "Catatan kalender"
 
@@ -24768,7 +24696,6 @@ msgstr ""
 #. type: delimited block =
 #: docs/manual/python/data.rst:21
 #, fuzzy
-#| msgid "Calendar notes"
 msgid "CalendarValueTypes"
 msgstr "Catatan kalender"
 
@@ -25864,7 +25791,6 @@ msgstr ""
 #. type: delimited block -
 #: docs/manual/python/gammu.rst:67
 #, fuzzy, no-wrap
-#| msgid "Memory (phonebooks and calls)"
 msgid "      Adds memory (phonebooks or calls) entry.\n"
 msgstr "Memori (buku telepon dan panggilan)"
 
@@ -26146,7 +26072,6 @@ msgstr ""
 #. type: delimited block -
 #: docs/manual/python/gammu.rst:197
 #, fuzzy, no-wrap
-#| msgid "Memory (phonebooks and calls)"
 msgid "      Deletes memory (phonebooks or calls) entry.\n"
 msgstr "Memori (buku telepon dan panggilan)"
 
@@ -26606,7 +26531,6 @@ msgstr ""
 #. type: delimited block -
 #: docs/manual/python/gammu.rst:413
 #, fuzzy, no-wrap
-#| msgid "Failed to get SMSC number from phone."
 msgid "      Reads IMEI/serial number from phone.\n"
 msgstr "Gagal mengambil nomor SMSC dari telepon."
 
@@ -27301,7 +27225,6 @@ msgstr ""
 #. type: delimited block -
 #: docs/manual/python/gammu.rst:731
 #, fuzzy, no-wrap
-#| msgid "Phone settings"
 msgid "      Resets phone settings.\n"
 msgstr "Pengaturan telepon"
 
@@ -27699,7 +27622,6 @@ msgstr ""
 #. type: delimited block -
 #: docs/manual/python/gammu.rst:953
 #, fuzzy, no-wrap
-#| msgid "Memory (phonebooks and calls)"
 msgid "      Sets memory (phonebooks or calls) entry.\n"
 msgstr "Memori (buku telepon dan panggilan)"
 
@@ -27845,7 +27767,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/gammu.rst:1055
 #, fuzzy
-#| msgid "Phone information"
 msgid "Get version information."
 msgstr "Informasi telepon"
 
@@ -27859,7 +27780,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/python/gammu.rst:1060
 #, fuzzy, no-wrap
-#| msgid "Bad feature string in configuration."
 msgid "Debugging configuration"
 msgstr "Fitur string buruk dalam konfigurasi."
 
@@ -27918,7 +27838,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/gammu.rst:1083
 #, fuzzy
-#| msgid "No error."
 msgid "errors"
 msgstr "Tidak ada Kesalahan"
 
@@ -28177,7 +28096,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/python/gammu.rst:1223
 #, fuzzy, no-wrap
-#| msgid "Backing up and restoring"
 msgid "Backup reading and writing"
 msgstr "Backing up dan restoring"
 
@@ -28244,7 +28162,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/gammu.rst:1262
 msgid "IMEI"
-msgstr ""
+msgstr "IMEI"
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:1264
@@ -28310,7 +28228,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/gammu.rst:1295
 #, fuzzy
-#| msgid "Network"
 msgid "GSMNetworks"
 msgstr "Jaringan"
 
@@ -28719,7 +28636,6 @@ msgstr ""
 #. type: Title =
 #: docs/manual/internal/index.rst:4
 #, fuzzy, no-wrap
-#| msgid "Gammu information"
 msgid "Gammu internals"
 msgstr "Informasi gammu"
 
@@ -29102,7 +29018,6 @@ msgstr ""
 #. type: Title =
 #: docs/manual/formats/index.rst:2
 #, fuzzy, no-wrap
-#| msgid "File format not supported by Gammu."
 msgid "File formats used by Gammu"
 msgstr "Format file tidak didukung oleh Gammu."
 
@@ -29184,7 +29099,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/c/call.rst:2
 #, fuzzy
-#| msgid "Calls"
 msgid "Call"
 msgstr "Panggilan"
 
@@ -29486,7 +29400,6 @@ msgstr ""
 #. type: delimited block =
 #: docs/manual/c/call.rst:21
 #, fuzzy
-#| msgid "Calls"
 msgid "GSM_Call"
 msgstr "Panggilan"
 
@@ -29525,7 +29438,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/c/examples.rst:8
 #, fuzzy, no-wrap
-#| msgid "Phone information"
 msgid "Getting phone information"
 msgstr "Informasi telepon"
 
@@ -29588,7 +29500,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/c/examples.rst:38
 #, fuzzy, no-wrap
-#| msgid "Bad feature string in configuration."
 msgid "Custom configuration"
 msgstr "Fitur string buruk dalam konfigurasi."
 
@@ -29776,7 +29687,7 @@ msgstr ""
 #: docs/manual/c/misc.rst:2
 #, no-wrap
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Miscellaneous"
 
 #. type: Plain text
 #: docs/manual/c/misc.rst:5
@@ -30087,7 +29998,6 @@ msgstr ""
 #. type: delimited block =
 #: docs/manual/c/calendar.rst:29
 #, fuzzy
-#| msgid "MMS and MMS settings"
 msgid "GSM_SetCalendarSettings"
 msgstr "MMS dan pengaturan MMS"
 
@@ -30129,7 +30039,6 @@ msgstr ""
 #. type: delimited block =
 #: docs/manual/c/calendar.rst:37
 #, fuzzy
-#| msgid "MMS and MMS settings"
 msgid "GSM_CalendarSettings"
 msgstr "MMS dan pengaturan MMS"
 
@@ -30141,21 +30050,18 @@ msgstr ""
 #. type: delimited block =
 #: docs/manual/c/calendar.rst:39
 #, fuzzy
-#| msgid "Calendar notes"
 msgid "GSM_CalendarStatus"
 msgstr "Catatan kalender"
 
 #. type: delimited block =
 #: docs/manual/c/calendar.rst:40
 #, fuzzy
-#| msgid "Calendar notes"
 msgid "GSM_CalendarNoteType"
 msgstr "Catatan kalender"
 
 #. type: delimited block =
 #: docs/manual/c/calendar.rst:41
 #, fuzzy
-#| msgid "Calendar notes"
 msgid "GSM_CalendarType"
 msgstr "Catatan kalender"
 
@@ -30167,7 +30073,6 @@ msgstr ""
 #. type: delimited block =
 #: docs/manual/c/calendar.rst:43
 #, fuzzy
-#| msgid "Calendar notes"
 msgid "GSM_CalendarEntry"
 msgstr "Catatan kalender"
 
@@ -30475,7 +30380,6 @@ msgstr ""
 #. type: delimited block =
 #: docs/manual/c/info.rst:28
 #, fuzzy
-#| msgid "Network"
 msgid "GSM_NetworkInfo"
 msgstr "Jaringan"
 
@@ -30522,7 +30426,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/c/category.rst:2
 #, fuzzy
-#| msgid "Categories"
 msgid "Category"
 msgstr "Kategori"
 
@@ -30544,14 +30447,12 @@ msgstr ""
 #. type: delimited block =
 #: docs/manual/c/category.rst:8
 #, fuzzy
-#| msgid "Categories"
 msgid "GSM_CategoryType"
 msgstr "Kategori"
 
 #. type: delimited block =
 #: docs/manual/c/category.rst:9
 #, fuzzy
-#| msgid "Categories"
 msgid "GSM_Category"
 msgstr "Kategori"
 
@@ -30943,7 +30844,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/c/hints.rst:180
 #, fuzzy
-#| msgid "Bad feature string in configuration."
 msgid "For per state machine configuration:"
 msgstr "Fitur string buruk dalam konfigurasi."
 
@@ -31559,7 +31459,6 @@ msgstr ""
 #. type: delimited block =
 #: docs/manual/c/file.rst:19
 #, fuzzy
-#| msgid "Filesystem"
 msgid "GSM_FileSystemStatus"
 msgstr "File sistem"
 
@@ -31751,7 +31650,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/c/callback.rst:2
 #, fuzzy
-#| msgid "Calls"
 msgid "Callback"
 msgstr "Panggilan"
 
@@ -32052,21 +31950,18 @@ msgstr ""
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:7
 #, fuzzy
-#| msgid "Ringtones"
 msgid "GSM_GetRingtone"
 msgstr "Nada dering"
 
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:8
 #, fuzzy
-#| msgid "Ringtones"
 msgid "GSM_SetRingtone"
 msgstr "Nada dering"
 
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:9
 #, fuzzy
-#| msgid "Ringtones"
 msgid "GSM_GetRingtonesInfo"
 msgstr "Nada dering"
 
@@ -32173,7 +32068,6 @@ msgstr ""
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:30
 #, fuzzy
-#| msgid "Ringtones"
 msgid "GSM_NoteRingtone"
 msgstr "Nada dering"
 
@@ -32195,21 +32089,18 @@ msgstr ""
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:34
 #, fuzzy
-#| msgid "Ringtones"
 msgid "GSM_Ringtone"
 msgstr "Nada dering"
 
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:35
 #, fuzzy
-#| msgid "Ringtones"
 msgid "GSM_RingtoneInfo"
 msgstr "Nada dering"
 
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:35
 #, fuzzy
-#| msgid "Ringtones"
 msgid "GSM_AllRingtonesInfo"
 msgstr "Nada dering"
 
@@ -32251,7 +32142,6 @@ msgstr ""
 #. type: delimited block =
 #: docs/manual/c/settings.rst:12
 #, fuzzy
-#| msgid "MMS and MMS settings"
 msgid "GSM_SetMMSSettings"
 msgstr "MMS dan pengaturan MMS"
 
@@ -32268,7 +32158,6 @@ msgstr ""
 #. type: delimited block =
 #: docs/manual/c/settings.rst:15
 #, fuzzy
-#| msgid "Phone settings"
 msgid "GSM_ResetPhoneSettings"
 msgstr "Pengaturan telepon"
 
@@ -32310,7 +32199,6 @@ msgstr ""
 #. type: delimited block =
 #: docs/manual/c/settings.rst:23
 #, fuzzy
-#| msgid "MMS and MMS settings"
 msgid "GSM_SyncMLSettings"
 msgstr "MMS dan pengaturan MMS"
 
@@ -32555,8 +32443,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/utils/gammu-detect.rst:55
+#, fuzzy
 msgid "Show version information and compiled in features."
-msgstr ""
+msgstr "Informasi telepon"
 
 #. type: Plain text
 #: docs/manual/utils/gammu-detect.rst:57

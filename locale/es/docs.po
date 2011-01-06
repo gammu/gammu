@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.28.95\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-01-04 10:40+0100\n"
+"POT-Creation-Date: 2011-01-06 11:46+0100\n"
 "PO-Revision-Date: 2009-08-26 18:12+0200\n"
 "Last-Translator: Nacho Carretero <albucasis@gmail.com>\n"
 "Language-Team: none\n"
@@ -167,7 +167,7 @@ msgstr ""
 #: docs/manual/utils/jadmaker.rst:16 docs/manual/utils/gammu-detect.rst:19
 #, no-wrap
 msgid "Description"
-msgstr ""
+msgstr "Descripción"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:26
@@ -489,7 +489,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/config/index.rst:103
 msgid "Device"
-msgstr ""
+msgstr "Dispositivo"
 
 #. type: Labeled list
 #: docs/manual/config/index.rst:104 docs/manual/smsd/config.rst:67
@@ -746,8 +746,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/config/index.rst:163
+#, fuzzy
 msgid "Port"
-msgstr ""
+msgstr "Prioridad"
 
 #. type: Labeled list
 #: docs/manual/config/index.rst:164 docs/manual/smsd/config.rst:73
@@ -765,7 +766,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/config/index.rst:169 docs/manual/python/gammu.rst:1263
 msgid "Model"
-msgstr ""
+msgstr "Modelo"
 
 # type: Plain text
 #. type: Plain text
@@ -926,7 +927,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/config/index.rst:229
 #, fuzzy, no-wrap
-#| msgid "Debug levels"
 msgid "no debug level\n"
 msgstr "Niveles de debugueo"
 
@@ -1460,7 +1460,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:90
 #, fuzzy
-#| msgid "Notes"
 msgid "Note:"
 msgstr "Notas"
 
@@ -1813,7 +1812,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:192
 #, fuzzy, no-wrap
-#| msgid "Phone tests"
 msgid "0x04: Phone Status\n"
 msgstr "Pruebas del teléfono"
 
@@ -1863,7 +1861,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:203
 #, fuzzy, no-wrap
-#| msgid "Phone settings"
 msgid "0x05: Profile settings\n"
 msgstr "Ajustes del teléfono"
 
@@ -2694,7 +2691,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:471 docs/manual/protocol/n7110.rst:219
 #, fuzzy, no-wrap
-#| msgid "Calendar notes"
 msgid "0x13: Calendar notes\n"
 msgstr "Notas de calendario"
 
@@ -2760,7 +2756,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:484
 #, fuzzy, no-wrap
-#| msgid "No error."
 msgid "other: error\n"
 msgstr "Sin error."
 
@@ -3938,7 +3933,6 @@ msgstr ""
 #. type: Title +
 #: docs/manual/protocol/samsung.rst:5
 #, fuzzy, no-wrap
-#| msgid "Phone information"
 msgid "Get organizer information"
 msgstr "Información del teléfono"
 
@@ -3963,7 +3957,7 @@ msgstr ""
 #: docs/manual/formats/smsbackup.rst:104 docs/manual/utils/gammu-detect.rst:83
 #, no-wrap
 msgid "Example"
-msgstr ""
+msgstr "Ejemplo"
 
 #. type: Plain text
 #: docs/manual/protocol/samsung.rst:16
@@ -4363,10 +4357,10 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/protocol/samsung.rst:293
 msgid "OK"
-msgstr ""
+msgstr "Aceptar"
 
 #. type: Title +
-#: docs/manual/protocol/samsung.rst:295 docs/manual/protocol/m-obex.rst:393
+#: docs/manual/protocol/samsung.rst:295 docs/manual/protocol/m-obex.rst:394
 #: docs/manual/testing/dummy-driver.rst:37
 #, no-wrap
 msgid "Notes"
@@ -4480,7 +4474,6 @@ msgstr ""
 #. type: Labeled list
 #: docs/manual/protocol/m-obex.rst:28
 #, fuzzy, no-wrap
-#| msgid "For example to create SQLite tables, issue following command:"
 msgid "Some phones seem to start with following command"
 msgstr "Por ejemplo para crear tablas SQLite, emitir el siguiente comando:"
 
@@ -4576,7 +4569,7 @@ msgstr ""
 #: docs/manual/protocol/m-obex.rst:73
 #, no-wrap
 msgid "Contacts"
-msgstr ""
+msgstr "Contactos"
 
 #. type: Title +
 #: docs/manual/protocol/m-obex.rst:76
@@ -4586,11 +4579,11 @@ msgstr ""
 
 #. type: Title ~
 #: docs/manual/protocol/m-obex.rst:79 docs/manual/protocol/m-obex.rst:106
-#: docs/manual/protocol/m-obex.rst:139 docs/manual/protocol/m-obex.rst:171
-#: docs/manual/protocol/m-obex.rst:199 docs/manual/protocol/m-obex.rst:226
-#: docs/manual/protocol/m-obex.rst:252 docs/manual/protocol/m-obex.rst:277
-#: docs/manual/protocol/m-obex.rst:301 docs/manual/protocol/m-obex.rst:330
-#: docs/manual/protocol/m-obex.rst:356 docs/manual/protocol/m-obex.rst:381
+#: docs/manual/protocol/m-obex.rst:140 docs/manual/protocol/m-obex.rst:172
+#: docs/manual/protocol/m-obex.rst:200 docs/manual/protocol/m-obex.rst:227
+#: docs/manual/protocol/m-obex.rst:253 docs/manual/protocol/m-obex.rst:278
+#: docs/manual/protocol/m-obex.rst:302 docs/manual/protocol/m-obex.rst:331
+#: docs/manual/protocol/m-obex.rst:357 docs/manual/protocol/m-obex.rst:382
 #, no-wrap
 msgid "Request"
 msgstr ""
@@ -4611,11 +4604,11 @@ msgstr ""
 
 #. type: Title ~
 #: docs/manual/protocol/m-obex.rst:91 docs/manual/protocol/m-obex.rst:117
-#: docs/manual/protocol/m-obex.rst:154 docs/manual/protocol/m-obex.rst:186
-#: docs/manual/protocol/m-obex.rst:210 docs/manual/protocol/m-obex.rst:237
-#: docs/manual/protocol/m-obex.rst:263 docs/manual/protocol/m-obex.rst:287
-#: docs/manual/protocol/m-obex.rst:316 docs/manual/protocol/m-obex.rst:345
-#: docs/manual/protocol/m-obex.rst:367
+#: docs/manual/protocol/m-obex.rst:155 docs/manual/protocol/m-obex.rst:187
+#: docs/manual/protocol/m-obex.rst:211 docs/manual/protocol/m-obex.rst:238
+#: docs/manual/protocol/m-obex.rst:264 docs/manual/protocol/m-obex.rst:288
+#: docs/manual/protocol/m-obex.rst:317 docs/manual/protocol/m-obex.rst:346
+#: docs/manual/protocol/m-obex.rst:368
 #, no-wrap
 msgid "Answer"
 msgstr ""
@@ -4635,7 +4628,7 @@ msgid ""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:103 docs/manual/protocol/m-obex.rst:274
+#: docs/manual/protocol/m-obex.rst:103 docs/manual/protocol/m-obex.rst:275
 #, no-wrap
 msgid "List all"
 msgstr ""
@@ -4655,7 +4648,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:127
+#: docs/manual/protocol/m-obex.rst:126
 #, no-wrap
 msgid ""
 "*A0* 08 C1\n"
@@ -4664,33 +4657,38 @@ msgid ""
 "    Length of sent data\n"
 "*4C* 00 05 00 02\n"
 "    Indicates if these are the last contacts\n"
-"*49* 08 B4 00 0A 00 .....\n"
-"    Contacts in VCard format. The first two bytes of an item are the id of the contact. Bytes 3 and 4: length of vard. The vcard starts with byte 5.\n"
-"    There are more vcards (usually 4-5) in one response.\n"
+"*49* 07 41 01 10 01 8D ....\"\n"
+"    The first byte is unknown but all answers have this byte, then byte 2 and 3 contains the length of the answer, bytes 4 and 5 are the ID of the first entry bytes 6 and 7 are the length of this entry.\n"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:129
+#: docs/manual/protocol/m-obex.rst:128
+#, no-wrap
+msgid "    In one response more than 1 vcard can be returned in this case, entries are separated by 4 bytes with the following meaning: bytes 1 and 2 ID of the entry, bytes 3 and 4: length of the entry.\n"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/protocol/m-obex.rst:130
 msgid ""
 "To get all contacts the request have to be sent several times. The last two "
 "bytes must be incremented by every call."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:131
+#: docs/manual/protocol/m-obex.rst:132
 msgid ""
 "The end of the contacts list is reached if the header 0x4C is 0. The header "
 "will be 4C 00 05 00 00."
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:134
+#: docs/manual/protocol/m-obex.rst:135
 #, no-wrap
 msgid "Create a contact"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:137 docs/manual/protocol/m-obex.rst:169
+#: docs/manual/protocol/m-obex.rst:138 docs/manual/protocol/m-obex.rst:170
 msgid ""
 "Beware: This is a put operation and is performed in some obex "
 "implementations in several packages (for example 0x02, 0x02, 0x82). But I "
@@ -4699,7 +4697,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:152
+#: docs/manual/protocol/m-obex.rst:153
 #, no-wrap
 msgid ""
 "*82* 00 88\n"
@@ -4717,7 +4715,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:163
+#: docs/manual/protocol/m-obex.rst:164
 #, no-wrap
 msgid ""
 "*A0* 00 12\n"
@@ -4731,13 +4729,13 @@ msgid ""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:166
+#: docs/manual/protocol/m-obex.rst:167
 #, no-wrap
 msgid "Update a contact"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:184
+#: docs/manual/protocol/m-obex.rst:185
 #, no-wrap
 msgid ""
 "*82* 00 8D\n"
@@ -4755,7 +4753,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:191
+#: docs/manual/protocol/m-obex.rst:192
 #, no-wrap
 msgid ""
 "*A0* 00 08\n"
@@ -4765,18 +4763,18 @@ msgid ""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:194
+#: docs/manual/protocol/m-obex.rst:195
 #, no-wrap
 msgid "Read one contact"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:197
+#: docs/manual/protocol/m-obex.rst:198
 msgid "There is also the possibility to read exactly one contact."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:208
+#: docs/manual/protocol/m-obex.rst:209
 #, no-wrap
 msgid ""
 "*83* 00 26\n"
@@ -4790,7 +4788,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:219
+#: docs/manual/protocol/m-obex.rst:220
 #, no-wrap
 msgid ""
 "*A0* 00 C4\n"
@@ -4804,18 +4802,18 @@ msgid ""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:221
+#: docs/manual/protocol/m-obex.rst:222
 #, no-wrap
 msgid "Delete contact"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:224
+#: docs/manual/protocol/m-obex.rst:225
 msgid "To delete a contact you only have to know it's id."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:235
+#: docs/manual/protocol/m-obex.rst:236
 #, no-wrap
 msgid ""
 "*82* 00 28\n"
@@ -4829,7 +4827,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:243 docs/manual/protocol/m-obex.rst:350
+#: docs/manual/protocol/m-obex.rst:244 docs/manual/protocol/m-obex.rst:351
 #, no-wrap
 msgid ""
 "*A0* 00 08\n"
@@ -4839,22 +4837,21 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:246 docs/manual/testing/dummy-driver.rst:42
+#: docs/manual/protocol/m-obex.rst:247 docs/manual/testing/dummy-driver.rst:42
 #: docs/manual/python/objects.rst:419 docs/manual/python/gammu.rst:1267
 #: docs/manual/c/calendar.rst:2
 #, fuzzy, no-wrap
-#| msgid "Calendar notes"
 msgid "Calendar"
 msgstr "Notas de calendario"
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:249
+#: docs/manual/protocol/m-obex.rst:250
 #, no-wrap
 msgid "Get count"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:261
+#: docs/manual/protocol/m-obex.rst:262
 #, no-wrap
 msgid ""
 "*83* 00 25\n"
@@ -4868,7 +4865,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:272
+#: docs/manual/protocol/m-obex.rst:273
 #, no-wrap
 msgid ""
 "A0 00 1C\n"
@@ -4882,7 +4879,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:284
+#: docs/manual/protocol/m-obex.rst:285
 #, no-wrap
 msgid ""
 "*83* 00 20\n"
@@ -4894,7 +4891,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:296
+#: docs/manual/protocol/m-obex.rst:297
 #, no-wrap
 msgid ""
 "*A0* 00 C0\n"
@@ -4908,13 +4905,13 @@ msgid ""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:298
+#: docs/manual/protocol/m-obex.rst:299
 #, no-wrap
 msgid "Create"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:314
+#: docs/manual/protocol/m-obex.rst:315
 #, no-wrap
 msgid ""
 "*82* 00 CC\n"
@@ -4932,7 +4929,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:325
+#: docs/manual/protocol/m-obex.rst:326
 #, no-wrap
 msgid ""
 "*A0* 00 12\n"
@@ -4946,13 +4943,13 @@ msgid ""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:327
+#: docs/manual/protocol/m-obex.rst:328
 #, no-wrap
 msgid "Update"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:343
+#: docs/manual/protocol/m-obex.rst:344
 #, no-wrap
 msgid ""
 "*82* 00 F7\n"
@@ -4970,13 +4967,13 @@ msgid ""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:353
+#: docs/manual/protocol/m-obex.rst:354
 #, no-wrap
 msgid "Read"
-msgstr ""
+msgstr "Leer"
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:365
+#: docs/manual/protocol/m-obex.rst:366
 #, no-wrap
 msgid ""
 "*83* 00 26\n"
@@ -4990,7 +4987,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:376
+#: docs/manual/protocol/m-obex.rst:377
 #, no-wrap
 msgid ""
 "*A0* 00 C0\n"
@@ -5004,13 +5001,13 @@ msgid ""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:378
+#: docs/manual/protocol/m-obex.rst:379
 #, no-wrap
 msgid "Delete"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:390
+#: docs/manual/protocol/m-obex.rst:391
 #, no-wrap
 msgid ""
 "*82* 00 28\n"
@@ -5024,57 +5021,56 @@ msgid ""
 msgstr ""
 
 #. type: Title -
-#: docs/manual/protocol/m-obex.rst:397
+#: docs/manual/protocol/m-obex.rst:398
 #, no-wrap
 msgid "Tasks"
 msgstr ""
 
 #. type: Title -
-#: docs/manual/protocol/m-obex.rst:401
+#: docs/manual/protocol/m-obex.rst:402
 #, fuzzy, no-wrap
-#| msgid "Filesystem"
 msgid "Files"
 msgstr "Sistema de archivos"
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:404
+#: docs/manual/protocol/m-obex.rst:405
 msgid ""
 "To get the file structure on the mobile, there are two commands. One that "
 "lists all subdirectories and one that lists all files."
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:406
+#: docs/manual/protocol/m-obex.rst:407
 #, no-wrap
 msgid "List directories"
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:409
+#: docs/manual/protocol/m-obex.rst:410
 #, no-wrap
 msgid "List files"
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:412
+#: docs/manual/protocol/m-obex.rst:413
 #, no-wrap
 msgid "Get file"
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:415
+#: docs/manual/protocol/m-obex.rst:416
 #, no-wrap
 msgid "Create file"
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:418
+#: docs/manual/protocol/m-obex.rst:419
 #, no-wrap
 msgid "Delete file"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:422
+#: docs/manual/protocol/m-obex.rst:423
 #, no-wrap
 msgid ""
 "SMS\n"
@@ -5082,36 +5078,36 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:426
+#: docs/manual/protocol/m-obex.rst:427
 msgid "0x01: Inbox 0x08: Outbox"
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:428
+#: docs/manual/protocol/m-obex.rst:429
 #, no-wrap
 msgid "Get sms count"
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:431
+#: docs/manual/protocol/m-obex.rst:432
 #, no-wrap
 msgid "List all sms"
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:434
+#: docs/manual/protocol/m-obex.rst:435
 #, no-wrap
 msgid "Send sms"
 msgstr ""
 
 #. type: Title +
-#: docs/manual/protocol/m-obex.rst:437
+#: docs/manual/protocol/m-obex.rst:438
 #, no-wrap
 msgid "Create sms"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/protocol/m-obex.rst:439
+#: docs/manual/protocol/m-obex.rst:440
 msgid ""
 "I don't think this is possible. At least I didn't find the function in New "
 "PC Studio. So sadly there will be no backup of sms messages."
@@ -5236,7 +5232,6 @@ msgstr ""
 #: docs/manual/protocol/carkit.rst:67 docs/manual/protocol/carkit.rst:181
 #: docs/manual/protocol/carkit.rst:354 docs/manual/protocol/carkit.rst:511
 #, fuzzy, no-wrap
-#| msgid "Cancel incoming call"
 msgid "Incoming call"
 msgstr "Cancela llamada entrante"
 
@@ -5262,7 +5257,7 @@ msgstr ""
 #: docs/manual/protocol/carkit.rst:368 docs/manual/protocol/carkit.rst:541
 #, no-wrap
 msgid "Connected"
-msgstr ""
+msgstr "Conectado"
 
 #. type: Plain text
 #: docs/manual/protocol/carkit.rst:80 docs/manual/protocol/carkit.rst:200
@@ -7473,7 +7468,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/protocol/n7110.rst:683
 #, fuzzy, no-wrap
-#| msgid "Phone settings"
 msgid "0x7a: settings\n"
 msgstr "Ajustes del teléfono"
 
@@ -8381,7 +8375,6 @@ msgstr ""
 #. type: Title =
 #: docs/manual/protocol/index.rst:4
 #, fuzzy, no-wrap
-#| msgid "Phone tests"
 msgid "Phone Protocols"
 msgstr "Pruebas del teléfono"
 
@@ -8430,7 +8423,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/protocol/samsung-gt.rst:5
 #, fuzzy, no-wrap
-#| msgid "Calendar notes"
 msgid "Calendar Entries"
 msgstr "Notas de calendario"
 
@@ -8669,7 +8661,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/protocol/samsung-gt.rst:128
 #, fuzzy, no-wrap
-#| msgid "Notes"
 msgid "Memo Notes"
 msgstr "Notas"
 
@@ -8866,7 +8857,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/protocol/nokia-s40-sms.rst:74
 #, fuzzy
-#| msgid "Phone tests"
 msgid "To test:"
 msgstr "Pruebas del teléfono"
 
@@ -8884,7 +8874,6 @@ msgstr ""
 #. type: Labeled list
 #: docs/manual/protocol/sonim.rst:4
 #, fuzzy, no-wrap
-#| msgid "Filesystem"
 msgid "Filesystem access"
 msgstr "Sistema de archivos"
 
@@ -10065,7 +10054,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/protocol/n6510.rst:736
 #, fuzzy
-#| msgid "FM radio"
 msgid "0x3E: FM Radio"
 msgstr "Radio FM"
 
@@ -11005,7 +10993,6 @@ msgstr ""
 #: docs/manual/smsd/sql.rst:325 docs/manual/smsd/sql.rst:349
 #: docs/manual/smsd/sql.rst:375 docs/manual/smsd/sql.rst:385
 #, fuzzy
-#| msgid "Using default values."
 msgid "Default value:"
 msgstr "Usando valores por defecto."
 
@@ -12443,7 +12430,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:338
 #, fuzzy, no-wrap
-#| msgid "7 - added CreatorID to tables (it holds PhoneID if set)"
 msgid ""
 "7\n"
 "    added CreatorID to tables (it holds PhoneID if set)\n"
@@ -13271,7 +13257,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/smsd/config.rst:94
 #, fuzzy
-#| msgid "OPTIONS"
 msgid "PIN"
 msgstr "OPCIONES"
 
@@ -13300,7 +13285,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/smsd/config.rst:104
 #, fuzzy
-#| msgid "Phone tests"
 msgid "PhoneCode"
 msgstr "Pruebas del teléfono"
 
@@ -13338,7 +13322,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/smsd/config.rst:121
 #, fuzzy
-#| msgid "Debug levels"
 msgid "DebugLevel"
 msgstr "Niveles de debugueo"
 
@@ -13423,7 +13406,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/smsd/config.rst:150
 #, fuzzy
-#| msgid "Categories"
 msgid "MaxRetries"
 msgstr "Categorías"
 
@@ -13818,7 +13800,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/smsd/config.rst:331
 msgid "Send"
-msgstr ""
+msgstr "Enviar"
 
 #. type: Plain text
 #: docs/manual/smsd/config.rst:333
@@ -13866,7 +13848,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/smsd/config.rst:351
 msgid "User"
-msgstr ""
+msgstr "Usuario"
 
 # type: Plain text
 #. type: Plain text
@@ -13877,7 +13859,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/smsd/config.rst:355
 msgid "Password"
-msgstr ""
+msgstr "Contraseña"
 
 # type: Plain text
 #. type: Plain text
@@ -14489,7 +14471,6 @@ msgstr ""
 #: docs/manual/utils/gammu-config.rst:12 docs/manual/utils/jadmaker.rst:12
 #: docs/manual/utils/gammu-detect.rst:15
 #, fuzzy
-#| msgid "Gettext"
 msgid "text"
 msgstr "Gettext"
 
@@ -14683,7 +14664,6 @@ msgstr ""
 #: docs/manual/smsd/smsd.rst:32 docs/manual/utils/gammu-config.rst:24
 #: docs/manual/utils/jadmaker.rst:25 docs/manual/utils/gammu-detect.rst:45
 #, fuzzy
-#| msgid "B<-h, --help>"
 msgid "-h, --help"
 msgstr "B<-h, --help>"
 
@@ -14865,7 +14845,6 @@ msgstr ""
 #. type: Title =
 #: docs/manual/smsd/code.rst:2
 #, fuzzy, no-wrap
-#| msgid "Gammu Documentation"
 msgid "Developer documentation"
 msgstr "Documentación Gammu"
 
@@ -15693,7 +15672,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/gammu/index.rst:18
 #, fuzzy
-#| msgid "Commands can be specified with or without leading --."
 msgid ""
 "Commands actually indicate which operation should Gammu perform. They can be "
 "specified with or without leading ``--``."
@@ -15749,7 +15727,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/gammu/index.rst:40
 #, fuzzy
-#| msgid "Debug levels"
 msgid "-d, --debug <level>"
 msgstr "Niveles de debugueo"
 
@@ -15806,7 +15783,6 @@ msgstr "Cancela llamada entrante"
 #. type: Plain text
 #: docs/manual/gammu/index.rst:60
 #, fuzzy
-#| msgid "B<canceldiverts>"
 msgid "canceldiverts"
 msgstr "B<canceldiverts>"
 
@@ -15833,7 +15809,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/gammu/index.rst:68
 #, fuzzy
-#| msgid "B<dialvoice>I< number [show|hide]>"
 msgid "dialvoice number [show|hide]"
 msgstr "B<dialvoice>I< number [show|hide]>"
 
@@ -15854,9 +15829,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/gammu/index.rst:74
 #, fuzzy
-#| msgid ""
-#| "B<divert>I< get|set all|busy|noans|outofreach all|voice|fax|data [number "
-#| "timeout]>"
 msgid ""
 "divert get|set all|busy|noans|outofreach all|voice|fax|data [number timeout]"
 msgstr ""
@@ -15922,7 +15894,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/gammu/index.rst:89
 #, fuzzy
-#| msgid "B<getussd>I< code>"
 msgid "getussd code"
 msgstr "B<getussd>I< code>"
 
@@ -15947,7 +15918,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/gammu/index.rst:97
 #, fuzzy
-#| msgid "B<maketerminatedcall>I< number length [show|hide]>"
 msgid "maketerminatedcall number length [show|hide]"
 msgstr "B<maketerminatedcall>I< number length [show|hide]>"
 
@@ -15955,9 +15925,6 @@ msgstr "B<maketerminatedcall>I< number length [show|hide]>"
 #. type: Plain text
 #: docs/manual/gammu/index.rst:100
 #, fuzzy
-#| msgid ""
-#| "Make voice call from SIM card line set in phone which will be terminated "
-#| "after B<length> seconds."
 msgid ""
 "Make voice call from SIM card line set in phone which will be terminated "
 "after ``length`` seconds."
@@ -16029,7 +15996,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/gammu/index.rst:122
 #, fuzzy, no-wrap
-#| msgid "SMS and EMS"
 msgid "SMS and EMS commands"
 msgstr "SMS y EMS"
 
@@ -16147,7 +16113,7 @@ msgstr ""
 #: docs/manual/c/hints.rst:140 docs/manual/c/unicode.rst:2
 #, no-wrap
 msgid "Unicode"
-msgstr ""
+msgstr "Unicode"
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:177
@@ -16193,7 +16159,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/gammu/index.rst:199
 #, fuzzy
-#| msgid "SMS and EMS"
 msgid "SMS commands"
 msgstr "SMS y EMS"
 
@@ -16201,7 +16166,6 @@ msgstr "SMS y EMS"
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:202
 #, fuzzy
-#| msgid "B<addsmsfolder>I< name>"
 msgid "addsmsfolder name"
 msgstr "B<addsmsfolder>I< nombre>"
 
@@ -16209,7 +16173,6 @@ msgstr "B<addsmsfolder>I< nombre>"
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:204
 #, fuzzy
-#| msgid "B<deleteallsms>I< folder>"
 msgid "deleteallsms folder"
 msgstr "B<deleteallsms>I< carpeta>"
 
@@ -16223,7 +16186,6 @@ msgstr "Borra todos los SMS de la carpeta especificada."
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:208
 #, fuzzy
-#| msgid "B<deletesms>I< folder start [stop]>"
 msgid "deletesms folder start [stop]"
 msgstr "B<deletesms>I< carpeta start [stop]>"
 
@@ -16266,11 +16228,6 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:225
 #, fuzzy
-#| msgid ""
-#| "Get all SMS from phone. In some phones you will have also SMS templates "
-#| "and info about locations used to save Picture Images. With each sms you "
-#| "will see location. If you want to get such sms from phone alone, use "
-#| "B<gammu getsms 0 location>"
 msgid ""
 "Get all SMS from phone. In some phones you will have also SMS templates and "
 "info about locations used to save Picture Images. With each sms you will see "
@@ -16302,7 +16259,6 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:232
 #, fuzzy
-#| msgid "B<deletesms>I< folder start [stop]>"
 msgid "getsms folder start [stop]"
 msgstr "B<deletesms>I< carpeta start [stop]>"
 
@@ -16335,7 +16291,6 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:249
 #, fuzzy
-#| msgid "B<getspeeddial>I< start [stop]>"
 msgid "getsmsc [start [stop]]"
 msgstr "B<getspeeddial>I< start [stop]>"
 
@@ -16396,7 +16351,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/gammu/index.rst:271 docs/manual/python/objects.rst:216
 msgid "SMSC number"
-msgstr ""
+msgstr "Número SMSC"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:273
@@ -16612,7 +16567,6 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:360 docs/manual/gammu/index.rst:589
 #, fuzzy
-#| msgid "Gettext"
 msgid "-text"
 msgstr "Gettext"
 
@@ -17272,7 +17226,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/gammu/index.rst:676
 #, fuzzy, no-wrap
-#| msgid "Memory (phonebooks and calls)"
 msgid "Memory (phonebooks and calls) commands"
 msgstr "Memoria (números y llamadas)"
 
@@ -17375,7 +17328,6 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:735
 #, fuzzy
-#| msgid "B<getspeeddial>I< start [stop]>"
 msgid "getspeeddial start [stop]"
 msgstr "B<getspeeddial>I< start [stop]>"
 
@@ -17399,7 +17351,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/gammu/index.rst:745
 #, fuzzy, no-wrap
-#| msgid "Filesystem"
 msgid "Filesystem commands"
 msgstr "Sistema de archivos"
 
@@ -17456,7 +17407,6 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:769
 #, fuzzy
-#| msgid "Filesystem"
 msgid "-system"
 msgstr "Sistema de archivos"
 
@@ -17513,7 +17463,6 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:790
 #, fuzzy
-#| msgid "B<addsmsfolder>I< name>"
 msgid "deletefolder name"
 msgstr "B<addsmsfolder>I< nombre>"
 
@@ -17585,7 +17534,6 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:814
 #, fuzzy
-#| msgid "Filesystem"
 msgid "getfilesystemstatus"
 msgstr "Sistema de archivos"
 
@@ -17650,7 +17598,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/gammu/index.rst:843
 #, fuzzy, no-wrap
-#| msgid "Logo and pictures"
 msgid "Logo and pictures commands"
 msgstr "Logotipos y imágenes"
 
@@ -17868,7 +17815,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/gammu/index.rst:932
 #, fuzzy, no-wrap
-#| msgid "Ringtones"
 msgid "Ringtones commands"
 msgstr "Tonos de llamada"
 
@@ -17924,7 +17870,6 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:958
 #, fuzzy
-#| msgid "Ringtones"
 msgid "getringtoneslist"
 msgstr "Tonos de llamada"
 
@@ -17983,7 +17928,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/gammu/index.rst:986
 #, fuzzy, no-wrap
-#| msgid "Calendar notes"
 msgid "Calendar notes commands"
 msgstr "Notas de calendario"
 
@@ -17998,7 +17942,6 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:991
 #, fuzzy
-#| msgid "B<deletesms>I< folder start [stop]>"
 msgid "deletecalendar start [stop]"
 msgstr "B<deletesms>I< carpeta start [stop]>"
 
@@ -18021,7 +17964,6 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:999
 #, fuzzy
-#| msgid "B<getspeeddial>I< start [stop]>"
 msgid "getcalendar start [stop]"
 msgstr "B<getspeeddial>I< start [stop]>"
 
@@ -18033,7 +17975,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/gammu/index.rst:1004
 #, fuzzy, no-wrap
-#| msgid "To do lists"
 msgid "To do list commands"
 msgstr "Listas de tareas"
 
@@ -18041,7 +17982,6 @@ msgstr "Listas de tareas"
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1007
 #, fuzzy
-#| msgid "B<deletesms>I< folder start [stop]>"
 msgid "deletetodo start [stop]"
 msgstr "B<deletesms>I< carpeta start [stop]>"
 
@@ -18066,7 +18006,6 @@ msgstr "Almacena todos los mensajes SMS del teléfono en un archivo."
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1015
 #, fuzzy
-#| msgid "B<getspeeddial>I< start [stop]>"
 msgid "gettodo start [stop]"
 msgstr "B<getspeeddial>I< start [stop]>"
 
@@ -18103,7 +18042,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/gammu/index.rst:1032
 #, fuzzy, no-wrap
-#| msgid "Date, time and alarms"
 msgid "Date, time and alarm commands"
 msgstr "Fecha, hora y alarmas"
 
@@ -18165,7 +18103,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/gammu/index.rst:1060
 #, fuzzy, no-wrap
-#| msgid "Categories"
 msgid "Categories commands"
 msgstr "Categorías"
 
@@ -18208,7 +18145,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/gammu/index.rst:1078
 #, fuzzy, no-wrap
-#| msgid "Backing up and restoring"
 msgid "Backing up and restoring commands"
 msgstr "Backup y recuperación"
 
@@ -18258,9 +18194,6 @@ msgstr "B<addsms>I< carpeta  archivo>"
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1100
 #, fuzzy
-#| msgid ""
-#| "Adds SMSes from file (format like backupsms uses) to selected folder in "
-#| "phone."
 msgid ""
 "Adds SMSes from file (format like :option:`gammu backupsms` uses) to "
 "selected folder in phone."
@@ -18291,14 +18224,12 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1107
 #, fuzzy
-#| msgid "Calendar notes"
 msgid "calendar notes"
 msgstr "Notas de calendario"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1108
 #, fuzzy
-#| msgid "MMS and MMS settings"
 msgid "SMSC settings"
 msgstr "MMS y ajustes MMS"
 
@@ -18315,14 +18246,12 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1111
 #, fuzzy
-#| msgid "WAP settings and bookmarks"
 msgid "WAP bookmarks"
 msgstr "Ajustes WAP y marcadores"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1112
 #, fuzzy
-#| msgid "Phone settings"
 msgid "WAP settings"
 msgstr "Ajustes del teléfono"
 
@@ -18389,7 +18318,6 @@ msgstr "B<backupsms>I< archivo>"
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1128
 #, fuzzy
-#| msgid "Stores all SMSes from phone to file."
 msgid "Stores all SMSes from phone to file into :ref:`gammu-smsbackup`."
 msgstr "Almacena todos los mensajes SMS del teléfono en un archivo."
 
@@ -18442,10 +18370,6 @@ msgstr "B<deletesms>I< carpeta start [stop]>"
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1151
 #, fuzzy
-#| msgid ""
-#| "Restores SMSes from file (format like backupsms uses) to selected folder "
-#| "in phone. Please note that this overwrites existing messages in phone (if "
-#| "it supports it)."
 msgid ""
 "Please note that this overwrites existing messages in phone (if it supports "
 "it)."
@@ -18459,9 +18383,6 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1154
 #, fuzzy
-#| msgid ""
-#| "Adds SMSes from file (format like backupsms uses) to selected folder in "
-#| "phone."
 msgid ""
 "Restores SMSes from file (format like :option:`gammu backupsms` uses) to "
 "selected folder in phone."
@@ -18563,7 +18484,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/gammu/index.rst:1200
 #, fuzzy, no-wrap
-#| msgid "Nokia specific"
 msgid "Nokia specific commands"
 msgstr "Específico para Nokia"
 
@@ -18654,7 +18574,6 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1241
 #, fuzzy
-#| msgid "Filesystem"
 msgid "gammu getfilesystem"
 msgstr "Sistema de archivos"
 
@@ -19006,7 +18925,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/gammu/index.rst:1381
 #, fuzzy, no-wrap
-#| msgid "Siemens specific"
 msgid "Siemens specific commands"
 msgstr "Específico para Siemens"
 
@@ -19035,7 +18953,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/gammu/index.rst:1393
 #, fuzzy, no-wrap
-#| msgid "Network"
 msgid "Network commands"
 msgstr "Red"
 
@@ -19043,7 +18960,6 @@ msgstr "Red"
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1396
 #, fuzzy
-#| msgid "B<getspeeddial>I< start [stop]>"
 msgid "getgprspoint start [stop]"
 msgstr "B<getspeeddial>I< start [stop]>"
 
@@ -19061,7 +18977,6 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1402
 #, fuzzy
-#| msgid "Network"
 msgid "networkinfo"
 msgstr "Red"
 
@@ -19078,7 +18993,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/gammu/index.rst:1408
 #, fuzzy, no-wrap
-#| msgid "WAP settings and bookmarks"
 msgid "WAP settings and bookmarks commands"
 msgstr "Ajustes WAP y marcadores"
 
@@ -19086,7 +19000,6 @@ msgstr "Ajustes WAP y marcadores"
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1411
 #, fuzzy
-#| msgid "B<deletesms>I< folder start [stop]>"
 msgid "deletewapbookmark start [stop]"
 msgstr "B<deletesms>I< carpeta start [stop]>"
 
@@ -19100,7 +19013,6 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1417
 #, fuzzy
-#| msgid "B<getspeeddial>I< start [stop]>"
 msgid "getchatsettings start [stop]"
 msgstr "B<getspeeddial>I< start [stop]>"
 
@@ -19108,7 +19020,6 @@ msgstr "B<getspeeddial>I< start [stop]>"
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1419
 #, fuzzy
-#| msgid "B<getspeeddial>I< start [stop]>"
 msgid "getsyncmlsettings start [stop]"
 msgstr "B<getspeeddial>I< start [stop]>"
 
@@ -19116,7 +19027,6 @@ msgstr "B<getspeeddial>I< start [stop]>"
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1421
 #, fuzzy
-#| msgid "B<getspeeddial>I< start [stop]>"
 msgid "getwapbookmark start [stop]"
 msgstr "B<getspeeddial>I< start [stop]>"
 
@@ -19130,7 +19040,6 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1427
 #, fuzzy
-#| msgid "B<getspeeddial>I< start [stop]>"
 msgid "getwapsettings start [stop]"
 msgstr "B<getspeeddial>I< start [stop]>"
 
@@ -19143,7 +19052,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/gammu/index.rst:1433
 #, fuzzy, no-wrap
-#| msgid "MMS and MMS settings"
 msgid "MMS and MMS settings commands"
 msgstr "MMS y ajustes MMS"
 
@@ -19166,7 +19074,6 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1442
 #, fuzzy
-#| msgid "B<getspeeddial>I< start [stop]>"
 msgid "getmmssettings start [stop]"
 msgstr "B<getspeeddial>I< start [stop]>"
 
@@ -19180,7 +19087,6 @@ msgstr "B<addsms>I< carpeta  archivo>"
 #. type: Title -
 #: docs/manual/gammu/index.rst:1447
 #, fuzzy, no-wrap
-#| msgid "FM radio"
 msgid "FM radio commands"
 msgstr "Radio FM"
 
@@ -19188,7 +19094,6 @@ msgstr "Radio FM"
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1450
 #, fuzzy
-#| msgid "B<getspeeddial>I< start [stop]>"
 msgid "getfmstation start [stop]"
 msgstr "B<getspeeddial>I< start [stop]>"
 
@@ -19201,14 +19106,13 @@ msgstr ""
 #. type: Title -
 #: docs/manual/gammu/index.rst:1454
 #, fuzzy, no-wrap
-#| msgid "Phone information"
 msgid "Phone information commands"
 msgstr "Información del teléfono"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1457
 msgid "battery"
-msgstr ""
+msgstr "batería"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1459
@@ -19259,7 +19163,6 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1477
 #, fuzzy
-#| msgid "B<monitor>I< [times]>"
 msgid "monitor [times]"
 msgstr "B<monitor>I< [veces]>"
 
@@ -19267,9 +19170,6 @@ msgstr "B<monitor>I< [veces]>"
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1480
 #, fuzzy
-#| msgid ""
-#| "Get phone status and writes continuously to standard output. Press Ctrl+C "
-#| "to break this state."
 msgid ""
 "Get phone status and writes continuously to standard output. Press :kbd:`Ctrl"
 "+C` to break this state."
@@ -19280,7 +19180,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/gammu/index.rst:1483
 #, fuzzy, no-wrap
-#| msgid "Phone settings"
 msgid "Phone settings commands"
 msgstr "Ajustes del teléfono"
 
@@ -19301,7 +19200,6 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1491
 #, fuzzy
-#| msgid "B<getspeeddial>I< start [stop]>"
 msgid "getprofile start [stop]"
 msgstr "B<getspeeddial>I< start [stop]>"
 
@@ -19318,7 +19216,6 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1497
 #, fuzzy
-#| msgid "Phone settings"
 msgid "Reset phone settings."
 msgstr "Ajustes del teléfono"
 
@@ -19429,7 +19326,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/gammu/index.rst:1528
 #, fuzzy, no-wrap
-#| msgid "Dumps decoding"
 msgid "Dumps decoding commands"
 msgstr "Decodificación de volcados"
 
@@ -19675,7 +19571,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/gammu/index.rst:1610
 #, fuzzy, no-wrap
-#| msgid "Gammu information"
 msgid "Gammu information commands"
 msgstr "Información Gammu"
 
@@ -20092,7 +19987,7 @@ msgstr ""
 #: docs/manual/gammu/index.rst:1900
 #, no-wrap
 msgid "Reporting bugs"
-msgstr ""
+msgstr "Informar de fallos(bugs)"
 
 # type: Plain text
 #. type: delimited block _
@@ -20148,7 +20043,6 @@ msgstr ""
 #. type: Title =
 #: docs/manual/project/documentation.rst:2
 #, fuzzy, no-wrap
-#| msgid "Gammu Documentation"
 msgid "Project Documentation"
 msgstr "Documentación Gammu"
 
@@ -20229,7 +20123,7 @@ msgstr ""
 #: docs/manual/project/documentation.rst:43
 #, no-wrap
 msgid "Man pages"
-msgstr ""
+msgstr "Páginas del manual"
 
 #. type: Plain text
 #: docs/manual/project/documentation.rst:46
@@ -20955,7 +20849,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/project/coding-style.rst:28
 #, fuzzy
-#| msgid "..."
 msgid ".."
 msgstr "..."
 
@@ -22237,7 +22130,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/testing/dummy-driver.rst:14
 #, fuzzy, no-wrap
-#| msgid "Filesystem"
 msgid "Filesystem structure"
 msgstr "Sistema de archivos"
 
@@ -22269,7 +22161,7 @@ msgstr ""
 #: docs/manual/testing/dummy-driver.rst:25 docs/manual/c/message.rst:2
 #, no-wrap
 msgid "Messages"
-msgstr ""
+msgstr "Mensajes"
 
 #. type: Plain text
 #: docs/manual/testing/dummy-driver.rst:29
@@ -22702,7 +22594,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/contents.rst:4
 #, fuzzy, no-wrap
-#| msgid "Gammu Documentation"
 msgid "Gammu Documentation Contents"
 msgstr "Documentación Gammu"
 
@@ -22842,7 +22733,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:23
 msgid "SMSC"
-msgstr ""
+msgstr "SMSC"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:25
@@ -22853,7 +22744,7 @@ msgstr ""
 #: docs/manual/python/objects.rst:27 docs/manual/python/objects.rst:214
 #: docs/manual/python/objects.rst:391
 msgid "Number"
-msgstr ""
+msgstr "Número"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:29
@@ -22864,7 +22755,7 @@ msgstr ""
 #: docs/manual/python/objects.rst:31 docs/manual/python/objects.rst:218
 #: docs/manual/python/objects.rst:734
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:34
@@ -22888,7 +22779,7 @@ msgstr ""
 #: docs/manual/internal/reply.rst:25
 #, no-wrap
 msgid "Text"
-msgstr ""
+msgstr "Texto"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:42
@@ -22898,7 +22789,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:44 docs/manual/python/objects.rst:738
 msgid "Folder"
-msgstr ""
+msgstr "Carpeta"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:46
@@ -22910,7 +22801,7 @@ msgstr ""
 #: docs/manual/python/objects.rst:442 docs/manual/python/objects.rst:537
 #: docs/manual/python/objects.rst:632
 msgid "Location"
-msgstr ""
+msgstr "Ubicación"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:50
@@ -22950,7 +22841,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:64 docs/manual/python/objects.rst:272
 msgid "Class"
-msgstr ""
+msgstr "Clase"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:66 docs/manual/python/objects.rst:274
@@ -22990,7 +22881,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:80 docs/manual/c/memory.rst:2
 #, fuzzy
-#| msgid "Memory full."
 msgid "Memory"
 msgstr "Memoria llena."
 
@@ -23005,7 +22895,7 @@ msgstr ""
 #: docs/manual/python/objects.rst:541 docs/manual/python/objects.rst:595
 #: docs/manual/python/objects.rst:660 docs/manual/python/objects.rst:746
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:86
@@ -23032,7 +22922,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:93
 msgid "Coding"
-msgstr ""
+msgstr "Codificación"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:95
@@ -23093,10 +22983,11 @@ msgstr ""
 msgid "Timestamp when the message was at SMSC."
 msgstr ""
 
+# Puede leerse también "País"
 #. type: Plain text
 #: docs/manual/python/objects.rst:115
 msgid "State"
-msgstr ""
+msgstr "Estado"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:117
@@ -23259,7 +23150,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:179
 #, fuzzy
-#| msgid "Ringtones"
 msgid "``NokiaRingtone``"
 msgstr "Tonos de llamada"
 
@@ -23349,7 +23239,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:220
 #, fuzzy
-#| msgid "Bad feature string in configuration."
 msgid "Name of the SMSC configuration"
 msgstr "Cadena de características mal formada en la configuración."
 
@@ -23366,7 +23255,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:226
 msgid "Format"
-msgstr ""
+msgstr "Formato"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:228
@@ -23396,7 +23285,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:235
 msgid "Validity"
-msgstr ""
+msgstr "Validez"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:237
@@ -23456,7 +23345,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:268
 #, fuzzy
-#| msgid "Unknown error."
 msgid "Unknown"
 msgstr "Error desconocido."
 
@@ -23722,7 +23610,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:351
 msgid "Left"
-msgstr ""
+msgstr "Izquierda"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:353 docs/manual/python/objects.rst:357
@@ -23731,49 +23619,48 @@ msgstr ""
 #: docs/manual/python/objects.rst:377 docs/manual/python/objects.rst:381
 #: docs/manual/python/objects.rst:385
 #, fuzzy
-#| msgid "Phone information"
 msgid "Text formatting"
 msgstr "Información del teléfono"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:355
 msgid "Right"
-msgstr ""
+msgstr "Derecha"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:359
 msgid "Center"
-msgstr ""
+msgstr "Centro"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:363
 msgid "Large"
-msgstr ""
+msgstr "Grande"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:367
 msgid "Small"
-msgstr ""
+msgstr "Pequeño"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:371
 msgid "Bold"
-msgstr ""
+msgstr "Negrita"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:375
 msgid "Italic"
-msgstr ""
+msgstr "Cursiva"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:379
 msgid "Underlined"
-msgstr ""
+msgstr "Subrayado"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:383
 msgid "Strikethrough"
-msgstr ""
+msgstr "Tachado"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:387 docs/manual/python/objects.rst:775
@@ -23793,7 +23680,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:395 docs/manual/c/ringtone.rst:2
 #, fuzzy
-#| msgid "Ringtones"
 msgid "Ringtone"
 msgstr "Tonos de llamada"
 
@@ -23805,7 +23691,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:399 docs/manual/c/bitmap.rst:2
 msgid "Bitmap"
-msgstr ""
+msgstr "Bitmap"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:401
@@ -23825,7 +23711,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:407 docs/manual/c/settings.rst:2
 #, fuzzy
-#| msgid "Phone settings"
 msgid "Settings"
 msgstr "Ajustes del teléfono"
 
@@ -24056,7 +23941,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:479
 msgid "Priority"
-msgstr ""
+msgstr "Prioridad"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:481
@@ -24190,7 +24075,7 @@ msgstr ""
 #: docs/manual/python/objects.rst:526 docs/manual/python/objects.rst:621
 #: docs/manual/python/objects.rst:715
 msgid "Value"
-msgstr ""
+msgstr "Valor"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:528 docs/manual/python/objects.rst:623
@@ -24206,7 +24091,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/python/objects.rst:532
 #, fuzzy, no-wrap
-#| msgid "Calendar notes"
 msgid "Calendar Object"
 msgstr "Notas de calendario"
 
@@ -24242,7 +24126,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/python/objects.rst:592
 #, fuzzy, no-wrap
-#| msgid "Calendar notes"
 msgid "Calendar Entries Object"
 msgstr "Notas de calendario"
 
@@ -24831,7 +24714,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:787
 #, fuzzy
-#| msgid "Filesystem"
 msgid "System"
 msgstr "Sistema de archivos"
 
@@ -24997,7 +24879,6 @@ msgstr ""
 #. type: delimited block =
 #: docs/manual/python/data.rst:17
 #, fuzzy
-#| msgid "Calendar notes"
 msgid "CalendarTypes"
 msgstr "Notas de calendario"
 
@@ -25009,7 +24890,6 @@ msgstr ""
 #. type: delimited block =
 #: docs/manual/python/data.rst:21
 #, fuzzy
-#| msgid "Calendar notes"
 msgid "CalendarValueTypes"
 msgstr "Notas de calendario"
 
@@ -25168,7 +25048,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/python/index.rst:40
 #, fuzzy, no-wrap
-#| msgid "Gammu Documentation"
 msgid "API documentation"
 msgstr "Documentación Gammu"
 
@@ -26107,7 +25986,6 @@ msgstr ""
 #. type: delimited block -
 #: docs/manual/python/gammu.rst:67
 #, fuzzy, no-wrap
-#| msgid "Memory (phonebooks and calls)"
 msgid "      Adds memory (phonebooks or calls) entry.\n"
 msgstr "Memoria (números y llamadas)"
 
@@ -26131,7 +26009,6 @@ msgstr ""
 #. type: delimited block -
 #: docs/manual/python/gammu.rst:77
 #, fuzzy, no-wrap
-#| msgid "Delete all SMS from specified SMS folder."
 msgid "      Adds SMS to specified folder.\n"
 msgstr "Borra todos los SMS de la carpeta especificada."
 
@@ -26199,7 +26076,6 @@ msgstr ""
 #. type: delimited block -
 #: docs/manual/python/gammu.rst:107
 #, fuzzy, no-wrap
-#| msgid "Answer incoming call."
 msgid "      Accept current incoming call.\n"
 msgstr "Contesta llamada entrante"
 
@@ -26225,7 +26101,6 @@ msgstr ""
 #. type: delimited block -
 #: docs/manual/python/gammu.rst:119
 #, fuzzy, no-wrap
-#| msgid "Cancel incoming call"
 msgid "      Deny current incoming call.\n"
 msgstr "Cancela llamada entrante"
 
@@ -26396,7 +26271,6 @@ msgstr ""
 #. type: delimited block -
 #: docs/manual/python/gammu.rst:197
 #, fuzzy, no-wrap
-#| msgid "Memory (phonebooks and calls)"
 msgid "      Deletes memory (phonebooks or calls) entry.\n"
 msgstr "Memoria (números y llamadas)"
 
@@ -27558,7 +27432,6 @@ msgstr ""
 #. type: delimited block -
 #: docs/manual/python/gammu.rst:731
 #, fuzzy, no-wrap
-#| msgid "Phone settings"
 msgid "      Resets phone settings.\n"
 msgstr "Ajustes del teléfono"
 
@@ -27956,7 +27829,6 @@ msgstr ""
 #. type: delimited block -
 #: docs/manual/python/gammu.rst:953
 #, fuzzy, no-wrap
-#| msgid "Memory (phonebooks and calls)"
 msgid "      Sets memory (phonebooks or calls) entry.\n"
 msgstr "Memoria (números y llamadas)"
 
@@ -28102,7 +27974,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/gammu.rst:1055
 #, fuzzy
-#| msgid "Phone information"
 msgid "Get version information."
 msgstr "Información del teléfono"
 
@@ -28141,7 +28012,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/gammu.rst:1072
 #, fuzzy
-#| msgid "Debug levels"
 msgid "SetDebugLevel(Level)"
 msgstr "Niveles de debugueo"
 
@@ -28177,7 +28047,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/gammu.rst:1083
 #, fuzzy
-#| msgid "No error."
 msgid "errors"
 msgstr "Sin error."
 
@@ -28438,7 +28307,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/python/gammu.rst:1223
 #, fuzzy, no-wrap
-#| msgid "Backing up and restoring"
 msgid "Backup reading and writing"
 msgstr "Backup y recuperación"
 
@@ -28505,7 +28373,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/gammu.rst:1262
 msgid "IMEI"
-msgstr ""
+msgstr "IMEI"
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:1264
@@ -28571,7 +28439,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/gammu.rst:1295
 #, fuzzy
-#| msgid "Network"
 msgid "GSMNetworks"
 msgstr "Red"
 
@@ -28980,7 +28847,6 @@ msgstr ""
 #. type: Title =
 #: docs/manual/internal/index.rst:4
 #, fuzzy, no-wrap
-#| msgid "Gammu information"
 msgid "Gammu internals"
 msgstr "Información Gammu"
 
@@ -29363,7 +29229,6 @@ msgstr ""
 #. type: Title =
 #: docs/manual/formats/index.rst:2
 #, fuzzy, no-wrap
-#| msgid "File format not supported by Gammu."
 msgid "File formats used by Gammu"
 msgstr "Formato de archivo no soportado por Gammu."
 
@@ -29445,7 +29310,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/c/call.rst:2
 #, fuzzy
-#| msgid "Calls"
 msgid "Call"
 msgstr "Llamadas"
 
@@ -29655,7 +29519,6 @@ msgstr ""
 #. type: delimited block =
 #: docs/manual/c/call.rst:17
 #, fuzzy
-#| msgid "B<canceldiverts>"
 msgid "GSM_CancelAllDiverts"
 msgstr "B<canceldiverts>"
 
@@ -29750,7 +29613,6 @@ msgstr ""
 #. type: delimited block =
 #: docs/manual/c/call.rst:21
 #, fuzzy
-#| msgid "Calls"
 msgid "GSM_Call"
 msgstr "Llamadas"
 
@@ -29789,7 +29651,6 @@ msgstr ""
 #. type: Title -
 #: docs/manual/c/examples.rst:8
 #, fuzzy, no-wrap
-#| msgid "Phone information"
 msgid "Getting phone information"
 msgstr "Información del teléfono"
 
@@ -30039,7 +29900,7 @@ msgstr ""
 #: docs/manual/c/misc.rst:2
 #, no-wrap
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Miscelánea"
 
 #. type: Plain text
 #: docs/manual/c/misc.rst:5
@@ -30160,7 +30021,7 @@ msgstr ""
 #: docs/manual/c/datetime.rst:2
 #, no-wrap
 msgid "Date and time"
-msgstr ""
+msgstr "Fecha y hora"
 
 #. type: Plain text
 #: docs/manual/c/datetime.rst:5
@@ -30350,7 +30211,6 @@ msgstr ""
 #. type: delimited block =
 #: docs/manual/c/calendar.rst:29
 #, fuzzy
-#| msgid "MMS and MMS settings"
 msgid "GSM_SetCalendarSettings"
 msgstr "MMS y ajustes MMS"
 
@@ -30403,21 +30263,18 @@ msgstr ""
 #. type: delimited block =
 #: docs/manual/c/calendar.rst:39
 #, fuzzy
-#| msgid "Calendar notes"
 msgid "GSM_CalendarStatus"
 msgstr "Notas de calendario"
 
 #. type: delimited block =
 #: docs/manual/c/calendar.rst:40
 #, fuzzy
-#| msgid "Calendar notes"
 msgid "GSM_CalendarNoteType"
 msgstr "Notas de calendario"
 
 #. type: delimited block =
 #: docs/manual/c/calendar.rst:41
 #, fuzzy
-#| msgid "Calendar notes"
 msgid "GSM_CalendarType"
 msgstr "Notas de calendario"
 
@@ -30429,7 +30286,6 @@ msgstr ""
 #. type: delimited block =
 #: docs/manual/c/calendar.rst:43
 #, fuzzy
-#| msgid "Calendar notes"
 msgid "GSM_CalendarEntry"
 msgstr "Notas de calendario"
 
@@ -30582,7 +30438,7 @@ msgstr ""
 #: docs/manual/c/index.rst:4
 #, no-wrap
 msgid "libGammu"
-msgstr ""
+msgstr "libGammu"
 
 #. type: Plain text
 #: docs/manual/c/index.rst:9
@@ -30737,7 +30593,6 @@ msgstr ""
 #. type: delimited block =
 #: docs/manual/c/info.rst:28
 #, fuzzy
-#| msgid "Network"
 msgid "GSM_NetworkInfo"
 msgstr "Red"
 
@@ -30784,7 +30639,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/c/category.rst:2
 #, fuzzy
-#| msgid "Categories"
 msgid "Category"
 msgstr "Categorías"
 
@@ -30806,14 +30660,12 @@ msgstr ""
 #. type: delimited block =
 #: docs/manual/c/category.rst:8
 #, fuzzy
-#| msgid "Categories"
 msgid "GSM_CategoryType"
 msgstr "Categorías"
 
 #. type: delimited block =
 #: docs/manual/c/category.rst:9
 #, fuzzy
-#| msgid "Categories"
 msgid "GSM_Category"
 msgstr "Categorías"
 
@@ -31205,7 +31057,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/c/hints.rst:180
 #, fuzzy
-#| msgid "Bad feature string in configuration."
 msgid "For per state machine configuration:"
 msgstr "Cadena de características mal formada en la configuración."
 
@@ -31256,7 +31107,6 @@ msgstr ""
 #. type: delimited block =
 #: docs/manual/c/debug.rst:11
 #, fuzzy
-#| msgid "Debug levels"
 msgid "GSM_SetDebugLevel"
 msgstr "Niveles de debugueo"
 
@@ -31824,7 +31674,6 @@ msgstr ""
 #. type: delimited block =
 #: docs/manual/c/file.rst:19
 #, fuzzy
-#| msgid "Filesystem"
 msgid "GSM_FileSystemStatus"
 msgstr "Sistema de archivos"
 
@@ -32016,7 +31865,6 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/c/callback.rst:2
 #, fuzzy
-#| msgid "Calls"
 msgid "Callback"
 msgstr "Llamadas"
 
@@ -32073,7 +31921,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/c/smsd.rst:2
 msgid "SMSD"
-msgstr ""
+msgstr "SMSD"
 
 #. type: delimited block =
 #: docs/manual/c/smsd.rst:5
@@ -32317,21 +32165,18 @@ msgstr ""
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:7
 #, fuzzy
-#| msgid "Ringtones"
 msgid "GSM_GetRingtone"
 msgstr "Tonos de llamada"
 
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:8
 #, fuzzy
-#| msgid "Ringtones"
 msgid "GSM_SetRingtone"
 msgstr "Tonos de llamada"
 
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:9
 #, fuzzy
-#| msgid "Ringtones"
 msgid "GSM_GetRingtonesInfo"
 msgstr "Tonos de llamada"
 
@@ -32438,7 +32283,6 @@ msgstr ""
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:30
 #, fuzzy
-#| msgid "Ringtones"
 msgid "GSM_NoteRingtone"
 msgstr "Tonos de llamada"
 
@@ -32460,21 +32304,18 @@ msgstr ""
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:34
 #, fuzzy
-#| msgid "Ringtones"
 msgid "GSM_Ringtone"
 msgstr "Tonos de llamada"
 
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:35
 #, fuzzy
-#| msgid "Ringtones"
 msgid "GSM_RingtoneInfo"
 msgstr "Tonos de llamada"
 
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:35
 #, fuzzy
-#| msgid "Ringtones"
 msgid "GSM_AllRingtonesInfo"
 msgstr "Tonos de llamada"
 
@@ -32516,7 +32357,6 @@ msgstr ""
 #. type: delimited block =
 #: docs/manual/c/settings.rst:12
 #, fuzzy
-#| msgid "MMS and MMS settings"
 msgid "GSM_SetMMSSettings"
 msgstr "MMS y ajustes MMS"
 
@@ -32533,7 +32373,6 @@ msgstr ""
 #. type: delimited block =
 #: docs/manual/c/settings.rst:15
 #, fuzzy
-#| msgid "Phone settings"
 msgid "GSM_ResetPhoneSettings"
 msgstr "Ajustes del teléfono"
 
@@ -32575,7 +32414,6 @@ msgstr ""
 #. type: delimited block =
 #: docs/manual/c/settings.rst:23
 #, fuzzy
-#| msgid "MMS and MMS settings"
 msgid "GSM_SyncMLSettings"
 msgstr "MMS y ajustes MMS"
 
@@ -32823,8 +32661,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/utils/gammu-detect.rst:55
+#, fuzzy
 msgid "Show version information and compiled in features."
-msgstr ""
+msgstr "Información del teléfono"
 
 #. type: Plain text
 #: docs/manual/utils/gammu-detect.rst:57
