@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.28.95\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-06 16:39+0100\n"
-"PO-Revision-Date: 2011-01-04 10:39+0100\n"
+"PO-Revision-Date: 2011-01-06 20:40+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -836,9 +836,9 @@ msgstr ".. deprecated"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:167
-#, fuzzy
 msgid "Alias for :config:option:`Device`, kept for backward compatibility."
-msgstr "Stejné jako Device, zachováno kvůli zpětné kompatibilitě."
+msgstr ""
+"Stejné jako :config:option:`Device`, zachováno kvůli zpětné kompatibilitě."
 
 # type: TP
 #. type: Plain text
@@ -899,13 +899,12 @@ msgstr "``obexnone``"
 # type: Plain text
 #. type: Plain text
 #: docs/manual/config/index.rst:183
-#, fuzzy
 msgid ""
 "none service chosen, this has only limited use for sending file (:option:"
 "`gammu sendfile` command)"
 msgstr ""
 "nebube vybrána žádná služba, toto má jen omezené použití pro posílání "
-"souborů (příkaz ``sendfile``d )"
+"souborů (příkaz :option:`gammu sendfile`)"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:184
@@ -915,7 +914,7 @@ msgstr "``mobex``"
 #. type: Plain text
 #: docs/manual/config/index.rst:185
 msgid "m-obex service for Samsung phones"
-msgstr ""
+msgstr "služba m-obex pro telefony Samsung"
 
 # type: TP
 #. type: Plain text
@@ -973,14 +972,13 @@ msgstr "StartInfo"
 # type: Plain text
 #. type: Plain text
 #: docs/manual/config/index.rst:209
-#, fuzzy
 msgid ""
 "This option allow to set, that you want (setting ``yes``) to see message on "
 "the phone screen or phone should enable light for a moment during starting "
 "connection. Phone will not beep during starting connection with this option. "
 "This works only with some Nokia phones."
 msgstr ""
-"Tato volba umožní nastavit (při nastavení na \"yes\") zobrazení zprávy na "
+"Tato volba umožní nastavit (při nastavení na ``yes``) zobrazení zprávy na "
 "displeji telefonu nebo rozsvítit jeho podsvícení při připojení. Telefon "
 "nebude během připojení vydávat žádné zvuky. Tato volba funguje jen s "
 "některými telefony Nokia."
@@ -1019,11 +1017,12 @@ msgstr "LogFormat"
 # type: Plain text
 #. type: Plain text
 #: docs/manual/config/index.rst:226
-#, fuzzy
 msgid ""
 "Determines what all will be logged to :config:option:`LogFile`. Possible "
 "values are:"
-msgstr "Určuje co vše se bude logovat do souboru LogFile. Možné hodnoty jsou:"
+msgstr ""
+"Určuje co vše se bude logovat do souboru :config:option:`LogFile`. Možné "
+"hodnoty jsou:"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:228
@@ -1162,14 +1161,13 @@ msgstr "GammuCoding"
 # type: Plain text
 #. type: Plain text
 #: docs/manual/config/index.rst:261
-#, fuzzy
 msgid ""
 "Forces using specified codepage (for example ``1250`` will force CP-1250 or "
 "``utf8`` for UTF-8). This should not be needed, Gammu detects it according "
 "to your locales."
 msgstr ""
-"Vynutí použití zadaného kódování (například \"1250\" vynutí CP-1250 nebo "
-"\"utf8\" pro UTF-8). Tato volba by obvykle neměla být potřeba, Gammu "
+"Vynutí použití zadaného kódování (například ``1250`` vynutí CP-1250 nebo "
+"``utf8`` pro UTF-8). Tato volba by obvykle neměla být potřeba, Gammu "
 "kódování zjištuje podle nastavených locales."
 
 # type: TP
@@ -1181,14 +1179,13 @@ msgstr "GammuLoc"
 # type: Plain text
 #. type: Plain text
 #: docs/manual/config/index.rst:267
-#, fuzzy
 msgid ""
 "Path to directory with localisation files (the directory should contain "
 "``LANG/LC_MESSAGES/gammu.mo``). If gammu is properly installed it should "
 "find these files automatically."
 msgstr ""
-"Cesta k adresáři s lokalizačními soubory (adresář by měl obsahovat LANG/"
-"LC_MESSAGES/gammu.mo). Pokud je gammu správně instalované, mělo bypřeklady "
+"Cesta k adresáři s lokalizačními soubory (adresář by měl obsahovat ``LANG/"
+"LC_MESSAGES/gammu.mo``). Pokud je gammu správně instalované, mělo bypřeklady "
 "najít automaticky."
 
 #. type: Title =
@@ -1297,7 +1294,6 @@ msgstr "Práce s více telefony"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:317
-#, fuzzy
 msgid ""
 "Gammu can be configured for multiple phones (however only one connection is "
 "used at one time, you can choose which one to use with :option:`gammu --"
@@ -1305,8 +1301,8 @@ msgid ""
 "look like following:"
 msgstr ""
 "Gammu může být nastaveno pro práci s více telefony najedou (ale jen jedno "
-"připojení v jeden okamžik, to zvolíte parametrem --section). Nastavení "
-"telefonů na třech sériových portech by vypadalo následovně:"
+"připojení v jeden okamžik, to zvolíte parametrem :option:`gammu --section`). "
+"Nastavení telefonů na třech sériových portech by vypadalo následovně:"
 
 # type: Plain text
 #. type: Plain text
@@ -1615,9 +1611,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:90
-#, fuzzy
 msgid "Note:"
-msgstr "Poznámky"
+msgstr "Poznámky:"
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:91
@@ -4114,9 +4109,9 @@ msgstr ""
 #: docs/manual/python/objects.rst:491 docs/manual/python/objects.rst:577
 #: docs/manual/python/objects.rst:643 docs/manual/python/objects.rst:798
 #: docs/manual/formats/smsbackup.rst:104 docs/manual/utils/gammu-detect.rst:83
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Example"
-msgstr "Například:"
+msgstr "Příklad"
 
 #. type: Plain text
 #: docs/manual/protocol/samsung.rst:16
@@ -4599,9 +4594,9 @@ msgstr ""
 
 #. type: Title -
 #: docs/manual/protocol/m-obex.rst:16
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Requirements"
-msgstr "Ze zdrojového kódu - požadavky\n"
+msgstr "Požadavky"
 
 #. type: Plain text
 #: docs/manual/protocol/m-obex.rst:19
@@ -5001,7 +4996,7 @@ msgstr ""
 #: docs/manual/protocol/m-obex.rst:247 docs/manual/testing/dummy-driver.rst:42
 #: docs/manual/python/objects.rst:419 docs/manual/python/gammu.rst:1267
 #: docs/manual/c/calendar.rst:2
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Calendar"
 msgstr "Kalendář"
 
@@ -5189,7 +5184,7 @@ msgstr ""
 
 #. type: Title -
 #: docs/manual/protocol/m-obex.rst:402
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Files"
 msgstr "Soubory"
 
@@ -17177,23 +17172,20 @@ msgstr ""
 # type: SS
 #. type: Plain text
 #: docs/manual/gammu/index.rst:199
-#, fuzzy
 msgid "SMS commands"
-msgstr "Příkazy"
+msgstr "Práce se SMS"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:202
-#, fuzzy
 msgid "addsmsfolder name"
-msgstr "B<addsmsfolder>I< name>"
+msgstr "addsmsfolder name"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:204
-#, fuzzy
 msgid "deleteallsms folder"
-msgstr "B<deleteallsms>I< folder>"
+msgstr "deleteallsms folder"
 
 # type: Plain text
 #. type: delimited block _
@@ -17204,20 +17196,18 @@ msgstr "Odstraní všechny SMS ze zadané složky."
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:208
-#, fuzzy
 msgid "deletesms folder start [stop]"
-msgstr "B<deletesms>I< folder start [stop]>"
+msgstr "deletesms folder start [stop]"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:211
-#, fuzzy
 msgid ""
 "Delete SMS from phone. See description for :option:`gammu getsms` for info "
 "about sms folders naming convention."
 msgstr ""
 "Ostraní SMS z telefonu. Popis zadávání umístění a složek v telefonu "
-"naleznete u B<getsms>."
+"naleznete u :option:`gammu getsms`."
 
 # type: Plain text
 #. type: delimited block _
@@ -17232,9 +17222,8 @@ msgstr "Umístění číslujte od 1."
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:215
-#, fuzzy
 msgid "displaysms ... (options like in sendsms)"
-msgstr "B<displaysms>I< ... (options like in sendsms)>"
+msgstr "displaysms ... (options like in sendsms)"
 
 # type: Plain text
 #. type: delimited block _
@@ -17249,14 +17238,12 @@ msgstr ""
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:220
-#, fuzzy
 msgid "getallsms -pbk"
-msgstr "B<getallsms>I< -pbk>"
+msgstr "getallsms -pbk"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:225
-#, fuzzy
 msgid ""
 "Get all SMS from phone. In some phones you will have also SMS templates and "
 "info about locations used to save Picture Images. With each sms you will see "
@@ -17265,32 +17252,29 @@ msgid ""
 msgstr ""
 "Načte všechny zprávy z telefonu. U některých telefonu načte také šablony "
 "zpráv a informace o uložených obrázcích. U každé zprávy uvidíte umístění, "
-"pokud chcete získat jednotlivou zprávu, použijte B<gammu getsms 0 location>"
+"pokud chcete získat jednotlivou zprávu, použijte :option:`gammu getsms`"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:227
-#, fuzzy
 msgid "geteachsms -pbk"
-msgstr "B<geteachsms>I< -pbk>"
+msgstr "geteachsms -pbk"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:230
-#, fuzzy
 msgid ""
 "Similiary to :option:`gammu getallsms`. Difference is, that links all "
 "concatenated sms"
 msgstr ""
-"Podobné jako B<getallsms>, jen dlouhé zprávy budu spojeny a dekódovány "
-"dohromady."
+"Podobné jako :option:`gammu getallsms`, jen dlouhé zprávy budu spojeny a "
+"dekódovány dohromady."
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:232
-#, fuzzy
 msgid "getsms folder start [stop]"
-msgstr "B<getsms>I< folder start [stop]>"
+msgstr "getsms folder start [stop]"
 
 # type: Plain text
 #. type: delimited block _
@@ -17312,7 +17296,6 @@ msgstr ""
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:247
-#, fuzzy
 msgid ""
 "Other folders like 1, 2, etc. match folders in phone such as Inbox, Outbox, "
 "etc.  and each sms has unique number in his folder. Name of folders can "
@@ -17326,14 +17309,13 @@ msgstr ""
 "závisí na použitém telefonu (většinou 1=\"Přijaté\", 2=\"Odeslané\", atd.).  "
 "Tato metoda není podporována všemi telefony (například Noka 3310, 5110 a "
 "6110 jí nepodporují). Pokud s vaším telefonem funguje, můžete seznam složek "
-"získat příkazem B<getsmsfolders>."
+"získat příkazem :option:`gammu getsmsfolders`."
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:249
-#, fuzzy
 msgid "getsmsc [start [stop]]"
-msgstr "B<getsmsc>I< [start [stop]]>"
+msgstr "getsmsc [start [stop]]"
 
 # type: Plain text
 #. type: delimited block _
@@ -17344,9 +17326,8 @@ msgstr "Načte nastavení SMS zpráv ze SIM karty."
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:255
-#, fuzzy
 msgid "getsmsfolders"
-msgstr "B<getsmsfolders>"
+msgstr "getsmsfolders"
 
 # type: Plain text
 #. type: delimited block _
@@ -17357,15 +17338,14 @@ msgstr "Načte s telefonu názvy složek se zprávami."
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:259
-#, fuzzy
 msgid ""
 "savesms TYPE [type parameters] [type options] [-folder id] [-unread] [-read] "
 "[-unsent] [-sent] [-sender number] [-smsname name] [-smscset number] [-"
 "smscnumber number] [-reply] [-maxsms num]"
 msgstr ""
-"B<savesms TODO>I< file location [-folder id] [-unread] [-read] [-unsent] [-"
-"sent] [-sender number] [-smsname name] [-smscset number] [-smscnumber "
-"number] [-reply] [-maxsms num]>"
+"savesms TYPE [type parameters] [type options] [-folder id] [-unread] [-read] "
+"[-unsent] [-sent] [-sender number] [-smsname name] [-smscset number] [-"
+"smscnumber number] [-reply] [-maxsms num]"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:261
@@ -17375,9 +17355,8 @@ msgstr ""
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:263
-#, fuzzy
 msgid "-smscset number"
-msgstr "číslo příjemce"
+msgstr "-smscset číslo"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:265
@@ -17388,57 +17367,51 @@ msgstr ""
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:267
-#, fuzzy
 msgid "Default: 1"
 msgstr "Výchozí je 1."
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:269
-#, fuzzy
 msgid "-smscnumber number"
-msgstr "B<-smscnumber number> - číslo centra zpráv (SMSC)"
+msgstr "-smscnumber číslo"
 
 # type: Plain text
 #. type: Plain text
 #: docs/manual/gammu/index.rst:271 docs/manual/python/objects.rst:216
-#, fuzzy
 msgid "SMSC number"
 msgstr "číslo centra zpráv (SMSC)"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:273
 msgid "-reply"
-msgstr ""
+msgstr "-reply"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:275
-#, fuzzy
 msgid "reply SMSC is set"
-msgstr "B<-reply> - vynutit odpověď přes stejné SMSC"
+msgstr "vynutit odpověď přes stejné SMSC"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:277
 msgid "-maxnum number"
-msgstr ""
+msgstr "-maxnum číslo"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:280
-#, fuzzy
 msgid ""
 "Limit maximal number of messages which will be created. If there are more "
 "messages, Gammu will terminate with failure."
 msgstr ""
-"B<-maxnum number> - Omezí maximální počet zpráv, které budou vytvořeny. "
-"Pokud by jich bylo více, Gammu skončí s chybou."
+"Omezí maximální počet zpráv, které budou vytvořeny. Pokud by jich bylo více, "
+"Gammu skončí s chybou."
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:282
-#, fuzzy
 msgid "-folder number"
-msgstr "Číslo odesílatele."
+msgstr "-folder number"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:284
@@ -17455,103 +17428,95 @@ msgstr "Složky číslujte od 1."
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:288
-#, fuzzy
 msgid ""
 "The most often folder 1 = \"Inbox\", 2 = \"Outbox\",etc. Use :option:`gammu "
 "getsmsfolders` to get folder list."
 msgstr ""
-"Nejčastěji jsou složky 1 = \"Příchozí\", 2 = \"Odchozí\",atd. Použijte "
-"B<getsmsfolders> pro zjištění skutečného seznamu složek pro váš telefon."
+"Nejčastěji jsou složky 1 = \"Příchozí\", 2 = \"Odchozí\",atd. Použijte :"
+"option:`gammu getsmsfolders` pro zjištění skutečného seznamu složek pro váš "
+"telefon."
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:290
 msgid "-unread"
-msgstr ""
+msgstr "-unread"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:294
-#, fuzzy
 msgid ""
 "makes message unread. In some phones (like 6210) you won't see unread sms "
 "envelope after saving such sms. In some phones with internal SMS memory "
 "(like 6210) after using it with folder 1 SIM SMS memory will be used"
 msgstr ""
-"B<-unread> - označí zprávu jako nepřečtenou. U některých telefonů (jako "
-"6210) však neuvidíte indikaci nepřečtené zprávy v telefonu. U některých "
-"telefonů s interní pamětí na SMS (jako 6210) bude po použití složky 1 "
-"uložena zpráva na SIM kartu."
+"označí zprávu jako nepřečtenou. U některých telefonů (jako 6210) však "
+"neuvidíte indikaci nepřečtené zprávy v telefonu. U některých telefonů s "
+"interní pamětí na SMS (jako 6210) bude po použití složky 1 uložena zpráva na "
+"SIM kartu."
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:296
 msgid "-read"
-msgstr ""
+msgstr "-read"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:299
-#, fuzzy
 msgid ""
 "makes message read. In some phones with internal SMS memory (like 6210) "
 "after using it with folder 1 SIM SMS memory will be used"
 msgstr ""
-"B<-read> - označí zprávu jako přečtenou. U některých telefonů s interní "
-"pamětí na SMS (jako 6210) bude po použití složky 1 uložena zpráva na SIM "
-"kartu."
+"označí zprávu jako přečtenou. U některých telefonů s interní pamětí na SMS "
+"(jako 6210) bude po použití složky 1 uložena zpráva na SIM kartu."
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:301
 msgid "-unsent"
-msgstr ""
+msgstr "-unsent"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:303
-#, fuzzy
 msgid "makes message unsent"
-msgstr "B<-unsent> - označí zprávu jako neodeslanou"
+msgstr "označí zprávu jako neodeslanou"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:305
 msgid "-sent"
-msgstr ""
+msgstr "-sent"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:307
-#, fuzzy
 msgid "makes message sent"
-msgstr "B<-sent> - označí zprávu jako odeslanou"
+msgstr "označí zprávu jako odeslanou"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:309
 msgid "-smsname name"
-msgstr ""
+msgstr "-smsname jméno"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:311
-#, fuzzy
 msgid "set message name"
-msgstr "Proměnné pro každou zprávu"
+msgstr "nastaví jméno zprávy"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:313
-#, fuzzy
 msgid "-sender number"
-msgstr "Číslo odesílatele."
+msgstr "-sender číslo"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:315
-#, fuzzy
 msgid "set sender number (default: ``Gammu``)"
-msgstr "B<-sender number> - nastaví odesílatele na number (výchozí: \"Gammu\")"
+msgstr " nastaví odesílatele na number (výchozí: ``Gammu``)"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:317
 msgid "-maxsms num"
-msgstr ""
+msgstr "-maxsms číslo"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:319
@@ -17561,9 +17526,8 @@ msgstr ""
 # type: SS
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:321
-#, fuzzy
 msgid "Types of messages:"
-msgstr "Třída zprávy."
+msgstr "Typy zpráv:"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:323
@@ -17641,7 +17605,7 @@ msgstr ""
 #: docs/manual/gammu/index.rst:1581 docs/manual/gammu/index.rst:1603
 #, no-wrap
 msgid ".. warning"
-msgstr ""
+msgstr ".. warning"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:352
@@ -17683,242 +17647,218 @@ msgstr ""
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:360 docs/manual/gammu/index.rst:589
-#, fuzzy
 msgid "-text"
-msgstr "Gettext"
+msgstr "-text"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:362
-#, fuzzy
 msgid "adds text"
-msgstr "B<-text> - přidá text"
+msgstr "přidá text"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:364
 msgid "-unicodefiletext"
-msgstr ""
+msgstr "-unicodefiletext"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:366
-#, fuzzy
 msgid "adds text from Unicode file"
-msgstr "B<-unicodefiletext> - přidá text ze souboru v unicode"
+msgstr "přidá text ze souboru v unicode"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:368
-#, fuzzy
 msgid "-defanimation"
-msgstr "Omezení"
+msgstr "-defanimation"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:370
-#, fuzzy
 msgid ""
 "adds default animation with ID specified by user. ID for different phones "
 "are different."
 msgstr ""
-"B<-defanimation> - přidá předdefinovanou animaci podle zadaného ID. Některé "
-"telefony mohou podporovat více ID a ty nemusí odpovídat jiným značkám "
-"telefonů."
+"přidá předdefinovanou animaci podle zadaného ID. Některé telefony mohou "
+"podporovat více ID a ty nemusí odpovídat jiným značkám telefonů."
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:372
-#, fuzzy
 msgid "-animation"
-msgstr "Omezení"
+msgstr "-animation"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:374
-#, fuzzy
 msgid "adds \"frames\" frames read from file1, file2, etc."
 msgstr ""
-"B<-animation> - přidá \"frames\" snímků animace načtených ze souborů file1, "
-"file2, atd."
+"přidá \"frames\" snímků animace načtených ze souborů file1, file2, atd."
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:376
 msgid "-defsound"
-msgstr ""
+msgstr "-defsound"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:378
-#, fuzzy
 msgid ""
 "adds default sound with ID specified by user. ID for different phones are "
 "different."
 msgstr ""
-"B<-defsound> - přidá předdefinovaný zvuk podle zadaného ID. Některé telefony "
-"mohou podporovat více ID a ty nemusí odpovídat jiným značkám telefonů."
+"přidá předdefinovaný zvuk podle zadaného ID. Některé telefony mohou "
+"podporovat více ID a ty nemusí odpovídat jiným značkám telefonů."
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:380
 msgid "-tone10"
-msgstr ""
+msgstr "-tone10"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:382
-#, fuzzy
 msgid "adds IMelody version 1.0 read from RTTL or other compatible file"
 msgstr ""
-"B<-tone10> - přidá vyzvánění ve formátu iMelody verze 1.0 načtené z RTTL "
-"nebo komatibilního souboru."
+"přidá vyzvánění ve formátu iMelody verze 1.0 načtené z RTTL nebo "
+"komatibilního souboru."
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:384
 msgid "-tone10long"
-msgstr ""
+msgstr "-tone10long"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:388
-#, fuzzy
 msgid ""
 "IMelody version 1.0 saved in one of few SMS with UPI. Phones compatible with "
 "UPI (like Sony-Ericsson phones) will read such ringtone as one"
 msgstr ""
-"B<-tone10long> - přidá vyzvánění ve formátu iMelody verze 1.0 ve formátu s "
-"UPI v několika SMS zprávách. Telefony podporující UPI (například Sony-"
-"Ericsson) načtou takové vyzvánění jako jedno."
+"přidá vyzvánění ve formátu iMelody verze 1.0 ve formátu s UPI v několika SMS "
+"zprávách. Telefony podporující UPI (například Sony-Ericsson) načtou takové "
+"vyzvánění jako jedno."
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:390
 msgid "-tone12"
-msgstr ""
+msgstr "-tone12"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:392
-#, fuzzy
 msgid "adds IMelody version 1.2 read from RTTL or other compatible file"
 msgstr ""
-"B<-tone12> - přidá vyzvánění ve formátu iMelody verze 1.2s načtené z RTTL "
-"nebo komatibilního souboru."
+"přidá vyzvánění ve formátu iMelody verze 1.2s načtené z RTTL nebo "
+"komatibilního souboru."
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:394
 msgid "-tone12long"
-msgstr ""
+msgstr "-tone12long"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:398
-#, fuzzy
 msgid ""
 "IMelody version 1.2 saved in one of few SMS with UPI. Phones compatible with "
 "UPI (like Sony-Ericsson phones) will read such ringtone as one"
 msgstr ""
-"B<-tone12long> - přidá vyzvánění ve formátu iMelody verze 1.2 ve formátu s "
-"UPI v několika SMS zprávách. Telefony podporující UPI (například Sony-"
-"Ericsson) načtou takové vyzvánění jako jedno."
+"přidá vyzvánění ve formátu iMelody verze 1.2 ve formátu s UPI v několika SMS "
+"zprávách. Telefony podporující UPI (například Sony-Ericsson) načtou takové "
+"vyzvánění jako jedno."
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:400
 msgid "-toneSE"
-msgstr ""
+msgstr "-toneSE"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:402
-#, fuzzy
 msgid "adds IMelody in \"short\" form supported by Sony-Ericsson phones"
 msgstr ""
-"B<-toneSE> - přidá vyzvánění ve formátu iMelody v \"krátké\" formě jak je "
-"podporováno telefony Sony-Ericsson."
+"přidá vyzvánění ve formátu iMelody v \"krátké\" formě jak je podporováno "
+"telefony Sony-Ericsson."
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:404
 msgid "-toneSElong"
-msgstr ""
+msgstr "-toneSElong"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:406
-#, fuzzy
 msgid "add Sony-Ericsson IMelody saved in one or few SMS with UPI"
 msgstr ""
-"B<-toneSElong> - přidá melodii SonyEricsson IMelody uloženou v jedné nebo "
-"více SMS s UPI"
+"přidá melodii SonyEricsson IMelody uloženou v jedné nebo více SMS s UPI"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:408
 msgid "-variablebitmap"
-msgstr ""
+msgstr "-variablebitmap"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:410
-#, fuzzy
 msgid "bitmap in any size saved in one SMS"
-msgstr "B<-variablebitmap> - obrázek libovolné velikosti uložený v jedné SMS"
+msgstr "obrázek libovolné velikosti uložený v jedné SMS"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:412
 msgid "-variablebitmaplong"
-msgstr ""
+msgstr "-variablebitmaplong"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:414
-#, fuzzy
 msgid "bitmap with maximal size 96x128 saved in one or few sms"
-msgstr ""
-"B<-variablebitmaplong> - obrázek o maximální velikosti 96x128 uložený v "
-"jedné nebo více zpráv"
+msgstr "obrázek o maximální velikosti 96x128 uložený v jedné nebo více zpráv"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:416
 msgid "-fixedbitmap"
-msgstr ""
+msgstr "-fixedbitmap"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:418
-#, fuzzy
 msgid "bitmap 16x16 or 32x32"
-msgstr "B<-fixedbitmap > - obrázek o velikosti 16x16 nebo 32x32"
+msgstr "obrázek o velikosti 16x16 nebo 32x32"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:420 docs/manual/gammu/index.rst:764
 msgid "-protected"
-msgstr ""
+msgstr "-protected"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:425
-#, fuzzy
 msgid ""
 "all ringtones and bitmaps after this parameter (excluding default ringtones "
 "and logos) will be \"protected\" (in phones compatible with ODI like "
 "SonyEricsson products it won't be possible to forward them from phone menu)"
 msgstr ""
-"B<-protected> - všechna vyzvánění a obrázky (kromě předdefinovaných) uvedená "
-"za tímto parametrem budou \"chráběna\" (v telefonech podporující standard "
-"ODI jako například SonyEricsson je nebude možné přeposlat)"
+"všechna vyzvánění a obrázky (kromě předdefinovaných) uvedená za tímto "
+"parametrem budou \"chráběna\" (v telefonech podporující standard ODI jako "
+"například SonyEricsson je nebude možné přeposlat)"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:427 docs/manual/gammu/index.rst:603
 msgid "-16bit"
-msgstr ""
+msgstr "-16bit"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:430 docs/manual/gammu/index.rst:606
-#, fuzzy
 msgid ""
 "Gammu uses SMS headers with 16-bit numbers for saving linking info in SMS "
 "(it means less chars available for user in each SMS)"
 msgstr ""
-"B<-16bit> - Gammu použije 16-bitová čísla pro identifikaci zpráv, což "
-"znamená méně místa pro vlastní text ve zprávě"
+"Gammu použije 16-bitová čísla pro identifikaci zpráv, což znamená méně místa "
+"pro vlastní text ve zprávě"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:432
 msgid "-format lcrasbiut"
-msgstr ""
+msgstr "-format lcrasbiut"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:434
@@ -17990,7 +17930,6 @@ msgstr ""
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:467
-#, fuzzy
 msgid ""
 "Save operator logo as sms in Nokia (Smart Messaging) format - size 72x14 in "
 "two colors."
@@ -18036,7 +17975,6 @@ msgstr ""
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:490
-#, fuzzy
 msgid ""
 "Read ringtone (RTTL) format, bitmap (Picture Image size) and name, format "
 "into Smart Messaging profile and send/save as SMS."
@@ -18068,23 +18006,22 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:503
 msgid "-long"
-msgstr ""
+msgstr "-long"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:506
-#, fuzzy
 msgid ""
 "ringtone is saved using Profile style. It can be longer (and saved in 2 "
 "SMS), but decoded only by newer phones (like 33xx)"
 msgstr ""
-"B<-long> - vyzvánění je uloženo v podobě profilo. Může být delší (a uloženo "
-"do 2 SMS), ale umí s ním pracovat jen novější telefony (jako 33xx)."
+"vyzvánění je uloženo v podobě profilo. Může být delší (a uloženo do 2 SMS), "
+"ale umí s ním pracovat jen novější telefony (jako 33xx)."
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:508 docs/manual/gammu/index.rst:974
 msgid "-scale"
-msgstr ""
+msgstr "-scale"
 
 # type: Plain text
 #. type: delimited block _
@@ -18150,7 +18087,7 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:524
 msgid "-flash"
-msgstr ""
+msgstr "-flash"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:526
@@ -18162,40 +18099,38 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:528
 msgid "-len len"
-msgstr ""
+msgstr "-len len"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:531
-#, fuzzy
 msgid ""
 "specify, how many chars will be read. When use this option and text will be "
 "longer than 1 SMS, will be split into more linked SMS"
 msgstr ""
-"B<-len len> - určí, kolik znaků bude načteno. Pokud bude zadaný text delší, "
-"než se vejde do jedné zprávy, bude automaticky rozdělen do více zpráv."
+"určí, kolik znaků bude načteno. Pokud bude zadaný text delší, než se vejde "
+"do jedné zprávy, bude automaticky rozdělen do více zpráv."
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:533
 msgid "-autolen len"
-msgstr ""
+msgstr "-autolen len"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:538
-#, fuzzy
 msgid ""
 "specify, how many chars will be read. When use this option and text will be "
 "longer than 1 SMS, will be split into more linked SMS.Coding type (SMS "
 "default alphabet/Unicode) is set according to input text"
 msgstr ""
-"B<-autolen len> - určí, kolik znaků bude načteno. Pokud bude zadaný text "
-"delší, než se vejde do jedné zprávy, bude automaticky rozdělen do více zpráv."
+"určí, kolik znaků bude načteno. Pokud bude zadaný text delší, než se vejde "
+"do jedné zprávy, bude automaticky rozdělen do více zpráv."
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:540
 msgid "-enablevoice"
-msgstr ""
+msgstr "-enablevoice"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:542
@@ -18205,7 +18140,7 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:544
 msgid "-disablevoice"
-msgstr ""
+msgstr "-disablevoice"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:546
@@ -18215,7 +18150,7 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:548
 msgid "-enablefax"
-msgstr ""
+msgstr "-enablefax"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:550
@@ -18225,7 +18160,7 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:552
 msgid "-disablefax"
-msgstr ""
+msgstr "-disablefax"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:554
@@ -18235,7 +18170,7 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:556
 msgid "-enableemail"
-msgstr ""
+msgstr "-enableemail"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:558
@@ -18245,7 +18180,7 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:560
 msgid "-disableemail"
-msgstr ""
+msgstr "-disableemail"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:562
@@ -18255,87 +18190,78 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:564
 msgid "-voidsms"
-msgstr ""
+msgstr "-voidsms"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:567
-#, fuzzy
 msgid ""
 "many phones after receiving it won't display anything, only beep, vibrate or "
 "turn on light. Text will be cut to 1 sms."
 msgstr ""
-"B<-voidsms> - při odeslání této zprávy mnoho telefonů nic nezobrazí, jen "
-"oznámí přijetí nové zprávy. Text bude zkrácen na 1 sms."
+"při odeslání této zprávy mnoho telefonů nic nezobrazí, jen oznámí přijetí "
+"nové zprávy. Text bude zkrácen na 1 sms."
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:569
 msgid "-unicode"
-msgstr ""
+msgstr "-unicode"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:571
-#, fuzzy
 msgid "SMS will be saved in Unicode format"
-msgstr "B<-unicode> - SMS bude uložena v unicode."
+msgstr "SMS bude uložena v unicode."
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:577
-#, fuzzy
 msgid ""
 "The ``~`` char in SMS text and :option:`-unicode` option (Unicode coding "
 "required) can cause text of SMS after ``~`` char blink in some phones (like "
 "Nokia 33xx)."
 msgstr ""
-"I<TIP:> pokud použijete ve textu zprávy znak ~ a přepínač B<-unicode>, bude "
+"Pokud použijete ve textu zprávy znak ~ a přepínač :option:`-unicode`, bude "
 "text za znakem ~ u některých telefonů blikat (například 33xx)"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:579
 msgid "-inputunicode"
-msgstr ""
+msgstr "-inputunicode"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:581
-#, fuzzy
 msgid "input text is in Unicode."
-msgstr "B<-inputunicode> - zadaný text je v Unicode."
+msgstr "zadaný text je v Unicode."
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:587
-#, fuzzy
 msgid ""
 "You can create Unicode file using WordPad in Windows (during saving select "
 "\"Unicode Text Document\" format). In Unix can use for example YUdit or vim."
 msgstr ""
-"I<TIP:> Soubor v Unicode můžete na Windows vytvořit například pomocí "
-"WordPadu (zvolte volbu \"Uložit jako unicode text\"). Na Linuxu můžete "
-"použít třeba YUdit nebo Vim."
+"Soubor v Unicode můžete na Windows vytvořit například pomocí WordPadu "
+"(zvolte volbu \"Uložit jako unicode text\"). Na Linuxu můžete použít třeba "
+"YUdit nebo Vim."
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:591
-#, fuzzy
 msgid "get text from command line instead of stdin."
-msgstr "B<-text> - načte text z příkazové řádky místo standardního vstupu."
+msgstr "načte text z příkazové řádky místo standardního vstupu."
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:593
 msgid "-textutf8"
-msgstr ""
+msgstr "-textutf8"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:595
-#, fuzzy
 msgid "get text in UTF-8 from command line instead of stdin."
-msgstr ""
-"B<-textutf8> - načte text v UTF-8 z příkazové řádky místo standardního "
-"vstupu."
+msgstr "načte text v UTF-8 z příkazové řádky místo standardního vstupu."
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:601
@@ -18347,20 +18273,19 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:608
 msgid "-replacemessages ID"
-msgstr ""
+msgstr "-replacemessages ID"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:612
-#, fuzzy
 msgid ""
 "``ID`` can be 1..7. When you will use option and send more single SMS to one "
 "recipient with the same ID, each another SMS will replace each previous with "
 "the same ID"
 msgstr ""
-"B<-replacemessages ID> - B<ID> může být 1..7. Pokud použijete tento parametr "
-"a pošlete více zpráv se stejným ID jednomu příjemci, každá další zpráva se "
-"stejným ID přepíše předchozí"
+"``ID`` může být 1..7. Pokud použijete tento parametr a pošlete více zpráv se "
+"stejným ID jednomu příjemci, každá další zpráva se stejným ID přepíše "
+"předchozí"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:614
@@ -18459,47 +18384,43 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:654
 msgid "-save"
-msgstr ""
+msgstr "-save"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:656
-#, fuzzy
 msgid "will also save message which is being sent"
-msgstr "B<-save> - zpráva bude před odesláním uložena do telefonu"
+msgstr "zpráva bude před odesláním uložena do telefonu"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:658
 msgid "-report"
-msgstr ""
+msgstr "-report"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:660
-#, fuzzy
 msgid "request delivery report for message"
-msgstr "B<-report> - vyžadovat doručenku pro zprávu"
+msgstr "vyžadovat doručenku pro zprávu"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:662
 msgid "-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX"
-msgstr ""
+msgstr "-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:666
-#, fuzzy
 msgid ""
 "sets how long will be the message valid (SMSC will the discard the message "
 "after this time if it could not deliver it)."
 msgstr ""
-"B<-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX> - nastaví jak dlouho bude zpráva "
-"platná (SMSC zruší zprávu po této době pokud se jí nepodařilo doručit)."
+"nastaví jak dlouho bude zpráva platná (SMSC zruší zprávu po této době pokud "
+"se jí nepodařilo doručit)."
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:668
-#, fuzzy
 msgid "setsmsc location number"
-msgstr "B<setsmsc>I< location number>"
+msgstr "setsmsc location number"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:671
@@ -18512,19 +18433,19 @@ msgstr ""
 
 #. type: Title -
 #: docs/manual/gammu/index.rst:676
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Memory (phonebooks and calls) commands"
 msgstr "Paměť (kontakty a hovory)"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:679
 msgid "_memory types:"
-msgstr ""
+msgstr "_memory types:"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:681
 msgid "Memory types"
-msgstr ""
+msgstr "Typy pamětí"
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:684
@@ -18558,16 +18479,14 @@ msgstr ""
 # type: SS
 #. type: Plain text
 #: docs/manual/gammu/index.rst:706
-#, fuzzy
 msgid "Memory commands"
-msgstr "Příkazy"
+msgstr "Příkazy pro práci s paměťmi"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:709
-#, fuzzy
 msgid "deleteallmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL"
-msgstr "B<deleteallmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL>"
+msgstr "deleteallmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL"
 
 # type: Plain text
 #. type: delimited block _
@@ -18584,9 +18503,8 @@ msgstr ""
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:715
-#, fuzzy
 msgid "deletememory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL start [stop]"
-msgstr "B<deletememory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL>I< start [stop]>"
+msgstr "deletememory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL start [stop]"
 
 # type: Plain text
 #. type: delimited block _
@@ -18597,23 +18515,20 @@ msgstr "Odstraní položky v zadaném rozsahu ze zadané paměti."
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:721
-#, fuzzy
 msgid "getallmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL"
-msgstr "B<getallmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL>"
+msgstr "getallmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:723
-#, fuzzy
 msgid "Get all memory locations from phone."
 msgstr "Načte položku paměti (kontakt nebo hovor) z telefonu."
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:727
-#, fuzzy
 msgid "getmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL start [stop [-nonempty]]"
-msgstr "B<getmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL>I< start [stop [-nonempty]]>"
+msgstr "getmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL start [stop [-nonempty]]"
 
 # type: Plain text
 #. type: delimited block _
@@ -18624,9 +18539,8 @@ msgstr "Načte položku paměti (kontakt nebo hovor) z telefonu."
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:735
-#, fuzzy
 msgid "getspeeddial start [stop]"
-msgstr "B<getspeeddial>I< start [stop]>"
+msgstr "getspeeddial start [stop]"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:737
@@ -18636,23 +18550,21 @@ msgstr "Načte seznam rychlého vytáčení."
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:739
-#, fuzzy
 msgid "searchmemory text"
-msgstr "B<searchmemory>I< text>"
+msgstr "searchmemory text"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:743
-#, fuzzy
 msgid ""
 "Scans all memory entries for given text. It performs case insensitive "
 "substring lookup. You can interrupt searching by pressing :kbd:`Ctrl+C`."
 msgstr ""
 "Projde všechny kontakty v telefonu a hledá zadaný text (bez rozlišení "
-"velikosti písmen). Vyhledávání můžete kdykoliv přerušit pomocí Ctrl+C."
+"velikosti písmen). Vyhledávání můžete kdykoliv přerušit pomocí :kbd:`Ctrl+C`."
 
 #. type: Title -
 #: docs/manual/gammu/index.rst:745
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Filesystem commands"
 msgstr "Soubory"
 
@@ -18670,13 +18582,12 @@ msgstr ""
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:752
-#, fuzzy
 msgid ""
 "addfile folderID name [-type JAR|BMP|PNG|GIF|JPG|MIDI|WBMP|AMR|3GP|NRT] [-"
 "readonly] [-protected] [-system] [-hidden] [-newtime]"
 msgstr ""
-"B<addfile>I< folderID name [-type JAR|BMP|PNG|GIF|JPG|MIDI|WBMP|AMR|3GP|NRT] "
-"[-readonly] [-protected] [-system] [-hidden] [-newtime]>"
+"addfile folderID name [-type JAR|BMP|PNG|GIF|JPG|MIDI|WBMP|AMR|3GP|NRT] [-"
+"readonly] [-protected] [-system] [-hidden] [-newtime]"
 
 # type: Plain text
 #. type: delimited block _
@@ -18687,23 +18598,22 @@ msgstr "Přidá soubor se zadaným jménem do adresáře se zvoleným ID."
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:756
 msgid "-type"
-msgstr ""
+msgstr "-type"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:758
-#, fuzzy
 msgid ""
 "File type was required for filesystem 1 in Nokia phones (current filesystem "
 "2 doesn't need this)."
 msgstr ""
-"B<-type> - typ souboru je vyžadován pro některé souborové systémy (starší "
-"telefony Nokia)"
+"typ souboru je vyžadován pro některé souborové systémy (starší telefony "
+"Nokia)"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:760
 msgid "-readonly"
-msgstr ""
+msgstr "-readonly"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:762
@@ -18719,9 +18629,8 @@ msgstr ""
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:769
-#, fuzzy
 msgid "-system"
-msgstr "Soubory"
+msgstr "-system"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:771
@@ -18731,7 +18640,7 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:773
 msgid "-hidden"
-msgstr ""
+msgstr "-hidden"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:775
@@ -18741,23 +18650,21 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:777
 msgid "-newtime"
-msgstr ""
+msgstr "-newtime"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:779
-#, fuzzy
 msgid ""
 "After using it date/time of file modification will be set to moment of "
 "uploading."
-msgstr "B<-newtime> - čas modifikace souboru bude nastaven na aktuální čas"
+msgstr "čas modifikace souboru bude nastaven na aktuální čas"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:781
-#, fuzzy
 msgid "addfolder parentfolderID name"
-msgstr "B<addfolder>I< parentfolderID name>"
+msgstr "addfolder parentfolderID name"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:784
@@ -18769,9 +18676,8 @@ msgstr "Vytvoří složku v telefonu se zadaným jménem ve složce se zadaným 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:786
-#, fuzzy
 msgid "deletefiles fileID"
-msgstr "B<deletefiles>I< fileID>"
+msgstr "deletefiles fileID"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:788
@@ -18781,9 +18687,8 @@ msgstr "Vymaže soubory se zadanými ID."
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:790
-#, fuzzy
 msgid "deletefolder name"
-msgstr "B<deletefolder>I< name>"
+msgstr "deletefolder name"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:792
@@ -18793,9 +18698,8 @@ msgstr "Vymaže složku se zadaným ID."
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:794
-#, fuzzy
 msgid "getfilefolder fileID, fileID, ..."
-msgstr "B<getfilefolder>I< fileID, fileID, ...>"
+msgstr "getfilefolder fileID, fileID, ..."
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:796
@@ -18809,9 +18713,8 @@ msgstr ""
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:798
-#, fuzzy
 msgid "getfiles fileID, fileID, ..."
-msgstr "B<getfiles>I< fileID, fileID, ...>"
+msgstr "getfiles fileID, fileID, ..."
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:800
@@ -18821,9 +18724,8 @@ msgstr "Načte ze souborového systému telefonu soubory se zadanými ID."
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:802
-#, fuzzy
 msgid "getfilesystem [-flatall|-flat]"
-msgstr "B<getfilesystem>I< [-flatall|-flat]>"
+msgstr "getfilesystem [-flatall|-flat]"
 
 # type: Plain text
 #. type: delimited block _
@@ -18838,32 +18740,27 @@ msgstr ""
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:806
-#, fuzzy
 msgid "-flatall"
-msgstr "B<-flat>"
+msgstr "-flatall"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:808
-#, fuzzy
 msgid ""
 "there are displayed full file/folder details like ID (first parameter in "
 "line)"
 msgstr ""
-"B<-flatall> jsou zobrazeny všechny podrobnosti o souboru jako jeho ID (první "
-"v řádku)"
+"jsou zobrazeny všechny podrobnosti o souboru jako jeho ID (první v řádku)"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:810
-#, fuzzy
 msgid "-flat"
-msgstr "B<-flat>"
+msgstr "-flat"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:812
-#, fuzzy
 msgid ""
 "In some phones (like N6230) content of some folders (with more files) can be "
 "cut (only part of files will be displayed) for example on infrared "
@@ -18876,9 +18773,8 @@ msgstr ""
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:814
-#, fuzzy
 msgid "getfilesystemstatus"
-msgstr "B<getfilesystemstatus>"
+msgstr "getfilesystemstatus"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:817
@@ -18892,9 +18788,8 @@ msgstr ""
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:819
-#, fuzzy
 msgid "getfolderlisting folderID"
-msgstr "B<getfolderlisting>I< folderID>"
+msgstr "getfolderlisting folderID"
 
 # type: Plain text
 #. type: delimited block _
@@ -18921,9 +18816,8 @@ msgstr ""
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:830
-#, fuzzy
 msgid "getrootfolders"
-msgstr "B<getrootfolders>"
+msgstr "getrootfolders"
 
 # type: Plain text
 #. type: delimited block _
@@ -18934,9 +18828,8 @@ msgstr "Zobrazí informace o kořenových složkách dostupných v telefonu."
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:834
-#, fuzzy
 msgid "sendfile name"
-msgstr "B<sendfile>I< name>"
+msgstr "sendfile name"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:838
@@ -18952,14 +18845,12 @@ msgstr ""
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:840
-#, fuzzy
 msgid "setfileattrib folderID [-system] [-readonly] [-hidden] [-protected]"
-msgstr ""
-"B<setfileattrib>I< folderID [-system] [-readonly] [-hidden] [-protected]>"
+msgstr "setfileattrib folderID [-system] [-readonly] [-hidden] [-protected]"
 
 #. type: Title -
 #: docs/manual/gammu/index.rst:843
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Logo and pictures commands"
 msgstr "Loga a obrázky"
 
@@ -18983,10 +18874,8 @@ msgstr ""
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:852
-#, fuzzy
 msgid "copybitmap inputfile [outputfile [OPERATOR|PICTURE|STARTUP|CALLER]]"
-msgstr ""
-"B<copybitmap>I< inputfile [outputfile [OPERATOR|PICTURE|STARTUP|CALLER]]>"
+msgstr "copybitmap inputfile [outputfile [OPERATOR|PICTURE|STARTUP|CALLER]]"
 
 # type: Plain text
 #. type: delimited block _
@@ -19004,7 +18893,7 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:859
 msgid "getbitmap TYPE [type options]"
-msgstr ""
+msgstr "getbitmap TYPE [type options]"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:861
@@ -19014,9 +18903,8 @@ msgstr ""
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:863 docs/manual/gammu/index.rst:893
-#, fuzzy
 msgid "CALLER location [file]"
-msgstr "B<getbitmap CALLER>I< location [file]>"
+msgstr "CALLER location [file]"
 
 # type: Plain text
 #. type: delimited block _
@@ -19027,7 +18915,7 @@ msgstr "Načte logo skupiny z telefonu. Umístění 1-5."
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:867
 msgid "DEALER"
-msgstr ""
+msgstr "DEALER"
 
 # type: Plain text
 #. type: delimited block _
@@ -19044,9 +18932,8 @@ msgstr ""
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:873
-#, fuzzy
 msgid "OPERATOR [file]"
-msgstr "B<getbitmap OPERATOR>I< [file]>"
+msgstr "OPERATOR [file]"
 
 # type: Plain text
 #. type: delimited block _
@@ -19059,9 +18946,8 @@ msgstr ""
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:877
-#, fuzzy
 msgid "PICTURE location [file]"
-msgstr "B<getbitmap PICTURE>I< location [file]>"
+msgstr "PICTURE location [file]"
 
 # type: Plain text
 #. type: delimited block _
@@ -19072,9 +18958,8 @@ msgstr "Načte obrázek z telefonu."
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:881
-#, fuzzy
 msgid "STARTUP [file]"
-msgstr "B<getbitmap STARTUP>I< [file]>"
+msgstr "STARTUP [file]"
 
 # type: Plain text
 #. type: delimited block _
@@ -19086,7 +18971,7 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:885
 msgid "TEXT"
-msgstr ""
+msgstr "TEXT"
 
 # type: Plain text
 #. type: delimited block _
@@ -19097,7 +18982,7 @@ msgstr "Načte z telefonu uvítací text."
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:889
 msgid "setbitmap TYPE [type options]"
-msgstr ""
+msgstr "setbitmap TYPE [type options]"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:891
@@ -19113,9 +18998,8 @@ msgstr "Nastaví logo volajícího."
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:897
-#, fuzzy
 msgid "COLOUROPERATOR [fileID [netcode]]"
-msgstr "B<setbitmap COLOUROPERATOR>I< [fileID [netcode]]>"
+msgstr "COLOUROPERATOR [fileID [netcode]]"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:899
@@ -19125,14 +19009,13 @@ msgstr "Nastaví v telefonu logo operátora."
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:901
-#, fuzzy
 msgid "COLOURSTARTUP [fileID]"
-msgstr "B<setbitmap COLOURSTARTUP>I< [fileID]>"
+msgstr "COLOURSTARTUP [fileID]"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:903
 msgid "DEALER text"
-msgstr ""
+msgstr "DEALER text"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:905
@@ -19146,13 +19029,11 @@ msgstr ""
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:907
-#, fuzzy
 msgid "OPERATOR [file [netcode]]"
-msgstr "B<setbitmap OPERATOR>I< [file [netcode]]>"
+msgstr "OPERATOR [file [netcode]]"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:912
-#, fuzzy
 msgid ""
 "Set operator logo in phone. When won't give file and netcode, operator logo "
 "will be removed from phone. When will give only filename, operator logo will "
@@ -19162,14 +19043,13 @@ msgstr ""
 "Nastaví logo operátora v telefonu. Pokud nezadáte ani soubor ani kód sítě, "
 "logo v telefonu bude vymazáno. Při vynechání kódu sítě se použije síť, ke "
 "které je telefon právě připojený. Zadáním kódu určíte pro jakého operátora "
-"bude logo zobrazeno: B<gammu setbitmap OPERATOR file \"230 03\">"
+"bude logo zobrazeno."
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:914
-#, fuzzy
 msgid "PICTURE file location [text]"
-msgstr "B<setbitmap PICTURE>I< file location [text]>"
+msgstr "PICTURE file location [text]"
 
 # type: Plain text
 #. type: delimited block _
@@ -19180,9 +19060,8 @@ msgstr "Nastaví obrázek v telefonu."
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:918
-#, fuzzy
 msgid "STARTUP file|1|2|3"
-msgstr "B<setbitmap STARTUP>I< file|1|2|3>"
+msgstr "STARTUP file|1|2|3"
 
 # type: Plain text
 #. type: delimited block _
@@ -19199,7 +19078,7 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:924
 msgid "TEXT text"
-msgstr ""
+msgstr "TEXT text"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:926
@@ -19209,9 +19088,8 @@ msgstr "Nastaví v telefonu uvítací text."
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:928
-#, fuzzy
 msgid "WALLPAPER fileID"
-msgstr "B<setbitmap WALLPAPER>I< fileID>"
+msgstr "WALLPAPER fileID"
 
 # type: Plain text
 #. type: delimited block _
@@ -19221,9 +19099,9 @@ msgstr "Nastaví v telefonu obrázek pozadí."
 
 #. type: Title -
 #: docs/manual/gammu/index.rst:932
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Ringtones commands"
-msgstr "Zvonění"
+msgstr "Vyzvánění"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:936
@@ -19246,9 +19124,8 @@ msgstr ""
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:944
-#, fuzzy
 msgid "copyringtone source destination [RTTL|BINARY]"
-msgstr "B<copyringtone>I< source destination [RTTL|BINARY]>"
+msgstr "copyringtone source destination [RTTL|BINARY]"
 
 # type: Plain text
 #. type: delimited block _
@@ -19259,9 +19136,8 @@ msgstr "Zkopíruje vyzvánění do jiného souboru."
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:948
-#, fuzzy
 msgid "getphoneringtone location [file]"
-msgstr "B<getphoneringtone>I< location [file]>"
+msgstr "getphoneringtone location [file]"
 
 # type: Plain text
 #. type: delimited block _
@@ -19272,9 +19148,8 @@ msgstr "Načte jedno z \"výchozích\" vyzvánění a uloží ho do souboru"
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:952
-#, fuzzy
 msgid "getringtone location [file]"
-msgstr "B<getringtone>I< location [file]>"
+msgstr "getringtone location [file]"
 
 # type: Plain text
 #. type: delimited block _
@@ -19285,16 +19160,14 @@ msgstr "Načte vyzvánění z telefonu ve formátu RTTL nebo BINARY."
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:958
-#, fuzzy
 msgid "getringtoneslist"
-msgstr "B<getringtoneslist>"
+msgstr "getringtoneslist"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:960
-#, fuzzy
 msgid "playringtone file"
-msgstr "B<playringtone>I< file>"
+msgstr "playringtone file"
 
 # type: Plain text
 #. type: delimited block _
@@ -19309,14 +19182,12 @@ msgstr ""
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:964
-#, fuzzy
 msgid "playsavedringtone number"
-msgstr "B<playsavedringtone>I< number>"
+msgstr "playsavedringtone number"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:967
-#, fuzzy
 msgid ""
 "Play one of built-in ringtones. This option is available for DCT4 phones.  "
 "For getting ringtones list use :option:`gammu getringtoneslist`."
@@ -19328,9 +19199,8 @@ msgstr ""
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:969
-#, fuzzy
 msgid "setringtone file [-location location] [-scale] [-name name]"
-msgstr "B<setringtone>I< file [-location location] [-scale] [-name name]>"
+msgstr "setringtone file [-location location] [-scale] [-name name]"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:972
@@ -19350,19 +19220,18 @@ msgstr ""
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:983
-#, fuzzy
 msgid ""
 "When use ``~`` char in ringtone name, in some phones (like 33xx) name will "
 "blink later in phone menus."
 msgstr ""
-"I<TIP:> pokud použijete ve názvu vyzvánění znak ~, bude tento název v menu "
+"Pokud použijete ve názvu vyzvánění znak ``~``, bude tento název v menu "
 "některých telefonů blikat (například 33xx)"
 
 #. type: Title -
 #: docs/manual/gammu/index.rst:986
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Calendar notes commands"
-msgstr "Kalendář"
+msgstr "Kalendář "
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:989
@@ -19374,9 +19243,8 @@ msgstr ""
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:991
-#, fuzzy
 msgid "deletecalendar start [stop]"
-msgstr "B<deletecalendar>I< start [stop]>"
+msgstr "deletecalendar start [stop]"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:993
@@ -19386,9 +19254,8 @@ msgstr "Odstraní vybrané poznámky v kalendáři z telefonu."
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:995
-#, fuzzy
 msgid "getallcalendar"
-msgstr "B<getallcalendar>"
+msgstr "getallcalendar"
 
 # type: Plain text
 #. type: delimited block _
@@ -19399,9 +19266,8 @@ msgstr "Načte všechny poznámky v kalendáři z telefonu."
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:999
-#, fuzzy
 msgid "getcalendar start [stop]"
-msgstr "B<getcalendar>I< start [stop]>"
+msgstr "getcalendar start [stop]"
 
 # type: Plain text
 #. type: delimited block _
@@ -19411,16 +19277,15 @@ msgstr "Načte vybrané poznámky v kalendáři z telefonu."
 
 #. type: Title -
 #: docs/manual/gammu/index.rst:1004
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "To do list commands"
 msgstr "Úkoly"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1007
-#, fuzzy
 msgid "deletetodo start [stop]"
-msgstr "B<deletetodo>I< start [stop]>"
+msgstr "deletetodo start [stop]"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1009
@@ -19430,9 +19295,8 @@ msgstr "Odstraní vybrané úkoly z telefonu."
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1011
-#, fuzzy
 msgid "getalltodo"
-msgstr "B<getalltodo>"
+msgstr "getalltodo"
 
 # type: Plain text
 #. type: delimited block _
@@ -19443,9 +19307,8 @@ msgstr "Načte všechny úkoly z telefonu."
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1015
-#, fuzzy
 msgid "gettodo start [stop]"
-msgstr "B<gettodo>I< start [stop]>"
+msgstr "gettodo start [stop]"
 
 # type: Plain text
 #. type: delimited block _
@@ -19456,16 +19319,15 @@ msgstr "Načte vybrané úkoly z telefonu."
 # type: SS
 #. type: Title -
 #: docs/manual/gammu/index.rst:1019
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Notes commands"
-msgstr "Příkazy"
+msgstr "Poznámky"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1022
-#, fuzzy
 msgid "getallnotes"
-msgstr "B<getallnotes>"
+msgstr "getallnotes"
 
 # type: Plain text
 #. type: delimited block _
@@ -19475,26 +19337,24 @@ msgstr "Zobrazí všechny poznámky z telefonu."
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1029
-#, fuzzy
 msgid ""
 "Not all phones supports this function, especially most Sony Ericsson phones "
 "even if they have notes inside phone."
 msgstr ""
-"Poznámka: Ne všechny telefony toto podporují, i když funkci poznámek "
-"obsahují (například Sony-Ericsson)."
+"Ne všechny telefony toto podporují, i když funkci poznámek obsahují "
+"(například Sony-Ericsson)."
 
 #. type: Title -
 #: docs/manual/gammu/index.rst:1032
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Date, time and alarm commands"
 msgstr "Čas, datum a budíky"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1035
-#, fuzzy
 msgid "getalarm [start]"
-msgstr "B<getalarm>I< [start]>"
+msgstr "getalarm [start]"
 
 # type: Plain text
 #. type: delimited block _
@@ -19505,9 +19365,8 @@ msgstr "Načte budík z telfonu, pokud není zadáno umístění je použita 1."
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1040
-#, fuzzy
 msgid "getdatetime"
-msgstr "B<getdatetime>"
+msgstr "getdatetime"
 
 # type: Plain text
 #. type: delimited block _
@@ -19518,9 +19377,8 @@ msgstr "Načte datum a čas z telefonu."
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1044
-#, fuzzy
 msgid "setalarm hour minute"
-msgstr "B<setalarm>I< hour minute>"
+msgstr "setalarm hour minute"
 
 # type: Plain text
 #. type: delimited block _
@@ -19531,9 +19389,8 @@ msgstr "Nastaví opakující se budík v telefonu na zadaný čas."
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1048
-#, fuzzy
 msgid "setdatetime [HH:MM[:SS]] [YYYY/MM/DD]"
-msgstr "B<setdatetime>I< [HH:MM[:SS]] [YYYY/MM/DD]>"
+msgstr "setdatetime [HH:MM[:SS]] [YYYY/MM/DD]"
 
 # type: Plain text
 #. type: delimited block _
@@ -19549,18 +19406,18 @@ msgstr ""
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1057
-#, fuzzy
 msgid ""
 "You can make such synchronization each time, when will connect your phone "
 "and use Gammu. See :config:option:`SynchronizeTime` in :ref:`gammurc` for "
 "details."
 msgstr ""
-"I<TIP:> můžete si také nastavit tuto synchronizaci při každém připojení "
-"telefonu ke Gammu. Více podrobností naleznete v gammurc(5)."
+"Můžete si také nastavit tuto synchronizaci při každém připojení telefonu ke "
+"Gammu. Více podrobností naleznete v popisu :config:option:`SynchronizeTime` "
+"v :ref:`gammurc`."
 
 #. type: Title -
 #: docs/manual/gammu/index.rst:1060
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Categories commands"
 msgstr "Kategorie"
 
@@ -19572,50 +19429,44 @@ msgstr ""
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1067
-#, fuzzy
 msgid "addcategory TODO|PHONEBOOK text"
-msgstr "B<addcategory TODO|PHONEBOOK>I< text>"
+msgstr "addcategory TODO|PHONEBOOK text"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1069
-#, fuzzy
 msgid "getallcategory TODO|PHONEBOOK"
-msgstr "B<getallcategory TODO|PHONEBOOK>"
+msgstr "getallcategory TODO|PHONEBOOK"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1071
-#, fuzzy
 msgid "getcategory TODO|PHONEBOOK start [stop]"
-msgstr "B<getcategory TODO|PHONEBOOK>I< start [stop]>"
+msgstr "getcategory TODO|PHONEBOOK start [stop]"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1073
-#, fuzzy
 msgid "listmemorycategory text|number"
-msgstr "B<listmemorycategory>I< text|number>"
+msgstr "listmemorycategory text|number"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1075
-#, fuzzy
 msgid "listtodocategory text|number"
-msgstr "B<listtodocategory>I< text|number>"
+msgstr "listtodocategory text|number"
 
 #. type: Title -
 #: docs/manual/gammu/index.rst:1078
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Backing up and restoring commands"
 msgstr "Záloha a obnovení"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1081
-#, fuzzy
 msgid "addnew file [-yes] [-memory ME|SM|..]"
-msgstr "B<addnew>I< file [-yes] [-memory ME|SM|..]>"
+msgstr "addnew file [-yes] [-memory ME|SM|..]"
 
 # type: Plain text
 #. type: delimited block _
@@ -19658,27 +19509,24 @@ msgstr ""
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1097
-#, fuzzy
 msgid "addsms folder file [-yes]"
-msgstr "B<addsms>I< folder file [-yes]>"
+msgstr "addsms folder file [-yes]"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1100
-#, fuzzy
 msgid ""
 "Adds SMSes from file (format like :option:`gammu backupsms` uses) to "
 "selected folder in phone."
 msgstr ""
-"Přidá SMS zprávy ze souboru (formát jako používá backupsms) do zvolené "
-"složky v telefonu."
+"Přidá SMS zprávy ze souboru (formát jako používá :option:`gammu backupsms`) "
+"do zvolené složky v telefonu."
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1102
-#, fuzzy
 msgid "backup file [-yes]"
-msgstr "B<backup>I< file [-yes]>"
+msgstr "backup file [-yes]"
 
 # type: Plain text
 #. type: delimited block _
@@ -19693,65 +19541,56 @@ msgstr ""
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1106
-#, fuzzy
 msgid "phonebook from SIM and phone memory"
-msgstr "* kontakty ze SIM karty a z telefonu"
+msgstr "kontakty ze SIM karty a z telefonu"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1107
-#, fuzzy
 msgid "calendar notes"
-msgstr "* události z kalendáře"
+msgstr "události z kalendáře"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1108
-#, fuzzy
 msgid "SMSC settings"
-msgstr "* nastavení SMS zpráv"
+msgstr "nastavení SMS zpráv"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1109
-#, fuzzy
 msgid "operator logo"
-msgstr "* loga operátora"
+msgstr "loga operátora"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1110
-#, fuzzy
 msgid "startup (static) logo or startup text"
-msgstr "* úvodní logo a text"
+msgstr "úvodní logo a text"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1111
-#, fuzzy
 msgid "WAP bookmarks"
-msgstr "* WAP záložky"
+msgstr "WAP záložky"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1112
-#, fuzzy
 msgid "WAP settings"
-msgstr "* nastavení WAPu"
+msgstr "nastavení WAPu"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1113
-#, fuzzy
 msgid "caller logos and groups"
-msgstr "* loga volajících a skupiny"
+msgstr "loga volajících a skupiny"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1114
-#, fuzzy
 msgid "user ringtones"
-msgstr "* uživatelská vyzvánění"
+msgstr "uživatelská vyzvánění"
 
 # type: Plain text
 #. type: delimited block _
@@ -19766,64 +19605,56 @@ msgstr ""
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1119
-#, fuzzy
 msgid ""
 "``.lmb`` - Nokia backup, supports contacts, caller logos and startup logo."
 msgstr ""
-"* .lmb - Záloha Nokia, podporuje kontakty, loga volajících a uvodní logo."
+"``.lmb`` - Záloha Nokia, podporuje kontakty, loga volajících a uvodní logo."
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1120
-#, fuzzy
 msgid "``.vcs`` - vCalendar, supports calendar and todo."
-msgstr "* .vcs - vCalendar, podporuje kalendář a úkoly."
+msgstr "``.vcs`` - vCalendar, podporuje kalendář a úkoly."
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1121
-#, fuzzy
 msgid "``.vcf`` - vCard, supports contacts."
-msgstr "* .vcf - vCard, podporuje kontakty."
+msgstr "``.vcf`` - vCard, podporuje kontakty."
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1122
-#, fuzzy
 msgid "``.ldif`` - LDAP import, supports contacts."
-msgstr "* .ldif - LDAP import, podporuje kontakty."
+msgstr "``.ldif`` - LDAP import, podporuje kontakty."
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1123
-#, fuzzy
 msgid "``.ics`` - iCalendar, supports calendar and todo."
-msgstr "* .ics - iCalendar, podporuje kalendář a úkoly."
+msgstr "``.ics`` - iCalendar, podporuje kalendář a úkoly."
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1124
-#, fuzzy
 msgid ""
 "Any other extension is Gammu backup file and it supports all data mentioned "
 "above, see :ref:`gammu-backup` for more details."
 msgstr ""
-"* Jakákoliv jiná přípona je vlastní formát Gammu, který podporuje všechna "
-"data zmíněná výše."
+"Jakákoliv jiná přípona je vlastní formát Gammu, který podporuje všechna data "
+"zmíněná výše. Viz :ref:`gammu-backup`."
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1126
-#, fuzzy
 msgid "backupsms file [-yes|-all]"
-msgstr "B<backupsms>I< file [-yes|-all]>"
+msgstr "backupsms file [-yes|-all]"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1128
-#, fuzzy
 msgid "Stores all SMSes from phone to file into :ref:`gammu-smsbackup`."
-msgstr "Uloží všechny SMS z telefonu do souboru."
+msgstr "Uloží všechny SMS z telefonu do souboru :ref:`gammu-smsbackup`."
 
 # type: Plain text
 #. type: delimited block _
@@ -19840,29 +19671,28 @@ msgstr ""
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1134
-#, fuzzy
 msgid "restore file [-yes]"
-msgstr "B<restore>I< file [-yes]>"
+msgstr "restore file [-yes]"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1139
-#, fuzzy
 msgid ""
 "Please note that restoring deletes all current content in phone. If you want "
 "only to add entries to phone, use :option:`gammu addnew`."
 msgstr ""
 "Prosím uvědomte si, že obnovení znamená odstranění dat, která jsou v "
-"telefonu obsažena. Pokud chcete jen přidat nové záznamy, použijte addnew."
+"telefonu obsažena. Pokud chcete jen přidat nové záznamy, použijte :option:"
+"`gammu addnew`."
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1141
-#, fuzzy
 msgid ""
 "Restore settings written in file created using :option:`gammu backup` "
 "command."
-msgstr "Přidá data ze souboru vytvořeného pomocí fuknce B<backup>."
+msgstr ""
+"Přidá data ze souboru vytvořeného pomocí fuknce :option:`gammu backup`."
 
 # type: Plain text
 #. type: delimited block _
@@ -19877,9 +19707,8 @@ msgstr ""
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1147
-#, fuzzy
 msgid "restoresms file [-yes]"
-msgstr "B<restoresms>I< file [-yes]>"
+msgstr "restoresms file [-yes]"
 
 # type: Plain text
 #. type: delimited block _
@@ -19907,15 +19736,16 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1156
 msgid "savefile TYPE [type options]"
-msgstr ""
+msgstr "savefile TYPE [type options]"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1159
-#, fuzzy
 msgid ""
 "Converts between various file formats supported by Gammu, following types "
 "are supported:"
-msgstr "Převede formát se zálohou podporovaný Gammu do souboru vBookmark."
+msgstr ""
+"Převede formát se zálohou podporovaný Gammu, jsou podporovány následující "
+"typy:"
 
 # type: TP
 #. type: delimited block _
@@ -19986,19 +19816,18 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1187
 msgid ":option:`gammu convertbackup`"
-msgstr ""
+msgstr ":option:`gammu convertbackup`"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1189
 msgid "convertbackup source.file output.file"
-msgstr ""
+msgstr "convertbackup zdrojový.soubor výstupní.soubor"
 
 # type: TH
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1191
-#, fuzzy
 msgid "1.28.94"
-msgstr "Gammu 1.28.90"
+msgstr "1.28.94"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1195
@@ -20011,18 +19840,18 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1197
 msgid ":option:`gammu savefile`"
-msgstr ""
+msgstr ":option:`gammu savefile`"
 
 #. type: Title -
 #: docs/manual/gammu/index.rst:1200
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Nokia specific commands"
 msgstr "Specifické pro Nokii"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1203
 msgid "nokiaaddfile TYPE [type options]"
-msgstr ""
+msgstr "nokiaaddfile TYPE [type options]"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1205
@@ -20031,28 +19860,24 @@ msgstr ""
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1207
-#, fuzzy
 msgid "APPLICATION|GAME file [-readonly] [-overwrite] [-overwriteall]"
-msgstr ""
-"B<nokiaaddfile APPLICATION|GAME>I< file [-readonly] [-overwrite] [-"
-"overwriteall]>"
+msgstr "APPLICATION|GAME file [-readonly] [-overwrite] [-overwriteall]"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1211
-#, fuzzy
 msgid ""
 "Install the ``*.jar/*.jad`` file pair of a midlet in the application or game "
 "menu of the phone. You need to specify filename without the jar/jad suffix, "
 "both will be added automatically."
 msgstr ""
-"Naistaluje soubory *.jar/*.jad jako midlet do složky aplikací nebo her v "
+"Naistaluje soubory ``*.jar/*.jad`` jako midlet do složky aplikací nebo her v "
 "telefonu. Jméno souboru musíte zadat bez přípony .jar/.jad, budou doplěny "
 "automaticky."
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1213
 msgid "-overwrite"
-msgstr ""
+msgstr "-overwrite"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1216
@@ -20064,7 +19889,7 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1218
 msgid "-overwriteall"
-msgstr ""
+msgstr "-overwriteall"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1221
@@ -20075,28 +19900,25 @@ msgstr ""
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1223
-#, fuzzy
 msgid "You can use :ref:`jadmaker` to generate a .jad file from a .jar file."
-msgstr "Pro vygenerování jad souboru z jar souboru můžete použít jadmaker(1)."
+msgstr ""
+"Pro vygenerování jad souboru z jar souboru můžete použít :ref:`jadmaker`."
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1225
-#, fuzzy
 msgid ""
 "GALLERY|GALLERY2|CAMERA|TONES|TONES2|RECORDS|VIDEO|PLAYLIST|MEMORYCARD file "
 "[-name name] [-protected] [-readonly] [-system] [-hidden] [-newtime]"
 msgstr ""
-"B<nokiaaddfile GALLERY|GALLERY2|CAMERA|TONES|TONES2|RECORDS|VIDEO|PLAYLIST|"
-"MEMORYCARD>I< file [-name name] [-protected] [-readonly] [-system] [-hidden] "
-"[-newtime]>"
+"GALLERY|GALLERY2|CAMERA|TONES|TONES2|RECORDS|VIDEO|PLAYLIST|MEMORYCARD file "
+"[-name name] [-protected] [-readonly] [-system] [-hidden] [-newtime]"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1227
-#, fuzzy
 msgid "nokiaaddplaylists"
-msgstr "B<nokiaaddplaylists>"
+msgstr "nokiaaddplaylists"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1229
@@ -20113,9 +19935,8 @@ msgstr "Pro ruční zprávu seznamů skladeb:"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1235
-#, fuzzy
 msgid "gammu addfile a:\\\\predefplaylist filename.m3u"
-msgstr "    gammu addfile a:\\epredefplaylist jméno.m3u\n"
+msgstr "gammu addfile a:\\\\predefplaylist filename.m3u"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1237
@@ -20124,9 +19945,8 @@ msgstr "Přidá seznam skladeb jméno.m3u"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1241
-#, fuzzy
 msgid "gammu getfilesystem"
-msgstr "    gammu getfilesystem\n"
+msgstr "gammu getfilesystem"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1243
@@ -20135,9 +19955,8 @@ msgstr "Získá seznam všech souborů (včetně souborů se seznamy skladeb)"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1247
-#, fuzzy
 msgid "gammu deletefiles a:\\\\predefplaylist\\\\filename.m3u"
-msgstr "    gammu deletefiles a:\\epredefplaylist\\ejméno.m3u\n"
+msgstr "gammu deletefiles a:\\\\predefplaylist\\\\filename.m3u"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1249
@@ -20162,9 +19981,8 @@ msgstr ""
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1258
-#, fuzzy
 msgid "nokiacomposer file"
-msgstr "B<nokiacomposer>I< file>"
+msgstr "nokiacomposer file"
 
 # type: Plain text
 #. type: delimited block _
@@ -20179,37 +19997,32 @@ msgstr ""
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1263
-#, fuzzy
 msgid "nokiadebug filename [[v11-22] [,v33-44]...]"
-msgstr "B<nokiadebug>I< filename [[v11-22] [,v33-44]...]>"
+msgstr "nokiadebug filename [[v11-22] [,v33-44]...]"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1265
-#, fuzzy
 msgid "nokiadisplayoutput"
-msgstr "B<nokiadisplayoutput>"
+msgstr "nokiadisplayoutput"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1267
-#, fuzzy
 msgid "nokiadisplaytest number"
-msgstr "B<nokiadisplaytest>I< number>"
+msgstr "nokiadisplaytest number"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1269
-#, fuzzy
 msgid "nokiagetadc"
-msgstr "B<nokiagetadc>"
+msgstr "nokiagetadc"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1271
-#, fuzzy
 msgid "nokiagetoperatorname"
-msgstr "B<nokiagetoperatorname>"
+msgstr "nokiagetoperatorname"
 
 # type: Plain text
 #. type: delimited block _
@@ -20225,23 +20038,20 @@ msgstr ""
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1277
-#, fuzzy
 msgid "nokiagetpbkfeatures memorytype"
-msgstr "B<nokiagetpbkfeatures>I< memorytype>"
+msgstr "nokiagetpbkfeatures memorytype"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1279
-#, fuzzy
 msgid "nokiagetscreendump"
-msgstr "B<nokiagetscreendump>"
+msgstr "nokiagetscreendump"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1281
-#, fuzzy
 msgid "nokiagett9"
-msgstr "B<nokiagett9>"
+msgstr "nokiagett9"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1284
@@ -20251,9 +20061,8 @@ msgstr "Tato volba zobrazí T9 slovík z telefonů DCT4."
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1286
-#, fuzzy
 msgid "nokiagetvoicerecord location"
-msgstr "B<nokiagetvoicerecord>I< location>"
+msgstr "nokiagetvoicerecord location"
 
 # type: Plain text
 #. type: delimited block _
@@ -20280,51 +20089,43 @@ msgstr ""
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1296
-#, fuzzy
 msgid "Control Panel"
-msgstr "1. Ovládací panel"
+msgstr "Ovládací panel"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1297
-#, fuzzy
 msgid "Add hardware"
-msgstr "2. Přidat hardware"
+msgstr "Přidat hardware"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1298
-#, fuzzy
 msgid "click Next"
-msgstr "3. klikněte na Další"
+msgstr "klikněte na Další"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1299
-#, fuzzy
 msgid "select \"Yes. I have already connected the hardware"
-msgstr "4. zvolte \"Ano, hardware už je připojený\""
+msgstr "zvolte \"Ano, hardware už je připojený\""
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1300
-#, fuzzy
 msgid "select \"Add a new hardware device"
-msgstr "5. zvolte \"Přidat nové zařízení\""
+msgstr "zvolte \"Přidat nové zařízení\""
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1301
-#, fuzzy
 msgid "select \"Install the hardware that I manually select from a list"
-msgstr "6. zvolte \"Instalovat ovladač který zvolím ze seznamu\""
+msgstr "zvolte \"Instalovat ovladač který zvolím ze seznamu\""
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1302
-#, fuzzy
 msgid "select \"Sound, video and game controllers"
-msgstr "7. zvolte \"Ovladače zvuku, videa a her\""
+msgstr "zvolte \"Ovladače zvuku, videa a her\""
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1303
-#, fuzzy
 msgid "select \"Audio codecs"
-msgstr "8. zvolte \"Kodeky zvuku\""
+msgstr "zvolte \"Kodeky zvuku\""
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1304
@@ -20347,16 +20148,14 @@ msgstr ""
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1308
-#, fuzzy
 msgid "nokiamakecamerashoot"
-msgstr "B<nokiamakecamerashoot>"
+msgstr "nokiamakecamerashoot"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1310
-#, fuzzy
 msgid "nokianetmonitor test"
-msgstr "B<nokianetmonitor>I< test>"
+msgstr "nokianetmonitor test"
 
 # type: Plain text
 #. type: delimited block _
@@ -20367,37 +20166,34 @@ msgstr "Zobrazí výstup nebo nastaví netmonitor na telefonech Nokia DCT3."
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1314 docs/manual/gammu/index.rst:1330
 msgid "seealso::"
-msgstr ""
+msgstr "seealso::"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1318 docs/manual/gammu/index.rst:1334
-#, fuzzy
 msgid ""
 "For more info about this option, please visit `Marcin's page <http://www."
 "mwiacek.com/>`_ and read netmonitor manual there."
 msgstr ""
-"I<TIP:> Pro více informací se podívejte na stránky I<http://www.mwiacek."
-"com>, kde naleznete manuál k netmonitoru."
+"Pro více informací se podívejte na stránky I<http://www.mwiacek.com>, kde "
+"naleznete manuál k netmonitoru."
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1324
-#, fuzzy
 msgid ""
 "test ``243`` enables all tests (after using command :command:`gammu "
 "nokianetmonitor 243` in some phones like 6210 or 9210 have to reboot them to "
 "see netmonitor menu)"
 msgstr ""
-"I<TIP:> test B<243> zapne všechny testy (po použití příkazu B<gammu "
-"nokianetmonitor 243> se musí některé telefony restartovat)"
+"test B<243> zapne všechny testy (po použití příkazu B<gammu nokianetmonitor "
+"243> se musí některé telefony restartovat)"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1326
-#, fuzzy
 msgid "nokianetmonitor36"
-msgstr "B<nokianetmonitor36>"
+msgstr "nokianetmonitor36"
 
 # type: Plain text
 #. type: delimited block _
@@ -20408,9 +20204,8 @@ msgstr "Vynuluje čítače z testu 36 v netmonitoru telefonů Nokia DCT3."
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1336
-#, fuzzy
 msgid "nokiasecuritycode"
-msgstr "B<nokiasecuritycode>"
+msgstr "nokiasecuritycode"
 
 # type: Plain text
 #. type: delimited block _
@@ -20421,9 +20216,8 @@ msgstr "Přečte bezpečnostní kód nebo ho nastaví na \"12345\"."
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1340
-#, fuzzy
 msgid "nokiaselftests"
-msgstr "B<nokiaselftests>"
+msgstr "nokiaselftests"
 
 # type: Plain text
 #. type: delimited block _
@@ -20442,23 +20236,20 @@ msgstr ""
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1350
-#, fuzzy
 msgid "nokiasetlights keypad|display|torch on|off"
-msgstr "B<nokiasetlights>I< keypad|display|torch on|off>"
+msgstr "nokiasetlights keypad|display|torch on|off"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1352
-#, fuzzy
 msgid "nokiasetoperatorname [networkcode name]"
-msgstr "B<nokiasetoperatorname>I< [networkcode name]>"
+msgstr "nokiasetoperatorname [networkcode name]"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1354
-#, fuzzy
 msgid "nokiasetphonemenus"
-msgstr "B<nokiasetphonemenus>"
+msgstr "nokiasetphonemenus"
 
 # type: Plain text
 #. type: delimited block _
@@ -20469,44 +20260,38 @@ msgstr "Zapne všechny (?) dostupné nabídky na telefonech Nokia DCT3."
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1358 docs/manual/gammu/index.rst:1367
-#, fuzzy
 msgid "ALS (Alternative Line Service) option menu"
-msgstr "1. Nabídka nastavení ALS (Alternative Line Service)"
+msgstr "Nabídka nastavení ALS (Alternative Line Service)"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1359
-#, fuzzy
 msgid "vibra menu for 3210"
-msgstr "2. Nastavení vibračního vyzvánění pro 3210"
+msgstr "Nastavení vibračního vyzvánění pro 3210"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1360
-#, fuzzy
 msgid "3315 features in 3310 5.45 and higher"
-msgstr "3. vlastnosti 3315 v 3310 5.45 a novějších"
+msgstr "vlastnosti 3315 v 3310 5.45 a novějších"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1361
-#, fuzzy
 msgid "two additional games (React and Logic) for 3210 5\\.31 and higher"
-msgstr "4. dvě další hry (React a Logic) pro 3210 5.31 a novější"
+msgstr "dvě další hry (React a Logic) pro 3210 5.31 a novější"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1362
-#, fuzzy
 msgid "WellMate menu for 6150"
-msgstr "5. Nabídka WellMate 6150"
+msgstr "Nabídka WellMate 6150"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1363
-#, fuzzy
 msgid "NetMonitor"
-msgstr "6. NetMonitor"
+msgstr "NetMonitor"
 
 # type: Plain text
 #. type: delimited block _
@@ -20517,16 +20302,14 @@ msgstr "a pro DCT4:"
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1368
-#, fuzzy
 msgid "Bluetooth, WAP bookmarks and settings menu, ... (6310i)"
-msgstr "2. Nabídka Bluetooth, záložky WAP a nastavení, ... (6310i)"
+msgstr "Nabídka Bluetooth, záložky WAP a nastavení, ... (6310i)"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1369
-#, fuzzy
 msgid "GPRS Always Online"
-msgstr "3. GPRS vždy zapnuté"
+msgstr "GPRS vždy zapnuté"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1370
@@ -20536,9 +20319,8 @@ msgstr ""
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1372
-#, fuzzy
 msgid "nokiasetvibralevel level"
-msgstr "B<nokiasetvibralevel>I< level>"
+msgstr "nokiasetvibralevel level"
 
 # type: Plain text
 #. type: delimited block _
@@ -20549,29 +20331,26 @@ msgstr "Nastaví úrověň vibrací na úroveň \"level\" (v procentech)"
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1376
-#, fuzzy
 msgid "nokiatuneradio"
-msgstr "B<nokiatuneradio>"
+msgstr "nokiatuneradio"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1378
-#, fuzzy
 msgid "nokiavibratest"
-msgstr "B<nokiavibratest>"
+msgstr "nokiavibratest"
 
 #. type: Title -
 #: docs/manual/gammu/index.rst:1381
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Siemens specific commands"
 msgstr "Specifické pro Siemens"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1384
-#, fuzzy
 msgid "siemensnetmonact netmon_type"
-msgstr "B<siemensnetmonact>I< netmon_type>"
+msgstr "siemensnetmonact netmon_type"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1387
@@ -20583,36 +20362,32 @@ msgstr ""
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1389
-#, fuzzy
 msgid "siemensnetmonitor test"
-msgstr "B<siemensnetmonitor>I< test>"
+msgstr "siemensnetmonitor test"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1391
-#, fuzzy
 msgid "siemenssatnetmon"
-msgstr "B<siemenssatnetmon>"
+msgstr "siemenssatnetmon"
 
 #. type: Title -
 #: docs/manual/gammu/index.rst:1393
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Network commands"
 msgstr "Síť"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1396
-#, fuzzy
 msgid "getgprspoint start [stop]"
-msgstr "B<getgprspoint>I< start [stop]>"
+msgstr "getgprspoint start [stop]"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1398
-#, fuzzy
 msgid "listnetworks [country]"
-msgstr "B<listnetworks>I< [country]>"
+msgstr "listnetworks [country]"
 
 # type: Plain text
 #. type: delimited block _
@@ -20623,9 +20398,8 @@ msgstr "Zobrazí názvy GSM sítí známých Gammu."
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1402
-#, fuzzy
 msgid "networkinfo"
-msgstr "B<networkinfo>"
+msgstr "networkinfo"
 
 # type: Plain text
 #. type: delimited block _
@@ -20636,22 +20410,20 @@ msgstr "Zobrazí informace o stavu sítě z telefonu."
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1406
-#, fuzzy
 msgid "setautonetworklogin"
-msgstr "B<setautonetworklogin>"
+msgstr "setautonetworklogin"
 
 #. type: Title -
 #: docs/manual/gammu/index.rst:1408
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "WAP settings and bookmarks commands"
 msgstr "Nastavení WAPu a záložky"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1411
-#, fuzzy
 msgid "deletewapbookmark start [stop]"
-msgstr "B<deletewapbookmark>I< start [stop]>"
+msgstr "deletewapbookmark start [stop]"
 
 # type: Plain text
 #. type: delimited block _
@@ -20662,23 +20434,20 @@ msgstr "Odstraní WAP záložky z telefonu."
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1417
-#, fuzzy
 msgid "getchatsettings start [stop]"
-msgstr "B<getchatsettings>I< start [stop]>"
+msgstr "getchatsettings start [stop]"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1419
-#, fuzzy
 msgid "getsyncmlsettings start [stop]"
-msgstr "B<getsyncmlsettings>I< start [stop]>"
+msgstr "getsyncmlsettings start [stop]"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1421
-#, fuzzy
 msgid "getwapbookmark start [stop]"
-msgstr "B<getwapbookmark>I< start [stop]>"
+msgstr "getwapbookmark start [stop]"
 
 # type: Plain text
 #. type: delimited block _
@@ -20689,9 +20458,8 @@ msgstr "Načte WAP záložky z telefonu."
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1427
-#, fuzzy
 msgid "getwapsettings start [stop]"
-msgstr "B<getwapsettings>I< start [stop]>"
+msgstr "getwapsettings start [stop]"
 
 # type: Plain text
 #. type: delimited block _
@@ -20701,57 +20469,51 @@ msgstr "Načte nastavení WAPu z telefonu."
 
 #. type: Title -
 #: docs/manual/gammu/index.rst:1433
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "MMS and MMS settings commands"
 msgstr "MMS a jejich nastavení"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1436
-#, fuzzy
 msgid "getallmms [-save]"
-msgstr "B<getallmms>I< [-save]>"
+msgstr "getallmms [-save]"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1438
-#, fuzzy
 msgid "geteachmms [-save]"
-msgstr "B<geteachmms>I< [-save]>"
+msgstr "geteachmms [-save]"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1440
-#, fuzzy
 msgid "getmmsfolders"
-msgstr "B<getmmsfolders>"
+msgstr "getmmsfolders"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1442
-#, fuzzy
 msgid "getmmssettings start [stop]"
-msgstr "B<getmmssettings>I< start [stop]>"
+msgstr "getmmssettings start [stop]"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1444
-#, fuzzy
 msgid "readmmsfile file [-save]"
-msgstr "B<readmmsfile>I< file [-save]>"
+msgstr "readmmsfile file [-save]"
 
 #. type: Title -
 #: docs/manual/gammu/index.rst:1447
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "FM radio commands"
 msgstr "FM rádio"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1450
-#, fuzzy
 msgid "getfmstation start [stop]"
-msgstr "B<getfmstation>I< start [stop]>"
+msgstr "getfmstation start [stop]"
 
 # type: Plain text
 #. type: delimited block _
@@ -20761,16 +20523,15 @@ msgstr "Zobrazí informace o FM stanicích v telefonu."
 
 #. type: Title -
 #: docs/manual/gammu/index.rst:1454
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Phone information commands"
 msgstr "Informace o telefonu"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1457
-#, fuzzy
 msgid "battery"
-msgstr "B<CheckBattery>"
+msgstr "battery"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1459
@@ -20780,35 +20541,31 @@ msgstr ""
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1461
-#, fuzzy
 msgid "getdisplaystatus"
-msgstr "B<getdisplaystatus>"
+msgstr "getdisplaystatus"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1463
-#, fuzzy
 msgid "getlocation"
-msgstr "B<getlocation>"
+msgstr "getlocation"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1467
-#, fuzzy
 msgid ""
 "Gets network information from phone (same as networkinfo)  and prints "
 "location (latitude and longitude) based on information from `OpenCellID "
 "<http://opencellid.org>`_."
 msgstr ""
 "Načte informace o síti z telefonu (stejné jako networkinfo)  a zobrazí vaše "
-"umístění (zeměpisnou šířku a délku) podle informací z OpenCellID E<lt>http://"
-"opencellid.orgE<gt>."
+"umístění (zeměpisnou šířku a délku) podle informací z `OpenCellID <http://"
+"opencellid.org>`_."
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1469
-#, fuzzy
 msgid "getsecuritystatus"
-msgstr "B<getsecuritystatus>"
+msgstr "getsecuritystatus"
 
 # type: Plain text
 #. type: delimited block _
@@ -20819,9 +20576,8 @@ msgstr "Zobrazí, jestli telefon čeká na bezpečnostní kód (PIN, PUK a podob
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1473
-#, fuzzy
 msgid "identify"
-msgstr "B<identify>"
+msgstr "identify"
 
 # type: Plain text
 #. type: delimited block _
@@ -20832,33 +20588,30 @@ msgstr "Zobrazí základní informace o telefonu."
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1477
-#, fuzzy
 msgid "monitor [times]"
-msgstr "B<monitor>I< [times]>"
+msgstr "monitor [times]"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1480
-#, fuzzy
 msgid ""
 "Get phone status and writes continuously to standard output. Press :kbd:`Ctrl"
 "+C` to break this state."
 msgstr ""
 "Periodicky zobrazuje informace o stavu telefonu. Program přerušíte "
-"stisknutím Ctrl+C."
+"stisknutím :kbd:`Ctrl+C`."
 
 #. type: Title -
 #: docs/manual/gammu/index.rst:1483
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Phone settings commands"
 msgstr "Nastavení telefonu"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1486
-#, fuzzy
 msgid "getcalendarsettings"
-msgstr "B<getcalendarsettings>"
+msgstr "getcalendarsettings"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1489
@@ -20872,16 +20625,14 @@ msgstr ""
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1491
-#, fuzzy
 msgid "getprofile start [stop]"
-msgstr "B<getprofile>I< start [stop]>"
+msgstr "getprofile start [stop]"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1493
-#, fuzzy
 msgid "resetphonesettings PHONE|DEV|UIF|ALL|FACTORY"
-msgstr "B<resetphonesettings PHONE|DEV|UIF|ALL|FACTORY>"
+msgstr "resetphonesettings PHONE|DEV|UIF|ALL|FACTORY"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1495
@@ -20890,92 +20641,82 @@ msgstr ""
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1497
-#, fuzzy
 msgid "Reset phone settings."
-msgstr "Nastavení telefonu"
+msgstr "Obnoví nastavení telefonu"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1499
 msgid "``PHONE``"
-msgstr ""
+msgstr "``PHONE``"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1500
-#, fuzzy
 msgid "Clear phone settings."
-msgstr "Odstraní uživatelská nastavení"
+msgstr "Odstraní nastavení telefonu"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1502
 msgid "``DEV``"
-msgstr ""
+msgstr "``DEV``"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1503
-#, fuzzy
 msgid "Clear device settings."
-msgstr "Odstraní uživatelská nastavení"
+msgstr "Odstraní nastavení zařízení"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1505
 msgid "``ALL``"
-msgstr ""
+msgstr "``ALL``"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1506
-#, fuzzy
 msgid "Clear user settings."
 msgstr "Odstraní uživatelská nastavení"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1508
-#, fuzzy
 msgid "removes or set logos to default"
-msgstr "* odstraní nebo obnoví výchozí loga"
+msgstr "odstraní nebo obnoví výchozí loga"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1509
-#, fuzzy
 msgid "set default phonebook and other menu settings"
-msgstr "* obnoví výchozí nastavení kontaktů a menu"
+msgstr "obnoví výchozí nastavení kontaktů a menu"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1510
-#, fuzzy
 msgid "clear T9 words,"
-msgstr "* vyprázdní slovník T9"
+msgstr "vyprázdní slovník T9"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1511
-#, fuzzy
 msgid "clear call register info"
-msgstr "* vymaže informace o hovorech"
+msgstr "vymaže informace o hovorech"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1512
-#, fuzzy
 msgid "set default profiles settings"
-msgstr "* obnoví výchozí nastavení profilů"
+msgstr "obnoví výchozí nastavení profilů"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1513
-#, fuzzy
 msgid "clear user ringtones"
-msgstr "* odstraní uživatelská vyzvánění"
+msgstr "odstraní uživatelská vyzvánění"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1515
 msgid "``UIF``"
-msgstr ""
+msgstr "``UIF``"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1516
@@ -20985,23 +20726,20 @@ msgstr ""
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1518
-#, fuzzy
 msgid "changes like after ``ALL``"
-msgstr "* změny jako B<ALL>"
+msgstr "změny jako ``ALL``"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1519
-#, fuzzy
 msgid "disables netmon and PPS (all \"hidden\" menus)"
-msgstr "* vypne netmonitor a PPS (všechna \"skrytá\" menu)"
+msgstr "vypne netmonitor a PPS (všechna \"skrytá\" menu)"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1521
-#, fuzzy
 msgid "``FACTORY``"
-msgstr "B<FACTORY:>"
+msgstr "``FACTORY``"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1522
@@ -21011,38 +20749,35 @@ msgstr ""
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1524
-#, fuzzy
 msgid "changes like after ``UIF``"
-msgstr "* změny jako B<UIF>"
+msgstr "změny jako ``UIF``"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1525
-#, fuzzy
 msgid "clear date/time"
-msgstr "* vymaže datum a čas"
+msgstr "vymaže datum a čas"
 
 #. type: Title -
 #: docs/manual/gammu/index.rst:1528
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Dumps decoding commands"
-msgstr "Dekódování výpisů"
+msgstr "Příkazy pro dekódování výpisů"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1531
-#, fuzzy
 msgid ""
 "These commands are available only if Gammu was compiled with debugging "
 "options."
 msgstr ""
-"Tento příkaz je dostupný jen pokud bylo Gammu kompilováno s ladicími volbami."
+"Tento příkaz je dostupný jen pokud bylo Gammu kompilováno s ladicími "
+"volbami. "
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1533
-#, fuzzy
 msgid "decodebinarydump file [phonemodel]"
-msgstr "B<decodebinarydump>I< file [phonemodel]>"
+msgstr "decodebinarydump file [phonemodel]"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1536
@@ -21054,9 +20789,8 @@ msgstr ""
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1538
-#, fuzzy
 msgid "decodesniff MBUS2|IRDA file [phonemodel]"
-msgstr "B<decodesniff MBUS2|IRDA>I< file [phonemodel]>"
+msgstr "decodesniff MBUS2|IRDA file [phonemodel]"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1540
@@ -21067,36 +20801,31 @@ msgstr ""
 # type: SS
 #. type: Title -
 #: docs/manual/gammu/index.rst:1542
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Other commands"
-msgstr "Příkazy"
+msgstr "Další příkazy"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1545
-#, fuzzy
 msgid "entersecuritycode PIN|PUK|PIN2|PUK2|PHONE|NETWORK code|-"
-msgstr "B<entersecuritycode PIN|PUK|PIN2|PUK2|PHONE|NETWORK>I< code|->"
+msgstr "entersecuritycode PIN|PUK|PIN2|PUK2|PHONE|NETWORK code|-"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1547
-#, fuzzy
 msgid ""
 "Allow to enter security code from PC. When code is ``-``, it is read from "
 "stdin."
 msgstr ""
-"Umožní zadat bezpečností kód z PC. Pokud je jako kód zadáno -, je načten ze "
-"standardního vstupu."
+"Umožní zadat bezpečností kód z PC. Pokud je jako kód zadáno ``-``, je načten "
+"ze standardního vstupu."
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1549
-#, fuzzy
 msgid "presskeysequence mMnNpPuUdD+-123456789*0#gGrR<>[]hHcCjJfFoOmMdD@"
-msgstr ""
-"B<presskeysequence>I< mMnNpPuUdD+-123456789*0#gGrRE<lt>E<gt>[]"
-"hHcCjJfFoOmMdD@>"
+msgstr "presskeysequence mMnNpPuUdD+-123456789*0#gGrR<>[]hHcCjJfFoOmMdD@"
 
 # type: Plain text
 #. type: delimited block _
@@ -21107,39 +20836,38 @@ msgstr "Simuluje stisk kláves na klávesnici telefonu"
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1553
 msgid "``mM``"
-msgstr ""
+msgstr "``mM``"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1554
 msgid "Menu"
-msgstr ""
+msgstr "Menu"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1555
 msgid "``nN``"
-msgstr ""
+msgstr "``nN``"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1556
-#, fuzzy
 msgid "Names key"
-msgstr "B<nN> - Klávesa pro jména"
+msgstr "Klávesa pro jména"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1557
 msgid "``pP``"
-msgstr ""
+msgstr "``pP``"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1558
 msgid "Power"
-msgstr ""
+msgstr "Vypínač"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1559
 msgid "``uU``"
-msgstr ""
+msgstr "``uU``"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1560
@@ -21149,7 +20877,7 @@ msgstr "Nahoru"
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1561
 msgid "``dD``"
-msgstr ""
+msgstr "``dD``"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1562
@@ -21159,51 +20887,49 @@ msgstr "Dolů"
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1563
 msgid "``+-``"
-msgstr ""
+msgstr "``+-``"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1564
 msgid "+-"
-msgstr ""
+msgstr "+-"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1565
 msgid "``gG``"
-msgstr ""
+msgstr "``gG``"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1566
 msgid "Green"
-msgstr ""
+msgstr "Zelené (Green)"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1567
 msgid "``rR``"
-msgstr ""
+msgstr "``rR``"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1568
 msgid "Red"
-msgstr ""
+msgstr "Červené (Red)"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1569
 msgid "``123456789*0#``"
-msgstr ""
+msgstr "``123456789*0#``"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1570
-#, fuzzy
 msgid "numeric keyboard"
-msgstr "B<123456789*0#> číslicová klávesnice"
+msgstr "číslicová klávesnice"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1572
-#, fuzzy
 msgid "reset SOFT|HARD"
-msgstr "B<reset SOFT|HARD>"
+msgstr "reset SOFT|HARD"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1574
@@ -21213,7 +20939,7 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1576
 msgid "``SOFT``"
-msgstr ""
+msgstr "``SOFT``"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1577
@@ -21223,7 +20949,7 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1578
 msgid "``HARD``"
-msgstr ""
+msgstr "``HARD``"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1579
@@ -21233,11 +20959,8 @@ msgstr ""
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1581
-#, fuzzy
 msgid "Some phones will ask for PIN even with ``SOFT`` option."
-msgstr ""
-"I<Poznámka:> některé telefony provedou tvrdý reset i při zadání parametru "
-"B<SOFT>."
+msgstr "některé telefony provedou tvrdý reset i při zadání parametru ``SOFT``."
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1582
@@ -21253,9 +20976,8 @@ msgstr ""
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1587
-#, fuzzy
 msgid "batch [file]"
-msgstr "B<batch>I< [file]>"
+msgstr "batch [file]"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1591
@@ -21268,28 +20990,26 @@ msgstr ""
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1595
-#, fuzzy
 msgid ""
 "By default, commands are read from standard input, but you can optionally "
 "specify a file from where they would be read (special case ``-`` means "
 "standard input)."
 msgstr ""
 "Pokud nezadáte jméno souboru, jsou příkazy čteny ze standardního vstupu. "
-"Jinak jsou čteny z tohoto souboru, speciální případ - znamená čtení ze "
+"Jinak jsou čteny z tohoto souboru, speciální případ ``-`` znamená čtení ze "
 "standardního vstupu."
 
 #. type: Title -
 #: docs/manual/gammu/index.rst:1597
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Configuration commands"
 msgstr "Nastavení"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1600
-#, fuzzy
 msgid "searchphone [-debug]"
-msgstr "B<searchphone>I< [-debug]>"
+msgstr "searchphone [-debug]"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1602
@@ -21298,7 +21018,6 @@ msgstr ""
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1608
-#, fuzzy
 msgid ""
 "Please note that this can take a very long time, but in case you have no "
 "clue how to configure phone connection, this is a convenient way to find "
@@ -21311,21 +21030,19 @@ msgstr ""
 # type: TH
 #. type: Title -
 #: docs/manual/gammu/index.rst:1610
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Gammu information commands"
 msgstr "Informace o Gammu"
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1613
-#, fuzzy
 msgid "checkversion [STABLE]"
-msgstr "B<checkversion>I< [STABLE]>"
+msgstr "checkversion [STABLE]"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1617
-#, fuzzy
 msgid ""
 "Checks whether there is newer Gammu version available online (if Gammu has "
 "been compiled with CURL). If you pass additional parameter ``STABLE``, only "
@@ -21333,14 +21050,13 @@ msgid ""
 msgstr ""
 "Zkontroluje jesti není dostupná novější verze Gammu (pro tuto funkci muselo "
 "být Gammu zkompilováno s podporou pro CURL). Pokud použijete volitelný "
-"parametr B<STABLE>, budou kontrolovány jen stabilní verze."
+"parametr ``STABLE``, budou kontrolovány jen stabilní verze."
 
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1619
-#, fuzzy
 msgid "features"
-msgstr "B<features>"
+msgstr "features"
 
 # type: Plain text
 #. type: delimited block _
@@ -21351,9 +21067,8 @@ msgstr "Zobrazí informace o zakompilovaných funkcích."
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1623
-#, fuzzy
 msgid "help [topic]"
-msgstr "B<help>I< [topic]>"
+msgstr "help [téma]"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1626
@@ -21367,9 +21082,8 @@ msgstr ""
 # type: TP
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1628
-#, fuzzy
 msgid "version"
-msgstr "B<version>"
+msgstr "version"
 
 # type: Plain text
 #. type: delimited block _
@@ -21381,7 +21095,7 @@ msgstr "Zobrazí informace o verzi a licenci"
 #: docs/manual/gammu/index.rst:1633
 #, no-wrap
 msgid "Return values"
-msgstr ""
+msgstr "Návratové hodnoty"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1637
@@ -21595,16 +21309,14 @@ msgstr "Uložení standardní textové zprávy s maximální délkou 160 znaků:
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1811
-#, fuzzy
 msgid "echo \"All your base are belong to us\" | gammu savesms TEXT"
-msgstr "echo \"All your base are belong to us\" | gammu savesms TEXT\n"
+msgstr "echo \"All your base are belong to us\" | gammu savesms TEXT"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1817
-#, fuzzy
 msgid "gammu savesms TEXT -text \"All your base are belong to us\""
-msgstr "gammu savesms TEXT -text \"All your base are belong to us\"\n"
+msgstr "gammu savesms TEXT -text \"All your base are belong to us\""
 
 # type: TP
 #. type: delimited block _
@@ -21615,24 +21327,20 @@ msgstr "Uložení dlouhé textové zprávy:"
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1823
-#, fuzzy
 msgid "echo \"All your base are belong to us\" | gammu savesms TEXT -len 400"
-msgstr ""
-"echo \"All your base are belong to us\" | gammu savesms TEXT -len 400\n"
+msgstr "echo \"All your base are belong to us\" | gammu savesms TEXT -len 400"
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1829
-#, fuzzy
 msgid "gammu savesms TEXT -len 400 -text \"All your base are belong to us\""
-msgstr "gammu savesms TEXT -len 400 -text \"All your base are belong to us\"\n"
+msgstr "gammu savesms TEXT -len 400 -text \"All your base are belong to us\""
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1835
-#, fuzzy
 msgid "gammu savesms EMS -text \"All your base are belong to us\""
-msgstr "gammu savesms EMS -text \"All your base are belong to us\"\n"
+msgstr "gammu savesms EMS -text \"All your base are belong to us\""
 
 # type: TP
 #. type: delimited block _
@@ -21644,13 +21352,12 @@ msgstr "Uložení zprávy s předdefinovaným zvukem a animací ze 2 obrázků:"
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1841
-#, fuzzy
 msgid ""
 "gammu savesms EMS -text \"Greetings\" -defsound 1 -text \"from Gammu -tone10 "
 "axelf.txt -animation 2 file1.bmp file2.bmp"
 msgstr ""
-"gammu savesms EMS -text \"Greetings\" -defsound 1 -text \"from Gammu\"\n"
-"-tone10 axelf.txt -animation 2 file1.bmp file2.bmp\n"
+"gammu savesms EMS -text \"Greetings\" -defsound 1 -text \"from Gammu -tone10 "
+"axelf.txt -animation 2 file1.bmp file2.bmp"
 
 # type: TP
 #. type: delimited block _
@@ -21661,13 +21368,12 @@ msgstr "Uložení chráněné zprávy s vyzváněním:"
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1847
-#, fuzzy
 msgid ""
 "gammu savesms EMS -protected 2 -variablebitmaplong ala.bmp -toneSElong axelf."
 "txt -toneSE ring.txt"
 msgstr ""
-"gammu savesms EMS -protected 2 -variablebitmaplong ala.bmp\n"
-"-toneSElong axelf.txt -toneSE ring.txt\n"
+"gammu savesms EMS -protected 2 -variablebitmaplong ala.bmp -toneSElong axelf."
+"txt -toneSE ring.txt"
 
 #. type: Title -
 #: docs/manual/gammu/index.rst:1849
@@ -21685,7 +21391,7 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1856
 msgid "gammu nokiaaddfile APPLICATION Alien"
-msgstr ""
+msgstr "gammu nokiaaddfile APPLICATION Alien"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1858
@@ -21695,14 +21401,14 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1862
 msgid "gammu nokiaaddfile TONES file.mid"
-msgstr ""
+msgstr "gammu nokiaaddfile TONES file.mid"
 
 # type: Plain text
 #. type: Title -
 #: docs/manual/gammu/index.rst:1864
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Setting operator logo"
-msgstr "* loga operátora"
+msgstr "Nastavení loga operátora"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1867
@@ -21712,12 +21418,12 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1871
 msgid "gammu setbitmap OPERATOR ala.bmp \"230 03\""
-msgstr ""
+msgstr "gammu setbitmap OPERATOR ala.bmp \"230 03\""
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1873
 msgid "_converting-formats:"
-msgstr ""
+msgstr "_converting-formats:"
 
 #. type: Title -
 #: docs/manual/gammu/index.rst:1875
@@ -21744,9 +21450,8 @@ msgstr ""
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1885
-#, fuzzy
 msgid "gammu savefile CALENDAR output.vcs myCalendar.backup 260"
-msgstr "    gammu savefile CALENDAR output.vcs myCalendar.backup 260\n"
+msgstr "gammu savefile CALENDAR output.vcs myCalendar.backup 260"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1887
@@ -21755,9 +21460,8 @@ msgstr ""
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1891
-#, fuzzy
 msgid "gammu savefile VCARD21 output.vcf phone.backup ME 1"
-msgstr "    gammu savefile CALENDAR output.vcf myPhonebook.backup ME 42\n"
+msgstr "gammu savefile VCARD21 output.vcf phone.backup ME 1"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1893
@@ -21767,7 +21471,7 @@ msgstr ""
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1897
 msgid "gammu convertbackup phone.backup output.vcf"
-msgstr ""
+msgstr "gammu convertbackup phone.backup output.vcf"
 
 #. type: Title -
 #: docs/manual/gammu/index.rst:1900
@@ -21813,7 +21517,7 @@ msgstr "Nepodařilo se otevřít soubor zadaný na příkazové řádce."
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1920
 msgid "gammu -d textall -f /tmp/gammu.log ..."
-msgstr ""
+msgstr "gammu -d textall -f /tmp/gammu.log ..."
 
 # type: Plain text
 #. type: delimited block _
@@ -21829,24 +21533,22 @@ msgstr ""
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1926
-#, fuzzy
 msgid ""
 "See <http://wammu.eu/support/bugs/> for more information on reporting bugs."
 msgstr ""
-"Na stránce E<lt>http://wammu.eu/support/bugs/E<gt> naleznete více informací "
-"o hlášení chyb."
+"Na stránce <http://wammu.eu/support/bugs/> naleznete více informací o "
+"hlášení chyb."
 
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1927
-#, fuzzy
 msgid "Please report bugs to `Gammu bug tracker <http://bugs.cihar.com/>`_."
-msgstr "Prosím hlašte chyby na E<lt>http://bugs.cihar.comE<gt>."
+msgstr "Prosím hlašte chyby na <http://bugs.cihar.com/>."
 
 # type: TH
 #. type: Title =
 #: docs/manual/project/documentation.rst:2
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Project Documentation"
 msgstr "Dokumentace Gammu"
 
@@ -33773,9 +33475,8 @@ msgstr ""
 # type: TP
 #. type: delimited block =
 #: docs/manual/c/file.rst:15
-#, fuzzy
 msgid "GSM_GetFileSystemStatus"
-msgstr "B<getfilesystemstatus>"
+msgstr "GSM_GetFileSystemStatus"
 
 #. type: delimited block =
 #: docs/manual/c/file.rst:16
@@ -33795,9 +33496,8 @@ msgstr ""
 # type: TP
 #. type: delimited block =
 #: docs/manual/c/file.rst:19
-#, fuzzy
 msgid "GSM_FileSystemStatus"
-msgstr "B<getfilesystemstatus>"
+msgstr "GSM_FileSystemStatus"
 
 #. type: delimited block =
 #: docs/manual/c/file.rst:20
@@ -33817,12 +33517,12 @@ msgstr ""
 #. type: delimited block =
 #: docs/manual/c/inifile.rst:5
 msgid "INI_Free"
-msgstr ""
+msgstr "INI_Free"
 
 #. type: delimited block =
 #: docs/manual/c/inifile.rst:6
 msgid "INI_ReadFile"
-msgstr ""
+msgstr "INI_ReadFile"
 
 #. type: delimited block =
 #: docs/manual/c/inifile.rst:7
@@ -33852,169 +33552,167 @@ msgstr ""
 #. type: delimited block =
 #: docs/manual/c/inifile.rst:13
 msgid "INI_Entry"
-msgstr ""
+msgstr "INI_Entry"
 
 #. type: delimited block =
 #: docs/manual/c/inifile.rst:14
 msgid "INI_Section"
-msgstr ""
+msgstr "INI_Section"
 
 #. type: delimited block =
 #: docs/manual/c/inifile.rst:15
 msgid "_INI_Entry"
-msgstr ""
+msgstr "_INI_Entry"
 
 #. type: delimited block =
 #: docs/manual/c/inifile.rst:15
 msgid "_INI_Section"
-msgstr ""
+msgstr "_INI_Section"
 
 #. type: Plain text
 #: docs/manual/c/limits.rst:2
-#, fuzzy
 msgid "Limits"
 msgstr "Omezení"
 
 #. type: delimited block =
 #: docs/manual/c/memory.rst:5
 msgid "GSM_StringToMemoryType"
-msgstr ""
+msgstr "GSM_StringToMemoryType"
 
 #. type: delimited block =
 #: docs/manual/c/memory.rst:6
 msgid "GSM_GetMemoryStatus"
-msgstr ""
+msgstr "GSM_GetMemoryStatus"
 
 #. type: delimited block =
 #: docs/manual/c/memory.rst:7
 msgid "GSM_GetMemory"
-msgstr ""
+msgstr "GSM_GetMemory"
 
 #. type: delimited block =
 #: docs/manual/c/memory.rst:8
 msgid "GSM_GetNextMemory"
-msgstr ""
+msgstr "GSM_GetNextMemory"
 
 #. type: delimited block =
 #: docs/manual/c/memory.rst:9
 msgid "GSM_SetMemory"
-msgstr ""
+msgstr "GSM_SetMemory"
 
 #. type: delimited block =
 #: docs/manual/c/memory.rst:10
 msgid "GSM_AddMemory"
-msgstr ""
+msgstr "GSM_AddMemory"
 
 #. type: delimited block =
 #: docs/manual/c/memory.rst:11
 msgid "GSM_DeleteMemory"
-msgstr ""
+msgstr "GSM_DeleteMemory"
 
 #. type: delimited block =
 #: docs/manual/c/memory.rst:12
 msgid "GSM_DeleteAllMemory"
-msgstr ""
+msgstr "GSM_DeleteAllMemory"
 
 #. type: delimited block =
 #: docs/manual/c/memory.rst:13
 msgid "GSM_GetSpeedDial"
-msgstr ""
+msgstr "GSM_GetSpeedDial"
 
 #. type: delimited block =
 #: docs/manual/c/memory.rst:14
 msgid "GSM_SetSpeedDial"
-msgstr ""
+msgstr "GSM_SetSpeedDial"
 
 #. type: delimited block =
 #: docs/manual/c/memory.rst:15
 msgid "GSM_PhonebookGetEntryName"
-msgstr ""
+msgstr "GSM_PhonebookGetEntryName"
 
 #. type: delimited block =
 #: docs/manual/c/memory.rst:16
 msgid "GSM_PhonebookFindDefaultNameNumberGroup"
-msgstr ""
+msgstr "GSM_PhonebookFindDefaultNameNumberGroup"
 
 #. type: delimited block =
 #: docs/manual/c/memory.rst:17
 msgid "GSM_EncodeVCARD"
-msgstr ""
+msgstr "GSM_EncodeVCARD"
 
 #. type: delimited block =
 #: docs/manual/c/memory.rst:18
 msgid "GSM_DecodeVCARD"
-msgstr ""
+msgstr "GSM_DecodeVCARD"
 
 #. type: delimited block =
 #: docs/manual/c/memory.rst:19
 msgid "GSM_FreeMemoryEntry"
-msgstr ""
+msgstr "GSM_FreeMemoryEntry"
 
 #. type: delimited block =
 #: docs/manual/c/memory.rst:20
 msgid "GSM_MemoryType"
-msgstr ""
+msgstr "GSM_MemoryType"
 
 #. type: delimited block =
 #: docs/manual/c/memory.rst:21
 msgid "GSM_MemoryStatus"
-msgstr ""
+msgstr "GSM_MemoryStatus"
 
 #. type: delimited block =
 #: docs/manual/c/memory.rst:22
 msgid "GSM_EntryType"
-msgstr ""
+msgstr "GSM_EntryType"
 
 #. type: delimited block =
 #: docs/manual/c/memory.rst:23
 msgid "GSM_SubMemoryEntry"
-msgstr ""
+msgstr "GSM_SubMemoryEntry"
 
 #. type: delimited block =
 #: docs/manual/c/memory.rst:24
 msgid "GSM_MemoryEntry"
-msgstr ""
+msgstr "GSM_MemoryEntry"
 
 #. type: delimited block =
 #: docs/manual/c/memory.rst:25
 msgid "GSM_SpeedDial"
-msgstr ""
+msgstr "GSM_SpeedDial"
 
 #. type: delimited block =
 #: docs/manual/c/memory.rst:25
 msgid "GSM_VCardVersion"
-msgstr ""
+msgstr "GSM_VCardVersion"
 
 #. type: Plain text
 #: docs/manual/c/callback.rst:2
-#, fuzzy
 msgid "Callback"
-msgstr "Hovory"
+msgstr "Zpětná volání"
 
 #. type: delimited block =
 #: docs/manual/c/callback.rst:5
 msgid "GSM_SetIncomingCallCallback"
-msgstr ""
+msgstr "GSM_SetIncomingCallCallback"
 
 #. type: delimited block =
 #: docs/manual/c/callback.rst:6
 msgid "GSM_SetIncomingSMSCallback"
-msgstr ""
+msgstr "GSM_SetIncomingSMSCallback"
 
 #. type: delimited block =
 #: docs/manual/c/callback.rst:7
 msgid "GSM_SetIncomingCBCallback"
-msgstr ""
+msgstr "GSM_SetIncomingCBCallback"
 
 #. type: delimited block =
 #: docs/manual/c/callback.rst:8
 msgid "GSM_SetIncomingUSSDCallback"
-msgstr ""
+msgstr "GSM_SetIncomingUSSDCallback"
 
 #. type: delimited block =
 #: docs/manual/c/callback.rst:9
 msgid "GSM_SetSendSMSStatusCallback"
-msgstr ""
+msgstr "GSM_SetSendSMSStatusCallback"
 
 #. type: delimited block =
 #: docs/manual/c/callback.rst:10
@@ -34049,47 +33747,47 @@ msgstr "SMSD"
 #. type: delimited block =
 #: docs/manual/c/smsd.rst:5
 msgid "SMSD_InjectSMS"
-msgstr ""
+msgstr "SMSD_InjectSMS"
 
 #. type: delimited block =
 #: docs/manual/c/smsd.rst:6
 msgid "SMSD_GetStatus"
-msgstr ""
+msgstr "SMSD_GetStatus"
 
 #. type: delimited block =
 #: docs/manual/c/smsd.rst:7
 msgid "SMSD_Shutdown"
-msgstr ""
+msgstr "SMSD_Shutdown"
 
 #. type: delimited block =
 #: docs/manual/c/smsd.rst:8
 msgid "SMSD_ReadConfig"
-msgstr ""
+msgstr "SMSD_ReadConfig"
 
 #. type: delimited block =
 #: docs/manual/c/smsd.rst:9
 msgid "SMSD_MainLoop"
-msgstr ""
+msgstr "SMSD_MainLoop"
 
 #. type: delimited block =
 #: docs/manual/c/smsd.rst:10
 msgid "SMSD_NewConfig"
-msgstr ""
+msgstr "SMSD_NewConfig"
 
 #. type: delimited block =
 #: docs/manual/c/smsd.rst:11
 msgid "SMSD_FreeConfig"
-msgstr ""
+msgstr "SMSD_FreeConfig"
 
 #. type: delimited block =
 #: docs/manual/c/smsd.rst:12
 msgid "GSM_SMSDStatus"
-msgstr ""
+msgstr "GSM_SMSDStatus"
 
 #. type: delimited block =
 #: docs/manual/c/smsd.rst:12
 msgid "GSM_SMSDConfig"
-msgstr ""
+msgstr "GSM_SMSDConfig"
 
 #. type: Title =
 #: docs/manual/c/statemachine.rst:2
@@ -34103,6 +33801,8 @@ msgid ""
 "GSM_Error GSM_InitConnection_Log(GSM_StateMachine * s, int ReplyNum, "
 "GSM_Log_Function log_function, void *user_data)"
 msgstr ""
+"GSM_Error GSM_InitConnection_Log(GSM_StateMachine * s, int ReplyNum, "
+"GSM_Log_Function log_function, void *user_data)"
 
 #. type: Plain text
 #: docs/manual/c/statemachine.rst:11
@@ -34157,12 +33857,12 @@ msgstr ""
 #: docs/manual/c/statemachine.rst:40 docs/manual/c/statemachine.rst:48
 #, no-wrap
 msgid ".. c:type"
-msgstr ""
+msgstr ".. c:type"
 
 #. type: Plain text
 #: docs/manual/c/statemachine.rst:31
 msgid "GSM_StateMachine"
-msgstr ""
+msgstr "GSM_StateMachine"
 
 #. type: Plain text
 #: docs/manual/c/statemachine.rst:35
@@ -34175,9 +33875,8 @@ msgstr ""
 # type: TP
 #. type: Plain text
 #: docs/manual/c/statemachine.rst:37
-#, fuzzy
 msgid "GSM_ConnectionType"
-msgstr "B<Connection>"
+msgstr "GSM_ConnectionType"
 
 #. type: Plain text
 #: docs/manual/c/statemachine.rst:39
@@ -34187,7 +33886,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/c/statemachine.rst:41 docs/manual/c/statemachine.rst:67
 msgid "GSM_Config"
-msgstr ""
+msgstr "GSM_Config"
 
 #. type: Plain text
 #: docs/manual/c/statemachine.rst:43
@@ -34198,12 +33897,12 @@ msgstr ""
 #: docs/manual/c/statemachine.rst:44
 #, no-wrap
 msgid ".. c:member"
-msgstr ""
+msgstr ".. c:member"
 
 #. type: Plain text
 #: docs/manual/c/statemachine.rst:45
 msgid "char Model[50]"
-msgstr ""
+msgstr "char Model[50]"
 
 #. type: Plain text
 #: docs/manual/c/statemachine.rst:47
@@ -34231,430 +33930,412 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/c/statemachine.rst:57
 msgid "GSM_ReadDevice"
-msgstr ""
+msgstr "GSM_ReadDevice"
 
 #. type: Plain text
 #: docs/manual/c/statemachine.rst:58
 msgid "GSM_IsConnected"
-msgstr ""
+msgstr "GSM_IsConnected"
 
 #. type: Plain text
 #: docs/manual/c/statemachine.rst:59
 msgid "GSM_FindGammuRC"
-msgstr ""
+msgstr "GSM_FindGammuRC"
 
 #. type: Plain text
 #: docs/manual/c/statemachine.rst:60
 msgid "GSM_ReadConfig"
-msgstr ""
+msgstr "GSM_ReadConfig"
 
 #. type: Plain text
 #: docs/manual/c/statemachine.rst:61
 msgid "GSM_GetConfig"
-msgstr ""
+msgstr "GSM_GetConfig"
 
 #. type: Plain text
 #: docs/manual/c/statemachine.rst:62
 msgid "GSM_GetConfigNum"
-msgstr ""
+msgstr "GSM_GetConfigNum"
 
 #. type: Plain text
 #: docs/manual/c/statemachine.rst:63
 msgid "GSM_SetConfigNum"
-msgstr ""
+msgstr "GSM_SetConfigNum"
 
 #. type: Plain text
 #: docs/manual/c/statemachine.rst:64
 msgid "GSM_AllocStateMachine"
-msgstr ""
+msgstr "GSM_AllocStateMachine"
 
 #. type: Plain text
 #: docs/manual/c/statemachine.rst:65
 msgid "GSM_FreeStateMachine"
-msgstr ""
+msgstr "GSM_FreeStateMachine"
 
 #. type: Plain text
 #: docs/manual/c/statemachine.rst:66
 msgid "GSM_GetUsedConnection"
-msgstr ""
+msgstr "GSM_GetUsedConnection"
 
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:5
 msgid "PHONE_RTTLPlayOneNote"
-msgstr ""
+msgstr "PHONE_RTTLPlayOneNote"
 
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:6
 msgid "PHONE_Beep"
-msgstr ""
+msgstr "PHONE_Beep"
 
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:7
-#, fuzzy
 msgid "GSM_GetRingtone"
 msgstr "GSM_GetRingtone"
 
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:8
-#, fuzzy
 msgid "GSM_SetRingtone"
 msgstr "GSM_SetRingtone"
 
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:9
-#, fuzzy
 msgid "GSM_GetRingtonesInfo"
 msgstr "GSM_GetRingtonesInfo"
 
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:10
 msgid "GSM_DeleteUserRingtones"
-msgstr ""
+msgstr "GSM_DeleteUserRingtones"
 
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:11
 msgid "GSM_PlayTone"
-msgstr ""
+msgstr "GSM_PlayTone"
 
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:12
 msgid "GSM_RingtoneConvert"
-msgstr ""
+msgstr "GSM_RingtoneConvert"
 
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:13
 msgid "GSM_ReadRingtoneFile"
-msgstr ""
+msgstr "GSM_ReadRingtoneFile"
 
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:14
 msgid "GSM_SaveRingtoneFile"
-msgstr ""
+msgstr "GSM_SaveRingtoneFile"
 
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:15
 msgid "GSM_SaveRingtoneOtt"
-msgstr ""
+msgstr "GSM_SaveRingtoneOtt"
 
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:16
 msgid "GSM_SaveRingtoneMidi"
-msgstr ""
+msgstr "GSM_SaveRingtoneMidi"
 
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:17
 msgid "GSM_SaveRingtoneIMelody"
-msgstr ""
+msgstr "GSM_SaveRingtoneIMelody"
 
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:18
 msgid "GSM_SaveRingtoneWav"
-msgstr ""
+msgstr "GSM_SaveRingtoneWav"
 
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:19
 msgid "GSM_SaveRingtoneRttl"
-msgstr ""
+msgstr "GSM_SaveRingtoneRttl"
 
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:20
 msgid "GSM_GetRingtoneName"
-msgstr ""
+msgstr "GSM_GetRingtoneName"
 
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:21
 msgid "GSM_RTTLGetTempo"
-msgstr ""
+msgstr "GSM_RTTLGetTempo"
 
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:22
 msgid "GSM_RingNoteStyle"
-msgstr ""
+msgstr "GSM_RingNoteStyle"
 
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:23
 msgid "GSM_RingNoteNote"
-msgstr ""
+msgstr "GSM_RingNoteNote"
 
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:24
 msgid "GSM_RingNoteDuration"
-msgstr ""
+msgstr "GSM_RingNoteDuration"
 
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:25
 msgid "GSM_RingNoteDurationSpec"
-msgstr ""
+msgstr "GSM_RingNoteDurationSpec"
 
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:26
 msgid "GSM_RingNoteScale"
-msgstr ""
+msgstr "GSM_RingNoteScale"
 
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:27
 msgid "GSM_RingNote"
-msgstr ""
+msgstr "GSM_RingNote"
 
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:28
 msgid "GSM_RingCommandType"
-msgstr ""
+msgstr "GSM_RingCommandType"
 
 # type: SS
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:29
-#, fuzzy
 msgid "GSM_RingCommand"
-msgstr "Příkazy"
+msgstr "GSM_RingCommand"
 
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:30
-#, fuzzy
 msgid "GSM_NoteRingtone"
 msgstr "GSM_NoteRingtone"
 
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:31
 msgid "GSM_NokiaBinaryRingtone"
-msgstr ""
+msgstr "GSM_NokiaBinaryRingtone"
 
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:32
 msgid "GSM_BinaryTone"
-msgstr ""
+msgstr "GSM_BinaryTone"
 
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:33
 msgid "GSM_RingtoneFormat"
-msgstr ""
+msgstr "GSM_RingtoneFormat"
 
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:34
-#, fuzzy
 msgid "GSM_Ringtone"
 msgstr "GSM_Ringtone"
 
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:35
-#, fuzzy
 msgid "GSM_RingtoneInfo"
 msgstr "GSM_RingtoneInfo"
 
 #. type: delimited block =
 #: docs/manual/c/ringtone.rst:35
-#, fuzzy
 msgid "GSM_AllRingtonesInfo"
 msgstr "GSM_AllRingtonesInfo"
 
 #. type: delimited block =
 #: docs/manual/c/settings.rst:5
 msgid "GSM_GetLocale"
-msgstr ""
+msgstr "GSM_GetLocale"
 
 #. type: delimited block =
 #: docs/manual/c/settings.rst:6
 msgid "GSM_SetLocale"
-msgstr ""
+msgstr "GSM_SetLocale"
 
 #. type: delimited block =
 #: docs/manual/c/settings.rst:7
 msgid "GSM_GetSyncMLSettings"
-msgstr ""
+msgstr "GSM_GetSyncMLSettings"
 
 #. type: delimited block =
 #: docs/manual/c/settings.rst:8
 msgid "GSM_SetSyncMLSettings"
-msgstr ""
+msgstr "GSM_SetSyncMLSettings"
 
 #. type: delimited block =
 #: docs/manual/c/settings.rst:9
 msgid "GSM_GetChatSettings"
-msgstr ""
+msgstr "GSM_GetChatSettings"
 
 # type: Plain text
 #. type: delimited block =
 #: docs/manual/c/settings.rst:10
-#, fuzzy
 msgid "GSM_SetChatSettings"
-msgstr "* nastavení SMS zpráv"
+msgstr "GSM_SetChatSettings"
 
 # type: Plain text
 #. type: delimited block =
 #: docs/manual/c/settings.rst:11
-#, fuzzy
 msgid "GSM_GetMMSSettings"
-msgstr "* nastavení SMS zpráv"
+msgstr "GSM_GetMMSSettings"
 
 #. type: delimited block =
 #: docs/manual/c/settings.rst:12
-#, fuzzy
 msgid "GSM_SetMMSSettings"
-msgstr "MMS a jejich nastavení"
+msgstr "GSM_SetMMSSettings"
 
 # type: TP
 #. type: delimited block =
 #: docs/manual/c/settings.rst:13
-#, fuzzy
 msgid "GSM_SetAutoNetworkLogin"
-msgstr "B<setautonetworklogin>"
+msgstr "GSM_SetAutoNetworkLogin"
 
 #. type: delimited block =
 #: docs/manual/c/settings.rst:14
 msgid "GSM_Reset"
-msgstr ""
+msgstr "GSM_Reset"
 
 #. type: delimited block =
 #: docs/manual/c/settings.rst:15
-#, fuzzy
 msgid "GSM_ResetPhoneSettings"
-msgstr "Nastavení telefonu"
+msgstr "GSM_ResetPhoneSettings"
 
 #. type: delimited block =
 #: docs/manual/c/settings.rst:16
 msgid "GSM_GetProfile"
-msgstr ""
+msgstr "GSM_GetProfile"
 
 #. type: delimited block =
 #: docs/manual/c/settings.rst:17
 msgid "GSM_SetProfile"
-msgstr ""
+msgstr "GSM_SetProfile"
 
 #. type: delimited block =
 #: docs/manual/c/settings.rst:18
 msgid "GSM_GetFMStation"
-msgstr ""
+msgstr "GSM_GetFMStation"
 
 #. type: delimited block =
 #: docs/manual/c/settings.rst:19
 msgid "GSM_SetFMStation"
-msgstr ""
+msgstr "GSM_SetFMStation"
 
 #. type: delimited block =
 #: docs/manual/c/settings.rst:20
 msgid "GSM_ClearFMStations"
-msgstr ""
+msgstr "GSM_ClearFMStations"
 
 #. type: delimited block =
 #: docs/manual/c/settings.rst:21
 msgid "GSM_GetGPRSAccessPoint"
-msgstr ""
+msgstr "GSM_GetGPRSAccessPoint"
 
 #. type: delimited block =
 #: docs/manual/c/settings.rst:22
 msgid "GSM_SetGPRSAccessPoint"
-msgstr ""
+msgstr "GSM_SetGPRSAccessPoint"
 
 #. type: delimited block =
 #: docs/manual/c/settings.rst:23
-#, fuzzy
 msgid "GSM_SyncMLSettings"
-msgstr "MMS a jejich nastavení"
+msgstr "GSM_SyncMLSettings"
 
 #. type: delimited block =
 #: docs/manual/c/settings.rst:24
 msgid "GSM_ResetSettingsType"
-msgstr ""
+msgstr "GSM_ResetSettingsType"
 
 # type: Plain text
 #. type: delimited block =
 #: docs/manual/c/settings.rst:25
-#, fuzzy
 msgid "GSM_ChatSettings"
-msgstr "* nastavení SMS zpráv"
+msgstr "GSM_ChatSettings"
 
 #. type: delimited block =
 #: docs/manual/c/settings.rst:26
 msgid "GSM_Profile_Feat_Value"
-msgstr ""
+msgstr "GSM_Profile_Feat_Value"
 
 #. type: delimited block =
 #: docs/manual/c/settings.rst:27
 msgid "GSM_Profile_Feat_ID"
-msgstr ""
+msgstr "GSM_Profile_Feat_ID"
 
 #. type: delimited block =
 #: docs/manual/c/settings.rst:28
 msgid "GSM_Profile"
-msgstr ""
+msgstr "GSM_Profile"
 
 #. type: delimited block =
 #: docs/manual/c/settings.rst:29
 msgid "GSM_FMStation"
-msgstr ""
+msgstr "GSM_FMStation"
 
 #. type: delimited block =
 #: docs/manual/c/settings.rst:30
 msgid "GSM_GPRSAccessPoint"
-msgstr ""
+msgstr "GSM_GPRSAccessPoint"
 
 #. type: delimited block =
 #: docs/manual/c/settings.rst:31
 msgid "GSM_DateFormat"
-msgstr ""
+msgstr "GSM_DateFormat"
 
 #. type: delimited block =
 #: docs/manual/c/settings.rst:32
 msgid "GSM_Locale"
-msgstr ""
+msgstr "GSM_Locale"
 
 #. type: delimited block =
 #: docs/manual/c/settings.rst:32
 msgid "GSM_Profile_PhoneTableValue"
-msgstr ""
+msgstr "GSM_Profile_PhoneTableValue"
 
 #. type: Plain text
 #: docs/manual/utils/index.rst:2
 msgid "_utils:"
-msgstr ""
+msgstr "_utils:"
 
 #. type: Title =
 #: docs/manual/utils/index.rst:4
 #, no-wrap
 msgid "Miscellaneous utilities"
-msgstr ""
+msgstr "Rozličné utility"
 
 #. type: Plain text
 #: docs/manual/utils/index.rst:12
 msgid "gammu-detect gammu-config jadmaker"
-msgstr ""
+msgstr "gammu-detect gammu-config jadmaker"
 
 #. type: Plain text
 #: docs/manual/utils/gammu-config.rst:2
 msgid "_gammu-config:"
-msgstr ""
+msgstr "_gammu-config:"
 
 #. type: Plain text
 #: docs/manual/utils/gammu-config.rst:4 docs/manual/utils/gammu-config.rst:7
 #, no-wrap
 msgid "gammu-config"
-msgstr ""
+msgstr "gammu-config"
 
 # type: Plain text
 #. type: Plain text
 #: docs/manual/utils/gammu-config.rst:14
-#, fuzzy
 msgid "gammu-config [-f|--force] [-c|--config CONFIG]"
-msgstr "B<gammu-config> [I<-f|--force>] [I<-c|--config konfigurace>]"
+msgstr "gammu-config [-f|--force] [-c|--config SOUBOR]"
 
 # type: Plain text
 #. type: Plain text
 #: docs/manual/utils/gammu-config.rst:19
-#, fuzzy
 msgid "Script to help configuring :ref:`gammu`."
-msgstr "Skript, který vám usnadní konfiguraci gammu."
+msgstr "Skript, který vám usnadní konfiguraci :ref:`gammu`."
 
 # type: Plain text
 #. type: Plain text
 #: docs/manual/utils/gammu-config.rst:22 docs/manual/utils/jadmaker.rst:22
 #: docs/manual/utils/gammu-detect.rst:43
-#, fuzzy
 msgid ""
 "This program follows the usual GNU command line syntax, with long options "
 "starting with two dashes (``-``). A summary of options is included below."
 msgstr ""
 "Program se chová podle GNU zvyklostí, takže dlouhé parametry jsou uvedeny "
-"dvěmi pomlčkami (`-'). Souhrn parametrů je uveden níže."
+"dvěmi pomlčkami (``-``). Souhrn parametrů je uveden níže."
 
 # type: Plain text
 #. type: Plain text
@@ -34666,9 +34347,8 @@ msgstr "Zobrazí přehled voleb."
 # type: TP
 #. type: Plain text
 #: docs/manual/utils/gammu-config.rst:28 docs/manual/utils/jadmaker.rst:29
-#, fuzzy
 msgid "-f, --force"
-msgstr "B<-f, --force>"
+msgstr "-f, --force"
 
 # type: Plain text
 #. type: Plain text
@@ -34679,9 +34359,8 @@ msgstr "Vynutí konfigurování i když konfigurační soubor již existuje."
 # type: TP
 #. type: Plain text
 #: docs/manual/utils/gammu-config.rst:32
-#, fuzzy
 msgid "-c, --config CONFIG"
-msgstr "B<-c, --config konfigurace>"
+msgstr "-c, --config SOUBOR"
 
 # type: Plain text
 #. type: Plain text
@@ -34692,20 +34371,19 @@ msgstr "Určí, který konfigurační soubor bude použit."
 #. type: Plain text
 #: docs/manual/utils/jadmaker.rst:2
 msgid "_jadmaker:"
-msgstr ""
+msgstr "_jadmaker:"
 
 #. type: Plain text
 #: docs/manual/utils/jadmaker.rst:4 docs/manual/utils/jadmaker.rst:7
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "jadmaker"
-msgstr "make"
+msgstr "jadmaker"
 
 # type: Plain text
 #. type: Plain text
 #: docs/manual/utils/jadmaker.rst:14
-#, fuzzy
 msgid "jadmaker [-f|--force] [-u|--url URL] <filename.jar>..."
-msgstr "B<jadmaker> [I<-f|--force>] [I<-u|--url URL>] E<lt>soubor.jarE<gt>..."
+msgstr "jadmaker [-f|--force] [-u|--url URL] <soubor.jar>..."
 
 # type: Plain text
 #. type: Plain text
@@ -34722,9 +34400,8 @@ msgstr "Vynutí přepsání JAD souboru i když již existuje."
 # type: TP
 #. type: Plain text
 #: docs/manual/utils/jadmaker.rst:33
-#, fuzzy
 msgid "-u, --url URL"
-msgstr "B<-u, --url URL>"
+msgstr "-u, --url URL"
 
 # type: Plain text
 #. type: Plain text
@@ -34735,28 +34412,26 @@ msgstr "Určí URL, které bude obsaženo v JAD souboru."
 #. type: Plain text
 #: docs/manual/utils/gammu-detect.rst:3
 msgid "_gammu-detect:"
-msgstr ""
+msgstr "_gammu-detect:"
 
 # type: TP
 #. type: Plain text
 #: docs/manual/utils/gammu-detect.rst:5 docs/manual/utils/gammu-detect.rst:10
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "gammu-detect"
-msgstr "gammu-smsd.exe -u\n"
+msgstr "gammu-detect"
 
 # type: TH
 #. type: Plain text
 #: docs/manual/utils/gammu-detect.rst:8
-#, fuzzy
 msgid "1.28.95"
-msgstr "Gammu 1.28.90"
+msgstr "1.28.95"
 
 # type: Plain text
 #. type: Plain text
 #: docs/manual/utils/gammu-detect.rst:17
-#, fuzzy
 msgid "gammu-detect [OPTIONS]"
-msgstr "B<gammu-smsd> [I<PARAMETR>]..."
+msgstr "gammu-detect [PARAMETRY]"
 
 #. type: Plain text
 #: docs/manual/utils/gammu-detect.rst:22
@@ -34808,7 +34483,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/utils/gammu-detect.rst:49
 msgid "-d, --debug"
-msgstr ""
+msgstr "-d, --debug"
 
 #. type: Plain text
 #: docs/manual/utils/gammu-detect.rst:51
@@ -34825,7 +34500,7 @@ msgstr "Zobrazí informace o verzi a zakompilované funkcionalitě."
 #. type: Plain text
 #: docs/manual/utils/gammu-detect.rst:57
 msgid "-u, --no-udev"
-msgstr ""
+msgstr "-u, --no-udev"
 
 #. type: Plain text
 #: docs/manual/utils/gammu-detect.rst:59
@@ -34835,7 +34510,7 @@ msgstr "Vypne prohledávání udevu."
 #. type: Plain text
 #: docs/manual/utils/gammu-detect.rst:61
 msgid "-b, --no-bluez"
-msgstr ""
+msgstr "-b, --no-bluez"
 
 #. type: Plain text
 #: docs/manual/utils/gammu-detect.rst:63
