@@ -11624,7 +11624,7 @@ msgstr ""
 #: docs/manual/smsd/usage.rst:2
 #, no-wrap
 msgid "Usage"
-msgstr ""
+msgstr "Utilizzo"
 
 #. type: Plain text
 #: docs/manual/smsd/usage.rst:6
@@ -21413,7 +21413,7 @@ msgstr ""
 #: docs/manual/project/install.rst:278
 #, no-wrap
 msgid "Cross compilation for Windows on Linux"
-msgstr ""
+msgstr "Compilazione multipla per Windows su Linux"
 
 #. type: Plain text
 #: docs/manual/project/install.rst:283

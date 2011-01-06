@@ -11623,7 +11623,7 @@ msgstr ""
 #: docs/manual/smsd/usage.rst:2
 #, no-wrap
 msgid "Usage"
-msgstr ""
+msgstr "Gebruik"
 
 #. type: Plain text
 #: docs/manual/smsd/usage.rst:6

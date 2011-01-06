@@ -11625,7 +11625,7 @@ msgstr ""
 #: docs/manual/smsd/usage.rst:2
 #, no-wrap
 msgid "Usage"
-msgstr ""
+msgstr "Použitie"
 
 #. type: Plain text
 #: docs/manual/smsd/usage.rst:6

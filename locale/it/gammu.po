@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.28.95\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-01-06 11:46+0100\n"
+"POT-Creation-Date: 2011-01-06 12:08+0100\n"
 "PO-Revision-Date: 2009-03-14 15:31+0200\n"
 "Last-Translator: soft developer <soft-developer@live.com>\n"
 "Language-Team: Language =it\n"
@@ -3304,7 +3304,7 @@ msgstr "Sicurezza              : On\n"
 
 #: gammu/misc.c:1621 gammu/misc.c:1671
 msgid "Homepage"
-msgstr ""
+msgstr "Pagina iniziale"
 
 #: gammu/misc.c:1665
 #, fuzzy

@@ -11623,9 +11623,9 @@ msgstr ""
 
 #. type: Title =
 #: docs/manual/smsd/usage.rst:2
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "Usage"
-msgstr ""
+msgstr "Użycie\n"
 
 #. type: Plain text
 #: docs/manual/smsd/usage.rst:6
