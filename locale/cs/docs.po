@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.28.95\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-01-06 16:39+0100\n"
+"POT-Creation-Date: 2011-01-06 20:40+0100\n"
 "PO-Revision-Date: 2011-01-06 20:40+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -20278,7 +20278,9 @@ msgstr "vlastnosti 3315 v 3310 5.45 a novějších"
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1361
-msgid "two additional games (React and Logic) for 3210 5\\.31 and higher"
+#, fuzzy
+#| msgid "two additional games (React and Logic) for 3210 5\\.31 and higher"
+msgid "two additional games (React and Logic) for 3210 5.31 and higher"
 msgstr "dvě další hry (React a Logic) pro 3210 5.31 a novější"
 
 # type: Plain text

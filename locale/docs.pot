@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.28.95\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-01-06 16:39+0100\n"
+"POT-Creation-Date: 2011-01-06 20:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18624,7 +18624,7 @@ msgstr ""
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1361
-msgid "two additional games (React and Logic) for 3210 5\\.31 and higher"
+msgid "two additional games (React and Logic) for 3210 5.31 and higher"
 msgstr ""
 
 #. type: delimited block _
