@@ -1937,6 +1937,31 @@ void EnterSecurityCode(int argc UNUSED, char *argv[])
 		strcpy(Code.Code,argv[3]);
 	}
 
+	if (argc >= 5) {
+		if (strcmp(argv[4], "-") == 0) {
+			sprintf(message, _("Enter new PIN code: "));
+#ifdef HAVE_GETPASS
+			pass = getpass(message);
+			strcpy(Code.Code, pass);
+#else
+			/* Read code from stdin */
+#ifdef HAVE_UNISTD_H
+			if (isatty(fileno(stdin))) {
+				printf("%s", message);
+			}
+#endif
+			if (fscanf(stdin, "%15s", Code.Code) != 1) {
+				printf_err("%s\n", _("No PIN code entered!"));
+				Terminate(2);
+			}
+#endif
+		} else {
+			strcpy(Code.NewPIN, argv[4]);
+		}
+	} else {
+		Code.NewPIN[0] = 0;
+	}
+
 	GSM_Init(TRUE);
 
 	error=GSM_EnterSecurityCode(gsm,Code);

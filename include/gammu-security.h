@@ -70,6 +70,13 @@ typedef struct {
 	 * Actual code.
 	 */
 	char Code[GSM_SECURITY_CODE_LEN + 1];
+	/**
+	 * New PIN code.
+	 *
+	 * Some phones require to set PIN on entering PUK, you can
+	 * provide it here.
+	 */
+	char NewPIN[GSM_SECURITY_CODE_LEN + 1];
 } GSM_SecurityCode;
 
 /**

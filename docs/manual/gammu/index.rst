@@ -1541,9 +1541,11 @@ Dumps decoding commands
 Other commands
 --------------
 
-.. option:: entersecuritycode PIN|PUK|PIN2|PUK2|PHONE|NETWORK code|-
+.. option:: entersecuritycode PIN|PUK|PIN2|PUK2|PHONE|NETWORK code|- [newpin|-]
 
     Allow to enter security code from PC. When code is ``-``, it is read from stdin.
+
+    In case entering PUK, some phones require you to set new PIN as well.
 
 .. option:: presskeysequence mMnNpPuUdD+-123456789*0#gGrR<>[]hHcCjJfFoOmMdD@
 

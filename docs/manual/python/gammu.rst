@@ -257,7 +257,7 @@ This module wraps all python-gammu functionality.
       :rtype: None
       
    
-   .. method:: EnterSecurityCode(Type, Code)
+   .. method:: EnterSecurityCode(Type, Code, NewPIN)
       
       Entres security code.
 
@@ -265,6 +265,8 @@ This module wraps all python-gammu functionality.
       :type Type: string
       :param Code: Code value
       :type Code: string
+      :param NewPIN: New PIN value in case entering PUK
+      :type NewPIN: string
       :return: None
       :rtype: None
       

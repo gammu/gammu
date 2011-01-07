@@ -1409,7 +1409,7 @@ StateMachine_ResetPhoneSettings(StateMachineObject *self, PyObject *args, PyObje
 /*********************/
 
 static char StateMachine_EnterSecurityCode__doc__[] =
-"EnterSecurityCode(Type, Code)\n\n"
+"EnterSecurityCode(Type, Code, NewPIN)\n\n"
 "Entres security code.\n"
 "@param Type: What code to enter, one of 'PIN', 'PUK', 'PIN2', 'PUK2', 'Phone'.\n"
 "@type Type: string\n"
@@ -1425,10 +1425,11 @@ StateMachine_EnterSecurityCode(StateMachineObject *self, PyObject *args, PyObjec
     GSM_SecurityCode    Code;
     char                *s;
     char                *code;
-    static char         *kwlist[] = {"Type", "Code", NULL};
+    char                *newpin = NULL;
+    static char         *kwlist[] = {"Type", "Code", "NewPIN", NULL};
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "ss", kwlist,
-                &s, &code))
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "ss|s", kwlist,
+                &s, &code, &newpin))
         return NULL;
 
     if (strcasecmp(s, "PIN") == 0)          Code.Type = SEC_Pin;
@@ -1443,6 +1444,11 @@ StateMachine_EnterSecurityCode(StateMachineObject *self, PyObject *args, PyObjec
     }
 
     mystrncpy(Code.Code, code, GSM_SECURITY_CODE_LEN);
+    if (newpin == NULL) {
+        Code.NewPIN[0] = 0;
+    } else {
+        mystrncpy(Code.NewPIN, newpin, GSM_SECURITY_CODE_LEN);
+    }
 
     BEGIN_PHONE_COMM
     error = GSM_EnterSecurityCode(self->s, Code);

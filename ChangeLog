@@ -20,6 +20,9 @@ ChangeLog
 =========
     
 2011???? - 1.28.96
+
+[+] * Added option to enter new PIN when entering PUK, thanks to Peter
+      Stuge for pointing out this requirement.
     
 20110107 - 1.28.95
 

@@ -4228,7 +4228,16 @@ GSM_Error ATGEN_EnterSecurityCode(GSM_StateMachine *s, GSM_SecurityCode Code)
 			smprintf(s, "Phone is expecting different security code!\n");
 			return ERR_SECURITYERROR;
 		}
-		len = sprintf(req, "AT+CPIN=\"%s\"\r" , Code.Code);
+		if (Code.Type == SEC_Puk) {
+			if (Code.NewPIN[0] == 0) {
+				smprintf(s, "Need new PIN code to enter PUK!\n");
+				return ERR_SECURITYERROR;
+			}
+			len = sprintf(req, "AT+CPIN=\"%s\",\"%s\"\r" , Code.Code, Code.NewPIN);
+		} else {
+			len = sprintf(req, "AT+CPIN=\"%s\"\r" , Code.Code);
+		}
+
 	}
 	smprintf(s, "Entering security code\n");
 	ATGEN_WaitFor(s, req, len, 0x00, 6, ID_EnterSecurityCode);

@@ -2171,9 +2171,11 @@ Allows to decode sniffs. See \fIDiscovering protocol\fP for more details.
 .SS Other commands
 .INDENT 0.0
 .TP
-.B entersecuritycode PIN|PUK|PIN2|PUK2|PHONE|NETWORK code|\-
+.B entersecuritycode PIN|PUK|PIN2|PUK2|PHONE|NETWORK code|\- [newpin|\-]
 .sp
 Allow to enter security code from PC. When code is \fB\-\fP, it is read from stdin.
+.sp
+In case entering PUK, some phones require you to set new PIN as well.
 .UNINDENT
 .INDENT 0.0
 .TP
