@@ -779,6 +779,11 @@ GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos,
 			OBEXAddBlock(req, &Current, 0x01, File->Name, UnicodeLength(File->Name)*2+2);
 		}
 
+		/* Include m-obex application data */
+		if (Priv->Service == OBEX_m_OBEX && Priv->m_obex_appdata != NULL && Priv->m_obex_appdata_len != 0) {
+			OBEXAddBlock(req, &Current, 0x4C, Priv->m_obex_appdata, Priv->m_obex_appdata_len);
+		}
+
 		/* File size block */
 		req[Current++] = 0xC3; /* ID */
 		req[Current++] = (File->Used >> 24) & 0xff;
@@ -790,11 +795,6 @@ GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos,
 		if (HardDelete) {
 			OBEXAddBlock(req, &Current, 0x4c, hard_delete_header, 2);
 		}
-	}
-
-	/* Include m-obex application data */
-	if (Priv->Service == OBEX_m_OBEX && Priv->m_obex_appdata != NULL && Priv->m_obex_appdata_len != 0) {
-		OBEXAddBlock(req, &Current, 0x4C, Priv->m_obex_appdata, Priv->m_obex_appdata_len);
 	}
 
 	j = Priv->FrameSize - Current - 20;
