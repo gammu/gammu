@@ -94,6 +94,20 @@ static GSM_Error OBEXGEN_HandleError(GSM_Protocol_Message msg, GSM_StateMachine 
 }
 
 /**
+ * Adds connection ID block to the request.
+ */
+void OBEXGEN_AddConnectionID(GSM_StateMachine *s, char *Buffer, int *Pos)
+{
+	GSM_Phone_OBEXGENData *Priv = &s->Phone.Data.Priv.OBEXGEN;
+
+	Buffer[(*Pos)++] = 0xCB;
+	Buffer[(*Pos)++] = Priv->connection_id[0];
+	Buffer[(*Pos)++] = Priv->connection_id[1];
+	Buffer[(*Pos)++] = Priv->connection_id[2];
+	Buffer[(*Pos)++] = Priv->connection_id[3];
+}
+
+/**
  * \defgroup OBEXinit OBEX initialisation and terminating
  * \ingroup OBEXPhone
  * @{
@@ -101,12 +115,38 @@ static GSM_Error OBEXGEN_HandleError(GSM_Protocol_Message msg, GSM_StateMachine 
 
 static GSM_Error OBEXGEN_ReplyConnect(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
+	size_t i;
+	GSM_Phone_OBEXGENData *Priv = &s->Phone.Data.Priv.OBEXGEN;
+
 	switch (msg.Type) {
 	case 0xA0:
 		smprintf(s,"Connected/disconnected OK\n");
-		if (msg.Length != 0) {
-			s->Phone.Data.Priv.OBEXGEN.FrameSize = msg.Buffer[2]*256+msg.Buffer[3];
+		/* Sample: 10 |00 |20 |00 |CB |00 |00 |00 |10 |4AJ|00 |08 |4DM|4FO|42B|45E|58X */
+		/* Byte 0 - OBEX version */
+		/* Byte 1 - flags */
+		/* Bytes 2,3 - maximal size of packet */
+		if (msg.Length >= 4) {
+			s->Phone.Data.Priv.OBEXGEN.FrameSize = msg.Buffer[2]*256 + msg.Buffer[3];
 			smprintf(s,"Maximal size of frame is %i 0x%x\n",s->Phone.Data.Priv.OBEXGEN.FrameSize,s->Phone.Data.Priv.OBEXGEN.FrameSize);
+		}
+		/* Remaining bytes - optional headers */
+		for (i = 4; i < msg.Length;) {
+			switch (msg.Buffer[i]) {
+				case 0xCB:
+					/* Connection ID */
+					memcpy(Priv->connection_id, msg.Buffer + i + 1, 4);
+					i += 5;
+					break;
+				case 0x4A:
+					/* Peer */
+					/* We just skip it */
+					i += (msg.Buffer[i + 1] << 8) + msg.Buffer[i + 2];
+					break;
+				default:
+					smprintf(s, "Unknown OBEX header: 0x%02X, skipping rest\n", msg.Buffer[i]);
+					i = msg.Length;
+					break;
+			}
 		}
 		return ERR_NONE;
 	case 0xC0:
@@ -276,6 +316,12 @@ GSM_Error OBEXGEN_InitialiseVars(GSM_StateMachine *s)
         Priv->m_obex_contacts_buffer = NULL;
         Priv->m_obex_contacts_buffer_pos = 0;
         Priv->m_obex_contacts_buffer_size = 0;
+
+	/* Default connection ID */
+	Priv->connection_id[0] = 0;
+	Priv->connection_id[1] = 0;
+	Priv->connection_id[2] = 0;
+	Priv->connection_id[3] = 1;
 
 	IRMC_InitCapabilities(&(Priv->NoteCap));
 	IRMC_InitCapabilities(&(Priv->PbCap));
@@ -522,10 +568,7 @@ static GSM_Error OBEXGEN_ChangePath(GSM_StateMachine *s, char *Name, unsigned ch
 		OBEXAddBlock(req, &Current, 0x01, NULL, 0);
 	}
 
-	/* connection ID block */
-	req[Current++] = 0xCB; /* ID */
-	req[Current++] = 0x00; req[Current++] = 0x00;
-	req[Current++] = 0x00; req[Current++] = 0x01;
+	OBEXGEN_AddConnectionID(s, req, &Current);
 
 	return GSM_WaitFor (s, req, Current, 0x85, OBEX_TIMEOUT, ID_SetPath);
 }
@@ -741,10 +784,7 @@ GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos,
 	}
 
 	if (Priv->Service == OBEX_BrowsingFolders || Priv->Service == OBEX_m_OBEX) {
-		/* connection ID block */
-		req[Current++] = 0xCB; /* ID */
-		req[Current++] = 0x00; req[Current++] = 0x00;
-		req[Current++] = 0x00; req[Current++] = 0x01;
+		OBEXGEN_AddConnectionID(s, req, &Current);
 	}
 
 	/* Include m-obex application data */
@@ -911,10 +951,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, gb
 	File->ModifiedEmpty	= TRUE;
 
 	if (Priv->Service == OBEX_BrowsingFolders || Priv->Service == OBEX_m_OBEX) {
-		/* connection ID block */
-		req[Current++] = 0xCB; /* ID */
-		req[Current++] = 0x00; req[Current++] = 0x00;
-		req[Current++] = 0x00; req[Current++] = 0x10;
+		OBEXGEN_AddConnectionID(s, req, &Current);
 	}
 
 	if (File->Used == 0x00) {
@@ -991,10 +1028,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, gb
 	while (!Priv->FileLastPart) {
 		Current = 0;
 		if (Priv->Service == OBEX_BrowsingFolders || Priv->Service == OBEX_m_OBEX) {
-			/* connection ID block */
-			req[Current++] = 0xCB; /* ID */
-			req[Current++] = 0x00; req[Current++] = 0x00;
-			req[Current++] = 0x00; req[Current++] = 0x01;
+			OBEXGEN_AddConnectionID(s, req, &Current);
 		}
 		/* Include m-obex application data */
 		if (Priv->Service == OBEX_m_OBEX && Priv->m_obex_appdata != NULL && Priv->m_obex_appdata_len != 0) {
@@ -1234,9 +1268,7 @@ GSM_Error OBEXGEN_DeleteFile(GSM_StateMachine *s, unsigned char *ID)
 	OBEXAddBlock(req, &Current, 0x01, req2, UnicodeLength(req2)*2+2);
 
 	/* connection ID block */
-	req[Current++] = 0xCB; /* ID */
-	req[Current++] = 0x00; req[Current++] = 0x00;
-	req[Current++] = 0x00; req[Current++] = 0x01;
+	OBEXGEN_AddConnectionID(s, req, &Current);
 
 	return GSM_WaitFor (s, req, Current, 0x82, OBEX_TIMEOUT, ID_AddFile);
 }
