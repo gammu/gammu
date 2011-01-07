@@ -19,7 +19,7 @@ the issue.
 ChangeLog
 =========
     
-2011???? - 1.28.95
+20110107 - 1.28.95
 
 [-] * Fix decoding of SMS without date on DCT4 phones (bug #1368).
 [+] * Added gammu-detect tool to detect available devices on system.
