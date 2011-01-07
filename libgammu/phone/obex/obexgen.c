@@ -772,7 +772,11 @@ GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos,
 		}
 
 		/* Name block */
-		OBEXAddBlock(req, &Current, 0x01, File->Name, UnicodeLength(File->Name)*2+2);
+		if (Priv->Service == OBEX_m_OBEX) {
+			OBEXAddBlock(req, &Current, 0x42, DecodeUnicodeString(File->ID_FullName), UnicodeLength(File->ID_FullName) + 1);
+		} else {
+			OBEXAddBlock(req, &Current, 0x01, File->Name, UnicodeLength(File->Name)*2+2);
+		}
 
 		/* File size block */
 		req[Current++] = 0xC3; /* ID */
