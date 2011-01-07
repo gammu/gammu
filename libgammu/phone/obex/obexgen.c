@@ -756,6 +756,10 @@ GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos,
 
 	s->Phone.Data.File = File;
 
+	if (Priv->Service == OBEX_BrowsingFolders || Priv->Service == OBEX_m_OBEX) {
+		OBEXGEN_AddConnectionID(s, req, &Current);
+	}
+
 	if (*Pos == 0) {
 		if (!strcmp(DecodeUnicodeString(File->ID_FullName),"")) {
 			error = OBEXGEN_Connect(s,OBEX_None);
@@ -781,10 +785,6 @@ GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos,
 		if (HardDelete) {
 			OBEXAddBlock(req, &Current, 0x4c, hard_delete_header, 2);
 		}
-	}
-
-	if (Priv->Service == OBEX_BrowsingFolders || Priv->Service == OBEX_m_OBEX) {
-		OBEXGEN_AddConnectionID(s, req, &Current);
 	}
 
 	/* Include m-obex application data */
