@@ -383,6 +383,7 @@ GSM_PhoneModel allmodels[] = {
 	{"8910" ,"NHM-4" ,"Nokia 8910", {F_CAL62,F_NOMIDI,F_NOFILESYSTEM,F_NOMMS,0}},
 	{"8910i","NHM-4" ,"Nokia 8910i",{F_CAL62,F_NOMIDI,F_NOFILESYSTEM,F_NOMMS,0}},
 	{"C3"	,"RM-614","Nokia C3", {F_SERIES40_30,F_FILES2,F_TODO66,F_RADIO,F_NOTES,F_SMS_FILES,0}},/* fixme */
+	{"X3"	,"RM-540","Nokia X3", {F_SERIES40_30,F_FILES2,F_TODO66,F_RADIO,F_NOTES,F_SMS_FILES,0}},/* fixme */
 #endif
 #ifdef GSM_ENABLE_NOKIA3320
 	{"3320" ,"NPC-1" ,"Nokia 3320", {F_CAL62,F_DAYMONTH,0}},/* fixme */
