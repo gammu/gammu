@@ -760,6 +760,7 @@ GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos,
 		OBEXGEN_AddConnectionID(s, req, &Current);
 	}
 
+	/* Are we sending first request or continuation? */
 	if (*Pos == 0) {
 		if (!strcmp(DecodeUnicodeString(File->ID_FullName),"")) {
 			error = OBEXGEN_Connect(s,OBEX_None);
