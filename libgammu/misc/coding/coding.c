@@ -739,7 +739,7 @@ int GSM_UnpackSemiOctetNumber(GSM_Debug_Info *di, unsigned char *retval, const u
 	unsigned char	Buffer[GSM_MAX_NUMBER_LENGTH + 1];
 	int		length		= Number[0];
 
-	smfprintf(di, "L=%d\n", length);
+	smfprintf(di, "Number Length=%d\n", length);
 
 	/* Default ouput on error */
 	strcpy(Buffer, "<NOT DECODED>");
