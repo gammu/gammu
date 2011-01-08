@@ -67,9 +67,9 @@ static GSM_Error FBUS2_WriteFrame(GSM_StateMachine 	*s,
 	buffer[length++] = checksum;
 
 	/* Sending to phone */
-	sent=s->Device.Functions->WriteDevice(s,buffer,length);
+	sent = s->Device.Functions->WriteDevice(s, buffer, length);
 
-	if (sent!=length) {
+	if (sent != length) {
 		return ERR_DEVICEWRITEERROR;
 	}
 	return ERR_NONE;
