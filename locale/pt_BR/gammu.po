@@ -1540,11 +1540,10 @@ msgid "Windows serial port probing"
 msgstr "Provando porta serial do Windows"
 
 #: gammu-detect/main.c:87
-#, fuzzy
 msgid ""
 "Copyright (C) 2010 - 2011 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
-"Copyright (C) 2003 - 2010 Michal Cihar <michal@cihar.com> e outros autores."
+"Copyright (C) 2003 - 2011 Michal Cihar <michal@cihar.com> e outros autores."
 
 #: gammu-detect/main.c:89 gammu/gammu.c:345
 msgid ""
