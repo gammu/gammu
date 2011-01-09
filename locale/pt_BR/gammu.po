@@ -1597,7 +1597,7 @@ msgstr "Número:"
 
 #: gammu-detect/udev.c:71
 msgid "Path:"
-msgstr ""
+msgstr "Caminho:"
 
 # type: TP
 #: gammu-detect/udev.c:72
