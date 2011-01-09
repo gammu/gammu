@@ -1572,7 +1572,7 @@ msgstr "Arquivo de configuração gerado pelo gammu-detect."
 
 #: gammu-detect/main.c:103
 msgid "Please check The Gammu Manual for more information."
-msgstr ""
+msgstr "Por favor verifique o Manual Gammu para mais informações."
 
 #: gammu-detect/main.c:160
 #, c-format
