@@ -1577,7 +1577,7 @@ msgstr "Por favor verifique o Manual Gammu para mais informações."
 #: gammu-detect/main.c:160
 #, c-format
 msgid "option parsing failed: %s\n"
-msgstr ""
+msgstr "opção passada falhou: %s\n"
 
 #: gammu-detect/udev.c:67
 #, fuzzy
