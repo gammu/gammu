@@ -1507,7 +1507,7 @@ msgstr "Desabilitar procura de udev."
 
 #: gammu-detect/main.c:61
 msgid "Disables scanning using Bluez."
-msgstr ""
+msgstr "Desabilitar procura usando Bluez."
 
 #: gammu-detect/main.c:64
 msgid "Disables scanning of Windows serial ports."
