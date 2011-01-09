@@ -1514,9 +1514,9 @@ msgid "Disables scanning of Windows serial ports."
 msgstr "Desabilitar procura de portas seriais do Windows."
 
 #: gammu-detect/main.c:71
-#, fuzzy, c-format
+#, c-format
 msgid "Gammu-detect version %s"
-msgstr "Versão do Gammu"
+msgstr "Versão do Gammu detectada %s"
 
 #: gammu-detect/main.c:73
 #, fuzzy, c-format
