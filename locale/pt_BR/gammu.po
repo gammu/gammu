@@ -1529,7 +1529,7 @@ msgstr "Configuração da Compilação:"
 
 #: gammu-detect/main.c:78
 msgid "udev probing"
-msgstr ""
+msgstr "provando udev"
 
 #: gammu-detect/main.c:81
 msgid "Bluez probing"
