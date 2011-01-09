@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-06 11:46+0100\n"
-"PO-Revision-Date: 2011-01-09 16:42+0200\n"
+"PO-Revision-Date: 2011-01-09 16:43+0200\n"
 "Last-Translator: gilberto dos santos alves <gsavix@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
@@ -1511,7 +1511,7 @@ msgstr "Desabilitar procura usando Bluez."
 
 #: gammu-detect/main.c:64
 msgid "Disables scanning of Windows serial ports."
-msgstr ""
+msgstr "Desabilitar procura de portas seriais do Windows."
 
 #: gammu-detect/main.c:71
 #, fuzzy, c-format
