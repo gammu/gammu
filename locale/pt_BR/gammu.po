@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-06 11:46+0100\n"
-"PO-Revision-Date: 2011-01-09 16:48+0200\n"
+"PO-Revision-Date: 2011-01-09 16:49+0200\n"
 "Last-Translator: gilberto dos santos alves <gsavix@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
@@ -1605,9 +1605,8 @@ msgid "Driver:"
 msgstr "Driver:"
 
 #: gammu-detect/udev.c:73
-#, fuzzy
 msgid "Sequential Number:"
-msgstr "Número geral"
+msgstr "Número Sequencial:"
 
 #: gammu-detect/udev.c:74
 #, fuzzy
