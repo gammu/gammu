@@ -1498,7 +1498,6 @@ msgstr "Exibir saída da depuração na detecção de dispositivos."
 
 # type: Plain text
 #: gammu-detect/main.c:56
-#, fuzzy
 msgid "Show version information and compiled in features."
 msgstr "Apresenta informação da versão e das funcionalidades compiladas."
 
