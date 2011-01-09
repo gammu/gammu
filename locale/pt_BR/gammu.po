@@ -1536,9 +1536,8 @@ msgid "Bluez probing"
 msgstr "Provando Bluez"
 
 #: gammu-detect/main.c:84
-#, fuzzy
 msgid "Windows serial port probing"
-msgstr "Porta do telefone"
+msgstr "Provando porta serial do Windows"
 
 #: gammu-detect/main.c:87
 #, fuzzy
