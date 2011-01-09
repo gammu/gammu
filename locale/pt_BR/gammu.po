@@ -1588,9 +1588,8 @@ msgid "Type:"
 msgstr "Tipo:"
 
 #: gammu-detect/udev.c:69
-#, fuzzy
 msgid "Subsystem:"
-msgstr "Sistema Arquivo"
+msgstr "Subsistema:"
 
 #: gammu-detect/udev.c:70
 #, fuzzy
