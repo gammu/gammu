@@ -1,0 +1,42 @@
+Messages
+=============
+
+.. doxygenfunction:: GSM_DecodePDUFrame .. doxygenfunction::
+GSM_DecodeSMSFrame .. doxygenfunction:: GSM_GetMessageCoding
+.. doxygenfunction:: GSM_EncodeSMSFrame .. doxygenfunction::
+GSM_DecodeSMSFrameStatusReportData .. doxygenfunction::
+GSM_DecodeSMSFrameText .. doxygenfunction:: GSM_DecodeUDHHeader
+.. doxygenfunction:: GSM_EncodeUDHHeader .. doxygenfunction::
+GSM_SetDefaultReceivedSMSData .. doxygenfunction:: GSM_SetDefaultSMSData
+.. doxygenfunction:: GSM_DecodeSiemensOTASMS .. doxygenfunction::
+PHONE_EncodeSMSFrame .. doxygenfunction:: GSM_EncodeMultiPartSMS
+.. doxygenfunction:: GSM_DecodeMultiPartSMS .. doxygenfunction::
+GSM_ClearMultiPartSMSInfo .. doxygenfunction:: GSM_FreeMultiPartSMSInfo
+.. doxygenfunction:: GSM_LinkSMS .. doxygenfunction::
+GSM_DecodeMMSFileToMultiPart .. doxygenfunction:: GSM_ClearMMSMultiPart
+.. doxygenfunction:: GSM_GetSMSC .. doxygenfunction:: GSM_SetSMSC
+.. doxygenfunction:: GSM_GetSMSStatus .. doxygenfunction:: GSM_GetSMS
+.. doxygenfunction:: GSM_GetNextSMS .. doxygenfunction:: GSM_SetSMS
+.. doxygenfunction:: GSM_AddSMS .. doxygenfunction:: GSM_DeleteSMS
+.. doxygenfunction:: GSM_SendSMS .. doxygenfunction:: GSM_SendSavedSMS
+.. doxygenfunction:: GSM_SetFastSMSSending .. doxygenfunction::
+GSM_SetIncomingSMS .. doxygenfunction:: GSM_SetIncomingCB
+.. doxygenfunction:: GSM_GetSMSFolders .. doxygenfunction:: GSM_AddSMSFolder
+.. doxygenfunction:: GSM_DeleteSMSFolder .. doxygenfunction::
+GSM_GetMMSFolders .. doxygenfunction:: GSM_GetNextMMSFileInfo
+.. doxygenfunction:: GSM_SetIncomingUSSD .. doxygenenum:: GSM_MMS_Class
+.. doxygenstruct:: GSM_MMSIndicator .. doxygenstruct:: GSM_CBMessage
+.. doxygenenum:: GSM_USSDStatus .. doxygenstruct:: GSM_USSDMessage
+.. doxygenstruct:: GSM_SMSMemoryStatus .. doxygenenum:: GSM_SMSFormat
+.. doxygenenum:: GSM_ValidityPeriod .. doxygenenum::
+GSM_ValidityPeriodFormat .. doxygenstruct:: GSM_SMSValidity
+.. doxygenstruct:: GSM_SMSC .. doxygenenum:: GSM_SMS_State .. doxygenenum::
+GSM_Coding_Type .. doxygenenum:: GSM_UDH .. doxygenstruct:: GSM_UDHHeader
+.. doxygenenum:: GSM_SMSMessageType .. doxygenstruct:: GSM_SMSMessage
+.. doxygenstruct:: GSM_SMSMessageLayout .. doxygenstruct:: GSM_OneSMSFolder
+.. doxygenstruct:: GSM_SMSFolders .. doxygenstruct:: GSM_SiemensOTASMSInfo
+.. doxygenstruct:: GSM_MultiSMSMessage .. doxygenstruct:: GSM_OneMMSFolder
+.. doxygenstruct:: GSM_MMSFolders .. doxygenenum:: EncodeMultiPartSMSID
+.. doxygenstruct:: GSM_MultiPartSMSEntry .. doxygenstruct::
+GSM_MultiPartSMSInfo .. doxygenenum:: MMSAddressType .. doxygenstruct::
+GSM_EncodedMultiPartMMSEntry .. doxygenstruct:: GSM_EncodedMultiPartMMSInfo

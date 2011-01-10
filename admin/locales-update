@@ -35,14 +35,17 @@ xgettext \
     `find libgammu -name '*.c' -o -name '*.h' | sort`
 
 if [ "x$1" = "x--po4a" ] ; then
-    ./admin/po4a
+    ./admin/po4a-docs
+    ./admin/po4a-manual
 fi
 
 for loc in $LOCS ; do
     cd locale/$loc
-    msgmerge -U -C ../../../wammu/locale/$loc/docs.po -C ../../../wammu/locale/$loc/wammu.po -C gammu.po -C libgammu.po docs.po ../docs.pot
+    msgmerge -U -C ../../../wammu/locale/$loc/docs.po -C ../../../wammu/locale/$loc/wammu.po -C gammu.po -C libgammu.po -C manual.po docs.po ../docs.pot
+    msgmerge -U -C ../../../wammu/locale/$loc/docs.po -C ../../../wammu/locale/$loc/wammu.po -C gammu.po -C libgammu.po -C docs.po manual.po ../manual.pot
     if [ -f  ../../..//wammu_web/locale/$loc/LC_MESSAGES/django.po ] ; then
         msgmerge -C ../../../wammu_web/locale/$loc/LC_MESSAGES/django.po -U docs.po ../docs.pot
+        msgmerge -C ../../../wammu_web/locale/$loc/LC_MESSAGES/django.po -U manual.po ../manual.pot
     fi
     cd ../..
 done
@@ -67,7 +70,7 @@ for loc in $LOCS ; do
         s/VERSION/'$ver'/;
         s/Project-Id-Version: Gammu [0-9.]*/Project-Id-Version: Gammu '$ver'/;
         ' locale/$loc/gammu.po
-    msgmerge -C ../wammu/locale/$loc/docs.po -C ../wammu/locale/$loc/wammu.po -C locale/$loc/libgammu.po -C locale/$loc/docs.po -U locale/$loc/gammu.po locale/gammu.pot
+    msgmerge -C ../wammu/locale/$loc/docs.po -C ../wammu/locale/$loc/wammu.po -C locale/$loc/libgammu.po -C locale/$loc/docs.po -C locale/$loc/manual.po -U locale/$loc/gammu.po locale/gammu.pot
     if [ -f  ../wammu_web/locale/$loc/LC_MESSAGES/django.po ] ; then
         msgmerge -C ../wammu_web/locale/$loc/LC_MESSAGES/django.po -U locale/$loc/gammu.po locale/gammu.pot
     fi
@@ -77,7 +80,7 @@ for loc in $LOCS ; do
         s/VERSION/'$ver'/;
         s/Project-Id-Version: libGammu [0-9.]*/Project-Id-Version: libGammu '$ver'/;
         ' locale/$loc/libgammu.po
-    msgmerge -C ../wammu/locale/$loc/docs.po -C ../wammu/locale/$loc/wammu.po -C locale/$loc/gammu.po -C locale/$loc/docs.po -U locale/$loc/libgammu.po locale/libgammu.pot
+    msgmerge -C ../wammu/locale/$loc/docs.po -C ../wammu/locale/$loc/wammu.po -C locale/$loc/gammu.po -C locale/$loc/docs.po -C locale/$loc/manual.po -U locale/$loc/libgammu.po locale/libgammu.pot
     if [ -f  ../wammu_web/locale/$loc/LC_MESSAGES/django.po ] ; then
         msgmerge -C ../wammu_web/locale/$loc/LC_MESSAGES/django.po -U locale/$loc/libgammu.po locale/libgammu.pot
     fi
@@ -88,4 +91,11 @@ for loc in $LOCS ; do
         s/VERSION/'$ver'/;
         s/Project-Id-Version: Gammu-docs [0-9.]*/Project-Id-Version: Gammu-docs '$ver'/;
         ' locale/$loc/docs.po
+    sed -i '
+        s/SOME DESCRIPTIVE TITLE/Gammu manual translation/;
+        s/PACKAGE/Gammu-manual/;
+        s/(C) YEAR/(C) 2003 - '`date +%Y`'/;
+        s/VERSION/'$ver'/;
+        s/Project-Id-Version: Gammu-manual [0-9.]*/Project-Id-Version: Gammu-manual '$ver'/;
+        ' locale/$loc/manual.po
 done

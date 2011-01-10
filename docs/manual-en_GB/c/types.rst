@@ -1,0 +1,5 @@
+Types
+=============
+
+.. doxygentypedef:: gboolean
+

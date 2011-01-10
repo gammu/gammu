@@ -10,10 +10,11 @@ fi
 
 mkdir locale/$1
 
-for loc in docs gammu libgammu ; do
+for loc in docs gammu libgammu manual ; do
     msginit -i locale/$loc.pot -o locale/$1/$loc.po -l $1 --no-translator
 done
 
-sed -i "s/\(.*po4a_langs.*\)/\1 $1/" admin/po4a.config
+sed -i "s/\(.*po4a_langs.*\)/\1 $1/" admin/po4a-docs.config
+sed -i "s/\(.*po4a_langs.*\)/\1 $1/" admin/po4a-manual.config
 
 git add locale/$1

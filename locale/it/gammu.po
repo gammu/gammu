@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu 1.28.95\n"
+"Project-Id-Version: Gammu 1.28.96\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-01-06 12:08+0100\n"
+"POT-Creation-Date: 2011-01-10 12:11+0100\n"
 "PO-Revision-Date: 2009-03-14 15:31+0200\n"
 "Last-Translator: soft developer <soft-developer@live.com>\n"
 "Language-Team: Language =it\n"
@@ -775,7 +775,7 @@ msgstr ""
 #: gammu/calendar.c:232 gammu/calendar.c:599 gammu/calendar.c:643
 #: gammu/calendar.c:687 gammu/calendar.c:711 gammu/calendar.c:830
 #: gammu/memory.c:141 gammu/message.c:215 gammu/misc.c:1807 gammu/misc.c:1840
-#: gammu/misc.c:2105 gammu/misc.c:2228
+#: gammu/misc.c:2130 gammu/misc.c:2253
 #, fuzzy
 msgid "Location"
 msgstr "Locazione %i\n"
@@ -1019,8 +1019,8 @@ msgstr "Alta\n"
 msgid "None"
 msgstr "Fatto\n"
 
-#: gammu/calendar.c:729 gammu/message.c:111 gammu/misc.c:2036
-#: gammu/misc.c:2079
+#: gammu/calendar.c:729 gammu/message.c:111 gammu/misc.c:2061
+#: gammu/misc.c:2104
 #, fuzzy
 msgid "Unknown"
 msgstr "Sconosciuto\n"
@@ -1286,7 +1286,7 @@ msgstr ""
 msgid "No signal"
 msgstr "Non ottenibile"
 
-#: gammu/depend/nokia/dct4.c:373 gammu/message.c:105 gammu/misc.c:2374
+#: gammu/depend/nokia/dct4.c:373 gammu/message.c:105 gammu/misc.c:2399
 msgid "Timeout"
 msgstr ""
 
@@ -1942,7 +1942,7 @@ msgid "Network"
 msgstr "Codice rete assente\n"
 
 #: gammu/gammu.c:86 gammu/message.c:218 gammu/misc.c:907 gammu/misc.c:1074
-#: gammu/misc.c:1811 gammu/misc.c:1850 gammu/misc.c:2119 gammu/mms.c:112
+#: gammu/misc.c:1811 gammu/misc.c:1850 gammu/misc.c:2144 gammu/mms.c:112
 #: helper/memory-display.c:137 helper/message-display.c:235
 msgid "Name"
 msgstr "Nome"
@@ -2263,7 +2263,7 @@ msgstr ""
 msgid "Memory %s, Location %i\n"
 msgstr "Memoria %s, locazione %i\n"
 
-#: gammu/memory.c:104 gammu/misc.c:1848 gammu/misc.c:2231
+#: gammu/memory.c:104 gammu/misc.c:1848 gammu/misc.c:2256
 msgid "Entry is empty"
 msgstr "Locazione vuota"
 
@@ -2343,7 +2343,7 @@ msgstr "Risposta del servizio: \"%s\"\n"
 msgid "Invalid SMSC location: %s\n"
 msgstr ""
 
-#: gammu/message.c:220 gammu/misc.c:2120 gammu/misc.c:2378
+#: gammu/message.c:220 gammu/misc.c:2145 gammu/misc.c:2403
 #, fuzzy
 msgid "Number"
 msgstr "Novembre"
@@ -2965,7 +2965,7 @@ msgid "%i. Access point %i"
 msgstr "%i. Punto di accesso %i "
 
 #: gammu/misc.c:952 gammu/misc.c:1476 gammu/misc.c:1483 gammu/misc.c:1518
-#: gammu/misc.c:1531 gammu/misc.c:1570 gammu/misc.c:1619 gammu/misc.c:1974
+#: gammu/misc.c:1531 gammu/misc.c:1570 gammu/misc.c:1619 gammu/misc.c:1999
 msgid " (active)"
 msgstr " (attivo)"
 
@@ -3001,13 +3001,13 @@ msgid "(file with ID %i)\n"
 msgstr "Suoneria    : \"%s\" (file con ID %i)\n"
 
 #. l10n: Ringtone name and ID format
-#: gammu/misc.c:1039 gammu/misc.c:1993
+#: gammu/misc.c:1039 gammu/misc.c:2018
 #, c-format
 msgid "\"%s\" (ID %i)\n"
 msgstr ""
 
 #. l10n: Ringtone ID format
-#: gammu/misc.c:1042 gammu/misc.c:1996
+#: gammu/misc.c:1042 gammu/misc.c:2021
 #, c-format
 msgid "ID %i\n"
 msgstr ""
@@ -3127,11 +3127,11 @@ msgstr "Errore temporaneo, "
 msgid "Connection security"
 msgstr "Sicurezza              : On\n"
 
-#: gammu/misc.c:1463 gammu/misc.c:2070
+#: gammu/misc.c:1463 gammu/misc.c:2095
 msgid "On"
 msgstr ""
 
-#: gammu/misc.c:1465 gammu/misc.c:2056
+#: gammu/misc.c:1465 gammu/misc.c:2081
 #, fuzzy
 msgid "Off"
 msgstr "No suoneria\n"
@@ -3230,7 +3230,7 @@ msgstr ""
 msgid "Data call speed"
 msgstr "Chiamata dati\n"
 
-#: gammu/misc.c:1510 gammu/misc.c:2072
+#: gammu/misc.c:1510 gammu/misc.c:2097
 #, fuzzy
 msgid "Auto"
 msgstr "Automatico\n"
@@ -3377,294 +3377,299 @@ msgstr ""
 msgid "Enter %s code: "
 msgstr ""
 
-#: gammu/misc.c:1932
+#: gammu/misc.c:1932 gammu/misc.c:1954
 msgid "No PIN code entered!"
 msgstr ""
 
-#: gammu/misc.c:1975
+#: gammu/misc.c:1942
+#, c-format
+msgid "Enter new PIN code: "
+msgstr ""
+
+#: gammu/misc.c:2000
 msgid " (default name)"
 msgstr " (nome predefinito)"
 
-#: gammu/misc.c:1976
+#: gammu/misc.c:2001
 #, fuzzy
 msgid " (Head set profile)"
 msgstr "Profilo Nokia"
 
-#: gammu/misc.c:1977
+#: gammu/misc.c:2002
 #, fuzzy
 msgid " (Car kit profile)"
 msgstr "Profilo Nokia"
 
-#: gammu/misc.c:1986 helper/memory-display.c:105
+#: gammu/misc.c:2011 helper/memory-display.c:105
 #, fuzzy
 msgid "Ringtone ID"
 msgstr "Suoneria \"%s\"\n"
 
-#: gammu/misc.c:1988
+#: gammu/misc.c:2013
 #, fuzzy
 msgid "Message alert tone ID"
 msgstr "ID Suoneria messaggi  : "
 
-#: gammu/misc.c:2001
+#: gammu/misc.c:2026
 #, fuzzy
 msgid "Call alert for"
 msgstr "Vibrazione            : "
 
-#: gammu/misc.c:2022
+#: gammu/misc.c:2047
 #, fuzzy
 msgid "Screen saver number"
 msgstr "Numero screen saver   : "
 
-#: gammu/misc.c:2025
+#: gammu/misc.c:2050
 #, fuzzy
 msgid "Incoming call alert"
 msgstr "Segnale di chiamata   : "
 
-#: gammu/misc.c:2026
+#: gammu/misc.c:2051
 #, fuzzy
 msgid "Ringtone volume"
 msgstr "Volume della suoneria : "
 
-#: gammu/misc.c:2027
+#: gammu/misc.c:2052
 #, fuzzy
 msgid "Vibrating alert"
 msgstr "Vibrazione            : "
 
-#: gammu/misc.c:2028
+#: gammu/misc.c:2053
 #, fuzzy
 msgid "Message alert tone"
 msgstr "ID Suoneria messaggi  : "
 
-#: gammu/misc.c:2029
+#: gammu/misc.c:2054
 #, fuzzy
 msgid "Keypad tones"
 msgstr "Tastiera bloccata\n"
 
-#: gammu/misc.c:2030
+#: gammu/misc.c:2055
 #, fuzzy
 msgid "Warning (games) tones"
 msgstr "Toni di avviso        : "
 
-#: gammu/misc.c:2031 helper/message-display.c:424
+#: gammu/misc.c:2056 helper/message-display.c:424
 #, fuzzy
 msgid "Screen saver"
 msgstr "Numero screen saver   : "
 
-#: gammu/misc.c:2032
+#: gammu/misc.c:2057
 #, fuzzy
 msgid "Screen saver timeout"
 msgstr "Timeout screen saver  : "
 
-#: gammu/misc.c:2033
+#: gammu/misc.c:2058
 #, fuzzy
 msgid "Automatic answer"
 msgstr "Risposta automatica   : "
 
-#: gammu/misc.c:2034
+#: gammu/misc.c:2059
 #, fuzzy
 msgid "Lights"
 msgstr "Alta\n"
 
-#: gammu/misc.c:2042
+#: gammu/misc.c:2067
 #, fuzzy
 msgid "Level 1"
 msgstr "Livello 1\n"
 
-#: gammu/misc.c:2044
+#: gammu/misc.c:2069
 #, fuzzy
 msgid "Level 2"
 msgstr "Livello 2\n"
 
-#: gammu/misc.c:2046
+#: gammu/misc.c:2071
 #, fuzzy
 msgid "Level 3"
 msgstr "Livello 3\n"
 
-#: gammu/misc.c:2047
+#: gammu/misc.c:2072
 #, fuzzy
 msgid "Level 4"
 msgstr "Livello 4\n"
 
-#: gammu/misc.c:2048
+#: gammu/misc.c:2073
 #, fuzzy
 msgid "Level 5"
 msgstr "Livello 5\n"
 
-#: gammu/misc.c:2057
+#: gammu/misc.c:2082
 #, fuzzy
 msgid "Ringing"
 msgstr "Suoneria\n"
 
-#: gammu/misc.c:2059
+#: gammu/misc.c:2084
 #, fuzzy
 msgid "Beep once"
 msgstr "Bip x 1\n"
 
-#: gammu/misc.c:2060
+#: gammu/misc.c:2085
 #, fuzzy
 msgid "Ring once"
 msgstr "Suona x 1\n"
 
-#: gammu/misc.c:2061 gammu/misc.c:2065
+#: gammu/misc.c:2086 gammu/misc.c:2090
 #, fuzzy
 msgid "Ascending"
 msgstr "Ascendente\n"
 
-#: gammu/misc.c:2062
+#: gammu/misc.c:2087
 #, fuzzy
 msgid "Caller groups"
 msgstr "Gruppi chiamante\n"
 
-#: gammu/misc.c:2063
+#: gammu/misc.c:2088
 #, fuzzy
 msgid "Standard"
 msgstr "Normale\n"
 
-#: gammu/misc.c:2064
+#: gammu/misc.c:2089
 #, fuzzy
 msgid "Special"
 msgstr "Speciale\n"
 
-#: gammu/misc.c:2066
+#: gammu/misc.c:2091
 #, fuzzy
 msgid "Personal"
 msgstr "Personale\n"
 
-#: gammu/misc.c:2071
+#: gammu/misc.c:2096
 #, fuzzy
 msgid "Vibrate first"
 msgstr "Prima vibra\n"
 
-#: gammu/misc.c:2108
+#: gammu/misc.c:2133
 #, fuzzy
 msgid " speed dial not assigned"
 msgstr " chiamata rapida non assegnata\n"
 
-#: gammu/misc.c:2139
+#: gammu/misc.c:2164
 #, c-format
 msgid "What type of reset phone settings (\"%s\") ?\n"
 msgstr "Che tipo di reset vuoi fare (\"%s\") ?\n"
 
-#: gammu/misc.c:2173
+#: gammu/misc.c:2198
 #, fuzzy
 msgid "Currently shown on the display"
 msgstr "Caratteristiche attuali del display :\n"
 
-#: gammu/misc.c:2178
+#: gammu/misc.c:2203
 #, fuzzy
 msgid "Call active"
 msgstr "Chiamata in corso\n"
 
-#: gammu/misc.c:2181
+#: gammu/misc.c:2206
 #, fuzzy
 msgid "Unread SMS"
 msgstr "SMS non letto\n"
 
-#: gammu/misc.c:2184
+#: gammu/misc.c:2209
 #, fuzzy
 msgid "Voice call"
 msgstr "Chiamata voce\n"
 
-#: gammu/misc.c:2187
+#: gammu/misc.c:2212
 #, fuzzy
 msgid "Fax call"
 msgstr "Chiamata fax\n"
 
-#: gammu/misc.c:2190
+#: gammu/misc.c:2215
 #, fuzzy
 msgid "Data call"
 msgstr "Chiamata dati\n"
 
-#: gammu/misc.c:2193
+#: gammu/misc.c:2218
 #, fuzzy
 msgid "Keypad locked"
 msgstr "Tastiera bloccata\n"
 
-#: gammu/misc.c:2196
+#: gammu/misc.c:2221
 #, fuzzy
 msgid "SMS memory full"
 msgstr "Memoria SMS piena\n"
 
-#: gammu/misc.c:2234
+#: gammu/misc.c:2259
 #, fuzzy
 msgid "Station name"
 msgstr "Locazione    : \"%s\"\n"
 
-#: gammu/misc.c:2235
+#: gammu/misc.c:2260
 msgid "Frequency"
 msgstr ""
 
-#: gammu/misc.c:2256
+#: gammu/misc.c:2281
 #, c-format
 msgid "Unknown divert action (\"%s\")\n"
 msgstr "Azione di deviazione sconosciuta (\"%s\")\n"
 
-#: gammu/misc.c:2269
+#: gammu/misc.c:2294
 #, c-format
 msgid "Unknown divert type (\"%s\")\n"
 msgstr "Tipo di deviazione sconosciuta (\"%s\")\n"
 
-#: gammu/misc.c:2282
+#: gammu/misc.c:2307
 #, c-format
 msgid "Unknown call type (\"%s\")\n"
 msgstr "Tipo di chiamata sconosciuta (\"%s\")\n"
 
-#: gammu/misc.c:2291
+#: gammu/misc.c:2316
 msgid "Query:"
 msgstr ""
 
-#: gammu/misc.c:2293 gammu/misc.c:2310
+#: gammu/misc.c:2318 gammu/misc.c:2335
 #, fuzzy
 msgid "Divert type"
 msgstr "Tipo di nota : "
 
-#: gammu/misc.c:2308
+#: gammu/misc.c:2333
 msgid "Changed:"
 msgstr ""
 
-#: gammu/misc.c:2315
+#: gammu/misc.c:2340
 msgid "when busy"
 msgstr "se occupato"
 
-#: gammu/misc.c:2318
+#: gammu/misc.c:2343
 msgid "when not answered"
 msgstr "se non si risponde"
 
-#: gammu/misc.c:2321
+#: gammu/misc.c:2346
 msgid "when phone off or no coverage"
 msgstr "a telefono spento o non raggiungibile"
 
-#: gammu/misc.c:2324
+#: gammu/misc.c:2349
 msgid "all types of diverts"
 msgstr "tutti i tipi di deviazione"
 
-#: gammu/misc.c:2327 gammu/misc.c:2347 gammu/misc.c:2369
+#: gammu/misc.c:2352 gammu/misc.c:2372 gammu/misc.c:2394
 #, c-format
 msgid "unknown %i"
 msgstr "sconosiuto %i"
 
-#: gammu/misc.c:2332 gammu/misc.c:2357
+#: gammu/misc.c:2357 gammu/misc.c:2382
 #, fuzzy
 msgid "Call type"
 msgstr "Chiamata in corso\n"
 
-#: gammu/misc.c:2335 gammu/misc.c:2360
+#: gammu/misc.c:2360 gammu/misc.c:2385
 msgid "voice"
 msgstr "voce"
 
-#: gammu/misc.c:2338 gammu/misc.c:2363 helper/message-display.c:120
+#: gammu/misc.c:2363 gammu/misc.c:2388 helper/message-display.c:120
 msgid "fax"
 msgstr ""
 
-#: gammu/misc.c:2341 gammu/misc.c:2366
+#: gammu/misc.c:2366 gammu/misc.c:2391
 msgid "data"
 msgstr "dati"
 
-#: gammu/misc.c:2344
+#: gammu/misc.c:2369
 msgid "data & fax & voice"
 msgstr "dati & fax & voce"
 
-#: gammu/misc.c:2352
+#: gammu/misc.c:2377
 #, fuzzy
 msgid "Response:"
 msgstr ""
