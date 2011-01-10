@@ -30,7 +30,7 @@ There are several po files to translate:
 ``libgammu.po``
     Messages used in the Gammu library (see :ref:`libgammu`).
 ``gammu.po``
-    Message used by command line utilities (mostly :ref:`gammu`).
+    Messages used by command line utilities (mostly :ref:`gammu`).
 ``docs.po``
     Basic documentation shipped withing package (eg. :file:`README` and
     :file:`INSTALL` files).
