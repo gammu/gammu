@@ -42,4 +42,4 @@ SQL script for creating tables in SQLite database:
 .. note::
 
     You can find the script in :file:`docs/sql/sqlite.sql` as well. There are
-    also scripts for other databases as well.
+    also scripts for other databases in same folder.
