@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.28.96\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-10 12:11+0100\n"
-"PO-Revision-Date: 2011-01-03 14:40+0100\n"
+"PO-Revision-Date: 2011-01-10 13:50+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -3083,9 +3083,9 @@ msgid "No PIN code entered!"
 msgstr "Nebyl zadán žádný PIN kód!"
 
 #: gammu/misc.c:1942
-#, fuzzy, c-format
+#, c-format
 msgid "Enter new PIN code: "
-msgstr "Zadejte %s kód: "
+msgstr "Zadejte nový PIN kód: "
 
 #: gammu/misc.c:2000
 msgid " (default name)"
