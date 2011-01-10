@@ -19,13 +19,14 @@ Translation areas
 There are several po files to translate:
 
 ``libgammu.po``
-    Messages used in the Gammu library (libgammu).
+    Messages used in the Gammu library (see :ref:`libgammu`).
 ``gammu.po``
     Message used by command line utilities (mostly :ref:`gammu`).
 ``docs.po``
-    Basic documentation shipped withing package.
+    Basic documentation shipped withing package (eg. :file:`README` and
+    :file:`INSTALL` files).
 ``manual.po``
-    The Gammu Manual
+    The Gammu Manual translation (this manual).
 
 
 .. _translation server: http://l10n.cihar.com/projects/gammu/
