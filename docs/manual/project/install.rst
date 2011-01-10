@@ -1,33 +1,20 @@
-Compiling Gammu
-+++++++++++++++
-
-Compliling python-gammu
-=======================
-
-Currently python-gammu is distributed together with Gammu, so all you need
-to get it is to build Gammu with Python support (it should be automatically
-detected if you have development environment installed for Python).
-
-Gammu uses CMake_ to generate build environment (for example Makefiles for
-UNIX, Visual Studio projects, Eclipse projects, etc.) which you can later use
-for building. You can use ``-DBUILD_PYTHON=/path/to/python`` to define path to
-another Python interpreter to use than default one available in the system.
-
-Alternatively you can use standard distutils, for which :file:`setup.py` is placed in
-`python` subdirectory.
-
-
-Binaries - Linux
+Installing Gammu
 ================
+
+Prebuilt Binaries for Linux
+---------------------------
 
 Many distributions come with prebuilt Gammu binaries, if you can use
 them, it is definitely the easiest thing. There are also binary packages
 of latest release built for many distributions available on Gammu home
 page <http://wammu.eu/gammu/>.
 
+You can usually also find Gammu in your distribution, so unless you need a
+newer version, just install package from your distribution.
 
-Binaries - Windows
-==================
+
+Prebuilt Binaries for Windows
+-----------------------------
 
 You can download Windows binaries from <http://wammu.eu/gammu/>. For
 Windows 95, 98 and NT 4.0 you will also need ShFolder DLL, which can be
@@ -36,11 +23,16 @@ downloaded from Microsoft:
 http://www.microsoft.com/downloads/details.aspx?displaylang=en&FamilyID=6AE02498-07E9-48F1-A5D6-DBFA18D37E0F
 
 
-From Sources - Requirements
-===========================
+Dependencies
+------------
 
-Gammu does not require any special dependencies at all to build, but you might
-miss some features. Optional dependencies include:
+You need CMake from <http://www.cmake.org> for compiling Gammu.
+
+Optional Dependencies
+---------------------
+
+Gammu does not require any special libraries at all to build, but you might
+miss some features. Optional libraries include:
 
 Bluez-libs 
     - http://www.bluez.org/
@@ -75,21 +67,17 @@ libdbi
     - required at least version 0.8.2
     - DBI support in SMSD.
 
-        - For testing, please install libdbd-sqlite3
-
 Python
     - http://www.python.org/
     - Gammu has a Python bindings
 
 SQLite + libdbi-drivers with SQLite
     - http://www.sqlite.org/
-    - needed for testing of SMSD using libdbi driver
+    - needed for testing of SMSD using libdbi driver (libdbd-sqlite3)
 
 
-From Sources - Linux
-====================
-
-You need CMake from <http://www.cmake.org> for configuring Gammu.
+Compiling on Linux/Unix Systems
+-------------------------------
 
 For compatibility reasons, configure like wrapper is provided, if you
 don't need much specific tuning, you can use general "./configure; make;
@@ -99,7 +87,7 @@ changed in source tree), for example gammu binary is in
 build-configure/gammu directory.
 
 If you need/want to tweak build a bit more than configure wrapper
-provides, you have to use CMake directly. For now, only out of source
+provides, you have to use `CMake`_ directly. For now, only out of source
 build is supported, so you have to create separate directory for build:
 
 .. code-block:: sh
@@ -151,40 +139,18 @@ You can also disable support for whole set of phones, e.g.:
 * -DWITH_BLUETOOTH=OFF disables Bluetooth support
 * -DWITH_IRDA=OFF disables IrDA support
 
-Limiting set of installed data
-==============================
+Compiling on Microsoft Windows
+------------------------------
 
-By setting following flags you can control which additional parts will
-be installed:
-
-* INSTALL_GNAPPLET - Install Gnapplet binaries
-* INSTALL_MEDIA - Install sample media files
-* INSTALL_PHP_EXAMPLES - Install PHP example scripts
-* INSTALL_BASH_COMPLETION - Install bash completion script for Gammu
-* INSTALL_LSB_INIT - Install LSB compatible init script for Gammu
-* INSTALL_DOC - Install documentation
-* INSTALL_LOC - Install locales data
-
-For example:
-
-.. code-block:: sh
-
-    cmake -DINSTALL_DOC=OFF
-
-
-From Sources - Windows
-======================
-
-You need CMake from <http://www.cmake.org> for configuring Gammu. CMake
-is able to generate projects for various tools including Microsoft
+`CMake`_ is able to generate projects for various tools including Microsoft
 Visual Studio, Borland toolchains, Cygwin or Mingw32. Just click on
 CMakeLists.txt in project sources and configure CMake to be able to find
-optional libraries (see cross compilation section for more information
-about getting those). The result should be project for your compiler
-where you should be able to work with it as with any other project.
+optional libraries (see cross compilation section for more information about
+getting those). The result should be project for your compiler where you
+should be able to work with it as with any other project.
 
 Compiling using MS Visual C++
------------------------------
++++++++++++++++++++++++++++++
 
 You will probably need additional SDKs:
 
@@ -234,7 +200,7 @@ After downloading and installing them into your system:
   ISGTK. ITK, [wxWidgets http://www.wxwidgets.org/wiki/index.php/CMake].
 
 Compiling using Borland C++
----------------------------
++++++++++++++++++++++++++++
 
 Borland toolchain - you can download compiler at
 <http://www.codegear.com/downloads/free/cppbuilder>. You need to add
@@ -244,15 +210,15 @@ CMake) and add -Lc:/Borland/BCC55/Lib -Ic:/Borland/BCC55/Include
 compilation fails).
 
 Compiling using Cygwin
-----------------------
+++++++++++++++++++++++
 
 This should work pretty much same as on Linux.
 
-From Sources - Mac OS X
-=======================
+Compiling on Mac OS X
+---------------------
 
 Gammu should be compilable on Mac OS X, you need to have installed
-Developer Tols (version 2.4.1 was tested) and CMake (there is a Mac OS X
+Developer Tols (version 2.4.1 was tested) and `CMake`_ (there is a Mac OS X
 "Darwin" DMG download). For database support in SMSD, install wanted
 database, eg. MySQL.
 
@@ -275,9 +241,9 @@ Or completely disable iconv support:
 
 
 Cross compilation for Windows on Linux
-======================================
+--------------------------------------
 
-Only cross compilation using CMake has been tested. You need to install
+Only cross compilation using `CMake`_ has been tested. You need to install
 MinGW cross tool chain and run time. On Debian you can do it by apt-get
 install mingw32. Build is then quite simple:
 
@@ -311,7 +277,7 @@ specifications, example is shown in cmake/mingw.spec, which is used by
 CMakeLists.txt. You might need to tune it for your environment.
 
 Third party libraries
----------------------
++++++++++++++++++++++
 
 The easies way to link with third party libraries is to add path to
 their installation to cmake/Toolchain-mingw32.cmake or to list these
@@ -319,7 +285,7 @@ paths in CMAKE_FIND_ROOT_PATH when invoking cmake.
 
 
 MySQL
------
+~~~~~
 
 You can download MySQL binaries from <http://dev.mysql.com/>, but then
 need some tweaks:
@@ -336,14 +302,14 @@ try to compile native binary from it.
 
 
 PostgreSQL
-----------
+~~~~~~~~~~
 
 You can download PostgreSQL binaries from <http://www.postgresql.org/>,
 but then you need to add wldap32.dll library to bin.
 
 
 Gettext
--------
+~~~~~~~
 
 For Gettext (internationalization support), you need
 gettext-0.14.4-bin.zip, gettext-0.14.4-dep.zip, gettext-0.14.4-lib.zip
@@ -351,15 +317,41 @@ from <http://gnuwin32.sourceforge.net/>. Unpack these to same directory.
 
 
 CURL
-----
+~~~~
 
 For CURL support, you need curl-7.19.0-devel-mingw32.zip from
 <http://curl.haxx.se/>.
 
-.. _CMake: http://www.cmake.org/
+Advanced Build Options
+----------------------
+
+The build system accepts wide range of options. You can see them all by
+running GUI version of `CMake`_ or by inspecting :file:`CMakeCache.txt` in
+build directory.
+
+Limiting set of installed data
+++++++++++++++++++++++++++++++
+
+By setting following flags you can control which additional parts will
+be installed:
+
+* INSTALL_GNAPPLET - Install Gnapplet binaries
+* INSTALL_MEDIA - Install sample media files
+* INSTALL_PHP_EXAMPLES - Install PHP example scripts
+* INSTALL_BASH_COMPLETION - Install bash completion script for Gammu
+* INSTALL_LSB_INIT - Install LSB compatible init script for Gammu
+* INSTALL_DOC - Install documentation
+* INSTALL_LOC - Install locales data
+
+For example:
+
+.. code-block:: sh
+
+    cmake -DINSTALL_DOC=OFF
+
 
 Debugging build failures
-========================
+++++++++++++++++++++++++
 
 If there is some build failure (eg. some dependencies are not correctly
 detected), please attach :file:`CMakeCache.txt`,
@@ -368,8 +360,26 @@ to the report. It will help diagnose what was detected on the system and
 possibly fix these errors.
 
 Debugging crashes
-=================
++++++++++++++++++
 
 To debug program crashes, you might want to build Gammu with
 ``-DENABLE_PROTECTION=OFF``, otherwise debugging tools are somehow confused
 with protections GCC makes and produce bogus back traces.
+
+
+Compliling python-gammu
++++++++++++++++++++++++
+
+Currently python-gammu is distributed together with Gammu, so all you need
+to get it is to build Gammu with Python support (it should be automatically
+detected if you have development environment installed for Python).
+
+Gammu uses CMake_ to generate build environment (for example Makefiles for
+UNIX, Visual Studio projects, Eclipse projects, etc.) which you can later use
+for building. You can use ``-DBUILD_PYTHON=/path/to/python`` to define path to
+another Python interpreter to use than default one available in the system.
+
+Alternatively you can use standard distutils, for which :file:`setup.py` is placed in
+`python` subdirectory.
+
+.. _CMake: http://www.cmake.org/
