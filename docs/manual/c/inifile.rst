@@ -7,7 +7,7 @@ INI files
 .. doxygenfunction:: INI_GetValue
 .. doxygenfunction:: INI_GetInt
 .. doxygenfunction:: INI_GetBool
-.. doxygenfunction:: INI_IsTrue
+.. doxygenfunction:: GSM_StringToBool
 
 .. doxygentypedef:: INI_Entry
 .. doxygentypedef:: INI_Section
