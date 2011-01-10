@@ -39,8 +39,8 @@ http://www.microsoft.com/downloads/details.aspx?displaylang=en&FamilyID=6AE02498
 From Sources - Requirements
 ===========================
 
-Gammu does not require anything at all to build, but you might miss some
-features. Optional dependencies include:
+Gammu does not require any special dependencies at all to build, but you might
+miss some features. Optional dependencies include:
 
 Bluez-libs 
     - http://www.bluez.org/
