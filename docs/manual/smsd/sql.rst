@@ -8,7 +8,11 @@ SQL service stores all its data in database. It can use one of these SQL backend
 
 * ``native_mysql`` for :ref:`gammu-smsd-mysql`
 * ``native_pgsql`` for :ref:`gammu-smsd-pgsql`
-* drivers supported by DBI for :ref:`gammu-smsd-dbi`
+* drivers supported by DBI for :ref:`gammu-smsd-dbi`, which include:
+    * ``sqlite3`` - for SQLite 3
+    * ``mysql`` - for MySQL
+    * ``pgsql`` - for PostgeSQL
+    * ``freetds`` - for MS SQL Server or Sybase
 
 SQL connection parameters
 -------------------------

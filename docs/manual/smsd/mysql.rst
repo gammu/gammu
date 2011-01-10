@@ -29,3 +29,15 @@ privleges should be enough:
    creating triggers, which are used for some functionality.
 
 .. _MySQL: http://www.mysql.com/
+
+Example
+-------
+
+SQL script for creating tables in MySQL database:
+
+.. literalinclude:: ../../sql/mysql.sql
+   :language: mysql
+
+.. note::
+
+    You can find the script in :file:`docs/sql/mysql.sql` as well. 
