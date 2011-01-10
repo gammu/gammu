@@ -1,5 +1,5 @@
 Info
-=============
+====
 
 .. doxygenfunction:: GSM_GetNetworkName
 .. doxygenfunction:: GSM_GetCountryName

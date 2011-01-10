@@ -1,5 +1,5 @@
 INI files
-=============
+=========
 
 .. doxygenfunction:: INI_Free
 .. doxygenfunction:: INI_ReadFile

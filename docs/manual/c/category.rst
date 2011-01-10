@@ -1,5 +1,5 @@
 Category
-=============
+========
 
 .. doxygenfunction:: GSM_GetCategory
 .. doxygenfunction:: GSM_AddCategory

@@ -1,5 +1,5 @@
 WAP
-=============
+===
 
 .. doxygenfunction:: GSM_EncodeURLFile
 .. doxygenfunction:: GSM_GetWAPBookmark

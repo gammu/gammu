@@ -1,5 +1,5 @@
 Call
-=============
+====
 
 .. doxygenfunction:: GSM_DialVoice
 .. doxygenfunction:: GSM_DialService

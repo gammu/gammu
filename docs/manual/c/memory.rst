@@ -1,5 +1,5 @@
 Memory
-=============
+======
 
 .. doxygenfunction:: GSM_StringToMemoryType
 .. doxygenfunction:: GSM_GetMemoryStatus

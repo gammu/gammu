@@ -1,5 +1,5 @@
 File
-=============
+====
 
 .. doxygenfunction:: GSM_JADFindData
 .. doxygenfunction:: GSM_ReadFile

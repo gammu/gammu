@@ -1,5 +1,5 @@
 Calendar
-=============
+========
 
 .. doxygenfunction:: GSM_CalendarFindDefaultTextTimeAlarmPhone
 .. doxygenfunction:: GSM_EncodeVTODO

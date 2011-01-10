@@ -1,5 +1,5 @@
 Callback
-=============
+========
 
 .. doxygenfunction:: GSM_SetIncomingCallCallback
 .. doxygenfunction:: GSM_SetIncomingSMSCallback

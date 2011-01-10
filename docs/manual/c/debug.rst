@@ -1,5 +1,5 @@
 Debug
-=============
+=====
 
 .. doxygenfunction:: GSM_SetDebugFunction
 .. doxygenfunction:: GSM_SetDebugFile

@@ -1,5 +1,5 @@
 Bitmap
-=============
+======
 
 .. doxygenfunction:: GSM_GetBitmap
 .. doxygenfunction:: GSM_SetBitmap

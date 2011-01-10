@@ -1,5 +1,5 @@
 Settings
-=============
+========
 
 .. doxygenfunction:: GSM_GetLocale
 .. doxygenfunction:: GSM_SetLocale

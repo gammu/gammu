@@ -1,5 +1,5 @@
 Backup
-=============
+======
 
 .. doxygenfunction:: GSM_ReadSMSBackupFile
 .. doxygenfunction:: GSM_AddSMSBackupFile

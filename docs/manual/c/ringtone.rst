@@ -1,5 +1,5 @@
 Ringtone
-=============
+========
 
 .. doxygenfunction:: PHONE_RTTLPlayOneNote
 .. doxygenfunction:: PHONE_Beep

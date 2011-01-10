@@ -1,5 +1,5 @@
 Unicode
-=============
+=======
 
 .. doxygenfunction:: UnicodeLength
 .. doxygenfunction:: DecodeUnicodeString

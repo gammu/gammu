@@ -1,5 +1,5 @@
 Messages
-=============
+========
 
 .. doxygenfunction:: GSM_DecodePDUFrame
 .. doxygenfunction:: GSM_DecodeSMSFrame

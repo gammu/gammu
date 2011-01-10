@@ -1,5 +1,5 @@
 SMSD
-=============
+====
 
 .. doxygenfunction:: SMSD_InjectSMS
 .. doxygenfunction:: SMSD_GetStatus
