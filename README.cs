@@ -17,8 +17,9 @@ Více informací
 
 Více informací naleznete na <http://cs.wammu.eu/gammu/>.
 
-There is also Gammu manual available in docs/manual. You can build HTML
-version of it using make manual-html which is viewable online at
+Další dokumentaci naleznete v Manuálu Gammu, který je v adresáři
+docs/manual. Můžete si vytvořit jeho HTML verzi pro prohlížení pomocí make
+manual-html, nebo si ji prohlédnout online na
 <http://wammu.eu/docs/manual/>.
 
 
