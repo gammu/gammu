@@ -384,7 +384,7 @@ supports same options for configuring connection to a database:
 
     SQL driver to use. 
 
-    Can be either one of native drivers (``native_mysql`` or ``native_pgsql``) or DBI driver.
+    Can be either one of native drivers (``native_mysql`` or ``native_pgsql``) or :ref:`gammu-smsd-dbi` driver.
     
     Depends on what DBI drivers you have installed, DBI
     supports: ``mysql``, ``freetds`` (provides access to MS SQL Server and

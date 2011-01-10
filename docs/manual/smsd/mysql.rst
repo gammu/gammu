@@ -3,7 +3,7 @@
 MySQL Backend
 =============
 
-MYSQL backend stores all data in a MySQL database server, which parameters are
+MYSQL backend stores all data in a `MySQL`_ database server, which parameters are
 defined by configuration (see :ref:`gammu-smsdrc` for description of configuration
 options).
 
@@ -27,3 +27,5 @@ privleges should be enough:
 
    For creating the SQL tables you need more privileges, especially for
    creating triggers, which are used for some functionality.
+
+.. _MySQL: http://www.mysql.com/
