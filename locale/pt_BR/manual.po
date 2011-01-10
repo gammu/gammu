@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-manual 1.28.96\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-01-10 12:07+0100\n"
+"POT-Creation-Date: 2011-01-10 13:04+0100\n"
 "PO-Revision-Date: 2011-01-10 12:07+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -43,10 +43,11 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/config/index.rst:11
+#, fuzzy
 msgid ""
 "On Linux, MacOS X, BSD and other Unix-like systems, the config file is "
 "searched in following order:"
-msgstr ""
+msgstr "Em Linux, MacOS X, BSD e outros sistemas Unix-like:"
 
 #. type: Bullet: '1. '
 #: docs/manual/config/index.rst:16
@@ -58,30 +59,36 @@ msgstr ""
 msgid "``~/.config/gammu/config``"
 msgstr ""
 
+# type: Plain text
 #. type: Bullet: '3. '
 #: docs/manual/config/index.rst:16
+#, fuzzy
 msgid "``~/.gammurc``"
-msgstr ""
+msgstr "I<~/.gammurc>"
 
+# type: Plain text
 #. type: Bullet: '4. '
 #: docs/manual/config/index.rst:16
+#, fuzzy
 msgid "``/etc/gammurc``"
-msgstr ""
+msgstr "I</etc/gammu-smsdrc>"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:18
 msgid "On Microsoft Windows:"
-msgstr ""
+msgstr "No Microsoft Windows:"
 
 #. type: Bullet: '1. '
 #: docs/manual/config/index.rst:21
 msgid "``$PROFILE\\Application Data\\gammurc``"
 msgstr ""
 
+# type: Plain text
 #. type: Bullet: '2. '
 #: docs/manual/config/index.rst:21
+#, fuzzy
 msgid "``.\\gammurc``"
-msgstr ""
+msgstr "I<~/.gammurc>"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:23 docs/manual/smsd/run.rst:7
@@ -116,6 +123,9 @@ msgid ""
 "For hints about configuring your phone, you can check Gammu Phone Database "
 "<http://wammu.eu/phones/> to see what user users experienced."
 msgstr ""
+"Para dicas sobre configuração do seu telefone, você pode ver o Banco de "
+"Dados Gammu de Telefones em <http://wammu.eu/phones/> para ver experiências "
+"de outros usuários."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:37 docs/manual/smsd/config.rst:14
@@ -123,8 +133,10 @@ msgstr ""
 msgid "This file use ini file syntax, see :ref:`ini`."
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/config/index.rst:43
+#, fuzzy
 msgid ""
 "Configuration file for gammu can contain several sections - ``[gammu]``, ``"
 "[gammu1]``, ``[gammuN]``, ... Each section configures one connection setup "
@@ -133,6 +145,11 @@ msgid ""
 "section:`[gammu]` has number 0) as a parameter to :ref:`gammu` and it will "
 "then use only this section."
 msgstr ""
+"Arquivo de Configuração para o Gammu pode conter várias seções: Ex: [gammu], "
+"[gammu1], [gammuN], ... Cada seção configura um tipo de conexão e por padrão "
+"o gammu tenta todas em ordem numérica sequêncial. Voce também pode "
+"especificar qual seção quer utilizar informando o número da seção como "
+"parâmetro na hora de executar o gammu."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:45
@@ -623,20 +640,22 @@ msgid ""
 "--------\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/config/index.rst:272
 msgid "There is more complete example available in Gammu documentation."
-msgstr ""
+msgstr "Há exemplos mais completos, disponíveis na documentação Gammu."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:275
 msgid "Connection examples +++++++++++++++++++"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/config/index.rst:277
 msgid "Gammu configuration for Nokia phone using DLR-3 cable:"
-msgstr ""
+msgstr "Configuração Gammu para telefone Nokia usando cabos DLR-3:"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:279 docs/manual/config/index.rst:288
@@ -667,6 +686,8 @@ msgid ""
 "Gammu configuration for Sony-Ericsson phone (or any other AT compatible "
 "phone) connected using USB cable:"
 msgstr ""
+"Configuração para telefones Sony-Ericsson (ou qualquer outro telefone "
+"compatível AT) conectado usando cabo USB:"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:292
@@ -683,6 +704,8 @@ msgid ""
 "Gammu configuration for Sony-Ericsson (or any other AT compatible phone) "
 "connected using bluetooth:"
 msgstr ""
+"Configuração para Sony-Ericsson (ou qualquer outro telefone compatível com "
+"comandos AT) usando Bluetooth:"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:301
@@ -693,12 +716,15 @@ msgid ""
 "    connection = blueat\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/config/index.rst:303
 msgid ""
 "Gammu configuration for phone which needs to manually adjust Bluetooth "
 "channel to use channel 42:"
 msgstr ""
+"Configuração Gammu para o telefone precisa que seja feito o ajuste manual "
+"para o canal Bluetooth 42:"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:309
@@ -716,12 +742,16 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/config/index.rst:317
+#, fuzzy
 msgid ""
 "Gammu can be configured for multiple phones (however only one connection is "
 "used at one time, you can choose which one to use with :option:`gammu -s` "
 "parameter). Configuration for phones on three serial ports would look like "
 "following:"
 msgstr ""
+"Gammu pode ser configurado para trabalhar com multiplos telefones (contudo "
+"somente uma conexão é utilizada, por vez) você pode escolher qual através do "
+"parâmetro --section. Configuração para 3 portas seriais, ficariam assim:"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:323
@@ -2134,8 +2164,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/protocol/samsung.rst:298
+#, fuzzy
 msgid "Read command use index reference."
-msgstr ""
+msgstr "Linha de comando com parâmetros inválidos."
 
 #. type: Plain text
 #: docs/manual/protocol/samsung.rst:300
@@ -4722,10 +4753,12 @@ msgstr ""
 msgid "<computer sends request>"
 msgstr ""
 
+# type: TP
 #. type: Bullet: '* '
 #: docs/manual/protocol/nokia.rst:105
+#, fuzzy
 msgid "<phone sends ack>"
-msgstr ""
+msgstr "B<phones>"
 
 #. type: Bullet: '* '
 #: docs/manual/protocol/nokia.rst:105
@@ -7327,19 +7360,26 @@ msgid ""
 "===========\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/dbi.rst:9
+#, fuzzy
 msgid ""
 "DBI backend stores all data in any database supported by `libdbi`_, which "
 "parameters are defined by configuration (see :ref:`gammu-smsdrc` for "
 "description of configuration options)."
 msgstr ""
+"DBI Banco de Dados de Retaguarda, armazena todos os dados em qualquer um dos "
+"bancos de dados suportados por libdbi, cujos parâmetros são definidos pela "
+"configuração (veja gammu-smsdrc(5) para descrição e configuração das opções)."
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/dbi.rst:11 docs/manual/smsd/pgsql.rst:11
 #: docs/manual/smsd/mysql.rst:11
+#, fuzzy
 msgid "For tables description see :ref:`gammu-smsd-tables`."
-msgstr ""
+msgstr "Para descrição das tabelas veja gammu-smsd-tables(7)."
 
 #. type: Plain text
 #: docs/manual/smsd/dbi.rst:13 docs/manual/smsd/pgsql.rst:13
@@ -7512,18 +7552,23 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/smsd/sql.rst:21
+#, fuzzy
 msgid "Common for all backends:"
-msgstr ""
+msgstr "Documentação para diferentes Bancos de Dados de Retaguarda:"
 
+# type: Plain text
 #. type: Bullet: '* '
 #: docs/manual/smsd/sql.rst:27
+#, fuzzy
 msgid ":config:option:`User` - user connecting to database"
-msgstr ""
+msgstr "Nome do usuário para conexão com o DB."
 
+# type: Plain text
 #. type: Bullet: '* '
 #: docs/manual/smsd/sql.rst:27
+#, fuzzy
 msgid ":config:option:`Password` - password for connecting to database"
-msgstr ""
+msgstr "Senha para conexão com o DB."
 
 #. type: Bullet: '* '
 #: docs/manual/smsd/sql.rst:27
@@ -8177,31 +8222,42 @@ msgid ""
 "=============\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/files.rst:8
+#, fuzzy
 msgid ""
 "FILES backend stores all data on a filesystem in folders defined by "
 "configuration (see :ref:`gammu-smsdrc` for description of configuration "
 "options)."
 msgstr ""
+"FILES armazena todos os dados em pastas do sistema de arquivo utilizado pelo "
+"seu computador veja gammu-smsdrc(5) para descrição e opções de configuração)."
 
 #. type: Plain text
 #: docs/manual/smsd/files.rst:11
 msgid "Receiving of messages +++++++++++++++++++++"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/files.rst:15
+#, fuzzy
 msgid ""
 "Received messages are stored in a folder defined by configuration. The "
 "filename will be ``IN<date>_<time>_<serial>_<sender>_<sequence>.<ext>``, for "
 "example ``NN20021130_021531_00_+45409000931640979_00.txt``."
 msgstr ""
+"As mensagens recebidas são armazenadas na pasta definida pela configuração. "
+"O nome do arquivo será "
+"INE<lt>dataE<gt>_E<lt>horaE<gt>_E<lt>númerosérieE<gt>_E<lt>número_telefoneE<gt>_E<lt>sequênciaE<gt>."
+"E<lt>extE<gt>, por Ex: NN20021130_021531_00_+45409000931640979_00.txt."
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/files.rst:17 docs/manual/smsd/files.rst:45
 msgid "Explanation of fields:"
-msgstr ""
+msgstr "Explicação dos campos:"
 
 #. type: Plain text
 #: docs/manual/smsd/files.rst:30
@@ -8223,23 +8279,29 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/smsd/files.rst:33
+#, fuzzy
 msgid ""
 "The content of the file is content of the message and the format is defined "
 "by configuration directive :config:option:`InboxFormat` (see :ref:`gammu-"
 "smsdrc`)."
 msgstr ""
+"O conteúdo do arquivo é o mesmo conteúdo da mensagem e o formato é definido "
+"pela diretiva de configuração InboxFormat (veja gammu-smsdrc(5))."
 
 #. type: Plain text
 #: docs/manual/smsd/files.rst:36
 msgid "Transmitting of messages ++++++++++++++++++++++++"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/files.rst:39
 msgid ""
 "Transmitted messages are read from a folder defined by configuration. The "
 "filename should be one of the following formats:"
 msgstr ""
+"Mensagens transmitidas são lidas da pasta definida pela configuração. O nome "
+"do arquivo pode estar nos seguintes formatos:"
 
 #. type: Plain text
 #: docs/manual/smsd/files.rst:43
@@ -8279,18 +8341,23 @@ msgid ""
 "        WAP bookmark as name,URL\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/files.rst:65
 msgid "Other fields are same as for received messages."
-msgstr ""
+msgstr "Outros campos são os mesmos de mensagens recebidas."
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/files.rst:68
 msgid ""
 "For example OUTG20040620_193810_123_+4512345678_xpq.txtdf is a flash text "
 "SMS requesting delivery reports."
 msgstr ""
+"Por exemplo OUTG20040620_193810_123_+4512345678_xpq.txtdf é uma SMS texto "
+"flash  requisitando relatório de envio."
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/files.rst:71
 msgid ""
@@ -8298,7 +8365,11 @@ msgid ""
 "of the file is the SMS to be transmitted (in Unicode or standard character "
 "set)."
 msgstr ""
+"SMS serão transmitidas sequencialmente com base no nome do arquivo. O "
+"conteúdo do arquivo é a SMS que será transmitida (em código de página "
+"Unicode ou padrão)."
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/files.rst:75
 msgid ""
@@ -8306,7 +8377,11 @@ msgid ""
 "standard character set), for WAP bookmarks it is split on as Name,URL, for "
 "text messages whole file content is used."
 msgstr ""
+"O conteúdo do arquivo SMS que será transmitido (em Código de Página Unicode "
+"ou Padrão), para endereços (bookmarks) WAP é dividido em Nome, URL, para "
+"mensagens de Texto todo o conteúdo é utilizado."
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/files.rst:78
 msgid ""
@@ -8314,6 +8389,10 @@ msgid ""
 "locales, which do not have to be configured if SMSD is running from init "
 "script. If this is your case, please add locales definition to init script."
 msgstr ""
+"Por favor note que se o arquivo não estiver em Unicode, a codificação é "
+"detectada com base no \"locale\", o qual precisa ser configurado no script "
+"de inicialização do SMSD. Se esse é o seu caso, por favor adicione as "
+"definições do seu locale ao script."
 
 #. type: Plain text
 #: docs/manual/smsd/index.rst:2
@@ -8441,16 +8520,21 @@ msgid ""
 "--------------\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/usage.rst:44
+#, fuzzy
 msgid "Please report bugs to <http://bugs.cihar.com>."
-msgstr ""
+msgstr "Por favor reporte bugs para E<lt>http://bugs.cihar.comE<gt>."
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/usage.rst:46
 msgid ""
 "Before reporting a bug, please enable verbose logging in SMSD configuration:"
 msgstr ""
+"Antes de reportar um erro (bug), por favor habilite depuração modo (verbose) "
+"na configuração do SMSD:"
 
 #. type: Plain text
 #: docs/manual/smsd/usage.rst:53 docs/manual/smsd/config.rst:546
@@ -8461,10 +8545,11 @@ msgid ""
 "    logfile = smsd.log\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/usage.rst:54
 msgid "and include this verbose log within bug report."
-msgstr ""
+msgstr "e inclua esse relatório detalhado junto com o reporte de erro (bug)."
 
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:2
@@ -8479,15 +8564,21 @@ msgid ""
 "=======================\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:8
+#, fuzzy
 msgid ""
 "The backends themselves are described in their sections, this document "
 "describes general database structure and required tables."
 msgstr ""
+"Bancos de Dados de Retaguarda são descritos separadamente em páginas man. "
+"Esse manual descreve estrutura geral e as tabelas requeridas."
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:14
+#, fuzzy
 msgid ""
 "More SMS daemons can share single database. If you do not specify PhoneID in "
 "their configuration, all are treated equally and you have no guarantee which "
@@ -8495,6 +8586,12 @@ msgid ""
 "inserting message to the ``outbox`` table (:ref:`gammu-smsd-inject` does "
 "this), each SMS daemon will have separate outbox queue."
 msgstr ""
+"Mais Daemon SMS podem compartilhar um único banco de dados. Se você não "
+"especificar PhoneID na configuração, todos serão tratados igualmente e você "
+"não terá garantia de qual será enviada a mensagem. Se você configurar "
+"PhoneID e usá-lo quando inserindo mensagem para a tabela outbox (gammu-sms-"
+"inject(1) faz isso), cada Daemon SMS irá ter uma fila de caixa postal de "
+"saída separada."
 
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:16
@@ -8504,10 +8601,12 @@ msgid ""
 "---------------------\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:19
+#, fuzzy
 msgid "Received messages are stored in ``inbox`` table."
-msgstr ""
+msgstr "Mensagens recebidas são armazenadas na tabela inbox."
 
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:21
@@ -8517,12 +8616,16 @@ msgid ""
 "------------------------\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:25
+#, fuzzy
 msgid ""
 "Transmitted messages are read from table ``outbox`` and possible subsequent "
 "parts of the same message from ``outbox_multipart``."
 msgstr ""
+"Mensagens transmitidas são lidas da tabela outbox e as partes subsequentes "
+"da mesma mensagem a partir da tabela outbox_multipart."
 
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:27
@@ -8537,64 +8640,73 @@ msgstr ""
 msgid "daemons +++++++"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:33
 msgid "Information about running daemons."
-msgstr ""
+msgstr "Informações sobre Daemons em execução"
 
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:36
 msgid "gammu +++++"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:39
 msgid ""
 "Table holding single value - version of a database schema. See HISTORY for "
 "details what has changed."
 msgstr ""
+"Tabela armazenando um valor único - versão do schema do banco de dados. Veja "
+"HISTORY para detalhes do que foi modificado."
 
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:42
 msgid "inbox +++++"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:44
 msgid "Table where received messages will be stored."
-msgstr ""
+msgstr "Tabela onde as mensagens recebidas são armazenadas."
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:46 docs/manual/smsd/tables.rst:91
 #: docs/manual/smsd/tables.rst:153 docs/manual/smsd/tables.rst:181
 #: docs/manual/smsd/tables.rst:227
 msgid "Fields description:"
-msgstr ""
+msgstr "Descrição dos Campos:"
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:49 docs/manual/smsd/tables.rst:94
 #: docs/manual/smsd/tables.rst:230
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``UpdatedInDB`` (timestamp)\n"
 "    when somebody (daemon, user, etc.) updated it\n"
-msgstr ""
+msgstr "quando alguém (Daemon ou Usuário) faz modificação"
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:52
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``ReceivingDateTime`` (timestamp)\n"
 "    when SMS was received\n"
-msgstr ""
+msgstr "B<ReceivingDateTime> (data e hora)"
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:55
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``Text`` (text)\n"
 "    encoded SMS text (for all SMS)\n"
-msgstr ""
+msgstr "texto codificado da SMS (para todas SMS)"
 
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:58
@@ -8604,140 +8716,157 @@ msgid ""
 "    decoded SMS sender number\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:61 docs/manual/smsd/tables.rst:110
 #: docs/manual/smsd/tables.rst:273
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``Coding`` (enum('Default_No_Compression', 'Unicode_No_Compression', '8bit', 'Default_Compression', 'Unicode_Compression'))\n"
 "    SMS text coding\n"
-msgstr ""
+msgstr "B<Coding> (enum('Default_No_Compression', 'Unicode_No_Compression', '8bit', 'Default_Compression', 'Unicode_Compression'))"
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:64
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``UDH`` (text)\n"
 "    encoded User Data Header text\n"
-msgstr ""
+msgstr "texto codificado dos dados do cabeçalho do usuário"
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:67
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``SMSCNumber`` (varchar(20))\n"
 "    decoded SMSC number\n"
-msgstr ""
+msgstr "B<SMSCNumber> (varchar(20))"
 
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:70
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``Class`` (integer)\n"
 "    SMS class or \\-1 (0 is flash SMS, 1 is normal one)\n"
-msgstr ""
+msgstr "Classe SMS ou -1 (0 é SMS flash, 1 é normal)"
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:73
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``TextDecoded`` (varchar(160))\n"
 "    decoded SMS text (for Default Alphabet/Unicode SMS)\n"
-msgstr ""
+msgstr "texto decodificado da SMS (para Alfabeto Padrão / Unicode)"
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:76
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``ID`` (integer unsigned)\n"
 "    SMS identificator (for using with external applications)\n"
-msgstr ""
+msgstr "Identificador SMS (para uso com aplicações externas)"
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:79
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``RecipientID`` (text)\n"
 "    which Gammu daemon has added it\n"
-msgstr ""
+msgstr "qual Daemon Gammu que adicionou "
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:82
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``Processed`` (enum('false', 'true'))\n"
 "    you can use for marking, whether SMS was processed or not\n"
-msgstr ""
+msgstr "você pode usar para marcar, quando SMS foi processada ou não"
 
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:86
 msgid "outbox ++++++"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:89
 msgid ""
 "Messages enqueued for sending should be placed in this table. If message is "
 "multipart, subsequent parts are stored in table outbox_multipart."
 msgstr ""
+"Mensagens enfileiradas para envio precisam estar nesta tabela. Se a mensagem "
+"é composta múltiplas partes, as partes subsequentes são armazenadas na "
+"tabela outbox_multipart."
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:97 docs/manual/smsd/tables.rst:233
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``InsertIntoDB`` (timestamp)\n"
 "    when message was inserted into database\n"
-msgstr ""
+msgstr "quando a mensagem foi inserida no banco de dados"
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:100
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``SendingDateTime`` (timestamp)\n"
 "    set it to some value, when want to force sending after some planned time\n"
-msgstr ""
+msgstr "coloque um valor horário, para que após o envido deve ser obrigatório"
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:104
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``Text`` (text)\n"
 "    SMS text encoded using hex values in proper coding. If you want to use\n"
 "    TextDecoded field, keep this NULL (or empty).\n"
-msgstr ""
+msgstr "Texto SMS codificado usando valores em hexa em codificação própria. Se você deseja usar o campo TextDecoded, deixe este com valor NULL ou vazio."
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:107
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``DestinationNumber`` (varchar(20))\n"
 "    recipient number\n"
-msgstr ""
+msgstr "B<DestinationNumber> (varchar(20))"
 
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:114
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``UDH`` (text)\n"
 "    User Data Header encoded using hex values which will be used for constructing\n"
 "    the message. Without this, message will be sent as plain text.\n"
-msgstr ""
+msgstr "Dados codificados do Cabeçalho do usuário usando valores hexa os quais serão utilizados para construir a mensagem. Sem isso, a mensagem será enviada como texto padrão."
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:117 docs/manual/smsd/tables.rst:282
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``Class`` (integer)\n"
 "    SMS class or \\-1 (0 is normal SMS, 1 is flash one)\n"
-msgstr ""
+msgstr "Classe SMS ou -1 (0=SMS Normal, 1=Flash)"
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:120 docs/manual/smsd/tables.rst:285
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``TextDecoded`` (varchar(160))\n"
 "    SMS text in \"human readable\" form\n"
-msgstr ""
+msgstr "Texto da SMS em formato legível por humanos"
 
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:123
@@ -8747,72 +8876,80 @@ msgid ""
 "    SMS/SMS sequence ID\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:126
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "    Please note that this number has to be unique also for sentitems table, so\n"
 "    reusing message IDs might not be a good idea.\n"
-msgstr ""
+msgstr "Por favor note que este número precisa ser único também para a tabela sentitems, portanto reutilizar IDs de mensagens não é uma boa idéia!."
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:129
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``MultiPart`` (enum('false','true'))\n"
 "    info, whether there are more SMS from this sequence in outbox_multipart\n"
-msgstr ""
+msgstr "informacional, quando há mais SMS dessa sequência na tabela outbox_multipart"
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:132 docs/manual/smsd/tables.rst:300
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``RelativeValidity`` (integer)\n"
 "    SMS relative validity like encoded using GSM specs\n"
-msgstr ""
+msgstr "Validade relativa da SMS codificado utilizando especificações GSM"
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:135
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``SenderID`` (text)\n"
 "    which SMSD instance should send this one sequence\n"
-msgstr ""
+msgstr "qual instância SMSD pode enviar esta sequência"
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:138
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``SendingTimeOut`` (timestamp)\n"
 "    used by SMSD instance for own targets\n"
-msgstr ""
+msgstr "usado por instância SMSD para objetivos próprios"
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:141
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``DeliveryReport`` (enum('default','yes','no'))\n"
 "    when default is used, Delivery Report is used or not according to SMSD instance settings; yes forces Delivery Report.\n"
-msgstr ""
+msgstr "quando Padrão é usado, relatório de envio é usado ou não de acordo com as configurações da instância SMSD; Yes força relatório de envio."
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:145
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``CreatorID`` (text)\n"
 "    sender identification, it has to match PhoneID in SMSD configuration to make\n"
 "    SMSD process this message\n"
-msgstr ""
+msgstr "identificação do remetente, ele precisa combinar com o PhoneID na configuração da SMSD para permitir o SMSD processar esta mensagem"
 
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:149
 msgid "outbox_multipart ++++++++++++++++"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:151
 msgid "Data for outgoing multipart messages."
-msgstr ""
+msgstr "Dados para mensagem de múltiplas partes."
 
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:168
@@ -8836,24 +8973,28 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:172
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``SequencePosition`` (integer)\n"
 "    info, what is SMS number in SMS sequence (start at 2, first part is in outbox\n"
 "    table).\n"
-msgstr ""
+msgstr "informacional, qual é o número SMS na sequência SMS (inicia com 2, a parte 1 está na tabela outbox)."
 
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:176
 msgid "phones ++++++"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:179
 msgid ""
 "Information about connected phones. This table is periodically refreshed and "
 "you can get information such as battery or signal level from here."
 msgstr ""
+"Informação sobre os telefones conectados. Esta tabela é periodicamente "
+"atualizada e você pode obter informação como carga bateria, nível de sinal "
+"olhando nesta tabela."
 
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:184
@@ -8863,29 +9004,32 @@ msgid ""
 "    PhoneID value\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:187
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``UpdatedInDB`` (timestamp)\n"
 "    when this record has been updated\n"
-msgstr ""
+msgstr "quando este registro foi atualizado"
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:190
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``InsertIntoDB`` (timestamp)\n"
 "    when this record has been created (when phone has been connected)\n"
-msgstr ""
+msgstr "quando este registro foi criado (quando o telefone foi conectado)"
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:193
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``TimeOut`` (timestamp)\n"
 "    when this record expires\n"
-msgstr ""
+msgstr "quando o registro expira"
 
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:196
@@ -8911,53 +9055,59 @@ msgid ""
 "    IMEI of phone\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:205
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``Client`` (text)\n"
 "    client name, usually string Gammu with version\n"
-msgstr ""
+msgstr "nome do cliente, normalmente uma string contendo a versão do Gammu"
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:208
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``Battery`` (integer)\n"
 "    battery level in percent (or \\-1 if unknown)\n"
-msgstr ""
+msgstr "nível de bateria em porcentagem (ou -1 se desconhecido)"
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:211
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``Signal`` (integer)\n"
 "    signal level in percent (or \\-1 if unknown)\n"
-msgstr ""
+msgstr "nível de sinal em porcentagem (ou -1 se desconhecido)"
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:215
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``Sent`` (integer)\n"
 "    Number of sent SMS messages (SMSD does not reset this counter, so it might\n"
 "    overflow).\n"
-msgstr ""
+msgstr "Número de mensagens SMS enviadas (SMSD não inicializa este contador, portanto ele pode estar estourado)"
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:219
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``Received`` (integer)\n"
 "    Number of received SMS messages (SMSD does not reset this counter, so it might\n"
 "    overflow).\n"
-msgstr ""
+msgstr "Número de mensagens SMS recebidas (SMSD não faz reset deste contador, portanto ele pode estar estourado)"
 
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:222
 msgid "sentitems +++++++++"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:225
 msgid ""
@@ -8965,6 +9115,9 @@ msgid ""
 "reports are enabled, message state is updated after receiving delivery "
 "report."
 msgstr ""
+"Registro de mensagens enviadas (e não enviadas com erro). Também se "
+"relatório de envio habilitado, este campo também é atualizado quando recebe "
+"o relatório de mensagem)."
 
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:236
@@ -8974,22 +9127,24 @@ msgid ""
 "    when message has been sent\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:239
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``DeliveryDateTime`` (timestamp)\n"
 "    Time of receiving delivery report (if it has been enabled).\n"
-msgstr ""
+msgstr "Horário do recebimento do relatório de envio (se habilitado)."
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:243
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``Status`` (enum('SendingOK', 'SendingOKNoReport', 'SendingError', 'DeliveryOK', 'DeliveryFailed', 'DeliveryPending', 'DeliveryUnknown', 'Error'))\n"
 "    Status of message sending. SendingError mens that phone failed to send the\n"
 "    message, Error indicates some other error while processing message.\n"
-msgstr ""
+msgstr "Situação do envio de mensagem. SendingError significa que o telefone falhou em enviar a mensagem, Error indica que algum outro erro ocorreu no processamento."
 
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:260
@@ -9015,60 +9170,66 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:264
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``StatusError`` (integer)\n"
 "    Status of delivery from delivery report message, codes are defined in GSM\n"
 "    specification 03.40 section 9.2.3.15 (TP-Status).\n"
-msgstr ""
+msgstr "Situação de envio do relatório de envio de mensagem, os códigos são definidos pela especificação GSM 03.40 seção 9.2.3.15 (TP-Status)."
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:267
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``Text`` (text)\n"
 "    SMS text encoded using hex values\n"
-msgstr ""
+msgstr "Texto SMS codificado utilizando valores hexa"
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:270
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``DestinationNumber`` (varchar(20))\n"
 "    decoded destination number for SMS\n"
-msgstr ""
+msgstr "número decodificado de destinação para SMS"
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:276
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``UDH`` (text)\n"
 "    User Data Header encoded using hex values\n"
-msgstr ""
+msgstr "Dados codificados do Cabeçalho do Usuário usando valores hexa"
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:279
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``SMSCNumber`` (varchar(20))\n"
 "    decoded number of SMSC, which sent SMS\n"
-msgstr ""
+msgstr "número decodificado do SMSC que enviou a SMS"
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:288
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``ID`` (integer unsigned)\n"
 "    SMS ID\n"
-msgstr ""
+msgstr "B<ID> (inteiro sem sinal)"
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:291
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``SenderID`` (text)\n"
 "    which SMSD instance sent this one sequence\n"
-msgstr ""
+msgstr "qual instância SMSD enviou esta sequência única"
 
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:294
@@ -9078,31 +9239,34 @@ msgid ""
 "    SMS number in SMS sequence\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:297
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``TPMR`` (integer)\n"
 "    Message Reference like in GSM specs\n"
-msgstr ""
+msgstr "Referência da Mensagem similar a espec. GSM"
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:303
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "``CreatorID`` (text)\n"
 "    copied from CreatorID from outbox table, matches PhoneID\n"
-msgstr ""
+msgstr "copiado da coluna CreatorID da tabela outbox, combina com PhoneID"
 
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:307
 msgid "pbk +++"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:309 docs/manual/smsd/tables.rst:314
 msgid "Not used by SMSD currently, included only for application usage."
-msgstr ""
+msgstr "Não usado pelo SMSD atualmente, incluído para utilização da app."
 
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:312
@@ -9117,10 +9281,11 @@ msgid ""
 "-------\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:319
 msgid "History of schema versions:"
-msgstr ""
+msgstr "Histórico das versões:"
 
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:335
@@ -9143,19 +9308,21 @@ msgid ""
 "    introduced phones table\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:338
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "7\n"
 "    added CreatorID to tables (it holds PhoneID if set)\n"
-msgstr ""
+msgstr "7 - adicionado CreatorID nas tabelas (isto prende PhoneID se configurado)"
 
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:345
 msgid "Creating tables +++++++++++++++"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:349
 msgid ""
@@ -9163,11 +9330,15 @@ msgid ""
 "Gammu documentation (docs/sql). As well as some PHP scripts interacting with "
 "the database."
 msgstr ""
+"Scripts SQL para criar todas as tabelas necessárias para a maioria dos "
+"bancos de dados incluídos na documentação Gammu (docs/sql). Bem como alguns "
+"scripts PHP para interagir com o banco de dados."
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:351
 msgid "For example to create SQLite tables, issue following command:"
-msgstr ""
+msgstr "Ex. para criar tabelas no SQLite, use os comandos:"
 
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:353 docs/manual/smsd/run.rst:110
@@ -9209,13 +9380,18 @@ msgstr ""
 msgid "Injecting a message using SQL +++++++++++++++++++++++++++++"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:362
+#, fuzzy
 msgid ""
 "To send a message, you can either use :ref:`gammu-smsd-inject`, which does "
 "all the magic for you, or you can insert the message manually. The simplest "
 "example is short text message:"
 msgstr ""
+"Para enviar uma mensagem, você pode usar gammu-smsd-inject(1) que faz toda a "
+"mágica para você, ou pode inserir a mensagem manualmente. O exemplo básico é "
+"a menor mensagem:"
 
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:364 docs/manual/smsd/tables.rst:394
@@ -9247,14 +9423,18 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:383
+#, fuzzy
 msgid ""
 "Inserting multipart messages is a bit more tricky, you need to construct "
 "also UDH header and store it hexadecimally written into UDH field. Unless "
 "you have a good reason to do this manually, use :ref:`gammu-smsd-inject`."
 msgstr ""
+"Inserindo mensagens partes múltiplas exigem mais uns truques, você precisa "
+"construir um cabeçalho UDH e armazenar em hexadecimal num campo no UDH."
 
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:390
+#, fuzzy
 msgid ""
 "For long text message, the UDH starts with ``050003`` followed by byte as a "
 "message reference (you can put anything there, but it should be different "
@@ -9263,11 +9443,19 @@ msgid ""
 "phone number)  and byte for number of current message (``01`` for first "
 "message, ``02`` for second, etc.)."
 msgstr ""
+"Para uma mensagem de texto longo, o UDH inicia com 050003 seguido por um "
+"byte como referência da mensagem (você pode gravar qualquer coisa, mas "
+"precisa ser diferente para cada mensagem, D3 no ex. seguinte), byte para "
+"número de mensagens (02 no ex. e precisa ser único para cada mensagem do "
+"mesmo número de telefone) e byte para número da mensagem corrente (01 para a "
+"primeira, 02 para segunda, etc)."
 
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:392
 msgid "For example long text message of two parts could look like following:"
 msgstr ""
+"Por exemplo a mensagem de texto longo de duas partes pareceria com o "
+"seguinte:"
 
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:410
@@ -9331,13 +9519,18 @@ msgid ""
 "==================\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/pgsql.rst:9
+#, fuzzy
 msgid ""
 "PGSQL backend stores all data in a `PostgreSQL`_ database server, which "
 "parameters are defined by configuration (see :ref:`gammu-smsdrc` for "
 "description of configuration options)."
 msgstr ""
+"PGSQL Servidor Banco de Dados de Retaguarda, quais parâmetros são definidos "
+"pela configuração (veja gammu-smsdrc(5) para descrição das opções da "
+"configuração)."
 
 #. type: Plain text
 #: docs/manual/smsd/pgsql.rst:15
@@ -9415,6 +9608,12 @@ msgid ""
 "typically it is ID of inserted row for database backends or file name for "
 "file based backends."
 msgstr ""
+"Esse parametro é executado através do shell (command). Você precisa utilizar "
+"alguns caracteres especiais e você pode incluir qualquer número de "
+"parâmetros. Adicionalmente os parametros com identificador de recebimento de "
+"mensagens são adicionados à linha de comando. Os identificadores dependem do "
+"uso do serviço retaguarda (DB). Tipicamente é o ID da coluna inserida no "
+"banco de dados ou o nome do arquivo de retaguarda."
 
 #. type: Plain text
 #: docs/manual/smsd/run.rst:24
@@ -9425,6 +9624,11 @@ msgid ""
 "minutes. After this time SMSD will continue in normal operation and might "
 "execute your script again."
 msgstr ""
+"O Gammu SMSD aguarda até o (script) terminar. Se você tem tempo gasto aqui, "
+"isto pode impedir o SMSD de receber novas mensagens. Contudo para limitar a "
+"quebra dessa situação, o tempo de espera é limitado a 2 minutos. Após este "
+"tempo o SMSD irá continuar sua operação normal e poderá executar seu "
+"(script) novamente."
 
 #. type: Plain text
 #: docs/manual/smsd/run.rst:26
@@ -9476,10 +9680,13 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/smsd/run.rst:48
+#, fuzzy
 msgid ""
 "The variables further described as ``SMS_1_...`` are generated for each "
 "physical message, where 1 is replaced by current number of message."
 msgstr ""
+"As variáveis como descritas SMS_1_...são geradas para cada mensagem física, "
+"onde 1 é trocado pelo número da mensagem."
 
 #. type: Plain text
 #: docs/manual/smsd/run.rst:50
@@ -9521,11 +9728,15 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/smsd/run.rst:67
+#, fuzzy
 msgid ""
 "The variables further described as ``DECODED_1_...`` are generated for each "
 "message part, where 1 is replaced by current number of part. Set are only "
 "those variables whose content is present in the message."
 msgstr ""
+"As variáveis descritas como DECODED_1_... são geradas para cada parte da "
+"mensagem múltipla, onde 1 é substituído pelo número da parte da mensagem. "
+"Estão ativas apenas variáveis que têm contéudo presente na mensagem."
 
 #. type: Plain text
 #: docs/manual/smsd/run.rst:69
@@ -9661,11 +9872,16 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/smsd/run.rst:139
+#, fuzzy
 msgid ""
 "Following script (if used as :config:option:`RunOnReceive` handler) will "
 "write information about each received MMS indication to the log file. Just "
 "replace echo command with your own program to do custom processing."
 msgstr ""
+"O script (se usado como controlador RunOnReceive) irá gravar informação "
+"sobre cada MMS recebida no arquivo de depuração (log). Apenas substitua o "
+"comando echo por seu próprio programa para efetuar processamento "
+"personalizado."
 
 #. type: Plain text
 #: docs/manual/smsd/run.rst:150
@@ -9756,13 +9972,18 @@ msgid ""
 "=======================\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/config.rst:12
+#, fuzzy
 msgid ""
 "gammu-smsd reads configuration from a config file. It's location can be "
 "specified on command line, otherwise default path ``/etc/gammu-smsdrc`` is "
 "used."
 msgstr ""
+"gammu-smsd(1) leitura da configuração do arquivo. Sua localização pode ser "
+"especificada na linha de comando, caso não seja especificada utilizará /etc/"
+"gammu-smsdrc."
 
 #. type: Plain text
 #: docs/manual/smsd/config.rst:18
@@ -10843,12 +11064,17 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/smsd/config.rst:481
+#, fuzzy
 msgid ""
 "If :config:section:`[include_numbers]` section exists, all values (keys are "
 "ignored) from it are used as allowed phone numbers and no other message is "
 "processed. On the other side, in :config:section:`[exclude_numbers]` you can "
 "specify numbers which you want to skip."
 msgstr ""
+"Se a seção [include_numbers] existir, todos os valores (chaves são "
+"ignoradas) existentes são tratados como números de telefones a partir dos "
+"quais serão recebidas mensagens. Já na seção [exclude_numbers] você pode "
+"especificar números que você deseja desprezar."
 
 #. type: Plain text
 #: docs/manual/smsd/config.rst:487
@@ -10859,6 +11085,11 @@ msgid ""
 "messages from some numbers. If both lists are empty, all messages are "
 "accepted."
 msgstr ""
+"Listas de ambas origens são combinadas juntas. Se qualquer número está na "
+"lista de inclusão sómente a lista de inclusão é utilizada para mensagens "
+"recebidas. Se a lista de inclusão está vazia, a lista de exclusão pode ser "
+"utilizada para desprezar mensagens de alguns números. Se ambas as listas "
+"estão vazias todas as mensagens serão recebidas."
 
 #. type: Plain text
 #: docs/manual/smsd/config.rst:492
@@ -10869,19 +11100,25 @@ msgid ""
 "`IncludeSMSCFile` and :config:option:`ExcludeSMSCFile` directives."
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/config.rst:499
+#, fuzzy
 msgid ""
 "There is more complete example available in Gammu documentation. Please note "
 "that for simplicity following examples do not include :config:section:`"
 "[gammu]` section, you can look into :ref:`gammurc` for some examples how it "
 "can look like."
 msgstr ""
+"Existem exemplos mais complexos na documentação Gammu. Por favor note note "
+"que para facilitar visualização dos exemplos, estes não incluem seção "
+"[gammu] a qual pode ser visualizada com gammurc(5) para ver vários exemplos."
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/config.rst:501
 msgid "SMSD configuration file for FILES backend could look like:"
-msgstr ""
+msgstr "Arquivo de configuração SMSD para ARQUIVOS Retaguarda podem ser:"
 
 #. type: Plain text
 #: docs/manual/smsd/config.rst:512
@@ -10897,10 +11134,11 @@ msgid ""
 "    ErrorSMSPath = /var/spool/sms/error/\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/config.rst:514
 msgid "If you want to use MYSQL backend, you will need something like this:"
-msgstr ""
+msgstr "Se você utilza DB de retaguarda MYSQL, você precisa algo como:"
 
 #. type: Plain text
 #: docs/manual/smsd/config.rst:525
@@ -10916,10 +11154,11 @@ msgid ""
 "    Database = smsd\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/config.rst:527
 msgid "Process only messages from 123456 number:"
-msgstr ""
+msgstr "Processa apenas as mensagens do número 123456:"
 
 #. type: Plain text
 #: docs/manual/smsd/config.rst:532
@@ -10929,10 +11168,11 @@ msgid ""
 "    number1 = 123456\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/config.rst:534
 msgid "Do not process messages from evil number 666:"
-msgstr ""
+msgstr "Não processa mensagens do número da besta 666:"
 
 #. type: Plain text
 #: docs/manual/smsd/config.rst:539
@@ -10955,13 +11195,18 @@ msgid ""
 "========\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/overview.rst:7
+#, fuzzy
 msgid ""
 "Gammu SMS Daemon is a program that periodically scans GSM modem for received "
 "messages, stores them in defined storage and also sends messages enqueued in "
 "this storage."
 msgstr ""
+"B<gammu-smsd> é um programa que periódicamente procura por um modem GSM para "
+"receber mensagens, armazena-as em uma memória (arquivo, DB, etc) e também "
+"pode enviar mensagens enfileiradas desta memória (arquivo, DB, etc)."
 
 #. type: Plain text
 #: docs/manual/smsd/overview.rst:9
@@ -11096,11 +11341,14 @@ msgstr ""
 msgid "    gammu-smsd-inject [OPTION]... MESSAGETYPE RECIPIENT [MESSAGE_PARAMETER]...\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/inject.rst:19
+#, fuzzy
 msgid ""
 "This manual page documents briefly the :program:`gammu-smsd-inject` command."
 msgstr ""
+"Este página de manual documenta resumidamente o comando B<gammu-smsd-inject>"
 
 #. type: Plain text
 #: docs/manual/smsd/inject.rst:22
@@ -11115,7 +11363,10 @@ msgid ""
 "Support for this program depends on features available in currently used "
 "SMSD service backend, however currently it is supported by all of them."
 msgstr ""
+"O Suporte para este programa depende de funcionalidades disponíveis no Banco "
+"de Dados de Retaguarda (backend)."
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/inject.rst:28 docs/manual/smsd/monitor.rst:26
 #: docs/manual/smsd/smsd.rst:30
@@ -11123,6 +11374,8 @@ msgid ""
 "Program accepts following options (please note that long options might be "
 "not accepted on some platforms):"
 msgstr ""
+"O programa aceita as seguintes opções (por favor note que opções longas (--) "
+"podem não ser aceitas em todas plataformas):"
 
 #. type: Plain text
 #: docs/manual/smsd/inject.rst:30 docs/manual/smsd/monitor.rst:28
@@ -11166,12 +11419,16 @@ msgid ""
 "    is no default and configuration file path has to be always specified.\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/inject.rst:44
+#, fuzzy
 msgid ""
 "For description of message types and their parameters, please check "
 "documentation for :option:`gammu savesms`."
 msgstr ""
+"Para descrição dos tipos de mensagens e seus parâmetros, por favor "
+"verifique: gammu(1). As opções são idênticas ao comando sendsms do Gammu."
 
 #. type: Plain text
 #: docs/manual/smsd/inject.rst:50
@@ -11183,7 +11440,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/smsd/inject.rst:52
 msgid "Inject text message up to standard 160 chars:"
-msgstr ""
+msgstr "Injetar mensagem de texto até 160 caracteres padrões:"
 
 #. type: Plain text
 #: docs/manual/smsd/inject.rst:56
@@ -11191,12 +11448,13 @@ msgstr ""
 msgid "    echo \"All your base are belong to us\" | gammu-smsd-inject TEXT 123456\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/inject.rst:58 docs/manual/smsd/inject.rst:70
 #: docs/manual/smsd/inject.rst:76 docs/manual/gammu/index.rst:1815
 #: docs/manual/gammu/index.rst:1827 docs/manual/gammu/index.rst:1833
 msgid "or"
-msgstr ""
+msgstr "ou"
 
 #. type: Plain text
 #: docs/manual/smsd/inject.rst:62
@@ -11207,7 +11465,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/smsd/inject.rst:64
 msgid "Inject long text message:"
-msgstr ""
+msgstr "Injetar uma mensagem texto longo:"
 
 #. type: Plain text
 #: docs/manual/smsd/inject.rst:68
@@ -11231,7 +11489,7 @@ msgstr ""
 #: docs/manual/smsd/inject.rst:82
 msgid ""
 "Inject some funky message with predefined sound and animation from 2 bitmaps:"
-msgstr ""
+msgstr "Injetar mensagens alegres com som e animação a partir de 2 bitmaps:"
 
 #. type: Plain text
 #: docs/manual/smsd/inject.rst:86
@@ -11242,7 +11500,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/smsd/inject.rst:88
 msgid "Inject protected message with ringtone:"
-msgstr ""
+msgstr "Injetar mensagem protegida com Toque:"
 
 #. type: Plain text
 #: docs/manual/smsd/inject.rst:91
@@ -11263,13 +11521,18 @@ msgid ""
 "=============\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/mysql.rst:9
+#, fuzzy
 msgid ""
 "MYSQL backend stores all data in a `MySQL`_ database server, which "
 "parameters are defined by configuration (see :ref:`gammu-smsdrc` for "
 "description of configuration options)."
 msgstr ""
+"MYSQL como Banco de Dados de Retaguarda, armazenará todos os dados com base "
+"nos parâmetros definidos na configuração (veja gammu-smsdrc(5) para "
+"descrição das opções)."
 
 #. type: Plain text
 #: docs/manual/smsd/mysql.rst:15
@@ -11741,11 +12004,14 @@ msgstr ""
 msgid "    gammu-smsd-monitor [OPTION]...\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/monitor.rst:19
+#, fuzzy
 msgid ""
 "This manual page documents briefly the :program:`gammu-smsd-monitor` command."
 msgstr ""
+"Esta página de manual documenta resumidamente o comando B<gammu-smsd-monitor>"
 
 #. type: Plain text
 #: docs/manual/smsd/monitor.rst:23
@@ -11824,10 +12090,12 @@ msgstr ""
 msgid "    gammu-smsd [OPTION]...\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/smsd.rst:20
+#, fuzzy
 msgid "This manual page documents briefly the :program:`gammu-smsd` command."
-msgstr ""
+msgstr "Esse manual documenta resumidamente o comando B<gammu-smsd>."
 
 #. type: Plain text
 #: docs/manual/smsd/smsd.rst:24
@@ -11839,10 +12107,13 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/smsd/smsd.rst:27
+#, fuzzy
 msgid ""
 "The daemon can reload configuration file after sending hangup signal "
 "(SIGHUP)  and properly terminates itself on SIGINT and SIGTERM."
 msgstr ""
+"O Daemon pode recarregar o arquivo de configuração após envio do sinal de "
+"hangup \"SIGHUP\" e adequadamente encerrar-se em SIGINT e SIGTERM."
 
 #. type: Plain text
 #: docs/manual/smsd/smsd.rst:47
@@ -12004,7 +12275,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/smsd/smsd.rst:108
 msgid "Start SMSD as a daemon on Linux:"
-msgstr ""
+msgstr "Ativar SMSD como um Daemon Linux"
 
 #. type: Plain text
 #: docs/manual/smsd/smsd.rst:112
@@ -12015,7 +12286,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/smsd/smsd.rst:114
 msgid "Start SMSD as a daemon on Linux with reduced privileges:"
-msgstr ""
+msgstr "Ativar SMSD como um Daemon no Linux com privilégios reduzidos:"
 
 #. type: Plain text
 #: docs/manual/smsd/smsd.rst:118
@@ -12035,6 +12306,10 @@ msgid ""
 "with Gammu in contrib/init directory. It is not installed by default, either "
 "install it manually or check INSTALL file for instructions."
 msgstr ""
+"Para utilizar o SMSD como um Daemon, você precisa utilizar um script de "
+"inicialização que vem junto com o Gammu na pasta contrib/init. Ele não é "
+"instalado por Padrão. Você pode instalar manualmente ou verificar as "
+"instruções na arquivo INTALL-pt_BR."
 
 #. type: Plain text
 #: docs/manual/smsd/smsd.rst:128
@@ -12042,16 +12317,19 @@ msgid ""
 "Under Windows 7 you might need to disable UAC (user account control) before "
 "you will be able to install SMSD service."
 msgstr ""
+"Sob o Windows 7 pode ser necessário desabilitar o UAC (user account control) "
+"antes de você estar apto a instalar SMSD como um serviço."
 
 #. type: Plain text
 #: docs/manual/smsd/smsd.rst:131
 msgid "Windows Service Examples ++++++++++++++++++++++++"
 msgstr ""
 
+# type: TP
 #. type: Plain text
 #: docs/manual/smsd/smsd.rst:133
 msgid "Install Gammu SMSD Windows service:"
-msgstr ""
+msgstr "Instalar Gammu SMSD como um Serviço Windows:"
 
 #. type: Plain text
 #: docs/manual/smsd/smsd.rst:137
@@ -12059,10 +12337,11 @@ msgstr ""
 msgid "    gammu-smsd.exe -c c:\\Gammu\\smsdrc -i\n"
 msgstr ""
 
+# type: TP
 #. type: Plain text
 #: docs/manual/smsd/smsd.rst:139
 msgid "Install two instances of SMSD Windows service:"
-msgstr ""
+msgstr "Instalar duas instâncias do SMSD como Serviços do Windows:"
 
 #. type: Plain text
 #: docs/manual/smsd/smsd.rst:143
@@ -12076,10 +12355,11 @@ msgstr ""
 msgid "    gammu-smsd.exe -c c:\\Gammu\\smsdrc-2 -n Gammu-second-phone -i\n"
 msgstr ""
 
+# type: TP
 #. type: Plain text
 #: docs/manual/smsd/smsd.rst:147
 msgid "To uninstall a Windows service:"
-msgstr ""
+msgstr "Para desinstalar SMSD como Serviço do Windows"
 
 #. type: Plain text
 #: docs/manual/smsd/smsd.rst:151
@@ -12101,11 +12381,17 @@ msgid ""
 "useful hint, try starting SMSD manually with exactly same parameters as you "
 "installed the service (without -i)."
 msgstr ""
+"Se o Gammu SMSD falhar em iniciar como um Serviço Windows (normalmente "
+"ocorre o \"Erro 1053: Serviço não responde a Iniciar ou controle requisição"
+"\". Primeiro verifique os arquivos de depuração (logs) do SMSD. Se não "
+"houver nenhuma informação útil neles, tente ativar o SMSD manualmente "
+"exatamente com os mesmos parâmetros que você instalou o serviço (sem a "
+"diretiva -i)."
 
 #. type: Plain text
 #: docs/manual/smsd/smsd.rst:162
 msgid "For example the command line can look like:"
-msgstr ""
+msgstr "Por Ex. o comando pode parecer com:"
 
 #. type: Plain text
 #: docs/manual/smsd/smsd.rst:166
@@ -12113,12 +12399,15 @@ msgstr ""
 msgid "    gammu-smsd.exe -c smsdrc\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/smsd.rst:169
 msgid ""
 "You now should be able to get errors from SMSD even if it fails to start as "
 "a service."
 msgstr ""
+"Agora você consegue ver os erros que o SMSD apresenta, mesmo não iniciando "
+"como um serviço."
 
 #. type: Plain text
 #: docs/manual/smsd/smsd.rst:171
@@ -12130,12 +12419,18 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/smsd/smsd.rst:177
+#, fuzzy
 msgid ""
 "You can not use same phone by more programs in same time. However in case "
 "you did not enable locking in :config:section:`[gammu]` section, it might be "
 "able to start the communication with phone from more programs. In this case "
 "neither of the programs will probably work."
 msgstr ""
+"Você não pode utilizar o mesmo telefone com mais de um programa "
+"simultâneamente. Contudo se você não está utilizando o serviço de trava "
+"(lock) na seção [gammu], pode ser possível iniciar mais de um programa "
+"comunicando-se com o telefone. Provavelmente nenhum dos programas irá "
+"funcionar."
 
 #. type: Plain text
 #: docs/manual/smsd/smsd.rst:180
@@ -12144,6 +12439,9 @@ msgid ""
 "message headers. The only way to achieve this is to add some token to the "
 "message and let the user include it in the message on reply."
 msgstr ""
+"Não há maneira de detectar a resposta da mensagem SMS, olhando nos "
+"cabeçalhos da mesma. A única maneira de obter isso é adicionar algum "
+"contéudo na mensagem e deixar o usuário incluir isto na mensagem resposta."
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:2
@@ -12174,25 +12472,32 @@ msgstr ""
 msgid "    gammu [parameters] <command> [options]\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/gammu/index.rst:18
+#, fuzzy
 msgid ""
 "Commands actually indicate which operation should Gammu perform. They can be "
 "specified with or without leading ``--``."
-msgstr ""
+msgstr "Comandos podem ser especificados com ou sem -- no início."
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:21
 msgid "Description +++++++++++"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/gammu/index.rst:24
+#, fuzzy
 msgid ""
 "This program is a tool for mobile phones. Many vendors and phones are "
 "supported, for actual listing see `Gammu Phones Database <http://wammu.eu/"
 "phones/>`_."
 msgstr ""
+"Este programa é uma ferramenta para aparelhos celulares. Diversos "
+"fabricantes e aparelhos são compatíveis. Para ver a lista, acesse "
+"E<lt>http://cihar.com/gammu/telefonedb/E<gt>."
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:27
@@ -12448,6 +12753,7 @@ msgid ""
 "--------------------\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/gammu/index.rst:127
 msgid ""
@@ -12455,13 +12761,19 @@ msgid ""
 "be patient, the command line has been written in order to allow almost every "
 "usage. See EXAMPLE section for some hints on usage."
 msgstr ""
+"Envio de mensagens pode parecer um pouco complicado nas primeiras "
+"tentativas. Mas com paciência, a linha de comando servirá para qualquer tipo "
+"de utilização. Veja seção EXEMPLOS para mais dicas de uso."
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:130
+#, fuzzy
 msgid ""
 "There is also an option to use :ref:`gammu-smsd` when you want to send or "
 "receive more messages and process them automatically."
 msgstr ""
+"Existe também opção de utilizar gammu-smsd(1) quando você deseja automatizar "
+"envio e recebimento de mensagens num processo automatizado."
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:132
@@ -12474,7 +12786,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/gammu/index.rst:135
 msgid "Gammu has support for many SMS formats like:"
-msgstr ""
+msgstr "Gammu tem suporte para muitos formatos de SMS como:"
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:146
@@ -12499,6 +12811,9 @@ msgid ""
 "send. Otherwise the phone will not be able to display it or will even crash, "
 "because firmware of phone did not expect this possibility."
 msgstr ""
+"Você precisa certificar-se que o telefone destinatário suporta o tipo de "
+"mensagem enviada. De outra maneira, além de não exibir a mensagem ou mesmo "
+"travar porque o firmaware não espera esta possibilidade."
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:153
@@ -12511,7 +12826,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/gammu/index.rst:156
 msgid "Text in SMS can be coded using two ways:"
-msgstr ""
+msgstr "Texto da SMS pode ser codificado de duas maneiras:"
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:159
@@ -12520,42 +12835,53 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:164
+#, fuzzy
 msgid ""
 "With `GSM Default Alphabet` you can fit at most 160 chars into single SMS "
 "(Gammu doesn't support compressing such texts according to GSM standards, "
 "but it isn't big limit, because there are no phones supporting them), but "
 "they're from limited set:"
 msgstr ""
+"com B<Alfabeto padrão GSM> - em uma única SMS você pode ter no máximo 160 "
+"caracteres (Gammu não suporta compressão de textos de acordo com os padrões "
+"GSM. Mas esse não é um grande, pois muitos telefone não suportam este limite:"
 
 #. type: Bullet: '* '
 #: docs/manual/gammu/index.rst:171
+#, fuzzy
 msgid "all Latin small and large"
-msgstr ""
+msgstr "  * todos caracteres Latinos minúsculos e Maiúsculos\n"
 
 #. type: Bullet: '* '
 #: docs/manual/gammu/index.rst:171
+#, fuzzy
 msgid "all digits"
-msgstr ""
+msgstr "  * todos dígitos\n"
 
 #. type: Bullet: '* '
 #: docs/manual/gammu/index.rst:171
+#, fuzzy
 msgid "some Greek"
-msgstr ""
+msgstr "  * alguns símbolos Gregos\n"
 
 #. type: Bullet: '* '
 #: docs/manual/gammu/index.rst:171
+#, fuzzy
 msgid "some other national"
-msgstr ""
+msgstr "  * alguns outros do seu Idioma\n"
 
 #. type: Bullet: '* '
 #: docs/manual/gammu/index.rst:171
+#, fuzzy
 msgid "some symbols like @ ! \" # & / ( ) % * + = - , . : ; < > ?"
 msgstr ""
+"  * alguns simbolos como  @ ! \" # & / ( ) % * + = - , . : ; E<lt> E<gt> ?\n"
 
 #. type: Bullet: '* '
 #: docs/manual/gammu/index.rst:171
+#, fuzzy
 msgid "few others"
-msgstr ""
+msgstr "  * além de outros\n"
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:174
@@ -12564,10 +12890,15 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:177
+#, fuzzy
 msgid ""
 "With `Unicode` single SMS can contain at most 70 chars, but these can be any "
 "chars including all national and special ones."
 msgstr ""
+"com B<Unicode> - uma única SMS você pode usar 70 caracteres, e esses podem "
+"incluir todos os caracteres do seu idioma e mais os especiais. Por favor "
+"note que telefones antigos pode apresentar problemas na exibição desse tipo "
+"de mensagens."
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:179 docs/manual/c/index.rst:16
@@ -12596,9 +12927,14 @@ msgid ""
 "depending on your locales configuration) and in case message uses Unicode "
 "the text will be given as such to the message."
 msgstr ""
+"Gammu tenta lidar da melhor maneira com caracteres não ASCII da sua "
+"mensagem. Tudo é manipulado internamente em Unicode (a entrada é convertida "
+"dependendo da configuração de locales) e se a mensagem já usa Unicode o "
+"texto será preservado como está na mensagem."
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:197
+#, fuzzy
 msgid ""
 "Should the message be sent in GSM Default Alphabet, Gammu will try to "
 "convert all characters to keep message readable. Gammu does support multi "
@@ -12608,6 +12944,13 @@ msgid ""
 "equivalent (accents are removed).  Remaining not known characters are "
 "replaced by question mark."
 msgstr ""
+"Se a mensagem a ser enviada usa o Alfabeto Padrão GSM, o Gammu irá tentar "
+"converter todos os caracteres para manter a mensagem legível. O Gammu não "
+"suporta código de página \"multi byte\" para alguns caracteres do Alfabeto "
+"GSM como ( ^ { } \\e [ ] ~ |). Caracteres não existentes no Alfabeto GSM "
+"serão convertidos para a melhor equivalência ASCII (acentos serão "
+"removidos), outros desconhecidos serão substituídos pelo símbolo ? "
+"(interrogação)."
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:199
@@ -13962,6 +14305,9 @@ msgid ""
 "phone can also support usb storage, which is handled on the operating system "
 "level and Gammu does not use that."
 msgstr ""
+"Gammu permite você acessar telefones utilizando o protocolo nativo (Nokia) "
+"ou OBEX. Seu telefone também pode suportar modo memória usb, o qual é "
+"manipulado diretamente pelo seu sistema operacional e o Gammu não usa isso."
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:752
@@ -14218,18 +14564,23 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:848
+#, fuzzy
 msgid ""
 "These options are mainly (there are few exceptions) for monochromatic logos "
 "and images available in older phones. Recognized file formats: xpm (only "
 "saving), 2-colors bmp, nlm, nsl, ngg, nol, wbmp, gif (for Samsung)."
 msgstr ""
+"Estas são as principais opções (há poucas exceções) para logotipos "
+"monocromáticofor e imagens disponíveis em telefones antigos. Formatos "
+"reconhecidos: xpm (só para salvar), 2-cores bmp, nlm, nsl, ngg, nol, wbmp, "
+"gif (para Samsung)."
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:850
 msgid ""
 "In new models all bitmaps are saved in filesystem and should go into "
 "filesystem section"
-msgstr ""
+msgstr "Nos novos modelos todos os bitmaps são salvos no sistema de arquivos."
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:852
@@ -14462,6 +14813,9 @@ msgid ""
 "Ringtones are mostly supported only for older phones. For recent phones you "
 "usually just upload them to some folder in phone filesystem."
 msgstr ""
+"Muitos toques são usados por telefones antigos. Para aparelhos mais "
+"recentes, basta gravar em qualquer pasta do sistema de arquivos do seu "
+"aparelho."
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:941
@@ -14471,6 +14825,10 @@ msgid ""
 "communicator, ringtones format found in fkn.pl, wav (saving), ime/imy "
 "(saving), rng, mmf (for Samsung)."
 msgstr ""
+"Existem vários formatos de arquivos reconhecidos: RTTL, BINÁRIO, formato "
+"criado pelo GAMMU, MID (salvando), RE (lendo), OTT, COMUNICATOR, formatos "
+"encontrados em fkn.pl, WAV (salvando), IME/IMY (salvando), RNG, MMF (para "
+"Samsung)."
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:944
@@ -14591,6 +14949,8 @@ msgid ""
 "In Nokia 3310, 3315 and 3330 these are named \"Reminders\" and have some "
 "limitations (depending on phone firmware version)."
 msgstr ""
+"Nos telefones Nokia 3310, 3315 e 3330 são tratados como \"Reminders\" e há "
+"limitações (depende da versão do firmware do aparelho)."
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:991
@@ -14868,50 +15228,68 @@ msgstr ""
 msgid "    Backup your phone to file. It's possible to backup (depends on phone and backup format):\n"
 msgstr ""
 
+# type: Plain text
 #. type: Bullet: '    * '
 #: docs/manual/gammu/index.rst:1114
+#, fuzzy
 msgid "phonebook from SIM and phone memory"
-msgstr ""
+msgstr "* contatos do cartão SIM e da memória do telefone"
 
+# type: Plain text
 #. type: Bullet: '    * '
 #: docs/manual/gammu/index.rst:1114
+#, fuzzy
 msgid "calendar notes"
-msgstr ""
+msgstr "* anotações calendário"
 
+# type: Plain text
 #. type: Bullet: '    * '
 #: docs/manual/gammu/index.rst:1114
+#, fuzzy
 msgid "SMSC settings"
-msgstr ""
+msgstr "* SMSC configurações"
 
+# type: Plain text
 #. type: Bullet: '    * '
 #: docs/manual/gammu/index.rst:1114
+#, fuzzy
 msgid "operator logo"
-msgstr ""
+msgstr "* logotipo operadora"
 
+# type: Plain text
 #. type: Bullet: '    * '
 #: docs/manual/gammu/index.rst:1114
+#, fuzzy
 msgid "startup (static) logo or startup text"
-msgstr ""
+msgstr "* Logotipo ou Texto quando Liga Telefone"
 
+# type: Plain text
 #. type: Bullet: '    * '
 #: docs/manual/gammu/index.rst:1114
+#, fuzzy
 msgid "WAP bookmarks"
-msgstr ""
+msgstr "* favoritos WAP"
 
+# type: Plain text
 #. type: Bullet: '    * '
 #: docs/manual/gammu/index.rst:1114
+#, fuzzy
 msgid "WAP settings"
-msgstr ""
+msgstr "* configurações WAP"
 
+# type: Plain text
 #. type: Bullet: '    * '
 #: docs/manual/gammu/index.rst:1114
+#, fuzzy
 msgid "caller logos and groups"
-msgstr ""
+msgstr "* Logotipos e Grupos Chamadas"
 
+# type: Plain text
 #. type: Bullet: '    * '
 #: docs/manual/gammu/index.rst:1114
+#, fuzzy
 msgid "user ringtones"
-msgstr ""
+msgstr "* Toques Usuário"
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:1117
@@ -14921,38 +15299,54 @@ msgid ""
 "    based on file extension:\n"
 msgstr ""
 
+# type: Plain text
 #. type: Bullet: '    * '
 #: docs/manual/gammu/index.rst:1124
+#, fuzzy
 msgid ""
 "``.lmb`` - Nokia backup, supports contacts, caller logos and startup logo."
 msgstr ""
+"* .lmb - Backup Nokia, suporta contatos, logotipos chamadas e logo "
+"inicialização."
 
+# type: Plain text
 #. type: Bullet: '    * '
 #: docs/manual/gammu/index.rst:1124
+#, fuzzy
 msgid "``.vcs`` - vCalendar, supports calendar and todo."
-msgstr ""
+msgstr "* .vcs - vCalendar, suporta calendário e agenda."
 
+# type: Plain text
 #. type: Bullet: '    * '
 #: docs/manual/gammu/index.rst:1124
+#, fuzzy
 msgid "``.vcf`` - vCard, supports contacts."
-msgstr ""
+msgstr "* .vcf - vCard, suporta contatos."
 
+# type: Plain text
 #. type: Bullet: '    * '
 #: docs/manual/gammu/index.rst:1124
+#, fuzzy
 msgid "``.ldif`` - LDAP import, supports contacts."
-msgstr ""
+msgstr "* .ldif - Importação LDAP (diretórios), suporta contatos"
 
+# type: Plain text
 #. type: Bullet: '    * '
 #: docs/manual/gammu/index.rst:1124
+#, fuzzy
 msgid "``.ics`` - iCalendar, supports calendar and todo."
-msgstr ""
+msgstr "* .ics - iCalendar, suporta calendário e agenda."
 
+# type: Plain text
 #. type: Bullet: '    * '
 #: docs/manual/gammu/index.rst:1124
+#, fuzzy
 msgid ""
 "Any other extension is Gammu backup file and it supports all data mentioned "
 "above, see :ref:`gammu-backup` for more details."
 msgstr ""
+"* Todas outras extensões e tipos de dados, da Cópia de Segurança (backup) do "
+"Gammu mencionadas acima."
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:1126
@@ -15371,38 +15765,46 @@ msgstr ""
 
 #. type: Bullet: '    1. '
 #: docs/manual/gammu/index.rst:1306
+#, fuzzy
 msgid "Control Panel"
-msgstr ""
+msgstr "1. Painel de Controle"
 
 #. type: Bullet: '    2. '
 #: docs/manual/gammu/index.rst:1306
+#, fuzzy
 msgid "Add hardware"
-msgstr ""
+msgstr "2. Adicione Hardware"
 
 #. type: Bullet: '    3. '
 #: docs/manual/gammu/index.rst:1306
+#, fuzzy
 msgid "click Next"
-msgstr ""
+msgstr "3. clique Next"
 
 #. type: Bullet: '    4. '
 #: docs/manual/gammu/index.rst:1306
+#, fuzzy
 msgid "select \"Yes. I have already connected the hardware"
-msgstr ""
+msgstr "4. selecione \"Yes. I have already connected the hardware\""
 
 #. type: Bullet: '    5. '
 #: docs/manual/gammu/index.rst:1306
+#, fuzzy
 msgid "select \"Add a new hardware device"
-msgstr ""
+msgstr "5. selecione \"Add a new hardware device\""
 
 #. type: Bullet: '    6. '
 #: docs/manual/gammu/index.rst:1306
+#, fuzzy
 msgid "select \"Install the hardware that I manually select from a list"
 msgstr ""
+"6. selecione \"Install the hardware that I manually select from a list\""
 
 #. type: Bullet: '    7. '
 #: docs/manual/gammu/index.rst:1306
+#, fuzzy
 msgid "select \"Sound, video and game controllers"
-msgstr ""
+msgstr "7. selecione \"Sound, video and game controllers\""
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:1306
@@ -15517,35 +15919,47 @@ msgstr ""
 msgid "    Enable all (?) possible menus for DCT3 Nokia phones:\n"
 msgstr ""
 
+# type: Plain text
 #. type: Bullet: '    1. '
 #: docs/manual/gammu/index.rst:1363 docs/manual/gammu/index.rst:1370
+#, fuzzy
 msgid "ALS (Alternative Line Service) option menu"
-msgstr ""
+msgstr "1. ALS (Alternative Line Service) opção de menu"
 
+# type: Plain text
 #. type: Bullet: '    2. '
 #: docs/manual/gammu/index.rst:1363
+#, fuzzy
 msgid "vibra menu for 3210"
-msgstr ""
+msgstr "2. vibra menu para 3210"
 
+# type: Plain text
 #. type: Bullet: '    3. '
 #: docs/manual/gammu/index.rst:1363
+#, fuzzy
 msgid "3315 features in 3310 5.45 and higher"
-msgstr ""
+msgstr "3. 3315 funcionalidades no 3310 5.45 e posteriores"
 
+# type: Plain text
 #. type: Bullet: '    4. '
 #: docs/manual/gammu/index.rst:1363
+#, fuzzy
 msgid "two additional games (React and Logic) for 3210 5.31 and higher"
-msgstr ""
+msgstr "4. dois jogos adicionais (React e Logic) para 3210 5.31 e posterior"
 
+# type: Plain text
 #. type: Bullet: '    5. '
 #: docs/manual/gammu/index.rst:1363
+#, fuzzy
 msgid "WellMate menu for 6150"
-msgstr ""
+msgstr "5. WellMate menu para 6150"
 
+# type: Plain text
 #. type: Bullet: '    6. '
 #: docs/manual/gammu/index.rst:1363
+#, fuzzy
 msgid "NetMonitor"
-msgstr ""
+msgstr "6. NetMonitor"
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:1365
@@ -15553,15 +15967,19 @@ msgstr ""
 msgid "    and for DCT4:\n"
 msgstr ""
 
+# type: Plain text
 #. type: Bullet: '    2. '
 #: docs/manual/gammu/index.rst:1370
+#, fuzzy
 msgid "Bluetooth, WAP bookmarks and settings menu, ... (6310i)"
-msgstr ""
+msgstr "2. Bluetooth, preferidos WAP (bookmarks) e menus, ... (6310i)"
 
+# type: Plain text
 #. type: Bullet: '    3. '
 #: docs/manual/gammu/index.rst:1370
+#, fuzzy
 msgid "GPRS Always Online"
-msgstr ""
+msgstr "3. GPRS Sempre Conectado"
 
 #. type: Bullet: '    4. '
 #: docs/manual/gammu/index.rst:1370
@@ -15903,35 +16321,47 @@ msgid ""
 "        Clear user settings.\n"
 msgstr ""
 
+# type: Plain text
 #. type: Bullet: '        * '
 #: docs/manual/gammu/index.rst:1513
+#, fuzzy
 msgid "removes or set logos to default"
-msgstr ""
+msgstr "* remove ou configura logotipos padrões"
 
+# type: Plain text
 #. type: Bullet: '        * '
 #: docs/manual/gammu/index.rst:1513
+#, fuzzy
 msgid "set default phonebook and other menu settings"
-msgstr ""
+msgstr "* configura contato padrão e outros menus"
 
+# type: Plain text
 #. type: Bullet: '        * '
 #: docs/manual/gammu/index.rst:1513
+#, fuzzy
 msgid "clear T9 words,"
-msgstr ""
+msgstr "* limpa palavras T9,"
 
+# type: Plain text
 #. type: Bullet: '        * '
 #: docs/manual/gammu/index.rst:1513
+#, fuzzy
 msgid "clear call register info"
-msgstr ""
+msgstr "* limpa registrador de chamadas"
 
+# type: Plain text
 #. type: Bullet: '        * '
 #: docs/manual/gammu/index.rst:1513
+#, fuzzy
 msgid "set default profiles settings"
-msgstr ""
+msgstr "* configura perfil padrão"
 
+# type: Plain text
 #. type: Bullet: '        * '
 #: docs/manual/gammu/index.rst:1513
+#, fuzzy
 msgid "clear user ringtones"
-msgstr ""
+msgstr "* limpa toques usuário"
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:1516
@@ -15941,15 +16371,19 @@ msgid ""
 "        Clear user settings and disables hidden menus.\n"
 msgstr ""
 
+# type: Plain text
 #. type: Bullet: '        * '
 #: docs/manual/gammu/index.rst:1519
+#, fuzzy
 msgid "changes like after ``ALL``"
-msgstr ""
+msgstr "* atualiza após B<ALL>"
 
+# type: Plain text
 #. type: Bullet: '        * '
 #: docs/manual/gammu/index.rst:1519
+#, fuzzy
 msgid "disables netmon and PPS (all \"hidden\" menus)"
-msgstr ""
+msgstr "* desabilita netmon e PPS (todos menus ocultos \"hidden\")"
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:1522
@@ -15959,15 +16393,19 @@ msgid ""
 "        Reset to factory defaults.\n"
 msgstr ""
 
+# type: Plain text
 #. type: Bullet: '        * '
 #: docs/manual/gammu/index.rst:1525
+#, fuzzy
 msgid "changes like after ``UIF``"
-msgstr ""
+msgstr "* mudanças como após B<UIF>"
 
+# type: Plain text
 #. type: Bullet: '        * '
 #: docs/manual/gammu/index.rst:1525
+#, fuzzy
 msgid "clear date/time"
-msgstr ""
+msgstr "* limpa data / horário"
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:1528
@@ -16226,6 +16664,8 @@ msgstr ""
 msgid ""
 "gammu returns 0 on success. In case of failure non zero code is returned."
 msgstr ""
+"Gammu retornou 0 (zero) com sucesso. Em caso de falha prevista, outros "
+"códigos são retornados."
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:1652
@@ -16250,6 +16690,7 @@ msgstr ""
 msgid ""
 "Errors codes greater than 100 map to the GSM_Error values increased by 100:"
 msgstr ""
+"Erros maiores que 100 são relacionados a GSM_Error incrementados em mais 100:"
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:1794
@@ -16423,10 +16864,11 @@ msgid ""
 "----------------\n"
 msgstr ""
 
+# type: TP
 #. type: Plain text
 #: docs/manual/gammu/index.rst:1809
 msgid "Save text message up to standard 160 chars:"
-msgstr ""
+msgstr "Salvar a mensagem de texto até 160 caracteres."
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:1813
@@ -16440,10 +16882,11 @@ msgstr ""
 msgid "    gammu savesms TEXT -text \"All your base are belong to us\"\n"
 msgstr ""
 
+# type: TP
 #. type: Plain text
 #: docs/manual/gammu/index.rst:1821
 msgid "Save long text message:"
-msgstr ""
+msgstr "Salva uma mensagem de texto longo:"
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:1825
@@ -16463,11 +16906,12 @@ msgstr ""
 msgid "    gammu savesms EMS -text \"All your base are belong to us\"\n"
 msgstr ""
 
+# type: TP
 #. type: Plain text
 #: docs/manual/gammu/index.rst:1839
 msgid ""
 "Save some funky message with predefined sound and animation from 2 bitmaps:"
-msgstr ""
+msgstr "Salvar algumas mensagens engraçadas com sons e animações de 2 bitmaps:"
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:1843
@@ -16475,10 +16919,11 @@ msgstr ""
 msgid "    gammu savesms EMS -text \"Greetings\" -defsound 1 -text \"from Gammu -tone10 axelf.txt -animation 2 file1.bmp file2.bmp\n"
 msgstr ""
 
+# type: TP
 #. type: Plain text
 #: docs/manual/gammu/index.rst:1845
 msgid "Save protected message with ringtone:"
-msgstr ""
+msgstr "Salvar mensagem protegida com toque:"
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:1849
@@ -16599,6 +17044,7 @@ msgid ""
 "--------------\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/gammu/index.rst:1907
 msgid ""
@@ -16606,6 +17052,10 @@ msgid ""
 "include some useful information when sending bug reports (especially debug "
 "logs, operating system, it's version and phone information are needed)."
 msgstr ""
+"Existem muitos erros, reportar aos autores é muito bem vindo. Por favor "
+"inclua informações úteis com enviar relatórios de erros (especialmente "
+"relatórios de erros (logs), seu sistema operacional e versão, versão do "
+"gammu e informações sobre o aparelho e o modo conexão) são necessárias."
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:1909
@@ -16624,8 +17074,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:1918
+#, fuzzy
 msgid "Alternatively you can specify logging on command line:"
-msgstr ""
+msgstr "Falhou em abrir o arquivo de comandos especificado."
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:1922
@@ -16633,6 +17084,7 @@ msgstr ""
 msgid "   gammu -d textall -f /tmp/gammu.log ...\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/gammu/index.rst:1926
 msgid ""
@@ -16640,17 +17092,26 @@ msgid ""
 "phone and stores dump of communication there. You can also find some hints "
 "for improving support for your phone in this log."
 msgstr ""
+"Com estas configurações, o Gammu irá gravar /tmp/gammu.log a cada conexão "
+"com o telefone e armazenar informações da comunicação com o telefone. Você "
+"também pode achar informações e dicas sobre o suporte ao seu telefone nesse "
+"log."
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:1928
+#, fuzzy
 msgid ""
 "See <http://wammu.eu/support/bugs/> for more information on reporting bugs."
 msgstr ""
+"Veja E<lt>http://wammu.eu/support/bugs/E<gt> para mais informações sobre "
+"como reportar erros ou bugs."
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/gammu/index.rst:1929
+#, fuzzy
 msgid "Please report bugs to `Gammu bug tracker <http://bugs.cihar.com/>`_."
-msgstr ""
+msgstr "Por favor reporte bugs para E<lt>http://bugs.cihar.comE<gt>."
 
 #. type: Plain text
 #: docs/manual/project/documentation.rst:2
@@ -16807,6 +17268,10 @@ msgid ""
 "ones have z >= 90. Testing releases usually provide latest features, but "
 "everything does not have to be stabilized yet."
 msgstr ""
+"Existem dois tipos de versões: teste e estável, ambas tem versionamento x.y."
+"z.Versões estáveis normalmente tem z = 0 ou um número baixo, enquanto "
+"versões teste tem o z >=90. Versões de teste contém as últimas "
+"funcionalidades, mas nem tudo está estável ainda."
 
 #. type: Plain text
 #: docs/manual/project/directories.rst:2
@@ -17099,10 +17564,12 @@ msgstr ""
 msgid "media *****"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/project/directories.rst:138
+#, fuzzy
 msgid "Sample media files which can be used with Gammu."
-msgstr ""
+msgstr "Programas relacionados que podem ser utilizados com modem GSM:"
 
 #. type: Plain text
 #: docs/manual/project/directories.rst:141
@@ -17233,21 +17700,31 @@ msgid ""
 "Gammu is library and command line utility for mobile phones. It is released "
 "under GNU GPL version 2."
 msgstr ""
+"Gammu é uma biblioteca e utilitários de comandos de linha para telefones "
+"móveis. É distribuído sob GNU GPL versão 2."
 
 #. type: Plain text
 #: docs/manual/project/about.rst:10
+#, fuzzy
 msgid ""
 "It has been initiated by Marcin Wiacek and other people. Originally the code "
 "was based on `Gnokii`_ and later `MyGnokii`_ projects. Gammu was former (up "
 "to version 0.58) called MyGnokii2."
 msgstr ""
+"Foi iniciado por Marcin Wiacek e outras pessoas. Originalmente o código foi "
+"baseado nos projetos: Gnokii <http://www.gnokii.org> a mais tarde no "
+"MyGnokii <http://www.mwiacek.com>. Gammu até a versão 0.58 era chamado "
+"MyGnokii2."
 
 #. type: Plain text
 #: docs/manual/project/about.rst:13
+#, fuzzy
 msgid ""
 "Currently the project is lead by `Michal Čihař`_ with help of many "
 "contributors."
 msgstr ""
+"Atualmente o projeto é liderado por Michal Cihar <michal@cihar.com> com "
+"ajuda de vários contribuidores."
 
 #. type: Plain text
 #: docs/manual/project/about.rst:17
@@ -17832,8 +18309,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/project/install.rst:138
+#, fuzzy
 msgid "Useful cmake parameters:"
-msgstr ""
+msgstr "Linha de comando com parâmetros inválidos."
 
 #. type: Bullet: '* '
 #: docs/manual/project/install.rst:147
@@ -18269,10 +18747,13 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/project/install.rst:326
+#, fuzzy
 msgid ""
 "You can download MySQL binaries from <http://dev.mysql.com/>, but then need "
 "some tweaks:"
 msgstr ""
+"Você pode fazer o download dos arquivos binários do MySQL em:<http://dev."
+"mysql.com/>, mas precisa de alguns ajustes:"
 
 #. type: Plain text
 #: docs/manual/project/install.rst:333
@@ -18301,10 +18782,14 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/project/install.rst:343
+#, fuzzy
 msgid ""
 "You can download PostgreSQL binaries from <http://www.postgresql.org/>, but "
 "then you need to add wldap32.dll library to bin."
 msgstr ""
+"Você pode fazer o download dos arquivos binários do PostgreSQL em:<http://"
+"www.postgresql.org/>, você precisará adicionar a biblioteca wldap32.dll no "
+"diretório bin"
 
 #. type: Plain text
 #: docs/manual/project/install.rst:346
@@ -18370,11 +18855,16 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/project/install.rst:375
+#, fuzzy
 msgid ""
 "To debug program crashes, you might want to build Gammu with ``-"
 "DENABLE_PROTECTION=OFF``, otherwise debugging tools are somehow confused "
 "with protections GCC makes and produce bogus back traces."
 msgstr ""
+"Para depurar, você precisa ter compilado o Gammu com -"
+"DENABLE_PROTECTION=OFF, pois senão as ferramentas de depuração se tornarão "
+"um pouco confusas por causa das proteções que o GCC constrói produzindo "
+"traces não confusos."
 
 #. type: Plain text
 #: docs/manual/project/motivation.rst:2
@@ -18484,19 +18974,29 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/project/localization.rst:7
+#, fuzzy
 msgid ""
 "Localization uses Gettext. You can set locales you want to use by specifying "
 "LANG or LC_* environment variables (on Linux you usually don't care about "
 "this, on Windows just export e.g. ``LANG=cs_CZ``)."
 msgstr ""
+"Para Localizações use Gettext. Você pode configurar o locales que desejar "
+"especificando LANG ou LC_* nas variáveis de ambiente (no Linux normalmente "
+"você não precisa se importar com isto). No Windows use o comando export por "
+"Ex. LANG=pt_BR."
 
 #. type: Plain text
 #: docs/manual/project/localization.rst:12
+#, fuzzy
 msgid ""
 "If you want to improve existing translation, please visit `translation "
 "server`_. For adding new one, you need to contact `Michal Čihař`_ and then "
 "you will be able to edit it on former mentioned URL."
 msgstr ""
+"Se você deseja melhorar a tradução existente, por favor visite <http://l10n."
+"cihar.com/projects/gammu/>. Para adicionar uma nova língua, por favor "
+"contacte <michal@cihar.com> e então você poderá editá-la através de uma URL "
+"criada."
 
 #. type: Plain text
 #: docs/manual/project/localization.rst:15
@@ -18504,6 +19004,9 @@ msgid ""
 "You can also go ahead with traditional way of creating/updating po files in "
 "locale/ folder and then sending updated ones to bug tracker."
 msgstr ""
+"Você também pode avançar da maneira tradicional criando ou atualizando "
+"arquivos .po na pasta locale/ e então enviar as atualizações para o "
+"rastreador de erros (bug tracker)."
 
 #. type: Plain text
 #: docs/manual/project/localization.rst:17
@@ -18519,21 +19022,22 @@ msgid "There are several po files to translate:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/localization.rst:29
+#: docs/manual/project/localization.rst:30
 #, no-wrap
 msgid ""
 "``libgammu.po``\n"
-"    Messages used in the Gammu library (libgammu).\n"
+"    Messages used in the Gammu library (see :ref:`libgammu`).\n"
 "``gammu.po``\n"
 "    Message used by command line utilities (mostly :ref:`gammu`).\n"
 "``docs.po``\n"
-"    Basic documentation shipped withing package.\n"
+"    Basic documentation shipped withing package (eg. :file:`README` and\n"
+"    :file:`INSTALL` files).\n"
 "``manual.po``\n"
-"    The Gammu Manual\n"
+"    The Gammu Manual translation (this manual).\n"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/localization.rst:32
+#: docs/manual/project/localization.rst:33
 msgid ""
 ".. _translation server: http://l10n.cihar.com/projects/gammu/ .. _Michal "
 "Čihař: mailto:michal@cihar.com"
@@ -18618,10 +19122,12 @@ msgstr ""
 msgid ":ref:`gammu` -- the Gammu utility"
 msgstr ""
 
+# type: Plain text
 #. type: Bullet: '    * '
 #: docs/manual/index.rst:27
+#, fuzzy
 msgid ":ref:`gammurc` -- the Gammu configuration file"
-msgstr ""
+msgstr "gammurc - gammu(1) arquivo de configuração"
 
 #. type: Bullet: '    * '
 #: docs/manual/index.rst:27
@@ -19746,8 +20252,9 @@ msgstr ""
 
 #. type: Bullet: '* '
 #: docs/manual/python/objects.rst:188
+#, fuzzy
 msgid "``NokiaRingtone``"
-msgstr ""
+msgstr "Toques"
 
 #. type: Bullet: '* '
 #: docs/manual/python/objects.rst:188
@@ -20180,8 +20687,9 @@ msgstr ""
 
 #. type: Bullet: '* '
 #: docs/manual/python/objects.rst:349
+#, fuzzy
 msgid "``EMSFixedBitmap`` - Fixed bitmap of size 16x16 or 32x32."
-msgstr ""
+msgstr "B<-fixedbitmap> - bitmap 16x16 ou 32x32"
 
 #. type: Bullet: '* '
 #: docs/manual/python/objects.rst:349
@@ -22374,9 +22882,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:45
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Adds file part to filesystem.\n"
-msgstr ""
+msgstr "    gammu getfilesystem\n"
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:50
@@ -22396,9 +22904,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:55
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Adds folder to filesystem.\n"
-msgstr ""
+msgstr "    gammu getfilesystem\n"
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:62
@@ -22420,9 +22928,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:67
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Adds memory (phonebooks or calls) entry.\n"
-msgstr ""
+msgstr "Memória (agenda e chamadas)"
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:72 docs/manual/python/gammu.rst:960
@@ -22440,11 +22948,12 @@ msgstr ""
 msgid "   .. method:: AddSMS(Value)\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/python/gammu.rst:77
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Adds SMS to specified folder.\n"
-msgstr ""
+msgstr "Apague todas as mensagens SMS da pasta especificada."
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:82 docs/manual/python/gammu.rst:970
@@ -22506,11 +23015,12 @@ msgstr ""
 msgid "   .. method:: AnswerCall(ID, All)\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/python/gammu.rst:107
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Accept current incoming call.\n"
-msgstr ""
+msgstr "Responder chamada."
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:114
@@ -22530,11 +23040,12 @@ msgstr ""
 msgid "   .. method:: CancelCall(ID, All)\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/python/gammu.rst:119
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Deny current incoming call.\n"
-msgstr ""
+msgstr "Cancelar chamada"
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:126
@@ -22556,9 +23067,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:131
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Initiates conference call.\n"
-msgstr ""
+msgstr "Iniciar modo conferênia de chamada."
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:136 docs/manual/python/gammu.rst:672
@@ -22580,9 +23091,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:141
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Deletes all calendar entries.\n"
-msgstr ""
+msgstr "Apaga entradas selecionadas no calendário do telefone."
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:144 docs/manual/python/gammu.rst:162
@@ -22599,11 +23110,12 @@ msgstr ""
 msgid "   .. method:: DeleteAllMemory(Type)\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/python/gammu.rst:149
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Deletes all memory (phonebooks or calls) entries of specified type.\n"
-msgstr ""
+msgstr "Apaga todas as entradas para um tipo de memória especificado."
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:154
@@ -22623,9 +23135,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:159
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Deletes all todo entries in phone.\n"
-msgstr ""
+msgstr "Apaga compromissos selecionados no telefone."
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:165
@@ -22635,9 +23147,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:167
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Deletes calendar entry.\n"
-msgstr ""
+msgstr "Apaga entradas selecionadas no calendário do telefone."
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:172
@@ -22657,9 +23169,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:177
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Deletes file from filesystem.\n"
-msgstr ""
+msgstr "    gammu getfilesystem\n"
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:182
@@ -22679,9 +23191,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:187
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Deletes folder on filesystem.\n"
-msgstr ""
+msgstr "    gammu getfilesystem\n"
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:192
@@ -22701,9 +23213,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:197
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Deletes memory (phonebooks or calls) entry.\n"
-msgstr ""
+msgstr "Memória (agenda e chamadas)"
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:204
@@ -22771,9 +23283,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:231
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Deletes ToDo entry in phone.\n"
-msgstr ""
+msgstr "Apaga compromissos selecionados no telefone."
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:236
@@ -22859,9 +23371,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:277
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Reads alarm set in phone.\n"
-msgstr ""
+msgstr "Define texto apresentado quando ligar o telefone."
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:282
@@ -22881,9 +23393,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:287
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Gets information about battery charge and phone charging state.\n"
-msgstr ""
+msgstr "Exibe informação sobre bateria e fonte de energia."
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:290
@@ -22901,9 +23413,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:295
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Retrieves calendar entry.\n"
-msgstr ""
+msgstr "Recupera todas as entradas do calendário do telefone."
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:300
@@ -22943,9 +23455,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:313
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Reads category from phone.\n"
-msgstr ""
+msgstr "Leitura de todas as anotações do telefone."
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:320
@@ -23019,11 +23531,12 @@ msgstr ""
 msgid "   .. method:: GetDateTime()\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/python/gammu.rst:354
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Reads date and time from phone.\n"
-msgstr ""
+msgstr "Obtem Data e Hora do telefone"
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:357
@@ -23076,11 +23589,12 @@ msgstr ""
 msgid "   .. method:: GetFileSystemStatus()\n"
 msgstr ""
 
+# type: TP
 #. type: Plain text
 #: docs/manual/python/gammu.rst:379
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Acquires filesystem status.\n"
-msgstr ""
+msgstr "B<getfilesystemstatus>"
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:382
@@ -23096,11 +23610,12 @@ msgstr ""
 msgid "   .. method:: GetFirmware()\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/python/gammu.rst:387
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Reads firmware information from phone.\n"
-msgstr ""
+msgstr "Obtem localização de memória do telefone."
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:390
@@ -23162,9 +23677,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:415
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Reads IMEI/serial number from phone.\n"
-msgstr ""
+msgstr "Leitura de todas as anotações do telefone."
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:418
@@ -23180,11 +23695,12 @@ msgstr ""
 msgid "   .. method:: GetLocale()\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/python/gammu.rst:423
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Gets locale information from phone.\n"
-msgstr ""
+msgstr "Obtem localização de memória do telefone."
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:426
@@ -23222,9 +23738,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:439
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Reads manufacturer from phone.\n"
-msgstr ""
+msgstr "Leitura de todas as anotações do telefone."
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:442
@@ -23286,9 +23802,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:467
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Reads model from phone.\n"
-msgstr ""
+msgstr "Leitura de todas as anotações do telefone."
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:470
@@ -23306,9 +23822,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:475
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Gets network information.\n"
-msgstr ""
+msgstr "Mais informação\n"
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:478
@@ -23445,9 +23961,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:542 docs/manual/python/gammu.rst:649
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Reads ToDo from phone.\n"
-msgstr ""
+msgstr "Leitura de todas as anotações do telefone."
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:549
@@ -23670,9 +24186,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:639
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Gets speed dial.\n"
-msgstr ""
+msgstr "Obtém escolhas para discagem rápida"
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:644
@@ -23728,9 +24244,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:667
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Holds call.\n"
-msgstr ""
+msgstr "Retém chamada."
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:675
@@ -23856,9 +24372,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:733
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Resets phone settings.\n"
-msgstr ""
+msgstr "Configuração telefone"
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:738
@@ -23948,9 +24464,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:785
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Sets alarm in phone.\n"
-msgstr ""
+msgstr "Define papéis de parede no telefone"
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:796
@@ -24032,11 +24548,12 @@ msgstr ""
 msgid "   .. method:: SetDateTime(Date)\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/python/gammu.rst:831
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Sets date and time in phone.\n"
-msgstr ""
+msgstr "Obtem Data e Hora do telefone"
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:836
@@ -24138,11 +24655,12 @@ msgstr ""
 msgid "   .. method:: SetIncomingCB(Enable)\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/python/gammu.rst:889
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Gets network information from phone.\n"
-msgstr ""
+msgstr "Obtem localização de memória do telefone."
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:894 docs/manual/python/gammu.rst:904
@@ -24227,9 +24745,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:941
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Sets locale of phone.\n"
-msgstr ""
+msgstr "Define papéis de parede no telefone"
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:950
@@ -24253,9 +24771,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:955
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Sets memory (phonebooks or calls) entry.\n"
-msgstr ""
+msgstr "Memória (agenda e chamadas)"
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:963
@@ -24299,9 +24817,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:985
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Sets speed dial.\n"
-msgstr ""
+msgstr "Obtém escolhas para discagem rápida"
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:990
@@ -24321,9 +24839,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:995
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Sets ToDo in phone.\n"
-msgstr ""
+msgstr "Define papéis de parede no telefone"
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:1003
@@ -24333,9 +24851,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:1005
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Splits call.\n"
-msgstr ""
+msgstr "Atendimento Simultâneo"
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:1013
@@ -24345,9 +24863,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:1015
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Switches call.\n"
-msgstr ""
+msgstr "Alterna entre ligações"
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:1023
@@ -24369,9 +24887,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:1033
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Transfers call.\n"
-msgstr ""
+msgstr "Transfere chamada"
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:1041
@@ -24381,9 +24899,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:1043
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Unholds call.\n"
-msgstr ""
+msgstr "Libera chamada."
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:1052
@@ -24482,8 +25000,9 @@ msgstr ""
 
 #. type: Bullet: '       * '
 #: docs/manual/python/gammu.rst:1090
+#, fuzzy
 msgid "errors"
-msgstr ""
+msgstr "Sem erro."
 
 #. type: Bullet: '       * '
 #: docs/manual/python/gammu.rst:1090
@@ -24891,10 +25410,12 @@ msgstr ""
 msgid "PhonePhonebook"
 msgstr ""
 
+# type: Plain text
 #. type: Bullet: '         * '
 #: docs/manual/python/gammu.rst:1272
+#, fuzzy
 msgid "SIMPhonebook"
-msgstr ""
+msgstr "B<SM> = Contatos do SIM"
 
 #. type: Bullet: '         * '
 #: docs/manual/python/gammu.rst:1272
@@ -25153,9 +25674,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/smsd.rst:63
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "            Number of sent messages.\n"
-msgstr ""
+msgstr "Número de partes decodificadas da mensagem"
 
 #. type: Plain text
 #: docs/manual/python/smsd.rst:65
@@ -25165,9 +25686,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/smsd.rst:67
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "            Number of received messages.\n"
-msgstr ""
+msgstr "Número de partes decodificadas da mensagem"
 
 #. type: Plain text
 #: docs/manual/python/smsd.rst:69
@@ -25177,9 +25698,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/smsd.rst:71
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "            Number of failed messages.\n"
-msgstr ""
+msgstr "Número de partes decodificadas da mensagem"
 
 #. type: Plain text
 #: docs/manual/python/smsd.rst:73
@@ -25644,8 +26165,11 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/formats/smsbackup.rst:107
+#, fuzzy
 msgid "The backup of message can look like following:"
 msgstr ""
+"Por exemplo a mensagem de texto longo de duas partes pareceria com o "
+"seguinte:"
 
 #. type: Plain text
 #: docs/manual/formats/smsbackup.rst:129
@@ -25694,6 +26218,7 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/formats/backup.rst:21
+#, fuzzy
 msgid ""
 "If you will backup settings to Gammu text file, it will be possible to edit "
 "it. It's easy: many things in this file will be written double - once in "
@@ -25704,20 +26229,32 @@ msgid ""
 "isn't important, what locale is set in computer and no conversion Unicode -> "
 "ASCII and ASCII -> Unicode is done)."
 msgstr ""
+"Se você deseja salvar as configurações para um arquivo texto Gammu, será "
+"possível editá-lo. É fácil: muitas coisas deste arquivo são gravadas em "
+"dobro - quando utilizado Unicode, quando em ASCII. Quando você remove o "
+"Unicode o Gammu usa ASCII na B<Recuperação/Restore> (e você pode facilmente "
+"editar arquivo texto ASCII) e a conversão ocorrerá de acordo com o (locale) "
+"do seu sistema operacional. Quando houver versão Unicode, está será "
+"utilizada em vez do ASCII (utilizável com telefones Unicode). "
 
 #. type: Plain text
 #: docs/manual/formats/backup.rst:25
+#, fuzzy
 msgid ""
 "You can use any editor with regular expressions function to edit backup text "
 "file. Examples of such editors can be `vim <http://www.vim.org/>`_ or "
 "`TextPad <http://www.textpad.com/>`_ which both do support regular "
 "expressions."
 msgstr ""
+"Você pode usar qualquer editor (desde que o mesmo não insira caracteres de "
+"formatação no arquivo texto). Exemplos: vim E<lt>http://www.vim.org/E<gt> ou "
+"TextPad E<lt>http://www.textpad.com/E<gt> ambos com suporte a expressões "
+"regulares."
 
 #. type: Plain text
 #: docs/manual/formats/backup.rst:27
 msgid "Remove info about voice tags"
-msgstr ""
+msgstr "Remove informação sobre as etiquetas de voz"
 
 #. type: Plain text
 #: docs/manual/formats/backup.rst:29 docs/manual/formats/backup.rst:39
@@ -25747,6 +26284,7 @@ msgstr ""
 #: docs/manual/formats/backup.rst:37
 msgid "Change all numbers starting from +3620, +3630, +3660, +3670 to +3620"
 msgstr ""
+"Trocar todos os números começando por +3620, +3630, +3660, +3670 para +3620"
 
 #. type: Plain text
 #: docs/manual/formats/backup.rst:41
@@ -25766,6 +26304,8 @@ msgid ""
 "Change phone numbers type to mobile for numbers starting from +3620, "
 "+3630,... and removing the corresponding TextUnicode line"
 msgstr ""
+"Troque os números de telefone para números começando com +3620, +3630,... e "
+"remova a linha correspondente do Texto Unicode"
 
 #. type: Plain text
 #: docs/manual/formats/backup.rst:51
@@ -25831,11 +26371,16 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/formats/ini.rst:12
+#, fuzzy
 msgid ""
 "This file use ini file syntax, with comment parts being marked with both ``;"
 "`` and ``#``. Sections of config file are identified in square brackets line "
 "``[this]``. All key values are case insensitive."
 msgstr ""
+"Esse arquivo utiliza a sintaxe de arquivos .ini, com comentários que podem "
+"ser (; ponto e vírgula ou # jogo da velha). Seções do arquivo são "
+"identificadas por colchetes exemplo [telefone1]. Todos os parâmetros são "
+"indiferentes a MAIÚSCULAS E MINÚSCULAS."
 
 #. type: Plain text
 #: docs/manual/formats/ini.rst:18
@@ -26314,12 +26859,16 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/c/index.rst:14
+#, fuzzy
 msgid ""
 "If you intend to use libGammu in your application, all you should need is to "
 "``#include <gammu.h>`` and then use Gammu functions. You can check docs/"
 "examples/ for some small example applications. You don't need real phone for "
 "testing, use :ref:`dummy-driver` instead."
 msgstr ""
+"Se você pretende utilizar libGammu na sua aplicação, você só precisa usar "
+"#include <gammu.h> e então utilizar as funções Gammu. Veja exemplos em docs/"
+"examples/ para pequenas aplicações de exemplo."
 
 #. type: Plain text
 #: docs/manual/c/index.rst:20 docs/manual/c/api.rst:9
@@ -26822,8 +27371,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/c/hints.rst:180
+#, fuzzy
 msgid "For per state machine configuration:"
-msgstr ""
+msgstr "Configuração de string errada."
 
 #. type: Plain text
 #: docs/manual/c/hints.rst:186
@@ -27325,18 +27875,24 @@ msgstr ""
 msgid "    gammu-config [-f|--force] [-c|--config CONFIG]\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/utils/gammu-config.rst:19
+#, fuzzy
 msgid "Script to help configuring :ref:`gammu`."
-msgstr ""
+msgstr "Script para ajudar configurar o Gammu."
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/utils/gammu-config.rst:22 docs/manual/utils/jadmaker.rst:22
 #: docs/manual/utils/gammu-detect.rst:43
+#, fuzzy
 msgid ""
 "This program follows the usual GNU command line syntax, with long options "
 "starting with two dashes (``-``). A summary of options is included below."
 msgstr ""
+"Estes programas seguem o padrão de sintaxe do comando GNU, com opções longas "
+"começando por dois traços (--). Um resumo das opções está incluído abaixo."
 
 #. type: Plain text
 #: docs/manual/utils/gammu-config.rst:26 docs/manual/utils/jadmaker.rst:27
@@ -27391,10 +27947,11 @@ msgstr ""
 msgid "    jadmaker [-f|--force] [-u|--url URL] <filename.jar>...\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/utils/jadmaker.rst:19
 msgid "Script to generate JAD file from JAR file."
-msgstr ""
+msgstr "Script para gerar um arquivo JAD a partir de um arquivo JAR."
 
 #. type: Plain text
 #: docs/manual/utils/jadmaker.rst:31

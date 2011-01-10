@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-manual 1.28.96\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-01-10 12:07+0100\n"
+"POT-Creation-Date: 2011-01-10 13:04+0100\n"
 "PO-Revision-Date: 2011-01-10 12:07+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -9117,10 +9117,11 @@ msgid ""
 "-------\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:319
 msgid "History of schema versions:"
-msgstr ""
+msgstr "Historia de versiones de esquema:"
 
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:335
@@ -9143,19 +9144,21 @@ msgid ""
 "    introduced phones table\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:338
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "7\n"
 "    added CreatorID to tables (it holds PhoneID if set)\n"
-msgstr ""
+msgstr "7 - agregado CreatorID a las tablas (contiene PhoneID si está establecido)"
 
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:345
 msgid "Creating tables +++++++++++++++"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:349
 msgid ""
@@ -9163,11 +9166,15 @@ msgid ""
 "Gammu documentation (docs/sql). As well as some PHP scripts interacting with "
 "the database."
 msgstr ""
+"Scripts SQL para crear todas las tablas necesarias para la mayoría de bases "
+"de datos que se incluyen en la documentación del Gammu (docs / sql). Así "
+"como algunos scripts PHP interactuando con la base de datos."
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:351
 msgid "For example to create SQLite tables, issue following command:"
-msgstr ""
+msgstr "Por ejemplo para crear tablas SQLite, emitir el siguiente comando:"
 
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:353 docs/manual/smsd/run.rst:110
@@ -12176,23 +12183,29 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:18
+#, fuzzy
 msgid ""
 "Commands actually indicate which operation should Gammu perform. They can be "
 "specified with or without leading ``--``."
-msgstr ""
+msgstr "Los comandos pueden ser especificados con o sin -- al principio."
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:21
 msgid "Description +++++++++++"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/gammu/index.rst:24
+#, fuzzy
 msgid ""
 "This program is a tool for mobile phones. Many vendors and phones are "
 "supported, for actual listing see `Gammu Phones Database <http://wammu.eu/"
 "phones/>`_."
 msgstr ""
+"Este programa es una herramienta para teléfonos móviles. Muchas marcas  y "
+"modelos son soportodos, para la lista actualizada consulte E<lt>http://cihar."
+"com/gammu/phonedb/E<gt>."
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:27
@@ -12447,6 +12460,7 @@ msgid ""
 "--------------------\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/gammu/index.rst:127
 msgid ""
@@ -12454,6 +12468,10 @@ msgid ""
 "be patient, the command line has been written in order to allow almost every "
 "usage. See EXAMPLE section for some hints on usage."
 msgstr ""
+"El envío de mensajes puede parecer un poco complicado en los primeros "
+"intentos de uso. Pero sé paciente, la línea de comando ha sido escrita para "
+"permitir casi cualquier uso. Mira la sección de EJEMPLOS para algunos tipos "
+"sobre su uso."
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:130
@@ -14874,13 +14892,15 @@ msgstr ""
 
 #. type: Bullet: '    * '
 #: docs/manual/gammu/index.rst:1114
+#, fuzzy
 msgid "calendar notes"
-msgstr ""
+msgstr "Notas de calendario"
 
 #. type: Bullet: '    * '
 #: docs/manual/gammu/index.rst:1114
+#, fuzzy
 msgid "SMSC settings"
-msgstr ""
+msgstr "MMS y ajustes MMS"
 
 #. type: Bullet: '    * '
 #: docs/manual/gammu/index.rst:1114
@@ -14894,13 +14914,15 @@ msgstr ""
 
 #. type: Bullet: '    * '
 #: docs/manual/gammu/index.rst:1114
+#, fuzzy
 msgid "WAP bookmarks"
-msgstr ""
+msgstr "Ajustes WAP y marcadores"
 
 #. type: Bullet: '    * '
 #: docs/manual/gammu/index.rst:1114
+#, fuzzy
 msgid "WAP settings"
-msgstr ""
+msgstr "Ajustes del teléfono"
 
 #. type: Bullet: '    * '
 #: docs/manual/gammu/index.rst:1114
@@ -14909,8 +14931,9 @@ msgstr ""
 
 #. type: Bullet: '    * '
 #: docs/manual/gammu/index.rst:1114
+#, fuzzy
 msgid "user ringtones"
-msgstr ""
+msgstr "Tonos de llamada"
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:1117
@@ -15929,8 +15952,9 @@ msgstr ""
 
 #. type: Bullet: '        * '
 #: docs/manual/gammu/index.rst:1513
+#, fuzzy
 msgid "clear user ringtones"
-msgstr ""
+msgstr "Tonos de llamada"
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:1516
@@ -18517,21 +18541,22 @@ msgid "There are several po files to translate:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/localization.rst:29
+#: docs/manual/project/localization.rst:30
 #, no-wrap
 msgid ""
 "``libgammu.po``\n"
-"    Messages used in the Gammu library (libgammu).\n"
+"    Messages used in the Gammu library (see :ref:`libgammu`).\n"
 "``gammu.po``\n"
 "    Message used by command line utilities (mostly :ref:`gammu`).\n"
 "``docs.po``\n"
-"    Basic documentation shipped withing package.\n"
+"    Basic documentation shipped withing package (eg. :file:`README` and\n"
+"    :file:`INSTALL` files).\n"
 "``manual.po``\n"
-"    The Gammu Manual\n"
+"    The Gammu Manual translation (this manual).\n"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/localization.rst:32
+#: docs/manual/project/localization.rst:33
 msgid ""
 ".. _translation server: http://l10n.cihar.com/projects/gammu/ .. _Michal "
 "Čihař: mailto:michal@cihar.com"
@@ -18894,8 +18919,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/testing/testsuite.rst:21
+#, fuzzy
 msgid "``make test``"
-msgstr ""
+msgstr "Pruebas del teléfono"
 
 #. type: Plain text
 #: docs/manual/testing/testsuite.rst:23
@@ -19744,8 +19770,9 @@ msgstr ""
 
 #. type: Bullet: '* '
 #: docs/manual/python/objects.rst:188
+#, fuzzy
 msgid "``NokiaRingtone``"
-msgstr ""
+msgstr "Tonos de llamada"
 
 #. type: Bullet: '* '
 #: docs/manual/python/objects.rst:188
@@ -22418,9 +22445,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:67
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Adds memory (phonebooks or calls) entry.\n"
-msgstr ""
+msgstr "Memoria (números y llamadas)"
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:72 docs/manual/python/gammu.rst:960
@@ -22438,11 +22465,12 @@ msgstr ""
 msgid "   .. method:: AddSMS(Value)\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/python/gammu.rst:77
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Adds SMS to specified folder.\n"
-msgstr ""
+msgstr "Borra todos los SMS de la carpeta especificada."
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:82 docs/manual/python/gammu.rst:970
@@ -22504,11 +22532,12 @@ msgstr ""
 msgid "   .. method:: AnswerCall(ID, All)\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/python/gammu.rst:107
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Accept current incoming call.\n"
-msgstr ""
+msgstr "Contesta llamada entrante"
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:114
@@ -22528,11 +22557,12 @@ msgstr ""
 msgid "   .. method:: CancelCall(ID, All)\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/python/gammu.rst:119
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Deny current incoming call.\n"
-msgstr ""
+msgstr "Cancela llamada entrante"
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:126
@@ -22619,11 +22649,12 @@ msgstr ""
 msgid "   .. method:: DeleteAllToDo()\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/python/gammu.rst:159
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Deletes all todo entries in phone.\n"
-msgstr ""
+msgstr "Almacena todos los mensajes SMS del teléfono en un archivo."
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:165
@@ -22699,9 +22730,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:197
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Deletes memory (phonebooks or calls) entry.\n"
-msgstr ""
+msgstr "Memoria (números y llamadas)"
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:204
@@ -22855,11 +22886,12 @@ msgstr ""
 msgid "   .. method:: GetAlarm(Location)\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/python/gammu.rst:277
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Reads alarm set in phone.\n"
-msgstr ""
+msgstr "Almacena todos los mensajes SMS del teléfono en un archivo."
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:282
@@ -22939,11 +22971,12 @@ msgstr ""
 msgid "   .. method:: GetCategory(Type, Location)\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/python/gammu.rst:313
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Reads category from phone.\n"
-msgstr ""
+msgstr "Almacena todos los mensajes SMS del teléfono en un archivo."
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:320
@@ -23017,11 +23050,12 @@ msgstr ""
 msgid "   .. method:: GetDateTime()\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/python/gammu.rst:354
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Reads date and time from phone.\n"
-msgstr ""
+msgstr "Almacena todos los mensajes SMS del teléfono en un archivo."
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:357
@@ -23094,11 +23128,12 @@ msgstr ""
 msgid "   .. method:: GetFirmware()\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/python/gammu.rst:387
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Reads firmware information from phone.\n"
-msgstr ""
+msgstr "Almacena todos los mensajes SMS del teléfono en un archivo."
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:390
@@ -23158,11 +23193,12 @@ msgstr ""
 msgid "   .. method:: GetIMEI()\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/python/gammu.rst:415
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Reads IMEI/serial number from phone.\n"
-msgstr ""
+msgstr "Almacena todos los mensajes SMS del teléfono en un archivo."
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:418
@@ -23218,11 +23254,12 @@ msgstr ""
 msgid "   .. method:: GetManufacturer()\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/python/gammu.rst:439
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Reads manufacturer from phone.\n"
-msgstr ""
+msgstr "Almacena todos los mensajes SMS del teléfono en un archivo."
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:442
@@ -23282,11 +23319,12 @@ msgstr ""
 msgid "   .. method:: GetModel()\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/python/gammu.rst:467
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Reads model from phone.\n"
-msgstr ""
+msgstr "Almacena todos los mensajes SMS del teléfono en un archivo."
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:470
@@ -23304,9 +23342,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:475
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Gets network information.\n"
-msgstr ""
+msgstr "Información del teléfono"
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:478
@@ -23441,11 +23479,12 @@ msgstr ""
 msgid "   .. method:: GetNextToDo(Start, Location)\n"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/python/gammu.rst:542 docs/manual/python/gammu.rst:649
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Reads ToDo from phone.\n"
-msgstr ""
+msgstr "Almacena todos los mensajes SMS del teléfono en un archivo."
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:549
@@ -23854,9 +23893,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:733
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Resets phone settings.\n"
-msgstr ""
+msgstr "Ajustes del teléfono"
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:738
@@ -24251,9 +24290,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:955
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Sets memory (phonebooks or calls) entry.\n"
-msgstr ""
+msgstr "Memoria (números y llamadas)"
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:963
@@ -24465,8 +24504,9 @@ msgstr ""
 
 #. type: Bullet: '       * '
 #: docs/manual/python/gammu.rst:1090
+#, fuzzy
 msgid "text"
-msgstr ""
+msgstr "Gettext"
 
 #. type: Bullet: '       * '
 #: docs/manual/python/gammu.rst:1090
@@ -24480,8 +24520,9 @@ msgstr ""
 
 #. type: Bullet: '       * '
 #: docs/manual/python/gammu.rst:1090
+#, fuzzy
 msgid "errors"
-msgstr ""
+msgstr "Sin error."
 
 #. type: Bullet: '       * '
 #: docs/manual/python/gammu.rst:1090
@@ -26820,8 +26861,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/c/hints.rst:180
+#, fuzzy
 msgid "For per state machine configuration:"
-msgstr ""
+msgstr "Cadena de características mal formada en la configuración."
 
 #. type: Plain text
 #: docs/manual/c/hints.rst:186

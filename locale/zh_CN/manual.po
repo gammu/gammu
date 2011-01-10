@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-manual 1.28.96\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-01-10 12:07+0100\n"
+"POT-Creation-Date: 2011-01-10 13:04+0100\n"
 "PO-Revision-Date: 2011-01-10 12:07+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -14908,8 +14908,9 @@ msgstr ""
 
 #. type: Bullet: '    * '
 #: docs/manual/gammu/index.rst:1114
+#, fuzzy
 msgid "user ringtones"
-msgstr ""
+msgstr "铃音"
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:1117
@@ -18516,21 +18517,22 @@ msgid "There are several po files to translate:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/localization.rst:29
+#: docs/manual/project/localization.rst:30
 #, no-wrap
 msgid ""
 "``libgammu.po``\n"
-"    Messages used in the Gammu library (libgammu).\n"
+"    Messages used in the Gammu library (see :ref:`libgammu`).\n"
 "``gammu.po``\n"
 "    Message used by command line utilities (mostly :ref:`gammu`).\n"
 "``docs.po``\n"
-"    Basic documentation shipped withing package.\n"
+"    Basic documentation shipped withing package (eg. :file:`README` and\n"
+"    :file:`INSTALL` files).\n"
 "``manual.po``\n"
-"    The Gammu Manual\n"
+"    The Gammu Manual translation (this manual).\n"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/localization.rst:32
+#: docs/manual/project/localization.rst:33
 msgid ""
 ".. _translation server: http://l10n.cihar.com/projects/gammu/ .. _Michal "
 "Čihař: mailto:michal@cihar.com"
@@ -19743,8 +19745,9 @@ msgstr ""
 
 #. type: Bullet: '* '
 #: docs/manual/python/objects.rst:188
+#, fuzzy
 msgid "``NokiaRingtone``"
-msgstr ""
+msgstr "铃音"
 
 #. type: Bullet: '* '
 #: docs/manual/python/objects.rst:188
@@ -23303,9 +23306,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:475
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Gets network information.\n"
-msgstr ""
+msgstr "手机信息"
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:478
@@ -24479,8 +24482,9 @@ msgstr ""
 
 #. type: Bullet: '       * '
 #: docs/manual/python/gammu.rst:1090
+#, fuzzy
 msgid "errors"
-msgstr ""
+msgstr "没有错误。"
 
 #. type: Bullet: '       * '
 #: docs/manual/python/gammu.rst:1090
