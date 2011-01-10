@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.28.95\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-01-06 20:40+0100\n"
+"POT-Creation-Date: 2011-01-10 11:59+0100\n"
 "PO-Revision-Date: 2009-01-07 18:00+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -242,15 +242,15 @@ msgstr ""
 #: docs/manual/config/index.rst:203 docs/manual/config/index.rst:214
 #: docs/manual/config/index.rst:223 docs/manual/config/index.rst:245
 #: docs/manual/config/index.rst:256 docs/manual/config/index.rst:262
-#: docs/manual/smsd/sql.rst:104 docs/manual/smsd/sql.rst:114
-#: docs/manual/smsd/sql.rst:132 docs/manual/smsd/sql.rst:143
-#: docs/manual/smsd/sql.rst:160 docs/manual/smsd/sql.rst:177
-#: docs/manual/smsd/sql.rst:188 docs/manual/smsd/sql.rst:198
-#: docs/manual/smsd/sql.rst:214 docs/manual/smsd/sql.rst:231
-#: docs/manual/smsd/sql.rst:247 docs/manual/smsd/sql.rst:265
-#: docs/manual/smsd/sql.rst:280 docs/manual/smsd/sql.rst:295
-#: docs/manual/smsd/sql.rst:320 docs/manual/smsd/sql.rst:344
-#: docs/manual/smsd/sql.rst:370 docs/manual/smsd/sql.rst:380
+#: docs/manual/smsd/sql.rst:108 docs/manual/smsd/sql.rst:118
+#: docs/manual/smsd/sql.rst:136 docs/manual/smsd/sql.rst:147
+#: docs/manual/smsd/sql.rst:164 docs/manual/smsd/sql.rst:181
+#: docs/manual/smsd/sql.rst:192 docs/manual/smsd/sql.rst:202
+#: docs/manual/smsd/sql.rst:218 docs/manual/smsd/sql.rst:235
+#: docs/manual/smsd/sql.rst:251 docs/manual/smsd/sql.rst:269
+#: docs/manual/smsd/sql.rst:284 docs/manual/smsd/sql.rst:299
+#: docs/manual/smsd/sql.rst:324 docs/manual/smsd/sql.rst:348
+#: docs/manual/smsd/sql.rst:374 docs/manual/smsd/sql.rst:384
 #: docs/manual/smsd/config.rst:56 docs/manual/smsd/config.rst:93
 #: docs/manual/smsd/config.rst:98 docs/manual/smsd/config.rst:103
 #: docs/manual/smsd/config.rst:108 docs/manual/smsd/config.rst:120
@@ -487,7 +487,7 @@ msgstr "Alat"
 #: docs/manual/config/index.rst:104 docs/manual/smsd/config.rst:67
 #: docs/manual/smsd/config.rst:216 docs/manual/smsd/config.rst:280
 #: docs/manual/smsd/config.rst:363 docs/manual/gammu/index.rst:1190
-#: docs/manual/testing/dummy-driver.rst:6 docs/manual/python/gammu.rst:1145
+#: docs/manual/testing/dummy-driver.rst:6 docs/manual/python/gammu.rst:1147
 #: docs/manual/utils/gammu-detect.rst:7
 #, no-wrap
 msgid ".. versionadded"
@@ -543,8 +543,10 @@ msgstr ""
 #: docs/manual/config/index.rst:125 docs/manual/config/index.rst:157
 #: docs/manual/config/index.rst:219 docs/manual/protocol/n6110.rst:26
 #: docs/manual/protocol/n7110.rst:23 docs/manual/protocol/nokia.rst:32
-#: docs/manual/protocol/index.rst:23 docs/manual/smsd/tables.rst:427
-#: docs/manual/smsd/config.rst:90 docs/manual/gammu/index.rst:583
+#: docs/manual/protocol/index.rst:23 docs/manual/smsd/dbi.rst:15
+#: docs/manual/smsd/dbi.rst:43 docs/manual/smsd/tables.rst:427
+#: docs/manual/smsd/pgsql.rst:25 docs/manual/smsd/config.rst:90
+#: docs/manual/smsd/mysql.rst:42 docs/manual/gammu/index.rst:583
 #: docs/manual/gammu/index.rst:597 docs/manual/gammu/index.rst:1054
 #: docs/manual/gammu/index.rst:1344 docs/manual/project/motivation.rst:5
 #: docs/manual/formats/smsbackup.rst:44 docs/manual/c/hints.rst:161
@@ -572,11 +574,13 @@ msgstr ""
 
 #. type: Labeled list
 #: docs/manual/config/index.rst:135 docs/manual/config/index.rst:339
-#: docs/manual/python/examples.rst:10 docs/manual/python/examples.rst:16
-#: docs/manual/python/examples.rst:22 docs/manual/python/examples.rst:28
-#: docs/manual/c/examples.rst:10 docs/manual/c/examples.rst:16
-#: docs/manual/c/examples.rst:22 docs/manual/c/examples.rst:28
-#: docs/manual/c/examples.rst:34 docs/manual/c/examples.rst:40
+#: docs/manual/smsd/dbi.rst:39 docs/manual/smsd/pgsql.rst:21
+#: docs/manual/smsd/mysql.rst:38 docs/manual/python/examples.rst:10
+#: docs/manual/python/examples.rst:16 docs/manual/python/examples.rst:22
+#: docs/manual/python/examples.rst:28 docs/manual/c/examples.rst:10
+#: docs/manual/c/examples.rst:16 docs/manual/c/examples.rst:22
+#: docs/manual/c/examples.rst:28 docs/manual/c/examples.rst:34
+#: docs/manual/c/examples.rst:40
 #, no-wrap
 msgid ".. literalinclude"
 msgstr ""
@@ -625,15 +629,15 @@ msgstr ""
 #: docs/manual/config/index.rst:151 docs/manual/config/index.rst:278
 #: docs/manual/config/index.rst:287 docs/manual/config/index.rst:296
 #: docs/manual/config/index.rst:304 docs/manual/config/index.rst:318
-#: docs/manual/smsd/sql.rst:110 docs/manual/smsd/sql.rst:120
-#: docs/manual/smsd/sql.rst:138 docs/manual/smsd/sql.rst:149
-#: docs/manual/smsd/sql.rst:166 docs/manual/smsd/sql.rst:183
-#: docs/manual/smsd/sql.rst:194 docs/manual/smsd/sql.rst:204
-#: docs/manual/smsd/sql.rst:220 docs/manual/smsd/sql.rst:237
-#: docs/manual/smsd/sql.rst:253 docs/manual/smsd/sql.rst:271
-#: docs/manual/smsd/sql.rst:286 docs/manual/smsd/sql.rst:301
-#: docs/manual/smsd/sql.rst:326 docs/manual/smsd/sql.rst:350
-#: docs/manual/smsd/sql.rst:376 docs/manual/smsd/sql.rst:386
+#: docs/manual/smsd/sql.rst:114 docs/manual/smsd/sql.rst:124
+#: docs/manual/smsd/sql.rst:142 docs/manual/smsd/sql.rst:153
+#: docs/manual/smsd/sql.rst:170 docs/manual/smsd/sql.rst:187
+#: docs/manual/smsd/sql.rst:198 docs/manual/smsd/sql.rst:208
+#: docs/manual/smsd/sql.rst:224 docs/manual/smsd/sql.rst:241
+#: docs/manual/smsd/sql.rst:257 docs/manual/smsd/sql.rst:275
+#: docs/manual/smsd/sql.rst:290 docs/manual/smsd/sql.rst:305
+#: docs/manual/smsd/sql.rst:330 docs/manual/smsd/sql.rst:354
+#: docs/manual/smsd/sql.rst:380 docs/manual/smsd/sql.rst:390
 #: docs/manual/smsd/usage.rst:48 docs/manual/smsd/tables.rst:352
 #: docs/manual/smsd/tables.rst:363 docs/manual/smsd/tables.rst:393
 #: docs/manual/smsd/run.rst:98 docs/manual/smsd/run.rst:109
@@ -652,14 +656,14 @@ msgstr ""
 #: docs/manual/smsd/smsd.rst:148 docs/manual/smsd/smsd.rst:163
 #: docs/manual/gammu/index.rst:12 docs/manual/gammu/index.rst:1232
 #: docs/manual/gammu/index.rst:1238 docs/manual/gammu/index.rst:1244
-#: docs/manual/gammu/index.rst:1808 docs/manual/gammu/index.rst:1814
-#: docs/manual/gammu/index.rst:1820 docs/manual/gammu/index.rst:1826
-#: docs/manual/gammu/index.rst:1832 docs/manual/gammu/index.rst:1838
-#: docs/manual/gammu/index.rst:1844 docs/manual/gammu/index.rst:1853
-#: docs/manual/gammu/index.rst:1859 docs/manual/gammu/index.rst:1868
-#: docs/manual/gammu/index.rst:1882 docs/manual/gammu/index.rst:1888
-#: docs/manual/gammu/index.rst:1894 docs/manual/gammu/index.rst:1908
-#: docs/manual/gammu/index.rst:1917 docs/manual/project/documentation.rst:18
+#: docs/manual/gammu/index.rst:1810 docs/manual/gammu/index.rst:1816
+#: docs/manual/gammu/index.rst:1822 docs/manual/gammu/index.rst:1828
+#: docs/manual/gammu/index.rst:1834 docs/manual/gammu/index.rst:1840
+#: docs/manual/gammu/index.rst:1846 docs/manual/gammu/index.rst:1855
+#: docs/manual/gammu/index.rst:1861 docs/manual/gammu/index.rst:1870
+#: docs/manual/gammu/index.rst:1884 docs/manual/gammu/index.rst:1890
+#: docs/manual/gammu/index.rst:1896 docs/manual/gammu/index.rst:1910
+#: docs/manual/gammu/index.rst:1919 docs/manual/project/documentation.rst:18
 #: docs/manual/project/documentation.rst:25
 #: docs/manual/project/documentation.rst:47
 #: docs/manual/project/documentation.rst:55
@@ -701,14 +705,14 @@ msgstr ""
 #: docs/manual/smsd/smsd.rst:135 docs/manual/smsd/smsd.rst:141
 #: docs/manual/smsd/smsd.rst:149 docs/manual/smsd/smsd.rst:164
 #: docs/manual/gammu/index.rst:1233 docs/manual/gammu/index.rst:1239
-#: docs/manual/gammu/index.rst:1245 docs/manual/gammu/index.rst:1809
-#: docs/manual/gammu/index.rst:1815 docs/manual/gammu/index.rst:1821
-#: docs/manual/gammu/index.rst:1827 docs/manual/gammu/index.rst:1833
-#: docs/manual/gammu/index.rst:1839 docs/manual/gammu/index.rst:1845
-#: docs/manual/gammu/index.rst:1854 docs/manual/gammu/index.rst:1860
-#: docs/manual/gammu/index.rst:1869 docs/manual/gammu/index.rst:1883
-#: docs/manual/gammu/index.rst:1889 docs/manual/gammu/index.rst:1895
-#: docs/manual/gammu/index.rst:1918 docs/manual/project/documentation.rst:19
+#: docs/manual/gammu/index.rst:1245 docs/manual/gammu/index.rst:1811
+#: docs/manual/gammu/index.rst:1817 docs/manual/gammu/index.rst:1823
+#: docs/manual/gammu/index.rst:1829 docs/manual/gammu/index.rst:1835
+#: docs/manual/gammu/index.rst:1841 docs/manual/gammu/index.rst:1847
+#: docs/manual/gammu/index.rst:1856 docs/manual/gammu/index.rst:1862
+#: docs/manual/gammu/index.rst:1871 docs/manual/gammu/index.rst:1885
+#: docs/manual/gammu/index.rst:1891 docs/manual/gammu/index.rst:1897
+#: docs/manual/gammu/index.rst:1920 docs/manual/project/documentation.rst:19
 #: docs/manual/project/documentation.rst:26
 #: docs/manual/project/documentation.rst:48
 #: docs/manual/project/documentation.rst:56
@@ -753,7 +757,7 @@ msgid "Alias for :config:option:`Device`, kept for backward compatibility."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:169 docs/manual/python/gammu.rst:1263
+#: docs/manual/config/index.rst:169 docs/manual/python/gammu.rst:1265
 msgid "Model"
 msgstr "Model"
 
@@ -1047,7 +1051,7 @@ msgstr ""
 #: docs/manual/config/index.rst:269 docs/manual/smsd/tables.rst:341
 #: docs/manual/smsd/run.rst:90 docs/manual/smsd/config.rst:494
 #: docs/manual/smsd/inject.rst:46 docs/manual/smsd/smsd.rst:102
-#: docs/manual/gammu/index.rst:1795 docs/manual/testing/dummy-driver.rst:69
+#: docs/manual/gammu/index.rst:1797 docs/manual/testing/dummy-driver.rst:69
 #: docs/manual/python/objects.rst:123 docs/manual/formats/backup.rst:11
 #: docs/manual/formats/ini.rst:14 docs/manual/c/examples.rst:2
 #, no-wrap
@@ -1079,7 +1083,7 @@ msgstr ""
 #: docs/manual/smsd/run.rst:99 docs/manual/smsd/config.rst:503
 #: docs/manual/smsd/config.rst:516 docs/manual/smsd/config.rst:529
 #: docs/manual/smsd/config.rst:536 docs/manual/smsd/config.rst:543
-#: docs/manual/gammu/index.rst:1909 docs/manual/testing/dummy-driver.rst:74
+#: docs/manual/gammu/index.rst:1911 docs/manual/testing/dummy-driver.rst:74
 #: docs/manual/testing/dummy-driver.rst:83
 #: docs/manual/formats/smsbackup.rst:36 docs/manual/formats/smsbackup.rst:109
 #: docs/manual/formats/ini.rst:20 docs/manual/utils/gammu-detect.rst:86
@@ -1138,9 +1142,9 @@ msgstr ""
 #: docs/manual/config/index.rst:317
 msgid ""
 "Gammu can be configured for multiple phones (however only one connection is "
-"used at one time, you can choose which one to use with :option:`gammu --"
-"section` parameter). Configuration for phones on three serial ports would "
-"look like following:"
+"used at one time, you can choose which one to use with :option:`gammu -s` "
+"parameter). Configuration for phones on three serial ports would look like "
+"following:"
 msgstr ""
 
 #. type: Plain text
@@ -3938,11 +3942,13 @@ msgstr ""
 
 #. type: Title -
 #: docs/manual/protocol/samsung.rst:11 docs/manual/protocol/samsung.rst:271
-#: docs/manual/protocol/samsung.rst:288 docs/manual/python/objects.rst:193
-#: docs/manual/python/objects.rst:243 docs/manual/python/objects.rst:279
-#: docs/manual/python/objects.rst:491 docs/manual/python/objects.rst:577
-#: docs/manual/python/objects.rst:643 docs/manual/python/objects.rst:798
-#: docs/manual/formats/smsbackup.rst:104 docs/manual/utils/gammu-detect.rst:83
+#: docs/manual/protocol/samsung.rst:288 docs/manual/smsd/dbi.rst:35
+#: docs/manual/smsd/pgsql.rst:17 docs/manual/smsd/mysql.rst:34
+#: docs/manual/python/objects.rst:193 docs/manual/python/objects.rst:243
+#: docs/manual/python/objects.rst:279 docs/manual/python/objects.rst:491
+#: docs/manual/python/objects.rst:577 docs/manual/python/objects.rst:643
+#: docs/manual/python/objects.rst:798 docs/manual/formats/smsbackup.rst:104
+#: docs/manual/utils/gammu-detect.rst:83
 #, no-wrap
 msgid "Example"
 msgstr ""
@@ -4825,7 +4831,7 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/protocol/m-obex.rst:247 docs/manual/testing/dummy-driver.rst:42
-#: docs/manual/python/objects.rst:419 docs/manual/python/gammu.rst:1267
+#: docs/manual/python/objects.rst:419 docs/manual/python/gammu.rst:1269
 #: docs/manual/c/calendar.rst:2
 #, fuzzy, no-wrap
 msgid "Calendar"
@@ -10675,7 +10681,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/smsd/dbi.rst:9
 msgid ""
-"DBI backend stores all data in any database supported by libdbi, which "
+"DBI backend stores all data in any database supported by `libdbi`_, which "
 "parameters are defined by configuration (see :ref:`gammu-smsdrc` for "
 "description of configuration options)."
 msgstr ""
@@ -10687,9 +10693,81 @@ msgid "For tables description see :ref:`gammu-smsd-tables`."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/dbi.rst:12 docs/manual/smsd/pgsql.rst:12
+#: docs/manual/smsd/dbi.rst:13 docs/manual/smsd/pgsql.rst:13
 #: docs/manual/smsd/mysql.rst:13
 msgid "This backend is based on :ref:`gammu-smsd-sql`."
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/dbi.rst:18
+msgid ""
+"The DBI driver is currently not supported on Windows because libdbi library "
+"does not support this platform."
+msgstr ""
+
+#. type: Title -
+#: docs/manual/smsd/dbi.rst:21
+#, no-wrap
+msgid "Supported drivers"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/dbi.rst:25
+msgid ""
+"For complete list of drivers for `libdbi`_ see `libdbi-drivers`_ project. "
+"The drivers for example include:"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/dbi.rst:27 docs/manual/smsd/sql.rst:13
+msgid "``sqlite3`` - for SQLite 3"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/dbi.rst:28 docs/manual/smsd/sql.rst:14
+msgid "``mysql`` - for MySQL"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/dbi.rst:29 docs/manual/smsd/sql.rst:15
+msgid "``pgsql`` - for PostgeSQL"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/dbi.rst:30 docs/manual/smsd/sql.rst:16
+msgid "``freetds`` - for MS SQL Server or Sybase"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/dbi.rst:32
+msgid "_libdbi: http://libdbi.sourceforge.net/"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/dbi.rst:33
+msgid "_libdbi-drivers: http://libdbi-drivers.sourceforge.net/"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/dbi.rst:38
+msgid "SQL script for creating tables in SQLite database:"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/dbi.rst:40
+msgid "../../sql/sqlite.sql"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/dbi.rst:41 docs/manual/smsd/pgsql.rst:23
+msgid ":language: sql"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/dbi.rst:45
+msgid ""
+"You can find the script in :file:`docs/sql/sqlite.sql` as well. There are "
+"also scripts for other databases in same folder."
 msgstr ""
 
 #. type: Plain text
@@ -10745,62 +10823,62 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/smsd/sql.rst:12
-msgid "drivers supported by DBI for :ref:`gammu-smsd-dbi`"
+msgid "drivers supported by DBI for :ref:`gammu-smsd-dbi`, which include:"
 msgstr ""
 
 #. type: Title -
-#: docs/manual/smsd/sql.rst:14
+#: docs/manual/smsd/sql.rst:18
 #, no-wrap
 msgid "SQL connection parameters"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:17
+#: docs/manual/smsd/sql.rst:21
 msgid "Common for all backends:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:19
+#: docs/manual/smsd/sql.rst:23
 msgid ":config:option:`User` - user connecting to database"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:20
+#: docs/manual/smsd/sql.rst:24
 msgid ":config:option:`Password` - password for connecting to database"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:21
+#: docs/manual/smsd/sql.rst:25
 msgid ":config:option:`Host` - database host"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:22
+#: docs/manual/smsd/sql.rst:26
 msgid ":config:option:`Database` - database name"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:23
+#: docs/manual/smsd/sql.rst:27
 msgid ":config:option:`Driver` - ``native_mysql``, ``native_pgsql`` or DBI one"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:25
+#: docs/manual/smsd/sql.rst:29
 msgid "Specific for DBI:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:27
+#: docs/manual/smsd/sql.rst:31
 msgid ":config:option:`DriversPath` - path to DBI drivers"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:28
+#: docs/manual/smsd/sql.rst:32
 msgid ":config:option:`DBDir` - sqlite/sqlite3 directory with database"
 msgstr ""
 
 #. type: Labeled list
-#: docs/manual/smsd/sql.rst:29 docs/manual/smsd/config.rst:51
+#: docs/manual/smsd/sql.rst:33 docs/manual/smsd/config.rst:51
 #: docs/manual/gammu/index.rst:1186 docs/manual/gammu/index.rst:1196
 #: docs/manual/formats/backup.rst:56
 #, no-wrap
@@ -10808,65 +10886,65 @@ msgid ".. seealso"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:30
+#: docs/manual/smsd/sql.rst:34
 msgid "The variables are fully described in :ref:`gammurc` documentation."
 msgstr ""
 
 #. type: Title -
-#: docs/manual/smsd/sql.rst:32
+#: docs/manual/smsd/sql.rst:36
 #, no-wrap
 msgid "SQL Queries"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:35
+#: docs/manual/smsd/sql.rst:39
 msgid "Almost all queries are configurable. You can edit them in"
 msgstr ""
 
 #. type: Attribute :config:
-#: docs/manual/smsd/sql.rst:35
+#: docs/manual/smsd/sql.rst:39
 #, no-wrap
 msgid "section:`[sql]` section. There are several variables used in SQL"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:37
+#: docs/manual/smsd/sql.rst:41
 msgid "queries. We can separate them into three groups:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:39
+#: docs/manual/smsd/sql.rst:43
 msgid ""
 "phone specific, which can be used in every query, see :ref:`Phone Specific "
 "Parameters`"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:40
+#: docs/manual/smsd/sql.rst:44
 msgid ""
 "SMS specific, which can be used in queries which works with SMS messages, "
 "see :ref:`SMS Specific Parameters`"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:41
+#: docs/manual/smsd/sql.rst:45
 msgid ""
 "query specific, which are numeric and are specific only for given query (or "
 "set of queries), see :ref:`Configurable queries`"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:43
+#: docs/manual/smsd/sql.rst:47
 msgid "_Phone Specific Parameters:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:45
+#: docs/manual/smsd/sql.rst:49
 msgid "Phone Specific Parameters"
 msgstr ""
 
 #. type: delimited block +
-#: docs/manual/smsd/sql.rst:56
+#: docs/manual/smsd/sql.rst:60
 #, no-wrap
 msgid ""
 "+-----------+------------------------------------------------------------------+\n"
@@ -10881,19 +10959,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block +
-#: docs/manual/smsd/sql.rst:58
+#: docs/manual/smsd/sql.rst:62
 #, no-wrap
 msgid ".. _SMS Specific Parameters:\n"
 msgstr ""
 
 #. type: delimited block +
-#: docs/manual/smsd/sql.rst:60
+#: docs/manual/smsd/sql.rst:64
 #, no-wrap
 msgid "SMS Specific Parameters\n"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:91
+#: docs/manual/smsd/sql.rst:95
 #, no-wrap
 msgid ""
 "+-----------+------------------------------------------------------------------+\n"
@@ -10928,93 +11006,93 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:93
+#: docs/manual/smsd/sql.rst:97
 msgid ""
 "[#f1] Sender number for received messages (insert to inbox or delivery "
 "notifications), destination otherwise."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:95
+#: docs/manual/smsd/sql.rst:99
 msgid "_Configurable queries:"
 msgstr ""
 
 #. type: Title -
-#: docs/manual/smsd/sql.rst:97
+#: docs/manual/smsd/sql.rst:101
 #, no-wrap
 msgid "Configurable queries"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:100
+#: docs/manual/smsd/sql.rst:104
 msgid ""
 "All configurable queries can be set in :config:section:`[sql]` section. "
 "Sequence of rows in selects are mandatory."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:103
+#: docs/manual/smsd/sql.rst:107
 msgid ""
 "All default queries noted here are noted for MySQL. Actual time and time "
 "addition are selected for default queries during initialization."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:105
+#: docs/manual/smsd/sql.rst:109
 msgid "delete_phone"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:107
+#: docs/manual/smsd/sql.rst:111
 msgid "Deletes phone from database."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:109 docs/manual/smsd/sql.rst:119
-#: docs/manual/smsd/sql.rst:137 docs/manual/smsd/sql.rst:148
-#: docs/manual/smsd/sql.rst:165 docs/manual/smsd/sql.rst:182
-#: docs/manual/smsd/sql.rst:193 docs/manual/smsd/sql.rst:203
-#: docs/manual/smsd/sql.rst:219 docs/manual/smsd/sql.rst:236
-#: docs/manual/smsd/sql.rst:252 docs/manual/smsd/sql.rst:270
-#: docs/manual/smsd/sql.rst:285 docs/manual/smsd/sql.rst:300
-#: docs/manual/smsd/sql.rst:325 docs/manual/smsd/sql.rst:349
-#: docs/manual/smsd/sql.rst:375 docs/manual/smsd/sql.rst:385
+#: docs/manual/smsd/sql.rst:113 docs/manual/smsd/sql.rst:123
+#: docs/manual/smsd/sql.rst:141 docs/manual/smsd/sql.rst:152
+#: docs/manual/smsd/sql.rst:169 docs/manual/smsd/sql.rst:186
+#: docs/manual/smsd/sql.rst:197 docs/manual/smsd/sql.rst:207
+#: docs/manual/smsd/sql.rst:223 docs/manual/smsd/sql.rst:240
+#: docs/manual/smsd/sql.rst:256 docs/manual/smsd/sql.rst:274
+#: docs/manual/smsd/sql.rst:289 docs/manual/smsd/sql.rst:304
+#: docs/manual/smsd/sql.rst:329 docs/manual/smsd/sql.rst:353
+#: docs/manual/smsd/sql.rst:379 docs/manual/smsd/sql.rst:389
 #, fuzzy
 msgid "Default value:"
 msgstr "Gunakan nilai default."
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:111 docs/manual/smsd/sql.rst:121
-#: docs/manual/smsd/sql.rst:139 docs/manual/smsd/sql.rst:150
-#: docs/manual/smsd/sql.rst:167 docs/manual/smsd/sql.rst:184
-#: docs/manual/smsd/sql.rst:195 docs/manual/smsd/sql.rst:205
-#: docs/manual/smsd/sql.rst:221 docs/manual/smsd/sql.rst:238
-#: docs/manual/smsd/sql.rst:254 docs/manual/smsd/sql.rst:272
-#: docs/manual/smsd/sql.rst:287 docs/manual/smsd/sql.rst:302
-#: docs/manual/smsd/sql.rst:327 docs/manual/smsd/sql.rst:351
-#: docs/manual/smsd/sql.rst:377 docs/manual/smsd/sql.rst:387
+#: docs/manual/smsd/sql.rst:115 docs/manual/smsd/sql.rst:125
+#: docs/manual/smsd/sql.rst:143 docs/manual/smsd/sql.rst:154
+#: docs/manual/smsd/sql.rst:171 docs/manual/smsd/sql.rst:188
+#: docs/manual/smsd/sql.rst:199 docs/manual/smsd/sql.rst:209
+#: docs/manual/smsd/sql.rst:225 docs/manual/smsd/sql.rst:242
+#: docs/manual/smsd/sql.rst:258 docs/manual/smsd/sql.rst:276
+#: docs/manual/smsd/sql.rst:291 docs/manual/smsd/sql.rst:306
+#: docs/manual/smsd/sql.rst:331 docs/manual/smsd/sql.rst:355
+#: docs/manual/smsd/sql.rst:381 docs/manual/smsd/sql.rst:391
 #: docs/manual/smsd/tables.rst:364 docs/manual/smsd/tables.rst:394
 #: docs/manual/smsd/mysql.rst:21
 msgid "sql"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:113
+#: docs/manual/smsd/sql.rst:117
 msgid "DELETE FROM phones WHERE IMEI = %I"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:115
+#: docs/manual/smsd/sql.rst:119
 msgid "insert_phone"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:117
+#: docs/manual/smsd/sql.rst:121
 msgid "Inserts phone to database."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:124
+#: docs/manual/smsd/sql.rst:128
 msgid ""
 "INSERT INTO phones (IMEI, ID, Send, Receive, InsertIntoDB, TimeOut, Client, "
 "Battery, Signal)  VALUES (%I, %P, %1, %2, NOW(), (NOW() + INTERVAL 10 "
@@ -11022,57 +11100,57 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:126 docs/manual/smsd/sql.rst:154
-#: docs/manual/smsd/sql.rst:171 docs/manual/smsd/sql.rst:210
-#: docs/manual/smsd/sql.rst:227 docs/manual/smsd/sql.rst:243
-#: docs/manual/smsd/sql.rst:259 docs/manual/smsd/sql.rst:276
-#: docs/manual/smsd/sql.rst:291 docs/manual/smsd/sql.rst:308
-#: docs/manual/smsd/sql.rst:332 docs/manual/smsd/sql.rst:358
-#: docs/manual/smsd/sql.rst:392
+#: docs/manual/smsd/sql.rst:130 docs/manual/smsd/sql.rst:158
+#: docs/manual/smsd/sql.rst:175 docs/manual/smsd/sql.rst:214
+#: docs/manual/smsd/sql.rst:231 docs/manual/smsd/sql.rst:247
+#: docs/manual/smsd/sql.rst:263 docs/manual/smsd/sql.rst:280
+#: docs/manual/smsd/sql.rst:295 docs/manual/smsd/sql.rst:312
+#: docs/manual/smsd/sql.rst:336 docs/manual/smsd/sql.rst:362
+#: docs/manual/smsd/sql.rst:396
 msgid "Query specific parameters:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:128 docs/manual/smsd/sql.rst:156
-#: docs/manual/smsd/sql.rst:173 docs/manual/smsd/sql.rst:212
-#: docs/manual/smsd/sql.rst:229 docs/manual/smsd/sql.rst:245
-#: docs/manual/smsd/sql.rst:261 docs/manual/smsd/sql.rst:278
-#: docs/manual/smsd/sql.rst:293 docs/manual/smsd/sql.rst:310
-#: docs/manual/smsd/sql.rst:334 docs/manual/smsd/sql.rst:360
-#: docs/manual/smsd/sql.rst:394
+#: docs/manual/smsd/sql.rst:132 docs/manual/smsd/sql.rst:160
+#: docs/manual/smsd/sql.rst:177 docs/manual/smsd/sql.rst:216
+#: docs/manual/smsd/sql.rst:233 docs/manual/smsd/sql.rst:249
+#: docs/manual/smsd/sql.rst:265 docs/manual/smsd/sql.rst:282
+#: docs/manual/smsd/sql.rst:297 docs/manual/smsd/sql.rst:314
+#: docs/manual/smsd/sql.rst:338 docs/manual/smsd/sql.rst:364
+#: docs/manual/smsd/sql.rst:398
 msgid "``%1``"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:129
+#: docs/manual/smsd/sql.rst:133
 msgid "enable send (yes or no) - configuration option Send"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:130 docs/manual/smsd/sql.rst:158
-#: docs/manual/smsd/sql.rst:175 docs/manual/smsd/sql.rst:263
-#: docs/manual/smsd/sql.rst:312 docs/manual/smsd/sql.rst:336
-#: docs/manual/smsd/sql.rst:362 docs/manual/smsd/sql.rst:396
+#: docs/manual/smsd/sql.rst:134 docs/manual/smsd/sql.rst:162
+#: docs/manual/smsd/sql.rst:179 docs/manual/smsd/sql.rst:267
+#: docs/manual/smsd/sql.rst:316 docs/manual/smsd/sql.rst:340
+#: docs/manual/smsd/sql.rst:366 docs/manual/smsd/sql.rst:400
 msgid "``%2``"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:131
+#: docs/manual/smsd/sql.rst:135
 msgid "enable receive (yes or no)  - configuration option Receive"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:133
+#: docs/manual/smsd/sql.rst:137
 msgid "save_inbox_sms_select"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:135
+#: docs/manual/smsd/sql.rst:139
 msgid "Select message for update delivery status."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:142
+#: docs/manual/smsd/sql.rst:146
 msgid ""
 "SELECT ID, Status, SendingDateTime, DeliveryDateTime, SMSCNumber FROM "
 "sentitems WHERE DeliveryDateTime IS NULL AND SenderID = %P AND TPMR = %t AND "
@@ -11080,65 +11158,65 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:144
+#: docs/manual/smsd/sql.rst:148
 msgid "save_inbox_sms_update_delivered"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:146
+#: docs/manual/smsd/sql.rst:150
 msgid "Update message delivery status if message was delivered."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:152
+#: docs/manual/smsd/sql.rst:156
 msgid ""
 "UPDATE sentitems SET DeliveryDateTime = %C, Status = %1, StatusError = %e "
 "WHERE ID = %2 AND TPMR = %t"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:157 docs/manual/smsd/sql.rst:174
+#: docs/manual/smsd/sql.rst:161 docs/manual/smsd/sql.rst:178
 msgid "delivery status returned by GSM network"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:159 docs/manual/smsd/sql.rst:176
-#: docs/manual/smsd/sql.rst:213 docs/manual/smsd/sql.rst:246
-#: docs/manual/smsd/sql.rst:262 docs/manual/smsd/sql.rst:279
-#: docs/manual/smsd/sql.rst:294 docs/manual/smsd/sql.rst:319
-#: docs/manual/smsd/sql.rst:343
+#: docs/manual/smsd/sql.rst:163 docs/manual/smsd/sql.rst:180
+#: docs/manual/smsd/sql.rst:217 docs/manual/smsd/sql.rst:250
+#: docs/manual/smsd/sql.rst:266 docs/manual/smsd/sql.rst:283
+#: docs/manual/smsd/sql.rst:298 docs/manual/smsd/sql.rst:323
+#: docs/manual/smsd/sql.rst:347
 msgid "ID of message"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:161
+#: docs/manual/smsd/sql.rst:165
 msgid "save_inbox_sms_update"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:163
+#: docs/manual/smsd/sql.rst:167
 msgid "Update message if there is an delivery error."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:169
+#: docs/manual/smsd/sql.rst:173
 msgid ""
 "UPDATE sentitems SET Status = %1, StatusError = %e WHERE ID = %2 AND TPMR = "
 "%t"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:178
+#: docs/manual/smsd/sql.rst:182
 msgid "save_inbox_sms_insert"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:180
+#: docs/manual/smsd/sql.rst:184
 msgid "Insert received message."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:187
+#: docs/manual/smsd/sql.rst:191
 msgid ""
 "INSERT INTO inbox (ReceivingDateTime, Text, SenderNumber, Coding, "
 "SMSCNumber, UDH, Class, TextDecoded, RecipientID) VALUES (%d, %E, %R, %c, "
@@ -11146,49 +11224,49 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:189
+#: docs/manual/smsd/sql.rst:193
 msgid "update_received"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:191
+#: docs/manual/smsd/sql.rst:195
 msgid "Update statistics after receiving message."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:197
+#: docs/manual/smsd/sql.rst:201
 msgid "UPDATE phones SET Received = Received + 1 WHERE IMEI = %I"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:199
+#: docs/manual/smsd/sql.rst:203
 msgid "refresh_send_status"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:201
+#: docs/manual/smsd/sql.rst:205
 msgid "Update messages in outbox."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:208
+#: docs/manual/smsd/sql.rst:212
 msgid ""
 "UPDATE outbox SET SendingTimeOut = (NOW() + INTERVAL locktime SECOND) + 0 "
 "WHERE ID = %1 AND (SendingTimeOut < NOW() OR SendingTimeOut IS NULL)"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:215
+#: docs/manual/smsd/sql.rst:219
 msgid "find_outbox_sms_id"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:217
+#: docs/manual/smsd/sql.rst:221
 msgid "Find sms messages for sending."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:225
+#: docs/manual/smsd/sql.rst:229
 msgid ""
 "SELECT ID, InsertIntoDB, SendingDateTime, SenderID FROM outbox WHERE "
 "SendingDateTime < NOW() AND SendingTimeOut < NOW() AND ( SenderID is NULL OR "
@@ -11196,22 +11274,22 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:230
+#: docs/manual/smsd/sql.rst:234
 msgid "limit of sms messages sended in one walk in loop"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:232
+#: docs/manual/smsd/sql.rst:236
 msgid "find_outbox_body"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:234
+#: docs/manual/smsd/sql.rst:238
 msgid "Select body of message."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:241
+#: docs/manual/smsd/sql.rst:245
 msgid ""
 "SELECT Text, Coding, UDH, Class, TextDecoded, ID, DestinationNumber, "
 "MultiPart, RelativeValidity, DeliveryReport, CreatorID FROM outbox WHERE ID="
@@ -11219,69 +11297,69 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:248
+#: docs/manual/smsd/sql.rst:252
 msgid "find_outbox_multipart"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:250
+#: docs/manual/smsd/sql.rst:254
 msgid "Select remaining parts of sms message."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:257
+#: docs/manual/smsd/sql.rst:261
 msgid ""
 "SELECT Text, Coding, UDH, Class, TextDecoded, ID, SequencePosition FROM "
 "outbox_multipart WHERE ID=%1 AND SequencePosition=%2"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:264
+#: docs/manual/smsd/sql.rst:268
 msgid "Number of multipart message"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:266
+#: docs/manual/smsd/sql.rst:270
 msgid "delete_outbox"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:268
+#: docs/manual/smsd/sql.rst:272
 msgid "Remove messages from outbox after threir successful send."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:274
+#: docs/manual/smsd/sql.rst:278
 msgid "DELETE FROM outbox WHERE ID=%1"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:281
+#: docs/manual/smsd/sql.rst:285
 msgid "delete_outbox_multipart"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:283
+#: docs/manual/smsd/sql.rst:287
 msgid "Remove messages from outbox_multipart after threir successful send."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:289
+#: docs/manual/smsd/sql.rst:293
 msgid "DELETE FROM outbox_multipart WHERE ID=%1"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:296
+#: docs/manual/smsd/sql.rst:300
 msgid "create_outbox"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:298
+#: docs/manual/smsd/sql.rst:302
 msgid "Create message (insert to outbox)."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:306
+#: docs/manual/smsd/sql.rst:310
 msgid ""
 "INSERT INTO outbox (CreatorID, SenderID, DeliveryReport, MultiPart, "
 "InsertIntoDB, Text, DestinationNumber, RelativeValidity, Coding, UDH, Class, "
@@ -11289,72 +11367,72 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:311 docs/manual/smsd/sql.rst:335
+#: docs/manual/smsd/sql.rst:315 docs/manual/smsd/sql.rst:339
 msgid "creator of message"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:313 docs/manual/smsd/sql.rst:337
-msgid "delivery status report - yes/default"
-msgstr ""
-
-#. type: Plain text
-#: docs/manual/smsd/sql.rst:314 docs/manual/smsd/sql.rst:338
-#: docs/manual/smsd/sql.rst:364
-msgid "``%3``"
-msgstr ""
-
-#. type: Plain text
-#: docs/manual/smsd/sql.rst:315 docs/manual/smsd/sql.rst:339
-msgid "multipart - FALSE/TRUE"
-msgstr ""
-
-#. type: Plain text
-#: docs/manual/smsd/sql.rst:316 docs/manual/smsd/sql.rst:340
-#: docs/manual/smsd/sql.rst:366
-msgid "``%4``"
-msgstr ""
-
-#. type: Plain text
 #: docs/manual/smsd/sql.rst:317 docs/manual/smsd/sql.rst:341
-msgid "Part (part number)"
+msgid "delivery status report - yes/default"
 msgstr ""
 
 #. type: Plain text
 #: docs/manual/smsd/sql.rst:318 docs/manual/smsd/sql.rst:342
 #: docs/manual/smsd/sql.rst:368
+msgid "``%3``"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/sql.rst:319 docs/manual/smsd/sql.rst:343
+msgid "multipart - FALSE/TRUE"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/sql.rst:320 docs/manual/smsd/sql.rst:344
+#: docs/manual/smsd/sql.rst:370
+msgid "``%4``"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/sql.rst:321 docs/manual/smsd/sql.rst:345
+msgid "Part (part number)"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/sql.rst:322 docs/manual/smsd/sql.rst:346
+#: docs/manual/smsd/sql.rst:372
 msgid "``%5``"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:321
+#: docs/manual/smsd/sql.rst:325
 msgid "create_outbox_multipart"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:323
+#: docs/manual/smsd/sql.rst:327
 msgid "Create message remaining parts."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:330
+#: docs/manual/smsd/sql.rst:334
 msgid ""
 "INSERT INTO outbox_multipart (SequencePosition, Text, Coding, UDH, Class, "
 "TextDecoded, ID) VALUES (%4, %E, %c, %u, %x, %T, %5)"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:345
+#: docs/manual/smsd/sql.rst:349
 msgid "add_sent_info"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:347
+#: docs/manual/smsd/sql.rst:351
 msgid "Insert to sentitems."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:356
+#: docs/manual/smsd/sql.rst:360
 msgid ""
 "INSERT INTO sentitems (CreatorID,ID,SequencePosition,Status,SendingDateTime, "
 "SMSCNumber, TPMR, SenderID,Text,DestinationNumber,Coding,UDH,Class,"
@@ -11363,69 +11441,69 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:361
+#: docs/manual/smsd/sql.rst:365
 msgid "ID of sms message"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:363
+#: docs/manual/smsd/sql.rst:367
 msgid "part number (for multipart sms)"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:365
+#: docs/manual/smsd/sql.rst:369
 msgid "message state (SendingError, Error, SendingOK, SendingOKNoReport)"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:367
+#: docs/manual/smsd/sql.rst:371
 msgid "message reference (TPMR)"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:369
+#: docs/manual/smsd/sql.rst:373
 msgid "time when inserted in db"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:371
+#: docs/manual/smsd/sql.rst:375
 msgid "update_sent"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:373
+#: docs/manual/smsd/sql.rst:377
 msgid "Update sent statistics after sending message."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:379
+#: docs/manual/smsd/sql.rst:383
 msgid "UPDATE phones SET Sent= Sent + 1 WHERE IMEI = %I"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:381
+#: docs/manual/smsd/sql.rst:385
 msgid "refresh_phone_status"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:383
+#: docs/manual/smsd/sql.rst:387
 msgid "Update phone status (battery, signal)."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:390
+#: docs/manual/smsd/sql.rst:394
 msgid ""
 "UPDATE phones SET TimeOut= (NOW() + INTERVAL 10 SECOND) + 0, Battery = %1, "
 "Signal = %2 WHERE IMEI = %I"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:395
+#: docs/manual/smsd/sql.rst:399
 msgid "battery percent"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/sql.rst:396
+#: docs/manual/smsd/sql.rst:400
 msgid "signal percent"
 msgstr ""
 
@@ -12579,9 +12657,29 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/smsd/pgsql.rst:9
 msgid ""
-"PGSQL backend stores all data in a PostgreSQL database server, which "
+"PGSQL backend stores all data in a `PostgreSQL`_ database server, which "
 "parameters are defined by configuration (see :ref:`gammu-smsdrc` for "
 "description of configuration options)."
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/pgsql.rst:15
+msgid "_PostgreSQL: http://www.postgresql.org/"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/pgsql.rst:20
+msgid "SQL script for creating tables in PostgreSQL database:"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/pgsql.rst:22
+msgid "../../sql/pgsql.sql"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/pgsql.rst:26
+msgid "You can find the script in :file:`docs/sql/pgsql.sql` as well."
 msgstr ""
 
 #. type: Plain text
@@ -13681,7 +13779,7 @@ msgstr ""
 #: docs/manual/gammu/index.rst:811 docs/manual/gammu/index.rst:979
 #: docs/manual/gammu/index.rst:1025 docs/manual/gammu/index.rst:1062
 #: docs/manual/gammu/index.rst:1319 docs/manual/gammu/index.rst:1530
-#: docs/manual/gammu/index.rst:1580
+#: docs/manual/gammu/index.rst:1582
 #, no-wrap
 msgid ".. note"
 msgstr ""
@@ -13905,7 +14003,7 @@ msgstr ""
 #: docs/manual/smsd/config.rst:388
 msgid ""
 "Can be either one of native drivers (``native_mysql`` or ``native_pgsql``) "
-"or DBI driver."
+"or :ref:`gammu-smsd-dbi` driver."
 msgstr ""
 
 #. type: Plain text
@@ -14441,7 +14539,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/smsd/inject.rst:12 docs/manual/smsd/monitor.rst:12
 #: docs/manual/smsd/monitor.rst:53 docs/manual/smsd/smsd.rst:12
-#: docs/manual/gammu/index.rst:13 docs/manual/python/gammu.rst:1080
+#: docs/manual/gammu/index.rst:13 docs/manual/python/gammu.rst:1082
 #: docs/manual/utils/gammu-config.rst:12 docs/manual/utils/jadmaker.rst:12
 #: docs/manual/utils/gammu-detect.rst:15
 msgid "text"
@@ -14618,10 +14716,10 @@ msgstr ""
 #: docs/manual/gammu/index.rst:1485 docs/manual/gammu/index.rst:1490
 #: docs/manual/gammu/index.rst:1492 docs/manual/gammu/index.rst:1532
 #: docs/manual/gammu/index.rst:1537 docs/manual/gammu/index.rst:1544
-#: docs/manual/gammu/index.rst:1548 docs/manual/gammu/index.rst:1571
-#: docs/manual/gammu/index.rst:1586 docs/manual/gammu/index.rst:1599
-#: docs/manual/gammu/index.rst:1612 docs/manual/gammu/index.rst:1618
-#: docs/manual/gammu/index.rst:1622 docs/manual/gammu/index.rst:1627
+#: docs/manual/gammu/index.rst:1550 docs/manual/gammu/index.rst:1573
+#: docs/manual/gammu/index.rst:1588 docs/manual/gammu/index.rst:1601
+#: docs/manual/gammu/index.rst:1614 docs/manual/gammu/index.rst:1620
+#: docs/manual/gammu/index.rst:1624 docs/manual/gammu/index.rst:1629
 #: docs/manual/utils/gammu-config.rst:23 docs/manual/utils/gammu-config.rst:27
 #: docs/manual/utils/gammu-config.rst:31 docs/manual/utils/jadmaker.rst:24
 #: docs/manual/utils/jadmaker.rst:28 docs/manual/utils/jadmaker.rst:32
@@ -14705,8 +14803,8 @@ msgstr ""
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/smsd/inject.rst:58 docs/manual/smsd/inject.rst:70
-#: docs/manual/smsd/inject.rst:76 docs/manual/gammu/index.rst:1813
-#: docs/manual/gammu/index.rst:1825 docs/manual/gammu/index.rst:1831
+#: docs/manual/smsd/inject.rst:76 docs/manual/gammu/index.rst:1815
+#: docs/manual/gammu/index.rst:1827 docs/manual/gammu/index.rst:1833
 msgid "or"
 msgstr ""
 
@@ -14778,9 +14876,9 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/smsd/mysql.rst:9
 msgid ""
-"MYSQL backend stores all data in a MySQL database server, which parameters "
-"are defined by configuration (see :ref:`gammu-smsdrc` for description of "
-"configuration options)."
+"MYSQL backend stores all data in a `MySQL`_ database server, which "
+"parameters are defined by configuration (see :ref:`gammu-smsdrc` for "
+"description of configuration options)."
 msgstr ""
 
 #. type: Title -
@@ -14807,10 +14905,35 @@ msgid "GRANT SELECT, INSERT, UPDATE, DELETE ON `smsd`.* TO 'smsd'@'localhost';"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/mysql.rst:29
+#: docs/manual/smsd/mysql.rst:30
 msgid ""
 "For creating the SQL tables you need more privileges, especially for "
 "creating triggers, which are used for some functionality."
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/mysql.rst:32
+msgid "_MySQL: http://www.mysql.com/"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/mysql.rst:37
+msgid "SQL script for creating tables in MySQL database:"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/mysql.rst:39
+msgid "../../sql/mysql.sql"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/mysql.rst:40
+msgid ":language: mysql"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/mysql.rst:43
+msgid "You can find the script in :file:`docs/sql/mysql.sql` as well."
 msgstr ""
 
 #. type: Title =
@@ -16428,7 +16551,7 @@ msgstr ""
 #. type: Labeled list
 #: docs/manual/gammu/index.rst:347 docs/manual/gammu/index.rst:1135
 #: docs/manual/gammu/index.rst:1148 docs/manual/gammu/index.rst:1494
-#: docs/manual/gammu/index.rst:1581 docs/manual/gammu/index.rst:1603
+#: docs/manual/gammu/index.rst:1583 docs/manual/gammu/index.rst:1605
 #, no-wrap
 msgid ".. warning"
 msgstr ""
@@ -19175,7 +19298,7 @@ msgstr ""
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1545
-msgid "entersecuritycode PIN|PUK|PIN2|PUK2|PHONE|NETWORK code|-"
+msgid "entersecuritycode PIN|PUK|PIN2|PUK2|PHONE|NETWORK code|- [newpin|-]"
 msgstr ""
 
 #. type: delimited block _
@@ -19187,165 +19310,170 @@ msgstr ""
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1549
+msgid "In case entering PUK, some phones require you to set new PIN as well."
+msgstr ""
+
+#. type: delimited block _
+#: docs/manual/gammu/index.rst:1551
 msgid "presskeysequence mMnNpPuUdD+-123456789*0#gGrR<>[]hHcCjJfFoOmMdD@"
 msgstr ""
 
 # type: Plain text
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1551
+#: docs/manual/gammu/index.rst:1553
 msgid "Press specified key sequence on phone keyboard"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1553
+#: docs/manual/gammu/index.rst:1555
 msgid "``mM``"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1554
+#: docs/manual/gammu/index.rst:1556
 msgid "Menu"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1555
+#: docs/manual/gammu/index.rst:1557
 msgid "``nN``"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1556
+#: docs/manual/gammu/index.rst:1558
 msgid "Names key"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1557
+#: docs/manual/gammu/index.rst:1559
 msgid "``pP``"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1558
+#: docs/manual/gammu/index.rst:1560
 msgid "Power"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1559
+#: docs/manual/gammu/index.rst:1561
 msgid "``uU``"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1560
+#: docs/manual/gammu/index.rst:1562
 msgid "Up"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1561
+#: docs/manual/gammu/index.rst:1563
 msgid "``dD``"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1562
+#: docs/manual/gammu/index.rst:1564
 msgid "Down"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1563
+#: docs/manual/gammu/index.rst:1565
 msgid "``+-``"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1564
+#: docs/manual/gammu/index.rst:1566
 msgid "+-"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1565
+#: docs/manual/gammu/index.rst:1567
 msgid "``gG``"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1566
+#: docs/manual/gammu/index.rst:1568
 msgid "Green"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1567
+#: docs/manual/gammu/index.rst:1569
 msgid "``rR``"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1568
+#: docs/manual/gammu/index.rst:1570
 msgid "Red"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1569
+#: docs/manual/gammu/index.rst:1571
 msgid "``123456789*0#``"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1570
+#: docs/manual/gammu/index.rst:1572
 msgid "numeric keyboard"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1572
+#: docs/manual/gammu/index.rst:1574
 msgid "reset SOFT|HARD"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1574
+#: docs/manual/gammu/index.rst:1576
 msgid "Make phone reset:"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1576
+#: docs/manual/gammu/index.rst:1578
 msgid "``SOFT``"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1577
+#: docs/manual/gammu/index.rst:1579
 msgid "without asking for PIN"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1578
+#: docs/manual/gammu/index.rst:1580
 msgid "``HARD``"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1579
+#: docs/manual/gammu/index.rst:1581
 msgid "with asking for PIN"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1581
+#: docs/manual/gammu/index.rst:1583
 msgid "Some phones will ask for PIN even with ``SOFT`` option."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1582
+#: docs/manual/gammu/index.rst:1584
 msgid "Some phones will reset user data on ``HARD`` reset."
 msgstr ""
 
 #. type: Title -
-#: docs/manual/gammu/index.rst:1584
+#: docs/manual/gammu/index.rst:1586
 #, no-wrap
 msgid "Batch mode commands"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1587
+#: docs/manual/gammu/index.rst:1589
 msgid "batch [file]"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1591
+#: docs/manual/gammu/index.rst:1593
 msgid ""
 "Starts Gammu in a batch mode. In this mode you can issue several commands "
 "each on one line. Lines starting with # are treated as a comments."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1595
+#: docs/manual/gammu/index.rst:1597
 msgid ""
 "By default, commands are read from standard input, but you can optionally "
 "specify a file from where they would be read (special case ``-`` means "
@@ -19353,23 +19481,23 @@ msgid ""
 msgstr ""
 
 #. type: Title -
-#: docs/manual/gammu/index.rst:1597
+#: docs/manual/gammu/index.rst:1599
 #, no-wrap
 msgid "Configuration commands"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1600
+#: docs/manual/gammu/index.rst:1602
 msgid "searchphone [-debug]"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1602
+#: docs/manual/gammu/index.rst:1604
 msgid "Attempts to search for a connected phone."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1608
+#: docs/manual/gammu/index.rst:1610
 msgid ""
 "Please note that this can take a very long time, but in case you have no "
 "clue how to configure phone connection, this is a convenient way to find "
@@ -19377,18 +19505,18 @@ msgid ""
 msgstr ""
 
 #. type: Title -
-#: docs/manual/gammu/index.rst:1610
+#: docs/manual/gammu/index.rst:1612
 #, fuzzy, no-wrap
 msgid "Gammu information commands"
 msgstr "Informasi gammu"
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1613
+#: docs/manual/gammu/index.rst:1615
 msgid "checkversion [STABLE]"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1617
+#: docs/manual/gammu/index.rst:1619
 msgid ""
 "Checks whether there is newer Gammu version available online (if Gammu has "
 "been compiled with CURL). If you pass additional parameter ``STABLE``, only "
@@ -19396,51 +19524,51 @@ msgid ""
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1619
+#: docs/manual/gammu/index.rst:1621
 msgid "features"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1621
+#: docs/manual/gammu/index.rst:1623
 msgid "Print information about compiled in features."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1623
+#: docs/manual/gammu/index.rst:1625
 msgid "help [topic]"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1626
+#: docs/manual/gammu/index.rst:1628
 msgid ""
 "Print help. By default general help is printed, but you can also specify a "
 "help category to get more detailed help on some topic."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1628
+#: docs/manual/gammu/index.rst:1630
 msgid "version"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1630
+#: docs/manual/gammu/index.rst:1632
 msgid "Print version information and license."
 msgstr ""
 
 #. type: Title +
-#: docs/manual/gammu/index.rst:1633
+#: docs/manual/gammu/index.rst:1635
 #, no-wrap
 msgid "Return values"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1637
+#: docs/manual/gammu/index.rst:1639
 msgid ""
 "gammu returns 0 on success. In case of failure non zero code is returned."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1650
+#: docs/manual/gammu/index.rst:1652
 #, no-wrap
 msgid ""
 "1\n"
@@ -19458,13 +19586,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1653
+#: docs/manual/gammu/index.rst:1655
 msgid ""
 "Errors codes greater than 100 map to the GSM_Error values increased by 100:"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1792
+#: docs/manual/gammu/index.rst:1794
 #, no-wrap
 msgid ""
 "101\n"
@@ -19608,74 +19736,74 @@ msgid ""
 msgstr ""
 
 #. type: Title -
-#: docs/manual/gammu/index.rst:1798
+#: docs/manual/gammu/index.rst:1800
 #, no-wrap
 msgid "Configuration"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1801
+#: docs/manual/gammu/index.rst:1803
 msgid "To check it out, you need to have configuration file for gammu, see"
 msgstr ""
 
 #. type: Attribute :ref:
-#: docs/manual/gammu/index.rst:1801
+#: docs/manual/gammu/index.rst:1803
 #, no-wrap
 msgid "`gammurc` for more details about it."
 msgstr ""
 
 #. type: Title -
-#: docs/manual/gammu/index.rst:1804
+#: docs/manual/gammu/index.rst:1806
 #, no-wrap
 msgid "Sending messages"
 msgstr ""
 
 # type: TP
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1807
+#: docs/manual/gammu/index.rst:1809
 msgid "Save text message up to standard 160 chars:"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1811
+#: docs/manual/gammu/index.rst:1813
 msgid "echo \"All your base are belong to us\" | gammu savesms TEXT"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1817
+#: docs/manual/gammu/index.rst:1819
 msgid "gammu savesms TEXT -text \"All your base are belong to us\""
 msgstr ""
 
 # type: TP
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1819
+#: docs/manual/gammu/index.rst:1821
 msgid "Save long text message:"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1823
+#: docs/manual/gammu/index.rst:1825
 msgid "echo \"All your base are belong to us\" | gammu savesms TEXT -len 400"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1829
+#: docs/manual/gammu/index.rst:1831
 msgid "gammu savesms TEXT -len 400 -text \"All your base are belong to us\""
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1835
+#: docs/manual/gammu/index.rst:1837
 msgid "gammu savesms EMS -text \"All your base are belong to us\""
 msgstr ""
 
 # type: TP
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1837
+#: docs/manual/gammu/index.rst:1839
 msgid ""
 "Save some funky message with predefined sound and animation from 2 bitmaps:"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1841
+#: docs/manual/gammu/index.rst:1843
 msgid ""
 "gammu savesms EMS -text \"Greetings\" -defsound 1 -text \"from Gammu -tone10 "
 "axelf.txt -animation 2 file1.bmp file2.bmp"
@@ -19683,123 +19811,123 @@ msgstr ""
 
 # type: TP
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1843
+#: docs/manual/gammu/index.rst:1845
 msgid "Save protected message with ringtone:"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1847
+#: docs/manual/gammu/index.rst:1849
 msgid ""
 "gammu savesms EMS -protected 2 -variablebitmaplong ala.bmp -toneSElong axelf."
 "txt -toneSE ring.txt"
 msgstr ""
 
 #. type: Title -
-#: docs/manual/gammu/index.rst:1849
+#: docs/manual/gammu/index.rst:1851
 #, no-wrap
 msgid "Uploading files to Nokia"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1852
+#: docs/manual/gammu/index.rst:1854
 msgid ""
 "Add Alien to applications in your phone (you need to have files Alien.JAD "
 "and Alien.JAR in current directory):"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1856
+#: docs/manual/gammu/index.rst:1858
 msgid "gammu nokiaaddfile APPLICATION Alien"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1858
+#: docs/manual/gammu/index.rst:1860
 msgid "Add file.mid to ringtones folder:"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1862
+#: docs/manual/gammu/index.rst:1864
 msgid "gammu nokiaaddfile TONES file.mid"
 msgstr ""
 
 #. type: Title -
-#: docs/manual/gammu/index.rst:1864
+#: docs/manual/gammu/index.rst:1866
 #, no-wrap
 msgid "Setting operator logo"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1867
+#: docs/manual/gammu/index.rst:1869
 msgid "Set logo for network ``230 03`` (Vodafone CZ):"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1871
+#: docs/manual/gammu/index.rst:1873
 msgid "gammu setbitmap OPERATOR ala.bmp \"230 03\""
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1873
+#: docs/manual/gammu/index.rst:1875
 msgid "_converting-formats:"
 msgstr ""
 
 #. type: Title -
-#: docs/manual/gammu/index.rst:1875
+#: docs/manual/gammu/index.rst:1877
 #, no-wrap
 msgid "Converting file formats"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1878
+#: docs/manual/gammu/index.rst:1880
 msgid "The formats conversion can done using :option:`gammu savefile` or"
 msgstr ""
 
 #. type: Attribute :option:
-#: docs/manual/gammu/index.rst:1878
+#: docs/manual/gammu/index.rst:1880
 #, no-wrap
 msgid "`gammu convertbackup` commands."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1881
+#: docs/manual/gammu/index.rst:1883
 msgid ""
 "Convert single entry (at position 260) from :ref:`gammu-backup` to vCalendar:"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1885
+#: docs/manual/gammu/index.rst:1887
 msgid "gammu savefile CALENDAR output.vcs myCalendar.backup 260"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1887
+#: docs/manual/gammu/index.rst:1889
 msgid "Convert first phonebook entry from :ref:`gammu-backup` to vCard:"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1891
+#: docs/manual/gammu/index.rst:1893
 msgid "gammu savefile VCARD21 output.vcf phone.backup ME 1"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1893
+#: docs/manual/gammu/index.rst:1895
 msgid "Convert all contacts from backup to vCard:"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1897
+#: docs/manual/gammu/index.rst:1899
 msgid "gammu convertbackup phone.backup output.vcf"
 msgstr ""
 
 #. type: Title -
-#: docs/manual/gammu/index.rst:1900
+#: docs/manual/gammu/index.rst:1902
 #, no-wrap
 msgid "Reporting bugs"
 msgstr ""
 
 # type: Plain text
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1905
+#: docs/manual/gammu/index.rst:1907
 msgid ""
 "There are definitely many bugs, reporting to author is welcome. Please "
 "include some useful information when sending bug reports (especially debug "
@@ -19807,29 +19935,29 @@ msgid ""
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1907
+#: docs/manual/gammu/index.rst:1909
 msgid "To generate debug log, enable it in :ref:`gammurc`:"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1914
+#: docs/manual/gammu/index.rst:1916
 msgid ""
 "[gammu] YOUR CONNECTION SETTINGS logfile = /tmp/gammu.log logformat = textall"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1916
+#: docs/manual/gammu/index.rst:1918
 msgid "Alternatively you can specify logging on command line:"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1920
+#: docs/manual/gammu/index.rst:1922
 msgid "gammu -d textall -f /tmp/gammu.log ..."
 msgstr ""
 
 # type: Plain text
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1924
+#: docs/manual/gammu/index.rst:1926
 msgid ""
 "With this settings, Gammu generates /tmp/gammu.log on each connection to "
 "phone and stores dump of communication there. You can also find some hints "
@@ -19837,13 +19965,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1926
+#: docs/manual/gammu/index.rst:1928
 msgid ""
 "See <http://wammu.eu/support/bugs/> for more information on reporting bugs."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1927
+#: docs/manual/gammu/index.rst:1929
 msgid "Please report bugs to `Gammu bug tracker <http://bugs.cihar.com/>`_."
 msgstr ""
 
@@ -22767,7 +22895,7 @@ msgid "``8bit`` - for binary messages"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/objects.rst:105 docs/manual/python/gammu.rst:1269
+#: docs/manual/python/objects.rst:105 docs/manual/python/gammu.rst:1271
 msgid "DateTime"
 msgstr ""
 
@@ -23547,7 +23675,7 @@ msgid "Calendar entry to encode in message, see :ref:`cal_obj`."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/objects.rst:423 docs/manual/python/gammu.rst:1268
+#: docs/manual/python/objects.rst:423 docs/manual/python/gammu.rst:1270
 msgid "ToDo"
 msgstr ""
 
@@ -24654,8 +24782,8 @@ msgstr ""
 #: docs/manual/python/data.rst:16 docs/manual/python/data.rst:20
 #: docs/manual/python/data.rst:24 docs/manual/python/data.rst:28
 #: docs/manual/python/data.rst:32 docs/manual/python/data.rst:36
-#: docs/manual/python/data.rst:40 docs/manual/python/gammu.rst:1294
-#: docs/manual/python/gammu.rst:1298
+#: docs/manual/python/data.rst:40 docs/manual/python/gammu.rst:1296
+#: docs/manual/python/gammu.rst:1300
 #, no-wrap
 msgid ".. data"
 msgstr ""
@@ -25618,17 +25746,17 @@ msgid "Exception indicating invalid command."
 msgstr ""
 
 #. type: Labeled list
-#: docs/manual/python/worker.rst:154 docs/manual/python/gammu.rst:1052
-#: docs/manual/python/gammu.rst:1062 docs/manual/python/gammu.rst:1071
-#: docs/manual/python/gammu.rst:1092 docs/manual/python/gammu.rst:1103
-#: docs/manual/python/gammu.rst:1114 docs/manual/python/gammu.rst:1123
-#: docs/manual/python/gammu.rst:1134 docs/manual/python/gammu.rst:1150
-#: docs/manual/python/gammu.rst:1159 docs/manual/python/gammu.rst:1168
-#: docs/manual/python/gammu.rst:1177 docs/manual/python/gammu.rst:1186
-#: docs/manual/python/gammu.rst:1195 docs/manual/python/gammu.rst:1204
-#: docs/manual/python/gammu.rst:1213 docs/manual/python/gammu.rst:1225
-#: docs/manual/python/gammu.rst:1238 docs/manual/python/gammu.rst:1251
-#: docs/manual/python/gammu.rst:1271 docs/manual/python/gammu.rst:1282
+#: docs/manual/python/worker.rst:154 docs/manual/python/gammu.rst:1054
+#: docs/manual/python/gammu.rst:1064 docs/manual/python/gammu.rst:1073
+#: docs/manual/python/gammu.rst:1094 docs/manual/python/gammu.rst:1105
+#: docs/manual/python/gammu.rst:1116 docs/manual/python/gammu.rst:1125
+#: docs/manual/python/gammu.rst:1136 docs/manual/python/gammu.rst:1152
+#: docs/manual/python/gammu.rst:1161 docs/manual/python/gammu.rst:1170
+#: docs/manual/python/gammu.rst:1179 docs/manual/python/gammu.rst:1188
+#: docs/manual/python/gammu.rst:1197 docs/manual/python/gammu.rst:1206
+#: docs/manual/python/gammu.rst:1215 docs/manual/python/gammu.rst:1227
+#: docs/manual/python/gammu.rst:1240 docs/manual/python/gammu.rst:1253
+#: docs/manual/python/gammu.rst:1273 docs/manual/python/gammu.rst:1284
 #, no-wrap
 msgid ".. function"
 msgstr ""
@@ -25795,7 +25923,7 @@ msgid "      Adds memory (phonebooks or calls) entry.\n"
 msgstr "Memori (buku telepon dan panggilan)"
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:72 docs/manual/python/gammu.rst:958
+#: docs/manual/python/gammu.rst:72 docs/manual/python/gammu.rst:960
 #, no-wrap
 msgid ""
 "      :param Value: Memory entry, see :ref:`pbk_obj`\n"
@@ -25817,7 +25945,7 @@ msgid "      Adds SMS to specified folder.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:82 docs/manual/python/gammu.rst:968
+#: docs/manual/python/gammu.rst:82 docs/manual/python/gammu.rst:970
 #, no-wrap
 msgid ""
 "      :param Value: SMS data, see :ref:`sms_obj`\n"
@@ -25861,7 +25989,7 @@ msgid "      Adds ToDo in phone.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:102 docs/manual/python/gammu.rst:998
+#: docs/manual/python/gammu.rst:102 docs/manual/python/gammu.rst:1000
 #, no-wrap
 msgid ""
 "      :param Value: ToDo data, see :ref:`todo_obj`\n"
@@ -25931,9 +26059,9 @@ msgid "      Initiates conference call.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:136 docs/manual/python/gammu.rst:670
-#: docs/manual/python/gammu.rst:1008 docs/manual/python/gammu.rst:1018
-#: docs/manual/python/gammu.rst:1036 docs/manual/python/gammu.rst:1046
+#: docs/manual/python/gammu.rst:136 docs/manual/python/gammu.rst:672
+#: docs/manual/python/gammu.rst:1010 docs/manual/python/gammu.rst:1020
+#: docs/manual/python/gammu.rst:1038 docs/manual/python/gammu.rst:1048
 #, no-wrap
 msgid ""
 "      :param ID: ID of call\n"
@@ -25956,7 +26084,7 @@ msgstr ""
 
 #. type: delimited block -
 #: docs/manual/python/gammu.rst:144 docs/manual/python/gammu.rst:162
-#: docs/manual/python/gammu.rst:802 docs/manual/python/gammu.rst:1026
+#: docs/manual/python/gammu.rst:804 docs/manual/python/gammu.rst:1028
 #, no-wrap
 msgid ""
 "      :return: None\n"
@@ -26168,7 +26296,7 @@ msgid "      Dials number and starts voice call.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:246 docs/manual/python/gammu.rst:746
+#: docs/manual/python/gammu.rst:246 docs/manual/python/gammu.rst:748
 #, no-wrap
 msgid ""
 "      :param Number: Number to dial\n"
@@ -26198,7 +26326,7 @@ msgstr ""
 #. type: delimited block -
 #: docs/manual/python/gammu.rst:261
 #, no-wrap
-msgid "   .. method:: EnterSecurityCode(Type, Code)\n"
+msgid "   .. method:: EnterSecurityCode(Type, Code, NewPIN)\n"
 msgstr ""
 
 #. type: delimited block -
@@ -26208,31 +26336,33 @@ msgid "      Entres security code.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:270
+#: docs/manual/python/gammu.rst:272
 #, no-wrap
 msgid ""
 "      :param Type: What code to enter, one of ``PIN``, ``PUK``, ``PIN2``, ``PUK2``, ``Phone``.\n"
 "      :type Type: string\n"
 "      :param Code: Code value\n"
 "      :type Code: string\n"
+"      :param NewPIN: New PIN value in case entering PUK\n"
+"      :type NewPIN: string\n"
 "      :return: None\n"
 "      :rtype: None\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:273
+#: docs/manual/python/gammu.rst:275
 #, no-wrap
 msgid "   .. method:: GetAlarm(Location)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:275
+#: docs/manual/python/gammu.rst:277
 #, no-wrap
 msgid "      Reads alarm set in phone.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:280
+#: docs/manual/python/gammu.rst:282
 #, no-wrap
 msgid ""
 "      :param Location: Which alarm to read. Many phone support only one alarm. Default is 1.\n"
@@ -26242,19 +26372,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:283
+#: docs/manual/python/gammu.rst:285
 #, no-wrap
 msgid "   .. method:: GetBatteryCharge()\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:285
+#: docs/manual/python/gammu.rst:287
 #, no-wrap
 msgid "      Gets information about battery charge and phone charging state.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:288
+#: docs/manual/python/gammu.rst:290
 #, no-wrap
 msgid ""
 "      :return: Dictionary containing information about battery state (BatteryPercent and ChargeState)\n"
@@ -26262,19 +26392,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:291
+#: docs/manual/python/gammu.rst:293
 #, no-wrap
 msgid "   .. method:: GetCalendar(Location)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:293
+#: docs/manual/python/gammu.rst:295
 #, no-wrap
 msgid "      Retrieves calendar entry.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:298
+#: docs/manual/python/gammu.rst:300
 #, no-wrap
 msgid ""
 "      :param Location: Calendar entry to read\n"
@@ -26284,19 +26414,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:301
+#: docs/manual/python/gammu.rst:303
 #, no-wrap
 msgid "   .. method:: GetCalendarStatus()\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:303
+#: docs/manual/python/gammu.rst:305
 #, no-wrap
 msgid "      Retrieves calendar status (number of used entries).\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:306
+#: docs/manual/python/gammu.rst:308
 #, no-wrap
 msgid ""
 "      :return: Dictionary with calendar status (Used)\n"
@@ -26304,19 +26434,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:309
+#: docs/manual/python/gammu.rst:311
 #, no-wrap
 msgid "   .. method:: GetCategory(Type, Location)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:311
+#: docs/manual/python/gammu.rst:313
 #, no-wrap
 msgid "      Reads category from phone.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:318
+#: docs/manual/python/gammu.rst:320
 #, no-wrap
 msgid ""
 "      :param Type: Type of category to read, one of ``ToDo``, ``Phonebook``\n"
@@ -26328,19 +26458,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:321
+#: docs/manual/python/gammu.rst:323
 #, no-wrap
 msgid "   .. method:: GetCategoryStatus(Type)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:323
+#: docs/manual/python/gammu.rst:325
 #, no-wrap
 msgid "      Reads category status (number of used entries) from phone.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:328
+#: docs/manual/python/gammu.rst:330
 #, no-wrap
 msgid ""
 "      :param Type: Type of category to read, one of ``ToDo``, ``Phonebook``\n"
@@ -26350,13 +26480,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:331
+#: docs/manual/python/gammu.rst:333
 #, no-wrap
 msgid "   .. method:: GetConfig(Section)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:342
+#: docs/manual/python/gammu.rst:344
 #, no-wrap
 msgid ""
 "      Gets specified config section. Configuration consists of all params which can be defined in gammurc config file:\n"
@@ -26372,7 +26502,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:347
+#: docs/manual/python/gammu.rst:349
 #, no-wrap
 msgid ""
 "      :param Section: Index of config section to read. Defaults to 0.\n"
@@ -26382,19 +26512,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:350
+#: docs/manual/python/gammu.rst:352
 #, no-wrap
 msgid "   .. method:: GetDateTime()\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:352
+#: docs/manual/python/gammu.rst:354
 #, no-wrap
 msgid "      Reads date and time from phone.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:355
+#: docs/manual/python/gammu.rst:357
 #, no-wrap
 msgid ""
 "      :return: Date and time from phone as datetime.datetime object.\n"
@@ -26402,13 +26532,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:358
+#: docs/manual/python/gammu.rst:360
 #, no-wrap
 msgid "   .. method:: GetDisplayStatus()\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:362
+#: docs/manual/python/gammu.rst:364
 #, no-wrap
 msgid ""
 "      Acquired display status.\n"
@@ -26417,19 +26547,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:365
+#: docs/manual/python/gammu.rst:367
 #, no-wrap
 msgid "   .. method:: GetFilePart(File)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:367
+#: docs/manual/python/gammu.rst:369
 #, no-wrap
 msgid "      Gets file part from filesystem.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:372 docs/manual/python/gammu.rst:756
+#: docs/manual/python/gammu.rst:374 docs/manual/python/gammu.rst:758
 #, no-wrap
 msgid ""
 "      :param File: File data, see :ref:`file_obj`\n"
@@ -26439,19 +26569,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:375
+#: docs/manual/python/gammu.rst:377
 #, no-wrap
 msgid "   .. method:: GetFileSystemStatus()\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:377
+#: docs/manual/python/gammu.rst:379
 #, no-wrap
 msgid "      Acquires filesystem status.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:380
+#: docs/manual/python/gammu.rst:382
 #, no-wrap
 msgid ""
 "      :return: Dictionary containing filesystem status (Used and Free)\n"
@@ -26459,19 +26589,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:383
+#: docs/manual/python/gammu.rst:385
 #, no-wrap
 msgid "   .. method:: GetFirmware()\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:385
+#: docs/manual/python/gammu.rst:387
 #, no-wrap
 msgid "      Reads firmware information from phone.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:388
+#: docs/manual/python/gammu.rst:390
 #, no-wrap
 msgid ""
 "      :return: Tuple from version, date and numeric version.\n"
@@ -26479,19 +26609,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:391
+#: docs/manual/python/gammu.rst:393
 #, no-wrap
 msgid "   .. method:: GetFolderListing(Folder, Start)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:393
+#: docs/manual/python/gammu.rst:395
 #, no-wrap
 msgid "      Gets next filename from filesystem folder.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:400
+#: docs/manual/python/gammu.rst:402
 #, no-wrap
 msgid ""
 "      :param Folder: Folder to list\n"
@@ -26503,19 +26633,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:403
+#: docs/manual/python/gammu.rst:405
 #, no-wrap
 msgid "   .. method:: GetHardware()\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:405
+#: docs/manual/python/gammu.rst:407
 #, no-wrap
 msgid "      Gets hardware information about device.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:408
+#: docs/manual/python/gammu.rst:410
 #, no-wrap
 msgid ""
 "      :return: Hardware information as string.\n"
@@ -26523,19 +26653,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:411
+#: docs/manual/python/gammu.rst:413
 #, no-wrap
 msgid "   .. method:: GetIMEI()\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:413
+#: docs/manual/python/gammu.rst:415
 #, fuzzy, no-wrap
 msgid "      Reads IMEI/serial number from phone.\n"
 msgstr "Gagal mengambil nomor SMSC dari telepon."
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:416
+#: docs/manual/python/gammu.rst:418
 #, no-wrap
 msgid ""
 "      :return: IMEI of phone as string.\n"
@@ -26543,19 +26673,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:419
+#: docs/manual/python/gammu.rst:421
 #, no-wrap
 msgid "   .. method:: GetLocale()\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:421
+#: docs/manual/python/gammu.rst:423
 #, no-wrap
 msgid "      Gets locale information from phone.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:424
+#: docs/manual/python/gammu.rst:426
 #, no-wrap
 msgid ""
 "      :return: Dictionary of locale settings. :meth:`SetLocale` lists them all.\n"
@@ -26563,19 +26693,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:427
+#: docs/manual/python/gammu.rst:429
 #, no-wrap
 msgid "   .. method:: GetManufactureMonth()\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:429
+#: docs/manual/python/gammu.rst:431
 #, no-wrap
 msgid "      Gets month when device was manufactured.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:432
+#: docs/manual/python/gammu.rst:434
 #, no-wrap
 msgid ""
 "      :return: Month of manufacture as string.\n"
@@ -26583,19 +26713,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:435
+#: docs/manual/python/gammu.rst:437
 #, no-wrap
 msgid "   .. method:: GetManufacturer()\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:437
+#: docs/manual/python/gammu.rst:439
 #, no-wrap
 msgid "      Reads manufacturer from phone.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:440
+#: docs/manual/python/gammu.rst:442
 #, no-wrap
 msgid ""
 "      :return: String with manufacturer name\n"
@@ -26603,19 +26733,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:443
+#: docs/manual/python/gammu.rst:445
 #, no-wrap
 msgid "   .. method:: GetMemory(Type, Location)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:445
+#: docs/manual/python/gammu.rst:447
 #, no-wrap
 msgid "      Reads entry from memory (phonebooks or calls). Which entry shouldbe read is defined in entry.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:450
+#: docs/manual/python/gammu.rst:452
 #, no-wrap
 msgid ""
 "      :param Type: Memory type, one of ``ME``, ``SM``, ``ON``, ``DC``, ``RC``, ``MC``, ``MT``, ``FD``, ``VM``\n"
@@ -26625,19 +26755,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:453
+#: docs/manual/python/gammu.rst:455
 #, no-wrap
 msgid "   .. method:: GetMemoryStatus(Type)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:455
+#: docs/manual/python/gammu.rst:457
 #, no-wrap
 msgid "      Gets memory (phonebooks or calls) status (eg. number of used andfree entries).\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:460
+#: docs/manual/python/gammu.rst:462
 #, no-wrap
 msgid ""
 "      :param Type: Memory type, one of ``ME``, ``SM``, ``ON``, ``DC``, ``RC``, ``MC``, ``MT``, ``FD``, ``VM``\n"
@@ -26647,19 +26777,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:463
+#: docs/manual/python/gammu.rst:465
 #, no-wrap
 msgid "   .. method:: GetModel()\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:465
+#: docs/manual/python/gammu.rst:467
 #, no-wrap
 msgid "      Reads model from phone.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:468
+#: docs/manual/python/gammu.rst:470
 #, no-wrap
 msgid ""
 "      :return: Tuple containing gammu identification and real model returned by phone.\n"
@@ -26667,19 +26797,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:471
+#: docs/manual/python/gammu.rst:473
 #, no-wrap
 msgid "   .. method:: GetNetworkInfo()\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:473
+#: docs/manual/python/gammu.rst:475
 #, no-wrap
 msgid "      Gets network information.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:476
+#: docs/manual/python/gammu.rst:478
 #, no-wrap
 msgid ""
 "      :return: Dictionary with information about network (NetworkName, State, NetworkCode, CID and LAC)\n"
@@ -26687,19 +26817,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:479
+#: docs/manual/python/gammu.rst:481
 #, no-wrap
 msgid "   .. method:: GetNextCalendar(Start, Location)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:481
+#: docs/manual/python/gammu.rst:483
 #, no-wrap
 msgid "      Retrieves calendar entry. This is useful for continuous reading of all calendar entries.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:488
+#: docs/manual/python/gammu.rst:490
 #, no-wrap
 msgid ""
 "      :param Start: Whether to start. This can not be used together with Location\n"
@@ -26711,19 +26841,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:491
+#: docs/manual/python/gammu.rst:493
 #, no-wrap
 msgid "   .. method:: GetNextFileFolder(Start)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:493
+#: docs/manual/python/gammu.rst:495
 #, no-wrap
 msgid "      Gets next filename from filesystem.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:498
+#: docs/manual/python/gammu.rst:500
 #, no-wrap
 msgid ""
 "      :param Start: Whether we're starting listing. Defaults to False.\n"
@@ -26733,19 +26863,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:501
+#: docs/manual/python/gammu.rst:503
 #, no-wrap
 msgid "   .. method:: GetNextMemory(Type, Start, Location)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:503
+#: docs/manual/python/gammu.rst:505
 #, no-wrap
 msgid "      Reads entry from memory (phonebooks or calls). Which entry shouldbe read is defined in entry. This can be easily used for reading all entries.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:512
+#: docs/manual/python/gammu.rst:514
 #, no-wrap
 msgid ""
 "      :param Type: Memory type, one of ``ME``, ``SM``, ``ON``, ``DC``, ``RC``, ``MC``, ``MT``, ``FD``, ``VM``\n"
@@ -26759,19 +26889,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:515
+#: docs/manual/python/gammu.rst:517
 #, no-wrap
 msgid "   .. method:: GetNextRootFolder(Folder)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:517
+#: docs/manual/python/gammu.rst:519
 #, no-wrap
 msgid "      Gets next root folder from filesystem. Start with empty folder name.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:521
+#: docs/manual/python/gammu.rst:523
 #, no-wrap
 msgid ""
 "      :param Folder: Previous read fodlder. Start with empty folder name.\n"
@@ -26780,19 +26910,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:524
+#: docs/manual/python/gammu.rst:526
 #, no-wrap
 msgid "   .. method:: GetNextSMS(Folder, Start, Location)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:526
+#: docs/manual/python/gammu.rst:528
 #, no-wrap
 msgid "      Reads next (or first if start set) SMS message. This might befaster for some phones than using :meth:`GetSMS` for each message.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:535
+#: docs/manual/python/gammu.rst:537
 #, no-wrap
 msgid ""
 "      :param Folder: Folder where to read entry (0 is emulated flat memory)\n"
@@ -26806,19 +26936,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:538
+#: docs/manual/python/gammu.rst:540
 #, no-wrap
 msgid "   .. method:: GetNextToDo(Start, Location)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:540 docs/manual/python/gammu.rst:647
+#: docs/manual/python/gammu.rst:542 docs/manual/python/gammu.rst:649
 #, no-wrap
 msgid "      Reads ToDo from phone.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:547
+#: docs/manual/python/gammu.rst:549
 #, no-wrap
 msgid ""
 "      :param Start: Whether to start. This can not be used together with Location\n"
@@ -26830,19 +26960,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:550
+#: docs/manual/python/gammu.rst:552
 #, no-wrap
 msgid "   .. method:: GetOriginalIMEI()\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:552
+#: docs/manual/python/gammu.rst:554
 #, no-wrap
 msgid "      Gets original IMEI from phone.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:555
+#: docs/manual/python/gammu.rst:557
 #, no-wrap
 msgid ""
 "      :return: Original IMEI of phone as string.\n"
@@ -26850,19 +26980,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:558
+#: docs/manual/python/gammu.rst:560
 #, no-wrap
 msgid "   .. method:: GetPPM()\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:560
+#: docs/manual/python/gammu.rst:562
 #, no-wrap
 msgid "      Gets PPM (Post Programmable Memory) from phone.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:563
+#: docs/manual/python/gammu.rst:565
 #, no-wrap
 msgid ""
 "      :return: PPM as string\n"
@@ -26870,13 +27000,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:566
+#: docs/manual/python/gammu.rst:568
 #, no-wrap
 msgid "   .. method:: GetProductCode()\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:570
+#: docs/manual/python/gammu.rst:572
 #, no-wrap
 msgid ""
 "      Gets product code of device.\n"
@@ -26885,19 +27015,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:573
+#: docs/manual/python/gammu.rst:575
 #, no-wrap
 msgid "   .. method:: GetSIMIMSI()\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:575
+#: docs/manual/python/gammu.rst:577
 #, no-wrap
 msgid "      Gets SIM IMSI from phone.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:578
+#: docs/manual/python/gammu.rst:580
 #, no-wrap
 msgid ""
 "      :return: SIM IMSI as string\n"
@@ -26905,19 +27035,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:581
+#: docs/manual/python/gammu.rst:583
 #, no-wrap
 msgid "   .. method:: GetSMS(Folder, Location)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:583
+#: docs/manual/python/gammu.rst:585
 #, no-wrap
 msgid "      Reads SMS message.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:590
+#: docs/manual/python/gammu.rst:592
 #, no-wrap
 msgid ""
 "      :param Folder: Folder where to read entry (0 is emulated flat memory)\n"
@@ -26929,19 +27059,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:593
+#: docs/manual/python/gammu.rst:595
 #, no-wrap
 msgid "   .. method:: GetSMSC(Location)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:595
+#: docs/manual/python/gammu.rst:597
 #, no-wrap
 msgid "      Gets SMS Service Center number and SMS settings.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:600
+#: docs/manual/python/gammu.rst:602
 #, no-wrap
 msgid ""
 "      :param Location: Location of entry to read. Defaults to 1\n"
@@ -26951,19 +27081,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:603
+#: docs/manual/python/gammu.rst:605
 #, no-wrap
 msgid "   .. method:: GetSMSFolders()\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:605
+#: docs/manual/python/gammu.rst:607
 #, no-wrap
 msgid "      Returns SMS folders information.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:608
+#: docs/manual/python/gammu.rst:610
 #, no-wrap
 msgid ""
 "      :return: List of SMS folders.\n"
@@ -26971,19 +27101,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:611
+#: docs/manual/python/gammu.rst:613
 #, no-wrap
 msgid "   .. method:: GetSMSStatus()\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:613
+#: docs/manual/python/gammu.rst:615
 #, no-wrap
 msgid "      Gets information about SMS memory (read/unread/size of memory for both SIM and phone).\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:616
+#: docs/manual/python/gammu.rst:618
 #, no-wrap
 msgid ""
 "      :return: Dictionary with information about phone memory (SIMUnRead, SIMUsed, SIMSize, PhoneUnRead, PhoneUsed, PhoneSize and TemplatesUsed)\n"
@@ -26991,19 +27121,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:619
+#: docs/manual/python/gammu.rst:621
 #, no-wrap
 msgid "   .. method:: GetSecurityStatus()\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:621
+#: docs/manual/python/gammu.rst:623
 #, no-wrap
 msgid "      Queries whether some security code needs to be entered.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:624
+#: docs/manual/python/gammu.rst:626
 #, no-wrap
 msgid ""
 "      :return: String indicating which code needs to be entered or None if none is needed\n"
@@ -27011,19 +27141,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:627
+#: docs/manual/python/gammu.rst:629
 #, no-wrap
 msgid "   .. method:: GetSignalQuality()\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:629
+#: docs/manual/python/gammu.rst:631
 #, no-wrap
 msgid "      Reads signal quality (strength and error rate).\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:632
+#: docs/manual/python/gammu.rst:634
 #, no-wrap
 msgid ""
 "      :return: Dictionary containing information about signal state (SignalStrength, SignalPercent and BitErrorRate)\n"
@@ -27031,19 +27161,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:635
+#: docs/manual/python/gammu.rst:637
 #, no-wrap
 msgid "   .. method:: GetSpeedDial(Location)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:637
+#: docs/manual/python/gammu.rst:639
 #, no-wrap
 msgid "      Gets speed dial.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:642
+#: docs/manual/python/gammu.rst:644
 #, no-wrap
 msgid ""
 "      :param Location: Location of entry to read\n"
@@ -27053,13 +27183,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:645
+#: docs/manual/python/gammu.rst:647
 #, no-wrap
 msgid "   .. method:: GetToDo(Location)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:652
+#: docs/manual/python/gammu.rst:654
 #, no-wrap
 msgid ""
 "      :param Location: Location of entry to read\n"
@@ -27069,19 +27199,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:655
+#: docs/manual/python/gammu.rst:657
 #, no-wrap
 msgid "   .. method:: GetToDoStatus()\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:657
+#: docs/manual/python/gammu.rst:659
 #, no-wrap
 msgid "      Gets status of ToDos (count of used entries).\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:660
+#: docs/manual/python/gammu.rst:662
 #, no-wrap
 msgid ""
 "      :return: Dictionary of status (Used)\n"
@@ -27089,31 +27219,31 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:663
+#: docs/manual/python/gammu.rst:665
 #, no-wrap
 msgid "   .. method:: HoldCall(ID)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:665
+#: docs/manual/python/gammu.rst:667
 #, no-wrap
 msgid "      Holds call.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:673
+#: docs/manual/python/gammu.rst:675
 #, no-wrap
 msgid "   .. method:: Init(Replies)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:675
+#: docs/manual/python/gammu.rst:677
 #, no-wrap
 msgid "      Initialises the connection with phone.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:680
+#: docs/manual/python/gammu.rst:682
 #, no-wrap
 msgid ""
 "      :param Replies: Number of replies to wait for on each request. Defaults to 1. Higher value makes sense only on unreliable links.\n"
@@ -27123,19 +27253,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:683
+#: docs/manual/python/gammu.rst:685
 #, no-wrap
 msgid "   .. method:: PressKey(Key, Press)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:685
+#: docs/manual/python/gammu.rst:687
 #, no-wrap
 msgid "      Emulates key press.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:692
+#: docs/manual/python/gammu.rst:694
 #, no-wrap
 msgid ""
 "      :param Key: What key to press\n"
@@ -27147,19 +27277,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:695
+#: docs/manual/python/gammu.rst:697
 #, no-wrap
 msgid "   .. method:: ReadConfig(Section, Configuration, Filename)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:697
+#: docs/manual/python/gammu.rst:699
 #, no-wrap
 msgid "      Reads specified section of gammurc\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:706
+#: docs/manual/python/gammu.rst:708
 #, no-wrap
 msgid ""
 "      :param Section: Index of config section to read. Defaults to 0.\n"
@@ -27173,19 +27303,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:709
+#: docs/manual/python/gammu.rst:711
 #, no-wrap
 msgid "   .. method:: ReadDevice(Wait)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:711
+#: docs/manual/python/gammu.rst:713
 #, no-wrap
 msgid "      Reads data from device.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:716
+#: docs/manual/python/gammu.rst:718
 #, no-wrap
 msgid ""
 "      :param Wait: Whether to wait, default is not to wait.\n"
@@ -27195,19 +27325,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:719
+#: docs/manual/python/gammu.rst:721
 #, no-wrap
 msgid "   .. method:: Reset(Hard)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:721
+#: docs/manual/python/gammu.rst:723
 #, no-wrap
 msgid "      Performs phone reset.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:726
+#: docs/manual/python/gammu.rst:728
 #, no-wrap
 msgid ""
 "      :param Hard: Whether to make hard reset\n"
@@ -27217,19 +27347,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:729
+#: docs/manual/python/gammu.rst:731
 #, no-wrap
 msgid "   .. method:: ResetPhoneSettings(Type)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:731
+#: docs/manual/python/gammu.rst:733
 #, fuzzy, no-wrap
 msgid "      Resets phone settings.\n"
 msgstr "Pengaturan telepon"
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:736
+#: docs/manual/python/gammu.rst:738
 #, no-wrap
 msgid ""
 "      :param Type: What to reset, one of ``PHONE``, ``UIF``, ``ALL``, ``DEV``, ``FACTORY``\n"
@@ -27239,43 +27369,43 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:739
+#: docs/manual/python/gammu.rst:741
 #, no-wrap
 msgid "   .. method:: SendDTMF(Number)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:741
+#: docs/manual/python/gammu.rst:743
 #, no-wrap
 msgid "      Sends DTMF (Dual Tone Multi Frequency) tone.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:749
+#: docs/manual/python/gammu.rst:751
 #, no-wrap
 msgid "   .. method:: SendFilePart(File)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:751
+#: docs/manual/python/gammu.rst:753
 #, no-wrap
 msgid "      Sends file part to phone.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:759
+#: docs/manual/python/gammu.rst:761
 #, no-wrap
 msgid "   .. method:: SendSMS(Value)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:761
+#: docs/manual/python/gammu.rst:763
 #, no-wrap
 msgid "      Sends SMS.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:766
+#: docs/manual/python/gammu.rst:768
 #, no-wrap
 msgid ""
 "      :param Value: SMS data, see :ref:`sms_obj`\n"
@@ -27285,19 +27415,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:769
+#: docs/manual/python/gammu.rst:771
 #, no-wrap
 msgid "   .. method:: SendSavedSMS(Folder, Location)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:771
+#: docs/manual/python/gammu.rst:773
 #, no-wrap
 msgid "      Sends SMS saved in phone.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:778
+#: docs/manual/python/gammu.rst:780
 #, no-wrap
 msgid ""
 "      :param Folder: Folder where to read entry (0 is emulated flat memory)\n"
@@ -27309,19 +27439,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:781
+#: docs/manual/python/gammu.rst:783
 #, no-wrap
 msgid "   .. method:: SetAlarm(DateTime, Location, Repeating, Text)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:783
+#: docs/manual/python/gammu.rst:785
 #, no-wrap
 msgid "      Sets alarm in phone.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:794
+#: docs/manual/python/gammu.rst:796
 #, no-wrap
 msgid ""
 "      :param DateTime: When should alarm happen.\n"
@@ -27337,31 +27467,31 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:797
+#: docs/manual/python/gammu.rst:799
 #, no-wrap
 msgid "   .. method:: SetAutoNetworkLogin()\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:799
+#: docs/manual/python/gammu.rst:801
 #, no-wrap
 msgid "      Enables network auto login.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:805
+#: docs/manual/python/gammu.rst:807
 #, no-wrap
 msgid "   .. method:: SetCalendar(Value)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:807
+#: docs/manual/python/gammu.rst:809
 #, no-wrap
 msgid "      Sets calendar entry\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:812
+#: docs/manual/python/gammu.rst:814
 #, no-wrap
 msgid ""
 "      :param Value: Calendar entry data, see :ref:`cal_obj`\n"
@@ -27371,19 +27501,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:815
+#: docs/manual/python/gammu.rst:817
 #, no-wrap
 msgid "   .. method:: SetConfig(Section, Values)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:817
+#: docs/manual/python/gammu.rst:819
 #, no-wrap
 msgid "      Sets specified config section.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:824
+#: docs/manual/python/gammu.rst:826
 #, no-wrap
 msgid ""
 "      :param Section: Index of config section to modify\n"
@@ -27395,19 +27525,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:827
+#: docs/manual/python/gammu.rst:829
 #, no-wrap
 msgid "   .. method:: SetDateTime(Date)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:829
+#: docs/manual/python/gammu.rst:831
 #, no-wrap
 msgid "      Sets date and time in phone.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:834
+#: docs/manual/python/gammu.rst:836
 #, no-wrap
 msgid ""
 "      :param Date: Date to set\n"
@@ -27417,19 +27547,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:837
+#: docs/manual/python/gammu.rst:839
 #, no-wrap
 msgid "   .. method:: SetDebugFile(File, Global)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:839
+#: docs/manual/python/gammu.rst:841
 #, no-wrap
 msgid "      Sets state machine debug file.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:846
+#: docs/manual/python/gammu.rst:848
 #, no-wrap
 msgid ""
 "      :param File: File where to write debug stuff (as configured by :meth:`SetDebugLevel`). Can be either None for no file, Python file object or filename.\n"
@@ -27441,19 +27571,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:849
+#: docs/manual/python/gammu.rst:851
 #, no-wrap
 msgid "   .. method:: SetDebugLevel(Level)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:851
+#: docs/manual/python/gammu.rst:853
 #, no-wrap
 msgid "      Sets state machine debug level accorting to passed string. You need to configure output file using :meth:`SetDebugFile` to activate it.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:864
+#: docs/manual/python/gammu.rst:866
 #, no-wrap
 msgid ""
 "      :type Level: string\n"
@@ -27471,19 +27601,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:867
+#: docs/manual/python/gammu.rst:869
 #, no-wrap
 msgid "   .. method:: SetFileAttributes(Filename, ReadOnly, Protected, System, Hidden)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:869
+#: docs/manual/python/gammu.rst:871
 #, no-wrap
 msgid "      Sets file attributes.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:882
+#: docs/manual/python/gammu.rst:884
 #, no-wrap
 msgid ""
 "      :param Filename: File to modify\n"
@@ -27501,20 +27631,20 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:885
+#: docs/manual/python/gammu.rst:887
 #, no-wrap
 msgid "   .. method:: SetIncomingCB(Enable)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:887
+#: docs/manual/python/gammu.rst:889
 #, no-wrap
 msgid "      Gets network information from phone.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:892 docs/manual/python/gammu.rst:902
-#: docs/manual/python/gammu.rst:924 docs/manual/python/gammu.rst:934
+#: docs/manual/python/gammu.rst:894 docs/manual/python/gammu.rst:904
+#: docs/manual/python/gammu.rst:926 docs/manual/python/gammu.rst:936
 #, no-wrap
 msgid ""
 "      :type Enable: boolean\n"
@@ -27524,37 +27654,37 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:895
+#: docs/manual/python/gammu.rst:897
 #, no-wrap
 msgid "   .. method:: SetIncomingCall(Enable)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:897
+#: docs/manual/python/gammu.rst:899
 #, no-wrap
 msgid "      Activates/deactivates noticing about incoming calls.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:905
+#: docs/manual/python/gammu.rst:907
 #, no-wrap
 msgid "   .. method:: SetIncomingCallback(Callback)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:907
+#: docs/manual/python/gammu.rst:909
 #, no-wrap
 msgid "      Sets callback function which is called whenever any (enabled) incoming event appears. Please note that you have to enable each event type by calling SetIncoming* functions.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:909
+#: docs/manual/python/gammu.rst:911
 #, no-wrap
 msgid "      The callback function needs to accept three parameters: StateMachine object, event type and it's data in dictionary.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:914
+#: docs/manual/python/gammu.rst:916
 #, no-wrap
 msgid ""
 "      :param Callback: callback function or None for disabling\n"
@@ -27564,43 +27694,43 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:917
+#: docs/manual/python/gammu.rst:919
 #, no-wrap
 msgid "   .. method:: SetIncomingSMS(Enable)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:919
+#: docs/manual/python/gammu.rst:921
 #, no-wrap
 msgid "      Enable/disable notification on incoming SMS.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:927
+#: docs/manual/python/gammu.rst:929
 #, no-wrap
 msgid "   .. method:: SetIncomingUSSD(Enable)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:929
+#: docs/manual/python/gammu.rst:931
 #, no-wrap
 msgid "      Activates/deactivates noticing about incoming USSDs (UnStructured Supplementary Services).\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:937
+#: docs/manual/python/gammu.rst:939
 #, no-wrap
 msgid "   .. method:: SetLocale(DateSeparator, DateFormat, AMPMTime)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:939
+#: docs/manual/python/gammu.rst:941
 #, no-wrap
 msgid "      Sets locale of phone.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:948
+#: docs/manual/python/gammu.rst:950
 #, no-wrap
 msgid ""
 "      :param DateSeparator: Date separator.\n"
@@ -27614,43 +27744,43 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:951
+#: docs/manual/python/gammu.rst:953
 #, no-wrap
 msgid "   .. method:: SetMemory(Value)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:953
+#: docs/manual/python/gammu.rst:955
 #, fuzzy, no-wrap
 msgid "      Sets memory (phonebooks or calls) entry.\n"
 msgstr "Memori (buku telepon dan panggilan)"
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:961
+#: docs/manual/python/gammu.rst:963
 #, no-wrap
 msgid "   .. method:: SetSMS(Value)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:963
+#: docs/manual/python/gammu.rst:965
 #, no-wrap
 msgid "      Sets SMS.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:971
+#: docs/manual/python/gammu.rst:973
 #, no-wrap
 msgid "   .. method:: SetSMSC(Value)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:973
+#: docs/manual/python/gammu.rst:975
 #, no-wrap
 msgid "      Sets SMS Service Center number and SMS settings.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:978
+#: docs/manual/python/gammu.rst:980
 #, no-wrap
 msgid ""
 "      :param Value: SMSC information, see :ref:`smsc_obj`\n"
@@ -27660,19 +27790,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:981
+#: docs/manual/python/gammu.rst:983
 #, no-wrap
 msgid "   .. method:: SetSpeedDial(Value)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:983
+#: docs/manual/python/gammu.rst:985
 #, no-wrap
 msgid "      Sets speed dial.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:988
+#: docs/manual/python/gammu.rst:990
 #, no-wrap
 msgid ""
 "      :param Value: Speed dial data, see :meth:`GetSpeedDial` for listing.\n"
@@ -27682,119 +27812,119 @@ msgid ""
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:991
+#: docs/manual/python/gammu.rst:993
 #, no-wrap
 msgid "   .. method:: SetToDo(Value)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:993
+#: docs/manual/python/gammu.rst:995
 #, no-wrap
 msgid "      Sets ToDo in phone.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:1001
+#: docs/manual/python/gammu.rst:1003
 #, no-wrap
 msgid "   .. method:: SplitCall(ID)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:1003
+#: docs/manual/python/gammu.rst:1005
 #, no-wrap
 msgid "      Splits call.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:1011
+#: docs/manual/python/gammu.rst:1013
 #, no-wrap
 msgid "   .. method:: SwitchCall(ID, Next)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:1013
+#: docs/manual/python/gammu.rst:1015
 #, no-wrap
 msgid "      Switches call.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:1021
+#: docs/manual/python/gammu.rst:1023
 #, no-wrap
 msgid "   .. method:: Terminate()\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:1023
+#: docs/manual/python/gammu.rst:1025
 #, no-wrap
 msgid "      Terminates the connection with phone.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:1029
+#: docs/manual/python/gammu.rst:1031
 #, no-wrap
 msgid "   .. method:: TransferCall(ID, Next)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:1031
+#: docs/manual/python/gammu.rst:1033
 #, no-wrap
 msgid "      Transfers call.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:1039
+#: docs/manual/python/gammu.rst:1041
 #, no-wrap
 msgid "   .. method:: UnholdCall(ID)\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:1041
+#: docs/manual/python/gammu.rst:1043
 #, no-wrap
 msgid "      Unholds call.\n"
 msgstr ""
 
 #. type: delimited block -
-#: docs/manual/python/gammu.rst:1050
+#: docs/manual/python/gammu.rst:1052
 #, no-wrap
 msgid "Generic functions\n"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1053
+#: docs/manual/python/gammu.rst:1055
 msgid "Version()"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1055
+#: docs/manual/python/gammu.rst:1057
 #, fuzzy
 msgid "Get version information."
 msgstr "Informasi telepon"
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1058
+#: docs/manual/python/gammu.rst:1060
 msgid ""
 ":return: Tuple of version information - Gammu runtime version, python-gammu "
 "version, build time Gammu version.  :rtype: tuple"
 msgstr ""
 
 #. type: Title -
-#: docs/manual/python/gammu.rst:1060
+#: docs/manual/python/gammu.rst:1062
 #, fuzzy, no-wrap
 msgid "Debugging configuration"
 msgstr "Fitur string buruk dalam konfigurasi."
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1063
+#: docs/manual/python/gammu.rst:1065
 msgid "SetDebugFile(File)"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1065
+#: docs/manual/python/gammu.rst:1067
 msgid "Sets global debug file."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1070
+#: docs/manual/python/gammu.rst:1072
 msgid ""
 ":param File: File where to write debug stuff (as configured by :meth:"
 "`SetDebugLevel`). Can be either None for no file, Python file object or "
@@ -27802,83 +27932,83 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1072
+#: docs/manual/python/gammu.rst:1074
 msgid "SetDebugLevel(Level)"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1074
+#: docs/manual/python/gammu.rst:1076
 msgid ""
 "Sets global debug level accorting to passed string. You need to configure "
 "output file using :meth:`SetDebugFile` to activate it."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1077
+#: docs/manual/python/gammu.rst:1079
 msgid ""
 ":type Level: string :param Level: name of debug level to use, currently one "
 "of:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1079
+#: docs/manual/python/gammu.rst:1081
 msgid "nothing"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1081
+#: docs/manual/python/gammu.rst:1083
 msgid "textall"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1082
+#: docs/manual/python/gammu.rst:1084
 msgid "binary"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1083
+#: docs/manual/python/gammu.rst:1085
 #, fuzzy
 msgid "errors"
 msgstr "Tidak ada Kesalahan"
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1084
+#: docs/manual/python/gammu.rst:1086
 msgid "textdate"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1085
+#: docs/manual/python/gammu.rst:1087
 msgid "textalldate"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1086
+#: docs/manual/python/gammu.rst:1088
 msgid "errorsdate"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1088
+#: docs/manual/python/gammu.rst:1090
 msgid ":return: None :rtype: None"
 msgstr ""
 
 #. type: Title -
-#: docs/manual/python/gammu.rst:1090
+#: docs/manual/python/gammu.rst:1092
 #, no-wrap
 msgid "Message processing"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1093
+#: docs/manual/python/gammu.rst:1095
 msgid "LinkSMS(Messages, EMS)"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1095
+#: docs/manual/python/gammu.rst:1097
 msgid "Links multi part SMS messages."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1102
+#: docs/manual/python/gammu.rst:1104
 msgid ""
 ":type Messages: list :type EMS: boolean :param Messages: List of messages to "
 "link, see :ref:`sms_obj` :param EMS: Whether to detect ems, defauls to True :"
@@ -27886,17 +28016,17 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1104
+#: docs/manual/python/gammu.rst:1106
 msgid "DecodeSMS(Messages, EMS)"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1106
+#: docs/manual/python/gammu.rst:1108
 msgid "Decodes multi part SMS message."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1113
+#: docs/manual/python/gammu.rst:1115
 msgid ""
 ":param Messages: Nessages to decode, see :ref:`sms_obj` :type Messages: "
 "list :param EMS: Whether to use EMS, defalt to True :type EMS: boolean :"
@@ -27904,17 +28034,17 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1115
+#: docs/manual/python/gammu.rst:1117
 msgid "EncodeSMS(MessageInfo)"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1117
+#: docs/manual/python/gammu.rst:1119
 msgid "Encodes multi part SMS message."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1122
+#: docs/manual/python/gammu.rst:1124
 msgid ""
 ":param MessageInfo: Description of message, see :ref:`sms_info_obj` :type "
 "MessageInfo: dict :return: List of dictionaries with raw message, see :ref:"
@@ -27922,17 +28052,17 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1124
+#: docs/manual/python/gammu.rst:1126
 msgid "DecodePDU(Data, SMSC = False)"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1126
+#: docs/manual/python/gammu.rst:1128
 msgid "Parses PDU packet."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1133
+#: docs/manual/python/gammu.rst:1135
 msgid ""
 ":param Data: PDU data, need to be binary not hex encoded :type Data: string :"
 "param SMSC: Whether PDU includes SMSC.  :type SMSC: boolean :return: Message "
@@ -27940,17 +28070,17 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1135
+#: docs/manual/python/gammu.rst:1137
 msgid "EncodePDU(SMS, Layout = Submit)"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1137
+#: docs/manual/python/gammu.rst:1139
 msgid "Creates PDU packet."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1144
+#: docs/manual/python/gammu.rst:1146
 msgid ""
 ":param SMS: SMS dictionary, see :ref:`sms_obj` :type SMS: dict :param "
 "Layout: Layout (one of Submit, Deliver, StatusReport), Submit is default :"
@@ -27958,62 +28088,62 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1146
+#: docs/manual/python/gammu.rst:1148
 msgid "1.27.93"
 msgstr ""
 
 #. type: Title -
-#: docs/manual/python/gammu.rst:1148
+#: docs/manual/python/gammu.rst:1150
 #, no-wrap
 msgid "Encoding and decoding entries"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1151
+#: docs/manual/python/gammu.rst:1153
 msgid "DecodeVCARD(Text)"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1153
+#: docs/manual/python/gammu.rst:1155
 msgid "Decodes memory entry v from a string."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1158
+#: docs/manual/python/gammu.rst:1160
 msgid ""
 ":param Text: String to decode :type Text: string :return: Memory entry, see :"
 "ref:`pbk_obj` :rtype: dict"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1160
+#: docs/manual/python/gammu.rst:1162
 msgid "EncodeVCARD(Entry)"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1162
+#: docs/manual/python/gammu.rst:1164
 msgid "Encodes memory entry to a vCard."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1167
+#: docs/manual/python/gammu.rst:1169
 msgid ""
 ":param Entry: Memory entry, see :ref:`pbk_obj` :type Entry: dict :return: "
 "String with vCard :rtype: string"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1169
+#: docs/manual/python/gammu.rst:1171
 msgid "DecodeVCS(Text)"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1171 docs/manual/python/gammu.rst:1180
+#: docs/manual/python/gammu.rst:1173 docs/manual/python/gammu.rst:1182
 msgid "Decodes todo/calendar entry v from a string."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1176 docs/manual/python/gammu.rst:1185
+#: docs/manual/python/gammu.rst:1178 docs/manual/python/gammu.rst:1187
 msgid ""
 ":param Text: String to decode :type Text: string :return: Calendar or todo "
 "entry (whatever one was included in string), see :ref:`cal_obj`, :ref:"
@@ -28021,96 +28151,96 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1178
+#: docs/manual/python/gammu.rst:1180
 msgid "DecodeICS(Text)"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1187
+#: docs/manual/python/gammu.rst:1189
 msgid "EncodeVCALENDAR(Entry)"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1189
+#: docs/manual/python/gammu.rst:1191
 msgid "Encodes calendar entry to a vCalendar."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1194
+#: docs/manual/python/gammu.rst:1196
 msgid ""
 ":param Entry: Calendar entry, see :ref:`cal_obj` :type Entry: dict :return: "
 "String with vCalendar :rtype: string"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1196
+#: docs/manual/python/gammu.rst:1198
 msgid "EncodeICALENDAR(Entry)"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1198
+#: docs/manual/python/gammu.rst:1200
 msgid "Encodes calendar entry to a iCalendar."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1203
+#: docs/manual/python/gammu.rst:1205
 msgid ""
 ":param Entry: Calendar entry, see :ref:`cal_obj` :type Entry: dict :return: "
 "String with iCalendar :rtype: string"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1205
+#: docs/manual/python/gammu.rst:1207
 msgid "EncodeVTODO(Entry)"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1207
+#: docs/manual/python/gammu.rst:1209
 msgid "Encodes todo entry to a vTodo."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1212
+#: docs/manual/python/gammu.rst:1214
 msgid ""
 ":param Entry: Todo entry, see :ref:`todo_obj` :type Entry: dict :return: "
 "String with vTodo :rtype: string"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1214
+#: docs/manual/python/gammu.rst:1216
 msgid "EncodeITODO(Entry)"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1216
+#: docs/manual/python/gammu.rst:1218
 msgid "Encodes todo entry to a iTodo."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1221
+#: docs/manual/python/gammu.rst:1223
 msgid ""
 ":param Entry: Todo entry, see :ref:`todo_obj` :type Entry: dict :return: "
 "String with vCard :rtype: string"
 msgstr ""
 
 #. type: Title -
-#: docs/manual/python/gammu.rst:1223
+#: docs/manual/python/gammu.rst:1225
 #, fuzzy, no-wrap
 msgid "Backup reading and writing"
 msgstr "Backing up dan restoring"
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1226
+#: docs/manual/python/gammu.rst:1228
 msgid "SaveRingtone(Filename, Ringtone, Format)"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1228
+#: docs/manual/python/gammu.rst:1230
 msgid "Saves ringtone into file."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1237
+#: docs/manual/python/gammu.rst:1239
 msgid ""
 ":param Filename: Name of file where ringote will be saved :type Filename: "
 "string :param Ringtone: Ringtone to save :type Ringtone: dict :param Format: "
@@ -28119,17 +28249,17 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1239
+#: docs/manual/python/gammu.rst:1241
 msgid "SaveBackup(Filename, Backup, Format)"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1241
+#: docs/manual/python/gammu.rst:1243
 msgid "Saves backup into file."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1250
+#: docs/manual/python/gammu.rst:1252
 msgid ""
 ":param Filename: Name of file to read backup from :type Filename: string :"
 "param Backup: Backup data, see :func:`ReadBackup` for description :type "
@@ -28140,17 +28270,17 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1252
+#: docs/manual/python/gammu.rst:1254
 msgid "ReadBackup(Filename, Format)"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1254
+#: docs/manual/python/gammu.rst:1256
 msgid "Reads backup into file."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1260
+#: docs/manual/python/gammu.rst:1262
 msgid ""
 ":param Filename: Name of file where backup is stored :type Filename: string :"
 "param Format: File format to use (``Auto``, ``AutoUnicode``, ``LMB``, "
@@ -28160,42 +28290,42 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1262
+#: docs/manual/python/gammu.rst:1264
 msgid "IMEI"
 msgstr "IMEI"
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1264
+#: docs/manual/python/gammu.rst:1266
 msgid "Creator"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1265
+#: docs/manual/python/gammu.rst:1267
 msgid "PhonePhonebook"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1266
+#: docs/manual/python/gammu.rst:1268
 msgid "SIMPhonebook"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1270
+#: docs/manual/python/gammu.rst:1272
 msgid ":rtype: dict"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1272
+#: docs/manual/python/gammu.rst:1274
 msgid "SaveSMSBackup(Filename, Backup)"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1274
+#: docs/manual/python/gammu.rst:1276
 msgid "Saves SMS backup into file."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1281
+#: docs/manual/python/gammu.rst:1283
 msgid ""
 ":param Filename: Name of file where to save SMS backup :type Filename: "
 "string :param Backup: List of messages to store :type Backup: list :return: "
@@ -28203,46 +28333,46 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1283
+#: docs/manual/python/gammu.rst:1285
 msgid "ReadSMSBackup(Filename)"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1285
+#: docs/manual/python/gammu.rst:1287
 msgid "Reads SMS backup into file."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1290
+#: docs/manual/python/gammu.rst:1292
 msgid ""
 ":param Filename: Name of file where SMS backup is stored :type Filename: "
 "string :return: List of messages read from file :rtype: list"
 msgstr ""
 
 #. type: Title -
-#: docs/manual/python/gammu.rst:1292
+#: docs/manual/python/gammu.rst:1294
 #, no-wrap
 msgid "Various data"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1295
+#: docs/manual/python/gammu.rst:1297
 #, fuzzy
 msgid "GSMNetworks"
 msgstr "Jaringan"
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1297
+#: docs/manual/python/gammu.rst:1299
 msgid "Dictionary with GSM network codes."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1299
+#: docs/manual/python/gammu.rst:1301
 msgid "GSMCountries"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/python/gammu.rst:1300
+#: docs/manual/python/gammu.rst:1302
 msgid "Dictionary with GSM country codes."
 msgstr ""
 

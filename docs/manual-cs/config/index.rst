@@ -306,10 +306,10 @@ kanálu 42:
 Práce s více telefony
 +++++++++++++++++++++++
 
-Gammu může být nastaveno pro práci s více telefony najedou (ale jen jedno
-připojení v jeden okamžik, to zvolíte parametrem :option:`gammu
---section`). Nastavení telefonů na třech sériových portech by vypadalo
-následovně:
+Gammu can be configured for multiple phones (however only one connection is
+used at one time, you can choose which one to use with :option:`gammu -s`
+parameter). Configuration for phones on three serial ports would look like
+following:
 
 .. code-block:: ini
 
