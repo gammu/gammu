@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.28.96\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-10 13:29+0100\n"
-"PO-Revision-Date: 2011-01-10 13:28+0100\n"
+"PO-Revision-Date: 2011-01-10 13:35+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: cs\n"
@@ -20,16 +20,15 @@ msgstr ""
 # type: TP
 #. type: Plain text
 #: docs/manual/config/index.rst:2
-#, fuzzy
 msgid "_gammurc:"
-msgstr "``.\\gammurc``"
+msgstr "_gammurc:"
 
 # type: Plain text
 #. type: Title =
 #: docs/manual/config/index.rst:4
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Gammu Configuration File"
-msgstr "gammurc - konfigurační soubor gammu(1)"
+msgstr "Konfigurační soubor Gammu"
 
 #. type: Title -
 #: docs/manual/config/index.rst:7 docs/manual/smsd/inject.rst:9
@@ -94,9 +93,9 @@ msgstr "``.\\gammurc``"
 #: docs/manual/smsd/monitor.rst:16 docs/manual/smsd/smsd.rst:17
 #: docs/manual/gammu/index.rst:20 docs/manual/utils/gammu-config.rst:16
 #: docs/manual/utils/jadmaker.rst:16 docs/manual/utils/gammu-detect.rst:19
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Description"
-msgstr "Popis sloupců:"
+msgstr "Popis"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:26
@@ -106,9 +105,9 @@ msgstr ""
 # type: Plain text
 #. type: Attribute :ref:
 #: docs/manual/config/index.rst:26
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "`gammu` reads configuration from a config file. It's location is determined"
-msgstr "gammu-smsd(1) čte konfiguraci z konfiguračního souboru. Jeho umístění může být zadáno na příkazové řádce, jinak se použije /etc/gammu-smsdrc."
+msgstr "`gammu` čte konfiguraci z konfiguračního souboru. Jeho umístění"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:28
@@ -805,9 +804,8 @@ msgstr "vynutí použití služby IrMC (kontakty, kalendář a poznámky)"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:182
-#, fuzzy
 msgid "``obexnone``"
-msgstr "``NokiaRingtone``"
+msgstr "``obexnone``"
 
 # type: Plain text
 #. type: Plain text
@@ -952,9 +950,9 @@ msgstr "žádné ladicí zprávy\n"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:230
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "``text``        \n"
-msgstr "        IMEI\n"
+msgstr "``text``        \n"
 
 # type: Plain text
 #. type: Plain text
@@ -1108,9 +1106,9 @@ msgstr ""
 #: docs/manual/gammu/index.rst:1797 docs/manual/testing/dummy-driver.rst:69
 #: docs/manual/python/objects.rst:123 docs/manual/formats/backup.rst:11
 #: docs/manual/formats/ini.rst:14 docs/manual/c/examples.rst:2
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Examples"
-msgstr "Například:"
+msgstr "Příklady"
 
 # type: Plain text
 #. type: Plain text
@@ -1147,12 +1145,8 @@ msgstr "ini"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:283
-#, fuzzy
 msgid "[gammu] device = /dev/ttyACM0 connection = dlr3"
-msgstr ""
-"    [gammu]\n"
-"    device = /dev/ttyS0\n"
-"    connection = at\n"
+msgstr "[gammu] device = /dev/ttyACM0 connection = dlr3"
 
 # type: Plain text
 #. type: Plain text
@@ -1166,12 +1160,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/config/index.rst:292
-#, fuzzy
 msgid "[gammu] device = /dev/ttyACM0 connection = at"
-msgstr ""
-"    [gammu]\n"
-"    device = /dev/ttyS0\n"
-"    connection = at\n"
+msgstr "[gammu] device = /dev/ttyACM0 connection = at"
 
 # type: Plain text
 #. type: Plain text
@@ -1185,12 +1175,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/config/index.rst:301
-#, fuzzy
 msgid "[gammu] device = B0:0B:00:00:FA:CE connection = blueat"
-msgstr ""
-"    [gammu]\n"
-"    device = B0:0B:00:00:FA:CE\n"
-"    connection = blueat\n"
+msgstr "[gammu] device = B0:0B:00:00:FA:CE connection = blueat"
 
 # type: Plain text
 #. type: Plain text
@@ -1204,12 +1190,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/config/index.rst:309
-#, fuzzy
 msgid "[gammu] device = B0:0B:00:00:FA:CE/42 connection = blueat"
-msgstr ""
-"    [gammu]\n"
-"    device = B0:0B:00:00:FA:CE/42\n"
-"    connection = blueat\n"
+msgstr "[gammu] device = B0:0B:00:00:FA:CE/42 connection = blueat"
 
 #. type: Title +
 #: docs/manual/config/index.rst:311
@@ -1231,30 +1213,18 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/config/index.rst:323
-#, fuzzy
 msgid "[gammu] device = /dev/ttyS0 connection = at"
-msgstr ""
-"    [gammu]\n"
-"    device = /dev/ttyS0\n"
-"    connection = at\n"
+msgstr "[gammu] device = /dev/ttyS0 connection = at"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:327
-#, fuzzy
 msgid "[gammmu1] device = /dev/ttyS1 connection = at"
-msgstr ""
-"    [gammmu1]\n"
-"    device = /dev/ttyS1\n"
-"    connection = at\n"
+msgstr "[gammmu1] device = /dev/ttyS1 connection = at"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:331
-#, fuzzy
 msgid "[gammmu2] device = /dev/ttyS2 connection = at"
-msgstr ""
-"    [gammmu2]\n"
-"    device = /dev/ttyS2\n"
-"    connection = at\n"
+msgstr "[gammmu2] device = /dev/ttyS2 connection = at"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:333
