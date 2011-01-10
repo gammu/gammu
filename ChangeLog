@@ -23,6 +23,7 @@ ChangeLog
 
 [+] * Added option to enter new PIN when entering PUK, thanks to Peter
       Stuge for pointing out this requirement.
+[-] * Improved documentation of SMSD backend services.
     
 20110107 - 1.28.95
 
