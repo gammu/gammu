@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSD-DBI" "7" "January 07, 2011" "1.28.96" "Gammu"
+.TH "GAMMU-SMSD-DBI" "7" "January 10, 2011" "1.28.96" "Gammu"
 .SH NAME
 gammu-smsd-dbi \- gammu-smsd(1) backend using DBI abstraction layer to use any supported database as a message storage
 .
@@ -31,13 +31,195 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" Man page generated from reStructeredText.
 .
 .sp
-DBI backend stores all data in any database supported by libdbi, which
+DBI backend stores all data in any database supported by \fI\%libdbi\fP, which
 parameters are defined by configuration (see \fIgammu\-smsdrc\fP for description of
 configuration options).
 .sp
 For tables description see \fIgammu\-smsd\-tables\fP.
 .sp
 This backend is based on \fIgammu\-smsd\-sql\fP.
+.IP Note
+.
+The DBI driver is currently not supported on Windows because libdbi
+library does not support this platform.
+.RE
+.SH SUPPORTED DRIVERS
+.sp
+For complete list of drivers for \fI\%libdbi\fP see \fI\%libdbi-drivers\fP project. The
+drivers for example include:
+.INDENT 0.0
+.IP \(bu 2
+.
+\fBsqlite3\fP \- for SQLite 3
+.IP \(bu 2
+.
+\fBmysql\fP \- for MySQL
+.IP \(bu 2
+.
+\fBpgsql\fP \- for PostgeSQL
+.IP \(bu 2
+.
+\fBfreetds\fP \- for MS SQL Server or Sybase
+.UNINDENT
+.SH EXAMPLE
+.sp
+SQL script for creating tables in SQLite database:
+.sp
+.nf
+.ft C
+CREATE TABLE daemons (
+  Start TEXT NOT NULL,
+  Info TEXT NOT NULL
+);
+
+CREATE TABLE gammu (
+  Version INTEGER NOT NULL DEFAULT \(aq0\(aq
+);
+
+INSERT INTO gammu (Version) VALUES (12);
+
+CREATE TABLE inbox (
+  UpdatedInDB NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq)),
+  ReceivingDateTime NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq)),
+  Text TEXT NOT NULL,
+  SenderNumber TEXT NOT NULL DEFAULT \(aq\(aq,
+  Coding TEXT NOT NULL DEFAULT \(aqDefault_No_Compression\(aq,
+  UDH TEXT NOT NULL,
+  SMSCNumber TEXT NOT NULL DEFAULT \(aq\(aq,
+  Class INTEGER NOT NULL DEFAULT \(aq\-1\(aq,
+  TextDecoded TEXT NOT NULL DEFAULT \(aq\(aq,
+  ID INTEGER PRIMARY KEY AUTOINCREMENT,
+  RecipientID TEXT NOT NULL,
+  Processed TEXT NOT NULL DEFAULT \(aqfalse\(aq,
+  CHECK (Coding IN 
+  (\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq)) 
+);
+
+CREATE TRIGGER update_inbox_time UPDATE ON inbox 
+  BEGIN
+    UPDATE inbox SET UpdatedInDB = datetime(\(aqnow\(aq) WHERE ID = old.ID;
+  END;
+
+CREATE TABLE outbox (
+  UpdatedInDB NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq)),
+  InsertIntoDB NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq)),
+  SendingDateTime NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq)),
+  Text TEXT,
+  DestinationNumber TEXT NOT NULL DEFAULT \(aq\(aq,
+  Coding TEXT NOT NULL DEFAULT \(aqDefault_No_Compression\(aq,
+  UDH TEXT,
+  Class INTEGER DEFAULT \(aq\-1\(aq,
+  TextDecoded TEXT NOT NULL DEFAULT \(aq\(aq,
+  ID INTEGER PRIMARY KEY AUTOINCREMENT,
+  MultiPart TEXT NOT NULL DEFAULT \(aqfalse\(aq,
+  RelativeValidity INTEGER DEFAULT \(aq\-1\(aq,
+  SenderID TEXT,
+  SendingTimeOut NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq)),
+  DeliveryReport TEXT DEFAULT \(aqdefault\(aq,
+  CreatorID TEXT NOT NULL,
+  CHECK (Coding IN 
+  (\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq)),
+  CHECK (DeliveryReport IN (\(aqdefault\(aq,\(aqyes\(aq,\(aqno\(aq))
+);
+
+CREATE INDEX outbox_date ON outbox(SendingDateTime, SendingTimeOut);
+CREATE INDEX outbox_sender ON outbox(SenderID);
+
+CREATE TRIGGER update_outbox_time UPDATE ON outbox 
+  BEGIN
+    UPDATE outbox SET UpdatedInDB = datetime(\(aqnow\(aq) WHERE ID = old.ID;
+  END;
+
+CREATE TABLE outbox_multipart (
+  Text TEXT,
+  Coding TEXT NOT NULL DEFAULT \(aqDefault_No_Compression\(aq,
+  UDH TEXT,
+  Class INTEGER DEFAULT \(aq\-1\(aq,
+  TextDecoded TEXT DEFAULT NULL,
+  ID INTEGER,
+  SequencePosition INTEGER NOT NULL DEFAULT \(aq1\(aq,
+  CHECK (Coding IN 
+  (\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq)),
+ PRIMARY KEY (ID, SequencePosition)
+);
+
+CREATE TABLE pbk (
+  ID INTEGER PRIMARY KEY AUTOINCREMENT,
+  GroupID INTEGER NOT NULL DEFAULT \(aq\-1\(aq,
+  Name TEXT NOT NULL,
+  Number TEXT NOT NULL
+);
+
+CREATE TABLE pbk_groups (
+  Name TEXT NOT NULL,
+  ID INTEGER PRIMARY KEY AUTOINCREMENT
+);
+
+CREATE TABLE phones (
+  ID TEXT NOT NULL,
+  UpdatedInDB NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq)),
+  InsertIntoDB NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq)),
+  TimeOut NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq)),
+  Send TEXT NOT NULL DEFAULT \(aqno\(aq,
+  Receive TEXT NOT NULL DEFAULT \(aqno\(aq,
+  IMEI TEXT PRIMARY KEY NOT NULL,
+  Client TEXT NOT NULL,
+  Battery INTEGER NOT NULL DEFAULT \-1,
+  Signal INTEGER NOT NULL DEFAULT \-1,
+  Sent INTEGER NOT NULL DEFAULT 0,
+  Received INTEGER NOT NULL DEFAULT 0
+);
+
+CREATE TRIGGER update_phones_time UPDATE ON phones 
+  BEGIN
+    UPDATE phones SET UpdatedInDB = datetime(\(aqnow\(aq) WHERE IMEI = old.IMEI;
+  END;
+
+CREATE TABLE sentitems (
+  UpdatedInDB NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq)),
+  InsertIntoDB NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq)),
+  SendingDateTime NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq)),
+  DeliveryDateTime NUMERIC NULL,
+  Text TEXT NOT NULL,
+  DestinationNumber TEXT NOT NULL DEFAULT \(aq\(aq,
+  Coding TEXT NOT NULL DEFAULT \(aqDefault_No_Compression\(aq,
+  UDH TEXT NOT NULL,
+  SMSCNumber TEXT NOT NULL DEFAULT \(aq\(aq,
+  Class INTEGER NOT NULL DEFAULT \(aq\-1\(aq,
+  TextDecoded TEXT NOT NULL DEFAULT \(aq\(aq,
+  ID INTEGER,
+  SenderID TEXT NOT NULL,
+  SequencePosition INTEGER NOT NULL DEFAULT \(aq1\(aq,
+  Status TEXT NOT NULL DEFAULT \(aqSendingOK\(aq,
+  StatusError INTEGER NOT NULL DEFAULT \(aq\-1\(aq,
+  TPMR INTEGER NOT NULL DEFAULT \(aq\-1\(aq,
+  RelativeValidity INTEGER NOT NULL DEFAULT \(aq\-1\(aq,
+  CreatorID TEXT NOT NULL,
+  CHECK (Status IN 
+  (\(aqSendingOK\(aq,\(aqSendingOKNoReport\(aq,\(aqSendingError\(aq,\(aqDeliveryOK\(aq,\(aqDeliveryFailed\(aq,\(aqDeliveryPending\(aq,
+  \(aqDeliveryUnknown\(aq,\(aqError\(aq)),
+  CHECK (Coding IN 
+  (\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq)) ,
+  PRIMARY KEY (ID, SequencePosition)
+);
+
+CREATE INDEX sentitems_date ON sentitems(DeliveryDateTime);
+CREATE INDEX sentitems_tpmr ON sentitems(TPMR);
+CREATE INDEX sentitems_dest ON sentitems(DestinationNumber);
+CREATE INDEX sentitems_sender ON sentitems(SenderID);
+
+CREATE TRIGGER update_sentitems_time UPDATE ON sentitems 
+  BEGIN
+    UPDATE sentitems SET UpdatedInDB = datetime(\(aqnow\(aq) WHERE ID = old.ID;
+  END;
+
+.ft P
+.fi
+.IP Note
+.
+You can find the script in \fBdocs/sql/sqlite.sql\fP as well. There are
+also scripts for other databases in same folder.
+.RE
 .SH AUTHOR
 Michal Čihař <michal@cihar.com>
 .SH COPYRIGHT

@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSD-MYSQL" "7" "January 07, 2011" "1.28.96" "Gammu"
+.TH "GAMMU-SMSD-MYSQL" "7" "January 10, 2011" "1.28.96" "Gammu"
 .SH NAME
 gammu-smsd-mysql \- gammu-smsd(1) backend using MySQL database server as a message storage
 .
@@ -31,7 +31,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" Man page generated from reStructeredText.
 .
 .sp
-MYSQL backend stores all data in a MySQL database server, which parameters are
+MYSQL backend stores all data in a \fI\%MySQL\fP database server, which parameters are
 defined by configuration (see \fIgammu\-smsdrc\fP for description of configuration
 options).
 .sp
@@ -54,6 +54,299 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON \(gasmsd\(ga.* TO \(aqsmsd\(aq@\(aqlocal
 .
 For creating the SQL tables you need more privileges, especially for
 creating triggers, which are used for some functionality.
+.RE
+.SH EXAMPLE
+.sp
+SQL script for creating tables in MySQL database:
+.sp
+.nf
+.ft C
+\-\- phpMyAdmin SQL Dump
+\-\- version 2.8.0.3
+\-\- http://www.phpmyadmin.net
+\-\- 
+\-\- Host: localhost
+\-\- Generation Time: Jun 10, 2006 at 11:08 PM
+\-\- Server version: 5.0.18
+\-\- PHP Version: 5.1.3
+\-\- 
+\-\- Database: \(gasmsd\(ga
+\-\- 
+
+\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+
+\-\- 
+\-\- Table structure for table \(gadaemons\(ga
+\-\- 
+
+CREATE TABLE \(gadaemons\(ga (
+  \(gaStart\(ga text NOT NULL,
+  \(gaInfo\(ga text NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+\-\- 
+\-\- Dumping data for table \(gadaemons\(ga
+\-\- 
+
+
+\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+
+\-\- 
+\-\- Table structure for table \(gagammu\(ga
+\-\- 
+
+CREATE TABLE \(gagammu\(ga (
+  \(gaVersion\(ga integer NOT NULL default \(aq0\(aq
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+\-\- 
+\-\- Dumping data for table \(gagammu\(ga
+\-\- 
+
+INSERT INTO \(gagammu\(ga (\(gaVersion\(ga) VALUES (12);
+
+\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+
+\-\- 
+\-\- Table structure for table \(gainbox\(ga
+\-\- 
+
+CREATE TABLE \(gainbox\(ga (
+  \(gaUpdatedInDB\(ga timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  \(gaReceivingDateTime\(ga timestamp NOT NULL default \(aq0000\-00\-00 00:00:00\(aq,
+  \(gaText\(ga text NOT NULL,
+  \(gaSenderNumber\(ga varchar(20) NOT NULL default \(aq\(aq,
+  \(gaCoding\(ga enum(\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq) NOT NULL default \(aqDefault_No_Compression\(aq,
+  \(gaUDH\(ga text NOT NULL,
+  \(gaSMSCNumber\(ga varchar(20) NOT NULL default \(aq\(aq,
+  \(gaClass\(ga integer NOT NULL default \(aq\-1\(aq,
+  \(gaTextDecoded\(ga text NOT NULL default \(aq\(aq,
+  \(gaID\(ga integer unsigned NOT NULL auto_increment,
+  \(gaRecipientID\(ga text NOT NULL,
+  \(gaProcessed\(ga enum(\(aqfalse\(aq,\(aqtrue\(aq) NOT NULL default \(aqfalse\(aq,
+  PRIMARY KEY \(gaID\(ga (\(gaID\(ga)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+\-\- 
+\-\- Dumping data for table \(gainbox\(ga
+\-\- 
+
+
+\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+
+\-\- 
+\-\- Table structure for table \(gaoutbox\(ga
+\-\- 
+
+CREATE TABLE \(gaoutbox\(ga (
+  \(gaUpdatedInDB\(ga timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  \(gaInsertIntoDB\(ga timestamp NOT NULL default \(aq0000\-00\-00 00:00:00\(aq,
+  \(gaSendingDateTime\(ga timestamp NOT NULL default \(aq0000\-00\-00 00:00:00\(aq,
+  \(gaText\(ga text,
+  \(gaDestinationNumber\(ga varchar(20) NOT NULL default \(aq\(aq,
+  \(gaCoding\(ga enum(\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq) NOT NULL default \(aqDefault_No_Compression\(aq,
+  \(gaUDH\(ga text,
+  \(gaClass\(ga integer default \(aq\-1\(aq,
+  \(gaTextDecoded\(ga text NOT NULL default \(aq\(aq,
+  \(gaID\(ga integer unsigned NOT NULL auto_increment,
+  \(gaMultiPart\(ga enum(\(aqfalse\(aq,\(aqtrue\(aq) default \(aqfalse\(aq,
+  \(gaRelativeValidity\(ga integer default \(aq\-1\(aq,
+  \(gaSenderID\(ga varchar(255),
+  \(gaSendingTimeOut\(ga timestamp NULL default \(aq0000\-00\-00 00:00:00\(aq,
+  \(gaDeliveryReport\(ga enum(\(aqdefault\(aq,\(aqyes\(aq,\(aqno\(aq) default \(aqdefault\(aq,
+  \(gaCreatorID\(ga text NOT NULL,
+  PRIMARY KEY \(gaID\(ga (\(gaID\(ga)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE INDEX outbox_date ON outbox(SendingDateTime, SendingTimeOut);
+CREATE INDEX outbox_sender ON outbox(SenderID);
+
+\-\- 
+\-\- Dumping data for table \(gaoutbox\(ga
+\-\- 
+
+
+\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+
+\-\- 
+\-\- Table structure for table \(gaoutbox_multipart\(ga
+\-\- 
+
+CREATE TABLE \(gaoutbox_multipart\(ga (
+  \(gaText\(ga text,
+  \(gaCoding\(ga enum(\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq) NOT NULL default \(aqDefault_No_Compression\(aq,
+  \(gaUDH\(ga text,
+  \(gaClass\(ga integer default \(aq\-1\(aq,
+  \(gaTextDecoded\(ga text default NULL,
+  \(gaID\(ga integer unsigned NOT NULL default \(aq0\(aq,
+  \(gaSequencePosition\(ga integer NOT NULL default \(aq1\(aq,
+  PRIMARY KEY (\(gaID\(ga, \(gaSequencePosition\(ga)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+\-\- 
+\-\- Dumping data for table \(gaoutbox_multipart\(ga
+\-\- 
+
+
+\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+
+\-\- 
+\-\- Table structure for table \(gapbk\(ga
+\-\- 
+
+CREATE TABLE \(gapbk\(ga (
+  \(gaID\(ga integer NOT NULL auto_increment,
+  \(gaGroupID\(ga integer NOT NULL default \(aq\-1\(aq,
+  \(gaName\(ga text NOT NULL,
+  \(gaNumber\(ga text NOT NULL,
+  PRIMARY KEY (\(gaID\(ga)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+\-\- 
+\-\- Dumping data for table \(gapbk\(ga
+\-\- 
+
+
+\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+
+\-\- 
+\-\- Table structure for table \(gapbk_groups\(ga
+\-\- 
+
+CREATE TABLE \(gapbk_groups\(ga (
+  \(gaName\(ga text NOT NULL,
+  \(gaID\(ga integer NOT NULL auto_increment,
+  PRIMARY KEY \(gaID\(ga (\(gaID\(ga)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+\-\- 
+\-\- Dumping data for table \(gapbk_groups\(ga
+\-\- 
+
+
+\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+
+\-\- 
+\-\- Table structure for table \(gaphones\(ga
+\-\- 
+
+CREATE TABLE \(gaphones\(ga (
+  \(gaID\(ga text NOT NULL,
+  \(gaUpdatedInDB\(ga timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  \(gaInsertIntoDB\(ga timestamp NOT NULL default \(aq0000\-00\-00 00:00:00\(aq,
+  \(gaTimeOut\(ga timestamp NOT NULL default \(aq0000\-00\-00 00:00:00\(aq,
+  \(gaSend\(ga enum(\(aqyes\(aq,\(aqno\(aq) NOT NULL default \(aqno\(aq,
+  \(gaReceive\(ga enum(\(aqyes\(aq,\(aqno\(aq) NOT NULL default \(aqno\(aq,
+  \(gaIMEI\(ga varchar(35) NOT NULL,
+  \(gaClient\(ga text NOT NULL,
+  \(gaBattery\(ga integer NOT NULL DEFAULT 0,
+  \(gaSignal\(ga integer NOT NULL DEFAULT 0,
+  \(gaSent\(ga int NOT NULL DEFAULT 0,
+  \(gaReceived\(ga int NOT NULL DEFAULT 0,
+  PRIMARY KEY (\(gaIMEI\(ga)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+\-\- 
+\-\- Dumping data for table \(gaphones\(ga
+\-\- 
+
+\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+
+\-\- 
+\-\- Table structure for table \(gasentitems\(ga
+\-\- 
+
+CREATE TABLE \(gasentitems\(ga (
+  \(gaUpdatedInDB\(ga timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  \(gaInsertIntoDB\(ga timestamp NOT NULL default \(aq0000\-00\-00 00:00:00\(aq,
+  \(gaSendingDateTime\(ga timestamp NOT NULL default \(aq0000\-00\-00 00:00:00\(aq,
+  \(gaDeliveryDateTime\(ga timestamp NULL,
+  \(gaText\(ga text NOT NULL,
+  \(gaDestinationNumber\(ga varchar(20) NOT NULL default \(aq\(aq,
+  \(gaCoding\(ga enum(\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq) NOT NULL default \(aqDefault_No_Compression\(aq,
+  \(gaUDH\(ga text NOT NULL,
+  \(gaSMSCNumber\(ga varchar(20) NOT NULL default \(aq\(aq,
+  \(gaClass\(ga integer NOT NULL default \(aq\-1\(aq,
+  \(gaTextDecoded\(ga text NOT NULL default \(aq\(aq,
+  \(gaID\(ga integer unsigned NOT NULL default \(aq0\(aq,
+  \(gaSenderID\(ga varchar(255) NOT NULL,
+  \(gaSequencePosition\(ga integer NOT NULL default \(aq1\(aq,
+  \(gaStatus\(ga enum(\(aqSendingOK\(aq,\(aqSendingOKNoReport\(aq,\(aqSendingError\(aq,\(aqDeliveryOK\(aq,\(aqDeliveryFailed\(aq,\(aqDeliveryPending\(aq,\(aqDeliveryUnknown\(aq,\(aqError\(aq) NOT NULL default \(aqSendingOK\(aq,
+  \(gaStatusError\(ga integer NOT NULL default \(aq\-1\(aq,
+  \(gaTPMR\(ga integer NOT NULL default \(aq\-1\(aq,
+  \(gaRelativeValidity\(ga integer NOT NULL default \(aq\-1\(aq,
+  \(gaCreatorID\(ga text NOT NULL,
+  PRIMARY KEY (\(gaID\(ga, \(gaSequencePosition\(ga)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE INDEX sentitems_date ON sentitems(DeliveryDateTime);
+CREATE INDEX sentitems_tpmr ON sentitems(TPMR);
+CREATE INDEX sentitems_dest ON sentitems(DestinationNumber);
+CREATE INDEX sentitems_sender ON sentitems(SenderID);
+
+\-\- 
+\-\- Dumping data for table \(gasentitems\(ga
+\-\- 
+
+
+\-\- 
+\-\- Triggers for setting default timestamps
+\-\- 
+
+DELIMITER //
+
+CREATE TRIGGER inbox_timestamp BEFORE INSERT ON inbox
+FOR EACH ROW
+BEGIN
+    IF NEW.ReceivingDateTime = \(aq0000\-00\-00 00:00:00\(aq THEN
+        SET NEW.ReceivingDateTime = CURRENT_TIMESTAMP();
+    END IF;
+END;//
+
+CREATE TRIGGER outbox_timestamp BEFORE INSERT ON outbox
+FOR EACH ROW
+BEGIN
+    IF NEW.InsertIntoDB = \(aq0000\-00\-00 00:00:00\(aq THEN
+        SET NEW.InsertIntoDB = CURRENT_TIMESTAMP();
+    END IF;
+    IF NEW.SendingDateTime = \(aq0000\-00\-00 00:00:00\(aq THEN
+        SET NEW.SendingDateTime = CURRENT_TIMESTAMP();
+    END IF;
+    IF NEW.SendingTimeOut = \(aq0000\-00\-00 00:00:00\(aq THEN
+        SET NEW.SendingTimeOut = CURRENT_TIMESTAMP();
+    END IF;
+END;//
+
+CREATE TRIGGER phones_timestamp BEFORE INSERT ON phones
+FOR EACH ROW
+BEGIN
+    IF NEW.InsertIntoDB = \(aq0000\-00\-00 00:00:00\(aq THEN
+        SET NEW.InsertIntoDB = CURRENT_TIMESTAMP();
+    END IF;
+    IF NEW.TimeOut = \(aq0000\-00\-00 00:00:00\(aq THEN
+        SET NEW.TimeOut = CURRENT_TIMESTAMP();
+    END IF;
+END;//
+
+CREATE TRIGGER sentitems_timestamp BEFORE INSERT ON sentitems
+FOR EACH ROW
+BEGIN
+    IF NEW.InsertIntoDB = \(aq0000\-00\-00 00:00:00\(aq THEN
+        SET NEW.InsertIntoDB = CURRENT_TIMESTAMP();
+    END IF;
+    IF NEW.SendingDateTime = \(aq0000\-00\-00 00:00:00\(aq THEN
+        SET NEW.SendingDateTime = CURRENT_TIMESTAMP();
+    END IF;
+END;//
+
+DELIMITER ;
+
+
+.ft P
+.fi
+.IP Note
+.
+You can find the script in \fBdocs/sql/mysql.sql\fP as well.
 .RE
 .SH AUTHOR
 Michal Čihař <michal@cihar.com>

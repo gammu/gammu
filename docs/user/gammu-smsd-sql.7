@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSD-SQL" "7" "January 07, 2011" "1.28.96" "Gammu"
+.TH "GAMMU-SMSD-SQL" "7" "January 10, 2011" "1.28.96" "Gammu"
 .SH NAME
 gammu-smsd-sql \- gammu-smsd(1) backend using SQL abstraction layer to use any supported database as a message storage
 .
@@ -41,8 +41,24 @@ SQL service stores all its data in database. It can use one of these SQL backend
 .
 \fBnative_pgsql\fP for \fIgammu\-smsd\-pgsql\fP
 .IP \(bu 2
+.INDENT 2.0
+.TP
+.B drivers supported by DBI for \fIgammu\-smsd\-dbi\fP, which include:
+.INDENT 7.0
+.IP \(bu 2
 .
-drivers supported by DBI for \fIgammu\-smsd\-dbi\fP
+\fBsqlite3\fP \- for SQLite 3
+.IP \(bu 2
+.
+\fBmysql\fP \- for MySQL
+.IP \(bu 2
+.
+\fBpgsql\fP \- for PostgeSQL
+.IP \(bu 2
+.
+\fBfreetds\fP \- for MS SQL Server or Sybase
+.UNINDENT
+.UNINDENT
 .UNINDENT
 .SH SQL CONNECTION PARAMETERS
 .sp

@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSD-PGSQL" "7" "January 07, 2011" "1.28.96" "Gammu"
+.TH "GAMMU-SMSD-PGSQL" "7" "January 10, 2011" "1.28.96" "Gammu"
 .SH NAME
 gammu-smsd-pgsql \- gammu-smsd(1) backend using PostgreSQL database server as a message storage
 .
@@ -31,13 +31,330 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" Man page generated from reStructeredText.
 .
 .sp
-PGSQL backend stores all data in a PostgreSQL database server, which
+PGSQL backend stores all data in a \fI\%PostgreSQL\fP database server, which
 parameters are defined by configuration (see \fIgammu\-smsdrc\fP for description of
 configuration options).
 .sp
 For tables description see \fIgammu\-smsd\-tables\fP.
 .sp
 This backend is based on \fIgammu\-smsd\-sql\fP.
+.SH EXAMPLE
+.sp
+SQL script for creating tables in PostgreSQL database:
+.sp
+.nf
+.ft C
+\-\- 
+\-\- Database: "smsd"
+\-\- 
+\-\- CREATE USER "smsd" WITH NOCREATEDB NOCREATEUSER;
+\-\- CREATE DATABASE "smsd" WITH OWNER = "smsd" ENCODING = \(aqUTF8\(aq;
+\-\- \econnect "smsd" "smsd"
+\-\- COMMENT ON DATABASE "smsd" IS \(aqGammu SMSD Database\(aq;
+
+\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+
+\-\-
+\-\- Function declaration for updating timestamps
+\-\-
+CREATE LANGUAGE plpgsql;
+CREATE OR REPLACE FUNCTION update_timestamp() RETURNS trigger AS $update_timestamp$
+  BEGIN
+    NEW.UpdatedInDB := LOCALTIMESTAMP(0);
+    RETURN NEW;
+  END;
+$update_timestamp$ LANGUAGE plpgsql;
+
+\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+
+\-\-
+\-\- Sequence declarations for tables\(aq primary keys
+\-\-
+
+\-\-CREATE SEQUENCE inbox_ID_seq;
+
+\-\-CREATE SEQUENCE outbox_ID_seq;
+
+\-\-CREATE SEQUENCE outbox_multipart_ID_seq;
+
+\-\-CREATE SEQUENCE pbk_groups_ID_seq;
+
+\-\-CREATE SEQUENCE sentitems_ID_seq;
+
+\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+
+\-\-
+\-\- Index declarations for tables\(aq primary keys
+\-\-
+
+\-\-CREATE UNIQUE INDEX inbox_pkey ON inbox USING btree ("ID");
+
+\-\-CREATE UNIQUE INDEX outbox_pkey ON outbox USING btree ("ID");
+
+\-\-CREATE UNIQUE INDEX outbox_multipart_pkey ON outbox_multipart USING btree ("ID");
+
+\-\-CREATE UNIQUE INDEX pbk_groups_pkey ON pbk_groups USING btree ("ID");
+
+\-\-CREATE UNIQUE INDEX sentitems_pkey ON sentitems USING btree ("ID");
+
+\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+\-\- 
+\-\- Table structure for table "daemons"
+\-\- 
+
+CREATE TABLE daemons (
+  Start text NOT NULL,
+  Info text NOT NULL
+);
+
+\-\- 
+\-\- Dumping data for table "daemons"
+\-\- 
+
+
+\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+
+\-\- 
+\-\- Table structure for table "gammu"
+\-\- 
+
+CREATE TABLE gammu (
+  Version smallint NOT NULL DEFAULT \(aq0\(aq
+);
+
+\-\- 
+\-\- Dumping data for table "gammu"
+\-\- 
+
+INSERT INTO gammu (Version) VALUES (12);
+
+\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+
+\-\- 
+\-\- Table structure for table "inbox"
+\-\- 
+
+CREATE TABLE inbox (
+  UpdatedInDB timestamp(0) WITHOUT time zone NOT NULL DEFAULT LOCALTIMESTAMP(0),
+  ReceivingDateTime timestamp(0) WITHOUT time zone NOT NULL DEFAULT \(aqepoch\(aq,
+  Text text NOT NULL,
+  SenderNumber varchar(20) NOT NULL DEFAULT \(aq\(aq,
+  Coding varchar(255) NOT NULL DEFAULT \(aqDefault_No_Compression\(aq,
+  UDH text NOT NULL,
+  SMSCNumber varchar(20) NOT NULL DEFAULT \(aq\(aq,
+  Class integer NOT NULL DEFAULT \(aq\-1\(aq,
+  TextDecoded text NOT NULL DEFAULT \(aq\(aq,
+  ID serial PRIMARY KEY,
+  RecipientID text NOT NULL,
+  Processed boolean NOT NULL DEFAULT \(aqfalse\(aq,
+  CHECK (Coding IN 
+  (\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq)) 
+);
+
+\-\- 
+\-\- Dumping data for table "inbox"
+\-\- 
+
+\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+
+\-\-
+\-\- Create trigger for table "inbox"
+\-\-
+
+CREATE TRIGGER update_timestamp BEFORE UPDATE ON inbox FOR EACH ROW EXECUTE PROCEDURE update_timestamp();
+
+\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+
+\-\- 
+\-\- Table structure for table "outbox"
+\-\- 
+
+CREATE TABLE outbox (
+  UpdatedInDB timestamp(0) WITHOUT time zone NOT NULL DEFAULT LOCALTIMESTAMP(0),
+  InsertIntoDB timestamp(0) WITHOUT time zone NOT NULL DEFAULT \(aqepoch\(aq,
+  SendingDateTime timestamp NOT NULL DEFAULT \(aqepoch\(aq,
+  Text text,
+  DestinationNumber varchar(20) NOT NULL DEFAULT \(aq\(aq,
+  Coding varchar(255) NOT NULL DEFAULT \(aqDefault_No_Compression\(aq,
+  UDH text,
+  Class integer DEFAULT \(aq\-1\(aq,
+  TextDecoded text NOT NULL DEFAULT \(aq\(aq,
+  ID serial PRIMARY KEY,
+  MultiPart boolean NOT NULL DEFAULT \(aqfalse\(aq,
+  RelativeValidity integer DEFAULT \(aq\-1\(aq,
+  SenderID varchar(255),
+  SendingTimeOut timestamp(0) WITHOUT time zone NOT NULL DEFAULT \(aqepoch\(aq,
+  DeliveryReport varchar(10) DEFAULT \(aqdefault\(aq,
+  CreatorID text NOT NULL,
+  CHECK (Coding IN 
+  (\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq)),
+  CHECK (DeliveryReport IN (\(aqdefault\(aq,\(aqyes\(aq,\(aqno\(aq))
+);
+
+CREATE INDEX outbox_date ON outbox(SendingDateTime, SendingTimeOut);
+CREATE INDEX outbox_sender ON outbox(SenderID);
+
+\-\- 
+\-\- Dumping data for table "outbox"
+\-\- 
+
+\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+
+\-\-
+\-\- Create trigger for table "outbox"
+\-\-
+
+CREATE TRIGGER update_timestamp BEFORE UPDATE ON outbox FOR EACH ROW EXECUTE PROCEDURE update_timestamp();
+
+\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+
+\-\- 
+\-\- Table structure for table "outbox_multipart"
+\-\- 
+
+CREATE TABLE outbox_multipart (
+  Text text,
+  Coding varchar(255) NOT NULL DEFAULT \(aqDefault_No_Compression\(aq,
+  UDH text,
+  Class integer DEFAULT \(aq\-1\(aq,
+  TextDecoded text DEFAULT NULL,
+  ID serial,
+  SequencePosition integer NOT NULL DEFAULT \(aq1\(aq,
+  PRIMARY KEY (ID, SequencePosition),
+  CHECK (Coding IN 
+  (\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq))
+);
+
+\-\- 
+\-\- Dumping data for table "outbox_multipart"
+\-\- 
+
+
+\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+
+\-\- 
+\-\- Table structure for table "pbk"
+\-\- 
+
+CREATE TABLE pbk (
+  ID serial PRIMARY KEY,
+  GroupID integer NOT NULL DEFAULT \(aq\-1\(aq,
+  Name text NOT NULL,
+  Number text NOT NULL
+);
+
+\-\- 
+\-\- Dumping data for table "pbk"
+\-\- 
+
+
+\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+
+\-\- 
+\-\- Table structure for table "pbk_groups"
+\-\- 
+
+CREATE TABLE pbk_groups (
+  Name text NOT NULL,
+  ID serial PRIMARY KEY
+);
+
+\-\- 
+\-\- Dumping data for table "pbk_groups"
+\-\- 
+
+
+\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+
+\-\- 
+\-\- Table structure for table "phones"
+\-\- 
+
+CREATE TABLE phones (
+  ID text NOT NULL,
+  UpdatedInDB timestamp(0) WITHOUT time zone NOT NULL DEFAULT LOCALTIMESTAMP(0),
+  InsertIntoDB timestamp(0) WITHOUT time zone NOT NULL DEFAULT \(aqepoch\(aq,
+  TimeOut timestamp(0) WITHOUT time zone NOT NULL DEFAULT \(aqepoch\(aq,
+  Send boolean NOT NULL DEFAULT \(aqno\(aq,
+  Receive boolean NOT NULL DEFAULT \(aqno\(aq,
+  IMEI varchar(35) PRIMARY KEY NOT NULL,
+  Client text NOT NULL,
+  Battery integer NOT NULL DEFAULT 0,
+  Signal integer NOT NULL DEFAULT 0,
+  Sent integer NOT NULL DEFAULT 0,
+  Received integer NOT NULL DEFAULT 0
+);
+
+\-\- 
+\-\- Dumping data for table "phones"
+\-\- 
+
+\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+
+\-\-
+\-\- Create trigger for table "phones"
+\-\-
+
+CREATE TRIGGER update_timestamp BEFORE UPDATE ON phones FOR EACH ROW EXECUTE PROCEDURE update_timestamp();
+
+\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+
+\-\- 
+\-\- Table structure for table "sentitems"
+\-\- 
+
+CREATE TABLE sentitems (
+  UpdatedInDB timestamp(0) WITHOUT time zone NOT NULL DEFAULT LOCALTIMESTAMP(0),
+  InsertIntoDB timestamp(0) WITHOUT time zone NOT NULL DEFAULT \(aqepoch\(aq,
+  SendingDateTime timestamp(0) WITHOUT time zone NOT NULL DEFAULT \(aqepoch\(aq,
+  DeliveryDateTime timestamp(0) WITHOUT time zone NULL,
+  Text text NOT NULL,
+  DestinationNumber varchar(20) NOT NULL DEFAULT \(aq\(aq,
+  Coding varchar(255) NOT NULL DEFAULT \(aqDefault_No_Compression\(aq,
+  UDH text NOT NULL,
+  SMSCNumber varchar(20) NOT NULL DEFAULT \(aq\(aq,
+  Class integer NOT NULL DEFAULT \(aq\-1\(aq,
+  TextDecoded text NOT NULL DEFAULT \(aq\(aq,
+  ID serial,
+  SenderID varchar(255) NOT NULL,
+  SequencePosition integer NOT NULL DEFAULT \(aq1\(aq,
+  Status varchar(255) NOT NULL DEFAULT \(aqSendingOK\(aq,
+  StatusError integer NOT NULL DEFAULT \(aq\-1\(aq,
+  TPMR integer NOT NULL DEFAULT \(aq\-1\(aq,
+  RelativeValidity integer NOT NULL DEFAULT \(aq\-1\(aq,
+  CreatorID text NOT NULL,
+  CHECK (Status IN 
+  (\(aqSendingOK\(aq,\(aqSendingOKNoReport\(aq,\(aqSendingError\(aq,\(aqDeliveryOK\(aq,\(aqDeliveryFailed\(aq,\(aqDeliveryPending\(aq,
+  \(aqDeliveryUnknown\(aq,\(aqError\(aq)),
+  CHECK (Coding IN 
+  (\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq)),
+  PRIMARY KEY (ID, SequencePosition)
+);
+
+CREATE INDEX sentitems_date ON sentitems(DeliveryDateTime);
+CREATE INDEX sentitems_tpmr ON sentitems(TPMR);
+CREATE INDEX sentitems_dest ON sentitems(DestinationNumber);
+CREATE INDEX sentitems_sender ON sentitems(SenderID);
+
+\-\- 
+\-\- Dumping data for table "sentitems"
+\-\- 
+
+\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+
+\-\-
+\-\- Create trigger for table "sentitems"
+\-\-
+
+CREATE TRIGGER update_timestamp BEFORE UPDATE ON sentitems FOR EACH ROW EXECUTE PROCEDURE update_timestamp();
+
+
+.ft P
+.fi
+.IP Note
+.
+You can find the script in \fBdocs/sql/pgsql.sql\fP as well.
+.RE
 .SH AUTHOR
 Michal Čihař <michal@cihar.com>
 .SH COPYRIGHT

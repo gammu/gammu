@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSDRC" "5" "January 07, 2011" "1.28.96" "Gammu"
+.TH "GAMMU-SMSDRC" "5" "January 10, 2011" "1.28.96" "Gammu"
 .SH NAME
 gammu-smsdrc \- gammu-smsd(1) configuration file
 .
@@ -44,7 +44,7 @@ you can also use \fI\%[sql]\fP.
 .sp
 The \fB[gammu]\fP section is configuration of a phone connection
 and is same as described in \fIgammurc\fP with the only exception that
-\fI\%LogFile\fP is ignored and common logging for gammu library and
+\fBLogFile\fP is ignored and common logging for gammu library and
 SMS daemon is used. However the \fBLogFormat\fP directive still
 configures how much messages gammu emits.
 .INDENT 0.0
@@ -521,7 +521,7 @@ will not check it\(aqs number during assigning reports to sent SMS.
 .
 SQL driver to use.
 .sp
-Can be either one of native drivers (\fBnative_mysql\fP or \fBnative_pgsql\fP) or DBI driver.
+Can be either one of native drivers (\fBnative_mysql\fP or \fBnative_pgsql\fP) or \fIgammu\-smsd\-dbi\fP driver.
 .sp
 Depends on what DBI drivers you have installed, DBI
 supports: \fBmysql\fP, \fBfreetds\fP (provides access to MS SQL Server and
