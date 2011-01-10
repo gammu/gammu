@@ -311,7 +311,7 @@ Working with multiple phones
 ++++++++++++++++++++++++++++
 
 Gammu can be configured for multiple phones (however only one connection
-is used at one time, you can choose which one to use with :option:`gammu --section`
+is used at one time, you can choose which one to use with :option:`gammu -s`
 parameter). Configuration for phones on three serial ports would look
 like following:
 
