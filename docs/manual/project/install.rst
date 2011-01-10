@@ -48,15 +48,15 @@ Bluez-libs
 
 libusb-1.0
     - http://libusb.sourceforge.net/
-    - fbususb connection support
+    - fbususb/dku2 connection support on Linux
 
 libCURL
     - http://curl.haxx.se/libcurl/
-    - New versions notification and phonedb access.
+    - New versions notification and OpenCellID access.
 
 libiconv
     - http://www.gnu.org/software/libiconv/
-    - Support for more charsets in AT engine.
+    - Support for more character sets in AT engine.
 
 Gettext
     - http://www.gnu.org/software/gettext/
