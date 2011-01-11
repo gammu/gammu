@@ -45,6 +45,16 @@ Nightly testing
     ``make NightlyMemoryCheck`` to test with valgrind. Also you can enable
     coverage tests as described above.
 
+Running single test
+
+    You can run single test by directly calling ctest::
+
+        ctest -R test-name
+
+    Adding ``-V`` runs it in verbose mode with all test output::
+
+        ctest -V -R test-name
+
 Collecting results
 ------------------
 
