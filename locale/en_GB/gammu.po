@@ -1505,9 +1505,8 @@ msgid "Disables scanning using Bluez."
 msgstr "Disables scanning using Bluez."
 
 #: gammu-detect/main.c:64
-#, fuzzy
 msgid "Disables scanning of Windows serial ports."
-msgstr "Disables scanning of udev."
+msgstr "Disables scanning of Windows serial ports."
 
 #: gammu-detect/main.c:71
 #, fuzzy, c-format
