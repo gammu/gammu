@@ -94,9 +94,9 @@ msgstr ""
 
 #. type: Title =
 #: INSTALL:2
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Gammu All Mobile Management Utilities - Installation"
-msgstr "Gammu All Mobile Management Utilities - Installation\n"
+msgstr "Gammu All Mobile Management Utilities - Installation"
 
 #. type: Plain text
 #: INSTALL:5
