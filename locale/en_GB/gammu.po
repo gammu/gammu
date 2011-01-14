@@ -1574,9 +1574,8 @@ msgid "option parsing failed: %s\n"
 msgstr "option parsing failed: %s\n"
 
 #: gammu-detect/udev.c:67
-#, fuzzy
 msgid "Name:"
-msgstr "Name"
+msgstr "Name:"
 
 #: gammu-detect/udev.c:68
 #, fuzzy
