@@ -1594,9 +1594,8 @@ msgid "Path:"
 msgstr "Path:"
 
 #: gammu-detect/udev.c:72
-#, fuzzy
 msgid "Driver:"
-msgstr "B<Driver>"
+msgstr "Driver:"
 
 #: gammu-detect/udev.c:73
 #, fuzzy
