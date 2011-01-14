@@ -3070,9 +3070,9 @@ msgid "No PIN code entered!"
 msgstr "No PIN code entered!"
 
 #: gammu/misc.c:1942
-#, fuzzy, c-format
+#, c-format
 msgid "Enter new PIN code: "
-msgstr "Enter %s code: "
+msgstr "Enter new PIN code: "
 
 #: gammu/misc.c:2000
 msgid " (default name)"
