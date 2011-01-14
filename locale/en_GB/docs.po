@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.28.96\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-10 12:45+0100\n"
-"PO-Revision-Date: 2010-09-06 20:58+0200\n"
+"PO-Revision-Date: 2011-01-14 23:06+0200\n"
 "Last-Translator: Robert Readman <robert_readman@hotmail.com>\n"
 "Language-Team: none\n"
 "Language: en_GB\n"
@@ -20,9 +20,9 @@ msgstr ""
 
 #. type: Title =
 #: README:2
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Gammu All Mobile Management Utilities"
-msgstr "Gammu All Mobile Management Utilities\n"
+msgstr "Gammu All Mobile Management Utilities"
 
 #. type: Plain text
 #: README:6
