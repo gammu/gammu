@@ -85,13 +85,12 @@ msgstr "Feedback and bug reports"
 
 #. type: Plain text
 #: README:30
-#, fuzzy
 msgid ""
 "Any feedback is welcome, see <http://wammu.eu/support/> for information how "
 "to contact developers."
 msgstr ""
-"Unknown frame. See E<lt>http://wammu.eu/support/bugs/E<gt> for information "
-"how to report it."
+"Any feedback is welcome, see <http://wammu.eu/support/> for information how "
+"to contact developers."
 
 #. type: Title =
 #: INSTALL:2
