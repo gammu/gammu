@@ -1528,7 +1528,7 @@ msgstr "udev probing"
 
 #: gammu-detect/main.c:81
 msgid "Bluez probing"
-msgstr ""
+msgstr "Bluez probing"
 
 #: gammu-detect/main.c:84
 #, fuzzy
