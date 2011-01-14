@@ -81,7 +81,7 @@ msgstr ""
 #: README:27
 #, no-wrap
 msgid "Feedback and bug reports"
-msgstr ""
+msgstr "Feedback and bug reports"
 
 #. type: Plain text
 #: README:30
