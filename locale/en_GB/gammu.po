@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.27.96\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-10 12:11+0100\n"
-"PO-Revision-Date: 2011-01-14 23:09+0200\n"
+"PO-Revision-Date: 2011-01-14 23:10+0200\n"
 "Last-Translator: Robert Readman <robert_readman@hotmail.com>\n"
 "Language-Team: none\n"
 "Language: en_GB\n"
@@ -1514,9 +1514,9 @@ msgid "Gammu-detect version %s"
 msgstr "Gammu-detect version %s"
 
 #: gammu-detect/main.c:73
-#, fuzzy, c-format
+#, c-format
 msgid "Built %s on %s using %s"
-msgstr "[Gammu version %s built %s on %s using %s]"
+msgstr "Built %s on %s using %s"
 
 #: gammu-detect/main.c:76 gammu/gammu.c:114
 msgid "Compiled in features:"
