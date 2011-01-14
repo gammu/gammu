@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.27.96\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-10 12:11+0100\n"
-"PO-Revision-Date: 2011-01-01 10:44+0200\n"
+"PO-Revision-Date: 2011-01-14 23:09+0200\n"
 "Last-Translator: Robert Readman <robert_readman@hotmail.com>\n"
 "Language-Team: none\n"
 "Language: en_GB\n"
@@ -1493,9 +1493,8 @@ msgid "Show debugging output for detecting devices."
 msgstr "Show debugging output for detecting devices."
 
 #: gammu-detect/main.c:56
-#, fuzzy
 msgid "Show version information and compiled in features."
-msgstr "Shows version information and compiled in features."
+msgstr "Show version information and compiled in features."
 
 #: gammu-detect/main.c:58
 msgid "Disables scanning of udev."
