@@ -1509,9 +1509,9 @@ msgid "Disables scanning of Windows serial ports."
 msgstr "Disables scanning of Windows serial ports."
 
 #: gammu-detect/main.c:71
-#, fuzzy, c-format
+#, c-format
 msgid "Gammu-detect version %s"
-msgstr "Gammu version"
+msgstr "Gammu-detect version %s"
 
 #: gammu-detect/main.c:73
 #, fuzzy, c-format
