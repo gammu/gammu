@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.27.96\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-10 12:11+0100\n"
-"PO-Revision-Date: 2011-01-14 23:10+0200\n"
+"PO-Revision-Date: 2011-01-14 23:11+0200\n"
 "Last-Translator: Robert Readman <robert_readman@hotmail.com>\n"
 "Language-Team: none\n"
 "Language: en_GB\n"
@@ -1582,9 +1582,8 @@ msgid "Type:"
 msgstr "Type:"
 
 #: gammu-detect/udev.c:69
-#, fuzzy
 msgid "Subsystem:"
-msgstr "Subsys:   %s"
+msgstr "Subsystem:"
 
 #: gammu-detect/udev.c:70
 #, fuzzy
