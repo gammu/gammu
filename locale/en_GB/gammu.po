@@ -1602,9 +1602,8 @@ msgid "Sequential Number:"
 msgstr "Sequential Number:"
 
 #: gammu-detect/udev.c:74
-#, fuzzy
 msgid "Device File:"
-msgstr "Dev File: %s"
+msgstr "Device File:"
 
 #: gammu-detect/udev.c:77
 msgid "Properties:"
