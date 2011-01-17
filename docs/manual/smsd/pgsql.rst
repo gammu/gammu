@@ -23,4 +23,4 @@ SQL script for creating tables in PostgreSQL database:
 
 .. note::
 
-    You can find the script in :file:`docs/sql/pgsql.sql` as well. 
+    You can find the script in :file:`docs/sql/pgsql.sql` as well.

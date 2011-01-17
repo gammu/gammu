@@ -28,20 +28,20 @@ Options
 
 Parameters before command configure gammu behaviour:
 
-.. option:: -c, --config <filename> 
-   
+.. option:: -c, --config <filename>
+
     name of configuration file
 
-.. option:: -s, --section <confign> 
-   
+.. option:: -s, --section <confign>
+
    section of config file to use, eg. 42
 
 .. option:: -d, --debug <level>
-   
+
    debug level (see :config:option:`LogFormat` in :ref:`gammurc` for possible values)
 
 .. option:: -f, --debug-file <filename>
-   
+
    file for logging debug messages
 
 
@@ -76,13 +76,13 @@ Call commands
 
     ``get`` or ``set``
         whether to get divert information or to set it.
-    ``all`` or ``busy`` or ``noans`` or ``outofreach`` 
+    ``all`` or ``busy`` or ``noans`` or ``outofreach``
         condition when apply divert
-    ``all`` or ``voice`` or ``fax`` or ``data`` 
+    ``all`` or ``voice`` or ``fax`` or ``data``
         call type when apply divert
-    number 
+    number
         number where to divert
-    timeout 
+    timeout
         timeout when the diversion will happen
 
 .. option:: getussd code
@@ -95,7 +95,7 @@ Call commands
 
 .. option:: maketerminatedcall number length [show|hide]
 
-    Make voice call from SIM card line set in phone which will 
+    Make voice call from SIM card line set in phone which will
     be terminated after ``length`` seconds.
 
 .. option:: senddtmf sequence
@@ -127,7 +127,7 @@ Sending messages might look a bit complicated on first attempt to use.
 But be patient, the command line has been written in order to allow
 almost every usage. See EXAMPLE section for some hints on usage.
 
-There is also an option to use :ref:`gammu-smsd` when you want to send or 
+There is also an option to use :ref:`gammu-smsd` when you want to send or
 receive more messages and process them automatically.
 
 Introduction to SMS formats
@@ -175,10 +175,10 @@ Unicode
 ~~~~~~~
 
 With `Unicode` single SMS can contain at most 70 chars, but these can be
-any chars including all national and special ones. 
+any chars including all national and special ones.
 
 .. warning::
-   
+
    Please note, that some older phones might have problems displaying such
    message.
 
@@ -188,7 +188,7 @@ Conversion
 Gammu tries to do the best to handle non ASCII characters in your message.
 Everything is internally handled in Unicode (the input is converted depending
 on your locales configuration) and in case message uses Unicode the text will
-be given as such to the message. 
+be given as such to the message.
 
 Should the message be sent in GSM Default Alphabet, Gammu will try to convert
 all characters to keep message readable. Gammu does support multi byte
@@ -209,13 +209,13 @@ ____________
 .. option:: deletesms folder start [stop]
 
     Delete SMS from phone. See description for :option:`gammu getsms` for info about
-    sms folders naming convention. 
+    sms folders naming convention.
 
     Locations are numerated from 1.
 
 .. option:: displaysms ... (options like in sendsms)
 
-    Displays PDU data of encoded SMS messages. It accepts same parameters and 
+    Displays PDU data of encoded SMS messages. It accepts same parameters and
     behaves same like sendsms.
 
 .. option:: getallsms -pbk
@@ -232,12 +232,12 @@ ____________
 
 .. option:: getsms folder start [stop]
 
-    Get SMS. 
+    Get SMS.
 
     Locations are numerated from 1.
 
     Folder 0 means that sms is being read from "flat" memory (all sms from all
-    folders have unique numbers). It's sometimes emulated by Gammu. You 
+    folders have unique numbers). It's sometimes emulated by Gammu. You
     can use it with all phones.
 
     Other folders like 1, 2, etc. match folders in phone such as Inbox, Outbox, etc.
@@ -249,7 +249,7 @@ ____________
 
 .. option:: getsmsc [start [stop]]
 
-    Get SMSC settings from SIM card. 
+    Get SMSC settings from SIM card.
 
     Locations are numerated from 1.
 
@@ -263,8 +263,8 @@ ____________
 
     .. option:: -smscset number
 
-        SMSC number will be taken from phone stored SMSC configuration ``number``. 
-        
+        SMSC number will be taken from phone stored SMSC configuration ``number``.
+
         Default: 1
 
     .. option:: -smscnumber number
@@ -282,7 +282,7 @@ ____________
 
     .. option:: -folder number
 
-        save to specified folder. 
+        save to specified folder.
 
         Folders are numerated from 1.
 
@@ -290,8 +290,8 @@ ____________
 
     .. option:: -unread
 
-        makes message unread. In some phones (like 6210) you won't see 
-        unread sms envelope after saving such sms. In some phones with internal 
+        makes message unread. In some phones (like 6210) you won't see
+        unread sms envelope after saving such sms. In some phones with internal
         SMS memory (like 6210) after using it with folder 1 SIM SMS memory will be used
 
     .. option:: -read
@@ -314,7 +314,7 @@ ____________
     .. option:: -sender number
 
         set sender number (default: ``Gammu``)
-    
+
     .. option:: -maxsms num
 
         maximal number of SMS messages to create
@@ -327,27 +327,27 @@ ____________
         number of frames and picture for each frame. Each picture can be in any
         picture format which Gammu supports (B/W bmp, gif, wbmp, nol, nlm...).
 
-    .. option:: BOOKMARK file location 
+    .. option:: BOOKMARK file location
 
         Read WAP bookmark from file created by :option:`gammu backup` command and saves in
         Nokia format as SMS
 
 
-    .. option:: CALENDAR file location 
+    .. option:: CALENDAR file location
 
         Read calendar note from file created by :option:`gammu backup` command and saves in
-        VCALENDAR 1.0 format as SMS. The location identifies position of calendar item 
-        to be read in backup file (usually 1, but can be useful in case the backup contains 
+        VCALENDAR 1.0 format as SMS. The location identifies position of calendar item
+        to be read in backup file (usually 1, but can be useful in case the backup contains
         more items).
 
 
-    .. option:: CALLER file 
+    .. option:: CALLER file
 
         Save caller logo as sms in Nokia (Smart Messaging)
         format - size 72x14, two colors.
 
-        .. warning:: 
-           
+        .. warning::
+
            Please note, that it isn't designed for colour logos available for
            example in DCT4/TIKU - you need to put bitmap file there inside
            phone using filesystem commands.
@@ -430,8 +430,8 @@ ____________
             Gammu uses SMS headers with 16-bit numbers for saving linking info
             in SMS (it means less chars available for user in each SMS)
 
-        .. option:: -format lcrasbiut 
-           
+        .. option:: -format lcrasbiut
+
             last text will be formatted. You can use combinations of chars:
 
             =========  ==================
@@ -449,15 +449,15 @@ ____________
             =========  ==================
 
 
-    .. option:: MMSINDICATOR URL Title Sender 
+    .. option:: MMSINDICATOR URL Title Sender
 
         Creates a MMS indication SMS. It contains URL where the actual MMS
-        payload is stored which needs to be SMIL encoded. The phone usually 
+        payload is stored which needs to be SMIL encoded. The phone usually
         downloads the MMS data using special APN, which does not count to
         transmitted data, however there might be limitations which URLs can
         be accessed.
 
-    .. option:: MMSSETTINGS file location  
+    .. option:: MMSSETTINGS file location
 
         Saves a message with MMS configuration. The
         configuration will be read from Gammu backup file from given location.
@@ -471,8 +471,8 @@ ____________
 
             Use 78x21 formatted logo instead of standard 72x14.
 
-        .. note:: 
-           
+        .. note::
+
            This isn't designed for colour logos available for example in newer
            phones - you need to put bitmap file there inside phone using
            filesystem commands.
@@ -488,10 +488,10 @@ ____________
     .. option:: PROFILE  [-name name] [-bitmap bitmap] [-ringtone ringtone]
 
         Read ringtone (RTTL) format, bitmap (Picture Image size) and name, format into
-        Smart Messaging profile and send/save as SMS. 
-        
+        Smart Messaging profile and send/save as SMS.
+
         .. warning::
-           
+
            Please note, that this format is abandoned by Nokia and supported
            by some (older) devices only like Nokia 3310.
 
@@ -519,7 +519,7 @@ ____________
 
     .. option:: TEXT  [-inputunicode] [-16bit] [-flash] [-len len] [-autolen len] [-unicode] [-enablevoice] [-disablevoice] [-enablefax] [-disablefax] [-enableemail] [-disableemail] [-voidsms] [-replacemessages ID] [-replacefile file] [-text msgtext] [-textutf8 msgtext]
 
-        Take text from stdin (or commandline if -text 
+        Take text from stdin (or commandline if -text
         specified) and save as text SMS into SIM/phone memory.
 
         .. option:: -flash
@@ -571,7 +571,7 @@ ____________
 
             SMS will be saved in Unicode format
 
-            .. note:: 
+            .. note::
 
                 The ``~`` char in SMS text and :option:`-unicode` option
                 (Unicode coding required) can cause text of SMS after ``~``
@@ -613,7 +613,7 @@ ____________
             replace each previous with the same ID
 
         .. option:: -replacefile file
-          
+
             File with replacement table in unicode (UCS-2), preferably with
             byte order mark (BOM). It contains pairs of chars, first one is to
             replace, second is replacement one. The replacement is done after
@@ -625,12 +625,12 @@ ____________
 
                 ff fe 61 00 31 00
 
-    .. option:: TODO file location 
+    .. option:: TODO file location
 
         Saves a message with a todo entry. The content will
         be read from any backup format which Gammu supports and from given location.
 
-    .. option:: VCARD10|VCARD21 file SM|ME location [-nokia] 
+    .. option:: VCARD10|VCARD21 file SM|ME location [-nokia]
 
         Read phonebook entry from file created by :option:`gammu backup`
         command and saves in VCARD 1.0 (only name and default number) or VCARD
@@ -640,13 +640,13 @@ ____________
         items).
 
 
-    .. option:: WAPINDICATOR URL Title 
+    .. option:: WAPINDICATOR URL Title
 
         Saves a SMS with a WAP indication for given
         URL and title.
 
 
-    .. option:: WAPSETTINGS file location DATA|GPRS 
+    .. option:: WAPSETTINGS file location DATA|GPRS
 
         Read WAP settings from file created by :option:`gammu backup` command
         and saves in Nokia format as SMS
@@ -725,13 +725,13 @@ _______________
 
 .. option:: getallmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL
 
-    Get all memory locations from phone. 
-    
+    Get all memory locations from phone.
+
     For memory types description see :ref:`memory types`.
 
 .. option:: getmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL start [stop [-nonempty]]
 
-    Get memory location from phone. 
+    Get memory location from phone.
 
     For memory types description see :ref:`memory types`.
 
@@ -758,28 +758,28 @@ level and Gammu does not use that.
 
     Add file with specified name to folder with specified folder ID.
 
-    .. option:: -type 
+    .. option:: -type
 
        File type was required for filesystem 1 in Nokia phones (current filesystem 2 doesn't need this).
 
     .. option:: -readonly
- 
+
        Sets the read only attribute.
 
     .. option:: -protected
- 
+
        Sets the protected attribute (file can't be for example forwarded
        from phone menu).
 
     .. option:: -system
- 
+
        Sets the system attribute.
 
     .. option:: -hidden
 
        Sets the hidden attribute (file is hidden from phone menu).
 
-    .. option:: -newtime 
+    .. option:: -newtime
 
         After using it date/time of file modification will be set to moment of uploading.
 
@@ -826,7 +826,7 @@ level and Gammu does not use that.
     Display files and folders available in folder with given folder ID. You can get ID's using getfilesystem -flatall.
 
     .. warning::
-       
+
        Please note, that in some phones (like N6230) content of some folders
        (with more files) can be cut (only part of files will be displayed) for
        example on infrared connection. This is not Gammu issue, but phone
@@ -956,7 +956,7 @@ Samsung).
 
 .. option:: getringtone location [file]
 
-    Get ringtone from phone in RTTL or BINARY format. 
+    Get ringtone from phone in RTTL or BINARY format.
 
     Locations are numerated from 1.
 
@@ -982,8 +982,8 @@ Samsung).
         avoid scale problems available during editing ringtone in composer
         from phone menu (for example, in Nokia 33xx).
 
-    .. note:: 
-       
+    .. note::
+
         When use ``~`` char in ringtone name, in some phones (like 33xx) name
         will blink later in phone menus.
 
@@ -995,7 +995,7 @@ In Nokia 3310, 3315 and 3330 these are named "Reminders" and have some limitatio
 
 .. option:: deletecalendar start [stop]
 
-    Deletes selected calendar entries in phone. 
+    Deletes selected calendar entries in phone.
 
 .. option:: getallcalendar
 
@@ -1011,7 +1011,7 @@ To do list commands
 
 .. option:: deletetodo start [stop]
 
-    Deletes selected todo entries in phone. 
+    Deletes selected todo entries in phone.
 
 .. option:: getalltodo
 
@@ -1028,8 +1028,8 @@ Notes commands
 
     Reads all notes from the phone.
 
-    .. note:: 
-        
+    .. note::
+
         Not all phones supports this function, especially most Sony Ericsson
         phones even if they have notes inside phone.
 
@@ -1052,12 +1052,12 @@ Date, time and alarm commands
 
 .. option:: setdatetime [HH:MM[:SS]] [YYYY/MM/DD]
 
-    Set date and time in phone to date and time set in computer. Please 
+    Set date and time in phone to date and time set in computer. Please
     note, that this option doesn't show clock on phone screen. It only set
     date and time.
 
     .. note::
-       
+
        You can make such synchronization each time, when will connect your
        phone and use Gammu. See :config:option:`SynchronizeTime` in :ref:`gammurc` for details.
 
@@ -1065,8 +1065,8 @@ Date, time and alarm commands
 Categories commands
 -------------------
 
-.. note:: 
-   
+.. note::
+
     Categories are supported only on few phones (Alcatel).
 
 .. option:: addcategory TODO|PHONEBOOK text
@@ -1090,13 +1090,13 @@ Backing up and restoring commands
     file).
 
     Please note that this adds all content of backup file to phone and
-    does not care about current data in the phone (no duplicates are 
+    does not care about current data in the phone (no duplicates are
     detected).
 
-    Use -yes parameter to answer yes to all questions (you want to automatically 
+    Use -yes parameter to answer yes to all questions (you want to automatically
     restore all data).
 
-    Use -memory parameter to force usage of defined memory type for storing entries 
+    Use -memory parameter to force usage of defined memory type for storing entries
     regardless what backu format says.
 
 .. option:: addsms folder file [-yes]
@@ -1130,33 +1130,33 @@ Backing up and restoring commands
 
 .. option:: backupsms file [-yes|-all]
 
-    Stores all SMSes from phone to file into :ref:`gammu-smsbackup`. 
+    Stores all SMSes from phone to file into :ref:`gammu-smsbackup`.
 
-    Use -yes for answering yes to all questions (backup all messages and 
+    Use -yes for answering yes to all questions (backup all messages and
     delete them from phone), or -all to just backup all folders while keeping
     messages in phone.
 
 .. option:: restore file [-yes]
 
-    .. warning:: 
-       
+    .. warning::
+
         Please note that restoring deletes all current content in phone. If you
         want only to add entries to phone, use :option:`gammu addnew`.
 
-    Restore settings written in file created using :option:`gammu backup` command. 
+    Restore settings written in file created using :option:`gammu backup` command.
 
 
     In some phones restoring calendar notes will not show error, but won't
     be done, when phone doesn't have set clock inside.
 
 .. option:: restoresms file [-yes]
-    
-    .. warning:: 
-       
+
+    .. warning::
+
        Please note that this overwrites existing messages in phone (if it supports it).
 
     Restores SMSes from file (format like :option:`gammu backupsms` uses) to
-    selected folder in phone. 
+    selected folder in phone.
 
 .. option:: savefile TYPE [type options]
 
@@ -1172,21 +1172,21 @@ Backing up and restoring commands
 
         Allows to convert between various backup formats which gammu
         supports for calendar events. The file type is guessed (for input file
-        guess is based on extension and file content, for output solely on 
+        guess is based on extension and file content, for output solely on
         extension).
 
     .. option:: TODO target.vcs file location
 
         Allows to convert between various backup formats which gammu
         supports for todo events. The file type is guessed (for input file
-        guess is based on extension and file content, for output solely on 
+        guess is based on extension and file content, for output solely on
         extension).
 
     .. option:: VCARD10|VCARD21 target.vcf file SM|ME location
 
         Allows to convert between various backup formats which gammu
         supports for phonebook events. The file type is guessed (for input file
-        guess is based on extension and file content, for output solely on 
+        guess is based on extension and file content, for output solely on
         extension).
 
     .. seealso:: :option:`gammu convertbackup`
@@ -1195,7 +1195,7 @@ Backing up and restoring commands
 
     .. versionadded:: 1.28.94
 
-    Converts backup between formats supported by Gammu. Unlike 
+    Converts backup between formats supported by Gammu. Unlike
     :option:`gammu savefile`, this does not give you any options what to
     convert, it simply takes converts all what can be saved into output file.
 
@@ -1216,12 +1216,12 @@ Nokia specific commands
         suffix, both will be added automatically.
 
         .. option:: -overwrite
-        
+
             Delete the application's .jad and .jar files before installing, but
             doesn't delete the application data.
 
         .. option:: -overwriteall
-        
+
             Delete the application (same as :option:`-overwrite`) and all it's
             data.
 
@@ -1317,14 +1317,14 @@ Nokia specific commands
     Takes output or set netmonitor for Nokia DCT3 phones.
 
     .. seealso::
-       
-        For more info about this option, please visit 
+
+        For more info about this option, please visit
         `Marcin's page <http://www.mwiacek.com/>`_ and read netmonitor manual
         there.
 
-    .. note:: 
-       
-       test ``243`` enables all tests (after using command 
+    .. note::
+
+       test ``243`` enables all tests (after using command
        :command:`gammu nokianetmonitor 243` in some phones like 6210 or 9210 have to reboot
        them to see netmonitor menu)
 
@@ -1333,8 +1333,8 @@ Nokia specific commands
     Reset counters from netmonitor test 36 in Nokia DCT3 phones.
 
     .. seealso::
-       
-        For more info about this option, please visit 
+
+        For more info about this option, please visit
         `Marcin's page <http://www.mwiacek.com/>`_ and read netmonitor manual
         there.
 
@@ -1347,7 +1347,7 @@ Nokia specific commands
     Perform tests for Nokia DCT3 phones.
 
     .. note::
-       
+
        EEPROM test can show an error when your phone has an EEPROM in flash
        (like 82xx/7110/62xx/33xx). The clock test will show an error when the
        phone doesn?t have an internal battery for the clock (like 3xxx).
@@ -1415,7 +1415,7 @@ WAP settings and bookmarks commands
 
 .. option:: deletewapbookmark start [stop]
 
-    Delete WAP bookmarks from phone. 
+    Delete WAP bookmarks from phone.
 
     Locations are numerated from 1.
 
@@ -1425,13 +1425,13 @@ WAP settings and bookmarks commands
 
 .. option:: getwapbookmark start [stop]
 
-    Get WAP bookmarks from phone. 
+    Get WAP bookmarks from phone.
 
     Locations are numerated from 1.
 
 .. option:: getwapsettings start [stop]
 
-    Get WAP settings from phone. 
+    Get WAP settings from phone.
 
     Locations are numerated from 1.
 
@@ -1468,7 +1468,7 @@ Phone information commands
 .. option:: getlocation
 
     Gets network information from phone (same as networkinfo)
-    and prints location (latitude and longitude) based on information from 
+    and prints location (latitude and longitude) based on information from
     `OpenCellID <http://opencellid.org>`_.
 
 .. option:: getsecuritystatus
@@ -1514,7 +1514,7 @@ Phone settings commands
         * set default phonebook and other menu settings
         * clear T9 words,
         * clear call register info
-        * set default profiles settings 
+        * set default profiles settings
         * clear user ringtones
 
     ``UIF``
@@ -1537,7 +1537,7 @@ Dumps decoding commands
 
 .. option:: decodebinarydump file [phonemodel]
 
-    Decodes a dump made by Gammu with 
+    Decodes a dump made by Gammu with
     :config:option:`LogFormat` set to ``binary``.
 
 .. option:: decodesniff MBUS2|IRDA file [phonemodel]
@@ -1578,8 +1578,8 @@ Other commands
 
 .. option:: reset SOFT|HARD
 
-    Make phone reset: 
-    
+    Make phone reset:
+
     ``SOFT``
         without asking for PIN
     ``HARD``
@@ -1606,10 +1606,10 @@ Configuration commands
 
 .. option:: searchphone [-debug]
 
-    Attempts to search for a connected phone. 
-    
-    .. warning:: 
-       
+    Attempts to search for a connected phone.
+
+    .. warning::
+
        Please note that this can take a very long time, but in case you have
        no clue how to configure phone connection, this is a convenient way to
        find working setup for Gammu.
@@ -1640,8 +1640,8 @@ Gammu information commands
 Return values
 +++++++++++++
 
-gammu returns 0 on success. In case of failure non zero code is 
-returned. 
+gammu returns 0 on success. In case of failure non zero code is
+returned.
 
 1
     Out of memory or other critical error.
@@ -1656,7 +1656,7 @@ returned.
 99
     Functionality has been moved. For example to :ref:`gammu-smsd`.
 
-Errors codes greater than 100 map to the GSM_Error 
+Errors codes greater than 100 map to the GSM_Error
 values increased by 100:
 
 101
@@ -1805,7 +1805,7 @@ Examples
 Configuration
 -------------
 
-To check it out, you need to have configuration file for gammu, see 
+To check it out, you need to have configuration file for gammu, see
 :ref:`gammurc` for more details about it.
 
 Sending messages
@@ -1817,7 +1817,7 @@ Save text message up to standard 160 chars:
 
     echo "All your base are belong to us" | gammu savesms TEXT
 
-or 
+or
 
 .. code-block:: sh
 
@@ -1829,7 +1829,7 @@ Save long text message:
 
     echo "All your base are belong to us" | gammu savesms TEXT -len 400
 
-or 
+or
 
 .. code-block:: sh
 
@@ -1865,7 +1865,7 @@ Add Alien to applications in your phone (you need to have files Alien.JAD and Al
 Add file.mid to ringtones folder:
 
 .. code-block:: sh
-    
+
     gammu nokiaaddfile TONES file.mid
 
 Setting operator logo

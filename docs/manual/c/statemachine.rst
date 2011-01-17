@@ -46,11 +46,11 @@ State machine
         Model from config file.
 
 .. c:type:: GSM_Log_Function
- 
+
     :param text: Text to be printed, \n will be also sent (as a separate message).
     :param data: Arbitrary logger data, as passed to :c:func:`GSM_InitConnection_Log`.
     :returns: void
- 
+
     Type of callback function for logging.
 
 .. doxygenfunction:: GSM_ReadDevice

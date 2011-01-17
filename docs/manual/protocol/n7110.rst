@@ -15,8 +15,8 @@ Walek          <walek@pa98.opole.sdi.tpnet.pl>
 ... and other members of gnokii mailing list
 and authors of some WWW pages.
 
-The data provided is for information purposes only. 
-Some of the frames might be hazardous to your phone. Be careful!!! 
+The data provided is for information purposes only.
+Some of the frames might be hazardous to your phone. Be careful!!!
 We do not take any responsibility or liability for damages, etc.
 
 .. note::
@@ -237,7 +237,7 @@ List::
                                                       For "On time"=0x0000
                                                       half an hour=0x001E, and so on.
                                                     Recurrance=in hours, between future occurances of this meeting.
-                                                      If there is no repeat, this value is 0x0000. The special value 0xffff 
+                                                      If there is no repeat, this value is 0x0000. The special value 0xffff
                                                       means 1 Year!
                                               for Call:{Hour,Minute,Alarm (as above),Recurrance (as above),namelen,numberlen,
                                                         name(unicode),number(unicode)}
@@ -295,7 +295,7 @@ List::
                                     using 'Move' option. Picture messages are not here.
                                   e - Number of unread messages in SIM memory
 
-        s Set Picture Image     { 0x0050, 0x07, location, number[2 bytes], 0x07, ??[38], 
+        s Set Picture Image     { 0x0050, 0x07, location, number[2 bytes], 0x07, ??[38],
                                          width, height, lenH, lenL, {bitmap}, 0x00, 0x00, text len, text(coded like in SMS)...}
                                   std. size: 72x28
         r Set Picture Image     { 0x0051, location, number[2 bytes], 0x07 }
@@ -449,7 +449,7 @@ List::
 
         s ?                     { 0x0105}
         r ?                     { 0x0106, 0x01, 0x04}
-    0x3f: WAP 
+    0x3f: WAP
         s Enable WAP frames     { 0x0000}
         r Enable WAP frames     { 0x0002, 0x01}
 
@@ -478,7 +478,7 @@ List::
                                    0x04 - memory is full
                                    0x01 - we are in the bookmark menu
                                    0x00 - unknown reason for now ;(
-                       
+
     ?   s Delete WAP bookmark   { 0x000c, 0x00, location }
                                   where: location = 0-14
     ?   r Delete WAR bookmark OK{ 0x000d }
@@ -517,7 +517,7 @@ List::
                                   service code (Unicode)
                              where type: 0x01 - service number, 0x00 - IP
         r Get WAP settings 2 err{ 0x001d,error}
-                                where: error=0x05    
+                                where: error=0x05
     0x40: Security commands
     ?   s ???(N6150)            { 0x08, 0x00 }
     ?   r ???(N6150)            { 0x08 }
@@ -703,10 +703,10 @@ List::
                                           width:  96 (0x60)
                                           {bitmap}: like other bitmaps but pixels
                                                     placed vertically.
-                                  0x1c (security code): {code(ascii)}, 0x00 
+                                  0x1c (security code): {code(ascii)}, 0x00
     0x7f: Acknowledge(FBUS/IRDA){+type, seq }
           Acknowledge(MBUS)...
-    0xd0: 
+    0xd0:
         s Power on message seq1 {+04 }
         r Power on message seq1 {+05 }
     0xd1:

@@ -11,8 +11,8 @@ and authors of some WWW pages.
 
 Heavily based on nk7110.txt.
 
-The data provided is for information purposes only. 
-Some of the frames might be hazardous to your phone. Be careful!!! 
+The data provided is for information purposes only.
+Some of the frames might be hazardous to your phone. Be careful!!!
 We do not take any responsibility or liability for damages, etc.
 
 .. note ::
@@ -97,7 +97,7 @@ Correct format is FBUS version 2/Infrared/MBUS version 2
         r Send SMS              { 0x03, 0x00, 0x01, 0x0c, 0x08, 0x00, 0x00, 0xdb, 0x55, 0x55, 0x00 }
 
         s Get SMSC              { 0x14, 0x01, 0x00 }
-        r Get SMSC              { 0x15, format,  0x01, 0x0b, 0x28, # of SMSC, 0xf8, 0x00, validity, 0x55 
+        r Get SMSC              { 0x15, format,  0x01, 0x0b, 0x28, # of SMSC, 0xf8, 0x00, validity, 0x55
                                   #blocks,
                                   blocks ...}
 
@@ -180,7 +180,7 @@ Correct format is FBUS version 2/Infrared/MBUS version 2
     0x0a: NETSTATUS
 
         s Get Info              { 0x00, 0x00 }
-        r Get Info              { 0x01, 0x00, # blocks, 
+        r Get Info              { 0x01, 0x00, # blocks,
                                   0x00, length, 0x00, 0x02, status, length, operator name (unicode),
                                   0x09, length, LAC, LAC, 0x00, 0x00, CellID, CellID, NetworkCode (3 octets), ... }
 
@@ -188,8 +188,8 @@ Correct format is FBUS version 2/Infrared/MBUS version 2
         r GET RF Level          { 0x0c, 0x00, 0x01, 0x04, 0x04, level, 0x5f }
 
         s Get operator logo     { 0x23, 0x00, 0x00, 0x55, 0x55, 0x55 }
-        r Get operator logo     { 0x24, 0x00, 0x01, 0x00, 0x00, 0x00, 
-                                  0x02, 0x0c, 0x08, netcode (3 octets), 0x02, 0x00, 0x00, 
+        r Get operator logo     { 0x24, 0x00, 0x01, 0x00, 0x00, 0x00,
+                                  0x02, 0x0c, 0x08, netcode (3 octets), 0x02, 0x00, 0x00,
                       0x1a, size, width, height, logo size (2 octets), logo size (2 octets), logo }
 
     0x10: SUBSCRIBE
@@ -223,7 +223,7 @@ Correct format is FBUS version 2/Infrared/MBUS version 2
                                                       For "On time"=0x0000
                                                       half an hour=0x001E, and so on.
                                                     Recurrance=in hours, between future occurances of this meeting.
-                                                      If there is no repeat, this value is 0x0000. The special value 0xffff 
+                                                      If there is no repeat, this value is 0x0000. The special value 0xffff
                                                       means 1 Year!
                                               for Call:{Hour,Minute,Alarm (as above),Recurrance (as above),namelen,numberlen,
                                                         name(unicode),number(unicode)}
@@ -265,10 +265,10 @@ Correct format is FBUS version 2/Infrared/MBUS version 2
     0x14: FOLDER/PICTURE SMS HANDLING
 
         s Get SMS Status        { 0x08, 0x00, 0x01 }
-        r Get SMS Status        { 0x09, 0x00, #blocks, 
+        r Get SMS Status        { 0x09, 0x00, #blocks,
                                   type, length, blocknumber,
                                   a (2 octets), b (2 octets), c (2 octets), 0x00, 0x55 ,
-                                  type, length, blocknumber, 
+                                  type, length, blocknumber,
                                   d (2 octets), e (2 octets), f (2 octets), 0x01, 0x55 }
 
                                   where:
@@ -288,11 +288,11 @@ Correct format is FBUS version 2/Infrared/MBUS version 2
 
 
         s Get SMS from folder   { 0x02, memory, folderID, location, location, 0x01, 0x00}
-                                where: 
+                                where:
                     memory - 0x01 for SIM, 0x02 for phone (SIM only for IN/OUTBOX
                                 folderID - see 0x14/0x017B
-        r Get SMS from folder   { 0x03, 0x00, 0x01, memory, folderID, locationH, locationL, 0x55, 0x55, 0x55,  
-                                  0x01 (on big block), type, length of big block, 
+        r Get SMS from folder   { 0x03, 0x00, 0x01, memory, folderID, locationH, locationL, 0x55, 0x55, 0x55,
+                                  0x01 (on big block), type, length of big block,
                       [date/time1], [date/time2], # blocks,
                       type, length, data...
                       ... }
@@ -302,7 +302,7 @@ Correct format is FBUS version 2/Infrared/MBUS version 2
 
         s Get folder status     { 0x0c, memory, folderID, 0x0F, 0x55, 0x55, 0x55, 0x55}
                                 where: folderID - see 0x14/0x017B
-        r Get folder status     { 0x0d, 0x00, length, number of entries (2 bytes), 
+        r Get folder status     { 0x0d, 0x00, length, number of entries (2 bytes),
                     entry1number (2 bytes), entry2number(2 bytes), ..., 0x55[]}
 
         s Get message info      { 0x0e, memory, folderID, location, location, 0x55, 0x55 }
@@ -318,7 +318,7 @@ Correct format is FBUS version 2/Infrared/MBUS version 2
                           0x07 - stored/not sent
 
         s Get folder names      { 0x12, 0x00, 0x00}
-        r Get folder names      { 0x13, 0x00, number of strings, 0x01, 0x28, folderID, length, 0x00, name1, 0x00, 
+        r Get folder names      { 0x13, 0x00, number of strings, 0x01, 0x28, folderID, length, 0x00, name1, 0x00,
                     0x55[40-length(name1)], 01 28, folderID, length, 0x00, name2, 0x00, 0x55[dito] ... }
                                    where: folderID = 0x02 - Inbox
                                                      0x03 - Outbox
@@ -336,7 +336,7 @@ Correct format is FBUS version 2/Infrared/MBUS version 2
         r ???                   {+0x06, '.',  0x00, 'e',  ?, ? }
 
     0x17: BATTERY
-        
+
         s Get battery level     { 0x0a, 0x02, 0x00 }
         r Get battery level     { 0x0b, 0x01, 0x01, 0x16, level, 0x07, 0x05 }
                                 where: level: 1-7 (as in phone display)
@@ -347,8 +347,8 @@ Correct format is FBUS version 2/Infrared/MBUS version 2
         r Get ????              {0x02,...}
 
         s Get date              { 0x0a, 0x00, 0x00 }
-        r Get date              { 0x0b, 0x00, 0x02 (blocks), 
-                                  0x01 (type), 0x0c (length), 0x01, 0x03, year (2 octets), month, day, hour, minute, second, 0x00, 
+        r Get date              { 0x0b, 0x00, 0x02 (blocks),
+                                  0x01 (type), 0x0c (length), 0x01, 0x03, year (2 octets), month, day, hour, minute, second, 0x00,
                                   0x04, 0x04, 0x01, 0x00 }
 
         s Get ????              {0x0c, 0x00, 0x00}
@@ -375,12 +375,12 @@ Correct format is FBUS version 2/Infrared/MBUS version 2
         s Get product code      {+0x00, 0x03, 0x04, 0x0b, 0x00, 0x02 }
         r Get product code      {                   0x0c, 0x00, 0x01, 'N', 0x0c, 0x00, 0x08, code(7 bytes), 0x00 }
         s ???                   {+00 |03 |05 |0b |00 |20}
-        r ???                   {+03 |2b+|05 |0c |00 |01 |52R|0c |00 |08 |00 |00 |00 |00 |00 |00 | 00 |00} 
+        r ???                   {+03 |2b+|05 |0c |00 |01 |52R|0c |00 |08 |00 |00 |00 |00 |00 |00 | 00 |00}
         s Get ???               {+00 |03 |06 |0b |00 |01}
         r Get ???               {+03 |2b+|06 |0c |00 |01 |4dM|10 |00 |0a |53S|54T|41A|344|355|399|311|355|377|00 |00 |00}
 
     Sending frame 0x1b / 0x0006
-    00 |03 |07 |0b |00 |ff                                         .....           
+    00 |03 |07 |0b |00 |ff                                         ..... 
     Received frame 0x1b / 0x0072
     03 |2b+|07 |0c |00 |08 |4dM|10 |00 |0a |53S|54T|41A|344|355|39 .+....M...STA459
     311|355|377|00 |00 |00 |4eN|0c |00 |08 |300|355|300|377|355|32 157...N...050752
@@ -389,9 +389,9 @@ Correct format is FBUS version 2/Infrared/MBUS version 2
     00 |00 |00 |00 |00 |00 |52R|0c |00 |08 |00 |00 |00 |00 |00 |00 ......R.........
     00 |00 |53S|0c |00 |5b[|00 |00 |00 |0d |00 |00 |00 |00 |59Y|14 ..S..[........Y.
     00 |10 |00 |00 |00 |00 |00 |00 |00 |00 |00 |00 |00 |00 |00 |00 ................
-    00 |00                                                         ..              
+    00 |00                                                         ..
     Sending frame 0x1b / 0x0006
-    00 |03 |08 |07 |01 |ff                                         .....           
+    00 |03 |08 |07 |01 |ff                                         ..... 
     Received frame 0x1b / 0x00ae
     03 |2b+|08 |08 |00 |09 |48H|28(|00 |20 |56V|20 |300|344|2e.|30 .+....H(. V 04.0
     344|0a |322|399|2d-|311|300|2d-|300|311|0a |4eN|48H|4dM|2d-|37 4.29-10-01.NHM-7
@@ -400,127 +400,127 @@ Correct format is FBUS version 2/Infrared/MBUS version 2
     00 |00 |00 |00 |00 |00 |4bK|08 |00 |03 |333|366|00 |00 |4cL|0c ......K...36..L.
     00 |04 |322|388|388|00 |00 |00 |00 |00 |54T|0c |00 |05 |300|31 ..288.....T...01
     300|355|00 |00 |00 |00 |55U|10 |00 |0a |47G|344|2e.|300|2d-|34 05....U...G4.0-4
-    2e.|311|322|00 |00 |00 |57W|10 |00 |08 |53S|45E|49I|4bK|4fO|20 .12...W...SEIKO 
+    2e.|311|322|00 |00 |00 |57W|10 |00 |08 |53S|45E|49I|4bK|4fO|20 .12...W...SEIKO
     300|00 |00 |00 |00 |00 |58X|29)|00 |22"|56V|20 |300|344|2e.|30 0.....X)."V 04.0
     344|0a |322|399|2d-|311|300|2d-|300|311|0a |4eN|48H|4dM|2d-|37 4.29-10-01.NHM-7
-    0a |28(|63c|29)|20 |4eN|4dM|50P|2e.|0a |44D|00 |00 |00         .(c) NMP..D...  
+    0a |28(|63c|29)|20 |4eN|4dM|50P|2e.|0a |44D|00 |00 |00         .(c) NMP..D...
     Sending frame 0x1b / 0x0008
-    00 |03 |09 |00 |41A|00 |00 |00                                 ....A...        
+    00 |03 |09 |00 |41A|00 |00 |00                                 ....A...
     Received frame 0x1b / 0x001a
     03 |2b+|09 |01 |00 |01 |41A|14 |00 |10 |333|355|300|377|300|30 .+....A...350700
-    311|300|355|388|300|311|333|300|333|00                         105801303.      
+    311|300|355|388|300|311|333|300|333|00                         105801303.
     Sending frame 0x1b / 0x0008
-    00 |03 |0a |00 |42B|00 |00 |00                                 ....B...        
+    00 |03 |0a |00 |42B|00 |00 |00                                 ....B...
     Received frame 0x1b / 0x0012
     03 |2b+|0a |01 |00 |01 |42B|0c |00 |08 |3a:|05 |07 |10 |50P|08 .+....B...:...P.
-    311|00                                                         1.              
+    311|00                                                         1.
     Sending frame 0x1b / 0x0008
-    00 |03 |0b |00 |43C|00 |00 |00                                 ....C...        
+    00 |03 |0b |00 |43C|00 |00 |00                                 ....C...
     Received frame 0x1b / 0x0016
     03 |2b+|0b |01 |00 |01 |43C|10 |00 |09 |333|05 |07 |10 |50P|08 .+....C...3...P.
-    311|00 |f6÷|00 |00 |00                                         1.÷...          
+    311|00 |f6÷|00 |00 |00                                         1.÷...
     Sending frame 0x1b / 0x0008
-    00 |03 |0c |00 |44D|00 |00 |00                                 ....D...        
+    00 |03 |0c |00 |44D|00 |00 |00                                 ....D...
     Received frame 0x1b / 0x0006
-    03 |2b+|0c |01 |02 |00                                         .+....          
+    03 |2b+|0c |01 |02 |00                                         .+....
     Sending frame 0x1b / 0x0008
-    00 |03 |0d |00 |45E|00 |00 |00                                 ....E...        
+    00 |03 |0d |00 |45E|00 |00 |00                                 ....E...
     Received frame 0x1b / 0x0006
-    03 |2b+|0d |01 |02 |00                                         .+....          
+    03 |2b+|0d |01 |02 |00                                         .+....
     Sending frame 0x1b / 0x0008
-    00 |03 |0e |00 |46F|00 |00 |00                                 ....F...        
+    00 |03 |0e |00 |46F|00 |00 |00                                 ....F...
     Received frame 0x1b / 0x0012
     03 |2b+|0e |01 |00 |01 |46F|0c |00 |08 |4eN|54T|54T|4aJ|50P|12 .+....F...NTTJP.
-    344|56V                                                        4V              
+    344|56V                                                        4V
     Sending frame 0x1b / 0x0008
-    00 |03 |0f |00 |56V|00 |00 |00                                 ....V...        
+    00 |03 |0f |00 |56V|00 |00 |00                                 ....V...
     Received frame 0x1b / 0x0006
-    03 |2b+|0f |01 |02 |00                                         .+....          
+    03 |2b+|0f |01 |02 |00                                         .+....
     Sending frame 0x1b / 0x0008
-    00 |03 |10 |00 |5aZ|00 |00 |00                                 ....Z...        
+    00 |03 |10 |00 |5aZ|00 |00 |00                                 ....Z...
     Received frame 0x1b / 0x0006
-    03 |2b+|10 |01 |02 |00                                         .+....          
+    03 |2b+|10 |01 |02 |00                                         .+....
     Sending frame 0x1b / 0x0006
-    00 |03 |11 |0b |00 |02                                         ......          
+    00 |03 |11 |0b |00 |02                                         ......
     Received frame 0x1b / 0x0012
     03 |2b+|11 |0c |00 |01 |4eN|0c |00 |08 |300|355|300|377|355|32 .+....N...050752
-    300|00                                                         0.              
+    300|00                                                         0.
     Sending frame 0x1b / 0x0006
-    00 |03 |12 |0b |00 |20                                         .....           
+    00 |03 |12 |0b |00 |20                                         .....
     Received frame 0x1b / 0x0012
     03 |2b+|12 |0c |00 |01 |52R|0c |00 |08 |00 |00 |00 |00 |00 |00 .+....R.........
-    00 |00                                                         ..              
+    00 |00                                                         ..
     Sending frame 0x1b / 0x0006
-    00 |03 |13 |0b |00 |01                                         ......          
+    00 |03 |13 |0b |00 |01                                         ......
     Received frame 0x1b / 0x0016
     03 |2b+|13 |0c |00 |01 |4dM|10 |00 |0a |53S|54T|41A|344|355|39 .+....M...STA459
-    311|355|377|00 |00 |00                                         157...          
+    311|355|377|00 |00 |00                                         157...
     Sending frame 0x1b / 0x0006
-    00 |03 |14 |07 |00 |02                                         ......          
+    00 |03 |14 |07 |00 |02                                         ......
     Received frame 0x1b / 0x0012
     03 |2b+|14 |08 |00 |01 |49I|0c |00 |05 |300|388|300|322|00 |00 .+....I...0802..
-    00 |00                                                         ..              
+    00 |00                                                         ..
 
         s Get IMEI              { 0x00, 0x41 }
         r Get IMEI              { 0x01, 0x00, 0x01, 0x41, 0x14, 0x00, 0x10, {IMEI(ASCII)}, 0x00 }
 
     Sending frame 0x1b / 0x0008
-    00 |03 |16 |00 |44D|00 |00 |00                                 ....D...        
+    00 |03 |16 |00 |44D|00 |00 |00                                 ....D...
     Received frame 0x1b / 0x0006
-    03 |2b+|16 |01 |02 |00                                         .+....          
+    03 |2b+|16 |01 |02 |00                                         .+....
     Sending frame 0x1b / 0x0006
-    00 |03 |17 |07 |00 |01                                         ......          
+    00 |03 |17 |07 |00 |01                                         ......
     Received frame 0x1b / 0x002e
     03 |2b+|17 |08 |00 |01 |48H|28(|00 |20 |56V|20 |300|344|2e.|30 .+....H(. V 04.0
     344|0a |322|399|2d-|311|300|2d-|300|311|0a |4eN|48H|4dM|2d-|37 4.29-10-01.NHM-7
-    0a |28(|63c|29)|20 |4eN|4dM|50P|2e.|00 |00 |00 |00 |00         .(c) NMP......  
+    0a |28(|63c|29)|20 |4eN|4dM|50P|2e.|00 |00 |00 |00 |00         .(c) NMP......
     Sending frame 0x1b / 0x0006
-    00 |03 |18 |07 |00 |01                                         ......          
+    00 |03 |18 |07 |00 |01                                         ......
     Received frame 0x1b / 0x002e
     03 |2b+|18 |08 |00 |01 |48H|28(|00 |20 |56V|20 |300|344|2e.|30 .+....H(. V 04.0
     344|0a |322|399|2d-|311|300|2d-|300|311|0a |4eN|48H|4dM|2d-|37 4.29-10-01.NHM-7
-    0a |28(|63c|29)|20 |4eN|4dM|50P|2e.|00 |00 |00 |00 |00         .(c) NMP......  
+    0a |28(|63c|29)|20 |4eN|4dM|50P|2e.|00 |00 |00 |00 |00         .(c) NMP......
     Sending frame 0x1b / 0x0006
-    00 |03 |19 |07 |00 |01                                         ......          
+    00 |03 |19 |07 |00 |01                                         ......
     Received frame 0x1b / 0x002e
     03 |2b+|19 |08 |00 |01 |48H|28(|00 |20 |56V|20 |300|344|2e.|30 .+....H(. V 04.0
     344|0a |322|399|2d-|311|300|2d-|300|311|0a |4eN|48H|4dM|2d-|37 4.29-10-01.NHM-7
-    0a |28(|63c|29)|20 |4eN|4dM|50P|2e.|00 |00 |00 |00 |00         .(c) NMP......  
+    0a |28(|63c|29)|20 |4eN|4dM|50P|2e.|00 |00 |00 |00 |00         .(c) NMP......
     Sending frame 0x1b / 0x0006
-    00 |03 |1a |07 |00 |01                                         ......          
+    00 |03 |1a |07 |00 |01                                         ......
     Received frame 0x1b / 0x002e
     03 |2b+|1a |08 |00 |01 |48H|28(|00 |20 |56V|20 |300|344|2e.|30 .+....H(. V 04.0
     344|0a |322|399|2d-|311|300|2d-|300|311|0a |4eN|48H|4dM|2d-|37 4.29-10-01.NHM-7
-    0a |28(|63c|29)|20 |4eN|4dM|50P|2e.|00 |00 |00 |00 |00         .(c) NMP......  
+    0a |28(|63c|29)|20 |4eN|4dM|50P|2e.|00 |00 |00 |00 |00         .(c) NMP......
     Sending frame 0x1b / 0x0006
-    00 |03 |1b |07 |00 |01                                         ......          
+    00 |03 |1b |07 |00 |01                                         ......
     Received frame 0x1b / 0x002e
     03 |2b+|1b |08 |00 |01 |48H|28(|00 |20 |56V|20 |300|344|2e.|30 .+....H(. V 04.0
     344|0a |322|399|2d-|311|300|2d-|300|311|0a |4eN|48H|4dM|2d-|37 4.29-10-01.NHM-7
-    0a |28(|63c|29)|20 |4eN|4dM|50P|2e.|00 |00 |00 |00 |00         .(c) NMP......  
+    0a |28(|63c|29)|20 |4eN|4dM|50P|2e.|00 |00 |00 |00 |00         .(c) NMP......
     Sending frame 0x1b / 0x0006
-    00 |03 |1c |07 |00 |01                                         ......          
+    00 |03 |1c |07 |00 |01                                         ......
     Received frame 0x1b / 0x002e
     03 |2b+|1c |08 |00 |01 |48H|28(|00 |20 |56V|20 |300|344|2e.|30 .+....H(. V 04.0
     344|0a |322|399|2d-|311|300|2d-|300|311|0a |4eN|48H|4dM|2d-|37 4.29-10-01.NHM-7
-    0a |28(|63c|29)|20 |4eN|4dM|50P|2e.|00 |00 |00 |00 |00         .(c) NMP......  
+    0a |28(|63c|29)|20 |4eN|4dM|50P|2e.|00 |00 |00 |00 |00         .(c) NMP......
     Sending frame 0x1b / 0x0006
-    00 |03 |1d |07 |00 |01                                         ......          
+    00 |03 |1d |07 |00 |01                                         ......
     Received frame 0x1b / 0x002e
     03 |2b+|1d |08 |00 |01 |48H|28(|00 |20 |56V|20 |300|344|2e.|30 .+....H(. V 04.0
     344|0a |322|399|2d-|311|300|2d-|300|311|0a |4eN|48H|4dM|2d-|37 4.29-10-01.NHM-7
-    0a |28(|63c|29)|20 |4eN|4dM|50P|2e.|00 |00 |00 |00 |00         .(c) NMP......  
+    0a |28(|63c|29)|20 |4eN|4dM|50P|2e.|00 |00 |00 |00 |00         .(c) NMP......
     Sending frame 0x1b / 0x0006
-    00 |03 |1e |07 |00 |01                                         ......          
+    00 |03 |1e |07 |00 |01                                         ......
     Received frame 0x1b / 0x002e
     03 |2b+|1e |08 |00 |01 |48H|28(|00 |20 |56V|20 |300|344|2e.|30 .+....H(. V 04.0
     344|0a |322|399|2d-|311|300|2d-|300|311|0a |4eN|48H|4dM|2d-|37 4.29-10-01.NHM-7
-    0a |28(|63c|29)|20 |4eN|4dM|50P|2e.|00 |00 |00 |00 |00         .(c) NMP......  
+    0a |28(|63c|29)|20 |4eN|4dM|50P|2e.|00 |00 |00 |00 |00         .(c) NMP......
 
     0x1f: RINGTONE
 
         s Get Ringtones         { 0x07, 0x00, 0x00, 0xFE, 0x00, 0x7D }
-        r Get Ringtones         { 0x08, 0x00, 0x23, 0x00, # ringtones, 0x00, 
+        r Get Ringtones         { 0x08, 0x00, 0x23, 0x00, # ringtones, 0x00,
                                   ringtone number, 0x01, 0x01, 0x00, name length (chars), name (unicode)... }
 
 
@@ -548,7 +548,7 @@ Correct format is FBUS version 2/Infrared/MBUS version 2
           00 |55U|00 |56V|00 |57W|00 |58X|00 |59Y|00 |5aZ|00 |5b[|00 |5c .U.V.W.X.Y.Z.[.\
           00 |5d]|00 |5e^|00 |5f_|00 |60`|00 |61a|00 |62b|00 |63c|00 |64 .].^._.`.a.b.c.d
           00 |65e|00 |66f|00 |67g|00 |68h|00 |69i|00 |6aj|00 |6bk|00 |6c .e.f.g.h.i.j.k.l
-          00 |6dm|00 |6en|00 |6fo|00                                     .m.n.o.         
+          00 |6dm|00 |6en|00 |6fo|00                                     .m.n.o.
         r ???
           02 |1d |00 |0b |00 |60`|00 |10 |04 |00 |00 |11 |0c |06 |00 |00 .....`..........
           00 |00 |00 |00 |00 |00 |00 |12 |04 |00 |00 |13 |04 |00 |00 |14 ................
@@ -560,7 +560,7 @@ Correct format is FBUS version 2/Infrared/MBUS version 2
           ff |ff |ff |ff |ff |ff |ff |ff |ff |ff |ff |ff |ff |ff |ff |ff                 
           ff |ff |ff |ff |ff |ff |ff |ff |ff |ff |ff |ff |ff |ff |ff |ff                 
           ff |ff |ff |ff |ff |ff |ff |ff |ff |ff |ff |ff |ff |ff |ff |ff                 
-          ff |ff |ff |00 |00 |00 |00 |1f |08 |00 |00 |00 |00 |00 |00 |20    ............ 
+          ff |ff |ff |00 |00 |00 |00 |1f |08 |00 |00 |00 |00 |00 |00 |20    ............
           04 |00 |00 |21!|04 |00 |00 |22"|04 |00 |00 |23#|04 |00 |00 |24 ...!..."...#...$
           04 |00 |00 |25%|04 |00 |00 |26&|04 |00 |00 |27'|08 |00 |00 |00 ...%...&...'....
           00 |00 |00 |28(|08 |00 |00 |00 |00 |00 |00 |29)|08 |00 |00 |00 ...(.......)....
@@ -599,7 +599,7 @@ Correct format is FBUS version 2/Infrared/MBUS version 2
     00 |00 |00 |6aj|08 |00 |00 |00 |00 |00 |00 |6bk|08 |04 |00 |00 ...j.......k....
     00 |00 |00 |6cl|08 |04 |00 |00 |00 |00 |00 |6dm|08 |00 |00 |00 ...l.......m....
     00 |00 |00 |6en|08 |00 |00 |00 |00 |00 |00 |6fo|08 |00 |00 |00 ...n.......o....
-    00 |00                                                         ..              
+    00 |00                                                         ..
     Sending frame 0x38 / 0x00c7
     00 |02 |00 |0a |00 |60`|00 |70p|00 |71q|00 |72r|00 |73s|00 |74 .....`.p.q.r.s.t
     00 |75u|00 |76v|00 |77w|00 |78x|00 |79y|00 |7az|00 |7b{|00 |7c .u.v.w.x.y.z.{.|
@@ -613,7 +613,7 @@ Correct format is FBUS version 2/Infrared/MBUS version 2
     00 |b5Á|00 |b6Â|00 |b7Ě|00 |b8Ş|00 |b9 |00 |ba |00 |bb |00 |bc .Á.Â.Ě.Ş........
     00 |bdŻ|00 |beż|00 |bf |00 |c0 |00 |c1 |00 |c2 |00 |c3 |00 |c4 .Ż.ż............
     00 |c5 |00 |c6Ă|00 |c7ă|00 |c8 |00 |c9 |00 |ca |00 |cb |00 |cc ...Ă.ă..........
-    00 |cd |00 |ce |00 |cf¤|00                                     .....¤.         
+    00 |cd |00 |ce |00 |cf¤|00                                     .....¤.
     Received frame 0x38 / 0x0306
     02 |1d |00 |0b |00 |60`|00 |70p|08 |00 |00 |00 |00 |00 |00 |71 .....`.p.......q
     08 |00 |00 |00 |00 |00 |00 |72r|08 |00 |00 |00 |00 |00 |00 |73 .......r.......s
@@ -663,7 +663,7 @@ Correct format is FBUS version 2/Infrared/MBUS version 2
     08 |04 |00 |c9 |00 |00 |00 |04 |08 |04 |00 |ca |00 |00 |00 |04 ................
     08 |04 |00 |cb |00 |00 |00 |04 |08 |04 |00 |cc |00 |00 |00 |04 ................
     08 |04 |00 |cd |00 |00 |00 |04 |08 |04 |00 |ce |00 |00 |00 |04 ................
-    08 |04 |00 |cf¤|00 |00                                         ...¤..          
+    08 |04 |00 |cf¤|00 |00                                         ...¤..
     Received frame 0x38 / 0x0306
     02 |1d |00 |0b |00 |60`|00 |04 |08 |04 |00 |d0đ|00 |00 |00 |04 .....`.....đ....
     08 |04 |00 |d1Đ|00 |00 |00 |04 |08 |04 |00 |d2Ď|00 |00 |00 |04 ...Đ.......Ď....
@@ -713,20 +713,20 @@ Correct format is FBUS version 2/Infrared/MBUS version 2
     08 |04 |01 |29)|00 |00 |00 |04 |08 |04 |01 |2a*|00 |00 |00 |04 ...).......*....
     08 |04 |01 |2b+|00 |00 |00 |04 |08 |04 |01 |2c,|00 |00 |00 |04 ...+.......,....
     08 |04 |01 |2d-|00 |00 |00 |04 |08 |04 |01 |2e.|00 |00 |00 |04 ...-............
-    08 |04 |01 |2f/|00 |00                                         .../..          
+    08 |04 |01 |2f/|00 |00                                         .../..
     Sending frame 0x38 / 0x000e
-    00 |02 |00 |0c |00 |01 |00 |01 |08 |02 |05 |08 |00 |00         ..............  
+    00 |02 |00 |0c |00 |01 |00 |01 |08 |02 |05 |08 |00 |00         ..............
     Received frame 0x38 / 0x0006
-    02 |1d |00 |0d |00 |00                                         ......          
+    02 |1d |00 |0d |00 |00                                         ......
 
     0x39: PROFILES
 
         s Get Profile           { 0x01, 0x01, 0x0c, 0x01,
                                   0x04 (length), profile #, 'feature', 0x01 }
-        r Get Profile           { 0x02, 0x00, 0x0c, 0x02, 
+        r Get Profile           { 0x02, 0x00, 0x0c, 0x02,
                                   0x09 (length), type, 0x01, 0x02, 0x00, 0x00, 0x01, value, 0x02 ... }
 
-        s Set Profile           { 0x03, 0x01, # blocks, 0x03, 
+        s Set Profile           { 0x03, 0x01, # blocks, 0x03,
                                   length, type, profile #, value, 0x00, 0x00, 0x01, value, 0x03 ... }
         r Set Profile           { 0x04, 0x01, # blocks,
                                   length, 0xXX, type, 0xXX, value
@@ -739,7 +739,7 @@ Correct format is FBUS version 2/Infrared/MBUS version 2
                      FreqHI , FreqLO,
                      name_in_unicode,[0x55,0x55] - if name_length is odd}
                                  where frequency = (0xffff + FreqHi * 0x100 + FreqLo) kHz
-        
+
         r Get FM Station	    { 			0x16, 0x05, 0x06 } - if entry is empty
 
     0x42:
@@ -785,7 +785,7 @@ Correct format is FBUS version 2/Infrared/MBUS version 2
         r Get TODO locations    {0x16, ...}
 
     0x7a: STARTUP
-        
+
         s Get startup logo      { 0x02, 0x0f }
         r Get startup logo      { 0x03, 0x0f, 0x00[4], # blocks,
                                   0xc0, 0x02, height (2 octets),

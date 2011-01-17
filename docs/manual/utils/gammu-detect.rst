@@ -35,7 +35,7 @@ Currently it supports following devices:
 .. note::
 
     Supported devices depend on platform you are using and compiled in
-    features. You can find out what is actually compiled in by running 
+    features. You can find out what is actually compiled in by running
     :option:`gammu-detect -v`.
 
 This program follows the usual GNU command line syntax, with long options
@@ -62,7 +62,7 @@ starting with two dashes (``-``). A summary of options is included below.
     Disables scanning using Bluez.
 
 .. option:: -w, --no-win32-serial
-   
+
     Disables scanning of Windows serial ports.
 
 Output
@@ -70,10 +70,10 @@ Output
 
 The output of :ref:`gammu-detect` is configuration file for Gammu (see
 :ref:`gammurc`) with configuration section for every device which might be
-used with :ref:`gammu`. 
+used with :ref:`gammu`.
 
 .. note::
-   
+
     You can choose which section to use by :option:`gammu -s`.
 
 When invoked as :option:`gammu-detect -d`, also all examined devices are

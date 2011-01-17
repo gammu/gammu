@@ -7,7 +7,7 @@ Which databases does SMSD support?
 SMSD natively supports `MySQL`_ and `PostgreSQL`_. However it has also support for
 `libdbi`_, which provides access to wide range of database engines (eg. SQLite, MS
 SQL Server, Sybase, Firebird,...). Unfortunately `libdbi`_ currently does not work
-natively on Microsoft Windows, so you can use it only on Unix platforms.  
+natively on Microsoft Windows, so you can use it only on Unix platforms.
 
 .. seealso:: :ref:`gammu-smsd-sql`
 

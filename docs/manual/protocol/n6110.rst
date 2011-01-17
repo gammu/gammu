@@ -17,8 +17,8 @@ Walek                <walek@pa98.opole.sdi.tpnet.pl>
 ... and other members of gnokii mailing list
 and authors of some WWW pages.
 
-The data provided is for information purposes only. 
-Some of the frames might be hazardous to your phone. Be careful!!! 
+The data provided is for information purposes only.
+Some of the frames might be hazardous to your phone. Be careful!!!
 We do not take any responsibility or liability for damages, etc.
 
 
@@ -85,7 +85,7 @@ List::
           data call		             0x07,0xa3,0xb8,0x81,0x20,0x15,0x63,0x80,
           (non digital lines)            0x01,0x60 }
         s Send DTMF             { 0x0050, length, {ascii codes for DTMF}, 0x01 }
-        
+
         Note:
           to make data call (non digital lines):
             1.send "Make call" for non digital lines
@@ -101,7 +101,7 @@ List::
     0x02: SMS handling
         s Send SMS message      { 0x0001, 0x02, 0x00 (SEND REQUEST), ... }
         r Message sent          { 0x0002 }
-        r Send failed           { 0x0003, ?, ?, error (like in netmon in 65)}    
+        r Send failed           { 0x0003, ?, ?, error (like in netmon in 65)}
         s Get SMS message       { 0x0007, 0x02, location, 0x01, 0x64 }
         s Initiate connection   { 0x000d, 0x00, 0x00, 0x02 }
         r Initiate ACK          { 0x000e, 0x01 }
@@ -113,7 +113,7 @@ List::
         r Set CellBroadcast OK  { 0x0021, 0x01 }
         r Read CellBroadcast    { 0x0023, ?, ?, ?, channel, ?, message... } ?
         s Set SMS center        { 0x0030, 0x64, priority, checksum? ,0?, format,
-                                          validity, {DefaultRecipient no.}[12], 
+                                          validity, {DefaultRecipient no.}[12],
                                           {SMScenter no.}[12], {SMSC name}, 0x00}
                                   where tel.no.[12]: {len, type, {number(BCD)}}
                                         type: 0x81: normal
@@ -138,7 +138,7 @@ List::
         r SMS center received   { 0x0034, priority, checksum?, format, 0x00?,
                                           validity, {DefaultRecipient no.}[12],
                                           {SMScenter no.}[12], {SMSC name}, 0x00}
-                                          tel.no[12]: {len, type, {number(BCD)}} 
+                                          tel.no[12]: {len, type, {number(BCD)}}
                                   where priority, checksum, type, validity,
                                         tel.no.[12]: see 0x02/0x0030
         r SMS center error recv { 0x0035, reason }
@@ -228,7 +228,7 @@ List::
                                  0x06     vibration                      0=off, 1=on
                                  0x07     warning and game tones         0xff=off, 0x04=on
                                  0x08     incoming caller groups         1=family, 2=VIP, 4=friends, 8=collegues, 16=other
-                                 0x09     automatic answer               0x00=off, 0x01=on 
+                                 0x09     automatic answer               0x00=off, 0x01=on
                                  -------------------------
                                  0x16     Anykey answer                  0x00=Off, 0x01=On
                                  0x17     ???                            0x00 | 0x01
@@ -263,7 +263,7 @@ List::
                                  0x00     keypad notes                   0xff=off, 0x00=level 1, 0x01=level 2, 0x02=level 3
                                  0x01     incoming call alert            1=ringing, 2=beep once, 3=unknown, 4=off, 5=ring once,
                                                                          6=ascending
-                                 0x02     ringing tone ID                
+                                 0x02     ringing tone ID
                                  0x03     ringing volume                 level 1 (0x06) - level 5 (0x0a)
                                  0x04     message alert tone             0=no tone, 1=standard, 2=special, 3=beep once, 4=ascending
                                  0x05     vibration                      0=off, 1=on, 2=vibrate first
@@ -322,7 +322,7 @@ List::
                                 where nr: see 0x05/0x0013
         r Profile name          { 0x001b, 1, 1, 3, flen, nr, len, {text} }
                                 where nr: see 0x05/0x0013
-                                      len: text length 
+                                      len: text length
                                       flen len + len(nr, len) = len + 2
                                 Note: in Nokia 3310 name is in Unicode
         s ???                   { 0x001c }
@@ -431,7 +431,7 @@ List::
                                               0x1a: Names
                                               0x1B onwards: don't know but they do produce
                                                    a beep and light up the keypad as if
-                                                   a key had been pressed. 
+                                                   a key had been pressed.
         r Press key ack         { 0x0043, press/release/error(0x05) }
         s ???                   { 0x0044 }
         r ??? ack               { 0x0045, 0x01 }
@@ -489,7 +489,7 @@ List::
         s Write SMS to SIM      { 0x0004, .... }
         s Mark SMS as read      { 0x0007, 0x02, location, 0x00, 0x64 }
         r SMS message frame rcv { 0x0008,subtype,?,num,?,BCD(smscenter)...} 20->type, 22->status
-                                where type: 0x06: delivery report 
+                                where type: 0x06: delivery report
                                       status: 0x00: delivered
                                               0x30: pending
                                               0x46: failed
@@ -502,7 +502,7 @@ List::
         s SMS status request    { 0x0036, 0x64 }
         r SMS status            { 0x0037,?,?,?,?,?,?,msgnumber,unread }
         r SMS status error      { 0x0038 }
-    0x3f: WAP 
+    0x3f: WAP
         s Enable WAP frames     { 0x0000}
         r Enable WAP frames     { 0x0002, 0x01}
 
@@ -571,7 +571,7 @@ List::
                                   service code (Unicode)
                              where type: 0x01 - service number, 0x00 - IP
         r Get WAP settings 2 err{ 0x001d,error}
-                                where: error=0x05    
+                                where: error=0x05
     0x40: Security commands
         s ???                   {+0x00, 0x00, 0x07, 0x11, 0x00, 0x10, 0x00, 0x00}
                                 This frame hangs phone (N3310 4.02). Meaning unknown !
@@ -784,7 +784,7 @@ List::
         s Accessory connection  { 0x0012, 16x0x00, 'NOKIA&NOKIA accessory', 3x0x00 } (45 bytes)
     0x7f: Acknowledge(FBUS/IRDA){+type, seq }
           Acknowledge(MBUS)...
-    0xd0: 
+    0xd0:
         s Power on message seq1 {+04 }
         r Power on message seq1 {+05 }
     0xd1:

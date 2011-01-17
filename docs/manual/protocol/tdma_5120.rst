@@ -1,7 +1,7 @@
 TDMA 5120
 =========
 
-Eduardo Spremolla at gnokii-users@mail.freesoftware.fsf.org 
+Eduardo Spremolla at gnokii-users@mail.freesoftware.fsf.org
 
 After playing a while with my 5120i y find some use full frames:
 
@@ -18,8 +18,8 @@ answer::
 
 Cant figure out how to modify 6110 code to get & put the logo, not in a
 hi value to me now.
- 
-got key press working 
+
+got key press working
 ---------------------
 
 As stated in http://www.flosys.com/tdma/n5160.html
@@ -30,8 +30,8 @@ with frame: key-press::
 
 this seems to press the key for a while. No release needed
 
-key-release: 
-        
+key-release:
+
     D1 {+00 01 50 00 00 KY}
 
 keep the key press => got speedee dial::
@@ -49,15 +49,15 @@ chunks of memory with diferent numbers in the 6 place. in particular:
 
 get configuration pins::
 
-    40 {+0x00, 0x00, 0x07, 0x11, 0x00, 0x0f, 0x00, 0x00 } 
+    40 {+0x00, 0x00, 0x07, 0x11, 0x00, 0x0f, 0x00, 0x00 }
 
 get security code::
 
-    40 {+0x00, 0x00, 0x07, 0x11, 0x00, 0x09, 0x00, 0x00 } 
+    40 {+0x00, 0x00, 0x07, 0x11, 0x00, 0x09, 0x00, 0x00 }
 
 get NAM data ::
 
-    40 {+0x00, 0x00, 0x07, 0x11, 0x00, 0x08, 0x00, nam# } 
+    40 {+0x00, 0x00, 0x07, 0x11, 0x00, 0x08, 0x00, nam# }
 
 that last answers with::
 
@@ -81,7 +81,7 @@ that last answers with::
     local option
 0f
     overload class
-20 41 43 41 45 00 00 00 00 00 00 00 00 00 00 00 
+20 41 43 41 45 00 00 00 00 00 00 00 00 00 00 00
     alpha tag
 b3 4d
     unknow
@@ -117,5 +117,5 @@ of 07 11 in the request change the command from read to write.be care
 full!!! I almost ruin my 5125 with a 40 {+0x00, 0x00, 0x07, 0x10, 0x00,
 0x08, 0x00, 0x01 } frame , since the frame is ok, but the phone the
 write info from an area of the buffer that I did not send!!!!
- 
+
 OK so far. Still looking for how to handle SMS......

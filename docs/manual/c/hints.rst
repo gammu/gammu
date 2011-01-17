@@ -18,7 +18,7 @@ To compile you need to pass flags from pkg-config::
 
     pkg-config --cflags gammu
 
-To link you need to pass from pkg-config:: 
+To link you need to pass from pkg-config::
 
     pkg-config --libs gammu
 
@@ -129,7 +129,7 @@ example:
 
     all: $(ALL)
 
-    clean: 
+    clean:
         rm -f $(ALL)
 
     %:%.c
@@ -166,7 +166,7 @@ For giving string to some GUI toolkit:
 Debugging
 ---------
 
-You can either enabled debug logging globally or per state machine. 
+You can either enabled debug logging globally or per state machine.
 
 To enable global debugging use:
 

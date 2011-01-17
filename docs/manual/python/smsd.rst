@@ -8,9 +8,9 @@
 -------------
 
 .. class:: SMSD(Config)
-    
+
     SMSD main class, that is used for communication with phone.
-        
+
     You don't need to run the SMS daemon itself to control or ask it for
     status, this can be also done on separately running instances. All you
     need to do for this is to give same configuration file as that instance is
@@ -21,8 +21,8 @@
 
     .. method:: MainLoop(MaxFailures)
 
-        Runs SMS daemon main loop. 
-        
+        Runs SMS daemon main loop.
+
         Please note that this will run until some serious error occurs or until
         terminated by :meth:`Shutdown`.
 
@@ -33,7 +33,7 @@
 
 
     .. method:: Shutdown()
-        
+
         Signals SMS daemon to stop.
 
         :return: None
@@ -41,16 +41,16 @@
 
     .. method:: GetStatus()
 
-        Returns SMSD status. 
+        Returns SMSD status.
 
         The following values are set in resulting dictionary:
-        
+
         Client
 
             Client software name.
 
         PhoneID
-            
+
             PhoneID which can be used for multiple SMSD setup.
 
         IMEI

@@ -54,7 +54,7 @@ Inject text message up to standard 160 chars:
 
     echo "All your base are belong to us" | gammu-smsd-inject TEXT 123456
 
-or 
+or
 
 .. code-block:: sh
 
@@ -66,7 +66,7 @@ Inject long text message:
 
     echo "All your base are belong to us" | gammu-smsd-inject TEXT 123456 -len 400
 
-or 
+or
 
 .. code-block:: sh
 

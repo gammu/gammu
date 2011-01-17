@@ -89,12 +89,12 @@ CB 00 00 00 00
 
 Answer
 ~~~~~~
-*A0* 00 14 
-    Obex ok    
-*C3* 00 00 00 04                                                                                         
-    Maybe the number of requests you have to send to get all contacts. See next chapter for more information 
-*4C* 00 05 00 00 
-    Error code       
+*A0* 00 14
+    Obex ok
+*C3* 00 00 00 04
+    Maybe the number of requests you have to send to get all contacts. See next chapter for more information
+*4C* 00 05 00 00
+    Error code
 *49* 00 07 07 D0 00 18
     First two data bytes: maximal number of contacts (0x07D0 = 2000). Last two data bytes: Current number of contacts
 

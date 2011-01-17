@@ -33,7 +33,7 @@ There are some more options for testing:
 
 Coverage reports
 
-    To get test coverage reports, you need to configure project using 
+    To get test coverage reports, you need to configure project using
     ``cmake -DCOVERAGE=ON``
 
 Nightly testing
@@ -41,7 +41,7 @@ Nightly testing
     Currently several machines do compile and test Gammu every night. If
     you want to tak part of this, just ensure that your machine executes
     test suite every night (preferably after 3:00 CET). You can select
-    either ``make Nightly`` to do regullar testing or 
+    either ``make Nightly`` to do regullar testing or
     ``make NightlyMemoryCheck`` to test with valgrind. Also you can enable
     coverage tests as described above.
 

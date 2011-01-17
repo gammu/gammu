@@ -20,7 +20,7 @@ ID_SaveSMSMessage request function reply. Frame is type "\x14",
 Of course, things like frame type are found in protocol (here FBUS, MBUS,
 etc.) funcitons. If don't need anything more than frame type, 0x03,0x05
 should be 0x00, 0x00 - it means then, that we check only frame type.
- 
+
 Text
 ----
 

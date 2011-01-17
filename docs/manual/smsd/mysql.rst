@@ -23,7 +23,7 @@ privleges should be enough:
 
     GRANT SELECT, INSERT, UPDATE, DELETE ON `smsd`.* TO 'smsd'@'localhost';
 
-.. note:: 
+.. note::
 
    For creating the SQL tables you need more privileges, especially for
    creating triggers, which are used for some functionality.
@@ -40,4 +40,4 @@ SQL script for creating tables in MySQL database:
 
 .. note::
 
-    You can find the script in :file:`docs/sql/mysql.sql` as well. 
+    You can find the script in :file:`docs/sql/mysql.sql` as well.

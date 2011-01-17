@@ -54,11 +54,11 @@ Explanation of fields:
 
 For text messages, you can additionally append flags to extension:
 
-    ``d`` 
+    ``d``
         delivery report requested
-    ``f`` 
+    ``f``
         flash SMS
-    ``b`` 
+    ``b``
         WAP bookmark as name,URL
 
 Other fields are same as for received messages.
@@ -71,7 +71,7 @@ the file is the SMS to be transmitted (in Unicode or standard character set).
 
 The contents of the file is the SMS to be transmitted (in Unicode or standard
 character set), for WAP bookmarks it is split on as Name,URL, for text
-messages whole file content is used. 
+messages whole file content is used.
 
 Please note that if file is not in Unicode, encoding is detected based on
 locales, which do not have to be configured if SMSD is running from init

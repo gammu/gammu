@@ -52,7 +52,7 @@ accepted on some platforms):
     Lock file for storing pid, empty for no locking. Not supported on Windows.
 
 .. option:: -U, --user=user
-    
+
     Drop daemon privileges to chosed user after starting.
 
 .. option:: -G, --group=group
@@ -84,7 +84,7 @@ accepted on some platforms):
     Terminate after defined number of failures. Use 0 to not terminate (this is default).
 
 .. option:: -X, --suicide=seconds
-    
+
     Kills itself after number of seconds.
 
 .. option:: -S, --run-service
@@ -113,7 +113,7 @@ Start SMSD as a daemon on Linux:
 Start SMSD as a daemon on Linux with reduced privileges:
 
 .. code-block:: sh
-    
+
     gammu-smsd --config /etc/gammu-smsdrc --pid /var/run/gammu-smsd.pid --daemon --user gammu --group gammu
 
 SMSD as a system wide daemon

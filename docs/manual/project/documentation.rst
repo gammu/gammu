@@ -8,8 +8,8 @@ included in this manual as well.
 The Gammu Manual
 ----------------
 
-This manual is in written in rst format and built using 
-`Sphinx <http://sphinx.pocoo.org/>`_ with 
+This manual is in written in rst format and built using
+`Sphinx <http://sphinx.pocoo.org/>`_ with
 `breathe <https://github.com/michaeljones/breathe>`_ extension. As Gammu uses
 latest version of this extension, it is shipped within Gammu sources, but if
 you use git, you need to check out it separately as git submodule (you should
@@ -25,19 +25,19 @@ You can build HTML, PDF, PS, HTMLHELP and Latex versions of it:
 .. code-block:: sh
 
     # Generates HTML version of manual in docs/manual/html
-    make manual-html 
+    make manual-html
 
     # Generates PS version of manual in docs/manual/latex/gammu.ps
-    make manual-ps      
+    make manual-ps
 
     # Generates PDF version of manual in docs/manual/latex/gammu.pdf
-    make manual-pdf      
+    make manual-pdf
 
     # Generates HTML version of manual in docs/manual/htmlhelp
-    make manual-htmlhelp 
+    make manual-htmlhelp
 
     # Generates HTML version of manual in docs/manual/latex
-    make manual-latex    
+    make manual-latex
 
 Man pages
 ---------

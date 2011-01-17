@@ -36,7 +36,7 @@ Optional Dependencies
 Gammu does not require any special libraries at all to build, but you might
 miss some features. Optional libraries include:
 
-Bluez-libs 
+Bluez-libs
     - http://www.bluez.org/
     - Bluetooth support on Linux.
 
@@ -182,7 +182,7 @@ After downloading and installing them into your system:
     directory (just point to it to Gammu sources).
   * Select directory where binaries will be stored, I suggest this is
     different than source one, eg. append subdirectory build.
-  * Select compiler you want to use in Build for select. 
+  * Select compiler you want to use in Build for select.
 
 * In list bellow, you can tweak paths to some optional libraries and
   project configuration.

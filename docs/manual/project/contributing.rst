@@ -4,7 +4,7 @@ Contributing
 We welcome contribution in any area, if you don't have developer skills, you
 can always contribute to :doc:`localization`. In case you are
 interested in fixing some code, please read :doc:`../internal/index` to
-understand structure of Gammu code. We also maintain list of 
+understand structure of Gammu code. We also maintain list of
 `wanted skills <http://wammu.eu/contribute/wanted/>`_ where you can find in
 which areas we currently mostly lack manpower.
 
@@ -17,7 +17,7 @@ cloning our Git repository::
 
     git clone git://gitorious.org/gammu/mainline.git gammu
 
-Once you have done that, do some fixes and commit them (see 
+Once you have done that, do some fixes and commit them (see
 `Git tutorial <http://www.kernel.org/pub/software/scm/git/docs/gittutorial.html>`_
 for information how to work with Git). Once you're satisfied with your
 results, you can send the patches (all changes you've made so far) to us::

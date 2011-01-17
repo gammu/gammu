@@ -13,7 +13,7 @@ and ``#``. Sections of config file are identified in square brackets line
 Examples
 --------
 
-You most likely know INI files from other programs, however to illustrate, 
+You most likely know INI files from other programs, however to illustrate,
 here is some example:
 
 .. code-block:: ini

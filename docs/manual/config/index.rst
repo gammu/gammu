@@ -54,15 +54,15 @@ Device connection parameters
 
     For Nokia cables you want to use one of following:
 
-    ``fbus``           
+    ``fbus``
         serial FBUS connection
-    ``dlr3``           
+    ``dlr3``
         DLR-3 and compatible cables
-    ``dku2``           
+    ``dku2``
         DKU-2 and compatible cables
-    ``dku5``           
+    ``dku5``
         DKU-5 and compatible cables
-    ``mbus``           
+    ``mbus``
         serial MBUS connection
 
     If you use some non original cable, you might need to append ``-nodtr`` (eg. for
@@ -71,7 +71,7 @@ Device connection parameters
 
     For non-Nokia phones connected using cable you generally want:
 
-    ``at``             
+    ``at``
         generic AT commands based connection
 
     You can optionally specify speed of the connection, eg. ``at19200``, but it is
@@ -79,31 +79,31 @@ Device connection parameters
 
     For IrDA connections use one of following:
 
-    ``irdaphonet``     
+    ``irdaphonet``
         Phonet connection for Nokia phones.
-    ``irdaat``         
+    ``irdaat``
         AT commands connection for most of phones (this is not supported on Linux).
-    ``irdaobex``       
+    ``irdaobex``
         OBEX (IrMC or file transfer) connection for most of phones.
-    ``irdagnapbus``    
+    ``irdagnapbus``
         GNapplet based connection for Symbian phones
 
     For Bluetooth connection use one of following:
 
-    ``bluephonet``     
+    ``bluephonet``
         Phonet connection for Nokia phones.
-    ``blueat``         
+    ``blueat``
         AT commands connection for most of phones.
-    ``blueobex``       
+    ``blueobex``
         OBEX (IrMC or file transfer) connection for most of phones.
-    ``bluerfgnapbus``  
+    ``bluerfgnapbus``
         GNapplet based connection for Symbian phones
 
 .. config:option:: Device
 
     .. versionadded:: 1.27.95
 
-    Device node or address of phone. It depends on used connection. 
+    Device node or address of phone. It depends on used connection.
 
     For **cables** or emulated serial ports, you enter device name (for example
     ``/dev/ttyS0``, ``/dev/ttyACM0``, ``/dev/ircomm0``, ``/dev/rfcomm0`` on Linux,
@@ -183,11 +183,11 @@ Device connection parameters
     connection instead of letting Gammu try the best suited for selected
     operation:
 
-    ``obexfs`` 
+    ``obexfs``
         force using of file browsing service (file system support)
-    ``obexirmc`` 
+    ``obexirmc``
         force using of IrMC service (contacts, calendar and notes support)
-    ``obexnone`` 
+    ``obexnone``
         none service chosen, this has only limited use for sending file (:option:`gammu sendfile` command)
     ``mobex``
         m-obex service for Samsung phones
@@ -209,11 +209,11 @@ Connection options
 
     If you want to set time from computer to phone during starting connection.
 
-.. config:option:: StartInfo 
+.. config:option:: StartInfo
 
     This option allow to set, that you want (setting ``yes``) to see message on the
     phone screen or phone should enable light for a moment during starting
-    connection. Phone will not beep during starting connection with this 
+    connection. Phone will not beep during starting connection with this
     option. This works only with some Nokia phones.
 
 
@@ -233,19 +233,19 @@ Debugging options
 
     Determines what all will be logged to :config:option:`LogFile`. Possible values are:
 
-    ``nothing``     
+    ``nothing``
         no debug level
-    ``text``        
+    ``text``
         transmission dump in text format
-    ``textall``     
+    ``textall``
         all possible info in text format
-    ``textalldate`` 
+    ``textalldate``
         all possible info in text format, with time stamp
-    ``errors``      
+    ``errors``
         errors in text format
-    ``errorsdate``  
+    ``errorsdate``
         errors in text format, with time stamp
-    ``binary``      
+    ``binary``
         transmission dump in binary format
 
     For debugging use either ``textalldate`` or ``textall``, it contains all

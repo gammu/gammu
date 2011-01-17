@@ -31,4 +31,4 @@ MMS contains of two parts - the actual MMS data in SMIL format and the SMS
 containing notification about the data. Gammu can create the notification SMS,
 where you just need to put URL of the data (use :option:`gammu sendsms`
 MMSINDICATOR for that). However you need to encode MMS data yourself or use
-other program to do that. 
+other program to do that.

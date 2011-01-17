@@ -57,7 +57,7 @@ General parameters of SMS daemon
 
     SMSD service to use, one of following choices:
 
-    ``FILES``  
+    ``FILES``
         stores messages in files, see :ref:`gammu-smsd-files` for details
     ``NULL``
         does not store messages at all, see :ref:`gammu-smsd-null` for details
@@ -87,7 +87,7 @@ General parameters of SMS daemon
         .. deprecated:: 1.28.93
 
     .. note::
-        
+
         Availability of backends depends on platform and compile time configuration.
 
 .. config:option:: PIN
@@ -120,7 +120,7 @@ General parameters of SMS daemon
 .. config:option:: DebugLevel
 
     Debug level for SMSD. The integer value should be sum of all flags you
-    want to enable. 
+    want to enable.
 
     1
         enables basic debugging information
@@ -133,7 +133,7 @@ General parameters of SMS daemon
 
     Default is 0, what should mean no extra information.
 
-.. config:option:: CommTimeout 
+.. config:option:: CommTimeout
 
     How many seconds should SMSD wait after there is no message in outbox.
 
@@ -141,7 +141,7 @@ General parameters of SMS daemon
 
 .. config:option:: SendTimeout
 
-    Shows how many seconds SMSD should wait for network answer during sending 
+    Shows how many seconds SMSD should wait for network answer during sending
     sms. If nothing happen during this time, sms will be resent.
 
     Default is 30.
@@ -152,15 +152,15 @@ General parameters of SMS daemon
 
     Default is 1.
 
-.. config:option:: ReceiveFrequency 
+.. config:option:: ReceiveFrequency
 
     The number of seconds between testing for received SMSes, when the phone is
     busy sending SMSes. Normally a test for received SMSes is done every
-    :config:option:`CommTimeout` seconds and after each sent SMS. 
+    :config:option:`CommTimeout` seconds and after each sent SMS.
 
     Default is 0 (not used).
 
-.. config:option:: StatusFrequency 
+.. config:option:: StatusFrequency
 
     The number of seconds between refreshing phone status (battery, signal) stored
     in shared memory and possibly in service backends. Use 0 to disable.
@@ -217,7 +217,7 @@ General parameters of SMS daemon
 
     .. warning::
 
-       For some phones hard reset means deleting all data in it. Use 
+       For some phones hard reset means deleting all data in it. Use
        :config:option:`ResetFrequency`, unless you know what you are doing.
 
     The number of seconds between performing a preventive hard reset in order to
@@ -230,7 +230,7 @@ General parameters of SMS daemon
     Whether delivery reports should be used, one of ``no``, ``log``, ``sms``.
 
     ``log``
-        one line log entry, 
+        one line log entry,
     ``sms``
         store in inbox as a received SMS
     ``no``
@@ -258,7 +258,7 @@ General parameters of SMS daemon
 
 .. config:option:: RunOnReceive
 
-    Executes a program after receiving message. 
+    Executes a program after receiving message.
 
     This parameter is executed through shell, so you might need to escape some
     special characters and you can include any number of parameters. Additionally
@@ -272,7 +272,7 @@ General parameters of SMS daemon
     time SMSD will continue in normal operation and might execute your script
     again.
 
-    The process has available lot of information about received message in 
+    The process has available lot of information about received message in
     environment, check :ref:`smsd_run` for more details.
 
 .. config:option:: RunOnFailure
@@ -382,10 +382,10 @@ supports same options for configuring connection to a database:
 
 .. config:option:: Driver
 
-    SQL driver to use. 
+    SQL driver to use.
 
     Can be either one of native drivers (``native_mysql`` or ``native_pgsql``) or :ref:`gammu-smsd-dbi` driver.
-    
+
     Depends on what DBI drivers you have installed, DBI
     supports: ``mysql``, ``freetds`` (provides access to MS SQL Server and
     Sybase), ``pgsql``, ``sqlite``, ``sqlite3``, ``firebird`` and ``ingres``,
@@ -437,7 +437,7 @@ that all path should contain trailing path separator (/ on Unix systems):
 
     The format in which the SMS will be stored: ``detail``, ``unicode``, ``standard``.
 
-    ``detail``   
+    ``detail``
         format used for message backup by :ref:`gammu`, see :ref:`gammu-smsbackup`.
     ``unicode``
         message text stored in unicode (UTF-16)
@@ -459,7 +459,7 @@ that all path should contain trailing path separator (/ on Unix systems):
 
 .. config:option:: TransmitFormat
 
-    The format for transmitting the SMS: ``auto``, ``unicode``, ``7bit``. 
+    The format for transmitting the SMS: ``auto``, ``unicode``, ``7bit``.
 
     Default is ``auto``.
 
@@ -472,7 +472,7 @@ SMSD allows to process only limited subset of incoming messages. You can define
 filters for sender number in :config:section:`[include_numbers]` and
 :config:section:`[exclude_numbers]` sections or using
 :config:option:`IncludeNumbersFile` and :config:option:`ExcludeNumbersFile`
-directives. 
+directives.
 
 If :config:section:`[include_numbers]` section exists, all values (keys are
 ignored) from it are used as allowed phone numbers and no other message is

@@ -3,8 +3,8 @@ Motivation to fork Gnokii
 
 .. note::
 
-    Please note that this is original list of differences written by 
-    Marcin when forking Gnokii, so it represents state of the code in 
+    Please note that this is original list of differences written by
+    Marcin when forking Gnokii, so it represents state of the code in
     that time.
 
 1. Unicode used almost everywhere. In MyGnokii and Gnokii with modern
@@ -38,7 +38,7 @@ Motivation to fork Gnokii
        because of changed locations (let's say, we won't read Call note
        again. It will have location 2 in PC. Now you will write new note
        into phone (for keypad) and it will save in under location 2. When
-       will try to save Call not with location 2, it will overwrite new 
+       will try to save Call not with location 2, it will overwrite new
        saved note !).
 
     This is not good. When for example delete one entry from phonebook,

@@ -241,21 +241,21 @@ Fields description:
     Status of message sending. SendingError mens that phone failed to send the
     message, Error indicates some other error while processing message.
 
-    ``SendingOK`` 
+    ``SendingOK``
         Message has been sent, waiting for delivery report.
-    ``SendingOKNoReport`` 
+    ``SendingOKNoReport``
         Message has been sent without asking for delivery report.
     ``SendingError``
         Sending has failed.
-    ``DeliveryOK`` 
+    ``DeliveryOK``
         Delivery report arrived and reported success.
-    ``DeliveryFailed`` 
+    ``DeliveryFailed``
         Delivery report arrived and reports failure.
-    ``DeliveryPending`` 
+    ``DeliveryPending``
         Delivery report announced pending deliver.
-    ``DeliveryUnknown`` 
+    ``DeliveryUnknown``
         Delivery report reported unknown status.
-    ``Error`` 
+    ``Error``
         Some other error happened during sending (usually bug in SMSD).
 
 ``StatusError`` (integer)
@@ -319,18 +319,18 @@ History of schema versions:
 
 12
     the changes only affect MySQL structure changing default values for
-    timestamps from ``0000-00-00 00:00:00`` to ``CURRENT_TIMESTAMP()`` by 
-    using triggers, to update to this version, just execute triggers 
+    timestamps from ``0000-00-00 00:00:00`` to ``CURRENT_TIMESTAMP()`` by
+    using triggers, to update to this version, just execute triggers
     definition at the end of SQL file.
 11
     all fields for storing message text are no longer limited to 160 chars,
     but are arbitrary length text fields (1.25.92)
-10 
+10
     ``DeliveryDateTime`` is now NULL when message is not delivered, added several
     indexes
-9 
+9
     added sent/received counters to phones table
-8 
+8
     introduced phones table
 
 7
@@ -348,7 +348,7 @@ Gammu documentation (docs/sql). As well as some PHP scripts interacting with
 the database.
 
 For example to create SQLite tables, issue following command:
-    
+
 .. code-block:: sh
 
     sqlite3 smsd.db < docs/sql/sqlite.sql
@@ -368,8 +368,8 @@ short text message:
         CreatorID,
         Coding
     ) VALUES (
-        '800123465', 
-        'This is a SQL test message', 
+        '800123465',
+        'This is a SQL test message',
         'Program',
         'Default_No_Compression'
     );
@@ -378,7 +378,7 @@ Injecting long message using SQL
 ++++++++++++++++++++++++++++++++
 
 Inserting multipart messages is a bit more tricky, you need to construct also
-UDH header and store it hexadecimally written into UDH field. Unless you have 
+UDH header and store it hexadecimally written into UDH field. Unless you have
 a good reason to do this manually, use :ref:`gammu-smsd-inject`.
 
 For long text message, the UDH starts with ``050003`` followed by byte as a
@@ -418,12 +418,12 @@ For example long text message of two parts could look like following:
     ) VALUES (
         2,
         '050003D30202',
-        'u xewz qisubevumxyzk ufuylehyzc. Nse xobq dfolizygqysj t bvowsyhyhyemim ovutpapeaempye giuuwbib.', 
+        'u xewz qisubevumxyzk ufuylehyzc. Nse xobq dfolizygqysj t bvowsyhyhyemim ovutpapeaempye giuuwbib.',
         <ID_OF_INSERTED_RECORD_IN_OUBOX_TABLE>,
         'Default_No_Compression'
     )
 
 .. note::
 
-    Adding UDH means that you have less space for text, in above example you 
+    Adding UDH means that you have less space for text, in above example you
     can use only 153 characters in single message.

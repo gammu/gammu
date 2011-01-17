@@ -56,7 +56,7 @@ in ``GSM_SMSDService`` structure:
     :param Config: Pointer to SMSD configuration data
     :param ID: Identification of found message will be stored here, this
         should be unique for different message, so that repeated attempts to
-        send same message can be detected by SMSD core. Empty string avoids 
+        send same message can be detected by SMSD core. Empty string avoids
         this check.
     :return: Error code.
 
@@ -94,7 +94,7 @@ in ``GSM_SMSDService`` structure:
 
 .. c:function:: GSM_Error	GSM_SMSDService::RefreshSendStatus  (GSM_SMSDConfig *Config, char *ID)
 
-    Updates sending status in service backend. 
+    Updates sending status in service backend.
 
     :param Config: Pointer to SMSD configuration data
     :param ID: Identification of message to be marked.
@@ -102,7 +102,7 @@ in ``GSM_SMSDService`` structure:
 
 .. c:function:: GSM_Error	GSM_SMSDService::RefreshPhoneStatus (GSM_SMSDConfig *Config)
 
-    Updates information about phone in database (network status, battery, etc.).   
+    Updates information about phone in database (network status, battery, etc.).
 
     :param Config: Pointer to SMSD configuration data
     :return: Error code.
@@ -120,7 +120,7 @@ Message ID
 You might have noticed that message ID is often used in the API. The primary
 reason for this is that it is usually easier for backend to handle message
 just by it's internal identification instead of handling message data from
-:c:type:`GSM_MultiSMSMessage`. 
+:c:type:`GSM_MultiSMSMessage`.
 
 If the backend does not use any IDs internally, it really does not have to
 provide them, with only exception of :c:func:`GSM_SMSDService::FindOutboxSMS`,
@@ -161,7 +161,7 @@ Message Sending Workflow
       "FindOutboxSMS" -> "AddSentSMSInfo(ERROR)" [label="Error", style=dotted];
       "FindOutboxSMS" -> "check duplicates";
       "check duplicates" -> "AddSentSMSInfo(ERROR)" [label="Too many retries", style=dotted];
-      "check duplicates" -> "GSM_SendSMS"; 
+      "check duplicates" -> "GSM_SendSMS";
       "GSM_SendSMS" -> "RefreshSendStatus";
       "GSM_SendSMS" -> "AddSentSMSInfo(ERROR)" [label="Error", style=dotted];
       "RefreshSendStatus" -> "RefreshSendStatus" [label="Sending"];
