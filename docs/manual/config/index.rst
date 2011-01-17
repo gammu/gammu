@@ -161,7 +161,12 @@ Device connection parameters
 
         Native IrDA is not supported on Linux, you need to setup virtual
         serial port for it (eg. ``/dev/ircomm0``) and use it same way as cable.
-        This can be usually achieved by loading module ``ircomm-tty``.
+        This can be usually achieved by loading modules ``ircomm-tty`` and ``irtty-sir``:
+
+        .. code-block:: sh
+
+            modprobe ircomm-tty
+            modprobe irtty-sir
 
 .. config:option:: Port
 
