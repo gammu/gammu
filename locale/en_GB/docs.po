@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.28.96\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-10 12:45+0100\n"
-"PO-Revision-Date: 2010-09-06 20:58+0200\n"
+"PO-Revision-Date: 2011-01-14 23:07+0200\n"
 "Last-Translator: Robert Readman <robert_readman@hotmail.com>\n"
 "Language-Team: none\n"
 "Language: en_GB\n"
@@ -20,9 +20,9 @@ msgstr ""
 
 #. type: Title =
 #: README:2
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Gammu All Mobile Management Utilities"
-msgstr "Gammu All Mobile Management Utilities\n"
+msgstr "Gammu All Mobile Management Utilities"
 
 #. type: Plain text
 #: README:6
@@ -57,14 +57,14 @@ msgstr ""
 
 #. type: Title =
 #: README:17
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "More information"
-msgstr "More information\n"
+msgstr "More information"
 
 #. type: Plain text
 #: README:20
 msgid "You can find more information on <http://wammu.eu/gammu/>."
-msgstr ""
+msgstr "You can find more information on <http://wammu.eu/gammu/>."
 
 #. type: Plain text
 #: README:24
@@ -73,28 +73,30 @@ msgid ""
 "version of it using make manual-html which is viewable online at <http://"
 "wammu.eu/docs/manual/>."
 msgstr ""
+"There is also Gammu manual available in docs/manual. You can build HTML "
+"version of it using make manual-html which is viewable online at "
+"<http://wammu.eu/docs/manual/>."
 
 #. type: Title =
 #: README:27
 #, no-wrap
 msgid "Feedback and bug reports"
-msgstr ""
+msgstr "Feedback and bug reports"
 
 #. type: Plain text
 #: README:30
-#, fuzzy
 msgid ""
 "Any feedback is welcome, see <http://wammu.eu/support/> for information how "
 "to contact developers."
 msgstr ""
-"Unknown frame. See E<lt>http://wammu.eu/support/bugs/E<gt> for information "
-"how to report it."
+"Any feedback is welcome, see <http://wammu.eu/support/> for information how "
+"to contact developers."
 
 #. type: Title =
 #: INSTALL:2
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Gammu All Mobile Management Utilities - Installation"
-msgstr "Gammu All Mobile Management Utilities - Installation\n"
+msgstr "Gammu All Mobile Management Utilities - Installation"
 
 #. type: Plain text
 #: INSTALL:5
@@ -102,6 +104,8 @@ msgid ""
 "See docs/manual/project/install.rst for installation guide or see chapter "
 "\"Compiling Gammu\" in The Gammu Manual."
 msgstr ""
+"See docs/manual/project/install.rst for installation guide or see chapter "
+"\"Compiling Gammu\" in The Gammu Manual."
 
 #, fuzzy
 #~ msgid "_gammurc:"
