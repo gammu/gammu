@@ -18,3 +18,10 @@ path based locations for messages, phonebook, calendar, etc.
 The another major obstacle which is all around Gammu code is own
 implementation of unicode (UCS-2-BE) strings. This code should be dropped and
 wchar_t used instead.
+
+Avoid heavy usage of gsmstate.h header and move the
+``#ifdef...#define...#endif`` blocks to ``gammu-config.h``.
+
+Drop multiple configurations handling in libGammu, it should provide just API
+to read some section from Gammurc and possible fall-back logic should be in
+application.
