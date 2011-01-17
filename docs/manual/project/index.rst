@@ -15,3 +15,4 @@ Gammu project
     versioning
     documentation
     directories
+    roadmap
