@@ -869,12 +869,20 @@ replace each previous with the same ID
 .TP
 .B \-replacefile file
 .sp
-when you want, you can make file in such format:
-\fBsrc_unicode_char1, dest_unicode_char1, src_unicode_char2, dest_unicode_char2\fP
-(everything in one line). After reading text
-for SMS from stdin there will be made translation and each src char
-will be converted to dest char. In docs there is example file
-(\fBreplace.txt\fP), which will change all "a" chars to "1
+File with replacement table in unicode (UCS\-2), preferably with
+byte order mark (BOM). It contains pairs of chars, first one is to
+replace, second is replacement one. The replacement is done after
+reading text for the message.
+.sp
+For example replacement \fB1\fP (0x0061) with \fBa\fP (0x0031) would
+be done by file with following content (hex dump, first two bytes
+is BOM):
+.sp
+.nf
+.ft C
+ff fe 61 00 31 00
+.ft P
+.fi
 .UNINDENT
 .UNINDENT
 .INDENT 0.0

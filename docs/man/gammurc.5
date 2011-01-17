@@ -249,15 +249,22 @@ enable discovery (you need to run these commands as root):
 .sp
 .nf
 .ft C
-ip l s dev irda0 up
-sysctl net.irda.discovery=1
+ip l s dev irda0 up          # Enables irda0 device
+sysctl net.irda.discovery=1  # Enables device discovery on IrDA
 .ft P
 .fi
 .IP Note
 .
 Native IrDA is not supported on Linux, you need to setup virtual
 serial port for it (eg. \fB/dev/ircomm0\fP) and use it same way as cable.
-This can be usually achieved by loading module \fBircomm\-tty\fP.
+This can be usually achieved by loading modules \fBircomm\-tty\fP and \fBirtty\-sir\fP:
+.sp
+.nf
+.ft C
+modprobe ircomm\-tty
+modprobe irtty\-sir
+.ft P
+.fi
 .RE
 .UNINDENT
 .INDENT 0.0
