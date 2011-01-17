@@ -972,7 +972,7 @@ if(INSTALL_DOC)
     add_subdirectory(docs/manual)
     add_subdirectory(docs/examples)
     add_subdirectory(docs/sql)
-    add_subdirectory(docs/user)
+    add_subdirectory(docs/man)
 endif(INSTALL_DOC)
 
 add_subdirectory(contrib)
