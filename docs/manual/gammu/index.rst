@@ -613,13 +613,17 @@ ____________
             replace each previous with the same ID
 
         .. option:: -replacefile file
-           
-            when you want, you can make file in such format:
-            ``src_unicode_char1, dest_unicode_char1, src_unicode_char2, dest_unicode_char2``
-            (everything in one line). After reading text
-            for SMS from stdin there will be made translation and each src char
-            will be converted to dest char. In docs there is example file
-            (``replace.txt``), which will change all "a" chars to "1
+          
+            File with replacement table in unicode (UCS-2), preferably with
+            byte order mark (BOM). It contains pairs of chars, first one is to
+            replace, second is replacement one. The replacement is done after
+            reading text for the message.
+
+            For example replacement ``1`` (0x0061) with ``a`` (0x0031) would
+            be done by file with following content (hex dump, first two bytes
+            is BOM)::
+
+                ff fe 61 00 31 00
 
     .. option:: TODO file location 
 
