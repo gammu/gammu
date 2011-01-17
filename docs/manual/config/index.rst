@@ -135,6 +135,10 @@ Device connection parameters
         .. literalinclude:: ../../../contrib/udev/45-nokiadku2.rules
            :language: sh
 
+    In case your USB device appears as the serial port in the system (eg.
+    ``/dev/ttyACM0`` on Linux or ``COM5:`` on Windows), just use same setup as
+    with serial port.
+
     For **Bluetooth** connection you have to enter Bluetooth address of your phone
     (you can list Bluetooth devices in range on Linux using :command:`hcitool scan`
     command). Optionally you can also force Gammu to use specified channel by
