@@ -1,7 +1,7 @@
 .. _gammurc:
 
-Gammu Configuration File
-========================
+Konfigurační soubor Gammu
+===========================
 
 Syntaxe
 -------
@@ -19,11 +19,11 @@ Na Microsoft Windows:
 1. ``$PROFILE\Application Data\gammurc``
 2. ``.\gammurc``
 
-Description
------------
+Popis
+-----
 
 Gammu requires configuration to be able to properly talk to your phone.
-:ref:`gammu` reads configuration from a config file. It's location is determined
+:ref:`gammu` čte konfiguraci z konfiguračního souboru. Jeho umístění
 je vyhledáno při spuštění, vyhledávací cesty jsou uvedeny výše.
 
 You can use :ref:`gammu-config` or :ref:`gammu-detect` to generate
@@ -138,6 +138,10 @@ Parametry připojení
         .. literalinclude::         ../../../contrib/udev/45-nokiadku2.rules
            :language: sh
 
+    In case your USB device appears as the serial port in the system (eg.
+    ``/dev/ttyACM0`` on Linux or ``COM5:`` on Windows), just use same setup as
+    with serial port.
+
     Při připojení přes **Bluetooth** musíte zadat Bluetooth adresu vašeho
     telefonu (na Linuxu můžete zjistit seznam zařízení v dosahu pomocí příkazu
     :command:`hcitool scan`). Volitelně můžete Gammu přinutit používat jiný
@@ -153,13 +157,18 @@ Parametry připojení
 
     .. code-block::     sh
 
-        ip l s dev irda0 up sysctl net.irda.discovery=1
+        ip l s dev irda0 up          # Enables irda0 device
+        sysctl net.irda.discovery=1  # Enables device discovery on IrDA
 
     .. note::
 
         Native IrDA is not supported on Linux, you need to setup virtual serial port
         for it (eg. ``/dev/ircomm0``) and use it same way as cable.  This can be
-        usually achieved by loading module ``ircomm-tty``.
+        usually achieved by loading modules ``ircomm-tty`` and ``irtty-sir``:
+
+        .. code-block::         sh
+
+            modprobe ircomm-tty modprobe irtty-sir
 
 .. config:option:: Port
 
@@ -268,8 +277,8 @@ Locales and character set options
     ``LANG/LC_MESSAGES/gammu.mo``). Pokud je gammu správně instalované, mělo
     bypřeklady najít automaticky.
 
-Examples
---------
+Příklady
+----------
 
 Podrobnější příklady jsou dostupné v dokumentaci Gammu.
 
