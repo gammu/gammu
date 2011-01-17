@@ -28,7 +28,7 @@ Continue reading
     * :ref:`formats` -- file formats supported by Gammu
 
 Full content
-------------------
+------------
 
 .. toctree::
     :maxdepth: 3
