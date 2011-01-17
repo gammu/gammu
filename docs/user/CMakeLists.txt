@@ -1,14 +1,5 @@
 project (Gammu-user-docs C)
 
-# [a-z] is needed to skip CMakeLists.txt
-file(GLOB TEXTDOCS "[a-z]*.txt" "*.html")
-
-install (
-    FILES ${TEXTDOCS}
-    DESTINATION "${INSTALL_DOC_DIR}"
-    COMPONENT "docs"
-    )
-
 file(GLOB MAN1_PAGES "*.1")
 
 install (
