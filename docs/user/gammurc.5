@@ -1,4 +1,4 @@
-.TH "GAMMURC" "5" "January 10, 2011" "1.28.96" "Gammu"
+.TH "GAMMURC" "5" "January 17, 2011" "1.28.96" "Gammu"
 .SH NAME
 gammurc \- gammu(1) configuration file
 .
@@ -230,6 +230,10 @@ LABEL="nokiadku2_rules_end"
 .fi
 .RE
 .sp
+In case your USB device appears as the serial port in the system (eg.
+\fB/dev/ttyACM0\fP on Linux or \fBCOM5:\fP on Windows), just use same setup as
+with serial port.
+.sp
 For \fBBluetooth\fP connection you have to enter Bluetooth address of your phone
 (you can list Bluetooth devices in range on Linux using \fBhcitool scan\fP
 command). Optionally you can also force Gammu to use specified channel by
@@ -337,7 +341,7 @@ each execution.
 .TP
 .B LogFormat
 .
-Determines what all will be logged to \fI\%LogFile\fP. Possible values are:
+Determines what all will be logged to \fBLogFile\fP. Possible values are:
 .INDENT 7.0
 .TP
 .B \fBnothing\fP
