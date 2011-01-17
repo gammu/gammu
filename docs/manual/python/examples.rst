@@ -1,7 +1,9 @@
-More Examples
-=============
+.. _python-gammu-examples:
 
-All these (and some more) examples are also available in python/examples/
+More python-gammu Examples
+==========================
+
+All these (and some more) examples are also available in ``python/examples/``
 directory in Gammu sources.
 
 Sending a message

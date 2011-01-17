@@ -1,3 +1,5 @@
+.. _formats:
+
 File formats used by Gammu
 ==========================
 

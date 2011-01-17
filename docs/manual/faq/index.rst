@@ -1,0 +1,12 @@
+.. _faq:
+
+Frequently Asked Questions
+==========================
+
+.. toctree::
+    :maxdepth: 2
+    
+    general
+    phone
+    smsd
+    python

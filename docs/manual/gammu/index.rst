@@ -118,6 +118,8 @@ Call commands
 
     Unholds call.
 
+.. _gammu-sms:
+
 SMS and EMS commands
 --------------------
 

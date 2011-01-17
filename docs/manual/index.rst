@@ -23,7 +23,9 @@ Continue reading
     * :ref:`python` -- use Gammu functionality from Python
     * :ref:`libgammu` -- use Gammu functionality from C
     * :ref:`internal` -- learn about Gammu internals
+    * :ref:`faq` -- frequently asked questions
     * :ref:`protocols` -- learn about phone protocols
+    * :ref:`formats` -- file formats supported by Gammu
 
 Full content
 ------------------
