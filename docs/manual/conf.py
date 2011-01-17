@@ -94,6 +94,8 @@ release = version
 # for source files.
 exclude_trees = ['.build']
 
+exclude_patterns = ['contents.rst']
+
 # The reST default role (used for this markup: `text`) to use for all documents.
 #default_role = None
 
