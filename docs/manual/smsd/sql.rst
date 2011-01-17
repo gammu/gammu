@@ -48,50 +48,44 @@ queries. We can separate them into three groups:
 Phone Specific Parameters 
 +++++++++++++++++++++++++
 
-+-----------+------------------------------------------------------------------+
-| Parameter |    Description                                                   |
-+===========+==================================================================+
-| ``%I``    | IMEI of phone                                                    |
-+-----------+------------------------------------------------------------------+
-| ``%P``    | PHONE ID (hostname)                                              |
-+-----------+------------------------------------------------------------------+
-| ``%N``    | client name (eg. Gammu 1.12.3)                                   |
-+-----------+------------------------------------------------------------------+
+``%I``
+    IMEI of phone
+``%P``
+    PHONE ID (hostname)
+``%N``
+    client name (eg. Gammu 1.12.3)
 
 .. _SMS Specific Parameters:
 
 SMS Specific Parameters
 +++++++++++++++++++++++
 
-+-----------+------------------------------------------------------------------+
-| Parameter |    Description                                                   |
-+===========+==================================================================+
-| ``%R``    | remote number [#f1]_                                             |
-+-----------+------------------------------------------------------------------+
-| ``%C``    | delivery datetime                                                |
-+-----------+------------------------------------------------------------------+
-| ``%e``    | delivery status on receiving or status error on sending          |
-+-----------+------------------------------------------------------------------+
-| ``%t``    | message reference                                                |
-+-----------+------------------------------------------------------------------+
-| ``%d``    | receiving datetime for received sms                              |
-+-----------+------------------------------------------------------------------+
-| ``%E``    | encoded text of SMS                                              |
-+-----------+------------------------------------------------------------------+
-| ``%c``    | SMS coding (ie 8bit or UnicodeNoCompression)                     |
-+-----------+------------------------------------------------------------------+
-| ``%F``    | sms centre number                                                |
-+-----------+------------------------------------------------------------------+
-| ``%u``    | UDH header                                                       |
-+-----------+------------------------------------------------------------------+
-| ``%x``    | class                                                            |
-+-----------+------------------------------------------------------------------+
-| ``%T``    | decoded SMS text                                                 |
-+-----------+------------------------------------------------------------------+
-| ``%A``    | CreatorID of SMS (sending sms)                                   |
-+-----------+------------------------------------------------------------------+
-| ``%V``    | relative validity                                                |
-+-----------+------------------------------------------------------------------+
+``%R``
+    remote number [#f1]_
+``%C``
+    delivery datetime
+``%e``
+    delivery status on receiving or status error on sending
+``%t``
+    message reference
+``%d``
+    receiving datetime for received sms
+``%E``
+    encoded text of SMS
+``%c``
+    SMS coding (ie 8bit or UnicodeNoCompression)
+``%F``
+    sms centre number
+``%u``
+    UDH header
+``%x``
+    class
+``%T``
+    decoded SMS text
+``%A``
+    CreatorID of SMS (sending sms)
+``%V``
+    relative validity
 
 .. [#f1] Sender number for received messages (insert to inbox or delivery notifications), destination otherwise.
 
