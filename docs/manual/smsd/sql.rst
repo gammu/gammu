@@ -3,7 +3,7 @@
 SQL Service
 ===========
 
-SQL service stores all its data in database. It can use one of these SQL backends 
+SQL service stores all its data in database. It can use one of these SQL backends
 (configuration option :config:option:`Driver` in smsd section):
 
 * ``native_mysql`` for :ref:`gammu-smsd-mysql`
@@ -45,7 +45,7 @@ queries. We can separate them into three groups:
 
 .. _Phone Specific Parameters:
 
-Phone Specific Parameters 
+Phone Specific Parameters
 +++++++++++++++++++++++++
 
 ``%I``
@@ -96,7 +96,7 @@ Configurable queries
 
 All configurable queries can be set in :config:section:`[sql]` section. Sequence of rows in selects are mandatory.
 
-All default queries noted here are noted for MySQL. Actual time and time addition 
+All default queries noted here are noted for MySQL. Actual time and time addition
 are selected for default queries during initialization.
 
 .. config:option:: delete_phone
@@ -117,7 +117,7 @@ are selected for default queries during initialization.
 
     .. code-block:: sql
 
-        INSERT INTO phones (IMEI, ID, Send, Receive, InsertIntoDB, TimeOut, Client, Battery, Signal) 
+        INSERT INTO phones (IMEI, ID, Send, Receive, InsertIntoDB, TimeOut, Client, Battery, Signal)
         VALUES (%I, %P, %1, %2, NOW(), (NOW() + INTERVAL 10 SECOND) + 0, %N, -1, -1)
 
     Query specific parameters:
@@ -135,7 +135,7 @@ are selected for default queries during initialization.
 
     .. code-block:: sql
 
-        SELECT ID, Status, SendingDateTime, DeliveryDateTime, SMSCNumber FROM sentitems 
+        SELECT ID, Status, SendingDateTime, DeliveryDateTime, SMSCNumber FROM sentitems
         WHERE DeliveryDateTime IS NULL AND SenderID = %P AND TPMR = %t AND DestinationNumber = %R
 
 .. config:option:: save_inbox_sms_update_delivered
@@ -180,7 +180,7 @@ are selected for default queries during initialization.
 
     .. code-block:: sql
 
-        INSERT INTO inbox (ReceivingDateTime, Text, SenderNumber, Coding, SMSCNumber, UDH, 
+        INSERT INTO inbox (ReceivingDateTime, Text, SenderNumber, Coding, SMSCNumber, UDH,
         Class, TextDecoded, RecipientID) VALUES (%d, %E, %R, %c, %F, %u, %x, %T, %P)
 
 .. config:option:: update_received
@@ -201,7 +201,7 @@ are selected for default queries during initialization.
 
     .. code-block:: sql
 
-        UPDATE outbox SET SendingTimeOut = (NOW() + INTERVAL locktime SECOND) + 0 
+        UPDATE outbox SET SendingTimeOut = (NOW() + INTERVAL locktime SECOND) + 0
         WHERE ID = %1 AND (SendingTimeOut < NOW() OR SendingTimeOut IS NULL)
 
     Query specific parameters:
@@ -217,8 +217,8 @@ are selected for default queries during initialization.
 
     .. code-block:: sql
 
-        SELECT ID, InsertIntoDB, SendingDateTime, SenderID FROM outbox 
-        WHERE SendingDateTime < NOW() AND SendingTimeOut <  NOW() AND 
+        SELECT ID, InsertIntoDB, SendingDateTime, SenderID FROM outbox
+        WHERE SendingDateTime < NOW() AND SendingTimeOut <  NOW() AND
         ( SenderID is NULL OR SenderID = '' OR SenderID = %P ) ORDER BY InsertIntoDB ASC LIMIT %1
 
     Query specific parameters:
@@ -234,7 +234,7 @@ are selected for default queries during initialization.
 
     .. code-block:: sql
 
-        SELECT Text, Coding, UDH, Class, TextDecoded, ID, DestinationNumber, MultiPart, 
+        SELECT Text, Coding, UDH, Class, TextDecoded, ID, DestinationNumber, MultiPart,
         RelativeValidity, DeliveryReport, CreatorID FROM outbox WHERE ID=%1
 
     Query specific parameters:
@@ -250,7 +250,7 @@ are selected for default queries during initialization.
 
     .. code-block:: sql
 
-        SELECT Text, Coding, UDH, Class, TextDecoded, ID, SequencePosition 
+        SELECT Text, Coding, UDH, Class, TextDecoded, ID, SequencePosition
         FROM outbox_multipart WHERE ID=%1 AND SequencePosition=%2
 
     Query specific parameters:
@@ -298,8 +298,8 @@ are selected for default queries during initialization.
 
     .. code-block:: sql
 
-        INSERT INTO outbox (CreatorID, SenderID, DeliveryReport, MultiPart, 
-        InsertIntoDB, Text, DestinationNumber, RelativeValidity, Coding, UDH, Class, 
+        INSERT INTO outbox (CreatorID, SenderID, DeliveryReport, MultiPart,
+        InsertIntoDB, Text, DestinationNumber, RelativeValidity, Coding, UDH, Class,
         TextDecoded) VALUES (%1, %P, %2, %3, NOW(), %E, %R, %V, %c, %u, %x, %T)
 
     Query specific parameters:
@@ -323,7 +323,7 @@ are selected for default queries during initialization.
 
     .. code-block:: sql
 
-        INSERT INTO outbox_multipart (SequencePosition, Text, Coding, UDH, Class, 
+        INSERT INTO outbox_multipart (SequencePosition, Text, Coding, UDH, Class,
         TextDecoded, ID) VALUES (%4, %E, %c, %u, %x, %T, %5)
 
     Query specific parameters:
@@ -349,7 +349,7 @@ are selected for default queries during initialization.
 
         INSERT INTO sentitems (CreatorID,ID,SequencePosition,Status,SendingDateTime,
         SMSCNumber, TPMR, SenderID,Text,DestinationNumber,Coding,UDH,Class,TextDecoded,
-        InsertIntoDB,RelativeValidity) 
+        InsertIntoDB,RelativeValidity)
         VALUES (%A, %1, %2, %3, NOW(), %F, %4, %P, %E, %R, %c, %u, %x, %T, %5, %V)
 
     Query specific parameters:
@@ -383,7 +383,7 @@ are selected for default queries during initialization.
 
     .. code-block:: sql
 
-        UPDATE phones SET TimeOut= (NOW() + INTERVAL 10 SECOND) + 0, 
+        UPDATE phones SET TimeOut= (NOW() + INTERVAL 10 SECOND) + 0,
         Battery = %1, Signal = %2 WHERE IMEI = %I
 
     Query specific parameters:
