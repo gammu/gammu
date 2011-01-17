@@ -154,8 +154,8 @@ Device connection parameters
 
     .. code-block:: sh
 
-        ip l s dev irda0 up
-        sysctl net.irda.discovery=1
+        ip l s dev irda0 up          # Enables irda0 device
+        sysctl net.irda.discovery=1  # Enables device discovery on IrDA
 
     .. note::
 
