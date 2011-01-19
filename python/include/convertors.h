@@ -419,4 +419,14 @@ PyObject *WAPBookmarkToPython(GSM_WAPBookmark * wap);
  */
 int WAPBookmarkFromPython(PyObject * dict, GSM_WAPBookmark * wap);
 
+/**
+ * Converts UDH type string to value.
+ */
+GSM_UDH StringToUDHType(const char *s);;
+
+/**
+ * Converts GSM coding string to value.
+ */
+GSM_Coding_Type StringToSMSCoding(const char *s);
+
 #endif

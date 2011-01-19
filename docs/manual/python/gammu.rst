@@ -1108,6 +1108,19 @@ Message processing
     :return: List of linked messages, see :ref:`sms_obj`
     :rtype: list
 
+.. function:: SMSCounter(Text, UDH = "NoUDH", Coding = "Default")
+
+    Calculates number of SMS and free chars in SMS.
+
+    :type Text: string
+    :param Text: Message text
+    :type UDH: string
+    :param UDH: Message UDH
+    :type Coding: string
+    :param Coding: Message coding (eg. Unicode or Default)
+    :return: Number of messages and number of free chars
+    :rtype: tuple
+
 .. function:: DecodeSMS(Messages, EMS)
 
     Decodes multi part SMS message.

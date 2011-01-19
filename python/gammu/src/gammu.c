@@ -6155,6 +6155,57 @@ gammu_ReadSMSBackup(PyObject *self, PyObject *args, PyObject *kwds)
 }
 #endif
 
+static char gammu_SMSCounter__doc__[] =
+"SMSCounter(Text, UDH = \"NoUDH\", Coding = \"Default\")\n\n"
+"Calculates number of SMS and free chars in SMS.\n\n"
+"@return: Number of messages and number of free chars\n"
+"@rtype: tuple\n"
+;
+
+static PyObject *
+gammu_SMSCounter(PyObject *self, PyObject *args, PyObject *kwds)
+{
+    static char *kwlist[] = {"Text", "UDH", "Coding", NULL};
+    PyObject *o = Py_None;
+    const char *udh_s = "\0", *coding_s = "\0";
+    unsigned char *str;
+    GSM_UDH udh;
+    GSM_Coding_Type coding;
+    int SMSNum;
+    size_t CharsLeft;
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O|ss", kwlist,
+                &o, &udh_s, &coding_s))
+        return NULL;
+
+    if (!PyString_Check(o) && !PyUnicode_Check(o)) {
+        PyErr_Format(PyExc_ValueError, "Text not string nor unicode!");
+        return NULL;
+    }
+
+    str = StringPythonToGammu(o);
+    if (str == NULL) return NULL;
+
+    if (udh_s[0] == 0) {
+        udh = UDH_NoUDH;
+    } else {
+        udh = StringToUDHType(udh_s);
+        if (udh == 0) return NULL;
+    }
+
+    if (coding_s[0] == 0) {
+        coding = SMS_Coding_Default_No_Compression;
+    } else {
+        coding = StringToSMSCoding(coding_s) ;
+        if (coding == 0) return NULL;
+    }
+
+    GSM_SMSCounter(GSM_GetGlobalDebug(), UnicodeLength(str), str, udh, coding, &SMSNum, &CharsLeft);
+    free(str);
+
+    return Py_BuildValue("(ii)", SMSNum, CharsLeft);
+}
+
 static char gammu_DecodePDU__doc__[] =
 "DecodePDU(Data, SMSC = False)\n\n"
 "Parses PDU packet.\n\n"
@@ -6325,6 +6376,8 @@ static struct PyMethodDef gammu_methods[] = {
     {"SaveSMSBackup",   (PyCFunction)gammu_SaveSMSBackup,   METH_VARARGS|METH_KEYWORDS,   gammu_SaveSMSBackup__doc__},
     {"ReadSMSBackup",   (PyCFunction)gammu_ReadSMSBackup,   METH_VARARGS|METH_KEYWORDS,   gammu_ReadSMSBackup__doc__},
 #endif
+
+    {"SMSCounter",       (PyCFunction)gammu_SMSCounter,       METH_VARARGS|METH_KEYWORDS,   gammu_SMSCounter__doc__},
 
     {"DecodePDU",       (PyCFunction)gammu_DecodePDU,       METH_VARARGS|METH_KEYWORDS,   gammu_DecodePDU__doc__},
     {"EncodePDU",       (PyCFunction)gammu_EncodePDU,       METH_VARARGS|METH_KEYWORDS,   gammu_EncodePDU__doc__},
