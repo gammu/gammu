@@ -38,7 +38,7 @@ else (CMAKE_CROSSCOMPILING AND MINGW)
 endif (CMAKE_CROSSCOMPILING AND MINGW)
 
 # Set version
-set (GAMMU_VERSION "1.29.0" CACHE INTERNAL "")
+set (GAMMU_VERSION "1.29.90" CACHE INTERNAL "")
 string (REGEX REPLACE "^([0-9]*)\\.([0-9]*)\\.([0-9]*)$" "\\1" "GAMMU_VERSION_MAJOR" "${GAMMU_VERSION}")
 string (REGEX REPLACE "^([0-9]*)\\.([0-9]*)\\.([0-9]*)$" "\\2" "GAMMU_VERSION_MINOR" "${GAMMU_VERSION}")
 string (REGEX REPLACE "^([0-9]*)\\.([0-9]*)\\.([0-9]*)$" "\\3" "GAMMU_VERSION_PATCH" "${GAMMU_VERSION}")

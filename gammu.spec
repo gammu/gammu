@@ -1,5 +1,5 @@
 Name:               gammu
-Version:            1.29.0
+Version:            1.29.90
 Release:            1
 # Set to 0 to disable bluetooth support
 %if 0%{?opensuse_bs} && 0%{?sles_version} == 9
@@ -363,6 +363,7 @@ fi
 %_bindir/jadmaker
 %_mandir/man1/gammu.1*
 %_mandir/man1/gammu-config.1*
+%_mandir/man1/gammu-detect.1*
 %_mandir/man1/jadmaker.1*
 %_mandir/man5/gammurc.5*
 %_mandir/man5/gammu-backup.5*
