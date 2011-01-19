@@ -97,3 +97,9 @@ if (LIBDBI_FOUND AND SQLITE_BIN AND WITH_BACKUP)
     configure_file("examples/smsd-testing.py" "${CMAKE_CURRENT_BINARY_DIR}/test-smsd-testing.py" @ONLY)
     add_test("py-smsd-testing" ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/test-smsd-testing.py")
 endif (LIBDBI_FOUND AND SQLITE_BIN AND WITH_BACKUP)
+
+add_test("py-smscounter-foobar" ${PYTHON_EXECUTABLE} -c "import gammu; print gammu.SMSCounter('foobar')")
+set_tests_properties("py-smscounter-foobar" PROPERTIES PASS_REGULAR_EXPRESSION "\(1, 154\)")
+
+add_test("py-smscounter-long" ${PYTHON_EXECUTABLE} -c "import gammu; print gammu.SMSCounter('foobar fjsa;kjfkasdjfkljsklfjaskdljfkljasdfkljqilui143uu51o23rjhskdf jasdklfjasdklf jasdfkljasdlkfj;asd;lfjaskdljf431ou983jdfaskljfklsdjdkljasfl sdfjasdfkl jafklsda')")
+set_tests_properties("py-smscounter-long" PROPERTIES PASS_REGULAR_EXPRESSION "\(2, 156\)")
