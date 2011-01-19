@@ -206,7 +206,7 @@ Fields description:
 ``Battery`` (integer)
     battery level in percent (or \-1 if unknown)
 
-``Signal`` (integer)
+``SignalStrength`` (integer)
     signal level in percent (or \-1 if unknown)
 
 ``Sent`` (integer)
@@ -317,6 +317,9 @@ History
 
 History of schema versions:
 
+13
+    Changed name of ``Signal`` field to ``SignalStrength`` to avoid problems
+    with database which have ``SIGNAL`` as reserved word
 12
     the changes only affect MySQL structure changing default values for
     timestamps from ``0000-00-00 00:00:00`` to ``CURRENT_TIMESTAMP()`` by

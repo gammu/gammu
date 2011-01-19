@@ -1028,7 +1028,7 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 
 	if (SMSDSQL_option(Config, SQL_QUERY_INSERT_PHONE, "insert_phone",
 		"INSERT INTO phones (IMEI, ID, Send, Receive, InsertIntoDB, "
-			"TimeOut, Client, Battery, Signal) VALUES (%I, %P, %1, %2, ",
+			"TimeOut, Client, Battery, SignalStrength) VALUES (%I, %P, %1, %2, ",
 			SMSDSQL_Now(Config),
 			", ",
 			SMSDSQL_NowPlus(Config, 10),
@@ -1140,7 +1140,7 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 	if (SMSDSQL_option(Config, SQL_QUERY_REFRESH_PHONE_STATUS, "refresh_phone_status",
 			"UPDATE phones SET TimeOut= ",
 			SMSDSQL_NowPlus(Config, 10),
-			", Battery = %1, Signal = %2 WHERE IMEI = %I", NULL) != ERR_NONE) {
+			", Battery = %1, SignalStrength = %2 WHERE IMEI = %I", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
 

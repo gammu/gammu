@@ -40,7 +40,7 @@ CREATE TABLE `gammu` (
 -- Dumping data for table `gammu`
 -- 
 
-INSERT INTO `gammu` (`Version`) VALUES (12);
+INSERT INTO `gammu` (`Version`) VALUES (13);
 
 -- --------------------------------------------------------
 
@@ -176,8 +176,8 @@ CREATE TABLE `phones` (
   `Receive` enum('yes','no') NOT NULL default 'no',
   `IMEI` varchar(35) NOT NULL,
   `Client` text NOT NULL,
-  `Battery` integer NOT NULL DEFAULT 0,
-  `Signal` integer NOT NULL DEFAULT 0,
+  `Battery` integer NOT NULL DEFAULT -1,
+  `SignalStrength` integer NOT NULL DEFAULT -1,
   `Sent` int NOT NULL DEFAULT 0,
   `Received` int NOT NULL DEFAULT 0,
   PRIMARY KEY (`IMEI`)
