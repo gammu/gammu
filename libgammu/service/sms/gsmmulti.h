@@ -26,13 +26,6 @@
 #define ALCATELTDD_ANIMATION   5
 #define ALCATELTDD_SMSTEMPLATE 6
 
-void GSM_SMSCounter(GSM_Debug_Info *di, size_t	 	MessageLength,
-		    unsigned char       *MessageBuffer,
-		    GSM_UDH	     	UDHType,
-		    GSM_Coding_Type     Coding,
-		    int		 	*SMSNum,
-		    size_t	 	*CharsLeft);
-
 GSM_Error GSM_AddSMS_Text_UDH(GSM_Debug_Info *di, GSM_MultiSMSMessage       *SMS,
 				GSM_Coding_Type	 	Coding,
 				char		    	*Buffer,

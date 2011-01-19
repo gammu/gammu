@@ -27,6 +27,7 @@ ChangeLog
 [+] * Change database structure to avoid using reserved word Signal (bug #1380).
 [+] * Possibility to limit time of day for SMS in SMSD (bug #1203).
 [-] * Enforce limits on SMS payload length.
+[+] * Made GSM_SMSCounter public (bug #1356).
     
 20110119 - 1.29.0
 
