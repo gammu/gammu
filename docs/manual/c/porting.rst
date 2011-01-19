@@ -46,4 +46,6 @@ As there might be some functions still missing from new API, don't
 hesitate to contact author or ask on mailing list if you miss something.
 
 API documentation can be generated using Doxygen (make apidoc in build
-tree), you can also view it online at <http://wammu.eu/docs/devel/api/>.
+tree) or Sphinx and is part of this manual.
+
+.. seealso:: :ref:`libgammu`
