@@ -1,5 +1,5 @@
-libdir=@Gammu_BINARY_DIR@/common
-includedir=@Gammu_BINARY_DIR@/include
+libdir=@libGammu_BINARY_DIR@
+includedir=@Gammu-headers_BINARY_DIR@
 
 Name: gammu
 Description: Gammu library
