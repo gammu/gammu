@@ -52,6 +52,8 @@
 #cmakedefine GSM_ENABLE_IRDAGNAPBUS
 
 #cmakedefine GSM_ENABLE_BLUEGNAPBUS
+
+#cmakedefine GSM_ENABLE_S60
 /* Bluetooth stack (like Bluez). FBUS2 (init done using AT commands) */
 #cmakedefine GSM_ENABLE_BLUEFBUS2
 /* Bluetooth stack (like Bluez). PHONET FBUS */
