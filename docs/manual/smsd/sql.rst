@@ -219,6 +219,7 @@ are selected for default queries during initialization.
 
         SELECT ID, InsertIntoDB, SendingDateTime, SenderID FROM outbox
         WHERE SendingDateTime < NOW() AND SendingTimeOut <  NOW() AND
+        SendBefore >= CURTIME() AND SendAfter <= CURTIME() AND
         ( SenderID is NULL OR SenderID = '' OR SenderID = %P ) ORDER BY InsertIntoDB ASC LIMIT %1
 
     Query specific parameters:

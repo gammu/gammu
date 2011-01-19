@@ -98,6 +98,14 @@ Fields description:
 ``SendingDateTime`` (timestamp)
     set it to some value, when want to force sending after some planned time
 
+``SendBefore`` (time)
+    Send message before specified time, can be used to limit messages from
+    being sent in night. Default value is 23:59:59
+
+``SendAfter`` (time)
+    Send message after specified time, can be used to limit messages from
+    being sent in night. Default value is 00:00:00
+
 ``Text`` (text)
     SMS text encoded using hex values in proper coding. If you want to use
     TextDecoded field, keep this NULL (or empty).
@@ -319,7 +327,8 @@ History of schema versions:
 
 13
     Changed name of ``Signal`` field to ``SignalStrength`` to avoid problems
-    with database which have ``SIGNAL`` as reserved word
+    with database which have ``SIGNAL`` as reserved word. Added ``SendBefore``
+    and ``SendAfter`` fields.
 12
     the changes only affect MySQL structure changing default values for
     timestamps from ``0000-00-00 00:00:00`` to ``CURRENT_TIMESTAMP()`` by

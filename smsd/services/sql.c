@@ -65,6 +65,30 @@ const char now_sqlite[] = "datetime('now')";
 const char now_freetds[] = "CURRENT_TIMESTAMP";
 const char now_fallback[] = "NOW()";
 
+const char currtime_mysql[] = "CURTIME()";
+const char currtime_pgsql[] = "localtime";
+const char currtime_sqlite[] = "time('now')";
+const char currtime_freetds[] = "CURRENT_TIME";
+const char currtime_fallback[] = "CURTIME()";
+
+static const char *SMSDSQL_CurrentTime(GSM_SMSDConfig * Config)
+{
+	const char *driver_name;
+
+	driver_name = Config->driver;
+
+	if (strcasecmp(driver_name, "mysql") == 0 || strcasecmp(driver_name, "native_mysql") == 0) {
+		return currtime_mysql;
+	} else if (strcasecmp(driver_name, "pgsql") == 0 || strcasecmp(driver_name, "native_pgsql") == 0) {
+		return currtime_pgsql;
+	} else if (strncasecmp(driver_name, "sqlite", 6) == 0) {
+		return currtime_sqlite;
+	} else if (strcasecmp(driver_name, "freetds") == 0) {
+		return currtime_freetds;
+	} else {
+		return currtime_fallback;
+	}
+}
 static const char *SMSDSQL_Now(GSM_SMSDConfig * Config)
 {
 	const char *driver_name;
@@ -1081,6 +1105,10 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 			SMSDSQL_Now(Config),
 			" AND SendingTimeOut < ",
 			SMSDSQL_Now(Config),
+			" AND SendBefore >= ",
+			SMSDSQL_CurrentTime(Config),
+			" AND SendAfter <= ",
+			SMSDSQL_CurrentTime(Config),
 			" AND ( SenderID is NULL OR SenderID = '' OR SenderID = %P ) ORDER BY InsertIntoDB ASC LIMIT %1", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}

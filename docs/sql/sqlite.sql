@@ -35,6 +35,8 @@ CREATE TABLE outbox (
   UpdatedInDB NUMERIC NOT NULL DEFAULT (datetime('now')),
   InsertIntoDB NUMERIC NOT NULL DEFAULT (datetime('now')),
   SendingDateTime NUMERIC NOT NULL DEFAULT (datetime('now')),
+  SendBefore time NOT NULL DEFAULT '23:59:59',
+  SendAfter time NOT NULL DEFAULT '00:00:00',
   Text TEXT,
   DestinationNumber TEXT NOT NULL DEFAULT '',
   Coding TEXT NOT NULL DEFAULT 'Default_No_Compression',

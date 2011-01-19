@@ -25,6 +25,7 @@ ChangeLog
 [!] * Changed default connection settings to at and ttyACM0 (bug #1078).
 [+] * Add new API call to abort existing operation (bug #1155).
 [+] * Change database structure to avoid using reserved word Signal (bug #1380).
+[+] * Possibility to limit time of day for SMS in SMSD (bug #1203).
     
 20110119 - 1.29.0
 

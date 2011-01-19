@@ -127,6 +127,8 @@ CREATE TABLE outbox (
   UpdatedInDB timestamp(0) WITHOUT time zone NOT NULL DEFAULT LOCALTIMESTAMP(0),
   InsertIntoDB timestamp(0) WITHOUT time zone NOT NULL DEFAULT 'epoch',
   SendingDateTime timestamp NOT NULL DEFAULT 'epoch',
+  SendBefore time NOT NULL DEFAULT '23:59:59',
+  SendAfter time NOT NULL DEFAULT '00:00:00',
   Text text,
   DestinationNumber varchar(20) NOT NULL DEFAULT '',
   Coding varchar(255) NOT NULL DEFAULT 'Default_No_Compression',
