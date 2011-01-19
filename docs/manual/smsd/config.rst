@@ -449,6 +449,11 @@ that all path should contain trailing path separator (/ on Unix systems):
 
     Default is ``unicode``.
 
+    .. note::
+
+        In ``detail`` format, all message parts are stored into signle file,
+        for all others each message part is saved separately.
+
 .. config:option:: OutboxFormat
 
     The format in which messages created by :ref:`gammu-smsd-inject` will be stored,
