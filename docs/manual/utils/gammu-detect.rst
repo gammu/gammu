@@ -74,7 +74,7 @@ used with :ref:`gammu`.
 
 .. note::
 
-    You can choose which section to use by :option:`gammu -s`.
+    You can choose which section to use in :ref:`gammu` by :option:`gammu -s`.
 
 When invoked as :option:`gammu-detect -d`, also all examined devices are
 listed as comments in the output.
