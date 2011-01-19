@@ -79,6 +79,7 @@ GSM_Error bluetooth_findrfchannel(GSM_StateMachine *s)
 			break;
 		case GCT_BLUES60:
 			channel_id = 18;
+			break;
 		default:
 			channel_id = 0;
 			break;
