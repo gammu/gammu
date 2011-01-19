@@ -129,6 +129,16 @@ when message was inserted into database
 .sp
 set it to some value, when want to force sending after some planned time
 .TP
+.B \fBSendBefore\fP (time)
+.sp
+Send message before specified time, can be used to limit messages from
+being sent in night. Default value is 23:59:59
+.TP
+.B \fBSendAfter\fP (time)
+.sp
+Send message after specified time, can be used to limit messages from
+being sent in night. Default value is 00:00:00
+.TP
 .B \fBText\fP (text)
 .sp
 SMS text encoded using hex values in proper coding. If you want to use
@@ -271,7 +281,7 @@ client name, usually string Gammu with version
 .sp
 battery level in percent (or \-1 if unknown)
 .TP
-.B \fBSignal\fP (integer)
+.B \fBSignalStrength\fP (integer)
 .sp
 signal level in percent (or \-1 if unknown)
 .TP
@@ -415,6 +425,12 @@ Not used by SMSD currently, included only for application usage.
 .sp
 History of schema versions:
 .INDENT 0.0
+.TP
+.B 13
+.
+Changed name of \fBSignal\fP field to \fBSignalStrength\fP to avoid problems
+with database which have \fBSIGNAL\fP as reserved word. Added \fBSendBefore\fP
+and \fBSendAfter\fP fields.
 .TP
 .B 12
 .

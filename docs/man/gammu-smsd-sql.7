@@ -213,7 +213,7 @@ Default value:
 .sp
 .nf
 .ft C
-INSERT INTO phones (IMEI, ID, Send, Receive, InsertIntoDB, TimeOut, Client, Battery, Signal)
+INSERT INTO phones (IMEI, ID, Send, Receive, InsertIntoDB, TimeOut, Client, Battery, SignalStrength)
 VALUES (%I, %P, %1, %2, NOW(), (NOW() + INTERVAL 10 SECOND) + 0, %N, \-1, \-1)
 .ft P
 .fi
@@ -361,6 +361,7 @@ Default value:
 .ft C
 SELECT ID, InsertIntoDB, SendingDateTime, SenderID FROM outbox
 WHERE SendingDateTime < NOW() AND SendingTimeOut <  NOW() AND
+SendBefore >= CURTIME() AND SendAfter <= CURTIME() AND
 ( SenderID is NULL OR SenderID = \(aq\(aq OR SenderID = %P ) ORDER BY InsertIntoDB ASC LIMIT %1
 .ft P
 .fi
@@ -612,7 +613,7 @@ Default value:
 .nf
 .ft C
 UPDATE phones SET TimeOut= (NOW() + INTERVAL 10 SECOND) + 0,
-Battery = %1, Signal = %2 WHERE IMEI = %I
+Battery = %1, SignalStrength = %2 WHERE IMEI = %I
 .ft P
 .fi
 .sp

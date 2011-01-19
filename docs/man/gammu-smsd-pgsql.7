@@ -126,7 +126,7 @@ CREATE TABLE gammu (
 \-\- Dumping data for table "gammu"
 \-\- 
 
-INSERT INTO gammu (Version) VALUES (12);
+INSERT INTO gammu (Version) VALUES (13);
 
 \-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 
@@ -173,6 +173,8 @@ CREATE TABLE outbox (
   UpdatedInDB timestamp(0) WITHOUT time zone NOT NULL DEFAULT LOCALTIMESTAMP(0),
   InsertIntoDB timestamp(0) WITHOUT time zone NOT NULL DEFAULT \(aqepoch\(aq,
   SendingDateTime timestamp NOT NULL DEFAULT \(aqepoch\(aq,
+  SendBefore time NOT NULL DEFAULT \(aq23:59:59\(aq,
+  SendAfter time NOT NULL DEFAULT \(aq00:00:00\(aq,
   Text text,
   DestinationNumber varchar(20) NOT NULL DEFAULT \(aq\(aq,
   Coding varchar(255) NOT NULL DEFAULT \(aqDefault_No_Compression\(aq,
@@ -279,8 +281,8 @@ CREATE TABLE phones (
   Receive boolean NOT NULL DEFAULT \(aqno\(aq,
   IMEI varchar(35) PRIMARY KEY NOT NULL,
   Client text NOT NULL,
-  Battery integer NOT NULL DEFAULT 0,
-  Signal integer NOT NULL DEFAULT 0,
+  Battery integer NOT NULL DEFAULT \-1,
+  SignalStrength integer NOT NULL DEFAULT \-1,
   Sent integer NOT NULL DEFAULT 0,
   Received integer NOT NULL DEFAULT 0
 );

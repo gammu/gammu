@@ -103,7 +103,7 @@ CREATE TABLE \(gagammu\(ga (
 \-\- Dumping data for table \(gagammu\(ga
 \-\- 
 
-INSERT INTO \(gagammu\(ga (\(gaVersion\(ga) VALUES (12);
+INSERT INTO \(gagammu\(ga (\(gaVersion\(ga) VALUES (13);
 
 \-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 
@@ -142,6 +142,8 @@ CREATE TABLE \(gaoutbox\(ga (
   \(gaUpdatedInDB\(ga timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   \(gaInsertIntoDB\(ga timestamp NOT NULL default \(aq0000\-00\-00 00:00:00\(aq,
   \(gaSendingDateTime\(ga timestamp NOT NULL default \(aq0000\-00\-00 00:00:00\(aq,
+  \(gaSendBefore\(ga time NOT NULL DEFAULT \(aq23:59:59\(aq,
+  \(gaSendAfter\(ga time NOT NULL DEFAULT \(aq00:00:00\(aq,
   \(gaText\(ga text,
   \(gaDestinationNumber\(ga varchar(20) NOT NULL default \(aq\(aq,
   \(gaCoding\(ga enum(\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq) NOT NULL default \(aqDefault_No_Compression\(aq,
@@ -239,8 +241,8 @@ CREATE TABLE \(gaphones\(ga (
   \(gaReceive\(ga enum(\(aqyes\(aq,\(aqno\(aq) NOT NULL default \(aqno\(aq,
   \(gaIMEI\(ga varchar(35) NOT NULL,
   \(gaClient\(ga text NOT NULL,
-  \(gaBattery\(ga integer NOT NULL DEFAULT 0,
-  \(gaSignal\(ga integer NOT NULL DEFAULT 0,
+  \(gaBattery\(ga integer NOT NULL DEFAULT \-1,
+  \(gaSignalStrength\(ga integer NOT NULL DEFAULT \-1,
   \(gaSent\(ga int NOT NULL DEFAULT 0,
   \(gaReceived\(ga int NOT NULL DEFAULT 0,
   PRIMARY KEY (\(gaIMEI\(ga)
