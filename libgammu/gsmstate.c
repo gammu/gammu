@@ -1235,10 +1235,10 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 #if defined(WIN32) || defined(DJGPP)
         static const char *DefaultPort		= "com2:";
 #else
-        static const char *DefaultPort		= "/dev/ttyS1";
+        static const char *DefaultPort		= "/dev/ttyACM0";
 #endif
         static const char *DefaultModel		= "";
-        static const char *DefaultConnection		= "fbus";
+        static const char *DefaultConnection		= "at";
 	static gboolean DefaultSynchronizeTime	= FALSE;
 	static const char *DefaultDebugFile		= "";
 	static const char *DefaultDebugLevel		= "";
