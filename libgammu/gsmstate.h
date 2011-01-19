@@ -151,6 +151,9 @@ typedef struct _GSM_User	 	GSM_User;
 #if defined(GSM_ENABLE_BLUEGNAPBUS) || defined(GSM_ENABLE_IRDAGNAPBUS)
 #  include "protocol/symbian/gnapbus.h"
 #endif
+#if defined(GSM_ENABLE_S60)
+#  include "protocol/s60/s60.h"
+#endif
 
 #define GSM_ENABLE_SERIALDEVICE
 #ifndef GSM_USED_SERIALDEVICE
@@ -357,6 +360,9 @@ typedef struct {
 #if defined(GSM_ENABLE_BLUEGNAPBUS) || defined(GSM_ENABLE_IRDAGNAPBUS)
 	extern GSM_Protocol_Functions GNAPBUSProtocol;
 #endif
+#if defined(GSM_ENABLE_S60)
+	extern GSM_Protocol_Functions S60Protocol;
+#endif
 
 /**
  * Structure containing protocol specific data and pointer to protocol
@@ -386,6 +392,9 @@ typedef struct {
 #endif
 #if defined(GSM_ENABLE_BLUEGNAPBUS) || defined(GSM_ENABLE_IRDAGNAPBUS)
 		GSM_Protocol_GNAPBUSData	GNAPBUS;
+#endif
+#if defined(GSM_ENABLE_S60)
+		GSM_Protocol_S60Data		S60;
 #endif
 	} Data;
 	/**

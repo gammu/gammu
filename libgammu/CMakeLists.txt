@@ -45,6 +45,7 @@ set (LIBRARY_SRC
     protocol/nokia/phonet.c
     protocol/obex/obex.c
     protocol/symbian/gnapbus.c
+    protocol/s60/s60.c
     phone/pfunc.c
     phone/at/atgen.c
     phone/at/at-sms.c
