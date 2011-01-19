@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSD-DBI" "7" "January 17, 2011" "1.28.96" "Gammu"
+.TH "GAMMU-SMSD-DBI" "7" "January 19, 2011" "1.29.0" "Gammu"
 .SH NAME
 gammu-smsd-dbi \- gammu-smsd(1) backend using DBI abstraction layer to use any supported database as a message storage
 .
@@ -164,8 +164,8 @@ CREATE TABLE phones (
   Receive TEXT NOT NULL DEFAULT \(aqno\(aq,
   IMEI TEXT PRIMARY KEY NOT NULL,
   Client TEXT NOT NULL,
-  Battery INTEGER NOT NULL DEFAULT \-1,
-  Signal INTEGER NOT NULL DEFAULT \-1,
+  Battery INTEGER NOT NULL DEFAULT 0,
+  Signal INTEGER NOT NULL DEFAULT 0,
   Sent INTEGER NOT NULL DEFAULT 0,
   Received INTEGER NOT NULL DEFAULT 0
 );
