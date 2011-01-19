@@ -843,7 +843,7 @@ int GSM_ReadDevice (GSM_StateMachine *s, gboolean waitforreply)
 
 	GSM_GetCurrentDateTime (&Date);
 	i=Date.Second;
-	while (i==Date.Second) {
+	while (i==Date.Second && !s->Abort) {
 		res = s->Device.Functions->ReadDevice(s, buff, sizeof(buff));
 
 		if (!waitforreply) {
@@ -892,6 +892,12 @@ gboolean GSM_IsConnected(GSM_StateMachine *s) {
 	return (s != NULL) && s->Phone.Functions != NULL && s->opened;
 }
 
+GSM_Error GSM_AbortOperation(GSM_StateMachine * s)
+{
+	s->Abort = TRUE;
+	return ERR_NONE;
+}
+
 GSM_Error GSM_WaitForOnce(GSM_StateMachine *s, unsigned const char *buffer,
 			  int length, unsigned char type, int timeout)
 {
@@ -912,6 +918,9 @@ GSM_Error GSM_WaitForOnce(GSM_StateMachine *s, unsigned const char *buffer,
 		if (GSM_ReadDevice(s, TRUE) > 0) {
 			i = 0;
 		} else {
+			if (s->Abort) {
+				return ERR_ABORTED;
+			}
 			usleep(10000);
 		}
 
@@ -1655,6 +1664,7 @@ GSM_StateMachine *GSM_AllocStateMachine(void)
 	GSM_StateMachine *ret;
 	ret = (GSM_StateMachine *)calloc(1, sizeof(GSM_StateMachine));
 	ret->CurrentConfig = &(ret->Config[0]);
+	ret->Abort = FALSE;
 	return ret;
 }
 

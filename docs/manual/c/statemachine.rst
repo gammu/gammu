@@ -27,6 +27,16 @@ State machine
 
     Terminates connection.
 
+.. c:function:: GSM_Error GSM_AbortOperation(GSM_StateMachine * s)
+
+    :param s: State machine data
+    :return: Error code
+
+    Aborts current operation.
+ 
+    This is thread safe call to abort any existing operations with the
+    phone.
+
 .. c:type:: GSM_StateMachine
 
     Private structure holding information about phone connection. Should

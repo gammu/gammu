@@ -26,6 +26,7 @@ gboolean batchConn = FALSE;
 void interrupt(int sign)
 {
 	signal(sign, SIG_IGN);
+	GSM_AbortOperation(gsm);
 	gshutdown = TRUE;
 }
 

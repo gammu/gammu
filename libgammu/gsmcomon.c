@@ -150,6 +150,7 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{ERR_COULDNT_CONNECT, "COULDNT_CONNECT", N_("Could not connect to the server.")},
 	{ERR_COULDNT_RESOLVE, "COULDNT_RESOLVE", N_("Could not resolve the host name.")},
 	{ERR_GETTING_SMSC, "GETTING_SMSC", N_("Failed to get SMSC number from phone.")},
+	{ERR_ABORTED, "ABORTED", N_("Operation aborted.")},
 
 	{0,	"",				""}
 };

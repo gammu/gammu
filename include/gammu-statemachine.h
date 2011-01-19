@@ -170,6 +170,19 @@ GSM_Error GSM_InitConnection(GSM_StateMachine * s, int ReplyNum);
 GSM_Error GSM_TerminateConnection(GSM_StateMachine * s);
 
 /**
+ * Aborts current operation.
+ *
+ * This is thread safe call to abort any existing operations with the
+ * phone.
+ *
+ * \ingroup StateMachine
+ *
+ * \param s State machine data
+ * \return Error code
+ */
+GSM_Error GSM_AbortOperation(GSM_StateMachine * s);
+
+/**
  * Attempts to read data from phone. This can be used for getting
  * status of incoming events, which would not be found out without
  * polling device.

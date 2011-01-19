@@ -645,6 +645,26 @@ StateMachine_Init(StateMachineObject *self, PyObject *args, PyObject *kwds)
 }
 
 
+static char StateMachine_Abort__doc__[] =
+"Abort()\n\n"
+"Aborts current operation.\n\n"
+"@return: None\n"
+"@rtype: None\n"
+;
+
+static PyObject *
+StateMachine_Abort(StateMachineObject *self, PyObject *args, PyObject *kwds)
+{
+    GSM_Error           error;
+
+    error = GSM_AbortOperation(self->s);
+
+    if (!checkError(self->s, error, "Abort")) return NULL;
+
+    Py_RETURN_NONE;
+}
+
+
 static char StateMachine_Terminate__doc__[] =
 "Terminate()\n\n"
 "Terminates the connection with phone.\n\n"
@@ -5070,6 +5090,7 @@ static struct PyMethodDef StateMachine_methods[] = {
     {"GetConfig",	(PyCFunction)StateMachine_GetConfig,	METH_VARARGS|METH_KEYWORDS,	StateMachine_GetConfig__doc__},
     {"Init",	(PyCFunction)StateMachine_Init,	METH_VARARGS|METH_KEYWORDS,	StateMachine_Init__doc__},
     {"Terminate",	(PyCFunction)StateMachine_Terminate,	METH_VARARGS|METH_KEYWORDS,	StateMachine_Terminate__doc__},
+    {"Abort",	(PyCFunction)StateMachine_Abort,	METH_VARARGS|METH_KEYWORDS,	StateMachine_Abort__doc__},
     {"ReadDevice",	(PyCFunction)StateMachine_ReadDevice,	METH_VARARGS|METH_KEYWORDS,	StateMachine_ReadDevice__doc__},
     {"GetManufacturer",	(PyCFunction)StateMachine_GetManufacturer,	METH_VARARGS|METH_KEYWORDS,	StateMachine_GetManufacturer__doc__},
     {"GetModel",	(PyCFunction)StateMachine_GetModel,	METH_VARARGS|METH_KEYWORDS,	StateMachine_GetModel__doc__},

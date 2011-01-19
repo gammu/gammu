@@ -1026,6 +1026,12 @@ This module wraps all python-gammu functionality.
       :return: None
       :rtype: None
 
+   .. method:: Abort()
+
+      Aborts current operation.
+
+      :return: None
+      :rtype: None
 
    .. method:: TransferCall(ID, Next)
 

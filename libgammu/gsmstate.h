@@ -1353,6 +1353,11 @@ struct _GSM_StateMachine {
 	int			ReplyNum;				/**< How many times make sth. 			*/
 	int			Speed;					/**< For some protocols used speed		*/
 
+	/**
+	 * Flag for interrupting communication.
+	 */
+	volatile gboolean Abort;
+
 	GSM_Device		Device; /**< Device driver data and functions */
 	GSM_Protocol		Protocol; /**< Protocol driver data and functions */
 	GSM_Phone		Phone; /**< Phone driver data and functions */

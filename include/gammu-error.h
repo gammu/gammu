@@ -306,6 +306,12 @@ typedef enum {
 	 */
 	ERR_GETTING_SMSC,
 
+	/** 70 **/
+	/**
+	 * Operation aborted.
+	 */
+	ERR_ABORTED,
+
 	/**
 	 * Just marker of highest error code, should not be used.
 	 */
