@@ -106,9 +106,13 @@ Fields description:
     Send message after specified time, can be used to limit messages from
     being sent in night. Default value is 00:00:00
 
+    .. versionadded:: 1.29.90
+
 ``Text`` (text)
     SMS text encoded using hex values in proper coding. If you want to use
     TextDecoded field, keep this NULL (or empty).
+
+    .. versionadded:: 1.29.90
 
 ``DestinationNumber`` (varchar(20))
     recipient number
@@ -216,6 +220,10 @@ Fields description:
 
 ``SignalStrength`` (integer)
     signal level in percent (or \-1 if unknown)
+
+    .. versionchanged:: 1.29.90
+        This used to be called ``Signal``. Renamed because ``SIGNAL`` is
+        reserved word in MySQL 5.5.
 
 ``Sent`` (integer)
     Number of sent SMS messages (SMSD does not reset this counter, so it might

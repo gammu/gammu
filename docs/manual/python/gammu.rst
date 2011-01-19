@@ -1121,6 +1121,8 @@ Message processing
     :return: Number of messages and number of free chars
     :rtype: tuple
 
+    .. versionadded:: 1.29.90
+
 .. function:: DecodeSMS(Messages, EMS)
 
     Decodes multi part SMS message.
