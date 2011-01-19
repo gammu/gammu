@@ -20,6 +20,8 @@ ChangeLog
 =========
     
 2011???? - 1.29.90
+
+[-] * Fix detection of MySQL libraries (bug #1370).
     
 20110119 - 1.29.0
 
