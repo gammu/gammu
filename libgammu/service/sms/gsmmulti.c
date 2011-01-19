@@ -198,7 +198,7 @@ void GSM_MakeMultiPartSMS(GSM_Debug_Info *di, GSM_MultiSMSMessage	*SMS,
 }
 
 /* Calculates number of SMS and number of left chars in SMS */
-void GSM_SMSCounter(GSM_Debug_Info *di, size_t 		MessageLength,
+void GSM_SMSCounter(GSM_Debug_Info *di,
 		    unsigned char 	*MessageBuffer,
 		    GSM_UDH	 	UDHType,
 		    GSM_Coding_Type 	Coding,
@@ -209,7 +209,7 @@ void GSM_SMSCounter(GSM_Debug_Info *di, size_t 		MessageLength,
 	GSM_MultiSMSMessage 	MultiSMS;
 
 	MultiSMS.Number = 0;
-	GSM_MakeMultiPartSMS(di, &MultiSMS,MessageBuffer,MessageLength,UDHType,Coding,-1,FALSE);
+	GSM_MakeMultiPartSMS(di, &MultiSMS,MessageBuffer,UnicodeLength(MessageBuffer),UDHType,Coding,-1,FALSE);
 	GSM_Find_Free_Used_SMS2(di, Coding,MultiSMS.SMS[MultiSMS.Number-1], &UsedText, CharsLeft, &FreeBytes);
 	*SMSNum = MultiSMS.Number;
 }

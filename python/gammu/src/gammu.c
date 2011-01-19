@@ -6200,7 +6200,7 @@ gammu_SMSCounter(PyObject *self, PyObject *args, PyObject *kwds)
         if (coding == 0) return NULL;
     }
 
-    GSM_SMSCounter(GSM_GetGlobalDebug(), UnicodeLength(str), str, udh, coding, &SMSNum, &CharsLeft);
+    GSM_SMSCounter(GSM_GetGlobalDebug(), str, udh, coding, &SMSNum, &CharsLeft);
     free(str);
 
     return Py_BuildValue("(ii)", SMSNum, CharsLeft);

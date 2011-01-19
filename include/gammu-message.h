@@ -1409,7 +1409,6 @@ GSM_Error GSM_SetIncomingUSSD(GSM_StateMachine * s, gboolean enable);
  * Calculates number of messages and free chars needed for text.
  *
  * \param di Debug settings.
- * \param[in] MessageLength Length of text.
  * \param[in] MessageBuffer Actual message text in unicode.
  * \param[in] UDHType UDH type.
  * \param[in] Coding GSM Encoding type.
@@ -1418,7 +1417,7 @@ GSM_Error GSM_SetIncomingUSSD(GSM_StateMachine * s, gboolean enable);
  *
  * \ingroup SMS
  */
-void GSM_SMSCounter(GSM_Debug_Info *di, size_t MessageLength, unsigned char *MessageBuffer,
+void GSM_SMSCounter(GSM_Debug_Info *di, unsigned char *MessageBuffer,
 	GSM_UDH UDHType, GSM_Coding_Type Coding, int *SMSNum, size_t *CharsLeft);
 
 #endif
