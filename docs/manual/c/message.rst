@@ -39,6 +39,7 @@ Messages
 .. doxygenfunction:: GSM_GetMMSFolders
 .. doxygenfunction:: GSM_GetNextMMSFileInfo
 .. doxygenfunction:: GSM_SetIncomingUSSD
+.. doxygenfunction:: GSM_SMSCounter
 .. doxygenenum:: GSM_MMS_Class
 .. doxygenstruct:: GSM_MMSIndicator
 .. doxygenstruct:: GSM_CBMessage
