@@ -785,7 +785,7 @@ static int GSM_EncodeSMSFrameText(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsig
 			/* GSM 03.40 section 9.2.3.10 (TP-Data-Coding-Scheme)
 			 * and GSM 03.38 section 4 */
 			buffer[Layout.TPDCS] |= (1 << 2);
-			memcpy(buffer+(Layout.Text+off), SMS->Text, SMS->Length);
+			memcpy(buffer+(Layout.Text+off), SMS->Text, MIN(SMS->Length, 140));
 			size2 = size = SMS->Length+off;
 			smfprintf(di, "8 bit SMS, length %i\n",SMS->Length);
 			DumpMessageText(di, SMS->Text, SMS->Length);
@@ -796,7 +796,7 @@ static int GSM_EncodeSMSFrameText(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsig
 				p+=7;
 				w=(p-off)%p;
 			} while (w<0);
-			p = UnicodeLength(SMS->Text);
+			p = MIN(UnicodeLength(SMS->Text), 160);
 			EncodeDefault(buff, SMS->Text, &p, TRUE, NULL);
 			size = GSM_PackSevenBitsToEight(w, buff, buffer+(Layout.Text+off), p);
 			size += off;
@@ -811,7 +811,7 @@ static int GSM_EncodeSMSFrameText(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsig
 			/* GSM 03.40 section 9.2.3.10 (TP-Data-Coding-Scheme)
 			 * and GSM 03.38 section 4 */
 			buffer[Layout.TPDCS] |= (1 << 3);
-			EncodeUnicodeSpecialNOKIAChars(buffer+(Layout.Text+off), SMS->Text, UnicodeLength(SMS->Text));
+			EncodeUnicodeSpecialNOKIAChars(buffer+(Layout.Text+off), SMS->Text, MIN(UnicodeLength(SMS->Text), 70));
 			size=size2=UnicodeLength(buffer+(Layout.Text+off))*2+off;
 			smfprintf(di, "Unicode SMS, length %i\n",(size2-off)/2);
 			DumpMessageText(di, buffer+(Layout.Text+off), size2-off);
