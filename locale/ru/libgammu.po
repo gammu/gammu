@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libGammu 1.28.96\n"
+"Project-Id-Version: libGammu 1.29.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-12-27 19:36+0100\n"
+"POT-Creation-Date: 2011-01-19 11:16+0100\n"
 "PO-Revision-Date: 2008-01-27 17:07+0100\n"
 "Last-Translator: Даниил Аплеев <apleev@mail.ru>\n"
 "Language-Team: Language =ru\n"
@@ -356,7 +356,12 @@ msgstr "Невозможно прочитать сохраненное сооб�
 msgid "Failed to get SMSC number from phone."
 msgstr ""
 
-#: libgammu/gsmcomon.c:185
+#: libgammu/gsmcomon.c:153
+#, fuzzy
+msgid "Operation aborted."
+msgstr "Выполняется операция"
+
+#: libgammu/gsmcomon.c:186
 #, fuzzy
 msgid "Unknown error description."
 msgstr "Неизвестная ошибка."

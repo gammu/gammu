@@ -6,9 +6,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libGammu 1.28.96\n"
+"Project-Id-Version: libGammu 1.29.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-12-27 19:36+0100\n"
+"POT-Creation-Date: 2011-01-19 11:16+0100\n"
 "PO-Revision-Date: 2010-12-23 23:18+0200\n"
 "Last-Translator:  <elrond+gammu.org@samba-tng.org>\n"
 "Language-Team: Language =de\n"
@@ -346,7 +346,12 @@ msgstr "Konnte den Hostnamen nicht auflösen."
 msgid "Failed to get SMSC number from phone."
 msgstr "Konnte keine SMSC-Nummer vom Telefon erhalten."
 
-#: libgammu/gsmcomon.c:185
+#: libgammu/gsmcomon.c:153
+#, fuzzy
+msgid "Operation aborted."
+msgstr "Vorgang läuft"
+
+#: libgammu/gsmcomon.c:186
 msgid "Unknown error description."
 msgstr "Unbekannte Fehlerbeschreibung."
 

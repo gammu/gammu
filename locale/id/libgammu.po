@@ -4,9 +4,9 @@
 # Automatically generated, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: libGammu 1.28.96\n"
+"Project-Id-Version: libGammu 1.29.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-12-27 19:36+0100\n"
+"POT-Creation-Date: 2011-01-19 11:16+0100\n"
 "PO-Revision-Date: 2010-03-17 17:52+0200\n"
 "Last-Translator: Azhari Harahap <azhari.harahap@yahoo.com>\n"
 "Language-Team: none\n"
@@ -332,7 +332,12 @@ msgstr "Tidak dapat mengartikan nama host"
 msgid "Failed to get SMSC number from phone."
 msgstr "Gagal mengambil nomor SMSC dari telepon."
 
-#: libgammu/gsmcomon.c:185
+#: libgammu/gsmcomon.c:153
+#, fuzzy
+msgid "Operation aborted."
+msgstr "Operasi tidak diizinkan oleh telepon"
+
+#: libgammu/gsmcomon.c:186
 msgid "Unknown error description."
 msgstr "Deskripsi kesalahan tidak diketahui."
 

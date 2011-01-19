@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu 1.28.96\n"
+"Project-Id-Version: Gammu 1.29.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-01-10 12:11+0100\n"
+"POT-Creation-Date: 2011-01-19 11:16+0100\n"
 "PO-Revision-Date: 2008-01-27 17:07+0100\n"
 "Last-Translator: Даниил Аплеев <apleev@mail.ru>\n"
 "Language-Team: Language =ru\n"
@@ -1066,191 +1066,191 @@ msgstr "ID контакта      : %d\n"
 msgid "Search text too long, truncating to %d chars!\n"
 msgstr "Искомый текст слишком длинный; усечён до %d символов!\n"
 
-#: gammu/common.c:41
+#: gammu/common.c:42
 #, fuzzy
 msgid "Waiting for Security Code."
 msgstr "Ожидается ввод кода защиты.\n"
 
-#: gammu/common.c:44
+#: gammu/common.c:45
 #, fuzzy
 msgid "Waiting for PIN."
 msgstr "Ожидается PIN.\n"
 
-#: gammu/common.c:47
+#: gammu/common.c:48
 #, fuzzy
 msgid "Waiting for PIN2."
 msgstr "Ожидается PIN2.\n"
 
-#: gammu/common.c:50
+#: gammu/common.c:51
 #, fuzzy
 msgid "Waiting for PUK."
 msgstr "Ожидается PUK.\n"
 
-#: gammu/common.c:53
+#: gammu/common.c:54
 #, fuzzy
 msgid "Waiting for PUK2."
 msgstr "Ожидается PUK2.\n"
 
-#: gammu/common.c:56
+#: gammu/common.c:57
 #, fuzzy
 msgid "Waiting for phone code."
 msgstr "Ожидается ввод кода защиты.\n"
 
-#: gammu/common.c:59
+#: gammu/common.c:60
 #, fuzzy
 msgid "Waiting for network code."
 msgstr "Ожидается ввод кода защиты.\n"
 
-#: gammu/common.c:62
+#: gammu/common.c:63
 #, fuzzy
 msgid "Nothing to enter."
 msgstr "Нечего вводить.\n"
 
-#: gammu/common.c:66
+#: gammu/common.c:67
 #, fuzzy
 msgid "Unknown security status."
 msgstr "Состояние безопасности: "
 
-#: gammu/common.c:77
+#: gammu/common.c:78
 msgid "January"
 msgstr "января"
 
-#: gammu/common.c:80
+#: gammu/common.c:81
 msgid "February"
 msgstr "февраля"
 
-#: gammu/common.c:83
+#: gammu/common.c:84
 msgid "March"
 msgstr "марта"
 
-#: gammu/common.c:86
+#: gammu/common.c:87
 msgid "April"
 msgstr "апреля"
 
-#: gammu/common.c:89
+#: gammu/common.c:90
 msgid "May"
 msgstr "мая"
 
-#: gammu/common.c:92
+#: gammu/common.c:93
 msgid "June"
 msgstr "июня"
 
-#: gammu/common.c:95
+#: gammu/common.c:96
 msgid "July"
 msgstr "июля"
 
-#: gammu/common.c:98
+#: gammu/common.c:99
 msgid "August"
 msgstr "августа"
 
-#: gammu/common.c:101
+#: gammu/common.c:102
 msgid "September"
 msgstr "сентября"
 
-#: gammu/common.c:104
+#: gammu/common.c:105
 msgid "October"
 msgstr "октября"
 
-#: gammu/common.c:107
+#: gammu/common.c:108
 msgid "November"
 msgstr "ноября"
 
-#: gammu/common.c:110
+#: gammu/common.c:111
 msgid "December"
 msgstr "декабря"
 
-#: gammu/common.c:113
+#: gammu/common.c:114
 msgid "Bad month!"
 msgstr "Неверный месяц!"
 
-#: gammu/common.c:125
+#: gammu/common.c:126
 msgid "Monday"
 msgstr "понедельник"
 
-#: gammu/common.c:128
+#: gammu/common.c:129
 msgid "Tuesday"
 msgstr "вторник"
 
-#: gammu/common.c:131
+#: gammu/common.c:132
 msgid "Wednesday"
 msgstr "среду"
 
-#: gammu/common.c:134
+#: gammu/common.c:135
 msgid "Thursday"
 msgstr "четверг"
 
-#: gammu/common.c:137
+#: gammu/common.c:138
 msgid "Friday"
 msgstr "пятницу"
 
-#: gammu/common.c:140
+#: gammu/common.c:141
 msgid "Saturday"
 msgstr "субботу"
 
-#: gammu/common.c:143
+#: gammu/common.c:144
 msgid "Sunday"
 msgstr "воскресенье"
 
-#: gammu/common.c:146
+#: gammu/common.c:147
 msgid "Bad day!"
 msgstr "Неверный день!"
 
-#: gammu/common.c:193
+#: gammu/common.c:194
 #, fuzzy
 msgid "Security status"
 msgstr "Состояние безопасности: "
 
-#: gammu/common.c:311 gammu/misc.c:1102 gammu/misc.c:1117 gammu/misc.c:1124
+#: gammu/common.c:312 gammu/misc.c:1102 gammu/misc.c:1117 gammu/misc.c:1124
 #: gammu/misc.c:1131 gammu/misc.c:1161
 #, fuzzy
 msgid "More parameters required!"
 msgstr "ОШИБКА: требуются дополнительные параметры\n"
 
-#: gammu/common.c:317 gammu/common.c:327 gammu/depend/nokia/dct4.c:687
+#: gammu/common.c:318 gammu/common.c:328 gammu/depend/nokia/dct4.c:687
 #: gammu/misc.c:1277
 #, fuzzy
 msgid "Please enumerate locations from 1"
 msgstr "ОШИБКА: пронумеруйте размещения с 1\n"
 
-#: gammu/common.c:332
+#: gammu/common.c:333
 #, fuzzy
 msgid "Swapping start and end location"
 msgstr "ПРЕДУПРЕЖДЕНИЕ: меняются местами начальное и конечное положения\n"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:354 gammu/common.c:383 gammu/depend/nokia/dct4.c:85
+#: gammu/common.c:355 gammu/common.c:384 gammu/depend/nokia/dct4.c:85
 #: gammu/misc.c:1669
 #, fuzzy
 msgid "yes"
 msgstr "да\n"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:354 gammu/common.c:386 gammu/depend/nokia/dct4.c:86
+#: gammu/common.c:355 gammu/common.c:387 gammu/depend/nokia/dct4.c:86
 #, fuzzy
 msgid "no"
 msgstr "нет\n"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:355 gammu/common.c:378
+#: gammu/common.c:356 gammu/common.c:379
 msgid "ALL"
 msgstr ""
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:355 gammu/common.c:373
+#: gammu/common.c:356 gammu/common.c:374
 msgid "ONLY"
 msgstr ""
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:355 gammu/common.c:368
+#: gammu/common.c:356 gammu/common.c:369
 msgid "NONE"
 msgstr ""
 
-#: gammu/common.c:357
+#: gammu/common.c:358
 #, fuzzy
 msgid "YES (always)"
 msgstr "ДА (для всех)\n"
 
-#: gammu/common.c:361
+#: gammu/common.c:362
 #, fuzzy
 msgid "NO (always)"
 msgstr "НЕТ (для всех)\n"

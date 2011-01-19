@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-12-27 19:36+0100\n"
+"POT-Creation-Date: 2011-01-19 11:16+0100\n"
 "PO-Revision-Date: 2009-03-23 19:32+0200\n"
 "Last-Translator: Sergio Martín <ser.martin@wanadoo.es>\n"
 "Language-Team: Español\n"
@@ -355,7 +355,12 @@ msgstr "No se pueden leer los mensajes guardados"
 msgid "Failed to get SMSC number from phone."
 msgstr ""
 
-#: libgammu/gsmcomon.c:185
+#: libgammu/gsmcomon.c:153
+#, fuzzy
+msgid "Operation aborted."
+msgstr "Operación en progreso"
+
+#: libgammu/gsmcomon.c:186
 msgid "Unknown error description."
 msgstr "Descripción del error desconocida."
 

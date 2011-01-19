@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-12-27 19:36+0100\n"
+"POT-Creation-Date: 2011-01-19 11:16+0100\n"
 "PO-Revision-Date: 2010-06-29 16:04+0200\n"
 "Last-Translator: Michal ÄŒihaÅ™ <michal@cihar.com>\n"
 "Language-Team: none\n"
@@ -332,7 +332,12 @@ msgstr "Nepodarilo sa preložiť meno počítača."
 msgid "Failed to get SMSC number from phone."
 msgstr ""
 
-#: libgammu/gsmcomon.c:185
+#: libgammu/gsmcomon.c:153
+#, fuzzy
+msgid "Operation aborted."
+msgstr "Prebieha operácia"
+
+#: libgammu/gsmcomon.c:186
 msgid "Unknown error description."
 msgstr "Neznámy popis chyby."
 

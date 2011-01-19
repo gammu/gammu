@@ -6,9 +6,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu 1.28.96\n"
+"Project-Id-Version: Gammu 1.29.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-01-10 12:11+0100\n"
+"POT-Creation-Date: 2011-01-19 11:16+0100\n"
 "PO-Revision-Date: 2011-01-10 13:50+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -949,175 +949,175 @@ msgstr "Kontakt"
 msgid "Search text too long, truncating to %d chars!\n"
 msgstr "Text pro vyhledávání je příliš dlouhý, zkracuji na %d znaků!\n"
 
-#: gammu/common.c:41
+#: gammu/common.c:42
 msgid "Waiting for Security Code."
 msgstr "Čeká na bezpečnostní kód."
 
-#: gammu/common.c:44
+#: gammu/common.c:45
 msgid "Waiting for PIN."
 msgstr "Čeká na PIN."
 
-#: gammu/common.c:47
+#: gammu/common.c:48
 msgid "Waiting for PIN2."
 msgstr "Čeká na PIN2."
 
-#: gammu/common.c:50
+#: gammu/common.c:51
 msgid "Waiting for PUK."
 msgstr "Čeká na PUK."
 
-#: gammu/common.c:53
+#: gammu/common.c:54
 msgid "Waiting for PUK2."
 msgstr "Čeká na PUK2."
 
-#: gammu/common.c:56
+#: gammu/common.c:57
 msgid "Waiting for phone code."
 msgstr "Čeká na kód telefonu."
 
-#: gammu/common.c:59
+#: gammu/common.c:60
 msgid "Waiting for network code."
 msgstr "Čeká na kód sítě."
 
-#: gammu/common.c:62
+#: gammu/common.c:63
 msgid "Nothing to enter."
 msgstr "Není co zadat."
 
-#: gammu/common.c:66
+#: gammu/common.c:67
 msgid "Unknown security status."
 msgstr "Neznámý stav bezpečnosti."
 
-#: gammu/common.c:77
+#: gammu/common.c:78
 msgid "January"
 msgstr "Leden"
 
-#: gammu/common.c:80
+#: gammu/common.c:81
 msgid "February"
 msgstr "Únor"
 
-#: gammu/common.c:83
+#: gammu/common.c:84
 msgid "March"
 msgstr "Březen"
 
-#: gammu/common.c:86
+#: gammu/common.c:87
 msgid "April"
 msgstr "Duben"
 
-#: gammu/common.c:89
+#: gammu/common.c:90
 msgid "May"
 msgstr "Květen"
 
-#: gammu/common.c:92
+#: gammu/common.c:93
 msgid "June"
 msgstr "Červen"
 
-#: gammu/common.c:95
+#: gammu/common.c:96
 msgid "July"
 msgstr "Červenec"
 
-#: gammu/common.c:98
+#: gammu/common.c:99
 msgid "August"
 msgstr "Srpen"
 
-#: gammu/common.c:101
+#: gammu/common.c:102
 msgid "September"
 msgstr "Září"
 
-#: gammu/common.c:104
+#: gammu/common.c:105
 msgid "October"
 msgstr "Říjen"
 
-#: gammu/common.c:107
+#: gammu/common.c:108
 msgid "November"
 msgstr "Listopad"
 
-#: gammu/common.c:110
+#: gammu/common.c:111
 msgid "December"
 msgstr "Prosinec"
 
-#: gammu/common.c:113
+#: gammu/common.c:114
 msgid "Bad month!"
 msgstr "Chybný měsíc!"
 
-#: gammu/common.c:125
+#: gammu/common.c:126
 msgid "Monday"
 msgstr "Pondělí"
 
-#: gammu/common.c:128
+#: gammu/common.c:129
 msgid "Tuesday"
 msgstr "Úterý"
 
-#: gammu/common.c:131
+#: gammu/common.c:132
 msgid "Wednesday"
 msgstr "Středa"
 
-#: gammu/common.c:134
+#: gammu/common.c:135
 msgid "Thursday"
 msgstr "Čtvrtek"
 
-#: gammu/common.c:137
+#: gammu/common.c:138
 msgid "Friday"
 msgstr "Pátek"
 
-#: gammu/common.c:140
+#: gammu/common.c:141
 msgid "Saturday"
 msgstr "Sobota"
 
-#: gammu/common.c:143
+#: gammu/common.c:144
 msgid "Sunday"
 msgstr "Neděle"
 
-#: gammu/common.c:146
+#: gammu/common.c:147
 msgid "Bad day!"
 msgstr "Chybný den!"
 
-#: gammu/common.c:193
+#: gammu/common.c:194
 msgid "Security status"
 msgstr "Stav bezpečnosti"
 
-#: gammu/common.c:311 gammu/misc.c:1102 gammu/misc.c:1117 gammu/misc.c:1124
+#: gammu/common.c:312 gammu/misc.c:1102 gammu/misc.c:1117 gammu/misc.c:1124
 #: gammu/misc.c:1131 gammu/misc.c:1161
 msgid "More parameters required!"
 msgstr "Je potřeba více parametrů!"
 
-#: gammu/common.c:317 gammu/common.c:327 gammu/depend/nokia/dct4.c:687
+#: gammu/common.c:318 gammu/common.c:328 gammu/depend/nokia/dct4.c:687
 #: gammu/misc.c:1277
 msgid "Please enumerate locations from 1"
 msgstr "Prosím číslujte pozice od 1"
 
-#: gammu/common.c:332
+#: gammu/common.c:333
 msgid "Swapping start and end location"
 msgstr "Prohazuji začátek a konec"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:354 gammu/common.c:383 gammu/depend/nokia/dct4.c:85
+#: gammu/common.c:355 gammu/common.c:384 gammu/depend/nokia/dct4.c:85
 #: gammu/misc.c:1669
 msgid "yes"
 msgstr "ano"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:354 gammu/common.c:386 gammu/depend/nokia/dct4.c:86
+#: gammu/common.c:355 gammu/common.c:387 gammu/depend/nokia/dct4.c:86
 msgid "no"
 msgstr "ne"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:355 gammu/common.c:378
+#: gammu/common.c:356 gammu/common.c:379
 msgid "ALL"
 msgstr "VSE"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:355 gammu/common.c:373
+#: gammu/common.c:356 gammu/common.c:374
 msgid "ONLY"
 msgstr "JEDNO"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:355 gammu/common.c:368
+#: gammu/common.c:356 gammu/common.c:369
 msgid "NONE"
 msgstr "NIC"
 
-#: gammu/common.c:357
+#: gammu/common.c:358
 msgid "YES (always)"
 msgstr "ANO (vždy)"
 
-#: gammu/common.c:361
+#: gammu/common.c:362
 msgid "NO (always)"
 msgstr "NE (vždy)"
 
