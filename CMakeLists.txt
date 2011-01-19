@@ -547,10 +547,12 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_MINGW OR
     endif (WIN32 AND NOT CYGWIN AND BUILD_SHARED_LIBS)
 
     MACRO_TUNE_LINKER("-Wl,--as-needed")
-    set (PIC ON CACHE BOOL "Compile PIC code")
-    if (PIC)
-        MACRO_TUNE_COMPILER("-fPIC")
-    endif (PIC)
+    if (NOT WIN32)
+        set (PIC ON CACHE BOOL "Compile PIC code")
+        if (PIC)
+            MACRO_TUNE_COMPILER("-fPIC")
+        endif (PIC)
+    endif (NOT WIN32)
     # Specs for MinGW to change msvcrt
     # This is not supported by MinGW and is broken currently
 #    if (CMAKE_COMPILER_IS_MINGW)
