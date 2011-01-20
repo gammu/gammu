@@ -180,7 +180,7 @@ msgstr ""
 
 #. type: Title +
 #: docs/manual/config/index.rst:49
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Device connection parameters"
 msgstr "Linha de comando com parâmetros inválidos."
 
