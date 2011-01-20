@@ -929,7 +929,6 @@ msgstr ""
 # type: TP
 #. type: Plain text
 #: docs/manual/config/index.rst:233
-#, fuzzy
 msgid "LogFormat"
 msgstr "B<Formato da Depuração (log)>"
 
