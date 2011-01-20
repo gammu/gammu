@@ -833,7 +833,6 @@ msgstr ""
 # type: TP
 #. type: Plain text
 #: docs/manual/config/index.rst:196
-#, fuzzy
 msgid "Use_Locking"
 msgstr "B<Use_Locking>"
 
