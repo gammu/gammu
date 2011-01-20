@@ -501,6 +501,7 @@ static GSM_Error FBUS2_Terminate(GSM_StateMachine *s)
 GSM_Protocol_Functions FBUS2Protocol = {
 	FBUS2_WriteMessage,
 	FBUS2_StateMachine,
+	NULL,
 	FBUS2_Initialise,
 	FBUS2_Terminate
 };

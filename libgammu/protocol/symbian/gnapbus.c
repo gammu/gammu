@@ -149,6 +149,7 @@ static GSM_Error GNAPBUS_Terminate(GSM_StateMachine *s)
 GSM_Protocol_Functions GNAPBUSProtocol = {
 	GNAPBUS_WriteMessage,
 	GNAPBUS_StateMachine,
+	NULL,
 	GNAPBUS_Initialise,
 	GNAPBUS_Terminate
 };

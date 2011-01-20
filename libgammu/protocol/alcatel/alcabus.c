@@ -248,6 +248,7 @@ static GSM_Error ALCABUS_Terminate(GSM_StateMachine *s)
 GSM_Protocol_Functions ALCABUSProtocol = {
 	ALCABUS_WriteMessage,
 	ALCABUS_StateMachine,
+	NULL,
 	ALCABUS_Initialise,
 	ALCABUS_Terminate
 };

@@ -67,7 +67,7 @@ static GSM_Error S60_WriteMessage (GSM_StateMachine *s, unsigned const char *Msg
 	return ERR_NONE;
 }
 
-static GSM_Error S60_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
+static GSM_Error S60_Receive(GSM_StateMachine *s, unsigned char *data, size_t length)
 {
 	return ERR_NONE;
 }
@@ -93,7 +93,8 @@ static GSM_Error S60_Terminate(GSM_StateMachine *s)
 
 GSM_Protocol_Functions S60Protocol = {
 	S60_WriteMessage,
-	S60_StateMachine,
+	NULL,
+	S60_Receive,
 	S60_Initialise,
 	S60_Terminate
 };
