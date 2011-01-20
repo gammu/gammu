@@ -373,7 +373,6 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/config/index.rst:87
-#, fuzzy
 msgid "``irdaobex``"
 msgstr "Toques"
 
