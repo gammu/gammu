@@ -862,7 +862,7 @@ msgstr "Esta opção não tem sentido no Windows."
 # type: TP
 #. type: Title +
 #: docs/manual/config/index.rst:206
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Connection options"
 msgstr "B<Conexão>"
 
