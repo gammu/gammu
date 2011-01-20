@@ -534,6 +534,10 @@ typedef struct {
 	 */
 	GSM_CalendarStatus	*CalStatus;
 	/**
+	 * Todo status.
+	 */
+	GSM_ToDoStatus		*ToDoStatus;
+	/**
 	 * Used internally by phone drivers.
 	 */
 	unsigned char		*SecurityCode;

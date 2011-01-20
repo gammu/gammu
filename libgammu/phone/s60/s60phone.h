@@ -42,6 +42,12 @@ typedef struct {
 	int *ContactLocations;
 	size_t ContactLocationsSize;
 	size_t ContactLocationsPos;
+	int *CalendarLocations;
+	size_t CalendarLocationsSize;
+	size_t CalendarLocationsPos;
+	int *ToDoLocations;
+	size_t ToDoLocationsSize;
+	size_t ToDoLocationsPos;
 } GSM_Phone_S60Data;
 
 #endif

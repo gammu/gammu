@@ -37,6 +37,14 @@ GSM_Error S60_Initialise(GSM_StateMachine *s)
 	Priv->ContactLocationsSize = 0;
 	Priv->ContactLocationsPos = 0;
 
+	Priv->CalendarLocations = NULL;
+	Priv->CalendarLocationsSize = 0;
+	Priv->CalendarLocationsPos = 0;
+
+	Priv->ToDoLocations = NULL;
+	Priv->ToDoLocationsSize = 0;
+	Priv->ToDoLocationsPos = 0;
+
 	s->Phone.Data.SignalQuality = NULL;
 	s->Phone.Data.BatteryCharge = NULL;
 
@@ -107,6 +115,16 @@ GSM_Error S60_Terminate(GSM_StateMachine *s)
 	Priv->ContactLocationsSize = 0;
 	Priv->ContactLocationsPos = 0;
 
+	free(Priv->CalendarLocations);
+	Priv->CalendarLocations = NULL;
+	Priv->CalendarLocationsSize = 0;
+	Priv->CalendarLocationsPos = 0;
+
+	free(Priv->ToDoLocations);
+	Priv->ToDoLocations = NULL;
+	Priv->ToDoLocationsSize = 0;
+	Priv->ToDoLocationsPos = 0;
+
 	return ERR_NONE;
 }
 
@@ -115,6 +133,8 @@ static GSM_Error S60_Reply_Generic(GSM_Protocol_Message msg, GSM_StateMachine *s
 	switch (msg.Type) {
 		case NUM_SYSINFO_REPLY_START:
 		case NUM_CONTACTS_REPLY_HASH_SINGLE_START:
+		case NUM_CONTACTS_REPLY_CONTACT_START:
+		case NUM_CALENDAR_REPLY_ENTRIES_START:
 			return ERR_NEEDANOTHERANSWER;
 		default:
 			return ERR_NONE;
@@ -299,6 +319,99 @@ static GSM_Error S60_Reply_ContactHash(GSM_Protocol_Message msg, GSM_StateMachin
 	return ERR_NEEDANOTHERANSWER;
 }
 
+static GSM_Error S60_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Status)
+{
+	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
+	GSM_Error error;
+
+	s->Phone.Data.CalStatus = Status;
+	Status->Used = 0;
+	Status->Free = 1000;
+	Priv->CalendarLocationsPos = 0;
+	error = GSM_WaitFor(s, "", 0, NUM_CALENDAR_REQUEST_ENTRIES_ALL, S60_TIMEOUT, ID_GetCalendarNotesInfo);
+	s->Phone.Data.CalStatus = NULL;
+	return error;
+}
+
+static GSM_Error S60_Reply_CalendarCount(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
+	GSM_Error error;
+
+	error = S60_SplitValues(&msg, s);
+	if (error != ERR_NONE) {
+		return error;
+
+	}
+
+	if (Priv->MessageParts[0] == NULL || Priv->MessageParts[1] == NULL) {
+		return ERR_UNKNOWN;
+	}
+
+	if (strcmp(Priv->MessageParts[1], "appointment") != 0 &&
+		strcmp(Priv->MessageParts[1], "event") != 0 &&
+		strcmp(Priv->MessageParts[1], "annoversary") != 0) {
+		return ERR_NEEDANOTHERANSWER;
+	}
+
+	error = S60_StoreLocation(s, &Priv->CalendarLocations, &Priv->CalendarLocationsSize, &Priv->CalendarLocationsPos, atoi(Priv->MessageParts[0]));
+	if (error != ERR_NONE) {
+		return error;
+
+	}
+
+	if (s->Phone.Data.CalStatus != NULL) {
+		s->Phone.Data.CalStatus->Used++;
+	}
+	return ERR_NEEDANOTHERANSWER;
+}
+
+static GSM_Error S60_GetToDoStatus(GSM_StateMachine *s, GSM_ToDoStatus *Status)
+{
+	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
+	GSM_Error error;
+
+	s->Phone.Data.ToDoStatus = Status;
+	Status->Used = 0;
+	Status->Free = 1000;
+	Priv->ToDoLocationsPos = 0;
+	error = GSM_WaitFor(s, "", 0, NUM_CALENDAR_REQUEST_ENTRIES_ALL, S60_TIMEOUT, ID_GetToDoInfo);
+	s->Phone.Data.ToDoStatus = NULL;
+	return error;
+}
+
+static GSM_Error S60_Reply_ToDoCount(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
+	GSM_Error error;
+
+	error = S60_SplitValues(&msg, s);
+	if (error != ERR_NONE) {
+		return error;
+
+	}
+
+	if (Priv->MessageParts[0] == NULL || Priv->MessageParts[1] == NULL) {
+		return ERR_UNKNOWN;
+	}
+
+	if (strcmp(Priv->MessageParts[1], "todo") != 0) {
+		return ERR_NEEDANOTHERANSWER;
+	}
+
+	error = S60_StoreLocation(s, &Priv->ToDoLocations, &Priv->ToDoLocationsSize, &Priv->ToDoLocationsPos, atoi(Priv->MessageParts[0]));
+	if (error != ERR_NONE) {
+		return error;
+
+	}
+
+	if (s->Phone.Data.ToDoStatus != NULL) {
+		s->Phone.Data.ToDoStatus->Used++;
+	}
+	return ERR_NEEDANOTHERANSWER;
+}
+
+
 GSM_Reply_Function S60ReplyFunctions[] = {
 
 	{S60_Reply_Connect,	"", 0x00, NUM_CONNECTED, ID_Initialise },
@@ -311,6 +424,14 @@ GSM_Reply_Function S60ReplyFunctions[] = {
 	{S60_Reply_Generic,	"", 0x00, NUM_CONTACTS_REPLY_HASH_SINGLE_START, ID_GetMemoryStatus },
 	{S60_Reply_ContactHash, "", 0x00, NUM_CONTACTS_REPLY_HASH_SINGLE_LINE, ID_GetMemoryStatus },
 	{S60_Reply_Generic,	"", 0x00, NUM_CONTACTS_REPLY_HASH_SINGLE_END, ID_GetMemoryStatus },
+
+	{S60_Reply_Generic,	"", 0x00, NUM_CALENDAR_REPLY_ENTRIES_START, ID_GetCalendarNotesInfo },
+	{S60_Reply_CalendarCount, "", 0x00, NUM_CALENDAR_REPLY_ENTRY, ID_GetCalendarNotesInfo },
+	{S60_Reply_Generic,	"", 0x00, NUM_CALENDAR_REPLY_ENTRIES_END, ID_GetCalendarNotesInfo },
+
+	{S60_Reply_Generic,	"", 0x00, NUM_CALENDAR_REPLY_ENTRIES_START, ID_GetToDoInfo },
+	{S60_Reply_ToDoCount, "", 0x00, NUM_CALENDAR_REPLY_ENTRY, ID_GetToDoInfo },
+	{S60_Reply_Generic,	"", 0x00, NUM_CALENDAR_REPLY_ENTRIES_END, ID_GetToDoInfo },
 
 	{NULL,			"", 0x00, 0x00, ID_None }
 };
@@ -412,14 +533,14 @@ GSM_Phone_Functions S60Phone = {
 	NOTSUPPORTED,			/*	GetNextMMSFileInfo	*/
 	NOTIMPLEMENTED,			/*	GetBitmap		*/
 	NOTIMPLEMENTED,			/*	SetBitmap		*/
-	NOTIMPLEMENTED,                 /*      GetTodoStatus */
+	S60_GetToDoStatus,
 	NOTIMPLEMENTED,                 /*      GetTodo */
 	NOTIMPLEMENTED,                 /*      GetNextTodo */
 	NOTIMPLEMENTED,                 /*      SetTodo */
 	NOTIMPLEMENTED,                 /*      AddTodo */
 	NOTIMPLEMENTED,                 /*      DeleteTodo */
 	NOTIMPLEMENTED,                 /*      DeleteAllTodo */
-	NOTIMPLEMENTED,                 /*      GetCalendarStatus */
+	S60_GetCalendarStatus,
 	NOTIMPLEMENTED,                 /*      GetCalendar */
     	NOTIMPLEMENTED,                 /*      GetNextCalendar */
 	NOTIMPLEMENTED,                 /*      SetCalendar */

@@ -118,6 +118,7 @@ typedef enum {
 	ID_GetLanguage,
 	ID_SetFastSMSSending,
 	ID_Reset,
+	ID_GetToDoInfo,
 	ID_GetToDo,
 	ID_PressKey,
 	ID_DeleteAllToDo,
