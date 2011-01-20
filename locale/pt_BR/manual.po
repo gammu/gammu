@@ -302,14 +302,13 @@ msgstr "B<mbus> - conexão MBUS serial"
 # type: Plain text
 #. type: Plain text
 #: docs/manual/config/index.rst:71
-#, fuzzy
 msgid ""
 "If you use some non original cable, you might need to append ``-nodtr`` (eg. "
 "for ARK3116 based cables) or ``-nopower``, but Gammu should be able to "
 "detect this automatically."
 msgstr ""
-"Se você utiliza algum cabo não original, pode ser necessário anexar (append -"
-"nodtr ex: cabos ARK3116 ou -nopower) mas o Gammu é capaz de detectar isto "
+"Se você utiliza algum cabo não original, pode ser necessário anexar (append "
+"-nodtr ex: cabos ARK3116 ou -nopower) mas o Gammu é capaz de detectar isto "
 "automaticamente."
 
 # type: Plain text
