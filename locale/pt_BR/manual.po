@@ -869,7 +869,6 @@ msgstr "Opções de Conexão"
 # type: TP
 #. type: Plain text
 #: docs/manual/config/index.rst:209
-#, fuzzy
 msgid "SynchronizeTime"
 msgstr "B<SynchronizeTime>"
 
