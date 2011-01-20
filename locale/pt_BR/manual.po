@@ -93,7 +93,7 @@ msgstr "I<~/.gammurc>"
 #: docs/manual/smsd/monitor.rst:16 docs/manual/smsd/smsd.rst:17
 #: docs/manual/gammu/index.rst:20 docs/manual/utils/gammu-config.rst:16
 #: docs/manual/utils/jadmaker.rst:16 docs/manual/utils/gammu-detect.rst:19
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Description"
 msgstr "Descrição dos Campos:"
 
