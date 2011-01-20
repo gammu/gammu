@@ -60,7 +60,6 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/manual/config/index.rst:15
-#, fuzzy
 msgid "``~/.gammurc``"
 msgstr "I<~/.gammurc>"
 
