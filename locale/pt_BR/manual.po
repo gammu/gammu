@@ -162,7 +162,7 @@ msgstr ""
 #: docs/manual/smsd/config.rst:31 docs/manual/smsd/config.rst:35
 #: docs/manual/smsd/config.rst:39 docs/manual/smsd/config.rst:43
 #: docs/manual/smsd/config.rst:47
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ".. config:section"
 msgstr "Configuração"
 
