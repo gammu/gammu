@@ -230,7 +230,7 @@ typedef struct {
 	/**
 	 * Subtype to be checked.
 	 */
-	const unsigned char		subtype;
+	const int			subtype;
 	/**
 	 * Phone request when this can be called, use ID_IncomingFrame when
 	 * you want to use this in any state.

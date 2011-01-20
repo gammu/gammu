@@ -16,7 +16,7 @@ typedef enum {
 typedef struct {
 	size_t 		Length;
 	size_t 		Count;
-	unsigned char 	Type;
+	int	 	Type;
 	unsigned char 	Source;
 	unsigned char 	Destination;
 	unsigned char	*Buffer;

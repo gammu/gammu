@@ -1006,8 +1006,13 @@ static GSM_Error CheckReplyFunctions(GSM_StateMachine *s, GSM_Reply_Function *Re
 
 	while (Reply[i].requestID!=ID_None) {
 		execute=FALSE;
+		/* Long ID frames like S60 */
+		if (Reply[i].msgtype[0] == 0 && Reply[i].subtypechar == 0) {
+			if (Reply[i].subtype == msg->Type) {
+				execute = TRUE;
+			}
 		/* Binary frames like in Nokia */
-		if (strlen(Reply[i].msgtype) < 2) {
+		} else if (strlen(Reply[i].msgtype) < 2) {
 			if (Reply[i].msgtype[0]==msg->Type) {
 				if (Reply[i].subtypechar!=0) {
 					if (Reply[i].subtypechar<=msg->Length) {
