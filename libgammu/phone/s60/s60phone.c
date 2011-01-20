@@ -34,6 +34,7 @@ GSM_Error S60_Initialise(GSM_StateMachine *s)
 	size_t i;
 
 	s->Phone.Data.SignalQuality = NULL;
+	s->Phone.Data.BatteryCharge = NULL;
 
 	for (i = 0; i < sizeof(Priv->MessageParts) / sizeof(Priv->MessageParts[0]); i++) {
 		Priv->MessageParts[i] = NULL;
@@ -144,12 +145,25 @@ static GSM_Error S60_GetSignalQuality(GSM_StateMachine *s, GSM_SignalQuality *si
 	return error;
 }
 
+static GSM_Error S60_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *bat)
+{
+	GSM_Error error;
+
+	GSM_ClearBatteryCharge(bat);
+	s->Phone.Data.BatteryCharge = bat;
+	error = S60_GetInfo(s);
+	s->Phone.Data.BatteryCharge = NULL;
+	return error;
+}
+
+
 static GSM_Error S60_Reply_GetInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
 	GSM_Error error;
 	char *pos;
 	GSM_SignalQuality *Signal = s->Phone.Data.SignalQuality;
+	GSM_BatteryCharge *BatteryCharge = s->Phone.Data.BatteryCharge;
 
 	error = S60_SplitValues(&msg, s);
 	if (error != ERR_NONE) {
@@ -176,6 +190,8 @@ static GSM_Error S60_Reply_GetInfo(GSM_Protocol_Message msg, GSM_StateMachine *s
 		Signal->SignalStrength = atoi(Priv->MessageParts[1]);
 	} else if (Signal != NULL && strcmp(Priv->MessageParts[0], "signal_bars") == 0) {
 		Signal->SignalPercent = 100 * 7 / atoi(Priv->MessageParts[1]);
+	} else if (BatteryCharge != NULL && strcmp(Priv->MessageParts[0], "battery") == 0) {
+		BatteryCharge->BatteryPercent = atoi(Priv->MessageParts[1]);
 	}
 	return ERR_NEEDANOTHERANSWER;
 }
@@ -221,7 +237,7 @@ GSM_Phone_Functions S60Phone = {
 	NOTIMPLEMENTED,			/*	GetSecurityStatus	*/
 	NOTIMPLEMENTED,			/*	GetDisplayStatus	*/
 	NOTIMPLEMENTED,			/*	SetAutoNetworkLogin	*/
-	NOTIMPLEMENTED,			/*	GetBatteryCharge	*/
+	S60_GetBatteryCharge,
 	S60_GetSignalQuality,
 	NOTIMPLEMENTED,			/*	GetNetworkInfo		*/
 	NOTIMPLEMENTED,     		/*  	GetCategory 		*/
