@@ -43,6 +43,11 @@ GSM_Error S60_Initialise(GSM_StateMachine *s)
 		return ERR_NOTSUPPORTED;
 	}
 
+	error = GSM_WaitFor(s, NULL, 0, NUM_HELLO_REQUEST, S60_TIMEOUT, ID_EnableEcho);
+	if (error != ERR_NONE) {
+		return error;
+	}
+
 	return error;
 
 //	return ERR_NONE;
@@ -54,6 +59,11 @@ GSM_Error S60_Terminate(GSM_StateMachine *s)
 
 	Priv->foo = 0;
 
+	return ERR_NONE;
+}
+
+static GSM_Error S60_Reply_Generic(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
 	return ERR_NONE;
 }
 
@@ -76,6 +86,7 @@ static GSM_Error S60_Reply_Connect(GSM_Protocol_Message msg, GSM_StateMachine *s
 GSM_Reply_Function S60ReplyFunctions[] = {
 
 	{S60_Reply_Connect,	"", 0x00, NUM_CONNECTED, ID_Initialise },
+	{S60_Reply_Generic,	"", 0x00, NUM_HELLO_REPLY, ID_EnableEcho },
 	{NULL,			"", 0x00, 0x00, ID_None }
 };
 
