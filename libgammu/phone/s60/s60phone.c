@@ -47,6 +47,10 @@ GSM_Error S60_Initialise(GSM_StateMachine *s)
 
 	s->Phone.Data.SignalQuality = NULL;
 	s->Phone.Data.BatteryCharge = NULL;
+	s->Phone.Data.Memory = NULL;
+	s->Phone.Data.MemoryStatus = NULL;
+	s->Phone.Data.CalStatus = NULL;
+	s->Phone.Data.ToDoStatus = NULL;
 
 	for (i = 0; i < sizeof(Priv->MessageParts) / sizeof(Priv->MessageParts[0]); i++) {
 		Priv->MessageParts[i] = NULL;
@@ -411,6 +415,41 @@ static GSM_Error S60_Reply_ToDoCount(GSM_Protocol_Message msg, GSM_StateMachine 
 	return ERR_NEEDANOTHERANSWER;
 }
 
+GSM_Error S60_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
+{
+	char buffer[100];
+	GSM_Error error;
+
+	if (Entry->MemoryType != MEM_ME) {
+		return ERR_NOTSUPPORTED;
+	}
+
+	sprintf(buffer, "%d", Entry->Location);
+
+	s->Phone.Data.Memory = Entry;
+	error = GSM_WaitFor(s, buffer, strlen(buffer), NUM_CONTACTS_REQUEST_CONTACT, S60_TIMEOUT, ID_GetMemory);
+	s->Phone.Data.Memory = NULL;
+
+	return error;
+}
+
+static GSM_Error S60_Reply_GetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
+	GSM_Error error;
+
+	error = S60_SplitValues(&msg, s);
+	if (error != ERR_NONE) {
+		return error;
+
+	}
+
+	if (Priv->MessageParts[0] == NULL || Priv->MessageParts[1] == NULL) {
+		return ERR_UNKNOWN;
+	}
+
+	return ERR_NEEDANOTHERANSWER;
+}
 
 GSM_Reply_Function S60ReplyFunctions[] = {
 
@@ -432,6 +471,10 @@ GSM_Reply_Function S60ReplyFunctions[] = {
 	{S60_Reply_Generic,	"", 0x00, NUM_CALENDAR_REPLY_ENTRIES_START, ID_GetToDoInfo },
 	{S60_Reply_ToDoCount, "", 0x00, NUM_CALENDAR_REPLY_ENTRY, ID_GetToDoInfo },
 	{S60_Reply_Generic,	"", 0x00, NUM_CALENDAR_REPLY_ENTRIES_END, ID_GetToDoInfo },
+
+	{S60_Reply_Generic, "", 0x00, NUM_CONTACTS_REPLY_CONTACT_START, ID_GetMemory },
+	{S60_Reply_GetMemory, "", 0x00, NUM_CONTACTS_REPLY_CONTACT_LINE, ID_GetMemory },
+	{S60_Reply_Generic, "", 0x00, NUM_CONTACTS_REPLY_CONTACT_END, ID_GetMemory },
 
 	{NULL,			"", 0x00, 0x00, ID_None }
 };
@@ -473,7 +516,7 @@ GSM_Phone_Functions S60Phone = {
  	NOTSUPPORTED,       		/*  	AddCategory 		*/
         NOTIMPLEMENTED,      		/*  	GetCategoryStatus 	*/
 	S60_GetMemoryStatus,
-	NOTIMPLEMENTED,                 /*      GetMemory */
+	S60_GetMemory,
 	NOTIMPLEMENTED,                 /*      GetNextMemory */
 	NOTIMPLEMENTED,                 /*      SetMemory */
 	NOTIMPLEMENTED,                 /*      AddMemory */
