@@ -33,6 +33,7 @@ GSM_Error S60_Initialise(GSM_StateMachine *s)
 	GSM_Error error;
 	size_t i;
 
+	s->Phone.Data.SignalQuality = NULL;
 
 	for (i = 0; i < sizeof(Priv->MessageParts) / sizeof(Priv->MessageParts[0]); i++) {
 		Priv->MessageParts[i] = NULL;
@@ -129,11 +130,26 @@ static GSM_Error S60_GetInfo(GSM_StateMachine *s)
 	return GSM_WaitFor(s, "1", 1, NUM_SYSINFO_REQUEST, S60_TIMEOUT, ID_GetModel);
 }
 
+static GSM_Error S60_GetSignalQuality(GSM_StateMachine *s, GSM_SignalQuality *sig)
+{
+	GSM_Error error;
+
+	sig->BitErrorRate = -1;
+	sig->SignalStrength = -1;
+	sig->SignalPercent = -1;
+
+	s->Phone.Data.SignalQuality = sig;
+	error = S60_GetInfo(s);
+	s->Phone.Data.SignalQuality = NULL;
+	return error;
+}
+
 static GSM_Error S60_Reply_GetInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
 	GSM_Error error;
 	char *pos;
+	GSM_SignalQuality *Signal = s->Phone.Data.SignalQuality;
 
 	error = S60_SplitValues(&msg, s);
 	if (error != ERR_NONE) {
@@ -156,6 +172,10 @@ static GSM_Error S60_Reply_GetInfo(GSM_Protocol_Message msg, GSM_StateMachine *s
 		strcat(s->Phone.Data.Version, ".");
 		strcat(s->Phone.Data.Version, Priv->MessageParts[2]);
 		GSM_CreateFirmwareNumber(s);
+	} else if (Signal != NULL && strcmp(Priv->MessageParts[0], "signal_dbm") == 0) {
+		Signal->SignalStrength = atoi(Priv->MessageParts[1]);
+	} else if (Signal != NULL && strcmp(Priv->MessageParts[0], "signal_bars") == 0) {
+		Signal->SignalPercent = 100 * 7 / atoi(Priv->MessageParts[1]);
 	}
 	return ERR_NEEDANOTHERANSWER;
 }
@@ -202,7 +222,7 @@ GSM_Phone_Functions S60Phone = {
 	NOTIMPLEMENTED,			/*	GetDisplayStatus	*/
 	NOTIMPLEMENTED,			/*	SetAutoNetworkLogin	*/
 	NOTIMPLEMENTED,			/*	GetBatteryCharge	*/
-	NOTIMPLEMENTED,			/*	GetSignalQuality	*/
+	S60_GetSignalQuality,
 	NOTIMPLEMENTED,			/*	GetNetworkInfo		*/
 	NOTIMPLEMENTED,     		/*  	GetCategory 		*/
  	NOTSUPPORTED,       		/*  	AddCategory 		*/
