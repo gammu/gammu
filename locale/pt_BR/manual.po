@@ -600,7 +600,6 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/manual/config/index.rst:151
-#, fuzzy
 msgid "For **IrDA** connections, this parameters is not used at all."
 msgstr "Para conexões IrDA, esses parâmetros não são totalmente utilizados."
 
