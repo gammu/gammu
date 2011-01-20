@@ -143,7 +143,6 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/manual/config/index.rst:43
-#, fuzzy
 msgid ""
 "Configuration file for gammu can contain several sections - ``[gammu]``, ``"
 "[gammu1]``, ``[gammuN]``, ... Each section configures one connection setup "
@@ -153,8 +152,8 @@ msgid ""
 "then use only this section."
 msgstr ""
 "Arquivo de Configuração para o Gammu pode conter várias seções: Ex: [gammu], "
-"[gammu1], [gammuN], ... Cada seção configura um tipo de conexão e por padrão "
-"o gammu tenta todas em ordem numérica sequêncial. Voce também pode "
+"[gammu1], [gammuN], ... Cada seção configura um tipo de conexão e por "
+"padrão o gammu tenta todas em ordem numérica sequêncial. Voce também pode "
 "especificar qual seção quer utilizar informando o número da seção como "
 "parâmetro na hora de executar o gammu."
 
