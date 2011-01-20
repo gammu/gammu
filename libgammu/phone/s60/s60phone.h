@@ -33,8 +33,11 @@
 
 #include "../../gsmstate.h"
 
+#define S60_TIMEOUT 60
+
 typedef struct {
     int foo;
+    int Version;
 } GSM_Phone_S60Data;
 
 #endif

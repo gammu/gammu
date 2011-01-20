@@ -28,10 +28,14 @@
 GSM_Error S60_Initialise(GSM_StateMachine *s)
 {
 	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
+	GSM_Error error;
 
 	Priv->foo = 0;
 
-	return ERR_NONE;
+	error = GSM_WaitFor (s, NULL, 0, 0, S60_TIMEOUT, ID_Initialise);
+	return error;
+
+//	return ERR_NONE;
 }
 
 GSM_Error S60_Terminate(GSM_StateMachine *s)
@@ -43,9 +47,20 @@ GSM_Error S60_Terminate(GSM_StateMachine *s)
 	return ERR_NONE;
 }
 
+static GSM_Error S60_Reply_Connect(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
+
+	Priv->Version = atoi(msg.Buffer);
+	smprintf(s, "Connected to series60-remote version %d\n", Priv->Version);
+
+	return ERR_NONE;
+}
+
 GSM_Reply_Function S60ReplyFunctions[] = {
 
-	{NULL,				"\x00",0x00,0x00,ID_None			}
+	{S60_Reply_Connect,	"", 0x00, NUM_CONNECTED, ID_Initialise },
+	{NULL,			"", 0x00, 0x00, ID_None }
 };
 
 GSM_Phone_Functions S60Phone = {
