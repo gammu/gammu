@@ -29,7 +29,7 @@
 #include "s60-ids.h"
 
 static GSM_Error S60_WriteMessage (GSM_StateMachine *s, unsigned const char *MsgBuffer,
-				    int MsgLength, unsigned char MsgType)
+				    int MsgLength, int MsgType)
 {
 	unsigned char	*buffer=NULL;
 	int pos, sent, length, buflen, bufpos;

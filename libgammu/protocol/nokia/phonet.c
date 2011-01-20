@@ -27,7 +27,7 @@
 static GSM_Error PHONET_WriteMessage (GSM_StateMachine 	*s,
 				      unsigned const char 	*MsgBuffer,
 				      int 		MsgLength,
-				      unsigned char 	MsgType)
+				      int	MsgType)
 {
 	unsigned char		*buffer=NULL;
 	int			sent=0,length=0;

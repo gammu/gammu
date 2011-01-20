@@ -327,7 +327,7 @@ typedef struct {
 	 * Writes message to device.
 	 */
 	GSM_Error (*WriteMessage) (GSM_StateMachine *s, unsigned const char *buffer,
-				   int length, unsigned char type);
+				   int length, int type);
 	/**
 	 * This one is called when character is received from device.
 	 */

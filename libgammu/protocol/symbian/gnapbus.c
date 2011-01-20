@@ -12,7 +12,7 @@
 #include "gnapbus.h"
 
 static GSM_Error GNAPBUS_WriteMessage (GSM_StateMachine *s, unsigned const char *MsgBuffer,
-				    int MsgLength, unsigned char MsgType)
+				    int MsgLength, int MsgType)
 {
 	unsigned char	*buffer=NULL;
 	int		sent=0,length=0,i=0;

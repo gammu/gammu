@@ -15,7 +15,7 @@
 static GSM_Error MBUS2_WriteMessage (GSM_StateMachine 	*s,
 				     unsigned const char 	*MsgBuffer,
 				     int 		MsgLength,
-				     unsigned char 	MsgType)
+				     int 	MsgType)
 {
 	unsigned char 			*buffer=NULL, checksum = 0;
 	GSM_Protocol_MBUS2Data 		*d = &s->Protocol.Data.MBUS2;

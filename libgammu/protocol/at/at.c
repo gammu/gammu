@@ -12,7 +12,7 @@
 #include "at.h"
 
 static GSM_Error AT_WriteMessage (GSM_StateMachine *s, unsigned const char *buffer,
-				     int length, unsigned char type)
+				     int length, int type)
 {
 	int sent=0, write_data=0, i=0;
 
