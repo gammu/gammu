@@ -884,7 +884,6 @@ msgstr ""
 # type: TP
 #. type: Plain text
 #: docs/manual/config/index.rst:213
-#, fuzzy
 msgid "StartInfo"
 msgstr "B<StartInfo>"
 
