@@ -27,7 +27,7 @@ msgstr "I<~/.gammurc>"
 # type: Plain text
 #. type: Title =
 #: docs/manual/config/index.rst:4
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Gammu Configuration File"
 msgstr "gammurc - gammu(1) arquivo de configuração"
 
