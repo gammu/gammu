@@ -96,7 +96,7 @@ static GSM_Error S60_GetInfo(GSM_StateMachine *s)
 
 static GSM_Error S60_Reply_GetInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	return ERR_NONE;
+	return ERR_NEEDANOTHERANSWER;
 }
 
 
