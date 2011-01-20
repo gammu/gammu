@@ -23,6 +23,7 @@
 #include "../../gsmphones.h"
 #include "../../gsmstate.h"
 #include "../../service/gsmmisc.h"
+#include <string.h>
 
 #if defined(GSM_ENABLE_S60)
 GSM_Error S60_Initialise(GSM_StateMachine *s)
@@ -33,6 +34,15 @@ GSM_Error S60_Initialise(GSM_StateMachine *s)
 	Priv->foo = 0;
 
 	error = GSM_WaitFor (s, NULL, 0, 0, S60_TIMEOUT, ID_Initialise);
+	if (error != ERR_NONE) {
+		return error;
+	}
+
+	if (Priv->MajorVersion != 1 || Priv->MinorVersion != 5) {
+		smprintf(s, "Unsupported protocol version\n");
+		return ERR_NOTSUPPORTED;
+	}
+
 	return error;
 
 //	return ERR_NONE;
@@ -50,9 +60,15 @@ GSM_Error S60_Terminate(GSM_StateMachine *s)
 static GSM_Error S60_Reply_Connect(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
+	char *pos;
 
-	Priv->Version = atoi(msg.Buffer);
-	smprintf(s, "Connected to series60-remote version %d\n", Priv->Version);
+	Priv->MajorVersion = atoi(msg.Buffer);
+	pos = strchr(msg.Buffer, '.');
+	if (pos == NULL) {
+		return ERR_UNKNOWN;
+	}
+	Priv->MinorVersion = atoi(pos + 1);
+	smprintf(s, "Connected to series60-remote version %d.%d\n", Priv->MajorVersion, Priv->MinorVersion);
 
 	return ERR_NONE;
 }

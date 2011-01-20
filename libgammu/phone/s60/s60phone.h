@@ -37,7 +37,8 @@
 
 typedef struct {
     int foo;
-    int Version;
+    int MajorVersion;
+    int MinorVersion;
 } GSM_Phone_S60Data;
 
 #endif
