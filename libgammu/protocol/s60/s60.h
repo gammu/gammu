@@ -20,8 +20,16 @@
 
 #include "../protocol.h"
 
+typedef enum {
+	S60_Header,
+	S60_Data,
+} S60_State;
+
 typedef struct {
 	GSM_Protocol_Message Msg;
+	S60_State State;
+	char idbuffer[20];
+	int idpos;
 } GSM_Protocol_S60Data;
 
 #if defined(GSM_ENABLE_S60)

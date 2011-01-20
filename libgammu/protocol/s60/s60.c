@@ -75,55 +75,52 @@ static GSM_Error S60_WriteMessage (GSM_StateMachine *s, unsigned const char *Msg
 	return ERR_NONE;
 }
 
-static GSM_Error S60_Receive(GSM_StateMachine *s, unsigned char *data, size_t length)
+static GSM_Error S60_StateMachine(GSM_StateMachine *s, unsigned char rxchar)
 {
 	GSM_Protocol_S60Data *d = &s->Protocol.Data.S60;
-	unsigned char *pos;
-	size_t payload;
 
-	if (length == 0) {
-		return ERR_NONE;
+	/* Did we complete part of packet? */
+	switch (d->State) {
+		case S60_Header:
+			if (rxchar == NUM_END_HEADER) {
+				d->Msg.Type = atoi(d->idbuffer);
+				d->State = S60_Data;
+				d->idpos = 0;
+			} else {
+				d->idbuffer[d->idpos++] = rxchar;
+				d->idbuffer[d->idpos] = 0;
+			}
+			break;
+		case S60_Data:
+			if (rxchar == NUM_END_TEXT) {
+				d->State = S60_Header;
+				/* Should we wait for other parts? */
+				if (d->Msg.Type == NUM_PARTIAL_MESSAGE) {
+					return ERR_NONE;
+				}
+
+				/* We've got data to process */
+				s->Phone.Data.RequestMsg = &d->Msg;
+				s->Phone.Data.DispatchError = s->Phone.Functions->DispatchMessage(s);
+
+				/* Reset message length */
+				d->Msg.Length = 0;
+			} else {
+				/* Allocate buffer */
+				if (d->Msg.BufferUsed < d->Msg.Length + 2) {
+					d->Msg.BufferUsed = d->Msg.Length + 2;
+					d->Msg.Buffer = (unsigned char *)realloc(d->Msg.Buffer, d->Msg.BufferUsed);
+					if (d->Msg.Buffer == NULL) {
+						return ERR_MOREMEMORY;
+					}
+				}
+
+				/* Store received byte */
+				d->Msg.Buffer[d->Msg.Length++] = rxchar;
+				d->Msg.Buffer[d->Msg.Length] = 0;
+			}
+			break;
 	}
-
-	/* Allocate buffer */
-	if (d->Msg.BufferUsed < d->Msg.Length + length) {
-		d->Msg.BufferUsed = d->Msg.Length + length;
-		d->Msg.Buffer = (unsigned char *)realloc(d->Msg.Buffer, d->Msg.BufferUsed);
-		if (d->Msg.Buffer == NULL) {
-			return ERR_MOREMEMORY;
-		}
-	}
-
-	/* Parse message type */
-	d->Msg.Type = atoi(data);
-	pos = strchr(data, NUM_END_HEADER);
-	if (pos == NULL) {
-		smprintf(s, "Can not find payload in packet!\n");
-		return ERR_BUG;
-	}
-	if (data[length - 1] != NUM_END_TEXT) {
-		smprintf(s, "Can not find end of payload in packet!\n");
-		return ERR_BUG;
-	}
-	/* Skip header end */
-	pos++;
-	payload = length - (pos - data) - 1;
-
-	/* Store data */
-	memcpy(d->Msg.Buffer + d->Msg.Length, pos, payload);
-	d->Msg.Length += payload;
-
-	/* If it was message part, wait for other parts */
-	if (d->Msg.Type == NUM_PARTIAL_MESSAGE) {
-		return ERR_NONE;
-	}
-
-	/* We've got data to process */
-	s->Phone.Data.RequestMsg = &d->Msg;
-	s->Phone.Data.DispatchError = s->Phone.Functions->DispatchMessage(s);
-
-	/* Reset message length */
-	d->Msg.Length = 0;
 
 	return ERR_NONE;
 }
@@ -135,6 +132,8 @@ static GSM_Error S60_Initialise(GSM_StateMachine *s)
 	d->Msg.BufferUsed	= 0;
 	d->Msg.Buffer 		= NULL;
 	d->Msg.Length		= 0;
+	d->State = S60_Header;
+	d->idpos = 0;
 
 	return ERR_NONE;
 }
@@ -149,8 +148,8 @@ static GSM_Error S60_Terminate(GSM_StateMachine *s)
 
 GSM_Protocol_Functions S60Protocol = {
 	S60_WriteMessage,
+	S60_StateMachine,
 	NULL,
-	S60_Receive,
 	S60_Initialise,
 	S60_Terminate
 };
