@@ -889,18 +889,16 @@ msgstr "B<StartInfo>"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:218
-#, fuzzy
 msgid ""
 "This option allow to set, that you want (setting ``yes``) to see message on "
 "the phone screen or phone should enable light for a moment during starting "
 "connection. Phone will not beep during starting connection with this option. "
 "This works only with some Nokia phones."
 msgstr ""
-"Esta opção permite configurar, o que você quer (\"yes\") para ver mensagem "
-"na tela do telefone ou para que o telefone acenda a tela por um momento "
-"durante a inicialização da comunicação. O telefone NÃO irá dar um bip "
-"durante a inicialização com esta opção. Isto funciona só para alguns "
-"aparelhos Nokia."
+"Esta opção permite configurar, o que você quer (\"yes\") para ver mensagem na "
+"tela do telefone ou para que o telefone acenda a tela por um momento durante "
+"a inicialização da comunicação. O telefone NÃO irá dar um bip durante a "
+"inicialização com esta opção. Isto funciona só para alguns aparelhos Nokia."
 
 #. type: Title +
 #: docs/manual/config/index.rst:221
