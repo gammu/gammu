@@ -263,7 +263,6 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/manual/config/index.rst:61
-#, fuzzy
 msgid "DLR-3 and compatible cables"
 msgstr "B<dlr3> - DLR-3 e Cabos compatíveis"
 
