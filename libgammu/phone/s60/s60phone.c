@@ -33,6 +33,10 @@ GSM_Error S60_Initialise(GSM_StateMachine *s)
 	GSM_Error error;
 	size_t i;
 
+	Priv->ContactLocations = NULL;
+	Priv->ContactLocationsSize = 0;
+	Priv->ContactLocationsPos = 0;
+
 	s->Phone.Data.SignalQuality = NULL;
 	s->Phone.Data.BatteryCharge = NULL;
 
@@ -96,6 +100,13 @@ GSM_Error S60_SplitValues(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 
 GSM_Error S60_Terminate(GSM_StateMachine *s)
 {
+	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
+
+	free(Priv->ContactLocations);
+	Priv->ContactLocations = NULL;
+	Priv->ContactLocationsSize = 0;
+	Priv->ContactLocationsPos = 0;
+
 	return ERR_NONE;
 }
 
@@ -229,6 +240,7 @@ static GSM_Error S60_Reply_GetInfo(GSM_Protocol_Message msg, GSM_StateMachine *s
 
 static GSM_Error S60_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Status)
 {
+	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
 	GSM_Error error;
 
 	if (Status->MemoryType != MEM_ME) {
@@ -238,13 +250,49 @@ static GSM_Error S60_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Stat
 	s->Phone.Data.MemoryStatus = Status;
 	Status->MemoryUsed = 0;
 	Status->MemoryFree = 1000;
+	Priv->ContactLocationsPos = 0;
 	error = GSM_WaitFor(s, "", 0, NUM_CONTACTS_REQUEST_HASH_SINGLE, S60_TIMEOUT, ID_GetMemoryStatus);
 	s->Phone.Data.MemoryStatus = NULL;
 	return error;
 }
 
+static GSM_Error S60_StoreLocation(GSM_StateMachine *s, int **locations, size_t *size, size_t *pos, int location)
+{
+	if ((*pos) + 3 >= (*size)) {
+		*locations = (int *)realloc(*locations, ((*size) + 20) * sizeof(int));
+		if (*locations == NULL) {
+			return ERR_MOREMEMORY;
+		}
+		*size += 20;
+	}
+	(*locations)[(*pos)] = location;
+	(*locations)[(*pos) + 1] = 0;
+	(*pos) += 1;
+	return ERR_NONE;
+}
+
+
 static GSM_Error S60_Reply_ContactHash(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
+	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
+	GSM_Error error;
+
+	error = S60_SplitValues(&msg, s);
+	if (error != ERR_NONE) {
+		return error;
+
+	}
+
+	if (Priv->MessageParts[0] == NULL) {
+		return ERR_UNKNOWN;
+	}
+
+	error = S60_StoreLocation(s, &Priv->ContactLocations, &Priv->ContactLocationsSize, &Priv->ContactLocationsPos, atoi(Priv->MessageParts[0]));
+	if (error != ERR_NONE) {
+		return error;
+
+	}
+
 	if (s->Phone.Data.MemoryStatus != NULL) {
 		s->Phone.Data.MemoryStatus->MemoryUsed++;
 	}

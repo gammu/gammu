@@ -36,9 +36,12 @@
 #define S60_TIMEOUT 60
 
 typedef struct {
-    int MajorVersion;
-    int MinorVersion;
-    char *MessageParts[50];
+	int MajorVersion;
+	int MinorVersion;
+	char *MessageParts[50];
+	int *ContactLocations;
+	size_t ContactLocationsSize;
+	size_t ContactLocationsPos;
 } GSM_Phone_S60Data;
 
 #endif
