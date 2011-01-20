@@ -64,8 +64,14 @@ GSM_Error S60_Terminate(GSM_StateMachine *s)
 
 static GSM_Error S60_Reply_Generic(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	return ERR_NONE;
+	switch (msg.Type) {
+		case NUM_SYSINFO_REPLY_START:
+			return ERR_NEEDANOTHERANSWER;
+		default:
+			return ERR_NONE;
+	}
 }
+
 
 static GSM_Error S60_Reply_Connect(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
@@ -83,10 +89,24 @@ static GSM_Error S60_Reply_Connect(GSM_Protocol_Message msg, GSM_StateMachine *s
 	return ERR_NONE;
 }
 
+static GSM_Error S60_GetInfo(GSM_StateMachine *s)
+{
+	return GSM_WaitFor(s, "1", 1, NUM_SYSINFO_REQUEST, S60_TIMEOUT, ID_GetModel);
+}
+
+static GSM_Error S60_Reply_GetInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	return ERR_NONE;
+}
+
+
 GSM_Reply_Function S60ReplyFunctions[] = {
 
 	{S60_Reply_Connect,	"", 0x00, NUM_CONNECTED, ID_Initialise },
 	{S60_Reply_Generic,	"", 0x00, NUM_HELLO_REPLY, ID_EnableEcho },
+	{S60_Reply_Generic,	"", 0x00, NUM_SYSINFO_REPLY_START, ID_GetModel },
+	{S60_Reply_GetInfo,	"", 0x00, NUM_SYSINFO_REPLY_LINE, ID_GetModel },
+	{S60_Reply_Generic,	"", 0x00, NUM_SYSINFO_REPLY_END, ID_GetModel },
 	{NULL,			"", 0x00, 0x00, ID_None }
 };
 
@@ -97,10 +117,10 @@ GSM_Phone_Functions S60Phone = {
 	S60_Terminate,
 	GSM_DispatchMessage,
 	NOTIMPLEMENTED,			/* 	ShowStartInfo		*/
-	NOTIMPLEMENTED,                 /*      GetManufacturer */
-	NOTIMPLEMENTED,                 /*      GetModel */
-	NOTIMPLEMENTED,                 /*      GetFirmware */
-	NOTIMPLEMENTED,                 /*      GetIMEI */
+	S60_GetInfo,                 /*      GetManufacturer */
+	S60_GetInfo,                 /*      GetModel */
+	S60_GetInfo,                 /*      GetFirmware */
+	S60_GetInfo,                 /*      GetIMEI */
 	NOTIMPLEMENTED,			/*	GetOriginalIMEI		*/
 	NOTIMPLEMENTED,			/*	GetManufactureMonth	*/
 	NOTIMPLEMENTED,			/*	GetProductCode		*/
