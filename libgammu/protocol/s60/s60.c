@@ -32,7 +32,8 @@ static GSM_Error S60_WriteMessage (GSM_StateMachine *s, unsigned const char *Msg
 				    int MsgLength, unsigned char MsgType)
 {
 	unsigned char	*buffer=NULL;
-	int pos, sent, length;
+	int pos, sent, length, buflen, bufpos;
+	GSM_Error error;
 
 	/* No type */
 	if (MsgType == 0) {
@@ -44,18 +45,16 @@ static GSM_Error S60_WriteMessage (GSM_StateMachine *s, unsigned const char *Msg
 	GSM_DumpMessageLevel2(s, MsgBuffer, MsgLength, MsgType);
 
 	/* Allocate buffer for composing message */
-	buffer = (unsigned char *)malloc(MIN(MAX_LENGTH, MsgLength) + 10);
+	buflen = MIN(MAX_LENGTH, MsgLength) + 10;
+	buffer = (unsigned char *)malloc(buflen);
 	if (buffer == NULL) {
 		return ERR_MOREMEMORY;
 	}
 
 	/* Send message parts */
 	for (pos = 0; MsgLength - pos > MAX_LENGTH; pos += MAX_LENGTH) {
-		buffer[0] = NUM_PARTIAL_MESSAGE;
-		memcpy(buffer + 1, MsgBuffer + pos, MAX_LENGTH);
-		length = MAX_LENGTH + 1;
-		sent = s->Device.Functions->WriteDevice(s, buffer, length);
-		if (sent != length) {
+		error = S60_WriteMessage(s, MsgBuffer + pos, MAX_LENGTH, NUM_PARTIAL_MESSAGE);
+		if (error != ERR_NONE) {
 			return ERR_DEVICEWRITEERROR;
 		}
 	}
@@ -63,7 +62,11 @@ static GSM_Error S60_WriteMessage (GSM_StateMachine *s, unsigned const char *Msg
 	/* Send final message */
 	buffer[0] = MsgType;
 	length = MsgLength - pos;
-	memcpy(buffer + 1, MsgBuffer + pos, length);
+
+	bufpos = snprintf(buffer, buflen, "%d%c", MsgType, NUM_END_HEADER);
+	memcpy(buffer + bufpos, MsgBuffer + pos, length);
+	buffer[bufpos + length] = '\n';
+	length += bufpos + 1;
 	sent = s->Device.Functions->WriteDevice(s, buffer, length);
 	if (sent != length) {
 		return ERR_DEVICEWRITEERROR;
@@ -98,9 +101,13 @@ static GSM_Error S60_Receive(GSM_StateMachine *s, unsigned char *data, size_t le
 		smprintf(s, "Can not find payload in packet!\n");
 		return ERR_BUG;
 	}
+	if (data[length - 1] != NUM_END_TEXT) {
+		smprintf(s, "Can not find end of payload in packet!\n");
+		return ERR_BUG;
+	}
 	/* Skip header end */
 	pos++;
-	payload = length - (pos - data);
+	payload = length - (pos - data) - 1;
 
 	/* Store data */
 	memcpy(d->Msg.Buffer + d->Msg.Length, pos, payload);
