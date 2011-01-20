@@ -354,7 +354,6 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/manual/config/index.rst:84 docs/manual/config/index.rst:95
-#, fuzzy
 msgid "Phonet connection for Nokia phones."
 msgstr "B<irdaphonet> - Conexão Phonet para telefones Nokia."
 
