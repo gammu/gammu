@@ -34,6 +34,11 @@ static GSM_Error S60_WriteMessage (GSM_StateMachine *s, unsigned const char *Msg
 	unsigned char	*buffer=NULL;
 	int pos, sent, length;
 
+	/* No type */
+	if (MsgType == 0) {
+		return ERR_NONE;
+	}
+
 	/* Debugging */
 	GSM_DumpMessageLevel3(s, MsgBuffer, MsgLength, MsgType);
 	GSM_DumpMessageLevel2(s, MsgBuffer, MsgLength, MsgType);
@@ -70,6 +75,8 @@ static GSM_Error S60_WriteMessage (GSM_StateMachine *s, unsigned const char *Msg
 static GSM_Error S60_Receive(GSM_StateMachine *s, unsigned char *data, size_t length)
 {
 	GSM_Protocol_S60Data *d = &s->Protocol.Data.S60;
+	unsigned char *pos;
+	size_t payload;
 
 	if (length == 0) {
 		return ERR_NONE;
@@ -84,17 +91,25 @@ static GSM_Error S60_Receive(GSM_StateMachine *s, unsigned char *data, size_t le
 		}
 	}
 
-	/* Store data */
-	memcpy(d->Msg.Buffer + d->Msg.Length, data + 1, length - 1);
-	d->Msg.Length += length - 1;
+	/* Parse message type */
+	d->Msg.Type = atoi(data);
+	pos = strchr(data, NUM_END_HEADER);
+	if (pos == NULL) {
+		smprintf(s, "Can not find payload in packet!\n");
+		return ERR_BUG;
+	}
+	/* Skip header end */
+	pos++;
+	payload = length - (pos - data);
 
-	/* If it was message part, do nothing */
-	if (data[0] == NUM_PARTIAL_MESSAGE) {
+	/* Store data */
+	memcpy(d->Msg.Buffer + d->Msg.Length, pos, payload);
+	d->Msg.Length += payload;
+
+	/* If it was message part, wait for other parts */
+	if (d->Msg.Type == NUM_PARTIAL_MESSAGE) {
 		return ERR_NONE;
 	}
-
-	/* Store message type */
-	d->Msg.Type = data[0];
 
 	/* We've got data to process */
 	s->Phone.Data.RequestMsg = &d->Msg;
