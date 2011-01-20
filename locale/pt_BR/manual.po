@@ -935,7 +935,6 @@ msgstr "B<Formato da Depuração (log)>"
 # type: Plain text
 #. type: Plain text
 #: docs/manual/config/index.rst:235
-#, fuzzy
 msgid ""
 "Determines what all will be logged to :config:option:`LogFile`. Possible "
 "values are:"
