@@ -105,9 +105,12 @@ msgstr ""
 # type: Plain text
 #. type: Attribute :ref:
 #: docs/manual/config/index.rst:26
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "`gammu` reads configuration from a config file. It's location is determined"
-msgstr "gammu-smsd(1) leitura da configuração do arquivo. Sua localização pode ser especificada na linha de comando, caso não seja especificada utilizará /etc/gammu-smsdrc."
+msgstr ""
+"gammu-smsd(1) leitura da configuração do arquivo. Sua localização pode ser "
+"especificada na linha de comando, caso não seja especificada utilizará /etc"
+"/gammu-smsdrc."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:28
