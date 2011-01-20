@@ -909,7 +909,6 @@ msgstr ""
 # type: TP
 #. type: Plain text
 #: docs/manual/config/index.rst:224 docs/manual/smsd/config.rst:109
-#, fuzzy
 msgid "LogFile"
 msgstr "B<Arquivo Depuração>"
 
