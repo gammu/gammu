@@ -392,7 +392,6 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/manual/config/index.rst:90 docs/manual/config/index.rst:101
-#, fuzzy
 msgid "GNapplet based connection for Symbian phones"
 msgstr "B<irdagnapbus> - GNapplet conexão baseada em telefones Symbian"
 
