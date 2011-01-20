@@ -223,7 +223,7 @@ msgstr "Linha de comando com parâmetros inválidos."
 #: docs/manual/smsd/config.rst:417 docs/manual/smsd/config.rst:423
 #: docs/manual/smsd/config.rst:430 docs/manual/smsd/config.rst:436
 #: docs/manual/smsd/config.rst:457 docs/manual/smsd/config.rst:465
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ".. config:option"
 msgstr "Configuração"
 
