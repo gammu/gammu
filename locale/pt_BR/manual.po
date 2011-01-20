@@ -42,7 +42,6 @@ msgstr "Sinopse"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:11
-#, fuzzy
 msgid ""
 "On Linux, MacOS X, BSD and other Unix-like systems, the config file is "
 "searched in following order:"
