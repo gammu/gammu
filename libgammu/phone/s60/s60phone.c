@@ -30,8 +30,12 @@ GSM_Error S60_Initialise(GSM_StateMachine *s)
 {
 	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
 	GSM_Error error;
+	size_t i;
 
-	Priv->foo = 0;
+
+	for (i = 0; i < sizeof(Priv->MessageParts) / sizeof(Priv->MessageParts[0]); i++) {
+		Priv->MessageParts[i] = NULL;
+	}
 
 	error = GSM_WaitFor (s, NULL, 0, 0, S60_TIMEOUT, ID_Initialise);
 	if (error != ERR_NONE) {
@@ -53,12 +57,42 @@ GSM_Error S60_Initialise(GSM_StateMachine *s)
 //	return ERR_NONE;
 }
 
-GSM_Error S60_Terminate(GSM_StateMachine *s)
+/**
+ * Splits values from S60 reply.
+ */
+GSM_Error S60_SplitValues(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
+	unsigned char * pos = msg->Buffer - 1;
+	size_t i;
 	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
 
-	Priv->foo = 0;
+	for (i = 0; i < sizeof(Priv->MessageParts) / sizeof(Priv->MessageParts[0]); i++) {
+		Priv->MessageParts[i] = NULL;
+	}
 
+	i = 0;
+
+	while ((pos - msg->Buffer) < (ssize_t)msg->Length) {
+		if (i >  sizeof(Priv->MessageParts) / sizeof(Priv->MessageParts[0])) {
+			smprintf(s, "Too many reply parts!\n");
+			return ERR_MOREMEMORY;
+		}
+		Priv->MessageParts[i++] = pos + 1;
+
+		/* Find end of next field */
+		pos = strchr(pos + 1, NUM_SEPERATOR);
+		if (pos == NULL) {
+			break;
+		}
+
+		/* Zero terminate string */
+		*pos = 0;
+	}
+	return ERR_NONE;
+}
+
+GSM_Error S60_Terminate(GSM_StateMachine *s)
+{
 	return ERR_NONE;
 }
 
@@ -96,6 +130,17 @@ static GSM_Error S60_GetInfo(GSM_StateMachine *s)
 
 static GSM_Error S60_Reply_GetInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
+	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
+	GSM_Error error;
+
+	error = S60_SplitValues(&msg, s);
+	if (error != ERR_NONE) {
+		return error;
+	}
+	if (Priv->MessageParts[0] == NULL || Priv->MessageParts[1] == NULL) {
+		return ERR_UNKNOWN;
+	}
+	smprintf(s, "Received %s=%s\n", Priv->MessageParts[0], Priv->MessageParts[1]);
 	return ERR_NEEDANOTHERANSWER;
 }
 
