@@ -456,7 +456,6 @@ msgstr "Endereço do dispositivo do telefone. Depende do tipo de conexão."
 # type: Plain text
 #. type: Plain text
 #: docs/manual/config/index.rst:113
-#, fuzzy
 msgid ""
 "For **cables** or emulated serial ports, you enter device name (for example "
 "``/dev/ttyS0``, ``/dev/ttyACM0``, ``/dev/ircomm0``, ``/dev/rfcomm0`` on "
