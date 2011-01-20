@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.29.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-19 11:16+0100\n"
-"PO-Revision-Date: 2011-01-20 20:58+0200\n"
+"PO-Revision-Date: 2011-01-20 20:59+0200\n"
 "Last-Translator: gilberto dos santos alves <gsavix@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
@@ -38,7 +38,7 @@ msgstr "gammurc - gammu(1) arquivo de configuração"
 #: docs/manual/utils/jadmaker.rst:9 docs/manual/utils/gammu-detect.rst:12
 #, no-wrap
 msgid "Synopsis"
-msgstr ""
+msgstr "Sinopse"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:11
