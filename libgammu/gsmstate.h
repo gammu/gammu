@@ -1394,7 +1394,7 @@ struct _GSM_StateMachine {
 GSM_Error GSM_RegisterAllPhoneModules	(GSM_StateMachine *s);
 
 GSM_Error GSM_WaitForOnce		(GSM_StateMachine *s, unsigned const char *buffer,
-			  		 int length, unsigned char type, int timeout);
+			  		 int length, int type, int timeout);
 
 /**
  * Wait for reply from the phone.
@@ -1409,7 +1409,7 @@ GSM_Error GSM_WaitForOnce		(GSM_StateMachine *s, unsigned const char *buffer,
  * \return Error code, ERR_NONE on sucecss.
  */
 GSM_Error GSM_WaitFor			(GSM_StateMachine *s, unsigned const char *buffer,
-		       			 int length, unsigned char type, int timeout,
+		       			 int length, int type, int timeout,
 					 GSM_Phone_RequestID request) WARNUNUSED;
 
 /**

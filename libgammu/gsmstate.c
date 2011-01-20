@@ -918,7 +918,7 @@ GSM_Error GSM_AbortOperation(GSM_StateMachine * s)
 }
 
 GSM_Error GSM_WaitForOnce(GSM_StateMachine *s, unsigned const char *buffer,
-			  int length, unsigned char type, int timeout)
+			  int length, int type, int timeout)
 {
 	GSM_Phone_Data *Phone = &s->Phone.Data;
 	GSM_Protocol_Message sentmsg;
@@ -960,7 +960,7 @@ GSM_Error GSM_WaitForOnce(GSM_StateMachine *s, unsigned const char *buffer,
 }
 
 GSM_Error GSM_WaitFor (GSM_StateMachine *s, unsigned const char *buffer,
-		       int length, unsigned char type, int timeout,
+		       int length, int type, int timeout,
 		       GSM_Phone_RequestID request)
 {
 	GSM_Phone_Data		*Phone = &s->Phone.Data;
