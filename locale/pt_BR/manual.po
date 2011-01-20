@@ -813,7 +813,6 @@ msgstr "``obexnone``"
 # type: Plain text
 #. type: Plain text
 #: docs/manual/config/index.rst:192
-#, fuzzy
 msgid ""
 "none service chosen, this has only limited use for sending file (:option:"
 "`gammu sendfile` command)"
