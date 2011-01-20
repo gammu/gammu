@@ -787,7 +787,6 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/manual/config/index.rst:188
-#, fuzzy
 msgid "force using of file browsing service (file system support)"
 msgstr ""
 "B<obexfs> - força uso do serviço de navegação arquivos (suporte sistema de "
