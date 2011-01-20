@@ -69,6 +69,40 @@ static GSM_Error S60_WriteMessage (GSM_StateMachine *s, unsigned const char *Msg
 
 static GSM_Error S60_Receive(GSM_StateMachine *s, unsigned char *data, size_t length)
 {
+	GSM_Protocol_S60Data *d = &s->Protocol.Data.S60;
+
+	if (length == 0) {
+		return ERR_NONE;
+	}
+
+	/* Allocate buffer */
+	if (d->Msg.BufferUsed < d->Msg.Length + length) {
+		d->Msg.BufferUsed = d->Msg.Length + length;
+		d->Msg.Buffer = (unsigned char *)realloc(d->Msg.Buffer, d->Msg.BufferUsed);
+		if (d->Msg.Buffer == NULL) {
+			return ERR_MOREMEMORY;
+		}
+	}
+
+	/* Store data */
+	memcpy(d->Msg.Buffer + d->Msg.Length, data + 1, length - 1);
+	d->Msg.Length += length - 1;
+
+	/* If it was message part, do nothing */
+	if (data[0] == NUM_PARTIAL_MESSAGE) {
+		return ERR_NONE;
+	}
+
+	/* Store message type */
+	d->Msg.Type = data[0];
+
+	/* We've got data to process */
+	s->Phone.Data.RequestMsg = &d->Msg;
+	s->Phone.Data.DispatchError = s->Phone.Functions->DispatchMessage(s);
+
+	/* Reset message length */
+	d->Msg.Length = 0;
+
 	return ERR_NONE;
 }
 
