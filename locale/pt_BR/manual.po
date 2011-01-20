@@ -333,7 +333,6 @@ msgstr "B<at> - conexão baseada em comandos AT"
 # type: Plain text
 #. type: Plain text
 #: docs/manual/config/index.rst:79
-#, fuzzy
 msgid ""
 "You can optionally specify speed of the connection, eg. ``at19200``, but it "
 "is not needed for modern USB cables."
