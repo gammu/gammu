@@ -23,6 +23,7 @@
 #include "../../gsmphones.h"
 #include "../../gsmstate.h"
 #include "../../service/gsmmisc.h"
+#include "../pfunc.h"
 #include <string.h>
 
 #if defined(GSM_ENABLE_S60)
@@ -132,6 +133,7 @@ static GSM_Error S60_Reply_GetInfo(GSM_Protocol_Message msg, GSM_StateMachine *s
 {
 	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
 	GSM_Error error;
+	char *pos;
 
 	error = S60_SplitValues(&msg, s);
 	if (error != ERR_NONE) {
@@ -141,6 +143,20 @@ static GSM_Error S60_Reply_GetInfo(GSM_Protocol_Message msg, GSM_StateMachine *s
 		return ERR_UNKNOWN;
 	}
 	smprintf(s, "Received %s=%s\n", Priv->MessageParts[0], Priv->MessageParts[1]);
+	if (strcmp(Priv->MessageParts[0], "imei") == 0) {
+		strcpy(s->Phone.Data.IMEI, Priv->MessageParts[1]);
+	} else if (strcmp(Priv->MessageParts[0], "model") == 0) {
+		strcpy(s->Phone.Data.Model, Priv->MessageParts[1]);
+		pos = strstr(s->Phone.Data.Model, "(C)");
+		if (pos != NULL) {
+			strcpy(s->Phone.Data.Manufacturer, pos + 3);
+		}
+	} else if (strcmp(Priv->MessageParts[0], "s60_version") == 0) {
+		strcpy(s->Phone.Data.Version, Priv->MessageParts[1]);
+		strcat(s->Phone.Data.Version, ".");
+		strcat(s->Phone.Data.Version, Priv->MessageParts[2]);
+		GSM_CreateFirmwareNumber(s);
+	}
 	return ERR_NEEDANOTHERANSWER;
 }
 
