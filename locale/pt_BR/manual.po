@@ -419,7 +419,6 @@ msgstr "B<blueat> - Conexão para muitos telefones com suporte a comandos AT."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:98
-#, fuzzy
 msgid "``blueobex``"
 msgstr "Toques"
 
