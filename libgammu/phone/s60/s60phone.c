@@ -197,6 +197,20 @@ static GSM_Error S60_Reply_GetInfo(GSM_Protocol_Message msg, GSM_StateMachine *s
 		} else {
 			strcpy(s->Phone.Data.Model, Priv->MessageParts[1]);
 		}
+		s->Phone.Data.ModelInfo = GetModelData(s, NULL, s->Phone.Data.Model, NULL);
+
+		if (s->Phone.Data.ModelInfo->number[0] == 0)
+			s->Phone.Data.ModelInfo = GetModelData(s, NULL, NULL, s->Phone.Data.Model);
+
+		if (s->Phone.Data.ModelInfo->number[0] == 0)
+			s->Phone.Data.ModelInfo = GetModelData(s, s->Phone.Data.Model, NULL, NULL);
+
+		if (s->Phone.Data.ModelInfo->number[0] == 0) {
+			smprintf(s, "Unknown model, but it should still work\n");
+		}
+		smprintf(s, "[Model name: `%s']\n", s->Phone.Data.Model);
+		smprintf(s, "[Model data: `%s']\n", s->Phone.Data.ModelInfo->number);
+		smprintf(s, "[Model data: `%s']\n", s->Phone.Data.ModelInfo->model);
 	} else if (strcmp(Priv->MessageParts[0], "s60_version") == 0) {
 		strcpy(s->Phone.Data.Version, Priv->MessageParts[1]);
 		strcat(s->Phone.Data.Version, ".");
