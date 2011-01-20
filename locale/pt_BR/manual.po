@@ -489,7 +489,7 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/config/index.rst:123
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "Device = 0x1234:0x5678  # Match device by vendor and product id\n"
 "Device = 0x1234:-1      # Match device by vendor id\n"
@@ -498,9 +498,12 @@ msgid ""
 "Device = serial:123456  # Match device by serial string\n"
 msgstr ""
 "    Device = 0x1234:0x5678  # Seleciona fornecedor e id do produto.\n"
-"    Device = 0x1234:-1           # Seleciona dispositivo por id do fornecedor.\n"
-"    Device = 1.10                     # Seleciona dispositivo por bus USB e endereço.\n"
-"    Device = 10                        # Seleciona dispositivo pelo endereço.\n"
+"    Device = 0x1234:-1           # Seleciona dispositivo por id do "
+"fornecedor.\n"
+"    Device = 1.10                     # Seleciona dispositivo por bus USB e "
+"endereço.\n"
+"    Device = 10                        # Seleciona dispositivo pelo "
+"endereço.\n"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:125 docs/manual/config/index.rst:161
