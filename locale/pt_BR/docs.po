@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.29.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-10 12:45+0100\n"
-"PO-Revision-Date: 2011-01-20 20:24+0200\n"
+"PO-Revision-Date: 2011-01-20 20:25+0200\n"
 "Last-Translator: gilberto dos santos alves <gsavix@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
@@ -81,7 +81,7 @@ msgstr ""
 #: README:27
 #, no-wrap
 msgid "Feedback and bug reports"
-msgstr ""
+msgstr "Reporte erros e de sua opinião"
 
 #. type: Plain text
 #: README:30
