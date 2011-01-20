@@ -103,6 +103,7 @@ static GSM_Error S60_Reply_Generic(GSM_Protocol_Message msg, GSM_StateMachine *s
 {
 	switch (msg.Type) {
 		case NUM_SYSINFO_REPLY_START:
+		case NUM_CONTACTS_REPLY_HASH_SINGLE_START:
 			return ERR_NEEDANOTHERANSWER;
 		default:
 			return ERR_NONE;
@@ -226,14 +227,44 @@ static GSM_Error S60_Reply_GetInfo(GSM_Protocol_Message msg, GSM_StateMachine *s
 	return ERR_NEEDANOTHERANSWER;
 }
 
+static GSM_Error S60_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Status)
+{
+	GSM_Error error;
+
+	if (Status->MemoryType != MEM_ME) {
+		return ERR_NOTSUPPORTED;
+	}
+
+	s->Phone.Data.MemoryStatus = Status;
+	Status->MemoryUsed = 0;
+	Status->MemoryFree = 1000;
+	error = GSM_WaitFor(s, "", 0, NUM_CONTACTS_REQUEST_HASH_SINGLE, S60_TIMEOUT, ID_GetMemoryStatus);
+	s->Phone.Data.MemoryStatus = NULL;
+	return error;
+}
+
+static GSM_Error S60_Reply_ContactHash(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	if (s->Phone.Data.MemoryStatus == NULL) {
+		return ERR_BUG;
+	}
+	s->Phone.Data.MemoryStatus->MemoryUsed++;
+	return ERR_NEEDANOTHERANSWER;
+}
 
 GSM_Reply_Function S60ReplyFunctions[] = {
 
 	{S60_Reply_Connect,	"", 0x00, NUM_CONNECTED, ID_Initialise },
 	{S60_Reply_Generic,	"", 0x00, NUM_HELLO_REPLY, ID_EnableEcho },
+
 	{S60_Reply_Generic,	"", 0x00, NUM_SYSINFO_REPLY_START, ID_GetModel },
 	{S60_Reply_GetInfo,	"", 0x00, NUM_SYSINFO_REPLY_LINE, ID_GetModel },
 	{S60_Reply_Generic,	"", 0x00, NUM_SYSINFO_REPLY_END, ID_GetModel },
+
+	{S60_Reply_Generic,	"", 0x00, NUM_CONTACTS_REPLY_HASH_SINGLE_START, ID_GetMemoryStatus },
+	{S60_Reply_ContactHash, "", 0x00, NUM_CONTACTS_REPLY_HASH_SINGLE_LINE, ID_GetMemoryStatus },
+	{S60_Reply_Generic,	"", 0x00, NUM_CONTACTS_REPLY_HASH_SINGLE_END, ID_GetMemoryStatus },
+
 	{NULL,			"", 0x00, 0x00, ID_None }
 };
 
@@ -273,7 +304,7 @@ GSM_Phone_Functions S60Phone = {
 	NOTIMPLEMENTED,     		/*  	GetCategory 		*/
  	NOTSUPPORTED,       		/*  	AddCategory 		*/
         NOTIMPLEMENTED,      		/*  	GetCategoryStatus 	*/
-	NOTIMPLEMENTED,                 /*      GetMemoryStatus */
+	S60_GetMemoryStatus,
 	NOTIMPLEMENTED,                 /*      GetMemory */
 	NOTIMPLEMENTED,                 /*      GetNextMemory */
 	NOTIMPLEMENTED,                 /*      SetMemory */
