@@ -800,7 +800,6 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/manual/config/index.rst:190
-#, fuzzy
 msgid "force using of IrMC service (contacts, calendar and notes support)"
 msgstr ""
 "B<obexirmc> - obriga uso do serviço IrMC (contatos, calendário e suporte "
