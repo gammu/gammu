@@ -316,7 +316,8 @@ msgstr ""
 #: docs/manual/config/index.rst:73
 msgid "For non-Nokia phones connected using cable you generally want:"
 msgstr ""
-"Para telefones não Nokia conectados através de cabo, geralmente você precisa:"
+"Para telefones não Nokia conectados através de cabo, geralmente você "
+"precisa:"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:75
