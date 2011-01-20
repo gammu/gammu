@@ -245,10 +245,9 @@ static GSM_Error S60_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Stat
 
 static GSM_Error S60_Reply_ContactHash(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	if (s->Phone.Data.MemoryStatus == NULL) {
-		return ERR_BUG;
+	if (s->Phone.Data.MemoryStatus != NULL) {
+		s->Phone.Data.MemoryStatus->MemoryUsed++;
 	}
-	s->Phone.Data.MemoryStatus->MemoryUsed++;
 	return ERR_NEEDANOTHERANSWER;
 }
 
