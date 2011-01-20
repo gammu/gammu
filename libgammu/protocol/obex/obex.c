@@ -104,7 +104,6 @@ static GSM_Error OBEX_Terminate(GSM_StateMachine *s)
 GSM_Protocol_Functions OBEXProtocol = {
 	OBEX_WriteMessage,
 	OBEX_StateMachine,
-	NULL,
 	OBEX_Initialise,
 	OBEX_Terminate
 };

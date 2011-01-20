@@ -223,7 +223,6 @@ static GSM_Error PHONET_Terminate(GSM_StateMachine *s)
 GSM_Protocol_Functions PHONETProtocol = {
 	PHONET_WriteMessage,
 	PHONET_StateMachine,
-	NULL,
 	PHONET_Initialise,
 	PHONET_Terminate
 };

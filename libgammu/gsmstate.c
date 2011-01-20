@@ -165,7 +165,6 @@ GSM_Device_Functions NoneDevice = {
 GSM_Protocol_Functions NoProtocol = {
 	NONEFUNCTION,
 	NONEFUNCTION,
-	NULL,
 	NONEFUNCTION,
 	NONEFUNCTION
 };
@@ -875,12 +874,8 @@ int GSM_ReadDevice (GSM_StateMachine *s, gboolean waitforreply)
 		usleep(5000);
 		GSM_GetCurrentDateTime(&Date);
 	}
-	if (s->Protocol.Functions->Receive != NULL) {
-		s->Protocol.Functions->Receive(s, buff, res);
-	} else {
-		for (count = 0; count < res; count++) {
-			s->Protocol.Functions->StateMachine(s,buff[count]);
-		}
+	for (count = 0; count < res; count++) {
+		s->Protocol.Functions->StateMachine(s,buff[count]);
 	}
 	return res;
 }

@@ -308,7 +308,6 @@ static GSM_Error AT_Terminate(GSM_StateMachine *s)
 GSM_Protocol_Functions ATProtocol = {
 	AT_WriteMessage,
 	AT_StateMachine,
-	NULL,
 	AT_Initialise,
 	AT_Terminate
 };

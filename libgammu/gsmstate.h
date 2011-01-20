@@ -330,16 +330,8 @@ typedef struct {
 				   int length, unsigned char type);
 	/**
 	 * This one is called when character is received from device.
-	 *
-	 * Used only when Receive is NULL
 	 */
 	GSM_Error (*StateMachine) (GSM_StateMachine *s, unsigned char rx_char);
-	/**
-	 * This one is called when block of data is received from device.
-	 *
-	 * If this is NULL, StateMachine is used.
-	 */
-	GSM_Error (*Receive) (GSM_StateMachine *s, unsigned char *data, size_t length);
 	/**
 	 * Protocol initialisation.
 	 */

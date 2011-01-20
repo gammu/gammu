@@ -149,7 +149,6 @@ static GSM_Error S60_Terminate(GSM_StateMachine *s)
 GSM_Protocol_Functions S60Protocol = {
 	S60_WriteMessage,
 	S60_StateMachine,
-	NULL,
 	S60_Initialise,
 	S60_Terminate
 };
