@@ -396,6 +396,9 @@ GSM_PhoneModel allmodels[] = {
 	{"9210" ,"RAE-3" ,"",           {0}},
 	{"9210i","RAE-5" ,"",           {0}},
 #endif
+#if defined(GSM_ENABLE_S90) || defined(GSM_ENABLE_ATGEN)
+	{"E52", "RM-469", "Nokia E52", {0}},
+#endif
 #ifdef GSM_ENABLE_ATGEN
 	/* Generic AT */
 	{"at"   ,	  "at",		  "",				   {0}},
