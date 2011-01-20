@@ -576,7 +576,6 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/manual/config/index.rst:146
-#, fuzzy
 msgid ""
 "For **Bluetooth** connection you have to enter Bluetooth address of your "
 "phone (you can list Bluetooth devices in range on Linux using :command:"
