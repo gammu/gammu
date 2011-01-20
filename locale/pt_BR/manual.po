@@ -327,7 +327,6 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/manual/config/index.rst:76
-#, fuzzy
 msgid "generic AT commands based connection"
 msgstr "B<at> - conexão baseada em comandos AT"
 
