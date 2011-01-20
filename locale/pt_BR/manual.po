@@ -807,7 +807,6 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/config/index.rst:191
-#, fuzzy
 msgid "``obexnone``"
 msgstr "Toques"
 
