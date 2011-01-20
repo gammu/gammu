@@ -285,7 +285,6 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/manual/config/index.rst:65
-#, fuzzy
 msgid "DKU-5 and compatible cables"
 msgstr "B<dku5> - DKU-5 e cabos compatíveis"
 
