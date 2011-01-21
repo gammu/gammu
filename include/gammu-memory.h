@@ -480,7 +480,7 @@ GSM_Error GSM_GetNextMemory(GSM_StateMachine * s, GSM_MemoryEntry * entry,
 GSM_Error GSM_SetMemory(GSM_StateMachine * s, GSM_MemoryEntry * entry);
 
 /**
- * Deletes memory (phonebooks or calls) entry.
+ * Adds memory (phonebooks or calls) entry.
  *
  * \param s State machine pointer.
  * \param entry Entry to add, Location is ignored, MemoryType has to be
