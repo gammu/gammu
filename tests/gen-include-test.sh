@@ -16,7 +16,7 @@ cecho() {
 cecho "$start"
 cecho "# Do not modify this section, change gen-include-test.sh instead"
 
-for x in `ls ../include/ | grep -v gammu.h` ; do
+for x in `ls ../include/ | grep -v gammu.h | grep -v CMake` ; do
 	noext=${x%.h}
 	base=${noext#gammu-}
 	filename=include-$base.c
@@ -37,7 +37,8 @@ for x in `ls ../include/ | grep -v gammu.h` ; do
 		echo "# endif"
 		echo "#endif"
 		echo
-		echo "int main(int argc UNUSED, char** argv UNUSED) {"
+		echo "int main(int argc UNUSED, char **argv UNUSED)"
+        echo "{"
 		echo "	return 0;"
 		echo "}"
 	) >  $filename
@@ -46,7 +47,7 @@ for x in `ls ../include/ | grep -v gammu.h` ; do
 	cecho
 	cecho "# Test for header $x"
 	cecho "add_executable($executable $filename)"
-	cecho "target_link_libraries($executable libGammu)"
+	cecho "target_link_libraries($executable libGammu \${LIBINTL_LIBRARIES})"
 	cecho "add_test($executable \"\${GAMMU_TEST_PATH}/$executable\${GAMMU_TEST_SUFFIX}\")"
 
 done
