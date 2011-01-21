@@ -31,7 +31,7 @@ while (<>) {
 	chomp;
 	s/^(.*)\r$/$1/;
 
-	if (/^Sent = (.*)/) {
+	if (/^DateTime = (.*)/) {
 		$time = str2time($1);
 	} elsif (/^Number = "(.*)"/) {
 		$address = $1;
