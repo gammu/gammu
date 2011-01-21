@@ -1,0 +1,30 @@
+Gammu Utilitários para Gerenciamento Telefones Celulares
+=========================================================
+
+Gammu é uma biblioteca e utilitários de comandos de linha para telefones
+móveis. É distribuído sob GNU GPL versão 2.
+
+Foi iniciado por Marcin Wiacek e outras pessoas. Originalmente o código foi
+baseado nos projetos: Gnokii <http://www.gnokii.org> a mais tarde no
+MyGnokii <http://www.mwiacek.com>. Gammu até a versão 0.58 era chamado
+MyGnokii2.
+
+Atualmente o projeto é liderado por Michal Cihar <michal@cihar.com> com
+ajuda de vários contribuidores.
+
+
+Mais informação
+=================
+
+Você pode achar mais informações em <http://wammu.eu/gammu/>.
+
+Também há um manual Gammu disponível em docs/manual. Você pode construir o
+HTML da versão usando: make manual-html. Também pode acessá-lo em
+<http://wammu.eu/docs/manual/>.
+
+
+Reporte erros e de sua opinião
+===============================
+
+Toda opinião é bem vinda! veja <http://wammu.eu/support/> para saber como
+contactar os desenvolvedores.
