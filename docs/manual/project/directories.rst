@@ -159,6 +159,14 @@ php
 
 Various PHP frontends to SMSD or Gammu directly.
 
+sms-gammu2android
+*****************
+
+Perl script to convert :ref:`gammu-smsbackup` into XML suitable for
+Android SMS Backup & Restore application.
+
+.. seealso:: http://blog.ginkel.com/2009/12/transferring-sms-from-nokia-to-android/
+
 smscgi
 ******
 
