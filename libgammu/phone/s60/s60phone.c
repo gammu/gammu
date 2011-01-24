@@ -571,9 +571,6 @@ static GSM_Error S60_Reply_GetMemory(GSM_Protocol_Message msg, GSM_StateMachine 
 		} else {
 			Entry->Entries[Entry->EntriesNum].EntryType = PBK_Number_General;
 		}
-	} else if(strcmp(type, "po_box") == 0) {
-		text = TRUE;
-		/* TODO */
 	} else if(strcmp(type, "postal_address") == 0) {
 		text = TRUE;
 		if (work) {
