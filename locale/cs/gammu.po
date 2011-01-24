@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.29.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-24 15:47+0100\n"
-"PO-Revision-Date: 2011-01-10 13:50+0200\n"
+"PO-Revision-Date: 2011-01-24 15:52+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -3654,29 +3654,24 @@ msgid "General number"
 msgstr "Obecné číslo"
 
 #: helper/memory-display.c:136
-#, fuzzy
 msgid "Video number"
-msgstr "Číslo na mobil"
+msgstr "Číslo na videohovor"
 
 #: helper/memory-display.c:141
-#, fuzzy
 msgid "Home mobile number"
-msgstr "Číslo na mobil"
+msgstr "Číslo na mobil domů"
 
 #: helper/memory-display.c:144
-#, fuzzy
 msgid "Work mobile number"
-msgstr "Číslo na mobil"
+msgstr "Číslo na mobil do práce"
 
 #: helper/memory-display.c:155
-#, fuzzy
 msgid "Home fax number"
-msgstr "Číslo domů"
+msgstr "Faxové číslo domů"
 
 #: helper/memory-display.c:158
-#, fuzzy
 msgid "Work fax number"
-msgstr "Číslo do práce"
+msgstr "Faxové číslo do práce"
 
 #: helper/memory-display.c:165
 msgid "Pager number"
@@ -3687,64 +3682,56 @@ msgid "Other number"
 msgstr "Další číslo"
 
 #: helper/memory-display.c:172
-#, fuzzy
 msgid "Home address"
-msgstr "Adresa odesílatele"
+msgstr "Domácí adresa"
 
 #: helper/memory-display.c:175
-#, fuzzy
 msgid "Work address"
-msgstr "Pracovní poštovní adresa"
+msgstr "Pracovní adresa"
 
 #: helper/memory-display.c:186
-#, fuzzy
 msgid "Home email"
-msgstr "Váš email"
+msgstr "Domácí email"
 
 #: helper/memory-display.c:189
-#, fuzzy
 msgid "Work email"
-msgstr "Váš email"
+msgstr "Pracovní email"
 
 #: helper/memory-display.c:196
 msgid "Email address 2"
 msgstr "Email 2"
 
 #: helper/memory-display.c:201
-#, fuzzy
 msgid "Home website"
-msgstr "Číslo domů"
+msgstr "Domácí webové stránky"
 
 #: helper/memory-display.c:204
-#, fuzzy
 msgid "Work website"
-msgstr "Stát pracoviště"
+msgstr "Pracovní webové stránky"
 
 #: helper/memory-display.c:207
-#, fuzzy
 msgid "Website"
-msgstr "&Webové stránky"
+msgstr "Webové stránky"
 
 #: helper/memory-display.c:212
 msgid "VOIP"
-msgstr ""
+msgstr "VOIP"
 
 #: helper/memory-display.c:213
 msgid "SWIS"
-msgstr ""
+msgstr "SWIS"
 
 #: helper/memory-display.c:214
 msgid "WVID"
-msgstr ""
+msgstr "WVID"
 
 #: helper/memory-display.c:215
-#, fuzzy
 msgid "SIP"
-msgstr "SIM"
+msgstr "SIP"
 
 #: helper/memory-display.c:216
 msgid "DTMF"
-msgstr ""
+msgstr "DTMF"
 
 #: helper/memory-display.c:218
 msgid "Last name"
@@ -3755,22 +3742,20 @@ msgid "First name"
 msgstr "Křestní jméno"
 
 #: helper/memory-display.c:220
-#, fuzzy
 msgid "Second name"
-msgstr "Název stanice"
+msgstr "Střední jméno"
 
 #: helper/memory-display.c:221
 msgid "Formal name"
 msgstr "Formální jméno"
 
 #: helper/memory-display.c:222
-#, fuzzy
 msgid "Name prefix"
-msgstr "Prefix čísel"
+msgstr "Přezdívka"
 
 #: helper/memory-display.c:223
 msgid "Name suffix"
-msgstr ""
+msgstr "Dodatek"
 
 #: helper/memory-display.c:224
 msgid "Nick name"
