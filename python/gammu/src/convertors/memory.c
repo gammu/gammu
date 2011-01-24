@@ -258,6 +258,9 @@ PyObject *MemoryEntryToPython(const GSM_MemoryEntry * entry)
 			case PBK_Number_Messaging:
 				convert_number("Messaging");
 				break;
+			case PBK_Number_Video:
+				convert_number("Video");
+				break;
 			case PBK_PushToTalkID:
 				convert_text("PushToTalkID");
 				break;
@@ -451,6 +454,9 @@ int MemoryEntryFromPython(PyObject * dict, GSM_MemoryEntry * entry,
 		} else if (strcmp("Number_Messaging", type) == 0) {
 			valuetype = 't';
 			entry->Entries[i].EntryType = PBK_Number_Messaging;
+		} else if (strcmp("Number_Video", type) == 0) {
+			valuetype = 't';
+			entry->Entries[i].EntryType = PBK_Number_Video;
 		} else if (strcmp("Text_Note", type) == 0) {
 			valuetype = 't';
 			entry->Entries[i].EntryType = PBK_Text_Note;

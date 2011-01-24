@@ -601,7 +601,7 @@ static GSM_Error S60_Reply_GetMemory(GSM_Protocol_Message msg, GSM_StateMachine 
 		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_URL;
 	} else if(strcmp(type, "video_number") == 0) {
 		text = TRUE;
-		/* TODO */
+		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Number_Video;
 	} else if(strcmp(type, "wvid") == 0) {
 		/* TODO */
 	} else if(strcmp(type, "thumbnail_image") == 0) {

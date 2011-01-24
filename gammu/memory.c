@@ -200,6 +200,7 @@ void SearchOneEntry(GSM_MemoryEntry *Entry, const unsigned char *Text)
 			case PBK_Number_Pager       :
 			case PBK_Number_Other       :
 			case PBK_Number_Messaging:
+			case PBK_Number_Video:
 			case PBK_Text_Note          :
 			case PBK_Text_Postal        :
 			case PBK_Text_WorkPostal:

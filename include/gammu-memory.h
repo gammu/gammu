@@ -345,6 +345,10 @@ typedef enum {
 	 * DTMF (Text).
 	 */
 	PBK_Text_DTMF,
+	/**
+	 * Video number. (Text)
+	 */
+	PBK_Number_Video,
 } GSM_EntryType;
 
 /**

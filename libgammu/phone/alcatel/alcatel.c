@@ -1940,6 +1940,7 @@ static GSM_Error ALCATEL_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 				case PBK_Text_PictureName:
 				case PBK_PushToTalkID:
 				case PBK_Number_Messaging:
+				case PBK_Number_Video:
 				case PBK_Photo:
 				case PBK_Number_Mobile_Work:
 				case PBK_Number_Mobile_Home:
@@ -2129,6 +2130,7 @@ static GSM_Error ALCATEL_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 				case PBK_Text_PictureName:
 				case PBK_PushToTalkID:
 				case PBK_Number_Messaging:
+				case PBK_Number_Video:
 				case PBK_Photo:
 				case PBK_Number_Mobile_Work:
 				case PBK_Number_Mobile_Home:

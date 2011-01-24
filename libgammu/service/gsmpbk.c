@@ -246,6 +246,7 @@ GSM_Error GSM_EncodeVCARD(GSM_Debug_Info *di, char *Buffer, const size_t buff_le
 					ignore = TRUE;
 					break;
 				case PBK_Number_General:
+				case PBK_Number_Video:
 				case PBK_Number_Other:
 				case PBK_Number_Pager:
 				case PBK_Number_Mobile  :
@@ -301,6 +302,10 @@ GSM_Error GSM_EncodeVCARD(GSM_Debug_Info *di, char *Buffer, const size_t buff_le
 							break;
 						case PBK_Number_Messaging:
 							error = VC_Store(Buffer, buff_len, Length, ";MSG");
+							if (error != ERR_NONE) return error;
+							break;
+						case PBK_Number_Video:
+							error = VC_Store(Buffer, buff_len, Length, ";VIDEO");
 							if (error != ERR_NONE) return error;
 							break;
 						default:
@@ -745,6 +750,18 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 				}
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_General;
+				Pbk->Entries[Pbk->EntriesNum].SMSList[0] = 0;
+				Pbk->Entries[Pbk->EntriesNum].VoiceTag = 0;
+				Pbk->EntriesNum++;
+				continue;
+			}
+			if (ReadVCALText(Line, "TEL;VIDEO",	     Buff,  (version >= 3)) ||
+			    ReadVCALText(Line, "TEL;TYPE=VIDEO",	     Buff,  (version >= 3))) {
+				if (Buff[1] == '+') {
+					GSM_TweakInternationalNumber(Buff, NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN);
+				}
+				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Video;
 				Pbk->Entries[Pbk->EntriesNum].SMSList[0] = 0;
 				Pbk->Entries[Pbk->EntriesNum].VoiceTag = 0;
 				Pbk->EntriesNum++;
