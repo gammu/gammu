@@ -46,6 +46,7 @@ class Mobile(object):
         self.service = False
         self.useCanvas = True
         self.client = None
+        self.port = PORT
 
         self.inbox = inbox.Inbox(inbox.EInbox)
         self.sent = inbox.Inbox(inbox.ESent)
@@ -70,7 +71,7 @@ class Mobile(object):
         self.lock = e32.Ao_lock()
         app.exit_key_handler = self.exitHandler
         app.screen = 'normal'
-        app.menu = [(u'Exit', self.exitHandler)]
+        app.menu = [(u'About', self.aboutHandler), (u'Change port', self.portHandler), (u'Exit', self.exitHandler)]
 
     def statusUpdate(self, rect=None):
         if not self.useCanvas:
@@ -78,7 +79,7 @@ class Mobile(object):
 
         self.canvas.clear((255,255,255))
         if self.service:
-            self.canvas.text((1,14),u"Service started",0xff0000)
+            self.canvas.text((1,14),u"Service started at port %s" % self.port,0xff0000)
         else:
             self.canvas.text((1,14),u"Service stopped",0xff0000)
 
@@ -92,7 +93,7 @@ class Mobile(object):
         self.statusUpdate()
 
         self.sock = socket.socket(socket.AF_BT, socket.SOCK_STREAM)
-        self.sock.bind(('', PORT))
+        self.sock.bind(('', self.port))
         self.sock.listen(1)
 
         socket.set_security(self.sock,  socket.AUTH | socket.AUTHOR)
@@ -980,6 +981,16 @@ class Mobile(object):
             self.canvas = None
         if app.full_name()[-10:] != "Python.app":
            app.set_exit()
+
+    def portHandler(self):
+        ret = query(u'Enter bluetooth port to use', 'number', self.port)
+        if ret is not None:
+            self.port = ret
+            self.quit()
+            self.startService()
+
+    def aboutHandler(self):
+        note(u'Series60 - remote')
 
 # Debug of SIS applications
 try:
