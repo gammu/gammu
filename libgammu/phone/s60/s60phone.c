@@ -606,9 +606,19 @@ static GSM_Error S60_Reply_GetMemory(GSM_Protocol_Message msg, GSM_StateMachine 
 		text = TRUE;
 		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Number_Video;
 	} else if(strcmp(type, "wvid") == 0) {
-		/* TODO */
+		text = TRUE;
+		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_WVID;
 	} else if(strcmp(type, "thumbnail_image") == 0) {
 		/* TODO */
+	} else if(strcmp(type, "suffix") == 0) {
+		text = TRUE;
+		/* TODO */
+	} else if(strcmp(type, "prefix") == 0) {
+		text = TRUE;
+		/* TODO */
+	} else if(strcmp(type, "share_view") == 0) {
+		text = TRUE;
+		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_SWIS;
 	} else {
 		smprintf(s, "WARNING: Ignoring unknown field type: %s\n", type);
 		return ERR_NEEDANOTHERANSWER;

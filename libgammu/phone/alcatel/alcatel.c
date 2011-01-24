@@ -1927,6 +1927,8 @@ static GSM_Error ALCATEL_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 				case PBK_Text_URL:
 				case PBK_Text_LUID:
 				case PBK_Text_VOIP:
+				case PBK_Text_SWIS:
+				case PBK_Text_WVID:
 				case PBK_Text_SIP:
 				case PBK_Text_DTMF:
 				case PBK_CallLength:
@@ -2118,6 +2120,8 @@ static GSM_Error ALCATEL_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 				case PBK_Text_URL:
 				case PBK_Text_LUID:
 				case PBK_Text_VOIP:
+				case PBK_Text_SWIS:
+				case PBK_Text_WVID:
 				case PBK_Text_SIP:
 				case PBK_Text_DTMF:
 				case PBK_CallLength:

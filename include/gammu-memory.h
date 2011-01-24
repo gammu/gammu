@@ -353,6 +353,14 @@ typedef enum {
 	 * Video number. (Text)
 	 */
 	PBK_Number_Video,
+	/**
+	 * See What I See address. (Text)
+	 */
+	PBK_Text_SWIS,
+	/**
+	 * Wireless Village user ID. (Text)
+	 */
+	PBK_Text_WVID,
 } GSM_EntryType;
 
 /**

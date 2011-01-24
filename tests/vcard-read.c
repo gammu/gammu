@@ -143,6 +143,8 @@ int main(int argc, char **argv)
 			case PBK_Text_PictureName:
 			case PBK_PushToTalkID:
 			case PBK_Text_VOIP:
+			case PBK_Text_SWIS:
+			case PBK_Text_WVID:
 			case PBK_Text_SIP:
 			case PBK_Text_DTMF:
 				test_result(mywstrncmp(pbk.Entries[i].Text, backup.PhonePhonebook[0]->Entries[i].Text, 0) == TRUE);
