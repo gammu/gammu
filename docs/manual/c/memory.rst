@@ -19,6 +19,7 @@ Memory
 .. doxygenenum:: GSM_MemoryType
 .. doxygenstruct:: GSM_MemoryStatus
 .. doxygenenum:: GSM_EntryType
+.. doxygenenum:: GSM_EntryLocation
 .. doxygenstruct:: GSM_SubMemoryEntry
 .. doxygenstruct:: GSM_MemoryEntry
 .. doxygenstruct:: GSM_SpeedDial

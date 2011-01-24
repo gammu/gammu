@@ -513,38 +513,47 @@ GSM_Error SAMSUNG_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
  		smprintf(s, "Phonebook entry received\n");
 		Memory->EntriesNum = 9;
 		Memory->Entries[0].EntryType = PBK_Number_Mobile;
+		Memory->Entries[0].Location = PBK_Location_Unknown;
 		Memory->Entries[0].AddError = ERR_NONE;
 		Memory->Entries[0].VoiceTag = 0;
 		Memory->Entries[0].SMSList[0] = 0;
-		Memory->Entries[1].EntryType = PBK_Number_Home;
+		Memory->Entries[1].EntryType = PBK_Number_General;
+		Memory->Entries[1].Location = PBK_Location_Home;
 		Memory->Entries[1].AddError = ERR_NONE;
 		Memory->Entries[1].VoiceTag = 0;
 		Memory->Entries[1].SMSList[0] = 0;
-		Memory->Entries[2].EntryType = PBK_Number_Work;
+		Memory->Entries[2].EntryType = PBK_Number_General;
+		Memory->Entries[2].Location = PBK_Location_Work;
 		Memory->Entries[2].AddError = ERR_NONE;
 		Memory->Entries[2].VoiceTag = 0;
 		Memory->Entries[2].SMSList[0] = 0;
 		Memory->Entries[3].EntryType = PBK_Number_Fax;
+		Memory->Entries[3].Location = PBK_Location_Unknown;
 		Memory->Entries[3].AddError = ERR_NONE;
 		Memory->Entries[3].VoiceTag = 0;
 		Memory->Entries[3].SMSList[0] = 0;
 		Memory->Entries[4].EntryType = PBK_Number_General;
+		Memory->Entries[4].Location = PBK_Location_Unknown;
 		Memory->Entries[4].AddError = ERR_NONE;
 		Memory->Entries[4].VoiceTag = 0;
 		Memory->Entries[4].SMSList[0] = 0;
 		Memory->Entries[5].EntryType = PBK_Text_Email;
+		Memory->Entries[5].Location = PBK_Location_Unknown;
 		Memory->Entries[5].AddError = ERR_NONE;
 		Memory->Entries[5].VoiceTag = 0;
 		Memory->Entries[5].SMSList[0] = 0;
 		Memory->Entries[6].EntryType = PBK_Text_FirstName;
+		Memory->Entries[6].Location = PBK_Location_Unknown;
 		Memory->Entries[6].AddError = ERR_NONE;
 		Memory->Entries[6].VoiceTag = 0;
 		Memory->Entries[6].SMSList[0] = 0;
 		Memory->Entries[7].EntryType = PBK_Text_LastName;
+		Memory->Entries[7].Location = PBK_Location_Unknown;
 		Memory->Entries[7].AddError = ERR_NONE;
 		Memory->Entries[7].VoiceTag = 0;
 		Memory->Entries[7].SMSList[0] = 0;
 		Memory->Entries[8].EntryType = PBK_Text_Note;
+		Memory->Entries[8].Location = PBK_Location_Unknown;
 		Memory->Entries[8].AddError = ERR_NONE;
 		Memory->Entries[8].VoiceTag = 0;
 		Memory->Entries[8].SMSList[0] = 0;
@@ -566,9 +575,11 @@ GSM_Error SAMSUNG_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			if (error == ERR_NONE) {
 				/* Set name type */
 				Memory->Entries[0].EntryType = PBK_Text_Name;
+				Memory->Entries[0].Location = PBK_Location_Unknown;
 
 				/* Set number type */
 				Memory->Entries[1].EntryType = PBK_Number_General;
+				Memory->Entries[1].Location = PBK_Location_Unknown;
 				Memory->Entries[1].VoiceTag = 0;
 				Memory->Entries[1].SMSList[0] = 0;
 
@@ -624,6 +635,7 @@ GSM_Error SAMSUNG_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 				for (j = i + 1; j < Memory->EntriesNum; j++) {
 					CopyUnicodeString(Memory->Entries[j - 1].Text, Memory->Entries[j].Text);
 					Memory->Entries[j - 1].EntryType = Memory->Entries[j].EntryType;
+					Memory->Entries[j - 1].Location = Memory->Entries[j].Location;
 				}
 				Memory->EntriesNum--;
 			}
@@ -631,6 +643,7 @@ GSM_Error SAMSUNG_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		/* Was there stored birthday? */
 		if (year > 1900) {
 			Memory->Entries[Memory->EntriesNum].EntryType = PBK_Date;
+			Memory->Entries[Memory->EntriesNum].Location = PBK_Location_Unknown;
 			Memory->Entries[Memory->EntriesNum].Date.Year = year;
 			Memory->Entries[Memory->EntriesNum].Date.Month = month;
 			Memory->Entries[Memory->EntriesNum].Date.Day = day;

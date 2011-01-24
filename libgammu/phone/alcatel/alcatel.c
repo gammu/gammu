@@ -1506,6 +1506,7 @@ static GSM_Error ALCATEL_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 						break;
 					}
 					entry->Entries[i - j].EntryType = PBK_Text_LastName;
+					entry->Entries[i - j].Location = PBK_Location_Unknown;
 					CopyUnicodeString(entry->Entries[i - j].Text, Priv->ReturnString);
 					break;
 				case 1:
@@ -1516,6 +1517,7 @@ static GSM_Error ALCATEL_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 						break;
 					}
 					entry->Entries[i - j].EntryType = PBK_Text_FirstName;
+					entry->Entries[i - j].Location = PBK_Location_Unknown;
 					CopyUnicodeString(entry->Entries[i - j].Text, Priv->ReturnString);
 					break;
 				case 2:
@@ -1526,6 +1528,7 @@ static GSM_Error ALCATEL_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 						break;
 					}
 					entry->Entries[i - j].EntryType = PBK_Text_Company;
+					entry->Entries[i - j].Location = PBK_Location_Unknown;
 					CopyUnicodeString(entry->Entries[i - j].Text, Priv->ReturnString);
 					break;
 				case 3:
@@ -1536,6 +1539,7 @@ static GSM_Error ALCATEL_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 						break;
 					}
 					entry->Entries[i - j].EntryType = PBK_Text_JobTitle;
+					entry->Entries[i - j].Location = PBK_Location_Unknown;
 					CopyUnicodeString(entry->Entries[i - j].Text, Priv->ReturnString);
 					break;
 				case 4:
@@ -1546,6 +1550,7 @@ static GSM_Error ALCATEL_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 						break;
 					}
 					entry->Entries[i - j].EntryType = PBK_Text_Note;
+					entry->Entries[i - j].Location = PBK_Location_Unknown;
 					CopyUnicodeString(entry->Entries[i - j].Text, Priv->ReturnString);
 					break;
 				case 5:
@@ -1556,6 +1561,7 @@ static GSM_Error ALCATEL_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 						break;
 					}
 					entry->Entries[i - j].EntryType = PBK_Category;
+					entry->Entries[i - j].Location = PBK_Location_Unknown;
 					entry->Entries[i - j].Number = Priv->ReturnInt;
 					break;
 				case 6:
@@ -1566,6 +1572,7 @@ static GSM_Error ALCATEL_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 						break;
 					}
 					entry->Entries[i - j].EntryType = PBK_Private;
+					entry->Entries[i - j].Location = PBK_Location_Unknown;
 					entry->Entries[i - j].Number = Priv->ReturnInt;
 					break;
 				case 7:
@@ -1575,7 +1582,8 @@ static GSM_Error ALCATEL_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 						j++;
 						break;
 					}
-					entry->Entries[i - j].EntryType = PBK_Number_Work;
+					entry->Entries[i - j].EntryType = PBK_Number_General;
+					entry->Entries[i - j].Location = PBK_Location_Work;
 					CopyUnicodeString(entry->Entries[i - j].Text, Priv->ReturnString);
 					break;
 				case 8:
@@ -1596,6 +1604,7 @@ static GSM_Error ALCATEL_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 						break;
 					}
 					entry->Entries[i - j].EntryType = PBK_Number_Fax;
+					entry->Entries[i - j].Location = PBK_Location_Unknown;
 					CopyUnicodeString(entry->Entries[i - j].Text, Priv->ReturnString);
 					break;
 				case 10:
@@ -1606,6 +1615,7 @@ static GSM_Error ALCATEL_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 						break;
 					}
 					entry->Entries[i - j].EntryType = PBK_Number_Other;
+					entry->Entries[i - j].Location = PBK_Location_Unknown;
 					CopyUnicodeString(entry->Entries[i - j].Text, Priv->ReturnString);
 					break;
 				case 11:
@@ -1616,6 +1626,7 @@ static GSM_Error ALCATEL_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 						break;
 					}
 					entry->Entries[i - j].EntryType = PBK_Number_Pager;
+					entry->Entries[i - j].Location = PBK_Location_Unknown;
 					CopyUnicodeString(entry->Entries[i - j].Text, Priv->ReturnString);
 					break;
 				case 12:
@@ -1626,6 +1637,7 @@ static GSM_Error ALCATEL_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 						break;
 					}
 					entry->Entries[i - j].EntryType = PBK_Number_Mobile;
+					entry->Entries[i - j].Location = PBK_Location_Unknown;
 					CopyUnicodeString(entry->Entries[i - j].Text, Priv->ReturnString);
 					break;
 				case 13:
@@ -1635,7 +1647,8 @@ static GSM_Error ALCATEL_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 						j++;
 						break;
 					}
-					entry->Entries[i - j].EntryType = PBK_Number_Home;
+					entry->Entries[i - j].EntryType = PBK_Number_General;
+					entry->Entries[i - j].Location = PBK_Location_Home;
 					CopyUnicodeString(entry->Entries[i - j].Text, Priv->ReturnString);
 					break;
 				case 14:
@@ -1646,6 +1659,7 @@ static GSM_Error ALCATEL_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 						break;
 					}
 					entry->Entries[i - j].EntryType = PBK_Text_Email;
+					entry->Entries[i - j].Location = PBK_Location_Unknown;
 					CopyUnicodeString(entry->Entries[i - j].Text, Priv->ReturnString);
 					break;
 				case 15:
@@ -1656,6 +1670,7 @@ static GSM_Error ALCATEL_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 						break;
 					}
 					entry->Entries[i - j].EntryType = PBK_Text_Email2;
+					entry->Entries[i - j].Location = PBK_Location_Unknown;
 					CopyUnicodeString(entry->Entries[i - j].Text, Priv->ReturnString);
 					break;
 				case 16:
@@ -1666,6 +1681,7 @@ static GSM_Error ALCATEL_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 						break;
 					}
 					entry->Entries[i - j].EntryType = PBK_Text_StreetAddress;
+					entry->Entries[i - j].Location = PBK_Location_Unknown;
 					CopyUnicodeString(entry->Entries[i - j].Text, Priv->ReturnString);
 					break;
 				case 17:
@@ -1676,6 +1692,7 @@ static GSM_Error ALCATEL_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 						break;
 					}
 					entry->Entries[i - j].EntryType = PBK_Text_City;
+					entry->Entries[i - j].Location = PBK_Location_Unknown;
 					CopyUnicodeString(entry->Entries[i - j].Text, Priv->ReturnString);
 					break;
 				case 18:
@@ -1686,6 +1703,7 @@ static GSM_Error ALCATEL_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 						break;
 					}
 					entry->Entries[i - j].EntryType = PBK_Text_State;
+					entry->Entries[i - j].Location = PBK_Location_Unknown;
 					CopyUnicodeString(entry->Entries[i - j].Text, Priv->ReturnString);
 					break;
 				case 19:
@@ -1696,6 +1714,7 @@ static GSM_Error ALCATEL_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 						break;
 					}
 					entry->Entries[i - j].EntryType = PBK_Text_Zip;
+					entry->Entries[i - j].Location = PBK_Location_Unknown;
 					CopyUnicodeString(entry->Entries[i - j].Text, Priv->ReturnString);
 					break;
 				case 20:
@@ -1706,6 +1725,7 @@ static GSM_Error ALCATEL_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 						break;
 					}
 					entry->Entries[i - j].EntryType = PBK_Text_Country;
+					entry->Entries[i - j].Location = PBK_Location_Unknown;
 					CopyUnicodeString(entry->Entries[i - j].Text, Priv->ReturnString);
 					break;
 				case 21:
@@ -1716,6 +1736,7 @@ static GSM_Error ALCATEL_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 						break;
 					}
 					entry->Entries[i - j].EntryType = PBK_Text_Custom1;
+					entry->Entries[i - j].Location = PBK_Location_Unknown;
 					CopyUnicodeString(entry->Entries[i - j].Text, Priv->ReturnString);
 					break;
 				case 22:
@@ -1726,6 +1747,7 @@ static GSM_Error ALCATEL_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 						break;
 					}
 					entry->Entries[i - j].EntryType = PBK_Text_Custom2;
+					entry->Entries[i - j].Location = PBK_Location_Unknown;
 					CopyUnicodeString(entry->Entries[i - j].Text, Priv->ReturnString);
 					break;
 				case 23:
@@ -1736,6 +1758,7 @@ static GSM_Error ALCATEL_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 						break;
 					}
 					entry->Entries[i - j].EntryType = PBK_Text_Custom3;
+					entry->Entries[i - j].Location = PBK_Location_Unknown;
 					CopyUnicodeString(entry->Entries[i - j].Text, Priv->ReturnString);
 					break;
 				case 24:
@@ -1746,6 +1769,7 @@ static GSM_Error ALCATEL_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 						break;
 					}
 					entry->Entries[i - j].EntryType = PBK_Text_Custom4;
+					entry->Entries[i - j].Location = PBK_Location_Unknown;
 					CopyUnicodeString(entry->Entries[i - j].Text, Priv->ReturnString);
 					break;
 				case 25:
@@ -1757,6 +1781,7 @@ static GSM_Error ALCATEL_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 					}
 					if (Priv->ReturnInt != 0) {
 						entry->Entries[i - j].EntryType = PBK_PictureID;
+						entry->Entries[i - j].Location = PBK_Location_Unknown;
 						entry->Entries[i - j].Number = Priv->ReturnInt;
 					} else {
 						entry->EntriesNum--;
@@ -1831,19 +1856,23 @@ static GSM_Error ALCATEL_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 			entry->Entries[i].AddError = ERR_NONE;
 			switch (entry->Entries[i].EntryType) {
 				case PBK_Number_General:
-					if ((error = ALCATEL_CreateField(s, Alcatel_phone, 8, entry->Entries[i].Text)) != ERR_NONE) return error;
+					switch (entry->Entries[i].Location) {
+						case PBK_Location_Unknown:
+							if ((error = ALCATEL_CreateField(s, Alcatel_phone, 8, entry->Entries[i].Text)) != ERR_NONE) return error;
+							break;
+						case PBK_Location_Work:
+							if ((error = ALCATEL_CreateField(s, Alcatel_phone, 7, entry->Entries[i].Text)) != ERR_NONE) return error;
+							break;
+						case PBK_Location_Home:
+							if ((error = ALCATEL_CreateField(s, Alcatel_phone, 13, entry->Entries[i].Text)) != ERR_NONE) return error;
+							break;
+					}
 					break;
 				case PBK_Number_Mobile:
 					if ((error = ALCATEL_CreateField(s, Alcatel_phone, 12, entry->Entries[i].Text)) != ERR_NONE) return error;
 					break;
-				case PBK_Number_Work:
-					if ((error = ALCATEL_CreateField(s, Alcatel_phone, 7, entry->Entries[i].Text)) != ERR_NONE) return error;
-					break;
 				case PBK_Number_Fax:
 					if ((error = ALCATEL_CreateField(s, Alcatel_phone, 9, entry->Entries[i].Text)) != ERR_NONE) return error;
-					break;
-				case PBK_Number_Home:
-					if ((error = ALCATEL_CreateField(s, Alcatel_phone, 13, entry->Entries[i].Text)) != ERR_NONE) return error;
 					break;
 				case PBK_Number_Pager:
 					if ((error = ALCATEL_CreateField(s, Alcatel_phone, 11, entry->Entries[i].Text)) != ERR_NONE) return error;
@@ -1936,19 +1965,11 @@ static GSM_Error ALCATEL_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 				case PBK_Text_FormalName:
 				case PBK_Text_NameSuffix:
 				case PBK_Text_NamePrefix:
-				case PBK_Text_WorkPostal:
-				case PBK_Text_WorkStreetAddress:
-				case PBK_Text_WorkCity:
-				case PBK_Text_WorkState:
-				case PBK_Text_WorkZip:
-				case PBK_Text_WorkCountry:
 				case PBK_Text_PictureName:
 				case PBK_PushToTalkID:
 				case PBK_Number_Messaging:
 				case PBK_Number_Video:
 				case PBK_Photo:
-				case PBK_Number_Mobile_Work:
-				case PBK_Number_Mobile_Home:
 				case PBK_Text_SecondName:
 					entry->Entries[i].AddError = ERR_NOTSUPPORTED;
 					smprintf(s,"WARNING: Ignoring entry %d, not supported by phone\n", entry->Entries[i].EntryType);
@@ -2003,24 +2024,28 @@ static GSM_Error ALCATEL_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 			entry->Entries[i].AddError = ERR_NONE;
 			switch (entry->Entries[i].EntryType) {
 				case PBK_Number_General:
-					UpdatedFields[8] = TRUE;
-					if ((error = ALCATEL_UpdateField(s, Alcatel_phone, entry->Location, 8, entry->Entries[i].Text)) != ERR_NONE) return error;
+					switch (entry->Entries[i].Location) {
+						case PBK_Location_Unknown:
+							UpdatedFields[8] = TRUE;
+							if ((error = ALCATEL_UpdateField(s, Alcatel_phone, entry->Location, 8, entry->Entries[i].Text)) != ERR_NONE) return error;
+							break;
+						case PBK_Location_Work:
+							UpdatedFields[7] = TRUE;
+							if ((error = ALCATEL_UpdateField(s, Alcatel_phone, entry->Location, 7, entry->Entries[i].Text)) != ERR_NONE) return error;
+							break;
+						case PBK_Location_Home:
+							UpdatedFields[13] = TRUE;
+							if ((error = ALCATEL_UpdateField(s, Alcatel_phone, entry->Location, 13, entry->Entries[i].Text)) != ERR_NONE) return error;
+							break;
+					}
 					break;
 				case PBK_Number_Mobile:
 					UpdatedFields[12] = TRUE;
 					if ((error = ALCATEL_UpdateField(s, Alcatel_phone, entry->Location, 12, entry->Entries[i].Text)) != ERR_NONE) return error;
 					break;
-				case PBK_Number_Work:
-					UpdatedFields[7] = TRUE;
-					if ((error = ALCATEL_UpdateField(s, Alcatel_phone, entry->Location, 7, entry->Entries[i].Text)) != ERR_NONE) return error;
-					break;
 				case PBK_Number_Fax:
 					UpdatedFields[9] = TRUE;
 					if ((error = ALCATEL_UpdateField(s, Alcatel_phone, entry->Location, 9, entry->Entries[i].Text)) != ERR_NONE) return error;
-					break;
-				case PBK_Number_Home:
-					UpdatedFields[13] = TRUE;
-					if ((error = ALCATEL_UpdateField(s, Alcatel_phone, entry->Location, 13, entry->Entries[i].Text)) != ERR_NONE) return error;
 					break;
 				case PBK_Number_Pager:
 					UpdatedFields[11] = TRUE;
@@ -2131,19 +2156,11 @@ static GSM_Error ALCATEL_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 				case PBK_Text_FormalName:
 				case PBK_Text_NameSuffix:
 				case PBK_Text_NamePrefix:
-				case PBK_Text_WorkPostal:
-				case PBK_Text_WorkStreetAddress:
-				case PBK_Text_WorkCity:
-				case PBK_Text_WorkState:
-				case PBK_Text_WorkZip:
-				case PBK_Text_WorkCountry:
 				case PBK_Text_PictureName:
 				case PBK_PushToTalkID:
 				case PBK_Number_Messaging:
 				case PBK_Number_Video:
 				case PBK_Photo:
-				case PBK_Number_Mobile_Work:
-				case PBK_Number_Mobile_Home:
 				case PBK_Text_SecondName:
 					entry->Entries[i].AddError = ERR_NOTSUPPORTED;
 					smprintf(s,"WARNING: Ignoring entry %d, not supported by phone\n", entry->Entries[i].EntryType);

@@ -255,7 +255,9 @@ GSM_Error MOTOROLA_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		Memory->Entries[0].AddError = ERR_NONE;
 		Memory->Entries[0].VoiceTag = 0;
 		Memory->Entries[0].SMSList[0] = 0;
+		Memory->Entries[0].Location = PBK_Location_Unknown;
 		Memory->Entries[1].EntryType = PBK_Text_Name;
+		Memory->Entries[1].Location = PBK_Location_Unknown;
 		Memory->Entries[1].AddError = ERR_NONE;
 		Memory->Entries[1].VoiceTag = 0;
 		Memory->Entries[1].SMSList[0] = 0;
@@ -280,39 +282,48 @@ GSM_Error MOTOROLA_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 					&entry_type);
 		switch (entry_type) {
 			case 0:
-				Memory->Entries[0].EntryType = PBK_Number_Work;
+				Memory->Entries[0].EntryType = PBK_Number_General;
+				Memory->Entries[0].Location = PBK_Location_Work;
 				GSM_TweakInternationalNumber(Memory->Entries[0].Text, number_type);
 				break;
 			case 1:
-				Memory->Entries[0].EntryType = PBK_Number_Home;
+				Memory->Entries[0].EntryType = PBK_Number_General;
+				Memory->Entries[0].Location = PBK_Location_Home;
 				GSM_TweakInternationalNumber(Memory->Entries[0].Text, number_type);
 				break;
 			case 2:
 			case 10:
 			case 11:
 				Memory->Entries[0].EntryType = PBK_Number_General;
+				Memory->Entries[0].Location = PBK_Location_Unknown;
 				GSM_TweakInternationalNumber(Memory->Entries[0].Text, number_type);
 				break;
 			case 3:
 				Memory->Entries[0].EntryType = PBK_Number_Mobile;
+				Memory->Entries[0].Location = PBK_Location_Unknown;
 				GSM_TweakInternationalNumber(Memory->Entries[0].Text, number_type);
 				break;
 			case 4:
 				Memory->Entries[0].EntryType = PBK_Number_Fax;
+				Memory->Entries[0].Location = PBK_Location_Unknown;
 				GSM_TweakInternationalNumber(Memory->Entries[0].Text, number_type);
 				break;
 			case 5:
 				Memory->Entries[0].EntryType = PBK_Number_Pager;
+				Memory->Entries[0].Location = PBK_Location_Unknown;
 				GSM_TweakInternationalNumber(Memory->Entries[0].Text, number_type);
 				break;
 			case 6:
 				Memory->Entries[0].EntryType = PBK_Text_Email;
+				Memory->Entries[0].Location = PBK_Location_Unknown;
 				break;
 			case 7:
 				Memory->Entries[0].EntryType = PBK_Text_Email; /* Mailing list */
+				Memory->Entries[0].Location = PBK_Location_Unknown;
 				break;
 			default:
 				Memory->Entries[0].EntryType = PBK_Text_Note;
+				Memory->Entries[0].Location = PBK_Location_Unknown;
 		}
 
 		if (error != ERR_NONE) {

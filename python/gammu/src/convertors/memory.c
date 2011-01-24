@@ -24,13 +24,26 @@
 #include "convertors.h"
 #include "misc.h"
 
+const char *LocationToString(GSM_EntryLocation location)
+{
+    switch (location) {
+        case PBK_Location_Home:
+            return "Home";
+        case PBK_Location_Work:
+            return "Work";
+        case PBK_Location_Unknown:
+            return "Unknown";
+    }
+    return "Unknown";
+}
+
 #define convert_text(name) \
                 s = strGammuToPython(entry->Entries[i].Text); \
                 if (s == NULL) { \
                     Py_DECREF(v); \
                     return NULL; \
                 } \
-                f = Py_BuildValue("{s:s,s:u,s:i}", "Type", name, "Value", s, "AddError", (int)entry->Entries[i].AddError); \
+                f = Py_BuildValue("{s:s,s:u,s:i,s:s}", "Type", name, "Value", s, "AddError", (int)entry->Entries[i].AddError, "Location", LocationToString(entry->Entries[i].Location)); \
                 free(s);
 
 #define convert_number(name) \
@@ -74,20 +87,8 @@ PyObject *MemoryEntryToPython(const GSM_MemoryEntry * entry)
 			case PBK_Number_Mobile:
 				convert_number("Mobile");
 				break;
-			case PBK_Number_Mobile_Work:
-				convert_number("Mobile_Work");
-				break;
-			case PBK_Number_Mobile_Home:
-				convert_number("Mobile_Home");
-				break;
-			case PBK_Number_Work:
-				convert_number("Work");
-				break;
 			case PBK_Number_Fax:
 				convert_number("Fax");
-				break;
-			case PBK_Number_Home:
-				convert_number("Home");
 				break;
 			case PBK_Number_Pager:
 				convert_number("Pager");
@@ -100,9 +101,6 @@ PyObject *MemoryEntryToPython(const GSM_MemoryEntry * entry)
 				break;
 			case PBK_Text_Postal:
 				convert_text("Text_Postal");
-				break;
-			case PBK_Text_WorkPostal:
-				convert_text("Text_WorkPostal");
 				break;
 			case PBK_Text_Email:
 				convert_text("Text_Email");
@@ -201,21 +199,6 @@ PyObject *MemoryEntryToPython(const GSM_MemoryEntry * entry)
 				break;
 			case PBK_Text_Country:
 				convert_text("Text_Country");
-				break;
-			case PBK_Text_WorkStreetAddress:
-				convert_text("Text_WorkStreetAddress");
-				break;
-			case PBK_Text_WorkCity:
-				convert_text("Text_WorkCity");
-				break;
-			case PBK_Text_WorkState:
-				convert_text("Text_WorkState");
-				break;
-			case PBK_Text_WorkZip:
-				convert_text("Text_WorkZip");
-				break;
-			case PBK_Text_WorkCountry:
-				convert_text("Text_WorkCountry");
 				break;
 			case PBK_Text_Custom1:
 				convert_text("Text_Custom1");
@@ -356,7 +339,7 @@ int MemoryEntryFromPython(PyObject * dict, GSM_MemoryEntry * entry,
 	PyObject *item;
 	Py_ssize_t len, data_len;
 	Py_ssize_t i;
-	char *type;
+	char *type, *location;
 	char valuetype;
 	const char *bmptype;
 
@@ -419,6 +402,19 @@ int MemoryEntryFromPython(PyObject * dict, GSM_MemoryEntry * entry,
 		if (type == NULL)
 			return 0;
 
+		location = GetCharFromDict(item, "Location");
+		if (location == NULL) {
+            entry->Entries[i].Location = PBK_Location_Unknown;
+        } else {
+            if (strcmp(location, "Home") == 0) {
+                entry->Entries[i].Location = PBK_Location_Home;
+            } else if (strcmp(location, "Work") == 0) {
+                entry->Entries[i].Location = PBK_Location_Work;
+            } else {
+                entry->Entries[i].Location = PBK_Location_Unknown;
+            }
+        }
+
 		/* Zero everything, just to be sure */
 		entry->Entries[i].Text[0] = 0;
 		entry->Entries[i].Text[1] = 0;
@@ -444,22 +440,26 @@ int MemoryEntryFromPython(PyObject * dict, GSM_MemoryEntry * entry,
 			entry->Entries[i].EntryType = PBK_Number_General;
 		} else if (strcmp("Number_Mobile_Work", type) == 0) {
 			valuetype = 't';
-			entry->Entries[i].EntryType = PBK_Number_Mobile_Work;
+			entry->Entries[i].EntryType = PBK_Number_Mobile;
+            entry->Entries[i].Location = PBK_Location_Work;
 		} else if (strcmp("Number_Mobile_Home", type) == 0) {
 			valuetype = 't';
-			entry->Entries[i].EntryType = PBK_Number_Mobile_Home;
+			entry->Entries[i].EntryType = PBK_Number_Mobile;
+            entry->Entries[i].Location = PBK_Location_Home;
 		} else if (strcmp("Number_Mobile", type) == 0) {
 			valuetype = 't';
 			entry->Entries[i].EntryType = PBK_Number_Mobile;
 		} else if (strcmp("Number_Work", type) == 0) {
 			valuetype = 't';
-			entry->Entries[i].EntryType = PBK_Number_Work;
+			entry->Entries[i].EntryType = PBK_Number_General;
+            entry->Entries[i].Location = PBK_Location_Work;
 		} else if (strcmp("Number_Fax", type) == 0) {
 			valuetype = 't';
 			entry->Entries[i].EntryType = PBK_Number_Fax;
 		} else if (strcmp("Number_Home", type) == 0) {
 			valuetype = 't';
-			entry->Entries[i].EntryType = PBK_Number_Home;
+			entry->Entries[i].EntryType = PBK_Number_General;
+            entry->Entries[i].Location = PBK_Location_Home;
 		} else if (strcmp("Number_Pager", type) == 0) {
 			valuetype = 't';
 			entry->Entries[i].EntryType = PBK_Number_Pager;
@@ -480,7 +480,8 @@ int MemoryEntryFromPython(PyObject * dict, GSM_MemoryEntry * entry,
 			entry->Entries[i].EntryType = PBK_Text_Postal;
 		} else if (strcmp("Text_WorkPostal", type) == 0) {
 			valuetype = 't';
-			entry->Entries[i].EntryType = PBK_Text_WorkPostal;
+			entry->Entries[i].EntryType = PBK_Text_Postal;
+            entry->Entries[i].Location = PBK_Location_Work;
 		} else if (strcmp("Text_Email", type) == 0) {
 			valuetype = 't';
 			entry->Entries[i].EntryType = PBK_Text_Email;
@@ -552,20 +553,24 @@ int MemoryEntryFromPython(PyObject * dict, GSM_MemoryEntry * entry,
 			entry->Entries[i].EntryType = PBK_Text_Country;
 		} else if (strcmp("Text_WorkStreetAddress", type) == 0) {
 			valuetype = 't';
-			entry->Entries[i].EntryType =
-			    PBK_Text_WorkStreetAddress;
+			entry->Entries[i].EntryType = PBK_Text_StreetAddress;
+            entry->Entries[i].Location = PBK_Location_Work;
 		} else if (strcmp("Text_WorkCity", type) == 0) {
 			valuetype = 't';
-			entry->Entries[i].EntryType = PBK_Text_WorkCity;
+			entry->Entries[i].EntryType = PBK_Text_City;
+            entry->Entries[i].Location = PBK_Location_Work;
 		} else if (strcmp("Text_WorkState", type) == 0) {
 			valuetype = 't';
-			entry->Entries[i].EntryType = PBK_Text_WorkState;
+			entry->Entries[i].EntryType = PBK_Text_State;
+            entry->Entries[i].Location = PBK_Location_Work;
 		} else if (strcmp("Text_WorkZip", type) == 0) {
 			valuetype = 't';
-			entry->Entries[i].EntryType = PBK_Text_WorkZip;
+			entry->Entries[i].EntryType = PBK_Text_Zip;
+            entry->Entries[i].Location = PBK_Location_Work;
 		} else if (strcmp("Text_WorkCountry", type) == 0) {
 			valuetype = 't';
-			entry->Entries[i].EntryType = PBK_Text_WorkCountry;
+			entry->Entries[i].EntryType = PBK_Text_Country;
+            entry->Entries[i].Location = PBK_Location_Work;
 		} else if (strcmp("Text_Custom1", type) == 0) {
 			valuetype = 't';
 			entry->Entries[i].EntryType = PBK_Text_Custom1;

@@ -192,18 +192,13 @@ void SearchOneEntry(GSM_MemoryEntry *Entry, const unsigned char *Text)
 		switch (Entry->Entries[i].EntryType) {
 			case PBK_Number_General     :
 			case PBK_Number_Mobile      :
-			case PBK_Number_Mobile_Work :
-			case PBK_Number_Mobile_Home :
-			case PBK_Number_Work        :
 			case PBK_Number_Fax         :
-			case PBK_Number_Home        :
 			case PBK_Number_Pager       :
 			case PBK_Number_Other       :
 			case PBK_Number_Messaging:
 			case PBK_Number_Video:
 			case PBK_Text_Note          :
 			case PBK_Text_Postal        :
-			case PBK_Text_WorkPostal:
 			case PBK_Text_Email         :
 			case PBK_Text_Email2        :
 			case PBK_Text_URL           :
@@ -228,11 +223,6 @@ void SearchOneEntry(GSM_MemoryEntry *Entry, const unsigned char *Text)
 			case PBK_Text_State         :
 			case PBK_Text_Zip           :
 			case PBK_Text_Country       :
-			case PBK_Text_WorkStreetAddress :
-			case PBK_Text_WorkCity          :
-			case PBK_Text_WorkState         :
-			case PBK_Text_WorkZip           :
-			case PBK_Text_WorkCountry       :
 			case PBK_Text_Custom1       :
 			case PBK_Text_Custom2       :
 			case PBK_Text_Custom3       :

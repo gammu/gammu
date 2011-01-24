@@ -60,9 +60,7 @@ const GSM_MemoryEntry *SearchPhoneNumber(const unsigned char *number, const GSM_
 			switch (List[i]->Entries[*pos].EntryType) {
 				case PBK_Number_General:
 				case PBK_Number_Mobile:
-				case PBK_Number_Work:
 				case PBK_Number_Fax:
-				case PBK_Number_Home:
 				case PBK_Number_Pager:
 				case PBK_Number_Other:
 					if (mywstrncmp(List[i]->Entries[*pos].Text,number,-1)) {
@@ -113,14 +111,8 @@ void PrintPhoneNumber(const unsigned char *number, const void *Info)
 		case PBK_Number_Mobile:
 			printf(" (%s)", _("mobile"));
 			break;
-		case PBK_Number_Work:
-			printf(" (%s)", _("work"));
-			break;
 		case PBK_Number_Fax:
 			printf(" (%s)", _("fax"));
-			break;
-		case PBK_Number_Home:
-			printf(" (%s)", _("home"));
 			break;
 		case PBK_Number_Pager:
 			printf(" (%s)", _("pager"));
@@ -129,6 +121,16 @@ void PrintPhoneNumber(const unsigned char *number, const void *Info)
 			printf(" (%s)", _("general"));
 			break;
 		default:
+			break;
+	}
+	switch (pbk->Entries[pos].Location) {
+		case PBK_Location_Home:
+			printf(" [%s]", _("home"));
+			break;
+		case PBK_Location_Work:
+			printf(" [%s]", _("work"));
+			break;
+		case PBK_Location_Unknown:
 			break;
 	}
 #endif

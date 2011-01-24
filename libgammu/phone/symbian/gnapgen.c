@@ -701,6 +701,7 @@ GSM_Error GNAPGEN_ReplyGetNextMemory( GSM_Protocol_Message msg, GSM_StateMachine
 			len = msg.Buffer[pos]*256+msg.Buffer[pos+1];
 			if (len!=0) {
 				entry->Entries[entry->EntriesNum].EntryType=PBK_Text_Name;
+				entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
 				memcpy(entry->Entries[entry->EntriesNum].Text,msg.Buffer+pos+2,len*2);
 				entry->Entries[entry->EntriesNum].Text[len*2]=0;
 				entry->Entries[entry->EntriesNum].Text[len*2+1]=0;
@@ -712,6 +713,7 @@ GSM_Error GNAPGEN_ReplyGetNextMemory( GSM_Protocol_Message msg, GSM_StateMachine
                 case 0x08:
 			len = msg.Buffer[pos]*256+msg.Buffer[pos+1];
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Text_Email;
+			entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
 			memcpy(entry->Entries[entry->EntriesNum].Text,msg.Buffer+pos+2,len*2);
 			entry->Entries[entry->EntriesNum].Text[len*2]=0;
 			entry->Entries[entry->EntriesNum].Text[len*2+1]=0;
@@ -724,22 +726,27 @@ GSM_Error GNAPGEN_ReplyGetNextMemory( GSM_Protocol_Message msg, GSM_StateMachine
 				/*  fax */
 				case 0x04:
 					entry->Entries[entry->EntriesNum].EntryType=PBK_Number_Fax;
+					entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
 					break;
 				/*  work */
 				case 0x06:
-					entry->Entries[entry->EntriesNum].EntryType=PBK_Number_Work;
+					entry->Entries[entry->EntriesNum].EntryType=PBK_Number_General;
+					entry->Entries[entry->EntriesNum].Location = PBK_Location_Work;
 					break;
 				/*  mobile */
 				case 0x03:
 					entry->Entries[entry->EntriesNum].EntryType=PBK_Number_Mobile;
+					entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
 					break;
 				/*  home */
 				case 0x02:
-					entry->Entries[entry->EntriesNum].EntryType=PBK_Number_Home;
+					entry->Entries[entry->EntriesNum].EntryType=PBK_Number_General;
+					entry->Entries[entry->EntriesNum].Location = PBK_Location_Home;
 					break;
 				/*  general */
 				case 0x0a: default:
 					entry->Entries[entry->EntriesNum].EntryType=PBK_Number_General;
+					entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
 					break;
 			}
 			len = msg.Buffer[pos]*256+msg.Buffer[pos+1];
@@ -752,6 +759,7 @@ GSM_Error GNAPGEN_ReplyGetNextMemory( GSM_Protocol_Message msg, GSM_StateMachine
                 /*  date */
 		case 0x13:
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Date;
+			entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
 			NOKIA_DecodeDateTime(s, msg.Buffer+pos, &entry->Entries[entry->EntriesNum].Date, TRUE, FALSE);
 			entry->EntriesNum++;
 			pos+=2+7;
@@ -760,6 +768,7 @@ GSM_Error GNAPGEN_ReplyGetNextMemory( GSM_Protocol_Message msg, GSM_StateMachine
 		case 0x0a:
 			len = msg.Buffer[pos]*256+msg.Buffer[pos+1];
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Text_Note;
+			entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
 			memcpy(entry->Entries[entry->EntriesNum].Text,msg.Buffer+pos+2,len*2);
 			entry->Entries[entry->EntriesNum].Text[len*2]=0;
 			entry->Entries[entry->EntriesNum].Text[len*2+1]=0;
@@ -770,6 +779,7 @@ GSM_Error GNAPGEN_ReplyGetNextMemory( GSM_Protocol_Message msg, GSM_StateMachine
 		case 0x2c:
 			len = msg.Buffer[pos]*256+msg.Buffer[pos+1];
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Text_URL;
+			entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
 			memcpy(entry->Entries[entry->EntriesNum].Text,msg.Buffer+pos+2,len*2);
 			entry->Entries[entry->EntriesNum].Text[len*2]=0;
 			entry->Entries[entry->EntriesNum].Text[len*2+1]=0;
@@ -830,6 +840,7 @@ static GSM_Error GNAPGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachi
 			len = msg.Buffer[pos]*256+msg.Buffer[pos+1];
 			if (len!=0) {
 				entry->Entries[entry->EntriesNum].EntryType=PBK_Text_Name;
+				entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
 				memcpy(entry->Entries[entry->EntriesNum].Text,msg.Buffer+pos+2,len*2);
 				entry->Entries[entry->EntriesNum].Text[len*2]=0;
 				entry->Entries[entry->EntriesNum].Text[len*2+1]=0;
@@ -841,6 +852,7 @@ static GSM_Error GNAPGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachi
                 case 0x08:
 			len = msg.Buffer[pos]*256+msg.Buffer[pos+1];
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Text_Email;
+			entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
 			memcpy(entry->Entries[entry->EntriesNum].Text,msg.Buffer+pos+2,len*2);
 			entry->Entries[entry->EntriesNum].Text[len*2]=0;
 			entry->Entries[entry->EntriesNum].Text[len*2+1]=0;
@@ -853,22 +865,27 @@ static GSM_Error GNAPGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachi
 				/*  fax */
 				case 0x04:
 					entry->Entries[entry->EntriesNum].EntryType=PBK_Number_Fax;
+					entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
 					break;
 				/*  work */
 				case 0x06:
-					entry->Entries[entry->EntriesNum].EntryType=PBK_Number_Work;
+					entry->Entries[entry->EntriesNum].EntryType=PBK_Number_General;
+					entry->Entries[entry->EntriesNum].Location = PBK_Location_Work;
 					break;
 				/*  mobile */
 				case 0x03:
 					entry->Entries[entry->EntriesNum].EntryType=PBK_Number_Mobile;
+					entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
 					break;
 				/*  home */
 				case 0x02:
-					entry->Entries[entry->EntriesNum].EntryType=PBK_Number_Home;
+					entry->Entries[entry->EntriesNum].EntryType=PBK_Number_General;
+					entry->Entries[entry->EntriesNum].Location = PBK_Location_Home;
 					break;
 				/*  general */
 				case 0x0a: default:
 					entry->Entries[entry->EntriesNum].EntryType=PBK_Number_General;
+					entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
 					break;
 			}
 			len = msg.Buffer[pos]*256+msg.Buffer[pos+1];
@@ -881,6 +898,7 @@ static GSM_Error GNAPGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachi
                 /*  date */
 		case 0x13:
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Date;
+			entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
 			NOKIA_DecodeDateTime(s, msg.Buffer+pos, &entry->Entries[entry->EntriesNum].Date, TRUE, FALSE);
 			entry->EntriesNum++;
 			pos+=2+7;
@@ -889,6 +907,7 @@ static GSM_Error GNAPGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachi
 		case 0x0a:
 			len = msg.Buffer[pos]*256+msg.Buffer[pos+1];
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Text_Note;
+			entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
 			memcpy(entry->Entries[entry->EntriesNum].Text,msg.Buffer+pos+2,len*2);
 			entry->Entries[entry->EntriesNum].Text[len*2]=0;
 			entry->Entries[entry->EntriesNum].Text[len*2+1]=0;
@@ -899,6 +918,7 @@ static GSM_Error GNAPGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachi
 		case 0x2c:
 			len = msg.Buffer[pos]*256+msg.Buffer[pos+1];
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Text_URL;
+			entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
 			memcpy(entry->Entries[entry->EntriesNum].Text,msg.Buffer+pos+2,len*2);
 			entry->Entries[entry->EntriesNum].Text[len*2]=0;
 			entry->Entries[entry->EntriesNum].Text[len*2+1]=0;
@@ -971,26 +991,26 @@ static GSM_Error GNAPGEN_SetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	for( i=0; i< entry->EntriesNum; i++ ) {
 		subMemoryEntry = &entry->Entries[i];
 		switch( subMemoryEntry->EntryType ) {
-			case PBK_Number_Home:
-				req[currentByte++] = 0x00;
-				req[currentByte++] = 0x0b;
-				req[currentByte++] = 0x00;
-				req[currentByte++] = 0x02;
 				break;
 
 			case PBK_Number_General:
 			case PBK_Number_Mobile:
-				req[currentByte++] = 0x00;
-				req[currentByte++] = 0x0b;
-				req[currentByte++] = 0x00;
-				req[currentByte++] = 0x03;
-				break;
-
-			case PBK_Number_Work:
-				req[currentByte++] = 0x00;
-				req[currentByte++] = 0x0b;
-				req[currentByte++] = 0x00;
-				req[currentByte++] = 0x06;
+				if (subMemoryEntry->Location == PBK_Location_Home) {
+					req[currentByte++] = 0x00;
+					req[currentByte++] = 0x0b;
+					req[currentByte++] = 0x00;
+					req[currentByte++] = 0x02;
+				} else if (subMemoryEntry->Location == PBK_Location_Home) {
+					req[currentByte++] = 0x00;
+					req[currentByte++] = 0x0b;
+					req[currentByte++] = 0x00;
+					req[currentByte++] = 0x06;
+				} else {
+					req[currentByte++] = 0x00;
+					req[currentByte++] = 0x0b;
+					req[currentByte++] = 0x00;
+					req[currentByte++] = 0x03;
+				}
 				break;
 
 			case PBK_Number_Fax:

@@ -142,17 +142,9 @@ typedef enum {
 	 */
 	PBK_Number_Mobile,
 	/**
-	 * Work number. (Text)
-	 */
-	PBK_Number_Work,
-	/**
 	 * Fax number. (Text)
 	 */
 	PBK_Number_Fax,
-	/**
-	 * Home number. (Text)
-	 */
-	PBK_Number_Home,	/* 5 */
 	/**
 	 * Pager number. (Text)
 	 */
@@ -172,7 +164,7 @@ typedef enum {
 	/**
 	 * Email. (Text)
 	 */
-	PBK_Text_Email,		/* 10 */
+	PBK_Text_Email,
 	/*
 	 * Second email. (Text)
 	 */
@@ -192,7 +184,7 @@ typedef enum {
 	/**
 	 * Name (Text)
 	 */
-	PBK_Text_Name,		/* 15 */
+	PBK_Text_Name,
 	/**
 	 * Last name. (Text)
 	 */
@@ -212,7 +204,7 @@ typedef enum {
 	/**
 	 * Category. (Number, if -1 then text)
 	 */
-	PBK_Category,		/* 20 */
+	PBK_Category,
 	/**
 	 * Whether entry is private. (Number)
 	 */
@@ -232,7 +224,7 @@ typedef enum {
 	/**
 	 * Zip code. (Text)
 	 */
-	PBK_Text_Zip,		/* 25 */
+	PBK_Text_Zip,
 	/**
 	 * Country. (Text)
 	 */
@@ -252,7 +244,7 @@ typedef enum {
 	/**
 	 * Custom information 4. (Text)
 	 */
-	PBK_Text_Custom4,	/* 30 */
+	PBK_Text_Custom4,
 	/**
 	 * Ringtone ID. (Number)
 	 */
@@ -272,7 +264,7 @@ typedef enum {
 	/**
 	 * LUID - Unique Identifier used for synchronisation (Text)
 	 */
-	PBK_Text_LUID,		/* 35 */
+	PBK_Text_LUID,
 	/**
 	 * Date of last modification (Date)
 	 */
@@ -286,33 +278,9 @@ typedef enum {
 	 */
 	PBK_Text_FormalName,
 	/**
-	 * Work street address. (Text)
-	 */
-	PBK_Text_WorkStreetAddress,
-	/**
-	 * Work city. (Text)
-	 */
-	PBK_Text_WorkCity,	/* 40 */
-	/**
-	 * Work state. (Text)
-	 */
-	PBK_Text_WorkState,
-	/**
-	 * Work zip code. (Text)
-	 */
-	PBK_Text_WorkZip,
-	/**
-	 * Work country. (Text)
-	 */
-	PBK_Text_WorkCountry,
-	/**
-	 * Complete work postal address. (Text)
-	 */
-	PBK_Text_WorkPostal,
-	/**
 	 * Picture name (on phone filesystem). (Text)
 	 */
-	PBK_Text_PictureName,	/* 45 */
+	PBK_Text_PictureName,
 	/**
  	 * Push-to-talk ID (Text)
  	 */
@@ -325,14 +293,6 @@ typedef enum {
 	 * Photo (Picture).
 	 */
 	PBK_Photo,
-	/**
-	 * Home mobile number. (Text)
-	 */
-	PBK_Number_Mobile_Home,
-	/**
-	 * Work mobile number. (Text)
-	 */
-	PBK_Number_Mobile_Work,
 	/**
 	 * Second name. (Text)
 	 */
@@ -372,6 +332,26 @@ typedef enum {
 } GSM_EntryType;
 
 /**
+ * Location of memory contact.
+ *
+ * \ingroup Memory
+ */
+typedef enum {
+	/**
+	 * No/Unknown location.
+	 */
+	PBK_Location_Unknown = 0,
+	/**
+	 * Home
+	 */
+	PBK_Location_Home,
+	/**
+	 * Work
+	 */
+	PBK_Location_Work,
+} GSM_EntryLocation;
+
+/**
  * One value of phonebook memory entry.
  *
  * \ingroup Memory
@@ -381,6 +361,10 @@ typedef struct {
 	 * Type of entry.
 	 */
 	GSM_EntryType EntryType;
+	/**
+	 * Location for the entry.
+	 */
+	GSM_EntryLocation Location;
 	/**
 	 * Text of entry (if applicable, see @ref GSM_EntryType).
 	 */

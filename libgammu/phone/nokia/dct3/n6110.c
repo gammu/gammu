@@ -312,6 +312,7 @@ static GSM_Error N6110_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine
                                 return ERR_UNKNOWNRESPONSE;
                         }
                         Data->Memory->Entries[Data->Memory->EntriesNum].EntryType=PBK_Text_Name;
+			Data->Memory->Entries[Data->Memory->EntriesNum].Location = PBK_Location_Unknown;
                         if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOPBKUNICODE)) {
                                 if (Data->Memory->MemoryType==MEM_DC ||
                                     Data->Memory->MemoryType==MEM_RC ||
@@ -343,6 +344,7 @@ static GSM_Error N6110_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine
                         return ERR_UNKNOWNRESPONSE;
                 }
                 Data->Memory->Entries[Data->Memory->EntriesNum].EntryType  = PBK_Number_General;
+                Data->Memory->Entries[Data->Memory->EntriesNum].Location = PBK_Location_Unknown;
                 Data->Memory->Entries[Data->Memory->EntriesNum].VoiceTag   = 0;
                 Data->Memory->Entries[Data->Memory->EntriesNum].SMSList[0] = 0;
                 EncodeUnicode(Data->Memory->Entries[Data->Memory->EntriesNum].Text,
@@ -355,6 +357,7 @@ static GSM_Error N6110_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine
                 if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOCALLER)) {
                         if (msg.Buffer[count]<5) {
                                 Data->Memory->Entries[Data->Memory->EntriesNum].EntryType=PBK_Caller_Group;
+				Data->Memory->Entries[Data->Memory->EntriesNum].Location = PBK_Location_Unknown;
                                 smprintf(s, "Caller group \"%i\"\n",msg.Buffer[count]);
                                 Data->Memory->Entries[Data->Memory->EntriesNum].Number=msg.Buffer[count]+1;
                                 Data->Memory->EntriesNum++;
@@ -367,6 +370,7 @@ static GSM_Error N6110_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine
                     Data->Memory->MemoryType==MEM_MC) {
                         NOKIA_DecodeDateTime(s, msg.Buffer+count+1,&Data->Memory->Entries[Data->Memory->EntriesNum].Date, TRUE, FALSE);
                         Data->Memory->Entries[Data->Memory->EntriesNum].EntryType=PBK_Date;
+			Data->Memory->Entries[Data->Memory->EntriesNum].Location = PBK_Location_Unknown;
 
                         /* These values are set, when date and time unavailable in phone.
                          * Values from 3310 - in other can be different */

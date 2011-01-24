@@ -135,11 +135,11 @@ size_t N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_
 	}
 	for (i = 0; i < entry->EntriesNum; i++) {
 		type = 0;
-		if (entry->Entries[i].EntryType == PBK_Number_General) type = N7110_PBK_NUMBER_GENERAL;
+		if (entry->Entries[i].EntryType == PBK_Number_General && entry->Entries[i].Location == PBK_Location_Work)    type = N7110_PBK_NUMBER_WORK;
+		else if (entry->Entries[i].EntryType == PBK_Number_General && entry->Entries[i].Location == PBK_Location_Home)    type = N7110_PBK_NUMBER_HOME;
+		else if (entry->Entries[i].EntryType == PBK_Number_General) type = N7110_PBK_NUMBER_GENERAL;
 		if (entry->Entries[i].EntryType == PBK_Number_Mobile)  type = N7110_PBK_NUMBER_MOBILE;
-		if (entry->Entries[i].EntryType == PBK_Number_Work)    type = N7110_PBK_NUMBER_WORK;
 		if (entry->Entries[i].EntryType == PBK_Number_Fax)     type = N7110_PBK_NUMBER_FAX;
-		if (entry->Entries[i].EntryType == PBK_Number_Home)    type = N7110_PBK_NUMBER_HOME;
 		if (type != 0) {
 			entry->Entries[i].AddError = ERR_NONE;
 
@@ -372,6 +372,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 	unsigned char 				*Block;
 	int					length = 0, i, bs = 0;
 	GSM_71_65_Phonebook_Entries_Types	Type;
+	GSM_EntryLocation	Location = PBK_Location_Unknown;
 	gboolean					found=FALSE;
 	gboolean					foundbb5add=FALSE;
 	int favorite_messaging_numbers[10];
@@ -429,6 +430,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			if (! N71_65_PB_CopyString(s, entry, Block+6, Block[5]))
 				return ERR_UNKNOWNRESPONSE;
 			entry->Entries[entry->EntriesNum].EntryType=Type;
+			entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
 			entry->EntriesNum ++;
 		}
 	}
@@ -494,6 +496,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 				entry->Entries[entry->EntriesNum].Text[Block[5] + 1] = 0;
 			}
 			entry->Entries[entry->EntriesNum].EntryType=Type;
+			entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
 			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
 			if (Block[0] == N7110_PBK_NAME) {
 				if ((int)entry->MemoryType == MEM7110_CG || (int)entry->MemoryType == MEM6510_CG2) {
@@ -511,6 +514,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 		}
 		if (Block[0] == N7110_PBK_DATETIME) {
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Date;
+			entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
 			NOKIA_DecodeDateTime(s, Block+6, &entry->Entries[entry->EntriesNum].Date, TRUE, DayMonthReverse);
 			if (CheckDate(&entry->Entries[entry->EntriesNum].Date) &&
 					CheckDate(&entry->Entries[entry->EntriesNum].Date)) {
@@ -527,6 +531,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 				bitmap->PictureID = Block[10]*256+Block[11];
 			} else {
 				entry->Entries[entry->EntriesNum].EntryType=PBK_PictureID;
+			entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
 				smprintf(s, "Picture ID \"%i\"\n",Block[10]*256+Block[11]);
 				entry->Entries[entry->EntriesNum].Number=Block[10]*256+Block[11];
 				entry->EntriesNum ++;
@@ -558,7 +563,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 				Type = PBK_Number_General;    smprintf(s,"General number ");
 			}
 			if (Block[5] == N7110_PBK_NUMBER_WORK) {
-				Type = PBK_Number_Work;       smprintf(s,"Work number ");
+				Type = PBK_Number_General; Location = PBK_Location_Work;       smprintf(s,"Work number ");
 			}
 			if (Block[5] == N7110_PBK_NUMBER_FAX) {
 				Type = PBK_Number_Fax;        smprintf(s,"Fax number ");
@@ -567,13 +572,14 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 				Type = PBK_Number_Mobile;     smprintf(s,"Mobile number ");
 			}
 			if (Block[5] == N7110_PBK_NUMBER_HOME) {
-				Type = PBK_Number_Home;       smprintf(s,"Home number ");
+				Type = PBK_Number_General; Location = PBK_Location_Home;       smprintf(s,"Home number ");
 			}
 			if (Type == 0x00) {
 				smprintf(s, "Unknown number type %02x\n",Block[5]);
 				return ERR_UNKNOWNRESPONSE;
 			}
 			entry->Entries[entry->EntriesNum].EntryType=Type;
+			entry->Entries[entry->EntriesNum].Location = Location;
 			if (! N71_65_PB_CopyString(s, entry, Block+10, Block[9]))
 				return ERR_UNKNOWNRESPONSE;
 			/* DCT3 phones like 6210 */
@@ -589,6 +595,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 		if (Block[0] == S4030_PBK_CALLLENGTH) {
 			entry->Entries[entry->EntriesNum].CallLength = Block[9]*256*256+Block[10]*256+Block[11];
 			entry->Entries[entry->EntriesNum].EntryType=PBK_CallLength;
+			entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
 			entry->EntriesNum ++;
 			continue;
 		}
@@ -621,6 +628,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 				return ERR_UNKNOWNRESPONSE;
 			}
 			entry->Entries[entry->EntriesNum].EntryType=Type;
+			entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
 			if (! N71_65_PB_CopyString(s, entry, Block+10, Block[9]))
 				return ERR_UNKNOWNRESPONSE;
 			entry->EntriesNum ++;
@@ -633,6 +641,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			if (! N71_65_PB_CopyString(s, entry, Block+6, Block[5]))
 				return ERR_UNKNOWNRESPONSE;
 			entry->Entries[entry->EntriesNum].EntryType=Type;
+			entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
 			entry->EntriesNum ++;
 			continue;
 		}
@@ -641,6 +650,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			if (! N71_65_PB_CopyString(s, entry, Block+6, Block[5]))
 				return ERR_UNKNOWNRESPONSE;
 			entry->Entries[entry->EntriesNum].EntryType=Type;
+			entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
 			entry->EntriesNum ++;
 			continue;
 		}
@@ -649,6 +659,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			if (! N71_65_PB_CopyString(s, entry, Block+6, Block[5]))
 				return ERR_UNKNOWNRESPONSE;
 			entry->Entries[entry->EntriesNum].EntryType=Type;
+			entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
 			entry->EntriesNum ++;
 			continue;
 		}
@@ -657,6 +668,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			if (! N71_65_PB_CopyString(s, entry, Block+6, Block[5]))
 				return ERR_UNKNOWNRESPONSE;
 			entry->Entries[entry->EntriesNum].EntryType=Type;
+			entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
 			entry->EntriesNum ++;
 			continue;
 		}
@@ -665,6 +677,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			if (! N71_65_PB_CopyString(s, entry, Block+6, Block[5]))
 				return ERR_UNKNOWNRESPONSE;
 			entry->Entries[entry->EntriesNum].EntryType=Type;
+			entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
 			entry->EntriesNum ++;
 			continue;
 		}
@@ -673,6 +686,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			if (! N71_65_PB_CopyString(s, entry, Block+6, Block[5]))
 				return ERR_UNKNOWNRESPONSE;
 			entry->Entries[entry->EntriesNum].EntryType=Type;
+			entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
 			entry->EntriesNum ++;
 			continue;
 		}
@@ -681,6 +695,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			if (! N71_65_PB_CopyString(s, entry, Block+6, Block[5]))
 				return ERR_UNKNOWNRESPONSE;
 			entry->Entries[entry->EntriesNum].EntryType=Type;
+			entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
 			entry->EntriesNum ++;
 			continue;
 		}
@@ -689,6 +704,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			if (! N71_65_PB_CopyString(s, entry, Block+6, Block[5]))
 				return ERR_UNKNOWNRESPONSE;
 			entry->Entries[entry->EntriesNum].EntryType=Type;
+			entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
 			entry->EntriesNum ++;
 			continue;
 		}
@@ -697,6 +713,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			if (! N71_65_PB_CopyString(s, entry, Block+6, Block[5]))
 				return ERR_UNKNOWNRESPONSE;
 			entry->Entries[entry->EntriesNum].EntryType=Type;
+			entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
 			entry->EntriesNum ++;
 			continue;
 		}
@@ -705,11 +722,13 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			if (! N71_65_PB_CopyString(s, entry, Block+6, Block[5]))
 				return ERR_UNKNOWNRESPONSE;
 			entry->Entries[entry->EntriesNum].EntryType=Type;
+			entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
 			entry->EntriesNum ++;
 			continue;
 		}
 		if (Block[0] == S4030_PBK_BIRTHDAY) {
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Date;
+			entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
 			NOKIA_DecodeDateTime(s, Block+6, &entry->Entries[entry->EntriesNum].Date, FALSE, DayMonthReverse);
 			entry->EntriesNum ++;
 			continue;
@@ -725,6 +744,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 				bitmap->FileSystemRingtone 	= FALSE;
 			} else {
 				entry->Entries[entry->EntriesNum].EntryType=PBK_RingtoneID;
+				entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
 				smprintf(s, "Ringtone ID \"%i\"\n",Block[7]);
 				entry->Entries[entry->EntriesNum].Number=Block[7];
 				entry->EntriesNum ++;
@@ -752,6 +772,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 		}
 		if (Block[0] == N7110_PBK_GROUP) {
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Caller_Group;
+			entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
 			smprintf(s, "Caller group \"%i\"\n",Block[5]);
 			entry->Entries[entry->EntriesNum].Number=Block[5];
 			if (Block[5]!=0) entry->EntriesNum ++;
@@ -823,6 +844,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 				/* series 40 3.0 */
 				smprintf(s, "Filesystem ringtone ID: %02x\n",Block[10]*256+Block[11]);
 				entry->Entries[entry->EntriesNum].EntryType=PBK_RingtoneID;
+				entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
 				entry->Entries[entry->EntriesNum].Number=Block[10]*256+Block[11];
 				entry->EntriesNum ++;
 			}
@@ -860,6 +882,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			if (! N71_65_PB_CopyString(s, entry, Block+6, Block[5]))
 				return ERR_UNKNOWNRESPONSE;
 			entry->Entries[entry->EntriesNum].EntryType=PBK_PushToTalkID;
+			entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
 			entry->EntriesNum ++;
 			continue;
 		}
@@ -871,6 +894,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			smprintf(s,"Group ID (6230i or later)\n");
 
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Caller_Group;
+			entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
 			smprintf(s, "Caller group \"%i\"\n",Block[7]);
 			entry->Entries[entry->EntriesNum].Number=Block[7];
 			entry->EntriesNum ++;
@@ -903,6 +927,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 		 * entry->Entries doesn't retain order. */
 
 		entry->Entries[entry->EntriesNum].EntryType = PBK_Number_Messaging;
+		entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
 		CopyUnicodeString(entry->Entries[entry->EntriesNum].Text,entry->Entries[favorite_messaging_numbers[i] - 1].Text);
 		smprintf(s,"Marked entry #%i (%s) as favorite messaging number\n",
 			favorite_messaging_numbers[i],

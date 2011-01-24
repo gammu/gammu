@@ -121,16 +121,11 @@ GSM_Error PrintMemorySubEntry(GSM_SubMemoryEntry *entry, GSM_StateMachine *sm)
 	case PBK_Number_General     : printf(LISTFORMAT, _("General number")); break;
 	case PBK_Number_Video     : printf(LISTFORMAT, _("Video number")); break;
 	case PBK_Number_Mobile      : printf(LISTFORMAT, _("Mobile number")); break;
-	case PBK_Number_Mobile_Work : printf(LISTFORMAT, _("Mobile number (work)")); break;
-	case PBK_Number_Mobile_Home : printf(LISTFORMAT, _("Mobile number (home)")); break;
-	case PBK_Number_Work        : printf(LISTFORMAT, _("Work number")); break;
 	case PBK_Number_Fax         : printf(LISTFORMAT, _("Fax number")); break;
-	case PBK_Number_Home        : printf(LISTFORMAT, _("Home number")); break;
 	case PBK_Number_Pager       : printf(LISTFORMAT, _("Pager number")); break;
 	case PBK_Number_Other       : printf(LISTFORMAT, _("Other number")); break;
 	case PBK_Text_Note          : printf(LISTFORMAT, _("Text")); break;
 	case PBK_Text_Postal        : printf(LISTFORMAT, _("Snail address")); break;
-	case PBK_Text_WorkPostal    : printf(LISTFORMAT, _("Work snail address")); break;
 	case PBK_Text_Email         : printf(LISTFORMAT, _("Email address 1")); break;
 	case PBK_Text_Email2        : printf(LISTFORMAT, _("Email address 2")); break;
 	case PBK_Text_URL           : printf(LISTFORMAT, _("URL address")); break;
@@ -155,11 +150,6 @@ GSM_Error PrintMemorySubEntry(GSM_SubMemoryEntry *entry, GSM_StateMachine *sm)
 	case PBK_Text_State         : printf(LISTFORMAT, _("State")); break;
 	case PBK_Text_Zip           : printf(LISTFORMAT, _("Zip code")); break;
 	case PBK_Text_Country       : printf(LISTFORMAT, _("Country")); break;
-	case PBK_Text_WorkStreetAddress : printf(LISTFORMAT, _("Work street address")); break;
-	case PBK_Text_WorkCity      : printf(LISTFORMAT, _("Work city")); break;
-	case PBK_Text_WorkState     : printf(LISTFORMAT, _("Work state")); break;
-	case PBK_Text_WorkZip       : printf(LISTFORMAT, _("Work zip code")); break;
-	case PBK_Text_WorkCountry   : printf(LISTFORMAT, _("Work country")); break;
 	case PBK_Text_Custom1       : printf(LISTFORMAT, _("Custom text 1")); break;
 	case PBK_Text_Custom2       : printf(LISTFORMAT, _("Custom text 2")); break;
 	case PBK_Text_Custom3       : printf(LISTFORMAT, _("Custom text 3")); break;
@@ -170,6 +160,16 @@ GSM_Error PrintMemorySubEntry(GSM_SubMemoryEntry *entry, GSM_StateMachine *sm)
 		printf("%s\n", _("unknown field type"));
 		return ERR_NONE;
 #endif
+	}
+	switch (entry->Location) {
+		case PBK_Location_Home:
+			printf("[%s]", _("home"));
+			break;
+		case PBK_Location_Work:
+			printf("[%s]", _("work"));
+			break;
+		case PBK_Location_Unknown:
+			break;
 	}
 	printf("\"%s\"\n", DecodeUnicodeConsole(entry->Text));
 	return ERR_NONE;

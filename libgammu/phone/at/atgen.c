@@ -3635,11 +3635,13 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 		/* Set number type */
 		Memory->Entries[0].EntryType = PBK_Number_General;
+		Memory->Entries[0].Location = PBK_Location_Unknown;
 		Memory->Entries[0].VoiceTag = 0;
 		Memory->Entries[0].SMSList[0] = 0;
 
 		/* Set name type */
 		Memory->Entries[1].EntryType = PBK_Text_Name;
+		Memory->Entries[1].Location = PBK_Location_Unknown;
 
 		/* Try standard reply */
 		if (Priv->Manufacturer == AT_Motorola) {
@@ -3709,6 +3711,7 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			GSM_TweakInternationalNumber(Memory->Entries[0].Text, number_type);
 			/* Set date type */
 			Memory->Entries[2].EntryType = PBK_Date;
+			Memory->Entries[2].Location = PBK_Location_Unknown;
 			/* Set number of entries */
 			Memory->EntriesNum = 3;
 			/* Check whether date is correct */
@@ -3797,12 +3800,19 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 				smprintf(s, "Samsung reply detected\n");
 				/* Set types */
 				Memory->Entries[1].EntryType = PBK_Text_LastName;
+				Memory->Entries[1].Location = PBK_Location_Unknown;
 				Memory->Entries[2].EntryType = PBK_Text_FirstName;
+				Memory->Entries[2].Location = PBK_Location_Unknown;
 				Memory->Entries[7].EntryType = PBK_Text_Email;
+				Memory->Entries[7].Location = PBK_Location_Unknown;
 				Memory->Entries[8].EntryType = PBK_Text_Note;
+				Memory->Entries[8].Location = PBK_Location_Unknown;
 				Memory->Entries[9].EntryType = PBK_Category;
+				Memory->Entries[9].Location = PBK_Location_Unknown;
 				Memory->Entries[10].EntryType = PBK_RingtoneID;
+				Memory->Entries[10].Location = PBK_Location_Unknown;
 				Memory->Entries[11].EntryType = PBK_Text_PictureName;
+				Memory->Entries[11].Location = PBK_Location_Unknown;
 
 				/* Adjust location */
 				Memory->Location = Memory->Location + 1 - Priv->FirstMemoryEntry;
@@ -3831,21 +3841,27 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 					switch (types[index]) { \
 						case 2: \
 							Memory->Entries[index - offset].EntryType  = PBK_Number_Fax; \
+							Memory->Entries[index - offset].Location = PBK_Location_Unknown; \
 							break; \
 						case 4: \
 							Memory->Entries[index - offset].EntryType  = PBK_Number_Mobile; \
+							Memory->Entries[index - offset].Location = PBK_Location_Unknown; \
 							break; \
 						case 5: \
 							Memory->Entries[index - offset].EntryType  = PBK_Number_Other; \
+							Memory->Entries[index - offset].Location = PBK_Location_Unknown; \
 							break; \
 						case 6: \
-							Memory->Entries[index - offset].EntryType  = PBK_Number_Home; \
+							Memory->Entries[index - offset].EntryType  = PBK_Number_General; \
+							Memory->Entries[index - offset].Location = PBK_Location_Home; \
 							break; \
 						case 7: \
-							Memory->Entries[index - offset].EntryType  = PBK_Number_Work; \
+							Memory->Entries[index - offset].EntryType  = PBK_Number_General; \
+							Memory->Entries[index - offset].Location = PBK_Location_Work; \
 							break; \
 						default: \
 							Memory->Entries[index - offset].EntryType  = PBK_Number_Other; \
+							Memory->Entries[index - offset].Location = PBK_Location_Unknown; \
 							smprintf(s, "WARNING: Unknown memory entry type %d\n", types[index]); \
 							break; \
 					} \

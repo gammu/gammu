@@ -315,8 +315,10 @@ void ATSIEMENSActivateNetmon(int argc, char *argv[])
 	    pbk.Location = pbk_maxlocation;
 	    pbk.EntriesNum = 2;
 	    pbk.Entries[0].EntryType = PBK_Number_General;
+	    pbk.Entries[0].Location = PBK_Location_Unknown;
 	    EncodeUnicode (pbk.Entries[0].Text,NetMonCode,strlen(NetMonCode));
 	    pbk.Entries[1].EntryType = PBK_Text_Name;
+	    pbk.Entries[1].Location = PBK_Location_Unknown;
 	    strcpy(NetMonCode, "Net Monitor");
 	    EncodeUnicode (pbk.Entries[1].Text,NetMonCode,strlen(NetMonCode));
 	    error = ATGEN_SetMemory (gsm, &pbk);

@@ -469,7 +469,7 @@ static GSM_Error S60_Reply_GetMemory(GSM_Protocol_Message msg, GSM_StateMachine 
 	GSM_Error error;
 	char *pos, *type, *location, *value;
 	GSM_MemoryEntry *Entry;
-	gboolean text = FALSE, home, work;
+	gboolean text = FALSE;
 
 	error = S60_SplitValues(&msg, s);
 	if (error != ERR_NONE) {
@@ -489,27 +489,25 @@ static GSM_Error S60_Reply_GetMemory(GSM_Protocol_Message msg, GSM_StateMachine 
 		return ERR_UNKNOWN;
 	}
 
-	work = (strcmp(location, "work") == 0);
-	home = (strcmp(location, "home") == 0);
+	/* Handle location */
+	if ((strcmp(location, "work") == 0)) {
+		Entry->Entries[Entry->EntriesNum].Location = PBK_Location_Work;
+	} else if ((strcmp(location, "home") == 0)) {
+		Entry->Entries[Entry->EntriesNum].Location = PBK_Location_Home;
+	} else {
+		Entry->Entries[Entry->EntriesNum].Location = PBK_Location_Unknown;
+	}
 
 	/* Store in contacts */
 	if(strcmp(type, "city") == 0) {
 		text = TRUE;
-		if (work) {
-			Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_WorkCity;
-		} else {
-			Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_City;
-		}
+		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_City;
 	} else if(strcmp(type, "company_name") == 0) {
 		text = TRUE;
 		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_Company;
 	} else if(strcmp(type, "country") == 0) {
 		text = TRUE;
-		if (work) {
-			Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_WorkCountry;
-		} else {
-			Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_Country;
-		}
+		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_Country;
 	} else if(strcmp(type, "date") == 0) {
 		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Date;
 		if (!ReadVCALDateTime(value, &(Entry->Entries[Entry->EntriesNum].Date))) {
@@ -549,13 +547,7 @@ static GSM_Error S60_Reply_GetMemory(GSM_Protocol_Message msg, GSM_StateMachine 
 		Entry->Entries[Entry->EntriesNum].EntryType = PBK_PushToTalkID;
 	} else if(strcmp(type, "mobile_number") == 0) {
 		text = TRUE;
-		if (home) {
-			Entry->Entries[Entry->EntriesNum].EntryType = PBK_Number_Mobile_Home;
-		} else if (work) {
-			Entry->Entries[Entry->EntriesNum].EntryType = PBK_Number_Mobile_Work;
-		} else {
-			Entry->Entries[Entry->EntriesNum].EntryType = PBK_Number_Mobile;
-		}
+		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Number_Mobile;
 	} else if(strcmp(type, "note") == 0) {
 		text = TRUE;
 		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_Note;
@@ -564,41 +556,19 @@ static GSM_Error S60_Reply_GetMemory(GSM_Protocol_Message msg, GSM_StateMachine 
 		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Number_Pager;
 	} else if(strcmp(type, "phone_number") == 0) {
 		text = TRUE;
-		if (home) {
-			Entry->Entries[Entry->EntriesNum].EntryType = PBK_Number_Home;
-		} else if (work) {
-			Entry->Entries[Entry->EntriesNum].EntryType = PBK_Number_Work;
-		} else {
-			Entry->Entries[Entry->EntriesNum].EntryType = PBK_Number_General;
-		}
+		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Number_General;
 	} else if(strcmp(type, "postal_address") == 0) {
 		text = TRUE;
-		if (work) {
-			Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_WorkPostal;
-		} else {
-			Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_Postal;
-		}
+		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_Postal;
 	} else if(strcmp(type, "postal_code") == 0) {
 		text = TRUE;
-		if (work) {
-			Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_WorkZip;
-		} else {
-			Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_Zip;
-		}
+		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_Zip;
 	} else if(strcmp(type, "state") == 0) {
 		text = TRUE;
-		if (work) {
-			Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_WorkState;
-		} else {
-			Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_State;
-		}
+		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_State;
 	} else if(strcmp(type, "street_address") == 0) {
 		text = TRUE;
-		if (work) {
-			Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_WorkStreetAddress;
-		} else {
-			Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_StreetAddress;
-		}
+		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_StreetAddress;
 	} else if(strcmp(type, "url") == 0) {
 		text = TRUE;
 		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_URL;
@@ -658,195 +628,129 @@ GSM_Error S60_SetMemoryEntry(GSM_StateMachine *s, GSM_SubMemoryEntry *Entry, int
 	char buffer [100 + (GSM_PHONEBOOK_TEXT_LENGTH + 1) * 2];
 	gboolean text = FALSE;
 
-	switch (Entry->EntryType) {
-		case PBK_Text_WorkCity:
-			type = "city";
-			location = "work";
-			text = TRUE;
+	switch (Entry->Location) {
+		case PBK_Location_Unknown:
+			location = "none";
 			break;
+		case PBK_Location_Home:
+			location = "home";
+			break;
+		case PBK_Location_Work:
+			location = "work";
+			break;
+	}
+
+	switch (Entry->EntryType) {
 		case PBK_Text_City:
 			type = "city";
-			location = "none";
 			text = TRUE;
 			break;
 		case PBK_Text_Company:
 			type = "company_name";
-			location = "none";
-			text = TRUE;
-			break;
-		case PBK_Text_WorkCountry:
-			type = "country";
-			location = "work";
 			text = TRUE;
 			break;
 		case PBK_Text_Country:
 			type = "country";
-			location = "none";
 			text = TRUE;
 			break;
 		case PBK_Date:
 			type = "date";
-			location = "none";
 			snprintf(value, sizeof(value), "%04d%02d%02d", Entry->Date.Year, Entry->Date.Month, Entry->Date.Day);
 			break;
 		case PBK_Text_DTMF:
 			type = "dtmf_string";
-			location = "none";
 			text = TRUE;
 			break;
 		case PBK_Text_Email:
 			type = "email_address";
-			location = "none";
 			text = TRUE;
 			break;
 		case PBK_Number_Fax:
 			type = "fax_number";
-			location = "none";
 			text = TRUE;
 			break;
 		case PBK_Text_FirstName:
 			type = "first_name";
-			location = "none";
 			text = TRUE;
 			break;
 		case PBK_Text_SecondName:
 			type = "second_name";
-			location = "none";
 			text = TRUE;
 			break;
 		case PBK_Text_JobTitle:
 			type = "job_title";
-			location = "none";
 			text = TRUE;
 			break;
 		case PBK_Text_LastName:
 			type = "last_name";
-			location = "none";
 			text = TRUE;
 			break;
 		case PBK_Text_VOIP:
 			type = "voip";
-			location = "none";
 			text = TRUE;
 			break;
 		case PBK_Text_SIP:
 			type = "sip_id";
-			location = "none";
 			text = TRUE;
 			break;
 		case PBK_PushToTalkID:
 			type = "push_to_talk";
-			location = "none";
-			text = TRUE;
-			break;
-		case PBK_Number_Mobile_Home:
-			type = "mobile_number";
-			location = "home";
-			text = TRUE;
-			break;
-		case PBK_Number_Mobile_Work:
-			type = "mobile_number";
-			location = "work";
 			text = TRUE;
 			break;
 		case PBK_Number_Mobile:
 			type = "mobile_number";
-			location = "none";
 			text = TRUE;
 			break;
 		case PBK_Text_Note:
 			type = "note";
-			location = "none";
 			text = TRUE;
 			break;
 		case PBK_Number_Pager:
 			type = "pager";
-			location = "none";
-			text = TRUE;
-			break;
-		case PBK_Number_Home:
-			type = "phone_number";
-			location = "home";
-			text = TRUE;
-			break;
-		case PBK_Number_Work:
-			type = "phone_number";
-			location = "work";
 			text = TRUE;
 			break;
 		case PBK_Number_General:
 			type = "phone_number";
-			location = "none";
-			text = TRUE;
-			break;
-		case PBK_Text_WorkPostal:
-			type = "postal_address";
-			location = "none";
 			text = TRUE;
 			break;
 		case PBK_Text_Postal:
 			type = "postal_address";
-			location = "work";
-			text = TRUE;
-			break;
-		case PBK_Text_WorkZip:
-			type = "postal_code";
-			location = "work";
 			text = TRUE;
 			break;
 		case PBK_Text_Zip:
 			type = "postal_code";
-			location = "none";
 			text = TRUE;
 			break;
 		case PBK_Text_State:
 			type = "state";
-			location = "none";
-			text = TRUE;
-			break;
-		case PBK_Text_WorkState:
-			type = "state";
-			location = "work";
 			text = TRUE;
 			break;
 		case PBK_Text_StreetAddress:
 			type = "street_address";
-			location = "none";
-			text = TRUE;
-			break;
-		case PBK_Text_WorkStreetAddress:
-			type = "street_address";
-			location = "work";
 			text = TRUE;
 			break;
 		case PBK_Text_URL:
 			type = "url";
-			location = "none";
 			text = TRUE;
 			break;
 		case PBK_Number_Video:
 			type = "video_number";
-			location = "none";
 			text = TRUE;
 			break;
 		case PBK_Text_WVID:
 			type = "wvid";
-			location = "none";
 			text = TRUE;
 			break;
 		case PBK_Text_NameSuffix:
 			type = "suffix";
-			location = "none";
 			text = TRUE;
 			break;
 		case PBK_Text_NamePrefix:
 			type = "prefix";
-			location = "none";
 			text = TRUE;
 			break;
 		case PBK_Text_SWIS:
 			type = "share_view";
-			location = "none";
 			text = TRUE;
 			break;
 		default:
