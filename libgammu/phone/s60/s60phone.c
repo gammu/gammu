@@ -633,8 +633,29 @@ static GSM_Error S60_Reply_GetMemory(GSM_Protocol_Message msg, GSM_StateMachine 
 	return ERR_NEEDANOTHERANSWER;
 }
 
+GSM_Error S60_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
+{
+	char buffer[100];
+	GSM_Error error;
+
+	if (Entry->MemoryType != MEM_ME) {
+		return ERR_NOTSUPPORTED;
+	}
+
+	sprintf(buffer, "%d", Entry->Location);
+
+	s->Phone.Data.Memory = Entry;
+	error = GSM_WaitFor(s, buffer, strlen(buffer), NUM_CONTACTS_DELETE, S60_TIMEOUT, ID_None);
+	s->Phone.Data.Memory = NULL;
+
+	return error;
+}
+
 GSM_Error S60_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 {
+	if (Entry->MemoryType != MEM_ME) {
+		return ERR_NOTSUPPORTED;
+	}
 	return ERR_NOTIMPLEMENTED;
 }
 
@@ -642,10 +663,14 @@ GSM_Error S60_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 {
 	GSM_Error error;
 
-	/* TODO: add and get ID */
+	if (Entry->MemoryType != MEM_ME) {
+		return ERR_NOTSUPPORTED;
+	}
+
 	s->Phone.Data.Memory = Entry;
 	error = GSM_WaitFor(s, NULL, 0, NUM_CONTACTS_ADD, S60_TIMEOUT, ID_SetMemory);
 	s->Phone.Data.Memory = NULL;
+
 	if (error != ERR_NONE) {
 		return error;
 	}
@@ -731,7 +756,7 @@ GSM_Phone_Functions S60Phone = {
 	S60_GetNextMemory,
 	S60_SetMemory,
 	S60_AddMemory,
-	NOTIMPLEMENTED,                 /*      DeleteMemory */
+	S60_DeleteMemory,
 	NOTIMPLEMENTED,                 /*      DeleteAllMemory */
 	NOTIMPLEMENTED,			/*	GetSpeedDial		*/
 	NOTIMPLEMENTED,			/*	SetSpeedDial		*/

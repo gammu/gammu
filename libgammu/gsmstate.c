@@ -984,6 +984,11 @@ GSM_Error GSM_WaitFor (GSM_StateMachine *s, unsigned const char *buffer,
 		error = s->Protocol.Functions->WriteMessage(s, buffer, length, type);
 		if (error!=ERR_NONE) return error;
 
+		/* Special case when no reply is expected */
+		if (request == ID_None) {
+			return ERR_NONE;
+		}
+
 		error = GSM_WaitForOnce(s, buffer, length, type, timeout);
 		if (error != ERR_TIMEOUT) return error;
         }
