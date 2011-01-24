@@ -61,6 +61,7 @@ typedef enum {
 
 	/* Unknown/Other series */
 	N2630_PBK_FAVMESSAGING	 = 0x65,
+	N3600_PBK_UNKNOWN1	 = 0x7b, /* Unknown so far			*/
 	N6303_PBK_UNKNOWN1       = 0x8b,
 } GSM_71_65_Phonebook_Entries_Types;
 
