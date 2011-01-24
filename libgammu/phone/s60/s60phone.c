@@ -437,6 +437,7 @@ static GSM_Error S60_Reply_GetMemory(GSM_Protocol_Message msg, GSM_StateMachine 
 {
 	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
 	GSM_Error error;
+	char *type, *location, *value;
 
 	error = S60_SplitValues(&msg, s);
 	if (error != ERR_NONE) {
@@ -444,7 +445,13 @@ static GSM_Error S60_Reply_GetMemory(GSM_Protocol_Message msg, GSM_StateMachine 
 
 	}
 
-	if (Priv->MessageParts[0] == NULL || Priv->MessageParts[1] == NULL || Priv->MessageParts[2] == NULL) {
+	/* Grab values */
+	type = Priv->MessageParts[0];
+	location = Priv->MessageParts[1];
+	value =Priv->MessageParts[2];
+
+	/* We need all of them */
+	if (type == NULL || location == NULL || value == NULL) {
 		return ERR_UNKNOWN;
 	}
 
