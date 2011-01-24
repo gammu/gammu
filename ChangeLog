@@ -28,6 +28,7 @@ ChangeLog
 [+] * Possibility to limit time of day for SMS in SMSD (bug #1203).
 [-] * Enforce limits on SMS payload length.
 [+] * Made GSM_SMSCounter public (bug #1356).
+[+] * Support for S60 phones using Series60 applet (bug #423).
     
 20110119 - 1.29.0
 
