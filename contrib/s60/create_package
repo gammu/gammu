@@ -7,6 +7,15 @@ mkdir tmp
 
 cp *.py tmp/
 
-ensymble py2sis --appname="Series60 - Remote" --version=$VERSION --lang=EN --shortcaption="S60-Remote" --caps=LocalServices+ReadUserData+WriteUserData+WriteUserData+NetworkServices+UserEnvironment --icon="icon.svg" --verbose ./tmp series60-remote.sis
+ensymble py2sis \
+    --appname="Series60 - Remote" \
+    --version=$VERSION \
+    --lang=EN \
+    --shortcaption="S60-Remote" \
+    --caps=LocalServices+ReadUserData+WriteUserData+WriteUserData+NetworkServices+UserEnvironment \
+    --icon="icon.svg" \
+    --verbose \
+    ./tmp \
+    series60-remote.sis
 
 rm -rf tmp
