@@ -423,6 +423,7 @@ GSM_Error S60_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 	if (Entry->MemoryType != MEM_ME) {
 		return ERR_NOTSUPPORTED;
 	}
+	Entry->EntriesNum = 0;
 
 	sprintf(buffer, "%d", Entry->Location);
 
@@ -437,23 +438,146 @@ static GSM_Error S60_Reply_GetMemory(GSM_Protocol_Message msg, GSM_StateMachine 
 {
 	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
 	GSM_Error error;
-	char *type, *location, *value;
+	char *pos, *type, *location, *value;
+	GSM_MemoryEntry *Entry;
+	gboolean text = FALSE, home, work;
 
 	error = S60_SplitValues(&msg, s);
 	if (error != ERR_NONE) {
 		return error;
-
 	}
+
+	Entry = s->Phone.Data.Memory;
 
 	/* Grab values */
-	type = Priv->MessageParts[0];
-	location = Priv->MessageParts[1];
-	value =Priv->MessageParts[2];
+	pos = Priv->MessageParts[0];
+	type = Priv->MessageParts[1];
+	location = Priv->MessageParts[2];
+	value =Priv->MessageParts[3];
 
 	/* We need all of them */
-	if (type == NULL || location == NULL || value == NULL) {
+	if (pos == NULL || type == NULL || location == NULL || value == NULL) {
 		return ERR_UNKNOWN;
 	}
+
+	work = (strcmp(location, "work") == 0);
+	home = (strcmp(location, "home") == 0);
+
+	/* Store in contacts */
+	if(strcmp(type, "city") == 0) {
+		text = TRUE;
+		if (work) {
+			Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_WorkCity;
+		} else {
+			Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_City;
+		}
+	} else if(strcmp(type, "company_name") == 0) {
+		text = TRUE;
+		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_Company;
+	} else if(strcmp(type, "country") == 0) {
+		text = TRUE;
+		if (work) {
+			Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_WorkCountry;
+		} else {
+			Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_Country;
+		}
+	} else if(strcmp(type, "date") == 0) {
+		/* TODO */
+	} else if(strcmp(type, "dtmf_string") == 0) {
+		text = TRUE;
+		/* TODO */
+	} else if(strcmp(type, "email_address") == 0) {
+		text = TRUE;
+		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_Email;
+	} else if(strcmp(type, "extended_address") == 0) {
+		text = TRUE;
+	} else if(strcmp(type, "fax_number") == 0) {
+		text = TRUE;
+		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Number_Fax;
+	} else if(strcmp(type, "first_name") == 0) {
+		text = TRUE;
+		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_FirstName;
+	} else if(strcmp(type, "job_title") == 0) {
+		text = TRUE;
+		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_JobTitle;
+	} else if(strcmp(type, "last_name") == 0) {
+		text = TRUE;
+		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_LastName;
+	} else if(strcmp(type, "mobile_number") == 0) {
+		text = TRUE;
+		if (home) {
+			Entry->Entries[Entry->EntriesNum].EntryType = PBK_Number_Mobile_Home;
+		} else if (work) {
+			Entry->Entries[Entry->EntriesNum].EntryType = PBK_Number_Mobile_Work;
+		} else {
+			Entry->Entries[Entry->EntriesNum].EntryType = PBK_Number_Mobile;
+		}
+	} else if(strcmp(type, "note") == 0) {
+		text = TRUE;
+		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_Note;
+	} else if(strcmp(type, "pager_number") == 0) {
+		text = TRUE;
+		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Number_Pager;
+	} else if(strcmp(type, "phone_number") == 0) {
+		text = TRUE;
+		if (home) {
+			Entry->Entries[Entry->EntriesNum].EntryType = PBK_Number_Home;
+		} else if (work) {
+			Entry->Entries[Entry->EntriesNum].EntryType = PBK_Number_Work;
+		} else {
+			Entry->Entries[Entry->EntriesNum].EntryType = PBK_Number_General;
+		}
+	} else if(strcmp(type, "po_box") == 0) {
+		text = TRUE;
+		/* TODO */
+	} else if(strcmp(type, "postal_address") == 0) {
+		text = TRUE;
+		if (work) {
+			Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_WorkPostal;
+		} else {
+			Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_Postal;
+		}
+	} else if(strcmp(type, "postal_code") == 0) {
+		text = TRUE;
+		if (work) {
+			Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_WorkZip;
+		} else {
+			Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_Zip;
+		}
+	} else if(strcmp(type, "state") == 0) {
+		text = TRUE;
+		if (work) {
+			Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_WorkState;
+		} else {
+			Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_State;
+		}
+	} else if(strcmp(type, "street_address") == 0) {
+		text = TRUE;
+		if (work) {
+			Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_WorkStreetAddress;
+		} else {
+			Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_StreetAddress;
+		}
+	} else if(strcmp(type, "url") == 0) {
+		text = TRUE;
+		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_URL;
+	} else if(strcmp(type, "video_number") == 0) {
+		text = TRUE;
+		/* TODO */
+	} else if(strcmp(type, "wvid") == 0) {
+		/* TODO */
+	} else if(strcmp(type, "thumbnail_image") == 0) {
+		/* TODO */
+	} else {
+		smprintf(s, "WARNING: Ignoring unknown field type: %s\n", type);
+		return ERR_NEEDANOTHERANSWER;
+	}
+
+	if (text) {
+		DecodeUTF8(Entry->Entries[Entry->EntriesNum].Text, value, strlen(value));
+	}
+
+	Entry->EntriesNum++;
 
 	return ERR_NEEDANOTHERANSWER;
 }
