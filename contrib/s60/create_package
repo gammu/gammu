@@ -1,0 +1,47 @@
+#!/bin/sh
+
+PYTHON=python2.5
+ENSYMBLE_PY14=$HOME/ensymble/pys60-1.4/ensymble.py
+ENSYMBLE_PY20_DIR=$HOME/ensymble/pys60-2.0
+ENSYMBLE_PY20_FILE=ensymble.py
+VERSION=0.4.80
+
+# Create series60-remote-py{pys60-release}.sis
+
+DIR=$(pwd)
+
+mkdir tmp
+
+cp mobile.py tmp/default.py
+cp ../pc/devices/status_numbers.py ./tmp/status_numbers.py
+
+# Create file for PyS50 1.4.5
+
+$PYTHON $ENSYMBLE_PY14 py2sis --appname="Series60 - Remote" --version=$VERSION --lang=EN --shortcaption="S60-Remote" --caps=LocalServices+ReadUserData+WriteUserData+WriteUserData+NetworkServices+UserEnvironment --icon="icon.svg" --verbose ./tmp series60-remote-py14.sis
+
+# Create file for PyS60 2.0.0
+
+cd $ENSYMBLE_PY20_DIR
+$PYTHON $ENSYMBLE_PY20_FILE py2sis --appname="Series60 - Remote" --version=$VERSION --lang=EN --shortcaption="S60-Remote" --caps=LocalServices+ReadUserData+WriteUserData+WriteUserData+NetworkServices+UserEnvironment --icon="$DIR/icon.svg" --verbose "$DIR/tmp" "$DIR/series60-remote-py20.sis"
+
+cd $DIR
+
+# Copy PyS60 2.0.0 runtime
+
+cp $ENSYMBLE_PY20_DIR/PyS60Dependencies/Python_2.0.0.sis .
+
+rm -rf tmp
+
+# Download PyS60 packages from Sourceforge
+
+RELEASE=1_4_5
+
+if [ ! -f PythonForS60_${RELEASE}_3rdEd.sis ];
+then
+   echo "Downloading PyS60 $RELEASE from Sourceforge..."
+   wget http://sourceforge.net/projects/pys60/files/pys60/1.4.5/PythonForS60_${RELEASE}_3rdEd.sis/download > /dev/null 2>&1
+fi
+
+#wget http://sourceforge.net/projects/pys60/files/pys60/1.4.5/PythonForS60_${RELEASE}_2ndEdFP3.SIS/download
+#wget http://sourceforge.net/projects/pys60/files/pys60/1.4.5/PythonForS60_${RELEASE}_2ndEdFP2.SIS/download
+#wget http://sourceforge.net/projects/pys60/files/pys60/1.4.5/PythonForS60_${RELEASE}_2ndEd.SIS/download
