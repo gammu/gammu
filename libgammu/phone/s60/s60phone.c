@@ -651,12 +651,259 @@ GSM_Error S60_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 	return error;
 }
 
+GSM_Error S60_SetMemoryEntry(GSM_StateMachine *s, GSM_SubMemoryEntry *Entry, int pos, int reqtype)
+{
+	const char *type, *location;
+	char value[(GSM_PHONEBOOK_TEXT_LENGTH + 1) * 2];
+	char buffer [100 + (GSM_PHONEBOOK_TEXT_LENGTH + 1) * 2];
+	gboolean text = FALSE;
+
+	switch (Entry->EntryType) {
+		case PBK_Text_WorkCity:
+			type = "city";
+			location = "work";
+			text = TRUE;
+			break;
+		case PBK_Text_City:
+			type = "city";
+			location = "none";
+			text = TRUE;
+			break;
+		case PBK_Text_Company:
+			type = "company_name";
+			location = "none";
+			text = TRUE;
+			break;
+		case PBK_Text_WorkCountry:
+			type = "country";
+			location = "work";
+			text = TRUE;
+			break;
+		case PBK_Text_Country:
+			type = "country";
+			location = "none";
+			text = TRUE;
+			break;
+		case PBK_Date:
+			type = "date";
+			location = "none";
+			snprintf(value, sizeof(value), "%04d%02d%02d", Entry->Date.Year, Entry->Date.Month, Entry->Date.Day);
+			break;
+		case PBK_Text_DTMF:
+			type = "dtmf_string";
+			location = "none";
+			text = TRUE;
+			break;
+		case PBK_Text_Email:
+			type = "email_address";
+			location = "none";
+			text = TRUE;
+			break;
+		case PBK_Number_Fax:
+			type = "fax_number";
+			location = "none";
+			text = TRUE;
+			break;
+		case PBK_Text_FirstName:
+			type = "first_name";
+			location = "none";
+			text = TRUE;
+			break;
+		case PBK_Text_SecondName:
+			type = "second_name";
+			location = "none";
+			text = TRUE;
+			break;
+		case PBK_Text_JobTitle:
+			type = "job_title";
+			location = "none";
+			text = TRUE;
+			break;
+		case PBK_Text_LastName:
+			type = "last_name";
+			location = "none";
+			text = TRUE;
+			break;
+		case PBK_Text_VOIP:
+			type = "voip";
+			location = "none";
+			text = TRUE;
+			break;
+		case PBK_Text_SIP:
+			type = "sip_id";
+			location = "none";
+			text = TRUE;
+			break;
+		case PBK_PushToTalkID:
+			type = "push_to_talk";
+			location = "none";
+			text = TRUE;
+			break;
+		case PBK_Number_Mobile_Home:
+			type = "mobile_number";
+			location = "home";
+			text = TRUE;
+			break;
+		case PBK_Number_Mobile_Work:
+			type = "mobile_number";
+			location = "work";
+			text = TRUE;
+			break;
+		case PBK_Number_Mobile:
+			type = "mobile_number";
+			location = "none";
+			text = TRUE;
+			break;
+		case PBK_Text_Note:
+			type = "note";
+			location = "none";
+			text = TRUE;
+			break;
+		case PBK_Number_Pager:
+			type = "pager";
+			location = "none";
+			text = TRUE;
+			break;
+		case PBK_Number_Home:
+			type = "phone_number";
+			location = "home";
+			text = TRUE;
+			break;
+		case PBK_Number_Work:
+			type = "phone_number";
+			location = "work";
+			text = TRUE;
+			break;
+		case PBK_Number_General:
+			type = "phone_number";
+			location = "none";
+			text = TRUE;
+			break;
+		case PBK_Text_WorkPostal:
+			type = "postal_address";
+			location = "none";
+			text = TRUE;
+			break;
+		case PBK_Text_Postal:
+			type = "postal_address";
+			location = "work";
+			text = TRUE;
+			break;
+		case PBK_Text_WorkZip:
+			type = "postal_code";
+			location = "work";
+			text = TRUE;
+			break;
+		case PBK_Text_Zip:
+			type = "postal_code";
+			location = "none";
+			text = TRUE;
+			break;
+		case PBK_Text_State:
+			type = "state";
+			location = "none";
+			text = TRUE;
+			break;
+		case PBK_Text_WorkState:
+			type = "state";
+			location = "work";
+			text = TRUE;
+			break;
+		case PBK_Text_StreetAddress:
+			type = "street_address";
+			location = "none";
+			text = TRUE;
+			break;
+		case PBK_Text_WorkStreetAddress:
+			type = "street_address";
+			location = "work";
+			text = TRUE;
+			break;
+		case PBK_Text_URL:
+			type = "url";
+			location = "none";
+			text = TRUE;
+			break;
+		case PBK_Number_Video:
+			type = "video_number";
+			location = "none";
+			text = TRUE;
+			break;
+		case PBK_Text_WVID:
+			type = "wvid";
+			location = "none";
+			text = TRUE;
+			break;
+		case PBK_Text_NameSuffix:
+			type = "suffix";
+			location = "none";
+			text = TRUE;
+			break;
+		case PBK_Text_NamePrefix:
+			type = "prefix";
+			location = "none";
+			text = TRUE;
+			break;
+		case PBK_Text_SWIS:
+			type = "share_view";
+			location = "none";
+			text = TRUE;
+			break;
+		default:
+			Entry->AddError = ERR_NOTIMPLEMENTED;
+			return ERR_NONE;
+	}
+
+	if (text) {
+		EncodeUTF8(value, Entry->Text);
+	}
+
+	snprintf(buffer, sizeof(buffer), "%d%c%s%c%s%c%s%c",
+		pos, NUM_SEPERATOR,
+		type , NUM_SEPERATOR,
+		location, NUM_SEPERATOR,
+		value, NUM_SEPERATOR);
+
+	return GSM_WaitFor(s, buffer, strlen(buffer), reqtype, S60_TIMEOUT, ID_None);
+}
+
 GSM_Error S60_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 {
+	GSM_MemoryEntry oldentry;
+	GSM_Error error;
+	int i;
+
 	if (Entry->MemoryType != MEM_ME) {
 		return ERR_NOTSUPPORTED;
 	}
-	return ERR_NOTIMPLEMENTED;
+	oldentry.MemoryType = Entry->MemoryType;
+	oldentry.Location = Entry->Location;
+
+	/* Read existing entry */
+	error = S60_GetMemory(s, &oldentry);
+	if (error != ERR_NONE) {
+		return error;
+	}
+
+	/* TODO: Here should be some clever method for doing only needed changes */
+
+	/* Delete all existing fields */
+	for (i = 0; i < oldentry.EntriesNum; i++) {
+		error = S60_SetMemoryEntry(s, &(oldentry.Entries[i]), Entry->Location, NUM_CONTACTS_CHANGE_REMOVEFIELD);
+		if (error != ERR_NONE) {
+			return error;
+		}
+	}
+
+	/* Set all new fields */
+	for (i = 0; i < Entry->EntriesNum; i++) {
+		error = S60_SetMemoryEntry(s, &(Entry->Entries[i]), Entry->Location, NUM_CONTACTS_CHANGE_ADDFIELD);
+		if (error != ERR_NONE) {
+			return error;
+		}
+	}
+
+	return ERR_NONE;
 }
 
 GSM_Error S60_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
