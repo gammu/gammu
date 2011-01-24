@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libGammu 1.29.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-01-19 11:16+0100\n"
+"POT-Creation-Date: 2011-01-24 15:47+0100\n"
 "PO-Revision-Date: 2011-01-21 11:21+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -340,35 +340,35 @@ msgstr "Neznámý popis chyby."
 msgid "Templates"
 msgstr "Šablony"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1959
+#: libgammu/phone/nokia/dct3/n6110.c:1963
 msgid "Personal"
 msgstr "Osobní"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1961 libgammu/phone/nokia/nfunc.c:1115
+#: libgammu/phone/nokia/dct3/n6110.c:1965 libgammu/phone/nokia/nfunc.c:1141
 msgid "Car"
 msgstr "Auto"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1963 libgammu/phone/nokia/nfunc.c:1117
+#: libgammu/phone/nokia/dct3/n6110.c:1967 libgammu/phone/nokia/nfunc.c:1143
 msgid "Headset"
 msgstr "Sluchátka"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1969 libgammu/phone/nokia/nfunc.c:1105
+#: libgammu/phone/nokia/dct3/n6110.c:1973 libgammu/phone/nokia/nfunc.c:1131
 msgid "General"
 msgstr "Obecné"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1971 libgammu/phone/nokia/nfunc.c:1107
+#: libgammu/phone/nokia/dct3/n6110.c:1975 libgammu/phone/nokia/nfunc.c:1133
 msgid "Silent"
 msgstr "Tiché"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1973
+#: libgammu/phone/nokia/dct3/n6110.c:1977
 msgid "Discreet"
 msgstr "Diskritní"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1975
+#: libgammu/phone/nokia/dct3/n6110.c:1979
 msgid "Loud"
 msgstr "Hlasité"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1977
+#: libgammu/phone/nokia/dct3/n6110.c:1981
 msgid "My style"
 msgstr "Můj styl"
 
@@ -388,35 +388,35 @@ msgstr "Odeslané zprávy"
 msgid "Saved items"
 msgstr "Uložené zprávy"
 
-#: libgammu/phone/nokia/nfunc.c:921
+#: libgammu/phone/nokia/nfunc.c:947
 msgid "Family"
 msgstr "Rodina"
 
-#: libgammu/phone/nokia/nfunc.c:923
+#: libgammu/phone/nokia/nfunc.c:949
 msgid "VIP"
 msgstr "VIP"
 
-#: libgammu/phone/nokia/nfunc.c:925
+#: libgammu/phone/nokia/nfunc.c:951
 msgid "Friends"
 msgstr "Přatelé"
 
-#: libgammu/phone/nokia/nfunc.c:927
+#: libgammu/phone/nokia/nfunc.c:953
 msgid "Colleagues"
 msgstr "Kolegové"
 
-#: libgammu/phone/nokia/nfunc.c:929
+#: libgammu/phone/nokia/nfunc.c:955
 msgid "Other"
 msgstr "Ostatní"
 
-#: libgammu/phone/nokia/nfunc.c:1109
+#: libgammu/phone/nokia/nfunc.c:1135
 msgid "Meeting"
 msgstr "Schůzka"
 
-#: libgammu/phone/nokia/nfunc.c:1111
+#: libgammu/phone/nokia/nfunc.c:1137
 msgid "Outdoor"
 msgstr "Venkovní"
 
-#: libgammu/phone/nokia/nfunc.c:1113
+#: libgammu/phone/nokia/nfunc.c:1139
 msgid "Pager"
 msgstr "Pager"
 

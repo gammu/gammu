@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-01-19 11:16+0100\n"
+"POT-Creation-Date: 2011-01-24 15:47+0100\n"
 "PO-Revision-Date: 2010-02-20 13:07+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: none\n"
@@ -332,35 +332,35 @@ msgstr "תיאור השגיאה אינו ידוע."
 msgid "Templates"
 msgstr "תבניות"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1959
+#: libgammu/phone/nokia/dct3/n6110.c:1963
 msgid "Personal"
 msgstr "אישי"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1961 libgammu/phone/nokia/nfunc.c:1115
+#: libgammu/phone/nokia/dct3/n6110.c:1965 libgammu/phone/nokia/nfunc.c:1141
 msgid "Car"
 msgstr "רכב"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1963 libgammu/phone/nokia/nfunc.c:1117
+#: libgammu/phone/nokia/dct3/n6110.c:1967 libgammu/phone/nokia/nfunc.c:1143
 msgid "Headset"
 msgstr "אוזניה"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1969 libgammu/phone/nokia/nfunc.c:1105
+#: libgammu/phone/nokia/dct3/n6110.c:1973 libgammu/phone/nokia/nfunc.c:1131
 msgid "General"
 msgstr "כללי"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1971 libgammu/phone/nokia/nfunc.c:1107
+#: libgammu/phone/nokia/dct3/n6110.c:1975 libgammu/phone/nokia/nfunc.c:1133
 msgid "Silent"
 msgstr "שקט"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1973
+#: libgammu/phone/nokia/dct3/n6110.c:1977
 msgid "Discreet"
 msgstr "חשאי"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1975
+#: libgammu/phone/nokia/dct3/n6110.c:1979
 msgid "Loud"
 msgstr "צליל חזק"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1977
+#: libgammu/phone/nokia/dct3/n6110.c:1981
 msgid "My style"
 msgstr "הסגנון שלי"
 
@@ -380,35 +380,35 @@ msgstr "פריטים שנשלחו"
 msgid "Saved items"
 msgstr "פריטים שנשמרו"
 
-#: libgammu/phone/nokia/nfunc.c:921
+#: libgammu/phone/nokia/nfunc.c:947
 msgid "Family"
 msgstr "משפחה"
 
-#: libgammu/phone/nokia/nfunc.c:923
+#: libgammu/phone/nokia/nfunc.c:949
 msgid "VIP"
 msgstr "אח\"מים"
 
-#: libgammu/phone/nokia/nfunc.c:925
+#: libgammu/phone/nokia/nfunc.c:951
 msgid "Friends"
 msgstr "חברים"
 
-#: libgammu/phone/nokia/nfunc.c:927
+#: libgammu/phone/nokia/nfunc.c:953
 msgid "Colleagues"
 msgstr "שותפים לעבודה"
 
-#: libgammu/phone/nokia/nfunc.c:929
+#: libgammu/phone/nokia/nfunc.c:955
 msgid "Other"
 msgstr "אחר"
 
-#: libgammu/phone/nokia/nfunc.c:1109
+#: libgammu/phone/nokia/nfunc.c:1135
 msgid "Meeting"
 msgstr "פגישה"
 
-#: libgammu/phone/nokia/nfunc.c:1111
+#: libgammu/phone/nokia/nfunc.c:1137
 msgid "Outdoor"
 msgstr "מחוץ למבנה"
 
-#: libgammu/phone/nokia/nfunc.c:1113
+#: libgammu/phone/nokia/nfunc.c:1139
 msgid "Pager"
 msgstr "זימונית"
 
