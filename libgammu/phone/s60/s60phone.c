@@ -535,6 +535,12 @@ static GSM_Error S60_Reply_GetMemory(GSM_Protocol_Message msg, GSM_StateMachine 
 	} else if(strcmp(type, "last_name") == 0) {
 		text = TRUE;
 		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_LastName;
+	} else if(strcmp(type, "voip") == 0) {
+		text = TRUE;
+		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_VOIP;
+	} else if(strcmp(type, "push_to_talk") == 0) {
+		text = TRUE;
+		Entry->Entries[Entry->EntriesNum].EntryType = PBK_PushToTalkID;
 	} else if(strcmp(type, "mobile_number") == 0) {
 		text = TRUE;
 		if (home) {

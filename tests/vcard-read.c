@@ -141,6 +141,7 @@ int main(int argc, char **argv)
 			case PBK_Text_UserID:
 			case PBK_Text_PictureName:
 			case PBK_PushToTalkID:
+			case PBK_Text_VOIP:
 				test_result(mywstrncmp(pbk.Entries[i].Text, backup.PhonePhonebook[0]->Entries[i].Text, 0) == TRUE);
 				break;
 			case PBK_Photo:

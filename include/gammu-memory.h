@@ -337,6 +337,10 @@ typedef enum {
 	 * Second name. (Text)
 	 */
 	PBK_Text_SecondName,
+	/**
+	 * VOIP address (Text).
+	 */
+	PBK_Text_VOIP,
 } GSM_EntryType;
 
 /**
