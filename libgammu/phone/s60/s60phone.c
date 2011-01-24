@@ -434,6 +434,35 @@ GSM_Error S60_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 	return error;
 }
 
+GSM_Error S60_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry, gboolean Start)
+{
+	GSM_Error error;
+	GSM_MemoryStatus Status;
+	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
+
+	if (Entry->MemoryType != MEM_ME) {
+		return ERR_NOTSUPPORTED;
+	}
+
+	Status.MemoryType = Entry->MemoryType;
+
+	if (Start) {
+		error = S60_GetMemoryStatus(s, &Status);
+		if (error != ERR_NONE) {
+			return error;
+		}
+		Priv->ContactLocationsPos = 0;
+	}
+
+	if (Priv->ContactLocations[Priv->ContactLocationsPos] == 0) {
+		return ERR_EMPTY;
+	}
+
+	Entry->Location = Priv->ContactLocations[Priv->ContactLocationsPos++];
+
+	return S60_GetMemory(s, Entry);
+}
+
 static GSM_Error S60_Reply_GetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
@@ -648,7 +677,7 @@ GSM_Phone_Functions S60Phone = {
         NOTIMPLEMENTED,      		/*  	GetCategoryStatus 	*/
 	S60_GetMemoryStatus,
 	S60_GetMemory,
-	NOTIMPLEMENTED,                 /*      GetNextMemory */
+	S60_GetNextMemory,
 	NOTIMPLEMENTED,                 /*      SetMemory */
 	NOTIMPLEMENTED,                 /*      AddMemory */
 	NOTIMPLEMENTED,                 /*      DeleteMemory */
