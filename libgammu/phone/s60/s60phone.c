@@ -143,6 +143,8 @@ static GSM_Error S60_Reply_Generic(GSM_Protocol_Message msg, GSM_StateMachine *s
 			return ERR_NEEDANOTHERANSWER;
 		case NUM_LOCATION_REPLY_NA:
 			return ERR_NOTSUPPORTED;
+		case NUM_CONTACTS_REPLY_CONTACT_NOT_FOUND:
+			return ERR_EMPTY;
 		default:
 			return ERR_NONE;
 	}
@@ -915,6 +917,7 @@ GSM_Reply_Function S60ReplyFunctions[] = {
 	{S60_Reply_Generic, "", 0x00, NUM_CONTACTS_REPLY_CONTACT_START, ID_GetMemory },
 	{S60_Reply_GetMemory, "", 0x00, NUM_CONTACTS_REPLY_CONTACT_LINE, ID_GetMemory },
 	{S60_Reply_Generic, "", 0x00, NUM_CONTACTS_REPLY_CONTACT_END, ID_GetMemory },
+	{S60_Reply_Generic, "", 0x00, NUM_CONTACTS_REPLY_CONTACT_NOT_FOUND, ID_GetMemory },
 
 	{S60_Reply_AddMemory, "", 0x00, NUM_CONTACTS_ADD_REPLY_ID, ID_SetMemory },
 

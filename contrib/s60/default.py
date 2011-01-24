@@ -184,8 +184,11 @@ class Mobile(object):
 
             elif (header == NUM_CONTACTS_REQUEST_CONTACT):
                 key = int(message.split(NUM_SEPERATOR)[0])
-                contact = self.contactDb[key]
-                self.sendContact(contact)
+                try:
+                    contact = self.contactDb[key]
+                    self.sendContact(contact)
+                except:
+                    self.send(NUM_CONTACTS_REPLY_CONTACT_NOT_FOUND)
 
             elif (header == NUM_CONTACTS_REQUEST_CONTACTS_ALL):
                 self.sendAllContacts()
