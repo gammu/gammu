@@ -98,6 +98,10 @@ Device connection parameters
         OBEX (IrMC or file transfer) connection for most of phones.
     ``bluerfgnapbus``
         GNapplet based connection for Symbian phones
+    ``blues60``
+        Connection to Series60 applet in S60 phones.
+
+        .. versionadded:: 1.29.90
 
 .. config:option:: Device
 
