@@ -538,6 +538,9 @@ static GSM_Error S60_Reply_GetMemory(GSM_Protocol_Message msg, GSM_StateMachine 
 	} else if(strcmp(type, "voip") == 0) {
 		text = TRUE;
 		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_VOIP;
+	} else if(strcmp(type, "sip_id") == 0) {
+		text = TRUE;
+		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_SIP;
 	} else if(strcmp(type, "push_to_talk") == 0) {
 		text = TRUE;
 		Entry->Entries[Entry->EntriesNum].EntryType = PBK_PushToTalkID;

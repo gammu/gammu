@@ -342,6 +342,10 @@ typedef enum {
 	 */
 	PBK_Text_VOIP,
 	/**
+	 * SIP address (Text).
+	 */
+	PBK_Text_SIP,
+	/**
 	 * DTMF (Text).
 	 */
 	PBK_Text_DTMF,

@@ -209,6 +209,7 @@ void SearchOneEntry(GSM_MemoryEntry *Entry, const unsigned char *Text)
 			case PBK_Text_URL           :
 			case PBK_Text_LUID          :
 			case PBK_Text_VOIP          :
+			case PBK_Text_SIP          :
 			case PBK_Text_DTMF          :
 			case PBK_Text_Name          :
 			case PBK_Text_LastName      :

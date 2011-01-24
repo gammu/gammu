@@ -229,6 +229,9 @@ PyObject *MemoryEntryToPython(const GSM_MemoryEntry * entry)
 			case PBK_Text_VOIP:
 				convert_text("Text_VOIP");
 				break;
+			case PBK_Text_SIP:
+				convert_text("Text_SIP");
+				break;
 			case PBK_Text_DTMF:
 				convert_text("Text_DTMF");
 				break;
@@ -563,6 +566,9 @@ int MemoryEntryFromPython(PyObject * dict, GSM_MemoryEntry * entry,
 		} else if (strcmp("Text_VOIP", type) == 0) {
 			valuetype = 't';
 			entry->Entries[i].EntryType = PBK_Text_VOIP;
+		} else if (strcmp("Text_SIP", type) == 0) {
+			valuetype = 't';
+			entry->Entries[i].EntryType = PBK_Text_SIP;
 		} else if (strcmp("Text_DTMF", type) == 0) {
 			valuetype = 't';
 			entry->Entries[i].EntryType = PBK_Text_DTMF;
