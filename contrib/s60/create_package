@@ -12,6 +12,7 @@ ensymble py2sis \
     --version=$VERSION \
     --lang=EN \
     --shortcaption="S60-Remote" \
+    --caption="Series60 - Remote" \
     --caps=LocalServices+ReadUserData+WriteUserData+WriteUserData+NetworkServices+UserEnvironment \
     --icon="icon.svg" \
     --verbose \
