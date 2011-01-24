@@ -444,7 +444,7 @@ static GSM_Error S60_Reply_GetMemory(GSM_Protocol_Message msg, GSM_StateMachine 
 
 	}
 
-	if (Priv->MessageParts[0] == NULL || Priv->MessageParts[1] == NULL) {
+	if (Priv->MessageParts[0] == NULL || Priv->MessageParts[1] == NULL || Priv->MessageParts[2] == NULL) {
 		return ERR_UNKNOWN;
 	}
 
