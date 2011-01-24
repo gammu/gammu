@@ -70,6 +70,7 @@ class Mobile(object):
 
         self.lock = e32.Ao_lock()
         app.exit_key_handler = self.exitHandler
+        app.screen = 'normal'
 
     def statusUpdate(self, rect=None):
         if not self.useCanvas:
@@ -761,12 +762,12 @@ class Mobile(object):
         entry.replication = replication
         entry.alarm = alarm
         entry.priority = priority
-        
+
         # Clear the old repeat
         entry.set_repeat(None)
-        
+
         entry.set_repeat(self.buildCalendarEntryRepeat(repeat_type,  repeat_days,  repeat_exceptions,  repeat_start,  repeat_end,  repeat_interval))
-    
+
     def buildCalendarEntryRepeat(self,   type,  days,  exceptions,  start,  end,  interval):
         if not type:
             return None
