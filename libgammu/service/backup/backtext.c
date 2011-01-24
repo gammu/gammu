@@ -578,6 +578,11 @@ static GSM_Error SavePbkEntry(FILE *file, GSM_MemoryEntry *Pbk, gboolean UseUnic
 				error = SaveBackupText(file, "", buffer, UseUnicode);
 				if (error != ERR_NONE) return error;
 				break;
+			case PBK_Text_DTMF:
+				sprintf(buffer,"Entry%02iType = DTMF%c%c",j,13,10);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
+				break;
 			case PBK_Date:
 				sprintf(buffer,"Entry%02iType = Date%c%cEntry%02iText",j,13,10, j);
 				error = SaveBackupText(file, "", buffer, UseUnicode);
@@ -1924,6 +1929,8 @@ static void ReadPbkEntry(INI_Section *file_info, char *section, GSM_MemoryEntry 
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_LUID;
 			} else if (strcasecmp(readvalue,"VOIP") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_VOIP;
+			} else if (strcasecmp(readvalue,"DTMF") == 0) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_DTMF;
 			} else if (strcasecmp(readvalue,"Name") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Name;
 			} else if (strcasecmp(readvalue,"Category") == 0) {

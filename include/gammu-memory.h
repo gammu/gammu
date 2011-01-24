@@ -341,6 +341,10 @@ typedef enum {
 	 * VOIP address (Text).
 	 */
 	PBK_Text_VOIP,
+	/**
+	 * DTMF (Text).
+	 */
+	PBK_Text_DTMF,
 } GSM_EntryType;
 
 /**

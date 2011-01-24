@@ -134,9 +134,12 @@ GSM_Error PrintMemorySubEntry(GSM_SubMemoryEntry *entry, GSM_StateMachine *sm)
 	case PBK_Text_Email2        : printf(LISTFORMAT, _("Email address 2")); break;
 	case PBK_Text_URL           : printf(LISTFORMAT, _("URL address")); break;
 	case PBK_Text_LUID          : printf(LISTFORMAT, _("LUID")); break;
+	case PBK_Text_VOIP          : printf(LISTFORMAT, _("VOIP")); break;
+	case PBK_Text_DTMF          : printf(LISTFORMAT, _("DTMF")); break;
 	case PBK_Text_Name          : printf(LISTFORMAT, _("Name")); break;
 	case PBK_Text_LastName      : printf(LISTFORMAT, _("Last name")); break;
 	case PBK_Text_FirstName     : printf(LISTFORMAT, _("First name")); break;
+	case PBK_Text_SecondName     : printf(LISTFORMAT, _("Second name")); break;
 	case PBK_Text_FormalName     : printf(LISTFORMAT, _("Formal name")); break;
 	case PBK_Text_NickName     : printf(LISTFORMAT, _("Nick name")); break;
 	case PBK_Text_Company       : printf(LISTFORMAT, _("Company")); break;

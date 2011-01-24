@@ -369,6 +369,14 @@ GSM_Error GSM_EncodeVCARD(GSM_Debug_Info *di, char *Buffer, const size_t buff_le
 					error = VC_Store(Buffer, buff_len, Length, "X-SIP;VOIP");
 					if (error != ERR_NONE) return error;
 					break;
+				case PBK_Text_DTMF      :
+					if (UnicodeLength(pbk->Entries[i].Text) == 0) {
+						ignore = TRUE;
+						break;
+					}
+					error = VC_Store(Buffer, buff_len, Length, "X-DTMF");
+					if (error != ERR_NONE) return error;
+					break;
 				case PBK_PushToTalkID:
 					if (UnicodeLength(pbk->Entries[i].Text) == 0) {
 						ignore = TRUE;
@@ -1004,6 +1012,12 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 			if (ReadVCALText(Line, "X-IRMC-LUID", Buff,  (version >= 3))) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_LUID;
+				Pbk->EntriesNum++;
+				continue;
+			}
+			if (ReadVCALText(Line, "X-DTMF", Buff,  (version >= 3))) {
+				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_DTMF;
 				Pbk->EntriesNum++;
 				continue;
 			}

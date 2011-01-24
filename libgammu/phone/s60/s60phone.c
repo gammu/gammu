@@ -514,7 +514,7 @@ static GSM_Error S60_Reply_GetMemory(GSM_Protocol_Message msg, GSM_StateMachine 
 		/* TODO */
 	} else if(strcmp(type, "dtmf_string") == 0) {
 		text = TRUE;
-		/* TODO */
+		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_DTMF;
 	} else if(strcmp(type, "email_address") == 0) {
 		text = TRUE;
 		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_Email;
