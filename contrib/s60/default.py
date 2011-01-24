@@ -69,6 +69,7 @@ class Mobile(object):
         self.lock = e32.Ao_lock()
         app.exit_key_handler = self.exitHandler
         app.screen = 'normal'
+        app.menu = [(u'Exit', self.exitHandler)]
 
     def statusUpdate(self, rect=None):
         if not self.useCanvas:
