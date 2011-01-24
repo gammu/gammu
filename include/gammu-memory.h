@@ -361,6 +361,14 @@ typedef enum {
 	 * Wireless Village user ID. (Text)
 	 */
 	PBK_Text_WVID,
+	/**
+	 * Name prefix (Text)
+	 */
+	PBK_Text_NamePrefix,
+	/**
+	 * Name suffix (Text)
+	 */
+	PBK_Text_NameSuffix,
 } GSM_EntryType;
 
 /**

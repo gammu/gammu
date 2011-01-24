@@ -160,6 +160,12 @@ PyObject *MemoryEntryToPython(const GSM_MemoryEntry * entry)
 			case PBK_Text_FormalName:
 				convert_text("Text_FormalName");
 				break;
+			case PBK_Text_NamePrefix:
+				convert_text("Text_NamePrefix");
+				break;
+			case PBK_Text_NameSuffix:
+				convert_text("Text_NameSuffix");
+				break;
 			case PBK_Text_Company:
 				convert_text("Text_Company");
 				break;
@@ -511,6 +517,12 @@ int MemoryEntryFromPython(PyObject * dict, GSM_MemoryEntry * entry,
 		} else if (strcmp("Text_FormalName", type) == 0) {
 			valuetype = 't';
 			entry->Entries[i].EntryType = PBK_Text_FormalName;
+		} else if (strcmp("Text_NameSuffix", type) == 0) {
+			valuetype = 't';
+			entry->Entries[i].EntryType = PBK_Text_NameSuffix;
+		} else if (strcmp("Text_NamePrefix", type) == 0) {
+			valuetype = 't';
+			entry->Entries[i].EntryType = PBK_Text_NamePrefix;
 		} else if (strcmp("Text_Company", type) == 0) {
 			valuetype = 't';
 			entry->Entries[i].EntryType = PBK_Text_Company;

@@ -183,6 +183,14 @@ GSM_Error GSM_EncodeVCARD(GSM_Debug_Info *di, char *Buffer, const size_t buff_le
 					error = VC_Store(Buffer, buff_len, Length, "FN");
 					if (error != ERR_NONE) return error;
 					break;
+				case PBK_Text_NamePrefix:
+					error = VC_Store(Buffer, buff_len, Length, "X-NAME-PREFIX");
+					if (error != ERR_NONE) return error;
+					break;
+				case PBK_Text_NameSuffix:
+					error = VC_Store(Buffer, buff_len, Length, "X-NAME-SUFFIX");
+					if (error != ERR_NONE) return error;
+					break;
 				case PBK_Text_FirstName:
 					firstname = i;
 					ignore = TRUE;
@@ -1113,6 +1121,18 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 			if (ReadVCALText(Line, "FN", Buff,  (version >= 3))) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_FormalName;
+				Pbk->EntriesNum++;
+				continue;
+			}
+			if (ReadVCALText(Line, "X-NAME-PREFIX", Buff,  (version >= 3))) {
+				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_NamePrefix;
+				Pbk->EntriesNum++;
+				continue;
+			}
+			if (ReadVCALText(Line, "X-NAME-SUFFIX", Buff,  (version >= 3))) {
+				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_NameSuffix;
 				Pbk->EntriesNum++;
 				continue;
 			}

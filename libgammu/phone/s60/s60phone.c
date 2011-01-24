@@ -612,10 +612,10 @@ static GSM_Error S60_Reply_GetMemory(GSM_Protocol_Message msg, GSM_StateMachine 
 		/* TODO */
 	} else if(strcmp(type, "suffix") == 0) {
 		text = TRUE;
-		/* TODO */
+		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_NameSuffix;
 	} else if(strcmp(type, "prefix") == 0) {
 		text = TRUE;
-		/* TODO */
+		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_NamePrefix;
 	} else if(strcmp(type, "share_view") == 0) {
 		text = TRUE;
 		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_SWIS;

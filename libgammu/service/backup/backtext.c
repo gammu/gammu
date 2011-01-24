@@ -493,6 +493,16 @@ static GSM_Error SavePbkEntry(FILE *file, GSM_MemoryEntry *Pbk, gboolean UseUnic
 				error = SaveBackupText(file, "", buffer, UseUnicode);
 				if (error != ERR_NONE) return error;
 				break;
+			case PBK_Text_NamePrefix:
+				sprintf(buffer,"Entry%02iType = NamePrefix%c%c",j,13,10);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
+				break;
+			case PBK_Text_NameSuffix:
+				sprintf(buffer,"Entry%02iType = NameSuffix%c%c",j,13,10);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
+				break;
 			case PBK_Text_Company:
 				sprintf(buffer,"Entry%02iType = Company%c%c",j,13,10);
 				error = SaveBackupText(file, "", buffer, UseUnicode);
@@ -1914,6 +1924,10 @@ static void ReadPbkEntry(INI_Section *file_info, char *section, GSM_MemoryEntry 
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_NickName;
 			} else if (strcasecmp(readvalue,"FormalName") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_FormalName;
+			} else if (strcasecmp(readvalue,"NamePrefix") == 0) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_NamePrefix;
+			} else if (strcasecmp(readvalue,"NameSuffix") == 0) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_NameSuffix;
 			} else if (strcasecmp(readvalue,"LastName") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_LastName;
 			} else if (strcasecmp(readvalue,"Company") == 0) {

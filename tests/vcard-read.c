@@ -122,6 +122,8 @@ int main(int argc, char **argv)
 			case PBK_Text_FirstName:
 			case PBK_Text_SecondName:
 			case PBK_Text_FormalName:
+			case PBK_Text_NamePrefix:
+			case PBK_Text_NameSuffix:
 			case PBK_Text_NickName:
 			case PBK_Text_Company:
 			case PBK_Text_JobTitle:
