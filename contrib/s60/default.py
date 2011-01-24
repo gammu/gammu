@@ -16,6 +16,7 @@ import inbox
 import contacts
 import telephone
 import messaging
+import location
 from appuifw import *
 from status_numbers import *
 
@@ -171,6 +172,9 @@ class Mobile(object):
             elif (header == NUM_SYSINFO_REQUEST):
                 full = bool(int(message.split(NUM_SEPERATOR)[0]))
                 self.sendSysinfo(full)
+
+            elif (header == NUM_LOCATION_REQUEST):
+                self.sendLocation()
 
             elif (header == NUM_CONTACTS_REQUEST_HASH_ALL):
                 self.sendContactHash()
@@ -337,6 +341,14 @@ class Mobile(object):
             self.send(NUM_SYSINFO_REPLY_LINE, "total_rom", sysinfo.total_rom())
 
         self.send(NUM_SYSINFO_REPLY_END)
+
+    def sendLocation(self):
+        loc = location.gsm_location()
+        if loc is None:
+            self.send(NUM_LOCATION_REPLY_NA)
+        else:
+            mcc, mnc, lac, cellid = loc
+            self.send(NUM_LOCATION_REPLY, '%03d' % mcc, '%02d' % mnc, '%X' % lac, '%X' % cellid)
 
     def contactDict(self):
         keys = self.contactDb.keys()

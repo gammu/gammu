@@ -45,6 +45,7 @@ GSM_Error S60_Initialise(GSM_StateMachine *s)
 	Priv->ToDoLocationsSize = 0;
 	Priv->ToDoLocationsPos = 0;
 
+	s->Phone.Data.NetworkInfo = NULL;
 	s->Phone.Data.SignalQuality = NULL;
 	s->Phone.Data.BatteryCharge = NULL;
 	s->Phone.Data.Memory = NULL;
@@ -140,6 +141,8 @@ static GSM_Error S60_Reply_Generic(GSM_Protocol_Message msg, GSM_StateMachine *s
 		case NUM_CONTACTS_REPLY_CONTACT_START:
 		case NUM_CALENDAR_REPLY_ENTRIES_START:
 			return ERR_NEEDANOTHERANSWER;
+		case NUM_LOCATION_REPLY_NA:
+			return ERR_NOTSUPPORTED;
 		default:
 			return ERR_NONE;
 	}
@@ -179,6 +182,58 @@ static GSM_Error S60_GetSignalQuality(GSM_StateMachine *s, GSM_SignalQuality *si
 	error = S60_GetInfo(s);
 	s->Phone.Data.SignalQuality = NULL;
 	return error;
+}
+
+static GSM_Error S60_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo)
+{
+	GSM_Error error;
+
+	s->Phone.Data.NetworkInfo = netinfo;
+	error = GSM_WaitFor(s, NULL, 0, NUM_LOCATION_REQUEST, S60_TIMEOUT, ID_GetNetworkInfo);
+	s->Phone.Data.NetworkInfo = NULL;
+	return error;
+}
+
+static GSM_Error S60_Reply_GetNetworkInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
+	GSM_Error error;
+	char *mcc, *mnc, *lac, *cellid;
+
+	if (s->Phone.Data.NetworkInfo == NULL) {
+		return ERR_NONE;
+	}
+
+	error = S60_SplitValues(&msg, s);
+	if (error != ERR_NONE) {
+		return error;
+	}
+
+	/* Grab values */
+	mcc = Priv->MessageParts[0];
+	mnc = Priv->MessageParts[1];
+	lac = Priv->MessageParts[2];
+	cellid =Priv->MessageParts[3];
+
+	/* We need all of them */
+	if (mcc == NULL || mnc == NULL || lac == NULL || cellid == NULL) {
+		return ERR_UNKNOWN;
+	}
+
+	strcpy(s->Phone.Data.NetworkInfo->CID, cellid);
+	strcpy(s->Phone.Data.NetworkInfo->NetworkCode, mcc);
+	strcat(s->Phone.Data.NetworkInfo->NetworkCode, " ");
+	strcat(s->Phone.Data.NetworkInfo->NetworkCode, mnc);
+	s->Phone.Data.NetworkInfo->State = GSM_NetworkStatusUnknown;
+	strcpy(s->Phone.Data.NetworkInfo->LAC, lac);
+	s->Phone.Data.NetworkInfo->NetworkName[0] = 0;
+	s->Phone.Data.NetworkInfo->NetworkName[1] = 0;
+	s->Phone.Data.NetworkInfo->GPRS = 0;
+	s->Phone.Data.NetworkInfo->PacketCID[0] = 0;
+	s->Phone.Data.NetworkInfo->PacketState = 0;
+	s->Phone.Data.NetworkInfo->PacketLAC[0] = 0;
+
+	return ERR_NONE;
 }
 
 static GSM_Error S60_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *bat)
@@ -863,6 +918,9 @@ GSM_Reply_Function S60ReplyFunctions[] = {
 
 	{S60_Reply_AddMemory, "", 0x00, NUM_CONTACTS_ADD_REPLY_ID, ID_SetMemory },
 
+	{S60_Reply_GetNetworkInfo, "", 0x00, NUM_LOCATION_REPLY, ID_GetNetworkInfo },
+	{S60_Reply_Generic, "", 0x00, NUM_LOCATION_REPLY_NA, ID_GetNetworkInfo },
+
 	{NULL,			"", 0x00, 0x00, ID_None }
 };
 
@@ -898,7 +956,7 @@ GSM_Phone_Functions S60Phone = {
 	NOTIMPLEMENTED,			/*	SetAutoNetworkLogin	*/
 	S60_GetBatteryCharge,
 	S60_GetSignalQuality,
-	NOTIMPLEMENTED,			/*	GetNetworkInfo		*/
+	S60_GetNetworkInfo,
 	NOTIMPLEMENTED,     		/*  	GetCategory 		*/
  	NOTSUPPORTED,       		/*  	AddCategory 		*/
         NOTIMPLEMENTED,      		/*  	GetCategoryStatus 	*/
