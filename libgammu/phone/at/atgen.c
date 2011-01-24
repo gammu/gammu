@@ -3138,17 +3138,6 @@ GSM_Error ATGEN_SetPBKMemory(GSM_StateMachine *s, GSM_MemoryType MemType)
 	char 			req[] = "AT+CPBS=\"XX\"\r";
 	GSM_Error		error;
 
-	if (MemType == MEM_ME) {
-		if (Priv->PBKSBNR == 0) {
-			ATGEN_CheckSBNR(s);
-		}
-		if (Priv->PBK_SPBR == 0) {
-			ATGEN_CheckSPBR(s);
-		}
-		if (Priv->PBK_MPBR == 0) {
-			ATGEN_CheckMPBR(s);
-		}
-	}
 	if (Priv->PBKMemory == MemType) return ERR_NONE;
 
 	/* Zero values that are for actual memory */
@@ -3230,6 +3219,17 @@ GSM_Error ATGEN_SetPBKMemory(GSM_StateMachine *s, GSM_MemoryType MemType)
 
 	if (error == ERR_NONE) {
 		Priv->PBKMemory = MemType;
+	}
+	if (MemType == MEM_ME) {
+		if (Priv->PBKSBNR == 0) {
+			ATGEN_CheckSBNR(s);
+		}
+		if (Priv->PBK_SPBR == 0) {
+			ATGEN_CheckSPBR(s);
+		}
+		if (Priv->PBK_MPBR == 0) {
+			ATGEN_CheckMPBR(s);
+		}
 	}
 	return error;
 }
