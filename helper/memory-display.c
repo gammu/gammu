@@ -23,6 +23,7 @@ GSM_Error PrintMemorySubEntry(GSM_SubMemoryEntry *entry, GSM_StateMachine *sm)
 	GSM_Category	Category;
 	int		z;
 	GSM_Error error;
+	gboolean show_location = TRUE;
 
 	switch (entry->EntryType) {
 	case PBK_CallLength:
@@ -118,17 +119,95 @@ GSM_Error PrintMemorySubEntry(GSM_SubMemoryEntry *entry, GSM_StateMachine *sm)
 		printf(LISTFORMAT "%s\n", _("Photo"), _("Displaying not supported"));
 		return ERR_NONE;
 	case PBK_Number_Messaging   : printf(LISTFORMAT, _("Favorite messaging number")); break;
-	case PBK_Number_General     : printf(LISTFORMAT, _("General number")); break;
+	case PBK_Number_General     :
+		show_location = FALSE;
+		switch (entry->Location) {
+			case PBK_Location_Home:
+				printf(LISTFORMAT, _("Home number"));
+				break;
+			case PBK_Location_Work:
+				printf(LISTFORMAT, _("Work number"));
+				break;
+			case PBK_Location_Unknown:
+				printf(LISTFORMAT, _("General number"));
+				break;
+		}
+		break;
 	case PBK_Number_Video     : printf(LISTFORMAT, _("Video number")); break;
-	case PBK_Number_Mobile      : printf(LISTFORMAT, _("Mobile number")); break;
-	case PBK_Number_Fax         : printf(LISTFORMAT, _("Fax number")); break;
+	case PBK_Number_Mobile      :
+		show_location = FALSE;
+		switch (entry->Location) {
+			case PBK_Location_Home:
+				printf(LISTFORMAT, _("Home mobile number"));
+				break;
+			case PBK_Location_Work:
+				printf(LISTFORMAT, _("Work mobile number"));
+				break;
+			case PBK_Location_Unknown:
+				printf(LISTFORMAT, _("Mobile number"));
+				break;
+		}
+		break;
+	case PBK_Number_Fax         :
+		show_location = FALSE;
+		switch (entry->Location) {
+			case PBK_Location_Home:
+				printf(LISTFORMAT, _("Home fax number"));
+				break;
+			case PBK_Location_Work:
+				printf(LISTFORMAT, _("Work fax number"));
+				break;
+			case PBK_Location_Unknown:
+				printf(LISTFORMAT, _("Fax number"));
+				break;
+		}
+		break;
 	case PBK_Number_Pager       : printf(LISTFORMAT, _("Pager number")); break;
 	case PBK_Number_Other       : printf(LISTFORMAT, _("Other number")); break;
 	case PBK_Text_Note          : printf(LISTFORMAT, _("Text")); break;
-	case PBK_Text_Postal        : printf(LISTFORMAT, _("Snail address")); break;
-	case PBK_Text_Email         : printf(LISTFORMAT, _("Email address 1")); break;
+	case PBK_Text_Postal        :
+		show_location = FALSE;
+		switch (entry->Location) {
+			case PBK_Location_Home:
+				printf(LISTFORMAT, _("Home address"));
+				break;
+			case PBK_Location_Work:
+				printf(LISTFORMAT, _("Work address"));
+				break;
+			case PBK_Location_Unknown:
+				printf(LISTFORMAT, _("Address"));
+				break;
+		}
+		break;
+	case PBK_Text_Email         :
+		show_location = FALSE;
+		switch (entry->Location) {
+			case PBK_Location_Home:
+				printf(LISTFORMAT, _("Home email"));
+				break;
+			case PBK_Location_Work:
+				printf(LISTFORMAT, _("Work email"));
+				break;
+			case PBK_Location_Unknown:
+				printf(LISTFORMAT, _("Email"));
+				break;
+		}
+		break;
 	case PBK_Text_Email2        : printf(LISTFORMAT, _("Email address 2")); break;
-	case PBK_Text_URL           : printf(LISTFORMAT, _("URL address")); break;
+	case PBK_Text_URL           :
+		show_location = FALSE;
+		switch (entry->Location) {
+			case PBK_Location_Home:
+				printf(LISTFORMAT, _("Home website"));
+				break;
+			case PBK_Location_Work:
+				printf(LISTFORMAT, _("Work website"));
+				break;
+			case PBK_Location_Unknown:
+				printf(LISTFORMAT, _("Website"));
+				break;
+		}
+		break;
 	case PBK_Text_LUID          : printf(LISTFORMAT, _("LUID")); break;
 	case PBK_Text_VOIP          : printf(LISTFORMAT, _("VOIP")); break;
 	case PBK_Text_SWIS          : printf(LISTFORMAT, _("SWIS")); break;
@@ -161,15 +240,17 @@ GSM_Error PrintMemorySubEntry(GSM_SubMemoryEntry *entry, GSM_StateMachine *sm)
 		return ERR_NONE;
 #endif
 	}
-	switch (entry->Location) {
-		case PBK_Location_Home:
-			printf("[%s]", _("home"));
-			break;
-		case PBK_Location_Work:
-			printf("[%s]", _("work"));
-			break;
-		case PBK_Location_Unknown:
-			break;
+	if (show_location) {
+		switch (entry->Location) {
+			case PBK_Location_Home:
+				printf("[%s]", _("home"));
+				break;
+			case PBK_Location_Work:
+				printf("[%s]", _("work"));
+				break;
+			case PBK_Location_Unknown:
+				break;
+		}
 	}
 	printf("\"%s\"\n", DecodeUnicodeConsole(entry->Text));
 	return ERR_NONE;
