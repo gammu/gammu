@@ -13,6 +13,7 @@ ensymble py2sis \
     --lang=EN \
     --shortcaption="S60-Remote" \
     --caption="Series60 - Remote" \
+    --vendor="Gammu team" \
     --caps=LocalServices+ReadUserData+WriteUserData+WriteUserData+NetworkServices+UserEnvironment \
     --icon="icon.svg" \
     --verbose \
