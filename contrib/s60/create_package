@@ -1,13 +1,18 @@
 #!/bin/sh
 # Create series60-remote.sis
 
+PYS60DIR=~/PythonForS60
 VERSION=0.4.80
+CURDIR=$PWD
+
 
 mkdir tmp
 
 cp *.py tmp/
 
-ensymble py2sis \
+cd $PYS60DIR
+
+python2.5 $PYS60DIR/ensymble.py py2sis \
     --appname="Series60 - Remote" \
     --version=$VERSION \
     --lang=EN \
@@ -15,9 +20,11 @@ ensymble py2sis \
     --caption="Series60 - Remote" \
     --vendor="Gammu team" \
     --caps=LocalServices+ReadUserData+WriteUserData+WriteUserData+NetworkServices+UserEnvironment \
-    --icon="icon.svg" \
+    --icon="$CURDIR/icon.svg" \
     --verbose \
-    ./tmp \
-    series60-remote.sis
+    $CURDIR/tmp \
+    $CURDIR/series60-remote.sis
+
+cd $CURDIR
 
 rm -rf tmp
