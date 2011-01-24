@@ -3,3 +3,4 @@ S60 applet
 - location.gsm_location()
 - telephone.dial()
 - telephone.hang_up()
+- properly handle home/work/none location
