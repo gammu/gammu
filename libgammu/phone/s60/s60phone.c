@@ -511,7 +511,10 @@ static GSM_Error S60_Reply_GetMemory(GSM_Protocol_Message msg, GSM_StateMachine 
 			Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_Country;
 		}
 	} else if(strcmp(type, "date") == 0) {
-		/* TODO */
+		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Date;
+		if (!ReadVCALDateTime(value, &(Entry->Entries[Entry->EntriesNum].Date))) {
+			return ERR_UNKNOWN;
+		}
 	} else if(strcmp(type, "dtmf_string") == 0) {
 		text = TRUE;
 		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_DTMF;
