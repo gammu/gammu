@@ -53,8 +53,6 @@ class Mobile(object):
         self.currentMessage = None
         self.__partialMessage = ""
 
-        #FIXME: I shouldn't need this
-        e32.ao_sleep(1)
         self.inbox.bind(self.newMessage)
         #telephone.call_state(self.handleCall)
 
