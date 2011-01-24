@@ -448,11 +448,11 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			Block = &Block[bs];
 		}
 		bs = 256*Block[2]+Block[3];
-#ifdef DEBUG
 		smprintf(s, "Phonebook entry block 0x%02x - length %i\n",
 		         Block[0], bs-6);
-		if (s->di.dl == DL_TEXTALL || s->di.dl == DL_TEXTALLDATE) DumpMessage(&s->di, Block+0, bs-1);
-#endif
+		if (s->di.dl == DL_TEXTALL || s->di.dl == DL_TEXTALLDATE) {
+			DumpMessage(&s->di, Block+0, bs-1);
+		}
 		if (entry->EntriesNum >= GSM_PHONEBOOK_ENTRIES) {
 			smprintf(s, "Too many entries\n");
 			return ERR_MOREMEMORY;
