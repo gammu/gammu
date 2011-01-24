@@ -633,6 +633,33 @@ static GSM_Error S60_Reply_GetMemory(GSM_Protocol_Message msg, GSM_StateMachine 
 	return ERR_NEEDANOTHERANSWER;
 }
 
+GSM_Error S60_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
+{
+	return ERR_NOTIMPLEMENTED;
+}
+
+GSM_Error S60_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
+{
+	GSM_Error error;
+
+	/* TODO: add and get ID */
+	s->Phone.Data.Memory = Entry;
+	error = GSM_WaitFor(s, NULL, 0, NUM_CONTACTS_ADD, S60_TIMEOUT, ID_SetMemory);
+	s->Phone.Data.Memory = NULL;
+	if (error != ERR_NONE) {
+		return error;
+	}
+
+	return S60_SetMemory(s, Entry);
+}
+
+static GSM_Error S60_Reply_AddMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	s->Phone.Data.Memory->Location = atoi(msg.Buffer);
+	smprintf(s, "Added contact ID %d\n", s->Phone.Data.Memory->Location);
+	return ERR_NONE;
+}
+
 GSM_Reply_Function S60ReplyFunctions[] = {
 
 	{S60_Reply_Connect,	"", 0x00, NUM_CONNECTED, ID_Initialise },
@@ -657,6 +684,8 @@ GSM_Reply_Function S60ReplyFunctions[] = {
 	{S60_Reply_Generic, "", 0x00, NUM_CONTACTS_REPLY_CONTACT_START, ID_GetMemory },
 	{S60_Reply_GetMemory, "", 0x00, NUM_CONTACTS_REPLY_CONTACT_LINE, ID_GetMemory },
 	{S60_Reply_Generic, "", 0x00, NUM_CONTACTS_REPLY_CONTACT_END, ID_GetMemory },
+
+	{S60_Reply_AddMemory, "", 0x00, NUM_CONTACTS_ADD_REPLY_ID, ID_SetMemory },
 
 	{NULL,			"", 0x00, 0x00, ID_None }
 };
@@ -700,8 +729,8 @@ GSM_Phone_Functions S60Phone = {
 	S60_GetMemoryStatus,
 	S60_GetMemory,
 	S60_GetNextMemory,
-	NOTIMPLEMENTED,                 /*      SetMemory */
-	NOTIMPLEMENTED,                 /*      AddMemory */
+	S60_SetMemory,
+	S60_AddMemory,
 	NOTIMPLEMENTED,                 /*      DeleteMemory */
 	NOTIMPLEMENTED,                 /*      DeleteAllMemory */
 	NOTIMPLEMENTED,			/*	GetSpeedDial		*/
