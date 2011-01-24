@@ -151,6 +151,9 @@ PyObject *MemoryEntryToPython(const GSM_MemoryEntry * entry)
 			case PBK_Text_FirstName:
 				convert_text("Text_FirstName");
 				break;
+			case PBK_Text_SecondName:
+				convert_text("Text_SecondName");
+				break;
 			case PBK_Text_NickName:
 				convert_text("Text_NickName");
 				break;
@@ -478,6 +481,9 @@ int MemoryEntryFromPython(PyObject * dict, GSM_MemoryEntry * entry,
 		} else if (strcmp("Text_FirstName", type) == 0) {
 			valuetype = 't';
 			entry->Entries[i].EntryType = PBK_Text_FirstName;
+		} else if (strcmp("Text_SecondName", type) == 0) {
+			valuetype = 't';
+			entry->Entries[i].EntryType = PBK_Text_SecondName;
 		} else if (strcmp("Text_NickName", type) == 0) {
 			valuetype = 't';
 			entry->Entries[i].EntryType = PBK_Text_NickName;

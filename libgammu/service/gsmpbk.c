@@ -127,7 +127,7 @@ void GSM_PhonebookFindDefaultNameNumberGroup(const GSM_MemoryEntry *entry, int *
 GSM_Error GSM_EncodeVCARD(GSM_Debug_Info *di, char *Buffer, const size_t buff_len, size_t *Length, GSM_MemoryEntry *pbk, const gboolean header, const GSM_VCardVersion Version)
 {
 	int Name, Number, Group, i;
-	int firstname = -1, lastname = -1;
+	int firstname = -1, secondname = -1, lastname = -1;
 	int address = -1, city = -1, state = -1, zip = -1, country = -1;
 	int workaddress = -1, workcity = -1, workstate = -1, workzip = -1, workcountry = -1;
 	unsigned char buffer[1024];
@@ -185,6 +185,10 @@ GSM_Error GSM_EncodeVCARD(GSM_Debug_Info *di, char *Buffer, const size_t buff_le
 					break;
 				case PBK_Text_FirstName:
 					firstname = i;
+					ignore = TRUE;
+					break;
+				case PBK_Text_SecondName:
+					secondname = i;
 					ignore = TRUE;
 					break;
 				case PBK_Text_LastName:
@@ -437,7 +441,7 @@ GSM_Error GSM_EncodeVCARD(GSM_Debug_Info *di, char *Buffer, const size_t buff_le
 			}
 		}
 		/* Save name if it is composed from parts */
-		if (firstname != -1 || lastname != -1) {
+		if (firstname != -1 || secondname != -1 || lastname != -1) {
 			pos = 0;
 			if (lastname != -1) {
 				CopyUnicodeString(buffer + 2*pos, pbk->Entries[lastname].Text);
@@ -449,6 +453,13 @@ GSM_Error GSM_EncodeVCARD(GSM_Debug_Info *di, char *Buffer, const size_t buff_le
 			if (firstname != -1) {
 				CopyUnicodeString(buffer + 2*pos, pbk->Entries[firstname].Text);
 				pos += UnicodeLength(pbk->Entries[firstname].Text);
+			}
+			if (firstname != -1) {
+				buffer[2*pos] = 0;
+				buffer[2*pos + 1] = ' ';
+				pos++;
+				CopyUnicodeString(buffer + 2*pos, pbk->Entries[secondname].Text);
+				pos += UnicodeLength(pbk->Entries[secondname].Text);
 			}
 			buffer[2*pos] = 0;
 			buffer[2*pos + 1] = 0;

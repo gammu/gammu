@@ -526,6 +526,9 @@ static GSM_Error S60_Reply_GetMemory(GSM_Protocol_Message msg, GSM_StateMachine 
 	} else if(strcmp(type, "first_name") == 0) {
 		text = TRUE;
 		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_FirstName;
+	} else if(strcmp(type, "second_name") == 0) {
+		text = TRUE;
+		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_SecondName;
 	} else if(strcmp(type, "job_title") == 0) {
 		text = TRUE;
 		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_JobTitle;

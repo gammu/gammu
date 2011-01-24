@@ -210,6 +210,7 @@ void SearchOneEntry(GSM_MemoryEntry *Entry, const unsigned char *Text)
 			case PBK_Text_Name          :
 			case PBK_Text_LastName      :
 			case PBK_Text_FirstName     :
+			case PBK_Text_SecondName:
 			case PBK_Text_FormalName    :
 			case PBK_Text_NickName      :
 			case PBK_Text_Company       :

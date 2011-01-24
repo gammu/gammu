@@ -333,6 +333,10 @@ typedef enum {
 	 * Work mobile number. (Text)
 	 */
 	PBK_Number_Mobile_Work,
+	/**
+	 * Second name. (Text)
+	 */
+	PBK_Text_SecondName,
 } GSM_EntryType;
 
 /**
