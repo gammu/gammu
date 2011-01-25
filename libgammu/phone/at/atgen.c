@@ -5857,7 +5857,8 @@ GSM_Phone_Functions ATGENPhone = {
 	NOTSUPPORTED,			/* 	AddFolder		*/
 	NOTSUPPORTED,			/* 	DeleteFolder		*/
 	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
-	NOTSUPPORTED			/* 	SetGPRSAccessPoint	*/
+	NOTSUPPORTED,			/* 	SetGPRSAccessPoint	*/
+	NOTSUPPORTED			/* 	GetScreenshot		*/
 };
 
 #endif
