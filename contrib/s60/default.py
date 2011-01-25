@@ -110,6 +110,18 @@ class Mobile(object):
             self.sock.close()
             self.sock = None
 
+    def disconnect(self):
+        if(self.connected):
+            self.connected = False
+
+            self.fos.close()
+            self.fis.close()
+
+            self.client[0].close()
+            self.client = None
+
+            self.statusUpdate()
+
     def listen(self):
         while self.service:
             self.client = self.sock.accept()
@@ -965,16 +977,7 @@ class Mobile(object):
 
     def quit(self):
         self.stopService()
-        if(self.connected):
-            self.connected = False
-
-            self.fos.close()
-            self.fis.close()
-
-            self.client[0].close()
-            self.client = None
-
-            self.statusUpdate()
+        self.disconnect()
 
     def exitHandler(self):
         self.quit()
