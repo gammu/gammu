@@ -282,6 +282,7 @@ void GSM_ClearBitmap(GSM_Bitmap * bmp);
 /**
  * Gets phone screenshot.
  *
+ * \param s State machine pointer.
  * \param picture Structure which will hold data.
  *
  * \ingroup Bitmap
