@@ -101,6 +101,15 @@ class Mobile(object):
 
         self.listen()
 
+    def stopService(self):
+        if (self.service):
+            self.service = False
+            self.statusUpdate()
+
+            socket.bt_advertise_service(u"pys60_remote", self.sock, False, socket.RFCOMM)
+            self.sock.close()
+            self.sock = None
+
     def listen(self):
         while self.service:
             self.client = self.sock.accept()
@@ -955,12 +964,7 @@ class Mobile(object):
         self.inbox.set_unread(id,  state)
 
     def quit(self):
-        if (self.service):
-            self.service = False
-
-            self.sock.close()
-            self.sock = None
-
+        self.stopService()
         if(self.connected):
             self.connected = False
 
