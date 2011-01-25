@@ -15,3 +15,4 @@ Bitmap
 .. doxygenenum:: GSM_Bitmap_Types
 .. doxygenstruct:: GSM_Bitmap
 .. doxygenstruct:: GSM_MultiBitmap
+.. doxygenfunction:: GSM_GetScreenshot

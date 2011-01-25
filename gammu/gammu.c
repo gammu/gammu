@@ -487,6 +487,7 @@ static GSM_Parameters Parameters[] = {
 	{"setautonetworklogin",	0, 0, SetAutoNetworkLogin,	{H_Network,0},			""},
 	{"listnetworks",		0, 1, ListNetworks,		{H_Network,0},			"[country]"},
 	{"getgprspoint",		1, 2, GetGPRSPoint,		{H_Network,0},			"start [stop]"},
+	{"screenshot",			1, 1, Screenshot,		{H_Nokia,H_Other,0},		"filenamebase"},
 	{"getfilesystemstatus",	0, 0, GetFileSystemStatus,	{H_Filesystem,0},		""},
 	{"getfilesystem",		0, 1, GetFileSystem,		{H_Filesystem,0},		"[-flatall|-flat]"},
 	{"getfilefolder",		1,40, GetFileFolder,		{H_Filesystem,0},		"fileID, fileID, ..."},

@@ -279,6 +279,15 @@ void GSM_ClearPointBitmap(GSM_Bitmap * bmp, int x, int y);
  */
 void GSM_ClearBitmap(GSM_Bitmap * bmp);
 
+/**
+ * Gets phone screenshot.
+ *
+ * \param picture Structure which will hold data.
+ *
+ * \ingroup Bitmap
+ */
+GSM_Error GSM_GetScreenshot(GSM_StateMachine *s, GSM_BinaryPicture *picture);
+
 #endif
 
 /* Editor configuration
