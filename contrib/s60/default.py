@@ -159,23 +159,12 @@ class Mobile(object):
                 sentParts += 1
             return
 
-        try:
-            self.fos.write(unicode(str(header) + str(NUM_END_HEADER) + new_message + str(NUM_END_TEXT)).encode("utf8") )
-            self.fos.flush()
-        except:
-            try:
-                self.quit()
-            except:
-                pass
-            self.startService()
+        self.fos.write(unicode(str(header) + str(NUM_END_HEADER) + new_message + str(NUM_END_TEXT)).encode("utf8") )
+        self.fos.flush()
 
     def wait(self):
         while(True):
-            try:
-                data = self.fis.readline()
-            except:
-                self.quit()
-                self.startService()
+            data = self.fis.readline()
 
             header = int(data.split(NUM_END_HEADER)[0])
             message = unicode(data.split(NUM_END_HEADER)[1],  "utf8")
