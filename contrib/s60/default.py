@@ -421,7 +421,7 @@ class Mobile(object):
 
         self.send(NUM_SYSINFO_REPLY_END)
 
-    def sendScreeshot(self):
+    def sendScreenshot(self):
         fn = self.getScreenshotFilename()
         shot = graphics.screenshot()
         shot.save(fn)
