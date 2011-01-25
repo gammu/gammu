@@ -241,8 +241,11 @@ class Mobile(object):
 
             elif (header == NUM_CALENDAR_REQUEST_ENTRY):
                 key = int(message.split(NUM_SEPERATOR)[0])
-                entry = self.calendarDb[key]
-                self.sendCalendarEntry(entry)
+                try:
+                    entry = self.calendarDb[key]
+                    self.sendCalendarEntry(entry)
+                except:
+                    self.send(NUM_CALENDAR_REPLY_ENTRY_NOT_FOUND)
 
             elif (header == NUM_CALENDAR_REQUEST_ENTRIES_ALL):
                 self.sendAllCalendarEntries()
