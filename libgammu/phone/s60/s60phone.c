@@ -144,6 +144,7 @@ static GSM_Error S60_Reply_Generic(GSM_Protocol_Message msg, GSM_StateMachine *s
 		case NUM_LOCATION_REPLY_NA:
 			return ERR_NOTSUPPORTED;
 		case NUM_CONTACTS_REPLY_CONTACT_NOT_FOUND:
+		case NUM_CALENDAR_REPLY_ENTRY_NOT_FOUND:
 			return ERR_EMPTY;
 		default:
 			return ERR_NONE;
@@ -411,7 +412,7 @@ static GSM_Error S60_Reply_CalendarCount(GSM_Protocol_Message msg, GSM_StateMach
 
 	if (strcmp(Priv->MessageParts[1], "appointment") != 0 &&
 		strcmp(Priv->MessageParts[1], "event") != 0 &&
-		strcmp(Priv->MessageParts[1], "annoversary") != 0) {
+		strcmp(Priv->MessageParts[1], "anniversary") != 0) {
 		return ERR_NEEDANOTHERANSWER;
 	}
 
@@ -893,6 +894,93 @@ static GSM_Error S60_Reply_AddMemory(GSM_Protocol_Message msg, GSM_StateMachine 
 	return ERR_NONE;
 }
 
+static GSM_Error S60_Reply_GetCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
+	GSM_Error error;
+	char *pos, *type, *content, *location, *start, *end, *modified, *replication, *alarm_time, *priority, *repeat, *repeat_rule, *repeat_exceptions, *repeat_start, *repeat_end, *interval;
+	GSM_CalendarEntry *Entry;
+	int i;
+
+	error = S60_SplitValues(&msg, s);
+	if (error != ERR_NONE) {
+		return error;
+	}
+
+	/* Check for required fields */
+	for (i = 0; i < 16; i++) {
+		if (Priv->MessageParts[i] == NULL) {
+			smprintf(s, "Not enough parts in reply!\n");
+			return ERR_UNKNOWN;
+		}
+	}
+
+	Entry = s->Phone.Data.Cal;
+
+	/* Grab values */
+	pos = Priv->MessageParts[0];
+	type = Priv->MessageParts[1];
+	content = Priv->MessageParts[2];
+	location = Priv->MessageParts[3];
+	start = Priv->MessageParts[4];
+	end = Priv->MessageParts[5];
+	modified = Priv->MessageParts[6];
+	replication = Priv->MessageParts[7];
+	alarm_time = Priv->MessageParts[8];
+	priority = Priv->MessageParts[9];
+	repeat = Priv->MessageParts[10];
+	repeat_rule = Priv->MessageParts[11];
+	repeat_exceptions = Priv->MessageParts[12];
+	repeat_start = Priv->MessageParts[13];
+	repeat_end = Priv->MessageParts[14];
+	interval = Priv->MessageParts[15];
+
+	/* Check for correct type */
+	if (strcmp(type, "appointment") == 0) {
+		Entry->Type = GSM_CAL_REMINDER;
+	} else if (strcmp(type, "event") == 0) {
+		Entry->Type = GSM_CAL_MEMO;
+	} else if (strcmp(type, "anniversary") == 0) {
+		Entry->Type = GSM_CAL_BIRTHDAY;
+	} else {
+		return ERR_EMPTY;
+	}
+
+	if (strlen(content) > 0) {
+		Entry->Entries[Entry->EntriesNum].EntryType = CAL_TEXT;
+		DecodeUTF8(Entry->Entries[Entry->EntriesNum].Text, content, strlen(content));
+		Entry->EntriesNum++;
+	}
+
+	if (strlen(location) > 0) {
+		Entry->Entries[Entry->EntriesNum].EntryType = CAL_LOCATION;
+		DecodeUTF8(Entry->Entries[Entry->EntriesNum].Text, location, strlen(location));
+		Entry->EntriesNum++;
+	}
+
+	/* TODO: implement rest */
+
+	return ERR_NONE;
+}
+
+GSM_Error S60_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
+{
+	char buffer[100];
+	GSM_Error error;
+
+	Entry->EntriesNum = 0;
+
+	sprintf(buffer, "%d", Entry->Location);
+
+	s->Phone.Data.Cal = Entry;
+	error = GSM_WaitFor(s, buffer, strlen(buffer), NUM_CALENDAR_REQUEST_ENTRY, S60_TIMEOUT, ID_GetCalendarNote);
+	s->Phone.Data.Cal = NULL;
+
+	return error;
+}
+
+
+
 GSM_Reply_Function S60ReplyFunctions[] = {
 
 	{S60_Reply_Connect,	"", 0x00, NUM_CONNECTED, ID_Initialise },
@@ -918,6 +1006,9 @@ GSM_Reply_Function S60ReplyFunctions[] = {
 	{S60_Reply_GetMemory, "", 0x00, NUM_CONTACTS_REPLY_CONTACT_LINE, ID_GetMemory },
 	{S60_Reply_Generic, "", 0x00, NUM_CONTACTS_REPLY_CONTACT_END, ID_GetMemory },
 	{S60_Reply_Generic, "", 0x00, NUM_CONTACTS_REPLY_CONTACT_NOT_FOUND, ID_GetMemory },
+
+	{S60_Reply_GetCalendar, "", 0x00, NUM_CALENDAR_REPLY_ENTRY, ID_GetCalendarNote },
+	{S60_Reply_Generic, "", 0x00, NUM_CALENDAR_REPLY_ENTRY_NOT_FOUND, ID_GetCalendarNote },
 
 	{S60_Reply_AddMemory, "", 0x00, NUM_CONTACTS_ADD_REPLY_ID, ID_SetMemory },
 
@@ -1034,7 +1125,7 @@ GSM_Phone_Functions S60Phone = {
 	NOTIMPLEMENTED,                 /*      DeleteTodo */
 	NOTIMPLEMENTED,                 /*      DeleteAllTodo */
 	S60_GetCalendarStatus,
-	NOTIMPLEMENTED,                 /*      GetCalendar */
+	S60_GetCalendar,
     	NOTIMPLEMENTED,                 /*      GetNextCalendar */
 	NOTIMPLEMENTED,                 /*      SetCalendar */
 	NOTIMPLEMENTED,                 /*      AddCalendar */
