@@ -165,7 +165,10 @@ class Mobile(object):
 
     def wait(self):
         while(True):
-            data = self.fis.readline()
+            try:
+                data = self.fis.readline()
+            except:
+                break
 
             header = int(data.split(NUM_END_HEADER)[0])
             message = unicode(data.split(NUM_END_HEADER)[1],  "utf8")
