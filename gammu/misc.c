@@ -516,8 +516,8 @@ void Screenshot(int argc UNUSED, char *argv[])
 		return;
 	}
 
-	fname = (char *)malloc(strlen(argv[1]) + strlen(ext) + 1);
-	strcpy(fname, argv[1]);
+	fname = (char *)malloc(strlen(argv[2]) + strlen(ext) + 1);
+	strcpy(fname, argv[2]);
 	strcat(fname, ext);
 
 	f = fopen(fname, "w");
