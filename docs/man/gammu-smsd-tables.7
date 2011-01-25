@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSD-TABLES" "7" "January 19, 2011" "1.29.90" "Gammu"
+.TH "GAMMU-SMSD-TABLES" "7" "January 25, 2011" "1.29.90" "Gammu"
 .SH NAME
 gammu-smsd-tables \- description of tables for database backends of gammu-smsd(1)
 .
@@ -138,11 +138,15 @@ being sent in night. Default value is 23:59:59
 .sp
 Send message after specified time, can be used to limit messages from
 being sent in night. Default value is 00:00:00
+.sp
+New in version 1.29.90.
 .TP
 .B \fBText\fP (text)
 .sp
 SMS text encoded using hex values in proper coding. If you want to use
 TextDecoded field, keep this NULL (or empty).
+.sp
+New in version 1.29.90.
 .TP
 .B \fBDestinationNumber\fP (varchar(20))
 .sp
@@ -284,6 +288,9 @@ battery level in percent (or \-1 if unknown)
 .B \fBSignalStrength\fP (integer)
 .sp
 signal level in percent (or \-1 if unknown)
+.sp
+Changed in version 1.29.90: This used to be called \fBSignal\fP. Renamed because \fBSIGNAL\fP is
+reserved word in MySQL 5.5.
 .TP
 .B \fBSent\fP (integer)
 .sp
