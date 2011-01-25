@@ -135,8 +135,7 @@ class Mobile(object):
             self.send(NUM_CONNECTED,  PROTOCOL_VERSION)
 
             self.wait()
-            self.quit()
-            self.startService()
+            self.disconnect()
 
     def send(self, header,  *message):
         new_message = ""
