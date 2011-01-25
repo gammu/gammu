@@ -51,6 +51,12 @@ Downloading from phone
 Downloading files from the phone and installing them directly. You can
 download all required files from http://wammu.eu/s60/.
 
+.. figure:: s60-download-qr.png
+   :target: http://wammu.eu/s60/
+   :alt: QR code for download of applet.
+   
+   QR code for download of applet.
+
 Installation using Gammu
 ++++++++++++++++++++++++
 
