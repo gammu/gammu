@@ -18,6 +18,7 @@ Phone Protocols
     samsung-gt
     sonim
     m-obex
+    s60
 
 .. note::
 
