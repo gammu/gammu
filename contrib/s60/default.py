@@ -67,14 +67,26 @@ class Mobile(object):
         self.initUi()
         self.startService()
 
-    def getConfigFilename(self):
+    def getCurrentDir(self):
+        try:
+            return self._current_dir
+        except:
+            pass
+
         try:
             raise Exception
         except Exception:
             frame = sys.exc_info()[2].tb_frame
             path = frame.f_code.co_filename
-            this_dir = os.path.split(path)[0]
-            return os.path.join(this_dir, 's60.cfg')
+            self._current_dir = os.path.split(path)[0]
+
+        return self._current_dir
+
+    def getFilename(self, name):
+            return os.path.join(self.getCurrentDir(), name)
+
+    def getConfigFilename(self):
+            return self.getFilename('s60.cfg')
 
     def loadConfig(self):
         try:
