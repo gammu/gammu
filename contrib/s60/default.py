@@ -79,7 +79,8 @@ class Mobile(object):
         except Exception:
             frame = sys.exc_info()[2].tb_frame
             path = frame.f_code.co_filename
-            self._current_dir = os.path.split(path)[0]
+            dirpath = os.path.split(path)[0]
+            self._current_dir = os.path.realpath(dirpath)
 
         return self._current_dir
 
