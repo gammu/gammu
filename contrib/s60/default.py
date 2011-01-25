@@ -426,6 +426,7 @@ class Mobile(object):
         fn = self.getScreenshotFilename()
         shot = graphics.screenshot()
         shot.save(fn)
+        note(u'Saved screenshot as %s' % fn)
         f = file(fn, 'r')
         self.send(NUM_SCREENSHOT_REPLY, f.read().encode('base64'))
         f.close()
