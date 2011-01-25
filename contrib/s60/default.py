@@ -129,6 +129,7 @@ class Mobile(object):
 
             self.connected = True
             self.statusUpdate()
+            note(u'Connected client %s' % self.client[1])
 
             self.fos = self.client[0].makefile("w")
             self.fis = self.client[0].makefile("r")
@@ -136,6 +137,7 @@ class Mobile(object):
             self.send(NUM_CONNECTED,  PROTOCOL_VERSION)
 
             self.wait()
+            note(u'Disconnected client %s' % self.client[1])
             self.disconnect()
 
     def send(self, header,  *message):
