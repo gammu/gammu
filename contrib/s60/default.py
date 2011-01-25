@@ -95,7 +95,7 @@ class Mobile(object):
 
     def loadConfig(self):
         try:
-            f = file(self.getConfigFilename(), 'r')
+            f = file(self.getConfigFilename(), 'rb')
             conf = cPickle.load(f)
             f.close()
             if 'port' in conf:
@@ -107,7 +107,7 @@ class Mobile(object):
 
     def saveConfig(self):
         try:
-            f = file(self.getConfigFilename(), 'w')
+            f = file(self.getConfigFilename(), 'wb')
             conf = {
                 'port': self.port,
                 'useCanvas': self.useCanvas,
@@ -427,7 +427,7 @@ class Mobile(object):
         shot = graphics.screenshot()
         shot.save(fn)
         note(u'Saved screenshot as %s' % fn)
-        f = file(fn, 'r')
+        f = file(fn, 'rb')
         self.send(NUM_SCREENSHOT_REPLY, f.read().encode('base64'))
         f.close()
 
