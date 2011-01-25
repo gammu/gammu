@@ -6,6 +6,8 @@ import sys
 sys.path.append('e:\python\libs')
 sys.path.append('c:\python\libs')
 
+import os.path
+
 import time
 import math
 import md5
@@ -30,6 +32,8 @@ if float(e32.pys60_version[:3]) >= 1.9:
 else:
     import socket
 
+import cPickle
+
 
 VERSION = 0.5
 PORT = 18
@@ -48,6 +52,8 @@ class Mobile(object):
         self.client = None
         self.port = PORT
 
+        self.loadConfig()
+
         self.inbox = inbox.Inbox(inbox.EInbox)
         self.sent = inbox.Inbox(inbox.ESent)
         self.contactDb = contacts.open()
@@ -60,6 +66,39 @@ class Mobile(object):
 
         self.initUi()
         self.startService()
+
+    def getConfigFilename(self):
+        try:
+            raise Exception
+        except Exception:
+            frame = sys.exc_info()[2].tb_frame
+            path = frame.f_code.co_filename
+            this_dir = os.path.split(path)[0]
+            return os.path.join(this_dir, 's60.cfg')
+
+    def loadConfig(self):
+        try:
+            f = file(self.getConfigFilename(), 'r')
+            conf = cPickle.load(f)
+            f.close()
+            if 'port' in conf:
+                self.port = conf['port']
+            if 'useCanvas' in conf:
+                self.useCanvas = conf['useCanvas']
+        except IOError, r:
+            pass
+
+    def saveConfig(self):
+        try:
+            f = file(self.getConfigFilename(), 'w')
+            conf = {
+                'port': self.port,
+                'useCanvas': self.useCanvas,
+                }
+            cPickle.dump(conf, f)
+            f.close()
+        except IOError, r:
+            pass
 
     def initUi(self):
         app.title = u"Series 60 - Remote"
@@ -977,6 +1016,7 @@ class Mobile(object):
 
     def exitHandler(self):
         self.quit()
+        self.saveConfig()
 
         app.exit_key_handler = None
         self.lock.signal()
@@ -990,6 +1030,7 @@ class Mobile(object):
         if ret is not None:
             self.port = ret
             self.quit()
+            self.saveConfig()
             self.startService()
 
     def aboutHandler(self):
