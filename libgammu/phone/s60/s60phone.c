@@ -130,7 +130,7 @@ GSM_Error S60_Terminate(GSM_StateMachine *s)
 	Priv->ToDoLocationsSize = 0;
 	Priv->ToDoLocationsPos = 0;
 
-	return GSM_WaitFor(s, NULL, 0, NUM_QUIT, S60_TIMEOUT, ID_None);
+	return GSM_WaitFor(s, NULL, 0, NUM_QUIT, S60_TIMEOUT, ID_Terminate);
 }
 
 static GSM_Error S60_Reply_Generic(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -923,6 +923,8 @@ GSM_Reply_Function S60ReplyFunctions[] = {
 
 	{S60_Reply_GetNetworkInfo, "", 0x00, NUM_LOCATION_REPLY, ID_GetNetworkInfo },
 	{S60_Reply_Generic, "", 0x00, NUM_LOCATION_REPLY_NA, ID_GetNetworkInfo },
+
+	{S60_Reply_Generic, "", 0x00, NUM_QUIT, ID_Terminate },
 
 	{NULL,			"", 0x00, 0x00, ID_None }
 };

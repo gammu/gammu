@@ -84,6 +84,7 @@ typedef enum {
 	ID_GetCNMIMode,
 	ID_GetCalendarNotePos,
 	ID_Initialise,
+	ID_Terminate,
 	ID_GetConnectSet,
 	ID_SetWAPBookmark,
 	ID_GetLocale,
