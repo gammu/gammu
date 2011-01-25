@@ -1013,6 +1013,30 @@ GSM_Error S60_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 	return error;
 }
 
+GSM_Error S60_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry, gboolean Start)
+{
+	GSM_Error error;
+	GSM_CalendarStatus Status;
+	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
+
+	if (Start) {
+		error = S60_GetCalendarStatus(s, &Status);
+		if (error != ERR_NONE) {
+			return error;
+		}
+		Priv->CalendarLocationsPos = 0;
+	}
+
+	if (Priv->CalendarLocations[Priv->CalendarLocationsPos] == 0) {
+		return ERR_EMPTY;
+	}
+
+	Entry->Location = Priv->CalendarLocations[Priv->CalendarLocationsPos++];
+
+	return S60_GetCalendar(s, Entry);
+}
+
+
 static GSM_Error S60_Reply_GetToDo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
@@ -1144,6 +1168,30 @@ GSM_Error S60_GetToDo(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 
 	return error;
 }
+
+GSM_Error S60_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *Entry, gboolean Start)
+{
+	GSM_Error error;
+	GSM_ToDoStatus Status;
+	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
+
+	if (Start) {
+		error = S60_GetToDoStatus(s, &Status);
+		if (error != ERR_NONE) {
+			return error;
+		}
+		Priv->ToDoLocationsPos = 0;
+	}
+
+	if (Priv->ToDoLocations[Priv->ToDoLocationsPos] == 0) {
+		return ERR_EMPTY;
+	}
+
+	Entry->Location = Priv->ToDoLocations[Priv->ToDoLocationsPos++];
+
+	return S60_GetToDo(s, Entry);
+}
+
 
 GSM_Reply_Function S60ReplyFunctions[] = {
 
@@ -1286,14 +1334,14 @@ GSM_Phone_Functions S60Phone = {
 	NOTIMPLEMENTED,			/*	SetBitmap		*/
 	S60_GetToDoStatus,
 	S60_GetToDo,
-	NOTIMPLEMENTED,                 /*      GetNextTodo */
+	S60_GetNextToDo,
 	NOTIMPLEMENTED,                 /*      SetTodo */
 	NOTIMPLEMENTED,                 /*      AddTodo */
 	NOTIMPLEMENTED,                 /*      DeleteTodo */
 	NOTIMPLEMENTED,                 /*      DeleteAllTodo */
 	S60_GetCalendarStatus,
 	S60_GetCalendar,
-    	NOTIMPLEMENTED,                 /*      GetNextCalendar */
+	S60_GetNextCalendar,
 	NOTIMPLEMENTED,                 /*      SetCalendar */
 	NOTIMPLEMENTED,                 /*      AddCalendar */
 	NOTIMPLEMENTED,                 /*      DeleteCalendar */
