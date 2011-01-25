@@ -19,7 +19,7 @@ python2.5 $PYS60DIR/ensymble.py py2sis \
     --shortcaption="S60-Remote" \
     --caption="Series60 - Remote" \
     --vendor="Gammu team" \
-    --caps=LocalServices+Location+ReadUserData+WriteUserData+WriteUserData+NetworkServices+UserEnvironment \
+    --caps=LocalServices+Location+ReadDeviceData+ReadUserData+WriteUserData+WriteUserData+NetworkServices+UserEnvironment \
     --icon="$CURDIR/icon.svg" \
     --verbose \
     $CURDIR/tmp \
