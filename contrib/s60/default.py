@@ -98,6 +98,7 @@ class Mobile(object):
 
         socket.set_security(self.sock,  socket.AUTH | socket.AUTHOR)
         socket.bt_advertise_service(u"pys60_remote", self.sock, True, socket.RFCOMM)
+        note(u'Listenning on port %d' % self.port)
 
         self.listen()
 
