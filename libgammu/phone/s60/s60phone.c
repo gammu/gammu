@@ -1269,6 +1269,9 @@ GSM_Error S60_Reply_Screenshot(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	s->Phone.Data.Picture->Type = PICTURE_PNG;
 	s->Phone.Data.Picture->Buffer = (unsigned char *)malloc(msg.Length);
+	if (s->Phone.Data.Picture->Buffer == NULL) {
+		return ERR_MOREMEMORY;
+	}
 	s->Phone.Data.Picture->Length = DecodeBASE64(msg.Buffer, s->Phone.Data.Picture->Buffer, msg.Length);
 	return ERR_NONE;
 }
