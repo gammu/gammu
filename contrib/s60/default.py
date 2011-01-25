@@ -19,6 +19,7 @@ import contacts
 import telephone
 import messaging
 import location
+import graphics
 from appuifw import *
 from status_numbers import *
 
@@ -87,6 +88,9 @@ class Mobile(object):
 
     def getConfigFilename(self):
         return self.getFilename('s60.cfg')
+
+    def getScreenshotFilename(self):
+        return self.getFilename('screenshot.png')
 
     def loadConfig(self):
         try:
@@ -381,6 +385,9 @@ class Mobile(object):
                 state = bool(message.split(NUM_SEPERATOR)[1])
                 self.setRead(id, state)
 
+            elif (header == NUM_SCREENSHOT):
+                self.sendScreenshot()
+
             elif (header == NUM_QUIT):
                 self.send(NUM_QUIT)
                 break
@@ -413,6 +420,14 @@ class Mobile(object):
             self.send(NUM_SYSINFO_REPLY_LINE, "total_rom", sysinfo.total_rom())
 
         self.send(NUM_SYSINFO_REPLY_END)
+
+    def sendScreeshot(self):
+        fn = self.getScreenshotFilename()
+        shot = graphics.screenshot()
+        shot.save(fn)
+        f = file(fn, 'r')
+        self.send(NUM_SCREENSHOT_REPLY, f.read().encode('base64'))
+        f.close()
 
     def sendLocation(self):
         loc = location.gsm_location()
