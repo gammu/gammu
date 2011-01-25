@@ -1254,6 +1254,25 @@ GSM_Error S60_DeleteToDo(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 	return error;
 }
 
+GSM_Error S60_GetScreenshot(GSM_StateMachine *s, GSM_BinaryPicture *picture)
+{
+	GSM_Error error;
+
+	s->Phone.Data.Picture = picture;
+	error = GSM_WaitFor(s, NULL, 0, NUM_SCREENSHOT, S60_TIMEOUT, ID_Screenshot);
+	s->Phone.Data.Picture = NULL;
+
+	return error;
+}
+
+GSM_Error S60_Reply_Screenshot(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	s->Phone.Data.Picture->Type = PICTURE_PNG;
+	s->Phone.Data.Picture->Buffer = (unsigned char *)malloc(msg.Length);
+	s->Phone.Data.Picture->Length = DecodeBASE64(msg.Buffer, s->Phone.Data.Picture->Buffer, msg.Length);
+	return ERR_NONE;
+}
+
 GSM_Reply_Function S60ReplyFunctions[] = {
 
 	{S60_Reply_Connect,	"", 0x00, NUM_CONNECTED, ID_Initialise },
@@ -1292,6 +1311,8 @@ GSM_Reply_Function S60ReplyFunctions[] = {
 	{S60_Reply_Generic, "", 0x00, NUM_LOCATION_REPLY_NA, ID_GetNetworkInfo },
 
 	{S60_Reply_Generic, "", 0x00, NUM_QUIT, ID_Terminate },
+
+	{S60_Reply_Screenshot, "", 0x00, NUM_SCREENSHOT_REPLY, ID_Screenshot },
 
 	{NULL,			"", 0x00, 0x00, ID_None }
 };
@@ -1434,7 +1455,7 @@ GSM_Phone_Functions S60Phone = {
 	NOTIMPLEMENTED,                 /*      DeleteFile */		/* 	DeleteFolder		*/
 	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
 	NOTSUPPORTED,			/* 	SetGPRSAccessPoint	*/
-	NOTSUPPORTED			/* 	GetScreenshot		*/
+	S60_GetScreenshot
 };
 #endif
 

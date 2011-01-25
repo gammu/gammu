@@ -570,6 +570,10 @@ typedef struct {
 	 */
 	GSM_NoteEntry		*Note;
 	/**
+	 * Pointer to picture structure used internally by phone drivers.
+	 */
+	GSM_BinaryPicture	*Picture;
+	/**
 	 * Used internally by phone drivers.
 	 */
 	gboolean			PressKey;
