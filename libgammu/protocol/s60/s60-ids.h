@@ -72,6 +72,9 @@
 
 #define NUM_INCOMING_CALL 400
 
+#define NUM_SCREENSHOT 900
+#define NUM_SCREENSHOT_REPLY 901
+
 #define NUM_DEBUG 999
 
 #define NUM_END_HEADER 0x02   /* Start of Text */

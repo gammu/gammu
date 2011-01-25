@@ -3840,7 +3840,8 @@ GSM_Phone_Functions OBEXGENPhone = {
 	OBEXGEN_AddFolder,
 	OBEXGEN_DeleteFile,		/* 	DeleteFolder		*/
 	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
-	NOTSUPPORTED			/* 	SetGPRSAccessPoint	*/
+	NOTSUPPORTED,			/* 	SetGPRSAccessPoint	*/
+	NOTSUPPORTED			/* 	GetScreenshot		*/
 };
 
 #endif

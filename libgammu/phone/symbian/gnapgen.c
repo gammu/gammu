@@ -1895,7 +1895,8 @@ GSM_Phone_Functions GNAPGENPhone = {
 	NOTSUPPORTED,			/* 	AddFolder		*/
 	NOTSUPPORTED,			/* 	DeleteFolder		*/
 	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
-	NOTSUPPORTED			/* 	SetGPRSAccessPoint	*/
+	NOTSUPPORTED,			/* 	SetGPRSAccessPoint	*/
+	NOTSUPPORTED			/* 	GetScreenshot		*/
 };
 
 #endif

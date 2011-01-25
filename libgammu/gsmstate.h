@@ -1273,6 +1273,10 @@ typedef struct {
 	 * Sets GPRS access point.
 	 */
 	GSM_Error (*SetGPRSAccessPoint) (GSM_StateMachine *s, GSM_GPRSAccessPoint *point);
+	/**
+	 * Gets phone screenshot
+	 */
+	GSM_Error (*GetScreenshot)	(GSM_StateMachine *s, GSM_BinaryPicture *picture);
 } GSM_Phone_Functions;
 
 	extern GSM_Phone_Functions NAUTOPhone;

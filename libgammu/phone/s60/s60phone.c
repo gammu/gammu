@@ -1433,7 +1433,8 @@ GSM_Phone_Functions S60Phone = {
 	NOTIMPLEMENTED,                 /*      AddFolder */
 	NOTIMPLEMENTED,                 /*      DeleteFile */		/* 	DeleteFolder		*/
 	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
-	NOTSUPPORTED			/* 	SetGPRSAccessPoint	*/
+	NOTSUPPORTED,			/* 	SetGPRSAccessPoint	*/
+	NOTSUPPORTED			/* 	GetScreenshot		*/
 };
 #endif
 

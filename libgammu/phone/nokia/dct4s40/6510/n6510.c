@@ -4498,7 +4498,8 @@ GSM_Phone_Functions N6510Phone = {
 	N6510_AddFolder,
 	N6510_DeleteFolder,
 	N6510_GetGPRSAccessPoint,
-	N6510_SetGPRSAccessPoint
+	N6510_SetGPRSAccessPoint,
+	NOTSUPPORTED			/* 	GetScreenshot		*/
 };
 
 #endif

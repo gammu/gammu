@@ -278,7 +278,8 @@ GSM_Phone_Functions N3320Phone = {
 	NOTIMPLEMENTED,			/*	AddFolder		*/
 	NOTSUPPORTED,			/* 	DeleteFolder		*/
 	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
-	NOTSUPPORTED			/* 	SetGPRSAccessPoint	*/
+	NOTSUPPORTED,			/* 	SetGPRSAccessPoint	*/
+	NOTSUPPORTED			/* 	GetScreenshot		*/
 };
 
 #endif
