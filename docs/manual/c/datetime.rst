@@ -6,6 +6,7 @@ Date and time
 .. doxygenfunction:: Fill_Time_T
 .. doxygenfunction:: GSM_GetLocalTimezoneOffset
 .. doxygenfunction:: Fill_GSM_DateTime
+.. doxygenfunction:: GSM_DateTimeFromTimestamp
 .. doxygenfunction:: OSDateTime
 .. doxygenfunction:: OSDate
 .. doxygenfunction:: CheckDate

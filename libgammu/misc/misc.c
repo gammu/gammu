@@ -151,6 +151,14 @@ int GSM_GetLocalTimezoneOffset() {
 	return (tl->tm_hour - tg->tm_hour) * 3600 + (tl->tm_min - tg->tm_min) * 60 + (tl->tm_sec - tg->tm_sec);
 }
 
+void GSM_DateTimeFromTimestamp(GSM_DateTime *Date, const char *str)
+{
+	time_t timet;
+
+	timet = atof(str);
+	Fill_GSM_DateTime(Date, timet);
+}
+
 void Fill_GSM_DateTime(GSM_DateTime *Date, time_t timet)
 {
 	struct tm *now;

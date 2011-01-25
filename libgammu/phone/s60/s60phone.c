@@ -958,7 +958,41 @@ static GSM_Error S60_Reply_GetCalendar(GSM_Protocol_Message msg, GSM_StateMachin
 		Entry->EntriesNum++;
 	}
 
-	/* TODO: implement rest */
+	if (strlen(start) > 0) {
+		Entry->Entries[Entry->EntriesNum].EntryType = CAL_START_DATETIME;
+		GSM_DateTimeFromTimestamp(&(Entry->Entries[Entry->EntriesNum].Date), start);
+		Entry->EntriesNum++;
+	}
+
+	if (strlen(end) > 0) {
+		Entry->Entries[Entry->EntriesNum].EntryType = CAL_END_DATETIME;
+		GSM_DateTimeFromTimestamp(&(Entry->Entries[Entry->EntriesNum].Date), end);
+		Entry->EntriesNum++;
+	}
+
+	if (strlen(modified) > 0) {
+		Entry->Entries[Entry->EntriesNum].EntryType = CAL_LAST_MODIFIED;
+		GSM_DateTimeFromTimestamp(&(Entry->Entries[Entry->EntriesNum].Date), modified);
+		Entry->EntriesNum++;
+	}
+
+	if (strlen(replication) > 0) {
+		Entry->Entries[Entry->EntriesNum].EntryType = CAL_PRIVATE;
+		if (strcmp(replication, "open") == 0) {
+			Entry->Entries[Entry->EntriesNum].Number = 0;
+		} else {
+			Entry->Entries[Entry->EntriesNum].Number = 1;
+		}
+		Entry->EntriesNum++;
+	}
+
+	if (strlen(alarm_time) > 0) {
+		Entry->Entries[Entry->EntriesNum].EntryType = CAL_TONE_ALARM_DATETIME;
+		GSM_DateTimeFromTimestamp(&(Entry->Entries[Entry->EntriesNum].Date), alarm_time);
+		Entry->EntriesNum++;
+	}
+
+	/* TODO: implement rest (priority, repeating) */
 
 	return ERR_NONE;
 }
