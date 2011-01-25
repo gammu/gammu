@@ -1013,7 +1013,137 @@ GSM_Error S60_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 	return error;
 }
 
+static GSM_Error S60_Reply_GetToDo(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
+	GSM_Error error;
+	char *pos, *type, *content, *location, *start, *end, *modified, *replication, *alarm_time, *priority, *repeat, *repeat_rule, *repeat_exceptions, *repeat_start, *repeat_end, *interval, *crossedout, *crossedout_time;
+	GSM_ToDoEntry *Entry;
+	int i;
 
+	error = S60_SplitValues(&msg, s);
+	if (error != ERR_NONE) {
+		return error;
+	}
+
+	/* Check for required fields */
+	for (i = 0; i < 18; i++) {
+		if (Priv->MessageParts[i] == NULL) {
+			smprintf(s, "Not enough parts in reply!\n");
+			return ERR_UNKNOWN;
+		}
+	}
+
+	Entry = s->Phone.Data.ToDo;
+
+	/* Grab values */
+	pos = Priv->MessageParts[0];
+	type = Priv->MessageParts[1];
+	content = Priv->MessageParts[2];
+	location = Priv->MessageParts[3];
+	start = Priv->MessageParts[4];
+	end = Priv->MessageParts[5];
+	modified = Priv->MessageParts[6];
+	replication = Priv->MessageParts[7];
+	alarm_time = Priv->MessageParts[8];
+	priority = Priv->MessageParts[9];
+	repeat = Priv->MessageParts[10];
+	repeat_rule = Priv->MessageParts[11];
+	repeat_exceptions = Priv->MessageParts[12];
+	repeat_start = Priv->MessageParts[13];
+	repeat_end = Priv->MessageParts[14];
+	interval = Priv->MessageParts[15];
+	crossedout = Priv->MessageParts[16];
+	crossedout_time = Priv->MessageParts[17];
+
+	/* Check for correct type */
+	if (strcmp(type, "todo") == 0) {
+		Entry->Type = GSM_CAL_MEMO;
+	} else {
+		return ERR_EMPTY;
+	}
+
+	if (strlen(content) > 0) {
+		Entry->Entries[Entry->EntriesNum].EntryType = TODO_TEXT;
+		DecodeUTF8(Entry->Entries[Entry->EntriesNum].Text, content, strlen(content));
+		Entry->EntriesNum++;
+	}
+
+	if (strlen(location) > 0) {
+		Entry->Entries[Entry->EntriesNum].EntryType = TODO_LOCATION;
+		DecodeUTF8(Entry->Entries[Entry->EntriesNum].Text, location, strlen(location));
+		Entry->EntriesNum++;
+	}
+
+	if (strlen(start) > 0) {
+		Entry->Entries[Entry->EntriesNum].EntryType = TODO_START_DATETIME;
+		GSM_DateTimeFromTimestamp(&(Entry->Entries[Entry->EntriesNum].Date), start);
+		Entry->EntriesNum++;
+	}
+
+	if (strlen(end) > 0) {
+		Entry->Entries[Entry->EntriesNum].EntryType = TODO_END_DATETIME;
+		GSM_DateTimeFromTimestamp(&(Entry->Entries[Entry->EntriesNum].Date), end);
+		Entry->EntriesNum++;
+	}
+
+	if (strlen(modified) > 0) {
+		Entry->Entries[Entry->EntriesNum].EntryType = TODO_LAST_MODIFIED;
+		GSM_DateTimeFromTimestamp(&(Entry->Entries[Entry->EntriesNum].Date), modified);
+		Entry->EntriesNum++;
+	}
+
+	if (strlen(replication) > 0) {
+		Entry->Entries[Entry->EntriesNum].EntryType = TODO_PRIVATE;
+		if (strcmp(replication, "open") == 0) {
+			Entry->Entries[Entry->EntriesNum].Number = 0;
+		} else {
+			Entry->Entries[Entry->EntriesNum].Number = 1;
+		}
+		Entry->EntriesNum++;
+	}
+
+	if (strlen(alarm_time) > 0) {
+		Entry->Entries[Entry->EntriesNum].EntryType = TODO_ALARM_DATETIME;
+		GSM_DateTimeFromTimestamp(&(Entry->Entries[Entry->EntriesNum].Date), alarm_time);
+		Entry->EntriesNum++;
+	}
+
+	if (strlen(priority) > 0) {
+		Entry->Priority = atoi(priority);
+	}
+
+	if (strlen(crossedout) > 0) {
+		Entry->Entries[Entry->EntriesNum].EntryType = TODO_COMPLETED;
+		Entry->Entries[Entry->EntriesNum].Number = atoi(crossedout);
+		Entry->EntriesNum++;
+	}
+
+	if (strlen(crossedout_time) > 0) {
+		Entry->Entries[Entry->EntriesNum].EntryType = TODO_COMPLETED_DATETIME;
+		GSM_DateTimeFromTimestamp(&(Entry->Entries[Entry->EntriesNum].Date), crossedout_time);
+		Entry->EntriesNum++;
+	}
+	/* TODO: implement rest (repeating) */
+
+	return ERR_NONE;
+}
+
+GSM_Error S60_GetToDo(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
+{
+	char buffer[100];
+	GSM_Error error;
+
+	Entry->EntriesNum = 0;
+
+	sprintf(buffer, "%d", Entry->Location);
+
+	s->Phone.Data.ToDo = Entry;
+	error = GSM_WaitFor(s, buffer, strlen(buffer), NUM_CALENDAR_REQUEST_ENTRY, S60_TIMEOUT, ID_GetToDo);
+	s->Phone.Data.ToDo = NULL;
+
+	return error;
+}
 
 GSM_Reply_Function S60ReplyFunctions[] = {
 
@@ -1043,6 +1173,9 @@ GSM_Reply_Function S60ReplyFunctions[] = {
 
 	{S60_Reply_GetCalendar, "", 0x00, NUM_CALENDAR_REPLY_ENTRY, ID_GetCalendarNote },
 	{S60_Reply_Generic, "", 0x00, NUM_CALENDAR_REPLY_ENTRY_NOT_FOUND, ID_GetCalendarNote },
+
+	{S60_Reply_GetToDo, "", 0x00, NUM_CALENDAR_REPLY_ENTRY, ID_GetToDo },
+	{S60_Reply_Generic, "", 0x00, NUM_CALENDAR_REPLY_ENTRY_NOT_FOUND, ID_GetToDo },
 
 	{S60_Reply_AddMemory, "", 0x00, NUM_CONTACTS_ADD_REPLY_ID, ID_SetMemory },
 
@@ -1152,7 +1285,7 @@ GSM_Phone_Functions S60Phone = {
 	NOTIMPLEMENTED,			/*	GetBitmap		*/
 	NOTIMPLEMENTED,			/*	SetBitmap		*/
 	S60_GetToDoStatus,
-	NOTIMPLEMENTED,                 /*      GetTodo */
+	S60_GetToDo,
 	NOTIMPLEMENTED,                 /*      GetNextTodo */
 	NOTIMPLEMENTED,                 /*      SetTodo */
 	NOTIMPLEMENTED,                 /*      AddTodo */
