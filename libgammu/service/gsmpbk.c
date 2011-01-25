@@ -203,7 +203,7 @@ GSM_Error GSM_EncodeVCARD(GSM_Debug_Info *di, char *Buffer, const size_t buff_le
 					ignore = TRUE;
 					break;
 				case PBK_Text_StreetAddress:
-					if (pbk->Entries[i].EntryType == PBK_Location_Work) {
+					if (pbk->Entries[i].Location == PBK_Location_Work) {
 						workaddress = i;
 					} else {
 						address = i;
@@ -211,7 +211,7 @@ GSM_Error GSM_EncodeVCARD(GSM_Debug_Info *di, char *Buffer, const size_t buff_le
 					ignore = TRUE;
 					break;
 				case PBK_Text_City:
-					if (pbk->Entries[i].EntryType == PBK_Location_Work) {
+					if (pbk->Entries[i].Location == PBK_Location_Work) {
 						workcity = i;
 					} else {
 						city = i;
@@ -219,7 +219,7 @@ GSM_Error GSM_EncodeVCARD(GSM_Debug_Info *di, char *Buffer, const size_t buff_le
 					ignore = TRUE;
 					break;
 				case PBK_Text_State:
-					if (pbk->Entries[i].EntryType == PBK_Location_Work) {
+					if (pbk->Entries[i].Location == PBK_Location_Work) {
 						workstate = i;
 					} else {
 						state = i;
@@ -227,7 +227,7 @@ GSM_Error GSM_EncodeVCARD(GSM_Debug_Info *di, char *Buffer, const size_t buff_le
 					ignore = TRUE;
 					break;
 				case PBK_Text_Zip:
-					if (pbk->Entries[i].EntryType == PBK_Location_Work) {
+					if (pbk->Entries[i].Location == PBK_Location_Work) {
 						workzip = i;
 					} else {
 						zip = i;
@@ -235,7 +235,7 @@ GSM_Error GSM_EncodeVCARD(GSM_Debug_Info *di, char *Buffer, const size_t buff_le
 					ignore = TRUE;
 					break;
 				case PBK_Text_Country:
-					if (pbk->Entries[i].EntryType == PBK_Location_Work) {
+					if (pbk->Entries[i].Location == PBK_Location_Work) {
 						workcountry = i;
 					} else {
 						country = i;
@@ -329,9 +329,9 @@ GSM_Error GSM_EncodeVCARD(GSM_Debug_Info *di, char *Buffer, const size_t buff_le
 					 */
 					error = VC_StoreText(Buffer, buff_len, Length, pbk->Entries[i].Text, "LABEL", FALSE);
 					if (error != ERR_NONE) return error;
-					if (pbk->Entries[i].EntryType == PBK_Location_Work) {
+					if (pbk->Entries[i].Location == PBK_Location_Work) {
 						error = VC_Store(Buffer, buff_len, Length, "ADR;WORK");
-					} else if (pbk->Entries[i].EntryType == PBK_Location_Home) {
+					} else if (pbk->Entries[i].Location == PBK_Location_Home) {
 						error = VC_Store(Buffer, buff_len, Length, "ADR;HOME");
 					} else {
 						error = VC_Store(Buffer, buff_len, Length, "ADR");
