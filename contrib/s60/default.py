@@ -83,10 +83,10 @@ class Mobile(object):
         return self._current_dir
 
     def getFilename(self, name):
-            return os.path.join(self.getCurrentDir(), name)
+        return os.path.join(self.getCurrentDir(), name)
 
     def getConfigFilename(self):
-            return self.getFilename('s60.cfg')
+        return self.getFilename('s60.cfg')
 
     def loadConfig(self):
         try:
