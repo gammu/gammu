@@ -990,7 +990,7 @@ class Mobile(object):
             self.startService()
 
     def aboutHandler(self):
-        note(u'Series60 - remote')
+        query(u'Series60 - remote\nVersion %s\nModified for Gammu\nhttp://wammu.eu/' % (VERSION) , 'query')
 
 # Debug of SIS applications
 try:
