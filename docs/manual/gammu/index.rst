@@ -1588,6 +1588,11 @@ Other commands
     .. note:: Some phones will ask for PIN even with ``SOFT`` option.
     .. warning:: Some phones will reset user data on ``HARD`` reset.
 
+.. option:: screenshot filename
+
+    Captures phone screenshot and saves it as filename. The extension is
+    automatically appended to filename based on what data phone provides.
+
 Batch mode commands
 -------------------
 
