@@ -334,8 +334,7 @@ class Mobile(object):
 
             elif (header == NUM_QUIT):
                 self.send(NUM_QUIT)
-                self.quit()
-                self.startService()
+                break
 
     def sendSysinfo(self,  full):
         self.send(NUM_SYSINFO_REPLY_START)
