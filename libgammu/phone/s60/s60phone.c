@@ -680,7 +680,7 @@ GSM_Error S60_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 
 GSM_Error S60_SetMemoryEntry(GSM_StateMachine *s, GSM_SubMemoryEntry *Entry, int pos, int reqtype)
 {
-	const char *type, *location;
+	const char *type, *location = "none";
 	char value[(GSM_PHONEBOOK_TEXT_LENGTH + 1) * 2];
 	char buffer [100 + (GSM_PHONEBOOK_TEXT_LENGTH + 1) * 2];
 	gboolean text = FALSE;
