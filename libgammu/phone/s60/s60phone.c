@@ -672,9 +672,7 @@ GSM_Error S60_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 
 	sprintf(buffer, "%d", Entry->Location);
 
-	s->Phone.Data.Memory = Entry;
 	error = GSM_WaitFor(s, buffer, strlen(buffer), NUM_CONTACTS_DELETE, S60_TIMEOUT, ID_None);
-	s->Phone.Data.Memory = NULL;
 
 	return error;
 }
@@ -1077,6 +1075,17 @@ GSM_Error S60_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry, gbo
 	return S60_GetCalendar(s, Entry);
 }
 
+GSM_Error S60_DeleteCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
+{
+	char buffer[100];
+	GSM_Error error;
+
+	sprintf(buffer, "%d", Entry->Location);
+
+	error = GSM_WaitFor(s, buffer, strlen(buffer), NUM_CALENDAR_ENTRY_DELETE, S60_TIMEOUT, ID_None);
+
+	return error;
+}
 
 static GSM_Error S60_Reply_GetToDo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
@@ -1233,6 +1242,17 @@ GSM_Error S60_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *Entry, gboolean St
 	return S60_GetToDo(s, Entry);
 }
 
+GSM_Error S60_DeleteToDo(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
+{
+	char buffer[100];
+	GSM_Error error;
+
+	sprintf(buffer, "%d", Entry->Location);
+
+	error = GSM_WaitFor(s, buffer, strlen(buffer), NUM_CALENDAR_ENTRY_DELETE, S60_TIMEOUT, ID_None);
+
+	return error;
+}
 
 GSM_Reply_Function S60ReplyFunctions[] = {
 
