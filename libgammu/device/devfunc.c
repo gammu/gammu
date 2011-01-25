@@ -38,6 +38,10 @@ int bluetooth_checkservicename(GSM_StateMachine *s, const char *name)
 	if (s->ConnectionType == GCT_BLUEPHONET) {
 		if (strstr(name, "Nokia PC Suite") != NULL) return 1;
 
+	/* Series 60 remote */
+	} else if (s->ConnectionType == GCT_BLUES60) {
+		if (strstr(name, "pys60_remote") != NULL) return 1;
+
 	/* OBEX */
 	} else if (s->ConnectionType == GCT_BLUEOBEX) {
 		/* Prefer this on Nokia as this gives better access to filesystem */
