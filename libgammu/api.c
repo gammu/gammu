@@ -1853,6 +1853,10 @@ GSM_Error GSM_GetScreenshot(GSM_StateMachine *s, GSM_BinaryPicture *picture)
 
 	CHECK_PHONE_CONNECTION();
 
+	picture->Length = 0;
+	picture->Buffer = NULL;
+	picture->Type = 0;
+
 	err = s->Phone.Functions->GetScreenshot(s, picture);
 	PRINT_LOG_ERROR(err);
 	return err;
