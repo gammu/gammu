@@ -992,6 +992,47 @@ static GSM_Error S60_Reply_GetCalendar(GSM_Protocol_Message msg, GSM_StateMachin
 		Entry->EntriesNum++;
 	}
 
+	if ((strlen(repeat) > 0) && (strlen(repeat_rule) > 0)) {
+		if (strcmp(repeat, "daily") == 0 ) {
+		} else if (strcmp(repeat, "weekly") == 0 ) {
+			Entry->Entries[Entry->EntriesNum].EntryType = CAL_REPEAT_DAYOFWEEK;
+			Entry->Entries[Entry->EntriesNum].Number = atoi(repeat_rule);
+			Entry->EntriesNum++;
+		} else if (strcmp(repeat, "monthly_by_dates") == 0 ) {
+			Entry->Entries[Entry->EntriesNum].EntryType = CAL_REPEAT_DAY;
+			Entry->Entries[Entry->EntriesNum].Number = atoi(repeat_rule);
+			Entry->EntriesNum++;
+		} else if (strcmp(repeat, "monthly_by_days") == 0 ) {
+		} else if (strcmp(repeat, "yearly_by_date") == 0 ) {
+		} else if (strcmp(repeat, "yearly_by_day") == 0 ) {
+			Entry->Entries[Entry->EntriesNum].EntryType = CAL_REPEAT_DAYOFYEAR;
+			Entry->Entries[Entry->EntriesNum].Number = atoi(repeat_rule);
+			Entry->EntriesNum++;
+		} else {
+			smprintf(s, "Unknown value for repeating: %s\n", repeat);
+			return ERR_UNKNOWN;
+		}
+	}
+
+	if (strlen(repeat_start) > 0) {
+		Entry->Entries[Entry->EntriesNum].EntryType = CAL_REPEAT_STARTDATE;
+		GSM_DateTimeFromTimestamp(&(Entry->Entries[Entry->EntriesNum].Date), repeat_start);
+		Entry->EntriesNum++;
+	}
+
+	if (strlen(repeat_end) > 0) {
+		Entry->Entries[Entry->EntriesNum].EntryType = CAL_REPEAT_STOPDATE;
+		GSM_DateTimeFromTimestamp(&(Entry->Entries[Entry->EntriesNum].Date), repeat_end);
+		Entry->EntriesNum++;
+	}
+
+	if (strlen(interval) > 0) {
+		Entry->Entries[Entry->EntriesNum].EntryType = CAL_REPEAT_FREQUENCY;
+		Entry->Entries[Entry->EntriesNum].Number = atoi(interval);
+		Entry->EntriesNum++;
+	}
+
+
 	/* TODO: implement rest (priority, repeating) */
 
 	return ERR_NONE;
