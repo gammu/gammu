@@ -1565,6 +1565,23 @@ GSM_Error S60_SendSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	return GSM_WaitFor(s, buffer, strlen(buffer), NUM_MESSAGE_SEND_REQUEST, S60_TIMEOUT, ID_None);
 }
 
+GSM_Error S60_GetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
+{
+	if (smsc->Location != 1) {
+		return ERR_EMPTY;
+	}
+	smsc->Name[0] = 0;
+	smsc->Name[1] = 0;
+	smsc->Number[0] = 0;
+	smsc->Number[1] = 0;
+	smsc->Validity.Format = SMS_Validity_NotAvailable;
+	smsc->Validity.Relative = SMS_VALID_Max_Time;
+	smsc->DefaultNumber[0] = 0;
+	smsc->DefaultNumber[1] = 0;
+	smsc->Format = SMS_FORMAT_Text;
+	return ERR_NONE;
+}
+
 GSM_Reply_Function S60ReplyFunctions[] = {
 
 	{S60_Reply_Connect,	"", 0x00, NUM_CONNECTED, ID_Initialise },
@@ -1669,7 +1686,7 @@ GSM_Phone_Functions S60Phone = {
 	NOTIMPLEMENTED,                 /*      DeleteAllMemory */
 	NOTIMPLEMENTED,			/*	GetSpeedDial		*/
 	NOTIMPLEMENTED,			/*	SetSpeedDial		*/
-	NOTIMPLEMENTED,			/*	GetSMSC			*/
+	S60_GetSMSC,
 	NOTIMPLEMENTED,			/*	SetSMSC			*/
 	S60_GetSMSStatus,
 	S60_GetSMS,
