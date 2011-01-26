@@ -259,6 +259,9 @@ class Mobile(object):
             elif (header == NUM_CONTACTS_REQUEST_HASH_SINGLE):
                 self.sendContactHashSingle()
 
+            elif (header == NUM_CONTACTS_REQUEST_COUNT):
+                self.send(NUM_CONTACTS_REPLY_COUNT, len(self.contactDb))
+
             elif (header == NUM_CONTACTS_REQUEST_CONTACT):
                 key = int(message.split(NUM_SEPERATOR)[0])
                 try:

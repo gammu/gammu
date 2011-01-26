@@ -332,10 +332,14 @@ static GSM_Error S60_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Stat
 	s->Phone.Data.MemoryStatus = Status;
 	Status->MemoryUsed = 0;
 	Status->MemoryFree = 1000;
-	Priv->ContactLocationsPos = 0;
-	error = GSM_WaitFor(s, "", 0, NUM_CONTACTS_REQUEST_HASH_SINGLE, S60_TIMEOUT, ID_GetMemoryStatus);
+	error = GSM_WaitFor(s, "", 0, NUM_CONTACTS_REQUEST_COUNT, S60_TIMEOUT, ID_GetMemoryStatus);
 	s->Phone.Data.MemoryStatus = NULL;
 	return error;
+}
+
+static GSM_Error S60_GetMemoryLocations(GSM_StateMachine *s)
+{
+	return GSM_WaitFor(s, "", 0, NUM_CONTACTS_REQUEST_HASH_SINGLE, S60_TIMEOUT, ID_GetMemoryStatus);
 }
 
 static GSM_Error S60_StoreLocation(GSM_StateMachine *s, int **locations, size_t *size, size_t *pos, int location)
@@ -353,6 +357,13 @@ static GSM_Error S60_StoreLocation(GSM_StateMachine *s, int **locations, size_t 
 	return ERR_NONE;
 }
 
+
+static GSM_Error S60_Reply_GetMemoryStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	s->Phone.Data.MemoryStatus->MemoryUsed = atoi(msg.Buffer);
+
+	return ERR_NONE;
+}
 
 static GSM_Error S60_Reply_ContactHash(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
@@ -375,9 +386,6 @@ static GSM_Error S60_Reply_ContactHash(GSM_Protocol_Message msg, GSM_StateMachin
 
 	}
 
-	if (s->Phone.Data.MemoryStatus != NULL) {
-		s->Phone.Data.MemoryStatus->MemoryUsed++;
-	}
 	return ERR_NEEDANOTHERANSWER;
 }
 
@@ -495,17 +503,14 @@ GSM_Error S60_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 GSM_Error S60_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry, gboolean Start)
 {
 	GSM_Error error;
-	GSM_MemoryStatus Status;
 	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
 
 	if (Entry->MemoryType != MEM_ME) {
 		return ERR_NOTSUPPORTED;
 	}
 
-	Status.MemoryType = Entry->MemoryType;
-
 	if (Start) {
-		error = S60_GetMemoryStatus(s, &Status);
+		error = S60_GetMemoryLocations(s);
 		if (error != ERR_NONE) {
 			return error;
 		}
@@ -1288,6 +1293,8 @@ GSM_Reply_Function S60ReplyFunctions[] = {
 	{S60_Reply_Generic,	"", 0x00, NUM_CONTACTS_REPLY_HASH_SINGLE_START, ID_GetMemoryStatus },
 	{S60_Reply_ContactHash, "", 0x00, NUM_CONTACTS_REPLY_HASH_SINGLE_LINE, ID_GetMemoryStatus },
 	{S60_Reply_Generic,	"", 0x00, NUM_CONTACTS_REPLY_HASH_SINGLE_END, ID_GetMemoryStatus },
+
+	{S60_Reply_GetMemoryStatus,	"", 0x00, NUM_CONTACTS_REPLY_COUNT, ID_GetMemoryStatus },
 
 	{S60_Reply_Generic,	"", 0x00, NUM_CALENDAR_REPLY_ENTRIES_START, ID_GetCalendarNotesInfo },
 	{S60_Reply_CalendarCount, "", 0x00, NUM_CALENDAR_REPLY_ENTRY, ID_GetCalendarNotesInfo },
