@@ -34,6 +34,10 @@ GSM_Error S60_Initialise(GSM_StateMachine *s)
 	GSM_Error error;
 	size_t i;
 
+	Priv->SMSLocations = NULL;
+	Priv->SMSLocationsSize = 0;
+	Priv->SMSLocationsPos = 0;
+
 	Priv->ContactLocations = NULL;
 	Priv->ContactLocationsSize = 0;
 	Priv->ContactLocationsPos = 0;
@@ -119,6 +123,11 @@ GSM_Error S60_SplitValues(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 GSM_Error S60_Terminate(GSM_StateMachine *s)
 {
 	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
+
+	free(Priv->SMSLocations);
+	Priv->SMSLocations = NULL;
+	Priv->SMSLocationsSize = 0;
+	Priv->SMSLocationsPos = 0;
 
 	free(Priv->ContactLocations);
 	Priv->ContactLocations = NULL;
@@ -1379,11 +1388,12 @@ GSM_Error S60_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 
 	char buffer[100];
 
+	sprintf(buffer, "%d", sms->SMS[0].Location);
+
 	sms->Number = 1;
-	GSM_SetDefaultSMSData(&(sms->SMS[0]));
+	GSM_SetDefaultReceivedSMSData(&(sms->SMS[0]));
 	s->Phone.Data.SaveSMSMessage = &(sms->SMS[0]);
 
-	sprintf(buffer, "%d", sms->SMS[0].Location);
 
 	return GSM_WaitFor(s, buffer, strlen(buffer), NUM_MESSAGE_REQUEST_ONE, S60_TIMEOUT, ID_GetSMSMessage);
 }
@@ -1415,9 +1425,11 @@ GSM_Error S60_Reply_GetSMS(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	if (strcmp(Priv->MessageParts[0], "inbox") == 0) {
 		s->Phone.Data.SaveSMSMessage->Folder = 1;
 		s->Phone.Data.SaveSMSMessage->InboxFolder = TRUE;
+		s->Phone.Data.SaveSMSMessage->PDU = SMS_Deliver;
 	} else {
 		s->Phone.Data.SaveSMSMessage->Folder = 2;
 		s->Phone.Data.SaveSMSMessage->InboxFolder = FALSE;
+		s->Phone.Data.SaveSMSMessage->PDU = SMS_Submit;
 	}
 
 	/* ID */
@@ -1429,6 +1441,7 @@ GSM_Error S60_Reply_GetSMS(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 	/* Content */
 	DecodeUTF8(s->Phone.Data.SaveSMSMessage->Text, Priv->MessageParts[4], strlen(Priv->MessageParts[4]));
+	s->Phone.Data.SaveSMSMessage->Coding = SMS_Coding_Default_No_Compression;
 
 	/* Unread */
 	if (strcmp(Priv->MessageParts[5], "1") == 0) {
@@ -1439,6 +1452,60 @@ GSM_Error S60_Reply_GetSMS(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		s->Phone.Data.SaveSMSMessage->State = SMS_Sent;
 	}
 	return ERR_NONE;
+}
+
+GSM_Error S60_Reply_SMSLocation(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
+	GSM_Error error;
+
+	error = S60_SplitValues(&msg, s);
+	if (error != ERR_NONE) {
+		return error;
+
+	}
+
+	if (Priv->MessageParts[0] == NULL) {
+		return ERR_UNKNOWN;
+	}
+
+	error = S60_StoreLocation(s, &Priv->SMSLocations, &Priv->SMSLocationsSize, &Priv->SMSLocationsPos, atoi(Priv->MessageParts[0]));
+	if (error != ERR_NONE) {
+		return error;
+
+	}
+
+	return ERR_NEEDANOTHERANSWER;
+}
+
+
+static GSM_Error S60_GetSMSLocations(GSM_StateMachine *s)
+{
+	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
+	Priv->SMSLocationsPos = 0;
+	return GSM_WaitFor(s, "", 0, NUM_MESSAGE_REQUEST_LIST, S60_TIMEOUT, ID_GetSMSStatus);
+}
+
+GSM_Error S60_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, gboolean Start)
+{
+	GSM_Error error;
+	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
+
+	if (Start) {
+		error = S60_GetSMSLocations(s);
+		if (error != ERR_NONE) {
+			return error;
+		}
+		Priv->SMSLocationsPos = 0;
+	}
+
+	if (Priv->SMSLocations[Priv->SMSLocationsPos] == 0) {
+		return ERR_EMPTY;
+	}
+
+	sms->SMS[0].Location = Priv->SMSLocations[Priv->SMSLocationsPos++];
+
+	return S60_GetSMS(s, sms);
 }
 
 GSM_Reply_Function S60ReplyFunctions[] = {
@@ -1453,6 +1520,9 @@ GSM_Reply_Function S60ReplyFunctions[] = {
 	{S60_Reply_Generic,	"", 0x00, NUM_CONTACTS_REPLY_HASH_SINGLE_START, ID_GetMemoryStatus },
 	{S60_Reply_ContactHash, "", 0x00, NUM_CONTACTS_REPLY_HASH_SINGLE_LINE, ID_GetMemoryStatus },
 	{S60_Reply_Generic,	"", 0x00, NUM_CONTACTS_REPLY_HASH_SINGLE_END, ID_GetMemoryStatus },
+
+	{S60_Reply_SMSLocation, "", 0x00, NUM_MESSAGE_REPLY_LIST, ID_GetSMSStatus },
+	{S60_Reply_Generic,	"", 0x00, NUM_MESSAGE_REPLY_END, ID_GetSMSStatus },
 
 	{S60_Reply_GetMemoryStatus,	"", 0x00, NUM_CONTACTS_REPLY_COUNT, ID_GetMemoryStatus },
 
@@ -1541,7 +1611,7 @@ GSM_Phone_Functions S60Phone = {
 	NOTIMPLEMENTED,			/*	SetSMSC			*/
 	S60_GetSMSStatus,
 	S60_GetSMS,
-	NOTIMPLEMENTED,			/*	GetNextSMS		*/
+	S60_GetNextSMS,
 	NOTIMPLEMENTED,			/*	SetSMS			*/
 	NOTIMPLEMENTED,			/*	AddSMS			*/
 	NOTIMPLEMENTED,			/* 	DeleteSMS 		*/

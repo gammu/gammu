@@ -39,6 +39,9 @@ typedef struct {
 	int MajorVersion;
 	int MinorVersion;
 	char *MessageParts[50];
+	int *SMSLocations;
+	size_t SMSLocationsSize;
+	size_t SMSLocationsPos;
 	int *ContactLocations;
 	size_t ContactLocationsSize;
 	size_t ContactLocationsPos;
