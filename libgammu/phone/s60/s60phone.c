@@ -1435,6 +1435,7 @@ GSM_Error S60_Reply_GetSMS(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	/* ID */
 
 	/* Time */
+	GSM_DateTimeFromTimestamp(&(s->Phone.Data.SaveSMSMessage->DateTime), Priv->MessageParts[2]);
 
 	/* Address */
 	DecodeUTF8(s->Phone.Data.SaveSMSMessage->Number, Priv->MessageParts[3], strlen(Priv->MessageParts[3]));
