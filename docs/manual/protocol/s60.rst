@@ -70,7 +70,7 @@ following content:
     model = obexnone
     device = 5C:57:C8:XX:XX:XX # Address of the phone
 
-Now you can send files to your phone::
+Now you can send files to your phone:
 
 .. code-block:: sh
 
