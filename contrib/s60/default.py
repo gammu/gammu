@@ -382,6 +382,10 @@ class Mobile(object):
                 lastId = int(message.split(NUM_SEPERATOR)[0])
                 self.sendAllMessages(lastId)
 
+            elif (header == NUM_MESSAGE_REQUEST_ONE):
+                lastId = int(message.split(NUM_SEPERATOR)[0])
+                self.sendOneMessage(lastId)
+
             elif (header == NUM_MESSAGE_REQUEST_UNREAD):
                 self.sendUnreadMessages()
 
@@ -956,7 +960,13 @@ class Mobile(object):
                 dates[key] = int(value)
             return dates
 
-    def sendMessage(self, sms, box, code):
+    def sendOneMessage(self, sms):
+        box = 'inbox'
+        if sms in self.sent.sms_messages():
+            box = 'sent'
+        self.__sendOneMessage(sms, box, NUM_MESSAGE_REPLY_ONE)
+
+    def __sendOneMessage(self, sms, box, code):
         id = sms
         time = self.inbox.time(sms)
         address = self.inbox.address(sms)
