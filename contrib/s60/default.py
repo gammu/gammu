@@ -297,6 +297,9 @@ class Mobile(object):
                 value = unicode(message.split(NUM_SEPERATOR)[3])
                 self.modifyContact("remove",  id,  type,  location,  value)
 
+            elif (header == NUM_CALENDAR_REQUEST_COUNT):
+                self.sendCalendarCount()
+
             elif (header == NUM_CALENDAR_REQUEST_HASH_ALL):
                 self.sendCalendarHash()
 
@@ -780,6 +783,18 @@ class Mobile(object):
             calendarDict[entry.id] =  line
 
         return calendarDict
+
+    def sendCalendarCount(self):
+        todos = 0
+        calendars = 0
+        for key in self.calendarDb:
+            entry = self.calendarDb[key]
+            entryType = self.__calendarGetType(entry)
+            if entryType in ['todo']:
+                todos = todos + 1
+            elif entryType != '':
+                calendars = calendars + 1
+        self.send(NUM_CALENDAR_REPLY_COUNT, len(self.calendarDb), calendars, todos)
 
     def sendCalendarHash(self):
         calendarDict = self.calendarDict()

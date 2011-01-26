@@ -338,6 +338,8 @@ static GSM_Error S60_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Stat
 
 static GSM_Error S60_GetMemoryLocations(GSM_StateMachine *s)
 {
+	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
+	Priv->ContactLocationsPos = 0;
 	return GSM_WaitFor(s, "", 0, NUM_CONTACTS_REQUEST_HASH_SINGLE, S60_TIMEOUT, ID_GetMemoryStatus);
 }
 
@@ -388,18 +390,48 @@ static GSM_Error S60_Reply_ContactHash(GSM_Protocol_Message msg, GSM_StateMachin
 	return ERR_NEEDANOTHERANSWER;
 }
 
-static GSM_Error S60_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Status)
+static GSM_Error S60_Reply_GetCalendarStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
+	GSM_Error error;
+
+	error = S60_SplitValues(&msg, s);
+	if (error != ERR_NONE) {
+		return error;
+	}
+
+	if (Priv->MessageParts[0] == NULL || Priv->MessageParts[1] == NULL || Priv->MessageParts[2] == NULL) {
+		return ERR_UNKNOWN;
+	}
+
+	if (s->Phone.Data.CalStatus != NULL) {
+		s->Phone.Data.CalStatus->Used = atoi(Priv->MessageParts[1]);
+	}
+	if (s->Phone.Data.ToDoStatus != NULL) {
+		s->Phone.Data.ToDoStatus->Used = atoi(Priv->MessageParts[2]);
+	}
+
+	return ERR_NONE;
+}
+
+static GSM_Error S60_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Status)
+{
 	GSM_Error error;
 
 	s->Phone.Data.CalStatus = Status;
 	Status->Used = 0;
 	Status->Free = 1000;
-	Priv->CalendarLocationsPos = 0;
-	error = GSM_WaitFor(s, "", 0, NUM_CALENDAR_REQUEST_ENTRIES_ALL, S60_TIMEOUT, ID_GetCalendarNotesInfo);
+	error = GSM_WaitFor(s, "", 0, NUM_CALENDAR_REQUEST_COUNT, S60_TIMEOUT, ID_GetCalendarNotesInfo);
 	s->Phone.Data.CalStatus = NULL;
 	return error;
+}
+
+static GSM_Error S60_GetCalendarLocations(GSM_StateMachine *s)
+{
+	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
+
+	Priv->CalendarLocationsPos = 0;
+	return GSM_WaitFor(s, "", 0, NUM_CALENDAR_REQUEST_ENTRIES_ALL, S60_TIMEOUT, ID_GetCalendarNotesInfo);
 }
 
 static GSM_Error S60_Reply_CalendarCount(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -437,16 +469,22 @@ static GSM_Error S60_Reply_CalendarCount(GSM_Protocol_Message msg, GSM_StateMach
 
 static GSM_Error S60_GetToDoStatus(GSM_StateMachine *s, GSM_ToDoStatus *Status)
 {
-	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
 	GSM_Error error;
 
 	s->Phone.Data.ToDoStatus = Status;
 	Status->Used = 0;
 	Status->Free = 1000;
-	Priv->ToDoLocationsPos = 0;
-	error = GSM_WaitFor(s, "", 0, NUM_CALENDAR_REQUEST_ENTRIES_ALL, S60_TIMEOUT, ID_GetToDoInfo);
+	error = GSM_WaitFor(s, "", 0, NUM_CALENDAR_REQUEST_COUNT, S60_TIMEOUT, ID_GetCalendarNotesInfo);
 	s->Phone.Data.ToDoStatus = NULL;
 	return error;
+}
+
+static GSM_Error S60_GetToDoLocations(GSM_StateMachine *s)
+{
+	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
+
+	Priv->ToDoLocationsPos = 0;
+	return GSM_WaitFor(s, "", 0, NUM_CALENDAR_REQUEST_ENTRIES_ALL, S60_TIMEOUT, ID_GetToDoInfo);
 }
 
 static GSM_Error S60_Reply_ToDoCount(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -1059,11 +1097,10 @@ GSM_Error S60_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 GSM_Error S60_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry, gboolean Start)
 {
 	GSM_Error error;
-	GSM_CalendarStatus Status;
 	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
 
 	if (Start) {
-		error = S60_GetCalendarStatus(s, &Status);
+		error = S60_GetCalendarLocations(s);
 		if (error != ERR_NONE) {
 			return error;
 		}
@@ -1226,11 +1263,10 @@ GSM_Error S60_GetToDo(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 GSM_Error S60_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *Entry, gboolean Start)
 {
 	GSM_Error error;
-	GSM_ToDoStatus Status;
 	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
 
 	if (Start) {
-		error = S60_GetToDoStatus(s, &Status);
+		error = S60_GetToDoLocations(s);
 		if (error != ERR_NONE) {
 			return error;
 		}
@@ -1363,6 +1399,8 @@ GSM_Reply_Function S60ReplyFunctions[] = {
 	{S60_Reply_Screenshot, "", 0x00, NUM_SCREENSHOT_REPLY, ID_Screenshot },
 
 	{S60_Reply_GetSMSStatus, "", 0x00,NUM_MESSAGE_REPLY_COUNT, ID_GetSMSStatus },
+
+	{S60_Reply_GetCalendarStatus, "", 0x00, NUM_CALENDAR_REPLY_COUNT, ID_GetCalendarNotesInfo },
 
 	{NULL,			"", 0x00, 0x00, ID_None }
 };
