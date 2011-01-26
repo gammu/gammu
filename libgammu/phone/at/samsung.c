@@ -327,8 +327,8 @@ GSM_Error SAMSUNG_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 	if ((dot = strrchr(name, '.')) != NULL)
 		*dot = 0;
 
-	len = sprintf(req, "AT+IMGW=0,\"%s\",2,0,0,0,0,100,%d,%u\r", name,
-		Bitmap->BinaryPic.Length, (unsigned int)crc);
+	len = sprintf(req, "AT+IMGW=0,\"%s\",2,0,0,0,0,100,%ld,%u\r", name,
+		(long int)Bitmap->BinaryPic.Length, (unsigned int)crc);
 
 	error = s->Protocol.Functions->WriteMessage(s, req, len, 0x00);
 	if (error!=ERR_NONE) return error;

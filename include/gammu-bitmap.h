@@ -39,7 +39,7 @@ typedef enum {
 typedef struct {
 	GSM_BinaryPicture_Types Type;
 	unsigned char *Buffer;
-	int Length;
+	size_t Length;
 } GSM_BinaryPicture;
 
 /**
