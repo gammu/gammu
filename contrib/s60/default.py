@@ -1020,7 +1020,9 @@ class Mobile(object):
 
     def sendMessagesList(self):
         inbox = self.inbox.sms_messages() + self.sent.sms_messages()
-        self.send(NUM_MESSAGE_REPLY_LIST, *inbox)
+        for i in inbox:
+            self.send(NUM_MESSAGE_REPLY_LIST, i)
+        self.send(NUM_MESSAGE_REPLY_END)
 
     def sendMessagesCount(self):
         messages = list()
