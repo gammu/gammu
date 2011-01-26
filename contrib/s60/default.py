@@ -1006,7 +1006,7 @@ class Mobile(object):
                 else:
                     box = "sent"
 
-                self.sendMessage(sms, box, NUM_MESSAGE_REPLY_LINE)
+                self.__sendOneMessage(sms, box, NUM_MESSAGE_REPLY_LINE)
 
         self.send(NUM_MESSAGE_REPLY_END)
 
