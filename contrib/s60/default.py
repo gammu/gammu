@@ -963,7 +963,12 @@ class Mobile(object):
                 else:
                     box = "sent"
 
-                self.send(NUM_MESSAGE_REPLY_LINE,  box,  id,  time,  address,  content)
+                if self.inbox.unread(sms):
+                    unread = '1'
+                else:
+                    unread = '0'
+
+                self.send(NUM_MESSAGE_REPLY_LINE,  box,  id,  time,  address,  content, unread)
 
         self.send(NUM_MESSAGE_REPLY_END)
 
