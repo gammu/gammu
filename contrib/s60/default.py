@@ -127,7 +127,12 @@ class Mobile(object):
         self.lock = e32.Ao_lock()
         app.exit_key_handler = self.exitHandler
         app.screen = 'normal'
-        app.menu = [(u'About', self.aboutHandler), (u'Change port', self.portHandler), (u'Toggle Bluetooth', self.toggleHandler), (u'Exit', self.exitHandler)]
+        app.menu = [
+            (u'About', self.aboutHandler),
+            (u'Change port', self.portHandler),
+            (u'Toggle Bluetooth', self.toggleHandler),
+            (u'Exit', self.exitHandler),
+            ]
 
     def statusUpdate(self, rect=None):
         if not self.useCanvas:
