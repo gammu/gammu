@@ -23,6 +23,7 @@
 #include "../../gsmphones.h"
 #include "../../gsmstate.h"
 #include "../../service/gsmmisc.h"
+#include "../../misc/locales.h"
 #include "../pfunc.h"
 #include <string.h>
 
@@ -91,6 +92,10 @@ GSM_Error S60_SplitValues(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 	}
 
 	i = 0;
+
+	if (msg->Length == 0) {
+		return ERR_NONE;
+	}
 
 	while ((pos - msg->Buffer) < (ssize_t)msg->Length) {
 		if (i >  sizeof(Priv->MessageParts) / sizeof(Priv->MessageParts[0])) {
@@ -1355,6 +1360,87 @@ GSM_Error S60_Reply_GetSMSStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	return ERR_NONE;
 }
 
+GSM_Error S60_GetSMSFolders(GSM_StateMachine *s UNUSED, GSM_SMSFolders *folders)
+{
+	folders->Number=2;
+	EncodeUnicode(folders->Folder[0].Name,_("Inbox"),strlen(_("Inbox")));
+	EncodeUnicode(folders->Folder[1].Name,_("Outbox"),strlen(_("Outbox")));
+	folders->Folder[0].InboxFolder = TRUE;
+	folders->Folder[1].InboxFolder = FALSE;
+	folders->Folder[0].OutboxFolder 	= FALSE;
+	folders->Folder[1].OutboxFolder 	= TRUE;
+	folders->Folder[0].Memory      = MEM_ME;
+	folders->Folder[1].Memory      = MEM_ME;
+	return ERR_NONE;
+}
+
+GSM_Error S60_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
+{
+
+	char buffer[100];
+
+	sms->Number = 1;
+	GSM_SetDefaultSMSData(&(sms->SMS[0]));
+	s->Phone.Data.SaveSMSMessage = &(sms->SMS[0]);
+
+	sprintf(buffer, "%d", sms->SMS[0].Location);
+
+	return GSM_WaitFor(s, buffer, strlen(buffer), NUM_MESSAGE_REQUEST_ONE, S60_TIMEOUT, ID_GetSMSMessage);
+}
+
+GSM_Error S60_Reply_GetSMS(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	GSM_Error error;
+	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
+	int i;
+
+	error = S60_SplitValues(&msg, s);
+	if (error != ERR_NONE) {
+		return error;
+	}
+
+	if (Priv->MessageParts[0] == NULL || Priv->MessageParts[0][0] == 0) {
+		return ERR_EMPTY;
+	}
+
+	/* Check for required fields */
+	for (i = 0; i < 6; i++) {
+		if (Priv->MessageParts[i] == NULL) {
+			smprintf(s, "Not enough parts in reply!\n");
+			return ERR_UNKNOWN;
+		}
+	}
+
+	/* Folder */
+	if (strcmp(Priv->MessageParts[0], "inbox") == 0) {
+		s->Phone.Data.SaveSMSMessage->Folder = 1;
+		s->Phone.Data.SaveSMSMessage->InboxFolder = TRUE;
+	} else {
+		s->Phone.Data.SaveSMSMessage->Folder = 2;
+		s->Phone.Data.SaveSMSMessage->InboxFolder = FALSE;
+	}
+
+	/* ID */
+
+	/* Time */
+
+	/* Address */
+	DecodeUTF8(s->Phone.Data.SaveSMSMessage->Number, Priv->MessageParts[3], strlen(Priv->MessageParts[3]));
+
+	/* Content */
+	DecodeUTF8(s->Phone.Data.SaveSMSMessage->Text, Priv->MessageParts[4], strlen(Priv->MessageParts[4]));
+
+	/* Unread */
+	if (strcmp(Priv->MessageParts[5], "1") == 0) {
+		s->Phone.Data.SaveSMSMessage->State = SMS_UnRead;
+	} else if (s->Phone.Data.SaveSMSMessage->InboxFolder) {
+		s->Phone.Data.SaveSMSMessage->State = SMS_Read;
+	} else {
+		s->Phone.Data.SaveSMSMessage->State = SMS_Sent;
+	}
+	return ERR_NONE;
+}
+
 GSM_Reply_Function S60ReplyFunctions[] = {
 
 	{S60_Reply_Connect,	"", 0x00, NUM_CONNECTED, ID_Initialise },
@@ -1399,6 +1485,7 @@ GSM_Reply_Function S60ReplyFunctions[] = {
 	{S60_Reply_Screenshot, "", 0x00, NUM_SCREENSHOT_REPLY, ID_Screenshot },
 
 	{S60_Reply_GetSMSStatus, "", 0x00,NUM_MESSAGE_REPLY_COUNT, ID_GetSMSStatus },
+	{S60_Reply_GetSMS, "", 0x00, NUM_MESSAGE_REPLY_ONE, ID_GetSMSMessage },
 
 	{S60_Reply_GetCalendarStatus, "", 0x00, NUM_CALENDAR_REPLY_COUNT, ID_GetCalendarNotesInfo },
 
@@ -1453,7 +1540,7 @@ GSM_Phone_Functions S60Phone = {
 	NOTIMPLEMENTED,			/*	GetSMSC			*/
 	NOTIMPLEMENTED,			/*	SetSMSC			*/
 	S60_GetSMSStatus,
-	NOTIMPLEMENTED,			/*	GetSMS			*/
+	S60_GetSMS,
 	NOTIMPLEMENTED,			/*	GetNextSMS		*/
 	NOTIMPLEMENTED,			/*	SetSMS			*/
 	NOTIMPLEMENTED,			/*	AddSMS			*/
@@ -1463,7 +1550,7 @@ GSM_Phone_Functions S60Phone = {
 	NOTSUPPORTED,			/*	SetFastSMSSending	*/
 	NOTIMPLEMENTED,			/*	SetIncomingSMS		*/
 	NOTIMPLEMENTED,			/* 	SetIncomingCB		*/
-	NOTIMPLEMENTED,			/*	GetSMSFolders		*/
+	S60_GetSMSFolders,
  	NOTIMPLEMENTED,			/* 	AddSMSFolder		*/
  	NOTIMPLEMENTED,			/* 	DeleteSMSFolder		*/
 	NOTIMPLEMENTED,			/*	DialVoice		*/
