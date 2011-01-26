@@ -2006,7 +2006,8 @@ GSM_Phone_Functions DUMMYPhone = {
 	DUMMY_AddFolder,
 	DUMMY_DeleteFolder,
 	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
-	NOTSUPPORTED			/* 	SetGPRSAccessPoint	*/
+	NOTSUPPORTED,			/* 	SetGPRSAccessPoint	*/
+	NOTSUPPORTED			/* 	GetScreenshot		*/
 };
 
 /*@}*/

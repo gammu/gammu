@@ -481,6 +481,61 @@ void Battery(int argc UNUSED, char *argv[] UNUSED)
 	GSM_Terminate();
 }
 
+void Screenshot(int argc UNUSED, char *argv[])
+{
+	GSM_BinaryPicture pic;
+	const char *ext = NULL;
+	char *fname;
+	GSM_Error error;
+	FILE *f;
+
+	GSM_Init(TRUE);
+
+	error = GSM_GetScreenshot(gsm, &pic);
+	Print_Error(error);
+
+	switch (pic.Type) {
+		case PICTURE_BMP:
+			ext = ".bmp";
+			break;
+		case PICTURE_GIF:
+			ext = ".gif";
+			break;
+		case PICTURE_JPG:
+			ext = ".jpg";
+			break;
+		case PICTURE_ICN:
+			ext = ".icn";
+			break;
+		case PICTURE_PNG:
+			ext = ".png";
+			break;
+	}
+	if (ext == NULL) {
+		printf_err("Unknown file type: %d\n", pic.Type);
+		return;
+	}
+
+	fname = (char *)malloc(strlen(argv[2]) + strlen(ext) + 1);
+	strcpy(fname, argv[2]);
+	strcat(fname, ext);
+
+	f = fopen(fname, "w");
+	if (f == NULL) {
+		printf_err("Failed to open file: %s\n", fname);
+		return;
+	}
+	fwrite(pic.Buffer, 1, pic.Length, f);
+	fclose(f);
+
+	printf_info("File saved as %s\n", fname);
+
+	free(fname);
+	free(pic.Buffer);
+
+	GSM_Terminate();
+}
+
 void IncomingCall(GSM_StateMachine *sm UNUSED, GSM_Call call, void *user_data)
 {
 	printf(LISTFORMAT, _("Call info"));

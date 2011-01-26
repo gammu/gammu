@@ -2,4 +2,3 @@ S60 applet
 
 - telephone.dial()
 - telephone.hang_up()
-- image.screenshot()

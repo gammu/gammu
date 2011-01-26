@@ -84,6 +84,7 @@ typedef enum {
 	ID_GetCNMIMode,
 	ID_GetCalendarNotePos,
 	ID_Initialise,
+	ID_Terminate,
 	ID_GetConnectSet,
 	ID_SetWAPBookmark,
 	ID_GetLocale,
@@ -150,6 +151,7 @@ typedef enum {
 	ID_DeleteFile,
 	ID_ModeSwitch,
 	ID_GetProtocol,
+	ID_Screenshot,
 
     	/* Alcatel AT mode */
     	ID_SetFlowControl,

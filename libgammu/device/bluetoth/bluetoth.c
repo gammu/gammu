@@ -47,7 +47,6 @@ GSM_Error bluetooth_findrfchannel(GSM_StateMachine *s)
 	/* Default device on *NIX is /dev/.., so we need to ignore it here as well. */
 	channel = strchr(device, '/');
 	if ((device[0] == '/' || channel == NULL) &&
-			(s->ConnectionType != GCT_BLUES60) &&
 			strncasecmp(s->CurrentConfig->Connection, "bluerf", 6) != 0) {
 		free(device);
 		device=NULL;

@@ -1,0 +1,84 @@
+Series60 Remote Protocol
+========================
+
+.. note:: 
+
+    The original applet has been created for
+    <http://series60-remote.sourceforge.net/>. Gammu currently uses slightly
+    extended version which will be hopefully merged back.
+
+Choosing right version
+----------------------
+
+Before using this connection type, you need to install the applet to the
+phone. The applet can be found in ``contrib/s60`` directory and there are two
+variants of the applets:
+
+``series60-remote.sis``
+    Not signed applet, which can be installed to the phone if it has enabled
+    installation of unsigned applications.
+
+    .. note::
+       
+        This applet also lacks some capabilities, so for example you will not
+        be able to get network information.
+
+``series60-remote-sign.sis``
+    Applet ready for signing using `Open Signed Online`_. This will allow you
+    to install applet to your phone only (it is bound to IMEI), but you don't
+    need to allow installation of unsigned applications.
+
+.. note:: 
+   
+   The best way of course would be to have properly signed applet. However
+   access to signing tools costs 200 USD per year, what is something we can
+   not afford right now.
+
+Installation
+------------
+
+To run the applet you need to install `Python for S60`_ 2.0 to the phone. You
+can either download it from their website, or just get mirrored installation
+package from <http://dl.cihar.com/gammu/s60/Python_2.0.0.sis>. This file is
+not distributed with Gammu due to licensing reasons.
+
+Installing Python for S60 and Series60 remote applet can be done in several
+ways:
+
+Downloading from phone
+++++++++++++++++++++++
+
+Downloading files from the phone and installing them directly. You can
+download all required files from http://wammu.eu/s60/.
+
+.. figure:: s60-download-qr.png
+   :target: http://wammu.eu/s60/
+   :alt: QR code for download of applet.
+   
+   QR code for download of applet.
+
+Installation using Gammu
+++++++++++++++++++++++++
+
+Gammu can be used to send the files to phone. First create ``~/.gammurc`` with
+following content:
+
+.. code-block:: ini
+
+    [gammu]
+    connection = blueobex
+    model = obexnone
+    device = 5C:57:C8:XX:XX:XX # Address of the phone
+
+Now you can send files to your phone::
+
+.. code-block:: sh
+
+    gammu sendfile Python_2.0.0.sis
+    gammu sendfile contrib/s60/series60-remote.sis
+
+Files should appear in inbox in your phone and you can install them from
+there.
+
+.. _Open Signed Online: https://www.symbiansigned.com/app/page/public/openSignedOnline.do
+.. _Python for S60: https://garage.maemo.org/projects/pys60/

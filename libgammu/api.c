@@ -1844,6 +1844,24 @@ GSM_Error GSM_SetGPRSAccessPoint(GSM_StateMachine *s, GSM_GPRSAccessPoint *point
 	return err;
 }
 
+/**
+ * Gets phone screenshot
+ */
+GSM_Error GSM_GetScreenshot(GSM_StateMachine *s, GSM_BinaryPicture *picture)
+{
+	GSM_Error err;
+
+	CHECK_PHONE_CONNECTION();
+
+	picture->Length = 0;
+	picture->Buffer = NULL;
+	picture->Type = 0;
+
+	err = s->Phone.Functions->GetScreenshot(s, picture);
+	PRINT_LOG_ERROR(err);
+	return err;
+}
+
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:
  */

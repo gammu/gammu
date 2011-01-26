@@ -146,6 +146,16 @@ int GSM_GetLocalTimezoneOffset(void);
 void Fill_GSM_DateTime(GSM_DateTime * Date, time_t timet);
 
 /**
+ * Converts string (seconds since epoch) to gammu \ref GSM_DateTime structure.
+ *
+ * \param Date Storage for date.
+ * \param str Input date.
+ *
+ * \ingroup DateTime
+ */
+void GSM_DateTimeFromTimestamp(GSM_DateTime *Date, const char *str);
+
+/**
  * Converts timestamp to string according to OS settings.
  *
  * \param dt Input timestamp.

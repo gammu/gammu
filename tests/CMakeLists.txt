@@ -35,6 +35,10 @@ add_test(sizes "${GAMMU_TEST_PATH}/sizes${GAMMU_TEST_SUFFIX}")
 set_tests_properties(sizes PROPERTIES
     FAIL_REGULAR_EXPRESSION "[0-9][0-9] MiB")
 
+add_executable(base64 base64.c)
+target_link_libraries(base64 libGammu ${LIBINTL_LIBRARIES})
+add_test(base64 "${GAMMU_TEST_PATH}/base64${GAMMU_TEST_SUFFIX}")
+
 # Array manipulation tests
 add_executable(array-test array-test.c)
 target_link_libraries (array-test array)

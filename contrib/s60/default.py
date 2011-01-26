@@ -6,6 +6,8 @@ import sys
 sys.path.append('e:\python\libs')
 sys.path.append('c:\python\libs')
 
+import os.path
+
 import time
 import math
 import md5
@@ -17,6 +19,7 @@ import contacts
 import telephone
 import messaging
 import location
+import graphics
 from appuifw import *
 from status_numbers import *
 
@@ -29,6 +32,8 @@ if float(e32.pys60_version[:3]) >= 1.9:
     import btsocket as socket
 else:
     import socket
+
+import cPickle
 
 
 VERSION = 0.5
@@ -48,6 +53,8 @@ class Mobile(object):
         self.client = None
         self.port = PORT
 
+        self.loadConfig()
+
         self.inbox = inbox.Inbox(inbox.EInbox)
         self.sent = inbox.Inbox(inbox.ESent)
         self.contactDb = contacts.open()
@@ -60,6 +67,55 @@ class Mobile(object):
 
         self.initUi()
         self.startService()
+
+    def getCurrentDir(self):
+        try:
+            return self._current_dir
+        except:
+            pass
+
+        try:
+            raise Exception
+        except Exception:
+            frame = sys.exc_info()[2].tb_frame
+            path = frame.f_code.co_filename
+            dirpath = os.path.split(path)[0]
+            self._current_dir = os.path.realpath(dirpath)
+
+        return self._current_dir
+
+    def getFilename(self, name):
+        return os.path.join(self.getCurrentDir(), name)
+
+    def getConfigFilename(self):
+        return self.getFilename('s60.cfg')
+
+    def getScreenshotFilename(self):
+        return self.getFilename('screenshot.png')
+
+    def loadConfig(self):
+        try:
+            f = file(self.getConfigFilename(), 'rb')
+            conf = cPickle.load(f)
+            f.close()
+            if 'port' in conf:
+                self.port = conf['port']
+            if 'useCanvas' in conf:
+                self.useCanvas = conf['useCanvas']
+        except IOError, r:
+            pass
+
+    def saveConfig(self):
+        try:
+            f = file(self.getConfigFilename(), 'wb')
+            conf = {
+                'port': self.port,
+                'useCanvas': self.useCanvas,
+                }
+            cPickle.dump(conf, f)
+            f.close()
+        except IOError, r:
+            pass
 
     def initUi(self):
         app.title = u"Series 60 - Remote"
@@ -98,8 +154,30 @@ class Mobile(object):
 
         socket.set_security(self.sock,  socket.AUTH | socket.AUTHOR)
         socket.bt_advertise_service(u"pys60_remote", self.sock, True, socket.RFCOMM)
+        note(u'Listenning on port %d' % self.port)
 
         self.listen()
+
+    def stopService(self):
+        if (self.service):
+            self.service = False
+            self.statusUpdate()
+
+            socket.bt_advertise_service(u"pys60_remote", self.sock, False, socket.RFCOMM)
+            self.sock.close()
+            self.sock = None
+
+    def disconnect(self):
+        if(self.connected):
+            self.connected = False
+
+            self.fos.close()
+            self.fis.close()
+
+            self.client[0].close()
+            self.client = None
+
+            self.statusUpdate()
 
     def listen(self):
         while self.service:
@@ -107,6 +185,7 @@ class Mobile(object):
 
             self.connected = True
             self.statusUpdate()
+            note(u'Connected client %s' % self.client[1])
 
             self.fos = self.client[0].makefile("w")
             self.fis = self.client[0].makefile("r")
@@ -114,8 +193,8 @@ class Mobile(object):
             self.send(NUM_CONNECTED,  PROTOCOL_VERSION)
 
             self.wait()
-            self.quit()
-            self.startService()
+            note(u'Disconnected client %s' % self.client[1])
+            self.disconnect()
 
     def send(self, header,  *message):
         new_message = ""
@@ -139,23 +218,15 @@ class Mobile(object):
                 sentParts += 1
             return
 
-        try:
-            self.fos.write(unicode(str(header) + str(NUM_END_HEADER) + new_message + str(NUM_END_TEXT)).encode("utf8") )
-            self.fos.flush()
-        except:
-            try:
-                self.quit()
-            except:
-                pass
-            self.startService()
+        self.fos.write(unicode(str(header) + str(NUM_END_HEADER) + new_message + str(NUM_END_TEXT)).encode("utf8") )
+        self.fos.flush()
 
     def wait(self):
         while(True):
             try:
                 data = self.fis.readline()
             except:
-                self.quit()
-                self.startService()
+                break
 
             header = int(data.split(NUM_END_HEADER)[0])
             message = unicode(data.split(NUM_END_HEADER)[1],  "utf8")
@@ -226,8 +297,11 @@ class Mobile(object):
 
             elif (header == NUM_CALENDAR_REQUEST_ENTRY):
                 key = int(message.split(NUM_SEPERATOR)[0])
-                entry = self.calendarDb[key]
-                self.sendCalendarEntry(entry)
+                try:
+                    entry = self.calendarDb[key]
+                    self.sendCalendarEntry(entry)
+                except:
+                    self.send(NUM_CALENDAR_REPLY_ENTRY_NOT_FOUND)
 
             elif (header == NUM_CALENDAR_REQUEST_ENTRIES_ALL):
                 self.sendAllCalendarEntries()
@@ -312,10 +386,12 @@ class Mobile(object):
                 state = bool(message.split(NUM_SEPERATOR)[1])
                 self.setRead(id, state)
 
+            elif (header == NUM_SCREENSHOT):
+                self.sendScreenshot()
+
             elif (header == NUM_QUIT):
                 self.send(NUM_QUIT)
-                self.quit()
-                self.startService()
+                break
 
     def sendSysinfo(self,  full):
         self.send(NUM_SYSINFO_REPLY_START)
@@ -345,6 +421,15 @@ class Mobile(object):
             self.send(NUM_SYSINFO_REPLY_LINE, "total_rom", sysinfo.total_rom())
 
         self.send(NUM_SYSINFO_REPLY_END)
+
+    def sendScreenshot(self):
+        fn = self.getScreenshotFilename()
+        shot = graphics.screenshot()
+        shot.save(fn)
+        note(u'Saved screenshot as %s' % fn)
+        f = file(fn, 'rb')
+        self.send(NUM_SCREENSHOT_REPLY, f.read().encode('base64'))
+        f.close()
 
     def sendLocation(self):
         loc = location.gsm_location()
@@ -955,25 +1040,12 @@ class Mobile(object):
         self.inbox.set_unread(id,  state)
 
     def quit(self):
-        if (self.service):
-            self.service = False
-
-            self.sock.close()
-            self.sock = None
-
-        if(self.connected):
-            self.connected = False
-
-            self.fos.close()
-            self.fis.close()
-
-            self.client[0].close()
-            self.client = None
-
-            self.statusUpdate()
+        self.stopService()
+        self.disconnect()
 
     def exitHandler(self):
         self.quit()
+        self.saveConfig()
 
         app.exit_key_handler = None
         self.lock.signal()
@@ -987,10 +1059,11 @@ class Mobile(object):
         if ret is not None:
             self.port = ret
             self.quit()
+            self.saveConfig()
             self.startService()
 
     def aboutHandler(self):
-        note(u'Series60 - remote')
+        query(u'Series60 - remote\nVersion %s\nModified for Gammu\nhttp://wammu.eu/' % (VERSION) , 'query')
 
 # Debug of SIS applications
 try:
@@ -1007,8 +1080,8 @@ except Exception, e:
 
     # Show the last 4 lines of the call stack
     call_stack = u""
-    for file, lineno, function, text in traceback.extract_tb(info[2])[4:]:
-        call_stack += file + u": " + str(lineno) + u" - " + function + new_line
+    for filename, lineno, function, text in traceback.extract_tb(info[2])[4:]:
+        call_stack += filename + u": " + str(lineno) + u" - " + function + new_line
         call_stack += u" " + repr(text) + new_line
     call_stack +=  u"%s: %s" % info[:2]
 

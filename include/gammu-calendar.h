@@ -416,7 +416,7 @@ typedef enum {
 	 */
 	TODO_START_DATETIME,
 	/**
-	 * Start date (Date).
+	 * Completed date (Date).
 	 */
 	TODO_COMPLETED_DATETIME,
 } GSM_ToDoType;

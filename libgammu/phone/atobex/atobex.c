@@ -1529,7 +1529,8 @@ GSM_Phone_Functions ATOBEXPhone = {
 	ATOBEX_AddFolder,
 	ATOBEX_DeleteFile,	/* 	DeleteFolder		*/
 	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
-	NOTSUPPORTED			/* 	SetGPRSAccessPoint	*/
+	NOTSUPPORTED,			/* 	SetGPRSAccessPoint	*/
+	NOTSUPPORTED			/* 	GetScreenshot		*/
 };
 
 #endif
