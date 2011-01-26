@@ -956,6 +956,20 @@ class Mobile(object):
                 dates[key] = int(value)
             return dates
 
+    def sendMessage(self, sms, box, code):
+        id = sms
+        time = self.inbox.time(sms)
+        address = self.inbox.address(sms)
+        content = self.inbox.content(sms)
+        content = content.replace(u'\u2029',  u'\n') # PARAGRAPH SEPARATOR (\u2029) replaced by LINE FEED (\u000a)
+
+        if self.inbox.unread(sms):
+            unread = '1'
+        else:
+            unread = '0'
+
+        self.send(code, box,  id,  time,  address,  content, unread)
+
     def sendAllMessages(self,  lastId):
         messages = list()
         inbox = list()
@@ -973,23 +987,12 @@ class Mobile(object):
         messages.sort()
         for sms in messages:
             if (int(sms) > int(lastId)):
-                id = sms
-                time = self.inbox.time(sms)
-                address = self.inbox.address(sms)
-                content = self.inbox.content(sms)
-                content = content.replace(u'\u2029',  u'\n') # PARAGRAPH SEPARATOR (\u2029) replaced by LINE FEED (\u000a)
-
                 if sms in inbox:
                     box = "inbox"
                 else:
                     box = "sent"
 
-                if self.inbox.unread(sms):
-                    unread = '1'
-                else:
-                    unread = '0'
-
-                self.send(NUM_MESSAGE_REPLY_LINE,  box,  id,  time,  address,  content, unread)
+                self.sendMessage(sms, box, NUM_MESSAGE_REPLY_LINE)
 
         self.send(NUM_MESSAGE_REPLY_END)
 
