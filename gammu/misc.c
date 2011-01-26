@@ -488,6 +488,8 @@ void Screenshot(int argc UNUSED, char *argv[])
 	char *fname;
 	GSM_Error error;
 	FILE *f;
+	size_t written;
+	int ret;
 
 	GSM_Init(TRUE);
 
@@ -525,8 +527,12 @@ void Screenshot(int argc UNUSED, char *argv[])
 		printf_err("Failed to open file: %s\n", fname);
 		return;
 	}
-	fwrite(pic.Buffer, 1, pic.Length, f);
-	fclose(f);
+	written = fwrite(pic.Buffer, 1, pic.Length, f);
+	ret = fclose(f);
+	if (ret != 0 || written != pic.Length) {
+		printf_err("Failed to write file: %s\n", fname);
+		return;
+	}
 
 	printf_info("File saved as %s\n", fname);
 
