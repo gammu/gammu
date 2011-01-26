@@ -385,6 +385,9 @@ class Mobile(object):
             elif (header == NUM_MESSAGE_REQUEST_LIST):
                 self.sendMessagesList()
 
+            elif (header == NUM_MESSAGE_REQUEST_COUNT):
+                self.sendMessagesCount()
+
             elif (header == NUM_MESSAGE_SEND_REQUEST):
                 name = unicode(message.split(NUM_SEPERATOR)[0])
                 phone = unicode(message.split(NUM_SEPERATOR)[1])
@@ -986,6 +989,14 @@ class Mobile(object):
     def sendMessagesList(self):
         inbox = self.inbox.sms_messages()
         self.send(NUM_MESSAGE_REPLY_LIST, *inbox)
+
+    def sendMessagesCount(self):
+        messages = list()
+        inbox = self.inbox.sms_messages()
+        for sms in inbox:
+            if self.inbox.unread(sms):
+                messages.append(sms)
+        self.send(NUM_MESSAGE_REPLY_COUNT, len(inbox), len(messages))
 
     def sendMessage(self, name, phone, encoding,  msg):
         try:
