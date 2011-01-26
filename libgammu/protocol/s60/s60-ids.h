@@ -93,6 +93,7 @@
 
 #define NUM_END_HEADER 0x02   /* Start of Text */
 #define NUM_SEPERATOR 0x1E   /* Record Separator */
+#define NUM_SEPERATOR_STR "\x1E"   /* Record Separator */
 #define NUM_END_TEXT 0x03   /* End of Text */
 
 #define PROTOCOL_VERSION 1.5

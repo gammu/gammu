@@ -165,6 +165,30 @@ static GSM_Error S60_Reply_Generic(GSM_Protocol_Message msg, GSM_StateMachine *s
 	}
 }
 
+static GSM_Error S60_Reply_SendSMS(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	switch (msg.Type) {
+		case NUM_MESSAGE_SEND_REPLY_RETRY:
+			if (s->User.SendSMSStatus != NULL) {
+				s->User.SendSMSStatus(s, 1, -1, s->User.SendSMSStatusUserData);
+			}
+			return ERR_UNKNOWN;
+		case NUM_MESSAGE_SEND_REPLY_STATUS:
+			return ERR_NONE;
+		case NUM_MESSAGE_SEND_REPLY_OK:
+			if (s->User.SendSMSStatus != NULL) {
+				s->User.SendSMSStatus(s, 0, -1, s->User.SendSMSStatusUserData);
+			}
+			return ERR_NONE;
+		case NUM_MESSAGE_SEND_REPLY_FAILURE:
+			if (s->User.SendSMSStatus != NULL) {
+				s->User.SendSMSStatus(s, 1, -1, s->User.SendSMSStatusUserData);
+			}
+			return ERR_UNKNOWN;
+		default:
+			return ERR_UNKNOWN;
+	}
+}
 
 static GSM_Error S60_Reply_Connect(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
@@ -1509,6 +1533,38 @@ GSM_Error S60_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, gboolean
 	return S60_GetSMS(s, sms);
 }
 
+GSM_Error S60_SendSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
+{
+	char buffer[((GSM_MAX_SMS_LENGTH + 1) * 2) + ((GSM_MAX_SMS_NAME_LENGTH + 1) * 2) + ((GSM_MAX_NUMBER_LENGTH + 1) * 2)];
+
+	if (sms->UDH.Type != UDH_NoUDH) {
+		return ERR_NOTSUPPORTED;
+	}
+
+	EncodeUTF8(buffer, sms->Name);
+	strcat(buffer, NUM_SEPERATOR_STR);
+	EncodeUTF8(buffer + strlen(buffer), sms->Number);
+	strcat(buffer, NUM_SEPERATOR_STR);
+	switch (sms->Coding) {
+		case SMS_Coding_Unicode_No_Compression:
+		case SMS_Coding_Unicode_Compression:
+			strcat(buffer, "UCS2");
+			break;
+		case SMS_Coding_Default_No_Compression:
+		case SMS_Coding_Default_Compression:
+			strcat(buffer, "7bit");
+			break;
+		case SMS_Coding_8bit:
+			strcat(buffer, "8bit");
+			break;
+	}
+	strcat(buffer, NUM_SEPERATOR_STR);
+	EncodeUTF8(buffer + strlen(buffer), sms->Text);
+	strcat(buffer, NUM_SEPERATOR_STR);
+
+	return GSM_WaitFor(s, buffer, strlen(buffer), NUM_MESSAGE_SEND_REQUEST, S60_TIMEOUT, ID_None);
+}
+
 GSM_Reply_Function S60ReplyFunctions[] = {
 
 	{S60_Reply_Connect,	"", 0x00, NUM_CONNECTED, ID_Initialise },
@@ -1559,6 +1615,11 @@ GSM_Reply_Function S60ReplyFunctions[] = {
 	{S60_Reply_GetSMS, "", 0x00, NUM_MESSAGE_REPLY_ONE, ID_GetSMSMessage },
 
 	{S60_Reply_GetCalendarStatus, "", 0x00, NUM_CALENDAR_REPLY_COUNT, ID_GetCalendarNotesInfo },
+
+	{S60_Reply_SendSMS, "", 0x00, NUM_MESSAGE_SEND_REPLY_RETRY, ID_IncomingFrame },
+	{S60_Reply_SendSMS, "", 0x00, NUM_MESSAGE_SEND_REPLY_STATUS, ID_IncomingFrame },
+	{S60_Reply_SendSMS, "", 0x00, NUM_MESSAGE_SEND_REPLY_OK, ID_IncomingFrame },
+	{S60_Reply_SendSMS, "", 0x00, NUM_MESSAGE_SEND_REPLY_FAILURE, ID_IncomingFrame },
 
 	{NULL,			"", 0x00, 0x00, ID_None }
 };
@@ -1616,7 +1677,7 @@ GSM_Phone_Functions S60Phone = {
 	NOTIMPLEMENTED,			/*	SetSMS			*/
 	NOTIMPLEMENTED,			/*	AddSMS			*/
 	NOTIMPLEMENTED,			/* 	DeleteSMS 		*/
-	NOTIMPLEMENTED,			/*	SendSMSMessage		*/
+	S60_SendSMS,
 	NOTSUPPORTED,			/*	SendSavedSMS		*/
 	NOTSUPPORTED,			/*	SetFastSMSSending	*/
 	NOTIMPLEMENTED,			/*	SetIncomingSMS		*/
