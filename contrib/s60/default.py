@@ -968,7 +968,11 @@ class Mobile(object):
 
     def __sendOneMessage(self, sms, box, code):
         id = sms
-        time = self.inbox.time(sms)
+        try:
+            time = self.inbox.time(sms)
+        except:
+            self.send(code, "")
+            return
         address = self.inbox.address(sms)
         content = self.inbox.content(sms)
         content = content.replace(u'\u2029',  u'\n') # PARAGRAPH SEPARATOR (\u2029) replaced by LINE FEED (\u000a)
