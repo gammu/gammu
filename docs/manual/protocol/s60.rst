@@ -80,5 +80,20 @@ Now you can send files to your phone::
 Files should appear in inbox in your phone and you can install them from
 there.
 
+Connecting
+----------
+
+The Gammu configuration is simple, all you need to specify is correct
+:config:option:`Connection`:
+
+.. code-block:: ini
+
+    [gammu]
+    connection = blues60
+    device = 5C:57:C8:XX:XX:XX # Address of the phone
+
+Now you need to start the Series60 applet in the phone and Gammu should be
+able to talk to it.
+
 .. _Open Signed Online: https://www.symbiansigned.com/app/page/public/openSignedOnline.do
 .. _Python for S60: https://garage.maemo.org/projects/pys60/
