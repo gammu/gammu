@@ -1005,12 +1005,12 @@ class Mobile(object):
         self.send(NUM_MESSAGE_REPLY_UNREAD,  *messages)
 
     def sendMessagesList(self):
-        inbox = self.inbox.sms_messages()
+        inbox = self.inbox.sms_messages() + self.sent.sms_messages()
         self.send(NUM_MESSAGE_REPLY_LIST, *inbox)
 
     def sendMessagesCount(self):
         messages = list()
-        inbox = self.inbox.sms_messages()
+        inbox = self.inbox.sms_messages() + self.sent.sms_messages()
         for sms in inbox:
             if self.inbox.unread(sms):
                 messages.append(sms)
