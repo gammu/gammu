@@ -322,7 +322,6 @@ static GSM_Error S60_Reply_GetInfo(GSM_Protocol_Message msg, GSM_StateMachine *s
 
 static GSM_Error S60_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Status)
 {
-	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
 	GSM_Error error;
 
 	if (Status->MemoryType != MEM_ME) {
@@ -1281,6 +1280,45 @@ GSM_Error S60_Reply_Screenshot(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	return ERR_NONE;
 }
 
+GSM_Error S60_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status)
+{
+	GSM_Error error;
+
+	status->SIMUnRead = 0;
+	status->SIMUsed = 0;
+	status->SIMSize = 0;
+	status->TemplatesUsed = 0;
+	status->PhoneUnRead = 0;
+	status->PhoneUsed = 0;
+	status->PhoneSize = 0;
+
+	s->Phone.Data.SMSStatus = status;
+	error = GSM_WaitFor(s, NULL, 0, NUM_MESSAGE_REQUEST_COUNT, S60_TIMEOUT, ID_GetSMSStatus);
+	s->Phone.Data.SMSStatus = NULL;
+
+	return error;
+}
+
+GSM_Error S60_Reply_GetSMSStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	GSM_Error error;
+	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
+
+	error = S60_SplitValues(&msg, s);
+	if (error != ERR_NONE) {
+		return error;
+	}
+
+	if (Priv->MessageParts[0] == NULL || Priv->MessageParts[1] == NULL) {
+		return ERR_UNKNOWN;
+	}
+	s->Phone.Data.SMSStatus->PhoneUsed = atoi(Priv->MessageParts[0]);
+	s->Phone.Data.SMSStatus->PhoneUnRead = atoi(Priv->MessageParts[1]);
+	s->Phone.Data.SMSStatus->PhoneSize = s->Phone.Data.SMSStatus->PhoneUsed + 1000;
+
+	return ERR_NONE;
+}
+
 GSM_Reply_Function S60ReplyFunctions[] = {
 
 	{S60_Reply_Connect,	"", 0x00, NUM_CONNECTED, ID_Initialise },
@@ -1323,6 +1361,8 @@ GSM_Reply_Function S60ReplyFunctions[] = {
 	{S60_Reply_Generic, "", 0x00, NUM_QUIT, ID_Terminate },
 
 	{S60_Reply_Screenshot, "", 0x00, NUM_SCREENSHOT_REPLY, ID_Screenshot },
+
+	{S60_Reply_GetSMSStatus, "", 0x00,NUM_MESSAGE_REPLY_COUNT, ID_GetSMSStatus },
 
 	{NULL,			"", 0x00, 0x00, ID_None }
 };
@@ -1374,7 +1414,7 @@ GSM_Phone_Functions S60Phone = {
 	NOTIMPLEMENTED,			/*	SetSpeedDial		*/
 	NOTIMPLEMENTED,			/*	GetSMSC			*/
 	NOTIMPLEMENTED,			/*	SetSMSC			*/
-	NOTIMPLEMENTED,			/*	GetSMSStatus		*/
+	S60_GetSMSStatus,
 	NOTIMPLEMENTED,			/*	GetSMS			*/
 	NOTIMPLEMENTED,			/*	GetNextSMS		*/
 	NOTIMPLEMENTED,			/*	SetSMS			*/
