@@ -1167,7 +1167,7 @@ except Exception, e:
 
     # Show the last 4 lines of the call stack
     call_stack = u""
-    for filename, lineno, function, text in traceback.extract_tb(info[2])[4:]:
+    for filename, lineno, function, text in traceback.extract_tb(info[2]):
         call_stack += filename + u": " + str(lineno) + u" - " + function + new_line
         call_stack += u" " + repr(text) + new_line
     call_stack +=  u"%s: %s" % info[:2]
