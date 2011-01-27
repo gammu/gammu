@@ -354,7 +354,7 @@ each execution.
 .TP
 .B LogFormat
 .
-Determines what all will be logged to \fBLogFile\fP. Possible values are:
+Determines what all will be logged to \fI\%LogFile\fP. Possible values are:
 .INDENT 7.0
 .TP
 .B \fBnothing\fP
@@ -415,6 +415,16 @@ to your locales.
 Path to directory with localisation files (the directory should contain
 \fBLANG/LC_MESSAGES/gammu.mo\fP). If gammu is properly installed it should find
 these files automatically.
+.UNINDENT
+.SS Other options
+.INDENT 0.0
+.TP
+.B DataPath
+.
+Additional path where to search for data files. The default path is
+configured on build time (and defaults to \fB/usr/share/data/gammu\fP on Unix
+systems). Currently it is used only for searching files to upload to phone
+using \fIgammu install\fP.
 .UNINDENT
 .SH EXAMPLES
 .sp
