@@ -16,7 +16,7 @@ variants of the applets:
 
 ``series60-remote.sis``
     Not signed applet, which can be installed to the phone if it has enabled
-    installation of unsigned applications.
+    installation of unsigned applications (see :ref:`s60-unsigned`). 
 
     .. note::
        
@@ -33,6 +33,27 @@ variants of the applets:
    The best way of course would be to have properly signed applet. However
    access to signing tools costs 200 USD per year, what is something we can
    not afford right now.
+
+.. _s60-unsigned:
+
+Allowing installation of unsigned applications
+++++++++++++++++++++++++++++++++++++++++++++++
+
+For security reasons, Symbian defaults to install signed applications only. As
+getting properly signed applet is expensive for non commercial product like
+Gammu, you need to either sign applet yourself (the signature is valid for
+single phone) or allow installation of unsigned applications:
+
+1. Open :guilabel:`Application Manager`, it is usually located in :guilabel:`Control Center`.
+2. Press left soft key for :guilabel:`Options` menu.
+3. From the menu choose :guilabel:`Settings`.
+4. Change the :guilabel:`Software Installation` to :guilabel:`All`.
+
+.. warning::
+
+    This allows installation of any not signed code to your phone. You should
+    consider reverting this change, once you have installed applet required
+    for Gammu.
 
 Installation
 ------------
