@@ -151,6 +151,7 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{ERR_COULDNT_RESOLVE, "COULDNT_RESOLVE", N_("Could not resolve the host name.")},
 	{ERR_GETTING_SMSC, "GETTING_SMSC", N_("Failed to get SMSC number from phone.")},
 	{ERR_ABORTED, "ABORTED", N_("Operation aborted.")},
+	{ERR_INSTALL_NOT_FOUND, "INSTALL_NOT_FOUND", N_("Installation data not found, please consult debug log and/or documentation for more details.")},
 
 	{0,	"",				""}
 };
