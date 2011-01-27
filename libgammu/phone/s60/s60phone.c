@@ -81,20 +81,36 @@ GSM_Error S60_Install(GSM_StateMachine *s, const char *ExtraPath)
 	GSM_Debug_Info *debug_info;
 	GSM_Config *cfg;
 	GSM_Error error;
-	GSM_File PythonFile, AppletFile;
-	gboolean install_python;
+	GSM_File PythonFile, PIPSFile, AppletFile;
+	gboolean install_python, install_pips;
 
 	error = PHONE_FindDataFile(s, &AppletFile, ExtraPath, "series60-remote.sis");
 	if (error != ERR_NONE) {
-		smprintf(s, "Failed to load applet data!\n");
-		return ERR_INSTALL_NOT_FOUND;
+		smprintf(s, "Failed to find applet, trying another filename!\n");
+		error = PHONE_FindDataFile(s, &AppletFile, ExtraPath, "series60-remote-sign.sis");
+		if (error != ERR_NONE) {
+			smprintf(s, "Failed to load applet data!\n");
+			return ERR_INSTALL_NOT_FOUND;
+		}
 	}
+
 	error = PHONE_FindDataFile(s, &PythonFile, ExtraPath, "Python_2.0.0.sis");
 	if (error == ERR_NONE) {
 		install_python = TRUE;
 	} else {
 		smprintf(s, "Could not find Python for S60 to install, skipping!\n");
 		install_python = FALSE;
+		install_pips = FALSE;
+	}
+
+	if (install_python) {
+		error = PHONE_FindDataFile(s, &PythonFile, ExtraPath, "pips.sis");
+		if (error == ERR_NONE) {
+			install_pips = TRUE;
+		} else {
+			smprintf(s, "Could not find PIPS to install, skipping!\n");
+			install_pips = FALSE;
+		}
 	}
 
 	gsm = GSM_AllocStateMachine();
@@ -119,6 +135,14 @@ GSM_Error S60_Install(GSM_StateMachine *s, const char *ExtraPath)
 	error = GSM_InitConnection(gsm, 1);
 	if (error != ERR_NONE) {
 		return error;
+	}
+
+	if (install_pips) {
+		error = PHONE_UploadFile(gsm, &PIPSFile);
+		free(PIPSFile.Buffer);
+		if (error != ERR_NONE) {
+			return error;
+		}
 	}
 
 	if (install_python) {
