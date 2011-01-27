@@ -1281,8 +1281,6 @@ Nokia specific commands
 
 .. option:: nokiagetpbkfeatures memorytype
 
-.. option:: nokiagetscreendump
-
 .. option:: nokiagett9
 
     This option should display T9 dictionary content from

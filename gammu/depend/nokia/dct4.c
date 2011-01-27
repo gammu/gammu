@@ -1324,35 +1324,6 @@ void DCT4MakeCameraShoot(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-int len;
-
-static GSM_Error DCT4_ReplyGetScreenDump(GSM_Protocol_Message msg, GSM_StateMachine *sm)
-{
-	if (msg.Buffer[7] == 0x0C) len = 1;
-	return ERR_NONE;
-}
-
-void DCT4GetScreenDump(int argc, char *argv[])
-{
-	unsigned char req[] = {N6110_FRAME_HEADER, 0x07, 0x01, 0x00};
-	GSM_Error error;
-	//n6110_frameheader 06//screen info
-
-	GSM_Init(TRUE);
-
-        CheckDCT4();
-
-	gsm->User.UserReplyFunctions=UserReplyFunctions4;
-
-	error=GSM_WaitFor (gsm, req, 6, 0x0E, 4, ID_User3);
-	Print_Error(error);
-	len = 2000;
-	while (len >= 200) {
-		GSM_ReadDevice(gsm,TRUE);
-	}
-	GSM_Terminate();
-}
-
 static GSM_Error DCT4_ReplyGetPBKFeatures(GSM_Protocol_Message msg, GSM_StateMachine *sm)
 {
 	int i,pos=6;
@@ -1459,9 +1430,6 @@ GSM_Reply_Function UserReplyFunctions4[] = {
 	{DCT4_ReplyResetSecurityCode,	"\x08",0x03,0x05,ID_User2	},
 	{DCT4_ReplyResetSecurityCode,	"\x08",0x03,0x06,ID_User2	},
 #endif
-
-	{DCT4_ReplyGetScreenDump,	"\x0E",0x00,0x00,ID_User3	},
-	{DCT4_ReplyGetScreenDump,	"\x0E",0x00,0x00,ID_IncomingFrame},
 
 	{DCT4_ReplyGetADC,		"\x17",0x03,0x10,ID_User3	},
 	{DCT4_ReplyGetADC,		"\x17",0x03,0x12,ID_User3	},

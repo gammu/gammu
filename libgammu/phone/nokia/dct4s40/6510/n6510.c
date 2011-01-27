@@ -4114,6 +4114,23 @@ GSM_Error N6510_GetWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *bookmark)
 	return DCT3DCT4_GetWAPBookmarkPart(s,bookmark);
 }
 
+static GSM_Error DCT4_ReplyGetScreenDump(GSM_Protocol_Message msg, GSM_StateMachine *sm)
+{
+	if (msg.Buffer[7] == 0x0C) {
+		return ERR_NONE;
+	}
+	return ERR_NEEDANOTHERANSWER;
+}
+
+GSM_Error DCT4_Screenshot(GSM_StateMachine *s, GSM_BinaryPicture *picture)
+{
+	unsigned char req[] = {N6110_FRAME_HEADER, 0x07, 0x01, 0x00};
+	//n6110_frameheader 06//screen info
+
+	return  GSM_WaitFor(s, req, 6, 0x0E, 4, ID_Screenshot);
+}
+
+
 static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N71_65_ReplyCallInfo,		  "\x01",0x03,0x02,ID_IncomingFrame	  },
 	{N71_65_ReplyCallInfo,		  "\x01",0x03,0x03,ID_IncomingFrame	  },
@@ -4358,6 +4375,8 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 
 	{N6510_ReplyGetRingtoneID,	  "\xDB",0x03,0x02,ID_SetRingtone	  },
 
+	{DCT4_ReplyGetScreenDump,	  "\x0E",0x00,0x00,ID_Screenshot		},
+
 	{NULL,				  "\x00",0x00,0x00,ID_None		  }
 };
 
@@ -4499,7 +4518,7 @@ GSM_Phone_Functions N6510Phone = {
 	N6510_DeleteFolder,
 	N6510_GetGPRSAccessPoint,
 	N6510_SetGPRSAccessPoint,
-	NOTSUPPORTED			/* 	GetScreenshot		*/
+	DCT4_Screenshot
 };
 
 #endif
