@@ -364,6 +364,9 @@
 /* Path where locales will be installed */
 #define LOCALE_PATH "@CMAKE_INSTALL_PREFIX@/@INSTALL_LOC_DIR@"
 
+/* Path where locales will be installed */
+#define GAMMU_DATA_PATH "@CMAKE_INSTALL_PREFIX@/@INSTALL_DATA_DIR@"
+
 /* OpenCellID API key */
 #define OPENCELLID_API_KEY "@OPENCELLID_API_KEY@"
 

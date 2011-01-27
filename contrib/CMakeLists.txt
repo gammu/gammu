@@ -5,6 +5,7 @@
 project (Gammu-contrib C)
 
 option(INSTALL_GNAPPLET "Install Gnapplet binaries" ON)
+option(INSTALL_S60 "Install Series 60 applet binaries" ON)
 option(INSTALL_MEDIA "Install sample media files" ON)
 option(INSTALL_PHP_EXAMPLES "Install PHP example scripts" ON)
 
@@ -17,10 +18,13 @@ endif (BASH_BIN)
 option(INSTALL_LSB_INIT "Install LSB compatible init script for Gammu" OFF)
 option(INSTALL_UDEV_RULES "Install udev rules for Gammu" OFF)
 
-set (SYMBIAN_FILES
-    symbian/readme.txt
+set (GNAPPLET_FILES
     symbian/gnapplet.ini
     symbian/gnapplet.sis
+    )
+
+set (S60_FILES
+    s60/series60-remote.sis
     )
 
 file(GLOB MEDIA_FILES "media/*.txt" "media/*.nlm")
@@ -44,11 +48,19 @@ set (PHP_EXAMPLES
 
 if (INSTALL_GNAPPLET)
     install (
-        FILES ${SYMBIAN_FILES}
-        DESTINATION "${INSTALL_DOC_DIR}/symbian"
-        COMPONENT "gnapplet"
+        FILES ${GNAPPLET_FILES}
+        DESTINATION "${INSTALL_DATA_DIR}"
+        COMPONENT "symbian"
         )
 endif (INSTALL_GNAPPLET)
+
+if (INSTALL_S60)
+    install (
+        FILES ${S60_FILES}
+        DESTINATION "${INSTALL_DATA_DIR}"
+        COMPONENT "symbian"
+        )
+endif (INSTALL_S60)
 
 if (INSTALL_MEDIA)
     install (
