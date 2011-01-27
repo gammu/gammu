@@ -253,6 +253,18 @@ class Mobile(object):
             elif (header == NUM_LOCATION_REQUEST):
                 self.sendLocation()
 
+            elif (header == NUM_DIAL):
+                try:
+                    telephone.dial(message.split(NUM_SEPERATOR)[0])
+                except:
+                    pass
+
+            elif (header == NUM_HANGUP):
+                try:
+                    telephone.hang_up()
+                except:
+                    pass
+
             elif (header == NUM_CONTACTS_REQUEST_HASH_ALL):
                 self.sendContactHash()
 

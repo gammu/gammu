@@ -1582,6 +1582,16 @@ GSM_Error S60_GetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 	return ERR_NONE;
 }
 
+GSM_Error S60_DialVoice(GSM_StateMachine *s, char *Number, GSM_CallShowNumber ShowNumber)
+{
+	return GSM_WaitFor(s, Number, strlen(Number), NUM_DIAL, S60_TIMEOUT, ID_None);
+}
+
+GSM_Error S60_CancelCall(GSM_StateMachine *s, int ID, gboolean all)
+{
+	return GSM_WaitFor(s, "", 0, NUM_HANGUP, S60_TIMEOUT, ID_None);
+}
+
 GSM_Reply_Function S60ReplyFunctions[] = {
 
 	{S60_Reply_Connect,	"", 0x00, NUM_CONNECTED, ID_Initialise },
@@ -1702,10 +1712,10 @@ GSM_Phone_Functions S60Phone = {
 	S60_GetSMSFolders,
  	NOTIMPLEMENTED,			/* 	AddSMSFolder		*/
  	NOTIMPLEMENTED,			/* 	DeleteSMSFolder		*/
-	NOTIMPLEMENTED,			/*	DialVoice		*/
+	S60_DialVoice,
         NOTIMPLEMENTED,			/*	DialService		*/
 	NOTIMPLEMENTED,			/*	AnswerCall		*/
-	NOTIMPLEMENTED,			/*	CancelCall		*/
+	S60_CancelCall,
  	NOTIMPLEMENTED,			/* 	HoldCall 		*/
  	NOTIMPLEMENTED,			/* 	UnholdCall 		*/
  	NOTIMPLEMENTED,			/* 	ConferenceCall 		*/
