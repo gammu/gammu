@@ -32,6 +32,7 @@ if float(e32.pys60_version[:3]) >= 1.9:
     import btsocket as socket
 else:
     import socket
+import socket as pysocket
 
 import cPickle
 
@@ -176,10 +177,26 @@ class Mobile(object):
         if(self.connected):
             self.connected = False
 
-            self.fos.close()
-            self.fis.close()
+            try:
+                self.fos.close()
+            except socket.error:
+                pass
+            except pysocket.error:
+                pass
 
-            self.client[0].close()
+            try:
+                self.fis.close()
+            except socket.error:
+                pass
+            except pysocket.error:
+                pass
+
+            try:
+                self.client[0].close()
+            except socket.error:
+                pass
+            except pysocket.error:
+                pass
             self.client = None
 
             self.statusUpdate()
@@ -190,16 +207,22 @@ class Mobile(object):
 
             self.connected = True
             self.statusUpdate()
-            note(u'Connected client %s' % self.client[1])
+            address = str(self.client[1])
+            note(u'Connected client %s' % address)
 
             self.fos = self.client[0].makefile("w")
             self.fis = self.client[0].makefile("r")
 
-            self.send(NUM_CONNECTED,  PROTOCOL_VERSION)
+            try:
+                self.send(NUM_CONNECTED,  PROTOCOL_VERSION)
+                self.wait()
+            except socket.error:
+                pass
+            except pysocket.error:
+                pass
 
-            self.wait()
-            note(u'Disconnected client %s' % self.client[1])
             self.disconnect()
+            note(u'Disconnected client %s' % address)
 
     def send(self, header,  *message):
         new_message = ""
@@ -228,10 +251,7 @@ class Mobile(object):
 
     def wait(self):
         while(True):
-            try:
-                data = self.fis.readline()
-            except:
-                break
+            data = self.fis.readline()
 
             header = int(data.split(NUM_END_HEADER)[0])
             message = unicode(data.split(NUM_END_HEADER)[1],  "utf8")
