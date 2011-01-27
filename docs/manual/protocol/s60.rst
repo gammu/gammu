@@ -138,8 +138,8 @@ there.
 
 .. _connecting-s60:
 
-Connecting
-----------
+Connecting to Series60 phone
+----------------------------
 
 The Gammu configuration is simple, all you need to specify is correct
 :config:option:`Connection`:
