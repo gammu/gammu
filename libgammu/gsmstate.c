@@ -742,7 +742,13 @@ GSM_Error GSM_InitConnection_Log(GSM_StateMachine *s, int ReplyNum, GSM_Log_Func
 
 autodetect:
 		/* Model auto */
-		if (s->CurrentConfig->Model[0] == 0) {
+		if (s->CurrentConfig->Model[0] == 0 &&
+				s->ConnectionType != GCT_NONE &&
+				s->ConnectionType != GCT_IRDAOBEX &&
+				s->ConnectionType != GCT_BLUEOBEX &&
+				s->ConnectionType != GCT_BLUEGNAPBUS &&
+				s->ConnectionType != GCT_IRDAGNAPBUS &&
+				s->ConnectionType != GCT_BLUES60) {
 			error = GSM_TryGetModel(s);
 			if ((i != s->ConfigNum - 1) && (
 				(error == ERR_DEVICEOPENERROR) ||
