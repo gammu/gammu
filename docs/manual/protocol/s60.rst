@@ -88,6 +88,16 @@ It will automatically transmit the applet to the phone. On some phones the
 installation will start automatically, on some you need to find received files
 in the inbox and install them manually from there.
 
+If you want to install Python for S60 as well you need to download it and
+place in folder where Gammu searches for installation images (you can
+configure it by setting :config:option:`DataPath`). For example:
+
+.. code-block:: sh
+
+    cd /usr/share/data/gammu
+    wget http://dl.cihar.com/gammu/s60/Python_2.0.0.sis
+    wget http://dl.cihar.com/gammu/s60/pips.sis
+
 Downloading from phone
 ++++++++++++++++++++++
 

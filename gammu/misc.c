@@ -2486,7 +2486,7 @@ void Install(int argc UNUSED, char *argv[] UNUSED)
 	GSM_Init(FALSE);
 
 	/* TODO: make search path configurable */
-	error = GSM_Install(gsm, NULL);
+	error = GSM_Install(gsm, INI_GetValue(cfg, "gammu", "datapath", FALSE));
 	Print_Error(error);
 
 	GSM_Terminate();

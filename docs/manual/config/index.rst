@@ -278,6 +278,16 @@ Locales and character set options
     ``LANG/LC_MESSAGES/gammu.mo``). If gammu is properly installed it should find
     these files automatically.
 
+Other options
++++++++++++++
+
+.. config:option:: DataPath
+
+    Additional path where to search for data files. The default path is
+    configured on build time (and defaults to ``/usr/share/data/gammu`` on Unix
+    systems). Currently it is used only for searching files to upload to phone
+    using :option:`gammu install`.
+
 Examples
 --------
 

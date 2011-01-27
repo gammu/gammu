@@ -1621,6 +1621,9 @@ Configuration commands
 
     Installs applet for currently configured connection to the phone.
 
+    You can configure search path for instllation files by
+    :config:option:`DataPath`.
+
 Gammu information commands
 --------------------------
 
