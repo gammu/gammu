@@ -45,8 +45,9 @@ not distributed with Gammu due to licensing reasons.
 .. note::
 
     On some phones, the Python for S60 2.0 will not start, in this case you
-    need to install `pips.sis` (coming with Python for S60 2.0), which also
-    available at <http://dl.cihar.com/gammu/s60/pips.sis>.
+    need to install some additional support libraries coming with Python for S60 2.0 - 
+    :file:`pips.sis`, :file:`ssl.sis` and :file:`stdioserver.sis`. You can get
+    all of them at http://wammu.eu/s60/ as well.
 
 Installing Python for S60 and Series60 remote applet can be done in several
 ways:
