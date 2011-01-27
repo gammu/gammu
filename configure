@@ -33,6 +33,7 @@ Usage: ./configure [options]
 --enable-protection enable compile time protections
 --with-python=<path> path to Python interpreter
 --without-gnapplet  disable installation of gnapplet
+--without-completion disable installation of bash completion script
 
 All enable params have their disable counterparts.
 
@@ -56,6 +57,7 @@ CMAKE_PROTECTION=
 CMAKE_PYTHON=
 CMAKE_GNAP=
 CMAKE_TIGER=
+CMAKE_COMPLETE=
 
 # process command line
 while [ "$#" -gt 0 ] ; do
@@ -102,6 +104,9 @@ while [ "$#" -gt 0 ] ; do
         --without-gnapplet)
             CMAKE_GNAP="-DINSTALL_GNAPPLET=OFF"
             ;;
+        --without-completion)
+            CMAKE_COMPLETE="-DINSTALL_BASH_COMPLETION=OFF"
+            ;;
         --enable-tiger)
             CMAKE_TIGER="-DENABLE_TIGER=ON"
             ;;
@@ -141,4 +146,4 @@ fi
 cd "$BUILD_DIR"
 
 # invoke cmake to do configuration
-cmake $SOURCE_DIR $CMAKE_PREFIX $CMAKE_SHARED $CMAKE_DEBUG $CMAKE_BACKUP $CMAKE_CROSS $CMAKE_PROTECTION $CMAKE_PYTHON $CMAKE_GNAP $CMAKE_TIGER
+cmake $SOURCE_DIR $CMAKE_PREFIX $CMAKE_SHARED $CMAKE_DEBUG $CMAKE_BACKUP $CMAKE_CROSS $CMAKE_PROTECTION $CMAKE_PYTHON $CMAKE_GNAP $CMAKE_TIGER $CMAKE_COMPLETE
