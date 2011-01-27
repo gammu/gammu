@@ -136,6 +136,7 @@ static const GSM_ConnectionInfo GSM_Connections[] = {
 	{"bluerfat", GCT_BLUEAT, FALSE},
 	{"bluerfgnapbus", GCT_BLUEGNAPBUS, FALSE},
 	{"blues60", GCT_BLUES60, FALSE},
+	{"bluerfs60", GCT_BLUES60, FALSE},
 
 	/* old "serial" irda */
 	{"infrared", GCT_FBUS2IRDA, FALSE},
