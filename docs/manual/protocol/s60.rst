@@ -52,6 +52,21 @@ not distributed with Gammu due to licensing reasons.
 Installing Python for S60 and Series60 remote applet can be done in several
 ways:
 
+Installation using Gammu
+++++++++++++++++++++++++
+
+Gammu can transmit the applet to your phone automatically. Just configure it
+for use of S60 connection (see :ref:`connecting-s60` chapter bellow) and
+invoke :option:`gammu install`:
+
+.. code-block:: sh
+
+   gammu install
+
+It will automatically transmit the applet to the phone. On some phones the
+installation will start automatically, on some you need to find received files
+in the inbox and install them manually from there.
+
 Downloading from phone
 ++++++++++++++++++++++
 
@@ -64,28 +79,8 @@ download all required files from http://wammu.eu/s60/.
    
    QR code for download of applet.
 
-Installation using Gammu
-++++++++++++++++++++++++
 
-Gammu can be used to send the files to phone. First create ``~/.gammurc`` with
-following content:
-
-.. code-block:: ini
-
-    [gammu]
-    connection = blueobex
-    model = obexnone
-    device = 5C:57:C8:XX:XX:XX # Address of the phone
-
-Now you can send files to your phone:
-
-.. code-block:: sh
-
-    gammu sendfile Python_2.0.0.sis
-    gammu sendfile contrib/s60/series60-remote.sis
-
-Files should appear in inbox in your phone and you can install them from
-there.
+.. _connecting-s60:
 
 Connecting
 ----------
