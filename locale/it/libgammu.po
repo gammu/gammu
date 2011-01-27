@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libGammu 1.29.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-01-24 15:47+0100\n"
+"POT-Creation-Date: 2011-01-27 16:36+0100\n"
 "PO-Revision-Date: 2009-03-15 16:50+0200\n"
 "Last-Translator: soft developer <soft-developer@live.com>\n"
 "Language-Team: Language =it\n"
@@ -365,7 +365,13 @@ msgstr ""
 msgid "Operation aborted."
 msgstr "Operazione in corso"
 
-#: libgammu/gsmcomon.c:186
+#: libgammu/gsmcomon.c:154
+msgid ""
+"Installation data not found, please consult debug log and/or documentation "
+"for more details."
+msgstr ""
+
+#: libgammu/gsmcomon.c:187
 msgid "Unknown error description."
 msgstr "Errore sconosciuto"
 
@@ -410,6 +416,7 @@ msgid "SIM"
 msgstr "SIM"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:564 libgammu/phone/pfunc.c:41
+#: libgammu/phone/s60/s60phone.c:1541
 msgid "Inbox"
 msgstr "Ricevuti"
 
@@ -454,7 +461,7 @@ msgstr "Messaggi inviati"
 msgid "Pager"
 msgstr ""
 
-#: libgammu/phone/pfunc.c:42
+#: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1542
 msgid "Outbox"
 msgstr "Messaggi inviati"
 

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-01-24 15:47+0100\n"
+"POT-Creation-Date: 2011-01-27 16:36+0100\n"
 "PO-Revision-Date: 2009-03-23 19:32+0200\n"
 "Last-Translator: Sergio Martín <ser.martin@wanadoo.es>\n"
 "Language-Team: Español\n"
@@ -360,7 +360,13 @@ msgstr ""
 msgid "Operation aborted."
 msgstr "Operación en progreso"
 
-#: libgammu/gsmcomon.c:186
+#: libgammu/gsmcomon.c:154
+msgid ""
+"Installation data not found, please consult debug log and/or documentation "
+"for more details."
+msgstr ""
+
+#: libgammu/gsmcomon.c:187
 msgid "Unknown error description."
 msgstr "Descripción del error desconocida."
 
@@ -405,6 +411,7 @@ msgid "SIM"
 msgstr "SIM"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:564 libgammu/phone/pfunc.c:41
+#: libgammu/phone/s60/s60phone.c:1541
 msgid "Inbox"
 msgstr "Bandeja de entrada"
 
@@ -448,7 +455,7 @@ msgstr "Exterior"
 msgid "Pager"
 msgstr "Mensáfono"
 
-#: libgammu/phone/pfunc.c:42
+#: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1542
 msgid "Outbox"
 msgstr "Bandeja de salida"
 
