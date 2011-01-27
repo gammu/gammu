@@ -2489,6 +2489,9 @@ void Install(int argc UNUSED, char *argv[] UNUSED)
 	error = GSM_Install(gsm, INI_GetValue(cfg, "gammu", "datapath", FALSE));
 	Print_Error(error);
 
+	printf("\n", _("The application has been successfully sent to the phone."));
+	printf("\n", _("Please find received files in Inbox and install them."));
+
 	GSM_Terminate();
 }
 
