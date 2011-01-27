@@ -419,6 +419,10 @@ class Mobile(object):
                 state = bool(message.split(NUM_SEPERATOR)[1])
                 self.setRead(id, state)
 
+            elif (header == NUM_MESSAGE_DELETE):
+                id = int(message.split(NUM_SEPERATOR)[0])
+                self.messageDelete(id)
+
             elif (header == NUM_SCREENSHOT):
                 self.sendScreenshot()
 
@@ -1107,6 +1111,9 @@ class Mobile(object):
         telephone.EStatusTransferAlerting: "transfer alerting" }
 
         self.send(NUM_INCOMING_CALL, number,  call_state[state])
+
+    def messageDelete(self,  id):
+        self.inbox.delete(id)
 
     def setRead(self,  id,  state):
         state = int(not state)

@@ -1422,6 +1422,16 @@ GSM_Error S60_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 	return GSM_WaitFor(s, buffer, strlen(buffer), NUM_MESSAGE_REQUEST_ONE, S60_TIMEOUT, ID_GetSMSMessage);
 }
 
+GSM_Error S60_DeleteSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
+{
+
+	char buffer[100];
+
+	sprintf(buffer, "%d", sms->Location);
+
+	return GSM_WaitFor(s, buffer, strlen(buffer), NUM_MESSAGE_DELETE, S60_TIMEOUT, ID_None);
+}
+
 GSM_Error S60_Reply_GetSMS(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Error error;
@@ -1703,7 +1713,7 @@ GSM_Phone_Functions S60Phone = {
 	S60_GetNextSMS,
 	NOTIMPLEMENTED,			/*	SetSMS			*/
 	NOTIMPLEMENTED,			/*	AddSMS			*/
-	NOTIMPLEMENTED,			/* 	DeleteSMS 		*/
+	S60_DeleteSMS,
 	S60_SendSMS,
 	NOTSUPPORTED,			/*	SendSavedSMS		*/
 	NOTSUPPORTED,			/*	SetFastSMSSending	*/
