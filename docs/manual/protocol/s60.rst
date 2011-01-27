@@ -42,6 +42,12 @@ can either download it from their website, or just get mirrored installation
 package from <http://dl.cihar.com/gammu/s60/Python_2.0.0.sis>. This file is
 not distributed with Gammu due to licensing reasons.
 
+.. note::
+
+    On some phones, the Python for S60 2.0 will not start, in this case you
+    need to install `pips.sis` (coming with Python for S60 2.0), which also
+    available at <http://dl.cihar.com/gammu/s60/pips.sis>.
+
 Installing Python for S60 and Series60 remote applet can be done in several
 ways:
 
