@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.29.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-27 16:36+0100\n"
-"PO-Revision-Date: 2011-01-24 15:52+0100\n"
+"PO-Revision-Date: 2011-01-27 16:41+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -3335,11 +3335,11 @@ msgstr "Odpověď:"
 
 #: gammu/misc.c:2492
 msgid "The application has been successfully sent to the phone."
-msgstr ""
+msgstr "Aplikace byla úspěšně odeslána do telefonu."
 
 #: gammu/misc.c:2493
 msgid "Please find received files in Inbox and install them."
-msgstr ""
+msgstr "Prosím spusťte její instalaci, naleznete ji v přijatých zprávách."
 
 #: gammu/mms.c:49
 msgid "Do you want to save this MMS file?"
