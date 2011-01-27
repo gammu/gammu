@@ -729,6 +729,10 @@ typedef struct {
 	 */
 	GSM_Reply_Function	      	*ReplyFunctions;
 	/**
+	 * Installs required applets to the phone.
+	 */
+	GSM_Error (*Install)	 	(GSM_StateMachine *s, const char *ExtraPath);
+	/**
 	 * Initializes phone.
 	 */
 	GSM_Error (*Initialise)	 	(GSM_StateMachine *s);

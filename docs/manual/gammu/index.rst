@@ -1617,6 +1617,10 @@ Configuration commands
        no clue how to configure phone connection, this is a convenient way to
        find working setup for Gammu.
 
+.. option:: install
+
+    Installs applet for currently configured connection to the phone.
+
 Gammu information commands
 --------------------------
 

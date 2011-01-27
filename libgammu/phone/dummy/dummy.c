@@ -1872,6 +1872,7 @@ GSM_Reply_Function DUMMYReplyFunctions[] = {
 GSM_Phone_Functions DUMMYPhone = {
 	"dummy",
 	DUMMYReplyFunctions,
+	NOTSUPPORTED,			/* 	Install			*/
 	DUMMY_Initialise,
 	DUMMY_Terminate,
 	DUMMY_DispatchMessage,

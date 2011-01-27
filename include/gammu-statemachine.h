@@ -300,6 +300,17 @@ void GSM_FreeStateMachine(GSM_StateMachine * s);
  */
 GSM_ConnectionType GSM_GetUsedConnection(GSM_StateMachine * s);
 
+/**
+ * Installs applet required for configured connection to the phone.
+ *
+ * \param s State machine data.
+ * \param ExtraPath Extra path where to search for installation data.
+ * \return Result of operation.
+ *
+ * \ingroup StateMachine
+ */
+GSM_Error GSM_Install(GSM_StateMachine *s, const char *ExtraPath);
+
 #endif
 
 /* Editor configuration

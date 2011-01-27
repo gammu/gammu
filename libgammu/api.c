@@ -1862,6 +1862,18 @@ GSM_Error GSM_GetScreenshot(GSM_StateMachine *s, GSM_BinaryPicture *picture)
 	return err;
 }
 
+/**
+ * Gets phone screenshot
+ */
+GSM_Error GSM_Install(GSM_StateMachine *s, const char *ExtraPath)
+{
+	GSM_Error err;
+
+	err = s->Phone.Functions->Install(s, ExtraPath);
+	PRINT_LOG_ERROR(err);
+	return err;
+}
+
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:
  */

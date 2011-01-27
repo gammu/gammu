@@ -1395,6 +1395,7 @@ GSM_Phone_Functions ATOBEXPhone = {
 	/* There is much more SE phones which support this! */
 	"sonyericsson|ericsson|atobex",
 	ATGENReplyFunctions,
+	NOTSUPPORTED,			/* 	Install			*/
 	ATOBEX_Initialise,
 	ATOBEX_Terminate,
 	ATOBEX_DispatchMessage,

@@ -311,6 +311,10 @@ typedef enum {
 	 * Operation aborted.
 	 */
 	ERR_ABORTED,
+	/**
+	 * Installation data not found.
+	 */
+	ERR_INSTALL_NOT_FOUND,
 
 	/**
 	 * Just marker of highest error code, should not be used.

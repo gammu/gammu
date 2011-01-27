@@ -37,6 +37,14 @@ State machine
     This is thread safe call to abort any existing operations with the
     phone.
 
+.. c:function: GSM_Error GSM_Install(GSM_StateMachine *s, const char *ExtraPath)
+
+    :param s: State machine data.
+    :param ExtraPath: Extra path where to search for installation data.
+    :return: Result of operation.
+
+    Installs applet required for configured connection to the phone.
+
 .. c:type:: GSM_StateMachine
 
     Private structure holding information about phone connection. Should

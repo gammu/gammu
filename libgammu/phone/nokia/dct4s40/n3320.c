@@ -144,6 +144,7 @@ static GSM_Reply_Function N3320ReplyFunctions[] = {
 GSM_Phone_Functions N3320Phone = {
 	"3320",
 	N3320ReplyFunctions,
+	NOTSUPPORTED,			/* 	Install			*/
 	NONEFUNCTION,			/*	Initialise		*/
 	NONEFUNCTION,			/*	Terminate		*/
 	GSM_DispatchMessage,

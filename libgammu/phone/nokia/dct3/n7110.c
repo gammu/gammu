@@ -1631,6 +1631,7 @@ static GSM_Reply_Function N7110ReplyFunctions[] = {
 GSM_Phone_Functions N7110Phone = {
 	"6210|6250|7110|7190",
 	N7110ReplyFunctions,
+	NOTSUPPORTED,			/* 	Install			*/
 	N7110_Initialise,
 	PHONE_Terminate,
 	GSM_DispatchMessage,

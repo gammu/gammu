@@ -1761,6 +1761,7 @@ static GSM_Reply_Function GNAPGENReplyFunctions[] = {
 GSM_Phone_Functions GNAPGENPhone = {
 	"gnap",
 	GNAPGENReplyFunctions,
+	NOTIMPLEMENTED,			/* 	Install			*/
 	GNAPGEN_Initialise,
 	NONEFUNCTION,			/*	Terminate 		*/
 	GSM_DispatchMessage,

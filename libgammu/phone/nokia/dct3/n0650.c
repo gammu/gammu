@@ -19,6 +19,7 @@ static GSM_Reply_Function N650ReplyFunctions[] = {
 GSM_Phone_Functions N650Phone = {
 	"0650",
 	N650ReplyFunctions,
+	NOTSUPPORTED,			/* 	Install			*/
 	NONEFUNCTION,			/*	Initialise		*/
 	NONEFUNCTION,			/*	Terminate 		*/
 	GSM_DispatchMessage,

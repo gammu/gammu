@@ -3706,6 +3706,7 @@ GSM_Reply_Function OBEXGENReplyFunctions[] = {
 GSM_Phone_Functions OBEXGENPhone = {
 	"obex|seobex|obexfs|obexirmc|obexnone|mobex",
 	OBEXGENReplyFunctions,
+	NOTSUPPORTED,			/* 	Install			*/
 	OBEXGEN_Initialise,
 	OBEXGEN_Terminate,
 	GSM_DispatchMessage,

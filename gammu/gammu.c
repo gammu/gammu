@@ -654,6 +654,7 @@ static GSM_Parameters Parameters[] = {
 #if defined(WIN32) || defined(HAVE_PTHREAD)
 	{"searchphone",		0, 1, SearchPhone,		{H_Other,0},			"[-debug]"},
 #endif
+	{"install",			0, 0, Install,			{H_Other,0},			""},
 #ifdef GSM_ENABLE_BACKUP
 	{"savefile",			4, 5, SaveFile,			{H_Backup,H_Calendar,0},	"CALENDAR target.vcs file location"},
 	{"savefile",			4, 5, SaveFile,			{H_Backup,H_ToDo,0},		"TODO target.vcs file location"},

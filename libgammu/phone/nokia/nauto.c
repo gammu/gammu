@@ -38,6 +38,7 @@ static GSM_Error NAUTO_Initialise(GSM_StateMachine *s)
 GSM_Phone_Functions NAUTOPhone = {
 	"NAUTO",
 	NAUTOReplyFunctions,
+	NOTSUPPORTED,			/* 	Install			*/
 	NAUTO_Initialise,			/*	Initialise		*/
 	NONEFUNCTION,			/*	Terminate 		*/
 	GSM_DispatchMessage,

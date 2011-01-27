@@ -270,6 +270,7 @@ static GSM_Reply_Function N9210ReplyFunctions[] = {
 GSM_Phone_Functions N9210Phone = {
 	"9210|9210i",
 	N9210ReplyFunctions,
+	NOTSUPPORTED,			/* 	Install			*/
 	N9210_Initialise,
 	PHONE_Terminate,
 	GSM_DispatchMessage,

@@ -275,6 +275,7 @@ static GSM_Reply_Function N3650ReplyFunctions[] = {
 GSM_Phone_Functions N3650Phone = {
 	"3650|NGAGE",
 	N3650ReplyFunctions,
+	NOTSUPPORTED,			/* 	Install			*/
 	N3650_Initialise,
 	N3650_Terminate,
 	GSM_DispatchMessage,

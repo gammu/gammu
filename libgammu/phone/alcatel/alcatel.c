@@ -4066,6 +4066,7 @@ GSM_Phone_Functions ALCATELPhone = {
 	 */
 	"alcatel|OT501|OT701|OT715|OT535|OT735|BE5|BF5|BH4",
 	ALCATELReplyFunctions,
+	NOTSUPPORTED,			/* 	Install			*/
 	ALCATEL_Initialise,
 	ALCATEL_Terminate,
 	ALCATEL_DispatchMessage,

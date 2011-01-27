@@ -28,6 +28,124 @@
 #include <string.h>
 
 #if defined(GSM_ENABLE_S60)
+
+GSM_Error PHONE_FindDataFile(GSM_StateMachine *s, GSM_File * File, const char *ExtraPath, const char *filename)
+{
+	char *path;
+	GSM_Error error;
+
+	EncodeUnicode(File->Name, filename, strlen(filename));
+
+	path = malloc(MAX(strlen(GAMMU_DATA_PATH), ExtraPath == NULL ? 0 : strlen(ExtraPath)) + 50);
+	if (path == NULL) {
+		return ERR_MOREMEMORY;
+	}
+
+	if (ExtraPath != NULL) {
+		sprintf(path, "%s/%s", ExtraPath, filename);
+		smprintf(s, "Trying to load from extra path: %s\n", path);
+
+		error = GSM_ReadFile(path, File);
+		if (error == ERR_NONE) {
+			free(path);
+			return error;
+		}
+	}
+
+	sprintf(path, "%s/%s", GAMMU_DATA_PATH, filename);
+	smprintf(s, "Trying to load from data path: %s\n", path);
+
+	error = GSM_ReadFile(path, File);
+	free(path);
+
+	return error;
+}
+
+GSM_Error PHONE_UploadFile(GSM_StateMachine *s, GSM_File * File)
+{
+	int Pos = 0, Handle;
+	GSM_Error error = ERR_NONE;;
+
+	while (error == ERR_NONE) {
+		error = GSM_SendFilePart(s, File, &Pos, &Handle);
+	}
+	if (error == ERR_EMPTY) {
+		return ERR_NONE;
+	}
+	return error;
+}
+
+GSM_Error S60_Install(GSM_StateMachine *s, const char *ExtraPath)
+{
+	GSM_StateMachine *gsm;
+	GSM_Debug_Info *debug_info;
+	GSM_Config *cfg;
+	GSM_Error error;
+	GSM_File PythonFile, AppletFile;
+	gboolean install_python;
+
+	error = PHONE_FindDataFile(s, &AppletFile, ExtraPath, "series60-remote.sis");
+	if (error != ERR_NONE) {
+		smprintf(s, "Failed to load applet data!\n");
+		return ERR_INSTALL_NOT_FOUND;
+	}
+	error = PHONE_FindDataFile(s, &PythonFile, ExtraPath, "Python_2.0.0.sis");
+	if (error == ERR_NONE) {
+		install_python = TRUE;
+	} else {
+		smprintf(s, "Could not find Python for S60 to install, skipping!\n");
+		install_python = FALSE;
+	}
+
+	gsm = GSM_AllocStateMachine();
+	if (gsm == NULL) {
+		return ERR_MOREMEMORY;
+	}
+
+	/* Copy debug configuration */
+	debug_info = GSM_GetDebug(gsm);
+	*debug_info = *GSM_GetDebug(s);
+	debug_info->closable = FALSE;
+
+	/* Generate configuration */
+	cfg = GSM_GetConfig(gsm, 0);
+	cfg->Device = strdup(s->CurrentConfig->Device);
+	cfg->Connection = strdup("blueobex");
+	strcpy(cfg->Model, "obexnone");
+
+	/* We have one configuration */
+	GSM_SetConfigNum(gsm, 1);
+
+	error = GSM_InitConnection(gsm, 1);
+	if (error != ERR_NONE) {
+		return error;
+	}
+
+	if (install_python) {
+		error = PHONE_UploadFile(gsm, &PythonFile);
+		free(PythonFile.Buffer);
+		if (error != ERR_NONE) {
+			return error;
+		}
+	}
+
+	error = PHONE_UploadFile(gsm, &AppletFile);
+	free(AppletFile.Buffer);
+	if (error != ERR_NONE) {
+		return error;
+	}
+
+	error = GSM_TerminateConnection(gsm);
+	if (error != ERR_NONE) {
+		return error;
+	}
+
+	/* Free up used memory */
+	GSM_FreeStateMachine(gsm);
+
+	return ERR_NONE;
+}
+
 GSM_Error S60_Initialise(GSM_StateMachine *s)
 {
 	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
@@ -1664,6 +1782,7 @@ GSM_Reply_Function S60ReplyFunctions[] = {
 GSM_Phone_Functions S60Phone = {
 	"s60",
 	S60ReplyFunctions,
+	S60_Install,
 	S60_Initialise,
 	S60_Terminate,
 	GSM_DispatchMessage,
