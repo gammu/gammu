@@ -48,6 +48,7 @@ single phone) or allow installation of unsigned applications:
 2. Press left soft key for :guilabel:`Options` menu.
 3. From the menu choose :guilabel:`Settings`.
 4. Change the :guilabel:`Software Installation` to :guilabel:`All`.
+5. Change the :guilabel:`Online certif. check` to :guilabel:`Off`.
 
 .. warning::
 
