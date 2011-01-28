@@ -1186,7 +1186,11 @@ time_t SMSDSQL_ParseDate(GSM_SMSDConfig * Config, const char *date)
 
 	tzset();
 
+#ifdef HAVE_DAYLIGHT
 	timestruct.tm_isdst	= daylight;
+#else
+	timestruct.tm_isdst	= -1;
+#endif
 #ifdef HAVE_STRUCT_TM_TM_ZONE
 	/* No time zone information */
 	timestruct.tm_gmtoff = timezone;

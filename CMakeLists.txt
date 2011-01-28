@@ -295,6 +295,16 @@ int main(void) {
 "  HAVE_STRUCT_TM_TM_ZONE)
 
 check_c_source_compiles ("
+#include <time.h>
+
+int main(void) {
+    struct tm tm;
+	tm.tm_isdst	= daylight;
+    return 0;
+}
+"  HAVE_DAYLIGHT)
+
+check_c_source_compiles ("
 #include <stdio.h>
 
 int main(void) {

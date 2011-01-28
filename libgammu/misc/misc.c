@@ -194,7 +194,11 @@ time_t Fill_Time_T(GSM_DateTime DT)
 
 	tzset();
 
+#ifdef HAVE_DAYLIGHT
 	tm_starttime.tm_isdst	= daylight;
+#else
+	tm_starttime.tm_isdst	= -1;
+#endif
 #ifdef HAVE_STRUCT_TM_TM_ZONE
 	/* No time zone information */
 	tm_starttime.tm_gmtoff = timezone;

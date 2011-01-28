@@ -325,6 +325,13 @@
 #endif
 
 /**
+ * daylight variable
+ */
+#ifndef HAVE_DAYLIGHT
+#cmakedefine HAVE_DAYLIGHT
+#endif
+
+/**
  * __FUNC__ support
  */
 #cmakedefine HAVE_MACRO_FUNC
