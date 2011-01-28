@@ -78,6 +78,7 @@ typedef enum {
 	ID_SetMemory,
 	ID_DeleteMemory,
 	ID_SetCalendarNote,
+	ID_AddCalendarNote,
 	ID_SetIncomingSMS,
 	ID_SetIncomingCB,
 	ID_SetIncomingCall,

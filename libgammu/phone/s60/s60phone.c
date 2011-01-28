@@ -1277,6 +1277,154 @@ GSM_Error S60_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 	return error;
 }
 
+static GSM_Error S60_Reply_AddCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	s->Phone.Data.Cal->Location = atoi(msg.Buffer);
+	smprintf(s, "Added calendar ID %d\n", s->Phone.Data.Cal->Location);
+	return ERR_NONE;
+}
+
+int S60_FindCalendarField(GSM_StateMachine *s, GSM_CalendarEntry *Entry, GSM_CalendarType Type)
+{
+	int i;
+
+	for (i = 0; i < Entry->EntriesNum; i++) {
+		if (Entry->Entries[i].EntryType == Type && Entry->Entries[i].AddError == ERR_NOTSUPPORTED) {
+			Entry->Entries[i].AddError = ERR_NONE;
+			return i;
+		}
+	}
+	return -1;
+}
+
+void S60_SetCalendarError(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
+{
+	int i;
+
+	for (i = 0; i < Entry->EntriesNum; i++) {
+		Entry->Entries[i].AddError = ERR_NOTSUPPORTED;
+	}
+}
+
+GSM_Error S60_SetAddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry, int request, int ID_request)
+{
+	int i;
+	char buffer[1024];
+	const char *type;
+
+	if (ID_request == ID_SetCalendarNote) {
+		sprintf(buffer, "%d%s", Entry->Location, NUM_SEPERATOR_STR);
+	} else {
+		switch (Entry->Type) {
+			case GSM_CAL_MEETING:
+				type = "appointment";
+				break;
+			case GSM_CAL_MEMO:
+				type = "event";
+				break;
+			case GSM_CAL_BIRTHDAY:
+				type = "anniversary";
+				break;
+			case GSM_CAL_REMINDER:
+				type = "reminder";
+				break;
+			default:
+				type = "appointment";
+				break;
+		}
+		sprintf(buffer, "%s%s", type, NUM_SEPERATOR_STR);
+	}
+
+
+	S60_SetCalendarError(s, Entry);
+
+	i = S60_FindCalendarField(s, Entry, CAL_TEXT);
+	if (i == -1) {
+		i = S60_FindCalendarField(s, Entry, CAL_DESCRIPTION);
+	}
+	if (i != -1) {
+		EncodeUTF8(buffer + strlen(buffer), Entry->Entries[i].Text);
+	}
+	strcat(buffer, NUM_SEPERATOR_STR);
+
+	i = S60_FindCalendarField(s, Entry, CAL_LOCATION);
+	if (i != -1) {
+		EncodeUTF8(buffer + strlen(buffer), Entry->Entries[i].Text);
+	}
+	strcat(buffer, NUM_SEPERATOR_STR);
+
+	i = S60_FindCalendarField(s, Entry, CAL_START_DATETIME);
+	if (i != -1) {
+		GSM_DateTimeToTimestamp(&(Entry->Entries[i].Date), buffer + strlen(buffer));
+	}
+	strcat(buffer, NUM_SEPERATOR_STR);
+
+	i = S60_FindCalendarField(s, Entry, CAL_END_DATETIME);
+	if (i != -1) {
+		GSM_DateTimeToTimestamp(&(Entry->Entries[i].Date), buffer + strlen(buffer));
+	}
+	strcat(buffer, NUM_SEPERATOR_STR);
+
+	i = S60_FindCalendarField(s, Entry, CAL_PRIVATE);
+	if (i == -1) {
+		if (Entry->Entries[i].Number) {
+			strcat(buffer, "private");
+		} else {
+			strcat(buffer, "open");
+		}
+	}
+	strcat(buffer, NUM_SEPERATOR_STR);
+
+	i = S60_FindCalendarField(s, Entry, CAL_TONE_ALARM_DATETIME);
+	if (i == -1) {
+		i = S60_FindCalendarField(s, Entry, CAL_SILENT_ALARM_DATETIME);
+	}
+	if (i != -1) {
+		GSM_DateTimeToTimestamp(&(Entry->Entries[i].Date), buffer + strlen(buffer));
+	}
+	strcat(buffer, NUM_SEPERATOR_STR);
+
+	/* Priority */
+	strcat(buffer, "2");
+	strcat(buffer, NUM_SEPERATOR_STR);
+
+	/* TODO: implement repeating */
+	strcat(buffer, NUM_SEPERATOR_STR); /* Type */
+	strcat(buffer, NUM_SEPERATOR_STR); /* Days */
+	strcat(buffer, NUM_SEPERATOR_STR); /* Exceptions */
+
+	i = S60_FindCalendarField(s, Entry, CAL_REPEAT_STARTDATE);
+	if (i != -1) {
+		GSM_DateTimeToTimestamp(&(Entry->Entries[i].Date), buffer + strlen(buffer));
+	}
+	strcat(buffer, NUM_SEPERATOR_STR);
+
+	i = S60_FindCalendarField(s, Entry, CAL_REPEAT_STOPDATE);
+	if (i != -1) {
+		GSM_DateTimeToTimestamp(&(Entry->Entries[i].Date), buffer + strlen(buffer));
+	}
+	strcat(buffer, NUM_SEPERATOR_STR);
+
+	i = S60_FindCalendarField(s, Entry, CAL_REPEAT_FREQUENCY);
+	if (i != -1) {
+		sprintf(buffer + strlen(buffer), "%d", Entry->Entries[i].Number);
+	}
+	strcat(buffer, NUM_SEPERATOR_STR);
+
+	return GSM_WaitFor(s, buffer, strlen(buffer), request, S60_TIMEOUT, ID_request);
+}
+
+GSM_Error S60_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
+{
+	return S60_SetAddCalendar(s, Entry, NUM_CALENDAR_ENTRY_CHANGE, ID_SetCalendarNote);
+}
+
+GSM_Error S60_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
+{
+	s->Phone.Data.Cal = Entry;
+	return S60_SetAddCalendar(s, Entry, NUM_CALENDAR_ENTRY_ADD, ID_AddCalendarNote);
+}
+
 GSM_Error S60_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry, gboolean Start)
 {
 	GSM_Error error;
@@ -1797,6 +1945,9 @@ GSM_Reply_Function S60ReplyFunctions[] = {
 	{S60_Reply_SendSMS, "", 0x00, NUM_MESSAGE_SEND_REPLY_OK, ID_IncomingFrame },
 	{S60_Reply_SendSMS, "", 0x00, NUM_MESSAGE_SEND_REPLY_FAILURE, ID_IncomingFrame },
 
+	{S60_Reply_Generic, "", 0x00, NUM_CALENDAR_ENTRY_CHANGE_REPLY_TIME, ID_SetCalendarNote },
+	{S60_Reply_AddCalendar, "", 0x00, NUM_CALENDAR_ENTRY_ADD_REPLY, ID_AddCalendarNote },
+
 	{NULL,			"", 0x00, 0x00, ID_None }
 };
 
@@ -1908,8 +2059,8 @@ GSM_Phone_Functions S60Phone = {
 	S60_GetCalendarStatus,
 	S60_GetCalendar,
 	S60_GetNextCalendar,
-	NOTIMPLEMENTED,                 /*      SetCalendar */
-	NOTIMPLEMENTED,                 /*      AddCalendar */
+	S60_SetCalendar,
+	S60_AddCalendar,
 	NOTIMPLEMENTED,                 /*      DeleteCalendar */
 	NOTIMPLEMENTED,                 /*      DeleteAllCalendar */
 	NOTSUPPORTED,			/* 	GetCalendarSettings	*/

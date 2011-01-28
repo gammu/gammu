@@ -156,6 +156,16 @@ void Fill_GSM_DateTime(GSM_DateTime * Date, time_t timet);
 void GSM_DateTimeFromTimestamp(GSM_DateTime *Date, const char *str);
 
 /**
+ * Converts gammu \ref GSM_DateTime structure to string (seconds since epoch).
+ *
+ * \param Date Date.
+ * \param str Strorage for string.
+ *
+ * \ingroup DateTime
+ */
+void GSM_DateTimeToTimestamp(GSM_DateTime *Date, char *str);
+
+/**
  * Converts timestamp to string according to OS settings.
  *
  * \param dt Input timestamp.
