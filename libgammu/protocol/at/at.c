@@ -286,7 +286,8 @@ static GSM_Error AT_Initialise(GSM_StateMachine *s)
 	d->LineEnd		= -1;
 	d->wascrlf 		= FALSE;
 	d->EditMode		= FALSE;
-	d->FastWrite		= FALSE;
+	/* Slow write makes sense only on cable for some phones */
+	d->FastWrite		= (s->ConnectionType != GCT_AT);
 	d->CPINNoOK		= FALSE;
 
 	error = s->Device.Functions->DeviceSetParity(s, FALSE);
