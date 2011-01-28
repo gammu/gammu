@@ -82,6 +82,8 @@ typedef struct {
 	 * links as IrDA.
 	 */
 	int				Timeout;
+	int				ScreenWidth;
+	int				ScreenHeight;
 } GSM_Phone_N6510Data;
 
 void N6510_EncodeFMFrequency(double freq, unsigned char *buff);

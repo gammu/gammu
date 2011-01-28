@@ -45,6 +45,8 @@ static GSM_Error N6510_Initialise (GSM_StateMachine *s)
 	s->Phone.Data.Priv.N6510.FilesLocationsAvail = 0;
 	s->Phone.Data.Priv.N6510.FilesLocationsUsed = 0;
 	s->Phone.Data.Priv.N6510.FilesCache = NULL;
+	s->Phone.Data.Priv.N6510.ScreenWidth = 0;
+	s->Phone.Data.Priv.N6510.ScreenHeight = 0;
 
 	/* Default timeout for cables */
 	s->Phone.Data.Priv.N6510.Timeout = 8;
@@ -4114,20 +4116,102 @@ GSM_Error N6510_GetWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *bookmark)
 	return DCT3DCT4_GetWAPBookmarkPart(s,bookmark);
 }
 
-static GSM_Error DCT4_ReplyGetScreenDump(GSM_Protocol_Message msg, GSM_StateMachine *sm)
+static GSM_Error DCT4_ReplyGetScreenDump(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	if (msg.Buffer[7] == 0x0C) {
+	int len;
+
+	/* Data is at offset 10 */
+
+	len = msg.Buffer[7] | (msg.Buffer[6] << 8);
+	smprintf(s, "Received screenshot part, length %d\n", len);
+	s->Phone.Data.Picture->Buffer = realloc(s->Phone.Data.Picture->Buffer, s->Phone.Data.Picture->Length + len);
+	if (s->Phone.Data.Picture->Buffer == NULL) {
+		return ERR_MOREMEMORY;
+	}
+	memcpy(s->Phone.Data.Picture->Buffer + s->Phone.Data.Picture->Length, msg.Buffer + 10, len);
+	s->Phone.Data.Picture->Length += len;
+	if (len < 500) {
 		return ERR_NONE;
 	}
 	return ERR_NEEDANOTHERANSWER;
 }
 
+static GSM_Error DCT4_ReplyGetScreenInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	s->Phone.Data.Priv.N6510.ScreenWidth = msg.Buffer[5] | (msg.Buffer[4] << 8);
+	s->Phone.Data.Priv.N6510.ScreenHeight = msg.Buffer[7] | (msg.Buffer[6] << 8);
+	smprintf(s, "Screen size %dx%d\n", s->Phone.Data.Priv.N6510.ScreenWidth, s->Phone.Data.Priv.N6510.ScreenHeight);
+
+	return ERR_NONE;
+}
+
 GSM_Error DCT4_Screenshot(GSM_StateMachine *s, GSM_BinaryPicture *picture)
 {
-	unsigned char req[] = {N6110_FRAME_HEADER, 0x07, 0x01, 0x00};
-	//n6110_frameheader 06//screen info
+	unsigned char req_data[] = {N6110_FRAME_HEADER, 0x07, 0x01, 0x00};
+	unsigned char req_screen[] = {N6110_FRAME_HEADER, 0x06, 0x01, 0x00};
+	unsigned char bmp_header[] = {0x42, 0x4D, /* BMP magic "BM" */
+				0, 0, 0, 0, /* Size of BMP in bytes */
+				0, 0, 0, 0, /* reserved */
+				0x7a, 0, 0, 0 , /* Offset of data */
+				0x6c, 0, 0, 0, /* Size of header */
+				0, 0, 0, 0, /* width */
+				0, 0, 0, 0, /* height */
+				1, 0, /* color planes */
+				32, 0, /* bpp */
+				3, 0, 0, 0, /* compression, BI_BITFIELDS */
+				0, 0, 0, 0, /* Size of image in bytes */
+				0xE8,0x03,0x00,0x00, /* XPelsPerMeter */
+				0xE8,0x03,0x00,0x00, /* YPelsPerMeter */
+				0, 0, 0, 0, /* palette */
+				0, 0, 0, 0, /* important colors */
+				0, 0xFF, 0, 0, /* red mask */
+				0, 0, 0xFF, 0, /* green mask */
+				0, 0, 0, 0xFF, /* blue mask */
+				0xFF, 0, 0, 0, /* alpha mask */
+				0x20, 0x6E, 0x69, 0x57, /* LCS_WINDOWS_COLOR_SPACE */
+				0, 0, 0, 0, /* CIEXYZTRIPLE */
+				0, 0, 0, 0,
+				0, 0, 0, 0,
+				0, 0, 0, 0,
+				0, 0, 0, 0,
+				0, 0, 0, 0,
+				0, 0, 0, 0,
+				0, 0, 0, 0,
+				0, 0, 0, 0, /* red gamma */
+				0, 0, 0, 0, /* green gamma */
+				0, 0, 0, 0, /* blue gamma */
+	};
+	GSM_Error error;
+	int tmp;
 
-	return  GSM_WaitFor(s, req, 6, 0x0E, 4, ID_Screenshot);
+	/* Get screen size */
+	error = GSM_WaitFor(s, req_screen, 6, 0x0E, 4, ID_GetScreenSize);
+	if (error != ERR_NONE) {
+		return error;
+	}
+
+	/* Allocate buffer */
+	s->Phone.Data.Picture = picture;
+	picture->Type = PICTURE_BMP;
+	picture->Buffer = malloc(sizeof(bmp_header));
+	if (picture->Buffer == NULL) {
+		return ERR_MOREMEMORY;
+	}
+	memcpy(picture->Buffer, bmp_header, sizeof(bmp_header));
+	picture->Length = sizeof(bmp_header);
+
+	/* Fill BMP header */
+#define STORE_INT(data, pos) picture->Buffer[pos] = data & 0xff; picture->Buffer[pos + 1] = (data >> 8) & 0xff; picture->Buffer[pos + 2] = (data >> 16) & 0xff; picture->Buffer[pos + 3] = (data >> 24) & 0xff;
+	/* Size */
+	tmp = 0x7a + (s->Phone.Data.Priv.N6510.ScreenWidth * s->Phone.Data.Priv.N6510.ScreenHeight * 4);
+	STORE_INT(tmp, 2);
+	STORE_INT(s->Phone.Data.Priv.N6510.ScreenWidth, 18);
+	STORE_INT(-s->Phone.Data.Priv.N6510.ScreenHeight, 22);
+	tmp = s->Phone.Data.Priv.N6510.ScreenWidth * s->Phone.Data.Priv.N6510.ScreenHeight * 4;
+	STORE_INT(tmp, 34);
+
+	/* And fill in bitmap */
+	return  GSM_WaitFor(s, req_data, 6, 0x0E, 4, ID_Screenshot);
 }
 
 
@@ -4376,6 +4460,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N6510_ReplyGetRingtoneID,	  "\xDB",0x03,0x02,ID_SetRingtone	  },
 
 	{DCT4_ReplyGetScreenDump,	  "\x0E",0x00,0x00,ID_Screenshot		},
+	{DCT4_ReplyGetScreenInfo,	  "\x0E",0x00,0x00,ID_GetScreenSize	  },
 
 	{NULL,				  "\x00",0x00,0x00,ID_None		  }
 };

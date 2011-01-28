@@ -32,6 +32,7 @@ ChangeLog
 [-] * Do not fail on 0x7b field in Nokia 3600s phonebook (bug #1385).
 [!] * Disabled two stage probing for most protocols.
 [-] * Fixed saving of SMS backups (bug #1392).
+[+] * Screenshot functionality for DCT4 phones (bug #1390).
     
 20110119 - 1.29.0
 

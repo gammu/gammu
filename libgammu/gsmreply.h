@@ -154,6 +154,7 @@ typedef enum {
 	ID_ModeSwitch,
 	ID_GetProtocol,
 	ID_Screenshot,
+	ID_GetScreenSize,
 
     	/* Alcatel AT mode */
     	ID_SetFlowControl,
