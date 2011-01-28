@@ -78,7 +78,7 @@ Installation using Gammu
 ++++++++++++++++++++++++
 
 Gammu can transmit the applet to your phone automatically. Just configure it
-for use of S60 connection (see :ref:`connecting-s60` chapter below) and
+for use of BlueS60 connection (see :ref:`connecting-s60` chapter below) and
 invoke :option:`gammu install`:
 
 .. code-block:: sh
