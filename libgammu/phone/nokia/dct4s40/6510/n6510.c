@@ -4159,9 +4159,9 @@ GSM_Error DCT4_Screenshot(GSM_StateMachine *s, GSM_BinaryPicture *picture)
 				1, 0, /* color planes */
 				32, 0, /* bpp */
 				3, 0, 0, 0, /* compression, BI_BITFIELDS */
-				0, 0, 0, 0, /* Size of image in bytes */
-				0xE8,0x03,0x00,0x00, /* XPelsPerMeter */
-				0xE8,0x03,0x00,0x00, /* YPelsPerMeter */
+				32, 0, 0, 0, /* Size of image pixel */
+				0x13,0x0b,0x00,0x00, /* XPelsPerMeter */
+				0x13,0x0b,0x00,0x00, /* YPelsPerMeter */
 				0, 0, 0, 0, /* palette */
 				0, 0, 0, 0, /* important colors */
 				0, 0xFF, 0, 0, /* red mask */
@@ -4177,12 +4177,13 @@ GSM_Error DCT4_Screenshot(GSM_StateMachine *s, GSM_BinaryPicture *picture)
 				0, 0, 0, 0,
 				0, 0, 0, 0,
 				0, 0, 0, 0,
+				0, 0, 0, 0,
 				0, 0, 0, 0, /* red gamma */
 				0, 0, 0, 0, /* green gamma */
 				0, 0, 0, 0, /* blue gamma */
 	};
 	GSM_Error error;
-	int tmp;
+	int32_t tmp;
 
 	/* Get screen size */
 	error = GSM_WaitFor(s, req_screen, 6, 0x0E, 4, ID_GetScreenSize);
@@ -4205,10 +4206,10 @@ GSM_Error DCT4_Screenshot(GSM_StateMachine *s, GSM_BinaryPicture *picture)
 	/* Size */
 	tmp = 0x7a + (s->Phone.Data.Priv.N6510.ScreenWidth * s->Phone.Data.Priv.N6510.ScreenHeight * 4);
 	STORE_INT(tmp, 2);
-	STORE_INT(s->Phone.Data.Priv.N6510.ScreenWidth, 18);
-	STORE_INT(-s->Phone.Data.Priv.N6510.ScreenHeight, 22);
-	tmp = s->Phone.Data.Priv.N6510.ScreenWidth * s->Phone.Data.Priv.N6510.ScreenHeight * 4;
-	STORE_INT(tmp, 34);
+	tmp = s->Phone.Data.Priv.N6510.ScreenWidth;
+	STORE_INT(tmp, 18);
+	tmp = -s->Phone.Data.Priv.N6510.ScreenHeight;
+	STORE_INT(tmp, 22);
 
 	/* And fill in bitmap */
 	return  GSM_WaitFor(s, req_data, 6, 0x0E, 4, ID_Screenshot);
