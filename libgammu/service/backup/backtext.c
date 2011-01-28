@@ -185,8 +185,7 @@ static GSM_Error SaveBackupText(FILE *file, const char *myname, const char *myva
 
 		} else {
 			EncodeSpecialChars(buffer, DecodeUnicodeString(myvalue));
-			sprintf(buffer, "%s = \"%s\"%c%c", myname, buffer, 13, 10);
-			fprintf(file, "%s", buffer);
+			fprintf(file, "%s = \"%s\"%c%c", myname, buffer, 13, 10);
 			EncodeHexBin(buffer, myvalue, UnicodeLength(myvalue) * 2);
 			fprintf(file, "%sUnicode = %s%c%c", myname, buffer, 13, 10);
 		}

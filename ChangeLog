@@ -31,6 +31,7 @@ ChangeLog
 [+] * Support for S60 phones using Series60 applet (bug #423).
 [-] * Do not fail on 0x7b field in Nokia 3600s phonebook (bug #1385).
 [!] * Disabled two stage probing for most protocols.
+[-] * Fixed saving of SMS backups (bug #1392).
     
 20110119 - 1.29.0
 
