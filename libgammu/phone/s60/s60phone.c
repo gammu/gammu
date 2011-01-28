@@ -631,6 +631,7 @@ static GSM_Error S60_Reply_CalendarCount(GSM_Protocol_Message msg, GSM_StateMach
 
 	if (strcmp(Priv->MessageParts[1], "appointment") != 0 &&
 		strcmp(Priv->MessageParts[1], "event") != 0 &&
+		strcmp(Priv->MessageParts[1], "reminder") != 0 &&
 		strcmp(Priv->MessageParts[1], "anniversary") != 0) {
 		return ERR_NEEDANOTHERANSWER;
 	}
@@ -1157,11 +1158,13 @@ static GSM_Error S60_Reply_GetCalendar(GSM_Protocol_Message msg, GSM_StateMachin
 
 	/* Check for correct type */
 	if (strcmp(type, "appointment") == 0) {
-		Entry->Type = GSM_CAL_REMINDER;
+		Entry->Type = GSM_CAL_MEETING;
 	} else if (strcmp(type, "event") == 0) {
 		Entry->Type = GSM_CAL_MEMO;
 	} else if (strcmp(type, "anniversary") == 0) {
 		Entry->Type = GSM_CAL_BIRTHDAY;
+	} else if (strcmp(type, "reminder") == 0) {
+		Entry->Type = GSM_CAL_REMINDER;
 	} else {
 		return ERR_EMPTY;
 	}
