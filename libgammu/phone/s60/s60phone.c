@@ -1119,7 +1119,7 @@ static GSM_Error S60_Reply_GetCalendar(GSM_Protocol_Message msg, GSM_StateMachin
 {
 	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
 	GSM_Error error;
-	char *pos, *type, *content, *location, *start, *end, *modified, *replication, *alarm_time, *priority, *repeat, *repeat_rule, *repeat_exceptions, *repeat_start, *repeat_end, *interval;
+	char *type, *content, *location, *start, *end, *modified, *replication, *alarm_time, *repeat, *repeat_rule, *repeat_start, *repeat_end, *interval;
 	GSM_CalendarEntry *Entry;
 	int i;
 
@@ -1139,7 +1139,7 @@ static GSM_Error S60_Reply_GetCalendar(GSM_Protocol_Message msg, GSM_StateMachin
 	Entry = s->Phone.Data.Cal;
 
 	/* Grab values */
-	pos = Priv->MessageParts[0];
+	/* No need to parse position */
 	type = Priv->MessageParts[1];
 	content = Priv->MessageParts[2];
 	location = Priv->MessageParts[3];
@@ -1148,10 +1148,10 @@ static GSM_Error S60_Reply_GetCalendar(GSM_Protocol_Message msg, GSM_StateMachin
 	modified = Priv->MessageParts[6];
 	replication = Priv->MessageParts[7];
 	alarm_time = Priv->MessageParts[8];
-	priority = Priv->MessageParts[9];
+	/* Priority not used for calendar */
 	repeat = Priv->MessageParts[10];
 	repeat_rule = Priv->MessageParts[11];
-	repeat_exceptions = Priv->MessageParts[12];
+	/* We do not handle repeat_exceptions for now */
 	repeat_start = Priv->MessageParts[13];
 	repeat_end = Priv->MessageParts[14];
 	interval = Priv->MessageParts[15];
@@ -1256,7 +1256,7 @@ static GSM_Error S60_Reply_GetCalendar(GSM_Protocol_Message msg, GSM_StateMachin
 	}
 
 
-	/* TODO: implement rest (priority, repeating) */
+	/* TODO: implement rest of repeating */
 
 	return ERR_NONE;
 }
@@ -1315,7 +1315,7 @@ static GSM_Error S60_Reply_GetToDo(GSM_Protocol_Message msg, GSM_StateMachine *s
 {
 	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
 	GSM_Error error;
-	char *pos, *type, *content, *location, *start, *end, *modified, *replication, *alarm_time, *priority, *repeat, *repeat_rule, *repeat_exceptions, *repeat_start, *repeat_end, *interval, *crossedout, *crossedout_time;
+	char *type, *content, *location, *start, *end, *modified, *replication, *alarm_time, *priority, *crossedout, *crossedout_time;
 	GSM_ToDoEntry *Entry;
 	int i;
 
@@ -1335,7 +1335,7 @@ static GSM_Error S60_Reply_GetToDo(GSM_Protocol_Message msg, GSM_StateMachine *s
 	Entry = s->Phone.Data.ToDo;
 
 	/* Grab values */
-	pos = Priv->MessageParts[0];
+	/* No need to parse position */
 	type = Priv->MessageParts[1];
 	content = Priv->MessageParts[2];
 	location = Priv->MessageParts[3];
@@ -1345,12 +1345,7 @@ static GSM_Error S60_Reply_GetToDo(GSM_Protocol_Message msg, GSM_StateMachine *s
 	replication = Priv->MessageParts[7];
 	alarm_time = Priv->MessageParts[8];
 	priority = Priv->MessageParts[9];
-	repeat = Priv->MessageParts[10];
-	repeat_rule = Priv->MessageParts[11];
-	repeat_exceptions = Priv->MessageParts[12];
-	repeat_start = Priv->MessageParts[13];
-	repeat_end = Priv->MessageParts[14];
-	interval = Priv->MessageParts[15];
+	/* Repeating does not make sense for todo */
 	crossedout = Priv->MessageParts[16];
 	crossedout_time = Priv->MessageParts[17];
 
@@ -1422,7 +1417,6 @@ static GSM_Error S60_Reply_GetToDo(GSM_Protocol_Message msg, GSM_StateMachine *s
 		GSM_DateTimeFromTimestamp(&(Entry->Entries[Entry->EntriesNum].Date), crossedout_time);
 		Entry->EntriesNum++;
 	}
-	/* TODO: implement rest (repeating) */
 
 	return ERR_NONE;
 }
