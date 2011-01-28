@@ -30,6 +30,7 @@ ChangeLog
 [+] * Made GSM_SMSCounter public (bug #1356).
 [+] * Support for S60 phones using Series60 applet (bug #423).
 [-] * Do not fail on 0x7b field in Nokia 3600s phonebook (bug #1385).
+[!] * Disabled two stage probing for most protocols.
     
 20110119 - 1.29.0
 
