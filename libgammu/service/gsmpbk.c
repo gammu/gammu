@@ -503,7 +503,7 @@ GSM_Error GSM_EncodeVCARD(GSM_Debug_Info *di, char *Buffer, const size_t buff_le
 				CopyUnicodeString(buffer + 2*pos, pbk->Entries[firstname].Text);
 				pos += UnicodeLength(pbk->Entries[firstname].Text);
 			}
-			if (firstname != -1) {
+			if (secondname != -1) {
 				buffer[2*pos] = 0;
 				buffer[2*pos + 1] = ' ';
 				pos++;
