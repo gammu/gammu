@@ -520,6 +520,7 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_MINGW OR
     # This is extremely noisy, use only in debug builds
     if (DEBUG)
         MACRO_TUNE_COMPILER("-Wextra")
+        MACRO_TUNE_COMPILER("-Wunused-but-set-variable")
         # Just silent this for now, too much code to fix here
         MACRO_TUNE_COMPILER("-Wno-unused-parameter")
         # Not sure if this is safe for all architectures
