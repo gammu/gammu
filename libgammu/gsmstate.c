@@ -743,12 +743,17 @@ GSM_Error GSM_InitConnection_Log(GSM_StateMachine *s, int ReplyNum, GSM_Log_Func
 
 autodetect:
 		/* Model auto */
+		/* Try to guess correct driver based on model */
 		if (s->CurrentConfig->Model[0] == 0 &&
 				s->ConnectionType != GCT_NONE &&
 				s->ConnectionType != GCT_IRDAOBEX &&
 				s->ConnectionType != GCT_BLUEOBEX &&
 				s->ConnectionType != GCT_BLUEGNAPBUS &&
 				s->ConnectionType != GCT_IRDAGNAPBUS &&
+				s->ConnectionType != GCT_DKU2AT &&
+				s->ConnectionType != GCT_AT &&
+				s->ConnectionType != GCT_IRDAAT &&
+				s->ConnectionType != GCT_BLUEAT &&
 				s->ConnectionType != GCT_BLUES60) {
 			error = GSM_TryGetModel(s);
 			if ((i != s->ConfigNum - 1) && (
