@@ -127,6 +127,7 @@ typedef enum {
 	ID_SetLight,
 	ID_Divert,
 	ID_SetToDo,
+	ID_AddToDo,
 	ID_PlayTone,
 	ID_GetChatSettings,
 	ID_GetSyncMLSettings,

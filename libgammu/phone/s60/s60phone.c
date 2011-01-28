@@ -1619,6 +1619,107 @@ GSM_Error S60_DeleteToDo(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 	return error;
 }
 
+static GSM_Error S60_Reply_AddToDo(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	s->Phone.Data.ToDo->Location = atoi(msg.Buffer);
+	smprintf(s, "Added todo ID %d\n", s->Phone.Data.ToDo->Location);
+	return ERR_NONE;
+}
+
+int S60_FindToDoField(GSM_StateMachine *s, GSM_ToDoEntry *Entry, GSM_ToDoType Type)
+{
+	int i;
+
+	for (i = 0; i < Entry->EntriesNum; i++) {
+		if (Entry->Entries[i].EntryType == Type) {
+			return i;
+		}
+	}
+	return -1;
+}
+
+GSM_Error S60_SetAddToDo(GSM_StateMachine *s, GSM_ToDoEntry *Entry, int request, int ID_request)
+{
+	int i;
+	char buffer[1024];
+
+	if (ID_request == ID_SetToDo) {
+		sprintf(buffer, "%d%s", Entry->Location, NUM_SEPERATOR_STR);
+	} else {
+		sprintf(buffer, "%s%s", "todo", NUM_SEPERATOR_STR);
+	}
+
+	i = S60_FindToDoField(s, Entry, TODO_TEXT);
+	if (i == -1) {
+		i = S60_FindToDoField(s, Entry, TODO_DESCRIPTION);
+	}
+	if (i != -1) {
+		EncodeUTF8(buffer + strlen(buffer), Entry->Entries[i].Text);
+	}
+	strcat(buffer, NUM_SEPERATOR_STR);
+
+	i = S60_FindToDoField(s, Entry, TODO_LOCATION);
+	if (i != -1) {
+		EncodeUTF8(buffer + strlen(buffer), Entry->Entries[i].Text);
+	}
+	strcat(buffer, NUM_SEPERATOR_STR);
+
+	i = S60_FindToDoField(s, Entry, TODO_START_DATETIME);
+	if (i != -1) {
+		GSM_DateTimeToTimestamp(&(Entry->Entries[i].Date), buffer + strlen(buffer));
+	}
+	strcat(buffer, NUM_SEPERATOR_STR);
+
+	i = S60_FindToDoField(s, Entry, TODO_END_DATETIME);
+	if (i != -1) {
+		GSM_DateTimeToTimestamp(&(Entry->Entries[i].Date), buffer + strlen(buffer));
+	}
+	strcat(buffer, NUM_SEPERATOR_STR);
+
+	i = S60_FindToDoField(s, Entry, TODO_PRIVATE);
+	if (i == -1) {
+		if (Entry->Entries[i].Number) {
+			strcat(buffer, "private");
+		} else {
+			strcat(buffer, "open");
+		}
+	}
+	strcat(buffer, NUM_SEPERATOR_STR);
+
+	i = S60_FindToDoField(s, Entry, TODO_ALARM_DATETIME);
+	if (i == -1) {
+		i = S60_FindToDoField(s, Entry, TODO_SILENT_ALARM_DATETIME);
+	}
+	if (i != -1) {
+		GSM_DateTimeToTimestamp(&(Entry->Entries[i].Date), buffer + strlen(buffer));
+	}
+	strcat(buffer, NUM_SEPERATOR_STR);
+
+	/* Priority */
+	sprintf(buffer + strlen(buffer), "%d", Entry->Priority);
+	strcat(buffer, NUM_SEPERATOR_STR);
+
+	strcat(buffer, NUM_SEPERATOR_STR); /* Type */
+	strcat(buffer, NUM_SEPERATOR_STR); /* Days */
+	strcat(buffer, NUM_SEPERATOR_STR); /* Exceptions */
+	strcat(buffer, NUM_SEPERATOR_STR); /* Start */
+	strcat(buffer, NUM_SEPERATOR_STR); /* End */
+	strcat(buffer, NUM_SEPERATOR_STR); /* Frequency */
+
+	return GSM_WaitFor(s, buffer, strlen(buffer), request, S60_TIMEOUT, ID_request);
+}
+
+GSM_Error S60_SetToDo(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
+{
+	return S60_SetAddToDo(s, Entry, NUM_CALENDAR_ENTRY_CHANGE, ID_SetToDo);
+}
+
+GSM_Error S60_AddToDo(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
+{
+	s->Phone.Data.ToDo = Entry;
+	return S60_SetAddToDo(s, Entry, NUM_CALENDAR_ENTRY_ADD, ID_AddToDo);
+}
+
 GSM_Error S60_GetScreenshot(GSM_StateMachine *s, GSM_BinaryPicture *picture)
 {
 	GSM_Error error;
@@ -1947,6 +2048,9 @@ GSM_Reply_Function S60ReplyFunctions[] = {
 
 	{S60_Reply_Generic, "", 0x00, NUM_CALENDAR_ENTRY_CHANGE_REPLY_TIME, ID_SetCalendarNote },
 	{S60_Reply_AddCalendar, "", 0x00, NUM_CALENDAR_ENTRY_ADD_REPLY, ID_AddCalendarNote },
+
+	{S60_Reply_Generic, "", 0x00, NUM_CALENDAR_ENTRY_CHANGE_REPLY_TIME, ID_SetToDo },
+	{S60_Reply_AddToDo, "", 0x00, NUM_CALENDAR_ENTRY_ADD_REPLY, ID_AddToDo },
 
 	{NULL,			"", 0x00, 0x00, ID_None }
 };
