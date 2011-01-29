@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-27 16:36+0100\n"
-"PO-Revision-Date: 2010-12-27 16:03+0200\n"
+"PO-Revision-Date: 2011-01-29 17:57+0200\n"
 "Last-Translator: gilberto dos santos alves <gsavix@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
@@ -328,9 +328,8 @@ msgid "Failed to get SMSC number from phone."
 msgstr "Falhou em obter o número SMSC do telefone."
 
 #: libgammu/gsmcomon.c:153
-#, fuzzy
 msgid "Operation aborted."
-msgstr "Operação em progresso"
+msgstr "Operação cancelada."
 
 #: libgammu/gsmcomon.c:154
 msgid ""
