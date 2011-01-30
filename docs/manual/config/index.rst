@@ -86,7 +86,7 @@ Device connection parameters
     ``irdaobex``
         OBEX (IrMC or file transfer) connection for most of phones.
     ``irdagnapbus``
-        GNapplet based connection for Symbian phones
+        GNapplet based connection for Symbian phones, see :ref:`gnapplet`.
 
     For Bluetooth connection use one of following:
 
@@ -97,9 +97,9 @@ Device connection parameters
     ``blueobex``
         OBEX (IrMC or file transfer) connection for most of phones.
     ``bluerfgnapbus``
-        GNapplet based connection for Symbian phones
+        GNapplet based connection for Symbian phones, see :ref:`gnapplet`.
     ``blues60``
-        Connection to Series60 applet in S60 phones.
+        Connection to Series60 applet in S60 phones, see :ref:`s60`.
 
         .. versionadded:: 1.29.90
 
