@@ -26,7 +26,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 {
 	char *decoded;
 	char *encoded;
-	int len;
+	size_t len;
 
 	decoded = malloc(sizeof(base64));
 	encoded = malloc(sizeof(base64));
