@@ -25,6 +25,81 @@ unsigned char GNAPGEN_MEMORY_TYPES[] = {
 	  0x00,		 0x00
 };
 
+GSM_Error GNAPGEN_Install(GSM_StateMachine *s, const char *ExtraPath)
+{
+	GSM_StateMachine *gsm;
+	GSM_Debug_Info *debug_info;
+	GSM_Config *cfg;
+	GSM_Error error;
+	GSM_File INIFile, AppletFile;
+
+	AppletFile.Buffer 	= NULL;
+	AppletFile.Used 	= 0;
+	INIFile.Buffer 	= NULL;
+	INIFile.Used 	= 0;
+
+	error = PHONE_FindDataFile(s, &AppletFile, ExtraPath, "gnapplet.sis");
+	if (error != ERR_NONE) {
+		smprintf(s, "Failed to load applet data!\n");
+		return ERR_INSTALL_NOT_FOUND;
+	}
+
+	error = PHONE_FindDataFile(s, &INIFile, ExtraPath, "gnapplet.ini");
+	if (error != ERR_NONE) {
+		smprintf(s, "Failed to load applet configuration!\n");
+		return ERR_INSTALL_NOT_FOUND;
+	}
+
+	gsm = GSM_AllocStateMachine();
+	if (gsm == NULL) {
+		return ERR_MOREMEMORY;
+	}
+
+	/* Copy debug configuration */
+	debug_info = GSM_GetDebug(gsm);
+	*debug_info = *GSM_GetDebug(s);
+	debug_info->closable = FALSE;
+	GSM_SetDebugFileDescriptor(GSM_GetDebug(s)->df, FALSE, debug_info);
+	GSM_SetDebugLevel(s->CurrentConfig->DebugLevel, debug_info);
+
+	/* Generate configuration */
+	cfg = GSM_GetConfig(gsm, 0);
+	cfg->Device = strdup(s->CurrentConfig->Device);
+	cfg->Connection = strdup("blueobex");
+	strcpy(cfg->Model, "obexnone");
+	strcpy(cfg->DebugLevel, s->CurrentConfig->DebugLevel);
+	cfg->UseGlobalDebugFile = s->CurrentConfig->UseGlobalDebugFile;
+
+	/* We have one configuration */
+	GSM_SetConfigNum(gsm, 1);
+
+	error = GSM_InitConnection(gsm, 1);
+	if (error != ERR_NONE) {
+		return error;
+	}
+
+	error = PHONE_UploadFile(gsm, &AppletFile);
+	free(AppletFile.Buffer);
+	if (error != ERR_NONE) {
+		return error;
+	}
+
+	error = PHONE_UploadFile(gsm, &INIFile);
+	free(AppletFile.Buffer);
+	if (error != ERR_NONE) {
+		return error;
+	}
+
+	error = GSM_TerminateConnection(gsm);
+	if (error != ERR_NONE) {
+		return error;
+	}
+
+	/* Free up used memory */
+	GSM_FreeStateMachine(gsm);
+
+	return ERR_NONE;
+}
 GSM_Error GNAPGEN_ReplyGetSMSFolderStatus(GSM_Protocol_Message msg, GSM_StateMachine *s) {
 	GSM_Phone_GNAPGENData           *Priv = &s->Phone.Data.Priv.GNAPGEN;
 	int i;
