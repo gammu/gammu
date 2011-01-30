@@ -111,7 +111,7 @@ GSM_Error S60_Install(GSM_StateMachine *s, const char *ExtraPath)
 	}
 
 	if (install_python) {
-		error = PHONE_FindDataFile(s, &PythonFile, ExtraPath, "pips.sis");
+		error = PHONE_FindDataFile(s, &PIPSFile, ExtraPath, "pips.sis");
 		if (error == ERR_NONE) {
 			install_pips = TRUE;
 		} else {
