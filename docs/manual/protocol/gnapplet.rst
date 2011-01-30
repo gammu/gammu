@@ -1,7 +1,7 @@
 .. _gnapplet:
 
-Gnapplet Remote Protocol
-========================
+Gnapplet Protocol
+=================
 
 .. note:: 
 
