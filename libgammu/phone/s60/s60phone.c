@@ -84,6 +84,13 @@ GSM_Error S60_Install(GSM_StateMachine *s, const char *ExtraPath)
 	GSM_File PythonFile, PIPSFile, AppletFile;
 	gboolean install_python, install_pips;
 
+	PythonFile.Buffer 	= NULL;
+	PythonFile.Used 	= 0;
+	PIPSFile.Buffer 	= NULL;
+	PIPSFile.Used 	= 0;
+	AppletFile.Buffer 	= NULL;
+	AppletFile.Used 	= 0;
+
 	error = PHONE_FindDataFile(s, &AppletFile, ExtraPath, "series60-remote.sis");
 	if (error != ERR_NONE) {
 		smprintf(s, "Failed to find applet, trying another filename!\n");
