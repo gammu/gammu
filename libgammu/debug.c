@@ -142,6 +142,9 @@ GSM_Error GSM_SetDebugFile(const char *info, GSM_Debug_Info *privdi)
 	if (info == NULL || strlen(info) == 0) {
 		return GSM_SetDebugFileDescriptor(NULL, FALSE, privdi);
 	}
+	if (strcmp(info, "__inherit__") == 0) {
+		return ERR_NONE;
+	}
 
 	switch (privdi->dl) {
 		case DL_BINARY:

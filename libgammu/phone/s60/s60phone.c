@@ -63,7 +63,7 @@ GSM_Error PHONE_FindDataFile(GSM_StateMachine *s, GSM_File * File, const char *E
 
 GSM_Error PHONE_UploadFile(GSM_StateMachine *s, GSM_File * File)
 {
-	int Pos = 0, Handle;
+	int Pos = 0, Handle = 0;
 	GSM_Error error = ERR_NONE;;
 
 	while (error == ERR_NONE) {
@@ -129,12 +129,16 @@ GSM_Error S60_Install(GSM_StateMachine *s, const char *ExtraPath)
 	debug_info = GSM_GetDebug(gsm);
 	*debug_info = *GSM_GetDebug(s);
 	debug_info->closable = FALSE;
+	GSM_SetDebugFileDescriptor(GSM_GetDebug(s)->df, FALSE, debug_info);
+	GSM_SetDebugLevel(s->CurrentConfig->DebugLevel, debug_info);
 
 	/* Generate configuration */
 	cfg = GSM_GetConfig(gsm, 0);
 	cfg->Device = strdup(s->CurrentConfig->Device);
 	cfg->Connection = strdup("blueobex");
 	strcpy(cfg->Model, "obexnone");
+	strcpy(cfg->DebugLevel, s->CurrentConfig->DebugLevel);
+	cfg->UseGlobalDebugFile = s->CurrentConfig->UseGlobalDebugFile;
 
 	/* We have one configuration */
 	GSM_SetConfigNum(gsm, 1);
