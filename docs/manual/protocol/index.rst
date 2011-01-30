@@ -19,6 +19,7 @@ Phone Protocols
     sonim
     m-obex
     s60
+    gnapplet
 
 .. note::
 
