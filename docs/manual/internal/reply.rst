@@ -4,7 +4,33 @@ Reply functions
 When phone gives answers, we check if we requested received info and we
 redirect it to concrete reply function, which will decode it. Different
 phone answers can go to one reply function let's say responsible for
-getting sms status. There are three types of answer:
+getting sms status. 
+
+.. c:type:: GSM_Reply_Function
+
+    Defines reply function for phone driver.
+
+    .. c:member:: GSM_Error (*Function)	(GSM_Protocol_Message msg, GSM_StateMachine *s);
+
+        Callback on reply match.
+
+    .. c:member:: const unsigned char		*msgtype;
+
+        String match on the message.
+
+    .. c:member:: const size_t			subtypechar;
+
+        Position for char match inside reply. If 0, message type is checked.
+
+    .. c:member:: const int			subtype;
+
+       Match for char/message type check (see above).
+
+    .. c:member:: const GSM_Phone_RequestID	requestID;
+
+       Match for request ID. this is filled in when calling :c:func:`GSM_WaitFor`.
+
+There are three types of answer matching:
 
 Binary
 ------
