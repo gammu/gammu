@@ -740,7 +740,7 @@ GSM_Error GSM_UnpackSemiOctetNumber(GSM_Debug_Info *di, unsigned char *retval, c
 	size_t		length		= Number[*pos];
 	GSM_Error ret = ERR_NONE;
 
-	smfprintf(di, "Number Length=%d\n", length);
+	smfprintf(di, "Number Length=%ld\n", (long)length);
 
 	/* Default ouput on error */
 	strcpy(Buffer, "<NOT DECODED>");
@@ -758,7 +758,7 @@ GSM_Error GSM_UnpackSemiOctetNumber(GSM_Debug_Info *di, unsigned char *retval, c
 
 	/* Check length */
 	if (length > GSM_MAX_NUMBER_LENGTH) {
-		smfprintf(di, "Number too big, not decoding! (Length=%d, MAX=%d)\n", length, GSM_MAX_NUMBER_LENGTH);
+		smfprintf(di, "Number too big, not decoding! (Length=%ld, MAX=%d)\n", (long)length, GSM_MAX_NUMBER_LENGTH);
 		ret = ERR_UNKNOWN;
 		goto out;
 	}
@@ -769,7 +769,7 @@ GSM_Error GSM_UnpackSemiOctetNumber(GSM_Debug_Info *di, unsigned char *retval, c
 	switch ((Number[*pos + 1] & 0x70)) {
 	case (NUMBER_ALPHANUMERIC_NUMBERING_PLAN_UNKNOWN & 0x70):
 		if (length > 6) length++;
-		smfprintf(di, "Alphanumeric number, length %i\n",length);
+		smfprintf(di, "Alphanumeric number, length %ld\n", (long)length);
 		GSM_UnpackEightBitsToSeven(0, length, length, Number+*pos+2, Buffer);
 		Buffer[length]=0;
 		break;
@@ -793,7 +793,7 @@ GSM_Error GSM_UnpackSemiOctetNumber(GSM_Debug_Info *di, unsigned char *retval, c
 		break;
 	}
 
-	smfprintf(di, "Len %i\n",length);
+	smfprintf(di, "Len %ld\n", (long)length);
 out:
 	EncodeUnicode(retval,Buffer,strlen(Buffer));
 	if (semioctet) {
