@@ -136,6 +136,52 @@ GSM_Error PHONE_Beep(GSM_StateMachine *s)
 	return s->Phone.Functions->PlayTone(s,255*255,0,FALSE);
 }
 
+GSM_Error PHONE_FindDataFile(GSM_StateMachine *s, GSM_File * File, const char *ExtraPath, const char *filename)
+{
+	char *path;
+	GSM_Error error;
+
+	EncodeUnicode(File->Name, filename, strlen(filename));
+
+	path = malloc(MAX(strlen(GAMMU_DATA_PATH), ExtraPath == NULL ? 0 : strlen(ExtraPath)) + 50);
+	if (path == NULL) {
+		return ERR_MOREMEMORY;
+	}
+
+	if (ExtraPath != NULL) {
+		sprintf(path, "%s/%s", ExtraPath, filename);
+		smprintf(s, "Trying to load from extra path: %s\n", path);
+
+		error = GSM_ReadFile(path, File);
+		if (error == ERR_NONE) {
+			free(path);
+			return error;
+		}
+	}
+
+	sprintf(path, "%s/%s", GAMMU_DATA_PATH, filename);
+	smprintf(s, "Trying to load from data path: %s\n", path);
+
+	error = GSM_ReadFile(path, File);
+	free(path);
+
+	return error;
+}
+
+GSM_Error PHONE_UploadFile(GSM_StateMachine *s, GSM_File * File)
+{
+	int Pos = 0, Handle = 0;
+	GSM_Error error = ERR_NONE;;
+
+	while (error == ERR_NONE) {
+		error = GSM_SendFilePart(s, File, &Pos, &Handle);
+	}
+	if (error == ERR_EMPTY) {
+		return ERR_NONE;
+	}
+	return error;
+}
+
 GSM_Error NoneReply(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s,"None answer\n");
