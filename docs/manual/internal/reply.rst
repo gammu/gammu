@@ -4,7 +4,7 @@ Reply functions
 When phone gives answers, we check if we requested received info and we
 redirect it to concrete reply function, which will decode it. Different
 phone answers can go to one reply function let's say responsible for
-getting sms status. There are 2 types of answer:
+getting sms status. There are three types of answer:
 
 Binary
 ------
@@ -33,6 +33,18 @@ Example:
 All incoming (not requested in the moment, sent by phone, who
 likes us - ID_IncomingFrame) responses starting from "+CLIP" will go
 to the ATGEN_ReplyIncomingCallInfo.
+
+Numeric
+-------
+
+Example:
+
+.. code-block:: c
+
+	{S60_Reply_Generic, "", 0x00, NUM_QUIT, ID_Terminate },
+
+When match string is empty and match char position is zero, matching on message
+type is performed.
 
 Requests
 --------
