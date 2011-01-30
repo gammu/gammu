@@ -1,3 +1,5 @@
+.. _s60:
+
 Series60 Remote Protocol
 ========================
 
