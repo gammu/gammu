@@ -101,7 +101,8 @@ typedef enum {
 	/* specification give also other values */
 } GSM_NumberType;
 
-int GSM_UnpackSemiOctetNumber(GSM_Debug_Info *di, unsigned char *retval, const unsigned char *Number, gboolean semioctet);
+//int GSM_UnpackSemiOctetNumber(GSM_Debug_Info *di, unsigned char *retval, const unsigned char *Number, gboolean semioctet);
+GSM_Error GSM_UnpackSemiOctetNumber(GSM_Debug_Info *di, unsigned char *retval, const unsigned char *Number, size_t *pos, size_t bufferlength, gboolean semioctet);
 int		GSM_PackSemiOctetNumber		(const unsigned char *Number, unsigned char *Output, gboolean semioctet);
 
 /* ---------------------------- Bits --------------------------------------- */

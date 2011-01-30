@@ -189,9 +189,12 @@ GSM_Error GNAPGEN_PrivSetSMSLayout(GSM_StateMachine *s, GSM_SMSMessage *sms, uns
 	return ERR_NONE;
 }
 
-GSM_Error GNAPGEN_DecodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout *Layout)
+GSM_Error GNAPGEN_DecodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *SMS, unsigned char *buffer, size_t length, GSM_SMSMessageLayout *Layout)
 {
 	GSM_DateTime	zerodt = {0,0,0,0,0,0,0};
+	size_t pos;
+	GSM_Error error;
+
 #ifdef DEBUG
 	if (Layout->firstbyte == 255) {
 		smprintf(s, "ERROR: firstbyte in SMS layout not set\n");
@@ -225,7 +228,11 @@ GSM_Error GNAPGEN_DecodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *SMS, unsig
 	SMS->Name[1]			= 0;
 	SMS->ReplyViaSameSMSC		= FALSE;
 	if (Layout->SMSCNumber!=255) {
-		GSM_UnpackSemiOctetNumber(&(s->di), SMS->SMSC.Number,buffer+Layout->SMSCNumber,TRUE);
+		pos = Layout->SMSCNumber;
+		error = GSM_UnpackSemiOctetNumber(&(s->di), SMS->SMSC.Number, buffer, &pos, length, TRUE);
+		if (error != ERR_NONE) {
+			return error;
+		}
 		smprintf(s, "SMS center number : \"%s\"\n",DecodeUnicodeString(SMS->SMSC.Number));
 	}
 	if ((buffer[Layout->firstbyte] & 0x80)!=0) SMS->ReplyViaSameSMSC=TRUE;
@@ -233,7 +240,11 @@ GSM_Error GNAPGEN_DecodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *SMS, unsig
 	if (SMS->ReplyViaSameSMSC) smprintf(s, "SMS centre set for reply\n");
 #endif
 	if (Layout->Number!=255) {
-		GSM_UnpackSemiOctetNumber(&(s->di), SMS->Number,buffer+Layout->Number,TRUE);
+		pos = Layout->Number;
+		error = GSM_UnpackSemiOctetNumber(&(s->di), SMS->Number,buffer, &pos, length, TRUE);
+		if (error != ERR_NONE) {
+			return error;
+		}
 		smprintf(s, "Remote number : \"%s\"\n",DecodeUnicodeString(SMS->Number));
 	}
 	if (Layout->Text != 255 && Layout->TPDCS!=255 && Layout->TPUDL!=255) {
@@ -332,7 +343,7 @@ static GSM_Error GNAPGEN_ReplyGetSMS(GSM_Protocol_Message msg, GSM_StateMachine 
 		s->Phone.Data.GetSMSMessage->SMS[i].Name[1]	= 0;
 
 		GNAPGEN_PrivSetSMSLayout(s, sms, buffer, &layout );
-		GNAPGEN_DecodeSMSFrame(s, sms,buffer,&layout);
+		GNAPGEN_DecodeSMSFrame(s, sms,buffer,messageLen,&layout);
 	}
 
 	return ERR_NONE;

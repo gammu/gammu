@@ -159,6 +159,8 @@ static GSM_Error N6510_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *
 {
 	int 			i, current, j;
 	GSM_Phone_Data		*Data = &s->Phone.Data;
+	size_t pos;
+	GSM_Error error;
 
 	switch (msg.Buffer[4]) {
 		case 0x00:
@@ -204,11 +206,19 @@ static GSM_Error N6510_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *
 		case 0x82:
 			switch (msg.Buffer[current+2]) {
 			case 0x01:
-				GSM_UnpackSemiOctetNumber(&(s->di), Data->SMSC->DefaultNumber,msg.Buffer+current+4,TRUE);
+				pos = current + 4;
+				error = GSM_UnpackSemiOctetNumber(&(s->di), Data->SMSC->DefaultNumber, msg.Buffer, &pos, msg.Length, TRUE);
+				if (error != ERR_NONE) {
+					return error;
+				}
 				smprintf(s, "   Default number \"%s\"\n", DecodeUnicodeString(Data->SMSC->DefaultNumber));
 				break;
 			case 0x02:
-				GSM_UnpackSemiOctetNumber(&(s->di), Data->SMSC->Number,msg.Buffer+current+4,FALSE);
+				pos = current + 4;
+				error = GSM_UnpackSemiOctetNumber(&(s->di), Data->SMSC->Number, msg.Buffer, &pos, msg.Length, FALSE);
+				if (error != ERR_NONE) {
+					return error;
+				}
 				smprintf(s, "   Number \"%s\"\n", DecodeUnicodeString(Data->SMSC->Number));
 				break;
 			default:

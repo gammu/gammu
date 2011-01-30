@@ -1152,6 +1152,8 @@ GSM_Error DCT3DCT4_ReplyCallDivert(GSM_Protocol_Message msg, GSM_StateMachine *s
 {
 	GSM_MultiCallDivert 	*cd = s->Phone.Data.Divert;
 	int			i,pos = 11,j;
+	size_t number_pos;
+	GSM_Error error;
 
 	switch (msg.Buffer[3]) {
   	case 0x02:
@@ -1195,7 +1197,11 @@ GSM_Error DCT3DCT4_ReplyCallDivert(GSM_Protocol_Message msg, GSM_StateMachine *s
 			j = pos + 2;
 			while (msg.Buffer[j] != 0x00) j++;
 			msg.Buffer[pos+1] = j - pos - 2;
-			GSM_UnpackSemiOctetNumber(&(s->di), cd->Response.Entries[i].Number,msg.Buffer+(pos+1),FALSE);
+			number_pos = pos + 1;
+			error = GSM_UnpackSemiOctetNumber(&(s->di), cd->Response.Entries[i].Number, msg.Buffer, &number_pos, msg.Length, FALSE);
+			if (error != ERR_NONE) {
+				return error;
+			}
 	      		smprintf(s,"   Number     : %s\n",DecodeUnicodeString(cd->Response.Entries[i].Number));
 	        	cd->Response.Entries[i].Timeout = msg.Buffer[pos+34];
 	 	     	smprintf(s,"   Timeout    : %i seconds\n",msg.Buffer[pos+34]);
