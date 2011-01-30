@@ -253,6 +253,8 @@ static GSM_Error N7110_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMac
 	size_t			Width, Height;
 	unsigned char		output[500], output2[500];
 	GSM_Phone_Data		*Data = &s->Phone.Data;
+	size_t pos;
+	GSM_Error error;
 
 	switch(msg.Buffer[3]) {
 	case 0x08:
@@ -283,9 +285,17 @@ static GSM_Error N7110_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMac
 				Data->Bitmap->BitmapWidth	= Width;
 				Data->Bitmap->BitmapHeight	= Height;
 				PHONE_DecodeBitmap(GSM_NokiaPictureImage, msg.Buffer + 51, Data->Bitmap);
-				GSM_UnpackSemiOctetNumber(&(s->di), Data->Bitmap->Sender,msg.Buffer+22,TRUE);
+				pos = 22;
+				error = GSM_UnpackSemiOctetNumber(&(s->di), Data->Bitmap->Sender, msg.Buffer, &pos, msg.Length, TRUE);
+				if (error != ERR_NONE) {
+					return error;
+				}
 #ifdef DEBUG
-				GSM_UnpackSemiOctetNumber(&(s->di), output,msg.Buffer+9,TRUE);
+				pos = 9;
+				error = GSM_UnpackSemiOctetNumber(&(s->di), output, msg.Buffer, &pos, msg.Length, TRUE);
+				if (error != ERR_NONE) {
+					return error;
+				}
 				smprintf(s, "SMSC : %s\n",DecodeUnicodeString(output));
 #endif
 				Data->Bitmap->Text[0] = 0;

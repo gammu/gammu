@@ -378,13 +378,17 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, const unsi
 	unsigned char	output[161];
 	int			datalength;
 	gboolean have_data = FALSE;
+	GSM_Error error;
 
 	/* Set some sane data */
 	GSM_SetDefaultReceivedSMSData(SMS);
 
 	/* Parse SMSC if it is included */
 	if (SMSC) {
-		pos += GSM_UnpackSemiOctetNumber(di, SMS->SMSC.Number, buffer + pos, FALSE);
+		error = GSM_UnpackSemiOctetNumber(di, SMS->SMSC.Number, buffer, &pos, length, FALSE);
+		if (error != ERR_NONE) {
+			return error;
+		}
 		smfprintf(di, "SMS center number : \"%s\"\n",DecodeUnicodeString(SMS->SMSC.Number));
 	}
 
@@ -449,7 +453,10 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, const unsi
 	}
 
 	/* Remote number */
-	pos += GSM_UnpackSemiOctetNumber(di, SMS->Number, buffer + pos, TRUE);
+	error = GSM_UnpackSemiOctetNumber(di, SMS->Number, buffer, &pos, length, TRUE);
+	if (error != ERR_NONE) {
+		return error;
+	}
 	smfprintf(di, "Remote number : \"%s\"\n",DecodeUnicodeString(SMS->Number));
 	if (pos >= length) {
 		smfprintf(di, "Ran out of buffer when parsing PDU!\n");
@@ -652,6 +659,9 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, const unsi
 GSM_Error GSM_DecodeSMSFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout Layout)
 {
 	GSM_DateTime	zerodt = {0,0,0,0,0,0,0};
+	size_t pos;
+	GSM_Error error;
+
 #ifdef DEBUG
 	if (Layout.firstbyte == 255) {
 		smfprintf(di, "ERROR: firstbyte in SMS layout not set\n");
@@ -670,7 +680,11 @@ GSM_Error GSM_DecodeSMSFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsigned c
 	GSM_SetDefaultReceivedSMSData(SMS);
 
 	if (Layout.SMSCNumber!=255) {
-		GSM_UnpackSemiOctetNumber(di, SMS->SMSC.Number,buffer+Layout.SMSCNumber,FALSE);
+		pos = Layout.SMSCNumber;
+		error = GSM_UnpackSemiOctetNumber(di, SMS->SMSC.Number, buffer, &pos, 1000, FALSE);
+		if (error != ERR_NONE) {
+			return error;
+		}
 		smfprintf(di, "SMS center number : \"%s\"\n",DecodeUnicodeString(SMS->SMSC.Number));
 	}
 	if ((buffer[Layout.firstbyte] & 0x80)!=0) SMS->ReplyViaSameSMSC=TRUE;
@@ -678,7 +692,11 @@ GSM_Error GSM_DecodeSMSFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsigned c
 	if (SMS->ReplyViaSameSMSC) smfprintf(di, "SMS centre set for reply\n");
 #endif
 	if (Layout.Number!=255) {
-		GSM_UnpackSemiOctetNumber(di, SMS->Number,buffer+Layout.Number,TRUE);
+		pos = Layout.Number;
+		error = GSM_UnpackSemiOctetNumber(di, SMS->Number, buffer, &pos, 1000, TRUE);
+		if (error != ERR_NONE) {
+			return error;
+		}
 		smfprintf(di, "Remote number : \"%s\"\n",DecodeUnicodeString(SMS->Number));
 	}
 	if (Layout.TPDCS != 255) {

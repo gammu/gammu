@@ -959,12 +959,18 @@ static GSM_Error N6110_ReplyGetSetPicture(GSM_Protocol_Message msg, GSM_StateMac
 {
         int                     count = 5, i;
         GSM_Phone_Data          *Data = &s->Phone.Data;
+	GSM_Error error;
+	size_t pos;
 
         switch (msg.Buffer[3]) {
         case 0x02:
                 smprintf(s, "Picture Image received\n");
                 if (msg.Buffer[count]!=0) {
-                        GSM_UnpackSemiOctetNumber(&(s->di), Data->Bitmap->Sender, msg.Buffer + 5, TRUE);
+			pos = 5;
+                        error = GSM_UnpackSemiOctetNumber(&(s->di), Data->Bitmap->Sender, msg.Buffer, &pos, msg.Length, TRUE);
+			if (error != ERR_NONE) {
+				return error;
+			}
                         /* Convert number of semioctets to number of chars */
                         i = msg.Buffer[5];
                         if (i % 2) i++;

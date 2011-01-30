@@ -734,15 +734,21 @@ int GSM_PackSevenBitsToEight(int offset, const unsigned char *input, unsigned ch
         return (output_pos - output);
 }
 
-int GSM_UnpackSemiOctetNumber(GSM_Debug_Info *di, unsigned char *retval, const unsigned char *Number, gboolean semioctet)
+GSM_Error GSM_UnpackSemiOctetNumber(GSM_Debug_Info *di, unsigned char *retval, const unsigned char *Number, size_t *pos, size_t bufferlength, gboolean semioctet)
 {
 	unsigned char	Buffer[GSM_MAX_NUMBER_LENGTH + 1];
-	int		length		= Number[0];
+	size_t		length		= Number[*pos];
+	GSM_Error ret = ERR_NONE;
 
 	smfprintf(di, "Number Length=%d\n", length);
 
 	/* Default ouput on error */
 	strcpy(Buffer, "<NOT DECODED>");
+
+	if (length > bufferlength) {
+		smfprintf(di, "Number too long!\n");
+		return ERR_UNKNOWN;
+	}
 
 	if (semioctet) {
 		/* Convert number of semioctets to number of chars */
@@ -753,36 +759,37 @@ int GSM_UnpackSemiOctetNumber(GSM_Debug_Info *di, unsigned char *retval, const u
 	/* Check length */
 	if (length > GSM_MAX_NUMBER_LENGTH) {
 		smfprintf(di, "Number too big, not decoding! (Length=%d, MAX=%d)\n", length, GSM_MAX_NUMBER_LENGTH);
+		ret = ERR_UNKNOWN;
 		goto out;
 	}
 
 	/*without leading byte with format of number*/
 	length--;
 
-	switch ((Number[1] & 0x70)) {
+	switch ((Number[*pos + 1] & 0x70)) {
 	case (NUMBER_ALPHANUMERIC_NUMBERING_PLAN_UNKNOWN & 0x70):
 		if (length > 6) length++;
 		smfprintf(di, "Alphanumeric number, length %i\n",length);
-		GSM_UnpackEightBitsToSeven(0, length, length, Number+2, Buffer);
+		GSM_UnpackEightBitsToSeven(0, length, length, Number+*pos+2, Buffer);
 		Buffer[length]=0;
 		break;
 	case (NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN & 0x70):
 		smfprintf(di, "International number\n");
 		Buffer[0]='+';
-		DecodeBCD(Buffer+1,Number+2, length);
+		DecodeBCD(Buffer+1,Number+*pos+2, length);
 		break;
 	default:
-		smfprintf(di, "Default number %02x (%d %d %d %d|%d %d %d %d)\n",Number[1],
-				Number[1] & 0x80 ? 1 : 0,
-				Number[1] & 0x40 ? 1 : 0,
-				Number[1] & 0x20 ? 1 : 0,
-				Number[1] & 0x10 ? 1 : 0,
-				Number[1] & 0x08 ? 1 : 0,
-				Number[1] & 0x04 ? 1 : 0,
-				Number[1] & 0x02 ? 1 : 0,
-				Number[1] & 0x01 ? 1 : 0
+		smfprintf(di, "Default number %02x (%d %d %d %d|%d %d %d %d)\n",Number[*pos],
+				Number[*pos] & 0x80 ? 1 : 0,
+				Number[*pos] & 0x40 ? 1 : 0,
+				Number[*pos] & 0x20 ? 1 : 0,
+				Number[*pos] & 0x10 ? 1 : 0,
+				Number[*pos] & 0x08 ? 1 : 0,
+				Number[*pos] & 0x04 ? 1 : 0,
+				Number[*pos] & 0x02 ? 1 : 0,
+				Number[*pos] & 0x01 ? 1 : 0
 				);
-		DecodeBCD (Buffer, Number+2, length);
+		DecodeBCD (Buffer, Number+*pos+2, length);
 		break;
 	}
 
@@ -790,10 +797,11 @@ int GSM_UnpackSemiOctetNumber(GSM_Debug_Info *di, unsigned char *retval, const u
 out:
 	EncodeUnicode(retval,Buffer,strlen(Buffer));
 	if (semioctet) {
-		return 2 + ((Number[0] + 1) / 2);
+		*pos += 2 + ((Number[*pos] + 1) / 2);
 	} else {
-		return 1 + Number[0];
+		*pos += 1 + Number[*pos];
 	}
+	return ret;
 }
 
 /**

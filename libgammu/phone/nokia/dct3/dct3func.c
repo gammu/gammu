@@ -402,6 +402,8 @@ GSM_Error DCT3_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	int 		i;
 	GSM_Phone_Data	*Data = &s->Phone.Data;
+	size_t pos;
+	GSM_Error error;
 
 	switch (msg.Buffer[3]) {
 	case 0x34:
@@ -427,10 +429,18 @@ GSM_Error DCT3_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		EncodeUnicode(Data->SMSC->Name,msg.Buffer+33,i);
 		smprintf(s, "Name \"%s\"\n", DecodeUnicodeString(Data->SMSC->Name));
 
-		GSM_UnpackSemiOctetNumber(&(s->di), Data->SMSC->DefaultNumber,msg.Buffer+9,TRUE);
+		pos = 9;
+		error = GSM_UnpackSemiOctetNumber(&(s->di), Data->SMSC->DefaultNumber, msg.Buffer, &pos, msg.Length, TRUE);
+		if (error != ERR_NONE) {
+			return error;
+		}
 		smprintf(s, "Default number \"%s\"\n", DecodeUnicodeString(Data->SMSC->DefaultNumber));
 
-		GSM_UnpackSemiOctetNumber(&(s->di), Data->SMSC->Number,msg.Buffer+21,FALSE);
+		pos = 21;
+		error = GSM_UnpackSemiOctetNumber(&(s->di), Data->SMSC->Number, msg.Buffer, &pos, msg.Length, FALSE);
+		if (error != ERR_NONE) {
+			return error;
+		}
 		smprintf(s, "Number \"%s\"\n", DecodeUnicodeString(Data->SMSC->Number));
 
 		return ERR_NONE;
