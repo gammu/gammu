@@ -896,7 +896,7 @@ GSM_Error GSM_TerminateConnection(GSM_StateMachine *s)
 {
 	GSM_Error error;
 
-	if (!s->opened) return ERR_UNKNOWN;
+	if (!s->opened) return ERR_NONE;
 
 	smprintf(s,"[Terminating]\n");
 
