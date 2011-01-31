@@ -2,7 +2,7 @@ Contributing
 ============
 
 We welcome contribution in any area, if you don't have developer skills, you
-can always contribute to :doc:`localization`. In case you are
+can always contribute to :doc:`localization` or just `donate us money`_. In case you are
 interested in fixing some code, please read :doc:`../internal/index` to
 understand structure of Gammu code. We also maintain list of
 `wanted skills <http://wammu.eu/contribute/wanted/>`_ where you can find in
@@ -48,3 +48,5 @@ To manually create patch you can use following steps:
    placed.
 5. Call ``diff -rup -X .git gammu work > patchfile``.
 6. Send ``patchfile`` to us (you can use bug tracker or mailing list).
+
+.. _donate us money: http://wammu.eu/donate/
