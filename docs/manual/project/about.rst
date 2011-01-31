@@ -14,8 +14,3 @@ help of many contributors.
 .. _Gnokii: http://www.gnokii.org
 .. _MyGnokii:  http://www.mwiacek.com
 .. _Michal Čihař: mailto:michal@cihar.com
-
-.. toctree::
-    :maxdepth: 2
-
-    motivation

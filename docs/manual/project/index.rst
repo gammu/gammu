@@ -7,6 +7,7 @@ Gammu project
     :maxdepth: 2
 
     about
+    motivation
     install
     contributing
     localization
