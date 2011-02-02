@@ -3688,9 +3688,8 @@ msgid "Other number"
 msgstr "Outro número"
 
 #: helper/memory-display.c:172
-#, fuzzy
 msgid "Home address"
-msgstr "Do Endereço"
+msgstr "Endereço Residencial"
 
 #: helper/memory-display.c:175
 #, fuzzy
