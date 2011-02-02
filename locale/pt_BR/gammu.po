@@ -3708,10 +3708,10 @@ msgstr "Email de Trabalho"
 msgid "Email address 2"
 msgstr "Endereço email 2"
 
+# gsavix
 #: helper/memory-display.c:201
-#, fuzzy
 msgid "Home website"
-msgstr "Casa"
+msgstr "Endereço WebSite"
 
 #: helper/memory-display.c:204
 #, fuzzy
