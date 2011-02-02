@@ -152,6 +152,7 @@ completed:
 
 		return ERR_NONE;
 	case AT_Reply_Error:
+		return ERR_NOTSUPPORTED;
 	case AT_Reply_CMSError:
 		return ATGEN_HandleCMSError(s);
 	case AT_Reply_CMEError:
@@ -1416,14 +1417,14 @@ GSM_Error ATGEN_ReplyAddSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 	size_t i = 0;
 	int folder = 0;
 
-	if (s->Protocol.Data.AT.EditMode) {
-		if (Priv->ReplyState != AT_Reply_SMSEdit) {
-			return ATGEN_HandleCMSError(s);
-		}
-		s->Protocol.Data.AT.EditMode = FALSE;
-		return ERR_NONE;
-	}
 	switch (Priv->ReplyState) {
+	case AT_Reply_SMSEdit:
+		if (s->Protocol.Data.AT.EditMode) {
+			s->Protocol.Data.AT.EditMode = FALSE;
+			return ERR_NONE;
+		}
+		smprintf(s, "Received unexpected SMS edit prompt!\n");
+		return ERR_UNKNOWN;
 	case AT_Reply_OK:
 		smprintf(s, "SMS saved OK\n");
 
@@ -1776,15 +1777,14 @@ GSM_Error ATGEN_ReplySendSMS(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 	int i = 0,reference = 0;
 
-	if (s->Protocol.Data.AT.EditMode) {
-		if (Priv->ReplyState != AT_Reply_SMSEdit) {
-			return ERR_UNKNOWN;
-		}
-		s->Protocol.Data.AT.EditMode = FALSE;
-		return ERR_NONE;
-	}
-
 	switch (Priv->ReplyState) {
+	case AT_Reply_SMSEdit:
+		if (s->Protocol.Data.AT.EditMode) {
+			s->Protocol.Data.AT.EditMode = FALSE;
+			return ERR_NONE;
+		}
+		smprintf(s, "Received unexpected SMS edit prompt!\n");
+		return ERR_UNKNOWN;
 	case AT_Reply_OK:
  		smprintf(s, "SMS sent OK\n");
 
