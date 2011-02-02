@@ -3739,7 +3739,7 @@ msgstr "SIP"
 
 #: helper/memory-display.c:216
 msgid "DTMF"
-msgstr ""
+msgstr "DTMF"
 
 #: helper/memory-display.c:218
 msgid "Last name"
