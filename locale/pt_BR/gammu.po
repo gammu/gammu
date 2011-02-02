@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-27 16:36+0100\n"
-"PO-Revision-Date: 2011-02-02 20:20+0200\n"
+"PO-Revision-Date: 2011-02-02 20:21+0200\n"
 "Last-Translator: gilberto dos santos alves <gsavix@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
@@ -3757,10 +3757,10 @@ msgstr "Nome Intermediário (nem o primeiro nem o último, se houver)"
 msgid "Formal name"
 msgstr "Nome Formal"
 
+# Sr., Sra., Dr., Dra, etc
 #: helper/memory-display.c:222
-#, fuzzy
 msgid "Name prefix"
-msgstr "Número Prefixo"
+msgstr "Prefixo do Nome"
 
 #: helper/memory-display.c:223
 msgid "Name suffix"
