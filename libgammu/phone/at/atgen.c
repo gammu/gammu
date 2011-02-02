@@ -2787,6 +2787,16 @@ GSM_Error ATGEN_ReplyGetNetworkLAC_CID(GSM_Protocol_Message msg, GSM_StateMachin
 			NetworkInfo->LAC, sizeof(NetworkInfo->LAC),
 			NetworkInfo->CID, sizeof(NetworkInfo->CID));
 
+	/* Reply without mode */
+	if (error == ERR_UNKNOWNRESPONSE) {
+		error = ATGEN_ParseReply(s,
+				GetLineString(msg.Buffer, &Priv->Lines, 2),
+				"+CREG: @i, @r, @r",
+				&state,
+				NetworkInfo->LAC, sizeof(NetworkInfo->LAC),
+				NetworkInfo->CID, sizeof(NetworkInfo->CID));
+	}
+
 	/* Reply without LAC/CID */
 	if (error == ERR_UNKNOWNRESPONSE) {
 		error = ATGEN_ParseReply(s,
