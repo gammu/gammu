@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-27 16:36+0100\n"
-"PO-Revision-Date: 2011-01-20 20:22+0200\n"
+"PO-Revision-Date: 2011-02-02 20:22+0200\n"
 "Last-Translator: gilberto dos santos alves <gsavix@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
@@ -3333,11 +3333,14 @@ msgstr "Resposta:"
 
 #: gammu/misc.c:2492
 msgid "The application has been successfully sent to the phone."
-msgstr ""
+msgstr "A aplicação foi enviada com sucesso para o telefone."
 
+# gsavix 02.02.2011
 #: gammu/misc.c:2493
 msgid "Please find received files in Inbox and install them."
 msgstr ""
+"Por favor localizar e instalar os arquivos recebidos, na caixa postal de "
+"entrada."
 
 #: gammu/mms.c:49
 msgid "Do you want to save this MMS file?"
@@ -3652,30 +3655,29 @@ msgstr "Número trabalho"
 msgid "General number"
 msgstr "Número geral"
 
+# gsavix 2.2.11
 #: helper/memory-display.c:136
-#, fuzzy
 msgid "Video number"
-msgstr "Celular"
+msgstr "Vídeo Número"
 
+# gsavix 2.2.11
 #: helper/memory-display.c:141
-#, fuzzy
 msgid "Home mobile number"
-msgstr "Celular"
+msgstr "Número do Celular Residencial"
 
+# gsavix 2.2.11
 #: helper/memory-display.c:144
-#, fuzzy
 msgid "Work mobile number"
-msgstr "Celular"
+msgstr "Número do Celular de Trabalho"
 
+# gsavix 2.2.11
 #: helper/memory-display.c:155
-#, fuzzy
 msgid "Home fax number"
-msgstr "Casa"
+msgstr "Número fax residencial"
 
 #: helper/memory-display.c:158
-#, fuzzy
 msgid "Work fax number"
-msgstr "Número trabalho"
+msgstr "Número do fax do trabalho"
 
 #: helper/memory-display.c:165
 msgid "Pager number"
@@ -3686,64 +3688,58 @@ msgid "Other number"
 msgstr "Outro número"
 
 #: helper/memory-display.c:172
-#, fuzzy
 msgid "Home address"
-msgstr "Do Endereço"
+msgstr "Endereço Residencial"
 
 #: helper/memory-display.c:175
-#, fuzzy
 msgid "Work address"
-msgstr "Endereço Adicional de trabalho"
+msgstr "Endereço do trabalho"
 
+# gsavix 2.2.11
 #: helper/memory-display.c:186
-#, fuzzy
 msgid "Home email"
-msgstr "seu email"
+msgstr "Email residencial"
 
 #: helper/memory-display.c:189
-#, fuzzy
 msgid "Work email"
-msgstr "seu email"
+msgstr "Email de Trabalho"
 
 #: helper/memory-display.c:196
 msgid "Email address 2"
 msgstr "Endereço email 2"
 
+# gsavix
 #: helper/memory-display.c:201
-#, fuzzy
 msgid "Home website"
-msgstr "Casa"
+msgstr "Endereço WebSite"
 
 #: helper/memory-display.c:204
-#, fuzzy
 msgid "Work website"
-msgstr "Estado Trabalho"
+msgstr "Endereço WebSite Trabalho"
 
 #: helper/memory-display.c:207
-#, fuzzy
 msgid "Website"
-msgstr "Sítio Web"
+msgstr "WebSite"
 
 #: helper/memory-display.c:212
 msgid "VOIP"
-msgstr ""
+msgstr "VOIP"
 
 #: helper/memory-display.c:213
 msgid "SWIS"
-msgstr ""
+msgstr "SWIS"
 
 #: helper/memory-display.c:214
 msgid "WVID"
-msgstr ""
+msgstr "WVID"
 
 #: helper/memory-display.c:215
-#, fuzzy
 msgid "SIP"
-msgstr "SIM"
+msgstr "SIP"
 
 #: helper/memory-display.c:216
 msgid "DTMF"
-msgstr ""
+msgstr "DTMF"
 
 #: helper/memory-display.c:218
 msgid "Last name"
@@ -3754,22 +3750,22 @@ msgid "First name"
 msgstr "Primeiro Nome"
 
 #: helper/memory-display.c:220
-#, fuzzy
 msgid "Second name"
-msgstr "Nome Estação"
+msgstr "Nome Intermediário (nem o primeiro nem o último, se houver)"
 
 #: helper/memory-display.c:221
 msgid "Formal name"
 msgstr "Nome Formal"
 
+# Sr., Sra., Dr., Dra, etc
 #: helper/memory-display.c:222
-#, fuzzy
 msgid "Name prefix"
-msgstr "Número Prefixo"
+msgstr "Prefixo do Nome"
 
+# ex. Jr, Neto...
 #: helper/memory-display.c:223
 msgid "Name suffix"
-msgstr ""
+msgstr "Nome Sufixo (se houver)"
 
 #: helper/memory-display.c:224
 msgid "Nick name"

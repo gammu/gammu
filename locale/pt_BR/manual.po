@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.29.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-19 11:16+0100\n"
-"PO-Revision-Date: 2011-01-20 21:11+0200\n"
+"PO-Revision-Date: 2011-02-02 20:32+0200\n"
 "Last-Translator: gilberto dos santos alves <gsavix@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
@@ -55,7 +55,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/config/index.rst:14
 msgid "``~/.config/gammu/config``"
-msgstr ""
+msgstr "``~/.config/gammu/config``"
 
 # type: Plain text
 #. type: Plain text
