@@ -3655,10 +3655,10 @@ msgstr "Número trabalho"
 msgid "General number"
 msgstr "Número geral"
 
+# gsavix 2.2.11
 #: helper/memory-display.c:136
-#, fuzzy
 msgid "Video number"
-msgstr "Celular"
+msgstr "Vídeo Número"
 
 #: helper/memory-display.c:141
 #, fuzzy
