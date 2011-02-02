@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-27 16:36+0100\n"
-"PO-Revision-Date: 2011-02-02 20:13+0200\n"
+"PO-Revision-Date: 2011-02-02 20:15+0200\n"
 "Last-Translator: gilberto dos santos alves <gsavix@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
@@ -3701,9 +3701,8 @@ msgid "Home email"
 msgstr "Email residencial"
 
 #: helper/memory-display.c:189
-#, fuzzy
 msgid "Work email"
-msgstr "seu email"
+msgstr "Email de Trabalho"
 
 #: helper/memory-display.c:196
 msgid "Email address 2"
