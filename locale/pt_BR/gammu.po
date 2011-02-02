@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-27 16:36+0100\n"
-"PO-Revision-Date: 2011-02-02 20:08+0200\n"
+"PO-Revision-Date: 2011-02-02 20:09+0200\n"
 "Last-Translator: gilberto dos santos alves <gsavix@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
@@ -3660,10 +3660,10 @@ msgstr "Número geral"
 msgid "Video number"
 msgstr "Vídeo Número"
 
+# gsavix 2.2.11
 #: helper/memory-display.c:141
-#, fuzzy
 msgid "Home mobile number"
-msgstr "Celular"
+msgstr "Número do Celular Residencial"
 
 #: helper/memory-display.c:144
 #, fuzzy
