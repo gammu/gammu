@@ -3695,10 +3695,10 @@ msgstr "Endereço Residencial"
 msgid "Work address"
 msgstr "Endereço do trabalho"
 
+# gsavix 2.2.11
 #: helper/memory-display.c:186
-#, fuzzy
 msgid "Home email"
-msgstr "seu email"
+msgstr "Email residencial"
 
 #: helper/memory-display.c:189
 #, fuzzy
