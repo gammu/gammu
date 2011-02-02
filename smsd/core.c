@@ -410,8 +410,8 @@ GSM_Error SMSGetService(GSM_SMSDConfig *Config)
 	} else if (strcasecmp(Config->ServiceName, "NULL") == 0) {
 		SMSD_Log(DEBUG_NOTICE, Config, "Using NULL service");
 		Config->Service = &SMSDNull;
-#if defined(LIBDBI_FOUND) || defined(HAVE_MYSQL_MYSQL_H) || defined(HAVE_POSTGRESQL_LIBPQ_FE_H)
 	} else if (strcasecmp(Config->ServiceName, "SQL") == 0) {
+#if defined(LIBDBI_FOUND) || defined(HAVE_MYSQL_MYSQL_H) || defined(HAVE_POSTGRESQL_LIBPQ_FE_H)
 		SMSD_Log(DEBUG_NOTICE, Config, "Using SQL service");
 		Config->Service = &SMSDSQL;
 		Config->driver = INI_GetValue(Config->smsdcfgfile, "smsd", "driver", FALSE);
