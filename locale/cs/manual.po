@@ -8,14 +8,15 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.29.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-19 11:16+0100\n"
-"PO-Revision-Date: 2011-01-10 13:35+0100\n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2011-02-03 15:08+0200\n"
+"Last-Translator: Pavlína Raszyková <pavlina.raszykova@gmail.com>\n"
 "Language-Team: none\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Pootle 2.0.5\n"
 
 # type: TP
 #. type: Plain text
