@@ -1181,6 +1181,10 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			BMP_AUTO_ALLOC(SMSInfo.EntriesNum);
 			bitmap2.Bitmap[0].Type=GSM_StartupLogo;
 			error=GSM_ReadBitmapFile(argv[i],&bitmap2);
+			if (error != ERR_NONE) {
+				printf(_("Can't open file \"%s\"\n"),argv[i]);
+				exit(-1);
+			}
 			for (j=0;j<bitmap2.Number;j++) {
 				if (bitmap[SMSInfo.EntriesNum]->Number == FramesNum) break;
 				memcpy(&bitmap[SMSInfo.EntriesNum]->Bitmap[bitmap[SMSInfo.EntriesNum]->Number],&bitmap2.Bitmap[j],sizeof(GSM_Bitmap));
