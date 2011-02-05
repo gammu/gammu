@@ -1783,6 +1783,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 					if (GSM_GetIMEI(Config->gsm, Config->Status->IMEI) != ERR_NONE) {
 						errors++;
 					} else {
+						errors = 0;
 						error = Config->Service->InitAfterConnect(Config);
 						if (error!=ERR_NONE) {
 							if (Config->RunOnFailure != NULL) {
@@ -1794,8 +1795,9 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 						GSM_SetFastSMSSending(Config->gsm, TRUE);
 					}
 					first_start = FALSE;
+				} else {
+					errors = 0;
 				}
-				errors = 0;
 
 				if (initerrors > 3 || force_reset ) {
 					error = GSM_Reset(Config->gsm, FALSE); /* soft reset */
