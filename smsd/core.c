@@ -794,6 +794,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 
 	/* Load exclude numbers from external file */
 	error = SMSD_LoadNumbersFile(Config, &(Config->ExcludeNumbersList), "excludenumbersfile");
+	if (error != ERR_NONE) return error;
 
 	if (Config->IncludeNumbersList.used > 0) {
 		SMSD_Log(DEBUG_NOTICE, Config, "Include numbers available");
@@ -819,6 +820,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 
 	/* Load exclude smsc from external file */
 	error = SMSD_LoadNumbersFile(Config, &(Config->ExcludeSMSCList), "excludesmscfile");
+	if (error != ERR_NONE) return error;
 
 	if (Config->IncludeSMSCList.used > 0) {
 		SMSD_Log(DEBUG_NOTICE, Config, "Include smsc available");
