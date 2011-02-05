@@ -1713,7 +1713,7 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(GSM_Debug_Info *di, char *Buffer, size_t *Po
 	gboolean		is_date_only;
 	gboolean		date_only = FALSE;
 	int		lBuffer;
- 	int 		Time=-1, Alarm=-1;
+ 	int 		Time=-1;
 	char		*rrule = NULL;
 
 	if (!Buffer) return ERR_EMPTY;
@@ -1739,14 +1739,14 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(GSM_Debug_Info *di, char *Buffer, size_t *Po
 				Calendar->Type = 0;
 				date_only = TRUE;
 				dstflag = 0;
-				Time=-1; Alarm=-1;
+				Time=-1;
 				Level 		= 1;
 			}
 			if (strstr(Line,"BEGIN:VTODO")) {
 				ToDo->Priority 	= GSM_Priority_None;
 				ToDo->Type = GSM_CAL_MEMO;
 				dstflag = 0;
-				Time=-1; Alarm=-1;
+				Time=-1;
 				Level 		= 2;
 			}
 			break;
@@ -1773,9 +1773,8 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(GSM_Debug_Info *di, char *Buffer, size_t *Po
 				if (Calendar->EntriesNum == 0) return ERR_EMPTY;
 
 				if (trigger.Timezone != -999 * 3600) {
-					Alarm = Calendar->EntriesNum;
-					Calendar->Entries[Alarm].Date = GSM_AddTime (Calendar->Entries[Time].Date, trigger);
-					Calendar->Entries[Alarm].EntryType = CAL_TONE_ALARM_DATETIME;
+					Calendar->Entries[Calendar->EntriesNum].Date = GSM_AddTime (Calendar->Entries[Time].Date, trigger);
+					Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_TONE_ALARM_DATETIME;
 					Calendar->Entries[Calendar->EntriesNum].AddError = ERR_NONE;
 					Calendar->EntriesNum++;
 				}
@@ -1908,14 +1907,12 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(GSM_Debug_Info *di, char *Buffer, size_t *Po
 				} else {
 					Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_SILENT_ALARM_DATETIME;
 				}
-				Alarm = Calendar->EntriesNum;
 				Calendar->Entries[Calendar->EntriesNum].AddError = ERR_NONE;
 				Calendar->EntriesNum++;
 			}
 			if (ReadVCALDate(Line, "AALARM", &Date, &is_date_only)) {
 				Calendar->Entries[Calendar->EntriesNum].Date = Date;
 				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_TONE_ALARM_DATETIME;
-				Alarm = Calendar->EntriesNum;
 				Calendar->Entries[Calendar->EntriesNum].AddError = ERR_NONE;
 				Calendar->EntriesNum++;
 			}
@@ -2003,7 +2000,6 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(GSM_Debug_Info *di, char *Buffer, size_t *Po
 			if (ReadVCALDate(Line, "DALARM", &Date, &is_date_only)) {
 				ToDo->Entries[ToDo->EntriesNum].Date = Date;
 				ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_SILENT_ALARM_DATETIME;
-				Alarm = Calendar->EntriesNum;
 				ToDo->EntriesNum++;
 			}
 			if (ReadVCALDate(Line, "LAST-MODIFIED", &Date, &is_date_only)) {
@@ -2014,7 +2010,6 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(GSM_Debug_Info *di, char *Buffer, size_t *Po
 			if (ReadVCALDate(Line, "AALARM", &Date, &is_date_only)) {
 				ToDo->Entries[ToDo->EntriesNum].Date = Date;
 				ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_ALARM_DATETIME;
-				Alarm = Calendar->EntriesNum;
 				ToDo->EntriesNum++;
 			}
 
