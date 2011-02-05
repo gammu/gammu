@@ -77,7 +77,7 @@ static void ListNetworks(int argc, char *argv[])
 			}
 			i++;
 		}
-		if (!*country) {
+		if (strlen(country) == 0) {
 			printf(_("Unknown country name: %s."), argv[2]);
 			printf("\n");
 			Terminate(2);
