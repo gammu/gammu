@@ -347,7 +347,9 @@ void SMSD_Log_Function(const char *text, void *data)
 	if (newsize > Config->gammu_log_buffer_size) {
 		newsize += 50;
 		Config->gammu_log_buffer = realloc(Config->gammu_log_buffer, newsize);
-		assert(Config->gammu_log_buffer != NULL);
+		if (Config->gammu_log_buffer == NULL) {
+			return;
+		}
 		Config->gammu_log_buffer_size = newsize;
 	}
 
