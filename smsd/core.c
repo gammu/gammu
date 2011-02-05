@@ -1350,6 +1350,7 @@ gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config)
 
 	/* Link messages */
 	error = GSM_LinkSMS(GSM_GetDebug(Config->gsm), GetSMSData, SortedSMS, TRUE);
+	if (error != ERR_NONE) return FALSE;
 
 	/* Free memory */
 	for (i = 0; GetSMSData[i] != NULL; i++) {
