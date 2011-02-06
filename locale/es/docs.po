@@ -52,6 +52,8 @@ msgid ""
 "Currently the project is lead by Michal Cihar <michal@cihar.com> with help "
 "of many contributors."
 msgstr ""
+"Actualmente el proyecto es liderado por Michal Cihar <michal@cihar.com> con "
+"la ayuda de muchos contribuyentes."
 
 #. type: Title =
 #: README:17
