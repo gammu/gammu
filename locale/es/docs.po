@@ -64,7 +64,7 @@ msgstr "Más información"
 #. type: Plain text
 #: README:20
 msgid "You can find more information on <http://wammu.eu/gammu/>."
-msgstr ""
+msgstr "Puede encontrar más información en <http://wammu.eu/gammu/>."
 
 #. type: Plain text
 #: README:24
