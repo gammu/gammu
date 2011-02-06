@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.29.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-10 12:45+0100\n"
-"PO-Revision-Date: 2011-02-06 16:39+0200\n"
+"PO-Revision-Date: 2011-02-06 16:40+0200\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitoschido@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
@@ -57,9 +57,9 @@ msgstr ""
 
 #. type: Title =
 #: README:17
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "More information"
-msgstr "Información del teléfono"
+msgstr "Más información"
 
 #. type: Plain text
 #: README:20
