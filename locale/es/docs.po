@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.29.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-10 12:45+0100\n"
-"PO-Revision-Date: 2011-02-06 16:40+0200\n"
+"PO-Revision-Date: 2011-02-06 16:41+0200\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitoschido@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
@@ -86,6 +86,8 @@ msgid ""
 "Any feedback is welcome, see <http://wammu.eu/support/> for information how "
 "to contact developers."
 msgstr ""
+"Toda retroalimentación es bienvenida, vea <http://wammu.eu/support/> para "
+"información sobre cómo contactar a los desarrolladores."
 
 #. type: Title =
 #: INSTALL:2
