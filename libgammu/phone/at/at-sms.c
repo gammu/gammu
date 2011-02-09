@@ -1144,10 +1144,12 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, gboole
 
 		/* Get list of messages */
 		error = ATGEN_GetSMSList(s, TRUE);
+	} else {
+		error == ERR_NONE;
 	}
 
 	/* Use listed locations if we have them */
-	if (Priv->SMSCache != NULL) {
+	if (error == ERR_NONE && Priv->SMSCache != NULL) {
 		if (start) {
 			found = 0;
 		} else {
