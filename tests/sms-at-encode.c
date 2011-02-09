@@ -109,7 +109,11 @@ int main(int argc, char **argv)
 		}
 
 		/* Read data */
-		len = fwrite(hexreq, strlen(hexreq), 1, f);
+		len = fwrite(hexreq, 1, strlen(hexreq), f);
+		if (len != strlen(hexreq)) {
+			printf("Could not save %s\n", argv[2]);
+			return 1;
+		}
 
 		/* Close file */
 		fclose(f);
