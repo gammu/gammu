@@ -2198,7 +2198,8 @@ void GetSpeedDial(int argc, char *argv[])
 
 			Phonebook.Location	= SpeedDial.MemoryLocation;
 			Phonebook.MemoryType 	= SpeedDial.MemoryType;
-			error=GSM_GetMemory(gsm,&Phonebook);
+			error = GSM_GetMemory(gsm,&Phonebook);
+			Print_Error(error);
 
 			GSM_PhonebookFindDefaultNameNumberGroup(&Phonebook, &Name, &Number, &Group);
 
