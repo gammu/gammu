@@ -1005,7 +1005,7 @@ GSM_Error DUMMY_SetAlarm(GSM_StateMachine *s, GSM_Alarm *entry)
 	error = GSM_SaveBackupFile(filename, &backup, GSM_Backup_VCalendar);
 	free(filename);
 	filename=NULL;
-	return ERR_NONE;
+	return error;
 }
 
 GSM_Error DUMMY_SetIncomingUSSD(GSM_StateMachine *s, gboolean enable)
