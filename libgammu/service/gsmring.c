@@ -1365,6 +1365,8 @@ static void Binary2RTTL(GSM_Ringtone *dest, GSM_Ringtone *src)
 				NotesScale[NrNotes] = Scale_1760;  command -= 138;
 			} else if (command >= 150 && command <= 161) {
 				NotesScale[NrNotes] = Scale_3520;  command -= 150;
+			} else {
+				NotesScale[NrNotes] = Scale_440;
 			}
 			switch (command) {
 				case   0 : Notes[NrNotes] = Note_C;	break;
@@ -1379,6 +1381,7 @@ static void Binary2RTTL(GSM_Ringtone *dest, GSM_Ringtone *src)
 				case   9 : Notes[NrNotes] = Note_A;	break;
 				case  10 : Notes[NrNotes] = Note_Ais;	break;
 				case  11 : Notes[NrNotes] = Note_H;	break;
+				default  : Notes[NrNotes] = Note_Pause;	break;
 			}
 			if (NrNotes > 0 &&
 					Notes[NrNotes - 1] == Notes[NrNotes] &&
