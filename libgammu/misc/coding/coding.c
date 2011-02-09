@@ -1788,7 +1788,7 @@ void EncodeBASE64(const unsigned char *Input, char *Output, const size_t Length)
 		}
         }
 
-	Output[outpos++] = 0;
+	Output[outpos] = 0;
 }
 
 static void DecodeBASE64Block(const char in[4], unsigned char out[3])
