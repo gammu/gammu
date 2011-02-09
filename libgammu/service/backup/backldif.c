@@ -76,7 +76,6 @@ GSM_Error SaveLDIF(const char *FileName, GSM_Backup *backup)
 			}
 			Text[2*pos] = 0;
 			Text[2*pos + 1] = 0;
-			pos++;
 
 			SaveLDIFText(file, "dn", Text);
 		}
