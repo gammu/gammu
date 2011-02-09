@@ -584,15 +584,11 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 
 static GSM_Error SMSDSQL_RefreshSendStatus(GSM_SMSDConfig * Config, char *ID)
 {
-	unsigned int locktime;
 	SQL_result Res;
 	struct GSM_SMSDdbobj *db = Config->db;
 	SQL_Var vars[2] = {
 		{SQL_TYPE_STRING, { .s = ID}},
 		{SQL_TYPE_NONE, {NULL}}};
-
-	locktime = Config->loopsleep * 8; /* reserve 8 sec per message */
-	locktime = locktime < 60 ? 60 : locktime; /* Minimum time reserve is 60 sec */
 
 	if (SMSDSQL_NamedQuery(Config, SMSDSQL_queries[SQL_QUERY_REFRESH_SEND_STATUS], NULL, vars, &Res) != ERR_NONE) {
 		SMSD_Log(DEBUG_INFO, Config, "Error writing to database (%s)", __FUNCTION__);
