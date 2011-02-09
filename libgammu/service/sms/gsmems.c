@@ -590,7 +590,7 @@ gboolean GSM_DecodeEMSMultiPartSMS(GSM_Debug_Info *di,
 	int  			i, w, Pos, UPI = 1, fmt;
 	size_t			width, height;
 	size_t			z;
- 	gboolean 			RetVal = FALSE, NewPicture = TRUE;
+ 	gboolean 		NewPicture = TRUE;
 	GSM_Phone_Bitmap_Types 	BitmapType;
 	GSM_Bitmap		Bitmap,Bitmap2;
 
@@ -634,7 +634,6 @@ gboolean GSM_DecodeEMSMultiPartSMS(GSM_Debug_Info *di,
 						smfprintf(di, "UDH part - unknown application data - 0x%04x\n", Info->Entries[Info->EntriesNum].Number);
 						break;
 				}
-				RetVal = TRUE;
 				break;
 			case 0x08:
 				smfprintf(di, "UDH part - linked SMS with 16 bit ID\n");
@@ -681,7 +680,6 @@ gboolean GSM_DecodeEMSMultiPartSMS(GSM_Debug_Info *di,
 				}
 				Info->Entries[Info->EntriesNum].Number 	= SMS->SMS[i].UDH.Text[w+3];
 				Info->Entries[Info->EntriesNum].ID 	= SMS_ConcatenatedTextLong;
-				RetVal = TRUE;
 				break;
 			case 0x0B:
 				smfprintf(di, "UDH part - default EMS sound\n");
@@ -692,7 +690,6 @@ gboolean GSM_DecodeEMSMultiPartSMS(GSM_Debug_Info *di,
 				if (Info->Entries[Info->EntriesNum].ID != 0) (Info->EntriesNum)++;
 				Info->Entries[Info->EntriesNum].Number 	= SMS->SMS[i].UDH.Text[w+3];
 				Info->Entries[Info->EntriesNum].ID 	= SMS_EMSPredefinedSound;
-				RetVal = TRUE;
 				break;
 #if 0
 			case 0x0C:
@@ -708,7 +705,6 @@ gboolean GSM_DecodeEMSMultiPartSMS(GSM_Debug_Info *di,
 				if (Info->Entries[Info->EntriesNum].ID != 0) (Info->EntriesNum)++;
 				Info->Entries[Info->EntriesNum].Number 	= SMS->SMS[i].UDH.Text[w+3];
 				Info->Entries[Info->EntriesNum].ID 	= SMS_EMSPredefinedAnimation;
-				RetVal = TRUE;
 				break;
 			case 0x0E:
 			case 0x0F:
@@ -736,7 +732,6 @@ gboolean GSM_DecodeEMSMultiPartSMS(GSM_Debug_Info *di,
 						&Info->Entries[Info->EntriesNum].Bitmap->Bitmap[z]);
 					Info->Entries[Info->EntriesNum].Bitmap->Number++;
 				}
-				RetVal = TRUE;
 				break;
 			case 0x10:
 			case 0x11:
@@ -762,7 +757,6 @@ gboolean GSM_DecodeEMSMultiPartSMS(GSM_Debug_Info *di,
 				Info->Entries[Info->EntriesNum].Bitmap->Bitmap[0].Text[0] = 0;
 				Info->Entries[Info->EntriesNum].Bitmap->Bitmap[0].Text[1] = 0;
 				Info->Entries[Info->EntriesNum].ID = SMS_EMSFixedBitmap;
-				RetVal = TRUE;
 				break;
 			case 0x12:
 				smfprintf(di, "UDH part - EMS variable width bitmap\n");
@@ -812,7 +806,6 @@ gboolean GSM_DecodeEMSMultiPartSMS(GSM_Debug_Info *di,
 					Info->Entries[Info->EntriesNum].Bitmap->Bitmap[0].Text[0] = 0;
 					Info->Entries[Info->EntriesNum].Bitmap->Bitmap[0].Text[1] = 0;
 					Info->Entries[Info->EntriesNum].ID = SMS_EMSVariableBitmap;
-					RetVal 		= TRUE;
 					NewPicture 	= TRUE;
 					smfprintf(di, "New variable picture\n");
 				} else {
@@ -835,10 +828,9 @@ gboolean GSM_DecodeEMSMultiPartSMS(GSM_Debug_Info *di,
 			w=w+SMS->SMS[i].UDH.Text[w+1]+2;
 		} /* while */
 		if (!AddEMSText(&SMS->SMS[i], Info, &Pos, SMS->SMS[i].Length-Pos)) return FALSE;
-		RetVal = TRUE;
 	}
-	if (RetVal) (Info->EntriesNum)++;
-	return RetVal;
+	if (SMS->Number > 0) (Info->EntriesNum)++;
+	return TRUE;
 }
 
 /* How should editor hadle tabs in this file? Add editor commands here.
