@@ -1492,7 +1492,7 @@ gboolean EncodeUTF8QuotedPrintable(char *dest, const unsigned char *src)
 			}
 	    	}
 	}
-	dest[j++]=0;
+	dest[j]=0;
 	return retval;
 }
 
@@ -1512,7 +1512,7 @@ gboolean EncodeUTF8(char *dest, const unsigned char *src)
 			j+= DecodeWithUnicodeAlphabet(((wchar_t)(src[i*2]*256+src[i*2+1])), dest + j);
 	    	}
 	}
-	dest[j++]=0;
+	dest[j]=0;
 	return retval;
 }
 
