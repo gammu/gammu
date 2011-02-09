@@ -1398,24 +1398,19 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 
 		if (isdigit((int)err[j])) {
 			Priv->ErrorCode = atoi(&(err[j]));
-			k = 0;
-
-			while (ErrorCodes[k].Number != -1) {
+			for (k = 0; ErrorCodes[k].Number != -1; k++) {
 				if (ErrorCodes[k].Number == Priv->ErrorCode) {
 					Priv->ErrorText = ErrorCodes[k].Text;
 					break;
 				}
-				k++;
 			}
 		} else if (isalpha((int)err[j])) {
-			k = 0;
-			while (ErrorCodes[k].Number != -1) {
+			for (k = 0; ErrorCodes[k].Number != -1; k++) {
 				if (!strncmp(err + j, ErrorCodes[k].Text, strlen(ErrorCodes[k].Text))) {
 					Priv->ErrorCode = ErrorCodes[k].Number;
 					Priv->ErrorText = ErrorCodes[k].Text;
 					break;
 				}
-				k++;
 			}
 		}
 	}
