@@ -1829,6 +1829,7 @@ GSM_Error S60_Reply_GetSMS(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 	/* Content */
 	DecodeUTF8(s->Phone.Data.SaveSMSMessage->Text, Priv->MessageParts[4], strlen(Priv->MessageParts[4]));
+	s->Phone.Data.SaveSMSMessage->Length = UnicodeLength(s->Phone.Data.SaveSMSMessage->Text);
 	s->Phone.Data.SaveSMSMessage->Coding = SMS_Coding_Default_No_Compression;
 
 	/* Unread */
