@@ -500,7 +500,7 @@ gboolean ReadVCALText(char *Buffer, const char *Start, unsigned char *Value, con
 		}
 	}
 	/* Store last token */
-	tokens[token++] = begin;
+	tokens[token] = begin;
 
 	/* Compare first token, it must be in place */
 	pos = Buffer;
