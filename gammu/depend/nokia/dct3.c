@@ -142,6 +142,7 @@ void DCT3VibraTest(int argc, char *argv[])
 
 	SetLevel[3] = 0x00;
 	error=GSM_WaitFor (gsm, SetLevel, 4, 0x40, 4, ID_User3);
+	Print_Error(error);
 }
 
 static GSM_Error DCT3_ReplyPhoneTests(GSM_Protocol_Message msg, GSM_StateMachine *sm UNUSED)
