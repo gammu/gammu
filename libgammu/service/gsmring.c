@@ -788,20 +788,20 @@ static GSM_Error loadott(FILE *file, GSM_Ringtone *ringtone)
 static GSM_Error loadcommunicator(FILE *file, GSM_Ringtone *ringtone)
 {
 	char 	Buffer[4000];
-	int 	i,j;
+	int 	bytes_read,j;
 
-	i = fread(Buffer, 1, 4000, file);
+	bytes_read = fread(Buffer, 1, 4000, file);
 
-	i=0;j=0;
+	j=0;
 	while (TRUE) {
 		if (Buffer[j]  ==0x00 && Buffer[j+1]==0x02 &&
 		    Buffer[j+2]==0x4a && Buffer[j+3]==0x3a) break;
-		if (j==i-4) return ERR_UNKNOWN;
+		if (j==bytes_read-4) return ERR_UNKNOWN;
 		j++;
 	}
 	j++;
 
-	return GSM_DecodeNokiaRTTLRingtone(ringtone, Buffer+j, i-j);
+	return GSM_DecodeNokiaRTTLRingtone(ringtone, Buffer+j, bytes_read-j);
 }
 
 static GSM_Error loadbin(FILE *file, GSM_Ringtone *ringtone)
