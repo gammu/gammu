@@ -1531,7 +1531,6 @@ GSM_Error GSM_DecodeVCAL_RRULE(GSM_Debug_Info *di, const char *Buffer, GSM_Calen
 						NEXT_NOSPACE(0);
 
 						while (isalpha((int)*pos)) {
-							have_info = TRUE;
 							GET_DOW(CAL_REPEAT_DAYOFWEEK, 0);
 							NEXT_NOSPACE(0);
 						}
