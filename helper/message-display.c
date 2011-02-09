@@ -392,7 +392,7 @@ void DisplayMultiSMSInfo (GSM_MultiSMSMessage *sms, gboolean eachsms, gboolean e
 				Pos = 0;
 				error = GSM_DecodeVCARD(GSM_GetGlobalDebug(), SMSInfo.Entries[i].File->Buffer, &Pos, &pbk, Nokia_VCard21);
 				if (error == ERR_NONE) {
-					error = PrintMemoryEntry(&pbk, sm);
+					PrintMemoryEntry(&pbk, sm);
 				}
 			} else {
 				printf("\n");
