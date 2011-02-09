@@ -854,6 +854,7 @@ static GSM_Error N6510_GetFolderListing1(GSM_StateMachine *s, GSM_File *File, gb
 
 		memcpy(File,&Priv->FilesCache[0],sizeof(GSM_File));
 		error = N6510_GetFileFolderInfo1(s, File, FALSE);
+		if (error != ERR_NONE) return error;
 
 		error = N6510_ShiftFileCache(s, -1);
 		if (error != ERR_NONE) return error;
