@@ -213,11 +213,15 @@ static GSM_Error N3650_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, gb
 		if (File->ID_FullName[0]!=Priv->Files[Priv->FilesLocationsCurrent-2]->ID_FullName[0]) {
 			if (File->ID_FullName[0] == 'E') {
 				error = DCT4_SetPhoneMode(s, DCT4_MODE_TEST);
+				if (error != ERR_NONE) return error;
 				error = DCT4_SetPhoneMode(s, DCT4_MODE_TEST);
+				if (error != ERR_NONE) return error;
 			}
 			if (File->ID_FullName[0] == 'C') {
 				error = DCT4_SetPhoneMode(s, DCT4_MODE_LOCAL);
+				if (error != ERR_NONE) return error;
 				error = DCT4_SetPhoneMode(s, DCT4_MODE_LOCAL);
+				if (error != ERR_NONE) return error;
 			}
 #if 0
 		if (error != ERR_NONE) return error;
