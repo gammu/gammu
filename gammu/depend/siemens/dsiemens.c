@@ -243,12 +243,14 @@ GSM_Error ATSIEMENS_GetSAT(GSM_StateMachine *sm)
 
         strcpy(req, "AT^SSTK=?\r");
         error = GSM_WaitForAutoLen(sm, req, 0x00, 3, ID_User1);
+	Print_Error(error);
 
     	for (i=0;i<3;i++){
 		len				= strlen(reqSAT[i]);
 		sm->Protocol.Data.AT.EditMode 	= TRUE;
         	sprintf(req, "AT^SSTK=%i,1\r",len/2);
         	error = GSM_WaitForAutoLen(sm, req, 0x00, 3, ID_User1);
+		Print_Error(error);
 		sm->Phone.Data.DispatchError	= ERR_TIMEOUT;
 		sm->Phone.Data.RequestID		= ID_User1;
     		error = sm->Protocol.Functions->WriteMessage(sm, reqSAT[i], len, 0x00);
