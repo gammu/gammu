@@ -1145,7 +1145,7 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, gboole
 		/* Get list of messages */
 		error = ATGEN_GetSMSList(s, TRUE);
 	} else {
-		error == ERR_NONE;
+		error = ERR_NONE;
 	}
 
 	/* Use listed locations if we have them */
