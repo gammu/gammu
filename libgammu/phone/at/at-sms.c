@@ -2332,6 +2332,9 @@ int *GetRange(GSM_StateMachine *s, const char *buffer)
 			return NULL;
 		}
 	}
+	if (result == NULL) {
+		return NULL;
+	}
 	smprintf(s, "Returning range: ");
 
 	for (i = 0; result[i] != -1; i++) {
