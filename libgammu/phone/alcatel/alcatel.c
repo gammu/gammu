@@ -760,7 +760,6 @@ static GSM_Error ALCATEL_GetAvailableIds(GSM_StateMachine *s, gboolean refresh)
 		if (error != ERR_NONE) return error;
 	}
 
-	i = 0;
 	smprintf(s,"Received %d ids: ", *Priv->CurrentCount);
 	for (i=0; i < *Priv->CurrentCount; i++) {
 		smprintf(s,"%x ", (*Priv->CurrentList)[i]);
@@ -831,7 +830,6 @@ static GSM_Error ALCATEL_GetFields(GSM_StateMachine *s, int id) {
 	error=GSM_WaitFor (s, 0, 0, 0x00, ALCATEL_TIMEOUT, ID_AlcatelGetFields2);
 	if (error != ERR_NONE) return error;
 
-	i = 0;
 	smprintf(s,"Received %d fields: ", Priv->CurrentFieldsCount);
 	for (i=0; i < Priv->CurrentFieldsCount; i++) {
 		smprintf(s,"%x ", Priv->CurrentFields[i]);
@@ -1084,7 +1082,6 @@ static GSM_Error ALCATEL_GetAvailableCategoryIds(GSM_StateMachine *s) {
 	error=GSM_WaitFor (s, 0, 0, 0x00, ALCATEL_TIMEOUT, ID_AlcatelGetCategories2);
 	if (error != ERR_NONE) return error;
 
-	i = 0;
 	smprintf(s,"Received %d ids: ", Priv->CurrentCategoriesCount);
 	for (i=0; i < Priv->CurrentCategoriesCount; i++) {
 		smprintf(s,"%i ", Priv->CurrentCategories[i]);
