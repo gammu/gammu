@@ -52,6 +52,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 
 	/* Sort linked messages */
 	error = GSM_LinkSMS(debug_info, InputSMS, SortedSMS, TRUE);
+	gammu_test_result(error, "GSM_LinkSMS");
 
 	/* Free memory */
 	for (i = 0; i < count; i++) {
