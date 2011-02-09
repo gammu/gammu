@@ -1391,6 +1391,9 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 	}
 
 	if (Priv->ReplyState == AT_Reply_CMEError || Priv->ReplyState == AT_Reply_CMSError) {
+		if (ErrorCodes == NULL) {
+			return ERR_BUG;
+		}
 	        j = 0;
 		/* One char behind +CM[SE] ERROR */
 		err = line + 11;
