@@ -376,6 +376,9 @@ GSM_Error SIEMENS_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	if (Priv->Manufacturer!=AT_Siemens) return ERR_NOTSUPPORTED;
 
 	error=GSM_EncodeVCALENDAR(req, sizeof(req),&size,Note,TRUE,Siemens_VCalendar);
+	if (error != ERR_NONE) {
+		return error;
+	}
 
 	Note->Location		= Priv->FirstFreeCalendarPos;
 	s->Phone.Data.Cal 	= Note;
