@@ -867,6 +867,7 @@ static GSM_Error loadnlm (FILE *file, GSM_MultiBitmap *bitmap)
 	size_t		readbytes;
 
 	readbytes = fread(buffer,1,5,file);
+	if (readbytes != 5) return ERR_FILENOTSUPPORTED;
 
 	readbytes = fread(buffer,1,1,file);
 	if (readbytes != 1) return ERR_FILENOTSUPPORTED;
