@@ -1632,10 +1632,14 @@ void DecodeXMLUTF8(unsigned char *dest, const char *src, int len)
 		DecodeUTF8(dest, src, len);
 		return;
 	}
+	if (src == NULL) {
+		*dest = 0;
+		return;
+	}
 
 	/* Find ampersand and decode the */
 	lastpos = src;
-	while ((lastpos != 0) && ((pos = strchr(lastpos, '&')) != NULL)) {
+	while ((*lastpos != 0) && ((pos = strchr(lastpos, '&')) != NULL)) {
 		/* Store current string */
 		strncat(tmp, lastpos, pos - lastpos);
 		lastpos = pos;
