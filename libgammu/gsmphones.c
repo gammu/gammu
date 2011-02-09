@@ -988,7 +988,7 @@ gboolean GSM_AddPhoneFeature(GSM_PhoneModel *model, GSM_Feature feature)
 	}
 	if (i == GSM_MAX_PHONE_FEATURES) return FALSE;
 	model->features[i++] = feature;
-	model->features[i++] = 0;
+	model->features[i] = 0;
 	return TRUE;
 }
 

@@ -327,7 +327,7 @@ void DecodeBCD (unsigned char *dest, const unsigned char *src, int len)
 	        digit=src[i] >> 4;
                 if (digit<10) dest[current++]=digit + '0';
 	}
-	dest[current++]=0;
+	dest[current]=0;
 }
 
 void EncodeBCD (unsigned char *dest, const unsigned char *src, int len, gboolean fill)
@@ -383,7 +383,7 @@ void DecodeHexUnicode (unsigned char *dest, const char *src, size_t len)
 			DecodeWithHexBinAlphabet(src[i + 3]);
 	}
 	dest[current++] = 0;
-	dest[current++] = 0;
+	dest[current] = 0;
 }
 
 void EncodeHexUnicode (char *dest, const unsigned char *src, size_t len)
@@ -401,7 +401,7 @@ gboolean DecodeHexBin (unsigned char *dest, const unsigned char *src, int len)
 		if (low < 0 || high < 0) return FALSE;
 		dest[current++] = (high << 4) | low;
 	}
-	dest[current++] = 0;
+	dest[current] = 0;
 	return TRUE;
 }
 
@@ -413,7 +413,7 @@ void EncodeHexBin (char *dest, const unsigned char *src, size_t len)
 		dest[outpos++] = EncodeWithHexBinAlphabet(src[i] >> 4);
 		dest[outpos++] = EncodeWithHexBinAlphabet(src[i] & 0xF);
 	}
-	dest[outpos++] = 0;
+	dest[outpos] = 0;
 }
 
 /* ETSI GSM 03.38, section 6.2.1: Default alphabet for SMS messages */
@@ -517,7 +517,7 @@ void DecodeDefault (unsigned char *dest, const unsigned char *src, size_t len, g
 		dest[current++] = GSM_DefaultAlphabetUnicode[src[pos]][1];
 	}
 	dest[current++]=0;
-	dest[current++]=0;
+	dest[current]=0;
 #ifdef DEBUG
 	DumpMessageText(&GSM_global_debug, dest, UnicodeLength(dest)*2);
 #endif
@@ -939,7 +939,7 @@ void ReadUnicodeFile(unsigned char *Dest, const unsigned char *Source)
 		j=j+2;
 	}
 	Dest[current++] = 0;
-	Dest[current++]	= 0;
+	Dest[current]	= 0;
 }
 
 INLINE int GetBit(unsigned char *Buffer, size_t BitNum)
@@ -1097,7 +1097,7 @@ void EncodeUnicodeSpecialNOKIAChars(unsigned char *dest, const unsigned char *sr
 		dest[current++]	= 0x01;
 	}
 	dest[current++] = 0x00;
-	dest[current++] = 0x00;
+	dest[current] = 0x00;
 }
 
 void DecodeUnicodeSpecialNOKIAChars(unsigned char *dest, const unsigned char *src, int len)
@@ -1129,7 +1129,7 @@ void DecodeUnicodeSpecialNOKIAChars(unsigned char *dest, const unsigned char *sr
 		}
 	}
 	dest[current++] = 0x00;
-	dest[current++] = 0x00;
+	dest[current] = 0x00;
 }
 
 
@@ -1558,7 +1558,7 @@ void DecodeISO88591QuotedPrintable(unsigned char *dest, const unsigned char *src
 		i++;
 	}
 	dest[j++] = 0;
-	dest[j++] = 0;
+	dest[j] = 0;
 }
 
 /* Make Unicode string from UTF8 string */
@@ -1594,7 +1594,7 @@ void DecodeUTF8QuotedPrintable(unsigned char *dest, const char *src, int len)
 		dest[j++] = ret & 0xff;
 	}
 	dest[j++] = 0;
-	dest[j++] = 0;
+	dest[j] = 0;
 }
 
 void DecodeUTF8(unsigned char *dest, const char *src, int len)
@@ -1613,7 +1613,7 @@ void DecodeUTF8(unsigned char *dest, const char *src, int len)
 		dest[j++] = ret & 0xff;
 	}
 	dest[j++] = 0;
-	dest[j++] = 0;
+	dest[j] = 0;
 }
 
 void DecodeXMLUTF8(unsigned char *dest, const char *src, int len)
@@ -1726,7 +1726,7 @@ void DecodeUTF7(unsigned char *dest, const unsigned char *src, int len)
 		}
 	}
 	dest[j++] = 0;
-	dest[j++] = 0;
+	dest[j] = 0;
 }
 
 /*

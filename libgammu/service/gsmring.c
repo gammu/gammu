@@ -477,7 +477,7 @@ GSM_Error GSM_SaveRingtoneMidi(FILE* file, GSM_Ringtone *ringtone)
 	midifile[current++] = 0x2F;
 	midifile[current++] = 0x00;
 	midifile[length++] = (current-22) >> 8;
-	midifile[length++] = current-22;
+	midifile[length] = current-22;
 
 	chk_fwrite(midifile,1,current,file);
 	return ERR_NONE;
