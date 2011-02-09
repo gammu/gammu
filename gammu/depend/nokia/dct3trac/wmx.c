@@ -435,9 +435,9 @@ void DCT3SetDebug(int argc, char *argv[])
 	Print_Error(error);
 	signal(SIGINT, interrupt);
 	printf("Press Ctrl+C to interrupt...\n");
-	x=0;
 
 	/*
+	x=0;
 	while(x<100) {
 		//printf(": %02x\n",x);
 		gsm->Phone.Data.RequestID	= ID_DebugTrace;
