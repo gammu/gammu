@@ -1752,7 +1752,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 					SMSD_Log(DEBUG_INFO, Config, "Already hit %d errors", errors);
 				}
 				SMSD_LogError(DEBUG_INFO, Config, "Terminating communication", error);
-				error = GSM_TerminateConnection(Config->gsm);
+				GSM_TerminateConnection(Config->gsm);
 			}
 			/* Did we reach limit for errors? */
 			if (max_failures != 0 && initerrors > max_failures) {
