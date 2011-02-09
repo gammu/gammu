@@ -1621,9 +1621,9 @@ unsigned char GSM_EncodeEMSSound(GSM_Ringtone ringtone, unsigned char *package, 
 		Len+=sprintf(package+Len,"MELODY:");
 		if (version != GSM_Ring_NoHeader) {
 			/* 15 = Len of END:IMELODY... */
-			if ((Len+15) > Max) { end = TRUE; break; }
+			if ((Len+15) > Max) { break; }
 		} else {
-			if (Len > Max) { end = TRUE; break; }
+			if (Len > Max) { break; }
 		}
 		*maxlength = Len;
 		break;
