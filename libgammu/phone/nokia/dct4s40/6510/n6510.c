@@ -19,6 +19,9 @@
 
 #include <string.h>
 #include <time.h>
+#ifdef HAVE_STDINT_H
+#include <stdint.h>
+#endif
 
 #include <gammu-nokia.h>
 

@@ -295,6 +295,9 @@
 #ifndef HAVE_STRINGS_H
 #cmakedefine HAVE_STRINGS_H
 #endif
+#ifndef HAVE_STDINT_H
+#cmakedefine HAVE_STDINT_H
+#endif
 
 #ifndef HAVE_SSIZE_T
 #cmakedefine HAVE_SSIZE_T
