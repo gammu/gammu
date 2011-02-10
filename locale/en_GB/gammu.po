@@ -3691,9 +3691,8 @@ msgid "Home website"
 msgstr "Home website"
 
 #: helper/memory-display.c:204
-#, fuzzy
 msgid "Work website"
-msgstr "Work state"
+msgstr "Work website"
 
 #: helper/memory-display.c:207
 #, fuzzy
