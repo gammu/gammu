@@ -3687,9 +3687,8 @@ msgid "Email address 2"
 msgstr "E-mail address 2"
 
 #: helper/memory-display.c:201
-#, fuzzy
 msgid "Home website"
-msgstr "Home number"
+msgstr "Home website"
 
 #: helper/memory-display.c:204
 #, fuzzy
