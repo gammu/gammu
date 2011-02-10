@@ -3655,9 +3655,8 @@ msgid "Home fax number"
 msgstr "Home fax number"
 
 #: helper/memory-display.c:158
-#, fuzzy
 msgid "Work fax number"
-msgstr "Work number"
+msgstr "Work fax number"
 
 #: helper/memory-display.c:165
 msgid "Pager number"
