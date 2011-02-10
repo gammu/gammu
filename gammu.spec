@@ -383,6 +383,7 @@ fi
 %files -n libGammu7
 %defattr(-,root,root)
 %_libdir/libGammu*.so.*
+%_datadir/gammu/
 
 %files -n libgsmsd7
 %defattr(-,root,root)

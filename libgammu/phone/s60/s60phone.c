@@ -1642,7 +1642,7 @@ GSM_Error S60_SetAddToDo(GSM_StateMachine *s, GSM_ToDoEntry *Entry, int request,
 	strcat(buffer, NUM_SEPERATOR_STR);
 
 	i = S60_FindToDoField(s, Entry, TODO_PRIVATE);
-	if (i == -1) {
+	if (i != -1) {
 		if (Entry->Entries[i].Number) {
 			strcat(buffer, "private");
 		} else {
