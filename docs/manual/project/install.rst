@@ -77,6 +77,14 @@ SQLite + libdbi-drivers with SQLite
     - http://www.sqlite.org/
     - needed for testing of SMSD using libdbi driver (libdbd-sqlite3)
 
+glib
+    - http://www.gtk.org/
+    - currently needed only for :ref:`gammu-detect`
+
+gudev
+    - http://gudev.sourceforge.net/
+    - currently needed only for :ref:`gammu-detect`
+
 
 Compiling on Linux/Unix Systems
 -------------------------------
