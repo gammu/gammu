@@ -3647,9 +3647,8 @@ msgid "Home mobile number"
 msgstr "Home mobile number"
 
 #: helper/memory-display.c:144
-#, fuzzy
 msgid "Work mobile number"
-msgstr "Mobile number"
+msgstr "Work mobile number"
 
 #: helper/memory-display.c:155
 #, fuzzy
