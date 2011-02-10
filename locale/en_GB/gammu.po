@@ -3326,7 +3326,7 @@ msgstr "The application has been successfully sent to the phone."
 
 #: gammu/misc.c:2493
 msgid "Please find received files in Inbox and install them."
-msgstr ""
+msgstr "Please find received files in Inbox and install them."
 
 #: gammu/mms.c:49
 msgid "Do you want to save this MMS file?"
