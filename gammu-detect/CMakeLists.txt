@@ -38,5 +38,10 @@ if (GLIB_FOUND AND GOBJECT_FOUND)
         "${Gammu_BINARY_DIR}/include"
         "${CMAKE_CURRENT_BINARY_DIR}"
         )
+    install (TARGETS gammu-detect
+            RUNTIME DESTINATION "${INSTALL_BIN_DIR}"
+            COMPONENT gammu
+            )
+
 endif (GLIB_FOUND AND GOBJECT_FOUND)
 
