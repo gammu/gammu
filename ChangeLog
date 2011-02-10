@@ -19,7 +19,7 @@ the issue.
 ChangeLog
 =========
     
-2011???? - 1.29.90
+20110210 - 1.29.90
 
 [-] * Fix detection of MySQL libraries (bug #1370).
 [!] * Changed default connection settings to at and ttyACM0 (bug #1078).
