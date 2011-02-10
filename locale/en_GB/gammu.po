@@ -3671,9 +3671,8 @@ msgid "Home address"
 msgstr "Home address"
 
 #: helper/memory-display.c:175
-#, fuzzy
 msgid "Work address"
-msgstr "Work snail address"
+msgstr "Work address"
 
 #: helper/memory-display.c:186
 #, fuzzy
