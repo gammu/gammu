@@ -3639,9 +3639,8 @@ msgid "General number"
 msgstr "General number"
 
 #: helper/memory-display.c:136
-#, fuzzy
 msgid "Video number"
-msgstr "Mobile number"
+msgstr "Video number"
 
 #: helper/memory-display.c:141
 #, fuzzy
