@@ -3700,7 +3700,7 @@ msgstr "Website"
 
 #: helper/memory-display.c:212
 msgid "VOIP"
-msgstr ""
+msgstr "VOIP"
 
 #: helper/memory-display.c:213
 msgid "SWIS"
