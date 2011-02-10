@@ -143,7 +143,7 @@ Fields description:
     SMS relative validity like encoded using GSM specs
 
 ``SenderID`` (text)
-    which SMSD instance should send this one sequence
+    which SMSD instance should send this one sequence, see :config:option:`PhoneID`
 
 ``SendingTimeOut`` (timestamp)
     used by SMSD instance for own targets
@@ -303,7 +303,7 @@ Fields description:
     SMS ID
 
 ``SenderID`` (text)
-    which SMSD instance sent this one sequence
+    which SMSD instance sent this one sequence, see :config:option:`PhoneID`
 
 ``SequencePosition`` (integer)
     SMS number in SMS sequence

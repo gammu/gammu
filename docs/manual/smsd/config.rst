@@ -252,9 +252,11 @@ General parameters of SMS daemon
     String with info about phone used for sending/receiving. This can be useful if
     you want to run several SMS daemons.
 
-    When you set PhoneID, all messages (including injected ones) will be marked by
-    this string and it allow more SMS daemons to share single database. This
-    option has actually no effect with :ref:`gammu-smsd-files`.
+    When you set PhoneID, all messages (including injected ones) will be marked
+    by this string (stored as SenderID in the database) and it allows more SMS
+    daemons to share a single database. 
+    
+    This option has actually no effect with :ref:`gammu-smsd-files`.
 
 .. config:option:: RunOnReceive
 
