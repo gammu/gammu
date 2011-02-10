@@ -1331,7 +1331,7 @@ GSM_Error S60_SetAddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry, int 
 	strcat(buffer, NUM_SEPERATOR_STR);
 
 	i = S60_FindCalendarField(s, Entry, CAL_PRIVATE);
-	if (i == -1) {
+	if (i != -1) {
 		if (Entry->Entries[i].Number) {
 			strcat(buffer, "private");
 		} else {
