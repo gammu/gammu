@@ -369,6 +369,9 @@ detected), please attach :file:`CMakeCache.txt`,
 to the report. It will help diagnose what was detected on the system and
 possibly fix these errors.
 
+To find out what is going on during compilation, add
+``-DCMAKE_VERBOSE_MAKEFILE=ON`` to :program:`cmake` command line.
+
 Debugging crashes
 +++++++++++++++++
 
