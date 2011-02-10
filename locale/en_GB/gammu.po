@@ -3667,9 +3667,8 @@ msgid "Other number"
 msgstr "Other number"
 
 #: helper/memory-display.c:172
-#, fuzzy
 msgid "Home address"
-msgstr "From Address"
+msgstr "Home address"
 
 #: helper/memory-display.c:175
 #, fuzzy
