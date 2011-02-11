@@ -27,6 +27,7 @@
 #include <gammu-misc.h>
 #include <gammu-category.h>
 #include <gammu-backup.h>
+#include <string.h>
 
 typedef struct _GSM_User	 	GSM_User;
 
