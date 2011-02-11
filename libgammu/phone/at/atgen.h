@@ -392,6 +392,11 @@ typedef struct {
 	 * Mode of SQWE (Siemens phones and switching to OBEX).
 	 */
 	int			SQWEMode;
+	/**
+	 * Screen width and heigth for screenshot.
+	 */
+	int			ScreenWidth;
+	int			ScreenHeigth;
 } GSM_Phone_ATGENData;
 
 /**

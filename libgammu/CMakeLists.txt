@@ -52,6 +52,7 @@ set (LIBRARY_SRC
     phone/at/siemens.c
     phone/at/samsung.c
     phone/at/motorola.c
+    phone/at/sonyericsson.c
     phone/alcatel/alcatel.c
     phone/atobex/atobex.c
     phone/nokia/dct3/n0650.c

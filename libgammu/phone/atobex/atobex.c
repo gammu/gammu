@@ -30,6 +30,7 @@
 #include "../../misc/misc.h"
 #include "../pfunc.h"
 #include "../at/atfunc.h"
+#include "../at/sonyericsson.h"
 #include "../obex/obexfunc.h"
 #include "atobex.h"
 
@@ -1647,7 +1648,7 @@ GSM_Phone_Functions ATOBEXPhone = {
 	ATOBEX_DeleteFile,	/* 	DeleteFolder		*/
 	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
 	NOTSUPPORTED,			/* 	SetGPRSAccessPoint	*/
-	NOTSUPPORTED			/* 	GetScreenshot		*/
+	SONYERICSSON_GetScreenshot
 };
 
 #endif

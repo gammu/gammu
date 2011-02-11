@@ -37,6 +37,7 @@
 #include "samsung.h"
 #include "siemens.h"
 #include "motorola.h"
+#include "sonyericsson.h"
 
 #include "../../../helper/string.h"
 
@@ -5691,6 +5692,10 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReplyIgnore, 	"^DSFLOWRPT:"		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore, 	"+ZUSIMR:"		,0x00,0x00,ID_IncomingFrame	 },
 
+/* Sony Ericsson screenshot */
+{SONYERICSSON_Reply_Screenshot,	"AT*ZISI=?\r",		0x00,0x00,ID_Screenshot		},
+{SONYERICSSON_Reply_ScreenshotData,	"AT*ZISI\r",		0x00,0x00,ID_Screenshot		},
+
 #ifdef GSM_ENABLE_ATOBEX
 {ATGEN_GenericReply,		"AT*EOBEX=?"		,0x00,0x00,ID_SetOBEX		 },
 {ATGEN_GenericReply,		"AT*EOBEX"		,0x00,0x00,ID_SetOBEX		 },
@@ -5867,7 +5872,7 @@ GSM_Phone_Functions ATGENPhone = {
 	NOTSUPPORTED,			/* 	DeleteFolder		*/
 	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
 	NOTSUPPORTED,			/* 	SetGPRSAccessPoint	*/
-	NOTSUPPORTED			/* 	GetScreenshot		*/
+	SONYERICSSON_GetScreenshot
 };
 
 #endif
