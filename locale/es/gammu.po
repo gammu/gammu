@@ -1851,6 +1851,8 @@ msgid ""
 "SMS daemon is now in separate binary, please use gammu-smsd-inject instead "
 "of gammu sendsmsdsms!"
 msgstr ""
+"El demonio SMS ahora es un ejecutable separado, por favor utiliza gammu-"
+"smsd-inject en lugar de gammu sensmsdsms."
 
 #: gammu/gammu.c:470
 msgid ""
