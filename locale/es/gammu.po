@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-27 16:36+0100\n"
-"PO-Revision-Date: 2011-02-13 08:05+0200\n"
+"PO-Revision-Date: 2011-02-13 08:06+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -1842,9 +1842,9 @@ msgid "Batch processed, terminating.\n"
 msgstr "Lote procesado, terminando.\n"
 
 #: gammu/gammu.c:440
-#, fuzzy, c-format
+#, c-format
 msgid "Executing batch \"%s\" - command %i: %s\n"
-msgstr "Ejecutando archivo de proceso por lotes \"%s\" - comando %i: %s"
+msgstr "Ejecutando proceso por lotes \"%s\" - orden %i: %s\n"
 
 #: gammu/gammu.c:463
 msgid ""
