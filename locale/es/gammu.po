@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-27 16:36+0100\n"
-"PO-Revision-Date: 2011-02-13 08:16+0200\n"
+"PO-Revision-Date: 2011-02-13 08:17+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -2052,7 +2052,7 @@ msgstr "Advertencia: ¡No se encontró el archivo de configuración!"
 
 #: gammu/gammu.c:1120
 msgid "Failed to allocate memory, aborting!\n"
-msgstr ""
+msgstr "No se pudo obtener memoria. ¡Abortando!\n"
 
 #: gammu/gammu.c:1151
 msgid "Too few parameters!"
