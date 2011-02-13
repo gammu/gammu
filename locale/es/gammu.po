@@ -1565,11 +1565,8 @@ msgstr ""
 "<http://creativecommons.org/licenses/GPL/2.0/>."
 
 #: gammu-detect/main.c:90 gammu/gammu.c:347
-#, fuzzy
 msgid "This is free software: you are free to change and redistribute it."
-msgstr ""
-"Este programa es software libre.__ Puede redistribuir copias según los "
-"términos de"
+msgstr "Este programa es software libre: puedes modificarlo y redistribuirlo."
 
 #: gammu-detect/main.c:91 gammu/gammu.c:349
 msgid "There is NO WARRANTY, to the extent permitted by law."
