@@ -1618,7 +1618,6 @@ msgstr "Controlador:"
 msgid "Sequential Number:"
 msgstr "Número secuencial:"
 
-#  msgid "Finished %s"
 #: gammu-detect/udev.c:74
 msgid "Device File:"
 msgstr "Archivo de dispositivo:"
