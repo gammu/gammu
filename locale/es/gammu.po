@@ -1274,9 +1274,8 @@ msgid "mA"
 msgstr "mA"
 
 #: gammu/depend/nokia/dct4.c:1041
-#, fuzzy
 msgid "Battery size indicator:"
-msgstr "Habilita indicador de voz"
+msgstr "Indicador de tamaño de la batería:"
 
 #: gammu/depend/nokia/dct4.c:1041
 msgid "Ohms"
