@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-27 16:36+0100\n"
-"PO-Revision-Date: 2011-02-13 07:54+0200\n"
+"PO-Revision-Date: 2011-02-13 07:55+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -1561,6 +1561,8 @@ msgid ""
 "License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
 "GPL/2.0/>."
 msgstr ""
+"Licencia GPLv2: GNU GPL versión 2 "
+"<http://creativecommons.org/licenses/GPL/2.0/>."
 
 #: gammu-detect/main.c:90 gammu/gammu.c:347
 #, fuzzy
