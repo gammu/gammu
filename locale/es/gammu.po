@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-27 16:36+0100\n"
-"PO-Revision-Date: 2011-02-13 07:43+0200\n"
+"PO-Revision-Date: 2011-02-13 07:44+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -1401,8 +1401,9 @@ msgid " (Caller group: is logo on ?)"
 msgstr "(Grupo de llamada: ¿está el logo activado?)"
 
 #: gammu/depend/nokia/dct4.c:1348
+#, fuzzy
 msgid " (Caller group number in pbk entry)"
-msgstr "_(Número de grupo en entrada de la agenda)"
+msgstr "(Número de grupo en entrada de la agenda)"
 
 #: gammu/depend/nokia/dct4.c:1351
 msgid " (Text: URL address)"
