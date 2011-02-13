@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-27 16:36+0100\n"
-"PO-Revision-Date: 2011-02-13 08:00+0200\n"
+"PO-Revision-Date: 2011-02-13 08:01+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -1624,7 +1624,7 @@ msgstr "Archivo de dispositivo:"
 
 #: gammu-detect/udev.c:77
 msgid "Properties:"
-msgstr ""
+msgstr "Propiedades:"
 
 #: gammu-detect/udev.c:170 gammu-detect/win32-serial.c:44
 #, fuzzy, c-format
