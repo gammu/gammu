@@ -104,6 +104,8 @@ msgid ""
 "See docs/manual/project/install.rst for installation guide or see chapter "
 "\"Compiling Gammu\" in The Gammu Manual."
 msgstr ""
+"Ver docs/manual/project/install.rst para la guía de instalación o el "
+"capítulo \"Compilando Gammu\" en el Manual de Gammu"
 
 #, fuzzy
 #~ msgid "Gammu Configuration File"
