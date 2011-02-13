@@ -1406,7 +1406,7 @@ msgstr "_(Número de grupo en entrada de la agenda)"
 
 #: gammu/depend/nokia/dct4.c:1351
 msgid " (Text: URL address)"
-msgstr "_(Texto: Dirección web)"
+msgstr "(Texto: Dirección web)"
 
 #: gammu/depend/nokia/dct4.c:1352
 msgid " (SMS list assignment)"
