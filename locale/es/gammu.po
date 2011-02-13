@@ -1305,9 +1305,8 @@ msgid "Light sensor:"
 msgstr "Sensor de luz:"
 
 #: gammu/depend/nokia/dct4.c:1046
-#, fuzzy
 msgid "Power amplifier temperature:"
-msgstr "Temperatura del teléfono"
+msgstr "Temperadora del amplificador de poder:"
 
 #: gammu/depend/nokia/dct4.c:1047
 #, fuzzy
