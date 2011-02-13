@@ -980,9 +980,8 @@ msgid "Waiting for phone code."
 msgstr "Esperando código de seguridad."
 
 #: gammu/common.c:60
-#, fuzzy
 msgid "Waiting for network code."
-msgstr "Esperando código de seguridad."
+msgstr "Esperando código de red."
 
 #: gammu/common.c:63
 msgid "Nothing to enter."
