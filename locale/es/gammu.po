@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-27 16:36+0100\n"
-"PO-Revision-Date: 2011-02-13 08:14+0200\n"
+"PO-Revision-Date: 2011-02-13 08:15+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -1967,7 +1967,7 @@ msgstr "Los parámetros antes de la orden configuran el comportamiento de gammu:
 
 #: gammu/gammu.c:765
 msgid "-c / --config <filename> ... name of configuration file"
-msgstr ""
+msgstr "-c / --config <archivo> ... nombre del archivo de configuración"
 
 #: gammu/gammu.c:766
 msgid "-s / --section <confign> ... section of config file to use, eg. 42"
