@@ -1637,7 +1637,6 @@ msgid "Phone on USB serial port %s %s"
 msgstr "Teléfono en puerto serial USB %s %s"
 
 #: gammu/files.c:48
-#, fuzzy
 msgid "Phone memory"
 msgstr "Memoria del teléfono"
 
