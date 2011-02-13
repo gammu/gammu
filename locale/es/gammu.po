@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-27 16:36+0100\n"
-"PO-Revision-Date: 2011-02-13 07:51+0200\n"
+"PO-Revision-Date: 2011-02-13 07:52+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -1539,7 +1539,7 @@ msgstr "Características en la compilación:"
 
 #: gammu-detect/main.c:78
 msgid "udev probing"
-msgstr ""
+msgstr "sonda udev"
 
 #: gammu-detect/main.c:81
 msgid "Bluez probing"
