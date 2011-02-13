@@ -1632,9 +1632,9 @@ msgid "Phone on serial port %s"
 msgstr "Teléfono en el puerto serial %s"
 
 #: gammu-detect/udev.c:172
-#, fuzzy, c-format
+#, c-format
 msgid "Phone on USB serial port %s %s"
-msgstr "Puerto del teléfono"
+msgstr "Teléfono en puerto serial USB %s %s"
 
 #: gammu/files.c:48
 #, fuzzy
