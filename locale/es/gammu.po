@@ -1327,9 +1327,8 @@ msgid "Initial battery voltage:"
 msgstr "Voltaje inicial de la batería:"
 
 #: gammu/depend/nokia/dct4.c:1051
-#, fuzzy
 msgid "Battery Current:"
-msgstr "Tipo de batería"
+msgstr "Corriente de la batería:"
 
 #: gammu/depend/nokia/dct4.c:1052
 msgid "Battery Current Fast:"
