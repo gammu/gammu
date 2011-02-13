@@ -1646,9 +1646,8 @@ msgid "%i bytes (free %i bytes, used %i bytes)"
 msgstr "%i bytes (%i bytes libres, %i bytes en uso)"
 
 #: gammu/files.c:55
-#, fuzzy
 msgid "Usage details"
-msgstr "Detalles"
+msgstr "Detalles de uso"
 
 #: gammu/files.c:56
 #, fuzzy, c-format
