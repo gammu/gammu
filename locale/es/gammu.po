@@ -1323,9 +1323,8 @@ msgid "Resistive keyboard 1/auxdet:"
 msgstr "Teclado resistivo 1/auxdet:"
 
 #: gammu/depend/nokia/dct4.c:1050
-#, fuzzy
 msgid "Initial battery voltage:"
-msgstr "Voltaje de la batería"
+msgstr "Voltaje inicial de la batería:"
 
 #: gammu/depend/nokia/dct4.c:1051
 #, fuzzy
