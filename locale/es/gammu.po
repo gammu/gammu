@@ -1839,7 +1839,7 @@ msgstr "Error al leer archivo de proceso por lotes. Terminando.\n"
 
 #: gammu/gammu.c:403
 msgid "Batch processed, terminating.\n"
-msgstr ""
+msgstr "Lote procesado, terminando.\n"
 
 #: gammu/gammu.c:440
 #, fuzzy, c-format
