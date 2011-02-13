@@ -1507,9 +1507,8 @@ msgid "Show debugging output for detecting devices."
 msgstr "Mostrar salida de depuración para la detección de dispositivos."
 
 #: gammu-detect/main.c:56
-#, fuzzy
 msgid "Show version information and compiled in features."
-msgstr "Información del teléfono"
+msgstr "Mostrar información de versión y funcionalidad compilada."
 
 #: gammu-detect/main.c:58
 msgid "Disables scanning of udev."
