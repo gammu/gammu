@@ -1611,9 +1611,8 @@ msgid "Path:"
 msgstr "Ruta:"
 
 #: gammu-detect/udev.c:72
-#, fuzzy
 msgid "Driver:"
-msgstr "Controlador que usar"
+msgstr "Controlador:"
 
 #: gammu-detect/udev.c:73
 #, fuzzy
