@@ -502,7 +502,6 @@ msgid "   Increase %s\n"
 msgstr "___Incrementar %s\n"
 
 #: gammu/backupsms.c:107 gammu/misc.c:1375
-#, fuzzy
 msgid "Deleting:"
 msgstr "Borrando:"
 
