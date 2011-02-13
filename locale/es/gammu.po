@@ -1293,7 +1293,7 @@ msgstr "K"
 
 #: gammu/depend/nokia/dct4.c:1043
 msgid "Headset interconnection:"
-msgstr "Interconexión con auriculares:"
+msgstr "Conexión con auriculares:"
 
 #: gammu/depend/nokia/dct4.c:1044
 #, fuzzy
