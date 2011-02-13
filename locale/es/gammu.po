@@ -336,6 +336,8 @@ msgid ""
 "Probably caller group is missing from your backup, add it and use --restore "
 "again."
 msgstr ""
+"Probablemente el grupo de llamada falta del respaldo, agrégalo y utilizar "
+"--restore nuevamente."
 
 #: gammu/backup.c:1100 gammu/backup.c:1159
 #, c-format
