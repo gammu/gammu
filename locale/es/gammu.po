@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-27 16:36+0100\n"
-"PO-Revision-Date: 2011-02-13 07:33+0200\n"
+"PO-Revision-Date: 2011-02-13 07:34+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -847,9 +847,8 @@ msgid ", date separator is %c\n"
 msgstr ", el separador de fecha es %c\n"
 
 #: gammu/calendar.c:463
-#, fuzzy
 msgid "Setting time in phone to the same time as is set in computer."
-msgstr "Estableciendo hora del teléfono a la hora del PC."
+msgstr "Estableciendo hora del teléfono a la hora de la PC."
 
 #: gammu/calendar.c:513
 msgid "Updating specified parts of date and time in phone."
