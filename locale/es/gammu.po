@@ -1955,12 +1955,10 @@ msgid "Gammu information"
 msgstr "Información Gammu"
 
 # type: Plain text
+# Not too fond of translating the command usage help
 #: gammu/gammu.c:763
-#, fuzzy
 msgid "Usage: gammu [parameters] <command> [options]"
-msgstr ""
-"Uso: gammu [I<confign>] [I<nothing|text|textall|binary|errors>] "
-"E<lt>commandE<gt> [I<options>]"
+msgstr "Uso: gammu [parámetros] <orden> [opciones]"
 
 # type: Plain text
 #: gammu/gammu.c:764
