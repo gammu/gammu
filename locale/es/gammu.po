@@ -1717,7 +1717,7 @@ msgstr "es una carpeta. Por favor, indique sólamente nombres de archivo."
 #: gammu/files.c:399 gammu/files.c:616
 #, c-format
 msgid " (%02i:%02i minutes left)"
-msgstr "_(quedan %02i:%02i minutos)"
+msgstr "(quedan %02i:%02i minutos)"
 
 #: gammu/files.c:410 gammu/files.c:627
 msgid ""
