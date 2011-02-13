@@ -317,9 +317,8 @@ msgstr "¿Restaurar grupos de llamadas de teléfonos y logos?"
 #: gammu/backup.c:1675 gammu/backup.c:1703 gammu/backup.c:1736
 #: gammu/backup.c:1760 gammu/backup.c:1782 gammu/backup.c:1806
 #: gammu/files.c:753
-#, fuzzy
 msgid "Writing:"
-msgstr "Advertencia"
+msgstr "Escribiendo:"
 
 #: gammu/backup.c:1070 gammu/backup.c:1138 gammu/backup.c:1199
 #: gammu/backup.c:1247 gammu/backup.c:1340 gammu/backup.c:1665
