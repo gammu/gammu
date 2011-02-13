@@ -1627,9 +1627,9 @@ msgid "Properties:"
 msgstr "Propiedades:"
 
 #: gammu-detect/udev.c:170 gammu-detect/win32-serial.c:44
-#, fuzzy, c-format
+#, c-format
 msgid "Phone on serial port %s"
-msgstr "Puerto del teléfono"
+msgstr "Teléfono en el puerto serial %s"
 
 #: gammu-detect/udev.c:172
 #, fuzzy, c-format
