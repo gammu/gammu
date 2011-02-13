@@ -1513,7 +1513,7 @@ msgstr "Mostrar información de versión y funcionalidad compilada."
 
 #: gammu-detect/main.c:58
 msgid "Disables scanning of udev."
-msgstr ""
+msgstr "Desactivar escaneo de udev."
 
 #: gammu-detect/main.c:61
 msgid "Disables scanning using Bluez."
