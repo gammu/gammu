@@ -1244,9 +1244,8 @@ msgid "unit result %10i "
 msgstr "resultado unitario/de la unidad"
 
 #: gammu/depend/nokia/dct4.c:1037
-#, fuzzy
 msgid "Battery voltage, divided:"
-msgstr "Voltaje de la batería"
+msgstr "Voltaje de la batería, dividido:"
 
 #: gammu/depend/nokia/dct4.c:1037 gammu/depend/nokia/dct4.c:1038
 #: gammu/depend/nokia/dct4.c:1039 gammu/depend/nokia/dct4.c:1043
