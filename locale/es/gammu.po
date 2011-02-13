@@ -1821,6 +1821,8 @@ msgstr ""
 msgid ""
 "Copyright (C) 2003 - 2010 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
+"Derechos de Autor (C) 2003 - 2010 Michal Cihar <michal@cihar.com> y otros "
+"autores."
 
 #: gammu/gammu.c:379
 msgid "standard input"
