@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-27 16:36+0100\n"
-"PO-Revision-Date: 2011-02-13 08:20+0200\n"
+"PO-Revision-Date: 2011-02-13 20:43+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -299,7 +299,6 @@ msgstr ""
 "teléfono se borren."
 
 #: gammu/backup.c:1023
-#, fuzzy
 msgid "Use addnew command if you just want to add some entries to your phone."
 msgstr ""
 "Utilizar la orden addnew si sólo quieres agregar algunas entradas a tu "
