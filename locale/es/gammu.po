@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-27 16:36+0100\n"
-"PO-Revision-Date: 2011-02-13 07:49+0200\n"
+"PO-Revision-Date: 2011-02-13 07:51+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -1531,7 +1531,7 @@ msgstr "versión Gammu detectada %s"
 #: gammu-detect/main.c:73
 #, fuzzy, c-format
 msgid "Built %s on %s using %s"
-msgstr "[Versión de Gammu %s compilación %s/%s utilizando %s]"
+msgstr "Compilado %s en %s utilizando %s"
 
 #: gammu-detect/main.c:76 gammu/gammu.c:114
 msgid "Compiled in features:"
