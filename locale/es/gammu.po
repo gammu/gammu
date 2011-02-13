@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-27 16:36+0100\n"
-"PO-Revision-Date: 2011-02-13 07:32+0200\n"
+"PO-Revision-Date: 2011-02-13 07:33+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -436,9 +436,8 @@ msgid "Restore phone FM radio stations?"
 msgstr "¿Restaurar emisoras de radio?"
 
 #: gammu/backup.c:1557
-#, fuzzy
 msgid "Deleting old FM stations:"
-msgstr "Eliminando emisoras de radio obsoletas:"
+msgstr "Eliminando emisoras de radio antiguas:"
 
 #: gammu/backup.c:1583
 msgid "Restore phone GPRS Points?"
