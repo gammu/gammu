@@ -1398,7 +1398,7 @@ msgstr " (Grupo de llamada: logotipo)"
 
 #: gammu/depend/nokia/dct4.c:1347
 msgid " (Caller group: is logo on ?)"
-msgstr "_(Grupo de llamada: ¿está el logo activado?)"
+msgstr "(Grupo de llamada: ¿está el logo activado?)"
 
 #: gammu/depend/nokia/dct4.c:1348
 msgid " (Caller group number in pbk entry)"
