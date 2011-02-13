@@ -1282,9 +1282,8 @@ msgid "Ohms"
 msgstr "Ohms"
 
 #: gammu/depend/nokia/dct4.c:1042
-#, fuzzy
 msgid "Battery temperature:"
-msgstr "Temperatura de la batería"
+msgstr "Temperatura de la batería:"
 
 #: gammu/depend/nokia/dct4.c:1042 gammu/depend/nokia/dct4.c:1046
 #: gammu/depend/nokia/dct4.c:1047
