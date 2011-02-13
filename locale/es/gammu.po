@@ -1711,9 +1711,8 @@ msgid "Getting \"%s\"\n"
 msgstr "Obteniendo: \"%s\"\n"
 
 #: gammu/files.c:379
-#, fuzzy
 msgid "Is a folder. Please give only file names."
-msgstr "es una carpeta. Por favor, indique solamente nombres de fichero"
+msgstr "es una carpeta. Por favor, indique sólamente nombres de archivo."
 
 #: gammu/files.c:399 gammu/files.c:616
 #, c-format
