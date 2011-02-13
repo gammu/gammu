@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-27 16:36+0100\n"
-"PO-Revision-Date: 2011-02-13 07:34+0200\n"
+"PO-Revision-Date: 2011-02-13 07:35+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -1141,13 +1141,12 @@ msgid "Setting done"
 msgstr "Configuración realizada"
 
 #: gammu/depend/nokia/dct4.c:303
-#, fuzzy
 msgid ""
 "Sorry, but configuration matrix for this model has not yet been added. See "
 "<http://wammu.eu/support/bugs/> for information how to report it."
 msgstr ""
-"El teléfono devolvió una respuesta desconocida. Visite la página <http://"
-"cihar.com/gammu/report> para saber cómo informar del error."
+"Perdón, pero la matriz de configuración para este modelo aún no existe. "
+"Visite <http://wammu.eu/support/bugs/> para saber cómo informar del error."
 
 #: gammu/depend/nokia/dct4.c:369
 msgid "Passed"
