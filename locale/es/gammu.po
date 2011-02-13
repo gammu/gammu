@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-27 16:36+0100\n"
-"PO-Revision-Date: 2011-02-13 08:03+0200\n"
+"PO-Revision-Date: 2011-02-13 08:04+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -1720,14 +1720,13 @@ msgid " (%02i:%02i minutes left)"
 msgstr "_(quedan %02i:%02i minutos)"
 
 #: gammu/files.c:410 gammu/files.c:627
-#, fuzzy
 msgid ""
 "File checksum calculated by phone doesn't match with value calculated by "
 "Gammu. File is damaged or there is a error in Gammu."
 msgstr ""
-"El checksum del archivo calculado por el teléfono con coincide con el valor "
-"calculado por Gammu. El fichero puede estar dañado o puede ser un error de "
-"Gammu."
+"El valor de chequeo del archivo calculado por el teléfono no coincide con el "
+"valor calculado por Gammu. El fichero puede estar dañado o puede ser un "
+"error de Gammu."
 
 #: gammu/files.c:421
 #, fuzzy, c-format
