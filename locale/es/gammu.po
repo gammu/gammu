@@ -1504,7 +1504,7 @@ msgstr "ERROR: tipo de memoria desconocido (\"%s\")\n"
 
 #: gammu-detect/main.c:55
 msgid "Show debugging output for detecting devices."
-msgstr ""
+msgstr "Mostrar salida de depuración para la detección de dispositivos."
 
 #: gammu-detect/main.c:56
 #, fuzzy
