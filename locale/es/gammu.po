@@ -477,9 +477,8 @@ msgid "Add phone ToDo?"
 msgstr "¿Añadir listas de tareas del teléfono?"
 
 #: gammu/backup.c:1774
-#, fuzzy
 msgid "Add notes to phone?"
-msgstr "Envio de archivo al teléfono"
+msgstr "¿Añadir notas al teléfono?"
 
 #: gammu/backup.c:1797
 msgid "Add phone WAP bookmarks?"
