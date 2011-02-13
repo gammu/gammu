@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-27 16:36+0100\n"
-"PO-Revision-Date: 2011-02-13 08:01+0200\n"
+"PO-Revision-Date: 2011-02-13 08:02+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -1641,9 +1641,9 @@ msgid "Phone memory"
 msgstr "Memoria del teléfono"
 
 #: gammu/files.c:49
-#, fuzzy, c-format
+#, c-format
 msgid "%i bytes (free %i bytes, used %i bytes)"
-msgstr "Memoria teléfono: %i bytes (libres %i bytes, en uso %i bytes)"
+msgstr "%i bytes (%i bytes libres, %i bytes en uso)"
 
 #: gammu/files.c:55
 #, fuzzy
