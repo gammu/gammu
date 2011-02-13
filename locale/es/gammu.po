@@ -1986,6 +1986,8 @@ msgstr ""
 #: gammu/gammu.c:768
 msgid "-f / --debug-file <filename> ... file for logging debug messages"
 msgstr ""
+"-f / --debug-file <archivo> ... archivo para registrar los mensajes de "
+"depuración"
 
 #: gammu/gammu.c:770
 msgid "Commands can be specified with or without leading --."
