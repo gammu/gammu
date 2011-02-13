@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-27 16:36+0100\n"
-"PO-Revision-Date: 2011-02-13 08:02+0200\n"
+"PO-Revision-Date: 2011-02-13 08:03+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -1650,9 +1650,9 @@ msgid "Usage details"
 msgstr "Detalles de uso"
 
 #: gammu/files.c:56
-#, fuzzy, c-format
+#, c-format
 msgid "images: %i, sounds: %i, themes: %i"
-msgstr "Utilizado por: Imágenes: %i, Sonidos: %i, Temas: %i"
+msgstr "Imágenes: %i, sonidos: %i, temas: %i"
 
 #. l10n: One char to indicate protected file
 #: gammu/files.c:119 gammu/files.c:208 gammu/files.c:329
