@@ -499,7 +499,7 @@ msgstr " (SIM)"
 #: gammu/backupsms.c:84
 #, c-format
 msgid "   Increase %s\n"
-msgstr "___Incrementar %s\n"
+msgstr "Aumentar %s\n"
 
 #: gammu/backupsms.c:107 gammu/misc.c:1375
 msgid "Deleting:"
