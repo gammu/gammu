@@ -1729,9 +1729,9 @@ msgstr ""
 "error de Gammu."
 
 #: gammu/files.c:421
-#, fuzzy, c-format
+#, c-format
 msgid "%i percent done."
-msgstr "%i por ciento"
+msgstr "%i por ciento completado."
 
 #: gammu/files.c:423
 #, c-format
