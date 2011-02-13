@@ -1608,7 +1608,7 @@ msgstr "Número:"
 
 #: gammu-detect/udev.c:71
 msgid "Path:"
-msgstr ""
+msgstr "Ruta:"
 
 #: gammu-detect/udev.c:72
 #, fuzzy
