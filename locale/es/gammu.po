@@ -1265,9 +1265,8 @@ msgid "Charger voltage:"
 msgstr "Voltaje de cargador:"
 
 #: gammu/depend/nokia/dct4.c:1040
-#, fuzzy
 msgid "Charger current:"
-msgstr "Carga actual"
+msgstr "Corriente de cargador:"
 
 #: gammu/depend/nokia/dct4.c:1040 gammu/depend/nokia/dct4.c:1051
 #: gammu/depend/nokia/dct4.c:1052
