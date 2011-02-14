@@ -6,9 +6,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libGammu 1.29.90\n"
+"Project-Id-Version: libGammu 1.29.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-01-27 16:36+0100\n"
+"POT-Creation-Date: 2011-02-14 10:40+0100\n"
 "PO-Revision-Date: 2010-12-23 23:18+0200\n"
 "Last-Translator:  <elrond+gammu.org@samba-tng.org>\n"
 "Language-Team: Language =de\n"
@@ -365,52 +365,52 @@ msgstr "Unbekannte Fehlerbeschreibung."
 msgid "Templates"
 msgstr "Vorlagen"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1963
+#: libgammu/phone/nokia/dct3/n6110.c:1969
 msgid "Personal"
 msgstr "Persönlich"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1965 libgammu/phone/nokia/nfunc.c:1141
+#: libgammu/phone/nokia/dct3/n6110.c:1971 libgammu/phone/nokia/nfunc.c:1141
 msgid "Car"
 msgstr "Auto"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1967 libgammu/phone/nokia/nfunc.c:1143
+#: libgammu/phone/nokia/dct3/n6110.c:1973 libgammu/phone/nokia/nfunc.c:1143
 msgid "Headset"
 msgstr "Headset"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1973 libgammu/phone/nokia/nfunc.c:1131
+#: libgammu/phone/nokia/dct3/n6110.c:1979 libgammu/phone/nokia/nfunc.c:1131
 msgid "General"
 msgstr "Allgemein"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1975 libgammu/phone/nokia/nfunc.c:1133
+#: libgammu/phone/nokia/dct3/n6110.c:1981 libgammu/phone/nokia/nfunc.c:1133
 msgid "Silent"
 msgstr "Lautlos"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1977
+#: libgammu/phone/nokia/dct3/n6110.c:1983
 msgid "Discreet"
 msgstr "Unaufdringlich"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1979
+#: libgammu/phone/nokia/dct3/n6110.c:1985
 msgid "Loud"
 msgstr "Laut"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1981
+#: libgammu/phone/nokia/dct3/n6110.c:1987
 msgid "My style"
 msgstr "Mein Stil"
 
-#: libgammu/phone/nokia/dct4s40/6510/n6510.c:563
+#: libgammu/phone/nokia/dct4s40/6510/n6510.c:578
 msgid "SIM"
 msgstr "SIM"
 
-#: libgammu/phone/nokia/dct4s40/6510/n6510.c:564 libgammu/phone/pfunc.c:41
-#: libgammu/phone/s60/s60phone.c:1541
+#: libgammu/phone/nokia/dct4s40/6510/n6510.c:579 libgammu/phone/pfunc.c:41
+#: libgammu/phone/s60/s60phone.c:1752
 msgid "Inbox"
 msgstr "Eingang"
 
-#: libgammu/phone/nokia/dct4s40/6510/n6510.c:565
+#: libgammu/phone/nokia/dct4s40/6510/n6510.c:580
 msgid "Sent items"
 msgstr "Versandte Mitteilungen"
 
-#: libgammu/phone/nokia/dct4s40/6510/n6510.c:566
+#: libgammu/phone/nokia/dct4s40/6510/n6510.c:581
 msgid "Saved items"
 msgstr "Gespeicherte Mitteilungen"
 
@@ -446,7 +446,7 @@ msgstr "Draussen"
 msgid "Pager"
 msgstr "Pager"
 
-#: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1542
+#: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1753
 msgid "Outbox"
 msgstr "Ausgang"
 

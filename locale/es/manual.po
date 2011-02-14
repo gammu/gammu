@@ -5,7 +5,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu-manual 1.29.90\n"
+"Project-Id-Version: Gammu-manual 1.29.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-01-19 11:16+0100\n"
 "PO-Revision-Date: 2011-01-10 12:07+0100\n"
@@ -11591,7 +11591,7 @@ msgstr ""
 #: docs/manual/smsd/usage.rst:2
 #, no-wrap
 msgid "Usage"
-msgstr ""
+msgstr "Uso"
 
 #. type: Plain text
 #: docs/manual/smsd/usage.rst:6
@@ -15650,10 +15650,12 @@ msgstr ""
 msgid "Options"
 msgstr ""
 
+# type: Plain text
 #. type: Plain text
 #: docs/manual/gammu/index.rst:30
 msgid "Parameters before command configure gammu behaviour:"
 msgstr ""
+"Los parámetros antes de la orden configuran el comportamiento de gammu:"
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:32
@@ -20517,6 +20519,8 @@ msgid ""
 "Gammu is library and command line utility for mobile phones. It is released "
 "under GNU GPL version 2."
 msgstr ""
+"Gammu es una biblioteca y una utilidad de línea de órdenes para teléfonos "
+"móviles. Está liberada bajo la GNU GPL versión 2."
 
 #. type: Plain text
 #: docs/manual/project/about.rst:10
@@ -21486,7 +21490,7 @@ msgstr ""
 #: docs/manual/project/install.rst:246
 #, no-wrap
 msgid "Cross compilation for Windows on Linux"
-msgstr ""
+msgstr "Compilación cruzada para Windows en Linux"
 
 #. type: Plain text
 #: docs/manual/project/install.rst:251
@@ -32668,7 +32672,7 @@ msgstr ""
 #: docs/manual/utils/gammu-config.rst:26 docs/manual/utils/jadmaker.rst:27
 #: docs/manual/utils/gammu-detect.rst:47
 msgid "Show summary of options."
-msgstr ""
+msgstr "Mostrar resumen de las opciones."
 
 #. type: Plain text
 #: docs/manual/utils/gammu-config.rst:28 docs/manual/utils/jadmaker.rst:29
@@ -32803,7 +32807,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/utils/gammu-detect.rst:51
 msgid "Show debugging output for detecting devices."
-msgstr ""
+msgstr "Mostrar salida de depuración para la detección de dispositivos."
 
 #. type: Plain text
 #: docs/manual/utils/gammu-detect.rst:55
@@ -32819,7 +32823,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/utils/gammu-detect.rst:59
 msgid "Disables scanning of udev."
-msgstr ""
+msgstr "Desactivar escaneo de udev."
 
 #. type: Plain text
 #: docs/manual/utils/gammu-detect.rst:61
@@ -32829,7 +32833,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/utils/gammu-detect.rst:63
 msgid "Disables scanning using Bluez."
-msgstr ""
+msgstr "Desactivar escaneo utilizando Bluez."
 
 #. type: Plain text
 #: docs/manual/utils/gammu-detect.rst:65
@@ -32839,7 +32843,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/utils/gammu-detect.rst:67
 msgid "Disables scanning of Windows serial ports."
-msgstr ""
+msgstr "Desactivar escaneo de puertos seriales Windows."
 
 #. type: Title -
 #: docs/manual/utils/gammu-detect.rst:69

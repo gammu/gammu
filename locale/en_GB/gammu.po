@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.27.96\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-01-27 16:36+0100\n"
+"POT-Creation-Date: 2011-02-14 10:40+0100\n"
 "PO-Revision-Date: 2011-02-10 13:01+0200\n"
 "Last-Translator: Robert Readman <robert_readman@hotmail.com>\n"
 "Language-Team: none\n"
@@ -683,7 +683,7 @@ msgstr "LUID"
 #: gammu/calendar.c:232 gammu/calendar.c:599 gammu/calendar.c:643
 #: gammu/calendar.c:687 gammu/calendar.c:711 gammu/calendar.c:830
 #: gammu/memory.c:141 gammu/message.c:215 gammu/misc.c:1868 gammu/misc.c:1901
-#: gammu/misc.c:2191 gammu/misc.c:2314
+#: gammu/misc.c:2191 gammu/misc.c:2315
 msgid "Location"
 msgstr "Location"
 
@@ -1155,7 +1155,7 @@ msgstr "Not executed"
 msgid "No signal"
 msgstr "No signal"
 
-#: gammu/depend/nokia/dct4.c:373 gammu/message.c:105 gammu/misc.c:2460
+#: gammu/depend/nokia/dct4.c:373 gammu/message.c:105 gammu/misc.c:2461
 msgid "Timeout"
 msgstr "Timeout"
 
@@ -1736,7 +1736,7 @@ msgid "What file type (\"%s\") ?\n"
 msgstr "What file type (\"%s\") ?\n"
 
 #: gammu/files.c:746 gammu/misc.c:1334 gammu/nokia.c:955
-#: helper/message-cmdline.c:1307
+#: helper/message-cmdline.c:1311
 msgid "Parameter missing!"
 msgstr "Parameter missing!"
 
@@ -1765,7 +1765,7 @@ msgid "Network"
 msgstr "Network"
 
 #: gammu/gammu.c:86 gammu/message.c:218 gammu/misc.c:968 gammu/misc.c:1135
-#: gammu/misc.c:1872 gammu/misc.c:1911 gammu/misc.c:2205 gammu/mms.c:112
+#: gammu/misc.c:1872 gammu/misc.c:1911 gammu/misc.c:2206 gammu/mms.c:112
 #: helper/memory-display.c:217 helper/message-display.c:237
 msgid "Name"
 msgstr "Name"
@@ -2068,7 +2068,7 @@ msgstr ""
 msgid "Memory %s, Location %i\n"
 msgstr "Memory %s, Location %i\n"
 
-#: gammu/memory.c:104 gammu/misc.c:1909 gammu/misc.c:2317
+#: gammu/memory.c:104 gammu/misc.c:1909 gammu/misc.c:2318
 msgid "Entry is empty"
 msgstr "Entry is empty"
 
@@ -2141,7 +2141,7 @@ msgstr "Service reply"
 msgid "Invalid SMSC location: %s\n"
 msgstr "Invalid SMSC location: %s\n"
 
-#: gammu/message.c:220 gammu/misc.c:2206 gammu/misc.c:2464
+#: gammu/message.c:220 gammu/misc.c:2207 gammu/misc.c:2465
 msgid "Number"
 msgstr "Number"
 
@@ -3203,128 +3203,128 @@ msgstr "Vibrate first"
 msgid " speed dial not assigned"
 msgstr " speed dial not assigned"
 
-#: gammu/misc.c:2225
+#: gammu/misc.c:2226
 #, c-format
 msgid "What type of reset phone settings (\"%s\") ?\n"
 msgstr "What type of reset phone settings (\"%s\") ?\n"
 
-#: gammu/misc.c:2259
+#: gammu/misc.c:2260
 msgid "Currently shown on the display"
 msgstr "Currently shown on the display"
 
-#: gammu/misc.c:2264
+#: gammu/misc.c:2265
 msgid "Call active"
 msgstr "Call active"
 
-#: gammu/misc.c:2267
+#: gammu/misc.c:2268
 msgid "Unread SMS"
 msgstr "Unread SMS"
 
-#: gammu/misc.c:2270
+#: gammu/misc.c:2271
 msgid "Voice call"
 msgstr "Voice call"
 
-#: gammu/misc.c:2273
+#: gammu/misc.c:2274
 msgid "Fax call"
 msgstr "Fax call"
 
-#: gammu/misc.c:2276
+#: gammu/misc.c:2277
 msgid "Data call"
 msgstr "Data call"
 
-#: gammu/misc.c:2279
+#: gammu/misc.c:2280
 msgid "Keypad locked"
 msgstr "Keypad locked"
 
-#: gammu/misc.c:2282
+#: gammu/misc.c:2283
 msgid "SMS memory full"
 msgstr "SMS memory full"
 
-#: gammu/misc.c:2320
+#: gammu/misc.c:2321
 msgid "Station name"
 msgstr "Station name"
 
-#: gammu/misc.c:2321
+#: gammu/misc.c:2322
 msgid "Frequency"
 msgstr "Frequency"
 
-#: gammu/misc.c:2342
+#: gammu/misc.c:2343
 #, c-format
 msgid "Unknown divert action (\"%s\")\n"
 msgstr "Unknown divert action (\"%s\")\n"
 
-#: gammu/misc.c:2355
+#: gammu/misc.c:2356
 #, c-format
 msgid "Unknown divert type (\"%s\")\n"
 msgstr "Unknown divert type (\"%s\")\n"
 
-#: gammu/misc.c:2368
+#: gammu/misc.c:2369
 #, c-format
 msgid "Unknown call type (\"%s\")\n"
 msgstr "Unknown call type (\"%s\")\n"
 
-#: gammu/misc.c:2377
+#: gammu/misc.c:2378
 msgid "Query:"
 msgstr "Query:"
 
-#: gammu/misc.c:2379 gammu/misc.c:2396
+#: gammu/misc.c:2380 gammu/misc.c:2397
 msgid "Divert type"
 msgstr "Divert type"
 
-#: gammu/misc.c:2394
+#: gammu/misc.c:2395
 msgid "Changed:"
 msgstr "Changed:"
 
-#: gammu/misc.c:2401
+#: gammu/misc.c:2402
 msgid "when busy"
 msgstr "when busy"
 
-#: gammu/misc.c:2404
+#: gammu/misc.c:2405
 msgid "when not answered"
 msgstr "when not answered"
 
-#: gammu/misc.c:2407
+#: gammu/misc.c:2408
 msgid "when phone off or no coverage"
 msgstr "when phone off or no coverage"
 
-#: gammu/misc.c:2410
+#: gammu/misc.c:2411
 msgid "all types of diverts"
 msgstr "all types of diverts"
 
-#: gammu/misc.c:2413 gammu/misc.c:2433 gammu/misc.c:2455
+#: gammu/misc.c:2414 gammu/misc.c:2434 gammu/misc.c:2456
 #, c-format
 msgid "unknown %i"
 msgstr "unknown %i"
 
-#: gammu/misc.c:2418 gammu/misc.c:2443
+#: gammu/misc.c:2419 gammu/misc.c:2444
 msgid "Call type"
 msgstr "Call type"
 
-#: gammu/misc.c:2421 gammu/misc.c:2446
+#: gammu/misc.c:2422 gammu/misc.c:2447
 msgid "voice"
 msgstr "voice"
 
-#: gammu/misc.c:2424 gammu/misc.c:2449 helper/message-display.c:115
+#: gammu/misc.c:2425 gammu/misc.c:2450 helper/message-display.c:115
 msgid "fax"
 msgstr "fax"
 
-#: gammu/misc.c:2427 gammu/misc.c:2452
+#: gammu/misc.c:2428 gammu/misc.c:2453
 msgid "data"
 msgstr "data"
 
-#: gammu/misc.c:2430
+#: gammu/misc.c:2431
 msgid "data & fax & voice"
 msgstr "data & fax & voice"
 
-#: gammu/misc.c:2438
+#: gammu/misc.c:2439
 msgid "Response:"
 msgstr "Response:"
 
-#: gammu/misc.c:2492
+#: gammu/misc.c:2493
 msgid "The application has been successfully sent to the phone."
 msgstr "The application has been successfully sent to the phone."
 
-#: gammu/misc.c:2493
+#: gammu/misc.c:2494
 msgid "Please find received files in Inbox and install them."
 msgstr "Please find received files in Inbox and install them."
 
@@ -3894,61 +3894,61 @@ msgstr "Unknown validity string (\"%s\")\n"
 msgid "You have to give number of EMS frames between 1 and 4 (\"%s\")\n"
 msgstr "You have to give number of EMS frames between 1 and 4 (\"%s\")\n"
 
-#: helper/message-cmdline.c:1198
+#: helper/message-cmdline.c:1185 helper/message-cmdline.c:1202
 #, c-format
 msgid "Can't open file \"%s\"\n"
 msgstr "Can't open file \"%s\"\n"
 
-#: helper/message-cmdline.c:1247
+#: helper/message-cmdline.c:1251
 #, c-format
 msgid "Unknown parameter (\"%c\")\n"
 msgstr "Unknown parameter (\"%c\")\n"
 
-#: helper/message-cmdline.c:1252
+#: helper/message-cmdline.c:1256
 msgid "Last parameter wasn't text"
 msgstr "Last parameter wasn't text"
 
-#: helper/message-cmdline.c:1286
+#: helper/message-cmdline.c:1290
 #, c-format
 msgid "Too long SMS name (\"%s\"), ignored\n"
 msgstr "Too long SMS name (\"%s\"), ignored\n"
 
-#: helper/message-cmdline.c:1326
+#: helper/message-cmdline.c:1330
 #, c-format
 msgid "Enter the message text and press %s:\n"
 msgstr "Enter the message text and press %s:\n"
 
-#: helper/message-cmdline.c:1328
+#: helper/message-cmdline.c:1332
 msgid "Ctrl+Z"
 msgstr "Ctrl+Z"
 
-#: helper/message-cmdline.c:1330
+#: helper/message-cmdline.c:1334
 msgid "Ctrl+D"
 msgstr "Ctrl+D"
 
-#: helper/message-cmdline.c:1344
+#: helper/message-cmdline.c:1348
 msgid "No chars read, assuming it is okay!"
 msgstr "No chars read, assuming it is okay!"
 
-#: helper/message-cmdline.c:1364
+#: helper/message-cmdline.c:1368
 msgid "No network code"
 msgstr "No network code"
 
-#: helper/message-cmdline.c:1370
+#: helper/message-cmdline.c:1374
 msgid "You have to set network code!"
 msgstr "You have to set network code!"
 
-#: helper/message-cmdline.c:1409
+#: helper/message-cmdline.c:1413
 #, c-format
 msgid "Ringtone too long. %i percent part cut\n"
 msgstr "Ringtone too long. %i percent part cut\n"
 
-#: helper/message-cmdline.c:1420
+#: helper/message-cmdline.c:1424
 #, c-format
 msgid "There are %i SMS messages packed and the limit is %i. Exiting\n"
 msgstr "There are %i SMS messages packed and the limit is %i. Exiting\n"
 
-#: helper/message-cmdline.c:1430
+#: helper/message-cmdline.c:1434
 msgid "Use -smscnumber option to give SMSC number"
 msgstr "Use -smscnumber option to give SMSC number"
 
