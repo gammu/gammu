@@ -333,6 +333,13 @@ if (WITH_NOKIA6510)
     add_test(sms-nokia-16 "${GAMMU_TEST_PATH}/sms-nokia-16${GAMMU_TEST_SUFFIX}")
 endif (WITH_NOKIA6510)
 
+if (WITH_NOKIA6510)
+    add_executable(sms-nokia-17 sms-nokia-17.c)
+    target_link_libraries(sms-nokia-17 libGammu ${LIBINTL_LIBRARIES})
+    target_link_libraries(sms-nokia-17 messagedisplay)
+    add_test(sms-nokia-17 "${GAMMU_TEST_PATH}/sms-nokia-17${GAMMU_TEST_SUFFIX}")
+endif (WITH_NOKIA6510)
+
 if (WITH_NOKIA6110)
 # Nokia ringtone
     add_executable(nokia-6110-ringtone nokia-6110-ringtone.c)
