@@ -1,5 +1,5 @@
 /* Sony Ericsson specific functions
- * Copyright (C) 2011 MÃ¡rton NÃ©meth <nm127@freemail.hu>
+ * Copyright (C) 2011 Márton Németh <nm127@freemail.hu>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -126,7 +126,7 @@ GSM_Error SONYERICSSON_Reply_Screenshot(GSM_Protocol_Message msg, GSM_StateMachi
 			}
 
 			line++;
-		
+
 		} while (strcmp("OK", string) != 0);
 
 		return ERR_NONE;
@@ -178,7 +178,7 @@ static int SONYERICSSON_Screenshot_createBMPHeader(unsigned int w, unsigned int 
 	// BMP magic "BM"
 	*p = 0x42;
 	*(p+1) = 0x4D;
-	
+
 	// size of the BMP file in bytes
 	data = 14 + 40 + w * h * 4;
 	u32_store(p+2, data);

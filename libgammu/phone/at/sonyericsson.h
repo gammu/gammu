@@ -1,5 +1,5 @@
 /* Sony Ericsson specific functions
- * Copyright (C) 2011 MÃ¡rton NÃ©meth <nm127@freemail.hu>
+ * Copyright (C) 2011 Márton Németh <nm127@freemail.hu>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
