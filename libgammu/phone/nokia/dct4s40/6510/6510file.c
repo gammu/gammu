@@ -2389,6 +2389,10 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 			smprintf(s, "WARNING: 0x00 block, assuming rest is just junk!\n");
 			break;
 		}
+		if (pos + 2 == FFF->Used && FFF->Buffer[pos] == 0x01) {
+			smprintf(s, "WARNING: 0x01 block, assuming rest is just junk!\n");
+			break;
+		}
 		if (pos + 2 >= FFF->Used) {
 			smprintf(s, "ERROR: Reach end of file before size of block!\n");
 			return ERR_BUG;
