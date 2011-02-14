@@ -2463,6 +2463,7 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 			case 0x26:
 			case 0x27:
 			case 0x2a:
+			case 0x2f:
 			case 0x08:
 				if (FFF->Buffer[pos + 2] != 1 || FFF->Buffer[pos + 3] != 0x00) {
 					unknown = TRUE;
@@ -2474,6 +2475,8 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 				/* Some ID: 12 |00 |04 |355|EA |6En|D2 */
 			case 0x23:
 				/* Some ID: 23#|00 |04 |00 |00 |09 |A6 */
+			case 0x2D:
+				/* Some ID: 2D-|00 |04 |00 |00 |00 |00 */
 				if (FFF->Buffer[pos + 2] != 4 ||
 					FFF->Buffer[pos + 3] != 0x00 ||
 					FFF->Buffer[pos + 4] != 0x00 ||
