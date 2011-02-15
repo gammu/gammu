@@ -83,18 +83,18 @@ typedef enum {
  *
  * \ingroup Memory
  */
-#define GSM_MemoryTypeToString(x) ( \
-	(x) == MEM_ME ? "ME" :			\
-	(x) == MEM_SM ? "SM" :			\
-	(x) == MEM_ON ? "ON" :			\
-	(x) == MEM_DC ? "DC" :			\
-	(x) == MEM_RC ? "RC" :			\
-	(x) == MEM_MC ? "MC" :			\
-	(x) == MEM_MT ? "MT" :			\
-	(x) == MEM_FD ? "FD" :			\
-	(x) == MEM_VM ? "VM" :			\
-	(x) == MEM_QD ? "QD" :			\
-	(x) == MEM_SL ? "SL" : "XX")
+#define GSM_MemoryTypeToString(x) \
+	((x) == MEM_ME ? "ME" :	\
+	((x) == MEM_SM ? "SM" :	\
+	((x) == MEM_ON ? "ON" :	\
+	((x) == MEM_DC ? "DC" :	\
+	((x) == MEM_RC ? "RC" :	\
+	((x) == MEM_MC ? "MC" :	\
+	((x) == MEM_MT ? "MT" : \
+	((x) == MEM_FD ? "FD" :	\
+	((x) == MEM_VM ? "VM" :	\
+	((x) == MEM_QD ? "QD" :	\
+	((x) == MEM_SL ? "SL" : "XX")))))))))))
 
 /**
  * Converts memory type from string.
