@@ -173,7 +173,9 @@ typedef struct _GSM_User	 	GSM_User;
 #ifndef GSM_USED_IRDADEVICE
 #  undef GSM_ENABLE_IRDADEVICE
 #endif
-#define GSM_ENABLE_BLUETOOTHDEVICE
+#if defined(BLUEZ_FOUND) || defined(BSD_BLUE_FOUND) || defined(OSX_BLUE_FOUND) || defined(WIN32)
+#  define GSM_ENABLE_BLUETOOTHDEVICE
+#endif
 #ifndef GSM_USED_BLUETOOTHDEVICE
 #  undef GSM_ENABLE_BLUETOOTHDEVICE
 #endif
