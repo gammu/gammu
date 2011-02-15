@@ -256,7 +256,7 @@ GSM_Error SONYERICSSON_Reply_ScreenshotData(GSM_Protocol_Message msg, GSM_StateM
 	unsigned int i;
 	int state;
 	int token;
-	u8 alpha, red, green, blue;
+	u8 alpha = 0, red = 0, green = 0, blue = 0;
 	u8 *p;
 	unsigned int length;
 	unsigned int w, h;
