@@ -7,10 +7,10 @@
 
 /* Reply functions which are hooked into AT module */
 
-extern GSM_Error ATOBEX_ReplyGetDateLocale(GSM_Protocol_Message msg, GSM_StateMachine *s);
-extern GSM_Error ATOBEX_ReplyGetTimeLocale(GSM_Protocol_Message msg, GSM_StateMachine *s);
-extern GSM_Error ATOBEX_ReplyGetFileSystemStatus(GSM_Protocol_Message msg, GSM_StateMachine *s);
-extern GSM_Error ATOBEX_ReplyGetBatteryCharge(GSM_Protocol_Message msg, GSM_StateMachine *s);
+extern GSM_Error ATOBEX_ReplyGetDateLocale(GSM_Protocol_Message *msg, GSM_StateMachine *s);
+extern GSM_Error ATOBEX_ReplyGetTimeLocale(GSM_Protocol_Message *msg, GSM_StateMachine *s);
+extern GSM_Error ATOBEX_ReplyGetFileSystemStatus(GSM_Protocol_Message *msg, GSM_StateMachine *s);
+extern GSM_Error ATOBEX_ReplyGetBatteryCharge(GSM_Protocol_Message *msg, GSM_StateMachine *s);
 
 #endif
 

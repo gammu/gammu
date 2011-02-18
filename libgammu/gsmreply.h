@@ -222,7 +222,7 @@ typedef struct {
 	/**
 	 * Pointer to function that should be executed.
 	 */
-	GSM_Error (*Function)	(GSM_Protocol_Message msg, GSM_StateMachine *s);
+	GSM_Error (*Function)	(GSM_Protocol_Message *msg, GSM_StateMachine *s);
 	/**
 	 * Message type, if it is longer than 1 character, it disables subtype
 	 * checking.

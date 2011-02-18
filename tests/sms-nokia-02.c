@@ -26,7 +26,7 @@ unsigned char data[] = {
 };
 
 /* This is not part of API! */
-extern GSM_Error N6110_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine * s);
+extern GSM_Error N6110_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine * s);
 
 int main(int argc UNUSED, char **argv UNUSED)
 {
@@ -55,7 +55,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	s->Phone.Data.GetSMSMessage = &sms;
 
 	/* Parse it */
-	error = N6110_ReplyGetSMSMessage(msg, s);
+	error = N6110_ReplyGetSMSMessage(&msg, s);
 
 	/* Display message */
 	DisplayMultiSMSInfo(&sms, FALSE, TRUE, NULL, NULL);

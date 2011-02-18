@@ -16,29 +16,29 @@
 #include "../dct4s40/dct4func.h"
 #include "n3650.h"
 
-static GSM_Error N3650_ReplyGetFilePart(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error N3650_ReplyGetFilePart(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	int old;
 
 	smprintf(s,"File part received\n");
 	old = s->Phone.Data.File->Used;
 
-	if (msg.Length < 10) {
+	if (msg->Length < 10) {
 		if (old == 0) return ERR_UNKNOWN;
 		return ERR_EMPTY;
 	}
 
-	s->Phone.Data.File->Used += msg.Buffer[10]*256*256*256+
-			    	    msg.Buffer[11]*256*256+
-			    	    msg.Buffer[12]*256+
-			    	    msg.Buffer[13];
+	s->Phone.Data.File->Used += msg->Buffer[10]*256*256*256+
+			    	    msg->Buffer[11]*256*256+
+			    	    msg->Buffer[12]*256+
+			    	    msg->Buffer[13];
 	smprintf(s,"Length: %i\n",
-			msg.Buffer[10]*256*256*256+
-			msg.Buffer[11]*256*256+
-			msg.Buffer[12]*256+
-			msg.Buffer[13]);
+			msg->Buffer[10]*256*256*256+
+			msg->Buffer[11]*256*256+
+			msg->Buffer[12]*256+
+			msg->Buffer[13]);
 	s->Phone.Data.File->Buffer = (unsigned char *)realloc(s->Phone.Data.File->Buffer,s->Phone.Data.File->Used);
-	memcpy(s->Phone.Data.File->Buffer+old,msg.Buffer+18,s->Phone.Data.File->Used-old);
+	memcpy(s->Phone.Data.File->Buffer+old,msg->Buffer+18,s->Phone.Data.File->Used-old);
 	if (s->Phone.Data.File->Used-old < 0x03 * 256 + 0xD4) return ERR_EMPTY;
 	return ERR_NONE;
 }
@@ -99,7 +99,7 @@ static GSM_Error N3650_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Han
 	return error;
 }
 
-static GSM_Error N3650_ReplyGetFolderInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error N3650_ReplyGetFolderInfo(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_File	 	*File = s->Phone.Data.FileInfo;
 	GSM_Phone_N3650Data	*Priv = &s->Phone.Data.Priv.N3650;
@@ -109,24 +109,24 @@ static GSM_Error N3650_ReplyGetFolderInfo(GSM_Protocol_Message msg, GSM_StateMac
 	while (1) {
 		if (i==Priv->FilesLocationsCurrent-1) break;
 		smprintf(s, "Copying %i to %i, max %i, current %i\n",
-			i,i+msg.Buffer[5],
+			i,i+msg->Buffer[5],
 			Priv->FilesLocationsUsed,Priv->FilesLocationsCurrent);
-		memcpy(Priv->Files[i+msg.Buffer[5]],Priv->Files[i],sizeof(GSM_File));
+		memcpy(Priv->Files[i+msg->Buffer[5]],Priv->Files[i],sizeof(GSM_File));
 		i--;
 	}
-	Priv->FileEntries	  = msg.Buffer[5];
-	Priv->FilesLocationsUsed += msg.Buffer[5];
-	for (i=0;i<msg.Buffer[5];i++) {
+	Priv->FileEntries	  = msg->Buffer[5];
+	Priv->FilesLocationsUsed += msg->Buffer[5];
+	for (i=0;i<msg->Buffer[5];i++) {
 		Priv->Files[Priv->FilesLocationsCurrent+i]->Folder = TRUE;
-		if (msg.Buffer[pos+2] == 0x01) {
+		if (msg->Buffer[pos+2] == 0x01) {
 			Priv->Files[Priv->FilesLocationsCurrent+i]->Folder = FALSE;
 			smprintf(s,"File ");
 		}
-		EncodeUnicode(Priv->Files[Priv->FilesLocationsCurrent+i]->Name,msg.Buffer+pos+9,msg.Buffer[pos+8]);
+		EncodeUnicode(Priv->Files[Priv->FilesLocationsCurrent+i]->Name,msg->Buffer+pos+9,msg->Buffer[pos+8]);
 		smprintf(s,"%s\n",DecodeUnicodeString(Priv->Files[Priv->FilesLocationsCurrent+i]->Name));
 		Priv->Files[Priv->FilesLocationsCurrent+i]->Level  = File->Level+1;
-		sprintf(Priv->Files[Priv->FilesLocationsCurrent+i]->ID_FullName,"%s\\%s",File->ID_FullName,msg.Buffer+pos+9);
-		pos+=msg.Buffer[pos+1];
+		sprintf(Priv->Files[Priv->FilesLocationsCurrent+i]->ID_FullName,"%s\\%s",File->ID_FullName,msg->Buffer+pos+9);
+		pos+=msg->Buffer[pos+1];
 	}
 	smprintf(s, "\n");
 	return ERR_NONE;

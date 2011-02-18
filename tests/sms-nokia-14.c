@@ -21,7 +21,7 @@ const char text[] = "";
 char decoded_text[200];
 
 /* This is not part of API! */
-extern GSM_Error N6510_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine * s);
+extern GSM_Error N6510_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine * s);
 
 int main(int argc UNUSED, char **argv UNUSED)
 {
@@ -57,7 +57,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	s->Phone.Data.GetSMSMessage = &sms;
 
 	/* Parse it */
-	error = N6510_ReplyGetSMSMessage(msg, s);
+	error = N6510_ReplyGetSMSMessage(&msg, s);
 
 	/* Display message */
 	DisplayMultiSMSInfo(&sms, FALSE, TRUE, NULL, NULL);

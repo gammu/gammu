@@ -92,7 +92,7 @@ MOTOROLA_CommandInfo Commands[] = {
 	{"", 0},
 };
 
-GSM_Error MOTOROLA_SetModeReply(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
+GSM_Error MOTOROLA_SetModeReply(GSM_Protocol_Message *msg UNUSED, GSM_StateMachine *s)
 {
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
@@ -103,7 +103,7 @@ GSM_Error MOTOROLA_SetModeReply(GSM_Protocol_Message msg UNUSED, GSM_StateMachin
 			 * The typo in next line (Unkown) is intentional,
 			 * phone returns it this way.
 			 */
-			if (strstr(GetLineString(msg.Buffer, &Priv->Lines, 2), "Unkown mode value") != NULL) {
+			if (strstr(GetLineString(msg->Buffer, &Priv->Lines, 2), "Unkown mode value") != NULL) {
 				return ERR_NOTSUPPORTED;
 			}
 			return ERR_NONE;
@@ -197,14 +197,14 @@ GSM_Error MOTOROLA_SetMode(GSM_StateMachine *s, const char *command)
 /**
  * Catches +MBAN: reply.
  */
-GSM_Error MOTOROLA_Banner(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
+GSM_Error MOTOROLA_Banner(GSM_Protocol_Message *msg UNUSED, GSM_StateMachine *s)
 {
 	s->Phone.Data.Priv.ATGEN.CurrentMode = 2;
 	return ERR_NONE;
 }
 
 
-GSM_Error MOTOROLA_ReplyGetMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error MOTOROLA_ReplyGetMemoryInfo(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
  	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error error;
@@ -217,7 +217,7 @@ GSM_Error MOTOROLA_ReplyGetMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachine
 		 * +MPBR: 10-18259,40,24,14,0-1,64,(255),(0),(0-1),(1-11),(255),25,(0-1,255),264,(0),62,62,32,32,32,32,50,264
 		 */
 		Priv->PBK_MPBR = AT_AVAILABLE;
-		error = ATGEN_ParseReply(s, GetLineString(msg.Buffer, &Priv->Lines, 2),
+		error = ATGEN_ParseReply(s, GetLineString(msg->Buffer, &Priv->Lines, 2),
 					"+MPBR: @i-@i, @0",
 					&Priv->MotorolaFirstMemoryEntry,
 					&Priv->MotorolaMemorySize);
@@ -240,7 +240,7 @@ GSM_Error MOTOROLA_ReplyGetMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachine
 	}
 }
 
-GSM_Error MOTOROLA_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error MOTOROLA_ReplyGetMemory(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
  	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
  	GSM_MemoryEntry		*Memory = s->Phone.Data.Memory;
@@ -263,7 +263,7 @@ GSM_Error MOTOROLA_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		Memory->Entries[1].SMSList[0] = 0;
 
 		/* Get line from reply */
-		str = GetLineString(msg.Buffer, &Priv->Lines, 2);
+		str = GetLineString(msg->Buffer, &Priv->Lines, 2);
 
 		/* Detect empty entry */
 		if (strcmp(str, "OK") == 0) return ERR_EMPTY;
@@ -360,7 +360,7 @@ GSM_Error MOTOROLA_UnlockCalendar(GSM_StateMachine *s)
 	return error;
 }
 
-GSM_Error MOTOROLA_ReplyGetCalendarStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error MOTOROLA_ReplyGetCalendarStatus(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error error;
@@ -386,7 +386,7 @@ GSM_Error MOTOROLA_ReplyGetCalendarStatus(GSM_Protocol_Message msg, GSM_StateMac
 	 */
 
 	error = ATGEN_ParseReply(s,
-		GetLineString(msg.Buffer, &Priv->Lines, 2),
+		GetLineString(msg->Buffer, &Priv->Lines, 2),
 		"+MDBR: @i, @i, @i, @i, @i",
 		&s->Phone.Data.CalStatus->Free,
 		&s->Phone.Data.CalStatus->Used,
@@ -497,7 +497,7 @@ GSM_Error MOTOROLA_ParseCalendarSimple(GSM_StateMachine *s, const char *line)
 	return error;
 }
 
-GSM_Error MOTOROLA_ReplyGetCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error MOTOROLA_ReplyGetCalendar(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error error;
@@ -516,7 +516,7 @@ GSM_Error MOTOROLA_ReplyGetCalendar(GSM_Protocol_Message msg, GSM_StateMachine *
 		}
 	}
 
-	line = GetLineString(msg.Buffer, &Priv->Lines, 2);
+	line = GetLineString(msg->Buffer, &Priv->Lines, 2);
 
 	if (strcmp("OK", line) == 0) {
 		return ERR_EMPTY;
@@ -582,7 +582,7 @@ GSM_Error MOTOROLA_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	return error;
 }
 
-GSM_Error MOTOROLA_ReplySetCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error MOTOROLA_ReplySetCalendar(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	return ERR_NOTIMPLEMENTED;
 }
@@ -625,7 +625,7 @@ GSM_Error MOTOROLA_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	return ERR_NOTIMPLEMENTED;
 }
 
-GSM_Error MOTOROLA_ReplyGetMPBRMemoryStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error MOTOROLA_ReplyGetMPBRMemoryStatus(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
  	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 

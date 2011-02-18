@@ -39,7 +39,7 @@ static GSM_Error N9210_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 	return ERR_NOTSUPPORTED;
 }
 
-static GSM_Error N9210_ReplySetOpLogo(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
+static GSM_Error N9210_ReplySetOpLogo(GSM_Protocol_Message *msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "Operator logo clear/set\n");
 	return ERR_NONE;
@@ -130,7 +130,7 @@ static GSM_Error N9210_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 	return ERR_NOTSUPPORTED;
 }
 
-static GSM_Error N9210_ReplyIncomingSMS(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error N9210_ReplyIncomingSMS(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_SMSMessage		sms;
 	GSM_Phone_Data		*Data = &s->Phone.Data;
@@ -139,12 +139,12 @@ static GSM_Error N9210_ReplyIncomingSMS(GSM_Protocol_Message msg, GSM_StateMachi
 	smprintf(s, "SMS message received\n");
 	sms.State 	= SMS_UnRead;
 	sms.InboxFolder = TRUE;
-	DCT3_DecodeSMSFrame(s, &sms,msg.Buffer+5);
+	DCT3_DecodeSMSFrame(s, &sms,msg->Buffer+5);
 #endif
 	if (Data->EnableIncomingSMS && s->User.IncomingSMS!=NULL) {
 		sms.State 	= SMS_UnRead;
 		sms.InboxFolder = TRUE;
-		DCT3_DecodeSMSFrame(s, &sms,msg.Buffer+5);
+		DCT3_DecodeSMSFrame(s, &sms,msg->Buffer+5);
 
 		s->User.IncomingSMS(s,sms, s->User.IncomingSMSUserData);
 	}
@@ -152,21 +152,21 @@ static GSM_Error N9210_ReplyIncomingSMS(GSM_Protocol_Message msg, GSM_StateMachi
 }
 
 #ifdef GSM_ENABLE_N71_92INCOMINGINFO
-static GSM_Error N9210_ReplySetIncomingSMS(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error N9210_ReplySetIncomingSMS(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
-	switch (msg.Buffer[3]) {
+	switch (msg->Buffer[3]) {
 	case 0x0e:
 		s->Phone.Data.EnableIncomingSMS = TRUE;
 		smprintf(s, "Incoming SMS enabled\n");
 		return ERR_NONE;
 	case 0x0f:
 		smprintf(s, "Error enabling incoming SMS\n");
-		switch (msg.Buffer[4]) {
+		switch (msg->Buffer[4]) {
 		case 0x0c:
 			smprintf(s, "No PIN ?\n");
 			return ERR_SECURITYERROR;
 		default:
-			smprintf(s, "ERROR: unknown %i\n",msg.Buffer[4]);
+			smprintf(s, "ERROR: unknown %i\n",msg->Buffer[4]);
 		}
 	}
 	return ERR_UNKNOWNRESPONSE;

@@ -11,9 +11,9 @@ typedef enum {
 	DCT4_MODE_LOCAL  = 0x05
 } DCT4_PHONE_MODE;
 
-GSM_Error DCT4_ReplyGetPhoneMode (GSM_Protocol_Message msg, GSM_StateMachine *s);
-GSM_Error DCT4_ReplySetPhoneMode (GSM_Protocol_Message msg, GSM_StateMachine *s);
-GSM_Error DCT4_ReplyGetIMEI	 (GSM_Protocol_Message msg, GSM_StateMachine *s);
+GSM_Error DCT4_ReplyGetPhoneMode (GSM_Protocol_Message *msg, GSM_StateMachine *s);
+GSM_Error DCT4_ReplySetPhoneMode (GSM_Protocol_Message *msg, GSM_StateMachine *s);
+GSM_Error DCT4_ReplyGetIMEI	 (GSM_Protocol_Message *msg, GSM_StateMachine *s);
 
 GSM_Error DCT4_GetPhoneMode	 (GSM_StateMachine *s);
 GSM_Error DCT4_SetPhoneMode	 (GSM_StateMachine *s, DCT4_PHONE_MODE mode);

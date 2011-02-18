@@ -10,7 +10,7 @@ getting sms status.
 
     Defines reply function for phone driver.
 
-    .. c:member:: GSM_Error (*Function)	(GSM_Protocol_Message msg, GSM_StateMachine *s);
+    .. c:member:: GSM_Error (*Function)	(GSM_Protocol_Message *msg, GSM_StateMachine *s);
 
         Callback on reply match.
 

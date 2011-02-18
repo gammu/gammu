@@ -60,7 +60,7 @@ static void N71_65_GetCalendarAlarm(GSM_StateMachine *s, unsigned char *buffer, 
 }
 
 /* method 2 */
-GSM_Error N71_65_ReplyGetNextCalendar2(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error N71_65_ReplyGetNextCalendar2(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_DateTime 		Date;
 	GSM_CalendarEntry	*entry = s->Phone.Data.Cal;
@@ -70,33 +70,33 @@ GSM_Error N71_65_ReplyGetNextCalendar2(GSM_Protocol_Message msg, GSM_StateMachin
 
 	smprintf(s, "Calendar note received method 2\n");
 
-	if (msg.Length < 10) return ERR_EMPTY;
+	if (msg->Length < 10) return ERR_EMPTY;
 
-	entry->Location = msg.Buffer[4]*256 + msg.Buffer[5];
+	entry->Location = msg->Buffer[4]*256 + msg->Buffer[5];
 	smprintf(s, "Location: %i\n",entry->Location);
 
 	/* Not birthday */
-	if (msg.Buffer[21] != 0x04) {
+	if (msg->Buffer[21] != 0x04) {
 		Date.Year 	= 2030;	Date.Month 	= 01; Date.Day    = 01;
 		Date.Hour 	= 00;	Date.Minute 	= 00; Date.Second = 00;
 	} else {
 		Date.Year 	= 2029; Date.Month 	= 12; Date.Day 	  = 31;
 		Date.Hour 	= 22;   Date.Minute 	= 59; Date.Second = 58;
 	}
-	diff  = ((unsigned int)msg.Buffer[12]) << 24;
-	diff += ((unsigned int)msg.Buffer[13]) << 16;
-	diff += ((unsigned int)msg.Buffer[14]) << 8;
-	diff += msg.Buffer[15];
+	diff  = ((unsigned int)msg->Buffer[12]) << 24;
+	diff += ((unsigned int)msg->Buffer[13]) << 16;
+	diff += ((unsigned int)msg->Buffer[14]) << 8;
+	diff += msg->Buffer[15];
 	smprintf(s, "  Difference : %li seconds\n", diff);
 	GetTimeDifference(diff, &Date, TRUE, 1);
 	Date.Year += 20;
 	entry->Entries[0].EntryType = CAL_START_DATETIME;
 
-	smprintf(s, "Note type %02x: ",msg.Buffer[21]);
-	switch (msg.Buffer[21]) {
+	smprintf(s, "Note type %02x: ",msg->Buffer[21]);
+	switch (msg->Buffer[21]) {
 	case 0x01:
 	case 0x08:
-		if (msg.Buffer[21] == 0x01) {
+		if (msg->Buffer[21] == 0x01) {
 			smprintf(s, "Meeting or Reminder\n");
 			entry->Type = GSM_CAL_MEETING;
 		} else {
@@ -107,12 +107,12 @@ GSM_Error N71_65_ReplyGetNextCalendar2(GSM_Protocol_Message msg, GSM_StateMachin
 		memcpy(&entry->Entries[0].Date,&Date,sizeof(GSM_DateTime));
 		entry->EntriesNum++;
 
-		N71_65_GetCalendarAlarm(s, msg.Buffer+16, entry, 0, Data);
-		GSM_GetCalendarRecurranceRepeat(&(s->di), msg.Buffer+22, NULL, entry);
+		N71_65_GetCalendarAlarm(s, msg->Buffer+16, entry, 0, Data);
+		GSM_GetCalendarRecurranceRepeat(&(s->di), msg->Buffer+22, NULL, entry);
 
-		memcpy(entry->Entries[entry->EntriesNum].Text, msg.Buffer+30, msg.Buffer[28]*2);
-		entry->Entries[entry->EntriesNum].Text[msg.Buffer[28]*2]   = 0;
-		entry->Entries[entry->EntriesNum].Text[msg.Buffer[28]*2+1] = 0;
+		memcpy(entry->Entries[entry->EntriesNum].Text, msg->Buffer+30, msg->Buffer[28]*2);
+		entry->Entries[entry->EntriesNum].Text[msg->Buffer[28]*2]   = 0;
+		entry->Entries[entry->EntriesNum].Text[msg->Buffer[28]*2+1] = 0;
 		entry->Entries[entry->EntriesNum].EntryType		   = CAL_TEXT;
 		break;
 	case 0x02:
@@ -122,12 +122,12 @@ GSM_Error N71_65_ReplyGetNextCalendar2(GSM_Protocol_Message msg, GSM_StateMachin
 		memcpy(&entry->Entries[0].Date,&Date,sizeof(GSM_DateTime));
 		entry->EntriesNum++;
 
-		N71_65_GetCalendarAlarm(s, msg.Buffer+16, entry, 0, Data);
-		GSM_GetCalendarRecurranceRepeat(&(s->di), msg.Buffer+22, NULL, entry);
+		N71_65_GetCalendarAlarm(s, msg->Buffer+16, entry, 0, Data);
+		GSM_GetCalendarRecurranceRepeat(&(s->di), msg->Buffer+22, NULL, entry);
 
-		i = msg.Buffer[28] * 2;
+		i = msg->Buffer[28] * 2;
 		if (i!=0) {
-			memcpy(entry->Entries[entry->EntriesNum].Text, msg.Buffer+30, i);
+			memcpy(entry->Entries[entry->EntriesNum].Text, msg->Buffer+30, i);
 			entry->Entries[entry->EntriesNum].Text[i]   	= 0;
 			entry->Entries[entry->EntriesNum].Text[i+1] 	= 0;
 			entry->Entries[entry->EntriesNum].EntryType	= CAL_PHONE;
@@ -135,9 +135,9 @@ GSM_Error N71_65_ReplyGetNextCalendar2(GSM_Protocol_Message msg, GSM_StateMachin
 			entry->EntriesNum++;
 		}
 
-		memcpy(entry->Entries[entry->EntriesNum].Text, msg.Buffer+30+i, msg.Buffer[29]*2);
-		entry->Entries[entry->EntriesNum].Text[msg.Buffer[29]*2]   = 0;
-		entry->Entries[entry->EntriesNum].Text[msg.Buffer[29]*2+1] = 0;
+		memcpy(entry->Entries[entry->EntriesNum].Text, msg->Buffer+30+i, msg->Buffer[29]*2);
+		entry->Entries[entry->EntriesNum].Text[msg->Buffer[29]*2]   = 0;
+		entry->Entries[entry->EntriesNum].Text[msg->Buffer[29]*2+1] = 0;
 		entry->Entries[entry->EntriesNum].EntryType		   = CAL_TEXT;
 		break;
 	case 0x04:
@@ -152,23 +152,23 @@ GSM_Error N71_65_ReplyGetNextCalendar2(GSM_Protocol_Message msg, GSM_StateMachin
 		entry->Entries[0].Date.Second	= 58;
 		entry->EntriesNum++;
 
-		N71_65_GetCalendarAlarm(s, msg.Buffer+16, entry, 0, Data);
-		GSM_GetCalendarRecurranceRepeat(&(s->di), msg.Buffer+22, NULL, entry);
+		N71_65_GetCalendarAlarm(s, msg->Buffer+16, entry, 0, Data);
+		GSM_GetCalendarRecurranceRepeat(&(s->di), msg->Buffer+22, NULL, entry);
 
 		/* Birthday year */
-		entry->Entries[0].Date.Year = msg.Buffer[28]*256 + msg.Buffer[29];
-		if (msg.Buffer[28] == 0xff && msg.Buffer[29] == 0xff) entry->Entries[0].Date.Year = 0;
+		entry->Entries[0].Date.Year = msg->Buffer[28]*256 + msg->Buffer[29];
+		if (msg->Buffer[28] == 0xff && msg->Buffer[29] == 0xff) entry->Entries[0].Date.Year = 0;
 		smprintf(s, "Birthday date: %02i-%02i-%04i\n",
 			entry->Entries[0].Date.Day,entry->Entries[0].Date.Month,
 			entry->Entries[0].Date.Year);
 
-		memcpy(entry->Entries[entry->EntriesNum].Text, msg.Buffer+32, msg.Buffer[31]*2);
-		entry->Entries[entry->EntriesNum].Text[msg.Buffer[31]*2]   = 0;
-		entry->Entries[entry->EntriesNum].Text[msg.Buffer[31]*2+1] = 0;
+		memcpy(entry->Entries[entry->EntriesNum].Text, msg->Buffer+32, msg->Buffer[31]*2);
+		entry->Entries[entry->EntriesNum].Text[msg->Buffer[31]*2]   = 0;
+		entry->Entries[entry->EntriesNum].Text[msg->Buffer[31]*2+1] = 0;
 		entry->Entries[entry->EntriesNum].EntryType		   = CAL_TEXT;
 		break;
 	default:
-		smprintf(s, "ERROR: unknown %i\n",msg.Buffer[6]);
+		smprintf(s, "ERROR: unknown %i\n",msg->Buffer[6]);
 		return ERR_UNKNOWNRESPONSE;
 	}
 	smprintf(s, "Text         : \"%s\"\n", DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));

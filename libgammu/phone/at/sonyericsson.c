@@ -83,7 +83,7 @@ GSM_Error SONYERICSSON_GetScreenshot(GSM_StateMachine *s, GSM_BinaryPicture *pic
 	return error;
 }
 
-GSM_Error SONYERICSSON_Reply_Screenshot(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error SONYERICSSON_Reply_Screenshot(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Error error;
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
@@ -102,7 +102,7 @@ GSM_Error SONYERICSSON_Reply_Screenshot(GSM_Protocol_Message msg, GSM_StateMachi
 		param3 = 0;
 		param4 = 0;
 		do {
-			string = GetLineString(msg.Buffer, &Priv->Lines, line+1);
+			string = GetLineString(msg->Buffer, &Priv->Lines, line+1);
 
 			/*
 			 * *ZISI: 320, 240, 16, 0
@@ -141,7 +141,7 @@ GSM_Error SONYERICSSON_Reply_Screenshot(GSM_Protocol_Message msg, GSM_StateMachi
 	}
 
 	s->Phone.Data.Picture->Type = PICTURE_BMP;
-	s->Phone.Data.Picture->Buffer = (unsigned char *)malloc(msg.Length);
+	s->Phone.Data.Picture->Buffer = (unsigned char *)malloc(msg->Length);
 	if (s->Phone.Data.Picture->Buffer == NULL) {
 		return ERR_MOREMEMORY;
 	}
@@ -249,7 +249,7 @@ static int SONYERICSSON_Screenshot_addPixel(u8 alpha, u8 red, u8 green, u8 blue,
 }
 
 
-GSM_Error SONYERICSSON_Reply_ScreenshotData(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error SONYERICSSON_Reply_ScreenshotData(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Error error = ERR_NONE;
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
@@ -281,7 +281,7 @@ GSM_Error SONYERICSSON_Reply_ScreenshotData(GSM_Protocol_Message msg, GSM_StateM
 
 		i = 0;
 		state = STATE_ALPHA0;
-		while (i < msg.BufferUsed) {
+		while (i < msg->BufferUsed) {
 			/* Tokenize. The tokens are:
 			 *  - TOKEN_COMMAND_ZISI_ECHO: "AT*ZISI"
 			 *  - TOKEN_RESPONSE_ZISI: "*ZISI:"
@@ -305,9 +305,9 @@ GSM_Error SONYERICSSON_Reply_ScreenshotData(GSM_Protocol_Message msg, GSM_StateM
 			 *  - TOKEN_DATA_F: "F"
 			 */
 
-			switch (msg.Buffer[i]) {
+			switch (msg->Buffer[i]) {
 				case 'A':
-					if (strlen("AT*ZISI") <= msg.BufferUsed - i && strncmp(&msg.Buffer[i], "AT*ZISI", strlen("AT*ZISI")) == 0) {
+					if (strlen("AT*ZISI") <= msg->BufferUsed - i && strncmp(&msg->Buffer[i], "AT*ZISI", strlen("AT*ZISI")) == 0) {
 						token = TOKEN_COMMAND_ZISI_ECHO;
 						i += strlen("AT*ZISI");
 					} else {
@@ -316,7 +316,7 @@ GSM_Error SONYERICSSON_Reply_ScreenshotData(GSM_Protocol_Message msg, GSM_StateM
 					}
 					break;
 				case '*':
-					if (strlen("*ZISI:") <= msg.BufferUsed - i && strncmp(&msg.Buffer[i], "*ZISI:", strlen("*ZISI:")) == 0) {
+					if (strlen("*ZISI:") <= msg->BufferUsed - i && strncmp(&msg->Buffer[i], "*ZISI:", strlen("*ZISI:")) == 0) {
 						token = TOKEN_RESPONSE_ZISI;
 						i += strlen("*ZISI:");
 					} else {
@@ -325,7 +325,7 @@ GSM_Error SONYERICSSON_Reply_ScreenshotData(GSM_Protocol_Message msg, GSM_StateM
 					}
 					break;
 				case 'O':
-					if (strlen("OK") <= msg.BufferUsed - i && strncmp(&msg.Buffer[i], "OK", strlen("OK")) == 0) {
+					if (strlen("OK") <= msg->BufferUsed - i && strncmp(&msg->Buffer[i], "OK", strlen("OK")) == 0) {
 						token = TOKEN_RESPONSE_OK;
 						i += strlen("OK");
 					} else {

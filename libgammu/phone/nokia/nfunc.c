@@ -1019,9 +1019,9 @@ void NOKIA_DecodeSMSState(GSM_StateMachine *s, unsigned char state, GSM_SMSMessa
 	}
 }
 
-GSM_Error NOKIA_ReplyGetPhoneString(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error NOKIA_ReplyGetPhoneString(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
-	strcpy(s->Phone.Data.PhoneString, msg.Buffer+s->Phone.Data.StartPhoneString);
+	strcpy(s->Phone.Data.PhoneString, msg->Buffer+s->Phone.Data.StartPhoneString);
 	return ERR_NONE;
 }
 
@@ -1148,33 +1148,33 @@ void NOKIA_GetDefaultProfileName(GSM_Profile *Profile)
 
 /* - Shared for DCT3 (n6110.c, n7110.c, n9110.c) and DCT4 (n6510.c) phones - */
 
-GSM_Error DCT3DCT4_ReplyCallDivert(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error DCT3DCT4_ReplyCallDivert(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_MultiCallDivert 	*cd = s->Phone.Data.Divert;
 	int			i,pos = 11,j;
 	size_t number_pos;
 	GSM_Error error;
 
-	switch (msg.Buffer[3]) {
+	switch (msg->Buffer[3]) {
   	case 0x02:
 		smprintf(s,"Message: Call divert status received\n");
   	  	smprintf(s,"   Divert type: ");
-    		switch (msg.Buffer[6]) {
+    		switch (msg->Buffer[6]) {
       			case 0x43: smprintf(s,"when busy");			break;
 	      		case 0x3d: smprintf(s,"when not answered");		break;
       			case 0x3e: smprintf(s,"when phone off or no coverage");	break;
 	      		case 0x15: smprintf(s,"all types of diverts");		break;
-	      		default:   smprintf(s,"unknown %i",msg.Buffer[6]);	break;
+	      		default:   smprintf(s,"unknown %i",msg->Buffer[6]);	break;
 	    	}
 		/* 6150 */
-		if (msg.Length == 0x0b) {
+		if (msg->Length == 0x0b) {
 			cd->Response.EntriesNum = 0;
 			return ERR_NONE;
 		}
-		cd->Response.EntriesNum = msg.Buffer[10];
+		cd->Response.EntriesNum = msg->Buffer[10];
 		for (i=0;i<cd->Response.EntriesNum;i++) {
 		    	smprintf(s,"\n   Calls type : ");
-		      	switch (msg.Buffer[pos]) {
+		      	switch (msg->Buffer[pos]) {
         		case 0x0b:
 				smprintf(s,"voice");
 				cd->Response.Entries[i].CallType = GSM_DIVERT_VoiceCalls;
@@ -1188,23 +1188,23 @@ GSM_Error DCT3DCT4_ReplyCallDivert(GSM_Protocol_Message msg, GSM_StateMachine *s
 				cd->Response.Entries[i].CallType = GSM_DIVERT_DataCalls;
 				break;
         		default:
-				smprintf(s,"unknown %i",msg.Buffer[pos]);
+				smprintf(s,"unknown %i",msg->Buffer[pos]);
 				/* 6310i */
 				cd->Response.EntriesNum = 0;
 				return ERR_NONE;
 	    		}
 		    	smprintf(s,"\n");
 			j = pos + 2;
-			while (msg.Buffer[j] != 0x00) j++;
-			msg.Buffer[pos+1] = j - pos - 2;
+			while (msg->Buffer[j] != 0x00) j++;
+			msg->Buffer[pos+1] = j - pos - 2;
 			number_pos = pos + 1;
-			error = GSM_UnpackSemiOctetNumber(&(s->di), cd->Response.Entries[i].Number, msg.Buffer, &number_pos, msg.Length, FALSE);
+			error = GSM_UnpackSemiOctetNumber(&(s->di), cd->Response.Entries[i].Number, msg->Buffer, &number_pos, msg->Length, FALSE);
 			if (error != ERR_NONE) {
 				return error;
 			}
 	      		smprintf(s,"   Number     : %s\n",DecodeUnicodeString(cd->Response.Entries[i].Number));
-	        	cd->Response.Entries[i].Timeout = msg.Buffer[pos+34];
-	 	     	smprintf(s,"   Timeout    : %i seconds\n",msg.Buffer[pos+34]);
+	        	cd->Response.Entries[i].Timeout = msg->Buffer[pos+34];
+	 	     	smprintf(s,"   Timeout    : %i seconds\n",msg->Buffer[pos+34]);
 			pos+=35;
 	    	}
     		return ERR_NONE;
@@ -1282,12 +1282,12 @@ GSM_Error DCT3DCT4_CancelAllDiverts(GSM_StateMachine *s)
 	return GSM_WaitFor (s, req, 0x09, 0x06, 10, ID_Divert);
 }
 
-GSM_Error DCT3DCT4_ReplyGetActiveConnectSet(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error DCT3DCT4_ReplyGetActiveConnectSet(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Phone_Data *Data = &s->Phone.Data;
 
 	Data->WAPSettings->Active = FALSE;
-	if (Data->WAPSettings->Location - 1 == msg.Buffer[4]) {
+	if (Data->WAPSettings->Location - 1 == msg->Buffer[4]) {
 		Data->WAPSettings->Active = TRUE;
 	}
 	return ERR_NONE;
@@ -1301,7 +1301,7 @@ GSM_Error DCT3DCT4_GetActiveConnectSet(GSM_StateMachine *s)
 	return GSM_WaitFor (s, GetSetreq, 4, 0x3f, 4, ID_GetConnectSet);
 }
 
-GSM_Error DCT3DCT4_ReplySetActiveConnectSet(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
+GSM_Error DCT3DCT4_ReplySetActiveConnectSet(GSM_Protocol_Message *msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "Connection settings activated\n");
 	return ERR_NONE;
@@ -1337,29 +1337,29 @@ GSM_Error DCT3DCT4_SendDTMF(GSM_StateMachine *s, char *DTMFSequence)
 	return GSM_WaitFor (s, req, 5+strlen(DTMFSequence), 0x01, 4, ID_SendDTMF);
 }
 
-GSM_Error DCT3DCT4_ReplyGetWAPBookmark(GSM_Protocol_Message msg, GSM_StateMachine *s, gboolean FullLength)
+GSM_Error DCT3DCT4_ReplyGetWAPBookmark(GSM_Protocol_Message *msg, GSM_StateMachine *s, gboolean FullLength)
 {
 	int 			tmp;
 	GSM_Phone_Data		*Data = &s->Phone.Data;
 
 	smprintf(s, "WAP bookmark received\n");
-	switch (msg.Buffer[3]) {
+	switch (msg->Buffer[3]) {
 	case 0x07:
 		tmp = 4;
 
-		Data->WAPBookmark->Location = msg.Buffer[tmp] * 256 + msg.Buffer[tmp+1];
+		Data->WAPBookmark->Location = msg->Buffer[tmp] * 256 + msg->Buffer[tmp+1];
 		smprintf(s, "Location: %i\n",Data->WAPBookmark->Location);
 		tmp = tmp + 2;
 
- 		NOKIA_GetUnicodeString(s, &tmp, msg.Buffer, Data->WAPBookmark->Title, FullLength);
+ 		NOKIA_GetUnicodeString(s, &tmp, msg->Buffer, Data->WAPBookmark->Title, FullLength);
 		smprintf(s, "Title   : \"%s\"\n",DecodeUnicodeString(Data->WAPBookmark->Title));
 
- 		NOKIA_GetUnicodeString(s, &tmp, msg.Buffer, Data->WAPBookmark->Address, FullLength);
+ 		NOKIA_GetUnicodeString(s, &tmp, msg->Buffer, Data->WAPBookmark->Address, FullLength);
 		smprintf(s, "Address : \"%s\"\n",DecodeUnicodeString(Data->WAPBookmark->Address));
 
 		return ERR_NONE;
 	case 0x08:
-		switch (msg.Buffer[4]) {
+		switch (msg->Buffer[4]) {
 		case 0x01:
 			smprintf(s, "Security error. Inside WAP bookmarks menu\n");
 			return ERR_INSIDEPHONEMENU;
@@ -1367,22 +1367,22 @@ GSM_Error DCT3DCT4_ReplyGetWAPBookmark(GSM_Protocol_Message msg, GSM_StateMachin
 			smprintf(s, "Invalid or empty\n");
 			return ERR_INVALIDLOCATION;
 		default:
-			smprintf(s, "ERROR: unknown %i\n",msg.Buffer[4]);
+			smprintf(s, "ERROR: unknown %i\n",msg->Buffer[4]);
 			return ERR_UNKNOWNRESPONSE;
 		}
 	}
 	return ERR_UNKNOWNRESPONSE;
 }
 
-GSM_Error DCT3DCT4_ReplySetWAPBookmark(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error DCT3DCT4_ReplySetWAPBookmark(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
-	switch (msg.Buffer[3]) {
+	switch (msg->Buffer[3]) {
 	case 0x0A:
 		smprintf(s, "WAP bookmark set OK\n");
 		return ERR_NONE;
 	case 0x0B:
 		smprintf(s, "WAP bookmark setting error\n");
-		switch (msg.Buffer[4]) {
+		switch (msg->Buffer[4]) {
 		case 0x01:
 			smprintf(s, "Security error. Inside WAP bookmarks menu\n");
 			return ERR_INSIDEPHONEMENU;
@@ -1393,14 +1393,14 @@ GSM_Error DCT3DCT4_ReplySetWAPBookmark(GSM_Protocol_Message msg, GSM_StateMachin
 			smprintf(s, "Full memory\n");
 			return ERR_FULL;
 		default:
-			smprintf(s, "ERROR: unknown %i\n",msg.Buffer[4]);
+			smprintf(s, "ERROR: unknown %i\n",msg->Buffer[4]);
 			return ERR_UNKNOWNRESPONSE;
 		}
 	}
 	return ERR_UNKNOWNRESPONSE;
 }
 
-GSM_Error DCT3DCT4_ReplyEnableConnectFunc(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
+GSM_Error DCT3DCT4_ReplyEnableConnectFunc(GSM_Protocol_Message *msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "Connection functions enabled\n");
 	return ERR_NONE;
@@ -1416,7 +1416,7 @@ GSM_Error DCT3DCT4_EnableWAPFunctions(GSM_StateMachine *s)
 	return GSM_WaitFor (s, req, 4, 0x3f, 4, ID_EnableConnectFunc);
 }
 
-GSM_Error DCT3DCT4_ReplyDisableConnectFunc(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
+GSM_Error DCT3DCT4_ReplyDisableConnectFunc(GSM_Protocol_Message *msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "Connection functions disabled\n");
 	return ERR_NONE;
@@ -1432,15 +1432,15 @@ GSM_Error DCT3DCT4_DisableConnectionFunctions(GSM_StateMachine *s)
 	return GSM_WaitFor (s, req, 4, 0x3f, 4, ID_DisableConnectFunc);
 }
 
-GSM_Error DCT3DCT4_ReplyDelWAPBookmark(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error DCT3DCT4_ReplyDelWAPBookmark(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
-	switch (msg.Buffer[3]) {
+	switch (msg->Buffer[3]) {
 	case 0x0D:
 		smprintf(s, "WAP bookmark deleted OK\n");
 		return ERR_NONE;
 	case 0x0E:
 		smprintf(s, "WAP bookmark deleting error\n");
-		switch (msg.Buffer[4]) {
+		switch (msg->Buffer[4]) {
 		case 0x01:
 			smprintf(s, "Security error. Inside WAP bookmarks menu\n");
 			return ERR_SECURITYERROR;
@@ -1448,7 +1448,7 @@ GSM_Error DCT3DCT4_ReplyDelWAPBookmark(GSM_Protocol_Message msg, GSM_StateMachin
 			smprintf(s, "Invalid location\n");
 			return ERR_INVALIDLOCATION;
 		default:
-			smprintf(s, "ERROR: unknown %i\n",msg.Buffer[4]);
+			smprintf(s, "ERROR: unknown %i\n",msg->Buffer[4]);
 			return ERR_UNKNOWNRESPONSE;
 		}
 	}
@@ -1518,23 +1518,23 @@ GSM_Error DCT3DCT4_AnswerCall(GSM_StateMachine *s, int ID)
 	return GSM_WaitFor (s, req, 6, 0x01, 4, ID_AnswerCall);
 }
 
-GSM_Error DCT3DCT4_ReplyGetModelFirmware(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error DCT3DCT4_ReplyGetModelFirmware(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_CutLines	lines;
 	GSM_Phone_Data	*Data = &s->Phone.Data;
 
 	InitLines(&lines);
 
-	SplitLines(msg.Buffer, msg.Length, &lines, "\x20\x0A", 2, "", 0, FALSE);
+	SplitLines(msg->Buffer, msg->Length, &lines, "\x20\x0A", 2, "", 0, FALSE);
 
-	strcpy(Data->Model,GetLineString(msg.Buffer, &lines, 4));
+	strcpy(Data->Model,GetLineString(msg->Buffer, &lines, 4));
 	smprintf(s, "Received model %s\n",Data->Model);
 	Data->ModelInfo = GetModelData(s, NULL, Data->Model, NULL);
 
-	strcpy(Data->VerDate,GetLineString(msg.Buffer, &lines, 3));
+	strcpy(Data->VerDate,GetLineString(msg->Buffer, &lines, 3));
 	smprintf(s, "Received firmware date %s\n",Data->VerDate);
 
-	strcpy(Data->Version,GetLineString(msg.Buffer, &lines, 2));
+	strcpy(Data->Version,GetLineString(msg->Buffer, &lines, 2));
 	smprintf(s, "Received firmware version %s\n",Data->Version);
 	GSM_CreateFirmwareNumber(s);
 
@@ -1634,12 +1634,12 @@ GSM_Error N71_65_ReplyGetMemoryError(unsigned char error, GSM_StateMachine *s)
 	}
 }
 
-GSM_Error N71_65_ReplyWritePhonebook(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error N71_65_ReplyWritePhonebook(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
-	switch (msg.Buffer[6]) {
+	switch (msg->Buffer[6]) {
 	case 0x0f:
 		smprintf(s, "Phonebook entry writing failed\n");
-		switch (msg.Buffer[10]) {
+		switch (msg->Buffer[10]) {
 		case 0xf:
 			smprintf(s, "Invalid block sent\n");
 			return ERR_BUG;
@@ -1674,7 +1674,7 @@ GSM_Error N71_65_ReplyWritePhonebook(GSM_Protocol_Message msg, GSM_StateMachine 
 			smprintf(s, "Incorrect characters\n");
 			return ERR_NOTSUPPORTED;
 		default:
-			smprintf(s, "ERROR: unknown %i\n",msg.Buffer[10]);
+			smprintf(s, "ERROR: unknown %i\n",msg->Buffer[10]);
 			return ERR_UNKNOWNRESPONSE;
 		}
 	default:
@@ -1807,15 +1807,15 @@ GSM_Error NOKIA_SetIncomingSMS(GSM_StateMachine *s, gboolean enable)
 	return ERR_NONE;
 }
 
-GSM_Error N71_65_ReplyUSSDInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error N71_65_ReplyUSSDInfo(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	unsigned char buffer[2000];
 	GSM_USSDMessage ussd;
 
 	if (s->Phone.Data.RequestID == ID_Divert) return ERR_NONE;
 
-	memcpy(buffer,msg.Buffer+8,msg.Buffer[7]);
-	buffer[msg.Buffer[7]] = 0x00;
+	memcpy(buffer,msg->Buffer+8,msg->Buffer[7]);
+	buffer[msg->Buffer[7]] = 0x00;
 
 	smprintf(s, "USSD reply: \"%s\"\n",buffer);
 
@@ -1859,7 +1859,7 @@ GSM_Error NOKIA_SetIncomingCall(GSM_StateMachine *s, gboolean enable)
 	return ERR_NONE;
 }
 
-GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Call 	call;
 	int		tmp;
@@ -1871,7 +1871,7 @@ GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	call.PhoneNumber[0] = 0;
 	call.PhoneNumber[1] = 0;
 	smprintf(s, "Call info, ");
-	switch (msg.Buffer[3]) {
+	switch (msg->Buffer[3]) {
 	case 0x02:
 		smprintf(s, "Call established, waiting for answer\n");
 		call.Status = GSM_CALL_CallEstablished;
@@ -1879,10 +1879,10 @@ GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	case 0x03:
 	case 0x53:
 	case 0x05:
-		if (msg.Buffer[3] == 0x03) {
+		if (msg->Buffer[3] == 0x03) {
 			smprintf(s, "Call started\n");
 			call.Status = GSM_CALL_CallStart;
-		} else if (msg.Buffer[3] == 0x05) {
+		} else if (msg->Buffer[3] == 0x05) {
 			smprintf(s, "Incoming call\n");
 			call.Status = GSM_CALL_IncomingCall;
 		} else {
@@ -1896,26 +1896,26 @@ GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 00 |6Fo|00 |72r|00 |69i|00 |73s|00 |20 |00 |41A|00 |63c|00 |63c .o.r.i.s. .A.c.c
 00 |00 |00 |00 |00 |00 |00 |00 |00 |00 |00 |00                  ............
 */
-		smprintf(s, "Call mode  : %i\n",msg.Buffer[5]);/* such interpretation is in gnokii */
+		smprintf(s, "Call mode  : %i\n",msg->Buffer[5]);/* such interpretation is in gnokii */
 		/* This is probably wrong, but I need more sample data to properly parse output */
-		if (msg.Buffer[6] == 7) {
+		if (msg->Buffer[6] == 7) {
 			tmp = 14;
 		} else {
 			tmp = 6;
 		}
-		NOKIA_GetUnicodeString(s, &tmp, msg.Buffer,call.PhoneNumber,FALSE);
+		NOKIA_GetUnicodeString(s, &tmp, msg->Buffer,call.PhoneNumber,FALSE);
 		smprintf(s, "Number     : \"%s\"\n",DecodeUnicodeString(call.PhoneNumber));
 		/* FIXME: read name from frame */
 
 		break;
 	case 0x04:
 		smprintf(s, "Remote end hang up\n");
-		smprintf(s, "Cause Type : %i\n",msg.Buffer[5]);/* such interpretation is in gnokii */
-		smprintf(s, "CC         : %i\n",msg.Buffer[6]);
-		smprintf(s, "MM(?)      : %i\n",msg.Buffer[7]);
-		smprintf(s, "RR(?)      : %i\n",msg.Buffer[8]);
+		smprintf(s, "Cause Type : %i\n",msg->Buffer[5]);/* such interpretation is in gnokii */
+		smprintf(s, "CC         : %i\n",msg->Buffer[6]);
+		smprintf(s, "MM(?)      : %i\n",msg->Buffer[7]);
+		smprintf(s, "RR(?)      : %i\n",msg->Buffer[8]);
 		call.Status 	= GSM_CALL_CallRemoteEnd;
-		call.StatusCode = msg.Buffer[6];
+		call.StatusCode = msg->Buffer[6];
 		break;
 	case 0x07:
 		smprintf(s, "Call answer initiated\n");
@@ -1933,31 +1933,31 @@ GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		break;
 	case 0x0c:
 		smprintf(s, "Audio status\n");
-		if (msg.Buffer[4] == 0x01) smprintf(s, "Audio enabled\n");
+		if (msg->Buffer[4] == 0x01) smprintf(s, "Audio enabled\n");
 				      else smprintf(s, "Audio disabled\n");
 		call.CallIDAvailable = FALSE;
 		break;
 	case 0x0f: /* 6111 */
-		if (msg.Buffer[8]==0x01) {
+		if (msg->Buffer[8]==0x01) {
 			smprintf(s, "Calling from phone keypad ?\n");
-			if (msg.Buffer[14]==0x03) {
+			if (msg->Buffer[14]==0x03) {
 				tmp = 19;
 			} else {
 				tmp = 21;
-				NOKIA_GetUnicodeString(s, &tmp, msg.Buffer,buffer,FALSE);
+				NOKIA_GetUnicodeString(s, &tmp, msg->Buffer,buffer,FALSE);
 				smprintf(s, "Name       : \"%s\"\n",DecodeUnicodeString(buffer));
 				tmp+=7;
 			}
-			if (msg.Buffer[tmp-3]==0x11) {
+			if (msg->Buffer[tmp-3]==0x11) {
 				call.PhoneNumber[0]=0;
 				call.PhoneNumber[1]='+';
-				NOKIA_GetUnicodeString(s, &tmp, msg.Buffer,call.PhoneNumber+2,FALSE);
+				NOKIA_GetUnicodeString(s, &tmp, msg->Buffer,call.PhoneNumber+2,FALSE);
 			} else {
-				NOKIA_GetUnicodeString(s, &tmp, msg.Buffer,call.PhoneNumber,FALSE);
+				NOKIA_GetUnicodeString(s, &tmp, msg->Buffer,call.PhoneNumber,FALSE);
 			}
 			call.Status = GSM_CALL_OutgoingCall;
 		}
-		if (msg.Buffer[8]==0x00) {
+		if (msg->Buffer[8]==0x00) {
 			smprintf(s, "Call released\n");
 			call.Status = GSM_CALL_CallLocalEnd;
 		}
@@ -1985,17 +1985,17 @@ GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		call.CallIDAvailable = FALSE;
 		break;
 	}
-	if (call.CallIDAvailable) smprintf(s, "Call ID    : %d\n",msg.Buffer[4]);
+	if (call.CallIDAvailable) smprintf(s, "Call ID    : %d\n",msg->Buffer[4]);
 	if (s->Phone.Data.EnableIncomingCall && s->User.IncomingCall!=NULL && call.Status != 0) {
-		if (call.CallIDAvailable) call.CallID = msg.Buffer[4];
+		if (call.CallIDAvailable) call.CallID = msg->Buffer[4];
 		s->User.IncomingCall(s, call, s->User.IncomingCallUserData);
 	}
 	if (s->Phone.Data.RequestID == ID_DialVoice) {
-		if (msg.Buffer[3] == 0x10) return ERR_NOTSUPPORTED;
+		if (msg->Buffer[3] == 0x10) return ERR_NOTSUPPORTED;
 	}
 	if (s->Phone.Data.RequestID == ID_CancelCall) {
-		if (msg.Buffer[3] == 0x09) {
-			if (s->Phone.Data.CallID == msg.Buffer[4]) return ERR_NONE;
+		if (msg->Buffer[3] == 0x09) {
+			if (s->Phone.Data.CallID == msg->Buffer[4]) return ERR_NONE;
 			/* when we canceled call and see frame about other
 			 * call releasing, we don't give ERR_NONE for "our"
 			 * call release command
@@ -2004,8 +2004,8 @@ GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		}
 	}
 	if (s->Phone.Data.RequestID == ID_AnswerCall) {
-		if (msg.Buffer[3] == 0x07) {
-			if (s->Phone.Data.CallID == msg.Buffer[4]) return ERR_NONE;
+		if (msg->Buffer[3] == 0x07) {
+			if (s->Phone.Data.CallID == msg->Buffer[4]) return ERR_NONE;
 			return ERR_NEEDANOTHERANSWER;
 		}
 	}
@@ -2013,7 +2013,7 @@ GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 }
 
 /* method 2 */
-GSM_Error N71_65_ReplyAddCalendar2(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
+GSM_Error N71_65_ReplyAddCalendar2(GSM_Protocol_Message *msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "Calendar note added\n");
 	return ERR_NONE;
@@ -2175,10 +2175,10 @@ GSM_Error N71_65_AddCalendar2(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 }
 
 /* method 1*/
-GSM_Error N71_65_ReplyGetCalendarNotePos1(GSM_Protocol_Message msg, GSM_StateMachine *s,int *FirstCalendarPos)
+GSM_Error N71_65_ReplyGetCalendarNotePos1(GSM_Protocol_Message *msg, GSM_StateMachine *s,int *FirstCalendarPos)
 {
-	smprintf(s, "First calendar location: %i\n",msg.Buffer[4]*256+msg.Buffer[5]);
-	*FirstCalendarPos = msg.Buffer[4]*256+msg.Buffer[5];
+	smprintf(s, "First calendar location: %i\n",msg->Buffer[4]*256+msg->Buffer[5]);
+	*FirstCalendarPos = msg->Buffer[4]*256+msg->Buffer[5];
 	return ERR_NONE;
 }
 
@@ -2192,17 +2192,17 @@ static GSM_Error N71_65_GetCalendarNotePos1(GSM_StateMachine *s)
 }
 
 /* method 1 */
-GSM_Error N71_65_ReplyAddCalendar1(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error N71_65_ReplyAddCalendar1(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 #ifdef DEBUG
 	smprintf(s, "Written calendar note type ");
-	switch ((msg.Buffer[3]/2)-1) {
+	switch ((msg->Buffer[3]/2)-1) {
 		case 0:	smprintf(s, "Meeting");	break;
 		case 1:	smprintf(s, "Call");	break;
 		case 2:	smprintf(s, "Birthday");break;
 		case 3:	smprintf(s, "Reminder");break;
 	}
-	smprintf(s, " on location %d\n",msg.Buffer[4]*256+msg.Buffer[5]);
+	smprintf(s, " on location %d\n",msg->Buffer[4]*256+msg->Buffer[5]);
 #endif
 	return ERR_NONE;
 }
@@ -2363,11 +2363,11 @@ GSM_Error N71_65_AddCalendar1(GSM_StateMachine *s, GSM_CalendarEntry *Note, int 
 	return GSM_WaitFor (s, req, count, 0x13, 4, ID_SetCalendarNote);
 }
 
-GSM_Error N71_65_ReplyDelCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error N71_65_ReplyDelCalendar(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
-	if (msg.Buffer[3] == 0xf0) return ERR_NOTSUPPORTED;
+	if (msg->Buffer[3] == 0xf0) return ERR_NOTSUPPORTED;
 
-	smprintf(s, "Deleted calendar note on location %d\n",msg.Buffer[4]*256+msg.Buffer[5]);
+	smprintf(s, "Deleted calendar note on location %d\n",msg->Buffer[4]*256+msg->Buffer[5]);
 	return ERR_NONE;
 }
 
@@ -2384,7 +2384,7 @@ GSM_Error N71_65_DelCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 }
 
 /* method 1 */
-GSM_Error N71_65_ReplyGetCalendarInfo1(GSM_Protocol_Message msg, GSM_StateMachine *s, GSM_NOKIACalToDoLocations *LastCalendar)
+GSM_Error N71_65_ReplyGetCalendarInfo1(GSM_Protocol_Message *msg, GSM_StateMachine *s, GSM_NOKIACalToDoLocations *LastCalendar)
 {
 	size_t i,j=0;
 
@@ -2395,20 +2395,20 @@ GSM_Error N71_65_ReplyGetCalendarInfo1(GSM_Protocol_Message msg, GSM_StateMachin
 		return ERR_MOREMEMORY;
 	}
 	if (j == 0) {
-		LastCalendar->Number=msg.Buffer[4]*256+msg.Buffer[5];
+		LastCalendar->Number=msg->Buffer[4]*256+msg->Buffer[5];
 		smprintf(s, "Number of Entries: %i\n",LastCalendar->Number);
 	}
 	smprintf(s, "Locations: ");
 	i = 0;
-	while (9+(i*2) <= msg.Length) {
-		LastCalendar->Location[j++]=msg.Buffer[8+(i*2)]*256+msg.Buffer[9+(i*2)];
+	while (9+(i*2) <= msg->Length) {
+		LastCalendar->Location[j++]=msg->Buffer[8+(i*2)]*256+msg->Buffer[9+(i*2)];
 		smprintf(s, "%i ",LastCalendar->Location[j-1]);
 		i++;
 	}
 	smprintf(s, "\nNumber of Entries in frame: %ld\n", (long)i);
 	smprintf(s, "\n");
 	LastCalendar->Location[j] = 0;
-	if (i == 1 && msg.Buffer[8+(0*2)]*256+msg.Buffer[9+(0*2)] == 0) return ERR_EMPTY;
+	if (i == 1 && msg->Buffer[8+(0*2)]*256+msg->Buffer[9+(0*2)] == 0) return ERR_EMPTY;
 	if (i == 0) return ERR_EMPTY;
 	return ERR_NONE;
 }
@@ -2448,7 +2448,7 @@ GSM_Error N71_65_GetCalendarInfo1(GSM_StateMachine *s, GSM_NOKIACalToDoLocations
 }
 
 /* method 1 */
-GSM_Error N71_65_ReplyGetNextCalendar1(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error N71_65_ReplyGetNextCalendar1(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	int 			timedelta,i;
 	GSM_CalendarEntry	*entry = s->Phone.Data.Cal;
@@ -2456,23 +2456,23 @@ GSM_Error N71_65_ReplyGetNextCalendar1(GSM_Protocol_Message msg, GSM_StateMachin
 	smprintf(s, "Calendar note received method 1\n");
 
 	/* Later these values can change */
-	if (msg.Buffer[6]!=0x04) { /* Here not birthday */
-		entry->Entries[0].Date.Year = msg.Buffer[8]*256+msg.Buffer[9];
+	if (msg->Buffer[6]!=0x04) { /* Here not birthday */
+		entry->Entries[0].Date.Year = msg->Buffer[8]*256+msg->Buffer[9];
 	}
-	entry->Entries[0].Date.Month 	= msg.Buffer[10];
-	entry->Entries[0].Date.Day	= msg.Buffer[11];
-	entry->Entries[0].Date.Hour	= msg.Buffer[12];
-	entry->Entries[0].Date.Minute	= msg.Buffer[13];
+	entry->Entries[0].Date.Month 	= msg->Buffer[10];
+	entry->Entries[0].Date.Day	= msg->Buffer[11];
+	entry->Entries[0].Date.Hour	= msg->Buffer[12];
+	entry->Entries[0].Date.Minute	= msg->Buffer[13];
 	entry->Entries[0].Date.Second 	= 0;
 	entry->Entries[0].EntryType 	= CAL_START_DATETIME;
 	entry->EntriesNum++;
 
-	switch (msg.Buffer[6]) {
+	switch (msg->Buffer[6]) {
 	case 0x01:
 		smprintf(s, "Meeting\n");
 		entry->Type = GSM_CAL_MEETING;
 
-		timedelta=msg.Buffer[14]*256+msg.Buffer[15];
+		timedelta=msg->Buffer[14]*256+msg->Buffer[15];
 		if (timedelta != 0xffff) {
 			smprintf(s, "  Difference : %i seconds\n", timedelta);
 			memcpy(&entry->Entries[1].Date,&entry->Entries[0].Date,sizeof(GSM_DateTime));
@@ -2480,11 +2480,11 @@ GSM_Error N71_65_ReplyGetNextCalendar1(GSM_Protocol_Message msg, GSM_StateMachin
 			entry->Entries[1].EntryType = CAL_TONE_ALARM_DATETIME;
 			entry->EntriesNum++;
 		}
-		GSM_GetCalendarRecurranceRepeat(&(s->di), msg.Buffer + 16, NULL, entry);
+		GSM_GetCalendarRecurranceRepeat(&(s->di), msg->Buffer + 16, NULL, entry);
 
-		memcpy(entry->Entries[entry->EntriesNum].Text, msg.Buffer+20, msg.Buffer[18]*2);
-		entry->Entries[entry->EntriesNum].Text[msg.Buffer[18]*2]   = 0;
-		entry->Entries[entry->EntriesNum].Text[msg.Buffer[18]*2+1] = 0;
+		memcpy(entry->Entries[entry->EntriesNum].Text, msg->Buffer+20, msg->Buffer[18]*2);
+		entry->Entries[entry->EntriesNum].Text[msg->Buffer[18]*2]   = 0;
+		entry->Entries[entry->EntriesNum].Text[msg->Buffer[18]*2+1] = 0;
 		entry->Entries[entry->EntriesNum].EntryType		   = CAL_TEXT;
 		smprintf(s, "Text         : \"%s\"\n", DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
 		entry->EntriesNum++;
@@ -2493,7 +2493,7 @@ GSM_Error N71_65_ReplyGetNextCalendar1(GSM_Protocol_Message msg, GSM_StateMachin
 		smprintf(s, "Call\n");
 		entry->Type = GSM_CAL_CALL;
 
-		timedelta=msg.Buffer[14]*256+msg.Buffer[15];
+		timedelta=msg->Buffer[14]*256+msg->Buffer[15];
 		if (timedelta != 0xffff) {
 			smprintf(s, "  Difference : %i seconds\n", timedelta);
 			memcpy(&entry->Entries[1].Date,&entry->Entries[0].Date,sizeof(GSM_DateTime));
@@ -2501,11 +2501,11 @@ GSM_Error N71_65_ReplyGetNextCalendar1(GSM_Protocol_Message msg, GSM_StateMachin
 			entry->Entries[1].EntryType = CAL_TONE_ALARM_DATETIME;
 			entry->EntriesNum++;
 		}
-		GSM_GetCalendarRecurranceRepeat(&(s->di), msg.Buffer + 16, NULL, entry);
+		GSM_GetCalendarRecurranceRepeat(&(s->di), msg->Buffer + 16, NULL, entry);
 
-		i = msg.Buffer[18] * 2;
+		i = msg->Buffer[18] * 2;
 		if (i!=0) {
-			memcpy(entry->Entries[entry->EntriesNum].Text, msg.Buffer+20, i);
+			memcpy(entry->Entries[entry->EntriesNum].Text, msg->Buffer+20, i);
 			entry->Entries[entry->EntriesNum].Text[i]   	= 0;
 			entry->Entries[entry->EntriesNum].Text[i+1] 	= 0;
 			entry->Entries[entry->EntriesNum].EntryType	= CAL_TEXT;
@@ -2513,9 +2513,9 @@ GSM_Error N71_65_ReplyGetNextCalendar1(GSM_Protocol_Message msg, GSM_StateMachin
 			entry->EntriesNum++;
 		}
 
-		memcpy(entry->Entries[entry->EntriesNum].Text, msg.Buffer+20+i, msg.Buffer[19]*2);
-		entry->Entries[entry->EntriesNum].Text[msg.Buffer[19]*2]   = 0;
-		entry->Entries[entry->EntriesNum].Text[msg.Buffer[19]*2+1] = 0;
+		memcpy(entry->Entries[entry->EntriesNum].Text, msg->Buffer+20+i, msg->Buffer[19]*2);
+		entry->Entries[entry->EntriesNum].Text[msg->Buffer[19]*2]   = 0;
+		entry->Entries[entry->EntriesNum].Text[msg->Buffer[19]*2+1] = 0;
 		entry->Entries[entry->EntriesNum].EntryType		   = CAL_PHONE;
 		smprintf(s, "Phone        : \"%s\"\n", DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
 		entry->EntriesNum++;
@@ -2528,29 +2528,29 @@ GSM_Error N71_65_ReplyGetNextCalendar1(GSM_Protocol_Message msg, GSM_StateMachin
 		entry->Entries[0].Date.Minute	= 59;
 		entry->Entries[0].Date.Second	= 58;
 
-		timedelta  = ((unsigned int)msg.Buffer[14]) << 24;
-		timedelta += ((unsigned int)msg.Buffer[15]) << 16;
-		timedelta += ((unsigned int)msg.Buffer[16]) << 8;
-		timedelta += msg.Buffer[17];
+		timedelta  = ((unsigned int)msg->Buffer[14]) << 24;
+		timedelta += ((unsigned int)msg->Buffer[15]) << 16;
+		timedelta += ((unsigned int)msg->Buffer[16]) << 8;
+		timedelta += msg->Buffer[17];
 		if (timedelta != 0xffff) {
 			smprintf(s, "  Difference : %i seconds\n", timedelta);
 			memcpy(&entry->Entries[1].Date,&entry->Entries[0].Date,sizeof(GSM_DateTime));
 			GetTimeDifference(timedelta, &entry->Entries[1].Date, FALSE, 1);
 			entry->Entries[1].EntryType = CAL_TONE_ALARM_DATETIME;
-			if (msg.Buffer[20]!=0x00) {
+			if (msg->Buffer[20]!=0x00) {
 				entry->Entries[1].EntryType = CAL_SILENT_ALARM_DATETIME;
 				smprintf(s, "Alarm type   : Silent\n");
 			}
 			entry->EntriesNum++;
 		}
 
-		entry->Entries[0].Date.Year = msg.Buffer[18]*256 + msg.Buffer[19];
+		entry->Entries[0].Date.Year = msg->Buffer[18]*256 + msg->Buffer[19];
 		if (entry->Entries[0].Date.Year == 65535) entry->Entries[0].Date.Year = 0;
 		smprintf(s, "Age          : %i\n",entry->Entries[0].Date.Year);
 
-		memcpy(entry->Entries[entry->EntriesNum].Text, msg.Buffer+22, msg.Buffer[21]*2);
-		entry->Entries[entry->EntriesNum].Text[msg.Buffer[21]*2]   = 0;
-		entry->Entries[entry->EntriesNum].Text[msg.Buffer[21]*2+1] = 0;
+		memcpy(entry->Entries[entry->EntriesNum].Text, msg->Buffer+22, msg->Buffer[21]*2);
+		entry->Entries[entry->EntriesNum].Text[msg->Buffer[21]*2]   = 0;
+		entry->Entries[entry->EntriesNum].Text[msg->Buffer[21]*2+1] = 0;
 		entry->Entries[entry->EntriesNum].EntryType		   = CAL_TEXT;
 		smprintf(s, "Text         : \"%s\"\n", DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
 		entry->EntriesNum++;
@@ -2573,17 +2573,17 @@ GSM_Error N71_65_ReplyGetNextCalendar1(GSM_Protocol_Message msg, GSM_StateMachin
 		entry->Entries[0].Date.Hour	= 0;
 		entry->Entries[0].Date.Minute	= 0;
 
-		GSM_GetCalendarRecurranceRepeat(&(s->di), msg.Buffer + 12, NULL, entry);
+		GSM_GetCalendarRecurranceRepeat(&(s->di), msg->Buffer + 12, NULL, entry);
 
-		memcpy(entry->Entries[entry->EntriesNum].Text, msg.Buffer+16, msg.Buffer[14]*2);
-		entry->Entries[entry->EntriesNum].Text[msg.Buffer[14]*2]   = 0;
-		entry->Entries[entry->EntriesNum].Text[msg.Buffer[14]*2+1] = 0;
+		memcpy(entry->Entries[entry->EntriesNum].Text, msg->Buffer+16, msg->Buffer[14]*2);
+		entry->Entries[entry->EntriesNum].Text[msg->Buffer[14]*2]   = 0;
+		entry->Entries[entry->EntriesNum].Text[msg->Buffer[14]*2+1] = 0;
 		entry->Entries[entry->EntriesNum].EntryType		   = CAL_TEXT;
 		smprintf(s, "Text         : \"%s\"\n", DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
 		entry->EntriesNum++;
 		return ERR_NONE;
 	default:
-		smprintf(s, "ERROR: unknown %i\n",msg.Buffer[6]);
+		smprintf(s, "ERROR: unknown %i\n",msg->Buffer[6]);
 		return ERR_UNKNOWNRESPONSE;
 	}
 }
@@ -2647,9 +2647,9 @@ GSM_Error N71_65_EnableFunctions(GSM_StateMachine *s,const char *buff,int len)
 	return s->Protocol.Functions->WriteMessage(s, buffer, 5+len, 0x10);
 }
 
-GSM_Error N71_65_ReplySendDTMF(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error N71_65_ReplySendDTMF(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
-	switch (msg.Buffer[3]) {
+	switch (msg->Buffer[3]) {
 	case 0xf0:
 		return ERR_NOTSUPPORTED;
 	case 0x51:

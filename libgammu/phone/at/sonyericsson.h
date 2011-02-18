@@ -40,8 +40,8 @@
 #define SONYERICSSON_TIMEOUT 60
 
 GSM_Error SONYERICSSON_GetScreenshot(GSM_StateMachine *s, GSM_BinaryPicture *picture);
-GSM_Error SONYERICSSON_Reply_Screenshot(GSM_Protocol_Message msg, GSM_StateMachine *s);
-GSM_Error SONYERICSSON_Reply_ScreenshotData(GSM_Protocol_Message msg, GSM_StateMachine *s);
+GSM_Error SONYERICSSON_Reply_Screenshot(GSM_Protocol_Message *msg, GSM_StateMachine *s);
+GSM_Error SONYERICSSON_Reply_ScreenshotData(GSM_Protocol_Message *msg, GSM_StateMachine *s);
 
 #endif
 

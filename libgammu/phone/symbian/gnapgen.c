@@ -100,25 +100,25 @@ GSM_Error GNAPGEN_Install(GSM_StateMachine *s, const char *ExtraPath)
 
 	return ERR_NONE;
 }
-GSM_Error GNAPGEN_ReplyGetSMSFolderStatus(GSM_Protocol_Message msg, GSM_StateMachine *s) {
+GSM_Error GNAPGEN_ReplyGetSMSFolderStatus(GSM_Protocol_Message *msg, GSM_StateMachine *s) {
 	GSM_Phone_GNAPGENData           *Priv = &s->Phone.Data.Priv.GNAPGEN;
 	int i;
 	int pos = 10;
 
-	if( msg.Buffer[3] == 17){
+	if( msg->Buffer[3] == 17){
 		smprintf(s, "Invalid memory type");
 		return ERR_UNKNOWN;
 	}
 
-	Priv->SMSCount = msg.Buffer[8] * 256 + msg.Buffer[9];
+	Priv->SMSCount = msg->Buffer[8] * 256 + msg->Buffer[9];
 	smprintf(s, "SMS count: %d\n", Priv->SMSCount );
 
 	for( i=0; i<Priv->SMSCount; i++ ) {
-		smprintf(s, "Entry id %d: %d\n", i, msg.Buffer[pos+1] * 256 * 256 + msg.Buffer[pos+2]*256+msg.Buffer[pos+3]);
-		Priv->SMSIDs[i].byte1 = msg.Buffer[pos];
-		Priv->SMSIDs[i].byte2 = msg.Buffer[pos+1];
-		Priv->SMSIDs[i].byte3 = msg.Buffer[pos+2];
-		Priv->SMSIDs[i].byte4 = msg.Buffer[pos+3];
+		smprintf(s, "Entry id %d: %d\n", i, msg->Buffer[pos+1] * 256 * 256 + msg->Buffer[pos+2]*256+msg->Buffer[pos+3]);
+		Priv->SMSIDs[i].byte1 = msg->Buffer[pos];
+		Priv->SMSIDs[i].byte2 = msg->Buffer[pos+1];
+		Priv->SMSIDs[i].byte3 = msg->Buffer[pos+2];
+		Priv->SMSIDs[i].byte4 = msg->Buffer[pos+3];
 		pos += 4;
 	}
 
@@ -378,7 +378,7 @@ GSM_Error GNAPGEN_DecodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *SMS, unsig
 	return ERR_NONE;
 }
 
-static GSM_Error GNAPGEN_ReplyGetSMS(GSM_Protocol_Message msg, GSM_StateMachine *s) {
+static GSM_Error GNAPGEN_ReplyGetSMS(GSM_Protocol_Message *msg, GSM_StateMachine *s) {
 	GSM_SMSMessage *sms = 0;
 	unsigned char buffer[800];
 	int numberOfMessages = 0;
@@ -388,10 +388,10 @@ static GSM_Error GNAPGEN_ReplyGetSMS(GSM_Protocol_Message msg, GSM_StateMachine 
 	int current=6;
 	GSM_SMSMessageLayout layout;
 
-	numberOfMessages = msg.Buffer[4] * 256 + msg.Buffer[5];
+	numberOfMessages = msg->Buffer[4] * 256 + msg->Buffer[5];
 	s->Phone.Data.GetSMSMessage->Number = numberOfMessages;
 
-	switch( msg.Buffer[msg.Length-1] ) {
+	switch( msg->Buffer[msg->Length-1] ) {
 		case 0x01:
 			state = SMS_Read;
 			break;
@@ -407,9 +407,9 @@ static GSM_Error GNAPGEN_ReplyGetSMS(GSM_Protocol_Message msg, GSM_StateMachine 
 	}
 
 	for( i=0; i<numberOfMessages; i++ ) {
-		messageLen = msg.Buffer[current] * 256 + msg.Buffer[current+1];
+		messageLen = msg->Buffer[current] * 256 + msg->Buffer[current+1];
 		memset( buffer, 0, 800 );
-		memcpy( buffer, msg.Buffer + current + 2, messageLen );
+		memcpy( buffer, msg->Buffer + current + 2, messageLen );
 		current += messageLen + 2;
 		sms = &s->Phone.Data.GetSMSMessage->SMS[i];
 
@@ -594,7 +594,7 @@ static GSM_Error GNAPGEN_SendSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sms
 	return s->Protocol.Functions->WriteMessage(s, req, length + 2, 0x06);
 }
 
-GSM_Error GNAPGEN_ReplySetSMS (GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s) {
+GSM_Error GNAPGEN_ReplySetSMS (GSM_Protocol_Message *msg UNUSED, GSM_StateMachine *s) {
 	/* @todo do something useful here ;) */
 	smprintf(s, "SetSMS: got reply\n");
 	return ERR_NONE;
@@ -639,13 +639,13 @@ static GSM_Error GNAPGEN_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 
 /* ----------------------------------------------------------------------------- */
 
-static GSM_Error GNAPGEN_ReplyGetSignalQuality(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error GNAPGEN_ReplyGetSignalQuality(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Phone_Data *Data = &s->Phone.Data;
 
-	smprintf(s, "Network level received: %i\n",msg.Buffer[4]);
+	smprintf(s, "Network level received: %i\n",msg->Buffer[4]);
     	Data->SignalQuality->SignalStrength 	= -1;
-    	Data->SignalQuality->SignalPercent 	= ((int)msg.Buffer[4]);
+    	Data->SignalQuality->SignalPercent 	= ((int)msg->Buffer[4]);
     	Data->SignalQuality->BitErrorRate 	= -1;
 	return ERR_NONE;
 }
@@ -659,12 +659,12 @@ static GSM_Error GNAPGEN_GetSignalQuality(GSM_StateMachine *s, GSM_SignalQuality
 	return GSM_WaitFor(s, req, 2, 0x03, 4, ID_GetSignalQuality);
 }
 
-static GSM_Error GNAPGEN_ReplyGetBatteryCharge(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error GNAPGEN_ReplyGetBatteryCharge(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Phone_Data *Data = &s->Phone.Data;
 
-	smprintf(s, "Battery level received: %i\n",msg.Buffer[4]);
-    	Data->BatteryCharge->BatteryPercent 	= ((int)(msg.Buffer[4]));
+	smprintf(s, "Battery level received: %i\n",msg->Buffer[4]);
+    	Data->BatteryCharge->BatteryPercent 	= ((int)(msg->Buffer[4]));
     	Data->BatteryCharge->ChargeState 	= 0;
 	return ERR_NONE;
 }
@@ -679,7 +679,7 @@ static GSM_Error GNAPGEN_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge
 	return GSM_WaitFor(s, req, 2, 0x04, 4, ID_GetBatteryCharge);
 }
 
-static GSM_Error GNAPGEN_ReplyGetNetworkInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error GNAPGEN_ReplyGetNetworkInfo(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Phone_Data	*Data = &s->Phone.Data;
 	char		buf[100];
@@ -687,18 +687,18 @@ static GSM_Error GNAPGEN_ReplyGetNetworkInfo(GSM_Protocol_Message msg, GSM_State
 	GSM_NetworkInfo NetInfo;
 
 	smprintf(s, "Network status            : ");
-	switch (msg.Buffer[9]) {
+	switch (msg->Buffer[9]) {
 		case 0x00 : smprintf(s, "home network ?\n");		break;
-		default	  : smprintf(s, "unknown %i!\n",msg.Buffer[9]); break;
+		default	  : smprintf(s, "unknown %i!\n",msg->Buffer[9]); break;
 	}
-	if (msg.Buffer[9]==0x00) {
-		sprintf(NetInfo.CID, "%02X%02X", msg.Buffer[4], msg.Buffer[5]);
+	if (msg->Buffer[9]==0x00) {
+		sprintf(NetInfo.CID, "%02X%02X", msg->Buffer[4], msg->Buffer[5]);
 		smprintf(s, "CID                       : %s\n", NetInfo.CID);
-		sprintf(NetInfo.LAC, "%02X%02X", msg.Buffer[6], msg.Buffer[7]);
+		sprintf(NetInfo.LAC, "%02X%02X", msg->Buffer[6], msg->Buffer[7]);
 		smprintf(s, "LAC                       : %s\n", NetInfo.LAC);
 
 		memset(buf,0,sizeof(buf));
-		memcpy(buf,msg.Buffer+11,msg.Buffer[10]*2);
+		memcpy(buf,msg->Buffer+11,msg->Buffer[10]*2);
 		sprintf(NetInfo.NetworkCode,"%s",DecodeUnicodeString(buf));
 		smprintf(s, "Network code              : %s\n", NetInfo.NetworkCode);
 		smprintf(s, "Network name for Gammu    : %s ",
@@ -709,15 +709,15 @@ static GSM_Error GNAPGEN_ReplyGetNetworkInfo(GSM_Protocol_Message msg, GSM_State
 	Data->NetworkInfo->NetworkName[0] = 0x00;
 	Data->NetworkInfo->NetworkName[1] = 0x00;
 	Data->NetworkInfo->State 	  = 0;
-	switch (msg.Buffer[8]) {
+	switch (msg->Buffer[8]) {
 		case 0x00: Data->NetworkInfo->State = GSM_HomeNetwork;		break;
 	}
 	if (Data->NetworkInfo->State == GSM_HomeNetwork) {
-		sprintf(Data->NetworkInfo->CID, "%02X%02X", msg.Buffer[4], msg.Buffer[5]);
-		sprintf(Data->NetworkInfo->LAC, "%02X%02X", msg.Buffer[6], msg.Buffer[7]);
+		sprintf(Data->NetworkInfo->CID, "%02X%02X", msg->Buffer[4], msg->Buffer[5]);
+		sprintf(Data->NetworkInfo->LAC, "%02X%02X", msg->Buffer[6], msg->Buffer[7]);
 
 		memset(buf,0,sizeof(buf));
-		memcpy(buf,msg.Buffer+11,msg.Buffer[10]*2);
+		memcpy(buf,msg->Buffer+11,msg->Buffer[10]*2);
 		sprintf(Data->NetworkInfo->NetworkCode,"%s",DecodeUnicodeString(buf));
 	}
 	return ERR_NONE;
@@ -733,15 +733,15 @@ static GSM_Error GNAPGEN_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *ne
 	return GSM_WaitFor(s, req, 2, 0x03, 4, ID_GetNetworkInfo);
 }
 
-static GSM_Error GNAPGEN_ReplyGetMemoryStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error GNAPGEN_ReplyGetMemoryStatus(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Phone_Data *Data = &s->Phone.Data;
 
 	smprintf(s, "Memory status received\n");
-	if (msg.Length == 4) return ERR_EMPTY;
+	if (msg->Length == 4) return ERR_EMPTY;
 
-	Data->MemoryStatus->MemoryUsed = msg.Buffer[8]*256 + msg.Buffer[9];
-	Data->MemoryStatus->MemoryFree = msg.Buffer[12]*256 + msg.Buffer[13];
+	Data->MemoryStatus->MemoryUsed = msg->Buffer[8]*256 + msg->Buffer[9];
+	Data->MemoryStatus->MemoryFree = msg->Buffer[12]*256 + msg->Buffer[13];
 	smprintf(s, "Free       : %i\n",Data->MemoryStatus->MemoryFree);
 	smprintf(s, "Used       : %i\n",Data->MemoryStatus->MemoryUsed);
 
@@ -763,32 +763,32 @@ static GSM_Error GNAPGEN_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *
 	return GSM_WaitFor(s, req, 4, 0x02, 4, ID_GetMemoryStatus);
 }
 
-GSM_Error GNAPGEN_ReplyGetNextMemory( GSM_Protocol_Message msg, GSM_StateMachine *s ) {
+GSM_Error GNAPGEN_ReplyGetNextMemory( GSM_Protocol_Message *msg, GSM_StateMachine *s ) {
 	int 			i,pos=8,type,subtype,len;
         GSM_MemoryEntry         *entry = s->Phone.Data.Memory;
 	GSM_Phone_GNAPGENData	*Priv = &s->Phone.Data.Priv.GNAPGEN;
 
 	/*  17 == GN_ERR_INVALIDMEMORYTYPE */
-	if( msg.Buffer[3] == 17 ) {
+	if( msg->Buffer[3] == 17 ) {
 		smprintf(s, "unknown memory type\n");
 		return ERR_UNKNOWN;
 	}
 
-	entry->Location=msg.Buffer[5];
+	entry->Location=msg->Buffer[5];
 	entry->EntriesNum=0;
 
-	for (i=0;i<msg.Buffer[7];i++) {
-		type = msg.Buffer[pos]*256+msg.Buffer[pos+1];
-		subtype = msg.Buffer[pos+2]*256+msg.Buffer[pos+3];
+	for (i=0;i<msg->Buffer[7];i++) {
+		type = msg->Buffer[pos]*256+msg->Buffer[pos+1];
+		subtype = msg->Buffer[pos+2]*256+msg->Buffer[pos+3];
 		pos+=4;
 		switch (type) {
                 /*  name */
 		case 0x07:
-			len = msg.Buffer[pos]*256+msg.Buffer[pos+1];
+			len = msg->Buffer[pos]*256+msg->Buffer[pos+1];
 			if (len!=0) {
 				entry->Entries[entry->EntriesNum].EntryType=PBK_Text_Name;
 				entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
-				memcpy(entry->Entries[entry->EntriesNum].Text,msg.Buffer+pos+2,len*2);
+				memcpy(entry->Entries[entry->EntriesNum].Text,msg->Buffer+pos+2,len*2);
 				entry->Entries[entry->EntriesNum].Text[len*2]=0;
 				entry->Entries[entry->EntriesNum].Text[len*2+1]=0;
 				entry->EntriesNum++;
@@ -797,10 +797,10 @@ GSM_Error GNAPGEN_ReplyGetNextMemory( GSM_Protocol_Message msg, GSM_StateMachine
 			break;
                 /*  email */
                 case 0x08:
-			len = msg.Buffer[pos]*256+msg.Buffer[pos+1];
+			len = msg->Buffer[pos]*256+msg->Buffer[pos+1];
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Text_Email;
 			entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
-			memcpy(entry->Entries[entry->EntriesNum].Text,msg.Buffer+pos+2,len*2);
+			memcpy(entry->Entries[entry->EntriesNum].Text,msg->Buffer+pos+2,len*2);
 			entry->Entries[entry->EntriesNum].Text[len*2]=0;
 			entry->Entries[entry->EntriesNum].Text[len*2+1]=0;
 			entry->EntriesNum++;
@@ -835,8 +835,8 @@ GSM_Error GNAPGEN_ReplyGetNextMemory( GSM_Protocol_Message msg, GSM_StateMachine
 					entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
 					break;
 			}
-			len = msg.Buffer[pos]*256+msg.Buffer[pos+1];
-			memcpy(entry->Entries[entry->EntriesNum].Text,msg.Buffer+pos+2,len*2);
+			len = msg->Buffer[pos]*256+msg->Buffer[pos+1];
+			memcpy(entry->Entries[entry->EntriesNum].Text,msg->Buffer+pos+2,len*2);
 			entry->Entries[entry->EntriesNum].Text[len*2]=0;
 			entry->Entries[entry->EntriesNum].Text[len*2+1]=0;
 			entry->EntriesNum++;
@@ -846,16 +846,16 @@ GSM_Error GNAPGEN_ReplyGetNextMemory( GSM_Protocol_Message msg, GSM_StateMachine
 		case 0x13:
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Date;
 			entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
-			NOKIA_DecodeDateTime(s, msg.Buffer+pos, &entry->Entries[entry->EntriesNum].Date, TRUE, FALSE);
+			NOKIA_DecodeDateTime(s, msg->Buffer+pos, &entry->Entries[entry->EntriesNum].Date, TRUE, FALSE);
 			entry->EntriesNum++;
 			pos+=2+7;
 			break;
 		/*  note */
 		case 0x0a:
-			len = msg.Buffer[pos]*256+msg.Buffer[pos+1];
+			len = msg->Buffer[pos]*256+msg->Buffer[pos+1];
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Text_Note;
 			entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
-			memcpy(entry->Entries[entry->EntriesNum].Text,msg.Buffer+pos+2,len*2);
+			memcpy(entry->Entries[entry->EntriesNum].Text,msg->Buffer+pos+2,len*2);
 			entry->Entries[entry->EntriesNum].Text[len*2]=0;
 			entry->Entries[entry->EntriesNum].Text[len*2+1]=0;
 			entry->EntriesNum++;
@@ -863,10 +863,10 @@ GSM_Error GNAPGEN_ReplyGetNextMemory( GSM_Protocol_Message msg, GSM_StateMachine
 			break;
 		/*  url */
 		case 0x2c:
-			len = msg.Buffer[pos]*256+msg.Buffer[pos+1];
+			len = msg->Buffer[pos]*256+msg->Buffer[pos+1];
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Text_URL;
 			entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
-			memcpy(entry->Entries[entry->EntriesNum].Text,msg.Buffer+pos+2,len*2);
+			memcpy(entry->Entries[entry->EntriesNum].Text,msg->Buffer+pos+2,len*2);
 			entry->Entries[entry->EntriesNum].Text[len*2]=0;
 			entry->Entries[entry->EntriesNum].Text[len*2+1]=0;
 			entry->EntriesNum++;
@@ -908,7 +908,7 @@ static GSM_Error GNAPGEN_GetNextMemory( GSM_StateMachine *s, GSM_MemoryEntry *en
 	return GSM_WaitFor(s, req, 6, 0x02, 6, ID_GetMemory);
 }
 
-static GSM_Error GNAPGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error GNAPGEN_ReplyGetMemory(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	int 			i,pos=6,type,subtype,len;
         GSM_MemoryEntry         *entry = s->Phone.Data.Memory;
@@ -916,18 +916,18 @@ static GSM_Error GNAPGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachi
 	entry->EntriesNum=0;
 
 	smprintf(s, "Phonebook entry received\n");
-	for (i=0;i<msg.Buffer[5];i++) {
-		type = msg.Buffer[pos]*256+msg.Buffer[pos+1];
-		subtype = msg.Buffer[pos+2]*256+msg.Buffer[pos+3];
+	for (i=0;i<msg->Buffer[5];i++) {
+		type = msg->Buffer[pos]*256+msg->Buffer[pos+1];
+		subtype = msg->Buffer[pos+2]*256+msg->Buffer[pos+3];
 		pos+=4;
 		switch (type) {
                 /*  name */
 		case 0x07:
-			len = msg.Buffer[pos]*256+msg.Buffer[pos+1];
+			len = msg->Buffer[pos]*256+msg->Buffer[pos+1];
 			if (len!=0) {
 				entry->Entries[entry->EntriesNum].EntryType=PBK_Text_Name;
 				entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
-				memcpy(entry->Entries[entry->EntriesNum].Text,msg.Buffer+pos+2,len*2);
+				memcpy(entry->Entries[entry->EntriesNum].Text,msg->Buffer+pos+2,len*2);
 				entry->Entries[entry->EntriesNum].Text[len*2]=0;
 				entry->Entries[entry->EntriesNum].Text[len*2+1]=0;
 				entry->EntriesNum++;
@@ -936,10 +936,10 @@ static GSM_Error GNAPGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachi
 			break;
                 /*  email */
                 case 0x08:
-			len = msg.Buffer[pos]*256+msg.Buffer[pos+1];
+			len = msg->Buffer[pos]*256+msg->Buffer[pos+1];
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Text_Email;
 			entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
-			memcpy(entry->Entries[entry->EntriesNum].Text,msg.Buffer+pos+2,len*2);
+			memcpy(entry->Entries[entry->EntriesNum].Text,msg->Buffer+pos+2,len*2);
 			entry->Entries[entry->EntriesNum].Text[len*2]=0;
 			entry->Entries[entry->EntriesNum].Text[len*2+1]=0;
 			entry->EntriesNum++;
@@ -974,8 +974,8 @@ static GSM_Error GNAPGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachi
 					entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
 					break;
 			}
-			len = msg.Buffer[pos]*256+msg.Buffer[pos+1];
-			memcpy(entry->Entries[entry->EntriesNum].Text,msg.Buffer+pos+2,len*2);
+			len = msg->Buffer[pos]*256+msg->Buffer[pos+1];
+			memcpy(entry->Entries[entry->EntriesNum].Text,msg->Buffer+pos+2,len*2);
 			entry->Entries[entry->EntriesNum].Text[len*2]=0;
 			entry->Entries[entry->EntriesNum].Text[len*2+1]=0;
 			entry->EntriesNum++;
@@ -985,16 +985,16 @@ static GSM_Error GNAPGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachi
 		case 0x13:
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Date;
 			entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
-			NOKIA_DecodeDateTime(s, msg.Buffer+pos, &entry->Entries[entry->EntriesNum].Date, TRUE, FALSE);
+			NOKIA_DecodeDateTime(s, msg->Buffer+pos, &entry->Entries[entry->EntriesNum].Date, TRUE, FALSE);
 			entry->EntriesNum++;
 			pos+=2+7;
 			break;
 		/*  note */
 		case 0x0a:
-			len = msg.Buffer[pos]*256+msg.Buffer[pos+1];
+			len = msg->Buffer[pos]*256+msg->Buffer[pos+1];
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Text_Note;
 			entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
-			memcpy(entry->Entries[entry->EntriesNum].Text,msg.Buffer+pos+2,len*2);
+			memcpy(entry->Entries[entry->EntriesNum].Text,msg->Buffer+pos+2,len*2);
 			entry->Entries[entry->EntriesNum].Text[len*2]=0;
 			entry->Entries[entry->EntriesNum].Text[len*2+1]=0;
 			entry->EntriesNum++;
@@ -1002,10 +1002,10 @@ static GSM_Error GNAPGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachi
 			break;
 		/*  url */
 		case 0x2c:
-			len = msg.Buffer[pos]*256+msg.Buffer[pos+1];
+			len = msg->Buffer[pos]*256+msg->Buffer[pos+1];
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Text_URL;
 			entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
-			memcpy(entry->Entries[entry->EntriesNum].Text,msg.Buffer+pos+2,len*2);
+			memcpy(entry->Entries[entry->EntriesNum].Text,msg->Buffer+pos+2,len*2);
 			entry->Entries[entry->EntriesNum].Text[len*2]=0;
 			entry->Entries[entry->EntriesNum].Text[len*2+1]=0;
 			entry->EntriesNum++;
@@ -1041,9 +1041,9 @@ static GSM_Error GNAPGEN_GetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	return GSM_WaitFor(s, req, 8, 0x02, 6, ID_GetMemory);
 }
 
-static GSM_Error GNAPGEN_ReplySetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s) {
+static GSM_Error GNAPGEN_ReplySetMemory(GSM_Protocol_Message *msg, GSM_StateMachine *s) {
 	smprintf(s, "Got reply: SetMemory()\n");
-	if( msg.Buffer[4] == 0 )
+	if( msg->Buffer[4] == 0 )
 		return ERR_NONE;
 	else
 		return ERR_UNKNOWN;
@@ -1137,7 +1137,7 @@ static GSM_Error GNAPGEN_SetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	return GSM_WaitFor(s, req, currentByte, 0x02, 4, ID_SetMemory);
 }
 
-GSM_Error GNAPGEN_ReplyDeleteMemory ( GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s ) {
+GSM_Error GNAPGEN_ReplyDeleteMemory ( GSM_Protocol_Message *msg UNUSED, GSM_StateMachine *s ) {
 	/* @todo implement error handling */
 	smprintf(s, "Deleted\n");
 	return ERR_NONE;
@@ -1166,9 +1166,9 @@ static GSM_Error GNAPGEN_AddMemory ( GSM_StateMachine *s, GSM_MemoryEntry *entry
 	return GNAPGEN_SetMemory( s, entry );
 }
 
-static GSM_Error GNAPGEN_ReplyDeleteSMSMessage ( GSM_Protocol_Message msg, GSM_StateMachine *s ) {
+static GSM_Error GNAPGEN_ReplyDeleteSMSMessage ( GSM_Protocol_Message *msg, GSM_StateMachine *s ) {
 	/*  17 == GN_ERR_INVALIDMEMORYTYPE */
-	switch( msg.Buffer[3] ) {
+	switch( msg->Buffer[3] ) {
 		case 16:
 			smprintf(s, "invalid location\n");
 			return ERR_UNKNOWN;
@@ -1198,31 +1198,31 @@ static GSM_Error GNAPGEN_DeleteSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *s
 	return GSM_WaitFor(s, req, 8, 0x06, 6, ID_DeleteSMSMessage );
 }
 
-GSM_Error GNAPGEN_ReplyGetToDo(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error GNAPGEN_ReplyGetToDo(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_ToDoEntry 	*Last = s->Phone.Data.ToDo;
 	int 		pos = 8;
 
 	smprintf(s, "TODO received\n");
 
-	memcpy(Last->Entries[0].Text,msg.Buffer+pos+2,(msg.Buffer[pos]*256+msg.Buffer[pos+1])*2);
-	Last->Entries[0].Text[(msg.Buffer[pos]*256+msg.Buffer[pos+1])*2] = 0;
-	Last->Entries[0].Text[(msg.Buffer[pos]*256+msg.Buffer[pos+1])*2+1] = 0;
+	memcpy(Last->Entries[0].Text,msg->Buffer+pos+2,(msg->Buffer[pos]*256+msg->Buffer[pos+1])*2);
+	Last->Entries[0].Text[(msg->Buffer[pos]*256+msg->Buffer[pos+1])*2] = 0;
+	Last->Entries[0].Text[(msg->Buffer[pos]*256+msg->Buffer[pos+1])*2+1] = 0;
 	smprintf(s, "Text: \"%s\"\n",DecodeUnicodeString(Last->Entries[0].Text));
-	pos+=(msg.Buffer[pos]*256+msg.Buffer[pos+1])*2+2;
+	pos+=(msg->Buffer[pos]*256+msg->Buffer[pos+1])*2+2;
 
 	/**
 	 * @todo There might be better type.
 	 */
 	Last->Type = GSM_CAL_MEMO;
 
-	switch (msg.Buffer[pos]) {
+	switch (msg->Buffer[pos]) {
 		case 1  : Last->Priority = GSM_Priority_High; 	break;
 		case 2  : Last->Priority = GSM_Priority_Medium; break;
 		case 3  : Last->Priority = GSM_Priority_Low; 	break;
 		default	: return ERR_UNKNOWN;
 	}
-	smprintf(s, "Priority: %i\n",msg.Buffer[4]);
+	smprintf(s, "Priority: %i\n",msg->Buffer[4]);
 
  	Last->Entries[0].EntryType = TODO_TEXT;
 	Last->EntriesNum	   = 1;
@@ -1354,27 +1354,27 @@ GSM_Error GNAPGEN_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	return GSM_WaitFor(s, req, current, 7, 4, ID_SetCalendarNote);
 }
 
-static GSM_Error GNAPGEN_ReplyGetNextCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error GNAPGEN_ReplyGetNextCalendar(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
         int                     pos;
         GSM_CalendarEntry       *Entry = s->Phone.Data.Cal;
 
-        switch (msg.Buffer[3]) {
+        switch (msg->Buffer[3]) {
         case 0x00:
                 smprintf(s, "Calendar note received\n");
-                switch (msg.Buffer[8]) {
+                switch (msg->Buffer[8]) {
                         case 0x01: Entry->Type = GSM_CAL_MEETING;   break;
                         case 0x04: Entry->Type = GSM_CAL_REMINDER;  break;
                         case 0x08: Entry->Type = GSM_CAL_MEMO;      break;
                         default  :
-                                smprintf(s, "Unknown note type %i\n",msg.Buffer[8]);
+                                smprintf(s, "Unknown note type %i\n",msg->Buffer[8]);
                                 return ERR_UNKNOWNRESPONSE;
                 }
 
 		pos = 9;
                 Entry->EntriesNum = 0;
 
-                NOKIA_DecodeDateTime(s, msg.Buffer+pos, &Entry->Entries[Entry->EntriesNum].Date, TRUE, FALSE);
+                NOKIA_DecodeDateTime(s, msg->Buffer+pos, &Entry->Entries[Entry->EntriesNum].Date, TRUE, FALSE);
                 smprintf(s, "Time        : %02i-%02i-%04i %02i:%02i:%02i\n",
                         Entry->Entries[Entry->EntriesNum].Date.Day,Entry->Entries[Entry->EntriesNum].Date.Month,Entry->Entries[Entry->EntriesNum].Date.Year,
                         Entry->Entries[Entry->EntriesNum].Date.Hour,Entry->Entries[Entry->EntriesNum].Date.Minute,Entry->Entries[Entry->EntriesNum].Date.Second);
@@ -1382,7 +1382,7 @@ static GSM_Error GNAPGEN_ReplyGetNextCalendar(GSM_Protocol_Message msg, GSM_Stat
                 Entry->EntriesNum++;
 		pos+=7;
 
-                NOKIA_DecodeDateTime(s, msg.Buffer+pos, &Entry->Entries[Entry->EntriesNum].Date, TRUE, FALSE);
+                NOKIA_DecodeDateTime(s, msg->Buffer+pos, &Entry->Entries[Entry->EntriesNum].Date, TRUE, FALSE);
                 smprintf(s, "Time        : %02i-%02i-%04i %02i:%02i:%02i\n",
                         Entry->Entries[Entry->EntriesNum].Date.Day,Entry->Entries[Entry->EntriesNum].Date.Month,Entry->Entries[Entry->EntriesNum].Date.Year,
                         Entry->Entries[Entry->EntriesNum].Date.Hour,Entry->Entries[Entry->EntriesNum].Date.Minute,Entry->Entries[Entry->EntriesNum].Date.Second);
@@ -1390,7 +1390,7 @@ static GSM_Error GNAPGEN_ReplyGetNextCalendar(GSM_Protocol_Message msg, GSM_Stat
                 Entry->EntriesNum++;
 		pos+=7;
 
-                NOKIA_DecodeDateTime(s, msg.Buffer+pos, &Entry->Entries[Entry->EntriesNum].Date, TRUE, FALSE);
+                NOKIA_DecodeDateTime(s, msg->Buffer+pos, &Entry->Entries[Entry->EntriesNum].Date, TRUE, FALSE);
                 if (Entry->Entries[Entry->EntriesNum].Date.Year!=0) {
 	                smprintf(s, "Alarm       : %02i-%02i-%04i %02i:%02i:%02i\n",
 	                        Entry->Entries[Entry->EntriesNum].Date.Day,Entry->Entries[Entry->EntriesNum].Date.Month,Entry->Entries[Entry->EntriesNum].Date.Year,
@@ -1402,28 +1402,28 @@ static GSM_Error GNAPGEN_ReplyGetNextCalendar(GSM_Protocol_Message msg, GSM_Stat
                 }
 		pos+=7;
 
-		memcpy(Entry->Entries[Entry->EntriesNum].Text,msg.Buffer+pos+2,msg.Buffer[pos+1]*2);
-		Entry->Entries[Entry->EntriesNum].Text[msg.Buffer[pos+1]*2  ]=0;
-		Entry->Entries[Entry->EntriesNum].Text[msg.Buffer[pos+1]*2+1]=0;
+		memcpy(Entry->Entries[Entry->EntriesNum].Text,msg->Buffer+pos+2,msg->Buffer[pos+1]*2);
+		Entry->Entries[Entry->EntriesNum].Text[msg->Buffer[pos+1]*2  ]=0;
+		Entry->Entries[Entry->EntriesNum].Text[msg->Buffer[pos+1]*2+1]=0;
                 smprintf(s, "Text \"%s\"\n",DecodeUnicodeString(Entry->Entries[Entry->EntriesNum].Text));
-                if (msg.Buffer[pos+1] != 0x00) {
+                if (msg->Buffer[pos+1] != 0x00) {
                         Entry->Entries[Entry->EntriesNum].EntryType = CAL_TEXT;
                         Entry->EntriesNum++;
                 }
-		pos+=msg.Buffer[pos+1]*2+4;
+		pos+=msg->Buffer[pos+1]*2+4;
 
-		memcpy(Entry->Entries[Entry->EntriesNum].Text,msg.Buffer+pos+2,msg.Buffer[pos+1]*2);
-		Entry->Entries[Entry->EntriesNum].Text[msg.Buffer[pos+1]*2  ]=0;
-		Entry->Entries[Entry->EntriesNum].Text[msg.Buffer[pos+1]*2+1]=0;
+		memcpy(Entry->Entries[Entry->EntriesNum].Text,msg->Buffer+pos+2,msg->Buffer[pos+1]*2);
+		Entry->Entries[Entry->EntriesNum].Text[msg->Buffer[pos+1]*2  ]=0;
+		Entry->Entries[Entry->EntriesNum].Text[msg->Buffer[pos+1]*2+1]=0;
                 smprintf(s, "Text \"%s\"\n",DecodeUnicodeString(Entry->Entries[Entry->EntriesNum].Text));
-                if (msg.Buffer[pos+1] != 0x00) {
+                if (msg->Buffer[pos+1] != 0x00) {
                         Entry->Entries[Entry->EntriesNum].EntryType = CAL_LOCATION;
                         Entry->EntriesNum++;
                 }
-		pos+=msg.Buffer[pos+1]*2+2;
+		pos+=msg->Buffer[pos+1]*2+2;
 
 		if (Entry->Type == GSM_CAL_MEETING) {
-			GSM_GetCalendarRecurranceRepeat(&(s->di), msg.Buffer+pos, NULL, Entry);
+			GSM_GetCalendarRecurranceRepeat(&(s->di), msg->Buffer+pos, NULL, Entry);
 		}
 
                 return ERR_NONE;
@@ -1458,15 +1458,15 @@ static GSM_Error GNAPGEN_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry 
         return error;
 }
 
-static GSM_Error GNAPGEN_ReplyGetSMSStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error GNAPGEN_ReplyGetSMSStatus(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Phone_Data *Data = &s->Phone.Data;
 
-	smprintf(s, "Used in phone memory   : %i\n",msg.Buffer[6]*256+msg.Buffer[7]);
-	smprintf(s, "Unread in phone memory : %i\n",msg.Buffer[10]*256+msg.Buffer[11]);
+	smprintf(s, "Used in phone memory   : %i\n",msg->Buffer[6]*256+msg->Buffer[7]);
+	smprintf(s, "Unread in phone memory : %i\n",msg->Buffer[10]*256+msg->Buffer[11]);
 	Data->SMSStatus->PhoneSize	= 0xff*256+0xff;
-	Data->SMSStatus->PhoneUsed	= msg.Buffer[6]*256+msg.Buffer[7];
-	Data->SMSStatus->PhoneUnRead 	= msg.Buffer[10]*256+msg.Buffer[11];
+	Data->SMSStatus->PhoneUsed	= msg->Buffer[6]*256+msg->Buffer[7];
+	Data->SMSStatus->PhoneUnRead 	= msg->Buffer[10]*256+msg->Buffer[11];
 	Data->SMSStatus->TemplatesUsed = 0;
 	return ERR_NONE;
 }
@@ -1480,29 +1480,29 @@ static GSM_Error GNAPGEN_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *
 	return GSM_WaitFor(s, req, 2, 0x6, 2, ID_GetSMSStatus);
 }
 
-static GSM_Error GNAPGEN_ReplyGetSMSFolders(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error GNAPGEN_ReplyGetSMSFolders(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	int 			j, pos;
 	GSM_Phone_Data		*Data = &s->Phone.Data;
 	GSM_Phone_GNAPGENData   *Priv = &s->Phone.Data.Priv.GNAPGEN;
 
 	smprintf(s, "SMS folders names received\n");
-	Data->SMSFolders->Number = msg.Buffer[5];
+	Data->SMSFolders->Number = msg->Buffer[5];
 
 	pos = 6;
-	for (j=0;j<msg.Buffer[5];j++) {
-		if (msg.Buffer[pos+3]>GSM_MAX_SMS_FOLDER_NAME_LEN) {
+	for (j=0;j<msg->Buffer[5];j++) {
+		if (msg->Buffer[pos+3]>GSM_MAX_SMS_FOLDER_NAME_LEN) {
 			smprintf(s, "Too long text\n");
 			return ERR_UNKNOWNRESPONSE;
 		}
-		Priv->SMSFolderID[j] = msg.Buffer[pos+1];
+		Priv->SMSFolderID[j] = msg->Buffer[pos+1];
 
-		memcpy(Data->SMSFolders->Folder[j].Name,msg.Buffer + pos+4,msg.Buffer[pos+3]*2);
-		Data->SMSFolders->Folder[j].Name[msg.Buffer[pos+3]*2]=0;
-		Data->SMSFolders->Folder[j].Name[msg.Buffer[pos+3]*2+1]=0;
-		smprintf(s, "id: %d, folder name: \"%s\"\n",msg.Buffer[pos+1], DecodeUnicodeString(Data->SMSFolders->Folder[j].Name));
+		memcpy(Data->SMSFolders->Folder[j].Name,msg->Buffer + pos+4,msg->Buffer[pos+3]*2);
+		Data->SMSFolders->Folder[j].Name[msg->Buffer[pos+3]*2]=0;
+		Data->SMSFolders->Folder[j].Name[msg->Buffer[pos+3]*2+1]=0;
+		smprintf(s, "id: %d, folder name: \"%s\"\n",msg->Buffer[pos+1], DecodeUnicodeString(Data->SMSFolders->Folder[j].Name));
 
-		if( msg.Buffer[pos+1] == 12 )
+		if( msg->Buffer[pos+1] == 12 )
 			Data->SMSFolders->Folder[j].InboxFolder = TRUE;
 		else
 			Data->SMSFolders->Folder[j].InboxFolder = FALSE;
@@ -1511,7 +1511,7 @@ static GSM_Error GNAPGEN_ReplyGetSMSFolders(GSM_Protocol_Message msg, GSM_StateM
 		 * @todo Need to detect outbox folder somehow.
 		 */
 		Data->SMSFolders->Folder[j].Memory 	  = MEM_ME;
-		pos+=msg.Buffer[pos+3]*2+4;
+		pos+=msg->Buffer[pos+3]*2+4;
 	}
 	return ERR_NONE;
 }
@@ -1525,20 +1525,20 @@ static GSM_Error GNAPGEN_GetSMSFolders(GSM_StateMachine *s, GSM_SMSFolders *fold
 	return GSM_WaitFor(s, req, 2, 0x06, 4, ID_GetSMSFolders);
 }
 
-static GSM_Error GNAPGEN_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error GNAPGEN_ReplyGetSMSC(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	int 			pos=7;
 	GSM_Phone_Data		*Data = &s->Phone.Data;
 
-	if (msg.Buffer[7]*2>GSM_MAX_SMSC_NAME_LENGTH) {
+	if (msg->Buffer[7]*2>GSM_MAX_SMSC_NAME_LENGTH) {
 		smprintf(s, "Too long name\n");
 		return ERR_UNKNOWNRESPONSE;
 	}
-	memcpy(Data->SMSC->Name,msg.Buffer+8,msg.Buffer[7]*2);
-	Data->SMSC->Name[msg.Buffer[7]*2] = 0;
-	Data->SMSC->Name[msg.Buffer[7]*2+1] = 0;
+	memcpy(Data->SMSC->Name,msg->Buffer+8,msg->Buffer[7]*2);
+	Data->SMSC->Name[msg->Buffer[7]*2] = 0;
+	Data->SMSC->Name[msg->Buffer[7]*2+1] = 0;
 	smprintf(s, "   Name \"%s\"\n", DecodeUnicodeString(Data->SMSC->Name));
-	pos+=msg.Buffer[7]*2;
+	pos+=msg->Buffer[7]*2;
 
 	pos+=4;
 
@@ -1549,9 +1549,9 @@ static GSM_Error GNAPGEN_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine
 	Data->SMSC->DefaultNumber[0] = 0;
 	Data->SMSC->DefaultNumber[1] = 0;
 
-	memcpy(Data->SMSC->Number,msg.Buffer+pos+4,msg.Buffer[pos+3]*2);
-	Data->SMSC->Number[msg.Buffer[pos+3]*2] = 0;
-	Data->SMSC->Number[msg.Buffer[pos+3]*2+1] = 0;
+	memcpy(Data->SMSC->Number,msg->Buffer+pos+4,msg->Buffer[pos+3]*2);
+	Data->SMSC->Number[msg->Buffer[pos+3]*2] = 0;
+	Data->SMSC->Number[msg->Buffer[pos+3]*2+1] = 0;
 	smprintf(s, "   Number \"%s\"\n", DecodeUnicodeString(Data->SMSC->Number));
 
 	return ERR_NONE;
@@ -1571,16 +1571,16 @@ static GSM_Error GNAPGEN_GetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 	return GSM_WaitFor(s, req, 4, 0x06, 4, ID_GetSMSC);
 }
 
-static GSM_Error GNAPGEN_ReplyGetAlarm(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error GNAPGEN_ReplyGetAlarm(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Phone_Data *Data = &s->Phone.Data;
 
 	smprintf(s, "Alarm received\n");
-	if (msg.Buffer[4] == 0x00) return ERR_EMPTY;
+	if (msg->Buffer[4] == 0x00) return ERR_EMPTY;
 	Data->Alarm->Repeating 		= FALSE;
 	Data->Alarm->Text[0] 		= 0;
 	Data->Alarm->Text[1] 		= 0;
-	NOKIA_DecodeDateTime(s, msg.Buffer+5, &Data->Alarm->DateTime, TRUE, FALSE);
+	NOKIA_DecodeDateTime(s, msg->Buffer+5, &Data->Alarm->DateTime, TRUE, FALSE);
 	return ERR_NONE;
 }
 
@@ -1595,10 +1595,10 @@ static GSM_Error GNAPGEN_GetAlarm(GSM_StateMachine *s, GSM_Alarm *timedelta)
 	return GSM_WaitFor(s, req, 2, 0x8, 4, ID_GetAlarm);
 }
 
-static GSM_Error GNAPGEN_ReplyGetDateTime(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error GNAPGEN_ReplyGetDateTime(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	smprintf(s, "Date & time received\n");
-	NOKIA_DecodeDateTime(s, msg.Buffer+4, s->Phone.Data.DateTime, TRUE, FALSE);
+	NOKIA_DecodeDateTime(s, msg->Buffer+4, s->Phone.Data.DateTime, TRUE, FALSE);
 	return ERR_NONE;
 }
 
@@ -1611,7 +1611,7 @@ static GSM_Error GNAPGEN_GetDateTime(GSM_StateMachine *s, GSM_DateTime *date_tim
 	return GSM_WaitFor(s, req, 2, 0x08, 4, ID_GetDateTime);
 }
 
-GSM_Error GNAPGEN_ReplyDialVoice( GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s ) {
+GSM_Error GNAPGEN_ReplyDialVoice( GSM_Protocol_Message *msg UNUSED, GSM_StateMachine *s ) {
 	smprintf(s, "Dialed voice number\n");
 	return ERR_NONE;
 }
@@ -1637,15 +1637,15 @@ static GSM_Error GNAPGEN_DialVoice ( GSM_StateMachine *s, char *Number, GSM_Call
 	return GSM_WaitFor(s, req, currentByte, 0x02, 8, ID_DialVoice);
 }
 
-GSM_Error GNAPGEN_ReplyGetHW(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error GNAPGEN_ReplyGetHW(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	unsigned char 	buff[200];
 	int 		pos=8,len,i;
 
 	for (i=0;i<5;i++) {
-		len=msg.Buffer[pos]*256+msg.Buffer[pos+1];
+		len=msg->Buffer[pos]*256+msg->Buffer[pos+1];
 		memset(buff,0,sizeof(buff));
-		memcpy(buff,msg.Buffer+pos+2,len*2);
+		memcpy(buff,msg->Buffer+pos+2,len*2);
 		pos+=2+len*2;
 	}
 
@@ -1671,18 +1671,18 @@ GSM_Error GNAPGEN_GetHW(GSM_StateMachine *s, char *value)
 	return error;
 }
 
-GSM_Error GNAPGEN_ReplyGetManufacturer(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error GNAPGEN_ReplyGetManufacturer(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	unsigned char 			buff[200];
 	int 				pos=8,len;
 	GSM_Phone_GNAPGENData           *Priv = &s->Phone.Data.Priv.GNAPGEN;
 
-	smprintf(s, "gnapplet %i. %i\n",msg.Buffer[4]*256+msg.Buffer[5],msg.Buffer[6]*256+msg.Buffer[7]);
-	Priv->GNAPPLETVer = msg.Buffer[4]*256+msg.Buffer[5] * 100 + msg.Buffer[6]*256+msg.Buffer[7];
+	smprintf(s, "gnapplet %i. %i\n",msg->Buffer[4]*256+msg->Buffer[5],msg->Buffer[6]*256+msg->Buffer[7]);
+	Priv->GNAPPLETVer = msg->Buffer[4]*256+msg->Buffer[5] * 100 + msg->Buffer[6]*256+msg->Buffer[7];
 
-	len=msg.Buffer[pos]*256+msg.Buffer[pos+1];
+	len=msg->Buffer[pos]*256+msg->Buffer[pos+1];
 	memset(buff,0,sizeof(buff));
-	memcpy(buff,msg.Buffer+pos+2,len*2);
+	memcpy(buff,msg->Buffer+pos+2,len*2);
 
 	strcpy(s->Phone.Data.Manufacturer,DecodeUnicodeString(buff));
 
@@ -1697,15 +1697,15 @@ GSM_Error GNAPGEN_GetManufacturer(GSM_StateMachine *s)
 	return GSM_WaitFor(s, req, 2, 0x01, 2, ID_GetManufacturer);
 }
 
-GSM_Error GNAPGEN_ReplyGetIMEI(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error GNAPGEN_ReplyGetIMEI(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	unsigned char 	buff[200];
 	int 		pos=8,len,i;
 
 	for (i=0;i<3;i++) {
-		len=msg.Buffer[pos]*256+msg.Buffer[pos+1];
+		len=msg->Buffer[pos]*256+msg->Buffer[pos+1];
 		memset(buff,0,sizeof(buff));
-		memcpy(buff,msg.Buffer+pos+2,len*2);
+		memcpy(buff,msg->Buffer+pos+2,len*2);
 		pos+=2+len*2;
 	}
 
@@ -1723,12 +1723,12 @@ GSM_Error GNAPGEN_GetIMEI(GSM_StateMachine *s)
 	return GSM_WaitFor(s, req, 2, 0x01, 2, ID_GetIMEI);
 }
 
-GSM_Error GNAPGEN_ReplyGetID(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s UNUSED)
+GSM_Error GNAPGEN_ReplyGetID(GSM_Protocol_Message *msg UNUSED, GSM_StateMachine *s UNUSED)
 {
 	return ERR_NONE;
 }
 
-GSM_Error GNAPGEN_ReplyGetModelFirmware(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error GNAPGEN_ReplyGetModelFirmware(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_CutLines	lines;
 	GSM_Phone_Data	*Data = &s->Phone.Data;
@@ -1736,16 +1736,16 @@ GSM_Error GNAPGEN_ReplyGetModelFirmware(GSM_Protocol_Message msg, GSM_StateMachi
 	if (Data->RequestID!=ID_GetManufacturer && Data->RequestID!=ID_GetModel) return ERR_NONE;
 
 	InitLines(&lines);
-	SplitLines(DecodeUnicodeString(msg.Buffer+6), msg.Length-6, &lines, "\x0A", 1, "", 0, FALSE);
+	SplitLines(DecodeUnicodeString(msg->Buffer+6), msg->Length-6, &lines, "\x0A", 1, "", 0, FALSE);
 
-	strcpy(Data->Model,GetLineString(DecodeUnicodeString(msg.Buffer+6), &lines, 4));
+	strcpy(Data->Model,GetLineString(DecodeUnicodeString(msg->Buffer+6), &lines, 4));
 	smprintf(s, "Received model %s\n",Data->Model);
 	Data->ModelInfo = GetModelData(s, NULL, Data->Model, NULL);
 
-	strcpy(Data->VerDate,GetLineString(DecodeUnicodeString(msg.Buffer+6), &lines, 3));
+	strcpy(Data->VerDate,GetLineString(DecodeUnicodeString(msg->Buffer+6), &lines, 3));
 	smprintf(s, "Received firmware date %s\n",Data->VerDate);
 
-	strcpy(Data->Version,GetLineString(DecodeUnicodeString(msg.Buffer+6), &lines, 2));
+	strcpy(Data->Version,GetLineString(DecodeUnicodeString(msg->Buffer+6), &lines, 2));
 	smprintf(s, "Received firmware version %s\n",Data->Version);
 	GSM_CreateFirmwareNumber(s);
 

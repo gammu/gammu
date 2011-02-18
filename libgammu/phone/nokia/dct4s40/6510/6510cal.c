@@ -18,7 +18,7 @@
 #include "n6510.h"
 
 /* method 3 */
-GSM_Error N6510_ReplyGetCalendarInfo3(GSM_Protocol_Message msg, GSM_StateMachine *s, GSM_NOKIACalToDoLocations *Last)
+GSM_Error N6510_ReplyGetCalendarInfo3(GSM_Protocol_Message *msg, GSM_StateMachine *s, GSM_NOKIACalToDoLocations *Last)
 {
 	size_t i=0,j=0;
 
@@ -28,12 +28,12 @@ GSM_Error N6510_ReplyGetCalendarInfo3(GSM_Protocol_Message msg, GSM_StateMachine
 		return ERR_MOREMEMORY;
 	}
 	if (j == 0) {
-		Last->Number = msg.Buffer[8]*256 + msg.Buffer[9];
+		Last->Number = msg->Buffer[8]*256 + msg->Buffer[9];
 		smprintf(s, "Number of Entries: %i\n", Last->Number);
 	}
 	smprintf(s, "Locations: ");
-	while (14+(i*4) <= msg.Length) {
-		Last->Location[j] = msg.Buffer[12+i*4]*256 + msg.Buffer[13+i*4];
+	while (14+(i*4) <= msg->Length) {
+		Last->Location[j] = msg->Buffer[12+i*4]*256 + msg->Buffer[13+i*4];
 		smprintf(s, "%i ", Last->Location[j]);
 		i++;
 		j++;
@@ -41,7 +41,7 @@ GSM_Error N6510_ReplyGetCalendarInfo3(GSM_Protocol_Message msg, GSM_StateMachine
 	smprintf(s, "\nNumber of Entries in frame: %ld\n", (long)i);
 	Last->Location[j] = 0;
 	smprintf(s, "\n");
-	if (i == 1 && msg.Buffer[12+0*4]*256+msg.Buffer[13+0*4] == 0) return ERR_EMPTY;
+	if (i == 1 && msg->Buffer[12+0*4]*256+msg->Buffer[13+0*4] == 0) return ERR_EMPTY;
 	if (i == 0) return ERR_EMPTY;
 	return ERR_NONE;
 }
@@ -99,7 +99,7 @@ GSM_Error N6510_GetCalendarInfo3(GSM_StateMachine *s, GSM_NOKIACalToDoLocations 
 }
 
 /* method 3 */
-GSM_Error N6510_ReplyGetCalendar3(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error N6510_ReplyGetCalendar3(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_CalendarEntry 		*entry = s->Phone.Data.Cal;
 	unsigned long			diff;
@@ -110,8 +110,8 @@ GSM_Error N6510_ReplyGetCalendar3(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 	smprintf(s, "Calendar note received method 3\n");
 
-	smprintf(s,"Note type %02i: ",msg.Buffer[27]);
-	switch(msg.Buffer[27]) {
+	smprintf(s,"Note type %02i: ",msg->Buffer[27]);
+	switch(msg->Buffer[27]) {
 		case 0x00: smprintf(s,"Reminder\n"); entry->Type = GSM_CAL_REMINDER; break;
 		case 0x01: smprintf(s,"Meeting\n");  entry->Type = GSM_CAL_MEETING;  break;
 		case 0x02: smprintf(s,"Call\n");     entry->Type = GSM_CAL_CALL;     break;
@@ -122,19 +122,19 @@ GSM_Error N6510_ReplyGetCalendar3(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	}
 
 	smprintf(s,"StartTime: %04i-%02i-%02i %02i:%02i\n",
-		msg.Buffer[28]*256+msg.Buffer[29],
-		msg.Buffer[30],msg.Buffer[31],msg.Buffer[32],
-		msg.Buffer[33]);
+		msg->Buffer[28]*256+msg->Buffer[29],
+		msg->Buffer[30],msg->Buffer[31],msg->Buffer[32],
+		msg->Buffer[33]);
 	GSM_GetCurrentDateTime(&entry->Entries[0].Date);
-	entry->Entries[0].Date.Year 	= msg.Buffer[28]*256+msg.Buffer[29];
+	entry->Entries[0].Date.Year 	= msg->Buffer[28]*256+msg->Buffer[29];
 	if (entry->Type == GSM_CAL_BIRTHDAY) {
 		entry->Entries[0].Date.Year = entry->Entries[0].Date.Year;
 		smprintf(s,"%i\n",entry->Entries[0].Date.Year);
 	}
-	entry->Entries[0].Date.Month 	= msg.Buffer[30];
-	entry->Entries[0].Date.Day 	= msg.Buffer[31];
-	entry->Entries[0].Date.Hour 	= msg.Buffer[32];
-	entry->Entries[0].Date.Minute 	= msg.Buffer[33];
+	entry->Entries[0].Date.Month 	= msg->Buffer[30];
+	entry->Entries[0].Date.Day 	= msg->Buffer[31];
+	entry->Entries[0].Date.Hour 	= msg->Buffer[32];
+	entry->Entries[0].Date.Minute 	= msg->Buffer[33];
 	/* Garbage seen with 3510i 3.51 */
 	if (entry->Entries[0].Date.Month == 0 &&
 			entry->Entries[0].Date.Day == 0 &&
@@ -145,24 +145,24 @@ GSM_Error N6510_ReplyGetCalendar3(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	entry->Entries[0].EntryType = CAL_START_DATETIME;
 	entry->EntriesNum++;
 
-	GSM_GetCalendarRecurranceRepeat(&(s->di), msg.Buffer+40, msg.Buffer+46, entry);
+	GSM_GetCalendarRecurranceRepeat(&(s->di), msg->Buffer+40, msg->Buffer+46, entry);
 
 	if (entry->Type != GSM_CAL_BIRTHDAY) {
 		smprintf(s,"EndTime: %04i-%02i-%02i %02i:%02i\n",
-			msg.Buffer[34]*256+msg.Buffer[35],
-			msg.Buffer[36],msg.Buffer[37],msg.Buffer[38],
-			msg.Buffer[39]);
-		entry->Entries[entry->EntriesNum].Date.Year 	= msg.Buffer[34]*256+msg.Buffer[35];
-		entry->Entries[entry->EntriesNum].Date.Month 	= msg.Buffer[36];
-		entry->Entries[entry->EntriesNum].Date.Day 	= msg.Buffer[37];
-		entry->Entries[entry->EntriesNum].Date.Hour 	= msg.Buffer[38];
-		entry->Entries[entry->EntriesNum].Date.Minute 	= msg.Buffer[39];
+			msg->Buffer[34]*256+msg->Buffer[35],
+			msg->Buffer[36],msg->Buffer[37],msg->Buffer[38],
+			msg->Buffer[39]);
+		entry->Entries[entry->EntriesNum].Date.Year 	= msg->Buffer[34]*256+msg->Buffer[35];
+		entry->Entries[entry->EntriesNum].Date.Month 	= msg->Buffer[36];
+		entry->Entries[entry->EntriesNum].Date.Day 	= msg->Buffer[37];
+		entry->Entries[entry->EntriesNum].Date.Hour 	= msg->Buffer[38];
+		entry->Entries[entry->EntriesNum].Date.Minute 	= msg->Buffer[39];
 		entry->Entries[entry->EntriesNum].Date.Second	= 0;
 		entry->Entries[entry->EntriesNum].EntryType = CAL_END_DATETIME;
 		entry->EntriesNum++;
 	}
 
-	smprintf(s, "Note icon: %02x\n",msg.Buffer[21]);
+	smprintf(s, "Note icon: %02x\n",msg->Buffer[21]);
 	for(i=0;i<Priv->CalendarIconsNum;i++) {
 		if (Priv->CalendarIconsTypes[i] == entry->Type) {
 			found = TRUE;
@@ -170,17 +170,17 @@ GSM_Error N6510_ReplyGetCalendar3(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	}
 	if (!found) {
 		Priv->CalendarIconsTypes[Priv->CalendarIconsNum] = entry->Type;
-		Priv->CalendarIcons	[Priv->CalendarIconsNum] = msg.Buffer[21];
+		Priv->CalendarIcons	[Priv->CalendarIconsNum] = msg->Buffer[21];
 		Priv->CalendarIconsNum++;
 	}
 
-	if (msg.Buffer[14] == 0xFF && msg.Buffer[15] == 0xFF && msg.Buffer[16] == 0xff && msg.Buffer[17] == 0xff) {
+	if (msg->Buffer[14] == 0xFF && msg->Buffer[15] == 0xFF && msg->Buffer[16] == 0xff && msg->Buffer[17] == 0xff) {
 		smprintf(s, "No alarm\n");
 	} else {
-		diff  = ((unsigned int)msg.Buffer[14]) << 24;
-		diff += ((unsigned int)msg.Buffer[15]) << 16;
-		diff += ((unsigned int)msg.Buffer[16]) << 8;
-		diff += msg.Buffer[17];
+		diff  = ((unsigned int)msg->Buffer[14]) << 24;
+		diff += ((unsigned int)msg->Buffer[15]) << 16;
+		diff += ((unsigned int)msg->Buffer[16]) << 8;
+		diff += msg->Buffer[17];
 
 		memcpy(&entry->Entries[entry->EntriesNum].Date,&entry->Entries[0].Date,sizeof(GSM_DateTime));
 		GetTimeDifference(diff, &entry->Entries[entry->EntriesNum].Date, FALSE, 60);
@@ -190,8 +190,8 @@ GSM_Error N6510_ReplyGetCalendar3(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			entry->Entries[entry->EntriesNum].Date.Minute,entry->Entries[entry->EntriesNum].Date.Second);
 
 		entry->Entries[entry->EntriesNum].EntryType = CAL_TONE_ALARM_DATETIME;
-		if (msg.Buffer[22]==0x00 && msg.Buffer[23]==0x00 &&
-		    msg.Buffer[24]==0x00 && msg.Buffer[25]==0x00) {
+		if (msg->Buffer[22]==0x00 && msg->Buffer[23]==0x00 &&
+		    msg->Buffer[24]==0x00 && msg->Buffer[25]==0x00) {
 			entry->Entries[entry->EntriesNum].EntryType = CAL_SILENT_ALARM_DATETIME;
 			smprintf(s, "Alarm type   : Silent\n");
 		}
@@ -199,20 +199,20 @@ GSM_Error N6510_ReplyGetCalendar3(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	}
 
 	if (entry->Type == GSM_CAL_BIRTHDAY) {
-		if (msg.Buffer[42] == 0xff && msg.Buffer[43] == 0xff) {
+		if (msg->Buffer[42] == 0xff && msg->Buffer[43] == 0xff) {
 			entry->Entries[0].Date.Year = 0;
 		} else {
-			entry->Entries[0].Date.Year = msg.Buffer[42]*256+msg.Buffer[43];
+			entry->Entries[0].Date.Year = msg->Buffer[42]*256+msg->Buffer[43];
 		}
 	}
 
-	len = msg.Buffer[50] * 256 + msg.Buffer[51];
+	len = msg->Buffer[50] * 256 + msg->Buffer[51];
 	if (len > GSM_MAX_CALENDAR_TEXT_LENGTH) {
 		smprintf(s, "Calendar text too long (%d), truncating to %d\n", len, GSM_MAX_CALENDAR_TEXT_LENGTH);
 		len = GSM_MAX_CALENDAR_TEXT_LENGTH;
 	}
 	memcpy(entry->Entries[entry->EntriesNum].Text,
-		msg.Buffer + 54,
+		msg->Buffer + 54,
 		len * 2);
 	entry->Entries[entry->EntriesNum].Text[len * 2]  = 0;
 	entry->Entries[entry->EntriesNum].Text[len * 2 + 1] = 0;
@@ -221,16 +221,16 @@ GSM_Error N6510_ReplyGetCalendar3(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	smprintf(s, "Note text: \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum-1].Text));
 
 	if (entry->Type == GSM_CAL_CALL) {
-		memcpy(entry->Entries[entry->EntriesNum].Text, msg.Buffer+(54+msg.Buffer[51]*2), msg.Buffer[52]*2);
-		entry->Entries[entry->EntriesNum].Text[msg.Buffer[52]*2]   = 0;
-		entry->Entries[entry->EntriesNum].Text[msg.Buffer[52]*2+1] = 0;
+		memcpy(entry->Entries[entry->EntriesNum].Text, msg->Buffer+(54+msg->Buffer[51]*2), msg->Buffer[52]*2);
+		entry->Entries[entry->EntriesNum].Text[msg->Buffer[52]*2]   = 0;
+		entry->Entries[entry->EntriesNum].Text[msg->Buffer[52]*2+1] = 0;
 		entry->Entries[entry->EntriesNum].EntryType		   = CAL_PHONE;
 		entry->EntriesNum++;
 	}
 	if (entry->Type == GSM_CAL_MEETING) {
-		memcpy(entry->Entries[entry->EntriesNum].Text, msg.Buffer+(54+msg.Buffer[51]*2), msg.Buffer[52]*2);
-		entry->Entries[entry->EntriesNum].Text[msg.Buffer[52]*2]   = 0;
-		entry->Entries[entry->EntriesNum].Text[msg.Buffer[52]*2+1] = 0;
+		memcpy(entry->Entries[entry->EntriesNum].Text, msg->Buffer+(54+msg->Buffer[51]*2), msg->Buffer[52]*2);
+		entry->Entries[entry->EntriesNum].Text[msg->Buffer[52]*2]   = 0;
+		entry->Entries[entry->EntriesNum].Text[msg->Buffer[52]*2+1] = 0;
 		entry->Entries[entry->EntriesNum].EntryType		   = CAL_LOCATION;
 		entry->EntriesNum++;
 	}
@@ -311,9 +311,9 @@ static GSM_Error N6510_GetNextCalendar3(GSM_StateMachine *s, GSM_CalendarEntry *
 	return error;
 }
 
-GSM_Error N6510_ReplyGetCalendarInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error N6510_ReplyGetCalendarInfo(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
-	switch (msg.Buffer[3]) {
+	switch (msg->Buffer[3]) {
 	case 0x3B:
 		/* Old method 1 for accessing calendar */
 		return N71_65_ReplyGetCalendarInfo1(msg, s, &s->Phone.Data.Priv.N6510.LastCalendar);
@@ -325,10 +325,10 @@ GSM_Error N6510_ReplyGetCalendarInfo(GSM_Protocol_Message msg, GSM_StateMachine 
 }
 
 /* method 3 */
-GSM_Error N6510_ReplyGetCalendarNotePos3(GSM_Protocol_Message msg, GSM_StateMachine *s,int *FirstCalendarPos)
+GSM_Error N6510_ReplyGetCalendarNotePos3(GSM_Protocol_Message *msg, GSM_StateMachine *s,int *FirstCalendarPos)
 {
-	smprintf(s, "First calendar location: %i\n",msg.Buffer[8]*256+msg.Buffer[9]);
-	*FirstCalendarPos = msg.Buffer[8]*256+msg.Buffer[9];
+	smprintf(s, "First calendar location: %i\n",msg->Buffer[8]*256+msg->Buffer[9]);
+	*FirstCalendarPos = msg->Buffer[8]*256+msg->Buffer[9];
 	return ERR_NONE;
 }
 
@@ -341,9 +341,9 @@ static GSM_Error N6510_GetCalendarNotePos3(GSM_StateMachine *s)
 	return GSM_WaitFor (s, req, 5, 0x13, 4, ID_GetCalendarNotePos);
 }
 
-GSM_Error N6510_ReplyGetCalendarNotePos(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error N6510_ReplyGetCalendarNotePos(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
-	switch (msg.Buffer[3]) {
+	switch (msg->Buffer[3]) {
 	case 0xf0:
 		return ERR_NOTSUPPORTED;
 	case 0x32:
@@ -436,7 +436,7 @@ static GSM_Error N6510_FindCalendarIconID3(GSM_StateMachine *s, GSM_CalendarEntr
 }
 
 /* method 3 */
-GSM_Error N6510_ReplyAddCalendar3(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
+GSM_Error N6510_ReplyAddCalendar3(GSM_Protocol_Message *msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "Calendar note added\n");
 	return ERR_NONE;
@@ -667,23 +667,23 @@ GSM_Error N6510_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	}
 }
 
-GSM_Error N6510_ReplyGetNoteInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error N6510_ReplyGetNoteInfo(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	return N6510_ReplyGetCalendarInfo3(msg, s, &s->Phone.Data.Priv.N6510.LastNote);
 }
 
-GSM_Error N6510_ReplyGetNote(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error N6510_ReplyGetNote(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	int len;
 
 	smprintf(s, "Note received\n");
-	len = msg.Buffer[50] * 256 + msg.Buffer[51];
+	len = msg->Buffer[50] * 256 + msg->Buffer[51];
 	if (len > GSM_MAX_NOTE_TEXT_LENGTH) {
 		smprintf(s, "Note too long (%d), truncating to %d\n", len, GSM_MAX_NOTE_TEXT_LENGTH);
 		len = GSM_MAX_NOTE_TEXT_LENGTH;
 	}
 	memcpy(s->Phone.Data.Note->Text,
-		msg.Buffer + 54,
+		msg->Buffer + 54,
 		len * 2);
 	s->Phone.Data.Note->Text[len * 2] = 0;
 	s->Phone.Data.Note->Text[(len * 2) + 1] = 0;
@@ -731,14 +731,14 @@ GSM_Error N6510_DeleteNote(GSM_StateMachine *s, GSM_NoteEntry *Not)
 	return N71_65_DelCalendar(s,&Note);
 }
 
-GSM_Error N6510_ReplyGetNoteFirstLoc(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error N6510_ReplyGetNoteFirstLoc(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
-	smprintf(s, "First Note location: %i\n",msg.Buffer[8]*256+msg.Buffer[9]);
-	s->Phone.Data.Note->Location = msg.Buffer[8]*256+msg.Buffer[9];
+	smprintf(s, "First Note location: %i\n",msg->Buffer[8]*256+msg->Buffer[9]);
+	s->Phone.Data.Note->Location = msg->Buffer[8]*256+msg->Buffer[9];
 	return ERR_NONE;
 }
 
-GSM_Error N6510_ReplyAddNote(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
+GSM_Error N6510_ReplyAddNote(GSM_Protocol_Message *msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "Note added\n");
 	return ERR_NONE;
@@ -807,17 +807,17 @@ GSM_Error N6510_GetNoteStatus(GSM_StateMachine *s, GSM_ToDoStatus *status)
 }
 
 /* ToDo support - 6310 style */
-GSM_Error N6510_ReplyGetToDoStatus1(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error N6510_ReplyGetToDoStatus1(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	int				i;
 	GSM_NOKIACalToDoLocations	*Last = &s->Phone.Data.Priv.N6510.LastToDo;
 
 	smprintf(s, "TODO locations received\n");
-	Last->Number=msg.Buffer[6]*256+msg.Buffer[7];
+	Last->Number=msg->Buffer[6]*256+msg->Buffer[7];
 	smprintf(s, "Number of Entries: %i\n",Last->Number);
 	smprintf(s, "Locations: ");
 	for (i=0;i<Last->Number;i++) {
-		Last->Location[i]=msg.Buffer[12+(i*4)]*256+msg.Buffer[(i*4)+13];
+		Last->Location[i]=msg->Buffer[12+(i*4)]*256+msg->Buffer[(i*4)+13];
 		smprintf(s, "%i ",Last->Location[i]);
 	}
 	smprintf(s, "\n");
@@ -876,7 +876,7 @@ GSM_Error N6510_GetToDoStatus(GSM_StateMachine *s, GSM_ToDoStatus *status)
 }
 
 /* ToDo support - 6310 style */
-GSM_Error N6510_ReplyGetToDo1(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error N6510_ReplyGetToDo1(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_ToDoEntry *Last = s->Phone.Data.ToDo;
 
@@ -887,15 +887,15 @@ GSM_Error N6510_ReplyGetToDo1(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	 */
 	Last->Type = GSM_CAL_MEMO;
 
-	switch (msg.Buffer[4]) {
+	switch (msg->Buffer[4]) {
 		case 1  : Last->Priority = GSM_Priority_High; 	break;
 		case 2  : Last->Priority = GSM_Priority_Medium; break;
 		case 3  : Last->Priority = GSM_Priority_Low; 	break;
 		default	: return ERR_UNKNOWN;
 	}
-	smprintf(s, "Priority: %i\n",msg.Buffer[4]);
+	smprintf(s, "Priority: %i\n",msg->Buffer[4]);
 
-	CopyUnicodeString(Last->Entries[0].Text,msg.Buffer+14);
+	CopyUnicodeString(Last->Entries[0].Text,msg->Buffer+14);
  	Last->Entries[0].EntryType = TODO_TEXT;
 	Last->EntriesNum		 = 1;
 	smprintf(s, "Text: \"%s\"\n",DecodeUnicodeString(Last->Entries[0].Text));
@@ -930,13 +930,13 @@ static GSM_Error N6510_GetNextToDo1(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, gb
 	return GSM_WaitFor (s, reqGet, 10, 0x55, 4, ID_GetToDo);
 }
 
-GSM_Error N6510_ReplyGetToDoStatus2(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error N6510_ReplyGetToDoStatus2(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	return N6510_ReplyGetCalendarInfo3(msg, s, &s->Phone.Data.Priv.N6510.LastToDo);
 }
 
 /* Similiar to getting calendar method 3 */
-GSM_Error N6510_ReplyGetToDo2(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error N6510_ReplyGetToDo2(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_ToDoEntry 		*Last = s->Phone.Data.ToDo;
 	GSM_DateTime		Date;
@@ -950,20 +950,20 @@ GSM_Error N6510_ReplyGetToDo2(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	 */
 	Last->Type = GSM_CAL_MEMO;
 
-	switch (msg.Buffer[44]) {
+	switch (msg->Buffer[44]) {
 		case 0x10: Last->Priority = GSM_Priority_Low; 		break;
 		case 0x20: Last->Priority = GSM_Priority_Medium; 	break;
 		case 0x30: Last->Priority = GSM_Priority_High; 		break;
 		default	 : return ERR_UNKNOWN;
 	}
 
-	len = msg.Buffer[50] * 256 + msg.Buffer[51];
+	len = msg->Buffer[50] * 256 + msg->Buffer[51];
 	if (len > GSM_MAX_TODO_TEXT_LENGTH) {
 		smprintf(s, "Todo text too long (%d), truncating to %d\n", len, GSM_MAX_TODO_TEXT_LENGTH);
 		len = GSM_MAX_TODO_TEXT_LENGTH;
 	}
 	memcpy(Last->Entries[0].Text,
-		msg.Buffer + 54,
+		msg->Buffer + 54,
 		len * 2);
 	Last->Entries[0].Text[len * 2] = 0;
 	Last->Entries[0].Text[(len * 2) + 1] = 0;
@@ -971,45 +971,45 @@ GSM_Error N6510_ReplyGetToDo2(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	smprintf(s, "Text: \"%s\"\n",DecodeUnicodeString(Last->Entries[0].Text));
 
 	smprintf(s,"EndTime: %04i-%02i-%02i %02i:%02i\n",
-		msg.Buffer[34]*256+msg.Buffer[35],
-		msg.Buffer[36],msg.Buffer[37],msg.Buffer[38],
-		msg.Buffer[39]);
-	Date.Year 	= msg.Buffer[34]*256+msg.Buffer[35];
-	Date.Month 	= msg.Buffer[36];
-	Date.Day 	= msg.Buffer[37];
-	Date.Hour 	= msg.Buffer[38];
-	Date.Minute 	= msg.Buffer[39];
+		msg->Buffer[34]*256+msg->Buffer[35],
+		msg->Buffer[36],msg->Buffer[37],msg->Buffer[38],
+		msg->Buffer[39]);
+	Date.Year 	= msg->Buffer[34]*256+msg->Buffer[35];
+	Date.Month 	= msg->Buffer[36];
+	Date.Day 	= msg->Buffer[37];
+	Date.Hour 	= msg->Buffer[38];
+	Date.Minute 	= msg->Buffer[39];
 	Date.Second	= 0;
 	Last->Entries[1].EntryType = TODO_END_DATETIME;
 	memcpy(&Last->Entries[1].Date,&Date,sizeof(GSM_DateTime));
 
 	smprintf(s,"StartTime: %04i-%02i-%02i %02i:%02i\n",
-		msg.Buffer[28]*256+msg.Buffer[29],
-		msg.Buffer[30],msg.Buffer[31],msg.Buffer[32],
-		msg.Buffer[33]);
-	Date.Year 	= msg.Buffer[28]*256+msg.Buffer[29];
-	Date.Month 	= msg.Buffer[30];
-	Date.Day 	= msg.Buffer[31];
-	Date.Hour 	= msg.Buffer[32];
-	Date.Minute 	= msg.Buffer[33];
+		msg->Buffer[28]*256+msg->Buffer[29],
+		msg->Buffer[30],msg->Buffer[31],msg->Buffer[32],
+		msg->Buffer[33]);
+	Date.Year 	= msg->Buffer[28]*256+msg->Buffer[29];
+	Date.Month 	= msg->Buffer[30];
+	Date.Day 	= msg->Buffer[31];
+	Date.Hour 	= msg->Buffer[32];
+	Date.Minute 	= msg->Buffer[33];
 	Date.Second	= 0;
 
 	Last->EntriesNum = 2;
 
-	if (msg.Buffer[45] == 0x01) {
-		Last->Entries[2].Number		= msg.Buffer[45];
+	if (msg->Buffer[45] == 0x01) {
+		Last->Entries[2].Number		= msg->Buffer[45];
 	    	Last->Entries[2].EntryType 	= TODO_COMPLETED;
 		Last->EntriesNum++;
 		smprintf(s,"Completed\n");
 	}
 
-	if (msg.Buffer[14] == 0xFF && msg.Buffer[15] == 0xFF && msg.Buffer[16] == 0xff && msg.Buffer[17] == 0xff) {
+	if (msg->Buffer[14] == 0xFF && msg->Buffer[15] == 0xFF && msg->Buffer[16] == 0xff && msg->Buffer[17] == 0xff) {
 		smprintf(s, "No alarm\n");
 	} else {
-		diff  = ((unsigned int)msg.Buffer[14]) << 24;
-		diff += ((unsigned int)msg.Buffer[15]) << 16;
-		diff += ((unsigned int)msg.Buffer[16]) << 8;
-		diff += msg.Buffer[17];
+		diff  = ((unsigned int)msg->Buffer[14]) << 24;
+		diff += ((unsigned int)msg->Buffer[15]) << 16;
+		diff += ((unsigned int)msg->Buffer[16]) << 8;
+		diff += msg->Buffer[17];
 
 		memcpy(&Last->Entries[Last->EntriesNum].Date,&Date,sizeof(GSM_DateTime));
 		GetTimeDifference(diff, &Last->Entries[Last->EntriesNum].Date, FALSE, 60);
@@ -1019,8 +1019,8 @@ GSM_Error N6510_ReplyGetToDo2(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			Last->Entries[Last->EntriesNum].Date.Minute,Last->Entries[Last->EntriesNum].Date.Second);
 
 		Last->Entries[Last->EntriesNum].EntryType = TODO_ALARM_DATETIME;
-		if (msg.Buffer[22]==0x00 && msg.Buffer[23]==0x00 &&
-		    msg.Buffer[24]==0x00 && msg.Buffer[25]==0x00)
+		if (msg->Buffer[22]==0x00 && msg->Buffer[23]==0x00 &&
+		    msg->Buffer[24]==0x00 && msg->Buffer[25]==0x00)
 		{
 			Last->Entries[Last->EntriesNum].EntryType = TODO_SILENT_ALARM_DATETIME;
 			smprintf(s, "Alarm type   : Silent\n");
@@ -1064,7 +1064,7 @@ GSM_Error N6510_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, gboolean r
 }
 
 /* ToDo support - 6310 style */
-GSM_Error N6510_ReplyDeleteAllToDo1(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
+GSM_Error N6510_ReplyDeleteAllToDo1(GSM_Protocol_Message *msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "All TODO deleted\n");
 	return ERR_NONE;
@@ -1105,15 +1105,15 @@ GSM_Error N6510_DeleteToDo2(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 }
 
 /* ToDo support - 6310 style */
-GSM_Error N6510_ReplyGetToDoFirstLoc1(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error N6510_ReplyGetToDoFirstLoc1(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
-	smprintf(s, "TODO first location received method 1: %02x\n",msg.Buffer[9]);
-	s->Phone.Data.ToDo->Location = msg.Buffer[9];
+	smprintf(s, "TODO first location received method 1: %02x\n",msg->Buffer[9]);
+	s->Phone.Data.ToDo->Location = msg->Buffer[9];
 	return ERR_NONE;
 }
 
 /* ToDo support - 6310 style */
-GSM_Error N6510_ReplyAddToDo1(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
+GSM_Error N6510_ReplyAddToDo1(GSM_Protocol_Message *msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "TODO set OK\n");
 	return ERR_NONE;
@@ -1158,16 +1158,16 @@ static GSM_Error N6510_AddToDo1(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 	return GSM_WaitFor (s, reqSet, 12+ulen*2, 0x55, 4, ID_SetToDo);
 }
 
-GSM_Error N6510_ReplyAddToDo2(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
+GSM_Error N6510_ReplyAddToDo2(GSM_Protocol_Message *msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "ToDo added method 2\n");
 	return ERR_NONE;
 }
 
-GSM_Error N6510_ReplyGetToDoFirstLoc2(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error N6510_ReplyGetToDoFirstLoc2(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
-	smprintf(s, "First ToDo location method 2: %i\n",msg.Buffer[8]*256+msg.Buffer[9]);
-	s->Phone.Data.ToDo->Location = msg.Buffer[8]*256+msg.Buffer[9];
+	smprintf(s, "First ToDo location method 2: %i\n",msg->Buffer[8]*256+msg->Buffer[9]);
+	s->Phone.Data.ToDo->Location = msg->Buffer[8]*256+msg->Buffer[9];
 	return ERR_NONE;
 }
 
@@ -1297,18 +1297,18 @@ GSM_Error N6510_AddToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 	}
 }
 
-GSM_Error N6510_ReplyGetCalendarSettings(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error N6510_ReplyGetCalendarSettings(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_CalendarSettings *sett = s->Phone.Data.CalendarSettings;
 
-	switch (msg.Buffer[3]) {
+	switch (msg->Buffer[3]) {
 	case 0x86:
 		smprintf(s, "Auto deleting setting received\n");
-		sett->AutoDelete = msg.Buffer[4];
+		sett->AutoDelete = msg->Buffer[4];
 		return ERR_NONE;
 	case 0x8E:
 		smprintf(s, "Start day for calendar received\n");
-		switch(msg.Buffer[4]) {
+		switch(msg->Buffer[4]) {
 		case 0x04:
 			sett->StartDay = 1;
 			return ERR_NONE;

@@ -34,9 +34,9 @@ extern GSM_Reply_Function UserReplyFunctionsX[];
 GSMDecoder 		*gsmdec;
 struct wmx_tracestruct 	*traces;
 
-static GSM_Error DCT3_ReplySwitchDebug(GSM_Protocol_Message msg, GSM_StateMachine *sm)
+static GSM_Error DCT3_ReplySwitchDebug(GSM_Protocol_Message *msg, GSM_StateMachine *sm)
 {
-	switch(msg.Buffer[2]) {
+	switch(msg->Buffer[2]) {
 	case 0x70:
 		printf("Debug Trace Enabled\n");
 		break;
@@ -50,15 +50,15 @@ static GSM_Error DCT3_ReplySwitchDebug(GSM_Protocol_Message msg, GSM_StateMachin
 /**
  * RPC confirmation/reply
  */
-static GSM_Error DCT3_ReplyRPC(GSM_Protocol_Message msg, GSM_StateMachine *sm)
+static GSM_Error DCT3_ReplyRPC(GSM_Protocol_Message *msg, GSM_StateMachine *sm)
 {
 	printf("RPC Reply ");
-	printf("call=%02x rettype=%02x data=", msg.Buffer[2], msg.Buffer[3]);
-	if(msg.Buffer[3] == 3) {
+	printf("call=%02x rettype=%02x data=", msg->Buffer[2], msg->Buffer[3]);
+	if(msg->Buffer[3] == 3) {
 		/* string */
-		printf("%s", &msg.Buffer[4]);
+		printf("%s", &msg->Buffer[4]);
 	} else {
-		dumpraw("RPC Reply data", &msg.Buffer[4], msg.Length-4);
+		dumpraw("RPC Reply data", &msg->Buffer[4], msg->Length-4);
 	}
 	printf("\n");
 	return ERR_NONE;
@@ -155,7 +155,7 @@ static void mdircv_data(unsigned char type, unsigned char *buffer, size_t length
 	}
 }
 
-static GSM_Error DCT3_ReplyDebugTrace(GSM_Protocol_Message msg, GSM_StateMachine *sm)
+static GSM_Error DCT3_ReplyDebugTrace(GSM_Protocol_Message *msg, GSM_StateMachine *sm)
 {
 	size_t 			x;
 	int 			id,timestamp,number;
@@ -174,16 +174,16 @@ static GSM_Error DCT3_ReplyDebugTrace(GSM_Protocol_Message msg, GSM_StateMachine
 	   0x0C seq nr
 	   0x0D .. parameters
 	*/
-	id 		= ((msg.Buffer[2]&0xFF)<<8)|(msg.Buffer[3]&0xFF);
-	timestamp 	= ((msg.Buffer[4]&0xFF)<<8)|(msg.Buffer[5]&0xFF);
-	number 		= msg.Buffer[6]&0xFF;
-	length 		= msg.Buffer[7]&0xFF;
+	id 		= ((msg->Buffer[2]&0xFF)<<8)|(msg->Buffer[3]&0xFF);
+	timestamp 	= ((msg->Buffer[4]&0xFF)<<8)|(msg->Buffer[5]&0xFF);
+	number 		= msg->Buffer[6]&0xFF;
+	length 		= msg->Buffer[7]&0xFF;
 
 	/* filter */
 	//if((id&0xFF00)==0x1900 && id != 0x1980)
 	//	return GE_NONE;
-	//printf("%02x\n",msg.Buffer[10]);
-	//if(msg.Buffer[10]!=0x40)
+	//printf("%02x\n",msg->Buffer[10]);
+	//if(msg->Buffer[10]!=0x40)
 	//	return GE_NONE;
 	/* Query trace type name */
 	desc = "Unknown";
@@ -209,15 +209,15 @@ static GSM_Error DCT3_ReplyDebugTrace(GSM_Protocol_Message msg, GSM_StateMachine
 		/* text */
 		/* skip length byte */
 		printf("\"");
-		for(x=8; x<msg.Length; x++) {
-			printf("%c",msg.Buffer[x]&0xFF);
+		for(x=8; x<msg->Length; x++) {
+			printf("%c",msg->Buffer[x]&0xFF);
 		}
 		printf("\"");
 		break;
 		/*
 	case 0x6801:
-		for(x=8; x<msg.Length; x++) {
-			printf("%02x%c ",msg.Buffer[x]&0xFF,msg.Buffer[x]&0xFF);
+		for(x=8; x<msg->Length; x++) {
+			printf("%02x%c ",msg->Buffer[x]&0xFF,msg->Buffer[x]&0xFF);
 		}
 		break;
 		*/
@@ -227,60 +227,60 @@ static GSM_Error DCT3_ReplyDebugTrace(GSM_Protocol_Message msg, GSM_StateMachine
 		  +00 length
 		  +01 type (also xx in 0x18xx)
 		*/
-		if(msg.Length<10 || msg.Buffer[9]!=(id&0xFF)) {
-			printf("C %02X: param:%02x", id&0xFF, msg.Buffer[8]);
+		if(msg->Length<10 || msg->Buffer[9]!=(id&0xFF)) {
+			printf("C %02X: param:%02x", id&0xFF, msg->Buffer[8]);
 		} else {
 			//printf("D %02X: ", id&0xFF);
 			printf("D %02X: ", id&0xFF);
-			mdisnd_data((unsigned char)(id&0xFF), (unsigned char*)&msg.Buffer[10], msg.Length-10);
+			mdisnd_data((unsigned char)(id&0xFF), (unsigned char*)&msg->Buffer[10], msg->Length-10);
 		}
 		break;
 	case 0x19: /* MDIRCV */
-		if(msg.Length<10 || msg.Buffer[9]!=(id&0xFF)) {
-			printf("C %02X: param:%02x", id&0xFF, msg.Buffer[8]);
+		if(msg->Length<10 || msg->Buffer[9]!=(id&0xFF)) {
+			printf("C %02X: param:%02x", id&0xFF, msg->Buffer[8]);
 		} else {
 			printf("D %02X: ", id&0xFF);
-			mdircv_data((unsigned char)(id&0xFF), (unsigned char*)&msg.Buffer[10], msg.Length-10);
-			//dumpraw((unsigned char*)&msg.Buffer[10], msg.Length-10);
+			mdircv_data((unsigned char)(id&0xFF), (unsigned char*)&msg->Buffer[10], msg->Length-10);
+			//dumpraw((unsigned char*)&msg->Buffer[10], msg->Length-10);
 		}
 		break;
  	case 0x20: /* 0x25 SIM commands */
  		/*
-		for(x=8;x<msg.Length;x++)
- 		    printf("%02x ", msg.Buffer[x]&0xFF);
+		for(x=8;x<msg->Length;x++)
+ 		    printf("%02x ", msg->Buffer[x]&0xFF);
  		*/
  		printf("SIM command ");
- 		if(msg.Buffer[8]==0xa0) { // check if valid (class=a0)
-			simCommand_data(msg.Buffer[9], (unsigned char)(id&0xFF), (unsigned char*)&msg.Buffer[10], msg.Length-10);
- 			// TODO: pass the msg.Buffer[9] and skip 1rst arg
+ 		if(msg->Buffer[8]==0xa0) { // check if valid (class=a0)
+			simCommand_data(msg->Buffer[9], (unsigned char)(id&0xFF), (unsigned char*)&msg->Buffer[10], msg->Length-10);
+ 			// TODO: pass the msg->Buffer[9] and skip 1rst arg
  		} else {
 			printf("Unknown 0x25 packet (NOT SIM cmd): ");
-			for(x=8;x<msg.Length;x++) printf("%02x ", msg.Buffer[x]&0xFF);
+			for(x=8;x<msg->Length;x++) printf("%02x ", msg->Buffer[x]&0xFF);
 			printf("\n");
  		}
  		break;
  	case 0x22: /* 0x27 SIM answer to command (error/ok/etc..) */
- 		if(msg.Length < 10 || msg.Length < length + 8) {
+ 		if(msg->Length < 10 || msg->Length < length + 8) {
  		    	// Unknown response
- 		    	for(x=0;x<msg.Length;x++) printf("%02x ", msg.Buffer[x]&0xFF);
+ 		    	for(x=0;x<msg->Length;x++) printf("%02x ", msg->Buffer[x]&0xFF);
 			printf(" (Unknown 0x27 packet ? ? )\n");
  		} else {
- 		    	simAnswer_Process((unsigned char)(id&0xFF), (unsigned char*)&msg.Buffer[8], length);
+ 		    	simAnswer_Process((unsigned char)(id&0xFF), (unsigned char*)&msg->Buffer[8], length);
  		}
  		break;
  	case 0x23:  /* 0x28 SIM response data to commands */
- 		if(msg.Length < 10 || msg.Length < length + 8) {
+ 		if(msg->Length < 10 || msg->Length < length + 8) {
  		    	// Unknown response
- 		    	for(x=0;x<msg.Length;x++) printf("%02x ", msg.Buffer[x]&0xFF);
+ 		    	for(x=0;x<msg->Length;x++) printf("%02x ", msg->Buffer[x]&0xFF);
  		    	printf(" (Unknown 0x28 packet)\n");
  		} else {
- 		    	simResponse_Process((unsigned char)(id&0xFF), (unsigned char*)&msg.Buffer[8], length);
+ 		    	simResponse_Process((unsigned char)(id&0xFF), (unsigned char*)&msg->Buffer[8], length);
  		}
  		break;
 	default:
 		/* hex */
-		for(x=8; x<msg.Length; x++) {
-			printf("%02x ",msg.Buffer[x]&0xFF);
+		for(x=8; x<msg->Length; x++) {
+			printf("%02x ",msg->Buffer[x]&0xFF);
 		}
 		break;
 	}
@@ -289,13 +289,13 @@ static GSM_Error DCT3_ReplyDebugTrace(GSM_Protocol_Message msg, GSM_StateMachine
 }
 
 
-static GSM_Error DCT3_ReplyMyPacket(GSM_Protocol_Message msg, GSM_StateMachine *sm)
+static GSM_Error DCT3_ReplyMyPacket(GSM_Protocol_Message *msg, GSM_StateMachine *sm)
 {
 	size_t x;
 
 	printf("MyPacket ");
-	for(x=0; x<msg.Length; x++) {
-		printf("%02x ",msg.Buffer[x]&0xFF);
+	for(x=0; x<msg->Length; x++) {
+		printf("%02x ",msg->Buffer[x]&0xFF);
 	}
 	printf("\n");
 	return ERR_NONE;

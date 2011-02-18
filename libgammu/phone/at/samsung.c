@@ -178,14 +178,14 @@ static GSM_Error SetSamsungFrame(GSM_StateMachine *s, unsigned char *buff, int s
  * SDNDCRC = 0xa : RECEIVECRC = 0xcbf53a1c : BINSIZE = 5
  * CRCERR
  */
-static GSM_Error ReplySetSamsungFrame(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error ReplySetSamsungFrame(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	unsigned long 		txcrc, rxcrc;
 	int 			binsize;
 	char 			*pos;
 
 	/* Parse SDNDCRC */
-	pos = strchr(msg.Buffer, '=');
+	pos = strchr(msg->Buffer, '=');
 	if (!pos) return ERR_UNKNOWN;
 	pos++;
 	txcrc = strtoul(pos, NULL, 0);
@@ -212,7 +212,7 @@ static GSM_Error ReplySetSamsungFrame(GSM_Protocol_Message msg, GSM_StateMachine
  * Bitmaps
  */
 
-GSM_Error SAMSUNG_ReplyGetBitmap(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error SAMSUNG_ReplyGetBitmap(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
  	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	char 		buffer[32];
@@ -225,7 +225,7 @@ GSM_Error SAMSUNG_ReplyGetBitmap(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		/* Parse +IMGR:location,name,0,0,0,0 */
 
 		/* Parse location */
-		pos = strchr(msg.Buffer, ':');
+		pos = strchr(msg->Buffer, ':');
 		if (!pos) return ERR_UNKNOWN;
 		pos++;
 		location = atoi(pos);
@@ -258,7 +258,7 @@ GSM_Error SAMSUNG_ReplyGetBitmap(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	}
 }
 
-GSM_Error SAMSUNG_ReplySetBitmap(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error SAMSUNG_ReplySetBitmap(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	smprintf(s, "Bitmap sent\n");
 	return ReplySetSamsungFrame(msg, s);
@@ -341,7 +341,7 @@ GSM_Error SAMSUNG_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
  * Ringtones
  */
 
-GSM_Error SAMSUNG_ReplyGetRingtone(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error SAMSUNG_ReplyGetRingtone(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
  	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	unsigned char 		buffer[32];
@@ -354,7 +354,7 @@ GSM_Error SAMSUNG_ReplyGetRingtone(GSM_Protocol_Message msg, GSM_StateMachine *s
 		/* Parse +MELR:location,name,size */
 
 		/* Parse location */
-		pos = strchr(msg.Buffer, ':');
+		pos = strchr(msg->Buffer, ':');
 		if (!pos) return ERR_UNKNOWN;
 		pos++;
 		location = atoi(pos);
@@ -409,7 +409,7 @@ GSM_Error SAMSUNG_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, gbool
 	return GSM_WaitFor (s, req, len, 0x00, 4, ID_GetRingtone);
 }
 
-GSM_Error SAMSUNG_ReplySetRingtone(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error SAMSUNG_ReplySetRingtone(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	smprintf(s, "Ringtone sent\n");
 	return ReplySetSamsungFrame(msg, s);
@@ -477,7 +477,7 @@ GSM_Error SAMSUNG_CheckCalendar(GSM_StateMachine *s)
 
 }
 
-GSM_Error SAMSUNG_ReplyGetMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error SAMSUNG_ReplyGetMemoryInfo(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
  	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 
@@ -500,7 +500,7 @@ GSM_Error SAMSUNG_ReplyGetMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachine 
 	}
 }
 
-GSM_Error SAMSUNG_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error SAMSUNG_ReplyGetMemory(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
  	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
  	GSM_MemoryEntry		*Memory = s->Phone.Data.Memory;
@@ -559,7 +559,7 @@ GSM_Error SAMSUNG_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		Memory->Entries[8].SMSList[0] = 0;
 
 		/* Get line from reply */
-		str = GetLineString(msg.Buffer, &Priv->Lines, 2);
+		str = GetLineString(msg->Buffer, &Priv->Lines, 2);
 
 		/* Empty entry */
 		if (strcmp(str, "OK") == 0) return ERR_EMPTY;
@@ -567,7 +567,7 @@ GSM_Error SAMSUNG_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		/* Philips has it's SPBR as well, but different reply */
 		if ( Priv->Manufacturer == AT_Philips) {
 			error = ATGEN_ParseReply(s,
-						GetLineString(msg.Buffer, &Priv->Lines, 2),
+						GetLineString(msg->Buffer, &Priv->Lines, 2),
 						"+SPBR: @n, @u, @p",
 						&Memory->Location,
 						Memory->Entries[0].Text, sizeof(Memory->Entries[0].Text),
@@ -690,7 +690,7 @@ GSM_Error SAMSUNG_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	return ERR_NOTIMPLEMENTED;
 }
 
-GSM_Error SAMSUNG_ORG_ReplyGetCalendarStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error SAMSUNG_ORG_ReplyGetCalendarStatus(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error error;
@@ -709,12 +709,12 @@ GSM_Error SAMSUNG_ORG_ReplyGetCalendarStatus(GSM_Protocol_Message msg, GSM_State
 		}
 	}
 
-	if (strcmp(GetLineString(msg.Buffer, &Priv->Lines, 2), "OK") == 0) {
+	if (strcmp(GetLineString(msg->Buffer, &Priv->Lines, 2), "OK") == 0) {
 		return ERR_NOTSUPPORTED;
 	}
 
 	error = ATGEN_ParseReply(s,
-		GetLineString(msg.Buffer, &Priv->Lines, 2),
+		GetLineString(msg->Buffer, &Priv->Lines, 2),
 		"+ORGI: @i, @i, @i, @i, @i",
 		&s->Phone.Data.CalStatus->Used,
 		&s->Phone.Data.CalStatus->Free,
@@ -726,7 +726,7 @@ GSM_Error SAMSUNG_ORG_ReplyGetCalendarStatus(GSM_Protocol_Message msg, GSM_State
 	return ERR_NONE;
 }
 
-GSM_Error SAMSUNG_SSH_ReplyGetCalendarStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error SAMSUNG_SSH_ReplyGetCalendarStatus(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error error;
@@ -746,7 +746,7 @@ GSM_Error SAMSUNG_SSH_ReplyGetCalendarStatus(GSM_Protocol_Message msg, GSM_State
 	}
 
 	error = ATGEN_ParseReply(s,
-		GetLineString(msg.Buffer, &Priv->Lines, 2),
+		GetLineString(msg->Buffer, &Priv->Lines, 2),
 		"+SSHI: @i, @i, @i",
 		&s->Phone.Data.CalStatus->Used,
 		&s->Phone.Data.CalStatus->Free,
@@ -981,7 +981,7 @@ par24: Empty
 	return ERR_NONE;
 }
 
-GSM_Error SAMSUNG_ORG_ReplyGetCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error SAMSUNG_ORG_ReplyGetCalendar(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error error;
@@ -1001,7 +1001,7 @@ GSM_Error SAMSUNG_ORG_ReplyGetCalendar(GSM_Protocol_Message msg, GSM_StateMachin
 		}
 	}
 
-	line = GetLineString(msg.Buffer, &Priv->Lines, 2);
+	line = GetLineString(msg->Buffer, &Priv->Lines, 2);
 
 	if (strcmp("OK", line) == 0) {
 		return ERR_EMPTY;
@@ -1035,7 +1035,7 @@ GSM_Error SAMSUNG_ORG_ReplyGetCalendar(GSM_Protocol_Message msg, GSM_StateMachin
 	}
 }
 
-GSM_Error SAMSUNG_SSH_ReplyGetCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error SAMSUNG_SSH_ReplyGetCalendar(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	return ERR_NOTIMPLEMENTED;
 }
@@ -1107,7 +1107,7 @@ GSM_Error SAMSUNG_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	return error;
 }
 
-GSM_Error SAMSUNG_ORG_ReplySetCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error SAMSUNG_ORG_ReplySetCalendar(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	return ERR_NOTIMPLEMENTED;
 }

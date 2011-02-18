@@ -15,13 +15,13 @@
 #include "../../pfunc.h"
 #include "n3320.h"
 
-static GSM_Error N3320_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error N3320_ReplyGetMemory(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	smprintf(s, "Phonebook entry received\n");
-	if (msg.Buffer[6] == 0x0f)
-		return N71_65_ReplyGetMemoryError(msg.Buffer[10], s);
+	if (msg->Buffer[6] == 0x0f)
+		return N71_65_ReplyGetMemoryError(msg->Buffer[10], s);
 
-	return N71_65_DecodePhonebook(s, s->Phone.Data.Memory, s->Phone.Data.Bitmap, s->Phone.Data.SpeedDial, msg.Buffer+22, msg.Length-22,TRUE);
+	return N71_65_DecodePhonebook(s, s->Phone.Data.Memory, s->Phone.Data.Bitmap, s->Phone.Data.SpeedDial, msg->Buffer+22, msg->Length-22,TRUE);
 }
 
 static GSM_Error N3320_GetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry)
@@ -46,19 +46,19 @@ static GSM_Error N3320_GetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	return GSM_WaitFor (s, req, 19, 0x03, 4, ID_GetMemory);
 }
 
-static GSM_Error N3320_ReplyGetMemoryStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error N3320_ReplyGetMemoryStatus(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Phone_Data *Data = &s->Phone.Data;
 
 	smprintf(s, "Memory status received\n");
 	/* Quess ;-)) */
-	if (msg.Buffer[14]==0x10) {
-		Data->MemoryStatus->MemoryFree = msg.Buffer[18]*256 + msg.Buffer[19];
+	if (msg->Buffer[14]==0x10) {
+		Data->MemoryStatus->MemoryFree = msg->Buffer[18]*256 + msg->Buffer[19];
 	} else {
-		Data->MemoryStatus->MemoryFree = msg.Buffer[17];
+		Data->MemoryStatus->MemoryFree = msg->Buffer[17];
 	}
 	smprintf(s, "Size       : %i\n",Data->MemoryStatus->MemoryFree);
-	Data->MemoryStatus->MemoryUsed = msg.Buffer[20]*256 + msg.Buffer[21];
+	Data->MemoryStatus->MemoryUsed = msg->Buffer[20]*256 + msg->Buffer[21];
 	smprintf(s, "Used       : %i\n",Data->MemoryStatus->MemoryUsed);
 	Data->MemoryStatus->MemoryFree -= Data->MemoryStatus->MemoryUsed;
 	smprintf(s, "Free       : %i\n",Data->MemoryStatus->MemoryFree);
@@ -80,11 +80,11 @@ static GSM_Error N3320_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *St
 	return GSM_WaitFor (s, req, 10, 0x03, 4, ID_GetMemoryStatus);
 }
 
-static GSM_Error N3320_ReplyGetDateTime(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error N3320_ReplyGetDateTime(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	smprintf(s, "Date & time received\n");
-	if (msg.Buffer[4]==0x01) {
-		NOKIA_DecodeDateTime(s, msg.Buffer+10, s->Phone.Data.DateTime, TRUE, FALSE);
+	if (msg->Buffer[4]==0x01) {
+		NOKIA_DecodeDateTime(s, msg->Buffer+10, s->Phone.Data.DateTime, TRUE, FALSE);
 		return ERR_NONE;
 	}
 	smprintf(s, "Not set in phone\n");
@@ -121,7 +121,7 @@ static GSM_Error N3320_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus
 	return ERR_NONE;
 }
 
-static GSM_Error N3320_ReplyGetCalendarInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error N3320_ReplyGetCalendarInfo(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	return N71_65_ReplyGetCalendarInfo1(msg, s, &s->Phone.Data.Priv.N3320.LastCalendar);
 }

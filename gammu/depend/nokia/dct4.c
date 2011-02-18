@@ -260,7 +260,7 @@ static DCT4_Phone_Features DCT4PhoneFeatures[] = {
 	{"",		{{0,0}}}
 };
 
-static GSM_Error DCT4_ReplySetPPS(GSM_Protocol_Message msg, GSM_StateMachine *sm)
+static GSM_Error DCT4_ReplySetPPS(GSM_Protocol_Message *msg, GSM_StateMachine *sm)
 {
 	printf("%s\n", _("Setting done"));
 	return ERR_NONE;
@@ -313,72 +313,72 @@ void DCT4SetPhoneMenus(int argc, char *argv[])
 
 DCT4_Phone_Tests DCT4Tests;
 
-static GSM_Error DCT4_ReplyTestsNames(GSM_Protocol_Message msg, GSM_StateMachine *sm)
+static GSM_Error DCT4_ReplyTestsNames(GSM_Protocol_Message *msg, GSM_StateMachine *sm)
 {
 	int i,pos;
 
-	DCT4Tests.Num   = msg.Buffer[5];
+	DCT4Tests.Num   = msg->Buffer[5];
 	pos 		= 6;
 
-	smprintf(sm,"%i names for phone tests received\n",msg.Buffer[5]);
-	for (i=0;i<msg.Buffer[5];i++) {
-		strcpy(DCT4Tests.Tests[i].Name,msg.Buffer+pos+4);
-		DCT4Tests.Tests[i].ID = msg.Buffer[pos+2];
+	smprintf(sm,"%i names for phone tests received\n",msg->Buffer[5]);
+	for (i=0;i<msg->Buffer[5];i++) {
+		strcpy(DCT4Tests.Tests[i].Name,msg->Buffer+pos+4);
+		DCT4Tests.Tests[i].ID = msg->Buffer[pos+2];
 		smprintf(sm,"%x.\"%s\"\n",DCT4Tests.Tests[i].ID,DCT4Tests.Tests[i].Name);
-		pos+=msg.Buffer[pos+1];
+		pos+=msg->Buffer[pos+1];
 	}
 
 	return ERR_NONE;
 }
 
-static GSM_Error DCT4_ReplyTestsStartup(GSM_Protocol_Message msg, GSM_StateMachine *sm)
+static GSM_Error DCT4_ReplyTestsStartup(GSM_Protocol_Message *msg, GSM_StateMachine *sm)
 {
 	int 	 i,pos,j;
 	gboolean	 found;
 
 	pos = 10;
 
-	for (i=0;i<msg.Buffer[8];i++) {
+	for (i=0;i<msg->Buffer[8];i++) {
 		found = FALSE;
 		for (j=0;j<DCT4Tests.Num;j++) {
-			if (DCT4Tests.Tests[j].ID == msg.Buffer[pos]) {
+			if (DCT4Tests.Tests[j].ID == msg->Buffer[pos]) {
 				DCT4Tests.Tests[j].Startup 	= TRUE;
 				found 				= TRUE;
 				break;
 			}
 		}
-		if (!found) printf("%x ",msg.Buffer[pos]);
+		if (!found) printf("%x ",msg->Buffer[pos]);
 		pos++;
 	}
 
 	return ERR_NONE;
 }
 
-static GSM_Error DCT4_ReplyTestsStatus(GSM_Protocol_Message msg, GSM_StateMachine *sm)
+static GSM_Error DCT4_ReplyTestsStatus(GSM_Protocol_Message *msg, GSM_StateMachine *sm)
 {
 	int i,pos,j;
 
 	pos = 6;
 
-	smprintf(sm,"%i status entries for phone tests received\n",msg.Buffer[5]);
-	for (i=0;i<msg.Buffer[5];i++) {
+	smprintf(sm,"%i status entries for phone tests received\n",msg->Buffer[5]);
+	for (i=0;i<msg->Buffer[5];i++) {
 		for (j=0;j<DCT4Tests.Num;j++) {
-			if (DCT4Tests.Tests[j].ID == msg.Buffer[pos+2]) {
+			if (DCT4Tests.Tests[j].ID == msg->Buffer[pos+2]) {
 				printf("\"%40s\" : ",DCT4Tests.Tests[j].Name);
-				switch(msg.Buffer[pos+3]) {
+				switch(msg->Buffer[pos+3]) {
 					case 0x00: printf("%s", _("Passed")); 		break;
 					case 0x01: printf("%s", _("Fail"));   		break;
 					case 0x03: printf("%s", _("Not executed")); 	break;
 					case 0x06: printf("%s", _("No signal"));		break;
 					case 0x0D: printf("%s", _("Timeout"));		break;
-					default  : printf(_("Unknown (%x)"),msg.Buffer[pos+3]);
+					default  : printf(_("Unknown (%x)"),msg->Buffer[pos+3]);
 				}
 				if (DCT4Tests.Tests[j].Startup) printf("%s", _(" (startup)"));
 				printf("\n");
 				break;
 			}
 		}
-		pos+=msg.Buffer[pos+1];
+		pos+=msg->Buffer[pos+1];
 	}
 
 	return ERR_NONE;
@@ -421,10 +421,10 @@ void DCT4SelfTests(int argc, char *argv[])
 	Print_Error(error);
 }
 
-static GSM_Error DCT4_ReplyVibra(GSM_Protocol_Message msg, GSM_StateMachine *sm)
+static GSM_Error DCT4_ReplyVibra(GSM_Protocol_Message *msg, GSM_StateMachine *sm)
 {
 #ifdef DEBUG
-	switch (msg.Buffer[3]) {
+	switch (msg->Buffer[3]) {
 		case 0x0D : smprintf(sm, "Vibra state set OK\n"); break;
 		case 0x0F : smprintf(sm, "Vibra power set OK\n"); break;
 	}
@@ -502,9 +502,9 @@ void DCT4VibraTest(int argc, char *argv[])
 }
 
 #ifdef DEBUG
-static GSM_Error DCT4_ReplyResetSecurityCode(GSM_Protocol_Message msg, GSM_StateMachine *sm)
+static GSM_Error DCT4_ReplyResetSecurityCode(GSM_Protocol_Message *msg, GSM_StateMachine *sm)
 {
-	switch (msg.Buffer[3]) {
+	switch (msg->Buffer[3]) {
 	case 0x05:
 		printf(_("Security code set to \"12345\"\n"));
 		return ERR_NONE;
@@ -547,13 +547,13 @@ void DCT4ResetSecurityCode(int argc, char *argv[])
 
 char SecLength;
 
-static GSM_Error DCT4_ReplyGetSecurityCode(GSM_Protocol_Message msg, GSM_StateMachine *sm)
+static GSM_Error DCT4_ReplyGetSecurityCode(GSM_Protocol_Message *msg, GSM_StateMachine *sm)
 {
-	if (msg.Length > 12) {
-		SecLength = msg.Buffer[13];
-		if ((size_t)(msg.Buffer[17]+18) == msg.Length) {
-			printf(_("Security code is %s\n"),msg.Buffer+18);
-//			DumpMessage(stdout, msg.Buffer, msg.Length);
+	if (msg->Length > 12) {
+		SecLength = msg->Buffer[13];
+		if ((size_t)(msg->Buffer[17]+18) == msg->Length) {
+			printf(_("Security code is %s\n"),msg->Buffer+18);
+//			DumpMessage(stdout, msg->Buffer, msg->Length);
 		}
 	}
 	return ERR_NONE;
@@ -587,47 +587,47 @@ void DCT4GetSecurityCode(int argc, char *argv[])
 	}
 }
 
-static GSM_Error DCT4_ReplyGetVoiceRecord(GSM_Protocol_Message msg, GSM_StateMachine *sm)
+static GSM_Error DCT4_ReplyGetVoiceRecord(GSM_Protocol_Message *msg, GSM_StateMachine *sm)
 {
 	size_t i=18,j;
 	unsigned char	Buffer[100];
 
-	switch (msg.Buffer[3]) {
+	switch (msg->Buffer[3]) {
 	case 0x05:
 		smprintf(sm, "Part of voice record received\n");
-		if (msg.Length == 6) {
+		if (msg->Length == 6) {
 			smprintf(sm, "Empty\n");
 			return ERR_EMPTY;
 		}
  		*sm->Phone.Data.VoiceRecord = 0;
-		while (i<msg.Length) {
- 			sm->Phone.Data.PhoneString[(*sm->Phone.Data.VoiceRecord)++] = msg.Buffer[i+1];
- 			sm->Phone.Data.PhoneString[(*sm->Phone.Data.VoiceRecord)++] = msg.Buffer[i];
+		while (i<msg->Length) {
+ 			sm->Phone.Data.PhoneString[(*sm->Phone.Data.VoiceRecord)++] = msg->Buffer[i+1];
+ 			sm->Phone.Data.PhoneString[(*sm->Phone.Data.VoiceRecord)++] = msg->Buffer[i];
 			i += 2;
 		}
 		return ERR_NONE;
 	case 0x0D:
-		smprintf(sm, "Last part of voice record is %02x %02x\n",msg.Buffer[11],msg.Buffer[12]);
-		smprintf(sm, "Token is %02x\n",msg.Buffer[13]);
- 		sm->Phone.Data.PhoneString[0] = msg.Buffer[11];
- 		sm->Phone.Data.PhoneString[1] = msg.Buffer[12];
- 		sm->Phone.Data.PhoneString[2] = msg.Buffer[13];
+		smprintf(sm, "Last part of voice record is %02x %02x\n",msg->Buffer[11],msg->Buffer[12]);
+		smprintf(sm, "Token is %02x\n",msg->Buffer[13]);
+ 		sm->Phone.Data.PhoneString[0] = msg->Buffer[11];
+ 		sm->Phone.Data.PhoneString[1] = msg->Buffer[12];
+ 		sm->Phone.Data.PhoneString[2] = msg->Buffer[13];
 		return ERR_NONE;
 	case 0x31:
 		smprintf(sm, "Names of voice records received\n");
 		j = 33;
-		for (i = 0; i < (size_t)msg.Buffer[9]; i++) {
-			memcpy(Buffer,msg.Buffer+(j+1),msg.Buffer[j]);
-			Buffer[msg.Buffer[j]] 	= 0;
-			Buffer[msg.Buffer[j]+1] = 0;
+		for (i = 0; i < (size_t)msg->Buffer[9]; i++) {
+			memcpy(Buffer,msg->Buffer+(j+1),msg->Buffer[j]);
+			Buffer[msg->Buffer[j]] 	= 0;
+			Buffer[msg->Buffer[j]+1] = 0;
 			smprintf(sm, "%ld. \"%s\"\n",(long)i+1,DecodeUnicodeString(Buffer));
  			if (i==*sm->Phone.Data.VoiceRecord) {
  				sprintf(sm->Phone.Data.PhoneString,"%s->wav",DecodeUnicodeString(Buffer));
 				return ERR_NONE;
 			}
-			if (i != (size_t)msg.Buffer[9] - 1) {
-				j+=msg.Buffer[j] + 1;
-				if (msg.Buffer[j] == 0x00 && msg.Buffer[j+1]==0x00) j+=2;
+			if (i != (size_t)msg->Buffer[9] - 1) {
+				j+=msg->Buffer[j] + 1;
+				if (msg->Buffer[j] == 0x00 && msg->Buffer[j+1]==0x00) j+=2;
 				j+=23;
 			}
 		}
@@ -795,27 +795,27 @@ failnofile:
 	GSM_Terminate();
 }
 
-static GSM_Error DCT4_ReplyGetBTInfo(GSM_Protocol_Message msg, GSM_StateMachine *sm)
+static GSM_Error DCT4_ReplyGetBTInfo(GSM_Protocol_Message *msg, GSM_StateMachine *sm)
 {
 	printf(_("device address %02x%02x%02x%02x%02x%02x\n"),
-		msg.Buffer[9],msg.Buffer[10],msg.Buffer[11],
-		msg.Buffer[12],msg.Buffer[13],msg.Buffer[14]);
+		msg->Buffer[9],msg->Buffer[10],msg->Buffer[11],
+		msg->Buffer[12],msg->Buffer[13],msg->Buffer[14]);
 	return ERR_NONE;
 }
 
-static GSM_Error DCT4_ReplyGetSimlock(GSM_Protocol_Message msg, GSM_StateMachine *sm)
+static GSM_Error DCT4_ReplyGetSimlock(GSM_Protocol_Message *msg, GSM_StateMachine *sm)
 {
 	int 			i;
 	unsigned char 		buff[7];
 
-	switch (msg.Buffer[3]) {
+	switch (msg->Buffer[3]) {
 	case 0x0D:
 		smprintf(sm, "Simlock info received\n");
 		smprintf(sm, "Config_Data: ");
 		for (i=14;i<22;i++) {
-			smprintf(sm, "%02x",msg.Buffer[i]);
+			smprintf(sm, "%02x",msg->Buffer[i]);
 		}
-		sprintf(buff,"%02x%02x%02x",msg.Buffer[14],msg.Buffer[15],msg.Buffer[16]);
+		sprintf(buff,"%02x%02x%02x",msg->Buffer[14],msg->Buffer[15],msg->Buffer[16]);
 		buff[6] = 0;
 		buff[5] = buff[4];
 		buff[4] = buff[3];
@@ -830,21 +830,21 @@ static GSM_Error DCT4_ReplyGetSimlock(GSM_Protocol_Message msg, GSM_StateMachine
 		smprintf(sm, "\n");
 		smprintf(sm, "Profile_Bits: ");
 		for (i=22;i<30;i++) {
-			smprintf(sm, "%02x",msg.Buffer[i]);
+			smprintf(sm, "%02x",msg->Buffer[i]);
 		}
 		smprintf(sm, "\n");
 		return ERR_NONE;
 	case 0x13:
 		smprintf(sm, "Simlock info received\n");
-		if (msg.Buffer[58] == 0x05 && msg.Buffer[59] == 0x02) {
+		if (msg->Buffer[58] == 0x05 && msg->Buffer[59] == 0x02) {
 			smprintf(sm, "SIM_PATH: ");
 			for (i=44;i<52;i++) {
-				smprintf(sm, "%02x",msg.Buffer[i]);
+				smprintf(sm, "%02x",msg->Buffer[i]);
 			}
 			smprintf(sm, "\n");
 			printf(LISTFORMAT, _("Simlock data"));
 			for (i=60;i<63;i++) {
-				printf("%02x",msg.Buffer[i]);
+				printf("%02x",msg->Buffer[i]);
 			}
 			printf("\n");
 		}
@@ -893,11 +893,11 @@ static FILE *T9File;
 size_t T9Size;
 size_t T9FullSize;
 
-static GSM_Error DCT4_ReplyGetT9(GSM_Protocol_Message msg, GSM_StateMachine *sm)
+static GSM_Error DCT4_ReplyGetT9(GSM_Protocol_Message *msg, GSM_StateMachine *sm)
 {
-	T9FullSize 	= msg.Buffer[18] * 256 + msg.Buffer[19];
-	T9Size 		= msg.Length - 18;
-	chk_fwrite(msg.Buffer+18,1,T9Size,T9File);
+	T9FullSize 	= msg->Buffer[18] * 256 + msg->Buffer[19];
+	T9Size 		= msg->Length - 18;
+	chk_fwrite(msg->Buffer+18,1,T9Size,T9File);
 	return ERR_NONE;
 fail:
 	return ERR_WRITING_FILE;
@@ -1011,17 +1011,17 @@ void DCT4DisplayTest(int argc, char *argv[])
 
 int ADC;
 
-static GSM_Error DCT4_ReplyGetADC(GSM_Protocol_Message msg, GSM_StateMachine *sm)
+static GSM_Error DCT4_ReplyGetADC(GSM_Protocol_Message *msg, GSM_StateMachine *sm)
 {
-	if (msg.Buffer[6] == 0xff && msg.Buffer[7] == 0xff) return ERR_NONE;
-	switch (msg.Buffer[3]) {
+	if (msg->Buffer[6] == 0xff && msg->Buffer[7] == 0xff) return ERR_NONE;
+	switch (msg->Buffer[3]) {
 	case 0x10:
 		/* l10n: Raw data for A/D convertor */
-		printf(_("raw result %10i "),msg.Buffer[8]*256+msg.Buffer[9]);
+		printf(_("raw result %10i "),msg->Buffer[8]*256+msg->Buffer[9]);
 		break;
 	case 0x12:
 		/* l10n: Processed data for A/D convertor */
-		printf(_("unit result %10i "),(msg.Buffer[8]*256+msg.Buffer[9])*ADC);
+		printf(_("unit result %10i "),(msg->Buffer[8]*256+msg->Buffer[9])*ADC);
 		break;
 	}
 	return ERR_NONE;
@@ -1089,17 +1089,17 @@ void DCT4GetADC(int argc, char *argv[])
 static double 		RadioFreq;
 static unsigned char 	RadioName[100];
 
-static GSM_Error DCT4_ReplyTuneRadio(GSM_Protocol_Message msg, GSM_StateMachine *sm)
+static GSM_Error DCT4_ReplyTuneRadio(GSM_Protocol_Message *msg, GSM_StateMachine *sm)
 {
 	int 		length;
 	unsigned char 	name[100];
 
-	switch (msg.Buffer[3]) {
+	switch (msg->Buffer[3]) {
 	case 0x09:
-		N6510_DecodeFMFrequency(&RadioFreq, msg.Buffer+16);
+		N6510_DecodeFMFrequency(&RadioFreq, msg->Buffer+16);
 
- 		length = msg.Buffer[8];
- 		memcpy(name,msg.Buffer+18,length*2);
+ 		length = msg->Buffer[8];
+ 		memcpy(name,msg->Buffer+18,length*2);
  		name[length*2]	 = 0x00;
  		name[length*2+1] = 0x00;
  		CopyUnicodeString(RadioName,name);
@@ -1108,7 +1108,7 @@ static GSM_Error DCT4_ReplyTuneRadio(GSM_Protocol_Message msg, GSM_StateMachine 
 	case 0x15:
 	case 0x16:
 		smprintf(sm,"Response for enabling radio/headset status received\n");
-		if (msg.Buffer[5] == 0) {
+		if (msg->Buffer[5] == 0) {
 			smprintf(sm,"Connected\n");
 			return ERR_NONE;
 		}
@@ -1280,7 +1280,7 @@ void DCT4PlaySavedRingtone(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static GSM_Error DCT4_ReplyMakeCameraShoot(GSM_Protocol_Message msg, GSM_StateMachine *sm)
+static GSM_Error DCT4_ReplyMakeCameraShoot(GSM_Protocol_Message *msg, GSM_StateMachine *sm)
 {
 	return ERR_NONE;
 }
@@ -1324,15 +1324,15 @@ void DCT4MakeCameraShoot(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static GSM_Error DCT4_ReplyGetPBKFeatures(GSM_Protocol_Message msg, GSM_StateMachine *sm)
+static GSM_Error DCT4_ReplyGetPBKFeatures(GSM_Protocol_Message *msg, GSM_StateMachine *sm)
 {
 	int i,pos=6;
 
-	printf(_("%i entries types\n"),msg.Buffer[5]-1);
+	printf(_("%i entries types\n"),msg->Buffer[5]-1);
 
-	for (i=0;i<msg.Buffer[5]-1;i++) {
-		printf(_("  entry ID %02X"),msg.Buffer[pos+4]);
-		switch (msg.Buffer[pos+4]) {
+	for (i=0;i<msg->Buffer[5]-1;i++) {
+		printf(_("  entry ID %02X"),msg->Buffer[pos+4]);
+		switch (msg->Buffer[pos+4]) {
 		case N7110_PBK_SIM_SPEEDDIAL	: printf("%s", _(" (Speed dial on SIM)")); 			break;
 		case N7110_PBK_NAME	    	: printf("%s", _(" (Text: name (always the only one))"));		break;
 		case N7110_PBK_EMAIL	    	: printf("%s", _(" (Text: email address)"));			break;
@@ -1361,20 +1361,20 @@ static GSM_Error DCT4_ReplyGetPBKFeatures(GSM_Protocol_Message msg, GSM_StateMac
 		case N6510_PBK_GROUP2_ID	: printf("%s", _(" (Group ID (6230i or later))"));		break;
 		}
 		printf("%s", _(", type "));
-		switch (msg.Buffer[pos+5]) {
+		switch (msg->Buffer[pos+5]) {
 		case 0x05: printf("%s", _("string")); 	break;
 		case 0x02: printf("%s", _("byte")); 	break;
 		case 0x03: printf("%s", _("2 bytes")); 	break;
 		case 0x06: printf("%s", _("4 bytes")); 	break;
-		default  : printf("%02X",msg.Buffer[pos+5]);
+		default  : printf("%02X",msg->Buffer[pos+5]);
 		}
 		printf("\n");
-		pos+=msg.Buffer[pos+3];
+		pos+=msg->Buffer[pos+3];
 	}
 
-	printf(_("%i phone number types\n"),msg.Buffer[pos+4]);
-	for (i=0;i<msg.Buffer[pos+4];i++) {
-		switch (msg.Buffer[pos+5+i]) {
+	printf(_("%i phone number types\n"),msg->Buffer[pos+4]);
+	for (i=0;i<msg->Buffer[pos+4];i++) {
+		switch (msg->Buffer[pos+5+i]) {
 		case 0x02: printf("  %s\n", _("Home number")); 		break;
 		case 0x03: printf("  %s\n", _("Mobile number")); 	break;
 		case 0x04: printf("  %s\n", _("Fax number")); 		break;

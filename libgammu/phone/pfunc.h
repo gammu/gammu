@@ -40,7 +40,7 @@ GSM_Error PHONE_Terminate		(GSM_StateMachine *s);
 /**
  * Generic reply function when no reply is requested.
  */
-GSM_Error NoneReply(GSM_Protocol_Message msg, GSM_StateMachine *s);
+GSM_Error NoneReply(GSM_Protocol_Message *msg, GSM_StateMachine *s);
 
 GSM_Error PHONE_FindDataFile(GSM_StateMachine *s, GSM_File * File, const char *ExtraPath, const char *filename);
 GSM_Error PHONE_UploadFile(GSM_StateMachine *s, GSM_File * File);

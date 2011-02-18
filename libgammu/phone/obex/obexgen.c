@@ -49,9 +49,9 @@ GSM_Error OBEXGEN_GetModel(GSM_StateMachine *s);
 /**
  * Handles various error codes in OBEX protocol.
  */
-static GSM_Error OBEXGEN_HandleError(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error OBEXGEN_HandleError(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
-	switch (msg.Type & 0x7f) {
+	switch (msg->Type & 0x7f) {
 		/* HTTP based codes */
 		case 0x40:
 		case 0x45:
@@ -60,23 +60,23 @@ static GSM_Error OBEXGEN_HandleError(GSM_Protocol_Message msg, GSM_StateMachine 
 		case 0x4d:
 		case 0x4e:
 		case 0x4f:
-			smprintf(s, "Bad request (0x%02x)\n", msg.Type);
+			smprintf(s, "Bad request (0x%02x)\n", msg->Type);
 			return ERR_BUG;
 		case 0x41:
 		case 0x42:
 		case 0x43:
 		case 0x46: /* Not acceptable */
 		case 0x49: /* Conflict */
-			smprintf(s, "Security error (0x%02x)\n", msg.Type);
+			smprintf(s, "Security error (0x%02x)\n", msg->Type);
 			return ERR_PERMISSION;
 		case 0x44:
 		case 0x4a:
-			smprintf(s, "File not found (0x%02x)\n", msg.Type);
+			smprintf(s, "File not found (0x%02x)\n", msg->Type);
 			return ERR_FILENOTEXIST;
 		case 0x50: /* Internal server error */
 		case 0x51: /* Not implemented */
 		case 0x53: /* Service unavailable */
-			smprintf(s, "Internal phone error (0x%02x)\n", msg.Type);
+			smprintf(s, "Internal phone error (0x%02x)\n", msg->Type);
 			return ERR_PHONE_INTERNAL;
 		/* OBEX specials */
 		case 0x60:
@@ -89,7 +89,7 @@ static GSM_Error OBEXGEN_HandleError(GSM_Protocol_Message msg, GSM_StateMachine 
 			smprintf(s, "Precondition failed\n");
 			return ERR_NOTSUPPORTED;
 	}
-	smprintf(s, "Unknown OBEX error (0x%02x)\n", msg.Type);
+	smprintf(s, "Unknown OBEX error (0x%02x)\n", msg->Type);
 	return ERR_UNKNOWN;
 }
 
@@ -113,38 +113,38 @@ void OBEXGEN_AddConnectionID(GSM_StateMachine *s, char *Buffer, int *Pos)
  * @{
  */
 
-static GSM_Error OBEXGEN_ReplyConnect(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error OBEXGEN_ReplyConnect(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	size_t i;
 	GSM_Phone_OBEXGENData *Priv = &s->Phone.Data.Priv.OBEXGEN;
 
-	switch (msg.Type) {
+	switch (msg->Type) {
 	case 0xA0:
 		smprintf(s,"Connected/disconnected OK\n");
 		/* Sample: 10 |00 |20 |00 |CB |00 |00 |00 |10 |4AJ|00 |08 |4DM|4FO|42B|45E|58X */
 		/* Byte 0 - OBEX version */
 		/* Byte 1 - flags */
 		/* Bytes 2,3 - maximal size of packet */
-		if (msg.Length >= 4) {
-			s->Phone.Data.Priv.OBEXGEN.FrameSize = msg.Buffer[2]*256 + msg.Buffer[3];
+		if (msg->Length >= 4) {
+			s->Phone.Data.Priv.OBEXGEN.FrameSize = msg->Buffer[2]*256 + msg->Buffer[3];
 			smprintf(s,"Maximal size of frame is %i 0x%x\n",s->Phone.Data.Priv.OBEXGEN.FrameSize,s->Phone.Data.Priv.OBEXGEN.FrameSize);
 		}
 		/* Remaining bytes - optional headers */
-		for (i = 4; i < msg.Length;) {
-			switch (msg.Buffer[i]) {
+		for (i = 4; i < msg->Length;) {
+			switch (msg->Buffer[i]) {
 				case 0xCB:
 					/* Connection ID */
-					memcpy(Priv->connection_id, msg.Buffer + i + 1, 4);
+					memcpy(Priv->connection_id, msg->Buffer + i + 1, 4);
 					i += 5;
 					break;
 				case 0x4A:
 					/* Peer */
 					/* We just skip it */
-					i += (msg.Buffer[i + 1] << 8) + msg.Buffer[i + 2];
+					i += (msg->Buffer[i + 1] << 8) + msg->Buffer[i + 2];
 					break;
 				default:
-					smprintf(s, "Unknown OBEX header: 0x%02X, skipping rest\n", msg.Buffer[i]);
-					i = msg.Length;
+					smprintf(s, "Unknown OBEX header: 0x%02X, skipping rest\n", msg->Buffer[i]);
+					i = msg->Length;
 					break;
 			}
 		}
@@ -158,7 +158,7 @@ static GSM_Error OBEXGEN_ReplyConnect(GSM_Protocol_Message msg, GSM_StateMachine
 		return ERR_SECURITYERROR;
 	}
 	/* Generic error codes */
-	if ((msg.Type & 0x7f) >= 0x40) {
+	if ((msg->Type & 0x7f) >= 0x40) {
 		return OBEXGEN_HandleError(msg, s);
 	}
 	return ERR_UNKNOWNRESPONSE;
@@ -527,18 +527,18 @@ static void OBEXGEN_FindNextDir(unsigned char *Path, size_t *Pos, unsigned char 
 /**
  * Reply handler for changing path
  */
-static GSM_Error OBEXGEN_ReplyChangePath(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error OBEXGEN_ReplyChangePath(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	/* Non standard Sharp GX reply */
-	if (msg.Type == 0x80) {
+	if (msg->Type == 0x80) {
 		return ERR_FILENOTEXIST;
 	}
 
 	/* Generic error codes */
-	if ((msg.Type & 0x7f) >= 0x40) {
+	if ((msg->Type & 0x7f) >= 0x40) {
 		return OBEXGEN_HandleError(msg, s);
 	}
-	switch (msg.Type) {
+	switch (msg->Type) {
 	case 0xA0:
 		smprintf(s,"Path set OK\n");
 		return ERR_NONE;
@@ -616,7 +616,7 @@ static GSM_Error OBEXGEN_ChangeToFilePath(GSM_StateMachine *s, char *File, gbool
 /**
  * Reply handler for most file write operations.
  */
-static GSM_Error OBEXGEN_ReplyAddFilePart(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error OBEXGEN_ReplyAddFilePart(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	size_t Pos=0, pos2, len2;
 	char *NewLUID = NULL;
@@ -632,29 +632,29 @@ static GSM_Error OBEXGEN_ReplyAddFilePart(GSM_Protocol_Message msg, GSM_StateMac
 	UpdateTodoLUID = Priv->UpdateTodoLUID;
 	Priv->UpdateTodoLUID = FALSE;
 
-	if ((msg.Type & 0x7f) >= 0x40) {
+	if ((msg->Type & 0x7f) >= 0x40) {
 		return OBEXGEN_HandleError(msg, s);
 	}
 
-	switch (msg.Type) {
+	switch (msg->Type) {
 	case 0x90:
 		smprintf(s,"Last part of file added OK\n");
 		return ERR_NONE;
 	case 0xA0:
 		smprintf(s,"Part of file added OK\n");
 		while(1) {
-			if (Pos >= msg.Length) break;
-			switch (msg.Buffer[Pos]) {
+			if (Pos >= msg->Length) break;
+			switch (msg->Buffer[Pos]) {
 			case 0x4C:
 				smprintf(s, "Application data received:");
-				len2 =  msg.Buffer[Pos+1] * 256 + msg.Buffer[Pos+2];
+				len2 =  msg->Buffer[Pos+1] * 256 + msg->Buffer[Pos+2];
 				pos2 = 0;
 				while(1) {
 					if (pos2 >= len2) break;
-					switch (msg.Buffer[Pos + 3 + pos2]) {
+					switch (msg->Buffer[Pos + 3 + pos2]) {
 						case 0x00:
 							if (Priv->Service == OBEX_m_OBEX) {
-								Priv->m_obex_error = msg.Buffer[Pos + 3 + pos2 + 1];
+								Priv->m_obex_error = msg->Buffer[Pos + 3 + pos2 + 1];
 								smprintf(s, " m-obex error=\"%d\"", Priv->m_obex_error);
 								/* This field has fixed size */
 								pos2 += 2;
@@ -662,25 +662,25 @@ static GSM_Error OBEXGEN_ReplyAddFilePart(GSM_Protocol_Message msg, GSM_StateMac
 							}
 							break;
 						case 0x01:
-							NewLUID = (char *)malloc(msg.Buffer[Pos + 3 + pos2 + 1]+1);
-							memcpy(NewLUID,msg.Buffer + Pos + 3 + pos2 + 2, msg.Buffer[Pos + 3 + pos2 + 1]);
-							NewLUID[msg.Buffer[Pos + 3 + pos2 + 1]]=0;
+							NewLUID = (char *)malloc(msg->Buffer[Pos + 3 + pos2 + 1]+1);
+							memcpy(NewLUID,msg->Buffer + Pos + 3 + pos2 + 2, msg->Buffer[Pos + 3 + pos2 + 1]);
+							NewLUID[msg->Buffer[Pos + 3 + pos2 + 1]]=0;
 							smprintf(s, " LUID=\"%s\"", NewLUID);
 							break;
 						case 0x02:
-							CC = (char *)malloc(msg.Buffer[Pos + 3 + pos2 + 1]+1);
-							memcpy(CC,msg.Buffer + Pos + 3 + pos2 + 2, msg.Buffer[Pos + 3 + pos2 + 1]);
-							CC[msg.Buffer[Pos + 3 + pos2 + 1]]=0;
+							CC = (char *)malloc(msg->Buffer[Pos + 3 + pos2 + 1]+1);
+							memcpy(CC,msg->Buffer + Pos + 3 + pos2 + 2, msg->Buffer[Pos + 3 + pos2 + 1]);
+							CC[msg->Buffer[Pos + 3 + pos2 + 1]]=0;
 							smprintf(s, " CC=\"%s\"", CC);
 							break;
 						case 0x03:
-							timestamp = (char *)malloc(msg.Buffer[Pos + 3 + pos2 + 1]+1);
-							memcpy(timestamp,msg.Buffer + Pos + 3 + pos2 + 2, msg.Buffer[Pos + 3 + pos2 + 1]);
-							timestamp[msg.Buffer[Pos + 3 + pos2 + 1]] = 0;
+							timestamp = (char *)malloc(msg->Buffer[Pos + 3 + pos2 + 1]+1);
+							memcpy(timestamp,msg->Buffer + Pos + 3 + pos2 + 2, msg->Buffer[Pos + 3 + pos2 + 1]);
+							timestamp[msg->Buffer[Pos + 3 + pos2 + 1]] = 0;
 							smprintf(s, " Timestamp=\"%s\"", timestamp);
 							break;
 					}
-					pos2 += 2 + msg.Buffer[Pos + 3 + pos2 + 1];
+					pos2 += 2 + msg->Buffer[Pos + 3 + pos2 + 1];
 				}
 				smprintf(s, "\n");
 				if (timestamp != NULL) {
@@ -729,14 +729,14 @@ static GSM_Error OBEXGEN_ReplyAddFilePart(GSM_Protocol_Message msg, GSM_StateMac
 				break;
 			case 0x49:
 				/* ID of newly created m-obex entry */
-				Priv->m_obex_newid = msg.Buffer[Pos+3]*256 + msg.Buffer[Pos+4];
+				Priv->m_obex_newid = msg->Buffer[Pos+3]*256 + msg->Buffer[Pos+4];
 				Pos += 5;
 			case 0xcb:
 				/* Skip Connection ID (we ignore this for now) */
 				Pos += 5;
 				break;
 			default:
-				Pos+=msg.Buffer[Pos+1]*256+msg.Buffer[Pos+2];
+				Pos+=msg->Buffer[Pos+1]*256+msg->Buffer[Pos+2];
 				break;
 			}
 		}
@@ -862,40 +862,40 @@ GSM_Error OBEXGEN_SendFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, in
 /**
  * Reply handler for file reading operations.
  */
-static GSM_Error OBEXGEN_ReplyGetFilePart(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error OBEXGEN_ReplyGetFilePart(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	size_t old,Pos=0,len2,pos2;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 
 	/* Non standard Sharp GX reply */
-	if (msg.Type == 0x80) {
+	if (msg->Type == 0x80) {
 		return ERR_FILENOTEXIST;
 	}
 
 	/* Generic error codes */
-	if ((msg.Type & 0x7f) >= 0x40) {
+	if ((msg->Type & 0x7f) >= 0x40) {
 		return OBEXGEN_HandleError(msg, s);
 	}
 
-	switch (msg.Type) {
+	switch (msg->Type) {
 	case 0xA0:
 		smprintf(s,"Last file part received\n");
 		s->Phone.Data.Priv.OBEXGEN.FileLastPart = TRUE;
-		if (msg.Length == 0) return ERR_NONE;
+		if (msg->Length == 0) return ERR_NONE;
 		/* Fallthrough */
 	case 0x90:
 		while(1) {
-			if (Pos >= msg.Length) break;
-			switch (msg.Buffer[Pos]) {
+			if (Pos >= msg->Length) break;
+			switch (msg->Buffer[Pos]) {
 			case 0x48:
 			case 0x49:
 				smprintf(s,"File part received\n");
 				old = s->Phone.Data.File->Used;
-				s->Phone.Data.File->Used += msg.Buffer[Pos+1]*256+msg.Buffer[Pos+2]-3;
+				s->Phone.Data.File->Used += msg->Buffer[Pos+1]*256+msg->Buffer[Pos+2]-3;
 				smprintf(s,"Length of file part: %i\n",
-						msg.Buffer[Pos+1]*256+msg.Buffer[Pos+2]-3);
+						msg->Buffer[Pos+1]*256+msg->Buffer[Pos+2]-3);
 				s->Phone.Data.File->Buffer = (unsigned char *)realloc(s->Phone.Data.File->Buffer,s->Phone.Data.File->Used);
-				memcpy(s->Phone.Data.File->Buffer+old,msg.Buffer+Pos+3,s->Phone.Data.File->Used-old);
+				memcpy(s->Phone.Data.File->Buffer+old,msg->Buffer+Pos+3,s->Phone.Data.File->Used-old);
 				return ERR_NONE;
 			case 0xc3:
 				/* Length */
@@ -910,14 +910,14 @@ static GSM_Error OBEXGEN_ReplyGetFilePart(GSM_Protocol_Message msg, GSM_StateMac
 				break;
 			case 0x4C:
 				smprintf(s, "Application data received:");
-				len2 =  msg.Buffer[Pos+1] * 256 + msg.Buffer[Pos+2];
+				len2 =  msg->Buffer[Pos+1] * 256 + msg->Buffer[Pos+2];
 				pos2 = 0;
 				while(1) {
 					if (pos2 >= len2) break;
-					switch (msg.Buffer[Pos + 3 + pos2]) {
+					switch (msg->Buffer[Pos + 3 + pos2]) {
 						case 0x00:
 							if (Priv->Service == OBEX_m_OBEX) {
-								Priv->m_obex_error = msg.Buffer[Pos + 3 + pos2 + 1];
+								Priv->m_obex_error = msg->Buffer[Pos + 3 + pos2 + 1];
 								smprintf(s, " m-obex error=\"%d\"", Priv->m_obex_error);
 								/* This field has fixed size */
 								pos2 += 2;
@@ -925,13 +925,13 @@ static GSM_Error OBEXGEN_ReplyGetFilePart(GSM_Protocol_Message msg, GSM_StateMac
 							}
 							break;
 					}
-					pos2 += 2 + msg.Buffer[Pos + 3 + pos2 + 1];
+					pos2 += 2 + msg->Buffer[Pos + 3 + pos2 + 1];
 				}
 				smprintf(s, "\n");
 				Pos += len2;
 				break;
 			default:
-				Pos+=msg.Buffer[Pos+1]*256+msg.Buffer[Pos+2];
+				Pos+=msg->Buffer[Pos+1]*256+msg->Buffer[Pos+2];
 				break;
 			}
 		}

@@ -254,9 +254,9 @@ GSM_Error S60_Terminate(GSM_StateMachine *s)
 	return GSM_WaitFor(s, NULL, 0, NUM_QUIT, S60_TIMEOUT, ID_Terminate);
 }
 
-static GSM_Error S60_Reply_Generic(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error S60_Reply_Generic(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
-	switch (msg.Type) {
+	switch (msg->Type) {
 		case NUM_SYSINFO_REPLY_START:
 		case NUM_CONTACTS_REPLY_HASH_SINGLE_START:
 		case NUM_CONTACTS_REPLY_CONTACT_START:
@@ -272,9 +272,9 @@ static GSM_Error S60_Reply_Generic(GSM_Protocol_Message msg, GSM_StateMachine *s
 	}
 }
 
-static GSM_Error S60_Reply_SendSMS(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error S60_Reply_SendSMS(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
-	switch (msg.Type) {
+	switch (msg->Type) {
 		case NUM_MESSAGE_SEND_REPLY_RETRY:
 			if (s->User.SendSMSStatus != NULL) {
 				s->User.SendSMSStatus(s, 1, -1, s->User.SendSMSStatusUserData);
@@ -297,13 +297,13 @@ static GSM_Error S60_Reply_SendSMS(GSM_Protocol_Message msg, GSM_StateMachine *s
 	}
 }
 
-static GSM_Error S60_Reply_Connect(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error S60_Reply_Connect(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
 	char *pos;
 
-	Priv->MajorVersion = atoi(msg.Buffer);
-	pos = strchr(msg.Buffer, '.');
+	Priv->MajorVersion = atoi(msg->Buffer);
+	pos = strchr(msg->Buffer, '.');
 	if (pos == NULL) {
 		return ERR_UNKNOWN;
 	}
@@ -342,7 +342,7 @@ static GSM_Error S60_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinf
 	return error;
 }
 
-static GSM_Error S60_Reply_GetNetworkInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error S60_Reply_GetNetworkInfo(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
 	GSM_Error error;
@@ -352,7 +352,7 @@ static GSM_Error S60_Reply_GetNetworkInfo(GSM_Protocol_Message msg, GSM_StateMac
 		return ERR_NONE;
 	}
 
-	error = S60_SplitValues(&msg, s);
+	error = S60_SplitValues(msg, s);
 	if (error != ERR_NONE) {
 		return error;
 	}
@@ -396,7 +396,7 @@ static GSM_Error S60_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *ba
 }
 
 
-static GSM_Error S60_Reply_GetInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error S60_Reply_GetInfo(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
 	GSM_Error error;
@@ -404,7 +404,7 @@ static GSM_Error S60_Reply_GetInfo(GSM_Protocol_Message msg, GSM_StateMachine *s
 	GSM_SignalQuality *Signal = s->Phone.Data.SignalQuality;
 	GSM_BatteryCharge *BatteryCharge = s->Phone.Data.BatteryCharge;
 
-	error = S60_SplitValues(&msg, s);
+	error = S60_SplitValues(msg, s);
 	if (error != ERR_NONE) {
 		return error;
 	}
@@ -504,19 +504,19 @@ static GSM_Error S60_StoreLocation(GSM_StateMachine *s, int **locations, size_t 
 }
 
 
-static GSM_Error S60_Reply_GetMemoryStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error S60_Reply_GetMemoryStatus(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
-	s->Phone.Data.MemoryStatus->MemoryUsed = atoi(msg.Buffer);
+	s->Phone.Data.MemoryStatus->MemoryUsed = atoi(msg->Buffer);
 
 	return ERR_NONE;
 }
 
-static GSM_Error S60_Reply_ContactHash(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error S60_Reply_ContactHash(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
 	GSM_Error error;
 
-	error = S60_SplitValues(&msg, s);
+	error = S60_SplitValues(msg, s);
 	if (error != ERR_NONE) {
 		return error;
 
@@ -535,12 +535,12 @@ static GSM_Error S60_Reply_ContactHash(GSM_Protocol_Message msg, GSM_StateMachin
 	return ERR_NEEDANOTHERANSWER;
 }
 
-static GSM_Error S60_Reply_GetCalendarStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error S60_Reply_GetCalendarStatus(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
 	GSM_Error error;
 
-	error = S60_SplitValues(&msg, s);
+	error = S60_SplitValues(msg, s);
 	if (error != ERR_NONE) {
 		return error;
 	}
@@ -579,12 +579,12 @@ static GSM_Error S60_GetCalendarLocations(GSM_StateMachine *s)
 	return GSM_WaitFor(s, "", 0, NUM_CALENDAR_REQUEST_ENTRIES_ALL, S60_TIMEOUT, ID_GetCalendarNotesInfo);
 }
 
-static GSM_Error S60_Reply_CalendarCount(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error S60_Reply_CalendarCount(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
 	GSM_Error error;
 
-	error = S60_SplitValues(&msg, s);
+	error = S60_SplitValues(msg, s);
 	if (error != ERR_NONE) {
 		return error;
 
@@ -633,12 +633,12 @@ static GSM_Error S60_GetToDoLocations(GSM_StateMachine *s)
 	return GSM_WaitFor(s, "", 0, NUM_CALENDAR_REQUEST_ENTRIES_ALL, S60_TIMEOUT, ID_GetToDoInfo);
 }
 
-static GSM_Error S60_Reply_ToDoCount(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error S60_Reply_ToDoCount(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
 	GSM_Error error;
 
-	error = S60_SplitValues(&msg, s);
+	error = S60_SplitValues(msg, s);
 	if (error != ERR_NONE) {
 		return error;
 
@@ -709,7 +709,7 @@ GSM_Error S60_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry, gboolea
 	return S60_GetMemory(s, Entry);
 }
 
-static GSM_Error S60_Reply_GetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error S60_Reply_GetMemory(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
 	GSM_Error error;
@@ -717,7 +717,7 @@ static GSM_Error S60_Reply_GetMemory(GSM_Protocol_Message msg, GSM_StateMachine 
 	GSM_MemoryEntry *Entry;
 	gboolean text = FALSE;
 
-	error = S60_SplitValues(&msg, s);
+	error = S60_SplitValues(msg, s);
 	if (error != ERR_NONE) {
 		return error;
 	}
@@ -1073,14 +1073,14 @@ GSM_Error S60_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 	return S60_SetMemory(s, Entry);
 }
 
-static GSM_Error S60_Reply_AddMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error S60_Reply_AddMemory(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
-	s->Phone.Data.Memory->Location = atoi(msg.Buffer);
+	s->Phone.Data.Memory->Location = atoi(msg->Buffer);
 	smprintf(s, "Added contact ID %d\n", s->Phone.Data.Memory->Location);
 	return ERR_NONE;
 }
 
-static GSM_Error S60_Reply_GetCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error S60_Reply_GetCalendar(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
 	GSM_Error error;
@@ -1088,7 +1088,7 @@ static GSM_Error S60_Reply_GetCalendar(GSM_Protocol_Message msg, GSM_StateMachin
 	GSM_CalendarEntry *Entry;
 	int i;
 
-	error = S60_SplitValues(&msg, s);
+	error = S60_SplitValues(msg, s);
 	if (error != ERR_NONE) {
 		return error;
 	}
@@ -1242,9 +1242,9 @@ GSM_Error S60_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 	return error;
 }
 
-static GSM_Error S60_Reply_AddCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error S60_Reply_AddCalendar(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
-	s->Phone.Data.Cal->Location = atoi(msg.Buffer);
+	s->Phone.Data.Cal->Location = atoi(msg->Buffer);
 	smprintf(s, "Added calendar ID %d\n", s->Phone.Data.Cal->Location);
 	return ERR_NONE;
 }
@@ -1424,7 +1424,7 @@ GSM_Error S60_DeleteCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 	return error;
 }
 
-static GSM_Error S60_Reply_GetToDo(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error S60_Reply_GetToDo(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
 	GSM_Error error;
@@ -1432,7 +1432,7 @@ static GSM_Error S60_Reply_GetToDo(GSM_Protocol_Message msg, GSM_StateMachine *s
 	GSM_ToDoEntry *Entry;
 	int i;
 
-	error = S60_SplitValues(&msg, s);
+	error = S60_SplitValues(msg, s);
 	if (error != ERR_NONE) {
 		return error;
 	}
@@ -1584,9 +1584,9 @@ GSM_Error S60_DeleteToDo(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 	return error;
 }
 
-static GSM_Error S60_Reply_AddToDo(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error S60_Reply_AddToDo(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
-	s->Phone.Data.ToDo->Location = atoi(msg.Buffer);
+	s->Phone.Data.ToDo->Location = atoi(msg->Buffer);
 	smprintf(s, "Added todo ID %d\n", s->Phone.Data.ToDo->Location);
 	return ERR_NONE;
 }
@@ -1696,14 +1696,14 @@ GSM_Error S60_GetScreenshot(GSM_StateMachine *s, GSM_BinaryPicture *picture)
 	return error;
 }
 
-GSM_Error S60_Reply_Screenshot(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error S60_Reply_Screenshot(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	s->Phone.Data.Picture->Type = PICTURE_PNG;
-	s->Phone.Data.Picture->Buffer = (unsigned char *)malloc(msg.Length);
+	s->Phone.Data.Picture->Buffer = (unsigned char *)malloc(msg->Length);
 	if (s->Phone.Data.Picture->Buffer == NULL) {
 		return ERR_MOREMEMORY;
 	}
-	s->Phone.Data.Picture->Length = DecodeBASE64(msg.Buffer, s->Phone.Data.Picture->Buffer, msg.Length);
+	s->Phone.Data.Picture->Length = DecodeBASE64(msg->Buffer, s->Phone.Data.Picture->Buffer, msg->Length);
 	return ERR_NONE;
 }
 
@@ -1726,12 +1726,12 @@ GSM_Error S60_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status)
 	return error;
 }
 
-GSM_Error S60_Reply_GetSMSStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error S60_Reply_GetSMSStatus(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Error error;
 	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
 
-	error = S60_SplitValues(&msg, s);
+	error = S60_SplitValues(msg, s);
 	if (error != ERR_NONE) {
 		return error;
 	}
@@ -1785,13 +1785,13 @@ GSM_Error S60_DeleteSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	return GSM_WaitFor(s, buffer, strlen(buffer), NUM_MESSAGE_DELETE, S60_TIMEOUT, ID_None);
 }
 
-GSM_Error S60_Reply_GetSMS(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error S60_Reply_GetSMS(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Error error;
 	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
 	int i;
 
-	error = S60_SplitValues(&msg, s);
+	error = S60_SplitValues(msg, s);
 	if (error != ERR_NONE) {
 		return error;
 	}
@@ -1843,12 +1843,12 @@ GSM_Error S60_Reply_GetSMS(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	return ERR_NONE;
 }
 
-GSM_Error S60_Reply_SMSLocation(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error S60_Reply_SMSLocation(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
 	GSM_Error error;
 
-	error = S60_SplitValues(&msg, s);
+	error = S60_SplitValues(msg, s);
 	if (error != ERR_NONE) {
 		return error;
 

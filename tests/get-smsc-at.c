@@ -13,7 +13,7 @@
 
 #define BUFFER_SIZE 16384
 
-extern GSM_Error ATGEN_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine * s);
+extern GSM_Error ATGEN_ReplyGetSMSC(GSM_Protocol_Message *msg, GSM_StateMachine * s);
 
 int main(int argc, char **argv)
 {
@@ -79,7 +79,7 @@ int main(int argc, char **argv)
 	s->Phone.Data.SMSC = &SMSC;
 
 	/* Parse it */
-	error = ATGEN_ReplyGetSMSC(msg, s);
+	error = ATGEN_ReplyGetSMSC(&msg, s);
 
 	/* This is normally done by ATGEN_Terminate */
 	FreeLines(&Priv->Lines);

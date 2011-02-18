@@ -18,26 +18,26 @@
 #include "../../service/gsmlogo.h"
 
 
-static GSM_Error GetSiemensFrame(GSM_Protocol_Message msg, GSM_StateMachine *s, const char *templ,
+static GSM_Error GetSiemensFrame(GSM_Protocol_Message *msg, GSM_StateMachine *s, const char *templ,
 			    unsigned char *buffer, size_t *len)
 {
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	int			i=2, pos=0, length=0;
 	unsigned char 		buf[512];
 
-	if (strstr(GetLineString(msg.Buffer,&Priv->Lines,2), "OK")) {
+	if (strstr(GetLineString(msg->Buffer,&Priv->Lines,2), "OK")) {
 		return ERR_EMPTY;
 	}
-	if (!strstr(GetLineString(msg.Buffer,&Priv->Lines,2), templ)) {
+	if (!strstr(GetLineString(msg->Buffer,&Priv->Lines,2), templ)) {
 		return ERR_UNKNOWN;
 	}
 
 	while (1) {
 		if (Priv->Lines.numbers[i*2+1]==0) break;
-		if ((!strstr(GetLineString(msg.Buffer, &Priv->Lines, i + 1), templ)) &&
-				(strstr(GetLineString(msg.Buffer, &Priv->Lines, i), templ))){
-			length = strlen(GetLineString(msg.Buffer, &Priv->Lines, i + 1));
-			DecodeHexBin(buf, GetLineString(msg.Buffer, &Priv->Lines, i + 1),length);
+		if ((!strstr(GetLineString(msg->Buffer, &Priv->Lines, i + 1), templ)) &&
+				(strstr(GetLineString(msg->Buffer, &Priv->Lines, i), templ))){
+			length = strlen(GetLineString(msg->Buffer, &Priv->Lines, i + 1));
+			DecodeHexBin(buf, GetLineString(msg->Buffer, &Priv->Lines, i + 1),length);
 			length = length / 2;
 			memcpy (buffer+pos,buf,length);
 			pos+=length;
@@ -115,7 +115,7 @@ static GSM_Error SetSiemensFrame (GSM_StateMachine *s, unsigned char *buff, cons
 	return Phone->DispatchError;
 }
 
-GSM_Error SIEMENS_ReplyGetBitmap(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error SIEMENS_ReplyGetBitmap(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	unsigned char 		buffer[4096];
 	size_t			length;
@@ -129,7 +129,7 @@ GSM_Error SIEMENS_ReplyGetBitmap(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	else return ERR_UNKNOWN;
 }
 
-GSM_Error SIEMENS_ReplySetFunction (GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s, const char *function)
+GSM_Error SIEMENS_ReplySetFunction (GSM_Protocol_Message *msg UNUSED, GSM_StateMachine *s, const char *function)
 {
 	if (s->Protocol.Data.AT.EditMode) {
 	    s->Protocol.Data.AT.EditMode = FALSE;
@@ -145,7 +145,7 @@ GSM_Error SIEMENS_ReplySetFunction (GSM_Protocol_Message msg UNUSED, GSM_StateMa
 	}
 }
 
-GSM_Error SIEMENS_ReplySetBitmap(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error SIEMENS_ReplySetBitmap(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
     return SIEMENS_ReplySetFunction (msg, s, "Operator Logo");
 }
@@ -181,7 +181,7 @@ GSM_Error SIEMENS_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 				ID_SetBitmap,length);
 }
 
-GSM_Error SIEMENS_ReplyGetRingtone(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error SIEMENS_ReplyGetRingtone(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	char 		buffer[] = "Individual";
 	size_t			length;
@@ -208,7 +208,7 @@ GSM_Error SIEMENS_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, gbool
 	return GSM_WaitFor (s, req, len, 0x00, 4, ID_GetRingtone);
 }
 
-GSM_Error SIEMENS_ReplySetRingtone(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error SIEMENS_ReplySetRingtone(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	return SIEMENS_ReplySetFunction (msg, s, "Ringtone");
 }
@@ -226,7 +226,7 @@ GSM_Error SIEMENS_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *
 				ID_SetRingtone,Ringtone->NokiaBinary.Length);
 }
 
-GSM_Error SIEMENS_ReplyGetNextCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error SIEMENS_ReplyGetNextCalendar(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Phone_Data		*Data = &s->Phone.Data;
@@ -309,17 +309,17 @@ GSM_Error SIEMENS_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	return GSM_WaitFor (s, req, len, 0x00, 4, ID_GetCalendarNote);
 }
 
-GSM_Error SIEMENS_ReplyAddCalendarNote(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error SIEMENS_ReplyAddCalendarNote(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
     return SIEMENS_ReplySetFunction (msg, s, "Calendar Note");
 }
 
-GSM_Error SIEMENS_ReplySetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error SIEMENS_ReplySetMemory(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
     return SIEMENS_ReplySetFunction (msg, s, "Memory entry");
 }
 
-GSM_Error SIEMENS_ReplyDelCalendarNote(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
+GSM_Error SIEMENS_ReplyDelCalendarNote(GSM_Protocol_Message *msg UNUSED, GSM_StateMachine *s)
 {
 	GSM_Phone_Data *Data = &s->Phone.Data;
 
@@ -401,7 +401,7 @@ GSM_Error SIEMENS_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	return SetSiemensFrame (s,req,"vcs",Note->Location,ID_SetCalendarNote,size);
 }
 
-GSM_Error SIEMENS_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error SIEMENS_ReplyGetMemory(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
  	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
  	GSM_MemoryEntry		*Memory = s->Phone.Data.Memory;
@@ -434,7 +434,7 @@ GSM_Error SIEMENS_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	return ERR_UNKNOWNRESPONSE;
 }
 
-GSM_Error SIEMENS_ReplyGetMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error SIEMENS_ReplyGetMemoryInfo(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
  	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	char 			*pos;
@@ -447,7 +447,7 @@ GSM_Error SIEMENS_ReplyGetMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachine 
 		smprintf(s, "Memory info received\n");
 
 		/* Parse first location */
-		pos = strstr(msg.Buffer, "\"vcf\"");
+		pos = strstr(msg->Buffer, "\"vcf\"");
 		if (!pos) return ERR_NOTSUPPORTED;
 		pos = strchr(pos + 1, '(');
 		if (!pos) return ERR_UNKNOWNRESPONSE;

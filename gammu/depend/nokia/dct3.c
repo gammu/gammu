@@ -84,13 +84,13 @@ static gboolean answer_yes3(const char *text)
 
 static FILE *DCT3T9File;
 
-static GSM_Error DCT3_ReplyGetT9(GSM_Protocol_Message msg, GSM_StateMachine *sm UNUSED)
+static GSM_Error DCT3_ReplyGetT9(GSM_Protocol_Message *msg, GSM_StateMachine *sm UNUSED)
 {
 	size_t DCT3T9Size;
 	size_t written;
 
-	DCT3T9Size = msg.Length - 6;
-	written = fwrite(msg.Buffer+6,1,DCT3T9Size,DCT3T9File);
+	DCT3T9Size = msg->Length - 6;
+	written = fwrite(msg->Buffer+6,1,DCT3T9Size,DCT3T9File);
 	if (written == DCT3T9Size) return ERR_NONE;
 	return ERR_UNKNOWN;
 }
@@ -145,11 +145,11 @@ void DCT3VibraTest(int argc, char *argv[])
 	Print_Error(error);
 }
 
-static GSM_Error DCT3_ReplyPhoneTests(GSM_Protocol_Message msg, GSM_StateMachine *sm UNUSED)
+static GSM_Error DCT3_ReplyPhoneTests(GSM_Protocol_Message *msg, GSM_StateMachine *sm UNUSED)
 {
 	int i;
 
-	for (i=0;i<msg.Buffer[3];i++) {
+	for (i=0;i<msg->Buffer[3];i++) {
 		switch (i) {
 		case 0: printf("Unknown(%02i)                       ",i);break;
 		case 1: printf("MCU ROM checksum         (startup)");	break;
@@ -176,11 +176,11 @@ static GSM_Error DCT3_ReplyPhoneTests(GSM_Protocol_Message msg, GSM_StateMachine
 		case 22:printf("IMEI check?                       ");	break;/*from PC-Locals1.3.is OK?*/
 		default:printf("Unknown(%02i)                       ",i);break;
 		}
-		switch (msg.Buffer[4+i]) {
+		switch (msg->Buffer[4+i]) {
 		case 0:   printf(" : passed");					break;
 		case 0xff:printf(" : not executed");				break;
 		case 254: printf(" : fail");					break;
-		default:  printf(" : result unknown(%i)",msg.Buffer[4+i]);	break;
+		default:  printf(" : result unknown(%i)",msg->Buffer[4+i]);	break;
     		}
 		printf("\n");
 	}
@@ -249,14 +249,14 @@ static struct DCT3ADCInfo DCT3ADC[] = {
 unsigned char 	DCT3ADCBuf[200];
 int		DCT3ADCInt;
 
-static GSM_Error DCT3_ReplyGetADC(GSM_Protocol_Message msg, GSM_StateMachine *sm)
+static GSM_Error DCT3_ReplyGetADC(GSM_Protocol_Message *msg, GSM_StateMachine *sm)
 {
-	switch (msg.Buffer[2]) {
+	switch (msg->Buffer[2]) {
 	case 0x68:
-		memcpy(DCT3ADCBuf,msg.Buffer+4,msg.Length-4);
+		memcpy(DCT3ADCBuf,msg->Buffer+4,msg->Length-4);
 		return ERR_NONE;
 	case 0x91:
-		DCT3ADCInt = msg.Buffer[4]*256+msg.Buffer[5];
+		DCT3ADCInt = msg->Buffer[4]*256+msg->Buffer[5];
 		return ERR_NONE;
 	}
 	return ERR_UNKNOWNRESPONSE;
@@ -353,23 +353,23 @@ void DCT3netmonitor(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static GSM_Error DCT3_ReplyGetMSID(GSM_Protocol_Message msg, GSM_StateMachine *sm)
+static GSM_Error DCT3_ReplyGetMSID(GSM_Protocol_Message *msg, GSM_StateMachine *sm)
 {
 	int i;
 
 	printf("MSID          : ");
-	for (i=5;i<18;i++) printf("%02x",msg.Buffer[i]);
+	for (i=5;i<18;i++) printf("%02x",msg->Buffer[i]);
 	printf("\n");
 	return ERR_NONE;
 }
 
-static GSM_Error DCT3_ReplyGetDSPROM(GSM_Protocol_Message msg, GSM_StateMachine *sm)
+static GSM_Error DCT3_ReplyGetDSPROM(GSM_Protocol_Message *msg, GSM_StateMachine *sm)
 {
-	printf("DSP ROM       : %c\n",msg.Buffer[5]);
+	printf("DSP ROM       : %c\n",msg->Buffer[5]);
 	return ERR_NONE;
 }
 
-static GSM_Error DCT3_ReplySimlockInfo(GSM_Protocol_Message msg, GSM_StateMachine *sm)
+static GSM_Error DCT3_ReplySimlockInfo(GSM_Protocol_Message *msg, GSM_StateMachine *sm)
 {
 	int	i, j;
 	char	uni[100], buffer[50];
@@ -377,12 +377,12 @@ static GSM_Error DCT3_ReplySimlockInfo(GSM_Protocol_Message msg, GSM_StateMachin
 	j=0;
 	for (i=0; i < 12; i++) {
 		if (j<24) {
-			uni[j]='0' + (msg.Buffer[9+i] >> 4);
+			uni[j]='0' + (msg->Buffer[9+i] >> 4);
 			j++;
 		}
 		if (j!=15) {
 			if (j<24) {
-				uni[j]='0' + (msg.Buffer[9+i] & 0x0f);
+				uni[j]='0' + (msg->Buffer[9+i] & 0x0f);
 				j++;
 			}
 		} else j++;
@@ -392,45 +392,45 @@ static GSM_Error DCT3_ReplySimlockInfo(GSM_Protocol_Message msg, GSM_StateMachin
 	buffer[5]=0;
 	printf("Simlock 1     : MCC+MNC %10s, %s, %s, counter %i\n",
 		buffer,
-		((msg.Buffer[6] & 1) == 1)==0?"opened":"CLOSED",
-		((msg.Buffer[5] & 1) != 1)==0?"user   ":"factory",
-		msg.Buffer[21]);
+		((msg->Buffer[6] & 1) == 1)==0?"opened":"CLOSED",
+		((msg->Buffer[5] & 1) != 1)==0?"user   ":"factory",
+		msg->Buffer[21]);
 
 	strncpy(buffer,uni+16,4);
 	buffer[4]=0;
 	printf("Simlock 2     : GID1    %10s, %s, %s, counter %i\n",
 		buffer,
-		((msg.Buffer[6] & 4) == 4)==0?"opened":"CLOSED",
-		((msg.Buffer[5] & 4) != 4)==0?"user   ":"factory",
-		msg.Buffer[23]);
+		((msg->Buffer[6] & 4) == 4)==0?"opened":"CLOSED",
+		((msg->Buffer[5] & 4) != 4)==0?"user   ":"factory",
+		msg->Buffer[23]);
 
 	strncpy(buffer,uni+20,4);
 	buffer[4]=0;
 	printf("Simlock 3     : GID2    %10s, %s, %s, counter %i\n",
 		buffer,
-		((msg.Buffer[6] & 8) == 8)==0?"opened":"CLOSED",
-		((msg.Buffer[5] & 8) != 8)==0?"user   ":"factory",
-		msg.Buffer[24]);
+		((msg->Buffer[6] & 8) == 8)==0?"opened":"CLOSED",
+		((msg->Buffer[5] & 8) != 8)==0?"user   ":"factory",
+		msg->Buffer[24]);
 
 	strncpy(buffer,uni+5,10);
 	buffer[10]=0;
 	printf("Simlock 4     : MSIN    %10s, %s, %s, counter %i\n",
 		buffer,
-		((msg.Buffer[6] & 2) == 2)==0?"opened":"CLOSED",
-		((msg.Buffer[5] & 2) != 2)==0?"user   ":"factory",
-		msg.Buffer[22]);
+		((msg->Buffer[6] & 2) == 2)==0?"opened":"CLOSED",
+		((msg->Buffer[5] & 2) != 2)==0?"user   ":"factory",
+		msg->Buffer[22]);
 
 	return ERR_NONE;
 }
 
-static GSM_Error DCT3_ReplyGetMCUchkSum(GSM_Protocol_Message msg, GSM_StateMachine *sm)
+static GSM_Error DCT3_ReplyGetMCUchkSum(GSM_Protocol_Message *msg, GSM_StateMachine *sm)
 {
 	int i;
 
-	if (msg.Buffer[3] == 0x12) printf("Language Pack: %c\n",msg.Buffer[5]);
-	if (msg.Buffer[3] == 0x02) {
+	if (msg->Buffer[3] == 0x12) printf("Language Pack: %c\n",msg->Buffer[5]);
+	if (msg->Buffer[3] == 0x02) {
 		printf("MCU checksum  : ");
-		for (i=5;i<9;i++) printf("%c",msg.Buffer[i]);
+		for (i=5;i<9;i++) printf("%c",msg->Buffer[i]);
 		printf("\n");
 	}
 	return ERR_NONE;
@@ -438,10 +438,10 @@ static GSM_Error DCT3_ReplyGetMCUchkSum(GSM_Protocol_Message msg, GSM_StateMachi
 
 static unsigned char MSID1;
 
-GSM_Error DCT3_ReplyEnableSecurity2(GSM_Protocol_Message msg, GSM_StateMachine *sm)
+GSM_Error DCT3_ReplyEnableSecurity2(GSM_Protocol_Message *msg, GSM_StateMachine *sm)
 {
 	smprintf(sm, "State of security commands set\n");
-	MSID1 = msg.Buffer[5];
+	MSID1 = msg->Buffer[5];
 	return ERR_NONE;
 }
 
@@ -477,7 +477,7 @@ GSM_Error DCT3Info(void)
 	return ERR_NONE;
 }
 
-static GSM_Error DCT3_ReplyResetTest36(GSM_Protocol_Message msg, GSM_StateMachine *sm)
+static GSM_Error DCT3_ReplyResetTest36(GSM_Protocol_Message *msg, GSM_StateMachine *sm)
 {
 	printf("Netmonitor test 36 cleaned OK\n");
 	return ERR_NONE;
@@ -508,19 +508,19 @@ void DCT3ResetTest36(int argc, char *argv[])
 
 static unsigned char PPS[32]; /* Product Profile Settings */
 
-static GSM_Error DCT3_ReplyGetPPS(GSM_Protocol_Message msg, GSM_StateMachine *sm)
+static GSM_Error DCT3_ReplyGetPPS(GSM_Protocol_Message *msg, GSM_StateMachine *sm)
 {
 	int i,j,z;
 
 #ifdef DEBUG
 	smprintf(sm, "Product Profile Settings received -");
-	for (i=0;i<4;i++) smprintf(sm, " %02x",msg.Buffer[3+i]);
+	for (i=0;i<4;i++) smprintf(sm, " %02x",msg->Buffer[3+i]);
 	smprintf(sm, "\n");
 #endif
 	j=128;z=0;
 	for (i=0;i<32;i++) {
 		PPS[i]='0';
-		if (msg.Buffer[z+3]&j) PPS[i]='1';
+		if (msg->Buffer[z+3]&j) PPS[i]='1';
 		if (j==1) {
 			j=128;
 			z++;
@@ -534,7 +534,7 @@ static GSM_Error DCT3_ReplyGetPPS(GSM_Protocol_Message msg, GSM_StateMachine *sm
 	return ERR_NONE;
 }
 
-static GSM_Error DCT3_ReplySetPPS(GSM_Protocol_Message msg, GSM_StateMachine *sm)
+static GSM_Error DCT3_ReplySetPPS(GSM_Protocol_Message *msg, GSM_StateMachine *sm)
 {
 	printf("Setting done OK\n");
 	return ERR_NONE;
@@ -614,15 +614,15 @@ void DCT3SetPhoneMenus(int argc, char *argv[])
 	Print_Error(error);
 }
 
-static GSM_Error DCT3_Reply61GetSecurityCode(GSM_Protocol_Message msg, GSM_StateMachine *sm)
+static GSM_Error DCT3_Reply61GetSecurityCode(GSM_Protocol_Message *msg, GSM_StateMachine *sm)
 {
-	printf("Security Code is \"%s\"\n",msg.Buffer+5);
+	printf("Security Code is \"%s\"\n",msg->Buffer+5);
 	return ERR_NONE;
 }
 
-static GSM_Error DCT3_Reply7191GetSecurityCode(GSM_Protocol_Message msg, GSM_StateMachine *sm)
+static GSM_Error DCT3_Reply7191GetSecurityCode(GSM_Protocol_Message *msg, GSM_StateMachine *sm)
 {
-	printf("Security Code is \"%s\"\n",msg.Buffer+6);
+	printf("Security Code is \"%s\"\n",msg->Buffer+6);
 	return ERR_NONE;
 }
 
@@ -665,15 +665,15 @@ void DCT3GetSecurityCode(int argc, char *argv[])
 
 #ifdef GSM_ENABLE_NOKIA6110
 
-static GSM_Error DCT3_ReplyGetOperatorName(GSM_Protocol_Message msg, GSM_StateMachine *sm)
+static GSM_Error DCT3_ReplyGetOperatorName(GSM_Protocol_Message *msg, GSM_StateMachine *sm)
 {
 	unsigned char buffer[10];
 
-	NOKIA_DecodeNetworkCode(msg.Buffer+5, buffer);
+	NOKIA_DecodeNetworkCode(msg->Buffer+5, buffer);
 	buffer[6] = 0;
 	printf("Network           : %s (%s ",	buffer,DecodeUnicodeString(GSM_GetNetworkName(buffer)));
 	printf(", %s)\n",			DecodeUnicodeString(GSM_GetCountryName(buffer)));
-	printf("Name              : \"%s\"\n",msg.Buffer+8);
+	printf("Name              : \"%s\"\n",msg->Buffer+8);
 
 	return ERR_NONE;
 }
@@ -699,7 +699,7 @@ void DCT3GetOperatorName(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static GSM_Error DCT3_ReplySetOperatorName(GSM_Protocol_Message msg, GSM_StateMachine *sm)
+static GSM_Error DCT3_ReplySetOperatorName(GSM_Protocol_Message *msg, GSM_StateMachine *sm)
 {
 	printf("Operator name set OK\n");
 	return ERR_NONE;
@@ -740,17 +740,17 @@ void DCT3SetOperatorName(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static GSM_Error DCT3_ReplyDisplayOutput(GSM_Protocol_Message msg, GSM_StateMachine *sm)
+static GSM_Error DCT3_ReplyDisplayOutput(GSM_Protocol_Message *msg, GSM_StateMachine *sm)
 {
 	unsigned char buf[100];
 
-	switch (msg.Buffer[3]) {
+	switch (msg->Buffer[3]) {
 	case 0x50:
 		smprintf(sm, "Display string received\n");
-		memcpy(buf,msg.Buffer+8,msg.Buffer[7]*2);
-		buf[msg.Buffer[7]*2]   = 0;
-		buf[msg.Buffer[7]*2+1] = 0;
-		printf("X=%i, Y=%i, Text=\"%s\"\n",msg.Buffer[6],msg.Buffer[5],DecodeUnicodeString(buf));
+		memcpy(buf,msg->Buffer+8,msg->Buffer[7]*2);
+		buf[msg->Buffer[7]*2]   = 0;
+		buf[msg->Buffer[7]*2+1] = 0;
+		printf("X=%i, Y=%i, Text=\"%s\"\n",msg->Buffer[6],msg->Buffer[5],DecodeUnicodeString(buf));
 		return ERR_NONE;
 	case 0x54:
 		smprintf(sm, "Display output set\n");

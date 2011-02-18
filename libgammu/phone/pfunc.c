@@ -182,7 +182,7 @@ GSM_Error PHONE_UploadFile(GSM_StateMachine *s, GSM_File * File)
 	return error;
 }
 
-GSM_Error NoneReply(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
+GSM_Error NoneReply(GSM_Protocol_Message *msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s,"None answer\n");
 	return ERR_NONE;

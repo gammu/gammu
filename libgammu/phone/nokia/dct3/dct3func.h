@@ -5,35 +5,35 @@
 
 #include "../ncommon.h"
 
-GSM_Error DCT3_ReplyPressKey		(GSM_Protocol_Message msg, GSM_StateMachine *s);
-GSM_Error DCT3_ReplyPlayTone		(GSM_Protocol_Message msg, GSM_StateMachine *s);
-GSM_Error DCT3_ReplyEnableSecurity	(GSM_Protocol_Message msg, GSM_StateMachine *s);
-GSM_Error DCT3_ReplyGetIMEI		(GSM_Protocol_Message msg, GSM_StateMachine *s);
-GSM_Error DCT3_ReplyGetSMSC		(GSM_Protocol_Message msg, GSM_StateMachine *s);
-GSM_Error DCT3_ReplyWaitSMSC		(GSM_Protocol_Message msg, GSM_StateMachine *s);
-GSM_Error DCT3_ReplySIMLogin		(GSM_Protocol_Message msg, GSM_StateMachine *s);
-GSM_Error DCT3_ReplySIMLogout		(GSM_Protocol_Message msg, GSM_StateMachine *s);
-GSM_Error DCT3_ReplyGetDateTime		(GSM_Protocol_Message msg, GSM_StateMachine *s);
-GSM_Error DCT3_ReplyGetAlarm		(GSM_Protocol_Message msg, GSM_StateMachine *s);
-GSM_Error DCT3_ReplySetDateTime		(GSM_Protocol_Message msg, GSM_StateMachine *s);
-GSM_Error DCT3_ReplySetAlarm		(GSM_Protocol_Message msg, GSM_StateMachine *s);
-GSM_Error DCT3_ReplyDialCommand		(GSM_Protocol_Message msg, GSM_StateMachine *s);
-GSM_Error DCT3_ReplyGetWAPBookmark	(GSM_Protocol_Message msg, GSM_StateMachine *s);
-GSM_Error DCT3_ReplyGetNetworkInfo	(GSM_Protocol_Message msg, GSM_StateMachine *s);
-GSM_Error DCT3_ReplySendSMSMessage	(GSM_Protocol_Message msg, GSM_StateMachine *s);
-GSM_Error DCT3_ReplySetSMSC		(GSM_Protocol_Message msg, GSM_StateMachine *s);
-GSM_Error DCT3_ReplyGetWAPSettings	(GSM_Protocol_Message msg, GSM_StateMachine *s);
-GSM_Error DCT3_ReplySetWAPSettings	(GSM_Protocol_Message msg, GSM_StateMachine *s);
-GSM_Error DCT3_ReplyNetmonitor		(GSM_Protocol_Message msg, GSM_StateMachine *s);
-GSM_Error DCT3_ReplyDeleteSMSMessage	(GSM_Protocol_Message msg, GSM_StateMachine *s);
-GSM_Error N71_92_ReplyGetSignalQuality	(GSM_Protocol_Message msg, GSM_StateMachine *s);
-GSM_Error N71_92_ReplyGetBatteryCharge	(GSM_Protocol_Message msg, GSM_StateMachine *s);
-GSM_Error N71_92_ReplyPhoneSetting	(GSM_Protocol_Message msg, GSM_StateMachine *s);
-GSM_Error N61_71_ReplyResetPhoneSettings(GSM_Protocol_Message msg, GSM_StateMachine *s);
-GSM_Error N61_91_ReplySetOpLogo		(GSM_Protocol_Message msg, GSM_StateMachine *s);
+GSM_Error DCT3_ReplyPressKey		(GSM_Protocol_Message *msg, GSM_StateMachine *s);
+GSM_Error DCT3_ReplyPlayTone		(GSM_Protocol_Message *msg, GSM_StateMachine *s);
+GSM_Error DCT3_ReplyEnableSecurity	(GSM_Protocol_Message *msg, GSM_StateMachine *s);
+GSM_Error DCT3_ReplyGetIMEI		(GSM_Protocol_Message *msg, GSM_StateMachine *s);
+GSM_Error DCT3_ReplyGetSMSC		(GSM_Protocol_Message *msg, GSM_StateMachine *s);
+GSM_Error DCT3_ReplyWaitSMSC		(GSM_Protocol_Message *msg, GSM_StateMachine *s);
+GSM_Error DCT3_ReplySIMLogin		(GSM_Protocol_Message *msg, GSM_StateMachine *s);
+GSM_Error DCT3_ReplySIMLogout		(GSM_Protocol_Message *msg, GSM_StateMachine *s);
+GSM_Error DCT3_ReplyGetDateTime		(GSM_Protocol_Message *msg, GSM_StateMachine *s);
+GSM_Error DCT3_ReplyGetAlarm		(GSM_Protocol_Message *msg, GSM_StateMachine *s);
+GSM_Error DCT3_ReplySetDateTime		(GSM_Protocol_Message *msg, GSM_StateMachine *s);
+GSM_Error DCT3_ReplySetAlarm		(GSM_Protocol_Message *msg, GSM_StateMachine *s);
+GSM_Error DCT3_ReplyDialCommand		(GSM_Protocol_Message *msg, GSM_StateMachine *s);
+GSM_Error DCT3_ReplyGetWAPBookmark	(GSM_Protocol_Message *msg, GSM_StateMachine *s);
+GSM_Error DCT3_ReplyGetNetworkInfo	(GSM_Protocol_Message *msg, GSM_StateMachine *s);
+GSM_Error DCT3_ReplySendSMSMessage	(GSM_Protocol_Message *msg, GSM_StateMachine *s);
+GSM_Error DCT3_ReplySetSMSC		(GSM_Protocol_Message *msg, GSM_StateMachine *s);
+GSM_Error DCT3_ReplyGetWAPSettings	(GSM_Protocol_Message *msg, GSM_StateMachine *s);
+GSM_Error DCT3_ReplySetWAPSettings	(GSM_Protocol_Message *msg, GSM_StateMachine *s);
+GSM_Error DCT3_ReplyNetmonitor		(GSM_Protocol_Message *msg, GSM_StateMachine *s);
+GSM_Error DCT3_ReplyDeleteSMSMessage	(GSM_Protocol_Message *msg, GSM_StateMachine *s);
+GSM_Error N71_92_ReplyGetSignalQuality	(GSM_Protocol_Message *msg, GSM_StateMachine *s);
+GSM_Error N71_92_ReplyGetBatteryCharge	(GSM_Protocol_Message *msg, GSM_StateMachine *s);
+GSM_Error N71_92_ReplyPhoneSetting	(GSM_Protocol_Message *msg, GSM_StateMachine *s);
+GSM_Error N61_71_ReplyResetPhoneSettings(GSM_Protocol_Message *msg, GSM_StateMachine *s);
+GSM_Error N61_91_ReplySetOpLogo		(GSM_Protocol_Message *msg, GSM_StateMachine *s);
 #ifdef GSM_ENABLE_CELLBROADCAST
-GSM_Error DCT3_ReplySetIncomingCB	(GSM_Protocol_Message msg, GSM_StateMachine *s);
-GSM_Error DCT3_ReplyIncomingCB		(GSM_Protocol_Message msg, GSM_StateMachine *s);
+GSM_Error DCT3_ReplySetIncomingCB	(GSM_Protocol_Message *msg, GSM_StateMachine *s);
+GSM_Error DCT3_ReplyIncomingCB		(GSM_Protocol_Message *msg, GSM_StateMachine *s);
 #endif
 
 GSM_Error DCT3_DeleteWAPBookmark	(GSM_StateMachine *s, GSM_WAPBookmark *bookmark);

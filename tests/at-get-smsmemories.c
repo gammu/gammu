@@ -12,7 +12,7 @@
 
 #define BUFFER_SIZE 16384
 
-extern GSM_Error ATGEN_ReplyGetSMSMemories(GSM_Protocol_Message msg, GSM_StateMachine * s);
+extern GSM_Error ATGEN_ReplyGetSMSMemories(GSM_Protocol_Message *msg, GSM_StateMachine * s);
 
 int main(int argc, char **argv)
 {
@@ -79,7 +79,7 @@ int main(int argc, char **argv)
 	SplitLines(msg.Buffer, msg.Length, &Priv->Lines, "\x0D\x0A", 2, "\"", 1, TRUE);
 
 	/* Parse it */
-	error = ATGEN_ReplyGetSMSMemories(msg, s);
+	error = ATGEN_ReplyGetSMSMemories(&msg, s);
 
 	/* This is normally done by ATGEN_Terminate */
 	FreeLines(&Priv->Lines);

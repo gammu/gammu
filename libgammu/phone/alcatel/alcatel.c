@@ -252,7 +252,7 @@ unsigned char GSM_AlcatelAlphabet[] =
 /**
  * This is being called from atgen.
  */
-GSM_Error ALCATEL_ProtocolVersionReply	(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error ALCATEL_ProtocolVersionReply	(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	char			*str, *str2;
 /*
@@ -264,7 +264,7 @@ GSM_Error ALCATEL_ProtocolVersionReply	(GSM_Protocol_Message msg, GSM_StateMachi
  */
 	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
 		case AT_Reply_OK:
-			str = strstr(msg.Buffer, "\"V");
+			str = strstr(msg->Buffer, "\"V");
 			if (str == NULL) return ERR_UNKNOWNRESPONSE;
 			str += 2;
 			while((str2 = strstr(str, "\"V")) != NULL) str = str2 + 2;
@@ -682,12 +682,12 @@ static GSM_Error ALCATEL_GetNextId(GSM_StateMachine *s, int *id) {
 	}
 }
 
-static GSM_Error ALCATEL_ReplyGetIds(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error ALCATEL_ReplyGetIds(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Phone_ALCATELData 	*Priv = &s->Phone.Data.Priv.ALCATEL;
 	int 			count,i,pos;
 
-	count 		 = msg.Buffer[10];
+	count 		 = msg->Buffer[10];
 	*Priv->CurrentCount += count;
 
 	*Priv->CurrentList = (int *)realloc(*Priv->CurrentList, (*Priv->CurrentCount + 1)* sizeof(int));
@@ -695,15 +695,15 @@ static GSM_Error ALCATEL_ReplyGetIds(GSM_Protocol_Message msg, GSM_StateMachine 
 
 	for (i = 0; i < count; i++) {
 		pos = 11 + (4 * i);
-		(*Priv->CurrentList)[*Priv->CurrentCount - count + i] = msg.Buffer[pos + 3] +
-							(msg.Buffer[pos + 2] << 8) +
-							(msg.Buffer[pos + 1] << 16) +
-							(msg.Buffer[pos] << 24);
+		(*Priv->CurrentList)[*Priv->CurrentCount - count + i] = msg->Buffer[pos + 3] +
+							(msg->Buffer[pos + 2] << 8) +
+							(msg->Buffer[pos + 1] << 16) +
+							(msg->Buffer[pos] << 24);
 	}
 	(*Priv->CurrentList)[*Priv->CurrentCount] = 0;
 
 	/* If last byte is 0, then we transmitted all items */
-	Priv->TransferCompleted = msg.Buffer[4 + msg.Buffer[4]] == 0;
+	Priv->TransferCompleted = msg->Buffer[4 + msg->Buffer[4]] == 0;
 	return ERR_NONE;
 }
 
@@ -769,22 +769,22 @@ static GSM_Error ALCATEL_GetAvailableIds(GSM_StateMachine *s, gboolean refresh)
 	return ERR_NONE;
 }
 
-static GSM_Error ALCATEL_ReplyGetFields(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error ALCATEL_ReplyGetFields(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Phone_ALCATELData 	*Priv = &s->Phone.Data.Priv.ALCATEL;
 	int 			i;
 
-	if (msg.Buffer[14] > GSM_PHONEBOOK_ENTRIES) {
-		smprintf(s, "WARNING: Field list truncated, you should increase GSM_PHONEBOOK_ENTRIES to at least %d\n", msg.Buffer[14]);
+	if (msg->Buffer[14] > GSM_PHONEBOOK_ENTRIES) {
+		smprintf(s, "WARNING: Field list truncated, you should increase GSM_PHONEBOOK_ENTRIES to at least %d\n", msg->Buffer[14]);
 		Priv->CurrentFieldsCount = GSM_PHONEBOOK_ENTRIES;
 	} else {
-		Priv->CurrentFieldsCount = msg.Buffer[14];
+		Priv->CurrentFieldsCount = msg->Buffer[14];
 	}
 
 	Priv->CurrentFields[Priv->CurrentFieldsCount] = 0;
 
 	for (i = 0; i < Priv->CurrentFieldsCount; i++) {
-		Priv->CurrentFields[i] = msg.Buffer[15 + i];
+		Priv->CurrentFields[i] = msg->Buffer[15 + i];
 	}
 
 	return ERR_NONE;
@@ -924,10 +924,10 @@ static GSM_Error ALCATEL_EncodeString(GSM_StateMachine *s, unsigned const char *
  *
  * \todo Timezone is not correctly set.
  */
-static GSM_Error ALCATEL_ReplyGetFieldValue(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error ALCATEL_ReplyGetFieldValue(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Phone_ALCATELData 	*Priv = &s->Phone.Data.Priv.ALCATEL;
-	unsigned char 		*buffer = &(msg.Buffer[16]);
+	unsigned char 		*buffer = &(msg->Buffer[16]);
 
 	if (buffer[1] == 0x05 && buffer[2] == 0x67) {
 		/* date */
@@ -1021,25 +1021,25 @@ static GSM_Error ALCATEL_GetFieldValue(GSM_StateMachine *s, int id, int field)
 	return ERR_NONE;
 }
 
-static GSM_Error ALCATEL_ReplyGetCategories(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error ALCATEL_ReplyGetCategories(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Phone_ALCATELData 	*Priv = &s->Phone.Data.Priv.ALCATEL;
 	int 			i;
 
 	/* Did we get any category? */
-	if (msg.Buffer[4] == 6) {
+	if (msg->Buffer[4] == 6) {
 		Priv->CurrentCategoriesCount = 0;
 		return ERR_NONE;
 	}
-	if (msg.Buffer[12] > ALCATEL_MAX_CATEGORIES) {
-		smprintf(s, "WARNING: Field list truncated, you should increase ALCATEL_MAX_CATEGORIES to at least %d\n", msg.Buffer[12]);
+	if (msg->Buffer[12] > ALCATEL_MAX_CATEGORIES) {
+		smprintf(s, "WARNING: Field list truncated, you should increase ALCATEL_MAX_CATEGORIES to at least %d\n", msg->Buffer[12]);
 		Priv->CurrentCategoriesCount = ALCATEL_MAX_CATEGORIES;
 	} else {
-		Priv->CurrentCategoriesCount = msg.Buffer[12];
+		Priv->CurrentCategoriesCount = msg->Buffer[12];
 	}
 
 	for (i = 0; i < Priv->CurrentCategoriesCount; i++) {
-		Priv->CurrentCategories[i] = msg.Buffer[13 + i];
+		Priv->CurrentCategories[i] = msg->Buffer[13 + i];
 		Priv->CurrentCategoriesCache[i][0] = '\000';
 		Priv->CurrentCategoriesCache[i][1] = '\000';
 	}
@@ -1103,11 +1103,11 @@ static GSM_Error ALCATEL_IsCategoryIdAvailable(GSM_StateMachine *s, int id) {
 	return ERR_EMPTY;
 }
 
-static GSM_Error ALCATEL_ReplyAddCategoryText(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error ALCATEL_ReplyAddCategoryText(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Phone_ALCATELData 	*Priv = &s->Phone.Data.Priv.ALCATEL;
 
-	Priv->ReturnInt = msg.Buffer[12];
+	Priv->ReturnInt = msg->Buffer[12];
 
 	return ERR_NONE;
 }
@@ -1145,11 +1145,11 @@ static GSM_Error ALCATEL_AddCategoryText(GSM_StateMachine *s, const unsigned cha
 	return ALCATEL_GetAvailableCategoryIds(s);
 }
 
-static GSM_Error ALCATEL_ReplyGetCategoryText(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error ALCATEL_ReplyGetCategoryText(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Phone_ALCATELData 	*Priv = &s->Phone.Data.Priv.ALCATEL;
 
-	ALCATEL_DecodeString(s,msg.Buffer + 14, Priv->ReturnString, GSM_MAX_CATEGORY_NAME_LENGTH);
+	ALCATEL_DecodeString(s,msg->Buffer + 14, Priv->ReturnString, GSM_MAX_CATEGORY_NAME_LENGTH);
 
 	return ERR_NONE;
 }
@@ -1267,9 +1267,9 @@ static GSM_Error ALCATEL_DeleteItem(GSM_StateMachine *s, int id) {
 	return ERR_NONE;
 }
 
-static GSM_Error ALCATEL_ReplyDeleteItem(GSM_Protocol_Message msg, GSM_StateMachine *s UNUSED)
+static GSM_Error ALCATEL_ReplyDeleteItem(GSM_Protocol_Message *msg, GSM_StateMachine *s UNUSED)
 {
-	if (msg.Buffer[8] != 0x25) return ERR_UNKNOWNRESPONSE;
+	if (msg->Buffer[8] != 0x25) return ERR_UNKNOWNRESPONSE;
 	return ERR_NONE;
 }
 
@@ -3953,12 +3953,12 @@ static GSM_Error ALCATEL_DispatchMessage(GSM_StateMachine *s)
 	}
 }
 
-static GSM_Error ALCATEL_ReplyGeneric(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error ALCATEL_ReplyGeneric(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	/* All error values are just VERY wild guesses, but these seems to work
 	 * almost as expected ...
 	 */
-	switch (msg.Buffer[8]) {
+	switch (msg->Buffer[8]) {
 		case 0x00: /* no error */
 			return ERR_NONE;
 		case 0x0e: /* Opening session when not closed (might be also opened somewhere else) */
@@ -3978,7 +3978,7 @@ static GSM_Error ALCATEL_ReplyGeneric(GSM_Protocol_Message msg, GSM_StateMachine
 		case 0x0C: /* Bad id (item/database) */
 		case 0x11: /* Bad list id */
 		case 0x2A: /* Nonexistant field/item id */
-			smprintf(s, "WARNING: Bug reply %02X\n", msg.Buffer[8]);
+			smprintf(s, "WARNING: Bug reply %02X\n", msg->Buffer[8]);
 			return ERR_BUG;
 		case 0x35: /* Too long text */
 			return ERR_INVALIDDATA;
@@ -3988,14 +3988,14 @@ static GSM_Error ALCATEL_ReplyGeneric(GSM_Protocol_Message msg, GSM_StateMachine
 		case 0x82: /* Transfer canceled */
 			return ERR_CANCELED;
 		default:
-			smprintf(s, "WARNING: Packet seems to indicate some status by %02X, ignoring!\n", msg.Buffer[8]);
+			smprintf(s, "WARNING: Packet seems to indicate some status by %02X, ignoring!\n", msg->Buffer[8]);
 			return ERR_NONE;
 	}
 }
 
-static GSM_Error ALCATEL_ReplyCommit(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error ALCATEL_ReplyCommit(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
-	s->Phone.Data.Priv.ALCATEL.CommitedRecord = msg.Buffer[12] + (msg.Buffer[11] << 8) + (msg.Buffer[10] << 16) + (msg.Buffer[9] << 24);
+	s->Phone.Data.Priv.ALCATEL.CommitedRecord = msg->Buffer[12] + (msg->Buffer[11] << 8) + (msg->Buffer[10] << 16) + (msg->Buffer[9] << 24);
 	smprintf(s, "Created record %08x\n", s->Phone.Data.Priv.ALCATEL.CommitedRecord);
 	return ERR_NONE;
 }

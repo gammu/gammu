@@ -1081,7 +1081,7 @@ GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 	}
 
 	if (error==ERR_NONE) {
-		error=Reply[reply].Function(*msg, s);
+		error=Reply[reply].Function(msg, s);
 		if (Reply[reply].requestID==Phone->RequestID) {
 			if (error == ERR_NEEDANOTHERANSWER) {
 				error = ERR_NONE;

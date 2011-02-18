@@ -1128,7 +1128,7 @@ GSM_Error ATOBEX_DeleteNote (GSM_StateMachine *s, GSM_NoteEntry *Note)
  * is an easy way to obtain the source under GPL, otherwise the author's parts
  * of this function are GPL 2.0.
  */
-GSM_Error ATOBEX_ReplyGetDateLocale(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error ATOBEX_ReplyGetDateLocale(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Locale	*locale = s->Phone.Data.Locale;
 	int		format;
@@ -1137,7 +1137,7 @@ GSM_Error ATOBEX_ReplyGetDateLocale(GSM_Protocol_Message msg, GSM_StateMachine *
 	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
 	case AT_Reply_OK:
 		smprintf(s, "Date settings received\n");
-		pos = strstr(msg.Buffer, "*ESDF:");
+		pos = strstr(msg->Buffer, "*ESDF:");
 		if (pos == NULL) return ERR_UNKNOWNRESPONSE;
 		format = atoi(pos + 7);
 		switch (format) {
@@ -1179,7 +1179,7 @@ GSM_Error ATOBEX_ReplyGetDateLocale(GSM_Protocol_Message msg, GSM_StateMachine *
  * is an easy way to obtain the source under GPL, otherwise the author's parts
  * of this function are GPL 2.0.
  */
-GSM_Error ATOBEX_ReplyGetTimeLocale(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error ATOBEX_ReplyGetTimeLocale(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	int		format;
 	char		*pos;
@@ -1187,7 +1187,7 @@ GSM_Error ATOBEX_ReplyGetTimeLocale(GSM_Protocol_Message msg, GSM_StateMachine *
 	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
 		case AT_Reply_OK:
 			smprintf(s, "Time settings received\n");
-			pos = strstr(msg.Buffer, "*ESTF:");
+			pos = strstr(msg->Buffer, "*ESTF:");
 			if (pos == NULL) return ERR_UNKNOWNRESPONSE;
 			format = atoi(pos + 7);
 			switch (format) {
@@ -1261,14 +1261,14 @@ GSM_Error ATOBEX_SetLocale(GSM_StateMachine *s, GSM_Locale *locale)
 	return GSM_WaitFor (s, req, strlen(req), 0x00, 3, ID_SetLocale);
 }
 
-GSM_Error ATOBEX_ReplyGetFileSystemStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error ATOBEX_ReplyGetFileSystemStatus(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Error error;
 
 	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
 		case AT_Reply_OK:
 			error = ATGEN_ParseReply(s,
-					GetLineString(msg.Buffer, &s->Phone.Data.Priv.ATGEN.Lines, 2),
+					GetLineString(msg->Buffer, &s->Phone.Data.Priv.ATGEN.Lines, 2),
 					"*EMEM: @i, @i, @i, @i, @i",
 					&s->Phone.Data.FileSystemStatus->Free,
 					&s->Phone.Data.FileSystemStatus->Used,
@@ -1300,7 +1300,7 @@ GSM_Error ATOBEX_GetFileSystemStatus(GSM_StateMachine *s, GSM_FileSystemStatus *
 	return GSM_WaitFor (s, "AT*EMEM\r", 8, 0x00, 3, ID_FileSystemStatus);
 }
 
-GSM_Error ATOBEX_ReplyGetBatteryCharge(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error ATOBEX_ReplyGetBatteryCharge(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	int tmp, ncapacity, method, state;
 	int vbat1, vbat2, vbat3, vbat4;
@@ -1315,7 +1315,7 @@ GSM_Error ATOBEX_ReplyGetBatteryCharge(GSM_Protocol_Message msg, GSM_StateMachin
 
 	/* Parse version 4 reply */
 	error = ATGEN_ParseReply(s,
-				msg.Buffer,
+				msg->Buffer,
 				"*EBCA: @i, @i, @i, @i, @i, @i, @i, @i, @i, @i, @i, @i, @i, @i\xd\xa",
 				&bat->BatteryVoltage, /* vbat */
 				&bat->ChargeVoltage, /* dcio */
@@ -1375,7 +1375,7 @@ GSM_Error ATOBEX_ReplyGetBatteryCharge(GSM_Protocol_Message msg, GSM_StateMachin
 
 	/* Parse version 2 reply */
 	error = ATGEN_ParseReply(s,
-				msg.Buffer,
+				msg->Buffer,
 				"*EBCA: @i, @i, @i, @i, @i, @i, @i, @i, @i, @i, @i, @i, @i, @i, @i, @i, @i, @i, @i, @i, @i, @i, @i, @i, @i, @i, @i\xd\xa",
 				&vbat1, /* vbat1 */
 				&vbat2, /* vbat2 */
