@@ -750,10 +750,6 @@ autodetect:
 				s->ConnectionType != GCT_BLUEOBEX &&
 				s->ConnectionType != GCT_BLUEGNAPBUS &&
 				s->ConnectionType != GCT_IRDAGNAPBUS &&
-				s->ConnectionType != GCT_DKU2AT &&
-				s->ConnectionType != GCT_AT &&
-				s->ConnectionType != GCT_IRDAAT &&
-				s->ConnectionType != GCT_BLUEAT &&
 				s->ConnectionType != GCT_BLUES60) {
 			error = GSM_TryGetModel(s);
 			if ((i != s->ConfigNum - 1) && (
