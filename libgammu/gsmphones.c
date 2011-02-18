@@ -965,14 +965,14 @@ GSM_PhoneModel *GetModelData(GSM_StateMachine *s, const char *model, const char 
 
 gboolean GSM_IsPhoneFeatureAvailable(GSM_PhoneModel *model, GSM_Feature feature)
 {
-	int i = 0;
+	int i;
 
-	while (model->features[i] != 0) {
+	for (i = 0; model->features[i] != 0; i++) {
 		if (model->features[i] == feature) {
 			return TRUE;
 		}
-		i++;
 	}
+
 	return FALSE;
 }
 
@@ -980,12 +980,12 @@ gboolean GSM_AddPhoneFeature(GSM_PhoneModel *model, GSM_Feature feature)
 {
 	int	i	= 0;
 
-	while (model->features[i] != 0) {
+	for (i = 0; model->features[i] != 0; i++) {
 		if (model->features[i] == feature) {
 			return TRUE;
 		}
-		i++;
 	}
+
 	if (i == GSM_MAX_PHONE_FEATURES) return FALSE;
 	model->features[i++] = feature;
 	model->features[i] = 0;
