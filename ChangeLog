@@ -24,6 +24,7 @@ ChangeLog
 [+] * Added screenshot function for Sony-Ericssonn phones (Márton Németh).
 [-] * Fixed parsing of some Nokia SMSes (bug #1402).
 [-] * Properly report error on deleting non deletable entries (bug #1396).
+[-] * Slower switch from m-obex to AT (bug #1382).
     
 20110210 - 1.29.90
 

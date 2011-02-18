@@ -71,6 +71,11 @@ GSM_Error ATOBEX_SetATMode(GSM_StateMachine *s)
 		if (error != ERR_NONE) return error;
 	}
 
+	/* Give Samsung phones some time to recover from protocol switch */
+	if (Priv->HasOBEX == ATOBEX_OBEX_MOBEX || Priv->HasOBEX == ATOBEX_OBEX_TSSPCSW) {
+		sleep(2);
+	}
+
 	/* Initialise AT protocol */
 	error = s->Protocol.Functions->Initialise(s);
 	if (error != ERR_NONE) return error;
