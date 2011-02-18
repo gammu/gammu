@@ -752,6 +752,7 @@ autodetect:
 				s->ConnectionType != GCT_IRDAGNAPBUS &&
 				s->ConnectionType != GCT_BLUES60) {
 			error = GSM_TryGetModel(s);
+			/* Fall back to other configuraitons if the device is not existing (or similar error) */
 			if ((i != s->ConfigNum - 1) && (
 				(error == ERR_DEVICEOPENERROR) ||
 				(error == ERR_DEVICELOCKED) ||
