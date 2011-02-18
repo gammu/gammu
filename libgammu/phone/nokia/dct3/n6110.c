@@ -813,7 +813,7 @@ static GSM_Error N6110_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, 
                                 GSM_EncodeUDHHeader(&(s->di), &UDHHeader);
                                 /* We copy UDH now */
                                 memcpy(req+2,UDHHeader.Text,UDHHeader.Length);
-                                *maxlength=GSM_EncodeNokiaRTTLRingtone(*Ringtone, req+2+UDHHeader.Length, &size);
+                                *maxlength=GSM_EncodeNokiaRTTLRingtone(Ringtone, req+2+UDHHeader.Length, &size);
                                 error = s->Protocol.Functions->WriteMessage(s, req, 2+UDHHeader.Length+size, 0x12);
                                 if (error!=ERR_NONE) return error;
                                 sleep(1);
@@ -824,7 +824,7 @@ static GSM_Error N6110_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, 
                                 return ERR_NOTSUPPORTED;
                         }
                 }
-                *maxlength=GSM_EncodeNokiaRTTLRingtone(*Ringtone, req+7, &size);
+                *maxlength=GSM_EncodeNokiaRTTLRingtone(Ringtone, req+7, &size);
                 req[4] = Ringtone->Location - 1;
                 smprintf(s, "Setting ringtone\n");
                 return GSM_WaitFor (s, req, 7 + size, 0x05, 4, ID_SetRingtone);

@@ -1608,7 +1608,7 @@ static GSM_Error N6510_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, 
 		smprintf(s, "Getting ringtone ID\n");
 		error=GSM_WaitFor (s, GetIDReq, 14, 0xDB, s->Phone.Data.Priv.N6510.Timeout, ID_SetRingtone);
 		if (error != ERR_NONE) return error;
-		*maxlength=GSM_EncodeNokiaRTTLRingtone(*Ringtone, SetPreviewReq+11, &size);
+		*maxlength=GSM_EncodeNokiaRTTLRingtone(Ringtone, SetPreviewReq+11, &size);
 		SetPreviewReq[0]  = Priv->RingtoneID;
 		SetPreviewReq[10] = size;
 		smprintf(s, "Setting ringtone\n");

@@ -373,7 +373,7 @@ GSM_Error GSM_SaveRingtoneIMelody(FILE *file, GSM_Ringtone *ringtone)
 	char 	Buffer[2000];
   	size_t 	i=2000;
 
-	GSM_EncodeEMSSound(*ringtone, Buffer, &i, GSM_Ring_IMelody12, TRUE);
+	GSM_EncodeEMSSound(ringtone, Buffer, &i, GSM_Ring_IMelody12, TRUE);
 
 	chk_fwrite(Buffer, 1, i, file);
 	return ERR_NONE;
@@ -490,7 +490,7 @@ GSM_Error GSM_SaveRingtoneOtt(FILE *file, GSM_Ringtone *ringtone)
 	char 	Buffer[2000];
   	size_t	i=2000;
 
-	GSM_EncodeNokiaRTTLRingtone(*ringtone, Buffer, &i);
+	GSM_EncodeNokiaRTTLRingtone(ringtone, Buffer, &i);
 
 	chk_fwrite(Buffer, 1, i, file);
 	return ERR_NONE;
@@ -996,7 +996,7 @@ int GSM_RTTLGetTempo(int Beats)
    "package", where maxlength means length of package.
    Function returns number of packed notes and change maxlength to
    number of used chars in "package" */
-unsigned char GSM_EncodeNokiaRTTLRingtone(GSM_Ringtone ringtone, unsigned char *package, size_t *maxlength)
+unsigned char GSM_EncodeNokiaRTTLRingtone(GSM_Ringtone *ringtone, unsigned char *package, size_t *maxlength)
 {
 	unsigned char		CommandLength 	= 0x02;
 	unsigned char		Loop		= 0x15;	/* Infinite */
@@ -1025,7 +1025,7 @@ unsigned char GSM_EncodeNokiaRTTLRingtone(GSM_Ringtone ringtone, unsigned char *
 	AddBufferByte(package, &StartBit, SM_Song_BasicSongType, 3);
 
 	/* Packing the name of the tune. */
-	EncodeUnicodeSpecialNOKIAChars(Buffer, ringtone.Name, UnicodeLength(ringtone.Name));
+	EncodeUnicodeSpecialNOKIAChars(Buffer, ringtone->Name, UnicodeLength(ringtone->Name));
 	AddBufferByte(package, &StartBit, ((unsigned char)(UnicodeLength(Buffer)<<4)), 4);
 	AddBuffer(package, &StartBit, DecodeUnicodeString(Buffer), 8*UnicodeLength(Buffer));
 
@@ -1040,12 +1040,12 @@ unsigned char GSM_EncodeNokiaRTTLRingtone(GSM_Ringtone ringtone, unsigned char *
 	StartBit = StartBit + 8;
 
 	started = FALSE;
-	for (i=0; i<ringtone.NoteTone.NrCommands; i++) {
-		if (ringtone.NoteTone.Commands[i].Type != RING_Note) {
+	for (i=0; i<ringtone->NoteTone.NrCommands; i++) {
+		if (ringtone->NoteTone.Commands[i].Type != RING_Note) {
 			HowManyNotes++;
 			continue;
 		}
-		Note = &ringtone.NoteTone.Commands[i].Note;
+		Note = &ringtone->NoteTone.Commands[i].Note;
 		if (!started) {
 			/* First note can't be Pause - it makes problems
 			 * for example with PC Composer
@@ -1059,7 +1059,7 @@ unsigned char GSM_EncodeNokiaRTTLRingtone(GSM_Ringtone ringtone, unsigned char *
 		OldStartBit = StartBit;
 		/* we don't write Scale & Style info before "Pause" note - it saves place */
 		if (Note->Note!=Note_Pause) {
-			if (DefScale != Note->Scale || ringtone.NoteTone.AllNotesScale) {
+			if (DefScale != Note->Scale || ringtone->NoteTone.AllNotesScale) {
 				j = StartBit+5+8;
 				BufferAlignNumber(&j);
 				if ((j/8)>(*maxlength)) {
@@ -1568,7 +1568,7 @@ GSM_Error GSM_RingtoneConvert(GSM_Ringtone *dest, GSM_Ringtone *src, GSM_Rington
 
 /* 0 = No header and footer, 0.5 = partial header and footer,
  * 1.0 = IMelody 1.0, 1.2 = IMelody 1.2 */
-unsigned char GSM_EncodeEMSSound(GSM_Ringtone ringtone, unsigned char *package, size_t *maxlength, GSM_RingtoneVersion version, gboolean start)
+unsigned char GSM_EncodeEMSSound(GSM_Ringtone *ringtone, unsigned char *package, size_t *maxlength, GSM_RingtoneVersion version, gboolean start)
 {
 	int 			i, NrNotes = 0, Len, Max = *maxlength;
 
@@ -1592,16 +1592,16 @@ unsigned char GSM_EncodeEMSSound(GSM_Ringtone ringtone, unsigned char *package, 
 		if (version == GSM_Ring_IMelody12 || version == GSM_Ring_IMelody10)
 			*maxlength+=sprintf(package+(*maxlength),"FORMAT:CLASS1.0%c%c",13,10);
 		if (version == GSM_Ring_IMelody12)
-			*maxlength+=sprintf(package+(*maxlength),"NAME:%s%c%c",DecodeUnicodeString(ringtone.Name),13,10);
+			*maxlength+=sprintf(package+(*maxlength),"NAME:%s%c%c",DecodeUnicodeString(ringtone->Name),13,10);
 	}
 
 	DefNoteScale = Scale_880; /* by iMelody definition */
 
-	for (i=0;i<ringtone.NoteTone.NrCommands;i++) {
+	for (i=0;i<ringtone->NoteTone.NrCommands;i++) {
 		Len = *maxlength;
-		if (ringtone.NoteTone.Commands[i].Type != RING_Note) continue;
+		if (ringtone->NoteTone.Commands[i].Type != RING_Note) continue;
 
-		Note = &ringtone.NoteTone.Commands[i].Note;
+		Note = &ringtone->NoteTone.Commands[i].Note;
 		if (Note->Note == Note_Pause) continue;
 
 		if (version == GSM_Ring_IMelody12 && start) {
@@ -1629,12 +1629,12 @@ unsigned char GSM_EncodeEMSSound(GSM_Ringtone ringtone, unsigned char *package, 
 		break;
 	}
 
-	for (i=0;i<ringtone.NoteTone.NrCommands;i++) {
+	for (i=0;i<ringtone->NoteTone.NrCommands;i++) {
 		end = FALSE;
 		Len = *maxlength;
-		switch (ringtone.NoteTone.Commands[i].Type) {
+		switch (ringtone->NoteTone.Commands[i].Type) {
 		case RING_Note:
-			Note = &ringtone.NoteTone.Commands[i].Note;
+			Note = &ringtone->NoteTone.Commands[i].Note;
 			if (!started && Note->Note != Note_Pause) started = TRUE;
 			if (!started) break;
 			if (Note->Note!=Note_Pause && Note->Scale != DefNoteScale) {

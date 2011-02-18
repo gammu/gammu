@@ -693,7 +693,7 @@ static GSM_Error N7110_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, 
 		if (Ringtone->Location==255) {
 			/* 7110 doesn't support it */
 			if (strcmp(s->Phone.Data.Model,"NSE-5") == 0) return ERR_NOTSUPPORTED;
-			*maxlength=GSM_EncodeNokiaRTTLRingtone(*Ringtone, req+11, &size);
+			*maxlength=GSM_EncodeNokiaRTTLRingtone(Ringtone, req+11, &size);
 			req[10] = size;
 			error = s->Protocol.Functions->WriteMessage(s, req, size+11, 0x00);
 			if (error!=ERR_NONE) return error;

@@ -242,7 +242,7 @@ static void GSM_EncodeSMS30MultiPartSMS(GSM_MultiPartSMSInfo *Info,
 			 * but on 3310 4.02 it was possible to save about 196 chars
 			 * (without cutting) */
 			len = 196;
-			Info->Entries[0].RingtoneNotes=GSM_EncodeNokiaRTTLRingtone(*Info->Entries[0].Ringtone,Buffer+(*Length),&len);
+			Info->Entries[0].RingtoneNotes=GSM_EncodeNokiaRTTLRingtone(Info->Entries[0].Ringtone,Buffer+(*Length),&len);
 			Buffer[(*Length)-2] = len / 256;
 			Buffer[(*Length)-1] = len % 256;
 			*Length = *Length + len;
@@ -515,12 +515,12 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 		Class	= 1;
 		/* 7 = length of UDH_NokiaRingtone UDH header */
 		Length  = GSM_MAX_8BIT_SMS_LENGTH-7;
-		Info->Entries[0].RingtoneNotes = GSM_EncodeNokiaRTTLRingtone(*Info->Entries[0].Ringtone,Buffer,&Length);
+		Info->Entries[0].RingtoneNotes = GSM_EncodeNokiaRTTLRingtone(Info->Entries[0].Ringtone,Buffer,&Length);
 		if (Info->Entries[0].ID == SMS_NokiaRingtone) break;
 		if (Info->Entries[0].RingtoneNotes != Info->Entries[0].Ringtone->NoteTone.NrCommands) {
 			UDH    = UDH_NokiaRingtoneLong;
 			Length = (GSM_MAX_8BIT_SMS_LENGTH-12)*3;
-			Info->Entries[0].RingtoneNotes = GSM_EncodeNokiaRTTLRingtone(*Info->Entries[0].Ringtone,Buffer,&Length);
+			Info->Entries[0].RingtoneNotes = GSM_EncodeNokiaRTTLRingtone(Info->Entries[0].Ringtone,Buffer,&Length);
 		}
 		break;
 	case SMS_NokiaOperatorLogoLong:
