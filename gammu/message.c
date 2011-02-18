@@ -32,7 +32,7 @@ volatile int num_replies = 0;
 
 GSM_MultiSMSMessage		IncomingSMSData;
 
-void IncomingSMS(GSM_StateMachine *sm UNUSED, GSM_SMSMessage sms, void *user_data)
+void IncomingSMS(GSM_StateMachine *sm UNUSED, GSM_SMSMessage *sms, void *user_data)
 {
 	printf("%s\n", _("SMS message received"));
 	fflush(stdout);
@@ -43,7 +43,7 @@ void IncomingSMS(GSM_StateMachine *sm UNUSED, GSM_SMSMessage sms, void *user_dat
  		return;
  	}
  	wasincomingsms = TRUE;
- 	memcpy(&IncomingSMSData.SMS[0],&sms,sizeof(GSM_SMSMessage));
+ 	IncomingSMSData.SMS[0] = *sms;
  	IncomingSMSData.Number = 1;
 }
 
@@ -73,19 +73,19 @@ void DisplayIncomingSMS(void)
  	wasincomingsms = FALSE;
 }
 
-void IncomingCB(GSM_StateMachine *sm UNUSED, GSM_CBMessage CB, void *user_data)
+void IncomingCB(GSM_StateMachine *sm UNUSED, GSM_CBMessage *CB, void *user_data)
 {
 	printf("%s\n", _("CB message received"));
-	printf(_("Channel %i, text \"%s\"\n"),CB.Channel,DecodeUnicodeConsole(CB.Text));
+	printf(_("Channel %i, text \"%s\"\n"),CB->Channel,DecodeUnicodeConsole(CB->Text));
 	fflush(stdout);
 }
 
-void IncomingUSSD(GSM_StateMachine *sm UNUSED, GSM_USSDMessage ussd, void *user_data)
+void IncomingUSSD(GSM_StateMachine *sm UNUSED, GSM_USSDMessage *ussd, void *user_data)
 {
 	printf("%s\n", _("USSD received"));
 	printf(LISTFORMAT, _("Status"));
 
-	switch(ussd.Status) {
+	switch(ussd->Status) {
 		case USSD_NoActionNeeded:
 			printf("%s\n", _("No action needed"));
 			break;
@@ -111,11 +111,11 @@ void IncomingUSSD(GSM_StateMachine *sm UNUSED, GSM_USSDMessage ussd, void *user_
 			printf("%s\n", _("Unknown"));
 			break;
 	}
-	printf(LISTFORMAT "\"%s\"\n", _("Service reply"), DecodeUnicodeConsole(ussd.Text));
+	printf(LISTFORMAT "\"%s\"\n", _("Service reply"), DecodeUnicodeConsole(ussd->Text));
 	fflush(stdout);
 }
 
-void IncomingUSSD2(GSM_StateMachine *sm, GSM_USSDMessage ussd, void * user_data)
+void IncomingUSSD2(GSM_StateMachine *sm, GSM_USSDMessage *ussd, void * user_data)
 {
 	IncomingUSSD(sm, ussd, user_data);
 	num_replies++;

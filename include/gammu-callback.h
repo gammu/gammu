@@ -21,7 +21,7 @@
  *
  * \ingroup Callback
  */
-typedef void (*IncomingCallCallback) (GSM_StateMachine * s, GSM_Call call,
+typedef void (*IncomingCallCallback) (GSM_StateMachine * s, GSM_Call *call,
 				      void *user_data);
 
 /**
@@ -29,7 +29,7 @@ typedef void (*IncomingCallCallback) (GSM_StateMachine * s, GSM_Call call,
  *
  * \ingroup Callback
  */
-typedef void (*IncomingSMSCallback) (GSM_StateMachine * s, GSM_SMSMessage sms,
+typedef void (*IncomingSMSCallback) (GSM_StateMachine * s, GSM_SMSMessage *sms,
 				     void *user_data);
 
 /**
@@ -37,7 +37,7 @@ typedef void (*IncomingSMSCallback) (GSM_StateMachine * s, GSM_SMSMessage sms,
  *
  * \ingroup Callback
  */
-typedef void (*IncomingCBCallback) (GSM_StateMachine * s, GSM_CBMessage cb,
+typedef void (*IncomingCBCallback) (GSM_StateMachine * s, GSM_CBMessage *cb,
 				    void *user_data);
 
 /**
@@ -46,7 +46,7 @@ typedef void (*IncomingCBCallback) (GSM_StateMachine * s, GSM_CBMessage cb,
  * \ingroup Callback
  */
 typedef void (*IncomingUSSDCallback) (GSM_StateMachine * s,
-				      GSM_USSDMessage ussd, void *user_data);
+				      GSM_USSDMessage *ussd, void *user_data);
 
 /**
  * Callback for sending SMS.

@@ -301,24 +301,24 @@ static void cgi_process_each(GSM_StateMachine *s, GSM_SMSMessage*sms) {
 	return;
 }
 
-void cgi_enqueue(GSM_StateMachine *s, GSM_SMSMessage sms, void *user_data) {
+void cgi_enqueue(GSM_StateMachine *s, GSM_SMSMessage *sms, void *user_data) {
 	int i;
 
-	if(sms.Location == -1 || sms.Folder == -1) {
+	if(sms->Location == -1 || sms->Folder == -1) {
 		/* discard invalid message */
 		return;
 	}
 
 	for(i = 0; i<(GSM_MAX_MULTI_SMS - 1) /* keep the last one always empty */; i++) {
 		if(smsQ.SMS[i].Location == -1) {
-			smsQ.SMS[i].Folder = sms.Folder;
-			smsQ.SMS[i].Location = sms.Location;
-			smprintf(s, CGI_ENGINE "New message at folder: %d, location : %d\n", sms.Folder, sms.Location);
+			smsQ.SMS[i].Folder = sms->Folder;
+			smsQ.SMS[i].Location = sms->Location;
+			smprintf(s, CGI_ENGINE "New message at folder: %d, location : %d\n", sms->Folder, sms->Location);
 			break;
 		}
 		if(
-			smsQ.SMS[i].Folder == sms.Folder
-			&& smsQ.SMS[i].Location == sms.Location
+			smsQ.SMS[i].Folder == sms->Folder
+			&& smsQ.SMS[i].Location == sms->Location
 			) {
 			/* it is already in the queue */
 			break;

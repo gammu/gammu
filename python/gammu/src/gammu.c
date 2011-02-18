@@ -128,7 +128,7 @@ static void SendSMSStatus (GSM_StateMachine *s, int status, int mr, void *user) 
 /**
  * Incoming call callback.
  */
-static void IncomingCall (GSM_StateMachine *s, GSM_Call call, void *user) {
+static void IncomingCall (GSM_StateMachine *s, GSM_Call *call, void *user) {
     StateMachineObject  *sm = (StateMachineObject  *)user;
     int i = 0;
 
@@ -144,13 +144,13 @@ static void IncomingCall (GSM_StateMachine *s, GSM_Call call, void *user) {
     sm->IncomingCallQueue[i] = (GSM_Call *)malloc(sizeof(GSM_Call));
     if (sm->IncomingCallQueue[i] == NULL) return;
 
-    *(sm->IncomingCallQueue[i]) = call;
+    *(sm->IncomingCallQueue[i]) = *call;
 }
 
 /**
  * Incoming SMS callback.
  */
-static void IncomingSMS (GSM_StateMachine *s, GSM_SMSMessage msg, void *user) {
+static void IncomingSMS (GSM_StateMachine *s, GSM_SMSMessage *msg, void *user) {
     StateMachineObject  *sm = (StateMachineObject  *)user;
     int i = 0;
 
@@ -166,13 +166,13 @@ static void IncomingSMS (GSM_StateMachine *s, GSM_SMSMessage msg, void *user) {
     sm->IncomingSMSQueue[i] = (GSM_SMSMessage *)malloc(sizeof(GSM_SMSMessage));
     if (sm->IncomingSMSQueue[i] == NULL) return;
 
-    *(sm->IncomingSMSQueue[i]) = msg;
+    *(sm->IncomingSMSQueue[i]) = *msg;
 }
 
 /**
  * Incoming CB callback.
  */
-static void IncomingCB (GSM_StateMachine *s, GSM_CBMessage cb, void *user) {
+static void IncomingCB (GSM_StateMachine *s, GSM_CBMessage *cb, void *user) {
     StateMachineObject  *sm = (StateMachineObject  *)user;
     int i = 0;
 
@@ -188,13 +188,13 @@ static void IncomingCB (GSM_StateMachine *s, GSM_CBMessage cb, void *user) {
     sm->IncomingCBQueue[i] = (GSM_CBMessage *)malloc(sizeof(GSM_CBMessage));
     if (sm->IncomingCBQueue[i] == NULL) return;
 
-    *(sm->IncomingCBQueue[i]) = cb;
+    *(sm->IncomingCBQueue[i]) = *cb;
 }
 
 /**
  * Incoming USSD callback.
  */
-static void IncomingUSSD (GSM_StateMachine *s, GSM_USSDMessage ussd, void *user) {
+static void IncomingUSSD (GSM_StateMachine *s, GSM_USSDMessage *ussd, void *user) {
     StateMachineObject  *sm = (StateMachineObject  *)user;
     int i = 0;
 
@@ -210,7 +210,7 @@ static void IncomingUSSD (GSM_StateMachine *s, GSM_USSDMessage ussd, void *user)
     sm->IncomingUSSDQueue[i] = (GSM_USSDMessage *)malloc(sizeof(GSM_USSDMessage));
     if (sm->IncomingUSSDQueue[i] == NULL) return;
 
-    *(sm->IncomingUSSDQueue[i]) = ussd;
+    *(sm->IncomingUSSDQueue[i]) = *ussd;
 }
 
 /**

@@ -670,7 +670,7 @@ GSM_Error DUMMY_DialService(GSM_StateMachine *s, char *number)
 		EncodeUnicode(ussd.Text, ussd_text, len);
 
 		/* Notify application */
-		s->User.IncomingUSSD(s, ussd, s->User.IncomingUSSDUserData);
+		s->User.IncomingUSSD(s, &ussd, s->User.IncomingUSSDUserData);
 	}
 
 	return ERR_NONE;

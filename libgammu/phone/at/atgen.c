@@ -1567,7 +1567,7 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 
 		/* Notify application */
 		if (s->User.IncomingUSSD != NULL) {
-			s->User.IncomingUSSD(s, ussd, s->User.IncomingUSSDUserData);
+			s->User.IncomingUSSD(s, &ussd, s->User.IncomingUSSDUserData);
 		}
 	}
 
@@ -4381,7 +4381,7 @@ GSM_Error ATGEN_ReplyCancelCall(GSM_Protocol_Message *msg UNUSED, GSM_StateMachi
 		call.Status = GSM_CALL_CallLocalEnd;
 
 		if (s->User.IncomingCall) {
-			s->User.IncomingCall(s, call, s->User.IncomingCallUserData);
+			s->User.IncomingCall(s, &call, s->User.IncomingCallUserData);
 		}
 		return ERR_NONE;
     	case AT_Reply_CMSError:
@@ -4842,7 +4842,7 @@ GSM_Error ATGEN_ReplyIncomingCallInfo(GSM_Protocol_Message *msg, GSM_StateMachin
 			return ERR_NONE;
 		}
 
-		s->User.IncomingCall(s, call, s->User.IncomingCallUserData);
+		s->User.IncomingCall(s, &call, s->User.IncomingCallUserData);
 	}
 
 	return ERR_NONE;

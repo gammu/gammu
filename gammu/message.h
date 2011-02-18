@@ -1,10 +1,10 @@
 #include <gammu.h>
 
 extern volatile gboolean wasincomingsms;
-extern void IncomingSMS(GSM_StateMachine * s, GSM_SMSMessage sms, void *user_data);
-extern void IncomingCB(GSM_StateMachine * s, GSM_CBMessage CB, void *user_data);
-extern void IncomingUSSD(GSM_StateMachine * s, GSM_USSDMessage ussd, void *user_data);
-extern void IncomingUSSD2(GSM_StateMachine * s, GSM_USSDMessage ussd, void *user_data);
+extern void IncomingSMS(GSM_StateMachine * s, GSM_SMSMessage *sms, void *user_data);
+extern void IncomingCB(GSM_StateMachine * s, GSM_CBMessage *CB, void *user_data);
+extern void IncomingUSSD(GSM_StateMachine * s, GSM_USSDMessage *ussd, void *user_data);
+extern void IncomingUSSD2(GSM_StateMachine * s, GSM_USSDMessage *ussd, void *user_data);
 extern void DisplayIncomingSMS(void);
 extern void GetSMSC(int argc, char *argv[]);
 extern void SetSMSC(int argc, char *argv[]);

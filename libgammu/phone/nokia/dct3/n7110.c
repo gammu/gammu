@@ -1360,7 +1360,7 @@ static GSM_Error N7110_ReplyIncomingSMS(GSM_Protocol_Message *msg, GSM_StateMach
 		sms.InboxFolder = TRUE;
 		DCT3_DecodeSMSFrame(s, &sms,msg->Buffer+8);
 
-		s->User.IncomingSMS(s,sms, s->User.IncomingSMSUserData);
+		s->User.IncomingSMS(s, &sms, s->User.IncomingSMSUserData);
 	}
 	return ERR_NONE;
 }

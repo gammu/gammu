@@ -3539,7 +3539,7 @@ static GSM_Error N6510_ReplyIncomingSMS(GSM_Protocol_Message *msg, GSM_StateMach
 
 		N6510_DecodeSMSFrame(s, &sms, msg->Buffer+10,&i);
 
-		s->User.IncomingSMS(s,sms, s->User.IncomingSMSUserData);
+		s->User.IncomingSMS(s, &sms, s->User.IncomingSMSUserData);
 	}
 	return ERR_NONE;
 }

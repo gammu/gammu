@@ -2192,7 +2192,7 @@ GSM_Error ATGEN_IncomingSMSInfo(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 			buffer++;
 		}
 		sms.Location = atoi(buffer);
-		s->User.IncomingSMS(s, sms, s->User.IncomingSMSUserData);
+		s->User.IncomingSMS(s, &sms, s->User.IncomingSMSUserData);
 	}
 	return ERR_NONE;
 }
@@ -2244,7 +2244,7 @@ GSM_Error ATGEN_IncomingSMSDeliver(GSM_Protocol_Message *msg, GSM_StateMachine *
 			smsframe[i+PHONE_SMSDeliver.Text]=buffer[current++];
 		}
 		GSM_DecodeSMSFrame(&(s->di), &sms,smsframe,PHONE_SMSDeliver);
-		s->User.IncomingSMS(s,sms, s->User.IncomingSMSUserData);
+		s->User.IncomingSMS(s, &sms, s->User.IncomingSMSUserData);
 	}
 	return ERR_NONE;
 }

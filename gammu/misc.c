@@ -542,20 +542,20 @@ void Screenshot(int argc UNUSED, char *argv[])
 	GSM_Terminate();
 }
 
-void IncomingCall(GSM_StateMachine *sm UNUSED, GSM_Call call, void *user_data)
+void IncomingCall(GSM_StateMachine *sm UNUSED, GSM_Call *call, void *user_data)
 {
 	printf(LISTFORMAT, _("Call info"));
 
-	if (call.CallIDAvailable) {
-		printf(_("ID %i, "),call.CallID);
+	if (call->CallIDAvailable) {
+		printf(_("ID %i, "),call->CallID);
 	}
-	switch(call.Status) {
-		case GSM_CALL_IncomingCall  	: printf(_("incoming call from \"%s\"\n"),DecodeUnicodeConsole(call.PhoneNumber));  	break;
-		case GSM_CALL_OutgoingCall  	: printf(_("outgoing call to \"%s\"\n"),DecodeUnicodeConsole(call.PhoneNumber));    	break;
+	switch(call->Status) {
+		case GSM_CALL_IncomingCall  	: printf(_("incoming call from \"%s\"\n"),DecodeUnicodeConsole(call->PhoneNumber));  	break;
+		case GSM_CALL_OutgoingCall  	: printf(_("outgoing call to \"%s\"\n"),DecodeUnicodeConsole(call->PhoneNumber));    	break;
 		case GSM_CALL_CallStart     	: printf("%s\n", _("call started")); 					  	  		break;
 		case GSM_CALL_CallEnd	   	: printf("%s\n", _("end of call (unknown side)")); 					  	break;
 		case GSM_CALL_CallLocalEnd  	: printf("%s\n", _("call end from our side"));						  	break;
-		case GSM_CALL_CallRemoteEnd 	: printf(_("call end from remote side (code %i)\n"),call.StatusCode);			break;
+		case GSM_CALL_CallRemoteEnd 	: printf(_("call end from remote side (code %i)\n"),call->StatusCode);			break;
 		case GSM_CALL_CallEstablished   : printf("%s\n", _("call established. Waiting for answer"));				  	break;
 		case GSM_CALL_CallHeld		: printf("%s\n", _("call held"));								break;
 		case GSM_CALL_CallResumed	: printf("%s\n", _("call resumed"));								break;
@@ -785,9 +785,9 @@ void DialVoice(int argc, char *argv[])
 
 int TerminateID = -1;
 
-void IncomingCall0(GSM_StateMachine *sm UNUSED, GSM_Call call, void * user_data)
+void IncomingCall0(GSM_StateMachine *sm UNUSED, GSM_Call *call, void * user_data)
 {
-	if (call.CallIDAvailable) TerminateID = call.CallID;
+	if (call->CallIDAvailable) TerminateID = call->CallID;
 }
 
 void MakeTerminatedCall(int argc, char *argv[])
