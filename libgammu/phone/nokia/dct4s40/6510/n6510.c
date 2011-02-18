@@ -1212,8 +1212,11 @@ GSM_Error N6510_ReplyDeleteMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			case 0x3B:
 				smprintf(s, "Nothing to delete\n");
 				return ERR_NONE;
+			case 0x33:
+				smprintf(s, "Entry is read only\n");
+				return ERR_READ_ONLY;
 	                default:
-		                smprintf(s, "ERROR: unknown %i\n",msg.Buffer[10]);
+		                smprintf(s, "ERROR: unknown 0x%x\n", msg.Buffer[10]);
 			        return ERR_UNKNOWNRESPONSE;
 			}
 		}

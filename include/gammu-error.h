@@ -315,6 +315,10 @@ typedef enum {
 	 * Installation data not found.
 	 */
 	ERR_INSTALL_NOT_FOUND,
+	/**
+	 * Entry is read only.
+	 */
+	ERR_READ_ONLY,
 
 	/**
 	 * Just marker of highest error code, should not be used.
