@@ -2025,7 +2025,7 @@ void EnterSecurityCode(int argc UNUSED, char *argv[])
 
 	GSM_Init(TRUE);
 
-	error=GSM_EnterSecurityCode(gsm,Code);
+	error=GSM_EnterSecurityCode(gsm, &Code);
 	Print_Error(error);
 
 	GSM_Terminate();

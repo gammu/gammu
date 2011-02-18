@@ -798,11 +798,11 @@ GSM_Error DUMMY_GetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 	return ERR_NONE;
 }
 
-GSM_Error DUMMY_EnterSecurityCode(GSM_StateMachine *s, GSM_SecurityCode Code)
+GSM_Error DUMMY_EnterSecurityCode(GSM_StateMachine *s, GSM_SecurityCode *Code)
 {
 	GSM_Phone_DUMMYData	*Priv = &s->Phone.Data.Priv.DUMMY;
 
-	fprintf(Priv->log_file, "Security code %d: %s\n", Code.Type, Code.Code);
+	fprintf(Priv->log_file, "Security code %d: %s\n", Code->Type, Code->Code);
 
 	return ERR_NONE;
 }

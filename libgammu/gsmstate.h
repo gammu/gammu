@@ -832,7 +832,7 @@ typedef struct {
 	/**
 	 * Enters security code (PIN, PUK,...) .
 	 */
-	GSM_Error (*EnterSecurityCode)  (GSM_StateMachine *s, GSM_SecurityCode Code);
+	GSM_Error (*EnterSecurityCode)  (GSM_StateMachine *s, GSM_SecurityCode *Code);
 	/**
 	 * Queries whether some security code needs to be entered./
 	 */

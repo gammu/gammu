@@ -114,7 +114,7 @@ GSM_Error GSM_ReadFile(const char *FileName, GSM_File *File)
 	return ERR_NONE;
 }
 
-static void GSM_JADFindLine(GSM_File File, const char *Name, char *Value)
+static void GSM_JADFindLine(GSM_File *File, const char *Name, char *Value)
 {
 	unsigned char 	Line[2000];
 	size_t		Pos = 0;
@@ -122,7 +122,7 @@ static void GSM_JADFindLine(GSM_File File, const char *Name, char *Value)
 	Value[0] = 0;
 
 	while (1) {
-		if (MyGetLine(File.Buffer, &Pos, Line, File.Used, sizeof(Line), FALSE) != ERR_NONE) break;
+		if (MyGetLine(File->Buffer, &Pos, Line, File->Used, sizeof(Line), FALSE) != ERR_NONE) break;
 		if (strlen(Line) == 0) break;
 		if (!strncmp(Line,Name,strlen(Name))) {
 			Pos = strlen(Name);
@@ -133,7 +133,7 @@ static void GSM_JADFindLine(GSM_File File, const char *Name, char *Value)
 	}
 }
 
-GSM_Error GSM_JADFindData(GSM_File File, char *Vendor, char *Name, char *JAR, char *Version, int *Size)
+GSM_Error GSM_JADFindData(GSM_File *File, char *Vendor, char *Name, char *JAR, char *Version, int *Size)
 {
 	char Size2[200];
 

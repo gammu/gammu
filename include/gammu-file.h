@@ -127,7 +127,7 @@ typedef struct {
  *
  * \ingroup File
  */
-GSM_Error GSM_JADFindData(GSM_File File, char *Vendor, char *Name, char *JAR,
+GSM_Error GSM_JADFindData(GSM_File *File, char *Vendor, char *Name, char *JAR,
 			  char *Version, int *Size);
 
 /**

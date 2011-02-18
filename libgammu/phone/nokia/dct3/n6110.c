@@ -1664,16 +1664,16 @@ static GSM_Error N6110_ReplyEnterSecurityCode(GSM_Protocol_Message msg, GSM_Stat
         return ERR_UNKNOWNRESPONSE;
 }
 
-static GSM_Error N6110_EnterSecurityCode(GSM_StateMachine *s, GSM_SecurityCode Code)
+static GSM_Error N6110_EnterSecurityCode(GSM_StateMachine *s, GSM_SecurityCode *Code)
 {
         int             len = 0;
         unsigned char   req[15] = {N6110_FRAME_HEADER, 0x0a,
                                    0x00};       /* Type of code to enter */
 
-        req[4]=Code.Type;
+        req[4]=Code->Type;
 
-        len = strlen(Code.Code);
-        memcpy(req+5,Code.Code,len);
+        len = strlen(Code->Code);
+        memcpy(req+5,Code->Code,len);
         req[5+len]=0x00;
         req[6+len]=0x00;
 

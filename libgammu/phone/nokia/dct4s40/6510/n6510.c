@@ -2711,20 +2711,20 @@ static GSM_Error N6510_ReplyEnterSecurityCode(GSM_Protocol_Message msg, GSM_Stat
 	return ERR_UNKNOWNRESPONSE;
 }
 
-static GSM_Error N6510_EnterSecurityCode(GSM_StateMachine *s, GSM_SecurityCode Code)
+static GSM_Error N6510_EnterSecurityCode(GSM_StateMachine *s, GSM_SecurityCode *Code)
 {
 	int 		len = 0;
 	unsigned char 	req[15] = {N6110_FRAME_HEADER, 0x07,
 				   0x00};	/* Code type */
 
-	switch (Code.Type) {
+	switch (Code->Type) {
 		case SEC_Pin	: req[4] = 0x02; break;
 		case SEC_Puk	: req[4] = 0x03; break;/* FIXME */
 		default		: return ERR_NOTSUPPORTED;
 	}
 
-	len = strlen(Code.Code);
-	memcpy(req+5,Code.Code,len);
+	len = strlen(Code->Code);
+	memcpy(req+5,Code->Code,len);
 	req[5+len]=0x00;
 
 	smprintf(s, "Entering security code\n");

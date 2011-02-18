@@ -491,7 +491,7 @@ GSM_Error ATOBEX_GetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 	return ATGEN_GetSMSC(s, smsc);
 }
 
-GSM_Error ATOBEX_EnterSecurityCode(GSM_StateMachine *s, GSM_SecurityCode Code)
+GSM_Error ATOBEX_EnterSecurityCode(GSM_StateMachine *s, GSM_SecurityCode *Code)
 {
 	GSM_Error error;
 

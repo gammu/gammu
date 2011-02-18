@@ -685,7 +685,7 @@ void NokiaAddFile(int argc, char *argv[])
 		Print_Error(error);
 
 		/* Getting values from JAD file */
-		error = GSM_JADFindData(File, Vendor, Name, JAR, Version, &Size);
+		error = GSM_JADFindData(&File, Vendor, Name, JAR, Version, &Size);
 		if (error == ERR_FILENOTSUPPORTED) {
 			if (Vendor[0] == 0x00) {
 				fprintf(stderr, "%s\n", _("No vendor info in JAD file"));

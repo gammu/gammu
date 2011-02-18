@@ -1471,7 +1471,7 @@ StateMachine_EnterSecurityCode(StateMachineObject *self, PyObject *args, PyObjec
     }
 
     BEGIN_PHONE_COMM
-    error = GSM_EnterSecurityCode(self->s, Code);
+    error = GSM_EnterSecurityCode(self->s, &Code);
     END_PHONE_COMM
 
     if (!checkError(self->s, error, "EnterSecurityCode")) return NULL;

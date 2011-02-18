@@ -897,7 +897,7 @@ gboolean SMSD_CheckSecurity(GSM_SMSDConfig *Config)
 	/* Enter the PIN */
 	SMSD_Log(DEBUG_NOTICE, Config, "Trying to enter code");
 	strcpy(SecurityCode.Code, code);
-	error = GSM_EnterSecurityCode(Config->gsm, SecurityCode);
+	error = GSM_EnterSecurityCode(Config->gsm, &SecurityCode);
 	if (error == ERR_SECURITYERROR) {
 		SMSD_Terminate(Config, "ERROR: incorrect PIN", error, TRUE, -1);
 		return FALSE;

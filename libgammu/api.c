@@ -336,7 +336,7 @@ GSM_Error GSM_ResetPhoneSettings(GSM_StateMachine *s, GSM_ResetSettingsType Type
 /**
  * Enters security code (PIN, PUK,...) .
  */
-GSM_Error GSM_EnterSecurityCode(GSM_StateMachine *s, GSM_SecurityCode Code)
+GSM_Error GSM_EnterSecurityCode(GSM_StateMachine *s, GSM_SecurityCode *Code)
 {
 	GSM_Error err;
 

@@ -36,7 +36,7 @@ extern GSM_Error ATGEN_DialService(GSM_StateMachine *s, char *number);
 extern GSM_Error ATGEN_AnswerCall		(GSM_StateMachine *s, int ID, gboolean all);
 extern GSM_Error ATGEN_CancelCall		(GSM_StateMachine *s, int ID, gboolean all);
 extern GSM_Error ATGEN_SetDateTime		(GSM_StateMachine *s, GSM_DateTime *date_time);
-extern GSM_Error ATGEN_EnterSecurityCode	(GSM_StateMachine *s, GSM_SecurityCode Code);
+extern GSM_Error ATGEN_EnterSecurityCode	(GSM_StateMachine *s, GSM_SecurityCode *Code);
 extern GSM_Error ATGEN_GetSecurityStatus	(GSM_StateMachine *s, GSM_SecurityCodeType *Status);
 extern GSM_Error ATGEN_ResetPhoneSettings	(GSM_StateMachine *s, GSM_ResetSettingsType Type);
 extern GSM_Error ATGEN_SendDTMF			(GSM_StateMachine *s, char *sequence);

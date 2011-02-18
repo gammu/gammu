@@ -4234,33 +4234,33 @@ GSM_Error ATGEN_ReplyEnterSecurityCode(GSM_Protocol_Message msg UNUSED, GSM_Stat
 	return ERR_UNKNOWNRESPONSE;
 }
 
-GSM_Error ATGEN_EnterSecurityCode(GSM_StateMachine *s, GSM_SecurityCode Code)
+GSM_Error ATGEN_EnterSecurityCode(GSM_StateMachine *s, GSM_SecurityCode *Code)
 {
 	GSM_Error error;
 	GSM_SecurityCodeType Status;
 	unsigned char req[GSM_SECURITY_CODE_LEN + 12] = {'\0'};
 	size_t len;
 
-	if (Code.Type == SEC_Pin2 &&
+	if (Code->Type == SEC_Pin2 &&
 			s->Phone.Data.Priv.ATGEN.Manufacturer == AT_Siemens) {
-		len = sprintf(req, "AT+CPIN2=\"%s\"\r", Code.Code);
+		len = sprintf(req, "AT+CPIN2=\"%s\"\r", Code->Code);
 	} else {
 		error = ATGEN_GetSecurityStatus(s, &Status);
 		if (error != ERR_NONE) {
 			return error;
 		}
-		if (Status != Code.Type) {
+		if (Status != Code->Type) {
 			smprintf(s, "Phone is expecting different security code!\n");
 			return ERR_SECURITYERROR;
 		}
-		if (Code.Type == SEC_Puk) {
-			if (Code.NewPIN[0] == 0) {
+		if (Code->Type == SEC_Puk) {
+			if (Code->NewPIN[0] == 0) {
 				smprintf(s, "Need new PIN code to enter PUK!\n");
 				return ERR_SECURITYERROR;
 			}
-			len = sprintf(req, "AT+CPIN=\"%s\",\"%s\"\r" , Code.Code, Code.NewPIN);
+			len = sprintf(req, "AT+CPIN=\"%s\",\"%s\"\r" , Code->Code, Code->NewPIN);
 		} else {
-			len = sprintf(req, "AT+CPIN=\"%s\"\r" , Code.Code);
+			len = sprintf(req, "AT+CPIN=\"%s\"\r" , Code->Code);
 		}
 
 	}
