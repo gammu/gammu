@@ -726,7 +726,7 @@ GSM_Error GSM_InitConnection_Log(GSM_StateMachine *s, int ReplyNum, GSM_Log_Func
 		smprintf_level(s, D_ERROR, "[Device           - \"%s\"]\n",
 				s->CurrentConfig->Device);
 		if (strlen(GetOS()) != 0) {
-			smprintf_level(s, D_ERROR, "[Runing on        - %s]\n",
+			smprintf_level(s, D_ERROR, "[Running on       - %s]\n",
 					GetOS());
 		}
 
