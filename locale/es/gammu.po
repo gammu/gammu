@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-14 10:40+0100\n"
-"PO-Revision-Date: 2011-02-20 09:15+0200\n"
+"PO-Revision-Date: 2011-02-20 09:16+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -3332,9 +3332,8 @@ msgid "unknown %i"
 msgstr "%i desconocido"
 
 #: gammu/misc.c:2419 gammu/misc.c:2444
-#, fuzzy
 msgid "Call type"
-msgstr "Llamada activa"
+msgstr "Tipo de llamada"
 
 #: gammu/misc.c:2422 gammu/misc.c:2447
 msgid "voice"
