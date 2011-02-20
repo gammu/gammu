@@ -2639,9 +2639,8 @@ msgid "Enabling info about USSD"
 msgstr "Habilitando información sobre USSD"
 
 #: gammu/misc.c:640
-#, fuzzy
 msgid "Todos"
-msgstr "Quehaceres"
+msgstr "Listas de tareas"
 
 #: gammu/misc.c:644
 msgid "Calendar"
