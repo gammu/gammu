@@ -50,7 +50,6 @@ msgid "Error opening device. No required driver in operating system."
 msgstr "Error abriendo el dispositivo. Controlador no disponible."
 
 #: libgammu/gsmcomon.c:91
-#, fuzzy
 msgid "Error opening device. Some hardware not connected/wrongly configured."
 msgstr ""
 "Error abriendo el dispositivo. El hardware no está conectado o está mal "
