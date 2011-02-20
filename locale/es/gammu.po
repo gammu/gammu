@@ -3662,9 +3662,8 @@ msgid "Picture ID"
 msgstr "ID imagen"
 
 #: helper/memory-display.c:119
-#, fuzzy
 msgid "Photo"
-msgstr "Teléfono"
+msgstr "Foto"
 
 #: helper/memory-display.c:119
 #, fuzzy
