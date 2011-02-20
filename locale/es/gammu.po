@@ -2844,7 +2844,6 @@ msgid "Delete phone calendar notes?"
 msgstr "¿Borrar notas del calendario?"
 
 #: gammu/misc.c:1438
-#, fuzzy
 msgid "Delete phone todos?"
 msgstr "¿Borrar lista de tareas del teléfono?"
 
