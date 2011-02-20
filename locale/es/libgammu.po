@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-14 10:40+0100\n"
-"PO-Revision-Date: 2011-02-20 09:55+0200\n"
+"PO-Revision-Date: 2011-02-20 09:58+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -140,11 +140,10 @@ msgid "Invalid location. Maybe too high?"
 msgstr "Destino inválido. ¿Demasiado alto?"
 
 #: libgammu/gsmcomon.c:108
-#, fuzzy
 msgid "Functionality not implemented. You are welcome to help authors with it."
 msgstr ""
-"La función está escribiendo, si necesita ayuda, por favor contacte con los "
-"Autores."
+"Funcionalidad no implementada. Eres bienvenido si quieres ayudar a los "
+"autores con ella."
 
 #: libgammu/gsmcomon.c:109
 msgid "Memory full."
