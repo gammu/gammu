@@ -2341,9 +2341,8 @@ msgid "Name in phone"
 msgstr "Nombre en el teléfono"
 
 #: gammu/misc.c:62
-#, fuzzy
 msgid "Packet network state"
-msgstr "Estado de la red"
+msgstr "Estado de red de paquetes"
 
 #: gammu/misc.c:75
 #, fuzzy
