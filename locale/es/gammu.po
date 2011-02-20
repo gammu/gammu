@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-14 10:40+0100\n"
-"PO-Revision-Date: 2011-02-20 09:04+0200\n"
+"PO-Revision-Date: 2011-02-20 09:05+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -2926,9 +2926,8 @@ msgid "IP address"
 msgstr "Dirección IP"
 
 #: gammu/misc.c:1549 gammu/misc.c:1551 gammu/misc.c:1595 gammu/misc.c:1597
-#, fuzzy
 msgid "Login type"
-msgstr "Tipo de contenido"
+msgstr "Tipo de inicio de sesión"
 
 #: gammu/misc.c:1549 gammu/misc.c:1595
 #, fuzzy
