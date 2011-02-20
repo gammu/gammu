@@ -3557,7 +3557,7 @@ msgstr "Escribiendo archivo JAD:"
 
 #: gammu/nokia.c:901
 msgid "Writing JAR file:"
-msgstr ""
+msgstr "Escribiendo archivo JAR:"
 
 #: gammu/nokia.c:976
 msgid "Writing file:"
