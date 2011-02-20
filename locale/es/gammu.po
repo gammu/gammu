@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-14 10:40+0100\n"
-"PO-Revision-Date: 2011-02-20 09:41+0200\n"
+"PO-Revision-Date: 2011-02-20 09:42+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -3978,9 +3978,8 @@ msgid "No network code"
 msgstr "No hay código de red"
 
 #: helper/message-cmdline.c:1374
-#, fuzzy
 msgid "You have to set network code!"
-msgstr "No hay código de red"
+msgstr "¡Se debe definir un código de red!"
 
 #: helper/message-cmdline.c:1413
 #, c-format
