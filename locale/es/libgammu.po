@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-14 10:40+0100\n"
-"PO-Revision-Date: 2011-02-20 09:50+0200\n"
+"PO-Revision-Date: 2011-02-20 09:52+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -84,13 +84,12 @@ msgstr ""
 "no está conectado."
 
 #: libgammu/gsmcomon.c:98
-#, fuzzy
 msgid ""
 "Frame not requested right now. See <http://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
-"El teléfono devolvió una respuesta desconocida. Visite la página <http://"
-"cihar.com/gammu/report> para saber cómo informar del error."
+"Marco no solicitado en este momento. Ver <http://wammu.eu/support/bugs/> "
+"para información sobre cómo reportarlo."
 
 #: libgammu/gsmcomon.c:99
 #, fuzzy
