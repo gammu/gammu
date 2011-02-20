@@ -3448,12 +3448,8 @@ msgid "This ringtone in Nokia Composer in phone should look:"
 msgstr "Este tono en Nokia Composer en el teléfono debe quedar como:"
 
 #: gammu/nokia.c:105
-#, fuzzy
 msgid "To enter it please press:"
-msgstr ""
-"\n"
-"\n"
-"Para introducirlo por favor pulse:"
+msgstr "Para introducirlo por favor pulse:"
 
 #: gammu/nokia.c:124
 msgid "(longer)"
