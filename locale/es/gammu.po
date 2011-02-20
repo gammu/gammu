@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-14 10:40+0100\n"
-"PO-Revision-Date: 2011-02-20 09:06+0200\n"
+"PO-Revision-Date: 2011-02-20 09:09+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -2952,7 +2952,7 @@ msgstr "Seguro"
 #: gammu/misc.c:1559 gammu/misc.c:1561
 #, fuzzy
 msgid "Data call type"
-msgstr "Llamada de datos"
+msgstr "Tipo de llamada de datos"
 
 #: gammu/misc.c:1559
 msgid "ISDN"
