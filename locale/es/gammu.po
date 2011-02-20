@@ -3666,9 +3666,8 @@ msgid "Photo"
 msgstr "Foto"
 
 #: helper/memory-display.c:119
-#, fuzzy
 msgid "Displaying not supported"
-msgstr "No soportado"
+msgstr "Visualización no soportada"
 
 #: helper/memory-display.c:121
 msgid "Favorite messaging number"
