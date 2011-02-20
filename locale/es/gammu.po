@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-14 10:40+0100\n"
-"PO-Revision-Date: 2011-02-20 08:52+0200\n"
+"PO-Revision-Date: 2011-02-20 08:55+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -2469,7 +2469,7 @@ msgstr "¡Código de red erróneo del teléfono!\n"
 
 #: gammu/misc.c:300
 msgid "Request for information from OpenCellID failed!\n"
-msgstr ""
+msgstr "¡Falló el pedido de información a OpenCellID!\n"
 
 #: gammu/misc.c:306
 msgid "Failed to find latitude in OpenCellID reply!\n"
