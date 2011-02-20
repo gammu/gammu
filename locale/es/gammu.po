@@ -3308,7 +3308,7 @@ msgstr "Tipo de desvío"
 
 #: gammu/misc.c:2395
 msgid "Changed:"
-msgstr ""
+msgstr "Cambiado:"
 
 #: gammu/misc.c:2402
 msgid "when busy"
