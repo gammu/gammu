@@ -326,6 +326,7 @@ msgstr "Falta la configuración de servicio."
 #: libgammu/gsmcomon.c:149
 msgid "Command rejected because device was busy. Wait and restart."
 msgstr ""
+"Orden rechazada porque el dispositivo estaba ocupado. Espere y reinicie."
 
 #: libgammu/gsmcomon.c:150
 #, fuzzy
