@@ -2358,7 +2358,7 @@ msgstr "acoplado"
 
 #: gammu/misc.c:96
 msgid "detached"
-msgstr ""
+msgstr "desacoplado"
 
 #: gammu/misc.c:106
 msgid "Battery level"
