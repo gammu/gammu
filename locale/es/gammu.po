@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-14 10:40+0100\n"
-"PO-Revision-Date: 2011-02-20 09:25+0200\n"
+"PO-Revision-Date: 2011-02-20 09:26+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -3561,7 +3561,7 @@ msgstr "Escribiendo archivo JAR:"
 
 #: gammu/nokia.c:976
 msgid "Writing file:"
-msgstr ""
+msgstr "Escribiendo archivo:"
 
 #: gammu/search.c:145
 #, c-format
