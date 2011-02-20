@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-14 10:40+0100\n"
-"PO-Revision-Date: 2011-02-20 09:32+0200\n"
+"PO-Revision-Date: 2011-02-20 09:33+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -3738,9 +3738,8 @@ msgid "Work website"
 msgstr "Página web laboral"
 
 #: helper/memory-display.c:207
-#, fuzzy
 msgid "Website"
-msgstr "Página &web"
+msgstr "Página web"
 
 #: helper/memory-display.c:212
 msgid "VOIP"
