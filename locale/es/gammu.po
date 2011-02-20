@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-14 10:40+0100\n"
-"PO-Revision-Date: 2011-02-20 09:24+0200\n"
+"PO-Revision-Date: 2011-02-20 09:25+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -3552,9 +3552,8 @@ msgid "  Deleting %s\n"
 msgstr "  Borrando %s\n"
 
 #: gammu/nokia.c:882
-#, fuzzy
 msgid "Writing JAD file:"
-msgstr "No hay información del vendedor en el archivo JAD"
+msgstr "Escribiendo archivo JAD:"
 
 #: gammu/nokia.c:901
 msgid "Writing JAR file:"
