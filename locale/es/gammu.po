@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-14 10:40+0100\n"
-"PO-Revision-Date: 2011-02-20 09:20+0200\n"
+"PO-Revision-Date: 2011-02-20 09:21+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -3491,7 +3491,7 @@ msgid "What folder type (\"%s\") ?\n"
 msgstr "¿Qué tipo de carpeta (\"%s\")?\n"
 
 #: gammu/nokia.c:556 gammu/nokia.c:563 gammu/nokia.c:570
-#, fuzzy, c-format
+#, c-format
 msgid "Can not open file %s\n"
 msgstr "No se pudo abrir el archivo \"%s\"\n"
 
