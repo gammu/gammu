@@ -2254,9 +2254,8 @@ msgid "Message number"
 msgstr "Número de mensaje"
 
 #: gammu/message.c:591
-#, fuzzy
 msgid "Number of messages"
-msgstr "Número de mensajes: %i"
+msgstr "Número de mensajes"
 
 #: gammu/message.c:602 gammu/message.c:642
 msgid "If you want break, press Ctrl+C..."
