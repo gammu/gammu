@@ -4025,9 +4025,8 @@ msgid "pager"
 msgstr "buscapersonas"
 
 #: helper/message-display.c:121
-#, fuzzy
 msgid "general"
-msgstr "General"
+msgstr "general"
 
 #: helper/message-display.c:150
 msgid "SMS status report"
