@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-14 10:40+0100\n"
-"PO-Revision-Date: 2011-02-20 09:33+0200\n"
+"PO-Revision-Date: 2011-02-20 09:34+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -3770,9 +3770,8 @@ msgid "First name"
 msgstr "Nombre"
 
 #: helper/memory-display.c:220
-#, fuzzy
 msgid "Second name"
-msgstr "Nombre de la estación"
+msgstr "Segundo nombre"
 
 #: helper/memory-display.c:221
 msgid "Formal name"
