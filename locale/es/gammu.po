@@ -2358,6 +2358,7 @@ msgid "attached"
 msgstr "acoplado"
 
 #: gammu/misc.c:96
+#, fuzzy
 msgid "detached"
 msgstr "desacoplado"
 
