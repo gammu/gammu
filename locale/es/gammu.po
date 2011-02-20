@@ -3522,10 +3522,9 @@ msgstr ""
 "Gammu."
 
 #: gammu/nokia.c:731
-#, fuzzy
 msgid "No JAR size info in JAD file. Added by Gammu."
 msgstr ""
-"INFORMACIÓN: No se indica tamaño del JAR en el archivo JAD. Añadido por "
+"No se encontró tamaño del archivo JAR dentro del archivo JAD. Añadido por "
 "Gammu."
 
 #: gammu/nokia.c:740
