@@ -3578,9 +3578,9 @@ msgid "Number out of range: %s\n"
 msgstr "Número fuera de rango: %s\n"
 
 #: helper/cmdline.c:28
-#, fuzzy, c-format
+#, c-format
 msgid "Parameter is not a number: %s\n"
-msgstr "Parámetro \"%s\" desconocido\n"
+msgstr "Parámetro no es un número: %s\n"
 
 #: helper/formats.h:2
 #, c-format
