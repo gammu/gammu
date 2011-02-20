@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-14 10:40+0100\n"
-"PO-Revision-Date: 2011-02-20 09:36+0200\n"
+"PO-Revision-Date: 2011-02-20 09:37+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -3957,9 +3957,9 @@ msgid "Too long SMS name (\"%s\"), ignored\n"
 msgstr "Nombre SMS demasiado largo (\"%s\"), ignorado\n"
 
 #: helper/message-cmdline.c:1330
-#, fuzzy, c-format
+#, c-format
 msgid "Enter the message text and press %s:\n"
-msgstr "Introduzca el texto del mensaje y pulse ^D:"
+msgstr "Introduzca el texto del mensaje y pulse %s:\n"
 
 #: helper/message-cmdline.c:1332
 msgid "Ctrl+Z"
