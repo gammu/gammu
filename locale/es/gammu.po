@@ -3357,7 +3357,7 @@ msgstr "Respuesta:"
 
 #: gammu/misc.c:2493
 msgid "The application has been successfully sent to the phone."
-msgstr ""
+msgstr "La aplicación fue enviada al teléfono exitosamente."
 
 #: gammu/misc.c:2494
 msgid "Please find received files in Inbox and install them."
