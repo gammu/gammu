@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-14 10:40+0100\n"
-"PO-Revision-Date: 2011-02-20 09:27+0200\n"
+"PO-Revision-Date: 2011-02-20 09:28+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -3630,9 +3630,9 @@ msgstr "Longitud de llamada"
 
 #. l10n: Call length format string hour:minute:second
 #: helper/memory-display.c:32
-#, fuzzy, c-format
+#, c-format
 msgid "%02i:%02i:%02i\n"
-msgstr "Hora: %02d:%02d\n"
+msgstr "%02i:%02i:%02i\n"
 
 #: helper/memory-display.c:38
 msgid "Date and time"
