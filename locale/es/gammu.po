@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-14 10:40+0100\n"
-"PO-Revision-Date: 2011-02-20 08:38+0200\n"
+"PO-Revision-Date: 2011-02-20 08:40+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -1328,8 +1328,9 @@ msgid "Battery Current:"
 msgstr "Corriente de la batería:"
 
 #: gammu/depend/nokia/dct4.c:1052
+#, fuzzy
 msgid "Battery Current Fast:"
-msgstr ""
+msgstr "Corriente de la batería actual, rápido:"
 
 #: gammu/depend/nokia/dct4.c:1158
 msgid "Phone seems not to support radio"
