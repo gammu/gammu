@@ -3733,11 +3733,9 @@ msgstr "Dirección de email 2"
 msgid "Home website"
 msgstr "Página web hogareña"
 
-# En Europa no existen estados, solo países.
 #: helper/memory-display.c:204
-#, fuzzy
 msgid "Work website"
-msgstr "País de trabajo"
+msgstr "Página web laboral"
 
 #: helper/memory-display.c:207
 #, fuzzy
