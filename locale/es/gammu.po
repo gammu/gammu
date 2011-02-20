@@ -3783,7 +3783,7 @@ msgstr "Prefijo de nombre"
 
 #: helper/memory-display.c:223
 msgid "Name suffix"
-msgstr ""
+msgstr "Sufijo de nombre"
 
 #: helper/memory-display.c:224
 msgid "Nick name"
