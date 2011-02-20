@@ -3569,9 +3569,8 @@ msgid "Connection \"%s\" on device \"%s\"\n"
 msgstr "Conexión \"%s\" al dispositivo \"%s\"\n"
 
 #: gammu/search.c:182 gammu/search.c:189
-#, fuzzy
 msgid "Error creating thread\n"
-msgstr "Error al leer archivo de proceso por lotes. Terminando.\n"
+msgstr "Error creando hilo\n"
 
 #: helper/cmdline.c:23
 #, fuzzy, c-format
