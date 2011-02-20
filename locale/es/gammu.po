@@ -3625,9 +3625,8 @@ msgstr[0] "%d año"
 msgstr[1] "%d años"
 
 #: helper/memory-display.c:30
-#, fuzzy
 msgid "Call length"
-msgstr "Llamada de alerta para"
+msgstr "Longitud de llamada"
 
 #. l10n: Call length format string hour:minute:second
 #: helper/memory-display.c:32
