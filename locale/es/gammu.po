@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-14 10:40+0100\n"
-"PO-Revision-Date: 2011-02-20 09:02+0200\n"
+"PO-Revision-Date: 2011-02-20 09:03+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -2864,9 +2864,8 @@ msgid "Connection type"
 msgstr "Tipo de conexión"
 
 #: gammu/misc.c:1519
-#, fuzzy
 msgid "Continuous"
-msgstr "Congestión"
+msgstr "Continuo"
 
 #: gammu/misc.c:1521
 #, fuzzy
