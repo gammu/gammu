@@ -3434,11 +3434,9 @@ msgid "It can be RTTL ringtone only used with this option"
 msgstr "Puede ser el tono RTTL usado solo con esta opción"
 
 #: gammu/nokia.c:54
-#, fuzzy, c-format
+#, c-format
 msgid "Ringtone \"%s\" (tempo = %i Beats Per Minute)"
-msgstr ""
-"Tono \"%s\" (tempo = %i tics por minuto)\n"
-"\n"
+msgstr "Tono \"%s\" (tempo = %i pulsos por minuto)"
 
 #: gammu/nokia.c:63
 #, c-format
