@@ -3698,9 +3698,8 @@ msgid "Home fax number"
 msgstr "Número de fax hogareño"
 
 #: helper/memory-display.c:158
-#, fuzzy
 msgid "Work fax number"
-msgstr "Número de trabajo"
+msgstr "Número de fax laboral"
 
 #: helper/memory-display.c:165
 msgid "Pager number"
