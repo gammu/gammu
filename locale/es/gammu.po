@@ -2958,7 +2958,6 @@ msgid "Analogue"
 msgstr "Analógico"
 
 #: gammu/misc.c:1565 gammu/misc.c:1568 gammu/misc.c:1571
-#, fuzzy
 msgid "Data call speed"
 msgstr "Velocidad de llamada de datos"
 
