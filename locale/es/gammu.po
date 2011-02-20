@@ -2514,7 +2514,7 @@ msgstr "Longitud"
 #: gammu/misc.c:357
 #, fuzzy
 msgid "Range"
-msgstr "Leyendo"
+msgstr "Área"
 
 #: gammu/misc.c:358
 #, fuzzy
