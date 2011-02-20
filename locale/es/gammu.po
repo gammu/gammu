@@ -2895,7 +2895,7 @@ msgstr "dirección \"%s\", puerto %i"
 
 #: gammu/misc.c:1531
 msgid "Second proxy"
-msgstr ""
+msgstr "Segundo proxy"
 
 #: gammu/misc.c:1536 gammu/misc.c:1543 gammu/misc.c:1578 gammu/misc.c:1591
 msgid "Bearer"
