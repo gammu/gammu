@@ -3352,11 +3352,8 @@ msgid "data & fax & voice"
 msgstr "datos y fax y voz"
 
 #: gammu/misc.c:2439
-#, fuzzy
 msgid "Response:"
-msgstr ""
-"\n"
-"Respuesta:"
+msgstr "Respuesta:"
 
 #: gammu/misc.c:2493
 msgid "The application has been successfully sent to the phone."
