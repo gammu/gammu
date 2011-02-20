@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-14 10:40+0100\n"
-"PO-Revision-Date: 2011-02-20 09:54+0200\n"
+"PO-Revision-Date: 2011-02-20 09:55+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -116,13 +116,12 @@ msgid "Unknown model type string. Check config file."
 msgstr "Modelo desconocido. Verifique el archivo de configuración"
 
 #: libgammu/gsmcomon.c:103
-#, fuzzy
 msgid ""
 "Some functions not available for your system (disabled in config or not "
 "implemented)."
 msgstr ""
 "Algunas funciones no están disponibles para su sistema (desactivadas en la "
-"configuración o no escritas)."
+"configuración o no implementadas)."
 
 #: libgammu/gsmcomon.c:104
 msgid "Function not supported by phone."
