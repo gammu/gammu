@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-14 10:40+0100\n"
-"PO-Revision-Date: 2011-02-20 09:19+0200\n"
+"PO-Revision-Date: 2011-02-20 09:20+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -3474,11 +3474,12 @@ msgid "Writing file %s:"
 msgstr "Escribiendo el archivo %s:"
 
 #: gammu/nokia.c:438
-#, fuzzy
 msgid ""
 "Your phone model is not supported. Please report it to authors (see <http://"
 "wammu.eu/support/bugs/>). Thank you."
-msgstr "Su modelo de teléfono no está soportado. Por favor, reportelo"
+msgstr ""
+"Su modelo de teléfono no está soportado. Por favor, reportelo a los autores "
+"(ver <http://wammu.eu/support/bugs/>). Gracias."
 
 #: gammu/nokia.c:454
 msgid "Problem with deleting playlist"
