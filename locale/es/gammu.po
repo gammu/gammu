@@ -1226,7 +1226,7 @@ msgstr "¿Qué luces debo habilitar (\"%s\")?\n"
 #: gammu/depend/nokia/dct4.c:968
 #, c-format
 msgid "What should I do (\"%s\") ?\n"
-msgstr "¿ Qué debo hacer (\"%s\") ?\n"
+msgstr "¿Qué debo hacer (\"%s\")?\n"
 
 #. l10n: Raw data for A/D convertor
 #: gammu/depend/nokia/dct4.c:1020
