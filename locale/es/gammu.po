@@ -2934,9 +2934,8 @@ msgid "Manual"
 msgstr "Manual"
 
 #: gammu/misc.c:1551 gammu/misc.c:1597
-#, fuzzy
 msgid "Automatic"
-msgstr "Autorrespuesta"
+msgstr "Automático"
 
 #: gammu/misc.c:1554 gammu/misc.c:1556 gammu/misc.c:1600 gammu/misc.c:1602
 #, fuzzy
