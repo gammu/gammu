@@ -2868,9 +2868,8 @@ msgid "Continuous"
 msgstr "Continuo"
 
 #: gammu/misc.c:1521
-#, fuzzy
 msgid "Temporary"
-msgstr "Error temporal,"
+msgstr "Temporal"
 
 #: gammu/misc.c:1524 gammu/misc.c:1526
 #, fuzzy
