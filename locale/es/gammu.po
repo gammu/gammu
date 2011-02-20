@@ -3300,7 +3300,7 @@ msgstr "Tipo de llamada desconocido (\"%s\")\n"
 
 #: gammu/misc.c:2378
 msgid "Query:"
-msgstr ""
+msgstr "Consulta:"
 
 #: gammu/misc.c:2380 gammu/misc.c:2397
 #, fuzzy
