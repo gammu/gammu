@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-14 10:40+0100\n"
-"PO-Revision-Date: 2011-02-13 20:43+0200\n"
+"PO-Revision-Date: 2011-02-20 08:36+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -931,9 +931,8 @@ msgid "Start time"
 msgstr "Hora de inicio"
 
 #: gammu/calendar.c:746
-#, fuzzy
 msgid "Completed time"
-msgstr "Terminado"
+msgstr "Hora de fin"
 
 #: gammu/calendar.c:751
 msgid "Completed"
