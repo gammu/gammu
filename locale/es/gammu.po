@@ -3877,7 +3877,7 @@ msgstr "¿Dónde está el número de frames?"
 
 #: helper/message-cmdline.c:326
 msgid "Too many animation frames!"
-msgstr ""
+msgstr "¡Demasiados cuadros de animación!"
 
 #: helper/message-cmdline.c:357
 #, c-format
