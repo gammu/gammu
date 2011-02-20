@@ -3038,9 +3038,8 @@ msgid "active"
 msgstr "activo"
 
 #: gammu/misc.c:1730
-#, fuzzy
 msgid "Read only"
-msgstr "Leyendo"
+msgstr "Sólo lectura"
 
 #: gammu/misc.c:1755
 msgid "Startup logo"
