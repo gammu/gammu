@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-14 10:40+0100\n"
-"PO-Revision-Date: 2011-02-20 09:23+0200\n"
+"PO-Revision-Date: 2011-02-20 09:24+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -3543,9 +3543,8 @@ msgid " created by %s\n"
 msgstr " creado por %s\n"
 
 #: gammu/nokia.c:793 gammu/nokia.c:845
-#, fuzzy
 msgid "Application already exists. Deleting by Gammu."
-msgstr "INFO: La aplicación ya existe. Gammu la borrará"
+msgstr "La aplicación ya existe. Gammu la borrará."
 
 #: gammu/nokia.c:826 gammu/nokia.c:859
 #, c-format
