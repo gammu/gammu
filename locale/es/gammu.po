@@ -2942,9 +2942,8 @@ msgid "Authentication type"
 msgstr "Tipo de autenticación"
 
 #: gammu/misc.c:1554 gammu/misc.c:1600
-#, fuzzy
 msgid "Normal"
-msgstr "Formato"
+msgstr "Normal"
 
 #: gammu/misc.c:1556 gammu/misc.c:1602
 #, fuzzy
