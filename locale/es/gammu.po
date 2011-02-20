@@ -2946,7 +2946,6 @@ msgid "Secure"
 msgstr "Seguro"
 
 #: gammu/misc.c:1559 gammu/misc.c:1561
-#, fuzzy
 msgid "Data call type"
 msgstr "Tipo de llamada de datos"
 
