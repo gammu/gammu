@@ -3710,9 +3710,8 @@ msgid "Other number"
 msgstr "Otro número"
 
 #: helper/memory-display.c:172
-#, fuzzy
 msgid "Home address"
-msgstr "Dirección"
+msgstr "Dirección hogareña"
 
 #: helper/memory-display.c:175
 #, fuzzy
