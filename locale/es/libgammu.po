@@ -329,9 +329,8 @@ msgstr ""
 "Orden rechazada porque el dispositivo estaba ocupado. Espere y reinicie."
 
 #: libgammu/gsmcomon.c:150
-#, fuzzy
 msgid "Could not connect to the server."
-msgstr "Conectando con el servidor IMAP..."
+msgstr "No se pudo conectar al servidor."
 
 #: libgammu/gsmcomon.c:151
 #, fuzzy
