@@ -3913,9 +3913,9 @@ msgid "Backup functionality not compiled in!"
 msgstr "¡Funcionalidad de respaldo no compilada!"
 
 #: helper/message-cmdline.c:1055
-#, fuzzy, c-format
+#, c-format
 msgid "Wrong message length (\"%s\")\n"
-msgstr "Escribiendo mensaje(s)..."
+msgstr "Longitud de mensaje incorrecta (\"%s\")\n"
 
 #: helper/message-cmdline.c:1078
 #, c-format
