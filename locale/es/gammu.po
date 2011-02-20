@@ -3469,9 +3469,9 @@ msgid "  Problem with adding playlist"
 msgstr "  Problema al añadir la lista de reproducción"
 
 #: gammu/nokia.c:383
-#, fuzzy, c-format
+#, c-format
 msgid "Writing file %s:"
-msgstr "Error escribiendo el archivo en el disco."
+msgstr "Escribiendo el archivo %s:"
 
 #: gammu/nokia.c:438
 #, fuzzy
