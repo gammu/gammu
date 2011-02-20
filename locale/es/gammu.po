@@ -3967,7 +3967,7 @@ msgstr "Ctrl+Z"
 
 #: helper/message-cmdline.c:1334
 msgid "Ctrl+D"
-msgstr ""
+msgstr "Ctrl+D"
 
 #: helper/message-cmdline.c:1348
 msgid "No chars read, assuming it is okay!"
