@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-14 10:40+0100\n"
-"PO-Revision-Date: 2011-02-20 09:43+0200\n"
+"PO-Revision-Date: 2011-02-20 09:45+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -4377,9 +4377,8 @@ msgid "Error"
 msgstr "Error"
 
 #: helper/message-display.c:532
-#, fuzzy
 msgid "Data PDU"
-msgstr "datos (CSD)"
+msgstr "PDU de datos"
 
 #: helper/message-display.c:533
 msgid "Number of bits"
