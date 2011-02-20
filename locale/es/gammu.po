@@ -2889,9 +2889,9 @@ msgid "Proxy"
 msgstr "Proxy"
 
 #: gammu/misc.c:1529 gammu/misc.c:1532
-#, fuzzy, c-format
+#, c-format
 msgid "address \"%s\", port %i"
-msgstr "Proxy               : dirección \"%s\", puerto %i\n"
+msgstr "dirección \"%s\", puerto %i"
 
 #: gammu/misc.c:1531
 msgid "Second proxy"
