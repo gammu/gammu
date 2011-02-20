@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-14 10:40+0100\n"
-"PO-Revision-Date: 2011-02-20 08:42+0200\n"
+"PO-Revision-Date: 2011-02-20 08:43+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -2168,7 +2168,7 @@ msgstr "Respuesta de servicio"
 #: gammu/message.c:178
 #, c-format
 msgid "Invalid SMSC location: %s\n"
-msgstr ""
+msgstr "Ubicación SMSC inválida: %s\n"
 
 #: gammu/message.c:220 gammu/misc.c:2207 gammu/misc.c:2465
 msgid "Number"
