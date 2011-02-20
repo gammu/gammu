@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-14 10:40+0100\n"
-"PO-Revision-Date: 2011-02-20 09:05+0200\n"
+"PO-Revision-Date: 2011-02-20 09:06+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -2938,9 +2938,8 @@ msgid "Automatic"
 msgstr "Automático"
 
 #: gammu/misc.c:1554 gammu/misc.c:1556 gammu/misc.c:1600 gammu/misc.c:1602
-#, fuzzy
 msgid "Authentication type"
-msgstr "Tipo de autentic.   : Normal\n"
+msgstr "Tipo de autenticación"
 
 #: gammu/misc.c:1554 gammu/misc.c:1600
 #, fuzzy
