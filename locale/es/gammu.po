@@ -2860,9 +2860,8 @@ msgid "Delete all phone FM radio stations?"
 msgstr "¿Borrar todas las estaciones de radio FM del teléfono?"
 
 #: gammu/misc.c:1519 gammu/misc.c:1521
-#, fuzzy
 msgid "Connection type"
-msgstr "Nombre de conexión"
+msgstr "Tipo de conexión"
 
 #: gammu/misc.c:1519
 #, fuzzy
