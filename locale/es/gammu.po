@@ -2207,11 +2207,9 @@ msgid "Corrupted message, skipping"
 msgstr "Mensaje dañado, pasándolo"
 
 #: gammu/message.c:385 gammu/message.c:504
-#, fuzzy, c-format
+#, c-format
 msgid "%i SMS parts in %i SMS sequences"
-msgstr ""
-"\n"
-"%i partes de SMS en %i secuencias SMS\n"
+msgstr "%i partes de SMS en %i secuencias SMS"
 
 #: gammu/message.c:436
 msgid "SMS counter overflow"
