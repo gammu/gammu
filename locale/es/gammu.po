@@ -2464,9 +2464,8 @@ msgid "Not logged to network!\n"
 msgstr "¡Sesión de red no iniciada!\n"
 
 #: gammu/misc.c:272
-#, fuzzy
 msgid "Wrong network code from phone!\n"
-msgstr "No hay código de red"
+msgstr "¡Código de red erróneo del teléfono!\n"
 
 #: gammu/misc.c:300
 msgid "Request for information from OpenCellID failed!\n"
