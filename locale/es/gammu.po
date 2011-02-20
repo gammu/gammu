@@ -2872,9 +2872,8 @@ msgid "Temporary"
 msgstr "Temporal"
 
 #: gammu/misc.c:1524 gammu/misc.c:1526
-#, fuzzy
 msgid "Connection security"
-msgstr "Seguridad de conexión: Activa\n"
+msgstr "Seguridad de la conexión"
 
 #: gammu/misc.c:1524 gammu/misc.c:2156
 msgid "On"
