@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-14 10:40+0100\n"
-"PO-Revision-Date: 2011-02-20 08:44+0200\n"
+"PO-Revision-Date: 2011-02-20 08:45+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -2267,9 +2267,9 @@ msgid "Saving SMS %i/%i\n"
 msgstr "Guardando SMS %i/%i\n"
 
 #: gammu/message.c:610
-#, fuzzy, c-format
+#, c-format
 msgid "Saved in folder number %d \"%s\", location %i"
-msgstr "Guardado en carpeta \"%s\", localizado en %i"
+msgstr "Guardado en carpeta número %d \"%s\", ubicación %i"
 
 #: gammu/message.c:615
 msgid "SIM"
