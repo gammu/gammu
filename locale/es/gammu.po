@@ -2477,7 +2477,7 @@ msgstr "¡No se encontró la latitud en la respuesta OpenCellID!\n"
 
 #: gammu/misc.c:311
 msgid "Failed to parse latitude from OpenCellID reply!\n"
-msgstr ""
+msgstr "¡No se pudo analizar la latitud en la respuesta OpenCellID!\n"
 
 #: gammu/misc.c:317
 msgid "Failed to find longitude in OpenCellID reply!\n"
