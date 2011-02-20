@@ -3730,9 +3730,8 @@ msgid "Email address 2"
 msgstr "Dirección de email 2"
 
 #: helper/memory-display.c:201
-#, fuzzy
 msgid "Home website"
-msgstr "Teléfono del trabajo"
+msgstr "Página web hogareña"
 
 # En Europa no existen estados, solo países.
 #: helper/memory-display.c:204
