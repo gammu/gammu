@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-14 10:40+0100\n"
-"PO-Revision-Date: 2011-02-20 09:58+0200\n"
+"PO-Revision-Date: 2011-02-20 09:59+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -154,9 +154,8 @@ msgid "Unknown error."
 msgstr "Error desconocido."
 
 #: libgammu/gsmcomon.c:111
-#, fuzzy
 msgid "Can not open specified file."
-msgstr "No se puede abrir el archivo especificado. ¿Sólo lectura?"
+msgstr "No se puede abrir el archivo especificado."
 
 #: libgammu/gsmcomon.c:112
 msgid "More memory required..."
