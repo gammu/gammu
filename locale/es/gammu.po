@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-14 10:40+0100\n"
-"PO-Revision-Date: 2011-02-20 08:50+0200\n"
+"PO-Revision-Date: 2011-02-20 08:52+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -2460,9 +2460,8 @@ msgid "NiMH"
 msgstr "NiMH"
 
 #: gammu/misc.c:261
-#, fuzzy
 msgid "Not logged to network!\n"
-msgstr "sin registrar en la red"
+msgstr "¡Sesión de red no iniciada!\n"
 
 #: gammu/misc.c:272
 #, fuzzy
