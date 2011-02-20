@@ -1232,7 +1232,7 @@ msgstr "¿Qué debo hacer (\"%s\")?\n"
 #: gammu/depend/nokia/dct4.c:1020
 #, c-format
 msgid "raw result %10i "
-msgstr ""
+msgstr "resultado crudo %10i"
 
 #. l10n: Processed data for A/D convertor
 #: gammu/depend/nokia/dct4.c:1024
