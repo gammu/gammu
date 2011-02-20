@@ -4386,7 +4386,7 @@ msgstr "Número de bits"
 
 #: helper/message-display.c:535
 msgid "UDH"
-msgstr ""
+msgstr "UDH"
 
 #: helper/message-display.c:551
 msgid "Whole PDU"
