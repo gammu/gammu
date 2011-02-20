@@ -2250,9 +2250,8 @@ msgid ", message reference=%d"
 msgstr ", referencia de mensaje=%d"
 
 #: gammu/message.c:586
-#, fuzzy
 msgid "Message number"
-msgstr "Número buscapersonas"
+msgstr "Número de mensaje"
 
 #: gammu/message.c:591
 #, fuzzy
