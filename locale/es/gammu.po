@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-14 10:40+0100\n"
-"PO-Revision-Date: 2011-02-20 09:21+0200\n"
+"PO-Revision-Date: 2011-02-20 09:22+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -3516,11 +3516,10 @@ msgid "No JAR URL info in JAD file"
 msgstr "no hay información de URL JAR en el archivo JAD"
 
 #: gammu/nokia.c:707
-#, fuzzy
 msgid "Declared JAR file size is different than real. Fixed by Gammu."
 msgstr ""
-"INFORMACIÓN: el tamaño indicado del archivo JAR es diferente del real. "
-"Corregido por Gammu"
+"El tammaño de archivo JAR declarador es diferente del real. Corregido por "
+"Gammu."
 
 #: gammu/nokia.c:731
 #, fuzzy
