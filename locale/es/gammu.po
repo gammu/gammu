@@ -2930,9 +2930,8 @@ msgid "Login type"
 msgstr "Tipo de inicio de sesión"
 
 #: gammu/misc.c:1549 gammu/misc.c:1595
-#, fuzzy
 msgid "Manual"
-msgstr "Enero"
+msgstr "Manual"
 
 #: gammu/misc.c:1551 gammu/misc.c:1597
 #, fuzzy
