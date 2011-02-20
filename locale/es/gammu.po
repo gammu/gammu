@@ -2517,9 +2517,8 @@ msgid "Range"
 msgstr "Área"
 
 #: gammu/misc.c:358
-#, fuzzy
 msgid "Number of samples"
-msgstr "Número de mensajes: %i"
+msgstr "Número de muestras"
 
 #: gammu/misc.c:379
 msgid "Device"
