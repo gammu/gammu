@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-14 10:40+0100\n"
-"PO-Revision-Date: 2011-02-20 10:01+0200\n"
+"PO-Revision-Date: 2011-02-20 10:03+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -183,13 +183,12 @@ msgid "Phone is not connected."
 msgstr "El teléfono no está conectado."
 
 #: libgammu/gsmcomon.c:117
-#, fuzzy
 msgid ""
 "Function is currently being implemented. If you want to help, please contact "
 "authors."
 msgstr ""
-"La función está escribiendo, si necesita ayuda, por favor contacte con los "
-"Autores."
+"La función está siendo implementado. Si quieres ayudar, por favor contacte a "
+"los autores."
 
 #: libgammu/gsmcomon.c:118
 msgid "Phone is disabled and connected to charger."
