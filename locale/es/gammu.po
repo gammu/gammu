@@ -2956,7 +2956,7 @@ msgstr "Tipo de llamada de datos"
 
 #: gammu/misc.c:1559
 msgid "ISDN"
-msgstr ""
+msgstr "ISDN"
 
 #: gammu/misc.c:1561
 msgid "Analogue"
