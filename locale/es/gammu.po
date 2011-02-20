@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-14 10:40+0100\n"
-"PO-Revision-Date: 2011-02-20 09:26+0200\n"
+"PO-Revision-Date: 2011-02-20 09:27+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -3573,9 +3573,9 @@ msgid "Error creating thread\n"
 msgstr "Error creando hilo\n"
 
 #: helper/cmdline.c:23
-#, fuzzy, c-format
+#, c-format
 msgid "Number out of range: %s\n"
-msgstr "Número de mensajes: %i"
+msgstr "Número fuera de rango: %s\n"
 
 #: helper/cmdline.c:28
 #, fuzzy, c-format
