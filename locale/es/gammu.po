@@ -1283,7 +1283,6 @@ msgstr "Temperatura de la batería:"
 
 #: gammu/depend/nokia/dct4.c:1042 gammu/depend/nokia/dct4.c:1046
 #: gammu/depend/nokia/dct4.c:1047
-#, fuzzy
 msgid "K"
 msgstr "K"
 
