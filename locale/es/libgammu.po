@@ -88,7 +88,7 @@ msgid ""
 "Frame not requested right now. See <http://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
-"Marco no solicitado en este momento. Ver <http://wammu.eu/support/bugs/> "
+"Marco no solicitado en este momento. Visite <http://wammu.eu/support/bugs/> "
 "para información sobre cómo reportarlo."
 
 #: libgammu/gsmcomon.c:99
