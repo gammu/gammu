@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-14 10:40+0100\n"
-"PO-Revision-Date: 2011-02-20 09:59+0200\n"
+"PO-Revision-Date: 2011-02-20 10:00+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -162,9 +162,8 @@ msgid "More memory required..."
 msgstr "Requiere más memoria..."
 
 #: libgammu/gsmcomon.c:113
-#, fuzzy
 msgid "Operation not allowed by phone."
-msgstr "Función no soportada por el teléfono."
+msgstr "Operación no permitida por el teléfono."
 
 #: libgammu/gsmcomon.c:114
 msgid ""
