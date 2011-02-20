@@ -3778,9 +3778,8 @@ msgid "Formal name"
 msgstr "Nombre formal"
 
 #: helper/memory-display.c:222
-#, fuzzy
 msgid "Name prefix"
-msgstr "Prefijo del número"
+msgstr "Prefijo de nombre"
 
 #: helper/memory-display.c:223
 msgid "Name suffix"
