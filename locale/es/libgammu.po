@@ -128,7 +128,6 @@ msgid "Function not supported by phone."
 msgstr "Función no soportada por el teléfono."
 
 #: libgammu/gsmcomon.c:105
-#, fuzzy
 msgid "Entry is empty."
 msgstr "Entrada vacía."
 
