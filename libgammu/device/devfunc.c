@@ -366,13 +366,24 @@ int FindSerialSpeed(const char *buffer)
 		case 1200	: return 1200;
 		case 1800	: return 1800;
 		case 2400	: return 2400;
+		case 3600	: return 3600;
 		case 4800	: return 4800;
+		case 7200	: return 7200;
 		case 9600	: return 9600;
+		case 14400	: return 14400;
 		case 19200	: return 19200;
+		case 28800	: return 28800;
 		case 38400	: return 38400;
 		case 57600	: return 57600;
 		case 115200	: return 115200;
 		case 230400	: return 230400;
+		case 460800	: return 460800;
+		case 614400	: return 614400;
+		case 921600	: return 921600;
+		case 1228800	: return 1228800;
+		case 2457600	: return 2457600;
+		case 3000000	: return 3000000;
+		case 6000000	: return 6000000;
 		default		: return 0;
 	}
 }
