@@ -90,6 +90,7 @@ GSM_Error SONYERICSSON_Reply_Screenshot(GSM_Protocol_Message *msg, GSM_StateMach
 	const char *string;
 	int line;
 	int h, w, param3, param4;
+	GSM_Error result = ERR_UNKNOWNRESPONSE;
 
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
@@ -115,7 +116,17 @@ GSM_Error SONYERICSSON_Reply_Screenshot(GSM_Protocol_Message *msg, GSM_StateMach
 				&param4);
 
 			if (error != ERR_NONE) {
-				/* try again */
+				/* Try again. Some phones like Sony Ericsson
+				 * K508i returns data in different format:
+				 *
+				 * *ZISI: 160, 128, 16
+				 *
+				 */
+				error = ATGEN_ParseReply(s, string,
+					"*ZISI: @i, @i, @i",
+					&h,
+					&w,
+					&param3);
 			}
 
 			if (error == ERR_NONE) {
@@ -123,6 +134,7 @@ GSM_Error SONYERICSSON_Reply_Screenshot(GSM_Protocol_Message *msg, GSM_StateMach
 				/* Remember the screen size */
 				Priv->ScreenWidth = w;
 				Priv->ScreenHeigth = h;
+				result = ERR_NONE;
 			}
 
 			line++;
@@ -146,7 +158,7 @@ GSM_Error SONYERICSSON_Reply_Screenshot(GSM_Protocol_Message *msg, GSM_StateMach
 		return ERR_MOREMEMORY;
 	}
 	s->Phone.Data.Picture->Length = 0;
-	return ERR_NONE;
+	return result;
 }
 
 static void u32_store(u8 *p, u32 data) {
