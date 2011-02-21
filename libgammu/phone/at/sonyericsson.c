@@ -153,10 +153,7 @@ GSM_Error SONYERICSSON_Reply_Screenshot(GSM_Protocol_Message *msg, GSM_StateMach
 	}
 
 	s->Phone.Data.Picture->Type = PICTURE_BMP;
-	s->Phone.Data.Picture->Buffer = (unsigned char *)malloc(msg->Length);
-	if (s->Phone.Data.Picture->Buffer == NULL) {
-		return ERR_MOREMEMORY;
-	}
+	s->Phone.Data.Picture->Buffer = NULL;
 	s->Phone.Data.Picture->Length = 0;
 	return result;
 }
