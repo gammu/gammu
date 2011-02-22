@@ -1998,7 +1998,7 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
      	 * wake up the phone and does nothing.
      	 */
     	smprintf(s, "Sending simple AT command to wake up some devices\n");
-	error = GSM_WaitForAutoLen(s, "AT\r", 0x00, 2, ID_IncomingFrame);
+	error = GSM_WaitForAutoLen(s, "AT\r", 0x00, 2, ID_Initialise);
 
 	/* We want to see our commands to allow easy detection of reply functions */
 	smprintf(s, "Enabling echo\n");
@@ -5530,6 +5530,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReply,		"AT\r"			,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReply,		"ATE1" 	 		,0x00,0x00,ID_EnableEcho	 },
 {ATGEN_GenericReply,		"ERROR" 	 	,0x00,0x00,ID_EnableEcho	 },
+{ATGEN_GenericReply,		"OK"		 	,0x00,0x00,ID_EnableEcho	 },
 {ATGEN_GenericReply,		"AT+CMEE=" 		,0x00,0x00,ID_EnableErrorInfo	 },
 {ATGEN_GenericReply,		"AT+CKPD="		,0x00,0x00,ID_PressKey		 },
 {ATGEN_ReplyGetSIMIMSI,		"AT+CIMI" 	 	,0x00,0x00,ID_GetSIMIMSI	 },
@@ -5729,6 +5730,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ALCATEL_ProtocolVersionReply,	"AT+CPROT=?" 	 	,0x00,0x00,ID_AlcatelProtocol	 },
 {ATGEN_GenericReply,		"AT+CPROT=16" 	 	,0x00,0x00,ID_AlcatelConnect	 },
 #endif
+{ATGEN_GenericReply,		"OK"			,0x00,0x00,ID_Initialise	 },
 
 {NULL,				"\x00"			,0x00,0x00,ID_None		 }
 };
