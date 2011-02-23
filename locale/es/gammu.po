@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-14 10:40+0100\n"
-"PO-Revision-Date: 2011-02-23 03:04+0200\n"
+"PO-Revision-Date: 2011-02-23 03:05+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -1523,10 +1523,11 @@ msgstr "Desactivar escaneo utilizando Bluez."
 msgid "Disables scanning of Windows serial ports."
 msgstr "Desactivar escaneo de puertos seriales Windows."
 
+# printed when executing "gammu-detect --version"
 #: gammu-detect/main.c:71
-#, fuzzy, c-format
+#, c-format
 msgid "Gammu-detect version %s"
-msgstr "versión Gammu detectada %s"
+msgstr "gammu-detect versión %s"
 
 #: gammu-detect/main.c:73
 #, c-format
