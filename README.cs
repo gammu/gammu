@@ -30,7 +30,7 @@ Jakákoliv zpětná vazba je vítána, informace jak kontaktovat vývojáře
 naleznete na <http://cs.wammu.eu/support/>.
 
 
-Support developers
-==================
+Podpořte vývojáře
+=====================
 
-You can appreciate developers work at <http://wammu.eu/donate/>.
+Práci vývojářů můžete ocenit na <http://cs.wammu.eu/donate/>.
