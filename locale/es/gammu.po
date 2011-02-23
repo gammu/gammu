@@ -2360,8 +2360,8 @@ msgstr "GPRS"
 msgid "attached"
 msgstr "acoplado"
 
+# GPRS is activated
 #: gammu/misc.c:96
-#, fuzzy
 msgid "detached"
 msgstr "desacoplado"
 
