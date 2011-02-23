@@ -100,7 +100,6 @@ msgstr ""
 #. type: Plain text
 #: README:36
 #, fuzzy
-#| msgid "You can find more information on <http://wammu.eu/gammu/>."
 msgid "You can appreciate developers work at <http://wammu.eu/donate/>."
 msgstr "Puede encontrar más información en <http://wammu.eu/gammu/>."
 

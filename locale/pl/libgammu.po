@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libGammu 1.29.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-02-14 10:40+0100\n"
+"POT-Creation-Date: 2011-02-23 17:00+0100\n"
 "PO-Revision-Date: 2010-08-17 14:02+0200\n"
 "Last-Translator: Maciej Szeptuch <matthiaspriv@gmail.com>\n"
 "Language-Team: Language =pl\n"
@@ -390,7 +390,12 @@ msgid ""
 "for more details."
 msgstr ""
 
-#: libgammu/gsmcomon.c:187
+#: libgammu/gsmcomon.c:155
+#, fuzzy
+msgid "Entry is read only."
+msgstr "Pozycja jest pusta"
+
+#: libgammu/gsmcomon.c:188
 #, fuzzy
 msgid "Unknown error description."
 msgstr "Nieznany opis błędu."

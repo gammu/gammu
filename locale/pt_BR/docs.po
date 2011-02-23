@@ -95,14 +95,12 @@ msgstr ""
 #. type: Title =
 #: README:34
 #, fuzzy, no-wrap
-#| msgid "Developers\n"
 msgid "Support developers"
 msgstr "Desenvolvedor\n"
 
 #. type: Plain text
 #: README:36
 #, fuzzy
-#| msgid "You can find more information on <http://wammu.eu/gammu/>."
 msgid "You can appreciate developers work at <http://wammu.eu/donate/>."
 msgstr "Você pode achar mais informações em <http://wammu.eu/gammu/>."
 

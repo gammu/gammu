@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.27.96\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-02-14 10:40+0100\n"
+"POT-Creation-Date: 2011-02-23 17:00+0100\n"
 "PO-Revision-Date: 2011-02-10 13:01+0200\n"
 "Last-Translator: Robert Readman <robert_readman@hotmail.com>\n"
 "Language-Team: none\n"
@@ -334,7 +334,12 @@ msgstr ""
 "Installation data not found, please consult debug log and/or documentation "
 "for more details."
 
-#: libgammu/gsmcomon.c:187
+#: libgammu/gsmcomon.c:155
+#, fuzzy
+msgid "Entry is read only."
+msgstr "Entry is empty."
+
+#: libgammu/gsmcomon.c:188
 msgid "Unknown error description."
 msgstr "Unknown error description."
 

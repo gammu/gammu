@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-02-14 10:40+0100\n"
+"POT-Creation-Date: 2011-02-23 17:00+0100\n"
 "PO-Revision-Date: 2010-02-27 17:42+0200\n"
 "Last-Translator:  <doi@freemail.hu>\n"
 "Language-Team: none\n"
@@ -336,7 +336,12 @@ msgid ""
 "for more details."
 msgstr ""
 
-#: libgammu/gsmcomon.c:187
+#: libgammu/gsmcomon.c:155
+#, fuzzy
+msgid "Entry is read only."
+msgstr "Bejegyzés létrehozva."
+
+#: libgammu/gsmcomon.c:188
 msgid "Unknown error description."
 msgstr ""
 
