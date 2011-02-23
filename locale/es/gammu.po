@@ -1316,6 +1316,7 @@ msgstr "Temperatura VCXO:"
 msgid "Resistive keyboard 1/headint2:"
 msgstr "Teclado resistivo 1/headint2:"
 
+# This is part of the data returned by the NokiaGetADC command
 #: gammu/depend/nokia/dct4.c:1049
 #, fuzzy
 msgid "Resistive keyboard 1/auxdet:"
