@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-14 10:40+0100\n"
-"PO-Revision-Date: 2011-02-23 03:05+0200\n"
+"PO-Revision-Date: 2011-02-23 03:11+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -1598,10 +1598,10 @@ msgstr "Nombre:"
 msgid "Type:"
 msgstr "Tipo:"
 
+# used only for printing udev-related information
 #: gammu-detect/udev.c:69
-#, fuzzy
 msgid "Subsystem:"
-msgstr "Sistema de archivos"
+msgstr "Sub-sistema:"
 
 #: gammu-detect/udev.c:70
 msgid "Number:"
