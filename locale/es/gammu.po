@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-14 10:40+0100\n"
-"PO-Revision-Date: 2011-02-23 02:44+0200\n"
+"PO-Revision-Date: 2011-02-23 02:47+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -1310,6 +1310,7 @@ msgstr "Temperadora del amplificador de poder:"
 msgid "VCXO temperature:"
 msgstr "Temperatura VCXO:"
 
+# This is part of the data returned by the NokiaGetADC command
 #: gammu/depend/nokia/dct4.c:1048
 #, fuzzy
 msgid "Resistive keyboard 1/headint2:"
