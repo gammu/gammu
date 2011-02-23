@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.29.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-01-10 12:45+0100\n"
+"POT-Creation-Date: 2011-02-23 16:58+0100\n"
 "PO-Revision-Date: 2011-01-10 13:51+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -76,10 +76,9 @@ msgid ""
 "version of it using make manual-html which is viewable online at <http://"
 "wammu.eu/docs/manual/>."
 msgstr ""
-"Další dokumentaci naleznete v Manuálu Gammu, který je v adresáři "
-"docs/manual. Můžete si vytvořit jeho HTML verzi pro prohlížení pomocí make "
-"manual-html, nebo si ji prohlédnout online na "
-"<http://wammu.eu/docs/manual/>."
+"Další dokumentaci naleznete v Manuálu Gammu, který je v adresáři docs/"
+"manual. Můžete si vytvořit jeho HTML verzi pro prohlížení pomocí make manual-"
+"html, nebo si ji prohlédnout online na <http://wammu.eu/docs/manual/>."
 
 #. type: Title =
 #: README:27
@@ -88,13 +87,27 @@ msgid "Feedback and bug reports"
 msgstr "Zpětná vazba a hlášení chyb"
 
 #. type: Plain text
-#: README:30
+#: README:31
 msgid ""
 "Any feedback is welcome, see <http://wammu.eu/support/> for information how "
 "to contact developers."
 msgstr ""
 "Jakákoliv zpětná vazba je vítána, informace jak kontaktovat vývojáře "
 "naleznete na <http://cs.wammu.eu/support/>."
+
+#. type: Title =
+#: README:34
+#, fuzzy, no-wrap
+#| msgid "Developers\n"
+msgid "Support developers"
+msgstr "Vývojáři\n"
+
+#. type: Plain text
+#: README:36
+#, fuzzy
+#| msgid "You can find more information on <http://wammu.eu/gammu/>."
+msgid "You can appreciate developers work at <http://wammu.eu/donate/>."
+msgstr "Více informací naleznete na <http://cs.wammu.eu/gammu/>."
 
 #. type: Title =
 #: INSTALL:2
@@ -158,7 +171,9 @@ msgstr ""
 #~ msgstr "Popis"
 
 # type: Plain text
-#~ msgid "`gammu` reads configuration from a config file. It's location is determined"
+#~ msgid ""
+#~ "`gammu` reads configuration from a config file. It's location is "
+#~ "determined"
 #~ msgstr "`gammu` čte konfiguraci z konfiguračního souboru. Jeho umístění"
 
 #~ msgid "on runtime, see above for search paths."
@@ -295,15 +310,21 @@ msgstr ""
 #~ msgstr "``irdaat``         \n"
 
 # type: Plain text
-#~ msgid "AT commands connection for most of phones (this is not supported on Linux).\n"
-#~ msgstr "AT příkazy pro připojení k většině telefonů (toto není podporované na Linuxu).\n"
+#~ msgid ""
+#~ "AT commands connection for most of phones (this is not supported on "
+#~ "Linux).\n"
+#~ msgstr ""
+#~ "AT příkazy pro připojení k většině telefonů (toto není podporované na "
+#~ "Linuxu).\n"
 
 #~ msgid "``irdaobex``       \n"
 #~ msgstr "``irdaobex``       \n"
 
 # type: Plain text
 #~ msgid "OBEX (IrMC or file transfer) connection for most of phones.\n"
-#~ msgstr "připojení protokolem OBEX (IrMC nebo přenos souborů), použitelné pro většinu telefonů.\n"
+#~ msgstr ""
+#~ "připojení protokolem OBEX (IrMC nebo přenos souborů), použitelné pro "
+#~ "většinu telefonů.\n"
 
 #~ msgid "``irdagnapbus``    \n"
 #~ msgstr "``irdagnapbus``    \n"
@@ -375,7 +396,8 @@ msgstr ""
 #~ msgstr ""
 #~ "Device = 0x1234:0x5678  # Vyhledávání podle výrobce a produktu\n"
 #~ "Device = 0x1234:-1      # Vyhledávání podle výrobce\n"
-#~ "Device = 1.10           # Vyhledávání podle čísla sběrnice a adresy zařízení\n"
+#~ "Device = 1.10           # Vyhledávání podle čísla sběrnice a adresy "
+#~ "zařízení\n"
 #~ "Device = 10             # Vyhledávání podle adresy zařízení\n"
 #~ "Device = serial:123456  # Vyhledávání podle sériového čísla\n"
 
@@ -1389,9 +1411,12 @@ msgstr ""
 # type: Plain text
 #, fuzzy
 #~ msgid ""
-#~ "``Coding`` (enum('Default_No_Compression', 'Unicode_No_Compression', '8bit', 'Default_Compression', 'Unicode_Compression'))\n"
+#~ "``Coding`` (enum('Default_No_Compression', 'Unicode_No_Compression', "
+#~ "'8bit', 'Default_Compression', 'Unicode_Compression'))\n"
 #~ "    SMS text coding\n"
-#~ msgstr "B<Coding> (enum('Default_No_Compression', 'Unicode_No_Compression', '8bit', 'Default_Compression', 'Unicode_Compression'))"
+#~ msgstr ""
+#~ "B<Coding> (enum('Default_No_Compression', 'Unicode_No_Compression', "
+#~ "'8bit', 'Default_Compression', 'Unicode_Compression'))"
 
 # type: Plain text
 #, fuzzy
@@ -1412,7 +1437,8 @@ msgstr ""
 #~ msgid ""
 #~ "``Class`` (integer)\n"
 #~ "    SMS class or \\-1 (0 is flash SMS, 1 is normal one)\n"
-#~ msgstr "třída SMS nebo -1 (0 je jen pro zobrazení na displej, 1 je normální SMS)"
+#~ msgstr ""
+#~ "třída SMS nebo -1 (0 je jen pro zobrazení na displej, 1 je normální SMS)"
 
 # type: Plain text
 #, fuzzy
@@ -1440,7 +1466,8 @@ msgstr ""
 #~ msgid ""
 #~ "``Processed`` (enum('false', 'true'))\n"
 #~ "    you can use for marking, whether SMS was processed or not\n"
-#~ msgstr "můžete použít pro označení, jestli byla zpráva zpracována nebo nebyla"
+#~ msgstr ""
+#~ "můžete použít pro označení, jestli byla zpráva zpracována nebo nebyla"
 
 # type: TP
 #, fuzzy
@@ -1466,16 +1493,22 @@ msgstr ""
 #, fuzzy
 #~ msgid ""
 #~ "``SendingDateTime`` (timestamp)\n"
-#~ "    set it to some value, when want to force sending after some planned time\n"
-#~ msgstr "nastavte na libovolnou hodnotu, pokud chcete vynutit poslání zprávy i po naplánovaném čase"
+#~ "    set it to some value, when want to force sending after some planned "
+#~ "time\n"
+#~ msgstr ""
+#~ "nastavte na libovolnou hodnotu, pokud chcete vynutit poslání zprávy i po "
+#~ "naplánovaném čase"
 
 # type: Plain text
 #, fuzzy
 #~ msgid ""
 #~ "``Text`` (text)\n"
-#~ "    SMS text encoded using hex values in proper coding. If you want to use\n"
+#~ "    SMS text encoded using hex values in proper coding. If you want to "
+#~ "use\n"
 #~ "    TextDecoded field, keep this NULL (or empty).\n"
-#~ msgstr "Text SMS zakódovaný šestnáctkově ve správné znakové sadě. Pokud chcete použít pole TextDecoded, nechte zde NULL (nebo prázdný text)."
+#~ msgstr ""
+#~ "Text SMS zakódovaný šestnáctkově ve správné znakové sadě. Pokud chcete "
+#~ "použít pole TextDecoded, nechte zde NULL (nebo prázdný text)."
 
 # type: Plain text
 #, fuzzy
@@ -1487,16 +1520,21 @@ msgstr ""
 #, fuzzy
 #~ msgid ""
 #~ "``UDH`` (text)\n"
-#~ "    User Data Header encoded using hex values which will be used for constructing\n"
+#~ "    User Data Header encoded using hex values which will be used for "
+#~ "constructing\n"
 #~ "    the message. Without this, message will be sent as plain text.\n"
-#~ msgstr "User Data Header ((hlavička uživatelských dat) zapsaná v šestnáckové soustavě, která bude použita při vytváření zprávy. Pokud není uvedena, zpráva bude odeslána jako čistě textová."
+#~ msgstr ""
+#~ "User Data Header ((hlavička uživatelských dat) zapsaná v šestnáckové "
+#~ "soustavě, která bude použita při vytváření zprávy. Pokud není uvedena, "
+#~ "zpráva bude odeslána jako čistě textová."
 
 # type: Plain text
 #, fuzzy
 #~ msgid ""
 #~ "``Class`` (integer)\n"
 #~ "    SMS class or \\-1 (0 is normal SMS, 1 is flash one)\n"
-#~ msgstr "třída SMS nebo -1 (0 je normální SMS, 1 jen pro zobrazení na displej)"
+#~ msgstr ""
+#~ "třída SMS nebo -1 (0 je normální SMS, 1 jen pro zobrazení na displej)"
 
 # type: Plain text
 #, fuzzy
@@ -1508,16 +1546,22 @@ msgstr ""
 # type: Plain text
 #, fuzzy
 #~ msgid ""
-#~ "    Please note that this number has to be unique also for sentitems table, so\n"
+#~ "    Please note that this number has to be unique also for sentitems "
+#~ "table, so\n"
 #~ "    reusing message IDs might not be a good idea.\n"
-#~ msgstr "Prosím uvědomte si, že toto číslo musí být unikátní i pro tabulku sentitems, takže opětovné používání ID zpráv nemusí být nutně dobrý nápad."
+#~ msgstr ""
+#~ "Prosím uvědomte si, že toto číslo musí být unikátní i pro tabulku "
+#~ "sentitems, takže opětovné používání ID zpráv nemusí být nutně dobrý nápad."
 
 # type: Plain text
 #, fuzzy
 #~ msgid ""
 #~ "``MultiPart`` (enum('false','true'))\n"
-#~ "    info, whether there are more SMS from this sequence in outbox_multipart\n"
-#~ msgstr "informace, zda se v tabulce outbox_multipart nacházejí další části této SMS zprávy"
+#~ "    info, whether there are more SMS from this sequence in "
+#~ "outbox_multipart\n"
+#~ msgstr ""
+#~ "informace, zda se v tabulce outbox_multipart nacházejí další části této "
+#~ "SMS zprávy"
 
 # type: Plain text
 #, fuzzy
@@ -1544,16 +1588,22 @@ msgstr ""
 #, fuzzy
 #~ msgid ""
 #~ "``DeliveryReport`` (enum('default','yes','no'))\n"
-#~ "    when default is used, Delivery Report is used or not according to SMSD instance settings; yes forces Delivery Report.\n"
-#~ msgstr "při výchozí hodnotě bude nastavení doručenky záviset na nastavení SMSD, při yes se doručenka vynutí"
+#~ "    when default is used, Delivery Report is used or not according to "
+#~ "SMSD instance settings; yes forces Delivery Report.\n"
+#~ msgstr ""
+#~ "při výchozí hodnotě bude nastavení doručenky záviset na nastavení SMSD, "
+#~ "při yes se doručenka vynutí"
 
 # type: Plain text
 #, fuzzy
 #~ msgid ""
 #~ "``CreatorID`` (text)\n"
-#~ "    sender identification, it has to match PhoneID in SMSD configuration to make\n"
+#~ "    sender identification, it has to match PhoneID in SMSD configuration "
+#~ "to make\n"
 #~ "    SMSD process this message\n"
-#~ msgstr "identifikace odesílajícího démona, musí odpovídat PhoneID v konfiguraci SMSD, aby SMSD zprávu zpracoval"
+#~ msgstr ""
+#~ "identifikace odesílajícího démona, musí odpovídat PhoneID v konfiguraci "
+#~ "SMSD, aby SMSD zprávu zpracoval"
 
 # type: TP
 #, fuzzy
@@ -1568,9 +1618,12 @@ msgstr ""
 #, fuzzy
 #~ msgid ""
 #~ "``SequencePosition`` (integer)\n"
-#~ "    info, what is SMS number in SMS sequence (start at 2, first part is in outbox\n"
+#~ "    info, what is SMS number in SMS sequence (start at 2, first part is "
+#~ "in outbox\n"
 #~ "    table).\n"
-#~ msgstr "kolikátá zpráva je tato v SMS sekvenci (začíná se od 2, první část je uložena v tabulce outbox)."
+#~ msgstr ""
+#~ "kolikátá zpráva je tato v SMS sekvenci (začíná se od 2, první část je "
+#~ "uložena v tabulce outbox)."
 
 # type: TP
 #, fuzzy
@@ -1631,17 +1684,22 @@ msgstr ""
 #, fuzzy
 #~ msgid ""
 #~ "``Sent`` (integer)\n"
-#~ "    Number of sent SMS messages (SMSD does not reset this counter, so it might\n"
+#~ "    Number of sent SMS messages (SMSD does not reset this counter, so it "
+#~ "might\n"
 #~ "    overflow).\n"
-#~ msgstr "Počet odeslaných SMS zpráv (SMSD tento čítač nenuluje, takže může přetéct)."
+#~ msgstr ""
+#~ "Počet odeslaných SMS zpráv (SMSD tento čítač nenuluje, takže může "
+#~ "přetéct)."
 
 # type: Plain text
 #, fuzzy
 #~ msgid ""
 #~ "``Received`` (integer)\n"
-#~ "    Number of received SMS messages (SMSD does not reset this counter, so it might\n"
+#~ "    Number of received SMS messages (SMSD does not reset this counter, so "
+#~ "it might\n"
 #~ "    overflow).\n"
-#~ msgstr "Počet přijatých SMS zpráv (SMSD tento čítač nenuluje, takže může přetéct)."
+#~ msgstr ""
+#~ "Počet přijatých SMS zpráv (SMSD tento čítač nenuluje, takže může přetéct)."
 
 # type: TP
 #, fuzzy
@@ -1667,18 +1725,26 @@ msgstr ""
 # type: Plain text
 #, fuzzy
 #~ msgid ""
-#~ "``Status`` (enum('SendingOK', 'SendingOKNoReport', 'SendingError', 'DeliveryOK', 'DeliveryFailed', 'DeliveryPending', 'DeliveryUnknown', 'Error'))\n"
-#~ "    Status of message sending. SendingError mens that phone failed to send the\n"
+#~ "``Status`` (enum('SendingOK', 'SendingOKNoReport', 'SendingError', "
+#~ "'DeliveryOK', 'DeliveryFailed', 'DeliveryPending', 'DeliveryUnknown', "
+#~ "'Error'))\n"
+#~ "    Status of message sending. SendingError mens that phone failed to "
+#~ "send the\n"
 #~ "    message, Error indicates some other error while processing message.\n"
-#~ msgstr "Stav odesílání zprávy. SendingError znamená, že telefonu se nepodařilo zprávu odeslat, Error indikuje jinou chybu při zpracovávání zprávy."
+#~ msgstr ""
+#~ "Stav odesílání zprávy. SendingError znamená, že telefonu se nepodařilo "
+#~ "zprávu odeslat, Error indikuje jinou chybu při zpracovávání zprávy."
 
 # type: Plain text
 #, fuzzy
 #~ msgid ""
 #~ "``StatusError`` (integer)\n"
-#~ "    Status of delivery from delivery report message, codes are defined in GSM\n"
+#~ "    Status of delivery from delivery report message, codes are defined in "
+#~ "GSM\n"
 #~ "    specification 03.40 section 9.2.3.15 (TP-Status).\n"
-#~ msgstr "Stav z doručenky, hodnoty jsou definovány ve specifikaci GSM 03.40.sekce 9.2.3.15 (TP-Status)."
+#~ msgstr ""
+#~ "Stav z doručenky, hodnoty jsou definovány ve specifikaci GSM 03.40.sekce "
+#~ "9.2.3.15 (TP-Status)."
 
 # type: Plain text
 #, fuzzy
@@ -1756,7 +1822,8 @@ msgstr ""
 #~ msgid ""
 #~ "7\n"
 #~ "    added CreatorID to tables (it holds PhoneID if set)\n"
-#~ msgstr "7 - do tabulek přidáno CreatorID (obsahuje PhoneID, pokud je nastaveno)"
+#~ msgstr ""
+#~ "7 - do tabulek přidáno CreatorID (obsahuje PhoneID, pokud je nastaveno)"
 
 # type: SS
 #~ msgid "Creating tables"
@@ -1932,7 +1999,9 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "`gammu-smsdrc` for details) to run defined program after receiving"
-#~ msgstr "Gammu SMSD může být nastaven pomocí direktivy RunOnReceive (viz gammu-smsdrc(5)) aby spouštěl zadaný program při přijetí zprávy."
+#~ msgstr ""
+#~ "Gammu SMSD může být nastaven pomocí direktivy RunOnReceive (viz gammu-"
+#~ "smsdrc(5)) aby spouštěl zadaný program při přijetí zprávy."
 
 # type: SS
 #, fuzzy
@@ -1977,7 +2046,8 @@ msgstr ""
 
 # type: Plain text
 #, fuzzy
-#~ msgid "`gammu-smsd-null`) to implement completely own processing of messages."
+#~ msgid ""
+#~ "`gammu-smsd-null`) to implement completely own processing of messages."
 #~ msgstr "gammu-smsd-null - služba pro gammu-smsd(1) neukládající zprávy"
 
 #~ msgid "Global variables"
@@ -2902,7 +2972,9 @@ msgstr ""
 
 # type: Plain text
 #, fuzzy
-#~ msgid "format used for message backup by :ref:`gammu`, see :ref:`gammu-smsbackup`.\n"
+#~ msgid ""
+#~ "format used for message backup by :ref:`gammu`, see :ref:`gammu-"
+#~ "smsbackup`.\n"
 #~ msgstr "B<detail> - formát používaný gammu(1) pro zálohy zpráv"
 
 # type: Plain text
@@ -3148,7 +3220,9 @@ msgstr ""
 # type: Plain text
 #, fuzzy
 #~ msgid "`gammu-smsd-inject` is a program that enqueues message in Gammu SMS"
-#~ msgstr "B<gammu-smsd-inject> je program, který přidá zprávy do fronty Gammu SMS démona, který je později odešle pomocí připojeného GSM modemu."
+#~ msgstr ""
+#~ "B<gammu-smsd-inject> je program, který přidá zprávy do fronty Gammu SMS "
+#~ "démona, který je později odešle pomocí připojeného GSM modemu."
 
 # type: Plain text
 #, fuzzy
@@ -4545,7 +4619,8 @@ msgstr ""
 #~ "``t``      strikethrough font\n"
 #~ "=========  ==================\n"
 #~ msgstr ""
-#~ "B<-format> lcrasbiut - poslední část textu bude naformátována. Můžete použít následující znaky:\n"
+#~ "B<-format> lcrasbiut - poslední část textu bude naformátována. Můžete "
+#~ "použít následující znaky:\n"
 #~ "    l - zarovnané vlevo\n"
 #~ "    c - zarovnané na střed\n"
 #~ "    r - zarovnané vpravo\n"
@@ -7326,7 +7401,8 @@ msgstr ""
 #, fuzzy
 #~ msgid ""
 #~ "``MYSQL_TESTING``:\n"
-#~ "    you need to have setup MySQL server with database where SMSD can play.\n"
+#~ "    you need to have setup MySQL server with database where SMSD can "
+#~ "play.\n"
 #~ msgstr ""
 #~ "    MYSQL_TESTING - potřebujete mít nastavený MySQL server s databází,\n"
 #~ "    ve které může SMSD pracovat.\n"
@@ -7334,7 +7410,8 @@ msgstr ""
 #, fuzzy
 #~ msgid ""
 #~ "``PSQL_TESTING``\n"
-#~ "    you need to have setup PostgreSQL server with database where SMSD can play.\n"
+#~ "    you need to have setup PostgreSQL server with database where SMSD can "
+#~ "play.\n"
 #~ msgstr ""
 #~ "    PSQL_TESTING - potřebujete mít nastavený PostgreSQL server\n"
 #~ "    s databází, ve které může SMSD pracovat.\n"
@@ -7671,7 +7748,9 @@ msgstr ""
 
 # type: Plain text
 #, fuzzy
-#~ msgid "      Deletes all memory (phonebooks or calls) entries of specified type.\n"
+#~ msgid ""
+#~ "      Deletes all memory (phonebooks or calls) entries of specified "
+#~ "type.\n"
 #~ msgstr "Odstraní všechny položky ze zadané paměti."
 
 #, fuzzy
@@ -11035,9 +11114,6 @@ msgstr ""
 
 #~ msgid "   gammu --debug textall --identify\n"
 #~ msgstr "   gammu --debug textall --identify\n"
-
-#~ msgid "Developers\n"
-#~ msgstr "Vývojáři\n"
 
 #, fuzzy
 #~ msgid ""

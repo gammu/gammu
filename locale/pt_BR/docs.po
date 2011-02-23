@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.29.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-01-10 12:45+0100\n"
+"POT-Creation-Date: 2011-02-23 16:58+0100\n"
 "PO-Revision-Date: 2011-01-20 20:26+0200\n"
 "Last-Translator: gilberto dos santos alves <gsavix@gmail.com>\n"
 "Language-Team: none\n"
@@ -74,8 +74,8 @@ msgid ""
 "wammu.eu/docs/manual/>."
 msgstr ""
 "Também há um manual Gammu disponível em docs/manual. Você pode construir o "
-"HTML da versão usando: make manual-html. Também pode acessá-lo em "
-"<http://wammu.eu/docs/manual/>."
+"HTML da versão usando: make manual-html. Também pode acessá-lo em <http://"
+"wammu.eu/docs/manual/>."
 
 #. type: Title =
 #: README:27
@@ -84,13 +84,27 @@ msgid "Feedback and bug reports"
 msgstr "Reporte erros e de sua opinião"
 
 #. type: Plain text
-#: README:30
+#: README:31
 msgid ""
 "Any feedback is welcome, see <http://wammu.eu/support/> for information how "
 "to contact developers."
 msgstr ""
 "Toda opinião é bem vinda! veja <http://wammu.eu/support/> para saber como "
 "contactar os desenvolvedores."
+
+#. type: Title =
+#: README:34
+#, fuzzy, no-wrap
+#| msgid "Developers\n"
+msgid "Support developers"
+msgstr "Desenvolvedor\n"
+
+#. type: Plain text
+#: README:36
+#, fuzzy
+#| msgid "You can find more information on <http://wammu.eu/gammu/>."
+msgid "You can appreciate developers work at <http://wammu.eu/donate/>."
+msgstr "Você pode achar mais informações em <http://wammu.eu/gammu/>."
 
 #. type: Title =
 #: INSTALL:2
@@ -148,8 +162,13 @@ msgstr ""
 
 # type: Plain text
 #, fuzzy
-#~ msgid "`gammu` reads configuration from a config file. It's location is determined"
-#~ msgstr "gammu-smsd(1) leitura da configuração do arquivo. Sua localização pode ser especificada na linha de comando, caso não seja especificada utilizará /etc/gammu-smsdrc."
+#~ msgid ""
+#~ "`gammu` reads configuration from a config file. It's location is "
+#~ "determined"
+#~ msgstr ""
+#~ "gammu-smsd(1) leitura da configuração do arquivo. Sua localização pode "
+#~ "ser especificada na linha de comando, caso não seja especificada "
+#~ "utilizará /etc/gammu-smsdrc."
 
 #~ msgid ""
 #~ "For hints about configuring your phone, you can check Gammu Phone "
@@ -272,13 +291,19 @@ msgstr ""
 
 # type: Plain text
 #, fuzzy
-#~ msgid "AT commands connection for most of phones (this is not supported on Linux).\n"
-#~ msgstr "B<irdaat> - conexões comandos AT para a maioria dos telefones (isso não é suportado para Linux)."
+#~ msgid ""
+#~ "AT commands connection for most of phones (this is not supported on "
+#~ "Linux).\n"
+#~ msgstr ""
+#~ "B<irdaat> - conexões comandos AT para a maioria dos telefones (isso não é "
+#~ "suportado para Linux)."
 
 # type: Plain text
 #, fuzzy
 #~ msgid "OBEX (IrMC or file transfer) connection for most of phones.\n"
-#~ msgstr "B<irdaobex> - OBEX (IrMC ou transferência de arquivo) conexão para a maioria dos telefones."
+#~ msgstr ""
+#~ "B<irdaobex> - OBEX (IrMC ou transferência de arquivo) conexão para a "
+#~ "maioria dos telefones."
 
 # type: Plain text
 #, fuzzy
@@ -292,7 +317,8 @@ msgstr ""
 # type: Plain text
 #, fuzzy
 #~ msgid "AT commands connection for most of phones.\n"
-#~ msgstr "B<blueat> - Conexão para muitos telefones com suporte a comandos AT."
+#~ msgstr ""
+#~ "B<blueat> - Conexão para muitos telefones com suporte a comandos AT."
 
 #, fuzzy
 #~ msgid "Device"
@@ -338,9 +364,12 @@ msgstr ""
 #~ "Device = serial:123456  # Match device by serial string\n"
 #~ msgstr ""
 #~ "    Device = 0x1234:0x5678  # Seleciona fornecedor e id do produto.\n"
-#~ "    Device = 0x1234:-1           # Seleciona dispositivo por id do fornecedor.\n"
-#~ "    Device = 1.10                     # Seleciona dispositivo por bus USB e endereço.\n"
-#~ "    Device = 10                        # Seleciona dispositivo pelo endereço.\n"
+#~ "    Device = 0x1234:-1           # Seleciona dispositivo por id do "
+#~ "fornecedor.\n"
+#~ "    Device = 1.10                     # Seleciona dispositivo por bus USB "
+#~ "e endereço.\n"
+#~ "    Device = 10                        # Seleciona dispositivo pelo "
+#~ "endereço.\n"
 
 # type: Plain text
 #, fuzzy
@@ -1292,9 +1321,12 @@ msgstr ""
 # type: Plain text
 #, fuzzy
 #~ msgid ""
-#~ "``Coding`` (enum('Default_No_Compression', 'Unicode_No_Compression', '8bit', 'Default_Compression', 'Unicode_Compression'))\n"
+#~ "``Coding`` (enum('Default_No_Compression', 'Unicode_No_Compression', "
+#~ "'8bit', 'Default_Compression', 'Unicode_Compression'))\n"
 #~ "    SMS text coding\n"
-#~ msgstr "B<Coding> (enum('Default_No_Compression', 'Unicode_No_Compression', '8bit', 'Default_Compression', 'Unicode_Compression'))"
+#~ msgstr ""
+#~ "B<Coding> (enum('Default_No_Compression', 'Unicode_No_Compression', "
+#~ "'8bit', 'Default_Compression', 'Unicode_Compression'))"
 
 # type: Plain text
 #, fuzzy
@@ -1369,16 +1401,21 @@ msgstr ""
 #, fuzzy
 #~ msgid ""
 #~ "``SendingDateTime`` (timestamp)\n"
-#~ "    set it to some value, when want to force sending after some planned time\n"
-#~ msgstr "coloque um valor horário, para que após o envido deve ser obrigatório"
+#~ "    set it to some value, when want to force sending after some planned "
+#~ "time\n"
+#~ msgstr ""
+#~ "coloque um valor horário, para que após o envido deve ser obrigatório"
 
 # type: Plain text
 #, fuzzy
 #~ msgid ""
 #~ "``Text`` (text)\n"
-#~ "    SMS text encoded using hex values in proper coding. If you want to use\n"
+#~ "    SMS text encoded using hex values in proper coding. If you want to "
+#~ "use\n"
 #~ "    TextDecoded field, keep this NULL (or empty).\n"
-#~ msgstr "Texto SMS codificado usando valores em hexa em codificação própria. Se você deseja usar o campo TextDecoded, deixe este com valor NULL ou vazio."
+#~ msgstr ""
+#~ "Texto SMS codificado usando valores em hexa em codificação própria. Se "
+#~ "você deseja usar o campo TextDecoded, deixe este com valor NULL ou vazio."
 
 # type: Plain text
 #, fuzzy
@@ -1390,9 +1427,13 @@ msgstr ""
 #, fuzzy
 #~ msgid ""
 #~ "``UDH`` (text)\n"
-#~ "    User Data Header encoded using hex values which will be used for constructing\n"
+#~ "    User Data Header encoded using hex values which will be used for "
+#~ "constructing\n"
 #~ "    the message. Without this, message will be sent as plain text.\n"
-#~ msgstr "Dados codificados do Cabeçalho do usuário usando valores hexa os quais serão utilizados para construir a mensagem. Sem isso, a mensagem será enviada como texto padrão."
+#~ msgstr ""
+#~ "Dados codificados do Cabeçalho do usuário usando valores hexa os quais "
+#~ "serão utilizados para construir a mensagem. Sem isso, a mensagem será "
+#~ "enviada como texto padrão."
 
 # type: Plain text
 #, fuzzy
@@ -1411,16 +1452,22 @@ msgstr ""
 # type: Plain text
 #, fuzzy
 #~ msgid ""
-#~ "    Please note that this number has to be unique also for sentitems table, so\n"
+#~ "    Please note that this number has to be unique also for sentitems "
+#~ "table, so\n"
 #~ "    reusing message IDs might not be a good idea.\n"
-#~ msgstr "Por favor note que este número precisa ser único também para a tabela sentitems, portanto reutilizar IDs de mensagens não é uma boa idéia!."
+#~ msgstr ""
+#~ "Por favor note que este número precisa ser único também para a tabela "
+#~ "sentitems, portanto reutilizar IDs de mensagens não é uma boa idéia!."
 
 # type: Plain text
 #, fuzzy
 #~ msgid ""
 #~ "``MultiPart`` (enum('false','true'))\n"
-#~ "    info, whether there are more SMS from this sequence in outbox_multipart\n"
-#~ msgstr "informacional, quando há mais SMS dessa sequência na tabela outbox_multipart"
+#~ "    info, whether there are more SMS from this sequence in "
+#~ "outbox_multipart\n"
+#~ msgstr ""
+#~ "informacional, quando há mais SMS dessa sequência na tabela "
+#~ "outbox_multipart"
 
 # type: Plain text
 #, fuzzy
@@ -1447,16 +1494,22 @@ msgstr ""
 #, fuzzy
 #~ msgid ""
 #~ "``DeliveryReport`` (enum('default','yes','no'))\n"
-#~ "    when default is used, Delivery Report is used or not according to SMSD instance settings; yes forces Delivery Report.\n"
-#~ msgstr "quando Padrão é usado, relatório de envio é usado ou não de acordo com as configurações da instância SMSD; Yes força relatório de envio."
+#~ "    when default is used, Delivery Report is used or not according to "
+#~ "SMSD instance settings; yes forces Delivery Report.\n"
+#~ msgstr ""
+#~ "quando Padrão é usado, relatório de envio é usado ou não de acordo com as "
+#~ "configurações da instância SMSD; Yes força relatório de envio."
 
 # type: Plain text
 #, fuzzy
 #~ msgid ""
 #~ "``CreatorID`` (text)\n"
-#~ "    sender identification, it has to match PhoneID in SMSD configuration to make\n"
+#~ "    sender identification, it has to match PhoneID in SMSD configuration "
+#~ "to make\n"
 #~ "    SMSD process this message\n"
-#~ msgstr "identificação do remetente, ele precisa combinar com o PhoneID na configuração da SMSD para permitir o SMSD processar esta mensagem"
+#~ msgstr ""
+#~ "identificação do remetente, ele precisa combinar com o PhoneID na "
+#~ "configuração da SMSD para permitir o SMSD processar esta mensagem"
 
 # type: TP
 #, fuzzy
@@ -1470,9 +1523,12 @@ msgstr ""
 #, fuzzy
 #~ msgid ""
 #~ "``SequencePosition`` (integer)\n"
-#~ "    info, what is SMS number in SMS sequence (start at 2, first part is in outbox\n"
+#~ "    info, what is SMS number in SMS sequence (start at 2, first part is "
+#~ "in outbox\n"
 #~ "    table).\n"
-#~ msgstr "informacional, qual é o número SMS na sequência SMS (inicia com 2, a parte 1 está na tabela outbox)."
+#~ msgstr ""
+#~ "informacional, qual é o número SMS na sequência SMS (inicia com 2, a "
+#~ "parte 1 está na tabela outbox)."
 
 # type: TP
 #, fuzzy
@@ -1534,17 +1590,23 @@ msgstr ""
 #, fuzzy
 #~ msgid ""
 #~ "``Sent`` (integer)\n"
-#~ "    Number of sent SMS messages (SMSD does not reset this counter, so it might\n"
+#~ "    Number of sent SMS messages (SMSD does not reset this counter, so it "
+#~ "might\n"
 #~ "    overflow).\n"
-#~ msgstr "Número de mensagens SMS enviadas (SMSD não inicializa este contador, portanto ele pode estar estourado)"
+#~ msgstr ""
+#~ "Número de mensagens SMS enviadas (SMSD não inicializa este contador, "
+#~ "portanto ele pode estar estourado)"
 
 # type: Plain text
 #, fuzzy
 #~ msgid ""
 #~ "``Received`` (integer)\n"
-#~ "    Number of received SMS messages (SMSD does not reset this counter, so it might\n"
+#~ "    Number of received SMS messages (SMSD does not reset this counter, so "
+#~ "it might\n"
 #~ "    overflow).\n"
-#~ msgstr "Número de mensagens SMS recebidas (SMSD não faz reset deste contador, portanto ele pode estar estourado)"
+#~ msgstr ""
+#~ "Número de mensagens SMS recebidas (SMSD não faz reset deste contador, "
+#~ "portanto ele pode estar estourado)"
 
 # type: TP
 #, fuzzy
@@ -1571,17 +1633,26 @@ msgstr ""
 # type: Plain text
 #, fuzzy
 #~ msgid ""
-#~ "``Status`` (enum('SendingOK', 'SendingOKNoReport', 'SendingError', 'DeliveryOK', 'DeliveryFailed', 'DeliveryPending', 'DeliveryUnknown', 'Error'))\n"
-#~ "    Status of message sending. SendingError mens that phone failed to send the\n"
+#~ "``Status`` (enum('SendingOK', 'SendingOKNoReport', 'SendingError', "
+#~ "'DeliveryOK', 'DeliveryFailed', 'DeliveryPending', 'DeliveryUnknown', "
+#~ "'Error'))\n"
+#~ "    Status of message sending. SendingError mens that phone failed to "
+#~ "send the\n"
 #~ "    message, Error indicates some other error while processing message.\n"
-#~ msgstr "Situação do envio de mensagem. SendingError significa que o telefone falhou em enviar a mensagem, Error indica que algum outro erro ocorreu no processamento."
+#~ msgstr ""
+#~ "Situação do envio de mensagem. SendingError significa que o telefone "
+#~ "falhou em enviar a mensagem, Error indica que algum outro erro ocorreu no "
+#~ "processamento."
 
 #, fuzzy
 #~ msgid ""
 #~ "``StatusError`` (integer)\n"
-#~ "    Status of delivery from delivery report message, codes are defined in GSM\n"
+#~ "    Status of delivery from delivery report message, codes are defined in "
+#~ "GSM\n"
 #~ "    specification 03.40 section 9.2.3.15 (TP-Status).\n"
-#~ msgstr "Situação de envio do relatório de envio de mensagem, os códigos são definidos pela especificação GSM 03.40 seção 9.2.3.15 (TP-Status)."
+#~ msgstr ""
+#~ "Situação de envio do relatório de envio de mensagem, os códigos são "
+#~ "definidos pela especificação GSM 03.40 seção 9.2.3.15 (TP-Status)."
 
 # type: Plain text
 #, fuzzy
@@ -1657,7 +1728,8 @@ msgstr ""
 #~ msgid ""
 #~ "7\n"
 #~ "    added CreatorID to tables (it holds PhoneID if set)\n"
-#~ msgstr "7 - adicionado CreatorID nas tabelas (isto prende PhoneID se configurado)"
+#~ msgstr ""
+#~ "7 - adicionado CreatorID nas tabelas (isto prende PhoneID se configurado)"
 
 # type: SS
 #~ msgid "Creating tables"
@@ -1822,7 +1894,10 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "`gammu-smsdrc` for details) to run defined program after receiving"
-#~ msgstr "Gammu SMSD pode ser configurado para diretiva RunOnReceive (veja gammu-smsdrc(5) para detalhes) para executar um programa após receber uma mensagem."
+#~ msgstr ""
+#~ "Gammu SMSD pode ser configurado para diretiva RunOnReceive (veja gammu-"
+#~ "smsdrc(5) para detalhes) para executar um programa após receber uma "
+#~ "mensagem."
 
 #, fuzzy
 #~ msgid "message."
@@ -1868,8 +1943,11 @@ msgstr ""
 #~ "mensagens."
 
 #, fuzzy
-#~ msgid "`gammu-smsd-null`) to implement completely own processing of messages."
-#~ msgstr "gammu-smsd-null - gammu-smsd(1) banco de dados de retaguarda não armazenando mensagens"
+#~ msgid ""
+#~ "`gammu-smsd-null`) to implement completely own processing of messages."
+#~ msgstr ""
+#~ "gammu-smsd-null - gammu-smsd(1) banco de dados de retaguarda não "
+#~ "armazenando mensagens"
 
 #~ msgid "Global variables"
 #~ msgstr "Variáveis Globais"
@@ -2773,7 +2851,9 @@ msgstr ""
 
 # type: Plain text
 #, fuzzy
-#~ msgid "format used for message backup by :ref:`gammu`, see :ref:`gammu-smsbackup`.\n"
+#~ msgid ""
+#~ "format used for message backup by :ref:`gammu`, see :ref:`gammu-"
+#~ "smsbackup`.\n"
 #~ msgstr "B<detail> - formato usado para backup de mensagem pelo gammu(1)"
 
 # type: Plain text
@@ -3006,7 +3086,9 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "`gammu-smsd-inject` is a program that enqueues message in Gammu SMS"
-#~ msgstr "B<gammu-smsd-inject> é um programa que enfilera mensagens no Daemon Gammu SMS, o qual pode mais tarde enviá-las usando uma conexão com modem GSM."
+#~ msgstr ""
+#~ "B<gammu-smsd-inject> é um programa que enfilera mensagens no Daemon Gammu "
+#~ "SMS, o qual pode mais tarde enviá-las usando uma conexão com modem GSM."
 
 #, fuzzy
 #~ msgid ""
@@ -4373,7 +4455,8 @@ msgstr ""
 #~ "``t``      strikethrough font\n"
 #~ "=========  ==================\n"
 #~ msgstr ""
-#~ "B<-format> lcrasbiut - último texto será formatado. Você pode usar a cobinações dos caracteres:\n"
+#~ "B<-format> lcrasbiut - último texto será formatado. Você pode usar a "
+#~ "cobinações dos caracteres:\n"
 #~ "    l - alinhado a esquerda\n"
 #~ "    c - centralizado\n"
 #~ "    r - alinhado a direita\n"
@@ -7211,7 +7294,9 @@ msgstr ""
 
 # type: Plain text
 #, fuzzy
-#~ msgid "      Deletes all memory (phonebooks or calls) entries of specified type.\n"
+#~ msgid ""
+#~ "      Deletes all memory (phonebooks or calls) entries of specified "
+#~ "type.\n"
 #~ msgstr "Apaga todas as entradas para um tipo de memória especificado."
 
 #, fuzzy
@@ -7243,7 +7328,8 @@ msgstr ""
 #~ msgstr "Define texto apresentado quando ligar o telefone."
 
 #, fuzzy
-#~ msgid "      Gets information about battery charge and phone charging state.\n"
+#~ msgid ""
+#~ "      Gets information about battery charge and phone charging state.\n"
 #~ msgstr "Exibe informação sobre bateria e fonte de energia."
 
 #, fuzzy
@@ -10260,9 +10346,6 @@ msgstr ""
 
 #~ msgid "   gammu --debug textall --identify\n"
 #~ msgstr "   gammu --debug textall --identify\n"
-
-#~ msgid "Developers\n"
-#~ msgstr "Desenvolvedor\n"
 
 #~ msgid ""
 #~ "Some information is available in docs/manual/ folder. You can also "

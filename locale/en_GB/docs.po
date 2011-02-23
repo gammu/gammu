@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.29.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-01-10 12:45+0100\n"
+"POT-Creation-Date: 2011-02-23 16:58+0100\n"
 "PO-Revision-Date: 2011-01-14 23:07+0200\n"
 "Last-Translator: Robert Readman <robert_readman@hotmail.com>\n"
 "Language-Team: none\n"
@@ -74,8 +74,8 @@ msgid ""
 "wammu.eu/docs/manual/>."
 msgstr ""
 "There is also Gammu manual available in docs/manual. You can build HTML "
-"version of it using make manual-html which is viewable online at "
-"<http://wammu.eu/docs/manual/>."
+"version of it using make manual-html which is viewable online at <http://"
+"wammu.eu/docs/manual/>."
 
 #. type: Title =
 #: README:27
@@ -84,13 +84,27 @@ msgid "Feedback and bug reports"
 msgstr "Feedback and bug reports"
 
 #. type: Plain text
-#: README:30
+#: README:31
 msgid ""
 "Any feedback is welcome, see <http://wammu.eu/support/> for information how "
 "to contact developers."
 msgstr ""
 "Any feedback is welcome, see <http://wammu.eu/support/> for information how "
 "to contact developers."
+
+#. type: Title =
+#: README:34
+#, fuzzy, no-wrap
+#| msgid "Developers\n"
+msgid "Support developers"
+msgstr "Developers\n"
+
+#. type: Plain text
+#: README:36
+#, fuzzy
+#| msgid "You can find more information on <http://wammu.eu/gammu/>."
+msgid "You can appreciate developers work at <http://wammu.eu/donate/>."
+msgstr "You can find more information on <http://wammu.eu/gammu/>."
 
 #. type: Title =
 #: INSTALL:2
@@ -141,8 +155,13 @@ msgstr ""
 #~ msgstr "Description of tables"
 
 #, fuzzy
-#~ msgid "`gammu` reads configuration from a config file. It's location is determined"
-#~ msgstr "gammu-smsd(1) reads configuration from a config file. It's location can be specified on command line, otherwise default path /etc/gammu-smsdrc is used."
+#~ msgid ""
+#~ "`gammu` reads configuration from a config file. It's location is "
+#~ "determined"
+#~ msgstr ""
+#~ "gammu-smsd(1) reads configuration from a config file. It's location can "
+#~ "be specified on command line, otherwise default path /etc/gammu-smsdrc is "
+#~ "used."
 
 #~ msgid ""
 #~ "For hints about configuring your phone, you can check Gammu Phone "
@@ -246,12 +265,17 @@ msgstr ""
 #~ msgstr "B<irdaphonet> - Phonet connection for Nokia phones."
 
 #, fuzzy
-#~ msgid "AT commands connection for most of phones (this is not supported on Linux).\n"
-#~ msgstr "B<irdaat> - AT commands connection for most of phones (this is not supported on Linux)."
+#~ msgid ""
+#~ "AT commands connection for most of phones (this is not supported on "
+#~ "Linux).\n"
+#~ msgstr ""
+#~ "B<irdaat> - AT commands connection for most of phones (this is not "
+#~ "supported on Linux)."
 
 #, fuzzy
 #~ msgid "OBEX (IrMC or file transfer) connection for most of phones.\n"
-#~ msgstr "B<irdaobex> - OBEX (IrMC or file transfer) connection for most of phones."
+#~ msgstr ""
+#~ "B<irdaobex> - OBEX (IrMC or file transfer) connection for most of phones."
 
 #, fuzzy
 #~ msgid "GNapplet based connection for Symbian phones\n"
@@ -1176,9 +1200,12 @@ msgstr ""
 
 #, fuzzy
 #~ msgid ""
-#~ "``Coding`` (enum('Default_No_Compression', 'Unicode_No_Compression', '8bit', 'Default_Compression', 'Unicode_Compression'))\n"
+#~ "``Coding`` (enum('Default_No_Compression', 'Unicode_No_Compression', "
+#~ "'8bit', 'Default_Compression', 'Unicode_Compression'))\n"
 #~ "    SMS text coding\n"
-#~ msgstr "B<Coding> (enum('Default_No_Compression', 'Unicode_No_Compression', '8bit', 'Default_Compression', 'Unicode_Compression'))"
+#~ msgstr ""
+#~ "B<Coding> (enum('Default_No_Compression', 'Unicode_No_Compression', "
+#~ "'8bit', 'Default_Compression', 'Unicode_Compression'))"
 
 #, fuzzy
 #~ msgid ""
@@ -1242,15 +1269,20 @@ msgstr ""
 #, fuzzy
 #~ msgid ""
 #~ "``SendingDateTime`` (timestamp)\n"
-#~ "    set it to some value, when want to force sending after some planned time\n"
-#~ msgstr "set it to some value, when want to force sending after some planned time"
+#~ "    set it to some value, when want to force sending after some planned "
+#~ "time\n"
+#~ msgstr ""
+#~ "set it to some value, when want to force sending after some planned time"
 
 #, fuzzy
 #~ msgid ""
 #~ "``Text`` (text)\n"
-#~ "    SMS text encoded using hex values in proper coding. If you want to use\n"
+#~ "    SMS text encoded using hex values in proper coding. If you want to "
+#~ "use\n"
 #~ "    TextDecoded field, keep this NULL (or empty).\n"
-#~ msgstr "SMS text encoded using hex values in proper coding. If you want to use TextDecoded field, keep this NULL (or empty)."
+#~ msgstr ""
+#~ "SMS text encoded using hex values in proper coding. If you want to use "
+#~ "TextDecoded field, keep this NULL (or empty)."
 
 #, fuzzy
 #~ msgid ""
@@ -1261,9 +1293,13 @@ msgstr ""
 #, fuzzy
 #~ msgid ""
 #~ "``UDH`` (text)\n"
-#~ "    User Data Header encoded using hex values which will be used for constructing\n"
+#~ "    User Data Header encoded using hex values which will be used for "
+#~ "constructing\n"
 #~ "    the message. Without this, message will be sent as plain text.\n"
-#~ msgstr "User Data Header encoded using hex values which will be used for constructing the message. Without this, message will be sent as plain text."
+#~ msgstr ""
+#~ "User Data Header encoded using hex values which will be used for "
+#~ "constructing the message. Without this, message will be sent as plain "
+#~ "text."
 
 #, fuzzy
 #~ msgid ""
@@ -1279,15 +1315,20 @@ msgstr ""
 
 #, fuzzy
 #~ msgid ""
-#~ "    Please note that this number has to be unique also for sentitems table, so\n"
+#~ "    Please note that this number has to be unique also for sentitems "
+#~ "table, so\n"
 #~ "    reusing message IDs might not be a good idea.\n"
-#~ msgstr "Please note that this number has to be unique also for sentitems table, so reusing message IDs might not be a good idea."
+#~ msgstr ""
+#~ "Please note that this number has to be unique also for sentitems table, "
+#~ "so reusing message IDs might not be a good idea."
 
 #, fuzzy
 #~ msgid ""
 #~ "``MultiPart`` (enum('false','true'))\n"
-#~ "    info, whether there are more SMS from this sequence in outbox_multipart\n"
-#~ msgstr "info, whether there are more SMS from this sequence in outbox_multipart"
+#~ "    info, whether there are more SMS from this sequence in "
+#~ "outbox_multipart\n"
+#~ msgstr ""
+#~ "info, whether there are more SMS from this sequence in outbox_multipart"
 
 #, fuzzy
 #~ msgid ""
@@ -1310,15 +1351,21 @@ msgstr ""
 #, fuzzy
 #~ msgid ""
 #~ "``DeliveryReport`` (enum('default','yes','no'))\n"
-#~ "    when default is used, Delivery Report is used or not according to SMSD instance settings; yes forces Delivery Report.\n"
-#~ msgstr "when default is used, Delivery Report is used or not according to SMSD instance settings; yes forces Delivery Report."
+#~ "    when default is used, Delivery Report is used or not according to "
+#~ "SMSD instance settings; yes forces Delivery Report.\n"
+#~ msgstr ""
+#~ "when default is used, Delivery Report is used or not according to SMSD "
+#~ "instance settings; yes forces Delivery Report."
 
 #, fuzzy
 #~ msgid ""
 #~ "``CreatorID`` (text)\n"
-#~ "    sender identification, it has to match PhoneID in SMSD configuration to make\n"
+#~ "    sender identification, it has to match PhoneID in SMSD configuration "
+#~ "to make\n"
 #~ "    SMSD process this message\n"
-#~ msgstr "sender identification, it has to match PhoneID in SMSD configuration to make SMSD process this message"
+#~ msgstr ""
+#~ "sender identification, it has to match PhoneID in SMSD configuration to "
+#~ "make SMSD process this message"
 
 #, fuzzy
 #~ msgid "outbox_multipart"
@@ -1330,9 +1377,12 @@ msgstr ""
 #, fuzzy
 #~ msgid ""
 #~ "``SequencePosition`` (integer)\n"
-#~ "    info, what is SMS number in SMS sequence (start at 2, first part is in outbox\n"
+#~ "    info, what is SMS number in SMS sequence (start at 2, first part is "
+#~ "in outbox\n"
 #~ "    table).\n"
-#~ msgstr "info, what is SMS number in SMS sequence (start at 2, first part is in outbox table)."
+#~ msgstr ""
+#~ "info, what is SMS number in SMS sequence (start at 2, first part is in "
+#~ "outbox table)."
 
 #, fuzzy
 #~ msgid "phones"
@@ -1384,16 +1434,22 @@ msgstr ""
 #, fuzzy
 #~ msgid ""
 #~ "``Sent`` (integer)\n"
-#~ "    Number of sent SMS messages (SMSD does not reset this counter, so it might\n"
+#~ "    Number of sent SMS messages (SMSD does not reset this counter, so it "
+#~ "might\n"
 #~ "    overflow).\n"
-#~ msgstr "Number of sent SMS messages (SMSD does not reset this counter, so it might overflow)."
+#~ msgstr ""
+#~ "Number of sent SMS messages (SMSD does not reset this counter, so it "
+#~ "might overflow)."
 
 #, fuzzy
 #~ msgid ""
 #~ "``Received`` (integer)\n"
-#~ "    Number of received SMS messages (SMSD does not reset this counter, so it might\n"
+#~ "    Number of received SMS messages (SMSD does not reset this counter, so "
+#~ "it might\n"
 #~ "    overflow).\n"
-#~ msgstr "Number of received SMS messages (SMSD does not reset this counter, so it might overflow)."
+#~ msgstr ""
+#~ "Number of received SMS messages (SMSD does not reset this counter, so it "
+#~ "might overflow)."
 
 #, fuzzy
 #~ msgid "sentitems"
@@ -1416,17 +1472,25 @@ msgstr ""
 
 #, fuzzy
 #~ msgid ""
-#~ "``Status`` (enum('SendingOK', 'SendingOKNoReport', 'SendingError', 'DeliveryOK', 'DeliveryFailed', 'DeliveryPending', 'DeliveryUnknown', 'Error'))\n"
-#~ "    Status of message sending. SendingError mens that phone failed to send the\n"
+#~ "``Status`` (enum('SendingOK', 'SendingOKNoReport', 'SendingError', "
+#~ "'DeliveryOK', 'DeliveryFailed', 'DeliveryPending', 'DeliveryUnknown', "
+#~ "'Error'))\n"
+#~ "    Status of message sending. SendingError mens that phone failed to "
+#~ "send the\n"
 #~ "    message, Error indicates some other error while processing message.\n"
-#~ msgstr "Status of message sending. SendingError mens that phone failed to send the message, Error indicates some other error while processing message."
+#~ msgstr ""
+#~ "Status of message sending. SendingError mens that phone failed to send "
+#~ "the message, Error indicates some other error while processing message."
 
 #, fuzzy
 #~ msgid ""
 #~ "``StatusError`` (integer)\n"
-#~ "    Status of delivery from delivery report message, codes are defined in GSM\n"
+#~ "    Status of delivery from delivery report message, codes are defined in "
+#~ "GSM\n"
 #~ "    specification 03.40 section 9.2.3.15 (TP-Status).\n"
-#~ msgstr "Status of delivery from delivery report message, codes are defined in GSM specification 03.40 section 9.2.3.15 (TP-Status)."
+#~ msgstr ""
+#~ "Status of delivery from delivery report message, codes are defined in GSM "
+#~ "specification 03.40 section 9.2.3.15 (TP-Status)."
 
 #, fuzzy
 #~ msgid ""
@@ -1653,7 +1717,9 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "`gammu-smsdrc` for details) to run defined program after receiving"
-#~ msgstr "Gammu SMSD can be configured by RunOnReceive directive (see gammu-smsdrc(5)  for details) to run defined program after receiving message."
+#~ msgstr ""
+#~ "Gammu SMSD can be configured by RunOnReceive directive (see gammu-smsdrc"
+#~ "(5)  for details) to run defined program after receiving message."
 
 #, fuzzy
 #~ msgid "message."
@@ -1697,7 +1763,8 @@ msgstr ""
 #~ "smsd-null(7)) to implement completely own processing of messages."
 
 #, fuzzy
-#~ msgid "`gammu-smsd-null`) to implement completely own processing of messages."
+#~ msgid ""
+#~ "`gammu-smsd-null`) to implement completely own processing of messages."
 #~ msgstr "gammu-smsd-null - gammu-smsd(1) backend not storing messages"
 
 #~ msgid "Global variables"
@@ -2510,7 +2577,9 @@ msgstr ""
 #~ "'standard'."
 
 #, fuzzy
-#~ msgid "format used for message backup by :ref:`gammu`, see :ref:`gammu-smsbackup`.\n"
+#~ msgid ""
+#~ "format used for message backup by :ref:`gammu`, see :ref:`gammu-"
+#~ "smsbackup`.\n"
 #~ msgstr "B<detail> - format used for message backup by gammu(1)"
 
 #, fuzzy
@@ -2724,7 +2793,9 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "`gammu-smsd-inject` is a program that enqueues message in Gammu SMS"
-#~ msgstr "B<gammu-smsd-inject> is a program that enqueues message in Gammu SMS daemon, which will be later sent by the daemon using connected GSM modem."
+#~ msgstr ""
+#~ "B<gammu-smsd-inject> is a program that enqueues message in Gammu SMS "
+#~ "daemon, which will be later sent by the daemon using connected GSM modem."
 
 #, fuzzy
 #~ msgid ""
@@ -3948,7 +4019,8 @@ msgstr ""
 #~ "``t``      strikethrough font\n"
 #~ "=========  ==================\n"
 #~ msgstr ""
-#~ "B<-format> lcrasbiut - last text will be formatted. You can use combinations of chars:\n"
+#~ "B<-format> lcrasbiut - last text will be formatted. You can use "
+#~ "combinations of chars:\n"
 #~ "    l - left aligned\n"
 #~ "    c - centred\n"
 #~ "    r - right aligned\n"
@@ -6913,7 +6985,9 @@ msgstr ""
 #~ msgstr "Deletes selected calendar entries in phone."
 
 #, fuzzy
-#~ msgid "      Deletes all memory (phonebooks or calls) entries of specified type.\n"
+#~ msgid ""
+#~ "      Deletes all memory (phonebooks or calls) entries of specified "
+#~ "type.\n"
 #~ msgstr "Deletes all entries from specified memory type."
 
 #, fuzzy
@@ -6945,7 +7019,8 @@ msgstr ""
 #~ msgstr "Sets startup text in phone."
 
 #, fuzzy
-#~ msgid "      Gets information about battery charge and phone charging state.\n"
+#~ msgid ""
+#~ "      Gets information about battery charge and phone charging state.\n"
 #~ msgstr "Displays information about battery and power source."
 
 #, fuzzy
@@ -9681,9 +9756,6 @@ msgstr ""
 
 #~ msgid "   gammu --debug textall --identify\n"
 #~ msgstr "   gammu --debug textall --identify\n"
-
-#~ msgid "Developers\n"
-#~ msgstr "Developers\n"
 
 #~ msgid ""
 #~ "Some information is available in docs/manual/ folder. You can also "
