@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-14 10:40+0100\n"
-"PO-Revision-Date: 2011-02-23 03:22+0200\n"
+"PO-Revision-Date: 2011-02-23 03:27+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -2514,10 +2514,10 @@ msgstr "Latitud"
 msgid "Longitude"
 msgstr "Longitud"
 
+# Corresponds to the maximum phone reach distance of a cell tower
 #: gammu/misc.c:357
-#, fuzzy
 msgid "Range"
-msgstr "Área"
+msgstr "Alcance"
 
 #: gammu/misc.c:358
 msgid "Number of samples"
