@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-02-23 17:00+0100\n"
+"POT-Creation-Date: 2011-02-24 16:19+0100\n"
 "PO-Revision-Date: 2010-02-10 10:20+0200\n"
 "Last-Translator: shanyan baishui <Siramizu@gmail.com>\n"
 "Language-Team: none\n"
@@ -82,19 +82,21 @@ msgstr "连接超时，可能电话尚未连接。"
 msgid ""
 "Frame not requested right now. See <http://wammu.eu/support/bugs/> for "
 "information how to report it."
-msgstr ""
+msgstr "现在不能提交帧。请参考<http://wammu.eu/support/bugs/>上的信息来报告。"
 
 #: libgammu/gsmcomon.c:99
 msgid ""
 "Unknown response from phone. See <http://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
+"来自电话的未知回复。请参考<http://wammu.eu/support/bugs/>上的信息来报告这个问"
+"题。"
 
 #: libgammu/gsmcomon.c:100
 msgid ""
 "Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
 "report it."
-msgstr ""
+msgstr "未知帧。请参考<http://wammu.eu/support/bugs/>上的信息来报告这个问题。"
 
 #: libgammu/gsmcomon.c:101
 msgid "Unknown connection type string. Check config file."
@@ -102,7 +104,7 @@ msgstr "未知的连接类型。请检查配置文件。"
 
 #: libgammu/gsmcomon.c:102
 msgid "Unknown model type string. Check config file."
-msgstr ""
+msgstr "未知的型号字符。请检查配置文件。"
 
 #: libgammu/gsmcomon.c:103
 msgid ""
@@ -116,7 +118,7 @@ msgstr "手机不支持该功能。"
 
 #: libgammu/gsmcomon.c:105
 msgid "Entry is empty."
-msgstr ""
+msgstr "条目为空"
 
 #: libgammu/gsmcomon.c:106
 msgid "Security error. Maybe no PIN?"
@@ -154,11 +156,11 @@ msgstr "手机不支持该功能。"
 #: libgammu/gsmcomon.c:114
 msgid ""
 "No SMSC number given. Provide it manually or use the one configured in phone."
-msgstr ""
+msgstr "没有提供SMSC号码。请手动提供或使用手机中的一个配置。"
 
 #: libgammu/gsmcomon.c:115
 msgid "You're inside phone menu (maybe editing?). Leave it and try again."
-msgstr ""
+msgstr "你已经进入了手机菜单（正在编辑？）。Google之后再试一下。"
 
 #: libgammu/gsmcomon.c:116
 msgid "Phone is not connected."
@@ -182,7 +184,7 @@ msgstr "Gammu 尚不支持此文件格式。"
 msgid ""
 "Nobody is perfect, some bug appeared in protocol implementation. Please "
 "contact authors."
-msgstr ""
+msgstr "人无完人，协议也未尝存在bug。请联系作者。"
 
 #: libgammu/gsmcomon.c:121
 msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
@@ -190,11 +192,11 @@ msgstr "传输已被手机取消，你可能在手机上按了取消。"
 
 #: libgammu/gsmcomon.c:122
 msgid "Phone module need to send another answer frame."
-msgstr ""
+msgstr "手机模块需要发送另一个回复帧。"
 
 #: libgammu/gsmcomon.c:123
 msgid "Current connection type doesn't support called function."
-msgstr ""
+msgstr "目前的连接类型不支持请求的操作。"
 
 #: libgammu/gsmcomon.c:124
 msgid "CRC error."
@@ -210,7 +212,7 @@ msgstr "手机内存错误，可能是只读的。"
 
 #: libgammu/gsmcomon.c:127
 msgid "Invalid data given to phone."
-msgstr ""
+msgstr "向手机发送了无效的数据"
 
 #: libgammu/gsmcomon.c:128
 msgid "File with specified name already exists."
@@ -266,7 +268,7 @@ msgstr "写入文件到磁盘出错。"
 
 #: libgammu/gsmcomon.c:141
 msgid "No such section exists."
-msgstr ""
+msgstr "区域不存在。"
 
 #: libgammu/gsmcomon.c:142
 msgid "Using default values."
@@ -278,15 +280,15 @@ msgstr "手机返回了损坏的数据。"
 
 #: libgammu/gsmcomon.c:144
 msgid "Bad feature string in configuration."
-msgstr ""
+msgstr "配置文件中存在错误。"
 
 #: libgammu/gsmcomon.c:145
 msgid "Desired functionality has been disabled on compile time."
-msgstr ""
+msgstr "需求的函数在编译期间已经关闭了。"
 
 #: libgammu/gsmcomon.c:146
 msgid "Bluetooth configuration requires channel option."
-msgstr ""
+msgstr "蓝牙配置需要频道选项。"
 
 #: libgammu/gsmcomon.c:147
 #, fuzzy
@@ -299,7 +301,7 @@ msgstr "服务配置丢失。"
 
 #: libgammu/gsmcomon.c:149
 msgid "Command rejected because device was busy. Wait and restart."
-msgstr ""
+msgstr "命令被拒绝，设备正忙。等待后重新开始。"
 
 #: libgammu/gsmcomon.c:150
 msgid "Could not connect to the server."
@@ -311,7 +313,7 @@ msgstr "无法解析主机名。"
 
 #: libgammu/gsmcomon.c:152
 msgid "Failed to get SMSC number from phone."
-msgstr ""
+msgstr "从手机获取SMSC号码失败。"
 
 #: libgammu/gsmcomon.c:153
 #, fuzzy
@@ -330,7 +332,7 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:188
 msgid "Unknown error description."
-msgstr ""
+msgstr "未知的错误描述。"
 
 #: libgammu/phone/dummy/dummy.c:588
 msgid "Templates"
@@ -338,35 +340,35 @@ msgstr "模板"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1969
 msgid "Personal"
-msgstr ""
+msgstr "个人的"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1971 libgammu/phone/nokia/nfunc.c:1141
 msgid "Car"
-msgstr ""
+msgstr "小汽车"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1973 libgammu/phone/nokia/nfunc.c:1143
 msgid "Headset"
-msgstr ""
+msgstr "耳机"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1979 libgammu/phone/nokia/nfunc.c:1131
 msgid "General"
-msgstr ""
+msgstr "通常"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1981 libgammu/phone/nokia/nfunc.c:1133
 msgid "Silent"
-msgstr ""
+msgstr "安静"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1983
 msgid "Discreet"
-msgstr ""
+msgstr "小心"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1985
 msgid "Loud"
-msgstr ""
+msgstr "大声"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1987
 msgid "My style"
-msgstr ""
+msgstr "我的风格"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:578
 msgid "SIM"
@@ -375,19 +377,19 @@ msgstr "SIM卡"
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:579 libgammu/phone/pfunc.c:41
 #: libgammu/phone/s60/s60phone.c:1752
 msgid "Inbox"
-msgstr ""
+msgstr "收件箱"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:580
 msgid "Sent items"
-msgstr ""
+msgstr "已发送项目"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:581
 msgid "Saved items"
-msgstr ""
+msgstr "已存项目"
 
 #: libgammu/phone/nokia/nfunc.c:947
 msgid "Family"
-msgstr ""
+msgstr "家人"
 
 #: libgammu/phone/nokia/nfunc.c:949
 msgid "VIP"
@@ -395,11 +397,11 @@ msgstr ""
 
 #: libgammu/phone/nokia/nfunc.c:951
 msgid "Friends"
-msgstr ""
+msgstr "朋友"
 
 #: libgammu/phone/nokia/nfunc.c:953
 msgid "Colleagues"
-msgstr ""
+msgstr "同事"
 
 #: libgammu/phone/nokia/nfunc.c:955
 msgid "Other"
@@ -407,15 +409,15 @@ msgstr "其他"
 
 #: libgammu/phone/nokia/nfunc.c:1135
 msgid "Meeting"
-msgstr ""
+msgstr "会议"
 
 #: libgammu/phone/nokia/nfunc.c:1137
 msgid "Outdoor"
-msgstr ""
+msgstr "户外"
 
 #: libgammu/phone/nokia/nfunc.c:1139
 msgid "Pager"
-msgstr ""
+msgstr "传呼机"
 
 #: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1753
 msgid "Outbox"

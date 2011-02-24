@@ -102,56 +102,45 @@ msgid ""
 "\"Compiling Gammu\" in The Gammu Manual."
 msgstr ""
 
-#, fuzzy
 #~ msgid "Gammu Configuration File"
 #~ msgstr "Telefoninformation"
 
 #~ msgid "Description"
 #~ msgstr "Beskrivning"
 
-#, fuzzy
 #~ msgid ".. config:section"
 #~ msgstr "Telefoninformation"
 
-#, fuzzy
 #~ msgid ".. config:option"
 #~ msgstr "Telefoninformation"
 
-#, fuzzy
 #~ msgid "Connection"
 #~ msgstr "Telefoninformation"
 
 #~ msgid "Device"
 #~ msgstr "Enhet"
 
-#, fuzzy
 #~ msgid "Port"
 #~ msgstr "Prioritet"
 
 #~ msgid "Model"
 #~ msgstr "Modell"
 
-#, fuzzy
 #~ msgid "errors in text format\n"
 #~ msgstr "Telefoninformation"
 
-#, fuzzy
 #~ msgid "0x01: Call Information\n"
 #~ msgstr "Telefoninformation"
 
-#, fuzzy
 #~ msgid "Note:"
 #~ msgstr "Anteckningar"
 
-#, fuzzy
 #~ msgid "0x05: Profile settings\n"
 #~ msgstr "Telefoninställningar"
 
-#, fuzzy
 #~ msgid "other: error\n"
 #~ msgstr "Inget fel."
 
-#, fuzzy
 #~ msgid "Get organizer information"
 #~ msgstr "Telefoninformation"
 
@@ -170,15 +159,12 @@ msgstr ""
 #~ msgid "Read"
 #~ msgstr "Lästa"
 
-#, fuzzy
 #~ msgid "Files"
 #~ msgstr "Filsystem"
 
-#, fuzzy
 #~ msgid "Phone connected to PC"
 #~ msgstr "Telefoninformation"
 
-#, fuzzy
 #~ msgid "Initiation"
 #~ msgstr "Telefoninformation"
 
@@ -188,55 +174,42 @@ msgstr ""
 #~ msgid "Connected"
 #~ msgstr "Ansluten"
 
-#, fuzzy
 #~ msgid "Disconnected"
 #~ msgstr "Telefoninformation"
 
-#, fuzzy
 #~ msgid "Phone connected to CARC91"
 #~ msgstr "Telefoninformation"
 
-#, fuzzy
 #~ msgid "where location:\n"
 #~ msgstr "Telefoninformation"
 
-#, fuzzy
 #~ msgid "0x7a: settings\n"
 #~ msgstr "Telefoninställningar"
 
-#, fuzzy
 #~ msgid "Memo Notes"
 #~ msgstr "Anteckningar"
 
-#, fuzzy
 #~ msgid "rest is not known"
 #~ msgstr "Tjänsten är inte igång."
 
-#, fuzzy
 #~ msgid "Filesystem access"
 #~ msgstr "Filsystem"
 
-#, fuzzy
 #~ msgid "get configuration pins"
 #~ msgstr "Telefoninformation"
 
-#, fuzzy
 #~ msgid "Configurable queries"
 #~ msgstr "Telefoninformation"
 
-#, fuzzy
 #~ msgid "Default value:"
 #~ msgstr "Använder standardvärden."
 
-#, fuzzy
 #~ msgid "SMSD Configuration File"
 #~ msgstr "Telefoninformation"
 
-#, fuzzy
 #~ msgid "NetworkCode"
 #~ msgstr "Nätverk"
 
-#, fuzzy
 #~ msgid "MaxRetries"
 #~ msgstr "Kategorier"
 
@@ -246,11 +219,9 @@ msgstr ""
 #~ msgid "Password"
 #~ msgstr "Lösenord"
 
-#, fuzzy
 #~ msgid "Try to connect to phone if not connected."
 #~ msgstr "Telefoninformation"
 
-#, fuzzy
 #~ msgid "name of configuration file"
 #~ msgstr "Telefoninformation"
 
@@ -260,90 +231,69 @@ msgstr ""
 #~ msgid "SMSC number"
 #~ msgstr "SMSC-nummer"
 
-#, fuzzy
 #~ msgid "save to specified folder."
 #~ msgstr "Kan inte öppna angiven fil. Skrivskyddad?"
 
-#, fuzzy
 #~ msgid "-animation"
 #~ msgstr "Telefoninformation"
 
-#, fuzzy
 #~ msgid "Memory (phonebooks and calls) commands"
 #~ msgstr "Minne (telefonböcker och samtal)"
 
-#, fuzzy
 #~ msgid "Filesystem commands"
 #~ msgstr "Filsystem"
 
-#, fuzzy
 #~ msgid "-system"
 #~ msgstr "Filsystem"
 
-#, fuzzy
 #~ msgid "getfilesystemstatus"
 #~ msgstr "Filsystem"
 
-#, fuzzy
 #~ msgid "Logo and pictures commands"
 #~ msgstr "Logotyp och bilder"
 
-#, fuzzy
 #~ msgid "Ringtones commands"
 #~ msgstr "Ringsignaler"
 
-#, fuzzy
 #~ msgid "getringtoneslist"
 #~ msgstr "Ringsignaler"
 
-#, fuzzy
 #~ msgid "Date, time and alarm commands"
 #~ msgstr "Datum, tid och alarm"
 
-#, fuzzy
 #~ msgid "Categories commands"
 #~ msgstr "Kategorier"
 
-#, fuzzy
 #~ msgid "SMSC settings"
 #~ msgstr "Telefoninställningar"
 
-#, fuzzy
 #~ msgid "WAP settings"
 #~ msgstr "Telefoninställningar"
 
-#, fuzzy
 #~ msgid "user ringtones"
 #~ msgstr "Ringsignaler"
 
-#, fuzzy
 #~ msgid "gammu getfilesystem"
 #~ msgstr "Filsystem"
 
-#, fuzzy
 #~ msgid "Network commands"
 #~ msgstr "Nätverk"
 
-#, fuzzy
 #~ msgid "networkinfo"
 #~ msgstr "Nätverk"
 
-#, fuzzy
 #~ msgid "Phone information commands"
 #~ msgstr "Telefoninformation"
 
 #~ msgid "battery"
 #~ msgstr "batteri"
 
-#, fuzzy
 #~ msgid "Phone settings commands"
 #~ msgstr "Telefoninställningar"
 
-#, fuzzy
 #~ msgid "Reset phone settings."
 #~ msgstr "Telefoninställningar"
 
-#, fuzzy
 #~ msgid "Clear phone settings."
 #~ msgstr "Telefoninställningar"
 
@@ -353,30 +303,24 @@ msgstr ""
 #~ msgid "Down"
 #~ msgstr "Ner"
 
-#, fuzzy
 #~ msgid "Configuration commands"
 #~ msgstr "Telefoninformation"
 
-#, fuzzy
 #~ msgid "Gammu information commands"
 #~ msgstr "Gammu är inte konfigurerad."
 
-#, fuzzy
 #~ msgid "Configuration"
 #~ msgstr "Telefoninformation"
 
-#, fuzzy
 #~ msgid "motivation"
 #~ msgstr "Telefoninformation"
 
-#, fuzzy
 #~ msgid ".."
 #~ msgstr "..."
 
 #~ msgid "..."
 #~ msgstr "..."
 
-#, fuzzy
 #~ msgid "Filesystem structure"
 #~ msgstr "Filsystem"
 
@@ -407,7 +351,6 @@ msgstr ""
 #~ msgid "Location"
 #~ msgstr "Plats"
 
-#, fuzzy
 #~ msgid "Memory"
 #~ msgstr "Minnet är fullt."
 
@@ -417,22 +360,18 @@ msgstr ""
 #~ msgid "State"
 #~ msgstr "Tillstånd"
 
-#, fuzzy
 #~ msgid "``NokiaRingtone``"
 #~ msgstr "Ringsignaler"
 
-#, fuzzy
 #~ msgid "Name of the SMSC configuration"
 #~ msgstr "Felaktig funktionssträng i konfigurationen."
 
-#, fuzzy
 #~ msgid "Unknown"
 #~ msgstr "Okänt fel."
 
 #~ msgid "Left"
 #~ msgstr "Vänster"
 
-#, fuzzy
 #~ msgid "Text formatting"
 #~ msgstr "Telefoninformation"
 
@@ -460,11 +399,9 @@ msgstr ""
 #~ msgid "Strikethrough"
 #~ msgstr "Genomstruken"
 
-#, fuzzy
 #~ msgid "Ringtone"
 #~ msgstr "Ringsignaler"
 
-#, fuzzy
 #~ msgid "Settings"
 #~ msgstr "Telefoninställningar"
 
@@ -474,66 +411,51 @@ msgstr ""
 #~ msgid "Value"
 #~ msgstr "Värde"
 
-#, fuzzy
 #~ msgid "System"
 #~ msgstr "Filsystem"
 
-#, fuzzy
 #~ msgid "      Adds memory (phonebooks or calls) entry.\n"
 #~ msgstr "Minne (telefonböcker och samtal)"
 
-#, fuzzy
 #~ msgid "      Deletes memory (phonebooks or calls) entry.\n"
 #~ msgstr "Minne (telefonböcker och samtal)"
 
-#, fuzzy
 #~ msgid "      Gets network information.\n"
 #~ msgstr "Telefoninformation"
 
-#, fuzzy
 #~ msgid "      Resets phone settings.\n"
 #~ msgstr "Telefoninställningar"
 
-#, fuzzy
 #~ msgid "      Sets memory (phonebooks or calls) entry.\n"
 #~ msgstr "Minne (telefonböcker och samtal)"
 
-#, fuzzy
 #~ msgid "Get version information."
 #~ msgstr "Telefoninformation"
 
-#, fuzzy
 #~ msgid "Debugging configuration"
 #~ msgstr "Telefoninformation"
 
-#, fuzzy
 #~ msgid "errors"
 #~ msgstr "Inget fel."
 
 #~ msgid "IMEI"
 #~ msgstr "IMEI"
 
-#, fuzzy
 #~ msgid "GSMNetworks"
 #~ msgstr "Nätverk"
 
-#, fuzzy
 #~ msgid "File formats used by Gammu"
 #~ msgstr "Filformatet stöds inte av Gammu."
 
-#, fuzzy
 #~ msgid "Call"
 #~ msgstr "Samtal"
 
-#, fuzzy
 #~ msgid "GSM_Call"
 #~ msgstr "Samtal"
 
-#, fuzzy
 #~ msgid "Getting phone information"
 #~ msgstr "Telefoninformation"
 
-#, fuzzy
 #~ msgid "Custom configuration"
 #~ msgstr "Telefoninformation"
 
@@ -543,79 +465,60 @@ msgstr ""
 #~ msgid "Date and time"
 #~ msgstr "Datum och tid"
 
-#, fuzzy
 #~ msgid "GSM_NetworkInfo"
 #~ msgstr "Nätverk"
 
-#, fuzzy
 #~ msgid "Category"
 #~ msgstr "Kategorier"
 
-#, fuzzy
 #~ msgid "GSM_CategoryType"
 #~ msgstr "Kategorier"
 
-#, fuzzy
 #~ msgid "GSM_Category"
 #~ msgstr "Kategorier"
 
-#, fuzzy
 #~ msgid "For per state machine configuration:"
 #~ msgstr "Felaktig funktionssträng i konfigurationen."
 
-#, fuzzy
 #~ msgid "GSM_FileSystemStatus"
 #~ msgstr "Filsystem"
 
-#, fuzzy
 #~ msgid "Callback"
 #~ msgstr "Samtal"
 
-#, fuzzy
 #~ msgid "SMSD"
 #~ msgstr "SMS"
 
-#, fuzzy
 #~ msgid "GSM_GetRingtone"
 #~ msgstr "Ringsignaler"
 
-#, fuzzy
 #~ msgid "GSM_SetRingtone"
 #~ msgstr "Ringsignaler"
 
-#, fuzzy
 #~ msgid "GSM_GetRingtonesInfo"
 #~ msgstr "Ringsignaler"
 
-#, fuzzy
 #~ msgid "GSM_NoteRingtone"
 #~ msgstr "Ringsignaler"
 
-#, fuzzy
 #~ msgid "GSM_Ringtone"
 #~ msgstr "Ringsignaler"
 
-#, fuzzy
 #~ msgid "GSM_RingtoneInfo"
 #~ msgstr "Ringsignaler"
 
-#, fuzzy
 #~ msgid "GSM_AllRingtonesInfo"
 #~ msgstr "Ringsignaler"
 
-#, fuzzy
 #~ msgid "GSM_ResetPhoneSettings"
 #~ msgstr "Telefoninställningar"
 
-#, fuzzy
 #~ msgid "Show version information and compiled in features."
 #~ msgstr "Telefoninformation"
 
-#, fuzzy
 #~ msgid "Functionality has been moved. For example to gammu-smsd(1)."
 #~ msgstr "Önskad funktionalitet har inaktiverats vid kompileringen."
 
-#, fuzzy
 #~ msgid "Error opening device. Unknown, busy or no permissions."
 #~ msgstr "Fel vid öppnade av enhet. Okänd/upptagen eller ingen behörighet."
 
@@ -636,7 +539,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Fel vid öppnade av enheten. Nödvändig drivrutin saknas i operativsystemet."
 
-#, fuzzy
 #~ msgid ""
 #~ "Error opening device. Some hardware not connected/wrongly configured."
 #~ msgstr ""
@@ -650,15 +552,12 @@ msgstr ""
 #~ msgstr ""
 #~ "Fel vid inställning av enhetshastighet. Hastighet kanske inte stöds."
 
-#, fuzzy
 #~ msgid "Error writing to the device."
 #~ msgstr "Fel vid skrivning till enheten."
 
-#, fuzzy
 #~ msgid "Error during reading from the device."
 #~ msgstr "Fel vid läsning från enheten."
 
-#, fuzzy
 #~ msgid "Can't set parity on the device."
 #~ msgstr "Kan inte ställa in paritet på enheten."
 
@@ -672,7 +571,6 @@ msgstr ""
 #~ msgid "Unknown model type string. Check config file."
 #~ msgstr "Okänd modelltypssträng. Kontrollera konfigurationsfilen."
 
-#, fuzzy
 #~ msgid ""
 #~ "Some functions not available for your system (disabled in config or not "
 #~ "implemented)."
@@ -683,7 +581,6 @@ msgstr ""
 #~ msgid "Function not supported by phone."
 #~ msgstr "Funktionen stöds inte av telefonen."
 
-#, fuzzy
 #~ msgid "Entry is empty."
 #~ msgstr "Posten är tom"
 
@@ -693,7 +590,6 @@ msgstr ""
 #~ msgid "Invalid location. Maybe too high?"
 #~ msgstr "Ogiltig plats. Kanske för hög?"
 
-#, fuzzy
 #~ msgid ""
 #~ "Functionality not implemented. You are welcome to help authors with it."
 #~ msgstr ""
@@ -703,7 +599,6 @@ msgstr ""
 #~ msgid "More memory required..."
 #~ msgstr "Mer minne behövs..."
 
-#, fuzzy
 #~ msgid "Operation not allowed by phone."
 #~ msgstr "Funktionen stöds inte av telefonen."
 
@@ -711,7 +606,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Du är inne i telefonmenyn (kanske redigerar?). Lämna den och prova igen."
 
-#, fuzzy
 #~ msgid ""
 #~ "Function is currently being implemented. If you want to help, please "
 #~ "contact authors."
@@ -748,7 +642,6 @@ msgstr ""
 #~ msgid "Invalid data given to phone."
 #~ msgstr "Ogiltigt data gavs till telefon."
 
-#, fuzzy
 #~ msgid "File with specified name already exists."
 #~ msgstr "Fil med angivet namn finns redan."
 
@@ -797,19 +690,15 @@ msgstr ""
 #~ msgid "Service configuration is missing."
 #~ msgstr "Tjänstekonfigurationen saknas."
 
-#, fuzzy
 #~ msgid "Could not connect to the server."
 #~ msgstr "Ansluter till IMAP-server..."
 
-#, fuzzy
 #~ msgid "Could not resolve the host name."
 #~ msgstr "Kunde inte läsa sparat meddelande!"
 
-#, fuzzy
 #~ msgid "Configuration\n"
 #~ msgstr "Telefoninformation"
 
-#, fuzzy
 #~ msgid "Note\n"
 #~ msgstr "Anteckningar"
 
@@ -817,7 +706,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Tomt SMSC-nummer. Ställ in det i telefonen eller använd -smscnumber."
 
-#, fuzzy
 #~ msgid ""
 #~ "Configuration\n"
 #~ "=============\n"

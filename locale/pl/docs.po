@@ -103,55 +103,45 @@ msgid ""
 "\"Compiling Gammu\" in The Gammu Manual."
 msgstr ""
 
-#, fuzzy
 #~ msgid "Gammu Configuration File"
 #~ msgstr "Pobierz informację o telefonie"
 
 #~ msgid "Description"
 #~ msgstr "Opis"
 
-#, fuzzy
 #~ msgid ".. config:section"
 #~ msgstr "Pobierz informację o telefonie"
 
-#, fuzzy
 #~ msgid "[gammu]"
 #~ msgstr "gammu(1)"
 
-#, fuzzy
 #~ msgid ".. config:option"
 #~ msgstr "Pobierz informację o telefonie"
 
-#, fuzzy
 #~ msgid "Connection"
 #~ msgstr "Pobierz informację o telefonie"
 
 #~ msgid "Device"
 #~ msgstr "Urządzenie"
 
-#, fuzzy
 #~ msgid "Port"
 #~ msgstr "Priorytet"
 
 #~ msgid "Model"
 #~ msgstr "Model"
 
-#, fuzzy
 #~ msgid "errors in text format\n"
 #~ msgstr "Pobierz informację o telefonie"
 
-#, fuzzy
 #~ msgid "0x01: Call Information\n"
 #~ msgstr "Pobierz informację o telefonie"
 
 #~ msgid "Note:"
 #~ msgstr "Komentarz:"
 
-#, fuzzy
 #~ msgid "other: error\n"
 #~ msgstr "Nie ma błędu."
 
-#, fuzzy
 #~ msgid "Get organizer information"
 #~ msgstr "Pobierz informację o telefonie"
 
@@ -167,11 +157,9 @@ msgstr ""
 #~ msgid "Read"
 #~ msgstr "Przeczytane"
 
-#, fuzzy
 #~ msgid "Phone connected to PC"
 #~ msgstr "Pobierz informację o telefonie"
 
-#, fuzzy
 #~ msgid "Initiation"
 #~ msgstr "Pobierz informację o telefonie"
 
@@ -181,51 +169,39 @@ msgstr ""
 #~ msgid "Connected"
 #~ msgstr "Połączono"
 
-#, fuzzy
 #~ msgid "Disconnected"
 #~ msgstr "Pobierz informację o telefonie"
 
-#, fuzzy
 #~ msgid "Phone connected to CARC91"
 #~ msgstr "Pobierz informację o telefonie"
 
-#, fuzzy
 #~ msgid "where location:\n"
 #~ msgstr "Pobierz informację o telefonie"
 
-#, fuzzy
 #~ msgid "rest is not known"
 #~ msgstr "Usługa nie jest uruchomiona."
 
-#, fuzzy
 #~ msgid "get configuration pins"
 #~ msgstr "Pobierz informację o telefonie"
 
-#, fuzzy
 #~ msgid "Configurable queries"
 #~ msgstr "Pobierz informację o telefonie"
 
-#, fuzzy
 #~ msgid "Default value:"
 #~ msgstr "Używanie domyślnych wartości."
 
-#, fuzzy
 #~ msgid "Usage"
 #~ msgstr "Użycie\n"
 
-#, fuzzy
 #~ msgid "gammu"
 #~ msgstr "gammu(1)"
 
-#, fuzzy
 #~ msgid "SMSD Configuration File"
 #~ msgstr "Pobierz informację o telefonie"
 
-#, fuzzy
 #~ msgid "PIN"
 #~ msgstr "OPCJE"
 
-#, fuzzy
 #~ msgid "NetworkCode"
 #~ msgstr "Sieć"
 
@@ -235,93 +211,73 @@ msgstr ""
 #~ msgid "Password"
 #~ msgstr "Hasło"
 
-#, fuzzy
 #~ msgid "Try to connect to phone if not connected."
 #~ msgstr "Pobierz informację o telefonie"
 
-#, fuzzy
 #~ msgid "-h, --help"
 #~ msgstr "B<-h, --help>"
 
-#, fuzzy
 #~ msgid "_gammu:"
 #~ msgstr "gammu(1)"
 
-#, fuzzy
 #~ msgid "name of configuration file"
 #~ msgstr "Pobierz informację o telefonie"
 
 #~ msgid "Unicode"
 #~ msgstr "Unicode"
 
-#, fuzzy
 #~ msgid "SMSC number"
 #~ msgstr "   Numer      : %s\n"
 
-#, fuzzy
 #~ msgid "save to specified folder."
 #~ msgstr ""
 #~ "Nie można otworzyć podanego pliku. Prawdopodobnie jest tylko do odczytu."
 
-#, fuzzy
 #~ msgid "-animation"
 #~ msgstr "Pobierz informację o telefonie"
 
-#, fuzzy
 #~ msgid "Ringtones commands"
 #~ msgstr "Dźwięki dzwonka"
 
-#, fuzzy
 #~ msgid "getringtoneslist"
 #~ msgstr "Dźwięki dzwonka"
 
-#, fuzzy
 #~ msgid "user ringtones"
 #~ msgstr "Dźwięki dzwonka"
 
-#, fuzzy
 #~ msgid "Network commands"
 #~ msgstr "Sieć"
 
-#, fuzzy
 #~ msgid "networkinfo"
 #~ msgstr "Sieć"
 
-#, fuzzy
 #~ msgid "Phone information commands"
 #~ msgstr "Pobierz informację o telefonie"
 
 #~ msgid "battery"
 #~ msgstr "bateria"
 
-#, fuzzy
 #~ msgid "Phone settings commands"
 #~ msgstr "Pobierz informację o telefonie"
 
-#, fuzzy
 #~ msgid "Configuration commands"
 #~ msgstr "Pobierz informację o telefonie"
 
-#, fuzzy
 #~ msgid "Gammu information commands"
 #~ msgstr "Gammu nie zostało skonfigurowane."
 
-#, fuzzy
 #~ msgid "Configuration"
 #~ msgstr "Pobierz informację o telefonie"
 
 #~ msgid "Reporting bugs"
 #~ msgstr "Zgłaszanie błędów"
 
-#, fuzzy
 #~ msgid "Man pages"
 #~ msgstr "Strony man"
 
-#, fuzzy
 #~ msgid "motivation"
 #~ msgstr "Pobierz informację o telefonie"
 
-#, fuzzy
 #~ msgid ".."
 #~ msgstr "..."
 
@@ -349,36 +305,30 @@ msgstr ""
 #~ msgid "Location"
 #~ msgstr "Lokalizacja"
 
-#, fuzzy
 #~ msgid "Memory"
 #~ msgstr "Pamięć pełna."
 
 #~ msgid "Type"
 #~ msgstr "Typ"
 
-#, fuzzy
 #~ msgid "Coding"
 #~ msgstr "  Usuwam %s\n"
 
 #~ msgid "State"
 #~ msgstr "Stan"
 
-#, fuzzy
 #~ msgid "``NokiaRingtone``"
 #~ msgstr "Dźwięki dzwonka"
 
-#, fuzzy
 #~ msgid "Name of the SMSC configuration"
 #~ msgstr "Pobierz informację o telefonie"
 
-#, fuzzy
 #~ msgid "Unknown"
 #~ msgstr "Nieznany błąd."
 
 #~ msgid "Left"
 #~ msgstr "Do lewej"
 
-#, fuzzy
 #~ msgid "Text formatting"
 #~ msgstr "Pobierz informację o telefonie"
 
@@ -403,11 +353,9 @@ msgstr ""
 #~ msgid "Underlined"
 #~ msgstr "Podkreślenie"
 
-# Inconsistency of form with the previous three
 #~ msgid "Strikethrough"
 #~ msgstr "Przekreślenie"
 
-#, fuzzy
 #~ msgid "Ringtone"
 #~ msgstr "Dźwięki dzwonka"
 
@@ -420,136 +368,105 @@ msgstr ""
 #~ msgid "Value"
 #~ msgstr "Wartość"
 
-#, fuzzy
 #~ msgid "      Reads IMEI/serial number from phone.\n"
 #~ msgstr "Pobranie numeru SMSC z telefonu nie powiodło się."
 
-#, fuzzy
 #~ msgid "      Gets network information.\n"
 #~ msgstr "Pobierz informację o telefonie"
 
-#, fuzzy
 #~ msgid "Get version information."
 #~ msgstr "Pobierz informację o telefonie"
 
-#, fuzzy
 #~ msgid "Debugging configuration"
 #~ msgstr "Pobierz informację o telefonie"
 
-#, fuzzy
 #~ msgid "errors"
 #~ msgstr "Nie ma błędu."
 
 #~ msgid "IMEI"
 #~ msgstr "IMEI"
 
-#, fuzzy
 #~ msgid "GSMNetworks"
 #~ msgstr "Sieć"
 
-#, fuzzy
 #~ msgid "File formats used by Gammu"
 #~ msgstr "Format pliku nie obsługiwany przez telefon."
 
-#, fuzzy
 #~ msgid "Call"
 #~ msgstr "Połączenia"
 
-#, fuzzy
 #~ msgid "GSM_Call"
 #~ msgstr "Połączenia"
 
-#, fuzzy
 #~ msgid "Getting phone information"
 #~ msgstr "Pobierz informację o telefonie"
 
-#, fuzzy
 #~ msgid "Custom configuration"
 #~ msgstr "Pobierz informację o telefonie"
 
-#, fuzzy
 #~ msgid "Date and time"
 #~ msgstr "   Numer      : %s\n"
 
-#, fuzzy
 #~ msgid "GSM_NetworkInfo"
 #~ msgstr "Sieć"
 
-#, fuzzy
 #~ msgid "Callback"
 #~ msgstr "Połączenia"
 
 #~ msgid "SMSD"
 #~ msgstr "SMSD"
 
-#, fuzzy
 #~ msgid "GSM_GetRingtone"
 #~ msgstr "Dźwięki dzwonka"
 
-#, fuzzy
 #~ msgid "GSM_SetRingtone"
 #~ msgstr "Dźwięki dzwonka"
 
-#, fuzzy
 #~ msgid "GSM_GetRingtonesInfo"
 #~ msgstr "Dźwięki dzwonka"
 
-#, fuzzy
 #~ msgid "GSM_NoteRingtone"
 #~ msgstr "Dźwięki dzwonka"
 
-#, fuzzy
 #~ msgid "GSM_Ringtone"
 #~ msgstr "Dźwięki dzwonka"
 
-#, fuzzy
 #~ msgid "GSM_RingtoneInfo"
 #~ msgstr "Dźwięki dzwonka"
 
-#, fuzzy
 #~ msgid "GSM_AllRingtonesInfo"
 #~ msgstr "Dźwięki dzwonka"
 
-#, fuzzy
 #~ msgid "Show summary of options."
 #~ msgstr "Pokaż podsumowanie opcji."
 
-#, fuzzy
 #~ msgid "Show version information and compiled in features."
 #~ msgstr "Pokaż wersję programu."
 
-#, fuzzy
 #~ msgid "NAME"
 #~ msgstr "NAZWA"
 
-#, fuzzy
 #~ msgid "SYNOPSIS"
 #~ msgstr "SKŁADNIA"
 
-#, fuzzy
 #~ msgid "DESCRIPTION"
 #~ msgstr "OPIS"
 
-#, fuzzy
 #~ msgid "Error opening device. Unknown, busy or no permissions."
 #~ msgstr ""
 #~ "Błąd podczas otwierania urządzenia. Nieznane/zajęte lub brak uprawnień."
 
-#, fuzzy
 #~ msgid "Error opening device, it is locked."
 #~ msgstr "Błąd podczas otwierania urządzenia. Urządzenie zablokowane."
 
-#, fuzzy
 #~ msgid "Error opening device, it doesn't exist."
 #~ msgstr "Błąd podczas otwierania urządzenia. Urządzenie nie istnieje."
 
-#, fuzzy
 #~ msgid "Error opening device, it is already opened by other application."
 #~ msgstr ""
 #~ "Błąd podczas otwierania urządzenia. Urządzenie otwarte przez inną "
 #~ "aplikację."
 
-#, fuzzy
 #~ msgid "Error opening device, you don't have permissions."
 #~ msgstr "Błąd podczas otwierania urządzenia. Brak uprawnień."
 
@@ -557,7 +474,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Błąd podczas otwierania urządzenia. Brak wymaganego sterownika w systemie."
 
-#, fuzzy
 #~ msgid ""
 #~ "Error opening device. Some hardware not connected/wrongly configured."
 #~ msgstr ""
@@ -572,15 +488,12 @@ msgstr ""
 #~ "Błąd ustawienia szybkości urządzenia. Prawdopodobnie prędkość "
 #~ "nieobsługiwana."
 
-#, fuzzy
 #~ msgid "Error writing to the device."
 #~ msgstr "Błąd zapisu do urządzenia."
 
-#, fuzzy
 #~ msgid "Error during reading from the device."
 #~ msgstr "Błąd podczas odczytu urządzenia."
 
-#, fuzzy
 #~ msgid "Can't set parity on the device."
 #~ msgstr "Nie można ustawić parzystości w urządzeniu."
 
@@ -595,7 +508,6 @@ msgstr ""
 #~ msgid "Unknown model type string. Check config file."
 #~ msgstr "Podano nieznany model telefonu. Sprawdź konfigurację."
 
-#, fuzzy
 #~ msgid ""
 #~ "Some functions not available for your system (disabled in config or not "
 #~ "implemented)."
@@ -606,7 +518,6 @@ msgstr ""
 #~ msgid "Function not supported by phone."
 #~ msgstr "Funkcja nie obsługiwana przez telefon."
 
-#, fuzzy
 #~ msgid "Entry is empty."
 #~ msgstr "Pozycja jest pusta"
 
@@ -616,7 +527,6 @@ msgstr ""
 #~ msgid "Invalid location. Maybe too high?"
 #~ msgstr "Nieznana lokalizacja. Może zbyt wysoko?"
 
-#, fuzzy
 #~ msgid ""
 #~ "Functionality not implemented. You are welcome to help authors with it."
 #~ msgstr ""
@@ -626,12 +536,9 @@ msgstr ""
 #~ msgid "More memory required..."
 #~ msgstr "Potrzeba więcej pamięci..."
 
-#, fuzzy
 #~ msgid "Operation not allowed by phone."
 #~ msgstr "Funkcja nie obsługiwana przez telefon."
 
-# SMSC - numer centrali SMS?
-#, fuzzy
 #~ msgid ""
 #~ "No SMSC number given. Provide it manually or use the one configured in "
 #~ "phone."
@@ -644,7 +551,6 @@ msgstr ""
 #~ "Jesteś wewnątrz menu telefonu (może edytujesz?). Zostaw je i spróbuj "
 #~ "ponownie."
 
-#, fuzzy
 #~ msgid ""
 #~ "Function is currently being implemented. If you want to help, please "
 #~ "contact authors."
@@ -682,7 +588,6 @@ msgstr ""
 #~ msgid "Invalid data given to phone."
 #~ msgstr "Wysłano niepoprawne dane do telefonu."
 
-#, fuzzy
 #~ msgid "File with specified name already exists."
 #~ msgstr "Plik o określonej nazwie już istnieje."
 
@@ -704,7 +609,6 @@ msgstr ""
 #~ "Niepoprawna wersja GNAPPLET w telefonie. Użyj wersji z obecnie używanego "
 #~ "Gammu."
 
-#, fuzzy
 #~ msgid "Only part of folder has been listed."
 #~ msgstr "Tylko część zawartości katalogu została wypisana."
 
@@ -714,74 +618,58 @@ msgstr ""
 #~ msgid "Data were converted."
 #~ msgstr "Dane zostały przekonwertowane."
 
-#, fuzzy
 #~ msgid "Wrong folder used."
 #~ msgstr "Zły katalog."
 
-#, fuzzy
 #~ msgid "Internal phone error."
 #~ msgstr "Nieznany błąd."
 
-#, fuzzy
 #~ msgid "Error writing file to disk."
 #~ msgstr "Błąd zapisu do urządzenia."
 
-#, fuzzy
 #~ msgid "No such section exists."
 #~ msgstr "Taka sekcja nie istnieje."
 
-#, fuzzy
 #~ msgid "Corrupted data returned by phone."
 #~ msgstr "Telefon zwrócił uszkodzone dane."
 
-#, fuzzy
 #~ msgid "Desired functionality has been disabled on compile time."
 #~ msgstr "Żądana funkcjonalność została wyłączona podczas kompilacji."
 
-#, fuzzy
 #~ msgid "Bluetooth configuration requires channel option."
 #~ msgstr "Konfiguracja bluetootha wymaga podania kanału."
 
-#, fuzzy
 #~ msgid "Service configuration is missing."
 #~ msgstr "Wybierz sekcję konfiguracji"
 
-#, fuzzy
 #~ msgid "Command rejected because device was busy. Wait and restart."
 #~ msgstr ""
 #~ "Polecenie odrzucone - urządzenie zajęte. Spróbuj jeszcze raz za chwilę."
 
-#, fuzzy
 #~ msgid "Could not connect to the server."
 #~ msgstr "Łączy się z serwerem IMAP..."
 
-#, fuzzy
 #~ msgid "Could not resolve the host name."
 #~ msgstr "Problem z odczytem zapisanej wiadomości!"
 
-#, fuzzy
 #~ msgid "COPYRIGHT"
 #~ msgstr "PRAWA AUTORSKIE"
 
-#, fuzzy
 #~ msgid "REPORTING BUGS"
 #~ msgstr "RAPORTOWANIE BŁĘDÓW"
 
 #~ msgid "AUTHOR"
 #~ msgstr "AUTOR"
 
-#, fuzzy
 #~ msgid "SEE ALSO"
 #~ msgstr "ZOBACZ TAKŻE"
 
-#, fuzzy
 #~ msgid "Configuration\n"
 #~ msgstr "Pobierz informację o telefonie"
 
 #~ msgid "Empty SMSC number. Set in phone or use -smscnumber."
 #~ msgstr "Pusty numer SMSC. Ustaw w telefonie lub użyj -smscnumber."
 
-#, fuzzy
 #~ msgid ""
 #~ "Configuration\n"
 #~ "=============\n"

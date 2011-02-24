@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-23 16:58+0100\n"
 "PO-Revision-Date: 2010-10-29 21:04+0200\n"
-"Last-Translator:  <canin@in.com>\n"
+"Last-Translator: <canin@in.com>\n"
 "Language-Team: none\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -22,7 +22,7 @@ msgstr ""
 #: README:2
 #, no-wrap
 msgid "Gammu All Mobile Management Utilities"
-msgstr ""
+msgstr "Gammu Handy Verwaltungszubehör"
 
 #. type: Plain text
 #: README:6
@@ -30,6 +30,8 @@ msgid ""
 "Gammu is library and command line utility for mobile phones. It is released "
 "under GNU GPL version 2."
 msgstr ""
+"Gammu ist eine Programmbibliothek und ein Kommandozeilenwerkzeug für "
+"Mobiltelefone. Es wird unter der GNU GPL v2 veröffentlicht."
 
 #. type: Plain text
 #: README:11
@@ -39,6 +41,10 @@ msgid ""
 "mwiacek.com> projects. Gammu was former (up to version 0.58) called "
 "MyGnokii2."
 msgstr ""
+"Es wurde von Marcin Wiacek und anderen Personen gegründet.Der ursprüngliche "
+"Quellcode basierte auf den Gnokii<http://www.gnokii.org> und später "
+"MyGnokii<http://www.mwiacek.com> Projekten. Gammu hieß früher(vor Version "
+"0.58) MyGnokii2."
 
 #. type: Plain text
 #: README:14
@@ -46,17 +52,20 @@ msgid ""
 "Currently the project is lead by Michal Cihar <michal@cihar.com> with help "
 "of many contributors."
 msgstr ""
+"Das Projekt wird derzeit von Michal Cihar <michal@cihar.com> mit der Hilfe "
+"von vielen Unterstützern geleitet."
 
 #. type: Title =
 #: README:17
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "More information"
-msgstr "Telefoninformationen"
+msgstr "weitere Informationen"
 
 #. type: Plain text
 #: README:20
 msgid "You can find more information on <http://wammu.eu/gammu/>."
 msgstr ""
+"Sie unter <http://wammu.eu/gammu/> können sie weitere Informationen erhalten."
 
 #. type: Plain text
 #: README:24
@@ -65,12 +74,16 @@ msgid ""
 "version of it using make manual-html which is viewable online at <http://"
 "wammu.eu/docs/manual/>."
 msgstr ""
+"Es gibt auch ein Benutzerhandbuch für Gammu es ist unter docs/manual "
+"verfügbar. Sie können daraus eine HTML-Version erstellen indem sie make "
+"manual-html benutzen. Diese Version ist auch online unter <http://wammu.eu/"
+"docs/manual/> verfügbar."
 
 #. type: Title =
 #: README:27
 #, no-wrap
 msgid "Feedback and bug reports"
-msgstr ""
+msgstr "Feedback und Fehlerberichte"
 
 #. type: Plain text
 #: README:31
@@ -78,6 +91,8 @@ msgid ""
 "Any feedback is welcome, see <http://wammu.eu/support/> for information how "
 "to contact developers."
 msgstr ""
+"jegliches Feedback ist willkommen, Sie können sich auf <http://wammu.eu/"
+"support/> informieren wie Sie mit den Entwicklern in Kontakt treten können."
 
 #. type: Title =
 #: README:34
@@ -102,34 +117,30 @@ msgid ""
 "See docs/manual/project/install.rst for installation guide or see chapter "
 "\"Compiling Gammu\" in The Gammu Manual."
 msgstr ""
+"Lesen Sie bitte die Installationsanleitung unter docs/manual/project/install."
+"rst oder das Kapitel \"Compiling Gammu\" im Gammu-Benutzerhandbuch."
 
-#, fuzzy
 #~ msgid "Gammu Configuration File"
 #~ msgstr "Telefoninformationen"
 
 #~ msgid "Description"
 #~ msgstr "Beschreibung"
 
-#, fuzzy
 #~ msgid ".. config:section"
 #~ msgstr "Telefoninformationen"
 
-#, fuzzy
 #~ msgid "[gammu]"
 #~ msgstr "gammu(1)"
 
-#, fuzzy
 #~ msgid ".. config:option"
 #~ msgstr "Telefoninformationen"
 
-#, fuzzy
 #~ msgid "Connection"
 #~ msgstr "Telefoninformationen"
 
 #~ msgid "Device"
 #~ msgstr "Gerät"
 
-#, fuzzy
 #~ msgid "1.27.95"
 #~ msgstr "Gammu 1.27.94"
 
@@ -139,46 +150,36 @@ msgstr ""
 #~ msgid "Model"
 #~ msgstr "Modell"
 
-#, fuzzy
 #~ msgid "errors in text format\n"
 #~ msgstr "Telefoninformationen"
 
 #~ msgid "Features"
 #~ msgstr "Funktionen"
 
-#, fuzzy
 #~ msgid "0x01: Call Information\n"
 #~ msgstr "Telefoninformationen"
 
-#, fuzzy
 #~ msgid "voice call:\n"
 #~ msgstr "Schaltet das Gespräch um."
 
-#, fuzzy
 #~ msgid "Note:"
 #~ msgstr "Notizen"
 
-#, fuzzy
 #~ msgid "to answer call:"
 #~ msgstr "Verbindet den Anruf weiter."
 
-#, fuzzy
 #~ msgid "0x04: Phone Status\n"
 #~ msgstr "Funktionstests"
 
-#, fuzzy
 #~ msgid "0x05: Profile settings\n"
 #~ msgstr "Telefoneinstellungen"
 
-#, fuzzy
 #~ msgid "0x13: Calendar notes\n"
 #~ msgstr "Kalendernotizen"
 
-#, fuzzy
 #~ msgid "other: error\n"
 #~ msgstr "Kein Fehler."
 
-#, fuzzy
 #~ msgid "Get organizer information"
 #~ msgstr "Telefoninformationen"
 
@@ -188,113 +189,84 @@ msgstr ""
 #~ msgid "Notes"
 #~ msgstr "Notizen"
 
-# type: SS
-#, fuzzy
 #~ msgid "Obex commands"
 #~ msgstr "Kommandos"
 
 #~ msgid "Contacts"
 #~ msgstr "Adressbuch"
 
-#, fuzzy
 #~ msgid "Calendar"
 #~ msgstr "Kalendernotizen"
 
-# To be consistent with the other entries like "Ungelesen" in the menu tree below "Nachrichten" it should be "Gelesen" instead of "Lesen".
 #~ msgid "Read"
 #~ msgstr "Gelesen"
 
 #~ msgid "Delete"
 #~ msgstr "Löschen"
 
-#, fuzzy
 #~ msgid "Files"
 #~ msgstr "Dateisystem"
 
-#, fuzzy
 #~ msgid "Phone connected to PC"
 #~ msgstr "Telefoninformationen"
 
-#, fuzzy
 #~ msgid "Initiation"
 #~ msgstr "Telefoninformationen"
 
-# type: Plain text
-#, fuzzy
 #~ msgid "Incoming call"
 #~ msgstr "Eingehenden Anruf abweisen."
 
 #~ msgid "Connected"
 #~ msgstr "Verbunden"
 
-#, fuzzy
 #~ msgid "Disconnected"
 #~ msgstr "Telefoninformationen"
 
-#, fuzzy
 #~ msgid "Phone connected to CARC91"
 #~ msgstr "Telefoninformationen"
 
-#, fuzzy
 #~ msgid "where location:\n"
 #~ msgstr "Telefoninformationen"
 
-#, fuzzy
 #~ msgid "0x7a: settings\n"
 #~ msgstr "Telefoneinstellungen"
 
-# type: SS
-#, fuzzy
 #~ msgid "0x4E commands"
 #~ msgstr "Kommandos"
 
-# type: SS
-#, fuzzy
 #~ msgid "0xD0 commands"
 #~ msgstr "Kommandos"
 
-#, fuzzy
 #~ msgid "Phone Protocols"
 #~ msgstr "Funktionstests"
 
-#, fuzzy
 #~ msgid "Calendar Entries"
 #~ msgstr "Kalendernotizen"
 
-#, fuzzy
 #~ msgid "Memo Notes"
 #~ msgstr "Notizen"
 
-#, fuzzy
 #~ msgid "rest is not known"
 #~ msgstr "Der Dienst läuft nicht."
 
-#, fuzzy
 #~ msgid "To test:"
 #~ msgstr "Funktionstests"
 
-# type: SS
-#, fuzzy
 #~ msgid "Sonim AT Commands"
 #~ msgstr "Kommandos"
 
-#, fuzzy
 #~ msgid "Filesystem access"
 #~ msgstr "Dateisystem"
 
-#, fuzzy
 #~ msgid "0x3E: FM Radio"
 #~ msgstr "Radio"
 
-#, fuzzy
 #~ msgid "get configuration pins"
 #~ msgstr "Telefoninformationen"
 
-#, fuzzy
 #~ msgid "Configurable queries"
 #~ msgstr "Telefoninformationen"
 
-#, fuzzy
 #~ msgid "Default value:"
 #~ msgstr "Benutze Standardwerte."
 
@@ -304,36 +276,27 @@ msgstr ""
 #~ msgid "Reporting Bugs"
 #~ msgstr "Fehler melden"
 
-#, fuzzy
 #~ msgid "gammu"
 #~ msgstr "gammu(1)"
 
-#, fuzzy
 #~ msgid "SMSD Configuration File"
 #~ msgstr "Telefoninformationen"
 
-#, fuzzy
 #~ msgid "1.28.93"
 #~ msgstr "Gammu 1.28.90"
 
-# type: SH
-#, fuzzy
 #~ msgid "PIN"
 #~ msgstr "OPTIONEN"
 
-#, fuzzy
 #~ msgid "NetworkCode"
 #~ msgstr "Netzname"
 
-#, fuzzy
 #~ msgid "PhoneCode"
 #~ msgstr "Funktionstests"
 
-#, fuzzy
 #~ msgid "MaxRetries"
 #~ msgstr "Kategorien"
 
-#, fuzzy
 #~ msgid "1.28.92"
 #~ msgstr "Gammu 1.28.90"
 
@@ -346,42 +309,32 @@ msgstr ""
 #~ msgid "Password"
 #~ msgstr "Passwort"
 
-#, fuzzy
 #~ msgid "Try to connect to phone if not connected."
 #~ msgstr "Telefoninformationen"
 
-#, fuzzy
 #~ msgid "text"
 #~ msgstr "Gettext"
 
-#, fuzzy
 #~ msgid "-h, --help"
 #~ msgstr "B<-h, --help>"
 
-# type: TH
-#, fuzzy
 #~ msgid "Developer documentation"
 #~ msgstr "Gammu Dokumentation"
 
 #~ msgid "Troubleshooting Windows Service"
 #~ msgstr "Erste Hilfe bei Windows-Problemen"
 
-#, fuzzy
 #~ msgid "_gammu:"
 #~ msgstr "gammu(1)"
 
-# type: Plain text
-#, fuzzy
 #~ msgid "gammu [parameters] <command> [options]"
 #~ msgstr "Benutzung: gammu [I<parameters>] E<lt>commandE<gt> [I<options>]"
 
-#, fuzzy
 #~ msgid ""
 #~ "Commands actually indicate which operation should Gammu perform. They can "
 #~ "be specified with or without leading ``--``."
 #~ msgstr "Kommandos können mit oder ohne führende -- angegeben werden."
 
-#, fuzzy
 #~ msgid ""
 #~ "This program is a tool for mobile phones. Many vendors and phones are "
 #~ "supported, for actual listing see `Gammu Phones Database <http://wammu.eu/"
@@ -391,75 +344,55 @@ msgstr ""
 #~ "Anbieter und Telefone. Eine Übersicht findet man unter E<lt>http://wammu."
 #~ "eu/phones/E<gt>."
 
-# type: Plain text
 #~ msgid "Parameters before command configure gammu behaviour:"
 #~ msgstr "Parameter vor dem Komando konfigurieren das Verhalten von gammu:"
 
-#, fuzzy
 #~ msgid "name of configuration file"
 #~ msgstr "Telefoninformationen"
 
-# type: Plain text
-#, fuzzy
 #~ msgid "section of config file to use, eg. 42"
 #~ msgstr ""
 #~ "-s / --section E<lt>confignE<gt> ... Zu verwendender Abschnitt der  "
 #~ "Konfigurationsdatei, z.B. 42"
 
-# type: Plain text
-#, fuzzy
 #~ msgid "file for logging debug messages"
 #~ msgstr "-f / --debug-file E<lt>filenameE<gt> ... Datei für Debug-Meldungen"
 
-# type: SS
-#, fuzzy
 #~ msgid "Call commands"
 #~ msgstr "Kommandos"
 
-# die uebersetzung von einem befehl oder tag, je nach text... kann super sein oder missverstaendlich. da rot markiert, duerfte eine funktionalitaet gegeben sein?
-#, fuzzy
 #~ msgid "answercall [id]"
 #~ msgstr "B<answercall>I< [id]>"
 
-# type: Plain text
 #~ msgid "Answer incoming call."
 #~ msgstr "Eingehenden Anruf annehmen."
 
-#, fuzzy
 #~ msgid "cancelcall [id]"
 #~ msgstr "B<cancelcall>I< [id]>"
 
-# type: Plain text
 #~ msgid "Cancel incoming call"
 #~ msgstr "Eingehenden Anruf abweisen."
 
-# type: TP
-#, fuzzy
 #~ msgid "canceldiverts"
 #~ msgstr "B<canceldiverts>"
 
 #~ msgid "Cancel all existing call diverts."
 #~ msgstr "Alle Rufumleitungen beenden."
 
-#, fuzzy
 #~ msgid "conferencecall id"
 #~ msgstr "B<conferencecall>I< id>"
 
 #~ msgid "Initiates a conference call."
 #~ msgstr "Beginnt eine Konferenzschaltung"
 
-# type: TP
-#, fuzzy
 #~ msgid "dialvoice number [show|hide]"
 #~ msgstr "B<dialvoice>I< number [show|hide]>"
 
-# type: Plain text
 #~ msgid "Make voice call from SIM card line set in phone."
 #~ msgstr ""
 #~ "Anruf von der Leitung, die auf der SIM-Karte im Mobiltelefon eingestellt "
 #~ "ist."
 
-#, fuzzy
 #~ msgid ""
 #~ "``show|hide`` - optional parameter whether to disable call number "
 #~ "indication."
@@ -467,8 +400,6 @@ msgstr ""
 #~ "B<show|hide> - optionaler Parameter um die Übermittlung der eigenen "
 #~ "Rufnummer zuzulassen oder zu unterdrücken."
 
-# type: TP
-#, fuzzy
 #~ msgid ""
 #~ "divert get|set all|busy|noans|outofreach all|voice|fax|data [number "
 #~ "timeout]"
@@ -479,28 +410,21 @@ msgstr ""
 #~ msgid "Manage or display call diverts."
 #~ msgstr "Rufumleitungen anzeigen oder verwalten."
 
-#, fuzzy
 #~ msgid "whether to get divert information or to set it."
 #~ msgstr "B<get|set> - Rufumleitungen abrufen oder setzen."
 
-#, fuzzy
 #~ msgid "condition when apply divert"
 #~ msgstr "B<all|busy|noans|outofreach> - Bedingung für Rufumleitung wählen."
 
-#, fuzzy
 #~ msgid "call type when apply divert"
 #~ msgstr "B<all|voice|fax|data> - Anruftyp für Rufumleitung wählen."
 
-#, fuzzy
 #~ msgid "number where to divert"
 #~ msgstr "number - Nummer, zu der umgeleitet wird."
 
-#, fuzzy
 #~ msgid "timeout when the diversion will happen"
 #~ msgstr "timeout - Zeitspanne, bis die Rufumleitung aktiv wird"
 
-# type: TP
-#, fuzzy
 #~ msgid "getussd code"
 #~ msgstr "B<getussd>I< code>"
 
@@ -510,20 +434,15 @@ msgstr ""
 #~ "Ruft USSD-Informationen ab - Ruft eine Servicenummer an, und liest die "
 #~ "Antwort."
 
-#, fuzzy
 #~ msgid "holdcall id"
 #~ msgstr "B<holdcall>I< id>"
 
 #~ msgid "Holds call."
 #~ msgstr "Hält das Gespräch."
 
-# type: TP
-#, fuzzy
 #~ msgid "maketerminatedcall number length [show|hide]"
 #~ msgstr "B<maketerminatedcall>I< number length [show|hide]>"
 
-# type: Plain text
-#, fuzzy
 #~ msgid ""
 #~ "Make voice call from SIM card line set in phone which will be terminated "
 #~ "after ``length`` seconds."
@@ -531,50 +450,41 @@ msgstr ""
 #~ "Tätigt einen Anruf über die SIM-Karte im Mobiltelefon, der nach B<length> "
 #~ "Sekunden beendet wird."
 
-# type: TP
-#, fuzzy
 #~ msgid "senddtmf sequence"
 #~ msgstr "B<senddtmf>I< sequence>"
 
-# type: Plain text
 #~ msgid "Plays DTMF sequence. In some phones available only during calls"
 #~ msgstr ""
 #~ "Sendet eine DTMF-Sequenz. In einigen Mobiltelefonen nur während eines "
 #~ "Gespräch verfügbar."
 
-#, fuzzy
 #~ msgid "splitcall id"
 #~ msgstr "B<splitcall>I< id>"
 
 #~ msgid "Splits call."
 #~ msgstr "Teilt das Gespräch auf."
 
-#, fuzzy
 #~ msgid "switchcall [id]"
 #~ msgstr "B<switchcall>I< [id]>"
 
 #~ msgid "Switches call."
 #~ msgstr "Schaltet das Gespräch um."
 
-#, fuzzy
 #~ msgid "transfercall [id]"
 #~ msgstr "B<transfercall>I< [id]>"
 
 #~ msgid "Transfers call."
 #~ msgstr "Verbindet den Anruf weiter."
 
-#, fuzzy
 #~ msgid "unholdcall id"
 #~ msgstr "B<unholdcall>I< id>"
 
 #~ msgid "Unholds call."
 #~ msgstr "Nimmt gehaltenes Gespräch wieder auf."
 
-#, fuzzy
 #~ msgid "SMS and EMS commands"
 #~ msgstr "SMS und EMS"
 
-# type: Plain text
 #~ msgid ""
 #~ "Sending messages might look a bit complicated on first attempt to use.  "
 #~ "But be patient, the command line has been written in order to allow "
@@ -585,7 +495,6 @@ msgstr ""
 #~ "allen Zwecken gerecht zu werden. Schauen Sie auch in den Abschnitt "
 #~ "Beispiele für einige praktische Anwendungshinweise."
 
-#, fuzzy
 #~ msgid ""
 #~ "There is also an option to use :ref:`gammu-smsd` when you want to send or "
 #~ "receive more messages and process them automatically."
@@ -596,35 +505,24 @@ msgstr ""
 #~ msgid "Unicode"
 #~ msgstr "Unicode"
 
-# type: SS
-#, fuzzy
 #~ msgid "SMS commands"
 #~ msgstr "Kommandos"
 
-# type: TP
-#, fuzzy
 #~ msgid "getsms folder start [stop]"
 #~ msgstr "B<getspeeddial>I< start [stop]>"
 
-# type: TP
-#, fuzzy
 #~ msgid "getsmsc [start [stop]]"
 #~ msgstr "B<getspeeddial>I< start [stop]>"
 
-# type: Plain text
-#, fuzzy
 #~ msgid "-smscnumber number"
 #~ msgstr "B<-smscnumber number> - SMSC Nummer"
 
 #~ msgid "SMSC number"
 #~ msgstr "SMSC-Nummer"
 
-# type: Plain text
-#, fuzzy
 #~ msgid "reply SMSC is set"
 #~ msgstr "B<-reply> - Antwort-SMSC setzen"
 
-#, fuzzy
 #~ msgid ""
 #~ "Limit maximal number of messages which will be created. If there are more "
 #~ "messages, Gammu will terminate with failure."
@@ -632,16 +530,12 @@ msgstr ""
 #~ "Höchstanzahl der Nachrichten, die erstellt werden. Wenn sich mehr "
 #~ "Nachrichten ergeben, bricht Gammu mit einer Fehlermeldung ab."
 
-#, fuzzy
 #~ msgid "save to specified folder."
 #~ msgstr "Kann gewählte Datei nicht öffnen. Keine Schreibberechtigung?"
 
-# type: Plain text
 #~ msgid "Folders are numerated from 1."
 #~ msgstr "Ordner sind von '1' an durchnummeriert."
 
-# type: Plain text
-#, fuzzy
 #~ msgid ""
 #~ "The most often folder 1 = \"Inbox\", 2 = \"Outbox\",etc. Use :option:"
 #~ "`gammu getsmsfolders` to get folder list."
@@ -649,8 +543,6 @@ msgstr ""
 #~ "Gewöhnlich ist der Ordner 1 = \"Inbox\", 2 = \"Outbox\", usw.. Benutze "
 #~ "den Befehl B<getsmsfolders>, um eine Ordnerliste angezeigt zu bekommen."
 
-# type: Plain text
-#, fuzzy
 #~ msgid ""
 #~ "makes message unread. In some phones (like 6210) you won't see unread sms "
 #~ "envelope after saving such sms. In some phones with internal SMS memory "
@@ -664,8 +556,6 @@ msgstr ""
 #~ "Karte angezeigt wurden. Dann wird (automatisch?) der eingebaute SMS-"
 #~ "Speicher verwendet."
 
-# type: Plain text
-#, fuzzy
 #~ msgid ""
 #~ "makes message read. In some phones with internal SMS memory (like 6210) "
 #~ "after using it with folder 1 SIM SMS memory will be used"
@@ -678,205 +568,144 @@ msgstr ""
 #~ "Karte angezeigt wurden. Dann wird (automatisch?) der eingebaute SMS-"
 #~ "Speicher verwendet."
 
-#, fuzzy
 #~ msgid "-text"
 #~ msgstr "Gettext"
 
-#, fuzzy
 #~ msgid "-animation"
 #~ msgstr "Telefoninformationen"
 
-#, fuzzy
 #~ msgid "Memory (phonebooks and calls) commands"
 #~ msgstr "Speicher (Telefonbuch und Anrufe)"
 
-# type: SS
-#, fuzzy
 #~ msgid "Memory commands"
 #~ msgstr "Kommandos"
 
-# type: TP
-#, fuzzy
 #~ msgid "getspeeddial start [stop]"
 #~ msgstr "B<getspeeddial>I< start [stop]>"
 
 #~ msgid "Gets speed dial choices."
 #~ msgstr "Zeige Kurzwahlübersicht."
 
-#, fuzzy
 #~ msgid "Filesystem commands"
 #~ msgstr "Dateisystem"
 
-#, fuzzy
 #~ msgid "-system"
 #~ msgstr "Dateisystem"
 
-#, fuzzy
 #~ msgid "getfilesystemstatus"
 #~ msgstr "Dateisystem"
 
-#, fuzzy
 #~ msgid "Logo and pictures commands"
 #~ msgstr "Logos und Bilder"
 
-#, fuzzy
 #~ msgid "Ringtones commands"
 #~ msgstr "Klingeltöne"
 
-#, fuzzy
 #~ msgid "getringtoneslist"
 #~ msgstr "Klingeltöne"
 
-#, fuzzy
 #~ msgid "Calendar notes commands"
 #~ msgstr "Kalendernotizen"
 
-# type: TP
-#, fuzzy
 #~ msgid "deletecalendar start [stop]"
 #~ msgstr "B<getspeeddial>I< start [stop]>"
 
-# type: TP
-#, fuzzy
 #~ msgid "getcalendar start [stop]"
 #~ msgstr "B<getspeeddial>I< start [stop]>"
 
-#, fuzzy
 #~ msgid "To do list commands"
 #~ msgstr "Augabenlisten"
 
-# type: TP
-#, fuzzy
 #~ msgid "deletetodo start [stop]"
 #~ msgstr "B<getspeeddial>I< start [stop]>"
 
-# type: TP
-#, fuzzy
 #~ msgid "gettodo start [stop]"
 #~ msgstr "B<getspeeddial>I< start [stop]>"
 
-# type: SS
-#, fuzzy
 #~ msgid "Notes commands"
 #~ msgstr "Kommandos"
 
-#, fuzzy
 #~ msgid "Date, time and alarm commands"
 #~ msgstr "Datum, Uhrzeit und Wecker"
 
-#, fuzzy
 #~ msgid "Categories commands"
 #~ msgstr "Kategorien"
 
-#, fuzzy
 #~ msgid "Backing up and restoring commands"
 #~ msgstr "Sichern und wiederherstellen"
 
-#, fuzzy
 #~ msgid "calendar notes"
 #~ msgstr "Kalendernotizen"
 
-#, fuzzy
 #~ msgid "SMSC settings"
 #~ msgstr "MMS und MMS-Einstellungen"
 
-#, fuzzy
 #~ msgid "WAP bookmarks"
 #~ msgstr "WAP-Einstellungen und -Lesezeichen"
 
-#, fuzzy
 #~ msgid "WAP settings"
 #~ msgstr "Telefoneinstellungen"
 
-#, fuzzy
 #~ msgid "user ringtones"
 #~ msgstr "Klingeltöne"
 
-#, fuzzy
 #~ msgid "1.28.94"
 #~ msgstr "Gammu 1.28.90"
 
-#, fuzzy
 #~ msgid "Nokia specific commands"
 #~ msgstr "Nokia-spezifisch"
 
-#, fuzzy
 #~ msgid "gammu getfilesystem"
 #~ msgstr "Dateisystem"
 
-#, fuzzy
 #~ msgid "Siemens specific commands"
 #~ msgstr "Siemens-spezifisch"
 
-#, fuzzy
 #~ msgid "Network commands"
 #~ msgstr "Netzname"
 
-# type: TP
-#, fuzzy
 #~ msgid "getgprspoint start [stop]"
 #~ msgstr "B<getspeeddial>I< start [stop]>"
 
-#, fuzzy
 #~ msgid "networkinfo"
 #~ msgstr "Netzname"
 
-#, fuzzy
 #~ msgid "WAP settings and bookmarks commands"
 #~ msgstr "WAP-Einstellungen und -Lesezeichen"
 
-# type: TP
-#, fuzzy
 #~ msgid "getchatsettings start [stop]"
 #~ msgstr "B<getspeeddial>I< start [stop]>"
 
-# type: TP
-#, fuzzy
 #~ msgid "getsyncmlsettings start [stop]"
 #~ msgstr "B<getspeeddial>I< start [stop]>"
 
-# type: TP
-#, fuzzy
 #~ msgid "getwapbookmark start [stop]"
 #~ msgstr "B<getspeeddial>I< start [stop]>"
 
-# type: TP
-#, fuzzy
 #~ msgid "getwapsettings start [stop]"
 #~ msgstr "B<getspeeddial>I< start [stop]>"
 
-#, fuzzy
 #~ msgid "MMS and MMS settings commands"
 #~ msgstr "MMS und MMS-Einstellungen"
 
-# type: TP
-#, fuzzy
 #~ msgid "getmmssettings start [stop]"
 #~ msgstr "B<getspeeddial>I< start [stop]>"
 
-#, fuzzy
 #~ msgid "FM radio commands"
 #~ msgstr "Radio"
 
-# type: TP
-#, fuzzy
 #~ msgid "getfmstation start [stop]"
 #~ msgstr "B<getspeeddial>I< start [stop]>"
 
-#, fuzzy
 #~ msgid "Phone information commands"
 #~ msgstr "Telefoninformationen"
 
 #~ msgid "battery"
 #~ msgstr "Akku"
 
-# type: TP
-#, fuzzy
 #~ msgid "monitor [times]"
 #~ msgstr "B<monitor>I< [times]>"
 
-# type: Plain text
-#, fuzzy
 #~ msgid ""
 #~ "Get phone status and writes continuously to standard output. Press :kbd:"
 #~ "`Ctrl+C` to break this state."
@@ -884,65 +713,48 @@ msgstr ""
 #~ "Telefonstatus abfragen und laufend auf die Standardausgabe schreiben. "
 #~ "Abbruch mit Strg+C."
 
-#, fuzzy
 #~ msgid "Phone settings commands"
 #~ msgstr "Telefoneinstellungen"
 
-#, fuzzy
 #~ msgid "getcalendarsettings"
 #~ msgstr "Telefoneinstellungen"
 
-# type: TP
-#, fuzzy
 #~ msgid "getprofile start [stop]"
 #~ msgstr "B<getspeeddial>I< start [stop]>"
 
-#, fuzzy
 #~ msgid "Reset phone settings."
 #~ msgstr "Telefoneinstellungen"
 
-#, fuzzy
 #~ msgid "Clear phone settings."
 #~ msgstr "Telefoneinstellungen"
 
-#, fuzzy
 #~ msgid "Clear device settings."
 #~ msgstr "Telefoneinstellungen"
 
-#, fuzzy
 #~ msgid "Clear user settings."
 #~ msgstr "Telefoneinstellungen"
 
-#, fuzzy
 #~ msgid "clear user ringtones"
 #~ msgstr "Klingeltöne"
 
-#, fuzzy
 #~ msgid "Dumps decoding commands"
 #~ msgstr "Gibt Dekodierung aus"
 
-# type: SS
-#, fuzzy
 #~ msgid "Other commands"
 #~ msgstr "Kommandos"
 
-#, fuzzy
 #~ msgid "Configuration commands"
 #~ msgstr "Telefoninformationen"
 
-#, fuzzy
 #~ msgid "Gammu information commands"
 #~ msgstr "Gammu Information"
 
-#, fuzzy
 #~ msgid "Configuration"
 #~ msgstr "Telefoninformationen"
 
 #~ msgid "Reporting bugs"
 #~ msgstr "Fehler melden"
 
-# type: TH
-#, fuzzy
 #~ msgid "Project Documentation"
 #~ msgstr "Gammu Dokumentation"
 
@@ -952,7 +764,6 @@ msgstr ""
 #~ msgid "# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us"
 #~ msgstr "# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us"
 
-#, fuzzy
 #~ msgid "motivation"
 #~ msgstr "Telefoninformationen"
 
@@ -962,19 +773,15 @@ msgstr ""
 #~ msgid "Gettext"
 #~ msgstr "Gettext"
 
-#, fuzzy
 #~ msgid "make"
 #~ msgstr "Funktionstests"
 
-#, fuzzy
 #~ msgid "make test"
 #~ msgstr "Funktionstests"
 
-#, fuzzy
 #~ msgid "Cross compilation for Windows on Linux"
 #~ msgstr "Cross-Compilierung für Windows unter Linux\n"
 
-#, fuzzy
 #~ msgid "Filesystem structure"
 #~ msgstr "Dateisystem"
 
@@ -984,12 +791,9 @@ msgstr ""
 #~ msgid "Filesystem"
 #~ msgstr "Dateisystem"
 
-#, fuzzy
 #~ msgid "``make test``"
 #~ msgstr "Funktionstests"
 
-# type: TH
-#, fuzzy
 #~ msgid "Gammu Documentation Contents"
 #~ msgstr "Gammu Dokumentation"
 
@@ -1002,8 +806,6 @@ msgstr ""
 #~ msgid "Name"
 #~ msgstr "Name"
 
-# User Data Header, Im Zusammengan mit SMS
-# http://en.wikipedia.org/wiki/Short_message_service
 #~ msgid "UDH"
 #~ msgstr "UDH"
 
@@ -1019,7 +821,6 @@ msgstr ""
 #~ msgid "Class"
 #~ msgstr "Klasse"
 
-#, fuzzy
 #~ msgid "Memory"
 #~ msgstr "Speicher voll."
 
@@ -1032,11 +833,9 @@ msgstr ""
 #~ msgid "State"
 #~ msgstr "Status"
 
-#, fuzzy
 #~ msgid "``NokiaRingtone``"
 #~ msgstr "Klingeltöne"
 
-#, fuzzy
 #~ msgid "Name of the SMSC configuration"
 #~ msgstr "Falsche Feature-Angabe in der Konfiguration."
 
@@ -1046,14 +845,12 @@ msgstr ""
 #~ msgid "Validity"
 #~ msgstr "Gültigkeit"
 
-#, fuzzy
 #~ msgid "Unknown"
 #~ msgstr "Unbekannter Fehler."
 
 #~ msgid "Left"
 #~ msgstr "Links"
 
-#, fuzzy
 #~ msgid "Text formatting"
 #~ msgstr "Telefoninformationen"
 
@@ -1081,14 +878,12 @@ msgstr ""
 #~ msgid "Strikethrough"
 #~ msgstr "Durchgestrichen"
 
-#, fuzzy
 #~ msgid "Ringtone"
 #~ msgstr "Klingeltöne"
 
 #~ msgid "Bitmap"
 #~ msgstr "Bitmap"
 
-#, fuzzy
 #~ msgid "Settings"
 #~ msgstr "Telefoneinstellungen"
 
@@ -1098,183 +893,135 @@ msgstr ""
 #~ msgid "Value"
 #~ msgstr "Wert"
 
-#, fuzzy
 #~ msgid "Calendar Object"
 #~ msgstr "Kalendernotizen"
 
-#, fuzzy
 #~ msgid "Calendar Entries Object"
 #~ msgstr "Kalendernotizen"
 
-#, fuzzy
 #~ msgid "Used"
 #~ msgstr "Benutzer-UDH"
 
-#, fuzzy
 #~ msgid "System"
 #~ msgstr "Dateisystem"
 
-#, fuzzy
 #~ msgid "Initiating a voice call"
 #~ msgstr "Beginnt eine Konferenzschaltung"
 
-#, fuzzy
 #~ msgid "CalendarTypes"
 #~ msgstr "Kalendernotizen"
 
-#, fuzzy
 #~ msgid "CalendarValueTypes"
 #~ msgstr "Kalendernotizen"
 
-# type: TH
-#, fuzzy
 #~ msgid "API documentation"
 #~ msgstr "Gammu Dokumentation"
 
-#, fuzzy
 #~ msgid "      Adds memory (phonebooks or calls) entry.\n"
 #~ msgstr "Speicher (Telefonbuch und Anrufe)"
 
-# type: Plain text
-#, fuzzy
 #~ msgid "      Adds SMS to specified folder.\n"
 #~ msgstr "B<-folder number> - Speichern in der angegebenen Ordner."
 
-# type: Plain text
-#, fuzzy
 #~ msgid "      Accept current incoming call.\n"
 #~ msgstr "Eingehenden Anruf annehmen."
 
-# type: Plain text
-#, fuzzy
 #~ msgid "      Deny current incoming call.\n"
 #~ msgstr "Eingehenden Anruf abweisen."
 
-#, fuzzy
 #~ msgid "      Initiates conference call.\n"
 #~ msgstr "Beginnt eine Konferenzschaltung"
 
-#, fuzzy
 #~ msgid "      Deletes memory (phonebooks or calls) entry.\n"
 #~ msgstr "Speicher (Telefonbuch und Anrufe)"
 
-#, fuzzy
 #~ msgid "      Reads IMEI/serial number from phone.\n"
 #~ msgstr "Konnte keine SMSC-Nummer vom Telefon erhalten."
 
-#, fuzzy
 #~ msgid "      Gets network information.\n"
 #~ msgstr "Telefoninformationen"
 
-#, fuzzy
 #~ msgid "      Gets speed dial.\n"
 #~ msgstr "Zeige Kurzwahlübersicht."
 
-#, fuzzy
 #~ msgid "      Holds call.\n"
 #~ msgstr "Hält das Gespräch."
 
-#, fuzzy
 #~ msgid "      Resets phone settings.\n"
 #~ msgstr "Telefoneinstellungen"
 
-#, fuzzy
 #~ msgid "      Sets memory (phonebooks or calls) entry.\n"
 #~ msgstr "Speicher (Telefonbuch und Anrufe)"
 
-#, fuzzy
 #~ msgid "      Sets speed dial.\n"
 #~ msgstr "Zeige Kurzwahlübersicht."
 
-#, fuzzy
 #~ msgid "      Splits call.\n"
 #~ msgstr "Teilt das Gespräch auf."
 
-#, fuzzy
 #~ msgid "      Switches call.\n"
 #~ msgstr "Schaltet das Gespräch um."
 
-#, fuzzy
 #~ msgid "      Transfers call.\n"
 #~ msgstr "Verbindet den Anruf weiter."
 
-#, fuzzy
 #~ msgid "      Unholds call.\n"
 #~ msgstr "Nimmt gehaltenes Gespräch wieder auf."
 
-#, fuzzy
 #~ msgid "Get version information."
 #~ msgstr "Telefoninformationen"
 
-#, fuzzy
 #~ msgid "Debugging configuration"
 #~ msgstr "Telefoninformationen"
 
-#, fuzzy
 #~ msgid "errors"
 #~ msgstr "Kein Fehler."
 
-#, fuzzy
 #~ msgid "1.27.93"
 #~ msgstr "Gammu 1.27.94"
 
-#, fuzzy
 #~ msgid "Backup reading and writing"
 #~ msgstr "Sichern und wiederherstellen"
 
 #~ msgid "IMEI"
 #~ msgstr "IMEI"
 
-#, fuzzy
 #~ msgid "GSMNetworks"
 #~ msgstr "Netzname"
 
-#, fuzzy
 #~ msgid "Gammu internals"
 #~ msgstr "Gammu Information"
 
-#, fuzzy
 #~ msgid "File formats used by Gammu"
 #~ msgstr "Das Dateiformat wird von Gammu nicht unterstützt."
 
-#, fuzzy
 #~ msgid "Call"
 #~ msgstr "Anrufe"
 
-#, fuzzy
 #~ msgid "GSM_HoldCall"
 #~ msgstr "Hält das Gespräch."
 
-#, fuzzy
 #~ msgid "GSM_UnholdCall"
 #~ msgstr "Nimmt gehaltenes Gespräch wieder auf."
 
-#, fuzzy
 #~ msgid "GSM_SplitCall"
 #~ msgstr "Teilt das Gespräch auf."
 
-#, fuzzy
 #~ msgid "GSM_TransferCall"
 #~ msgstr "Verbindet den Anruf weiter."
 
-#, fuzzy
 #~ msgid "GSM_SwitchCall"
 #~ msgstr "Schaltet das Gespräch um."
 
-# type: TP
-#, fuzzy
 #~ msgid "GSM_CancelAllDiverts"
 #~ msgstr "B<canceldiverts>"
 
-#, fuzzy
 #~ msgid "GSM_Call"
 #~ msgstr "Anrufe"
 
-#, fuzzy
 #~ msgid "Getting phone information"
 #~ msgstr "Telefoninformationen"
 
-#, fuzzy
 #~ msgid "Custom configuration"
 #~ msgstr "Telefoninformationen"
 
@@ -1284,151 +1031,117 @@ msgstr ""
 #~ msgid "Date and time"
 #~ msgstr "Datum und Uhrzeit"
 
-#, fuzzy
 #~ msgid "GSM_SetCalendarSettings"
 #~ msgstr "MMS und MMS-Einstellungen"
 
-#, fuzzy
 #~ msgid "GSM_CalendarSettings"
 #~ msgstr "Telefoneinstellungen"
 
-#, fuzzy
 #~ msgid "GSM_CalendarStatus"
 #~ msgstr "Kalendernotizen"
 
-#, fuzzy
 #~ msgid "GSM_CalendarNoteType"
 #~ msgstr "Kalendernotizen"
 
-#, fuzzy
 #~ msgid "GSM_CalendarType"
 #~ msgstr "Kalendernotizen"
 
-#, fuzzy
 #~ msgid "GSM_CalendarEntry"
 #~ msgstr "Kalendernotizen"
 
 #~ msgid "libGammu"
 #~ msgstr "libGammu"
 
-#, fuzzy
 #~ msgid "GSM_NetworkInfo"
 #~ msgstr "Netzname"
 
-#, fuzzy
 #~ msgid "Category"
 #~ msgstr "Kategorien"
 
-#, fuzzy
 #~ msgid "GSM_CategoryType"
 #~ msgstr "Kategorien"
 
-#, fuzzy
 #~ msgid "GSM_Category"
 #~ msgstr "Kategorien"
 
-#, fuzzy
 #~ msgid "For per state machine configuration:"
 #~ msgstr "Falsche Feature-Angabe in der Konfiguration."
 
-#, fuzzy
 #~ msgid "GSM_FileSystemStatus"
 #~ msgstr "Dateisystem"
 
-#, fuzzy
 #~ msgid "Callback"
 #~ msgstr "Anrufe"
 
 #~ msgid "SMSD"
 #~ msgstr "SMSD"
 
-#, fuzzy
 #~ msgid "Initiates connection."
 #~ msgstr "Beginnt eine Konferenzschaltung"
 
-#, fuzzy
 #~ msgid "GSM_GetRingtone"
 #~ msgstr "Klingeltöne"
 
-#, fuzzy
 #~ msgid "GSM_SetRingtone"
 #~ msgstr "Klingeltöne"
 
-#, fuzzy
 #~ msgid "GSM_GetRingtonesInfo"
 #~ msgstr "Klingeltöne"
 
-# type: SS
-#, fuzzy
 #~ msgid "GSM_RingCommand"
 #~ msgstr "Kommandos"
 
-#, fuzzy
 #~ msgid "GSM_NoteRingtone"
 #~ msgstr "Klingeltöne"
 
-#, fuzzy
 #~ msgid "GSM_Ringtone"
 #~ msgstr "Klingeltöne"
 
-#, fuzzy
 #~ msgid "GSM_RingtoneInfo"
 #~ msgstr "Klingeltöne"
 
-#, fuzzy
 #~ msgid "GSM_AllRingtonesInfo"
 #~ msgstr "Klingeltöne"
 
-#, fuzzy
 #~ msgid "GSM_SetMMSSettings"
 #~ msgstr "MMS und MMS-Einstellungen"
 
-#, fuzzy
 #~ msgid "GSM_ResetPhoneSettings"
 #~ msgstr "Telefoneinstellungen"
 
-#, fuzzy
 #~ msgid "GSM_SyncMLSettings"
 #~ msgstr "MMS und MMS-Einstellungen"
 
 #~ msgid "Show summary of options."
 #~ msgstr "Zeigt die Zusammenfassung der Optionen."
 
-#, fuzzy
 #~ msgid "1.28.95"
 #~ msgstr "Gammu 1.28.90"
 
-#, fuzzy
 #~ msgid "Show version information and compiled in features."
 #~ msgstr "Zeigt die Programmversion."
 
-# type: TH
 #~ msgid "GAMMU"
 #~ msgstr "GAMMU"
 
 #~ msgid "Jul 27 2010"
 #~ msgstr "27 Jul 2010"
 
-# type: SH
 #~ msgid "NAME"
 #~ msgstr "NAME"
 
-# type: Plain text
 #~ msgid "Gammu - Does some neat things with your cellular phone or modem."
 #~ msgstr "Gammu - Macht tolle Sachen mit Ihrem Handy oder Modem!"
 
-# type: SH
 #~ msgid "SYNOPSIS"
 #~ msgstr "ÜBERSICHT"
 
 #~ msgid "DESCRIPTION"
 #~ msgstr "BESCHREIBUNG"
 
-# type: Plain text
 #~ msgid "-c / --config E<lt>filenameE<gt> ... name of configuration file"
 #~ msgstr "-c / --config E<lt>filenameE<gt> ... Name der Konfigurationsdatei"
 
-# type: Plain text
 #~ msgid ""
 #~ "-d / --debug E<lt>levelE<gt> ... debug level (see gammurc(5) for possible "
 #~ "values)"
@@ -1439,7 +1152,6 @@ msgstr ""
 #~ msgid "B<Common parameters for sendsms and savesms>"
 #~ msgstr "B<Allgemeine Einstellungen für die Befehle sendsms und savesms>"
 
-# type: Plain text
 #~ msgid ""
 #~ "B<-smscset number> - SMSC will be taken from set B<number>. Default set: 1"
 #~ msgstr ""
@@ -1448,7 +1160,6 @@ msgstr ""
 #~ msgid "Functions that don't fit elsewhere"
 #~ msgstr "Funktionen ohne Kategorie"
 
-#, fuzzy
 #~ msgid "Error opening device. Unknown, busy or no permissions."
 #~ msgstr ""
 #~ "Fehler beim Öffnen des Gerätes. Unbekannt/Belegt oder keine Berechtigung"
@@ -1472,7 +1183,6 @@ msgstr ""
 #~ "Fehler beim Öffnen des Geräts, es gibt im Betriebssystem keinen "
 #~ "entsprechenden Treiber."
 
-#, fuzzy
 #~ msgid ""
 #~ "Error opening device. Some hardware not connected/wrongly configured."
 #~ msgstr ""
@@ -1487,15 +1197,12 @@ msgstr ""
 #~ "Fehler beim Setzen der Geschwindigkeit der IR-Schnittstelle. Vielleicht "
 #~ "keine Unterstützung?"
 
-#, fuzzy
 #~ msgid "Error writing to the device."
 #~ msgstr "Fehler beim Schreiben auf das Gerät."
 
-#, fuzzy
 #~ msgid "Error during reading from the device."
 #~ msgstr "Fehler beim Lesen vom Gerät."
 
-#, fuzzy
 #~ msgid "Can't set parity on the device."
 #~ msgstr "Kann die Parität auf dem Gerät nicht setzen."
 
@@ -1508,7 +1215,6 @@ msgstr ""
 #~ msgid "Unknown model type string. Check config file."
 #~ msgstr "Unbekannter Modelltyp. Bitte Konfigurationsdatei überprüfen."
 
-#, fuzzy
 #~ msgid ""
 #~ "Some functions not available for your system (disabled in config or not "
 #~ "implemented)."
@@ -1519,7 +1225,6 @@ msgstr ""
 #~ msgid "Function not supported by phone."
 #~ msgstr "Funktion wird nicht vom Telefon unterstützt."
 
-#, fuzzy
 #~ msgid "Entry is empty."
 #~ msgstr "Eintrag ist leer."
 
@@ -1529,7 +1234,6 @@ msgstr ""
 #~ msgid "Invalid location. Maybe too high?"
 #~ msgstr "Ungültige Speicherstelle. Vielleicht zu hoch?"
 
-#, fuzzy
 #~ msgid ""
 #~ "Functionality not implemented. You are welcome to help authors with it."
 #~ msgstr ""
@@ -1539,7 +1243,6 @@ msgstr ""
 #~ msgid "More memory required..."
 #~ msgstr "Mehr Speicher benötigt."
 
-#, fuzzy
 #~ msgid "Operation not allowed by phone."
 #~ msgstr "Funktion wird nicht vom Telefon unterstützt."
 
@@ -1555,7 +1258,6 @@ msgstr ""
 #~ "Sie sind innerhalb des Telefon-Menüs (beim Bearbeiten?). Verlassen Sie es "
 #~ "und versuchen es erneut."
 
-#, fuzzy
 #~ msgid ""
 #~ "Function is currently being implemented. If you want to help, please "
 #~ "contact authors."
@@ -1598,7 +1300,6 @@ msgstr ""
 #~ msgid "Invalid data given to phone."
 #~ msgstr "Ungültige Daten an das Telefon übertragen."
 
-#, fuzzy
 #~ msgid "File with specified name already exists."
 #~ msgstr "Der angegebene Dateiname existiert bereits."
 
@@ -1620,7 +1321,6 @@ msgstr ""
 #~ "Im Handy befindet sich eine falsche GNAPPLET-Version. Verwenden Sie die "
 #~ "Version des aktuell verwendeten Gammu."
 
-#, fuzzy
 #~ msgid "Only part of folder has been listed."
 #~ msgstr "Nur ein Teil des Ordners wurde aufgelistet."
 
@@ -1639,7 +1339,6 @@ msgstr ""
 #~ msgid "Internal phone error."
 #~ msgstr "Interner Telefonfehler."
 
-#, fuzzy
 #~ msgid "Error writing file to disk."
 #~ msgstr "Fehler beim Schreiben auf Gerät."
 
@@ -1656,7 +1355,6 @@ msgstr ""
 #~ msgid "Bluetooth configuration requires channel option."
 #~ msgstr "Bluetooth Konfiguration benötigt \"Channel\" Angabe."
 
-#, fuzzy
 #~ msgid "Service configuration is missing."
 #~ msgstr "Wählen Sie den Konfigurationsbereich"
 
@@ -1665,11 +1363,9 @@ msgstr ""
 #~ "Der Befehl wurde abgelehnt, da das Gerät beschäftigt war. Warten und neu "
 #~ "starten."
 
-#, fuzzy
 #~ msgid "Could not connect to the server."
 #~ msgstr "Verbinde mit IMAP-Server..."
 
-#, fuzzy
 #~ msgid "Could not resolve the host name."
 #~ msgstr "Konnte die gespeicherte Nachricht nicht lesen!"
 
@@ -1685,23 +1381,18 @@ msgstr ""
 #~ msgid "SEE ALSO"
 #~ msgstr "SIEHE AUCH"
 
-#, fuzzy
 #~ msgid "March 16, 2010"
 #~ msgstr "Sep 14 2009"
 
-#, fuzzy
 #~ msgid "Gammu 1.28.0"
 #~ msgstr "Gammu 1.26.90"
 
-#, fuzzy
 #~ msgid "February 8, 2010"
 #~ msgstr "Sep 14 2009"
 
-#, fuzzy
 #~ msgid "Configuration\n"
 #~ msgstr "Telefoninformationen"
 
-#, fuzzy
 #~ msgid "Note\n"
 #~ msgstr "Notizen"
 
@@ -1713,11 +1404,9 @@ msgstr ""
 #~ "Leere SMSC-Nummer. Setzen Sie sie im Telefon oder verwenden Sie -"
 #~ "smscnumber."
 
-#, fuzzy
 #~ msgid "Feb 17 2010"
 #~ msgstr "Sep 14 2009"
 
-#, fuzzy
 #~ msgid ""
 #~ "Configuration\n"
 #~ "=============\n"
@@ -1726,14 +1415,11 @@ msgstr ""
 #~ msgid "Permission to file/device required..."
 #~ msgstr "Berechtigungen für Datei/Gerät benötigt..."
 
-#, fuzzy
 #~ msgid "October 20, 2009"
 #~ msgstr "Sep 14 2009"
 
-#, fuzzy
 #~ msgid "Gammu 1.27.0"
 #~ msgstr "Gammu 1.26.90"
 
-#, fuzzy
 #~ msgid "Gammu 1.26.93"
 #~ msgstr "Gammu 1.26.90"

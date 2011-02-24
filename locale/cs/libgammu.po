@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libGammu 1.29.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-02-23 17:00+0100\n"
+"POT-Creation-Date: 2011-02-24 16:19+0100\n"
 "PO-Revision-Date: 2011-02-23 17:03+0100\n"
 "Last-Translator: Pavlína Raszyková <pavlina.raszykova@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -1185,7 +1185,7 @@ msgstr "Odchozí"
 
 #~ msgid ""
 #~ "Version of installed libGammu.so (%s) is different to version of libGammu "
-#~ "(%s)\n"
+#~ "(%s) "
 #~ msgstr "Verze instalované libGammu.so (%s) se liší od verze libGammu (%s)\n"
 
 #~ msgid "Unknown memory type (\"%s\")\n"
@@ -1656,7 +1656,6 @@ msgstr "Odchozí"
 #~ msgid "Checking %s\n"
 #~ msgstr "Kontroluji %s\n"
 
-#, fuzzy
 #~ msgid "Error creating thread\n"
 #~ msgstr "Chyba při zápisu."
 
@@ -1723,11 +1722,9 @@ msgstr "Odchozí"
 #~ msgid "Picture ID"
 #~ msgstr "ID obrázku"
 
-#, fuzzy
 #~ msgid "Photo"
 #~ msgstr "Telefon"
 
-#, fuzzy
 #~ msgid "Displaying not supported"
 #~ msgstr "Není podporováno"
 
@@ -1995,7 +1992,6 @@ msgstr "Odchozí"
 #~ msgid "Error writing to database (%s): %s\n"
 #~ msgstr "Chyba při zápisu do databáze (%s): %s\n"
 
-#, fuzzy
 #~ msgid "Error writing to database (%s): %s %s\n"
 #~ msgstr "Chyba při zápisu souboru na disk."
 
@@ -2005,15 +2001,12 @@ msgstr "Odchozí"
 #~ msgid "UEM           : %s\n"
 #~ msgstr "UEM           : %s\n"
 
-#, fuzzy
 #~ msgid "Network           : %s (%s"
 #~ msgstr "Odesláno        : %s\n"
 
-#, fuzzy
 #~ msgid "deliveryreport = %s"
 #~ msgstr "Stav doručení   : %s\n"
 
-#, fuzzy
 #~ msgid "phoneid = %s"
 #~ msgstr "Čas v telefonu je %s\n"
 
@@ -2023,35 +2016,27 @@ msgstr "Odchozí"
 #~ msgid "72 hours"
 #~ msgstr "72 hodin"
 
-#, fuzzy
 #~ msgid "enumerate locations from 1"
 #~ msgstr "Prosím číslujte pozice od 1\n"
 
-#, fuzzy
 #~ msgid "More arguments required"
 #~ msgstr "Je potřeba více paměti..."
 
-#, fuzzy
 #~ msgid "Used"
 #~ msgstr "Prošlo"
 
-#, fuzzy
 #~ msgid "Battery level     : %i percent\n"
 #~ msgstr "Kategorie        : %i\n"
 
-#, fuzzy
 #~ msgid "Battery temp.     : %i C\n"
 #~ msgstr "Kategorie        : %i\n"
 
-#, fuzzy
 #~ msgid "Phone temp.       : %i C\n"
 #~ msgstr "ID vyzvánění     : %i\n"
 
-#, fuzzy
 #~ msgid "Please numerate locations from 1"
 #~ msgstr "Prosím číslujte pozice od 1\n"
 
-#, fuzzy
 #~ msgid "Number of SMS: %i"
 #~ msgid_plural "Number of SMSes: %i"
 #~ msgstr[0] "   Číslo      : %\n"
@@ -2061,15 +2046,12 @@ msgstr "Odchozí"
 #~ msgid "Remote number(s)"
 #~ msgstr "Vzdálené číslo"
 
-#, fuzzy
 #~ msgid "   Number"
 #~ msgstr "   Číslo      : %\n"
 
-#, fuzzy
 #~ msgid " Number \"%s\""
 #~ msgstr "   Číslo      : %\n"
 
-#, fuzzy
 #~ msgid "unknown memory type (\"%s\")\n"
 #~ msgstr "CHYBA: neznámý typ paměti (\"%s\")\n"
 
@@ -2079,61 +2061,48 @@ msgstr "Odchozí"
 #~ msgid "Unknown parameter \"%c\"\n"
 #~ msgstr "Neznámý parameter \"%c\"\n"
 
-#, fuzzy
 #~ msgid "  Sender"
 #~ msgstr "Obecné"
 
-#, fuzzy
 #~ msgid "  Date               : %s\n"
 #~ msgstr "Odesláno        : %s\n"
 
-#, fuzzy
 #~ msgid "  Subject            : %s\n"
 #~ msgstr "Odesláno        : %s\n"
 
-#, fuzzy
 #~ msgid "  Delivery report"
 #~ msgstr "Doručenka"
 
-#, fuzzy
 #~ msgid "    Content type     : %s\n"
 #~ msgstr "Odesláno        : %s\n"
 
-#, fuzzy
 #~ msgid "      Name           : %s"
 #~ msgstr "Jméno           "
 
 #~ msgid "Ringtone ID           : "
 #~ msgstr "ID vyzvánění"
 
-#, fuzzy
 #~ msgid ", SIM"
 #~ msgstr "SIM"
 
-#, fuzzy
 #~ msgid "UNKNOWN"
 #~ msgstr "NEZNÁMO\n"
 
-#, fuzzy
 #~ msgid "Screen saver          : "
 #~ msgstr "Odesláno        : %s\n"
 
-#, fuzzy
 #~ msgid "Lights                : "
 #~ msgstr "Město           "
 
 #~ msgid "24 hours\n"
 #~ msgstr "24 hodin\n"
 
-#, fuzzy
 #~ msgid "unknown\n"
 #~ msgstr "Neznámý\n"
 
-#, fuzzy
 #~ msgid "Ringtone    : default\n"
 #~ msgstr "ID vyzvánění     : %i\n"
 
-#, fuzzy
 #~ msgid "enumerate locations from 1\n"
 #~ msgstr "Prosím číslujte pozice od 1\n"
 
@@ -2149,51 +2118,39 @@ msgstr "Odchozí"
 #~ msgid "Unknown\n"
 #~ msgstr "Neznámý\n"
 
-#, fuzzy
 #~ msgid "Caller group     : \"%d\"\n"
 #~ msgstr "Skupina          : \"%s\"\n"
 
-#, fuzzy
 #~ msgid "Home Number"
 #~ msgstr "Číslo domů"
 
-#, fuzzy
 #~ msgid "Mobile Number"
 #~ msgstr "Číslo na mobil  "
 
-#, fuzzy
 #~ msgid "Fax Number"
 #~ msgstr "   Číslo      : %\n"
 
-#, fuzzy
 #~ msgid "  Home Number\n"
 #~ msgstr "Číslo domů      "
 
-#, fuzzy
 #~ msgid "  Mobile Number\n"
 #~ msgstr "Číslo na mobil  "
 
-#, fuzzy
 #~ msgid "  Fax Number\n"
 #~ msgstr "   Číslo      : %\n"
 
-#, fuzzy
 #~ msgid "  unknown\n"
 #~ msgstr "Neznámý\n"
 
-#, fuzzy
 #~ msgid "Sent\n"
 #~ msgstr "Odesláno"
 
-#, fuzzy
 #~ msgid "Read\n"
 #~ msgstr "Přečteno"
 
-#, fuzzy
 #~ msgid "UnRead\n"
 #~ msgstr "Nepřečteno"
 
-#, fuzzy
 #~ msgid "UnSent\n"
 #~ msgstr "Neodesláno"
 
@@ -2203,11 +2160,9 @@ msgstr "Odchozí"
 #~ msgid "Fax number      "
 #~ msgstr "Faxové číslo    "
 
-#, fuzzy
 #~ msgid "Text            "
 #~ msgstr "Jméno           "
 
-#, fuzzy
 #~ msgid "LUID            "
 #~ msgstr "Jméno           "
 
@@ -2223,50 +2178,39 @@ msgstr "Odchozí"
 #~ msgid "Details         : "
 #~ msgstr "Detaily         : "
 
-#, fuzzy
 #~ msgid "Coding           : "
 #~ msgstr "Město           "
 
-#, fuzzy
 #~ msgid "Status           : "
 #~ msgstr "Stát            "
 
-#, fuzzy
 #~ msgid "Format         : "
 #~ msgstr "Firma           "
 
-#, fuzzy
 #~ msgid "  Sender             : "
 #~ msgstr "Odesláno        : %s\n"
 
-#, fuzzy
 #~ msgid "  CC                 : "
 #~ msgstr "Město           "
 
-#, fuzzy
 #~ msgid "Ringtone    : "
 #~ msgstr "ID vyzvánění     : %i\n"
 
-#, fuzzy
 #~ msgid "Model         : %s (%s)\n"
 #~ msgstr "Kategorie        : \"%s\" (%i)\n"
 
-#, fuzzy
 #~ msgid "Hardware      : %s\n"
 #~ msgstr "Osobní           : %s\n"
 
-#, fuzzy
 #~ msgid "IMEI          : %s\n"
 #~ msgstr "Odesláno        : %s\n"
 
-#, fuzzy
 #~ msgid "SIM IMSI      : %s\n"
 #~ msgstr "Středisko zpráv : \"%s\"\n"
 
 #~ msgid "Text: \"%s\"\n"
 #~ msgstr "Text : \"%s\"\n"
 
-#, fuzzy
 #~ msgid "Category         : \"%s\"\n"
 #~ msgstr "Kategorie        : %i\n"
 
@@ -2288,40 +2232,32 @@ msgstr "Odchozí"
 #~ msgid "Ringtone ID      : %i\n"
 #~ msgstr "ID vyzvánění     : %i\n"
 
-#, fuzzy
 #~ msgid "User ID          : %s\n"
 #~ msgstr "Odesláno        : %s\n"
 
-#, fuzzy
 #~ msgid "Status          : "
 #~ msgstr "Stát            "
 
 #~ msgid "Sent            : %s\n"
 #~ msgstr "Odesláno        : %s\n"
 
-#, fuzzy
 #~ msgid "Saved            : %s\n"
 #~ msgstr "Odesláno        : %s\n"
 
-#, fuzzy
 #~ msgid "SMSC number      : \"%s\""
 #~ msgstr "Středisko zpráv : \"%s\"\n"
 
-#, fuzzy
 #~ msgid ""
 #~ "\n"
 #~ "Sent             : %s\n"
 #~ msgstr "Odesláno        : %s\n"
 
-#, fuzzy
 #~ msgid "Name             : \"%s\"\n"
 #~ msgstr "Jméno           "
 
-#, fuzzy
 #~ msgid "Class            : %i\n"
 #~ msgstr "Odesláno        : %s\n"
 
-#, fuzzy
 #~ msgid ""
 #~ "Text: \"%s\"\n"
 #~ "\n"
@@ -2333,81 +2269,62 @@ msgstr "Odchozí"
 #~ msgid "Name    : \"%s\"\n"
 #~ msgstr "Jméno   : \"%s\"\n"
 
-#, fuzzy
 #~ msgid "Ringtone    : %i\n"
 #~ msgstr "ID vyzvánění     : %i\n"
 
-#, fuzzy
 #~ msgid "Text   : \"%s\"\n"
 #~ msgstr "Text : \"%s\"n"
 
-#, fuzzy
 #~ msgid "Sender : \"%s\"\n"
 #~ msgstr "Středisko zpráv : \"%s\"\n"
 
-#, fuzzy
 #~ msgid "Name   : \"%s\"\n"
 #~ msgstr "   Číslo      : %\n"
 
-#, fuzzy
 #~ msgid "Phone           : %s\n"
 #~ msgstr "Odesláno        : %s\n"
 
-#, fuzzy
 #~ msgid "IMEI            : %s\n"
 #~ msgstr "Odesláno        : %s\n"
 
-#, fuzzy
 #~ msgid "Phone          : %s\n"
 #~ msgstr "Osobní           : %s\n"
 
-#, fuzzy
 #~ msgid "IMEI           : %s\n"
 #~ msgstr "Odesláno        : %s\n"
 
-#, fuzzy
 #~ msgid "Bearer              : SMS"
 #~ msgstr "Jméno           "
 
-#, fuzzy
 #~ msgid ""
 #~ "\n"
 #~ "Server number       : \"%s\"\n"
 #~ msgstr "Středisko zpráv : \"%s\"\n"
 
-#, fuzzy
 #~ msgid "IP address          : \"%s\"\n"
 #~ msgstr "Osobní           : %s\n"
 
-#, fuzzy
 #~ msgid "User name           : \"%s\"\n"
 #~ msgstr "Odesláno        : %s\n"
 
-#, fuzzy
 #~ msgid "Password            : \"%s\"\n"
 #~ msgstr "Odesláno        : %s\n"
 
-#, fuzzy
 #~ msgid "Bearer              : USSD"
 #~ msgstr "Jméno           "
 
-#, fuzzy
 #~ msgid "Bearer              : GPRS"
 #~ msgstr "Jméno           "
 
-#, fuzzy
 #~ msgid "User                : \"%s\"\n"
 #~ msgstr "Odesláno        : %s\n"
 
-#, fuzzy
 #~ msgid "Server              : \"%s\"\n"
 #~ msgstr "Odesláno        : %s\n"
 
-#, fuzzy
 #~ msgid "Homepage            : \"%s\"\n"
 #~ msgstr "Odesláno        : %s\n"
 
-#, fuzzy
 #~ msgid ""
 #~ "\n"
 #~ "Homepage            : \"%s\"\n"
@@ -2416,7 +2333,6 @@ msgstr "Odchozí"
 #~ msgid "Location: %i\n"
 #~ msgstr "Pozice: %i\n"
 
-#, fuzzy
 #~ msgid ""
 #~ "Name    : \"%s\"\n"
 #~ "\n"
@@ -2425,82 +2341,63 @@ msgstr "Odchozí"
 #~ msgid "Location  : %i\n"
 #~ msgstr "Pozice: %i\n"
 
-#, fuzzy
 #~ msgid "Location     : %i\n"
 #~ msgstr "Kategorie        : %i\n"
 
-#, fuzzy
 #~ msgid "DueTime      : %s\n"
 #~ msgstr "   Číslo      : %\n"
 
-#, fuzzy
 #~ msgid "Alarm        : %s\n"
 #~ msgstr "   Číslo      : %\n"
 
-#, fuzzy
 #~ msgid "Text         : \"%s\"\n"
 #~ msgstr "Odesláno        : %s\n"
 
-#, fuzzy
 #~ msgid "Private      : %s\n"
 #~ msgstr "Osobní           : %s\n"
 
-#, fuzzy
 #~ msgid "Category     : \"%s\" (%i)\n"
 #~ msgstr "Kategorie        : \"%s\" (%i)\n"
 
-#, fuzzy
 #~ msgid "Contact ID   : \"%s\" (%d)\n"
 #~ msgstr "Kategorie        : \"%s\" (%i)\n"
 
-#, fuzzy
 #~ msgid "Contact ID   : %d\n"
 #~ msgstr "ID vyzvánění     : %i\n"
 
-#, fuzzy
 #~ msgid "Phone        : \"%s\"\n"
 #~ msgstr "Vyzvánění        : \"%s\"\n"
 
-#, fuzzy
 #~ msgid "Location     : \"%s\"\n"
 #~ msgstr "Vyzvánění        : \"%s\"\n"
 
-#, fuzzy
 #~ msgid "LUID         : \"%s\"\n"
 #~ msgstr "Vyzvánění        : \"%s\"\n"
 
-#, fuzzy
 #~ msgid "   Number     : %s\n"
 #~ msgstr "   Číslo      : %\n"
 
 #~ msgid "   Manufacturer  : %s\n"
 #~ msgstr "   Výrobce       : %s\n"
 
-#, fuzzy
 #~ msgid "   Model         : %s (%s)\n"
 #~ msgstr "Odesláno        : %s\n"
 
-#, fuzzy
 #~ msgid "Start        : %s\n"
 #~ msgstr "Odesláno        : %s\n"
 
-#, fuzzy
 #~ msgid "Stop         : %s\n"
 #~ msgstr "Odesláno        : %s\n"
 
-#, fuzzy
 #~ msgid "Age          : "
 #~ msgstr "Odesláno        : %s\n"
 
-#, fuzzy
 #~ msgid "Location     : %d\n"
 #~ msgstr "Datum a čas      : %s\n"
 
-#, fuzzy
 #~ msgid "ERROR: enumerate locations from 1"
 #~ msgstr "CHYBA: číslujte pozice od 1\n"
 
-#, fuzzy
 #~ msgid "ERROR: unknown parameter \"%s\"\n"
 #~ msgstr "CHYBA: neznámý typ paměti (\"%s\")\n"
 
@@ -2517,46 +2414,35 @@ msgstr "Odchozí"
 #~ msgid "Entry number %i is empty\n"
 #~ msgstr "Záznam číslo %i je prázdný\n"
 
-#, fuzzy
 #~ msgid "Entry number %i\n"
 #~ msgstr "Záznam číslo %i je prázdný\n"
 
-#, fuzzy
 #~ msgid "Personal\n"
 #~ msgstr "Osobní"
 
-#, fuzzy
 #~ msgid "%s\n"
 #~ msgstr "Text : \"%s\"n"
 
-#, fuzzy
 #~ msgid " %02i:%02i:%02i\n"
 #~ msgstr "Čas  : %02d:%02d\n"
 
-#, fuzzy
 #~ msgid "Help: %s\n"
 #~ msgstr "Datum: %s\n"
 
-#, fuzzy
 #~ msgid " \"%s\""
 #~ msgstr "Text : \"%s\"n"
 
-#, fuzzy
 #~ msgid "GSM_SMSC        - %i\n"
 #~ msgstr "Kategorie        : %i\n"
 
-#, fuzzy
 #~ msgid "bool            - %i\n"
 #~ msgstr "Odesláno        : %s\n"
 
-#, fuzzy
 #~ msgid "GSM_DateTime    - %i\n"
 #~ msgstr "Datum a čas      : %s\n"
 
-#, fuzzy
 #~ msgid "int             - %i\n"
 #~ msgstr "Odesláno        : %s\n"
 
-#, fuzzy
 #~ msgid ": %s"
 #~ msgstr "Datum: %s\n"

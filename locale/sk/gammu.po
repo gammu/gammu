@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-02-14 10:40+0100\n"
+"POT-Creation-Date: 2011-02-24 16:19+0100\n"
 "PO-Revision-Date: 2010-09-02 20:55+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
@@ -171,7 +171,7 @@ msgstr "Zálohovať skupiny a logá volajúcich?"
 # Kontrolujem SMS profily na SIM karte.
 #: gammu/backup.c:560
 msgid "Checking SIM SMS profiles"
-msgstr ""
+msgstr "Kontrolujem profily SIM SMS"
 
 #: gammu/backup.c:561
 msgid "Backup SIM SMS profiles?"
@@ -2051,14 +2051,14 @@ msgstr "Príliš málo parametrov!"
 #, c-format
 msgid "Failed to read [gammu%d] section from configuration file (gammurc)!\n"
 msgstr ""
-"Nepodarilo sa načítať [gammu%d] sekciu z konfiguračného súboru (gammurc)!\n"
+"Nepodarilo sa načítať [gammu%d] sekciu z konfiguračného súboru (gammurc)! "
 
 #: gammu/gammu.c:1166 gammu/gammu.c:1177
 msgid "No configuration read, using builtin defaults!"
 msgstr "Nebolo načítané žiadne nastavenie, používam východzie hodnoty!"
 
 #: gammu/gammu.c:1216
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
 msgstr "Nainštalovaná verzia libGammu.so (%s) sa líši od verzie Gammu (%s)\n"
@@ -4425,36 +4425,29 @@ msgstr "Informácia"
 #~ msgid "Work country"
 #~ msgstr "Krajina pracoviska"
 
-#, fuzzy
 #~ msgid "Number:   %s"
 #~ msgstr "Počet bitov"
 
-#, fuzzy
 #~ msgid "Action:   %s"
 #~ msgstr "Umiestnenie %d"
 
-#, fuzzy
 #~ msgid "Compiled in features:\n"
 #~ msgstr "Zakompilované vlastnosti:"
 
-#, fuzzy
 #~ msgid ""
 #~ "License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
-#~ "GPL/2.0/>.\n"
+#~ "GPL/2.0/>. "
 #~ msgstr ""
 #~ "Licencia GPLv2: GNU GPL verze 2 <http://creativecommons.org/licenses/"
 #~ "GPL/2.0/>."
 
-#, fuzzy
 #~ msgid "This is free software: you are free to change and redistribute it.\n"
 #~ msgstr ""
 #~ "Tento program je slobodný software: môžete ho voľne šíriť a modifikovať."
 
-#, fuzzy
 #~ msgid "There is NO WARRANTY, to the extent permitted by law.\n"
 #~ msgstr "Nie je poskytovaná ŽIADNA ZÁRUKA, a to v miere povolenej zákonom."
 
-#, fuzzy
 #~ msgid "Check <http://wammu.eu/gammu/> for updates.\n"
 #~ msgstr ""
 #~ "Pozrite sa na <http://sk.wammu.eu/gammu/> pre infromácie o aktuálnej "

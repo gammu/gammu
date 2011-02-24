@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-02-23 17:00+0100\n"
+"POT-Creation-Date: 2011-02-24 16:19+0100\n"
 "PO-Revision-Date: 2009-01-27 14:28+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -19,7 +19,7 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
-msgstr ""
+msgstr "Ei virhettä."
 
 #: libgammu/gsmcomon.c:85
 msgid "Error opening device. Unknown, busy or no permissions."
@@ -132,11 +132,11 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:109
 msgid "Memory full."
-msgstr ""
+msgstr "Muisti täynä."
 
 #: libgammu/gsmcomon.c:110
 msgid "Unknown error."
-msgstr ""
+msgstr "Tuntematon virhe."
 
 #: libgammu/gsmcomon.c:111
 #, fuzzy
@@ -161,9 +161,8 @@ msgid "You're inside phone menu (maybe editing?). Leave it and try again."
 msgstr ""
 
 #: libgammu/gsmcomon.c:116
-#, fuzzy
 msgid "Phone is not connected."
-msgstr "Puhelimen tiedot"
+msgstr "Puhelin ei ole kytketty"
 
 #: libgammu/gsmcomon.c:117
 #, fuzzy
@@ -180,17 +179,21 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:119
 msgid "File format not supported by Gammu."
-msgstr ""
+msgstr "Gammu ei pysty avaamaan kyseistä tiedostomuotoa"
 
 #: libgammu/gsmcomon.c:120
 msgid ""
 "Nobody is perfect, some bug appeared in protocol implementation. Please "
 "contact authors."
 msgstr ""
+"Kukaan ei ole täydellinen, jonkinlainen virhe tapahtui protokollaa "
+"käytettäessä. Ole hyv ja ota yhteyttä ohjelman tekijöihin."
 
 #: libgammu/gsmcomon.c:121
 msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
 msgstr ""
+"Lähetys keskeytettiin puhelimen toimesta, ehkä painoit puhelimen "
+"keskeytyspainiketta."
 
 #: libgammu/gsmcomon.c:122
 msgid "Phone module need to send another answer frame."

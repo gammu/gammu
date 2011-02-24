@@ -101,7 +101,6 @@ msgid ""
 "\"Compiling Gammu\" in The Gammu Manual."
 msgstr ""
 
-#, fuzzy
 #~ msgid "Gammu Configuration File"
 #~ msgstr "Informasi gammu"
 
@@ -114,31 +113,24 @@ msgstr ""
 #~ msgid "Model"
 #~ msgstr "Model"
 
-#, fuzzy
 #~ msgid "0x01: Call Information\n"
 #~ msgstr "Informasi gammu"
 
-#, fuzzy
 #~ msgid "Note:"
 #~ msgstr "Catatan"
 
-#, fuzzy
 #~ msgid "0x04: Phone Status\n"
 #~ msgstr "Tes telepon"
 
-#, fuzzy
 #~ msgid "0x05: Profile settings\n"
 #~ msgstr "Pengaturan telepon"
 
-#, fuzzy
 #~ msgid "0x13: Calendar notes\n"
 #~ msgstr "Catatan kalender"
 
-#, fuzzy
 #~ msgid "other: error\n"
 #~ msgstr "Tidak ada Kesalahan"
 
-#, fuzzy
 #~ msgid "Get organizer information"
 #~ msgstr "Informasi telepon"
 
@@ -148,82 +140,63 @@ msgstr ""
 #~ msgid "Contacts"
 #~ msgstr "Kontak"
 
-#, fuzzy
 #~ msgid "Calendar"
 #~ msgstr "Catatan kalender"
 
 #~ msgid "Read"
 #~ msgstr "Sudah dibaca"
 
-#, fuzzy
 #~ msgid "Files"
 #~ msgstr "File sistem"
 
-#, fuzzy
 #~ msgid "Phone connected to PC"
 #~ msgstr "Telepon tidak terhubung."
 
-#, fuzzy
 #~ msgid "Disconnected"
 #~ msgstr "Telepon tidak terhubung."
 
-#, fuzzy
 #~ msgid "Phone connected to CARC91"
 #~ msgstr "Telepon tidak terhubung."
 
-#, fuzzy
 #~ msgid "0x7a: settings\n"
 #~ msgstr "Pengaturan telepon"
 
-#, fuzzy
 #~ msgid "Phone Protocols"
 #~ msgstr "Tes telepon"
 
-#, fuzzy
 #~ msgid "Calendar Entries"
 #~ msgstr "Catatan kalender"
 
-#, fuzzy
 #~ msgid "Memo Notes"
 #~ msgstr "Catatan"
 
-#, fuzzy
 #~ msgid "rest is not known"
 #~ msgstr "Layanan tidak berjalan."
 
-#, fuzzy
 #~ msgid "To test:"
 #~ msgstr "Tes telepon"
 
-#, fuzzy
 #~ msgid "Filesystem access"
 #~ msgstr "File sistem"
 
-#, fuzzy
 #~ msgid "0x3E: FM Radio"
 #~ msgstr "Radio FM"
 
-#, fuzzy
 #~ msgid "get configuration pins"
 #~ msgstr "Layanan konfigurasi hilang."
 
-#, fuzzy
 #~ msgid "Default value:"
 #~ msgstr "Gunakan nilai default."
 
-#, fuzzy
 #~ msgid "PIN"
 #~ msgstr "PILIHAN"
 
-#, fuzzy
 #~ msgid "NetworkCode"
 #~ msgstr "Jaringan"
 
-#, fuzzy
 #~ msgid "PhoneCode"
 #~ msgstr "Tes telepon"
 
-#, fuzzy
 #~ msgid "MaxRetries"
 #~ msgstr "Kategori"
 
@@ -236,164 +209,125 @@ msgstr ""
 #~ msgid "Password"
 #~ msgstr "kata sandi"
 
-#, fuzzy
 #~ msgid "Try to connect to phone if not connected."
 #~ msgstr "Telepon tidak terhubung."
 
-#, fuzzy
 #~ msgid ""
 #~ "Commands actually indicate which operation should Gammu perform. They can "
 #~ "be specified with or without leading ``--``."
 #~ msgstr "Perintah dapat diikuti dengan atau tanpa awalan --"
 
-# type: Plain text
 #~ msgid "Parameters before command configure gammu behaviour:"
 #~ msgstr "Parameter sebelum perintah mengkonfigurasi perilaku gammu:"
 
-#, fuzzy
 #~ msgid "SMS and EMS commands"
 #~ msgstr "SMS dan EMS"
 
 #~ msgid "Unicode"
 #~ msgstr "Unicode"
 
-#, fuzzy
 #~ msgid "SMS commands"
 #~ msgstr "SMS dan EMS"
 
-#, fuzzy
 #~ msgid "save to specified folder."
 #~ msgstr "Tidak dapat membuka file yang ditentukan."
 
-#, fuzzy
 #~ msgid "Memory (phonebooks and calls) commands"
 #~ msgstr "Memori (buku telepon dan panggilan)"
 
-#, fuzzy
 #~ msgid "Filesystem commands"
 #~ msgstr "File sistem"
 
-#, fuzzy
 #~ msgid "-system"
 #~ msgstr "File sistem"
 
-#, fuzzy
 #~ msgid "getfilesystemstatus"
 #~ msgstr "File sistem"
 
-#, fuzzy
 #~ msgid "Logo and pictures commands"
 #~ msgstr "Logo dan gambar"
 
-#, fuzzy
 #~ msgid "Ringtones commands"
 #~ msgstr "Nada dering"
 
-#, fuzzy
 #~ msgid "getringtoneslist"
 #~ msgstr "Nada dering"
 
-#, fuzzy
 #~ msgid "Calendar notes commands"
 #~ msgstr "Catatan kalender"
 
-#, fuzzy
 #~ msgid "To do list commands"
 #~ msgstr "List pengerjaan"
 
-#, fuzzy
 #~ msgid "Date, time and alarm commands"
 #~ msgstr "Tanggal, waktu dan alarm"
 
-#, fuzzy
 #~ msgid "Categories commands"
 #~ msgstr "Kategori"
 
-#, fuzzy
 #~ msgid "Backing up and restoring commands"
 #~ msgstr "Backing up dan restoring"
 
-#, fuzzy
 #~ msgid "calendar notes"
 #~ msgstr "Catatan kalender"
 
-#, fuzzy
 #~ msgid "SMSC settings"
 #~ msgstr "MMS dan pengaturan MMS"
 
-#, fuzzy
 #~ msgid "WAP bookmarks"
 #~ msgstr "Pengaturan WAP dan bookmark"
 
-#, fuzzy
 #~ msgid "WAP settings"
 #~ msgstr "Pengaturan telepon"
 
-#, fuzzy
 #~ msgid "user ringtones"
 #~ msgstr "Nada dering"
 
-#, fuzzy
 #~ msgid "Nokia specific commands"
 #~ msgstr "Spesifik Nokia"
 
-#, fuzzy
 #~ msgid "gammu getfilesystem"
 #~ msgstr "File sistem"
 
-#, fuzzy
 #~ msgid "Siemens specific commands"
 #~ msgstr "Spesifik Siemens"
 
-#, fuzzy
 #~ msgid "Network commands"
 #~ msgstr "Jaringan"
 
-#, fuzzy
 #~ msgid "networkinfo"
 #~ msgstr "Jaringan"
 
-#, fuzzy
 #~ msgid "WAP settings and bookmarks commands"
 #~ msgstr "Pengaturan WAP dan bookmark"
 
-#, fuzzy
 #~ msgid "MMS and MMS settings commands"
 #~ msgstr "MMS dan pengaturan MMS"
 
-#, fuzzy
 #~ msgid "FM radio commands"
 #~ msgstr "Radio FM"
 
-#, fuzzy
 #~ msgid "Phone information commands"
 #~ msgstr "Informasi telepon"
 
-#, fuzzy
 #~ msgid "Phone settings commands"
 #~ msgstr "Pengaturan telepon"
 
-#, fuzzy
 #~ msgid "Reset phone settings."
 #~ msgstr "Pengaturan telepon"
 
-#, fuzzy
 #~ msgid "Clear phone settings."
 #~ msgstr "Pengaturan telepon"
 
-#, fuzzy
 #~ msgid "Dumps decoding commands"
 #~ msgstr "Tumpukan sedang didecode"
 
-#, fuzzy
 #~ msgid "Gammu information commands"
 #~ msgstr "Informasi gammu"
 
-#, fuzzy
 #~ msgid "make test"
 #~ msgstr "Tes telepon"
 
-#, fuzzy
 #~ msgid "Filesystem structure"
 #~ msgstr "File sistem"
 
@@ -421,18 +355,15 @@ msgstr ""
 #~ msgid "Location"
 #~ msgstr "Lokasi"
 
-#, fuzzy
 #~ msgid "Memory"
 #~ msgstr "Memori penuh."
 
 #~ msgid "Type"
 #~ msgstr "Tipe"
 
-#, fuzzy
 #~ msgid "``NokiaRingtone``"
 #~ msgstr "Nada dering"
 
-#, fuzzy
 #~ msgid "Name of the SMSC configuration"
 #~ msgstr "Fitur string buruk dalam konfigurasi."
 
@@ -442,14 +373,12 @@ msgstr ""
 #~ msgid "Validity"
 #~ msgstr "Keabsahan"
 
-#, fuzzy
 #~ msgid "Unknown"
 #~ msgstr "Kesalahan tidak diketahui."
 
 #~ msgid "Left"
 #~ msgstr "Kiri"
 
-#, fuzzy
 #~ msgid "Text formatting"
 #~ msgstr "Informasi telepon"
 
@@ -474,14 +403,12 @@ msgstr ""
 #~ msgid "Underlined"
 #~ msgstr "Garis Bawah"
 
-#, fuzzy
 #~ msgid "Ringtone"
 #~ msgstr "Nada dering"
 
 #~ msgid "Bitmap"
 #~ msgstr "Bitmap"
 
-#, fuzzy
 #~ msgid "Settings"
 #~ msgstr "Pengaturan telepon"
 
@@ -491,192 +418,147 @@ msgstr ""
 #~ msgid "Value"
 #~ msgstr "Nilai"
 
-#, fuzzy
 #~ msgid "Calendar Object"
 #~ msgstr "Catatan kalender"
 
-#, fuzzy
 #~ msgid "Calendar Entries Object"
 #~ msgstr "Catatan kalender"
 
-#, fuzzy
 #~ msgid "System"
 #~ msgstr "File sistem"
 
-#, fuzzy
 #~ msgid "CalendarTypes"
 #~ msgstr "Catatan kalender"
 
-#, fuzzy
 #~ msgid "CalendarValueTypes"
 #~ msgstr "Catatan kalender"
 
-#, fuzzy
 #~ msgid "      Adds memory (phonebooks or calls) entry.\n"
 #~ msgstr "Memori (buku telepon dan panggilan)"
 
-#, fuzzy
 #~ msgid "      Deletes memory (phonebooks or calls) entry.\n"
 #~ msgstr "Memori (buku telepon dan panggilan)"
 
-#, fuzzy
 #~ msgid "      Reads IMEI/serial number from phone.\n"
 #~ msgstr "Gagal mengambil nomor SMSC dari telepon."
 
-#, fuzzy
 #~ msgid "      Resets phone settings.\n"
 #~ msgstr "Pengaturan telepon"
 
-#, fuzzy
 #~ msgid "      Sets memory (phonebooks or calls) entry.\n"
 #~ msgstr "Memori (buku telepon dan panggilan)"
 
-#, fuzzy
 #~ msgid "Get version information."
 #~ msgstr "Informasi telepon"
 
-#, fuzzy
 #~ msgid "Debugging configuration"
 #~ msgstr "Fitur string buruk dalam konfigurasi."
 
-#, fuzzy
 #~ msgid "errors"
 #~ msgstr "Tidak ada Kesalahan"
 
-#, fuzzy
 #~ msgid "Backup reading and writing"
 #~ msgstr "Backing up dan restoring"
 
 #~ msgid "IMEI"
 #~ msgstr "IMEI"
 
-#, fuzzy
 #~ msgid "GSMNetworks"
 #~ msgstr "Jaringan"
 
-#, fuzzy
 #~ msgid "Gammu internals"
 #~ msgstr "Informasi gammu"
 
-#, fuzzy
 #~ msgid "File formats used by Gammu"
 #~ msgstr "Format file tidak didukung oleh Gammu."
 
-#, fuzzy
 #~ msgid "Call"
 #~ msgstr "Panggilan"
 
-#, fuzzy
 #~ msgid "GSM_Call"
 #~ msgstr "Panggilan"
 
-#, fuzzy
 #~ msgid "Getting phone information"
 #~ msgstr "Informasi telepon"
 
-#, fuzzy
 #~ msgid "Custom configuration"
 #~ msgstr "Fitur string buruk dalam konfigurasi."
 
 #~ msgid "Miscellaneous"
 #~ msgstr "Miscellaneous"
 
-#, fuzzy
 #~ msgid "GSM_SetCalendarSettings"
 #~ msgstr "MMS dan pengaturan MMS"
 
-#, fuzzy
 #~ msgid "GSM_CalendarSettings"
 #~ msgstr "MMS dan pengaturan MMS"
 
-#, fuzzy
 #~ msgid "GSM_CalendarStatus"
 #~ msgstr "Catatan kalender"
 
-#, fuzzy
 #~ msgid "GSM_CalendarNoteType"
 #~ msgstr "Catatan kalender"
 
-#, fuzzy
 #~ msgid "GSM_CalendarType"
 #~ msgstr "Catatan kalender"
 
-#, fuzzy
 #~ msgid "GSM_CalendarEntry"
 #~ msgstr "Catatan kalender"
 
-#, fuzzy
 #~ msgid "GSM_NetworkInfo"
 #~ msgstr "Jaringan"
 
-#, fuzzy
 #~ msgid "Category"
 #~ msgstr "Kategori"
 
-#, fuzzy
 #~ msgid "GSM_CategoryType"
 #~ msgstr "Kategori"
 
-#, fuzzy
 #~ msgid "GSM_Category"
 #~ msgstr "Kategori"
 
-#, fuzzy
 #~ msgid "For per state machine configuration:"
 #~ msgstr "Fitur string buruk dalam konfigurasi."
 
-#, fuzzy
 #~ msgid "GSM_FileSystemStatus"
 #~ msgstr "File sistem"
 
-#, fuzzy
 #~ msgid "Callback"
 #~ msgstr "Panggilan"
 
-#, fuzzy
 #~ msgid "GSM_GetRingtone"
 #~ msgstr "Nada dering"
 
-#, fuzzy
 #~ msgid "GSM_SetRingtone"
 #~ msgstr "Nada dering"
 
-#, fuzzy
 #~ msgid "GSM_GetRingtonesInfo"
 #~ msgstr "Nada dering"
 
-#, fuzzy
 #~ msgid "GSM_NoteRingtone"
 #~ msgstr "Nada dering"
 
-#, fuzzy
 #~ msgid "GSM_Ringtone"
 #~ msgstr "Nada dering"
 
-#, fuzzy
 #~ msgid "GSM_RingtoneInfo"
 #~ msgstr "Nada dering"
 
-#, fuzzy
 #~ msgid "GSM_AllRingtonesInfo"
 #~ msgstr "Nada dering"
 
-#, fuzzy
 #~ msgid "GSM_SetMMSSettings"
 #~ msgstr "MMS dan pengaturan MMS"
 
-#, fuzzy
 #~ msgid "GSM_ResetPhoneSettings"
 #~ msgstr "Pengaturan telepon"
 
-#, fuzzy
 #~ msgid "GSM_SyncMLSettings"
 #~ msgstr "MMS dan pengaturan MMS"
 
 #~ msgid "Show summary of options."
 #~ msgstr "Tampilkan ringkasan dari pilihan."
 
-#, fuzzy
 #~ msgid "Show version information and compiled in features."
 #~ msgstr "Informasi telepon"
 
@@ -692,7 +574,6 @@ msgstr ""
 #~ msgid "Functions that don't fit elsewhere"
 #~ msgstr "Fungsi yang tidak sesuai dimana pun"
 
-#, fuzzy
 #~ msgid "Functionality has been moved. For example to gammu-smsd(1)."
 #~ msgstr "Fungsi yang dikehendaki telah dinonaktifkan pada waktu kompilasi."
 
@@ -776,7 +657,6 @@ msgstr ""
 #~ msgid "More memory required..."
 #~ msgstr "Diperlukan memori lebih..."
 
-#, fuzzy
 #~ msgid "Operation not allowed by phone."
 #~ msgstr "Fungsi tidak didukung oleh telepon"
 
@@ -832,7 +712,6 @@ msgstr ""
 #~ msgid "Invalid data given to phone."
 #~ msgstr "Data tidak valid diberikan ke telepon"
 
-#, fuzzy
 #~ msgid "File with specified name already exists."
 #~ msgstr "File dengan nama yang ditentukan sudah tersedia."
 
@@ -892,7 +771,6 @@ msgstr ""
 #~ msgid "Could not connect to the server."
 #~ msgstr "Tidak dapat terhubung ke server."
 
-#, fuzzy
 #~ msgid "Could not resolve the host name."
 #~ msgstr "Tidak dapat memutuskan nama host"
 

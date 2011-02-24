@@ -20573,6 +20573,8 @@ msgid ""
 "Gammu is library and command line utility for mobile phones. It is released "
 "under GNU GPL version 2."
 msgstr ""
+"Gammu ist eine Programmbibliothek und ein Kommandozeilenwerkzeug für "
+"Mobiltelefone. Es wird unter der GNU GPL v2 veröffentlicht."
 
 #. type: Plain text
 #: docs/manual/project/about.rst:10
@@ -33059,7 +33061,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/utils/gammu-detect.rst:51
 msgid "Show debugging output for detecting devices."
-msgstr ""
+msgstr "Zeige Debugmeldungen für die Geräteerkennung."
 
 #. type: Plain text
 #: docs/manual/utils/gammu-detect.rst:55
@@ -33075,7 +33077,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/utils/gammu-detect.rst:59
 msgid "Disables scanning of udev."
-msgstr ""
+msgstr "Scannen von udev deaktivieren"
 
 #. type: Plain text
 #: docs/manual/utils/gammu-detect.rst:61
@@ -33085,7 +33087,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/utils/gammu-detect.rst:63
 msgid "Disables scanning using Bluez."
-msgstr ""
+msgstr "Scannen mit Bluez deaktivieren"
 
 #. type: Plain text
 #: docs/manual/utils/gammu-detect.rst:65
@@ -33095,7 +33097,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/utils/gammu-detect.rst:67
 msgid "Disables scanning of Windows serial ports."
-msgstr ""
+msgstr "Scannen der seriellen Schnittstellen deaktivieren"
 
 #. type: Title -
 #: docs/manual/utils/gammu-detect.rst:69

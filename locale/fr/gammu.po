@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-02-14 10:40+0100\n"
+"POT-Creation-Date: 2011-02-24 16:19+0100\n"
 "PO-Revision-Date: 2009-01-27 17:27+0100\n"
 "Last-Translator: js <osmoze.linux@gmail.com>\n"
 "Language-Team: none\n"
@@ -23,37 +23,39 @@ msgstr ""
 #: helper/message-cmdline.c:441 helper/message-cmdline.c:478
 #: helper/message-cmdline.c:501
 msgid "Where is backup filename and location?"
-msgstr ""
+msgstr "Où se trouve l'emplacement et le nom du fichier de sauvegarde ?"
 
 #: gammu/backup.c:63 helper/message-cmdline.c:489
 msgid "Calendar note not found in file"
-msgstr ""
+msgstr "Note de calendrier non trouvé dans le fichier"
 
 #: gammu/backup.c:86
 msgid "WAP bookmark not found in file"
-msgstr ""
+msgstr "Marque page WAP non trouvé dans le fichier"
 
 #: gammu/backup.c:107
 msgid "Note not found in file"
-msgstr ""
+msgstr "Note non trouvée dans le fichier"
 
 #: gammu/backup.c:128
 msgid "Todo note not found in file"
-msgstr ""
+msgstr "Note \"à faire\" non trouvée dans le fichier"
 
 #: gammu/backup.c:137 helper/message-cmdline.c:525
 msgid "Where is backup filename and location and memory type?"
 msgstr ""
+"Où se trouve le nom du fichier, l'emplacement et le type de mémoire de la "
+"sauvegarde ?"
 
 #: gammu/backup.c:150 gammu/backup.c:161 helper/message-cmdline.c:537
 #: helper/message-cmdline.c:547
 msgid "Phonebook entry not found in file"
-msgstr ""
+msgstr "Entrée du répertoire non trouvée dans le fichier"
 
 #: gammu/backup.c:167 helper/message-cmdline.c:552
 #, c-format
 msgid "Unknown memory type: \"%s\"\n"
-msgstr ""
+msgstr "Type de mémoire inconnu: \"%s\"\n"
 
 #: gammu/backup.c:181
 #, c-format
@@ -62,11 +64,11 @@ msgstr "Format de sauvegarde inconnu: \"%s\"\n"
 
 #: gammu/backup.c:187
 msgid "Error while opening file for writing!\n"
-msgstr ""
+msgstr "Erreur lors de l'ouverture du fichier en écriture !\n"
 
 #: gammu/backup.c:191 gammu/files.c:454 helper/message-cmdline.c:1110
 msgid "Error while writing file!\n"
-msgstr ""
+msgstr "Erreur lors de l'écriture du fichier !\n"
 
 #: gammu/backup.c:194
 #, fuzzy
@@ -78,15 +80,17 @@ msgstr "Erreur pendant la sauvegarde"
 #: gammu/backup.c:744 gammu/backup.c:781 gammu/backup.c:819 gammu/backup.c:860
 #: gammu/backup.c:894 gammu/backup.c:931 gammu/message.c:432
 msgid "Reading"
-msgstr ""
+msgstr "En lecture"
 
 #: gammu/backup.c:247 gammu/backup.c:292
 msgid "Only part of data saved, please increase the limit."
 msgstr ""
+"Seulement une partie des données a été sauvegardée, veuillez augmenter la "
+"limite."
 
 #: gammu/backup.c:268 gammu/backup.c:310 gammu/backup.c:475 gammu/mms.c:182
 msgid "Reading:"
-msgstr ""
+msgstr "En lecture:"
 
 #: gammu/backup.c:269 gammu/backup.c:311 gammu/backup.c:476
 #: gammu/backup.c:1045 gammu/backup.c:1120 gammu/backup.c:1173
@@ -100,7 +104,7 @@ msgstr ""
 #: gammu/misc.c:659 gammu/misc.c:664 gammu/misc.c:1376 gammu/mms.c:183
 #, c-format
 msgid "%i percent"
-msgstr ""
+msgstr "%i pourcent"
 
 #: gammu/backup.c:367 gammu/backup.c:1026 gammu/backup.c:1645
 #: gammu/calendar.c:632 gammu/calendar.c:882 gammu/calendar.c:957
@@ -111,19 +115,19 @@ msgstr "Presser Ctrl+C pour arrêter"
 
 #: gammu/backup.c:372
 msgid "Use Unicode subformat of backup file?"
-msgstr ""
+msgstr "Utiliser le format Unicode pour le fichier de sauvegarde"
 
 #: gammu/backup.c:404
 msgid "Checking phone phonebook"
-msgstr ""
+msgstr "Vérifier l'annuaire du téléphone"
 
 #: gammu/backup.c:405
 msgid "Backup phone phonebook?"
-msgstr ""
+msgstr "Sauvegarder l'annuaire du téléphone"
 
 #: gammu/backup.c:409
 msgid "Checking SIM phonebook"
-msgstr ""
+msgstr "Vérifie l'annuaire de la carte SIM"
 
 #: gammu/backup.c:410
 msgid "Backup SIM phonebook?"
@@ -131,11 +135,11 @@ msgstr "sauvegarder les contacts SIM ?"
 
 #: gammu/backup.c:415
 msgid "Checking phone calendar"
-msgstr ""
+msgstr "Vérifie le calendrier du téléphone"
 
 #: gammu/backup.c:419
 msgid "Backup phone calendar notes?"
-msgstr ""
+msgstr "Sauvegarder les notes du calendrier à partir du téléphone"
 
 #: gammu/backup.c:432 gammu/backup.c:467 gammu/backup.c:504 gammu/backup.c:541
 #: gammu/backup.c:576 gammu/backup.c:642 gammu/backup.c:679 gammu/backup.c:716
@@ -147,71 +151,71 @@ msgstr ""
 
 #: gammu/backup.c:450
 msgid "Checking phone todos"
-msgstr ""
+msgstr "Vérification des tâches à faire du téléphone"
 
 #: gammu/backup.c:453
 msgid "Backup phone todos?"
-msgstr ""
+msgstr "Sauvegarder les tâches à faire du téléphone?"
 
 #: gammu/backup.c:487
 msgid "Checking phone notes"
-msgstr ""
+msgstr "Vérifie les notes du téléphone"
 
 #: gammu/backup.c:491
 msgid "Backup phone notes?"
-msgstr ""
+msgstr "Sauvegarder les notes du téléphone?"
 
 #: gammu/backup.c:522
 msgid "Checking phone caller logos"
-msgstr ""
+msgstr "Vérifie les logos du téléphone"
 
 #: gammu/backup.c:527
 msgid "Backup phone caller groups and logos?"
-msgstr ""
+msgstr "Sauvegarde les logos et groupes du téléphone?"
 
 #: gammu/backup.c:560
 msgid "Checking SIM SMS profiles"
-msgstr ""
+msgstr "Vérifie les profils SMS sur la carte SIM"
 
 #: gammu/backup.c:561
 msgid "Backup SIM SMS profiles?"
-msgstr ""
+msgstr "Sauvegarde les profils SMS à partir de la carte SIM?"
 
 #: gammu/backup.c:589
 msgid "Checking phone startup text"
-msgstr ""
+msgstr "Vérifie le message de bienvenu du téléphone"
 
 #: gammu/backup.c:593
 msgid "Backup phone startup logo/text?"
-msgstr ""
+msgstr "Sauvegarder le logo/texte de bienvenu du téléphone"
 
 #: gammu/backup.c:608
 msgid "Checking phone operator logo"
-msgstr ""
+msgstr "Vérifie le logo de l'opérateur"
 
 #: gammu/backup.c:613
 msgid "Backup phone operator logo?"
-msgstr ""
+msgstr "Sauvegarder le logo de l'opérateur"
 
 #: gammu/backup.c:624
 msgid "Checking phone WAP bookmarks"
-msgstr ""
+msgstr "Vérifie les favoris WAP du téléphone"
 
 #: gammu/backup.c:628
 msgid "Backup phone WAP bookmarks?"
-msgstr ""
+msgstr "Sauvegarder les favoris WAP du téléphone"
 
 #: gammu/backup.c:661
 msgid "Checking phone WAP settings"
-msgstr ""
+msgstr "Vérifie la configuration WAP du téléphone"
 
 #: gammu/backup.c:665
 msgid "Backup phone WAP settings?"
-msgstr ""
+msgstr "Sauvegarder la configuration WAP du téléphone"
 
 #: gammu/backup.c:698
 msgid "Checking phone MMS settings"
-msgstr ""
+msgstr "Vérifie la configuration MMS du téléphone"
 
 #: gammu/backup.c:702
 msgid "Backup phone MMS settings?"
@@ -219,39 +223,39 @@ msgstr "Sauvegarder les paramètres MMS ?"
 
 #: gammu/backup.c:735
 msgid "Checking phone Chat settings"
-msgstr ""
+msgstr "Vérifie les paramètres du Chat"
 
 #: gammu/backup.c:739
 msgid "Backup phone Chat settings?"
-msgstr ""
+msgstr "Sauvegarder les paramètres du Chat?"
 
 #: gammu/backup.c:772
 msgid "Checking phone SyncML settings"
-msgstr ""
+msgstr "Vérification des paramètres SyncML"
 
 #: gammu/backup.c:776
 msgid "Backup phone SyncML settings?"
-msgstr ""
+msgstr "Sauvegarde des paramètres SyncML"
 
 #: gammu/backup.c:808
 msgid "Checking phone user ringtones"
-msgstr ""
+msgstr "Vérification des sonneries"
 
 #: gammu/backup.c:813
 msgid "Backup phone user ringtones?"
-msgstr ""
+msgstr "Sauvegarder les sonneries?"
 
 #: gammu/backup.c:851
 msgid "Checking phone profiles"
-msgstr ""
+msgstr "Vérification des profils"
 
 #: gammu/backup.c:855
 msgid "Backup phone profiles?"
-msgstr ""
+msgstr "Sauvegarder les profils?"
 
 #: gammu/backup.c:884
 msgid "Checking phone FM radio stations"
-msgstr ""
+msgstr "Vérification des stations FM"
 
 #: gammu/backup.c:888
 msgid "Backup phone FM radio stations?"
@@ -259,11 +263,11 @@ msgstr "Sauvegarder les stations radio FM du téléphone ?"
 
 #: gammu/backup.c:921
 msgid "Checking phone GPRS access points"
-msgstr ""
+msgstr "Vérifications des points d'accès GPRS"
 
 #: gammu/backup.c:925
 msgid "Backup phone GPRS access points?"
-msgstr ""
+msgstr "Sauvegarder les points d'accès GPRS"
 
 #: gammu/backup.c:971
 msgid "Time of backup"
@@ -285,20 +289,26 @@ msgstr "Fichier crée par"
 #, c-format
 msgid "Checksum in backup file do not match (original: %s, new: %s). Continue?"
 msgstr ""
+"Le checksum de la sauvegarde ne correspond pas (original: %s, new: %s). "
+"Continuer?"
 
 #: gammu/backup.c:1022
 msgid ""
 "Please note that restoring data will cause existing data in phone to be "
 "deleted."
 msgstr ""
+"La restauration de la sauvegarde va supprimer les données présentes sur le "
+"téléphone"
 
 #: gammu/backup.c:1023
 msgid "Use addnew command if you just want to add some entries to your phone."
 msgstr ""
+"Utilisez addnew command si vous désirez ajouter de nouvelles entrées dans "
+"votre téléphone."
 
 #: gammu/backup.c:1034
 msgid "Restore phone caller groups and logos?"
-msgstr ""
+msgstr "Restaurer les groupes et les logos?"
 
 #: gammu/backup.c:1044 gammu/backup.c:1119 gammu/backup.c:1172
 #: gammu/backup.c:1230 gammu/backup.c:1279 gammu/backup.c:1307
@@ -309,7 +319,7 @@ msgstr ""
 #: gammu/backup.c:1760 gammu/backup.c:1782 gammu/backup.c:1806
 #: gammu/files.c:753
 msgid "Writing:"
-msgstr ""
+msgstr "Ecriture:"
 
 #: gammu/backup.c:1070 gammu/backup.c:1138 gammu/backup.c:1199
 #: gammu/backup.c:1247 gammu/backup.c:1340 gammu/backup.c:1665
@@ -320,22 +330,24 @@ msgstr "%i entrées dans le fichier de sauvegarde\n"
 
 #: gammu/backup.c:1071
 msgid "Restore phone phonebook?"
-msgstr ""
+msgstr "Restaurer les contacts?"
 
 #: gammu/backup.c:1090
 msgid ""
 "Probably caller group is missing from your backup, add it and use --restore "
 "again."
 msgstr ""
+"Probablement que le groupe d'appel ne se trouve pas dans la sauvegarde. "
+"Rajoutez le et utilisez à nouveau la commande --restore "
 
 #: gammu/backup.c:1100 gammu/backup.c:1159
 #, c-format
 msgid "Location %d"
-msgstr ""
+msgstr "Emplacement %d"
 
 #: gammu/backup.c:1139
 msgid "Restore SIM phonebook?"
-msgstr ""
+msgstr "Restaurer les contacts SIM"
 
 #: gammu/backup.c:1184 gammu/backup.c:1717
 msgid ""
@@ -345,7 +357,7 @@ msgstr ""
 
 #: gammu/backup.c:1200
 msgid "Restore phone calendar notes?"
-msgstr ""
+msgstr "Restaurer les notes du calendrier?"
 
 #: gammu/backup.c:1201
 msgid "Restore notes from the past?"
@@ -363,23 +375,23 @@ msgstr "effectué"
 
 #: gammu/backup.c:1249
 msgid "Restore phone todo?"
-msgstr ""
+msgstr "Restaurer les tâches à faire"
 
 #: gammu/backup.c:1257
 msgid "Deleting old todos:"
-msgstr ""
+msgstr "Effacer les anciennes tâches à faire"
 
 #: gammu/backup.c:1342
 msgid "Restore phone notes?"
-msgstr ""
+msgstr "Restaurer les notes?"
 
 #: gammu/backup.c:1373
 msgid "Restore SIM SMSC profiles?"
-msgstr ""
+msgstr "Restaurer les profils SIM SMSC"
 
 #: gammu/backup.c:1390
 msgid "Restore phone startup logo/text?"
-msgstr ""
+msgstr "Restaurer le logo/texte de démarrage"
 
 #: gammu/backup.c:1394
 msgid "Restore phone operator logo?"
@@ -387,19 +399,19 @@ msgstr "Restaurer le logo opérateur du téléphone ?"
 
 #: gammu/backup.c:1403
 msgid "Restore phone WAP bookmarks?"
-msgstr ""
+msgstr "Restaurer les favoris WAP du téléphone"
 
 #: gammu/backup.c:1407
 msgid "Deleting old bookmarks:"
-msgstr ""
+msgstr "Effacer les anciens favoris:"
 
 #: gammu/backup.c:1444
 msgid "Restore phone WAP settings?"
-msgstr ""
+msgstr "Restaurer les paramètres WAP"
 
 #: gammu/backup.c:1469
 msgid "Restore phone MMS settings?"
-msgstr ""
+msgstr "Restaurer les paramètres MMS"
 
 #: gammu/backup.c:1495 gammu/misc.c:1498
 msgid "Delete all phone user ringtones?"
@@ -4223,7 +4235,7 @@ msgstr ""
 
 #: helper/message-display.c:295 helper/message-display.c:296
 msgid "Nokia ringtone"
-msgstr ""
+msgstr "Sonnerie Nokia"
 
 #: helper/message-display.c:297
 msgid "Nokia GSM operator logo"
@@ -4306,11 +4318,11 @@ msgstr ""
 
 #: helper/message-display.c:407
 msgid "Do you want to play it?"
-msgstr ""
+msgstr "Désirez vous jouer avec"
 
 #: helper/message-display.c:412
 msgid "Caller logo"
-msgstr ""
+msgstr "Logo de l'appelant"
 
 #: helper/message-display.c:416
 #, c-format
@@ -4319,11 +4331,11 @@ msgstr ""
 
 #: helper/message-display.c:436
 msgid "Profile"
-msgstr ""
+msgstr "Profil"
 
 #: helper/message-display.c:457
 msgid "EMS sound ID"
-msgstr ""
+msgstr "EMS son ID"
 
 #: helper/message-display.c:460
 msgid "EMS animation ID"
@@ -4337,7 +4349,7 @@ msgstr "Messages"
 #. l10n: Generic prefix for error messages
 #: helper/message-display.c:499 helper/printing.c:18
 msgid "Error"
-msgstr ""
+msgstr "Erreur"
 
 #: helper/message-display.c:532
 msgid "Data PDU"
@@ -4345,7 +4357,7 @@ msgstr ""
 
 #: helper/message-display.c:533
 msgid "Number of bits"
-msgstr ""
+msgstr "Nombre de bit"
 
 #: helper/message-display.c:535
 msgid "UDH"
@@ -4358,21 +4370,18 @@ msgstr ""
 #. l10n: Generic prefix for warning messages
 #: helper/printing.c:34
 msgid "Warning"
-msgstr ""
+msgstr "Avertissement"
 
 #. l10n: Generic prefix for informational messages
 #: helper/printing.c:50
 msgid "Information"
 msgstr ""
 
-#, fuzzy
 #~ msgid "Mobile number (home)"
 #~ msgstr "Numéro de série (IMEI)"
 
-#, fuzzy
 #~ msgid "Number:   %s"
 #~ msgstr "Numéro"
 
-#, fuzzy
 #~ msgid "Compiled in features:\n"
 #~ msgstr "Fonctionnalités disponibles :"

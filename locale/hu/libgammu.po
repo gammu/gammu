@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-02-23 17:00+0100\n"
+"POT-Creation-Date: 2011-02-24 16:19+0100\n"
 "PO-Revision-Date: 2010-02-27 17:42+0200\n"
-"Last-Translator:  <doi@freemail.hu>\n"
+"Last-Translator: <doi@freemail.hu>\n"
 "Language-Team: none\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
@@ -20,11 +20,11 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
-msgstr ""
+msgstr "Rendben."
 
 #: libgammu/gsmcomon.c:85
 msgid "Error opening device. Unknown, busy or no permissions."
-msgstr ""
+msgstr "Hiba az eszköz megnyitásakor. Ismeretlen, foglalt, vagy tiltott."
 
 #: libgammu/gsmcomon.c:86
 msgid "Error opening device, it is locked."
@@ -40,7 +40,7 @@ msgstr "Az eszköz nem nyitható meg, mert egy másik alkalmazás használja."
 
 #: libgammu/gsmcomon.c:89
 msgid "Error opening device, you don't have permissions."
-msgstr ""
+msgstr "Az eszköz nem nyitható meg, mert engedély szükséges hozzá. "
 
 #: libgammu/gsmcomon.c:90
 msgid "Error opening device. No required driver in operating system."
@@ -50,6 +50,8 @@ msgstr ""
 #: libgammu/gsmcomon.c:91
 msgid "Error opening device. Some hardware not connected/wrongly configured."
 msgstr ""
+"Az eszköz nem nyitható meg, mert a hardver nincs csatlakoztatva, vagy "
+"rosszul van konfigurálva."
 
 #: libgammu/gsmcomon.c:92
 msgid "Error setting device DTR or RTS."
@@ -68,12 +70,11 @@ msgstr "Hiba lépett fel az eszköz megnyitása során."
 
 #: libgammu/gsmcomon.c:95
 msgid "Error during reading from the device."
-msgstr ""
+msgstr "Hiba az eszköz olvasásakor."
 
 #: libgammu/gsmcomon.c:96
-#, fuzzy
 msgid "Can't set parity on the device."
-msgstr "Kapcsolódás az eszközhöz"
+msgstr "Nem sikerült beállítani az eszköz paritását."
 
 #: libgammu/gsmcomon.c:97
 msgid "No response in specified timeout. Probably phone not connected."

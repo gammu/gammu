@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-02-14 10:40+0100\n"
+"POT-Creation-Date: 2011-02-24 16:19+0100\n"
 "PO-Revision-Date: 2009-01-27 14:28+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -52,7 +52,7 @@ msgstr ""
 #: gammu/backup.c:167 helper/message-cmdline.c:552
 #, c-format
 msgid "Unknown memory type: \"%s\"\n"
-msgstr ""
+msgstr "Tuntematon muistityyppi: \"%s\"\n"
 
 #: gammu/backup.c:181
 #, c-format
@@ -65,19 +65,18 @@ msgstr ""
 
 #: gammu/backup.c:191 gammu/files.c:454 helper/message-cmdline.c:1110
 msgid "Error while writing file!\n"
-msgstr ""
+msgstr "Virhe kirjoitettaessa tiedostoa!\n"
 
 #: gammu/backup.c:194
-#, fuzzy
 msgid "Error while closing file!\n"
-msgstr "Virhe tallennettaessa varmuuskopiota"
+msgstr "Virhe suljettaessa tiedostoa!\n"
 
 #: gammu/backup.c:241 gammu/backup.c:424 gammu/backup.c:496 gammu/backup.c:531
 #: gammu/backup.c:565 gammu/backup.c:633 gammu/backup.c:670 gammu/backup.c:707
 #: gammu/backup.c:744 gammu/backup.c:781 gammu/backup.c:819 gammu/backup.c:860
 #: gammu/backup.c:894 gammu/backup.c:931 gammu/message.c:432
 msgid "Reading"
-msgstr ""
+msgstr "Luetaan"
 
 #: gammu/backup.c:247 gammu/backup.c:292
 msgid "Only part of data saved, please increase the limit."
@@ -85,7 +84,7 @@ msgstr ""
 
 #: gammu/backup.c:268 gammu/backup.c:310 gammu/backup.c:475 gammu/mms.c:182
 msgid "Reading:"
-msgstr ""
+msgstr "Luetaan:"
 
 #: gammu/backup.c:269 gammu/backup.c:311 gammu/backup.c:476
 #: gammu/backup.c:1045 gammu/backup.c:1120 gammu/backup.c:1173
@@ -99,14 +98,14 @@ msgstr ""
 #: gammu/misc.c:659 gammu/misc.c:664 gammu/misc.c:1376 gammu/mms.c:183
 #, c-format
 msgid "%i percent"
-msgstr ""
+msgstr "%i prosenttia"
 
 #: gammu/backup.c:367 gammu/backup.c:1026 gammu/backup.c:1645
 #: gammu/calendar.c:632 gammu/calendar.c:882 gammu/calendar.c:957
 #: gammu/calendar.c:982 gammu/memory.c:24 gammu/memory.c:312
 #: gammu/memory.c:376 gammu/message.c:133 gammu/misc.c:205 gammu/misc.c:606
 msgid "Press Ctrl+C to break..."
-msgstr ""
+msgstr "Paina Ctrl+C keskeyttääksesi..."
 
 #: gammu/backup.c:372
 msgid "Use Unicode subformat of backup file?"
@@ -114,11 +113,11 @@ msgstr ""
 
 #: gammu/backup.c:404
 msgid "Checking phone phonebook"
-msgstr ""
+msgstr "Tarkistetaan osoitekirjaa"
 
 #: gammu/backup.c:405
 msgid "Backup phone phonebook?"
-msgstr ""
+msgstr "Varmuuskopioi osoitekirja?"
 
 #: gammu/backup.c:409
 msgid "Checking SIM phonebook"
@@ -198,7 +197,7 @@ msgstr ""
 
 #: gammu/backup.c:628
 msgid "Backup phone WAP bookmarks?"
-msgstr ""
+msgstr "Varmuuskopioi puhelimen WAP kirjanmerkit?"
 
 #: gammu/backup.c:661
 msgid "Checking phone WAP settings"
@@ -206,7 +205,7 @@ msgstr ""
 
 #: gammu/backup.c:665
 msgid "Backup phone WAP settings?"
-msgstr ""
+msgstr "Varmuuskopioi puhelimen WAP asetukset"
 
 #: gammu/backup.c:698
 msgid "Checking phone MMS settings"
@@ -214,7 +213,7 @@ msgstr ""
 
 #: gammu/backup.c:702
 msgid "Backup phone MMS settings?"
-msgstr ""
+msgstr "Varmuuskopioi puhelimen MMS asetukset?"
 
 #: gammu/backup.c:735
 msgid "Checking phone Chat settings"
@@ -222,7 +221,7 @@ msgstr ""
 
 #: gammu/backup.c:739
 msgid "Backup phone Chat settings?"
-msgstr ""
+msgstr "Varmuuskopioi puhelimen Chat asetukset?"
 
 #: gammu/backup.c:772
 msgid "Checking phone SyncML settings"
@@ -246,7 +245,7 @@ msgstr ""
 
 #: gammu/backup.c:855
 msgid "Backup phone profiles?"
-msgstr ""
+msgstr "Varmuuskopioi puhelimen profiilit?"
 
 #: gammu/backup.c:884
 msgid "Checking phone FM radio stations"
@@ -254,7 +253,7 @@ msgstr ""
 
 #: gammu/backup.c:888
 msgid "Backup phone FM radio stations?"
-msgstr ""
+msgstr "Varmuuskopioi puhelimen FM radioasemat?"
 
 #: gammu/backup.c:921
 msgid "Checking phone GPRS access points"
@@ -284,6 +283,8 @@ msgstr ""
 #, c-format
 msgid "Checksum in backup file do not match (original: %s, new: %s). Continue?"
 msgstr ""
+"Varmuuskopion tarkistussumma ei vastaa alkuperäistä (alkuperäinen: %s, uusi: "
+"%s). Jatketaanko?"
 
 #: gammu/backup.c:1022
 msgid ""
@@ -319,7 +320,7 @@ msgstr ""
 
 #: gammu/backup.c:1071
 msgid "Restore phone phonebook?"
-msgstr ""
+msgstr "Palautetaanko puhelimen osoitekirja?"
 
 #: gammu/backup.c:1090
 msgid ""
@@ -330,11 +331,11 @@ msgstr ""
 #: gammu/backup.c:1100 gammu/backup.c:1159
 #, c-format
 msgid "Location %d"
-msgstr ""
+msgstr "Sijainti %d"
 
 #: gammu/backup.c:1139
 msgid "Restore SIM phonebook?"
-msgstr ""
+msgstr "Palautetaanko SIM osoitekirja"
 
 #: gammu/backup.c:1184 gammu/backup.c:1717
 msgid ""
@@ -358,7 +359,7 @@ msgstr ""
 #: gammu/backup.c:1560 gammu/misc.c:1385 gammu/misc.c:1430 gammu/misc.c:1454
 #: gammu/misc.c:1502
 msgid "Done"
-msgstr ""
+msgstr "Valmis"
 
 #: gammu/backup.c:1249
 msgid "Restore phone todo?"
@@ -3999,11 +4000,11 @@ msgstr "Luettu"
 
 #: helper/message-display.c:156 helper/message-display.c:276
 msgid "UnRead"
-msgstr ""
+msgstr "Lukematon"
 
 #: helper/message-display.c:157 helper/message-display.c:277
 msgid "UnSent"
-msgstr ""
+msgstr "Odottaa lähettämistä"
 
 #: helper/message-display.c:161 helper/message-display.c:264
 msgid "Remote number"
@@ -4120,11 +4121,11 @@ msgstr ""
 
 #: helper/message-display.c:211 helper/message-display.c:228
 msgid "SMS message"
-msgstr ""
+msgstr "SMS viesti"
 
 #: helper/message-display.c:213
 msgid "Saved"
-msgstr ""
+msgstr "Tallennettu"
 
 #: helper/message-display.c:216
 msgid " (set for reply)"
@@ -4136,7 +4137,7 @@ msgstr ""
 
 #: helper/message-display.c:240
 msgid "Class"
-msgstr ""
+msgstr "Luokka"
 
 #: helper/message-display.c:242
 msgid "Coding"
@@ -4213,7 +4214,7 @@ msgstr ""
 
 #: helper/message-display.c:295 helper/message-display.c:296
 msgid "Nokia ringtone"
-msgstr ""
+msgstr "Nokia soittoääni"
 
 #: helper/message-display.c:297
 msgid "Nokia GSM operator logo"
@@ -4225,7 +4226,7 @@ msgstr ""
 
 #: helper/message-display.c:299
 msgid "Nokia profile"
-msgstr ""
+msgstr "Nokia profiili"
 
 #: helper/message-display.c:300
 msgid "Nokia calendar note"
@@ -4265,7 +4266,7 @@ msgstr ""
 
 #: helper/message-display.c:325
 msgid "Siemens file"
-msgstr ""
+msgstr "Siemens tiedosto"
 
 #: helper/message-display.c:328
 msgid "8 bit SMS, cannot be displayed here"
@@ -4283,7 +4284,7 @@ msgstr ""
 
 #: helper/message-display.c:386
 msgid "Siemens OTA file"
-msgstr ""
+msgstr "Siemens OTA-tiedosto"
 
 #: helper/message-display.c:388
 msgid " - VCARD"
@@ -4292,11 +4293,11 @@ msgstr ""
 #: helper/message-display.c:402
 #, c-format
 msgid "Ringtone \"%s\"\n"
-msgstr ""
+msgstr "Soittoääni \"%s\"\n"
 
 #: helper/message-display.c:407
 msgid "Do you want to play it?"
-msgstr ""
+msgstr "Haluatko soittaa sen?"
 
 #: helper/message-display.c:412
 msgid "Caller logo"
@@ -4309,7 +4310,7 @@ msgstr ""
 
 #: helper/message-display.c:436
 msgid "Profile"
-msgstr ""
+msgstr "Profiili"
 
 #: helper/message-display.c:457
 msgid "EMS sound ID"
@@ -4348,17 +4349,15 @@ msgstr ""
 #. l10n: Generic prefix for warning messages
 #: helper/printing.c:34
 msgid "Warning"
-msgstr ""
+msgstr "Varoitus"
 
 #. l10n: Generic prefix for informational messages
 #: helper/printing.c:50
 msgid "Information"
 msgstr ""
 
-#, fuzzy
 #~ msgid "Mobile number (home)"
 #~ msgstr "Sarjanumero (IMEI)"
 
-#, fuzzy
 #~ msgid "Number:   %s"
 #~ msgstr "Numero"

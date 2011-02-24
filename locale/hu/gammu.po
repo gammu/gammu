@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-02-14 10:40+0100\n"
+"POT-Creation-Date: 2011-02-24 16:19+0100\n"
 "PO-Revision-Date: 2009-01-27 14:28+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -22,27 +22,27 @@ msgstr ""
 #: helper/message-cmdline.c:441 helper/message-cmdline.c:478
 #: helper/message-cmdline.c:501
 msgid "Where is backup filename and location?"
-msgstr ""
+msgstr "Mi a Mentés fájl neve és helye?"
 
 #: gammu/backup.c:63 helper/message-cmdline.c:489
 msgid "Calendar note not found in file"
-msgstr ""
+msgstr "Naptár jegyzet nem található a fájlban"
 
 #: gammu/backup.c:86
 msgid "WAP bookmark not found in file"
-msgstr ""
+msgstr "WAP könyvjelző nem található a fájlban"
 
 #: gammu/backup.c:107
 msgid "Note not found in file"
-msgstr ""
+msgstr "Jegyzet nem található a fájlban"
 
 #: gammu/backup.c:128
 msgid "Todo note not found in file"
-msgstr ""
+msgstr "Teendő jegyzet nem található a fájlban"
 
 #: gammu/backup.c:137 helper/message-cmdline.c:525
 msgid "Where is backup filename and location and memory type?"
-msgstr ""
+msgstr "Hol található a mentett fájlnév, hely és memória típus?"
 
 #: gammu/backup.c:150 gammu/backup.c:161 helper/message-cmdline.c:537
 #: helper/message-cmdline.c:547
@@ -77,7 +77,7 @@ msgstr "Hiba lépett fel a bitzonsági másolat készítése közben"
 #: gammu/backup.c:744 gammu/backup.c:781 gammu/backup.c:819 gammu/backup.c:860
 #: gammu/backup.c:894 gammu/backup.c:931 gammu/message.c:432
 msgid "Reading"
-msgstr ""
+msgstr "Olvasás"
 
 #: gammu/backup.c:247 gammu/backup.c:292
 msgid "Only part of data saved, please increase the limit."
@@ -106,7 +106,7 @@ msgstr ""
 #: gammu/calendar.c:982 gammu/memory.c:24 gammu/memory.c:312
 #: gammu/memory.c:376 gammu/message.c:133 gammu/misc.c:205 gammu/misc.c:606
 msgid "Press Ctrl+C to break..."
-msgstr ""
+msgstr "Nyomd a Ctrl+C a megszakításhoz...."
 
 #: gammu/backup.c:372
 msgid "Use Unicode subformat of backup file?"
@@ -278,7 +278,7 @@ msgstr "IMEI"
 
 #: gammu/backup.c:980
 msgid "File created by"
-msgstr ""
+msgstr "A file készült:"
 
 #: gammu/backup.c:984
 #, c-format
@@ -308,7 +308,7 @@ msgstr ""
 #: gammu/backup.c:1760 gammu/backup.c:1782 gammu/backup.c:1806
 #: gammu/files.c:753
 msgid "Writing:"
-msgstr ""
+msgstr "Írás:"
 
 #: gammu/backup.c:1070 gammu/backup.c:1138 gammu/backup.c:1199
 #: gammu/backup.c:1247 gammu/backup.c:1340 gammu/backup.c:1665
@@ -358,7 +358,7 @@ msgstr ""
 #: gammu/backup.c:1560 gammu/misc.c:1385 gammu/misc.c:1430 gammu/misc.c:1454
 #: gammu/misc.c:1502
 msgid "Done"
-msgstr ""
+msgstr "Kész"
 
 #: gammu/backup.c:1249
 msgid "Restore phone todo?"
@@ -4354,14 +4354,11 @@ msgstr ""
 msgid "Information"
 msgstr ""
 
-#, fuzzy
 #~ msgid "Mobile number (home)"
 #~ msgstr "Sorozatszám (IMEI)"
 
-#, fuzzy
 #~ msgid "Number:   %s"
 #~ msgstr "Szám"
 
-#, fuzzy
 #~ msgid "Compiled in features:\n"
 #~ msgstr "Működő szolgáltatások:"

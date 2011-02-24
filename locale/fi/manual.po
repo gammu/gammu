@@ -22794,7 +22794,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:64 docs/manual/python/objects.rst:272
 msgid "Class"
-msgstr ""
+msgstr "Luokka"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:66 docs/manual/python/objects.rst:274

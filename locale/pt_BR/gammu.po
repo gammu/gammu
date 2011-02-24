@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-02-14 10:40+0100\n"
+"POT-Creation-Date: 2011-02-24 16:19+0100\n"
 "PO-Revision-Date: 2011-02-02 20:22+0200\n"
 "Last-Translator: gilberto dos santos alves <gsavix@gmail.com>\n"
 "Language-Team: none\n"
@@ -2051,11 +2051,11 @@ msgid "No configuration read, using builtin defaults!"
 msgstr "Nenhuma configuração lida, usando padrões da compilação!"
 
 #: gammu/gammu.c:1216
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
 msgstr ""
-"Versão da libGammu.so instalada (%s) é diferente da versão do Gammu (%s)\n"
+"Versão da libGammu.so instalada (%s) é diferente da versão do Gammu (%s) "
 
 #: gammu/memory.c:80
 msgid ""
@@ -4412,43 +4412,34 @@ msgstr "Informação"
 #~ msgid "Work country"
 #~ msgstr "País do Trabalho"
 
-#, fuzzy
 #~ msgid "Show version information."
 #~ msgstr "Exibe a versão do programa"
 
-#, fuzzy
 #~ msgid "Number:   %s"
 #~ msgstr "Número de Bits"
 
-#, fuzzy
 #~ msgid "Driver:   %s"
 #~ msgstr "Driver a ser usado"
 
-#, fuzzy
 #~ msgid "Action:   %s"
 #~ msgstr "Localização %d"
 
-#, fuzzy
 #~ msgid "Compiled in features:\n"
 #~ msgstr "Configuração da Compilação:"
 
-#, fuzzy
 #~ msgid ""
 #~ "License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
-#~ "GPL/2.0/>.\n"
+#~ "GPL/2.0/>. "
 #~ msgstr ""
 #~ "License GPLv2: GNU GPL versão 2 <http://creativecommons.org/licenses/"
 #~ "GPL/2.0/>."
 
-#, fuzzy
 #~ msgid "This is free software: you are free to change and redistribute it.\n"
 #~ msgstr ""
 #~ "Este é um software livre e você é livre para trocá-lo ou redistribuí-lo."
 
-#, fuzzy
 #~ msgid "There is NO WARRANTY, to the extent permitted by law.\n"
 #~ msgstr "Não há GARANTIA, até a extensão permitida pela lei."
 
-#, fuzzy
 #~ msgid "Check <http://wammu.eu/gammu/> for updates.\n"
 #~ msgstr "Veja <http://wammu.eu/gammu/> para atualizações."

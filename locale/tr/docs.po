@@ -48,9 +48,9 @@ msgstr ""
 
 #. type: Title =
 #: README:17
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "More information"
-msgstr "Telefon bilgisi"
+msgstr "Daha fazla bilgi"
 
 #. type: Plain text
 #: README:20
@@ -117,7 +117,6 @@ msgstr ""
 #~ msgid "Note:"
 #~ msgstr "Not:"
 
-#, fuzzy
 #~ msgid "Get organizer information"
 #~ msgstr "Telefon bilgisi"
 
@@ -148,26 +147,21 @@ msgstr ""
 #~ msgid "Unicode"
 #~ msgstr "Evrensel kod"
 
-#, fuzzy
 #~ msgid "Ringtones commands"
 #~ msgstr "Zil sesi"
 
-#, fuzzy
 #~ msgid "getringtoneslist"
 #~ msgstr "Zil sesi"
 
-#, fuzzy
 #~ msgid "user ringtones"
 #~ msgstr "Zil sesi"
 
-#, fuzzy
 #~ msgid "Phone information commands"
 #~ msgstr "Telefon bilgisi"
 
 #~ msgid "battery"
 #~ msgstr "pil"
 
-#, fuzzy
 #~ msgid "Phone settings commands"
 #~ msgstr "Telefon bilgisi"
 
@@ -201,7 +195,6 @@ msgstr ""
 #~ msgid "State"
 #~ msgstr "Estado"
 
-#, fuzzy
 #~ msgid "``NokiaRingtone``"
 #~ msgstr "Zil sesi"
 
@@ -211,7 +204,6 @@ msgstr ""
 #~ msgid "Left"
 #~ msgstr "Sol"
 
-#, fuzzy
 #~ msgid "Text formatting"
 #~ msgstr "Telefon bilgisi"
 
@@ -239,7 +231,6 @@ msgstr ""
 #~ msgid "Strikethrough"
 #~ msgstr "Üstü çizgili"
 
-#, fuzzy
 #~ msgid "Ringtone"
 #~ msgstr "Zil sesi"
 
@@ -252,57 +243,44 @@ msgstr ""
 #~ msgid "Value"
 #~ msgstr "Değer"
 
-#, fuzzy
 #~ msgid "Get version information."
 #~ msgstr "Telefon bilgisi"
 
 #~ msgid "IMEI"
 #~ msgstr "IMEI"
 
-#, fuzzy
 #~ msgid "Call"
 #~ msgstr "Çağrılar"
 
-#, fuzzy
 #~ msgid "GSM_Call"
 #~ msgstr "Çağrılar"
 
-#, fuzzy
 #~ msgid "Getting phone information"
 #~ msgstr "Telefon bilgisi"
 
-#, fuzzy
 #~ msgid "Callback"
 #~ msgstr "Çağrılar"
 
-#, fuzzy
 #~ msgid "GSM_GetRingtone"
 #~ msgstr "Zil sesi"
 
-#, fuzzy
 #~ msgid "GSM_SetRingtone"
 #~ msgstr "Zil sesi"
 
-#, fuzzy
 #~ msgid "GSM_GetRingtonesInfo"
 #~ msgstr "Zil sesi"
 
-#, fuzzy
 #~ msgid "GSM_NoteRingtone"
 #~ msgstr "Zil sesi"
 
-#, fuzzy
 #~ msgid "GSM_Ringtone"
 #~ msgstr "Zil sesi"
 
-#, fuzzy
 #~ msgid "GSM_RingtoneInfo"
 #~ msgstr "Zil sesi"
 
-#, fuzzy
 #~ msgid "GSM_AllRingtonesInfo"
 #~ msgstr "Zil sesi"
 
-#, fuzzy
 #~ msgid "Show version information and compiled in features."
 #~ msgstr "Telefon bilgisi"

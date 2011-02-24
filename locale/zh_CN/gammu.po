@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-02-14 10:40+0100\n"
+"POT-Creation-Date: 2011-02-24 16:19+0100\n"
 "PO-Revision-Date: 2009-01-27 14:20+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -524,7 +524,7 @@ msgstr "呼叫"
 
 #: gammu/calendar.c:28
 msgid "Meeting"
-msgstr ""
+msgstr "会议"
 
 #: gammu/calendar.c:31
 msgid "Birthday (Anniversary)"
@@ -2147,7 +2147,7 @@ msgstr ""
 
 #: gammu/message.c:228
 msgid "Pager"
-msgstr ""
+msgstr "传呼机"
 
 #: gammu/message.c:232
 msgid "Validity"
@@ -3178,7 +3178,7 @@ msgstr ""
 
 #: gammu/misc.c:2152
 msgid "Personal"
-msgstr ""
+msgstr "个人的"
 
 #: gammu/misc.c:2157
 msgid "Vibrate first"

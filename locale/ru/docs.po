@@ -103,27 +103,21 @@ msgid ""
 "\"Compiling Gammu\" in The Gammu Manual."
 msgstr ""
 
-#, fuzzy
 #~ msgid "Gammu Configuration File"
 #~ msgstr "Информация о телефоне"
 
-#, fuzzy
 #~ msgid "Description"
 #~ msgstr "Описание         : \"%s\"\n"
 
-#, fuzzy
 #~ msgid ".. config:section"
 #~ msgstr "Информация о телефоне"
 
-#, fuzzy
 #~ msgid "[gammu]"
 #~ msgstr "gammu(1)"
 
-#, fuzzy
 #~ msgid ".. config:option"
 #~ msgstr "Информация о телефоне"
 
-#, fuzzy
 #~ msgid "Connection"
 #~ msgstr "Информация о телефоне"
 
@@ -136,52 +130,42 @@ msgstr ""
 #~ msgid "Model"
 #~ msgstr "Модель"
 
-#, fuzzy
 #~ msgid "errors in text format\n"
 #~ msgstr "Информация о телефоне"
 
-#, fuzzy
 #~ msgid "0x01: Call Information\n"
 #~ msgstr "Информация о телефоне"
 
 #~ msgid "Note:"
 #~ msgstr "Заметки:"
 
-#, fuzzy
 #~ msgid "0x04: Phone Status\n"
 #~ msgstr "Время телефона - %s\n"
 
-#, fuzzy
 #~ msgid "0x05: Profile settings\n"
 #~ msgstr "Проверяются настройки WAP телефона\n"
 
-#, fuzzy
 #~ msgid "0x13: Calendar notes\n"
 #~ msgstr "Nokia: заметка в календаре"
 
-#, fuzzy
 #~ msgid "other: error\n"
 #~ msgstr "Нет ошибки."
 
-#, fuzzy
 #~ msgid "Get organizer information"
 #~ msgstr "Информация о телефоне"
 
 #~ msgid "Contacts"
 #~ msgstr "Контакты"
 
-#, fuzzy
 #~ msgid "Calendar"
 #~ msgstr "Nokia: заметка в календаре"
 
 #~ msgid "Read"
 #~ msgstr "Прочитанные"
 
-#, fuzzy
 #~ msgid "Phone connected to PC"
 #~ msgstr "Информация о телефоне"
 
-#, fuzzy
 #~ msgid "Initiation"
 #~ msgstr "Информация о телефоне"
 
@@ -191,229 +175,177 @@ msgstr ""
 #~ msgid "Connected"
 #~ msgstr "Подключен"
 
-#, fuzzy
 #~ msgid "Disconnected"
 #~ msgstr "Информация о телефоне"
 
-#, fuzzy
 #~ msgid "Phone connected to CARC91"
 #~ msgstr "Информация о телефоне"
 
-#, fuzzy
 #~ msgid "where location:\n"
 #~ msgstr "Информация о телефоне"
 
-#, fuzzy
 #~ msgid "0x7a: settings\n"
 #~ msgstr "Проверяются настройки WAP телефона\n"
 
-#, fuzzy
 #~ msgid "Phone Protocols"
 #~ msgstr "Время телефона - %s\n"
 
-#, fuzzy
 #~ msgid "Calendar Entries"
 #~ msgstr "Nokia: заметка в календаре"
 
-#, fuzzy
 #~ msgid "To test:"
 #~ msgstr "Время телефона - %s\n"
 
-#, fuzzy
 #~ msgid "get configuration pins"
 #~ msgstr "Информация о телефоне"
 
-#, fuzzy
 #~ msgid "Configurable queries"
 #~ msgstr "Информация о телефоне"
 
-#, fuzzy
 #~ msgid "Default value:"
 #~ msgstr " (имя по умолчанию)"
 
 #~ msgid "Usage"
 #~ msgstr "Использование"
 
-#, fuzzy
 #~ msgid "gammu"
 #~ msgstr "gammu(1)"
 
-#, fuzzy
 #~ msgid "SMSD Configuration File"
 #~ msgstr "Информация о телефоне"
 
-#, fuzzy
 #~ msgid "PIN"
 #~ msgstr "НАСТРОЙКИ"
 
-#, fuzzy
 #~ msgid "NetworkCode"
 #~ msgstr "Название сети\n"
 
-#, fuzzy
 #~ msgid "PhoneCode"
 #~ msgstr "Время телефона - %s\n"
 
 #~ msgid "Send"
 #~ msgstr "Отправить"
 
-#, fuzzy
 #~ msgid "User"
 #~ msgstr "Пользовательский UDH"
 
 #~ msgid "Password"
 #~ msgstr "Пароль"
 
-#, fuzzy
 #~ msgid "Try to connect to phone if not connected."
 #~ msgstr "Информация о телефоне"
 
-#, fuzzy
 #~ msgid "-h, --help"
 #~ msgstr "B<-h, --help>"
 
-#, fuzzy
 #~ msgid "_gammu:"
 #~ msgstr "gammu(1)"
 
-#, fuzzy
 #~ msgid "name of configuration file"
 #~ msgstr "Информация о телефоне"
 
-#, fuzzy
 #~ msgid "SMS and EMS commands"
 #~ msgstr "Проверяются настройки MMS телефона\n"
 
 #~ msgid "Unicode"
 #~ msgstr "Юникод"
 
-#, fuzzy
 #~ msgid "SMSC number"
 #~ msgstr "Номер SMSC        : \"%s\"\n"
 
-#, fuzzy
 #~ msgid "save to specified folder."
 #~ msgstr "Невозможно открыть указанный файл. Доступен только для чтения?"
 
-#, fuzzy
 #~ msgid "-animation"
 #~ msgstr "Информация о телефоне"
 
-#, fuzzy
 #~ msgid "Ringtones commands"
 #~ msgstr "Рингтон \"%s\"\n"
 
-#, fuzzy
 #~ msgid "getringtoneslist"
 #~ msgstr "Рингтон \"%s\"\n"
 
-#, fuzzy
 #~ msgid "Calendar notes commands"
 #~ msgstr "Nokia: заметка в календаре"
 
-#, fuzzy
 #~ msgid "calendar notes"
 #~ msgstr "Nokia: заметка в календаре"
 
-#, fuzzy
 #~ msgid "SMSC settings"
 #~ msgstr "Проверяются настройки MMS телефона\n"
 
-#, fuzzy
 #~ msgid "WAP bookmarks"
 #~ msgstr "Удаление старых закладок: "
 
-#, fuzzy
 #~ msgid "WAP settings"
 #~ msgstr "Проверяются настройки WAP телефона\n"
 
-#, fuzzy
 #~ msgid "user ringtones"
 #~ msgstr "Рингтон \"%s\"\n"
 
-#, fuzzy
 #~ msgid "Nokia specific commands"
 #~ msgstr "Nokia: профиль"
 
-#, fuzzy
 #~ msgid "Siemens specific commands"
 #~ msgstr "Файл Siemens\n"
 
-#, fuzzy
 #~ msgid "Network commands"
 #~ msgstr "Название сети\n"
 
-#, fuzzy
 #~ msgid "networkinfo"
 #~ msgstr "Название сети\n"
 
-#, fuzzy
 #~ msgid "WAP settings and bookmarks commands"
 #~ msgstr "Удаление старых закладок: "
 
-#, fuzzy
 #~ msgid "MMS and MMS settings commands"
 #~ msgstr "Проверяются настройки MMS телефона\n"
 
-#, fuzzy
 #~ msgid "Phone information commands"
 #~ msgstr "Информация о телефоне"
 
 #~ msgid "battery"
 #~ msgstr "батарея"
 
-#, fuzzy
 #~ msgid "Phone settings commands"
 #~ msgstr "Проверяются настройки WAP телефона\n"
 
-#, fuzzy
 #~ msgid "getcalendarsettings"
 #~ msgstr "Проверяются настройки WAP телефона\n"
 
-#, fuzzy
 #~ msgid "Reset phone settings."
 #~ msgstr "Проверяются настройки WAP телефона\n"
 
-#, fuzzy
 #~ msgid "Clear phone settings."
 #~ msgstr "Проверяются настройки WAP телефона\n"
 
-#, fuzzy
 #~ msgid "Clear device settings."
 #~ msgstr "Проверяются настройки WAP телефона\n"
 
-#, fuzzy
 #~ msgid "Clear user settings."
 #~ msgstr "Проверяются настройки WAP телефона\n"
 
-#, fuzzy
 #~ msgid "clear user ringtones"
 #~ msgstr "Рингтон \"%s\"\n"
 
-#, fuzzy
 #~ msgid "Configuration commands"
 #~ msgstr "Информация о телефоне"
 
-#, fuzzy
 #~ msgid "Gammu information commands"
 #~ msgstr "Gammu не настроена."
 
-#, fuzzy
 #~ msgid "Configuration"
 #~ msgstr "Информация о телефоне"
 
 #~ msgid "# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us"
 #~ msgstr "# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us"
 
-#, fuzzy
 #~ msgid "motivation"
 #~ msgstr "Информация о телефоне"
 
-#, fuzzy
 #~ msgid "make"
 #~ msgstr "Время телефона - %s\n"
 
-#, fuzzy
 #~ msgid "make test"
 #~ msgstr "Время телефона - %s\n"
 
@@ -423,7 +355,6 @@ msgstr ""
 #~ msgid "Messages"
 #~ msgstr "Сообщения"
 
-#, fuzzy
 #~ msgid "``make test``"
 #~ msgstr "Время телефона - %s\n"
 
@@ -445,44 +376,36 @@ msgstr ""
 #~ msgid "Location"
 #~ msgstr "Местонахождение"
 
-#, fuzzy
 #~ msgid "Class"
 #~ msgstr "Позвонить\n"
 
-#, fuzzy
 #~ msgid "Memory"
 #~ msgstr "Память заполнена."
 
 #~ msgid "Type"
 #~ msgstr "Тип"
 
-#, fuzzy
 #~ msgid "Coding"
 #~ msgstr "Чтение"
 
 #~ msgid "State"
 #~ msgstr "Состояние"
 
-#, fuzzy
 #~ msgid "``NokiaRingtone``"
 #~ msgstr "Рингтон \"%s\"\n"
 
-#, fuzzy
 #~ msgid "Name of the SMSC configuration"
 #~ msgstr "Информация о телефоне"
 
-#, fuzzy
 #~ msgid "Validity"
 #~ msgstr "Достоверность  : "
 
-#, fuzzy
 #~ msgid "Unknown"
 #~ msgstr "Неизвестная ошибка."
 
 #~ msgid "Left"
 #~ msgstr "По левому краю"
 
-#, fuzzy
 #~ msgid "Text formatting"
 #~ msgstr "Информация о телефоне"
 
@@ -510,15 +433,12 @@ msgstr ""
 #~ msgid "Strikethrough"
 #~ msgstr "Зачёркнутый"
 
-#, fuzzy
 #~ msgid "Ringtone"
 #~ msgstr "Рингтон \"%s\"\n"
 
-#, fuzzy
 #~ msgid "Bitmap"
 #~ msgstr "ID рисунка  : %i\n"
 
-#, fuzzy
 #~ msgid "Settings"
 #~ msgstr "Проверяются настройки WAP телефона\n"
 
@@ -528,165 +448,126 @@ msgstr ""
 #~ msgid "Value"
 #~ msgstr "Значение"
 
-#, fuzzy
 #~ msgid "Calendar Object"
 #~ msgstr "Nokia: заметка в календаре"
 
-#, fuzzy
 #~ msgid "Calendar Entries Object"
 #~ msgstr "Nokia: заметка в календаре"
 
-#, fuzzy
 #~ msgid "Used"
 #~ msgstr "Пользовательский UDH"
 
-#, fuzzy
 #~ msgid "CalendarTypes"
 #~ msgstr "Nokia: заметка в календаре"
 
-#, fuzzy
 #~ msgid "CalendarValueTypes"
 #~ msgstr "Nokia: заметка в календаре"
 
-#, fuzzy
 #~ msgid "      Gets network information.\n"
 #~ msgstr "Информация о телефоне"
 
-#, fuzzy
 #~ msgid "      Resets phone settings.\n"
 #~ msgstr "Проверяются настройки WAP телефона\n"
 
-#, fuzzy
 #~ msgid "Get version information."
 #~ msgstr "Информация о телефоне"
 
-#, fuzzy
 #~ msgid "Debugging configuration"
 #~ msgstr "Информация о телефоне"
 
-#, fuzzy
 #~ msgid "errors"
 #~ msgstr "Нет ошибки."
 
 #~ msgid "IMEI"
 #~ msgstr "IMEI"
 
-#, fuzzy
 #~ msgid "GSMNetworks"
 #~ msgstr "Название сети\n"
 
-#, fuzzy
 #~ msgid "File formats used by Gammu"
 #~ msgstr "Данный формат файлов не поддерживается в Gammu."
 
-#, fuzzy
 #~ msgid "Call"
 #~ msgstr "Позвонить\n"
 
-#, fuzzy
 #~ msgid "GSM_Call"
 #~ msgstr "Позвонить\n"
 
-#, fuzzy
 #~ msgid "Getting phone information"
 #~ msgstr "Информация о телефоне"
 
-#, fuzzy
 #~ msgid "Custom configuration"
 #~ msgstr "Информация о телефоне"
 
-#, fuzzy
 #~ msgid "Miscellaneous"
 #~ msgstr "Заметки (различные)\n"
 
-#, fuzzy
 #~ msgid "Date and time"
 #~ msgstr "Дата и время     : %s\n"
 
-#, fuzzy
 #~ msgid "GSM_SetCalendarSettings"
 #~ msgstr "Проверяются настройки MMS телефона\n"
 
-#, fuzzy
 #~ msgid "GSM_CalendarSettings"
 #~ msgstr "Проверяются настройки WAP телефона\n"
 
-#, fuzzy
 #~ msgid "GSM_CalendarStatus"
 #~ msgstr "Nokia: заметка в календаре"
 
-#, fuzzy
 #~ msgid "GSM_CalendarNoteType"
 #~ msgstr "Nokia: заметка в календаре"
 
-#, fuzzy
 #~ msgid "GSM_CalendarType"
 #~ msgstr "Nokia: заметка в календаре"
 
-#, fuzzy
 #~ msgid "GSM_CalendarEntry"
 #~ msgstr "Nokia: заметка в календаре"
 
-#, fuzzy
 #~ msgid "GSM_NetworkInfo"
 #~ msgstr "Название сети\n"
 
-#, fuzzy
 #~ msgid "Category"
 #~ msgstr "Категория    : %i\n"
 
-#, fuzzy
 #~ msgid "Callback"
 #~ msgstr "Позвонить\n"
 
-#, fuzzy
 #~ msgid "SMSD"
 #~ msgstr "SMS-центр"
 
-#, fuzzy
 #~ msgid "GSM_GetRingtone"
 #~ msgstr "Рингтон \"%s\"\n"
 
-#, fuzzy
 #~ msgid "GSM_SetRingtone"
 #~ msgstr "Рингтон \"%s\"\n"
 
-#, fuzzy
 #~ msgid "GSM_GetRingtonesInfo"
 #~ msgstr "Рингтон \"%s\"\n"
 
-#, fuzzy
 #~ msgid "GSM_NoteRingtone"
 #~ msgstr "Рингтон \"%s\"\n"
 
-#, fuzzy
 #~ msgid "GSM_Ringtone"
 #~ msgstr "Рингтон \"%s\"\n"
 
-#, fuzzy
 #~ msgid "GSM_RingtoneInfo"
 #~ msgstr "Рингтон \"%s\"\n"
 
-#, fuzzy
 #~ msgid "GSM_AllRingtonesInfo"
 #~ msgstr "Рингтон \"%s\"\n"
 
-#, fuzzy
 #~ msgid "GSM_SetMMSSettings"
 #~ msgstr "Проверяются настройки MMS телефона\n"
 
-#, fuzzy
 #~ msgid "GSM_ResetPhoneSettings"
 #~ msgstr "Проверяются настройки WAP телефона\n"
 
-#, fuzzy
 #~ msgid "GSM_SyncMLSettings"
 #~ msgstr "Проверяются настройки MMS телефона\n"
 
 #~ msgid "Show summary of options."
 #~ msgstr "Показать список опций."
 
-#, fuzzy
 #~ msgid "Show version information and compiled in features."
 #~ msgstr "Показать версию программы."
 
@@ -699,20 +580,16 @@ msgstr ""
 #~ msgid "DESCRIPTION"
 #~ msgstr "ОПИСАНИЕ"
 
-#, fuzzy
 #~ msgid "Error opening device. Unknown, busy or no permissions."
 #~ msgstr ""
 #~ "Ошибка подключения к устройству: неизвестно, занято или нет доступа."
 
-# Make device error messages uniform
 #~ msgid "Error opening device, it is locked."
 #~ msgstr "Ошибка подключения к устройству: заблокировано."
 
-#, fuzzy
 #~ msgid "Error opening device, it doesn't exist."
 #~ msgstr "Ошибка подключения к устройству: не существует."
 
-#, fuzzy
 #~ msgid "Error opening device, it is already opened by other application."
 #~ msgstr "Ошибка подключения к устройству: используется другим приложением."
 
@@ -724,7 +601,6 @@ msgstr ""
 #~ "Ошибка подключения к устройству: в операционной системе отсутствует "
 #~ "необходимый драйвер."
 
-#, fuzzy
 #~ msgid ""
 #~ "Error opening device. Some hardware not connected/wrongly configured."
 #~ msgstr ""
@@ -739,15 +615,12 @@ msgstr ""
 #~ "Ошибка установки скорости для устройства. Возможно, данная скорость не "
 #~ "поддерживается."
 
-#, fuzzy
 #~ msgid "Error writing to the device."
 #~ msgstr "Ошибка записи в устройство."
 
-#, fuzzy
 #~ msgid "Error during reading from the device."
 #~ msgstr "Ошибка чтения из устройства."
 
-#, fuzzy
 #~ msgid "Can't set parity on the device."
 #~ msgstr "Невозможно установить проверку чётности для устройства."
 
@@ -761,7 +634,6 @@ msgstr ""
 #~ msgid "Unknown model type string. Check config file."
 #~ msgstr "Указана неизвестная модель. Проверьте конфигурационный файл."
 
-#, fuzzy
 #~ msgid ""
 #~ "Some functions not available for your system (disabled in config or not "
 #~ "implemented)."
@@ -772,19 +644,15 @@ msgstr ""
 #~ msgid "Function not supported by phone."
 #~ msgstr "Функция не поддерживается телефоном."
 
-#, fuzzy
 #~ msgid "Entry is empty."
 #~ msgstr "Запись пуста."
 
-#, fuzzy
 #~ msgid "Security error. Maybe no PIN?"
 #~ msgstr "Ошибка защиты. Возможно, отсутствует PIN-код?"
 
-#, fuzzy
 #~ msgid "Invalid location. Maybe too high?"
 #~ msgstr "Недопустимое размещение. Возможно, слишком высокое значение?"
 
-#, fuzzy
 #~ msgid ""
 #~ "Functionality not implemented. You are welcome to help authors with it."
 #~ msgstr ""
@@ -793,17 +661,14 @@ msgstr ""
 #~ msgid "More memory required..."
 #~ msgstr "Нехватка памяти..."
 
-#, fuzzy
 #~ msgid "Operation not allowed by phone."
 #~ msgstr "Функция не поддерживается телефоном."
 
-#, fuzzy
 #~ msgid "You're inside phone menu (maybe editing?). Leave it and try again."
 #~ msgstr ""
 #~ "Вы находитесь внутри телефонного меню (в процессе редактирования?). "
 #~ "Выйдите из него и попробуйте ещё раз."
 
-#, fuzzy
 #~ msgid ""
 #~ "Function is currently being implemented. If you want to help, please "
 #~ "contact authors."
@@ -839,18 +704,15 @@ msgstr ""
 #~ msgid "Invalid data given to phone."
 #~ msgstr "Телефону переданы неверные данные."
 
-#, fuzzy
 #~ msgid "File with specified name already exists."
 #~ msgstr "Файл с указанным именем уже существует."
 
 #~ msgid "File with specified name doesn't exist."
 #~ msgstr "Файл с указанным именем не существует."
 
-#, fuzzy
 #~ msgid "You have to give folder name and not file name."
 #~ msgstr "Необходимо указать имя каталога, а не файла."
 
-#, fuzzy
 #~ msgid "You have to give file name and not folder name."
 #~ msgstr "Необходимо указать имя файла, а не каталога."
 
@@ -869,27 +731,21 @@ msgstr ""
 #~ msgid "Data were converted."
 #~ msgstr "Данные были преобразованы."
 
-#, fuzzy
 #~ msgid "Wrong folder used."
 #~ msgstr ", папка Входящие"
 
-#, fuzzy
 #~ msgid "Internal phone error."
 #~ msgstr "Неизвестная ошибка."
 
-#, fuzzy
 #~ msgid "Error writing file to disk."
 #~ msgstr "Ошибка записи в устройство."
 
-#, fuzzy
 #~ msgid "Service configuration is missing."
 #~ msgstr "Пошаговая настройка"
 
-#, fuzzy
 #~ msgid "Could not connect to the server."
 #~ msgstr "Соединение с сервером IMAP..."
 
-#, fuzzy
 #~ msgid "Could not resolve the host name."
 #~ msgstr "Невозможно прочитать сохраненное сообщение!"
 
@@ -905,7 +761,6 @@ msgstr ""
 #~ msgid "SEE ALSO"
 #~ msgstr "СМОТРИТЕ ТАКЖЕ"
 
-#, fuzzy
 #~ msgid "Configuration\n"
 #~ msgstr "Информация о телефоне"
 
@@ -914,7 +769,6 @@ msgstr ""
 #~ "Не указан номер центра сообщений (SMSC). Настройте его в телефоне или "
 #~ "воспользуйтесь параметром -smscnumber."
 
-#, fuzzy
 #~ msgid ""
 #~ "Configuration\n"
 #~ "=============\n"

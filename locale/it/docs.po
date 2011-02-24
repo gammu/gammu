@@ -102,27 +102,21 @@ msgid ""
 "\"Compiling Gammu\" in The Gammu Manual."
 msgstr ""
 
-#, fuzzy
 #~ msgid "Gammu Configuration File"
 #~ msgstr "Informazioni sul telefono"
 
-#, fuzzy
 #~ msgid "Description"
 #~ msgstr "Locazione    : \"%s\"\n"
 
-#, fuzzy
 #~ msgid ".. config:section"
 #~ msgstr "Informazioni sul telefono"
 
-#, fuzzy
 #~ msgid "[gammu]"
 #~ msgstr "gammu(1)"
 
-#, fuzzy
 #~ msgid ".. config:option"
 #~ msgstr "Informazioni sul telefono"
 
-#, fuzzy
 #~ msgid "Connection"
 #~ msgstr "Informazioni sul telefono"
 
@@ -135,26 +129,21 @@ msgstr ""
 #~ msgid "Model"
 #~ msgstr "Modello"
 
-#, fuzzy
 #~ msgid "errors in text format\n"
 #~ msgstr "Informazioni sul telefono"
 
-#, fuzzy
 #~ msgid "0x01: Call Information\n"
 #~ msgstr "Informazioni sul telefono"
 
 #~ msgid "Note:"
 #~ msgstr "Avviso:"
 
-#, fuzzy
 #~ msgid "0x04: Phone Status\n"
 #~ msgstr "Data ed ora impostati nel telefono: %s\n"
 
-#, fuzzy
 #~ msgid "other: error\n"
 #~ msgstr "Nessun errore."
 
-#, fuzzy
 #~ msgid "Get organizer information"
 #~ msgstr "Informazioni sul telefono"
 
@@ -170,11 +159,9 @@ msgstr ""
 #~ msgid "Read"
 #~ msgstr "Letti"
 
-#, fuzzy
 #~ msgid "Phone connected to PC"
 #~ msgstr "Informazioni sul telefono"
 
-#, fuzzy
 #~ msgid "Initiation"
 #~ msgstr "Informazioni sul telefono"
 
@@ -184,154 +171,120 @@ msgstr ""
 #~ msgid "Connected"
 #~ msgstr "Connesso"
 
-#, fuzzy
 #~ msgid "Disconnected"
 #~ msgstr "Informazioni sul telefono"
 
-#, fuzzy
 #~ msgid "Phone connected to CARC91"
 #~ msgstr "Informazioni sul telefono"
 
-#, fuzzy
 #~ msgid "where location:\n"
 #~ msgstr "Informazioni sul telefono"
 
-#, fuzzy
 #~ msgid "Phone Protocols"
 #~ msgstr "Data ed ora impostati nel telefono: %s\n"
 
-#, fuzzy
 #~ msgid "rest is not known"
 #~ msgstr "Servizio non disponibile"
 
-#, fuzzy
 #~ msgid "To test:"
 #~ msgstr "Data ed ora impostati nel telefono: %s\n"
 
-#, fuzzy
 #~ msgid "get configuration pins"
 #~ msgstr "Informazioni sul telefono"
 
-#, fuzzy
 #~ msgid "Configurable queries"
 #~ msgstr "Informazioni sul telefono"
 
-#, fuzzy
 #~ msgid "Default value:"
 #~ msgstr " (nome predefinito)"
 
 #~ msgid "Usage"
 #~ msgstr "Utilizzo"
 
-#, fuzzy
 #~ msgid "gammu"
 #~ msgstr "gammu(1)"
 
-#, fuzzy
 #~ msgid "SMSD Configuration File"
 #~ msgstr "Informazioni sul telefono"
 
-#, fuzzy
 #~ msgid "PIN"
 #~ msgstr "OPZIONI"
 
-#, fuzzy
 #~ msgid "NetworkCode"
 #~ msgstr "Codice rete assente\n"
 
-#, fuzzy
 #~ msgid "PhoneCode"
 #~ msgstr "Data ed ora impostati nel telefono: %s\n"
 
 #~ msgid "Send"
 #~ msgstr "Invia"
 
-#, fuzzy
 #~ msgid "User"
 #~ msgstr "UDH Utente"
 
 #~ msgid "Password"
 #~ msgstr "Password"
 
-#, fuzzy
 #~ msgid "Try to connect to phone if not connected."
 #~ msgstr "Informazioni sul telefono"
 
-#, fuzzy
 #~ msgid "-h, --help"
 #~ msgstr "B<-h, --help>"
 
-#, fuzzy
 #~ msgid "_gammu:"
 #~ msgstr "gammu(1)"
 
-#, fuzzy
 #~ msgid "name of configuration file"
 #~ msgstr "Informazioni sul telefono"
 
 #~ msgid "Unicode"
 #~ msgstr "Unicode"
 
-#, fuzzy
 #~ msgid "SMSC number"
 #~ msgstr "Centro messaggi   : \"%s\"\n"
 
-#, fuzzy
 #~ msgid "save to specified folder."
 #~ msgstr "Impossibile aprire il file specificato. E' a sola lettura?"
 
-#, fuzzy
 #~ msgid "-animation"
 #~ msgstr "Informazioni sul telefono"
 
-#, fuzzy
 #~ msgid "Ringtones commands"
 #~ msgstr "Suoneria \"%s\"\n"
 
-#, fuzzy
 #~ msgid "getringtoneslist"
 #~ msgstr "Suoneria \"%s\"\n"
 
-#, fuzzy
 #~ msgid "WAP bookmarks"
 #~ msgstr "Cancello i vecchi bookmarks: "
 
-#, fuzzy
 #~ msgid "WAP settings"
 #~ msgstr "Cancello i vecchi bookmarks: "
 
-#, fuzzy
 #~ msgid "user ringtones"
 #~ msgstr "Suoneria \"%s\"\n"
 
-#, fuzzy
 #~ msgid "Nokia specific commands"
 #~ msgstr "Profilo Nokia"
 
-#, fuzzy
 #~ msgid "Network commands"
 #~ msgstr "Codice rete assente\n"
 
-#, fuzzy
 #~ msgid "networkinfo"
 #~ msgstr "Codice rete assente\n"
 
-#, fuzzy
 #~ msgid "WAP settings and bookmarks commands"
 #~ msgstr "Cancello i vecchi bookmarks: "
 
-#, fuzzy
 #~ msgid "Phone information commands"
 #~ msgstr "Informazioni sul telefono"
 
 #~ msgid "battery"
 #~ msgstr "batteria"
 
-#, fuzzy
 #~ msgid "Phone settings commands"
 #~ msgstr "Cancello i vecchi bookmarks: "
 
-#, fuzzy
 #~ msgid "clear user ringtones"
 #~ msgstr "Suoneria \"%s\"\n"
 
@@ -341,37 +294,30 @@ msgstr ""
 #~ msgid "Down"
 #~ msgstr "In basso"
 
-#, fuzzy
 #~ msgid "Configuration commands"
 #~ msgstr "Informazioni sul telefono"
 
-#, fuzzy
 #~ msgid "Gammu information commands"
 #~ msgstr "Gammu non è configurato"
 
-#, fuzzy
 #~ msgid "Configuration"
 #~ msgstr "Informazioni sul telefono"
 
 #~ msgid "# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us"
 #~ msgstr "# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=it_it"
 
-#, fuzzy
 #~ msgid "motivation"
 #~ msgstr "Informazioni sul telefono"
 
-#, fuzzy
 #~ msgid ".."
 #~ msgstr "..."
 
 #~ msgid "..."
 #~ msgstr "..."
 
-#, fuzzy
 #~ msgid "make"
 #~ msgstr "Data ed ora impostati nel telefono: %s\n"
 
-#, fuzzy
 #~ msgid "make test"
 #~ msgstr "Data ed ora impostati nel telefono: %s\n"
 
@@ -381,7 +327,6 @@ msgstr ""
 #~ msgid "Messages"
 #~ msgstr "Messaggi"
 
-#, fuzzy
 #~ msgid "``make test``"
 #~ msgstr "Data ed ora impostati nel telefono: %s\n"
 
@@ -403,44 +348,36 @@ msgstr ""
 #~ msgid "Location"
 #~ msgstr "Posizione"
 
-#, fuzzy
 #~ msgid "Class"
 #~ msgstr "Chiamata\n"
 
-#, fuzzy
 #~ msgid "Memory"
 #~ msgstr "Memoria piena."
 
 #~ msgid "Type"
 #~ msgstr "Tipo"
 
-#, fuzzy
 #~ msgid "Coding"
 #~ msgstr "Cancellazione delle vecchie stazioni FM: "
 
 #~ msgid "State"
 #~ msgstr "Stato"
 
-#, fuzzy
 #~ msgid "``NokiaRingtone``"
 #~ msgstr "Suoneria \"%s\"\n"
 
-#, fuzzy
 #~ msgid "Name of the SMSC configuration"
 #~ msgstr "Stringa di configurazione mal formattata"
 
-#, fuzzy
 #~ msgid "Validity"
 #~ msgstr "Validità           : "
 
-#, fuzzy
 #~ msgid "Unknown"
 #~ msgstr "Errore sconosciuto."
 
 #~ msgid "Left"
 #~ msgstr "Sinistra"
 
-#, fuzzy
 #~ msgid "Text formatting"
 #~ msgstr "Informazioni sul telefono"
 
@@ -468,11 +405,9 @@ msgstr ""
 #~ msgid "Strikethrough"
 #~ msgstr "Barrato"
 
-#, fuzzy
 #~ msgid "Ringtone"
 #~ msgstr "Suoneria \"%s\"\n"
 
-#, fuzzy
 #~ msgid "Bitmap"
 #~ msgstr "Immagine    : abilitata\n"
 
@@ -485,109 +420,84 @@ msgstr ""
 #~ msgid "Value"
 #~ msgstr "Valore"
 
-#, fuzzy
 #~ msgid "Used"
 #~ msgstr "UDH Utente"
 
-#, fuzzy
 #~ msgid "      Gets network information.\n"
 #~ msgstr "Informazioni sul telefono"
 
-#, fuzzy
 #~ msgid "Get version information."
 #~ msgstr "Informazioni sul telefono"
 
-#, fuzzy
 #~ msgid "Debugging configuration"
 #~ msgstr "Informazioni sul telefono"
 
-#, fuzzy
 #~ msgid "errors"
 #~ msgstr "Nessun errore."
 
 #~ msgid "IMEI"
 #~ msgstr "IMEI"
 
-#, fuzzy
 #~ msgid "GSMNetworks"
 #~ msgstr "Codice rete assente\n"
 
-#, fuzzy
 #~ msgid "File formats used by Gammu"
 #~ msgstr "Formato del file non supportato da Gammu."
 
-#, fuzzy
 #~ msgid "Call"
 #~ msgstr "Chiamata\n"
 
-#, fuzzy
 #~ msgid "GSM_Call"
 #~ msgstr "Chiamata\n"
 
-#, fuzzy
 #~ msgid "Getting phone information"
 #~ msgstr "Informazioni sul telefono"
 
-#, fuzzy
 #~ msgid "Custom configuration"
 #~ msgstr "Informazioni sul telefono"
 
-#, fuzzy
 #~ msgid "Miscellaneous"
 #~ msgstr "Memo (Varie)\n"
 
-#, fuzzy
 #~ msgid "Date and time"
 #~ msgstr "Data ed ora      : %s\n"
 
-#, fuzzy
 #~ msgid "GSM_NetworkInfo"
 #~ msgstr "Codice rete assente\n"
 
-#, fuzzy
 #~ msgid "Category"
 #~ msgstr "Categoria    : %i\n"
 
-#, fuzzy
 #~ msgid "For per state machine configuration:"
 #~ msgstr "Stringa di configurazione mal formattata"
 
-#, fuzzy
 #~ msgid "Callback"
 #~ msgstr "Chiamata\n"
 
-#, fuzzy
 #~ msgid "GSM_GetRingtone"
 #~ msgstr "Suoneria \"%s\"\n"
 
-#, fuzzy
 #~ msgid "GSM_SetRingtone"
 #~ msgstr "Suoneria \"%s\"\n"
 
-#, fuzzy
 #~ msgid "GSM_GetRingtonesInfo"
 #~ msgstr "Suoneria \"%s\"\n"
 
-#, fuzzy
 #~ msgid "GSM_NoteRingtone"
 #~ msgstr "Suoneria \"%s\"\n"
 
-#, fuzzy
 #~ msgid "GSM_Ringtone"
 #~ msgstr "Suoneria \"%s\"\n"
 
-#, fuzzy
 #~ msgid "GSM_RingtoneInfo"
 #~ msgstr "Suoneria \"%s\"\n"
 
-#, fuzzy
 #~ msgid "GSM_AllRingtonesInfo"
 #~ msgstr "Suoneria \"%s\"\n"
 
 #~ msgid "Show summary of options."
 #~ msgstr "Mostra un riepilogo delle opzioni."
 
-#, fuzzy
 #~ msgid "Show version information and compiled in features."
 #~ msgstr "Mostra la versione del programma."
 
@@ -600,12 +510,10 @@ msgstr ""
 #~ msgid "DESCRIPTION"
 #~ msgstr "DESCRIZIONE"
 
-#, fuzzy
 #~ msgid "Functionality has been moved. For example to gammu-smsd(1)."
 #~ msgstr ""
 #~ "La funzionalita' richiesta è stata disabilitata durante la compilazione"
 
-#, fuzzy
 #~ msgid "Error opening device. Unknown, busy or no permissions."
 #~ msgstr ""
 #~ "Errore durante l'apertura del dispositivo. Sconosciuto/occupato o senza "
@@ -630,7 +538,6 @@ msgstr ""
 #~ "Errore durante l'apertura del dispositivo. Manca il driver necessario nel "
 #~ "sistema operativo."
 
-#, fuzzy
 #~ msgid ""
 #~ "Error opening device. Some hardware not connected/wrongly configured."
 #~ msgstr ""
@@ -645,15 +552,12 @@ msgstr ""
 #~ "Errore nel cambiare la velocità del dispositivo. Forse la velocità non è "
 #~ "supportata."
 
-#, fuzzy
 #~ msgid "Error writing to the device."
 #~ msgstr "Errore durante la scrittura sul dispositivo."
 
-#, fuzzy
 #~ msgid "Error during reading from the device."
 #~ msgstr "Errore durante la lettura dal dispositivo."
 
-#, fuzzy
 #~ msgid "Can't set parity on the device."
 #~ msgstr "Impossibile impostare la parità sul dispositivo."
 
@@ -669,7 +573,6 @@ msgstr ""
 #~ msgid "Unknown model type string. Check config file."
 #~ msgstr "Modello sconosciuto. Controllare il file di configurazione."
 
-#, fuzzy
 #~ msgid ""
 #~ "Some functions not available for your system (disabled in config or not "
 #~ "implemented)."
@@ -680,18 +583,15 @@ msgstr ""
 #~ msgid "Function not supported by phone."
 #~ msgstr "Funzione non supportata dal telefono."
 
-#, fuzzy
 #~ msgid "Entry is empty."
 #~ msgstr "Locazione vuota"
 
 #~ msgid "Security error. Maybe no PIN?"
 #~ msgstr "Errore di sicurezza. Forse non c'è PIN?"
 
-#, fuzzy
 #~ msgid "Invalid location. Maybe too high?"
 #~ msgstr "Locazione non valida. Forse troppo alta?"
 
-#, fuzzy
 #~ msgid ""
 #~ "Functionality not implemented. You are welcome to help authors with it."
 #~ msgstr ""
@@ -701,15 +601,12 @@ msgstr ""
 #~ msgid "More memory required..."
 #~ msgstr "Serve più memoria..."
 
-#, fuzzy
 #~ msgid "Operation not allowed by phone."
 #~ msgstr "Funzione non supportata dal telefono."
 
-#, fuzzy
 #~ msgid "You're inside phone menu (maybe editing?). Leave it and try again."
 #~ msgstr "Siete dentro il menu del telefono. Uscite e riprovate."
 
-#, fuzzy
 #~ msgid ""
 #~ "Function is currently being implemented. If you want to help, please "
 #~ "contact authors."
@@ -738,7 +635,6 @@ msgstr ""
 #~ msgid "Current connection type doesn't support called function."
 #~ msgstr "La connessione corrente non supporta la funzione richiesta."
 
-#, fuzzy
 #~ msgid "CRC error."
 #~ msgstr "Nessun errore."
 
@@ -751,7 +647,6 @@ msgstr ""
 #~ msgid "Invalid data given to phone."
 #~ msgstr "Dati non validi inviati al telefono."
 
-#, fuzzy
 #~ msgid "File with specified name already exists."
 #~ msgstr "Esiste già un file col nome specificato."
 
@@ -781,11 +676,9 @@ msgstr ""
 #~ msgid "Data were converted."
 #~ msgstr "I dati sono stati convertiti"
 
-#, fuzzy
 #~ msgid "Wrong folder used."
 #~ msgstr ", cartella Ricevuti"
 
-#, fuzzy
 #~ msgid "Internal phone error."
 #~ msgstr "Errore sconosciuto."
 
@@ -805,15 +698,12 @@ msgstr ""
 #~ msgid "Bluetooth configuration requires channel option."
 #~ msgstr "La configurazione Bluetooth richiede opzioni sui canali"
 
-#, fuzzy
 #~ msgid "Service configuration is missing."
 #~ msgstr "Configurazione non trovata"
 
-#, fuzzy
 #~ msgid "Could not connect to the server."
 #~ msgstr "Connessione al server IMAP..."
 
-#, fuzzy
 #~ msgid "Could not resolve the host name."
 #~ msgstr "Impossibile leggere i messaggi salvati!"
 
@@ -829,7 +719,6 @@ msgstr ""
 #~ msgid "SEE ALSO"
 #~ msgstr "VEDI ANCHE"
 
-#, fuzzy
 #~ msgid "Configuration\n"
 #~ msgstr "Informazioni sul telefono"
 
@@ -837,7 +726,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Il numero SMSC è vuoto, selezionarlo nel telefono oppure usare -smscnumber"
 
-#, fuzzy
 #~ msgid ""
 #~ "Configuration\n"
 #~ "=============\n"

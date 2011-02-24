@@ -103,30 +103,24 @@ msgid ""
 "\"Compiling Gammu\" in The Gammu Manual."
 msgstr ""
 
-#, fuzzy
 #~ msgid "Gammu Configuration File"
 #~ msgstr "Telefoon informatie"
 
-#, fuzzy
 #~ msgid ".. config:section"
 #~ msgstr "Telefoon informatie"
 
-#, fuzzy
 #~ msgid "[gammu]"
 #~ msgstr "gammu(1)"
 
-#, fuzzy
 #~ msgid ".. config:option"
 #~ msgstr "Telefoon informatie"
 
-#, fuzzy
 #~ msgid "Connection"
 #~ msgstr "Telefoon informatie"
 
 #~ msgid "Device"
 #~ msgstr "Apparaat"
 
-#, fuzzy
 #~ msgid "1.27.95"
 #~ msgstr "Gammu 1.24.90"
 
@@ -136,18 +130,15 @@ msgstr ""
 #~ msgid "Model"
 #~ msgstr "Model"
 
-#, fuzzy
 #~ msgid "errors in text format\n"
 #~ msgstr "Telefoon informatie"
 
-#, fuzzy
 #~ msgid "0x01: Call Information\n"
 #~ msgstr "Telefoon informatie"
 
 #~ msgid "Note:"
 #~ msgstr "Opmerking:"
 
-#, fuzzy
 #~ msgid "Get organizer information"
 #~ msgstr "Telefoon informatie"
 
@@ -163,11 +154,9 @@ msgstr ""
 #~ msgid "Read"
 #~ msgstr "Lezen"
 
-#, fuzzy
 #~ msgid "Phone connected to PC"
 #~ msgstr "Telefoon informatie"
 
-#, fuzzy
 #~ msgid "Initiation"
 #~ msgstr "Telefoon informatie"
 
@@ -177,47 +166,36 @@ msgstr ""
 #~ msgid "Connected"
 #~ msgstr "Verbonden"
 
-#, fuzzy
 #~ msgid "Disconnected"
 #~ msgstr "Telefoon informatie"
 
-#, fuzzy
 #~ msgid "Phone connected to CARC91"
 #~ msgstr "Telefoon informatie"
 
-#, fuzzy
 #~ msgid "where location:\n"
 #~ msgstr "Telefoon informatie"
 
-#, fuzzy
 #~ msgid "get configuration pins"
 #~ msgstr "Telefoon informatie"
 
-#, fuzzy
 #~ msgid "Configurable queries"
 #~ msgstr "Telefoon informatie"
 
 #~ msgid "Usage"
 #~ msgstr "Gebruik"
 
-#, fuzzy
 #~ msgid "gammu"
 #~ msgstr "gammu(1)"
 
-#, fuzzy
 #~ msgid "SMSD Configuration File"
 #~ msgstr "Telefoon informatie"
 
-#, fuzzy
 #~ msgid "1.28.93"
 #~ msgstr "Gammu 1.24.90"
 
-# type: SH
-#, fuzzy
 #~ msgid "PIN"
 #~ msgstr "OPTIES"
 
-#, fuzzy
 #~ msgid "1.28.92"
 #~ msgstr "Gammu 1.24.90"
 
@@ -227,62 +205,48 @@ msgstr ""
 #~ msgid "Password"
 #~ msgstr "Wachtwoord"
 
-#, fuzzy
 #~ msgid "Try to connect to phone if not connected."
 #~ msgstr "Telefoon informatie"
 
-#, fuzzy
 #~ msgid "-h, --help"
 #~ msgstr "B<-h, --help>"
 
-# type: TH
-#, fuzzy
 #~ msgid "Developer documentation"
 #~ msgstr "Gammu Documentatie"
 
-#, fuzzy
 #~ msgid "_gammu:"
 #~ msgstr "gammu(1)"
 
-#, fuzzy
 #~ msgid "name of configuration file"
 #~ msgstr "Telefoon informatie"
 
 #~ msgid "Unicode"
 #~ msgstr "Unicode"
 
-#, fuzzy
 #~ msgid "save to specified folder."
 #~ msgstr "Kan bestand niet aanmaken!"
 
-#, fuzzy
 #~ msgid "-animation"
 #~ msgstr "Telefoon informatie"
 
-#, fuzzy
 #~ msgid "Ringtones commands"
 #~ msgstr "Taken lezen"
 
-#, fuzzy
 #~ msgid "getringtoneslist"
 #~ msgstr "Taken lezen"
 
-#, fuzzy
 #~ msgid "user ringtones"
 #~ msgstr "Taken lezen"
 
-#, fuzzy
 #~ msgid "1.28.94"
 #~ msgstr "Gammu 1.24.90"
 
-#, fuzzy
 #~ msgid "Phone information commands"
 #~ msgstr "Telefoon informatie"
 
 #~ msgid "battery"
 #~ msgstr "batterij"
 
-#, fuzzy
 #~ msgid "Phone settings commands"
 #~ msgstr "Telefoon informatie"
 
@@ -292,34 +256,27 @@ msgstr ""
 #~ msgid "Down"
 #~ msgstr "Neer"
 
-#, fuzzy
 #~ msgid "Configuration commands"
 #~ msgstr "Telefoon informatie"
 
-#, fuzzy
 #~ msgid "Configuration"
 #~ msgstr "Telefoon informatie"
 
-# type: TH
-#, fuzzy
 #~ msgid "Project Documentation"
 #~ msgstr "Gammu Documentatie"
 
 #~ msgid "# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us"
 #~ msgstr "# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us"
 
-#, fuzzy
 #~ msgid "motivation"
 #~ msgstr "Telefoon informatie"
 
-#, fuzzy
 #~ msgid ".."
 #~ msgstr "..."
 
 #~ msgid "..."
 #~ msgstr "..."
 
-#, fuzzy
 #~ msgid "Cross compilation for Windows on Linux"
 #~ msgstr ""
 #~ "Kruiscompilatie voor Windows op Linux\n"
@@ -328,8 +285,6 @@ msgstr ""
 #~ msgid "Messages"
 #~ msgstr "Berichten"
 
-# type: TH
-#, fuzzy
 #~ msgid "Gammu Documentation Contents"
 #~ msgstr "Gammu Documentatie"
 
@@ -360,11 +315,9 @@ msgstr ""
 #~ msgid "State"
 #~ msgstr "Status"
 
-#, fuzzy
 #~ msgid "``NokiaRingtone``"
 #~ msgstr "Taken lezen"
 
-#, fuzzy
 #~ msgid "Name of the SMSC configuration"
 #~ msgstr "Telefoon informatie"
 
@@ -374,7 +327,6 @@ msgstr ""
 #~ msgid "Left"
 #~ msgstr "Links"
 
-#, fuzzy
 #~ msgid "Text formatting"
 #~ msgstr "Telefoon informatie"
 
@@ -402,7 +354,6 @@ msgstr ""
 #~ msgid "Strikethrough"
 #~ msgstr "Doorhalen"
 
-#, fuzzy
 #~ msgid "Ringtone"
 #~ msgstr "Taken lezen"
 
@@ -415,124 +366,96 @@ msgstr ""
 #~ msgid "Value"
 #~ msgstr "Waarde"
 
-# type: TH
-#, fuzzy
 #~ msgid "API documentation"
 #~ msgstr "Gammu Documentatie"
 
-#, fuzzy
 #~ msgid "      Gets network information.\n"
 #~ msgstr "Telefoon informatie"
 
-#, fuzzy
 #~ msgid "Get version information."
 #~ msgstr "Telefoon informatie"
 
-#, fuzzy
 #~ msgid "Debugging configuration"
 #~ msgstr "Telefoon informatie"
 
-#, fuzzy
 #~ msgid "1.27.93"
 #~ msgstr "Gammu 1.24.90"
 
 #~ msgid "IMEI"
 #~ msgstr "IMEI"
 
-#, fuzzy
 #~ msgid "Call"
 #~ msgstr "Oproepen"
 
-#, fuzzy
 #~ msgid "GSM_Call"
 #~ msgstr "Oproepen"
 
-#, fuzzy
 #~ msgid "Getting phone information"
 #~ msgstr "Telefoon informatie"
 
-#, fuzzy
 #~ msgid "Custom configuration"
 #~ msgstr "Telefoon informatie"
 
-#, fuzzy
 #~ msgid "Callback"
 #~ msgstr "Oproepen"
 
-#, fuzzy
 #~ msgid "GSM_GetRingtone"
 #~ msgstr "Taken lezen"
 
-#, fuzzy
 #~ msgid "GSM_SetRingtone"
 #~ msgstr "Taken lezen"
 
-#, fuzzy
 #~ msgid "GSM_GetRingtonesInfo"
 #~ msgstr "Taken lezen"
 
-#, fuzzy
 #~ msgid "GSM_NoteRingtone"
 #~ msgstr "Taken lezen"
 
-#, fuzzy
 #~ msgid "GSM_Ringtone"
 #~ msgstr "Taken lezen"
 
-#, fuzzy
 #~ msgid "GSM_RingtoneInfo"
 #~ msgstr "Taken lezen"
 
-#, fuzzy
 #~ msgid "GSM_AllRingtonesInfo"
 #~ msgstr "Taken lezen"
 
 #~ msgid "Show summary of options."
 #~ msgstr "Geef een overzicht van de opties."
 
-#, fuzzy
 #~ msgid "1.28.95"
 #~ msgstr "Gammu 1.24.90"
 
-#, fuzzy
 #~ msgid "Show version information and compiled in features."
 #~ msgstr "Toon programmaversie."
 
-# type: TH
 #~ msgid "GAMMU"
 #~ msgstr "Gammu"
 
-#, fuzzy
 #~ msgid "Jul 27 2010"
 #~ msgstr "5 Mei 2009"
 
-# type: SH
 #~ msgid "NAME"
 #~ msgstr "NAAM"
 
 #~ msgid "SYNOPSIS"
 #~ msgstr "SAMENVATTING"
 
-# type: SH
 #~ msgid "DESCRIPTION"
 #~ msgstr "OMSCHRIJVING"
 
-#, fuzzy
 #~ msgid "Error writing to the device."
 #~ msgstr "Toestel verbinden"
 
-#, fuzzy
 #~ msgid "Can't set parity on the device."
 #~ msgstr "Toestel verbinden"
 
-#, fuzzy
 #~ msgid ""
 #~ "Functionality not implemented. You are welcome to help authors with it."
 #~ msgstr ""
 #~ "Deze functie is niet geïmplementeerd in jouw telefoon.  Indien je hulp "
 #~ "wil voor de implementatie, contacteer de auteurs."
 
-#, fuzzy
 #~ msgid ""
 #~ "Function is currently being implemented. If you want to help, please "
 #~ "contact authors."
@@ -540,15 +463,12 @@ msgstr ""
 #~ "Deze functie is niet geïmplementeerd in jouw telefoon.  Indien je hulp "
 #~ "wil voor de implementatie, contacteer de auteurs."
 
-#, fuzzy
 #~ msgid "Service configuration is missing."
 #~ msgstr "Configuratie niet gevonden"
 
-#, fuzzy
 #~ msgid "Could not connect to the server."
 #~ msgstr "Bezig met verbinden met IMAP server..."
 
-#, fuzzy
 #~ msgid "Could not resolve the host name."
 #~ msgstr "Kon het opgeslagen bericht niet lezen!"
 
@@ -564,56 +484,43 @@ msgstr ""
 #~ msgid "SEE ALSO"
 #~ msgstr "ZIE OOK"
 
-#, fuzzy
 #~ msgid "March 16, 2010"
 #~ msgstr "5 Mei 2009"
 
-#, fuzzy
 #~ msgid "Gammu 1.28.0"
 #~ msgstr "Gammu 1.24.90"
 
-#, fuzzy
 #~ msgid "February 8, 2010"
 #~ msgstr "5 Mei 2009"
 
-#, fuzzy
 #~ msgid "August 17, 2009"
 #~ msgstr "5 Mei 2009"
 
-#, fuzzy
 #~ msgid "Gammu 1.26.0"
 #~ msgstr "Gammu 1.24.90"
 
-#, fuzzy
 #~ msgid "Configuration\n"
 #~ msgstr "Telefoon informatie"
 
-#, fuzzy
 #~ msgid "May 12 2010"
 #~ msgstr "5 Mei 2009"
 
-#, fuzzy
 #~ msgid "Feb 17 2010"
 #~ msgstr "5 Mei 2009"
 
-#, fuzzy
 #~ msgid ""
 #~ "Configuration\n"
 #~ "=============\n"
 #~ msgstr "Telefoon informatie"
 
-#, fuzzy
 #~ msgid "October 20, 2009"
 #~ msgstr "5 Mei 2009"
 
-#, fuzzy
 #~ msgid "Gammu 1.27.0"
 #~ msgstr "Gammu 1.24.90"
 
-#, fuzzy
 #~ msgid "Gammu 1.26.93"
 #~ msgstr "Gammu 1.24.90"
 
-#, fuzzy
 #~ msgid "Gammu 1.25.91"
 #~ msgstr "Gammu 1.24.90"

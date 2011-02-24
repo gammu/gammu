@@ -102,19 +102,15 @@ msgid ""
 "\"Compiling Gammu\" in The Gammu Manual."
 msgstr ""
 
-#, fuzzy
 #~ msgid "Gammu Configuration File"
 #~ msgstr "Telefoninformáció"
 
-#, fuzzy
 #~ msgid ".. config:section"
 #~ msgstr "Telefoninformáció"
 
-#, fuzzy
 #~ msgid ".. config:option"
 #~ msgstr "Telefoninformáció"
 
-#, fuzzy
 #~ msgid "Connection"
 #~ msgstr "Telefoninformáció"
 
@@ -127,18 +123,15 @@ msgstr ""
 #~ msgid "Model"
 #~ msgstr "Modell"
 
-#, fuzzy
 #~ msgid "errors in text format\n"
 #~ msgstr "Telefoninformáció"
 
-#, fuzzy
 #~ msgid "0x01: Call Information\n"
 #~ msgstr "Telefoninformáció"
 
 #~ msgid "Note:"
 #~ msgstr "Megjegyzés:"
 
-#, fuzzy
 #~ msgid "Get organizer information"
 #~ msgstr "Telefoninformáció"
 
@@ -151,11 +144,9 @@ msgstr ""
 #~ msgid "Read"
 #~ msgstr "Olvasott"
 
-#, fuzzy
 #~ msgid "Phone connected to PC"
 #~ msgstr "Telefoninformáció"
 
-#, fuzzy
 #~ msgid "Initiation"
 #~ msgstr "Telefoninformáció"
 
@@ -165,31 +156,24 @@ msgstr ""
 #~ msgid "Connected"
 #~ msgstr "Kapcsolódva"
 
-#, fuzzy
 #~ msgid "Disconnected"
 #~ msgstr "Telefoninformáció"
 
-#, fuzzy
 #~ msgid "Phone connected to CARC91"
 #~ msgstr "Telefoninformáció"
 
-#, fuzzy
 #~ msgid "where location:\n"
 #~ msgstr "Telefoninformáció"
 
-#, fuzzy
 #~ msgid "get configuration pins"
 #~ msgstr "Telefoninformáció"
 
-#, fuzzy
 #~ msgid "Configurable queries"
 #~ msgstr "Telefoninformáció"
 
-#, fuzzy
 #~ msgid "SMSD Configuration File"
 #~ msgstr "Telefoninformáció"
 
-#, fuzzy
 #~ msgid "PIN"
 #~ msgstr "BEÁLLÍTÁSOK"
 
@@ -199,61 +183,48 @@ msgstr ""
 #~ msgid "Password"
 #~ msgstr "Jelszó"
 
-#, fuzzy
 #~ msgid "Try to connect to phone if not connected."
 #~ msgstr "Telefoninformáció"
 
-#, fuzzy
 #~ msgid "-h, --help"
 #~ msgstr "B<-h, --help>"
 
-#, fuzzy
 #~ msgid "name of configuration file"
 #~ msgstr "Telefoninformáció"
 
 #~ msgid "Unicode"
 #~ msgstr "Unicode"
 
-#, fuzzy
 #~ msgid "save to specified folder."
 #~ msgstr "A fájl nem hozható létre."
 
-#, fuzzy
 #~ msgid "-animation"
 #~ msgstr "Telefoninformáció"
 
-#, fuzzy
 #~ msgid "Ringtones commands"
 #~ msgstr "Csengőhangok"
 
-#, fuzzy
 #~ msgid "getringtoneslist"
 #~ msgstr "Csengőhangok"
 
-#, fuzzy
 #~ msgid "user ringtones"
 #~ msgstr "Csengőhangok"
 
-#, fuzzy
 #~ msgid "Phone information commands"
 #~ msgstr "Telefoninformáció"
 
 #~ msgid "battery"
 #~ msgstr "Akkumulátorról"
 
-#, fuzzy
 #~ msgid "Phone settings commands"
 #~ msgstr "Telefoninformáció"
 
-#, fuzzy
 #~ msgid "Configuration commands"
 #~ msgstr "Telefoninformáció"
 
-#, fuzzy
 #~ msgid "Configuration"
 #~ msgstr "Telefoninformáció"
 
-#, fuzzy
 #~ msgid "motivation"
 #~ msgstr "Telefoninformáció"
 
@@ -287,11 +258,9 @@ msgstr ""
 #~ msgid "State"
 #~ msgstr "Állapot"
 
-#, fuzzy
 #~ msgid "``NokiaRingtone``"
 #~ msgstr "Csengőhangok"
 
-#, fuzzy
 #~ msgid "Name of the SMSC configuration"
 #~ msgstr "Telefoninformáció"
 
@@ -301,7 +270,6 @@ msgstr ""
 #~ msgid "Left"
 #~ msgstr "Balra"
 
-#, fuzzy
 #~ msgid "Text formatting"
 #~ msgstr "Telefoninformáció"
 
@@ -329,7 +297,6 @@ msgstr ""
 #~ msgid "Strikethrough"
 #~ msgstr "Áthúzott"
 
-#, fuzzy
 #~ msgid "Ringtone"
 #~ msgstr "Csengőhangok"
 
@@ -342,77 +309,60 @@ msgstr ""
 #~ msgid "Value"
 #~ msgstr "Érték"
 
-#, fuzzy
 #~ msgid "      Gets network information.\n"
 #~ msgstr "Telefoninformáció"
 
-#, fuzzy
 #~ msgid "Get version information."
 #~ msgstr "Telefoninformáció"
 
-#, fuzzy
 #~ msgid "Debugging configuration"
 #~ msgstr "Telefoninformáció"
 
 #~ msgid "IMEI"
 #~ msgstr "IMEI"
 
-#, fuzzy
 #~ msgid "Call"
 #~ msgstr "Hívások"
 
-#, fuzzy
 #~ msgid "GSM_Call"
 #~ msgstr "Hívások"
 
-#, fuzzy
 #~ msgid "Getting phone information"
 #~ msgstr "Telefoninformáció"
 
-#, fuzzy
 #~ msgid "Custom configuration"
 #~ msgstr "Telefoninformáció"
 
-#, fuzzy
 #~ msgid "Callback"
 #~ msgstr "Hívások"
 
-#, fuzzy
 #~ msgid "SMSD"
 #~ msgstr "SMSC"
 
-#, fuzzy
 #~ msgid "GSM_GetRingtone"
 #~ msgstr "Csengőhangok"
 
-#, fuzzy
 #~ msgid "GSM_SetRingtone"
 #~ msgstr "Csengőhangok"
 
-#, fuzzy
 #~ msgid "GSM_GetRingtonesInfo"
 #~ msgstr "Csengőhangok"
 
-#, fuzzy
 #~ msgid "GSM_NoteRingtone"
 #~ msgstr "Csengőhangok"
 
-#, fuzzy
 #~ msgid "GSM_Ringtone"
 #~ msgstr "Csengőhangok"
 
-#, fuzzy
 #~ msgid "GSM_RingtoneInfo"
 #~ msgstr "Csengőhangok"
 
-#, fuzzy
 #~ msgid "GSM_AllRingtonesInfo"
 #~ msgstr "Csengőhangok"
 
 #~ msgid "Show summary of options."
 #~ msgstr "Megjeleníti ezt a súgót."
 
-#, fuzzy
 #~ msgid "Show version information and compiled in features."
 #~ msgstr "Megjeleníti a program verzióját."
 
@@ -443,11 +393,9 @@ msgstr ""
 #~ "Hiba az eszköz sebességének megadásakor. Lehet, hogy ez a sebesség nem "
 #~ "támogatott."
 
-#, fuzzy
 #~ msgid "Error writing to the device."
 #~ msgstr "Hiba lépett fel az eszköz megnyitása során."
 
-#, fuzzy
 #~ msgid "Can't set parity on the device."
 #~ msgstr "Kapcsolódás az eszközhöz"
 
@@ -456,7 +404,6 @@ msgstr ""
 #~ "Nincs válasz a megadott időn belül. Lehet, hogy a telefon nincs "
 #~ "csatlakoztatva."
 
-#, fuzzy
 #~ msgid ""
 #~ "Functionality not implemented. You are welcome to help authors with it."
 #~ msgstr ""
@@ -464,7 +411,6 @@ msgstr ""
 #~ "funkció elkészítésében, kérjük vegye fel a kapcsolatot a program "
 #~ "készítőivel."
 
-#, fuzzy
 #~ msgid ""
 #~ "Function is currently being implemented. If you want to help, please "
 #~ "contact authors."
@@ -473,26 +419,21 @@ msgstr ""
 #~ "funkció elkészítésében, kérjük vegye fel a kapcsolatot a program "
 #~ "készítőivel."
 
-#, fuzzy
 #~ msgid "Service configuration is missing."
 #~ msgstr "Válassza ki a konfigurációs részt"
 
-#, fuzzy
 #~ msgid "Could not connect to the server."
 #~ msgstr "Kapcsolódás az IMAP kiszolgálóhoz..."
 
-#, fuzzy
 #~ msgid "Could not resolve the host name."
 #~ msgstr "Az elmentett üzenet nem olvasható."
 
 #~ msgid "REPORTING BUGS"
 #~ msgstr "HIBÁK JELENTÉSE"
 
-#, fuzzy
 #~ msgid "Configuration\n"
 #~ msgstr "Telefoninformáció"
 
-#, fuzzy
 #~ msgid ""
 #~ "Configuration\n"
 #~ "=============\n"

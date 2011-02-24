@@ -101,6 +101,7 @@ msgstr "Descrição dos Campos:"
 #: docs/manual/config/index.rst:26
 msgid "Gammu requires configuration to be able to properly talk to your phone."
 msgstr ""
+"gammu requer configuração para adequadamente interagir com seu telefone."
 
 # type: Plain text
 #. type: Attribute :ref:
@@ -112,7 +113,7 @@ msgstr "gammu-smsd(1) leitura da configuração do arquivo. Sua localização po
 #. type: Plain text
 #: docs/manual/config/index.rst:28
 msgid "on runtime, see above for search paths."
-msgstr ""
+msgstr "executando, veja acima para os caminhos (path) pesquisados."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:31
@@ -120,6 +121,9 @@ msgid ""
 "You can use :ref:`gammu-config` or :ref:`gammu-detect` to generate "
 "configuration file or start from :ref:`Fully documented example`."
 msgstr ""
+"Você pode usar :ref:`gammu-config` ou :ref:`gammu-detect` para geraro "
+"arquivo de configuração ou iniciar a partir de :ref:`Fully documented "
+"example`."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:35
@@ -135,7 +139,7 @@ msgstr ""
 #: docs/manual/config/index.rst:37 docs/manual/smsd/config.rst:14
 #: docs/manual/formats/smsbackup.rst:10 docs/manual/formats/backup.rst:9
 msgid "This file use ini file syntax, see :ref:`ini`."
-msgstr ""
+msgstr "Esse arquivo usa sintaxe tipo .ini, veja :ref:`ini`."
 
 # type: Plain text
 #. type: Plain text
@@ -174,6 +178,8 @@ msgstr "gammu(1)"
 msgid ""
 "This section is read by default unless you specify other on command line."
 msgstr ""
+"Essa seção é lida por padrão a menos que você especifique outra na linha de "
+"comando."
 
 #. type: Title +
 #: docs/manual/config/index.rst:49
@@ -463,7 +469,7 @@ msgstr "Dispositivo"
 #. type: Plain text
 #: docs/manual/config/index.rst:109 docs/manual/config/index.rst:178
 msgid "1.27.95"
-msgstr ""
+msgstr "1.29.00"
 
 # type: Plain text
 #. type: Plain text
@@ -503,7 +509,7 @@ msgstr ""
 #: docs/manual/config/index.rst:120
 #, no-wrap
 msgid "vendor/product IDs or device address on USB"
-msgstr ""
+msgstr "IDs de fornecedor/produto ou endereço do dispositivo USB"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:127
@@ -548,6 +554,10 @@ msgid ""
 "`dialout`) or or add special udev rules to enable you access these devices "
 "as non-root."
 msgstr ""
+"Em sistemas Linux, você pode não ter permissões para alguns dispositivos.  "
+"Você pode precisar ser membro de algum grupo (ex. :samp:`plugdev` or :samp:"
+"`dialout`) ou adicionar regras udev especiais para permitir acesso como "
+"usuário não root."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:138
@@ -556,6 +566,9 @@ msgid ""
 "file:`contrib/udev/45-nokiadku2.rules`) as :file:`/etc/udev/rules.d/45-"
 "nokiadku2.rules`:"
 msgstr ""
+"Para telefones Nokia você pode colocar o seguinte arquivo (também disponível "
+"como arquivo fonte :file:`contrib/udev/45-nokiadku2.rules`) as :file:`/etc/"
+"udev/rules.d/45-nokiadku2.rules`:"
 
 #. type: Labeled list
 #: docs/manual/config/index.rst:139 docs/manual/config/index.rst:362
@@ -587,6 +600,9 @@ msgid ""
 "dev/ttyACM0`` on Linux or ``COM5:`` on Windows), just use same setup as with "
 "serial port."
 msgstr ""
+" No caso de seu dispositivo USB aparecer como porta serial (ex.:  ``/dev/"
+"ttyACM0`` no LInux ou ``COM5:`` no Windows), apenas usa o mesmo setup com da "
+"porta serial."
 
 # type: Plain text
 #. type: Plain text
@@ -737,6 +753,8 @@ msgid ""
 "ip l s dev irda0 up          # Enables irda0 device\n"
 "sysctl net.irda.discovery=1  # Enables device discovery on IrDA\n"
 msgstr ""
+"ip l s dev irda0 up          # Habilita irda0 device\n"
+"sysctl net.irda.discovery=1  # Habilita detecção dispositivo em IrDA\n"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:169
@@ -745,6 +763,10 @@ msgid ""
 "for it (eg. ``/dev/ircomm0``) and use it same way as cable.  This can be "
 "usually achieved by loading modules ``ircomm-tty`` and ``irtty-sir``:"
 msgstr ""
+"Suporte nativo IrDA não é suportado no Linux, você precisa configurar uma "
+"porta serial virtual para isso (ex ``/dev/ircomm0``) e usar da mesma maneira "
+"que um cabo.  Isto pode ser alcançado carregando módulos ``ircomm-tty`` e "
+"``irtty-sir``:"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:174
@@ -844,7 +866,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/config/index.rst:198
 msgid "m-obex service for Samsung phones"
-msgstr ""
+msgstr "m-obex serviço para telefones Samsung"
 
 # type: TP
 #. type: Plain text
@@ -921,7 +943,7 @@ msgstr ""
 #: docs/manual/config/index.rst:225
 #, no-wrap
 msgid "Debugging options"
-msgstr ""
+msgstr "Opções de Depuração"
 
 # type: TP
 #. type: Plain text
@@ -942,6 +964,8 @@ msgid ""
 "For most debug levels (excluding ``errors``) the log file is overwritten on "
 "each execution."
 msgstr ""
+"Para os níveis de depuração (excluindo ``errors``) o arquivo de log é "
+"sobreposto a cada execução."
 
 # type: TP
 #. type: Plain text
@@ -1083,7 +1107,7 @@ msgstr ""
 #: docs/manual/config/index.rst:267
 #, no-wrap
 msgid "Locales and character set options"
-msgstr ""
+msgstr "Opções de caracteres e locales"
 
 # type: TP
 #. type: Plain text
@@ -1157,7 +1181,7 @@ msgstr ""
 #: docs/manual/formats/ini.rst:14 docs/manual/c/examples.rst:2
 #, no-wrap
 msgid "Examples"
-msgstr ""
+msgstr "Exemplos"
 
 # type: Plain text
 #. type: Plain text
@@ -1311,7 +1335,7 @@ msgstr ""
 #: docs/manual/config/index.rst:358
 #, no-wrap
 msgid "Fully documented example"
-msgstr ""
+msgstr "Exemplo Completo"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:361
@@ -1319,6 +1343,8 @@ msgid ""
 "You can find this sample file as :file:`docs/config/gammurc` in Gammu "
 "sources."
 msgstr ""
+"Você pode achar este exemplo no arquivo :file:`docs/config/gammurc` nos "
+"Fontes Gammu."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:363
@@ -1355,6 +1381,20 @@ msgid ""
 "... and other members of gnokii mailing list\n"
 "and authors of some WWW pages.\n"
 msgstr ""
+"Montado por\n"
+"Balazs Nagy          <js@iksz.hu>\n"
+"Harri Yli-Torkko     <hyt@surfeu.fi>\n"
+"Alfred R. Nurnberger <arnu@flosys.com>\n"
+"Hugh Blemings        <Hugh.Blemings@vsb.com.au>\n"
+"Mike Bradley         <mike@trumpington.st>\n"
+"Odinokov Serge       <serge@takas.lt>\n"
+"Pavel Janik          <Pavel@Janik.cz>\n"
+"BORBELY Zoltan       <bozo@andrews.hu>\n"
+"Pawel Kot            <pkot@linuxnews.pl>\n"
+"Marcin Wiacek        <Marcin@MWiacek.com>\n"
+"Walek                <walek@pa98.opole.sdi.tpnet.pl>\n"
+"... e outros membros da lista gnokii\n"
+"e autores de páginas WWW .\n"
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:23 docs/manual/protocol/n7110.rst:21
@@ -1364,6 +1404,9 @@ msgid ""
 "might be hazardous to your phone. Be careful!!! We do not take any "
 "responsibility or liability for damages, etc."
 msgstr ""
+"Os dados fornecidos são para informação apenas.  Alguns frames podem ser "
+"reservados em seu aparelho.  Cuidado!!! Nós não assumimos responsabilidades "
+"ou garantia contra danos, etc."
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:30 docs/manual/protocol/n7110.rst:27
@@ -1373,6 +1416,9 @@ msgid ""
 "features not listed here or you noticed a bug in this list, please notify us "
 "via e-mail.  Thank you."
 msgstr ""
+"esta informação não pode ser considerada completa.  Se você conhece algo "
+"mais sobre as funcionalidades não listadas aqui ou perceber um erro, por "
+"favor notifique-nos via email.  Muito Obrigado!."
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:34
@@ -1380,6 +1426,8 @@ msgid ""
 "Document describing frames used in GSM/PCN Nokia 6110 and derivatives (Nokia "
 "6130, 6150, 6190, 5110, 5130, 5150, 5190, 3210, 3310)"
 msgstr ""
+"Documento descrevendo frames usados em GSM/PCN Nokia 6110 e derivativos "
+"(Nokia 6130, 6150, 6190, 5110, 5130, 5150, 5190, 3210, 3310)"
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:37
@@ -1387,6 +1435,8 @@ msgid ""
 "Correct format is FBUS version 2/Direct IRDA/MBUS version 2 (see nokia.txt "
 "for protocol details):"
 msgstr ""
+"Forma correta é FBUS versão 2/Direct IRDA/MBUS versão 2 (veja nokia.txt para "
+"detalhes do protocolo):"
 
 #. type: Labeled list
 #: docs/manual/protocol/n6110.rst:38 docs/manual/protocol/n7110.rst:34
@@ -15651,8 +15701,7 @@ msgid ""
 "echo \"All your base are belong to us\" | gammu-smsd-inject TEXT 123456 -len "
 "400"
 msgstr ""
-"echo \"Toda sua base nos pertence\" | gammu-smsd-inject TEXT 123456 -len "
-"400\n"
+"echo \"Toda sua base nos pertence\" | gammu-smsd-inject TEXT 123456 -len 400 "
 
 #. type: Plain text
 #: docs/manual/smsd/inject.rst:74
@@ -15661,7 +15710,7 @@ msgid ""
 "gammu-smsd-inject TEXT 123456 -len 400 -text \"All your base are belong to us"
 "\""
 msgstr ""
-"gammu-smsd-inject TEXT 123456 -len 400 -text \"Toda sua base nos pertence\"\n"
+"gammu-smsd-inject TEXT 123456 -len 400 -text \"Toda sua base nos pertence\" "
 
 #. type: Plain text
 #: docs/manual/smsd/inject.rst:80
@@ -16538,8 +16587,7 @@ msgstr "Ativar SMSD como um Daemon Linux"
 msgid ""
 "gammu-smsd --config /etc/gammu-smsdrc --pid /var/run/gammu-smsd.pid --daemon"
 msgstr ""
-"gammu-smsd --config /etc/gammu-smsdrc --pid /var/run/gammu-smsd.pid --"
-"daemon\n"
+"gammu-smsd --config /etc/gammu-smsdrc --pid /var/run/gammu-smsd.pid --daemon "
 
 #. type: Plain text
 #: docs/manual/smsd/smsd.rst:114
@@ -16554,7 +16602,7 @@ msgid ""
 "--user gammu --group gammu"
 msgstr ""
 "gammu-smsd --config /etc/gammu-smsdrc --pid /var/run/gammu-smsd.pid --daemon "
-"--user gammu --group gammu\n"
+"--user gammu --group gammu "
 
 #. type: Title +
 #: docs/manual/smsd/smsd.rst:120
@@ -17203,7 +17251,7 @@ msgstr "  * alguns outros do seu Idioma\n"
 #, fuzzy
 msgid "some symbols like @ ! \" # & / ( ) % * + = - , . : ; < > ?"
 msgstr ""
-"  * alguns simbolos como  @ ! \" # & / ( ) % * + = - , . : ; E<lt> E<gt> ?\n"
+"  * alguns simbolos como  @ ! \" # & / ( ) % * + = - , . : ; E<lt> E<gt> ? "
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:173
@@ -22577,7 +22625,6 @@ msgstr ""
 msgid "Unsupported applications built on top of libGammu.dll on Windows."
 msgstr ""
 
-#
 #. type: Plain text
 #: docs/manual/project/directories.rst:202
 msgid "# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us"
@@ -29117,11 +29164,12 @@ msgstr ""
 msgid "   .. method:: GetMemory(Type, Location)\n"
 msgstr ""
 
+# type: Plain text
 #. type: delimited block -
 #: docs/manual/python/gammu.rst:447
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Reads entry from memory (phonebooks or calls). Which entry shouldbe read is defined in entry.\n"
-msgstr ""
+msgstr "Apaga todas as entradas para um tipo de memória especificado."
 
 #. type: delimited block -
 #: docs/manual/python/gammu.rst:452
@@ -29141,9 +29189,9 @@ msgstr ""
 
 #. type: delimited block -
 #: docs/manual/python/gammu.rst:457
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Gets memory (phonebooks or calls) status (eg. number of used andfree entries).\n"
-msgstr ""
+msgstr "Memória (agenda e chamadas)"
 
 #. type: delimited block -
 #: docs/manual/python/gammu.rst:462
@@ -29487,9 +29535,9 @@ msgstr ""
 
 #. type: delimited block -
 #: docs/manual/python/gammu.rst:615
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Gets information about SMS memory (read/unread/size of memory for both SIM and phone).\n"
-msgstr ""
+msgstr "Exibe informação sobre bateria e fonte de energia."
 
 #. type: delimited block -
 #: docs/manual/python/gammu.rst:618
@@ -35479,17 +35527,12 @@ msgstr ""
 "device = B0:0B:00:00:FA:CE/42\n"
 "connection = blueat\n"
 
-# type: TP
-#, fuzzy
 #~ msgid "nokiagetscreendump"
 #~ msgstr "B<nokiagetscreendump>"
 
-#, fuzzy
 #~ msgid "motivation"
 #~ msgstr "Configuração"
 
-# type: Plain text
-#, fuzzy
 #~ msgid ""
 #~ "when you want, you can make file in such format: ``src_unicode_char1, "
 #~ "dest_unicode_char1, src_unicode_char2, dest_unicode_char2`` (everything "
@@ -35505,8 +35548,6 @@ msgstr ""
 #~ "origem/destino. Na documentação há exemplos (I<replace.txt>), que "
 #~ "substitui todos \"a\" por \"1\""
 
-# type: Plain text
-#, fuzzy
 #~ msgid "ip l s dev irda0 up sysctl net.irda.discovery=1"
 #~ msgstr ""
 #~ "    ip l s dev irda0 up\n"

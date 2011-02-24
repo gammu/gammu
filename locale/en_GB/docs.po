@@ -119,40 +119,32 @@ msgstr ""
 "See docs/manual/project/install.rst for installation guide or see chapter "
 "\"Compiling Gammu\" in The Gammu Manual."
 
-#, fuzzy
 #~ msgid "_gammurc:"
 #~ msgstr "I<~/.gammurc>"
 
-#, fuzzy
 #~ msgid "Gammu Configuration File"
 #~ msgstr "Gammu configurator 0.3"
 
-#, fuzzy
 #~ msgid ""
 #~ "On Linux, MacOS X, BSD and other Unix-like systems, the config file is "
 #~ "searched in following order:"
 #~ msgstr "On Linux, MacOS X, BSD and other Unix-like systems:"
 
-#, fuzzy
 #~ msgid "``~/.gammurc``"
 #~ msgstr "I<~/.gammurc>"
 
-#, fuzzy
 #~ msgid "``/etc/gammurc``"
 #~ msgstr "I</etc/gammu-smsdrc>"
 
 #~ msgid "On Microsoft Windows:"
 #~ msgstr "On Microsoft Windows:"
 
-#, fuzzy
 #~ msgid "``.\\gammurc``"
 #~ msgstr "I<~/.gammurc>"
 
-#, fuzzy
 #~ msgid "Description"
 #~ msgstr "Description of tables"
 
-#, fuzzy
 #~ msgid ""
 #~ "`gammu` reads configuration from a config file. It's location is "
 #~ "determined"
@@ -168,7 +160,6 @@ msgstr ""
 #~ "For hints about configuring your phone, you can check Gammu Phone "
 #~ "Database <http://wammu.eu/phones/> to see what user users experienced."
 
-#, fuzzy
 #~ msgid ""
 #~ "Configuration file for gammu can contain several sections - ``[gammu]``, "
 #~ "``[gammu1]``, ``[gammuN]``, ... Each section configures one connection "
@@ -184,23 +175,18 @@ msgstr ""
 #~ "has number 0) as a parameter to gammu(1) and it will then use only this "
 #~ "section."
 
-#, fuzzy
 #~ msgid ".. config:section"
 #~ msgstr "Configuration"
 
-#, fuzzy
 #~ msgid "[gammu]"
 #~ msgstr "gammu(1)"
 
-#, fuzzy
 #~ msgid "Device connection parameters"
 #~ msgstr "Invalid command line parameters."
 
-#, fuzzy
 #~ msgid ".. config:option"
 #~ msgstr "Configuration"
 
-#, fuzzy
 #~ msgid "Connection"
 #~ msgstr "B<Connection>"
 
@@ -210,27 +196,21 @@ msgstr ""
 #~ msgid "For Nokia cables you want to use one of following:"
 #~ msgstr "For Nokia cables you want to use one of following:"
 
-#, fuzzy
 #~ msgid "serial FBUS connection\n"
 #~ msgstr "B<fbus> - serial FBUS connection"
 
-#, fuzzy
 #~ msgid "DLR-3 and compatible cables\n"
 #~ msgstr "B<dlr3> - DLR-3 and compatible cables"
 
-#, fuzzy
 #~ msgid "DKU-2 and compatible cables\n"
 #~ msgstr "B<dku2> - DKU-2 and compatible cables"
 
-#, fuzzy
 #~ msgid "DKU-5 and compatible cables\n"
 #~ msgstr "B<dku5> - DKU-5 and compatible cables"
 
-#, fuzzy
 #~ msgid "serial MBUS connection\n"
 #~ msgstr "B<mbus> - serial MBUS connection"
 
-#, fuzzy
 #~ msgid ""
 #~ "If you use some non original cable, you might need to append ``-nodtr`` "
 #~ "(eg. for ARK3116 based cables) or ``-nopower``, but Gammu should be able "
@@ -243,11 +223,9 @@ msgstr ""
 #~ msgid "For non-Nokia phones connected using cable you generally want:"
 #~ msgstr "For non-Nokia phones connected using cable you generally want:"
 
-#, fuzzy
 #~ msgid "generic AT commands based connection\n"
 #~ msgstr "B<at> - generic AT commands based connection"
 
-#, fuzzy
 #~ msgid ""
 #~ "You can optionally specify speed of the connection, eg. ``at19200``, but "
 #~ "it is not needed for modern USB cables."
@@ -258,46 +236,38 @@ msgstr ""
 #~ msgid "For IrDA connections use one of following:"
 #~ msgstr "For IrDA connections use one of following:"
 
-#, fuzzy
 #~ msgid "Phonet connection for Nokia phones.\n"
 #~ msgstr "B<irdaphonet> - Phonet connection for Nokia phones."
 
-#, fuzzy
 #~ msgid ""
 #~ "AT commands connection for most of phones (this is not supported on "
-#~ "Linux).\n"
+#~ "Linux). "
 #~ msgstr ""
 #~ "B<irdaat> - AT commands connection for most of phones (this is not "
 #~ "supported on Linux)."
 
-#, fuzzy
 #~ msgid "OBEX (IrMC or file transfer) connection for most of phones.\n"
 #~ msgstr ""
 #~ "B<irdaobex> - OBEX (IrMC or file transfer) connection for most of phones."
 
-#, fuzzy
 #~ msgid "GNapplet based connection for Symbian phones\n"
 #~ msgstr "B<irdagnapbus> - GNapplet based connection for Symbian phones"
 
 #~ msgid "For Bluetooth connection use one of following:"
 #~ msgstr "For Bluetooth connection use one of following:"
 
-#, fuzzy
 #~ msgid "AT commands connection for most of phones.\n"
 #~ msgstr "B<blueat> - AT commands connection for most of phones."
 
-#, fuzzy
 #~ msgid "Device"
 #~ msgstr "B<Device>"
 
-#, fuzzy
 #~ msgid "1.27.95"
 #~ msgstr "Gammu 1.27.96"
 
 #~ msgid "Device node or address of phone. It depends on used connection."
 #~ msgstr "Device node or address of phone. It depends on used connection."
 
-#, fuzzy
 #~ msgid ""
 #~ "For **cables** or emulated serial ports, you enter device name (for "
 #~ "example ``/dev/ttyS0``, ``/dev/ttyACM0``, ``/dev/ircomm0``, ``/dev/"
@@ -312,7 +282,6 @@ msgstr ""
 #~ "DKU-5 cables on Windows, where the device is automatically detected from "
 #~ "driver information and this parameters is ignored."
 
-#, fuzzy
 #~ msgid ""
 #~ "For **USB** connections (currently only fbususb and dku2 on Linux), you "
 #~ "can specify to which USB device Gammu should connect. You can either "
@@ -322,7 +291,6 @@ msgstr ""
 #~ "specify to which USB device Gammu should connect. You can either provide "
 #~ "vendor/product IDs or device address on USB:"
 
-#, fuzzy
 #~ msgid ""
 #~ "Device = 0x1234:0x5678  # Match device by vendor and product id\n"
 #~ "Device = 0x1234:-1      # Match device by vendor id\n"
@@ -335,7 +303,6 @@ msgstr ""
 #~ "    Device = 1.10           # Match device by usb bus and device address\n"
 #~ "    Device = 10             # Match device by usb device address\n"
 
-#, fuzzy
 #~ msgid ""
 #~ "For **Bluetooth** connection you have to enter Bluetooth address of your "
 #~ "phone (you can list Bluetooth devices in range on Linux using :command:"
@@ -354,7 +321,6 @@ msgstr ""
 #~ "Before using Gammu, your device should be paired with computer or you "
 #~ "should have set up automatic pairing."
 
-#, fuzzy
 #~ msgid "For **IrDA** connections, this parameters is not used at all."
 #~ msgstr "For IrDA connections, this parameters is not used at all."
 
@@ -365,21 +331,17 @@ msgstr ""
 #~ "If IrDA does not work on Linux, you might need to bring up the interface "
 #~ "and enable discovery (you need to run these commands as root):"
 
-#, fuzzy
 #~ msgid "ip l s dev irda0 up sysctl net.irda.discovery=1"
 #~ msgstr ""
 #~ "    ip l s dev irda0 up\n"
 #~ "    sysctl net.irda.discovery=1\n"
 
-#, fuzzy
 #~ msgid "Port"
 #~ msgstr "B<Port>"
 
-#, fuzzy
 #~ msgid "Alias for :config:option:`Device`, kept for backward compatibility."
 #~ msgstr "Alias for Device, kept for backward compatibility."
 
-#, fuzzy
 #~ msgid "Model"
 #~ msgstr "B<Model>"
 
@@ -399,18 +361,15 @@ msgstr ""
 #~ "connection instead of letting Gammu try the best suited for selected "
 #~ "operation:"
 
-#, fuzzy
 #~ msgid "force using of file browsing service (file system support)"
 #~ msgstr ""
 #~ "B<obexfs> - force using of file browsing service (file system support)"
 
-#, fuzzy
 #~ msgid "force using of IrMC service (contacts, calendar and notes support)"
 #~ msgstr ""
 #~ "B<obexirmc> - force using of IrMC service (contacts, calendar and notes "
 #~ "support)"
 
-#, fuzzy
 #~ msgid ""
 #~ "none service chosen, this has only limited use for sending file (:option:"
 #~ "`gammu sendfile` command)"
@@ -418,7 +377,6 @@ msgstr ""
 #~ "B<obexnone> - none service chosen, this has only limited use for sending "
 #~ "file (B<sendfile> command)"
 
-#, fuzzy
 #~ msgid "Use_Locking"
 #~ msgstr "B<Use_Locking>"
 
@@ -438,11 +396,9 @@ msgstr ""
 #~ msgid "This option has no meaning on Windows."
 #~ msgstr "This option has no meaning on Windows."
 
-#, fuzzy
 #~ msgid "Connection options"
 #~ msgstr "B<Connection>"
 
-#, fuzzy
 #~ msgid "SynchronizeTime"
 #~ msgstr "B<SynchronizeTime>"
 
@@ -451,11 +407,9 @@ msgstr ""
 #~ msgstr ""
 #~ "If you want to set time from computer to phone during starting connection."
 
-#, fuzzy
 #~ msgid "StartInfo"
 #~ msgstr "B<StartInfo>"
 
-#, fuzzy
 #~ msgid ""
 #~ "This option allow to set, that you want (setting ``yes``) to see message "
 #~ "on the phone screen or phone should enable light for a moment during "
@@ -467,52 +421,41 @@ msgstr ""
 #~ "starting connection. Phone will not beep during starting connection with "
 #~ "this option. This works only with some Nokia phones."
 
-#, fuzzy
 #~ msgid "LogFile"
 #~ msgstr "B<LogFile>"
 
 #~ msgid "Path to file where information about communication will be stored."
 #~ msgstr "Path to file where information about communication will be stored."
 
-#, fuzzy
 #~ msgid "LogFormat"
 #~ msgstr "B<LogFormat>"
 
-#, fuzzy
 #~ msgid ""
 #~ "Determines what all will be logged to :config:option:`LogFile`. Possible "
 #~ "values are:"
 #~ msgstr "Determines what all will be logged to LogFile. Possible values are:"
 
-#, fuzzy
 #~ msgid "no debug level\n"
 #~ msgstr "B<nothing> - no debug level"
 
-#, fuzzy
 #~ msgid "transmission dump in text format\n"
 #~ msgstr "B<text> - transmission dump in text format"
 
-#, fuzzy
 #~ msgid "all possible info in text format\n"
 #~ msgstr "B<textall> - all possible info in text format"
 
-#, fuzzy
 #~ msgid "all possible info in text format, with time stamp\n"
 #~ msgstr "B<textalldate> - all possible info in text format, with time stamp"
 
-#, fuzzy
 #~ msgid "errors in text format\n"
 #~ msgstr "B<errors> - errors in text format"
 
-#, fuzzy
 #~ msgid "errors in text format, with time stamp\n"
 #~ msgstr "B<errorsdate> - errors in text format, with time stamp"
 
-#, fuzzy
 #~ msgid "transmission dump in binary format\n"
 #~ msgstr "B<binary> - transmission dump in binary format"
 
-#, fuzzy
 #~ msgid ""
 #~ "For debugging use either ``textalldate`` or ``textall``, it contains all "
 #~ "needed information to diagnose problems."
@@ -520,11 +463,9 @@ msgstr ""
 #~ "For debugging use either B<textalldate> or B<textall>, it contains all "
 #~ "needed information to diagnose problems."
 
-#, fuzzy
 #~ msgid "Features"
 #~ msgstr "B<Features>"
 
-#, fuzzy
 #~ msgid ""
 #~ "Custom features for phone. This can be used as override when values coded "
 #~ "in ``common/gsmphones.c`` are bad or missing. Consult ``include/gammu-"
@@ -536,11 +477,9 @@ msgstr ""
 #~ "for possible values (all GSM_Feature values without leading F_ prefix). "
 #~ "Please report correct values to Gammu authors."
 
-#, fuzzy
 #~ msgid "GammuCoding"
 #~ msgstr "B<GammuCoding>"
 
-#, fuzzy
 #~ msgid ""
 #~ "Forces using specified codepage (for example ``1250`` will force CP-1250 "
 #~ "or ``utf8`` for UTF-8). This should not be needed, Gammu detects it "
@@ -550,11 +489,9 @@ msgstr ""
 #~ "or \"utf8\" for UTF-8). This should not be needed in most cases, Gammu "
 #~ "should detect it according to your locales."
 
-#, fuzzy
 #~ msgid "GammuLoc"
 #~ msgstr "B<GammuLoc>"
 
-#, fuzzy
 #~ msgid ""
 #~ "Path to directory with localisation files (the directory should contain "
 #~ "``LANG/LC_MESSAGES/gammu.mo``). If gammu is properly installed it should "
@@ -564,21 +501,18 @@ msgstr ""
 #~ "LANG/LC_MESSAGES/gammu.mo). If gammu is properly installed it should find "
 #~ "these files automatically."
 
-#, fuzzy
 #~ msgid "Examples"
 #~ msgstr "For example:"
 
 #~ msgid "There is more complete example available in Gammu documentation."
 #~ msgstr "There is more complete example available in Gammu documentation."
 
-#, fuzzy
 #~ msgid "Connection examples"
 #~ msgstr "B<Connection>"
 
 #~ msgid "Gammu configuration for Nokia phone using DLR-3 cable:"
 #~ msgstr "Gammu configuration for Nokia phone using DLR-3 cable:"
 
-#, fuzzy
 #~ msgid "[gammu] device = /dev/ttyACM0 connection = dlr3"
 #~ msgstr ""
 #~ "[gammu]\n"
@@ -592,7 +526,6 @@ msgstr ""
 #~ "Gammu configuration for Sony-Ericsson phone (or any other AT compatible "
 #~ "phone) connected using USB cable:"
 
-#, fuzzy
 #~ msgid "[gammu] device = /dev/ttyACM0 connection = at"
 #~ msgstr ""
 #~ "[gammu]\n"
@@ -606,7 +539,6 @@ msgstr ""
 #~ "Gammu configuration for Sony-Ericsson (or any other AT compatible phone) "
 #~ "connected using bluetooth:"
 
-#, fuzzy
 #~ msgid "[gammu] device = B0:0B:00:00:FA:CE connection = blueat"
 #~ msgstr ""
 #~ "[gammu]\n"
@@ -620,7 +552,6 @@ msgstr ""
 #~ "Gammu configuration for phone which needs to manually adjust Bluetooth "
 #~ "channel to use channel 42:"
 
-#, fuzzy
 #~ msgid "[gammu] device = B0:0B:00:00:FA:CE/42 connection = blueat"
 #~ msgstr ""
 #~ "[gammu]\n"
@@ -630,7 +561,6 @@ msgstr ""
 #~ msgid "Working with multiple phones"
 #~ msgstr "Working with multiple phones"
 
-#, fuzzy
 #~ msgid ""
 #~ "Gammu can be configured for multiple phones (however only one connection "
 #~ "is used at one time, you can choose which one to use with :option:`gammu -"
@@ -642,102 +572,81 @@ msgstr ""
 #~ "parameter). Configuration for phones on three serial ports would look "
 #~ "like following:"
 
-#, fuzzy
 #~ msgid "[gammu] device = /dev/ttyS0 connection = at"
 #~ msgstr ""
 #~ "[gammu]\n"
 #~ "device = /dev/ttyS0\n"
 #~ "connection = at\n"
 
-#, fuzzy
 #~ msgid "[gammmu1] device = /dev/ttyS1 connection = at"
 #~ msgstr ""
 #~ "[gammmu1]\n"
 #~ "device = /dev/ttyS1\n"
 #~ "connection = at\n"
 
-#, fuzzy
 #~ msgid "[gammmu2] device = /dev/ttyS2 connection = at"
 #~ msgstr ""
 #~ "[gammmu2]\n"
 #~ "device = /dev/ttyS2\n"
 #~ "connection = at\n"
 
-#, fuzzy
 #~ msgid "0x01: Call Information\n"
 #~ msgstr "More information\n"
 
-#, fuzzy
 #~ msgid "voice call:\n"
 #~ msgstr "Switches call."
 
-#, fuzzy
 #~ msgid "Note:"
 #~ msgstr "Notes"
 
-#, fuzzy
 #~ msgid "to answer call:"
 #~ msgstr "Transfers call."
 
-#, fuzzy
 #~ msgid "0x04: Phone Status\n"
 #~ msgstr "Phone tests"
 
-#, fuzzy
 #~ msgid "2: battery\n"
 #~ msgstr "B<battery>"
 
-#, fuzzy
 #~ msgid "0x05: Profile settings\n"
 #~ msgstr "Phone settings"
 
-#, fuzzy
 #~ msgid "0x13: Calendar notes\n"
 #~ msgstr "Calendar notes"
 
-#, fuzzy
 #~ msgid "other: error\n"
 #~ msgstr "No error."
 
-#, fuzzy
 #~ msgid "s Set Picture Image     { 0x0003, frame...}\n"
 #~ msgstr "Get Picture Image from phone."
 
-#, fuzzy
 #~ msgid "Get organizer information"
 #~ msgstr "Phone information"
 
-#, fuzzy
 #~ msgid "Invocation"
 #~ msgstr "Localisation\n"
 
-#, fuzzy
 #~ msgid "Example"
 #~ msgstr "For example:"
 
 #~ msgid "Notes"
 #~ msgstr "Notes"
 
-#, fuzzy
 #~ msgid "Read command use index reference."
 #~ msgstr "Invalid command line parameters."
 
-#, fuzzy
 #~ msgid "Requirements"
 #~ msgstr "From Sources - Requirements\n"
 
-#, fuzzy
 #~ msgid "Some phones seem to start with following command"
 #~ msgstr "For example to create SQLite tables, issue following command:"
 
-#, fuzzy
 #~ msgid "Obex commands"
 #~ msgstr "Commands"
 
 #~ msgid "Contacts"
 #~ msgstr "Contacts"
 
-#, fuzzy
 #~ msgid "Calendar"
 #~ msgstr "Calendar notes"
 
@@ -747,127 +656,96 @@ msgstr ""
 #~ msgid "Delete"
 #~ msgstr "Delete"
 
-#, fuzzy
 #~ msgid "Files"
 #~ msgstr "Filesystem"
 
-#, fuzzy
 #~ msgid "Create file"
 #~ msgstr "Creating tables"
 
-#, fuzzy
 #~ msgid "Phone connected to PC"
 #~ msgstr "Phone is not connected."
 
-#, fuzzy
 #~ msgid "Initiation"
 #~ msgstr "Configuration"
 
-#, fuzzy
 #~ msgid "Incoming call"
 #~ msgstr "Cancel incoming call"
 
-#, fuzzy
 #~ msgid "Connected"
 #~ msgstr "B<Connection>"
 
-#, fuzzy
 #~ msgid "Disconnected"
 #~ msgstr "Phone is not connected."
 
-#, fuzzy
 #~ msgid "Phone connected to CARC91"
 #~ msgstr "Phone is not connected."
 
-#, fuzzy
 #~ msgid "note: no info about Delivery Reports\n"
 #~ msgstr "B<no> - no delivery reports"
 
-#, fuzzy
 #~ msgid "y: location\n"
 #~ msgstr "Localisation\n"
 
-#, fuzzy
 #~ msgid "where location:\n"
 #~ msgstr "More information\n"
 
-#, fuzzy
 #~ msgid "0x7a: settings\n"
 #~ msgstr "* WAP settings"
 
-#, fuzzy
 #~ msgid "where for number:\n"
 #~ msgstr "Sender number."
 
-#, fuzzy
 #~ msgid "<phone sends ack>"
 #~ msgstr "B<phones>"
 
-#, fuzzy
 #~ msgid "hex: Short description"
 #~ msgstr "Fields description:"
 
-#, fuzzy
 #~ msgid "0x4E commands"
 #~ msgstr "Commands"
 
-#, fuzzy
 #~ msgid "0xD0 commands"
 #~ msgstr "Commands"
 
-#, fuzzy
 #~ msgid "Phone Protocols"
 #~ msgstr "Phone tests"
 
-#, fuzzy
 #~ msgid "Calendar Entries"
 #~ msgstr "Calendar notes"
 
-#, fuzzy
 #~ msgid "Memo Notes"
 #~ msgstr "Notes"
 
-#, fuzzy
 #~ msgid "You can add a note"
 #~ msgstr "* calendar notes"
 
-#, fuzzy
 #~ msgid "rest is not known"
 #~ msgstr "Service is not runnig."
 
-#, fuzzy
 #~ msgid "To test:"
 #~ msgstr "Phone tests"
 
-#, fuzzy
 #~ msgid "Sonim AT Commands"
 #~ msgstr "Commands"
 
-#, fuzzy
 #~ msgid "Filesystem access"
 #~ msgstr "Filesystem"
 
-#, fuzzy
 #~ msgid "0x3E: FM Radio"
 #~ msgstr "FM radio"
 
-#, fuzzy
 #~ msgid "get configuration pins"
 #~ msgstr "Configuration"
 
-#, fuzzy
 #~ msgid "get security code"
 #~ msgstr "B<nokiasecuritycode>"
 
-#, fuzzy
 #~ msgid "device\n"
 #~ msgstr "B<Device>"
 
-#, fuzzy
 #~ msgid "_gammu-smsd-dbi:"
 #~ msgstr "gammu-smsd.exe -u\n"
 
-#, fuzzy
 #~ msgid ""
 #~ "DBI backend stores all data in any database supported by `libdbi`_, which "
 #~ "parameters are defined by configuration (see :ref:`gammu-smsdrc` for "
@@ -877,123 +755,93 @@ msgstr ""
 #~ "parameters are defined by configuration (see gammu-smsdrc(5) for "
 #~ "description of configuration options)."
 
-#, fuzzy
 #~ msgid "For tables description see :ref:`gammu-smsd-tables`."
 #~ msgstr "For tables description see gammu-smsd-tables(7)."
 
-#, fuzzy
 #~ msgid "_libdbi: http://libdbi.sourceforge.net/"
 #~ msgstr "http://libdbi.sourceforge.net/"
 
-#, fuzzy
 #~ msgid "_libdbi-drivers: http://libdbi-drivers.sourceforge.net/"
 #~ msgstr "http://libdbi.sourceforge.net/"
 
-#, fuzzy
 #~ msgid "Backend services"
 #~ msgstr "B<BackendRetries>"
 
-#, fuzzy
 #~ msgid "_gammu-smsd-sql:"
 #~ msgstr "gammu-smsd.exe -u\n"
 
-#, fuzzy
 #~ msgid "SQL Service"
 #~ msgstr "B<Service>"
 
-#, fuzzy
 #~ msgid "Common for all backends:"
 #~ msgstr "Documentation for different backends:"
 
-#, fuzzy
 #~ msgid ":config:option:`User` - user connecting to database"
 #~ msgstr "User name used for connection to a database."
 
-#, fuzzy
 #~ msgid ":config:option:`Password` - password for connecting to database"
 #~ msgstr "Password used for connection to a database."
 
-#, fuzzy
 #~ msgid "The variables are fully described in :ref:`gammurc` documentation."
 #~ msgstr "There is more complete example available in Gammu documentation."
 
-#, fuzzy
 #~ msgid "Configurable queries"
 #~ msgstr "Configuration"
 
-#, fuzzy
 #~ msgid "Default value:"
 #~ msgstr "Using default values."
 
-#, fuzzy
 #~ msgid "Inserts phone to database."
 #~ msgstr "User name used for connection to a database."
 
-#, fuzzy
 #~ msgid "Query specific parameters:"
 #~ msgstr "Useful cmake parameters:"
 
-#, fuzzy
 #~ msgid "ID of message"
 #~ msgstr "Class of message."
 
-#, fuzzy
 #~ msgid "Insert received message."
 #~ msgstr "Where the received SMSes are stored."
 
-#, fuzzy
 #~ msgid "Update statistics after receiving message."
 #~ msgstr "Executes a program after receiving message."
 
-#, fuzzy
 #~ msgid "Select body of message."
 #~ msgstr "Class of message."
 
-#, fuzzy
 #~ msgid "find_outbox_multipart"
 #~ msgstr "B<outbox_multipart>"
 
-#, fuzzy
 #~ msgid "Select remaining parts of sms message."
 #~ msgstr "Receiving of messages"
 
-#, fuzzy
 #~ msgid "Number of multipart message"
 #~ msgstr "Data for outgoing multipart messages."
 
-#, fuzzy
 #~ msgid "delete_outbox_multipart"
 #~ msgstr "B<outbox_multipart>"
 
-#, fuzzy
 #~ msgid "Create message (insert to outbox)."
 #~ msgstr "when message was inserted into database"
 
-#, fuzzy
 #~ msgid "creator of message"
 #~ msgstr "Class of message."
 
-#, fuzzy
 #~ msgid "create_outbox_multipart"
 #~ msgstr "B<outbox_multipart>"
 
-#, fuzzy
 #~ msgid "ID of sms message"
 #~ msgstr "Class of message."
 
-#, fuzzy
 #~ msgid "time when inserted in db"
 #~ msgstr "when message was inserted into database"
 
-#, fuzzy
 #~ msgid "_gammu-smsd-files:"
 #~ msgstr "gammu-smsd.exe -u\n"
 
-#, fuzzy
 #~ msgid "Files backend"
 #~ msgstr "Files backend options"
 
-#, fuzzy
 #~ msgid ""
 #~ "FILES backend stores all data on a filesystem in folders defined by "
 #~ "configuration (see :ref:`gammu-smsdrc` for description of configuration "
@@ -1006,7 +854,6 @@ msgstr ""
 #~ msgid "Receiving of messages"
 #~ msgstr "Receiving of messages"
 
-#, fuzzy
 #~ msgid ""
 #~ "Received messages are stored in a folder defined by configuration. The "
 #~ "filename will be ``IN<date>_<time>_<serial>_<sender>_<sequence>.<ext>``, "
@@ -1020,7 +867,6 @@ msgstr ""
 #~ msgid "Explanation of fields:"
 #~ msgstr "Explanation of fields:"
 
-#, fuzzy
 #~ msgid ""
 #~ "The content of the file is content of the message and the format is "
 #~ "defined by configuration directive :config:option:`InboxFormat` (see :ref:"
@@ -1078,21 +924,18 @@ msgstr ""
 #~ "script. If this is your case, please add locales definition to init "
 #~ "script."
 
-#, fuzzy
 #~ msgid "SMS Daemon"
 #~ msgstr "SMS ID"
 
 #~ msgid "Usage"
 #~ msgstr "Usage"
 
-#, fuzzy
 #~ msgid "Creating Messages to Send"
 #~ msgstr "Creating tables"
 
 #~ msgid "Reporting Bugs"
 #~ msgstr "Reporting Bugs"
 
-#, fuzzy
 #~ msgid "Please report bugs to <http://bugs.cihar.com>."
 #~ msgstr "Please report bugs to E<lt>http://bugs.cihar.comE<gt>."
 
@@ -1103,7 +946,6 @@ msgstr ""
 #~ "Before reporting a bug, please enable verbose logging in SMSD "
 #~ "configuration:"
 
-#, fuzzy
 #~ msgid "[smsd] debuglevel = 255 logfile = smsd.log"
 #~ msgstr ""
 #~ "[smsd]\n"
@@ -1113,7 +955,6 @@ msgstr ""
 #~ msgid "and include this verbose log within bug report."
 #~ msgstr "and include this verbose log within bug report."
 
-#, fuzzy
 #~ msgid ""
 #~ "The backends themselves are described in their sections, this document "
 #~ "describes general database structure and required tables."
@@ -1121,7 +962,6 @@ msgstr ""
 #~ "Separate backends are described in their appropriate man pages. This "
 #~ "manual page describes general database structure and required tables."
 
-#, fuzzy
 #~ msgid ""
 #~ "More SMS daemons can share single database. If you do not specify PhoneID "
 #~ "in their configuration, all are treated equally and you have no guarantee "
@@ -1135,11 +975,9 @@ msgstr ""
 #~ "when inserting message to the outbox table (gammu-smsd-inject(1) does "
 #~ "this), each SMS daemon will have separate outbox queue."
 
-#, fuzzy
 #~ msgid "Received messages are stored in ``inbox`` table."
 #~ msgstr "Received messages are stored in inbox table."
 
-#, fuzzy
 #~ msgid ""
 #~ "Transmitted messages are read from table ``outbox`` and possible "
 #~ "subsequent parts of the same message from ``outbox_multipart``."
@@ -1150,14 +988,12 @@ msgstr ""
 #~ msgid "Description of tables"
 #~ msgstr "Description of tables"
 
-#, fuzzy
 #~ msgid "daemons"
 #~ msgstr "B<daemons>"
 
 #~ msgid "Information about running daemons."
 #~ msgstr "Information about running daemons."
 
-#, fuzzy
 #~ msgid "gammu"
 #~ msgstr "gammu(1)"
 
@@ -1168,7 +1004,6 @@ msgstr ""
 #~ "Table holding single value - version of a database schema. See HISTORY "
 #~ "for details what has changed."
 
-#, fuzzy
 #~ msgid "inbox"
 #~ msgstr "B<inbox>"
 
@@ -1178,25 +1013,21 @@ msgstr ""
 #~ msgid "Fields description:"
 #~ msgstr "Fields description:"
 
-#, fuzzy
 #~ msgid ""
 #~ "``UpdatedInDB`` (timestamp)\n"
 #~ "    when somebody (daemon, user, etc.) updated it\n"
 #~ msgstr "when somebody (daemon, user, etc.) updated it"
 
-#, fuzzy
 #~ msgid ""
 #~ "``ReceivingDateTime`` (timestamp)\n"
 #~ "    when SMS was received\n"
 #~ msgstr "B<ReceivingDateTime> (timestamp)"
 
-#, fuzzy
 #~ msgid ""
 #~ "``Text`` (text)\n"
 #~ "    encoded SMS text (for all SMS)\n"
 #~ msgstr "encoded SMS text (for all SMS)"
 
-#, fuzzy
 #~ msgid ""
 #~ "``Coding`` (enum('Default_No_Compression', 'Unicode_No_Compression', "
 #~ "'8bit', 'Default_Compression', 'Unicode_Compression'))\n"
@@ -1205,49 +1036,41 @@ msgstr ""
 #~ "B<Coding> (enum('Default_No_Compression', 'Unicode_No_Compression', "
 #~ "'8bit', 'Default_Compression', 'Unicode_Compression'))"
 
-#, fuzzy
 #~ msgid ""
 #~ "``UDH`` (text)\n"
 #~ "    encoded User Data Header text\n"
 #~ msgstr "encoded User Data Header text"
 
-#, fuzzy
 #~ msgid ""
 #~ "``SMSCNumber`` (varchar(20))\n"
 #~ "    decoded SMSC number\n"
 #~ msgstr "B<SMSCNumber> (varchar(20))"
 
-#, fuzzy
 #~ msgid ""
 #~ "``Class`` (integer)\n"
 #~ "    SMS class or \\-1 (0 is flash SMS, 1 is normal one)\n"
 #~ msgstr "SMS class or -1 (0 is flash SMS, 1 is normal one)"
 
-#, fuzzy
 #~ msgid ""
 #~ "``TextDecoded`` (varchar(160))\n"
 #~ "    decoded SMS text (for Default Alphabet/Unicode SMS)\n"
 #~ msgstr "decoded SMS text (for Default Alphabet/Unicode SMS)"
 
-#, fuzzy
 #~ msgid ""
 #~ "``ID`` (integer unsigned)\n"
 #~ "    SMS identificator (for using with external applications)\n"
 #~ msgstr "SMS identificator (for using with external applications)"
 
-#, fuzzy
 #~ msgid ""
 #~ "``RecipientID`` (text)\n"
 #~ "    which Gammu daemon has added it\n"
 #~ msgstr "which Gammu daemon has added it"
 
-#, fuzzy
 #~ msgid ""
 #~ "``Processed`` (enum('false', 'true'))\n"
 #~ "    you can use for marking, whether SMS was processed or not\n"
 #~ msgstr "you can use for marking, whether SMS was processed or not"
 
-#, fuzzy
 #~ msgid "outbox"
 #~ msgstr "B<outbox>"
 
@@ -1258,13 +1081,11 @@ msgstr ""
 #~ "Messages enqueued for sending should be placed in this table. If message "
 #~ "is multipart, subsequent parts are stored in table outbox_multipart."
 
-#, fuzzy
 #~ msgid ""
 #~ "``InsertIntoDB`` (timestamp)\n"
 #~ "    when message was inserted into database\n"
 #~ msgstr "when message was inserted into database"
 
-#, fuzzy
 #~ msgid ""
 #~ "``SendingDateTime`` (timestamp)\n"
 #~ "    set it to some value, when want to force sending after some planned "
@@ -1272,7 +1093,6 @@ msgstr ""
 #~ msgstr ""
 #~ "set it to some value, when want to force sending after some planned time"
 
-#, fuzzy
 #~ msgid ""
 #~ "``Text`` (text)\n"
 #~ "    SMS text encoded using hex values in proper coding. If you want to "
@@ -1282,13 +1102,11 @@ msgstr ""
 #~ "SMS text encoded using hex values in proper coding. If you want to use "
 #~ "TextDecoded field, keep this NULL (or empty)."
 
-#, fuzzy
 #~ msgid ""
 #~ "``DestinationNumber`` (varchar(20))\n"
 #~ "    recipient number\n"
 #~ msgstr "B<DestinationNumber> (varchar(20))"
 
-#, fuzzy
 #~ msgid ""
 #~ "``UDH`` (text)\n"
 #~ "    User Data Header encoded using hex values which will be used for "
@@ -1299,19 +1117,16 @@ msgstr ""
 #~ "constructing the message. Without this, message will be sent as plain "
 #~ "text."
 
-#, fuzzy
 #~ msgid ""
 #~ "``Class`` (integer)\n"
 #~ "    SMS class or \\-1 (0 is normal SMS, 1 is flash one)\n"
 #~ msgstr "SMS class or -1 (0 is normal SMS, 1 is flash one)"
 
-#, fuzzy
 #~ msgid ""
 #~ "``TextDecoded`` (varchar(160))\n"
 #~ "    SMS text in \"human readable\" form\n"
 #~ msgstr "SMS text in \"human readable\" form"
 
-#, fuzzy
 #~ msgid ""
 #~ "    Please note that this number has to be unique also for sentitems "
 #~ "table, so\n"
@@ -1320,7 +1135,6 @@ msgstr ""
 #~ "Please note that this number has to be unique also for sentitems table, "
 #~ "so reusing message IDs might not be a good idea."
 
-#, fuzzy
 #~ msgid ""
 #~ "``MultiPart`` (enum('false','true'))\n"
 #~ "    info, whether there are more SMS from this sequence in "
@@ -1328,25 +1142,21 @@ msgstr ""
 #~ msgstr ""
 #~ "info, whether there are more SMS from this sequence in outbox_multipart"
 
-#, fuzzy
 #~ msgid ""
 #~ "``RelativeValidity`` (integer)\n"
 #~ "    SMS relative validity like encoded using GSM specs\n"
 #~ msgstr "SMS relative validity like encoded using GSM specs"
 
-#, fuzzy
 #~ msgid ""
 #~ "``SenderID`` (text)\n"
 #~ "    which SMSD instance should send this one sequence\n"
 #~ msgstr "which SMSD instance should send this one sequence"
 
-#, fuzzy
 #~ msgid ""
 #~ "``SendingTimeOut`` (timestamp)\n"
 #~ "    used by SMSD instance for own targets\n"
 #~ msgstr "used by SMSD instance for own targets"
 
-#, fuzzy
 #~ msgid ""
 #~ "``DeliveryReport`` (enum('default','yes','no'))\n"
 #~ "    when default is used, Delivery Report is used or not according to "
@@ -1355,7 +1165,6 @@ msgstr ""
 #~ "when default is used, Delivery Report is used or not according to SMSD "
 #~ "instance settings; yes forces Delivery Report."
 
-#, fuzzy
 #~ msgid ""
 #~ "``CreatorID`` (text)\n"
 #~ "    sender identification, it has to match PhoneID in SMSD configuration "
@@ -1365,14 +1174,12 @@ msgstr ""
 #~ "sender identification, it has to match PhoneID in SMSD configuration to "
 #~ "make SMSD process this message"
 
-#, fuzzy
 #~ msgid "outbox_multipart"
 #~ msgstr "B<outbox_multipart>"
 
 #~ msgid "Data for outgoing multipart messages."
 #~ msgstr "Data for outgoing multipart messages."
 
-#, fuzzy
 #~ msgid ""
 #~ "``SequencePosition`` (integer)\n"
 #~ "    info, what is SMS number in SMS sequence (start at 2, first part is "
@@ -1382,7 +1189,6 @@ msgstr ""
 #~ "info, what is SMS number in SMS sequence (start at 2, first part is in "
 #~ "outbox table)."
 
-#, fuzzy
 #~ msgid "phones"
 #~ msgstr "B<phones>"
 
@@ -1393,43 +1199,36 @@ msgstr ""
 #~ "Information about connected phones. This table is periodically refreshed "
 #~ "and you can get information such as battery or signal level from here."
 
-#, fuzzy
 #~ msgid ""
 #~ "``UpdatedInDB`` (timestamp)\n"
 #~ "    when this record has been updated\n"
 #~ msgstr "when this record has been updated"
 
-#, fuzzy
 #~ msgid ""
 #~ "``InsertIntoDB`` (timestamp)\n"
 #~ "    when this record has been created (when phone has been connected)\n"
 #~ msgstr "when this record has been created (when phone has been connected)"
 
-#, fuzzy
 #~ msgid ""
 #~ "``TimeOut`` (timestamp)\n"
 #~ "    when this record expires\n"
 #~ msgstr "when this record expires"
 
-#, fuzzy
 #~ msgid ""
 #~ "``Client`` (text)\n"
 #~ "    client name, usually string Gammu with version\n"
 #~ msgstr "client name, usually string Gammu with version"
 
-#, fuzzy
 #~ msgid ""
 #~ "``Battery`` (integer)\n"
 #~ "    battery level in percent (or \\-1 if unknown)\n"
 #~ msgstr "battery level in percent (or -1 if unknown)"
 
-#, fuzzy
 #~ msgid ""
 #~ "``Signal`` (integer)\n"
 #~ "    signal level in percent (or \\-1 if unknown)\n"
 #~ msgstr "signal level in percent (or -1 if unknown)"
 
-#, fuzzy
 #~ msgid ""
 #~ "``Sent`` (integer)\n"
 #~ "    Number of sent SMS messages (SMSD does not reset this counter, so it "
@@ -1439,7 +1238,6 @@ msgstr ""
 #~ "Number of sent SMS messages (SMSD does not reset this counter, so it "
 #~ "might overflow)."
 
-#, fuzzy
 #~ msgid ""
 #~ "``Received`` (integer)\n"
 #~ "    Number of received SMS messages (SMSD does not reset this counter, so "
@@ -1449,7 +1247,6 @@ msgstr ""
 #~ "Number of received SMS messages (SMSD does not reset this counter, so it "
 #~ "might overflow)."
 
-#, fuzzy
 #~ msgid "sentitems"
 #~ msgstr "B<sentitems>"
 
@@ -1462,13 +1259,11 @@ msgstr ""
 #~ "reports are enabled, message state is updated after receiving delivery "
 #~ "report."
 
-#, fuzzy
 #~ msgid ""
 #~ "``DeliveryDateTime`` (timestamp)\n"
 #~ "    Time of receiving delivery report (if it has been enabled).\n"
 #~ msgstr "Time of receiving delivery report (if it has been enabled)."
 
-#, fuzzy
 #~ msgid ""
 #~ "``Status`` (enum('SendingOK', 'SendingOKNoReport', 'SendingError', "
 #~ "'DeliveryOK', 'DeliveryFailed', 'DeliveryPending', 'DeliveryUnknown', "
@@ -1480,7 +1275,6 @@ msgstr ""
 #~ "Status of message sending. SendingError mens that phone failed to send "
 #~ "the message, Error indicates some other error while processing message."
 
-#, fuzzy
 #~ msgid ""
 #~ "``StatusError`` (integer)\n"
 #~ "    Status of delivery from delivery report message, codes are defined in "
@@ -1490,49 +1284,41 @@ msgstr ""
 #~ "Status of delivery from delivery report message, codes are defined in GSM "
 #~ "specification 03.40 section 9.2.3.15 (TP-Status)."
 
-#, fuzzy
 #~ msgid ""
 #~ "``Text`` (text)\n"
 #~ "    SMS text encoded using hex values\n"
 #~ msgstr "SMS text encoded using hex values"
 
-#, fuzzy
 #~ msgid ""
 #~ "``DestinationNumber`` (varchar(20))\n"
 #~ "    decoded destination number for SMS\n"
 #~ msgstr "decoded destination number for SMS"
 
-#, fuzzy
 #~ msgid ""
 #~ "``UDH`` (text)\n"
 #~ "    User Data Header encoded using hex values\n"
 #~ msgstr "User Data Header encoded using hex values"
 
-#, fuzzy
 #~ msgid ""
 #~ "``SMSCNumber`` (varchar(20))\n"
 #~ "    decoded number of SMSC, which sent SMS\n"
 #~ msgstr "decoded number of SMSC, which sent SMS"
 
-#, fuzzy
 #~ msgid ""
 #~ "``ID`` (integer unsigned)\n"
 #~ "    SMS ID\n"
 #~ msgstr "B<ID> (integer unsigned)"
 
-#, fuzzy
 #~ msgid ""
 #~ "``SenderID`` (text)\n"
 #~ "    which SMSD instance sent this one sequence\n"
 #~ msgstr "which SMSD instance sent this one sequence"
 
-#, fuzzy
 #~ msgid ""
 #~ "``TPMR`` (integer)\n"
 #~ "    Message Reference like in GSM specs\n"
 #~ msgstr "Message Reference like in GSM specs"
 
-#, fuzzy
 #~ msgid ""
 #~ "``CreatorID`` (text)\n"
 #~ "    copied from CreatorID from outbox table, matches PhoneID\n"
@@ -1541,14 +1327,12 @@ msgstr ""
 #~ msgid "Not used by SMSD currently, included only for application usage."
 #~ msgstr "Not used by SMSD currently, included only for application usage."
 
-#, fuzzy
 #~ msgid "pbk_groups"
 #~ msgstr "B<pbk_groups>"
 
 #~ msgid "History of schema versions:"
 #~ msgstr "History of schema versions:"
 
-#, fuzzy
 #~ msgid ""
 #~ "7\n"
 #~ "    added CreatorID to tables (it holds PhoneID if set)\n"
@@ -1569,14 +1353,12 @@ msgstr ""
 #~ msgid "For example to create SQLite tables, issue following command:"
 #~ msgstr "For example to create SQLite tables, issue following command:"
 
-#, fuzzy
 #~ msgid "sqlite3 smsd.db < docs/sql/sqlite.sql"
 #~ msgstr "sqlite3 smsd.db E<lt> docs/sql/sqlite.sql\n"
 
 #~ msgid "Injecting a message using SQL"
 #~ msgstr "Injecting a message using SQL"
 
-#, fuzzy
 #~ msgid ""
 #~ "To send a message, you can either use :ref:`gammu-smsd-inject`, which "
 #~ "does all the magic for you, or you can insert the message manually. The "
@@ -1586,14 +1368,12 @@ msgstr ""
 #~ "all the magic for you, or you can insert the message manually. The "
 #~ "simplest example is short text message:"
 
-#, fuzzy
 #~ msgid ") VALUES ("
 #~ msgstr "RETURN VALUES"
 
 #~ msgid "Injecting long message using SQL"
 #~ msgstr "Injecting long message using SQL"
 
-#, fuzzy
 #~ msgid ""
 #~ "Inserting multipart messages is a bit more tricky, you need to construct "
 #~ "also UDH header and store it hexadecimally written into UDH field. Unless "
@@ -1602,7 +1382,6 @@ msgstr ""
 #~ "Inserting multipart messages is a bit more tricky, you need to construct "
 #~ "also UDH header and store it hexadecimally written into UDH field."
 
-#, fuzzy
 #~ msgid ""
 #~ "For long text message, the UDH starts with ``050003`` followed by byte as "
 #~ "a message reference (you can put anything there, but it should be "
@@ -1623,7 +1402,6 @@ msgstr ""
 #~ msgstr ""
 #~ "For example long text message of two parts could look like following:"
 
-#, fuzzy
 #~ msgid ""
 #~ "'Gammu 1.23.91', 'true', '123465', '050003D30201', 'Mqukqirip ya konej "
 #~ "eqniu rejropocejor hugiygydewl tfej nrupxujob xuemymiyliralj. Te tvyjuh "
@@ -1648,11 +1426,9 @@ msgstr ""
 #~ "    'Default_No_Compression'\n"
 #~ ")\n"
 
-#, fuzzy
 #~ msgid "INSERT INTO outbox_multipart ("
 #~ msgstr "B<outbox_multipart>"
 
-#, fuzzy
 #~ msgid ""
 #~ "2, '050003D30202', 'u xewz qisubevumxyzk ufuylehyzc. Nse xobq "
 #~ "dfolizygqysj t bvowsyhyhyemim ovutpapeaempye giuuwbib.', "
@@ -1674,15 +1450,12 @@ msgstr ""
 #~ "    'Default_No_Compression'\n"
 #~ ")\n"
 
-#, fuzzy
 #~ msgid "_gammu-smsd-pgsql:"
 #~ msgstr "gammu-smsd.exe -u\n"
 
-#, fuzzy
 #~ msgid "PostgreSQL Backend"
 #~ msgstr "PostgreSQL"
 
-#, fuzzy
 #~ msgid ""
 #~ "PGSQL backend stores all data in a `PostgreSQL`_ database server, which "
 #~ "parameters are defined by configuration (see :ref:`gammu-smsdrc` for "
@@ -1692,15 +1465,12 @@ msgstr ""
 #~ "parameters are defined by configuration (see gammu-smsdrc(5) for "
 #~ "description of configuration options)."
 
-#, fuzzy
 #~ msgid "_PostgreSQL: http://www.postgresql.org/"
 #~ msgstr "http://www.postgresql.org/"
 
-#, fuzzy
 #~ msgid "_gammu-smsd-null:"
 #~ msgstr "gammu-smsd.exe -u\n"
 
-#, fuzzy
 #~ msgid ""
 #~ "NULL backend does not store data at all. It could be useful in case you "
 #~ "don't want to store messages at all and you want to process then in"
@@ -1709,17 +1479,14 @@ msgstr ""
 #~ "don't want to store messages at all and you want to process then in "
 #~ "RunOnReceive handler."
 
-#, fuzzy
 #~ msgid "RunOnReceive Directive"
 #~ msgstr "B<RunOnReceive>"
 
-#, fuzzy
 #~ msgid "`gammu-smsdrc` for details) to run defined program after receiving"
 #~ msgstr ""
 #~ "Gammu SMSD can be configured by RunOnReceive directive (see gammu-smsdrc"
 #~ "(5)  for details) to run defined program after receiving message."
 
-#, fuzzy
 #~ msgid "message."
 #~ msgstr "Class of message."
 
@@ -1751,7 +1518,6 @@ msgstr ""
 #~ "minutes. After this time SMSD will continue in normal operation and might "
 #~ "execute your script again."
 
-#, fuzzy
 #~ msgid ""
 #~ "program is executed with environment which contains lot of information "
 #~ "about the message. You can use it together with NULL service (see"
@@ -1760,7 +1526,6 @@ msgstr ""
 #~ "about the message. You can use it together with NULL service (see gammu-"
 #~ "smsd-null(7)) to implement completely own processing of messages."
 
-#, fuzzy
 #~ msgid ""
 #~ "`gammu-smsd-null`) to implement completely own processing of messages."
 #~ msgstr "gammu-smsd-null - gammu-smsd(1) backend not storing messages"
@@ -1768,14 +1533,12 @@ msgstr ""
 #~ msgid "Global variables"
 #~ msgstr "Global variables"
 
-#, fuzzy
 #~ msgid "SMS_MESSAGES"
 #~ msgstr "B<SMS_MESSAGES>"
 
 #~ msgid "Number of physical messages received."
 #~ msgstr "Number of physical messages received."
 
-#, fuzzy
 #~ msgid "DECODED_PARTS"
 #~ msgstr "B<DECODED_PARTS>"
 
@@ -1785,7 +1548,6 @@ msgstr ""
 #~ msgid "Per message variables"
 #~ msgstr "Per message variables"
 
-#, fuzzy
 #~ msgid ""
 #~ "The variables further described as ``SMS_1_...`` are generated for each "
 #~ "physical message, where 1 is replaced by current number of message."
@@ -1793,21 +1555,18 @@ msgstr ""
 #~ "The variables further described as SMS_1_... are generated for each "
 #~ "physical message, where 1 is replaced by current number of message."
 
-#, fuzzy
 #~ msgid "SMS_1_CLASS"
 #~ msgstr "B<SMS_1_CLASS>"
 
 #~ msgid "Class of message."
 #~ msgstr "Class of message."
 
-#, fuzzy
 #~ msgid "SMS_1_NUMBER"
 #~ msgstr "B<SMS_1_NUMBER>"
 
 #~ msgid "Sender number."
 #~ msgstr "Sender number."
 
-#, fuzzy
 #~ msgid "SMS_1_TEXT"
 #~ msgstr "B<SMS_1_TEXT>"
 
@@ -1817,7 +1576,6 @@ msgstr ""
 #~ msgid "Per part variables"
 #~ msgstr "Per part variables"
 
-#, fuzzy
 #~ msgid ""
 #~ "The variables further described as ``DECODED_1_...`` are generated for "
 #~ "each message part, where 1 is replaced by current number of part. Set are "
@@ -1827,53 +1585,45 @@ msgstr ""
 #~ "message part, where 1 is replaced by current number of part. Set are only "
 #~ "those variables whose content is present in the message."
 
-#, fuzzy
 #~ msgid "DECODED_1_TEXT"
 #~ msgstr "B<DECODED_1_TEXT>"
 
 #~ msgid "Decoded long message text."
 #~ msgstr "Decoded long message text."
 
-#, fuzzy
 #~ msgid "DECODED_1_MMS_SENDER"
 #~ msgstr "B<DECODED_1_MMS_SENDER>"
 
 #~ msgid "Sender of MMS indication message."
 #~ msgstr "Sender of MMS indication message."
 
-#, fuzzy
 #~ msgid "DECODED_1_MMS_TITLE"
 #~ msgstr "B<DECODED_1_MMS_TITLE>"
 
 #~ msgid "title of MMS indication message."
 #~ msgstr "title of MMS indication message."
 
-#, fuzzy
 #~ msgid "DECODED_1_MMS_ADDRESS"
 #~ msgstr "B<DECODED_1_MMS_ADDRESS>"
 
 #~ msgid "Address (URL) of MMS from MMS indication message."
 #~ msgstr "Address (URL) of MMS from MMS indication message."
 
-#, fuzzy
 #~ msgid "DECODED_1_MMS_SIZE"
 #~ msgstr "B<DECODED_1_MMS_SIZE>"
 
 #~ msgid "Size of MMS as specified in MMS indication message."
 #~ msgstr "Size of MMS as specified in MMS indication message."
 
-#, fuzzy
 #~ msgid "Activating RunOnReceive"
 #~ msgstr "B<RunOnReceive>"
 
-#, fuzzy
 #~ msgid "Processing messages from the files backend"
 #~ msgstr "Process only messages from 123456 number:"
 
 #~ msgid "Passing MMS indication parameters to external program"
 #~ msgstr "Passing MMS indication parameters to external program"
 
-#, fuzzy
 #~ msgid ""
 #~ "Following script (if used as :config:option:`RunOnReceive` handler) will "
 #~ "write information about each received MMS indication to the log file. "
@@ -1883,23 +1633,18 @@ msgstr ""
 #~ "about each received MMS indication to the log file. Just replace echo "
 #~ "command with your own program to do custom processing."
 
-#, fuzzy
 #~ msgid "fi if [ \"$DECODED_1_MMS_ADDRESS\" ] ; then"
 #~ msgstr "B<DECODED_1_MMS_ADDRESS>"
 
-#, fuzzy
 #~ msgid "python"
 #~ msgstr "Python"
 
-#, fuzzy
 #~ msgid "_gammu-smsdrc:"
 #~ msgstr "I</etc/gammu-smsdrc>"
 
-#, fuzzy
 #~ msgid "SMSD Configuration File"
 #~ msgstr "Configuration"
 
-#, fuzzy
 #~ msgid ""
 #~ "gammu-smsd reads configuration from a config file. It's location can be "
 #~ "specified on command line, otherwise default path ``/etc/gammu-smsdrc`` "
@@ -1909,13 +1654,11 @@ msgstr ""
 #~ "be specified on command line, otherwise default path /etc/gammu-smsdrc is "
 #~ "used."
 
-#, fuzzy
 #~ msgid "Configuration file of gammu-smsd consists of at least two sections -"
 #~ msgstr ""
 #~ "Configuration file of gammu-smsd consists of at least two sections - "
 #~ "[gammu] and [smsd]."
 
-#, fuzzy
 #~ msgid ""
 #~ "The :config:section:`[smsd]` section configures SMS daemon itself, which "
 #~ "are described in following subsections. First general parameters of SMS "
@@ -1925,13 +1668,11 @@ msgstr ""
 #~ "following subsections. First general parameters of SMS daemon are listed "
 #~ "and then specific parameters for storage backends."
 
-#, fuzzy
 #~ msgid "[include_numbers]"
 #~ msgstr ""
 #~ "[include_numbers]\n"
 #~ "number1 = 123456\n"
 
-#, fuzzy
 #~ msgid "[exclude_numbers]"
 #~ msgstr ""
 #~ "[exclude_numbers]\n"
@@ -1940,49 +1681,40 @@ msgstr ""
 #~ msgid "General parameters of SMS daemon"
 #~ msgstr "General parameters of SMS daemon"
 
-#, fuzzy
 #~ msgid "Service"
 #~ msgstr "B<Service>"
 
-#, fuzzy
 #~ msgid "SMSD service to use, one of following choices:"
 #~ msgstr "For IrDA connections use one of following:"
 
-#, fuzzy
 #~ msgid "``FILES``"
 #~ msgstr "FILES"
 
-#, fuzzy
 #~ msgid "stores messages in files, see :ref:`gammu-smsd-files` for details"
 #~ msgstr ""
 #~ "B<FILES> - stores messages in files, see gammu-smsd-files(7) for details"
 
-#, fuzzy
 #~ msgid ""
 #~ "does not store messages at all, see :ref:`gammu-smsd-null` for details"
 #~ msgstr ""
 #~ "B<NULL> - does not store messages at all, see gammu-smsd-null(7) for "
 #~ "details"
 
-#, fuzzy
 #~ msgid ""
 #~ "stores messages in SQL database, see :ref:`gammu-smsd-sql` for details"
 #~ msgstr ""
 #~ "B<MYSQL> - stores messages in MySQL database, see gammu-smsd-mysql(7) for "
 #~ "details"
 
-#, fuzzy
 #~ msgid "1.28.93"
 #~ msgstr "Gammu 1.28.90"
 
-#, fuzzy
 #~ msgid ""
 #~ "stores messages in MySQL database, see :ref:`gammu-smsd-mysql` for details"
 #~ msgstr ""
 #~ "B<MYSQL> - stores messages in MySQL database, see gammu-smsd-mysql(7) for "
 #~ "details"
 
-#, fuzzy
 #~ msgid ""
 #~ "stores messages in PostgreSQL database, see :ref:`gammu-smsd-pgsql` for "
 #~ "details"
@@ -1990,7 +1722,6 @@ msgstr ""
 #~ "B<PGSQL> - stores messages in PostgreSQL database, see gammu-smsd-pgsql"
 #~ "(7)  for details"
 
-#, fuzzy
 #~ msgid ""
 #~ "stores messages in any database supported by libdbi, this includes MSSQL, "
 #~ "MySQL, PostgreSQL or SQLite databases, see :ref:`gammu-smsd-dbi` for "
@@ -2000,7 +1731,6 @@ msgstr ""
 #~ "includes MSSQL, MySQL, PostgreSQL or SQLite databases, see gammu-smsd-dbi"
 #~ "(7) for details"
 
-#, fuzzy
 #~ msgid "PIN"
 #~ msgstr "B<PIN>"
 
@@ -2011,7 +1741,6 @@ msgstr ""
 #~ "PIN for SIM card. This is optional, but you should set it if your phone "
 #~ "after power on requires PIN."
 
-#, fuzzy
 #~ msgid "NetworkCode"
 #~ msgstr "B<NetworkCode>"
 
@@ -2022,7 +1751,6 @@ msgstr ""
 #~ "Network personalisation password. This is optional, but some phones "
 #~ "require it after power on."
 
-#, fuzzy
 #~ msgid "PhoneCode"
 #~ msgstr "B<PhoneCode>"
 
@@ -2033,7 +1761,6 @@ msgstr ""
 #~ "Phone lock password. This is optional, but some phones require it after "
 #~ "power on."
 
-#, fuzzy
 #~ msgid ""
 #~ "File where SMSD actions are being logged. You can also use special value "
 #~ "``syslog`` which will send all messages to syslog daemon. On Windows "
@@ -2057,7 +1784,6 @@ msgstr ""
 #~ msgid "Default is to provide no logging."
 #~ msgstr "Default is to provide no logging."
 
-#, fuzzy
 #~ msgid "DebugLevel"
 #~ msgstr "B<DebugLevel>"
 
@@ -2071,21 +1797,18 @@ msgstr ""
 #~ msgid "1"
 #~ msgstr "1"
 
-#, fuzzy
 #~ msgid "enables basic debugging information"
 #~ msgstr "B<1> - enables basic debugging information"
 
 #~ msgid "2"
 #~ msgstr "2"
 
-#, fuzzy
 #~ msgid "enables logging of SQL queries of service backends"
 #~ msgstr "B<2> - enables logging of SQL queries of service backends"
 
 #~ msgid "4"
 #~ msgstr "4"
 
-#, fuzzy
 #~ msgid "enables logging of gammu debug information"
 #~ msgstr "B<4> - enables logging of gammu debug information"
 
@@ -2095,7 +1818,6 @@ msgstr ""
 #~ msgid "Default is 0, what should mean no extra information."
 #~ msgstr "Default is 0, what should mean no extra information."
 
-#, fuzzy
 #~ msgid "CommTimeout"
 #~ msgstr "B<CommTimeout>"
 
@@ -2107,7 +1829,6 @@ msgstr ""
 #~ msgid "Default is 30."
 #~ msgstr "Default is 30."
 
-#, fuzzy
 #~ msgid "SendTimeout"
 #~ msgstr "B<SendTimeout>"
 
@@ -2118,7 +1839,6 @@ msgstr ""
 #~ "Shows how many seconds SMSD should wait for network answer during sending "
 #~ "sms. If nothing happen during this time, sms will be resent."
 
-#, fuzzy
 #~ msgid "MaxRetries"
 #~ msgstr "B<MaxRetries>"
 
@@ -2128,11 +1848,9 @@ msgstr ""
 #~ msgid "Default is 1."
 #~ msgstr "Default is 1."
 
-#, fuzzy
 #~ msgid "ReceiveFrequency"
 #~ msgstr "B<ReceiveFrequency>"
 
-#, fuzzy
 #~ msgid ""
 #~ "The number of seconds between testing for received SMSes, when the phone "
 #~ "is busy sending SMSes. Normally a test for received SMSes is done every :"
@@ -2145,7 +1863,6 @@ msgstr ""
 #~ msgid "Default is 0 (not used)."
 #~ msgstr "Default is 0 (not used)."
 
-#, fuzzy
 #~ msgid "StatusFrequency"
 #~ msgstr "B<StatusFrequency>"
 
@@ -2161,7 +1878,6 @@ msgstr ""
 #~ msgid "Default is 15."
 #~ msgstr "Default is 15."
 
-#, fuzzy
 #~ msgid "LoopSleep"
 #~ msgstr "B<LoopSleep>"
 
@@ -2176,7 +1892,6 @@ msgstr ""
 #~ "effects to other time based configurations, because they will be "
 #~ "effectively rounded to multiply of this value."
 
-#, fuzzy
 #~ msgid "MultipartTimeout"
 #~ msgstr "B<MultipartTimeout>"
 
@@ -2192,7 +1907,6 @@ msgstr ""
 #~ msgid "Default is 600 (10 minutes)."
 #~ msgstr "Default is 600 (10 minutes)."
 
-#, fuzzy
 #~ msgid "CheckSecurity"
 #~ msgstr "B<CheckSecurity>"
 
@@ -2202,21 +1916,18 @@ msgstr ""
 #~ msgid "Default is 1 (enabled)."
 #~ msgstr "Default is 1 (enabled)."
 
-#, fuzzy
 #~ msgid "CheckBattery"
 #~ msgstr "B<CheckBattery>"
 
 #~ msgid "Whether to check phone battery state periodically."
 #~ msgstr "Whether to check phone battery state periodically."
 
-#, fuzzy
 #~ msgid "CheckSignal"
 #~ msgstr "B<CheckSignal>"
 
 #~ msgid "Whether to check signal level periodically."
 #~ msgstr "Whether to check signal level periodically."
 
-#, fuzzy
 #~ msgid "ResetFrequency"
 #~ msgstr "B<ResetFrequency>"
 
@@ -2231,15 +1942,12 @@ msgstr ""
 #~ "freeze to a state when only after unmounting the battery the phone will "
 #~ "be functional again."
 
-#, fuzzy
 #~ msgid "HardResetFrequency"
 #~ msgstr "B<ResetFrequency>"
 
-#, fuzzy
 #~ msgid "1.28.92"
 #~ msgstr "Gammu 1.28.90"
 
-#, fuzzy
 #~ msgid ""
 #~ "The number of seconds between performing a preventive hard reset in order "
 #~ "to minimize the cases of hanging phones."
@@ -2249,32 +1957,25 @@ msgstr ""
 #~ "freeze to a state when only after unmounting the battery the phone will "
 #~ "be functional again."
 
-#, fuzzy
 #~ msgid "DeliveryReport"
 #~ msgstr "B<DeliveryReport>"
 
-#, fuzzy
 #~ msgid ""
 #~ "Whether delivery reports should be used, one of ``no``, ``log``, ``sms``."
 #~ msgstr "Whether delivery reports should be used, one of 'no', 'log', 'sms'."
 
-#, fuzzy
 #~ msgid "one line log entry,"
 #~ msgstr "B<log> - one line log entry,"
 
-#, fuzzy
 #~ msgid "store in inbox as a received SMS"
 #~ msgstr "B<sms> - store in inbox as a received SMS"
 
-#, fuzzy
 #~ msgid "no delivery reports"
 #~ msgstr "B<no> - no delivery reports"
 
-#, fuzzy
 #~ msgid "Default is ``no``."
 #~ msgstr "Default is 'no'."
 
-#, fuzzy
 #~ msgid "DeliveryReportDelay"
 #~ msgstr "B<DeliveryReportDelay>"
 
@@ -2289,7 +1990,6 @@ msgstr ""
 #~ "timestamp as sent message). Increase this if delivery reports are not "
 #~ "paired with sent messages."
 
-#, fuzzy
 #~ msgid "PhoneID"
 #~ msgstr "B<PhoneID>"
 
@@ -2300,7 +2000,6 @@ msgstr ""
 #~ "String with info about phone used for sending/receiving. This can be "
 #~ "useful if you want to run several SMS daemons."
 
-#, fuzzy
 #~ msgid ""
 #~ "When you set PhoneID, all messages (including injected ones) will be "
 #~ "marked by this string and it allow more SMS daemons to share single "
@@ -2310,14 +2009,12 @@ msgstr ""
 #~ "marked by this string and it allow more SMS daemons to share single "
 #~ "database. This option has actually no effect of FILES backend service."
 
-#, fuzzy
 #~ msgid "RunOnReceive"
 #~ msgstr "B<RunOnReceive>"
 
 #~ msgid "Executes a program after receiving message."
 #~ msgstr "Executes a program after receiving message."
 
-#, fuzzy
 #~ msgid ""
 #~ "The process has available lot of information about received message in "
 #~ "environment, check :ref:`smsd_run` for more details."
@@ -2325,11 +2022,9 @@ msgstr ""
 #~ "The process has available lot of information about received message in "
 #~ "environment, check gammu-smsd-run(7) for more details."
 
-#, fuzzy
 #~ msgid "Executes a program on failure."
 #~ msgstr "Executes a program after receiving message."
 
-#, fuzzy
 #~ msgid "IncludeNumbersFile"
 #~ msgstr "B<IncludeNumbersFile>"
 
@@ -2344,7 +2039,6 @@ msgstr ""
 #~ "and is reread only when configuration is being reread. See Message "
 #~ "filtering for details."
 
-#, fuzzy
 #~ msgid "ExcludeNumbersFile"
 #~ msgstr "B<ExcludeNumbersFile>"
 
@@ -2359,7 +2053,6 @@ msgstr ""
 #~ "at startup and is reread only when configuration is being reread. See "
 #~ "Message filtering for details."
 
-#, fuzzy
 #~ msgid "IncludeSMSCFile"
 #~ msgstr "B<IncludeSMSCFile>"
 
@@ -2374,7 +2067,6 @@ msgstr ""
 #~ "at startup and is reread only when configuration is being reread. See "
 #~ "Message filtering for details."
 
-#, fuzzy
 #~ msgid "ExcludeSMSCFile"
 #~ msgstr "B<ExcludeSMSCFile>"
 
@@ -2389,7 +2081,6 @@ msgstr ""
 #~ "at startup and is reread only when configuration is being reread. See "
 #~ "Message filtering for details."
 
-#, fuzzy
 #~ msgid "BackendRetries"
 #~ msgstr "B<BackendRetries>"
 
@@ -2411,40 +2102,33 @@ msgstr ""
 #~ msgid "Send"
 #~ msgstr "Send"
 
-#, fuzzy
 #~ msgid "Default is True."
 #~ msgstr "Default is 1."
 
-#, fuzzy
 #~ msgid "Receive"
 #~ msgstr "B<RunOnReceive>"
 
-#, fuzzy
 #~ msgid "Whether to enable receiving of messages."
 #~ msgstr "Receiving of messages"
 
 #~ msgid "Database backends options"
 #~ msgstr "Database backends options"
 
-#, fuzzy
 #~ msgid "supports same options for configuring connection to a database:"
 #~ msgstr "User name used for connection to a database."
 
-#, fuzzy
 #~ msgid "User"
 #~ msgstr "B<User>"
 
 #~ msgid "User name used for connection to a database."
 #~ msgstr "User name used for connection to a database."
 
-#, fuzzy
 #~ msgid "Password"
 #~ msgstr "B<Password>"
 
 #~ msgid "Password used for connection to a database."
 #~ msgstr "Password used for connection to a database."
 
-#, fuzzy
 #~ msgid ""
 #~ "Database server address. It can also contain port or socket path after "
 #~ "semicolon, for example ``localhost:/path/to/socket``."
@@ -2452,7 +2136,6 @@ msgstr ""
 #~ "Database server address. It can also contain port or socket path after "
 #~ "semicolon, for example localhost:/path/to/socket."
 
-#, fuzzy
 #~ msgid "Database"
 #~ msgstr "B<Database>"
 
@@ -2465,7 +2148,6 @@ msgstr ""
 #~ "this database before using gammu-smsd. SQL files for creating needed "
 #~ "tables are included in documentation."
 
-#, fuzzy
 #~ msgid "SkipSMSCNumber"
 #~ msgstr "B<SkipSMSCNumber>"
 
@@ -2478,11 +2160,9 @@ msgstr ""
 #~ "from other SMSC number. You can set here number of this SMSC used by you "
 #~ "and Gammu will not check it's number during assigning reports to sent SMS."
 
-#, fuzzy
 #~ msgid "Driver"
 #~ msgstr "B<Driver>"
 
-#, fuzzy
 #~ msgid ""
 #~ "Depends on what DBI drivers you have installed, DBI supports: ``mysql``, "
 #~ "``freetds`` (provides access to MS SQL Server and Sybase), ``pgsql``, "
@@ -2494,7 +2174,6 @@ msgstr ""
 #~ "pgsql, sqlite, sqlite3, firebird and ingres, msql and oracle drivers are "
 #~ "under development."
 
-#, fuzzy
 #~ msgid "DriversPath"
 #~ msgstr "B<DriversPath>"
 
@@ -2505,7 +2184,6 @@ msgstr ""
 #~ "Path, where DBI drivers are stored, this usually does not have to be set "
 #~ "if you have properly installed drivers."
 
-#, fuzzy
 #~ msgid "DBDir"
 #~ msgstr "B<DBDir>"
 
@@ -2519,7 +2197,6 @@ msgstr ""
 #~ msgid "Files backend options"
 #~ msgstr "Files backend options"
 
-#, fuzzy
 #~ msgid "InboxPath"
 #~ msgstr "B<InboxPath>"
 
@@ -2529,18 +2206,15 @@ msgstr ""
 #~ msgid "Default is current directory."
 #~ msgstr "Default is current directory."
 
-#, fuzzy
 #~ msgid "OutboxPath"
 #~ msgstr "B<OutboxPath>"
 
 #~ msgid "Where SMSes to be sent should be placed."
 #~ msgstr "Where SMSes to be sent should be placed."
 
-#, fuzzy
 #~ msgid "SentSMSPath"
 #~ msgstr "B<SentSMSPath>"
 
-#, fuzzy
 #~ msgid ""
 #~ "Where the transmitted SMSes are placed, if same as :config:option:"
 #~ "`OutboxPath` transmitted messages are deleted."
@@ -2551,22 +2225,18 @@ msgstr ""
 #~ msgid "Default is to delete transmitted messages."
 #~ msgstr "Default is to delete transmitted messages."
 
-#, fuzzy
 #~ msgid "ErrorSMSPath"
 #~ msgstr "B<ErrorSMSPath>"
 
 #~ msgid "Where SMSes with error in transmission is placed."
 #~ msgstr "Where SMSes with error in transmission is placed."
 
-#, fuzzy
 #~ msgid "Default is same as :config:option:`SentSMSPath`."
 #~ msgstr "Default is same as SentSMSPath."
 
-#, fuzzy
 #~ msgid "InboxFormat"
 #~ msgstr "B<InboxFormat>"
 
-#, fuzzy
 #~ msgid ""
 #~ "The format in which the SMS will be stored: ``detail``, ``unicode``, "
 #~ "``standard``."
@@ -2574,21 +2244,17 @@ msgstr ""
 #~ "The format in which the SMS will be stored: 'detail', 'unicode', "
 #~ "'standard'."
 
-#, fuzzy
 #~ msgid ""
 #~ "format used for message backup by :ref:`gammu`, see :ref:`gammu-"
-#~ "smsbackup`.\n"
+#~ "smsbackup`. "
 #~ msgstr "B<detail> - format used for message backup by gammu(1)"
 
-#, fuzzy
 #~ msgid "message text stored in unicode (UTF-16)\n"
 #~ msgstr "B<unicode> - message text stored in unicode (UTF-16)"
 
-#, fuzzy
 #~ msgid "message text stored in system charset\n"
 #~ msgstr "B<standard> - message text stored in system charset"
 
-#, fuzzy
 #~ msgid ""
 #~ "The ``standard`` and ``unicode`` settings do not apply for 8-bit "
 #~ "messages, which are always written raw as they are received with "
@@ -2597,15 +2263,12 @@ msgstr ""
 #~ "The 'standard' and 'unicode' settings do not apply for 8-bit messages, "
 #~ "which are always written raw as they are received with extension .bin."
 
-#, fuzzy
 #~ msgid "Default is ``unicode``."
 #~ msgstr "Default is 'unicode'."
 
-#, fuzzy
 #~ msgid "OutboxFormat"
 #~ msgstr "B<OutboxFormat>"
 
-#, fuzzy
 #~ msgid ""
 #~ "The format in which messages created by :ref:`gammu-smsd-inject` will be "
 #~ "stored, it accepts same values as InboxFormat."
@@ -2613,7 +2276,6 @@ msgstr ""
 #~ "The format in which messages created by gammu-smsd-inject(1) will be "
 #~ "stored, it accepts same values as InboxFormat."
 
-#, fuzzy
 #~ msgid ""
 #~ "Default is ``detail`` if Gammu is compiled in with backup functions, "
 #~ "``unicode`` otherwise."
@@ -2621,27 +2283,22 @@ msgstr ""
 #~ "Default is 'detail' if Gammu is compiled in with backup functions, "
 #~ "'unicode' otherwise."
 
-#, fuzzy
 #~ msgid "TransmitFormat"
 #~ msgstr "B<TransmitFormat>"
 
-#, fuzzy
 #~ msgid ""
 #~ "The format for transmitting the SMS: ``auto``, ``unicode``, ``7bit``."
 #~ msgstr "The format for transmitting the SMS: 'auto', 'unicode', '7bit'."
 
-#, fuzzy
 #~ msgid "Default is ``auto``."
 #~ msgstr "Default is 'auto'."
 
-#, fuzzy
 #~ msgid "_message_filtering:"
 #~ msgstr "Message filtering"
 
 #~ msgid "Message filtering"
 #~ msgstr "Message filtering"
 
-#, fuzzy
 #~ msgid ""
 #~ "SMSD allows to process only limited subset of incoming messages. You can "
 #~ "define filters for sender number in :config:section:`[include_numbers]` "
@@ -2652,7 +2309,6 @@ msgstr ""
 #~ "[exclude_numbers] sections or using IncludeNumbersFile and "
 #~ "ExcludeNumbersFile directives."
 
-#, fuzzy
 #~ msgid ""
 #~ "If :config:section:`[include_numbers]` section exists, all values (keys "
 #~ "are ignored) from it are used as allowed phone numbers and no other "
@@ -2677,7 +2333,6 @@ msgstr ""
 #~ "ignore messages from some numbers. If both lists are empty, all messages "
 #~ "are accepted."
 
-#, fuzzy
 #~ msgid ""
 #~ "Similar filtering rules can be used for SMSC number filtering, they just "
 #~ "use different set of configuration options - :config:section:`"
@@ -2687,7 +2342,6 @@ msgstr ""
 #~ "use different set of configuration options - [include_smsc] and "
 #~ "[exclude_smsc] sections or IncludeSMSCFile and ExcludeSMSCFile directives."
 
-#, fuzzy
 #~ msgid ""
 #~ "There is more complete example available in Gammu documentation. Please "
 #~ "note that for simplicity following examples do not include :config:"
@@ -2702,7 +2356,6 @@ msgstr ""
 #~ msgid "SMSD configuration file for FILES backend could look like:"
 #~ msgstr "SMSD configuration file for FILES backend could look like:"
 
-#, fuzzy
 #~ msgid ""
 #~ "[smsd] Service = files PIN = 1234 LogFile = syslog InboxPath = /var/spool/"
 #~ "sms/inbox/ OutboPpath = /var/spool/sms/outbox/ SentSMSPath = /var/spool/"
@@ -2721,7 +2374,6 @@ msgstr ""
 #~ msgstr ""
 #~ "If you want to use MYSQL backend, you will need something like this:"
 
-#, fuzzy
 #~ msgid ""
 #~ "[smsd] Service = mysql PIN = 1234 LogFile = syslog User = smsd Password = "
 #~ "smsd PC = localhost Database = smsd"
@@ -2738,7 +2390,6 @@ msgstr ""
 #~ msgid "Process only messages from 123456 number:"
 #~ msgstr "Process only messages from 123456 number:"
 
-#, fuzzy
 #~ msgid "[include_numbers] number1 = 123456"
 #~ msgstr ""
 #~ "[include_numbers]\n"
@@ -2747,13 +2398,11 @@ msgstr ""
 #~ msgid "Do not process messages from evil number 666:"
 #~ msgstr "Do not process messages from evil number 666:"
 
-#, fuzzy
 #~ msgid "[exclude_numbers] number1 = 666"
 #~ msgstr ""
 #~ "[exclude_numbers]\n"
 #~ "number1 = 666\n"
 
-#, fuzzy
 #~ msgid ""
 #~ "Gammu SMS Daemon is a program that periodically scans GSM modem for "
 #~ "received messages, stores them in defined storage and also sends messages "
@@ -2763,39 +2412,32 @@ msgstr ""
 #~ "messages, stores them in defined storage and also sends messages enqueued "
 #~ "in this storage."
 
-#, fuzzy
 #~ msgid "Try to connect to phone if not connected."
 #~ msgstr "Phone is not connected."
 
-#, fuzzy
 #~ msgid "gammu-smsd-inject"
 #~ msgstr "gammu-smsd.exe -u\n"
 
-#, fuzzy
 #~ msgid "text"
 #~ msgstr "Gettext"
 
-#, fuzzy
 #~ msgid ""
 #~ "gammu-smsd-inject [OPTION]... MESSAGETYPE RECIPIENT [MESSAGE_PARAMETER]..."
 #~ msgstr ""
 #~ "B<gammu-smsd-inject> [I<OPTION>]...  MESSAGETYPE RECIPIENT "
 #~ "[I<MESSAGE_PARAMETER>]..."
 
-#, fuzzy
 #~ msgid ""
 #~ "This manual page documents briefly the :program:`gammu-smsd-inject` "
 #~ "command."
 #~ msgstr ""
 #~ "This manual page documents briefly the B<gammu-smsd-inject> command."
 
-#, fuzzy
 #~ msgid "`gammu-smsd-inject` is a program that enqueues message in Gammu SMS"
 #~ msgstr ""
 #~ "B<gammu-smsd-inject> is a program that enqueues message in Gammu SMS "
 #~ "daemon, which will be later sent by the daemon using connected GSM modem."
 
-#, fuzzy
 #~ msgid ""
 #~ "Daemon, which will be later sent by the daemon using connected GSM modem."
 #~ msgstr ""
@@ -2816,21 +2458,18 @@ msgstr ""
 #~ "Program accepts following options (please note that long options might be "
 #~ "not accepted on some platforms):"
 
-#, fuzzy
 #~ msgid "-h, --help"
 #~ msgstr "B<-h, --help>"
 
 #~ msgid "Shows help."
 #~ msgstr "Shows help."
 
-#, fuzzy
 #~ msgid "-v, --version"
 #~ msgstr "B<-v>, B<--version>"
 
 #~ msgid "Shows version information and compiled in features."
 #~ msgstr "Shows version information and compiled in features."
 
-#, fuzzy
 #~ msgid "-c, --config=file"
 #~ msgstr "B<-c>, B<--config>=I<file>"
 
@@ -2841,7 +2480,6 @@ msgstr ""
 #~ "Configuration file to use, default is /etc/gammu-smsdrc, on Windows there "
 #~ "is no default and configuration file path has to be always specified."
 
-#, fuzzy
 #~ msgid ""
 #~ "For description of message types and their parameters, please check "
 #~ "documentation for :option:`gammu savesms`."
@@ -2849,7 +2487,6 @@ msgstr ""
 #~ "For description of message types and their parameters, please check gammu"
 #~ "(1).  The options are identical to ones you can use for gammu sendsms."
 
-#, fuzzy
 #~ msgid "To check it out, you need to have configuration file for SMSD, see"
 #~ msgstr ""
 #~ "To check it out, you need to have configuration file for SMSD, see gammu-"
@@ -2858,7 +2495,6 @@ msgstr ""
 #~ msgid "Inject text message up to standard 160 chars:"
 #~ msgstr "Inject text message up to standard 160 chars:"
 
-#, fuzzy
 #~ msgid ""
 #~ "echo \"All your base are belong to us\" | gammu-smsd-inject TEXT 123456"
 #~ msgstr ""
@@ -2867,7 +2503,6 @@ msgstr ""
 #~ msgid "or"
 #~ msgstr "or"
 
-#, fuzzy
 #~ msgid ""
 #~ "gammu-smsd-inject TEXT 123456 -text \"All your base are belong to us\""
 #~ msgstr ""
@@ -2876,23 +2511,20 @@ msgstr ""
 #~ msgid "Inject long text message:"
 #~ msgstr "Inject long text message:"
 
-#, fuzzy
 #~ msgid ""
 #~ "echo \"All your base are belong to us\" | gammu-smsd-inject TEXT 123456 -"
 #~ "len 400"
 #~ msgstr ""
 #~ "echo \"All your base are belong to us\" | gammu-smsd-inject TEXT 123456 -"
-#~ "len 400\n"
+#~ "len 400 "
 
-#, fuzzy
 #~ msgid ""
 #~ "gammu-smsd-inject TEXT 123456 -len 400 -text \"All your base are belong "
 #~ "to us\""
 #~ msgstr ""
 #~ "gammu-smsd-inject TEXT 123456 -len 400 -text \"All your base are belong "
-#~ "to us\"\n"
+#~ "to us\" "
 
-#, fuzzy
 #~ msgid ""
 #~ "gammu-smsd-inject EMS 123456 -text \"All your base are belong to us\""
 #~ msgstr ""
@@ -2905,7 +2537,6 @@ msgstr ""
 #~ "Inject some funky message with predefined sound and animation from 2 "
 #~ "bitmaps:"
 
-#, fuzzy
 #~ msgid ""
 #~ "gammu-smsd-inject EMS 123456 -text \"Greetings\" -defsound 1 -text \"from "
 #~ "Gammu\" -tone10 axelf.txt -animation 2 file1.bmp file2.bmp"
@@ -2917,7 +2548,6 @@ msgstr ""
 #~ msgid "Inject protected message with ringtone:"
 #~ msgstr "Inject protected message with ringtone:"
 
-#, fuzzy
 #~ msgid ""
 #~ "gammu-smsd-inject EMS 123456 -protected 2 -variablebitmaplong ala.bmp -"
 #~ "toneSElong axelf.txt -toneSE ring.txt"
@@ -2925,11 +2555,9 @@ msgstr ""
 #~ "gammu-smsd-inject EMS 123456 -protected 2 -variablebitmaplong ala.bmp\n"
 #~ "-toneSElong axelf.txt -toneSE ring.txt\n"
 
-#, fuzzy
 #~ msgid "_gammu-smsd-mysql:"
 #~ msgstr "gammu-smsd.exe -u\n"
 
-#, fuzzy
 #~ msgid ""
 #~ "MYSQL backend stores all data in a `MySQL`_ database server, which "
 #~ "parameters are defined by configuration (see :ref:`gammu-smsdrc` for "
@@ -2939,42 +2567,33 @@ msgstr ""
 #~ "parameters are defined by configuration (see gammu-smsdrc(5) for "
 #~ "description of configuration options)."
 
-#, fuzzy
 #~ msgid "_MySQL: http://www.mysql.com/"
 #~ msgstr "http://mysql.com/"
 
-#, fuzzy
 #~ msgid "Developer documentation"
 #~ msgstr "Gammu Documentation"
 
-#, fuzzy
 #~ msgid "Saves message into inbox."
 #~ msgstr "Save protected message with ringtone:"
 
-#, fuzzy
 #~ msgid "_gammu-smsd-monitor:"
 #~ msgstr "B<gammu-smsd-monitor> [I<OPTION>]..."
 
-#, fuzzy
 #~ msgid "gammu-smsd-monitor"
 #~ msgstr "B<gammu-smsd-monitor> [I<OPTION>]..."
 
-#, fuzzy
 #~ msgid "gammu-smsd-monitor [OPTION]..."
 #~ msgstr "B<gammu-smsd-monitor> [I<OPTION>]..."
 
-#, fuzzy
 #~ msgid ""
 #~ "This manual page documents briefly the :program:`gammu-smsd-monitor` "
 #~ "command."
 #~ msgstr ""
 #~ "This manual page documents briefly the B<gammu-smsd-monitor> command."
 
-#, fuzzy
 #~ msgid "`gammu-smsd-monitor` is a program that monitors state of Gammu SMS"
 #~ msgstr "gammu-smsd-monitor - Monitor state of SMS daemon for Gammu"
 
-#, fuzzy
 #~ msgid ""
 #~ "Daemon. It periodically displays information about phone and number of "
 #~ "processed messages."
@@ -2983,21 +2602,18 @@ msgstr ""
 #~ "daemon. It periodically displays information about phone and number of "
 #~ "processed messages."
 
-#, fuzzy
 #~ msgid "-l, --loops=count"
 #~ msgstr "B<-l>, B<--loops>=I<count>"
 
 #~ msgid "Number of loops, by default monitor loops infinitely."
 #~ msgstr "Number of loops, by default monitor loops infinitely."
 
-#, fuzzy
 #~ msgid "-d, --delay=seconds"
 #~ msgstr "B<-d>, B<--delay>=I<seconds>"
 
 #~ msgid "Delay betwen polling SMSD state, default is 20 seconds."
 #~ msgstr "Delay betwen polling SMSD state, default is 20 seconds."
 
-#, fuzzy
 #~ msgid "-C, --csv"
 #~ msgstr "B<-C>, B<--csv>"
 
@@ -3007,24 +2623,19 @@ msgstr ""
 #~ msgid "client;phone ID;IMEI;sent;received;failed;battery;signal"
 #~ msgstr "client;phone ID;IMEI;sent;received;failed;battery;signal"
 
-#, fuzzy
 #~ msgid "_gammu-smsd:"
 #~ msgstr "gammu-smsd.exe -u\n"
 
-#, fuzzy
 #~ msgid "gammu-smsd"
 #~ msgstr "gammu-smsd.exe -u\n"
 
-#, fuzzy
 #~ msgid "gammu-smsd [OPTION]..."
 #~ msgstr "B<gammu-smsd> [I<OPTION>]..."
 
-#, fuzzy
 #~ msgid ""
 #~ "This manual page documents briefly the :program:`gammu-smsd` command."
 #~ msgstr "This manual page documents briefly the B<gammu-smsd> command."
 
-#, fuzzy
 #~ msgid ""
 #~ "received messages, stores them in defined storage and also sends messages "
 #~ "enqueued in this storage."
@@ -3033,7 +2644,6 @@ msgstr ""
 #~ "messages, stores them in defined storage and also sends messages enqueued "
 #~ "in this storage."
 
-#, fuzzy
 #~ msgid ""
 #~ "The daemon can reload configuration file after sending hangup signal "
 #~ "(SIGHUP)  and properly terminates itself on SIGINT and SIGTERM."
@@ -3041,7 +2651,6 @@ msgstr ""
 #~ "The daemon can reload configuration file after sending hangup signal "
 #~ "(SIGHUP) and properly terminates itself on SIGINT and SIGTERM."
 
-#, fuzzy
 #~ msgid ""
 #~ "If you run SMSD as a system daemon (or service), it is recommended to use "
 #~ "absolute path to configuration file as startup directory might be "
@@ -3051,11 +2660,9 @@ msgstr ""
 #~ "absolute path to log file as startup directory might be different than "
 #~ "you expect."
 
-#, fuzzy
 #~ msgid "See :ref:`gammu-smsdrc` for configuration file documentation."
 #~ msgstr "See gammu-smsdrc(5) for config file documentation."
 
-#, fuzzy
 #~ msgid "-p, --pid=file"
 #~ msgstr "B<-p>, B<--pid>=I<file>"
 
@@ -3064,56 +2671,48 @@ msgstr ""
 #~ msgstr ""
 #~ "Lock file for storing pid, empty for no locking. Not supported on Windows."
 
-#, fuzzy
 #~ msgid "-U, --user=user"
 #~ msgstr "B<-U>, B<--user>=I<user>"
 
 #~ msgid "Drop daemon privileges to chosed user after starting."
 #~ msgstr "Drop daemon privileges to chosed user after starting."
 
-#, fuzzy
 #~ msgid "-G, --group=group"
 #~ msgstr "B<-G>, B<--group>=I<group>"
 
 #~ msgid "Drop daemon privileges to chosen group after starting."
 #~ msgstr "Drop daemon privileges to chosen group after starting."
 
-#, fuzzy
 #~ msgid "-d, --daemon"
 #~ msgstr "B<-d>, B<--daemon>"
 
 #~ msgid "Daemonize program on startup. Not supported on Windows."
 #~ msgstr "Daemonize program on startup. Not supported on Windows."
 
-#, fuzzy
 #~ msgid "-i, --install-service"
 #~ msgstr "B<-i>, B<--install-service>"
 
 #~ msgid "Installs SMSD as a Windows service."
 #~ msgstr "Installs SMSD as a Windows service."
 
-#, fuzzy
 #~ msgid "-u, --uninstall-service"
 #~ msgstr "B<-u>, B<--uninstall-service>"
 
 #~ msgid "Uninstalls SMSD as a Windows service."
 #~ msgstr "Uninstalls SMSD as a Windows service."
 
-#, fuzzy
 #~ msgid "-s, --start-service"
 #~ msgstr "B<-s>, B<--start-service>"
 
 #~ msgid "Starts SMSD Windows service."
 #~ msgstr "Starts SMSD Windows service."
 
-#, fuzzy
 #~ msgid "-k, --stop-service"
 #~ msgstr "B<-k>, B<--stop-service>"
 
 #~ msgid "Stops SMSD Windows service."
 #~ msgstr "Stops SMSD Windows service."
 
-#, fuzzy
 #~ msgid "-f, --max-failures=count"
 #~ msgstr "B<-f>, B<--max-failures>=I<count>"
 
@@ -3124,14 +2723,12 @@ msgstr ""
 #~ "Terminate after defined number of failures. Use 0 to not terminate (this "
 #~ "is default)."
 
-#, fuzzy
 #~ msgid "-X, --suicide=seconds"
 #~ msgstr "B<-X>, B<--suicide>=I<seconds>"
 
 #~ msgid "Kills itself after number of seconds."
 #~ msgstr "Kills itself after number of seconds."
 
-#, fuzzy
 #~ msgid "-S, --run-service"
 #~ msgstr "B<-S>, B<--run-service>"
 
@@ -3142,7 +2739,6 @@ msgstr ""
 #~ "Runs pogram as SMSD Windows service. This should not be used manually, "
 #~ "but only Windows Service manager should use this command."
 
-#, fuzzy
 #~ msgid "-n, --service-name=name"
 #~ msgstr "B<-n>, B<--service-name>=I<name>"
 
@@ -3161,24 +2757,22 @@ msgstr ""
 #~ msgid "Start SMSD as a daemon on Linux:"
 #~ msgstr "Start SMSD as a daemon on Linux:"
 
-#, fuzzy
 #~ msgid ""
 #~ "gammu-smsd --config /etc/gammu-smsdrc --pid /var/run/gammu-smsd.pid --"
 #~ "daemon"
 #~ msgstr ""
 #~ "gammu-smsd --config /etc/gammu-smsdrc --pid /var/run/gammu-smsd.pid --"
-#~ "daemon\n"
+#~ "daemon "
 
 #~ msgid "Start SMSD as a daemon on Linux with reduced privileges:"
 #~ msgstr "Start SMSD as a daemon on Linux with reduced privileges:"
 
-#, fuzzy
 #~ msgid ""
 #~ "gammu-smsd --config /etc/gammu-smsdrc --pid /var/run/gammu-smsd.pid --"
 #~ "daemon --user gammu --group gammu"
 #~ msgstr ""
 #~ "gammu-smsd --config /etc/gammu-smsdrc --pid /var/run/gammu-smsd.pid --"
-#~ "daemon --user gammu --group gammu\n"
+#~ "daemon --user gammu --group gammu "
 
 #~ msgid "SMSD as a system wide daemon"
 #~ msgstr "SMSD as a system wide daemon"
@@ -3207,25 +2801,21 @@ msgstr ""
 #~ msgid "Install Gammu SMSD Windows service:"
 #~ msgstr "Install Gammu SMSD Windows service:"
 
-#, fuzzy
 #~ msgid "gammu-smsd.exe -c c:\\Gammu\\smsdrc -i"
 #~ msgstr "gammu-smsd.exe -c c:\\eGammu\\esmsdrc -i\n"
 
 #~ msgid "Install two instances of SMSD Windows service:"
 #~ msgstr "Install two instances of SMSD Windows service:"
 
-#, fuzzy
 #~ msgid "gammu-smsd.exe -c c:\\Gammu\\smsdrc-1 -n Gammu-first-phone -i"
 #~ msgstr "gammu-smsd.exe -c c:\\eGammu\\esmsdrc-1 -n Gammu-first-phone -i\n"
 
-#, fuzzy
 #~ msgid "gammu-smsd.exe -c c:\\Gammu\\smsdrc-2 -n Gammu-second-phone -i"
 #~ msgstr "gammu-smsd.exe -c c:\\eGammu\\esmsdrc-2 -n Gammu-second-phone -i\n"
 
 #~ msgid "To uninstall a Windows service:"
 #~ msgstr "To uninstall a Windows service:"
 
-#, fuzzy
 #~ msgid "gammu-smsd.exe -u"
 #~ msgstr "gammu-smsd.exe -u\n"
 
@@ -3248,7 +2838,6 @@ msgstr ""
 #~ msgid "For example the command line can look like:"
 #~ msgstr "For example the command line can look like:"
 
-#, fuzzy
 #~ msgid "gammu-smsd.exe -c smsdrc"
 #~ msgstr "gammu-smsd.exe -c smsdrc\n"
 
@@ -3259,7 +2848,6 @@ msgstr ""
 #~ "You now should be able to get errors from SMSD even if it fails to start "
 #~ "as a service."
 
-#, fuzzy
 #~ msgid ""
 #~ "You can not use same phone by more programs in same time. However in case "
 #~ "you did not enable locking in :config:section:`[gammu]` section, it might "
@@ -3280,21 +2868,17 @@ msgstr ""
 #~ "at message headers. The only way to achieve this is to add some token to "
 #~ "the message and let the user include it in the message on reply."
 
-#, fuzzy
 #~ msgid "_gammu:"
 #~ msgstr "gammu(1)"
 
-#, fuzzy
 #~ msgid "gammu [parameters] <command> [options]"
 #~ msgstr "Usage: gammu [I<parameters>] E<lt>commandE<gt> [I<options>]"
 
-#, fuzzy
 #~ msgid ""
 #~ "Commands actually indicate which operation should Gammu perform. They can "
 #~ "be specified with or without leading ``--``."
 #~ msgstr "Commands can be specified with or without leading --."
 
-#, fuzzy
 #~ msgid ""
 #~ "This program is a tool for mobile phones. Many vendors and phones are "
 #~ "supported, for actual listing see `Gammu Phones Database <http://wammu.eu/"
@@ -3306,67 +2890,55 @@ msgstr ""
 #~ msgid "Parameters before command configure gammu behaviour:"
 #~ msgstr "Parameters before command configure gammu behaviour:"
 
-#, fuzzy
 #~ msgid "-c, --config <filename>"
 #~ msgstr "B<-c>, B<--config>=I<file>"
 
-#, fuzzy
 #~ msgid "name of configuration file"
 #~ msgstr "gammurc - gammu(1) configuration file"
 
-#, fuzzy
 #~ msgid "-s, --section <confign>"
 #~ msgstr "B<-c, --config config>"
 
-#, fuzzy
 #~ msgid "section of config file to use, eg. 42"
 #~ msgstr ""
 #~ "-s / --section E<lt>confignE<gt> ... section of config file to use, eg. 42"
 
-#, fuzzy
 #~ msgid "file for logging debug messages"
 #~ msgstr "Data for outgoing multipart messages."
 
-#, fuzzy
 #~ msgid "Call commands"
 #~ msgstr "Commands"
 
-#, fuzzy
 #~ msgid "answercall [id]"
 #~ msgstr "B<answercall>I< [id]>"
 
 #~ msgid "Answer incoming call."
 #~ msgstr "Answer incoming call."
 
-#, fuzzy
 #~ msgid "cancelcall [id]"
 #~ msgstr "B<cancelcall>I< [id]>"
 
 #~ msgid "Cancel incoming call"
 #~ msgstr "Cancel incoming call"
 
-#, fuzzy
 #~ msgid "canceldiverts"
 #~ msgstr "B<canceldiverts>"
 
 #~ msgid "Cancel all existing call diverts."
 #~ msgstr "Cancel all existing call diverts."
 
-#, fuzzy
 #~ msgid "conferencecall id"
 #~ msgstr "B<conferencecall>I< id>"
 
 #~ msgid "Initiates a conference call."
 #~ msgstr "Initiates a conference call."
 
-#, fuzzy
 #~ msgid "dialvoice number [show|hide]"
 #~ msgstr "B<dialvoice>I< number [show|hide]>"
 
 #~ msgid "Make voice call from SIM card line set in phone."
 #~ msgstr "Make voice call from SIM card line set in phone."
 
-#, fuzzy
 #~ msgid ""
 #~ "``show|hide`` - optional parameter whether to disable call number "
 #~ "indication."
@@ -3374,7 +2946,6 @@ msgstr ""
 #~ "B<show|hide> - optional parameter whether to disable call number "
 #~ "indication."
 
-#, fuzzy
 #~ msgid ""
 #~ "divert get|set all|busy|noans|outofreach all|voice|fax|data [number "
 #~ "timeout]"
@@ -3385,31 +2956,24 @@ msgstr ""
 #~ msgid "Manage or display call diverts."
 #~ msgstr "Manage or display call diverts."
 
-#, fuzzy
 #~ msgid "whether to get divert information or to set it."
 #~ msgstr "B<get|set> - whether to get divert information or to set it."
 
-#, fuzzy
 #~ msgid "condition when apply divert"
 #~ msgstr "B<all|busy|noans|outofreach> - condition when apply divert"
 
-#, fuzzy
 #~ msgid "call type when apply divert"
 #~ msgstr "B<all|voice|fax|data> - call type when apply divert"
 
-#, fuzzy
 #~ msgid "number"
 #~ msgstr "Sender number."
 
-#, fuzzy
 #~ msgid "number where to divert"
 #~ msgstr "number - number where to divert"
 
-#, fuzzy
 #~ msgid "timeout when the diversion will happen"
 #~ msgstr "timeout - timeout when the diversion will happen"
 
-#, fuzzy
 #~ msgid "getussd code"
 #~ msgstr "B<getussd>I< code>"
 
@@ -3418,18 +2982,15 @@ msgstr ""
 #~ msgstr ""
 #~ "Retrieves USSD information - dials a service number and reads response."
 
-#, fuzzy
 #~ msgid "holdcall id"
 #~ msgstr "B<holdcall>I< id>"
 
 #~ msgid "Holds call."
 #~ msgstr "Holds call."
 
-#, fuzzy
 #~ msgid "maketerminatedcall number length [show|hide]"
 #~ msgstr "B<maketerminatedcall>I< number length [show|hide]>"
 
-#, fuzzy
 #~ msgid ""
 #~ "Make voice call from SIM card line set in phone which will be terminated "
 #~ "after ``length`` seconds."
@@ -3437,42 +2998,36 @@ msgstr ""
 #~ "Make voice call from SIM card line set in phone which will be terminated "
 #~ "after B<length> seconds."
 
-#, fuzzy
 #~ msgid "senddtmf sequence"
 #~ msgstr "B<senddtmf>I< sequence>"
 
 #~ msgid "Plays DTMF sequence. In some phones available only during calls"
 #~ msgstr "Plays DTMF sequence. In some phones available only during calls"
 
-#, fuzzy
 #~ msgid "splitcall id"
 #~ msgstr "B<splitcall>I< id>"
 
 #~ msgid "Splits call."
 #~ msgstr "Splits call."
 
-#, fuzzy
 #~ msgid "switchcall [id]"
 #~ msgstr "B<switchcall>I< [id]>"
 
 #~ msgid "Switches call."
 #~ msgstr "Switches call."
 
-#, fuzzy
 #~ msgid "transfercall [id]"
 #~ msgstr "B<transfercall>I< [id]>"
 
 #~ msgid "Transfers call."
 #~ msgstr "Transfers call."
 
-#, fuzzy
 #~ msgid "unholdcall id"
 #~ msgstr "B<unholdcall>I< id>"
 
 #~ msgid "Unholds call."
 #~ msgstr "Unholds call."
 
-#, fuzzy
 #~ msgid "SMS and EMS commands"
 #~ msgstr "SMS and EMS"
 
@@ -3485,7 +3040,6 @@ msgstr ""
 #~ "But be patient, the command line has been written in order to allow "
 #~ "almost every usage. See EXAMPLE section for some hints on usage."
 
-#, fuzzy
 #~ msgid ""
 #~ "There is also an option to use :ref:`gammu-smsd` when you want to send or "
 #~ "receive more messages and process them automatically."
@@ -3493,7 +3047,6 @@ msgstr ""
 #~ "There is also an option to use gammu-smsd(1) when you want to send or "
 #~ "receive more messages and process them automatically."
 
-#, fuzzy
 #~ msgid "Introduction to SMS formats"
 #~ msgstr "B<Introduction to SMS formats>"
 
@@ -3509,14 +3062,12 @@ msgstr ""
 #~ "to send. Otherwise the phone will not be able to display it or will even "
 #~ "crash, because firmware of phone did not expect this possibility."
 
-#, fuzzy
 #~ msgid "Encoding chars in SMS text"
 #~ msgstr "B<Encoding chars in SMS text>"
 
 #~ msgid "Text in SMS can be coded using two ways:"
 #~ msgstr "Text in SMS can be coded using two ways:"
 
-#, fuzzy
 #~ msgid ""
 #~ "With `GSM Default Alphabet` you can fit at most 160 chars into single SMS "
 #~ "(Gammu doesn't support compressing such texts according to GSM standards, "
@@ -3528,35 +3079,28 @@ msgstr ""
 #~ "standards, but it isn't big limit, because there are no phones supporting "
 #~ "them), but they're from limited set:"
 
-#, fuzzy
 #~ msgid "all Latin small and large"
 #~ msgstr "  * all Latin small and large\n"
 
-#, fuzzy
 #~ msgid "all digits"
 #~ msgstr "  * all digits\n"
 
-#, fuzzy
 #~ msgid "some Greek"
 #~ msgstr "  * some Greek\n"
 
-#, fuzzy
 #~ msgid "some other national"
 #~ msgstr "  * some other national\n"
 
-#, fuzzy
 #~ msgid "some symbols like @ ! \" # & / ( ) % * + = - , . : ; < > ?"
 #~ msgstr ""
-#~ "  * some symbols like  @ ! \" # & / ( ) % * + = - , . : ; E<lt> E<gt> ?\n"
+#~ "  * some symbols like  @ ! \" # & / ( ) % * + = - , . : ; E<lt> E<gt> ? "
 
-#, fuzzy
 #~ msgid "few others"
 #~ msgstr "  * few others\n"
 
 #~ msgid "Unicode"
 #~ msgstr "Unicode"
 
-#, fuzzy
 #~ msgid ""
 #~ "With `Unicode` single SMS can contain at most 70 chars, but these can be "
 #~ "any chars including all national and special ones."
@@ -3565,7 +3109,6 @@ msgstr ""
 #~ "can be any chars including all national and special ones. Please note, "
 #~ "that some older phones might have problems displaying such message."
 
-#, fuzzy
 #~ msgid "Conversion"
 #~ msgstr "B<version>"
 
@@ -3580,7 +3123,6 @@ msgstr ""
 #~ "converted depending on your locales configuration) and in case message "
 #~ "uses Unicode the text will be given as such to the message."
 
-#, fuzzy
 #~ msgid ""
 #~ "Should the message be sent in GSM Default Alphabet, Gammu will try to "
 #~ "convert all characters to keep message readable. Gammu does support multi "
@@ -3598,26 +3140,21 @@ msgstr ""
 #~ "are removed).  Remaining not known characters are replaced by question "
 #~ "mark."
 
-#, fuzzy
 #~ msgid "SMS commands"
 #~ msgstr "Commands"
 
-#, fuzzy
 #~ msgid "addsmsfolder name"
 #~ msgstr "B<addsmsfolder>I< name>"
 
-#, fuzzy
 #~ msgid "deleteallsms folder"
 #~ msgstr "B<deleteallsms>I< folder>"
 
 #~ msgid "Delete all SMS from specified SMS folder."
 #~ msgstr "Delete all SMS from specified SMS folder."
 
-#, fuzzy
 #~ msgid "deletesms folder start [stop]"
 #~ msgstr "B<deletesms>I< folder start [stop]>"
 
-#, fuzzy
 #~ msgid ""
 #~ "Delete SMS from phone. See description for :option:`gammu getsms` for "
 #~ "info about sms folders naming convention."
@@ -3628,7 +3165,6 @@ msgstr ""
 #~ msgid "Locations are numerated from 1."
 #~ msgstr "Locations are numerated from 1."
 
-#, fuzzy
 #~ msgid "displaysms ... (options like in sendsms)"
 #~ msgstr "B<displaysms>I< ... (options like in sendsms)>"
 
@@ -3639,11 +3175,9 @@ msgstr ""
 #~ "Displays PDU data of encoded SMS messages. It accepts same parameters and "
 #~ "behaves same like sendsms."
 
-#, fuzzy
 #~ msgid "getallsms -pbk"
 #~ msgstr "B<getallsms>I< -pbk>"
 
-#, fuzzy
 #~ msgid ""
 #~ "Get all SMS from phone. In some phones you will have also SMS templates "
 #~ "and info about locations used to save Picture Images. With each sms you "
@@ -3655,18 +3189,15 @@ msgstr ""
 #~ "will see location. If you want to get such sms from phone alone, use "
 #~ "B<gammu getsms 0 location>"
 
-#, fuzzy
 #~ msgid "geteachsms -pbk"
 #~ msgstr "B<geteachsms>I< -pbk>"
 
-#, fuzzy
 #~ msgid ""
 #~ "Similiary to :option:`gammu getallsms`. Difference is, that links all "
 #~ "concatenated sms"
 #~ msgstr ""
 #~ "Similiary to B<getallsms>. Difference is, that links all concatenated sms"
 
-#, fuzzy
 #~ msgid "getsms folder start [stop]"
 #~ msgstr "B<getsms>I< folder start [stop]>"
 
@@ -3682,7 +3213,6 @@ msgstr ""
 #~ "all folders have unique numbers). It's sometimes emulated by Gammu. You "
 #~ "can use it with all phones."
 
-#, fuzzy
 #~ msgid ""
 #~ "Other folders like 1, 2, etc. match folders in phone such as Inbox, "
 #~ "Outbox, etc.  and each sms has unique number in his folder. Name of "
@@ -3698,21 +3228,18 @@ msgstr ""
 #~ "supported by Nokia 3310, 5110, 6110). If work with your phone, use "
 #~ "B<getsmsfolders> to get folders list."
 
-#, fuzzy
 #~ msgid "getsmsc [start [stop]]"
 #~ msgstr "B<getsmsc>I< [start [stop]]>"
 
 #~ msgid "Get SMSC settings from SIM card."
 #~ msgstr "Get SMSC settings from SIM card."
 
-#, fuzzy
 #~ msgid "getsmsfolders"
 #~ msgstr "B<getsmsfolders>"
 
 #~ msgid "Get names for SMS folders in phone"
 #~ msgstr "Get names for SMS folders in phone"
 
-#, fuzzy
 #~ msgid ""
 #~ "savesms TYPE [type parameters] [type options] [-folder id] [-unread] [-"
 #~ "read] [-unsent] [-sent] [-sender number] [-smsname name] [-smscset "
@@ -3722,27 +3249,21 @@ msgstr ""
 #~ "[-sent] [-sender number] [-smsname name] [-smscset number] [-smscnumber "
 #~ "number] [-reply] [-maxsms num]>"
 
-#, fuzzy
 #~ msgid "-smscset number"
 #~ msgstr "recipient number"
 
-#, fuzzy
 #~ msgid "Default: 1"
 #~ msgstr "Default is 1."
 
-#, fuzzy
 #~ msgid "-smscnumber number"
 #~ msgstr "B<-smscnumber number> - SMSC number"
 
-#, fuzzy
 #~ msgid "SMSC number"
 #~ msgstr "decoded SMSC number"
 
-#, fuzzy
 #~ msgid "reply SMSC is set"
 #~ msgstr "B<-reply> - reply SMSC is set"
 
-#, fuzzy
 #~ msgid ""
 #~ "Limit maximal number of messages which will be created. If there are more "
 #~ "messages, Gammu will terminate with failure."
@@ -3750,18 +3271,15 @@ msgstr ""
 #~ "B<-maxnum number> - Limit maximal number of messages which will be "
 #~ "created. If there are more messages, Gammu will terminate with failure."
 
-#, fuzzy
 #~ msgid "-folder number"
 #~ msgstr "Sender number."
 
-#, fuzzy
 #~ msgid "save to specified folder."
 #~ msgstr "Can not open specified file."
 
 #~ msgid "Folders are numerated from 1."
 #~ msgstr "Folders are numerated from 1."
 
-#, fuzzy
 #~ msgid ""
 #~ "The most often folder 1 = \"Inbox\", 2 = \"Outbox\",etc. Use :option:"
 #~ "`gammu getsmsfolders` to get folder list."
@@ -3769,7 +3287,6 @@ msgstr ""
 #~ "The most often folder 1 = \"Inbox\", 2 = \"Outbox\",etc. Use "
 #~ "B<getsmsfolders> to get folder list."
 
-#, fuzzy
 #~ msgid ""
 #~ "makes message unread. In some phones (like 6210) you won't see unread sms "
 #~ "envelope after saving such sms. In some phones with internal SMS memory "
@@ -3780,7 +3297,6 @@ msgstr ""
 #~ "internal SMS memory (like 6210) after using it with folder 1 SIM SMS "
 #~ "memory will be used"
 
-#, fuzzy
 #~ msgid ""
 #~ "makes message read. In some phones with internal SMS memory (like 6210) "
 #~ "after using it with folder 1 SIM SMS memory will be used"
@@ -3788,27 +3304,21 @@ msgstr ""
 #~ "B<-read> - makes message read. In some phones with internal SMS memory "
 #~ "(like 6210) after using it with folder 1 SIM SMS memory will be used"
 
-#, fuzzy
 #~ msgid "makes message unsent"
 #~ msgstr "B<-unsent> - makes message unsent"
 
-#, fuzzy
 #~ msgid "makes message sent"
 #~ msgstr "B<-sent> - makes message sent"
 
-#, fuzzy
 #~ msgid "set message name"
 #~ msgstr "Per message variables"
 
-#, fuzzy
 #~ msgid "-sender number"
 #~ msgstr "Sender number."
 
-#, fuzzy
 #~ msgid "set sender number (default: ``Gammu``)"
 #~ msgstr "B<-sender number> - set sender number (default: \"Gammu\")"
 
-#, fuzzy
 #~ msgid "Types of messages:"
 #~ msgstr "Class of message."
 
@@ -3821,11 +3331,9 @@ msgstr ""
 #~ "for each frame. Each picture can be in any picture format which Gammu "
 #~ "supports (B/W bmp, gif, wbmp, nol, nlm...)."
 
-#, fuzzy
 #~ msgid "BOOKMARK file location"
 #~ msgstr "B<savefile BOOKMARK>I< target.url file location>"
 
-#, fuzzy
 #~ msgid ""
 #~ "Read WAP bookmark from file created by :option:`gammu backup` command and "
 #~ "saves in Nokia format as SMS"
@@ -3833,11 +3341,9 @@ msgstr ""
 #~ "Read WAP bookmark from file created by B<backup> option and saves in "
 #~ "Nokia format as SMS"
 
-#, fuzzy
 #~ msgid "CALENDAR file location"
 #~ msgstr "B<savefile CALENDAR>I< target.vcs file location>"
 
-#, fuzzy
 #~ msgid ""
 #~ "Read calendar note from file created by :option:`gammu backup` command "
 #~ "and saves in VCALENDAR 1.0 format as SMS. The location identifies "
@@ -3865,7 +3371,6 @@ msgstr ""
 #~ "example in DCT4/TIKU - you need to put bitmap file there inside phone "
 #~ "using filesystem commands."
 
-#, fuzzy
 #~ msgid ""
 #~ "EMS [-unicode] [-16bit] [-format lcrasbiut] [-text text] [-"
 #~ "unicodefiletext file] [-defsound ID] [-defanimation ID] [-tone10 file] [-"
@@ -3882,7 +3387,6 @@ msgstr ""
 #~ "variablebitmaplong file] [-animation frames file1 ...] [-protected number]"
 #~ ">"
 
-#, fuzzy
 #~ msgid ""
 #~ "Saves EMS sequence. All format specific parameters (like :option:`-"
 #~ "defsound`) can be used few times."
@@ -3890,19 +3394,15 @@ msgstr ""
 #~ "Saves EMS sequence. All parameters after B<-unread> (like B<-defsound>) "
 #~ "can be used few times."
 
-#, fuzzy
 #~ msgid "-text"
 #~ msgstr "Gettext"
 
-#, fuzzy
 #~ msgid "adds text"
 #~ msgstr "B<-text> - adds text"
 
-#, fuzzy
 #~ msgid "adds text from Unicode file"
 #~ msgstr "B<-unicodefiletext> - adds text from Unicode file"
 
-#, fuzzy
 #~ msgid ""
 #~ "adds default animation with ID specified by user. ID for different phones "
 #~ "are different."
@@ -3910,15 +3410,12 @@ msgstr ""
 #~ "B<-defanimation> - adds default animation with ID specified by user.ID "
 #~ "for different phones are different."
 
-#, fuzzy
 #~ msgid "-animation"
 #~ msgstr "Configuration"
 
-#, fuzzy
 #~ msgid "adds \"frames\" frames read from file1, file2, etc."
 #~ msgstr "B<-animation> - adds \"frames\" frames read from file1, file2, etc."
 
-#, fuzzy
 #~ msgid ""
 #~ "adds default sound with ID specified by user. ID for different phones are "
 #~ "different."
@@ -3926,13 +3423,11 @@ msgstr ""
 #~ "B<-defsound> - adds default sound with ID specified by user. ID for "
 #~ "different phones are different."
 
-#, fuzzy
 #~ msgid "adds IMelody version 1.0 read from RTTL or other compatible file"
 #~ msgstr ""
 #~ "B<-tone10> - adds IMelody version 1.0 read from RTTL or other compatible "
 #~ "file"
 
-#, fuzzy
 #~ msgid ""
 #~ "IMelody version 1.0 saved in one of few SMS with UPI. Phones compatible "
 #~ "with UPI (like Sony-Ericsson phones) will read such ringtone as one"
@@ -3941,13 +3436,11 @@ msgstr ""
 #~ "Phones compatible with UPI (like SonyEricsson phones) will read such "
 #~ "ringtone as one"
 
-#, fuzzy
 #~ msgid "adds IMelody version 1.2 read from RTTL or other compatible file"
 #~ msgstr ""
 #~ "B<-tone12> - adds IMelody version 1.2 read from RTTL or other compatible "
 #~ "file"
 
-#, fuzzy
 #~ msgid ""
 #~ "IMelody version 1.2 saved in one of few SMS with UPI. Phones compatible "
 #~ "with UPI (like Sony-Ericsson phones) will read such ringtone as one"
@@ -3956,32 +3449,26 @@ msgstr ""
 #~ "Phones compatible with UPI (like SonyEricsson phones) will read such "
 #~ "ringtone as one"
 
-#, fuzzy
 #~ msgid "adds IMelody in \"short\" form supported by Sony-Ericsson phones"
 #~ msgstr ""
 #~ "B<-toneSE> - adds IMelody in \"short\" form supported by SonyEricsson "
 #~ "phones"
 
-#, fuzzy
 #~ msgid "add Sony-Ericsson IMelody saved in one or few SMS with UPI"
 #~ msgstr ""
 #~ "B<-toneSElong> - add SonyEricsson IMelody saved in one or few SMS with UPI"
 
-#, fuzzy
 #~ msgid "bitmap in any size saved in one SMS"
 #~ msgstr "B<-variablebitmap> - bitmap in any size saved in one SMS"
 
-#, fuzzy
 #~ msgid "bitmap with maximal size 96x128 saved in one or few sms"
 #~ msgstr ""
 #~ "B<-variablebitmaplong> - bitmap with maximal size 96x128 saved in one or "
 #~ "few sms"
 
-#, fuzzy
 #~ msgid "bitmap 16x16 or 32x32"
 #~ msgstr "B<-fixedbitmap> - bitmap 16x16 or 32x32"
 
-#, fuzzy
 #~ msgid ""
 #~ "all ringtones and bitmaps after this parameter (excluding default "
 #~ "ringtones and logos) will be \"protected\" (in phones compatible with ODI "
@@ -3993,7 +3480,6 @@ msgstr ""
 #~ "with ODI like SonyEricsson products it won't be possible to forward them "
 #~ "from phone menu)"
 
-#, fuzzy
 #~ msgid ""
 #~ "Gammu uses SMS headers with 16-bit numbers for saving linking info in SMS "
 #~ "(it means less chars available for user in each SMS)"
@@ -4001,7 +3487,6 @@ msgstr ""
 #~ "B<-16bit> - Gammu uses SMS headers with 16-bit numbers for saving linking "
 #~ "info in SMS (it means less chars available for user in each SMS)"
 
-#, fuzzy
 #~ msgid ""
 #~ "=========  ==================\n"
 #~ "Character  Formating\n"
@@ -4036,7 +3521,6 @@ msgstr ""
 #~ "Saves a message with MMS configuration. The configuration will be read "
 #~ "from Gammu backup file from given location."
 
-#, fuzzy
 #~ msgid ""
 #~ "Save operator logo as sms in Nokia (Smart Messaging) format - size 72x14 "
 #~ "in two colors."
@@ -4044,7 +3528,6 @@ msgstr ""
 #~ "Save caller logo as sms in Nokia (Smart Messaging)  format - size 72x14, "
 #~ "two colours."
 
-#, fuzzy
 #~ msgid ""
 #~ "This isn't designed for colour logos available for example in newer "
 #~ "phones - you need to put bitmap file there inside phone using filesystem "
@@ -4065,7 +3548,6 @@ msgstr ""
 #~ "Picture Image and saved with text) or Alcatel format and send/save over "
 #~ "SMS."
 
-#, fuzzy
 #~ msgid ""
 #~ "Read ringtone (RTTL) format, bitmap (Picture Image size) and name, format "
 #~ "into Smart Messaging profile and send/save as SMS."
@@ -4075,7 +3557,6 @@ msgstr ""
 #~ "format is abandomed by Nokia and supported by some (older) devices only "
 #~ "like Nokia 3310."
 
-#, fuzzy
 #~ msgid ""
 #~ "Please note, that this format is abandoned by Nokia and supported by some "
 #~ "(older) devices only like Nokia 3310."
@@ -4092,7 +3573,6 @@ msgstr ""
 #~ "Read RTTL ringtone from file and save as SMS into SIM/phone memory. "
 #~ "Ringtone is saved in Nokia (Smart Messaging) format."
 
-#, fuzzy
 #~ msgid ""
 #~ "ringtone is saved using Profile style. It can be longer (and saved in 2 "
 #~ "SMS), but decoded only by newer phones (like 33xx)"
@@ -4100,7 +3580,6 @@ msgstr ""
 #~ "B<-long> - ringtone is saved using Profile style. It can be longer (and "
 #~ "saved in 2 SMS), but decoded only by newer phones (like 33xx)"
 
-#, fuzzy
 #~ msgid ""
 #~ "ringtone will have Scale info for each note. It will allow to edit it "
 #~ "correctly later in phone composer (for example, in 33xx)"
@@ -4108,7 +3587,6 @@ msgstr ""
 #~ "B<-scale> - ringtone will have Scale info for each note. It will allow to "
 #~ "edit it correctly later in phone composer (for example, in 33xx)"
 
-#, fuzzy
 #~ msgid ""
 #~ "SMSTEMPLATE [-unicode] [-text text] [-unicodefiletext file] [-defsound "
 #~ "ID] [-defanimation ID] [-tone10 file] [-tone10long file] [-tone12 file] [-"
@@ -4126,7 +3604,6 @@ msgstr ""
 #~ msgid "Saves a SMS template (for Alcatel phones)."
 #~ msgstr "Saves a SMS template (for Alcatel phones)."
 
-#, fuzzy
 #~ msgid ""
 #~ "TEXT [-inputunicode] [-16bit] [-flash] [-len len] [-autolen len] [-"
 #~ "unicode] [-enablevoice] [-disablevoice] [-enablefax] [-disablefax] [-"
@@ -4147,7 +3624,6 @@ msgstr ""
 #~ "Take text from stdin (or commandline if -text specified) and save as text "
 #~ "SMS into SIM/phone memory."
 
-#, fuzzy
 #~ msgid ""
 #~ "Class 0 SMS (should be displayed after receiving on recipients' phone "
 #~ "display after receiving without entering Inbox)"
@@ -4155,7 +3631,6 @@ msgstr ""
 #~ "B<-flash> - Class 0 SMS (should be displayed after receiving on "
 #~ "recipients' phone display after receiving without entering Inbox)"
 
-#, fuzzy
 #~ msgid ""
 #~ "specify, how many chars will be read. When use this option and text will "
 #~ "be longer than 1 SMS, will be split into more linked SMS"
@@ -4163,7 +3638,6 @@ msgstr ""
 #~ "B<-len len> - specify, how many chars will be read. When use this option "
 #~ "and text will be longer than 1 SMS, will be split into more linked SMS"
 
-#, fuzzy
 #~ msgid ""
 #~ "specify, how many chars will be read. When use this option and text will "
 #~ "be longer than 1 SMS, will be split into more linked SMS.Coding type (SMS "
@@ -4174,7 +3648,6 @@ msgstr ""
 #~ "SMS.Coding type (SMS default alphabet/Unicode) is set according to input "
 #~ "text"
 
-#, fuzzy
 #~ msgid ""
 #~ "many phones after receiving it won't display anything, only beep, vibrate "
 #~ "or turn on light. Text will be cut to 1 sms."
@@ -4182,11 +3655,9 @@ msgstr ""
 #~ "B<-voidsms> - many phones after receiving it won't display anything, only "
 #~ "beep, vibrate or turn on light. Text will be cut to 1 sms."
 
-#, fuzzy
 #~ msgid "SMS will be saved in Unicode format"
 #~ msgstr "B<-unicode> - SMS will be saved in Unicode format"
 
-#, fuzzy
 #~ msgid ""
 #~ "The ``~`` char in SMS text and :option:`-unicode` option (Unicode coding "
 #~ "required) can cause text of SMS after ``~`` char blink in some phones "
@@ -4196,11 +3667,9 @@ msgstr ""
 #~ "coding required), text of sms after ~ char will blink in some phones "
 #~ "(like N33xx)"
 
-#, fuzzy
 #~ msgid "input text is in Unicode."
 #~ msgstr "B<-inputunicode> - input text is in Unicode."
 
-#, fuzzy
 #~ msgid ""
 #~ "You can create Unicode file using WordPad in Windows (during saving "
 #~ "select \"Unicode Text Document\" format). In Unix can use for example "
@@ -4210,16 +3679,13 @@ msgstr ""
 #~ "saving select \"Unicode Text Document\" format). In Unix can use for "
 #~ "example YUdit."
 
-#, fuzzy
 #~ msgid "get text from command line instead of stdin."
 #~ msgstr "B<-text> - get text from command line instead of stdin."
 
-#, fuzzy
 #~ msgid "get text in UTF-8 from command line instead of stdin."
 #~ msgstr ""
 #~ "B<-textutf8> - get text in UTF-8 from command line instead of stdin."
 
-#, fuzzy
 #~ msgid ""
 #~ "``ID`` can be 1..7. When you will use option and send more single SMS to "
 #~ "one recipient with the same ID, each another SMS will replace each "
@@ -4229,7 +3695,6 @@ msgstr ""
 #~ "send more single SMS to one recipient with the same ID, each another SMS "
 #~ "will replace each previous with the same ID"
 
-#, fuzzy
 #~ msgid ""
 #~ "when you want, you can make file in such format: ``src_unicode_char1, "
 #~ "dest_unicode_char1, src_unicode_char2, dest_unicode_char2`` (everything "
@@ -4252,11 +3717,9 @@ msgstr ""
 #~ "Saves a message with a todo entry. The content will be read from any "
 #~ "backup format which Gammu supports and from given location."
 
-#, fuzzy
 #~ msgid "VCARD10|VCARD21 file SM|ME location [-nokia]"
 #~ msgstr "B<savefile VCARD10|VCARD21>I< target.vcf file SM|ME location>"
 
-#, fuzzy
 #~ msgid ""
 #~ "Read phonebook entry from file created by :option:`gammu backup` command "
 #~ "and saves in VCARD 1.0 (only name and default number) or VCARD 2.1 (all "
@@ -4273,7 +3736,6 @@ msgstr ""
 #~ msgid "Saves a SMS with a WAP indication for given URL and title."
 #~ msgstr "Saves a SMS with a WAP indication for given URL and title."
 
-#, fuzzy
 #~ msgid ""
 #~ "Read WAP settings from file created by :option:`gammu backup` command and "
 #~ "saves in Nokia format as SMS"
@@ -4281,15 +3743,12 @@ msgstr ""
 #~ "Read WAP settings from file created by B<backup> option and saves in "
 #~ "Nokia format as SMS"
 
-#, fuzzy
 #~ msgid "will also save message which is being sent"
 #~ msgstr "B<-save> - will also save message which is being sent"
 
-#, fuzzy
 #~ msgid "request delivery report for message"
 #~ msgstr "B<-report> - request delivery report for message"
 
-#, fuzzy
 #~ msgid ""
 #~ "sets how long will be the message valid (SMSC will the discard the "
 #~ "message after this time if it could not deliver it)."
@@ -4298,7 +3757,6 @@ msgstr ""
 #~ "message valid (SMSC will the discard the message after this time if it "
 #~ "could not deliver it)."
 
-#, fuzzy
 #~ msgid "setsmsc location number"
 #~ msgstr "B<setsmsc>I< location number>"
 
@@ -4309,37 +3767,30 @@ msgstr ""
 #~ "Set SMSC settings on SIM card. This keeps all SMSC configuration intact, "
 #~ "it just changes the SMSC number."
 
-#, fuzzy
 #~ msgid "Memory (phonebooks and calls) commands"
 #~ msgstr "Memory (phonebooks and calls)"
 
-#, fuzzy
 #~ msgid "Memory commands"
 #~ msgstr "Commands"
 
-#, fuzzy
 #~ msgid "deleteallmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL"
 #~ msgstr "B<deleteallmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL>"
 
 #~ msgid "Deletes all entries from specified memory type."
 #~ msgstr "Deletes all entries from specified memory type."
 
-#, fuzzy
 #~ msgid "deletememory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL start [stop]"
 #~ msgstr "B<deletememory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL>I< start [stop]>"
 
 #~ msgid "Deletes entries in specified range from specified memory type."
 #~ msgstr "Deletes entries in specified range from specified memory type."
 
-#, fuzzy
 #~ msgid "getallmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL"
 #~ msgstr "B<getallmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL>"
 
-#, fuzzy
 #~ msgid "Get all memory locations from phone."
 #~ msgstr "Get memory location from phone."
 
-#, fuzzy
 #~ msgid "getmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL start [stop [-nonempty]]"
 #~ msgstr ""
 #~ "B<getmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL>I< start [stop [-nonempty]]>"
@@ -4347,18 +3798,15 @@ msgstr ""
 #~ msgid "Get memory location from phone."
 #~ msgstr "Get memory location from phone."
 
-#, fuzzy
 #~ msgid "getspeeddial start [stop]"
 #~ msgstr "B<getspeeddial>I< start [stop]>"
 
 #~ msgid "Gets speed dial choices."
 #~ msgstr "Gets speed dial choices."
 
-#, fuzzy
 #~ msgid "searchmemory text"
 #~ msgstr "B<searchmemory>I< text>"
 
-#, fuzzy
 #~ msgid ""
 #~ "Scans all memory entries for given text. It performs case insensitive "
 #~ "substring lookup. You can interrupt searching by pressing :kbd:`Ctrl+C`."
@@ -4366,7 +3814,6 @@ msgstr ""
 #~ "Scans all memory entries for given text. It performs case insensitive "
 #~ "substring lookup. You can interrupt searching by pressing Ctrl+C."
 
-#, fuzzy
 #~ msgid "Filesystem commands"
 #~ msgstr "Filesystem"
 
@@ -4379,7 +3826,6 @@ msgstr ""
 #~ "Your phone can also support usb storage, which is handled on the "
 #~ "operating system level and Gammu does not use that."
 
-#, fuzzy
 #~ msgid ""
 #~ "addfile folderID name [-type JAR|BMP|PNG|GIF|JPG|MIDI|WBMP|AMR|3GP|NRT] [-"
 #~ "readonly] [-protected] [-system] [-hidden] [-newtime]"
@@ -4390,7 +3836,6 @@ msgstr ""
 #~ msgid "Add file with specified name to folder with specified folder ID."
 #~ msgstr "Add file with specified name to folder with specified folder ID."
 
-#, fuzzy
 #~ msgid ""
 #~ "File type was required for filesystem 1 in Nokia phones (current "
 #~ "filesystem 2 doesn't need this)."
@@ -4398,11 +3843,9 @@ msgstr ""
 #~ "B<-type> - file type was required for filesystem 1 in Nokia phones "
 #~ "(current filesystem 2 doesn't need this)"
 
-#, fuzzy
 #~ msgid "-system"
 #~ msgstr "Filesystem"
 
-#, fuzzy
 #~ msgid ""
 #~ "After using it date/time of file modification will be set to moment of "
 #~ "uploading."
@@ -4410,7 +3853,6 @@ msgstr ""
 #~ "B<-newtime> - after using it date/time of file modification will be set "
 #~ "to moment of uploading"
 
-#, fuzzy
 #~ msgid "addfolder parentfolderID name"
 #~ msgstr "B<addfolder>I< parentfolderID name>"
 
@@ -4421,21 +3863,18 @@ msgstr ""
 #~ "Create a folder in phone with specified name in a folder with specified "
 #~ "folder ID."
 
-#, fuzzy
 #~ msgid "deletefiles fileID"
 #~ msgstr "B<deletefiles>I< fileID>"
 
 #~ msgid "Delete files with given IDs."
 #~ msgstr "Delete files with given IDs."
 
-#, fuzzy
 #~ msgid "deletefolder name"
 #~ msgstr "B<deletefolder>I< name>"
 
 #~ msgid "Delete folder with given ID."
 #~ msgstr "Delete folder with given ID."
 
-#, fuzzy
 #~ msgid "getfilefolder fileID, fileID, ..."
 #~ msgstr "B<getfilefolder>I< fileID, fileID, ...>"
 
@@ -4446,14 +3885,12 @@ msgstr ""
 #~ "Retrieve files or all files from folder with given IDs from a phone "
 #~ "filesytem."
 
-#, fuzzy
 #~ msgid "getfiles fileID, fileID, ..."
 #~ msgstr "B<getfiles>I< fileID, fileID, ...>"
 
 #~ msgid "Retrieve files with given IDs from a phone filesytem."
 #~ msgstr "Retrieve files with given IDs from a phone filesytem."
 
-#, fuzzy
 #~ msgid "getfilesystem [-flatall|-flat]"
 #~ msgstr "B<getfilesystem>I< [-flatall|-flat]>"
 
@@ -4464,11 +3901,9 @@ msgstr ""
 #~ "Display info about all folders and files in phone memory/memory card. By "
 #~ "default there is tree displayed, you can change it:"
 
-#, fuzzy
 #~ msgid "-flatall"
 #~ msgstr "B<-flat>"
 
-#, fuzzy
 #~ msgid ""
 #~ "there are displayed full file/folder details like ID (first parameter in "
 #~ "line)"
@@ -4476,11 +3911,9 @@ msgstr ""
 #~ "B<-flatall> there are displayed full file/folder details like ID (first "
 #~ "parameter in line)"
 
-#, fuzzy
 #~ msgid "-flat"
 #~ msgstr "B<-flat>"
 
-#, fuzzy
 #~ msgid ""
 #~ "In some phones (like N6230) content of some folders (with more files) can "
 #~ "be cut (only part of files will be displayed) for example on infrared "
@@ -4491,7 +3924,6 @@ msgstr ""
 #~ "example on infrared connection. This is not Gammu issue, but phone "
 #~ "firmware problem."
 
-#, fuzzy
 #~ msgid "getfilesystemstatus"
 #~ msgstr "B<getfilesystemstatus>"
 
@@ -4502,7 +3934,6 @@ msgstr ""
 #~ "Display info filesystem status - number of bytes available, used or used "
 #~ "by some specific content."
 
-#, fuzzy
 #~ msgid "getfolderlisting folderID"
 #~ msgstr "B<getfolderlisting>I< folderID>"
 
@@ -4524,14 +3955,12 @@ msgstr ""
 #~ "example on infrared connection. This is not Gammu issue, but phone "
 #~ "firmware problem."
 
-#, fuzzy
 #~ msgid "getrootfolders"
 #~ msgstr "B<getrootfolders>"
 
 #~ msgid "Display info about drives available in phone/memory card."
 #~ msgstr "Display info about drives available in phone/memory card."
 
-#, fuzzy
 #~ msgid "sendfile name"
 #~ msgstr "B<sendfile>I< name>"
 
@@ -4544,16 +3973,13 @@ msgstr ""
 #~ "file and how to handle it (for example when you send vCard or vCalendar, "
 #~ "most of phones will offer you to import it."
 
-#, fuzzy
 #~ msgid "setfileattrib folderID [-system] [-readonly] [-hidden] [-protected]"
 #~ msgstr ""
 #~ "B<setfileattrib>I< folderID [-system] [-readonly] [-hidden] [-protected]>"
 
-#, fuzzy
 #~ msgid "Logo and pictures commands"
 #~ msgstr "Logo and pictures"
 
-#, fuzzy
 #~ msgid ""
 #~ "These options are mainly (there are few exceptions) for monochromatic "
 #~ "logos and images available in older phones. Recognized file formats: xpm "
@@ -4570,7 +3996,6 @@ msgstr ""
 #~ "In new models all bitmaps are saved in filesystem and should go into "
 #~ "filesystem section"
 
-#, fuzzy
 #~ msgid "copybitmap inputfile [outputfile [OPERATOR|PICTURE|STARTUP|CALLER]]"
 #~ msgstr ""
 #~ "B<copybitmap>I< inputfile [outputfile [OPERATOR|PICTURE|STARTUP|CALLER]]>"
@@ -4586,7 +4011,6 @@ msgstr ""
 #~ "format, in some file formats (like NLM) will be set indicator informing "
 #~ "about logo type to given."
 
-#, fuzzy
 #~ msgid "CALLER location [file]"
 #~ msgstr "B<getbitmap CALLER>I< location [file]>"
 
@@ -4602,7 +4026,6 @@ msgstr ""
 #~ "during enabling phone, which can't be edited from phone menu.  Here you "
 #~ "can get it."
 
-#, fuzzy
 #~ msgid "OPERATOR [file]"
 #~ msgstr "B<getbitmap OPERATOR>I< [file]>"
 
@@ -4611,14 +4034,12 @@ msgstr ""
 #~ msgstr ""
 #~ "Get operator logo (picture displayed instead of operator name) from phone."
 
-#, fuzzy
 #~ msgid "PICTURE location [file]"
 #~ msgstr "B<getbitmap PICTURE>I< location [file]>"
 
 #~ msgid "Get Picture Image from phone."
 #~ msgstr "Get Picture Image from phone."
 
-#, fuzzy
 #~ msgid "STARTUP [file]"
 #~ msgstr "B<getbitmap STARTUP>I< [file]>"
 
@@ -4631,14 +4052,12 @@ msgstr ""
 #~ msgid "Set caller logo."
 #~ msgstr "Set caller logo."
 
-#, fuzzy
 #~ msgid "COLOUROPERATOR [fileID [netcode]]"
 #~ msgstr "B<setbitmap COLOUROPERATOR>I< [fileID [netcode]]>"
 
 #~ msgid "Sets color operator logo in phone."
 #~ msgstr "Sets colour operator logo in phone."
 
-#, fuzzy
 #~ msgid "COLOURSTARTUP [fileID]"
 #~ msgstr "B<setbitmap COLOURSTARTUP>I< [fileID]>"
 
@@ -4649,11 +4068,9 @@ msgstr ""
 #~ "Sets welcome message configured by dealer, which usually can not be "
 #~ "changed in phone menus."
 
-#, fuzzy
 #~ msgid "OPERATOR [file [netcode]]"
 #~ msgstr "B<setbitmap OPERATOR>I< [file [netcode]]>"
 
-#, fuzzy
 #~ msgid ""
 #~ "Set operator logo in phone. When won't give file and netcode, operator "
 #~ "logo will be removed from phone. When will give only filename, operator "
@@ -4666,14 +4083,12 @@ msgstr ""
 #~ "additionally network code, it will be displayed for this operator: "
 #~ "B<gammu setbitmap OPERATOR file \"260 02\">"
 
-#, fuzzy
 #~ msgid "PICTURE file location [text]"
 #~ msgstr "B<setbitmap PICTURE>I< file location [text]>"
 
 #~ msgid "Sets picture image in phone."
 #~ msgstr "Sets picture image in phone."
 
-#, fuzzy
 #~ msgid "STARTUP file|1|2|3"
 #~ msgstr "B<setbitmap STARTUP>I< file|1|2|3>"
 
@@ -4689,14 +4104,12 @@ msgstr ""
 #~ msgid "Sets startup text in phone."
 #~ msgstr "Sets startup text in phone."
 
-#, fuzzy
 #~ msgid "WALLPAPER fileID"
 #~ msgstr "B<setbitmap WALLPAPER>I< fileID>"
 
 #~ msgid "Sets wallpaper in phone."
 #~ msgstr "Sets wallpaper in phone."
 
-#, fuzzy
 #~ msgid "Ringtones commands"
 #~ msgstr "Ringtones"
 
@@ -4718,32 +4131,27 @@ msgstr ""
 #~ "communicator, ringtones format found in fkn.pl, wav (saving), ime/imy "
 #~ "(saving), rng, mmf (for Samsung)."
 
-#, fuzzy
 #~ msgid "copyringtone source destination [RTTL|BINARY]"
 #~ msgstr "B<copyringtone>I< source destination [RTTL|BINARY]>"
 
 #~ msgid "Copy source ringtone to destination."
 #~ msgstr "Copy source ringtone to destination."
 
-#, fuzzy
 #~ msgid "getphoneringtone location [file]"
 #~ msgstr "B<getphoneringtone>I< location [file]>"
 
 #~ msgid "Get one of \"default\" ringtones and saves into file"
 #~ msgstr "Get one of \"default\" ringtones and saves into file"
 
-#, fuzzy
 #~ msgid "getringtone location [file]"
 #~ msgstr "B<getringtone>I< location [file]>"
 
 #~ msgid "Get ringtone from phone in RTTL or BINARY format."
 #~ msgstr "Get ringtone from phone in RTTL or BINARY format."
 
-#, fuzzy
 #~ msgid "getringtoneslist"
 #~ msgstr "B<getringtoneslist>"
 
-#, fuzzy
 #~ msgid "playringtone file"
 #~ msgstr "B<playringtone>I< file>"
 
@@ -4754,11 +4162,9 @@ msgstr ""
 #~ "Play aproximation of ringtone over phone buzzer. File can be in RTTL or "
 #~ "BINARY (Nokia DCT3) format."
 
-#, fuzzy
 #~ msgid "playsavedringtone number"
 #~ msgstr "B<playsavedringtone>I< number>"
 
-#, fuzzy
 #~ msgid ""
 #~ "Play one of built-in ringtones. This option is available for DCT4 "
 #~ "phones.  For getting ringtones list use :option:`gammu getringtoneslist`."
@@ -4766,11 +4172,9 @@ msgstr ""
 #~ "Play one of \"built\" ringtones. This option is available for DCT4 "
 #~ "phones. For getting ringtones list use getringtoneslist."
 
-#, fuzzy
 #~ msgid "setringtone file [-location location] [-scale] [-name name]"
 #~ msgstr "B<setringtone>I< file [-location location] [-scale] [-name name]>"
 
-#, fuzzy
 #~ msgid ""
 #~ "When use ``~`` char in ringtone name, in some phones (like 33xx) name "
 #~ "will blink later in phone menus."
@@ -4778,7 +4182,6 @@ msgstr ""
 #~ "I<TIP:> when use ~ char in ringtone name, in some phones (like 33xx) name "
 #~ "will blink later in phone menus"
 
-#, fuzzy
 #~ msgid "Calendar notes commands"
 #~ msgstr "Calendar notes"
 
@@ -4789,64 +4192,54 @@ msgstr ""
 #~ "In Nokia 3310, 3315 and 3330 these are named \"Reminders\" and have some "
 #~ "limitations (depending on phone firmware version)."
 
-#, fuzzy
 #~ msgid "deletecalendar start [stop]"
 #~ msgstr "B<deletecalendar>I< start [stop]>"
 
 #~ msgid "Deletes selected calendar entries in phone."
 #~ msgstr "Deletes selected calendar entries in phone."
 
-#, fuzzy
 #~ msgid "getallcalendar"
 #~ msgstr "B<getallcalendar>"
 
 #~ msgid "Retrieves all calendar entries from phone."
 #~ msgstr "Retrieves all calendar entries from phone."
 
-#, fuzzy
 #~ msgid "getcalendar start [stop]"
 #~ msgstr "B<getcalendar>I< start [stop]>"
 
 #~ msgid "Retrieves selected calendar entries from phone."
 #~ msgstr "Retrieves selected calendar entries from phone."
 
-#, fuzzy
 #~ msgid "To do list commands"
 #~ msgstr "To do lists"
 
-#, fuzzy
 #~ msgid "deletetodo start [stop]"
 #~ msgstr "B<deletetodo>I< start [stop]>"
 
 #~ msgid "Deletes selected todo entries in phone."
 #~ msgstr "Deletes selected todo entries in phone."
 
-#, fuzzy
 #~ msgid "getalltodo"
 #~ msgstr "B<getalltodo>"
 
 #~ msgid "Retrieves all todo entries from phone."
 #~ msgstr "Retrieves all todo entries from phone."
 
-#, fuzzy
 #~ msgid "gettodo start [stop]"
 #~ msgstr "B<gettodo>I< start [stop]>"
 
 #~ msgid "Retrieves selected todo entries from phone."
 #~ msgstr "Retrieves selected todo entries from phone."
 
-#, fuzzy
 #~ msgid "Notes commands"
 #~ msgstr "Commands"
 
-#, fuzzy
 #~ msgid "getallnotes"
 #~ msgstr "B<getallnotes>"
 
 #~ msgid "Reads all notes from the phone."
 #~ msgstr "Reads all notes from the phone."
 
-#, fuzzy
 #~ msgid ""
 #~ "Not all phones supports this function, especially most Sony Ericsson "
 #~ "phones even if they have notes inside phone."
@@ -4854,32 +4247,27 @@ msgstr ""
 #~ "Note: Not all phones supports this function, especially most Sony "
 #~ "Ericsson phones even if they have notes inside phone."
 
-#, fuzzy
 #~ msgid "Date, time and alarm commands"
 #~ msgstr "Date, time and alarms"
 
-#, fuzzy
 #~ msgid "getalarm [start]"
 #~ msgstr "B<getalarm>I< [start]>"
 
 #~ msgid "Get alarm from phone, if no location is specified, 1 is used."
 #~ msgstr "Get alarm from phone, if no location is specified, 1 is used."
 
-#, fuzzy
 #~ msgid "getdatetime"
 #~ msgstr "B<getdatetime>"
 
 #~ msgid "Get date and time from phone"
 #~ msgstr "Get date and time from phone"
 
-#, fuzzy
 #~ msgid "setalarm hour minute"
 #~ msgstr "B<setalarm>I< hour minute>"
 
 #~ msgid "Sets repeating alarm in phone on selected time."
 #~ msgstr "Sets repeating alarm in phone on selected time."
 
-#, fuzzy
 #~ msgid "setdatetime [HH:MM[:SS]] [YYYY/MM/DD]"
 #~ msgstr "B<setdatetime>I< [HH:MM[:SS]] [YYYY/MM/DD]>"
 
@@ -4892,7 +4280,6 @@ msgstr ""
 #~ "that this option doesn't show clock on phone screen. It only set date and "
 #~ "time."
 
-#, fuzzy
 #~ msgid ""
 #~ "You can make such synchronization each time, when will connect your phone "
 #~ "and use Gammu. See :config:option:`SynchronizeTime` in :ref:`gammurc` for "
@@ -4901,39 +4288,30 @@ msgstr ""
 #~ "I<TIP:> you can make such synchronisation each time, when will connect "
 #~ "your phone and use Gammu. See gammurc(5) for details."
 
-#, fuzzy
 #~ msgid "Categories commands"
 #~ msgstr "Categories"
 
-#, fuzzy
 #~ msgid "addcategory TODO|PHONEBOOK text"
 #~ msgstr "B<addcategory TODO|PHONEBOOK>I< text>"
 
-#, fuzzy
 #~ msgid "getallcategory TODO|PHONEBOOK"
 #~ msgstr "B<getallcategory TODO|PHONEBOOK>"
 
-#, fuzzy
 #~ msgid "getcategory TODO|PHONEBOOK start [stop]"
 #~ msgstr "B<getcategory TODO|PHONEBOOK>I< start [stop]>"
 
-#, fuzzy
 #~ msgid "listmemorycategory text|number"
 #~ msgstr "B<listmemorycategory>I< text|number>"
 
-#, fuzzy
 #~ msgid "listtodocategory text|number"
 #~ msgstr "B<listtodocategory>I< text|number>"
 
-#, fuzzy
 #~ msgid "Backing up and restoring commands"
 #~ msgstr "Backing up and restoring"
 
-#, fuzzy
 #~ msgid "addnew file [-yes] [-memory ME|SM|..]"
 #~ msgstr "B<addnew>I< file [-yes] [-memory ME|SM|..]>"
 
-#, fuzzy
 #~ msgid ""
 #~ "Adds data written in file created using :option:`gammu backup` command. "
 #~ "All things backed up :option:`gammu backup` can be restored (when made "
@@ -4964,11 +4342,9 @@ msgstr ""
 #~ "Use -memory parameter to force usage of defined memory type for storing "
 #~ "entries regardless what backu format says."
 
-#, fuzzy
 #~ msgid "addsms folder file [-yes]"
 #~ msgstr "B<addsms>I< folder file [-yes]>"
 
-#, fuzzy
 #~ msgid ""
 #~ "Adds SMSes from file (format like :option:`gammu backupsms` uses) to "
 #~ "selected folder in phone."
@@ -4976,7 +4352,6 @@ msgstr ""
 #~ "Adds SMSes from file (format like backupsms uses) to selected folder in "
 #~ "phone."
 
-#, fuzzy
 #~ msgid "backup file [-yes]"
 #~ msgstr "B<backup>I< file [-yes]>"
 
@@ -4987,39 +4362,30 @@ msgstr ""
 #~ "Backup your phone to file. It's possible to backup (depends on phone and "
 #~ "backup format):"
 
-#, fuzzy
 #~ msgid "phonebook from SIM and phone memory"
 #~ msgstr "* phonebook from SIM and phone memory"
 
-#, fuzzy
 #~ msgid "calendar notes"
 #~ msgstr "* calendar notes"
 
-#, fuzzy
 #~ msgid "SMSC settings"
 #~ msgstr "* SMSC settings"
 
-#, fuzzy
 #~ msgid "operator logo"
 #~ msgstr "* operator logo"
 
-#, fuzzy
 #~ msgid "startup (static) logo or startup text"
 #~ msgstr "* startup (static) logo or startup text"
 
-#, fuzzy
 #~ msgid "WAP bookmarks"
 #~ msgstr "* WAP bookmarks"
 
-#, fuzzy
 #~ msgid "WAP settings"
 #~ msgstr "* WAP settings"
 
-#, fuzzy
 #~ msgid "caller logos and groups"
 #~ msgstr "* caller logos and groups"
 
-#, fuzzy
 #~ msgid "user ringtones"
 #~ msgstr "* user ringtones"
 
@@ -5030,29 +4396,23 @@ msgstr ""
 #~ "There are various backup formats supported and the backup format is "
 #~ "guessed based on file extension:"
 
-#, fuzzy
 #~ msgid ""
 #~ "``.lmb`` - Nokia backup, supports contacts, caller logos and startup logo."
 #~ msgstr ""
 #~ "* .lmb - Nokia backup, supports contacts, caller logos and startup logo."
 
-#, fuzzy
 #~ msgid "``.vcs`` - vCalendar, supports calendar and todo."
 #~ msgstr "* .vcs - vCalendar, supports calendar and todo."
 
-#, fuzzy
 #~ msgid "``.vcf`` - vCard, supports contacts."
 #~ msgstr "* .vcf - vCard, supports contacts."
 
-#, fuzzy
 #~ msgid "``.ldif`` - LDAP import, supports contacts."
 #~ msgstr "* .ldif - LDAP import, supports contacts."
 
-#, fuzzy
 #~ msgid "``.ics`` - iCalendar, supports calendar and todo."
 #~ msgstr "* .ics - iCalendar, supports calendar and todo."
 
-#, fuzzy
 #~ msgid ""
 #~ "Any other extension is Gammu backup file and it supports all data "
 #~ "mentioned above, see :ref:`gammu-backup` for more details."
@@ -5060,11 +4420,9 @@ msgstr ""
 #~ "* Any other extension is Gammu backup file and it supports all data "
 #~ "mentioned above."
 
-#, fuzzy
 #~ msgid "backupsms file [-yes|-all]"
 #~ msgstr "B<backupsms>I< file [-yes|-all]>"
 
-#, fuzzy
 #~ msgid "Stores all SMSes from phone to file into :ref:`gammu-smsbackup`."
 #~ msgstr "Stores all SMSes from phone to file."
 
@@ -5077,11 +4435,9 @@ msgstr ""
 #~ "delete them from phone), or -all to just backup all folders while keeping "
 #~ "messages in phone."
 
-#, fuzzy
 #~ msgid "restore file [-yes]"
 #~ msgstr "B<restore>I< file [-yes]>"
 
-#, fuzzy
 #~ msgid ""
 #~ "Please note that restoring deletes all current content in phone. If you "
 #~ "want only to add entries to phone, use :option:`gammu addnew`."
@@ -5089,7 +4445,6 @@ msgstr ""
 #~ "Please note that restoring deletes all current content in phone. If you "
 #~ "want only to add entries to phone, use addnew."
 
-#, fuzzy
 #~ msgid ""
 #~ "Restore settings written in file created using :option:`gammu backup` "
 #~ "command."
@@ -5102,11 +4457,9 @@ msgstr ""
 #~ "In some phones restoring calendar notes will not show error, but won't be "
 #~ "done, when phone doesn't have set clock inside."
 
-#, fuzzy
 #~ msgid "restoresms file [-yes]"
 #~ msgstr "B<restoresms>I< file [-yes]>"
 
-#, fuzzy
 #~ msgid ""
 #~ "Please note that this overwrites existing messages in phone (if it "
 #~ "supports it)."
@@ -5115,7 +4468,6 @@ msgstr ""
 #~ "in phone. Please note that this overwrites existing messages in phone (if "
 #~ "it supports it)."
 
-#, fuzzy
 #~ msgid ""
 #~ "Restores SMSes from file (format like :option:`gammu backupsms` uses) to "
 #~ "selected folder in phone."
@@ -5123,20 +4475,17 @@ msgstr ""
 #~ "Adds SMSes from file (format like backupsms uses) to selected folder in "
 #~ "phone."
 
-#, fuzzy
 #~ msgid ""
 #~ "Converts between various file formats supported by Gammu, following types "
 #~ "are supported:"
 #~ msgstr "Converts backup format supported by Gammu to vBookmark file."
 
-#, fuzzy
 #~ msgid "BOOKMARK target.url file location"
 #~ msgstr "B<savefile BOOKMARK>I< target.url file location>"
 
 #~ msgid "Converts backup format supported by Gammu to vBookmark file."
 #~ msgstr "Converts backup format supported by Gammu to vBookmark file."
 
-#, fuzzy
 #~ msgid "CALENDAR target.vcs file location"
 #~ msgstr "B<savefile CALENDAR>I< target.vcs file location>"
 
@@ -5149,7 +4498,6 @@ msgstr ""
 #~ "calendar events. The file type is guessed (for input file guess is based "
 #~ "on extension and file content, for output solely on extension)."
 
-#, fuzzy
 #~ msgid "TODO target.vcs file location"
 #~ msgstr "B<savefile TODO>I< target.vcs file location>"
 
@@ -5162,7 +4510,6 @@ msgstr ""
 #~ "todo events. The file type is guessed (for input file guess is based on "
 #~ "extension and file content, for output solely on extension)."
 
-#, fuzzy
 #~ msgid "VCARD10|VCARD21 target.vcf file SM|ME location"
 #~ msgstr "B<savefile VCARD10|VCARD21>I< target.vcf file SM|ME location>"
 
@@ -5175,21 +4522,17 @@ msgstr ""
 #~ "phonebook events. The file type is guessed (for input file guess is based "
 #~ "on extension and file content, for output solely on extension)."
 
-#, fuzzy
 #~ msgid "1.28.94"
 #~ msgstr "Gammu 1.28.90"
 
-#, fuzzy
 #~ msgid "Nokia specific commands"
 #~ msgstr "Nokia specific"
 
-#, fuzzy
 #~ msgid "APPLICATION|GAME file [-readonly] [-overwrite] [-overwriteall]"
 #~ msgstr ""
 #~ "B<nokiaaddfile APPLICATION|GAME>I< file [-readonly] [-overwrite] [-"
 #~ "overwriteall]>"
 
-#, fuzzy
 #~ msgid ""
 #~ "Install the ``*.jar/*.jad`` file pair of a midlet in the application or "
 #~ "game menu of the phone. You need to specify filename without the jar/jad "
@@ -5199,12 +4542,10 @@ msgstr ""
 #~ "menu of the phone. You need to specify filename without the jar/jad "
 #~ "suffix, both will be added automatically."
 
-#, fuzzy
 #~ msgid ""
 #~ "You can use :ref:`jadmaker` to generate a .jad file from a .jar file."
 #~ msgstr "You can use jadmaker(1) to generate a .jad file from a .jar file."
 
-#, fuzzy
 #~ msgid ""
 #~ "GALLERY|GALLERY2|CAMERA|TONES|TONES2|RECORDS|VIDEO|PLAYLIST|MEMORYCARD "
 #~ "file [-name name] [-protected] [-readonly] [-system] [-hidden] [-newtime]"
@@ -5213,7 +4554,6 @@ msgstr ""
 #~ "PLAYLIST|MEMORYCARD>I< file [-name name] [-protected] [-readonly] [-"
 #~ "system] [-hidden] [-newtime]>"
 
-#, fuzzy
 #~ msgid "nokiaaddplaylists"
 #~ msgstr "B<nokiaaddplaylists>"
 
@@ -5227,14 +4567,12 @@ msgstr ""
 #~ msgid "To manually manage playlists:"
 #~ msgstr "To manually manage playlists:"
 
-#, fuzzy
 #~ msgid "gammu addfile a:\\\\predefplaylist filename.m3u"
 #~ msgstr "    gammu addfile a:\\epredefplaylist filename.m3u\n"
 
 #~ msgid "Will add playlist filename.m3u"
 #~ msgstr "Will add playlist filename.m3u"
 
-#, fuzzy
 #~ msgid "gammu getfilesystem"
 #~ msgstr "    gammu getfilesystem\n"
 
@@ -5242,7 +4580,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Will get list of all files (including names of files with playlists)"
 
-#, fuzzy
 #~ msgid "gammu deletefiles a:\\\\predefplaylist\\\\filename.m3u"
 #~ msgstr "    gammu deletefiles a:\\epredefplaylist\\efilename.m3u\n"
 
@@ -5252,7 +4589,6 @@ msgstr ""
 #~ msgid "Format of m3u playlist is easy (standard mp3 playlist):"
 #~ msgstr "Format of m3u playlist is easy (standard mp3 playlist):"
 
-#, fuzzy
 #~ msgid ""
 #~ "First line is ``#EXTM3U``, next lines contain names of files (``b:\\file1."
 #~ "mp3``, ``b:\\folder1\\file2.mp3``, etc.). File needs t have ``\\r\\n`` "
@@ -5264,7 +4600,6 @@ msgstr ""
 #~ "lines. So just run unix2dos on the resulting file before uploading it "
 #~ "your your phone."
 
-#, fuzzy
 #~ msgid "nokiacomposer file"
 #~ msgstr "B<nokiacomposer>I< file>"
 
@@ -5275,23 +4610,18 @@ msgstr ""
 #~ "Show, how to enter RTTL ringtone in composer existing in many Nokia "
 #~ "phones (and how should it look like)."
 
-#, fuzzy
 #~ msgid "nokiadebug filename [[v11-22] [,v33-44]...]"
 #~ msgstr "B<nokiadebug>I< filename [[v11-22] [,v33-44]...]>"
 
-#, fuzzy
 #~ msgid "nokiadisplayoutput"
 #~ msgstr "B<nokiadisplayoutput>"
 
-#, fuzzy
 #~ msgid "nokiadisplaytest number"
 #~ msgstr "B<nokiadisplaytest>I< number>"
 
-#, fuzzy
 #~ msgid "nokiagetadc"
 #~ msgstr "B<nokiagetadc>"
 
-#, fuzzy
 #~ msgid "nokiagetoperatorname"
 #~ msgstr "B<nokiagetoperatorname>"
 
@@ -5304,22 +4634,18 @@ msgstr ""
 #~ "flashing it's possible to change all names, but Gammu is not "
 #~ "flasher ;-)). You can get this name using this option."
 
-#, fuzzy
 #~ msgid "nokiagetpbkfeatures memorytype"
 #~ msgstr "B<nokiagetpbkfeatures>I< memorytype>"
 
-#, fuzzy
 #~ msgid "nokiagetscreendump"
 #~ msgstr "B<nokiagetscreendump>"
 
-#, fuzzy
 #~ msgid "nokiagett9"
 #~ msgstr "B<nokiagett9>"
 
 #~ msgid "This option should display T9 dictionary content from DCT4 phones."
 #~ msgstr "This option should display T9 dictionary content from DCT4 phones."
 
-#, fuzzy
 #~ msgid "nokiagetvoicerecord location"
 #~ msgstr "B<nokiagetvoicerecord>I< location>"
 
@@ -5341,45 +4667,35 @@ msgstr ""
 #~ "included by Microsoft. If you deleted it by accident in this operating "
 #~ "system, make such steps:"
 
-#, fuzzy
 #~ msgid "Control Panel"
 #~ msgstr "1. Control Panel"
 
-#, fuzzy
 #~ msgid "Add hardware"
 #~ msgstr "2. Add hardware"
 
-#, fuzzy
 #~ msgid "click Next"
 #~ msgstr "3. click Next"
 
-#, fuzzy
 #~ msgid "select \"Yes. I have already connected the hardware"
 #~ msgstr "4. select \"Yes. I have already connected the hardware\""
 
-#, fuzzy
 #~ msgid "select \"Add a new hardware device"
 #~ msgstr "5. select \"Add a new hardware device\""
 
-#, fuzzy
 #~ msgid "select \"Install the hardware that I manually select from a list"
 #~ msgstr ""
 #~ "6. select \"Install the hardware that I manually select from a list\""
 
-#, fuzzy
 #~ msgid "select \"Sound, video and game controllers"
 #~ msgstr "7. select \"Sound, video and game controllers\""
 
-#, fuzzy
 #~ msgid "select \"Audio codecs"
 #~ msgstr "8. select \"Audio codecs\""
 
-#, fuzzy
 #~ msgid "select \"windows\\\\system32\" directory and file \"mmdriver.inf"
 #~ msgstr ""
 #~ "9.  select \"windows\\esystem32\" directory and file \"mmdriver.inf\""
 
-#, fuzzy
 #~ msgid ""
 #~ "if You will be asked for file msgsm32.acm, it should unpacked from "
 #~ "Windows CD"
@@ -5387,7 +4703,6 @@ msgstr ""
 #~ "10. if You will be asked for file msgsm32.acm, it should unpacked from "
 #~ "Windows CD"
 
-#, fuzzy
 #~ msgid ""
 #~ "now You can be asked if want to install unsigned driver (YES), about "
 #~ "select codec configuration (select what you want) and rebotting PC (make "
@@ -5397,18 +4712,15 @@ msgstr ""
 #~ "select codec configuration (select what you want) and rebotting PC (make "
 #~ "it)"
 
-#, fuzzy
 #~ msgid "nokiamakecamerashoot"
 #~ msgstr "B<nokiamakecamerashoot>"
 
-#, fuzzy
 #~ msgid "nokianetmonitor test"
 #~ msgstr "B<nokianetmonitor>I< test>"
 
 #~ msgid "Takes output or set netmonitor for Nokia DCT3 phones."
 #~ msgstr "Takes output or set netmonitor for Nokia DCT3 phones."
 
-#, fuzzy
 #~ msgid ""
 #~ "For more info about this option, please visit `Marcin's page <http://www."
 #~ "mwiacek.com/>`_ and read netmonitor manual there."
@@ -5416,7 +4728,6 @@ msgstr ""
 #~ "I<TIP:> For more info about this option, please visit I<http://www."
 #~ "mwiacek.com> and read netmonitor manual."
 
-#, fuzzy
 #~ msgid ""
 #~ "test ``243`` enables all tests (after using command :command:`gammu "
 #~ "nokianetmonitor 243` in some phones like 6210 or 9210 have to reboot them "
@@ -5426,28 +4737,24 @@ msgstr ""
 #~ "nokianetmonitor 243> in some phones like 6210 or 9210 have to reboot them "
 #~ "to see netmonitor menu)"
 
-#, fuzzy
 #~ msgid "nokianetmonitor36"
 #~ msgstr "B<nokianetmonitor36>"
 
 #~ msgid "Reset counters from netmonitor test 36 in Nokia DCT3 phones."
 #~ msgstr "Reset counters from netmonitor test 36 in Nokia DCT3 phones."
 
-#, fuzzy
 #~ msgid "nokiasecuritycode"
 #~ msgstr "B<nokiasecuritycode>"
 
 #~ msgid "Get/reset to \"12345\" security code"
 #~ msgstr "Get/reset to \"12345\" security code"
 
-#, fuzzy
 #~ msgid "nokiaselftests"
 #~ msgstr "B<nokiaselftests>"
 
 #~ msgid "Perform tests for Nokia DCT3 phones."
 #~ msgstr "Perform tests for Nokia DCT3 phones."
 
-#, fuzzy
 #~ msgid ""
 #~ "EEPROM test can show an error when your phone has an EEPROM in flash "
 #~ "(like 82xx/7110/62xx/33xx). The clock test will show an error when the "
@@ -5457,76 +4764,60 @@ msgstr ""
 #~ "flash (like 82xx/7110/62xx/33xx). The clock test will show an error when "
 #~ "the phone doesn?t have an internal battery for the clock (like 3xxx)."
 
-#, fuzzy
 #~ msgid "nokiasetlights keypad|display|torch on|off"
 #~ msgstr "B<nokiasetlights>I< keypad|display|torch on|off>"
 
-#, fuzzy
 #~ msgid "nokiasetoperatorname [networkcode name]"
 #~ msgstr "B<nokiasetoperatorname>I< [networkcode name]>"
 
-#, fuzzy
 #~ msgid "nokiasetphonemenus"
 #~ msgstr "B<nokiasetphonemenus>"
 
 #~ msgid "Enable all (?) possible menus for DCT3 Nokia phones:"
 #~ msgstr "Enable all (?) possible menus for DCT3 Nokia phones:"
 
-#, fuzzy
 #~ msgid "ALS (Alternative Line Service) option menu"
 #~ msgstr "1. ALS (Alternative Line Service) option menu"
 
-#, fuzzy
 #~ msgid "vibra menu for 3210"
 #~ msgstr "2. vibra menu for 3210"
 
-#, fuzzy
 #~ msgid "3315 features in 3310 5.45 and higher"
 #~ msgstr "3. 3315 features in 3310 5.45 and higher"
 
-#, fuzzy
 #~ msgid "two additional games (React and Logic) for 3210 5.31 and higher"
 #~ msgstr "4. two additional games (React and Logic) for 3210 5.31 and higher"
 
-#, fuzzy
 #~ msgid "WellMate menu for 6150"
 #~ msgstr "5. WellMate menu for 6150"
 
-#, fuzzy
 #~ msgid "NetMonitor"
 #~ msgstr "6. NetMonitor"
 
 #~ msgid "and for DCT4:"
 #~ msgstr "and for DCT4:"
 
-#, fuzzy
 #~ msgid "Bluetooth, WAP bookmarks and settings menu, ... (6310i)"
 #~ msgstr "2. Bluetooth, WAP bookmarks and settings menu, ... (6310i)"
 
-#, fuzzy
 #~ msgid "GPRS Always Online"
 #~ msgstr "3. GPRS Always Online"
 
-#, fuzzy
 #~ msgid "nokiasetvibralevel level"
 #~ msgstr "B<nokiasetvibralevel>I< level>"
 
 #~ msgid "Set vibra power to \"level\" (given in percent)"
 #~ msgstr "Set vibra power to \"level\" (given in percent)"
 
-#, fuzzy
 #~ msgid "nokiatuneradio"
 #~ msgstr "B<nokiatuneradio>"
 
-#, fuzzy
 #~ msgid "nokiavibratest"
 #~ msgstr "B<nokiavibratest>"
 
-#, fuzzy
 #~ msgid "Siemens specific commands"
 #~ msgstr "Siemens specific"
 
-#, fuzzy
 #~ msgid "siemensnetmonact netmon_type"
 #~ msgstr "B<siemensnetmonact>I< netmon_type>"
 
@@ -5537,128 +4828,102 @@ msgstr ""
 #~ "Enables network monitor in Siemens phone. Currently known values for type "
 #~ "are 1 for full and 2 for simple mode."
 
-#, fuzzy
 #~ msgid "siemensnetmonitor test"
 #~ msgstr "B<siemensnetmonitor>I< test>"
 
-#, fuzzy
 #~ msgid "siemenssatnetmon"
 #~ msgstr "B<siemenssatnetmon>"
 
-#, fuzzy
 #~ msgid "Network commands"
 #~ msgstr "Network"
 
-#, fuzzy
 #~ msgid "getgprspoint start [stop]"
 #~ msgstr "B<getgprspoint>I< start [stop]>"
 
-#, fuzzy
 #~ msgid "listnetworks [country]"
 #~ msgstr "B<listnetworks>I< [country]>"
 
 #~ msgid "Show names/codes of GSM networks known for Gammu"
 #~ msgstr "Show names/codes of GSM networks known for Gammu"
 
-#, fuzzy
 #~ msgid "networkinfo"
 #~ msgstr "B<networkinfo>"
 
 #~ msgid "Show information about network status from the phone."
 #~ msgstr "Show information about network status from the phone."
 
-#, fuzzy
 #~ msgid "setautonetworklogin"
 #~ msgstr "B<setautonetworklogin>"
 
-#, fuzzy
 #~ msgid "WAP settings and bookmarks commands"
 #~ msgstr "WAP settings and bookmarks"
 
-#, fuzzy
 #~ msgid "deletewapbookmark start [stop]"
 #~ msgstr "B<deletewapbookmark>I< start [stop]>"
 
 #~ msgid "Delete WAP bookmarks from phone."
 #~ msgstr "Delete WAP bookmarks from phone."
 
-#, fuzzy
 #~ msgid "getchatsettings start [stop]"
 #~ msgstr "B<getchatsettings>I< start [stop]>"
 
-#, fuzzy
 #~ msgid "getsyncmlsettings start [stop]"
 #~ msgstr "B<getsyncmlsettings>I< start [stop]>"
 
-#, fuzzy
 #~ msgid "getwapbookmark start [stop]"
 #~ msgstr "B<getwapbookmark>I< start [stop]>"
 
 #~ msgid "Get WAP bookmarks from phone."
 #~ msgstr "Get WAP bookmarks from phone."
 
-#, fuzzy
 #~ msgid "getwapsettings start [stop]"
 #~ msgstr "B<getwapsettings>I< start [stop]>"
 
 #~ msgid "Get WAP settings from phone."
 #~ msgstr "Get WAP settings from phone."
 
-#, fuzzy
 #~ msgid "MMS and MMS settings commands"
 #~ msgstr "MMS and MMS settings"
 
-#, fuzzy
 #~ msgid "getallmms [-save]"
 #~ msgstr "B<getallmms>I< [-save]>"
 
-#, fuzzy
 #~ msgid "geteachmms [-save]"
 #~ msgstr "B<geteachmms>I< [-save]>"
 
-#, fuzzy
 #~ msgid "getmmsfolders"
 #~ msgstr "B<getmmsfolders>"
 
-#, fuzzy
 #~ msgid "getmmssettings start [stop]"
 #~ msgstr "B<getmmssettings>I< start [stop]>"
 
-#, fuzzy
 #~ msgid "readmmsfile file [-save]"
 #~ msgstr "B<readmmsfile>I< file [-save]>"
 
-#, fuzzy
 #~ msgid "FM radio commands"
 #~ msgstr "FM radio"
 
-#, fuzzy
 #~ msgid "getfmstation start [stop]"
 #~ msgstr "B<getfmstation>I< start [stop]>"
 
 #~ msgid "Show info about FM stations in phone"
 #~ msgstr "Show info about FM stations in phone"
 
-#, fuzzy
 #~ msgid "Phone information commands"
 #~ msgstr "Phone information"
 
-#, fuzzy
 #~ msgid "battery"
 #~ msgstr "B<battery>"
 
 #~ msgid "Displays information about battery and power source."
 #~ msgstr "Displays information about battery and power source."
 
-#, fuzzy
 #~ msgid "getdisplaystatus"
 #~ msgstr "B<getdisplaystatus>"
 
-#, fuzzy
 #~ msgid "getlocation"
 #~ msgstr "B<getlocation>"
 
-#, fuzzy
 #~ msgid ""
 #~ "Gets network information from phone (same as networkinfo)  and prints "
 #~ "location (latitude and longitude) based on information from `OpenCellID "
@@ -5668,25 +4933,21 @@ msgstr ""
 #~ "location (latitude and longitude) based on information from OpenCellID "
 #~ "E<lt>http://opencellid.orgE<gt>."
 
-#, fuzzy
 #~ msgid "getsecuritystatus"
 #~ msgstr "B<getsecuritystatus>"
 
 #~ msgid "Show, if phone wait for security code (like PIN, PUK, etc.) or not"
 #~ msgstr "Show, if phone wait for security code (like PIN, PUK, etc.) or not"
 
-#, fuzzy
 #~ msgid "identify"
 #~ msgstr "B<identify>"
 
 #~ msgid "Show the most important phone data."
 #~ msgstr "Show the most important phone data."
 
-#, fuzzy
 #~ msgid "monitor [times]"
 #~ msgstr "B<monitor>I< [times]>"
 
-#, fuzzy
 #~ msgid ""
 #~ "Get phone status and writes continuously to standard output. Press :kbd:"
 #~ "`Ctrl+C` to break this state."
@@ -5694,11 +4955,9 @@ msgstr ""
 #~ "Get phone status and writes continuously to standard output. Press Ctrl+C "
 #~ "to break this state."
 
-#, fuzzy
 #~ msgid "Phone settings commands"
 #~ msgstr "Phone settings"
 
-#, fuzzy
 #~ msgid "getcalendarsettings"
 #~ msgstr "B<getcalendarsettings>"
 
@@ -5709,102 +4968,78 @@ msgstr ""
 #~ "Displays calendar settings like first day of week or automatic deleting "
 #~ "of old entries."
 
-#, fuzzy
 #~ msgid "getprofile start [stop]"
 #~ msgstr "B<getprofile>I< start [stop]>"
 
-#, fuzzy
 #~ msgid "resetphonesettings PHONE|DEV|UIF|ALL|FACTORY"
 #~ msgstr "B<resetphonesettings PHONE|DEV|UIF|ALL|FACTORY>"
 
-#, fuzzy
 #~ msgid "Reset phone settings."
 #~ msgstr "Phone settings"
 
-#, fuzzy
 #~ msgid "Clear phone settings."
 #~ msgstr "Clear user settings"
 
-#, fuzzy
 #~ msgid "Clear device settings."
 #~ msgstr "Clear user settings"
 
-#, fuzzy
 #~ msgid "Clear user settings."
 #~ msgstr "Clear user settings"
 
-#, fuzzy
 #~ msgid "removes or set logos to default"
 #~ msgstr "* removes or set logos to default"
 
-#, fuzzy
 #~ msgid "set default phonebook and other menu settings"
 #~ msgstr "* set default phonebook and other menu settings"
 
-#, fuzzy
 #~ msgid "clear T9 words,"
 #~ msgstr "* clear T9 words,"
 
-#, fuzzy
 #~ msgid "clear call register info"
 #~ msgstr "* clear call register info"
 
-#, fuzzy
 #~ msgid "set default profiles settings"
 #~ msgstr "* set default profiles settings"
 
-#, fuzzy
 #~ msgid "clear user ringtones"
 #~ msgstr "* clear user ringtones"
 
-#, fuzzy
 #~ msgid "changes like after ``ALL``"
 #~ msgstr "* changes like after B<ALL>"
 
-#, fuzzy
 #~ msgid "disables netmon and PPS (all \"hidden\" menus)"
 #~ msgstr "* disables netmon and PPS (all \"hidden\" menus)"
 
-#, fuzzy
 #~ msgid "``FACTORY``"
 #~ msgstr "B<FACTORY:>"
 
-#, fuzzy
 #~ msgid "changes like after ``UIF``"
 #~ msgstr "* changes like after B<UIF>"
 
-#, fuzzy
 #~ msgid "clear date/time"
 #~ msgstr "* clear date/time"
 
-#, fuzzy
 #~ msgid "Dumps decoding commands"
 #~ msgstr "Dumps decoding"
 
-#, fuzzy
 #~ msgid ""
 #~ "These commands are available only if Gammu was compiled with debugging "
 #~ "options."
 #~ msgstr ""
 #~ "This option is available only if Gammu was compiled with debuging options."
 
-#, fuzzy
 #~ msgid "decodebinarydump file [phonemodel]"
 #~ msgstr "B<decodebinarydump>I< file [phonemodel]>"
 
-#, fuzzy
 #~ msgid "decodesniff MBUS2|IRDA file [phonemodel]"
 #~ msgstr "B<decodesniff MBUS2|IRDA>I< file [phonemodel]>"
 
-#, fuzzy
 #~ msgid "Other commands"
 #~ msgstr "Commands"
 
-#, fuzzy
 #~ msgid "entersecuritycode PIN|PUK|PIN2|PUK2|PHONE|NETWORK code|- [newpin|-]"
 #~ msgstr "B<entersecuritycode PIN|PUK|PIN2|PUK2|PHONE|NETWORK>I< code|->"
 
-#, fuzzy
 #~ msgid ""
 #~ "Allow to enter security code from PC. When code is ``-``, it is read from "
 #~ "stdin."
@@ -5812,7 +5047,6 @@ msgstr ""
 #~ "Allow to enter security code from PC. When code is -, it is read from "
 #~ "stdin."
 
-#, fuzzy
 #~ msgid "presskeysequence mMnNpPuUdD+-123456789*0#gGrR<>[]hHcCjJfFoOmMdD@"
 #~ msgstr ""
 #~ "B<presskeysequence>I< mMnNpPuUdD+-123456789*0#gGrRE<lt>E<gt>[]"
@@ -5821,23 +5055,18 @@ msgstr ""
 #~ msgid "Press specified key sequence on phone keyboard"
 #~ msgstr "Press specified key sequence on phone keyboard"
 
-#, fuzzy
 #~ msgid "Names key"
 #~ msgstr "B<nN> - Names key"
 
-#, fuzzy
 #~ msgid "numeric keyboard"
 #~ msgstr "B<123456789*0#> is numeric keyboard"
 
-#, fuzzy
 #~ msgid "reset SOFT|HARD"
 #~ msgstr "B<reset SOFT|HARD>"
 
-#, fuzzy
 #~ msgid "Some phones will ask for PIN even with ``SOFT`` option."
 #~ msgstr "I<Note:> some phones will make hard reset even with B<SOFT> option."
 
-#, fuzzy
 #~ msgid "batch [file]"
 #~ msgstr "B<batch>I< [file]>"
 
@@ -5848,7 +5077,6 @@ msgstr ""
 #~ "Starts Gammu in a batch mode. In this mode you can issue several commands "
 #~ "each on one line. Lines starting with # are treated as a comments."
 
-#, fuzzy
 #~ msgid ""
 #~ "By default, commands are read from standard input, but you can optionally "
 #~ "specify a file from where they would be read (special case ``-`` means "
@@ -5858,15 +5086,12 @@ msgstr ""
 #~ "specify a file from where they would be read (special case - means "
 #~ "standard input)."
 
-#, fuzzy
 #~ msgid "Configuration commands"
 #~ msgstr "Configuration"
 
-#, fuzzy
 #~ msgid "searchphone [-debug]"
 #~ msgstr "B<searchphone>I< [-debug]>"
 
-#, fuzzy
 #~ msgid ""
 #~ "Please note that this can take a very long time, but in case you have no "
 #~ "clue how to configure phone connection, this is a convenient way to find "
@@ -5876,15 +5101,12 @@ msgstr ""
 #~ "a very long time, but in case you have no clue how to configure phone "
 #~ "connection, this is a convenient way to find working setup for Gammu."
 
-#, fuzzy
 #~ msgid "Gammu information commands"
 #~ msgstr "Gammu information"
 
-#, fuzzy
 #~ msgid "checkversion [STABLE]"
 #~ msgstr "B<checkversion>I< [STABLE]>"
 
-#, fuzzy
 #~ msgid ""
 #~ "Checks whether there is newer Gammu version available online (if Gammu "
 #~ "has been compiled with CURL). If you pass additional parameter "
@@ -5894,14 +5116,12 @@ msgstr ""
 #~ "has been compiled with CURL). If you pass additional parameter B<STABLE>, "
 #~ "only stable versions will be checked."
 
-#, fuzzy
 #~ msgid "features"
 #~ msgstr "B<features>"
 
 #~ msgid "Print information about compiled in features."
 #~ msgstr "Print information about compiled in features."
 
-#, fuzzy
 #~ msgid "help [topic]"
 #~ msgstr "B<help>I< [topic]>"
 
@@ -5912,7 +5132,6 @@ msgstr ""
 #~ "Print help. By default general help is printed, but you can also specify "
 #~ "a help category to get more detailed help on some topic."
 
-#, fuzzy
 #~ msgid "version"
 #~ msgstr "B<version>"
 
@@ -5934,7 +5153,6 @@ msgstr ""
 #~ msgid "Configuration"
 #~ msgstr "Configuration"
 
-#, fuzzy
 #~ msgid "To check it out, you need to have configuration file for gammu, see"
 #~ msgstr ""
 #~ "To check it out, you need to have configuration file for gammu, see "
@@ -5946,29 +5164,24 @@ msgstr ""
 #~ msgid "Save text message up to standard 160 chars:"
 #~ msgstr "Save text message up to standard 160 chars:"
 
-#, fuzzy
 #~ msgid "echo \"All your base are belong to us\" | gammu savesms TEXT"
 #~ msgstr "echo \"All your base are belong to us\" | gammu savesms TEXT\n"
 
-#, fuzzy
 #~ msgid "gammu savesms TEXT -text \"All your base are belong to us\""
 #~ msgstr "gammu savesms TEXT -text \"All your base are belong to us\"\n"
 
 #~ msgid "Save long text message:"
 #~ msgstr "Save long text message:"
 
-#, fuzzy
 #~ msgid ""
 #~ "echo \"All your base are belong to us\" | gammu savesms TEXT -len 400"
 #~ msgstr ""
 #~ "echo \"All your base are belong to us\" | gammu savesms TEXT -len 400\n"
 
-#, fuzzy
 #~ msgid "gammu savesms TEXT -len 400 -text \"All your base are belong to us\""
 #~ msgstr ""
 #~ "gammu savesms TEXT -len 400 -text \"All your base are belong to us\"\n"
 
-#, fuzzy
 #~ msgid "gammu savesms EMS -text \"All your base are belong to us\""
 #~ msgstr "gammu savesms EMS -text \"All your base are belong to us\"\n"
 
@@ -5979,7 +5192,6 @@ msgstr ""
 #~ "Save some funky message with predefined sound and animation from 2 "
 #~ "bitmaps:"
 
-#, fuzzy
 #~ msgid ""
 #~ "gammu savesms EMS -text \"Greetings\" -defsound 1 -text \"from Gammu -"
 #~ "tone10 axelf.txt -animation 2 file1.bmp file2.bmp"
@@ -5990,7 +5202,6 @@ msgstr ""
 #~ msgid "Save protected message with ringtone:"
 #~ msgstr "Save protected message with ringtone:"
 
-#, fuzzy
 #~ msgid ""
 #~ "gammu savesms EMS -protected 2 -variablebitmaplong ala.bmp -toneSElong "
 #~ "axelf.txt -toneSE ring.txt"
@@ -5998,15 +5209,12 @@ msgstr ""
 #~ "gammu savesms EMS -protected 2 -variablebitmaplong ala.bmp\n"
 #~ "-toneSElong axelf.txt -toneSE ring.txt\n"
 
-#, fuzzy
 #~ msgid "Setting operator logo"
 #~ msgstr "* operator logo"
 
-#, fuzzy
 #~ msgid "gammu savefile CALENDAR output.vcs myCalendar.backup 260"
 #~ msgstr "    gammu savefile CALENDAR output.vcs myCalendar.backup 260\n"
 
-#, fuzzy
 #~ msgid "gammu savefile VCARD21 output.vcf phone.backup ME 1"
 #~ msgstr "    gammu savefile CALENDAR output.vcf myPhonebook.backup ME 42\n"
 
@@ -6024,7 +5232,6 @@ msgstr ""
 #~ "debug logs, operating system, it's version and phone information are "
 #~ "needed)."
 
-#, fuzzy
 #~ msgid ""
 #~ "[gammu] YOUR CONNECTION SETTINGS logfile = /tmp/gammu.log logformat = "
 #~ "textall"
@@ -6034,7 +5241,6 @@ msgstr ""
 #~ "logfile = /tmp/gammu.log\n"
 #~ "logformat = textall\n"
 
-#, fuzzy
 #~ msgid "Alternatively you can specify logging on command line:"
 #~ msgstr "Failed to open file specified on command line."
 
@@ -6047,7 +5253,6 @@ msgstr ""
 #~ "phone and stores dump of communication there. You can also find some "
 #~ "hints for improving support for your phone in this log."
 
-#, fuzzy
 #~ msgid ""
 #~ "See <http://wammu.eu/support/bugs/> for more information on reporting "
 #~ "bugs."
@@ -6055,18 +5260,15 @@ msgstr ""
 #~ "See E<lt>http://wammu.eu/support/bugs/E<gt> for more information on "
 #~ "reporting bugs."
 
-#, fuzzy
 #~ msgid "Please report bugs to `Gammu bug tracker <http://bugs.cihar.com/>`_."
 #~ msgstr "Please report bugs to E<lt>http://bugs.cihar.comE<gt>."
 
-#, fuzzy
 #~ msgid "Project Documentation"
 #~ msgstr "Gammu Documentation"
 
 #~ msgid "Man pages"
 #~ msgstr "Man pages"
 
-#, fuzzy
 #~ msgid "Versioning"
 #~ msgstr "Versions\n"
 
@@ -6081,26 +5283,21 @@ msgstr ""
 #~ "testing ones have z >= 90. Testing releases usually provide latest "
 #~ "features, but everything does not have to be stabilised yet."
 
-#, fuzzy
 #~ msgid "include directory"
 #~ msgstr "Default is current directory."
 
-#, fuzzy
 #~ msgid "utils directory"
 #~ msgstr "Default is current directory."
 
-#, fuzzy
 #~ msgid "conversion"
 #~ msgstr "B<version>"
 
-#, fuzzy
 #~ msgid "Sample media files which can be used with Gammu."
 #~ msgstr "Related programs which can be used with GSM modem:"
 
 #~ msgid "# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us"
 #~ msgstr "# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us"
 
-#, fuzzy
 #~ msgid ""
 #~ "It has been initiated by Marcin Wiacek and other people. Originally the "
 #~ "code was based on `Gnokii`_ and later `MyGnokii`_ projects. Gammu was "
@@ -6111,7 +5308,6 @@ msgstr ""
 #~ "<http://www.mwiacek.com> projects. Gammu was former (up to version 0.58) "
 #~ "called MyGnokii2."
 
-#, fuzzy
 #~ msgid ""
 #~ "Currently the project is lead by `Michal Čihař`_ with help of many "
 #~ "contributors."
@@ -6119,38 +5315,31 @@ msgstr ""
 #~ "Currently the project is lead by Michal Cihar <michal@cihar.com> with "
 #~ "help of many contributors."
 
-#, fuzzy
 #~ msgid "_Gnokii: http://www.gnokii.org"
 #~ msgstr "http://www.python.org/"
 
-#, fuzzy
 #~ msgid "motivation"
 #~ msgstr "Configuration"
 
-#, fuzzy
 #~ msgid "Sending patches"
 #~ msgstr "Sending messages"
 
-#, fuzzy
 #~ msgid "git send-email --to=gammu-users@lists.sourceforge.net origin"
 #~ msgstr ""
 #~ "You can contact authors on E<lt>gammu-users@lists.sourceforge.netE<gt>."
 
-#, fuzzy
 #~ msgid "Creating patches"
 #~ msgstr "Creating tables"
 
 #~ msgid "Testing"
 #~ msgstr "Testing"
 
-#, fuzzy
 #~ msgid ".."
 #~ msgstr "..."
 
 #~ msgid "..."
 #~ msgstr "..."
 
-#, fuzzy
 #~ msgid "Binaries - Linux"
 #~ msgstr "Binaries - Linux\n"
 
@@ -6165,7 +5354,6 @@ msgstr ""
 #~ "of latest release built for many distributions available on Gammu home "
 #~ "page <http://wammu.eu/gammu/>."
 
-#, fuzzy
 #~ msgid "Binaries - Windows"
 #~ msgstr "Binaries - Windows\n"
 
@@ -6185,7 +5373,6 @@ msgstr ""
 #~ "http://www.microsoft.com/downloads/details.aspx?"
 #~ "displaylang=en&FamilyID=6AE02498-07E9-48F1-A5D6-DBFA18D37E0F"
 
-#, fuzzy
 #~ msgid "From Sources - Requirements"
 #~ msgstr "From Sources - Requirements\n"
 
@@ -6292,7 +5479,6 @@ msgstr ""
 #~ msgid "needed for testing of SMSD using libdbi driver"
 #~ msgstr "needed for testing of SMSD using libdbi driver"
 
-#, fuzzy
 #~ msgid "From Sources - Linux"
 #~ msgstr "From Sources - Linux\n"
 
@@ -6323,7 +5509,6 @@ msgstr ""
 #~ "provides, you have to use CMake directly. For now, only out of source "
 #~ "build is supported, so you have to create separate directory for build:"
 
-#, fuzzy
 #~ msgid "mkdir build cd build"
 #~ msgstr "mkdir build"
 
@@ -6399,7 +5584,6 @@ msgstr ""
 #~ msgid "-DWITH_IRDA=OFF disables IrDA support"
 #~ msgstr "-DWITH_IRDA=OFF disables IrDA support"
 
-#, fuzzy
 #~ msgid "Limiting set of installed data"
 #~ msgstr "Limiting set of installed data\n"
 
@@ -6434,11 +5618,9 @@ msgstr ""
 #~ msgid "For example:"
 #~ msgstr "For example:"
 
-#, fuzzy
 #~ msgid "cmake -DINSTALL_DOC=OFF"
 #~ msgstr "-DINSTALL_DOC=OFF"
 
-#, fuzzy
 #~ msgid "From Sources - Windows"
 #~ msgstr "From Sources - Windows\n"
 
@@ -6472,11 +5654,9 @@ msgstr ""
 #~ "BCC55/Lib -Ic:/Borland/BCC55/Include -Lc:/Borland/BCC55/Lib/PSDK to "
 #~ "CMAKE_C_FLAGS in CMake (otherwise compilation fails)."
 
-#, fuzzy
 #~ msgid "From Sources - Mac OS X"
 #~ msgstr "From Sources - Mac OS X\n"
 
-#, fuzzy
 #~ msgid "Cross compilation for Windows on Linux"
 #~ msgstr "Cross compilation for Windows on Linux\n"
 
@@ -6506,13 +5686,11 @@ msgstr ""
 #~ msgid "To build just bare static library without any dependencies, use:"
 #~ msgstr "To build just bare static library without any dependencies, use:"
 
-#, fuzzy
 #~ msgid "cmake .. -DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchain-mingw32.cmake \\"
 #~ msgstr ""
 #~ "mkdir build-win32 cd build-win32 cmake .. -DCMAKE_TOOLCHAIN_FILE=../cmake/"
 #~ "Toolchain-mingw32.cmake make"
 
-#, fuzzy
 #~ msgid ""
 #~ "-DBUILD_SHARED_LIBS=OFF \\ -DWITH_MySQL=OFF \\ -DWITH_Postgres=OFF \\ -"
 #~ "DWITH_GettextLibs=OFF \\ -DWITH_Iconv=OFF \\ -DWITH_CURL=OFF"
@@ -6540,7 +5718,6 @@ msgstr ""
 #~ "example is shown in cmake/mingw.spec, which is used by CMakeLists.txt. "
 #~ "You might need to tune it for your environment."
 
-#, fuzzy
 #~ msgid "Third party libraries"
 #~ msgstr "Third party libraries\n"
 
@@ -6560,7 +5737,6 @@ msgstr ""
 #~ "You can download MySQL binaries from <http://dev.mysql.com/>, but then "
 #~ "need some tweaks:"
 
-#, fuzzy
 #~ msgid ""
 #~ "cd mysql/lib/opt reimp.exe -d libmysql.lib i586-mingw32msvc-dlltool --"
 #~ "kill-at --input-def libmysql.def \\"
@@ -6593,7 +5769,6 @@ msgstr ""
 #~ "zip, gettext-0.14.4-dep.zip, gettext-0.14.4-lib.zip from <http://gnuwin32."
 #~ "sourceforge.net/>. Unpack these to same directory."
 
-#, fuzzy
 #~ msgid "CURL"
 #~ msgstr "CURL\n"
 
@@ -6604,11 +5779,9 @@ msgstr ""
 #~ "For CURL support, you need curl-7.19.0-devel-mingw32.zip from <http://"
 #~ "curl.haxx.se/>."
 
-#, fuzzy
 #~ msgid "_CMake: http://www.cmake.org/"
 #~ msgstr "http://www.bluez.org/"
 
-#, fuzzy
 #~ msgid ""
 #~ "To debug program crashes, you might want to build Gammu with ``-"
 #~ "DENABLE_PROTECTION=OFF``, otherwise debugging tools are somehow confused "
@@ -6618,15 +5791,12 @@ msgstr ""
 #~ "otherwise debugging tools are somehow confused with protections GCC makes "
 #~ "and produce bogus back traces."
 
-#, fuzzy
 #~ msgid "some things like SMS can be accessed few ways"
 #~ msgstr "Text in SMS can be coded using two ways:"
 
-#, fuzzy
 #~ msgid "Localization"
 #~ msgstr "Localisation\n"
 
-#, fuzzy
 #~ msgid ""
 #~ "Localization uses Gettext. You can set locales you want to use by "
 #~ "specifying LANG or LC_* environment variables (on Linux you usually don't "
@@ -6636,7 +5806,6 @@ msgstr ""
 #~ "specifying LANG or LC_* environment variables (on Linux you usually don't "
 #~ "care about this, on Windows just export e.g. LANG=cs_CZ)."
 
-#, fuzzy
 #~ msgid ""
 #~ "If you want to improve existing translation, please visit `translation "
 #~ "server`_. For adding new one, you need to contact `Michal Čihař`_ and "
@@ -6654,19 +5823,15 @@ msgstr ""
 #~ "You can also go ahead with traditional way of creating/updating po files "
 #~ "in locale/ folder and then sending updated ones to bug tracker."
 
-#, fuzzy
 #~ msgid "Message reference as generated by GSM network."
 #~ msgstr "Message Reference like in GSM specs"
 
-#, fuzzy
 #~ msgid ":ref:`gammurc` -- the Gammu configuration file"
 #~ msgstr "gammurc - gammu(1) configuration file"
 
-#, fuzzy
 #~ msgid "Filesystem structure"
 #~ msgstr "Filesystem"
 
-#, fuzzy
 #~ msgid "where all data are stored."
 #~ msgstr "Where the received SMSes are stored."
 
@@ -6676,23 +5841,18 @@ msgstr ""
 #~ msgid "Filesystem"
 #~ msgstr "Filesystem"
 
-#, fuzzy
 #~ msgid "Other features"
 #~ msgstr "B<features>"
 
-#, fuzzy
 #~ msgid "``make test``"
 #~ msgstr "make test"
 
-#, fuzzy
 #~ msgid "Database backends configuration"
 #~ msgstr "Database backends options"
 
-#, fuzzy
 #~ msgid "Gammu Documentation Contents"
 #~ msgstr "Gammu Documentation"
 
-#, fuzzy
 #~ msgid "Indices and tables"
 #~ msgstr "Creating tables"
 
@@ -6711,105 +5871,84 @@ msgstr ""
 #~ msgid "Text"
 #~ msgstr "Text"
 
-#, fuzzy
 #~ msgid "Message text"
 #~ msgstr "Message filtering"
 
 #~ msgid "Folder"
 #~ msgstr "Folder"
 
-#, fuzzy
 #~ msgid "Folder where the message is stored"
 #~ msgstr "Table where received messages will be stored."
 
-#, fuzzy
 #~ msgid "Location"
 #~ msgstr "Localisation\n"
 
-#, fuzzy
 #~ msgid "Location where the message is stored"
 #~ msgstr "Table where received messages will be stored."
 
-#, fuzzy
 #~ msgid "InboxFolder"
 #~ msgstr "B<InboxFormat>"
 
-#, fuzzy
 #~ msgid "Message delivery status, used only for received messages"
 #~ msgstr "Other fields are same as for received messages."
 
 #~ msgid "Class"
 #~ msgstr "Class"
 
-#, fuzzy
 #~ msgid "Message class"
 #~ msgstr "Message filtering"
 
-#, fuzzy
 #~ msgid "MessageReference"
 #~ msgstr "Message filtering"
 
-#, fuzzy
 #~ msgid "ReplaceMessage"
 #~ msgstr "Replace:"
 
-#, fuzzy
 #~ msgid "Memory"
 #~ msgstr "Memory full."
 
-#, fuzzy
 #~ msgid "Memory where the message is stored"
 #~ msgstr "Table where received messages will be stored."
 
 #~ msgid "Type"
 #~ msgstr "Type"
 
-#, fuzzy
 #~ msgid "Coding"
 #~ msgstr "B<GammuCoding>"
 
-#, fuzzy
 #~ msgid "Timestamp when the message was received or sent."
 #~ msgstr "when message has been sent"
 
 #~ msgid "State"
 #~ msgstr "State"
 
-#, fuzzy
 #~ msgid "Number of current part"
 #~ msgstr "Number of decoded message parts."
 
-#, fuzzy
 #~ msgid "Count of all message parts"
 #~ msgstr "Number of decoded message parts."
 
-#, fuzzy
 #~ msgid "``NokiaRingtone``"
 #~ msgstr "Ringtones"
 
-#, fuzzy
 #~ msgid "Name of the SMSC configuration"
 #~ msgstr "Bad feature string in configuration."
 
-#, fuzzy
 #~ msgid "Format"
 #~ msgstr "B<LogFormat>"
 
 #~ msgid "Validity"
 #~ msgstr "Validity"
 
-#, fuzzy
 #~ msgid "Unknown"
 #~ msgstr "Unknown error."
 
-#, fuzzy
 #~ msgid "``EMSFixedBitmap`` - Fixed bitmap of size 16x16 or 32x32."
 #~ msgstr "B<-fixedbitmap> - bitmap 16x16 or 32x32"
 
 #~ msgid "Left"
 #~ msgstr "Left"
 
-#, fuzzy
 #~ msgid "Text formatting"
 #~ msgstr "Phone information"
 
@@ -6837,46 +5976,36 @@ msgstr ""
 #~ msgid "Strikethrough"
 #~ msgstr "Strikethrough"
 
-#, fuzzy
 #~ msgid "Number to encode in message."
 #~ msgstr "Number of decoded message parts."
 
-#, fuzzy
 #~ msgid "Ringtone"
 #~ msgstr "Ringtones"
 
-#, fuzzy
 #~ msgid "Ringtone to encode in message."
 #~ msgstr "title of MMS indication message."
 
 #~ msgid "Bitmap"
 #~ msgstr "Bitmap"
 
-#, fuzzy
 #~ msgid "Bitmap to encode in message."
 #~ msgstr "title of MMS indication message."
 
-#, fuzzy
 #~ msgid "Bookmark"
 #~ msgstr "* WAP bookmarks"
 
-#, fuzzy
 #~ msgid "Bookmark to encode in message."
 #~ msgstr "Number of decoded message parts."
 
-#, fuzzy
 #~ msgid "Settings"
 #~ msgstr "* SMSC settings"
 
-#, fuzzy
 #~ msgid "Settings to encode in message."
 #~ msgstr "Sending messages"
 
-#, fuzzy
 #~ msgid "MMS indication to encode in message."
 #~ msgstr "title of MMS indication message."
 
-#, fuzzy
 #~ msgid "String to encode in message."
 #~ msgstr "Sending messages"
 
@@ -6886,334 +6015,252 @@ msgstr ""
 #~ msgid "Value"
 #~ msgstr "Value"
 
-#, fuzzy
 #~ msgid "Calendar Object"
 #~ msgstr "Calendar notes"
 
-#, fuzzy
 #~ msgid "Calendar Entries Object"
 #~ msgstr "Calendar notes"
 
-#, fuzzy
 #~ msgid "System"
 #~ msgstr "Filesystem"
 
-#, fuzzy
 #~ msgid "FILE = {"
 #~ msgstr "FILES"
 
-#, fuzzy
 #~ msgid "More Examples"
 #~ msgstr "For example:"
 
-#, fuzzy
 #~ msgid "Sending a message"
 #~ msgstr "Sending messages"
 
-#, fuzzy
 #~ msgid "Sending a long message"
 #~ msgstr "Sending messages"
 
-#, fuzzy
 #~ msgid "Initiating a voice call"
 #~ msgstr "Initiates a conference call."
 
-#, fuzzy
 #~ msgid "Reading calendar from phone"
 #~ msgstr "Retrieves all calendar entries from phone."
 
-#, fuzzy
 #~ msgid "Connections"
 #~ msgstr "B<Connection>"
 
-#, fuzzy
 #~ msgid "CalendarTypes"
 #~ msgstr "Calendar notes"
 
-#, fuzzy
 #~ msgid "CalendarValueTypes"
 #~ msgstr "Calendar notes"
 
-#, fuzzy
 #~ msgid "_python:"
 #~ msgstr "Python"
 
-#, fuzzy
 #~ msgid "examples"
 #~ msgstr "For example:"
 
-#, fuzzy
 #~ msgid "API documentation"
 #~ msgstr "Gammu Documentation"
 
-#, fuzzy
 #~ msgid "Returns command params."
 #~ msgstr "Invalid command line parameters."
 
-#, fuzzy
 #~ msgid "      Adds file part to filesystem.\n"
 #~ msgstr "    gammu getfilesystem\n"
 
-#, fuzzy
 #~ msgid "      Adds folder to filesystem.\n"
 #~ msgstr "    gammu getfilesystem\n"
 
-#, fuzzy
 #~ msgid "      Adds memory (phonebooks or calls) entry.\n"
 #~ msgstr "Memory (phonebooks and calls)"
 
-#, fuzzy
 #~ msgid "      Adds SMS to specified folder.\n"
 #~ msgstr "Delete all SMS from specified SMS folder."
 
-#, fuzzy
 #~ msgid "      Accept current incoming call.\n"
 #~ msgstr "Answer incoming call."
 
-#, fuzzy
 #~ msgid "      Deny current incoming call.\n"
 #~ msgstr "Cancel incoming call"
 
-#, fuzzy
 #~ msgid "      Initiates conference call.\n"
 #~ msgstr "Initiates a conference call."
 
-#, fuzzy
 #~ msgid "      Deletes all calendar entries.\n"
 #~ msgstr "Deletes selected calendar entries in phone."
 
-#, fuzzy
 #~ msgid ""
-#~ "      Deletes all memory (phonebooks or calls) entries of specified "
-#~ "type.\n"
+#~ "      Deletes all memory (phonebooks or calls) entries of specified type. "
 #~ msgstr "Deletes all entries from specified memory type."
 
-#, fuzzy
 #~ msgid "      Deletes all todo entries in phone.\n"
 #~ msgstr "Deletes selected todo entries in phone."
 
-#, fuzzy
 #~ msgid "      Deletes calendar entry.\n"
 #~ msgstr "Deletes selected calendar entries in phone."
 
-#, fuzzy
 #~ msgid "      Deletes file from filesystem.\n"
 #~ msgstr "    gammu getfilesystem\n"
 
-#, fuzzy
 #~ msgid "      Deletes folder on filesystem.\n"
 #~ msgstr "    gammu getfilesystem\n"
 
-#, fuzzy
 #~ msgid "      Deletes memory (phonebooks or calls) entry.\n"
 #~ msgstr "Memory (phonebooks and calls)"
 
-#, fuzzy
 #~ msgid "      Deletes ToDo entry in phone.\n"
 #~ msgstr "Deletes selected todo entries in phone."
 
-#, fuzzy
 #~ msgid "      Reads alarm set in phone.\n"
 #~ msgstr "Sets startup text in phone."
 
-#, fuzzy
 #~ msgid ""
 #~ "      Gets information about battery charge and phone charging state.\n"
 #~ msgstr "Displays information about battery and power source."
 
-#, fuzzy
 #~ msgid "      Retrieves calendar entry.\n"
 #~ msgstr "Retrieves all calendar entries from phone."
 
-#, fuzzy
 #~ msgid "      Reads category from phone.\n"
 #~ msgstr "Reads all notes from the phone."
 
-#, fuzzy
 #~ msgid "      Reads date and time from phone.\n"
 #~ msgstr "Get date and time from phone"
 
-#, fuzzy
 #~ msgid "      Acquires filesystem status.\n"
 #~ msgstr "B<getfilesystemstatus>"
 
-#, fuzzy
 #~ msgid "      Reads firmware information from phone.\n"
 #~ msgstr "Get memory location from phone."
 
-#, fuzzy
 #~ msgid "      Reads IMEI/serial number from phone.\n"
 #~ msgstr "Reads all notes from the phone."
 
-#, fuzzy
 #~ msgid "      Gets locale information from phone.\n"
 #~ msgstr "Get memory location from phone."
 
-#, fuzzy
 #~ msgid "      Reads manufacturer from phone.\n"
 #~ msgstr "Reads all notes from the phone."
 
-#, fuzzy
 #~ msgid "      Reads model from phone.\n"
 #~ msgstr "Reads all notes from the phone."
 
-#, fuzzy
 #~ msgid "      Gets network information.\n"
 #~ msgstr "More information\n"
 
-#, fuzzy
 #~ msgid "      Reads ToDo from phone.\n"
 #~ msgstr "Reads all notes from the phone."
 
-#, fuzzy
 #~ msgid "      Gets speed dial.\n"
 #~ msgstr "Gets speed dial choices."
 
-#, fuzzy
 #~ msgid "      Holds call.\n"
 #~ msgstr "Holds call."
 
-#, fuzzy
 #~ msgid "      Resets phone settings.\n"
 #~ msgstr "Phone settings"
 
-#, fuzzy
 #~ msgid "      Sets alarm in phone.\n"
 #~ msgstr "Sets wallpaper in phone."
 
-#, fuzzy
 #~ msgid "      Sets date and time in phone.\n"
 #~ msgstr "Get date and time from phone"
 
-#, fuzzy
 #~ msgid "      Gets network information from phone.\n"
 #~ msgstr "Get memory location from phone."
 
-#, fuzzy
 #~ msgid "      Sets locale of phone.\n"
 #~ msgstr "Sets wallpaper in phone."
 
-#, fuzzy
 #~ msgid "      Sets memory (phonebooks or calls) entry.\n"
 #~ msgstr "Memory (phonebooks and calls)"
 
-#, fuzzy
 #~ msgid "      Sets speed dial.\n"
 #~ msgstr "Gets speed dial choices."
 
-#, fuzzy
 #~ msgid "      Sets ToDo in phone.\n"
 #~ msgstr "Sets wallpaper in phone."
 
-#, fuzzy
 #~ msgid "      Splits call.\n"
 #~ msgstr "Splits call."
 
-#, fuzzy
 #~ msgid "      Switches call.\n"
 #~ msgstr "Switches call."
 
-#, fuzzy
 #~ msgid "      Transfers call.\n"
 #~ msgstr "Transfers call."
 
-#, fuzzy
 #~ msgid "      Unholds call.\n"
 #~ msgstr "Unholds call."
 
-#, fuzzy
 #~ msgid "Version()"
 #~ msgstr "Versions\n"
 
-#, fuzzy
 #~ msgid "Get version information."
 #~ msgstr "Print version information and license."
 
-#, fuzzy
 #~ msgid "Debugging configuration"
 #~ msgstr "Configuration"
 
-#, fuzzy
 #~ msgid "SetDebugLevel(Level)"
 #~ msgstr "B<DebugLevel>"
 
-#, fuzzy
 #~ msgid "errors"
 #~ msgstr "No error."
 
-#, fuzzy
 #~ msgid "Message processing"
 #~ msgstr "Message filtering"
 
-#, fuzzy
 #~ msgid "Links multi part SMS messages."
 #~ msgstr "Data for outgoing multipart messages."
 
-#, fuzzy
 #~ msgid "Decodes multi part SMS message."
 #~ msgstr "Data for outgoing multipart messages."
 
-#, fuzzy
 #~ msgid "1.27.93"
 #~ msgstr "Gammu 1.27.96"
 
-#, fuzzy
 #~ msgid "Backup reading and writing"
 #~ msgstr "Backing up and restoring"
 
 #~ msgid "IMEI"
 #~ msgstr "IMEI"
 
-#, fuzzy
 #~ msgid "SIMPhonebook"
 #~ msgstr "B<SM> = SIM phonebook"
 
-#, fuzzy
 #~ msgid "GSMNetworks"
 #~ msgstr "Network"
 
-#, fuzzy
 #~ msgid "`gammu.smsd` -- SMSD access"
 #~ msgstr "gammu-smsd - SMS daemon for Gammu"
 
-#, fuzzy
 #~ msgid "gammu.smsd"
 #~ msgstr "gammu-smsd.exe -u\n"
 
-#, fuzzy
 #~ msgid "            Number of sent messages.\n"
 #~ msgstr "Number of decoded message parts."
 
-#, fuzzy
 #~ msgid "            Number of received messages.\n"
 #~ msgstr "Number of decoded message parts."
 
-#, fuzzy
 #~ msgid "            Number of failed messages.\n"
 #~ msgstr "Number of decoded message parts."
 
-#, fuzzy
 #~ msgid "Example:"
 #~ msgstr "For example:"
 
-#, fuzzy
 #~ msgid "Gammu internals"
 #~ msgstr "Gammu information"
 
-#, fuzzy
 #~ msgid "Decoded text"
 #~ msgstr "Decoded long message text."
 
-#, fuzzy
 #~ msgid "Variables"
 #~ msgstr "Global variables"
 
-#, fuzzy
 #~ msgid "The backup of message can look like following:"
 #~ msgstr ""
 #~ "For example long text message of two parts could look like following:"
 
-#, fuzzy
 #~ msgid ""
 #~ "[SMSBackup000] #ABCDEFGHIJKLMNOPQRSTUVWXYZ # SMSC = \"+4540590000\" "
 #~ "SMSCUnicode = 002B0034003500340030003500390030003000300030 Sent = "
@@ -7246,11 +6293,9 @@ msgstr ""
 #~ "ReplaceMessage = 0\n"
 #~ "MessageReference = 0\n"
 
-#, fuzzy
 #~ msgid "Backup Format"
 #~ msgstr "Backups"
 
-#, fuzzy
 #~ msgid ""
 #~ "If you will backup settings to Gammu text file, it will be possible to "
 #~ "edit it. It's easy: many things in this file will be written double - "
@@ -7270,7 +6315,6 @@ msgstr ""
 #~ "Unicode phones - it isn't important, what locale is set in computer and "
 #~ "no conversion Unicode -E<gt> ASCII and ASCII -E<gt> Unicode is done)."
 
-#, fuzzy
 #~ msgid ""
 #~ "You can use any editor with regular expressions function to edit backup "
 #~ "text file. Examples of such editors can be `vim <http://www.vim.org/>`_ "
@@ -7285,11 +6329,9 @@ msgstr ""
 #~ msgid "Remove info about voice tags"
 #~ msgstr "Remove info about voice tags"
 
-#, fuzzy
 #~ msgid "^Entry\\([0-9][0-9]\\)VoiceTag = \\(.*\\)\\n"
 #~ msgstr "Find: ^Entry\\e([0-9][0-9]\\e)VoiceTag = \\e(.*\\e)\\en"
 
-#, fuzzy
 #~ msgid "Replace"
 #~ msgstr "Replace:"
 
@@ -7297,7 +6339,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Change all numbers starting from +3620, +3630, +3660, +3670 to +3620"
 
-#, fuzzy
 #~ msgid ""
 #~ "Type = NumberGeneral\\nEntry\\([0-9][0-9]\\)Text = \"\\+36\\(20\\|30\\|"
 #~ "60\\|70\\)\\n"
@@ -7305,7 +6346,6 @@ msgstr ""
 #~ "Find: Type = NumberGeneral\\enEntry\\e([0-9][0-9]\\e)Text = \"\\e+36\\e"
 #~ "(20\\e|30\\e|60\\e|70\\e)\\en"
 
-#, fuzzy
 #~ msgid "Type = NumberMobile\\nEntry\\1Text = \"\\+3620"
 #~ msgstr "Replace: Type = NumberMobile\\enEntry\\e1Text = \"\\e+3620"
 
@@ -7316,7 +6356,6 @@ msgstr ""
 #~ "Change phone numbers type to mobile for numbers starting from +3620, "
 #~ "+3630,... and removing the corresponding TextUnicode line"
 
-#, fuzzy
 #~ msgid ""
 #~ "Type = NumberGeneral\\nEntry\\([0-9][0-9]\\)Text = \"\\+36\\([2367]"
 #~ "0\\)\\([^\\\"]*\\)\"\\nEntry\\([0-9][0-9]\\)TextUnicode = \\([^\\n]*\\)\\n"
@@ -7325,16 +6364,13 @@ msgstr ""
 #~ "([2367]0\\e)\\e([^\\e\"]*\\e)\"\\enEntry\\e([0-9][0-9]\\e)TextUnicode = "
 #~ "\\e([^\\en]*\\e)\\en"
 
-#, fuzzy
 #~ msgid "Type = NumberMobile\\nEntry\\1Text = \"\\+36\\2\\3\"\\n"
 #~ msgstr ""
 #~ "Replace: Type = NumberMobile\\enEntry\\e1Text = \"\\e+36\\e2\\e3\"\\en"
 
-#, fuzzy
 #~ msgid "File formats used by Gammu"
 #~ msgstr "File format not supported by Gammu."
 
-#, fuzzy
 #~ msgid ""
 #~ "This file use ini file syntax, with comment parts being marked with both "
 #~ "``;`` and ``#``. Sections of config file are identified in square "
@@ -7344,156 +6380,120 @@ msgstr ""
 #~ "both ; and #. Sections of config file are identified in square brackets "
 #~ "line [this]. All key values are case insensitive."
 
-#, fuzzy
 #~ msgid "Call"
 #~ msgstr "Calls"
 
-#, fuzzy
 #~ msgid "GSM_HoldCall"
 #~ msgstr "Holds call."
 
-#, fuzzy
 #~ msgid "GSM_UnholdCall"
 #~ msgstr "Unholds call."
 
-#, fuzzy
 #~ msgid "GSM_SplitCall"
 #~ msgstr "Splits call."
 
-#, fuzzy
 #~ msgid "GSM_TransferCall"
 #~ msgstr "Transfers call."
 
-#, fuzzy
 #~ msgid "GSM_SwitchCall"
 #~ msgstr "Switches call."
 
-#, fuzzy
 #~ msgid "GSM_CancelAllDiverts"
 #~ msgstr "B<canceldiverts>"
 
-#, fuzzy
 #~ msgid "GSM_Call"
 #~ msgstr "Calls"
 
-#, fuzzy
 #~ msgid "Getting phone information"
 #~ msgstr "Phone information"
 
-#, fuzzy
 #~ msgid "Reading SMS message"
 #~ msgstr "Sending messages"
 
-#, fuzzy
 #~ msgid "Sending SMS message"
 #~ msgstr "Sending messages"
 
-#, fuzzy
 #~ msgid "Sending Long SMS message"
 #~ msgstr "Sending messages"
 
-#, fuzzy
 #~ msgid "SMSD example"
 #~ msgstr "For example:"
 
-#, fuzzy
 #~ msgid "Custom configuration"
 #~ msgstr "Configuration"
 
-#, fuzzy
 #~ msgid "Security"
 #~ msgstr "B<CheckSecurity>"
 
-#, fuzzy
 #~ msgid "GSM_GetSecurityStatus"
 #~ msgstr "B<getsecuritystatus>"
 
-#, fuzzy
 #~ msgid "Backup"
 #~ msgstr "Backups"
 
-#, fuzzy
 #~ msgid "GSM_Backup"
 #~ msgstr "Backups"
 
 #~ msgid "Miscellaneous"
 #~ msgstr "Miscellaneous"
 
-#, fuzzy
 #~ msgid "GSM_GetWAPBookmark"
 #~ msgstr "* WAP bookmarks"
 
-#, fuzzy
 #~ msgid "GSM_SetWAPBookmark"
 #~ msgstr "* WAP bookmarks"
 
-#, fuzzy
 #~ msgid "GSM_DeleteWAPBookmark"
 #~ msgstr "Delete WAP bookmarks from phone."
 
-#, fuzzy
 #~ msgid "GSM_GetWAPSettings"
 #~ msgstr "* WAP settings"
 
-#, fuzzy
 #~ msgid "GSM_SetWAPSettings"
 #~ msgstr "* WAP settings"
 
-#, fuzzy
 #~ msgid "GSM_WAPBookmark"
 #~ msgstr "* WAP bookmarks"
 
-#, fuzzy
 #~ msgid "WAPSettings_Speed"
 #~ msgstr "* WAP settings"
 
-#, fuzzy
 #~ msgid "WAPSettings_Bearer"
 #~ msgstr "* WAP settings"
 
-#, fuzzy
 #~ msgid "GSM_WAPSettings"
 #~ msgstr "* WAP settings"
 
 #~ msgid "Date and time"
 #~ msgstr "Date and time"
 
-#, fuzzy
 #~ msgid "CheckDate"
 #~ msgstr "B<CheckBattery>"
 
-#, fuzzy
 #~ msgid "GSM_GetCalendarSettings"
 #~ msgstr "B<getcalendarsettings>"
 
-#, fuzzy
 #~ msgid "GSM_SetCalendarSettings"
 #~ msgstr "B<getcalendarsettings>"
 
-#, fuzzy
 #~ msgid "GSM_CalendarSettings"
 #~ msgstr "B<getcalendarsettings>"
 
-#, fuzzy
 #~ msgid "GSM_CalendarStatus"
 #~ msgstr "Calendar notes"
 
-#, fuzzy
 #~ msgid "GSM_CalendarNoteType"
 #~ msgstr "Calendar notes"
 
-#, fuzzy
 #~ msgid "GSM_CalendarType"
 #~ msgstr "Calendar notes"
 
-#, fuzzy
 #~ msgid "GSM_CalendarEntry"
 #~ msgstr "Calendar notes"
 
 #~ msgid "libGammu"
 #~ msgstr "libGammu"
 
-#, fuzzy
 #~ msgid ""
 #~ "If you intend to use libGammu in your application, all you should need is "
 #~ "to ``#include <gammu.h>`` and then use Gammu functions. You can check "
@@ -7504,138 +6504,105 @@ msgstr ""
 #~ "to #include <gammu.h> and then use Gammu functions. You can check docs/"
 #~ "examples/ for some small example applications."
 
-#, fuzzy
 #~ msgid "GSM_GetDisplayStatus"
 #~ msgstr "B<getdisplaystatus>"
 
-#, fuzzy
 #~ msgid "GSM_NetworkInfo"
 #~ msgstr "Network"
 
-#, fuzzy
 #~ msgid "GSM_Feature"
 #~ msgstr "B<Features>"
 
-#, fuzzy
 #~ msgid "GSM_PhoneModel"
 #~ msgstr "B<PhoneCode>"
 
-#, fuzzy
 #~ msgid "Category"
 #~ msgstr "Categories"
 
-#, fuzzy
 #~ msgid "GSM_CategoryType"
 #~ msgstr "Categories"
 
-#, fuzzy
 #~ msgid "GSM_Category"
 #~ msgstr "Categories"
 
-#, fuzzy
 #~ msgid "For per state machine configuration:"
 #~ msgstr "Bad feature string in configuration."
 
-#, fuzzy
 #~ msgid "GSM_SetDebugLevel"
 #~ msgstr "B<DebugLevel>"
 
-#, fuzzy
 #~ msgid "GSM_SetDebugCoding"
 #~ msgstr "SMS text coding"
 
-#, fuzzy
 #~ msgid "GSM_GetFileSystemStatus"
 #~ msgstr "B<getfilesystemstatus>"
 
-#, fuzzy
 #~ msgid "GSM_FileSystemStatus"
 #~ msgstr "B<getfilesystemstatus>"
 
-#, fuzzy
 #~ msgid "Callback"
 #~ msgstr "Calls"
 
 #~ msgid "SMSD"
 #~ msgstr "SMSD"
 
-#, fuzzy
 #~ msgid "Initiates connection."
 #~ msgstr "Initiates a conference call."
 
-#, fuzzy
 #~ msgid "GSM_ConnectionType"
 #~ msgstr "B<Connection>"
 
-#, fuzzy
 #~ msgid "GSM_GetRingtone"
 #~ msgstr "Ringtones"
 
-#, fuzzy
 #~ msgid "GSM_SetRingtone"
 #~ msgstr "Ringtones"
 
-#, fuzzy
 #~ msgid "GSM_GetRingtonesInfo"
 #~ msgstr "Ringtones"
 
-#, fuzzy
 #~ msgid "GSM_RingCommand"
 #~ msgstr "Commands"
 
-#, fuzzy
 #~ msgid "GSM_NoteRingtone"
 #~ msgstr "Ringtones"
 
-#, fuzzy
 #~ msgid "GSM_Ringtone"
 #~ msgstr "Ringtones"
 
-#, fuzzy
 #~ msgid "GSM_RingtoneInfo"
 #~ msgstr "Ringtones"
 
-#, fuzzy
 #~ msgid "GSM_AllRingtonesInfo"
 #~ msgstr "Ringtones"
 
-#, fuzzy
 #~ msgid "GSM_SetChatSettings"
 #~ msgstr "* SMSC settings"
 
-#, fuzzy
 #~ msgid "GSM_GetMMSSettings"
 #~ msgstr "* SMSC settings"
 
-#, fuzzy
 #~ msgid "GSM_SetMMSSettings"
 #~ msgstr "MMS and MMS settings"
 
-#, fuzzy
 #~ msgid "GSM_SetAutoNetworkLogin"
 #~ msgstr "B<setautonetworklogin>"
 
-#, fuzzy
 #~ msgid "GSM_ResetPhoneSettings"
 #~ msgstr "Phone settings"
 
-#, fuzzy
 #~ msgid "GSM_SyncMLSettings"
 #~ msgstr "MMS and MMS settings"
 
-#, fuzzy
 #~ msgid "GSM_ChatSettings"
 #~ msgstr "* SMSC settings"
 
-#, fuzzy
 #~ msgid "gammu-config [-f|--force] [-c|--config CONFIG]"
 #~ msgstr "B<gammu-config> [I<-f|--force>] [I<-c|--config config>]"
 
-#, fuzzy
 #~ msgid "Script to help configuring :ref:`gammu`."
 #~ msgstr "Script to help configuring gammu."
 
-#, fuzzy
 #~ msgid ""
 #~ "This program follows the usual GNU command line syntax, with long options "
 #~ "starting with two dashes (``-``). A summary of options is included below."
@@ -7647,25 +6614,21 @@ msgstr ""
 #~ msgid "Show summary of options."
 #~ msgstr "Show summary of options."
 
-#, fuzzy
 #~ msgid "-f, --force"
 #~ msgstr "B<-f, --force>"
 
 #~ msgid "Force configuring even if config already exists."
 #~ msgstr "Force configuring even if config already exists."
 
-#, fuzzy
 #~ msgid "-c, --config CONFIG"
 #~ msgstr "B<-c, --config config>"
 
 #~ msgid "Define which configuration file to use."
 #~ msgstr "Define which configuration file to use."
 
-#, fuzzy
 #~ msgid "jadmaker"
 #~ msgstr "make"
 
-#, fuzzy
 #~ msgid "jadmaker [-f|--force] [-u|--url URL] <filename.jar>..."
 #~ msgstr ""
 #~ "B<jadmaker> [I<-f|--force>] [I<-u|--url URL>] E<lt>filename.jarE<gt>..."
@@ -7676,33 +6639,27 @@ msgstr ""
 #~ msgid "Force rewriting of JAD file even if exists."
 #~ msgstr "Force rewriting of JAD file even if exists."
 
-#, fuzzy
 #~ msgid "-u, --url URL"
 #~ msgstr "B<-u, --url URL>"
 
 #~ msgid "Define URL to be included in JAD file."
 #~ msgstr "Define URL to be included in JAD file."
 
-#, fuzzy
 #~ msgid "gammu-detect"
 #~ msgstr "gammu-smsd.exe -u\n"
 
-#, fuzzy
 #~ msgid "1.28.95"
 #~ msgstr "Gammu 1.28.90"
 
-#, fuzzy
 #~ msgid "gammu-detect [OPTIONS]"
 #~ msgstr "B<gammu-smsd> [I<OPTION>]..."
 
-#, fuzzy
 #~ msgid "Serial ports on Windows"
 #~ msgstr "Binaries - Windows\n"
 
 #~ msgid "Show debugging output for detecting devices."
 #~ msgstr "Show debugging output for detecting devices."
 
-#, fuzzy
 #~ msgid "Show version information and compiled in features."
 #~ msgstr "Shows version information and compiled in features."
 
@@ -7712,25 +6669,21 @@ msgstr ""
 #~ msgid "Disables scanning using Bluez."
 #~ msgstr "Disables scanning using Bluez."
 
-#, fuzzy
 #~ msgid "Disables scanning of Windows serial ports."
 #~ msgstr "Disables scanning of udev."
 
-#, fuzzy
 #~ msgid "[gammu] device = /dev/ttyACM0 name = Nokia E52 connection = at"
 #~ msgstr ""
 #~ "[gammu]\n"
 #~ "device = /dev/ttyACM0\n"
 #~ "connection = at\n"
 
-#, fuzzy
 #~ msgid "[gammu1] device = /dev/ttyACM1 name = Nokia E52 connection = at"
 #~ msgstr ""
 #~ "[gammu]\n"
 #~ "device = /dev/ttyACM0\n"
 #~ "connection = at\n"
 
-#, fuzzy
 #~ msgid ""
 #~ "[gammu2] device = /dev/ttyS0 name = Phone on serial port 0 connection = at"
 #~ msgstr ""
@@ -7738,7 +6691,6 @@ msgstr ""
 #~ "device = /dev/ttyS0\n"
 #~ "connection = at\n"
 
-#, fuzzy
 #~ msgid ""
 #~ "[gammu3] device = /dev/ttyS1 name = Phone on serial port 1 connection = at"
 #~ msgstr ""
@@ -7746,7 +6698,6 @@ msgstr ""
 #~ "device = /dev/ttyS1\n"
 #~ "connection = at\n"
 
-#, fuzzy
 #~ msgid ""
 #~ "[gammu4] device = /dev/ttyS2 name = Phone on serial port 2 connection = at"
 #~ msgstr ""
@@ -7754,7 +6705,6 @@ msgstr ""
 #~ "device = /dev/ttyS2\n"
 #~ "connection = at\n"
 
-#, fuzzy
 #~ msgid ""
 #~ "[gammu5] device = /dev/ttyS3 name = Phone on serial port 3 connection = at"
 #~ msgstr ""
@@ -7762,7 +6712,6 @@ msgstr ""
 #~ "device = /dev/ttyS0\n"
 #~ "connection = at\n"
 
-#, fuzzy
 #~ msgid ""
 #~ "[gammu6] device = 5C:57:C8:BB:BB:BB name = Nokia E52 connection = "
 #~ "bluephonet"

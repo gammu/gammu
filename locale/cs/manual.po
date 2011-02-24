@@ -380,7 +380,7 @@ msgid ""
 "AT commands connection for most of phones (this is not supported on Linux)."
 msgstr ""
 "AT příkazy pro připojení k většině telefonů (toto není podporované na "
-"Linuxu).\n"
+"Linuxu). "
 
 #. type: Plain text
 #: docs/manual/config/index.rst:87
@@ -395,7 +395,7 @@ msgstr "``mobex``"
 msgid "OBEX (IrMC or file transfer) connection for most of phones."
 msgstr ""
 "připojení protokolem OBEX (IrMC nebo přenos souborů), použitelné pro většinu "
-"telefonů.\n"
+"telefonů. "
 
 #. type: Plain text
 #: docs/manual/config/index.rst:89
@@ -15695,7 +15695,7 @@ msgid ""
 "400"
 msgstr ""
 "echo \"All your base are belong to us\" | gammu-smsd-inject TEXT 123456 -len "
-"400\n"
+"400 "
 
 # type: Plain text
 #. type: Plain text
@@ -15706,7 +15706,7 @@ msgid ""
 "\""
 msgstr ""
 "gammu-smsd-inject TEXT 123456 -len 400 -text \"All your base are belong to us"
-"\"\n"
+"\" "
 
 # type: Plain text
 #. type: Plain text
@@ -16591,8 +16591,7 @@ msgstr "Spuštění SMSD jako démon na Linuxu:"
 msgid ""
 "gammu-smsd --config /etc/gammu-smsdrc --pid /var/run/gammu-smsd.pid --daemon"
 msgstr ""
-"gammu-smsd --config /etc/gammu-smsdrc --pid /var/run/gammu-smsd.pid --"
-"daemon\n"
+"gammu-smsd --config /etc/gammu-smsdrc --pid /var/run/gammu-smsd.pid --daemon "
 
 # type: TP
 #. type: Plain text
@@ -16609,7 +16608,7 @@ msgid ""
 "--user gammu --group gammu"
 msgstr ""
 "gammu-smsd --config /etc/gammu-smsdrc --pid /var/run/gammu-smsd.pid --daemon "
-"--user gammu --group gammu\n"
+"--user gammu --group gammu "
 
 #. type: Title +
 #: docs/manual/smsd/smsd.rst:120
@@ -17270,7 +17269,7 @@ msgstr "  * některé další národní znaky\n"
 #, fuzzy
 msgid "some symbols like @ ! \" # & / ( ) % * + = - , . : ; < > ?"
 msgstr ""
-"  * některé symboly jako  @ ! \" # & / ( ) % * + = - , . : ; E<lt> E<gt> ?\n"
+"  * některé symboly jako  @ ! \" # & / ( ) % * + = - , . : ; E<lt> E<gt> ? "
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:173
@@ -28962,11 +28961,12 @@ msgstr ""
 msgid "   .. method:: GetMemory(Type, Location)\n"
 msgstr ""
 
+# type: Plain text
 #. type: delimited block -
 #: docs/manual/python/gammu.rst:447
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Reads entry from memory (phonebooks or calls). Which entry shouldbe read is defined in entry.\n"
-msgstr ""
+msgstr "Odstraní všechny položky ze zadané paměti."
 
 #. type: delimited block -
 #: docs/manual/python/gammu.rst:452
@@ -28986,9 +28986,9 @@ msgstr ""
 
 #. type: delimited block -
 #: docs/manual/python/gammu.rst:457
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "      Gets memory (phonebooks or calls) status (eg. number of used andfree entries).\n"
-msgstr ""
+msgstr "Paměť (kontakty a hovory)"
 
 #. type: delimited block -
 #: docs/manual/python/gammu.rst:462
@@ -35315,11 +35315,9 @@ msgstr ""
 "    device = B0:0B:00:00:FA:CE\n"
 "    connection = blueat\n"
 
-# type: TP
 #~ msgid "nokiagetscreendump"
 #~ msgstr "nokiagetscreendump"
 
-#, fuzzy
 #~ msgid "motivation"
 #~ msgstr "Omezení"
 
@@ -35353,26 +35351,21 @@ msgstr ""
 #~ msgid "``errors``      \n"
 #~ msgstr "``errors``      \n"
 
-# type: Plain text
 #~ msgid "ip l s dev irda0 up sysctl net.irda.discovery=1"
 #~ msgstr "ip l s dev irda0 up sysctl net.irda.discovery=1"
 
-#, fuzzy
 #~ msgid "From Sources - Requirements"
 #~ msgstr "Ze zdrojového kódu - požadavky\n"
 
 #~ msgid "For testing, please install libdbd-sqlite3"
 #~ msgstr "Pro testování si prosím nainstalujte libdbd-sqlite3"
 
-#, fuzzy
 #~ msgid "From Sources - Linux"
 #~ msgstr "Ze zdrojového kódu - Linux\n"
 
-#, fuzzy
 #~ msgid "From Sources - Windows"
 #~ msgstr "Binárky - Windows\n"
 
-#, fuzzy
 #~ msgid "From Sources - Mac OS X"
 #~ msgstr "Ze zdrojového kódu - Mac OS X\n"
 
