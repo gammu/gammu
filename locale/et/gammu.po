@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-02-14 10:40+0100\n"
+"POT-Creation-Date: 2011-02-24 16:32+0100\n"
 "PO-Revision-Date: 2009-01-27 14:28+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -3343,7 +3343,7 @@ msgstr ""
 
 #: gammu/mms.c:100
 msgid "Delivery report"
-msgstr ""
+msgstr "Olekuraport"
 
 #: gammu/mms.c:107 gammu/mms.c:110
 msgid "Content type"
@@ -3966,7 +3966,7 @@ msgstr ""
 #: helper/message-display.c:218 helper/message-display.c:233
 #: helper/message-display.c:274
 msgid "Sent"
-msgstr ""
+msgstr "Saadetud"
 
 #: helper/message-display.c:155 helper/message-display.c:275
 msgid "Read"

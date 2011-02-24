@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.28.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-02-14 10:40+0100\n"
+"POT-Creation-Date: 2011-02-24 16:32+0100\n"
 "PO-Revision-Date: 2010-09-03 14:46+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -663,7 +663,7 @@ msgstr ""
 #: gammu/calendar.c:993 gammu/message.c:225 gammu/misc.c:1132
 #: helper/memory-display.c:167 helper/message-display.c:432
 msgid "Text"
-msgstr ""
+msgstr "نص"
 
 #: gammu/calendar.c:222 gammu/calendar.c:825
 msgid "Description"
@@ -678,7 +678,7 @@ msgstr ""
 #: gammu/memory.c:141 gammu/message.c:215 gammu/misc.c:1868 gammu/misc.c:1901
 #: gammu/misc.c:2191 gammu/misc.c:2315
 msgid "Location"
-msgstr ""
+msgstr "موقع"
 
 #: gammu/calendar.c:242 gammu/calendar.c:776 helper/memory-display.c:62
 msgid "Private"
@@ -851,7 +851,7 @@ msgstr ""
 
 #: gammu/calendar.c:542 gammu/calendar.c:545 gammu/mms.c:95
 msgid "Date"
-msgstr ""
+msgstr "تاريخ"
 
 #: gammu/calendar.c:543
 msgid "Every day"
@@ -886,7 +886,7 @@ msgstr ""
 
 #: gammu/calendar.c:713
 msgid "Priority"
-msgstr ""
+msgstr "أولوية"
 
 #: gammu/calendar.c:716
 msgid "Low"
@@ -923,7 +923,7 @@ msgstr ""
 
 #: gammu/calendar.c:751
 msgid "Completed"
-msgstr ""
+msgstr "تامّ"
 
 #: gammu/calendar.c:786 gammu/calendar.c:791 helper/memory-display.c:45
 #: helper/memory-display.c:55 helper/memory-display.c:57
@@ -1754,7 +1754,7 @@ msgstr ""
 #: gammu/misc.c:1872 gammu/misc.c:1911 gammu/misc.c:2206 gammu/mms.c:112
 #: helper/memory-display.c:217 helper/message-display.c:237
 msgid "Name"
-msgstr ""
+msgstr "اسم"
 
 #: gammu/gammu.c:105
 #, c-format
@@ -2113,7 +2113,7 @@ msgstr ""
 
 #: gammu/message.c:220 gammu/misc.c:2207 gammu/misc.c:2465
 msgid "Number"
-msgstr ""
+msgstr "رقم"
 
 #: gammu/message.c:221
 msgid "Default number"
@@ -3732,7 +3732,7 @@ msgstr ""
 
 #: helper/memory-display.c:229
 msgid "State"
-msgstr ""
+msgstr "حالة"
 
 #: helper/memory-display.c:230
 msgid "Zip code"

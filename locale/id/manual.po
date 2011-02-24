@@ -22961,7 +22961,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:115
 msgid "State"
-msgstr ""
+msgstr "keadaan"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:117

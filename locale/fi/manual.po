@@ -32665,7 +32665,7 @@ msgstr ""
 #: docs/manual/utils/gammu-config.rst:26 docs/manual/utils/jadmaker.rst:27
 #: docs/manual/utils/gammu-detect.rst:47
 msgid "Show summary of options."
-msgstr ""
+msgstr "Näytä yhteenveto asetuksista"
 
 #. type: Plain text
 #: docs/manual/utils/gammu-config.rst:28 docs/manual/utils/jadmaker.rst:29

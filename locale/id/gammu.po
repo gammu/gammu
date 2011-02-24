@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.29.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-02-24 16:19+0100\n"
+"POT-Creation-Date: 2011-02-24 16:32+0100\n"
 "PO-Revision-Date: 2010-12-18 15:54+0200\n"
 "Last-Translator: <webmaster_xp3000@yahoo.com>\n"
 "Language-Team: none\n"
@@ -3787,7 +3787,7 @@ msgstr ""
 
 #: helper/memory-display.c:229
 msgid "State"
-msgstr ""
+msgstr "keadaan"
 
 #: helper/memory-display.c:230
 msgid "Zip code"

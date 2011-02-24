@@ -22677,7 +22677,7 @@ msgstr ""
 #: docs/manual/python/objects.rst:27 docs/manual/python/objects.rst:214
 #: docs/manual/python/objects.rst:391
 msgid "Number"
-msgstr ""
+msgstr "رقم"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:29
@@ -22688,7 +22688,7 @@ msgstr ""
 #: docs/manual/python/objects.rst:31 docs/manual/python/objects.rst:218
 #: docs/manual/python/objects.rst:741
 msgid "Name"
-msgstr ""
+msgstr "اسم"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:34
@@ -22712,7 +22712,7 @@ msgstr ""
 #: docs/manual/internal/reply.rst:51
 #, no-wrap
 msgid "Text"
-msgstr ""
+msgstr "نص"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:42
@@ -22734,7 +22734,7 @@ msgstr ""
 #: docs/manual/python/objects.rst:442 docs/manual/python/objects.rst:537
 #: docs/manual/python/objects.rst:632 docs/manual/python/objects.rst:714
 msgid "Location"
-msgstr ""
+msgstr "موقع"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:50
@@ -22815,7 +22815,7 @@ msgstr ""
 #: docs/manual/python/objects.rst:80 docs/manual/c/memory.rst:2
 #, no-wrap
 msgid "Memory"
-msgstr ""
+msgstr "ذاكرة"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:82 docs/manual/python/objects.rst:638
@@ -22828,7 +22828,7 @@ msgstr ""
 #: docs/manual/python/objects.rst:541 docs/manual/python/objects.rst:595
 #: docs/manual/python/objects.rst:660 docs/manual/python/objects.rst:753
 msgid "Type"
-msgstr ""
+msgstr "نوع"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:86
@@ -22919,7 +22919,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:115
 msgid "State"
-msgstr ""
+msgstr "حالة"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:117
@@ -23871,7 +23871,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:479
 msgid "Priority"
-msgstr ""
+msgstr "أولوية"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:481
@@ -24005,7 +24005,7 @@ msgstr ""
 #: docs/manual/python/objects.rst:526 docs/manual/python/objects.rst:621
 #: docs/manual/python/objects.rst:722
 msgid "Value"
-msgstr ""
+msgstr "قيمة"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:528 docs/manual/python/objects.rst:623
