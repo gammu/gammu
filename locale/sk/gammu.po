@@ -2051,14 +2051,14 @@ msgstr "Príliš málo parametrov!"
 #, c-format
 msgid "Failed to read [gammu%d] section from configuration file (gammurc)!\n"
 msgstr ""
-"Nepodarilo sa načítať [gammu%d] sekciu z konfiguračného súboru (gammurc)! "
+"Nepodarilo sa načítať [gammu%d] sekciu z konfiguračného súboru (gammurc)!\n"
 
 #: gammu/gammu.c:1166 gammu/gammu.c:1177
 msgid "No configuration read, using builtin defaults!"
 msgstr "Nebolo načítané žiadne nastavenie, používam východzie hodnoty!"
 
 #: gammu/gammu.c:1216
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
 msgstr "Nainštalovaná verzia libGammu.so (%s) sa líši od verzie Gammu (%s)\n"

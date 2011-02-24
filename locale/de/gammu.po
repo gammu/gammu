@@ -1810,13 +1810,13 @@ msgstr "Verschiedenes"
 #, c-format
 msgid "There is newer stable Gammu version available! (%s instead of %s)\n"
 msgstr ""
-"INFO: Es ist eine neuere stabile Gammu-Version (%s anstatt %s) verfügbar! "
+"INFO: Es ist eine neuere stabile Gammu-Version (%s anstatt %s) verfügbar!\n"
 
 #: gammu/gammu.c:328
 #, c-format
 msgid "There is newer testing Gammu version available! (%s instead of %s)\n"
 msgstr ""
-"INFO: Es ist eine neuere Testversion von Gammu (%s anstatt %s) verfügbar! "
+"INFO: Es ist eine neuere Testversion von Gammu (%s anstatt %s) verfügbar!\n"
 
 #: gammu/gammu.c:341
 msgid ""
@@ -3965,7 +3965,7 @@ msgstr "Zu langer SMS-Name (\"%s\"), ignoriert\n"
 #: helper/message-cmdline.c:1330
 #, c-format
 msgid "Enter the message text and press %s:\n"
-msgstr "Nachricht eingeben und %s zum Abschliessen drücken:"
+msgstr "Nachricht eingeben und %s zum Abschliessen drücken:\n"
 
 #: helper/message-cmdline.c:1332
 msgid "Ctrl+Z"

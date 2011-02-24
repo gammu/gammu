@@ -1816,7 +1816,7 @@ msgstr ""
 #, c-format
 msgid "There is newer testing Gammu version available! (%s instead of %s)\n"
 msgstr ""
-"Hay una versión nueva de pruebas de Gammu disponible (%s en lugar de %s) "
+"Hay una versión nueva de pruebas de Gammu disponible (%s en lugar de %s)\n"
 
 #: gammu/gammu.c:341
 msgid ""
@@ -2064,19 +2064,19 @@ msgstr "¡Muy pocos parámetros!"
 #, c-format
 msgid "Failed to read [gammu%d] section from configuration file (gammurc)!\n"
 msgstr ""
-"Fallo al leer la sección [gammu%d] del archivo de configuración (gammurc) "
+"Fallo al leer la sección [gammu%d] del archivo de configuración (gammurc)!\n"
 
 #: gammu/gammu.c:1166 gammu/gammu.c:1177
 msgid "No configuration read, using builtin defaults!"
 msgstr "No se pudo leer la configuración, utilizando parámetros por defecto."
 
 #: gammu/gammu.c:1216
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
 msgstr ""
 "La versión instalada de libGammu.so (%s) es diferente a la versión de Gammu "
-"(%s) "
+"(%s)\n"
 
 #: gammu/memory.c:80
 msgid ""
