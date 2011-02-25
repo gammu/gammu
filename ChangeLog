@@ -19,7 +19,7 @@ the issue.
 ChangeLog
 =========
     
-2011???? - 1.29.91
+20110225 - 1.29.91
 
 [+] * Added screenshot function for Sony-Ericssonn phones (Márton Németh).
 [-] * Fixed parsing of some Nokia SMSes (bug #1402).

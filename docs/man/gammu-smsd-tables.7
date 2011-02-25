@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSD-TABLES" "7" "February 10, 2011" "1.29.91" "Gammu"
+.TH "GAMMU-SMSD-TABLES" "7" "February 25, 2011" "1.29.91" "Gammu"
 .SH NAME
 gammu-smsd-tables \- description of tables for database backends of gammu-smsd(1)
 .
@@ -186,7 +186,7 @@ SMS relative validity like encoded using GSM specs
 .TP
 .B \fBSenderID\fP (text)
 .sp
-which SMSD instance should send this one sequence
+which SMSD instance should send this one sequence, see \fBPhoneID\fP
 .TP
 .B \fBSendingTimeOut\fP (timestamp)
 .sp
@@ -404,7 +404,7 @@ SMS ID
 .TP
 .B \fBSenderID\fP (text)
 .sp
-which SMSD instance sent this one sequence
+which SMSD instance sent this one sequence, see \fBPhoneID\fP
 .TP
 .B \fBSequencePosition\fP (integer)
 .sp
