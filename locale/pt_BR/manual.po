@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.29.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-23 17:00+0100\n"
-"PO-Revision-Date: 2011-02-25 18:33+0200\n"
+"PO-Revision-Date: 2011-02-25 18:34+0200\n"
 "Last-Translator: gilberto dos santos alves <gsavix@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
@@ -66,9 +66,8 @@ msgstr "I<~/.gammurc>"
 # type: Plain text
 #. type: Plain text
 #: docs/manual/config/index.rst:16
-#, fuzzy
 msgid "``/etc/gammurc``"
-msgstr "I</etc/gammu-smsdrc>"
+msgstr "I</etc/gammurc>"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:18
