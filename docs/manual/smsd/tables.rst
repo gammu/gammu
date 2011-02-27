@@ -15,13 +15,13 @@ daemon will have separate outbox queue.
 Receiving of messages
 ---------------------
 
-Received messages are stored in ``inbox`` table.
+Received messages are stored in :ref:`inbox` table.
 
 Transmitting of messages
 ------------------------
 
-Transmitted messages are read from table ``outbox`` and possible subsequent parts
-of the same message from ``outbox_multipart``.
+Transmitted messages are read from table :ref:`outbox` and possible subsequent parts
+of the same message from :ref:`outbox_multipart`.
 
 Description of tables
 ---------------------
@@ -34,8 +34,10 @@ Information about running daemons.
 gammu
 +++++
 
-Table holding single value - version of a database schema. See :ref:`smsd-tables-history` for
-details what has changed.
+Table holding single field ``Version`` - version of a database schema. See
+:ref:`smsd-tables-history` for details what has changed.
+
+.. _inbox:
 
 inbox
 +++++
@@ -81,11 +83,13 @@ Fields description:
     you can use for marking, whether SMS was processed or not
 
 
+.. _outbox:
+
 outbox
 ++++++
 
 Messages enqueued for sending should be placed in this table. If message
-is multipart, subsequent parts are stored in table outbox_multipart.
+is multipart, subsequent parts are stored in table :ref:`outbox_multipart`.
 
 Fields description:
 
@@ -155,6 +159,7 @@ Fields description:
     sender identification, it has to match PhoneID in SMSD configuration to make
     SMSD process this message
 
+.. _outbox_multipart:
 
 outbox_multipart
 ++++++++++++++++
@@ -179,7 +184,7 @@ Fields description:
     the same meaning as values in outbox table
 
 ``SequencePosition`` (integer)
-    info, what is SMS number in SMS sequence (start at 2, first part is in outbox
+    info, what is SMS number in SMS sequence (start at 2, first part is in :ref:`outbox`
     table).
 
 
@@ -367,7 +372,7 @@ History of schema versions:
 
     .. versionchanged:: 1.20.94
 7
-    Added CreatorID to several tables.
+    Added ``CreatorID`` to several tables.
 
     .. versionchanged:: 1.07.00
 6
