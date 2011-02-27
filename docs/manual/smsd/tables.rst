@@ -34,7 +34,7 @@ Information about running daemons.
 gammu
 +++++
 
-Table holding single value - version of a database schema. See HISTORY for
+Table holding single value - version of a database schema. See :ref:`smsd-tables-history` for
 details what has changed.
 
 inbox
@@ -327,6 +327,8 @@ pbk_groups
 ++++++++++
 
 Not used by SMSD currently, included only for application usage.
+
+.. _smsd-tables-history:
 
 History
 -------
