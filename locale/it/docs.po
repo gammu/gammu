@@ -8,20 +8,21 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.29.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-23 16:58+0100\n"
-"PO-Revision-Date: 2009-01-07 18:00+0100\n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2011-02-27 02:04+0200\n"
+"Last-Translator:  <grandelg@tiscali.it>\n"
 "Language-Team: none\n"
-"Language: \n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Pootle 2.0.5\n"
 
 #. type: Title =
 #: README:2
 #, no-wrap
 msgid "Gammu All Mobile Management Utilities"
-msgstr ""
+msgstr "Utilità di gestione Gammu per tutti i cellulari"
 
 #. type: Plain text
 #: README:6
