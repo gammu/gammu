@@ -330,8 +330,8 @@ Not used by SMSD currently, included only for application usage.
 
 .. _smsd-tables-history:
 
-History
--------
+History of database structure
+-----------------------------
 
 History of schema versions:
 
