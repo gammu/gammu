@@ -339,24 +339,49 @@ History of schema versions:
     Changed name of ``Signal`` field to ``SignalStrength`` to avoid problems
     with database which have ``SIGNAL`` as reserved word. Added ``SendBefore``
     and ``SendAfter`` fields.
+
+    .. versionchanged:: 1.29.90
 12
     the changes only affect MySQL structure changing default values for
     timestamps from ``0000-00-00 00:00:00`` to ``CURRENT_TIMESTAMP()`` by
     using triggers, to update to this version, just execute triggers
     definition at the end of SQL file.
+
+    .. versionchanged:: 1.28.94
 11
     all fields for storing message text are no longer limited to 160 chars,
-    but are arbitrary length text fields (1.25.92)
+    but are arbitrary length text fields.
+    
+    .. versionchanged:: 1.25.92
 10
     ``DeliveryDateTime`` is now NULL when message is not delivered, added several
     indexes
+
+    .. versionchanged:: 1.22.95
 9
     added sent/received counters to phones table
-8
-    introduced phones table
 
+    .. versionchanged:: 1.22.93
+8
+    Signal and battery state are now stored in database.
+
+    .. versionchanged:: 1.20.94
 7
-    added CreatorID to tables (it holds PhoneID if set)
+    Added CreatorID to several tables.
+
+    .. versionchanged:: 1.07.00
+6
+    Many fields in outbox can now be NULL.
+
+    .. versionchanged:: 1.06.00
+5
+    Introduced daemons table and various other changes.
+
+    .. versionchanged:: 1.03.00
+3
+    Introduced phones table and various other changes.
+
+    .. versionchanged:: 0.98.0
 
 
 Examples
