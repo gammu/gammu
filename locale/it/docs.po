@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.29.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-23 16:58+0100\n"
-"PO-Revision-Date: 2011-02-27 02:04+0200\n"
+"PO-Revision-Date: 2011-02-27 02:25+0200\n"
 "Last-Translator:  <grandelg@tiscali.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -56,7 +56,7 @@ msgstr "Informazioni sul telefono"
 #. type: Plain text
 #: README:20
 msgid "You can find more information on <http://wammu.eu/gammu/>."
-msgstr ""
+msgstr "Puoi trovare maggiori informazioni a <http://wammu.eu/gammu/>."
 
 #. type: Plain text
 #: README:24
