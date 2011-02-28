@@ -275,11 +275,6 @@ ____________
 
         reply SMSC is set
 
-    .. option:: -maxnum number
-
-        Limit maximal number of messages which will be
-        created. If there are more messages, Gammu will terminate with failure.
-
     .. option:: -folder number
 
         save to specified folder.
@@ -317,7 +312,8 @@ ____________
 
     .. option:: -maxsms num
 
-        maximal number of SMS messages to create
+        Limit maximal number of messages which will be
+        created. If there are more messages, Gammu will terminate with failure.
 
     Types of messages:
 
