@@ -7,7 +7,7 @@ smsd = gammu.smsd.SMSD('/etc/gammu-smsdrc')
 
 import sys
 if len(sys.argv) != 2:
-    print 'This requires one parameter containing number!'
+    print 'Usage: smsd-inject.py RECIPIENT_NUMBER'
     sys.exit(1)
 
 message = {'Text': 'python-gammu testing message', 'SMSC': {'Location': 1}, 'Number': sys.argv[1]}

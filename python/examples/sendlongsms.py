@@ -19,7 +19,7 @@ else:
 
 # Check parameters
 if len(sys.argv) != 2:
-    print 'This requires one parameter containing number!'
+    print 'Usage: sendlongsms.py [configfile] RECIPIENT_NUMBER'
     sys.exit(1)
 
 # Connect to the phone
