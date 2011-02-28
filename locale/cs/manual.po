@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu-manual 1.29.91\n"
+"Project-Id-Version: Gammu-manual 1.29.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-02-23 17:00+0100\n"
+"POT-Creation-Date: 2011-02-28 14:06+0100\n"
 "PO-Revision-Date: 2011-02-03 15:31+0200\n"
 "Last-Translator: Pavlína Raszyková <pavlina.raszykova@gmail.com>\n"
 "Language-Team: none\n"
@@ -461,7 +461,7 @@ msgstr ""
 
 #. type: Labeled list
 #: docs/manual/config/index.rst:104 docs/manual/config/index.rst:108
-#: docs/manual/smsd/tables.rst:109 docs/manual/smsd/tables.rst:115
+#: docs/manual/smsd/tables.rst:113 docs/manual/smsd/tables.rst:119
 #: docs/manual/smsd/config.rst:67 docs/manual/smsd/config.rst:216
 #: docs/manual/smsd/config.rst:282 docs/manual/smsd/config.rst:365
 #: docs/manual/gammu/index.rst:1196 docs/manual/testing/dummy-driver.rst:6
@@ -472,8 +472,8 @@ msgid ".. versionadded"
 msgstr ".. versionadded"
 
 #. type: Plain text
-#: docs/manual/config/index.rst:105 docs/manual/smsd/tables.rst:110
-#: docs/manual/smsd/tables.rst:116 docs/manual/smsd/tables.rst:225
+#: docs/manual/config/index.rst:105 docs/manual/smsd/tables.rst:114
+#: docs/manual/smsd/tables.rst:120 docs/manual/smsd/tables.rst:230
 #: docs/manual/python/gammu.rst:1125
 msgid "1.29.90"
 msgstr ""
@@ -548,7 +548,7 @@ msgstr ""
 #: docs/manual/config/index.rst:232 docs/manual/protocol/n6110.rst:26
 #: docs/manual/protocol/n7110.rst:23 docs/manual/protocol/nokia.rst:32
 #: docs/manual/protocol/index.rst:25 docs/manual/smsd/dbi.rst:15
-#: docs/manual/smsd/dbi.rst:43 docs/manual/smsd/tables.rst:447
+#: docs/manual/smsd/dbi.rst:43 docs/manual/smsd/tables.rst:479
 #: docs/manual/smsd/pgsql.rst:25 docs/manual/smsd/config.rst:90
 #: docs/manual/smsd/config.rst:455 docs/manual/smsd/mysql.rst:27
 #: docs/manual/smsd/mysql.rst:42 docs/manual/gammu/index.rst:475
@@ -665,8 +665,8 @@ msgstr ""
 #: docs/manual/smsd/sql.rst:300 docs/manual/smsd/sql.rst:325
 #: docs/manual/smsd/sql.rst:349 docs/manual/smsd/sql.rst:375
 #: docs/manual/smsd/sql.rst:385 docs/manual/smsd/usage.rst:48
-#: docs/manual/smsd/tables.rst:372 docs/manual/smsd/tables.rst:383
-#: docs/manual/smsd/tables.rst:413 docs/manual/smsd/run.rst:98
+#: docs/manual/smsd/tables.rst:404 docs/manual/smsd/tables.rst:415
+#: docs/manual/smsd/tables.rst:445 docs/manual/smsd/run.rst:98
 #: docs/manual/smsd/run.rst:109 docs/manual/smsd/run.rst:124
 #: docs/manual/smsd/run.rst:140 docs/manual/smsd/run.rst:157
 #: docs/manual/smsd/config.rst:509 docs/manual/smsd/config.rst:522
@@ -723,7 +723,7 @@ msgstr ".. code-block"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:160 docs/manual/config/index.rst:171
-#: docs/manual/smsd/tables.rst:373 docs/manual/smsd/run.rst:110
+#: docs/manual/smsd/tables.rst:405 docs/manual/smsd/run.rst:110
 #: docs/manual/smsd/run.rst:125 docs/manual/smsd/run.rst:141
 #: docs/manual/smsd/inject.rst:54 docs/manual/smsd/inject.rst:60
 #: docs/manual/smsd/inject.rst:66 docs/manual/smsd/inject.rst:72
@@ -1165,7 +1165,7 @@ msgid ""
 msgstr ""
 
 #. type: Title =
-#: docs/manual/config/index.rst:292 docs/manual/smsd/tables.rst:361
+#: docs/manual/config/index.rst:292 docs/manual/smsd/tables.rst:393
 #: docs/manual/smsd/run.rst:90 docs/manual/smsd/config.rst:501
 #: docs/manual/smsd/inject.rst:46 docs/manual/smsd/smsd.rst:102
 #: docs/manual/gammu/index.rst:1813 docs/manual/testing/dummy-driver.rst:69
@@ -10685,7 +10685,7 @@ msgstr "Binárky - Windows\n"
 #. type: Plain text
 #: docs/manual/protocol/discovering.rst:28
 msgid ""
-"Download `Portmon`_, which allows to capture bytes sent and received by "
+"Download `Portmon`_, which allows one to capture bytes sent and received by "
 "ready binary software."
 msgstr ""
 
@@ -11241,7 +11241,7 @@ msgstr "Používám výchozí hodnoty."
 #: docs/manual/smsd/sql.rst:286 docs/manual/smsd/sql.rst:301
 #: docs/manual/smsd/sql.rst:326 docs/manual/smsd/sql.rst:350
 #: docs/manual/smsd/sql.rst:376 docs/manual/smsd/sql.rst:386
-#: docs/manual/smsd/tables.rst:384 docs/manual/smsd/tables.rst:414
+#: docs/manual/smsd/tables.rst:416 docs/manual/smsd/tables.rst:446
 #: docs/manual/smsd/mysql.rst:21
 msgid "sql"
 msgstr ""
@@ -12098,7 +12098,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/smsd/tables.rst:19
 #, fuzzy
-msgid "Received messages are stored in ``inbox`` table."
+msgid "Received messages are stored in :ref:`inbox` table."
 msgstr "Přijaté zprávy jsou ukládány v tabulce inbox."
 
 # type: Plain text
@@ -12106,8 +12106,8 @@ msgstr "Přijaté zprávy jsou ukládány v tabulce inbox."
 #: docs/manual/smsd/tables.rst:25
 #, fuzzy
 msgid ""
-"Transmitted messages are read from table ``outbox`` and possible subsequent "
-"parts of the same message from ``outbox_multipart``."
+"Transmitted messages are read from table :ref:`outbox` and possible "
+"subsequent parts of the same message from :ref:`outbox_multipart`."
 msgstr ""
 "Zprávy k odeslání jsou čteny z tabulky outbox a jejich případné další části "
 "z tabulky outbox_multipart."
@@ -12142,39 +12142,52 @@ msgstr "gammu(1)"
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:39
+#: docs/manual/smsd/tables.rst:38
+#, fuzzy
 msgid ""
-"Table holding single value - version of a database schema. See HISTORY for "
-"details what has changed."
+"Table holding single field ``Version`` - version of a database schema. See"
 msgstr ""
 "Tato tabulka obsahuje jedinou hodnotu - verzi databázového schématu. V části "
 "HISTORIE se můžete podívat, co se měnilo."
 
+#. type: Attribute :ref:
+#: docs/manual/smsd/tables.rst:38
+#, no-wrap
+msgid "`smsd-tables-history` for details what has changed."
+msgstr ""
+
+# type: TP
+#. type: Plain text
+#: docs/manual/smsd/tables.rst:41
+#, fuzzy
+msgid "_inbox:"
+msgstr "B<inbox>"
+
 # type: TP
 #. type: Title +
-#: docs/manual/smsd/tables.rst:41
+#: docs/manual/smsd/tables.rst:43
 #, fuzzy, no-wrap
 msgid "inbox"
 msgstr "B<inbox>"
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:44
+#: docs/manual/smsd/tables.rst:46
 msgid "Table where received messages will be stored."
 msgstr "Tabulka, ve které jsou ukládány přijaté zprávy."
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:46 docs/manual/smsd/tables.rst:91
-#: docs/manual/smsd/tables.rst:165 docs/manual/smsd/tables.rst:193
-#: docs/manual/smsd/tables.rst:243
+#: docs/manual/smsd/tables.rst:48 docs/manual/smsd/tables.rst:95
+#: docs/manual/smsd/tables.rst:170 docs/manual/smsd/tables.rst:198
+#: docs/manual/smsd/tables.rst:248
 msgid "Fields description:"
 msgstr "Popis sloupců:"
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:49 docs/manual/smsd/tables.rst:94
-#: docs/manual/smsd/tables.rst:246
+#: docs/manual/smsd/tables.rst:51 docs/manual/smsd/tables.rst:98
+#: docs/manual/smsd/tables.rst:251
 #, fuzzy, no-wrap
 msgid ""
 "``UpdatedInDB`` (timestamp)\n"
@@ -12183,7 +12196,7 @@ msgstr "kdy byl tento záznam aktualizován"
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:52
+#: docs/manual/smsd/tables.rst:54
 #, fuzzy, no-wrap
 msgid ""
 "``ReceivingDateTime`` (timestamp)\n"
@@ -12192,7 +12205,7 @@ msgstr "B<ReceivingDateTime> (timestamp)"
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:55
+#: docs/manual/smsd/tables.rst:57
 #, fuzzy, no-wrap
 msgid ""
 "``Text`` (text)\n"
@@ -12200,7 +12213,7 @@ msgid ""
 msgstr "zakódovaný text zprávy (pro všechny SMS)"
 
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:58
+#: docs/manual/smsd/tables.rst:60
 #, no-wrap
 msgid ""
 "``SenderNumber`` (varchar(20))\n"
@@ -12209,8 +12222,8 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:61 docs/manual/smsd/tables.rst:122
-#: docs/manual/smsd/tables.rst:289
+#: docs/manual/smsd/tables.rst:63 docs/manual/smsd/tables.rst:126
+#: docs/manual/smsd/tables.rst:294
 #, fuzzy, no-wrap
 msgid ""
 "``Coding`` (enum('Default_No_Compression', 'Unicode_No_Compression', '8bit', 'Default_Compression', 'Unicode_Compression'))\n"
@@ -12219,7 +12232,7 @@ msgstr "B<Coding> (enum('Default_No_Compression', 'Unicode_No_Compression', '8bi
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:64
+#: docs/manual/smsd/tables.rst:66
 #, fuzzy, no-wrap
 msgid ""
 "``UDH`` (text)\n"
@@ -12228,7 +12241,7 @@ msgstr "zakódovaná hlavička uživatelských dat (UDH)"
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:67
+#: docs/manual/smsd/tables.rst:69
 #, fuzzy, no-wrap
 msgid ""
 "``SMSCNumber`` (varchar(20))\n"
@@ -12237,7 +12250,7 @@ msgstr "B<SMSCNumber> (varchar(20))"
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:70
+#: docs/manual/smsd/tables.rst:72
 #, fuzzy, no-wrap
 msgid ""
 "``Class`` (integer)\n"
@@ -12246,7 +12259,7 @@ msgstr "třída SMS nebo -1 (0 je jen pro zobrazení na displej, 1 je normální
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:73
+#: docs/manual/smsd/tables.rst:75
 #, fuzzy, no-wrap
 msgid ""
 "``TextDecoded`` (varchar(160))\n"
@@ -12255,7 +12268,7 @@ msgstr "dekódovaný text (pro zprávy ve výchozí abecedě nebo unicode)"
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:76
+#: docs/manual/smsd/tables.rst:78
 #, fuzzy, no-wrap
 msgid ""
 "``ID`` (integer unsigned)\n"
@@ -12264,7 +12277,7 @@ msgstr "identifikátor zprávy (pro použití v externích aplikacích)"
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:79
+#: docs/manual/smsd/tables.rst:81
 #, fuzzy, no-wrap
 msgid ""
 "``RecipientID`` (text)\n"
@@ -12273,7 +12286,7 @@ msgstr "který démon Gammu přidal tento záznam"
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:82
+#: docs/manual/smsd/tables.rst:84
 #, fuzzy, no-wrap
 msgid ""
 "``Processed`` (enum('false', 'true'))\n"
@@ -12281,25 +12294,33 @@ msgid ""
 msgstr "můžete použít pro označení, jestli byla zpráva zpracována nebo nebyla"
 
 # type: TP
+#. type: Plain text
+#: docs/manual/smsd/tables.rst:87
+#, fuzzy
+msgid "_outbox:"
+msgstr "B<outbox>"
+
+# type: TP
 #. type: Title +
-#: docs/manual/smsd/tables.rst:85
+#: docs/manual/smsd/tables.rst:89
 #, fuzzy, no-wrap
 msgid "outbox"
 msgstr "B<outbox>"
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:89
+#: docs/manual/smsd/tables.rst:93
+#, fuzzy
 msgid ""
 "Messages enqueued for sending should be placed in this table. If message is "
-"multipart, subsequent parts are stored in table outbox_multipart."
+"multipart, subsequent parts are stored in table :ref:`outbox_multipart`."
 msgstr ""
 "Zprávy určené k odeslání by měly být uloženy v této tabulce. Pokud zpráva "
 "obsahuje více částí, další části jsou uloženy v tabulce outbox_multipart."
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:97 docs/manual/smsd/tables.rst:249
+#: docs/manual/smsd/tables.rst:101 docs/manual/smsd/tables.rst:254
 #, fuzzy, no-wrap
 msgid ""
 "``InsertIntoDB`` (timestamp)\n"
@@ -12308,7 +12329,7 @@ msgstr "kdy byla zpráva vložena do databáze"
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:100
+#: docs/manual/smsd/tables.rst:104
 #, fuzzy, no-wrap
 msgid ""
 "``SendingDateTime`` (timestamp)\n"
@@ -12316,7 +12337,7 @@ msgid ""
 msgstr "nastavte na libovolnou hodnotu, pokud chcete vynutit poslání zprávy i po naplánovaném čase"
 
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:104
+#: docs/manual/smsd/tables.rst:108
 #, no-wrap
 msgid ""
 "``SendBefore`` (time)\n"
@@ -12325,7 +12346,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:108
+#: docs/manual/smsd/tables.rst:112
 #, no-wrap
 msgid ""
 "``SendAfter`` (time)\n"
@@ -12335,7 +12356,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:114
+#: docs/manual/smsd/tables.rst:118
 #, fuzzy, no-wrap
 msgid ""
 "``Text`` (text)\n"
@@ -12345,7 +12366,7 @@ msgstr "Text SMS zakódovaný šestnáctkově ve správné znakové sadě. Pokud
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:119
+#: docs/manual/smsd/tables.rst:123
 #, fuzzy, no-wrap
 msgid ""
 "``DestinationNumber`` (varchar(20))\n"
@@ -12353,7 +12374,7 @@ msgid ""
 msgstr "B<DestinationNumber> (varchar(20))"
 
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:126
+#: docs/manual/smsd/tables.rst:130
 #, fuzzy, no-wrap
 msgid ""
 "``UDH`` (text)\n"
@@ -12363,7 +12384,7 @@ msgstr "User Data Header ((hlavička uživatelských dat) zapsaná v šestnácko
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:129 docs/manual/smsd/tables.rst:298
+#: docs/manual/smsd/tables.rst:133 docs/manual/smsd/tables.rst:303
 #, fuzzy, no-wrap
 msgid ""
 "``Class`` (integer)\n"
@@ -12372,7 +12393,7 @@ msgstr "třída SMS nebo -1 (0 je normální SMS, 1 jen pro zobrazení na disple
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:132 docs/manual/smsd/tables.rst:301
+#: docs/manual/smsd/tables.rst:136 docs/manual/smsd/tables.rst:306
 #, fuzzy, no-wrap
 msgid ""
 "``TextDecoded`` (varchar(160))\n"
@@ -12380,7 +12401,7 @@ msgid ""
 msgstr "text zprávy v \"člověkem čitelné\" podobě"
 
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:135
+#: docs/manual/smsd/tables.rst:139
 #, no-wrap
 msgid ""
 "``ID`` (integer unsigned)\n"
@@ -12389,7 +12410,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:138
+#: docs/manual/smsd/tables.rst:142
 #, fuzzy, no-wrap
 msgid ""
 "    Please note that this number has to be unique also for sentitems table, so\n"
@@ -12398,7 +12419,7 @@ msgstr "Prosím uvědomte si, že toto číslo musí být unikátní i pro tabul
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:141
+#: docs/manual/smsd/tables.rst:145
 #, fuzzy, no-wrap
 msgid ""
 "``MultiPart`` (enum('false','true'))\n"
@@ -12407,7 +12428,7 @@ msgstr "informace, zda se v tabulce outbox_multipart nacházejí další části
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:144 docs/manual/smsd/tables.rst:316
+#: docs/manual/smsd/tables.rst:148 docs/manual/smsd/tables.rst:321
 #, fuzzy, no-wrap
 msgid ""
 "``RelativeValidity`` (integer)\n"
@@ -12416,7 +12437,7 @@ msgstr "platnost SMS zakódovaná podle GSM specifikací"
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:147
+#: docs/manual/smsd/tables.rst:151
 #, fuzzy, no-wrap
 msgid ""
 "``SenderID`` (text)\n"
@@ -12425,7 +12446,7 @@ msgstr "která instance SMSD by měla odesílat tuto sekvenci"
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:150
+#: docs/manual/smsd/tables.rst:154
 #, fuzzy, no-wrap
 msgid ""
 "``SendingTimeOut`` (timestamp)\n"
@@ -12434,7 +12455,7 @@ msgstr "použito SMSD pro vlastní účely"
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:153
+#: docs/manual/smsd/tables.rst:157
 #, fuzzy, no-wrap
 msgid ""
 "``DeliveryReport`` (enum('default','yes','no'))\n"
@@ -12443,7 +12464,7 @@ msgstr "při výchozí hodnotě bude nastavení doručenky záviset na nastaven�
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:157
+#: docs/manual/smsd/tables.rst:161
 #, fuzzy, no-wrap
 msgid ""
 "``CreatorID`` (text)\n"
@@ -12452,20 +12473,27 @@ msgid ""
 msgstr "identifikace odesílajícího démona, musí odpovídat PhoneID v konfiguraci SMSD, aby SMSD zprávu zpracoval"
 
 # type: TP
+#. type: Plain text
+#: docs/manual/smsd/tables.rst:163
+#, fuzzy
+msgid "_outbox_multipart:"
+msgstr "B<outbox_multipart>"
+
+# type: TP
 #. type: Title +
-#: docs/manual/smsd/tables.rst:160
+#: docs/manual/smsd/tables.rst:165
 #, fuzzy, no-wrap
 msgid "outbox_multipart"
 msgstr "B<outbox_multipart>"
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:163
+#: docs/manual/smsd/tables.rst:168
 msgid "Data for outgoing multipart messages."
 msgstr "Data pro odchozí zprávy, které jsou z více částí."
 
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:180
+#: docs/manual/smsd/tables.rst:185
 #, no-wrap
 msgid ""
 "``ID`` (integer unsigned)\n"
@@ -12486,24 +12514,24 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:184
+#: docs/manual/smsd/tables.rst:189
 #, fuzzy, no-wrap
 msgid ""
 "``SequencePosition`` (integer)\n"
-"    info, what is SMS number in SMS sequence (start at 2, first part is in outbox\n"
+"    info, what is SMS number in SMS sequence (start at 2, first part is in :ref:`outbox`\n"
 "    table).\n"
 msgstr "kolikátá zpráva je tato v SMS sekvenci (začíná se od 2, první část je uložena v tabulce outbox)."
 
 # type: TP
 #. type: Title +
-#: docs/manual/smsd/tables.rst:187
+#: docs/manual/smsd/tables.rst:192
 #, fuzzy, no-wrap
 msgid "phones"
 msgstr "B<phones>"
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:191
+#: docs/manual/smsd/tables.rst:196
 msgid ""
 "Information about connected phones. This table is periodically refreshed and "
 "you can get information such as battery or signal level from here."
@@ -12512,7 +12540,7 @@ msgstr ""
 "můžete v ní najít informace jako stav baterie nebo síla signálu."
 
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:196
+#: docs/manual/smsd/tables.rst:201
 #, no-wrap
 msgid ""
 "``ID`` (text)\n"
@@ -12521,7 +12549,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:199
+#: docs/manual/smsd/tables.rst:204
 #, fuzzy, no-wrap
 msgid ""
 "``UpdatedInDB`` (timestamp)\n"
@@ -12530,7 +12558,7 @@ msgstr "kdy byl tento záznam aktualizován"
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:202
+#: docs/manual/smsd/tables.rst:207
 #, fuzzy, no-wrap
 msgid ""
 "``InsertIntoDB`` (timestamp)\n"
@@ -12539,7 +12567,7 @@ msgstr "kdy byl tento záznam vytvořen (kdy byl telefon připojen)"
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:205
+#: docs/manual/smsd/tables.rst:210
 #, fuzzy, no-wrap
 msgid ""
 "``TimeOut`` (timestamp)\n"
@@ -12547,7 +12575,7 @@ msgid ""
 msgstr "kdy tento záznam expiruje"
 
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:208
+#: docs/manual/smsd/tables.rst:213
 #, no-wrap
 msgid ""
 "``Send`` (boolean)\n"
@@ -12555,7 +12583,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:211
+#: docs/manual/smsd/tables.rst:216
 #, no-wrap
 msgid ""
 "``Receive`` (boolean)\n"
@@ -12563,7 +12591,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:214
+#: docs/manual/smsd/tables.rst:219
 #, no-wrap
 msgid ""
 "``IMEI`` (text)\n"
@@ -12572,7 +12600,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:217
+#: docs/manual/smsd/tables.rst:222
 #, fuzzy, no-wrap
 msgid ""
 "``Client`` (text)\n"
@@ -12581,7 +12609,7 @@ msgstr "jméno klienta, obvykle text Gammu a verze"
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:220
+#: docs/manual/smsd/tables.rst:225
 #, fuzzy, no-wrap
 msgid ""
 "``Battery`` (integer)\n"
@@ -12590,7 +12618,7 @@ msgstr "stav baterie v procentech (nebo -1 pokud není znám)"
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:223
+#: docs/manual/smsd/tables.rst:228
 #, fuzzy, no-wrap
 msgid ""
 "``SignalStrength`` (integer)\n"
@@ -12598,13 +12626,18 @@ msgid ""
 msgstr "úrověň signálu v procentech (nebo -1 pokud není znám)"
 
 #. type: Labeled list
-#: docs/manual/smsd/tables.rst:224
+#: docs/manual/smsd/tables.rst:229 docs/manual/smsd/tables.rst:348
+#: docs/manual/smsd/tables.rst:355 docs/manual/smsd/tables.rst:360
+#: docs/manual/smsd/tables.rst:365 docs/manual/smsd/tables.rst:369
+#: docs/manual/smsd/tables.rst:373 docs/manual/smsd/tables.rst:377
+#: docs/manual/smsd/tables.rst:381 docs/manual/smsd/tables.rst:385
+#: docs/manual/smsd/tables.rst:389
 #, fuzzy, no-wrap
 msgid ".. versionchanged"
 msgstr ".. versionadded"
 
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:227
+#: docs/manual/smsd/tables.rst:232
 msgid ""
 "This used to be called ``Signal``. Renamed because ``SIGNAL`` is reserved "
 "word in MySQL 5.5."
@@ -12612,7 +12645,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:231
+#: docs/manual/smsd/tables.rst:236
 #, fuzzy, no-wrap
 msgid ""
 "``Sent`` (integer)\n"
@@ -12622,7 +12655,7 @@ msgstr "Počet odeslaných SMS zpráv (SMSD tento čítač nenuluje, takže mů�
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:235
+#: docs/manual/smsd/tables.rst:240
 #, fuzzy, no-wrap
 msgid ""
 "``Received`` (integer)\n"
@@ -12632,14 +12665,14 @@ msgstr "Počet přijatých SMS zpráv (SMSD tento čítač nenuluje, takže mů�
 
 # type: TP
 #. type: Title +
-#: docs/manual/smsd/tables.rst:237
+#: docs/manual/smsd/tables.rst:242
 #, fuzzy, no-wrap
 msgid "sentitems"
 msgstr "B<sentitems>"
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:241
+#: docs/manual/smsd/tables.rst:246
 msgid ""
 "Log of sent messages (and unsent ones with error code). Also if delivery "
 "reports are enabled, message state is updated after receiving delivery "
@@ -12649,7 +12682,7 @@ msgstr ""
 "zapnutých doručenkách je stav zprávy aktualizován při jejím přijetí."
 
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:252
+#: docs/manual/smsd/tables.rst:257
 #, no-wrap
 msgid ""
 "``SendingDateTime`` (timestamp)\n"
@@ -12658,7 +12691,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:255
+#: docs/manual/smsd/tables.rst:260
 #, fuzzy, no-wrap
 msgid ""
 "``DeliveryDateTime`` (timestamp)\n"
@@ -12667,7 +12700,7 @@ msgstr "Čas přijetí doručenky (pokud jsou zapnuty)."
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:259
+#: docs/manual/smsd/tables.rst:264
 #, fuzzy, no-wrap
 msgid ""
 "``Status`` (enum('SendingOK', 'SendingOKNoReport', 'SendingError', 'DeliveryOK', 'DeliveryFailed', 'DeliveryPending', 'DeliveryUnknown', 'Error'))\n"
@@ -12676,7 +12709,7 @@ msgid ""
 msgstr "Stav odesílání zprávy. SendingError znamená, že telefonu se nepodařilo zprávu odeslat, Error indikuje jinou chybu při zpracovávání zprávy."
 
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:276
+#: docs/manual/smsd/tables.rst:281
 #, no-wrap
 msgid ""
 "    ``SendingOK``\n"
@@ -12699,7 +12732,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:280
+#: docs/manual/smsd/tables.rst:285
 #, fuzzy, no-wrap
 msgid ""
 "``StatusError`` (integer)\n"
@@ -12709,7 +12742,7 @@ msgstr "Stav z doručenky, hodnoty jsou definovány ve specifikaci GSM 03.40.sek
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:283
+#: docs/manual/smsd/tables.rst:288
 #, fuzzy, no-wrap
 msgid ""
 "``Text`` (text)\n"
@@ -12718,7 +12751,7 @@ msgstr "text SMS zprávy v šestnáctkovém formátu"
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:286
+#: docs/manual/smsd/tables.rst:291
 #, fuzzy, no-wrap
 msgid ""
 "``DestinationNumber`` (varchar(20))\n"
@@ -12727,7 +12760,7 @@ msgstr "číslo adresáta SMS"
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:292
+#: docs/manual/smsd/tables.rst:297
 #, fuzzy, no-wrap
 msgid ""
 "``UDH`` (text)\n"
@@ -12736,7 +12769,7 @@ msgstr "hlavička uživatelských dat (UDH) v šestnáctkovém formátu"
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:295
+#: docs/manual/smsd/tables.rst:300
 #, fuzzy, no-wrap
 msgid ""
 "``SMSCNumber`` (varchar(20))\n"
@@ -12745,7 +12778,7 @@ msgstr "číslo servisního centra (SMSC), které odeslalo zprávu"
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:304
+#: docs/manual/smsd/tables.rst:309
 #, fuzzy, no-wrap
 msgid ""
 "``ID`` (integer unsigned)\n"
@@ -12754,7 +12787,7 @@ msgstr "B<ID> (integer unsigned)"
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:307
+#: docs/manual/smsd/tables.rst:312
 #, fuzzy, no-wrap
 msgid ""
 "``SenderID`` (text)\n"
@@ -12762,7 +12795,7 @@ msgid ""
 msgstr "která instance SMSD odeslala tuto sekvenci"
 
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:310
+#: docs/manual/smsd/tables.rst:315
 #, no-wrap
 msgid ""
 "``SequencePosition`` (integer)\n"
@@ -12771,7 +12804,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:313
+#: docs/manual/smsd/tables.rst:318
 #, fuzzy, no-wrap
 msgid ""
 "``TPMR`` (integer)\n"
@@ -12780,7 +12813,7 @@ msgstr "reference zprávy, podle specifikací GSM"
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:319
+#: docs/manual/smsd/tables.rst:324
 #, fuzzy, no-wrap
 msgid ""
 "``CreatorID`` (text)\n"
@@ -12788,13 +12821,13 @@ msgid ""
 msgstr "zkopírováno CreatorID z tabulky outbox, odpovídá PhoneID"
 
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:323
+#: docs/manual/smsd/tables.rst:328
 msgid "pbk +++"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:325 docs/manual/smsd/tables.rst:330
+#: docs/manual/smsd/tables.rst:330 docs/manual/smsd/tables.rst:335
 msgid "Not used by SMSD currently, included only for application usage."
 msgstr ""
 "SMSD tuto tabulku v současné době nepoužívá, je zde jen pro použití v "
@@ -12802,67 +12835,141 @@ msgstr ""
 
 # type: TP
 #. type: Title +
-#: docs/manual/smsd/tables.rst:327
+#: docs/manual/smsd/tables.rst:332
 #, fuzzy, no-wrap
 msgid "pbk_groups"
 msgstr "B<pbk_groups>"
 
+# type: TP
+#. type: Plain text
+#: docs/manual/smsd/tables.rst:337
+#, fuzzy
+msgid "_smsd-tables-history:"
+msgstr "B<gammu-smsdrc-files>"
+
 #. type: Title -
-#: docs/manual/smsd/tables.rst:332
-#, no-wrap
-msgid "History"
-msgstr ""
+#: docs/manual/smsd/tables.rst:339
+#, fuzzy, no-wrap
+msgid "History of database structure"
+msgstr "Soubory"
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:335
+#: docs/manual/smsd/tables.rst:342
 msgid "History of schema versions:"
 msgstr "Historie verzí schématu:"
 
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:355
+#: docs/manual/smsd/tables.rst:347
 #, no-wrap
 msgid ""
 "13\n"
 "    Changed name of ``Signal`` field to ``SignalStrength`` to avoid problems\n"
 "    with database which have ``SIGNAL`` as reserved word. Added ``SendBefore``\n"
 "    and ``SendAfter`` fields.\n"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/tables.rst:354
+#, no-wrap
+msgid ""
+"1.29.90\n"
 "12\n"
 "    the changes only affect MySQL structure changing default values for\n"
 "    timestamps from ``0000-00-00 00:00:00`` to ``CURRENT_TIMESTAMP()`` by\n"
 "    using triggers, to update to this version, just execute triggers\n"
 "    definition at the end of SQL file.\n"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/tables.rst:359
+#, no-wrap
+msgid ""
+"1.28.94\n"
 "11\n"
 "    all fields for storing message text are no longer limited to 160 chars,\n"
-"    but are arbitrary length text fields (1.25.92)\n"
+"    but are arbitrary length text fields.\n"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/tables.rst:364
+#, no-wrap
+msgid ""
+"1.25.92\n"
 "10\n"
 "    ``DeliveryDateTime`` is now NULL when message is not delivered, added several\n"
 "    indexes\n"
-"9\n"
-"    added sent/received counters to phones table\n"
-"8\n"
-"    introduced phones table\n"
 msgstr ""
 
-# type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:358
-#, fuzzy, no-wrap
+#: docs/manual/smsd/tables.rst:368
+#, no-wrap
 msgid ""
+"1.22.95\n"
+"9\n"
+"    added sent/received counters to phones table\n"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/tables.rst:372
+#, no-wrap
+msgid ""
+"1.22.93\n"
+"8\n"
+"    Signal and battery state are now stored in database.\n"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/tables.rst:376
+#, no-wrap
+msgid ""
+"1.20.94\n"
 "7\n"
-"    added CreatorID to tables (it holds PhoneID if set)\n"
-msgstr "7 - do tabulek přidáno CreatorID (obsahuje PhoneID, pokud je nastaveno)"
+"    Added ``CreatorID`` to several tables.\n"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/tables.rst:380
+#, no-wrap
+msgid ""
+"1.07.00\n"
+"6\n"
+"    Many fields in outbox can now be NULL.\n"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/tables.rst:384
+#, no-wrap
+msgid ""
+"1.06.00\n"
+"5\n"
+"    Introduced daemons table and various other changes.\n"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/tables.rst:388
+#, no-wrap
+msgid ""
+"1.03.00\n"
+"3\n"
+"    Introduced phones table and various other changes.\n"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/tables.rst:390
+msgid "0.98.0"
+msgstr ""
 
 # type: SS
 #. type: Title +
-#: docs/manual/smsd/tables.rst:364
+#: docs/manual/smsd/tables.rst:396
 #, no-wrap
 msgid "Creating tables"
 msgstr "Vytváření tabulek"
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:369
+#: docs/manual/smsd/tables.rst:401
 msgid ""
 "SQL scripts to create all needed tables for most databases are included in "
 "Gammu documentation (docs/sql). As well as some PHP scripts interacting with "
@@ -12874,27 +12981,27 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:371
+#: docs/manual/smsd/tables.rst:403
 msgid "For example to create SQLite tables, issue following command:"
 msgstr "Například vytvoření tabulek pro SQLite vypadá následovně:"
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:375
+#: docs/manual/smsd/tables.rst:407
 #, fuzzy
 msgid "sqlite3 smsd.db < docs/sql/sqlite.sql"
 msgstr "sqlite3 smsd.db E<lt> docs/sql/sqlite.sql\n"
 
 # type: TP
 #. type: Title +
-#: docs/manual/smsd/tables.rst:377
+#: docs/manual/smsd/tables.rst:409
 #, fuzzy, no-wrap
 msgid "Injecting a message using SQL"
 msgstr "Vložení dlouhé textové zprávy:"
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:382
+#: docs/manual/smsd/tables.rst:414
 #, fuzzy
 msgid ""
 "To send a message, you can either use :ref:`gammu-smsd-inject`, which does "
@@ -12906,43 +13013,43 @@ msgstr ""
 "obyčejnou textovou zprávu:"
 
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:386 docs/manual/smsd/tables.rst:416
+#: docs/manual/smsd/tables.rst:418 docs/manual/smsd/tables.rst:448
 msgid "INSERT INTO outbox ("
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:390
+#: docs/manual/smsd/tables.rst:422
 msgid "DestinationNumber, TextDecoded, CreatorID, Coding"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:391 docs/manual/smsd/tables.rst:423
-#: docs/manual/smsd/tables.rst:439
+#: docs/manual/smsd/tables.rst:423 docs/manual/smsd/tables.rst:455
+#: docs/manual/smsd/tables.rst:471
 #, fuzzy
 msgid ") VALUES ("
 msgstr "NÁVRATOVÉ KÓDY"
 
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:395
+#: docs/manual/smsd/tables.rst:427
 msgid ""
 "'800123465', 'This is a SQL test message', 'Program', "
 "'Default_No_Compression'"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:396
+#: docs/manual/smsd/tables.rst:428
 msgid ");"
 msgstr ""
 
 # type: TP
 #. type: Title +
-#: docs/manual/smsd/tables.rst:398
+#: docs/manual/smsd/tables.rst:430
 #, fuzzy, no-wrap
 msgid "Injecting long message using SQL"
 msgstr "Vložení dlouhé textové zprávy:"
 
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:403
+#: docs/manual/smsd/tables.rst:435
 #, fuzzy
 msgid ""
 "Inserting multipart messages is a bit more tricky, you need to construct "
@@ -12953,7 +13060,7 @@ msgstr ""
 "Musíte také vytvořit UDH hlavičku a uložit ji šestnáctkově do pole UDH."
 
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:410
+#: docs/manual/smsd/tables.rst:442
 #, fuzzy
 msgid ""
 "For long text message, the UDH starts with ``050003`` followed by byte as a "
@@ -12970,19 +13077,19 @@ msgstr ""
 "první zprávu, 02 pro druhou, atd.)."
 
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:412
+#: docs/manual/smsd/tables.rst:444
 msgid "For example long text message of two parts could look like following:"
 msgstr ""
 "Například dlouhá textová zpráva skládající se z dvou částí může vypadat "
 "následovně:"
 
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:422
+#: docs/manual/smsd/tables.rst:454
 msgid "CreatorID, MultiPart, DestinationNumber, UDH, TextDecoded, Coding"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:429
+#: docs/manual/smsd/tables.rst:461
 #, fuzzy
 msgid ""
 "'Gammu 1.23.91', 'true', '123465', '050003D30201', 'Mqukqirip ya konej eqniu "
@@ -13009,25 +13116,25 @@ msgstr ""
 ")\n"
 
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:430 docs/manual/smsd/tables.rst:445
+#: docs/manual/smsd/tables.rst:462 docs/manual/smsd/tables.rst:477
 msgid ")"
 msgstr ""
 
 # type: TP
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:432
+#: docs/manual/smsd/tables.rst:464
 #, fuzzy
 msgid "INSERT INTO outbox_multipart ("
 msgstr "B<outbox_multipart>"
 
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:438
+#: docs/manual/smsd/tables.rst:470
 msgid "SequencePosition, UDH, Class, TextDecoded, ID, Coding"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:444
+#: docs/manual/smsd/tables.rst:476
 #, fuzzy
 msgid ""
 "2, '050003D30202', 'u xewz qisubevumxyzk ufuylehyzc. Nse xobq dfolizygqysj t "
@@ -13051,7 +13158,7 @@ msgstr ""
 ")\n"
 
 #. type: Plain text
-#: docs/manual/smsd/tables.rst:449
+#: docs/manual/smsd/tables.rst:481
 msgid ""
 "Adding UDH means that you have less space for text, in above example you can "
 "use only 153 characters in single message."
@@ -15001,7 +15108,7 @@ msgstr "Filtrování zpráv"
 #: docs/manual/smsd/config.rst:480
 #, fuzzy
 msgid ""
-"SMSD allows to process only limited subset of incoming messages. You can "
+"SMSD allows one to process only limited subset of incoming messages. You can "
 "define filters for sender number in :config:section:`[include_numbers]` and"
 msgstr ""
 "SMSD umožňuje zpracovat jen část přijatých zpráv. Filtry pro číslo "
@@ -18183,7 +18290,7 @@ msgstr "-scale"
 #: docs/manual/gammu/index.rst:513
 #, fuzzy
 msgid ""
-"ringtone will have Scale info for each note. It will allow to edit it "
+"ringtone will have Scale info for each note. It will allow one to edit it "
 "correctly later in phone composer (for example, in 33xx)"
 msgstr ""
 "B<-scale> - vyzvánění bude mít informaci o výšce u každé noty. S tímto "
@@ -18752,10 +18859,11 @@ msgstr "Soubory"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:756
+#, fuzzy
 msgid ""
-"Gammu allows to access phones using native protocol (Nokias) or OBEX. Your "
-"phone can also support usb storage, which is handled on the operating system "
-"level and Gammu does not use that."
+"Gammu allows one to access phones using native protocol (Nokias) or OBEX. "
+"Your phone can also support usb storage, which is handled on the operating "
+"system level and Gammu does not use that."
 msgstr ""
 "Gammu umí přistupovat k souborům pomocí nativního protokolu (Nokie) nebo "
 "přes OBEX. Váš telefon také může podporovat stadard USB storage, který je "
@@ -19063,11 +19171,12 @@ msgstr "copybitmap inputfile [outputfile [OPERATOR|PICTURE|STARTUP|CALLER]]"
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:863
+#, fuzzy
 msgid ""
-"Allow to convert logos files to another. When give ONLY inputfile, output "
-"will be written to stdout using ASCII art. When give output file and format, "
-"in some file formats (like NLM) will be set indicator informing about logo "
-"type to given."
+"Allow one to convert logos files to another. When give ONLY inputfile, "
+"output will be written to stdout using ASCII art. When give output file and "
+"format, in some file formats (like NLM) will be set indicator informing "
+"about logo type to given."
 msgstr ""
 "Převádí loga mezi různými formáty. Pokud neuvedete výstupní soubor, logo "
 "bude zobrazeno v ASCII artu. V některých výstupních formátech (například "
@@ -19147,7 +19256,8 @@ msgstr "STARTUP [file]"
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:889
-msgid "Get static startup logo from phone. Allow to save it in file."
+#, fuzzy
+msgid "Get static startup logo from phone. Allow one to save it in file."
 msgstr ""
 "Načte statické startovací logo z telefonu. Umožní jeho uložení do souboru."
 
@@ -19964,10 +20074,11 @@ msgstr "B<savefile CALENDAR>I< target.vcs file location>"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1177
+#, fuzzy
 msgid ""
-"Allows to convert between various backup formats which gammu supports for "
-"calendar events. The file type is guessed (for input file guess is based on "
-"extension and file content, for output solely on extension)."
+"Allows one to convert between various backup formats which gammu supports "
+"for calendar events. The file type is guessed (for input file guess is based "
+"on extension and file content, for output solely on extension)."
 msgstr ""
 "Umožní převádět mezi různými formáty pro zálohy, které Gammu podporuje pro "
 "kalendář. Typ souboru je odhadnut (pro vstupní soubor podle přípony a "
@@ -19982,9 +20093,10 @@ msgstr "B<savefile TODO>I< target.vcs file location>"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1184
+#, fuzzy
 msgid ""
-"Allows to convert between various backup formats which gammu supports for "
-"todo events. The file type is guessed (for input file guess is based on "
+"Allows one to convert between various backup formats which gammu supports "
+"for todo events. The file type is guessed (for input file guess is based on "
 "extension and file content, for output solely on extension)."
 msgstr ""
 "Umožní převádět mezi různými formáty pro zálohy, které Gammu podporuje pro "
@@ -20000,10 +20112,11 @@ msgstr "B<savefile VCARD10|VCARD21>I< target.vcf file SM|ME location>"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1191
+#, fuzzy
 msgid ""
-"Allows to convert between various backup formats which gammu supports for "
-"phonebook events. The file type is guessed (for input file guess is based on "
-"extension and file content, for output solely on extension)."
+"Allows one to convert between various backup formats which gammu supports "
+"for phonebook events. The file type is guessed (for input file guess is "
+"based on extension and file content, for output solely on extension)."
 msgstr ""
 "Umožní převádět mezi různými formáty pro zálohy, které Gammu podporuje pro "
 "kontakty. Typ souboru je odhadnut (pro vstupní soubor podle přípony a "
@@ -20998,7 +21111,8 @@ msgstr "decodesniff MBUS2|IRDA file [phonemodel]"
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1544
 msgid ""
-"Allows to decode sniffs. See :ref:`Discovering protocol` for more details."
+"Allows one to decode sniffs. See :ref:`Discovering protocol` for more "
+"details."
 msgstr ""
 
 # type: SS
@@ -21018,9 +21132,10 @@ msgstr "entersecuritycode PIN|PUK|PIN2|PUK2|PHONE|NETWORK code|-"
 # type: Plain text
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1551
+#, fuzzy
 msgid ""
-"Allow to enter security code from PC. When code is ``-``, it is read from "
-"stdin."
+"Allow one to enter security code from PC. When code is ``-``, it is read "
+"from stdin."
 msgstr ""
 "Umožní zadat bezpečností kód z PC. Pokud je jako kód zadáno ``-``, je načten "
 "ze standardního vstupu."
@@ -32784,8 +32899,8 @@ msgstr ""
 #: docs/manual/c/porting.rst:19
 msgid ""
 "Centralisation of variables cleanup. - Currently all phone drivers have to "
-"do some common things in each function. New API allows to centralize those "
-"operations in one place."
+"do some common things in each function. New API allows one to centralize "
+"those operations in one place."
 msgstr ""
 
 #. type: delimited block =
@@ -35314,6 +35429,14 @@ msgstr ""
 "    [gammu]\n"
 "    device = B0:0B:00:00:FA:CE\n"
 "    connection = blueat\n"
+
+# type: Plain text
+#, fuzzy
+#~ msgid ""
+#~ "7\n"
+#~ "    added CreatorID to tables (it holds PhoneID if set)\n"
+#~ msgstr ""
+#~ "7 - do tabulek přidáno CreatorID (obsahuje PhoneID, pokud je nastaveno)"
 
 #~ msgid "nokiagetscreendump"
 #~ msgstr "nokiagetscreendump"

@@ -23,7 +23,7 @@ Serial port
 -----------
 
 
-Download `Portmon`_, which allows to capture bytes sent and received by
+Download `Portmon`_, which allows one to capture bytes sent and received by
 ready binary software.
 
 .. _Portmon: http://technet.microsoft.com/en-us/sysinternals/bb896644.aspx

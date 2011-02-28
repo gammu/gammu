@@ -76,7 +76,7 @@
 #cmakedefine GSM_ENABLE_NOKIA7110
 /* n9210.c models */
 #cmakedefine GSM_ENABLE_NOKIA9210
-/* It allows to show incoming call and SMS info for 7110 family phones.
+/* It allows one to show incoming call and SMS info for 7110 family phones.
  * By default commented: you can have some problems, when using it.
  * Example: with my 6210 after using it info about incoming sms is shown much
  * earlier than sms in phone and phone restart (once and random) later after
@@ -142,7 +142,7 @@
  */
 /*#define DEVELOP*/
 
-/* By default disabled. It allows to make short beep after such things
+/* By default disabled. It allows one to make short beep after such things
  * like changing logo in phone (like in Logo Manager)
  */
 /*#define GSM_ENABLE_BEEP*/

@@ -475,7 +475,7 @@ that all path should contain trailing path separator (/ on Unix systems):
 Message filtering
 -----------------
 
-SMSD allows to process only limited subset of incoming messages. You can define
+SMSD allows one to process only limited subset of incoming messages. You can define
 filters for sender number in :config:section:`[include_numbers]` and
 :config:section:`[exclude_numbers]` sections or using
 :config:option:`IncludeNumbersFile` and :config:option:`ExcludeNumbersFile`

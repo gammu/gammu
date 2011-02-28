@@ -508,7 +508,7 @@ ____________
 
         .. option:: -scale
 
-            ringtone will have Scale info for each note. It will allow to edit
+            ringtone will have Scale info for each note. It will allow one to edit
             it correctly later in phone composer (for example, in 33xx)
 
 
@@ -750,7 +750,7 @@ _______________
 Filesystem commands
 -------------------
 
-Gammu allows to access phones using native protocol (Nokias) or OBEX. Your
+Gammu allows one to access phones using native protocol (Nokias) or OBEX. Your
 phone can also support usb storage, which is handled on the operating system
 level and Gammu does not use that.
 
@@ -856,7 +856,7 @@ In new models all bitmaps are saved in filesystem and should go into filesystem 
 
 .. option:: copybitmap inputfile [outputfile [OPERATOR|PICTURE|STARTUP|CALLER]]
 
-    Allow to convert logos files to another. When give ONLY inputfile, output will
+    Allow one to convert logos files to another. When give ONLY inputfile, output will
     be written to stdout using ASCII art. When give output file and format, in
     some file formats (like NLM) will be set indicator informing about logo type
     to given.
@@ -885,7 +885,7 @@ In new models all bitmaps are saved in filesystem and should go into filesystem 
 
     .. option:: STARTUP [file]
 
-        Get static startup logo from phone. Allow to save it in file.
+        Get static startup logo from phone. Allow one to save it in file.
 
     .. option:: TEXT
 
@@ -1170,21 +1170,21 @@ Backing up and restoring commands
 
     .. option:: CALENDAR target.vcs file location
 
-        Allows to convert between various backup formats which gammu
+        Allows one to convert between various backup formats which gammu
         supports for calendar events. The file type is guessed (for input file
         guess is based on extension and file content, for output solely on
         extension).
 
     .. option:: TODO target.vcs file location
 
-        Allows to convert between various backup formats which gammu
+        Allows one to convert between various backup formats which gammu
         supports for todo events. The file type is guessed (for input file
         guess is based on extension and file content, for output solely on
         extension).
 
     .. option:: VCARD10|VCARD21 target.vcf file SM|ME location
 
-        Allows to convert between various backup formats which gammu
+        Allows one to convert between various backup formats which gammu
         supports for phonebook events. The file type is guessed (for input file
         guess is based on extension and file content, for output solely on
         extension).
@@ -1540,14 +1540,14 @@ Dumps decoding commands
 
 .. option:: decodesniff MBUS2|IRDA file [phonemodel]
 
-    Allows to decode sniffs. See :ref:`Discovering protocol` for more details.
+    Allows one to decode sniffs. See :ref:`Discovering protocol` for more details.
 
 Other commands
 --------------
 
 .. option:: entersecuritycode PIN|PUK|PIN2|PUK2|PHONE|NETWORK code|- [newpin|-]
 
-    Allow to enter security code from PC. When code is ``-``, it is read from stdin.
+    Allow one to enter security code from PC. When code is ``-``, it is read from stdin.
 
     In case entering PUK, some phones require you to set new PIN as well.
 

@@ -14,7 +14,7 @@ API, which has to be done for various reasons:
   we could be proud of.
 
 - Centralisation of variables cleanup. - Currently all phone drivers
-  have to do some common things in each function. New API allows to
+  have to do some common things in each function. New API allows one to
   centralize those operations in one place.
 
 - Exposing of internals. - Old API exposed too much of Gammu internals,

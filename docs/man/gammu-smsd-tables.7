@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSD-TABLES" "7" "February 25, 2011" "1.29.92" "Gammu"
+.TH "GAMMU-SMSD-TABLES" "7" "February 28, 2011" "1.29.92" "Gammu"
 .SH NAME
 gammu-smsd-tables \- description of tables for database backends of gammu-smsd(1)
 .
@@ -41,19 +41,19 @@ message to the \fBoutbox\fP table (\fIgammu\-smsd\-inject\fP does this), each SM
 daemon will have separate outbox queue.
 .SH RECEIVING OF MESSAGES
 .sp
-Received messages are stored in \fBinbox\fP table.
+Received messages are stored in \fI\%inbox\fP table.
 .SH TRANSMITTING OF MESSAGES
 .sp
-Transmitted messages are read from table \fBoutbox\fP and possible subsequent parts
-of the same message from \fBoutbox_multipart\fP.
+Transmitted messages are read from table \fI\%outbox\fP and possible subsequent parts
+of the same message from \fI\%outbox_multipart\fP.
 .SH DESCRIPTION OF TABLES
 .SS daemons
 .sp
 Information about running daemons.
 .SS gammu
 .sp
-Table holding single value \- version of a database schema. See HISTORY for
-details what has changed.
+Table holding single field \fBVersion\fP \- version of a database schema. See
+\fI\%History of database structure\fP for details what has changed.
 .SS inbox
 .sp
 Table where received messages will be stored.
@@ -112,7 +112,7 @@ you can use for marking, whether SMS was processed or not
 .SS outbox
 .sp
 Messages enqueued for sending should be placed in this table. If message
-is multipart, subsequent parts are stored in table outbox_multipart.
+is multipart, subsequent parts are stored in table \fI\%outbox_multipart\fP.
 .sp
 Fields description:
 .INDENT 0.0
@@ -238,7 +238,7 @@ the same meaning as values in outbox table
 .TP
 .B \fBSequencePosition\fP (integer)
 .sp
-info, what is SMS number in SMS sequence (start at 2, first part is in outbox
+info, what is SMS number in SMS sequence (start at 2, first part is in \fI\%outbox\fP
 table).
 .UNINDENT
 .SS phones
@@ -428,7 +428,7 @@ Not used by SMSD currently, included only for application usage.
 .SS pbk_groups
 .sp
 Not used by SMSD currently, included only for application usage.
-.SH HISTORY
+.SH HISTORY OF DATABASE STRUCTURE
 .sp
 History of schema versions:
 .INDENT 0.0
@@ -438,6 +438,8 @@ History of schema versions:
 Changed name of \fBSignal\fP field to \fBSignalStrength\fP to avoid problems
 with database which have \fBSIGNAL\fP as reserved word. Added \fBSendBefore\fP
 and \fBSendAfter\fP fields.
+.sp
+Changed in version 1.29.90.
 .TP
 .B 12
 .
@@ -445,28 +447,58 @@ the changes only affect MySQL structure changing default values for
 timestamps from \fB0000\-00\-00 00:00:00\fP to \fBCURRENT_TIMESTAMP()\fP by
 using triggers, to update to this version, just execute triggers
 definition at the end of SQL file.
+.sp
+Changed in version 1.28.94.
 .TP
 .B 11
 .
 all fields for storing message text are no longer limited to 160 chars,
-but are arbitrary length text fields (1.25.92)
+but are arbitrary length text fields.
+.sp
+Changed in version 1.25.92.
 .TP
 .B 10
 .
 \fBDeliveryDateTime\fP is now NULL when message is not delivered, added several
 indexes
+.sp
+Changed in version 1.22.95.
 .TP
 .B 9
 .
 added sent/received counters to phones table
+.sp
+Changed in version 1.22.93.
 .TP
 .B 8
 .
-introduced phones table
+Signal and battery state are now stored in database.
+.sp
+Changed in version 1.20.94.
 .TP
 .B 7
 .
-added CreatorID to tables (it holds PhoneID if set)
+Added \fBCreatorID\fP to several tables.
+.sp
+Changed in version 1.07.00.
+.TP
+.B 6
+.
+Many fields in outbox can now be NULL.
+.sp
+Changed in version 1.06.00.
+.TP
+.B 5
+.
+Introduced daemons table and various other changes.
+.sp
+Changed in version 1.03.00.
+.TP
+.B 3
+.
+Introduced phones table and various other changes.
+.sp
+Changed in version 0.98.0.
 .UNINDENT
 .SH EXAMPLES
 .SS Creating tables

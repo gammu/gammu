@@ -1,4 +1,4 @@
-.TH "GAMMU" "1" "February 25, 2011" "1.29.92" "Gammu"
+.TH "GAMMU" "1" "February 28, 2011" "1.29.92" "Gammu"
 .SH NAME
 gammu \- Does some neat things with your cellular phone or modem.
 .
@@ -727,7 +727,7 @@ in 2 SMS), but decoded only by newer phones (like 33xx)
 .TP
 .B \-scale
 .
-ringtone will have Scale info for each note. It will allow to edit
+ringtone will have Scale info for each note. It will allow one to edit
 it correctly later in phone composer (for example, in 33xx)
 .UNINDENT
 .UNINDENT
@@ -1048,7 +1048,7 @@ case insensitive substring lookup. You can interrupt searching by pressing
 .UNINDENT
 .SS Filesystem commands
 .sp
-Gammu allows to access phones using native protocol (Nokias) or OBEX. Your
+Gammu allows one to access phones using native protocol (Nokias) or OBEX. Your
 phone can also support usb storage, which is handled on the operating system
 level and Gammu does not use that.
 .INDENT 0.0
@@ -1194,7 +1194,7 @@ In new models all bitmaps are saved in filesystem and should go into filesystem 
 .TP
 .B copybitmap inputfile [outputfile [OPERATOR|PICTURE|STARTUP|CALLER]]
 .sp
-Allow to convert logos files to another. When give ONLY inputfile, output will
+Allow one to convert logos files to another. When give ONLY inputfile, output will
 be written to stdout using ASCII art. When give output file and format, in
 some file formats (like NLM) will be set indicator informing about logo type
 to given.
@@ -1234,7 +1234,7 @@ Get Picture Image from phone.
 .TP
 .B STARTUP [file]
 .sp
-Get static startup logo from phone. Allow to save it in file.
+Get static startup logo from phone. Allow one to save it in file.
 .UNINDENT
 .INDENT 7.0
 .TP
@@ -1618,7 +1618,7 @@ Gammu to vBookmark file.
 .TP
 .B CALENDAR target.vcs file location
 .sp
-Allows to convert between various backup formats which gammu
+Allows one to convert between various backup formats which gammu
 supports for calendar events. The file type is guessed (for input file
 guess is based on extension and file content, for output solely on
 extension).
@@ -1627,7 +1627,7 @@ extension).
 .TP
 .B TODO target.vcs file location
 .sp
-Allows to convert between various backup formats which gammu
+Allows one to convert between various backup formats which gammu
 supports for todo events. The file type is guessed (for input file
 guess is based on extension and file content, for output solely on
 extension).
@@ -1636,7 +1636,7 @@ extension).
 .TP
 .B VCARD10|VCARD21 target.vcf file SM|ME location
 .sp
-Allows to convert between various backup formats which gammu
+Allows one to convert between various backup formats which gammu
 supports for phonebook events. The file type is guessed (for input file
 guess is based on extension and file content, for output solely on
 extension).
@@ -2170,14 +2170,14 @@ Decodes a dump made by Gammu with
 .TP
 .B decodesniff MBUS2|IRDA file [phonemodel]
 .sp
-Allows to decode sniffs. See \fIDiscovering protocol\fP for more details.
+Allows one to decode sniffs. See \fIDiscovering protocol\fP for more details.
 .UNINDENT
 .SS Other commands
 .INDENT 0.0
 .TP
 .B entersecuritycode PIN|PUK|PIN2|PUK2|PHONE|NETWORK code|\- [newpin|\-]
 .sp
-Allow to enter security code from PC. When code is \fB\-\fP, it is read from stdin.
+Allow one to enter security code from PC. When code is \fB\-\fP, it is read from stdin.
 .sp
 In case entering PUK, some phones require you to set new PIN as well.
 .UNINDENT
