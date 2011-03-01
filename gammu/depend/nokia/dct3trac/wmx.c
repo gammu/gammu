@@ -20,6 +20,7 @@
 #include "../../../../libgammu/gsmstate.h"
 #include "../../../../libgammu/service/gsmpbk.h"
 #include "../../../../libgammu/phone/nokia/dct3/dct3func.h"
+#include "../../../../helper/printing.h"
 #include "../../../gammu.h"
 #include "../dct3.h"
 #include "wmx.h"
@@ -366,7 +367,8 @@ void DCT3SetDebug(int argc, char *argv[])
 	/* Open XML file .. needs to be argument */
 	xout = fopen("out.xml", "w");
 	if (xout == NULL) {
-		return;
+		printf_err("Failed to open out.xml for writing!\n");
+		Terminate(3);
 	}
 	GSMDecoder_xmlout(gsmdec, xout);
 
