@@ -15,10 +15,10 @@ char debug_filename[] = ".\\gammu-debug-test.log";
 char debug_filename[] = "./gammu-debug-test.log";
 #endif
 
-NORETURN void fail(int errcode)
+NORETURN void fail(int error_code)
 {
 	unlink(debug_filename);
-	exit(errcode);
+	exit(error_code);
 }
 
 void check_log(FILE * f, gboolean match, const char *test_name)
