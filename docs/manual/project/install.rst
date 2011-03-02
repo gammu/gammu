@@ -264,6 +264,15 @@ install mingw32. Build is then quite simple:
     cmake .. -DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchain-mingw32.cmake
     make
 
+There is also toolchain configuration for Win64 available:
+
+.. code-block:: sh
+
+    mkdir build-win64
+    cd build-win64
+    cmake .. -DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchain-mingw64.cmake
+    make
+
 If your MinGW cross compiler binaries are not found automatically, you
 can specify their different names in cmake/Toolchain-mingw32.cmake.
 
