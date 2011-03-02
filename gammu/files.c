@@ -421,7 +421,7 @@ static void GetOneFile(GSM_File * File, gboolean newtime, int i)
 			fprintf(stderr, _("%i percent done."), (int)(File->Used * 100 / Size));
 		}
 		fprintf(stderr, _("%lu Bytes in %li seconds, %lu Bytes/sec"),
-			(long unsigned int) File->Used, diff, File->Used / diff);
+			(long unsigned int) File->Used, (long unsigned int) diff, (long unsigned int) File->Used / diff);
 	}
 	fprintf(stderr, "\n");
 	fflush(stderr);
