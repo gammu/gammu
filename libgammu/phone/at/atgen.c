@@ -1008,7 +1008,7 @@ GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned c
 GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, const char *format, ...)
 {
 	const char *fmt = format;
-	const char *inp = input;
+	const char *input_pos = input;
 	char *endptr = NULL, *out_s = NULL, *search_pos = NULL;
 	GSM_DateTime *out_dt;
 	unsigned char *out_us = NULL,*buffer = NULL,*buffer2=NULL;
@@ -1032,17 +1032,17 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 				switch(*fmt++) {
 					case 'i':
 						out_i = va_arg(ap, int *);
-						*out_i = strtol(inp, &endptr, 10);
-						if (endptr == inp) {
+						*out_i = strtol(input_pos, &endptr, 10);
+						if (endptr == input_pos) {
 							error = ERR_UNKNOWNRESPONSE;
 							goto end;
 						}
 						smprintf(s, "Parsed int %d\n", *out_i);
-						inp = endptr;
+						input_pos = endptr;
 						break;
 					case 'n':
 						out_i = va_arg(ap, int *);
-						length = ATGEN_GrabString(s, inp, &buffer);
+						length = ATGEN_GrabString(s, input_pos, &buffer);
 						*out_i = strtol(buffer, &endptr, 10);
 						free(buffer);
 						if (endptr == (char *)buffer) {
@@ -1050,33 +1050,33 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 							goto end;
 						}
 						smprintf(s, "Parsed int %d\n", *out_i);
-						inp += length;
+						input_pos += length;
 						break;
 					case 'I':
 						out_i = va_arg(ap, int *);
-						*out_i = strtol(inp, &endptr, 10);
-						if (endptr == inp) {
+						*out_i = strtol(input_pos, &endptr, 10);
+						if (endptr == input_pos) {
 							smprintf(s, "Number empty\n");
 							*out_i = 0;
 						} else {
 							smprintf(s, "Parsed int %d\n", *out_i);
-							inp = endptr;
+							input_pos = endptr;
 						}
 						break;
 					case 'l':
 						out_l = va_arg(ap, long int *);
-						*out_l = strtol(inp, &endptr, 10);
-						if (endptr == inp) {
+						*out_l = strtol(input_pos, &endptr, 10);
+						if (endptr == input_pos) {
 							error = ERR_UNKNOWNRESPONSE;
 							goto end;
 						}
 						smprintf(s, "Parsed long int %ld\n", *out_l);
-						inp = endptr;
+						input_pos = endptr;
 						break;
 					case 'p':
 						out_s = va_arg(ap, char *);
 						storage_size = va_arg(ap, size_t);
-						length = ATGEN_GrabString(s, inp, &buffer);
+						length = ATGEN_GrabString(s, input_pos, &buffer);
 						smprintf(s, "Parsed phone string \"%s\"\n", buffer);
 						error = ATGEN_DecodeText(s,
 								buffer, strlen(buffer),
@@ -1091,12 +1091,12 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 						if (error != ERR_NONE) {
 							goto end;
 						}
-						inp += length;
+						input_pos += length;
 						break;
 					case 's':
 						out_s = va_arg(ap, char *);
 						storage_size = va_arg(ap, size_t);
-						length = ATGEN_GrabString(s, inp, &buffer);
+						length = ATGEN_GrabString(s, input_pos, &buffer);
 						smprintf(s, "Parsed generic string \"%s\"\n", buffer);
 						error = ATGEN_DecodeText(s,
 								buffer, strlen(buffer),
@@ -1111,12 +1111,12 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 						if (error != ERR_NONE) {
 							goto end;
 						}
-						inp += length;
+						input_pos += length;
 						break;
 					case 't':
 						out_s = va_arg(ap, char *);
 						storage_size = va_arg(ap, size_t);
-						length = ATGEN_GrabString(s, inp, &buffer);
+						length = ATGEN_GrabString(s, input_pos, &buffer);
 						smprintf(s, "Parsed string with length \"%s\"\n", buffer);
 						if (!isdigit((int)buffer[0])) {
 							free(buffer);
@@ -1145,23 +1145,23 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 						if (error != ERR_NONE) {
 							goto end;
 						}
-						inp += length;
+						input_pos += length;
 						break;
 					case 'u':
 						out_s = va_arg(ap, char *);
 						storage_size = va_arg(ap, size_t);
-						length = ATGEN_GrabString(s, inp, &buffer);
+						length = ATGEN_GrabString(s, input_pos, &buffer);
 						smprintf(s, "Parsed utf-8 string  \"%s\"\n", buffer);
 						DecodeUTF8(out_s, buffer, strlen(buffer));
 						smprintf(s, "utf-8 string with length decoded as \"%s\"\n", DecodeUnicodeString(out_s));
 						free(buffer);
 						buffer = NULL;
-						inp += length;
+						input_pos += length;
 						break;
 					case 'T':
 						out_s = va_arg(ap, char *);
 						storage_size = va_arg(ap, size_t);
-						length = ATGEN_GrabString(s, inp, &buffer);
+						length = ATGEN_GrabString(s, input_pos, &buffer);
 						smprintf(s, "Parsed utf-8 string with length \"%s\"\n", buffer);
 						if (!isdigit((int)buffer[0])) {
 							free(buffer);
@@ -1181,12 +1181,12 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 						smprintf(s, "utf-8 string with length decoded as \"%s\"\n", DecodeUnicodeString(out_s));
 						free(buffer);
 						buffer = NULL;
-						inp += length;
+						input_pos += length;
 						break;
 					case 'e':
 						out_s = va_arg(ap, char *);
 						storage_size = va_arg(ap, size_t);
-						length = ATGEN_GrabString(s, inp, &buffer);
+						length = ATGEN_GrabString(s, input_pos, &buffer);
 						smprintf(s, "Parsed generic string \"%s\"\n", buffer);
 						error = ATGEN_DecodeText(s,
 								buffer, strlen(buffer),
@@ -1201,12 +1201,12 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 						if (error != ERR_NONE) {
 							goto end;
 						}
-						inp += length;
+						input_pos += length;
 						break;
 					case 'S':
 						out_s = va_arg(ap, char *);
 						storage_size = va_arg(ap, size_t);
-						length = ATGEN_GrabString(s, inp, &buffer);
+						length = ATGEN_GrabString(s, input_pos, &buffer);
 						if (buffer[0] == 0x02 && buffer[strlen(buffer) - 1] == 0x03) {
 							memmove(buffer, buffer + 1, strlen(buffer) - 2);
 							buffer[strlen(buffer) - 2] = 0;
@@ -1216,12 +1216,12 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 						smprintf(s, "Samsung string decoded as \"%s\"\n", DecodeUnicodeString(out_s));
 						free(buffer);
 						buffer = NULL;
-						inp += length;
+						input_pos += length;
 						break;
 					case 'r':
 						out_us = va_arg(ap, unsigned char *);
 						storage_size = va_arg(ap, size_t);
-						length = ATGEN_GrabString(s, inp, &buffer);
+						length = ATGEN_GrabString(s, input_pos, &buffer);
 						smprintf(s, "Parsed raw string \"%s\"\n", buffer);
 						if (strlen(buffer) > storage_size) {
 							free(buffer);
@@ -1232,18 +1232,18 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 						strcpy(out_us, buffer);
 						free(buffer);
 						buffer = NULL;
-						inp += length;
+						input_pos += length;
 						break;
 					case 'd':
 						out_dt = va_arg(ap, GSM_DateTime *);
-						length = ATGEN_GrabString(s, inp, &buffer);
+						length = ATGEN_GrabString(s, input_pos, &buffer);
 						/* Fix up reply from broken phones which split
 						 * date to two strings */
-						if (length > 0 &&  *(inp + length) == ',' &&
+						if (length > 0 &&  *(input_pos + length) == ',' &&
 								strchr(buffer, ',') == NULL
 								) {
 							length++;
-							length += ATGEN_GrabString(s, inp + length, &buffer2);
+							length += ATGEN_GrabString(s, input_pos + length, &buffer2);
 							buffer = (unsigned char *)realloc(buffer, length + 2);
 							strcat(buffer, ",");
 							strcat(buffer, buffer2);
@@ -1260,14 +1260,14 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 							if (error != ERR_NONE) {
 								goto end;
 							}
-							inp += length;
+							input_pos += length;
 						} else {
 							free(buffer);
 							buffer = NULL;
 						}
 						break;
 					case '@':
-						if (*inp++ != '@') {
+						if (*input_pos++ != '@') {
 							error = ERR_UNKNOWNRESPONSE;
 							goto end;
 						}
@@ -1282,10 +1282,10 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 				}
 				break;
 			case ' ':
-				while (isspace((int)*inp)) inp++;
+				while (isspace((int)*input_pos)) input_pos++;
 				break;
 			default:
-				if (*inp++ != *(fmt - 1)) {
+				if (*input_pos++ != *(fmt - 1)) {
 					error = ERR_UNKNOWNRESPONSE;
 					goto end;
 				}
@@ -1294,9 +1294,9 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 	}
 
 	/* Ignore trailing spaces */
-	while (isspace((int)*inp)) inp++;
+	while (isspace((int)*input_pos)) input_pos++;
 
-	if (*inp != 0) {
+	if (*input_pos != 0) {
 		smprintf(s, "String do not end same!\n");
 		error = ERR_UNKNOWNRESPONSE;
 		goto end;
