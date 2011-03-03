@@ -216,8 +216,35 @@ char * SMSDODBC_QuoteString(GSM_SMSDConfig * Config, SQL_conn *conn, const char 
 /* LAST_INSERT_ID */
 unsigned long long SMSDODBC_SeqID(GSM_SMSDConfig * Config, const char *id)
 {
-	/* TODO */
-	return 0;
+	SQLRETURN ret;
+	SQLHSTMT stmt;
+	SQLINTEGER value;
+
+	ret = SQLAllocHandle(SQL_HANDLE_STMT, Config->conn.odbc.dbc, &stmt);
+	if (!SQL_SUCCEEDED(ret)) {
+		return 0;
+	}
+
+	ret = SQLExecDirect (stmt, (SQLCHAR*)"SELECT @@IDENTITY", SQL_NTS);
+	if (!SQL_SUCCEEDED(ret)) {
+		SQLFreeHandle (SQL_HANDLE_STMT, stmt);
+		return 0;
+	}
+
+	ret = SQLFetch(stmt);
+	if (!SQL_SUCCEEDED(ret)) {
+		SQLFreeHandle (SQL_HANDLE_STMT, stmt);
+		return 0;
+	}
+
+	ret = SQLGetData(stmt, 1, SQL_C_SLONG, &value, 0, NULL);
+	if (!SQL_SUCCEEDED(ret)) {
+		SQLFreeHandle (SQL_HANDLE_STMT, stmt);
+		return 0;
+	}
+	SQLFreeHandle (SQL_HANDLE_STMT, stmt);
+
+	return value;
 }
 
 unsigned long SMSDODBC_AffectedRows(GSM_SMSDConfig * Config, SQL_result res)

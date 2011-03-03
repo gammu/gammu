@@ -97,6 +97,15 @@ user = @MYSQL_USER@
 password = @MYSQL_PASSWORD@
 EOT
         ;;
+    odbc)
+        cat >> .smsdrc <<EOT
+service = sql
+driver = odbc
+pc = smsd
+user = @MYSQL_USER@
+password = @MYSQL_PASSWORD@
+EOT
+        ;;
     null)
         TEST_MATCH=";999999999999999;0;9;0;100;42"
         cat >> .smsdrc <<EOT
@@ -126,7 +135,7 @@ case $SERVICE in
         echo "DROP TABLE IF EXISTS daemons, gammu, inbox, outbox, outbox_multipart, pbk, pbk_groups, phones, sentitems;" | PGPASSWORD=@PSQL_PASSWORD@ @PSQL_BIN@ -h @PSQL_HOST@ -U @PSQL_USER@ @PSQL_DATABASE@
         PGPASSWORD=@PSQL_PASSWORD@ @PSQL_BIN@ -h @PSQL_HOST@ -U @PSQL_USER@ @PSQL_DATABASE@ < @CMAKE_CURRENT_SOURCE_DIR@/../docs/sql/pgsql.sql 2>&1 | grep -v 'ERROR.*language "plpgsql" already exists'
         ;;
-    *mysql)
+    *mysql|odbc)
         echo "DROP TABLE IF EXISTS daemons, gammu, inbox, outbox, outbox_multipart, pbk, pbk_groups, phones, sentitems;" | @MYSQL_BIN@ -u@MYSQL_USER@ -h@MYSQL_HOST@ -p@MYSQL_PASSWORD@ @MYSQL_DATABASE@
         @MYSQL_BIN@ -h@MYSQL_HOST@ -u@MYSQL_USER@ -p@MYSQL_PASSWORD@ @MYSQL_DATABASE@ < @CMAKE_CURRENT_SOURCE_DIR@/../docs/sql/mysql.sql
         ;;
@@ -168,7 +177,7 @@ case $SERVICE in
     *pgsql)
         echo "INSERT INTO outbox(DestinationNumber,TextDecoded,CreatorID,Coding) VALUES('800123465', 'This is a SQL test message', 'T3st', 'Default_No_Compression');" | PGPASSWORD=@PSQL_PASSWORD@ @PSQL_BIN@ -h @PSQL_HOST@ -U @PSQL_USER@ @PSQL_DATABASE@
         ;;
-    *mysql)
+    *mysql|odbc)
         echo "INSERT INTO outbox(DestinationNumber,TextDecoded,CreatorID,Coding) VALUES('800123465', 'This is a SQL test message', 'T3st', 'Default_No_Compression');" | @MYSQL_BIN@ -u@MYSQL_USER@ -h@MYSQL_HOST@ -p@MYSQL_PASSWORD@ @MYSQL_DATABASE@
         ;;
     files*)

@@ -25,6 +25,7 @@ option (COVERAGE "Add flags for Coverage analysis" OFF)
 option (ONLINE_TESTING "Enable testing of parts which use remote servers" OFF)
 option (PSQL_TESTING "Enable testing of PostgreSQL SMSD backend" OFF)
 option (MYSQL_TESTING "Enable testing of MySQL SMSD backend" OFF)
+option (ODBC_TESTING "Enable testing of ODBC MySQL SMSD backend" OFF)
 
 option (LARGE_FILES "Support for large files" ON)
 if (LARGE_FILES)

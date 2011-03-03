@@ -13,6 +13,8 @@ if (WITH_BACKUP)
     set(MYSQL_USER smsd CACHE STRING "User to use for MySQL tests")
     set(MYSQL_PASSWORD smsd CACHE STRING "Password to use for MySQL tests")
 
+    set(ODBC_HOST smsd CACHE STRING "ODBC connection to use for MySQL tests")
+
     configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/test-smsd.sh" "${CMAKE_CURRENT_BINARY_DIR}/run-test-smsd.sh" ESCAPE_QUOTES)
     configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/test-smsd-files-include.sh" "${CMAKE_CURRENT_BINARY_DIR}/run-test-smsd-files-include.sh" ESCAPE_QUOTES)
 
@@ -53,6 +55,9 @@ if (WITH_BACKUP)
         if (LIBDBI_FOUND)
             smsd_testsuite("dbi-mysql")
         endif (LIBDBI_FOUND)
+        if (ODBC_FOUND)
+            smsd_testsuite("odbc")
+        endif (ODBC_FOUND)
     endif (MYSQL_TESTING)
 
     if (PSQL_TESTING)
