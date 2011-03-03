@@ -148,6 +148,9 @@ void SMSDSQL_Time2String(struct GSM_SMSDdbobj *db, time_t timestamp, char *stati
 	struct tm *timestruct;
 	if (timestamp == -2) {
 		strcpy(static_buff, "0000-00-00 00:00:00");
+	} else if (strcasecmp(db->DriverName, "odbc") == 0) {
+		timestruct = gmtime(&timestamp);
+		strftime(static_buff, size, "{ ts '%Y-%m-%d %H:%M:%S' }", timestruct);
 	} else if (strcmp(db->DriverName, "pgsql") == 0) {
 		timestruct = gmtime(&timestamp);
 		strftime(static_buff, size, "%Y-%m-%d %H:%M:%S GMT", timestruct);
