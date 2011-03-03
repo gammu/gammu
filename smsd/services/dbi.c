@@ -283,10 +283,10 @@ int SMSDDBI_NextRow(GSM_SMSDConfig * Config, SQL_result *res)
 	return dbi_result_next_row(res->dbi);
 }
 /* quote strings */
-char * SMSDDBI_QuoteString(GSM_SMSDConfig * Config, SQL_conn *conn, const char *string)
+char * SMSDDBI_QuoteString(GSM_SMSDConfig * Config, const char *string)
 {
 	char *encoded_text = NULL;
-	dbi_conn_quote_string_copy(conn->dbi, string, &encoded_text);
+	dbi_conn_quote_string_copy(Config->conn.dbi, string, &encoded_text);
 	return encoded_text;
 }
 /* LAST_INSERT_ID */

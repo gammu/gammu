@@ -154,7 +154,7 @@ int SMSDMySQL_NextRow(GSM_SMSDConfig * Config, SQL_result *res)
 }
 
 /* quote strings */
-char * SMSDMySQL_QuoteString(GSM_SMSDConfig * Config, SQL_conn *conn, const char *string)
+char * SMSDMySQL_QuoteString(GSM_SMSDConfig * Config, const char *string)
 {
 	char *buff;
 	int len = strlen(string);
@@ -162,7 +162,7 @@ char * SMSDMySQL_QuoteString(GSM_SMSDConfig * Config, SQL_conn *conn, const char
 
 	buff[0] = '\'';
 	buff[1] = '\0';
-	mysql_real_escape_string(conn->my, buff+1, string, len);
+	mysql_real_escape_string(Config->conn.my, buff+1, string, len);
 	strcat(buff, "'");
 	return buff;
 }

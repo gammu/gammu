@@ -143,7 +143,7 @@ static SQL_Error SMSDPgSQL_Query(GSM_SMSDConfig * Config, const char *query, SQL
 }
 
 /* Assume 2 * strlen(from) + 1 buffer in to */
-char * SMSDPgSQL_QuoteString(GSM_SMSDConfig * Config, SQL_conn *conn, const char *from)
+char * SMSDPgSQL_QuoteString(GSM_SMSDConfig * Config, const char *from)
 {
 	char *to;
 	int ret =0;
@@ -151,7 +151,7 @@ char * SMSDPgSQL_QuoteString(GSM_SMSDConfig * Config, SQL_conn *conn, const char
 	to[0] = '\'';
 	to[1] = '\0';
 #ifdef HAVE_PQESCAPESTRINGCONN
-	PQescapeStringConn(conn->pg, to+1, from, strlen(from), &ret);
+	PQescapeStringConn(Config->conn.pg, to+1, from, strlen(from), &ret);
 #else
 	PQescapeString(to+1, from, strlen(from));
 #endif

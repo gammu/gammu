@@ -205,7 +205,7 @@ int SMSDODBC_NextRow(GSM_SMSDConfig * Config, SQL_result *res)
 }
 
 /* quote strings */
-char * SMSDODBC_QuoteString(GSM_SMSDConfig * Config, SQL_conn *conn, const char *string)
+char * SMSDODBC_QuoteString(GSM_SMSDConfig * Config, const char *string)
 {
 	char *encoded_text = NULL;
 	/* TODO: implement escaping */
