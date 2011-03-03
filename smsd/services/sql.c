@@ -29,6 +29,7 @@
 #include "../core.h"
 #include "../../helper/string.h"
 
+const char now_plus_odbc[] = "{fn CURRENT_TIMESTAMP()} + INTERVAL %d SECOND";
 const char now_plus_mysql[] = "(NOW() + INTERVAL %d SECOND) + 0";
 const char now_plus_pgsql[] = "now() + interval '%d seconds'";
 const char now_plus_sqlite[] = "datetime('now', '+%d seconds')";
@@ -53,18 +54,22 @@ static const char *SMSDSQL_NowPlus(GSM_SMSDConfig * Config, int seconds)
 		sprintf(result, now_plus_sqlite, seconds);
 	} else if (strcasecmp(driver_name, "freetds") == 0) {
 		sprintf(result, now_plus_freetds, seconds);
+	} else if (strcasecmp(driver_name, "odbc") == 0) {
+		sprintf(result, now_plus_odbc, seconds);
 	} else {
 		sprintf(result, now_plus_fallback, seconds);
 	}
 	return result;
 }
 
+const char now_odbc[] = "{fn CURRENT_TIMESTAMP()}";
 const char now_mysql[] = "NOW()";
 const char now_pgsql[] = "now()";
 const char now_sqlite[] = "datetime('now')";
 const char now_freetds[] = "CURRENT_TIMESTAMP";
 const char now_fallback[] = "NOW()";
 
+const char currtime_odbc[] = "{fn CURTIME()}";
 const char currtime_mysql[] = "CURTIME()";
 const char currtime_pgsql[] = "localtime";
 const char currtime_sqlite[] = "time('now')";
@@ -85,6 +90,8 @@ static const char *SMSDSQL_CurrentTime(GSM_SMSDConfig * Config)
 		return currtime_sqlite;
 	} else if (strcasecmp(driver_name, "freetds") == 0) {
 		return currtime_freetds;
+	} else if (strcasecmp(driver_name, "odbc") == 0) {
+		return currtime_odbc;
 	} else {
 		return currtime_fallback;
 	}
@@ -103,6 +110,8 @@ static const char *SMSDSQL_Now(GSM_SMSDConfig * Config)
 		return now_sqlite;
 	} else if (strcasecmp(driver_name, "freetds") == 0) {
 		return now_freetds;
+	} else if (strcasecmp(driver_name, "odbc") == 0) {
+		return now_odbc;
 	} else {
 		return now_fallback;
 	}
