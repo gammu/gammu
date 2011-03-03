@@ -171,13 +171,12 @@ static SQL_Error SMSDDBI_Connect(GSM_SMSDConfig * Config)
 	}
 
 	Config->conn.dbi = dbi_conn_new(Config->driver);
-	db->DriverName = dbi_driver_get_name(dbi_conn_get_driver(Config->conn.dbi));
 	if (Config->conn.dbi == NULL) {
 		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to init %s driver!", Config->driver);
 		dbi_shutdown();
 		return SQL_FAIL;
 	} else {
-		SMSD_Log(DEBUG_SQL, Config, "Using DBI driver '%s'", db->DriverName);
+		SMSD_Log(DEBUG_SQL, Config, "Using DBI driver '%s'", dbi_driver_get_name(dbi_conn_get_driver(Config->conn.dbi)));
 	}
 
 	dbi_conn_error_handler(Config->conn.dbi, SMSDDBI_Callback, Config);
