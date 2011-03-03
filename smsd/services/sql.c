@@ -29,7 +29,7 @@
 #include "../core.h"
 #include "../../helper/string.h"
 
-const char now_plus_odbc[] = "{ fn TIMESTAMPADD('SQL_TSI_SECOND', %d, {fn CURRENT_TIMESTAMP()}) }";
+const char now_plus_odbc[] = "{fn CURRENT_TIMESTAMP()} + INTERVAL %d SECOND";
 const char now_plus_mysql[] = "(NOW() + INTERVAL %d SECOND) + 0";
 const char now_plus_pgsql[] = "now() + interval '%d seconds'";
 const char now_plus_sqlite[] = "datetime('now', '+%d seconds')";
