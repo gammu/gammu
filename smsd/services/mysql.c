@@ -1,4 +1,5 @@
 /* (c) 2004 by Marcin Wiacek */
+/* Copyright (c) 2009 - 2011 Michal Cihar <michal@cihar.com> */
 
 #include <gammu.h>
 
