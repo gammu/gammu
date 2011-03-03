@@ -178,13 +178,7 @@ unsigned long SMSDMySQL_AffectedRows(GSM_SMSDConfig * Config, SQL_result Res)
 	return mysql_affected_rows(Res.my.con);
 }
 
-unsigned long SMSDMySQL_NumRows(GSM_SMSDConfig * Config, SQL_result Res)
-{
-	return mysql_num_rows(Res.my.res);
-}
-
 struct GSM_SMSDdbobj SMSDMySQL = {
-	"mysql",
 	SMSDMySQL_Connect,
 	SMSDMySQL_Query,
 	SMSDMySQL_Free,
@@ -192,7 +186,6 @@ struct GSM_SMSDdbobj SMSDMySQL = {
 	SMSDMySQL_NextRow,
 	SMSDMySQL_SeqID,
 	SMSDMySQL_AffectedRows,
-	SMSDMySQL_NumRows,
 	SMSDMySQL_GetString,
 	SMSDMySQL_GetNumber,
 	SMSDMySQL_GetDate,

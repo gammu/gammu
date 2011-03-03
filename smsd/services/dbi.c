@@ -305,13 +305,7 @@ unsigned long SMSDDBI_AffectedRows(GSM_SMSDConfig * Config, SQL_result Res)
 	return dbi_result_get_numrows_affected(Res.dbi);
 }
 
-unsigned long SMSDDBI_NumRows(GSM_SMSDConfig * Config, SQL_result Res)
-{
-	return dbi_result_get_numrows(Res.dbi);
-}
-
 struct GSM_SMSDdbobj SMSDDBI = {
-	"",
 	SMSDDBI_Connect,
 	SMSDDBI_Query,
 	SMSDDBI_Free,
@@ -319,7 +313,6 @@ struct GSM_SMSDdbobj SMSDDBI = {
 	SMSDDBI_NextRow,
 	SMSDDBI_SeqID,
 	SMSDDBI_AffectedRows,
-	SMSDDBI_NumRows,
 	SMSDDBI_GetString,
 	SMSDDBI_GetNumber,
 	SMSDDBI_GetDate,

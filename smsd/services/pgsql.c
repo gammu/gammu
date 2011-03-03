@@ -159,12 +159,6 @@ char * SMSDPgSQL_QuoteString(GSM_SMSDConfig * Config, SQL_conn *conn, const char
 	return to;
 }
 
-unsigned long SMSDPgSQL_NumRows(GSM_SMSDConfig * Config, SQL_result Res)
-{
-	return PQntuples(Res.pg.res);
-}
-
-
 unsigned long SMSDPgSQL_AffectedRows(GSM_SMSDConfig * Config, SQL_result Res)
 {
 	return atoi(PQcmdTuples(Res.pg.res));
@@ -188,7 +182,6 @@ unsigned long long SMSDPgSQL_SeqID(GSM_SMSDConfig * Config, const char *seq_id)
 }
 
 struct GSM_SMSDdbobj SMSDPgSQL = {
-	"pgsql",
 	SMSDPgSQL_Connect,
 	SMSDPgSQL_Query,
 	SMSDPgSQL_Free,
@@ -196,7 +189,6 @@ struct GSM_SMSDdbobj SMSDPgSQL = {
 	SMSDPgSQL_NextRow,
 	SMSDPgSQL_SeqID,
 	SMSDPgSQL_AffectedRows,
-	SMSDPgSQL_NumRows,
 	SMSDPgSQL_GetString,
 	SMSDPgSQL_GetNumber,
 	SMSDPgSQL_GetDate,

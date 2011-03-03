@@ -260,20 +260,7 @@ unsigned long SMSDODBC_AffectedRows(GSM_SMSDConfig * Config, SQL_result res)
 	return count;
 }
 
-unsigned long SMSDODBC_NumRows(GSM_SMSDConfig * Config, SQL_result Res)
-{
-	SQLRETURN ret;
-
-	/* FIXME: This is hack relying on sql.c not using anything else than 0 and 1 as values */
-	ret = SQLMoreResults(Res.odbc);
-	if (SQL_SUCCEEDED(ret)) {
-		return 1;
-	}
-	return 0;
-}
-
 struct GSM_SMSDdbobj SMSDODBC = {
-	"",
 	SMSDODBC_Connect,
 	SMSDODBC_Query,
 	SMSDODBC_Free,
@@ -281,7 +268,6 @@ struct GSM_SMSDdbobj SMSDODBC = {
 	SMSDODBC_NextRow,
 	SMSDODBC_SeqID,
 	SMSDODBC_AffectedRows,
-	SMSDODBC_NumRows,
 	SMSDODBC_GetString,
 	SMSDODBC_GetNumber,
 	SMSDODBC_GetDate,
