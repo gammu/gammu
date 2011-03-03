@@ -101,7 +101,7 @@ EOT
         cat >> .smsdrc <<EOT
 service = sql
 driver = odbc
-pc = smsd
+pc = @ODBC_DSN@
 user = @MYSQL_USER@
 password = @MYSQL_PASSWORD@
 EOT
