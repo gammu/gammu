@@ -218,8 +218,8 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 	if (s->ConnectionType != GCT_DKU2PHONET && s->ConnectionType != GCT_DKU2AT) {
 		d->old_settings.DCBlength = sizeof(DCB);
 		if (GetCommState(d->hPhone, &d->old_settings)==0) {
-			GSM_OSErrorInfo(s, "ReadDevice in serial_open");
-			return ERR_DEVICEREADERROR;
+			GSM_OSErrorInfo(s, "GetCommState in serial_open");
+			return ERR_DEVICEOPENERROR;
 		}
 
 		/* When char will be received, we will receive notifications */
@@ -252,7 +252,7 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 
 	    	/* Initialise the port settings */
 		if (SetCommState(d->hPhone, &dcb)==0) {
-			GSM_OSErrorInfo(s, "WriteDevice in serial_open");
+			GSM_OSErrorInfo(s, "SetCommState in serial_open");
 			return ERR_DEVICEOPENERROR;
 		}
 	}

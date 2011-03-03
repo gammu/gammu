@@ -22,6 +22,7 @@ ChangeLog
 2011???? - 1.29.92
 
 [-] * Documentation improvements and fixes.
+[-] * Saner error handling in Windows serial driver.
     
 20110225 - 1.29.91
 
