@@ -152,15 +152,19 @@ static GSM_Error SMSDSQL_Query(GSM_SMSDConfig * Config, const char *query, SQL_r
 	return ERR_TIMEOUT;
 }
 
-void SMSDSQL_Time2String(struct GSM_SMSDdbobj *db, time_t timestamp, char *static_buff, size_t size)
+void SMSDSQL_Time2String(GSM_SMSDConfig * Config, time_t timestamp, char *static_buff, size_t size)
 {
 	struct tm *timestruct;
+	const char *driver_name;
+
+	driver_name = Config->driver;
+
 	if (timestamp == -2) {
 		strcpy(static_buff, "0000-00-00 00:00:00");
-	} else if (strcasecmp(db->DriverName, "odbc") == 0) {
+	} else if (strcasecmp(driver_name, "odbc") == 0) {
 		timestruct = gmtime(&timestamp);
 		strftime(static_buff, size, "{ ts '%Y-%m-%d %H:%M:%S' }", timestruct);
-	} else if (strcasecmp(db->DriverName, "pgsql") == 0) {
+	} else if (strcasecmp(driver_name, "pgsql") == 0 || strcasecmp(driver_name, "native_pgsql") == 0) {
 		timestruct = gmtime(&timestamp);
 		strftime(static_buff, size, "%Y-%m-%d %H:%M:%S GMT", timestruct);
 	} else {
@@ -299,11 +303,11 @@ static GSM_Error SMSDSQL_NamedQuery(GSM_SMSDConfig * Config, const char *sql_que
 							numeric = 1;
 							break;
 						case 'C':
-							SMSDSQL_Time2String(db, Fill_Time_T(sms->SMSCTime), static_buff, sizeof(static_buff));
+							SMSDSQL_Time2String(Config, Fill_Time_T(sms->SMSCTime), static_buff, sizeof(static_buff));
 							to_print = static_buff;
 							break;
 						case 'd':
-							SMSDSQL_Time2String(db, Fill_Time_T(sms->DateTime), static_buff, sizeof(static_buff));
+							SMSDSQL_Time2String(Config, Fill_Time_T(sms->DateTime), static_buff, sizeof(static_buff));
 							to_print = static_buff;
 							break;
 						case 'e':
@@ -658,7 +662,7 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 			return ERR_UNKNOWN;
 		}
 		sprintf(ID, "%ld", (long)db->GetNumber(Config, Res, 0));
-		SMSDSQL_Time2String(db, timestamp, Config->DT, sizeof(Config->DT));
+		SMSDSQL_Time2String(Config, timestamp, Config->DT, sizeof(Config->DT));
 		sender_id = db->GetString(Config, Res, 3);
 		if (sender_id == NULL || strlen(sender_id) == 0 || !strcmp(sender_id, Config->PhoneID)) {
 			if (SMSDSQL_RefreshSendStatus(Config, ID) == ERR_NONE) {
