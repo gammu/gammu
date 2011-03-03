@@ -49,7 +49,7 @@
 #include "core.h"
 #include "services/files.h"
 #include "services/null.h"
-#if defined(HAVE_MYSQL_MYSQL_H) || defined(HAVE_POSTGRESQL_LIBPQ_FE_H) || defined(LIBDBI_FOUND)
+#if defined(HAVE_MYSQL_MYSQL_H) || defined(HAVE_POSTGRESQL_LIBPQ_FE_H) || defined(LIBDBI_FOUND) || defined(ODBC_FOUND)
 #include "services/sql.h"
 #endif
 
@@ -413,7 +413,7 @@ GSM_Error SMSGetService(GSM_SMSDConfig *Config)
 		SMSD_Log(DEBUG_NOTICE, Config, "Using NULL service");
 		Config->Service = &SMSDNull;
 	} else if (strcasecmp(Config->ServiceName, "SQL") == 0) {
-#if defined(LIBDBI_FOUND) || defined(HAVE_MYSQL_MYSQL_H) || defined(HAVE_POSTGRESQL_LIBPQ_FE_H)
+#if defined(ODBC_FOUND) ||  defined(LIBDBI_FOUND) || defined(HAVE_MYSQL_MYSQL_H) || defined(HAVE_POSTGRESQL_LIBPQ_FE_H)
 		SMSD_Log(DEBUG_NOTICE, Config, "Using SQL service");
 		Config->Service = &SMSDSQL;
 		Config->driver = INI_GetValue(Config->smsdcfgfile, "smsd", "driver", FALSE);

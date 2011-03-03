@@ -10,7 +10,7 @@
 #include <sys/types.h>
 #endif
 /* definition of dbobject */
-#if defined(HAVE_MYSQL_MYSQL_H) || defined(HAVE_POSTGRESQL_LIBPQ_FE_H) || defined(LIBDBI_FOUND)
+#if defined(HAVE_MYSQL_MYSQL_H) || defined(HAVE_POSTGRESQL_LIBPQ_FE_H) || defined(LIBDBI_FOUND) || defined(ODBC_FOUND)
 #include "services/sql-core.h"
 #endif
 
@@ -104,7 +104,7 @@ struct _GSM_SMSDConfig {
 	GSM_SMSC	SMSC;
 	const char	*skipsmscnumber;
 
-#if defined(HAVE_MYSQL_MYSQL_H) || defined(HAVE_POSTGRESQL_LIBPQ_FE_H) || defined(LIBDBI_FOUND)
+#if defined(HAVE_MYSQL_MYSQL_H) || defined(HAVE_POSTGRESQL_LIBPQ_FE_H) || defined(LIBDBI_FOUND) || defined(ODBC_FOUND)
 	/* options for SQL database */
 	/**
 	 * Database name.
