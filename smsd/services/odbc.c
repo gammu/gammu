@@ -103,6 +103,12 @@ const char *SMSDODBC_GetString(GSM_SMSDConfig * Config, SQL_result res, unsigned
 		return NULL;
 	}
 
+	if ((long)size == (long)SQL_NULL_DATA) {
+		Config->conn.odbc.retstr = realloc(Config->conn.odbc.retstr, 1);
+		Config->conn.odbc.retstr[0] = '\0';
+		return Config->conn.odbc.retstr;
+	}
+
 	Config->conn.odbc.retstr = realloc(Config->conn.odbc.retstr, size + 1);
 
 	ret = SQLGetData(res.odbc, field + 1, SQL_C_CHAR, Config->conn.odbc.retstr, size + 1, &size);
