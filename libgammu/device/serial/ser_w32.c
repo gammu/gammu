@@ -152,7 +152,7 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 		DeviceName2[0] = 0;
 		if (RegOpenKeyEx(HKEY_LOCAL_MACHINE, "HARDWARE\\DEVICEMAP\\SERIALCOMM", 0, KEY_QUERY_VALUE, &hKey) != ERROR_SUCCESS) {
 			smprintf(s,"Error opening key\n");
-			return ERR_DEVICENOTWORK;
+			return ERR_DEVICENOTEXIST;
 		}
 		i = 0;
 		while(1) {
@@ -168,7 +168,7 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 			/*  win 98 */
 			if (RegOpenKeyEx(HKEY_LOCAL_MACHINE, "Enum\\USBVSP\\ATMELPORT\\0000", 0, KEY_QUERY_VALUE, &hKey) != ERROR_SUCCESS) {
 				smprintf(s,"Error opening key\n");
-				return ERR_DEVICENOTWORK;
+				return ERR_DEVICENOTEXIST;
 			}
 			i = 0;
 			while(1) {
@@ -180,7 +180,9 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 				i++;
 			}
 			RegCloseKey(hKey);
-			if (strlen(DeviceName2) == 0) return ERR_DEVICENOTWORK;
+			if (strlen(DeviceName2) == 0) {
+				return ERR_DEVICENOTEXIST;
+			}
 		}
 		smprintf(s,"DKU5 device is \"%s\"\n",DeviceName2);
 	}
