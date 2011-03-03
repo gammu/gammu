@@ -49,10 +49,24 @@ gboolean SMSDODBC_GetBool(GSM_SMSDConfig * Config, SQL_result rc, unsigned int f
 	return -1;
 }
 
-const char *SMSDODBC_GetString(GSM_SMSDConfig * Config, SQL_result res, unsigned int col)
+const char *SMSDODBC_GetString(GSM_SMSDConfig * Config, SQL_result rc, unsigned int field)
 {
-	/* TODO */
-	return NULL;
+	SQLLEN size;
+	SQLRETURN ret;
+
+	ret = SQLGetData(rc.odbc, field + 1, SQL_C_CHAR, NULL, 0, &size);
+	if (!SQL_SUCCEEDED(ret)) {
+		return NULL;
+	}
+
+	Config->conn.odbc.retstr = realloc(Config->conn.odbc.retstr, size + 1);
+
+	ret = SQLGetData(rc.odbc, field + 1, SQL_C_CHAR, Config->conn.odbc.retstr, size + 1, &size);
+	if (!SQL_SUCCEEDED(ret)) {
+		return NULL;
+	}
+
+	return Config->conn.odbc.retstr;
 }
 
 static void SMSDODBC_LogError(GSM_SMSDConfig * Config, SQLSMALLINT handle_type, SQLHANDLE handle, const char *message)
@@ -79,12 +93,18 @@ void SMSDODBC_Free(GSM_SMSDConfig * Config)
 {
 	SQLDisconnect(Config->conn.odbc.dbc);
 	SQLFreeHandle(SQL_HANDLE_ENV, Config->conn.odbc.env);
+	if (Config->conn.odbc.retstr != NULL) {
+		free(Config->conn.odbc.retstr);
+		Config->conn.odbc.retstr = NULL;
+	}
 }
 
 /* Connects to database */
 static SQL_Error SMSDODBC_Connect(GSM_SMSDConfig * Config)
 {
 	SQLRETURN ret;
+
+	Config->conn.odbc.retstr = NULL;
 
 	ret = SQLAllocHandle (SQL_HANDLE_ENV, SQL_NULL_HANDLE, &Config->conn.odbc.env);
 	if (!SQL_SUCCEEDED(ret)) {

@@ -73,6 +73,7 @@ typedef union __sql_conn {
 	struct {
 		SQLHENV env;        /* Environment */
 		SQLHDBC dbc;        /* DBC */
+		char * retstr;	    /* Retrun string */
 	} odbc;
 #endif
 } SQL_conn;
