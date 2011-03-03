@@ -14,7 +14,10 @@ long int GetInt(const char* param)
 
     result = strtol(param, &endptr, 10);
 
-#ifdef WIN32
+#ifdef WIN64
+    /* Win64 has even more broken behavior, it returns -1 on range error */
+    if ((errno == ERANGE && (result == LONG_MAX || result == LONG_MIN || result == -1))) {
+#elif defined(WIN32)
     /* Windows do not report correctly errno */
     if (result == LONG_MAX || result == LONG_MIN) {
 #else
