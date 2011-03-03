@@ -30,7 +30,7 @@ long long SMSDODBC_GetNumber(GSM_SMSDConfig * Config, SQL_result rc, unsigned in
 	SQLRETURN ret;
 	SQLINTEGER value;
 
-	ret = SQLGetData(rc.odbc, field, SQL_C_SLONG, &value, 0, NULL);
+	ret = SQLGetData(rc.odbc, field + 1, SQL_C_SLONG, &value, 0, NULL);
 	if (!SQL_SUCCEEDED(ret)) {
 		return -1;
 	}
