@@ -39,3 +39,17 @@ http://support.microsoft.com/kb/305599
 
 For unixODBC this is documented in user manual:
 http://www.unixodbc.org/doc/UserManual/
+
+Example
+-------
+
+Example configuration:
+
+.. code-block:: ini
+
+    [smsd]
+    service = sql
+    driver = odbc
+    host = dsn_of_your_database
+    user = username
+    password = password

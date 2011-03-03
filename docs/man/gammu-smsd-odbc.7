@@ -58,6 +58,20 @@ On Microsoft Windows, you can find instructions on Microsoft website:
 .sp
 For unixODBC this is documented in user manual:
 \fI\%http://www.unixodbc.org/doc/UserManual/\fP
+.SH EXAMPLE
+.sp
+Example configuration:
+.sp
+.nf
+.ft C
+[smsd]
+service = sql
+driver = odbc
+host = dsn_of_your_database
+user = username
+password = password
+.ft P
+.fi
 .SH AUTHOR
 Michal Čihař <michal@cihar.com>
 .SH COPYRIGHT
