@@ -72,7 +72,7 @@ General parameters of SMS daemon
 
         .. deprecated:: 1.28.93
     ``PGSQL``
-        synonym for :config:option:`Service` = ``SQL`` and :config:option:`Driver` = ``native_mysql``
+        synonym for :config:option:`Service` = ``SQL`` and :config:option:`Driver` = ``native_pgsql``
 
         stores messages in PostgreSQL database, see :ref:`gammu-smsd-pgsql` for details
 
@@ -388,7 +388,8 @@ supports same options for configuring connection to a database:
 
     SQL driver to use.
 
-    Can be either one of native drivers (``native_mysql`` or ``native_pgsql``) or :ref:`gammu-smsd-dbi` driver.
+    Can be either one of native drivers (``odbc``, ``native_mysql`` or
+    ``native_pgsql``) or :ref:`gammu-smsd-dbi` driver.
 
     Depends on what DBI drivers you have installed, DBI
     supports: ``mysql``, ``freetds`` (provides access to MS SQL Server and
