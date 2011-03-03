@@ -8,6 +8,7 @@ SQL service stores all its data in database. It can use one of these SQL backend
 
 * ``native_mysql`` for :ref:`gammu-smsd-mysql`
 * ``native_pgsql`` for :ref:`gammu-smsd-pgsql`
+* ``odbc`` for :ref:`gammu-smsd-odbc`
 * drivers supported by DBI for :ref:`gammu-smsd-dbi`, which include:
     * ``sqlite3`` - for SQLite 3
     * ``mysql`` - for MySQL
@@ -21,7 +22,7 @@ Common for all backends:
 
 * :config:option:`User` - user connecting to database
 * :config:option:`Password` - password for connecting to database
-* :config:option:`Host` - database host
+* :config:option:`Host` - database host or data source name
 * :config:option:`Database` - database name
 * :config:option:`Driver` - ``native_mysql``, ``native_pgsql`` or DBI one
 

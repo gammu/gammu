@@ -24,6 +24,7 @@ ChangeLog
 [-] * Documentation improvements and fixes.
 [-] * Saner error handling in Windows serial driver.
 [-] * Cleanup in SMSD internals.
+[+] * Added ODBC driver to SMSD.
     
 20110225 - 1.29.91
 

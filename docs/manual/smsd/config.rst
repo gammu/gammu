@@ -362,6 +362,8 @@ supports same options for configuring connection to a database:
     Database server address. It can also contain port or socket path after
     semicolon, for example ``localhost:/path/to/socket``.
 
+    For ODBC this is used as Data source name.
+
     .. versionadded:: 1.28.92
 
 .. config:option:: PC

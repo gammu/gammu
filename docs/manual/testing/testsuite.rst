@@ -168,3 +168,6 @@ Database backends configuration
     User to use for MySQL tests (default: ``smsd``)
 ``MYSQL_PASSWORD``
     Password to use for MySQL tests (default: ``smsd``)
+``ODBC_DSN```
+    ODBC DSN to use for ODBC tests (default: ``smsd``). 
+    Currently needs to point to MySQL database.

@@ -14,6 +14,7 @@ outgoing ones).
     mysql
     pgsql
     dbi
+    odbc
     null
     tables
 

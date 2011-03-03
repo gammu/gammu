@@ -239,6 +239,7 @@ man_pages = [
     ('smsd/mysql', 'gammu-smsd-mysql', 'gammu-smsd(1) backend using MySQL database server as a message storage', u'Michal Čihař <michal@cihar.com>', 7),
     ('smsd/pgsql', 'gammu-smsd-pgsql', 'gammu-smsd(1) backend using PostgreSQL database server as a message storage', u'Michal Čihař <michal@cihar.com>', 7),
     ('smsd/dbi', 'gammu-smsd-dbi', 'gammu-smsd(1) backend using DBI abstraction layer to use any supported database as a message storage', u'Michal Čihař <michal@cihar.com>', 7),
+    ('smsd/odbc', 'gammu-smsd-odbc', 'gammu-smsd(1) backend using ODBC abstraction layer to use any supported database as a message storage', u'Michal Čihař <michal@cihar.com>', 7),
     ('smsd/sql', 'gammu-smsd-sql', 'gammu-smsd(1) backend using SQL abstraction layer to use any supported database as a message storage', u'Michal Čihař <michal@cihar.com>', 7),
     ('smsd/run', 'gammu-smsd-run', 'documentation for RunOnReceive directive', u'Michal Čihař <michal@cihar.com>', 7),
     ('smsd/null', 'gammu-smsd-null', 'gammu-smsd(1) backend not storing messages', u'Michal Čihař <michal@cihar.com>', 7),
