@@ -207,7 +207,9 @@ int SMSDODBC_NextRow(GSM_SMSDConfig * Config, SQL_result *res)
 	ret = SQLFetch(res->odbc);
 
 	if (!SQL_SUCCEEDED(ret)) {
-		SMSDODBC_LogError(Config, SQL_HANDLE_STMT, res->odbc, "SQLGetData failed");
+		if (ret != SQL_NO_DATA) {
+			SMSDODBC_LogError(Config, SQL_HANDLE_STMT, res->odbc, "SQLGetData failed");
+		}
 		return 0;
 	}
 	return 1;
