@@ -43,12 +43,6 @@ time_t SMSDODBC_GetDate(GSM_SMSDConfig * Config, SQL_result rc, unsigned int fie
 	return -1;
 }
 
-gboolean SMSDODBC_GetBool(GSM_SMSDConfig * Config, SQL_result rc, unsigned int field)
-{
-	/* TODO */
-	return -1;
-}
-
 const char *SMSDODBC_GetString(GSM_SMSDConfig * Config, SQL_result rc, unsigned int field)
 {
 	SQLLEN size;
@@ -67,6 +61,19 @@ const char *SMSDODBC_GetString(GSM_SMSDConfig * Config, SQL_result rc, unsigned 
 	}
 
 	return Config->conn.odbc.retstr;
+}
+
+gboolean SMSDODBC_GetBool(GSM_SMSDConfig * Config, SQL_result rc, unsigned int field)
+{
+	long long intval;
+	const char * charval;
+
+	intval = SMSDODBC_GetNumber(Config, rc, field);
+	if (intval == -1) {
+		charval = SMSDODBC_GetString(Config, rc, field);
+		return GSM_StringToBool(charval);
+	}
+	return intval ? TRUE : FALSE;
 }
 
 static void SMSDODBC_LogError(GSM_SMSDConfig * Config, SQLSMALLINT handle_type, SQLHANDLE handle, const char *message)
