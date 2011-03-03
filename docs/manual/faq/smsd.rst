@@ -9,6 +9,10 @@ SMSD natively supports `MySQL`_ and `PostgreSQL`_. However it has also support f
 SQL Server, Sybase, Firebird,...). Unfortunately `libdbi`_ currently does not work
 natively on Microsoft Windows, so you can use it only on Unix platforms.
 
+Since version 1.29.92, SMSD can also connect to any ODBC data source, so you
+should be able to connect to virtually any database engine using this
+standard.
+
 .. seealso:: :ref:`gammu-smsd-sql`
 
 Is there some user interface for SMSD?
