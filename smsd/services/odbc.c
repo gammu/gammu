@@ -51,7 +51,7 @@ long long SMSDODBC_GetNumber(GSM_SMSDConfig * Config, SQL_result res, unsigned i
 
 	ret = SQLGetData(res.odbc, field + 1, SQL_C_SLONG, &value, 0, NULL);
 	if (!SQL_SUCCEEDED(ret)) {
-		SMSDODBC_LogError(Config, SQL_HANDLE_STMT, res.odbc, "SQLGetData failed");
+		SMSDODBC_LogError(Config, SQL_HANDLE_STMT, res.odbc, "SQLGetData(long) failed");
 		return -1;
 	}
 	return value;
@@ -65,7 +65,7 @@ time_t SMSDODBC_GetDate(GSM_SMSDConfig * Config, SQL_result res, unsigned int fi
 
 	ret = SQLGetData(res.odbc, field + 1, SQL_C_TYPE_TIMESTAMP, &sqltime, 0, NULL);
 	if (!SQL_SUCCEEDED(ret)) {
-		SMSDODBC_LogError(Config, SQL_HANDLE_STMT, res.odbc, "SQLGetData failed");
+		SMSDODBC_LogError(Config, SQL_HANDLE_STMT, res.odbc, "SQLGetData(timestamp) failed");
 		return -1;
 	}
 
@@ -99,7 +99,7 @@ const char *SMSDODBC_GetString(GSM_SMSDConfig * Config, SQL_result res, unsigned
 
 	ret = SQLGetData(res.odbc, field + 1, SQL_C_CHAR, NULL, 0, &size);
 	if (!SQL_SUCCEEDED(ret)) {
-		SMSDODBC_LogError(Config, SQL_HANDLE_STMT, res.odbc, "SQLGetData failed");
+		SMSDODBC_LogError(Config, SQL_HANDLE_STMT, res.odbc, "SQLGetData(string,NULL) failed");
 		return NULL;
 	}
 
@@ -107,7 +107,7 @@ const char *SMSDODBC_GetString(GSM_SMSDConfig * Config, SQL_result res, unsigned
 
 	ret = SQLGetData(res.odbc, field + 1, SQL_C_CHAR, Config->conn.odbc.retstr, size + 1, &size);
 	if (!SQL_SUCCEEDED(ret)) {
-		SMSDODBC_LogError(Config, SQL_HANDLE_STMT, res.odbc, "SQLGetData failed");
+		SMSDODBC_LogError(Config, SQL_HANDLE_STMT, res.odbc, "SQLGetData(string) failed");
 		return NULL;
 	}
 
@@ -208,7 +208,7 @@ int SMSDODBC_NextRow(GSM_SMSDConfig * Config, SQL_result *res)
 
 	if (!SQL_SUCCEEDED(ret)) {
 		if (ret != SQL_NO_DATA) {
-			SMSDODBC_LogError(Config, SQL_HANDLE_STMT, res->odbc, "SQLGetData failed");
+			SMSDODBC_LogError(Config, SQL_HANDLE_STMT, res->odbc, "SQLFetch failed");
 		}
 		return 0;
 	}
