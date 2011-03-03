@@ -147,7 +147,7 @@ static SQL_Error SMSDODBC_Connect(GSM_SMSDConfig * Config)
 
 	ret = SQLAllocHandle (SQL_HANDLE_ENV, SQL_NULL_HANDLE, &Config->conn.odbc.env);
 	if (!SQL_SUCCEEDED(ret)) {
-		SMSDODBC_LogError(Config, SQL_HANDLE_ENV, Config->conn.odbc.env, "SQLAllocHandle failed");
+		SMSDODBC_LogError(Config, SQL_HANDLE_ENV, Config->conn.odbc.env, "SQLAllocHandle(ENV) failed");
 		return SQL_FAIL;
 	}
 
@@ -159,7 +159,7 @@ static SQL_Error SMSDODBC_Connect(GSM_SMSDConfig * Config)
 
 	ret = SQLAllocHandle (SQL_HANDLE_DBC, Config->conn.odbc.env, &Config->conn.odbc.dbc);
 	if (!SQL_SUCCEEDED(ret)) {
-		SMSDODBC_LogError(Config, SQL_HANDLE_ENV, Config->conn.odbc.env, "SQLAllocHandle failed");
+		SMSDODBC_LogError(Config, SQL_HANDLE_ENV, Config->conn.odbc.env, "SQLAllocHandle(DBC) failed");
 		return SQL_FAIL;
 	}
 
@@ -168,7 +168,7 @@ static SQL_Error SMSDODBC_Connect(GSM_SMSDConfig * Config)
 			  (SQLCHAR*)Config->user, SQL_NTS,
 			  (SQLCHAR*)Config->password, SQL_NTS);
 	if (!SQL_SUCCEEDED(ret)) {
-		SMSDODBC_LogError(Config, SQL_HANDLE_DBC, Config->conn.odbc.dbc, "SQLAllocHandle failed");
+		SMSDODBC_LogError(Config, SQL_HANDLE_DBC, Config->conn.odbc.dbc, "SQLConnect failed");
 		return SQL_FAIL;
 	}
 
