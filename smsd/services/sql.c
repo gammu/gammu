@@ -410,12 +410,6 @@ static GSM_Error SMSDSQL_Init(GSM_SMSDConfig * Config)
 		db->Free(Config);
 		return ERR_UNKNOWN;
 	}
-	if (db->NumRows(Config, res) != 1) {
-		SMSD_Log(DEBUG_ERROR, Config, "No Version information in table gammu!");
-		db->FreeResult(Config, res);
-		db->Free(Config);
-		return ERR_UNKNOWN;
-	}
 	if (db->NextRow(Config, &res) != 1) {
 		SMSD_Log(DEBUG_ERROR, Config, "Failed to seek to first row!");
 		db->FreeResult(Config, res);
@@ -701,11 +695,10 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 			return ERR_UNKNOWN;
 		}
 
-		if (db->NumRows(Config, Res) == 0) {
+		if (db->NextRow(Config, &Res) != 1) {
 			db->FreeResult(Config, Res);
 			return ERR_NONE;
 		}
-		db->NextRow(Config, &Res);
 
 		coding = db->GetString(Config, Res, 1);
 		text = db->GetString(Config, Res, 0);
