@@ -27,8 +27,14 @@
 
 long long SMSDODBC_GetNumber(GSM_SMSDConfig * Config, SQL_result rc, unsigned int field)
 {
-	/* TODO */
-	return -1;
+	SQLRETURN ret;
+	SQLINTEGER value;
+
+	ret = SQLGetData(rc.odbc, field, SQL_C_SLONG, &value, 0, NULL);
+	if (!SQL_SUCCEEDED(ret)) {
+		return -1;
+	}
+	return value;
 }
 
 time_t SMSDODBC_GetDate(GSM_SMSDConfig * Config, SQL_result rc, unsigned int field)
