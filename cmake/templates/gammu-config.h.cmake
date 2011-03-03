@@ -172,6 +172,8 @@
 #ifndef HAVE_MYSQL_MYSQL_H
 #cmakedefine HAVE_MYSQL_MYSQL_H
 #endif
+/* ODBC support */
+#cmakedefine ODBC_FOUND
 /* Do we have libdbi ? */
 #cmakedefine LIBDBI_FOUND
 #ifndef HAVE_POSTGRESQL_LIBPQ_FE_H

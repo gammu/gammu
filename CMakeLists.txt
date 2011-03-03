@@ -240,6 +240,7 @@ endif (PYTHON_EXECUTABLE)
 
 # Packages in sources
 macro_optional_find_package (MySQL)
+macro_optional_find_package (ODBC)
 macro_optional_find_package (Postgres)
 macro_optional_find_package (LibDBI)
 macro_optional_find_package (Libintl)

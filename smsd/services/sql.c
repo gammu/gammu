@@ -1016,7 +1016,7 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 	Config->dbdir = INI_GetValue(Config->smsdcfgfile, "smsd", "dbdir", FALSE);
 
 	if (Config->driver == NULL) {
-		SMSD_Log(DEBUG_ERROR, Config, "No database driver selected. Must be native_mysql, native_pgsql or DBI one.");
+		SMSD_Log(DEBUG_ERROR, Config, "No database driver selected. Must be native_mysql, native_pgsql, ODBC or DBI one.");
 		return ERR_UNKNOWN;
 	}
 
@@ -1028,6 +1028,10 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 #ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
 	if (!strcasecmp(Config->driver, "native_pgsql"))
 		Config->db = &SMSDPgSQL;
+#endif
+#ifdef ODBC_FOUND
+	if (!strcasecmp(Config->driver, "odbc"))
+		Config->db = &SMSDODBC;
 #endif
 	if (Config->db == NULL) {
 #ifdef LIBDBI_FOUND

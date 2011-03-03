@@ -30,6 +30,11 @@
 #include <sys/types.h>
 #endif
 
+#ifdef ODBC_FOUND
+#include <sql.h>
+#include <sqlext.h>
+#endif
+
 /* sql result structures */
 typedef union {
 #ifdef LIBDBI_FOUND
@@ -48,6 +53,9 @@ typedef union {
 		int iter; /* libpq does not have nexrow .. */
 	} pg;
 #endif
+#ifdef ODBC_FOUND
+	SQLHSTMT odbc;      /* Statement being executed */
+#endif
 } SQL_result;
 
 /* sql connection structures */
@@ -60,6 +68,12 @@ typedef union __sql_conn {
 #endif
 #ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
 	PGconn *pg; /* pgsql driver */
+#endif
+#ifdef ODBC_FOUND
+	struct {
+		SQLHENV env;        /* Environment */
+		SQLHDBC dbc;        /* DBC */
+	} odbc;
 #endif
 } SQL_conn;
 
@@ -147,6 +161,10 @@ extern struct GSM_SMSDdbobj SMSDMySQL;
 
 #ifdef LIBDBI_FOUND
 extern struct GSM_SMSDdbobj SMSDDBI;
+#endif
+
+#ifdef ODBC_FOUND
+extern struct GSM_SMSDdbobj SMSDODBC;
 #endif
 #endif
 

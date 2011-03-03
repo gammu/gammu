@@ -12,9 +12,9 @@ set (LIBRARY_SRC
     services/null.c
     )
 
-if (HAVE_MYSQL_MYSQL_H OR LIBDBI_FOUND OR HAVE_POSTGRESQL_LIBPQ_FE_H)
+if (HAVE_MYSQL_MYSQL_H OR LIBDBI_FOUND OR HAVE_POSTGRESQL_LIBPQ_FE_H OR ODBC_FOUND)
     list(APPEND LIBRARY_SRC services/sql.c)
-endif (HAVE_MYSQL_MYSQL_H OR LIBDBI_FOUND OR HAVE_POSTGRESQL_LIBPQ_FE_H)
+endif (HAVE_MYSQL_MYSQL_H OR LIBDBI_FOUND OR HAVE_POSTGRESQL_LIBPQ_FE_H OR ODBC_FOUND)
 
 if (HAVE_MYSQL_MYSQL_H)
     list(APPEND LIBRARY_SRC services/mysql.c)
@@ -27,6 +27,10 @@ endif (HAVE_POSTGRESQL_LIBPQ_FE_H)
 if (LIBDBI_FOUND)
     list(APPEND LIBRARY_SRC services/dbi.c)
 endif (LIBDBI_FOUND)
+
+if (ODBC_FOUND)
+    list(APPEND LIBRARY_SRC services/odbc.c)
+endif (ODBC_FOUND)
 
 if (WIN32)
     list(APPEND LIBRARY_SRC log-event.c)
@@ -113,6 +117,11 @@ if (LIBDBI_FOUND)
     target_link_libraries (gsmsd ${LIBDBI_LIBRARIES})
     include_directories (${LIBDBI_INCLUDE_DIR})
 endif (LIBDBI_FOUND)
+
+if (ODBC_FOUND)
+    target_link_libraries (gsmsd ${ODBC_LIBRARIES})
+    include_directories (${ODBC_INCLUDE_DIR})
+endif (ODBC_FOUND)
 
 if (MYSQL_FOUND)
     target_link_libraries (gsmsd ${MYSQL_LIBRARIES})
