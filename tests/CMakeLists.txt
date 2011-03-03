@@ -1027,7 +1027,7 @@ add_test(include-wap "${GAMMU_TEST_PATH}/include-wap${GAMMU_TEST_SUFFIX}")
 # Test for GetInt
 add_executable(getint getint.c)
 target_link_libraries(getint cmdline)
-set(GETINT_PASS 1 23213 3213213 -321312)
+set(GETINT_PASS 1 23213 3213213 -321312 -1)
 set(GETINT_FAIL 1a 24432f xxx foo 3243243243243243232432432432432)
 foreach(NUM ${GETINT_PASS})
     add_test(getint-${NUM} "${GAMMU_TEST_PATH}/getint${GAMMU_TEST_SUFFIX}" "${NUM}")
