@@ -59,6 +59,9 @@ NORETURN void version(void)
 #ifdef LIBDBI_FOUND
 	printf("  - %s\n", "DBI");
 #endif
+#ifdef ODBC_FOUND
+	printf("  - %s\n", "ODBC");
+#endif
 	printf("\n");
 	printf("Copyright (C) 2003 - 2010 Michal Cihar <michal@cihar.com> and other authors.\n");
 	printf("\n");
