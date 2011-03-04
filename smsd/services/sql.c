@@ -692,7 +692,7 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 			q = SMSDSQL_queries[SQL_QUERY_FIND_OUTBOX_MULTIPART];
 		}
 		if (SMSDSQL_NamedQuery(Config, q, NULL, vars, &res) != ERR_NONE) {
-			SMSD_Log(DEBUG_INFO, Config, "Error reading from database (%s)", __FUNCTION__);
+			SMSD_Log(DEBUG_ERROR, Config, "Error reading from database (%s)", __FUNCTION__);
 			return ERR_UNKNOWN;
 		}
 
