@@ -15,12 +15,12 @@ if (WITH_BACKUP)
 
     set(ODBC_DSN smsd CACHE STRING "ODBC data source name to use for MySQL tests")
 
-    configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/test-smsd.sh" "${CMAKE_CURRENT_BINARY_DIR}/run-test-smsd.sh" ESCAPE_QUOTES)
-    configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/test-smsd-files-include.sh" "${CMAKE_CURRENT_BINARY_DIR}/run-test-smsd-files-include.sh" ESCAPE_QUOTES)
+    configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/test-smsd.sh.in" "${CMAKE_CURRENT_BINARY_DIR}/test-smsd.sh" ESCAPE_QUOTES)
+    configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/test-smsd-files-include.sh.in" "${CMAKE_CURRENT_BINARY_DIR}/test-smsd-files-include.sh" ESCAPE_QUOTES)
 
     macro(smsd_testsuite _driver)
         # This test tests some functionality and setups environment
-        add_test("smsd-${_driver}" "${SH_BIN}" "${CMAKE_CURRENT_BINARY_DIR}/run-test-smsd.sh" "${_driver}")
+        add_test("smsd-${_driver}" "${SH_BIN}" "${CMAKE_CURRENT_BINARY_DIR}/test-smsd.sh" "${_driver}")
         set_tests_properties("smsd-${_driver}" PROPERTIES
             FAIL_REGULAR_EXPRESSION "ERROR: ;ODBC diagnostics;DBI error ([^5]:|[0-9][^:]);Wrong;Process finished successfully;Process failed with exit status [^4]"
             )
@@ -71,7 +71,7 @@ if (WITH_BACKUP)
         endif (LIBDBI_FOUND)
     endif (PSQL_TESTING)
 
-    add_test("smsd-files-include-unicode" "${SH_BIN}" "${CMAKE_CURRENT_BINARY_DIR}/run-test-smsd-files-include.sh" unicode)
+    add_test("smsd-files-include-unicode" "${SH_BIN}" "${CMAKE_CURRENT_BINARY_DIR}/test-smsd-files-include.sh" unicode)
     set_tests_properties("smsd-files-include-unicode" PROPERTIES
         PASS_REGULAR_EXPRESSION ".999999999999999.4.3.0.100.42"
         FAIL_REGULAR_EXPRESSION "ERROR: ;Wrong;Process failed with exit status"
