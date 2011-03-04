@@ -110,9 +110,8 @@ const char *SMSDODBC_GetString(GSM_SMSDConfig * Config, SQL_result *res, unsigne
 
 	/* Did not we get NULL? */
 	if ((long)size == (long)SQL_NULL_DATA) {
-		Config->conn.odbc.retstr[field] = realloc(Config->conn.odbc.retstr[field], 1);
-		Config->conn.odbc.retstr[field][0] = '\0';
-		return Config->conn.odbc.retstr[field];
+		SMSD_Log(DEBUG_INFO, Config, "Field %d returning NULL", field);
+		return NULL;
 	}
 
 	/* Allocate string */
@@ -127,6 +126,8 @@ const char *SMSDODBC_GetString(GSM_SMSDConfig * Config, SQL_result *res, unsigne
 		SMSDODBC_LogError(Config, SQL_HANDLE_STMT, res->odbc, "SQLGetData(string) failed");
 		return NULL;
 	}
+
+	SMSD_Log(DEBUG_INFO, Config, "Field %d returning string %s", field, Config->conn.odbc.retstr[field]);
 
 	return Config->conn.odbc.retstr[field];
 }
