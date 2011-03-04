@@ -97,6 +97,10 @@ const char *SMSDODBC_GetString(GSM_SMSDConfig * Config, SQL_result *res, unsigne
 	SQLLEN size;
 	SQLRETURN ret;
 
+	if (field > SMSD_ODBC_MAX_RETURN_STRINGS) {
+		return NULL;
+	}
+
 	/* Figure out string length */
 	ret = SQLGetData(res->odbc, field + 1, SQL_C_CHAR, NULL, 0, &size);
 	if (!SQL_SUCCEEDED(ret)) {
@@ -106,25 +110,25 @@ const char *SMSDODBC_GetString(GSM_SMSDConfig * Config, SQL_result *res, unsigne
 
 	/* Did not we get NULL? */
 	if ((long)size == (long)SQL_NULL_DATA) {
-		Config->conn.odbc.retstr = realloc(Config->conn.odbc.retstr, 1);
-		Config->conn.odbc.retstr[0] = '\0';
-		return Config->conn.odbc.retstr;
+		Config->conn.odbc.retstr[field] = realloc(Config->conn.odbc.retstr[field], 1);
+		Config->conn.odbc.retstr[field][0] = '\0';
+		return Config->conn.odbc.retstr[field];
 	}
 
 	/* Allocate string */
-	Config->conn.odbc.retstr = realloc(Config->conn.odbc.retstr, size + 1);
-	if (Config->conn.odbc.retstr == NULL) {
+	Config->conn.odbc.retstr[field] = realloc(Config->conn.odbc.retstr[field], size + 1);
+	if (Config->conn.odbc.retstr[field] == NULL) {
 		return NULL;
 	}
 
 	/* Actually grab result from database */
-	ret = SQLGetData(res->odbc, field + 1, SQL_C_CHAR, Config->conn.odbc.retstr, size + 1, &size);
+	ret = SQLGetData(res->odbc, field + 1, SQL_C_CHAR, Config->conn.odbc.retstr[field], size + 1, &size);
 	if (!SQL_SUCCEEDED(ret)) {
 		SMSDODBC_LogError(Config, SQL_HANDLE_STMT, res->odbc, "SQLGetData(string) failed");
 		return NULL;
 	}
 
-	return Config->conn.odbc.retstr;
+	return Config->conn.odbc.retstr[field];
 }
 
 gboolean SMSDODBC_GetBool(GSM_SMSDConfig * Config, SQL_result *res, unsigned int field)
@@ -145,11 +149,16 @@ gboolean SMSDODBC_GetBool(GSM_SMSDConfig * Config, SQL_result *res, unsigned int
 /* Disconnects from a database */
 void SMSDODBC_Free(GSM_SMSDConfig * Config)
 {
+	int field;
+
 	SQLDisconnect(Config->conn.odbc.dbc);
 	SQLFreeHandle(SQL_HANDLE_ENV, Config->conn.odbc.env);
-	if (Config->conn.odbc.retstr != NULL) {
-		free(Config->conn.odbc.retstr);
-		Config->conn.odbc.retstr = NULL;
+
+	for (field = 0; field < SMSD_ODBC_MAX_RETURN_STRINGS; field++) {
+		if (Config->conn.odbc.retstr[field] != NULL) {
+			free(Config->conn.odbc.retstr[field]);
+			Config->conn.odbc.retstr[field] = NULL;
+		}
 	}
 }
 
@@ -157,8 +166,11 @@ void SMSDODBC_Free(GSM_SMSDConfig * Config)
 static SQL_Error SMSDODBC_Connect(GSM_SMSDConfig * Config)
 {
 	SQLRETURN ret;
+	int field;
 
-	Config->conn.odbc.retstr = NULL;
+	for (field = 0; field < SMSD_ODBC_MAX_RETURN_STRINGS; field++) {
+		Config->conn.odbc.retstr[field] = NULL;
+	}
 
 	ret = SQLAllocHandle (SQL_HANDLE_ENV, SQL_NULL_HANDLE, &Config->conn.odbc.env);
 	if (!SQL_SUCCEEDED(ret)) {

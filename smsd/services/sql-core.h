@@ -58,6 +58,8 @@ typedef union {
 #endif
 } SQL_result;
 
+#define SMSD_ODBC_MAX_RETURN_STRINGS 30
+
 /* sql connection structures */
 typedef union __sql_conn {
 #ifdef LIBDBI_FOUND
@@ -73,7 +75,7 @@ typedef union __sql_conn {
 	struct {
 		SQLHENV env;        /* Environment */
 		SQLHDBC dbc;        /* DBC */
-		char * retstr;	    /* Retrun string */
+		char * retstr[SMSD_ODBC_MAX_RETURN_STRINGS];	    /* Retrun strings */
 	} odbc;
 #endif
 } SQL_conn;
