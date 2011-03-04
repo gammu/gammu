@@ -1087,7 +1087,9 @@ gboolean GSM_DecodeSiemensOTASMS(GSM_Debug_Info *di, GSM_SiemensOTASMSInfo	*Info
 GSM_Coding_Type GSM_StringToSMSCoding(const char *s)
 {
 	/* Maintain those without compression for backward compatibility */
-	if (strcmp("Unicode", s) == 0)
+	if (s == NULL)
+		return SMS_Coding_Default_No_Compression;
+	else if (strcmp("Unicode", s) == 0)
 		return SMS_Coding_Unicode_No_Compression;
 	else if (strcmp("Unicode_No_Compression", s) == 0)
 		return SMS_Coding_Unicode_No_Compression;
