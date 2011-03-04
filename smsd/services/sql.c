@@ -722,8 +722,13 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 		}
 
 		if (text == NULL || text_len == 0) {
-			SMSD_Log(DEBUG_NOTICE, Config, "Message: %s", text_decoded);
-			DecodeUTF8(sms->SMS[sms->Number].Text, text_decoded, strlen(text_decoded));
+			if (text_decoded == NULL) {
+				SMSD_Log(DEBUG_NOTICE, Config, "Message without text!");
+				EncodeUnicode(sms->SMS[sms->Number].Text, "", 0);
+			} else {
+				SMSD_Log(DEBUG_NOTICE, Config, "Message: %s", text_decoded);
+				DecodeUTF8(sms->SMS[sms->Number].Text, text_decoded, strlen(text_decoded));
+			}
 		} else {
 			switch (sms->SMS[sms->Number].Coding) {
 				case SMS_Coding_Unicode_No_Compression:
