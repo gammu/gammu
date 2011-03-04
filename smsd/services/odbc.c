@@ -127,7 +127,7 @@ const char *SMSDODBC_GetString(GSM_SMSDConfig * Config, SQL_result *res, unsigne
 		return NULL;
 	}
 
-	SMSD_Log(DEBUG_INFO, Config, "Field %d returning string %s", field, Config->conn.odbc.retstr[field]);
+	SMSD_Log(DEBUG_INFO, Config, "Field %d returning string \"%s\"", field, Config->conn.odbc.retstr[field]);
 
 	return Config->conn.odbc.retstr[field];
 }
