@@ -97,20 +97,27 @@ const char *SMSDODBC_GetString(GSM_SMSDConfig * Config, SQL_result res, unsigned
 	SQLLEN size;
 	SQLRETURN ret;
 
+	/* Figure out string length */
 	ret = SQLGetData(res.odbc, field + 1, SQL_C_CHAR, NULL, 0, &size);
 	if (!SQL_SUCCEEDED(ret)) {
 		SMSDODBC_LogError(Config, SQL_HANDLE_STMT, res.odbc, "SQLGetData(string,NULL) failed");
 		return NULL;
 	}
 
+	/* Did not we get NULL? */
 	if ((long)size == (long)SQL_NULL_DATA) {
 		Config->conn.odbc.retstr = realloc(Config->conn.odbc.retstr, 1);
 		Config->conn.odbc.retstr[0] = '\0';
 		return Config->conn.odbc.retstr;
 	}
 
+	/* Allocate string */
 	Config->conn.odbc.retstr = realloc(Config->conn.odbc.retstr, size + 1);
+	if (Config->conn.odbc.retstr == NULL) {
+		return NULL;
+	}
 
+	/* Actually grab result from database */
 	ret = SQLGetData(res.odbc, field + 1, SQL_C_CHAR, Config->conn.odbc.retstr, size + 1, &size);
 	if (!SQL_SUCCEEDED(ret)) {
 		SMSDODBC_LogError(Config, SQL_HANDLE_STMT, res.odbc, "SQLGetData(string) failed");
@@ -125,8 +132,10 @@ gboolean SMSDODBC_GetBool(GSM_SMSDConfig * Config, SQL_result res, unsigned int 
 	long long intval;
 	const char * charval;
 
+	/* Try to get numeric value first */
 	intval = SMSDODBC_GetNumber(Config, res, field);
 	if (intval == -1) {
+		/* If that fails, fall back to string and parse it */
 		charval = SMSDODBC_GetString(Config, res, field);
 		return GSM_StringToBool(charval);
 	}

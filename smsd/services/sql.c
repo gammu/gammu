@@ -29,6 +29,7 @@
 #include "../core.h"
 #include "../../helper/string.h"
 
+/* FIXME: I know this is broken, need to figure out better way */
 const char now_plus_odbc[] = "{fn CURRENT_TIMESTAMP()} + INTERVAL %d SECOND";
 const char now_plus_mysql[] = "(NOW() + INTERVAL %d SECOND) + 0";
 const char now_plus_pgsql[] = "now() + interval '%d seconds'";
