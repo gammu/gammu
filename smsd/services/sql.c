@@ -476,10 +476,10 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 	*Locations = NULL;
 
 	for (i = 0; i < sms->Number; i++) {
-		EncodeUTF8(smstext, sms->SMS[i].Text);
 		EncodeUTF8(destinationnumber, sms->SMS[i].Number);
 		EncodeUTF8(smsc_message, sms->SMS[i].SMSC.Number);
 		if (sms->SMS[i].PDU == SMS_Status_Report) {
+			EncodeUTF8(smstext, sms->SMS[i].Text);
 			SMSD_Log(DEBUG_INFO, Config, "Delivery report: %s to %s", smstext, destinationnumber);
 
 			if (SMSDSQL_NamedQuery(Config, SMSDSQL_queries[SQL_QUERY_SAVE_INBOX_SMS_SELECT], &sms->SMS[i], NULL, &res) != ERR_NONE) {
