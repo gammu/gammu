@@ -120,7 +120,7 @@ const char *SMSDODBC_GetString(GSM_SMSDConfig * Config, SQL_result *res, unsigne
 
 	/* Did not we get NULL? */
 	if (ssize == SQL_NULL_DATA) {
-		SMSD_Log(DEBUG_INFO, Config, "Field %d returning NULL", field);
+		SMSD_Log(DEBUG_SQL, Config, "Field %d returning NULL", field);
 		return NULL;
 	}
 
@@ -138,7 +138,7 @@ const char *SMSDODBC_GetString(GSM_SMSDConfig * Config, SQL_result *res, unsigne
 		return NULL;
 	}
 
-	SMSD_Log(DEBUG_INFO, Config, "Field %d returning string \"%s\"", field, Config->conn.odbc.retstr[field]);
+	SMSD_Log(DEBUG_SQL, Config, "Field %d returning string \"%s\"", field, Config->conn.odbc.retstr[field]);
 
 	return Config->conn.odbc.retstr[field];
 }
