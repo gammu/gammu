@@ -116,7 +116,11 @@ const char *SMSDODBC_GetString(GSM_SMSDConfig * Config, SQL_result *res, unsigne
 	}
 
 	/* Allocate string */
-	Config->conn.odbc.retstr[field] = realloc(Config->conn.odbc.retstr[field], size + 1);
+	if (Config->conn.odbc.retstr[field] == NULL) {
+		Config->conn.odbc.retstr[field] = malloc(size + 1);
+	} else {
+		Config->conn.odbc.retstr[field] = realloc(Config->conn.odbc.retstr[field], size + 1);
+	}
 	if (Config->conn.odbc.retstr[field] == NULL) {
 		SMSD_Log(DEBUG_ERROR, Config, "Field %d returning NULL, failed to allocate %ld bytes of memory", field, (long)size + 1);
 		return NULL;
