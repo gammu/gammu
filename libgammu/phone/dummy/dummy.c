@@ -454,7 +454,7 @@ GSM_Error DUMMY_GetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 
 GSM_Error DUMMY_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 {
-	GSM_SMS_Backup		Backup;
+	GSM_SMS_Backup *Backup;
 	char *filename;
 	GSM_Error error;
 	GSM_SMSMessage *SMS;
@@ -463,24 +463,29 @@ GSM_Error DUMMY_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 
 	location = sms->SMS[0].Location;
 	folder = sms->SMS[0].Folder;
+	Backup = malloc(sizeof(GSM_SMS_Backup));
+	if (Backup == NULL) {
+		return ERR_MOREMEMORY;
+	}
 
 	filename = DUMMY_GetSMSPath(s, &(sms->SMS[0]));
 
-	error = GSM_ReadSMSBackupFile(filename, &Backup);
+	error = GSM_ReadSMSBackupFile(filename, Backup);
 
 	free(filename);
 	filename=NULL;
 
 	if (error != ERR_NONE) {
+		free(Backup);
 		if (error == ERR_CANTOPENFILE) return ERR_EMPTY;
 		return error;
 	}
 
 	sms->Number = 0;
 
-	for (SMS = Backup.SMS[i]; SMS != NULL; SMS = Backup.SMS[++i]) {
+	for (SMS = Backup->SMS[i]; SMS != NULL; SMS = Backup->SMS[++i]) {
 		sms->Number++;
-		sms->SMS[i] = *Backup.SMS[i];
+		sms->SMS[i] = *(Backup->SMS[i]);
 		sms->SMS[i].Location = location + (folder * DUMMY_MAX_SMS);
 		sms->SMS[i].Folder = folder;
 		switch (folder) {
@@ -506,7 +511,8 @@ GSM_Error DUMMY_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 				break;
 		}
 	}
-	GSM_FreeSMSBackup(&Backup);
+	GSM_FreeSMSBackup(Backup);
+	free(Backup);
 
 	return ERR_NONE;
 }
