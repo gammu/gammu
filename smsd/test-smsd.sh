@@ -8,7 +8,7 @@ SERVICE="$1"
 
 TEST_MATCH=";999999999999999;3;9;0;100;42"
 
-if [ "@HAVE_KILL@" -eq 1 ] ; then
+if [ "x@HAVE_KILL@" = x1 ] ; then
     SMSD_EXTRA_PARAMS="-p @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/smsd.pid"
 fi
 
