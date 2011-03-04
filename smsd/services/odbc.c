@@ -109,7 +109,13 @@ const char *SMSDODBC_GetString(GSM_SMSDConfig * Config, SQL_result *res, unsigne
 		SMSDODBC_LogError(Config, SQL_HANDLE_STMT, res->odbc, "SQLGetData(string,NULL) failed");
 		return NULL;
 	}
-	/* This hack seems to be needed to avoid type breakage on Win64, don't ask me why */
+
+	/*
+	 * This hack seems to be needed to avoid type breakage on Win64, don't ask me why.
+	 *
+	 * Might be actually bug in MinGW compiler, but when using SQLLEN type bellow
+	 * anything fails (it does not match to SQL_NULL_DATA and realloc always fails).
+	 */
 	ssize = size;
 
 	/* Did not we get NULL? */
