@@ -44,28 +44,28 @@ static void SMSDODBC_LogError(GSM_SMSDConfig * Config, SQLSMALLINT handle_type, 
 	} while (ret == SQL_SUCCESS);
 }
 
-long long SMSDODBC_GetNumber(GSM_SMSDConfig * Config, SQL_result res, unsigned int field)
+long long SMSDODBC_GetNumber(GSM_SMSDConfig * Config, SQL_result *res, unsigned int field)
 {
 	SQLRETURN ret;
 	SQLINTEGER value;
 
-	ret = SQLGetData(res.odbc, field + 1, SQL_C_SLONG, &value, 0, NULL);
+	ret = SQLGetData(res->odbc, field + 1, SQL_C_SLONG, &value, 0, NULL);
 	if (!SQL_SUCCEEDED(ret)) {
-		SMSDODBC_LogError(Config, SQL_HANDLE_STMT, res.odbc, "SQLGetData(long) failed");
+		SMSDODBC_LogError(Config, SQL_HANDLE_STMT, res->odbc, "SQLGetData(long) failed");
 		return -1;
 	}
 	return value;
 }
 
-time_t SMSDODBC_GetDate(GSM_SMSDConfig * Config, SQL_result res, unsigned int field)
+time_t SMSDODBC_GetDate(GSM_SMSDConfig * Config, SQL_result *res, unsigned int field)
 {
 	struct tm timestruct;
 	SQL_TIMESTAMP_STRUCT sqltime;
 	SQLRETURN ret;
 
-	ret = SQLGetData(res.odbc, field + 1, SQL_C_TYPE_TIMESTAMP, &sqltime, 0, NULL);
+	ret = SQLGetData(res->odbc, field + 1, SQL_C_TYPE_TIMESTAMP, &sqltime, 0, NULL);
 	if (!SQL_SUCCEEDED(ret)) {
-		SMSDODBC_LogError(Config, SQL_HANDLE_STMT, res.odbc, "SQLGetData(timestamp) failed");
+		SMSDODBC_LogError(Config, SQL_HANDLE_STMT, res->odbc, "SQLGetData(timestamp) failed");
 		return -1;
 	}
 
@@ -92,15 +92,15 @@ time_t SMSDODBC_GetDate(GSM_SMSDConfig * Config, SQL_result res, unsigned int fi
 	return mktime(&timestruct);
 }
 
-const char *SMSDODBC_GetString(GSM_SMSDConfig * Config, SQL_result res, unsigned int field)
+const char *SMSDODBC_GetString(GSM_SMSDConfig * Config, SQL_result *res, unsigned int field)
 {
 	SQLLEN size;
 	SQLRETURN ret;
 
 	/* Figure out string length */
-	ret = SQLGetData(res.odbc, field + 1, SQL_C_CHAR, NULL, 0, &size);
+	ret = SQLGetData(res->odbc, field + 1, SQL_C_CHAR, NULL, 0, &size);
 	if (!SQL_SUCCEEDED(ret)) {
-		SMSDODBC_LogError(Config, SQL_HANDLE_STMT, res.odbc, "SQLGetData(string,NULL) failed");
+		SMSDODBC_LogError(Config, SQL_HANDLE_STMT, res->odbc, "SQLGetData(string,NULL) failed");
 		return NULL;
 	}
 
@@ -118,16 +118,16 @@ const char *SMSDODBC_GetString(GSM_SMSDConfig * Config, SQL_result res, unsigned
 	}
 
 	/* Actually grab result from database */
-	ret = SQLGetData(res.odbc, field + 1, SQL_C_CHAR, Config->conn.odbc.retstr, size + 1, &size);
+	ret = SQLGetData(res->odbc, field + 1, SQL_C_CHAR, Config->conn.odbc.retstr, size + 1, &size);
 	if (!SQL_SUCCEEDED(ret)) {
-		SMSDODBC_LogError(Config, SQL_HANDLE_STMT, res.odbc, "SQLGetData(string) failed");
+		SMSDODBC_LogError(Config, SQL_HANDLE_STMT, res->odbc, "SQLGetData(string) failed");
 		return NULL;
 	}
 
 	return Config->conn.odbc.retstr;
 }
 
-gboolean SMSDODBC_GetBool(GSM_SMSDConfig * Config, SQL_result res, unsigned int field)
+gboolean SMSDODBC_GetBool(GSM_SMSDConfig * Config, SQL_result *res, unsigned int field)
 {
 	long long intval;
 	const char * charval;
@@ -209,9 +209,9 @@ static SQL_Error SMSDODBC_Query(GSM_SMSDConfig * Config, const char *query, SQL_
 }
 
 /* free sql results */
-void SMSDODBC_FreeResult(GSM_SMSDConfig * Config, SQL_result res)
+void SMSDODBC_FreeResult(GSM_SMSDConfig * Config, SQL_result *res)
 {
-	SQLFreeHandle (SQL_HANDLE_STMT, res.odbc);
+	SQLFreeHandle (SQL_HANDLE_STMT, res->odbc);
 }
 
 /* set pointer to next row */
@@ -285,12 +285,12 @@ unsigned long long SMSDODBC_SeqID(GSM_SMSDConfig * Config, const char *id)
 	return value;
 }
 
-unsigned long SMSDODBC_AffectedRows(GSM_SMSDConfig * Config, SQL_result res)
+unsigned long SMSDODBC_AffectedRows(GSM_SMSDConfig * Config, SQL_result *res)
 {
 	SQLRETURN ret;
 	SQLLEN count;
 
-	ret = SQLRowCount (res.odbc, &count);
+	ret = SQLRowCount (res->odbc, &count);
 	if (!SQL_SUCCEEDED(ret)) {
 		SMSDODBC_LogError(Config, SQL_HANDLE_DBC, Config->conn.odbc.dbc, "SQLRowCount failed");
 		return 0;

@@ -357,7 +357,7 @@ static GSM_Error SMSDSQL_CheckTable(GSM_SMSDConfig * Config, const char *table)
 		db->Free(Config);
 		return ERR_UNKNOWN;
 	}
-	db->FreeResult(Config, res);
+	db->FreeResult(Config, &res);
 	return ERR_NONE;
 }
 
@@ -413,12 +413,12 @@ static GSM_Error SMSDSQL_Init(GSM_SMSDConfig * Config)
 	}
 	if (db->NextRow(Config, &res) != 1) {
 		SMSD_Log(DEBUG_ERROR, Config, "Failed to seek to first row!");
-		db->FreeResult(Config, res);
+		db->FreeResult(Config, &res);
 		db->Free(Config);
 		return ERR_UNKNOWN;
 	}
-	version = db->GetNumber(Config, res, 0);
-	db->FreeResult(Config, res);
+	version = db->GetNumber(Config, &res, 0);
+	db->FreeResult(Config, &res);
 	if (SMSD_CheckDBVersion(Config, version) != ERR_NONE) {
 		db->Free(Config);
 		return ERR_UNKNOWN;
@@ -431,25 +431,25 @@ static GSM_Error SMSDSQL_Init(GSM_SMSDConfig * Config)
 
 static GSM_Error SMSDSQL_InitAfterConnect(GSM_SMSDConfig * Config)
 {
-	SQL_result Res;
+	SQL_result res;
 	struct GSM_SMSDdbobj *db = Config->db;
 	SQL_Var vars[3] = {{SQL_TYPE_STRING, {NULL}}, {SQL_TYPE_STRING, {NULL}}, {SQL_TYPE_NONE, {NULL}}};
 
-	if (SMSDSQL_NamedQuery(Config, SMSDSQL_queries[SQL_QUERY_DELETE_PHONE], NULL, NULL, &Res) != ERR_NONE) {
+	if (SMSDSQL_NamedQuery(Config, SMSDSQL_queries[SQL_QUERY_DELETE_PHONE], NULL, NULL, &res) != ERR_NONE) {
 		SMSD_Log(DEBUG_INFO, Config, "Error deleting from database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
-	db->FreeResult(Config, Res);
+	db->FreeResult(Config, &res);
 
 	SMSD_Log(DEBUG_INFO, Config, "Inserting phone info");
 	vars[0].v.s = Config->enable_send ? "yes" : "no";
 	vars[1].v.s = Config->enable_receive ? "yes" : "no";
 
-	if (SMSDSQL_NamedQuery(Config, SMSDSQL_queries[SQL_QUERY_INSERT_PHONE], NULL, vars, &Res) != ERR_NONE) {
+	if (SMSDSQL_NamedQuery(Config, SMSDSQL_queries[SQL_QUERY_INSERT_PHONE], NULL, vars, &res) != ERR_NONE) {
 		SMSD_Log(DEBUG_INFO, Config, "Error inserting into database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
-	db->FreeResult(Config, Res);
+	db->FreeResult(Config, &res);
 
 	return ERR_NONE;
 }
@@ -457,7 +457,7 @@ static GSM_Error SMSDSQL_InitAfterConnect(GSM_SMSDConfig * Config)
 /* Save SMS from phone (called Inbox sms - it's in phone Inbox) somewhere */
 static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig * Config, char **Locations)
 {
-	SQL_result Res, Res2;
+	SQL_result res, res2;
 	SQL_Var vars[3];
 	struct GSM_SMSDdbobj *db = Config->db;
 	const char *q, *status;
@@ -482,15 +482,15 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 		if (sms->SMS[i].PDU == SMS_Status_Report) {
 			SMSD_Log(DEBUG_INFO, Config, "Delivery report: %s to %s", smstext, destinationnumber);
 
-			if (SMSDSQL_NamedQuery(Config, SMSDSQL_queries[SQL_QUERY_SAVE_INBOX_SMS_SELECT], &sms->SMS[i], NULL, &Res) != ERR_NONE) {
+			if (SMSDSQL_NamedQuery(Config, SMSDSQL_queries[SQL_QUERY_SAVE_INBOX_SMS_SELECT], &sms->SMS[i], NULL, &res) != ERR_NONE) {
 				SMSD_Log(DEBUG_INFO, Config, "Error reading from database (%s)", __FUNCTION__);
 				return ERR_UNKNOWN;
 			}
 
 			found = FALSE;
-			while (db->NextRow(Config, &Res)) {
-				smsc = db->GetString(Config, Res, 4);
-				state = db->GetString(Config, Res, 1);
+			while (db->NextRow(Config, &res)) {
+				smsc = db->GetString(Config, &res, 4);
+				state = db->GetString(Config, &res, 1);
 				SMSD_Log(DEBUG_NOTICE, Config, "Checking for delivery report, SMSC=%s, state=%s", smsc, state);
 
 				if (strcmp(smsc, smsc_message) != 0) {
@@ -500,7 +500,7 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 				}
 
 				if (strcmp(state, "SendingOK") == 0 || strcmp(state, "DeliveryPending") == 0) {
-					t_time1 = db->GetDate(Config, Res, 2);
+					t_time1 = db->GetDate(Config, &res, 2);
 					if (t_time1 < 0) {
 						SMSD_Log(DEBUG_ERROR, Config, "Invalid SendingDateTime -1 for SMS TPMR=%i", sms->SMS[i].MessageReference);
 						return ERR_UNKNOWN;
@@ -540,23 +540,23 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 				vars[0].type = SQL_TYPE_STRING;
 				vars[0].v.s = status;			/* Status */
 				vars[1].type = SQL_TYPE_INT;
-				vars[1].v.i = (long)db->GetNumber(Config, Res, 0); /* ID */
+				vars[1].v.i = (long)db->GetNumber(Config, &res, 0); /* ID */
 				vars[2].type = SQL_TYPE_NONE;
 
-				if (SMSDSQL_NamedQuery(Config, q, &sms->SMS[i], vars, &Res2) != ERR_NONE) {
+				if (SMSDSQL_NamedQuery(Config, q, &sms->SMS[i], vars, &res2) != ERR_NONE) {
 					SMSD_Log(DEBUG_INFO, Config, "Error writing to database (%s)", __FUNCTION__);
 					return ERR_UNKNOWN;
 				}
-				db->FreeResult(Config, Res2);
+				db->FreeResult(Config, &res2);
 			}
-			db->FreeResult(Config, Res);
+			db->FreeResult(Config, &res);
 			continue;
 		}
 
 		if (sms->SMS[i].PDU != SMS_Deliver)
 			continue;
 
-		if (SMSDSQL_NamedQuery(Config, SMSDSQL_queries[SQL_QUERY_SAVE_INBOX_SMS_INSERT], &sms->SMS[i], NULL, &Res) != ERR_NONE) {
+		if (SMSDSQL_NamedQuery(Config, SMSDSQL_queries[SQL_QUERY_SAVE_INBOX_SMS_INSERT], &sms->SMS[i], NULL, &res) != ERR_NONE) {
 			SMSD_Log(DEBUG_INFO, Config, "Error writing to database (%s)", __FUNCTION__);
 			return ERR_UNKNOWN;
 		}
@@ -568,7 +568,7 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 		}
 		SMSD_Log(DEBUG_NOTICE, Config, "Inserted message id %lu", (long)new_id);
 
-		db->FreeResult(Config, Res);
+		db->FreeResult(Config, &res);
 
 		if (new_id != 0) {
 			if (locations_pos + 10 >= locations_size) {
@@ -582,11 +582,11 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 			locations_pos += sprintf((*Locations) + locations_pos, "%lu ", (long)new_id);
 		}
 
-		if (SMSDSQL_NamedQuery(Config, SMSDSQL_queries[SQL_QUERY_UPDATE_RECEIVED], &sms->SMS[i], NULL, &Res2) != ERR_NONE) {
+		if (SMSDSQL_NamedQuery(Config, SMSDSQL_queries[SQL_QUERY_UPDATE_RECEIVED], &sms->SMS[i], NULL, &res2) != ERR_NONE) {
 			SMSD_Log(DEBUG_INFO, Config, "Error updating number of received messages (%s)", __FUNCTION__);
 			return ERR_UNKNOWN;
 		}
-		db->FreeResult(Config, Res2);
+		db->FreeResult(Config, &res2);
 
 	}
 
@@ -595,23 +595,23 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 
 static GSM_Error SMSDSQL_RefreshSendStatus(GSM_SMSDConfig * Config, char *ID)
 {
-	SQL_result Res;
+	SQL_result res;
 	struct GSM_SMSDdbobj *db = Config->db;
 	SQL_Var vars[2] = {
 		{SQL_TYPE_STRING, { .s = ID}},
 		{SQL_TYPE_NONE, {NULL}}};
 
-	if (SMSDSQL_NamedQuery(Config, SMSDSQL_queries[SQL_QUERY_REFRESH_SEND_STATUS], NULL, vars, &Res) != ERR_NONE) {
+	if (SMSDSQL_NamedQuery(Config, SMSDSQL_queries[SQL_QUERY_REFRESH_SEND_STATUS], NULL, vars, &res) != ERR_NONE) {
 		SMSD_Log(DEBUG_INFO, Config, "Error writing to database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 
-	if (db->AffectedRows(Config, Res) == 0) {
-		db->FreeResult(Config, Res);
+	if (db->AffectedRows(Config, &res) == 0) {
+		db->FreeResult(Config, &res);
 		return ERR_UNKNOWN;
 	}
 
-	db->FreeResult(Config, Res);
+	db->FreeResult(Config, &res);
 	return ERR_NONE;
 }
 
@@ -620,7 +620,7 @@ static GSM_Error SMSDSQL_RefreshSendStatus(GSM_SMSDConfig * Config, char *ID)
  */
 static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig * Config, char *ID)
 {
-	SQL_result Res;
+	SQL_result res;
 	struct GSM_SMSDdbobj *db = Config->db;
 	int i;
 	gboolean found = FALSE;
@@ -645,20 +645,20 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 	vars[0].v.i = limit;
 	vars[1].type = SQL_TYPE_NONE;
 
-	if (SMSDSQL_NamedQuery(Config, SMSDSQL_queries[SQL_QUERY_FIND_OUTBOX_SMS_ID], NULL, vars, &Res) != ERR_NONE) {
+	if (SMSDSQL_NamedQuery(Config, SMSDSQL_queries[SQL_QUERY_FIND_OUTBOX_SMS_ID], NULL, vars, &res) != ERR_NONE) {
 		SMSD_Log(DEBUG_INFO, Config, "Error reading from database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 
-	while (db->NextRow(Config, &Res)) {
-		timestamp = db->GetDate(Config, Res, 1);
+	while (db->NextRow(Config, &res)) {
+		timestamp = db->GetDate(Config, &res, 1);
 		if (timestamp == -1) {
 			SMSD_Log(DEBUG_INFO, Config, "Invalid date for InsertIntoDB.");
 			return ERR_UNKNOWN;
 		}
-		sprintf(ID, "%ld", (long)db->GetNumber(Config, Res, 0));
+		sprintf(ID, "%ld", (long)db->GetNumber(Config, &res, 0));
 		SMSDSQL_Time2String(Config, timestamp, Config->DT, sizeof(Config->DT));
-		sender_id = db->GetString(Config, Res, 3);
+		sender_id = db->GetString(Config, &res, 3);
 		if (sender_id == NULL || strlen(sender_id) == 0 || !strcmp(sender_id, Config->PhoneID)) {
 			if (SMSDSQL_RefreshSendStatus(Config, ID) == ERR_NONE) {
 				found = TRUE;
@@ -667,7 +667,7 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 		}
 	}
 
-	db->FreeResult(Config, Res);
+	db->FreeResult(Config, &res);
 
 	if (!found) {
 		return ERR_EMPTY;
@@ -691,25 +691,25 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 		} else {
 			q = SMSDSQL_queries[SQL_QUERY_FIND_OUTBOX_MULTIPART];
 		}
-		if (SMSDSQL_NamedQuery(Config, q, NULL, vars, &Res) != ERR_NONE) {
+		if (SMSDSQL_NamedQuery(Config, q, NULL, vars, &res) != ERR_NONE) {
 			SMSD_Log(DEBUG_INFO, Config, "Error reading from database (%s)", __FUNCTION__);
 			return ERR_UNKNOWN;
 		}
 
-		if (db->NextRow(Config, &Res) != 1) {
-			db->FreeResult(Config, Res);
+		if (db->NextRow(Config, &res) != 1) {
+			db->FreeResult(Config, &res);
 			return ERR_NONE;
 		}
 
-		coding = db->GetString(Config, Res, 1);
-		text = db->GetString(Config, Res, 0);
+		coding = db->GetString(Config, &res, 1);
+		text = db->GetString(Config, &res, 0);
 		if (text == NULL) {
 			text_len = 0;
 		} else {
 			text_len = strlen(text);
 		}
-		text_decoded = db->GetString(Config, Res, 4);
-		udh = db->GetString(Config, Res, 2);
+		text_decoded = db->GetString(Config, &res, 4);
+		udh = db->GetString(Config, &res, 2);
 		if (udh == NULL) {
 			udh_len = 0;
 		} else {
@@ -743,7 +743,7 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 		}
 
 		if (i == 1) {
-			destination = db->GetString(Config, Res, 6);
+			destination = db->GetString(Config, &res, 6);
 			DecodeUTF8(sms->SMS[sms->Number].Number, destination, strlen(destination));
 		} else {
 			CopyUnicodeString(sms->SMS[sms->Number].Number, sms->SMS[0].Number);
@@ -756,23 +756,23 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 			DecodeHexBin(sms->SMS[sms->Number].UDH.Text, udh, udh_len);
 		}
 
-		sms->SMS[sms->Number].Class = db->GetNumber(Config, Res, 3);
+		sms->SMS[sms->Number].Class = db->GetNumber(Config, &res, 3);
 		sms->SMS[sms->Number].PDU = SMS_Submit;
 		sms->Number++;
 
 		if (i == 1) {
-			strcpy(Config->CreatorID, db->GetString(Config, Res, 10));
-			Config->relativevalidity = db->GetNumber(Config, Res, 8);
+			strcpy(Config->CreatorID, db->GetString(Config, &res, 10));
+			Config->relativevalidity = db->GetNumber(Config, &res, 8);
 
-			Config->currdeliveryreport = db->GetBool(Config, Res, 9);
+			Config->currdeliveryreport = db->GetBool(Config, &res, 9);
 
-			if (!db->GetBool(Config, Res, 7)) {
-				db->FreeResult(Config, Res);
+			if (!db->GetBool(Config, &res, 7)) {
+				db->FreeResult(Config, &res);
 				break;
 			}
 
 		}
-		db->FreeResult(Config, Res);
+		db->FreeResult(Config, &res);
 	}
 
 	return ERR_NONE;
@@ -781,7 +781,7 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 /* After sending SMS is moved to Sent Items or Error Items. */
 static GSM_Error SMSDSQL_MoveSMS(GSM_MultiSMSMessage * sms UNUSED, GSM_SMSDConfig * Config, char *ID, gboolean alwaysDelete UNUSED, gboolean sent UNUSED)
 {
-	SQL_result Res;
+	SQL_result res;
 	SQL_Var vars[2];
 	struct GSM_SMSDdbobj *db = Config->db;
 
@@ -789,17 +789,17 @@ static GSM_Error SMSDSQL_MoveSMS(GSM_MultiSMSMessage * sms UNUSED, GSM_SMSDConfi
 	vars[0].v.s = ID;
 	vars[1].type = SQL_TYPE_NONE;
 
-	if (SMSDSQL_NamedQuery(Config, SMSDSQL_queries[SQL_QUERY_DELETE_OUTBOX], NULL, vars, &Res) != ERR_NONE) {
+	if (SMSDSQL_NamedQuery(Config, SMSDSQL_queries[SQL_QUERY_DELETE_OUTBOX], NULL, vars, &res) != ERR_NONE) {
 		SMSD_Log(DEBUG_INFO, Config, "Error deleting from database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
-	db->FreeResult(Config, Res);
+	db->FreeResult(Config, &res);
 
-	if (SMSDSQL_NamedQuery(Config, SMSDSQL_queries[SQL_QUERY_DELETE_OUTBOX_MULTIPART], NULL, vars, &Res) != ERR_NONE) {
+	if (SMSDSQL_NamedQuery(Config, SMSDSQL_queries[SQL_QUERY_DELETE_OUTBOX_MULTIPART], NULL, vars, &res) != ERR_NONE) {
 		SMSD_Log(DEBUG_INFO, Config, "Error deleting from database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
-	db->FreeResult(Config, Res);
+	db->FreeResult(Config, &res);
 
 	return ERR_NONE;
 }
@@ -810,7 +810,7 @@ static GSM_Error SMSDSQL_CreateOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConf
 	char creator[200];
 	int i;
 	unsigned int ID = 0;
-	SQL_result Res;
+	SQL_result res;
 	SQL_Var vars[6];
 	struct GSM_SMSDdbobj *db = Config->db;
 	const char *report, *multipart, *q;
@@ -838,7 +838,7 @@ static GSM_Error SMSDSQL_CreateOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConf
 		vars[4].v.i = ID;
 		vars[5].type = SQL_TYPE_NONE;
 
-		if (SMSDSQL_NamedQuery(Config, q, &sms->SMS[i], vars, &Res) != ERR_NONE) {
+		if (SMSDSQL_NamedQuery(Config, q, &sms->SMS[i], vars, &res) != ERR_NONE) {
 			SMSD_Log(DEBUG_INFO, Config, "Error writing to database (%s)", __FUNCTION__);
 			return ERR_UNKNOWN;
 		}
@@ -849,7 +849,7 @@ static GSM_Error SMSDSQL_CreateOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConf
 				return ERR_UNKNOWN;
 			}
 		}
-		db->FreeResult(Config, Res);
+		db->FreeResult(Config, &res);
 	}
 	SMSD_Log(DEBUG_INFO, Config, "Written message with ID %u", ID);
 	if (NewID != NULL)
@@ -859,7 +859,7 @@ static GSM_Error SMSDSQL_CreateOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConf
 
 static GSM_Error SMSDSQL_AddSentSMSInfo(GSM_MultiSMSMessage * sms, GSM_SMSDConfig * Config, char *ID, int Part, GSM_SMSDSendingError err, int TPMR)
 {
-	SQL_result Res;
+	SQL_result res;
 	struct GSM_SMSDdbobj *db = Config->db;
 
 	const char *message_state;
@@ -903,35 +903,35 @@ static GSM_Error SMSDSQL_AddSentSMSInfo(GSM_MultiSMSMessage * sms, GSM_SMSDConfi
 	vars[4].v.s = Config->DT;
 	vars[5].type = SQL_TYPE_NONE;
 
-	if (SMSDSQL_NamedQuery(Config, SMSDSQL_queries[SQL_QUERY_ADD_SENT_INFO], &sms->SMS[Part - 1], vars, &Res) != ERR_NONE) {
+	if (SMSDSQL_NamedQuery(Config, SMSDSQL_queries[SQL_QUERY_ADD_SENT_INFO], &sms->SMS[Part - 1], vars, &res) != ERR_NONE) {
 		SMSD_Log(DEBUG_INFO, Config, "Error writing to database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
-	db->FreeResult(Config, Res);
+	db->FreeResult(Config, &res);
 
-	if (SMSDSQL_NamedQuery(Config, SMSDSQL_queries[SQL_QUERY_UPDATE_SENT], &sms->SMS[Part - 1], NULL, &Res) != ERR_NONE) {
+	if (SMSDSQL_NamedQuery(Config, SMSDSQL_queries[SQL_QUERY_UPDATE_SENT], &sms->SMS[Part - 1], NULL, &res) != ERR_NONE) {
 		SMSD_Log(DEBUG_INFO, Config, "Error updating number of sent messages (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
-	db->FreeResult(Config, Res);
+	db->FreeResult(Config, &res);
 
 	return ERR_NONE;
 }
 
 static GSM_Error SMSDSQL_RefreshPhoneStatus(GSM_SMSDConfig * Config)
 {
-	SQL_result Res;
+	SQL_result res;
 	SQL_Var vars[3] = {
 		{SQL_TYPE_INT, { .i = Config->Status->Charge.BatteryPercent}},
 		{SQL_TYPE_INT, { .i = Config->Status->Network.SignalPercent}},
 		{SQL_TYPE_NONE, {NULL}}};
 	struct GSM_SMSDdbobj *db = Config->db;
 
-	if (SMSDSQL_NamedQuery(Config, SMSDSQL_queries[SQL_QUERY_REFRESH_PHONE_STATUS], NULL, vars, &Res) != ERR_NONE) {
+	if (SMSDSQL_NamedQuery(Config, SMSDSQL_queries[SQL_QUERY_REFRESH_PHONE_STATUS], NULL, vars, &res) != ERR_NONE) {
 		SMSD_Log(DEBUG_INFO, Config, "Error writing to database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
-	db->FreeResult(Config, Res);
+	db->FreeResult(Config, &res);
 
 	return ERR_NONE;
 }

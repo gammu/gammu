@@ -21,27 +21,27 @@
 #include "../core.h"
 #include "sql.h"
 
-long long SMSDMySQL_GetNumber(GSM_SMSDConfig * Config, SQL_result rc, unsigned int field)
+long long SMSDMySQL_GetNumber(GSM_SMSDConfig * Config, SQL_result *res, unsigned int field)
 {
-	return atoi(rc.my.row[field]);
+	return atoi(res->my.row[field]);
 }
 
-const char *SMSDMySQL_GetString(GSM_SMSDConfig * Config, SQL_result rc, unsigned int field)
+const char *SMSDMySQL_GetString(GSM_SMSDConfig * Config, SQL_result *res, unsigned int field)
 {
-	return rc.my.row[field];
+	return res->my.row[field];
 }
 
-time_t SMSDMySQL_GetDate(GSM_SMSDConfig * Config, SQL_result rc, unsigned int field)
+time_t SMSDMySQL_GetDate(GSM_SMSDConfig * Config, SQL_result *res, unsigned int field)
 {
 	const char *date;
 
-	date = rc.my.row[field];
+	date = res->my.row[field];
 	return SMSDSQL_ParseDate(Config, date);
 }
 
-gboolean SMSDMySQL_GetBool(GSM_SMSDConfig * Config, SQL_result rc, unsigned int field)
+gboolean SMSDMySQL_GetBool(GSM_SMSDConfig * Config, SQL_result *res, unsigned int field)
 {
-	const char *value = rc.my.row[field];
+	const char *value = res->my.row[field];
 
 	if(atoi(value) > 0){
 		return TRUE;
@@ -49,9 +49,9 @@ gboolean SMSDMySQL_GetBool(GSM_SMSDConfig * Config, SQL_result rc, unsigned int 
 	return GSM_StringToBool(value);
 }
 
-const char *SMSMySQL_GetString(GSM_SMSDConfig * Config, SQL_result res, unsigned int col)
+const char *SMSMySQL_GetString(GSM_SMSDConfig * Config, SQL_result *res, unsigned int col)
 {
-	return res.my.row[col];
+	return res->my.row[col];
 }
 
 /* Disconnects from a database */
@@ -137,9 +137,9 @@ static SQL_Error SMSDMySQL_Query(GSM_SMSDConfig * Config, const char *query, SQL
 }
 
 /* free mysql results */
-void SMSDMySQL_FreeResult(GSM_SMSDConfig * Config, SQL_result res)
+void SMSDMySQL_FreeResult(GSM_SMSDConfig * Config, SQL_result *res)
 {
-	mysql_free_result(res.my.res);
+	mysql_free_result(res->my.res);
 }
 
 /* set pointer to next row */
@@ -174,9 +174,9 @@ unsigned long long SMSDMySQL_SeqID(GSM_SMSDConfig * Config, const char *dummy)
 	return mysql_insert_id(Config->conn.my);
 }
 
-unsigned long SMSDMySQL_AffectedRows(GSM_SMSDConfig * Config, SQL_result Res)
+unsigned long SMSDMySQL_AffectedRows(GSM_SMSDConfig * Config, SQL_result *res)
 {
-	return mysql_affected_rows(Res.my.con);
+	return mysql_affected_rows(res->my.con);
 }
 
 struct GSM_SMSDdbobj SMSDMySQL = {

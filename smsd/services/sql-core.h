@@ -136,16 +136,16 @@ struct GSM_SMSDConfig;
 
 struct GSM_SMSDdbobj {
 	SQL_Error (* Connect)(GSM_SMSDConfig *);
-	SQL_Error (* Query)(GSM_SMSDConfig *, const char *, SQL_result *res);
+	SQL_Error (* Query)(GSM_SMSDConfig *, const char *, SQL_result *);
 	void (* Free)(GSM_SMSDConfig *); /* = close() */
-	void (* FreeResult)(GSM_SMSDConfig *, SQL_result);
+	void (* FreeResult)(GSM_SMSDConfig *, SQL_result *);
 	int (* NextRow)(GSM_SMSDConfig *, SQL_result *);
 	unsigned long long (* SeqID)(GSM_SMSDConfig *, const char *);
-	unsigned long (* AffectedRows)(GSM_SMSDConfig *, SQL_result);
-	const char * (* GetString)(GSM_SMSDConfig *, SQL_result, unsigned int);
-	long long (* GetNumber)(GSM_SMSDConfig *, SQL_result, unsigned int);
-	time_t (* GetDate)(GSM_SMSDConfig *, SQL_result, unsigned int);
-	gboolean (* GetBool)(GSM_SMSDConfig *, SQL_result, unsigned int);
+	unsigned long (* AffectedRows)(GSM_SMSDConfig *, SQL_result *);
+	const char * (* GetString)(GSM_SMSDConfig *, SQL_result *, unsigned int);
+	long long (* GetNumber)(GSM_SMSDConfig *, SQL_result *, unsigned int);
+	time_t (* GetDate)(GSM_SMSDConfig *, SQL_result *, unsigned int);
+	gboolean (* GetBool)(GSM_SMSDConfig *, SQL_result *, unsigned int);
 	char * (* QuoteString)(GSM_SMSDConfig *, const char *);
 };
 

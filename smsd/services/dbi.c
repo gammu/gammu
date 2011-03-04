@@ -26,36 +26,35 @@
 #include "../core.h"
 #include "sql.h"
 
-long long SMSDDBI_GetNumber(GSM_SMSDConfig * Config, SQL_result rc, unsigned int field)
+long long SMSDDBI_GetNumber(GSM_SMSDConfig * Config, SQL_result *res, unsigned int field)
 {
 	unsigned int type;
-	dbi_result res = rc.dbi;
 
 	field++;
-	type = dbi_result_get_field_type_idx(res, field);
+	type = dbi_result_get_field_type_idx(res->dbi, field);
 
 	switch (type) {
 		case DBI_TYPE_INTEGER:
-			type = dbi_result_get_field_attribs_idx(res, field);
+			type = dbi_result_get_field_attribs_idx(res->dbi, field);
 			if ((type & DBI_INTEGER_SIZEMASK) == DBI_INTEGER_SIZE1) {
-				return dbi_result_get_int_idx(res, field);
+				return dbi_result_get_int_idx(res->dbi, field);
 			} else if ((type & DBI_INTEGER_SIZEMASK) == DBI_INTEGER_SIZE2) {
-				return dbi_result_get_int_idx(res, field);
+				return dbi_result_get_int_idx(res->dbi, field);
 			} else if ((type & DBI_INTEGER_SIZEMASK) == DBI_INTEGER_SIZE3) {
-				return dbi_result_get_int_idx(res, field);
+				return dbi_result_get_int_idx(res->dbi, field);
 			} else if ((type & DBI_INTEGER_SIZEMASK) == DBI_INTEGER_SIZE4) {
-				return dbi_result_get_int_idx(res, field);
+				return dbi_result_get_int_idx(res->dbi, field);
 			} else if ((type & DBI_INTEGER_SIZEMASK) == DBI_INTEGER_SIZE8) {
-				return dbi_result_get_longlong_idx(res, field);
+				return dbi_result_get_longlong_idx(res->dbi, field);
 			}
 			SMSD_Log(DEBUG_ERROR, Config, "Wrong integer field subtype from DBI: %d", type);
 			return -1;
 		case DBI_TYPE_DECIMAL:
-			type = dbi_result_get_field_attribs_idx(res, field);
+			type = dbi_result_get_field_attribs_idx(res->dbi, field);
 			if ((type & DBI_DECIMAL_SIZEMASK) == DBI_DECIMAL_SIZE4) {
-				return dbi_result_get_int_idx(res, field);
+				return dbi_result_get_int_idx(res->dbi, field);
 			} else if ((type & DBI_DECIMAL_SIZEMASK) == DBI_DECIMAL_SIZE8) {
-				return dbi_result_get_longlong_idx(res, field);
+				return dbi_result_get_longlong_idx(res->dbi, field);
 			}
 			SMSD_Log(DEBUG_ERROR, Config, "Wrong decimal field subtype from DBI: %d", type);
 			return -1;
@@ -65,24 +64,23 @@ long long SMSDDBI_GetNumber(GSM_SMSDConfig * Config, SQL_result rc, unsigned int
 	}
 }
 
-time_t SMSDDBI_GetDate(GSM_SMSDConfig * Config, SQL_result rc, unsigned int field)
+time_t SMSDDBI_GetDate(GSM_SMSDConfig * Config, SQL_result *res, unsigned int field)
 {
 	unsigned int type;
 	const char *date;
-	dbi_result res = rc.dbi;
 
 	field++;
-	type = dbi_result_get_field_type_idx(res, field);
+	type = dbi_result_get_field_type_idx(res->dbi, field);
 
 	switch (type) {
 		case DBI_TYPE_INTEGER:
 		case DBI_TYPE_DECIMAL:
-			return SMSDDBI_GetNumber(Config, rc, field);
+			return SMSDDBI_GetNumber(Config, res, field);
 		case DBI_TYPE_STRING:
-			date = dbi_result_get_string_idx(res, field);
+			date = dbi_result_get_string_idx(res->dbi, field);
 			return SMSDSQL_ParseDate(Config, date);
 		case DBI_TYPE_DATETIME:
-			return dbi_result_get_datetime_idx(res, field);
+			return dbi_result_get_datetime_idx(res->dbi, field);
 		case DBI_TYPE_ERROR:
 		default:
 			SMSD_Log(DEBUG_ERROR, Config, "Wrong field type for date from DBI: %d", type);
@@ -90,20 +88,19 @@ time_t SMSDDBI_GetDate(GSM_SMSDConfig * Config, SQL_result rc, unsigned int fiel
 	}
 }
 
-gboolean SMSDDBI_GetBool(GSM_SMSDConfig * Config, SQL_result rc, unsigned int field)
+gboolean SMSDDBI_GetBool(GSM_SMSDConfig * Config, SQL_result *res, unsigned int field)
 {
 	unsigned int type;
 	const char *value;
 	int num;
-	dbi_result res = rc.dbi;
 
 	field++;
-	type = dbi_result_get_field_type_idx(res, field);
+	type = dbi_result_get_field_type_idx(res->dbi, field);
 
 	switch (type) {
 		case DBI_TYPE_INTEGER:
 		case DBI_TYPE_DECIMAL:
-			num = SMSDDBI_GetNumber(Config, rc, field);
+			num = SMSDDBI_GetNumber(Config, res, field);
 			if (num == -1) {
 				return -1;
 			} else if (num == 0) {
@@ -112,7 +109,7 @@ gboolean SMSDDBI_GetBool(GSM_SMSDConfig * Config, SQL_result rc, unsigned int fi
 				return TRUE;
 			}
 		case DBI_TYPE_STRING:
-			value = dbi_result_get_string_idx(res, field);
+			value = dbi_result_get_string_idx(res->dbi, field);
 			return GSM_StringToBool(value);
 		case DBI_TYPE_ERROR:
 		default:
@@ -121,9 +118,9 @@ gboolean SMSDDBI_GetBool(GSM_SMSDConfig * Config, SQL_result rc, unsigned int fi
 	}
 }
 
-const char *SMSDDBI_GetString(GSM_SMSDConfig * Config, SQL_result res, unsigned int col)
+const char *SMSDDBI_GetString(GSM_SMSDConfig * Config, SQL_result *res, unsigned int col)
 {
-	return dbi_result_get_string_idx(res.dbi, col+1);
+	return dbi_result_get_string_idx(res->dbi, col+1);
 }
 
 static void SMSDDBI_LogError(GSM_SMSDConfig * Config)
@@ -272,9 +269,9 @@ static SQL_Error SMSDDBI_Query(GSM_SMSDConfig * Config, const char *query, SQL_r
 }
 
 /* free sql results */
-void SMSDDBI_FreeResult(GSM_SMSDConfig * Config, SQL_result res)
+void SMSDDBI_FreeResult(GSM_SMSDConfig * Config, SQL_result *res)
 {
-	dbi_result_free(res.dbi);
+	dbi_result_free(res->dbi);
 }
 
 /* set pointer to next row */
@@ -300,9 +297,9 @@ unsigned long long SMSDDBI_SeqID(GSM_SMSDConfig * Config, const char *id)
 	return new_id;
 }
 
-unsigned long SMSDDBI_AffectedRows(GSM_SMSDConfig * Config, SQL_result Res)
+unsigned long SMSDDBI_AffectedRows(GSM_SMSDConfig * Config, SQL_result *res)
 {
-	return dbi_result_get_numrows_affected(Res.dbi);
+	return dbi_result_get_numrows_affected(res->dbi);
 }
 
 struct GSM_SMSDdbobj SMSDDBI = {

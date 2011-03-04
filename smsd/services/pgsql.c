@@ -26,29 +26,29 @@
 #include "../core.h"
 #include "sql.h"
 
-long long SMSDPgSQL_GetNumber(GSM_SMSDConfig * Config, SQL_result rc, unsigned int field)
+long long SMSDPgSQL_GetNumber(GSM_SMSDConfig * Config, SQL_result *res, unsigned int field)
 {
-	return atoi(PQgetvalue(rc.pg.res, rc.pg.iter, field));
+	return atoi(PQgetvalue(res->pg.res, res->pg.iter, field));
 }
 
-time_t SMSDPgSQL_GetDate(GSM_SMSDConfig * Config, SQL_result rc, unsigned int field)
+time_t SMSDPgSQL_GetDate(GSM_SMSDConfig * Config, SQL_result *res, unsigned int field)
 {
 	const char *date;
 
-	date = PQgetvalue(rc.pg.res, rc.pg.iter, field);
+	date = PQgetvalue(res->pg.res, res->pg.iter, field);
 	return SMSDSQL_ParseDate(Config, date);
 }
 
-gboolean SMSDPgSQL_GetBool(GSM_SMSDConfig * Config, SQL_result rc, unsigned int field)
+gboolean SMSDPgSQL_GetBool(GSM_SMSDConfig * Config, SQL_result *res, unsigned int field)
 {
 	const char *value;
-	value = PQgetvalue(rc.pg.res, rc.pg.iter, field);
+	value = PQgetvalue(res->pg.res, res->pg.iter, field);
 	return GSM_StringToBool(value);
 }
 
-const char *SMSDPgSQL_GetString(GSM_SMSDConfig * Config, SQL_result rc, unsigned int field)
+const char *SMSDPgSQL_GetString(GSM_SMSDConfig * Config, SQL_result *res, unsigned int field)
 {
-	return PQgetvalue(rc.pg.res, rc.pg.iter, field);
+	return PQgetvalue(res->pg.res, res->pg.iter, field);
 }
 
 /* Disconnects from a database */
@@ -93,10 +93,10 @@ static SQL_Error SMSDPgSQL_Connect(GSM_SMSDConfig * Config)
 	return SQL_OK;
 }
 
-void SMSDPgSQL_FreeResult(GSM_SMSDConfig * Config, SQL_result res)
+void SMSDPgSQL_FreeResult(GSM_SMSDConfig * Config, SQL_result *res)
 {
-	PQclear(res.pg.res);
-	res.pg.iter = -1;
+	PQclear(res->pg.res);
+	res->pg.iter = -1;
 }
 
 int SMSDPgSQL_NextRow(GSM_SMSDConfig * Config, SQL_result *res)
@@ -160,9 +160,9 @@ char * SMSDPgSQL_QuoteString(GSM_SMSDConfig * Config, const char *from)
 	return to;
 }
 
-unsigned long SMSDPgSQL_AffectedRows(GSM_SMSDConfig * Config, SQL_result Res)
+unsigned long SMSDPgSQL_AffectedRows(GSM_SMSDConfig * Config, SQL_result *res)
 {
-	return atoi(PQcmdTuples(Res.pg.res));
+	return atoi(PQcmdTuples(res->pg.res));
 }
 
 unsigned long long SMSDPgSQL_SeqID(GSM_SMSDConfig * Config, const char *seq_id)
