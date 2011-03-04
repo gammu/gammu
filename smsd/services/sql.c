@@ -723,8 +723,8 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 
 		if (text == NULL || text_len == 0) {
 			if (text_decoded == NULL) {
-				SMSD_Log(DEBUG_NOTICE, Config, "Message without text!");
-				EncodeUnicode(sms->SMS[sms->Number].Text, "", 0);
+				SMSD_Log(DEBUG_ERROR, Config, "Message without text!");
+				return ERR_UNKNOWN;
 			} else {
 				SMSD_Log(DEBUG_NOTICE, Config, "Message: %s", text_decoded);
 				DecodeUTF8(sms->SMS[sms->Number].Text, text_decoded, strlen(text_decoded));
@@ -749,6 +749,10 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 
 		if (i == 1) {
 			destination = db->GetString(Config, &res, 6);
+			if (destination == NULL) {
+				SMSD_Log(DEBUG_ERROR, Config, "Message without recipient!");
+				return ERR_UNKNOWN;
+			}
 			DecodeUTF8(sms->SMS[sms->Number].Number, destination, strlen(destination));
 		} else {
 			CopyUnicodeString(sms->SMS[sms->Number].Number, sms->SMS[0].Number);
