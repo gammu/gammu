@@ -95,6 +95,7 @@ time_t SMSDODBC_GetDate(GSM_SMSDConfig * Config, SQL_result *res, unsigned int f
 const char *SMSDODBC_GetString(GSM_SMSDConfig * Config, SQL_result *res, unsigned int field)
 {
 	SQLLEN size;
+	int ssize;
 	SQLRETURN ret;
 
 	if (field > SMSD_ODBC_MAX_RETURN_STRINGS) {
@@ -108,23 +109,24 @@ const char *SMSDODBC_GetString(GSM_SMSDConfig * Config, SQL_result *res, unsigne
 		SMSDODBC_LogError(Config, SQL_HANDLE_STMT, res->odbc, "SQLGetData(string,NULL) failed");
 		return NULL;
 	}
+	/* This hack seems to be needed to avoid type breakage on Win64, don't ask me why */
+	ssize = size;
 
 	/* Did not we get NULL? */
-	if ((long)size == (long)SQL_NULL_DATA) {
+	if (ssize == SQL_NULL_DATA) {
 		SMSD_Log(DEBUG_INFO, Config, "Field %d returning NULL", field);
 		return NULL;
 	}
 
 	/* Allocate string */
-	SMSD_Log(DEBUG_INFO, Config, "Field %d, pointer=%p", field, Config->conn.odbc.retstr[field]);
-	Config->conn.odbc.retstr[field] = realloc(Config->conn.odbc.retstr[field], (size_t)size + 1);
+	Config->conn.odbc.retstr[field] = realloc(Config->conn.odbc.retstr[field], ssize + 1);
 	if (Config->conn.odbc.retstr[field] == NULL) {
-		SMSD_Log(DEBUG_ERROR, Config, "Field %d returning NULL, failed to allocate %ld bytes of memory", field, (long)size + 1);
+		SMSD_Log(DEBUG_ERROR, Config, "Field %d returning NULL, failed to allocate %d bytes of memory", field, ssize + 1);
 		return NULL;
 	}
 
 	/* Actually grab result from database */
-	ret = SQLGetData(res->odbc, field + 1, SQL_C_CHAR, Config->conn.odbc.retstr[field], size + 1, &size);
+	ret = SQLGetData(res->odbc, field + 1, SQL_C_CHAR, Config->conn.odbc.retstr[field], ssize + 1, &size);
 	if (!SQL_SUCCEEDED(ret)) {
 		SMSDODBC_LogError(Config, SQL_HANDLE_STMT, res->odbc, "SQLGetData(string) failed");
 		return NULL;
