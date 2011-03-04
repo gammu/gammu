@@ -538,19 +538,28 @@ GSM_Error DUMMY_SetSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 {
 	char *filename=NULL;
 	GSM_Error error;
-	GSM_SMS_Backup backup;
+	GSM_SMS_Backup *Backup;
+
+	Backup = malloc(sizeof(GSM_SMS_Backup));
+	if (Backup == NULL) {
+		return ERR_MOREMEMORY;
+	}
 
 	error = DUMMY_DeleteSMS(s, sms);
 
-	if (error != ERR_EMPTY && error != ERR_NONE) return error;
+	if (error != ERR_EMPTY && error != ERR_NONE) {
+		free(Backup);
+		return error;
+	}
 
 	filename = DUMMY_GetSMSPath(s, sms);
 
-	backup.SMS[0] = sms;
-	backup.SMS[1] = NULL;
+	Backup->SMS[0] = sms;
+	Backup->SMS[1] = NULL;
 
-	error = GSM_AddSMSBackupFile(filename, &backup);
+	error = GSM_AddSMSBackupFile(filename, Backup);
 	free(filename);
+	free(Backup);
 	filename=NULL;
 	return error;
 }
