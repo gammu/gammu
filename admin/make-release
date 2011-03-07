@@ -127,6 +127,7 @@ cmake ../$repo-$version \
     -DWITH_GettextLibs=OFF \
     -DWITH_Iconv=OFF \
     -DWITH_CURL=OFF \
+    -DWITH_Glib=OFF \
     -DWITH_LibDBI=OFF \
     -DINSTALL_BASH_COMPLETION=OFF \
 
