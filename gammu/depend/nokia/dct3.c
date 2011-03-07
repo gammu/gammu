@@ -40,7 +40,7 @@ GSM_Error CheckDCT3Only(void)
 	if (gsm->ConnectionType!=GCT_MBUS2	    && gsm->ConnectionType!=GCT_FBUS2      &&
 	    gsm->ConnectionType!=GCT_FBUS2DLR3 && gsm->ConnectionType!=GCT_FBUS2BLUE  &&
 	    gsm->ConnectionType!=GCT_FBUS2IRDA && gsm->ConnectionType!=GCT_IRDAPHONET &&
-	    gsm->ConnectionType!=GCT_BLUEFBUS2) {
+	    gsm->ConnectionType!=GCT_BLUEFBUS2 && gsm->ConnectionType!=GCT_FBUS2PL2303) {
 		return ERR_OTHERCONNECTIONREQUIRED;
 	}
 	return ERR_NONE;
