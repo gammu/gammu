@@ -124,7 +124,7 @@ cmake ../$repo-$version \
     -DCPACK_SYSTEM_NAME=Windows-Minimal \
     -DWITH_Postgres=OFF \
     -DWITH_MySQL=OFF \
-    -DWITH_GettextLibs=OFF \
+    -DWITH_Libintl=OFF \
     -DWITH_Iconv=OFF \
     -DWITH_CURL=OFF \
     -DWITH_Glib=OFF \
