@@ -8,6 +8,7 @@ set -e
 repo=gammu
 #toolchain=cmake/Toolchain-mingw32msvc.cmake
 toolchain=cmake/Toolchain-mingw32.cmake
+toolchain64=cmake/Toolchain-mingw64.cmake
 
 version=`sed -n 's/set (GAMMU_VERSION "\([^"]*\)".*)/\1/p' CMakeLists.txt`
 
@@ -118,7 +119,7 @@ echo "Building minimal Windows version..."
 cd $tmp/build-win-minimal
 cmake ../$repo-$version \
     -DCMAKE_TOOLCHAIN_FILE=../$repo-$version/$toolchain \
-    -DBUILD_SHARED_LIBS=OFF \
+    -DBUILD_SHARED_LIBS=ON \
     $CMAKE_EXTRA \
     -DCPACK_SYSTEM_NAME=Windows-Minimal \
     -DWITH_Postgres=OFF \
@@ -135,6 +136,27 @@ signexe gammu/gammu.exe "Gammu"
 cpack -G NSIS
 cpack -G ZIP
 mv Gammu-*-Windows-Minimal.* $tmp/
+cd $tmp
+
+mkdir build-win-64
+echo "Building 64-bit Windows version..."
+cd $tmp/build-win-64
+cmake ../$repo-$version \
+    -DCMAKE_TOOLCHAIN_FILE=../$repo-$version/$toolchain64 \
+    -DBUILD_SHARED_LIBS=ON \
+    $CMAKE_EXTRA \
+    -DCPACK_SYSTEM_NAME=Windows-64bit \
+    -DWITH_Postgres=OFF \
+    -DWITH_MySQL=OFF \
+    -DWITH_LibDBI=OFF \
+    -DINSTALL_BASH_COMPLETION=OFF \
+
+make -j2
+checkexe gammu/gammu.exe
+signexe gammu/gammu.exe "Gammu"
+cpack -G NSIS
+cpack -G ZIP
+mv Gammu-*-Windows-64bit.* $tmp/
 cd $tmp
 
 if false ; then
