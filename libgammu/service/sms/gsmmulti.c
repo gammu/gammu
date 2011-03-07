@@ -1235,6 +1235,20 @@ GSM_Error GSM_LinkSMS(GSM_Debug_Info *di, GSM_MultiSMSMessage **InputMessages, G
 						InputMessages[i]->SMS[0].UDH.AllParts	= InputMessages[i]->SMS[0].UDH.Text[w+3];
 						InputMessages[i]->SMS[0].UDH.PartNumber	= InputMessages[i]->SMS[0].UDH.Text[w+4];
 						break;
+					case 0x05:
+						smfprintf(di, "Adding ID to user UDH - OTA/MMS with 8/16 bit ID\n");
+						if (InputMessages[i]->SMS[0].UDH.Text[w-1] == 6) {
+							InputMessages[i]->SMS[0].UDH.ID8bit = -1;
+							InputMessages[i]->SMS[0].UDH.ID16bit = InputMessages[i]->SMS[0].UDH.Text[w+2]*256+InputMessages[i]->SMS[0].UDH.Text[w+3];
+							InputMessages[i]->SMS[0].UDH.AllParts = 1;
+							InputMessages[i]->SMS[0].UDH.PartNumber = 1;
+						} else {
+							InputMessages[i]->SMS[0].UDH.ID16bit = -1;
+							InputMessages[i]->SMS[0].UDH.ID8bit = InputMessages[i]->SMS[0].UDH.Text[InputMessages[i]->SMS[0].UDH.Text[w-1] - 2];
+							InputMessages[i]->SMS[0].UDH.AllParts = InputMessages[i]->SMS[0].UDH.Text[InputMessages[i]->SMS[0].UDH.Text[w-1] - 1];
+							InputMessages[i]->SMS[0].UDH.PartNumber = InputMessages[i]->SMS[0].UDH.Text[InputMessages[i]->SMS[0].UDH.Text[w-1]];
+						}
+						break;
 					case 0x08:
 						smfprintf(di, "Adding ID to user UDH - linked SMS with 16 bit ID\n");
 						InputMessages[i]->SMS[0].UDH.ID8bit	= -1;
