@@ -30,7 +30,7 @@ set(WIN_LIB_INTL libintl-8.dll)
 set(WIN_LIB_CURL libcurl-4.dll libidn-11.dll libnspr4.dll nss3.dll libssh2-1.dll ssl3.dll zlib1.dll nssutil3.dll libplc4.dll libplds4.dll libgcrypt-11.dll libgpg-error-0.dll)
 set(WIN_LIB_MYSQL libmysql.dll)
 set(WIN_LIB_PGSQL libpq.dll)
-set(WIN_LIB_GLIB libglib-2.0-0.dll libgobject-2.0-0.dll libiconv-2.dll libgthread-2.0-0.dll)
+set(WIN_LIB_GLIB libglib-2.0-0.dll libgobject-2.0-0.dll libgthread-2.0-0.dll)
 
 # Disable pkg-config lookups
 set(PKG_CONFIG_EXECUTABLE /bin/false)
