@@ -187,7 +187,7 @@ GSM_Error OBEXGEN_Connect(GSM_StateMachine *s, OBEX_Service service)
 	unsigned char 	req[200] = {
 		0x10,			/* Version 1.0 			*/
 		0x00,			/* no flags 			*/
-		0x04,0x00};		/* 0x2000 max size of packet 	*/
+		0x04,0x00};		/* max size of packet (changed bellow for m-obex) */
 
 	/* Are we requsted for initial service? */
 	if (service == 0) {
