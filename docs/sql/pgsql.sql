@@ -57,8 +57,8 @@ $update_timestamp$ LANGUAGE plpgsql;
 -- 
 
 CREATE TABLE daemons (
-  Start text NOT NULL,
-  Info text NOT NULL
+  "Start" text NOT NULL,
+  "Info" text NOT NULL
 );
 
 -- 
@@ -73,7 +73,7 @@ CREATE TABLE daemons (
 -- 
 
 CREATE TABLE gammu (
-  Version smallint NOT NULL DEFAULT '0'
+  "Version" smallint NOT NULL DEFAULT '0'
 );
 
 -- 
@@ -89,18 +89,18 @@ INSERT INTO gammu (Version) VALUES (13);
 -- 
 
 CREATE TABLE inbox (
-  UpdatedInDB timestamp(0) WITHOUT time zone NOT NULL DEFAULT LOCALTIMESTAMP(0),
-  ReceivingDateTime timestamp(0) WITHOUT time zone NOT NULL DEFAULT 'epoch',
-  Text text NOT NULL,
-  SenderNumber varchar(20) NOT NULL DEFAULT '',
-  Coding varchar(255) NOT NULL DEFAULT 'Default_No_Compression',
-  UDH text NOT NULL,
-  SMSCNumber varchar(20) NOT NULL DEFAULT '',
-  Class integer NOT NULL DEFAULT '-1',
-  TextDecoded text NOT NULL DEFAULT '',
-  ID serial PRIMARY KEY,
-  RecipientID text NOT NULL,
-  Processed boolean NOT NULL DEFAULT 'false',
+  "UpdatedInDB" timestamp(0) WITHOUT time zone NOT NULL DEFAULT LOCALTIMESTAMP(0),
+  "ReceivingDateTime" timestamp(0) WITHOUT time zone NOT NULL DEFAULT 'epoch',
+  "Text" text NOT NULL,
+  "SenderNumber" varchar(20) NOT NULL DEFAULT '',
+  "Coding" varchar(255) NOT NULL DEFAULT 'Default_No_Compression',
+  "UDH" text NOT NULL,
+  "SMSCNumber" varchar(20) NOT NULL DEFAULT '',
+  "Class" integer NOT NULL DEFAULT '-1',
+  "TextDecoded" text NOT NULL DEFAULT '',
+  "ID" serial PRIMARY KEY,
+  "RecipientID" text NOT NULL,
+  "Processed" boolean NOT NULL DEFAULT 'false',
   CHECK (Coding IN 
   ('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression')) 
 );
@@ -124,24 +124,24 @@ CREATE TRIGGER update_timestamp BEFORE UPDATE ON inbox FOR EACH ROW EXECUTE PROC
 -- 
 
 CREATE TABLE outbox (
-  UpdatedInDB timestamp(0) WITHOUT time zone NOT NULL DEFAULT LOCALTIMESTAMP(0),
-  InsertIntoDB timestamp(0) WITHOUT time zone NOT NULL DEFAULT 'epoch',
-  SendingDateTime timestamp NOT NULL DEFAULT 'epoch',
-  SendBefore time NOT NULL DEFAULT '23:59:59',
-  SendAfter time NOT NULL DEFAULT '00:00:00',
-  Text text,
-  DestinationNumber varchar(20) NOT NULL DEFAULT '',
-  Coding varchar(255) NOT NULL DEFAULT 'Default_No_Compression',
-  UDH text,
-  Class integer DEFAULT '-1',
-  TextDecoded text NOT NULL DEFAULT '',
-  ID serial PRIMARY KEY,
-  MultiPart boolean NOT NULL DEFAULT 'false',
-  RelativeValidity integer DEFAULT '-1',
-  SenderID varchar(255),
-  SendingTimeOut timestamp(0) WITHOUT time zone NOT NULL DEFAULT 'epoch',
-  DeliveryReport varchar(10) DEFAULT 'default',
-  CreatorID text NOT NULL,
+  "UpdatedInDB" timestamp(0) WITHOUT time zone NOT NULL DEFAULT LOCALTIMESTAMP(0),
+  "InsertIntoDB" timestamp(0) WITHOUT time zone NOT NULL DEFAULT 'epoch',
+  "SendingDateTime" timestamp NOT NULL DEFAULT 'epoch',
+  "SendBefore" time NOT NULL DEFAULT '23:59:59',
+  "SendAfter" time NOT NULL DEFAULT '00:00:00',
+  "Text" text,
+  "DestinationNumber" varchar(20) NOT NULL DEFAULT '',
+  "Coding" varchar(255) NOT NULL DEFAULT 'Default_No_Compression',
+  "UDH" text,
+  "Class" integer DEFAULT '-1',
+  "TextDecoded" text NOT NULL DEFAULT '',
+  "ID" serial PRIMARY KEY,
+  "MultiPart" boolean NOT NULL DEFAULT 'false',
+  "RelativeValidity" integer DEFAULT '-1',
+  "SenderID" varchar(255),
+  "SendingTimeOut" timestamp(0) WITHOUT time zone NOT NULL DEFAULT 'epoch',
+  "DeliveryReport" varchar(10) DEFAULT 'default',
+  "CreatorID" text NOT NULL,
   CHECK (Coding IN 
   ('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression')),
   CHECK (DeliveryReport IN ('default','yes','no'))
@@ -169,13 +169,13 @@ CREATE TRIGGER update_timestamp BEFORE UPDATE ON outbox FOR EACH ROW EXECUTE PRO
 -- 
 
 CREATE TABLE outbox_multipart (
-  Text text,
-  Coding varchar(255) NOT NULL DEFAULT 'Default_No_Compression',
-  UDH text,
-  Class integer DEFAULT '-1',
-  TextDecoded text DEFAULT NULL,
-  ID serial,
-  SequencePosition integer NOT NULL DEFAULT '1',
+  "Text" text,
+  "Coding" varchar(255) NOT NULL DEFAULT 'Default_No_Compression',
+  "UDH" text,
+  "Class" integer DEFAULT '-1',
+  "TextDecoded" text DEFAULT NULL,
+  "ID" serial,
+  "SequencePosition" integer NOT NULL DEFAULT '1',
   PRIMARY KEY (ID, SequencePosition),
   CHECK (Coding IN 
   ('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression'))
@@ -193,10 +193,10 @@ CREATE TABLE outbox_multipart (
 -- 
 
 CREATE TABLE pbk (
-  ID serial PRIMARY KEY,
-  GroupID integer NOT NULL DEFAULT '-1',
-  Name text NOT NULL,
-  Number text NOT NULL
+  "ID" serial PRIMARY KEY,
+  "GroupID" integer NOT NULL DEFAULT '-1',
+  "Name" text NOT NULL,
+  "Number" text NOT NULL
 );
 
 -- 
@@ -211,8 +211,8 @@ CREATE TABLE pbk (
 -- 
 
 CREATE TABLE pbk_groups (
-  Name text NOT NULL,
-  ID serial PRIMARY KEY
+  "Name" text NOT NULL,
+  "ID" serial PRIMARY KEY
 );
 
 -- 
@@ -227,18 +227,18 @@ CREATE TABLE pbk_groups (
 -- 
 
 CREATE TABLE phones (
-  ID text NOT NULL,
-  UpdatedInDB timestamp(0) WITHOUT time zone NOT NULL DEFAULT LOCALTIMESTAMP(0),
-  InsertIntoDB timestamp(0) WITHOUT time zone NOT NULL DEFAULT 'epoch',
-  TimeOut timestamp(0) WITHOUT time zone NOT NULL DEFAULT 'epoch',
-  Send boolean NOT NULL DEFAULT 'no',
-  Receive boolean NOT NULL DEFAULT 'no',
-  IMEI varchar(35) PRIMARY KEY NOT NULL,
-  Client text NOT NULL,
-  Battery integer NOT NULL DEFAULT -1,
-  SignalStrength integer NOT NULL DEFAULT -1,
-  Sent integer NOT NULL DEFAULT 0,
-  Received integer NOT NULL DEFAULT 0
+  "ID" text NOT NULL,
+  "UpdatedInDB" timestamp(0) WITHOUT time zone NOT NULL DEFAULT LOCALTIMESTAMP(0),
+  "InsertIntoDB" timestamp(0) WITHOUT time zone NOT NULL DEFAULT 'epoch',
+  "TimeOut" timestamp(0) WITHOUT time zone NOT NULL DEFAULT 'epoch',
+  "Send" boolean NOT NULL DEFAULT 'no',
+  "Receive" boolean NOT NULL DEFAULT 'no',
+  "IMEI" varchar(35) PRIMARY KEY NOT NULL,
+  "Client" text NOT NULL,
+  "Battery" integer NOT NULL DEFAULT -1,
+  "SignalStrength" integer NOT NULL DEFAULT -1,
+  "Sent" integer NOT NULL DEFAULT 0,
+  "Received" integer NOT NULL DEFAULT 0
 );
 
 -- 
@@ -260,25 +260,25 @@ CREATE TRIGGER update_timestamp BEFORE UPDATE ON phones FOR EACH ROW EXECUTE PRO
 -- 
 
 CREATE TABLE sentitems (
-  UpdatedInDB timestamp(0) WITHOUT time zone NOT NULL DEFAULT LOCALTIMESTAMP(0),
-  InsertIntoDB timestamp(0) WITHOUT time zone NOT NULL DEFAULT 'epoch',
-  SendingDateTime timestamp(0) WITHOUT time zone NOT NULL DEFAULT 'epoch',
-  DeliveryDateTime timestamp(0) WITHOUT time zone NULL,
-  Text text NOT NULL,
-  DestinationNumber varchar(20) NOT NULL DEFAULT '',
-  Coding varchar(255) NOT NULL DEFAULT 'Default_No_Compression',
-  UDH text NOT NULL,
-  SMSCNumber varchar(20) NOT NULL DEFAULT '',
-  Class integer NOT NULL DEFAULT '-1',
-  TextDecoded text NOT NULL DEFAULT '',
-  ID serial,
-  SenderID varchar(255) NOT NULL,
-  SequencePosition integer NOT NULL DEFAULT '1',
-  Status varchar(255) NOT NULL DEFAULT 'SendingOK',
-  StatusError integer NOT NULL DEFAULT '-1',
-  TPMR integer NOT NULL DEFAULT '-1',
-  RelativeValidity integer NOT NULL DEFAULT '-1',
-  CreatorID text NOT NULL,
+  "UpdatedInDB" timestamp(0) WITHOUT time zone NOT NULL DEFAULT LOCALTIMESTAMP(0),
+  "InsertIntoDB" timestamp(0) WITHOUT time zone NOT NULL DEFAULT 'epoch',
+  "SendingDateTime" timestamp(0) WITHOUT time zone NOT NULL DEFAULT 'epoch',
+  "DeliveryDateTime" timestamp(0) WITHOUT time zone NULL,
+  "Text" text NOT NULL,
+  "DestinationNumber" varchar(20) NOT NULL DEFAULT '',
+  "Coding" varchar(255) NOT NULL DEFAULT 'Default_No_Compression',
+  "UDH" text NOT NULL,
+  "SMSCNumber" varchar(20) NOT NULL DEFAULT '',
+  "Class" integer NOT NULL DEFAULT '-1',
+  "TextDecoded" text NOT NULL DEFAULT '',
+  "ID" serial,
+  "SenderID" varchar(255) NOT NULL,
+  "SequencePosition" integer NOT NULL DEFAULT '1',
+  "Status" varchar(255) NOT NULL DEFAULT 'SendingOK',
+  "StatusError" integer NOT NULL DEFAULT '-1',
+  "TPMR" integer NOT NULL DEFAULT '-1',
+  "RelativeValidity" integer NOT NULL DEFAULT '-1',
+  "CreatorID" text NOT NULL,
   CHECK (Status IN 
   ('SendingOK','SendingOKNoReport','SendingError','DeliveryOK','DeliveryFailed','DeliveryPending',
   'DeliveryUnknown','Error')),
