@@ -186,36 +186,36 @@ void GSM_GetCurrentDateTime (GSM_DateTime *Date)
 
 time_t Fill_Time_T(GSM_DateTime DT)
 {
-	struct tm tm_starttime;
+	struct tm timestruct;
 	struct tm *now;
 	time_t t;
 
 
 	dbgprintf(NULL, "StartTime: %s\n", OSDate(DT));
 
-	memset(&tm_starttime, 0, sizeof(tm_starttime));
-	tm_starttime.tm_year 	= DT.Year - 1900;
-	tm_starttime.tm_mon  	= DT.Month - 1;
-	tm_starttime.tm_mday 	= DT.Day;
-	tm_starttime.tm_hour 	= DT.Hour;
-	tm_starttime.tm_min  	= DT.Minute;
-	tm_starttime.tm_sec  	= DT.Second;
+	memset(&timestruct, 0, sizeof(timestruct));
+	timestruct.tm_year 	= DT.Year - 1900;
+	timestruct.tm_mon  	= DT.Month - 1;
+	timestruct.tm_mday 	= DT.Day;
+	timestruct.tm_hour 	= DT.Hour;
+	timestruct.tm_min  	= DT.Minute;
+	timestruct.tm_sec  	= DT.Second;
 
 	time(&t);
 	now = localtime(&t);
 
 #ifdef HAVE_DAYLIGHT
-	tm_starttime.tm_isdst = now->tm_isdst;
+	timestruct.tm_isdst = now->tm_isdst;
 #else
-	tm_starttime.tm_isdst	= -1;
+	timestruct.tm_isdst	= -1;
 #endif
 #ifdef HAVE_STRUCT_TM_TM_ZONE
 	/* No time zone information */
-	tm_starttime.tm_gmtoff = now->tm_gmtoff;
-	tm_starttime.tm_zone = now->tm_zone;
+	timestruct.tm_gmtoff = now->tm_gmtoff;
+	timestruct.tm_zone = now->tm_zone;
 #endif
 
-	return mktime(&tm_starttime);
+	return mktime(&timestruct);
 }
 
 GSM_DateTime GSM_AddTime (GSM_DateTime DT , GSM_DeltaTime delta)
