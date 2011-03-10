@@ -187,6 +187,9 @@ void GSM_GetCurrentDateTime (GSM_DateTime *Date)
 time_t Fill_Time_T(GSM_DateTime DT)
 {
 	struct tm tm_starttime;
+	struct tm *now;
+	time_t t;
+
 
 	dbgprintf(NULL, "StartTime: %s\n", OSDate(DT));
 
@@ -199,16 +202,18 @@ time_t Fill_Time_T(GSM_DateTime DT)
 	tm_starttime.tm_sec  	= DT.Second;
 
 	tzset();
+        time(&t);
+        now = localtime(&t);
 
 #ifdef HAVE_DAYLIGHT
-	tm_starttime.tm_isdst	= daylight;
+	tm_starttime.tm_isdst = now->tm_isdst;
 #else
 	tm_starttime.tm_isdst	= -1;
 #endif
 #ifdef HAVE_STRUCT_TM_TM_ZONE
 	/* No time zone information */
-	tm_starttime.tm_gmtoff = timezone;
-	tm_starttime.tm_zone = *tzname;
+	tm_starttime.tm_gmtoff = now->tm_gmtoff;
+	tm_starttime.tm_zone = now->tm_zone;
 #endif
 
 	return mktime(&tm_starttime);
