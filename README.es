@@ -30,7 +30,8 @@ Toda retroalimentación es bienvenida, vea <http://wammu.eu/support/> para
 información sobre cómo contactar a los desarrolladores.
 
 
-Support developers
-==================
+Ayudar a los desarrolladores
+============================
 
-You can appreciate developers work at <http://wammu.eu/donate/>.
+Puedes mostrar tu aprecio por el trabajo de los desarrolladores en
+<http://wammu.eu/donate/>.
