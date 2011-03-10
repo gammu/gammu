@@ -201,9 +201,8 @@ time_t Fill_Time_T(GSM_DateTime DT)
 	tm_starttime.tm_min  	= DT.Minute;
 	tm_starttime.tm_sec  	= DT.Second;
 
-	tzset();
-        time(&t);
-        now = localtime(&t);
+	time(&t);
+	now = localtime(&t);
 
 #ifdef HAVE_DAYLIGHT
 	tm_starttime.tm_isdst = now->tm_isdst;
