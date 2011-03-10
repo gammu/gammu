@@ -59,8 +59,8 @@ long long SMSDODBC_GetNumber(GSM_SMSDConfig * Config, SQL_result *res, unsigned 
 
 time_t SMSDODBC_GetDate(GSM_SMSDConfig * Config, SQL_result *res, unsigned int field)
 {
-	struct tm timestruct;
 	SQL_TIMESTAMP_STRUCT sqltime;
+	GSM_DateTime DT;
 	SQLRETURN ret;
 
 	ret = SQLGetData(res->odbc, field + 1, SQL_C_TYPE_TIMESTAMP, &sqltime, 0, NULL);
@@ -69,27 +69,14 @@ time_t SMSDODBC_GetDate(GSM_SMSDConfig * Config, SQL_result *res, unsigned int f
 		return -1;
 	}
 
-	tzset();
+	DT.Year = sqltime.year;
+	DT.Month = sqltime.month;
+	DT.Day = sqltime.day;
+	DT.Hour = sqltime.hour;
+	DT.Minute = sqltime.minute;
+	DT.Second = sqltime.second;
 
-#ifdef HAVE_DAYLIGHT
-	timestruct.tm_isdst	= daylight;
-#else
-	timestruct.tm_isdst	= -1;
-#endif
-#ifdef HAVE_STRUCT_TM_TM_ZONE
-	/* No sqltime zone information */
-	timestruct.tm_gmtoff = timezone;
-	timestruct.tm_zone = *tzname;
-#endif
-
-	timestruct.tm_year = sqltime.year;
-	timestruct.tm_mon = sqltime.month;
-	timestruct.tm_mday = sqltime.day;
-	timestruct.tm_hour = sqltime.hour;
-	timestruct.tm_min = sqltime.minute;
-	timestruct.tm_sec = sqltime.second;
-
-	return mktime(&timestruct);
+	return Fill_Time_T(DT);
 }
 
 const char *SMSDODBC_GetString(GSM_SMSDConfig * Config, SQL_result *res, unsigned int field)
