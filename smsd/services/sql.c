@@ -1198,28 +1198,23 @@ time_t SMSDSQL_ParseDate(GSM_SMSDConfig * Config, const char *date)
 {
 	char *parse_res;
 	struct tm timestruct;
+	GSM_DateTime DT;
 
 	if (strcmp(date, "0000-00-00 00:00:00") == 0) {
 		return -2;
 	}
 
-	tzset();
-
-#ifdef HAVE_DAYLIGHT
-	timestruct.tm_isdst	= daylight;
-#else
-	timestruct.tm_isdst	= -1;
-#endif
-#ifdef HAVE_STRUCT_TM_TM_ZONE
-	/* No time zone information */
-	timestruct.tm_gmtoff = timezone;
-	timestruct.tm_zone = *tzname;
-#endif
-
 	parse_res = strptime(date, "%Y-%m-%d %H:%M:%S", &timestruct);
 
 	if (parse_res != NULL && *parse_res == 0) {
-		return mktime(&timestruct);
+		DT.Year = timestruct.tm_year + 1900;
+		DT.Month = timestruct.tm_mon + 1;
+		DT.Day = timestruct.tm_mday;
+		DT.Hour = timestruct.tm_hour;
+		DT.Minute = timestruct.tm_min;
+		DT.Second = timestruct.tm_sec;
+
+		return Fill_Time_T(DT);
 	}
 	/* Used during testing */
 	if (Config != NULL) {
