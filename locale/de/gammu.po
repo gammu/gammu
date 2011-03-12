@@ -3776,7 +3776,7 @@ msgstr "Firma"
 
 #: helper/memory-display.c:226
 msgid "Job title"
-msgstr "Tätigkeit         "
+msgstr "Tätigkeit"
 
 #: helper/memory-display.c:227
 msgid "Street address"
