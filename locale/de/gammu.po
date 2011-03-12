@@ -3796,7 +3796,7 @@ msgstr "Postleitzahl"
 
 #: helper/memory-display.c:231
 msgid "Country"
-msgstr "Land              "
+msgstr "Land"
 
 #: helper/memory-display.c:232
 msgid "Custom text 1"
