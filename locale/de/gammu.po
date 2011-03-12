@@ -3699,9 +3699,8 @@ msgid "Work address"
 msgstr "Anschrift gesch."
 
 #: helper/memory-display.c:186
-#, fuzzy
 msgid "Home email"
-msgstr "Ihre E-Mail-Adresse"
+msgstr "E-Mail privat"
 
 #: helper/memory-display.c:189
 #, fuzzy
