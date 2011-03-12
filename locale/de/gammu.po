@@ -3751,9 +3751,8 @@ msgid "First name"
 msgstr "Vorname           "
 
 #: helper/memory-display.c:220
-#, fuzzy
 msgid "Second name"
-msgstr "Sendername"
+msgstr "Nachname"
 
 #: helper/memory-display.c:221
 msgid "Formal name"
