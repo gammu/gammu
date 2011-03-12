@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Gammu 1.29.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-24 16:19+0100\n"
-"PO-Revision-Date: 2010-12-24 00:59+0200\n"
-"Last-Translator: <elrond+gammu.org@samba-tng.org>\n"
+"PO-Revision-Date: 2011-03-12 16:35+0200\n"
+"Last-Translator:  <mynetx@gmx.de>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -931,7 +931,6 @@ msgid "Start time"
 msgstr "Beginn"
 
 #: gammu/calendar.c:746
-#, fuzzy
 msgid "Completed time"
 msgstr "Erledigt"
 
