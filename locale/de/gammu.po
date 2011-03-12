@@ -3663,9 +3663,8 @@ msgid "General number"
 msgstr "Allgemeine Nummer"
 
 #: helper/memory-display.c:136
-#, fuzzy
 msgid "Video number"
-msgstr "Handynummer       "
+msgstr "Handynummer"
 
 #: helper/memory-display.c:141
 #, fuzzy
