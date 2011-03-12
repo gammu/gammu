@@ -3732,7 +3732,7 @@ msgstr "SWIS"
 
 #: helper/memory-display.c:214
 msgid "WVID"
-msgstr ""
+msgstr "WVID"
 
 #: helper/memory-display.c:215
 #, fuzzy
