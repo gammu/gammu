@@ -3703,9 +3703,8 @@ msgid "Home email"
 msgstr "E-Mail privat"
 
 #: helper/memory-display.c:189
-#, fuzzy
 msgid "Work email"
-msgstr "Ihre E-Mail-Adresse"
+msgstr "E-Mail gesch."
 
 #: helper/memory-display.c:196
 msgid "Email address 2"
