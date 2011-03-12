@@ -3675,9 +3675,8 @@ msgid "Work mobile number"
 msgstr "Handynummer gesch."
 
 #: helper/memory-display.c:155
-#, fuzzy
 msgid "Home fax number"
-msgstr "Privatnummer   "
+msgstr "Faxnummer privat"
 
 #: helper/memory-display.c:158
 #, fuzzy
