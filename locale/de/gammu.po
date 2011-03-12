@@ -3748,7 +3748,7 @@ msgstr "Nachname"
 
 #: helper/memory-display.c:219
 msgid "First name"
-msgstr "Vorname           "
+msgstr "Vorname"
 
 #: helper/memory-display.c:220
 msgid "Second name"
