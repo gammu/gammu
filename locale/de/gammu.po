@@ -1584,6 +1584,7 @@ msgid "option parsing failed: %s\n"
 msgstr "Die Konfigurationsdatei \"%s\" konnte nicht ausgelesen werden.\n"
 
 #: gammu-detect/udev.c:67
+#, fuzzy
 msgid "Name:"
 msgstr "Name:"
 
