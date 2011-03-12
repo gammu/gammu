@@ -98,7 +98,7 @@ msgstr ""
 #: README:34
 #, no-wrap
 msgid "Support developers"
-msgstr "Entwickler unterstützung"
+msgstr "Entwickler unterstützen"
 
 #. type: Plain text
 #: README:36
