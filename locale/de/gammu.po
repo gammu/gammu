@@ -3664,7 +3664,7 @@ msgstr "Allgemeine Nummer"
 
 #: helper/memory-display.c:136
 msgid "Video number"
-msgstr "Handynummer"
+msgstr "Videonummer"
 
 #: helper/memory-display.c:141
 msgid "Home mobile number"
