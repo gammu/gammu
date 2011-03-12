@@ -3764,7 +3764,7 @@ msgstr "Titel"
 
 #: helper/memory-display.c:223
 msgid "Name suffix"
-msgstr ""
+msgstr "Namensnachsatz"
 
 #: helper/memory-display.c:224
 msgid "Nick name"
