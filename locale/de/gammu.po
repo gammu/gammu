@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.29.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-24 16:19+0100\n"
-"PO-Revision-Date: 2011-03-12 16:38+0200\n"
+"PO-Revision-Date: 2011-03-12 16:39+0200\n"
 "Last-Translator:  <mynetx@gmx.de>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -3345,6 +3345,7 @@ msgstr "Die Anwendung wurde erfolgreich an das Telefon gesendet."
 #: gammu/misc.c:2494
 msgid "Please find received files in Inbox and install them."
 msgstr ""
+"Bitte finden Sie empfangene Dateien im Posteingang und installieren Sie sie."
 
 #: gammu/mms.c:49
 msgid "Do you want to save this MMS file?"
