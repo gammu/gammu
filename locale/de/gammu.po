@@ -3759,9 +3759,8 @@ msgid "Formal name"
 msgstr "Name (förmlich)"
 
 #: helper/memory-display.c:222
-#, fuzzy
 msgid "Name prefix"
-msgstr "Vorwahl"
+msgstr "Titel"
 
 #: helper/memory-display.c:223
 msgid "Name suffix"
