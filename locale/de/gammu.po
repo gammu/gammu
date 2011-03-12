@@ -3728,7 +3728,7 @@ msgstr "VOIP"
 
 #: helper/memory-display.c:213
 msgid "SWIS"
-msgstr ""
+msgstr "SWIS"
 
 #: helper/memory-display.c:214
 msgid "WVID"
