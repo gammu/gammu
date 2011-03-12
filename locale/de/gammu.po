@@ -3744,7 +3744,7 @@ msgstr "DTMF"
 
 #: helper/memory-display.c:218
 msgid "Last name"
-msgstr "Familienname"
+msgstr "Nachname"
 
 #: helper/memory-display.c:219
 msgid "First name"
