@@ -3719,9 +3719,8 @@ msgid "Home website"
 msgstr "Website privat"
 
 #: helper/memory-display.c:204
-#, fuzzy
 msgid "Work website"
-msgstr "Dienstliches Bundesland"
+msgstr "Website gesch."
 
 #: helper/memory-display.c:207
 #, fuzzy
