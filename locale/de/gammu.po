@@ -3340,7 +3340,7 @@ msgstr "Rückmeldung:"
 
 #: gammu/misc.c:2493
 msgid "The application has been successfully sent to the phone."
-msgstr ""
+msgstr "Die Anwendung wurde erfolgreich an das Telefon gesendet."
 
 #: gammu/misc.c:2494
 msgid "Please find received files in Inbox and install them."
