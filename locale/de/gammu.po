@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.29.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-24 16:19+0100\n"
-"PO-Revision-Date: 2011-03-12 16:39+0200\n"
+"PO-Revision-Date: 2011-03-12 16:40+0200\n"
 "Last-Translator:  <mynetx@gmx.de>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -3684,7 +3684,7 @@ msgstr "Faxnummer gesch."
 
 #: helper/memory-display.c:165
 msgid "Pager number"
-msgstr "Pagernummer      "
+msgstr "Pagernummer"
 
 #: helper/memory-display.c:166
 msgid "Other number"
