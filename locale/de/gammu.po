@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.29.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-24 16:19+0100\n"
-"PO-Revision-Date: 2011-03-12 16:40+0200\n"
+"PO-Revision-Date: 2011-03-12 16:41+0200\n"
 "Last-Translator:  <mynetx@gmx.de>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -3695,9 +3695,8 @@ msgid "Home address"
 msgstr "Anschrift privat"
 
 #: helper/memory-display.c:175
-#, fuzzy
 msgid "Work address"
-msgstr "Dienstliche Postanschrift"
+msgstr "Anschrift gesch."
 
 #: helper/memory-display.c:186
 #, fuzzy
