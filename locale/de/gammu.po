@@ -3772,7 +3772,7 @@ msgstr "Spitzname"
 
 #: helper/memory-display.c:225
 msgid "Company"
-msgstr "Firma             "
+msgstr "Firma"
 
 #: helper/memory-display.c:226
 msgid "Job title"
