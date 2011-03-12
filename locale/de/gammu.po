@@ -1485,7 +1485,7 @@ msgstr "Geschäftsnummer"
 
 #: gammu/depend/nokia/dct4.c:1382
 msgid "Standard number"
-msgstr "Standardnummer "
+msgstr "Standardnummer"
 
 #: gammu/depend/nokia/dct4.c:1383
 msgid "Unknown number"
