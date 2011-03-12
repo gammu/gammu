@@ -1469,7 +1469,7 @@ msgstr "%i Arten von Telefonnummern\n"
 
 #: gammu/depend/nokia/dct4.c:1378 helper/memory-display.c:126
 msgid "Home number"
-msgstr "Privatnummer   "
+msgstr "Privatnummer"
 
 #: gammu/depend/nokia/dct4.c:1379 helper/memory-display.c:147
 msgid "Mobile number"
