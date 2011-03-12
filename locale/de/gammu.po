@@ -1524,7 +1524,7 @@ msgstr "Gammu-Version"
 #: gammu-detect/main.c:73
 #, c-format
 msgid "Built %s on %s using %s"
-msgstr "[Gammu Version %s  auf %s mit %s erstellt]"
+msgstr "[Erstellt %s auf %s mit %s]"
 
 #: gammu-detect/main.c:76 gammu/gammu.c:114
 msgid "Compiled in features:"
