@@ -1473,7 +1473,7 @@ msgstr "Privatnummer"
 
 #: gammu/depend/nokia/dct4.c:1379 helper/memory-display.c:147
 msgid "Mobile number"
-msgstr "Handynummer       "
+msgstr "Handynummer"
 
 #: gammu/depend/nokia/dct4.c:1380 helper/memory-display.c:161
 msgid "Fax number"
