@@ -3688,7 +3688,7 @@ msgstr "Pagernummer"
 
 #: helper/memory-display.c:166
 msgid "Other number"
-msgstr "Andere Nummer     "
+msgstr "Andere Nummer"
 
 #: helper/memory-display.c:172
 #, fuzzy
