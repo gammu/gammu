@@ -3768,7 +3768,7 @@ msgstr "Namensnachsatz"
 
 #: helper/memory-display.c:224
 msgid "Nick name"
-msgstr "Nickname"
+msgstr "Spitzname"
 
 #: helper/memory-display.c:225
 msgid "Company"
