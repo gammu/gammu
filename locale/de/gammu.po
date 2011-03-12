@@ -3287,7 +3287,7 @@ msgstr "Abfrage:"
 
 #: gammu/misc.c:2380 gammu/misc.c:2397
 msgid "Divert type"
-msgstr "Typ der  Rufumleitung"
+msgstr "Typ der Rufumleitung"
 
 #: gammu/misc.c:2395
 msgid "Changed:"
