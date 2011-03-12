@@ -355,6 +355,8 @@ msgid ""
 "Installation data not found, please consult debug log and/or documentation "
 "for more details."
 msgstr ""
+"Installationsdaten nicht gefunden, bitte konsultieren Sie das Debuglog "
+"und/oder die Dokumentation für weitere Details."
 
 #: libgammu/gsmcomon.c:155
 #, fuzzy
