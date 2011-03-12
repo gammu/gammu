@@ -3804,7 +3804,7 @@ msgstr "Benutzer-Text 1"
 
 #: helper/memory-display.c:233
 msgid "Custom text 2"
-msgstr "Benutzer-Text 2   "
+msgstr "Benutzer-Text 2"
 
 #: helper/memory-display.c:234
 msgid "Custom text 3"
