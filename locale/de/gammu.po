@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.29.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-24 16:19+0100\n"
-"PO-Revision-Date: 2011-03-12 16:36+0200\n"
+"PO-Revision-Date: 2011-03-12 16:37+0200\n"
 "Last-Translator:  <mynetx@gmx.de>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -1543,12 +1543,11 @@ msgid "Windows serial port probing"
 msgstr "serielle Schnittstelle"
 
 #: gammu-detect/main.c:87
-#, fuzzy
 msgid ""
 "Copyright (C) 2010 - 2011 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
-"Copyright (C) 2003 - 2010 Michal Cihar <michal@cihar.com> und andere "
-"Authoren."
+"Copyright (C) 2010 - 2011 Michal Cihar <michal@cihar.com> und andere "
+"Autoren."
 
 #: gammu-detect/main.c:89 gammu/gammu.c:345
 msgid ""
