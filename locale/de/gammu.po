@@ -2334,9 +2334,8 @@ msgid "Packet network state"
 msgstr "Paketnetzwerkstatus"
 
 #: gammu/misc.c:75
-#, fuzzy
 msgid "Packet network"
-msgstr "Eigenes Netz"
+msgstr "Paketnetzwerk"
 
 #: gammu/misc.c:90 gammu/misc.c:1591
 msgid "GPRS"
