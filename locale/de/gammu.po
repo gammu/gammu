@@ -3660,7 +3660,7 @@ msgstr "Geschäftsnummer"
 
 #: helper/memory-display.c:132
 msgid "General number"
-msgstr "Allgemeine Nummer "
+msgstr "Allgemeine Nummer"
 
 #: helper/memory-display.c:136
 #, fuzzy
