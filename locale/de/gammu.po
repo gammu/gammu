@@ -1608,9 +1608,8 @@ msgid "Driver:"
 msgstr "Zu verwendender Treiber:"
 
 #: gammu-detect/udev.c:73
-#, fuzzy
 msgid "Sequential Number:"
-msgstr "Allgemeine Nummer "
+msgstr "Fortlaufende Nummer:"
 
 #  msgid "Finished %s"
 #: gammu-detect/udev.c:74
