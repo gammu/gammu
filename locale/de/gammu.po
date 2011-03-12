@@ -3780,7 +3780,7 @@ msgstr "Tätigkeit"
 
 #: helper/memory-display.c:227
 msgid "Street address"
-msgstr "Straße            "
+msgstr "Straße"
 
 #: helper/memory-display.c:228
 msgid "City"
