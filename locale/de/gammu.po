@@ -3736,7 +3736,7 @@ msgstr "WVID"
 
 #: helper/memory-display.c:215
 msgid "SIP"
-msgstr "SIM"
+msgstr "SIP"
 
 #: helper/memory-display.c:216
 msgid "DTMF"
