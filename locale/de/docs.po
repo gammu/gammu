@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.29.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-23 16:58+0100\n"
-"PO-Revision-Date: 2011-03-12 16:32+0200\n"
+"PO-Revision-Date: 2011-03-12 16:33+0200\n"
 "Last-Translator:  <mynetx@gmx.de>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -104,6 +104,8 @@ msgstr "Entwickler unterstützen"
 #: README:36
 msgid "You can appreciate developers work at <http://wammu.eu/donate/>."
 msgstr ""
+"Sie können unter <http://wammu.eu/donate/> Anerkennung für die Arbeit der "
+"Entwicker zeigen."
 
 #. type: Title =
 #: INSTALL:2
