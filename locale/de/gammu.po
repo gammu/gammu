@@ -3723,9 +3723,8 @@ msgid "Work website"
 msgstr "Website gesch."
 
 #: helper/memory-display.c:207
-#, fuzzy
 msgid "Website"
-msgstr "&Webseite"
+msgstr "Website"
 
 #: helper/memory-display.c:212
 msgid "VOIP"
