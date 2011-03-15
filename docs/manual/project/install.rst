@@ -30,7 +30,10 @@ http://www.microsoft.com/downloads/details.aspx?displaylang=en&FamilyID=6AE02498
 Dependencies
 ------------
 
-You need CMake from <http://www.cmake.org> for compiling Gammu.
+You need CMake from <http://www.cmake.org/> for compiling Gammu.
+
+Additionally pkg-config <http://pkg-config.freedesktop.org/> is used for
+detecting available libraries.
 
 .. _opt-deps:
 
