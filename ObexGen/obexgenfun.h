@@ -9,45 +9,14 @@ typedef struct {
 	char			m_ConnectID[4]; 
 	int				m_FrameSize;
 } OBEX_ConnectInfo;
-/*
-typedef struct {
-	int				FileLev;
-	int				FilesLocationsUsed;
-	int				FilesLocationsCurrent;
-	GSM_File			Files[2000];
-	bool				FileLastPart;
-
-	int				FrameSize;
-	OBEX_Service			Service;
-	char			ConnectID[4]; //peggy add
-} GSM_Phone_OBEXGENData;
-
-GSM_Error OBEXGEN_GetFilePart	(GSM_File *File);
-GSM_Error OBEXGEN_AddFilePart	(GSM_File *File, int *Pos);
-GSM_Error OBEXGEN_Disconnect	();
 
 
-GSM_Error OBEXGEN_GetNextFileFolder( GSM_File *File, bool start);
-GSM_Error OBEXGEN_DeleteFile( unsigned char *ID);
-GSM_Error OBEXGEN_AddFolder( GSM_File *File);
-GSM_Error OBEXGEN_GetFileFolderInfo(GSM_File *File,int Request);
-
-GSM_Error OBEXGEN_ChangePath(char *Name, unsigned char Flag1);
-GSM_Error OBEXGEN_Connect( OBEX_Service service);
-void OBEXGEN_FindNextDir(unsigned char *Path, int *Pos, unsigned char *Return);
-
-GSM_Error OBEXGEN_PrivGetFilePart( GSM_File *File, bool FolderList);
-
-void OBEXGEN_ParseXML(GSM_File *File);
-void GetFilePath(char* pFileFullName,char *pFilePath);
-GSM_Error OBEXGEN_CheckConnection();
-*/
-
-//--- tammy +
 GSM_Error WINAPI OBEXGEN_Initialise2(OnePhoneModel *pMobileInfo, Debug_Info *pDebuginfo);
-//--- tammy -
+
 
 GSM_Error OBEXGEN_Disconnect(GSM_Error (*pWriteCommandfn) (unsigned char *buffer,int length, unsigned char type, int WaitTime,bool ObexMode,
+							  GSM_ATMultiAnwser *pATMultiAnwser,GSM_Reply_MsgType* ReplyCheckType, GSM_Error (*CallBackFun)    (GSM_Protocol_Message msg)),Debug_Info	*pDebuginfo);
+GSM_Error OBEXGEN_DisconnectEx(bool bHaveConnectID,GSM_Error (*pWriteCommandfn) (unsigned char *buffer,int length, unsigned char type, int WaitTime,bool ObexMode,
 							  GSM_ATMultiAnwser *pATMultiAnwser,GSM_Reply_MsgType* ReplyCheckType, GSM_Error (*CallBackFun)    (GSM_Protocol_Message msg)),Debug_Info	*pDebuginfo);
 
 GSM_Error OBEXGEN_Initialise(Debug_Info	*pDebuginfo);
@@ -72,7 +41,7 @@ GSM_Error OBEXGEN_PrivGetFilePart(GSM_File *File, bool FolderList,GSM_Error (*pW
 GSM_Error OBEXGEN_GetFilePart(GSM_File *File,GSM_Error (*pWriteCommandfn) (unsigned char *buffer,int length, unsigned char type, int WaitTime,bool ObexMode,
 						  GSM_ATMultiAnwser *pATMultiAnwser,GSM_Reply_MsgType* ReplyCheckType, GSM_Error (*CallBackFun)    (GSM_Protocol_Message msg)),Debug_Info	*pDebuginfo,
 						  int (*pGetStatusfn)(int nCur,int nTotal));
-// v2.0.0.3 modified by mingfa "To add pGetStatusfn"
+
 GSM_Error OBEXGEN_AddFilePart(GSM_File *File, int *Pos,GSM_Error (*pWriteCommandfn) (unsigned char *buffer,int length, unsigned char type, int WaitTime,bool ObexMode,
 							  GSM_ATMultiAnwser *pATMultiAnwser,GSM_Reply_MsgType* ReplyCheckType, GSM_Error (*CallBackFun)    (GSM_Protocol_Message msg)),Debug_Info	*pDebuginfo,
 							  int (*pGetStatusfn)(int nCur,int nTotal));

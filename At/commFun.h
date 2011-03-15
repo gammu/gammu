@@ -1,6 +1,12 @@
-/* (c) 2001-2005 by Marcin Wiacek, Walek and Michal Cihar */
 
-
+/* (c) 2002-2003 by Marcin Wiacek and Michal Cihar */
+#ifndef _COMMONFUN_H
+#define _COMMONFUN_H
+#include "mbglobals.h"
+#include <string.h>
+#include <stdio.h>
+#define my_sleep(x) ((x)<1000 ? Sleep(1) : Sleep((x)/1000))
+#define MAX_LINES 100
 
 typedef enum {
 	/**
@@ -28,8 +34,21 @@ typedef enum {
 	 */
 	SEC_None 
 } GSM_SecurityCodeType;
+typedef struct {
+	char	Specialtext[MAX_PATH];
+	int		Anwserlines;
+} GSM_ATMultiAnwser;
 
-/* (c) 2002-2003 by Marcin Wiacek */
+typedef struct {
+	unsigned char	msgtype[20];
+	int				subtypechar;
+	unsigned char	subtype;
+} GSM_Reply_MsgCheckInfo;
+
+typedef struct {
+	int nCount;
+	GSM_Reply_MsgCheckInfo  CheckInfo[50];
+} GSM_Reply_MsgType;
 
 
 typedef struct {
@@ -62,17 +81,6 @@ typedef enum {
 	DL_TEXTALLDATE,		/* Everything			*/
 	DL_TEXTERRORDATE	/* Only errors			*/
 } Debug_Level;
-typedef struct {
-	Debug_Level	dl;
-	FILE		*df;
-//	bool        	use_global;
-	char		*coding;
-} Debug_Info;
-typedef struct {
-	int numbers[MAX_LINES*2];
-} GSM_Lines;
-
-/* (c) 2002-2004 by Marcin Wiacek & Michal Cihar */
 typedef enum {
 	GCT_ERROR=0,
 	GCT_MBUS2=1,
@@ -145,7 +153,7 @@ typedef enum {
 	F_VOICETAGS,	/* Voice tags available						*/
 	F_CAL62,	/* Calendar,6210 style - Call,Birthday,Memo,Meeting		*/
 //	F_NOTES,
-	F_PBKPUSHTALK, /* Compare : Add Push Talk by Mingfa 0127 */
+	F_PBKPUSHTALK,
 
 	/* AT modules */
 	F_SMSONLYSENT,	/* Phone supports only sent/unsent messages			*/
@@ -162,13 +170,33 @@ typedef enum {
 	F_MOTO_PHONEBOOK_2 /* Use Moto and Phonebook data include Address ,birthday*/
 } Feature;
 
+typedef struct 
+ {
+	char		model[MAX_PATH];
+	char		number[MAX_PATH];
+	char		irdamodel[MAX_PATH];
+	char		Manufacturer[MAX_PATH];
+	char        PhoneDllName[MAX_PATH];
+	char        ProtocolDllName[MAX_PATH];
+	char        DeviceDllName[MAX_PATH];
+	Feature		features[12];
+}OnePhoneModel;
+
+typedef struct {
+	Debug_Level	dl;
+	FILE		*df;
+//	bool        	use_global;
+	char		*coding;
+} Debug_Info;
+typedef struct {
+	int numbers[MAX_LINES*2];
+} GSM_Lines;
 
 int WINAPI smprintf(Debug_Info *debugInfo, const char *format, ...);
 void WINAPI GSM_OSErrorInfo(Debug_Info *debugInfo, char *description);
 int WINAPI smfprintf(FILE *f, Debug_Level dl, const char *format, ...);
 void WINAPI GSM_GetCurrentDateTime 	(GSM_DateTime *Date);
 char *WINAPI DayOfWeek 		(int year, int month, int day);
-
 GSM_Error WINAPI CheckReplyFunctions(GSM_Reply_MsgType ReplyCheckType,GSM_Protocol_Message		*msg);
 void WINAPI Fill_GSM_DateTime(GSM_DateTime *Date, time_t timet);
 int WINAPI dbgprintf(const char *format, ...);
@@ -179,7 +207,11 @@ BOOL WINAPI GetModelData(char *model, char *number, char *irdamodel,OnePhoneMode
 bool WINAPI IsPhoneFeatureAvailable(OnePhoneModel *model, Feature feature);
 bool WINAPI ReadVCALText(unsigned char *Buffer, char *Start,unsigned char *Value);
 void WINAPI SaveVCALText(char *Buffer, int *Length,unsigned char *Text, char *Start);
+void WINAPI SiemensSaveVCARDText(char *Buffer, int *Length, char *Text, char *Start,char *beforetext);
 int WINAPI ATGEN_ExtractOneParameter(unsigned char *input, unsigned char *output);
+bool WINAPI HHMM_Get_DateTime(GSM_DateTime *Date, char * timet);
+bool WINAPI MMDDYY_Get_DateTime(GSM_DateTime *Date, char * timet);
+int WINAPI GetDurationDifferenceTime(GSM_DateTime *end_DT, GSM_DateTime *start_DT);
 
 //#ifdef _DEBUG
 	int WINAPI dbgprintf(const char *format, ...);

@@ -14,6 +14,7 @@
  * authors will remain respected by adhering to the license they chose
  * to publish their code under.
  */
+
 /* You have to include wsock32.lib library to MS VC project to compile it */
 
 #include "stdafx.h"
@@ -44,12 +45,6 @@ The protocol parameter is always set to 0 for IrDA.
 */
    	fd = socket(AF_IRDA, SOCK_STREAM, 0);
 
-	/* added by mingfa , v1.0.3.5
-      if (fd ==INVALID_SOCKET)
-      {
-        return founddevice;
-      }
-	*/
     	/* can handle maximally 10 devices during discovering */
     	len  = sizeof(struct irda_device_list) + sizeof(struct irda_device_info) * 10;
     	buf  =(char *) malloc(len);
@@ -66,12 +61,7 @@ The protocol parameter is always set to 0 for IrDA.
 			if (getsockopt(fd, SOL_IRLMP, IRLMP_ENUMDEVICES, buf, &s) == 0) {
 		    		for (i = 0; i < (int)list->numDevice; i++) {
 					dbgprintf("Irda: found device \"%s\" (address %x) - ",list->Device[i].irdaDeviceName,list->Device[i].irdaDeviceID);
-			/*		if (strcmp(GetModelData(NULL,NULL,list->Device[i].irdaDeviceName)->number,"") != 0) {
-						founddevice = true;
-						/* Model AUTO */
-					/**	if (state->CurrentConfig->Model[0]==0) strcpy(state->Phone.Data.Model,GetModelData(NULL,NULL,list->Device[i].irdaDeviceName)->number);
-						state->Phone.Data.ModelInfo = GetModelData(NULL,state->Phone.Data.Model,NULL);
-					}*/
+
 					if(strcmp(state->irdamodel,list->Device[i].irdaDeviceName)== 0)
 					{
 						founddevice = true;
@@ -98,16 +88,13 @@ The protocol parameter is always set to 0 for IrDA.
     	free(buf);
 
 
-    //	close(fd); // v1.0.3.5 , 0307 , marked by mingfa
-	// v1.0.3.5 , 0307, added by mingfa
-	shutdown(fd, 0); // v1.0.3.5 , 0307 , change 0 to SD_BOTH by mingfa
+
+	shutdown(fd, 0);
 #ifdef WIN32
 	closesocket(fd); /*FIXME: error checking */
 #else
 	close(fd); /*FIXME: error checking */
 #endif
-    // mingfa--
-// WSACleanup();
 
    	return founddevice;
 }
@@ -115,18 +102,14 @@ The protocol parameter is always set to 0 for IrDA.
 GSM_Error irda_open (GSM_DeviceData *s,Debug_Info *debugInfo)
 {
     	SOCKET			fd = -1;
-		// v1.0.3.5 , 0307 , added by mingfa for irda version
 		int err;
 #ifdef WIN32
     	int 			Enable9WireMode = 1;
     	WSADATA			wsaData;
     
-		// v1.0.3.5 , 0307 , modified by mingfa
-		//The WSAStartup function must be the first Windows Sockets function called by an application or DLL
     	err = WSAStartup(MAKEWORD(1,1), &wsaData);
 		if ( err != 0 )
 		  return ERR_DEVICEOPENERROR; 
-		// mingfa--
 #else
     	if (s->ConnectionType == GCT_IRDAAT) return ERR_SOURCENOTAVAILABLE;
 #endif
@@ -140,13 +123,6 @@ GSM_Error irda_open (GSM_DeviceData *s,Debug_Info *debugInfo)
     //	err = WSAStartup(MAKEWORD(1,1), &wsaData); // for test
 
     	fd = socket(AF_IRDA, SOCK_STREAM, 0);
-
-	/* added by mingfa , v1.0.3.5
-      if (fd ==INVALID_SOCKET)
-      {
-        return ERR_DEVICEOPENERROR;
-      }
-	*/
 
     	s->peer.irdaAddressFamily 	= AF_IRDA;
 #ifndef WIN32
@@ -179,15 +155,13 @@ GSM_Error irda_open (GSM_DeviceData *s,Debug_Info *debugInfo)
     	/* Connecting to service */
     	if (connect(fd, (struct sockaddr *)&s->peer, sizeof(s->peer))) {
 		dbgprintf("Can't connect to service %s\n",s->peer.irdaServiceName);
-    //	close(fd); // v1.0.3.5 , 0307 , marked by mingfa
-	    // v1.0.3.5 , 0307, added by mingfa
-	    shutdown(fd, 0); // v1.0.3.5 , 0307 , change 0 to SD_BOTH by mingfa
+ 
+	    shutdown(fd, 0);
 #ifdef WIN32
 	    closesocket(fd); /*FIXME: error checking */
 #else
 	    close(fd); /*FIXME: error checking */
 #endif
-    // mingfa--
 
 		return ERR_NOTSUPPORTED;
     	}
@@ -201,12 +175,9 @@ GSM_Error irda_open (GSM_DeviceData *s,Debug_Info *debugInfo)
 
 GSM_Error irda_close(GSM_DeviceData *s,Debug_Info *debugInfo)
 {
-
-//	return socket_close(s, s->Device.Data.Irda.hPhone);
     socket_close(s, s->hSocketPhone);
 
 #ifdef WIN32
-	// v1.0.3.5 , 0307 , modified by mingfa
 	//There must be a call to WSACleanup for every successful call to WSAStartup made by a task
     WSACleanup();
 #endif

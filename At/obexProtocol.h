@@ -1,5 +1,7 @@
 /* (c) 2003 by Marcin Wiacek */
-
+#ifndef obex_h
+#define obex_h
+#include "commfun.h"
 
 
 typedef struct {

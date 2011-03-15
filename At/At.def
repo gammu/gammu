@@ -1,0 +1,14 @@
+; At.def : Declares the module parameters for the DLL.
+
+LIBRARY      "At"
+DESCRIPTION  'At Windows Dynamic Link Library'
+
+EXPORTS
+	InitialiseLib
+	ProtocolInitialise
+	Terminate
+	Open_Device
+	Close_Device
+	WriteCommand
+	SetATProtocolData
+   ; Explicit exports can go here

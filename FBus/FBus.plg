@@ -1,0 +1,52 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: FBus - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x404 /fo"..\..\temp\debug/FBus.res" /d "_DEBUG" /d "_AFXDLL" "D:\Customer Profile\Gammu GPL\code04082010\code\FBus\FBus.rc"" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP17F5.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /I "..\Proj_inc" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_USRDLL" /Fp"..\..\temp\debug/FBus.pch" /Yu"stdafx.h" /Fo"..\..\temp\debug/" /Fd"..\..\temp\debug/" /FD /GZ /c 
+"D:\Customer Profile\Gammu GPL\code04082010\code\Proj_inc\DeviceAPI.cpp"
+"D:\Customer Profile\Gammu GPL\code04082010\code\FBus\FBus.cpp"
+"D:\Customer Profile\Gammu GPL\code04082010\code\FBus\fbus2.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP17F5.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP17F6.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /I "..\Proj_inc" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_USRDLL" /Fp"..\..\temp\debug/FBus.pch" /Yc"stdafx.h" /Fo"..\..\temp\debug/" /Fd"..\..\temp\debug/" /FD /GZ /c 
+"D:\Customer Profile\Gammu GPL\code04082010\code\FBus\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP17F6.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP17F7.tmp" with contents
+[
+..\..\lib\Debug\Common.lib /nologo /subsystem:windows /dll /incremental:yes /pdb:"..\..\lib\debug/FBus.pdb" /debug /machine:I386 /def:".\FBus.def" /out:"..\..\exe\Debug\FBus.dll" /implib:"..\..\lib\debug/FBus.lib" /pdbtype:sept 
+"\Customer Profile\Gammu GPL\code04082010\temp\debug\DeviceAPI.obj"
+"\Customer Profile\Gammu GPL\code04082010\temp\debug\FBus.obj"
+"\Customer Profile\Gammu GPL\code04082010\temp\debug\fbus2.obj"
+"\Customer Profile\Gammu GPL\code04082010\temp\debug\StdAfx.obj"
+"\Customer Profile\Gammu GPL\code04082010\temp\debug\FBus.res"
+]
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP17F7.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+StdAfx.cpp
+Compiling...
+DeviceAPI.cpp
+FBus.cpp
+fbus2.cpp
+Generating Code...
+Linking...
+   Creating library ..\..\lib\debug/FBus.lib and object ..\..\lib\debug/FBus.exp
+
+
+
+<h3>Results</h3>
+FBus.dll - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

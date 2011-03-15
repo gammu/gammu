@@ -1,0 +1,150 @@
+; Common.def : Declares the module parameters for the DLL.
+
+LIBRARY      "Common"
+DESCRIPTION  'Common Windows Dynamic Link Library'
+
+EXPORTS
+	smfprintf
+	dbgprintf
+	smprintf
+	GSM_OSErrorInfo
+	GSM_GetCurrentDateTime
+	DayOfWeek
+	CheckReplyFunctions
+	Fill_GSM_DateTime
+	CopyLineString
+	GetLineString
+	SplitLines
+	PHONE_DecodeBitmap
+	DecodeUnicodeString
+	GetModelData
+	IsPhoneFeatureAvailable
+	CopyUnicodeString
+	UnicodeLength
+	GSM_DecodeSMSFrame
+	GSM_MakeMultiPartSMS
+	PHONE_GetBitmapSize
+	PHONE_GetBitmapWidthHeight
+	GSM_UnpackSemiOctetNumber
+	GSM_EncodeSMSFrame
+	GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance
+	ReadVCALText
+	SaveVCALText
+	ReadVCALDateTime
+	SaveVCALDateTime
+	GetTimeDifference
+	IsCalendarNoteFromThePast
+	Fill_Time_T
+	mywstrncasecmp
+	DecodeUTF2String
+	MyGetLine
+	EncodeUnicode
+	wstrstr
+	GSM_ClearBitmap
+	NOKIA_DecodeNetworkCode
+	mystrncasecmp
+	DecodeUnicodeConsole
+	EncodeUcs2
+	ReverseUnicodeString
+	Searchstr
+	GSM_PackSemiOctetNumber
+	GSM_PhonebookFindDefaultNameNumberGroup
+	GSM_PhonebookFindDefaultNameNumberGroupSamsung
+	ATGEN_ExtractOneParameter
+	ATGEN_ExtractOneParameterEx
+	ATGEN_ExtractOneParameterEx2
+	EncodeHexUnicode
+	EncodeCString2UTF8
+	EncodeDefault
+	EncodeHexBin
+	DecodeHexUnicode
+	GSM_DecodeSMSFrameText
+	GSM_DecodeSMSFrameStatusReportData
+	DecodeHexBin
+	SONYERIC_EncodeVCALENDAR
+	GSM_DecodeVCALENDAR_VTODO
+	SamsungZ_DecodeVCALENDAR_VTODO
+	GSM_EncodeSonyEricssonVCARD
+	GSM_DecodeVCARD
+	GSM_DecodePBInfo
+	GSM_EncodeSiemensVCARD
+	S55_EncodeVCALENDAR
+	DecodeDefault
+	HHMM_Get_DateTime
+	MMDDYY_Get_DateTime
+	GetDurationDifferenceTime
+
+	YYYYMMDD_Get_DateTime
+	GSM_EncodeNokiaS6VCARD
+	NokiaS6_DecodeVCARD
+	NokiaS6_DecodeVCALENDAR
+	NokiaS6_EncodeVCALENDAR
+	SaveVCALDateTimeWithoutTimeZone
+	GSM_EncodeVTODO
+	GSM_ToDoFindDefaultTextTimeAlarmCompleted
+	GSM_ToDoFindFindEntryIndex
+	GSM_ToDoFindFindEntryIndexEx
+
+	DecodeUTF8ToUnicode
+	UnicodeCat
+	DecodeUnicode
+	GetFilePath_Unicode
+	GetFileName_Unicode
+	GSM_GetCountryName
+	GSM_GetNetworkName
+	GetModelDataEx
+	EncodeCString2UTF7
+	EncodeCString2UTF8Ex
+	EncodeUnicode2UTF7
+
+	checksum_fcs32
+	checksum_fcs16
+
+	ReadVCALDateTime_GMT
+
+	EncodeQuotedPrintable
+	DecodeUTF8QuotedPrintable
+	VCARD_ParseAddress
+	VCARD_AddressCat
+
+	EncodeUnicode2UTF8
+	SharpSaveVCARDText
+	GSM_DecodeSharpPBInfo
+	GSM_DecodeSharpDevInfo
+	EncodeUTF8QuotedPrintable
+	GSM_SiemensDecodeVCARD
+	Samsung_DecodeVCARD
+	GSM_EncodeSamsungVCARD
+	GSM_EncodeSamsungZVCARD
+	SAGEM_DecodeVCARD
+	SAGEM_EncodeVCARD
+	SAGEM_EncodeVCALENDAR
+	SAGEM_DecodeVCALENDAR_VTODO
+	SamsungZGetLine
+	SAMSUNG_PackSemiOctetNumber
+
+	Samsung_EncodeVCALENDAR
+
+	SIM_DecodeText
+	SIM_EncodeText
+	IsCheckLimitedTrial
+
+	DecodeBCD
+	EncodeBCD
+	DecodeWithBCDAlphabet
+	GSM_UnpackEightBitsToSeven
+	GSM_PackSevenBitsToEight
+	EncodeWithBCDAlphabet
+	SIM_EncodeText2
+	GSM_EncodeSiemensVCARD_SL75
+
+	ReverseUnicode
+	MOTOE2_DecodeVCALENDAR
+	MOTOE2_EncodeVCALENDAR
+	MOTOE2_DecodeVCARD
+	MOTOE2_EncodeVCARD
+	EncodeUnicode2UTF8Ex
+	UnicodeReplace
+	SplitStringEx
+	GSM_DecodeSMSFrameNokia
+; Explicit exports can go here

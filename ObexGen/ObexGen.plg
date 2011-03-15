@@ -1,0 +1,53 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: ObexGen - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x404 /fo"..\..\temp\debug\obexgen/ObexGen.res" /d "_DEBUG" /d "_AFXDLL" "D:\Customer Profile\Gammu GPL\code04082010\code\ObexGen\ObexGen.rc"" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1801.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /I "..\Proj_inc" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_USRDLL" /Fp"..\..\temp\debug\obexgen/ObexGen.pch" /Yu"stdafx.h" /Fo"..\..\temp\debug\obexgen/" /Fd"..\..\temp\debug\obexgen/" /FD /GZ /c 
+"D:\Customer Profile\Gammu GPL\code04082010\code\ObexGen\ObexGen.cpp"
+"D:\Customer Profile\Gammu GPL\code04082010\code\ObexGen\obexgenfun.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1801.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1802.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /I "..\Proj_inc" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_USRDLL" /Fp"..\..\temp\debug\obexgen/ObexGen.pch" /Yc"stdafx.h" /Fo"..\..\temp\debug\obexgen/" /Fd"..\..\temp\debug\obexgen/" /FD /GZ /c 
+"D:\Customer Profile\Gammu GPL\code04082010\code\ObexGen\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1802.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1803.tmp" with contents
+[
+..\..\lib\Debug\Common.lib /nologo /subsystem:windows /dll /incremental:yes /pdb:"..\..\lib\debug/ObexGen.pdb" /debug /machine:I386 /def:".\ObexGen.def" /out:"..\..\exe\Debug\ObexGen.dll" /implib:"..\..\lib\debug/ObexGen.lib" /pdbtype:sept 
+"\Customer Profile\Gammu GPL\code04082010\temp\debug\obexgen\ObexGen.obj"
+"\Customer Profile\Gammu GPL\code04082010\temp\debug\obexgen\obexgenfun.obj"
+"\Customer Profile\Gammu GPL\code04082010\temp\debug\obexgen\StdAfx.obj"
+"\Customer Profile\Gammu GPL\code04082010\temp\debug\obexgen\ObexGen.res"
+]
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1803.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+StdAfx.cpp
+Compiling...
+ObexGen.cpp
+obexgenfun.cpp
+D:\Customer Profile\Gammu GPL\code04082010\code\ObexGen\obexgenfun.cpp(1266) : warning C4101: 'Line' : unreferenced local variable
+D:\Customer Profile\Gammu GPL\code04082010\code\ObexGen\obexgenfun.cpp(1266) : warning C4101: 'Line2' : unreferenced local variable
+D:\Customer Profile\Gammu GPL\code04082010\code\ObexGen\obexgenfun.cpp(2207) : warning C4018: '==' : signed/unsigned mismatch
+D:\Customer Profile\Gammu GPL\code04082010\code\ObexGen\obexgenfun.cpp(2174) : warning C4101: 'FullName' : unreferenced local variable
+Generating Code...
+Linking...
+   Creating library ..\..\lib\debug/ObexGen.lib and object ..\..\lib\debug/ObexGen.exp
+
+
+
+<h3>Results</h3>
+ObexGen.dll - 0 error(s), 4 warning(s)
+</pre>
+</body>
+</html>

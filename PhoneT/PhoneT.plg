@@ -1,0 +1,52 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: PhoneT - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x404 /fo"..\..\temp\debug/PhoneT.res" /d "_DEBUG" /d "_AFXDLL" "D:\Customer Profile\Gammu GPL\code04082010\code\PhoneT\PhoneT.rc"" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1807.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /I "..\Proj_inc" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_USRDLL" /Fp"..\..\temp\debug/PhoneT.pch" /Yu"stdafx.h" /Fo"..\..\temp\debug/" /Fd"..\..\temp\debug/" /FD /GZ /c 
+"D:\Customer Profile\Gammu GPL\code04082010\code\Proj_inc\DeviceAPI.cpp"
+"D:\Customer Profile\Gammu GPL\code04082010\code\PhoneT\PhoneT.cpp"
+"D:\Customer Profile\Gammu GPL\code04082010\code\PhoneT\phonetProtocol.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1807.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1808.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /I "..\Proj_inc" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_USRDLL" /Fp"..\..\temp\debug/PhoneT.pch" /Yc"stdafx.h" /Fo"..\..\temp\debug/" /Fd"..\..\temp\debug/" /FD /GZ /c 
+"D:\Customer Profile\Gammu GPL\code04082010\code\PhoneT\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1808.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1809.tmp" with contents
+[
+..\..\lib\Debug\Common.lib /nologo /subsystem:windows /dll /incremental:yes /pdb:"..\..\lib\debug/PhoneT.pdb" /debug /machine:I386 /def:".\PhoneT.def" /out:"..\..\exe\Debug\PhoneT.dll" /implib:"..\..\lib\debug/PhoneT.lib" /pdbtype:sept 
+"\Customer Profile\Gammu GPL\code04082010\temp\debug\DeviceAPI.obj"
+"\Customer Profile\Gammu GPL\code04082010\temp\debug\PhoneT.obj"
+"\Customer Profile\Gammu GPL\code04082010\temp\debug\phonetProtocol.obj"
+"\Customer Profile\Gammu GPL\code04082010\temp\debug\StdAfx.obj"
+"\Customer Profile\Gammu GPL\code04082010\temp\debug\PhoneT.res"
+]
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1809.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+StdAfx.cpp
+Compiling...
+DeviceAPI.cpp
+PhoneT.cpp
+phonetProtocol.cpp
+Generating Code...
+Linking...
+   Creating library ..\..\lib\debug/PhoneT.lib and object ..\..\lib\debug/PhoneT.exp
+
+
+
+<h3>Results</h3>
+PhoneT.dll - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

@@ -1,0 +1,40 @@
+; ObexGen.def : Declares the module parameters for the DLL.
+
+LIBRARY      "ObexGen"
+DESCRIPTION  'ObexGen Windows Dynamic Link Library'
+
+EXPORTS
+	OBEXAddBlock
+	OBEXGEN_Initialise
+	OBEXGEN_Connect
+	OBEXGEN_Connect2
+	OBEXGEN_Disconnect
+	OBEXGEN_GetNextFileFolder
+	OBEXGEN_DeleteFile
+	OBEXGEN_AddFolder
+	OBEXGEN_GetFileFolderInfo
+	OBEXGEN_ChangePath
+	OBEXGEN_PrivGetFilePart
+	OBEXGEN_GetFilePart
+	OBEXGEN_AddFilePart
+	OBEXGEN_FindNextDir
+	OBEXGEN_ParseXML
+	OBEXGEN_GetOBEXFolderListCount
+	OBEXGEN_GetOBEXSubList
+	OBEXGEN_GetNextFileFolder2
+
+	OBEXGEN_SetFolderPath
+	OBEXGEN_CheckConnection
+
+	OBEXGEN_Initialise2
+
+	OBEXHEADER_ConnectionID
+	OBEXHEADER_Length
+	OBEXHEADER_Name
+	OBEXHEADER_Type
+
+	OBEXGEN_ClearFolderListInfo
+	OBEXGEN_ReplyGetFilePart
+	OBEXGEN_FindNextDir_UnicodePath
+	OBEXGEN_DisconnectEx
+   ; Explicit exports can go here

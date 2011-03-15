@@ -1,0 +1,14 @@
+; Serial.def : Declares the module parameters for the DLL.
+
+LIBRARY      "Serial"
+DESCRIPTION  'Serial Windows Dynamic Link Library'
+
+EXPORTS
+ 	OpenDevice
+	CloseDevice
+	DeviceSetParity
+	DeviceSetDtrRts
+	DeviceSetSpeed
+	ReadDevice
+	WriteDevice
+   ; Explicit exports can go here

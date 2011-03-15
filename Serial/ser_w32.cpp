@@ -63,9 +63,6 @@ GSM_Error serial_close(GSM_DeviceData *s,Debug_Info *debugInfo)
 	my_sleep(10);
 	// Clears the DTR (data-terminal-ready) signal 
 	EscapeCommFunction(s->hPhone, CLRDTR);
-//	my_sleep(10);
-//	EscapeCommFunction(d->hPhone, CLRRTS);
-
 	my_sleep(10);
 
 	/* Closes device */
@@ -75,7 +72,6 @@ GSM_Error serial_close(GSM_DeviceData *s,Debug_Info *debugInfo)
 	}
 	smprintf(debugInfo,"[CloseHandle]\n");
 
-	// Compare ; by mingfa
 	if(s->osRead.hEvent	) CloseHandle(s->osRead.hEvent); 
 	return ERR_NONE;
 }
@@ -91,9 +87,9 @@ GSM_Error serial_open (GSM_DeviceData *s,Debug_Info *debugInfo)
 	unsigned char		KeyName[100];
 #endif
 	COMMTIMEOUTS TimeOut;
-	TimeOut.ReadIntervalTimeout = MAXDWORD;//0xFFFFFFFF;
+	TimeOut.ReadIntervalTimeout = MAXDWORD;
 	TimeOut.ReadTotalTimeoutMultiplier = 0;
-	TimeOut.ReadTotalTimeoutConstant = 1000; 
+	TimeOut.ReadTotalTimeoutConstant = 1000;
 	TimeOut.WriteTotalTimeoutMultiplier = 0;
 	TimeOut.WriteTotalTimeoutConstant = 1000;
 
@@ -165,11 +161,6 @@ GSM_Error serial_open (GSM_DeviceData *s,Debug_Info *debugInfo)
 		return ERR_DEVICEREADERROR;
 	}
 
-//	my_sleep(10);
-//	EscapeCommFunction(d->hPhone, SETDTR );
-//	my_sleep(10);
-//	EscapeCommFunction(d->hPhone, SETRTS );
-
 	/* When char will be received, we will receive notifications */
 	//SetCommMask(d->hPhone, EV_RXCHAR|EV_ERR);
 	SetCommMask(s->hPhone, EV_RXCHAR |EV_BREAK |EV_ERR);
@@ -189,16 +180,6 @@ GSM_Error serial_open (GSM_DeviceData *s,Debug_Info *debugInfo)
 	dcb.ByteSize 	 = 8;
 	dcb.Parity 	 = NOPARITY; 
 	dcb.StopBits 	 = ONESTOPBIT;
-
-	/* No Xon/Xof flow control */
-//	dcb.fOutX 	 = false;		
-//	dcb.fInX 	 = false;
-	
-	/* Hardware flow control */
-//	dcb.fOutxDsrFlow = true;
-//	dcb.fOutxCtsFlow = true;
-//	dcb.fDtrControl  = DTR_CONTROL_HANDSHAKE;
-//	dcb.fRtsControl  = RTS_CONTROL_HANDSHAKE;
 
     	/* Initialise the port settings */
 	if (SetCommState(s->hPhone, &dcb)==0) {
@@ -328,17 +309,9 @@ int serial_read(GSM_DeviceData *s, void *buf, size_t nbytes,Debug_Info *debugInf
 	if(s->hPhone == INVALID_HANDLE_VALUE)
 	   return 0;
 
-//	SetCommMask(d->hPhone, EV_RXCHAR |EV_BREAK |EV_ERR);
-
-//	GetCommMask(d->hPhone,&dwEvent);
-   //if(!WaitCommEvent(d->hPhone,&dwEvent,0))
-	   //return 0;
- 
 	ClearCommError(s->hPhone, &ErrorFlags, &ComStat);
-
-	// Compare by mingfa
     Length =   min(MAXData ,ComStat.cbInQue);
-   //  Length = ComStat.cbInQue;
+
 	 
 	// Nothing to read  
 	if (Length <= 0) 
@@ -373,11 +346,6 @@ int serial_write(GSM_DeviceData *s, void *buf, size_t nbytes,Debug_Info *debugIn
 {
 	DWORD			BytesWritten,ErrorFlags,BytesSent=0;
 	COMSTAT			ComStat;
-//	GSM_Device_SerialData 	*d = &s->Device.Data.Serial;
-//	PurgeComm(d->hPhone, PURGE_TXCLEAR );
-	//EscapeCommFunction(d->hPhone, CLRDTR);
-//	EscapeCommFunction( d->hPhone, RESETDEV | CLRBREAK ) ;
-
 
 	if (WriteFile(s->hPhone, buf, nbytes, &BytesSent, &s->osWrite)) return BytesSent;
 

@@ -108,52 +108,6 @@ GSM_Error CPhoneTApp::DispatchMessage(GSM_Protocol_Message* msg)
 	else 
 		error = ERR_NONE;
 
-/*
-	if (strcmp(s->Phone.Functions->models,"NAUTO"))
-	{
-		if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR ||
-		    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl==DL_TEXTERRORDATE)
-		{
-			disp = true;
-			switch (error) 
-			{
-			case ERR_UNKNOWNRESPONSE:
-				smprintf(s, "\nUNKNOWN response");
-				break;
-			case ERR_UNKNOWNFRAME:
-				smprintf(s, "\nUNKNOWN frame");
-				break;
-			case ERR_FRAMENOTREQUESTED:
-				smprintf(s, "\nFrame not request now");
-				break;
-			default:
-				disp = false;
-			}
-		}
-
-		if (error == ERR_UNKNOWNFRAME || error == ERR_FRAMENOTREQUESTED)
-		{
-			if(Phone->RequestID==ID_None)
-				error = ERR_NONE;
-			else
-				error = ERR_TIMEOUT;
-		}
-	}
-*/
-/*	if (disp) 
-	{
-		smprintf(s,". If you can, PLEASE report it (see readme.txt). THANK YOU\n");
-		if (Phone->SentMsg != NULL) {
-			smprintf(s,"LAST SENT frame ");
-			smprintf(s, "type 0x%02X/length %i", Phone->SentMsg->Type, Phone->Sentmsg.Length);
-			DumpMessage(s->di.use_global ? di.df : s->di.df, s->di.dl, Phone->Sentmsg.Buffer, Phone->Sentmsg.Length);
-		}
-		smprintf(s, "RECEIVED frame ");
-		smprintf(s, "type 0x%02X/length 0x%02X/%i", msg->Type, msg.Length, msg.Length);
-		DumpMessage(s->di.use_global ? di.df : s->di.df, s->di.dl, msg.Buffer, msg.Length);
-		smprintf(s, "\n");
-	}*/
-
 	return error;
 }
 GSM_Error WINAPI SetATProtocolData(bool EditMode,bool bFastWrite,DWORD dwFlag)
@@ -174,55 +128,9 @@ GSM_Error WINAPI InitialiseLib(char* pszDeviceDllName,Debug_Info *debugInfo,GSM_
 	return ERR_NONE;
 }
 
-GSM_Error WINAPI ProtocolInitialise(/*char* pszDeviceDllName,Debug_Info *debugInfo,*/GSM_Config ConfigInfo)
+GSM_Error WINAPI ProtocolInitialise(GSM_Config ConfigInfo)
 {
-/*	GSM_Error error = ERR_NONE;
-	char szConnectType[MAX_PATH];
-	char szDeviceName[MAX_PATH];
-
-	wsprintf(szConnectType,"%s",ConfigInfo.Connection);
-
-	theApp.m_pDebugInfo = debugInfo;
-	error = theApp.m_DeviceAPI.InitDeviceData(theApp.m_pDebugInfo,ConfigInfo);
-	if(error != ERR_NONE)
-		return error;
-
-/*	switch(theApp.m_DeviceAPI.m_DeviceData.ConnectionType )
-	{
-	case  GCT_PHONETBLUE:
-		wsprintf(szDeviceName,"serial.dll");
-		break;
-	case  GCT_IRDAPHONET:
-		wsprintf(szDeviceName,"irda.dll");
-		break;
-	case  GCT_BLUEPHONET:
-		wsprintf(szDeviceName,"winBT.dll");
-		break;
-	default:
-		return ERR_BUG;
-	}*/
-/*	if(theApp.m_DeviceAPI.LoadDeviceApiLibrary(pszDeviceDllName)==FALSE)
-		return ERR_BUG;
-
-	error =theApp.m_DeviceAPI.DeviceAPI_OpenDevice();
-	if(error != ERR_NONE)
-		return error;*/
-
-/*	int Speed =19200;
-	if(theApp.m_DeviceAPI.m_DeviceData.ConnectionType == GCT_AT)
-	{
-		if (strlen(szConnectType) > 2) 
-		{
-			Speed= theApp.m_DeviceAPI.FindSerialSpeed(szConnectType+2);
-			if(Speed == 0) Speed =19200;
-		}
-	}
-	error =theApp.m_DeviceAPI.DeviceAPI_DeviceSetSpeed(Speed);
-	if(error != ERR_NONE)
-		return error;*/
-
 	return PHONET_Initialise();
-
 }
 GSM_Error WINAPI Terminate()
 {
@@ -237,7 +145,7 @@ GSM_Error WINAPI Close_Device()
 	return theApp.m_DeviceAPI.DeviceAPI_CloseDevice();
 }
 
-int GSM_ReadDevice (bool wait)	   //by karl
+int GSM_ReadDevice (bool wait)
 {
 	unsigned char	buff[300];
 	int		res = 0, count;

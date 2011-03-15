@@ -1,7 +1,13 @@
 /* (c) 2003 by Marcin Wiacek */
 /* www.irda.org OBEX specs 1.3 */
+#include "stdafx.h"
+#include <stdio.h>
+#include <string.h>
+#include "obexProtocol.h"
+#include "at.h"
 
-
+#include "atprotocol.h"
+extern CAtApp theApp;
 
 
 GSM_Error OBEX_WriteMessage (unsigned char *buffer,

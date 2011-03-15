@@ -1,0 +1,14 @@
+; FBus.def : Declares the module parameters for the DLL.
+
+LIBRARY      "FBus"
+DESCRIPTION  'FBus Windows Dynamic Link Library'
+
+EXPORTS
+	InitialiseLib
+	ProtocolInitialise
+	Terminate
+	Open_Device
+	Close_Device
+	WriteCommand
+	SetATProtocolData
+    ; Explicit exports can go here

@@ -29,8 +29,8 @@ public:
 	OnePhoneModel *m_pMobileInfo;
 	Debug_Info	*m_pDebuginfo;
 	bool m_bObexMode;
-	char			m_ConnectID[4]; //peggy add
-//	unsigned char			m_ObexID[1];
+	char			m_ConnectID[4];
+
 	OBEX_Service		m_Service;
 	int				m_FrameSize;
 	bool				m_FileLastPart;

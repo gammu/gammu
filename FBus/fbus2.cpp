@@ -19,16 +19,17 @@
 
 #include <stdio.h>
 #include <string.h>
+#include "DeviceAPI.h"
 #include "fbus.h"
 
 #include "fbus2.h"
 extern CFBusApp theApp;
 
-//Compare by mingfa ; purpose ?? need to check peggy
+
 unsigned char g_AckSeqNo = 0x00 ;
 BOOL g_GetAck = FALSE ;
 
-int FBUS2_ReadDevice (bool wait)	   
+int FBUS2_ReadDevice (bool wait)
 {
 	unsigned char	buff[300];
 	int		res = 0, count;
@@ -87,7 +88,7 @@ GSM_Error FBUS2_WriteFrame(unsigned char 	*MsgBuffer,
 	unsigned char 		  buffer2[FBUS2_MAX_TRANSMIT_LENGTH + 10];  
 	unsigned char 		  checksum=0;
 	int 			  i, len, sent;
-//	int               j; 
+
 	CDeviceAPI	*Device 	= &theApp.m_DeviceAPI;
 
 	buffer2[0] 	= FBUS2_FRAME_ID;
@@ -113,49 +114,11 @@ GSM_Error FBUS2_WriteFrame(unsigned char 	*MsgBuffer,
 	for (i = 1; i < len; i+=2) checksum ^= buffer2[i];
 	buffer2[len++] 	= checksum;
 
-
-//	g_GetAck=FALSE; 
 	/* Sending to phone */
 	sent=Device->DeviceAPI_WriteDevice(buffer2,len);
 	if (sent!=len) return ERR_DEVICEWRITEERROR;
 
-/*	if(MsgType !=FBUS2_ACK_BYTE)
-	{
-		for(j = 0 ;j<2 ;j++)
-		{
-			my_sleep(10);
-			FBUS2_ReadAck(TRUE);
-			if(g_GetAck)
-			{
-				my_sleep(20);
-				break;
-			}
-		}
-	/*	if(g_GetAck == FALSE && s)
-		{
-			sent=s->Device.Functions->WriteDevice(s,bufferTemp,len);
-			if (sent!=len) return ERR_DEVICEWRITEERROR;
-			my_sleep(10);
-			for(j = 0 ;j<2 ;j++)
-			{
-				FBUS2_ReadAck(s,TRUE);
-				if(g_GetAck)
-					break;
-			}
-		}*/
-//	}
-
-
-
-
 	/* Sending to phone */
-	
-	/*
-	sent=s->Device.Functions->WriteDevice(s,buffer2,len);
-	if (sent!=len) return ERR_DEVICEWRITEERROR;
-    */
-
-
 	return ERR_NONE;
 }
 
@@ -287,14 +250,13 @@ GSM_Error FBUS2_StateMachine(unsigned char rx_char)
 				}
 			}
 
-			
 			free(d->Msg.Buffer);
 			d->Msg.Length 		= 0;
 			d->Msg.Buffer 		= NULL;
 
 		
 			g_GetAck = TRUE;
-           
+
 			d->MsgRXState = RX_Sync;
 			return ERR_NONE;
 		}
@@ -361,7 +323,7 @@ GSM_Error FBUS2_StateMachine(unsigned char rx_char)
 		/* do not ack debug trace, as this could generate a
 		 * (feedback loop) flood of which even Noah would be scared.
 		 */
-	   
+
 		if (d->Msg.Type != 0) {
 			FBUS2_SendAck(d->Msg.Type,((unsigned char)(seq_num & 0x0f)));
 		}
@@ -401,16 +363,6 @@ GSM_Error FBUS2_StateMachine(unsigned char rx_char)
 					smprintf(pDebugInfo,"[ERROR: incorrect char - %02x, not %02x]\n", rx_char, FBUS2_DEVICE_PHONE);
 				}
 			}
-/*
-			
-			free(d->Msg.Buffer);
-			d->Msg.Length 		= 0;
-			d->Msg.Buffer 		= NULL;
-
-			
-
-			d->MsgRXState = RX_Sync;
-			return ERR_NONE;*/
 		}
 		d->Msg.Source = rx_char;
 
@@ -428,12 +380,10 @@ GSM_Error FBUS2_StateMachine(unsigned char rx_char)
 				}
 			}
 
-			
 			free(d->Msg.Buffer);
 			d->Msg.Length 		= 0;
 			d->Msg.Buffer 		= NULL;
 
-			
 			d->MsgRXState = RX_Sync;
 			return ERR_NONE;
 		}
@@ -486,23 +436,6 @@ GSM_Error FBUS2_StateMachine(unsigned char rx_char)
 
 int FBUS2_WriteDLR3(char *command, int length, int timeout)
 {
-/*
-	unsigned char		buff[300];
-	int			w = 0;
-	bool			wassomething = false;
-
-	s->Device.Functions->WriteDevice(s,command,length);
-
-	for (w=0;w<timeout;w++) 
-	{ 
-		if (s->Device.Functions->ReadDevice(s, buff, 255)>0)
-		{
-			if(s->Device.Functions->ReadDevice(s, buff, 255)==0)
-				return 1;
-		}
-	}
-	return 0;
-*/
 
 	GSM_Protocol_FBUS2Data	*d		= &theApp.m_FBUS2Data;
 	CDeviceAPI	*Device 	= &theApp.m_DeviceAPI;
@@ -513,13 +446,12 @@ int FBUS2_WriteDLR3(char *command, int length, int timeout)
 	Device->DeviceAPI_WriteDevice(command,length);
 
 	for (w=0;w<timeout;w++) {   
-		Sleep(10); //Compare: added by mingfa 0131 ; change 50 to 10		
+		Sleep(10);		
 		if (wassomething) {
 			if (Device->DeviceAPI_ReadDevice( buff, 255)==0) return 1;
 		} else {
 			if (Device->DeviceAPI_ReadDevice( buff, 255)>0) wassomething = true;
 		}
-	//	my_sleep(50);
 	}
 	return 0;
 
@@ -559,23 +491,15 @@ GSM_Error FBUS2_Initialise()
 	case GCT_FBUS2DKU5:
 	case GCT_FBUS2PL2303:
 	case GCT_FBUS2DLR3:
-//		error=Device->DeviceSetDtrRts(s,false,false);
-//	    	if (error!=ERR_NONE) return error; 
-//		my_sleep(1000);
-
-  
-	//	error=Device->DeviceSetDtrRts(s,true,true);
-        error=Device->DeviceAPI_DeviceSetDtrRts(false,false); // mingfa marked
+        error=Device->DeviceAPI_DeviceSetDtrRts(false,false);
 	    if (error!=ERR_NONE) return error; 
 		error=Device->DeviceAPI_DeviceSetSpeed(115200);
 		if (error!=ERR_NONE) return error;
 
-	
-		FBUS2_WriteDLR3("AT\r",		 3,50); // change 5->10  
-        FBUS2_WriteDLR3("AT&F\r\n",		 6,50); // change 5->10 for 7260
-     //   error = FBUS2_WriteDLR3("AT*NOKIAFBUS\r\n",	14,10);
 
-	//	if ( error!=ERR_NONE ) 
+		FBUS2_WriteDLR3("AT\r",		 3,50);
+        FBUS2_WriteDLR3("AT&F\r\n",		 6,50);
+
 		if(FBUS2_WriteDLR3("AT*NOKIAFBUS\r\n",	14,50) == 0)
 		{
 			error=Device->DeviceAPI_CloseDevice();
@@ -591,35 +515,10 @@ GSM_Error FBUS2_Initialise()
 			error=Device->DeviceAPI_DeviceSetSpeed(115200);
 	    	if (error!=ERR_NONE) return error; 
 	//		error=Device->DeviceSetDtrRts(s,true,false);
-	        error=Device->DeviceAPI_DeviceSetDtrRts(false,false); 
+	        error=Device->DeviceAPI_DeviceSetDtrRts(false,false);
 			if (error!=ERR_NONE) return error; 
         }
 
-/* 
-		FBUS2_WriteDLR3(s,"\r",		 1,100);
-		FBUS2_WriteDLR3(s,"AT\r",		 3,200);
-		FBUS2_WriteDLR3(s,"AT&F\r\n",		 6,200);
-		FBUS2_WriteDLR3(s,"AT*NOKIAFBUS\r\n",	14,200);
-
-
-		error=Device->CloseDevice(s);
-		if (error!=ERR_NONE) return error;
-		my_sleep(1000);
-
-		error=Device->OpenDevice(s);
-		if (error!=ERR_NONE) return error;
-
-		error=Device->DeviceSetParity(s,false);
-	    	if (error!=ERR_NONE) return error;
-		error=Device->DeviceSetSpeed(s,115200);
-	    	if (error!=ERR_NONE) return error; 
-		error=Device->DeviceSetDtrRts(s,true,false);
-		if (error!=ERR_NONE) return error; 
-*/		
-/*		for (count = 0; count < 128; count ++) {
-			if (Device->DeviceAPI_WriteDevice(&init_char,1)!=1) return ERR_DEVICEWRITEERROR;
-			my_sleep(10);
-		}*/
 		unsigned char uinit[128];
 		FillMemory(uinit,128,0x55);
 		if (Device->DeviceAPI_WriteDevice(&uinit,128)!=128) 
@@ -669,7 +568,6 @@ GSM_Error FBUS2_Terminate()
 	if(d->MultiMsg.Buffer !=NULL)
 		free(d->MultiMsg.Buffer);
 
-//	my_sleep(200); 
 	return ERR_NONE;
 }
 

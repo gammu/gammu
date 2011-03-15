@@ -1,0 +1,64 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: ATgen - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x404 /fo"..\..\temp\debug\atgen/ATgen.res" /d "_DEBUG" /d "_AFXDLL" "D:\Customer Profile\Gammu GPL\code04082010\code\ATgen\ATgen.rc"" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP17EE.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /I "..\Proj_inc" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_USRDLL" /FR"..\..\temp\debug\atgen/" /Fp"..\..\temp\debug\atgen/ATgen.pch" /Yu"stdafx.h" /Fo"..\..\temp\debug\atgen/" /Fd"..\..\temp\debug\atgen/" /FD /GZ /c 
+"D:\Customer Profile\Gammu GPL\code04082010\code\ATgen\ATgen.cpp"
+"D:\Customer Profile\Gammu GPL\code04082010\code\ATgen\AtGer.cpp"
+"D:\Customer Profile\Gammu GPL\code04082010\code\ATgen\ATPhonebook.cpp"
+"D:\Customer Profile\Gammu GPL\code04082010\code\ATgen\ATSMS.CPP"
+"D:\Customer Profile\Gammu GPL\code04082010\code\ATgen\ATSMSEX.CPP"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP17EE.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP17EF.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /I "..\Proj_inc" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_USRDLL" /FR"..\..\temp\debug\atgen/" /Fp"..\..\temp\debug\atgen/ATgen.pch" /Yc"stdafx.h" /Fo"..\..\temp\debug\atgen/" /Fd"..\..\temp\debug\atgen/" /FD /GZ /c 
+"D:\Customer Profile\Gammu GPL\code04082010\code\ATgen\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP17EF.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP17F0.tmp" with contents
+[
+..\..\lib\Debug\Common.lib /nologo /subsystem:windows /dll /incremental:yes /pdb:"..\..\lib\debug/ATgen.pdb" /debug /machine:I386 /def:".\ATgen.def" /out:"..\..\exe\Debug\ATgen.dll" /implib:"..\..\lib\debug/ATgen.lib" /pdbtype:sept 
+"\Customer Profile\Gammu GPL\code04082010\temp\debug\atgen\ATgen.obj"
+"\Customer Profile\Gammu GPL\code04082010\temp\debug\atgen\AtGer.obj"
+"\Customer Profile\Gammu GPL\code04082010\temp\debug\atgen\ATPhonebook.obj"
+"\Customer Profile\Gammu GPL\code04082010\temp\debug\atgen\ATSMS.OBJ"
+"\Customer Profile\Gammu GPL\code04082010\temp\debug\atgen\ATSMSEX.OBJ"
+"\Customer Profile\Gammu GPL\code04082010\temp\debug\atgen\StdAfx.obj"
+"\Customer Profile\Gammu GPL\code04082010\temp\debug\atgen\ATgen.res"
+]
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP17F0.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+StdAfx.cpp
+Compiling...
+ATgen.cpp
+AtGer.cpp
+ATPhonebook.cpp
+ATSMS.CPP
+D:\Customer Profile\Gammu GPL\code04082010\code\ATgen\ATSMS.CPP(2330) : warning C4101: 'folderid' : unreferenced local variable
+D:\Customer Profile\Gammu GPL\code04082010\code\ATgen\ATSMS.CPP(2329) : warning C4101: 'statetxt' : unreferenced local variable
+D:\Customer Profile\Gammu GPL\code04082010\code\ATgen\ATSMS.CPP(3189) : warning C4101: 'error' : unreferenced local variable
+D:\Customer Profile\Gammu GPL\code04082010\code\ATgen\ATSMS.CPP(3282) : warning C4101: 'SMSC' : unreferenced local variable
+ATSMSEX.CPP
+D:\Customer Profile\Gammu GPL\code04082010\code\ATgen\ATSMSEX.CPP(792) : warning C4101: 'folderid' : unreferenced local variable
+D:\Customer Profile\Gammu GPL\code04082010\code\ATgen\ATSMSEX.CPP(1393) : warning C4101: 'folderid' : unreferenced local variable
+Generating Code...
+Linking...
+   Creating library ..\..\lib\debug/ATgen.lib and object ..\..\lib\debug/ATgen.exp
+
+
+
+<h3>Results</h3>
+ATgen.dll - 0 error(s), 6 warning(s)
+</pre>
+</body>
+</html>

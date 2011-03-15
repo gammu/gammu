@@ -1,0 +1,78 @@
+; ATgen.def : Declares the module parameters for the DLL.
+
+LIBRARY      "ATgen"
+DESCRIPTION  'ATgen Windows Dynamic Link Library'
+
+EXPORTS
+	ATGEN_GenericReply
+	ATGEN_GetReplyStatue
+	ATGEN_Initialise
+	ATGEN_Terminate
+	ATGEN_GetFirmware
+	ATGEN_GetManufacturer
+	ATGEN_GetModel
+	ATGEN_GetIMEI
+	ATGEN_GetDateTime
+	ATGEN_SetDateTime
+	ATGEN_Reset
+	ATGEN_GetNetworkInfo
+	ATGEN_GetSignalQuality
+	ATGEN_GetBatteryCharge
+
+	ATGEN_PrivGetMemory
+	ATGEN_PrivSetMemory
+	ATGEN_GetMemoryInfo
+	ATGEN_GetMemoryStatus
+	ATGEN_GetMemory
+	ATGEN_SetMemory
+	ATGEN_DeleteMemory
+	ATGEN_InitPBKGet
+
+	ATGEN_GetSMSStatus
+	ATGEN_GetSMS
+	ATGEN_GetNextSMS
+	ATGEN_AddSMS
+	ATGEN_DeleteSMS
+	ATGEN_SendSMS
+
+	ATGEN_SetPBKCharset
+	ATGEN_SetPBKUCS2Charset
+	ATGEN_EncodePHKString
+	ATGEN_DecodePHKString
+
+	ATGEN_GetSMSMMGL
+	ATGEN_GetNextSMSMMGL
+	ATGEN_SendSMSMMGL
+	ATGEN_AddSMSMMGL
+	ATGEN_DeleteSMSMMGL
+	ATGEN_SetPBKMemory
+	ATGEN_ReplySetMemory
+	ATGEN_HandleCMSError
+	ATGEN_HandleCMEError
+
+	ATGEN_InitPBKGetEx
+	ATGEN_GetModel2
+	ATGEN_InitPBKGet4Sharp
+	ATGEN_GetMemoryStatus4Sharp
+
+	ATGEN_InitPBKGetEx2
+	ATGEN_SetPBKMemoryEx
+	ATGEN_SetMemoryEx
+
+	ATGEN_InitParameter
+	
+	ATGEN_CDMA_GetModel
+	ATGEN_CDMA_GetIMEI
+	ATGEN_CDMA_GetManufacturer  
+	ATGEN_CDMA_GetFirmware
+
+	
+	ATGEN_AddSMSForTextMode
+	ATGEN_SendSMSForTextMode
+	ATGEN_DecodeNokiaSMSFile
+	ATGEN_MakeNokiaSMSFrame
+
+	ATGEN_GetNextSMSEX
+	ATGEN_AddSMSEX
+	ATGEN_DeleteSMSEX
+	  ; Explicit exports can go here

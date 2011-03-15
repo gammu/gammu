@@ -163,10 +163,9 @@ GSM_Error OBEXGEN_ReplyGetFilePart(GSM_Protocol_Message msg)
 					theApp.m_File->Used = tol-Pos-3;
 
 					theApp.m_File->Buffer = (unsigned char *)realloc(theApp.m_File->Buffer,tol+5);
-			//		memcpy(theApp.m_File->Buffer+Pos+old,msg.Buffer+3,msg.BufferUsed-3); //peggy -
-					//memcpy(theApp.m_File->Buffer+Pos+old,msg.Buffer+Pos+3,msg.Length-Pos-3); //peggy -
-					memcpy(theApp.m_File->Buffer+old,msg.Buffer+Pos+3,msg.Length-3); //peggy -
-					theApp.m_File->Buffer[Pos+old+msg.Length-Pos-3] ='\0';//peggy
+
+					memcpy(theApp.m_File->Buffer+old,msg.Buffer+Pos+3,msg.Length-Pos-3);
+					theApp.m_File->Buffer[old+msg.Length-Pos-3] ='\0';
 					theApp.m_FileLastPart = true;
 					return ERR_NONE;
 				}
@@ -176,7 +175,7 @@ GSM_Error OBEXGEN_ReplyGetFilePart(GSM_Protocol_Message msg)
 				break;
 			}
 			//Pos+=msg.BufferUsed-3;
-			Pos+=msg.Buffer[Pos+1]*256+msg.Buffer[Pos+2];// roger Add
+			Pos+=msg.Buffer[Pos+1]*256+msg.Buffer[Pos+2];
 		}
 		old=0;
 		Pos=0;
@@ -184,7 +183,7 @@ GSM_Error OBEXGEN_ReplyGetFilePart(GSM_Protocol_Message msg)
 		theApp.m_FileLastPart = true;
 		return ERR_NONE;
 	case 0x90:
-//		if (msg.Length < 11) return ERR_NONE;
+
 		if (msg.Type == 0x90) smprintf(theApp.m_pDebuginfo,"Last file part received\n");
 		while(1) 
 		{
@@ -193,7 +192,7 @@ GSM_Error OBEXGEN_ReplyGetFilePart(GSM_Protocol_Message msg)
 			{
 			case 0xC3:
 					old=0;
-				//	tol=256*msg.Buffer[Pos+3] + msg.Buffer[Pos+4];
+
 					tol=256*256*256*msg.Buffer[Pos+1] + 256*256*msg.Buffer[Pos+2]+256*msg.Buffer[Pos+3] + msg.Buffer[Pos+4];
 
 					theApp.m_File->Used=0;
@@ -203,10 +202,7 @@ GSM_Error OBEXGEN_ReplyGetFilePart(GSM_Protocol_Message msg)
 					}
 					theApp.m_File->Buffer = (unsigned char *)realloc(theApp.m_File->Buffer,tol+2);
 					memset(theApp.m_File->Buffer,0,tol);
-		//			memcpy(File->Buffer+old,msg.Buffer+8,msg.Length-8);
-		//			Pos=Pos+msg.Length-8;
-		//			File->Used=msg.Length-8;
-		//			return ERR_NONE;
+
 					Pos=Pos+5;
 					continue;
 				break;
@@ -216,24 +212,17 @@ GSM_Error OBEXGEN_ReplyGetFilePart(GSM_Protocol_Message msg)
 					old = theApp.m_File->Used;
 					//tol = old +	msg.BufferUsed;
 					tol = old +	msg.Length;
-					theApp.m_File->Used = tol-3;
+					theApp.m_File->Used = tol-Pos-3;
 
 					theApp.m_File->Buffer = (unsigned char *)realloc(theApp.m_File->Buffer,tol);
-					//memcpy(theApp.m_File->Buffer+Pos+old,msg.Buffer+3,msg.BufferUsed-3);
-				//	memcpy(theApp.m_File->Buffer+old,msg.Buffer+3,msg.BufferUsed-3); 
-			//		Pos+=msg.BufferUsed-3;//peggy -
-					memcpy(theApp.m_File->Buffer+old,msg.Buffer+3,msg.Length-3); 
-					Pos+=msg.Length-3; //peggy test
+
+					memcpy(theApp.m_File->Buffer+old,msg.Buffer+Pos+3,msg.Length-Pos-3);
+					Pos=msg.Length-3;
 				return ERR_NONE;
 			// Sony t610
 			case 0xCB:
 				{
-				/*	while( 1 )
-					{
-						if( msg.Buffer[Pos] == 0x48 )
-							break;
-						Pos++;
-					}	*/
+
 					while(1)
 					{
 						if (Pos >= msg.Length) break;
@@ -254,8 +243,7 @@ GSM_Error OBEXGEN_ReplyGetFilePart(GSM_Protocol_Message msg)
 					//if(!old || theApp.m_File->Buffer==NULL)
 							theApp.m_File->Buffer = (unsigned char *)realloc(theApp.m_File->Buffer,theApp.m_File->Used+2);
 					memcpy(theApp.m_File->Buffer+old,msg.Buffer+Pos+3,theApp.m_File->Used-old);
-					//msg.Buffer+=3+Pos;
-					//memcpy(theApp.m_File->Buffer+old,msg.Buffer,msg.Length);	
+
 					return ERR_NONE;
 				}
 		//------------
@@ -273,16 +261,25 @@ GSM_Error OBEXGEN_ReplyGetFilePart(GSM_Protocol_Message msg)
 	}
 	return ERR_UNKNOWNRESPONSE;
 }
+GSM_Error OBEXGEN_ReplyDisconnect(GSM_Protocol_Message msg)
+{
+	switch (msg.Type) {
+	case 0xA0:
+		return ERR_NONE;
+	}
+	return ERR_UNKNOWNRESPONSE;
+}
+
 GSM_Error OBEXGEN_ReplyConnect(GSM_Protocol_Message msg)
 { 
-	
+
     int nPos = 0;
 	int nMaxSize = 0;
 	theApp.m_ConnectID[0]=0x00;
 	theApp.m_ConnectID[1]=0x00;
 	theApp.m_ConnectID[2]=0x00;
 	theApp.m_ConnectID[3]=0x01;
-	
+
 	switch (msg.Type) {
 	case 0xA0:
 		smprintf(theApp.m_pDebuginfo,"Connected/disconnected OK\n");
@@ -303,7 +300,7 @@ GSM_Error OBEXGEN_ReplyConnect(GSM_Protocol_Message msg)
 
 			smprintf(theApp.m_pDebuginfo,"Maximal size of frame is %i 0x%x\n",theApp.m_FrameSize,theApp.m_FrameSize);
 	
-	
+
 			nPos = 4;
 			while(nPos< msg.Length)
 			{
@@ -314,11 +311,36 @@ GSM_Error OBEXGEN_ReplyConnect(GSM_Protocol_Message msg)
 				}
 				nPos +=msg.Buffer[nPos+1]*256+msg.Buffer[nPos+2];
 			}
-	
+
 		}
 		return ERR_NONE;
 	}
 	return ERR_UNKNOWNRESPONSE;
+}
+GSM_Error OBEXGEN_DisconnectEx(bool bHaveConnectID,GSM_Error (*pWriteCommandfn) (unsigned char *buffer,int length, unsigned char type, int WaitTime,bool ObexMode,
+							  GSM_ATMultiAnwser *pATMultiAnwser,GSM_Reply_MsgType* ReplyCheckType, GSM_Error (*CallBackFun)    (GSM_Protocol_Message msg)),Debug_Info	*pDebuginfo)
+{
+	GSM_Error error;
+	int		Current=0;
+	unsigned char 	req[200] ;
+	smprintf(theApp.m_pDebuginfo, "Disconnecting\n");
+	if(bHaveConnectID)
+	{
+		req[Current++] = 0xCB; // ID
+		req[Current++] = theApp.m_ConnectID[0];
+		req[Current++] = theApp.m_ConnectID[1];
+		req[Current++] = theApp.m_ConnectID[2];
+		req[Current++] = theApp.m_ConnectID[3];
+	}
+
+	error = pWriteCommandfn (req, Current, 0x81, 12,true,NULL, &ObexReplymsgType,OBEXGEN_ReplyDisconnect/*OBEXGEN_ReplyConnect*/);
+	if(error == ERR_NONE){
+		theApp.m_Service = OBEX_Init;
+	}
+
+	Sleep( 500 );
+
+	return error;
 }
 
 GSM_Error OBEXGEN_Disconnect(GSM_Error (*pWriteCommandfn) (unsigned char *buffer,int length, unsigned char type, int WaitTime,bool ObexMode,
@@ -338,9 +360,7 @@ GSM_Error OBEXGEN_Disconnect(GSM_Error (*pWriteCommandfn) (unsigned char *buffer
 		req[Current++] = theApp.m_ConnectID[3];
 	}
 
-//	return GSM_WaitFor (s, NULL, 0, 0x81, 2, ID_Initialise);
-//	error = GSM_WaitFor (s, req, Current, 0x81, 2, ID_Initialise);
-	error = pWriteCommandfn (req, Current, 0x81, 12,true,NULL, &ObexReplymsgType,OBEXGEN_ReplyConnect);
+	error = pWriteCommandfn (req, Current, 0x81, 12,true,NULL, &ObexReplymsgType,OBEXGEN_ReplyDisconnect/*OBEXGEN_ReplyConnect*/);
 	if(error == ERR_NONE){
 		theApp.m_Service = OBEX_Init;
 	}
@@ -348,7 +368,7 @@ GSM_Error OBEXGEN_Disconnect(GSM_Error (*pWriteCommandfn) (unsigned char *buffer
 		theApp.m_Service = OBEX_Init;
 	}
 
-	
+
 	Sleep( 500 );
 
 	return error;
@@ -396,17 +416,6 @@ GSM_Error OBEXGEN_Connect(/*char* pszManufacturer,*/OBEX_Service service,OBEX_Co
 		break;
 	case OBEX_BrowsingFolders:
 		/* Server ID */
-
-/*		if(mystrncasecmp((unsigned char *)pszManufacturer,(unsigned char *)"Siemens",0))
-		{
-			req2[0] = 0x6B; req2[1] = 0x01; req2[2] = 0xCB;
-			req2[3] = 0x31; req2[4] = 0x41; req2[5] = 0x06;
-			req2[6] = 0x11; req2[7] = 0xD4; req2[8] = 0x9A;
-			req2[9] = 0x77; req2[10]= 0x00; req2[11]= 0x50;
-			req2[12]= 0xDA; req2[13]= 0x3F; req2[14]= 0x47;
-			req2[15]= 0x1F;
-		}
-		else*/
 		{
 
 			req2[0] = 0xF9; req2[1] = 0xEC; req2[2] = 0x7B;
@@ -440,7 +449,7 @@ GSM_Error OBEXGEN_Connect(/*char* pszManufacturer,*/OBEX_Service service,OBEX_Co
 
 
 	smprintf(theApp.m_pDebuginfo, "Connecting\n");
-//	return GSM_WaitFor (s, req, Current, 0x80, 6, ID_Initialise);
+
 	error =  pWriteCommandfn (req, Current, 0x80, 18,true,NULL, &ObexReplymsgType,OBEXGEN_ReplyConnect);
 	
 	if(pConnectInfo)
@@ -466,7 +475,6 @@ GSM_Error OBEXGEN_CheckConnection(GSM_Error (*pWriteCommandfn) (unsigned char *b
 		0x00,			/* no flags 			*/
 		0x05,0x00};		/* 0x500 max size of packet 	*/
 
-//	error =  GSM_WaitFor (s, req, Current, 0x80, 6, ID_Initialise);
 	error = pWriteCommandfn (req, Current, 0x80, 12,true,NULL, &ObexReplymsgType,OBEXGEN_ReplyConnect);
 	if(error == ERR_NONE)
 	{
@@ -686,17 +694,6 @@ GSM_Error OBEXGEN_ChangePath(char *Name, unsigned char Flag1,GSM_Error (*pWriteC
 		OBEXAddBlock(req, &Current, 0x01, NULL, 0);
 	}
 
-
-	/* connection ID block */
-/*	req[Current++] = 0xCB; // ID
-//	req[Current++] = 0x00; req[Current++] = 0x00;
-//	req[Current++] = 0x00; req[Current++] = 0x01;
-	req[Current++] = theApp.m_ConnectID[0];
-	req[Current++] = theApp.m_ConnectID[1];
-	req[Current++] = theApp.m_ConnectID[2];
-	req[Current++] = theApp.m_ConnectID[3];
-*/
-//	return GSM_WaitFor (s, req, Current, 0x85, 4, ID_SetPath);
 	return  pWriteCommandfn (req, Current, 0x85, 8,true,NULL, &ObexReplymsgType,OBEXGEN_ReplyChangePath);
 }
 
@@ -732,10 +729,7 @@ static GSM_Error OBEXGEN_ReplyGetFileInfo(GSM_Protocol_Message msg)
 						File->FileSize = tol;
 						File->Buffer = (unsigned char *)realloc(File->Buffer,tol+2);
 						memset(File->Buffer,0,tol);
-			//			memcpy(File->Buffer+old,msg.Buffer+8,msg.Length-8);
-			//			Pos=Pos+msg.Length-8;
-			//			File->Used=msg.Length-8;
-			//			return ERR_NONE;
+
 						Pos=Pos+5;
 						continue;
 					break;
@@ -774,7 +768,7 @@ static GSM_Error OBEXGEN_ReplyGetFileInfo(GSM_Protocol_Message msg)
 								Pos+=msg.Buffer[Pos+1]*256+msg.Buffer[Pos+2];
 							if(Pos >= msg.Length)
 								break;
-					//		Pos++;
+
 						}	
 						if(Pos >= msg.Length)
 							break;
@@ -791,15 +785,13 @@ static GSM_Error OBEXGEN_ReplyGetFileInfo(GSM_Protocol_Message msg)
 								+2);
 							memset(File->Buffer,0,tol);
 							memcpy(File->Buffer+old,msg.Buffer+(Pos+3),msg.Length-(Pos+3));
-							//Pos=Pos+msg.Length-(Pos+3);
+
 							Pos=msg.Length-(Pos+3);
-							File->Used=Pos;//msg.Length-(8);
+							File->Used=Pos;
 							return ERR_NONE;
 					break;
 						}
-				/*default:
-						return ERR_NONE;
-					break;*/
+
 			}
 			Pos+=msg.Buffer[Pos+1]*256+msg.Buffer[Pos+2];
 		}
@@ -833,7 +825,7 @@ static GSM_Error OBEXGEN_ReplyGetFileInfo(GSM_Protocol_Message msg)
 						Pos+=5;
 					else
 						Pos+=msg.Buffer[Pos+1]*256+msg.Buffer[Pos+2];
-			//		Pos++;
+
 					if(Pos >= msg.Length)
 						break;
 				}	
@@ -877,7 +869,7 @@ GSM_Error OBEXGEN_GetFileFolderInfo(GSM_File *File,int Request,GSM_Error (*pWrit
 	unsigned int Pos;
 	GSM_Error		error;
 	unsigned char 		req[2000], req2[800];
-//	unsigned char		*name,*name1;
+
 	int name,name1;
 	name=name1 = 0;
 
@@ -888,8 +880,7 @@ GSM_Error OBEXGEN_GetFileFolderInfo(GSM_File *File,int Request,GSM_Error (*pWrit
 	File->System		= false;
 
 	req[Current++] = 0xCB; // ID
-//	req[Current++] = 0x00; req[Current++] = 0x00;
-//	req[Current++] = 0x00; req[Current++] = 0x01;
+
 	req[Current++] = theApp.m_ConnectID[0];
 	req[Current++] = theApp.m_ConnectID[1];
 	req[Current++] = theApp.m_ConnectID[2];
@@ -899,8 +890,7 @@ GSM_Error OBEXGEN_GetFileFolderInfo(GSM_File *File,int Request,GSM_Error (*pWrit
 	{
 		if (File->Folder) 
 		{
-			//theApp.m_Service = OBEX_BrowsingFolders;
-			/* Type block */
+
 			strcpy((char*)req2,"x-obex/folder-listing");
 			OBEXAddBlock(req, &Current, 0x42, req2, strlen((char*)req2)+1);
 	
@@ -932,18 +922,9 @@ GSM_Error OBEXGEN_GetFileFolderInfo(GSM_File *File,int Request,GSM_Error (*pWrit
 			//	if (strcmp(s->CurrentConfig->Connection,"seobex")) 
 				{	
 					strcpy((char*)req2,"x-obex/capability");
-//					strcpy(req2,"x-obex/object-profile");
 
-					/* Type block */
 					OBEXAddBlock(req, &Current, 0x42, req2, strlen((char*)req2)+1);
 				} 
-			/*	else 
-				{
-					EncodeUnicode(req2,"telecom/devinfo.txt",19);
-
-					/* Name block */
-			/**		OBEXAddBlock(req, &Current, 0x01, req2, UnicodeLength(req2)*2+2);
-				}*/
 			} 
 			else 
 			{
@@ -951,9 +932,6 @@ GSM_Error OBEXGEN_GetFileFolderInfo(GSM_File *File,int Request,GSM_Error (*pWrit
 				error = OBEXGEN_Connect(OBEX_BrowsingFolders,NULL,pWriteCommandfn,pDebuginfo);
 				if (error != ERR_NONE) return error;
 
-			//	if (mystrncasecmp(s->CurrentConfig->Connection,"seobex",0)) 
-//				name = strstr(File->ID_FullName,"\\");
-//				name1 = strstr(File->ID_FullName,"/");
 				name = wstrstr(File->ID_FullName,(unsigned char *)"\\");
 				name1 = wstrstr(File->ID_FullName,(unsigned char *)"/");
 				if (name || name1)
@@ -989,17 +967,9 @@ GSM_Error OBEXGEN_GetFileFolderInfo(GSM_File *File,int Request,GSM_Error (*pWrit
 	}
 
 
-	/* connection ID block */
-/*	req[Current++] = 0xCB; // ID
-//	req[Current++] = 0x00; req[Current++] = 0x00;
-//	req[Current++] = 0x00; req[Current++] = 0x01;
-	req[Current++] = theApp.m_ConnectID[0];
-	req[Current++] = theApp.m_ConnectID[1];
-	req[Current++] = theApp.m_ConnectID[2];
-	req[Current++] = theApp.m_ConnectID[3];
-*/
+
 	smprintf(theApp.m_pDebuginfo, "Getting file info from filesystem\n");
-//	error=GSM_WaitFor (s, req, Current, 0x03, 7, ID_GetFileInfo);
+
 	error=pWriteCommandfn (req, Current, 0x03, 14,true,NULL, &ObexReplymsgType,OBEXGEN_ReplyGetFileInfo);
 	if (error != ERR_NONE) 
 		return error;
@@ -1012,15 +982,14 @@ GSM_Error OBEXGEN_GetFileFolderInfo(GSM_File *File,int Request,GSM_Error (*pWrit
 
 		/* connection ID block */
 		req[Current++] = 0xCB; // ID
-//		req[Current++] = 0x00; req[Current++] = 0x00;
-//		req[Current++] = 0x00; req[Current++] = 0x01;
+
 		req[Current++] = theApp.m_ConnectID[0];
 		req[Current++] = theApp.m_ConnectID[1];
 		req[Current++] = theApp.m_ConnectID[2];
 		req[Current++] = theApp.m_ConnectID[3];
 
 		smprintf(theApp.m_pDebuginfo, "Getting file part from filesystem\n");
-//		error=GSM_WaitFor (s, req, Current, 0x83, 4, ID_GetFile);
+
 		error=pWriteCommandfn (req, Current, 0x83, 20,true,NULL, &ObexReplymsgType,OBEXGEN_ReplyGetFilePart);
 		if (error != ERR_NONE) return error;
 	}
@@ -1054,13 +1023,14 @@ GSM_Error OBEXGEN_PrivGetFilePart(GSM_File *File, bool FolderList,GSM_Error (*pW
 	File->FileSize = -1;
 
 	req[Current++] = 0xCB; // ID
-//	req[Current++] = 0x00; req[Current++] = 0x00;
-//	req[Current++] = 0x00; req[Current++] = 0x01;
+
 	req[Current++] = theApp.m_ConnectID[0];
 	req[Current++] = theApp.m_ConnectID[1];
 	req[Current++] = theApp.m_ConnectID[2];
 	req[Current++] = theApp.m_ConnectID[3];
-
+	bool bMotoCDMAPhone = false;
+	if(theApp.m_pMobileInfo && IsPhoneFeatureAvailable(theApp.m_pMobileInfo, F_CDMA_PHONE))
+		bMotoCDMAPhone = true;
 	if (File->Used == 0x00) 
 	{
 		if (FolderList) 
@@ -1070,15 +1040,7 @@ GSM_Error OBEXGEN_PrivGetFilePart(GSM_File *File, bool FolderList,GSM_Error (*pW
 			strcpy((char*)req2,"x-obex/folder-listing");
 			OBEXAddBlock(req, &Current, 0x42, req2, strlen((char*)req2)+1);
 	
-			/* Name block */
-		/*	if (UnicodeLength(File->Name) == 0x00) {
-				OBEXAddBlock(req, &Current, 0x01, NULL, 0);
-			} 
-			else 
-			{
-				CopyUnicodeString(req2,File->Name);
-				OBEXAddBlock(req, &Current, 0x01, req2, UnicodeLength(req2)*2+2);
-			}*/
+
 		} 
 		else 
 		{
@@ -1086,11 +1048,9 @@ GSM_Error OBEXGEN_PrivGetFilePart(GSM_File *File, bool FolderList,GSM_Error (*pW
 
 			if (UnicodeLength(File->ID_FullName) == 0) 
 			{
-/*#ifndef xxxx
-				error = OBEXGEN_Connect(OBEX_None,NULL,pWriteCommandfn,pDebuginfo);
-#else*/
+
 				error = OBEXGEN_Connect(OBEX_BrowsingFolders,NULL,pWriteCommandfn,pDebuginfo);
-//#endif
+
 				if (error != ERR_NONE) return error;
 
 				EncodeUnicode(File->Name,(unsigned char *)"one",3);
@@ -1098,28 +1058,16 @@ GSM_Error OBEXGEN_PrivGetFilePart(GSM_File *File, bool FolderList,GSM_Error (*pW
 //				if (mystrncasecmp(s->CurrentConfig->Connection,"seobex",0)) 
 				{	
 					strcpy((char*)req2,"x-obex/capability");
-//					strcpy(req2,"x-obex/object-profile");
 
 					/* Type block */
 					OBEXAddBlock(req, &Current, 0x42, req2, strlen((char*)req2)+1);
 				} 
-		/*		else 
-				{
-					EncodeUnicode(req2,"telecom/devinfo.txt",19);
-
-					/* Name block */
-			/*		OBEXAddBlock(req, &Current, 0x01, req2, UnicodeLength(req2)*2+2);
-				}*/
 			} 
 			else 
 			{
-//				error = OBEXGEN_Connect(s,OBEX_None);
 				error = OBEXGEN_Connect(OBEX_BrowsingFolders,NULL,pWriteCommandfn,pDebuginfo);
 				if (error != ERR_NONE) return error;
 
-			//	if (mystrncasecmp(s->CurrentConfig->Connection,"seobex",0)) 
-//				name = strstr(File->ID_FullName,"\\");
-//				name1 = strstr(File->ID_FullName,"/");
 				name = wstrstr(File->ID_FullName,(unsigned char *)"\\");
 				name1 = wstrstr(File->ID_FullName,(unsigned char *)"/");
 				if (name || name1)
@@ -1148,63 +1096,51 @@ GSM_Error OBEXGEN_PrivGetFilePart(GSM_File *File, bool FolderList,GSM_Error (*pW
 					{
 						GetFileName_Unicode(File->wFileFullPathName,req2);
 					}
-				//	EncodeUnicode(req2,File->ID_FullName,strlen((char*)File->ID_FullName));
+
 				}
 				CopyUnicodeString(File->Name,req2);
 			
 				theApp.m_File = File;
 	
-		//		Current = 0;
-				/* Name block */
 				OBEXAddBlock(req, &Current, 0x01, req2, UnicodeLength(req2)*2+2);
 			}
 		}
 	}
-	/* connection ID block */
-/*	req[Current++] = 0xCB; // ID
-//	req[Current++] = 0x00; req[Current++] = 0x00;
-//	req[Current++] = 0x00; req[Current++] = 0x01;
-	req[Current++] = theApp.m_ConnectID[0];
-	req[Current++] = theApp.m_ConnectID[1];
-	req[Current++] = theApp.m_ConnectID[2];
-	req[Current++] = theApp.m_ConnectID[3];
-*/
 
 	theApp.m_FileLastPart = false;
 
 	smprintf(theApp.m_pDebuginfo, "Getting file info from filesystem\n");
-//	error=GSM_WaitFor (s, req, Current, 0x03, 7, ID_GetFileInfo);
+
 	error=pWriteCommandfn (req, Current, 0x03, 14,true,NULL, &ObexReplymsgType,OBEXGEN_ReplyGetFileInfo);
 	if (error != ERR_NONE) 
 		return error;
 
 
 	int bContiGet = true;
-	while (!theApp.m_FileLastPart && bContiGet) 
+	//MOTO CDMA Phone cannot cancel transfer
+	while (!theApp.m_FileLastPart && (bContiGet|| bMotoCDMAPhone)) 
 	{
 		Current = 0;
 
 		/* connection ID block */
 		req[Current++] = 0xCB; // ID
-//		req[Current++] = 0x00; req[Current++] = 0x00;
-//		req[Current++] = 0x00; req[Current++] = 0x01;
+
 		req[Current++] = theApp.m_ConnectID[0];
 		req[Current++] = theApp.m_ConnectID[1];
 		req[Current++] = theApp.m_ConnectID[2];
 		req[Current++] = theApp.m_ConnectID[3];
 
 		smprintf(theApp.m_pDebuginfo, "Getting file part from filesystem\n");
-//		error=GSM_WaitFor (s, req, Current, 0x83, 4, ID_GetFile);
+
 		error=pWriteCommandfn ( req, Current, 0x83, 30,true,NULL, &ObexReplymsgType,OBEXGEN_ReplyGetFilePart);
 
 		if (error != ERR_NONE) return error;
 		if(pGetStatusfn)
 			bContiGet = pGetStatusfn(File->Used,File->FileSize);
 	}
-	if(!bContiGet)
+	if(!bContiGet && bMotoCDMAPhone == false)
 	{
-		//Terminate OBEX Get File ..... // need add
-		
+
 		error=pWriteCommandfn ( req, Current, 0xFF, 8,true,NULL, &ObexReplymsgType,OBEXGEN_ReplyAbortFilePart);
 		return ERR_CANCELED;
 	}
@@ -1224,39 +1160,51 @@ void OBEXGEN_ParseXML(GSM_File *File,GSM_Error (*pWriteCommandfn) (unsigned char
 //	GSM_Phone_OBEXGENData	*Priv = &theApp.m_Priv.OBEXGEN;
 
 	GSM_Error		error;
-	unsigned char		Line[2000],Line2[2000],*name,*size;
+	unsigned char		Line[2000],Line2[2000],name[2000],*size,*pTemp;
 	int			Pos,i,j,num,pos2,z;
-//	char			*strtemp;
+
 	num = 0;
 	Pos = 0;
 	unsigned char temp[10];
 	EncodeUnicode (temp, ( unsigned char *) "\\", 2);
-	while (1) 
+
+	unsigned char* pBuffer = File->Buffer;
+	while(Pos < File->Used)
 	{
-		MyGetLine(File->Buffer, &Pos, Line, File->Used);
-	//	if (strlen(Line) == 0) break;
-		if (strlen((char*)Line) == 0)
+		pTemp =(unsigned char *) strstr((char*)(pBuffer+Pos),"folder name=\"");
+		if(pTemp > File->Buffer+File->Used)
+			break;
+		if (pTemp != NULL) 
 		{
-			Pos++;
-			if(Pos >=File->Used)
-				break;
-		}
-		name =(unsigned char *) strstr((char*)Line,"folder name=\"");
-		if (name != NULL) 
-		{
-			name += 13;
+			pTemp += 13;
 			j = 0;
 			while(1) 
 			{
-				if (name[j] == '"') break;
+				if (pTemp[j] == '"') break;
+				name[j] = pTemp[j];
 				j++;
+				if(Pos+j > File->Used)	
+					break;
 			}
 			name[j] = 0;
 
 			if (strcmp((char*)name,".") && strlen((char*)name) >0) num++;
+
+			Pos = (pTemp - pBuffer)+j+1;
 		}
-		name =(unsigned char *) strstr((char*)Line,"file name=\"");
-		if (name != NULL) num++;
+		else break;
+	}
+	Pos =0;
+	while(Pos < File->Used)
+	{
+		pTemp =(unsigned char *) strstr((char*)(pBuffer+Pos),"file name=\"");
+		if (pTemp != NULL) 
+		{
+			num++;
+			Pos = (pTemp - File->Buffer)+11;
+		}
+		else break;
+
 	}
 	if (num != 0) 
 	{
@@ -1270,28 +1218,26 @@ void OBEXGEN_ParseXML(GSM_File *File,GSM_Error (*pWriteCommandfn) (unsigned char
 	}
 	Pos 	= 0;
 	pos2 	= 0;
-	while (1) 
+
+	while(Pos < File->Used)
 	{
-		MyGetLine(File->Buffer, &Pos, Line, File->Used);
-	//	if (strlen(Line) == 0) break;
-		if (strlen((char*)Line) == 0)
+		pTemp =(unsigned char *) strstr((char*)(pBuffer+Pos),"folder name=\"");
+		if(pTemp > File->Buffer+File->Used)
+			break;
+		if (pTemp != NULL) 
 		{
-			Pos++;
-			if(Pos >=File->Used)
-				break;
-		}
-		strcpy((char*)Line2,(char*)Line);
-		name = (unsigned char *)strstr((char*)Line2,"folder name=\"");
-		if (name != NULL) 
-		{
-			name += 13;
+			pTemp += 13;
 			j = 0;
 			while(1) 
 			{
-				if (name[j] == '"') break;
+				if (pTemp[j] == '"') break;
+				name[j] = pTemp[j];
 				j++;
+				if(Pos+j > File->Used)	
+					break;
 			}
 			name[j] = 0;
+			Pos = (pTemp - File->Buffer)+j+1;
 			if (strcmp((char*)name,".") && strlen((char*)name) >0) 
 			{
 			//	dbgprintf("copying folder %s to %i parent %i\n",name,theApp.m_FilesLocationsCurrent+pos2,theApp.m_FilesLocationsCurrent);
@@ -1315,18 +1261,25 @@ void OBEXGEN_ParseXML(GSM_File *File,GSM_Error (*pWriteCommandfn) (unsigned char
 				pos2++;
 			}
 		}
-		strcpy((char*)Line2,(char*)Line);
-		name = (unsigned char *)strstr((char*)Line2,"file name=\"");
-		if (name != NULL) 
+		else break;
+	}
+	Pos =0;
+	while(Pos < File->Used)
+	{
+		pTemp =(unsigned char *) strstr((char*)(pBuffer+Pos),"file name=\"");
+		if (pTemp != NULL) 
 		{
-			name += 11;
+			pTemp += 11;
 			j = 0;
 			while(1) 
 			{
-				if (name[j] == '"') break;
+				if (pTemp[j] == '"') break;
+				name[j] = pTemp[j];
 				j++;
 			}
 			name[j] = 0;
+	//		Pos = (pTemp - File->Buffer)+11+j+1;
+			Pos = (pTemp - File->Buffer)+j+1;
 
 			dbgprintf("copying file %s to %i\n",name,theApp.m_FilesLocationsCurrent+pos2);
 			theApp.m_Files[theApp.m_FilesLocationsCurrent+pos2].Level	= File->Level+1;
@@ -1346,8 +1299,9 @@ void OBEXGEN_ParseXML(GSM_File *File,GSM_Error (*pWriteCommandfn) (unsigned char
 
 
 			theApp.m_Files[theApp.m_FilesLocationsCurrent+pos2].Used 	= 0;
-			strcpy((char*)Line2,(char*)Line);
-			size =(unsigned char *) strstr((char*)Line2,"size=\"");
+
+		//	strcpy((char*)Line2,(char*)Line);
+			size =(unsigned char *) strstr((char*)(pBuffer+Pos),"size=\"");
 			if (size != NULL)
 			{
 				theApp.m_Files[theApp.m_FilesLocationsCurrent+pos2].Used = atoi((char*)size+6);
@@ -1356,8 +1310,8 @@ void OBEXGEN_ParseXML(GSM_File *File,GSM_Error (*pWriteCommandfn) (unsigned char
 			else theApp.m_Files[theApp.m_FilesLocationsCurrent+pos2].FileSize = -1;
 
 			theApp.m_Files[theApp.m_FilesLocationsCurrent+pos2].ModifiedEmpty = true;
-			strcpy((char*)Line2,(char*)Line);
-			size = (unsigned char *)strstr((char*)Line2,"modified=\"");
+
+			size = (unsigned char *)strstr((char*)(pBuffer+Pos),"modified=\"");
 			if (size != NULL) 
 			{
 				theApp.m_Files[theApp.m_FilesLocationsCurrent+pos2].ModifiedEmpty = false;
@@ -1365,11 +1319,11 @@ void OBEXGEN_ParseXML(GSM_File *File,GSM_Error (*pWriteCommandfn) (unsigned char
 			}
 			else
 				theApp.m_Files[theApp.m_FilesLocationsCurrent+pos2].Modified.Year = 0;
-//			if(theApp.m_Files[theApp.m_FilesLocationsCurrent+pos2].Modified.Year >=3000 || theApp.m_Files[theApp.m_FilesLocationsCurrent+pos2].Modified.Year<1900)
-	//			theApp.m_Files[theApp.m_FilesLocationsCurrent+pos2].Modified.Year = 0;
+
 			theApp.m_FilesLocationsUsed++;
 			pos2++;
 		}
+		else break;
 	}
 
 	z = theApp.m_FilesLocationsCurrent;
@@ -1384,7 +1338,7 @@ void OBEXGEN_ParseXML(GSM_File *File,GSM_Error (*pWriteCommandfn) (unsigned char
 				{
 					smprintf(theApp.m_pDebuginfo,"Changing path down\n");
 					error=OBEXGEN_ChangePath((char *)File->Name, 2,pWriteCommandfn,pDebuginfo);
-					//if (error != ERR_NONE) return error;
+
 					return;
 				}
 				break;
@@ -1396,6 +1350,7 @@ void OBEXGEN_ParseXML(GSM_File *File,GSM_Error (*pWriteCommandfn) (unsigned char
 	theApp.m_FileLev = File->Level;
 	free(File->Buffer);
 }
+
 GSM_Error OBEXGEN_GetNextFileFolder2(GSM_File *File, bool start,GSM_Error (*pWriteCommandfn) (unsigned char *buffer,int length, unsigned char type, int WaitTime,bool ObexMode,
 						  GSM_ATMultiAnwser *pATMultiAnwser,GSM_Reply_MsgType* ReplyCheckType, GSM_Error (*CallBackFun)    (GSM_Protocol_Message msg)),Debug_Info	*pDebuginfo)
 {
@@ -1410,11 +1365,10 @@ GSM_Error OBEXGEN_GetNextFileFolder2(GSM_File *File, bool start,GSM_Error (*pWri
 		smprintf(pDebuginfo,"Changing path down\n");
 		error=OBEXGEN_ChangePath(NULL, 2,pWriteCommandfn,pDebuginfo);
 
-	//	strcpy((char*)FullName, (char*)File->ID_FullName);
 		Pos = 0;
 		do {
 			OBEXGEN_FindNextDir_UnicodePath(File->ID_FullName, (unsigned int *)&Pos, Name);
-	//		smprintf(pDebuginfo,"%s %i %i\n",DecodeUnicodeString(Name),Pos,strlen((char*)FullName));
+
 			smprintf(pDebuginfo,"Changing path down\n");
 			error=OBEXGEN_ChangePath((char*)Name, 2,pWriteCommandfn,pDebuginfo);
 			if (error != ERR_NONE) return error;
@@ -1423,8 +1377,7 @@ GSM_Error OBEXGEN_GetNextFileFolder2(GSM_File *File, bool start,GSM_Error (*pWri
 
 		CopyUnicodeString(File->Name,Name);
 		CopyUnicodeString(File->ID_FullName,Name);
-	//	sprintf( (char*)File->Name,"%s", DecodeUnicodeString(Name) );
-	//	sprintf((char*) File->ID_FullName,"%s", DecodeUnicodeString(Name) );
+
 		memcpy(FullName,theApp.m_Files[0].ID_FullName,400);
 		memcpy(Name,theApp.m_Files[0].Name,300);
 		memset(theApp.m_Files[0].ID_FullName,0,400);
@@ -1436,10 +1389,7 @@ GSM_Error OBEXGEN_GetNextFileFolder2(GSM_File *File, bool start,GSM_Error (*pWri
 		{
 			memset(FullName,0,400);
 			memcpy(FullName,theApp.m_Files[i].ID_FullName,400);
-			//DecodeUTF2String(FullName,FullName,strlen(FullName));//UTF8		
-			//DecodeUTF2String(pathName,File->ID_FullName,strlen(File->ID_FullName));//UTF8		
-			//sprintf(s->Phone.Data.Priv.OBEXGEN.Files[i].ID_FullName,"%s/%s",pathName,FullName);
-//			sprintf((char*)theApp.m_Files[i].ID_FullName,"%s%s",File->ID_FullName,FullName);
+
 			CopyUnicodeString(theApp.m_Files[i].ID_FullName,File->ID_FullName);
 			UnicodeCat(theApp.m_Files[i].ID_FullName,FullName);
 		}
@@ -1453,14 +1403,12 @@ GSM_Error OBEXGEN_GetNextFileFolder2(GSM_File *File, bool start,GSM_Error (*pWri
 GSM_Error OBEXGEN_GetNextFileFolder(GSM_File *File, bool start,GSM_Error (*pWriteCommandfn) (unsigned char *buffer,int length, unsigned char type, int WaitTime,bool ObexMode,
 						  GSM_ATMultiAnwser *pATMultiAnwser,GSM_Reply_MsgType* ReplyCheckType, GSM_Error (*CallBackFun)    (GSM_Protocol_Message msg)),Debug_Info	*pDebuginfo)
 {
-//	GSM_Phone_OBEXGENData	*Priv = &theApp.m_Priv.OBEXGEN;
+
 	GSM_Error		error;
 	int			i,Current;
 
 	if (start) 
 	{
-//		if (!strcmp(s->CurrentConfig->Model,"seobex")) return ERR_NOTSUPPORTED;
-
 		theApp.m_Files[0].Folder		= true;
 		theApp.m_Files[0].Level		= 1;
 		theApp.m_Files[0].Name[0]		= 0;
@@ -1547,21 +1495,16 @@ GSM_Error OBEXGEN_DeleteFile(GSM_File *ID,GSM_Error (*pWriteCommandfn) (unsigned
 	int		Current = 0;
 	unsigned int Pos;
 	unsigned char		req[1000],req2[1000];
-//	unsigned char		*name,*name1;
+
 	int name,name1;
 	name=name1 = 0;
 
-//	if (!strcmp(s->CurrentConfig->Model,"seobex")) return ERR_NOTSUPPORTED;
-
-
 	error = OBEXGEN_Connect(OBEX_BrowsingFolders,NULL,pWriteCommandfn,pDebuginfo);
-
 
 	if (error != ERR_NONE) return error;
 
 	Pos = 0;
-//	name = strstr(ID,"\\");
-//	name1 = strstr(ID,"/");
+
 	name = wstrstr(ID->ID_FullName,(unsigned char *)"\\");
 	name1 = wstrstr(ID->ID_FullName,(unsigned char *)"/");
 	if (name || name1)
@@ -1590,8 +1533,7 @@ GSM_Error OBEXGEN_DeleteFile(GSM_File *ID,GSM_Error (*pWriteCommandfn) (unsigned
 
 
 	req[Current++] = 0xCB; // ID
-//	req[Current++] = 0x00; req[Current++] = 0x00;
-//	req[Current++] = 0x00; req[Current++] = 0x01;
+
 	req[Current++] = theApp.m_ConnectID[0];
 	req[Current++] = theApp.m_ConnectID[1];
 	req[Current++] = theApp.m_ConnectID[2];
@@ -1599,15 +1541,7 @@ GSM_Error OBEXGEN_DeleteFile(GSM_File *ID,GSM_Error (*pWriteCommandfn) (unsigned
 	/* Name block */
 	OBEXAddBlock(req, &Current, 0x01, req2, UnicodeLength(req2)*2+2);
 
-	/* connection ID block */
-/*	req[Current++] = 0xCB; // ID
-//	req[Current++] = 0x00; req[Current++] = 0x00;
-//	req[Current++] = 0x00; req[Current++] = 0x01;
-	req[Current++] = theApp.m_ConnectID[0];
-	req[Current++] = theApp.m_ConnectID[1];
-	req[Current++] = theApp.m_ConnectID[2];
-	req[Current++] = theApp.m_ConnectID[3];
-*/	
+
 
 //	return GSM_WaitFor (s, req, Current, 0x82, 12, ID_DeleteFile);
 	return pWriteCommandfn ( req, Current, 0x82,24,true,NULL, &ObexReplymsgType,OBEXGEN_ReplyDeleteFilePart);
@@ -1625,15 +1559,7 @@ static GSM_Error OBEXGEN_ReplyAddFilePart(GSM_Protocol_Message msg)
 		return ERR_NONE;
 	case 0xA0:
 		smprintf(theApp.m_pDebuginfo,"Part of file added OK\n");
-	/*	if(msg.Length >4)
-		{
-			num=msg.Buffer[4];
-			if(msg.Length >= num +5)
-			{
-				memcpy(theApp.m_File->ID_FullName , msg.Buffer+5 ,num); 
-				memset(theApp.m_File->ID_FullName+num,0,2);
-			}
-		}*/
+
 		return ERR_NONE;
 	case 0xC0:
 		smprintf(theApp.m_pDebuginfo,"Not understand. Probably not supported\n");
@@ -1642,7 +1568,6 @@ static GSM_Error OBEXGEN_ReplyAddFilePart(GSM_Protocol_Message msg)
 	return ERR_UNKNOWNRESPONSE;
 }
 //---AddFilePart------------------------
-
 
 GSM_Error OBEXGEN_AddFilePart(GSM_File *File, int *Pos,GSM_Error (*pWriteCommandfn) (unsigned char *buffer,int length, unsigned char type, int WaitTime,bool ObexMode,
 							  GSM_ATMultiAnwser *pATMultiAnwser,GSM_Reply_MsgType* ReplyCheckType, GSM_Error (*CallBackFun)    (GSM_Protocol_Message msg)),Debug_Info	*pDebuginfo,
@@ -1654,14 +1579,17 @@ GSM_Error OBEXGEN_AddFilePart(GSM_File *File, int *Pos,GSM_Error (*pWriteCommand
 	unsigned int		Pos2;
 	unsigned char 		req[67000],req2[800], filename[200];
 	unsigned char		Time[100];
-//	unsigned char		*name,*name1;
+
 	int name,name1;
 	name=name1 = 0;
 
 	theApp.m_File = File;
-	
+
 	File->FileSize = -1; 
 	int bContiGet = true;
+	bool bMotoCDMAPhone = false;
+	if(theApp.m_pMobileInfo && IsPhoneFeatureAvailable(theApp.m_pMobileInfo, F_CDMA_PHONE))
+		bMotoCDMAPhone = true;
 
 	if (*Pos == 0) 
 	{
@@ -1683,10 +1611,6 @@ GSM_Error OBEXGEN_AddFilePart(GSM_File *File, int *Pos,GSM_Error (*pWriteCommand
 
 			if (error != ERR_NONE) return error;
 
-			//if (strcmp(s->CurrentConfig->Connection,"seobex")) {
-	//		if (strcmp(s->CurrentConfig->Model,"seobex"))
-//			name = strstr(File->ID_FullName,"\\");
-//			name1 = strstr(File->ID_FullName,"/");
 			name = wstrstr(File->ID_FullName,(unsigned char *)"\\");
 			name1 = wstrstr(File->ID_FullName,(unsigned char *)"/");
 			if (name || name1)
@@ -1710,19 +1634,6 @@ GSM_Error OBEXGEN_AddFilePart(GSM_File *File, int *Pos,GSM_Error (*pWriteCommand
 				CopyUnicodeString(req2,File->ID_FullName);
 			}
 
-			//////////////
-/*			req[Current++] = 0xCB; // ID
-		//	req[Current++] = 0x00; req[Current++] = 0x00;
-		//	req[Current++] = 0x00; req[Current++] = 0x01;
-			req[Current++] = theApp.m_ConnectID[0];
-			req[Current++] = theApp.m_ConnectID[1];
-			req[Current++] = theApp.m_ConnectID[2];
-			req[Current++] = theApp.m_ConnectID[3];
-
-			OBEXAddBlock(req, &Current, 0x01, req2, UnicodeLength(req2)*2+2);
-			error = GSM_WaitFor (s, req, Current, 0x82, 4, ID_AddFile);
-			if (error != ERR_NONE) return error;
-			Current = 0;*/
 		}
 
 		/* Name block */
@@ -1812,7 +1723,7 @@ GSM_Error OBEXGEN_AddFilePart(GSM_File *File, int *Pos,GSM_Error (*pWriteCommand
 		*Pos = *Pos + j;
 //		error=GSM_WaitFor (s, req, Current, 0x02, 10, ID_AddFile);
 		error=pWriteCommandfn (req, Current, 0x02, 40,true,NULL, &ObexReplymsgType,OBEXGEN_ReplyAddFilePart);
-        
+
 		if (error != ERR_NONE) 
 			return error;
 		if(pGetStatusfn)
@@ -1821,11 +1732,11 @@ GSM_Error OBEXGEN_AddFilePart(GSM_File *File, int *Pos,GSM_Error (*pWriteCommand
 		}	
 	}
 
-   
-	if(!bContiGet)
+    // v2.0.0.3
+	if(!bContiGet && bMotoCDMAPhone == false)
 	{
 		//Terminate OBEX Add File ..... // need add
-		
+
 		  Current = 0;
 		  req[Current++] = 0xCB; // ID
 
@@ -2012,4 +1923,3 @@ void OBEXHEADER_Type(unsigned char* request, int* pos, char* szType)
 	if(szType==NULL) return;
 	OBEXAddBlock(request, pos, 0x42, (unsigned char*)szType, strlen(szType)+1);
 }
-n
