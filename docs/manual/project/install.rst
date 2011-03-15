@@ -90,11 +90,17 @@ Compiling on Linux/Unix Systems
 -------------------------------
 
 For compatibility reasons, configure like wrapper is provided, if you
-don't need much specific tuning, you can use general "./configure; make;
-sudo make install" set of commands. The configure wrapper will create
-directory build-configure and build all binaries there (nothing is
-changed in source tree), for example gammu binary is in
-build-configure/gammu directory.
+don't need much specific tuning, you can use usual set of commands:
+
+.. code-block:: sh
+
+    ./configure
+    make
+    sudo make install
+    
+The configure wrapper will create directory build-configure and build all
+binaries there (nothing is changed in source tree), for example gammu binary is
+in build-configure/gammu directory.
 
 If you need/want to tweak build a bit more than configure wrapper
 provides, you have to use `CMake`_ directly. For now, only out of source
@@ -134,20 +140,20 @@ parameters bellow), or using TUI - ccmake.
 
 Useful cmake parameters:
 
-* -DBUILD_SHARED_LIBS=ON enables shared library
-* -DCMAKE_BUILD_TYPE="Debug" enables debug build
-* -DCMAKE_INSTALL_PREFIX="/usr" change installation prefix
-* -DENABLE_PROTECTION=OFF disables various compile time protections
+* ``-DBUILD_SHARED_LIBS=ON`` enables shared library
+* ``-DCMAKE_BUILD_TYPE="Debug"`` enables debug build
+* ``-DCMAKE_INSTALL_PREFIX="/usr"`` change installation prefix
+* ``-DENABLE_PROTECTION=OFF`` disables various compile time protections
   against buffer overflows and similar attacks
-* -DBUILD_PYTHON=/usr/bin/python2.6 changes Python used for build Python
+* ``-DBUILD_PYTHON=/usr/bin/python2.6`` changes Python used for build Python
   module
-* -DWITH_PYTHON=OFF disables build of python-gammu
+* ``-DWITH_PYTHON=OFF`` disables build of python-gammu
 
 You can also disable support for whole set of phones, e.g.:
 
-* -DWITH_NOKIA_SUPPORT=OFF disables Nokia phones support
-* -DWITH_BLUETOOTH=OFF disables Bluetooth support
-* -DWITH_IRDA=OFF disables IrDA support
+* ``-DWITH_NOKIA_SUPPORT=OFF`` disables Nokia phones support
+* ``-DWITH_BLUETOOTH=OFF`` disables Bluetooth support
+* ``-DWITH_IRDA=OFF`` disables IrDA support
 
 Compiling on Microsoft Windows
 ------------------------------
