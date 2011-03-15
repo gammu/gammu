@@ -64,6 +64,11 @@ PostgreSQL
     - http://www.postgresql.org/
     - PostgreSQL support in SMSD.
 
+unixODBC
+    - http://www.unixodbc.org/
+    - :ref:`gammu-smsd-odbc` in :ref:`smsd`.
+    - not needed on platforms having native ODBC support such as Microsoft Windows
+
 libdbi
     - http://libdbi.sourceforge.net/
     - required at least version 0.8.2
@@ -96,7 +101,7 @@ gudev
 
     .. code-block:: sh
 
-        apt-get install python-dev pkg-config libmysqlclient-dev libpq-dev libcurl4-gnutls-dev libusb-1.0-0-dev libdbi0-dev libbluetooth-dev libgudev-1.0-dev libglib2.0-dev
+        apt-get install python-dev pkg-config libmysqlclient-dev libpq-dev libcurl4-gnutls-dev libusb-1.0-0-dev libdbi0-dev libbluetooth-dev libgudev-1.0-dev libglib2.0-dev unixodbc-dev
 
 
 
