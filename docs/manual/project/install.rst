@@ -25,10 +25,14 @@ downloaded from Microsoft:
 http://www.microsoft.com/downloads/details.aspx?displaylang=en&FamilyID=6AE02498-07E9-48F1-A5D6-DBFA18D37E0F
 
 
+.. _deps:
+
 Dependencies
 ------------
 
 You need CMake from <http://www.cmake.org> for compiling Gammu.
+
+.. _opt-deps:
 
 Optional Dependencies
 ---------------------
@@ -90,23 +94,26 @@ gudev
     - http://gudev.sourceforge.net/
     - currently needed only for :ref:`gammu-detect`
 
-.. note::
-
-    On Linux do not forget to install corresponding devel packages as well,
-    they are usually named with ``-dev`` or ``-devel`` suffix, depending on
-    your distribution.
-
-    For example on Debian or Ubuntu, you can install all needed packages by
-    following command:
-
-    .. code-block:: sh
-
-        apt-get install python-dev pkg-config libmysqlclient-dev libpq-dev libcurl4-gnutls-dev libusb-1.0-0-dev libdbi0-dev libbluetooth-dev libgudev-1.0-dev libglib2.0-dev unixodbc-dev
-
-
 
 Compiling on Linux/Unix Systems
 -------------------------------
+
+First install all :ref:`deps` and :ref:`opt-deps`. Do not forget to install
+corresponding devel packages as well, they are usually named with ``-dev`` or
+``-devel`` suffix, depending on your distribution.
+
+For example on Debian or Ubuntu, you can install all optional packages by
+following command:
+
+.. code-block:: sh
+
+    apt-get install cmake python-dev pkg-config libmysqlclient-dev libpq-dev libcurl4-gnutls-dev libusb-1.0-0-dev libdbi0-dev libbluetooth-dev libgudev-1.0-dev libglib2.0-dev unixodbc-dev
+
+For openSUSE, the installation all optional packages could look like:
+
+.. code-block:: sh
+
+    zypper install libusb-1_0-devel libdbi-devel bluez-devel postgresql-devel mysql-devel python-devel libcurl-devel cmake pkgconfig unixODBC-devel glib2-devel libgudev-1_0-devel
 
 For compatibility reasons, configure like wrapper is provided, if you
 don't need much specific tuning, you can use usual set of commands:
@@ -176,6 +183,8 @@ You can also disable support for whole set of phones, e.g.:
 
 Compiling on Microsoft Windows
 ------------------------------
+
+First install all :ref:`deps` and :ref:`opt-deps`.
 
 `CMake`_ is able to generate projects for various tools including Microsoft
 Visual Studio, Borland toolchains, Cygwin or Mingw32. Just click on
@@ -252,6 +261,8 @@ This should work pretty much same as on Linux.
 Compiling on Mac OS X
 ---------------------
 
+First install all :ref:`deps` and :ref:`opt-deps`.
+
 Gammu should be compilable on Mac OS X, you need to have installed
 Developer Tols (version 2.4.1 was tested) and `CMake`_ (there is a Mac OS X
 "Darwin" DMG download). For database support in SMSD, install wanted
@@ -277,6 +288,9 @@ Or completely disable iconv support:
 
 Cross compilation for Windows on Linux
 --------------------------------------
+
+First install all :ref:`deps` and :ref:`opt-deps` into your mingw build
+environment.
 
 Only cross compilation using `CMake`_ has been tested. You need to install
 MinGW cross tool chain and run time. On Debian you can do it by apt-get
