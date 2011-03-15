@@ -85,6 +85,20 @@ gudev
     - http://gudev.sourceforge.net/
     - currently needed only for :ref:`gammu-detect`
 
+.. note::
+
+    On Linux do not forget to install corresponding devel packages as well,
+    they are usually named with ``-dev`` or ``-devel`` suffix, depending on
+    your distribution.
+
+    For example on Debian or Ubuntu, you can install all needed packages by
+    following command:
+
+    .. code-block:: sh
+
+        apt-get install python-dev pkg-config libmysqlclient-dev libpq-dev libcurl4-gnutls-dev libusb-1.0-0-dev libdbi0-dev libbluetooth-dev libgudev-1.0-dev libglib2.0-dev
+
+
 
 Compiling on Linux/Unix Systems
 -------------------------------
