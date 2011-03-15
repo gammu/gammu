@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSDRC" "5" "March 03, 2011" "1.29.92" "Gammu"
+.TH "GAMMU-SMSDRC" "5" "March 15, 2011" "1.29.93" "Gammu"
 .SH NAME
 gammu-smsdrc \- gammu-smsd(1) configuration file
 .
@@ -121,7 +121,7 @@ Deprecated since version 1.28.93.
 .TP
 .B \fBPGSQL\fP
 .sp
-synonym for \fI\%Service\fP = \fBSQL\fP and \fI\%Driver\fP = \fBnative_mysql\fP
+synonym for \fI\%Service\fP = \fBSQL\fP and \fI\%Driver\fP = \fBnative_pgsql\fP
 .sp
 stores messages in PostgreSQL database, see \fIgammu\-smsd\-pgsql\fP for details
 .sp
@@ -525,7 +525,8 @@ will not check it\(aqs number during assigning reports to sent SMS.
 .
 SQL driver to use.
 .sp
-Can be either one of native drivers (\fBnative_mysql\fP or \fBnative_pgsql\fP) or \fIgammu\-smsd\-dbi\fP driver.
+Can be either one of native drivers (\fBodbc\fP, \fBnative_mysql\fP or
+\fBnative_pgsql\fP) or \fIgammu\-smsd\-dbi\fP driver.
 .sp
 Depends on what DBI drivers you have installed, DBI
 supports: \fBmysql\fP, \fBfreetds\fP (provides access to MS SQL Server and
