@@ -2057,6 +2057,8 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 	/* Get manufacturer, needed for some detection */
 	error = ATGEN_GetManufacturer(s);
 	if (error != ERR_NONE && error != ERR_SECURITYERROR) return error;
+	/* Clear error flag */
+	error = ERR_NONE;
 
 	/* Mode switching cabaple phones can switch using AT+MODE */
 	if (!Priv->Mode) {
