@@ -17,6 +17,8 @@ mkdir $REL
 cd $REL
 put Gammu-$REL-Windows-Minimal.exe
 put Gammu-$REL-Windows-Minimal.zip
+put Gammu-$REL-Windows-64bit.exe
+put Gammu-$REL-Windows-64bit.zip
 put Gammu-$REL-Windows.exe
 put Gammu-$REL-Windows.zip
 put gammu-$REL.tar.bz2
@@ -28,6 +30,8 @@ sftp mort <<EOT
 cd /srv/http/dl.cihar.com/gammu/releases/windows/
 put Gammu-$REL-Windows-Minimal.exe
 put Gammu-$REL-Windows-Minimal.zip
+put Gammu-$REL-Windows-64bit.exe
+put Gammu-$REL-Windows-64bit.zip
 put Gammu-$REL-Windows.exe
 put Gammu-$REL-Windows.zip
 cd /srv/http/dl.cihar.com/gammu/releases/
