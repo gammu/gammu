@@ -46,7 +46,7 @@ libusb-1.0
 
 libCURL
     - http://curl.haxx.se/libcurl/
-    - New versions notification and OpenCellID access.
+    - New versions notification and OpenCellID access, see :option:`gammu getlocation`.
 
 libiconv
     - http://www.gnu.org/software/libiconv/
@@ -76,11 +76,11 @@ libdbi
 
 Python
     - http://www.python.org/
-    - Gammu has a Python bindings
+    - Gammu has a Python bindings, see :ref:`python`.
 
 SQLite + libdbi-drivers with SQLite
     - http://www.sqlite.org/
-    - needed for testing of SMSD using libdbi driver (libdbd-sqlite3)
+    - needed for testing of SMSD using libdbi driver (libdbd-sqlite3), see :ref:`testing`.
 
 glib
     - http://www.gtk.org/
