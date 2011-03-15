@@ -5492,6 +5492,7 @@ GSM_Error ATGEN_ReplyCheckProt(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 #ifdef GSM_ENABLE_ATOBEX
 				/* Tell OBEX driver that AT+CPROT=0 is supported */
 				s->Phone.Data.Priv.ATOBEX.HasOBEX = ATOBEX_OBEX_CPROT0;
+				s->Phone.Data.Priv.ATOBEX.DataService = OBEX_IRMC;
 #endif
 				/*
 				 * Level 1 is almost useless, require
