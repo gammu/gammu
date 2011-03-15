@@ -58,21 +58,21 @@ Gettext
 
 MySQL
     - http://mysql.com/
-    - MySQL support in SMSD.
+    - :ref:`gammu-smsd-mysql` for :ref:`smsd`.
 
 PostgreSQL
     - http://www.postgresql.org/
-    - PostgreSQL support in SMSD.
+    - :ref:`gammu-smsd-pgsql` for :ref:`smsd`.
 
 unixODBC
     - http://www.unixodbc.org/
-    - :ref:`gammu-smsd-odbc` in :ref:`smsd`.
+    - :ref:`gammu-smsd-odbc` for :ref:`smsd`.
     - not needed on platforms having native ODBC support such as Microsoft Windows
 
 libdbi
     - http://libdbi.sourceforge.net/
     - required at least version 0.8.2
-    - DBI support in SMSD.
+    - :ref:`gammu-smsd-dbi` for :ref:`smsd`.
 
 Python
     - http://www.python.org/
