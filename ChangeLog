@@ -24,6 +24,7 @@ ChangeLog
 [-] * Properly initialize atobex driver with Sony-Ericsson phones.
 [-] * Updated list of country and network codes.
 [-] * Escape fields in SQL queries (bug#1415).
+[-] * Escape fields in PostgreSQL SQL script (bug#1415).
     
 20110315 - 1.29.92
 
