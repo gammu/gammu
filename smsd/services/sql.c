@@ -1205,8 +1205,8 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 
 	if (SMSDSQL_option(Config, SQL_QUERY_ADD_SENT_INFO, "add_sent_info",
 		"INSERT INTO sentitems "
-			"(", ESCAPE_FIELD("CreatorID") , ",", ESCAPE_FIELD("ID") , ",", ESCAPE_FIELD("SequencePosition") , ",", ESCAPE_FIELD("Status") , ",", ESCAPE_FIELD("SendingDateTime") , ", ", ESCAPE_FIELD("SMSCNumber") , ", ", ESCAPE_FIELD("TPMR") , ", "
-			"", ESCAPE_FIELD("SenderID") , ",", ESCAPE_FIELD("Text") , ",", ESCAPE_FIELD("DestinationNumber") , ",", ESCAPE_FIELD("Coding") , ",", ESCAPE_FIELD("UDH") , ",", ESCAPE_FIELD("Class") , ",", ESCAPE_FIELD("TextDecoded") , ",", ESCAPE_FIELD("InsertIntoDB") , ",", ESCAPE_FIELD("RelativeValidity") , ") "
+			"(", ESCAPE_FIELD("CreatorID") , ", ", ESCAPE_FIELD("ID") , ", ", ESCAPE_FIELD("SequencePosition") , ", ", ESCAPE_FIELD("Status") , ", ", ESCAPE_FIELD("SendingDateTime") , ", ", ESCAPE_FIELD("SMSCNumber") , ", ", ESCAPE_FIELD("TPMR") , ", "
+			"", ESCAPE_FIELD("SenderID") , ", ", ESCAPE_FIELD("Text") , ", ", ESCAPE_FIELD("DestinationNumber") , ", ", ESCAPE_FIELD("Coding") , ", ", ESCAPE_FIELD("UDH") , ", ", ESCAPE_FIELD("Class") , ", ", ESCAPE_FIELD("TextDecoded") , ", ", ESCAPE_FIELD("InsertIntoDB") , ", ", ESCAPE_FIELD("RelativeValidity") , ") "
 			" VALUES (%A, %1, %2, %3, ",
 			SMSDSQL_Now(Config),
 			", %F, %4, %P, %E, %R, %c, %u, %x, %T, %5, %V)", NULL) != ERR_NONE) {
