@@ -130,6 +130,8 @@ BuildRequires: %{dist_dbi_libs}
 BuildRequires: unixODBC-devel
 %endif
 
+BuildRequires: libgudev-1_0-devel glib2-devel
+
 BuildRequires: python-devel
 
 %if 0%{?centos_version} || 0%{?rhel_version} || 0%{?rhel} || 0%{?suse_version} < 1100
