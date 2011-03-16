@@ -63,6 +63,36 @@ static const char *SMSDSQL_NowPlus(GSM_SMSDConfig * Config, int seconds)
 	return result;
 }
 
+const char escape_char_odbc[] = "";
+const char escape_char_mysql[] = "`";
+const char escape_char_pgsql[] = "\"";
+const char escape_char_sqlite[] = "";
+const char escape_char_freetds[] = "";
+const char escape_char_fallback[] = "";
+
+static const char *SMSDSQL_EscapeChar(GSM_SMSDConfig * Config)
+{
+	const char *driver_name;
+	static char result[100];
+
+	driver_name = Config->driver;
+
+	if (strcasecmp(driver_name, "mysql") == 0 || strcasecmp(driver_name, "native_mysql") == 0) {
+		return escape_char_mysql;
+	} else if (strcasecmp(driver_name, "pgsql") == 0 || strcasecmp(driver_name, "native_pgsql") == 0) {
+		return escape_char_pgsql;
+	} else if (strncasecmp(driver_name, "sqlite", 6) == 0) {
+		return escape_char_sqlite;
+	} else if (strcasecmp(driver_name, "freetds") == 0) {
+		return escape_char_freetds;
+	} else if (strcasecmp(driver_name, "odbc") == 0) {
+		return escape_char_odbc;
+	} else {
+		return escape_char_fallback;
+	}
+	return result;
+}
+
 const char now_odbc[] = "{fn CURRENT_TIMESTAMP()}";
 const char now_mysql[] = "NOW()";
 const char now_pgsql[] = "now()";
@@ -1005,6 +1035,7 @@ GSM_Error SMSDSQL_option(GSM_SMSDConfig *Config, int optint, const char *option,
 GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 {
 	int locktime;
+	const char *escape_char;
 
 	Config->user = INI_GetValue(Config->smsdcfgfile, "smsd", "user", FALSE);
 	if (Config->user == NULL) {
@@ -1061,17 +1092,20 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 #endif
 	}
 
+	escape_char = SMSDSQL_EscapeChar(Config);
+#define ESCAPE_FIELD(x) escape_char, x, escape_char
+
 	locktime = Config->loopsleep * 8; /* reserve 8 sec per message */
 	locktime = locktime < 60 ? 60 : locktime; /* Minimum time reserve is 60 sec */
 
 	if (SMSDSQL_option(Config, SQL_QUERY_DELETE_PHONE, "delete_phone",
-		"DELETE FROM phones WHERE IMEI = %I", NULL) != ERR_NONE) {
+		"DELETE FROM phones WHERE ", ESCAPE_FIELD("IMEI") , " = %I", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
 
 	if (SMSDSQL_option(Config, SQL_QUERY_INSERT_PHONE, "insert_phone",
-		"INSERT INTO phones (IMEI, ID, Send, Receive, InsertIntoDB, "
-			"TimeOut, Client, Battery, SignalStrength) VALUES (%I, %P, %1, %2, ",
+		"INSERT INTO phones (", ESCAPE_FIELD("IMEI") , ", ", ESCAPE_FIELD("ID") , ", ", ESCAPE_FIELD("Send") , ", ", ESCAPE_FIELD("Receive") , ", ", ESCAPE_FIELD("InsertIntoDB") , ", "
+			"", ESCAPE_FIELD("TimeOut") , ", ", ESCAPE_FIELD("Client") , ", ", ESCAPE_FIELD("Battery") , ", ", ESCAPE_FIELD("SignalStrength") , ") VALUES (%I, %P, %1, %2, ",
 			SMSDSQL_Now(Config),
 			", ",
 			SMSDSQL_NowPlus(Config, 10),
@@ -1080,83 +1114,83 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 	}
 
 	if (SMSDSQL_option(Config, SQL_QUERY_SAVE_INBOX_SMS_SELECT, "save_inbox_sms_select",
-		"SELECT ID, Status, SendingDateTime, DeliveryDateTime, SMSCNumber "
+		"SELECT ", ESCAPE_FIELD("ID") , ", ", ESCAPE_FIELD("Status") , ", ", ESCAPE_FIELD("SendingDateTime") , ", ", ESCAPE_FIELD("DeliveryDateTime") , ", ", ESCAPE_FIELD("SMSCNumber") , " "
 			"FROM sentitems WHERE "
-			"DeliveryDateTime IS NULL AND "
-			"SenderID = %P AND TPMR = %t AND DestinationNumber = %R", NULL) != ERR_NONE) {
+			"", ESCAPE_FIELD("DeliveryDateTime") , " IS NULL AND "
+			"", ESCAPE_FIELD("SenderID") , " = %P AND ", ESCAPE_FIELD("TPMR") , " = %t AND ", ESCAPE_FIELD("DestinationNumber") , " = %R", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
 
 	if (SMSDSQL_option(Config, SQL_QUERY_SAVE_INBOX_SMS_UPDATE_DELIVERED, "save_inbox_sms_update_delivered",
 		"UPDATE sentitems "
-			"SET DeliveryDateTime = %C, Status = %1, StatusError = %e WHERE ID = %2 AND TPMR = %t", NULL) != ERR_NONE) {
+			"SET ", ESCAPE_FIELD("DeliveryDateTime") , " = %C, ", ESCAPE_FIELD("Status") , " = %1, ", ESCAPE_FIELD("StatusError") , " = %e WHERE ", ESCAPE_FIELD("ID") , " = %2 AND ", ESCAPE_FIELD("TPMR") , " = %t", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
 
 	if (SMSDSQL_option(Config, SQL_QUERY_SAVE_INBOX_SMS_UPDATE, "save_inbox_sms_update",
-		"UPDATE sentitems SET Status = %1, StatusError = %e WHERE ID = %2 AND TPMR = %t", NULL) != ERR_NONE) {
+		"UPDATE sentitems SET ", ESCAPE_FIELD("Status") , " = %1, ", ESCAPE_FIELD("StatusError") , " = %e WHERE ", ESCAPE_FIELD("ID") , " = %2 AND ", ESCAPE_FIELD("TPMR") , " = %t", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
 
 	if (SMSDSQL_option(Config, SQL_QUERY_SAVE_INBOX_SMS_INSERT, "save_inbox_sms_insert",
 		"INSERT INTO inbox "
-			"(ReceivingDateTime, Text, SenderNumber, Coding, SMSCNumber, UDH, "
-			"Class, TextDecoded, RecipientID) VALUES (%d, %E, %R, %c, %F, %u, %x, %T, %P)", NULL) != ERR_NONE) {
+			"(", ESCAPE_FIELD("ReceivingDateTime") , ", ", ESCAPE_FIELD("Text") , ", ", ESCAPE_FIELD("SenderNumber") , ", ", ESCAPE_FIELD("Coding") , ", ", ESCAPE_FIELD("SMSCNumber") , ", ", ESCAPE_FIELD("UDH") , ", "
+			"", ESCAPE_FIELD("Class") , ", ", ESCAPE_FIELD("TextDecoded") , ", ", ESCAPE_FIELD("RecipientID") , ") VALUES (%d, %E, %R, %c, %F, %u, %x, %T, %P)", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
 
 	if (SMSDSQL_option(Config, SQL_QUERY_UPDATE_RECEIVED, "update_received",
-		"UPDATE phones SET Received = Received + 1 WHERE IMEI = %I", NULL) != ERR_NONE) {
+		"UPDATE phones SET ", ESCAPE_FIELD("Received") , " = ", ESCAPE_FIELD("Received") , " + 1 WHERE ", ESCAPE_FIELD("IMEI") , " = %I", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
 
 	if (SMSDSQL_option(Config, SQL_QUERY_REFRESH_SEND_STATUS, "refresh_send_status",
-		"UPDATE outbox SET SendingTimeOut = ",
+		"UPDATE outbox SET ", ESCAPE_FIELD("SendingTimeOut") , " = ",
 			SMSDSQL_NowPlus(Config, locktime),
-			" WHERE ID = %1 AND (SendingTimeOut < ",
+			" WHERE ", ESCAPE_FIELD("ID") , " = %1 AND (", ESCAPE_FIELD("SendingTimeOut") , " < ",
 			SMSDSQL_Now(Config),
-			" OR SendingTimeOut IS NULL)", NULL) != ERR_NONE) {
+			" OR ", ESCAPE_FIELD("SendingTimeOut") , " IS NULL)", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
 
 	if (SMSDSQL_option(Config, SQL_QUERY_FIND_OUTBOX_SMS_ID, "find_outbox_sms_id",
-		"SELECT ID, InsertIntoDB, SendingDateTime, SenderID FROM outbox WHERE SendingDateTime < ",
+		"SELECT ", ESCAPE_FIELD("ID") , ", ", ESCAPE_FIELD("InsertIntoDB") , ", ", ESCAPE_FIELD("SendingDateTime") , ", ", ESCAPE_FIELD("SenderID") , " FROM outbox WHERE ", ESCAPE_FIELD("SendingDateTime") , " < ",
 			SMSDSQL_Now(Config),
-			" AND SendingTimeOut < ",
+			" AND ", ESCAPE_FIELD("SendingTimeOut") , " < ",
 			SMSDSQL_Now(Config),
-			" AND SendBefore >= ",
+			" AND ", ESCAPE_FIELD("SendBefore") , " >= ",
 			SMSDSQL_CurrentTime(Config),
-			" AND SendAfter <= ",
+			" AND ", ESCAPE_FIELD("SendAfter") , " <= ",
 			SMSDSQL_CurrentTime(Config),
-			" AND ( SenderID is NULL OR SenderID = '' OR SenderID = %P ) ORDER BY InsertIntoDB ASC LIMIT %1", NULL) != ERR_NONE) {
+			" AND ( ", ESCAPE_FIELD("SenderID") , " is NULL OR ", ESCAPE_FIELD("SenderID") , " = '' OR ", ESCAPE_FIELD("SenderID") , " = %P ) ORDER BY ", ESCAPE_FIELD("InsertIntoDB") , " ASC LIMIT %1", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
 
 	if (SMSDSQL_option(Config, SQL_QUERY_FIND_OUTBOX_BODY, "find_outbox_body",
-		"SELECT Text, Coding, UDH, Class, TextDecoded, ID, DestinationNumber, MultiPart, "
-			"RelativeValidity, DeliveryReport, CreatorID FROM outbox WHERE ID=%1", NULL) != ERR_NONE) {
+		"SELECT ", ESCAPE_FIELD("Text") , ", ", ESCAPE_FIELD("Coding") , ", ", ESCAPE_FIELD("UDH") , ", ", ESCAPE_FIELD("Class") , ", ", ESCAPE_FIELD("TextDecoded") , ", ", ESCAPE_FIELD("ID") , ", ", ESCAPE_FIELD("DestinationNumber") , ", ", ESCAPE_FIELD("MultiPart") , ", "
+			"", ESCAPE_FIELD("RelativeValidity") , ", ", ESCAPE_FIELD("DeliveryReport") , ", ", ESCAPE_FIELD("CreatorID") , " FROM outbox WHERE ", ESCAPE_FIELD("ID") , "=%1", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
 
 	if (SMSDSQL_option(Config, SQL_QUERY_FIND_OUTBOX_MULTIPART, "find_outbox_multipart",
-		"SELECT Text, Coding, UDH, Class, TextDecoded, ID, SequencePosition "
-			"FROM outbox_multipart WHERE ID=%1 AND SequencePosition=%2", NULL) != ERR_NONE) {
+		"SELECT ", ESCAPE_FIELD("Text") , ", ", ESCAPE_FIELD("Coding") , ", ", ESCAPE_FIELD("UDH") , ", ", ESCAPE_FIELD("Class") , ", ", ESCAPE_FIELD("TextDecoded") , ", ", ESCAPE_FIELD("ID") , ", ", ESCAPE_FIELD("SequencePosition") , " "
+			"FROM outbox_multipart WHERE ", ESCAPE_FIELD("ID") , "=%1 AND ", ESCAPE_FIELD("SequencePosition") , "=%2", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
 
 	if (SMSDSQL_option(Config, SQL_QUERY_DELETE_OUTBOX, "delete_outbox",
-		"DELETE FROM outbox WHERE ID=%1", NULL) != ERR_NONE) {
+		"DELETE FROM outbox WHERE ", ESCAPE_FIELD("ID") , "=%1", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
 
 	if (SMSDSQL_option(Config, SQL_QUERY_DELETE_OUTBOX_MULTIPART, "delete_outbox_multipart",
-		"DELETE FROM outbox_multipart WHERE ID=%1", NULL) != ERR_NONE) {
+		"DELETE FROM outbox_multipart WHERE ", ESCAPE_FIELD("ID") , "=%1", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
 
 	if (SMSDSQL_option(Config, SQL_QUERY_CREATE_OUTBOX, "create_outbox",
-		"INSERT INTO outbox (CreatorID, SenderID, DeliveryReport, MultiPart, InsertIntoDB, "
-			"Text, DestinationNumber, RelativeValidity, Coding, UDH, Class, TextDecoded) VALUES "
+		"INSERT INTO outbox (", ESCAPE_FIELD("CreatorID") , ", ", ESCAPE_FIELD("SenderID") , ", ", ESCAPE_FIELD("DeliveryReport") , ", ", ESCAPE_FIELD("MultiPart") , ", ", ESCAPE_FIELD("InsertIntoDB") , ", "
+			"", ESCAPE_FIELD("Text") , ", ", ESCAPE_FIELD("DestinationNumber") , ", ", ESCAPE_FIELD("RelativeValidity") , ", ", ESCAPE_FIELD("Coding") , ", ", ESCAPE_FIELD("UDH") , ", ", ESCAPE_FIELD("Class") , ", ", ESCAPE_FIELD("TextDecoded") , ") VALUES "
 			"(%1, %P, %2, %3, ",
 			SMSDSQL_Now(Config),
 			", %E, %R, %V, %c, %u, %x, %T)", NULL) != ERR_NONE) {
@@ -1165,14 +1199,14 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 
 	if (SMSDSQL_option(Config, SQL_QUERY_CREATE_OUTBOX_MULTIPART, "create_outbox_multipart",
 		"INSERT INTO outbox_multipart "
-			"(SequencePosition, Text, Coding, UDH, Class, TextDecoded, ID) VALUES (%4, %E, %c, %u, %x, %T, %5)", NULL) != ERR_NONE) {
+			"(", ESCAPE_FIELD("SequencePosition") , ", ", ESCAPE_FIELD("Text") , ", ", ESCAPE_FIELD("Coding") , ", ", ESCAPE_FIELD("UDH") , ", ", ESCAPE_FIELD("Class") , ", ", ESCAPE_FIELD("TextDecoded") , ", ", ESCAPE_FIELD("ID") , ") VALUES (%4, %E, %c, %u, %x, %T, %5)", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
 
 	if (SMSDSQL_option(Config, SQL_QUERY_ADD_SENT_INFO, "add_sent_info",
 		"INSERT INTO sentitems "
-			"(CreatorID,ID,SequencePosition,Status,SendingDateTime, SMSCNumber, TPMR, "
-			"SenderID,Text,DestinationNumber,Coding,UDH,Class,TextDecoded,InsertIntoDB,RelativeValidity) "
+			"(", ESCAPE_FIELD("CreatorID") , ",", ESCAPE_FIELD("ID") , ",", ESCAPE_FIELD("SequencePosition") , ",", ESCAPE_FIELD("Status") , ",", ESCAPE_FIELD("SendingDateTime") , ", ", ESCAPE_FIELD("SMSCNumber") , ", ", ESCAPE_FIELD("TPMR") , ", "
+			"", ESCAPE_FIELD("SenderID") , ",", ESCAPE_FIELD("Text") , ",", ESCAPE_FIELD("DestinationNumber") , ",", ESCAPE_FIELD("Coding") , ",", ESCAPE_FIELD("UDH") , ",", ESCAPE_FIELD("Class") , ",", ESCAPE_FIELD("TextDecoded") , ",", ESCAPE_FIELD("InsertIntoDB") , ",", ESCAPE_FIELD("RelativeValidity") , ") "
 			" VALUES (%A, %1, %2, %3, ",
 			SMSDSQL_Now(Config),
 			", %F, %4, %P, %E, %R, %c, %u, %x, %T, %5, %V)", NULL) != ERR_NONE) {
@@ -1180,16 +1214,17 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 	}
 
 	if (SMSDSQL_option(Config, SQL_QUERY_UPDATE_SENT, "update_sent",
-		"UPDATE phones SET Sent= Sent + 1 WHERE IMEI = %I", NULL) != ERR_NONE) {
+		"UPDATE phones SET ", ESCAPE_FIELD("Sent") , "= ", ESCAPE_FIELD("Sent") , " + 1 WHERE ", ESCAPE_FIELD("IMEI") , " = %I", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
 
 	if (SMSDSQL_option(Config, SQL_QUERY_REFRESH_PHONE_STATUS, "refresh_phone_status",
-			"UPDATE phones SET TimeOut= ",
+			"UPDATE phones SET ", ESCAPE_FIELD("TimeOut") , "= ",
 			SMSDSQL_NowPlus(Config, 10),
-			", Battery = %1, SignalStrength = %2 WHERE IMEI = %I", NULL) != ERR_NONE) {
+			", ", ESCAPE_FIELD("Battery") , " = %1, ", ESCAPE_FIELD("SignalStrength") , " = %2 WHERE ", ESCAPE_FIELD("IMEI") , "-= %I", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
+#undef ESCAPE_FIELD
 
 	return ERR_NONE;
 }
