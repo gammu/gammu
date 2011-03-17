@@ -890,7 +890,7 @@ static GSM_Error SMSDSQL_CreateOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConf
 			return ERR_UNKNOWN;
 		}
 		if (i == 0) {
-			ID = db->SeqID(Config, "outbox_id_seq");
+			ID = db->SeqID(Config, "outbox_ID_seq");
 			if (ID == 0) {
 				SMSD_Log(DEBUG_INFO, Config, "Failed to get inserted row ID (%s)", __FUNCTION__);
 				return ERR_UNKNOWN;
