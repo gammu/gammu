@@ -978,7 +978,7 @@ static GSM_Error SMSDSQL_RefreshPhoneStatus(GSM_SMSDConfig * Config)
 /*
  * better strcat... shows where is the bug
  */
-#define STRCAT_MAX 32
+#define STRCAT_MAX 64
 GSM_Error SMSDSQL_option(GSM_SMSDConfig *Config, int optint, const char *option, ...)
 {
 	size_t len[STRCAT_MAX], to_alloc = 0;
