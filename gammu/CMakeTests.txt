@@ -27,7 +27,7 @@ set_tests_properties(gammu-help-all PROPERTIES
 
 add_test(gammu-nets "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" listnetworks)
 set_tests_properties(gammu-nets PROPERTIES
-    PASS_REGULAR_EXPRESSION "740 01[\\t ]*Conecel S.A. \\(Consorcio Ecuatoriano de Telecomunicaciones S.A.\\)"
+    PASS_REGULAR_EXPRESSION "901 29     Telenor"
     )
 add_test(gammu-nets-230 "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" listnetworks 230)
 set_tests_properties(gammu-nets-230 PROPERTIES
