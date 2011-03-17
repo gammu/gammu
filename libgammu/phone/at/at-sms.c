@@ -2176,6 +2176,12 @@ GSM_Error ATGEN_IncomingSMSInfo(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 			} else {
 				sms.Folder = 1;
 			}
+		} else if (strncmp(buffer, "MT", 2) == 0 || strncmp(buffer, "\"MT\"", 4) == 0) {
+			if (Priv->SIMSMSMemory == AT_AVAILABLE) {
+				sms.Folder = 3;
+			} else {
+				sms.Folder = 1;
+			}
 		} else if (strncmp(buffer, "SM", 2) == 0 || strncmp(buffer, "\"SM\"", 4) == 0) {
 			sms.Folder = 1;
 		} else {

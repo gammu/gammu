@@ -13,6 +13,8 @@ Release:            1
 %define mysql     1
 # Set to 0 to disable DBI support
 %define dbi       1
+# Set to 0 to disable ODBC support
+%define odbc      1
 # Set to 0 to disable USB support
 %define usb       1
 # Change if using tar.gz sources
@@ -123,6 +125,12 @@ BuildRequires: mysql-devel
 %if %dbi
 BuildRequires: %{dist_dbi_libs}
 %endif
+
+%if %odbc
+BuildRequires: unixODBC-devel
+%endif
+
+BuildRequires: libgudev-1_0-devel glib2-devel
 
 BuildRequires: python-devel
 
