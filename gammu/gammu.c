@@ -60,24 +60,18 @@
 static void ListNetworks(int argc, char *argv[])
 {
 	int i = 0;
-	char country[4] = "";
+	const char *country_code = NULL;
 
 	if (argc > 2) {
-		while (GSM_Countries[i * 2] != NULL) {
-			if (strncmp
-			    (GSM_Countries[i * 2 + 1], argv[2],
-			     strlen(argv[2])) == 0
-			    || strncmp(GSM_Countries[i * 2], argv[2],
-				       strlen(argv[2])) == 0) {
-				strcpy(country, GSM_Countries[i * 2]);
-				printf(_("Networks for %s:"),
-				       GSM_Countries[i * 2 + 1]);
+		for (i = 0; GSM_Countries[i].Code[0] != 0; i++) {
+			if (strcmp(GSM_Countries[i].Name, argv[2]) == 0 || strcasecmp(GSM_Countries[i].Code, argv[2]) == 0) {
+				country_code = GSM_Countries[i].Code;
+				printf(_("Networks for %s:"), GSM_Countries[i].Name);
 				printf("\n\n");
 				break;
 			}
-			i++;
 		}
-		if (strlen(country) == 0) {
+		if (country_code == NULL) {
 			printf(_("Unknown country name: %s."), argv[2]);
 			printf("\n");
 			Terminate(2);
@@ -85,18 +79,10 @@ static void ListNetworks(int argc, char *argv[])
 	}
 	printf("%-10s %s\n", _("Network"), _("Name"));
 	i = 0;
-	while (GSM_Networks[i * 2] != NULL) {
-		if (argc > 2) {
-			if (!strncmp
-			    (GSM_Networks[i * 2], country, strlen(country))) {
-				printf("%-10s %s\n", GSM_Networks[i * 2],
-				       GSM_Networks[i * 2 + 1]);
-			}
-		} else {
-			printf("%-10s %s\n", GSM_Networks[i * 2],
-			       GSM_Networks[i * 2 + 1]);
+	for (i = 0; GSM_Networks[i].Code[0] != 0; i++) {
+		if (country_code == NULL || strncmp(GSM_Networks[i].Code, country_code, 3) == 0) {
+			printf("%-10s %s\n", GSM_Networks[i].Code, GSM_Networks[i].Name);
 		}
-		i++;
 	}
 }
 

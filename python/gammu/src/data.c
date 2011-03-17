@@ -31,9 +31,9 @@ int gammu_create_data(PyObject *d) {
     if (country_list == NULL)
         return 0;
 
-    for (i = 0; GSM_Countries[i * 2] != NULL; i++) {
-        val = PyString_FromString(GSM_Countries[(i * 2) + 1]);
-        PyDict_SetItemString(country_list, GSM_Countries[i * 2], val);
+    for (i = 0; GSM_Countries[i].Code[0] != 0; i++) {
+        val = PyString_FromString(GSM_Countries[i].Name);
+        PyDict_SetItemString(country_list, GSM_Countries[i].Code, val);
         Py_DECREF(val);
     }
 
@@ -45,9 +45,9 @@ int gammu_create_data(PyObject *d) {
     if (network_list == NULL)
         return 0;
 
-    for (i = 0; GSM_Networks[i * 2] != NULL; i++) {
-        val = PyString_FromString(GSM_Networks[(i * 2) + 1]);
-        PyDict_SetItemString(network_list, GSM_Networks[i * 2], val);
+    for (i = 0; GSM_Networks[i].Code[0] != 0; i++) {
+        val = PyString_FromString(GSM_Networks[i].Name);
+        PyDict_SetItemString(network_list, GSM_Networks[i].Code, val);
         Py_DECREF(val);
     }
 

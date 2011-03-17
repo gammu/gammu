@@ -31,20 +31,28 @@ const unsigned char *GSM_GetNetworkName(const char *NetworkCode);
 const unsigned char *GSM_GetCountryName(const char *CountryCode);
 
 /**
- * List of network codes, even elements contain code,
- * odd elements contain name.
+ * Structure for defining code-name mappings.
  *
  * \ingroup Info
  */
-extern const char *GSM_Networks[];
+typedef struct {
+	const char Code[8];
+	const char Name[64];
+} GSM_CodeName;
 
 /**
- * List of country codes, even elements contain code,
- * odd elements contain name.
+ * List of network codes, terminated by empty name/code.
  *
  * \ingroup Info
  */
-extern const char *GSM_Countries[];
+extern const GSM_CodeName GSM_Networks[];
+
+/**
+ * List of country codes, terminated by empty name/code.
+ *
+ * \ingroup Info
+ */
+extern const GSM_CodeName GSM_Countries[];
 
 /**
  * Status of network logging
