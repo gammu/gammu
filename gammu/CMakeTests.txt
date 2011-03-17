@@ -31,7 +31,7 @@ set_tests_properties(gammu-nets PROPERTIES
     )
 add_test(gammu-nets-230 "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" listnetworks 230)
 set_tests_properties(gammu-nets-230 PROPERTIES
-    PASS_REGULAR_EXPRESSION "230 03     Vodafone CZ"
+    PASS_REGULAR_EXPRESSION "230 03     Vodafone"
     )
 
 # Bitmap conversions
