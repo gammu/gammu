@@ -1314,7 +1314,7 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 			ESCAPE_FIELD("TimeOut"), "= ", SMSDSQL_NowPlus(Config, 10),
 			", ", ESCAPE_FIELD("Battery"), " = %1"
 			", ", ESCAPE_FIELD("SignalStrength"), " = %2"
-			" WHERE ", ESCAPE_FIELD("IMEI"), "-= %I", NULL) != ERR_NONE) {
+			" WHERE ", ESCAPE_FIELD("IMEI"), " = %I", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
 #undef ESCAPE_FIELD
