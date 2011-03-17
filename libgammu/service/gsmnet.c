@@ -1609,7 +1609,7 @@ const char *GSM_Networks[] = {
 	"708 01", "Claro",
 	"708 02", "",
 	"708 30", "Hondutel",
-	"708 40", "DIGICEL"
+	"708 40", "DIGICEL",
 	"710 21", "Claro",
 	"710 30", "movistar",
 	"710 73", "SERCOM",
