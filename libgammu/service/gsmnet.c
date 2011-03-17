@@ -1759,7 +1759,7 @@ const unsigned char *GSM_GetCountryName(const char *CountryCode)
 
 	EncodeUnicode(retval,"unknown",7);
 	for (i = 0; GSM_Countries[i].Code[0] != 0; i++) {
-		if (!strcmp(GSM_Countries[i].Code, CountryCode)) {
+		if (!strncmp(GSM_Countries[i].Code, CountryCode, 3)) {
 			EncodeUnicode(retval, GSM_Countries[i].Name, strlen(GSM_Countries[i].Name));
 			break;
 		}
