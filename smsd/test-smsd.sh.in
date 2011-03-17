@@ -175,7 +175,7 @@ case $SERVICE in
         echo "INSERT INTO outbox(DestinationNumber,TextDecoded,CreatorID,Coding) VALUES('800123465', 'This is a SQL test message', 'T3st', 'Default_No_Compression');" | @SQLITE_BIN@ smsd.db
         ;;
     *pgsql)
-        echo "INSERT INTO outbox(DestinationNumber,TextDecoded,CreatorID,Coding) VALUES('800123465', 'This is a SQL test message', 'T3st', 'Default_No_Compression');" | PGPASSWORD=@PSQL_PASSWORD@ @PSQL_BIN@ -h @PSQL_HOST@ -U @PSQL_USER@ @PSQL_DATABASE@
+        echo "INSERT INTO outbox(\"DestinationNumber\",\"TextDecoded\",\"CreatorID\",\"Coding\") VALUES('800123465', 'This is a SQL test message', 'T3st', 'Default_No_Compression');" | PGPASSWORD=@PSQL_PASSWORD@ @PSQL_BIN@ -h @PSQL_HOST@ -U @PSQL_USER@ @PSQL_DATABASE@
         ;;
     *mysql|odbc)
         echo "INSERT INTO outbox(DestinationNumber,TextDecoded,CreatorID,Coding) VALUES('800123465', 'This is a SQL test message', 'T3st', 'Default_No_Compression');" | @MYSQL_BIN@ -u@MYSQL_USER@ -h@MYSQL_HOST@ -p@MYSQL_PASSWORD@ @MYSQL_DATABASE@
