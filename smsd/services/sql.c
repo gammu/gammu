@@ -379,8 +379,11 @@ static GSM_Error SMSDSQL_CheckTable(GSM_SMSDConfig * Config, const char *table)
 	char buffer[200];
 	GSM_Error error;
 	struct GSM_SMSDdbobj *db = Config->db;
+	const char *escape_char;
 
-	sprintf(buffer, "SELECT id FROM %s LIMIT 1", table);
+	escape_char = SMSDSQL_EscapeChar(Config);
+
+	sprintf(buffer, "SELECT %sID%s FROM %s LIMIT 1", escape_char, escape_char, table);
 	error = SMSDSQL_Query(Config, buffer, &res);
 	if (error != ERR_NONE) {
 		SMSD_Log(DEBUG_ERROR, Config, "Table %s not found, disconnecting!", table);
