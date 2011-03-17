@@ -290,9 +290,16 @@ char * SMSDDBI_QuoteString(GSM_SMSDConfig * Config, const char *string)
 unsigned long long SMSDDBI_SeqID(GSM_SMSDConfig * Config, const char *id)
 {
 	unsigned long long new_id;
+	char buffer[100];
+
 	new_id = dbi_conn_sequence_last(Config->conn.dbi, NULL);
 	if (new_id == 0) {
 		new_id = dbi_conn_sequence_last(Config->conn.dbi, id);
+		/* Need to escape for PostgreSQL */
+		if (new_id == 0) {
+			sprintf(buffer, "\"%s\"", id);
+			new_id = dbi_conn_sequence_last(Config->conn.dbi, buffer);
+		}
 	}
 	return new_id;
 }
