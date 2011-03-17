@@ -415,6 +415,8 @@ static GSM_Error SMSDSQL_Init(GSM_SMSDConfig * Config)
 	int version;
 	GSM_Error error;
 	struct GSM_SMSDdbobj *db;
+	const char *escape_char;
+	char buffer[100];
 
 #ifdef WIN32
 	_tzset();
@@ -440,7 +442,10 @@ static GSM_Error SMSDSQL_Init(GSM_SMSDConfig * Config)
 	if (error != ERR_NONE)
 		return error;
 
-	if (SMSDSQL_Query(Config, "SELECT Version FROM gammu", &res) != ERR_NONE) {
+	escape_char = SMSDSQL_EscapeChar(Config);
+
+	sprintf(buffer, "SELECT %sVersion%s FROM gammu", escape_char, escape_char);
+	if (SMSDSQL_Query(Config, buffer, &res) != ERR_NONE) {
 		db->Free(Config);
 		return ERR_UNKNOWN;
 	}
