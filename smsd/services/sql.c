@@ -599,7 +599,7 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 			return ERR_UNKNOWN;
 		}
 
-		new_id = db->SeqID(Config, "inbox_id_seq");
+		new_id = db->SeqID(Config, "inbox_ID_seq");
 		if (new_id == 0) {
 			SMSD_Log(DEBUG_INFO, Config, "Failed to get inserted row ID (%s)", __FUNCTION__);
 			return ERR_UNKNOWN;
