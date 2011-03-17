@@ -22,8 +22,8 @@ int main(int argc, char **argv)
 {
 	int rc = 0;
 
-	rc |= single_test("247 01", "LMT LV");
-	rc |= single_test("24701", "LMT LV");
+	rc |= single_test("247 01", "LMT");
+	rc |= single_test("24701", "LMT");
 	rc |= single_test("99999", "GammuTel");
 	rc |= single_test("00000", "unknown");
 
