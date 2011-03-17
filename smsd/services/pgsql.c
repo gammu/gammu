@@ -172,7 +172,7 @@ unsigned long long SMSDPgSQL_SeqID(GSM_SMSDConfig * Config, const char *seq_id)
 	PGresult *rc;
 	int Status;
 
-	snprintf(buff, sizeof(buff), "SELECT currval('%s')", seq_id);
+	snprintf(buff, sizeof(buff), "SELECT currval(\"%s\")", seq_id);
 	rc = PQexec(Config->conn.pg, buff);
 	if ((rc == NULL) || ((Status = PQresultStatus(rc)) != PGRES_COMMAND_OK && (Status != PGRES_TUPLES_OK))) {
 		return 0;
