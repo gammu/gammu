@@ -769,7 +769,7 @@ set_tests_properties(sms-cmdline-PICTURE PROPERTIES
 add_test(sms-cmdline-OPERATOR "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
     OPERATOR 213 ${LOGO_TEST_FILE} -netcode "230 03")
 set_tests_properties(sms-cmdline-OPERATOR PROPERTIES
-    PASS_REGULAR_EXPRESSION "Operator logo for 230 03 network \\(Vodafone CZ, Czech Republic\\)")
+    PASS_REGULAR_EXPRESSION "Operator logo for 230 03 network \\(Vodafone, Czech Republic\\)")
 
 add_test(sms-cmdline-CALLER "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
     CALLER 213 ${LOGO_TEST_FILE})
