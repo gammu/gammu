@@ -5489,11 +5489,6 @@ GSM_Error ATGEN_ReplyCheckProt(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 			/* Check for OBEX */
 			if (error == ERR_NONE && protocol_id == 0) {
 				smprintf(s, "OBEX seems to be supported, version %s, level %d!\n", protocol_version, protocol_level);
-#ifdef GSM_ENABLE_ATOBEX
-				/* Tell OBEX driver that AT+CPROT=0 is supported */
-				s->Phone.Data.Priv.ATOBEX.HasOBEX = ATOBEX_OBEX_CPROT0;
-				s->Phone.Data.Priv.ATOBEX.DataService = OBEX_IRMC;
-#endif
 				/*
 				 * Level 1 is almost useless, require
 				 * higher levels.
@@ -5507,6 +5502,7 @@ GSM_Error ATGEN_ReplyCheckProt(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 					/* As AT+OBEX has automatic fallback we can try to enable OBEX here. */
 					smprintf(s, "Automatically enabling F_OBEX, please report bug if it causes problems\n");
 					GSM_AddPhoneFeature(s->Phone.Data.ModelInfo, F_OBEX);
+					GSM_AddPhoneFeature(s->Phone.Data.ModelInfo, F_CPROT);
 				}
 			}
 			/* Check for Alcatel protocol */
