@@ -1722,27 +1722,33 @@ const char *GSM_Networks[] = {
 
 const unsigned char *GSM_GetNetworkName(const char *NetworkCode)
 {
-	int		i = 0;
-	static char	retval[200];
-	char		NetworkCodeFull[7] = "      ";
-
-	/* FIXME: This fails with 3 digit country code */
+	int i = 0;
+	static char retval[200];
+	char NetworkCodeFull[8];
+	const char *pos;
 
 	EncodeUnicode(retval, "unknown", 7);
-	if ((strlen(NetworkCode) == 5) ||
-			(strlen(NetworkCode) == 6)) {
-		strncpy(NetworkCodeFull, NetworkCode, 3);
-		strncpy(NetworkCodeFull + 4, NetworkCode + strlen(NetworkCode) - 2, 2);
-		while (GSM_Networks[i * 2] != NULL) {
-			if (strncmp(GSM_Networks[i * 2], NetworkCodeFull, 6) == 0) {
-				EncodeUnicode(retval,
-						GSM_Networks[i * 2 + 1],
-						strlen(GSM_Networks[i * 2 + 1]));
-				break;
-			}
-			i++;
+
+	/* Too long string */
+	if (strlen(NetworkCode) > 7 || strlen(NetworkCode) < 5) {
+		return retval;
+	}
+	pos = strchr(NetworkCode, ' ');
+	if (pos == NULL) {
+		pos = NetworkCode + 3;
+	} else {
+		pos += 1;
+	}
+
+	sprintf(NetworkCodeFull, "%c%c%c %s", NetworkCode[0], NetworkCode[1], NetworkCode[2], pos);
+
+	for (i = 0; GSM_Networks[i * 2] != NULL; i++) {
+		if (strcmp(GSM_Networks[i * 2], NetworkCodeFull) == 0) {
+			EncodeUnicode(retval, GSM_Networks[i * 2 + 1], strlen(GSM_Networks[i * 2 + 1]));
+			break;
 		}
 	}
+
 	return retval;
 }
 
