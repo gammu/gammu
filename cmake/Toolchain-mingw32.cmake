@@ -4,18 +4,18 @@
 SET(CMAKE_SYSTEM_NAME Windows)
 
 # which compilers to use for C and C++
-SET(CMAKE_C_COMPILER i686-pc-mingw32-gcc)
-SET(CMAKE_CXX_COMPILER i686-pc-mingw32-g++)
-SET(CMAKE_AR i686-pc-mingw32-ar)
-SET(CMAKE_LD i686-pc-mingw32-ld)
-SET(CMAKE_NM i686-pc-mingw32-nm)
-SET(CMAKE_OBJCOPY i686-pc-mingw32-objcopy)
-SET(CMAKE_OBJDUMP i686-pc-mingw32-objdump)
-SET(CMAKE_RANLIB i686-pc-mingw32-ranlib)
-SET(CMAKE_STRIP i686-pc-mingw32-strip)
+SET(CMAKE_C_COMPILER i686-w64-mingw32-gcc)
+SET(CMAKE_CXX_COMPILER i686-w64-mingw32-g++)
+SET(CMAKE_AR i686-w64-mingw32-ar)
+SET(CMAKE_LD i686-w64-mingw32-ld)
+SET(CMAKE_NM i686-w64-mingw32-nm)
+SET(CMAKE_OBJCOPY i686-w64-mingw32-objcopy)
+SET(CMAKE_OBJDUMP i686-w64-mingw32-objdump)
+SET(CMAKE_RANLIB i686-w64-mingw32-ranlib)
+SET(CMAKE_STRIP i686-w64-mingw32-strip)
 
 # here is the target environment located
-SET(CMAKE_FIND_ROOT_PATH  /usr/i686-pc-mingw32/sys-root/mingw/ /home/mcihar/win-cross/crosscompiled)
+SET(CMAKE_FIND_ROOT_PATH  /usr/i686-w64-mingw32/sys-root/mingw/ /home/mcihar/win-cross/crosscompiled)
 
 # adjust the default behaviour of the FIND_XXX() commands:
 # search headers and libraries in the target environment, search 
