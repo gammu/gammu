@@ -166,6 +166,8 @@ static SQL_Error SMSDODBC_Connect(GSM_SMSDConfig * Config)
 {
 	SQLRETURN ret;
 	int field;
+	char driver_name[1000];
+	SQLSMALLINT len;
 
 	for (field = 0; field < SMSD_ODBC_MAX_RETURN_STRINGS; field++) {
 		Config->conn.odbc.retstr[field] = NULL;
@@ -197,6 +199,15 @@ static SQL_Error SMSDODBC_Connect(GSM_SMSDConfig * Config)
 		SMSDODBC_LogError(Config, SQL_HANDLE_DBC, Config->conn.odbc.dbc, "SQLConnect failed");
 		return SQL_FAIL;
 	}
+
+	ret = SQLGetInfo(Config->conn.odbc.dbc, SQL_DRIVER_NAME, driver_name, sizeof(driver_name), &len);
+	if (!SQL_SUCCEEDED(ret)) {
+		SMSDODBC_LogError(Config, SQL_HANDLE_DBC, Config->conn.odbc.dbc, "SQLGetInfo failed");
+		return SQL_FAIL;
+	} else{
+		SMSD_Log(DEBUG_NOTICE, Config, "Connected to driver %s", driver_name);
+	}
+
 
 	return SQL_OK;
 }
