@@ -426,6 +426,23 @@ short text message:
         'Default_No_Compression'
     );
 
+Please note usage of ``TextDecoded`` field, for ``Text`` field, you would have
+to hex encode the unicode text:
+
+.. code-block:: sql
+
+    INSERT INTO outbox (
+        DestinationNumber,
+        Text,
+        CreatorID,
+        Coding
+    ) VALUES (
+        '800123465',
+        '005400680069007300200069007300200061002000530051004c002000740065007300740020006d006500730073006100670065',
+        'Program',
+        'Default_No_Compression'
+    );
+
 Injecting long message using SQL
 ++++++++++++++++++++++++++++++++
 
