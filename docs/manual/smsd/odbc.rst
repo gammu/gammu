@@ -39,7 +39,7 @@ You specify data source name (DSN) as :config:option:`Host` in
 On Microsoft Windows, you can find instructions on Microsoft website:
 http://support.microsoft.com/kb/305599
 
-For unixODBC this is documented in user manual:
+For unixODBC this is documented in the user manual:
 http://www.unixodbc.org/doc/UserManual/
 
 Example
