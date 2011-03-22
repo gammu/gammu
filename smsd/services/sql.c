@@ -760,7 +760,7 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 				SMSD_Log(DEBUG_NOTICE, Config, "Assuming default coding for text message");
 				sms->SMS[sms->Number].Coding = SMS_Coding_Default_No_Compression;
 			} else {
-				SMSD_Log(DEBUG_NOTICE, Config, "Assuming 8bit coding for binary message")
+				SMSD_Log(DEBUG_NOTICE, Config, "Assuming 8bit coding for binary message");
 				sms->SMS[sms->Number].Coding = SMS_Coding_8bit;
 			}
 		}
