@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSDRC" "5" "March 15, 2011" "1.29.93" "Gammu"
+.TH "GAMMU-SMSDRC" "5" "March 22, 2011" "1.29.93" "Gammu"
 .SH NAME
 gammu-smsdrc \- gammu-smsd(1) configuration file
 .
@@ -532,6 +532,44 @@ Depends on what DBI drivers you have installed, DBI
 supports: \fBmysql\fP, \fBfreetds\fP (provides access to MS SQL Server and
 Sybase), \fBpgsql\fP, \fBsqlite\fP, \fBsqlite3\fP, \fBfirebird\fP and \fBingres\fP,
 \fBmsql\fP and \fBoracle\fP drivers are under development.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B SQL
+.
+SQL dialect to use. This is specially useful with \fIgammu\-smsd\-odbc\fP where SMSD
+does not know which server it is actually talking to.
+.sp
+Possible values:
+.INDENT 7.0
+.IP \(bu 2
+.
+\fBmysql\fP \- MySQL
+.IP \(bu 2
+.
+\fBpgsql\fP \- PostgreSQL
+.IP \(bu 2
+.
+\fBsqlite\fP \- SQLite
+.IP \(bu 2
+.
+\fBmssql\fP \- Microsoft SQL Server
+.IP \(bu 2
+.
+\fBsybase\fP \- Sybase
+.IP \(bu 2
+.
+\fBaccess\fP \- Microsoft Access
+.IP \(bu 2
+.
+\fBodbc\fP \- Generic ODBC
+.UNINDENT
+.sp
+New in version 1.28.93.
+.IP "See also"
+.sp
+You can also completely customize SQL queries used as described in \fISQL Queries\fP.
+.RE
 .UNINDENT
 .INDENT 0.0
 .TP

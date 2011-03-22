@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSD-ODBC" "7" "March 15, 2011" "1.29.93" "Gammu"
+.TH "GAMMU-SMSD-ODBC" "7" "March 22, 2011" "1.29.93" "Gammu"
 .SH NAME
 gammu-smsd-odbc \- gammu-smsd(1) backend using ODBC abstraction layer to use any supported database as a message storage
 .
@@ -47,7 +47,9 @@ can be used.
 .SH LIMITATIONS
 .sp
 Due to limits of the ODBC interface, you might have to tweak SQL queries to
-work in used SQL server, see \fIgammu\-smsd\-sql\fP for more details.
+work in used SQL server, see \fISQL Queries\fP for more details.
+.sp
+Partially this can be configured using \fBSQL\fP.
 .SH CONFIGURATION
 .sp
 You specify data source name (DSN) as \fBHost\fP in
@@ -56,7 +58,7 @@ You specify data source name (DSN) as \fBHost\fP in
 On Microsoft Windows, you can find instructions on Microsoft website:
 \fI\%http://support.microsoft.com/kb/305599\fP
 .sp
-For unixODBC this is documented in user manual:
+For unixODBC this is documented in the user manual:
 \fI\%http://www.unixodbc.org/doc/UserManual/\fP
 .SH EXAMPLE
 .sp

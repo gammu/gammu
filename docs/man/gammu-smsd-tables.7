@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSD-TABLES" "7" "March 15, 2011" "1.29.93" "Gammu"
+.TH "GAMMU-SMSD-TABLES" "7" "March 22, 2011" "1.29.93" "Gammu"
 .SH NAME
 gammu-smsd-tables \- description of tables for database backends of gammu-smsd(1)
 .
@@ -133,6 +133,8 @@ set it to some value, when want to force sending after some planned time
 .sp
 Send message before specified time, can be used to limit messages from
 being sent in night. Default value is 23:59:59
+.sp
+New in version 1.29.90.
 .TP
 .B \fBSendAfter\fP (time)
 .sp
@@ -145,8 +147,6 @@ New in version 1.29.90.
 .sp
 SMS text encoded using hex values in proper coding. If you want to use
 TextDecoded field, keep this NULL (or empty).
-.sp
-New in version 1.29.90.
 .TP
 .B \fBDestinationNumber\fP (varchar(20))
 .sp
@@ -530,6 +530,25 @@ INSERT INTO outbox (
 ) VALUES (
     \(aq800123465\(aq,
     \(aqThis is a SQL test message\(aq,
+    \(aqProgram\(aq,
+    \(aqDefault_No_Compression\(aq
+);
+.ft P
+.fi
+.sp
+Please note usage of \fBTextDecoded\fP field, for \fBText\fP field, you would have
+to hex encode the unicode text:
+.sp
+.nf
+.ft C
+INSERT INTO outbox (
+    DestinationNumber,
+    Text,
+    CreatorID,
+    Coding
+) VALUES (
+    \(aq800123465\(aq,
+    \(aq005400680069007300200069007300200061002000530051004c002000740065007300740020006d006500730073006100670065\(aq,
     \(aqProgram\(aq,
     \(aqDefault_No_Compression\(aq
 );
