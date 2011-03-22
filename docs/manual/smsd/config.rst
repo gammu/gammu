@@ -413,6 +413,8 @@ supports same options for configuring connection to a database:
 
     .. versionadded:: 1.28.93
 
+    .. seealso:: You can also completely customize SQL queries used as described in :ref:`SQL Queries`.
+
 .. config:option:: DriversPath
 
     Path, where DBI drivers are stored, this usually does not have to be set if

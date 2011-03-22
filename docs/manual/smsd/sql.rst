@@ -24,7 +24,8 @@ Common for all backends:
 * :config:option:`Password` - password for connecting to database
 * :config:option:`Host` - database host or data source name
 * :config:option:`Database` - database name
-* :config:option:`Driver` - ``native_mysql``, ``native_pgsql`` or DBI one
+* :config:option:`Driver` - ``native_mysql``, ``native_pgsql``, ``odbc`` or DBI one
+* :config:option:`SQL` - SQL dialect to use
 
 Specific for DBI:
 
@@ -32,6 +33,8 @@ Specific for DBI:
 * :config:option:`DBDir` - sqlite/sqlite3 directory with database
 
 .. seealso:: The variables are fully described in :ref:`gammurc` documentation.
+
+.. _SQL Queries:
 
 SQL Queries
 -----------
