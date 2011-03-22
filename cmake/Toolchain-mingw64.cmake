@@ -15,7 +15,7 @@ SET(CMAKE_RANLIB x86_64-w64-mingw32-ranlib)
 SET(CMAKE_STRIP x86_64-w64-mingw32-strip)
 
 # here is the target environment located
-SET(CMAKE_FIND_ROOT_PATH  /usr/x86_64-w64-mingw32/sys-root/mingw/)
+SET(CMAKE_FIND_ROOT_PATH  /usr/x86_64-w64-mingw32/sys-root/mingw/ /usr/x86_64-pc-mingw32/sys-root/mingw/)
 
 # adjust the default behaviour of the FIND_XXX() commands:
 # search headers and libraries in the target environment, search 
