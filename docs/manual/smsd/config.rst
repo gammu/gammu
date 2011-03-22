@@ -403,12 +403,13 @@ supports same options for configuring connection to a database:
 
     Possible values:
 
-    * ``mysql``
-    * ``pgsql``
-    * ``sqlite``
-    * ``mssql``
-    * ``sybase``
-    * ``access``
+    * ``mysql`` - MySQL
+    * ``pgsql`` - PostgreSQL
+    * ``sqlite`` - SQLite
+    * ``mssql`` - Microsoft SQL Server
+    * ``sybase`` - Sybase
+    * ``access`` - Microsoft Access
+    * ``odbc`` - Generic ODBC
 
     .. versionadded:: 1.28.93
 
