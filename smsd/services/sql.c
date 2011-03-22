@@ -77,7 +77,6 @@ const char escape_char_fallback[] = "";
 static const char *SMSDSQL_EscapeChar(GSM_SMSDConfig * Config)
 {
 	const char *driver_name;
-	static char result[100];
 
 	if (Config->sql != NULL) {
 		driver_name = Config->sql;
@@ -98,7 +97,6 @@ static const char *SMSDSQL_EscapeChar(GSM_SMSDConfig * Config)
 	} else {
 		return escape_char_fallback;
 	}
-	return result;
 }
 
 const char limit_clause_access[] = "TOP";
