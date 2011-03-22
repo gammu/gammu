@@ -408,6 +408,7 @@ supports same options for configuring connection to a database:
     * ``sqlite``
     * ``mssql``
     * ``sybase``
+    * ``access``
 
     .. versionadded:: 1.28.93
 

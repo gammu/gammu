@@ -101,6 +101,26 @@ static const char *SMSDSQL_EscapeChar(GSM_SMSDConfig * Config)
 	return result;
 }
 
+const char limit_clause_access[] = "TOP";
+const char limit_clause_fallback[] = "LIMIT";
+
+static const char *SMSDSQL_LimitClause(GSM_SMSDConfig * Config)
+{
+	const char *driver_name;
+
+	if (Config->sql != NULL) {
+		driver_name = Config->sql;
+	} else {
+		driver_name = Config->driver;
+	}
+
+	if (strcasecmp(driver_name, "access") == 0) {
+		return limit_clause_access;
+	} else {
+		return limit_clause_fallback;
+	}
+}
+
 const char now_odbc[] = "{fn CURRENT_TIMESTAMP()}";
 const char now_mysql[] = "NOW()";
 const char now_pgsql[] = "now()";
@@ -403,7 +423,7 @@ static GSM_Error SMSDSQL_CheckTable(GSM_SMSDConfig * Config, const char *table)
 
 	escape_char = SMSDSQL_EscapeChar(Config);
 
-	sprintf(buffer, "SELECT %sID%s FROM %s LIMIT 1", escape_char, escape_char, table);
+	sprintf(buffer, "SELECT %sID%s FROM %s %s 1", escape_char, escape_char, table, SMSDSQL_LimitClause(Config));
 	error = SMSDSQL_Query(Config, buffer, &res);
 	if (error != ERR_NONE) {
 		SMSD_Log(DEBUG_ERROR, Config, "Table %s not found, disconnecting!", table);
@@ -1238,7 +1258,7 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 			" AND ", ESCAPE_FIELD("SendBefore"), " >= ", SMSDSQL_CurrentTime(Config),
 			" AND ", ESCAPE_FIELD("SendAfter"), " <= ", SMSDSQL_CurrentTime(Config),
 			" AND ( ", ESCAPE_FIELD("SenderID"), " is NULL OR ", ESCAPE_FIELD("SenderID"), " = '' OR ", ESCAPE_FIELD("SenderID"), " = %P )"
-			" ORDER BY ", ESCAPE_FIELD("InsertIntoDB"), " ASC LIMIT %1", NULL) != ERR_NONE) {
+			" ORDER BY ", ESCAPE_FIELD("InsertIntoDB"), " ASC ", SMSDSQL_LimitClause(Config), " %1", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
 
