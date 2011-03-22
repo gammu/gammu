@@ -396,6 +396,21 @@ supports same options for configuring connection to a database:
     Sybase), ``pgsql``, ``sqlite``, ``sqlite3``, ``firebird`` and ``ingres``,
     ``msql`` and ``oracle`` drivers are under development.
 
+.. config:option:: SQL
+
+    SQL dialect to use. This is specially useful with :ref:`gammu-smsd-odbc` where SMSD
+    does not know which server it is actually talking to.
+
+    Possible values:
+
+    * ``mysql``
+    * ``pgsql``
+    * ``sqlite``
+    * ``mssql``
+    * ``sybase``
+
+    .. versionadded:: 1.28.93
+
 .. config:option:: DriversPath
 
     Path, where DBI drivers are stored, this usually does not have to be set if

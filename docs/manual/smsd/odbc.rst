@@ -28,6 +28,8 @@ Limitations
 Due to limits of the ODBC interface, you might have to tweak SQL queries to
 work in used SQL server, see :ref:`gammu-smsd-sql` for more details.
 
+Partially this can be configured using :config:option:`SQL`.
+
 Configuration
 -------------
 

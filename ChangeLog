@@ -26,6 +26,7 @@ ChangeLog
 [-] * Escape fields in SQL queries (bug#1415).
 [-] * Escape fields in PostgreSQL SQL script (bug#1415).
 [-] * Default to GSM encoding for text messages in SQL backend for SMSD.
+[-] * Add option to override which SQL dialect to use in SMSD (bug #1427).
     
 20110315 - 1.29.92
 

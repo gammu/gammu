@@ -45,7 +45,11 @@ static const char *SMSDSQL_NowPlus(GSM_SMSDConfig * Config, int seconds)
 	const char *driver_name;
 	static char result[100];
 
-	driver_name = Config->driver;
+	if (Config->sql != NULL) {
+		driver_name = Config->sql;
+	} else {
+		driver_name = Config->driver;
+	}
 
 	if (strcasecmp(driver_name, "mysql") == 0 || strcasecmp(driver_name, "native_mysql") == 0) {
 		sprintf(result, now_plus_mysql, seconds);
@@ -75,7 +79,11 @@ static const char *SMSDSQL_EscapeChar(GSM_SMSDConfig * Config)
 	const char *driver_name;
 	static char result[100];
 
-	driver_name = Config->driver;
+	if (Config->sql != NULL) {
+		driver_name = Config->sql;
+	} else {
+		driver_name = Config->driver;
+	}
 
 	if (strcasecmp(driver_name, "mysql") == 0 || strcasecmp(driver_name, "native_mysql") == 0) {
 		return escape_char_mysql;
@@ -83,9 +91,9 @@ static const char *SMSDSQL_EscapeChar(GSM_SMSDConfig * Config)
 		return escape_char_pgsql;
 	} else if (strncasecmp(driver_name, "sqlite", 6) == 0) {
 		return escape_char_sqlite;
-	} else if (strcasecmp(driver_name, "freetds") == 0) {
+	} else if (strcasecmp(driver_name, "freetds") == 0 || strcasecmp(driver_name, "mssql") == 0 || strcasecmp(driver_name, "sybase") == 0) {
 		return escape_char_freetds;
-	} else if (strcasecmp(driver_name, "odbc") == 0) {
+	} else if (strcasecmp(Config->driver, "odbc") == 0) {
 		return escape_char_odbc;
 	} else {
 		return escape_char_fallback;
@@ -111,7 +119,11 @@ static const char *SMSDSQL_CurrentTime(GSM_SMSDConfig * Config)
 {
 	const char *driver_name;
 
-	driver_name = Config->driver;
+	if (Config->sql != NULL) {
+		driver_name = Config->sql;
+	} else {
+		driver_name = Config->driver;
+	}
 
 	if (strcasecmp(driver_name, "mysql") == 0 || strcasecmp(driver_name, "native_mysql") == 0) {
 		return currtime_mysql;
@@ -119,9 +131,9 @@ static const char *SMSDSQL_CurrentTime(GSM_SMSDConfig * Config)
 		return currtime_pgsql;
 	} else if (strncasecmp(driver_name, "sqlite", 6) == 0) {
 		return currtime_sqlite;
-	} else if (strcasecmp(driver_name, "freetds") == 0) {
+	} else if (strcasecmp(driver_name, "freetds") == 0 || strcasecmp(driver_name, "mssql") == 0 || strcasecmp(driver_name, "sybase") == 0) {
 		return currtime_freetds;
-	} else if (strcasecmp(driver_name, "odbc") == 0) {
+	} else if (strcasecmp(Config->driver, "odbc") == 0) {
 		return currtime_odbc;
 	} else {
 		return currtime_fallback;
@@ -131,7 +143,11 @@ static const char *SMSDSQL_Now(GSM_SMSDConfig * Config)
 {
 	const char *driver_name;
 
-	driver_name = Config->driver;
+	if (Config->sql != NULL) {
+		driver_name = Config->sql;
+	} else {
+		driver_name = Config->driver;
+	}
 
 	if (strcasecmp(driver_name, "mysql") == 0 || strcasecmp(driver_name, "native_mysql") == 0) {
 		return now_mysql;
@@ -139,9 +155,9 @@ static const char *SMSDSQL_Now(GSM_SMSDConfig * Config)
 		return now_pgsql;
 	} else if (strncasecmp(driver_name, "sqlite", 6) == 0) {
 		return now_sqlite;
-	} else if (strcasecmp(driver_name, "freetds") == 0) {
+	} else if (strcasecmp(driver_name, "freetds") == 0 || strcasecmp(driver_name, "mssql") == 0 || strcasecmp(driver_name, "sybase") == 0) {
 		return now_freetds;
-	} else if (strcasecmp(driver_name, "odbc") == 0) {
+	} else if (strcasecmp(Config->driver, "odbc") == 0) {
 		return now_odbc;
 	} else {
 		return now_fallback;
@@ -188,16 +204,20 @@ void SMSDSQL_Time2String(GSM_SMSDConfig * Config, time_t timestamp, char *static
 	struct tm *timestruct;
 	const char *driver_name;
 
-	driver_name = Config->driver;
+	if (Config->sql != NULL) {
+		driver_name = Config->sql;
+	} else {
+		driver_name = Config->driver;
+	}
 
 	if (timestamp == -2) {
 		strcpy(static_buff, "0000-00-00 00:00:00");
-	} else if (strcasecmp(driver_name, "odbc") == 0) {
-		timestruct = gmtime(&timestamp);
-		strftime(static_buff, size, "{ ts '%Y-%m-%d %H:%M:%S' }", timestruct);
 	} else if (strcasecmp(driver_name, "pgsql") == 0 || strcasecmp(driver_name, "native_pgsql") == 0) {
 		timestruct = gmtime(&timestamp);
 		strftime(static_buff, size, "%Y-%m-%d %H:%M:%S GMT", timestruct);
+	} else if (strcasecmp(Config->driver, "odbc") == 0) {
+		timestruct = gmtime(&timestamp);
+		strftime(static_buff, size, "{ ts '%Y-%m-%d %H:%M:%S' }", timestruct);
 	} else {
 		timestruct = localtime(&timestamp);
 		strftime(static_buff, size, "%Y-%m-%d %H:%M:%S", timestruct);
@@ -1077,6 +1097,8 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 
 	Config->driverspath = INI_GetValue(Config->smsdcfgfile, "smsd", "driverspath", FALSE);
 
+	Config->sql = INI_GetValue(Config->smsdcfgfile, "smsd", "sql", FALSE);
+
 	Config->dbdir = INI_GetValue(Config->smsdcfgfile, "smsd", "dbdir", FALSE);
 
 	if (Config->driver == NULL) {
@@ -1096,6 +1118,9 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 #ifdef ODBC_FOUND
 	if (!strcasecmp(Config->driver, "odbc"))
 		Config->db = &SMSDODBC;
+		if (Config->sql == NULL) {
+			SMSD_Log(DEBUG_INFO, Config, "Using generic SQL for ODBC, this might fail. In such case please set SQL configuration option.");
+		}
 #endif
 	if (Config->db == NULL) {
 #ifdef LIBDBI_FOUND

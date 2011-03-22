@@ -128,6 +128,10 @@ struct _GSM_SMSDConfig {
 	 */
 	const char	*driverspath;
 	/**
+	 * SQL dialect to use.
+	 */
+	const char	*sql;
+	/**
 	 * Path to database directory.
 	 */
 	const char	*dbdir;
