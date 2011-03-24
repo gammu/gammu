@@ -694,6 +694,10 @@ typedef enum {
 	 * Samsung B2100 in UCS-2 mode provides a garbled UTF-8 instead.
 	 */
 	F_SAMSUNG_UTF8,
+	/**
+	 * SMS text is always UTF-8 encoded.
+	 */
+	F_SMS_UTF8_ENCODED,
 
 	/**
 	 * Just marker of highest feature code, should not be used.

@@ -123,6 +123,7 @@ GSM_FeatureName AllFeatureNames[] = {
 	{"DISABLE_CMGL", F_DISABLE_CMGL},
 	{"NO_UTF8", F_NO_UTF8},
 	{"SAMSUNG_UTF8", F_SAMSUNG_UTF8},
+	{"SMS_UTF8_ENCODED", F_SMS_UTF8_ENCODED},
 	{"", 0},
 };
 
@@ -456,9 +457,10 @@ GSM_PhoneModel allmodels[] = {
 	{"J700",	  "SGH-J700" ,	  "",				   {F_NO_ATOBEX, 0}},
 	{"J700",	  "SAMSUNG SGH-J700" , "",			   {F_NO_ATOBEX, F_DISABLE_CMGL, 0}},
 	{"D980",	  "SAMSUNG SGH-D980" , "",			   {F_NO_ATOBEX, 0}},
-	{"B2100",         "SAMSUNG B2100", "", {F_DISABLE_CMGL, 
+	{"B2100",         "SAMSUNG B2100", "", {F_DISABLE_CMGL,
 						F_SMS_SM, F_SMS_ME,
-						F_NO_UTF8, F_SAMSUNG_UTF8, 
+						F_SMS_UTF8_ENCODED,
+						F_NO_UTF8, F_SAMSUNG_UTF8,
 						F_TSSPCSW, F_OBEX, F_IRMC_LEVEL_2, 0}},
 
 	/* Philips */

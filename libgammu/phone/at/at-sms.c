@@ -832,7 +832,11 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 					}
 				case SMS_Coding_Unicode_No_Compression:
 				case SMS_Coding_8bit:
-					DecodeHexBin(buffer+PHONE_SMSDeliver.Text, msg->Buffer+current, TPUDL*2);
+					if (sms->Coding == SMS_Coding_Unicode_No_Compression && GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMS_UTF8_ENCODED)) {
+						DecodeUTF8(buffer+PHONE_SMSDeliver.Text, msg->Buffer+current, TPUDL);
+					} else {
+						DecodeHexBin(buffer+PHONE_SMSDeliver.Text, msg->Buffer+current, TPUDL*2);
+					}
 					buffer[PHONE_SMSDeliver.firstbyte] 	= firstbyte;
 					buffer[PHONE_SMSDeliver.TPDCS] 		= TPDCS;
 					buffer[PHONE_SMSDeliver.TPUDL] 		= TPUDL;
