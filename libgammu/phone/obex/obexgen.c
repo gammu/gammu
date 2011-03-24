@@ -786,9 +786,13 @@ GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos,
 			OBEXAddBlock(req, &Current, 0x4C, Priv->m_obex_appdata, Priv->m_obex_appdata_len);
 		}
 
-		if (Priv->Service == OBEX_m_OBEX && File->Buffer == NULL)
-		{
-			return GSM_WaitFor (s, req, Current, 0x82, OBEX_TIMEOUT * 10, ID_AddFile);
+		/* Adding empty file is special on mobex */
+		if (Priv->Service == OBEX_m_OBEX && File->Buffer == NULL) {
+			error = GSM_WaitFor (s, req, Current, 0x82, OBEX_TIMEOUT * 10, ID_AddFile);
+			if (error == ERR_NONE) {
+				return ERR_EMPTY;
+			}
+			return error;
 		}
 
 		/* File size block */
@@ -1402,8 +1406,6 @@ GSM_Error OBEXGEN_SetFile(GSM_StateMachine *s, const char *FileName, const unsig
 	/* Send file */
 	while (error == ERR_NONE) {
 		error = OBEXGEN_PrivAddFilePart(s, &File, &Pos, &Handle, HardDelete);
-		if (!Buffer)
-			break;
 	}
 	if (error != ERR_EMPTY) return error;
 
