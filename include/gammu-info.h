@@ -686,6 +686,14 @@ typedef enum {
 	 * CMGL hangs, so should not be used.
 	 */
 	F_DISABLE_CMGL,
+	/**
+	 * Phone does not support UTF8 even if it reports it.
+	 */
+	F_NO_UTF8,
+	/**
+	 * Samsung B2100 in UCS-2 mode provides a garbled UTF-8 instead.
+	 */
+	F_SAMSUNG_UTF8,
 
 	/**
 	 * Just marker of highest feature code, should not be used.

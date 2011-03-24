@@ -718,8 +718,63 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
   			break;
   		case AT_CHARSET_UCS2:
   		case AT_CHARSET_UCS_2:
-			if (length / 2 >= outlength) return ERR_MOREMEMORY;
- 			DecodeHexUnicode(output, input, length);
+			if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SAMSUNG_UTF8)) {
+				unsigned char *buf;
+				unsigned i;
+				int state = 0;
+
+				const unsigned char xlat[128] =
+					{
+						[0x40] = 0x80,
+						[0x5b] = 0xbc,
+						[0x5c] = 0xaf,
+						[0x5d] = 0xbe,
+						[0x5e] = 0x94,
+						[0x7b] = 0xa8,
+						[0x7d] = 0xa9,
+						[0x7e] = 0xbd,
+					};
+
+				if (length >= outlength) {
+					return ERR_MOREMEMORY;
+				}
+				buf = malloc (length / 2 + 5);
+				if (!buf) {
+					return ERR_MOREMEMORY;
+				}
+				DecodeHexUnicode(buf, input, length);
+				for (i = 0; 2 * i + 1 < length / 2; i++) {
+					buf[i] = (buf[2 * i] == 0x20 && buf[2 * i + 1] == 0xac) ? 0xe5 : buf[2 * i + 1];
+					if (!(buf[i] & 0x80)) {
+						if (state && xlat[buf[i]]) {
+							buf[i] = xlat[buf[i]];
+							state--;
+						} else {
+							state = 0;
+						}
+					} else if ((buf[i] & 0xc0) == 0x80) {
+						if (state) {
+							state--;
+						}
+					} else if ((buf[i] & 0xe0) == 0xc0) {
+						state = 1;
+					} else if ((buf[i] & 0xf0) == 0xe0) {
+						state = 2;
+					} else {
+						state = 3;
+					}
+
+				}
+				buf[i] = 0;
+
+				DecodeUTF8(output, buf, length / 2);
+				free (buf);
+			} else {
+				if (length / 2 >= outlength) {
+					return ERR_MOREMEMORY;
+				}
+				DecodeHexUnicode(output, input, length);
+			}
   			break;
   		case AT_CHARSET_IRA: /* IRA is ASCII only, so it's safe to treat is as UTF-8 */
 		case AT_CHARSET_ASCII:
@@ -2253,6 +2308,11 @@ GSM_Error ATGEN_ReplyGetCharsets(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 							Priv->Manufacturer == AT_Motorola) {
 						IgnoredUTF8 = TRUE;
 						smprintf(s, "Skipped %s because it is usually wrongly implemented on Motorola phones\n", AT_Charsets[i].text);
+					} else if ((AT_Charsets[i].charset == AT_CHARSET_UTF8 ||
+						AT_Charsets[i].charset == AT_CHARSET_UTF_8) &&
+							GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NO_UTF8)) {
+						IgnoredUTF8 = TRUE;
+						smprintf(s, "Skipped %s because it is reported to be broken on this phone\n", AT_Charsets[i].text);
 					} else if ((AT_Charsets[i].charset != AT_CHARSET_UCS2 &&
 							AT_Charsets[i].charset != AT_CHARSET_UCS_2) ||
 							!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NO_UCS2)) {
