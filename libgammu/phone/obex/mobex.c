@@ -37,7 +37,7 @@
  */
 #define MOBEX_TIMEOUT 10
 
-GSM_Error MOBEX_GetStatus(GSM_StateMachine *s, const char *path, GSM_MemoryType type, int *free_records, int *used)
+GSM_Error MOBEX_GetStatus(GSM_StateMachine *s, const char *path, unsigned char type, int *free_records, int *used)
 {
 	GSM_Error error;
 	unsigned char *buffer = NULL;
@@ -76,7 +76,7 @@ GSM_Error MOBEX_GetStatus(GSM_StateMachine *s, const char *path, GSM_MemoryType 
 	return ERR_NONE;
 }
 
-GSM_Error MOBEX_CreateEntry(GSM_StateMachine *s, const char *path, GSM_MemoryType type,  int *location, const char *data)
+GSM_Error MOBEX_CreateEntry(GSM_StateMachine *s, const char *path, unsigned char type,  int *location, const char *data)
 {
 	GSM_Error error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
@@ -102,7 +102,7 @@ GSM_Error MOBEX_CreateEntry(GSM_StateMachine *s, const char *path, GSM_MemoryTyp
 	return ERR_NONE;
 }
 
-GSM_Error MOBEX_UpdateEntry(GSM_StateMachine *s, const char *path, const int location, GSM_MemoryType type, const char *data)
+GSM_Error MOBEX_UpdateEntry(GSM_StateMachine *s, const char *path, const int location, unsigned char type, const char *data)
 {
 	GSM_Error error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
@@ -129,7 +129,7 @@ GSM_Error MOBEX_UpdateEntry(GSM_StateMachine *s, const char *path, const int loc
 	return ERR_NONE;
 }
 
-GSM_Error MOBEX_GetEntry(GSM_StateMachine *s, const char *path, const int location, GSM_MemoryType type, char **data)
+GSM_Error MOBEX_GetEntry(GSM_StateMachine *s, const char *path, const int location, unsigned char type, char **data)
 {
 	GSM_Error error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
