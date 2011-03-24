@@ -452,6 +452,14 @@ GSM_Error ATGEN_DecodePDUMessage(GSM_StateMachine *s, const char *PDU, const int
 		return ERR_MOREMEMORY;
 	}
 
+	/*
+	 * Strip possible ,0 at the end of reply.
+	 * It actually should not be there, but it simply happens with some phones.
+	 */
+	while (length >= 2 && PDU[length - 1] == '0' && PDU[length - 2] == ',') {
+		length -= 2;
+	}
+
 	/* Decode hex encoded binary data */
 	if (!DecodeHexBin(buffer, PDU, length)) {
 		smprintf(s, "Failed to decode hex string!\n");
