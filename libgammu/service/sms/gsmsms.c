@@ -251,7 +251,9 @@ GSM_Error GSM_DecodeSMSFrameText(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsign
 		smfprintf(di, "UDH header available (length %i)\n",off);
 
 		/* Copy UDH header into SMS->UDH */
-		for (i = 0; i < off; i++) SMS->UDH.Text[i] = buffer[Layout.Text + i];
+		for (i = 0; i < off; i++) {
+			SMS->UDH.Text[i] = buffer[Layout.Text + i];
+		}
 
 		GSM_DecodeUDHHeader(di, &SMS->UDH);
 	}
