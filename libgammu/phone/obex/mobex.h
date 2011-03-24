@@ -46,12 +46,20 @@ GSM_Error MOBEX_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry, gbool
  * Reads calendar entry using m-obex.
  */
 GSM_Error MOBEX_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry);
+
+/**
+ * Reads todo entry using m-obex.
+ */
 GSM_Error MOBEX_GetTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry);
 
 /**
  * Reads next calendar entry using m-obex.
  */
 GSM_Error MOBEX_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry, gboolean start);
+
+/**
+ * Reads next todo entry using m-obex.
+ */
 GSM_Error MOBEX_GetNextTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry, gboolean start);
 
 #endif
