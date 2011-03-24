@@ -244,6 +244,9 @@ GSM_Error GSM_DecodeSMSFrameText(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsign
 	if (buffer[Layout.firstbyte] & 64) {
 		/* Length of UDH header */
 		off = (buffer[Layout.Text] + 1);
+		if (off > buffer[Layout.TPUDL]) {
+			return ERR_CORRUPTED;
+		}
 		SMS->UDH.Length = off;
 		smfprintf(di, "UDH header available (length %i)\n",off);
 
