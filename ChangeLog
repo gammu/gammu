@@ -28,6 +28,7 @@ ChangeLog
 [-] * Default to GSM encoding for text messages in SQL backend for SMSD.
 [-] * Add option to override which SQL dialect to use in SMSD (bug #1427).
 [-] * Improved m-obex protocol support, thanks to Vladimir Serbinenko.
+[-] * Various fixes for Samsung B2100, thanks to Vladimir Serbinenko.
     
 20110315 - 1.29.92
 
