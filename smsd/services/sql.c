@@ -99,12 +99,37 @@ static const char *SMSDSQL_EscapeChar(GSM_SMSDConfig * Config)
 	}
 }
 
-const char limit_clause_access[] = "TOP";
-const char limit_clause_fallback[] = "LIMIT";
+const char top_clause_access[] = "TOP";
+const char top_clause_fallback[] = "";
 
-static const char *SMSDSQL_LimitClause(GSM_SMSDConfig * Config)
+static const char *SMSDSQL_TopClause(GSM_SMSDConfig * Config, const char *count)
 {
 	const char *driver_name;
+	static char result[100];
+
+	if (Config->sql != NULL) {
+		driver_name = Config->sql;
+	} else {
+		driver_name = Config->driver;
+	}
+
+	if (strcasecmp(driver_name, "access") == 0) {
+		strcpy(result, top_clause_access);
+		strcat(result, " ");
+		strcat(result, count);
+		return result;
+	} else {
+		return top_clause_fallback;
+	}
+}
+
+const char limit_clause_access[] = "";
+const char limit_clause_fallback[] = "LIMIT";
+
+static const char *SMSDSQL_LimitClause(GSM_SMSDConfig * Config, const char *count)
+{
+	const char *driver_name;
+	static char result[100];
 
 	if (Config->sql != NULL) {
 		driver_name = Config->sql;
@@ -115,7 +140,10 @@ static const char *SMSDSQL_LimitClause(GSM_SMSDConfig * Config)
 	if (strcasecmp(driver_name, "access") == 0) {
 		return limit_clause_access;
 	} else {
-		return limit_clause_fallback;
+		strcpy(result, limit_clause_fallback);
+		strcat(result, " ");
+		strcat(result, count);
+		return result;
 	}
 }
 
@@ -421,7 +449,7 @@ static GSM_Error SMSDSQL_CheckTable(GSM_SMSDConfig * Config, const char *table)
 
 	escape_char = SMSDSQL_EscapeChar(Config);
 
-	sprintf(buffer, "SELECT %sID%s FROM %s %s 1", escape_char, escape_char, table, SMSDSQL_LimitClause(Config));
+	sprintf(buffer, "SELECT %s %sID%s FROM %s %s", SMSDSQL_TopClause(Config, "1"), escape_char, escape_char, table, SMSDSQL_LimitClause(Config, "1"));
 	error = SMSDSQL_Query(Config, buffer, &res);
 	if (error != ERR_NONE) {
 		SMSD_Log(DEBUG_ERROR, Config, "Table %s not found, disconnecting!", table);
@@ -1245,7 +1273,7 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 	}
 
 	if (SMSDSQL_option(Config, SQL_QUERY_FIND_OUTBOX_SMS_ID, "find_outbox_sms_id",
-		"SELECT ",
+		"SELECT ", SMSDSQL_TopClause(Config, "%1"),
 			ESCAPE_FIELD("ID"),
 			", ", ESCAPE_FIELD("InsertIntoDB"),
 			", ", ESCAPE_FIELD("SendingDateTime"),
@@ -1256,7 +1284,7 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 			" AND ", ESCAPE_FIELD("SendBefore"), " >= ", SMSDSQL_CurrentTime(Config),
 			" AND ", ESCAPE_FIELD("SendAfter"), " <= ", SMSDSQL_CurrentTime(Config),
 			" AND ( ", ESCAPE_FIELD("SenderID"), " is NULL OR ", ESCAPE_FIELD("SenderID"), " = '' OR ", ESCAPE_FIELD("SenderID"), " = %P )"
-			" ORDER BY ", ESCAPE_FIELD("InsertIntoDB"), " ASC ", SMSDSQL_LimitClause(Config), " %1", NULL) != ERR_NONE) {
+			" ORDER BY ", ESCAPE_FIELD("InsertIntoDB"), " ASC ", SMSDSQL_LimitClause(Config, "%1"), NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
 
