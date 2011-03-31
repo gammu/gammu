@@ -222,7 +222,12 @@ static SQL_Error SMSDODBC_Query(GSM_SMSDConfig * Config, const char *query, SQL_
 	}
 
 	ret = SQLExecDirect (res->odbc, (SQLCHAR*)query, SQL_NTS);
-	if (SQL_SUCCEEDED(ret)) {
+	/*
+	 * If SQLExecDirect executes a searched update, insert, or delete
+	 * statement that does not affect any rows at the data source, the call
+	 * to SQLExecDirect returns SQL_NO_DATA.
+	 */
+	if (SQL_SUCCEEDED(ret) || ret == SQL_NO_DATA) {
 		return SQL_OK;
 	}
 
