@@ -544,13 +544,24 @@ If you want to use MYSQL backend, you will need something like this:
 .. code-block:: ini
 
     [smsd]
-    Service = mysql
+    Service = sql
+    Driver = native_mysql
     PIN = 1234
     LogFile = syslog
     User = smsd
     Password = smsd
     PC = localhost
     Database = smsd
+
+For :ref:`gammu-smsd-dbi` backend, in this particular case SQLite:
+
+.. code-block:: ini
+
+    [smsd]
+    Service = sql
+    Driver = sqlite3
+    DBDir = /var/lib/sqlite3
+    Database = smsd.db
 
 Process only messages from 123456 number:
 
