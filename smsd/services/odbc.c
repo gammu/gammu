@@ -25,7 +25,7 @@
 #include "sql.h"
 #include "sql-core.h"
 
-static void SMSDODBC_LogError(GSM_SMSDConfig * Config, SQLSMALLINT handle_type, SQLHANDLE handle, const char *message)
+static void SMSDODBC_LogError(GSM_SMSDConfig * Config, SQLRETURN origret, SQLSMALLINT handle_type, SQLHANDLE handle, const char *message)
 {
 	SQLINTEGER	 i = 0;
 	SQLINTEGER	 native;
@@ -34,7 +34,7 @@ static void SMSDODBC_LogError(GSM_SMSDConfig * Config, SQLSMALLINT handle_type, 
 	SQLSMALLINT	 len;
 	SQLRETURN	 ret;
 
-	SMSD_Log(DEBUG_ERROR, Config, "%s, ODBC diagnostics:", message);
+	SMSD_Log(DEBUG_ERROR, Config, "%s, Code = %d, ODBC diagnostics:", message, (int)origret);
 
 	do {
 		ret = SQLGetDiagRec(handle_type, handle, ++i, state, &native, text, sizeof(text), &len );
@@ -51,7 +51,7 @@ long long SMSDODBC_GetNumber(GSM_SMSDConfig * Config, SQL_result *res, unsigned 
 
 	ret = SQLGetData(res->odbc, field + 1, SQL_C_SLONG, &value, 0, NULL);
 	if (!SQL_SUCCEEDED(ret)) {
-		SMSDODBC_LogError(Config, SQL_HANDLE_STMT, res->odbc, "SQLGetData(long) failed");
+		SMSDODBC_LogError(Config, ret, SQL_HANDLE_STMT, res->odbc, "SQLGetData(long) failed");
 		return -1;
 	}
 	return value;
@@ -65,7 +65,7 @@ time_t SMSDODBC_GetDate(GSM_SMSDConfig * Config, SQL_result *res, unsigned int f
 
 	ret = SQLGetData(res->odbc, field + 1, SQL_C_TYPE_TIMESTAMP, &sqltime, 0, NULL);
 	if (!SQL_SUCCEEDED(ret)) {
-		SMSDODBC_LogError(Config, SQL_HANDLE_STMT, res->odbc, "SQLGetData(timestamp) failed");
+		SMSDODBC_LogError(Config, ret, SQL_HANDLE_STMT, res->odbc, "SQLGetData(timestamp) failed");
 		return -1;
 	}
 
@@ -93,7 +93,7 @@ const char *SMSDODBC_GetString(GSM_SMSDConfig * Config, SQL_result *res, unsigne
 	/* Figure out string length */
 	ret = SQLGetData(res->odbc, field + 1, SQL_C_CHAR, NULL, 0, &sqllen);
 	if (!SQL_SUCCEEDED(ret)) {
-		SMSDODBC_LogError(Config, SQL_HANDLE_STMT, res->odbc, "SQLGetData(string,NULL) failed");
+		SMSDODBC_LogError(Config, ret, SQL_HANDLE_STMT, res->odbc, "SQLGetData(string,NULL) failed");
 		return NULL;
 	}
 
@@ -121,7 +121,7 @@ const char *SMSDODBC_GetString(GSM_SMSDConfig * Config, SQL_result *res, unsigne
 	/* Actually grab result from database */
 	ret = SQLGetData(res->odbc, field + 1, SQL_C_CHAR, Config->conn.odbc.retstr[field], size + 1, &sqllen);
 	if (!SQL_SUCCEEDED(ret)) {
-		SMSDODBC_LogError(Config, SQL_HANDLE_STMT, res->odbc, "SQLGetData(string) failed");
+		SMSDODBC_LogError(Config, ret, SQL_HANDLE_STMT, res->odbc, "SQLGetData(string) failed");
 		return NULL;
 	}
 
@@ -175,19 +175,19 @@ static SQL_Error SMSDODBC_Connect(GSM_SMSDConfig * Config)
 
 	ret = SQLAllocHandle (SQL_HANDLE_ENV, SQL_NULL_HANDLE, &Config->conn.odbc.env);
 	if (!SQL_SUCCEEDED(ret)) {
-		SMSDODBC_LogError(Config, SQL_HANDLE_ENV, Config->conn.odbc.env, "SQLAllocHandle(ENV) failed");
+		SMSDODBC_LogError(Config, ret, SQL_HANDLE_ENV, Config->conn.odbc.env, "SQLAllocHandle(ENV) failed");
 		return SQL_FAIL;
 	}
 
 	ret = SQLSetEnvAttr (Config->conn.odbc.env, SQL_ATTR_ODBC_VERSION, (void*)SQL_OV_ODBC3, 0);
 	if (!SQL_SUCCEEDED(ret)) {
-		SMSDODBC_LogError(Config, SQL_HANDLE_ENV, Config->conn.odbc.env, "SQLSetEnvAttr failed");
+		SMSDODBC_LogError(Config, ret, SQL_HANDLE_ENV, Config->conn.odbc.env, "SQLSetEnvAttr failed");
 		return SQL_FAIL;
 	}
 
 	ret = SQLAllocHandle (SQL_HANDLE_DBC, Config->conn.odbc.env, &Config->conn.odbc.dbc);
 	if (!SQL_SUCCEEDED(ret)) {
-		SMSDODBC_LogError(Config, SQL_HANDLE_ENV, Config->conn.odbc.env, "SQLAllocHandle(DBC) failed");
+		SMSDODBC_LogError(Config, ret, SQL_HANDLE_ENV, Config->conn.odbc.env, "SQLAllocHandle(DBC) failed");
 		return SQL_FAIL;
 	}
 
@@ -196,13 +196,13 @@ static SQL_Error SMSDODBC_Connect(GSM_SMSDConfig * Config)
 			  (SQLCHAR*)Config->user, SQL_NTS,
 			  (SQLCHAR*)Config->password, SQL_NTS);
 	if (!SQL_SUCCEEDED(ret)) {
-		SMSDODBC_LogError(Config, SQL_HANDLE_DBC, Config->conn.odbc.dbc, "SQLConnect failed");
+		SMSDODBC_LogError(Config, ret, SQL_HANDLE_DBC, Config->conn.odbc.dbc, "SQLConnect failed");
 		return SQL_FAIL;
 	}
 
 	ret = SQLGetInfo(Config->conn.odbc.dbc, SQL_DRIVER_NAME, driver_name, sizeof(driver_name), &len);
 	if (!SQL_SUCCEEDED(ret)) {
-		SMSDODBC_LogError(Config, SQL_HANDLE_DBC, Config->conn.odbc.dbc, "SQLGetInfo failed");
+		SMSDODBC_LogError(Config, ret, SQL_HANDLE_DBC, Config->conn.odbc.dbc, "SQLGetInfo failed");
 		return SQL_FAIL;
 	} else{
 		SMSD_Log(DEBUG_NOTICE, Config, "Connected to driver %s", driver_name);
@@ -226,7 +226,7 @@ static SQL_Error SMSDODBC_Query(GSM_SMSDConfig * Config, const char *query, SQL_
 		return SQL_OK;
 	}
 
-	SMSDODBC_LogError(Config, SQL_HANDLE_STMT, res->odbc, "SQLExecDirect failed");
+	SMSDODBC_LogError(Config, ret, SQL_HANDLE_STMT, res->odbc, "SQLExecDirect failed");
 	return SQL_FAIL;
 }
 
@@ -245,7 +245,7 @@ int SMSDODBC_NextRow(GSM_SMSDConfig * Config, SQL_result *res)
 
 	if (!SQL_SUCCEEDED(ret)) {
 		if (ret != SQL_NO_DATA) {
-			SMSDODBC_LogError(Config, SQL_HANDLE_STMT, res->odbc, "SQLFetch failed");
+			SMSDODBC_LogError(Config, ret, SQL_HANDLE_STMT, res->odbc, "SQLFetch failed");
 		}
 		return 0;
 	}
@@ -327,7 +327,7 @@ unsigned long SMSDODBC_AffectedRows(GSM_SMSDConfig * Config, SQL_result *res)
 
 	ret = SQLRowCount (res->odbc, &count);
 	if (!SQL_SUCCEEDED(ret)) {
-		SMSDODBC_LogError(Config, SQL_HANDLE_DBC, Config->conn.odbc.dbc, "SQLRowCount failed");
+		SMSDODBC_LogError(Config, ret, SQL_HANDLE_DBC, Config->conn.odbc.dbc, "SQLRowCount failed");
 		return 0;
 	}
 	return count;
