@@ -526,6 +526,9 @@ There is more complete example available in Gammu documentation. Please note
 that for simplicity following examples do not include :config:section:`[gammu]`
 section, you can look into :ref:`gammurc` for some examples how it can look like.
 
+Files service
++++++++++++++
+
 SMSD configuration file for FILES backend could look like:
 
 .. code-block:: ini
@@ -538,6 +541,9 @@ SMSD configuration file for FILES backend could look like:
     OutboPpath = /var/spool/sms/outbox/
     SentSMSPath = /var/spool/sms/sent/
     ErrorSMSPath = /var/spool/sms/error/
+
+MySQL service
++++++++++++++
 
 If you want to use MYSQL backend, you will need something like this:
 
@@ -553,6 +559,9 @@ If you want to use MYSQL backend, you will need something like this:
     PC = localhost
     Database = smsd
 
+DBI service using SQLite
+++++++++++++++++++++++++
+
 For :ref:`gammu-smsd-dbi` backend, in this particular case SQLite:
 
 .. code-block:: ini
@@ -562,6 +571,9 @@ For :ref:`gammu-smsd-dbi` backend, in this particular case SQLite:
     Driver = sqlite3
     DBDir = /var/lib/sqlite3
     Database = smsd.db
+
+Numbers filtering
++++++++++++++++++
 
 Process only messages from 123456 number:
 
@@ -576,6 +588,9 @@ Do not process messages from evil number 666:
 
     [exclude_numbers]
     number1 = 666
+
+Debugging
++++++++++
 
 Enabling debugging:
 
