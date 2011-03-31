@@ -257,18 +257,31 @@ char * SMSDODBC_QuoteString(GSM_SMSDConfig * Config, const char *string)
 {
 	char *encoded_text = NULL;
 	size_t i, len, pos = 0;
+	char quote = '"';
+
+	const char *driver_name;
+
+	if (Config->sql != NULL) {
+		driver_name = Config->sql;
+	} else {
+		driver_name = Config->driver;
+	}
+
+	if (strcasecmp(driver_name, "access") == 0) {
+		quote = '\'';
+	}
 
 	len = strlen(string);
 
 	encoded_text = (char *)malloc((len * 2) + 3);
-	encoded_text[pos++] = '"';
+	encoded_text[pos++] = quote;
 	for (i = 0; i < len; i++) {
-		if (string[i] == '"' || string[i] == '\\') {
+		if (string[i] == quote || string[i] == '\\') {
 			encoded_text[pos++] = '\\';
 		}
 		encoded_text[pos++] = string[i];
 	}
-	encoded_text[pos++] = '"';
+	encoded_text[pos++] = quote;
 	encoded_text[pos] = '\0';
 	return encoded_text;
 }
