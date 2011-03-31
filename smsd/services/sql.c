@@ -147,6 +147,26 @@ static const char *SMSDSQL_LimitClause(GSM_SMSDConfig * Config, const char *coun
 	}
 }
 
+const char delete_clause_access[] = "DELETE";
+const char delete_clause_fallback[] = "DELETE *";
+
+static const char *SMSDSQL_DeleteClause(GSM_SMSDConfig * Config)
+{
+	const char *driver_name;
+
+	if (Config->sql != NULL) {
+		driver_name = Config->sql;
+	} else {
+		driver_name = Config->driver;
+	}
+
+	if (strcasecmp(driver_name, "access") == 0) {
+		return delete_clause_access;
+	} else {
+		return delete_clause_fallback;
+	}
+}
+
 const char now_odbc[] = "{fn CURRENT_TIMESTAMP()}";
 const char now_mysql[] = "NOW()";
 const char now_pgsql[] = "now()";
@@ -1184,7 +1204,7 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 	locktime = locktime < 60 ? 60 : locktime; /* Minimum time reserve is 60 sec */
 
 	if (SMSDSQL_option(Config, SQL_QUERY_DELETE_PHONE, "delete_phone",
-		"DELETE FROM phones WHERE ", ESCAPE_FIELD("IMEI"), " = %I", NULL) != ERR_NONE) {
+		SMSDSQL_DeleteClause(Config), " FROM phones WHERE ", ESCAPE_FIELD("IMEI"), " = %I", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
 
@@ -1322,12 +1342,12 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 	}
 
 	if (SMSDSQL_option(Config, SQL_QUERY_DELETE_OUTBOX, "delete_outbox",
-		"DELETE FROM outbox WHERE ", ESCAPE_FIELD("ID"), "=%1", NULL) != ERR_NONE) {
+		SMSDSQL_DeleteClause(Config), " FROM outbox WHERE ", ESCAPE_FIELD("ID"), "=%1", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
 
 	if (SMSDSQL_option(Config, SQL_QUERY_DELETE_OUTBOX_MULTIPART, "delete_outbox_multipart",
-		"DELETE FROM outbox_multipart WHERE ", ESCAPE_FIELD("ID"), "=%1", NULL) != ERR_NONE) {
+		SMSDSQL_DeleteClause(Config), " FROM outbox_multipart WHERE ", ESCAPE_FIELD("ID"), "=%1", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
 
