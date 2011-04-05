@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.29.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-23 16:58+0100\n"
-"PO-Revision-Date: 2011-01-14 23:07+0200\n"
+"PO-Revision-Date: 2011-04-05 16:14+0200\n"
 "Last-Translator: Robert Readman <robert_readman@hotmail.com>\n"
 "Language-Team: none\n"
 "Language: en_GB\n"
@@ -94,9 +94,9 @@ msgstr ""
 
 #. type: Title =
 #: README:34
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Support developers"
-msgstr "Developers\n"
+msgstr "Support developers"
 
 #. type: Plain text
 #: README:36
