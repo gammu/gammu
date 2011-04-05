@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.27.96\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-24 16:19+0100\n"
-"PO-Revision-Date: 2011-02-10 13:01+0200\n"
+"PO-Revision-Date: 2011-04-05 16:14+0200\n"
 "Last-Translator: Robert Readman <robert_readman@hotmail.com>\n"
 "Language-Team: none\n"
 "Language: en_GB\n"
@@ -335,9 +335,8 @@ msgstr ""
 "for more details."
 
 #: libgammu/gsmcomon.c:155
-#, fuzzy
 msgid "Entry is read only."
-msgstr "Entry is empty."
+msgstr "Entry is read only."
 
 #: libgammu/gsmcomon.c:188
 msgid "Unknown error description."
