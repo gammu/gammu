@@ -100,9 +100,8 @@ msgstr "Support developers"
 
 #. type: Plain text
 #: README:36
-#, fuzzy
 msgid "You can appreciate developers work at <http://wammu.eu/donate/>."
-msgstr "You can find more information on <http://wammu.eu/gammu/>."
+msgstr "You can appreciate developers work at <http://wammu.eu/donate/>."
 
 #. type: Title =
 #: INSTALL:2
