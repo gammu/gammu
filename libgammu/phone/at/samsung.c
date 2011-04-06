@@ -609,7 +609,7 @@ GSM_Error SAMSUNG_ReplyGetMemory(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 		if (error != ERR_NONE) {
 			/*
 			 * Some phones have different string:
-			 * +SPBR: 1,"+919821485060","","","","","apsengupta@gmail.com","6,Aditya","8,Sengupta",1985,2,31,"2,Me","0,"
+			 * +SPBR: 1,"+999999999999","","","","","aaaaaaaaaa@gmail.com","6,Aaaaaa","8,Ssssssss",1999,1,31,"2,Me","0,"
 			 */
 			error = ATGEN_ParseReply(s, str,
 						"+SPBR: @i, @p, @p, @p, @p, @p, @s, @T, @T, @i, @i, @i, @T, @T",
