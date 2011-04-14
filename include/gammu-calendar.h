@@ -584,7 +584,7 @@ typedef enum {
  * \ingroup Todo
  */
 GSM_Error GSM_EncodeVTODO(char *Buffer, const size_t buff_len, size_t * Length,
-			  GSM_ToDoEntry * note, const gboolean header,
+			  const GSM_ToDoEntry * note, const gboolean header,
 			  const GSM_VToDoVersion Version);
 
 /**

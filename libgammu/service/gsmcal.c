@@ -1056,7 +1056,7 @@ void GSM_ToDoFindDefaultTextTimeAlarmCompleted(GSM_ToDoEntry *entry, int *Text, 
 	}
 }
 
-GSM_Error GSM_EncodeVTODO(char *Buffer, const size_t buff_len, size_t *Length, GSM_ToDoEntry *note, gboolean header, GSM_VToDoVersion Version)
+GSM_Error GSM_EncodeVTODO(char *Buffer, const size_t buff_len, size_t *Length, const GSM_ToDoEntry *note, const gboolean header, const GSM_VToDoVersion Version)
 {
 	char		category[100];
 	int		i;
@@ -1120,7 +1120,7 @@ GSM_Error GSM_EncodeVTODO(char *Buffer, const size_t buff_len, size_t *Length, G
 		}
 	}
 	/* Store category */
-	GSM_Translate_Category(TRANSL_TO_VCAL, category, &note->Type);
+	GSM_Translate_Category(TRANSL_TO_VCAL, category, (GSM_CalendarNoteType *)&note->Type);
 	error = VC_StoreLine(Buffer, buff_len, Length,  "CATEGORIES:%s", category);
 	if (error != ERR_NONE) return error;
 
