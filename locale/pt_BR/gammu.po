@@ -2051,7 +2051,7 @@ msgid "No configuration read, using builtin defaults!"
 msgstr "Nenhuma configuração lida, usando padrões da compilação!"
 
 #: gammu/gammu.c:1216
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
 msgstr ""
