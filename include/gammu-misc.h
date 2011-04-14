@@ -133,7 +133,13 @@ extern void GSM_InitLocales(const char *path);
 
 /* strtoull for BCC (and maybe others) */
 #ifndef HAVE_STRTOULL
+/* MSVC provides same function under different name */
+#if _MSC_VER >= 1300
+#include <stdlib.h>
+#define strtoull _strtoui64
+#else
 #define strtoull(A,B,C) strtoul((A),(B),(C))
+#endif
 #endif
 
 /* ssize_t for compilers where it does not exist (BCC) */

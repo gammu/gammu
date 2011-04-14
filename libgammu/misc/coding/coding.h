@@ -27,12 +27,6 @@ typedef		int wchar_t;
 typedef		int wint_t;
 #endif
 
-/* MSVC provides same function under different name */
-#if _MSC_VER >= 1300
-#include <stdlib.h>
-#define strtoull _strtoui64
-#endif
-
 /* ---------------------------- Unicode ------------------------------------ */
 gboolean 		myiswspace	  		(unsigned const char *src);
 
