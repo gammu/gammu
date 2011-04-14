@@ -367,71 +367,71 @@ GSM_DateTime	VCALTimeDiff ( GSM_DateTime *Alarm,  GSM_DateTime *Time)
 }
 
 
-GSM_Error GSM_Translate_Category (GSM_CatTranslation direction, char *string, GSM_CalendarNoteType *Type)
+GSM_Error GSM_Translate_Category_From_VCal (const char *string, GSM_CalendarNoteType *Type)
 {
 	/* Mozilla has user defined categories. These must be converted to GSM_CAL_xxx types.
 	   TODO: For now we use hardcoded conversions. Should be user configurable. */
 
-	switch (direction) {
-	case TRANSL_TO_GSM:
-		if (strstr(string,"MEETING")) 			*Type = GSM_CAL_MEETING;
-		else if (strstr(string,"REMINDER")) 		*Type = GSM_CAL_REMINDER;
-		else if (strstr(string,"DATE"))	 		*Type = GSM_CAL_REMINDER; /* SE */
-		else if (strstr(string,"TRAVEL"))	 	*Type = GSM_CAL_TRAVEL;   /* SE */
-		else if (strstr(string,"VACATION"))	 	*Type = GSM_CAL_VACATION; /* SE */
-		else if (strstr(string,"MISCELLANEOUS"))	*Type = GSM_CAL_MEMO;
-		else if (strstr(string,"PHONE CALL")) 		*Type = GSM_CAL_CALL;
-		else if (strstr(string,"SPECIAL OCCASION")) 	*Type = GSM_CAL_BIRTHDAY;
-		else if (strstr(string,"ANNIVERSARY")) 		*Type = GSM_CAL_BIRTHDAY;
-		else if (strstr(string,"APPOINTMENT")) 		*Type = GSM_CAL_MEETING;
-		else if (strstr(string,"SHOPPING LIST")) 	*Type = GSM_CAL_SHOPPING;
-		/* These are the Nokia 6230i categories in local language. */
-		else if (strstr(string,"Erinnerung"))	 	*Type = GSM_CAL_REMINDER;
-		else if (strstr(string,"Besprechung"))	 	*Type = GSM_CAL_MEETING;
-		else if (strstr(string,"Anrufen"))	 	*Type = GSM_CAL_CALL;
-		else if (strstr(string,"Geburtstag"))	 	*Type = GSM_CAL_BIRTHDAY;
-		else if (strstr(string,"Notiz"))	 	*Type = GSM_CAL_MEMO;
+	if (strstr(string,"MEETING")) 			*Type = GSM_CAL_MEETING;
+	else if (strstr(string,"REMINDER")) 		*Type = GSM_CAL_REMINDER;
+	else if (strstr(string,"DATE"))	 		*Type = GSM_CAL_REMINDER; /* SE */
+	else if (strstr(string,"TRAVEL"))	 	*Type = GSM_CAL_TRAVEL;   /* SE */
+	else if (strstr(string,"VACATION"))	 	*Type = GSM_CAL_VACATION; /* SE */
+	else if (strstr(string,"MISCELLANEOUS"))	*Type = GSM_CAL_MEMO;
+	else if (strstr(string,"PHONE CALL")) 		*Type = GSM_CAL_CALL;
+	else if (strstr(string,"SPECIAL OCCASION")) 	*Type = GSM_CAL_BIRTHDAY;
+	else if (strstr(string,"ANNIVERSARY")) 		*Type = GSM_CAL_BIRTHDAY;
+	else if (strstr(string,"APPOINTMENT")) 		*Type = GSM_CAL_MEETING;
+	else if (strstr(string,"SHOPPING LIST")) 	*Type = GSM_CAL_SHOPPING;
+	/* These are the Nokia 6230i categories in local language. */
+	else if (strstr(string,"Erinnerung"))	 	*Type = GSM_CAL_REMINDER;
+	else if (strstr(string,"Besprechung"))	 	*Type = GSM_CAL_MEETING;
+	else if (strstr(string,"Anrufen"))	 	*Type = GSM_CAL_CALL;
+	else if (strstr(string,"Geburtstag"))	 	*Type = GSM_CAL_BIRTHDAY;
+	else if (strstr(string,"Notiz"))	 	*Type = GSM_CAL_MEMO;
 
-		else if (strstr(string,"Reminder"))	 	*Type = GSM_CAL_REMINDER;
-		else if (strstr(string,"Meeting"))	 	*Type = GSM_CAL_MEETING;
-		else if (strstr(string,"Call"))		 	*Type = GSM_CAL_CALL;
-		else if (strstr(string,"Birthday"))	 	*Type = GSM_CAL_BIRTHDAY;
-		else if (strstr(string,"Memo"))		 	*Type = GSM_CAL_MEMO;
-		/* default */
-		else *Type = GSM_CAL_MEETING;
-		break;
+	else if (strstr(string,"Reminder"))	 	*Type = GSM_CAL_REMINDER;
+	else if (strstr(string,"Meeting"))	 	*Type = GSM_CAL_MEETING;
+	else if (strstr(string,"Call"))		 	*Type = GSM_CAL_CALL;
+	else if (strstr(string,"Birthday"))	 	*Type = GSM_CAL_BIRTHDAY;
+	else if (strstr(string,"Memo"))		 	*Type = GSM_CAL_MEMO;
+	/* default */
+	else *Type = GSM_CAL_MEETING;
 
-	case TRANSL_TO_VCAL:
-		switch (*Type) {
-			case GSM_CAL_CALL:
-				strcpy(string, "PHONE CALL");
-				break;
-			case GSM_CAL_MEETING:
-				strcpy(string, "MEETING");
-				break;
-			case GSM_CAL_REMINDER:
-				strcpy(string, "DATE");
-				break;
-			case GSM_CAL_TRAVEL:
-				strcpy(string, "TRAVEL");
-				break;
-			case GSM_CAL_VACATION:
-				strcpy(string, "VACATION");
-				break;
-			case GSM_CAL_BIRTHDAY:
-				strcpy(string, "ANNIVERSARY");
-				break;
-			case GSM_CAL_SHOPPING:
-				strcpy(string, "SHOPPING LIST");
-				break;
-			case GSM_CAL_MEMO:
-			default:
-				strcpy(string, "MISCELLANEOUS");
-				break;
-		}
-		break;
+	return ERR_NONE;
+}
+
+GSM_Error GSM_Translate_Category_To_VCal (char *string, const GSM_CalendarNoteType Type)
+{
+	switch (Type) {
+		case GSM_CAL_CALL:
+			strcpy(string, "PHONE CALL");
+			break;
+		case GSM_CAL_MEETING:
+			strcpy(string, "MEETING");
+			break;
+		case GSM_CAL_REMINDER:
+			strcpy(string, "DATE");
+			break;
+		case GSM_CAL_TRAVEL:
+			strcpy(string, "TRAVEL");
+			break;
+		case GSM_CAL_VACATION:
+			strcpy(string, "VACATION");
+			break;
+		case GSM_CAL_BIRTHDAY:
+			strcpy(string, "ANNIVERSARY");
+			break;
+		case GSM_CAL_SHOPPING:
+			strcpy(string, "SHOPPING LIST");
+			break;
+		case GSM_CAL_MEMO:
+		default:
+			strcpy(string, "MISCELLANEOUS");
+			break;
 	}
-	return 0;
+
+	return ERR_NONE;
 }
 
 /**
@@ -859,7 +859,7 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, const size_t buff_len, size_t *Lengt
 	}
 
 	/* Store category */
-	GSM_Translate_Category(TRANSL_TO_VCAL, category, &note->Type);
+	GSM_Translate_Category_To_VCal(category, note->Type);
 	error = VC_StoreLine(Buffer, buff_len, Length,  "CATEGORIES:%s", category);
 	if (error != ERR_NONE) return error;
 
@@ -1120,7 +1120,7 @@ GSM_Error GSM_EncodeVTODO(char *Buffer, const size_t buff_len, size_t *Length, c
 		}
 	}
 	/* Store category */
-	GSM_Translate_Category(TRANSL_TO_VCAL, category, (GSM_CalendarNoteType *)&note->Type);
+	GSM_Translate_Category_To_VCal(category, note->Type);
 	error = VC_StoreLine(Buffer, buff_len, Length,  "CATEGORIES:%s", category);
 	if (error != ERR_NONE) return error;
 
@@ -1837,7 +1837,7 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(GSM_Debug_Info *di, char *Buffer, size_t *Po
 			/* Event type. Must be set correctly to let phone calendar work as expected. For example
 			   without GSM_CAL_MEETING the time part of an event date/time will be dropped. */
 			if (strstr(Line,"CATEGORIES:")) {
-				GSM_Translate_Category(TRANSL_TO_GSM, Line + 11, &Calendar->Type);
+				GSM_Translate_Category_From_VCal(Line + 11, &Calendar->Type);
 				break;
 			}
 
@@ -1949,7 +1949,7 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(GSM_Debug_Info *di, char *Buffer, size_t *Po
 			}
 
 			if (strstr(Line,"CATEGORIES:")) {
-				GSM_Translate_Category(TRANSL_TO_GSM, Line+11, &ToDo->Type);
+				GSM_Translate_Category_From_VCal(Line+11, &ToDo->Type);
 			}
 
 			if (strncmp(Line, "UID:", 4) == 0) {

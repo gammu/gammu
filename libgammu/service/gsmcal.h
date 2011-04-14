@@ -34,11 +34,6 @@ typedef enum {
 	GSM_TimeUnit_Seconds
 } GSM_TimeUnit;
 
-typedef enum {
-	TRANSL_TO_GSM = 1,
-	TRANSL_TO_VCAL,
-} GSM_CatTranslation;
-
 void GSM_GetCalendarRecurranceRepeat(GSM_Debug_Info *di, unsigned char *rec, unsigned char *endday, GSM_CalendarEntry *entry);
 void GSM_SetCalendarRecurranceRepeat(GSM_Debug_Info *di, unsigned char *rec, unsigned char *endday, GSM_CalendarEntry *entry);
 
