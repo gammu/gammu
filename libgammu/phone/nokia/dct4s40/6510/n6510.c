@@ -4199,7 +4199,7 @@ GSM_Error DCT4_Screenshot(GSM_StateMachine *s, GSM_BinaryPicture *picture)
 				0, 0, 0, 0, /* blue gamma */
 	};
 	GSM_Error error;
-	int32_t tmp;
+	int tmp;
 
 	/* Get screen size */
 	error = GSM_WaitFor(s, req_screen, 6, 0x0E, 4, ID_GetScreenSize);
