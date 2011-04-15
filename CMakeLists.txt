@@ -194,19 +194,23 @@ if (BUILD_PYTHON)
     set (PYTHON_EXECUTABLE ${BUILD_PYTHON})
     execute_process(
         COMMAND
-            ${PYTHON_EXECUTABLE} -c "import distutils.sysconfig; print(distutils.sysconfig.get_python_inc())"
-        OUTPUT_VARIABLE PYTHON_INCLUDE_PATH
-        OUTPUT_STRIP_TRAILING_WHITESPACE
-        )
-    execute_process(
-        COMMAND
             ${PYTHON_EXECUTABLE} -c "import sys; print('.'.join([str(x) for x in sys.version_info[:2]]))"
         OUTPUT_VARIABLE PYTHON_VERSION
         OUTPUT_STRIP_TRAILING_WHITESPACE
         )
-    message (STATUS "Compiling for Python ${PYTHON_VERSION}")
+    if("${PYTHON_VERSION}" STREQUAL "")
+        message(FATAL_ERROR "Failed to execute defined Python: ${BUILD_PYTHON}")
+    endif("${PYTHON_VERSION}" STREQUAL "")
 
-    string (REPLACE "." "" PYTHON_VERSION_NO_DOTS ${PYTHON_VERSION})
+    message (STATUS "Compiling for Python ${PYTHON_VERSION}")
+    execute_process(
+        COMMAND
+            ${PYTHON_EXECUTABLE} -c "import distutils.sysconfig; print(distutils.sysconfig.get_python_inc())"
+        OUTPUT_VARIABLE PYTHON_INCLUDE_PATH
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+        )
+
+    string (REPLACE "." "" PYTHON_VERSION_NO_DOTS "${PYTHON_VERSION}")
     find_library (PYTHON_LIBRARY
         NAMES python${PYTHON_VERSION_NO_DOTS} python${PYTHON_VERSION}
         PATHS
