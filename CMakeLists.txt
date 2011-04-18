@@ -21,7 +21,10 @@ if(COMMAND cmake_policy)
     cmake_policy(SET CMP0003 NEW)
 endif(COMMAND cmake_policy)
 
-option (COVERAGE "Add flags for Coverage analysis" OFF)
+if (NOT CLANG_COMPILER)
+    option (COVERAGE "Add flags for Coverage analysis" OFF)
+endif (NOT CLANG_COMPILER)
+
 option (ONLINE_TESTING "Enable testing of parts which use remote servers" OFF)
 option (PSQL_TESTING "Enable testing of PostgreSQL SMSD backend" OFF)
 option (MYSQL_TESTING "Enable testing of MySQL SMSD backend" OFF)
@@ -519,9 +522,11 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_MINGW OR
     endif (WIN32 AND NOT CYGWIN)
 
     # Win32 implementation of gettext does not allow us to use so strict warnings
-    if (COVERAGE)
-        MACRO_TUNE_COMPILER_LINKER("-fprofile-arcs -ftest-coverage")
-    endif (COVERAGE)
+    if (NOT CLANG_COMPILER)
+        if (COVERAGE)
+            MACRO_TUNE_COMPILER_LINKER("-fprofile-arcs -ftest-coverage")
+        endif (COVERAGE)
+    endif (NOT CLANG_COMPILER)
 
     # This is extremely noisy, use only in debug builds
     if (DEBUG)
