@@ -2055,7 +2055,7 @@ msgstr "Nenhuma configuração lida, usando padrões da compilação!"
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
 msgstr ""
-"Versão da libGammu.so instalada (%s) é diferente da versão do Gammu (%s) "
+"Versão da libGammu.so instalada (%s) é diferente da versão do Gammu (%s)\n"
 
 #: gammu/memory.c:80
 msgid ""
