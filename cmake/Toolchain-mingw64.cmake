@@ -6,6 +6,7 @@ SET(CMAKE_SYSTEM_NAME Windows)
 # which compilers to use for C and C++
 SET(CMAKE_C_COMPILER x86_64-w64-mingw32-gcc)
 SET(CMAKE_CXX_COMPILER x86_64-w64-mingw32-g++)
+SET(CMAKE_RC_COMPILER x86_64-w64-mingw32-windres)
 SET(CMAKE_AR x86_64-w64-mingw32-ar)
 SET(CMAKE_LD x86_64-w64-mingw32-ld)
 SET(CMAKE_NM x86_64-w64-mingw32-nm)
