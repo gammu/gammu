@@ -521,7 +521,7 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_MINGW OR
         MACRO_TUNE_COMPILER("-Wno-format-security")
     endif (WIN32 AND NOT CYGWIN)
 
-    # Win32 implementation of gettext does not allow us to use so strict warnings
+    # Enable coverage if requested
     if (NOT CLANG_COMPILER)
         if (COVERAGE)
             MACRO_TUNE_COMPILER_LINKER("-fprofile-arcs -ftest-coverage")
