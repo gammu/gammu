@@ -3985,6 +3985,10 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 
 		return ERR_UNKNOWNRESPONSE;
 	case AT_Reply_CMEError:
+		if (Priv->ErrorCode == 100)
+			return ERR_EMPTY;
+		if (Priv->ErrorCode == 3)
+			return ERR_INVALIDLOCATION;
 		error = ATGEN_HandleCMEError(s);
 		if (error == ERR_MEMORY) {
 			smprintf(s, "Assuming that memory error means empty entry\n");
