@@ -1512,6 +1512,7 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config)
 		Config->retries = 0;
 		strcpy(Config->prevSMSID, Config->SMSID);
 	}
+
 	for (i = 0; i < sms.Number; i++) {
 		if (sms.SMS[i].SMSC.Location == 0 && UnicodeLength(sms.SMS[i].SMSC.Number) == 0) {
 			SMSD_Log(DEBUG_INFO, Config, "Message without SMSC, assuming you want to use the one from phone");
