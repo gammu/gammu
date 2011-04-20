@@ -5561,15 +5561,15 @@ GSM_Error ATGEN_ReplyCheckProt(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 				 * Level 1 is almost useless, require
 				 * higher levels.
 				 */
-				if (protocol_level > 1 &&
-						strcmp(protocol_version, "1.2") == 0 &&
-						strcmp(protocol_version, "1.3") == 0 &&
-						!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NO_ATOBEX) &&
-						!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_OBEX)
-						) {
-					/* As AT+OBEX has automatic fallback we can try to enable OBEX here. */
-					smprintf(s, "Automatically enabling F_OBEX, please report bug if it causes problems\n");
-					GSM_AddPhoneFeature(s->Phone.Data.ModelInfo, F_OBEX);
+				if (protocol_level > 1 && strcmp(protocol_version, "1.2") == 0 && strcmp(protocol_version, "1.3") == 0) {
+
+					if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NO_ATOBEX) &&
+							!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_OBEX)
+							) {
+						/* As AT+OBEX has automatic fallback we can try to enable OBEX here. */
+						smprintf(s, "Automatically enabling F_OBEX, please report bug if it causes problems\n");
+						GSM_AddPhoneFeature(s->Phone.Data.ModelInfo, F_OBEX);
+					}
 					GSM_AddPhoneFeature(s->Phone.Data.ModelInfo, F_CPROT);
 				}
 			}
