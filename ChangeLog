@@ -29,6 +29,7 @@ ChangeLog
 [-] * Add option to override which SQL dialect to use in SMSD (bug #1427).
 [-] * Improved m-obex protocol support, thanks to Vladimir Serbinenko.
 [-] * Various fixes for Samsung B2100, thanks to Vladimir Serbinenko.
+[-] * Fix check for AT+CPROT support (bug #1438).
     
 20110315 - 1.29.92
 
