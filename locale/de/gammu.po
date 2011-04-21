@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.29.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-04-21 14:32+0200\n"
+"POT-Creation-Date: 2011-04-21 14:35+0200\n"
 "PO-Revision-Date: 2011-03-12 16:43+0200\n"
-"Last-Translator:  <mynetx@gmx.de>\n"
+"Last-Translator: <mynetx@gmx.de>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -1517,9 +1517,9 @@ msgid "Disables scanning of Windows serial ports."
 msgstr "Scannen der seriellen Schnittstellen deaktivieren"
 
 #: gammu-detect/main.c:71
-#, fuzzy, c-format
+#, c-format
 msgid "Gammu-detect version %s"
-msgstr "Gammu-Version"
+msgstr "Gammu-Version %s"
 
 #: gammu-detect/main.c:73
 #, c-format
@@ -1532,11 +1532,11 @@ msgstr "Eincompilierte Features:"
 
 #: gammu-detect/main.c:78
 msgid "udev probing"
-msgstr ""
+msgstr "Udev-Probing"
 
 #: gammu-detect/main.c:81
 msgid "Bluez probing"
-msgstr ""
+msgstr "Bluez-Probing"
 
 #: gammu-detect/main.c:84
 msgid "Windows serial port probing"

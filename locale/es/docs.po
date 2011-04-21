@@ -101,8 +101,8 @@ msgstr "Ayudar a los desarrolladores"
 #: README:36
 msgid "You can appreciate developers work at <http://wammu.eu/donate/>."
 msgstr ""
-"Puedes mostrar tu aprecio por el trabajo de los desarrolladores en "
-"<http://wammu.eu/donate/>."
+"Puedes mostrar tu aprecio por el trabajo de los desarrolladores en <http://"
+"wammu.eu/donate/>."
 
 #. type: Title =
 #: INSTALL:2

@@ -103,44 +103,36 @@ msgid ""
 "\"Compiling Gammu\" in The Gammu Manual."
 msgstr ""
 
-#, fuzzy
 #~ msgid "Gammu Configuration File"
 #~ msgstr "Puhelimen tiedot"
 
-#, fuzzy
 #~ msgid ".. config:section"
 #~ msgstr "Puhelimen tiedot"
 
-#, fuzzy
 #~ msgid ".. config:option"
 #~ msgstr "Puhelimen tiedot"
 
-#, fuzzy
 #~ msgid "Connection"
 #~ msgstr "Puhelimen tiedot"
 
 #~ msgid "Device"
 #~ msgstr "Laite"
 
-#, fuzzy
 #~ msgid "Port"
 #~ msgstr "Tärkeys"
 
 #~ msgid "Model"
 #~ msgstr "Malli"
 
-#, fuzzy
 #~ msgid "errors in text format\n"
 #~ msgstr "Puhelimen tiedot"
 
-#, fuzzy
 #~ msgid "0x01: Call Information\n"
 #~ msgstr "Puhelimen tiedot"
 
 #~ msgid "Note:"
 #~ msgstr "Huomautus:"
 
-#, fuzzy
 #~ msgid "Get organizer information"
 #~ msgstr "Puhelimen tiedot"
 
@@ -156,11 +148,9 @@ msgstr ""
 #~ msgid "Read"
 #~ msgstr "Luettu"
 
-#, fuzzy
 #~ msgid "Phone connected to PC"
 #~ msgstr "Puhelimen tiedot"
 
-#, fuzzy
 #~ msgid "Initiation"
 #~ msgstr "Puhelimen tiedot"
 
@@ -170,27 +160,21 @@ msgstr ""
 #~ msgid "Connected"
 #~ msgstr "Yhdistetty"
 
-#, fuzzy
 #~ msgid "Disconnected"
 #~ msgstr "Puhelimen tiedot"
 
-#, fuzzy
 #~ msgid "Phone connected to CARC91"
 #~ msgstr "Puhelimen tiedot"
 
-#, fuzzy
 #~ msgid "where location:\n"
 #~ msgstr "Puhelimen tiedot"
 
-#, fuzzy
 #~ msgid "get configuration pins"
 #~ msgstr "Puhelimen tiedot"
 
-#, fuzzy
 #~ msgid "Configurable queries"
 #~ msgstr "Puhelimen tiedot"
 
-#, fuzzy
 #~ msgid "SMSD Configuration File"
 #~ msgstr "Puhelimen tiedot"
 
@@ -200,45 +184,36 @@ msgstr ""
 #~ msgid "Password"
 #~ msgstr "Salasana"
 
-#, fuzzy
 #~ msgid "Try to connect to phone if not connected."
 #~ msgstr "Puhelimen tiedot"
 
-#, fuzzy
 #~ msgid "name of configuration file"
 #~ msgstr "Puhelimen tiedot"
 
 #~ msgid "Unicode"
 #~ msgstr "Unicode"
 
-#, fuzzy
 #~ msgid "save to specified folder."
 #~ msgstr "Tiedostoa ei voi luoda!"
 
-#, fuzzy
 #~ msgid "-animation"
 #~ msgstr "Puhelimen tiedot"
 
-#, fuzzy
 #~ msgid "Ringtones commands"
 #~ msgstr "Luetaan tehtäviä"
 
-#, fuzzy
 #~ msgid "getringtoneslist"
 #~ msgstr "Luetaan tehtäviä"
 
-#, fuzzy
 #~ msgid "user ringtones"
 #~ msgstr "Luetaan tehtäviä"
 
-#, fuzzy
 #~ msgid "Phone information commands"
 #~ msgstr "Puhelimen tiedot"
 
 #~ msgid "battery"
 #~ msgstr "akku"
 
-#, fuzzy
 #~ msgid "Phone settings commands"
 #~ msgstr "Puhelimen tiedot"
 
@@ -248,19 +223,15 @@ msgstr ""
 #~ msgid "Down"
 #~ msgstr "Alas"
 
-#, fuzzy
 #~ msgid "Configuration commands"
 #~ msgstr "Puhelimen tiedot"
 
-#, fuzzy
 #~ msgid "Configuration"
 #~ msgstr "Puhelimen tiedot"
 
-#, fuzzy
 #~ msgid "motivation"
 #~ msgstr "Puhelimen tiedot"
 
-#, fuzzy
 #~ msgid ".."
 #~ msgstr "..."
 
@@ -297,11 +268,9 @@ msgstr ""
 #~ msgid "State"
 #~ msgstr "Tila"
 
-#, fuzzy
 #~ msgid "``NokiaRingtone``"
 #~ msgstr "Luetaan tehtäviä"
 
-#, fuzzy
 #~ msgid "Name of the SMSC configuration"
 #~ msgstr "Puhelimen tiedot"
 
@@ -311,7 +280,6 @@ msgstr ""
 #~ msgid "Left"
 #~ msgstr "Vasen"
 
-#, fuzzy
 #~ msgid "Text formatting"
 #~ msgstr "Puhelimen tiedot"
 
@@ -339,7 +307,6 @@ msgstr ""
 #~ msgid "Strikethrough"
 #~ msgstr "Yliviivaus"
 
-#, fuzzy
 #~ msgid "Ringtone"
 #~ msgstr "Luetaan tehtäviä"
 
@@ -352,86 +319,66 @@ msgstr ""
 #~ msgid "Value"
 #~ msgstr "Arvo"
 
-#, fuzzy
 #~ msgid "      Gets network information.\n"
 #~ msgstr "Puhelimen tiedot"
 
-#, fuzzy
 #~ msgid "Get version information."
 #~ msgstr "Puhelimen tiedot"
 
-#, fuzzy
 #~ msgid "Debugging configuration"
 #~ msgstr "Puhelimen tiedot"
 
-#, fuzzy
 #~ msgid "Call"
 #~ msgstr "Puhelut"
 
-#, fuzzy
 #~ msgid "GSM_Call"
 #~ msgstr "Puhelut"
 
-#, fuzzy
 #~ msgid "Getting phone information"
 #~ msgstr "Puhelimen tiedot"
 
-#, fuzzy
 #~ msgid "Custom configuration"
 #~ msgstr "Puhelimen tiedot"
 
-#, fuzzy
 #~ msgid "Callback"
 #~ msgstr "Puhelut"
 
-#, fuzzy
 #~ msgid "GSM_GetRingtone"
 #~ msgstr "Luetaan tehtäviä"
 
-#, fuzzy
 #~ msgid "GSM_SetRingtone"
 #~ msgstr "Luetaan tehtäviä"
 
-#, fuzzy
 #~ msgid "GSM_GetRingtonesInfo"
 #~ msgstr "Luetaan tehtäviä"
 
-#, fuzzy
 #~ msgid "GSM_NoteRingtone"
 #~ msgstr "Luetaan tehtäviä"
 
-#, fuzzy
 #~ msgid "GSM_Ringtone"
 #~ msgstr "Luetaan tehtäviä"
 
-#, fuzzy
 #~ msgid "GSM_RingtoneInfo"
 #~ msgstr "Luetaan tehtäviä"
 
-#, fuzzy
 #~ msgid "GSM_AllRingtonesInfo"
 #~ msgstr "Luetaan tehtäviä"
 
-#, fuzzy
 #~ msgid "Show version information and compiled in features."
 #~ msgstr "Puhelimen tiedot"
 
-#, fuzzy
 #~ msgid "Error writing to the device."
 #~ msgstr "Yhdistä laite"
 
-#, fuzzy
 #~ msgid "Can't set parity on the device."
 #~ msgstr "Yhdistä laite"
 
-#, fuzzy
 #~ msgid ""
 #~ "Functionality not implemented. You are welcome to help authors with it."
 #~ msgstr ""
 #~ "Tämä toiminne ei ole puhelintasi varten. Jos haluat apua välineen kanssa, "
 #~ "ole hyvä ja ota yhteyttä ohjelman tekijään."
 
-#, fuzzy
 #~ msgid ""
 #~ "Function is currently being implemented. If you want to help, please "
 #~ "contact authors."
@@ -439,23 +386,18 @@ msgstr ""
 #~ "Tämä toiminne ei ole puhelintasi varten. Jos haluat apua välineen kanssa, "
 #~ "ole hyvä ja ota yhteyttä ohjelman tekijään."
 
-#, fuzzy
 #~ msgid "Service configuration is missing."
 #~ msgstr "Asetuksia ei löytynyt"
 
-#, fuzzy
 #~ msgid "Could not connect to the server."
 #~ msgstr "Yhdistetään IMAP palvelimeen..."
 
-#, fuzzy
 #~ msgid "Could not resolve the host name."
 #~ msgstr "Tallennettua viestiä ei pysty avaamaan!"
 
-#, fuzzy
 #~ msgid "Configuration\n"
 #~ msgstr "Puhelimen tiedot"
 
-#, fuzzy
 #~ msgid ""
 #~ "Configuration\n"
 #~ "=============\n"

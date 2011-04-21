@@ -35638,8 +35638,6 @@ msgstr ""
 "device = B0:0B:00:00:FA:CE/42\n"
 "connection = blueat\n"
 
-# type: Plain text
-#, fuzzy
 #~ msgid ""
 #~ "7\n"
 #~ "    added CreatorID to tables (it holds PhoneID if set)\n"
