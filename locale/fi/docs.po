@@ -83,7 +83,7 @@ msgstr ""
 #: README:34
 #, no-wrap
 msgid "Support developers"
-msgstr ""
+msgstr "Tue tekijöitä"
 
 #. type: Plain text
 #: README:36
