@@ -4,9 +4,9 @@
 # Automatically generated, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu 1.29.92\n"
+"Project-Id-Version: Gammu 1.29.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-02-24 16:32+0100\n"
+"POT-Creation-Date: 2011-04-21 14:32+0200\n"
 "PO-Revision-Date: 2010-12-18 15:54+0200\n"
 "Last-Translator: <webmaster_xp3000@yahoo.com>\n"
 "Language-Team: none\n"
@@ -1521,7 +1521,7 @@ msgstr "Versi Gammu"
 msgid "Built %s on %s using %s"
 msgstr "[Versi Gammu %s dibangun %s pada %s menggunakan %s]"
 
-#: gammu-detect/main.c:76 gammu/gammu.c:114
+#: gammu-detect/main.c:76 gammu/gammu.c:100
 msgid "Compiled in features:"
 msgstr "Dikompilasi dalam fitur:"
 
@@ -1545,7 +1545,7 @@ msgstr ""
 "Copyright (C) 2003 - 2009 Michal Cihar <michal@cihar.com> dan penulis "
 "lainnya."
 
-#: gammu-detect/main.c:89 gammu/gammu.c:345
+#: gammu-detect/main.c:89 gammu/gammu.c:331
 msgid ""
 "License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
 "GPL/2.0/>."
@@ -1553,17 +1553,17 @@ msgstr ""
 "License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
 "GPL/2.0/>."
 
-#: gammu-detect/main.c:90 gammu/gammu.c:347
+#: gammu-detect/main.c:90 gammu/gammu.c:333
 msgid "This is free software: you are free to change and redistribute it."
 msgstr ""
 "Ini adalah perangkat lunak bebas: anda bebas untuk mengubah dan "
 "mendistribusikannya."
 
-#: gammu-detect/main.c:91 gammu/gammu.c:349
+#: gammu-detect/main.c:91 gammu/gammu.c:335
 msgid "There is NO WARRANTY, to the extent permitted by law."
 msgstr "TIDAK ADA JAMINAN, sampai batas-batas yang diijinkan oleh hukum. "
 
-#: gammu-detect/main.c:93 gammu/gammu.c:353
+#: gammu-detect/main.c:93 gammu/gammu.c:339
 msgid "Check <http://wammu.eu/gammu/> for updates."
 msgstr "Cek <http://wammu.eu/gammu/> untuk pembaharuan."
 
@@ -1762,83 +1762,84 @@ msgstr "ID file baru adalah \"%s\"\n"
 msgid "ID of new folder is \"%s\"\n"
 msgstr "ID folder baru adalah \"%s\"\n"
 
-#: gammu/gammu.c:73
+#: gammu/gammu.c:69
 #, c-format
 msgid "Networks for %s:"
 msgstr "Jaringan untuk %s:"
 
-#: gammu/gammu.c:81
+#: gammu/gammu.c:75
 #, c-format
 msgid "Unknown country name: %s."
 msgstr "Nama negara tidak diketahui: %s."
 
-#: gammu/gammu.c:86 gammu/gammu.c:736 gammu/misc.c:48
+#: gammu/gammu.c:80 gammu/gammu.c:722 gammu/misc.c:48
 msgid "Network"
 msgstr "Jaringan"
 
-#: gammu/gammu.c:86 gammu/message.c:218 gammu/misc.c:968 gammu/misc.c:1135
+#: gammu/gammu.c:80 gammu/message.c:218 gammu/misc.c:968 gammu/misc.c:1135
 #: gammu/misc.c:1872 gammu/misc.c:1911 gammu/misc.c:2206 gammu/mms.c:112
 #: helper/memory-display.c:217 helper/message-display.c:237
 msgid "Name"
 msgstr "Nama"
 
-#: gammu/gammu.c:105
+#: gammu/gammu.c:91
 #, c-format
 msgid "[Gammu version %s built %s on %s using %s]"
 msgstr "[Versi Gammu %s dibangun %s pada %s menggunakan %s]"
 
-#: gammu/gammu.c:116
+#: gammu/gammu.c:102
 msgid "Protocols"
 msgstr "Protokol"
 
-#: gammu/gammu.c:184
+#: gammu/gammu.c:170
 msgid "Phones"
 msgstr "Telepon"
 
-#: gammu/gammu.c:229
+#: gammu/gammu.c:215
 msgid "Miscellaneous"
 msgstr "Miscellaneous"
 
-#: gammu/gammu.c:310
+#: gammu/gammu.c:296
 #, c-format
 msgid "There is newer stable Gammu version available! (%s instead of %s)\n"
 msgstr "Telah tersedia versi stabil Gammu terbaru!(%s selain dari %s)\n"
 
-#: gammu/gammu.c:328
+#: gammu/gammu.c:314
 #, c-format
 msgid "There is newer testing Gammu version available! (%s instead of %s)\n"
 msgstr "Telah tersedia versi pengujian Gammu terbaru!(%s selain dari %s)\n"
 
-#: gammu/gammu.c:341
+#: gammu/gammu.c:327
+#, fuzzy
 msgid ""
-"Copyright (C) 2003 - 2010 Michal Cihar <michal@cihar.com> and other authors."
+"Copyright (C) 2003 - 2011 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
 "Copyright (C) 2003 - 2010 Michal Cihar <michal@cihar.com> dan penulis "
 "lainnya."
 
-#: gammu/gammu.c:379
+#: gammu/gammu.c:365
 msgid "standard input"
 msgstr "masukan standar"
 
-#: gammu/gammu.c:390
+#: gammu/gammu.c:376
 #, c-format
 msgid "Batch file could not be opened: %s\n"
 msgstr "File batch tidak dapat dibuka: %s\n"
 
-#: gammu/gammu.c:401
+#: gammu/gammu.c:387
 msgid "Error reading batch! Terminating.\n"
 msgstr "Kesalahan membaca batch! Menghentikan.\n"
 
-#: gammu/gammu.c:403
+#: gammu/gammu.c:389
 msgid "Batch processed, terminating.\n"
 msgstr "Batch diproses, terminating.\n"
 
-#: gammu/gammu.c:440
+#: gammu/gammu.c:426
 #, c-format
 msgid "Executing batch \"%s\" - command %i: %s\n"
 msgstr "Eksekusi batch \"%s\" - perintah %i: %s\n"
 
-#: gammu/gammu.c:463
+#: gammu/gammu.c:449
 msgid ""
 "SMS daemon is now in separate binary, please use gammu-smsd-inject instead "
 "of gammu sendsmsdsms!"
@@ -1846,7 +1847,7 @@ msgstr ""
 "SMS daemon sekarang telah dipisahkan, silahkan gunakan gammu-smsd-inject "
 "bukan gammu sendsmsdsms!"
 
-#: gammu/gammu.c:470
+#: gammu/gammu.c:456
 msgid ""
 "SMS daemon is now in separate binary, please use gammu-smsd instead of gammu "
 "smsd!"
@@ -1854,118 +1855,118 @@ msgstr ""
 "SMS daemon sekarang telah dipisahkan, silahkan gunakan gammu-smsd bukan "
 "gammu smsd!"
 
-#: gammu/gammu.c:716
+#: gammu/gammu.c:702
 msgid "Calls"
 msgstr "Panggilan"
 
-#: gammu/gammu.c:717
+#: gammu/gammu.c:703
 msgid "SMS and EMS"
 msgstr "SMS dan EMS"
 
-#: gammu/gammu.c:718
+#: gammu/gammu.c:704
 msgid "Memory (phonebooks and calls)"
 msgstr "Memori (buku telepon dan panggilan)"
 
-#: gammu/gammu.c:719
+#: gammu/gammu.c:705
 msgid "Filesystem"
 msgstr "File sistem"
 
-#: gammu/gammu.c:720
+#: gammu/gammu.c:706
 msgid "Logo and pictures"
 msgstr "Logo dan gambar"
 
-#: gammu/gammu.c:721
+#: gammu/gammu.c:707
 msgid "Ringtones"
 msgstr "Nada dering"
 
-#: gammu/gammu.c:722
+#: gammu/gammu.c:708
 msgid "Calendar notes"
 msgstr "Catatan kalender"
 
-#: gammu/gammu.c:723
+#: gammu/gammu.c:709
 msgid "To do lists"
 msgstr "List pengerjaan"
 
-#: gammu/gammu.c:724
+#: gammu/gammu.c:710
 msgid "Notes"
 msgstr "Catatan"
 
-#: gammu/gammu.c:725
+#: gammu/gammu.c:711
 msgid "Date, time and alarms"
 msgstr "Tanggal, waktu dan alarm"
 
-#: gammu/gammu.c:726
+#: gammu/gammu.c:712
 msgid "Categories"
 msgstr "Kategori"
 
-#: gammu/gammu.c:728
+#: gammu/gammu.c:714
 msgid "Backing up and restoring"
 msgstr "Backing up dan restoring"
 
-#: gammu/gammu.c:731
+#: gammu/gammu.c:717
 msgid "Nokia specific"
 msgstr "Spesifik Nokia"
 
-#: gammu/gammu.c:734
+#: gammu/gammu.c:720
 msgid "Siemens specific"
 msgstr "Spesifik Siemens"
 
-#: gammu/gammu.c:737
+#: gammu/gammu.c:723
 msgid "WAP settings and bookmarks"
 msgstr "Pengaturan WAP dan bookmark"
 
-#: gammu/gammu.c:738
+#: gammu/gammu.c:724
 msgid "MMS and MMS settings"
 msgstr "MMS dan pengaturan MMS"
 
-#: gammu/gammu.c:739
+#: gammu/gammu.c:725
 msgid "Phone tests"
 msgstr "Tes telepon"
 
-#: gammu/gammu.c:740
+#: gammu/gammu.c:726
 msgid "FM radio"
 msgstr "Radio FM"
 
-#: gammu/gammu.c:741
+#: gammu/gammu.c:727
 msgid "Phone information"
 msgstr "Informasi telepon"
 
-#: gammu/gammu.c:742
+#: gammu/gammu.c:728
 msgid "Phone settings"
 msgstr "Pengaturan telepon"
 
-#: gammu/gammu.c:744
+#: gammu/gammu.c:730
 msgid "Dumps decoding"
 msgstr "Tumpukan sedang didecode"
 
-#: gammu/gammu.c:746
+#: gammu/gammu.c:732
 msgid "Functions that don't fit elsewhere"
 msgstr "Fungsi yang tidak sesuai dimana pun"
 
-#: gammu/gammu.c:747
+#: gammu/gammu.c:733
 msgid "Gammu information"
 msgstr "Informasi gammu"
 
-#: gammu/gammu.c:763
+#: gammu/gammu.c:749
 msgid "Usage: gammu [parameters] <command> [options]"
 msgstr "Penggunaan: gammu [parameter] <command> [opsi]"
 
 # type: Plain text
-#: gammu/gammu.c:764
+#: gammu/gammu.c:750
 msgid "Parameters before command configure gammu behaviour:"
 msgstr "Parameter sebelum perintah mengkonfigurasi perilaku gammu:"
 
-#: gammu/gammu.c:765
+#: gammu/gammu.c:751
 msgid "-c / --config <filename> ... name of configuration file"
 msgstr "-c / --config <namafile> ... nama file konfigurasi"
 
-#: gammu/gammu.c:766
+#: gammu/gammu.c:752
 msgid "-s / --section <confign> ... section of config file to use, eg. 42"
 msgstr ""
 "-s / --section <confign> ... bagian dari file config yang akan digunakan, "
 "contoh 42"
 
-#: gammu/gammu.c:767
+#: gammu/gammu.c:753
 msgid ""
 "-d / --debug <level> ... debug level (nothing|text|textall|textalldate|"
 "binary|errors)"
@@ -1973,15 +1974,15 @@ msgstr ""
 "-d / --debug <level> ... debug level (nothing|text|textall|textalldate|"
 "binary|errors)"
 
-#: gammu/gammu.c:768
+#: gammu/gammu.c:754
 msgid "-f / --debug-file <filename> ... file for logging debug messages"
 msgstr "-f / --debug-file <filename> ... file untuk mencatat pesan kesalahan"
 
-#: gammu/gammu.c:770
+#: gammu/gammu.c:756
 msgid "Commands can be specified with or without leading --."
 msgstr "Perintah dapat diikuti dengan atau tanpa awalan --"
 
-#: gammu/gammu.c:773
+#: gammu/gammu.c:759
 msgid ""
 "For more details, call help on specific topic (gammu --help topic). Topics "
 "are:"
@@ -1989,11 +1990,11 @@ msgstr ""
 "Untuk lebih jelasnya, panggil bantuan pada topik yang spesifik (gammu --"
 "topik bantuan). Topiknya adalah:"
 
-#: gammu/gammu.c:871
+#: gammu/gammu.c:857
 msgid "Unknown help topic specified!"
 msgstr "Topik bantuan tidak dikenali"
 
-#: gammu/gammu.c:875
+#: gammu/gammu.c:861
 #, c-format
 msgid ""
 "Gammu commands, topic: %s\n"
@@ -2002,60 +2003,60 @@ msgstr ""
 "Perintah Gammu, topik: %s\n"
 "\n"
 
-#: gammu/gammu.c:966
+#: gammu/gammu.c:952
 #, c-format
 msgid "More parameters required (function requires %d)\n"
 msgstr "Dibutuhkan lebih banyak dibutukan (fungsi dibutuhkan %d)\n"
 
-#: gammu/gammu.c:969
+#: gammu/gammu.c:955
 #, c-format
 msgid "More parameters required (function requires %d to %d)\n"
 msgstr "Dibutuhkan lebih banyak dibutukan (fungsi dibutuhkan %d hingga %d)\n"
 
-#: gammu/gammu.c:975 gammu/gammu.c:996
+#: gammu/gammu.c:961 gammu/gammu.c:982
 msgid "Parameters help"
 msgstr "Parameter bantuan"
 
-#: gammu/gammu.c:987
+#: gammu/gammu.c:973
 #, c-format
 msgid "Too many parameters (function accepts %d)\n"
 msgstr "Terlalu banyak parameter (Fungsi menerima %d)\n"
 
-#: gammu/gammu.c:990
+#: gammu/gammu.c:976
 #, c-format
 msgid "Too many parameters (function accepts %d to %d)\n"
 msgstr "Terlalu banyak parameter (Fungsi menerima %d hingga %d)\n"
 
-#: gammu/gammu.c:1017
+#: gammu/gammu.c:1003
 msgid "Bad option!"
 msgstr "Pilihan buruk!"
 
-#: gammu/gammu.c:1098
+#: gammu/gammu.c:1084
 msgid "Configuration could not be parsed!"
 msgstr "Konfigurasi tidak dapat diolah"
 
-#: gammu/gammu.c:1100
+#: gammu/gammu.c:1086
 msgid "No configuration file found!"
 msgstr "File konfigurasi tidak ditemukan"
 
-#: gammu/gammu.c:1120
+#: gammu/gammu.c:1106
 msgid "Failed to allocate memory, aborting!\n"
 msgstr "Gagal mengalokasikan memori, diabaikan!\n"
 
-#: gammu/gammu.c:1151
+#: gammu/gammu.c:1137
 msgid "Too few parameters!"
 msgstr "Parameter terlalu sedikit!"
 
-#: gammu/gammu.c:1164
+#: gammu/gammu.c:1150
 #, c-format
 msgid "Failed to read [gammu%d] section from configuration file (gammurc)!\n"
 msgstr "Gagal membaca bagian [gammu%d] dari file konfigurasi (gammurc)!\n"
 
-#: gammu/gammu.c:1166 gammu/gammu.c:1177
+#: gammu/gammu.c:1152 gammu/gammu.c:1163
 msgid "No configuration read, using builtin defaults!"
 msgstr "Konfigurasi tidak terbaca, menggunakan konfigurasi awal"
 
-#: gammu/gammu.c:1216
+#: gammu/gammu.c:1202
 #, fuzzy, c-format
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
@@ -3544,12 +3545,12 @@ msgstr ""
 msgid "Error creating thread\n"
 msgstr ""
 
-#: helper/cmdline.c:23
+#: helper/cmdline.c:26
 #, c-format
 msgid "Number out of range: %s\n"
 msgstr ""
 
-#: helper/cmdline.c:28
+#: helper/cmdline.c:31
 #, fuzzy, c-format
 msgid "Parameter is not a number: %s\n"
 msgstr "Parameter \"%s\" tidak diketahui\n"

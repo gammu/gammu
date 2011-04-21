@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libGammu 1.29.92\n"
+"Project-Id-Version: libGammu 1.29.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-02-24 16:19+0100\n"
+"POT-Creation-Date: 2011-04-21 14:32+0200\n"
 "PO-Revision-Date: 2011-02-23 17:03+0100\n"
 "Last-Translator: Pavlína Raszyková <pavlina.raszykova@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -346,7 +346,7 @@ msgstr "Záznam je jen pro čtení."
 msgid "Unknown error description."
 msgstr "Neznámý popis chyby."
 
-#: libgammu/phone/dummy/dummy.c:588
+#: libgammu/phone/dummy/dummy.c:603
 msgid "Templates"
 msgstr "Šablony"
 

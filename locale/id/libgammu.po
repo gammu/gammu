@@ -4,9 +4,9 @@
 # Automatically generated, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: libGammu 1.29.92\n"
+"Project-Id-Version: libGammu 1.29.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-02-24 16:19+0100\n"
+"POT-Creation-Date: 2011-04-21 14:32+0200\n"
 "PO-Revision-Date: 2010-03-17 17:52+0200\n"
 "Last-Translator: Azhari Harahap <azhari.harahap@yahoo.com>\n"
 "Language-Team: none\n"
@@ -352,7 +352,7 @@ msgstr "Masukan kosong."
 msgid "Unknown error description."
 msgstr "Deskripsi kesalahan tidak diketahui."
 
-#: libgammu/phone/dummy/dummy.c:588
+#: libgammu/phone/dummy/dummy.c:603
 msgid "Templates"
 msgstr "Template-template"
 

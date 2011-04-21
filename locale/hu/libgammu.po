@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-02-24 16:19+0100\n"
+"POT-Creation-Date: 2011-04-21 14:32+0200\n"
 "PO-Revision-Date: 2010-02-27 17:42+0200\n"
 "Last-Translator: <doi@freemail.hu>\n"
 "Language-Team: none\n"
@@ -346,7 +346,7 @@ msgstr "Bejegyzés létrehozva."
 msgid "Unknown error description."
 msgstr ""
 
-#: libgammu/phone/dummy/dummy.c:588
+#: libgammu/phone/dummy/dummy.c:603
 msgid "Templates"
 msgstr ""
 

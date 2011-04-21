@@ -6,9 +6,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libGammu 1.29.92\n"
+"Project-Id-Version: libGammu 1.29.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-02-24 16:19+0100\n"
+"POT-Creation-Date: 2011-04-21 14:32+0200\n"
 "PO-Revision-Date: 2011-03-12 16:35+0200\n"
 "Last-Translator:  <mynetx@gmx.de>\n"
 "Language-Team: Language =de\n"
@@ -355,8 +355,8 @@ msgid ""
 "Installation data not found, please consult debug log and/or documentation "
 "for more details."
 msgstr ""
-"Installationsdaten nicht gefunden, bitte konsultieren Sie das Debuglog "
-"und/oder die Dokumentation für weitere Details."
+"Installationsdaten nicht gefunden, bitte konsultieren Sie das Debuglog und/"
+"oder die Dokumentation für weitere Details."
 
 #: libgammu/gsmcomon.c:155
 msgid "Entry is read only."
@@ -366,7 +366,7 @@ msgstr "Eintrag ist nur lesbar."
 msgid "Unknown error description."
 msgstr "Unbekannte Fehlerbeschreibung."
 
-#: libgammu/phone/dummy/dummy.c:588
+#: libgammu/phone/dummy/dummy.c:603
 msgid "Templates"
 msgstr "Vorlagen"
 
