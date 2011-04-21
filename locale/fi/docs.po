@@ -8,14 +8,15 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.29.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-23 16:58+0100\n"
-"PO-Revision-Date: 2009-01-27 14:27+0100\n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2011-04-21 14:14+0200\n"
+"Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: none\n"
-"Language: \n"
+"Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Pootle 2.0.5\n"
 
 #. type: Title =
 #: README:2
@@ -48,9 +49,9 @@ msgstr ""
 
 #. type: Title =
 #: README:17
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "More information"
-msgstr "Puhelimen tiedot"
+msgstr "Lisätietoja"
 
 #. type: Plain text
 #: README:20
