@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-04-21 14:35+0200\n"
-"PO-Revision-Date: 2011-02-23 03:27+0200\n"
+"PO-Revision-Date: 2011-04-23 16:11+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -1819,11 +1819,10 @@ msgstr ""
 "Hay una versión nueva de pruebas de Gammu disponible (%s en lugar de %s)\n"
 
 #: gammu/gammu.c:327
-#, fuzzy
 msgid ""
 "Copyright (C) 2003 - 2011 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
-"Derechos de Autor (C) 2003 - 2010 Michal Cihar <michal@cihar.com> y otros "
+"Derechos de Autor (C) 2003 - 2011 Michal Cihar <michal@cihar.com> y otros "
 "autores."
 
 #: gammu/gammu.c:365
