@@ -1293,7 +1293,6 @@ msgstr "Conexión con auriculares:"
 
 # This is part of the data returned by the NokiaGetADC command
 #: gammu/depend/nokia/dct4.c:1044
-#, fuzzy
 msgid "Hook interconnection:"
 msgstr "Conexión del teléfono:"
 
