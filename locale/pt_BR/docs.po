@@ -94,7 +94,7 @@ msgstr ""
 
 #. type: Title =
 #: README:34
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "Support developers"
 msgstr "Desenvolvedor(es)\n"
 
