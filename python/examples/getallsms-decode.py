@@ -13,14 +13,19 @@ remain = status['SIMUsed'] + status['PhoneUsed'] + status['TemplatesUsed']
 sms = []
 start = True
 
-while remain > 0:
-    if start:
-        cursms = sm.GetNextSMS(Start = True, Folder = 0)
-        start = False
-    else:
-        cursms = sm.GetNextSMS(Location = cursms[0]['Location'], Folder = 0)
-    remain = remain - len(cursms)
-    sms.append(cursms)
+try:
+    while remain > 0:
+        if start:
+            cursms = sm.GetNextSMS(Start = True, Folder = 0)
+            start = False
+        else:
+            cursms = sm.GetNextSMS(Location = cursms[0]['Location'], Folder = 0)
+        remain = remain - len(cursms)
+        sms.append(cursms)
+except gammu.ERR_EMPTY:
+    # This error is raised when we've reached last entry
+    # It can happen when reported status does not match real counts
+    pass
 
 data = gammu.LinkSMS(sms)
 
