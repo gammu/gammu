@@ -17,6 +17,7 @@ Phone Protocols
     samsung
     samsung-gt
     sonim
+    mtk
     m-obex
     s60
     gnapplet
