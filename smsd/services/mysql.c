@@ -161,6 +161,11 @@ char * SMSDMySQL_QuoteString(GSM_SMSDConfig * Config, const char *string)
 	int len = strlen(string);
 	buff = malloc(len*2+3);
 
+	if (buff == NULL) {
+		SMSD_Log(DEBUG_ERROR, Config, "String allocation for escaping failed!");
+		return NULL;
+	}
+
 	buff[0] = '\'';
 	buff[1] = '\0';
 	mysql_real_escape_string(Config->conn.my, buff+1, string, len);
