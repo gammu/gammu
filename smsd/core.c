@@ -1347,17 +1347,22 @@ gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config)
 
 	/* Allocate memory for sorted messages */
 	SortedSMS = (GSM_MultiSMSMessage **)malloc(allocated * sizeof(GSM_MultiSMSMessage *));
+	if (SortedSMS == NULL) {
+		SMSD_Log(DEBUG_ERROR, Config, "Failed to allocate memory for linking messages");
+		SMSD_Log(DEBUG_ERROR, Config, "Skipping linking messages, long messages will not be connected");
+		SortedSMS = GetSMSData;
+	} else {
+		/* Link messages */
+		error = GSM_LinkSMS(GSM_GetDebug(Config->gsm), GetSMSData, SortedSMS, TRUE);
+		if (error != ERR_NONE) return FALSE;
 
-	/* Link messages */
-	error = GSM_LinkSMS(GSM_GetDebug(Config->gsm), GetSMSData, SortedSMS, TRUE);
-	if (error != ERR_NONE) return FALSE;
-
-	/* Free memory */
-	for (i = 0; GetSMSData[i] != NULL; i++) {
-		free(GetSMSData[i]);
-		GetSMSData[i] = NULL;
+		/* Free memory */
+		for (i = 0; GetSMSData[i] != NULL; i++) {
+			free(GetSMSData[i]);
+			GetSMSData[i] = NULL;
+		}
+		free(GetSMSData);
 	}
-	free(GetSMSData);
 
 	/* Process messages */
 	for (i = 0; SortedSMS[i] != NULL; i++) {
