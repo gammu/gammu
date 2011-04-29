@@ -30,6 +30,7 @@ ChangeLog
 [-] * Improved m-obex protocol support, thanks to Vladimir Serbinenko.
 [-] * Various fixes for Samsung B2100, thanks to Vladimir Serbinenko.
 [-] * Fix check for AT+CPROT support (bug #1438).
+[-] * Fix memory leak in s60 protocol driver (bug #1441).
     
 20110315 - 1.29.92
 

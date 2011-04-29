@@ -55,6 +55,7 @@ static GSM_Error S60_WriteMessage (GSM_StateMachine *s, unsigned const char *Msg
 	for (pos = 0; MsgLength - pos > MAX_LENGTH; pos += MAX_LENGTH) {
 		error = S60_WriteMessage(s, MsgBuffer + pos, MAX_LENGTH, NUM_PARTIAL_MESSAGE);
 		if (error != ERR_NONE) {
+			free(buffer);
 			return ERR_DEVICEWRITEERROR;
 		}
 	}
@@ -68,6 +69,7 @@ static GSM_Error S60_WriteMessage (GSM_StateMachine *s, unsigned const char *Msg
 	buffer[bufpos + length] = '\n';
 	length += bufpos + 1;
 	sent = s->Device.Functions->WriteDevice(s, buffer, length);
+	free(buffer);
 	if (sent != length) {
 		return ERR_DEVICEWRITEERROR;
 	}
