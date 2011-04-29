@@ -245,7 +245,7 @@ PRINTF_STYLE(3, 4)
 void SMSD_Log(SMSD_DebugLevel level, GSM_SMSDConfig *Config, const char *format, ...)
 {
 	GSM_DateTime 	date_time;
-	char 		Buffer[2000];
+	char 		Buffer[65535];
 	va_list		argp;
 #ifdef HAVE_SYSLOG
         int priority;
