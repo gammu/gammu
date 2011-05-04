@@ -2122,8 +2122,8 @@ GSM_Phone_Functions S60Phone = {
 	S60_GetToDoStatus,
 	S60_GetToDo,
 	S60_GetNextToDo,
-	NOTIMPLEMENTED,                 /*      SetTodo */
-	NOTIMPLEMENTED,                 /*      AddTodo */
+	S60_SetToDo,
+	S60_AddToDo,
 	NOTIMPLEMENTED,                 /*      DeleteTodo */
 	NOTIMPLEMENTED,                 /*      DeleteAllTodo */
 	S60_GetCalendarStatus,
