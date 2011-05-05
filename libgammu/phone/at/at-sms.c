@@ -1251,6 +1251,12 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, gboole
 	}
 
 	/* Use brute force if listing does not work */
+	error = ATGEN_GetSMSStatus(s, &Priv->LastSMSStatus);
+
+	if (error != ERR_NONE) {
+		return error;
+	}
+
 	while (TRUE) {
 		sms->SMS[0].Location++;
 
