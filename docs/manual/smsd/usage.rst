@@ -25,7 +25,7 @@ Notification about Received Messages
 ------------------------------------
 
 Once SMSD receives message and stores it in backend service, it can invoke
-your own program to do any message processing, see :ref:`smsd_run`.
+your own program to do any message processing, see :ref:`gammu-smsd-run`.
 
 Monitoring SMSD Status
 ----------------------

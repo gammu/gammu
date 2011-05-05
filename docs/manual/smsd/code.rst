@@ -7,9 +7,9 @@ Backend services
 The backend service is responsible for storing received messages and giving
 the SMSD core messages to send. It is solely up to them how the message will
 be stored, for example currently Gammu includes backends to store messages on
-filesystem (:ref:`smsd_files`), various databases (:ref:`smsd_mysql`,
-:ref:`smsd_pgsql`, :ref:`smsd_dbi`) or backend which does not store anything
-at all (:ref:`smsd_null`).
+filesystem (:ref:`gammu-smsd-files`), various databases (:ref:`gammu-smsd-mysql`,
+:ref:`gammu-smsd-pgsql`, :ref:`gammu-smsd-dbi`) or backend which does not store anything
+at all (:ref:`gammu-smsd-null`).
 
 
 Backend interface
@@ -141,7 +141,7 @@ The lifetime of ID for sent message:
 The lifetime of ID for incoming messages:
 
     * :c:func:`GSM_SMSDService::SaveInboxSMS` generates the message
-    * :ref:`smsd_run` uses this ID
+    * :ref:`gammu-smsd-run` uses this ID
 
 Message Sending Workflow
 ------------------------

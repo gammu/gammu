@@ -275,7 +275,7 @@ General parameters of SMS daemon
     again.
 
     The process has available lot of information about received message in
-    environment, check :ref:`smsd_run` for more details.
+    environment, check :ref:`gammu-smsd-run` for more details.
 
 .. config:option:: RunOnFailure
 

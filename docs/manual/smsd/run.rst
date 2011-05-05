@@ -1,4 +1,4 @@
-.. _smsd_run:
+.. _gammu-smsd-run:
 
 RunOnReceive Directive
 ======================
