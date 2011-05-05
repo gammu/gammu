@@ -2306,7 +2306,7 @@ GSM_Error ATGEN_ReplyGetCharsets(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 			/* Then find good charset for unicode and IRA */
 			Priv->UnicodeCharset = 0;
 			while (AT_Charsets[i].charset != 0) {
-				if (AT_Charsets[i].unicode && (strstr(line, AT_Charsets[i].text) != NULL)) {
+				if ((Priv->UnicodeCharset==0) && AT_Charsets[i].unicode && (strstr(line, AT_Charsets[i].text) != NULL)) {
 					if ((AT_Charsets[i].charset == AT_CHARSET_UTF8 ||
 						AT_Charsets[i].charset == AT_CHARSET_UTF_8) &&
 							Priv->Manufacturer == AT_Motorola) {
@@ -2322,7 +2322,6 @@ GSM_Error ATGEN_ReplyGetCharsets(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 							!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NO_UCS2)) {
 						Priv->UnicodeCharset = AT_Charsets[i].charset;
 						smprintf(s, "Chosen %s as unicode charset\n", AT_Charsets[i].text);
-						break;
 					}
 				}
 				if (AT_Charsets[i].ira && (strstr(line, AT_Charsets[i].text) != NULL)) {
