@@ -291,7 +291,7 @@ Other options
 Examples
 --------
 
-There is more complete example available in Gammu documentation.
+There is more complete example available in Gammu documentation, see :ref:`gammu`.
 
 Connection examples
 +++++++++++++++++++
