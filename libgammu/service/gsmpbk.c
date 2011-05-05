@@ -769,6 +769,7 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 
 			if (ReadVCALText(Line, "TEL",		   Buff,  (version >= 3)) ||
 			    ReadVCALText(Line, "TEL;VOICE",	     Buff,  (version >= 3)) ||
+			    ReadVCALText(Line, "TEL;TYPE=MAIN",	     Buff,  (version >= 3)) ||
 			    ReadVCALText(Line, "TEL;TYPE=VOICE",	     Buff,  (version >= 3))) {
 				if (Buff[1] == '+') {
 					GSM_TweakInternationalNumber(Buff, NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN);
