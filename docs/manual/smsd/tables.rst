@@ -223,12 +223,8 @@ Fields description:
 ``Battery`` (integer)
     battery level in percent (or \-1 if unknown)
 
-``SignalStrength`` (integer)
+``Signal`` (integer)
     signal level in percent (or \-1 if unknown)
-
-    .. versionchanged:: 1.29.90
-        This used to be called ``Signal``. Renamed because ``SIGNAL`` is
-        reserved word in MySQL 5.5.
 
 ``Sent`` (integer)
     Number of sent SMS messages (SMSD does not reset this counter, so it might
@@ -341,9 +337,7 @@ History of database structure
 History of schema versions:
 
 13
-    Changed name of ``Signal`` field to ``SignalStrength`` to avoid problems
-    with database which have ``SIGNAL`` as reserved word. Added ``SendBefore``
-    and ``SendAfter`` fields.
+    Added ``SendBefore`` and ``SendAfter`` fields.
 
     .. versionchanged:: 1.29.90
 12

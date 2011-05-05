@@ -1204,7 +1204,7 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 			", ", ESCAPE_FIELD("TimeOut"),
 			", ", ESCAPE_FIELD("Client"),
 			", ", ESCAPE_FIELD("Battery"),
-			", ", ESCAPE_FIELD("SignalStrength"),
+			", ", ESCAPE_FIELD("Signal"),
 			") VALUES (%I, %P, %1, %2, ",
 			SMSDSQL_Now(Config),
 			", ",
@@ -1404,7 +1404,7 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 		"UPDATE phones SET ",
 			ESCAPE_FIELD("TimeOut"), "= ", SMSDSQL_NowPlus(Config, 10),
 			", ", ESCAPE_FIELD("Battery"), " = %1"
-			", ", ESCAPE_FIELD("SignalStrength"), " = %2"
+			", ", ESCAPE_FIELD("Signal"), " = %2"
 			" WHERE ", ESCAPE_FIELD("IMEI"), " = %I", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
