@@ -1069,7 +1069,8 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 					continue;
 				}
 			}
-			if (ReadVCALText(Line, "ADR;WORK", Buff,  (version >= 3))) {
+			if (ReadVCALText(Line, "ADR;WORK", Buff,  (version >= 3)) ||
+			    ReadVCALText(Line, "ADR;TYPE=WORK", Buff,  (version >= 3))) {
 				pos = 0;
 				s = VCALGetTextPart(Buff, &pos); /* PO box, ignore for now */
 				if (s == NULL) {
