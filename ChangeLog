@@ -32,6 +32,7 @@ ChangeLog
 [-] * Fix check for AT+CPROT support (bug #1438).
 [-] * Fix memory leak in s60 protocol driver (bug #1441).
 [-] * Reverted change to SignalStrength because of SQL escaping we have now (bug #1380).
+[-] * Improved vCard parser to handle vCards from Gmail.
     
 20110315 - 1.29.92
 
