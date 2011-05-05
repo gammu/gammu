@@ -2273,7 +2273,7 @@ GSM_Error ATGEN_ReplyGetCharsets(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	const char	*line;
 	int			i = 0;
-	gboolean			IgnoredUTF8 = FALSE;
+	gboolean			IgnoredUTF8 = FALSE, IRAset = FALSE, GSMset = FALSE;
 
 	switch (Priv->ReplyState) {
 		case AT_Reply_OK:
@@ -2324,11 +2324,13 @@ GSM_Error ATGEN_ReplyGetCharsets(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 						smprintf(s, "Chosen %s as unicode charset\n", AT_Charsets[i].text);
 					}
 				}
-				if (AT_Charsets[i].ira && (strstr(line, AT_Charsets[i].text) != NULL)) {
+				if (!IRAset && AT_Charsets[i].ira && (strstr(line, AT_Charsets[i].text) != NULL)) {
 					Priv->IRACharset = AT_Charsets[i].charset;
+					IRAset = TRUE;
 				}
-				if (AT_Charsets[i].GSM && (strstr(line, AT_Charsets[i].text) != NULL)) {
+				if (!GSMset && AT_Charsets[i].GSM && (strstr(line, AT_Charsets[i].text) != NULL)) {
 					Priv->GSMCharset = AT_Charsets[i].charset;
+					GSMset = TRUE;
 				}
 				i++;
 			}
