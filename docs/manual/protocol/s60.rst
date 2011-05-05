@@ -9,6 +9,10 @@ Series60 Remote Protocol
     <http://series60-remote.sourceforge.net/>. Gammu currently uses slightly
     extended version which will be hopefully merged back.
 
+.. warning::
+
+    Connection to S60 phones currently works only using Bluetooth.
+
 Choosing right version
 ----------------------
 
