@@ -272,6 +272,7 @@ int SMSCFromPython(PyObject * dict, GSM_SMSC * smsc, gboolean complete)
 	if (!complete) {
 		smsc->Location = GetIntFromDict(dict, "Location");
 		if (smsc->Location == INT_INVALID) {
+			smsc->Location = 0;
 			PyErr_Clear();
 
 			if (!CopyStringFromDict
