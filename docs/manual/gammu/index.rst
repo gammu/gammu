@@ -1817,47 +1817,51 @@ To check it out, you need to have configuration file for gammu, see
 Sending messages
 ----------------
 
+.. note::
+
+    All messages bellow are sent to number 123456, replace it with proper destination.
+
 Save text message up to standard 160 chars:
 
 .. code-block:: sh
 
-    echo "All your base are belong to us" | gammu savesms TEXT
+    echo "All your base are belong to us" | gammu sendsms TEXT 123456
 
 or
 
 .. code-block:: sh
 
-    gammu savesms TEXT -text "All your base are belong to us"
+    gammu sendsms TEXT 123456 -text "All your base are belong to us"
 
 Save long text message:
 
 .. code-block:: sh
 
-    echo "All your base are belong to us" | gammu savesms TEXT -len 400
+    echo "All your base are belong to us" | gammu sendsms TEXT 123456 -len 400
 
 or
 
 .. code-block:: sh
 
-    gammu savesms TEXT -len 400 -text "All your base are belong to us"
+    gammu sendsms TEXT 123456 -len 400 -text "All your base are belong to us"
 
 or
 
 .. code-block:: sh
 
-    gammu savesms EMS -text "All your base are belong to us"
+    gammu sendsms EMS 123456 -text "All your base are belong to us"
 
 Save some funky message with predefined sound and animation from 2 bitmaps:
 
 .. code-block:: sh
 
-    gammu savesms EMS -text "Greetings" -defsound 1 -text "from Gammu -tone10 axelf.txt -animation 2 file1.bmp file2.bmp
+    gammu sendsms EMS 123456 -text "Greetings" -defsound 1 -text "from Gammu -tone10 axelf.txt -animation 2 file1.bmp file2.bmp
 
 Save protected message with ringtone:
 
 .. code-block:: sh
 
-    gammu savesms EMS -protected 2 -variablebitmaplong ala.bmp -toneSElong axelf.txt -toneSE ring.txt
+    gammu sendsms EMS 123456 -protected 2 -variablebitmaplong ala.bmp -toneSElong axelf.txt -toneSE ring.txt
 
 Uploading files to Nokia
 ------------------------
