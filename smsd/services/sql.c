@@ -891,6 +891,7 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 
 			Config->currdeliveryreport = db->GetBool(Config, &res, 9);
 
+			/* Is this a multipart message? */
 			if (!db->GetBool(Config, &res, 7)) {
 				db->FreeResult(Config, &res);
 				break;
