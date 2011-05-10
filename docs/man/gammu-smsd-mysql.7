@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSD-MYSQL" "7" "March 22, 2011" "1.29.93" "Gammu"
+.TH "GAMMU-SMSD-MYSQL" "7" "May 10, 2011" "1.29.93" "Gammu"
 .SH NAME
 gammu-smsd-mysql \- gammu-smsd(1) backend using MySQL database server as a message storage
 .
@@ -242,7 +242,7 @@ CREATE TABLE \(gaphones\(ga (
   \(gaIMEI\(ga varchar(35) NOT NULL,
   \(gaClient\(ga text NOT NULL,
   \(gaBattery\(ga integer NOT NULL DEFAULT \-1,
-  \(gaSignalStrength\(ga integer NOT NULL DEFAULT \-1,
+  \(gaSignal\(ga integer NOT NULL DEFAULT \-1,
   \(gaSent\(ga int NOT NULL DEFAULT 0,
   \(gaReceived\(ga int NOT NULL DEFAULT 0,
   PRIMARY KEY (\(gaIMEI\(ga)

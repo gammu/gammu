@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSD-TABLES" "7" "March 22, 2011" "1.29.93" "Gammu"
+.TH "GAMMU-SMSD-TABLES" "7" "May 10, 2011" "1.29.93" "Gammu"
 .SH NAME
 gammu-smsd-tables \- description of tables for database backends of gammu-smsd(1)
 .
@@ -285,12 +285,9 @@ client name, usually string Gammu with version
 .sp
 battery level in percent (or \-1 if unknown)
 .TP
-.B \fBSignalStrength\fP (integer)
+.B \fBSignal\fP (integer)
 .sp
 signal level in percent (or \-1 if unknown)
-.sp
-Changed in version 1.29.90: This used to be called \fBSignal\fP. Renamed because \fBSIGNAL\fP is
-reserved word in MySQL 5.5.
 .TP
 .B \fBSent\fP (integer)
 .sp
@@ -435,9 +432,7 @@ History of schema versions:
 .TP
 .B 13
 .
-Changed name of \fBSignal\fP field to \fBSignalStrength\fP to avoid problems
-with database which have \fBSIGNAL\fP as reserved word. Added \fBSendBefore\fP
-and \fBSendAfter\fP fields.
+Added \fBSendBefore\fP and \fBSendAfter\fP fields.
 .sp
 Changed in version 1.29.90.
 .TP

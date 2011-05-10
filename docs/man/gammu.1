@@ -1,4 +1,4 @@
-.TH "GAMMU" "1" "March 22, 2011" "1.29.93" "Gammu"
+.TH "GAMMU" "1" "May 10, 2011" "1.29.93" "Gammu"
 .SH NAME
 gammu \- Does some neat things with your cellular phone or modem.
 .
@@ -2065,8 +2065,30 @@ Show the most important phone data.
 .TP
 .B monitor [times]
 .sp
-Get phone status and writes continuously to standard output. Press \fBCtrl+C\fP
-to break this state.
+Retrieves phone status and writes it continuously to standard output. Press
+\fBCtrl+C\fP to interrupt this command.
+.sp
+If no parameter is given, the program runs until interrupted, otherwise
+only given number of iterations is performed.
+.sp
+This command outputs almost all information Gammu supports:
+.INDENT 7.0
+.IP \(bu 2
+.
+Number of contacts, calendar and todo entries, messages, calls, etc.
+.IP \(bu 2
+.
+Signal strength.
+.IP \(bu 2
+.
+Battery state.
+.IP \(bu 2
+.
+Currently used network.
+.IP \(bu 2
+.
+Notifications of incoming messages and calls.
+.UNINDENT
 .UNINDENT
 .SS Phone settings commands
 .INDENT 0.0
@@ -2630,12 +2652,16 @@ Failed to get SMSC number from phone.
 To check it out, you need to have configuration file for gammu, see
 \fIgammurc\fP for more details about it.
 .SS Sending messages
+.IP Note
+.
+All messages bellow are sent to number 123456, replace it with proper destination.
+.RE
 .sp
 Save text message up to standard 160 chars:
 .sp
 .nf
 .ft C
-echo "All your base are belong to us" | gammu savesms TEXT
+echo "All your base are belong to us" | gammu sendsms TEXT 123456
 .ft P
 .fi
 .sp
@@ -2643,7 +2669,7 @@ or
 .sp
 .nf
 .ft C
-gammu savesms TEXT \-text "All your base are belong to us"
+gammu sendsms TEXT 123456 \-text "All your base are belong to us"
 .ft P
 .fi
 .sp
@@ -2651,7 +2677,7 @@ Save long text message:
 .sp
 .nf
 .ft C
-echo "All your base are belong to us" | gammu savesms TEXT \-len 400
+echo "All your base are belong to us" | gammu sendsms TEXT 123456 \-len 400
 .ft P
 .fi
 .sp
@@ -2659,7 +2685,7 @@ or
 .sp
 .nf
 .ft C
-gammu savesms TEXT \-len 400 \-text "All your base are belong to us"
+gammu sendsms TEXT 123456 \-len 400 \-text "All your base are belong to us"
 .ft P
 .fi
 .sp
@@ -2667,7 +2693,7 @@ or
 .sp
 .nf
 .ft C
-gammu savesms EMS \-text "All your base are belong to us"
+gammu sendsms EMS 123456 \-text "All your base are belong to us"
 .ft P
 .fi
 .sp
@@ -2675,7 +2701,7 @@ Save some funky message with predefined sound and animation from 2 bitmaps:
 .sp
 .nf
 .ft C
-gammu savesms EMS \-text "Greetings" \-defsound 1 \-text "from Gammu \-tone10 axelf.txt \-animation 2 file1.bmp file2.bmp
+gammu sendsms EMS 123456 \-text "Greetings" \-defsound 1 \-text "from Gammu \-tone10 axelf.txt \-animation 2 file1.bmp file2.bmp
 .ft P
 .fi
 .sp
@@ -2683,7 +2709,7 @@ Save protected message with ringtone:
 .sp
 .nf
 .ft C
-gammu savesms EMS \-protected 2 \-variablebitmaplong ala.bmp \-toneSElong axelf.txt \-toneSE ring.txt
+gammu sendsms EMS 123456 \-protected 2 \-variablebitmaplong ala.bmp \-toneSElong axelf.txt \-toneSE ring.txt
 .ft P
 .fi
 .SS Uploading files to Nokia
