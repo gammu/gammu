@@ -1543,8 +1543,8 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config)
 
 		if (Config->currdeliveryreport == 1) {
 			sms.SMS[i].PDU = SMS_Status_Report;
-		} else {
-			if ((strcmp(Config->deliveryreport, "no") != 0 && (Config->currdeliveryreport == -1))) sms.SMS[i].PDU = SMS_Status_Report;
+		} else if (Config->currdeliveryreport == -1 && strcmp(Config->deliveryreport, "no") != 0) {
+			sms.SMS[i].PDU = SMS_Status_Report;
 		}
 
 		SMSD_PhoneStatus(Config);
