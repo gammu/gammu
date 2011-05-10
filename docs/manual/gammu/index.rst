@@ -1475,8 +1475,19 @@ Phone information commands
 
 .. option:: monitor [times]
 
-    Get phone status and writes continuously to standard output. Press :kbd:`Ctrl+C`
-    to break this state.
+    Retrieves phone status and writes it continuously to standard output. Press
+    :kbd:`Ctrl+C` to interrupt this command.
+
+    If no parameter is given, the program runs until interrupted, otherwise
+    only given number of iterations is performed.
+
+    This command outputs almost all information Gammu supports:
+
+    * Number of contacts, calendar and todo entries, messages, calls, etc.
+    * Signal strength.
+    * Battery state.
+    * Currently used network.
+    * Notifications of incoming messages and calls.
 
 
 Phone settings commands
