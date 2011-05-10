@@ -120,6 +120,7 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		{"^DSFLOWRPT:"	,1}, /* ^DSFLOWRPT:00000124,00000082,00000EA6,0000000000012325,000000000022771D,0000BB80,0001F400 */
 		{"^BOOT:"	,1}, /* ^BOOT:27710117,0,0,0,75 */
 		{"^MODE:"	,1}, /* ^MODE:3,3 */
+		{"^CSNR:"	,1}, /* ^CSNR:-93,-23 */
 
 		/* ONDA */
 		{"+ZUSIMR:"	,1}, /* +ZUSIMR:2 */
