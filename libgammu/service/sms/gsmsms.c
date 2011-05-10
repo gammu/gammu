@@ -426,6 +426,9 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, const unsi
 			smfprintf(di, ", UDH included");
 			udh = 1;
 		}
+		if (type & (1 << 5)) {
+			smfprintf(di, ", Delivery report requested");
+		}
 	}
 	if (SMS->PDU == SMS_Submit) {
 		vpf = (type & (0x3 << 3)) >> 3;
