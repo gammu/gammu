@@ -1232,6 +1232,7 @@ GSM_Error SMSD_ProcessSMS(GSM_SMSDConfig *Config, GSM_MultiSMSMessage *sms)
 gboolean SMSD_CheckMultipart(GSM_SMSDConfig *Config, GSM_MultiSMSMessage *MultiSMS)
 {
 	gboolean same_id;
+
 	/* Does the message have UDH (is multipart)? */
 	if (MultiSMS->SMS[0].UDH.Type == UDH_NoUDH) {
 		return TRUE;
@@ -1244,7 +1245,6 @@ gboolean SMSD_CheckMultipart(GSM_SMSDConfig *Config, GSM_MultiSMSMessage *MultiS
 	if (MultiSMS->SMS[0].UDH.AllParts == MultiSMS->Number) {
 		goto success;
 	}
-
 
 	/* Have we seen this message recently? */
 	if (same_id) {
