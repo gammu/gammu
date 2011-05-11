@@ -13,8 +13,8 @@
 #else
 #include <stdio.h>
 #include <time.h>
-#include <mysql/mysql.h>
-#include <mysql/mysqld_error.h>
+#include <mysql.h>
+#include <mysqld_error.h>
 #include <sys/types.h>
 #include <unistd.h>
 #endif
