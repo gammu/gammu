@@ -53,5 +53,6 @@ Example configuration:
     service = sql
     driver = odbc
     host = dsn_of_your_database
+    sql = sql_variant_to_use
     user = username
     password = password
