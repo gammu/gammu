@@ -110,7 +110,7 @@ msgstr ""
 #: INSTALL:2
 #, no-wrap
 msgid "Gammu All Mobile Management Utilities - Installation"
-msgstr ""
+msgstr "Gammu, perangkat managemen mobile- Instalasi"
 
 #. type: Plain text
 #: INSTALL:5
