@@ -65,6 +65,7 @@ msgstr "Informasi lebih lanjut"
 #: README:20
 msgid "You can find more information on <http://wammu.eu/gammu/>."
 msgstr ""
+"Kamu dapat menemukan Informasi lebih lanjut di <http://wammu.eu/gammu/>."
 
 #. type: Plain text
 #: README:24
