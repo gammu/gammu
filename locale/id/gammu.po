@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.29.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-04-21 14:35+0200\n"
-"PO-Revision-Date: 2011-05-12 10:05+0200\n"
+"PO-Revision-Date: 2011-05-12 10:06+0200\n"
 "Last-Translator: Triatmoko <tr_mbil@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1511,9 +1511,9 @@ msgid "Disables scanning of Windows serial ports."
 msgstr "Non-aktiv pencarian Windows serial ports."
 
 #: gammu-detect/main.c:71
-#, fuzzy, c-format
+#, c-format
 msgid "Gammu-detect version %s"
-msgstr "Versi Gammu"
+msgstr "Gammu-detect Versi %s"
 
 #: gammu-detect/main.c:73
 #, fuzzy, c-format
