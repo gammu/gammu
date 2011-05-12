@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.29.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-04-21 14:35+0200\n"
-"PO-Revision-Date: 2011-05-12 10:03+0200\n"
+"PO-Revision-Date: 2011-05-12 10:04+0200\n"
 "Last-Translator: Triatmoko <tr_mbil@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1495,9 +1495,8 @@ msgid "Show debugging output for detecting devices."
 msgstr "Lihat keluaran debugging untuk medeteksi perangkat."
 
 #: gammu-detect/main.c:56
-#, fuzzy
 msgid "Show version information and compiled in features."
-msgstr "Informasi telepon"
+msgstr "Lihat informasi versi dan compilasi fitur."
 
 #: gammu-detect/main.c:58
 msgid "Disables scanning of udev."
