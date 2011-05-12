@@ -1516,9 +1516,9 @@ msgid "Gammu-detect version %s"
 msgstr "Gammu-detect Versi %s"
 
 #: gammu-detect/main.c:73
-#, fuzzy, c-format
+#, c-format
 msgid "Built %s on %s using %s"
-msgstr "[Versi Gammu %s dibangun %s pada %s menggunakan %s]"
+msgstr "dibangun %s pada %s menggunakan %s]"
 
 #: gammu-detect/main.c:76 gammu/gammu.c:100
 msgid "Compiled in features:"
