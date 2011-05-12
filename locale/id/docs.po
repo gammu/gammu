@@ -74,6 +74,9 @@ msgid ""
 "version of it using make manual-html which is viewable online at <http://"
 "wammu.eu/docs/manual/>."
 msgstr ""
+"Disana juga dapat ditemukan Manual Gammu di Docs/manual. Kamu bisa membangun "
+"versi HTML dengan cara membuat manual-html yang dapat diambil online di "
+"<http://wammu.eu/docs/manual/>."
 
 #. type: Title =
 #: README:27
