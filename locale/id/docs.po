@@ -57,7 +57,7 @@ msgstr ""
 
 #. type: Title =
 #: README:17
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "More information"
 msgstr "Informasi lebih lanjut"
 
