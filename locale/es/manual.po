@@ -939,7 +939,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/config/index.rst:259
 msgid "Features"
-msgstr ""
+msgstr "Funcionalidades"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:265
@@ -4949,7 +4949,7 @@ msgstr ""
 #: docs/manual/protocol/m-obex.rst:379
 #, no-wrap
 msgid "Delete"
-msgstr ""
+msgstr "Borrar"
 
 #. type: Plain text
 #: docs/manual/protocol/m-obex.rst:391
@@ -11728,7 +11728,7 @@ msgstr ""
 #: docs/manual/smsd/usage.rst:41
 #, no-wrap
 msgid "Reporting Bugs"
-msgstr ""
+msgstr "Reportando errores"
 
 #. type: Plain text
 #: docs/manual/smsd/usage.rst:44
@@ -15708,7 +15708,7 @@ msgstr ""
 #: docs/manual/smsd/smsd.rst:153
 #, no-wrap
 msgid "Troubleshooting Windows Service"
-msgstr ""
+msgstr "Depurando el servicio de Windows"
 
 #. type: Plain text
 #: docs/manual/smsd/smsd.rst:160
@@ -20909,7 +20909,7 @@ msgstr ""
 #: docs/manual/project/testing.rst:2
 #, no-wrap
 msgid "Testing"
-msgstr ""
+msgstr "Testeo"
 
 #. type: Plain text
 #: docs/manual/project/testing.rst:7 docs/manual/testing/testsuite.rst:7
@@ -33338,7 +33338,8 @@ msgstr ""
 #~ msgid ""
 #~ "7\n"
 #~ "    added CreatorID to tables (it holds PhoneID if set)\n"
-#~ msgstr "7 - agregado CreatorID a las tablas (contiene PhoneID si está establecido)"
+#~ msgstr ""
+#~ "7 - agregado CreatorID a las tablas (contiene PhoneID si está establecido)"
 
 #, fuzzy
 #~ msgid "motivation"
