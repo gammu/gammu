@@ -1234,7 +1234,7 @@ gboolean SMSD_CheckMultipart(GSM_SMSDConfig *Config, GSM_MultiSMSMessage *MultiS
 	gboolean same_id;
 
 	/* Does the message have UDH (is multipart)? */
-	if (MultiSMS->SMS[0].UDH.Type == UDH_NoUDH) {
+	if (MultiSMS->SMS[0].UDH.Type == UDH_NoUDH || MultiSMS->SMS[0].UDH.AllParts == -1) {
 		return TRUE;
 	}
 
