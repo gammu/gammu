@@ -118,6 +118,8 @@ msgid ""
 "See docs/manual/project/install.rst for installation guide or see chapter "
 "\"Compiling Gammu\" in The Gammu Manual."
 msgstr ""
+"Lihat docs/manual/project/install.rst untuk bantuan instalasi atau lihat "
+"bagian \"Compiling Gammu\" di The Gammu Manual"
 
 #~ msgid "Gammu Configuration File"
 #~ msgstr "Informasi gammu"
