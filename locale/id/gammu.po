@@ -1534,7 +1534,7 @@ msgstr "Penyelidikan Bluez"
 
 #: gammu-detect/main.c:84
 msgid "Windows serial port probing"
-msgstr ""
+msgstr "Penyelidikan Windows serial port."
 
 #: gammu-detect/main.c:87
 #, fuzzy
