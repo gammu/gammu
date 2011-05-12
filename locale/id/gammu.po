@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.29.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-04-21 14:35+0200\n"
-"PO-Revision-Date: 2011-05-12 10:06+0200\n"
+"PO-Revision-Date: 2011-05-12 10:07+0200\n"
 "Last-Translator: Triatmoko <tr_mbil@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1526,7 +1526,7 @@ msgstr "Dikompilasi dalam fitur:"
 
 #: gammu-detect/main.c:78
 msgid "udev probing"
-msgstr ""
+msgstr "penyelidikan udev"
 
 #: gammu-detect/main.c:81
 msgid "Bluez probing"
