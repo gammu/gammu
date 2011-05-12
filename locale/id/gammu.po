@@ -1607,7 +1607,7 @@ msgstr "Pengendali:"
 
 #: gammu-detect/udev.c:73
 msgid "Sequential Number:"
-msgstr ""
+msgstr "Nomer berurutan"
 
 #: gammu-detect/udev.c:74
 #, fuzzy
