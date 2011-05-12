@@ -1599,7 +1599,7 @@ msgstr "Nomer"
 
 #: gammu-detect/udev.c:71
 msgid "Path:"
-msgstr ""
+msgstr "Jalan:"
 
 #: gammu-detect/udev.c:72
 msgid "Driver:"
