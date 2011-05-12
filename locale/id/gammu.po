@@ -1508,7 +1508,7 @@ msgstr "Non-aktiv pencarian menggunakan Bluez"
 
 #: gammu-detect/main.c:64
 msgid "Disables scanning of Windows serial ports."
-msgstr ""
+msgstr "Non-aktiv pencarian Windows serial ports."
 
 #: gammu-detect/main.c:71
 #, fuzzy, c-format
