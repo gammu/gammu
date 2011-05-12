@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.29.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-04-21 14:35+0200\n"
-"PO-Revision-Date: 2011-05-12 10:04+0200\n"
+"PO-Revision-Date: 2011-05-12 10:05+0200\n"
 "Last-Translator: Triatmoko <tr_mbil@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1500,7 +1500,7 @@ msgstr "Lihat informasi versi dan compilasi fitur."
 
 #: gammu-detect/main.c:58
 msgid "Disables scanning of udev."
-msgstr ""
+msgstr "Non-aktiv pencarian dari udev."
 
 #: gammu-detect/main.c:61
 msgid "Disables scanning using Bluez."
