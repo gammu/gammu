@@ -114,6 +114,7 @@ msgstr "Gammu, perangkat managemen mobile- Instalasi"
 
 #. type: Plain text
 #: INSTALL:5
+#, fuzzy
 msgid ""
 "See docs/manual/project/install.rst for installation guide or see chapter "
 "\"Compiling Gammu\" in The Gammu Manual."
