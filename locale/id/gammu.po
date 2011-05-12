@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.29.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-04-21 14:35+0200\n"
-"PO-Revision-Date: 2011-05-12 10:08+0200\n"
+"PO-Revision-Date: 2011-05-12 10:09+0200\n"
 "Last-Translator: Triatmoko <tr_mbil@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1577,7 +1577,7 @@ msgstr "Silahkan lihat The Gammu Manual untuk informasi lebih lanjut."
 #: gammu-detect/main.c:160
 #, c-format
 msgid "option parsing failed: %s\n"
-msgstr ""
+msgstr "Pilihan parsing gagal : %s\n"
 
 #: gammu-detect/udev.c:67
 #, fuzzy
