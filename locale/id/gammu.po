@@ -1530,7 +1530,7 @@ msgstr "penyelidikan udev"
 
 #: gammu-detect/main.c:81
 msgid "Bluez probing"
-msgstr ""
+msgstr "Penyelidikan Bluez"
 
 #: gammu-detect/main.c:84
 msgid "Windows serial port probing"
