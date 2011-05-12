@@ -1,0 +1,37 @@
+Gammu Perangkat managemen semua handphone
+=========================================
+
+Gammu adalah library dan command line untuk Mobile telepon. Gammu
+dikeluarkan dibawah GNU GPL versi 2
+
+Gammu dikeluarkan oleh Marcin Wiacek dan beberapa programmer. Code asli
+berdasarkan Gnokii <http://www.gnokii.org> dan proyek MyGnokii
+<http://www.mwiacek.com>. Gammu berasal ( mulai dari versi 0.58 ) dari
+MyGnokii2
+
+Sekarang proyek Gammu dipimpin oleh Michal Cihar <michal@cihar.com> dengan
+bantuan beberapa kontibutor. 
+
+
+More information
+================
+
+Kamu dapat menemukan Informasi lebih lanjut di <http://wammu.eu/gammu/>.
+
+Disana juga dapat ditemukan Manual Gammu di Docs/manual. Kamu bisa membangun
+versi HTML dengan cara membuat manual-html yang dapat diambil online di
+<http://wammu.eu/docs/manual/>.
+
+
+Laporan Feedback dan Bug (kelemahan)
+====================================
+
+Menerima setiap Feedback, lihat <http://wammu.eu/support/> untuk informasi
+bagaimana mengontak pengembang.
+
+
+Dukungan pengembang
+===================
+
+Kamu dapat menghargai pengembang yang sudah bekerja di
+<http://wammu.eu/donate/>.
