@@ -90,6 +90,8 @@ msgid ""
 "Any feedback is welcome, see <http://wammu.eu/support/> for information how "
 "to contact developers."
 msgstr ""
+"Menerima setiap Feedback, lihat <http://wammu.eu/support/> untuk informasi "
+"bagaimana mengontak pengembang."
 
 #. type: Title =
 #: README:34
