@@ -96,6 +96,7 @@ int main(int argc, char **argv)
 	if (error == ERR_NONE) {
 		DisplayMultiSMSInfo(&sms, FALSE, TRUE, NULL, NULL);
 		DisplayMultiSMSInfo(&sms, TRUE, TRUE, NULL, NULL);
+		printf("Parts: %d, count: %d, ID16: %d, ID8: %d\n", sms.SMS[0].UDH.AllParts, sms.Number, sms.SMS[0].UDH.ID16bit, sms.SMS[0].UDH.ID8bit);
 	}
 
 	/* This is normally done by ATGEN_Terminate */
