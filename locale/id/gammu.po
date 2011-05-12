@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.29.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-04-21 14:35+0200\n"
-"PO-Revision-Date: 2011-05-12 10:09+0200\n"
+"PO-Revision-Date: 2011-05-12 10:10+0200\n"
 "Last-Translator: Triatmoko <tr_mbil@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1603,7 +1603,7 @@ msgstr "Jalan:"
 
 #: gammu-detect/udev.c:72
 msgid "Driver:"
-msgstr ""
+msgstr "Pengendali:"
 
 #: gammu-detect/udev.c:73
 msgid "Sequential Number:"
