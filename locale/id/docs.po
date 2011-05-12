@@ -52,6 +52,8 @@ msgid ""
 "Currently the project is lead by Michal Cihar <michal@cihar.com> with help "
 "of many contributors."
 msgstr ""
+"Sekarang proyek Gammu dipimpin oleh Michal Cihar <michal@cihar.com> dengan "
+"bantuan beberapa kontibutor. "
 
 #. type: Title =
 #: README:17
