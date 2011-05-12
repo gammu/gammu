@@ -97,7 +97,7 @@ msgstr ""
 #: README:34
 #, no-wrap
 msgid "Support developers"
-msgstr ""
+msgstr "Dukungan pengembang"
 
 #. type: Plain text
 #: README:36
