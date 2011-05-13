@@ -608,6 +608,13 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
 	/* Default to charset from state machine */
 	charset = s->Phone.Data.Priv.ATGEN.Charset;
 
+	/* Canonical names */
+	if (charset == AT_CHARSET_UCS_2) {
+		charset = AT_CHARSET_UCS2;
+	} else if (charset == AT_CHARSET_UTF_8) {
+		charset = AT_CHARSET_UTF8;
+	}
+
 	/* Basic type checks */
 	is_hex = ATGEN_IsHex(input, length);
 	is_ucs = ATGEN_IsUCS2(input, length);
