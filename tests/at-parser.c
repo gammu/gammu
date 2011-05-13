@@ -170,6 +170,18 @@ int main(int argc UNUSED, char **argv UNUSED)
 	gammu_test_result(error, "+SPBR: @ni, @u, @e");
 	test_result((strcmp(DecodeUnicodeString(buffer), "+79164108633") == 0));
 
+	Priv->Charset = AT_CHARSET_UCS2;
+	error = ATGEN_ParseReply(s,
+				"+CPBR: 2,\"*100#\",129,\"gg get balance\",0",
+				"+CPBR: @i, @p, @I, @e, @i",
+				&i,
+				buffer, BUFFER_SIZE,
+				&i,
+				buffer, BUFFER_SIZE,
+				&i);
+	gammu_test_result(error, "+CPBR: @i, @p, @I, @e, @i");
+	test_result((strcmp(DecodeUnicodeString(buffer), "gg get balance") == 0));
+
 	/* Free state machine */
 	GSM_FreeStateMachine(s);
 
