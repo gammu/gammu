@@ -608,10 +608,12 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
 	/* Default to charset from state machine */
 	charset = s->Phone.Data.Priv.ATGEN.Charset;
 
+	/* Basic type checks */
+	is_hex = ATGEN_IsHex(input, length);
+	is_ucs = ATGEN_IsUCS2(input, length);
+
 	/* Can we do guesses? */
 	if (guess) {
-		is_hex = ATGEN_IsHex(input, length);
-		is_ucs = ATGEN_IsUCS2(input, length);
 		is_number = ATGEN_IsNumber(input, length);
 		/* Are there HEX only chars? */
 		if  (charset == AT_CHARSET_HEX
@@ -688,6 +690,14 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
 			&& input[length - 2] == '0'
 			) {
 			charset = AT_CHARSET_HEX;
+		}
+	} else {
+		/* No guessing, but still do some sanity checks */
+		if (charset == AT_CHARSET_UCS2 && !is_ucs) {
+			charset = AT_CHARSET_GSM;
+		}
+		if (charset == AT_CHARSET_HEX && !is_hex) {
+			charset = AT_CHARSET_GSM;
 		}
 	}
 
