@@ -9,6 +9,7 @@
 #ifdef GSM_ENABLE_BACKUP
 GSM_Error SaveLDIF(const char *FileName, GSM_Backup *backup);
 GSM_Error LoadLDIF(const char *FileName, GSM_Backup *backup);
+GSM_Error GSM_DecodeLDIFEntry(char *Buffer, size_t *Pos, GSM_MemoryEntry *Pbk);
 #endif
 
 #endif

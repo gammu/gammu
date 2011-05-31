@@ -152,6 +152,11 @@ if (WITH_BACKUP)
     target_link_libraries(vcard-read memorydisplay)
     target_link_libraries(vcard-read libGammu ${LIBINTL_LIBRARIES})
 
+    # LDIF parsing
+    add_executable(ldif-read ldif-read.c)
+    target_link_libraries(ldif-read memorydisplay)
+    target_link_libraries(ldif-read libGammu ${LIBINTL_LIBRARIES})
+
     # List test cases
     file(GLOB VCARDS
         RELATIVE "${Gammu_SOURCE_DIR}/tests/vcards"
