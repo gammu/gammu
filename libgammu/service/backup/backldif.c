@@ -484,6 +484,9 @@ GSM_Error GSM_DecodeLDIFEntry(char *Buffer, size_t *Pos, GSM_MemoryEntry *Pbk)
 			}
 			break;
 		}
+		if (Pbk->EntriesNum >= GSM_PHONEBOOK_ENTRIES) {
+			return ERR_MOREMEMORY;
+		}
 	}
 
 	dbgprintf(NULL, "entries num is %i\n",Pbk->EntriesNum);

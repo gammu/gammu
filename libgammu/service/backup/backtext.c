@@ -2106,6 +2106,10 @@ loadtext:
 			}
 loaddone:
 			Pbk->EntriesNum ++;
+			if (Pbk->EntriesNum >= GSM_PHONEBOOK_ENTRIES) {
+				Pbk->EntriesNum--;
+				return;
+			}
 		}
 	}
 }
