@@ -1290,7 +1290,7 @@ GSM_Error MyGetLine(char *Buffer, size_t *Pos, char *OutBuffer, size_t MaxLen, s
 	OutBuffer[0] = 0;
 	pos = 0;
 	if (Buffer == NULL) return ERR_NONE;
-	while ((*Pos) < MaxLen) {
+	for (; (*Pos) < MaxLen; (*Pos)++) {
 		switch (Buffer[*Pos]) {
 		case 0x00:
 			return ERR_NONE;
@@ -1341,7 +1341,6 @@ GSM_Error MyGetLine(char *Buffer, size_t *Pos, char *OutBuffer, size_t MaxLen, s
 			OutBuffer[pos] = 0;
 			if (pos + 1 >= MaxOutLen) return ERR_MOREMEMORY;
 		}
-		(*Pos)++;
 	}
 	return ERR_NONE;
 }
