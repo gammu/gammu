@@ -264,7 +264,7 @@ static gboolean ReadLDIFText(const char *Buffer, const char *Start, char *Value)
 	return FALSE;
 }
 
-static GSM_Error GSM_DecodeLDIFEntry(char *Buffer, size_t *Pos, GSM_MemoryEntry *Pbk)
+GSM_Error GSM_DecodeLDIFEntry(char *Buffer, size_t *Pos, GSM_MemoryEntry *Pbk)
 {
 	unsigned char 	Line[2000],Buff[2000],Buff2[2000];
 	int		Level = 0;
@@ -483,6 +483,9 @@ static GSM_Error GSM_DecodeLDIFEntry(char *Buffer, size_t *Pos, GSM_MemoryEntry 
 				Pbk->EntriesNum++;
 			}
 			break;
+		}
+		if (Pbk->EntriesNum >= GSM_PHONEBOOK_ENTRIES) {
+			return ERR_MOREMEMORY;
 		}
 	}
 

@@ -183,6 +183,27 @@ if (WITH_BACKUP)
             "vcard-read-${TESTNAME}"
             PROPERTIES WILL_FAIL TRUE)
     endforeach(TESTVCARD $VCARDS)
+
+    # LDIF parsing
+    add_executable(ldif-read ldif-read.c)
+    target_link_libraries(ldif-read memorydisplay)
+    target_link_libraries(ldif-read libGammu ${LIBINTL_LIBRARIES})
+
+    # List test cases
+    file(GLOB LDIFS
+        RELATIVE "${Gammu_SOURCE_DIR}/tests/ldif"
+        "${Gammu_SOURCE_DIR}/tests/ldif/*.ldif")
+    list(SORT LDIFS)
+
+    foreach(TESTLDIF ${LDIFS})
+        string(REPLACE ldif backup TESTBACKUP ${TESTLDIF})
+        string(REPLACE .ldif "" TESTNAME ${TESTLDIF})
+        add_test("ldif-read-${TESTNAME}"
+            "${GAMMU_TEST_PATH}/ldif-read${GAMMU_TEST_SUFFIX}"
+            "${Gammu_SOURCE_DIR}/tests/ldif/${TESTLDIF}"
+            "${Gammu_SOURCE_DIR}/tests/ldif/${TESTBACKUP}")
+    endforeach(TESTLDIF $LDIFS)
+
 endif (WITH_BACKUP)
 
 # [iv]Calendar parsing
