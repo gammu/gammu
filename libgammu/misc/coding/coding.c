@@ -1304,8 +1304,7 @@ GSM_Error MyGetLine(char *Buffer, size_t *Pos, char *OutBuffer, size_t MaxLen, s
 					if (was_lf && skip) return ERR_NONE;
 					was_lf = TRUE;
 				}
-			}
-			if (pos != 0 && !skip) {
+			} else {
 				if (MergeLines) {
 					/* (Quote printable new line) Does string end with = ? */
 					if (OutBuffer[pos - 1] == '=' && quoted_printable) {
@@ -1325,6 +1324,13 @@ GSM_Error MyGetLine(char *Buffer, size_t *Pos, char *OutBuffer, size_t MaxLen, s
 						*Pos = tmp;
 						break;
 					}
+				}
+				if (Buffer[*Pos] == 0x0d && (*Pos)+1 < MaxLen && Buffer[*Pos + 1] == 0x0a) {
+					/* Skip \r\n */
+					(*Pos) += 2;
+				} else {
+					/* Skip single \r or \n */
+					(*Pos)++;
 				}
 				return ERR_NONE;
 			}

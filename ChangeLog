@@ -33,6 +33,7 @@ ChangeLog
 [-] * Fix memory leak in s60 protocol driver (bug #1441).
 [-] * Reverted change to SignalStrength because of SQL escaping we have now (bug #1380).
 [-] * Improved vCard parser to handle vCards from Gmail.
+[-] * Fixed LDIF parser to cope with multiple LDIF in single file.
     
 20110315 - 1.29.92
 
