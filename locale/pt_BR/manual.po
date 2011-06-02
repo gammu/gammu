@@ -35620,12 +35620,12 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/utils/gammu-detect.rst:119
-#, fuzzy
 msgid ""
 "[gammu5] device = /dev/ttyS3 name = Phone on serial port 3 connection = at"
 msgstr ""
-"[gammu]\n"
-"device = /dev/ttyS0\n"
+"[gammu5]\n"
+"device = /dev/ttyS3\n"
+"name = Phone on serial port 3\n"
 "connection = at\n"
 
 #. type: Plain text
