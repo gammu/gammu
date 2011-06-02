@@ -431,9 +431,8 @@ msgstr "``bluerfgnapbus``"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:102
-#, fuzzy
 msgid "``blues60``"
-msgstr "Toques"
+msgstr "``blues60``"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:103
