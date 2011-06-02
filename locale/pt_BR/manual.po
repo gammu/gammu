@@ -376,7 +376,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/config/index.rst:87
 msgid "``irdaobex``"
-msgstr "Toques"
+msgstr "``irdaobex``"
 
 # type: Plain text
 #. type: Plain text
