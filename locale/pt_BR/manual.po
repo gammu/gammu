@@ -406,7 +406,7 @@ msgstr "Para conexão Bluetooth utilize o seguinte:"
 #. type: Plain text
 #: docs/manual/config/index.rst:94
 msgid "``bluephonet``"
-msgstr ""
+msgstr "``bluephonet``"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:96
