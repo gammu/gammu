@@ -5,7 +5,9 @@
 #ifndef __helper__string_h__
 #define __helper__string_h__
 
-#define _GNU_SOURCE
+#ifndef _GNU_SOURCE
+#  define _GNU_SOURCE
+#endif
 
 #include <gammu-config.h>
 

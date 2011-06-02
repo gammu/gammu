@@ -28,7 +28,7 @@
 #include <locale.h>
 
 /* Strings */
-#include <strings.h>
+#include "../../../helper/string.h"
 
 /* For locking */
 #ifdef WITH_THREAD
