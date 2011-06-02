@@ -324,7 +324,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/config/index.rst:75
 msgid "``at``"
-msgstr ""
+msgstr "``at``"
 
 # type: Plain text
 #. type: Plain text
