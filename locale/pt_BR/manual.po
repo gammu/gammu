@@ -294,7 +294,7 @@ msgstr "DKU-5 e cabos compatíveis"
 #. type: Plain text
 #: docs/manual/config/index.rst:66
 msgid "``mbus``"
-msgstr ""
+msgstr "``mbus``"
 
 # type: Plain text
 #. type: Plain text
