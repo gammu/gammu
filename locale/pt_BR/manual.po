@@ -1007,7 +1007,7 @@ msgstr "B<text> - gravação saída em formato texto"
 #. type: Plain text
 #: docs/manual/config/index.rst:245
 msgid "``textall``"
-msgstr ""
+msgstr "``textall``"
 
 # type: Plain text
 #. type: Plain text
