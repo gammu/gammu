@@ -83,7 +83,7 @@ msgstr "``$PROFILE\\Application Data\\gammurc``"
 #. type: Plain text
 #: docs/manual/config/index.rst:21
 msgid "``.\\gammurc``"
-msgstr "I<~/.gammurc>"
+msgstr "``.\\gammurc``"
 
 # type: Plain text
 #. type: Title -
