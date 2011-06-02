@@ -250,7 +250,7 @@ msgstr "Para cabos NOKIA você pode usar o seguinte:"
 #. type: Plain text
 #: docs/manual/config/index.rst:58
 msgid "``fbus``"
-msgstr ""
+msgstr "``fbus``"
 
 # type: Plain text
 #. type: Plain text
