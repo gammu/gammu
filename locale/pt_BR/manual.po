@@ -170,7 +170,7 @@ msgstr "Configuração"
 #. type: Plain text
 #: docs/manual/config/index.rst:45
 msgid "[gammu]"
-msgstr "gammu(1)"
+msgstr "[gammu]"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:47
