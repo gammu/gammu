@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.29.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-28 14:06+0100\n"
-"PO-Revision-Date: 2011-06-02 23:52+0200\n"
+"PO-Revision-Date: 2011-06-02 23:53+0200\n"
 "Last-Translator: Andrei Falbot <falbot@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
@@ -863,7 +863,7 @@ msgstr "``mobex``"
 #. type: Plain text
 #: docs/manual/config/index.rst:198
 msgid "m-obex service for Samsung phones"
-msgstr "m-obex serviço para telefones Samsung"
+msgstr "serviço m-obex para telefones Samsung"
 
 # type: TP
 #. type: Plain text
