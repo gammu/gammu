@@ -995,7 +995,7 @@ msgstr "Níveis de Debug"
 #. type: Plain text
 #: docs/manual/config/index.rst:243
 msgid "``text``"
-msgstr ""
+msgstr "``text``"
 
 # type: Plain text
 #. type: Plain text
