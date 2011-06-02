@@ -77,7 +77,7 @@ msgstr "No Microsoft Windows:"
 #. type: Plain text
 #: docs/manual/config/index.rst:20
 msgid "``$PROFILE\\Application Data\\gammurc``"
-msgstr ""
+msgstr "``$PROFILE\\Application Data\\gammurc``"
 
 # type: Plain text
 #. type: Plain text
