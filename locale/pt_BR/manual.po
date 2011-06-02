@@ -35630,7 +35630,6 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/utils/gammu-detect.rst:124
-#, fuzzy
 msgid ""
 "[gammu6] device = 5C:57:C8:BB:BB:BB name = Nokia E52 connection = bluephonet"
 msgstr ""
