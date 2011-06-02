@@ -417,7 +417,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/config/index.rst:97
 msgid "AT commands connection for most of phones."
-msgstr "B<blueat> - Conexão para muitos telefones com suporte a comandos AT."
+msgstr "Conexão para muitos telefones com suporte a comandos AT."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:98
