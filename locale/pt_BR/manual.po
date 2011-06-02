@@ -830,7 +830,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/config/index.rst:193
 msgid "``obexirmc``"
-msgstr ""
+msgstr "``obexirmc``"
 
 # type: Plain text
 #. type: Plain text
