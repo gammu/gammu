@@ -383,8 +383,8 @@ msgstr "Toques"
 #: docs/manual/config/index.rst:88 docs/manual/config/index.rst:99
 msgid "OBEX (IrMC or file transfer) connection for most of phones."
 msgstr ""
-"B<irdaobex> - OBEX (IrMC ou transferência de arquivo) conexão para a maioria "
-"dos telefones."
+"OBEX (IrMC ou transferência de arquivo) conexão para a maioria dos "
+"telefones."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:89
