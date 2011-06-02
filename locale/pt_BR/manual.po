@@ -100,7 +100,7 @@ msgstr "Descrição dos Campos:"
 #: docs/manual/config/index.rst:26
 msgid "Gammu requires configuration to be able to properly talk to your phone."
 msgstr ""
-"gammu requer configuração para adequadamente interagir com seu telefone."
+"Gammu requer configuração para adequadamente interagir com seu telefone."
 
 # type: Plain text
 #. type: Attribute :ref:
