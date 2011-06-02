@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-04-21 14:35+0200\n"
-"PO-Revision-Date: 2011-04-14 21:46+0200\n"
-"Last-Translator: gilberto dos santos alves <gsavix@gmail.com>\n"
+"PO-Revision-Date: 2011-06-02 23:00+0200\n"
+"Last-Translator: Andrei Falbot <falbot@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -1805,11 +1805,10 @@ msgid "There is newer testing Gammu version available! (%s instead of %s)\n"
 msgstr "Existe uma nova versão teste, Gammu, disponível! (%s em vez de %s)\n"
 
 #: gammu/gammu.c:327
-#, fuzzy
 msgid ""
 "Copyright (C) 2003 - 2011 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
-"Copyright (C) 2003 - 2010 Michal Cihar <michal@cihar.com> e outros autores."
+"Copyright (C) 2003 - 2011 Michal Cihar <michal@cihar.com> e outros autores."
 
 #: gammu/gammu.c:365
 msgid "standard input"
