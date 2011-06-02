@@ -283,7 +283,7 @@ msgstr "DKU-2 e cabos compatíveis"
 #. type: Plain text
 #: docs/manual/config/index.rst:64
 msgid "``dku5``"
-msgstr ""
+msgstr "``dku5``"
 
 # type: Plain text
 #. type: Plain text
