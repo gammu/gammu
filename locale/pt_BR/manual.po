@@ -422,7 +422,7 @@ msgstr "Conexão para muitos telefones com suporte a comandos AT."
 #. type: Plain text
 #: docs/manual/config/index.rst:98
 msgid "``blueobex``"
-msgstr "Toques"
+msgstr "``blueobex``"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:100
