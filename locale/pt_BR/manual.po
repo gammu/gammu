@@ -164,7 +164,7 @@ msgstr ""
 #: docs/manual/smsd/config.rst:47
 #, no-wrap
 msgid ".. config:section"
-msgstr "Configuração"
+msgstr ".. config:section"
 
 # type: Plain text
 #. type: Plain text
