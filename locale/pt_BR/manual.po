@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.29.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-28 14:06+0100\n"
-"PO-Revision-Date: 2011-06-02 23:50+0200\n"
+"PO-Revision-Date: 2011-06-02 23:51+0200\n"
 "Last-Translator: Andrei Falbot <falbot@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
@@ -228,7 +228,7 @@ msgstr "Linha de comando com parâmetros inválidos."
 #: docs/manual/smsd/config.rst:467
 #, no-wrap
 msgid ".. config:option"
-msgstr "Configuração"
+msgstr ".. config:option"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:52
