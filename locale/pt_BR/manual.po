@@ -300,7 +300,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/config/index.rst:67
 msgid "serial MBUS connection"
-msgstr "B<mbus> - conexão MBUS serial"
+msgstr "conexão MBUS serial"
 
 # type: Plain text
 #. type: Plain text
