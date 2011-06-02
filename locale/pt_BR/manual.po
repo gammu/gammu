@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.29.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-28 14:06+0100\n"
-"PO-Revision-Date: 2011-06-02 23:46+0200\n"
+"PO-Revision-Date: 2011-06-02 23:47+0200\n"
 "Last-Translator: Andrei Falbot <falbot@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
@@ -411,7 +411,7 @@ msgstr "``bluephonet``"
 #. type: Plain text
 #: docs/manual/config/index.rst:96
 msgid "``blueat``"
-msgstr ""
+msgstr "``blueat``"
 
 # type: Plain text
 #. type: Plain text
