@@ -1324,6 +1324,10 @@ GSM_Error MyGetLine(char *Buffer, size_t *Pos, char *OutBuffer, size_t MaxLen, s
 						*Pos = tmp;
 						break;
 					}
+					/* We ignore empty lines in this mode */
+					if (pos == 0) {
+						continue;
+					}
 				}
 				if (Buffer[*Pos] == 0x0d && (*Pos)+1 < MaxLen && Buffer[*Pos + 1] == 0x0a) {
 					/* Skip \r\n */
