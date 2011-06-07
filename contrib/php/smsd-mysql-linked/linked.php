@@ -34,7 +34,7 @@ function copysms($Text,$Sender,$DateTime,$id)
 		$offerta_richiesta = "v";
 	}
 	mysql_select_db("$new_db");
-	$result = mysql_query("insert into $new_db_table (ID,Text_Offer,Text_Category,PhoneNumber,Text_Other,DateTime) values ('$id','$offerta_richiesta','$category','$Sender','$testo','$DateTime')");
+	$result = mysql_query("insert into $new_db_table (ID,Text_Offer,Text_Category,PhoneNumber,Text_Other,DateTime) values ('$id','$offerta_richiesta','$category','$Sender','" . mysql_real_escape_string($testo) . "','$DateTime')");
 
 	//mark sms in Gammu smsd as processed
 	mysql_select_db("$smsd_db");
