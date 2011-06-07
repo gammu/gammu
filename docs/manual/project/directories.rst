@@ -107,8 +107,16 @@ contrib directory
 -----------------
 
 This directory contains various things which might be useful with Gammu.
-Please note that that code here might have different license terms than
-Gammu itself.
+
+.. note::
+
+    Please note that that code here might have different license terms than
+    Gammu itself.
+
+.. warning::
+
+    Most of scripts provided here are not actively maintained and might
+    be broken.
 
 bash-completion
 ***************
