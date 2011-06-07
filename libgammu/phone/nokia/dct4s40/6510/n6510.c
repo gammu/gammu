@@ -2665,6 +2665,10 @@ static GSM_Error N6510_ReplyGetSecurityStatus(GSM_Protocol_Message *msg, GSM_Sta
 {
 	GSM_Phone_Data *Data = &s->Phone.Data;
 
+	if (msg->Buffer[3] == 0xf0) {
+		return ERR_NOTSUPPORTED;
+	}
+
 	smprintf(s, "Security Code status received: ");
 	switch (msg->Buffer[4]) {
 	case 0x01 : smprintf(s, "waiting for Security Code.\n"); *Data->SecurityStatus = SEC_SecurityCode;	break;
@@ -4284,6 +4288,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N6510_ReplyEnterSecurityCode,	  "\x08",0x03,0x08,ID_EnterSecurityCode	  },
 	{N6510_ReplyEnterSecurityCode,	  "\x08",0x03,0x09,ID_EnterSecurityCode	  },
 	{N6510_ReplyGetSecurityStatus,	  "\x08",0x03,0x12,ID_GetSecurityStatus	  },
+	{N6510_ReplyGetSecurityStatus,	  "\x08",0x03,0xf0,ID_GetSecurityStatus	  },
 
 	{N6510_ReplyGetNetworkInfo,	  "\x0A",0x03,0x01,ID_GetNetworkInfo	  },
 	{N6510_ReplyGetNetworkInfo,	  "\x0A",0x03,0xf0,ID_GetNetworkInfo	  },
