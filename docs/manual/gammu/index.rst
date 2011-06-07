@@ -1832,7 +1832,7 @@ Sending messages
 
     All messages bellow are sent to number 123456, replace it with proper destination.
 
-Save text message up to standard 160 chars:
+Send text message up to standard 160 chars:
 
 .. code-block:: sh
 
@@ -1844,7 +1844,7 @@ or
 
     gammu sendsms TEXT 123456 -text "All your base are belong to us"
 
-Save long text message:
+Send long text message:
 
 .. code-block:: sh
 
@@ -1862,13 +1862,13 @@ or
 
     gammu sendsms EMS 123456 -text "All your base are belong to us"
 
-Save some funky message with predefined sound and animation from 2 bitmaps:
+Send some funky message with predefined sound and animation from 2 bitmaps:
 
 .. code-block:: sh
 
     gammu sendsms EMS 123456 -text "Greetings" -defsound 1 -text "from Gammu -tone10 axelf.txt -animation 2 file1.bmp file2.bmp
 
-Save protected message with ringtone:
+Send protected message with ringtone:
 
 .. code-block:: sh
 
