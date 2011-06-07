@@ -761,12 +761,12 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 	}
 
 	while (db->NextRow(Config, &res)) {
+		sprintf(ID, "%ld", (long)db->GetNumber(Config, &res, 0));
 		timestamp = db->GetDate(Config, &res, 1);
 		if (timestamp == -1) {
 			SMSD_Log(DEBUG_INFO, Config, "Invalid date for InsertIntoDB.");
 			return ERR_UNKNOWN;
 		}
-		sprintf(ID, "%ld", (long)db->GetNumber(Config, &res, 0));
 		SMSDSQL_Time2String(Config, timestamp, Config->DT, sizeof(Config->DT));
 		sender_id = db->GetString(Config, &res, 3);
 		if (sender_id == NULL || strlen(sender_id) == 0 || !strcmp(sender_id, Config->PhoneID)) {
