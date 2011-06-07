@@ -19,7 +19,7 @@ the issue.
 ChangeLog
 =========
     
-2011???? - 1.29.93
+20110607 - 1.29.93
 
 [-] * Properly initialize atobex driver with Sony-Ericsson phones.
 [-] * Updated list of country and network codes.
