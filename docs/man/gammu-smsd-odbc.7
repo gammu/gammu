@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSD-ODBC" "7" "May 10, 2011" "1.29.93" "Gammu"
+.TH "GAMMU-SMSD-ODBC" "7" "June 07, 2011" "1.29.94" "Gammu"
 .SH NAME
 gammu-smsd-odbc \- gammu-smsd(1) backend using ODBC abstraction layer to use any supported database as a message storage
 .
@@ -70,6 +70,7 @@ Example configuration:
 service = sql
 driver = odbc
 host = dsn_of_your_database
+sql = sql_variant_to_use
 user = username
 password = password
 .ft P
