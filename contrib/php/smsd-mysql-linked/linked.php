@@ -15,21 +15,21 @@ $new_db_table = "linked";
 $inbox = "UpdatedInDB,ReceivingDateTime,Text,SenderNumber,Coding,UDH,SMSCNumber,Class,TextDecoded,ID,RecipientID";
 
 //adds SMS to new table and marks processed sms as processed
-function copysms($Text,$Sender,$DateTime,$id) 
+function copysms($Text,$Sender,$DateTime,$id)
 {
 	global $new_db, $new_db_table, $smsd_db;
 
 	if (eregi("([0-9]{1,})(#)([a-z]{1,})(#)(.*)", $Text, $regs)) {
-		$testo = "".$regs[5].""; 
+		$testo = "".$regs[5]."";
 		$category = "".$regs[1]."";
 		$off_rich = "".$regs[3]."";
 		if ($off_rich=='r' || $off_rich=='R') {
 			$offerta_richiesta="a";
 		} else {
 			$offerta_richiesta="v";
-		} 
+		}
 	} else {
-		$testo = $Text; 
+		$testo = $Text;
 		$category = "45";
 		$offerta_richiesta = "v";
 	}
@@ -74,7 +74,7 @@ if (!$dbpass) {
 			$counter_complete++;
 		}
 		//we have linked sms with 8 bit ID (short UDH)
-		if (strlen($udh) == 12 && $udh[0] == 0 && $udh[1] == 5 && $udh[2] == 0 && $udh[3] == 0 && 
+		if (strlen($udh) == 12 && $udh[0] == 0 && $udh[1] == 5 && $udh[2] == 0 && $udh[3] == 0 &&
                                           $udh[4] == 0 && $udh[5] == 3 && $udh[10] == 0 && $udh[11] == 1) {
 			$complete = true;
 			$text = $rekord[8];
@@ -101,7 +101,7 @@ if (!$dbpass) {
 			}
 		}
 		//we have linked sms with 16 bit ID (long UDH)
-		if (strlen($udh) == 14 && $udh[0] == 0 && $udh[1] == 6 && $udh[2] == 0 && $udh[3] == 8 && 
+		if (strlen($udh) == 14 && $udh[0] == 0 && $udh[1] == 6 && $udh[2] == 0 && $udh[3] == 8 &&
                                           $udh[4] == 0 && $udh[5] == 4 && $udh[12] == 0 && $udh[13] == 1) {
 			$text = $rekord[8];
 			$id = $rekord[9];
