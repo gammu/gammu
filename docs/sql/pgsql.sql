@@ -90,7 +90,7 @@ INSERT INTO gammu ("Version") VALUES (13);
 
 CREATE TABLE inbox (
   "UpdatedInDB" timestamp(0) WITHOUT time zone NOT NULL DEFAULT LOCALTIMESTAMP(0),
-  "ReceivingDateTime" timestamp(0) WITHOUT time zone NOT NULL DEFAULT 'epoch',
+  "ReceivingDateTime" timestamp(0) WITHOUT time zone NOT NULL DEFAULT LOCALTIMESTAMP(0),
   "Text" text NOT NULL,
   "SenderNumber" varchar(20) NOT NULL DEFAULT '',
   "Coding" varchar(255) NOT NULL DEFAULT 'Default_No_Compression',
@@ -125,8 +125,8 @@ CREATE TRIGGER update_timestamp BEFORE UPDATE ON inbox FOR EACH ROW EXECUTE PROC
 
 CREATE TABLE outbox (
   "UpdatedInDB" timestamp(0) WITHOUT time zone NOT NULL DEFAULT LOCALTIMESTAMP(0),
-  "InsertIntoDB" timestamp(0) WITHOUT time zone NOT NULL DEFAULT 'epoch',
-  "SendingDateTime" timestamp NOT NULL DEFAULT 'epoch',
+  "InsertIntoDB" timestamp(0) WITHOUT time zone NOT NULL DEFAULT LOCALTIMESTAMP(0),
+  "SendingDateTime" timestamp NOT NULL DEFAULT LOCALTIMESTAMP(0),
   "SendBefore" time NOT NULL DEFAULT '23:59:59',
   "SendAfter" time NOT NULL DEFAULT '00:00:00',
   "Text" text,
@@ -139,7 +139,7 @@ CREATE TABLE outbox (
   "MultiPart" boolean NOT NULL DEFAULT 'false',
   "RelativeValidity" integer DEFAULT '-1',
   "SenderID" varchar(255),
-  "SendingTimeOut" timestamp(0) WITHOUT time zone NOT NULL DEFAULT 'epoch',
+  "SendingTimeOut" timestamp(0) WITHOUT time zone NOT NULL DEFAULT LOCALTIMESTAMP(0),
   "DeliveryReport" varchar(10) DEFAULT 'default',
   "CreatorID" text NOT NULL,
   CHECK ("Coding" IN 
@@ -229,8 +229,8 @@ CREATE TABLE pbk_groups (
 CREATE TABLE phones (
   "ID" text NOT NULL,
   "UpdatedInDB" timestamp(0) WITHOUT time zone NOT NULL DEFAULT LOCALTIMESTAMP(0),
-  "InsertIntoDB" timestamp(0) WITHOUT time zone NOT NULL DEFAULT 'epoch',
-  "TimeOut" timestamp(0) WITHOUT time zone NOT NULL DEFAULT 'epoch',
+  "InsertIntoDB" timestamp(0) WITHOUT time zone NOT NULL DEFAULT LOCALTIMESTAMP(0),
+  "TimeOut" timestamp(0) WITHOUT time zone NOT NULL DEFAULT LOCALTIMESTAMP(0),
   "Send" boolean NOT NULL DEFAULT 'no',
   "Receive" boolean NOT NULL DEFAULT 'no',
   "IMEI" varchar(35) PRIMARY KEY NOT NULL,
@@ -261,8 +261,8 @@ CREATE TRIGGER update_timestamp BEFORE UPDATE ON phones FOR EACH ROW EXECUTE PRO
 
 CREATE TABLE sentitems (
   "UpdatedInDB" timestamp(0) WITHOUT time zone NOT NULL DEFAULT LOCALTIMESTAMP(0),
-  "InsertIntoDB" timestamp(0) WITHOUT time zone NOT NULL DEFAULT 'epoch',
-  "SendingDateTime" timestamp(0) WITHOUT time zone NOT NULL DEFAULT 'epoch',
+  "InsertIntoDB" timestamp(0) WITHOUT time zone NOT NULL DEFAULT LOCALTIMESTAMP(0),
+  "SendingDateTime" timestamp(0) WITHOUT time zone NOT NULL DEFAULT LOCALTIMESTAMP(0),
   "DeliveryDateTime" timestamp(0) WITHOUT time zone NULL,
   "Text" text NOT NULL,
   "DestinationNumber" varchar(20) NOT NULL DEFAULT '',
