@@ -1831,6 +1831,10 @@ GSM_Error ATGEN_ReplyGetManufacturer(GSM_Protocol_Message *msg, GSM_StateMachine
 			strcpy(s->Phone.Data.Manufacturer,"Sharp");
 			Priv->Manufacturer = AT_Sharp;
 		}
+		if (strcasestr(msg->Buffer,"Huawei")) {
+			strcpy(s->Phone.Data.Manufacturer,"Huawei");
+			Priv->Manufacturer = AT_Huawei;
+		}
 		if (strstr(msg->Buffer,"ERICSSON")) {
 			strcpy(s->Phone.Data.Manufacturer,"Ericsson");
 			Priv->Manufacturer = AT_Ericsson;
