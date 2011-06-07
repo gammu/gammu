@@ -1786,6 +1786,32 @@ GSM_Error ATGEN_ReplyGetManufacturer(GSM_Protocol_Message *msg, GSM_StateMachine
 {
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
+	typedef struct {
+		char name[20];
+		GSM_AT_Manufacturer id;
+	} vendors_t;
+	vendors_t vendors[] = {
+		{"Falcom", AT_Falcom},
+		{"Nokia", AT_Nokia},
+		{"Siemens", AT_Siemens},
+		{"Sharp", AT_Sharp},
+		{"Huawei", AT_Huawei},
+		{"Sony Ericsson", AT_Ericsson},
+		{"Ericsson", AT_Ericsson},
+		{"iPAQ", AT_HP},
+		{"Alcatel", AT_Alcatel},
+		{"Samsung", AT_Samsung},
+		{"Philips", AT_Philips},
+		{"Mitsubishi", AT_Mitsubishi},
+		{"Motorola", AT_Motorola},
+		{"Option", AT_Option},
+		{"Wavecom", AT_Wavecom},
+		{"\0", 0}
+	};
+	vendors_t *vendor;
+
+
+
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
 		smprintf(s, "Manufacturer info received\n");
@@ -1809,80 +1835,24 @@ GSM_Error ATGEN_ReplyGetManufacturer(GSM_Protocol_Message *msg, GSM_StateMachine
 			memmove(s->Phone.Data.Manufacturer, s->Phone.Data.Manufacturer + 3, strlen(s->Phone.Data.Manufacturer + 3) + 1);
 		}
 
-		if (strstr(msg->Buffer,"Falcom")) {
-			strcpy(s->Phone.Data.Manufacturer,"Falcom");
-			Priv->Manufacturer = AT_Falcom;
-			if (strstr(msg->Buffer,"A2D")) {
-				strcpy(s->Phone.Data.Model,"A2D");
-				s->Phone.Data.ModelInfo = GetModelData(s, NULL, s->Phone.Data.Model, NULL);
-				smprintf(s, "Model A2D\n");
+		/* Lookup in vendor table */
+		for (vendor = vendors; vendor->id != 0; vendor++) {
+			if (strcasestr(msg->Buffer, vendor->name)) {
+				strcpy(s->Phone.Data.Manufacturer, vendor->name);
+				Priv->Manufacturer = vendor->id;
 			}
 		}
-		if (strstr(msg->Buffer,"Nokia")) {
-			strcpy(s->Phone.Data.Manufacturer,"Nokia");
+
+		/* Vendor specific hacks*/
+		if (Priv->Manufacturer == AT_Falcom && strstr(msg->Buffer,"A2D")) {
+			strcpy(s->Phone.Data.Model,"A2D");
+			s->Phone.Data.ModelInfo = GetModelData(s, NULL, s->Phone.Data.Model, NULL);
+			smprintf(s, "Model A2D\n");
+		}
+		if (Priv->Manufacturer == AT_Nokia) {
 			smprintf(s, "HINT: Consider using Nokia specific protocol instead of generic AT.\n");
-			Priv->Manufacturer = AT_Nokia;
 		}
-		if (strstr(msg->Buffer,"SIEMENS")) {
-			strcpy(s->Phone.Data.Manufacturer,"Siemens");
-			Priv->Manufacturer = AT_Siemens;
-		}
-		if (strstr(msg->Buffer,"SHARP")) {
-			strcpy(s->Phone.Data.Manufacturer,"Sharp");
-			Priv->Manufacturer = AT_Sharp;
-		}
-		if (strcasestr(msg->Buffer,"Huawei")) {
-			strcpy(s->Phone.Data.Manufacturer,"Huawei");
-			Priv->Manufacturer = AT_Huawei;
-		}
-		if (strstr(msg->Buffer,"ERICSSON")) {
-			strcpy(s->Phone.Data.Manufacturer,"Ericsson");
-			Priv->Manufacturer = AT_Ericsson;
-		}
-		if (strstr(msg->Buffer,"Sony Ericsson")) {
-			strcpy(s->Phone.Data.Manufacturer,"Sony Ericsson");
-			Priv->Manufacturer = AT_Ericsson;
-		}
-		if (strstr(msg->Buffer,"iPAQ")) {
-			strcpy(s->Phone.Data.Manufacturer,"HP");
-			Priv->Manufacturer = AT_HP;
-		}
-		if (strstr(msg->Buffer,"ALCATEL")) {
-			strcpy(s->Phone.Data.Manufacturer,"Alcatel");
-			Priv->Manufacturer = AT_Alcatel;
-		}
-		if (strstr(msg->Buffer,"SAGEM")) {
-			strcpy(s->Phone.Data.Manufacturer,"Sagem");
-			Priv->Manufacturer = AT_Sagem;
-		}
-		if (strstr(msg->Buffer,"Samsung")) {
-			strcpy(s->Phone.Data.Manufacturer,"Samsung");
-			Priv->Manufacturer = AT_Samsung;
-		}
-		if (strstr(msg->Buffer,"SAMSUNG")) {
-			strcpy(s->Phone.Data.Manufacturer,"Samsung");
-			Priv->Manufacturer = AT_Samsung;
-		}
-		if (strstr(msg->Buffer,"philips")) {
-			strcpy(s->Phone.Data.Manufacturer,"Philips");
-			Priv->Manufacturer = AT_Philips;
-		}
-		if (strstr(msg->Buffer,"Mitsubishi")) {
-			strcpy(s->Phone.Data.Manufacturer,"Mitsubishi");
-			Priv->Manufacturer = AT_Mitsubishi;
-		}
-		if (strstr(msg->Buffer,"Motorola")) {
-			strcpy(s->Phone.Data.Manufacturer,"Motorola");
-			Priv->Manufacturer = AT_Motorola;
-		}
-		if (strstr(msg->Buffer,"Option")) {
-			strcpy(s->Phone.Data.Manufacturer,"Option");
-			Priv->Manufacturer = AT_Option;
-		}
-		if (strstr(msg->Buffer, "WAVECOM")) {
-			strcpy(s->Phone.Data.Manufacturer, "Wavecom");
-			Priv->Manufacturer = AT_Wavecom;
-		}
+
 		/*
 		 * IAXmodem can not currently reasonably work with Gammu,
 		 * but we can try to fixup at least something.
