@@ -146,7 +146,6 @@ if (ICONV_FOUND)
 endif (ICONV_FOUND)
 
 if (UNIX)
-    find_library (MATH_LIBRARIES m)
     target_link_libraries (libGammu ${MATH_LIBRARIES})
 endif (UNIX)
 
