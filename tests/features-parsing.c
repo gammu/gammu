@@ -15,7 +15,7 @@ int single_test(const char *string, GSM_Error expected)
 	real = GSM_SetFeatureString(features, string);
 
 	if (real != expected) {
-		printf("Failed parsing of %s (got %s, expected %s)\n", string, GSM_FeatureToString(real), GSM_FeatureToString(expected));
+		printf("Failed parsing of %s (got %s, expected %s)\n", string, GSM_ErrorString(real), GSM_ErrorString(expected));
 		return 1;
 	}
 	return 0;
