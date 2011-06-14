@@ -371,7 +371,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 {
 	unsigned char 				*Block;
 	int					length = 0, i, bs = 0;
-	GSM_71_65_Phonebook_Entries_Types	Type;
+	GSM_EntryType Type;
 	GSM_EntryLocation	Location = PBK_Location_Unknown;
 	gboolean					found=FALSE;
 	gboolean					foundbb5add=FALSE;
