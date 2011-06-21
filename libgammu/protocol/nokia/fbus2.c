@@ -231,6 +231,9 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 	if (d->MsgRXState == RX_GetLength2) {
 		d->Msg.Length 	= d->Msg.Length + rx_char;
 		d->Msg.Buffer 	= (unsigned char *)malloc(d->Msg.Length+3);
+		if (d->Msg.Buffer == NULL) {
+			return ERR_MOREMEMORY;
+		}
 		d->MsgRXState 	= RX_GetMessage;
 		return ERR_NONE;
 	}
