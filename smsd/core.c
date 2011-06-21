@@ -742,13 +742,12 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 	Config->maxretries = INI_GetInt(Config->smsdcfgfile, "smsd", "maxretries", 1);
 	Config->backend_retries = INI_GetInt(Config->smsdcfgfile, "smsd", "backendretries", 10);
 
-	SMSD_Log(DEBUG_NOTICE, Config, "commtimeout=%i, sendtimeout=%i, receivefrequency=%i, resetfrequency=%i, hardresetfrequency=%i",
+	SMSD_Log(DEBUG_NOTICE, Config, "CommTimeout=%i, SendTimeout=%i, ReceiveFrequency=%i, ResetFrequency=%i, HardResetFrequency=%i",
 			Config->commtimeout, Config->sendtimeout, Config->receivefrequency, Config->resetfrequency, Config->hardresetfrequency);
-	SMSD_Log(DEBUG_NOTICE, Config, "checks: security=%d, battery=%d, signal=%d",
+	SMSD_Log(DEBUG_NOTICE, Config, "checks: CheckSecurity=%d, CheckBattery=%d, CheckSignal=%d",
 			Config->checksecurity, Config->checkbattery, Config->checksignal);
-	SMSD_Log(DEBUG_NOTICE, Config, "mode: %s %s",
-			Config->enable_send ? "send" : "no-send",
-			Config->enable_receive ? "receive" : "no-receive");
+	SMSD_Log(DEBUG_NOTICE, Config, "mode: Send=%d, Receive=%d",
+			Config->enable_send, Config->enable_receive);
 
 	Config->skipsmscnumber = INI_GetValue(Config->smsdcfgfile, "smsd", "skipsmscnumber", FALSE);
 	if (Config->skipsmscnumber == NULL) Config->skipsmscnumber="";
