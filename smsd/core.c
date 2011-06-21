@@ -746,6 +746,9 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 			Config->commtimeout, Config->sendtimeout, Config->receivefrequency, Config->resetfrequency, Config->hardresetfrequency);
 	SMSD_Log(DEBUG_NOTICE, Config, "checks: security=%d, battery=%d, signal=%d",
 			Config->checksecurity, Config->checkbattery, Config->checksignal);
+	SMSD_Log(DEBUG_NOTICE, Config, "mode: %s %s",
+			Config->enable_send ? "send" : "no-send",
+			Config->enable_receive ? "receive" : "no-receive");
 
 	Config->skipsmscnumber = INI_GetValue(Config->smsdcfgfile, "smsd", "skipsmscnumber", FALSE);
 	if (Config->skipsmscnumber == NULL) Config->skipsmscnumber="";
