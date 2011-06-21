@@ -331,11 +331,15 @@ General parameters of SMS daemon
 
 .. config:option:: Send
 
+    .. versionadded:: 1.28.91
+
     Whether to enable sending of messages.
 
     Default is True.
 
 .. config:option:: Receive
+
+    .. versionadded:: 1.28.91
 
     Whether to enable receiving of messages.
 
