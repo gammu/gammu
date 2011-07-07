@@ -38,12 +38,12 @@ RSC=rc.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 6
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\lib\Release"
-# PROP Intermediate_Dir "..\..\temp\Release"
+# PROP Output_Dir "..\lib\Release"
+# PROP Intermediate_Dir "..\temp\Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /Yu"stdafx.h" /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\Proj_inc" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_USRDLL" /Yu"stdafx.h" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\Proj_inc" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_USRDLL" /FR /Yu"stdafx.h" /FD /c
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x404 /d "NDEBUG" /d "_AFXDLL"
@@ -53,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /dll /machine:I386
-# ADD LINK32 ..\..\lib\Release\Common.lib /nologo /subsystem:windows /dll /machine:I386 /out:"..\..\exe\Release\ATgen.dll"
+# ADD LINK32 ..\lib\Release\Common.lib /nologo /subsystem:windows /dll /machine:I386 /out:"..\exe\Release\ATgen.dll"
 
 !ELSEIF  "$(CFG)" == "ATgen - Win32 Debug"
 
@@ -64,8 +64,8 @@ LINK32=link.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 6
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\lib\debug"
-# PROP Intermediate_Dir "..\..\temp\debug\atgen"
+# PROP Output_Dir "..\lib\debug"
+# PROP Intermediate_Dir "..\temp\debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /Yu"stdafx.h" /FD /GZ /c
@@ -79,7 +79,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 ..\..\lib\Debug\Common.lib /nologo /subsystem:windows /dll /debug /machine:I386 /out:"..\..\exe\Debug\ATgen.dll" /pdbtype:sept
+# ADD LINK32 ..\lib\Debug\Common.lib /nologo /subsystem:windows /dll /debug /machine:I386 /out:"..\exe\Debug\ATgen.dll" /pdbtype:sept
 
 !ENDIF 
 
@@ -113,10 +113,6 @@ SOURCE=.\ATPhonebook.cpp
 # Begin Source File
 
 SOURCE=.\ATSMS.CPP
-# End Source File
-# Begin Source File
-
-SOURCE=.\ATSMSEX.CPP
 # End Source File
 # Begin Source File
 

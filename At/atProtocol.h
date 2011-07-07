@@ -1,4 +1,4 @@
-/* (c) 2002-2003 by Marcin Wiacek and Michal Cihar */
+
 #ifndef atProtocol_h
 #define atProtocol_h
 #include "commfun.h"
@@ -18,7 +18,8 @@ GSM_Error AT_Terminate();
 GSM_Error AT_SetProtocolData(bool EditMode,bool bFastWrite,DWORD dwFlag);
 GSM_Error AT_WriteMessage (unsigned char *buffer,int length, unsigned char type);
 GSM_Error AT_StateMachine(unsigned char rx_char);
-
+// added for GX18
+GSM_Error AT_StateMachine2(unsigned char rx_char);
 #endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.

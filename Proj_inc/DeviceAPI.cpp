@@ -1,4 +1,3 @@
-/* (c) 2002-2004 by Marcin Wiacek and Michal Cihar */
 #include "stdafx.h"
 #include "DeviceAPI.h"
 

@@ -18,19 +18,24 @@ GSM_Error ATGEN_ReplyGetMutiMemory(GSM_Protocol_Message msg)
 	unsigned char		buffer[500],buffer2[500];
 	int			len;
 	FILE *	file;
-
+	// v1.1.0.0 , added by mingfa
     GSM_MemoryStatus  *MemoryStatus = theApp.m_MemoryStatus;
 	int testlen = 0;
 
 
 	switch (Replynfo.ReplyState) {
-	case AT_Reply_Continue:
+	case AT_Reply_Continue: //peggy 0201 add
 	case AT_Reply_OK:
  		smprintf(theApp.m_pDebuginfo, "Phonebook entry received\n");
  		Memory->EntriesNum = 0;
-
+	/*	if (Priv->Lines.numbers[4]==0) //	return ERR_EMPTY; //peggy
+		{
+			if(Priv->ReplyState == AT_Reply_Continue)
+				return ERR_EMPTY;
+			else return ERR_NONE; 
+		}*/
 		pos = strstr((char*)msg.Buffer, "+CPBR:");
-		if (pos == NULL)
+		if (pos == NULL)//return ERR_UNKNOWN;//peggy
 		{
 			if(Replynfo.ReplyState == AT_Reply_Continue)
 				return ERR_UNKNOWN;
@@ -87,11 +92,12 @@ GSM_Error ATGEN_ReplyGetMutiMemory(GSM_Protocol_Message msg)
 		pos += ATGEN_ExtractOneParameter((unsigned char *)pos, buffer);
  		smprintf(theApp.m_pDebuginfo, "Name text: %s\n",buffer);
 
+		/*v1.1.0.0 , added by mingfa ,  for SE T300/T290i/T230 number type */	
 		// only for ME type
 		if ( (theApp.m_ManufacturerID == AT_Ericsson) && ( MemoryStatus->MemoryType == 1 ) )
 		{	 
 			testlen = strlen((char*)buffer);
-
+            //if (strstr(buffer,"/H") )
 			// check last two byte , that was added vt SE mobile-self
 			if( ( buffer[strlen((char*)buffer)-3] == '/') && (buffer[strlen((char*)buffer)-2] == 'H') )
 			{
@@ -99,14 +105,14 @@ GSM_Error ATGEN_ReplyGetMutiMemory(GSM_Protocol_Message msg)
               buffer[strlen((char*)buffer)-3]=0x22; // it is ( " ).
               buffer[strlen((char*)buffer)-2]=0x00;
 			}
-
+		//	else if (strstr (buffer,"/W") )
 			else if( ( buffer[strlen((char*)buffer)-3] == '/') && (buffer[strlen((char*)buffer)-2] == 'W') )
 			{
               Memory->Entries[0].EntryType = PBK_Number_Work; 
               buffer[strlen((char*)buffer)-3]=0x22; // it is ( " ).
               buffer[strlen((char*)buffer)-2]=0x00;
 			}
-
+		//	else if (strstr (buffer,"/M") )
 			else if( ( buffer[strlen((char*)buffer)-3] == '/') && (buffer[strlen((char*)buffer)-2] == 'M') )
 			{
               Memory->Entries[0].EntryType = PBK_Number_Mobile; 
@@ -116,7 +122,7 @@ GSM_Error ATGEN_ReplyGetMutiMemory(GSM_Protocol_Message msg)
 			else
 			  Memory->Entries[0].EntryType = PBK_Number_General;
 		}
-
+         // mingfa--
 
 
  		Memory->EntriesNum++;
@@ -130,15 +136,14 @@ GSM_Error ATGEN_ReplyGetMutiMemory(GSM_Protocol_Message msg)
  			DecodeDefault(Memory->Entries[1].Text,buffer+1,strlen((char*)buffer)-2,false,NULL);
 			break;			
 		case AT_PBK_UTF8:
-
+	//		DecodeUTF2String((char*)buffer2,buffer+1,strlen((char*)buffer)-2);			
+	//		EncodeUcs2(Memory->Entries[1].Text,(char *)buffer2,strlen((char*)buffer2));
 			DecodeUTF8ToUnicode(Memory->Entries[1].Text,buffer+1,strlen((char*)buffer)-2);	//for _UNICODE
 			break;			
-		case AT_PBK_UCS2:		
-			if(buffer[0] = '"')
-				DecodeHexUnicode(Memory->Entries[1].Text,buffer+1,strlen((char*)buffer+1) - 1);
-			else
-				DecodeHexUnicode(Memory->Entries[1].Text,buffer,strlen((char*)buffer));
-
+		case AT_PBK_UCS2:			
+			DecodeHexUnicode(Memory->Entries[1].Text,buffer+1,strlen((char*)buffer+1) - 1);
+			//memcpy(Memory->Entries[1].Text,buffer+1,strlen(buffer+1) - 1);
+			//ReverseUnicodeString(Memory->Entries[1].Text);
 			break;			
 		case AT_PBK_PCCP437:
 			/* FIXME: correctly decode PCCP437 */
@@ -230,7 +235,7 @@ GSM_Error ATGEN_ReplyGetCPBRMemoryInfo(GSM_Protocol_Message msg)
 		if (!pos) 
 		{
 			pos = strstr((char*)msg.Buffer, "+CPBR:");
-			if (pos == NULL)
+			if (pos == NULL)//return ERR_UNKNOWN;//peggy
 				return ERR_UNKNOWN;
 			/* Go after +CPBR: */
 			pos += 6; 
@@ -307,7 +312,33 @@ GSM_Error ATGEN_ReplySetMemory(GSM_Protocol_Message msg)
 		return ERR_UNKNOWNRESPONSE;
 	}
 }GSM_Error SIEMENS_ReplyGetMemory(GSM_Protocol_Message msg)
-{
+{/*
+#ifndef ENABLE_LGPL
+	unsigned char		buffer[500],buffer2[500];
+	GSM_ATReplayInfo Replynfo;
+	ATGEN_GetReplyStatue(&msg,&Replynfo);
+
+	switch (Replynfo.ReplyState) {
+	case AT_Reply_OK:
+ 		smprintf(theApp.m_pDebuginfo, "Phonebook entry received\n");
+		CopyLineString(buffer, msg.Buffer, theApp.m_Lines, 3);
+		DecodeHexBin(buffer2,buffer,strlen(buffer));
+ 		Memory->EntriesNum = 0;
+                DecodeVCARD21Text(buffer2, Memory);
+		if (Memory->EntriesNum == 0) return ERR_EMPTY;
+		return ERR_NONE;
+	case AT_Reply_Error:
+                smprintf(theApp.m_pDebuginfo, "Error - too high location ?\n");
+                return ERR_INVALIDLOCATION;
+	case AT_Reply_CMSError:
+ 	        return ATGEN_HandleCMSError(s);
+	default:
+		break;
+	}
+	return ERR_UNKNOWNRESPONSE;
+#else
+	return ERR_NOTIMPLEMENTED;
+#endif*/
 	return ERR_NONE;
 }
 GSM_Error ATGEN_ReplyGetCPBRMemoryStatus(GSM_Protocol_Message msg)
@@ -363,7 +394,7 @@ GSM_Error ATGEN_GetMemoryInfo(GSM_MemoryStatus *Status,GSM_MemoryInfo* pMemoryIn
 	theApp.m_MemoryInfo.NumberLength		= 0;
 	theApp.m_MemoryInfo.FirstMemoryEntry = 0;
 
-
+//	error = GSM_WaitFor (s, "AT+CPBR=?\r", 10, 0x00, 4, ID_GetMemoryStatus);
 	ReplymsgType.nCount = 1;
 	wsprintf((char*)ReplymsgType.CheckInfo[0].msgtype,"AT+CPBR=?");
 	ReplymsgType.CheckInfo[0].subtypechar = 0;
@@ -371,9 +402,20 @@ GSM_Error ATGEN_GetMemoryInfo(GSM_MemoryStatus *Status,GSM_MemoryInfo* pMemoryIn
 	error = pWriteCommandfn ((unsigned char *)"AT+CPBR=?\r", 10, 0x00, 8, false,NULL,&ReplymsgType,ATGEN_ReplyGetCPBRMemoryInfo);
 
 	memcpy(pMemoryInfo,&theApp.m_MemoryInfo,sizeof(GSM_MemoryInfo));
+	// v1.1.0.1 for SE F500i "power on and run PB first " , added by mingfa
+	/* it's useless to fix F500i bug
+	if ( error!= ERR_NONE)
+	{
+	error=GSM_WaitFor (s, "AT+CGMM\r", 8, 0x00, 3, ID_GetModel);
+	Sleep(1000);
+	error = GSM_WaitFor (s, "AT+CPBR=?\r", 10, 0x00, 4, ID_GetMemoryStatus);
+	}
+	*/
 
+//	if (Priv->Manufacturer == AT_Samsung)
+//		error = GSM_WaitFor (s, "", 0, 0x00, 4, ID_GetMemoryStatus);
 	if (error != ERR_NONE) return error;
-
+//	max_no = xParseMaximunMemory(s->Phone.Data.RequestMsg->Buffer);
 	max_no = pMemoryInfo->MemorySize;
 	if (NeededInfo == AT_Total || NeededInfo == AT_Sizes || NeededInfo == AT_First) return ERR_NONE;
 
@@ -384,12 +426,12 @@ GSM_Error ATGEN_GetMemoryInfo(GSM_MemoryStatus *Status,GSM_MemoryInfo* pMemoryIn
 	Status->MemoryFree		= 0;
 	start				= pMemoryInfo->FirstMemoryEntry;
 	theApp.m_NextMemoryEntry		= 0;
-	pMemoryInfo->MemorySize += start-1;
+	pMemoryInfo->MemorySize += start-1; //Jay add for Motorola comparion start and end
 	while (1) {
 		end	= start + 20;
 		if (end > pMemoryInfo->MemorySize) end = pMemoryInfo->MemorySize;
 		sprintf(req, "AT+CPBR=%i,%i\r", start, end);
-
+	//	error	= GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_GetMemoryStatus);
 		ReplymsgType.nCount = 1;
 		wsprintf((char*)ReplymsgType.CheckInfo[0].msgtype,"AT+CPBR=");
 		ReplymsgType.CheckInfo[0].subtypechar = 0;
@@ -401,12 +443,16 @@ GSM_Error ATGEN_GetMemoryInfo(GSM_MemoryStatus *Status,GSM_MemoryInfo* pMemoryIn
 			return ERR_NONE;
 		}
 		if (error != ERR_NONE) return error;
-
+	/*	if( strlen(s->Phone.Data.RequestMsg->Buffer ) == 0x14 )
+		{
+			Status->MemoryFree = max_no - Status->MemoryUsed;
+			return ERR_NONE;
+		}*/
 		if (NeededInfo == AT_NextEmpty && theApp.m_NextMemoryEntry != 0 && theApp.m_NextMemoryEntry != end + 1)
 			return ERR_NONE;
 		if (end == pMemoryInfo->MemorySize) {
-
-			Status->MemoryFree = max_no - Status->MemoryUsed;
+	//		Status->MemoryFree = Priv->MemorySize - Status->MemoryUsed;//peggy -
+			Status->MemoryFree = max_no - Status->MemoryUsed; //peggy +
 			return ERR_NONE;
 		}
 		start = end + 1;
@@ -416,11 +462,11 @@ GSM_Error ATGEN_GetMemoryInfo(GSM_MemoryStatus *Status,GSM_MemoryInfo* pMemoryIn
 GSM_Error ATGEN_SetPBKMemoryEx(GSM_MemoryType MemType,bool bCheckOldType,GSM_Error (*pWriteCommandfn) (unsigned char *buffer,int length, unsigned char type, int WaitTime,bool ObexMode,
 							  GSM_ATMultiAnwser *pATMultiAnwser,GSM_Reply_MsgType* ReplyCheckType, GSM_Error (*CallBackFun)    (GSM_Protocol_Message msg)),Debug_Info	*pDebuginfo)
 {
-
+//	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	char 			req[] = "AT+CPBS=\"XX\"\r";
 	GSM_Error		error;
 
-
+//	if(s->Phone.Data.Priv.ATGEN.OBEX) return ERR_OBEXMODE;
 	if(bCheckOldType)
 	{
 		if (theApp.m_PBKMemory == MemType) return ERR_NONE;
@@ -433,8 +479,9 @@ GSM_Error ATGEN_SetPBKMemoryEx(GSM_MemoryType MemType,bool bCheckOldType,GSM_Err
 	theApp.m_MemoryInfo.TextLength		= 0;
 	theApp.m_MemoryInfo.NumberLength		= 0;
 
-	if (theApp.m_PBKMemories[0] == 0) {
-
+	if (theApp.m_PBKMemories[0] == 0) 
+	{
+	//	error=GSM_WaitFor (s, "AT+CPBS=?\r", 10, 0x00, 3, ID_SetMemoryType);
 		ReplymsgType.nCount = 1;
 		wsprintf((char*)ReplymsgType.CheckInfo[0].msgtype,"AT+CPBS=?");
 		ReplymsgType.CheckInfo[0].subtypechar = 0;
@@ -488,7 +535,7 @@ GSM_Error ATGEN_SetPBKMemoryEx(GSM_MemoryType MemType,bool bCheckOldType,GSM_Err
 		ReplymsgType.CheckInfo[0].subtypechar = 0;
 		ReplymsgType.CheckInfo[0].subtype = 0x00;
 		error = pWriteCommandfn ((unsigned char *)req, 13, 0x00, 6, false,NULL,&ReplymsgType,ATGEN_GenericReply);
-
+//	error=GSM_WaitFor (s, req, 13, 0x00, 3, ID_SetMemoryType);
 	if (error == ERR_NONE) theApp.m_PBKMemory = MemType;
 	return error;
 }
@@ -496,7 +543,79 @@ GSM_Error ATGEN_SetPBKMemory(GSM_MemoryType MemType,GSM_Error (*pWriteCommandfn)
 							  GSM_ATMultiAnwser *pATMultiAnwser,GSM_Reply_MsgType* ReplyCheckType, GSM_Error (*CallBackFun)    (GSM_Protocol_Message msg)),Debug_Info	*pDebuginfo)
 {
 	return ATGEN_SetPBKMemoryEx(MemType,true,pWriteCommandfn,pDebuginfo);
+/*
+	//	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
+	char 			req[] = "AT+CPBS=\"XX\"\r";
+	GSM_Error		error;
 
+//	if(s->Phone.Data.Priv.ATGEN.OBEX) return ERR_OBEXMODE;
+	if (theApp.m_PBKMemory == MemType) return ERR_NONE;
+
+	/* Zero values that are for actual memory */
+/**	theApp.m_MemoryInfo.MemorySize		= 0;
+	theApp.m_MemoryInfo.FirstMemoryEntry		= 0;
+	theApp.m_NextMemoryEntry		= 0;
+	theApp.m_MemoryInfo.TextLength		= 0;
+	theApp.m_MemoryInfo.NumberLength		= 0;
+
+	if (theApp.m_PBKMemories[0] == 0) {
+	//	error=GSM_WaitFor (s, "AT+CPBS=?\r", 10, 0x00, 3, ID_SetMemoryType);
+		ReplymsgType.nCount = 1;
+		wsprintf((char*)ReplymsgType.CheckInfo[0].msgtype,"AT+CPBS=?");
+		ReplymsgType.CheckInfo[0].subtypechar = 0;
+		ReplymsgType.CheckInfo[0].subtype = 0x00;
+		error = pWriteCommandfn ((unsigned char *)"AT+CPBS=?\r", 10, 0x00, 6, false,NULL,&ReplymsgType,ATGEN_ReplyGetPBKMemories);
+		if (error != ERR_NONE) return error;
+	}
+
+	switch (MemType) {
+		case MEM_SM:
+			req[9] = 'S'; req[10] = 'M';
+			break;
+		case MEM_ME: 
+		        if (strstr(theApp.m_PBKMemories,"ME")==NULL) return ERR_NOTSUPPORTED;
+			req[9] = 'M'; req[10] = 'E';
+			break;
+		case MEM_RC:
+		        if (strstr(theApp.m_PBKMemories,"RC")==NULL) return ERR_NOTSUPPORTED;
+			req[9] = 'R'; req[10] = 'C';
+			break;
+		case MEM_MC:
+		        if (strstr(theApp.m_PBKMemories,"MC")==NULL) return ERR_NOTSUPPORTED;
+			req[9] = 'M'; req[10] = 'C';
+			break;
+		case MEM_ON:
+		        if (strstr(theApp.m_PBKMemories,"ON")==NULL) return ERR_NOTSUPPORTED;
+			req[9] = 'O'; req[10] = 'N';
+			break;
+		case MEM_FD:
+		        if (strstr(theApp.m_PBKMemories,"FD")==NULL) return ERR_NOTSUPPORTED;
+			req[9] = 'F'; req[10] = 'D';
+			break;
+		case MEM_DC:
+			if (strstr(theApp.m_PBKMemories,"DC")!=NULL) {
+				req[9] = 'D'; req[10] = 'C';
+				break;
+			}
+			if (strstr(theApp.m_PBKMemories,"LD")!=NULL) {
+				req[9] = 'L'; req[10] = 'D';
+				break;
+			}
+			return ERR_NOTSUPPORTED;
+			break;
+		default:
+			return ERR_NOTSUPPORTED;
+	}
+
+	smprintf(theApp.m_pDebuginfo, "Setting memory type\n");
+		ReplymsgType.nCount = 1;
+		wsprintf((char*)ReplymsgType.CheckInfo[0].msgtype,"AT+CPBS=");
+		ReplymsgType.CheckInfo[0].subtypechar = 0;
+		ReplymsgType.CheckInfo[0].subtype = 0x00;
+		error = pWriteCommandfn ((unsigned char *)req, 13, 0x00, 6, false,NULL,&ReplymsgType,ATGEN_GenericReply);
+//	error=GSM_WaitFor (s, req, 13, 0x00, 3, ID_SetMemoryType);
+	if (error == ERR_NONE) theApp.m_PBKMemory = MemType;
+	return error;*/
 }
 
 GSM_Error ATGEN_GetMemoryStatus(GSM_MemoryStatus *Status,GSM_Error (*pWriteCommandfn) (unsigned char *buffer,int length, unsigned char type, int WaitTime,bool ObexMode,
@@ -505,13 +624,26 @@ GSM_Error ATGEN_GetMemoryStatus(GSM_MemoryStatus *Status,GSM_Error (*pWriteComma
 	GSM_Error error;
 	theApp.m_pDebuginfo = pDebuginfo;
 
+//	if(s->Phone.Data.Priv.ATGEN.OBEX) return ERR_OBEXMODE;
 	error = ATGEN_SetPBKMemory(Status->MemoryType,pWriteCommandfn,pDebuginfo);
 	if (error != ERR_NONE) return error;
 
+//	s->Phone.Data.MemoryStatus=Status;
 
-	Status->MemoryUsed		= -1;
-	Status->MemoryFree		= -1;
-	error =  ATGEN_GetMemoryInfo(Status,&theApp.m_MemoryInfo, AT_Total,pWriteCommandfn,pDebuginfo);
+	/* in some phones doesn't work or doesn't return memory status inside */
+	/* Some workaround for buggy mobile, that hangs after "AT+CPBS?" for other
+	 * memory than SM.
+	 */
+/*	if (!IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_BROKENCPBS) || (Status->MemoryType == MEM_SM)) {
+		smprintf(theApp.m_pDebuginfo, "Getting memory status\n");
+		error=GSM_WaitFor (s, "AT+CPBS?\r", 9, 0x00, 4, ID_GetMemoryStatus);
+		if (error == ERR_NONE) return ERR_NONE;
+	}*/
+
+//	return ATGEN_GetMemoryInfo(s, Status, AT_Status); //peggy -
+	Status->MemoryUsed		= -1;//peggy +
+	Status->MemoryFree		= -1;//peggy +
+	error =  ATGEN_GetMemoryInfo(Status,&theApp.m_MemoryInfo, AT_Total,pWriteCommandfn,pDebuginfo);//peggy +
 
 	return error;
 
@@ -527,6 +659,7 @@ GSM_Error ATGEN_PrivGetMemory (GSM_MemoryEntry *entry, int endlocation,GSM_Error
 	GSM_MemoryEntry* pMemoryEntry = NULL;
 	FILE *	file;
 
+//	if (entry->Location==0x00) return ERR_INVALIDLOCATION;
 	int nIndex = atoi(entry->szIndex);
 	if(strlen(entry->szIndex) <=0 || nIndex==0) return ERR_INVALIDLOCATION;
 
@@ -535,7 +668,7 @@ GSM_Error ATGEN_PrivGetMemory (GSM_MemoryEntry *entry, int endlocation,GSM_Error
 		if (theApp.m_PBKSBNR == 0) {
 			sprintf((char*)req, "AT^SBNR=?\r");
 			smprintf(theApp.m_pDebuginfo, "Checking availablity of SBNR\n");
-
+	//		error=GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_GetMemory);
 			ReplymsgType.nCount = 1;
 			wsprintf((char*)ReplymsgType.CheckInfo[0].msgtype,"AT^SBNR=?");
 			ReplymsgType.CheckInfo[0].subtypechar = 0;
@@ -555,11 +688,11 @@ GSM_Error ATGEN_PrivGetMemory (GSM_MemoryEntry *entry, int endlocation,GSM_Error
 		}
 		if (theApp.m_PBKSBNR == AT_SBNR_AVAILABLE) {
 			int nIndex = atoi(entry->szIndex);
-
+		//	sprintf((char*)req, "AT^SBNR=vcf,%i\r",entry->Location-1);
 			sprintf((char*)req, "AT^SBNR=vcf,%i\r",nIndex-1);
 			theApp.m_Memory=entry;
 			smprintf(theApp.m_pDebuginfo, "Getting phonebook entry\n");
-
+		//	return GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_GetMemory);
 			ReplymsgType.nCount = 1;
 			wsprintf((char*)ReplymsgType.CheckInfo[0].msgtype,"AT^SBNR");
 			ReplymsgType.CheckInfo[0].subtypechar = 0;
@@ -567,10 +700,36 @@ GSM_Error ATGEN_PrivGetMemory (GSM_MemoryEntry *entry, int endlocation,GSM_Error
 			return pWriteCommandfn ((unsigned char *)req, strlen((char*)req), 0x00, 8, false,NULL,&ReplymsgType,SIEMENS_ReplyGetMemory);
 		}
 	}
+/*
+	error=ATGEN_GetManufacturer(s);
+	if (error != ERR_NONE) return error;
 
+	error=ATGEN_SetPBKMemory(s, entry->MemoryType);
+	if (error != ERR_NONE) return error;
+
+	if (Priv->FirstMemoryEntry == 0) {
+		error = ATGEN_GetMemoryInfo(s, NULL, AT_First);
+		if (error != ERR_NONE) return error;
+	}
+
+	//Remove to Initial
+	//error=ATGEN_SetPBKCharset(s, true); /* For reading we prefer unicode */
+	//if (error != ERR_NONE) return error;
+	//----------------------
+/*	if (endlocation == 0) {
+		sprintf(req, "AT+CPBR=%i\r", entry->Location + Priv->FirstMemoryEntry - 1);
+	} else {
+		sprintf(req, "AT+CPBR=%i,%i\r", entry->Location + Priv->FirstMemoryEntry - 1, endlocation + Priv->FirstMemoryEntry - 1);
+	}
+
+	s->Phone.Data.Memory=entry;
+	smprintf(theApp.m_pDebuginfo, "Getting phonebook entry\n");
+	return GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_GetMemory);
+	*/
 	if (endlocation == 0)
 	{
-
+//		nLocation = entry->Location + Priv->FirstMemoryEntry - 1;
+//		nLocation = entry->Location -1;
 		nLocation =atoi(entry->szIndex) -1;
 		if(nLocation < theApp.m_PHKNum )
 		{
@@ -626,7 +785,7 @@ GSM_Error ATGEN_PrivSetMemory4Sharp(GSM_MemoryEntry *entry,GSM_Error (*pWriteCom
 
 	name[0] = 0;
 	if (Name != -1) {
-		PreferUnicode = true;
+		PreferUnicode = true;//peggy +
 		error = ATGEN_SetPBKCharset(PreferUnicode,NULL,pWriteCommandfn,pDebuginfo);
 		if (error != ERR_NONE) return error;
 
@@ -656,7 +815,7 @@ GSM_Error ATGEN_PrivSetMemory4Sharp(GSM_MemoryEntry *entry,GSM_Error (*pWriteCom
 			EncodeDefault(name, entry->Entries[Name].Text, &len, true, NULL);
 			break;
 		case AT_PBK_UTF8:
-
+//			len=EncodeCString2UTF8(DecodeUnicodeString(entry->Entries[Name].Text),name);
 			len=EncodeUnicode2UTF8(entry->Entries[Name].Text,name);// for _UNICODE
 			len = strlen((char*)name);
 			break;
@@ -726,12 +885,12 @@ GSM_Error ATGEN_PrivSetMemoryEx(GSM_MemoryEntry *entry,bool bWithSpace,bool bWit
 	GSM_Error 		error;
 	unsigned char		req[REQUEST_SIZE + 1];
 	unsigned char		name[2*(GSM_PHONEBOOK_TEXT_LENGTH + 1)];
-
+//	unsigned char		uname[2*(GSM_PHONEBOOK_TEXT_LENGTH + 1)];
 	unsigned char		number[GSM_PHONEBOOK_TEXT_LENGTH + 1];
 	int			reqlen;
 	bool			PreferUnicode = false;
 
-
+//	if (entry->Location == 0) return ERR_INVALIDLOCATION;
 	int nIndex = atoi(entry->szIndex);
 	if(strlen(entry->szIndex) <=0 || nIndex==0) return ERR_INVALIDLOCATION;
 
@@ -742,8 +901,34 @@ GSM_Error ATGEN_PrivSetMemoryEx(GSM_MemoryEntry *entry,bool bWithSpace,bool bWit
 
 	name[0] = 0;
 	if (Name != -1) {
+/* peggy +
+		len = UnicodeLength(entry->Entries[Name].Text);
 
-		PreferUnicode = true;
+		/* Compare if we would loose some information when not using
+		 * unicode */
+/* peggy +
+		EncodeDefault(name, entry->Entries[Name].Text, &len, true, NULL);
+		DecodeDefault(uname, name, len, true, NULL);
+		if (!mywstrncmp(uname, entry->Entries[Name].Text, len)) {
+			/* Get maximal text length */
+/* peggy +
+
+			if (Priv->TextLength == 0) {
+				ATGEN_GetMemoryInfo(s, NULL, AT_Sizes);
+			}
+			
+			/* I char stored in GSM alphabet takes 7 bits, one
+			 * unicode 16, if storing in unicode would truncate
+			 * text, do not use it, otherwise we will use it */
+/* peggy +
+			if ((Priv->TextLength != 0) && ((Priv->TextLength * 7 / 16) <= len)) {
+				PreferUnicode = false;
+			} else {
+				PreferUnicode = true;
+			}
+		}
+*/ //peggy +
+		PreferUnicode = true;//peggy +
 		error = ATGEN_SetPBKCharset(PreferUnicode,NULL,pWriteCommandfn,pDebuginfo);
 		if (error != ERR_NONE) return error;
 
@@ -758,7 +943,8 @@ GSM_Error ATGEN_PrivSetMemoryEx(GSM_MemoryEntry *entry,bool bWithSpace,bool bWit
 			EncodeDefault(name, entry->Entries[Name].Text, &len, true, NULL);
 			break;
 		case AT_PBK_UTF8:
-
+			//DecodeUcs2();
+		//	len=EncodeCString2UTF8(DecodeUnicodeString(entry->Entries[Name].Text),name);
 			len=EncodeUnicode2UTF8(entry->Entries[Name].Text,name);// for _UNICODE
 			len = strlen((char*)name);
 			break;
@@ -797,7 +983,7 @@ GSM_Error ATGEN_PrivSetMemoryEx(GSM_MemoryEntry *entry,bool bWithSpace,bool bWit
 	 *         entry->Location, number, NumberType, name);
 	 * because name can contain 0 when using GSM alphabet.
 	 */
-
+//	sprintf((char*)req, "AT+CPBW=%d, \"%s\", %i, \"", entry->Location + theApp.m_MemoryInfo.FirstMemoryEntry - 1, number, NumberType);
 	if(bWithSpace)
 	{
 		if(bWithIndex)
@@ -823,7 +1009,7 @@ GSM_Error ATGEN_PrivSetMemoryEx(GSM_MemoryEntry *entry,bool bWithSpace,bool bWit
 	reqlen += 2;
 
 	smprintf(theApp.m_pDebuginfo, "Writing phonebook entry\n");
-
+//	return GSM_WaitFor (s, req, reqlen, 0x00, 4, ID_SetMemory);
 	ReplymsgType.nCount = 1;
 	wsprintf((char*)ReplymsgType.CheckInfo[0].msgtype,"AT+CPBW");
 	ReplymsgType.CheckInfo[0].subtypechar = 0;
@@ -858,7 +1044,7 @@ GSM_Error ATGEN_DeleteMemory(GSM_MemoryEntry *entry , int Control,GSM_Error (*pW
 {
 	theApp.m_pDebuginfo = pDebuginfo;
 	GSM_Error 		error;
-
+//	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	unsigned char		req[100];
 
 //	if(s->Phone.Data.Priv.ATGEN.OBEX) return ERR_OBEXMODE;
@@ -874,11 +1060,11 @@ GSM_Error ATGEN_DeleteMemory(GSM_MemoryEntry *entry , int Control,GSM_Error (*pW
 		if (error != ERR_NONE) return error;
 	}
 
-
+//	sprintf((char*)req, "AT+CPBW=%d\r",entry->Location + theApp.m_MemoryInfo.FirstMemoryEntry - 1);
 	sprintf((char*)req, "AT+CPBW=%d\r",atoi(entry->szIndex) + theApp.m_MemoryInfo.FirstMemoryEntry - 1);
 
 	smprintf(theApp.m_pDebuginfo, "Deleting phonebook entry\n");
-
+//	return GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_SetMemory);
 	ReplymsgType.nCount = 1;
 	wsprintf((char*)ReplymsgType.CheckInfo[0].msgtype,"AT+CPBW");
 	ReplymsgType.CheckInfo[0].subtypechar = 0;
@@ -894,7 +1080,9 @@ GSM_Error ATGEN_InitPBKGet(GSM_MemoryStatus *Status,GSM_Error (*pWriteCommandfn)
 	int			start;
 	int         max_no;
 	int end;
+//	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 
+//	if(s->Phone.Data.Priv.ATGEN.OBEX) return ERR_OBEXMODE;
 	error = ATGEN_SetPBKMemory(Status->MemoryType,pWriteCommandfn,pDebuginfo);
 	if (error != ERR_NONE) return error;
 
@@ -904,7 +1092,7 @@ GSM_Error ATGEN_InitPBKGet(GSM_MemoryStatus *Status,GSM_Error (*pWriteCommandfn)
 	theApp.m_MemoryInfo.TextLength		= 0;
 	theApp.m_MemoryInfo.NumberLength		= 0;
  
-
+//	error = GSM_WaitFor (s, "AT+CPBR=?\r", 10, 0x00, 4, ID_GetMemoryStatus);
 	ReplymsgType.nCount = 1;
 	wsprintf((char*)ReplymsgType.CheckInfo[0].msgtype,"AT+CPBR=?");
 	ReplymsgType.CheckInfo[0].subtypechar = 0;
@@ -912,23 +1100,31 @@ GSM_Error ATGEN_InitPBKGet(GSM_MemoryStatus *Status,GSM_Error (*pWriteCommandfn)
 	error = pWriteCommandfn ((unsigned char *)"AT+CPBR=?\r", 10, 0x00, 8, false,NULL,&ReplymsgType,ATGEN_ReplyGetCPBRMemoryInfo);
 
 	if (error != ERR_NONE) return error;
-
+	//max_no = xParseMaximunMemory(s->Phone.Data.RequestMsg->Buffer);
 	max_no = theApp.m_MemoryInfo.MemorySize;
-
+/*
+	if (Priv->Manufacturer == AT_Samsung)
+		error = GSM_WaitFor (s, "", 0, 0x00, 4, ID_GetMemoryStatus);
+	if (error != ERR_NONE) return error;
+	*/
 	theApp.m_MemoryStatus	= Status;
 	Status->MemoryUsed		= 0;
 	Status->MemoryFree		= 0;
 	start				= theApp.m_MemoryInfo.FirstMemoryEntry;
 	theApp.m_NextMemoryEntry		= 0;
-	theApp.m_MemoryInfo.MemorySize += start-1;
+	theApp.m_MemoryInfo.MemorySize += start-1; //Jay add for Motorola comparion start and end
 	theApp.m_PHKNum = 0;
 	remove(theApp.m_szPHKTempFile);
 
 	ZeroMemory(&theApp.m_PBKMemoryEntry,sizeof(GSM_MemoryEntry));
+//	s->Phone.Data.Memory = &theApp.m_PHKMemoryEntry;
 
+//	sprintf(req, "AT+CPBR=%i,%i\r", start, Priv->MemorySize);
+//	error	= GSM_WaitFor (s, req, strlen(req), 0x00, 10, ID_GetMutiMemory);
+//	if (error != ERR_NONE) return error;
 	end =  max_no/2;
 	sprintf(req, "AT+CPBR=%i,%i\r", start, start + end);
-
+//	error	= GSM_WaitFor (s, req, strlen(req), 0x00, 10, ID_GetMutiMemory);
 	ReplymsgType.nCount = 2;
 	wsprintf((char*)ReplymsgType.CheckInfo[0].msgtype,"AT+CPBR=");
 	ReplymsgType.CheckInfo[0].subtypechar = 0;
@@ -947,7 +1143,7 @@ GSM_Error ATGEN_InitPBKGet(GSM_MemoryStatus *Status,GSM_Error (*pWriteCommandfn)
 	if (error != ERR_NONE && error != ERR_EMPTY) return error;
 	
 	sprintf(req, "AT+CPBR=%i,%i\r", start + end+1, theApp.m_MemoryInfo.MemorySize);
-
+//	error	= GSM_WaitFor (s, req, strlen(req), 0x00, 10, ID_GetMutiMemory);
 	error = pWriteCommandfn ((unsigned char *)req, strlen(req), 0x00, 40, false,&ATMultiAnwser,&ReplymsgType,ATGEN_ReplyGetMutiMemory);
 	if (error != ERR_NONE && error != ERR_EMPTY) return error;
 
@@ -971,13 +1167,15 @@ void ATGEN_DecodePHKString (unsigned char *dest, unsigned char *buffer)
  		DecodeDefault(dest,buffer+1,strlen((char*)buffer)-2,false,NULL);
 		break;			
 	case AT_PBK_UTF8:
-
+//		DecodeUTF2String((char*)buffer2,buffer+1,strlen((char*)buffer)-2);			
+//		EncodeUcs2(dest,(char*)buffer2,strlen((char*)buffer2));
 		DecodeUTF8ToUnicode(dest,buffer+1,strlen((char*)buffer)-2); //for _UNICODE
 		break;			
 	case AT_PBK_UCS2:
-
+	//	DecodeHexUnicode(dest,buffer+1,strlen(buffer+1) - 1);
 		DecodeHexUnicode(dest,buffer,strlen((char*)buffer) - 1);
-
+		//memcpy(dest,buffer+1,strlen(buffer+1) - 1);
+		//ReverseUnicodeString(dest);
 		break;			
 	case AT_PBK_PCCP437:
 		/* FIXME: correctly decode PCCP437 */
@@ -1001,7 +1199,8 @@ unsigned char *ATGEN_EncodePHKString (const unsigned char *src,int* len)
 		EncodeDefault((unsigned char *)szdest, src, len, true, NULL);
 		break;
 	case AT_PBK_UTF8:
-
+		//DecodeUcs2();
+//		*len=EncodeCString2UTF8(DecodeUnicodeString(src),(unsigned char *)szdest);
 		*len=EncodeUnicode2UTF8((unsigned char *)src,(unsigned char *)szdest);// for _UNICODE
 		*len = strlen(szdest);
 		break;
@@ -1028,7 +1227,9 @@ GSM_Error ATGEN_InitPBKGetEx(GSM_MemoryStatus *Status,GSM_Error (*pWriteCommandf
 	int			start;
 	int         max_no;
 	int end;
+//	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 
+//	if(s->Phone.Data.Priv.ATGEN.OBEX) return ERR_OBEXMODE;
 	error = ATGEN_SetPBKMemory(Status->MemoryType,pWriteCommandfn,pDebuginfo);
 	if (error != ERR_NONE) return error;
 
@@ -1038,7 +1239,7 @@ GSM_Error ATGEN_InitPBKGetEx(GSM_MemoryStatus *Status,GSM_Error (*pWriteCommandf
 	theApp.m_MemoryInfo.TextLength		= 0;
 	theApp.m_MemoryInfo.NumberLength		= 0;
  
-
+//	error = GSM_WaitFor (s, "AT+CPBR=?\r", 10, 0x00, 4, ID_GetMemoryStatus);
 	ReplymsgType.nCount = 1;
 	wsprintf((char*)ReplymsgType.CheckInfo[0].msgtype,"AT+CPBR=?");
 	ReplymsgType.CheckInfo[0].subtypechar = 0;
@@ -1046,20 +1247,57 @@ GSM_Error ATGEN_InitPBKGetEx(GSM_MemoryStatus *Status,GSM_Error (*pWriteCommandf
 	error = pWriteCommandfn ((unsigned char *)"AT+CPBR=?\r", 10, 0x00, 8, false,NULL,&ReplymsgType,ATGEN_ReplyGetCPBRMemoryInfo);
 
 	if (error != ERR_NONE) return error;
-
+	//max_no = xParseMaximunMemory(s->Phone.Data.RequestMsg->Buffer);
 	max_no = theApp.m_MemoryInfo.MemorySize;
-
+/*
+	if (Priv->Manufacturer == AT_Samsung)
+		error = GSM_WaitFor (s, "", 0, 0x00, 4, ID_GetMemoryStatus);
+	if (error != ERR_NONE) return error;
+	*/
 	theApp.m_MemoryStatus	= Status;
 	Status->MemoryUsed		= 0;
 	Status->MemoryFree		= 0;
 	start				= theApp.m_MemoryInfo.FirstMemoryEntry;
 	theApp.m_NextMemoryEntry		= 0;
-	theApp.m_MemoryInfo.MemorySize += start-1;
+	theApp.m_MemoryInfo.MemorySize += start-1; //Jay add for Motorola comparion start and end
 	theApp.m_PHKNum = 0;
 	remove(theApp.m_szPHKTempFile);
 
 	ZeroMemory(&theApp.m_PBKMemoryEntry,sizeof(GSM_MemoryEntry));
+//	s->Phone.Data.Memory = &theApp.m_PHKMemoryEntry;
 
+//	sprintf(req, "AT+CPBR=%i,%i\r", start, Priv->MemorySize);
+//	error	= GSM_WaitFor (s, req, strlen(req), 0x00, 10, ID_GetMutiMemory);
+//	if (error != ERR_NONE) return error;
+/*	end =  max_no/2;
+	sprintf(req, "AT+CPBR=%i,%i\r", start, start + end);
+	ReplymsgType.nCount = 2;
+	wsprintf((char*)ReplymsgType.CheckInfo[0].msgtype,"AT+CPBR=");
+	ReplymsgType.CheckInfo[0].subtypechar = 0;
+	ReplymsgType.CheckInfo[0].subtype = 0x00;
+
+	wsprintf((char*)ReplymsgType.CheckInfo[1].msgtype,"+CPBR:");
+	ReplymsgType.CheckInfo[1].subtypechar = 0;
+	ReplymsgType.CheckInfo[1].subtype = 0x00;
+
+	GSM_ATMultiAnwser ATMultiAnwser;
+	wsprintf(ATMultiAnwser.Specialtext,"+CPBR:");
+	ATMultiAnwser.Anwserlines = 1;
+
+	error = pWriteCommandfn ((unsigned char *)req, strlen(req), 0x00, 40, false,&ATMultiAnwser,&ReplymsgType,ATGEN_ReplyGetMutiMemory);
+
+	if (error != ERR_NONE) return error;
+	
+	sprintf(req, "AT+CPBR=%i,%i\r", start + end+1, theApp.m_MemoryInfo.MemorySize);
+//	error	= GSM_WaitFor (s, req, strlen(req), 0x00, 10, ID_GetMutiMemory);
+	error = pWriteCommandfn ((unsigned char *)req, strlen(req), 0x00, 40, false,&ATMultiAnwser,&ReplymsgType,ATGEN_ReplyGetMutiMemory);
+	if (error != ERR_NONE) return error;
+
+
+	Status->MemoryFree = max_no - theApp.m_PHKNum;
+	Status->MemoryUsed = theApp.m_PHKNum;
+	return ERR_NONE;
+	*/
 	int nFirstIndex = start;
 	int nCotiuneGet = true;
 	while (nCotiuneGet && start <= theApp.m_MemoryInfo.MemorySize) 
@@ -1128,7 +1366,7 @@ GSM_Error ATGEN_InitPBKGetEx2(GSM_MemoryStatus *Status,GSM_Error (*pWriteCommand
 	Status->MemoryFree		= 0;
 	start				= theApp.m_MemoryInfo.FirstMemoryEntry;
 	theApp.m_NextMemoryEntry		= 0;
-	theApp.m_MemoryInfo.MemorySize += start-1;
+	theApp.m_MemoryInfo.MemorySize += start-1; //Jay add for Motorola comparion start and end
 	theApp.m_PHKNum = 0;
 	remove(theApp.m_szPHKTempFile);
 

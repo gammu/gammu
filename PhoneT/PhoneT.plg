@@ -3,45 +3,52 @@
 <pre>
 <h1>Build Log</h1>
 <h3>
---------------------Configuration: PhoneT - Win32 Debug--------------------
+--------------------Configuration: PhoneT - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating command line "rc.exe /l 0x404 /fo"..\..\temp\debug/PhoneT.res" /d "_DEBUG" /d "_AFXDLL" "D:\Customer Profile\Gammu GPL\code04082010\code\PhoneT\PhoneT.rc"" 
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1807.tmp" with contents
+Creating command line "rc.exe /l 0x404 /fo"..\temp\Release/PhoneT.res" /d "NDEBUG" /d "_AFXDLL" "D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PhoneT\PhoneT.rc"" 
+Creating temporary file "C:\DOCUME~1\Alan\LOCALS~1\Temp\RSP12E.tmp" with contents
 [
-/nologo /MDd /W3 /Gm /GX /ZI /Od /I "..\Proj_inc" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_USRDLL" /Fp"..\..\temp\debug/PhoneT.pch" /Yu"stdafx.h" /Fo"..\..\temp\debug/" /Fd"..\..\temp\debug/" /FD /GZ /c 
-"D:\Customer Profile\Gammu GPL\code04082010\code\Proj_inc\DeviceAPI.cpp"
-"D:\Customer Profile\Gammu GPL\code04082010\code\PhoneT\PhoneT.cpp"
-"D:\Customer Profile\Gammu GPL\code04082010\code\PhoneT\phonetProtocol.cpp"
+/nologo /MD /W3 /GX /O2 /I "..\Proj_inc" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_USRDLL" /Fp"..\temp\Release/PhoneT.pch" /Yu"stdafx.h" /Fo"..\temp\Release/" /Fd"..\temp\Release/" /FD /c 
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PhoneT\PhoneT.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PhoneT\phonetProtocol.cpp"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1807.tmp" 
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1808.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\Alan\LOCALS~1\Temp\RSP12E.tmp" 
+Creating temporary file "C:\DOCUME~1\Alan\LOCALS~1\Temp\RSP12F.tmp" with contents
 [
-/nologo /MDd /W3 /Gm /GX /ZI /Od /I "..\Proj_inc" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_USRDLL" /Fp"..\..\temp\debug/PhoneT.pch" /Yc"stdafx.h" /Fo"..\..\temp\debug/" /Fd"..\..\temp\debug/" /FD /GZ /c 
-"D:\Customer Profile\Gammu GPL\code04082010\code\PhoneT\StdAfx.cpp"
+/nologo /MD /W3 /GX /O2 /I "..\Proj_inc" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_USRDLL" /Fp"..\temp\Release/PhoneT.pch" /Yc"stdafx.h" /Fo"..\temp\Release/" /Fd"..\temp\Release/" /FD /c 
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PhoneT\StdAfx.cpp"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1808.tmp" 
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1809.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\Alan\LOCALS~1\Temp\RSP12F.tmp" 
+Creating temporary file "C:\DOCUME~1\Alan\LOCALS~1\Temp\RSP130.tmp" with contents
 [
-..\..\lib\Debug\Common.lib /nologo /subsystem:windows /dll /incremental:yes /pdb:"..\..\lib\debug/PhoneT.pdb" /debug /machine:I386 /def:".\PhoneT.def" /out:"..\..\exe\Debug\PhoneT.dll" /implib:"..\..\lib\debug/PhoneT.lib" /pdbtype:sept 
-"\Customer Profile\Gammu GPL\code04082010\temp\debug\DeviceAPI.obj"
-"\Customer Profile\Gammu GPL\code04082010\temp\debug\PhoneT.obj"
-"\Customer Profile\Gammu GPL\code04082010\temp\debug\phonetProtocol.obj"
-"\Customer Profile\Gammu GPL\code04082010\temp\debug\StdAfx.obj"
-"\Customer Profile\Gammu GPL\code04082010\temp\debug\PhoneT.res"
+..\lib\Release\Common.lib /nologo /subsystem:windows /dll /incremental:no /pdb:"..\lib\Release/PhoneT.pdb" /machine:I386 /def:".\PhoneT.def" /out:"..\exe\Release\PhoneT.dll" /implib:"..\lib\Release/PhoneT.lib" 
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Release\DeviceAPI.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Release\PhoneT.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Release\phonetProtocol.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Release\StdAfx.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Release\PhoneT.res"
 ]
-Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1809.tmp"
+Creating command line "link.exe @C:\DOCUME~1\Alan\LOCALS~1\Temp\RSP130.tmp"
 <h3>Output Window</h3>
 Compiling resources...
 Compiling...
 StdAfx.cpp
 Compiling...
-DeviceAPI.cpp
 PhoneT.cpp
 phonetProtocol.cpp
 Generating Code...
 Linking...
-   Creating library ..\..\lib\debug/PhoneT.lib and object ..\..\lib\debug/PhoneT.exp
+   Creating library ..\lib\Release/PhoneT.lib and object ..\lib\Release/PhoneT.exp
+Creating temporary file "C:\DOCUME~1\Alan\LOCALS~1\Temp\RSP134.tmp" with contents
+[
+/nologo /MD /W3 /GX /O2 /I "..\Proj_inc" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_USRDLL" /Fp"..\temp\Release/PhoneT.pch" /Yu"stdafx.h" /Fo"..\temp\Release/" /Fd"..\temp\Release/" /FD /c 
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\Proj_inc\DeviceAPI.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\Alan\LOCALS~1\Temp\RSP134.tmp" 
+<h3>Output Window</h3>
+Compiling...
+DeviceAPI.cpp
 
 
 

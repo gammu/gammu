@@ -1,5 +1,3 @@
-
-/* (c) 2002-2003 by Marcin Wiacek and Michal Cihar */
 #ifndef _COMMONFUN_H
 #define _COMMONFUN_H
 #include "mbglobals.h"
@@ -153,7 +151,7 @@ typedef enum {
 	F_VOICETAGS,	/* Voice tags available						*/
 	F_CAL62,	/* Calendar,6210 style - Call,Birthday,Memo,Meeting		*/
 //	F_NOTES,
-	F_PBKPUSHTALK,
+	F_PBKPUSHTALK, /* Compare : Add Push Talk by Mingfa 0127 */
 
 	/* AT modules */
 	F_SMSONLYSENT,	/* Phone supports only sent/unsent messages			*/

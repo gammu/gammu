@@ -75,8 +75,18 @@ public:
 	int m_PhoneSize;
 
 	GSM_Error (* pSetATProtocolDatafn)(bool EditMode,bool bFastWrite,DWORD dwFlag);
+	///080506libaoliu
+	unsigned char *m_unDecodeBase64;
+	char m_szPHKIndexFileTempFile[MAX_PATH*2];
+	char m_szPHKDataFileTempFile[MAX_PATH*2];
+	char m_szPHKAddDataFileTempFile[MAX_PATH*2];
+	char m_szSMSDataFileTempFile[MAX_PATH*2];
+	bool isFirst;
+	bool isGetZero;
+	bool isMEsms;
+	bool isbNewXP;
 
-	bool m_SMSMemFlag;
+
 // Overrides 
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CATgenApp)

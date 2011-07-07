@@ -1,0 +1,89 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: Common - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x404 /fo"..\..\temp\Release/Common.res" /d "NDEBUG" /d "_AFXDLL" "D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\Common\COMMON\Common.rc"" 
+Creating temporary file "C:\DOCUME~1\Alan\LOCALS~1\Temp\RSPEA.tmp" with contents
+[
+/nologo /MD /W3 /GX /O2 /I "..\..\Proj_inc" /I "..\..\Proj_inc\anwmobile" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_USRDLL" /FR"..\..\temp\Release/" /Fp"..\..\temp\Release/Common.pch" /Yu"stdafx.h" /Fo"..\..\temp\Release/" /Fd"..\..\temp\Release/" /FD /c 
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\Common\COMMON\checksumfcs.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\Common\COMMON\coding.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\Common\COMMON\commFun.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\Common\COMMON\Common.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\Common\COMMON\CVTUTF7.Cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\Common\COMMON\gsmcal.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\Common\COMMON\gsmlogo.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\Common\COMMON\gsmmulti.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\Common\COMMON\gsmnet.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\Common\COMMON\gsmpbk.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\Common\COMMON\gsmsms.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\Common\COMMON\MobileInfo.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\Common\COMMON\SIM_Coding.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\Alan\LOCALS~1\Temp\RSPEA.tmp" 
+Creating temporary file "C:\DOCUME~1\Alan\LOCALS~1\Temp\RSPEB.tmp" with contents
+[
+/nologo /MD /W3 /GX /O2 /I "..\..\Proj_inc" /I "..\..\Proj_inc\anwmobile" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_USRDLL" /FR"..\..\temp\Release/" /Fp"..\..\temp\Release/Common.pch" /Yc"stdafx.h" /Fo"..\..\temp\Release/" /Fd"..\..\temp\Release/" /FD /c 
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\Common\COMMON\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\Alan\LOCALS~1\Temp\RSPEB.tmp" 
+Creating temporary file "C:\DOCUME~1\Alan\LOCALS~1\Temp\RSPEC.tmp" with contents
+[
+/nologo /subsystem:windows /dll /incremental:no /pdb:"..\..\lib\Release/Common.pdb" /machine:I386 /def:".\Common.def" /out:"..\..\exe\Release\Common.dll" /implib:"..\..\lib\Release/Common.lib" 
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Release\checksumfcs.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Release\coding.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Release\commFun.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Release\Common.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Release\CVTUTF7.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Release\gsmcal.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Release\gsmlogo.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Release\gsmmulti.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Release\gsmnet.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Release\gsmpbk.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Release\gsmsms.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Release\MobileInfo.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Release\SIM_Coding.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Release\StdAfx.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Release\Common.res"
+]
+Creating command line "link.exe @C:\DOCUME~1\Alan\LOCALS~1\Temp\RSPEC.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+StdAfx.cpp
+Compiling...
+checksumfcs.cpp
+coding.cpp
+D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\Common\COMMON\coding.cpp(1440) : warning C4101: 'mychar1' : unreferenced local variable
+D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\Common\COMMON\coding.cpp(1440) : warning C4101: 'mychar2' : unreferenced local variable
+D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\Common\COMMON\coding.cpp(1816) : warning C4101: 'ret' : unreferenced local variable
+commFun.cpp
+Common.cpp
+CVTUTF7.Cpp
+gsmcal.cpp
+D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\Common\COMMON\gsmcal.cpp(2136) : warning C4101: 'str' : unreferenced local variable
+D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\Common\COMMON\gsmcal.cpp(2134) : warning C4101: 'num' : unreferenced local variable
+gsmlogo.cpp
+gsmmulti.cpp
+gsmnet.cpp
+gsmpbk.cpp
+gsmsms.cpp
+MobileInfo.cpp
+D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\Common\COMMON\MobileInfo.cpp(193) : warning C4800: 'unsigned int' : forcing value to bool 'true' or 'false' (performance warning)
+D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\Common\COMMON\MobileInfo.cpp(194) : warning C4800: 'unsigned int' : forcing value to bool 'true' or 'false' (performance warning)
+SIM_Coding.cpp
+Generating Code...
+Linking...
+   Creating library ..\..\lib\Release/Common.lib and object ..\..\lib\Release/Common.exp
+
+
+
+<h3>Results</h3>
+Common.dll - 0 error(s), 7 warning(s)
+</pre>
+</body>
+</html>

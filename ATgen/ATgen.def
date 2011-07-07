@@ -65,14 +65,4 @@ EXPORTS
 	ATGEN_CDMA_GetIMEI
 	ATGEN_CDMA_GetManufacturer  
 	ATGEN_CDMA_GetFirmware
-
-	
-	ATGEN_AddSMSForTextMode
-	ATGEN_SendSMSForTextMode
-	ATGEN_DecodeNokiaSMSFile
-	ATGEN_MakeNokiaSMSFrame
-
-	ATGEN_GetNextSMSEX
-	ATGEN_AddSMSEX
-	ATGEN_DeleteSMSEX
 	  ; Explicit exports can go here

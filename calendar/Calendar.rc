@@ -1,0 +1,723 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Chinese (P.R.C.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_DLG_TOPBAR DIALOG DISCARDABLE  0, 0, 313, 105
+STYLE WS_CHILD
+FONT 10, "System"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,56,50,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,139,51,50,14
+END
+
+IDD_DLGBAR DIALOG DISCARDABLE  0, 0, 187, 94
+STYLE WS_CHILD
+FONT 10, "System"
+BEGIN
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_DLG_TOPBAR, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 306
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 98
+    END
+
+    IDD_DLGBAR, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 180
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 87
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MENU_LISTRIGHTKEY MENU DISCARDABLE 
+BEGIN
+    POPUP "ÓÒ¼ü²Ëµ¥"
+    BEGIN
+        MENUITEM "ÐÂÔö",                        IDC_MENU_LIST_ADD
+        MENUITEM "±à¼­",                        IDC_MENU_LIST_EDIT
+        MENUITEM "É¾³ý",                        IDC_MENU_LIST_DELETE
+        MENUITEM SEPARATOR
+        MENUITEM "Ë¢ÐÂ",                        IDC_MENU_LIST_REFLASH
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDC_MENU_LIST_ADD       "±à¼­ÐÐÊÂÀú"
+    IDC_MENU_LIST_DELETE    "É¾³ýÐÐÊÂÀú"
+    IDC_MENU_LIST_REFLASH   "Ë¢ÐÂÁÐ±í"
+END
+
+#endif    // Chinese (P.R.C.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Chinese (Taiwan) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHT)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_TRADITIONAL
+#pragma code_page(950)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU PRELOAD DISCARDABLE 
+BEGIN
+    POPUP "ÀÉ®×(&F)"
+    BEGIN
+        MENUITEM "µ²§ô(&X)",                    ID_APP_EXIT
+    END
+    POPUP "½s¿è(&E)"
+    BEGIN
+        MENUITEM "´_­ì(&U)\tCtrl+Z",            ID_EDIT_UNDO
+        MENUITEM SEPARATOR
+        MENUITEM "°Å¤U(&T)\tCtrl+X",            ID_EDIT_CUT
+        MENUITEM "½Æ»s(&C)\tCtrl+C",            ID_EDIT_COPY
+        MENUITEM "¶K¤W(&P)\tCtrl+V",            ID_EDIT_PASTE
+    END
+    POPUP "ÀËµø(&V)"
+    BEGIN
+        MENUITEM "ª¬ºA¦C(&S)",                  ID_VIEW_STATUS_BAR
+    END
+    POPUP "»¡©ú(&H)"
+    BEGIN
+        MENUITEM "Ãö©ó Calendar(&A)...",        ID_APP_ABOUT
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_DATEPICKER_BUTTON   BITMAP  DISCARDABLE     "res\\Calendar.bmp"
+IDB_SCH_ALARM           BITMAP  DISCARDABLE     "res\\clock.bmp"
+IDB_SCH_ALARM_GRAY      BITMAP  DISCARDABLE     "res\\clock_gray.bmp"
+IDB_SCH_GOTOTODAY_BUTTON BITMAP  DISCARDABLE     "res\\gototoday_up.bmp"
+IDB_SCH_MORE            BITMAP  DISCARDABLE     "res\\sch_more.bmp"
+IDB_SCH_REPEAT          BITMAP  DISCARDABLE     "res\\repeat.bmp"
+IDB_SCH_REPEAT_GRAY     BITMAP  DISCARDABLE     "res\\repeat_gray.bmp"
+IDB_SCH_MORE_GRAY       BITMAP  DISCARDABLE     "res\\sch_more_gray.bmp"
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHT)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 4, 1\r\n"
+    "#pragma code_page(950)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\Calendar.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""l.cht\010fxres.rc""          // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS PRELOAD MOVEABLE PURE 
+BEGIN
+    "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+    "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL, NOINVERT
+    VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT, NOINVERT
+    VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT, NOINVERT
+    VK_F6,          ID_NEXT_PANE,           VIRTKEY, NOINVERT
+    VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT, NOINVERT
+    VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+    VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT, NOINVERT
+    "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL, NOINVERT
+    "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL, NOINVERT
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 3,0,0,1
+ PRODUCTVERSION 3,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040404b0"
+        BEGIN
+            VALUE "Comments", "\0"
+            VALUE "CompanyName", "\0"
+            VALUE "FileDescription", "Calendar MFC Application\0"
+            VALUE "FileVersion", "3, 0, 0, 1\0"
+            VALUE "InternalName", "Calendar\0"
+            VALUE "LegalCopyright", "Copyright (C) 2004\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "Calendar.EXE\0"
+            VALUE "PrivateBuild", "\0"
+            VALUE "ProductName", "Calendar Application\0"
+            VALUE "ProductVersion", "3, 0, 0, 1\0"
+            VALUE "SpecialBuild", "\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x404, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_PHONE               ICON    DISCARDABLE     "res\\phone.ico"
+IDI_REMIND              ICON    DISCARDABLE     "res\\memorandum.ico"
+IDI_MEMO                ICON    DISCARDABLE     "res\\memorandum_1.ico"
+IDI_METTING             ICON    DISCARDABLE     "res\\metting.ico"
+IDI_BIRTHDAY            ICON    DISCARDABLE     "res\\birthday.ico"
+#endif    // Chinese (Taiwan) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ORG_SCHEDULE DIALOG DISCARDABLE  0, 0, 189, 106
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+FONT 10, "System"
+BEGIN
+    CONTROL         "MonthCalendar1",IDC_ORG_MONTHCALENDAR,"SysMonthCal32",
+                    WS_TABSTOP,0,0,189,106
+END
+
+IDD_ORG_SCHEDULE_EDITOR DIALOG DISCARDABLE  0, 0, 376, 226
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Calendar"
+FONT 8, "Tahoma"
+BEGIN
+    COMBOBOX        IDC_SCH_DATA_NoteType,77,11,85,76,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_SCH_DATA_TITLE,66,29,275,13,ES_AUTOHSCROLL
+    EDITTEXT        IDC_SCH_DATA_LOCATION,65,44,103,13,ES_AUTOHSCROLL | NOT 
+                    WS_VISIBLE | WS_DISABLED
+    EDITTEXT        IDC_SCH_DATA_ALARM_PHONENO,261,44,99,14,ES_AUTOHSCROLL | 
+                    NOT WS_VISIBLE | WS_DISABLED
+    EDITTEXT        IDC_ED_DESCRIPTION,227,14,40,14,ES_AUTOHSCROLL | 
+                    WS_DISABLED
+    CONTROL         "DateTimePicker3",IDC_SCH_DATA_STARTDATE,
+                    "SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,60,67,
+                    121,14
+    COMBOBOX        IDC_SCH_DATA_STARTTIME,191,67,124,97,CBS_DROPDOWN | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "DateTimePicker3",IDC_SCH_DATA_STOPDATE,
+                    "SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,56,89,
+                    121,14
+    COMBOBOX        IDC_SCH_DATA_STOPTIME,190,88,124,89,CBS_DROPDOWN | 
+                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_SCH_DATA_ALARM_INTERVAL,44,110,56,63,
+                    CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "DateTimePicker3",IDC_SCH_DATA_ALARMDAY,
+                    "SysDateTimePick32",DTS_RIGHTALIGN | DTS_UPDOWN | 
+                    WS_DISABLED | WS_TABSTOP,141,113,62,14
+    CONTROL         "DateTimePicker1",IDC_SCH_DATA_ALARMTIME,
+                    "SysDateTimePick32",DTS_RIGHTALIGN | DTS_UPDOWN | 
+                    WS_DISABLED | WS_TABSTOP | 0x8,213,113,62,14
+    EDITTEXT        IDC_SCH_DATA_STOPTIMEEDIT,196,164,28,14,ES_AUTOHSCROLL | 
+                    ES_NUMBER | NOT WS_VISIBLE | WS_DISABLED
+    COMBOBOX        IDC_SCH_DATA_STOPTIMETYPE,226,165,48,30,CBS_DROPDOWN | 
+                    WS_DISABLED | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_SCH_DATA_ALARMTIMEEDIT,275,165,28,14,ES_AUTOHSCROLL | 
+                    ES_NUMBER | NOT WS_VISIBLE | WS_DISABLED
+    COMBOBOX        IDC_SCH_DATA_ALARMTIMETYPE,304,165,48,30,CBS_DROPDOWN | 
+                    WS_DISABLED | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_SCH_DATA_REPEAT_TYPE,49,140,76,64,CBS_DROPDOWNLIST | 
+                    NOT WS_VISIBLE | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_ED_REPEATEINTER,83,185,40,14,ES_AUTOHSCROLL | 
+                    ES_NUMBER | WS_DISABLED
+    CONTROL         "1",IDC_CHWEEK1,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    127,132,20,10
+    CONTROL         "2",IDC_CHWEEK2,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    145,132,20,10
+    CONTROL         "3",IDC_CHWEEK3,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    165,132,20,10
+    CONTROL         "4",IDC_CHWEEK4,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    187,132,20,10
+    CONTROL         "5",IDC_CHWEEK5,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    125,145,20,10
+    CONTROL         "6",IDC_CHWEEK6,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    147,147,20,10
+    CONTROL         "7",IDC_CHWEEK7,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    167,145,20,10
+    CONTROL         "DateTimePicker2",IDC_SCH_DATA_REPEAT_WHICHDATE,
+                    "SysDateTimePick32",DTS_RIGHTALIGN | NOT WS_VISIBLE | 
+                    WS_DISABLED | WS_TABSTOP,74,158,71,12
+    DEFPUSHBUTTON   "save to phone",IDOK,137,205,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,213,205,50,14
+    CONTROL         "Alarm",IDC_SCH_CHK_ALARM,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,7,111,34,10
+    CONTROL         "Repeat",IDC_SCH_CHK_REPEAT,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,8,141,39,10
+    COMBOBOX        IDC_SCH_DATA_REPEAT_WHICHWEEK,259,145,43,61,
+                    CBS_DROPDOWNLIST | NOT WS_VISIBLE | WS_DISABLED | 
+                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_SCH_DATA_REPEAT_WEEKDAY,305,145,47,82,
+                    CBS_DROPDOWNLIST | NOT WS_VISIBLE | WS_DISABLED | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "repeat end ",IDC_SCH_CHK_REPEAT_Until,"Button",
+                    BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_DISABLED | 
+                    WS_TABSTOP,151,161,36,11
+    EDITTEXT        IDC_SCH_DATA_MEMO,39,207,37,12,ES_MULTILINE | 
+                    ES_AUTOVSCROLL | ES_WANTRETURN | NOT WS_VISIBLE | 
+                    WS_DISABLED | WS_VSCROLL
+    LTEXT           "Subject",IDC_SCH_LT_TITLE,9,31,65,9,NOT WS_GROUP
+    LTEXT           "Start Time",IDC_SCH_LT_STARTTIME,9,69,34,8,NOT WS_GROUP
+    LTEXT           "End Time",IDC_SCH_LT_STOPTIME,9,91,65,9,NOT WS_GROUP
+    LTEXT           "Memo",IDC_SCH_LT_MEMO,15,197,25,9,NOT WS_VISIBLE | NOT 
+                    WS_GROUP
+    CONTROL         "Appointment Telephone",IDC_SCH_LT_REMIND_PHONENO,"Static",
+                    SS_LEFTNOWORDWRAP | WS_DISABLED,191,45,65,11
+    LTEXT           "Location",IDC_SCH_LT_LOCATION,15,46,28,8,NOT WS_VISIBLE | 
+                    WS_DISABLED
+    LTEXT           "Type",IDC_SCH_LT_TYPE,9,13,17,8
+    CONTROL         "Tone",IDC_SCH_CHK_TONE,"Button",BS_AUTOCHECKBOX | 
+                    WS_DISABLED | WS_TABSTOP,294,116,32,10
+    LTEXT           "Repeat End Date",IDC_REPEATENDSTATIC,13,162,56,8,NOT 
+                    WS_VISIBLE
+    LTEXT           "description",IDC_SC_DESCRIPTION,185,14,36,8,WS_DISABLED
+    LTEXT           "Repeat on:",IDC_SC_REPEATON,13,175,37,8,WS_DISABLED
+    LTEXT           "Repeat interval:",IDC_SC_REPEATE_INTERVAL,15,185,53,8
+    CONTROL         "Spin1",IDC_SP_REPEATINTER,"msctls_updown32",
+                    UDS_SETBUDDYINT | UDS_ARROWKEYS,123,185,10,14
+    LTEXT           "Priority",IDC_STC_CAL_PRIORITY,236,188,24,8,NOT 
+                    WS_VISIBLE | WS_DISABLED
+    COMBOBOX        IDC_CMB_CAL_PRIORITY,261,188,66,69,CBS_DROPDOWNLIST | 
+                    WS_DISABLED | WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_PVI_5_USEREXIT DIALOG DISCARDABLE  0, 0, 203, 47
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "USER_EXIT"
+FONT 10, "Arial"
+BEGIN
+    CTEXT           "save or not?",IDC_PVI_5_UE_MSG1,22,7,163,8
+    CONTROL         "Save",IDC_PVI_5_UE_SAVE,"Button",BS_OWNERDRAW | 
+                    WS_TABSTOP,10,25,43,13
+    CONTROL         "Cancel",IDC_PVI_5_UE_CANCEL,"Button",BS_OWNERDRAW | 
+                    WS_TABSTOP,150,25,43,13
+    CONTROL         "Save As",IDC_PVI_5_UE_SAVEAS,"Button",BS_OWNERDRAW | 
+                    WS_TABSTOP,55,25,43,13
+    CONTROL         "Discard",IDC_PVI_5_UE_DISCARD,"Button",BS_OWNERDRAW | 
+                    WS_TABSTOP,104,25,43,13
+END
+
+IDD_OPENREPEATQUESTDLG DIALOG DISCARDABLE  0, 0, 179, 88
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 10, "Tahoma"
+BEGIN
+    CONTROL         "OK",IDOK,"Button",BS_OWNERDRAW | WS_TABSTOP,29,65,50,14
+    CONTROL         "Cancel",IDCANCEL,"Button",BS_OWNERDRAW | WS_TABSTOP,100,
+                    65,50,14
+    LTEXT           "Static",IDC_STATIC_TITLE,16,7,147,20
+    CONTROL         "Radio1",IDC_OPENCURRENTRADIO,"Button",
+                    BS_AUTORADIOBUTTON,16,33,147,10
+    CONTROL         "Radio2",IDC_OPENSERIALRADIO,"Button",BS_AUTORADIOBUTTON,
+                    16,49,147,10
+END
+
+IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 235, 55
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About"
+FONT 9, "????"
+BEGIN
+    LTEXT           "Calendar Version 1.0",IDC_SC_VERSION,40,10,119,8,
+                    SS_NOPREFIX
+    LTEXT           "Copyright (C) 2004",IDC_SC_COPYRIGHT,40,25,119,8
+    CONTROL         "??",IDOK,"Button",BS_OWNERDRAW | WS_GROUP | WS_TABSTOP,
+                    178,7,50,14
+    LTEXT           "CAMagic Mobile Version 1.0",IDC_SC_CAMVERSION,43,40,119,
+                    8,SS_NOPREFIX
+END
+
+IDD_SEARCH DIALOG DISCARDABLE  0, 0, 127, 59
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+FONT 10, "System"
+BEGIN
+    CONTROL         "OK",IDCANCEL,"Button",BS_OWNERDRAW | WS_TABSTOP,70,38,
+                    50,14
+    CONTROL         "Find next",IDC_BN_FINDNEXT,"Button",BS_OWNERDRAW | 
+                    WS_TABSTOP,7,38,50,14
+    COMBOBOX        IDC_COMBO_NAME,7,21,113,57,CBS_DROPDOWN | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Enter name:",IDC_SC_ENTERNAME,7,7,102,14
+END
+
+IDD_DLG_PROG DIALOGEX 0, 0, 187, 47
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION
+CAPTION "Dialog"
+FONT 10, "System", 0, 0, 0x1
+BEGIN
+    CONTROL         "Cancel",IDC_STOP,"Button",BS_OWNERDRAW | WS_TABSTOP,130,
+                    26,50,14
+    CONTROL         "Progress1",IDC_PROGRESS_BAR,"msctls_progress32",
+                    PBS_SMOOTH | WS_BORDER,7,12,173,14,WS_EX_TRANSPARENT
+    LTEXT           "Message",IDC_STATIC_MESSAGE,7,1,31,8,0,
+                    WS_EX_TRANSPARENT
+    PUSHBUTTON      "Button1",IDCANCEL,60,26,50,14,NOT WS_VISIBLE
+    CONTROL         "Animate1",IDC_ANIMATE,"SysAnimate32",ACS_AUTOPLAY | 
+                    WS_TABSTOP,160,1,20,20
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_ORG_SCHEDULE_EDITOR, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 369
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 219
+    END
+
+    IDD_PVI_5_USEREXIT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 196
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 40
+    END
+
+    IDD_OPENREPEATQUESTDLG, DIALOG
+    BEGIN
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 83
+    END
+
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 228
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 48
+    END
+
+    IDD_SEARCH, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 120
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 52
+    END
+
+    IDD_DLG_PROG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 180
+        TOPMARGIN, 1
+        BOTTOMMARGIN, 40
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDR_TB_FUNC             BITMAP  DISCARDABLE     "res\\tb_func.bmp"
+IDR_TB_TOOLBAR          BITMAP  DISCARDABLE     "res\\tb_toolb.bmp"
+IDB_COLUMNHEADER_END    BITMAP  DISCARDABLE     "res\\ColumnHeaderEnd.bmp"
+IDB_COLUMNHEADER_START  BITMAP  DISCARDABLE     "res\\ColumnHeaderStart.bmp"
+IDB_COLUMNHEADER_SPAN   BITMAP  DISCARDABLE     "res\\ColumnHeaderSpan.bmp"
+IDR_TOOLBAR_LEFTHANDSIDE BITMAP  DISCARDABLE     "res\\toolbar_.bmp"
+IDR_TOOLBAR_RIGHTHANDSIDE BITMAP  DISCARDABLE     "res\\bmp00001.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "res\\Calendar.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_ORG_SCHEDULE_EDITOR DLGINIT
+BEGIN
+    IDC_SCH_DATA_ALARM_INTERVAL, 0x403, 6, 0
+0x2030, 0x694d, 0x006e, 
+    IDC_SCH_DATA_ALARM_INTERVAL, 0x403, 6, 0
+0x2035, 0x694d, 0x006e, 
+    IDC_SCH_DATA_ALARM_INTERVAL, 0x403, 7, 0
+0x3031, 0x4d20, 0x6e69, "\000" 
+    IDC_SCH_DATA_ALARM_INTERVAL, 0x403, 7, 0
+0x3531, 0x4d20, 0x6e69, "\000" 
+    IDC_SCH_DATA_ALARM_INTERVAL, 0x403, 7, 0
+0x3033, 0x4d20, 0x6e69, "\000" 
+    IDC_SCH_DATA_ALARM_INTERVAL, 0x403, 7, 0
+0x2031, 0x6f48, 0x7275, "\000" 
+    IDC_SCH_DATA_ALARM_INTERVAL, 0x403, 7, 0
+0x2032, 0x6f48, 0x7275, "\000" 
+    IDC_SCH_DATA_ALARM_INTERVAL, 0x403, 7, 0
+0x2033, 0x6f48, 0x7275, "\000" 
+    IDC_SCH_DATA_ALARM_INTERVAL, 0x403, 7, 0
+0x2034, 0x6f48, 0x7275, "\000" 
+    IDC_SCH_DATA_ALARM_INTERVAL, 0x403, 7, 0
+0x2035, 0x6f48, 0x7275, "\000" 
+    IDC_SCH_DATA_ALARM_INTERVAL, 0x403, 7, 0
+0x2036, 0x6f48, 0x7275, "\000" 
+    IDC_SCH_DATA_ALARM_INTERVAL, 0x403, 7, 0
+0x2037, 0x6f48, 0x7275, "\000" 
+    IDC_SCH_DATA_ALARM_INTERVAL, 0x403, 7, 0
+0x2038, 0x6f48, 0x7275, "\000" 
+    IDC_SCH_DATA_ALARM_INTERVAL, 0x403, 7, 0
+0x2039, 0x6f48, 0x7275, "\000" 
+    IDC_SCH_DATA_ALARM_INTERVAL, 0x403, 8, 0
+0x3031, 0x4820, 0x756f, 0x0072, 
+    IDC_SCH_DATA_ALARM_INTERVAL, 0x403, 8, 0
+0x3131, 0x4820, 0x756f, 0x0072, 
+    IDC_SCH_DATA_ALARM_INTERVAL, 0x403, 8, 0
+0x3231, 0x4820, 0x756f, 0x0072, 
+    IDC_SCH_DATA_ALARM_INTERVAL, 0x403, 6, 0
+0x2031, 0x6144, 0x0079, 
+    IDC_SCH_DATA_ALARM_INTERVAL, 0x403, 6, 0
+0x2032, 0x6144, 0x0079, 
+    IDC_SCH_DATA_REPEAT_TYPE, 0x403, 4, 0
+0x6144, 0x0079, 
+    IDC_SCH_DATA_REPEAT_TYPE, 0x403, 5, 0
+0x6557, 0x6b65, "\000" 
+    IDC_SCH_DATA_REPEAT_TYPE, 0x403, 6, 0
+0x6f4d, 0x746e, 0x0068, 
+    IDC_SCH_DATA_REPEAT_TYPE, 0x403, 11, 0
+0x6f4d, 0x746e, 0x2c68, 0x6557, 0x6b65, "\000" 
+    IDC_SCH_DATA_REPEAT_TYPE, 0x403, 5, 0
+0x6559, 0x7261, "\000" 
+    IDC_SCH_DATA_REPEAT_WHICHWEEK, 0x403, 6, 0
+0x6946, 0x7372, 0x0074, 
+    IDC_SCH_DATA_REPEAT_WHICHWEEK, 0x403, 7, 0
+0x6553, 0x6f63, 0x646e, "\000" 
+    IDC_SCH_DATA_REPEAT_WHICHWEEK, 0x403, 6, 0
+0x6854, 0x7269, 0x0064, 
+    IDC_SCH_DATA_REPEAT_WHICHWEEK, 0x403, 7, 0
+0x6f46, 0x7275, 0x6874, "\000" 
+    IDC_SCH_DATA_REPEAT_WHICHWEEK, 0x403, 5, 0
+0x614c, 0x7473, "\000" 
+    IDC_SCH_DATA_REPEAT_WEEKDAY, 0x403, 4, 0
+0x7553, 0x006e, 
+    IDC_SCH_DATA_REPEAT_WEEKDAY, 0x403, 4, 0
+0x6f4d, 0x006e, 
+    IDC_SCH_DATA_REPEAT_WEEKDAY, 0x403, 4, 0
+0x7554, 0x0065, 
+    IDC_SCH_DATA_REPEAT_WEEKDAY, 0x403, 4, 0
+0x6557, 0x0064, 
+    IDC_SCH_DATA_REPEAT_WEEKDAY, 0x403, 4, 0
+0x6854, 0x0075, 
+    IDC_SCH_DATA_REPEAT_WEEKDAY, 0x403, 4, 0
+0x7246, 0x0069, 
+    IDC_SCH_DATA_REPEAT_WEEKDAY, 0x403, 4, 0
+0x6153, 0x0074, 
+    IDC_CMB_CAL_PRIORITY, 0x403, 3, 0
+0xdfb8, "\000" 
+    IDC_CMB_CAL_PRIORITY, 0x403, 3, 0
+0xd0d6, "\000" 
+    IDC_CMB_CAL_PRIORITY, 0x403, 3, 0
+0xcdb5, "\000" 
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_TB_FUNC TOOLBAR DISCARDABLE  68, 51
+BEGIN
+    BUTTON      ID_BN_PHONEBOOK
+    BUTTON      ID_BN_SCHEDULE
+    BUTTON      ID_BN_MEMO
+END
+
+IDR_TB_TOOLBAR TOOLBAR DISCARDABLE  35, 35
+BEGIN
+    BUTTON      ID_BN_NEW
+    BUTTON      ID_BN_EDIT
+    BUTTON      ID_BN_DELETE
+    BUTTON      ID_BN_REFRESH
+    SEPARATOR
+    BUTTON      ID_BN_EXIT
+    BUTTON      ID_BN_ABOUT
+    BUTTON      ID_BN_HELP
+END
+
+IDR_TOOLBAR_LEFTHANDSIDE TOOLBAR DISCARDABLE  35, 35
+BEGIN
+    BUTTON      ID_BN_NEW
+    BUTTON      ID_BN_EDIT
+    BUTTON      ID_BN_DELETE
+    BUTTON      ID_BN_REFRESH
+END
+
+IDR_TOOLBAR_RIGHTHANDSIDE TOOLBAR DISCARDABLE  35, 35
+BEGIN
+    BUTTON      ID_BN_EXIT
+    BUTTON      ID_BN_ABOUT
+    BUTTON      ID_BN_HELP
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_CONNECT              "Connect"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHT)
+#ifdef _WIN32
+LANGUAGE 4, 1
+#pragma code_page(950)
+#endif //_WIN32
+#include "res\Calendar.rc2"  // non-Microsoft Visual C++ edited resources
+         // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

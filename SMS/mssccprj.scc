@@ -1,0 +1,17 @@
+SCC = This is a Source Code Control file
+
+[SMSUtility.dsw]
+SCC_Aux_Path = "\\rd_ser\source_bk$\"
+SCC_Project_Name = "$/Mobile/CAMagic Mobile 3.0/Application/SMSUtility", ORZCAAAA
+
+[SMSUtility.dsp]
+SCC_Aux_Path = "\\rd_ser\source_bk$\"
+SCC_Project_Name = "$/Mobile/CAMagic Mobile 3.0/Application/SMSUtility", ORZCAAAA
+
+[SMSUtility_DLL.dsp]
+SCC_Aux_Path = "\\rd_ser\source_bk$\"
+SCC_Project_Name = "$/Mobile/CAMagic Mobile 3.0/Application/SMSUtility", ORZCAAAA
+
+[SMSUtility_DLL.dsw]
+SCC_Aux_Path = "\\rd_ser\source_bk$\"
+SCC_Project_Name = "$/Mobile/CAMagic Mobile 3.0/Application/SMSUtility", ORZCAAAA

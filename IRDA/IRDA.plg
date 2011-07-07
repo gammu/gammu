@@ -3,46 +3,46 @@
 <pre>
 <h1>Build Log</h1>
 <h3>
---------------------Configuration: IRDA - Win32 Debug--------------------
+--------------------Configuration: IRDA - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating command line "rc.exe /l 0x404 /fo"..\..\temp\debug/IRDA.res" /d "_DEBUG" /d "_AFXDLL" "D:\Customer Profile\Gammu GPL\code04082010\code\IRDA\IRDA.rc"" 
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP17FB.tmp" with contents
+Creating command line "rc.exe /l 0x404 /fo"..\temp\Release/IRDA.res" /d "NDEBUG" /d "_AFXDLL" "D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\IRDA\IRDA.rc"" 
+Creating temporary file "C:\DOCUME~1\Alan\LOCALS~1\Temp\RSPFE.tmp" with contents
 [
-/nologo /MDd /W3 /Gm /GX /ZI /Od /I "..\Proj_inc" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_USRDLL" /Fp"..\..\temp\debug/IRDA.pch" /Yu"stdafx.h" /Fo"..\..\temp\debug/" /Fd"..\..\temp\debug/" /FD /GZ /c 
-"D:\Customer Profile\Gammu GPL\code04082010\code\IRDA\devfunc.cpp"
-"D:\Customer Profile\Gammu GPL\code04082010\code\IRDA\IRDA.cpp"
-"D:\Customer Profile\Gammu GPL\code04082010\code\IRDA\irda_w32.cpp"
+/nologo /MD /W3 /GX /O2 /I "..\Proj_inc" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_USRDLL" /Fp"..\temp\Release/IRDA.pch" /Yu"stdafx.h" /Fo"..\temp\Release/" /Fd"..\temp\Release/" /FD /c 
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\IRDA\devfunc.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\IRDA\IRDA.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\IRDA\irda_w32.cpp"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP17FB.tmp" 
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP17FC.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\Alan\LOCALS~1\Temp\RSPFE.tmp" 
+Creating temporary file "C:\DOCUME~1\Alan\LOCALS~1\Temp\RSPFF.tmp" with contents
 [
-/nologo /MDd /W3 /Gm /GX /ZI /Od /I "..\Proj_inc" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_USRDLL" /Fp"..\..\temp\debug/IRDA.pch" /Yc"stdafx.h" /Fo"..\..\temp\debug/" /Fd"..\..\temp\debug/" /FD /GZ /c 
-"D:\Customer Profile\Gammu GPL\code04082010\code\IRDA\StdAfx.cpp"
+/nologo /MD /W3 /GX /O2 /I "..\Proj_inc" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_USRDLL" /Fp"..\temp\Release/IRDA.pch" /Yc"stdafx.h" /Fo"..\temp\Release/" /Fd"..\temp\Release/" /FD /c 
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\IRDA\StdAfx.cpp"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP17FC.tmp" 
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP17FD.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\Alan\LOCALS~1\Temp\RSPFF.tmp" 
+Creating temporary file "C:\DOCUME~1\Alan\LOCALS~1\Temp\RSP100.tmp" with contents
 [
-Ws2_32.lib ..\..\lib\Debug\Common.lib /nologo /subsystem:windows /dll /incremental:yes /pdb:"..\..\lib\debug/IRDA.pdb" /debug /machine:I386 /def:".\IRDA.def" /out:"..\..\exe\Debug\IRDA.dll" /implib:"..\..\lib\debug/IRDA.lib" /pdbtype:sept 
-"\Customer Profile\Gammu GPL\code04082010\temp\debug\devfunc.obj"
-"\Customer Profile\Gammu GPL\code04082010\temp\debug\IRDA.obj"
-"\Customer Profile\Gammu GPL\code04082010\temp\debug\irda_w32.obj"
-"\Customer Profile\Gammu GPL\code04082010\temp\debug\StdAfx.obj"
-"\Customer Profile\Gammu GPL\code04082010\temp\debug\IRDA.res"
+Ws2_32.lib ..\lib\Release\Common.lib /nologo /subsystem:windows /dll /incremental:no /pdb:"..\lib\Release/IRDA.pdb" /machine:I386 /def:".\IRDA.def" /out:"..\exe\Release/IRDA.dll" /implib:"..\lib\Release/IRDA.lib" 
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Release\devfunc.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Release\IRDA.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Release\irda_w32.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Release\StdAfx.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Release\IRDA.res"
 ]
-Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP17FD.tmp"
+Creating command line "link.exe @C:\DOCUME~1\Alan\LOCALS~1\Temp\RSP100.tmp"
 <h3>Output Window</h3>
 Compiling resources...
 Compiling...
 StdAfx.cpp
 Compiling...
 devfunc.cpp
-D:\Customer Profile\Gammu GPL\code04082010\code\IRDA\devfunc.cpp(41) : warning C4018: '==' : signed/unsigned mismatch
+D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\IRDA\devfunc.cpp(41) : warning C4018: '==' : signed/unsigned mismatch
 IRDA.cpp
 irda_w32.cpp
 Generating Code...
 Linking...
-   Creating library ..\..\lib\debug/IRDA.lib and object ..\..\lib\debug/IRDA.exp
+   Creating library ..\lib\Release/IRDA.lib and object ..\lib\Release/IRDA.exp
 
 
 

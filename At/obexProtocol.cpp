@@ -1,5 +1,4 @@
-/* (c) 2003 by Marcin Wiacek */
-/* www.irda.org OBEX specs 1.3 */
+
 #include "stdafx.h"
 #include <stdio.h>
 #include <string.h>

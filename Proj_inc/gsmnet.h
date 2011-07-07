@@ -1,5 +1,4 @@
 /* (c) 2002-2003 by Marcin Wiacek & Michal Cihar */
-
 #ifndef __gsm_net_h
 #define __gsm_net_h
 

@@ -1,0 +1,433 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Chinese (Taiwan) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHT)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_TRADITIONAL
+#pragma code_page(950)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHT)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 4, 1\r\n"
+    "#pragma code_page(950)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\SMSUtility.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""l.cht\\afxres.rc""          // Standard components\r\n"
+    "#include ""l.cht\\afxprint.rc""        // printing/print preview resources\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS PRELOAD MOVEABLE PURE 
+BEGIN
+    "N",            ID_FILE_NEW,            VIRTKEY, CONTROL
+    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL
+    "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL
+    "P",            ID_FILE_PRINT,          VIRTKEY, CONTROL
+    "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL
+    "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL
+    "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL
+    "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL
+    VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT
+    VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT
+    VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL
+    VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT
+    VK_F6,          ID_NEXT_PANE,           VIRTKEY 
+    VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_PHONE               ICON    DISCARDABLE     "res\\phone.ico"
+IDI_SIMCARD             ICON    DISCARDABLE     "res\\sim.ico"
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 3,0,0,3
+ PRODUCTVERSION 3,0,0,3
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "Comments", "\0"
+            VALUE "CompanyName", "A&W Soft\0"
+            VALUE "FileDescription", "SMS Manager\0"
+            VALUE "FileVersion", "3, 0, 0, 3\0"
+            VALUE "InternalName", "SMS Manager\0"
+            VALUE "LegalCopyright", "Copyright (C) 2004\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "SMSUtility.EXE\0"
+            VALUE "PrivateBuild", "\0"
+            VALUE "ProductName", "SMS Manager\0"
+            VALUE "ProductVersion", "3, 0, 0, 3\0"
+            VALUE "SpecialBuild", "\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+#endif    // !_MAC
+
+#endif    // Chinese (Taiwan) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "res\\camagic mobile icon.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 214, 71
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About"
+FONT 12, "Arial"
+BEGIN
+    LTEXT           "SMS manager Version 1.0.0.0",IDC_ST_1,34,35,95,8,
+                    SS_NOPREFIX
+    LTEXT           "Copyright(c) 2004 Advanced && Wise Technology Corp. All rights reserved.",
+                    IDC_ST_2,36,47,171,17
+    CONTROL         "OK",IDOK,"Button",BS_OWNERDRAW | WS_GROUP | WS_TABSTOP,
+                    165,8,35,11
+    LTEXT           "CAMagic Mobile Version 1.0.0.0",IDC_ST_MAIN,40,15,102,8,
+                    SS_NOPREFIX
+END
+
+IDD_DLG_OPENMSG DIALOGEX 0, 0, 233, 160
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Display SMS"
+FONT 10, "Tahoma", 0, 0, 0x1
+BEGIN
+    EDITTEXT        IDC_EDIT_SENDER,61,13,100,14,ES_READONLY | NOT 
+                    WS_TABSTOP
+    EDITTEXT        IDC_EDIT_TIME,61,31,100,14,ES_READONLY | NOT WS_TABSTOP
+    EDITTEXT        IDC_EDIT_CONTENT,7,62,163,91,ES_MULTILINE | ES_READONLY | 
+                    WS_VSCROLL | NOT WS_TABSTOP,WS_EX_CLIENTEDGE
+    CONTROL         "Previous",IDC_BTN_PREV,"Button",BS_OWNERDRAW,176,64,50,
+                    14
+    CONTROL         "Next",IDC_BTN_NEXT,"Button",BS_OWNERDRAW,176,83,50,14
+    CONTROL         "Reply",IDC_BTN_REPLY,"Button",BS_OWNERDRAW,176,119,50,
+                    14
+    CONTROL         "Cancel",IDCANCEL,"Button",BS_OWNERDRAW,176,139,50,14
+    LTEXT           "Sender :",IDC_ST_SENDER,21,16,34,8
+    LTEXT           "Time :",IDC_ST_TIME,21,33,40,8
+    LTEXT           "Message Contents :",IDC_ST_MSGCONTENT,8,51,66,8
+END
+
+IDD_DLG_NEWSMS DIALOGEX 0, 0, 226, 145
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "1SMS EDIT"
+FONT 12, "Tahoma", 0, 0, 0x1
+BEGIN
+    EDITTEXT        IDC_EDIT_CONTACTSLIST,47,15,101,14,ES_AUTOHSCROLL | NOT 
+                    WS_TABSTOP
+    EDITTEXT        IDC_EDIT_CONTENTS,7,63,162,75,ES_MULTILINE | 
+                    ES_WANTRETURN | WS_VSCROLL | NOT WS_TABSTOP,
+                    WS_EX_CLIENTEDGE
+    CONTROL         "Contacts",IDC_BTN_CONTACTS,"Button",BS_OWNERDRAW,169,17,
+                    50,14
+    CONTROL         "Send",IDC_BTN_SEND,"Button",BS_OWNERDRAW,176,76,43,14
+    CONTROL         "Save to Draft",IDC_BTN_DRAFT,"Button",BS_OWNERDRAW | 
+                    WS_TABSTOP,176,103,43,14
+    CONTROL         "Cancel",IDCANCEL,"Button",BS_OWNERDRAW,177,124,42,14
+    CONTROL         "OK",IDOK,"Button",BS_OWNERDRAW | NOT WS_VISIBLE | 
+                    WS_DISABLED,176,2,43,14
+    LTEXT           "Receiver :",IDC_ST_RECEIVER,7,18,34,8
+    LTEXT           "Message Contens",IDC_ST_MSGCONTENT,7,51,60,8
+    LTEXT           "[1 / 160]",IDC_ST_COUNTS,142,53,27,8,NOT WS_GROUP
+END
+
+IDD_DLG_CONTACTS DIALOGEX 0, 0, 289, 156
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION
+CAPTION "Dialog"
+FONT 12, "Tahoma", 0, 0, 0x1
+BEGIN
+    CONTROL         "OK",IDOK,"Button",BS_OWNERDRAW,168,135,50,14
+    CONTROL         "Cancel",IDCANCEL,"Button",BS_OWNERDRAW,232,135,50,14
+    CONTROL         "List2",IDC_LIST_CONTACTS,"SysListView32",LVS_REPORT | 
+                    LVS_ALIGNLEFT | LVS_NOSORTHEADER | WS_BORDER,28,26,60,50,
+                    WS_EX_CLIENTEDGE
+    CONTROL         "List3",IDC_LIST_SELPHONE,"SysListView32",LVS_REPORT | 
+                    LVS_ALIGNLEFT | LVS_NOSORTHEADER | WS_BORDER,201,32,60,
+                    50,WS_EX_CLIENTEDGE
+    CONTROL         "ADD >>",IDC_BTN_ADD,"Button",BS_OWNERDRAW,120,26,50,14
+    CONTROL         "Delete",IDC_BTN_DELETE,"Button",BS_OWNERDRAW,118,54,50,
+                    14
+END
+
+IDD_PROCESS_DLG DIALOG DISCARDABLE  0, 0, 201, 54
+STYLE DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION
+CAPTION "Read data from mobile"
+FONT 10, "System"
+BEGIN
+    CONTROL         "Progress1",IDC_PROGRESS_BAR,"msctls_progress32",
+                    PBS_SMOOTH | WS_BORDER,19,19,152,12
+    CONTROL         "",IDC_STOP,"Button",BS_OWNERDRAW | WS_TABSTOP,168,42,30,
+                    10
+    LTEXT           "Static",IDC_STATIC_MSG,19,4,150,8
+END
+
+IDD_AVI_DLG DIALOG DISCARDABLE  0, 0, 201, 54
+STYLE DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION
+CAPTION "Read data from mobile"
+FONT 10, "System"
+BEGIN
+    CONTROL         "",IDCANCEL,"Button",BS_OWNERDRAW | WS_TABSTOP,168,42,30,
+                    10
+    CONTROL         "Animate1",IDC_ANIMATE,"SysAnimate32",ACS_AUTOPLAY | 
+                    WS_TABSTOP,33,14,20,20
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 207
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 64
+    END
+
+    IDD_DLG_OPENMSG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 226
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 153
+    END
+
+    IDD_DLG_NEWSMS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 219
+        BOTTOMMARGIN, 138
+    END
+
+    IDD_DLG_CONTACTS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 282
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 149
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDR_TB_TOOLBAR          BITMAP  DISCARDABLE     "res\\tb_toolb.bmp"
+IDR_TB_TOOLBAR2         BITMAP  DISCARDABLE     "res\\toolbar1.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU PRELOAD DISCARDABLE 
+BEGIN
+    POPUP "??(&F)"
+    BEGIN
+        MENUITEM "????(&N)\tCtrl+N",            ID_FILE_NEW
+        MENUITEM "????(&O)...\tCtrl+O",         ID_FILE_OPEN
+        MENUITEM "????(&S)\tCtrl+S",            ID_BN_SAVE
+        MENUITEM "????(&A)...",                 ID_FILE_SAVE_AS
+        MENUITEM SEPARATOR
+        MENUITEM "??(&P)...\tCtrl+P",           ID_FILE_PRINT
+        MENUITEM "????(&V)",                    ID_FILE_PRINT_PREVIEW
+        MENUITEM "????(&R)...",                 ID_FILE_PRINT_SETUP
+        MENUITEM SEPARATOR
+        MENUITEM "??????",                      ID_FILE_MRU_FILE1, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "??(&X)",                      ID_APP_EXIT
+    END
+    POPUP "??(&E)"
+    BEGIN
+        MENUITEM "??(&U)\tCtrl+Z",              ID_EDIT_UNDO
+        MENUITEM SEPARATOR
+        MENUITEM "??(&T)\tCtrl+X",              ID_EDIT_CUT
+        MENUITEM "??(&C)\tCtrl+C",              ID_EDIT_COPY
+        MENUITEM "??(&P)\tCtrl+V",              ID_EDIT_PASTE
+    END
+    POPUP "??(&V)"
+    BEGIN
+        MENUITEM "???(&T)",                     ID_VIEW_TOOLBAR
+        MENUITEM "???(&S)",                     ID_VIEW_STATUS_BAR
+    END
+    POPUP "??(&H)"
+    BEGIN
+        MENUITEM "?? SMSUtility(&A)...",        ID_APP_ABOUT
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_TB_TOOLBAR TOOLBAR DISCARDABLE  35, 35
+BEGIN
+    BUTTON      ID_BN_NEW
+    BUTTON      ID_BN_REPLY
+    BUTTON      ID_BN_SAVE
+    BUTTON      ID_BN_PRINT
+    BUTTON      ID_BN_DELETE
+    SEPARATOR
+    BUTTON      ID_BN_RESEND
+    BUTTON      ID_BN_REFRESH
+END
+
+IDR_TB_TOOLBAR2 TOOLBAR DISCARDABLE  35, 35
+BEGIN
+    BUTTON      ID_BN_BACK
+    BUTTON      ID_BN_ABOUT
+    BUTTON      ID_BN_HELP
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_123                 "123456789012345"
+    IDS_456                 "1234567"
+    IDS_789                 "12345"
+    IDS_111                 "1234567890"
+    IDS_112                 "1234567890"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_CONNECT_STATUS      "Ready"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHT)
+#ifdef _WIN32
+LANGUAGE 4, 1
+#pragma code_page(950)
+#endif //_WIN32
+#include "res\SMSUtility.rc2"  // non-Microsoft Visual C++ edited resources
+#include "l.cht\afxres.rc"          // Standard components
+#include "l.cht\afxprint.rc"        // printing/print preview resources
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

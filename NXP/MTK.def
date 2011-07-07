@@ -1,0 +1,85 @@
+; MTK.def : Declares the module parameters for the DLL.
+
+LIBRARY      "MTK"
+DESCRIPTION  'MTK Windows Dynamic Link Library'
+
+EXPORTS
+	SetConnectparameter
+	Initialise
+	Terminate
+	GetManufacturer
+	GetModel
+	GetFirmware
+	GetIMEI
+	GetPhoneDateTime
+	SetPhoneDateTime
+	PhoneReset
+	CheckConnectStatus
+	GetNetworkInfo
+	GetSignalQuality
+	GetBatteryCharge
+
+
+	GetMemoryStatus
+	GetMemory
+	SetMemory
+	DeleteMemory
+	CheckSIMCard
+	InitPHKGet
+	GetPhoneBitmap
+
+	GetSMSStatus
+	GetSMSMessage
+	GetNextSMSMessage
+	SetSMS
+	AddSMS
+	DeleteSMSMessage
+	SendSMSMessage
+
+	GetCalendarStatus
+	GetNextCalendar
+	AddCalendar
+	InitCalendarGet
+	DelCalendar
+	Calendar_NeedCreateIndexTable
+
+	GetNextFileFolder
+	GetFilePart
+	AddFilePart
+	GetFileSystemStatus
+	DeleteFilePart
+	AddFolder
+
+	OBEX_SetFolderPath
+	OBEX_GetObexFileList
+	OBEX_GetNextFileFolder
+	OBEX_GetFilePart
+	OBEX_AddFilePart
+	OBEX_DeleteFile
+	OBEX_SetMode
+	OBEX_GetOBEXFolderListCount
+	OBEX_GetOBEXSubList
+	SetFilesLocations
+	GetObjectSubList
+
+
+	InitSyncPIM
+	SyncGetNexUpdateToDoData
+	SyncGetNexUpdateCalendarData
+	SyncGetNextUpdatePhonbookData
+	TerminateSyncPIM
+	InitSyncGetData
+
+	InitPHKGetEx
+    InitCalendarGetEx
+
+
+
+	DeleteMMSFile
+	AddMMSFilePart
+	GetMMSFilePart
+	GMMSFileList
+	MMSInit
+	MMSTerminate
+
+  ; Explicit exports can go here

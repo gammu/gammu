@@ -6,6 +6,7 @@
 #include "mbglobals.h"
 
 void GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(GSM_CalendarEntry *entry, int *Text, int *Time, int *Alarm, int *Phone, int *Recurrance, int *RecurranceFreq, int *EndTime, int *Location);
+void GSM_CalendarFindEntryIndex(GSM_CalendarEntry *entry, int *Text, int *Time, int *Alarm, int *Phone, int *Recurrance, int *RecurranceFreq, int *EndTime, int *Location ,int *RepeatEndDate,int *Description,int *DayofweekMask);
 
 typedef enum {
 	Nokia_VCalendar = 1,
@@ -171,8 +172,21 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 GSM_Error NokiaS6_DecodeVCALENDAR(unsigned char *Buffer, int *Pos, GSM_CalendarEntry *Calendar, GSM_ToDoEntry *ToDo, int* Timezone);
 GSM_Error SAGEM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_CalendarEntry *Calendar, GSM_ToDoEntry *ToDo, int Timezone);
 GSM_Error MOTOE2_DecodeVCALENDAR(unsigned char *Buffer, int *Pos, GSM_CalendarEntry *Calendar, GSM_ToDoEntry *ToDo, int* Timezone);
+/* --------------------------- recurrence ----------------------------- */
+bool GetRepeatDatesCount_Daily(COleDateTime dtStart,int interval,int* nCount ,COleDateTime& dtRepeatEndDate);
+bool GetRepeatDatesCount_Weekly(COleDateTime dtStart,int interval,int* nCount ,COleDateTime& dtRepeatEndDate,int DayofWeekMask);
+bool GetRepeatDatesCount_Monthly(COleDateTime dtStart,int interval,int* nCount ,COleDateTime& dtRepeatEndDate);
+bool GetRepeatDatesCount_MonthNth(COleDateTime dtStart,int interval,int* nCount ,COleDateTime& dtRepeatEndDate,int Week,int Day);
+
+bool GetRepeatDate_Daily(COleDateTime dtStart,int interval,int nCount ,COleDateTime& dtRepeatEndDate);
+bool GetRepeatDate_Weekly(COleDateTime dtStart,int interval,int nCount ,COleDateTime& dtRepeatEndDate,int DayofWeekMask);
+bool GetRepeatDate_Monthly(COleDateTime dtStart,int interval,int nCount ,COleDateTime& dtRepeatEndDate);
+bool GetRepeatDate_MonthNth(COleDateTime dtStart,int interval,int nCount ,COleDateTime& dtRepeatEndDate,int Week,int Day);
+
+void GetwhichWeekDay(GSM_DateTime gsmtime, UINT &whichWeek, UINT &whichDay);
 
 #endif
+GSM_Error SF_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_CalendarEntry *Calendar, GSM_ToDoEntry *ToDo, int Timezone);
 
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:

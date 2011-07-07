@@ -1,5 +1,4 @@
 /* (c) 2002-2006 by Marcin Wiacek */
-
 #ifndef __gsm_multi_h
 #define __gsm_multi_h
 

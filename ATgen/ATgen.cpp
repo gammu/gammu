@@ -66,6 +66,45 @@ CATgenApp::CATgenApp()
 	m_MAXSMSINFOLDER = PHONE_MAXSMSINFOLDER;
 	m_PhoneSize = PHONE_MAXSMSINFOLDER;
 	m_SIMSize = 0;
+	//////////////////////////////////////////////////////////////////////////080424libaoliu
+	GetTempPath(MAX_PATH,m_szPHKIndexFileTempFile);
+	 nLength = strlen(m_szPHKIndexFileTempFile);
+	if(m_szPHKIndexFileTempFile[nLength-1] != '\\')
+		strcat(m_szPHKIndexFileTempFile,"\\anwSMSIndexFile.tmp");
+	else
+		strcat(m_szPHKIndexFileTempFile,"anwSMSIndexFile.tmp");
+
+	GetTempPath(MAX_PATH,m_szPHKDataFileTempFile);
+	 nLength = strlen(m_szPHKDataFileTempFile);
+	if(m_szPHKDataFileTempFile[nLength-1] != '\\')
+		strcat(m_szPHKDataFileTempFile,"\\anwSMSDataFile.tmp");
+	else
+		strcat(m_szPHKDataFileTempFile,"anwSMSDataFile.tmp");
+	GetTempPath(MAX_PATH,m_szPHKAddDataFileTempFile);
+	nLength=strlen(m_szPHKAddDataFileTempFile);
+	if (m_szPHKAddDataFileTempFile[nLength-1] !='\\')
+	{
+		strcat(m_szPHKAddDataFileTempFile,"\\anwSMSAddDataFile.tmp");
+	}
+	else
+		strcat(m_szPHKAddDataFileTempFile,"anwSMSAddDataFile.tmp");
+	GetTempPath(MAX_PATH,	m_szSMSDataFileTempFile);
+	nLength=strlen(	m_szSMSDataFileTempFile);
+	if (m_szSMSDataFileTempFile[nLength-1] !='\\')
+	{
+		strcat(	m_szSMSDataFileTempFile,"\\anwSMSFile.tmp");
+	}
+	else
+		strcat(	m_szSMSDataFileTempFile,"anwSMSFile.tmp");
+
+
+
+	isFirst=false;
+	isGetZero=false;
+	m_unDecodeBase64=NULL;
+	isMEsms=false;
+	isbNewXP=false;
+	//////////////////////////////////////////////////////////////////////////
 }
 
 /////////////////////////////////////////////////////////////////////////////

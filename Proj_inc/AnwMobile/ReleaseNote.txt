@@ -1,0 +1,89 @@
+//*************************************************************************
+1.0.1.0    2004/11/17
+-Change OpenSyncDrv Function . Add IMEI .
+-Add GetIMEI & GetModelName Function.
+-修正PhoneBook CreateIndexTable 的Bug.
+-修正 Cal_Data_Struct2Entry 沒處理 Location by karl 93/11/09
+//*************************************************************************
+
+
+//*************************************************************************
+1.0.0.8    2004/11/9
+-modify GetMMSSupport in MMS by karl
+-修正 Cal_Data_Struct2Entry 沒處理 Location by karl 93/11/09
+//*************************************************************************
+
+//*************************************************************************
+1.0.0.7    2004/11/8
+-modify GetMMSSupport in MMS by karl
+-修正 AddCalendar not return Location by karl 93/11/08
+//*************************************************************************
+1.0.0.6    2004/11/6
+
+-modify CloseSyncDrv() by Karl
+-Add MBdrvThreadTerminate() in AnwMobile by Karl
+
+-modify SetProfilePath()
+-Add InitCalendar()
+& TerminateCalendar()
+& InitMMS()
+& TerminateMMS()
+& GetMMSSupport()
+& InitPhoto()
+& TerminatePhoto()
+& InitRingtone()
+& TerminateRingtone()
+& InitSMS()
+& TerminateSMS()
+& InitPhoneBook()
+& TerminatePhoneBook()	 by Karl 1004/11/5
+
+-Add 錯誤處理 in Phonebook	by Karl 1004/11/5
+
+
+//*************************************************************************
+//*************************************************************************
+1.0.0.5    2004/11/1
+-modify DllMain() by Karl
+-Add GetMMSFolder() ,GetWorkFolder() ,SetWorkFolder() in MMS by Karl
+
+-modify MobileSMS.cpp
+ Add a function call which name is GetSMSOneData(), this function let user 
+ to get sms's message one by one.
+
+//*************************************************************************
+
+//*************************************************************************
+1.0.0.4    2004/10/27
+-modify MobileID &  ConnectPortName  data type int to char *  in
+OpenSyncDrv(),OpenPhoneBook (), OpenSMS(), OpenRingtoneUtil(), OpenPhotoUtil(), OpenMMSUtil(), OpenCalenda()r  by Karl
+-add ResetPhoto() & ResetRingtone() & ResetMMS() API by Karl
+- modify  typedef struct PortNameList in SearchUSBPort()
+//*************************************************************************
+//*************************************************************************
+1.0.0.3    2004/10/20
+-add MMS by Karl
+
+//*************************************************************************
+
+//*************************************************************************
+1.0.0.2 2004/10/1 first version
+1.0.0.2 2001/10/4 modify AddData(),announce new phonebook.h
+1.0.0.2 2004/10/13
+
+Add Photo & Ringtone by karl
+
+New feature ---> Add Calendar
+	---> Send back when close connection.
+Fixed Bug ---> Group ID
+
+Know Bug---> Can not add last name in Nokia Mobile.
+	---> Can add Group in SIM 
+
+Not implement---> Get Feature list .
+
+//***************************************************************************
+
+1.0.0.1
+
+Make AnwMobile by karl

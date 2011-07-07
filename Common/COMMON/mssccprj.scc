@@ -1,0 +1,5 @@
+SCC = This is a Source Code Control file
+
+[Common.dsp]
+SCC_Aux_Path = "\\rd_ser\source_bk$\"
+SCC_Project_Name = "$/Mobile/CAMagic Mobile 3.0/Common/Common", HRYCAAAA

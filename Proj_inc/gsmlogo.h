@@ -1,5 +1,4 @@
 /* (c) 2002-2004 by Marcin Wiacek */
-
 #ifndef __gsm_bitmaps_h
 #define __gsm_bitmaps_h
 #include "mbglobals.h"

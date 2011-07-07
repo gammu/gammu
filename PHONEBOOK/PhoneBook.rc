@@ -1,0 +1,2064 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Chinese (Taiwan) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHT)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_TRADITIONAL
+#pragma code_page(950)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHT)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 4, 1\r\n"
+    "#pragma code_page(950)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\PhoneBook.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""l.cht\\afxres.rc""          // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU PRELOAD DISCARDABLE 
+BEGIN
+    POPUP "檔案(&F)"
+    BEGIN
+        MENUITEM "結束(&X)",                    ID_APP_EXIT
+    END
+    POPUP "編輯(&E)"
+    BEGIN
+        MENUITEM "復原(&U)\tCtrl+Z",            ID_EDIT_UNDO
+        MENUITEM SEPARATOR
+        MENUITEM "剪下(&T)\tCtrl+X",            ID_EDIT_CUT
+        MENUITEM "複製(&C)\tCtrl+C",            ID_EDIT_COPY
+        MENUITEM "貼上(&P)\tCtrl+V",            ID_EDIT_PASTE
+    END
+    POPUP "檢視(&V)"
+    BEGIN
+        MENUITEM "狀態列(&S)",                  ID_VIEW_STATUS_BAR
+    END
+    POPUP "說明(&H)"
+    BEGIN
+        MENUITEM "關於 PhoneBook(&A)...",       ID_APP_ABOUT
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS PRELOAD MOVEABLE PURE 
+BEGIN
+    "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+    "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL, NOINVERT
+    VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT, NOINVERT
+    VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT, NOINVERT
+    VK_F6,          ID_NEXT_PANE,           VIRTKEY, NOINVERT
+    VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT, NOINVERT
+    VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+    VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT, NOINVERT
+    "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL, NOINVERT
+    "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL, NOINVERT
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 3,0,8,318
+ PRODUCTVERSION 3,0,0,7
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040404b0"
+        BEGIN
+            VALUE "Comments", "\0"
+            VALUE "CompanyName", "\0"
+            VALUE "FileDescription", "PhoneBook MFC Application\0"
+            VALUE "FileVersion", "3, 0, 8, 318\0"
+            VALUE "InternalName", "PhoneBook\0"
+            VALUE "LegalCopyright", "Copyright (C) 2004\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "PhoneBook.EXE\0"
+            VALUE "PrivateBuild", "\0"
+            VALUE "ProductName", "PhoneBook Application\0"
+            VALUE "ProductVersion", "3, 0, 0, 7\0"
+            VALUE "SpecialBuild", "\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x404, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_SmartphoneAddress_Dialog DIALOG DISCARDABLE  0, 0, 155, 127
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 10, "Tahoma"
+BEGIN
+    CONTROL         "OK",IDOK,"Button",BS_OWNERDRAW | WS_TABSTOP,81,99,50,14
+    CONTROL         "Cancel",IDCANCEL,"Button",BS_OWNERDRAW | WS_TABSTOP,27,
+                    99,50,14
+    LTEXT           "Static",IDC_SC_ADTEXT1,99,24,19,8
+    LTEXT           "Static",IDC_SC_ADTEXT2,100,13,19,8
+    LTEXT           "Static",IDC_SC_ADTEXT3,129,15,19,8
+    LTEXT           "Static",IDC_SC_ADTEXT4,96,4,19,8
+    LTEXT           "Static",IDC_SC_ADTEXT5,116,29,19,8
+    LTEXT           "Static",IDC_SC_ADTEXT6,80,38,19,8
+    LTEXT           "Static",IDC_SC_ADTEXT7,77,22,19,8
+    LTEXT           "Static",IDC_SC_ADTEXT8,110,4,19,8
+    LTEXT           "Static",IDC_SC_ADTEXT9,94,42,19,8
+    LTEXT           "Static",IDC_SC_ADTEXT10,68,13,19,8
+    EDITTEXT        IDC_ED_ADTEXT1,9,38,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_ADTEXT2,42,47,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_ADTEXT3,107,38,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_ADTEXT4,95,57,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_ADTEXT5,9,60,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_ADTEXT6,49,63,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_ADTEXT7,9,79,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_ADTEXT8,105,73,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_ADTEXT9,58,82,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_ADTEXT10,68,49,40,14,ES_AUTOHSCROLL
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_SmartphoneAddress_Dialog, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 148
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 120
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+#endif    // Chinese (Taiwan) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_NS6_ADDRESSDLG DIALOG DISCARDABLE  0, 0, 169, 177
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 10, "System"
+BEGIN
+    EDITTEXT        IDC_ED_POBOX,67,15,84,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_EXTERNSION,67,35,84,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_STREET,67,55,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_CITY,67,72,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_STATE,67,90,84,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_POSTCODE,69,110,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_COUNTRY,67,129,84,13,ES_AUTOHSCROLL
+    CONTROL         "OK",IDOK,"Button",BS_OWNERDRAW | WS_TABSTOP,21,150,50,
+                    14
+    CONTROL         "Cancel",IDCANCEL,"Button",BS_OWNERDRAW | WS_TABSTOP,99,
+                    150,50,14
+    LTEXT           "Street:",IDC_SC_STREET,17,53,48,9
+    LTEXT           "Post Code",IDC_SC_POST_CODE,19,109,48,9
+    LTEXT           "City",IDC_SC_CITY,17,72,48,9
+    LTEXT           "Country",IDC_SC_COUNTRY,17,128,48,9
+    LTEXT           "P.O Box:",IDC_SC_POBOX,17,17,48,8
+    LTEXT           "Extension:",IDC_SC_EXTENSION,17,35,48,8
+    LTEXT           "State",IDC_SC_STATE,17,91,48,8
+END
+
+IDD_NS4_ADDRESSDLG DIALOG DISCARDABLE  0, 0, 167, 149
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 10, "System"
+BEGIN
+    EDITTEXT        IDC_ED_EXTERNSION,67,12,84,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_STREET,67,32,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_CITY,67,49,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_STATE,67,67,84,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_POSTCODE,69,87,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_COUNTRY,67,106,84,13,ES_AUTOHSCROLL
+    CONTROL         "OK",IDOK,"Button",BS_OWNERDRAW | WS_TABSTOP,21,127,50,
+                    14
+    CONTROL         "Cancel",IDCANCEL,"Button",BS_OWNERDRAW | WS_TABSTOP,99,
+                    127,50,14
+    LTEXT           "Street:",IDC_SC_STREET,17,30,48,9
+    LTEXT           "Post Code",IDC_SC_POST_CODE,19,86,48,9
+    LTEXT           "City",IDC_SC_CITY,17,49,48,9
+    LTEXT           "Country",IDC_SC_COUNTRY,17,105,48,9
+    LTEXT           "Extension:",IDC_SC_EXTENSION,17,12,48,8
+    LTEXT           "State",IDC_SC_STATE,17,68,48,8
+END
+
+IDD_ADDRESSDLG DIALOG DISCARDABLE  0, 0, 167, 149
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 10, "System"
+BEGIN
+    EDITTEXT        IDC_ED_STREET,67,32,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_CITY,67,49,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_STATE,67,67,84,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_POSTALCODE,69,87,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_COUNTRY,67,106,84,13,ES_AUTOHSCROLL
+    CONTROL         "OK",IDOK,"Button",BS_OWNERDRAW | WS_TABSTOP,21,127,50,
+                    14
+    CONTROL         "Cancel",IDCANCEL,"Button",BS_OWNERDRAW | WS_TABSTOP,99,
+                    127,50,14
+    LTEXT           "Street:",IDC_SC_STREET,17,30,48,9
+    LTEXT           "Post Code",IDC_SC_POSTALCODE,19,86,48,9
+    LTEXT           "City",IDC_SC_CITY,17,49,48,9
+    LTEXT           "Country",IDC_SC_COUNTRY,17,105,48,9
+    LTEXT           "State",IDC_SC_STATE,17,68,48,8
+END
+
+IDD_DLG_OTHER DIALOG DISCARDABLE  0, 0, 328, 336
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Other"
+FONT 10, "System"
+BEGIN
+    EDITTEXT        IDC_ED_NAME,63,7,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_FIRSTNAME,63,26,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_LASTNAME,63,40,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_PHONENO1,63,55,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_PHONENO2,63,71,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_PHONENO3,63,87,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_PHONENO4,63,103,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_PHONENO5,63,119,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_PHONENO6,63,135,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_PHONENO7,63,151,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_PHONENO8,63,167,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_PHONENO9,63,183,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_PHONENO10,63,199,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT1,206,7,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT2,206,24,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT3,206,41,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT4,206,58,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT5,206,75,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT6,206,92,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT7,206,109,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT8,206,126,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT9,206,143,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT10,206,160,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT11,206,175,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT12,206,190,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT13,206,206,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT14,206,222,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT15,206,241,84,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_CB_GROUPCOMBO,212,253,83,30,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "DateTimePicker1",IDC_DP_BIRTHDAY,"SysDateTimePick32",
+                    DTS_RIGHTALIGN | WS_TABSTOP,225,270,68,15
+    EDITTEXT        IDC_ED_HIDEPOSTAL,54,297,84,12,ES_AUTOHSCROLL | NOT 
+                    WS_VISIBLE
+    CONTROL         "Check1",IDC_CH_BIRTHDAY,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,209,273,9,10
+    CONTROL         "OK",IDOK,"Button",BS_OWNERDRAW | WS_TABSTOP,180,321,50,
+                    12
+    CONTROL         "Cancel",IDCANCEL,"Button",BS_OWNERDRAW | WS_TABSTOP,241,
+                    320,50,13
+    LTEXT           "Name",IDC_SC_NAME,7,7,50,8
+    LTEXT           "Phone1",IDC_SC_PHONENO1,7,55,50,8
+    LTEXT           "Text1",IDC_SC_TEXT1,154,7,54,8
+    LTEXT           "Position",IDC_SC_POSITION,146,293,50,8
+    CONTROL         "Memory",IDC_RD_ME,"Button",BS_AUTORADIOBUTTON,204,293,
+                    36,8
+    CONTROL         "SIM Card",IDC_RD_SIM,"Button",BS_AUTORADIOBUTTON,245,
+                    293,39,8
+    CONTROL         "",IDC_SC_LINE,"Static",SS_ETCHEDHORZ,7,289,283,1
+    LTEXT           "Birthday",IDC_SC_BIRTHDAY,162,273,42,8
+    LTEXT           "Last Name",IDC_SC_LASTNAME,7,40,50,8
+    LTEXT           "First Name",IDC_SC_FIRSTNAME,7,25,50,8
+    LTEXT           "Phone2",IDC_SC_PHONENO2,7,71,50,8
+    LTEXT           "Phone3",IDC_SC_PHONENO3,7,87,50,8
+    LTEXT           "Phone4",IDC_SC_PHONENO4,7,103,50,8
+    LTEXT           "Phone5",IDC_SC_PHONENO5,7,119,50,8
+    LTEXT           "Phone6",IDC_SC_PHONENO6,7,135,50,8
+    LTEXT           "Phone7",IDC_SC_PHONENO7,7,151,50,8
+    LTEXT           "Phone8",IDC_SC_PHONENO8,7,167,50,8
+    LTEXT           "Phone9",IDC_SC_PHONENO9,7,183,50,8
+    LTEXT           "Phone10",IDC_SC_PHONENO10,7,199,50,8
+    LTEXT           "Text2",IDC_SC_TEXT2,154,24,54,8
+    LTEXT           "Text3",IDC_SC_TEXT3,154,41,54,8
+    LTEXT           "Text4",IDC_SC_TEXT4,154,58,54,8
+    LTEXT           "Text5",IDC_SC_TEXT5,154,75,54,8
+    LTEXT           "Text6",IDC_SC_TEXT6,154,92,54,8
+    LTEXT           "Text7",IDC_SC_TEXT7,154,109,54,8
+    LTEXT           "Text8",IDC_SC_TEXT8,154,126,54,8
+    LTEXT           "Text9",IDC_SC_TEXT9,154,143,54,8
+    LTEXT           "Text10",IDC_SC_TEXT10,154,160,54,8
+    LTEXT           "Group",IDC_SC_GROUP,155,256,54,8
+    LTEXT           "Text11",IDC_SC_TEXT11,154,175,54,8
+    LTEXT           "Text12",IDC_SC_TEXT12,154,190,54,8
+    LTEXT           "Text13",IDC_SC_TEXT13,154,206,54,8
+    LTEXT           "Text14",IDC_SC_TEXT14,154,226,54,8
+    LTEXT           "Text15",IDC_SC_TEXT15,154,241,54,8
+END
+
+IDD_DLG_M_V501 DIALOG DISCARDABLE  0, 0, 317, 124
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Moto V501"
+FONT 10, "System"
+BEGIN
+    EDITTEXT        IDC_ED_NAME,60,7,91,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_CB_TYPE,60,22,91,50,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    EDITTEXT        IDC_ED_DATA,60,37,91,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_CB_GROUP,60,52,91,54,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    EDITTEXT        IDC_ET_NICKNAME,62,62,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_STREET1,208,7,42,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_STREET2,207,20,37,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_CITY,214,27,37,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_STATE,207,45,42,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_ZIP,208,55,42,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_COUNTRY,204,69,40,14,ES_AUTOHSCROLL
+    CONTROL         "DateTimePicker1",IDC_DP_BIRTHDAY,"SysDateTimePick32",
+                    DTS_RIGHTALIGN | WS_TABSTOP,59,77,92,10
+    CONTROL         "",IDC_CH_BIRTHDAY,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    46,80,8,10
+    CONTROL         "SIM card",IDC_RD_SIM,"Button",BS_AUTORADIOBUTTON,224,88,
+                    39,9
+    CONTROL         "Memory",IDC_RD_MEMORY,"Button",BS_AUTORADIOBUTTON,270,
+                    88,40,9
+    CONTROL         "OK",IDOK,"Button",BS_OWNERDRAW | WS_TABSTOP,40,103,50,
+                    14
+    CONTROL         "Cancel",IDCANCEL,"Button",BS_OWNERDRAW | WS_TABSTOP,260,
+                    103,50,14
+    LTEXT           "Type",IDC_SC_TYPE,7,22,47,9
+    LTEXT           "Name",IDC_SC_NAME,7,7,47,9
+    LTEXT           "Data",IDC_SC_DATA,7,37,47,9
+    LTEXT           "Group",IDC_SC_GROUP,7,52,47,9
+    LTEXT           "Storage",IDC_SC_STORAGE,166,88,47,9
+    CONTROL         "",IDC_LINE,"Static",SS_ETCHEDHORZ,7,99,303,1
+    LTEXT           "Nickname:",IDC_SC_NICKNAME,7,65,41,8
+    LTEXT           "Birthday:",IDC_SC_BIRTHDAY,7,81,31,8
+    LTEXT           "Street1:",IDC_SC_STREET1,173,7,26,8
+    LTEXT           "City",IDC_SC_CITY,174,32,14,8
+    LTEXT           "Street2:",IDC_SC_STREET2,171,20,26,8
+    LTEXT           "State",IDC_SC_STATE,172,46,18,8
+    LTEXT           "Zip Code",IDC_SC_ZIP,167,60,30,8
+    LTEXT           "Country",IDC_SC_COUNTRY,167,73,26,8
+END
+
+IDD_DLG_MOTOE DIALOG DISCARDABLE  0, 0, 300, 314
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Moto V501"
+FONT 10, "System"
+BEGIN
+    EDITTEXT        IDC_ED_FIRSTNAME,94,7,182,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_LASTNAME,94,21,182,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ET_NICKNAME,94,35,182,14,ES_AUTOHSCROLL
+    COMBOBOX        IDC_CB_NUMBERTYPE1,94,50,92,50,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_ED_DATA1,188,50,89,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_CB_NUMBERTYPE2,94,64,92,50,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_ED_DATA2,188,64,89,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_CB_NUMBERTYPE3,94,78,92,50,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_ED_DATA3,188,78,89,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_CB_NUMBERTYPE4,94,92,92,50,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_ED_DATA4,188,92,89,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_CB_NUMBERTYPE5,94,104,92,50,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_ED_DATA5,188,104,89,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_CB_NUMBERTYPE6,94,119,92,50,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_ED_DATA6,188,119,89,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_CB_NUMBERTYPE7,94,132,92,50,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_ED_DATA7,188,132,89,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_CB_EMAILTYPE1,94,144,92,50,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_ED_EMAIL1,188,145,89,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_CB_EMAILTYPE2,94,158,92,50,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_ED_EMAIL2,188,159,89,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_CB_ADDRESSTYPE1,94,171,92,50,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_ED_ADDRESS1,188,170,89,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_CB_ADDRESSTYPE2,94,184,92,50,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_ED_ADDRESS2,188,183,89,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_URL1,94,199,182,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_URL2,94,216,182,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_NOTE,94,233,182,14,ES_AUTOHSCROLL
+    COMBOBOX        IDC_CB_GROUP,94,248,92,54,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    CONTROL         "DateTimePicker1",IDC_DP_BIRTHDAY,"SysDateTimePick32",
+                    DTS_RIGHTALIGN | WS_TABSTOP,102,262,84,10
+    CONTROL         "",IDC_CH_BIRTHDAY,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    94,262,8,10
+    CONTROL         "SIM card",IDC_RD_SIM,"Button",BS_AUTORADIOBUTTON,197,
+                    284,39,9
+    CONTROL         "Memory",IDC_RD_MEMORY,"Button",BS_AUTORADIOBUTTON,244,
+                    284,40,9
+    CONTROL         "OK",IDOK,"Button",BS_OWNERDRAW | WS_TABSTOP,175,293,50,
+                    14
+    CONTROL         "Cancel",IDCANCEL,"Button",BS_OWNERDRAW | WS_TABSTOP,243,
+                    293,50,14
+    LTEXT           "Phone Number7",IDC_SC_PHONENO7,7,133,78,10
+    LTEXT           "First name",IDC_SC_FIRSTNAME,7,7,78,10
+    LTEXT           "URL1",IDC_SC_URL1,7,200,78,10
+    LTEXT           "Group",IDC_SC_GROUP,7,250,78,10
+    LTEXT           "Storage",IDC_SC_STORAGE,135,286,47,9
+    CONTROL         "",IDC_LINE,"Static",SS_ETCHEDHORZ,7,282,286,1
+    LTEXT           "Nickname:",IDC_SC_NICKNAME,7,37,78,10
+    LTEXT           "Birthday:",IDC_SC_BIRTHDAY,7,264,78,10
+    LTEXT           "Last name",IDC_SC_LASTNAME,7,21,78,10
+    LTEXT           "Email1",IDC_SC_EMAIL1,7,145,78,10
+    LTEXT           "Address1",IDC_SC_ADDRESS1,7,172,78,10
+    LTEXT           "Note",IDC_SC_NOTES,7,237,78,10
+    LTEXT           "Phone Number1",IDC_SC_PHONENO1,7,51,78,10
+    LTEXT           "Phone Number2",IDC_SC_PHONENO2,7,66,78,10
+    LTEXT           "Phone Number3",IDC_SC_PHONENO3,7,80,78,10
+    LTEXT           "Phone Number4",IDC_SC_PHONENO4,7,94,78,10
+    LTEXT           "Phone Number5",IDC_SC_PHONENO5,7,105,78,10
+    LTEXT           "Phone Number 6",IDC_SC_PHONENO6,7,120,78,10
+    LTEXT           "Email2",IDC_SC_EMAIL2,7,159,78,10
+    LTEXT           "Address2",IDC_SC_ADDRESS2,7,185,78,10
+    LTEXT           "URL2",IDC_SC_URL2,7,217,78,10
+END
+
+IDD_DLG_MOTOE2 DIALOG DISCARDABLE  0, 0, 300, 314
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Moto V501"
+FONT 10, "System"
+BEGIN
+    COMBOBOX        IDC_CB_NAMETYPE,94,8,92,50,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    EDITTEXT        IDC_ED_NAMES,202,7,90,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_COMPANY,94,22,92,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TITLE,202,22,90,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_CB_NUMBERTYPE1,94,36,92,50,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_ED_DATA1,202,36,89,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_CB_NUMBERTYPE2,94,50,92,50,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_ED_DATA2,202,50,89,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_CB_NUMBERTYPE3,94,64,92,50,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_ED_DATA3,202,64,89,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_CB_NUMBERTYPE4,94,78,92,50,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_ED_DATA4,202,78,89,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_CB_EMAILTYPE1,94,93,92,50,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_ED_EMAIL1,202,94,89,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_CB_EMAILTYPE2,94,107,92,50,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_ED_EMAIL2,202,108,89,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_CB_ADDRESSTYPE1,94,121,92,50,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_ED_ADDRESS1,202,120,89,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_CB_ADDRESSTYPE2,94,134,92,50,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_ED_ADDRESS2,202,133,89,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_URL,94,148,198,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_NOTE,94,161,198,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_MANAGERNAME,94,174,198,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_ASSISTANTNAME,94,187,198,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_SPOUSE,94,200,198,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_CHILDREN,94,213,198,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_IMID,93,229,198,12,ES_AUTOHSCROLL
+    CONTROL         "DateTimePicker1",IDC_DP_BIRTHDAY,"SysDateTimePick32",
+                    DTS_RIGHTALIGN | WS_TABSTOP,102,248,84,10
+    CONTROL         "DateTimePicker1",IDC_DP_ANNIVERSARY,"SysDateTimePick32",
+                    DTS_RIGHTALIGN | WS_TABSTOP,102,264,84,10
+    CONTROL         "",IDC_CH_BIRTHDAY,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    94,248,8,10
+    CONTROL         "SIM card",IDC_RD_SIM,"Button",BS_AUTORADIOBUTTON,197,
+                    282,39,9
+    CONTROL         "Memory",IDC_RD_MEMORY,"Button",BS_AUTORADIOBUTTON,244,
+                    282,40,9
+    CONTROL         "OK",IDOK,"Button",BS_OWNERDRAW | WS_TABSTOP,175,293,50,
+                    14
+    CONTROL         "Cancel",IDCANCEL,"Button",BS_OWNERDRAW | WS_TABSTOP,242,
+                    293,50,14
+    LTEXT           "Name",IDC_SC_NAME,7,7,78,10
+    LTEXT           "URL",IDC_SC_URL,7,147,78,10
+    LTEXT           "Storage",IDC_SC_STORAGE,135,280,47,9
+    CONTROL         "",IDC_LINE,"Static",SS_ETCHEDHORZ,7,278,285,1
+    LTEXT           "Birthday:",IDC_SC_BIRTHDAY,7,246,78,10
+    LTEXT           "Email1",IDC_SC_EMAIL1,7,91,78,10
+    LTEXT           "Address1",IDC_SC_ADDRESS1,7,119,78,10
+    LTEXT           "Note",IDC_SC_NOTES,7,161,78,10
+    LTEXT           "Phone Number1",IDC_SC_PHONENO1,7,35,78,10
+    LTEXT           "Phone Number2",IDC_SC_PHONENO2,7,49,78,10
+    LTEXT           "Phone Number3",IDC_SC_PHONENO3,7,63,78,10
+    LTEXT           "Phone Number4",IDC_SC_PHONENO4,7,77,78,10
+    LTEXT           "Email2",IDC_SC_EMAIL2,7,105,78,10
+    LTEXT           "Address2",IDC_SC_ADDRESS2,7,133,78,10
+    LTEXT           "Manager's Name",IDC_SC_MANAGERNAME,7,175,78,10
+    LTEXT           "Company/Title",IDC_SC_COMPANYTITLE,7,21,78,10
+    LTEXT           "Assistant's Name",IDC_SC_ASSISTANTNAME,7,189,78,10
+    LTEXT           "Spous",IDC_SC_SPOUSE,7,203,78,10
+    LTEXT           "Children",IDC_SC_CHILDREN,7,217,78,10
+    CONTROL         "",IDC_CH_ANNIVERSARY,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,94,264,8,10
+    LTEXT           "Anniversary:",IDC_SC_ANNIVERSARY,7,260,78,10
+    LTEXT           "/",IDC_SLASH,190,23,8,8
+    LTEXT           ":",IDC_DOT,189,7,8,8
+    LTEXT           ":",IDC_DOT2,189,39,8,8
+    LTEXT           ":",IDC_DOT3,189,53,8,8
+    LTEXT           ":",IDC_DOT4,189,65,8,8
+    LTEXT           ":",IDC_DOT5,190,80,8,8
+    LTEXT           ":",IDC_DOT6,189,95,8,8
+    LTEXT           ":",IDC_DOT7,190,110,8,8
+    LTEXT           ":",IDC_DOT8,190,123,8,8
+    LTEXT           ":",IDC_DOT9,189,135,8,8
+    LTEXT           "IM ID",IDC_SC_IMID,6,233,78,10
+END
+
+IDD_ABOUTBOX DIALOGEX 0, 0, 235, 55
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Phonebook"
+FONT 9, "System", 0, 0, 0x1
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_LOG,11,17,20,20,NOT WS_VISIBLE,
+                    WS_EX_TRANSPARENT
+    LTEXT           "version",IDC_SC_VERSION,40,10,119,8,SS_NOPREFIX
+    LTEXT           "copyright",IDC_SC_COPYRIGHT,40,25,182,23
+    CONTROL         "Ok",IDOK,"Button",BS_OWNERDRAW | WS_GROUP | WS_TABSTOP,
+                    178,7,50,14
+    LTEXT           "CAMagic Mobile",IDC_SC_CAMVERSION,47,17,119,8,
+                    SS_NOPREFIX
+END
+
+IDD_SEARCH DIALOG DISCARDABLE  0, 0, 127, 59
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+FONT 10, "System"
+BEGIN
+    CONTROL         "OK",IDCANCEL,"Button",BS_OWNERDRAW | WS_TABSTOP,70,38,
+                    50,14
+    CONTROL         "Find next",IDC_BN_FINDNEXT,"Button",BS_OWNERDRAW | 
+                    WS_TABSTOP,7,38,50,14
+    COMBOBOX        IDC_COMBO_NAME,7,21,113,57,CBS_DROPDOWN | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Enter name:",IDC_SC_ENTERNAME,7,7,102,14
+END
+
+IDD_DLG_PROG DIALOG DISCARDABLE  0, 0, 233, 52
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION
+CAPTION "Initializing handset"
+FONT 10, "System"
+BEGIN
+    CONTROL         "Cancel",IDCANCEL,"Button",BS_OWNERDRAW | NOT WS_VISIBLE | 
+                    WS_TABSTOP,176,30,50,14
+    CONTROL         "Progress1",IDC_PROG,"msctls_progress32",PBS_SMOOTH | 
+                    NOT WS_VISIBLE | WS_BORDER,7,31,153,14
+    LTEXT           "Text",IDC_SC_TEXT,7,7,154,16,NOT WS_VISIBLE
+    CONTROL         "Animate1",IDC_ANIMATE,"SysAnimate32",WS_TABSTOP,199,7,
+                    27,17
+END
+
+IDD_DLG_SG DIALOG DISCARDABLE  0, 0, 232, 369
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Samsung"
+FONT 8, "MS Sans Serif"
+BEGIN
+    EDITTEXT        IDC_ED_FIRST_NAME,93,7,111,15,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_LAST_NAME,93,26,111,15,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_MOBILE,93,46,111,15,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_HOME,93,65,111,15,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_WORK,93,84,111,15,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_FAX,93,102,111,15,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_PAGER,96,234,109,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_POSTCODE,96,254,111,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_MAIL,93,146,111,15,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_MEMO,93,182,111,15,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_OTHER,93,126,111,15,ES_AUTOHSCROLL
+    LTEXT           "Fax",IDC_SC_FAX,26,104,57,11
+    EDITTEXT        IDC_ED_NOTES,97,274,108,14,ES_AUTOHSCROLL
+    COMBOBOX        IDC_ED_GROUP,93,166,111,54,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    CONTROL         "DateTimePicker1",IDC_DP_BIRTHDAY,"SysDateTimePick32",
+                    DTS_RIGHTALIGN | WS_TABSTOP,109,212,100,15
+    CONTROL         "SIM card",IDC_RD_SIM,"Button",BS_AUTORADIOBUTTON,96,311,
+                    53,15
+    CONTROL         "Memory",IDC_RD_MEMORY,"Button",BS_AUTORADIOBUTTON,167,
+                    311,49,15
+    CONTROL         "OK",IDOK,"Button",BS_OWNERDRAW | WS_TABSTOP,17,334,67,
+                    17
+    CONTROL         "Cancel",IDCANCEL,"Button",BS_OWNERDRAW | WS_TABSTOP,145,
+                    335,67,17
+    LTEXT           "First Name",IDC_SC_FIRST_NAME,26,9,57,11
+    LTEXT           "Home Tel",IDC_SC_HOME_TEL,26,66,57,11
+    LTEXT           "Last Name",IDC_SC_LAST_NAME,26,28,57,11
+    LTEXT           "Work Tel",IDC_SC_WORK,26,85,57,11
+    LTEXT           "Mobile Number",IDC_SC_MOBILE,26,47,57,11
+    LTEXT           "Other",IDC_SC_OTHER,25,128,57,11
+    LTEXT           "E-mail",IDC_SC_MAIL,25,146,57,11
+    CONTROL         "",IDC_SC_LINE,"Static",SS_ETCHEDHORZ,7,297,214,1
+    LTEXT           "Positon",IDC_SC_POSITION,7,311,79,12
+    LTEXT           "Group",IDC_SC_GROUP,26,161,57,11
+    LTEXT           "Memo",IDC_SC_MEMO,27,184,57,14
+    LTEXT           "Birthday",IDC_SC_BIRTHDAY,28,207,57,14
+    CONTROL         "",IDC_CH_BIRTHDAY,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    92,212,12,8
+    LTEXT           "Pager",IDC_SC_PAGER,25,236,20,8
+    LTEXT           "Post Code",IDC_SC_POSTCODE,21,257,34,8
+    LTEXT           "Notes",IDC_SC_NOTES,27,279,20,8
+END
+
+IDD_DATA_DYC DIALOG DISCARDABLE  0, 0, 251, 253
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "NOKIA"
+FONT 10, "System"
+BEGIN
+    EDITTEXT        IDC_ED_NAME,130,21,105,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_COMBO2,37,37,79,45,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    EDITTEXT        IDC_EDIT2,130,37,105,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_COMBO3,37,53,79,44,CBS_DROPDOWNLIST | WS_DISABLED | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_EDIT3,130,53,105,12,ES_AUTOHSCROLL | WS_DISABLED
+    COMBOBOX        IDC_COMBO4,37,69,79,45,CBS_DROPDOWNLIST | WS_DISABLED | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_EDIT4,130,69,105,12,ES_AUTOHSCROLL | WS_DISABLED
+    COMBOBOX        IDC_COMBO5,37,85,79,46,CBS_DROPDOWNLIST | WS_DISABLED | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_EDIT5,130,85,105,12,ES_AUTOHSCROLL | WS_DISABLED
+    COMBOBOX        IDC_COMBO6,37,101,79,45,CBS_DROPDOWNLIST | WS_DISABLED | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_EDIT6,130,101,105,12,ES_AUTOHSCROLL | WS_DISABLED
+    COMBOBOX        IDC_COMBO7,37,117,79,46,CBS_DROPDOWNLIST | WS_DISABLED | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_EDIT7,130,117,105,12,ES_AUTOHSCROLL | WS_DISABLED
+    COMBOBOX        IDC_COMBO8,37,133,79,48,CBS_DROPDOWNLIST | WS_DISABLED | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_EDIT8,130,133,105,12,ES_AUTOHSCROLL | WS_DISABLED
+    COMBOBOX        IDC_COMBO9,37,149,79,50,CBS_DROPDOWNLIST | WS_DISABLED | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_EDIT9,130,149,105,12,ES_AUTOHSCROLL | WS_DISABLED
+    COMBOBOX        IDC_COMBO_DEFAULT,130,165,108,54,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO_GROUP,129,183,108,54,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "SIM Card",IDC_RD_SIM,"Button",BS_AUTORADIOBUTTON,130,
+                    202,46,11
+    CONTROL         "Phone",IDC_RD_PHONE,"Button",BS_AUTORADIOBUTTON,185,202,
+                    53,11
+    CONTROL         "OK",IDOK,"Button",BS_OWNERDRAW | WS_TABSTOP,113,232,50,
+                    14
+    CONTROL         "Cancel",IDCANCEL,"Button",BS_OWNERDRAW | WS_TABSTOP,194,
+                    232,50,14
+    GROUPBOX        "",IDC_GP,7,7,237,218
+    CTEXT           "Add Contact",IDC_SC_TITLE,17,7,42,10
+    LTEXT           "1",IDC_SC_NUMBER1,10,21,8,8
+    LTEXT           "2",IDC_SC_NUMBER2,10,39,8,8
+    LTEXT           "3",IDC_SC_NUMBER3,10,55,8,8
+    LTEXT           "4",IDC_SC_NUMBER4,10,71,8,8
+    LTEXT           "5",IDC_SC_NUMBER5,10,87,8,8
+    LTEXT           "6",IDC_SC_NUMBER6,10,103,8,8
+    LTEXT           "7",IDC_SC_NUMBER7,10,119,8,8
+    LTEXT           "8",IDC_SC_NUMBER8,10,135,8,8
+    LTEXT           "9",IDC_SC_NUMBER9,10,151,8,8
+    LTEXT           "Name",IDC_SC_NAME,37,21,51,10
+    CONTROL         "",IDC_CHECK3,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,24,
+                    55,8,8
+    CONTROL         "",IDC_CHECK4,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,24,
+                    71,8,8
+    CONTROL         "",IDC_CHECK5,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,24,
+                    87,8,8
+    CONTROL         "",IDC_CHECK6,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,24,
+                    103,8,8
+    CONTROL         "",IDC_CHECK7,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,24,
+                    119,8,8
+    CONTROL         "",IDC_CHECK8,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,24,
+                    135,8,8
+    CONTROL         "",IDC_CHECK9,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,24,
+                    152,8,8
+    LTEXT           "Set as default number",IDC_SC_DEFAULT,37,165,79,11
+    CTEXT           ":",IDC_SC_DOT1,118,21,8,9
+    CTEXT           ":",IDC_SC_DOT2,118,37,8,9
+    CTEXT           ":",IDC_SC_DOT3,118,53,8,9
+    CTEXT           ":",IDC_SC_DOT4,118,69,8,9
+    CTEXT           ":",IDC_SC_DOT5,118,85,8,9
+    CTEXT           ":",IDC_SC_DOT6,118,101,8,9
+    CTEXT           ":",IDC_SC_DOT7,118,117,8,9
+    CTEXT           ":",IDC_SC_DOT8,118,133,8,9
+    CTEXT           ":",IDC_SC_DOT9,118,149,8,9
+    RTEXT           "Storage",IDC_SC_STORAGE,38,202,74,10
+    CTEXT           ":",IDC_SC_DOT10,118,165,8,9
+    LTEXT           "Group",IDC_SC_GROUP,36,183,79,11
+    CTEXT           ":",IDC_SC_DOT11,117,183,8,9
+END
+
+IDD_SHARP_90X DIALOG DISCARDABLE  0, 0, 376, 207
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Sharp"
+FONT 10, "System"
+BEGIN
+    EDITTEXT        IDC_ED_FIRSTNAME_,57,21,78,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_LASTNAME_,57,7,78,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_COMBO_PHONE1,57,35,78,30,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_PHONE_EDIT1,151,35,53,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_COMBO_PHONE2,57,51,78,45,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_PHONE_EDIT2,151,51,53,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_COMBO_PHONE3,57,69,78,45,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_PHONE_EDIT3,151,69,53,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_EMAIL_COMBO1,57,88,78,45,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_EMAIL_EDIT1,151,88,53,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_EMAIL_COMBO2,57,104,78,45,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_EMAIL_EDIT2,151,104,53,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_EMAIL_COMBO3,57,123,78,45,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_EMAIL_EDIT3,151,123,53,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_STREET,259,6,102,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_CITY,259,21,102,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_STATE,259,35,102,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_ZIPCODE,259,51,102,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_COUNTRY,256,69,102,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_NOTE_EDIT,259,88,102,12,ES_AUTOHSCROLL
+    CONTROL         "DateTimePicker1",IDC_DP_BIRTHDAY,"SysDateTimePick32",
+                    DTS_RIGHTALIGN | WS_TABSTOP,268,104,92,15
+    COMBOBOX        IDC_GROUP_COMBO,284,123,78,45,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "SIM Card",IDC_RD_SIM,"Button",BS_AUTORADIOBUTTON,264,
+                    168,46,11
+    CONTROL         "Phone",IDC_RD_PHONE,"Button",BS_AUTORADIOBUTTON,311,166,
+                    53,11
+    CONTROL         "OK",IDOK,"Button",BS_OWNERDRAW | WS_TABSTOP,209,184,50,
+                    14
+    CONTROL         "Cancel",IDCANCEL,"Button",BS_OWNERDRAW | WS_TABSTOP,282,
+                    184,50,14
+    LTEXT           "Last Name",IDC_SC_LASTNAME,7,8,49,10
+    CTEXT           ":",IDC_SC_DOT1,139,38,8,9
+    CTEXT           ":",IDC_SC_DOT2,139,53,8,9
+    RTEXT           "Storage",IDC_SC_STORAGE,172,168,74,10
+    LTEXT           "Phone1",IDC_SC_PHONE1,7,36,49,8
+    LTEXT           "Phone2",IDC_SC_PHONE2,7,50,49,8
+    CTEXT           ":",IDC_SC_DOT3,139,71,8,9
+    LTEXT           "Phone3",IDC_SC_PHONE3,7,68,49,8
+    CTEXT           ":",IDC_SC_DOT4,139,90,8,9
+    LTEXT           "e-Mail1",IDC_SC_EMAIL1,7,87,49,8
+    CTEXT           ":",IDC_SC_DOT5,139,106,8,9
+    LTEXT           "e-Mail2",IDC_SC_EMAIL2,7,103,49,8
+    CTEXT           ":",IDC_SC_DOT6,139,125,8,9
+    LTEXT           "E-Mail3",IDC_SC_EMAIL3,7,123,49,8
+    LTEXT           "Group",IDC_SC_GROUP,234,123,49,8
+    LTEXT           "Note",IDC_SC_NOTE,207,88,43,8
+    CONTROL         "",IDC_SC_LINE,"Static",SS_ETCHEDHORZ,7,161,362,1
+    LTEXT           "First Name",IDC_SC_FIRSTNAME_,7,22,49,10
+    LTEXT           "Street",IDC_SC_STREET,209,6,43,8
+    LTEXT           "City",IDC_SC_CITY,209,21,43,8
+    LTEXT           "State",IDC_SC_STATE,209,35,43,8
+    LTEXT           "Postal Code",IDC_SC_ZIPCODE,209,51,43,8
+    LTEXT           "Country",IDC_SC_COUNTRY,209,69,43,8
+    LTEXT           "Birthday",IDC_SC_BIRTHDAY,203,104,43,8
+    CONTROL         "",IDC_CH_BIRTHDAY,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    254,104,13,8
+END
+
+IDD_SAGEM DIALOG DISCARDABLE  0, 0, 372, 187
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "SAGEM"
+FONT 10, "System"
+BEGIN
+    EDITTEXT        IDC_ED_LASTNAME_,57,7,78,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_FIRSTNAME_,57,21,78,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_COMBO_PHONE1,57,35,78,30,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_PHONE_EDIT1,151,35,53,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_COMBO_PHONE2,57,51,78,45,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_PHONE_EDIT2,151,51,53,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_COMBO_PHONE3,57,69,78,45,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_PHONE_EDIT3,151,69,53,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EMAIL_EDIT1,57,88,145,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EMAIL_EDIT2,57,104,145,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_URL_EDIT,57,123,145,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_STREET,262,28,78,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_CITY,262,44,78,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_STATE,262,60,78,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_ZIPCODE,262,76,78,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_COUNTRY,262,92,78,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_COMPANY_EDIT,262,108,78,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_NOTE_EDIT,262,123,78,12,ES_AUTOHSCROLL
+    CONTROL         "SIM Card",IDC_RD_SIM,"Button",BS_AUTORADIOBUTTON,264,
+                    149,46,11
+    CONTROL         "Phone",IDC_RD_PHONE,"Button",BS_AUTORADIOBUTTON,311,147,
+                    53,11
+    CONTROL         "OK",IDOK,"Button",BS_OWNERDRAW | WS_TABSTOP,209,165,50,
+                    14
+    CONTROL         "Cancel",IDCANCEL,"Button",BS_OWNERDRAW | WS_TABSTOP,282,
+                    165,50,14
+    LTEXT           "Last Name",IDC_SC_LASTNAME,7,8,49,10
+    CTEXT           ":",IDC_SC_DOT1,139,38,8,9
+    CTEXT           ":",IDC_SC_DOT2,139,53,8,9
+    RTEXT           "Storage",IDC_SC_STORAGE,172,149,74,10
+    LTEXT           "Phone1",IDC_SC_PHONE1,7,36,49,8
+    LTEXT           "Phone2",IDC_SC_PHONE2,7,50,49,8
+    CTEXT           ":",IDC_SC_DOT3,139,71,8,9
+    LTEXT           "Phone3",IDC_SC_PHONE3,7,68,49,8
+    LTEXT           "e-Mail1",IDC_SC_EMAIL1,7,87,49,8
+    LTEXT           "e-Mail2",IDC_SC_EMAIL2,7,103,49,8
+    LTEXT           "URL",IDC_SC_URL,7,123,49,8
+    LTEXT           "Company",IDC_SC_COMPANY,212,110,49,8
+    LTEXT           "Note",IDC_SC_NOTE,212,123,49,8
+    CONTROL         "",IDC_SC_LINE,"Static",SS_ETCHEDHORZ,7,144,357,1
+    LTEXT           "First Name",IDC_SC_FIRSTNAME_,7,22,49,10
+    LTEXT           "Street",IDC_SC_STREET,212,28,49,8
+    LTEXT           "City",IDC_SC_CITY,212,44,49,8
+    LTEXT           "State",IDC_SC_STATE,212,60,49,8
+    LTEXT           "Postal Code",IDC_SC_ZIPCODE,212,76,49,8
+    LTEXT           "Country",IDC_SC_COUNTRY,212,92,49,8
+    LTEXT           "Address:",IDC_SC_ADDRESS,212,13,49,8
+END
+
+IDD_SAMSUNGZDLG DIALOG DISCARDABLE  0, 0, 228, 310
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "SAGEM"
+FONT 10, "System"
+BEGIN
+    EDITTEXT        IDC_ED_LASTNAME_,59,7,161,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_FIRSTNAME_,59,21,161,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_COMBO_PHONE1,57,35,78,30,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_PHONE_EDIT1,151,35,53,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_COMBO_PHONE2,57,51,78,45,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_PHONE_EDIT2,151,51,53,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_COMBO_PHONE3,57,69,78,45,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_PHONE_EDIT3,151,69,53,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_COMBO_PHONE4,56,85,78,45,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_PHONE_EDIT4,150,85,53,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_COMBO_PHONE5,57,103,78,45,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_PHONE_EDIT5,151,103,53,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EMAIL_EDIT1,57,122,145,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EMAIL_EDIT2,57,138,145,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_NICKNAME_EDIT,57,156,145,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_JOBTITLE_EDIT,57,170,145,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_URL_EDIT,57,189,145,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_COMPANY_EDIT,57,207,146,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_DEP_EDIT,57,222,146,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_NOTE_EDIT,57,241,149,12,ES_AUTOHSCROLL
+    CONTROL         "DateTimePicker1",IDC_DP_BIRTHDAY,"SysDateTimePick32",
+                    DTS_RIGHTALIGN | WS_TABSTOP,107,257,68,15
+    CONTROL         "SIM Card",IDC_RD_SIM,"Button",BS_AUTORADIOBUTTON,99,276,
+                    46,11
+    CONTROL         "Phone",IDC_RD_PHONE,"Button",BS_AUTORADIOBUTTON,160,275,
+                    53,11
+    CONTROL         "OK",IDOK,"Button",BS_OWNERDRAW | WS_TABSTOP,66,289,50,
+                    14
+    CONTROL         "Cancel",IDCANCEL,"Button",BS_OWNERDRAW | WS_TABSTOP,131,
+                    289,50,14
+    LTEXT           "Last Name",IDC_SC_LASTNAME,7,8,49,10
+    CTEXT           ":",IDC_SC_DOT1,139,38,8,9
+    CTEXT           ":",IDC_SC_DOT2,139,53,8,9
+    RTEXT           "Storage",IDC_SC_STORAGE,7,276,74,10
+    LTEXT           "Phone1",IDC_SC_PHONE1,7,36,49,8
+    LTEXT           "Phone2",IDC_SC_PHONE2,7,50,49,8
+    CTEXT           ":",IDC_SC_DOT3,139,71,8,9
+    LTEXT           "Phone3",IDC_SC_PHONE3,7,68,49,8
+    LTEXT           "e-Mail1",IDC_SC_EMAIL1,7,121,49,8
+    LTEXT           "e-Mail2",IDC_SC_EMAIL2,7,137,49,8
+    LTEXT           "Job Title",IDC_SC_JOBTITLE,7,170,49,8
+    LTEXT           "Company",IDC_SC_COMPANY,7,209,49,8
+    LTEXT           "Note",IDC_SC_NOTE,7,241,49,8
+    CONTROL         "",IDC_SC_LINE,"Static",SS_ETCHEDHORZ,7,271,213,1
+    LTEXT           "First Name",IDC_SC_FIRSTNAME_,7,22,49,10
+    CTEXT           ":",IDC_SC_DOT4,138,87,8,9
+    LTEXT           "Phone4",IDC_SC_PHONE4,6,84,49,8
+    CTEXT           ":",IDC_SC_DOT5,139,105,8,9
+    LTEXT           "Phone5",IDC_SC_PHONE5,7,102,49,8
+    LTEXT           "Nickname",IDC_SC_NICKNAME,7,156,49,8
+    LTEXT           "Birthday",IDC_SC_BIRTHDAY,7,260,43,8
+    CONTROL         "Check1",IDC_CH_BIRTHDAY,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,87,261,9,10
+    LTEXT           "URL",IDC_SC_URL,7,189,49,8
+    LTEXT           "Department",IDC_SC_DEP,7,224,49,8
+END
+
+IDD_SHARP_T300 DIALOG DISCARDABLE  0, 0, 281, 219
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Sharp"
+FONT 10, "System"
+BEGIN
+    EDITTEXT        IDC_ED_NAME,57,20,78,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_COMBO_PHONE1,57,35,78,30,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_PHONE_EDIT1,151,35,105,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_COMBO_PHONE2,57,51,78,45,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_PHONE_EDIT2,151,51,105,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_COMBO_PHONE3,57,69,78,45,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_PHONE_EDIT3,151,69,105,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_EMAIL_COMBO1,57,88,78,45,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_EMAIL_EDIT1,151,88,105,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_EMAIL_COMBO2,57,104,78,45,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_EMAIL_EDIT2,151,104,105,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_ADDRESS_COMBO1,57,123,78,45,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_ADDRESS_EDIT1,151,123,105,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_GROUP_COMBO,57,141,78,45,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_NOTE_EDIT,57,157,77,12,ES_AUTOHSCROLL
+    CONTROL         "SIM Card",IDC_RD_SIM,"Button",BS_AUTORADIOBUTTON,162,
+                    175,46,11
+    CONTROL         "Phone",IDC_RD_PHONE,"Button",BS_AUTORADIOBUTTON,217,175,
+                    53,11
+    CONTROL         "OK",IDOK,"Button",BS_OWNERDRAW | WS_TABSTOP,107,198,50,
+                    14
+    CONTROL         "Cancel",IDCANCEL,"Button",BS_OWNERDRAW | WS_TABSTOP,180,
+                    198,50,14
+    LTEXT           "Name",IDC_SC_NAME,7,21,49,10
+    CTEXT           ":",IDC_SC_DOT1,139,38,8,9
+    CTEXT           ":",IDC_SC_DOT2,139,53,8,9
+    RTEXT           "Storage",IDC_SC_STORAGE,70,175,74,10
+    LTEXT           "Phone1",IDC_SC_PHONE1,7,36,49,8
+    LTEXT           "Phone2",IDC_SC_PHONE2,7,50,49,8
+    CTEXT           ":",IDC_SC_DOT3,139,71,8,9
+    LTEXT           "Phone3",IDC_SC_PHONE3,7,68,49,8
+    CTEXT           ":",IDC_SC_DOT4,139,90,8,9
+    LTEXT           "e-Mail1",IDC_SC_EMAIL1,7,87,49,8
+    CTEXT           ":",IDC_SC_DOT5,139,106,8,9
+    LTEXT           "e-Mail2",IDC_SC_EMAIL2,7,103,49,8
+    CTEXT           ":",IDC_SC_DOT6,139,125,8,9
+    LTEXT           "Address",IDC_SC_ADDRESS,7,122,49,8
+    LTEXT           "Group",IDC_SC_GROUP,7,141,49,8
+    LTEXT           "Note",IDC_SC_NOTE,7,161,49,8
+    CONTROL         "",IDC_SC_LINE,"Static",SS_ETCHEDHORZ,7,173,267,1
+END
+
+IDD_DATA_DYC_S6 DIALOG DISCARDABLE  0, 0, 251, 253
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "NOKIA"
+FONT 10, "System"
+BEGIN
+    EDITTEXT        IDC_ED_LASTNAME,130,21,105,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_FIRSTNAME,130,36,105,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_S6_COMBO3,37,51,79,30,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    EDITTEXT        IDC_S6_EDIT3,130,51,105,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_S6_COMBO4,37,68,79,45,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    EDITTEXT        IDC_S6_EDIT4,130,68,105,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_S6_COMBO5,37,84,79,44,CBS_DROPDOWNLIST | WS_DISABLED | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_S6_EDIT5,130,84,105,12,ES_AUTOHSCROLL | WS_DISABLED
+    COMBOBOX        IDC_S6_COMBO6,37,100,79,45,CBS_DROPDOWNLIST | 
+                    WS_DISABLED | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_S6_EDIT6,130,100,105,12,ES_AUTOHSCROLL | WS_DISABLED
+    COMBOBOX        IDC_S6_COMBO7,37,116,79,46,CBS_DROPDOWNLIST | 
+                    WS_DISABLED | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_S6_EDIT7,130,116,105,12,ES_AUTOHSCROLL | WS_DISABLED
+    COMBOBOX        IDC_S6_COMBO8,37,132,79,45,CBS_DROPDOWNLIST | 
+                    WS_DISABLED | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_S6_EDIT8,130,132,105,12,ES_AUTOHSCROLL | WS_DISABLED
+    COMBOBOX        IDC_S6_COMBO9,37,148,79,46,CBS_DROPDOWNLIST | 
+                    WS_DISABLED | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_S6_EDIT9,130,148,105,12,ES_AUTOHSCROLL | WS_DISABLED
+    COMBOBOX        IDC_S6_COMBO10,37,164,79,48,CBS_DROPDOWNLIST | 
+                    WS_DISABLED | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_S6_EDIT10,130,164,105,12,ES_AUTOHSCROLL | 
+                    WS_DISABLED
+    COMBOBOX        IDC_S6_COMBO11,37,182,79,50,CBS_DROPDOWNLIST | 
+                    WS_DISABLED | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_S6_EDIT11,130,180,105,12,ES_AUTOHSCROLL | 
+                    WS_DISABLED
+    CONTROL         "DateTimePicker1",IDC_DP_BIRTHDAY,"SysDateTimePick32",
+                    DTS_RIGHTALIGN | WS_TABSTOP,130,195,105,13
+    CONTROL         "SIM Card",IDC_RD_SIM,"Button",BS_AUTORADIOBUTTON,130,
+                    217,46,11
+    CONTROL         "Phone",IDC_RD_PHONE,"Button",BS_AUTORADIOBUTTON,185,217,
+                    53,11
+    CONTROL         "OK",IDOK,"Button",BS_OWNERDRAW | WS_TABSTOP,113,232,50,
+                    14
+    CONTROL         "Cancel",IDCANCEL,"Button",BS_OWNERDRAW | WS_TABSTOP,194,
+                    232,50,14
+    GROUPBOX        "",IDC_GP,7,6,237,223
+    CTEXT           "Add Contact",IDC_SC_TITLE,17,7,42,10
+    LTEXT           "1",IDC_SC_NUMBER1,10,21,8,8
+    LTEXT           "2",IDC_SC_NUMBER2,10,36,8,8
+    LTEXT           "3",IDC_SC_NUMBER3,10,51,8,8
+    LTEXT           "4",IDC_SC_NUMBER4,10,68,8,8
+    LTEXT           "5",IDC_SC_NUMBER5,10,84,8,8
+    LTEXT           "6",IDC_SC_NUMBER6,10,100,8,8
+    LTEXT           "7",IDC_SC_NUMBER7,10,116,8,8
+    LTEXT           "8",IDC_SC_NUMBER8,10,132,8,8
+    LTEXT           "9",IDC_SC_NUMBER9,10,148,8,8
+    LTEXT           "Last Name",IDC_SC_LASTNAME,37,21,79,10
+    CONTROL         "",IDC_S6_CHECK5,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    24,84,8,8
+    CONTROL         "",IDC_S6_CHECK6,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    24,100,8,8
+    CONTROL         "",IDC_S6_CHECK7,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    24,116,8,8
+    CONTROL         "",IDC_S6_CHECK8,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    24,132,8,8
+    CONTROL         "",IDC_S6_CHECK9,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    24,148,8,8
+    CONTROL         "",IDC_S6_CHECK10,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    24,164,8,8
+    CONTROL         "",IDC_S6_CHECK11,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    24,183,8,8
+    CTEXT           ":",IDC_SC_S6DOT1,118,21,8,9
+    CTEXT           ":",IDC_SC_S6DOT2,118,39,8,9
+    CTEXT           ":",IDC_SC_S6DOT3,118,54,8,9
+    CTEXT           ":",IDC_SC_S6DOT4,118,70,8,9
+    CTEXT           ":",IDC_SC_S6DOT5,118,86,8,9
+    CTEXT           ":",IDC_SC_S6DOT6,118,102,8,9
+    CTEXT           ":",IDC_SC_S6DOT7,118,118,8,9
+    CTEXT           ":",IDC_SC_S6DOT8,118,134,8,9
+    CTEXT           ":",IDC_SC_S6DOT9,118,147,8,9
+    RTEXT           "Storage",IDC_SC_STORAGE,38,217,74,10
+    CTEXT           ":",IDC_SC_S6DOT11,119,185,8,8
+    LTEXT           "First Name",IDC_SC_FIRSTNAME,37,36,79,10
+    CTEXT           ":",IDC_SC_S6DOT12,118,200,8,9
+    LTEXT           "Birthday",IDC_SC_BIRTHDAY,37,197,79,10
+    CTEXT           ":",IDC_SC_S6DOT10,117,165,8,9
+    LTEXT           "10",IDC_SC_NUMBER10,10,164,8,8
+    LTEXT           "11",IDC_SC_NUMBER11,10,183,8,8
+    LTEXT           "12",IDC_SC_NUMBER12,10,198,8,8
+    CONTROL         "",IDC_S6_CHECK12,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    24,198,8,8
+END
+
+IDD_DATA_DYC_S4 DIALOG DISCARDABLE  0, 0, 251, 253
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "NOKIA"
+FONT 10, "System"
+BEGIN
+    EDITTEXT        IDC_ED_LASTNAME,130,21,105,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_FIRSTNAME,130,36,105,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_S6_COMBO3,37,51,79,30,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    EDITTEXT        IDC_S6_EDIT3,130,51,105,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_S6_COMBO4,37,68,79,45,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    EDITTEXT        IDC_S6_EDIT4,130,68,105,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_S6_COMBO5,37,84,79,44,CBS_DROPDOWNLIST | WS_DISABLED | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_S6_EDIT5,130,84,105,12,ES_AUTOHSCROLL | WS_DISABLED
+    COMBOBOX        IDC_S6_COMBO6,37,100,79,45,CBS_DROPDOWNLIST | 
+                    WS_DISABLED | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_S6_EDIT6,130,100,105,12,ES_AUTOHSCROLL | WS_DISABLED
+    COMBOBOX        IDC_S6_COMBO7,37,116,79,46,CBS_DROPDOWNLIST | 
+                    WS_DISABLED | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_S6_EDIT7,130,116,105,12,ES_AUTOHSCROLL | WS_DISABLED
+    COMBOBOX        IDC_S6_COMBO8,37,132,79,45,CBS_DROPDOWNLIST | 
+                    WS_DISABLED | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_S6_EDIT8,130,132,105,12,ES_AUTOHSCROLL | WS_DISABLED
+    COMBOBOX        IDC_S6_COMBO9,37,148,79,46,CBS_DROPDOWNLIST | 
+                    WS_DISABLED | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_S6_EDIT9,130,148,105,12,ES_AUTOHSCROLL | WS_DISABLED
+    COMBOBOX        IDC_S6_COMBO10,37,164,79,48,CBS_DROPDOWNLIST | 
+                    WS_DISABLED | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_S6_EDIT10,130,164,105,12,ES_AUTOHSCROLL | 
+                    WS_DISABLED
+    COMBOBOX        IDC_COMBO_DEFAULT,128,180,108,54,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "SIM Card",IDC_RD_SIM,"Button",BS_AUTORADIOBUTTON,130,
+                    217,46,11
+    CONTROL         "Phone",IDC_RD_PHONE,"Button",BS_AUTORADIOBUTTON,185,217,
+                    53,11
+    CONTROL         "OK",IDOK,"Button",BS_OWNERDRAW | WS_TABSTOP,113,232,50,
+                    14
+    CONTROL         "Cancel",IDCANCEL,"Button",BS_OWNERDRAW | WS_TABSTOP,194,
+                    232,50,14
+    GROUPBOX        "",IDC_GP,7,6,237,223
+    CTEXT           "Add Contact",IDC_SC_TITLE,17,7,42,10
+    LTEXT           "1",IDC_SC_NUMBER1,10,21,8,8
+    LTEXT           "2",IDC_SC_NUMBER2,10,36,8,8
+    LTEXT           "3",IDC_SC_NUMBER3,10,51,8,8
+    LTEXT           "4",IDC_SC_NUMBER4,10,68,8,8
+    LTEXT           "5",IDC_SC_NUMBER5,10,84,8,8
+    LTEXT           "6",IDC_SC_NUMBER6,10,100,8,8
+    LTEXT           "7",IDC_SC_NUMBER7,10,116,8,8
+    LTEXT           "8",IDC_SC_NUMBER8,10,132,8,8
+    LTEXT           "9",IDC_SC_NUMBER9,10,148,8,8
+    LTEXT           "Last Name",IDC_SC_LASTNAME,37,21,79,10
+    CONTROL         "",IDC_S6_CHECK5,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    24,84,8,8
+    CONTROL         "",IDC_S6_CHECK6,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    24,100,8,8
+    CONTROL         "",IDC_S6_CHECK7,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    24,116,8,8
+    CONTROL         "",IDC_S6_CHECK8,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    24,132,8,8
+    CONTROL         "",IDC_S6_CHECK9,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    24,148,8,8
+    CONTROL         "",IDC_S6_CHECK10,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    24,164,8,8
+    CTEXT           ":",IDC_SC_S6DOT1,118,21,8,9
+    CTEXT           ":",IDC_SC_S6DOT2,118,39,8,9
+    CTEXT           ":",IDC_SC_S6DOT3,118,54,8,9
+    CTEXT           ":",IDC_SC_S6DOT4,118,70,8,9
+    CTEXT           ":",IDC_SC_S6DOT5,118,86,8,9
+    CTEXT           ":",IDC_SC_S6DOT6,118,102,8,9
+    CTEXT           ":",IDC_SC_S6DOT7,118,118,8,9
+    CTEXT           ":",IDC_SC_S6DOT8,118,134,8,9
+    CTEXT           ":",IDC_SC_S6DOT9,118,147,8,9
+    RTEXT           "Storage",IDC_SC_STORAGE,38,217,74,10
+    CTEXT           ":",IDC_SC_S6DOT11,119,185,8,8
+    LTEXT           "First Name",IDC_SC_FIRSTNAME,37,36,79,10
+    CTEXT           ":",IDC_SC_S6DOT10,117,165,8,9
+    LTEXT           "10",IDC_SC_NUMBER10,10,164,8,8
+    LTEXT           "11",IDC_SC_NUMBER11,10,183,8,8
+    LTEXT           "Set as default number",IDC_SC_DEFAULT,37,182,79,11
+    CONTROL         "",IDC_S6_CHECK4,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    23,69,8,8
+END
+
+IDD_DATA_DYC_S4_EX DIALOG DISCARDABLE  0, 0, 261, 277
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "NOKIA"
+FONT 10, "System"
+BEGIN
+    EDITTEXT        IDC_ED_LASTNAME,130,21,105,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_FIRSTNAME,130,36,105,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_S6_COMBO3,37,51,79,30,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    EDITTEXT        IDC_S6_EDIT3,130,52,105,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_S6_COMBO4,37,68,79,45,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    EDITTEXT        IDC_S6_EDIT4,130,68,105,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_S6_COMBO5,37,84,79,44,CBS_DROPDOWNLIST | WS_DISABLED | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_S6_EDIT5,130,84,105,12,ES_AUTOHSCROLL | WS_DISABLED
+    COMBOBOX        IDC_S6_COMBO6,37,100,79,45,CBS_DROPDOWNLIST | 
+                    WS_DISABLED | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_S6_EDIT6,130,100,105,12,ES_AUTOHSCROLL | WS_DISABLED
+    COMBOBOX        IDC_S6_COMBO7,37,116,79,46,CBS_DROPDOWNLIST | 
+                    WS_DISABLED | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_S6_EDIT7,130,116,105,12,ES_AUTOHSCROLL | WS_DISABLED
+    COMBOBOX        IDC_S6_COMBO8,37,132,79,45,CBS_DROPDOWNLIST | 
+                    WS_DISABLED | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_S6_EDIT8,130,132,105,12,ES_AUTOHSCROLL | WS_DISABLED
+    COMBOBOX        IDC_S6_COMBO9,37,148,79,46,CBS_DROPDOWNLIST | 
+                    WS_DISABLED | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_S6_EDIT9,130,148,105,12,ES_AUTOHSCROLL | WS_DISABLED
+    COMBOBOX        IDC_S6_COMBO10,37,164,79,48,CBS_DROPDOWNLIST | 
+                    WS_DISABLED | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_S6_EDIT10,130,164,105,12,ES_AUTOHSCROLL | 
+                    WS_DISABLED
+    COMBOBOX        IDC_S6_COMBO11,36,182,79,48,CBS_DROPDOWNLIST | 
+                    WS_DISABLED | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_S6_EDIT11,129,182,105,12,ES_AUTOHSCROLL | 
+                    WS_DISABLED
+    CONTROL         "DateTimePicker1",IDC_DP_BIRTHDAY,"SysDateTimePick32",
+                    DTS_RIGHTALIGN | WS_TABSTOP,130,195,105,13
+    COMBOBOX        IDC_COMBO_DEFAULT,125,216,108,54,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Birthday",IDC_SC_BIRTHDAY,33,200,79,11
+    CONTROL         "SIM Card",IDC_RD_SIM,"Button",BS_AUTORADIOBUTTON,130,
+                    231,46,11
+    CONTROL         "Phone",IDC_RD_PHONE,"Button",BS_AUTORADIOBUTTON,185,231,
+                    53,11
+    CONTROL         "OK",IDOK,"Button",BS_OWNERDRAW | WS_TABSTOP,113,256,50,
+                    14
+    CONTROL         "Cancel",IDCANCEL,"Button",BS_OWNERDRAW | WS_TABSTOP,204,
+                    256,50,14
+    GROUPBOX        "",IDC_GP,7,6,247,246
+    CTEXT           "Add Contact",IDC_SC_TITLE,17,7,42,10
+    LTEXT           "1",IDC_SC_NUMBER1,10,21,8,8
+    LTEXT           "2",IDC_SC_NUMBER2,10,36,8,8
+    LTEXT           "3",IDC_SC_NUMBER3,10,51,8,8
+    LTEXT           "4",IDC_SC_NUMBER4,10,68,8,8
+    LTEXT           "5",IDC_SC_NUMBER5,10,84,8,8
+    LTEXT           "6",IDC_SC_NUMBER6,10,100,8,8
+    LTEXT           "7",IDC_SC_NUMBER7,10,116,8,8
+    LTEXT           "8",IDC_SC_NUMBER8,10,132,8,8
+    LTEXT           "9",IDC_SC_NUMBER9,10,148,8,8
+    LTEXT           "Last Name",IDC_SC_LASTNAME,37,21,79,10
+    CONTROL         "",IDC_S6_CHECK5,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    24,84,8,8
+    CONTROL         "",IDC_S6_CHECK6,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    24,100,8,8
+    CONTROL         "",IDC_S6_CHECK7,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    24,116,8,8
+    CONTROL         "",IDC_S6_CHECK8,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    24,132,8,8
+    CONTROL         "",IDC_S6_CHECK9,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    24,148,8,8
+    CONTROL         "",IDC_S6_CHECK10,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    24,164,8,8
+    CTEXT           ":",IDC_SC_S6DOT1,118,21,8,9
+    CTEXT           ":",IDC_SC_S6DOT2,118,39,8,9
+    CTEXT           ":",IDC_SC_S6DOT3,118,54,8,9
+    CTEXT           ":",IDC_SC_S6DOT4,118,70,8,9
+    CTEXT           ":",IDC_SC_S6DOT5,118,86,8,9
+    CTEXT           ":",IDC_SC_S6DOT6,118,102,8,9
+    CTEXT           ":",IDC_SC_S6DOT7,118,118,8,9
+    CTEXT           ":",IDC_SC_S6DOT8,118,134,8,9
+    CTEXT           ":",IDC_SC_S6DOT9,118,147,8,9
+    RTEXT           "Storage",IDC_SC_STORAGE,38,231,74,10
+    CTEXT           ":",IDC_SC_S6DOT11,118,181,8,8
+    LTEXT           "First Name",IDC_SC_FIRSTNAME,37,36,79,10
+    CTEXT           ":",IDC_SC_S6DOT10,117,165,8,9
+    LTEXT           "10",IDC_SC_NUMBER10,10,164,8,8
+    LTEXT           "11",IDC_SC_NUMBER11,10,180,8,8
+    LTEXT           "Set as default number",IDC_SC_DEFAULT,34,217,79,11
+    CONTROL         "",IDC_S6_CHECK12,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    21,206,8,8
+    LTEXT           "12",IDC_SC_NUMBER12,10,202,8,8
+    LTEXT           "13",IDC_SC_NUMBER13,10,219,8,8
+    CTEXT           ":",IDC_SC_S6DOT12,119,202,8,8
+    CTEXT           ":",IDC_SC_S6DOT13,118,218,8,8
+    CONTROL         "",IDC_S6_CHECK11,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    22,186,8,8
+END
+
+IDD_DLG_ASUS DIALOGEX 0, 0, 303, 191
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "ASUS"
+FONT 10, "System", 0, 0, 0x1
+BEGIN
+    CONTROL         "OK",IDOK,"Button",BS_OWNERDRAW | WS_TABSTOP,165,170,50,
+                    14
+    CONTROL         "Cancel",IDCANCEL,"Button",BS_OWNERDRAW | WS_TABSTOP,225,
+                    170,50,14
+    LTEXT           "Name",IDC_SC_NAME,7,7,36,9
+    LTEXT           "Tel No. 1",IDC_SC_TEL1,7,22,36,9
+    LTEXT           "Tel No. 2",IDC_SC_TEL2,7,41,36,9
+    LTEXT           "Tel No. 3",IDC_SC_TEL3,7,58,36,9
+    LTEXT           "Tel No. 4",IDC_SC_TEL4,7,75,36,9
+    LTEXT           "Fax",IDC_SC_FAX,7,92,36,9
+    LTEXT           "Title",IDC_SC_TITLE,7,109,36,9
+    LTEXT           "Company",IDC_SC_CO,7,126,36,9
+    LTEXT           "Storage Pos",IDC_SC_STORAGE,7,143,44,9
+    EDITTEXT        IDC_ED_NAME,52,7,77,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEL1,52,23,77,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEL2,52,39,77,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEL3,52,55,77,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEL4,51,72,77,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_FAX,53,90,77,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TITLE,52,108,77,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_CO,52,125,77,12,ES_AUTOHSCROLL
+    CONTROL         "SIM Card",IDC_RD_SIM,"Button",BS_AUTORADIOBUTTON,53,144,
+                    45,12
+    CONTROL         "Mobile",IDC_RD_MOBILE,"Button",BS_AUTORADIOBUTTON,105,
+                    143,44,15
+    LTEXT           "E-Mail",IDC_SC_MAIL,145,7,43,11
+    LTEXT           "Address",IDC_SC_ADDRESS,146,24,43,11
+    LTEXT           "Birthday",IDC_SC_BIRTHDAY,147,38,43,11
+    LTEXT           "Sex",IDC_SC_SEX,146,56,43,11
+    LTEXT           "Group",IDC_SC_GROUP,147,74,43,11
+    LTEXT           "Indicator",IDC_SC_INDICATOR,146,89,43,11
+    LTEXT           "Memo",IDC_SC_MEMO,147,106,43,11
+    LTEXT           "Location",IDC_SC_LOCATION,150,146,43,11,NOT WS_VISIBLE
+    EDITTEXT        IDC_ED_MAIL,195,7,77,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_ADDRESS,194,20,77,12,ES_AUTOHSCROLL
+    LTEXT           "12",IDC_SC_LOCA,196,145,76,10,NOT WS_VISIBLE,
+                    WS_EX_CLIENTEDGE
+    CONTROL         "",IDC_CH_BIRHDAY,"Button",BS_AUTOCHECKBOX | WS_DISABLED | 
+                    WS_TABSTOP,196,37,8,9
+    COMBOBOX        IDC_COMBO_SEX,193,51,79,84,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    COMBOBOX        IDC_COMBO_GROUP,193,72,79,95,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "",IDC_RED_MEMO,"RICHEDIT",ES_MULTILINE | ES_AUTOHSCROLL | 
+                    WS_BORDER | WS_TABSTOP,193,107,82,34
+    COMBOBOX        IDC_COMBO_INDICATOR,193,89,83,82,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "",IDC_SC_LINE,"Static",SS_BLACKFRAME,7,163,289,1,
+                    WS_EX_STATICEDGE
+    CONTROL         "DateTimePicker1",IDC_DP_BD,"SysDateTimePick32",
+                    DTS_RIGHTALIGN | WS_TABSTOP,210,36,68,11
+END
+
+IDD_DLG_S_S65 DIALOG DISCARDABLE  0, 0, 327, 199
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "SIEMENS S65"
+FONT 10, "System"
+BEGIN
+    EDITTEXT        IDC_ED_NAME,92,1,60,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_SLASTNAME,92,13,60,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_SFIRSTNAME,92,25,60,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_PH_NUM,92,41,63,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_PH_OFFICE,92,56,63,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_PH_MOBILE,92,71,63,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_FAX,93,85,63,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_FAX2,94,97,63,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_MAIL,92,108,63,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_MAIL4,94,120,63,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_WEBPAGE,101,127,63,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_NICKNAME,92,142,63,12,ES_AUTOHSCROLL | NOT 
+                    WS_VISIBLE
+    EDITTEXT        IDC_ED_WV,92,157,63,12,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    EDITTEXT        IDC_ED_ICQ,92,172,63,12,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    EDITTEXT        IDC_ED_AIM,92,187,65,12,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    COMBOBOX        IDC_CB_GROUP,236,1,84,12,CBS_DROPDOWN | CBS_SORT | NOT 
+                    WS_VISIBLE | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_ED_COMPANY,236,22,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_STREET,236,52,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_POSTCODE,236,67,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_CITY,236,82,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_COUNTRY,236,97,84,13,ES_AUTOHSCROLL
+    CONTROL         "",IDC_CH_BIRTHDAY,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    236,112,8,12
+    CONTROL         "DateTimePicker1",IDC_DP_BIRTHDAY,"SysDateTimePick32",
+                    DTS_RIGHTALIGN | WS_TABSTOP,246,112,74,13
+    CONTROL         "SIM card",IDC_RD_SIMCARD,"Button",BS_AUTORADIOBUTTON,
+                    236,127,41,12
+    CONTROL         "Memory",IDC_RD_MEMORY,"Button",BS_AUTORADIOBUTTON,280,
+                    127,40,12
+    CONTROL         "OK",IDOK,"Button",BS_OWNERDRAW | WS_TABSTOP,185,178,51,
+                    14
+    CONTROL         "Cancel",IDCANCEL,"Button",BS_OWNERDRAW | WS_TABSTOP,270,
+                    178,50,14
+    LTEXT           "Name",IDC_SC_NAME,7,1,40,9
+    LTEXT           "Phone Number",IDC_SC_PH_NUM,7,41,60,9
+    LTEXT           "Phone no. / mobile",IDC_SC_MOBILE,7,71,64,9
+    LTEXT           "Phone no. / office",IDC_SC_OFFICE,7,56,60,9
+    LTEXT           "Fax",IDC_SC_FAX,8,85,64,9
+    LTEXT           "E-Mail",IDC_SC_EMAIL,7,108,64,9
+    LTEXT           "Com. services",IDC_SC_COM_SERVICES,8,139,64,9,NOT 
+                    WS_VISIBLE
+    LTEXT           "Nickname",IDC_SC_NICKNAME,21,148,64,9,NOT WS_VISIBLE
+    LTEXT           "WV user ID",IDC_SC_WV_USER_ID,21,157,64,9,NOT 
+                    WS_VISIBLE
+    LTEXT           "ICQ number",IDC_SC_ICQ,21,172,64,9,NOT WS_VISIBLE
+    LTEXT           "AIM screen name",IDC_SC_AIM,21,187,64,9,NOT WS_VISIBLE
+    CONTROL         "",IDC_SC_LINE,"Static",SS_ETCHEDHORZ,8,173,292,1
+    LTEXT           "Group",IDC_SC_GROUP,173,1,48,9,NOT WS_VISIBLE
+    LTEXT           "Company",IDC_SC_COMPANY,173,22,48,9
+    LTEXT           "Address",IDC_SC_ADDRESS,173,37,48,9
+    LTEXT           "Street",IDC_SC_STREET,186,52,48,9
+    LTEXT           "Post Code",IDC_SC_POST_CODE,186,67,48,9
+    LTEXT           "City",IDC_SC_CITY,186,82,48,9
+    LTEXT           "Country",IDC_SC_COUNTRY,186,97,48,9
+    LTEXT           "Birthday",IDC_SC_BIRTHDAY,173,112,48,9
+    LTEXT           "Position",IDC_SC_POSITION,173,127,63,12
+    LTEXT           "First Name",IDC_SC_SFIRSTNAME,7,25,40,9
+    LTEXT           "Last Name",IDC_SC_SLASTNAME,7,13,40,9
+    LTEXT           "Fax",IDC_SC_FAX2,9,97,64,9
+    LTEXT           "E-Mail",IDC_SC_EMAIL4,9,120,64,9
+    LTEXT           "URL",IDC_SC_WEBPAGE,16,127,64,9
+END
+
+IDD_DLG_SE_T68 DIALOG DISCARDABLE  0, 0, 176, 215
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "SONY ERISON T68"
+FONT 10, "System"
+BEGIN
+    EDITTEXT        IDC_ED_FIRST_NAME,72,7,83,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_LAST_NAME,72,23,83,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_MOBILE,72,39,83,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_HOME,72,55,83,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_WORK,72,71,83,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_FAX,72,87,83,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_OTHER,72,103,83,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_MAIL,72,119,83,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TITLE,72,135,83,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_COMPANY,72,151,83,12,ES_AUTOHSCROLL
+    CONTROL         "OK",IDOK,"Button",BS_OWNERDRAW | WS_TABSTOP,31,194,50,
+                    14
+    CONTROL         "Cancel",IDCANCEL,"Button",BS_OWNERDRAW | WS_TABSTOP,92,
+                    194,50,14
+    CONTROL         "SIM card",IDC_RD_SIM,"Button",BS_AUTORADIOBUTTON,66,170,
+                    40,12
+    CONTROL         "Memory",IDC_RD_MEMORY,"Button",BS_AUTORADIOBUTTON,114,
+                    171,37,12
+    LTEXT           "First Name",IDC_SC_FIRST_NAME,7,7,46,9
+    LTEXT           "Home Tel",IDC_SC_HOME_TEL,7,55,46,9
+    LTEXT           "Last Name",IDC_SC_LAST_NAME,7,23,46,9
+    LTEXT           "Title",IDC_SC_TITLE,7,135,46,9
+    LTEXT           "Company",IDC_SC_COMPANY,7,151,46,9
+    LTEXT           "Work Tel",IDC_SC_WORK,7,71,46,9
+    LTEXT           "Mobile Number",IDC_SC_MOBILE,7,39,46,9
+    LTEXT           "Fax",IDC_SC_FAX,7,87,46,9
+    LTEXT           "Other",IDC_SC_OTHER,7,103,46,9
+    LTEXT           "E-mail",IDC_SC_MAIL,7,119,46,9
+    CONTROL         "",IDC_SC_LINE,"Static",SS_ETCHEDHORZ,28,187,141,1
+    LTEXT           "Posiiton",IDC_SC_POSITION,7,170,59,10
+END
+
+IDD_DLG_SE_S700 DIALOG DISCARDABLE  0, 0, 299, 239
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "S700i / K700i"
+FONT 10, "System"
+BEGIN
+    EDITTEXT        IDC_ED_NAME,63,7,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_MOBILE,63,22,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_HOME,63,37,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_WORK,63,52,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_FAX,63,67,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_OTHER,63,82,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_MAIL,63,97,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_MAIL2,62,112,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_MAIL3,63,129,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_WEB,63,145,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TITLE,208,7,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_COMPANY,208,22,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_STREETW,208,37,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_CITYW,208,52,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_STATEW,208,67,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_ZIPW,208,82,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_COUNTRYW,208,97,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_STREET,208,112,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_CITY,208,127,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_STATE,208,142,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_ZIP,208,157,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_COUNTRY,208,172,84,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_INFO,217,180,75,12,ES_AUTOHSCROLL
+    CONTROL         "DateTimePicker1",IDC_DP_BIRTHDAY,"SysDateTimePick32",
+                    DTS_RIGHTALIGN | WS_TABSTOP,224,193,68,15
+    CONTROL         "Check1",IDC_CH_BIRTHDAY,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,208,200,9,10
+    CONTROL         "OK",IDOK,"Button",BS_OWNERDRAW | WS_TABSTOP,167,223,50,
+                    9
+    CONTROL         "Cancel",IDCANCEL,"Button",BS_OWNERDRAW | WS_TABSTOP,242,
+                    224,50,8
+    LTEXT           "Name",IDC_SC_NAME,7,7,50,8
+    LTEXT           "Mobile",IDC_SC_MOBILE,7,22,50,8
+    LTEXT           "Home",IDC_SC_HOME,7,37,50,8
+    LTEXT           "Work",IDC_SC_WORK,7,52,50,8
+    LTEXT           "Fax",IDC_SC_FAX,7,67,50,8
+    LTEXT           "Other",IDC_SC_OTHER,7,82,50,8
+    LTEXT           "EMail",IDC_SC_MAIL,7,97,50,8
+    LTEXT           "Web Address",IDC_SC_WEB,7,145,50,8
+    LTEXT           "Title",IDC_SC_TITLE,154,7,54,8
+    LTEXT           "Company",IDC_SC_COMPANY,154,22,54,8
+    LTEXT           "Street",IDC_SC_STREET,154,112,54,8
+    LTEXT           "City",IDC_SC_CITY,154,127,54,8
+    LTEXT           "State",IDC_SC_STATE,154,142,54,8
+    LTEXT           "Zip Code",IDC_SC_ZIP,154,157,54,8
+    LTEXT           "Country",IDC_SC_COUNTRY,154,172,54,8
+    LTEXT           "Position",IDC_SC_POSITION,38,211,50,8
+    LTEXT           "Info",IDC_SC_INFO,163,184,54,8
+    CONTROL         "Memory",IDC_RD_ME,"Button",BS_AUTORADIOBUTTON,96,211,36,
+                    8
+    CONTROL         "SIM Card",IDC_RD_SIM,"Button",BS_AUTORADIOBUTTON,137,
+                    211,39,8
+    CONTROL         "",IDC_SC_LINE,"Static",SS_ETCHEDHORZ,8,140,285,1
+    LTEXT           "Mail2",IDC_SC_MAIL2,7,114,50,8
+    LTEXT           "Mail3",IDC_SC_MAIL3,7,130,50,8
+    LTEXT           "Birthday",IDC_SC_BIRTHDAY,161,200,42,8
+    LTEXT           "Street(W)",IDC_SC_STREETW,154,37,54,8
+    LTEXT           "City(W)",IDC_SC_CITYW,154,52,54,8
+    LTEXT           "State(W)",IDC_SC_STATEW,154,67,54,8
+    LTEXT           "Zip Code(W)",IDC_SC_ZIPW,154,82,54,8
+    LTEXT           "Country(W)",IDC_SC_COUNTRYW,154,97,54,8
+END
+
+IDD_DLG_AVI DIALOG DISCARDABLE  0, 0, 189, 45
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Initial Memory"
+FONT 10, "System"
+BEGIN
+    CONTROL         "Animate1",IDC_ANIMATE,"SysAnimate32",WS_BORDER | 
+                    WS_TABSTOP,7,7,175,31
+END
+
+IDD_DLG_NEWSMS DIALOGEX 0, 0, 226, 145
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "1SMS EDIT"
+FONT 12, "Tahoma", 0, 0, 0x1
+BEGIN
+    EDITTEXT        IDC_EDIT_CONTACTSLIST,47,15,101,14,ES_AUTOHSCROLL | NOT 
+                    WS_TABSTOP
+    EDITTEXT        IDC_EDIT_CONTENTS,7,63,162,75,ES_MULTILINE | 
+                    ES_WANTRETURN | WS_VSCROLL | NOT WS_TABSTOP,
+                    WS_EX_CLIENTEDGE
+    CONTROL         "Send",IDC_BTN_SEND,"Button",BS_OWNERDRAW,176,76,43,14
+    CONTROL         "Cancel",IDCANCEL,"Button",BS_OWNERDRAW,177,124,42,14
+    CONTROL         "OK",IDOK,"Button",BS_OWNERDRAW | NOT WS_VISIBLE | 
+                    WS_DISABLED,176,2,43,14
+    LTEXT           "Receiver :",IDC_ST_RECEIVER,7,18,34,8
+    LTEXT           "Message Contens",IDC_ST_MSGCONTENT,7,51,60,8
+    LTEXT           "[1 / 160]",IDC_ST_COUNTS,142,53,27,8,NOT WS_GROUP
+END
+
+IDD_SMARTPHONE_DIALOG DIALOGEX 0, 0, 383, 256
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "Smartphone"
+FONT 10, "Tahoma", 0, 0, 0x1
+BEGIN
+    CONTROL         "Cancel",IDCANCEL,"Button",BS_OWNERDRAW | WS_TABSTOP,92,
+                    234,50,14
+    LTEXT           "Birthday",IDC_SC_BIRTHDAY,203,213,27,8
+    CONTROL         "DateTimePicker1",IDC_DP_BIRTHDAY,"SysDateTimePick32",
+                    DTS_RIGHTALIGN | WS_TABSTOP,276,212,57,12
+    LTEXT           "Anniversary",IDC_SC_ANNIVERSARY,203,201,39,8
+    CONTROL         "DateTimePicker1",IDC_DP_ANNIVERSARY,"SysDateTimePick32",
+                    DTS_RIGHTALIGN | WS_TABSTOP,276,200,57,12
+    CONTROL         "SIM",IDC_RD_SM,"Button",BS_AUTORADIOBUTTON,276,237,29,
+                    10
+    CONTROL         "PHONE",IDC_RD_ME,"Button",BS_AUTORADIOBUTTON,327,237,38,
+                    10
+    CONTROL         "OK",IDOK,"Button",BS_OWNERDRAW | WS_TABSTOP,174,234,50,
+                    14
+    LTEXT           "Static",IDC_SC_TEXT1,21,57,19,8
+    LTEXT           "Static",IDC_SC_TEXT2,36,86,19,8
+    LTEXT           "Static",IDC_SC_TEXT3,78,66,19,8
+    LTEXT           "Static",IDC_SC_TEXT4,121,85,19,8
+    LTEXT           "Static",IDC_SC_TEXT5,116,104,19,8
+    LTEXT           "Static",IDC_SC_TEXT6,124,141,19,8
+    LTEXT           "Static",IDC_SC_TEXT7,140,104,19,8
+    LTEXT           "Static",IDC_SC_TEXT8,132,49,19,8
+    LTEXT           "Static",IDC_SC_TEXT9,38,130,19,8
+    LTEXT           "Static",IDC_SC_TEXT10,65,106,19,8
+    LTEXT           "Static",IDC_SC_TEXT11,74,131,19,8
+    LTEXT           "Static",IDC_SC_TEXT12,61,83,19,8
+    LTEXT           "Static",IDC_SC_TEXT13,17,109,19,8
+    LTEXT           "Static",IDC_SC_TEXT14,12,152,19,8
+    LTEXT           "Static",IDC_SC_TEXT15,46,55,19,8
+    LTEXT           "Static",IDC_SC_TEXT16,77,87,19,8
+    LTEXT           "Static",IDC_SC_TEXT17,84,123,19,8
+    LTEXT           "Static",IDC_SC_TEXT18,60,152,19,8
+    LTEXT           "Static",IDC_SC_TEXT19,169,129,19,8
+    LTEXT           "Static",IDC_SC_TEXT20,156,99,19,8
+    LTEXT           "Static",IDC_SC_TEXT21,161,55,19,8
+    LTEXT           "Static",IDC_SC_TEXT22,181,102,19,8
+    LTEXT           "Static",IDC_SC_TEXT23,146,71,19,8
+    LTEXT           "Static",IDC_SC_TEXT24,102,69,19,8
+    LTEXT           "Static",IDC_SC_TEXT25,140,160,19,8
+    LTEXT           "Static",IDC_SC_TEXT26,93,55,19,8
+    LTEXT           "Static",IDC_SC_TEXT27,144,30,19,8
+    LTEXT           "Static",IDC_SC_TEXT28,168,24,19,8
+    LTEXT           "Static",IDC_SC_TEXT29,92,92,19,8
+    LTEXT           "Static",IDC_SC_TEXT30,108,121,19,8
+    LTEXT           "Static",IDC_SC_TEXT31,88,156,19,8
+    LTEXT           "Static",IDC_SC_TEXT32,13,74,19,8
+    LTEXT           "Static",IDC_SC_TEXT33,29,116,19,8
+    LTEXT           "Static",IDC_SC_TEXT34,90,143,19,8
+    LTEXT           "Static",IDC_SC_TEXT35,34,72,19,8
+    LTEXT           "Static",IDC_SC_TEXT36,136,124,19,8
+    EDITTEXT        IDC_ED_TEXT1,223,69,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT2,282,72,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT3,306,45,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT4,218,91,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT5,266,101,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT6,202,112,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT7,182,56,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT8,320,74,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT9,311,101,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT10,181,135,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT11,242,121,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT12,296,123,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT13,227,140,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT14,271,144,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT15,320,18,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT16,164,37,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT17,160,158,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT18,204,162,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT19,242,163,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT20,311,143,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT21,136,176,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT22,184,182,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT23,227,180,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT24,282,162,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT25,165,82,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT26,319,160,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT27,262,182,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT28,158,11,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT29,302,180,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT30,220,54,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT31,265,61,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT32,32,140,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT33,97,130,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT34,110,59,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT35,85,82,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT36,77,104,40,14,ES_AUTOHSCROLL
+    CONTROL         "",IDC_CHK_BIRTHDAY,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,101,215,16,8
+    CONTROL         "",IDC_CHK_ANNIVERSARY,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,138,204,16,8
+    LTEXT           "Static",IDC_SC_TEXT37,9,211,19,8
+    LTEXT           "Static",IDC_SC_TEXT38,8,171,19,8
+    LTEXT           "Static",IDC_SC_TEXT39,7,188,19,8
+    LTEXT           "Static",IDC_SC_TEXT40,24,174,19,8
+    EDITTEXT        IDC_ED_TEXT37,34,167,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT38,33,198,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT39,0,126,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ED_TEXT40,47,214,40,14,ES_AUTOHSCROLL
+    CONTROL         "",IDC_SC_LINE,"Static",SS_ETCHEDHORZ,7,231,413,1
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_NS6_ADDRESSDLG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 162
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 170
+    END
+
+    IDD_NS4_ADDRESSDLG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 160
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 142
+    END
+
+    IDD_ADDRESSDLG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 160
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 142
+    END
+
+    IDD_DLG_OTHER, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 325
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 333
+    END
+
+    IDD_DLG_M_V501, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 310
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 117
+    END
+
+    IDD_DLG_MOTOE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 293
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 307
+    END
+
+    IDD_DLG_MOTOE2, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 292
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 307
+    END
+
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 228
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 48
+    END
+
+    IDD_SEARCH, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 120
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 52
+    END
+
+    IDD_DLG_PROG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 226
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 45
+    END
+
+    IDD_DLG_SG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 225
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 360
+    END
+
+    IDD_DATA_DYC, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 244
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 246
+    END
+
+    IDD_SHARP_90X, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 369
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 200
+    END
+
+    IDD_SAGEM, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 364
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 180
+    END
+
+    IDD_SAMSUNGZDLG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 220
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 303
+    END
+
+    IDD_SHARP_T300, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 274
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 212
+    END
+
+    IDD_DATA_DYC_S6, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 244
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 246
+    END
+
+    IDD_DATA_DYC_S4, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 244
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 246
+    END
+
+    IDD_DATA_DYC_S4_EX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 254
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 270
+    END
+
+    IDD_DLG_ASUS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 296
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 184
+    END
+
+    IDD_DLG_S_S65, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 320
+        VERTGUIDE, 8
+        VERTGUIDE, 21
+        VERTGUIDE, 92
+        VERTGUIDE, 173
+        VERTGUIDE, 185
+        VERTGUIDE, 236
+        TOPMARGIN, 1
+        BOTTOMMARGIN, 192
+        HORZGUIDE, 19
+        HORZGUIDE, 22
+        HORZGUIDE, 34
+        HORZGUIDE, 37
+        HORZGUIDE, 49
+        HORZGUIDE, 52
+        HORZGUIDE, 64
+        HORZGUIDE, 67
+        HORZGUIDE, 79
+        HORZGUIDE, 82
+        HORZGUIDE, 94
+        HORZGUIDE, 97
+        HORZGUIDE, 110
+        HORZGUIDE, 112
+        HORZGUIDE, 124
+        HORZGUIDE, 127
+        HORZGUIDE, 139
+        HORZGUIDE, 142
+        HORZGUIDE, 154
+        HORZGUIDE, 157
+        HORZGUIDE, 169
+        HORZGUIDE, 178
+    END
+
+    IDD_DLG_SE_T68, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 169
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 208
+    END
+
+    IDD_DLG_SE_S700, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 292
+        VERTGUIDE, 57
+        VERTGUIDE, 63
+        VERTGUIDE, 107
+        VERTGUIDE, 147
+        VERTGUIDE, 154
+        VERTGUIDE, 167
+        VERTGUIDE, 203
+        VERTGUIDE, 208
+        VERTGUIDE, 217
+        VERTGUIDE, 242
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 232
+        HORZGUIDE, 7
+        HORZGUIDE, 19
+        HORZGUIDE, 22
+        HORZGUIDE, 34
+        HORZGUIDE, 37
+        HORZGUIDE, 49
+        HORZGUIDE, 52
+        HORZGUIDE, 64
+        HORZGUIDE, 67
+        HORZGUIDE, 79
+        HORZGUIDE, 82
+        HORZGUIDE, 94
+        HORZGUIDE, 97
+        HORZGUIDE, 109
+        HORZGUIDE, 112
+        HORZGUIDE, 124
+        HORZGUIDE, 127
+        HORZGUIDE, 135
+        HORZGUIDE, 145
+    END
+
+    IDD_DLG_AVI, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 182
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 38
+    END
+
+    IDD_DLG_NEWSMS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 219
+        BOTTOMMARGIN, 138
+    END
+
+    IDD_SMARTPHONE_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 376
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 249
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDR_TB_FUNC             BITMAP  DISCARDABLE     "res\\tb_func.bmp"
+IDR_TB_TOOLBAR          BITMAP  DISCARDABLE     "res\\tb_toolb.bmp"
+IDR_TB_TOOLBAR1         BITMAP  DISCARDABLE     "res\\bmp00001.bmp"
+IDR_TB_TOOLBAR2         BITMAP  DISCARDABLE     "res\\bmp00002.bmp"
+IDR_TB_TOOLBAR1_SMS     BITMAP  DISCARDABLE     "res\\bmp1.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "res\\idr_main.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_TB_FUNC TOOLBAR DISCARDABLE  68, 51
+BEGIN
+    BUTTON      ID_BN_PHONEBOOK
+    BUTTON      ID_BN_SCHEDULE
+    BUTTON      ID_BN_MEMO
+END
+
+IDR_TB_TOOLBAR TOOLBAR DISCARDABLE  35, 35
+BEGIN
+    BUTTON      ID_BN_NEW
+    BUTTON      ID_BN_EDIT
+    BUTTON      ID_BN_DELETE
+    SEPARATOR
+    BUTTON      ID_BN_SEARCH
+    BUTTON      ID_BN_BACKUP
+    BUTTON      ID_BN_RESTORE
+    BUTTON      ID_BN_REFRESH
+    SEPARATOR
+    BUTTON      ID_BN_EXIT
+    BUTTON      ID_BN_ABOUT
+    BUTTON      ID_BN_HELP
+END
+
+IDR_TB_TOOLBAR1 TOOLBAR DISCARDABLE  35, 35
+BEGIN
+    BUTTON      ID_BN_NEW
+    BUTTON      ID_BN_EDIT
+    BUTTON      ID_BN_DELETE
+    SEPARATOR
+    BUTTON      ID_BN_SEARCH
+    BUTTON      ID_BN_BACKUP
+    BUTTON      ID_BN_RESTORE
+    BUTTON      ID_BN_REFRESH
+END
+
+IDR_TB_TOOLBAR1_SMS TOOLBAR DISCARDABLE  35, 35
+BEGIN
+    BUTTON      ID_BN_NEW
+    BUTTON      ID_BN_EDIT
+    BUTTON      ID_BN_DELETE
+    SEPARATOR
+    BUTTON      ID_BN_SEARCH
+    BUTTON      ID_BN_BACKUP
+    BUTTON      ID_BN_RESTORE
+    BUTTON      ID_BN_REFRESH
+    SEPARATOR
+    BUTTON      ID_BN_SENDSMS
+END
+
+IDR_TB_TOOLBAR2 TOOLBAR DISCARDABLE  35, 35
+BEGIN
+    BUTTON      ID_BN_EXIT
+    BUTTON      ID_BN_ABOUT
+    BUTTON      ID_BN_HELP
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_CONNECT              "Connect"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHT)
+#ifdef _WIN32
+LANGUAGE 4, 1
+#pragma code_page(950)
+#endif //_WIN32
+#include "res\PhoneBook.rc2"  // non-Microsoft Visual C++ edited resources
+#include "l.cht\afxres.rc"          // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

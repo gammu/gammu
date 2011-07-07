@@ -1,0 +1,118 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: SMSUtility_DLL - Win32 Debug_Unicode--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x409 /fo"../temp/Debug/SMSUtility.res" /d "_DEBUG" /d "_AFXDLL" "D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\SMS\SMSUtility.rc"" 
+Creating temporary file "C:\DOCUME~1\Alan\LOCALS~1\Temp\RSP149.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /I "..\anwlib\include" /I "..\Proj_Inc" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_UNICODE" /D "_USRDLL" /FR"../temp/Debug/" /Fp"../temp/Debug/SMSUtility_DLL.pch" /Yu"stdafx.h" /Fo"../temp/Debug/" /Fd"../temp/Debug/" /FD /GZ /c 
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\SMS\ContactsDlg.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\SMS\ContentEdit.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\SMS\global.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\SMS\LeftView.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\SMS\MainFrm.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\SMS\NewSMS.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\SMS\OpenSMS.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\SMS\PhoneNumberEdit.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\SMS\PrevView.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\SMS\ProcessDlg.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\SMS\ProgressDlg.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\SMS\ReportCtrl.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\SMS\SkinHeaderCtrl.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\SMS\SMSUtility_DLL.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\SMS\worker.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\SMS\TabSplitterWnd.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\SMS\Toolbar\uifixtb.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\SMS\Toolbar\uiflatbar.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\SMS\Toolbar\uimodulver.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\SMS\CPage.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\SMS\CPrinter.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\SMS\Dib.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\Alan\LOCALS~1\Temp\RSP149.tmp" 
+Creating temporary file "C:\DOCUME~1\Alan\LOCALS~1\Temp\RSP14A.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /I "..\anwlib\include" /I "..\Proj_Inc" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_UNICODE" /D "_USRDLL" /FR"../temp/Debug/" /Fp"../temp/Debug/SMSUtility_DLL.pch" /Yc"stdafx.h" /Fo"../temp/Debug/" /Fd"../temp/Debug/" /FD /GZ /c 
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\SMS\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\Alan\LOCALS~1\Temp\RSP14A.tmp" 
+Creating temporary file "C:\DOCUME~1\Alan\LOCALS~1\Temp\RSP14B.tmp" with contents
+[
+CommUIU.lib /nologo /subsystem:windows /dll /incremental:yes /pdb:"../temp/Debug/SMSUtilityU.pdb" /debug /machine:I386 /def:".\SMSUtility.def" /out:"..\exe\Debug\SMSUtilityU.dll" /implib:"../temp/Debug/SMSUtilityU.lib" /pdbtype:sept /libpath:"..\anwlib\lib\Debug" /libpath:"..\Proc_Lib" /libpath:"..\lib\Debug" 
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\ContactsDlg.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\ContentEdit.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\global.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\LeftView.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\MainFrm.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\NewSMS.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\OpenSMS.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\PhoneNumberEdit.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\PrevView.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\ProcessDlg.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\ProgressDlg.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\ReportCtrl.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\SkinHeaderCtrl.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\SMSUtility_DLL.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\StdAfx.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\worker.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\TabSplitterWnd.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\uifixtb.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\uiflatbar.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\uimodulver.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\CPage.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\CPrinter.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Dib.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\SMSUtility.res"
+]
+Creating command line "link.exe @C:\DOCUME~1\Alan\LOCALS~1\Temp\RSP14B.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+StdAfx.cpp
+Compiling...
+ContactsDlg.cpp
+ContentEdit.cpp
+global.cpp
+LeftView.cpp
+D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\SMS\LeftView.cpp(3114) : warning C4305: '=' : truncation from 'const int' to 'char'
+D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\SMS\LeftView.cpp(3114) : warning C4309: '=' : truncation of constant value
+D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\SMS\LeftView.cpp(3115) : warning C4305: '=' : truncation from 'const int' to 'char'
+D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\SMS\LeftView.cpp(3115) : warning C4309: '=' : truncation of constant value
+D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\SMS\LeftView.cpp(3229) : warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+MainFrm.cpp
+NewSMS.cpp
+OpenSMS.cpp
+PhoneNumberEdit.cpp
+PrevView.cpp
+D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\SMS\PrevView.cpp(378) : warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+ProcessDlg.cpp
+ProgressDlg.cpp
+ReportCtrl.cpp
+SkinHeaderCtrl.cpp
+SMSUtility_DLL.cpp
+worker.cpp
+TabSplitterWnd.cpp
+uifixtb.cpp
+uiflatbar.cpp
+uimodulver.cpp
+CPage.cpp
+Generating Code...
+Compiling...
+CPrinter.cpp
+Dib.cpp
+Generating Code...
+Linking...
+   Creating library ../temp/Debug/SMSUtilityU.lib and object ../temp/Debug/SMSUtilityU.exp
+SMSUtilityU.exp : warning LNK4070: /OUT:SMSUtility.dll directive in .EXP differs from output filename "..\exe\Debug\SMSUtilityU.dll"; ignoring directive
+
+
+
+<h3>Results</h3>
+SMSUtilityU.dll - 0 error(s), 7 warning(s)
+</pre>
+</body>
+</html>

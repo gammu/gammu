@@ -1,4 +1,3 @@
-/* (c) 2002-2004 by Marcin Wiacek and Michal Cihar */
 // At.cpp : Defines the initialization routines for the DLL.
 //
 
@@ -81,15 +80,41 @@ GSM_Error WINAPI InitialiseLib(char* pszDeviceDllName,Debug_Info *debugInfo,GSM_
 	return ERR_NONE;
 }
 
-GSM_Error WINAPI ProtocolInitialise(GSM_Config ConfigInfo)
+GSM_Error WINAPI ProtocolInitialise(/*char* pszDeviceDllName,Debug_Info *debugInfo,*/GSM_Config ConfigInfo)
 {
 	GSM_Error error = ERR_NONE;
 	char szConnectType[MAX_PATH];
-
+//	char szDeviceName[MAX_PATH];
 
 	wsprintf(szConnectType,"%s",ConfigInfo.Connection);
 
+/*	theApp.m_pDebugInfo = debugInfo;
+	error = theApp.m_DeviceAPI.InitDeviceData(theApp.m_pDebugInfo,ConfigInfo);
+	if(error != ERR_NONE)
+		return error;
 
+/*	switch(theApp.m_DeviceAPI.m_DeviceData.ConnectionType )
+	{
+	case  GCT_AT:
+		wsprintf(szDeviceName,"serial.dll");
+		break;
+	case  GCT_IRDAAT:
+		wsprintf(szDeviceName,"irda.dll");
+		break;
+	case  GCT_BLUEAT:
+		wsprintf(szDeviceName,"winBT.dll");
+		break;
+	default:
+		return ERR_BUG;
+	}*/
+/*	if(theApp.m_DeviceAPI.LoadDeviceApiLibrary(pszDeviceDllName)==FALSE)
+		return ERR_BUG;
+
+	error =theApp.m_DeviceAPI.DeviceAPI_OpenDevice();
+
+	if(error != ERR_NONE)
+		return error;
+*/
 	if(theApp.m_DeviceAPI.m_DeviceData.ConnectionType == GCT_AT)
 	{
 		if (strlen(szConnectType) > 2) 
@@ -163,7 +188,7 @@ GSM_Error WINAPI Close_Device()
 	return theApp.m_DeviceAPI.DeviceAPI_CloseDevice();
 }
 
-int GSM_ReadDevice (bool wait)
+int GSM_ReadDevice (bool wait)	   //by karl
 {
 	unsigned char	buff[300];
 	int		res = 0, count;
@@ -187,8 +212,15 @@ int GSM_ReadDevice (bool wait)
 	{
 		if(theApp.m_bCurrentObexMode)
 			OBEX_StateMachine(buff[count]);
-		else
+		else // modify for GX 18 AVFL command
+		{
+		  if ((theApp.m_pATMultiAnwser) &&
+			  ( ( !strcmp(theApp.m_pATMultiAnwser->Specialtext,"%AVFL:") ) ||
+			    ( !strcmp(theApp.m_pATMultiAnwser->Specialtext,"%ARF:") ) ) )
+			AT_StateMachine2(buff[count]);
+		  else
 			AT_StateMachine(buff[count]);
+		}
 	}
 
 	return res;
@@ -324,6 +356,51 @@ GSM_Error CAtApp::DispatchMessage(GSM_Protocol_Message *msg)
 	}
 	else
 		error = ERR_NONE;	
+/*
+	if (strcmp(s->Phone.Functions->models,"NAUTO"))
+	{
+		if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR ||
+		    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl==DL_TEXTERRORDATE)
+		{
+			disp = true;
+			switch (error) 
+			{
+			case ERR_UNKNOWNRESPONSE:
+				smprintf(s, "\nUNKNOWN response");
+				break;
+			case ERR_UNKNOWNFRAME:
+				smprintf(s, "\nUNKNOWN frame");
+				break;
+			case ERR_FRAMENOTREQUESTED:
+				smprintf(s, "\nFrame not request now");
+				break;
+			default:
+				disp = false;
+			}
+		}
+
+		if (error == ERR_UNKNOWNFRAME || error == ERR_FRAMENOTREQUESTED)
+		{
+			if(Phone->RequestID==ID_None)
+				error = ERR_NONE;
+			else
+				error = ERR_TIMEOUT;
+		}
+	}
+*/
+/*	if (disp) 
+	{
+		smprintf(s,". If you can, PLEASE report it (see readme.txt). THANK YOU\n");
+		if (Phone->SentMsg != NULL) {
+			smprintf(s,"LAST SENT frame ");
+			smprintf(s, "type 0x%02X/length %i", Phone->SentMsg->Type, Phone->Sentmsg.Length);
+			DumpMessage(s->di.use_global ? di.df : s->di.df, s->di.dl, Phone->Sentmsg.Buffer, Phone->Sentmsg.Length);
+		}
+		smprintf(s, "RECEIVED frame ");
+		smprintf(s, "type 0x%02X/length 0x%02X/%i", msg->Type, msg.Length, msg.Length);
+		DumpMessage(s->di.use_global ? di.df : s->di.df, s->di.dl, msg.Buffer, msg.Length);
+		smprintf(s, "\n");
+	}*/
 
 	return error;
 }

@@ -1,3 +1,4 @@
+/* (c) 2002-2005 by Marcin Wiacek and Michal Cihar */
 #ifndef _ATGERFUNDEF_H
 #define _ATGERFUNDEF_H
 #include "commfun.h"
@@ -23,7 +24,7 @@ typedef enum {
 	AT_Reply_CMSError,
 	AT_Reply_CMEError,
 	AT_Reply_SMSEdit,
-	AT_Reply_Continue,
+	AT_Reply_Continue,//peggy +
 	AT_Reply_Entered,
 } GSM_AT_Reply_State;
 
@@ -82,7 +83,7 @@ typedef enum {
 	AT_Ericsson,
 	AT_Sagem,
 	AT_Samsung,
-	AT_Motorola,
+	AT_Motorola, //peggy
 	AT_Sharp,
 	AT_Panasonic,
 	AT_LG,
@@ -245,27 +246,5 @@ GSM_Error ATGEN_CDMA_GetFirmware(char* pszFirmwareVer,GSM_Error (*pWriteCommandf
 							  GSM_ATMultiAnwser *pATMultiAnwser,GSM_Reply_MsgType* ReplyCheckType, GSM_Error (*CallBackFun)    (GSM_Protocol_Message msg)),Debug_Info	*pDebuginfo);
 
 
-GSM_Error ATGEN_AddSMSForTextMode(OnePhoneModel *pMobileInfo, GSM_SMSMessage *sms,bool bSetSMSMode,GSM_Error (*pSetATProtocolData)(bool EditMode,bool bFastWrite,DWORD dwFlag),GSM_Error (*pWriteCommandfn) (unsigned char *buffer,int length, unsigned char type, int WaitTime,bool ObexMode,
-							  GSM_ATMultiAnwser *pATMultiAnwser,GSM_Reply_MsgType* ReplyCheckType, GSM_Error (*CallBackFun)    (GSM_Protocol_Message msg)),Debug_Info	*pDebuginfo);
-
-
-GSM_Error ATGEN_SendSMSForTextMode( OnePhoneModel *pMobileInfo,GSM_SMSMessage *sms,bool bSetSMSMode,GSM_Error (*pSetATProtocolData)(bool EditMode,bool bFastWrite,DWORD dwFlag),GSM_Error (*pWriteCommandfn) (unsigned char *buffer,int length, unsigned char type, int WaitTime,bool ObexMode,
-							  GSM_ATMultiAnwser *pATMultiAnwser,GSM_Reply_MsgType* ReplyCheckType, GSM_Error (*CallBackFun)    (GSM_Protocol_Message msg)),Debug_Info	*pDebuginfo);
-
-GSM_Error ATGEN_DecodeNokiaSMSFile(GSM_File *pfile,GSM_MultiSMSMessage *pSMS);
-
-GSM_Error ATGEN_MakeNokiaSMSFrame(GSM_SMSMessage *message, unsigned char *hexreq,int *length2,GSM_Error (*pWriteCommandfn) (unsigned char *buffer,int length, unsigned char type, int WaitTime,bool ObexMode,
-							  GSM_ATMultiAnwser *pATMultiAnwser,GSM_Reply_MsgType* ReplyCheckType, GSM_Error (*CallBackFun)    (GSM_Protocol_Message msg)),Debug_Info	*pDebuginfo);
-
-
-GSM_Error ATGEN_GetSMSStatus( GSM_SMSMemoryStatus *status,GSM_Error (*pWriteCommandfn) (unsigned char *buffer,int length, unsigned char type, int WaitTime,bool ObexMode,
-							  GSM_ATMultiAnwser *pATMultiAnwser,GSM_Reply_MsgType* ReplyCheckType, GSM_Error (*CallBackFun)    (GSM_Protocol_Message msg)),Debug_Info	*pDebuginfo);
-
-GSM_Error ATGEN_GetNextSMSEX(OnePhoneModel *pMobileInfo,GSM_MultiSMSMessage *sms, bool start, int startIndex,GSM_Error (*pWriteCommandfn) (unsigned char *buffer,int length, unsigned char type, int WaitTime,bool ObexMode,
-							  GSM_ATMultiAnwser *pATMultiAnwser,GSM_Reply_MsgType* ReplyCheckType, GSM_Error (*CallBackFun)    (GSM_Protocol_Message msg)),Debug_Info	*pDebuginfo);
-GSM_Error ATGEN_AddSMSEX(OnePhoneModel *pMobileInfo, GSM_SMSMessage *sms,GSM_Error (*pSetATProtocolData)(bool EditMode,bool bFastWrite,DWORD dwFlag),GSM_Error (*pWriteCommandfn) (unsigned char *buffer,int length, unsigned char type, int WaitTime,bool ObexMode,
-							  GSM_ATMultiAnwser *pATMultiAnwser,GSM_Reply_MsgType* ReplyCheckType, GSM_Error (*CallBackFun)    (GSM_Protocol_Message msg)),Debug_Info	*pDebuginfo);
-GSM_Error ATGEN_DeleteSMSEX(OnePhoneModel *pMobileInfo, GSM_SMSMessage *sms,GSM_Error (*pWriteCommandfn) (unsigned char *buffer,int length, unsigned char type, int WaitTime,bool ObexMode,
-							  GSM_ATMultiAnwser *pATMultiAnwser,GSM_Reply_MsgType* ReplyCheckType, GSM_Error (*CallBackFun)    (GSM_Protocol_Message msg)),Debug_Info	*pDebuginfo);
 
 #endif

@@ -1,0 +1,141 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: SMSUtility - Win32 Debug_Unicode--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x409 /fo"../../temp/Debug/SMSUtility.res" /d "_DEBUG" /d "_AFXDLL" "E:\Mobile Driver Unicode\Application\SMS\SMSUtility.rc"" 
+Creating temporary file "C:\DOCUME~1\PEGGY_~1\LOCALS~1\Temp\RSP20C5.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /I "..\anwlib\include" /I "..\..\Proj_Inc" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_UNICODE" /FR"../../temp/Debug/" /Fp"../../temp/Debug/SMSUtility.pch" /Yu"stdafx.h" /Fo"../../temp/Debug/" /Fd"../../temp/Debug/" /FD /GZ /c 
+"E:\Mobile Driver Unicode\Application\SMS\ContactsDlg.cpp"
+"E:\Mobile Driver Unicode\Application\SMS\ContentEdit.cpp"
+"E:\Mobile Driver Unicode\Application\SMS\global.cpp"
+"E:\Mobile Driver Unicode\Application\SMS\LeftView.cpp"
+"E:\Mobile Driver Unicode\Application\SMS\MainFrm.cpp"
+"E:\Mobile Driver Unicode\Application\SMS\NewSMS.cpp"
+"E:\Mobile Driver Unicode\Application\SMS\OpenSMS.cpp"
+"E:\Mobile Driver Unicode\Application\SMS\PhoneNumberEdit.cpp"
+"E:\Mobile Driver Unicode\Application\SMS\PrevView.cpp"
+"E:\Mobile Driver Unicode\Application\SMS\ProcessDlg.cpp"
+"E:\Mobile Driver Unicode\Application\SMS\ProgressDlg.cpp"
+"E:\Mobile Driver Unicode\Application\SMS\ReportCtrl.cpp"
+"E:\Mobile Driver Unicode\Application\SMS\SkinHeaderCtrl.cpp"
+"E:\Mobile Driver Unicode\Application\SMS\SMSUtility.cpp"
+"E:\Mobile Driver Unicode\Application\SMS\worker.cpp"
+"E:\Mobile Driver Unicode\Application\SMS\TabSplitterWnd.cpp"
+"E:\Mobile Driver Unicode\Application\SMS\Toolbar\uifixtb.cpp"
+"E:\Mobile Driver Unicode\Application\SMS\Toolbar\uiflatbar.cpp"
+"E:\Mobile Driver Unicode\Application\SMS\Toolbar\uimodulver.cpp"
+"E:\Mobile Driver Unicode\Application\SMS\CPage.cpp"
+"E:\Mobile Driver Unicode\Application\SMS\CPrinter.cpp"
+"E:\Mobile Driver Unicode\Application\SMS\Dib.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\PEGGY_~1\LOCALS~1\Temp\RSP20C5.tmp" 
+Creating temporary file "C:\DOCUME~1\PEGGY_~1\LOCALS~1\Temp\RSP20C6.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /I "..\anwlib\include" /I "..\..\Proj_Inc" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_UNICODE" /FR"../../temp/Debug/" /Fp"../../temp/Debug/SMSUtility.pch" /Yc"stdafx.h" /Fo"../../temp/Debug/" /Fd"../../temp/Debug/" /FD /GZ /c 
+"E:\Mobile Driver Unicode\Application\SMS\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\PEGGY_~1\LOCALS~1\Temp\RSP20C6.tmp" 
+Creating temporary file "C:\DOCUME~1\PEGGY_~1\LOCALS~1\Temp\RSP20C7.tmp" with contents
+[
+CommUIU.lib /nologo /entry:"wWinMainCRTStartup" /subsystem:windows /incremental:yes /pdb:"../../temp/Debug/SMSUtility.pdb" /debug /machine:I386 /out:"../../EXE/Debug\SMSUtility.exe" /pdbtype:sept /libpath:"..\anwlib\lib\Debug" /libpath:"..\..\Proc_Lib" /libpath:"..\..\lib\Debug" 
+"\Mobile Driver Unicode\temp\Debug\ContactsDlg.obj"
+"\Mobile Driver Unicode\temp\Debug\ContentEdit.obj"
+"\Mobile Driver Unicode\temp\Debug\global.obj"
+"\Mobile Driver Unicode\temp\Debug\LeftView.obj"
+"\Mobile Driver Unicode\temp\Debug\MainFrm.obj"
+"\Mobile Driver Unicode\temp\Debug\NewSMS.obj"
+"\Mobile Driver Unicode\temp\Debug\OpenSMS.obj"
+"\Mobile Driver Unicode\temp\Debug\PhoneNumberEdit.obj"
+"\Mobile Driver Unicode\temp\Debug\PrevView.obj"
+"\Mobile Driver Unicode\temp\Debug\ProcessDlg.obj"
+"\Mobile Driver Unicode\temp\Debug\ProgressDlg.obj"
+"\Mobile Driver Unicode\temp\Debug\ReportCtrl.obj"
+"\Mobile Driver Unicode\temp\Debug\SkinHeaderCtrl.obj"
+"\Mobile Driver Unicode\temp\Debug\SMSUtility.obj"
+"\Mobile Driver Unicode\temp\Debug\SMSUtility.res"
+"\Mobile Driver Unicode\temp\Debug\StdAfx.obj"
+"\Mobile Driver Unicode\temp\Debug\worker.obj"
+"\Mobile Driver Unicode\temp\Debug\TabSplitterWnd.obj"
+"\Mobile Driver Unicode\temp\Debug\uifixtb.obj"
+"\Mobile Driver Unicode\temp\Debug\uiflatbar.obj"
+"\Mobile Driver Unicode\temp\Debug\uimodulver.obj"
+"\Mobile Driver Unicode\temp\Debug\CPage.obj"
+"\Mobile Driver Unicode\temp\Debug\CPrinter.obj"
+"\Mobile Driver Unicode\temp\Debug\Dib.obj"
+]
+Creating command line "link.exe @C:\DOCUME~1\PEGGY_~1\LOCALS~1\Temp\RSP20C7.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+StdAfx.cpp
+Compiling...
+ContactsDlg.cpp
+ContentEdit.cpp
+global.cpp
+LeftView.cpp
+E:\Mobile Driver Unicode\Application\SMS\LeftView.cpp(3069) : warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+MainFrm.cpp
+NewSMS.cpp
+OpenSMS.cpp
+PhoneNumberEdit.cpp
+PrevView.cpp
+E:\Mobile Driver Unicode\Application\SMS\PrevView.cpp(364) : warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+ProcessDlg.cpp
+ProgressDlg.cpp
+ReportCtrl.cpp
+SkinHeaderCtrl.cpp
+SMSUtility.cpp
+worker.cpp
+TabSplitterWnd.cpp
+uifixtb.cpp
+uiflatbar.cpp
+uimodulver.cpp
+CPage.cpp
+Generating Code...
+Compiling...
+CPrinter.cpp
+Dib.cpp
+Generating Code...
+Linking...
+Creating temporary file "C:\DOCUME~1\PEGGY_~1\LOCALS~1\Temp\RSP20CB.tmp" with contents
+[
+/nologo /o"../../temp/Debug/SMSUtility.bsc" 
+"\Mobile Driver Unicode\temp\Debug\StdAfx.sbr"
+"\Mobile Driver Unicode\temp\Debug\ContactsDlg.sbr"
+"\Mobile Driver Unicode\temp\Debug\ContentEdit.sbr"
+"\Mobile Driver Unicode\temp\Debug\global.sbr"
+"\Mobile Driver Unicode\temp\Debug\LeftView.sbr"
+"\Mobile Driver Unicode\temp\Debug\MainFrm.sbr"
+"\Mobile Driver Unicode\temp\Debug\NewSMS.sbr"
+"\Mobile Driver Unicode\temp\Debug\OpenSMS.sbr"
+"\Mobile Driver Unicode\temp\Debug\PhoneNumberEdit.sbr"
+"\Mobile Driver Unicode\temp\Debug\PrevView.sbr"
+"\Mobile Driver Unicode\temp\Debug\ProcessDlg.sbr"
+"\Mobile Driver Unicode\temp\Debug\ProgressDlg.sbr"
+"\Mobile Driver Unicode\temp\Debug\ReportCtrl.sbr"
+"\Mobile Driver Unicode\temp\Debug\SkinHeaderCtrl.sbr"
+"\Mobile Driver Unicode\temp\Debug\SMSUtility.sbr"
+"\Mobile Driver Unicode\temp\Debug\worker.sbr"
+"\Mobile Driver Unicode\temp\Debug\TabSplitterWnd.sbr"
+"\Mobile Driver Unicode\temp\Debug\uifixtb.sbr"
+"\Mobile Driver Unicode\temp\Debug\uiflatbar.sbr"
+"\Mobile Driver Unicode\temp\Debug\uimodulver.sbr"
+"\Mobile Driver Unicode\temp\Debug\CPage.sbr"
+"\Mobile Driver Unicode\temp\Debug\CPrinter.sbr"
+"\Mobile Driver Unicode\temp\Debug\Dib.sbr"]
+Creating command line "bscmake.exe @C:\DOCUME~1\PEGGY_~1\LOCALS~1\Temp\RSP20CB.tmp"
+Creating browse info file...
+<h3>Output Window</h3>
+
+
+
+<h3>Results</h3>
+SMSUtility.exe - 0 error(s), 2 warning(s)
+</pre>
+</body>
+</html>

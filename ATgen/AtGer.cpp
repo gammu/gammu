@@ -1,4 +1,3 @@
-/* (c) 2002-2005 by Marcin Wiacek and Michal Cihar */
 #include "stdafx.h"
 #include "Atgen.h"
 #include "AtGenFundef.h"
@@ -142,43 +141,23 @@ void ATGEN_DecodeDateTime(GSM_DateTime *dt, unsigned char *input)
 
 	input++;
 	dt->Month=(*input-'0')*10;         input++;
-	if(*input-'0'<0 || *input-'0'>9)
-		dt->Month = dt->Month / 10;
-	else	{
-		dt->Month=dt->Month+(*input-'0');  input++;
-	}
+	dt->Month=dt->Month+(*input-'0');  input++;
 
 	input++;
 	dt->Day=(*input-'0')*10;           input++;
-	if(*input-'0'<0 || *input-'0'>9)
-		dt->Day = dt->Day /10;
-	else	{
-		dt->Day=dt->Day+(*input-'0');      input++;
-	}
+	dt->Day=dt->Day+(*input-'0');      input++;
 
 	input++;
 	dt->Hour=(*input-'0')*10;          input++;
-	if(*input-'0'<0 || *input-'0'>9)
-		dt->Hour = dt->Hour / 10;
-	else	{
-		dt->Hour=dt->Hour+(*input-'0');    input++;
-	}
+	dt->Hour=dt->Hour+(*input-'0');    input++;
 
 	input++;
 	dt->Minute=(*input-'0')*10;        input++;
-	if(*input-'0'<0 || *input-'0'>9)
-		dt->Minute = dt->Minute / 10;
-	else	{
-		dt->Minute=dt->Minute+(*input-'0');input++;
-	}
+	dt->Minute=dt->Minute+(*input-'0');input++;
 
 	input++;
 	dt->Second=(*input-'0')*10;        input++;
-	if(*input-'0'<0 || *input-'0'>9)
-		dt->Second = dt->Second / 10;
-	else	{
-		dt->Second=dt->Second+(*input-'0');input++;
-	}
+	dt->Second=dt->Second+(*input-'0');input++;
 
 	if (input!=NULL) {
 		input++;
@@ -224,12 +203,12 @@ GSM_Error ATGEN_GetReplyStatue(GSM_Protocol_Message	*msg,GSM_ATReplayInfo* pRepl
 		pReplynfo->ReplyState = AT_Reply_CMSError;
 		ErrorCodes = CMSErrorCodes;
 	}
-	if (!strncmp(line,"+MMGL:",6)) pReplynfo->ReplyState = AT_Reply_Continue;
-	if (!strncmp(line,"+CPBR:",6)) pReplynfo->ReplyState = AT_Reply_Continue; 
-	if (!strncmp(line,"+MPBR:",6)) pReplynfo->ReplyState = AT_Reply_Continue; 
-	if (!strncmp(line,"+MDBR:",6)) pReplynfo->ReplyState = AT_Reply_Continue; 
-	if (!strncmp(line,"+SSHR:",6)) pReplynfo->ReplyState = AT_Reply_Continue;
-	if (!strncmp(line,"+MPBRE:",7)) pReplynfo->ReplyState = AT_Reply_Continue;
+	if (!strncmp(line,"+MMGL:",6)) pReplynfo->ReplyState = AT_Reply_Continue; //peggy
+	if (!strncmp(line,"+CPBR:",6)) pReplynfo->ReplyState = AT_Reply_Continue; //peggy 0201 add
+	if (!strncmp(line,"+MPBR:",6)) pReplynfo->ReplyState = AT_Reply_Continue; //peggy 0201 add
+	if (!strncmp(line,"+MDBR:",6)) pReplynfo->ReplyState = AT_Reply_Continue; //peggy 0201 add
+	if (!strncmp(line,"+SSHR:",6)) pReplynfo->ReplyState = AT_Reply_Continue; //bobby 8.31.05
+	if (!strncmp(line,"+MPBRE:",7)) pReplynfo->ReplyState = AT_Reply_Continue; //bobby 1.24.06
 
 
 	if (pReplynfo->ReplyState == AT_Reply_CMEError || pReplynfo->ReplyState == AT_Reply_CMSError) {
@@ -337,6 +316,7 @@ GSM_Error ATGEN_HandleCMEError(GSM_ATReplayInfo Replynfo)
 			return ERR_UNKNOWN;
 	}
 }
+
 GSM_Error ATGEN_GenericReply(GSM_Protocol_Message msg)
 {
 	GSM_ATReplayInfo Replynfo;
@@ -699,6 +679,9 @@ GSM_Error ATGEN_ReplyCDMAGetManufacturer(GSM_Protocol_Message msg)
 			strcpy(theApp.m_pszTemp,"MTK");
 			theApp.m_ManufacturerID = AT_MTK;
 		}
+		//0810 added by Mingfa for Sangfei , SMS bug 
+        theApp.m_ManufacturerID = AT_MTK;
+
 		return ERR_NONE;
 	case AT_Reply_CMSError:
 		return ATGEN_HandleCMSError(Replynfo);
@@ -809,6 +792,9 @@ GSM_Error ATGEN_ReplyGetManufacturer(GSM_Protocol_Message msg)
 			strcpy(theApp.m_pszTemp,"MTK");
 			theApp.m_ManufacturerID = AT_MTK;
 		}
+		//08/10 added by Mingfa for Sangfei SMS bug 
+        theApp.m_ManufacturerID = AT_MTK;
+
 		return ERR_NONE;
 	case AT_Reply_CMSError:
 		return ATGEN_HandleCMSError(Replynfo);
@@ -850,9 +836,255 @@ GSM_Error ATGEN_ReplyGetModel(GSM_Protocol_Message msg)
 	{
 		CopyLineString((unsigned char *)theApp.m_pszTemp, msg.Buffer, theApp.m_Lines, 2);
 
+		/* Sometimes phone adds this before manufacturer (Sagem) */
 		if (strncmp("+CGMM: ", theApp.m_pszTemp, 7) == 0) {
 			memmove(theApp.m_pszTemp, theApp.m_pszTemp + 7, strlen(theApp.m_pszTemp + 7) + 1);
 		}
+/*
+		Data->ModelInfo = GetModelData(NULL,theApp.m_pszTemp,NULL);
+		if (Data->ModelInfo->number[0] == 0) Data->ModelInfo = GetModelData(NULL,NULL,theApp.m_pszTemp);
+		if (Data->ModelInfo->number[0] == 0) Data->ModelInfo = GetModelData(theApp.m_pszTemp,NULL,NULL);
+
+		if (Data->ModelInfo->number[0] != 0) strcpy(theApp.m_pszTemp,Data->ModelInfo->number);
+
+		if (strstr(msg.Buffer,"Nokia")) 
+		{
+		  theApp.m_ManufacturerID = AT_Nokia;
+		}
+		else if (strstr(msg.Buffer,"M20")) 
+		{
+	 	    theApp.m_ManufacturerID = AT_Siemens;
+		    strcpy(theApp.m_pszTemp,"M20");
+			strcpy(Data->ModelInfo->model,"M20");// mingfa
+		}
+		else if (strstr(msg.Buffer,"MC35"))
+		{
+			theApp.m_ManufacturerID = AT_Siemens;
+			strcpy(theApp.m_pszTemp,"MC35");
+			strcpy(Data->ModelInfo->model,"MC35");// mingfa
+		}
+		else if (strstr(msg.Buffer,"SL5C"))
+		{
+		    theApp.m_ManufacturerID = AT_Siemens;
+		    strcpy(theApp.m_pszTemp,"SL5C");
+			strcpy(Data->ModelInfo->model,"SL5C");// mingfa
+		}
+		else if (strstr(msg.Buffer,"SL6C"))
+		{
+			theApp.m_ManufacturerID = AT_Siemens;
+			strcpy(theApp.m_pszTemp,"SL6C");
+			strcpy(Data->ModelInfo->model,"SL6C");// mingfa
+		}
+		/* v1.1.0.1 ; don't support
+		else if (strstr(msg.Buffer, "iPAQ"))
+		{
+			theApp.m_ManufacturerID = AT_HP;
+			strcpy(theApp.m_pszTemp,"iPAQ");
+			strcpy(Data->ModelInfo->model,"iPAQ");// mingfa
+		}
+		*/
+	/**	else if (strstr(msg.Buffer,"1130102-CNT39mc"))
+		{
+			theApp.m_ManufacturerID = AT_Ericsson;
+			strcpy(theApp.m_pszTemp,"T39");
+			strcpy(Data->ModelInfo->model,"T39");// mingfa
+		}
+		else if (strstr(msg.Buffer,"1130201-BV"))
+		{
+		    theApp.m_ManufacturerID = AT_Ericsson;
+			strcpy(theApp.m_pszTemp,"T68");
+			strcpy(Data->ModelInfo->model,"T68");// mingfa
+		}
+		else if (strstr(msg.Buffer,"1021011-BV"))
+		{
+		    theApp.m_ManufacturerID = AT_Ericsson;
+			strcpy(theApp.m_pszTemp,"T610");
+			strcpy(Data->ModelInfo->model,"T610");// mingfa
+		}
+//		else if (strstr(msg.Buffer,"1021021-BV"))//mingfa;  1021021 is error
+		else if (strstr(msg.Buffer,"1021012-BV"))
+		{
+		    theApp.m_ManufacturerID = AT_Ericsson;
+			strcpy(theApp.m_pszTemp,"T630");
+			strcpy(Data->ModelInfo->model,"T630");// mingfa
+		}
+		else if (strstr(msg.Buffer,"1021041-BV"))
+		{
+		    theApp.m_ManufacturerID = AT_Ericsson;
+			strcpy(theApp.m_pszTemp,"K700i");
+			strcpy(Data->ModelInfo->model,"K700i");// mingfa
+		}
+		else if (strstr(msg.Buffer,"1021043-BV"))
+		{
+			theApp.m_ManufacturerID = AT_Ericsson;
+			strcpy(theApp.m_pszTemp,"K500i");
+			strcpy(Data->ModelInfo->model,"K500i");// mingfa
+		}
+		else if (strstr(msg.Buffer,"1021051-CN"))
+		{
+			theApp.m_ManufacturerID = AT_Ericsson;
+			strcpy(theApp.m_pszTemp,"S700i");
+			strcpy(Data->ModelInfo->model,"S700i");// mingfa
+		}
+		else if (strstr(msg.Buffer,"1021031-BV"))
+		{
+		    theApp.m_ManufacturerID = AT_Ericsson;
+			strcpy(theApp.m_pszTemp,"Z600");
+			strcpy(Data->ModelInfo->model,"Z600");// mingfa
+		}
+		else if (strstr(msg.Buffer,"AAD-3011011-BV")) 
+		{
+			theApp.m_ManufacturerID = AT_Ericsson;
+			strcpy(theApp.m_pszTemp,"Z1010");
+			strcpy(Data->ModelInfo->model,"Z1010");// mingfa
+		}
+		else if (strstr(msg.Buffer,"1021011-CNP900")) 
+		{
+			theApp.m_ManufacturerID = AT_Ericsson;
+			strcpy(theApp.m_pszTemp,"P900");
+			strcpy(Data->ModelInfo->model,"P900");// mingfa
+		}
+		else if (strstr(msg.Buffer,"1021012-CNP910i")) 
+		{
+		    theApp.m_ManufacturerID = AT_Ericsson;
+			strcpy(theApp.m_pszTemp,"P910i");
+			strcpy(Data->ModelInfo->model,"P910i");// mingfa
+		}
+		else if (strstr(msg.Buffer,"AAD-3021011-BV"))
+		{
+			theApp.m_ManufacturerID = AT_Ericsson;
+			strcpy(theApp.m_pszTemp,"V800");
+			strcpy(Data->ModelInfo->model,"V800");// mingfa
+		}
+		else if (strstr(msg.Buffer,"1130601-BVT300"))//v1.1.0.1 mingfa
+		{
+			theApp.m_ManufacturerID = AT_Ericsson;
+			strcpy(theApp.m_pszTemp,"T300");
+			strcpy(Data->ModelInfo->model,"T300");
+		}
+		else if (strstr(msg.Buffer,"1001012-CNT230"))//v1.1.0.1 mingfa
+		{
+			theApp.m_ManufacturerID = AT_Ericsson;
+			strcpy(theApp.m_pszTemp,"T230");
+			strcpy(Data->ModelInfo->model,"T230");
+		}
+		else if (strstr(msg.Buffer,"AAB-1021042-BV")) //v1.1.0.1 mingfa
+		{
+			theApp.m_ManufacturerID = AT_Ericsson;
+			strcpy(theApp.m_pszTemp,"F500i");
+			strcpy(Data->ModelInfo->model,"F500i");
+        }
+		else if (strstr(msg.Buffer,"1001013-BVT290")) //v1.1.0.1 mingfa
+		{
+			theApp.m_ManufacturerID = AT_Ericsson;
+			strcpy(theApp.m_pszTemp,"T290i");
+			strcpy(Data->ModelInfo->model,"T290i");
+        }
+		/*don't support
+		else if (strstr(msg.Buffer,"1130602-BVT310")) //??? v1.1.0.1 mingfa
+		{
+			theApp.m_ManufacturerID = AT_Ericsson;
+			strcpy(theApp.m_pszTemp,"T310");
+			strcpy(Data->ModelInfo->model,"T310");
+        }
+		*/
+/**		else if (strstr(msg.Buffer,"AAB-1021071-BV")) // v1.1.0.1 mingfa
+		{
+			theApp.m_ManufacturerID = AT_Ericsson;
+			strcpy(theApp.m_pszTemp,"K300i");
+			strcpy(Data->ModelInfo->model,"K300i");
+        }
+		else if (strstr(msg.Buffer, "V501"))
+		{
+			theApp.m_ManufacturerID = AT_Motorola; //peggy
+			strcpy(theApp.m_pszTemp,"V501");//peggy
+            strcpy(Data->ModelInfo->model,"V501");// mingfa
+		}
+		else if (strstr(msg.Buffer, "V600i")) 
+		{
+			theApp.m_ManufacturerID = AT_Motorola; //peggy
+			strcpy(theApp.m_pszTemp,"V600i"); //peggy
+			strcpy(Data->ModelInfo->model,"V600i");// mingfa
+		}
+		else if (strstr(msg.Buffer, "V600")) 
+		{
+			theApp.m_ManufacturerID = AT_Motorola; //peggy
+			strcpy(theApp.m_pszTemp,"V600"); //peggy
+			strcpy(Data->ModelInfo->model,"V600");// mingfa
+		}
+		else if (strstr(msg.Buffer, "V80"))
+		{
+			theApp.m_ManufacturerID = AT_Motorola; //peggy
+			strcpy(theApp.m_pszTemp,"V80"); //peggy
+			strcpy(Data->ModelInfo->model,"V80");// mingfa
+		}
+		else if (strstr(msg.Buffer, "E398")) 
+		{
+			theApp.m_ManufacturerID = AT_Motorola; //peggy
+			strcpy(theApp.m_pszTemp,"E398"); //peggy
+			strcpy(Data->ModelInfo->model,"E398");// mingfa
+		}
+		else if (strstr(msg.Buffer, "V620")) 
+		{
+			theApp.m_ManufacturerID = AT_Motorola; //peggy
+			strcpy(theApp.m_pszTemp,"V620"); //peggy
+			strcpy(Data->ModelInfo->model,"V620");// mingfa
+		}
+		else if (strstr(msg.Buffer, "E550")) 
+		{
+			theApp.m_ManufacturerID = AT_Motorola; //peggy
+			strcpy(theApp.m_pszTemp,"E550"); //peggy
+			strcpy(Data->ModelInfo->model,"E550");// mingfa
+		}
+		else if (strstr(msg.Buffer, "V635")) 
+		{
+			theApp.m_ManufacturerID = AT_Motorola; //peggy
+			strcpy(theApp.m_pszTemp,"V635"); //peggy
+			strcpy(Data->ModelInfo->model,"V635");// mingfa
+		}
+		else if (strstr(msg.Buffer, "V500")) 
+		{
+		    theApp.m_ManufacturerID = AT_Motorola; //peggy
+			strcpy(theApp.m_pszTemp,"V500"); //peggy
+			strcpy(Data->ModelInfo->model,"V500");// mingfa
+		}
+		else if (strstr(msg.Buffer, "V550"))
+		{
+			theApp.m_ManufacturerID = AT_Motorola; //peggy
+			strcpy(theApp.m_pszTemp,"V550"); //peggy
+			strcpy(Data->ModelInfo->model,"V550");// mingfa
+		}
+		else if (strstr(msg.Buffer, "V525"))
+		{
+			theApp.m_ManufacturerID = AT_Motorola; //peggy
+			strcpy(theApp.m_pszTemp,"V525"); //peggy
+			strcpy(Data->ModelInfo->model,"V525");// mingfa
+		}
+		else if (strstr(msg.Buffer, "E1000"))
+		{
+			theApp.m_ManufacturerID = AT_Motorola; //peggy
+			strcpy(theApp.m_pszTemp,"E1000"); //peggy
+			strcpy(Data->ModelInfo->model,"E1000");// mingfa
+		}
+		else if (strstr(msg.Buffer, "V303"))
+		{
+			theApp.m_ManufacturerID = AT_Motorola; //mingfa
+			strcpy(theApp.m_pszTemp,"V303"); //mingfa
+			strcpy(Data->ModelInfo->model,"V303");// mingfa
+		}
+		else if (strstr(msg.Buffer, "V300")) // NOTE : V300 should be before V3, if not , model name will be "V3"
+		{
+			theApp.m_ManufacturerID = AT_Motorola; //mingfa
+			strcpy(theApp.m_pszTemp,"V300"); //mingfa
+			strcpy(Data->ModelInfo->model,"V300");// mingfa
+		}
+		else if (strstr(msg.Buffer, "V3"))
+		{
+			theApp.m_ManufacturerID = AT_Motorola; //peggy
+			strcpy(theApp.m_pszTemp,"V3"); //peggy
+			strcpy(Data->ModelInfo->model,"V3");// mingfa
+		}
+*/
 
 	} else {
 		smprintf(theApp.m_pDebuginfo, "WARNING: Model name too long, increase MAX_MODEL_LENGTH to at least %zd\n", strlen(GetLineString(msg.Buffer, theApp.m_Lines, 2)));
@@ -1172,23 +1404,35 @@ GSM_Error ATGEN_Initialise(OnePhoneModel *pMobileInfo,GSM_Error (*pSetATProtocol
 	theApp.m_PBKMemory			= MEM_ERROR;
 	theApp.m_SMSMode			= SMS_AT_ERROR;
 	theApp.m_pMobileInfo = pMobileInfo;
+/** peggy temp
+	theApp.m_PBKMemory			= 0;
+	theApp.m_PBKMemories[0]		= 0;
+	theApp.m_FirstCalendarPos		= 0;
+	theApp.m_file.Used 		= 0;
+	theApp.m_file.Buffer 		= NULL;
+	theApp.m_OBEX			= false;
 
+	theApp.m_ErrorText			= NULL;
+	theApp.m_dtCurrentTime.Day = theApp.m_dtCurrentTime.Hour =theApp.m_dtCurrentTime.Minute =
+	theApp.m_dtCurrentTime.Month = theApp.m_dtCurrentTime.Second =theApp.m_dtCurrentTime.Timezone =theApp.m_dtCurrentTime.Year =0;
+*/
     smprintf(theApp.m_pDebuginfo, "Sending simple AT command to wake up some devices\n");
- 
+    // v1.1.0.1 ;marked by mingfa
+	//error = GSM_WaitFor (s, "AT\r", 3, 0x00, 2, ID_IncomingFrame);
+	//if (error != ERR_NONE) return error;
 
-
-	ReplymsgType.nCount = 2;
+	//v1.1.0.1  
+    // verify , refer to PP S/w
+//	error = GSM_WaitFor (s, "ATZ\r", 4, 0x00, 3, ID_IncomingFrame);
+	ReplymsgType.nCount = 1;
 	wsprintf((char*)ReplymsgType.CheckInfo[0].msgtype,"ATZ\r");
 	ReplymsgType.CheckInfo[0].subtypechar = 0;
 	ReplymsgType.CheckInfo[0].subtype = 0x00;
-	wsprintf((char*)ReplymsgType.CheckInfo[1].msgtype,"OK");
-	ReplymsgType.CheckInfo[1].subtypechar = 0;
-	ReplymsgType.CheckInfo[1].subtype = 0x00;
 	error = pWriteCommandfn ((unsigned char *)"ATZ\r", 4, 0x00, 6, false,NULL,&ReplymsgType,ATGEN_GenericReply);
 
 	if (error != ERR_NONE)
 	{
-
+	//  error = GSM_WaitFor (s, "AT\r", 3, 0x00, 2, ID_IncomingFrame);
 		wsprintf((char*)ReplymsgType.CheckInfo[0].msgtype,"AT\r");
 		ReplymsgType.CheckInfo[0].subtypechar = 0;
 		ReplymsgType.CheckInfo[0].subtype = 0x00;
@@ -1198,25 +1442,27 @@ GSM_Error ATGEN_Initialise(OnePhoneModel *pMobileInfo,GSM_Error (*pSetATProtocol
     
 
 	smprintf(theApp.m_pDebuginfo, "Enabling echo\n");
-
+//	error = GSM_WaitFor (s, "ATE1\r", 5, 0x00, 3, ID_EnableEcho);
 	wsprintf((char*)ReplymsgType.CheckInfo[0].msgtype,"ATE1");
 	ReplymsgType.CheckInfo[0].subtypechar = 0;
 	ReplymsgType.CheckInfo[0].subtype = 0x00;
 	error = pWriteCommandfn ((unsigned char *)"ATE1\r", 5, 0x00, 6, false,NULL,&ReplymsgType,ATGEN_GenericReply);
 	if (error != ERR_NONE)
 	{
-
+	//	error = GSM_WaitFor (s, "ATE1\r", 5, 0x00, 3, ID_EnableEcho);
 		error = pWriteCommandfn ((unsigned char *)"ATE1\r", 5, 0x00, 6, false,NULL,&ReplymsgType,ATGEN_GenericReply);
 	}
 	
 	smprintf(theApp.m_pDebuginfo, "Enabling CME errors\n");
-
+	/* Try numeric errors */
+//	error = GSM_WaitFor (s, "AT+CMEE=1\r", 10, 0x00, 3, ID_EnableErrorInfo);
 	wsprintf((char*)ReplymsgType.CheckInfo[0].msgtype,"AT+CMEE=");
 	ReplymsgType.CheckInfo[0].subtypechar = 0;
 	ReplymsgType.CheckInfo[0].subtype = 0x00;
 	error = pWriteCommandfn ((unsigned char *)"AT+CMEE=1\r", 10, 0x00, 6, false,NULL,&ReplymsgType,ATGEN_GenericReply);
 	if (error != ERR_NONE) {
-
+		/* Try textual errors */
+	//	error = GSM_WaitFor (s, "AT+CMEE=2\r", 10, 0x00, 3, ID_EnableErrorInfo);
 		error = pWriteCommandfn ((unsigned char *)"AT+CMEE=2\r", 10, 0x00, 6, false,NULL,&ReplymsgType,ATGEN_GenericReply);
 		if (error != ERR_NONE) {
 			smprintf(theApp.m_pDebuginfo, "CME errors could not be enabled, some error types won't be detected.\n");
@@ -1230,7 +1476,7 @@ GSM_Error ATGEN_Initialise(OnePhoneModel *pMobileInfo,GSM_Error (*pSetATProtocol
 	if (!IsPhoneFeatureAvailable(pMobileInfo, F_SLOWWRITE))
 	{
 		pSetATProtocolDatafn(false,true,0x02);
-
+	//	s->Protocol.Data.AT.FastWrite = true;
 	}
 	error=ATGEN_SetPBKCharset(true,NULL,pWriteCommandfn,pDebuginfo); /* For reading we prefer unicode */
 	if (error != ERR_NONE) return error;
@@ -1241,7 +1487,9 @@ GSM_Error ATGEN_Terminate(GSM_Error (*pWriteCommandfn) (unsigned char *buffer,in
 							  GSM_ATMultiAnwser *pATMultiAnwser,GSM_Reply_MsgType* ReplyCheckType, GSM_Error (*CallBackFun)    (GSM_Protocol_Message msg)),Debug_Info	*pDebuginfo)
 {
 	theApp.m_pDebuginfo = pDebuginfo;
-
+//	if(s->Phone.Data.Priv.OBEXGEN.Service != 0)
+//		OBEXGEN_Disconnect(s);
+//	free(Priv->file.Buffer);
 	return ERR_NONE;
 }
 
@@ -1251,11 +1499,15 @@ GSM_Error ATGEN_GetFirmware(char* pszFirmwareVer,GSM_Error (*pWriteCommandfn) (u
 	GSM_Error error;
 	theApp.m_pDebuginfo = pDebuginfo;
 
+//	if (s->Phone.Data.Version[0] != 0) return ERR_NONE;
+//	if(s->Phone.Data.Priv.ATGEN.OBEX) return ERR_OBEXMODE;
 
+//	error=ATGEN_GetManufacturer(s);
+//	if (error != ERR_NONE) return error;
 
 	smprintf(theApp.m_pDebuginfo, "Getting firmware - method 2\n");
 
-
+	//error=GSM_WaitFor (s, "AT+CGMR\r", 8, 0x00, 4, ID_GetFirmware);
 	theApp.m_pszTemp = pszFirmwareVer;
 	ReplymsgType.nCount = 1;
 	wsprintf((char*)ReplymsgType.CheckInfo[0].msgtype,"AT+CGMR");
@@ -1269,7 +1521,7 @@ GSM_Error ATGEN_GetManufacturer(char* pszManufacturer,GSM_Error (*pWriteCommandf
 {
 	theApp.m_pDebuginfo = pDebuginfo;
 	theApp.m_pszTemp = pszManufacturer;
-
+//	return GSM_WaitFor (s, "AT+CGMI\r", 8, 0x00, 6, ID_GetManufacturer);
 	ReplymsgType.nCount = 1;
 	wsprintf((char*)ReplymsgType.CheckInfo[0].msgtype,"AT+CGMI");
 	ReplymsgType.CheckInfo[0].subtypechar = 0;
@@ -1283,10 +1535,13 @@ GSM_Error ATGEN_GetModel(char* pszModel,GSM_Error (*pWriteCommandfn) (unsigned c
 	GSM_Error error;
 
 
+// v1.1.0.0 ; marked by mingfa ; loopproc() will update modelinfo value
+//	if (s->Phone.Data.Model[0] != 0) return ERR_NONE;
 
+//	if(s->Phone.Data.Priv.ATGEN.OBEX) return ERR_OBEXMODE;
 
 	smprintf(theApp.m_pDebuginfo, "Getting model\n");
-
+//	error=GSM_WaitFor (s, "AT+CGMM\r", 8, 0x00, 3, ID_GetModel);
 	theApp.m_pszTemp = pszModel;
 	ReplymsgType.nCount = 1;
 	wsprintf((char*)ReplymsgType.CheckInfo[0].msgtype,"AT+CGMM");
@@ -1311,9 +1566,10 @@ GSM_Error ATGEN_GetIMEI (char* pszIMEI,GSM_Error (*pWriteCommandfn) (unsigned ch
 
 {
 	theApp.m_pDebuginfo = pDebuginfo;
-
+//	if (s->Phone.Data.IMEI[0] != 0) return ERR_NONE;
+//	if(s->Phone.Data.Priv.ATGEN.OBEX) return ERR_OBEXMODE;
 	smprintf(theApp.m_pDebuginfo, "Getting IMEI\n");
-
+//	return GSM_WaitFor (s, "AT+CGSN\r", 8, 0x00, 3, ID_GetIMEI);
 	theApp.m_pszTemp = pszIMEI;
 	ReplymsgType.nCount = 1;
 	wsprintf((char*)ReplymsgType.CheckInfo[0].msgtype,"AT+CGSN");
@@ -1328,14 +1584,15 @@ GSM_Error ATGEN_GetDateTime( GSM_DateTime *date_time,GSM_Error (*pWriteCommandfn
 	theApp.m_pDebuginfo = pDebuginfo;
 
 
-
+//	if(s->Phone.Data.Priv.ATGEN.OBEX) return ERR_OBEXMODE;
+//	s->Phone.Data.DateTime=date_time;
 	theApp.m_pdate_time = date_time;
 	if(theApp.m_ManufacturerID == AT_Sharp){
 		theApp.m_pdate_time->Year=1900;
 		return ERR_NONE;
 	}
 	smprintf(theApp.m_pDebuginfo, "Getting date & time\n");
-
+//	return GSM_WaitFor (s, "AT+CCLK?\r", 9, 0x00, 4, ID_GetDateTime);
 	ReplymsgType.nCount = 1;
 	wsprintf((char*)ReplymsgType.CheckInfo[0].msgtype,"AT+CCLK?");
 	ReplymsgType.CheckInfo[0].subtypechar = 0;
@@ -1349,13 +1606,13 @@ GSM_Error ATGEN_SetDateTime(GSM_DateTime *date_time,GSM_Error (*pWriteCommandfn)
 	char req[128];
 	theApp.m_pDebuginfo = pDebuginfo;
 
-
+//	if(s->Phone.Data.Priv.ATGEN.OBEX) return ERR_OBEXMODE;
 	sprintf(req, "AT+CCLK=\"%02i/%02i/%02i,%02i:%02i:%02i+00\"\r",
 		     date_time->Year-2000,date_time->Month,date_time->Day,
 		     date_time->Hour,date_time->Minute,date_time->Second);
 
 	smprintf(theApp.m_pDebuginfo, "Setting date & time\n");
-
+//	return GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_SetDateTime);
 	ReplymsgType.nCount = 1;
 	wsprintf((char*)ReplymsgType.CheckInfo[0].msgtype,"AT+CCLK=");
 	ReplymsgType.CheckInfo[0].subtypechar = 0;
@@ -1368,19 +1625,20 @@ GSM_Error ATGEN_Reset( bool hard,GSM_Error (*pWriteCommandfn) (unsigned char *bu
 	GSM_Error error;
 
 	theApp.m_pDebuginfo = pDebuginfo;
-
+//	if(s->Phone.Data.Priv.ATGEN.OBEX) return ERR_OBEXMODE;
 	if (!hard) return ERR_NOTSUPPORTED;
 
 	smprintf(theApp.m_pDebuginfo, "Resetting device\n");
-
+	/* Siemens 35 */
 	ReplymsgType.nCount = 1;
 	wsprintf((char*)ReplymsgType.CheckInfo[0].msgtype,"AT+CFUN=1,1");
 	ReplymsgType.CheckInfo[0].subtypechar = 0;
 	ReplymsgType.CheckInfo[0].subtype = 0x00;
 	error=pWriteCommandfn ((unsigned char *)"AT+CFUN=1,1\r", 12, 0x00, 16, false,NULL,&ReplymsgType,ATGEN_ReplyReset);
-
+//	error=GSM_WaitFor (s, "AT+CFUN=1,1\r", 12, 0x00, 8, ID_Reset);
 	if (error != ERR_NONE) {
-
+		/* Siemens M20 */
+	//	error=GSM_WaitFor (s, "AT^SRESET\r", 10, 0x00, 8, ID_Reset);
 		wsprintf((char*)ReplymsgType.CheckInfo[0].msgtype,"AT^SRESET");
 		error=pWriteCommandfn ((unsigned char *)"AT^SRESET\r", 10, 0x00, 16, false,NULL,&ReplymsgType,ATGEN_ReplyReset);
 	}
@@ -1406,7 +1664,7 @@ GSM_Error ATGEN_GetNetworkInfo(GSM_NetworkInfo *netinfo,GSM_Error (*pWriteComman
 	ReplymsgType.CheckInfo[0].subtypechar = 0;
 	ReplymsgType.CheckInfo[0].subtype = 0x00;
 	error=pWriteCommandfn ((unsigned char *)"AT+CREG=2\r", 10, 0x00, 8, false,NULL,&ReplymsgType,ATGEN_GenericReply);
-
+//	error=GSM_WaitFor(s, "AT+CREG=2\r", 10, 0x00, 4, ID_GetNetworkInfo);
 	if ((error != ERR_NONE) &&   (theApp.m_ManufacturerID!=AT_Siemens) &&(theApp.m_ManufacturerID!=AT_Ericsson)) 
 		return error;
 
@@ -1417,7 +1675,7 @@ GSM_Error ATGEN_GetNetworkInfo(GSM_NetworkInfo *netinfo,GSM_Error (*pWriteComman
 	ReplymsgType.CheckInfo[0].subtypechar = 0;
 	ReplymsgType.CheckInfo[0].subtype = 0x00;
 	error=pWriteCommandfn ((unsigned char *)"AT+CREG?\r", 9, 0x00, 8, false,NULL,&ReplymsgType,ATGEN_ReplyGetNetworkLAC_CID);
-
+//	error=GSM_WaitFor(s, "AT+CREG?\r", 9, 0x00, 4, ID_GetNetworkInfo);
 	if (error != ERR_NONE) return error;
 
 	if (netinfo->State == GSM_HomeNetwork || netinfo->State == GSM_RoamingNetwork) {
@@ -1428,7 +1686,7 @@ GSM_Error ATGEN_GetNetworkInfo(GSM_NetworkInfo *netinfo,GSM_Error (*pWriteComman
 		ReplymsgType.CheckInfo[0].subtypechar = 0;
 		ReplymsgType.CheckInfo[0].subtype = 0x00;
 		error=pWriteCommandfn ((unsigned char *)"AT+COPS=3,2\r", 12, 0x00, 8, false,NULL,&ReplymsgType,ATGEN_GenericReply);
-
+	//	error=GSM_WaitFor(s, "AT+COPS=3,2\r", 12, 0x00, 4, ID_GetNetworkInfo);
 		char szManufacturer[MAX_PATH];
 		error=ATGEN_GetManufacturer(szManufacturer,pWriteCommandfn,pDebuginfo);
 		if (error != ERR_NONE) return error;
@@ -1439,7 +1697,7 @@ GSM_Error ATGEN_GetNetworkInfo(GSM_NetworkInfo *netinfo,GSM_Error (*pWriteComman
 		ReplymsgType.CheckInfo[0].subtypechar = 0;
 		ReplymsgType.CheckInfo[0].subtype = 0x00;
 		error=pWriteCommandfn ((unsigned char *)"AT+COPS?\r", 9, 0x00, 8, false,NULL,&ReplymsgType,ATGEN_ReplyGetNetworkCode);
-
+//		error=GSM_WaitFor(s, "AT+COPS?\r", 9, 0x00, 4, ID_GetNetworkInfo);
 	}
 	return error;
 }
@@ -1451,7 +1709,7 @@ GSM_Error ATGEN_GetSignalQuality(GSM_SignalQuality *sig,GSM_Error (*pWriteComman
 
 {
 	theApp.m_SignalQuality = sig;
-
+	//return GSM_WaitFor (s, "AT+CSQ\r", 7, 0x00, 4, ATGEN_ReplyGetSignalQuality);
 	ReplymsgType.nCount = 1;
 	wsprintf((char*)ReplymsgType.CheckInfo[0].msgtype,"AT+CSQ");
 	ReplymsgType.CheckInfo[0].subtypechar = 0;
@@ -1464,7 +1722,7 @@ GSM_Error ATGEN_GetBatteryCharge(GSM_BatteryCharge *bat,GSM_Error (*pWriteComman
 							  GSM_ATMultiAnwser *pATMultiAnwser,GSM_Reply_MsgType* ReplyCheckType, GSM_Error (*CallBackFun)    (GSM_Protocol_Message msg)),Debug_Info	*pDebuginfo)
 {
 	theApp.m_BatteryCharge = bat;
-
+//	return GSM_WaitFor (s, "AT+CBC\r", 7, 0x00, 4, ID_GetBatteryCharge);
 	ReplymsgType.nCount = 1;
 	wsprintf((char*)ReplymsgType.CheckInfo[0].msgtype,"AT+CBC");
 	ReplymsgType.CheckInfo[0].subtypechar = 0;

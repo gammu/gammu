@@ -1,3 +1,4 @@
+/* (c) 2001-2005 by Marcin Wiacek, Walek and Michal Cihar */
 #ifndef _COMMONFUN_H
 #define _COMMONFUN_H
 #include "mbglobals.h"
@@ -161,7 +162,7 @@ typedef enum {
 	F_VOICETAGS,	/* Voice tags available						*/
 	F_CAL62,	/* Calendar,6210 style - Call,Birthday,Memo,Meeting		*/
 //	F_NOTES,
-	F_PBKPUSHTALK,
+	F_PBKPUSHTALK, /* Compare : Add Push Talk by Mingfa 0127 */
 
 	/* AT modules */
 	F_SMSONLYSENT,	/* Phone supports only sent/unsent messages			*/
@@ -189,17 +190,6 @@ typedef enum {
 	F_SMS_SHIFTMEINDEX,
 	F_ATPHONE_PHONEBOOK_WITHOUTINDEX,
 	F_MOTO_CALENDAR_2,
-	F_MOTO_CALENDAR_3,
-	F_SERIAL40_SYNCML,
-	F_TODO6500,
-	F_CAL6500,
-	F_MOTO_E6,
-	F_SHARPS_PBK_Postal,
-	F_LG_KESeries,
-	F_NOKIAS60_SMS_TYPE1,
-	F_MOTO_SMSSTARTINDEX0,
-	F_S40_PBKSYNCML,
-	F_SAMSUNG_SMS2
 
 } Feature;
 

@@ -1,0 +1,190 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: Calendar_DLL - Win32 Debug_Unicode--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x409 /fo"..\temp\debug\Calendar/Calendar.res" /d "_DEBUG" /d "_AFXDLL" "D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\Calendar.rc"" 
+Creating temporary file "C:\DOCUME~1\Alan\LOCALS~1\Temp\RSPDE.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /I "..\anwlib\include" /I "..\Proj_Inc" /I "..\Proj_Inc\SYNC" /I "..\Proj_Inc\MSOT" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_UNICODE" /D "_USRDLL" /D "_WINDLL" /D "_AFXDLL" /Fp"..\temp\debug\Calendar/Calendar_DLL.pch" /Yu"stdafx.h" /Fo"..\temp\debug\Calendar/" /Fd"..\temp\debug\Calendar/" /FD /GZ /c 
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\Toolbar\uifixtb.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\Toolbar\uiflatbar.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\Toolbar\uimodulver.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\Schedule\cammschedulecalendar.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\Schedule\CAMMScheduleDailyTable.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\Schedule\CAMMScheduleDayView.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\Schedule\CAMMScheduleEditorDlg.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\Schedule\cammschedulelist.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\Schedule\ListPrint.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\Schedule\PrintSchedule.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\Schedule\XCell.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\Organizer\OleDateTimeEx.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\Organizer\Schedule3MonthInfo.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\Organizer\ScheduleAllInfo.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\Organizer\ScheduleAllRepeatInfo.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\Organizer\ScheduleDayInfo.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\Organizer\ScheduleInfo.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\Organizer\ScheduleMonthInfo.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\Organizer\ScheduleMultiInfo.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\Organizer\ScheduleTimeInfo.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\MobileDevice\CAMMSync.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\MobileDevice\CAMMSyncInclude.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\UnicodeString\UnicodeString.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\CIni_Src\Ini.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\include\SkinHeaderCtrl.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\include\SortClass.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\include\TabButtonEx2.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\include\TabSplitterWnd.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\Calendar_DLL.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\DialogBarEx.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\global.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\LeftView.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\loadString.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\MainFrm.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\Proj_inc\MSOT\MSOTDLL.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\myedit.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\OpenrepeatQuestDlg.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\PrevView.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\processdlg.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\SearchDlg.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\TopBarDlg.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\TopView.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\UserExitDlg.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\ViewModePanel.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\worker.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\Alan\LOCALS~1\Temp\RSPDE.tmp" 
+Creating temporary file "C:\DOCUME~1\Alan\LOCALS~1\Temp\RSPDF.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /I "..\anwlib\include" /I "..\Proj_Inc" /I "..\Proj_Inc\SYNC" /I "..\Proj_Inc\MSOT" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_UNICODE" /D "_USRDLL" /D "_WINDLL" /D "_AFXDLL" /Fp"..\temp\debug\Calendar/Calendar_DLL.pch" /Yc"stdafx.h" /Fo"..\temp\debug\Calendar/" /Fd"..\temp\debug\Calendar/" /FD /GZ /c 
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\Alan\LOCALS~1\Temp\RSPDF.tmp" 
+Creating temporary file "C:\DOCUME~1\Alan\LOCALS~1\Temp\RSPE0.tmp" with contents
+[
+CommUIU.lib /nologo /subsystem:windows /dll /incremental:yes /pdb:"..\temp\debug\Calendar/CalendarU.pdb" /debug /machine:I386 /def:".\Calendar.def" /out:"..\exe\debug\CalendarU.dll" /implib:"..\temp\debug\Calendar/CalendarU.lib" /pdbtype:sept /libpath:"..\anwlib\lib\Debug" /libpath:"..\lib\debug" 
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\uifixtb.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\uiflatbar.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\uimodulver.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\cammschedulecalendar.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\CAMMScheduleDailyTable.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\CAMMScheduleDayView.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\CAMMScheduleEditorDlg.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\cammschedulelist.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\ListPrint.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\PrintSchedule.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\XCell.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\OleDateTimeEx.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\Schedule3MonthInfo.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\ScheduleAllInfo.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\ScheduleAllRepeatInfo.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\ScheduleDayInfo.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\ScheduleInfo.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\ScheduleMonthInfo.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\ScheduleMultiInfo.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\ScheduleTimeInfo.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\CAMMSync.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\CAMMSyncInclude.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\UnicodeString.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\Ini.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\SkinHeaderCtrl.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\SortClass.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\TabButtonEx2.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\TabSplitterWnd.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\Calendar_DLL.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\DialogBarEx.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\global.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\LeftView.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\loadString.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\MainFrm.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\MSOTDLL.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\myedit.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\OpenrepeatQuestDlg.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\PrevView.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\processdlg.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\SearchDlg.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\StdAfx.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\TopBarDlg.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\TopView.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\UserExitDlg.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\ViewModePanel.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\worker.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\Calendar\Calendar.res"
+]
+Creating command line "link.exe @C:\DOCUME~1\Alan\LOCALS~1\Temp\RSPE0.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+StdAfx.cpp
+Compiling...
+uifixtb.cpp
+uiflatbar.cpp
+uimodulver.cpp
+cammschedulecalendar.cpp
+CAMMScheduleDailyTable.cpp
+CAMMScheduleDayView.cpp
+CAMMScheduleEditorDlg.cpp
+cammschedulelist.cpp
+ListPrint.cpp
+PrintSchedule.cpp
+XCell.cpp
+OleDateTimeEx.cpp
+Schedule3MonthInfo.cpp
+ScheduleAllInfo.cpp
+ScheduleAllRepeatInfo.cpp
+ScheduleDayInfo.cpp
+ScheduleInfo.cpp
+ScheduleMonthInfo.cpp
+ScheduleMultiInfo.cpp
+ScheduleTimeInfo.cpp
+Generating Code...
+Compiling...
+CAMMSync.cpp
+CAMMSyncInclude.cpp
+UnicodeString.cpp
+Ini.cpp
+SkinHeaderCtrl.cpp
+SortClass.cpp
+TabButtonEx2.cpp
+TabSplitterWnd.cpp
+Calendar_DLL.cpp
+DialogBarEx.cpp
+global.cpp
+LeftView.cpp
+D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\LeftView.cpp(790) : warning C4800: 'unsigned int' : forcing value to bool 'true' or 'false' (performance warning)
+loadString.cpp
+MainFrm.cpp
+D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\MainFrm.cpp(717) : warning C4800: 'unsigned int' : forcing value to bool 'true' or 'false' (performance warning)
+MSOTDLL.cpp
+myedit.cpp
+OpenrepeatQuestDlg.cpp
+PrevView.cpp
+processdlg.cpp
+D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\calendar\processdlg.cpp(162) : warning C4805: '==' : unsafe mix of type 'int' and type 'const bool' in operation
+SearchDlg.cpp
+Generating Code...
+e:\program files\microsoft visual studio\vc98\include\iterator(128) : warning C4786: 'std::insert_iterator<std::deque<std::basic_string<unsigned short,std::char_traits<unsigned short>,std::allocator<unsigned short> >,std::allocator<std::basic_string<unsigned short,std::char_traits<unsigned short>,std::allocator<unsigned short> > > > >::insert_iterator<std::deque<std::basic_string<unsigned short,std::char_traits<unsigned short>,std::allocator<unsigned short> >,std::allocator<std::basic_string<unsigned short,std::char_traits<unsigned short>,std::allocator<unsigned short> > > > >' : identifier was truncated to '255' characters in the debug information
+e:\program files\microsoft visual studio\vc98\include\iterator(134) : warning C4786: 'std::insert_iterator<std::deque<std::basic_string<unsigned short,std::char_traits<unsigned short>,std::allocator<unsigned short> >,std::allocator<std::basic_string<unsigned short,std::char_traits<unsigned short>,std::allocator<unsigned short> > > > >::operator=' : identifier was truncated to '255' characters in the debug information
+e:\program files\microsoft visual studio\vc98\include\iterator(136) : warning C4786: 'std::insert_iterator<std::deque<std::basic_string<unsigned short,std::char_traits<unsigned short>,std::allocator<unsigned short> >,std::allocator<std::basic_string<unsigned short,std::char_traits<unsigned short>,std::allocator<unsigned short> > > > >::operator*' : identifier was truncated to '255' characters in the debug information
+e:\program files\microsoft visual studio\vc98\include\iterator(138) : warning C4786: 'std::insert_iterator<std::deque<std::basic_string<unsigned short,std::char_traits<unsigned short>,std::allocator<unsigned short> >,std::allocator<std::basic_string<unsigned short,std::char_traits<unsigned short>,std::allocator<unsigned short> > > > >::operator++' : identifier was truncated to '255' characters in the debug information
+Compiling...
+TopBarDlg.cpp
+TopView.cpp
+UserExitDlg.cpp
+ViewModePanel.cpp
+worker.cpp
+Generating Code...
+Linking...
+   Creating library ..\temp\debug\Calendar/CalendarU.lib and object ..\temp\debug\Calendar/CalendarU.exp
+CalendarU.exp : warning LNK4070: /OUT:Calendar.dll directive in .EXP differs from output filename "..\exe\debug\CalendarU.dll"; ignoring directive
+
+
+
+<h3>Results</h3>
+CalendarU.dll - 0 error(s), 8 warning(s)
+</pre>
+</body>
+</html>

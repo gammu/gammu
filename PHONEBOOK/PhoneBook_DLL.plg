@@ -1,0 +1,214 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: PhoneBook_DLL - Win32 Debug_Unicode--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x404 /fo"..\temp\Debug\Phonebook/PhoneBook.res" /d "_DEBUG" /d "_AFXDLL" "D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\PhoneBook.rc"" 
+Creating temporary file "C:\DOCUME~1\Alan\LOCALS~1\Temp\RSP122.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /I "..\anwlib\include" /I "..\Proj_Inc" /I "..\Proj_Inc\MSOT" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_UNICODE" /D "_USRDLL" /D "DLL_EXPORTS" /FR"..\temp\Debug\Phonebook/" /Fp"..\temp\Debug\Phonebook/PhoneBook_DLL.pch" /Yu"stdafx.h" /Fo"..\temp\Debug\Phonebook/" /Fd"..\temp\Debug\Phonebook/" /FD /GZ /c 
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\dlg\AddressDlg.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\dlg\contentedit.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\DriverWrapper.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\global.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\MainFrm.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\dlg\motoE2dlg.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\dlg\motoEdlg.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\Proj_inc\MSOT\MSOTDLL.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\dlg\newsms.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\dlg\NS4AddressDlg.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\dlg\OtherDlg.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\PhoneBook_DLL.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\dlg\phonenumberedit.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\dlg\ProgressDlg.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\dlg\S4datadycdlg.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\dlg\S4datadycdlgEx.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\dlg\Sagemdlg.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\dlg\SamsungDlg.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\dlg\SamsungZdlg.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\dlg\Sharp90Xdlg.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\dlg\SharpT300Dlg.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\include\CheckThumbListCtrl.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\include\CSVHandle.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\include\myedit.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\include\SkinHeaderCtrl.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\include\SortClass.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\include\TabButtonEx2.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\include\TabSplitterWnd.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\Toolbar\uifixtb.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\Toolbar\uiflatbar.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\Toolbar\uimodulver.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\Dlg\asusdlg.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\Dlg\basedlg.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\Dlg\DataDycDlg.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\Dlg\motodlg.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\Dlg\NS6AddressDlg.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\Dlg\ProgDlg.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\Dlg\S6datadycdlg.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\Dlg\SearchDlg.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\Dlg\siemenssdlg.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\Dlg\sonyericcsonskdlg.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\Dlg\sonyericssonatdlg.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\Dlg\sonyerisontdlg.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\Data Structure\CardPanel.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\Data Structure\ListData.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\Data Structure\PhBoundary.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\Data Structure\PhoneData.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\Data Structure\PhoneNumber.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\Data Structure\SupportEntry.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\Panel\LeftView.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\Panel\PrevView.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\Panel\ViewModePanel.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\Alan\LOCALS~1\Temp\RSP122.tmp" 
+Creating temporary file "C:\DOCUME~1\Alan\LOCALS~1\Temp\RSP123.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /I "..\anwlib\include" /I "..\Proj_Inc" /I "..\Proj_Inc\MSOT" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_UNICODE" /D "_USRDLL" /D "DLL_EXPORTS" /FR"..\temp\Debug\Phonebook/" /Fp"..\temp\Debug\Phonebook/PhoneBook_DLL.pch" /Yc"stdafx.h" /Fo"..\temp\Debug\Phonebook/" /Fd"..\temp\Debug\Phonebook/" /FD /GZ /c 
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\Alan\LOCALS~1\Temp\RSP123.tmp" 
+Creating temporary file "C:\DOCUME~1\Alan\LOCALS~1\Temp\RSP124.tmp" with contents
+[
+CommUIU.lib shlwapi.lib /nologo /subsystem:windows /dll /incremental:yes /pdb:"Debug/Phonebook.pdb" /debug /machine:I386 /def:".\PhoneBook.def" /out:"..\exe\debug\PhonebookU.dll" /implib:"..\temp\Debug\Phonebook/PhonebookU.lib" /pdbtype:sept /libpath:"..\anwlib\lib\Debug" /libpath:"..\lib\debug" 
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\AddressDlg.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\contentedit.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\DriverWrapper.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\global.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\MainFrm.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\motoE2dlg.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\motoEdlg.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\MSOTDLL.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\newsms.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\NS4AddressDlg.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\OtherDlg.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\PhoneBook_DLL.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\phonenumberedit.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\ProgressDlg.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\S4datadycdlg.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\S4datadycdlgEx.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\Sagemdlg.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\SamsungDlg.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\SamsungZdlg.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\Sharp90Xdlg.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\SharpT300Dlg.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\StdAfx.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\CheckThumbListCtrl.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\CSVHandle.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\myedit.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\SkinHeaderCtrl.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\SortClass.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\TabButtonEx2.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\TabSplitterWnd.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\uifixtb.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\uiflatbar.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\uimodulver.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\asusdlg.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\basedlg.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\DataDycDlg.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\motodlg.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\NS6AddressDlg.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\ProgDlg.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\S6datadycdlg.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\SearchDlg.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\siemenssdlg.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\sonyericcsonskdlg.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\sonyericssonatdlg.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\sonyerisontdlg.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\CardPanel.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\ListData.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\PhBoundary.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\PhoneData.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\PhoneNumber.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\SupportEntry.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\LeftView.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\PrevView.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\ViewModePanel.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\Debug\Phonebook\PhoneBook.res"
+]
+Creating command line "link.exe @C:\DOCUME~1\Alan\LOCALS~1\Temp\RSP124.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+StdAfx.cpp
+Compiling...
+AddressDlg.cpp
+contentedit.cpp
+DriverWrapper.cpp
+D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\DriverWrapper.cpp(529) : warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+global.cpp
+MainFrm.cpp
+motoE2dlg.cpp
+motoEdlg.cpp
+MSOTDLL.cpp
+newsms.cpp
+D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\dlg\newsms.cpp(480) : warning C4101: 'msgInfo' : unreferenced local variable
+D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\PHONEBOOK\dlg\newsms.cpp(481) : warning C4101: 'strSaveMsg' : unreferenced local variable
+NS4AddressDlg.cpp
+OtherDlg.cpp
+PhoneBook_DLL.cpp
+phonenumberedit.cpp
+ProgressDlg.cpp
+S4datadycdlg.cpp
+S4datadycdlgEx.cpp
+Sagemdlg.cpp
+SamsungDlg.cpp
+SamsungZdlg.cpp
+Sharp90Xdlg.cpp
+Generating Code...
+Compiling...
+SharpT300Dlg.cpp
+CheckThumbListCtrl.cpp
+CSVHandle.cpp
+myedit.cpp
+SkinHeaderCtrl.cpp
+SortClass.cpp
+TabButtonEx2.cpp
+TabSplitterWnd.cpp
+uifixtb.cpp
+uiflatbar.cpp
+uimodulver.cpp
+asusdlg.cpp
+basedlg.cpp
+DataDycDlg.cpp
+motodlg.cpp
+NS6AddressDlg.cpp
+ProgDlg.cpp
+S6datadycdlg.cpp
+SearchDlg.cpp
+e:\program files\microsoft visual studio\vc98\include\iterator(130) : warning C4786: '??0?$insert_iterator@V?$deque@V?$basic_string@GU?$char_traits@G@std@@V?$allocator@G@2@@std@@V?$allocator@V?$basic_string@GU?$char_traits@G@std@@V?$allocator@G@2@@std@@@2@@std@@@std@@QAE@AAV?$deque@V?$basic_string@GU?$char_traits@G@std@@V?$allocator@G@2@@std@@V?$allocator@V?$basic_string@GU?$char_traits@G@std@@V?$allocator@G@2@@std@@@2@@1@Viterator@21@@Z' : identifier was truncated to '255' characters in the browser information
+        e:\program files\microsoft visual studio\vc98\include\deque(218) : see reference to class template instantiation 'std::insert_iterator<class std::deque<class std::basic_string<unsigned short,struct std::char_traits<unsigned short>,class std::allocator<unsigned short> >,class std::allocator<class std::basic_string<unsigned short,struct std::char_traits<unsigned short>,class std::allocator<unsigned short> > > > >' being compiled
+        e:\program files\microsoft visual studio\vc98\include\deque(210) : while compiling class-template member function 'class std::deque<class std::basic_string<unsigned short,struct std::char_traits<unsigned short>,class std::allocator<unsigned short> >,class std::allocator<class std::basic_string<unsigned short,struct std::char_traits<unsigned short>,class std::allocator<unsigned short> > > > &__thiscall std::deque<class std::basic_string<unsigned short,struct std::char_traits<unsigned short>,class std::allocator<unsigned short> >,class std::allocator<class std::basic_string<unsigned short,struct std::char_traits<unsigned short>,class std::allocator<unsigned short> > > >::operator =(const class std::deque<class std::basic_string<unsigned short,struct std::char_traits<unsigned short>,class std::allocator<unsigned short> >,class std::allocator<class std::basic_string<unsigned short,struct std::char_traits<unsigned short>,class std::allocator<unsigned short> > > > &)'
+siemenssdlg.cpp
+Generating Code...
+e:\program files\microsoft visual studio\vc98\include\iterator(128) : warning C4786: 'std::insert_iterator<std::deque<std::basic_string<unsigned short,std::char_traits<unsigned short>,std::allocator<unsigned short> >,std::allocator<std::basic_string<unsigned short,std::char_traits<unsigned short>,std::allocator<unsigned short> > > > >::insert_iterator<std::deque<std::basic_string<unsigned short,std::char_traits<unsigned short>,std::allocator<unsigned short> >,std::allocator<std::basic_string<unsigned short,std::char_traits<unsigned short>,std::allocator<unsigned short> > > > >' : identifier was truncated to '255' characters in the debug information
+e:\program files\microsoft visual studio\vc98\include\iterator(134) : warning C4786: 'std::insert_iterator<std::deque<std::basic_string<unsigned short,std::char_traits<unsigned short>,std::allocator<unsigned short> >,std::allocator<std::basic_string<unsigned short,std::char_traits<unsigned short>,std::allocator<unsigned short> > > > >::operator=' : identifier was truncated to '255' characters in the debug information
+e:\program files\microsoft visual studio\vc98\include\iterator(136) : warning C4786: 'std::insert_iterator<std::deque<std::basic_string<unsigned short,std::char_traits<unsigned short>,std::allocator<unsigned short> >,std::allocator<std::basic_string<unsigned short,std::char_traits<unsigned short>,std::allocator<unsigned short> > > > >::operator*' : identifier was truncated to '255' characters in the debug information
+e:\program files\microsoft visual studio\vc98\include\iterator(138) : warning C4786: 'std::insert_iterator<std::deque<std::basic_string<unsigned short,std::char_traits<unsigned short>,std::allocator<unsigned short> >,std::allocator<std::basic_string<unsigned short,std::char_traits<unsigned short>,std::allocator<unsigned short> > > > >::operator++' : identifier was truncated to '255' characters in the debug information
+Compiling...
+sonyericcsonskdlg.cpp
+sonyericssonatdlg.cpp
+sonyerisontdlg.cpp
+CardPanel.cpp
+ListData.cpp
+PhBoundary.cpp
+PhoneData.cpp
+PhoneNumber.cpp
+SupportEntry.cpp
+LeftView.cpp
+PrevView.cpp
+ViewModePanel.cpp
+Generating Code...
+Linking...
+   Creating library ..\temp\Debug\Phonebook/PhonebookU.lib and object ..\temp\Debug\Phonebook/PhonebookU.exp
+PhonebookU.exp : warning LNK4070: /OUT:PhoneBook.dll directive in .EXP differs from output filename "..\exe\debug\PhonebookU.dll"; ignoring directive
+
+
+
+<h3>Results</h3>
+PhonebookU.dll - 0 error(s), 9 warning(s)
+</pre>
+</body>
+</html>

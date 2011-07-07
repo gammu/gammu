@@ -1,3 +1,4 @@
+/* (c) 2002-2004 by Marcin Wiacek & Michal Cihar */
 // All Type 
 #ifndef __gsm_globals_h
 #define __gsm_globals_h
@@ -7,7 +8,7 @@
 #  include <unistd.h>
 #endif
 #define MAX_MANUFACTURER_LENGTH		50
-#define MAX_MODEL_LENGTH		100 
+#define MAX_MODEL_LENGTH		100 //peggy
 
 /* GSM_Error is used to notify about errors */
 typedef enum {
@@ -62,7 +63,7 @@ typedef enum {
 	ERR_INVALIDDATA,			// Invalid data
 	ERR_NEEDANOTHEDATA,   	// Inside MBdrv: phone module need to send another answer frame
 	ERR_OBEXMODE,
-	ERR_NOSIMCARD,
+	ERR_NOSIMCARD,       // Compare : added by mingfa , v0216 , v1.0.3.2
 	ERR_FILEALREADYEXIST,
 	ERR_TRIAL_LIMITEDFUNCTION,
 
@@ -263,7 +264,7 @@ typedef enum {
 	PBK_Number_Light,				//39
 		// Caller group. (Text)
 
-	//Compare : Push Talk. (TEXT) 
+	//Compare : Push Talk. (TEXT) // Added by Mingfa 0127; 
     PBK_Push_Talk,					//40
 
 
@@ -562,7 +563,7 @@ typedef enum
 	CAL_REPEAT_MONTHLY		= 3,
 	CAL_REPEAT_MONTH_WEEKLY = 4,
 	CAL_REPEAT_YEARLY		= 5,
-	CAL_REPEAT_YEAR_WEEKLY		= 6,
+	CAL_REPEAT_YEAR_WEEKLY	= 6,
 };
 /**
  * One value of calendar event.
@@ -791,6 +792,7 @@ typedef enum {
     GSM_File_Sound_MONO,
     GSM_File_Sound_WAV,
     GSM_File_Sound_AAC,
+	GSM_File_Video_3G2,
 } GSM_FileType;
 
 typedef struct {

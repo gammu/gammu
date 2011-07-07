@@ -1,0 +1,76 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: MTK - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x404 /fo"..\temp\debug/MTK.res" /d "_DEBUG" /d "_AFXDLL" "D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\NXP\MTK.rc"" 
+Creating temporary file "C:\DOCUME~1\Alan\LOCALS~1\Temp\RSP10A.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /I "..\Proj_inc" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_USRDLL" /Fp"..\temp\debug/MTK.pch" /Yu"stdafx.h" /Fo"..\temp\debug/" /Fd"..\temp\debug/" /FD /GZ /c 
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\NXP\MTK.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\NXP\MTKCalendar.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\NXP\MTKFile.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\NXP\MTKInit.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\NXP\MTKMMS.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\NXP\MTKObex.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\NXP\MTKPhonebook.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\NXP\MTKSMS.cpp"
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\NXP\MTKSync.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\Alan\LOCALS~1\Temp\RSP10A.tmp" 
+Creating temporary file "C:\DOCUME~1\Alan\LOCALS~1\Temp\RSP10B.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /I "..\Proj_inc" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_USRDLL" /Fp"..\temp\debug/MTK.pch" /Yc"stdafx.h" /Fo"..\temp\debug/" /Fd"..\temp\debug/" /FD /GZ /c 
+"D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\NXP\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\Alan\LOCALS~1\Temp\RSP10B.tmp" 
+Creating temporary file "C:\DOCUME~1\Alan\LOCALS~1\Temp\RSP10C.tmp" with contents
+[
+ObexGen.lib ATgen.lib common.lib shfolder.lib /nologo /subsystem:windows /dll /incremental:yes /pdb:"..\lib\debug/MTK.pdb" /map:"..\temp\debug/MTK.map" /debug /machine:I386 /def:".\MTK.def" /out:"..\exe\debug\MTK.dll" /implib:"..\lib\debug/MTK.lib" /pdbtype:sept /libpath:"..\lib\debug" /libpath:"..\anwlib\lib\debug" 
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\MTK.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\MTKCalendar.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\MTKFile.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\MTKInit.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\MTKMMS.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\MTKObex.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\MTKPhonebook.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\MTKSMS.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\MTKSync.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\StdAfx.obj"
+"\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\temp\debug\MTK.res"
+]
+Creating command line "link.exe @C:\DOCUME~1\Alan\LOCALS~1\Temp\RSP10C.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+StdAfx.cpp
+Compiling...
+MTK.cpp
+MTKCalendar.cpp
+MTKFile.cpp
+MTKInit.cpp
+MTKMMS.cpp
+MTKObex.cpp
+D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\NXP\MTKObex.cpp(329) : warning C4101: 'fold' : unreferenced local variable
+D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\NXP\MTKObex.cpp(551) : warning C4018: '==' : signed/unsigned mismatch
+D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\NXP\MTKObex.cpp(672) : warning C4018: '>' : signed/unsigned mismatch
+D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\NXP\MTKObex.cpp(888) : warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+MTKPhonebook.cpp
+D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\NXP\MTKPhonebook.cpp(1706) : warning C4018: '==' : signed/unsigned mismatch
+D:\Source_Code\sonim modfy\sonim\sonim xp3.1(open source)\NXP\MTKPhonebook.cpp(1894) : warning C4018: '==' : signed/unsigned mismatch
+MTKSMS.cpp
+MTKSync.cpp
+Generating Code...
+Linking...
+   Creating library ..\lib\debug/MTK.lib and object ..\lib\debug/MTK.exp
+
+
+
+<h3>Results</h3>
+MTK.dll - 0 error(s), 6 warning(s)
+</pre>
+</body>
+</html>

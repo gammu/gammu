@@ -1,0 +1,10 @@
+; PhoneBook_DLL.def : Declares the module parameters for the DLL.
+
+LIBRARY      "PhoneBook"
+DESCRIPTION  'PhoneBook Windows Dynamic Link Library'
+
+HEAPSIZE        10240
+EXPORTS
+    ; Explicit exports can go here
+
+StartDllEntry				@1

@@ -1,7 +1,6 @@
 /* (c) 2002-2004 by Marcin Wiacek and others */
 #ifndef __coding_h
 #define __coding_h
-
 #include <stdlib.h>
 
 //#include "ConvertUTF.h"
@@ -41,12 +40,6 @@ int			EncodeUnicode2UTF8( unsigned char* src, unsigned char *dest);
 int			EncodeUnicode2UTF8Ex( unsigned char* src, unsigned char *dest,int MaxByte);
 void UnicodeReplace(unsigned char *str, char *szOld,char* szNew);
 void SplitStringEx(unsigned char *pString ,char*  Split,unsigned char* pStr1,unsigned char* pStr2);
-
-/* -------------------------- SHIFT - JIS --------------------------------- */
-void DecodeSJIStoUnicode(unsigned char *dest, const unsigned char *src, int len);
-
-/* -------------------------- ISO 8859 - 1 --------------------------------- */
-void DecodeISO88591QuotedPrintable(unsigned char *dest, const unsigned char *src, int len);
 
 /* ------------------------------- BCD ------------------------------------- */
 unsigned char	EncodeWithBCDAlphabet		(int value);
@@ -94,14 +87,12 @@ void 		FindDefaultAlphabetLen		(const unsigned char *src, int *srclen, int *smsl
 int GSM_PackSevenBitsToEight	(int offset, unsigned char *input, unsigned char *output, int length);
 int GSM_UnpackEightBitsToSeven	(int offset, int in_length, int out_length,
 				 unsigned char *input, unsigned char *output);
-int GSM_UnpackEightBitsToSevenEx	(int offset, int in_length, int out_length,
-				 unsigned char *input, unsigned char *output,int *nUseInputLen);
 BOOL Win_DecodeUnicode(unsigned char *dest, const unsigned char *src, int len);
 int  DecodeUTF2String( char* text, unsigned char *utfstr, int str_len	);
 int DecodeUTF82Wchar(const unsigned char* utfchar,  wchar_t *ch );
 void  DecodeUTF8ToUnicode(unsigned char* text, unsigned char *utfstr, int str_len	);
 /* ----------------- Phone numbers according to GSM specs ------------------ */
-
+int ConvertToGreek(int j);
 /**
  * Enum to handle types of phones numbers like
  * specified in GSM 03.40 section 9.1.2.5

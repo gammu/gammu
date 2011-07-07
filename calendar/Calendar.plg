@@ -1,0 +1,143 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: Calendar - Win32 Release_Unicode--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP3A.tmp" with contents
+[
+/nologo /MD /W3 /GX /O2 /I "..\anwlib\include" /I "..\..\Proj_Inc" /I "..\Proj_Inc\SYNC" /I "..\..\Proj_Inc\MSOT" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_UNICODE" /FR"..\temp\Release\Calendar/" /Fp"..\temp\Release\Calendar/Calendar.pch" /Yu"stdafx.h" /Fo"..\temp\Release\Calendar/" /Fd"..\temp\Release\Calendar/" /FD /c 
+"H:\project\cm31 ui\calendar\Schedule\CAMMScheduleDailyTable.cpp"
+"H:\project\cm31 ui\calendar\Schedule\cammschedulelist.cpp"
+"H:\project\cm31 ui\calendar\MobileDevice\CAMMSync.cpp"
+"H:\project\cm31 ui\calendar\Calendar.cpp"
+"H:\project\cm31 ui\calendar\LeftView.cpp"
+"H:\project\cm31 ui\calendar\MainFrm.cpp"
+"H:\project\cm31 ui\calendar\PrevView.cpp"
+"H:\project\cm31 ui\calendar\processdlg.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP3A.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP3B.tmp" with contents
+[
+CommUIU.lib /nologo /entry:"wWinMainCRTStartup" /subsystem:windows /incremental:no /pdb:"..\temp\Release\Calendar/Calendar.pdb" /debug /machine:I386 /out:"..\..\eXe\Release\Calendar.exe" /libpath:"..\anwlib\lib\release" /libpath:"..\..\lib\release" 
+"\project\cm31 ui\temp\Release\Calendar\uifixtb.obj"
+"\project\cm31 ui\temp\Release\Calendar\uiflatbar.obj"
+"\project\cm31 ui\temp\Release\Calendar\uimodulver.obj"
+"\project\cm31 ui\temp\Release\Calendar\cammschedulecalendar.obj"
+"\project\cm31 ui\temp\Release\Calendar\CAMMScheduleDailyTable.obj"
+"\project\cm31 ui\temp\Release\Calendar\CAMMScheduleDayView.obj"
+"\project\cm31 ui\temp\Release\Calendar\CAMMScheduleEditorDlg.obj"
+"\project\cm31 ui\temp\Release\Calendar\cammschedulelist.obj"
+"\project\cm31 ui\temp\Release\Calendar\ListPrint.obj"
+"\project\cm31 ui\temp\Release\Calendar\PrintSchedule.obj"
+"\project\cm31 ui\temp\Release\Calendar\XCell.obj"
+"\project\cm31 ui\temp\Release\Calendar\OleDateTimeEx.obj"
+"\project\cm31 ui\temp\Release\Calendar\Schedule3MonthInfo.obj"
+"\project\cm31 ui\temp\Release\Calendar\ScheduleAllInfo.obj"
+"\project\cm31 ui\temp\Release\Calendar\ScheduleAllRepeatInfo.obj"
+"\project\cm31 ui\temp\Release\Calendar\ScheduleDayInfo.obj"
+"\project\cm31 ui\temp\Release\Calendar\ScheduleInfo.obj"
+"\project\cm31 ui\temp\Release\Calendar\ScheduleMonthInfo.obj"
+"\project\cm31 ui\temp\Release\Calendar\ScheduleMultiInfo.obj"
+"\project\cm31 ui\temp\Release\Calendar\ScheduleTimeInfo.obj"
+"\project\cm31 ui\temp\Release\Calendar\CAMMSync.obj"
+"\project\cm31 ui\temp\Release\Calendar\CAMMSyncInclude.obj"
+"\project\cm31 ui\temp\Release\Calendar\UnicodeString.obj"
+"\project\cm31 ui\temp\Release\Calendar\Ini.obj"
+"\project\cm31 ui\temp\Release\Calendar\SkinHeaderCtrl.obj"
+"\project\cm31 ui\temp\Release\Calendar\SortClass.obj"
+"\project\cm31 ui\temp\Release\Calendar\TabButtonEx2.obj"
+"\project\cm31 ui\temp\Release\Calendar\TabSplitterWnd.obj"
+"\project\cm31 ui\temp\Release\Calendar\Calendar.obj"
+"\project\cm31 ui\temp\Release\Calendar\global.obj"
+"\project\cm31 ui\temp\Release\Calendar\LeftView.obj"
+"\project\cm31 ui\temp\Release\Calendar\loadString.obj"
+"\project\cm31 ui\temp\Release\Calendar\MainFrm.obj"
+"\project\cm31 ui\temp\Release\Calendar\MSOTDLL.obj"
+"\project\cm31 ui\temp\Release\Calendar\myedit.obj"
+"\project\cm31 ui\temp\Release\Calendar\OpenrepeatQuestDlg.obj"
+"\project\cm31 ui\temp\Release\Calendar\PrevView.obj"
+"\project\cm31 ui\temp\Release\Calendar\processdlg.obj"
+"\project\cm31 ui\temp\Release\Calendar\SearchDlg.obj"
+"\project\cm31 ui\temp\Release\Calendar\StdAfx.obj"
+"\project\cm31 ui\temp\Release\Calendar\UserExitDlg.obj"
+"\project\cm31 ui\temp\Release\Calendar\ViewModePanel.obj"
+"\project\cm31 ui\temp\Release\Calendar\worker.obj"
+"\project\cm31 ui\temp\Release\Calendar\Calendar.res"
+]
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP3B.tmp"
+<h3>Output Window</h3>
+Compiling...
+CAMMScheduleDailyTable.cpp
+cammschedulelist.cpp
+CAMMSync.cpp
+Calendar.cpp
+H:\project\cm31 ui\calendar\Calendar.cpp(123) : warning C4010: single-line comment contains line-continuation character
+LeftView.cpp
+H:\project\cm31 ui\calendar\LeftView.cpp(771) : warning C4800: 'unsigned int' : forcing value to bool 'true' or 'false' (performance warning)
+MainFrm.cpp
+H:\project\cm31 ui\calendar\MainFrm.cpp(632) : warning C4800: 'unsigned int' : forcing value to bool 'true' or 'false' (performance warning)
+PrevView.cpp
+processdlg.cpp
+H:\project\cm31 ui\calendar\processdlg.cpp(161) : warning C4805: '==' : unsafe mix of type 'int' and type 'const bool' in operation
+Generating Code...
+Linking...
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP3D.tmp" with contents
+[
+/nologo /o"..\temp\Release\Calendar/Calendar.bsc" 
+"\project\cm31 ui\temp\Release\Calendar\StdAfx.sbr"
+"\project\cm31 ui\temp\Release\Calendar\uifixtb.sbr"
+"\project\cm31 ui\temp\Release\Calendar\uiflatbar.sbr"
+"\project\cm31 ui\temp\Release\Calendar\uimodulver.sbr"
+"\project\cm31 ui\temp\Release\Calendar\cammschedulecalendar.sbr"
+"\project\cm31 ui\temp\Release\Calendar\CAMMScheduleDailyTable.sbr"
+"\project\cm31 ui\temp\Release\Calendar\CAMMScheduleDayView.sbr"
+"\project\cm31 ui\temp\Release\Calendar\CAMMScheduleEditorDlg.sbr"
+"\project\cm31 ui\temp\Release\Calendar\cammschedulelist.sbr"
+"\project\cm31 ui\temp\Release\Calendar\ListPrint.sbr"
+"\project\cm31 ui\temp\Release\Calendar\PrintSchedule.sbr"
+"\project\cm31 ui\temp\Release\Calendar\XCell.sbr"
+"\project\cm31 ui\temp\Release\Calendar\OleDateTimeEx.sbr"
+"\project\cm31 ui\temp\Release\Calendar\Schedule3MonthInfo.sbr"
+"\project\cm31 ui\temp\Release\Calendar\ScheduleAllInfo.sbr"
+"\project\cm31 ui\temp\Release\Calendar\ScheduleAllRepeatInfo.sbr"
+"\project\cm31 ui\temp\Release\Calendar\ScheduleDayInfo.sbr"
+"\project\cm31 ui\temp\Release\Calendar\ScheduleInfo.sbr"
+"\project\cm31 ui\temp\Release\Calendar\ScheduleMonthInfo.sbr"
+"\project\cm31 ui\temp\Release\Calendar\ScheduleMultiInfo.sbr"
+"\project\cm31 ui\temp\Release\Calendar\ScheduleTimeInfo.sbr"
+"\project\cm31 ui\temp\Release\Calendar\CAMMSync.sbr"
+"\project\cm31 ui\temp\Release\Calendar\CAMMSyncInclude.sbr"
+"\project\cm31 ui\temp\Release\Calendar\UnicodeString.sbr"
+"\project\cm31 ui\temp\Release\Calendar\Ini.sbr"
+"\project\cm31 ui\temp\Release\Calendar\SkinHeaderCtrl.sbr"
+"\project\cm31 ui\temp\Release\Calendar\SortClass.sbr"
+"\project\cm31 ui\temp\Release\Calendar\TabButtonEx2.sbr"
+"\project\cm31 ui\temp\Release\Calendar\TabSplitterWnd.sbr"
+"\project\cm31 ui\temp\Release\Calendar\Calendar.sbr"
+"\project\cm31 ui\temp\Release\Calendar\global.sbr"
+"\project\cm31 ui\temp\Release\Calendar\LeftView.sbr"
+"\project\cm31 ui\temp\Release\Calendar\loadString.sbr"
+"\project\cm31 ui\temp\Release\Calendar\MainFrm.sbr"
+"\project\cm31 ui\temp\Release\Calendar\MSOTDLL.sbr"
+"\project\cm31 ui\temp\Release\Calendar\myedit.sbr"
+"\project\cm31 ui\temp\Release\Calendar\OpenrepeatQuestDlg.sbr"
+"\project\cm31 ui\temp\Release\Calendar\PrevView.sbr"
+"\project\cm31 ui\temp\Release\Calendar\processdlg.sbr"
+"\project\cm31 ui\temp\Release\Calendar\SearchDlg.sbr"
+"\project\cm31 ui\temp\Release\Calendar\UserExitDlg.sbr"
+"\project\cm31 ui\temp\Release\Calendar\ViewModePanel.sbr"
+"\project\cm31 ui\temp\Release\Calendar\worker.sbr"]
+Creating command line "bscmake.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP3D.tmp"
+Creating browse info file...
+<h3>Output Window</h3>
+
+
+
+<h3>Results</h3>
+Calendar.exe - 0 error(s), 4 warning(s)
+</pre>
+</body>
+</html>

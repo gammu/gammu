@@ -1,0 +1,144 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: PhoneBook - Win32 Debug_Unicode--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\PEGGY_~1\LOCALS~1\Temp\RSP3CA.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /I "..\anwlib\include" /I "..\..\Proj_Inc" /I "..\..\Proj_Inc\MSOT" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_UNICODE" /FR"../../temp/Debug/" /Fp"../../temp/Debug/PhoneBook.pch" /Yu"stdafx.h" /Fo"../../temp/Debug/" /Fd"../../temp/Debug/" /FD /GZ /c 
+"E:\Mobile Driver Unicode\Application\PHONEBOOK\include\CSVHandle.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\PEGGY_~1\LOCALS~1\Temp\RSP3CA.tmp" 
+Creating temporary file "C:\DOCUME~1\PEGGY_~1\LOCALS~1\Temp\RSP3CB.tmp" with contents
+[
+CommUIU.lib /nologo /entry:"wWinMainCRTStartup" /subsystem:windows /incremental:yes /pdb:"../../temp/Debug/PhonebookU.pdb" /debug /machine:I386 /out:"../../EXE/Debug/PhonebookU.exe" /pdbtype:sept /libpath:"..\anwlib\lib\Debug" /libpath:"..\..\lib\debug" 
+"\Mobile Driver Unicode\temp\Debug\AddressDlg.obj"
+"\Mobile Driver Unicode\temp\Debug\contentedit.obj"
+"\Mobile Driver Unicode\temp\Debug\DriverWrapper.obj"
+"\Mobile Driver Unicode\temp\Debug\global.obj"
+"\Mobile Driver Unicode\temp\Debug\MainFrm.obj"
+"\Mobile Driver Unicode\temp\Debug\motoE2dlg.obj"
+"\Mobile Driver Unicode\temp\Debug\motoEdlg.obj"
+"\Mobile Driver Unicode\temp\Debug\MSOTDLL.obj"
+"\Mobile Driver Unicode\temp\Debug\newsms.obj"
+"\Mobile Driver Unicode\temp\Debug\NS4AddressDlg.obj"
+"\Mobile Driver Unicode\temp\Debug\NS6AddressDlg.obj"
+"\Mobile Driver Unicode\temp\Debug\OtherDlg.obj"
+"\Mobile Driver Unicode\temp\Debug\PhoneBook.obj"
+"\Mobile Driver Unicode\temp\Debug\phonenumberedit.obj"
+"\Mobile Driver Unicode\temp\Debug\ProgressDlg.obj"
+"\Mobile Driver Unicode\temp\Debug\S4datadycdlg.obj"
+"\Mobile Driver Unicode\temp\Debug\S4datadycdlgEx.obj"
+"\Mobile Driver Unicode\temp\Debug\S6datadycdlg.obj"
+"\Mobile Driver Unicode\temp\Debug\Sagemdlg.obj"
+"\Mobile Driver Unicode\temp\Debug\SamsungDlg.obj"
+"\Mobile Driver Unicode\temp\Debug\SamsungZdlg.obj"
+"\Mobile Driver Unicode\temp\Debug\Sharp90Xdlg.obj"
+"\Mobile Driver Unicode\temp\Debug\SharpT300dlg.obj"
+"\Mobile Driver Unicode\temp\Debug\sonyericssonatdlg.obj"
+"\Mobile Driver Unicode\temp\Debug\StdAfx.obj"
+"\Mobile Driver Unicode\temp\Debug\CheckThumbListCtrl.obj"
+"\Mobile Driver Unicode\temp\Debug\CSVHandle.obj"
+"\Mobile Driver Unicode\temp\Debug\myedit.obj"
+"\Mobile Driver Unicode\temp\Debug\SkinHeaderCtrl.obj"
+"\Mobile Driver Unicode\temp\Debug\SortClass.obj"
+"\Mobile Driver Unicode\temp\Debug\TabButtonEx2.obj"
+"\Mobile Driver Unicode\temp\Debug\TabSplitterWnd.obj"
+"\Mobile Driver Unicode\temp\Debug\uifixtb.obj"
+"\Mobile Driver Unicode\temp\Debug\uiflatbar.obj"
+"\Mobile Driver Unicode\temp\Debug\uimodulver.obj"
+"\Mobile Driver Unicode\temp\Debug\asusdlg.obj"
+"\Mobile Driver Unicode\temp\Debug\basedlg.obj"
+"\Mobile Driver Unicode\temp\Debug\DataDycDlg.obj"
+"\Mobile Driver Unicode\temp\Debug\motodlg.obj"
+"\Mobile Driver Unicode\temp\Debug\ProgDlg.obj"
+"\Mobile Driver Unicode\temp\Debug\SearchDlg.obj"
+"\Mobile Driver Unicode\temp\Debug\siemenssdlg.obj"
+"\Mobile Driver Unicode\temp\Debug\sonyericcsonskdlg.obj"
+"\Mobile Driver Unicode\temp\Debug\sonyerisontdlg.obj"
+"\Mobile Driver Unicode\temp\Debug\CardPanel.obj"
+"\Mobile Driver Unicode\temp\Debug\ListData.obj"
+"\Mobile Driver Unicode\temp\Debug\PhBoundary.obj"
+"\Mobile Driver Unicode\temp\Debug\PhoneData.obj"
+"\Mobile Driver Unicode\temp\Debug\PhoneNumber.obj"
+"\Mobile Driver Unicode\temp\Debug\SupportEntry.obj"
+"\Mobile Driver Unicode\temp\Debug\LeftView.obj"
+"\Mobile Driver Unicode\temp\Debug\PrevView.obj"
+"\Mobile Driver Unicode\temp\Debug\ViewModePanel.obj"
+"\Mobile Driver Unicode\temp\Debug\PhoneBook.res"
+]
+Creating command line "link.exe @C:\DOCUME~1\PEGGY_~1\LOCALS~1\Temp\RSP3CB.tmp"
+<h3>Output Window</h3>
+Compiling...
+CSVHandle.cpp
+Linking...
+Creating temporary file "C:\DOCUME~1\PEGGY_~1\LOCALS~1\Temp\RSP3CD.tmp" with contents
+[
+/nologo /o"../../temp/Debug/PhoneBook.bsc" 
+"\Mobile Driver Unicode\temp\Debug\StdAfx.sbr"
+"\Mobile Driver Unicode\temp\Debug\AddressDlg.sbr"
+"\Mobile Driver Unicode\temp\Debug\contentedit.sbr"
+"\Mobile Driver Unicode\temp\Debug\DriverWrapper.sbr"
+"\Mobile Driver Unicode\temp\Debug\global.sbr"
+"\Mobile Driver Unicode\temp\Debug\MainFrm.sbr"
+"\Mobile Driver Unicode\temp\Debug\motoE2dlg.sbr"
+"\Mobile Driver Unicode\temp\Debug\motoEdlg.sbr"
+"\Mobile Driver Unicode\temp\Debug\MSOTDLL.sbr"
+"\Mobile Driver Unicode\temp\Debug\newsms.sbr"
+"\Mobile Driver Unicode\temp\Debug\NS4AddressDlg.sbr"
+"\Mobile Driver Unicode\temp\Debug\NS6AddressDlg.sbr"
+"\Mobile Driver Unicode\temp\Debug\OtherDlg.sbr"
+"\Mobile Driver Unicode\temp\Debug\PhoneBook.sbr"
+"\Mobile Driver Unicode\temp\Debug\phonenumberedit.sbr"
+"\Mobile Driver Unicode\temp\Debug\ProgressDlg.sbr"
+"\Mobile Driver Unicode\temp\Debug\S4datadycdlg.sbr"
+"\Mobile Driver Unicode\temp\Debug\S4datadycdlgEx.sbr"
+"\Mobile Driver Unicode\temp\Debug\S6datadycdlg.sbr"
+"\Mobile Driver Unicode\temp\Debug\Sagemdlg.sbr"
+"\Mobile Driver Unicode\temp\Debug\SamsungDlg.sbr"
+"\Mobile Driver Unicode\temp\Debug\SamsungZdlg.sbr"
+"\Mobile Driver Unicode\temp\Debug\Sharp90Xdlg.sbr"
+"\Mobile Driver Unicode\temp\Debug\SharpT300dlg.sbr"
+"\Mobile Driver Unicode\temp\Debug\sonyericssonatdlg.sbr"
+"\Mobile Driver Unicode\temp\Debug\CheckThumbListCtrl.sbr"
+"\Mobile Driver Unicode\temp\Debug\CSVHandle.sbr"
+"\Mobile Driver Unicode\temp\Debug\myedit.sbr"
+"\Mobile Driver Unicode\temp\Debug\SkinHeaderCtrl.sbr"
+"\Mobile Driver Unicode\temp\Debug\SortClass.sbr"
+"\Mobile Driver Unicode\temp\Debug\TabButtonEx2.sbr"
+"\Mobile Driver Unicode\temp\Debug\TabSplitterWnd.sbr"
+"\Mobile Driver Unicode\temp\Debug\uifixtb.sbr"
+"\Mobile Driver Unicode\temp\Debug\uiflatbar.sbr"
+"\Mobile Driver Unicode\temp\Debug\uimodulver.sbr"
+"\Mobile Driver Unicode\temp\Debug\asusdlg.sbr"
+"\Mobile Driver Unicode\temp\Debug\basedlg.sbr"
+"\Mobile Driver Unicode\temp\Debug\DataDycDlg.sbr"
+"\Mobile Driver Unicode\temp\Debug\motodlg.sbr"
+"\Mobile Driver Unicode\temp\Debug\ProgDlg.sbr"
+"\Mobile Driver Unicode\temp\Debug\SearchDlg.sbr"
+"\Mobile Driver Unicode\temp\Debug\siemenssdlg.sbr"
+"\Mobile Driver Unicode\temp\Debug\sonyericcsonskdlg.sbr"
+"\Mobile Driver Unicode\temp\Debug\sonyerisontdlg.sbr"
+"\Mobile Driver Unicode\temp\Debug\CardPanel.sbr"
+"\Mobile Driver Unicode\temp\Debug\ListData.sbr"
+"\Mobile Driver Unicode\temp\Debug\PhBoundary.sbr"
+"\Mobile Driver Unicode\temp\Debug\PhoneData.sbr"
+"\Mobile Driver Unicode\temp\Debug\PhoneNumber.sbr"
+"\Mobile Driver Unicode\temp\Debug\SupportEntry.sbr"
+"\Mobile Driver Unicode\temp\Debug\LeftView.sbr"
+"\Mobile Driver Unicode\temp\Debug\PrevView.sbr"
+"\Mobile Driver Unicode\temp\Debug\ViewModePanel.sbr"]
+Creating command line "bscmake.exe @C:\DOCUME~1\PEGGY_~1\LOCALS~1\Temp\RSP3CD.tmp"
+Creating browse info file...
+<h3>Output Window</h3>
+
+
+
+<h3>Results</h3>
+PhonebookU.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>
