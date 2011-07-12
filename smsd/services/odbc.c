@@ -84,6 +84,7 @@ const char *SMSDODBC_GetString(GSM_SMSDConfig * Config, SQL_result *res, unsigne
 	SQLLEN sqllen;
 	int size;
 	SQLRETURN ret;
+	char shortbuffer[1];
 
 	if (field > SMSD_ODBC_MAX_RETURN_STRINGS) {
 		SMSD_Log(DEBUG_ERROR, Config, "Field %d returning NULL, too many fields!", field);
@@ -91,9 +92,9 @@ const char *SMSDODBC_GetString(GSM_SMSDConfig * Config, SQL_result *res, unsigne
 	}
 
 	/* Figure out string length */
-	ret = SQLGetData(res->odbc, field + 1, SQL_C_CHAR, NULL, 0, &sqllen);
+	ret = SQLGetData(res->odbc, field + 1, SQL_C_CHAR, shortbuffer, 0, &sqllen);
 	if (!SQL_SUCCEEDED(ret)) {
-		SMSDODBC_LogError(Config, ret, SQL_HANDLE_STMT, res->odbc, "SQLGetData(string,NULL) failed");
+		SMSDODBC_LogError(Config, ret, SQL_HANDLE_STMT, res->odbc, "SQLGetData(string,0) failed");
 		return NULL;
 	}
 
