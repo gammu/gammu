@@ -52,9 +52,9 @@ message (STATUS "Configuring ${CMAKE_PROJECT_NAME} ${GAMMU_VERSION}")
 
 set (GAMMU_SOVERSION "7" CACHE INTERNAL "")
 
-if ("${Gammu_BINARY_DIR}" STREQUAL "${Gammu_SOURCE_DIR}")
+if ("${CMAKE_CURRENT_BINARY_DIR}" STREQUAL "${CMAKE_CURRENT_SOURCE_DIR}")
     message ("Warning: In tree build is not recommended way to build Gammu.")
-endif ("${Gammu_BINARY_DIR}" STREQUAL "${Gammu_SOURCE_DIR}")
+endif ("${CMAKE_CURRENT_BINARY_DIR}" STREQUAL "${CMAKE_CURRENT_SOURCE_DIR}")
 
 # For debugging
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -581,7 +581,7 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_MINGW OR
     # Specs for MinGW to change msvcrt
     # This is not supported by MinGW and is broken currently
 #    if (CMAKE_COMPILER_IS_MINGW)
-#        MACRO_TUNE_COMPILER("-specs=${Gammu_SOURCE_DIR}/cmake/mingw.spec")
+#        MACRO_TUNE_COMPILER("-specs=${CMAKE_CURRENT_SOURCE_DIR}/cmake/mingw.spec")
 #        add_definitions(-D_MSVCRT_VERSION__=0x090)
 #    endif (CMAKE_COMPILER_IS_MINGW)
 endif(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_MINGW OR
@@ -737,10 +737,10 @@ macro_gammu_option (CELLBROADCAST "Cell Broadcast messages support" ON ON ON)
 macro_gammu_option (BACKUP "Backup/Restore functions" ON ON ON)
 
 # Generate Doxygen file
-set (DOXYGEN_INPUT "${Gammu_BINARY_DIR}/include")
-set (DOXYGEN_INTERNAL_INPUT "${Gammu_SOURCE_DIR}/libgammu")
-set (DOXYGEN_OUTPUT "${Gammu_BINARY_DIR}/gammu-doc")
-set (DOXYGEN_INTERNAL_OUTPUT "${Gammu_BINARY_DIR}/gammu-internal-doc")
+set (DOXYGEN_INPUT "${CMAKE_CURRENT_BINARY_DIR}/include")
+set (DOXYGEN_INTERNAL_INPUT "${CMAKE_CURRENT_SOURCE_DIR}/libgammu")
+set (DOXYGEN_OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/gammu-doc")
+set (DOXYGEN_INTERNAL_OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/gammu-internal-doc")
 if ("${DOXYGEN_DOT_EXECUTABLE}" STREQUAL DOXYGEN_DOT_EXECUTABLE-NOTFOUND)
     set (HAVE_DOT "NO")
     set (DOXYGEN_DOT_PATH "")
@@ -749,10 +749,10 @@ else ("${DOXYGEN_DOT_EXECUTABLE}" STREQUAL DOXYGEN_DOT_EXECUTABLE-NOTFOUND)
     # Strip binary name from variable
     string (REGEX REPLACE "/dot$" "" DOXYGEN_DOT_PATH "${DOXYGEN_DOT_EXECUTABLE}")
 endif ("${DOXYGEN_DOT_EXECUTABLE}" STREQUAL DOXYGEN_DOT_EXECUTABLE-NOTFOUND)
-configure_file ("${Gammu_SOURCE_DIR}/cmake/templates/Doxyfile.cmake" "${Gammu_BINARY_DIR}/doxygen/Doxyfile")
-configure_file ("${Gammu_SOURCE_DIR}/cmake/templates/Doxyfile-internal.cmake" "${Gammu_BINARY_DIR}/doxygen/Doxyfile-internal")
-configure_file ("${Gammu_SOURCE_DIR}/cmake/templates/api.desc.cmake" "${Gammu_BINARY_DIR}/doxygen/api.desc")
-configure_file ("${Gammu_SOURCE_DIR}/cmake/templates/internals.desc.cmake" "${Gammu_BINARY_DIR}/doxygen/internals.desc")
+configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/Doxyfile.cmake" "${CMAKE_CURRENT_BINARY_DIR}/doxygen/Doxyfile")
+configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/Doxyfile-internal.cmake" "${CMAKE_CURRENT_BINARY_DIR}/doxygen/Doxyfile-internal")
+configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/api.desc.cmake" "${CMAKE_CURRENT_BINARY_DIR}/doxygen/api.desc")
+configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/internals.desc.cmake" "${CMAKE_CURRENT_BINARY_DIR}/doxygen/internals.desc")
 
 # Target for generating API documentation
 add_custom_target (apidoc ${DOXYGEN_EXECUTABLE} doxygen/Doxyfile
@@ -766,15 +766,15 @@ add_custom_target (interndoc ${DOXYGEN_EXECUTABLE} doxygen/Doxyfile-internal
 # CPP check
 find_program(CPPCHECK_EXECUTABLE NAMES cppcheck
     DOC "cppcheck - code checking tool")
-add_custom_target (cppcheck ${CPPCHECK_EXECUTABLE} -a -f -q "${Gammu_SOURCE_DIR}/gammu" "${Gammu_SOURCE_DIR}/smsd" "${Gammu_SOURCE_DIR}/helper" "${Gammu_SOURCE_DIR}/libgammu" "${Gammu_SOURCE_DIR}/python/gammu/src" "${Gammu_SOURCE_DIR}/tests" "${Gammu_SOURCE_DIR}/docs/manual/examples" "${Gammu_SOURCE_DIR}/contrib/smscgi"
+add_custom_target (cppcheck ${CPPCHECK_EXECUTABLE} -a -f -q "${CMAKE_CURRENT_SOURCE_DIR}/gammu" "${CURRENT_SOURCE_DIR}/smsd" "${CURRENT_SOURCE_DIR}/helper" "${CURRENT_SOURCE_DIR}/libgammu" "${CURRENT_SOURCE_DIR}/python/gammu/src" "${CURRENT_SOURCE_DIR}/tests" "${CURRENT_SOURCE_DIR}/docs/manual/examples" "${CURRENT_SOURCE_DIR}/contrib/smscgi"
     COMMENT "Checking C code")
 
 
 # Generate pkgconfig file
-configure_file ("${Gammu_SOURCE_DIR}/cmake/templates/gammu.pc.cmake" "${Gammu_BINARY_DIR}/cfg/gammu.pc" @ONLY)
-configure_file ("${Gammu_SOURCE_DIR}/cmake/templates/gammu-smsd.pc.cmake" "${Gammu_BINARY_DIR}/cfg/gammu-smsd.pc" @ONLY)
-configure_file ("${Gammu_SOURCE_DIR}/cmake/templates/gammu-uninstalled.pc.cmake" "${Gammu_BINARY_DIR}/pkgconfig/gammu.pc" @ONLY)
-configure_file ("${Gammu_SOURCE_DIR}/cmake/templates/gammu-smsd-uninstalled.pc.cmake" "${Gammu_BINARY_DIR}/pkgconfig/gammu-smsd.pc" @ONLY)
+configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/gammu.pc.cmake" "${CMAKE_CURRENT_BINARY_DIR}/cfg/gammu.pc" @ONLY)
+configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/gammu-smsd.pc.cmake" "${CMAKE_CURRENT_BINARY_DIR}/cfg/gammu-smsd.pc" @ONLY)
+configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/gammu-uninstalled.pc.cmake" "${CMAKE_CURRENT_BINARY_DIR}/pkgconfig/gammu.pc" @ONLY)
+configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/gammu-smsd-uninstalled.pc.cmake" "${CMAKE_CURRENT_BINARY_DIR}/pkgconfig/gammu-smsd.pc" @ONLY)
 
 # Install instructions
 
@@ -829,7 +829,7 @@ if (WIN32 AND NOT CYGWIN)
 endif (WIN32 AND NOT CYGWIN)
 
 install (
-    FILES "${Gammu_BINARY_DIR}/cfg/gammu.pc" "${Gammu_BINARY_DIR}/cfg/gammu-smsd.pc"
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/cfg/gammu.pc" "${CURRENT_BINARY_DIR}/cfg/gammu-smsd.pc"
     DESTINATION "${INSTALL_LIBDATA_DIR}/pkgconfig"
     COMPONENT "pkgconfig"
     )
@@ -839,7 +839,7 @@ install (
 # more fault tolerant when linking DLLs.
 
 # Valgrind supressions for python
-set (MEMORYCHECK_SUPPRESSIONS_FILE ${Gammu_SOURCE_DIR}/cmake/valgrind-python.supp CACHE FILEPATH "File that contains suppressions for the memory checker")
+set (MEMORYCHECK_SUPPRESSIONS_FILE ${CMAKE_CURRENT_SOURCE_DIR}/cmake/valgrind-python.supp CACHE FILEPATH "File that contains suppressions for the memory checker")
 
 # Testing and dashboard
 include(CTest)
@@ -860,7 +860,7 @@ set (CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/installer/license.
 set (CPACK_PACKAGE_VERSION_MAJOR "${GAMMU_VERSION_MAJOR}")
 set (CPACK_PACKAGE_VERSION_MINOR "${GAMMU_VERSION_MINOR}")
 set (CPACK_PACKAGE_VERSION_PATCH "${GAMMU_VERSION_PATCH}")
-set (CPACK_INSTALLER_PROGRAM_DISK_IMAGE "${Gammu_SOURCE_DIR}/installer/addpostflight")
+set (CPACK_INSTALLER_PROGRAM_DISK_IMAGE "${CMAKE_CURRENT_SOURCE_DIR}/installer/addpostflight")
 
 if (WIN32 AND NOT CYGWIN)
     set (CPACK_SYSTEM_NAME "Windows" CACHE STRING "Windows package name")
@@ -974,8 +974,8 @@ endif (WIN32 AND NOT CYGWIN)
 include (CPack)
 
 # Test files for Gammu
-set (RINGTONE_TEST_FILE ${Gammu_SOURCE_DIR}/contrib/media/axelf.txt)
-set (LOGO_TEST_FILE ${Gammu_SOURCE_DIR}/contrib/media/aliens.nlm)
+set (RINGTONE_TEST_FILE ${CMAKE_CURRENT_SOURCE_DIR}/contrib/media/axelf.txt)
+set (LOGO_TEST_FILE ${CMAKE_CURRENT_SOURCE_DIR}/contrib/media/aliens.nlm)
 
 # Transverse to dirs
 add_subdirectory(include)

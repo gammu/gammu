@@ -109,7 +109,7 @@ if (HAVE_SHM OR WIN32)
 endif (HAVE_SHM OR WIN32)
 
 include_directories (
-    "${Gammu_BINARY_DIR}/include"
+    "${CMAKE_CURRENT_BINARY_DIR}/../include"
     )
 
 # Tune options for found libraries

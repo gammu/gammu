@@ -16,7 +16,7 @@ else (EXECUTABLE_OUTPUT_PATH)
 endif (EXECUTABLE_OUTPUT_PATH)
 
 # We use Gammu
-include_directories("${Gammu_BINARY_DIR}/include")
+include_directories("${CMAKE_CURRENT_BINARY_DIR}/../include")
 
 # Basic check for statemachine allocation
 add_executable(statemachine-alloc statemachine-alloc.c)

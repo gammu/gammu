@@ -160,8 +160,8 @@ if(WIN32 AND NOT CMAKE_COMPILER_IS_MINGW AND NOT CMAKE_COMPILER_IS_CYGWIN)
 endif(WIN32 AND NOT CMAKE_COMPILER_IS_MINGW AND NOT CMAKE_COMPILER_IS_CYGWIN)
 
 # Include search path
-include_directories ("${Gammu_BINARY_DIR}/include")
-include_directories ("${Gammu_SOURCE_DIR}/common")
+include_directories ("${CMAKE_CURRENT_BINARY_DIR}/../include")
+include_directories ("${CMAKE_CURRENT_SOURCE_DIR}/../common")
 
 # Add libraries needed for windows build
 if (WIN32 AND NOT CYGWIN)

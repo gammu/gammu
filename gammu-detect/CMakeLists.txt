@@ -35,7 +35,7 @@ if (GLIB_FOUND AND GOBJECT_FOUND)
     endif (WIN32)
 
     include_directories (
-        "${Gammu_BINARY_DIR}/include"
+        "${CMAKE_CURRENT_BINARY_DIR}/../include"
         "${CMAKE_CURRENT_BINARY_DIR}"
         )
     install (TARGETS gammu-detect

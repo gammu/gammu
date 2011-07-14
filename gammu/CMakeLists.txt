@@ -55,7 +55,7 @@ target_link_libraries (gammu cmdline)
 target_link_libraries (gammu ${CMAKE_THREAD_LIBS_INIT})
 
 include_directories (
-    "${Gammu_BINARY_DIR}/include"
+    "${CMAKE_CURRENT_BINARY_DIR}/../include"
     )
 # Tune options for found libraries
 if (LIBINTL_LIB_FOUND AND LIBINTL_LIBRARIES)

@@ -70,8 +70,8 @@ if hasattr(sys, 'pydebug'):
     )
 
 include_directories (
-    "${Gammu_BINARY_DIR}/include"
-    "${Gammu_SOURCE_DIR}/python/include"
+    "${CMAKE_CURRENT_BINARY_DIR}/../../include"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../python/include"
     ${PYTHON_INCLUDE_PATH}
     ${CMAKE_CURRENT_SOURCE_DIR}
     )

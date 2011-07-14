@@ -8,7 +8,7 @@ include(GammuTuneCompiler)
 include(GammuTuneFlags)
 
 include_directories (
-    "${Gammu_BINARY_DIR}/include"
+    "${CMAKE_CURRENT_BINARY_DIR}/../include"
     )
 
 add_library(string STATIC string.c)
