@@ -24,6 +24,7 @@ ChangeLog
 [*] * Improved SMSD logging of configuration settings.
 [-] * Fix possible crash in fbus2 driver.
 [-] * Fix possible crash of ODBC driver on Windows (bug #1482).
+[-] * Fixed usage of dbi plugins from Python module.
     
 20110607 - 1.29.93
 
