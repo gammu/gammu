@@ -19,7 +19,7 @@ the issue.
 ChangeLog
 =========
     
-2011???? - 1.29.94
+20110719 - 1.30.0
 
 [*] * Improved SMSD logging of configuration settings.
 [-] * Fix possible crash in fbus2 driver.
