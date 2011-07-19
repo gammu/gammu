@@ -766,7 +766,7 @@ add_custom_target (interndoc ${DOXYGEN_EXECUTABLE} doxygen/Doxyfile-internal
 # CPP check
 find_program(CPPCHECK_EXECUTABLE NAMES cppcheck
     DOC "cppcheck - code checking tool")
-add_custom_target (cppcheck ${CPPCHECK_EXECUTABLE} -a -f -q "${CMAKE_CURRENT_SOURCE_DIR}/gammu" "${CURRENT_SOURCE_DIR}/smsd" "${CURRENT_SOURCE_DIR}/helper" "${CURRENT_SOURCE_DIR}/libgammu" "${CURRENT_SOURCE_DIR}/python/gammu/src" "${CURRENT_SOURCE_DIR}/tests" "${CURRENT_SOURCE_DIR}/docs/manual/examples" "${CURRENT_SOURCE_DIR}/contrib/smscgi"
+add_custom_target (cppcheck ${CPPCHECK_EXECUTABLE} -a -f -q "${CMAKE_CURRENT_SOURCE_DIR}/gammu" "${CMAKE_CURRENT_SOURCE_DIR}/smsd" "${CMAKE_CURRENT_SOURCE_DIR}/helper" "${CMAKE_CURRENT_SOURCE_DIR}/libgammu" "${CMAKE_CURRENT_SOURCE_DIR}/python/gammu/src" "${CMAKE_CURRENT_SOURCE_DIR}/tests" "${CMAKE_CURRENT_SOURCE_DIR}/docs/manual/examples" "${CMAKE_CURRENT_SOURCE_DIR}/contrib/smscgi"
     COMMENT "Checking C code")
 
 
@@ -829,7 +829,7 @@ if (WIN32 AND NOT CYGWIN)
 endif (WIN32 AND NOT CYGWIN)
 
 install (
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/cfg/gammu.pc" "${CURRENT_BINARY_DIR}/cfg/gammu-smsd.pc"
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/cfg/gammu.pc" "${CMAKE_CURRENT_BINARY_DIR}/cfg/gammu-smsd.pc"
     DESTINATION "${INSTALL_LIBDATA_DIR}/pkgconfig"
     COMPONENT "pkgconfig"
     )
