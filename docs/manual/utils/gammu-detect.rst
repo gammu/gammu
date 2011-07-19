@@ -39,7 +39,7 @@ Currently it supports following devices:
     :option:`gammu-detect -v`.
 
 This program follows the usual GNU command line syntax, with long options
-starting with two dashes (``-``). A summary of options is included below.
+starting with two dashes (``--``). A summary of options is included below.
 
 .. option:: -h, --help
 
