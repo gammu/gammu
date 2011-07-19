@@ -20,6 +20,10 @@ ChangeLog
 =========
     
 2011???? - 1.29.94
+
+[*] * Improved SMSD logging of configuration settings.
+[-] * Fix possible crash in fbus2 driver.
+[-] * Fix possible crash of ODBC driver on Windows (bug #1482).
     
 20110607 - 1.29.93
 
