@@ -27,15 +27,13 @@ __all__ = [
     'data',
     'worker',
     'smsd',
-    'core',
     'exception',
     ]
 
-# Conveniency and backward compatibility import
+# Import core library
 from gammu._gammu import *
 
-import gammu._gammu
 __version__ = 'Gammu %s, python-gammu %s' % (
-        gammu._gammu.Version()[0],
-        gammu._gammu.Version()[1]
+        Version()[0],
+        Version()[1]
         )

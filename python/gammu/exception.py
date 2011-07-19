@@ -22,10 +22,10 @@ this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 '''
 
-import gammu._gammu
+import gammu
 
 # Import base exception
-from gammu._gammu import GSMError
+from gammu import GSMError
 
 # Import all exceptions
 for _name in dir(gammu._gammu):

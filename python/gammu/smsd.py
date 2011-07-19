@@ -24,4 +24,4 @@ this program; if not, write to the Free Software Foundation, Inc.,
 
 __all__ = ['SMSD']
 
-from gammu._gammu import SMSD
+from gammu import SMSD
