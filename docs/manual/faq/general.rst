@@ -32,3 +32,27 @@ containing notification about the data. Gammu can create the notification SMS,
 where you just need to put URL of the data (use :option:`gammu sendsms`
 MMSINDICATOR for that). However you need to encode MMS data yourself or use
 other program to do that.
+
+Device name always changes on Linux, how to solve that?
+-------------------------------------------------------
+
+You can use udev to assign persistent device name. You can either use standard
+peristent names based on serial number (located in :file:`/dev/serial/by-id/`)
+or define own rules::
+
+    SUBSYSTEMS=="usb", ATTRS{manufacturer}=="Nokia", KERNEL=="ttyUSB*", SYMLINK+="phone"
+
+You can match by various attributes, you can figure them using udevadm command:
+
+.. code-block:: sh
+
+    udevadm info --name=/dev/ttyUSB1 --attribute-walk
+
+.. seealso::
+
+    Various documentation on creating persistent device names using udev is
+    available online, for example on the `Debian wiki`_ or in
+    `Writing udev rules`_ document.
+
+.. _Debian wiki: http://wiki.debian.org/udev#persistent-name
+.. _Writing udev rules: http://reactivated.net/writing_udev_rules.html
