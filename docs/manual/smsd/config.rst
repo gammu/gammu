@@ -364,9 +364,16 @@ supports same options for configuring connection to a database:
 .. config:option:: Host
 
     Database server address. It can also contain port or socket path after
-    semicolon, for example ``localhost:/path/to/socket``.
+    semicolon, for example ``localhost:/path/to/socket`` or
+    ``192.168.1.1:8000``.
 
     For ODBC this is used as Data source name.
+
+    .. note::
+        
+        Some database servers differentiate usage of ``localhost`` (to use
+        local socket) and ``127.0.0.1`` (to use locat TCP/IP connection).
+        Please make sure your SMSD settings match the database server ones.
 
     .. versionadded:: 1.28.92
 

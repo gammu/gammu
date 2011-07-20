@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSDRC" "5" "July 19, 2011" "1.30.90" "Gammu"
+.TH "GAMMU-SMSDRC" "5" "July 20, 2011" "1.30.90" "Gammu"
 .SH NAME
 gammu-smsdrc \- gammu-smsd(1) configuration file
 .
@@ -493,9 +493,16 @@ Password used for connection to a database.
 .B Host
 .
 Database server address. It can also contain port or socket path after
-semicolon, for example \fBlocalhost:/path/to/socket\fP.
+semicolon, for example \fBlocalhost:/path/to/socket\fP or
+\fB192.168.1.1:8000\fP.
 .sp
 For ODBC this is used as Data source name.
+.IP Note
+.
+Some database servers differentiate usage of \fBlocalhost\fP (to use
+local socket) and \fB127.0.0.1\fP (to use locat TCP/IP connection).
+Please make sure your SMSD settings match the database server ones.
+.RE
 .sp
 New in version 1.28.92.
 .UNINDENT
