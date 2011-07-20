@@ -596,7 +596,7 @@ For :ref:`gammu-smsd-odbc` backend, in this particular case using DSN ``smsd`` s
     Driver = odbc
     Host = smsd
 
-The DNS definition (in :file:`~/.odbc.ini` on UNIX) for using MySQL server would look like:
+The DSN definition (in :file:`~/.odbc.ini` on UNIX) for using MySQL server would look like:
 
 .. code-block:: ini
 
