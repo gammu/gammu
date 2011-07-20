@@ -7,9 +7,11 @@ project (Gammu-headers C)
 file(GLOB HEADER_FILES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "*.h")
 
 # Fill in include dir for build
-foreach (HEADER ${HEADER_FILES})
-    configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/${HEADER}" "${CMAKE_CURRENT_BINARY_DIR}/${HEADER}" COPY_ONLY)
-endforeach (HEADER)
+if(NOT ${CMAKE_CURRENT_SOURCE_DIR} STREQUAL ${CMAKE_CURRENT_BINARY_DIR})
+    foreach (HEADER ${HEADER_FILES})
+        configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/${HEADER}" "${CMAKE_CURRENT_BINARY_DIR}/${HEADER}" COPY_ONLY)
+    endforeach (HEADER)
+endif(NOT ${CMAKE_CURRENT_SOURCE_DIR} STREQUAL ${CMAKE_CURRENT_BINARY_DIR})
 
 # Generate config.h
 configure_file ("${Gammu_SOURCE_DIR}/cmake/templates/gammu-config.h.cmake" "${CMAKE_CURRENT_BINARY_DIR}/gammu-config.h" ESCAPE_QUOTES)
