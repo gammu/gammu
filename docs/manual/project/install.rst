@@ -393,9 +393,12 @@ provide CMake toolchain file for that and invoke `CMake`_ with it:
 
     cmake -DCMAKE_TOOLCHAIN_FILE=~/Toolchain-eldk-ppc74xx.cmake ..
 
-More information on creating that is described in `CMake Cross Compiling`_ wiki page.
+More information on creating that is described in `CMake Cross Compiling`_ wiki
+page. Also distributions like `OpenEmbedded`_ usually already come with
+prepared recipes for `CMake`_.
 
 .. _CMake Cross Compiling: http://www.vtk.org/Wiki/CMake_Cross_Compiling
+.. _OpenEmbedded: http://www.openembedded.org/
 
 Advanced Build Options
 ----------------------
