@@ -584,6 +584,38 @@ For :ref:`gammu-smsd-dbi` backend, in this particular case SQLite:
     DBDir = /var/lib/sqlite3
     Database = smsd.db
 
+ODBC service using MySQL
+++++++++++++++++++++++++
+
+For :ref:`gammu-smsd-odbc` backend, in this particular case using DSN ``smsd`` server:
+
+.. code-block:: ini
+
+    [smsd]
+    Service = sql
+    Driver = odbc
+    Host = smsd
+
+The DNS definition (in :file:`~/.odbc.ini` on UNIX) for using MySQL server would look like:
+
+.. code-block:: ini
+
+    [smsd]
+    Description		= MySQL
+    Driver		= MySQL
+    Server		= 127.0.0.1
+    Database		= smsd
+    Port		= 
+    Socket		= 
+    Option		= 
+    Stmt		= 
+
+    [smsdsuse]
+    Driver		= MySQL ODBC 3.51.27r695 Driver
+    DATABASE		= smsd
+    SERVER		= 127.0.0.1
+
+
 Numbers filtering
 +++++++++++++++++
 

@@ -757,6 +757,39 @@ DBDir = /var/lib/sqlite3
 Database = smsd.db
 .ft P
 .fi
+.SS ODBC service using MySQL
+.sp
+For \fIgammu\-smsd\-odbc\fP backend, in this particular case using DSN \fBsmsd\fP server:
+.sp
+.nf
+.ft C
+[smsd]
+Service = sql
+Driver = odbc
+Host = smsd
+.ft P
+.fi
+.sp
+The DNS definition (in \fB~/.odbc.ini\fP on UNIX) for using MySQL server would look like:
+.sp
+.nf
+.ft C
+[smsd]
+Description         = MySQL
+Driver              = MySQL
+Server              = 127.0.0.1
+Database            = smsd
+Port                =
+Socket              =
+Option              =
+Stmt                =
+
+[smsdsuse]
+Driver              = MySQL ODBC 3.51.27r695 Driver
+DATABASE            = smsd
+SERVER              = 127.0.0.1
+.ft P
+.fi
 .SS Numbers filtering
 .sp
 Process only messages from 123456 number:
