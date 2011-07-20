@@ -383,6 +383,20 @@ CURL
 For CURL support, you need curl-7.19.0-devel-mingw32.zip from
 <http://curl.haxx.se/>.
 
+Crosscompiling to different platform
+------------------------------------
+
+To cross compile Gammu to different architecture (or platform) you need to
+provide CMake toolchain file for that and invoke `CMake`_ with it:
+
+.. code-block:: sh
+
+    cmake -DCMAKE_TOOLCHAIN_FILE=~/Toolchain-eldk-ppc74xx.cmake ..
+
+More information on creating that is described in `CMake Cross Compiling`_ wiki page.
+
+.. _CMake Cross Compiling: http://www.vtk.org/Wiki/CMake_Cross_Compiling
+
 Advanced Build Options
 ----------------------
 
