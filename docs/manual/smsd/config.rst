@@ -349,9 +349,10 @@ General parameters of SMS daemon
 Database backends options
 -------------------------
 
-All DBI, MYSQL and PGSQL backends (see :ref:`gammu-smsd-mysql`,
-:ref:`gammu-smsd-pgsql`, :ref:`gammu-smsd-dbi` for their documentation)
-supports same options for configuring connection to a database:
+All DBI, ODBC, MYSQL and PGSQL backends (see :ref:`gammu-smsd-mysql`,
+:ref:`gammu-smsd-odbc`, :ref:`gammu-smsd-pgsql`, :ref:`gammu-smsd-dbi` for
+their documentation) supports same options for configuring connection to a
+database:
 
 .. config:option:: User
 
