@@ -438,7 +438,12 @@ to the report. It will help diagnose what was detected on the system and
 possibly fix these errors.
 
 To find out what is going on during compilation, add
-``-DCMAKE_VERBOSE_MAKEFILE=ON`` to :program:`cmake` command line.
+``-DCMAKE_VERBOSE_MAKEFILE=ON`` to :program:`cmake` command line or run
+:program:`make` with ``VERBOSE=1``:
+
+.. code-block:: sh
+    
+    make VERBOSE=1
 
 Debugging crashes
 +++++++++++++++++
