@@ -145,7 +145,7 @@ void execute_one_action(unsigned char *buf3)
 //              }
 //              if (num >= 0) {
 #ifdef WIN32
-		spawnv(_P_NOWAIT, buffe[1], args);
+		spawnv(_P_NOWAIT, buffe[1], (const char * const*)args);
 #else
 		if (fork() == 0)
 			execve(buffe[1], args, NULL);
