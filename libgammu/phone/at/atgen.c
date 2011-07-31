@@ -4356,7 +4356,15 @@ GSM_Error ATGEN_ReplyGetSecurityStatus(GSM_Protocol_Message *msg, GSM_StateMachi
 		"+CPIN: @r",
 		status,
 		sizeof(status));
-	if (error != ERR_NONE) return error;
+	if (error != ERR_NONE) {
+		/* Alcatel mangled reply */
+		if (strcmp(GetLineString(msg->Buffer, &Priv->Lines, 2), "+CPIN: ") == 0) {
+			*Status = SEC_None;
+			smprintf(s, "nothing to enter\n");
+			return ERR_NONE;
+		}
+		return error;
+	}
 
 	smprintf(s, "Security status received - ");
 	if (strstr(status, "READY")) {
