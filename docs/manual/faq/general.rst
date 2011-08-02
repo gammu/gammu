@@ -40,7 +40,11 @@ You can use udev to assign persistent device name. You can either use standard
 peristent names based on serial number (located in :file:`/dev/serial/by-id/`)
 or define own rules::
 
-    SUBSYSTEMS=="usb", ATTRS{manufacturer}=="Nokia", KERNEL=="ttyUSB*", SYMLINK+="phone"
+    ACTION=="add", SUBSYSTEMS=="usb", ATTRS{manufacturer}=="Nokia", KERNEL=="ttyUSB*", SYMLINK+="phone"
+
+Use better is to use vendor and product IDs (you can get them for example using :command:`lsusb`)::
+
+    ACTION=="add", SUBSYSTEMS=="usb", ATTRS{idVendor}=="xxxx", ATTRS{idProduct}=="yyyy", SYMLINK+="phone"
 
 You can match by various attributes, you can figure them using udevadm command:
 
