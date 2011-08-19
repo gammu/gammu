@@ -267,8 +267,8 @@ void GetLocation(int argc UNUSED, char *argv[]UNUSED)
 	lac = strtol(netinfo.LAC, NULL, 16);
 	cellid = strtol(netinfo.CID, NULL, 16);
 
-	/* Split code to country and network */
-	if (sscanf(netinfo.NetworkCode, "%ld %ld", &mcc, &mnc) != 2) {
+	/* Split code to country and network (beware ncc+nmc without space) */
+	if (sscanf(netinfo.NetworkCode, "%3ld%ld", &mcc, &mnc) != 2) {
 		printf_err("%s", _("Wrong network code from phone!\n"));
 		GSM_Terminate();
 		return;
