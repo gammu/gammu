@@ -327,7 +327,7 @@ void DisplaySingleSMSInfo(GSM_SMSMessage sms, gboolean displaytext, gboolean dis
 				char hexbuf[len * 2 + 1];
 				EncodeHexBin (hexbuf, sms.Text, len);
 				printf("%s\n", _("8 bit SMS, cannot be displayed here"));
-				printf("(hex: %s)\n", hexbuf);;
+				printf("(hex: %s)\n", hexbuf);
 			}
 		}
 		break;
