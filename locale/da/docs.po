@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.29.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-23 16:58+0100\n"
-"PO-Revision-Date: 2011-08-30 15:26+0200\n"
+"PO-Revision-Date: 2011-08-30 15:27+0200\n"
 "Last-Translator: Jørgen Thomsen <opensource@jth.net>\n"
 "Language-Team: none\n"
 "Language: da\n"
@@ -30,6 +30,8 @@ msgid ""
 "Gammu is library and command line utility for mobile phones. It is released "
 "under GNU GPL version 2."
 msgstr ""
+"Gammu er et bibliotek og kommandolinjeprogrammer for mobiltelefoner. Det er "
+"frigivet under GNU GPL version 2."
 
 #. type: Plain text
 #: README:11
