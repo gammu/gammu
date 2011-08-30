@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.29.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-23 16:58+0100\n"
-"PO-Revision-Date: 2011-08-30 15:29+0200\n"
+"PO-Revision-Date: 2011-08-30 15:30+0200\n"
 "Last-Translator: Jørgen Thomsen <opensource@jth.net>\n"
 "Language-Team: none\n"
 "Language: da\n"
@@ -52,6 +52,8 @@ msgid ""
 "Currently the project is lead by Michal Cihar <michal@cihar.com> with help "
 "of many contributors."
 msgstr ""
+"Aktuelt ledes projektet af Michal Cihar <michal@cihar.com> med hjælp af "
+"mange andre."
 
 #. type: Title =
 #: README:17
