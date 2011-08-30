@@ -59,7 +59,7 @@ msgstr ""
 #: README:17
 #, no-wrap
 msgid "More information"
-msgstr ""
+msgstr "Mere information"
 
 #. type: Plain text
 #: README:20
