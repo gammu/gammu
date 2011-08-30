@@ -144,7 +144,7 @@ BuildRequires: libcurl-devel
 BuildRequires: %{dist_usb_libs}
 %endif
 
-BuildRequires: gettext cmake pkgconfig
+BuildRequires: gettext cmake pkgconfig gcc
 
 Source:         http://dl.cihar.com/gammu/releases/gammu-%{version}.tar.%{extension}
 URL:            http://wammu.eu/gammu/
