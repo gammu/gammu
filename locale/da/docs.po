@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.29.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-23 16:58+0100\n"
-"PO-Revision-Date: 2011-08-30 15:34+0200\n"
+"PO-Revision-Date: 2011-08-30 15:35+0200\n"
 "Last-Translator: Jørgen Thomsen <opensource@jth.net>\n"
 "Language-Team: none\n"
 "Language: da\n"
@@ -109,7 +109,7 @@ msgstr ""
 #: INSTALL:2
 #, no-wrap
 msgid "Gammu All Mobile Management Utilities - Installation"
-msgstr ""
+msgstr "Gammu All Mobile Management Utilities - Installation"
 
 #. type: Plain text
 #: INSTALL:5
