@@ -117,6 +117,8 @@ msgid ""
 "See docs/manual/project/install.rst for installation guide or see chapter "
 "\"Compiling Gammu\" in The Gammu Manual."
 msgstr ""
+"Se docs/manual/project/install.rst for installationsvejledning eller se "
+"kapitlet \"Compiling Gammu\" i The Gammu Manual."
 
 #, fuzzy
 #~ msgid "Port"
