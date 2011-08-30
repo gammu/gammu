@@ -1663,8 +1663,10 @@ GSM_Error ATGEN_SetIncomingUSSD(GSM_StateMachine *s, gboolean enable)
 		smprintf(s, "Enabling incoming USSD\n");
 		ATGEN_WaitForAutoLen(s, "AT+CUSD=1\r", 0x00, 3, ID_SetUSSD);
 	} else {
-		smprintf(s, "Terminating possible incoming USSD\n");
-		ATGEN_WaitForAutoLen(s, "AT+CUSD=2\r", 0x00, 3, ID_SetUSSD);
+		if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NO_STOP_CUSD)) {
+			smprintf(s, "Terminating possible incoming USSD\n");
+			ATGEN_WaitForAutoLen(s, "AT+CUSD=2\r", 0x00, 3, ID_SetUSSD);
+		}
 		smprintf(s, "Disabling incoming USSD\n");
 		ATGEN_WaitForAutoLen(s, "AT+CUSD=0\r", 0x00, 3, ID_SetUSSD);
 	}

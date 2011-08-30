@@ -698,6 +698,10 @@ typedef enum {
 	 * SMS text is always UTF-8 encoded.
 	 */
 	F_SMS_UTF8_ENCODED,
+	/**
+	 * Avoid forcibly stopping CUSD session.
+	 */
+	F_NO_STOP_CUSD,
 
 	/**
 	 * Just marker of highest feature code, should not be used.

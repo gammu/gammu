@@ -124,6 +124,7 @@ GSM_FeatureName AllFeatureNames[] = {
 	{"NO_UTF8", F_NO_UTF8},
 	{"SAMSUNG_UTF8", F_SAMSUNG_UTF8},
 	{"SMS_UTF8_ENCODED", F_SMS_UTF8_ENCODED},
+	{"NO_STOP_CUSD", F_NO_STOP_CUSD},
 	{"", 0},
 };
 
@@ -943,6 +944,9 @@ GSM_PhoneModel allmodels[] = {
 
 	/* Ubinetics */
 	{"GDC201",	"GDC201",	"",		{F_SMS_NO_ME, 0}},
+
+	/* Qualcomm */
+	{"HP un2420 Mobile Broadband Module", "un2420", "", {F_NO_STOP_CUSD, 0}},
 
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_ALCATEL)
