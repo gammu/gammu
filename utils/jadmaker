@@ -50,7 +50,7 @@ makejad() {
 
     # Some needed variables
     echo "MIDlet-Jar-Size: $(stat -c%s "$1")" >> "$JAD"
-    echo "MIDlet-Jar-URL: $(basename $1)" >> "$JAD"
+    echo "MIDlet-Jar-URL: $(basename "$1")" >> "$JAD"
     echo "MIDlet-Info-URL: $URL" >> "$JAD"
 
     echo "File $JAD created"

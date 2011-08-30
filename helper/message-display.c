@@ -320,12 +320,14 @@ void DisplaySingleSMSInfo(GSM_SMSMessage sms, gboolean displaytext, gboolean dis
 			printf("\n");
 			if (sms.Coding != SMS_Coding_8bit) {
 				printf("%s\n", DecodeUnicodeConsole(sms.Text));
+			} else if (GSM_DecodeSiemensOTASMS(GSM_GetGlobalDebug(), &SiemensOTA,&sms)) {
+				printf("%s\n", _("Siemens file"));
 			} else {
-				if (GSM_DecodeSiemensOTASMS(GSM_GetGlobalDebug(), &SiemensOTA,&sms)) {
-					printf("%s\n", _("Siemens file"));
-					break;
-				}
+				size_t len = strlen(sms.Text);
+				char hexbuf[len * 2 + 1];
+				EncodeHexBin (hexbuf, sms.Text, len);
 				printf("%s\n", _("8 bit SMS, cannot be displayed here"));
+				printf("(hex: %s)\n", hexbuf);
 			}
 		}
 		break;
