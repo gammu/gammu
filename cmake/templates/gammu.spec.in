@@ -368,6 +368,7 @@ fi
 %config /etc/bash_completion.d/gammu
 %_bindir/gammu
 %_bindir/gammu-config
+%_bindir/gammu-detect
 %_bindir/jadmaker
 %_mandir/man1/gammu.1*
 %_mandir/man1/gammu-config.1*
