@@ -145,7 +145,11 @@ void execute_one_action(unsigned char *buf3)
 //              }
 //              if (num >= 0) {
 #ifdef WIN32
+# ifdef SPAWNV_ARGUMENT_IS_CONST
 		spawnv(_P_NOWAIT, buffe[1], (const char * const*)args);
+# else
+		spawnv(_P_NOWAIT, buffe[1], (char * const*)args);
+#endif
 #else
 		if (fork() == 0)
 			execve(buffe[1], args, NULL);

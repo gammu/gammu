@@ -373,6 +373,9 @@
 #  endif
 #endif
 
+/* spawnv argument type */
+#cmakedefine SPAWNV_ARGUMENT_IS_CONST
+
 /* Path where locales will be installed */
 #define LOCALE_PATH "@CMAKE_INSTALL_PREFIX@/@INSTALL_LOC_DIR@"
 
