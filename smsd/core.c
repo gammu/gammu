@@ -614,6 +614,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 #ifdef WIN32
 	size_t i;
 	size_t len;
+	char config_name[MAX_PATH];
 #endif
 
 	memset(&smsdcfg, 0, sizeof(smsdcfg));
@@ -646,7 +647,11 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 	Config->shm_key = ftok(fullpath, SMSD_SHM_KEY);
 #endif
 #ifdef WIN32
-	len = sprintf(Config->map_key, "Gammu-smsd-%s", filename);
+	if (GetFullPathName(filename, sizeof(config_name), config_name, NULL) == 0) {
+		return FALSE;
+	}
+
+	len = sprintf(Config->map_key, "Gammu-smsd-%s", config_name);
 	/* Replace some possibly dangerous chars */
 	for (i = 0; i < len; i++) {
 		if (!isalpha(Config->map_key[i]) && !isdigit(Config->map_key[i])) {
