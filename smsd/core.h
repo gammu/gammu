@@ -193,7 +193,7 @@ struct _GSM_SMSDConfig {
 	int shm_handle;
 #endif
 #ifdef WIN32
-	char map_key[MAX_PATH];
+	char map_key[MAX_PATH + 20];
 	HANDLE map_handle;
 #endif
 	GSM_SMSDStatus *Status;
