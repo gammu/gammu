@@ -1192,7 +1192,7 @@
    Leak from crypt
    Memcheck:Leak
    fun:malloc
-   obj:/usr/lib*/libgcrypt.so.*
+   obj:/usr/lib*/libgnutls.so.*
    obj:/usr/lib*/libgcrypt.so.*
    obj:/usr/lib*/libgcrypt.so.*
    obj:/usr/lib*/libgcrypt.so.*
@@ -1206,7 +1206,7 @@
    Leak from crypt
    Memcheck:Leak
    fun:malloc
-   obj:/usr/lib*/libgcrypt.so.*
+   obj:/usr/lib*/libgnutls.so.*
    obj:/usr/lib*/libgcrypt.so.*
    obj:/usr/lib*/libgcrypt.so.*
    obj:/usr/lib*/libgcrypt.so.*
@@ -1221,7 +1221,7 @@
    Leak from crypt
    Memcheck:Leak
    fun:malloc
-   obj:/usr/lib*/libgcrypt.so.*
+   obj:/usr/lib*/libgnutls.so.*
    obj:/usr/lib*/libgcrypt.so.*
    obj:/usr/lib*/libgcrypt.so.*
    obj:/usr/lib*/libgcrypt.so.*
@@ -1235,7 +1235,7 @@
    Leak from crypt
    Memcheck:Leak
    fun:malloc
-   obj:/usr/lib*/libgcrypt.so.*
+   obj:/usr/lib*/libgnutls.so.*
    obj:/usr/lib*/libgcrypt.so.*
    obj:/usr/lib*/libgcrypt.so.*
    obj:/usr/lib*/libgcrypt.so.*
