@@ -1,2 +1,0 @@
-#!/bin/sh
-./startppp gprs /dev/ttyS1 *99***1# "" "" www.plusgsm.pl

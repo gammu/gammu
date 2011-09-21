@@ -1,2 +1,0 @@
-#!/bin/sh
-./startppp data /dev/ttyS1 123 plusgsm plusgsm 43200

@@ -139,12 +139,6 @@ media
 
 Sample media files which can be used with Gammu.
 
-other
-*****
-
-Some scripts not related directly to Gammu, but more to modems and GSM
-phones in general.
-
 packaging
 *********
 
