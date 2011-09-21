@@ -202,5 +202,3 @@ win32
 *****
 
 Unsupported applications built on top of libGammu.dll on Windows.
-
-# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us
