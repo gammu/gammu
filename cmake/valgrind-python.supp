@@ -1244,6 +1244,72 @@
    fun:gnutls_global_init
 }
 {
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:malloc
+   obj:/usr/lib*/libgnutls.so.*
+   obj:/lib*/libgcrypt.so.*
+   obj:/lib*/libgcrypt.so.*
+   fun:gcry_control
+   obj:/usr/lib*/libgnutls.so.*
+   fun:gnutls_global_init
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:malloc
+   obj:/usr/lib*/libgnutls.so*
+   obj:/lib*/libgcrypt.so*
+   obj:/lib*/libgcrypt.so*
+   obj:/lib*/libgcrypt.so*
+   obj:/lib*/libgcrypt.so*
+   obj:/lib*/libgcrypt.so*
+   fun:gcry_control
+   obj:/usr/lib*/libgnutls.so*
+   fun:gnutls_global_init
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:malloc
+   obj:/usr/lib*/libgnutls.so*
+   obj:/lib*/libgcrypt.so*
+   obj:/lib*/libgcrypt.so*
+   obj:/lib*/libgcrypt.so*
+   fun:gcry_control
+   obj:/usr/lib*/libgnutls.so*
+   fun:gnutls_global_init
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:malloc
+   obj:/lib*/libgcrypt.so*
+   obj:/lib*/libgcrypt.so*
+   obj:/lib*/libgcrypt.so*
+   obj:/lib*/libgcrypt.so*
+   obj:/lib*/libgcrypt.so*
+   obj:/lib*/libgcrypt.so*
+   obj:/lib*/libgcrypt.so*
+   fun:gcry_control
+   obj:/usr/lib*/libgnutls.so*
+   fun:gnutls_global_init
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:malloc
+   obj:/lib*/libgcrypt.so*
+   obj:/lib*/libgcrypt.so*
+   obj:/lib*/libgcrypt.so*
+   obj:/lib*/libgcrypt.so*
+   obj:/lib*/libgcrypt.so*
+   obj:/lib*/libgcrypt.so*
+   obj:/usr/lib*/libgnutls.so*
+   obj:/usr/lib*/libgnutls.so*
+   fun:gnutls_global_init
+}
+{
    Leak from crypt
    Memcheck:Leak
    fun:malloc
@@ -1560,12 +1626,12 @@
    Memcheck:Leak
    fun:malloc
    fun:inet_ntoa
-   obj:/usr/lib*/libcurl-gnutls.so.4.1.0
-   obj:/usr/lib*/libcurl-gnutls.so.4.1.0
-   obj:/usr/lib*/libcurl-gnutls.so.4.1.0
-   obj:/usr/lib*/libcurl-gnutls.so.4.1.0
-   obj:/usr/lib*/libcurl-gnutls.so.4.1.0
-   obj:/usr/lib*/libcurl-gnutls.so.4.1.0
+   obj:/usr/lib*/libcurl-gnutls.so*
+   obj:/usr/lib*/libcurl-gnutls.so*
+   obj:/usr/lib*/libcurl-gnutls.so*
+   obj:/usr/lib*/libcurl-gnutls.so*
+   obj:/usr/lib*/libcurl-gnutls.so*
+   obj:/usr/lib*/libcurl-gnutls.so*
    fun:GSM_ReadHTTPFile
 }
 
@@ -1574,12 +1640,12 @@
    Memcheck:Leak
    fun:malloc
    fun:inet_ntoa
-   obj:/usr/lib*/libcurl-gnutls.so.4.1.0
-   obj:/usr/lib*/libcurl-gnutls.so.4.1.0
-   obj:/usr/lib*/libcurl-gnutls.so.4.1.0
-   obj:/usr/lib*/libcurl-gnutls.so.4.1.0
-   obj:/usr/lib*/libcurl-gnutls.so.4.1.0
-   obj:/usr/lib*/libcurl-gnutls.so.4.1.0
+   obj:/usr/lib*/libcurl-gnutls.so*
+   obj:/usr/lib*/libcurl-gnutls.so*
+   obj:/usr/lib*/libcurl-gnutls.so*
+   obj:/usr/lib*/libcurl-gnutls.so*
+   obj:/usr/lib*/libcurl-gnutls.so*
+   obj:/usr/lib*/libcurl-gnutls.so*
    fun:curl_easy_perform
    fun:GSM_ReadHTTPFile
 }
@@ -2425,4 +2491,22 @@
     fun:PyObject_CallFunction
     fun:PyErr_NewException
     fun:gammu_create_errors
+}
+
+# gettext
+{
+   gettext
+   Memcheck:Cond
+   fun:__GI___strcasecmp_l
+   fun:__gconv_open
+   fun:_nl_find_msg
+   fun:__dcigettext
+}
+{
+   gettext
+   Memcheck:Value8
+   fun:__GI___strcasecmp_l
+   fun:__gconv_open
+   fun:_nl_find_msg
+   fun:__dcigettext
 }
