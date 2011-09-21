@@ -8,7 +8,7 @@
 int main(int argc, char **argv)
 {
 	GSM_Error error;
-	gboolean numeric = FALSE, manpage = FALSE;
+	gboolean numeric = FALSE, manpage = FALSE, doc = FALSE;
 	int rc = 0;
 	const char *errorstring;
 	const char *errorname;
@@ -19,6 +19,10 @@ int main(int argc, char **argv)
 
 	if (argc >= 2 && strcmp(argv[1], "-m") == 0) {
 		manpage = TRUE;
+	}
+
+	if (argc >= 2 && strcmp(argv[1], "-d") == 0) {
+		doc = TRUE;
 	}
 
 	for (error = ERR_NONE; error < ERR_LAST_VALUE; error++) {
@@ -36,6 +40,8 @@ int main(int argc, char **argv)
 			printf("%d. %s - %s\n", error, errorname, errorstring);
 		} else if (manpage) {
 			printf(".SS %d\n%s\n", 100 + error, errorstring);
+		} else if (doc) {
+			printf("%d\n    %s\n", 100 + error, errorstring);
 		} else {
 			printf("# %s - %s\n", errorname, errorstring);
 		}
