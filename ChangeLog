@@ -28,6 +28,7 @@ ChangeLog
 [-] * Display 8-bit messages in hex (Nicolas Pitre).
 [-] * Do not use AT+CUSD=2 on some phones (bug #1508).
 [-] * Fixed gammu-monitor with Windows service (bug #1515).
+[-] * Cleanup of contrib directory.
     
 20110719 - 1.30.0
 
