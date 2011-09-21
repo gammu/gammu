@@ -27,4 +27,10 @@ Continue reading
     * :ref:`protocols` -- learn about phone protocols
     * :ref:`formats` -- file formats supported by Gammu
 
-.. include:: contents.rst
+Full contents
+-------------
+
+.. toctree::
+    :maxdepth: 2
+
+    contents
