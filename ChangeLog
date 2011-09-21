@@ -20,6 +20,14 @@ ChangeLog
 =========
     
 2011???? - 1.30.90
+
+[-] * Various documentation improvements.
+[-] * Detect Alcatel style reply on CPIN response (bug #1502).
+[-] * Fix build on some Win32 systems (bug #1496).
+[-] * Make jadmaker handle names with spaces (Raphaël Droz).
+[-] * Display 8-bit messages in hex (Nicolas Pitre).
+[-] * Do not use AT+CUSD=2 on some phones (bug #1508).
+[-] * Fixed gammu-monitor with Windows service (bug #1515).
     
 20110719 - 1.30.0
 
