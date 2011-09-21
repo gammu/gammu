@@ -110,13 +110,17 @@ following command:
 
 .. code-block:: sh
 
-    apt-get install cmake python-dev pkg-config libmysqlclient-dev libpq-dev libcurl4-gnutls-dev libusb-1.0-0-dev libdbi0-dev libbluetooth-dev libgudev-1.0-dev libglib2.0-dev unixodbc-dev
+    apt-get install cmake python-dev pkg-config libmysqlclient-dev libpq-dev \
+        libcurl4-gnutls-dev libusb-1.0-0-dev libdbi0-dev libbluetooth-dev \
+        libgudev-1.0-dev libglib2.0-dev unixodbc-dev
 
 For openSUSE, the installation all optional packages could look like:
 
 .. code-block:: sh
 
-    zypper install libusb-1_0-devel libdbi-devel bluez-devel postgresql-devel mysql-devel python-devel libcurl-devel cmake pkgconfig unixODBC-devel glib2-devel libgudev-1_0-devel
+    zypper install libusb-1_0-devel libdbi-devel bluez-devel postgresql-devel \
+        mysql-devel python-devel libcurl-devel cmake pkgconfig unixODBC-devel \
+        glib2-devel libgudev-1_0-devel
 
 For compatibility reasons, configure like wrapper is provided, if you
 don't need much specific tuning, you can use usual set of commands:
