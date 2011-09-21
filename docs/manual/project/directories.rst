@@ -134,12 +134,6 @@ init
 
 Init scripts for Gammu SMSD.
 
-linux-driver
-************
-
-DKU-2 driver for Linux. This will be removed in future, please use
-fbususb connection type instead.
-
 media
 *****
 
