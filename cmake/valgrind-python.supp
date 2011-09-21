@@ -2570,6 +2570,16 @@
 }
 {
    sse strcasestr
+   Memcheck:Value8
+   fun:__strcasestr_sse42_nonascii
+}
+{
+   sse strcasestr
    Memcheck:Cond
+   fun:__strcasestr_sse42
+}
+{
+   sse strcasestr
+   Memcheck:Value8
    fun:__strcasestr_sse42
 }
