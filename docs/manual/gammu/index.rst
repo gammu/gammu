@@ -1814,6 +1814,12 @@ values increased by 100:
     Could not resolve the host name.
 169
     Failed to get SMSC number from phone.
+170
+    Operation aborted.
+171
+    Installation data not found, please consult debug log and/or documentation for more details.
+172
+    Entry is read only.
 
 
 Examples
