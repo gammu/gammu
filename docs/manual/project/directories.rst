@@ -139,13 +139,6 @@ media
 
 Sample media files which can be used with Gammu.
 
-packaging
-*********
-
-Support for creating packages on various distributions. Please note that
-support for RPM (gammu.spec) and Slackware (description-pak) is included
-in top level directory.
-
 perl
 ****
 

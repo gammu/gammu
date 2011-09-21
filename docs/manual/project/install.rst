@@ -14,6 +14,26 @@ page <http://wammu.eu/gammu/>.
 You can usually also find Gammu in your distribution, so unless you need a
 newer version, just install package from your distribution.
 
+Debian
+++++++
+
+Gammu packages are included in Debian (testing versions go to
+experimental and stable to unstable). If you want to build Debian
+package on your own, you can find packaging in Git repository at
+``git://git.debian.org/git/collab-maint/gammu.git`` (you can browse it on
+<http://git.debian.org/?p=collab-maint/gammu.git>).
+
+RPM
++++
+
+Gammu packages are included in openSUSE and Fedora. Additionally source tarball
+contains :file:`gammu.spec` which you can use for building RPM package.
+
+Slackware
++++++++++
+
+Gammu packages are included in Gentoo. Additionally source tarball contains
+:file:`description-pak` which you can use for building Slackware package.
 
 Prebuilt Binaries for Windows
 -----------------------------
