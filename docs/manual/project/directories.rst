@@ -197,6 +197,13 @@ symbian
 GNapplet sources and binaries. This comes from Gnokii project, but Gammu
 includes slightly modified version.
 
+s60
+***
+
+Series60 applet to use with recent Symbian phones.
+
+.. seealso:: :ref:`s60`
+
 win32
 *****
 
