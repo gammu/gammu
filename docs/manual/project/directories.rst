@@ -107,6 +107,7 @@ contrib directory
 -----------------
 
 This directory contains various things which might be useful with Gammu.
+Most of them were contributed by Gammu users.
 
 .. note::
 
