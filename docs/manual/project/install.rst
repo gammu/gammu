@@ -64,58 +64,100 @@ Gammu does not require any special libraries at all to build, but you might
 miss some features. Optional libraries include:
 
 Bluez-libs
-    - http://www.bluez.org/
-    - Bluetooth support on Linux.
+++++++++++
+
+.. seealso:: http://www.bluez.org/
+
+Required for Bluetooth support on Linux.
 
 libusb-1.0
-    - http://libusb.sourceforge.net/
-    - fbususb/dku2 connection support on Linux
+++++++++++
+
+.. seealso:: http://libusb.sourceforge.net/
+
+Required for fbususb/dku2 connection support on Linux.
 
 libCURL
-    - http://curl.haxx.se/libcurl/
-    - New versions notification and OpenCellID access, see :option:`gammu getlocation`.
++++++++
+
+.. seealso:: http://curl.haxx.se/libcurl/
+
+Required for new versions notification (see :option:`gammu checkversion`) and
+OpenCellID access (see :option:`gammu getlocation`).
 
 libiconv
-    - http://www.gnu.org/software/libiconv/
-    - Support for more character sets in AT engine.
+++++++++
+
+.. seealso:: http://www.gnu.org/software/libiconv/
+
+Used to support more character sets in AT engine.
 
 Gettext
-    - http://www.gnu.org/software/gettext/
-    - Localization of strings.
++++++++
+
+.. seealso:: http://www.gnu.org/software/gettext/
+
+Localization of strings.
 
 MySQL
-    - http://mysql.com/
-    - :ref:`gammu-smsd-mysql` for :ref:`smsd`.
++++++
+
+.. seealso:: http://mysql.com/
+
+Required for :ref:`gammu-smsd-mysql` in :ref:`smsd`.
 
 PostgreSQL
-    - http://www.postgresql.org/
-    - :ref:`gammu-smsd-pgsql` for :ref:`smsd`.
+++++++++++
+
+.. seealso:: http://www.postgresql.org/
+
+Required for :ref:`gammu-smsd-pgsql` in :ref:`smsd`.
 
 unixODBC
-    - http://www.unixodbc.org/
-    - :ref:`gammu-smsd-odbc` for :ref:`smsd`.
-    - not needed on platforms having native ODBC support such as Microsoft Windows
+++++++++
+
+.. seealso:: http://www.unixodbc.org/
+
+Required for :ref:`gammu-smsd-odbc` in :ref:`smsd`.
+
+.. note:: Not needed on platforms having native ODBC support such as Microsoft Windows.
 
 libdbi
-    - http://libdbi.sourceforge.net/
-    - required at least version 0.8.2
-    - :ref:`gammu-smsd-dbi` for :ref:`smsd`.
+++++++
+
+.. seealso:: http://libdbi.sourceforge.net/
+
+Required for :ref:`gammu-smsd-dbi` in :ref:`smsd`.
+
+.. note:: Required at least version 0.8.2.
 
 Python
-    - http://www.python.org/
-    - Gammu has a Python bindings, see :ref:`python`.
+++++++
+
+.. seealso:: http://www.python.org/
+
+Gammu has a Python bindings, see :ref:`python`.
 
 SQLite + libdbi-drivers with SQLite
-    - http://www.sqlite.org/
-    - needed for testing of SMSD using libdbi driver (libdbd-sqlite3), see :ref:`testing`.
++++++++++++++++++++++++++++++++++++
+
+.. seealso:: http://www.sqlite.org/
+
+Needed for testing of SMSD using libdbi driver (libdbd-sqlite3), see :ref:`testing`.
 
 glib
-    - http://www.gtk.org/
-    - currently needed only for :ref:`gammu-detect`
+++++
+
+.. seealso:: http://www.gtk.org/
+
+Currently needed only for :ref:`gammu-detect`.
 
 gudev
-    - http://gudev.sourceforge.net/
-    - currently needed only for :ref:`gammu-detect`
++++++
+
+.. seealso:: http://gudev.sourceforge.net/
+
+Currently needed only for :ref:`gammu-detect`.
 
 
 Compiling on Linux/Unix Systems
