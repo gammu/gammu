@@ -149,6 +149,13 @@ php
 
 Various PHP frontends to SMSD or Gammu directly.
 
+sms
+***
+
+This directory contains SMS default alphabet saved in Unicode text file
+(:file:`charset.txt`) and table used for converting chars during saving
+SMS with default alphabet (:file:`convert.txt`).
+
 sms-gammu2android
 *****************
 
