@@ -248,7 +248,7 @@ msgstr "Du skal angive et filnavn, ikke et mappenavn."
 
 #: libgammu/gsmcomon.c:132
 msgid "Can not access SIM card."
-msgstr ""
+msgstr "Kan ikke få adgang til SIM-kortet."
 
 #: libgammu/gsmcomon.c:133
 msgid "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
