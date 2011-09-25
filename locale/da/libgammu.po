@@ -262,7 +262,7 @@ msgstr "Kun en del af mappen er listet."
 
 #: libgammu/gsmcomon.c:135
 msgid "Folder must be empty."
-msgstr ""
+msgstr "Mappen skal være tom."
 
 #: libgammu/gsmcomon.c:136
 msgid "Data were converted."
