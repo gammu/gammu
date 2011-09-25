@@ -282,7 +282,7 @@ msgstr "Intern telefonfejl."
 
 #: libgammu/gsmcomon.c:140
 msgid "Error writing file to disk."
-msgstr ""
+msgstr "Fejl under skrivning til disk."
 
 #: libgammu/gsmcomon.c:141
 msgid "No such section exists."
