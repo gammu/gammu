@@ -240,7 +240,7 @@ msgstr "En fil med det angivne navn findes ikke."
 
 #: libgammu/gsmcomon.c:130
 msgid "You have to give folder name and not file name."
-msgstr ""
+msgstr "Du skal angive et mappenavn, ikke et filnavn."
 
 #: libgammu/gsmcomon.c:131
 msgid "You have to give file name and not folder name."
