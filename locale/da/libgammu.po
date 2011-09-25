@@ -54,7 +54,7 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:92
 msgid "Error setting device DTR or RTS."
-msgstr "Fejl under opsætning af DTR eller RTS på enheden."
+msgstr "Fejl ved opsætning af DTR eller RTS på enheden."
 
 #: libgammu/gsmcomon.c:93
 msgid "Error setting device speed. Maybe speed not supported."
