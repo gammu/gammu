@@ -366,7 +366,7 @@ msgstr "Bil"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1973 libgammu/phone/nokia/nfunc.c:1143
 msgid "Headset"
-msgstr ""
+msgstr "Hovedtelefon"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1979 libgammu/phone/nokia/nfunc.c:1131
 msgid "General"
