@@ -294,7 +294,7 @@ msgstr "Bruger standardværdier."
 
 #: libgammu/gsmcomon.c:143
 msgid "Corrupted data returned by phone."
-msgstr ""
+msgstr "Forvrængede data returneret af telefonen."
 
 #: libgammu/gsmcomon.c:144
 msgid "Bad feature string in configuration."
