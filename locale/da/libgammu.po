@@ -302,7 +302,7 @@ msgstr "Dårlig featurestreng i konfigurationen."
 
 #: libgammu/gsmcomon.c:145
 msgid "Desired functionality has been disabled on compile time."
-msgstr ""
+msgstr "Den ønskede funktionalitet er ikke kompileret ind."
 
 #: libgammu/gsmcomon.c:146
 msgid "Bluetooth configuration requires channel option."
