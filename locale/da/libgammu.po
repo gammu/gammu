@@ -439,4 +439,4 @@ msgstr "Pager"
 
 #: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1753
 msgid "Outbox"
-msgstr ""
+msgstr "Udboks"
