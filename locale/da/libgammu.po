@@ -330,7 +330,7 @@ msgstr "Kunne ikke opløse værtsnavnet."
 
 #: libgammu/gsmcomon.c:152
 msgid "Failed to get SMSC number from phone."
-msgstr ""
+msgstr "Fik ikke SMSC nummer fra telefonen."
 
 #: libgammu/gsmcomon.c:153
 msgid "Operation aborted."
