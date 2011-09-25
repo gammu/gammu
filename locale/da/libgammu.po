@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-04-21 14:32+0200\n"
-"PO-Revision-Date: 2011-09-25 23:59+0200\n"
+"PO-Revision-Date: 2011-09-26 00:00+0200\n"
 "Last-Translator: Jørgen Thomsen <opensource@jth.net>\n"
 "Language-Team: none\n"
 "Language: da\n"
@@ -318,7 +318,7 @@ msgstr "Servicekonfiguration mangler."
 
 #: libgammu/gsmcomon.c:149
 msgid "Command rejected because device was busy. Wait and restart."
-msgstr ""
+msgstr "Kommandoen blev afvist, fordi enheden var optaget. Vent og genstart."
 
 #: libgammu/gsmcomon.c:150
 msgid "Could not connect to the server."
