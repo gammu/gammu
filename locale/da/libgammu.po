@@ -322,7 +322,7 @@ msgstr "Kommandoen blev afvist, fordi enheden var optaget. Vent og genstart."
 
 #: libgammu/gsmcomon.c:150
 msgid "Could not connect to the server."
-msgstr ""
+msgstr "Kunne ikke forbinde til serveren."
 
 #: libgammu/gsmcomon.c:151
 msgid "Could not resolve the host name."
