@@ -334,7 +334,7 @@ msgstr "Fik ikke SMSC nummer fra telefonen."
 
 #: libgammu/gsmcomon.c:153
 msgid "Operation aborted."
-msgstr ""
+msgstr "Operationen afbrudt."
 
 #: libgammu/gsmcomon.c:154
 msgid ""
