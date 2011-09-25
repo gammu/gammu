@@ -190,7 +190,7 @@ msgstr "Telefonen er deaktiveret og forbundet til en oplader."
 
 #: libgammu/gsmcomon.c:119
 msgid "File format not supported by Gammu."
-msgstr ""
+msgstr "Filformatet er ikke understøttet af Gammu."
 
 #: libgammu/gsmcomon.c:120
 msgid ""
