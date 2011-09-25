@@ -266,7 +266,7 @@ msgstr "Mappen skal være tom."
 
 #: libgammu/gsmcomon.c:136
 msgid "Data were converted."
-msgstr ""
+msgstr "Data blev konverteret."
 
 #: libgammu/gsmcomon.c:137
 msgid "Gammu is not configured."
