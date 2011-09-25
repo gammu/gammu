@@ -68,7 +68,7 @@ msgstr "Fejl under skrivning til enheden."
 
 #: libgammu/gsmcomon.c:95
 msgid "Error during reading from the device."
-msgstr ""
+msgstr "Fejl under læsning fra enheden."
 
 #: libgammu/gsmcomon.c:96
 msgid "Can't set parity on the device."
