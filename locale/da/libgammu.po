@@ -310,7 +310,7 @@ msgstr "Bluetooth konfiguration kræver kanal option."
 
 #: libgammu/gsmcomon.c:147
 msgid "Service is not running."
-msgstr ""
+msgstr "Servicen kører ikke."
 
 #: libgammu/gsmcomon.c:148
 msgid "Service configuration is missing."
