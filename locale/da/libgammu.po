@@ -350,7 +350,7 @@ msgstr "Indgangen er kun læsbar."
 
 #: libgammu/gsmcomon.c:188
 msgid "Unknown error description."
-msgstr ""
+msgstr "Ukendt fejlbeskrivelse."
 
 #: libgammu/phone/dummy/dummy.c:603
 msgid "Templates"
