@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-04-21 14:32+0200\n"
-"PO-Revision-Date: 2011-09-25 23:55+0200\n"
+"PO-Revision-Date: 2011-09-25 23:56+0200\n"
 "Last-Translator: Jørgen Thomsen <opensource@jth.net>\n"
 "Language-Team: none\n"
 "Language: da\n"
@@ -270,7 +270,7 @@ msgstr "Data blev konverteret."
 
 #: libgammu/gsmcomon.c:137
 msgid "Gammu is not configured."
-msgstr ""
+msgstr "Gammu er ikke konfigureret."
 
 #: libgammu/gsmcomon.c:138
 msgid "Wrong folder used."
