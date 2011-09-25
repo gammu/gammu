@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-04-21 14:32+0200\n"
-"PO-Revision-Date: 2011-09-25 23:40+0200\n"
+"PO-Revision-Date: 2011-09-25 23:41+0200\n"
 "Last-Translator: Jørgen Thomsen <opensource@jth.net>\n"
 "Language-Team: none\n"
 "Language: da\n"
@@ -108,7 +108,7 @@ msgstr "Ukendt forbindelsestype. Check konfigurationsfilen."
 
 #: libgammu/gsmcomon.c:102
 msgid "Unknown model type string. Check config file."
-msgstr ""
+msgstr "Ukendt modeltype. Check konfigurationsfilen."
 
 #: libgammu/gsmcomon.c:103
 msgid ""
