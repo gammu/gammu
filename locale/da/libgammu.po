@@ -174,7 +174,7 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:116
 msgid "Phone is not connected."
-msgstr ""
+msgstr "Telefonen er ikke forbundet."
 
 #: libgammu/gsmcomon.c:117
 msgid ""
