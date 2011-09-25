@@ -216,7 +216,7 @@ msgstr "Den aktuelle forbindelsestype understøtter ikke den kaldte funktion."
 
 #: libgammu/gsmcomon.c:124
 msgid "CRC error."
-msgstr ""
+msgstr "CRC fejl."
 
 #: libgammu/gsmcomon.c:125
 msgid "Invalid date or time specified."
