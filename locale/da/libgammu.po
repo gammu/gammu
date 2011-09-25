@@ -8,22 +8,21 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-04-21 14:32+0200\n"
-"PO-Revision-Date: 2009-02-03 12:50+0100\n"
-"Last-Translator: Jakob Peterhänsel <jakob@hjemme.dk>\n"
+"PO-Revision-Date: 2011-09-25 23:33+0200\n"
+"Last-Translator: Jørgen Thomsen <opensource@jth.net>\n"
 "Language-Team: none\n"
-"Language: \n"
+"Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Pootle 1.1.0\n"
+"X-Generator: Pootle 2.0.5\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
 msgstr "Ingen fejl."
 
 #: libgammu/gsmcomon.c:85
-#, fuzzy
 msgid "Error opening device. Unknown, busy or no permissions."
 msgstr "Fejl ved åbning af enhed. Ukendt/optaget eller manglende tilladelser."
 
