@@ -232,7 +232,7 @@ msgstr "Ugyldige data sendt til telefonen."
 
 #: libgammu/gsmcomon.c:128
 msgid "File with specified name already exists."
-msgstr ""
+msgstr "En fil med det angivne navn findes allerede."
 
 #: libgammu/gsmcomon.c:129
 msgid "File with specified name doesn't exist."
