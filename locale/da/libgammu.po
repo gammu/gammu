@@ -164,6 +164,8 @@ msgstr "Operationen er ikke tilladt af telefonen."
 msgid ""
 "No SMSC number given. Provide it manually or use the one configured in phone."
 msgstr ""
+"Intet SMSC nummer angivet. Angiv den manuelt eller brug den i telefonen "
+"konfigurerede."
 
 #: libgammu/gsmcomon.c:115
 msgid "You're inside phone menu (maybe editing?). Leave it and try again."
