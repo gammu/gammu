@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-04-21 14:32+0200\n"
-"PO-Revision-Date: 2011-09-25 23:37+0200\n"
+"PO-Revision-Date: 2011-09-25 23:38+0200\n"
 "Last-Translator: Jørgen Thomsen <opensource@jth.net>\n"
 "Language-Team: none\n"
 "Language: da\n"
@@ -76,7 +76,7 @@ msgstr "Kan ikke sætte paritet på enheden."
 
 #: libgammu/gsmcomon.c:97
 msgid "No response in specified timeout. Probably phone not connected."
-msgstr ""
+msgstr "Intet svar efter angivet timeoutværdi. Telefonen er nok ikke forbundet."
 
 #: libgammu/gsmcomon.c:98
 msgid ""
