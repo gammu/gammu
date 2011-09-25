@@ -407,7 +407,7 @@ msgstr "Gemte beskeder"
 
 #: libgammu/phone/nokia/nfunc.c:947
 msgid "Family"
-msgstr ""
+msgstr "Familie"
 
 #: libgammu/phone/nokia/nfunc.c:949
 msgid "VIP"
