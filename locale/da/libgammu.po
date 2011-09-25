@@ -346,7 +346,7 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:155
 msgid "Entry is read only."
-msgstr ""
+msgstr "Indgangen er kun læsbar."
 
 #: libgammu/gsmcomon.c:188
 msgid "Unknown error description."
