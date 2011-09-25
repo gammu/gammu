@@ -258,7 +258,7 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:134
 msgid "Only part of folder has been listed."
-msgstr ""
+msgstr "Kun en del af mappen er listet."
 
 #: libgammu/gsmcomon.c:135
 msgid "Folder must be empty."
