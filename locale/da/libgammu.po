@@ -40,7 +40,7 @@ msgstr "Fejl ved åbning af enhed. Er allerede åben af andet program."
 
 #: libgammu/gsmcomon.c:89
 msgid "Error opening device, you don't have permissions."
-msgstr "Fejl ved åbning af enhed. Bruger tilladelse mangler."
+msgstr "Fejl ved åbning af enhed. Brugertilladelse mangler."
 
 #: libgammu/gsmcomon.c:90
 msgid "Error opening device. No required driver in operating system."
