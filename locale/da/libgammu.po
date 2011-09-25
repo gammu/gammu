@@ -274,7 +274,7 @@ msgstr "Gammu er ikke konfigureret."
 
 #: libgammu/gsmcomon.c:138
 msgid "Wrong folder used."
-msgstr ""
+msgstr "Forkert mappe brugt."
 
 #: libgammu/gsmcomon.c:139
 msgid "Internal phone error."
