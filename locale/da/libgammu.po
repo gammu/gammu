@@ -395,7 +395,7 @@ msgstr "SIM"
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:579 libgammu/phone/pfunc.c:41
 #: libgammu/phone/s60/s60phone.c:1752
 msgid "Inbox"
-msgstr ""
+msgstr "Indboks"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:580
 msgid "Sent items"
