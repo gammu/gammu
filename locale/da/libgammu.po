@@ -374,7 +374,7 @@ msgstr "Generel"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1981 libgammu/phone/nokia/nfunc.c:1133
 msgid "Silent"
-msgstr ""
+msgstr "Tavs"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1983
 msgid "Discreet"
