@@ -362,7 +362,7 @@ msgstr "Personlig"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1971 libgammu/phone/nokia/nfunc.c:1141
 msgid "Car"
-msgstr ""
+msgstr "Bil"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1973 libgammu/phone/nokia/nfunc.c:1143
 msgid "Headset"
