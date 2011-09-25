@@ -278,7 +278,7 @@ msgstr "Forkert mappe brugt."
 
 #: libgammu/gsmcomon.c:139
 msgid "Internal phone error."
-msgstr ""
+msgstr "Intern telefonfejl."
 
 #: libgammu/gsmcomon.c:140
 msgid "Error writing file to disk."
