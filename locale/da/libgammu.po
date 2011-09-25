@@ -419,7 +419,7 @@ msgstr "Venner"
 
 #: libgammu/phone/nokia/nfunc.c:953
 msgid "Colleagues"
-msgstr ""
+msgstr "Kolleger"
 
 #: libgammu/phone/nokia/nfunc.c:955
 msgid "Other"
