@@ -411,7 +411,7 @@ msgstr "Familie"
 
 #: libgammu/phone/nokia/nfunc.c:949
 msgid "VIP"
-msgstr ""
+msgstr "VIP"
 
 #: libgammu/phone/nokia/nfunc.c:951
 msgid "Friends"
