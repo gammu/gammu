@@ -386,7 +386,7 @@ msgstr "Høj"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1987
 msgid "My style"
-msgstr ""
+msgstr "Min egen stil"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:578
 msgid "SIM"
