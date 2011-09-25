@@ -124,7 +124,7 @@ msgstr "Funktionen understøttes ikke af telefonen."
 
 #: libgammu/gsmcomon.c:105
 msgid "Entry is empty."
-msgstr ""
+msgstr "Indgangen er tom."
 
 #: libgammu/gsmcomon.c:106
 msgid "Security error. Maybe no PIN?"
