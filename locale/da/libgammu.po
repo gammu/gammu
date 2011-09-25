@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-04-21 14:32+0200\n"
-"PO-Revision-Date: 2011-09-25 23:33+0200\n"
+"PO-Revision-Date: 2011-09-25 23:34+0200\n"
 "Last-Translator: Jørgen Thomsen <opensource@jth.net>\n"
 "Language-Team: none\n"
 "Language: da\n"
@@ -47,7 +47,6 @@ msgid "Error opening device. No required driver in operating system."
 msgstr "Fejl ved åbning af enhed. Krævet driver mangler i systemet."
 
 #: libgammu/gsmcomon.c:91
-#, fuzzy
 msgid "Error opening device. Some hardware not connected/wrongly configured."
 msgstr ""
 "Fejl ved åbning af enhed. Forbindelse til enhed mangler eller forkert "
