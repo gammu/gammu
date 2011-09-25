@@ -99,6 +99,8 @@ msgid ""
 "Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
 "report it."
 msgstr ""
+"Ukendt ramme. Se <http://wammu.eu/support/bugs/> for information om "
+"fejlrapportering."
 
 #: libgammu/gsmcomon.c:101
 msgid "Unknown connection type string. Check config file."
