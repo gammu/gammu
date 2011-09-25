@@ -427,7 +427,7 @@ msgstr "Andre"
 
 #: libgammu/phone/nokia/nfunc.c:1135
 msgid "Meeting"
-msgstr ""
+msgstr "Møde"
 
 #: libgammu/phone/nokia/nfunc.c:1137
 msgid "Outdoor"
