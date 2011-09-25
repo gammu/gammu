@@ -228,7 +228,7 @@ msgstr "Fejl i telefonmemory. Måske kan den kun læses."
 
 #: libgammu/gsmcomon.c:127
 msgid "Invalid data given to phone."
-msgstr ""
+msgstr "Ugyldige data sendt til telefonen."
 
 #: libgammu/gsmcomon.c:128
 msgid "File with specified name already exists."
