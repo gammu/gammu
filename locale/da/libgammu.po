@@ -137,6 +137,8 @@ msgstr "Ugyldig position. Måske for høj ?"
 #: libgammu/gsmcomon.c:108
 msgid "Functionality not implemented. You are welcome to help authors with it."
 msgstr ""
+"Funktionen er ikke implementeret. Du er velkommen til at hjælpe forfatterne "
+"med den."
 
 #: libgammu/gsmcomon.c:109
 msgid "Memory full."
