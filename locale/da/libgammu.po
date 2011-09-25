@@ -146,7 +146,7 @@ msgstr "Memory fuld."
 
 #: libgammu/gsmcomon.c:110
 msgid "Unknown error."
-msgstr ""
+msgstr "Ukendt fejl."
 
 #: libgammu/gsmcomon.c:111
 msgid "Can not open specified file."
