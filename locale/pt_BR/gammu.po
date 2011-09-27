@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-04-21 14:35+0200\n"
+"POT-Creation-Date: 2011-09-27 08:58+0200\n"
 "PO-Revision-Date: 2011-06-02 23:00+0200\n"
 "Last-Translator: Andrei Falbot <falbot@gmail.com>\n"
 "Language-Team: none\n"
@@ -672,7 +672,7 @@ msgstr "Alarme silencioso"
 
 #: gammu/calendar.c:217 gammu/calendar.c:551 gammu/calendar.c:771
 #: gammu/calendar.c:993 gammu/message.c:225 gammu/misc.c:1132
-#: helper/memory-display.c:167 helper/message-display.c:432
+#: helper/memory-display.c:167 helper/message-display.c:434
 msgid "Text"
 msgstr "Texto"
 
@@ -2701,7 +2701,7 @@ msgid "What type of reset do you want (\"%s\") ?\n"
 msgstr "Qual tipo de (reset) você deseja (\"%s\")?\n"
 
 #: gammu/misc.c:969 gammu/misc.c:1016 helper/memory-display.c:178
-#: helper/message-display.c:465
+#: helper/message-display.c:467
 msgid "Address"
 msgstr "Endereço"
 
@@ -2774,7 +2774,7 @@ msgstr "Bitmap ID"
 msgid "No operator logo in phone"
 msgstr "Não há logo de operador no telefone"
 
-#: gammu/misc.c:1133 gammu/mms.c:71 helper/message-display.c:463
+#: gammu/misc.c:1133 gammu/mms.c:71 helper/message-display.c:465
 msgid "Sender"
 msgstr "Emissor"
 
@@ -3025,7 +3025,7 @@ msgstr "Logo Inicialização"
 msgid "Operator logo"
 msgstr "Logo Operador"
 
-#: gammu/misc.c:1757 helper/message-display.c:430
+#: gammu/misc.c:1757 helper/message-display.c:432
 msgid "Picture"
 msgstr "Foto"
 
@@ -3138,7 +3138,7 @@ msgstr "Tons Teclado"
 msgid "Warning (games) tones"
 msgstr "Tons Aviso Jogos"
 
-#: gammu/misc.c:2117 helper/message-display.c:426
+#: gammu/misc.c:2117 helper/message-display.c:428
 msgid "Screen saver"
 msgstr "Salva Tela"
 
@@ -3376,7 +3376,7 @@ msgstr "CC"
 msgid "Message type"
 msgstr "Tipo de Mensagem"
 
-#: gammu/mms.c:97 helper/message-display.c:464
+#: gammu/mms.c:97 helper/message-display.c:466
 msgid "Subject"
 msgstr "Assunto"
 
@@ -4292,86 +4292,86 @@ msgstr ", parte %i de %i"
 msgid ", %i parts"
 msgstr ", %i partes"
 
-#: helper/message-display.c:325
+#: helper/message-display.c:324
 msgid "Siemens file"
 msgstr "Arquivo Siemens"
 
-#: helper/message-display.c:328
+#: helper/message-display.c:329
 msgid "8 bit SMS, cannot be displayed here"
 msgstr "8 bits SMS, não podem ser exibidas aqui"
 
-#: helper/message-display.c:334
+#: helper/message-display.c:336
 #, c-format
 msgid "Unknown PDU type: 0x%x\n"
 msgstr "Tipo de PDU desconhecido: 0x%x\n"
 
-#: helper/message-display.c:381
+#: helper/message-display.c:383
 msgid ""
 "Some details were ignored (unknown or not implemented in decoding functions)"
 msgstr ""
 "Alguns detalhes foram ignorados (funções decodificadoras desconhecidas ou "
 "não implementadas)"
 
-#: helper/message-display.c:386
+#: helper/message-display.c:388
 msgid "Siemens OTA file"
 msgstr "Arquivo Siemens OTA"
 
-#: helper/message-display.c:388
+#: helper/message-display.c:390
 msgid " - VCARD"
 msgstr "- VCARD"
 
-#: helper/message-display.c:402
+#: helper/message-display.c:404
 #, c-format
 msgid "Ringtone \"%s\"\n"
 msgstr "Toque \"%s\"\n"
 
-#: helper/message-display.c:407
+#: helper/message-display.c:409
 msgid "Do you want to play it?"
 msgstr "Você deseja tocar este?"
 
-#: helper/message-display.c:412
+#: helper/message-display.c:414
 msgid "Caller logo"
 msgstr "Logotipo do Chamador"
 
-#: helper/message-display.c:416
+#: helper/message-display.c:418
 #, c-format
 msgid "Operator logo for %s network"
 msgstr "Logotipo %s Operador da rede"
 
-#: helper/message-display.c:436
+#: helper/message-display.c:438
 msgid "Profile"
 msgstr "Perfil"
 
-#: helper/message-display.c:457
+#: helper/message-display.c:459
 msgid "EMS sound ID"
 msgstr "Som de Id. EMS"
 
-#: helper/message-display.c:460
+#: helper/message-display.c:462
 msgid "EMS animation ID"
 msgstr "ID. animação EMS"
 
-#: helper/message-display.c:466
+#: helper/message-display.c:468
 msgid "Message size"
 msgstr "Tamanho da Mensagem"
 
 #. l10n: Generic prefix for error messages
-#: helper/message-display.c:499 helper/printing.c:18
+#: helper/message-display.c:501 helper/printing.c:18
 msgid "Error"
 msgstr "Erro"
 
-#: helper/message-display.c:532
+#: helper/message-display.c:534
 msgid "Data PDU"
 msgstr "Dados PDU"
 
-#: helper/message-display.c:533
+#: helper/message-display.c:535
 msgid "Number of bits"
 msgstr "Número de Bits"
 
-#: helper/message-display.c:535
+#: helper/message-display.c:537
 msgid "UDH"
 msgstr "UDH"
 
-#: helper/message-display.c:551
+#: helper/message-display.c:553
 msgid "Whole PDU"
 msgstr "PDU Integral"
 

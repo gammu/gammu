@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu 1.29.93\n"
+"Project-Id-Version: Gammu 1.30.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-04-21 14:32+0200\n"
+"POT-Creation-Date: 2011-09-27 08:58+0200\n"
 "PO-Revision-Date: 2009-03-14 15:31+0200\n"
 "Last-Translator: soft developer <soft-developer@live.com>\n"
 "Language-Team: Language =it\n"
@@ -759,7 +759,7 @@ msgstr "Senza allarme: %s\n"
 
 #: gammu/calendar.c:217 gammu/calendar.c:551 gammu/calendar.c:771
 #: gammu/calendar.c:993 gammu/message.c:225 gammu/misc.c:1132
-#: helper/memory-display.c:167 helper/message-display.c:432
+#: helper/memory-display.c:167 helper/message-display.c:434
 msgid "Text"
 msgstr "Testo"
 
@@ -2956,7 +2956,7 @@ msgid "What type of reset do you want (\"%s\") ?\n"
 msgstr "Che tipo di reset vuoi effettuare (\"%s\") ?\n"
 
 #: gammu/misc.c:969 gammu/misc.c:1016 helper/memory-display.c:178
-#: helper/message-display.c:465
+#: helper/message-display.c:467
 #, fuzzy
 msgid "Address"
 msgstr "Indirizzo : \"%s\"\n"
@@ -3037,7 +3037,7 @@ msgstr "Immagine    : abilitata\n"
 msgid "No operator logo in phone"
 msgstr "Nessun logo operatore nel telefono\n"
 
-#: gammu/misc.c:1133 gammu/mms.c:71 helper/message-display.c:463
+#: gammu/misc.c:1133 gammu/mms.c:71 helper/message-display.c:465
 #, fuzzy
 msgid "Sender"
 msgstr "Numero principale "
@@ -3326,7 +3326,7 @@ msgstr "Logo di accensione"
 msgid "Operator logo"
 msgstr "Logo operatore"
 
-#: gammu/misc.c:1757 helper/message-display.c:430
+#: gammu/misc.c:1757 helper/message-display.c:432
 #, fuzzy
 msgid "Picture"
 msgstr "Messaggio con disegno"
@@ -3452,7 +3452,7 @@ msgstr "Tastiera bloccata\n"
 msgid "Warning (games) tones"
 msgstr "Toni di avviso        : "
 
-#: gammu/misc.c:2117 helper/message-display.c:426
+#: gammu/misc.c:2117 helper/message-display.c:428
 #, fuzzy
 msgid "Screen saver"
 msgstr "Numero screen saver   : "
@@ -3723,7 +3723,7 @@ msgstr ""
 msgid "Message type"
 msgstr "ID Suoneria messaggi  : "
 
-#: gammu/mms.c:97 helper/message-display.c:464
+#: gammu/mms.c:97 helper/message-display.c:466
 msgid "Subject"
 msgstr ""
 
@@ -4723,21 +4723,21 @@ msgstr ", parte %i di %i"
 msgid ", %i parts"
 msgstr ", %i parti"
 
-#: helper/message-display.c:325
+#: helper/message-display.c:324
 msgid "Siemens file"
 msgstr ""
 
-#: helper/message-display.c:328
+#: helper/message-display.c:329
 #, fuzzy
 msgid "8 bit SMS, cannot be displayed here"
 msgstr "SMS ad 8 bit, non può essere visualizzato qui\n"
 
-#: helper/message-display.c:334
+#: helper/message-display.c:336
 #, fuzzy, c-format
 msgid "Unknown PDU type: 0x%x\n"
 msgstr "Tipo di memoria sconosciuto: \"%s\"\n"
 
-#: helper/message-display.c:381
+#: helper/message-display.c:383
 #, fuzzy
 msgid ""
 "Some details were ignored (unknown or not implemented in decoding functions)"
@@ -4746,83 +4746,83 @@ msgstr ""
 "implementata)\n"
 "\n"
 
-#: helper/message-display.c:386
+#: helper/message-display.c:388
 msgid "Siemens OTA file"
 msgstr ""
 
-#: helper/message-display.c:388
+#: helper/message-display.c:390
 msgid " - VCARD"
 msgstr ""
 
-#: helper/message-display.c:402
+#: helper/message-display.c:404
 #, c-format
 msgid "Ringtone \"%s\"\n"
 msgstr "Suoneria \"%s\"\n"
 
-#: helper/message-display.c:407
+#: helper/message-display.c:409
 msgid "Do you want to play it?"
 msgstr ""
 
-#: helper/message-display.c:412
+#: helper/message-display.c:414
 #, fuzzy
 msgid "Caller logo"
 msgstr ""
 "Logo chiamante\n"
 "\n"
 
-#: helper/message-display.c:416
+#: helper/message-display.c:418
 #, fuzzy, c-format
 msgid "Operator logo for %s network"
 msgstr ""
 "Logo operatore per %s (%s, %s)\n"
 "\n"
 
-#: helper/message-display.c:436
+#: helper/message-display.c:438
 #, fuzzy
 msgid "Profile"
 msgstr "Profilo\n"
 
-#: helper/message-display.c:457
+#: helper/message-display.c:459
 #, fuzzy
 msgid "EMS sound ID"
 msgstr ""
 "\n"
 "ID suono EMS; %i\n"
 
-#: helper/message-display.c:460
+#: helper/message-display.c:462
 #, fuzzy
 msgid "EMS animation ID"
 msgstr ""
 "\n"
 "ID animazione EMS: %i\n"
 
-#: helper/message-display.c:466
+#: helper/message-display.c:468
 #, fuzzy
 msgid "Message size"
 msgstr "Messaggi"
 
 #. l10n: Generic prefix for error messages
-#: helper/message-display.c:499 helper/printing.c:18
+#: helper/message-display.c:501 helper/printing.c:18
 #, fuzzy
 msgid "Error"
 msgstr "Errore\n"
 
-#: helper/message-display.c:532
+#: helper/message-display.c:534
 msgid "Data PDU"
 msgstr ""
 
-#: helper/message-display.c:533
+#: helper/message-display.c:535
 #, fuzzy
 msgid "Number of bits"
 msgstr ""
 "\n"
 "Numero del SMS: %i\n"
 
-#: helper/message-display.c:535
+#: helper/message-display.c:537
 msgid "UDH"
 msgstr ""
 
-#: helper/message-display.c:551
+#: helper/message-display.c:553
 msgid "Whole PDU"
 msgstr ""
 
