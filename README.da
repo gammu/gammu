@@ -1,0 +1,37 @@
+Gammu All Mobile Management Utilities
+=====================================
+
+Gammu er et bibliotek og kommandolinjeprogrammer for mobiltelefoner. Det er
+frigivet under GNU GPL version 2.
+
+Det er udviklet af Marcin Wiacek og andre personer. Oprindeligt var koden
+baseret på Gnokii <http://www.gnokii.org> og senere MyGnokii
+<http://www.mwiacek.com> projekterne. Gammu blev tidligere (op til version
+0.58) kaldt MyGnokii2.
+
+Aktuelt ledes projektet af Michal Cihar <michal@cihar.com> med hjælp af
+mange andre.
+
+
+Mere information
+================
+
+Du kan finde mere information på <http://wammu.eu/gammu/>.
+
+Der er også en Gammu manual tilgængelig i docs/manual. Du kan bygge en HTML
+version af den ved at bruge make manual-html. Den kan også ses online på
+<http://wammu.eu/docs/manual/>.
+
+
+Tilbagemelding og fejlrapporter
+===============================
+
+All tilbagemelding er velkommen. Se <http://wammu.eu/support/> for
+information om, hvordan udviklerne kontaktes.
+
+
+Supporter udviklerne
+====================
+
+Du kan vise din taknemmelighed for udviklernes arbejde på
+<http://wammu.eu/donate/>
