@@ -35624,7 +35624,7 @@ msgstr ""
 "[gammu5]\n"
 "device = /dev/ttyS3\n"
 "name = Phone on serial port 3\n"
-"connection = at\n"
+"connection = at"
 
 #. type: Plain text
 #: docs/manual/utils/gammu-detect.rst:124
@@ -35634,7 +35634,7 @@ msgstr ""
 "[gammu6]\n"
 "device = 5C:57:C8:BB:BB:BB\n"
 "name = Nokia E52\n"
-"connection = bluephonet\n"
+"connection = bluephonet"
 
 #~ msgid ""
 #~ "7\n"
