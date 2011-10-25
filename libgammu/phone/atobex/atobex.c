@@ -707,7 +707,7 @@ GSM_Error ATOBEX_AddFolder(GSM_StateMachine *s, GSM_File *File)
 
 /*@}*/
 
-static inline int ATOBEX_UseObex (GSM_StateMachine *s, GSM_MemoryType type)
+static int ATOBEX_UseObex (GSM_StateMachine *s, GSM_MemoryType type)
 {
 	GSM_Phone_ATOBEXData	*Priv = &s->Phone.Data.Priv.ATOBEX;
 	if (type == MEM_ME) {
