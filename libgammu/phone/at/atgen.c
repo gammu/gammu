@@ -740,18 +740,6 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
 				unsigned i;
 				int state = 0;
 
-				const unsigned char xlat[128] =
-					{
-						[0x40] = 0x80,
-						[0x5b] = 0xbc,
-						[0x5c] = 0xaf,
-						[0x5d] = 0xbe,
-						[0x5e] = 0x94,
-						[0x7b] = 0xa8,
-						[0x7d] = 0xa9,
-						[0x7e] = 0xbd,
-					};
-
 				if (length >= outlength) {
 					return ERR_MOREMEMORY;
 				}
@@ -763,8 +751,29 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
 				for (i = 0; 2 * i + 1 < length / 2; i++) {
 					buf[i] = (buf[2 * i] == 0x20 && buf[2 * i + 1] == 0xac) ? 0xe5 : buf[2 * i + 1];
 					if (!(buf[i] & 0x80)) {
-						if (state && xlat[buf[i]]) {
-							buf[i] = xlat[buf[i]];
+						if (state && buf[i] == 0x40) {
+							buf[i] = 0x80;
+							state--;
+						} else if (state && buf[i] == 0x5b) {
+							buf[i] = 0xbc;
+							state--;
+						} else if (state && buf[i] == 0x5c) {
+							buf[i] = 0xaf;
+							state--;
+						} else if (state && buf[i] == 0x5d) {
+							buf[i] = 0xbe;
+							state--;
+						} else if (state && buf[i] == 0x5e) {
+							buf[i] = 0x94;
+							state--;
+						} else if (state && buf[i] == 0x7b) {
+							buf[i] = 0xa8;
+							state--;
+						} else if (state && buf[i] == 0x7d) {
+							buf[i] = 0xa9;
+							state--;
+						} else if (state && buf[i] == 0x7e) {
+							buf[i] = 0xbd;
 							state--;
 						} else {
 							state = 0;
