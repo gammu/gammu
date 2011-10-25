@@ -708,7 +708,7 @@ static GSM_Error SMSDSQL_RefreshSendStatus(GSM_SMSDConfig * Config, char *ID)
 	SQL_result res;
 	struct GSM_SMSDdbobj *db = Config->db;
 	SQL_Var vars[2] = {
-		{SQL_TYPE_STRING, { .s = ID}},
+		{SQL_TYPE_STRING, {ID}},
 		{SQL_TYPE_NONE, {NULL}}};
 
 	if (SMSDSQL_NamedQuery(Config, SMSDSQL_queries[SQL_QUERY_REFRESH_SEND_STATUS], NULL, vars, &res) != ERR_NONE) {
@@ -1048,10 +1048,12 @@ static GSM_Error SMSDSQL_RefreshPhoneStatus(GSM_SMSDConfig * Config)
 {
 	SQL_result res;
 	SQL_Var vars[3] = {
-		{SQL_TYPE_INT, { .i = Config->Status->Charge.BatteryPercent}},
-		{SQL_TYPE_INT, { .i = Config->Status->Network.SignalPercent}},
+		{SQL_TYPE_INT, {NULL}},
+		{SQL_TYPE_INT, {NULL}},
 		{SQL_TYPE_NONE, {NULL}}};
 	struct GSM_SMSDdbobj *db = Config->db;
+	vars[0].v.i = Config->Status->Charge.BatteryPercent;
+	vars[1].v.i = Config->Status->Network.SignalPercent;
 
 	if (SMSDSQL_NamedQuery(Config, SMSDSQL_queries[SQL_QUERY_REFRESH_PHONE_STATUS], NULL, vars, &res) != ERR_NONE) {
 		SMSD_Log(DEBUG_INFO, Config, "Error writing to database (%s)", __FUNCTION__);
