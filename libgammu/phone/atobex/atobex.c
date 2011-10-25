@@ -710,12 +710,15 @@ GSM_Error ATOBEX_AddFolder(GSM_StateMachine *s, GSM_File *File)
 static inline int ATOBEX_UseObex (GSM_StateMachine *s, GSM_MemoryType type)
 {
 	GSM_Phone_ATOBEXData	*Priv = &s->Phone.Data.Priv.ATOBEX;
-	if (type == MEM_ME)
+	if (type == MEM_ME) {
 		return 1;
-	if (type != MEM_SM)
+	}
+	if (type != MEM_SM) {
 		return 0;
-	if (Priv->HasOBEX == ATOBEX_OBEX_MOBEX || Priv->HasOBEX == ATOBEX_OBEX_TSSPCSW)
+	}
+	if (Priv->HasOBEX == ATOBEX_OBEX_MOBEX || Priv->HasOBEX == ATOBEX_OBEX_TSSPCSW) {
 		return 1;
+	}
 	return 0;
 }
 /**
