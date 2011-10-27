@@ -843,6 +843,10 @@ static GSM_Error S60_Reply_GetMemory(GSM_Protocol_Message *msg, GSM_StateMachine
 	}
 
 	if (text) {
+		if (strlen(value) == 0) {
+			/* Ignore empty responses */
+			return ERR_NEEDANOTHERANSWER;
+		}
 		DecodeUTF8(Entry->Entries[Entry->EntriesNum].Text, value, strlen(value));
 	}
 
