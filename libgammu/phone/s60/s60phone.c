@@ -765,6 +765,8 @@ static GSM_Error S60_Reply_GetMemory(GSM_Protocol_Message *msg, GSM_StateMachine
 	} else if(strcmp(type, "email_address") == 0) {
 		text = TRUE;
 		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_Email;
+	} else if(strcmp(type, "po_box") == 0) {
+		text = TRUE;
 	} else if(strcmp(type, "extended_address") == 0) {
 		text = TRUE;
 	} else if(strcmp(type, "fax_number") == 0) {
