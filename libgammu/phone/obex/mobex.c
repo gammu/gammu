@@ -287,6 +287,8 @@ GSM_Error MOBEX_GetNextEntry(GSM_StateMachine *s, const char *path, const gboole
 	*entry = *data + *pos + 4;
 	*location = ((*data)[*pos + 0] << 8) + (*data)[*pos + 1];
 
+	smprintf(s, "Read data part at %d:\n%s\n", *location, *entry);
+
 	return ERR_NONE;
 }
 
