@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSD-TABLES" "7" "September 02, 2011" "1.30.90" "Gammu"
+.TH "GAMMU-SMSD-TABLES" "7" "October 27, 2011" "1.30.90" "Gammu"
 .SH NAME
 gammu-smsd-tables \- description of tables for database backends of gammu-smsd(1)
 .
@@ -62,51 +62,39 @@ Fields description:
 .INDENT 0.0
 .TP
 .B \fBUpdatedInDB\fP (timestamp)
-.sp
 when somebody (daemon, user, etc.) updated it
 .TP
 .B \fBReceivingDateTime\fP (timestamp)
-.sp
 when SMS was received
 .TP
 .B \fBText\fP (text)
-.sp
 encoded SMS text (for all SMS)
 .TP
 .B \fBSenderNumber\fP (varchar(20))
-.sp
 decoded SMS sender number
 .TP
 .B \fBCoding\fP (enum(\(aqDefault_No_Compression\(aq, \(aqUnicode_No_Compression\(aq, \(aq8bit\(aq, \(aqDefault_Compression\(aq, \(aqUnicode_Compression\(aq))
-.sp
 SMS text coding
 .TP
 .B \fBUDH\fP (text)
-.sp
 encoded User Data Header text
 .TP
 .B \fBSMSCNumber\fP (varchar(20))
-.sp
 decoded SMSC number
 .TP
 .B \fBClass\fP (integer)
-.sp
 SMS class or \-1 (0 is flash SMS, 1 is normal one)
 .TP
 .B \fBTextDecoded\fP (varchar(160))
-.sp
 decoded SMS text (for Default Alphabet/Unicode SMS)
 .TP
 .B \fBID\fP (integer unsigned)
-.sp
 SMS identificator (for using with external applications)
 .TP
 .B \fBRecipientID\fP (text)
-.sp
 which Gammu daemon has added it
 .TP
 .B \fBProcessed\fP (enum(\(aqfalse\(aq, \(aqtrue\(aq))
-.sp
 you can use for marking, whether SMS was processed or not
 .UNINDENT
 .SS outbox
@@ -118,86 +106,68 @@ Fields description:
 .INDENT 0.0
 .TP
 .B \fBUpdatedInDB\fP (timestamp)
-.sp
 when somebody (daemon, user, etc.) updated it
 .TP
 .B \fBInsertIntoDB\fP (timestamp)
-.sp
 when message was inserted into database
 .TP
 .B \fBSendingDateTime\fP (timestamp)
-.sp
 set it to some value, when want to force sending after some planned time
 .TP
 .B \fBSendBefore\fP (time)
-.sp
 Send message before specified time, can be used to limit messages from
 being sent in night. Default value is 23:59:59
 .sp
 New in version 1.29.90.
 .TP
 .B \fBSendAfter\fP (time)
-.sp
 Send message after specified time, can be used to limit messages from
 being sent in night. Default value is 00:00:00
 .sp
 New in version 1.29.90.
 .TP
 .B \fBText\fP (text)
-.sp
 SMS text encoded using hex values in proper coding. If you want to use
 TextDecoded field, keep this NULL (or empty).
 .TP
 .B \fBDestinationNumber\fP (varchar(20))
-.sp
 recipient number
 .TP
 .B \fBCoding\fP (enum(\(aqDefault_No_Compression\(aq, \(aqUnicode_No_Compression\(aq, \(aq8bit\(aq, \(aqDefault_Compression\(aq, \(aqUnicode_Compression\(aq))
-.sp
 SMS text coding
 .TP
 .B \fBUDH\fP (text)
-.sp
 User Data Header encoded using hex values which will be used for constructing
 the message. Without this, message will be sent as plain text.
 .TP
 .B \fBClass\fP (integer)
-.sp
 SMS class or \-1 (0 is normal SMS, 1 is flash one)
 .TP
 .B \fBTextDecoded\fP (varchar(160))
-.sp
 SMS text in "human readable" form
 .TP
 .B \fBID\fP (integer unsigned)
-.sp
 SMS/SMS sequence ID
 .sp
 Please note that this number has to be unique also for sentitems table, so
 reusing message IDs might not be a good idea.
 .TP
 .B \fBMultiPart\fP (enum(\(aqfalse\(aq,\(aqtrue\(aq))
-.sp
 info, whether there are more SMS from this sequence in outbox_multipart
 .TP
 .B \fBRelativeValidity\fP (integer)
-.sp
 SMS relative validity like encoded using GSM specs
 .TP
 .B \fBSenderID\fP (text)
-.sp
 which SMSD instance should send this one sequence, see \fBPhoneID\fP
 .TP
 .B \fBSendingTimeOut\fP (timestamp)
-.sp
 used by SMSD instance for own targets
 .TP
 .B \fBDeliveryReport\fP (enum(\(aqdefault\(aq,\(aqyes\(aq,\(aqno\(aq))
-.sp
 when default is used, Delivery Report is used or not according to SMSD instance settings; yes forces Delivery Report.
 .TP
 .B \fBCreatorID\fP (text)
-.sp
 sender identification, it has to match PhoneID in SMSD configuration to make
 SMSD process this message
 .UNINDENT
@@ -209,35 +179,27 @@ Fields description:
 .INDENT 0.0
 .TP
 .B \fBID\fP (integer unsigned)
-.sp
 the same meaning as values in outbox table
 .TP
 .B \fBText\fP (text)
-.sp
 the same meaning as values in outbox table
 .TP
 .B \fBCoding\fP (enum(\(aqDefault_No_Compression\(aq, \(aqUnicode_No_Compression\(aq, \(aq8bit\(aq, \(aqDefault_Compression\(aq, \(aqUnicode_Compression\(aq))
-.sp
 the same meaning as values in outbox table
 .TP
 .B \fBUDH\fP (text)
-.sp
 the same meaning as values in outbox table
 .TP
 .B \fBClass\fP (integer)
-.sp
 the same meaning as values in outbox table
 .TP
 .B \fBTextDecoded\fP (varchar(160))
-.sp
 the same meaning as values in outbox table
 .TP
 .B \fBID\fP (integer unsigned)
-.sp
 the same meaning as values in outbox table
 .TP
 .B \fBSequencePosition\fP (integer)
-.sp
 info, what is SMS number in SMS sequence (start at 2, first part is in \fI\%outbox\fP
 table).
 .UNINDENT
@@ -250,52 +212,40 @@ Fields description:
 .INDENT 0.0
 .TP
 .B \fBID\fP (text)
-.sp
 PhoneID value
 .TP
 .B \fBUpdatedInDB\fP (timestamp)
-.sp
 when this record has been updated
 .TP
 .B \fBInsertIntoDB\fP (timestamp)
-.sp
 when this record has been created (when phone has been connected)
 .TP
 .B \fBTimeOut\fP (timestamp)
-.sp
 when this record expires
 .TP
 .B \fBSend\fP (boolean)
-.sp
 indicates whether SMSD is sending messages, depends on configuration directive \fBSend\fP
 .TP
 .B \fBReceive\fP (boolean)
-.sp
 indicates whether SMSD is receiving messages, depends on configuration directive \fBReceive\fP
 .TP
 .B \fBIMEI\fP (text)
-.sp
 IMEI of phone
 .TP
 .B \fBClient\fP (text)
-.sp
 client name, usually string Gammu with version
 .TP
 .B \fBBattery\fP (integer)
-.sp
 battery level in percent (or \-1 if unknown)
 .TP
 .B \fBSignal\fP (integer)
-.sp
 signal level in percent (or \-1 if unknown)
 .TP
 .B \fBSent\fP (integer)
-.sp
 Number of sent SMS messages (SMSD does not reset this counter, so it might
 overflow).
 .TP
 .B \fBReceived\fP (integer)
-.sp
 Number of received SMS messages (SMSD does not reset this counter, so it might
 overflow).
 .UNINDENT
@@ -308,115 +258,88 @@ Fields description:
 .INDENT 0.0
 .TP
 .B \fBUpdatedInDB\fP (timestamp)
-.sp
 when somebody (daemon, user, etc.) updated it
 .TP
 .B \fBInsertIntoDB\fP (timestamp)
-.sp
 when message was inserted into database
 .TP
 .B \fBSendingDateTime\fP (timestamp)
-.sp
 when message has been sent
 .TP
 .B \fBDeliveryDateTime\fP (timestamp)
-.sp
 Time of receiving delivery report (if it has been enabled).
 .TP
 .B \fBStatus\fP (enum(\(aqSendingOK\(aq, \(aqSendingOKNoReport\(aq, \(aqSendingError\(aq, \(aqDeliveryOK\(aq, \(aqDeliveryFailed\(aq, \(aqDeliveryPending\(aq, \(aqDeliveryUnknown\(aq, \(aqError\(aq))
-.sp
 Status of message sending. SendingError mens that phone failed to send the
 message, Error indicates some other error while processing message.
 .INDENT 7.0
 .TP
 .B \fBSendingOK\fP
-.sp
 Message has been sent, waiting for delivery report.
 .TP
 .B \fBSendingOKNoReport\fP
-.sp
 Message has been sent without asking for delivery report.
 .TP
 .B \fBSendingError\fP
-.sp
 Sending has failed.
 .TP
 .B \fBDeliveryOK\fP
-.sp
 Delivery report arrived and reported success.
 .TP
 .B \fBDeliveryFailed\fP
-.sp
 Delivery report arrived and reports failure.
 .TP
 .B \fBDeliveryPending\fP
-.sp
 Delivery report announced pending deliver.
 .TP
 .B \fBDeliveryUnknown\fP
-.sp
 Delivery report reported unknown status.
 .TP
 .B \fBError\fP
-.sp
 Some other error happened during sending (usually bug in SMSD).
 .UNINDENT
 .TP
 .B \fBStatusError\fP (integer)
-.sp
 Status of delivery from delivery report message, codes are defined in GSM
 specification 03.40 section 9.2.3.15 (TP\-Status).
 .TP
 .B \fBText\fP (text)
-.sp
 SMS text encoded using hex values
 .TP
 .B \fBDestinationNumber\fP (varchar(20))
-.sp
 decoded destination number for SMS
 .TP
 .B \fBCoding\fP (enum(\(aqDefault_No_Compression\(aq, \(aqUnicode_No_Compression\(aq, \(aq8bit\(aq, \(aqDefault_Compression\(aq, \(aqUnicode_Compression\(aq))
-.sp
 SMS text coding
 .TP
 .B \fBUDH\fP (text)
-.sp
 User Data Header encoded using hex values
 .TP
 .B \fBSMSCNumber\fP (varchar(20))
-.sp
 decoded number of SMSC, which sent SMS
 .TP
 .B \fBClass\fP (integer)
-.sp
 SMS class or \-1 (0 is normal SMS, 1 is flash one)
 .TP
 .B \fBTextDecoded\fP (varchar(160))
-.sp
 SMS text in "human readable" form
 .TP
 .B \fBID\fP (integer unsigned)
-.sp
 SMS ID
 .TP
 .B \fBSenderID\fP (text)
-.sp
 which SMSD instance sent this one sequence, see \fBPhoneID\fP
 .TP
 .B \fBSequencePosition\fP (integer)
-.sp
 SMS number in SMS sequence
 .TP
 .B \fBTPMR\fP (integer)
-.sp
 Message Reference like in GSM specs
 .TP
 .B \fBRelativeValidity\fP (integer)
-.sp
 SMS relative validity like encoded using GSM specs
 .TP
 .B \fBCreatorID\fP (text)
-.sp
 copied from CreatorID from outbox table, matches PhoneID
 .UNINDENT
 .SS pbk
@@ -431,13 +354,11 @@ History of schema versions:
 .INDENT 0.0
 .TP
 .B 13
-.
 Added \fBSendBefore\fP and \fBSendAfter\fP fields.
 .sp
 Changed in version 1.29.90.
 .TP
 .B 12
-.
 the changes only affect MySQL structure changing default values for
 timestamps from \fB0000\-00\-00 00:00:00\fP to \fBCURRENT_TIMESTAMP()\fP by
 using triggers, to update to this version, just execute triggers
@@ -446,51 +367,43 @@ definition at the end of SQL file.
 Changed in version 1.28.94.
 .TP
 .B 11
-.
 all fields for storing message text are no longer limited to 160 chars,
 but are arbitrary length text fields.
 .sp
 Changed in version 1.25.92.
 .TP
 .B 10
-.
 \fBDeliveryDateTime\fP is now NULL when message is not delivered, added several
 indexes
 .sp
 Changed in version 1.22.95.
 .TP
 .B 9
-.
 added sent/received counters to phones table
 .sp
 Changed in version 1.22.93.
 .TP
 .B 8
-.
 Signal and battery state are now stored in database.
 .sp
 Changed in version 1.20.94.
 .TP
 .B 7
-.
 Added \fBCreatorID\fP to several tables.
 .sp
 Changed in version 1.07.00.
 .TP
 .B 6
-.
 Many fields in outbox can now be NULL.
 .sp
 Changed in version 1.06.00.
 .TP
 .B 5
-.
 Introduced daemons table and various other changes.
 .sp
 Changed in version 1.03.00.
 .TP
 .B 3
-.
 Introduced phones table and various other changes.
 .sp
 Changed in version 0.98.0.
@@ -599,7 +512,6 @@ INSERT INTO outbox_multipart (
 .ft P
 .fi
 .IP Note
-.
 Adding UDH means that you have less space for text, in above example you
 can use only 153 characters in single message.
 .RE

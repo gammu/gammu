@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSDRC" "5" "September 02, 2011" "1.30.90" "Gammu"
+.TH "GAMMU-SMSDRC" "5" "October 27, 2011" "1.30.90" "Gammu"
 .SH NAME
 gammu-smsdrc \- gammu-smsd(1) configuration file
 .
@@ -50,7 +50,6 @@ configures how much messages gammu emits.
 .INDENT 0.0
 .TP
 .B [smsd]
-.
 The \fI\%[smsd]\fP section configures SMS daemon itself, which are described in
 following subsections. First general parameters of SMS daemon are listed and
 then specific parameters for storage backends.
@@ -58,31 +57,26 @@ then specific parameters for storage backends.
 .INDENT 0.0
 .TP
 .B [include_numbers]
-.
 List of numbers from which accept messages, see \fI\%Message filtering\fP.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B [exclude_numbers]
-.
 List of numbers from which reject messages, see \fI\%Message filtering\fP.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B [include_smsc]
-.
 List of SMSC numbers from which accept messages, see \fI\%Message filtering\fP.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B [exclude_smsc]
-.
 List of SMSC numbers from which reject messages, see \fI\%Message filtering\fP.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B [sql]
-.
 Configure SQL queries used by \fIgammu\-smsd\-sql\fP, you usually don\(aqt have to modify them.
 .IP "See also"
 .sp
@@ -93,26 +87,21 @@ Configure SQL queries used by \fIgammu\-smsd\-sql\fP, you usually don\(aqt have 
 .INDENT 0.0
 .TP
 .B Service
-.
 SMSD service to use, one of following choices:
 .INDENT 7.0
 .TP
 .B \fBFILES\fP
-.sp
 stores messages in files, see \fIgammu\-smsd\-files\fP for details
 .TP
 .B \fBNULL\fP
-.sp
 does not store messages at all, see \fIgammu\-smsd\-null\fP for details
 .TP
 .B \fBSQL\fP
-.sp
 stores messages in SQL database, see \fIgammu\-smsd\-sql\fP for details
 .sp
 New in version 1.28.93.
 .TP
 .B \fBMYSQL\fP
-.sp
 synonym for \fI\%Service\fP = \fBSQL\fP and \fI\%Driver\fP = \fBnative_mysql\fP
 .sp
 stores messages in MySQL database, see \fIgammu\-smsd\-mysql\fP for details
@@ -120,7 +109,6 @@ stores messages in MySQL database, see \fIgammu\-smsd\-mysql\fP for details
 Deprecated since version 1.28.93.
 .TP
 .B \fBPGSQL\fP
-.sp
 synonym for \fI\%Service\fP = \fBSQL\fP and \fI\%Driver\fP = \fBnative_pgsql\fP
 .sp
 stores messages in PostgreSQL database, see \fIgammu\-smsd\-pgsql\fP for details
@@ -128,7 +116,6 @@ stores messages in PostgreSQL database, see \fIgammu\-smsd\-pgsql\fP for details
 Deprecated since version 1.28.93.
 .TP
 .B \fBDBI\fP
-.sp
 synonym for \fI\%Service\fP = \fBSQL\fP and \fI\%Driver\fP = DBI driver
 .sp
 stores messages in any database supported by libdbi, this includes
@@ -138,35 +125,30 @@ details
 Deprecated since version 1.28.93.
 .UNINDENT
 .IP Note
-.
 Availability of backends depends on platform and compile time configuration.
 .RE
 .UNINDENT
 .INDENT 0.0
 .TP
 .B PIN
-.
 PIN for SIM card. This is optional, but you should set it if your phone after
 power on requires PIN.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B NetworkCode
-.
 Network personalisation password. This is optional, but some phones require it
 after power on.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B PhoneCode
-.
 Phone lock password. This is optional, but some phones require it after power
 on.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B LogFile
-.
 File where SMSD actions are being logged. You can also use special value
 \fBsyslog\fP which will send all messages to syslog daemon. On Windows another
 special value \fBeventlog\fP exists, which will send logs to Windows Event Log.
@@ -180,21 +162,17 @@ Default is to provide no logging.
 .INDENT 0.0
 .TP
 .B DebugLevel
-.
 Debug level for SMSD. The integer value should be sum of all flags you
 want to enable.
 .INDENT 7.0
 .TP
 .B 1
-.
 enables basic debugging information
 .TP
 .B 2
-.
 enables logging of SQL queries of service backends
 .TP
 .B 4
-.
 enables logging of gammu debug information
 .UNINDENT
 .sp
@@ -205,7 +183,6 @@ Default is 0, what should mean no extra information.
 .INDENT 0.0
 .TP
 .B CommTimeout
-.
 How many seconds should SMSD wait after there is no message in outbox.
 .sp
 Default is 30.
@@ -213,7 +190,6 @@ Default is 30.
 .INDENT 0.0
 .TP
 .B SendTimeout
-.
 Shows how many seconds SMSD should wait for network answer during sending
 sms. If nothing happen during this time, sms will be resent.
 .sp
@@ -222,7 +198,6 @@ Default is 30.
 .INDENT 0.0
 .TP
 .B MaxRetries
-.
 How many times will SMSD try to resend message if sending fails.
 .sp
 Default is 1.
@@ -230,7 +205,6 @@ Default is 1.
 .INDENT 0.0
 .TP
 .B ReceiveFrequency
-.
 The number of seconds between testing for received SMSes, when the phone is
 busy sending SMSes. Normally a test for received SMSes is done every
 \fI\%CommTimeout\fP seconds and after each sent SMS.
@@ -240,7 +214,6 @@ Default is 0 (not used).
 .INDENT 0.0
 .TP
 .B StatusFrequency
-.
 The number of seconds between refreshing phone status (battery, signal) stored
 in shared memory and possibly in service backends. Use 0 to disable.
 .sp
@@ -249,7 +222,6 @@ Default is 15.
 .INDENT 0.0
 .TP
 .B LoopSleep
-.
 The number of seconds how long will SMSD sleep before checking for some
 activity. Please note that setting this to higher value than 1 will have
 effects to other time based configurations, because they will be effectively
@@ -260,7 +232,6 @@ Default is 1.
 .INDENT 0.0
 .TP
 .B MultipartTimeout
-.
 The number of seconds how long will SMSD wait for all parts of multipart
 message. If all parts won\(aqt arrive in time, parts will be processed as separate
 messages.
@@ -270,7 +241,6 @@ Default is 600 (10 minutes).
 .INDENT 0.0
 .TP
 .B CheckSecurity
-.
 Whether to check if phone wants to enter PIN.
 .sp
 Default is 1 (enabled).
@@ -278,7 +248,6 @@ Default is 1 (enabled).
 .INDENT 0.0
 .TP
 .B CheckBattery
-.
 Whether to check phone battery state periodically.
 .sp
 Default is 1 (enabled).
@@ -286,7 +255,6 @@ Default is 1 (enabled).
 .INDENT 0.0
 .TP
 .B CheckSignal
-.
 Whether to check signal level periodically.
 .sp
 Default is 1 (enabled).
@@ -294,7 +262,6 @@ Default is 1 (enabled).
 .INDENT 0.0
 .TP
 .B ResetFrequency
-.
 The number of seconds between performing a preventive soft reset in order to
 minimize the cases of hanging phones e.g. Nokia 5110 will sometimes freeze to
 a state when only after unmounting the battery the phone will be functional
@@ -305,10 +272,8 @@ Default is 0 (not used).
 .INDENT 0.0
 .TP
 .B HardResetFrequency
-.
 New in version 1.28.92.
 .IP Warning
-.
 For some phones hard reset means deleting all data in it. Use
 \fI\%ResetFrequency\fP, unless you know what you are doing.
 .RE
@@ -321,20 +286,16 @@ Default is 0 (not used).
 .INDENT 0.0
 .TP
 .B DeliveryReport
-.
 Whether delivery reports should be used, one of \fBno\fP, \fBlog\fP, \fBsms\fP.
 .INDENT 7.0
 .TP
 .B \fBlog\fP
-.sp
 one line log entry,
 .TP
 .B \fBsms\fP
-.sp
 store in inbox as a received SMS
 .TP
 .B \fBno\fP
-.sp
 no delivery reports
 .UNINDENT
 .sp
@@ -343,7 +304,6 @@ Default is \fBno\fP.
 .INDENT 0.0
 .TP
 .B DeliveryReportDelay
-.
 Delay in seconds how long is still delivery report considered valid. This
 depends on brokeness of your network (delivery report should have same
 timestamp as sent message). Increase this if delivery reports are not paired
@@ -354,7 +314,6 @@ Default is 600 (10 minutes).
 .INDENT 0.0
 .TP
 .B PhoneID
-.
 String with info about phone used for sending/receiving. This can be useful if
 you want to run several SMS daemons.
 .sp
@@ -367,7 +326,6 @@ This option has actually no effect with \fIgammu\-smsd\-files\fP.
 .INDENT 0.0
 .TP
 .B RunOnReceive
-.
 Executes a program after receiving message.
 .sp
 This parameter is executed through shell, so you might need to escape some
@@ -388,7 +346,6 @@ environment, check \fIgammu\-smsd\-run\fP for more details.
 .INDENT 0.0
 .TP
 .B RunOnFailure
-.
 New in version 1.28.93.
 .sp
 Executes a program on failure.
@@ -400,14 +357,12 @@ The program will receive optional parameter, which can currently be either
 \fBINIT\fP (meaning failure during phone initialization) or message ID,
 which would indicate error while sending the message.
 .IP Note
-.
 The environment with message (as is in \fI\%RunOnReceive\fP) is not passed to the command.
 .RE
 .UNINDENT
 .INDENT 0.0
 .TP
 .B IncludeNumbersFile
-.
 File with list of numbers which are accepted by SMSD. The file contains one
 number per line, blank lines are ignored. The file is read at startup and is
 reread only when configuration is being reread. See Message filtering for
@@ -416,7 +371,6 @@ details.
 .INDENT 0.0
 .TP
 .B ExcludeNumbersFile
-.
 File with list of numbers which are not accepted by SMSD. The file contains
 one number per line, blank lines are ignored. The file is read at startup and
 is reread only when configuration is being reread. See Message filtering for
@@ -425,7 +379,6 @@ details.
 .INDENT 0.0
 .TP
 .B IncludeSMSCFile
-.
 File with list of SMSC numbers which are accepted by SMSD. The file contains
 one number per line, blank lines are ignored. The file is read at startup and
 is reread only when configuration is being reread. See Message filtering for
@@ -434,7 +387,6 @@ details.
 .INDENT 0.0
 .TP
 .B ExcludeSMSCFile
-.
 File with list of SMSC numbers which are not accepted by SMSD. The file
 contains one number per line, blank lines are ignored. The file is read at
 startup and is reread only when configuration is being reread. See Message
@@ -443,7 +395,6 @@ filtering for details.
 .INDENT 0.0
 .TP
 .B BackendRetries
-.
 How many times will SMSD backend retry operation.
 .sp
 The implementation on different backends is different, for database backends
@@ -454,7 +405,6 @@ Default is 10.
 .INDENT 0.0
 .TP
 .B Send
-.
 New in version 1.28.91.
 .sp
 Whether to enable sending of messages.
@@ -464,7 +414,6 @@ Default is True.
 .INDENT 0.0
 .TP
 .B Receive
-.
 New in version 1.28.91.
 .sp
 Whether to enable receiving of messages.
@@ -480,26 +429,22 @@ database:
 .INDENT 0.0
 .TP
 .B User
-.
 User name used for connection to a database.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B Password
-.
 Password used for connection to a database.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B Host
-.
 Database server address. It can also contain port or socket path after
 semicolon, for example \fBlocalhost:/path/to/socket\fP or
 \fB192.168.1.1:8000\fP.
 .sp
 For ODBC this is used as Data source name.
 .IP Note
-.
 Some database servers differentiate usage of \fBlocalhost\fP (to use
 local socket) and \fB127.0.0.1\fP (to use locat TCP/IP connection).
 Please make sure your SMSD settings match the database server ones.
@@ -510,7 +455,6 @@ New in version 1.28.92.
 .INDENT 0.0
 .TP
 .B PC
-.
 Synonym for \fI\%Host\fP.
 .sp
 Deprecated since version 1.28.92.
@@ -518,7 +462,6 @@ Deprecated since version 1.28.92.
 .INDENT 0.0
 .TP
 .B Database
-.
 Name of database to use. Please note that you should create tables in this
 database before using gammu\-smsd. SQL files for creating needed tables are
 included in documentation.
@@ -526,7 +469,6 @@ included in documentation.
 .INDENT 0.0
 .TP
 .B SkipSMSCNumber
-.
 When you send sms from some SMS centere you can have delivery reports from
 other SMSC number. You can set here number of this SMSC used by you and Gammu
 will not check it\(aqs number during assigning reports to sent SMS.
@@ -534,7 +476,6 @@ will not check it\(aqs number during assigning reports to sent SMS.
 .INDENT 0.0
 .TP
 .B Driver
-.
 SQL driver to use.
 .sp
 Can be either one of native drivers (\fBodbc\fP, \fBnative_mysql\fP or
@@ -548,32 +489,24 @@ Sybase), \fBpgsql\fP, \fBsqlite\fP, \fBsqlite3\fP, \fBfirebird\fP and \fBingres\
 .INDENT 0.0
 .TP
 .B SQL
-.
 SQL dialect to use. This is specially useful with \fIgammu\-smsd\-odbc\fP where SMSD
 does not know which server it is actually talking to.
 .sp
 Possible values:
 .INDENT 7.0
 .IP \(bu 2
-.
 \fBmysql\fP \- MySQL
 .IP \(bu 2
-.
 \fBpgsql\fP \- PostgreSQL
 .IP \(bu 2
-.
 \fBsqlite\fP \- SQLite
 .IP \(bu 2
-.
 \fBmssql\fP \- Microsoft SQL Server
 .IP \(bu 2
-.
 \fBsybase\fP \- Sybase
 .IP \(bu 2
-.
 \fBaccess\fP \- Microsoft Access
 .IP \(bu 2
-.
 \fBodbc\fP \- Generic ODBC
 .UNINDENT
 .sp
@@ -586,14 +519,12 @@ You can also completely customize SQL queries used as described in \fISQL Querie
 .INDENT 0.0
 .TP
 .B DriversPath
-.
 Path, where DBI drivers are stored, this usually does not have to be set if
 you have properly installed drivers.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B DBDir
-.
 Database directory for some (currently only sqlite) DBI drivers. Set here path
 where sqlite database files are stored.
 .UNINDENT
@@ -605,7 +536,6 @@ that all path should contain trailing path separator (/ on Unix systems):
 .INDENT 0.0
 .TP
 .B InboxPath
-.
 Where the received SMSes are stored.
 .sp
 Default is current directory.
@@ -613,7 +543,6 @@ Default is current directory.
 .INDENT 0.0
 .TP
 .B OutboxPath
-.
 Where SMSes to be sent should be placed.
 .sp
 Default is current directory.
@@ -621,7 +550,6 @@ Default is current directory.
 .INDENT 0.0
 .TP
 .B SentSMSPath
-.
 Where the transmitted SMSes are placed, if same as \fI\%OutboxPath\fP transmitted
 messages are deleted.
 .sp
@@ -630,7 +558,6 @@ Default is to delete transmitted messages.
 .INDENT 0.0
 .TP
 .B ErrorSMSPath
-.
 Where SMSes with error in transmission is placed.
 .sp
 Default is same as \fI\%SentSMSPath\fP.
@@ -638,20 +565,16 @@ Default is same as \fI\%SentSMSPath\fP.
 .INDENT 0.0
 .TP
 .B InboxFormat
-.
 The format in which the SMS will be stored: \fBdetail\fP, \fBunicode\fP, \fBstandard\fP.
 .INDENT 7.0
 .TP
 .B \fBdetail\fP
-.sp
 format used for message backup by \fIgammu\fP, see \fIgammu\-smsbackup\fP.
 .TP
 .B \fBunicode\fP
-.sp
 message text stored in unicode (UTF\-16)
 .TP
 .B \fBstandard\fP
-.sp
 message text stored in system charset
 .UNINDENT
 .sp
@@ -660,7 +583,6 @@ are always written raw as they are received with extension .bin.
 .sp
 Default is \fBunicode\fP.
 .IP Note
-.
 In \fBdetail\fP format, all message parts are stored into signle file,
 for all others each message part is saved separately.
 .RE
@@ -668,7 +590,6 @@ for all others each message part is saved separately.
 .INDENT 0.0
 .TP
 .B OutboxFormat
-.
 The format in which messages created by \fIgammu\-smsd\-inject\fP will be stored,
 it accepts same values as InboxFormat.
 .sp
@@ -678,7 +599,6 @@ otherwise.
 .INDENT 0.0
 .TP
 .B TransmitFormat
-.
 The format for transmitting the SMS: \fBauto\fP, \fBunicode\fP, \fB7bit\fP.
 .sp
 Default is \fBauto\fP.

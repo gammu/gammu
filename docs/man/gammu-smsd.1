@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSD" "1" "September 02, 2011" "1.30.90" "Gammu"
+.TH "GAMMU-SMSD" "1" "October 27, 2011" "1.30.90" "Gammu"
 .SH NAME
 gammu-smsd \- SMS daemon for Gammu
 .
@@ -53,19 +53,16 @@ accepted on some platforms):
 .INDENT 0.0
 .TP
 .B \-h, \-\-help
-.sp
 Shows help.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-v, \-\-version
-.sp
 Shows version information and compiled in features.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-c, \-\-config=file
-.sp
 Configuration file to use, default is /etc/gammu\-smsdrc, on Windows there
 is no default and configuration file path has to be always specified.
 .sp
@@ -78,74 +75,62 @@ See \fIgammu\-smsdrc\fP for configuration file documentation.
 .INDENT 0.0
 .TP
 .B \-p, \-\-pid=file
-.sp
 Lock file for storing pid, empty for no locking. Not supported on Windows.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-U, \-\-user=user
-.sp
 Drop daemon privileges to chosed user after starting.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-G, \-\-group=group
-.sp
 Drop daemon privileges to chosen group after starting.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-d, \-\-daemon
-.sp
 Daemonize program on startup. Not supported on Windows.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-i, \-\-install\-service
-.sp
 Installs SMSD as a Windows service.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-u, \-\-uninstall\-service
-.sp
 Uninstalls SMSD as a Windows service.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-s, \-\-start\-service
-.sp
 Starts SMSD Windows service.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-k, \-\-stop\-service
-.sp
 Stops SMSD Windows service.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-f, \-\-max\-failures=count
-.sp
 Terminate after defined number of failures. Use 0 to not terminate (this is default).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-X, \-\-suicide=seconds
-.sp
 Kills itself after number of seconds.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-S, \-\-run\-service
-.sp
 Runs pogram as SMSD Windows service. This should not be used manually, but
 only Windows Service manager should use this command.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-n, \-\-service\-name=name
-.sp
 Defines name of a Windows service. Each service requires an unique name,
 so if you want to run several SMSD instances, you have to name each
 service differently. Default is "GammuSMSD".
