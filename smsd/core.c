@@ -1790,6 +1790,11 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 			}
 			switch (error) {
 			case ERR_NONE:
+				if (Config->checksecurity && !SMSD_CheckSecurity(Config)) {
+					errors++;
+					initerrors++;
+					continue;
+				}
 				GSM_SetSendSMSStatusCallback(Config->gsm, SMSD_SendSMSStatusCallback, Config);
 				/* On first start we need to initialize some variables */
 				if (first_start) {
