@@ -851,6 +851,10 @@ static GSM_Error S60_Reply_GetMemory(GSM_Protocol_Message *msg, GSM_StateMachine
 	}
 
 	Entry->EntriesNum++;
+	if (Entry->EntriesNum >= GSM_PHONEBOOK_ENTRIES) {
+		smprintf(s, "ERROR: reached limit of phonebook entries\n");
+		return ERR_MOREMEMORY;
+	}
 
 	return ERR_NEEDANOTHERANSWER;
 }
