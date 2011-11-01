@@ -845,6 +845,8 @@ msgid ""
 "none service chosen, this has only limited use for sending file (:option:"
 "`gammu sendfile` command)"
 msgstr ""
+"no se elija ningún servicio, esto sólo tiene una utilidad limitada para "
+"enviar archivos (la órden :option:`gammu sendfile`)"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:197
