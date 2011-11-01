@@ -569,7 +569,7 @@ msgstr ".. literalinclude"
 #. type: Plain text
 #: docs/manual/config/index.rst:140
 msgid "../../../contrib/udev/45-nokiadku2.rules"
-msgstr ""
+msgstr "../../../contrib/udev/45-nokiadku2.rules"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:141
