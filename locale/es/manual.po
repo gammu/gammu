@@ -819,6 +819,8 @@ msgstr "``obexfs``"
 #: docs/manual/config/index.rst:192
 msgid "force using of file browsing service (file system support)"
 msgstr ""
+"forzar la utilización del servicio de navegación de archivos (soporte de "
+"sistema de archivos)"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:193
