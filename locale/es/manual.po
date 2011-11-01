@@ -260,7 +260,7 @@ msgstr "``dlr3``"
 #. type: Plain text
 #: docs/manual/config/index.rst:61
 msgid "DLR-3 and compatible cables"
-msgstr ""
+msgstr "DLR-3 y cables compatibles"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:62
