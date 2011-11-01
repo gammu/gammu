@@ -56,7 +56,7 @@ msgstr "``$XDG_CONFIG_HOME/gammu/config``"
 #. type: Plain text
 #: docs/manual/config/index.rst:14
 msgid "``~/.config/gammu/config``"
-msgstr ""
+msgstr "``~/.config/gammu/config``"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:15
