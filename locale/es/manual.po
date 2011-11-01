@@ -766,9 +766,8 @@ msgstr "modprobe ircomm-tty modprobe irtty-sir"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:176
-#, fuzzy
 msgid "Port"
-msgstr "Prioridad"
+msgstr "Puerto"
 
 #. type: Labeled list
 #: docs/manual/config/index.rst:177 docs/manual/smsd/config.rst:73
