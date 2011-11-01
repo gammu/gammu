@@ -433,7 +433,7 @@ msgstr ""
 #: docs/manual/python/gammu.rst:1168 docs/manual/utils/gammu-detect.rst:7
 #, no-wrap
 msgid ".. versionadded"
-msgstr ""
+msgstr ".. versionadded"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:105 docs/manual/smsd/tables.rst:110
