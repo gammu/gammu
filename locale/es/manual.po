@@ -71,7 +71,7 @@ msgstr "``/etc/gammurc``"
 #. type: Plain text
 #: docs/manual/config/index.rst:18
 msgid "On Microsoft Windows:"
-msgstr ""
+msgstr "En Microsoft Windows:"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:20
