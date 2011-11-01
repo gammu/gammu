@@ -332,7 +332,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/config/index.rst:81
 msgid "For IrDA connections use one of following:"
-msgstr ""
+msgstr "Para conexiones IrDA utilice uno de los siguientes:"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:83
