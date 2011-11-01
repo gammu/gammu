@@ -831,6 +831,8 @@ msgstr "``obexirmc``"
 #: docs/manual/config/index.rst:194
 msgid "force using of IrMC service (contacts, calendar and notes support)"
 msgstr ""
+"forzar la utilización del servicio IrMC (soporte de contactos, calendario y "
+"notas)"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:195
