@@ -781,6 +781,8 @@ msgstr ".. deprecated"
 #: docs/manual/config/index.rst:180
 msgid "Alias for :config:option:`Device`, kept for backward compatibility."
 msgstr ""
+"Alias para :config:option:`Device`, mantenido sólo por cuestiones de "
+"compatibilidad."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:182 docs/manual/python/gammu.rst:1286
