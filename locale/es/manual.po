@@ -775,7 +775,7 @@ msgstr "Puerto"
 #: docs/manual/smsd/config.rst:385
 #, no-wrap
 msgid ".. deprecated"
-msgstr ""
+msgstr ".. deprecated"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:180
