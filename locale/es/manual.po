@@ -806,6 +806,9 @@ msgid ""
 "connection instead of letting Gammu try the best suited for selected "
 "operation:"
 msgstr ""
+"El único caso especias para utilizar el modelo es forzar el tipo de conexión "
+"especial OBEX en lugar de dejar que Gammu intente la mejor opción para la "
+"operación seleccionada:"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:191
