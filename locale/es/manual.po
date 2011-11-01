@@ -181,7 +181,7 @@ msgstr ""
 #: docs/manual/config/index.rst:49
 #, no-wrap
 msgid "Device connection parameters"
-msgstr ""
+msgstr "Parámetros de conexión al dispositivo"
 
 #. type: Labeled list
 #: docs/manual/config/index.rst:51 docs/manual/config/index.rst:106
