@@ -37,7 +37,7 @@ msgstr "Archivo de configuración de Gammu"
 #: docs/manual/utils/jadmaker.rst:9 docs/manual/utils/gammu-detect.rst:12
 #, no-wrap
 msgid "Synopsis"
-msgstr ""
+msgstr "Sinopsis"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:11
