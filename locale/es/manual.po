@@ -583,6 +583,9 @@ msgid ""
 "dev/ttyACM0`` on Linux or ``COM5:`` on Windows), just use same setup as with "
 "serial port."
 msgstr ""
+"En caso que el dispositivo USB aparezca como un puerto serial en el sistema "
+"(por ejemplo ``/dev/ttyACM0`` en Linux o ``COM5:`` en Windows), simplemente "
+"utilice la misma configuración para puertos seriales."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:150
