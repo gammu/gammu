@@ -45,6 +45,8 @@ msgid ""
 "On Linux, MacOS X, BSD and other Unix-like systems, the config file is "
 "searched in following order:"
 msgstr ""
+"En Linux, MacOS X, BSD y otros sistemas similares a Unix, se buscará por "
+"archivos de configuración en el siguiente órden:"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:13
