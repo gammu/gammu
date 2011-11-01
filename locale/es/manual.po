@@ -97,6 +97,8 @@ msgstr "Descripción"
 #: docs/manual/config/index.rst:26
 msgid "Gammu requires configuration to be able to properly talk to your phone."
 msgstr ""
+"Gammu necesita configuración para poder comunicarse apropiadamente con el "
+"teléfono."
 
 #. type: Attribute :ref:
 #: docs/manual/config/index.rst:26
