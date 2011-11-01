@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-09-27 08:58+0300\n"
-"PO-Revision-Date: 2011-11-01 20:04+0200\n"
+"PO-Revision-Date: 2011-11-01 20:06+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
@@ -607,6 +607,8 @@ msgid ""
 "Before using Gammu, your device should be paired with computer or you should "
 "have set up automatic pairing."
 msgstr ""
+"Antes de utilizar Gammu, el dispositivo debería de estar emparejado con el "
+"equipo o debe configurar emparejamiento automático."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:155
