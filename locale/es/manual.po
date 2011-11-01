@@ -420,6 +420,7 @@ msgstr "``blues60``"
 #: docs/manual/config/index.rst:103
 msgid "Connection to Series60 applet in S60 phones, see :ref:`s60`."
 msgstr ""
+"Conexión a la miniaplicación Series60 en teléfonos S60, revisa :ref:`s60`."
 
 #. type: Labeled list
 #: docs/manual/config/index.rst:104 docs/manual/config/index.rst:108
