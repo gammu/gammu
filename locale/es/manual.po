@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-09-27 08:58+0300\n"
-"PO-Revision-Date: 2011-11-01 19:47+0200\n"
+"PO-Revision-Date: 2011-11-01 19:48+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
@@ -240,7 +240,7 @@ msgstr "El protocolo a utilizar para comunicarse con el teléfono."
 #. type: Plain text
 #: docs/manual/config/index.rst:56
 msgid "For Nokia cables you want to use one of following:"
-msgstr ""
+msgstr "Para los cables Nokia deseará utilizar uno de los siguientes:"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:58
