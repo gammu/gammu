@@ -280,7 +280,7 @@ msgstr "``dku5``"
 #. type: Plain text
 #: docs/manual/config/index.rst:65
 msgid "DKU-5 and compatible cables"
-msgstr ""
+msgstr "DKU-5 y cables compatibles"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:66
