@@ -104,7 +104,7 @@ msgstr ""
 #: docs/manual/config/index.rst:26
 #, no-wrap
 msgid "`gammu` reads configuration from a config file. It's location is determined"
-msgstr ""
+msgstr "`gammu` lee su configuración de un archivo. Su ubicación es determinada"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:28
