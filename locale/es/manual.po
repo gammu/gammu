@@ -394,7 +394,7 @@ msgstr "``bluephonet``"
 #. type: Plain text
 #: docs/manual/config/index.rst:96
 msgid "``blueat``"
-msgstr ""
+msgstr "``blueat``"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:97
