@@ -245,7 +245,7 @@ msgstr "Para los cables Nokia deseará utilizar uno de los siguientes:"
 #. type: Plain text
 #: docs/manual/config/index.rst:58
 msgid "``fbus``"
-msgstr ""
+msgstr "``fbus``"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:59
