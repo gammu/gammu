@@ -861,7 +861,7 @@ msgstr "servicio m-obex para teléfonos Samsung"
 #. type: Plain text
 #: docs/manual/config/index.rst:200
 msgid "Use_Locking"
-msgstr ""
+msgstr "Use_Locking"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:206
