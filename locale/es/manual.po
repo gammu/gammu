@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-09-27 08:58+0300\n"
-"PO-Revision-Date: 2011-11-01 19:54+0200\n"
+"PO-Revision-Date: 2011-11-01 19:55+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
@@ -413,9 +413,8 @@ msgstr "``bluerfgnapbus``"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:102
-#, fuzzy
 msgid "``blues60``"
-msgstr "Tonos de llamada"
+msgstr "``blues60``"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:103
