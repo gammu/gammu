@@ -147,6 +147,13 @@ msgid ""
 "section:`[gammu]` has number 0) as a parameter to :ref:`gammu` and it will "
 "then use only this section."
 msgstr ""
+"Un archivo de configuración para gammu puede contener varias secciones: "
+"``[gammu]``, ``[gammu1]``, ``[gammuN]``, etc. Cada sección determina una "
+"configuración de conexión y en el modo predeterminado gammu intentará con "
+"todas en órden numérico. También puede especificar la sección de "
+"configuración a utilizar proveyendo su número (:config:section:`[gammu]` es "
+"la número 0) como parámetro a :ref:`gammu`; y éste sólo utilizará dicha "
+"sección."
 
 #. type: Labeled list
 #: docs/manual/config/index.rst:44 docs/manual/smsd/config.rst:25
