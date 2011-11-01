@@ -117,6 +117,8 @@ msgid ""
 "You can use :ref:`gammu-config` or :ref:`gammu-detect` to generate "
 "configuration file or start from :ref:`Fully documented example`."
 msgstr ""
+"Puede utilizar :ref:`gammu-config` o :ref:`gammu-detect` para generar un "
+"archivo de configuración o comienza con un :ref:`ejemplo bien documentado`."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:35
