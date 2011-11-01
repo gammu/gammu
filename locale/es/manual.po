@@ -469,6 +469,12 @@ msgid ""
 "automatically detected from driver information and this parameters is "
 "ignored."
 msgstr ""
+"Para **cables** o puertos seriales emulados, ingrese el nombre del "
+"dispositivo (por ejemplo ``/dev/ttyS0``, ``/dev/ttyACM0``, ``/dev/ircomm0``, "
+"``/dev/rfcomm0`` en Linux, ``/dev/cuad0`` en FreeBSD ó ``COM1:`` en "
+"Windows). Las excepciones son los cables DKU-2 y DKU-5 en Windows, donde el "
+"dispositivo es detectado automáticamente utilizando información del "
+"controlador y este parámetro es ignorado."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:120
