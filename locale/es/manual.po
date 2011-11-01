@@ -367,6 +367,8 @@ msgstr "``idraobex``"
 #: docs/manual/config/index.rst:88 docs/manual/config/index.rst:99
 msgid "OBEX (IrMC or file transfer) connection for most of phones."
 msgstr ""
+"Conexión OBEX (IrMC o transferencia de archivos) para la mayoría de los "
+"teléfonos."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:89
