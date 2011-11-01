@@ -574,7 +574,7 @@ msgstr "../../../contrib/udev/45-nokiadku2.rules"
 #. type: Plain text
 #: docs/manual/config/index.rst:141
 msgid ":language: sh"
-msgstr ""
+msgstr ":language: sh"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:145
