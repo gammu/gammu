@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-09-27 08:58+0300\n"
-"PO-Revision-Date: 2011-11-01 19:43+0200\n"
+"PO-Revision-Date: 2011-11-01 19:46+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
@@ -160,9 +160,9 @@ msgstr ""
 #: docs/manual/smsd/config.rst:31 docs/manual/smsd/config.rst:35
 #: docs/manual/smsd/config.rst:39 docs/manual/smsd/config.rst:43
 #: docs/manual/smsd/config.rst:47
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ".. config:section"
-msgstr "Información del teléfono"
+msgstr ".. config:section"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:45
