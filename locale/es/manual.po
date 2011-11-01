@@ -595,6 +595,11 @@ msgid ""
 "`hcitool scan` command). Optionally you can also force Gammu to use "
 "specified channel by including channel number after slash."
 msgstr ""
+"Para conexiones **Bluetooth** debe ingresar la dirección Bluetooth del "
+"teléfono (en Linux puede ver una lista de dispositivos Bluetooth en rango "
+"utilizando la órden :command:`hcitool scan`). Opcionalmente, puede forzar "
+"Gammu a utilizar un canal específico incluyendo su número luego de la barra "
+"oblicua."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:153
