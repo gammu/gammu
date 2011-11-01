@@ -235,7 +235,7 @@ msgstr "Conexión"
 #. type: Plain text
 #: docs/manual/config/index.rst:54
 msgid "Protocol which will be used to talk to your phone."
-msgstr ""
+msgstr "El protocolo a utilizar para comunicarse con el teléfono."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:56
