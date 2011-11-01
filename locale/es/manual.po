@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-09-27 08:58+0300\n"
-"PO-Revision-Date: 2011-11-01 19:59+0200\n"
+"PO-Revision-Date: 2011-11-01 20:01+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
@@ -527,7 +527,7 @@ msgstr ""
 #: docs/manual/c/hints.rst:161 docs/manual/utils/gammu-detect.rst:24
 #: docs/manual/utils/gammu-detect.rst:36 docs/manual/utils/gammu-detect.rst:76
 msgid "note::"
-msgstr ""
+msgstr "note::"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:134
