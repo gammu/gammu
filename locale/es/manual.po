@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-09-27 08:58+0300\n"
-"PO-Revision-Date: 2011-11-01 20:03+0200\n"
+"PO-Revision-Date: 2011-11-01 20:04+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
@@ -585,7 +585,7 @@ msgid ""
 msgstr ""
 "En caso que el dispositivo USB aparezca como un puerto serial en el sistema "
 "(por ejemplo ``/dev/ttyACM0`` en Linux o ``COM5:`` en Windows), simplemente "
-"utilice la misma configuración para puertos seriales."
+"utilice la misma configuración para puerto serial."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:150
