@@ -622,6 +622,9 @@ msgid ""
 "If IrDA does not work on Linux, you might need to bring up the interface and "
 "enable discovery (you need to run these commands as root):"
 msgstr ""
+"Si IrDA no funciona en Linux, puede llegar a necesitar activar la interfaz y "
+"activar desubrimiento (necesitará ejecutar las órdenes siguientes como "
+"root):"
 
 #. type: Labeled list
 #: docs/manual/config/index.rst:159 docs/manual/config/index.rst:170
