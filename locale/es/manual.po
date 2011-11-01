@@ -537,6 +537,10 @@ msgid ""
 "`dialout`) or or add special udev rules to enable you access these devices "
 "as non-root."
 msgstr ""
+"En sistemas Linux puede no tener permisos sobre algunos nodos de "
+"dispositivos. Podría necesitar ser miembro de algún grupo (por ejemplo "
+":samp:`plugdev` o :samp:`dialout`) o agregar reglas especiales a udev para "
+"permitir el acceso a estos dispositivos a los usuarios distintos a root."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:138
