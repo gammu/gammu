@@ -355,6 +355,8 @@ msgstr "``irdaat``"
 msgid ""
 "AT commands connection for most of phones (this is not supported on Linux)."
 msgstr ""
+"Conexión de órdenes AT para la mayoría de los teléfonos (no funcionará en "
+"Linux)."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:87
