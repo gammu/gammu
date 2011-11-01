@@ -326,6 +326,8 @@ msgid ""
 "You can optionally specify speed of the connection, eg. ``at19200``, but it "
 "is not needed for modern USB cables."
 msgstr ""
+"Opcionalmente se puede especificar la velocidad de conexión, por ejemplo "
+"``at19200``, pero no es necesario para cables USB modernos."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:81
