@@ -403,9 +403,8 @@ msgstr "Conexión de órdenes AT para la mayoría de los teléfonos."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:98
-#, fuzzy
 msgid "``blueobex``"
-msgstr "Tonos de llamada"
+msgstr "``blueobex``"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:100
