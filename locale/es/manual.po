@@ -342,9 +342,8 @@ msgstr "``irdaphonet``"
 # type: Plain text
 #. type: Plain text
 #: docs/manual/config/index.rst:84 docs/manual/config/index.rst:95
-#, fuzzy
 msgid "Phonet connection for Nokia phones."
-msgstr "Almacena todos los mensajes SMS del teléfono en un archivo."
+msgstr "Conexión Phonet para teléfonos Nokia."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:85
