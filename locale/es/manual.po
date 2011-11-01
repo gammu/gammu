@@ -66,7 +66,7 @@ msgstr "``~/.gammurc``"
 #. type: Plain text
 #: docs/manual/config/index.rst:16
 msgid "``/etc/gammurc``"
-msgstr ""
+msgstr "``/etc/gammurc``"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:18
