@@ -734,7 +734,7 @@ msgstr ".. code-block"
 #: docs/manual/project/install.rst:459 docs/manual/project/install.rst:493
 #: docs/manual/project/install.rst:511
 msgid "sh"
-msgstr ""
+msgstr "sh"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:163
