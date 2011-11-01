@@ -449,9 +449,8 @@ msgstr "Dispositivo"
 # type: TH
 #. type: Plain text
 #: docs/manual/config/index.rst:109 docs/manual/config/index.rst:178
-#, fuzzy
 msgid "1.27.95"
-msgstr "Gammu 1.22.93"
+msgstr "1.27.95"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:111
