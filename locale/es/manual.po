@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-09-27 08:58+0300\n"
-"PO-Revision-Date: 2011-11-01 19:51+0200\n"
+"PO-Revision-Date: 2011-11-01 19:52+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
@@ -337,7 +337,7 @@ msgstr "Para conexiones IrDA utilice uno de los siguientes:"
 #. type: Plain text
 #: docs/manual/config/index.rst:83
 msgid "``irdaphonet``"
-msgstr ""
+msgstr "``irdaphonet``"
 
 # type: Plain text
 #. type: Plain text
