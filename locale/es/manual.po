@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-09-27 08:58+0300\n"
-"PO-Revision-Date: 2011-11-01 20:01+0200\n"
+"PO-Revision-Date: 2011-11-01 20:02+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
@@ -549,6 +549,9 @@ msgid ""
 "file:`contrib/udev/45-nokiadku2.rules`) as :file:`/etc/udev/rules.d/45-"
 "nokiadku2.rules`:"
 msgstr ""
+"Para teléfonos Nokia puede agregar el archivo siguiente (también disponible "
+"en el código fuente como :file:`contrib/udev/45-nokiadku2.rules`) en "
+":file:`/etc/udev/rules.d/45-nokiadku2.rules`:"
 
 #. type: Labeled list
 #: docs/manual/config/index.rst:139 docs/manual/config/index.rst:362
