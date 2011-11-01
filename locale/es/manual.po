@@ -348,7 +348,7 @@ msgstr "Conexión Phonet para teléfonos Nokia."
 #. type: Plain text
 #: docs/manual/config/index.rst:85
 msgid "``irdaat``"
-msgstr ""
+msgstr "``irdaat``"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:86
