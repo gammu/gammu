@@ -502,6 +502,11 @@ msgid ""
 "Device = 10             # Match device by usb device address\n"
 "Device = serial:123456  # Match device by serial string\n"
 msgstr ""
+"Device = 0x1234:0x5678 # Buscar dispositivo por ID de fabricante y producto\n"
+"Device = 0x1234:-1 # Buscar dispositivo por ID de fabricante\n"
+"Device = 1.10 # Buscar dispositivo por bus USB y dirección de dispositivo\n"
+"Device = 10 # Buscar dispositivo por dirección de dispositivo USB\n"
+"Device = serial:123456 # Buscar dispositivo por cadena de serial\n"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:129 docs/manual/config/index.rst:165
