@@ -223,9 +223,9 @@ msgstr "Parámetros de conexión al dispositivo"
 #: docs/manual/smsd/config.rst:453 docs/manual/smsd/config.rst:459
 #: docs/manual/smsd/config.rst:466 docs/manual/smsd/config.rst:472
 #: docs/manual/smsd/config.rst:493 docs/manual/smsd/config.rst:501
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ".. config:option"
-msgstr "Información del teléfono"
+msgstr ".. config:option"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:52
