@@ -1360,6 +1360,8 @@ msgid ""
 "Correct format is FBUS version 2/Direct IRDA/MBUS version 2 (see nokia.txt "
 "for protocol details):"
 msgstr ""
+"El formato correcto es FBUS version 2/Direct IRDA/MBUS version 2 (revise "
+"nokia.txt para detalles del protocolo):"
 
 #. type: Labeled list
 #: docs/manual/protocol/n6110.rst:38 docs/manual/protocol/n7110.rst:34
