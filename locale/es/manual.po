@@ -1170,7 +1170,7 @@ msgstr ""
 #: docs/manual/formats/smsbackup.rst:36 docs/manual/formats/smsbackup.rst:109
 #: docs/manual/formats/ini.rst:20 docs/manual/utils/gammu-detect.rst:86
 msgid "ini"
-msgstr ""
+msgstr "ini"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:306
