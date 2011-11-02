@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-11-02 09:09+0100\n"
-"PO-Revision-Date: 2011-11-02 20:08+0200\n"
+"PO-Revision-Date: 2011-11-02 20:09+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
@@ -1329,6 +1329,9 @@ msgid ""
 "might be hazardous to your phone. Be careful!!! We do not take any "
 "responsibility or liability for damages, etc."
 msgstr ""
+"Los datos provistos son sólo con propósito informativo. Algunos de las "
+"tramas pueden ser dañinas para su teléfono. ¡Tenga cuidado! No tenemos "
+"responsabilidad u obligación alguna por cuanto daño pueda causarle, etc."
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:30 docs/manual/protocol/n7110.rst:27
