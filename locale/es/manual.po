@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-09-27 08:58+0300\n"
-"PO-Revision-Date: 2011-11-02 06:32+0200\n"
+"PO-Revision-Date: 2011-11-02 06:33+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
@@ -1038,6 +1038,8 @@ msgid ""
 "For debugging use either ``textalldate`` or ``textall``, it contains all "
 "needed information to diagnose problems."
 msgstr ""
+"Para depuración, use ``textalldate`` o ``textall``, ya que contienen toda la "
+"información necesaria para diagnosticar problemas."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:259
