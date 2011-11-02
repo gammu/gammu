@@ -1439,6 +1439,8 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 
 	line = GetLineString(msg->Buffer,&Priv->Lines,i);
 
+	smprintf(s, "Checking line: %s\n", line);
+
 	if (!strcmp(line,"OK")) {
 		Priv->ReplyState = AT_Reply_OK;
 	}
