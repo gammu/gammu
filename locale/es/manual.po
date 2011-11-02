@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-11-02 09:09+0100\n"
-"PO-Revision-Date: 2011-11-02 20:11+0200\n"
+"PO-Revision-Date: 2011-11-02 20:12+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
@@ -1351,6 +1351,8 @@ msgid ""
 "Document describing frames used in GSM/PCN Nokia 6110 and derivatives (Nokia "
 "6130, 6150, 6190, 5110, 5130, 5150, 5190, 3210, 3310)"
 msgstr ""
+"Documento describiendo las tramas utilizadas en GSM/PCN Nokia 6110 y "
+"derivados (Nokia 6130, 6150, 6190, 5110, 5130, 5150, 5190, 3210, 3310)"
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:37
