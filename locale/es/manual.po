@@ -1223,7 +1223,7 @@ msgstr "[gammu] device = B0:0B:00:00:FA:CE/42 connection = blueat"
 #: docs/manual/config/index.rst:334
 #, no-wrap
 msgid "Working with multiple phones"
-msgstr ""
+msgstr "Trabajando con múltiples teléfonos"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:340
