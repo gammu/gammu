@@ -1203,7 +1203,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/config/index.rst:324
 msgid "[gammu] device = B0:0B:00:00:FA:CE connection = blueat"
-msgstr ""
+msgstr "[gammu] device = B0:0B:00:00:FA:CE connection = blueat"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:326
