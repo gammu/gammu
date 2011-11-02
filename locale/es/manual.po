@@ -944,6 +944,8 @@ msgid ""
 "For most debug levels (excluding ``errors``) the log file is overwritten on "
 "each execution."
 msgstr ""
+"Para la mayoría de los niveles de depuración (excluyendo ``errors``) el "
+"archivo de registros es reemplazado en cada ejecución."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:237
