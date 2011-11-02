@@ -917,6 +917,10 @@ msgid ""
 "connection. Phone will not beep during starting connection with this option. "
 "This works only with some Nokia phones."
 msgstr ""
+"Esta opción permite (definiéndola como «yes») ver un mensaje en la pantalla "
+"del teléfono o encender la luz del mismo por un momento durante el comienzo "
+"de la conexión. El teléfono no sonará durante el comienzo de la conexión con "
+"esta opción. Esto sólo funciona con algúnos teléfonos Nokia."
 
 #. type: Title +
 #: docs/manual/config/index.rst:225
