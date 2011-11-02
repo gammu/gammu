@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-09-27 08:58+0300\n"
-"PO-Revision-Date: 2011-11-02 06:25+0200\n"
+"PO-Revision-Date: 2011-11-02 06:27+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
@@ -1000,7 +1000,7 @@ msgstr "``textalldate``"
 #. type: Plain text
 #: docs/manual/config/index.rst:248
 msgid "all possible info in text format, with time stamp"
-msgstr ""
+msgstr "toda la información posible en formato de texto, con marcas temporales"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:249
