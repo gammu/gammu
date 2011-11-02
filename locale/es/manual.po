@@ -1197,6 +1197,8 @@ msgid ""
 "Gammu configuration for Sony-Ericsson (or any other AT compatible phone) "
 "connected using bluetooth:"
 msgstr ""
+"Configuración de Gammu para un teléfono Sony-Ericsson (o cualquier otro "
+"teléfono compatible con AT) conectado utilizando bluetooth:"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:324
