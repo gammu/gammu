@@ -1025,7 +1025,7 @@ msgstr "errores en formato de texto, con marcas temporales"
 #. type: Plain text
 #: docs/manual/config/index.rst:253
 msgid "``binary``"
-msgstr ""
+msgstr "``binary``"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:254
