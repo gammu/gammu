@@ -989,9 +989,8 @@ msgstr "``textall``"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:246
-#, fuzzy
 msgid "all possible info in text format"
-msgstr "Información del teléfono"
+msgstr "toda información posible en formato texto"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:247
