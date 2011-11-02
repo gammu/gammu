@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-11-02 09:09+0100\n"
-"PO-Revision-Date: 2011-11-02 20:17+0200\n"
+"PO-Revision-Date: 2011-11-02 20:18+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
@@ -1414,9 +1414,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:48
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "0x01: Call Information\n"
-msgstr "Información del teléfono"
+msgstr ""
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:49
