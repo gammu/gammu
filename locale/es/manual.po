@@ -1014,9 +1014,8 @@ msgstr "errores en formato de texto"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:251
-#, fuzzy
 msgid "``errorsdate``"
-msgstr "Sin error."
+msgstr "``errorsdate``"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:252
