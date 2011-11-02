@@ -1118,6 +1118,11 @@ msgid ""
 "systems). Currently it is used only for searching files to upload to phone "
 "using :option:`gammu install`."
 msgstr ""
+"Rutas adicionales donde buscar por archivos de datos. La ruta predeterminada "
+"es configurada en tiempo de compilación (con el valor "
+"``/usr/share/data/gammu`` en sistemas Unix). Actualmente es sólo utilizada "
+"para buscar archivos que cargar al teléfono utilizando :option:`gammu "
+"install`"
 
 #. type: Title =
 #: docs/manual/config/index.rst:292 docs/manual/smsd/tables.rst:387
