@@ -995,7 +995,7 @@ msgstr "toda información posible en formato texto"
 #. type: Plain text
 #: docs/manual/config/index.rst:247
 msgid "``textalldate``"
-msgstr ""
+msgstr "``textalldate``"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:248
