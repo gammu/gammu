@@ -2213,13 +2213,8 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 	}
 #endif
 
-	if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SLOWWRITE)) {
-		s->Protocol.Data.AT.FastWrite = TRUE;
-	}
-	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CPIN_NO_OK)) {
-		s->Protocol.Data.AT.CPINNoOK = TRUE;
-	}
-
+	s->Protocol.Data.AT.FastWrite = !GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SLOWWRITE);
+	s->Protocol.Data.AT.CPINNoOK = GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CPIN_NO_OK);
 
 	return error;
 }
