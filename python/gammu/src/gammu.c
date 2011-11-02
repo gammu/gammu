@@ -6070,7 +6070,7 @@ gammu_ReadBackup(PyObject *self, PyObject *args, PyObject *kwds)
     GSM_ClearBackup(&backup);
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "s|s", kwlist,
-                &filename))
+                &filename, &s))
         return NULL;
 
     if (s != NULL) {
