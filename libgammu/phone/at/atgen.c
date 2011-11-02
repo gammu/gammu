@@ -1516,7 +1516,7 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 			}
 		}
 	}
-	smprintf(s, "Reply state: %d\n", Priv->ReplyState);
+	smprintf(s, "AT reply state: %d\n", Priv->ReplyState);
 	return GSM_DispatchMessage(s);
 }
 
