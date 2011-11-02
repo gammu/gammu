@@ -1787,6 +1787,10 @@ GSM_Error ATGEN_ReplyGetModel(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 	smprintf(s, "[Model name: `%s']\n", Data->Model);
 	smprintf(s, "[Model data: `%s']\n", Data->ModelInfo->number);
 	smprintf(s, "[Model data: `%s']\n", Data->ModelInfo->model);
+
+	s->Protocol.Data.AT.FastWrite = !GSM_IsPhoneFeatureAvailable(Data->ModelInfo, F_SLOWWRITE);
+	s->Protocol.Data.AT.CPINNoOK = GSM_IsPhoneFeatureAvailable(Data->ModelInfo, F_CPIN_NO_OK);
+
 	return ERR_NONE;
 }
 
