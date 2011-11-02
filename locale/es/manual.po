@@ -1095,6 +1095,9 @@ msgid ""
 "``LANG/LC_MESSAGES/gammu.mo``). If gammu is properly installed it should "
 "find these files automatically."
 msgstr ""
+"La ruta al directorio con los archivos de localización (el directorio debe "
+"contener ``LANG/LC_MESSAGES/gammu.mo``). Si gammu está instalado "
+"correctamente debería encontrar estos archivos automáticamente."
 
 #. type: Title +
 #: docs/manual/config/index.rst:282
