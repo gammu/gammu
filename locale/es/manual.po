@@ -974,9 +974,8 @@ msgstr "ningún nivel de depuración"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:243
-#, fuzzy
 msgid "``text``"
-msgstr "Gettext"
+msgstr "``text``"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:244
