@@ -511,7 +511,7 @@ GSM_Error SAMSUNG_ReplyGetMemory(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
  		smprintf(s, "Phonebook entry received\n");
-		Memory->EntriesNum = 9;
+		Memory->EntriesNum = 12;
 		Memory->Entries[0].EntryType = PBK_Number_Mobile;
 		Memory->Entries[0].Location = PBK_Location_Unknown;
 		Memory->Entries[0].AddError = ERR_NONE;
@@ -557,6 +557,24 @@ GSM_Error SAMSUNG_ReplyGetMemory(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 		Memory->Entries[8].AddError = ERR_NONE;
 		Memory->Entries[8].VoiceTag = 0;
 		Memory->Entries[8].SMSList[0] = 0;
+		Memory->Entries[9].EntryType = PBK_Text_Note;
+		Memory->Entries[9].Location = PBK_Location_Unknown;
+		Memory->Entries[9].AddError = ERR_NONE;
+		Memory->Entries[9].VoiceTag = 0;
+		Memory->Entries[9].SMSList[0] = 0;
+		EncodeUnicode(Memory->Entries[9].Text, "", 0);
+		Memory->Entries[10].EntryType = PBK_Text_Note;
+		Memory->Entries[10].Location = PBK_Location_Unknown;
+		Memory->Entries[10].AddError = ERR_NONE;
+		Memory->Entries[10].VoiceTag = 0;
+		Memory->Entries[10].SMSList[0] = 0;
+		EncodeUnicode(Memory->Entries[10].Text, "", 0);
+		Memory->Entries[11].EntryType = PBK_Text_Note;
+		Memory->Entries[11].Location = PBK_Location_Unknown;
+		Memory->Entries[11].AddError = ERR_NONE;
+		Memory->Entries[11].VoiceTag = 0;
+		Memory->Entries[11].SMSList[0] = 0;
+		EncodeUnicode(Memory->Entries[11].Text, "", 0);
 
 		/* Get line from reply */
 		str = GetLineString(msg->Buffer, &Priv->Lines, 2);
@@ -625,6 +643,28 @@ GSM_Error SAMSUNG_ReplyGetMemory(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 						&year, &month, &day,
 						Memory->Entries[8].Text, sizeof(Memory->Entries[8].Text),
 						Memory->Entries[9].Text, sizeof(Memory->Entries[9].Text));
+		}
+		if (error != ERR_NONE) {
+			/*
+			 * Some phones have different string:
+			 * +SPBR:1,"5,37217201","0,","0,","0,","0,","14,admrede@inf.ufsc.br","0,","11,Admrede Inf","4,Ufsc","0,","0,",1900,1,1,"0,"
+			 */
+			error = ATGEN_ParseReply(s, str,
+						"+SPBR: @i, @T, @T, @T, @T, @T, @T, @T, @T, @T, @T, @T, @i, @i, @i, @T",
+						&Memory->Location,
+						Memory->Entries[0].Text, sizeof(Memory->Entries[0].Text),
+						Memory->Entries[1].Text, sizeof(Memory->Entries[1].Text),
+						Memory->Entries[2].Text, sizeof(Memory->Entries[2].Text),
+						Memory->Entries[3].Text, sizeof(Memory->Entries[3].Text),
+						Memory->Entries[4].Text, sizeof(Memory->Entries[4].Text),
+						Memory->Entries[5].Text, sizeof(Memory->Entries[5].Text),
+						Memory->Entries[6].Text, sizeof(Memory->Entries[6].Text),
+						Memory->Entries[7].Text, sizeof(Memory->Entries[7].Text),
+						Memory->Entries[9].Text, sizeof(Memory->Entries[9].Text),
+						Memory->Entries[10].Text, sizeof(Memory->Entries[10].Text),
+						Memory->Entries[11].Text, sizeof(Memory->Entries[11].Text),
+						&year, &month, &day,
+						Memory->Entries[8].Text, sizeof(Memory->Entries[8].Text));
 		}
 		if (error != ERR_NONE) {
 			return error;
