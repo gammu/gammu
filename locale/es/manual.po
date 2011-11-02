@@ -931,7 +931,7 @@ msgstr "Opciones de depuración"
 #. type: Plain text
 #: docs/manual/config/index.rst:228 docs/manual/smsd/config.rst:109
 msgid "LogFile"
-msgstr ""
+msgstr "LogFile"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:230
