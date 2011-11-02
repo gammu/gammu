@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-09-27 08:58+0300\n"
-"PO-Revision-Date: 2011-11-02 06:15+0200\n"
+"PO-Revision-Date: 2011-11-02 06:16+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
@@ -901,6 +901,8 @@ msgstr "SyncronizeTime"
 msgid ""
 "If you want to set time from computer to phone during starting connection."
 msgstr ""
+"Si desea definir la hora del teléfono desde el equipo durante el comienzo de "
+"la conexión."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:217
