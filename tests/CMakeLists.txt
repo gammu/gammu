@@ -848,6 +848,11 @@ if (WITH_ATGEN)
     target_link_libraries(at-parser libGammu ${LIBINTL_LIBRARIES})
     add_test(at-parser "${GAMMU_TEST_PATH}/at-parser${GAMMU_TEST_SUFFIX}")
 
+    # AT dispatch tests
+    add_executable(at-dispatch at-dispatch.c)
+    target_link_libraries(at-dispatch libGammu ${LIBINTL_LIBRARIES})
+    add_test(at-dispatch "${GAMMU_TEST_PATH}/at-dispatch${GAMMU_TEST_SUFFIX}")
+
     # AT text encoding/decoding
     add_executable(at-charset at-charset.c)
     target_link_libraries(at-charset libGammu ${LIBINTL_LIBRARIES})
