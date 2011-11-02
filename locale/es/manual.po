@@ -1211,6 +1211,8 @@ msgid ""
 "Gammu configuration for phone which needs to manually adjust Bluetooth "
 "channel to use channel 42:"
 msgstr ""
+"Configuración de Gammy para un teléfono que necesita un ajuste manual de "
+"Bluetooth para forzar el uso del canal 42:"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:332
