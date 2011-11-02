@@ -1372,7 +1372,7 @@ msgstr "Lista"
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:41
 msgid "0x00: Monitoring values"
-msgstr ""
+msgstr "0x00: Valores de monitoreo"
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:42
