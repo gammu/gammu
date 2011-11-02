@@ -1231,6 +1231,10 @@ msgid ""
 "parameter). Configuration for phones on three serial ports would look like "
 "following:"
 msgstr ""
+"Gammu puede ser configurado para el uso de múltiples teléfonos (sin embargo "
+"no se utiliza más de una conexión simultáneamente, puede elegir aquella a "
+"utilizar con el parámetro :option:`gammu -s`). La configuración de teléfonos "
+"en tres puertos seriales se vería como sigue:"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:346
