@@ -990,7 +990,7 @@ msgstr "``textall``"
 #. type: Plain text
 #: docs/manual/config/index.rst:246
 msgid "all possible info in text format"
-msgstr "toda información posible en formato texto"
+msgstr "toda información posible en formato de texto"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:247
