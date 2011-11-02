@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-11-02 09:09+0100\n"
-"PO-Revision-Date: 2011-11-02 20:07+0200\n"
+"PO-Revision-Date: 2011-11-02 20:08+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
@@ -1274,7 +1274,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/config/index.rst:363
 msgid "../../../docs/config/gammurc"
-msgstr ""
+msgstr "../../../docs/config/gammurc"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:364
