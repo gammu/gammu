@@ -979,9 +979,8 @@ msgstr "``text``"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:244
-#, fuzzy
 msgid "transmission dump in text format"
-msgstr "Información del teléfono"
+msgstr "un volcado de la transmisión en formato de texto"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:245
