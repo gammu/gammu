@@ -12,7 +12,7 @@
 
 GSM_StateMachine *s;
 
-void do_test(const char *reply, GSM_AT_Reply_State expected)
+void do_test(const char *reply, GSM_AT_Reply_State expected, GSM_Error expect_error)
 {
 	GSM_Protocol_Message msg;
 	GSM_Error error;
@@ -24,7 +24,7 @@ void do_test(const char *reply, GSM_AT_Reply_State expected)
 	s->Phone.Data.RequestMsg = &msg;
 
 	error = ATGEN_DispatchMessage(s);
-	gammu_test_result(error, "Dispatch");
+	gammu_test_result_code(error, "Dispatch", expect_error);
 
 }
 
@@ -33,6 +33,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	GSM_Debug_Info *debug_info;
 	GSM_Phone_ATGENData *Priv;
 	GSM_Phone_Data *Data;
+	GSM_SecurityCodeType Status;
 
 	/* Init locales to get proper encoding */
 	GSM_InitLocales(NULL);
@@ -55,17 +56,18 @@ int main(int argc UNUSED, char **argv UNUSED)
 	Priv->ReplyState = AT_Reply_OK;
 	Priv->SMSMode = SMS_AT_PDU;
 	Priv->Charset = AT_CHARSET_GSM;
+	s->Phone.Data.SecurityStatus = &Status;
 	s->Phone.Functions = &ATGENPhone;
 	InitLines(&s->Phone.Data.Priv.ATGEN.Lines);
 
 	/* Perform real tests */
 	s->Phone.Data.RequestID = ID_GetSecurityStatus;
 	s->Protocol.Data.AT.CPINNoOK = TRUE;
-	do_test("AT+CPIN?\r\n+CPIN: READY\r\n", AT_Reply_OK);
+	do_test("AT+CPIN?\r\n+CPIN: READY\r\n", AT_Reply_OK, ERR_NONE);
 
 	s->Phone.Data.RequestID = ID_GetSecurityStatus;
 	s->Protocol.Data.AT.CPINNoOK = FALSE;
-	do_test("AT+CPIN?\r\n+CPIN: READY\r\n", AT_Reply_Unknown);
+	do_test("AT+CPIN?\r\n+CPIN: READY\r\n", AT_Reply_Unknown, ERR_UNKNOWNRESPONSE);
 
 	/* Free state machine */
 	GSM_FreeStateMachine(s);

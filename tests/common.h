@@ -24,4 +24,13 @@
     } \
 }
 
+#define gammu_test_result_code(error, text, expect) \
+{ \
+	if (error != expect) {\
+		fprintf(stderr, "%s\n", GSM_ErrorString(error)); \
+        fprintf(stderr, "Test \"%s\" failed!\n", text); \
+        exit(2); \
+    } \
+}
+
 #endif
