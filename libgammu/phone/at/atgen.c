@@ -1403,9 +1403,10 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 	SplitLines(msg->Buffer, msg->Length, &Priv->Lines, "\x0D\x0A", 2, "\"", 1, TRUE);
 
 	/* Find number of lines */
-	for (i = 1; Priv->Lines.numbers[i*2 - 1] != 0; i++) {
+	while (Priv->Lines.numbers[i*2+1] != 0) {
 		/* FIXME: handle special chars correctly */
-		smprintf(s, "%i \"%s\"\n", i, GetLineString(msg->Buffer, &Priv->Lines, i));
+		smprintf(s, "%i \"%s\"\n",i+1,GetLineString(msg->Buffer,&Priv->Lines,i+1));
+		i++;
 	}
 
 	/* Check for duplicated command in response (bug#1069) */
