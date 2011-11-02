@@ -1175,7 +1175,7 @@ msgstr "ini"
 #. type: Plain text
 #: docs/manual/config/index.rst:306
 msgid "[gammu] device = /dev/ttyACM0 connection = dlr3"
-msgstr ""
+msgstr "[gammu] device = /dev/ttyACM0 connection = dlr3"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:309
