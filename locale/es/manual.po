@@ -1374,11 +1374,12 @@ msgstr "Lista"
 msgid "0x00: Monitoring values"
 msgstr "0x00: Valores de monitorización"
 
+# Parte de la descripción de un protocolo
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:42
 #, no-wrap
 msgid "r monitoring value      {+0x01, 0x01, block... }\n"
-msgstr "valor de monitorización r {+0x01, 0x01, block... }\n"
+msgstr "r monitoring value {+0x01, 0x01, block... }\n"
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:43
