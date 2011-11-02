@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-09-27 08:58+0300\n"
-"PO-Revision-Date: 2011-11-02 06:31+0200\n"
+"PO-Revision-Date: 2011-11-02 06:32+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
@@ -1030,7 +1030,7 @@ msgstr "``binary``"
 #. type: Plain text
 #: docs/manual/config/index.rst:254
 msgid "transmission dump in binary format"
-msgstr ""
+msgstr "volcado de la transmisión en formato binario"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:257
