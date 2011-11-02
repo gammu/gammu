@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-11-02 09:09+0100\n"
-"PO-Revision-Date: 2011-11-02 20:12+0200\n"
+"PO-Revision-Date: 2011-11-02 20:13+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
@@ -1367,7 +1367,7 @@ msgstr ""
 #: docs/manual/protocol/n6110.rst:38 docs/manual/protocol/n7110.rst:34
 #, no-wrap
 msgid "List"
-msgstr ""
+msgstr "Lista"
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:41
