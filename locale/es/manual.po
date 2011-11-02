@@ -1285,7 +1285,7 @@ msgstr ":language: ini"
 #: docs/manual/protocol/n6110.rst:2
 #, no-wrap
 msgid "Nokia 6110"
-msgstr ""
+msgstr "Nokia 6110"
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:19
