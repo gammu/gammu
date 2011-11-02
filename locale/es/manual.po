@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-09-27 08:58+0300\n"
-"PO-Revision-Date: 2011-11-02 06:28+0200\n"
+"PO-Revision-Date: 2011-11-02 06:31+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
@@ -1009,9 +1009,8 @@ msgstr "``errors``"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:250
-#, fuzzy
 msgid "errors in text format"
-msgstr "Información del teléfono"
+msgstr "errores en formato de texto"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:251
