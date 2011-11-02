@@ -936,7 +936,7 @@ msgstr "LogFile"
 #. type: Plain text
 #: docs/manual/config/index.rst:230
 msgid "Path to file where information about communication will be stored."
-msgstr ""
+msgstr "Ruta del archivo donde se almacenará información sobre la comunicación."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:235
