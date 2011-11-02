@@ -890,10 +890,11 @@ msgstr "Esta opción no tiene efectos en Windows."
 msgid "Connection options"
 msgstr "Opciones de conexión"
 
+# Las opciones no se traducen
 #. type: Plain text
 #: docs/manual/config/index.rst:213
 msgid "SynchronizeTime"
-msgstr ""
+msgstr "SyncronizeTime"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:215
