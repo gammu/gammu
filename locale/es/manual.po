@@ -1148,7 +1148,7 @@ msgstr ""
 #: docs/manual/config/index.rst:297
 #, no-wrap
 msgid "Connection examples"
-msgstr ""
+msgstr "Exemplo de conexión"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:300
