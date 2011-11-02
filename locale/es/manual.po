@@ -1019,9 +1019,8 @@ msgstr "``errorsdate``"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:252
-#, fuzzy
 msgid "errors in text format, with time stamp"
-msgstr "Información del teléfono"
+msgstr "errores en formato de texto, con marcas temporales"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:253
