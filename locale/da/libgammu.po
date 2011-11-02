@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-04-21 14:32+0200\n"
+"POT-Creation-Date: 2011-11-02 09:09+0100\n"
 "PO-Revision-Date: 2011-09-26 00:06+0200\n"
 "Last-Translator: Jørgen Thomsen <opensource@jth.net>\n"
 "Language-Team: none\n"
@@ -76,7 +76,8 @@ msgstr "Kan ikke sætte paritet på enheden."
 
 #: libgammu/gsmcomon.c:97
 msgid "No response in specified timeout. Probably phone not connected."
-msgstr "Intet svar efter angivet timeoutværdi. Telefonen er nok ikke forbundet."
+msgstr ""
+"Intet svar efter angivet timeoutværdi. Telefonen er nok ikke forbundet."
 
 #: libgammu/gsmcomon.c:98
 msgid ""
@@ -203,8 +204,7 @@ msgstr ""
 #: libgammu/gsmcomon.c:121
 msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
 msgstr ""
-"Transfer blev afbrudt af telefonen. Måske trykkede du på afbryd på "
-"telefonen."
+"Transfer blev afbrudt af telefonen. Måske trykkede du på afbryd på telefonen."
 
 #: libgammu/gsmcomon.c:122
 msgid "Phone module need to send another answer frame."
@@ -393,7 +393,7 @@ msgid "SIM"
 msgstr "SIM"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:579 libgammu/phone/pfunc.c:41
-#: libgammu/phone/s60/s60phone.c:1752
+#: libgammu/phone/s60/s60phone.c:1762
 msgid "Inbox"
 msgstr "Indboks"
 
@@ -437,6 +437,6 @@ msgstr "Udendørs"
 msgid "Pager"
 msgstr "Pager"
 
-#: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1753
+#: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1763
 msgid "Outbox"
 msgstr "Udboks"
