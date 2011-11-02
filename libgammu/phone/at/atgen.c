@@ -1440,14 +1440,24 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 
 	line = GetLineString(msg->Buffer,&Priv->Lines,i);
 
-	if (!strcmp(line,"OK"))		Priv->ReplyState = AT_Reply_OK;
+	if (!strcmp(line,"OK")) {
+		Priv->ReplyState = AT_Reply_OK;
+	}
 	if (!strncmp(line,"+CPIN:", 6) && s->Protocol.Data.AT.CPINNoOK) {
 		Priv->ReplyState = AT_Reply_OK;
 	}
-	if (!strcmp(line,"> "))		Priv->ReplyState = AT_Reply_SMSEdit;
-	if (!strcmp(line,"CONNECT"))	Priv->ReplyState = AT_Reply_Connect;
-	if (!strcmp(line,"ERROR"  ))	Priv->ReplyState = AT_Reply_Error;
-	if (!strcmp(line,"NO CARRIER"  ))	Priv->ReplyState = AT_Reply_Error;
+	if (!strcmp(line,"> ")) {
+		Priv->ReplyState = AT_Reply_SMSEdit;
+	}
+	if (!strcmp(line,"CONNECT")) {
+		Priv->ReplyState = AT_Reply_Connect;
+	}
+	if (!strcmp(line,"ERROR")) {
+		Priv->ReplyState = AT_Reply_Error;
+	}
+	if (!strcmp(line,"NO CARRIER")) {
+		Priv->ReplyState = AT_Reply_Error;
+	}
 
 	if (!strncmp(line,"+CME ERROR:",11)) {
 		Priv->ReplyState = AT_Reply_CMEError;
