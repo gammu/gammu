@@ -1222,8 +1222,7 @@ GSM_Error GSM_LinkSMS(GSM_Debug_Info *di, GSM_MultiSMSMessage **InputMessages, G
 	OutputMessages[0] = NULL;
 
 	if (ems) {
-		i=0;
-		while (InputMessages[i] != NULL) {
+		for (i = 0; InputMessages[i] != NULL; i++) {
 			if (InputMessages[i]->SMS[0].UDH.Type == UDH_UserUDH) {
 				w=1;
 				while (w < InputMessages[i]->SMS[0].UDH.Length) {
@@ -1267,7 +1266,6 @@ GSM_Error GSM_LinkSMS(GSM_Debug_Info *di, GSM_MultiSMSMessage **InputMessages, G
 					w=w+InputMessages[i]->SMS[0].UDH.Text[w+1]+2;
 				}
 			}
-			i++;
 		}
 	}
 
