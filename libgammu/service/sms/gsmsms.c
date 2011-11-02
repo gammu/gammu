@@ -949,7 +949,7 @@ void GSM_SetDefaultReceivedSMSData(GSM_SMSMessage *SMS)
 	SMS->UDH.Text[0] 		= 0;
 	SMS->UDH.ID8bit			= 0;
 	SMS->UDH.ID16bit		= 0;
-	SMS->UDH.PartNumber		= 0;
+	SMS->UDH.PartNumber		= -1;
 	SMS->UDH.AllParts		= 0;
 	SMS->Coding 			= SMS_Coding_8bit;
 	SMS->Length			= 0;
