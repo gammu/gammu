@@ -1071,12 +1071,14 @@ GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 	GSM_DumpMessageLevel2Recv(s, msg->Buffer, msg->Length, msg->Type);
 	GSM_DumpMessageLevel3Recv(s, msg->Buffer, msg->Length, msg->Type);
 
-	Reply=s->User.UserReplyFunctions;
-	if (Reply != NULL) error=CheckReplyFunctions(s,Reply,&reply);
+	Reply = s->User.UserReplyFunctions;
+	if (Reply != NULL) {
+		error = CheckReplyFunctions(s,Reply,&reply);
+	}
 
-	if (error==ERR_UNKNOWNFRAME) {
-		Reply=s->Phone.Functions->ReplyFunctions;
-		error=CheckReplyFunctions(s,Reply,&reply);
+	if (error == ERR_UNKNOWNFRAME) {
+		Reply = s->Phone.Functions->ReplyFunctions;
+		error = CheckReplyFunctions(s,Reply,&reply);
 	}
 
 	if (error==ERR_NONE) {
