@@ -130,7 +130,15 @@ BuildRequires: %{dist_dbi_libs}
 BuildRequires: unixODBC-devel
 %endif
 
+%if 0%{?fedora_version} || 0%{?centos_version} || 0%{?rhel_version} || 0%{?fedora} || 0%{?rhel}
+BuildRequires: libgudev1-devel glib2-devel
+%else
+%if 0%{?mandriva_version}
+BuildRequires: libgudev-1.0-devel glib2-devel
+%else
 BuildRequires: libgudev-1_0-devel glib2-devel
+%endif
+%endif
 
 BuildRequires: python-devel
 
