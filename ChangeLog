@@ -29,6 +29,11 @@ ChangeLog
 [-] * Do not use AT+CUSD=2 on some phones (bug #1508).
 [-] * Fixed gammu-monitor with Windows service (bug #1515).
 [-] * Cleanup of contrib directory.
+[-] * Better support for Samsung AT phones (bug #1513).
+[-] * Fixed handling of MMS notification SMSes (bug #1530).
+[-] * Fixed CPIN reply handling (bug #1532).
+[+] * SMSD checks for PIN status just after connect (bug #1532).
+[-] * Fixed various MSVC compilation issues.
     
 20110719 - 1.30.0
 
