@@ -161,6 +161,36 @@ Default is to provide no logging.
 .UNINDENT
 .INDENT 0.0
 .TP
+.B LogFacility
+Facility to use on logging backends which support it (currently only
+syslog). One of following chouces:
+.INDENT 7.0
+.IP \(bu 2
+\fBDAEMON\fP (default)
+.IP \(bu 2
+\fBUSER\fP
+.IP \(bu 2
+\fBLOCAL0\fP
+.IP \(bu 2
+\fBLOCAL1\fP
+.IP \(bu 2
+\fBLOCAL2\fP
+.IP \(bu 2
+\fBLOCAL3\fP
+.IP \(bu 2
+\fBLOCAL4\fP
+.IP \(bu 2
+\fBLOCAL5\fP
+.IP \(bu 2
+\fBLOCAL6\fP
+.IP \(bu 2
+\fBLOCAL7\fP
+.UNINDENT
+.sp
+New in version 1.30.91.
+.UNINDENT
+.INDENT 0.0
+.TP
 .B DebugLevel
 Debug level for SMSD. The integer value should be sum of all flags you
 want to enable.

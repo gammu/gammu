@@ -117,6 +117,24 @@ General parameters of SMS daemon
 
     Default is to provide no logging.
 
+.. config:option:: LogFacility
+
+    Facility to use on logging backends which support it (currently only
+    syslog). One of following chouces:
+
+    * ``DAEMON`` (default)
+    * ``USER``
+    * ``LOCAL0``
+    * ``LOCAL1``
+    * ``LOCAL2``
+    * ``LOCAL3``
+    * ``LOCAL4``
+    * ``LOCAL5``
+    * ``LOCAL6``
+    * ``LOCAL7``
+
+    .. versionadded:: 1.30.91
+
 .. config:option:: DebugLevel
 
     Debug level for SMSD. The integer value should be sum of all flags you

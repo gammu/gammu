@@ -543,6 +543,9 @@ GSM_Error SMSD_LoadNumbersFile(GSM_SMSDConfig *Config, GSM_StringArray *Array, c
 GSM_Error SMSD_ConfigureLogging(GSM_SMSDConfig *Config, gboolean uselog)
 {
 	int fd;
+#ifdef HAVE_SYSLOG
+	int facility;
+#endif
 
 	/* No logging configured */
 	if (Config->logfilename == NULL) {
@@ -566,8 +569,34 @@ GSM_Error SMSD_ConfigureLogging(GSM_SMSDConfig *Config, gboolean uselog)
 #endif
 #ifdef HAVE_SYSLOG
 	} else if (strcmp(Config->logfilename, "syslog") == 0) {
+		if (Config->logfacility == NULL) {
+			facility = LOG_DAEMON;
+		} else if (strcasecmp(Config->logfacility, "DAEMON")) {
+			facility = LOG_DAEMON;
+		} else if (strcasecmp(Config->logfacility, "USER")) {
+			facility = LOG_USER;
+		} else if (strcasecmp(Config->logfacility, "LOCAL0")) {
+			facility = LOG_LOCAL0;
+		} else if (strcasecmp(Config->logfacility, "LOCAL1")) {
+			facility = LOG_LOCAL1;
+		} else if (strcasecmp(Config->logfacility, "LOCAL2")) {
+			facility = LOG_LOCAL2;
+		} else if (strcasecmp(Config->logfacility, "LOCAL3")) {
+			facility = LOG_LOCAL3;
+		} else if (strcasecmp(Config->logfacility, "LOCAL4")) {
+			facility = LOG_LOCAL4;
+		} else if (strcasecmp(Config->logfacility, "LOCAL5")) {
+			facility = LOG_LOCAL5;
+		} else if (strcasecmp(Config->logfacility, "LOCAL6")) {
+			facility = LOG_LOCAL6;
+		} else if (strcasecmp(Config->logfacility, "LOCAL7")) {
+			facility = LOG_LOCAL7;
+		} else {
+			fprintf(stderr, "Invalid facility \"%s\"\n", Config->logfacility);
+			facility = LOG_DAEMON;
+		}
 		Config->log_type = SMSD_LOG_SYSLOG;
-		openlog(Config->program_name, LOG_PID, LOG_DAEMON);
+		openlog(Config->program_name, LOG_PID, facility);
 		Config->use_stderr = TRUE;
 #endif
 	} else {
@@ -632,6 +661,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 	Config->gammu_log_buffer = NULL;
 	Config->gammu_log_buffer_size = 0;
 	Config->logfilename = NULL;
+	Config->logfacility = NULL;
 	Config->smsdcfgfile = NULL;
 	Config->use_timestamps = TRUE;
 	Config->log_type = SMSD_LOG_NONE;
@@ -677,7 +707,9 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 		Config->debug_level = 0;
 	}
 
-	Config->logfilename=INI_GetValue(Config->smsdcfgfile, "smsd", "logfile", FALSE);
+	Config->logfilename = INI_GetValue(Config->smsdcfgfile, "smsd", "logfile", FALSE);
+	Config->logfacility = INI_GetValue(Config->smsdcfgfile, "smsd", "logfacility", FALSE);
+
 	error = SMSD_ConfigureLogging(Config, uselog);
 	if (error != ERR_NONE) {
 		return error;
