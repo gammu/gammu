@@ -44,7 +44,7 @@ or define own rules::
 
     ACTION=="add", SUBSYSTEMS=="usb", ATTRS{manufacturer}=="Nokia", KERNEL=="ttyUSB*", SYMLINK+="phone"
 
-Use better is to use vendor and product IDs (you can get them for example using :command:`lsusb`)::
+Better is to use vendor and product IDs (you can get them for example using :command:`lsusb`)::
 
     ACTION=="add", SUBSYSTEMS=="usb", ATTRS{idVendor}=="xxxx", ATTRS{idProduct}=="yyyy", SYMLINK+="phone"
 
