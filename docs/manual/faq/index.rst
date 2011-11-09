@@ -7,6 +7,7 @@ Frequently Asked Questions
     :maxdepth: 2
 
     general
+    config
     phone
     smsd
     python

@@ -33,6 +33,8 @@ where you just need to put URL of the data (use :option:`gammu sendsms`
 MMSINDICATOR for that). However you need to encode MMS data yourself or use
 other program to do that.
 
+.. _faq_devname:
+
 Device name always changes on Linux, how to solve that?
 -------------------------------------------------------
 
