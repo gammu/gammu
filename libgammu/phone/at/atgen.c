@@ -5780,6 +5780,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {MOTOROLA_ReplySetCalendar,	"AT+MDBW="		,0x00,0x00,ID_SetCalendarNote },
 {ATGEN_GenericReply,		"AT+MDBL="		,0x00,0x00,ID_SetCalendarNote },
 
+{ATGEN_GenericReplyIgnore,	"SAMSUNG PTS DG Test"	,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore, 	"^RSSI:"		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore, 	"^BOOT:"		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore, 	"^MODE:"		,0x00,0x00,ID_IncomingFrame	 },

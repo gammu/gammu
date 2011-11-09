@@ -111,6 +111,8 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 
 		/* Samsung binary transfer end */
 		{"SDNDCRC ="	,1},
+		/* Samsung reply to SSHT in some cases */
+		{"SAMSUNG PTS DG Test", 1},
 
 		/* Motorola banner */
 		{"+MBAN:"	,1},
