@@ -15,7 +15,7 @@ device name as modem appears in your system, for example ``/dev/ttyACM0`` or
     acutally behave like a modem and not like a disk containing drivers for
     Windows.
 
-.. seealso:: :ref:`faq_devname`
+.. seealso:: :ref:`faq-devname`
 
 .. _usb-modeswitch: http://www.draisberghof.de/usb_modeswitch/
 
