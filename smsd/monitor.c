@@ -97,8 +97,10 @@ void help(void)
 			   "defines path to config file");
 	print_option_param("d", "delay", "DELAY",
 			   "delay in seconds between loops");
-	print_option_param("l", "loops", "NUMBER",
+	print_option_param("n", "loops", "NUMBER",
 			   "delay in seconds between loops");
+	print_option("l", "use-log", "use logging configuration from config file");
+	print_option("L", "no-use-log", "do not use logging configuration from config file (default)");
 }
 
 NORETURN void wrong_params(void)
@@ -117,16 +119,18 @@ int process_commandline(int argc, char **argv, SMSD_Parameters * params)
 		{"version", 0, 0, 'v'},
 		{"config", 1, 0, 'c'},
 		{"delay", 1, 0, 'd'},
-		{"loops", 1, 0, 'l'},
+		{"loops", 1, 0, 'n'},
+		{"use-log", 0, 0, 'l'},
+		{"no-use-log", 0, 0, 'L'},
 		{0, 0, 0, 0}
 	};
 	int option_index;
 
 	while ((opt =
-		getopt_long(argc, argv, "+hvc:d:l:C", long_options,
+		getopt_long(argc, argv, "+hvc:d:n:ClL", long_options,
 			    &option_index)) != -1) {
 #elif defined(HAVE_GETOPT)
-	while ((opt = getopt(argc, argv, "+hvc:d:l:C")) != -1) {
+	while ((opt = getopt(argc, argv, "+hvc:d:n:ClL")) != -1) {
 #else
 	/* Poor mans getopt replacement */
 	int i, optind = -1;

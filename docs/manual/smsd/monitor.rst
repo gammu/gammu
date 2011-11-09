@@ -37,7 +37,7 @@ accepted on some platforms):
     Configuration file to use, default is /etc/gammu-smsdrc, on Windows there
     is no default and configuration file path has to be always specified.
 
-.. option:: -l, --loops=count
+.. option:: -n, --loops=count
 
     Number of loops, by default monitor loops infinitely.
 
@@ -52,3 +52,12 @@ accepted on some platforms):
     .. code-block:: text
 
         client;phone ID;IMEI;sent;received;failed;battery;signal
+
+.. option:: -l, --use-log
+
+    Use logging as configured in config file.
+
+.. option:: -L, --no-use-log
+
+    Do not use logging as configured in config file (default).
+

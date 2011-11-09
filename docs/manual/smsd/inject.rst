@@ -39,6 +39,14 @@ accepted on some platforms):
     Configuration file to use, default is /etc/gammu-smsdrc, on Windows there
     is no default and configuration file path has to be always specified.
 
+.. option:: -l, --use-log
+
+    Use logging as configured in config file.
+
+.. option:: -L, --no-use-log
+
+    Do not use logging as configured in config file (default).
+
 For description of message types and their parameters, please check documentation
 for :option:`gammu savesms`.
 

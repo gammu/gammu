@@ -85,6 +85,8 @@ void help(void)
 	printf("options:\n");
 	print_option("h", "help", "shows this help");
 	print_option("v", "version", "shows version information");
+	print_option("l", "use-log", "use logging configuration from config file");
+	print_option("L", "no-use-log", "do not use logging configuration from config file (default)");
 	print_option_param("c", "config", "CONFIG_FILE",
 			   "defines path to config file");
 	printf("\n");
@@ -106,15 +108,17 @@ int process_commandline(int argc, char **argv, SMSD_Parameters * params)
 		{"help", 0, 0, 'h'},
 		{"version", 0, 0, 'v'},
 		{"config", 1, 0, 'c'},
+		{"use-log", 0, 0, 'l'},
+		{"no-use-log", 0, 0, 'L'},
 		{0, 0, 0, 0}
 	};
 	int option_index;
 
 	while ((opt =
-		getopt_long(argc, argv, "+hvc:", long_options,
+		getopt_long(argc, argv, "+hvc:lL", long_options,
 			    &option_index)) != -1) {
 #elif defined(HAVE_GETOPT)
-	while ((opt = getopt(argc, argv, "+hvc:")) != -1) {
+	while ((opt = getopt(argc, argv, "+hvc:lL")) != -1) {
 #else
 	/* Poor mans getopt replacement */
 	int i, optind = -1;

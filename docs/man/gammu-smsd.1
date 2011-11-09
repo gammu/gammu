@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSD" "1" "November 07, 2011" "1.30.91" "Gammu"
+.TH "GAMMU-SMSD" "1" "November 09, 2011" "1.30.91" "Gammu"
 .SH NAME
 gammu-smsd \- SMS daemon for Gammu
 .
@@ -134,6 +134,16 @@ only Windows Service manager should use this command.
 Defines name of a Windows service. Each service requires an unique name,
 so if you want to run several SMSD instances, you have to name each
 service differently. Default is "GammuSMSD".
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-l, \-\-use\-log
+Use logging as configured in config file (default).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-L, \-\-no\-use\-log
+Do not use logging as configured in config file.
 .UNINDENT
 .SH EXAMPLES
 .SS Linux/Unix Examples

@@ -152,6 +152,8 @@ void help(void)
 	print_option("S", "run-as-service", "runs as a SMSD Windows service");
 	print_option_param("n", "service-name", "NAME", "name of a Windows service (default: GammuSMSD)");
 #endif
+	print_option("l", "use-log", "use logging configuration from config file (default)");
+	print_option("L", "no-use-log", "do not use logging configuration from config file");
 }
 
 NORETURN void wrong_params(void)
@@ -181,13 +183,15 @@ void process_commandline(int argc, char **argv, SMSD_Parameters * params)
 		{"service-name", 1, 0, 'n'},
 		{"suicide", 1, 0, 'X'},
 		{"max-failures", 1, 0, 'f'},
+		{"use-log", 0, 0, 'l'},
+		{"no-use-log", 0, 0, 'L'},
 		{0, 0, 0, 0}
 	};
 	int option_index;
 
-	while ((opt = getopt_long(argc, argv, "hvdc:p:iusSkU:G:n:X:f:", long_options, &option_index)) != -1) {
+	while ((opt = getopt_long(argc, argv, "hvdc:p:iusSkU:G:n:X:f:lL", long_options, &option_index)) != -1) {
 #elif defined(HAVE_GETOPT)
-	while ((opt = getopt(argc, argv, "hvdc:p:iusSkU:G:n:X:f:")) != -1) {
+	while ((opt = getopt(argc, argv, "hvdc:p:iusSkU:G:n:X:f:lL")) != -1) {
 #else
 	/* Poor mans getopt replacement */
 	int i;

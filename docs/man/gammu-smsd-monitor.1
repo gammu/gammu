@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSD-MONITOR" "1" "November 07, 2011" "1.30.91" "Gammu"
+.TH "GAMMU-SMSD-MONITOR" "1" "November 09, 2011" "1.30.91" "Gammu"
 .SH NAME
 gammu-smsd-monitor \- Monitor state of SMS daemon for Gammu
 .
@@ -65,7 +65,7 @@ is no default and configuration file path has to be always specified.
 .UNINDENT
 .INDENT 0.0
 .TP
-.B \-l, \-\-loops=count
+.B \-n, \-\-loops=count
 Number of loops, by default monitor loops infinitely.
 .UNINDENT
 .INDENT 0.0
@@ -83,6 +83,16 @@ Print output in comma separated values format:
 client;phone ID;IMEI;sent;received;failed;battery;signal
 .ft P
 .fi
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-l, \-\-use\-log
+Use logging as configured in config file.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-L, \-\-no\-use\-log
+Do not use logging as configured in config file (default).
 .UNINDENT
 .SH AUTHOR
 Michal Čihař <michal@cihar.com>

@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSD-INJECT" "1" "November 07, 2011" "1.30.91" "Gammu"
+.TH "GAMMU-SMSD-INJECT" "1" "November 09, 2011" "1.30.91" "Gammu"
 .SH NAME
 gammu-smsd-inject \- Inject messages into queue of SMS daemon for Gammu
 .
@@ -64,6 +64,16 @@ Shows version information and compiled in features.
 .B \-c, \-\-config=file
 Configuration file to use, default is /etc/gammu\-smsdrc, on Windows there
 is no default and configuration file path has to be always specified.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-l, \-\-use\-log
+Use logging as configured in config file.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-L, \-\-no\-use\-log
+Do not use logging as configured in config file (default).
 .UNINDENT
 .sp
 For description of message types and their parameters, please check documentation

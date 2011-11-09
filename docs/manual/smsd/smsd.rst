@@ -98,6 +98,14 @@ accepted on some platforms):
     so if you want to run several SMSD instances, you have to name each
     service differently. Default is "GammuSMSD".
 
+.. option:: -l, --use-log
+
+    Use logging as configured in config file (default).
+
+.. option:: -L, --no-use-log
+
+    Do not use logging as configured in config file.
+
 Examples
 --------
 
