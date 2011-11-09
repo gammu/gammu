@@ -22,6 +22,7 @@ ChangeLog
 2011???? - 1.30.91
 
 [+] * Improved documentation for configuring Gammu.
+[-] * Fixed parsing birthday from vCard in some cases.
     
 20111107 - 1.30.90
 
