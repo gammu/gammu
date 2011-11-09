@@ -269,6 +269,14 @@ been installed. Some examples:
     # Gammu installed to /usr/local
     echo /usr/local/lib > /etc/ld.so.conf.d/gammu.conf
 
+You can also avoid changing ldconfig configuration by installing Gammu to paths
+where it already searches, for examble by:
+
+.. code-block:: sh
+
+   cmake .. -DCMAKE_INSTALL_PREFIX="/usr"
+
+
 Compiling on Microsoft Windows
 ------------------------------
 
