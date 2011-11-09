@@ -350,6 +350,7 @@ int main(int argc, char **argv)
 		FALSE,
 		FALSE,
 		FALSE,
+		TRUE,
 		0
 	};
 
@@ -420,7 +421,7 @@ read_config:
 	config = SMSD_NewConfig(program_name);
 	assert(config != NULL);
 
-	error = SMSD_ReadConfig(params.config_file, config, TRUE);
+	error = SMSD_ReadConfig(params.config_file, config, params.use_log);
 	if (error != ERR_NONE) {
 		printf("Failed to read config: %s\n", GSM_ErrorString(error));
 		SMSD_FreeConfig(config);
