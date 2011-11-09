@@ -38,9 +38,9 @@ other program to do that.
 Device name always changes on Linux, how to solve that?
 -------------------------------------------------------
 
-You can use udev to assign persistent device name. You can either use standard
-peristent names based on serial number (located in :file:`/dev/serial/by-id/`)
-or define own rules::
+You can use udev to assign persistent device name (used as
+:config:option:`Device`). You can either use standard peristent names based on
+serial number (located in :file:`/dev/serial/by-id/`) or define own rules::
 
     ACTION=="add", SUBSYSTEMS=="usb", ATTRS{manufacturer}=="Nokia", KERNEL=="ttyUSB*", SYMLINK+="phone"
 
