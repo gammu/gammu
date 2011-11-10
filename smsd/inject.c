@@ -138,6 +138,12 @@ int process_commandline(int argc, char **argv, SMSD_Parameters * params)
 			case 'v':
 				version();
 				break;
+			case 'l':
+				params->use_log = TRUE;
+				break;
+			case 'L':
+				params->use_log = FALSE;
+				break;
 			case '?':
 				wrong_params();
 			case 'h':
