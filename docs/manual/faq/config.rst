@@ -9,6 +9,9 @@ As most modems support AT commands, this is pretty easy and you should use
 device name as modem appears in your system, for example ``/dev/ttyACM0`` or
 ``COM7:``.
 
+Some modems expose more serial ports and you need to carefully choose the right
+one - for example only one of them can receive USSD notifications.
+
 .. note::
 
     On Linux, you might have to install `usb-modeswitch`_ to make your modem
