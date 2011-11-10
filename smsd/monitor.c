@@ -156,7 +156,7 @@ int process_commandline(int argc, char **argv, SMSD_Parameters * params)
 			case 'd':
 				delay_seconds = atoi(optarg);
 				break;
-			case 'l':
+			case 'n':
 				limit_loops = atoi(optarg);
 				break;
 			case '?':
