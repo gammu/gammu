@@ -26,6 +26,7 @@ ChangeLog
 [+] * Added option not to use configured logging in SMSD inject and monitor (bug #1539).
 [+] * Added SMSD configuration LogFacility (bug #1539).
 [-] * Fixed reading of data from OBEX phones (LP#891803).
+[-] * Fixed double reply detection (bug #1544).
     
 20111107 - 1.30.90
 

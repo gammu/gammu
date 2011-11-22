@@ -1425,8 +1425,8 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 			if (strcmp(line1, line2) == 0) {
 				smprintf(s, "Removing first reply, because it is duplicated\n");
 				/* Remove first line */
-				memmove(Priv->Lines.numbers, Priv->Lines.numbers + 2, (Priv->Lines.allocated - 2) * sizeof(Priv->Lines.numbers));
-
+				memmove(Priv->Lines.numbers, Priv->Lines.numbers + 2, (Priv->Lines.allocated - 2) * sizeof(int));
+				i--;
 			}
 		}
 		/* Free allocated memory */
