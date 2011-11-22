@@ -1685,7 +1685,7 @@ GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name,
         while (1) {
 		/* Remember line start position */
 		prevpos = linepos;
-                error = MyGetLine(*Data, &linepos, line, len, sizeof(line), FALSE);
+                error = MyGetLine(*Data, &linepos, line, len, sizeof(line), TRUE);
 		if (error != ERR_NONE) return error;
                 if (strlen(line) == 0) break;
                 switch (level) {
