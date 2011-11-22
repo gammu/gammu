@@ -69,6 +69,10 @@ int main(int argc UNUSED, char **argv UNUSED)
 	s->Protocol.Data.AT.CPINNoOK = FALSE;
 	do_test("AT+CPIN?\r\n+CPIN: READY\r\n", AT_Reply_Unknown, ERR_UNKNOWNRESPONSE);
 
+	s->Phone.Data.RequestID = ID_GetSignalQuality;
+	s->Protocol.Data.AT.CPINNoOK = FALSE;
+	do_test("AT+CSQ\r\nAT+CSQ\r\n+CME ERROR: 515", AT_Reply_CMEError, ERR_UNKNOWN);
+
 	/* Free state machine */
 	GSM_FreeStateMachine(s);
 
