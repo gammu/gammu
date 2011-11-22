@@ -652,7 +652,7 @@ if (WITH_OBEXGEN)
     add_test(obex-vcard-split-se-3
             "${GAMMU_TEST_PATH}/obex-vcard-split${GAMMU_TEST_SUFFIX}"
             "${Gammu_SOURCE_DIR}/tests/vcards/se-3.vcf"
-            493)
+            499)
 
 endif (WITH_OBEXGEN)
 
