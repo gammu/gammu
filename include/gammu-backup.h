@@ -107,7 +107,7 @@ void GSM_FreeSMSBackup(GSM_SMS_Backup * backup);
  *
  * \todo This should not be hardcoded.
  */
-#define GSM_BACKUP_MAX_CALLER 20
+#define GSM_BACKUP_MAX_CALLER 101
 /**
  * Maximal number of SMSC in backup.
  *
