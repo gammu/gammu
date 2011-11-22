@@ -1271,14 +1271,22 @@ GSM_Error SMSD_ProcessSMS(GSM_SMSDConfig *Config, GSM_MultiSMSMessage *sms)
 gboolean SMSD_CheckMultipart(GSM_SMSDConfig *Config, GSM_MultiSMSMessage *MultiSMS)
 {
 	gboolean same_id;
+	int current_id;
 
 	/* Does the message have UDH (is multipart)? */
 	if (MultiSMS->SMS[0].UDH.Type == UDH_NoUDH || MultiSMS->SMS[0].UDH.AllParts == -1) {
 		return TRUE;
 	}
 
+	/* Grab current id */
+	if (MultiSMS->SMS[0].UDH.ID16bit != -1) {
+		 current_id = MultiSMS->SMS[0].UDH.ID16bit;
+	} else {
+		 current_id = MultiSMS->SMS[0].UDH.ID8bit;
+	}
+
 	/* Do we have same id as last incomplete? */
-	same_id = (Config->IncompleteMessageID == MultiSMS->SMS[0].UDH.ID16bit || Config->IncompleteMessageID == MultiSMS->SMS[0].UDH.ID8bit);
+	same_id = (Config->IncompleteMessageID == current_id);
 
 	/* Check if we have all parts */
 	if (MultiSMS->SMS[0].UDH.AllParts == MultiSMS->Number) {
