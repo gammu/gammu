@@ -5184,7 +5184,7 @@ GSM_Error ATGEN_GetSignalQuality(GSM_StateMachine *s, GSM_SignalQuality *sig)
 
 	s->Phone.Data.SignalQuality = sig;
 	smprintf(s, "Getting signal quality info\n");
-	ATGEN_WaitForAutoLen(s, "AT+CSQ\r", 0x00, 4, ID_GetSignalQuality);
+	ATGEN_WaitForAutoLen(s, "AT+CSQ\r", 0x00, 20, ID_GetSignalQuality);
 	return error;
 }
 
