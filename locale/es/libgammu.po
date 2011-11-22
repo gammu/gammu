@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-04-21 14:32+0200\n"
+"POT-Creation-Date: 2011-11-02 09:09+0100\n"
 "PO-Revision-Date: 2011-03-10 19:27+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
@@ -401,7 +401,7 @@ msgid "SIM"
 msgstr "SIM"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:579 libgammu/phone/pfunc.c:41
-#: libgammu/phone/s60/s60phone.c:1752
+#: libgammu/phone/s60/s60phone.c:1762
 msgid "Inbox"
 msgstr "Bandeja de entrada"
 
@@ -445,7 +445,7 @@ msgstr "Exterior"
 msgid "Pager"
 msgstr "Mensáfono"
 
-#: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1753
+#: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1763
 msgid "Outbox"
 msgstr "Bandeja de salida"
 

@@ -81,7 +81,7 @@ struct _GSM_SMSDConfig {
 	unsigned int	resetfrequency;
 	unsigned int	hardresetfrequency;
 	unsigned int multiparttimeout;
-	const char   *deliveryreport, *logfilename,  *PINCode, *NetworkCode, *PhoneCode;
+	const char   *deliveryreport, *logfilename, *logfacility,  *PINCode, *NetworkCode, *PhoneCode;
 	const char	*PhoneID;
 	const char   *RunOnReceive;
 	const char   *RunOnFailure; /* run this command on phone communication failure */

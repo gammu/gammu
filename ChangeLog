@@ -19,7 +19,17 @@ the issue.
 ChangeLog
 =========
     
-2011???? - 1.30.90
+2011???? - 1.30.91
+
+[+] * Improved documentation for configuring Gammu.
+[-] * Fixed parsing birthday from vCard in some cases.
+[+] * Added option not to use configured logging in SMSD inject and monitor (bug #1539).
+[+] * Added SMSD configuration LogFacility (bug #1539).
+[-] * Fixed reading of data from OBEX phones (LP#891803).
+[-] * Fixed double reply detection (bug #1544).
+[-] * Increase maximal number of caller groups (bug #1541).
+    
+20111107 - 1.30.90
 
 [-] * Various documentation improvements.
 [-] * Detect Alcatel style reply on CPIN response (bug #1502).
@@ -29,6 +39,11 @@ ChangeLog
 [-] * Do not use AT+CUSD=2 on some phones (bug #1508).
 [-] * Fixed gammu-monitor with Windows service (bug #1515).
 [-] * Cleanup of contrib directory.
+[-] * Better support for Samsung AT phones (bug #1513).
+[-] * Fixed handling of MMS notification SMSes (bug #1530).
+[-] * Fixed CPIN reply handling (bug #1532).
+[+] * SMSD checks for PIN status just after connect (bug #1532).
+[-] * Fixed various MSVC compilation issues.
     
 20110719 - 1.30.0
 

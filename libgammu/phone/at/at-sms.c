@@ -174,7 +174,7 @@ GSM_Error ATGEN_GetSMSMemories(GSM_StateMachine *s)
 	}
 
 	smprintf(s, "Getting available SMS memories\n");
-	ATGEN_WaitForAutoLen(s, "AT+CPMS=?\r", 0x00, 4, ID_GetSMSMemories);
+	ATGEN_WaitForAutoLen(s, "AT+CPMS=?\r", 0x00, 20, ID_GetSMSMemories);
 
 	if (error != ERR_NONE) {
 		return error;

@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSD-FILES" "7" "September 02, 2011" "1.30.90" "Gammu"
+.TH "GAMMU-SMSD-FILES" "7" "November 09, 2011" "1.30.91" "Gammu"
 .SH NAME
 gammu-smsd-files \- gammu-smsd(1) backend using filesystem as a message storage
 .
@@ -43,27 +43,21 @@ Explanation of fields:
 .INDENT 0.0
 .TP
 .B \fB<date>\fP
-.sp
 date in format \fBYYYYMMDD\fP
 .TP
 .B \fB<time>\fP
-.sp
 time in format \fBHHMMSS\fP
 .TP
 .B \fB<sender>\fP
-.sp
 sender number
 .TP
 .B \fB<serial>\fP
-.sp
 order of a message (in case more messages were received at same time), in format \fBNN\fP
 .TP
 .B \fB<sequence>\fP
-.sp
 part of the message for multipart messages, in format \fBNN\fP
 .TP
 .B \fB<ext>\fP
-.sp
 \fBtxt\fP for text message, 8\-bit messages are stored with \fBbin\fP extension, \fBsmsbackup\fP for \fIgammu\-smsbackup\fP
 .UNINDENT
 .sp
@@ -75,13 +69,10 @@ Transmitted messages are read from a folder defined by configuration. The
 filename should be one of the following formats:
 .INDENT 0.0
 .IP \(bu 2
-.
 \fBOUT<recipient>.<ext>\fP
 .IP \(bu 2
-.
 \fBOUT<priority>_<recipient>_<serial>.<ext>\fP
 .IP \(bu 2
-.
 \fBOUT<priority><date>_<time>_<serial>_<recipient>_<note>.<ext>\fP
 .UNINDENT
 .sp
@@ -89,19 +80,15 @@ Explanation of fields:
 .INDENT 0.0
 .TP
 .B \fB<recipient>\fP
-.sp
 recipient number where to send message
 .TP
 .B \fB<priority>\fP
-.sp
 an alphabetic character (A\-Z) A = highest priority
 .TP
 .B \fB<ext>\fP
-.sp
 \fBtxt\fP for normal text SMS, \fBsmsbackup\fP for \fIgammu\-smsbackup\fP
 .TP
 .B \fB<note>\fP
-.sp
 any artibrary text which is ignored
 .UNINDENT
 .sp
@@ -111,15 +98,12 @@ For text messages, you can additionally append flags to extension:
 .INDENT 0.0
 .TP
 .B \fBd\fP
-.sp
 delivery report requested
 .TP
 .B \fBf\fP
-.sp
 flash SMS
 .TP
 .B \fBb\fP
-.sp
 WAP bookmark as name,URL
 .UNINDENT
 .UNINDENT

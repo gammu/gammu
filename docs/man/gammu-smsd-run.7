@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSD-RUN" "7" "September 02, 2011" "1.30.90" "Gammu"
+.TH "GAMMU-SMSD-RUN" "7" "November 09, 2011" "1.30.91" "Gammu"
 .SH NAME
 gammu-smsd-run \- documentation for RunOnReceive directive
 .
@@ -47,6 +47,10 @@ there, it will make SMSD not receive new messages. However to limit breakage
 from this situation, the waiting time is limited to two minutes. After this
 time SMSD will continue in normal operation and might execute your script
 again.
+.IP Note
+All input and output file descriptors are closed when this program is
+invoked, so you have to ensure to open files on your own.
+.RE
 .SH ENVIRONMENT
 .sp
 program is executed with environment which contains lot of information about
@@ -56,13 +60,11 @@ the message. You can use it together with NULL service (see
 .INDENT 0.0
 .TP
 .B SMS_MESSAGES
-.
 Number of physical messages received.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B DECODED_PARTS
-.
 Number of decoded message parts.
 .UNINDENT
 .SS Per message variables
@@ -72,19 +74,16 @@ message, where 1 is replaced by current number of message.
 .INDENT 0.0
 .TP
 .B SMS_1_CLASS
-.
 Class of message.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B SMS_1_NUMBER
-.
 Sender number.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B SMS_1_TEXT
-.
 Message text. Text is not available for 8\-bit binary messages.
 .UNINDENT
 .SS Per part variables
@@ -95,31 +94,26 @@ variables whose content is present in the message.
 .INDENT 0.0
 .TP
 .B DECODED_1_TEXT
-.
 Decoded long message text.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B DECODED_1_MMS_SENDER
-.
 Sender of MMS indication message.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B DECODED_1_MMS_TITLE
-.
 title of MMS indication message.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B DECODED_1_MMS_ADDRESS
-.
 Address (URL) of MMS from MMS indication message.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B DECODED_1_MMS_SIZE
-.
 Size of MMS as specified in MMS indication message.
 .UNINDENT
 .SH EXAMPLES

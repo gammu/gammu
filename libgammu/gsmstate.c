@@ -31,7 +31,9 @@
 
 #if defined(WIN32) || defined(DJGPP)
 /* Needed for SHGFP_TYPE_CURRENT */
+#ifndef _WIN32_IE
 #define _WIN32_IE 0x0501
+#endif
 #include <shlobj.h>
 
 #define FALLBACK_GAMMURC "gammurc"
@@ -1069,12 +1071,14 @@ GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 	GSM_DumpMessageLevel2Recv(s, msg->Buffer, msg->Length, msg->Type);
 	GSM_DumpMessageLevel3Recv(s, msg->Buffer, msg->Length, msg->Type);
 
-	Reply=s->User.UserReplyFunctions;
-	if (Reply != NULL) error=CheckReplyFunctions(s,Reply,&reply);
+	Reply = s->User.UserReplyFunctions;
+	if (Reply != NULL) {
+		error = CheckReplyFunctions(s,Reply,&reply);
+	}
 
-	if (error==ERR_UNKNOWNFRAME) {
-		Reply=s->Phone.Functions->ReplyFunctions;
-		error=CheckReplyFunctions(s,Reply,&reply);
+	if (error == ERR_UNKNOWNFRAME) {
+		Reply = s->Phone.Functions->ReplyFunctions;
+		error = CheckReplyFunctions(s,Reply,&reply);
 	}
 
 	if (error==ERR_NONE) {

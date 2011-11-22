@@ -56,6 +56,14 @@ static void byteReverse(unsigned char *buf, unsigned longs)
 	} while (--longs);
 }
 
+static void putu32(uint32 data, unsigned char *addr)
+{
+	addr[0] = (unsigned char)data;
+	addr[1] = (unsigned char)(data >> 8);
+	addr[2] = (unsigned char)(data >> 16);
+	addr[3] = (unsigned char)(data >> 24);
+}
+
 /*
  * Start MD5 accumulation.  Set bit count to 0 and buffer to mysterious
  * initialization constants.
@@ -155,8 +163,8 @@ void MD5Final(unsigned char digest[16], struct MD5Context *ctx)
 	byteReverse(ctx->in, 14);
 
 	/* Append length in bits and transform */
-	((uint32 *) ctx->in)[14] = ctx->bits[0];
-	((uint32 *) ctx->in)[15] = ctx->bits[1];
+	putu32(ctx->bits[0], ctx->in + (14 * 4));
+	putu32(ctx->bits[1], ctx->in + (15 * 4));
 
 	MD5Transform(ctx->buf, (uint32 *) ctx->in);
 	byteReverse((unsigned char *) ctx->buf, 4);

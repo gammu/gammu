@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libGammu 1.30.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-04-21 14:35+0200\n"
+"POT-Creation-Date: 2011-11-02 09:09+0100\n"
 "PO-Revision-Date: 2010-03-17 17:52+0200\n"
 "Last-Translator: Azhari Harahap <azhari.harahap@yahoo.com>\n"
 "Language-Team: none\n"
@@ -393,7 +393,7 @@ msgid "SIM"
 msgstr "SIM"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:579 libgammu/phone/pfunc.c:41
-#: libgammu/phone/s60/s60phone.c:1752
+#: libgammu/phone/s60/s60phone.c:1762
 msgid "Inbox"
 msgstr "Kotak masuk"
 
@@ -437,7 +437,7 @@ msgstr "Luar ruangan."
 msgid "Pager"
 msgstr "Pager"
 
-#: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1753
+#: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1763
 msgid "Outbox"
 msgstr "Kotak Keluar"
 

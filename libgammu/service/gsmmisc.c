@@ -258,7 +258,14 @@ gboolean ReadVCALDateTime(const char *Buffer, GSM_DateTime *dt)
 
 	memset(dt,0,sizeof(GSM_DateTime));
 
-	if (strlen(Buffer) < 8) return FALSE;
+	/* YYYY-MM-DD is invalid, though used */
+	if (sscanf(Buffer, "%d-%d-%d", &dt->Year, &dt->Month, &dt->Day) == 3) {
+		goto checkdt;
+	}
+
+	if (strlen(Buffer) < 8) {
+		return FALSE;
+	}
 
 	strncpy(year, 	Buffer, 	4);
 	strncpy(month, 	Buffer+4, 	2);
@@ -282,6 +289,7 @@ gboolean ReadVCALDateTime(const char *Buffer, GSM_DateTime *dt)
 		 */
 		if (Buffer[15] == 'Z') dt->Timezone = 0; /* Z = ZULU = GMT */
 	}
+checkdt:
 
 	if (!CheckTime(dt)) {
 		dbgprintf(NULL, "incorrect date %d-%d-%d %d:%d:%d\n",dt->Day,dt->Month,dt->Year,dt->Hour,dt->Minute,dt->Second);

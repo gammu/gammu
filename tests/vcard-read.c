@@ -16,13 +16,14 @@
 
 #include "common.h"
 
+char buffer[65536000];
+char vcard_buffer[65536000];
+
 int main(int argc, char **argv)
 {
 	size_t pos = 0;
 	GSM_MemoryEntry pbk;
 	GSM_Error error;
-	char buffer[65536];
-	char vcard_buffer[65536];
 	FILE *f;
 	size_t len;
 	gboolean generate = FALSE;

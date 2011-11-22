@@ -765,6 +765,8 @@ static GSM_Error S60_Reply_GetMemory(GSM_Protocol_Message *msg, GSM_StateMachine
 	} else if(strcmp(type, "email_address") == 0) {
 		text = TRUE;
 		Entry->Entries[Entry->EntriesNum].EntryType = PBK_Text_Email;
+	} else if(strcmp(type, "po_box") == 0) {
+		text = TRUE;
 	} else if(strcmp(type, "extended_address") == 0) {
 		text = TRUE;
 	} else if(strcmp(type, "fax_number") == 0) {
@@ -841,10 +843,18 @@ static GSM_Error S60_Reply_GetMemory(GSM_Protocol_Message *msg, GSM_StateMachine
 	}
 
 	if (text) {
+		if (strlen(value) == 0) {
+			/* Ignore empty responses */
+			return ERR_NEEDANOTHERANSWER;
+		}
 		DecodeUTF8(Entry->Entries[Entry->EntriesNum].Text, value, strlen(value));
 	}
 
 	Entry->EntriesNum++;
+	if (Entry->EntriesNum >= GSM_PHONEBOOK_ENTRIES) {
+		smprintf(s, "ERROR: reached limit of phonebook entries\n");
+		return ERR_MOREMEMORY;
+	}
 
 	return ERR_NEEDANOTHERANSWER;
 }

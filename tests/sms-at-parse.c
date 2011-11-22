@@ -28,6 +28,9 @@ int main(int argc, char **argv)
 	GSM_Protocol_Message msg;
 	GSM_Error error;
 	GSM_MultiSMSMessage sms;
+#if 0
+	GSM_SMS_Backup bkp;
+#endif
 
 	/* Check parameters */
 	if (argc != 2 && argc != 3) {
@@ -91,6 +94,13 @@ int main(int argc, char **argv)
 	/* Parse it */
 	error = ATGEN_ReplyGetSMSMessage(&msg, s);
 	sms.SMS[0].Memory = MEM_SM;
+
+#if 0
+	bkp.SMS[0] = &sms.SMS[0];
+	bkp.SMS[1] = NULL;
+
+	GSM_AddSMSBackupFile("/tmp/back", &bkp);
+#endif
 
 	/* Display message */
 	if (error == ERR_NONE) {

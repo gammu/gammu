@@ -543,6 +543,9 @@ GSM_Error SMSD_LoadNumbersFile(GSM_SMSDConfig *Config, GSM_StringArray *Array, c
 GSM_Error SMSD_ConfigureLogging(GSM_SMSDConfig *Config, gboolean uselog)
 {
 	int fd;
+#ifdef HAVE_SYSLOG
+	int facility;
+#endif
 
 	/* No logging configured */
 	if (Config->logfilename == NULL) {
@@ -566,8 +569,34 @@ GSM_Error SMSD_ConfigureLogging(GSM_SMSDConfig *Config, gboolean uselog)
 #endif
 #ifdef HAVE_SYSLOG
 	} else if (strcmp(Config->logfilename, "syslog") == 0) {
+		if (Config->logfacility == NULL) {
+			facility = LOG_DAEMON;
+		} else if (strcasecmp(Config->logfacility, "DAEMON")) {
+			facility = LOG_DAEMON;
+		} else if (strcasecmp(Config->logfacility, "USER")) {
+			facility = LOG_USER;
+		} else if (strcasecmp(Config->logfacility, "LOCAL0")) {
+			facility = LOG_LOCAL0;
+		} else if (strcasecmp(Config->logfacility, "LOCAL1")) {
+			facility = LOG_LOCAL1;
+		} else if (strcasecmp(Config->logfacility, "LOCAL2")) {
+			facility = LOG_LOCAL2;
+		} else if (strcasecmp(Config->logfacility, "LOCAL3")) {
+			facility = LOG_LOCAL3;
+		} else if (strcasecmp(Config->logfacility, "LOCAL4")) {
+			facility = LOG_LOCAL4;
+		} else if (strcasecmp(Config->logfacility, "LOCAL5")) {
+			facility = LOG_LOCAL5;
+		} else if (strcasecmp(Config->logfacility, "LOCAL6")) {
+			facility = LOG_LOCAL6;
+		} else if (strcasecmp(Config->logfacility, "LOCAL7")) {
+			facility = LOG_LOCAL7;
+		} else {
+			fprintf(stderr, "Invalid facility \"%s\"\n", Config->logfacility);
+			facility = LOG_DAEMON;
+		}
 		Config->log_type = SMSD_LOG_SYSLOG;
-		openlog(Config->program_name, LOG_PID, LOG_DAEMON);
+		openlog(Config->program_name, LOG_PID, facility);
 		Config->use_stderr = TRUE;
 #endif
 	} else {
@@ -632,6 +661,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 	Config->gammu_log_buffer = NULL;
 	Config->gammu_log_buffer_size = 0;
 	Config->logfilename = NULL;
+	Config->logfacility = NULL;
 	Config->smsdcfgfile = NULL;
 	Config->use_timestamps = TRUE;
 	Config->log_type = SMSD_LOG_NONE;
@@ -677,7 +707,9 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 		Config->debug_level = 0;
 	}
 
-	Config->logfilename=INI_GetValue(Config->smsdcfgfile, "smsd", "logfile", FALSE);
+	Config->logfilename = INI_GetValue(Config->smsdcfgfile, "smsd", "logfile", FALSE);
+	Config->logfacility = INI_GetValue(Config->smsdcfgfile, "smsd", "logfacility", FALSE);
+
 	error = SMSD_ConfigureLogging(Config, uselog);
 	if (error != ERR_NONE) {
 		return error;
@@ -844,7 +876,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 	Config->prevSMSID[0] 	  = 0;
 	Config->relativevalidity  = -1;
 	Config->Status = NULL;
-	Config->IncompleteMessageID = 0;
+	Config->IncompleteMessageID = -1;
 	Config->IncompleteMessageTime = 0;
 
 	return ERR_NONE;
@@ -1239,14 +1271,26 @@ GSM_Error SMSD_ProcessSMS(GSM_SMSDConfig *Config, GSM_MultiSMSMessage *sms)
 gboolean SMSD_CheckMultipart(GSM_SMSDConfig *Config, GSM_MultiSMSMessage *MultiSMS)
 {
 	gboolean same_id;
+	int current_id;
 
 	/* Does the message have UDH (is multipart)? */
 	if (MultiSMS->SMS[0].UDH.Type == UDH_NoUDH || MultiSMS->SMS[0].UDH.AllParts == -1) {
 		return TRUE;
 	}
 
+	/* Grab current id */
+	if (MultiSMS->SMS[0].UDH.ID16bit != -1) {
+		 current_id = MultiSMS->SMS[0].UDH.ID16bit;
+	} else {
+		 current_id = MultiSMS->SMS[0].UDH.ID8bit;
+	}
+
 	/* Do we have same id as last incomplete? */
-	same_id = (Config->IncompleteMessageID == MultiSMS->SMS[0].UDH.ID16bit || Config->IncompleteMessageID == MultiSMS->SMS[0].UDH.ID8bit);
+	same_id = (Config->IncompleteMessageID != -1 && Config->IncompleteMessageID == current_id);
+
+	/* Some logging */
+	SMSD_Log(DEBUG_INFO, Config, "Multipart message 0x%02X, %d parts of %d",
+		current_id, MultiSMS->Number, MultiSMS->SMS[0].UDH.AllParts);
 
 	/* Check if we have all parts */
 	if (MultiSMS->SMS[0].UDH.AllParts == MultiSMS->Number) {
@@ -1258,6 +1302,7 @@ gboolean SMSD_CheckMultipart(GSM_SMSDConfig *Config, GSM_MultiSMSMessage *MultiS
 		if (Config->IncompleteMessageTime != 0 && difftime(time(NULL), Config->IncompleteMessageTime) > Config->multiparttimeout) {
 			SMSD_Log(DEBUG_INFO, Config, "Incomplete multipart message 0x%02X, processing after timeout",
 				Config->IncompleteMessageID);
+			Config->IncompleteMessageID = -1;
 		} else {
 			SMSD_Log(DEBUG_INFO, Config, "Incomplete multipart message 0x%02X, waiting for other parts (waited %.0f seconds)",
 				Config->IncompleteMessageID,
@@ -1286,6 +1331,7 @@ success:
 	/* Clean multipart wait flag */
 	if (same_id) {
 		Config->IncompleteMessageTime = 0;
+		Config->IncompleteMessageID = -1;
 	}
 	return TRUE;
 }
@@ -1790,6 +1836,11 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 			}
 			switch (error) {
 			case ERR_NONE:
+				if (Config->checksecurity && !SMSD_CheckSecurity(Config)) {
+					errors++;
+					initerrors++;
+					continue;
+				}
 				GSM_SetSendSMSStatusCallback(Config->gsm, SMSD_SendSMSStatusCallback, Config);
 				/* On first start we need to initialize some variables */
 				if (first_start) {

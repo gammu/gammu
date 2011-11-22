@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSD-SQL" "7" "September 02, 2011" "1.30.90" "Gammu"
+.TH "GAMMU-SMSD-SQL" "7" "November 09, 2011" "1.30.91" "Gammu"
 .SH NAME
 gammu-smsd-sql \- gammu-smsd(1) backend using SQL abstraction layer to use any supported database as a message storage
 .
@@ -35,13 +35,10 @@ SQL service stores all its data in database. It can use one of these SQL backend
 (configuration option \fBDriver\fP in smsd section):
 .INDENT 0.0
 .IP \(bu 2
-.
 \fBnative_mysql\fP for \fIgammu\-smsd\-mysql\fP
 .IP \(bu 2
-.
 \fBnative_pgsql\fP for \fIgammu\-smsd\-pgsql\fP
 .IP \(bu 2
-.
 \fBodbc\fP for \fIgammu\-smsd\-odbc\fP
 .IP \(bu 2
 .INDENT 2.0
@@ -49,16 +46,12 @@ SQL service stores all its data in database. It can use one of these SQL backend
 .B drivers supported by DBI for \fIgammu\-smsd\-dbi\fP, which include:
 .INDENT 7.0
 .IP \(bu 2
-.
 \fBsqlite3\fP \- for SQLite 3
 .IP \(bu 2
-.
 \fBmysql\fP \- for MySQL
 .IP \(bu 2
-.
 \fBpgsql\fP \- for PostgeSQL
 .IP \(bu 2
-.
 \fBfreetds\fP \- for MS SQL Server or Sybase
 .UNINDENT
 .UNINDENT
@@ -68,32 +61,24 @@ SQL service stores all its data in database. It can use one of these SQL backend
 Common for all backends:
 .INDENT 0.0
 .IP \(bu 2
-.
 \fBUser\fP \- user connecting to database
 .IP \(bu 2
-.
 \fBPassword\fP \- password for connecting to database
 .IP \(bu 2
-.
 \fBHost\fP \- database host or data source name
 .IP \(bu 2
-.
 \fBDatabase\fP \- database name
 .IP \(bu 2
-.
 \fBDriver\fP \- \fBnative_mysql\fP, \fBnative_pgsql\fP, \fBodbc\fP or DBI one
 .IP \(bu 2
-.
 \fBSQL\fP \- SQL dialect to use
 .UNINDENT
 .sp
 Specific for DBI:
 .INDENT 0.0
 .IP \(bu 2
-.
 \fBDriversPath\fP \- path to DBI drivers
 .IP \(bu 2
-.
 \fBDBDir\fP \- sqlite/sqlite3 directory with database
 .UNINDENT
 .IP "See also"
@@ -107,87 +92,67 @@ Almost all queries are configurable. You can edit them in
 queries. We can separate them into three groups:
 .INDENT 0.0
 .IP \(bu 2
-.
 phone specific, which can be used in every query, see \fI\%Phone Specific Parameters\fP
 .IP \(bu 2
-.
 SMS specific, which can be used in queries which works with SMS messages, see \fI\%SMS Specific Parameters\fP
 .IP \(bu 2
-.
 query specific, which are numeric and are specific only for given query (or set of queries), see \fI\%Configurable queries\fP
 .UNINDENT
 .SS Phone Specific Parameters
 .INDENT 0.0
 .TP
 .B \fB%I\fP
-.sp
 IMEI of phone
 .TP
 .B \fB%P\fP
-.sp
 PHONE ID (hostname)
 .TP
 .B \fB%N\fP
-.sp
 client name (eg. Gammu 1.12.3)
 .UNINDENT
 .SS SMS Specific Parameters
 .INDENT 0.0
 .TP
 .B \fB%R\fP
-.sp
 remote number [1]
 .TP
 .B \fB%C\fP
-.sp
 delivery datetime
 .TP
 .B \fB%e\fP
-.sp
 delivery status on receiving or status error on sending
 .TP
 .B \fB%t\fP
-.sp
 message reference
 .TP
 .B \fB%d\fP
-.sp
 receiving datetime for received sms
 .TP
 .B \fB%E\fP
-.sp
 encoded text of SMS
 .TP
 .B \fB%c\fP
-.sp
 SMS coding (ie 8bit or UnicodeNoCompression)
 .TP
 .B \fB%F\fP
-.sp
 sms centre number
 .TP
 .B \fB%u\fP
-.sp
 UDH header
 .TP
 .B \fB%x\fP
-.sp
 class
 .TP
 .B \fB%T\fP
-.sp
 decoded SMS text
 .TP
 .B \fB%A\fP
-.sp
 CreatorID of SMS (sending sms)
 .TP
 .B \fB%V\fP
-.sp
 relative validity
 .UNINDENT
 .IP [1] 5
-.
 Sender number for received messages (insert to inbox or delivery notifications), destination otherwise.
 .SH CONFIGURABLE QUERIES
 .sp
@@ -198,7 +163,6 @@ are selected for default queries during initialization.
 .INDENT 0.0
 .TP
 .B delete_phone
-.
 Deletes phone from database.
 .sp
 Default value:
@@ -212,7 +176,6 @@ DELETE FROM phones WHERE IMEI = %I
 .INDENT 0.0
 .TP
 .B insert_phone
-.
 Inserts phone to database.
 .sp
 Default value:
@@ -228,18 +191,15 @@ Query specific parameters:
 .INDENT 7.0
 .TP
 .B \fB%1\fP
-.sp
 enable send (yes or no) \- configuration option Send
 .TP
 .B \fB%2\fP
-.sp
 enable receive (yes or no)  \- configuration option Receive
 .UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
 .B save_inbox_sms_select
-.
 Select message for update delivery status.
 .sp
 Default value:
@@ -254,7 +214,6 @@ WHERE DeliveryDateTime IS NULL AND SenderID = %P AND TPMR = %t AND DestinationNu
 .INDENT 0.0
 .TP
 .B save_inbox_sms_update_delivered
-.
 Update message delivery status if message was delivered.
 .sp
 Default value:
@@ -269,18 +228,15 @@ Query specific parameters:
 .INDENT 7.0
 .TP
 .B \fB%1\fP
-.sp
 delivery status returned by GSM network
 .TP
 .B \fB%2\fP
-.sp
 ID of message
 .UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
 .B save_inbox_sms_update
-.
 Update message if there is an delivery error.
 .sp
 Default value:
@@ -295,18 +251,15 @@ Query specific parameters:
 .INDENT 7.0
 .TP
 .B \fB%1\fP
-.sp
 delivery status returned by GSM network
 .TP
 .B \fB%2\fP
-.sp
 ID of message
 .UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
 .B save_inbox_sms_insert
-.
 Insert received message.
 .sp
 Default value:
@@ -321,7 +274,6 @@ Class, TextDecoded, RecipientID) VALUES (%d, %E, %R, %c, %F, %u, %x, %T, %P)
 .INDENT 0.0
 .TP
 .B update_received
-.
 Update statistics after receiving message.
 .sp
 Default value:
@@ -335,7 +287,6 @@ UPDATE phones SET Received = Received + 1 WHERE IMEI = %I
 .INDENT 0.0
 .TP
 .B refresh_send_status
-.
 Update messages in outbox.
 .sp
 Default value:
@@ -351,14 +302,12 @@ Query specific parameters:
 .INDENT 7.0
 .TP
 .B \fB%1\fP
-.sp
 ID of message
 .UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
 .B find_outbox_sms_id
-.
 Find sms messages for sending.
 .sp
 Default value:
@@ -376,14 +325,12 @@ Query specific parameters:
 .INDENT 7.0
 .TP
 .B \fB%1\fP
-.sp
 limit of sms messages sended in one walk in loop
 .UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
 .B find_outbox_body
-.
 Select body of message.
 .sp
 Default value:
@@ -399,14 +346,12 @@ Query specific parameters:
 .INDENT 7.0
 .TP
 .B \fB%1\fP
-.sp
 ID of message
 .UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
 .B find_outbox_multipart
-.
 Select remaining parts of sms message.
 .sp
 Default value:
@@ -422,18 +367,15 @@ Query specific parameters:
 .INDENT 7.0
 .TP
 .B \fB%1\fP
-.sp
 ID of message
 .TP
 .B \fB%2\fP
-.sp
 Number of multipart message
 .UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
 .B delete_outbox
-.
 Remove messages from outbox after threir successful send.
 .sp
 Default value:
@@ -448,14 +390,12 @@ Query specific parameters:
 .INDENT 7.0
 .TP
 .B \fB%1\fP
-.sp
 ID of message
 .UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
 .B delete_outbox_multipart
-.
 Remove messages from outbox_multipart after threir successful send.
 .sp
 Default value:
@@ -470,14 +410,12 @@ Query specific parameters:
 .INDENT 7.0
 .TP
 .B \fB%1\fP
-.sp
 ID of message
 .UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
 .B create_outbox
-.
 Create message (insert to outbox).
 .sp
 Default value:
@@ -494,30 +432,24 @@ Query specific parameters:
 .INDENT 7.0
 .TP
 .B \fB%1\fP
-.sp
 creator of message
 .TP
 .B \fB%2\fP
-.sp
 delivery status report \- yes/default
 .TP
 .B \fB%3\fP
-.sp
 multipart \- FALSE/TRUE
 .TP
 .B \fB%4\fP
-.sp
 Part (part number)
 .TP
 .B \fB%5\fP
-.sp
 ID of message
 .UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
 .B create_outbox_multipart
-.
 Create message remaining parts.
 .sp
 Default value:
@@ -533,30 +465,24 @@ Query specific parameters:
 .INDENT 7.0
 .TP
 .B \fB%1\fP
-.sp
 creator of message
 .TP
 .B \fB%2\fP
-.sp
 delivery status report \- yes/default
 .TP
 .B \fB%3\fP
-.sp
 multipart \- FALSE/TRUE
 .TP
 .B \fB%4\fP
-.sp
 Part (part number)
 .TP
 .B \fB%5\fP
-.sp
 ID of message
 .UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
 .B add_sent_info
-.
 Insert to sentitems.
 .sp
 Default value:
@@ -574,30 +500,24 @@ Query specific parameters:
 .INDENT 7.0
 .TP
 .B \fB%1\fP
-.sp
 ID of sms message
 .TP
 .B \fB%2\fP
-.sp
 part number (for multipart sms)
 .TP
 .B \fB%3\fP
-.sp
 message state (SendingError, Error, SendingOK, SendingOKNoReport)
 .TP
 .B \fB%4\fP
-.sp
 message reference (TPMR)
 .TP
 .B \fB%5\fP
-.sp
 time when inserted in db
 .UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
 .B update_sent
-.
 Update sent statistics after sending message.
 .sp
 Default value:
@@ -611,7 +531,6 @@ UPDATE phones SET Sent= Sent + 1 WHERE IMEI = %I
 .INDENT 0.0
 .TP
 .B refresh_phone_status
-.
 Update phone status (battery, signal).
 .sp
 Default value:
@@ -627,11 +546,9 @@ Query specific parameters:
 .INDENT 7.0
 .TP
 .B \fB%1\fP
-.sp
 battery percent
 .TP
 .B \fB%2\fP
-.sp
 signal percent
 .UNINDENT
 .UNINDENT

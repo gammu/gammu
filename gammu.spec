@@ -1,5 +1,5 @@
 Name:               gammu
-Version:            1.30.90
+Version:            1.30.91
 Release:            1
 # Set to 0 to disable bluetooth support
 %if 0%{?opensuse_bs} && 0%{?sles_version} == 9
@@ -130,7 +130,15 @@ BuildRequires: %{dist_dbi_libs}
 BuildRequires: unixODBC-devel
 %endif
 
+%if 0%{?fedora_version} || 0%{?centos_version} || 0%{?rhel_version} || 0%{?fedora} || 0%{?rhel}
+BuildRequires: libgudev1-devel glib2-devel
+%else
+%if 0%{?mandriva_version}
+BuildRequires: libgudev-1.0-devel glib2-devel
+%else
 BuildRequires: libgudev-1_0-devel glib2-devel
+%endif
+%endif
 
 BuildRequires: python-devel
 

@@ -22,6 +22,11 @@ from this situation, the waiting time is limited to two minutes. After this
 time SMSD will continue in normal operation and might execute your script
 again.
 
+.. note::
+
+    All input and output file descriptors are closed when this program is
+    invoked, so you have to ensure to open files on your own.
+
 Environment
 -----------
 

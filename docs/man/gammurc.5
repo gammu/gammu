@@ -1,4 +1,4 @@
-.TH "GAMMURC" "5" "September 02, 2011" "1.30.90" "Gammu"
+.TH "GAMMURC" "5" "November 09, 2011" "1.30.91" "Gammu"
 .SH NAME
 gammurc \- gammu(1) configuration file
 .
@@ -36,26 +36,20 @@ On Linux, MacOS X, BSD and other Unix\-like systems, the config file is
 searched in following order:
 .INDENT 0.0
 .IP 1. 3
-.
 \fB$XDG_CONFIG_HOME/gammu/config\fP
 .IP 2. 3
-.
 \fB~/.config/gammu/config\fP
 .IP 3. 3
-.
 \fB~/.gammurc\fP
 .IP 4. 3
-.
 \fB/etc/gammurc\fP
 .UNINDENT
 .sp
 On Microsoft Windows:
 .INDENT 0.0
 .IP 1. 3
-.
 \fB$PROFILE\eApplication Data\egammurc\fP
 .IP 2. 3
-.
 \fB.\egammurc\fP
 .UNINDENT
 .SH DESCRIPTION
@@ -88,30 +82,24 @@ This section is read by default unless you specify other on command line.
 .INDENT 0.0
 .TP
 .B Connection
-.
 Protocol which will be used to talk to your phone.
 .sp
 For Nokia cables you want to use one of following:
 .INDENT 7.0
 .TP
 .B \fBfbus\fP
-.sp
 serial FBUS connection
 .TP
 .B \fBdlr3\fP
-.sp
 DLR\-3 and compatible cables
 .TP
 .B \fBdku2\fP
-.sp
 DKU\-2 and compatible cables
 .TP
 .B \fBdku5\fP
-.sp
 DKU\-5 and compatible cables
 .TP
 .B \fBmbus\fP
-.sp
 serial MBUS connection
 .UNINDENT
 .sp
@@ -123,7 +111,6 @@ For non\-Nokia phones connected using cable you generally want:
 .INDENT 7.0
 .TP
 .B \fBat\fP
-.sp
 generic AT commands based connection
 .UNINDENT
 .sp
@@ -134,19 +121,15 @@ For IrDA connections use one of following:
 .INDENT 7.0
 .TP
 .B \fBirdaphonet\fP
-.sp
 Phonet connection for Nokia phones.
 .TP
 .B \fBirdaat\fP
-.sp
 AT commands connection for most of phones (this is not supported on Linux).
 .TP
 .B \fBirdaobex\fP
-.sp
 OBEX (IrMC or file transfer) connection for most of phones.
 .TP
 .B \fBirdagnapbus\fP
-.sp
 GNapplet based connection for Symbian phones, see \fIgnapplet\fP.
 .UNINDENT
 .sp
@@ -154,23 +137,18 @@ For Bluetooth connection use one of following:
 .INDENT 7.0
 .TP
 .B \fBbluephonet\fP
-.sp
 Phonet connection for Nokia phones.
 .TP
 .B \fBblueat\fP
-.sp
 AT commands connection for most of phones.
 .TP
 .B \fBblueobex\fP
-.sp
 OBEX (IrMC or file transfer) connection for most of phones.
 .TP
 .B \fBbluerfgnapbus\fP
-.sp
 GNapplet based connection for Symbian phones, see \fIgnapplet\fP.
 .TP
 .B \fBblues60\fP
-.sp
 Connection to Series60 applet in S60 phones, see \fIs60\fP.
 .sp
 New in version 1.29.90.
@@ -179,7 +157,6 @@ New in version 1.29.90.
 .INDENT 0.0
 .TP
 .B Device
-.
 New in version 1.27.95.
 .sp
 Device node or address of phone. It depends on used connection.
@@ -204,7 +181,6 @@ Device = serial:123456  # Match device by serial string
 .ft P
 .fi
 .IP Note
-.
 On Linux systems, you might lack permissions for some device nodes.
 You might need to be member of some group (eg. \fBplugdev\fP or
 \fBdialout\fP) or or add special udev rules to enable you access
@@ -260,7 +236,6 @@ sysctl net.irda.discovery=1  # Enables device discovery on IrDA
 .ft P
 .fi
 .IP Note
-.
 Native IrDA is not supported on Linux, you need to setup virtual
 serial port for it (eg. \fB/dev/ircomm0\fP) and use it same way as cable.
 This can be usually achieved by loading modules \fBircomm\-tty\fP and \fBirtty\-sir\fP:
@@ -276,7 +251,6 @@ modprobe irtty\-sir
 .INDENT 0.0
 .TP
 .B Port
-.
 Deprecated since version 1.27.95.
 .sp
 Alias for \fI\%Device\fP, kept for backward compatibility.
@@ -284,7 +258,6 @@ Alias for \fI\%Device\fP, kept for backward compatibility.
 .INDENT 0.0
 .TP
 .B Model
-.
 Do not use this parameter unless really needed! The only use case for this is
 when Gammu does not know your phone and misdetects it\(aqs features.
 .sp
@@ -294,26 +267,21 @@ operation:
 .INDENT 7.0
 .TP
 .B \fBobexfs\fP
-.sp
 force using of file browsing service (file system support)
 .TP
 .B \fBobexirmc\fP
-.sp
 force using of IrMC service (contacts, calendar and notes support)
 .TP
 .B \fBobexnone\fP
-.sp
 none service chosen, this has only limited use for sending file (\fIgammu sendfile\fP command)
 .TP
 .B \fBmobex\fP
-.sp
 m\-obex service for Samsung phones
 .UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
 .B Use_Locking
-.
 On Posix systems, you might want to lock serial device when it is being used
 using UUCP\-style lock files. Enabling this option (setting to yes) will make
 Gammu honor these locks and create it on startup. On most distributions you
@@ -326,13 +294,11 @@ This option has no meaning on Windows.
 .INDENT 0.0
 .TP
 .B SynchronizeTime
-.
 If you want to set time from computer to phone during starting connection.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B StartInfo
-.
 This option allow to set, that you want (setting \fByes\fP) to see message on the
 phone screen or phone should enable light for a moment during starting
 connection. Phone will not beep during starting connection with this
@@ -342,10 +308,8 @@ option. This works only with some Nokia phones.
 .INDENT 0.0
 .TP
 .B LogFile
-.
 Path to file where information about communication will be stored.
 .IP Note
-.
 For most debug levels (excluding \fBerrors\fP) the log file is overwritten on
 each execution.
 .RE
@@ -353,36 +317,28 @@ each execution.
 .INDENT 0.0
 .TP
 .B LogFormat
-.
 Determines what all will be logged to \fBLogFile\fP. Possible values are:
 .INDENT 7.0
 .TP
 .B \fBnothing\fP
-.sp
 no debug level
 .TP
 .B \fBtext\fP
-.sp
 transmission dump in text format
 .TP
 .B \fBtextall\fP
-.sp
 all possible info in text format
 .TP
 .B \fBtextalldate\fP
-.sp
 all possible info in text format, with time stamp
 .TP
 .B \fBerrors\fP
-.sp
 errors in text format
 .TP
 .B \fBerrorsdate\fP
-.sp
 errors in text format, with time stamp
 .TP
 .B \fBbinary\fP
-.sp
 transmission dump in binary format
 .UNINDENT
 .sp
@@ -392,7 +348,6 @@ needed information to diagnose problems.
 .INDENT 0.0
 .TP
 .B Features
-.
 Custom features for phone. This can be used as override when values coded
 in \fBcommon/gsmphones.c\fP are bad or missing. Consult
 \fBinclude/gammu\-info.h\fP for possible values (all \fBGSM_Feature\fP values
@@ -403,7 +358,6 @@ authors.
 .INDENT 0.0
 .TP
 .B GammuCoding
-.
 Forces using specified codepage (for example \fB1250\fP will force CP\-1250 or
 \fButf8\fP for UTF\-8). This should not be needed, Gammu detects it according
 to your locales.
@@ -411,7 +365,6 @@ to your locales.
 .INDENT 0.0
 .TP
 .B GammuLoc
-.
 Path to directory with localisation files (the directory should contain
 \fBLANG/LC_MESSAGES/gammu.mo\fP). If gammu is properly installed it should find
 these files automatically.
@@ -420,7 +373,6 @@ these files automatically.
 .INDENT 0.0
 .TP
 .B DataPath
-.
 Additional path where to search for data files. The default path is
 configured on build time (and defaults to \fB/usr/share/data/gammu\fP on Unix
 systems). Currently it is used only for searching files to upload to phone

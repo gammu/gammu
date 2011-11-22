@@ -740,18 +740,6 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
 				unsigned i;
 				int state = 0;
 
-				const unsigned char xlat[128] =
-					{
-						[0x40] = 0x80,
-						[0x5b] = 0xbc,
-						[0x5c] = 0xaf,
-						[0x5d] = 0xbe,
-						[0x5e] = 0x94,
-						[0x7b] = 0xa8,
-						[0x7d] = 0xa9,
-						[0x7e] = 0xbd,
-					};
-
 				if (length >= outlength) {
 					return ERR_MOREMEMORY;
 				}
@@ -763,8 +751,29 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
 				for (i = 0; 2 * i + 1 < length / 2; i++) {
 					buf[i] = (buf[2 * i] == 0x20 && buf[2 * i + 1] == 0xac) ? 0xe5 : buf[2 * i + 1];
 					if (!(buf[i] & 0x80)) {
-						if (state && xlat[buf[i]]) {
-							buf[i] = xlat[buf[i]];
+						if (state && buf[i] == 0x40) {
+							buf[i] = 0x80;
+							state--;
+						} else if (state && buf[i] == 0x5b) {
+							buf[i] = 0xbc;
+							state--;
+						} else if (state && buf[i] == 0x5c) {
+							buf[i] = 0xaf;
+							state--;
+						} else if (state && buf[i] == 0x5d) {
+							buf[i] = 0xbe;
+							state--;
+						} else if (state && buf[i] == 0x5e) {
+							buf[i] = 0x94;
+							state--;
+						} else if (state && buf[i] == 0x7b) {
+							buf[i] = 0xa8;
+							state--;
+						} else if (state && buf[i] == 0x7d) {
+							buf[i] = 0xa9;
+							state--;
+						} else if (state && buf[i] == 0x7e) {
+							buf[i] = 0xbd;
 							state--;
 						} else {
 							state = 0;
@@ -1416,8 +1425,8 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 			if (strcmp(line1, line2) == 0) {
 				smprintf(s, "Removing first reply, because it is duplicated\n");
 				/* Remove first line */
-				memmove(Priv->Lines.numbers, Priv->Lines.numbers + 2, (Priv->Lines.allocated - 2) * sizeof(Priv->Lines.numbers));
-
+				memmove(Priv->Lines.numbers, Priv->Lines.numbers + 2, (Priv->Lines.allocated - 2) * sizeof(int));
+				i--;
 			}
 		}
 		/* Free allocated memory */
@@ -1431,11 +1440,26 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 
 	line = GetLineString(msg->Buffer,&Priv->Lines,i);
 
-	if (!strcmp(line,"OK"))		Priv->ReplyState = AT_Reply_OK;
-	if (!strcmp(line,"> "))		Priv->ReplyState = AT_Reply_SMSEdit;
-	if (!strcmp(line,"CONNECT"))	Priv->ReplyState = AT_Reply_Connect;
-	if (!strcmp(line,"ERROR"  ))	Priv->ReplyState = AT_Reply_Error;
-	if (!strcmp(line,"NO CARRIER"  ))	Priv->ReplyState = AT_Reply_Error;
+	smprintf(s, "Checking line: %s\n", line);
+
+	if (!strcmp(line,"OK")) {
+		Priv->ReplyState = AT_Reply_OK;
+	}
+	if (!strncmp(line,"+CPIN:", 6) && s->Protocol.Data.AT.CPINNoOK) {
+		Priv->ReplyState = AT_Reply_OK;
+	}
+	if (!strcmp(line,"> ")) {
+		Priv->ReplyState = AT_Reply_SMSEdit;
+	}
+	if (!strcmp(line,"CONNECT")) {
+		Priv->ReplyState = AT_Reply_Connect;
+	}
+	if (!strcmp(line,"ERROR")) {
+		Priv->ReplyState = AT_Reply_Error;
+	}
+	if (!strcmp(line,"NO CARRIER")) {
+		Priv->ReplyState = AT_Reply_Error;
+	}
 
 	if (!strncmp(line,"+CME ERROR:",11)) {
 		Priv->ReplyState = AT_Reply_CMEError;
@@ -1494,6 +1518,7 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 			}
 		}
 	}
+	smprintf(s, "AT reply state: %d\n", Priv->ReplyState);
 	return GSM_DispatchMessage(s);
 }
 
@@ -1762,6 +1787,10 @@ GSM_Error ATGEN_ReplyGetModel(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 	smprintf(s, "[Model name: `%s']\n", Data->Model);
 	smprintf(s, "[Model data: `%s']\n", Data->ModelInfo->number);
 	smprintf(s, "[Model data: `%s']\n", Data->ModelInfo->model);
+
+	s->Protocol.Data.AT.FastWrite = !GSM_IsPhoneFeatureAvailable(Data->ModelInfo, F_SLOWWRITE);
+	s->Protocol.Data.AT.CPINNoOK = GSM_IsPhoneFeatureAvailable(Data->ModelInfo, F_CPIN_NO_OK);
+
 	return ERR_NONE;
 }
 
@@ -2188,13 +2217,8 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 	}
 #endif
 
-	if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SLOWWRITE)) {
-		s->Protocol.Data.AT.FastWrite = TRUE;
-	}
-	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CPIN_NO_OK)) {
-		s->Protocol.Data.AT.CPINNoOK = TRUE;
-	}
-
+	s->Protocol.Data.AT.FastWrite = !GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SLOWWRITE);
+	s->Protocol.Data.AT.CPINNoOK = GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CPIN_NO_OK);
 
 	return error;
 }
@@ -5160,7 +5184,7 @@ GSM_Error ATGEN_GetSignalQuality(GSM_StateMachine *s, GSM_SignalQuality *sig)
 
 	s->Phone.Data.SignalQuality = sig;
 	smprintf(s, "Getting signal quality info\n");
-	ATGEN_WaitForAutoLen(s, "AT+CSQ\r", 0x00, 4, ID_GetSignalQuality);
+	ATGEN_WaitForAutoLen(s, "AT+CSQ\r", 0x00, 20, ID_GetSignalQuality);
 	return error;
 }
 
@@ -5756,6 +5780,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {MOTOROLA_ReplySetCalendar,	"AT+MDBW="		,0x00,0x00,ID_SetCalendarNote },
 {ATGEN_GenericReply,		"AT+MDBL="		,0x00,0x00,ID_SetCalendarNote },
 
+{ATGEN_GenericReplyIgnore,	"SAMSUNG PTS DG Test"	,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore, 	"^RSSI:"		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore, 	"^BOOT:"		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore, 	"^MODE:"		,0x00,0x00,ID_IncomingFrame	 },

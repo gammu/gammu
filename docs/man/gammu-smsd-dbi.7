@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSD-DBI" "7" "September 02, 2011" "1.30.90" "Gammu"
+.TH "GAMMU-SMSD-DBI" "7" "November 09, 2011" "1.30.91" "Gammu"
 .SH NAME
 gammu-smsd-dbi \- gammu-smsd(1) backend using DBI abstraction layer to use any supported database as a message storage
 .
@@ -39,7 +39,6 @@ For tables description see \fIgammu\-smsd\-tables\fP.
 .sp
 This backend is based on \fIgammu\-smsd\-sql\fP.
 .IP Note
-.
 The DBI driver is currently not supported on Windows because libdbi
 library does not support this platform.
 .RE
@@ -49,16 +48,12 @@ For complete list of drivers for \fI\%libdbi\fP see \fI\%libdbi-drivers\fP proje
 drivers for example include:
 .INDENT 0.0
 .IP \(bu 2
-.
 \fBsqlite3\fP \- for SQLite 3
 .IP \(bu 2
-.
 \fBmysql\fP \- for MySQL
 .IP \(bu 2
-.
 \fBpgsql\fP \- for PostgeSQL
 .IP \(bu 2
-.
 \fBfreetds\fP \- for MS SQL Server or Sybase
 .UNINDENT
 .SH EXAMPLE
@@ -218,7 +213,6 @@ CREATE TRIGGER update_sentitems_time UPDATE ON sentitems
 .ft P
 .fi
 .IP Note
-.
 You can find the script in \fBdocs/sql/sqlite.sql\fP as well. There are
 also scripts for other databases in same folder.
 .RE

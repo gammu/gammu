@@ -287,6 +287,8 @@ GSM_Error MOBEX_GetNextEntry(GSM_StateMachine *s, const char *path, const gboole
 	*entry = *data + *pos + 4;
 	*location = ((*data)[*pos + 0] << 8) + (*data)[*pos + 1];
 
+	smprintf(s, "Read data part at %d:\n%s\n", *location, *entry);
+
 	return ERR_NONE;
 }
 
@@ -303,7 +305,7 @@ GSM_Error MOBEX_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry, gbool
 			&Priv->m_obex_contacts_buffer, &Priv->m_obex_contacts_buffer_pos,
 				   &Priv->m_obex_contacts_buffer_size, &data, &(Entry->Location), Entry->MemoryType);
 
-	smprintf(s, "Error: %d\n", error);
+	smprintf(s, "MOBEX_GetNextEntry returned %s\n", GSM_ErrorString(error));
 	if (error != ERR_NONE) {
 		return error;
 	}

@@ -250,6 +250,33 @@ You can also disable support for whole set of phones, e.g.:
 * ``-DWITH_BLUETOOTH=OFF`` disables Bluetooth support
 * ``-DWITH_IRDA=OFF`` disables IrDA support
 
+Library search paths
+++++++++++++++++++++
+
+By installing Gammu to non default system paths, you might need to add path
+where libGammu and other Gammu liraries are installed to :program:`ldconfig`
+search path.
+
+You can do this by editing :file:`/etc/ld.so.conf` or adding new file to
+:file:`/etc/ld.so.conf.d/` directory containing path, wherge Gammu library has
+been installed. Some examples:
+
+.. code-block:: sh
+
+    # Gammu on 64-bit Fedora installed to /opt/gammu
+    echo /opt/gammu/lib64 > /etc/ld.so.conf.d/gammu.conf
+
+    # Gammu installed to /usr/local
+    echo /usr/local/lib > /etc/ld.so.conf.d/gammu.conf
+
+You can also avoid changing ldconfig configuration by installing Gammu to paths
+where it already searches, for examble by:
+
+.. code-block:: sh
+
+   cmake .. -DCMAKE_INSTALL_PREFIX="/usr"
+
+
 Compiling on Microsoft Windows
 ------------------------------
 

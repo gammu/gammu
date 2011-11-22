@@ -1,4 +1,4 @@
-.TH "GAMMU-DETECT" "1" "September 02, 2011" "1.30.90" "Gammu"
+.TH "GAMMU-DETECT" "1" "November 09, 2011" "1.30.91" "Gammu"
 .SH NAME
 gammu-detect \- Gammu device detection
 .
@@ -43,7 +43,6 @@ gammu\-detect [OPTIONS]
 .sp
 Script to detect available devices, which might be suitable for \fIgammu\fP.
 .IP Note
-.
 This program lists all devices, which might be suitable, it does not do
 any probing on devices them self.
 .RE
@@ -51,20 +50,15 @@ any probing on devices them self.
 Currently it supports following devices:
 .INDENT 0.0
 .IP \(bu 2
-.
 USB devices using udev
 .IP \(bu 2
-.
 Serial ports using udev
 .IP \(bu 2
-.
 Serial ports on Windows
 .IP \(bu 2
-.
 Bluetooth devices using Bluez
 .UNINDENT
 .IP Note
-.
 Supported devices depend on platform you are using and compiled in
 features. You can find out what is actually compiled in by running
 \fI\%gammu-detect -v\fP.
@@ -75,37 +69,31 @@ starting with two dashes (\fB\-\-\fP). A summary of options is included below.
 .INDENT 0.0
 .TP
 .B \-h, \-\-help
-.sp
 Show summary of options.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-d, \-\-debug
-.sp
 Show debugging output for detecting devices.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-v, \-\-version
-.sp
 Show version information and compiled in features.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-u, \-\-no\-udev
-.sp
 Disables scanning of udev.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-b, \-\-no\-bluez
-.sp
 Disables scanning using Bluez.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-w, \-\-no\-win32\-serial
-.sp
 Disables scanning of Windows serial ports.
 .UNINDENT
 .SH OUTPUT
@@ -114,7 +102,6 @@ The output of \fI\%gammu-detect\fP is configuration file for Gammu (see
 \fIgammurc\fP) with configuration section for every device which might be
 used with \fIgammu\fP.
 .IP Note
-.
 You can choose which section to use in \fIgammu\fP by \fIgammu \-s\fP.
 .RE
 .sp

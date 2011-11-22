@@ -33,16 +33,18 @@ where you just need to put URL of the data (use :option:`gammu sendsms`
 MMSINDICATOR for that). However you need to encode MMS data yourself or use
 other program to do that.
 
+.. _faq-devname:
+
 Device name always changes on Linux, how to solve that?
 -------------------------------------------------------
 
-You can use udev to assign persistent device name. You can either use standard
-peristent names based on serial number (located in :file:`/dev/serial/by-id/`)
-or define own rules::
+You can use udev to assign persistent device name (used as
+:config:option:`Device`). You can either use standard peristent names based on
+serial number (located in :file:`/dev/serial/by-id/`) or define own rules::
 
     ACTION=="add", SUBSYSTEMS=="usb", ATTRS{manufacturer}=="Nokia", KERNEL=="ttyUSB*", SYMLINK+="phone"
 
-Use better is to use vendor and product IDs (you can get them for example using :command:`lsusb`)::
+Better is to use vendor and product IDs (you can get them for example using :command:`lsusb`)::
 
     ACTION=="add", SUBSYSTEMS=="usb", ATTRS{idVendor}=="xxxx", ATTRS{idProduct}=="yyyy", SYMLINK+="phone"
 

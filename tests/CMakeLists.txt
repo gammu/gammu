@@ -643,6 +643,19 @@ if (WITH_ATGEN)
     endif (WITH_BACKUP)
 endif (WITH_ATGEN)
 
+if (WITH_OBEXGEN)
+    # OBEX entries splitting
+    add_executable(obex-vcard-split obex-vcard-split.c)
+    target_link_libraries(obex-vcard-split libGammu ${LIBINTL_LIBRARIES})
+
+    # Tests
+    add_test(obex-vcard-split-se-3
+            "${GAMMU_TEST_PATH}/obex-vcard-split${GAMMU_TEST_SUFFIX}"
+            "${Gammu_SOURCE_DIR}/tests/vcards/se-3.vcf"
+            499)
+
+endif (WITH_OBEXGEN)
+
 # SMS encoding
 add_executable(sms-encode-decode sms-encode-decode.c)
 target_link_libraries(sms-encode-decode libGammu ${LIBINTL_LIBRARIES})
@@ -847,6 +860,11 @@ if (WITH_ATGEN)
     add_executable(at-parser at-parser.c)
     target_link_libraries(at-parser libGammu ${LIBINTL_LIBRARIES})
     add_test(at-parser "${GAMMU_TEST_PATH}/at-parser${GAMMU_TEST_SUFFIX}")
+
+    # AT dispatch tests
+    add_executable(at-dispatch at-dispatch.c)
+    target_link_libraries(at-dispatch libGammu ${LIBINTL_LIBRARIES})
+    add_test(at-dispatch "${GAMMU_TEST_PATH}/at-dispatch${GAMMU_TEST_SUFFIX}")
 
     # AT text encoding/decoding
     add_executable(at-charset at-charset.c)

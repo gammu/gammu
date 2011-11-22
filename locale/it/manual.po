@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-09-27 08:58+0300\n"
+"POT-Creation-Date: 2011-11-02 09:09+0100\n"
 "PO-Revision-Date: 2011-01-10 12:07+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -466,15 +466,16 @@ msgstr ""
 #: docs/manual/protocol/n7110.rst:23 docs/manual/protocol/nokia.rst:32
 #: docs/manual/protocol/index.rst:26 docs/manual/smsd/dbi.rst:15
 #: docs/manual/smsd/dbi.rst:43 docs/manual/smsd/tables.rst:490
-#: docs/manual/smsd/pgsql.rst:25 docs/manual/smsd/config.rst:90
-#: docs/manual/smsd/config.rst:374 docs/manual/smsd/config.rst:489
-#: docs/manual/smsd/mysql.rst:27 docs/manual/smsd/mysql.rst:42
-#: docs/manual/gammu/index.rst:471 docs/manual/gammu/index.rst:571
-#: docs/manual/gammu/index.rst:581 docs/manual/gammu/index.rst:595
-#: docs/manual/gammu/index.rst:982 docs/manual/gammu/index.rst:1028
-#: docs/manual/gammu/index.rst:1056 docs/manual/gammu/index.rst:1065
-#: docs/manual/gammu/index.rst:1320 docs/manual/gammu/index.rst:1344
-#: docs/manual/gammu/index.rst:1838 docs/manual/project/directories.rst:113
+#: docs/manual/smsd/pgsql.rst:25 docs/manual/smsd/run.rst:26
+#: docs/manual/smsd/config.rst:90 docs/manual/smsd/config.rst:374
+#: docs/manual/smsd/config.rst:489 docs/manual/smsd/mysql.rst:27
+#: docs/manual/smsd/mysql.rst:42 docs/manual/gammu/index.rst:471
+#: docs/manual/gammu/index.rst:571 docs/manual/gammu/index.rst:581
+#: docs/manual/gammu/index.rst:595 docs/manual/gammu/index.rst:982
+#: docs/manual/gammu/index.rst:1028 docs/manual/gammu/index.rst:1056
+#: docs/manual/gammu/index.rst:1065 docs/manual/gammu/index.rst:1320
+#: docs/manual/gammu/index.rst:1344 docs/manual/gammu/index.rst:1838
+#: docs/manual/project/directories.rst:113
 #: docs/manual/project/motivation.rst:5 docs/manual/formats/smsbackup.rst:44
 #: docs/manual/c/hints.rst:161 docs/manual/utils/gammu-detect.rst:24
 #: docs/manual/utils/gammu-detect.rst:36 docs/manual/utils/gammu-detect.rst:76
@@ -573,9 +574,9 @@ msgstr ""
 #: docs/manual/smsd/sql.rst:389 docs/manual/smsd/usage.rst:48
 #: docs/manual/smsd/tables.rst:398 docs/manual/smsd/tables.rst:409
 #: docs/manual/smsd/tables.rst:426 docs/manual/smsd/tables.rst:456
-#: docs/manual/smsd/run.rst:98 docs/manual/smsd/run.rst:109
-#: docs/manual/smsd/run.rst:124 docs/manual/smsd/run.rst:140
-#: docs/manual/smsd/run.rst:157 docs/manual/smsd/config.rst:546
+#: docs/manual/smsd/run.rst:103 docs/manual/smsd/run.rst:114
+#: docs/manual/smsd/run.rst:129 docs/manual/smsd/run.rst:145
+#: docs/manual/smsd/run.rst:162 docs/manual/smsd/config.rst:546
 #: docs/manual/smsd/config.rst:562 docs/manual/smsd/config.rst:579
 #: docs/manual/smsd/config.rst:592 docs/manual/smsd/config.rst:601
 #: docs/manual/smsd/config.rst:624 docs/manual/smsd/config.rst:631
@@ -609,12 +610,12 @@ msgstr ""
 #: docs/manual/project/install.rst:181 docs/manual/project/install.rst:190
 #: docs/manual/project/install.rst:204 docs/manual/project/install.rst:211
 #: docs/manual/project/install.rst:217 docs/manual/project/install.rst:223
-#: docs/manual/project/install.rst:229 docs/manual/project/install.rst:347
-#: docs/manual/project/install.rst:353 docs/manual/project/install.rst:368
-#: docs/manual/project/install.rst:377 docs/manual/project/install.rst:389
-#: docs/manual/project/install.rst:420 docs/manual/project/install.rst:458
-#: docs/manual/project/install.rst:492 docs/manual/project/install.rst:510
-#: docs/manual/testing/dummy-driver.rst:73
+#: docs/manual/project/install.rst:229 docs/manual/project/install.rst:264
+#: docs/manual/project/install.rst:366 docs/manual/project/install.rst:372
+#: docs/manual/project/install.rst:387 docs/manual/project/install.rst:396
+#: docs/manual/project/install.rst:408 docs/manual/project/install.rst:439
+#: docs/manual/project/install.rst:477 docs/manual/project/install.rst:511
+#: docs/manual/project/install.rst:529 docs/manual/testing/dummy-driver.rst:73
 #: docs/manual/testing/dummy-driver.rst:82 docs/manual/internal/reply.rst:42
 #: docs/manual/internal/reply.rst:57 docs/manual/internal/reply.rst:70
 #: docs/manual/internal/reply.rst:84 docs/manual/formats/smsbackup.rst:35
@@ -634,8 +635,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/config/index.rst:160 docs/manual/config/index.rst:171
-#: docs/manual/smsd/tables.rst:399 docs/manual/smsd/run.rst:110
-#: docs/manual/smsd/run.rst:125 docs/manual/smsd/run.rst:141
+#: docs/manual/smsd/tables.rst:399 docs/manual/smsd/run.rst:115
+#: docs/manual/smsd/run.rst:130 docs/manual/smsd/run.rst:146
 #: docs/manual/smsd/inject.rst:54 docs/manual/smsd/inject.rst:60
 #: docs/manual/smsd/inject.rst:66 docs/manual/smsd/inject.rst:72
 #: docs/manual/smsd/inject.rst:78 docs/manual/smsd/inject.rst:84
@@ -659,11 +660,11 @@ msgstr ""
 #: docs/manual/project/install.rst:191 docs/manual/project/install.rst:205
 #: docs/manual/project/install.rst:212 docs/manual/project/install.rst:218
 #: docs/manual/project/install.rst:224 docs/manual/project/install.rst:230
-#: docs/manual/project/install.rst:348 docs/manual/project/install.rst:354
-#: docs/manual/project/install.rst:369 docs/manual/project/install.rst:378
-#: docs/manual/project/install.rst:390 docs/manual/project/install.rst:421
-#: docs/manual/project/install.rst:459 docs/manual/project/install.rst:493
-#: docs/manual/project/install.rst:511
+#: docs/manual/project/install.rst:265 docs/manual/project/install.rst:367
+#: docs/manual/project/install.rst:373 docs/manual/project/install.rst:388
+#: docs/manual/project/install.rst:397 docs/manual/project/install.rst:409
+#: docs/manual/project/install.rst:440 docs/manual/project/install.rst:478
+#: docs/manual/project/install.rst:512 docs/manual/project/install.rst:530
 msgid "sh"
 msgstr ""
 
@@ -1006,7 +1007,7 @@ msgstr ""
 
 #. type: Title =
 #: docs/manual/config/index.rst:292 docs/manual/smsd/tables.rst:387
-#: docs/manual/smsd/run.rst:90 docs/manual/smsd/config.rst:535
+#: docs/manual/smsd/run.rst:95 docs/manual/smsd/config.rst:535
 #: docs/manual/smsd/inject.rst:46 docs/manual/smsd/smsd.rst:102
 #: docs/manual/gammu/index.rst:1826 docs/manual/testing/dummy-driver.rst:69
 #: docs/manual/python/objects.rst:123 docs/manual/formats/backup.rst:11
@@ -1037,7 +1038,7 @@ msgstr ""
 #: docs/manual/config/index.rst:302 docs/manual/config/index.rst:311
 #: docs/manual/config/index.rst:320 docs/manual/config/index.rst:328
 #: docs/manual/config/index.rst:342 docs/manual/smsd/usage.rst:49
-#: docs/manual/smsd/run.rst:99 docs/manual/smsd/config.rst:547
+#: docs/manual/smsd/run.rst:104 docs/manual/smsd/config.rst:547
 #: docs/manual/smsd/config.rst:563 docs/manual/smsd/config.rst:580
 #: docs/manual/smsd/config.rst:593 docs/manual/smsd/config.rst:602
 #: docs/manual/smsd/config.rst:625 docs/manual/smsd/config.rst:632
@@ -12852,112 +12853,119 @@ msgid ""
 "execute your script again."
 msgstr ""
 
+#. type: Plain text
+#: docs/manual/smsd/run.rst:29
+msgid ""
+"All input and output file descriptors are closed when this program is "
+"invoked, so you have to ensure to open files on your own."
+msgstr ""
+
 #. type: Title -
-#: docs/manual/smsd/run.rst:26
+#: docs/manual/smsd/run.rst:31
 #, no-wrap
 msgid "Environment"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:30
+#: docs/manual/smsd/run.rst:35
 msgid ""
 "program is executed with environment which contains lot of information about "
 "the message. You can use it together with NULL service (see"
 msgstr ""
 
 #. type: Attribute :ref:
-#: docs/manual/smsd/run.rst:30
+#: docs/manual/smsd/run.rst:35
 #, no-wrap
 msgid "`gammu-smsd-null`) to implement completely own processing of messages."
 msgstr ""
 
 #. type: Title +
-#: docs/manual/smsd/run.rst:33
+#: docs/manual/smsd/run.rst:38
 #, no-wrap
 msgid "Global variables"
 msgstr ""
 
 #. type: Labeled list
-#: docs/manual/smsd/run.rst:35 docs/manual/smsd/run.rst:39
-#: docs/manual/smsd/run.rst:49 docs/manual/smsd/run.rst:53
-#: docs/manual/smsd/run.rst:57 docs/manual/smsd/run.rst:68
-#: docs/manual/smsd/run.rst:72 docs/manual/smsd/run.rst:76
-#: docs/manual/smsd/run.rst:80 docs/manual/smsd/run.rst:84
+#: docs/manual/smsd/run.rst:40 docs/manual/smsd/run.rst:44
+#: docs/manual/smsd/run.rst:54 docs/manual/smsd/run.rst:58
+#: docs/manual/smsd/run.rst:62 docs/manual/smsd/run.rst:73
+#: docs/manual/smsd/run.rst:77 docs/manual/smsd/run.rst:81
+#: docs/manual/smsd/run.rst:85 docs/manual/smsd/run.rst:89
 #, no-wrap
 msgid ".. envvar"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:36
+#: docs/manual/smsd/run.rst:41
 msgid "SMS_MESSAGES"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:38
+#: docs/manual/smsd/run.rst:43
 msgid "Number of physical messages received."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:40
+#: docs/manual/smsd/run.rst:45
 msgid "DECODED_PARTS"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:42
+#: docs/manual/smsd/run.rst:47
 msgid "Number of decoded message parts."
 msgstr ""
 
 #. type: Title +
-#: docs/manual/smsd/run.rst:44
+#: docs/manual/smsd/run.rst:49
 #, no-wrap
 msgid "Per message variables"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:48
+#: docs/manual/smsd/run.rst:53
 msgid ""
 "The variables further described as ``SMS_1_...`` are generated for each "
 "physical message, where 1 is replaced by current number of message."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:50
+#: docs/manual/smsd/run.rst:55
 msgid "SMS_1_CLASS"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:52
+#: docs/manual/smsd/run.rst:57
 msgid "Class of message."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:54
+#: docs/manual/smsd/run.rst:59
 msgid "SMS_1_NUMBER"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:56
+#: docs/manual/smsd/run.rst:61
 msgid "Sender number."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:58
+#: docs/manual/smsd/run.rst:63
 msgid "SMS_1_TEXT"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:60
+#: docs/manual/smsd/run.rst:65
 msgid "Message text. Text is not available for 8-bit binary messages."
 msgstr ""
 
 #. type: Title +
-#: docs/manual/smsd/run.rst:62
+#: docs/manual/smsd/run.rst:67
 #, no-wrap
 msgid "Per part variables"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:67
+#: docs/manual/smsd/run.rst:72
 msgid ""
 "The variables further described as ``DECODED_1_...`` are generated for each "
 "message part, where 1 is replaced by current number of part. Set are only "
@@ -12965,81 +12973,81 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:69
+#: docs/manual/smsd/run.rst:74
 msgid "DECODED_1_TEXT"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:71
+#: docs/manual/smsd/run.rst:76
 msgid "Decoded long message text."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:73
+#: docs/manual/smsd/run.rst:78
 msgid "DECODED_1_MMS_SENDER"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:75
+#: docs/manual/smsd/run.rst:80
 msgid "Sender of MMS indication message."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:77
+#: docs/manual/smsd/run.rst:82
 msgid "DECODED_1_MMS_TITLE"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:79
+#: docs/manual/smsd/run.rst:84
 msgid "title of MMS indication message."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:81
+#: docs/manual/smsd/run.rst:86
 msgid "DECODED_1_MMS_ADDRESS"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:83
+#: docs/manual/smsd/run.rst:88
 msgid "Address (URL) of MMS from MMS indication message."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:85
+#: docs/manual/smsd/run.rst:90
 msgid "DECODED_1_MMS_SIZE"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:87
+#: docs/manual/smsd/run.rst:92
 msgid "Size of MMS as specified in MMS indication message."
 msgstr ""
 
 #. type: Title +
-#: docs/manual/smsd/run.rst:93
+#: docs/manual/smsd/run.rst:98
 #, no-wrap
 msgid "Activating RunOnReceive"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:97
+#: docs/manual/smsd/run.rst:102
 msgid ""
 "To activate this feature you need to set :config:option:`RunOnReceive` in "
 "the :ref:`gammu-smsdrc`."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:102
+#: docs/manual/smsd/run.rst:107
 msgid "[smsd] RunOnReceive = /path/to/script.sh"
 msgstr ""
 
 #. type: Title +
-#: docs/manual/smsd/run.rst:104
+#: docs/manual/smsd/run.rst:109
 #, no-wrap
 msgid "Processing messages from the files backend"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:108
+#: docs/manual/smsd/run.rst:113
 msgid ""
 "Following script (if used as :config:option:`RunOnReceive` handler) passes "
 "message data to other program. This works only with the :ref:`gammu-smsd-"
@@ -13047,53 +13055,53 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:115
+#: docs/manual/smsd/run.rst:120
 msgid ""
 "#!/bin/sh INBOX=/path/to/smsd/inbox PROGRAM=/bin/cat for ID in \"$@\" ; do"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:116
+#: docs/manual/smsd/run.rst:121
 msgid "$PROGRAM < $INBOX/$ID"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:117 docs/manual/smsd/run.rst:131
+#: docs/manual/smsd/run.rst:122 docs/manual/smsd/run.rst:136
 msgid "done"
 msgstr ""
 
 #. type: Title +
-#: docs/manual/smsd/run.rst:119
+#: docs/manual/smsd/run.rst:124
 #, no-wrap
 msgid "Passing message text to program"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:123
+#: docs/manual/smsd/run.rst:128
 msgid ""
 "Following script (if used as :config:option:`RunOnReceive` handler) passes "
 "message text and sender to external program."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:129
+#: docs/manual/smsd/run.rst:134
 msgid "#!/bin/sh PROGRAM=/bin/echo for i in `seq $SMS_MESSAGES` ; do"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:130
+#: docs/manual/smsd/run.rst:135
 msgid ""
 "eval \"$PROGRAM \\\"\\${SMS_${i}_NUMBER}\\\" \\\"\\${SMS_${i}_TEXT}\\\"\""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/smsd/run.rst:134
+#: docs/manual/smsd/run.rst:139
 #, no-wrap
 msgid "Passing MMS indication parameters to external program"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:139
+#: docs/manual/smsd/run.rst:144
 msgid ""
 "Following script (if used as :config:option:`RunOnReceive` handler) will "
 "write information about each received MMS indication to the log file. Just "
@@ -13101,87 +13109,87 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:144
+#: docs/manual/smsd/run.rst:149
 msgid "#!/bin/sh if [ $DECODED_PARTS -eq 0 ] ; then"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:146
+#: docs/manual/smsd/run.rst:151
 msgid "# No decoded parts, nothing to process exit"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:148
+#: docs/manual/smsd/run.rst:153
 msgid "fi if [ \"$DECODED_1_MMS_ADDRESS\" ] ; then"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:149
+#: docs/manual/smsd/run.rst:154
 msgid ""
 "echo \"$DECODED_1_MMS_ADDRESS\" \"$DECODED_1_MMS_SENDER\" "
 "\"$DECODED_1_MMS_TITLE\" >> /tmp/smsd-mms.log"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:150
+#: docs/manual/smsd/run.rst:155
 msgid "fi"
 msgstr ""
 
 #. type: Title +
-#: docs/manual/smsd/run.rst:152
+#: docs/manual/smsd/run.rst:157
 #, no-wrap
 msgid "Processing message text in Python"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:156
+#: docs/manual/smsd/run.rst:161
 msgid ""
 "Following script (if used as :config:option:`RunOnReceive` handler) written "
 "in Python will concatenate all text from received message:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:158
+#: docs/manual/smsd/run.rst:163
 msgid "python"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:162
+#: docs/manual/smsd/run.rst:167
 msgid "#!/usr/bin/python import os import sys"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:164
+#: docs/manual/smsd/run.rst:169
 msgid "numparts = int(os.environ['DECODED_PARTS'])"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:167
+#: docs/manual/smsd/run.rst:172
 msgid "# Are there any decoded parts? if numparts == 0:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:169
+#: docs/manual/smsd/run.rst:174
 msgid "print('No decoded parts!')  sys.exit(1)"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:173
+#: docs/manual/smsd/run.rst:178
 msgid "# Get all text parts text = '' for i in range(1, numparts + 1):"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:175
+#: docs/manual/smsd/run.rst:180
 msgid "varname = 'DECODED_%d_TEXT' % i if varname in os.environ:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:176
+#: docs/manual/smsd/run.rst:181
 msgid "text = text + os.environ[varname]"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:178
+#: docs/manual/smsd/run.rst:183
 msgid ""
 "# Do something with the text print('Number %s have sent text: %s' % (os."
 "environ['SMS_1_NUMBER'], text))"
@@ -21332,7 +21340,7 @@ msgid "http://www.gnu.org/software/libiconv/"
 msgstr ""
 
 #. type: Title ~
-#: docs/manual/project/install.rst:96 docs/manual/project/install.rst:439
+#: docs/manual/project/install.rst:96 docs/manual/project/install.rst:458
 #, no-wrap
 msgid "Gettext"
 msgstr ""
@@ -21348,7 +21356,7 @@ msgid "http://www.gnu.org/software/gettext/"
 msgstr ""
 
 #. type: Title ~
-#: docs/manual/project/install.rst:103 docs/manual/project/install.rst:415
+#: docs/manual/project/install.rst:103 docs/manual/project/install.rst:434
 #, no-wrap
 msgid "MySQL"
 msgstr ""
@@ -21364,7 +21372,7 @@ msgid "http://mysql.com/"
 msgstr ""
 
 #. type: Title ~
-#: docs/manual/project/install.rst:110 docs/manual/project/install.rst:432
+#: docs/manual/project/install.rst:110 docs/manual/project/install.rst:451
 #, no-wrap
 msgid "PostgreSQL"
 msgstr ""
@@ -21676,19 +21684,64 @@ msgstr ""
 msgid "``-DWITH_IRDA=OFF`` disables IrDA support"
 msgstr ""
 
-#. type: Title -
+#. type: Title +
 #: docs/manual/project/install.rst:254
+#, no-wrap
+msgid "Library search paths"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/project/install.rst:259
+msgid ""
+"By installing Gammu to non default system paths, you might need to add path "
+"where libGammu and other Gammu liraries are installed to :program:`ldconfig` "
+"search path."
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/project/install.rst:261
+msgid ""
+"You can do this by editing :file:`/etc/ld.so.conf` or adding new file to"
+msgstr ""
+
+#. type: Attribute :file:
+#: docs/manual/project/install.rst:261
+#, no-wrap
+msgid "`/etc/ld.so.conf.d/` directory containing path, wherge Gammu library has"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/project/install.rst:263
+msgid "been installed. Some examples:"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/project/install.rst:268
+msgid ""
+"# Gammu on 64-bit Fedora installed to /opt/gammu echo /opt/gammu/lib64 > /"
+"etc/ld.so.conf.d/gammu.conf"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/project/install.rst:271
+msgid ""
+"# Gammu installed to /usr/local echo /usr/local/lib > /etc/ld.so.conf.d/"
+"gammu.conf"
+msgstr ""
+
+#. type: Title -
+#: docs/manual/project/install.rst:273
 #, no-wrap
 msgid "Compiling on Microsoft Windows"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:257 docs/manual/project/install.rst:334
+#: docs/manual/project/install.rst:276 docs/manual/project/install.rst:353
 msgid "First install all :ref:`deps` and :ref:`opt-deps`."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:264
+#: docs/manual/project/install.rst:283
 msgid ""
 "`CMake`_ is able to generate projects for various tools including Microsoft "
 "Visual Studio, Borland toolchains, Cygwin or Mingw32. Just click on "
@@ -21699,18 +21752,18 @@ msgid ""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/project/install.rst:266
+#: docs/manual/project/install.rst:285
 #, no-wrap
 msgid "Compiling using MS Visual C++"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:269
+#: docs/manual/project/install.rst:288
 msgid "You will probably need additional SDKs:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:275
+#: docs/manual/project/install.rst:294
 msgid ""
 "Microsoft Windows Platform SDK (required especially for Bluetooth).  It's "
 "given for free. Below are links to different releases (if you have problems "
@@ -21719,108 +21772,108 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:277
+#: docs/manual/project/install.rst:296
 msgid ""
 "For free Visual C++ Express 2005 you need to set compiler to work with "
 "Platform SDK (see description)."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:279
+#: docs/manual/project/install.rst:298
 msgid ""
 "MySQL include/library files from MySQL install package (for MySQL support in "
 "SMSD)."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:281
+#: docs/manual/project/install.rst:300
 msgid ""
 "PostgreSQL include/library files from PostgreSQL install package (for "
 "PostgreSQL support in SMSD)."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:283
+#: docs/manual/project/install.rst:302
 msgid ""
 "For gettext (internationalization) support, you will need gettext packages "
 "from GnuWin32 project."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:285
+#: docs/manual/project/install.rst:304
 msgid ""
 "As build is now based on CMake, you will need to get it from http://cmake."
 "org/."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:287
+#: docs/manual/project/install.rst:306
 msgid "After downloading and installing them into your system:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:291
+#: docs/manual/project/install.rst:310
 msgid ""
 "Now you should be able to execute cmake by clicking on CMakeLists.txt file "
 "in Gammu sources, this should pop up dialog with configuration options."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:294
+#: docs/manual/project/install.rst:313
 msgid ""
 "You can also start CMakeSetup from start menu and select source directory "
 "(just point to it to Gammu sources)."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:296
+#: docs/manual/project/install.rst:315
 msgid ""
 "Select directory where binaries will be stored, I suggest this is different "
 "than source one, eg. append subdirectory build."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:297
+#: docs/manual/project/install.rst:316
 msgid "Select compiler you want to use in Build for select."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:300
+#: docs/manual/project/install.rst:319
 msgid ""
 "In list bellow, you can tweak paths to some optional libraries and project "
 "configuration."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:302
+#: docs/manual/project/install.rst:321
 msgid ""
 "Then just press Configure button, which will do the hard job. After this, "
 "just click OK button to generate Visual Studio project."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:304
+#: docs/manual/project/install.rst:323
 msgid ""
 "Project files for Visual Studio should be now generated in directory you "
 "selected, just open it in Visual Studio and compile :-)."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:307
+#: docs/manual/project/install.rst:326
 msgid ""
 "Project file should be named Gammu.dsw or Gammu.sln depending on what MSVC "
 "version you choose."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:309
+#: docs/manual/project/install.rst:328
 msgid ""
 "You should see ALL_BUILD target, which builds everything needed, simmilar to "
 "make all on Linux."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:314
+#: docs/manual/project/install.rst:333
 msgid ""
 "I know this guide is incomplete, I don't have environment to test, you're "
 "welcome to improve it!. Some more information can be found in howtos for "
@@ -21829,13 +21882,13 @@ msgid ""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/project/install.rst:316
+#: docs/manual/project/install.rst:335
 #, no-wrap
 msgid "Compiling using Borland C++"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:324
+#: docs/manual/project/install.rst:343
 msgid ""
 "Borland toolchain - you can download compiler at <http://www.codegear.com/"
 "downloads/free/cppbuilder>. You need to add c:/Borland/BCC55/Bin to system "
@@ -21845,24 +21898,24 @@ msgid ""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/project/install.rst:326
+#: docs/manual/project/install.rst:345
 #, no-wrap
 msgid "Compiling using Cygwin"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:329
+#: docs/manual/project/install.rst:348
 msgid "This should work pretty much same as on Linux."
 msgstr ""
 
 #. type: Title -
-#: docs/manual/project/install.rst:331
+#: docs/manual/project/install.rst:350
 #, no-wrap
 msgid "Compiling on Mac OS X"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:339
+#: docs/manual/project/install.rst:358
 msgid ""
 "Gammu should be compilable on Mac OS X, you need to have installed Developer "
 "Tols (version 2.4.1 was tested) and `CMake`_ (there is a Mac OS X \"Darwin\" "
@@ -21871,14 +21924,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:342
+#: docs/manual/project/install.rst:361
 msgid ""
 "The rest of the compilation should be pretty same as on Linux, see Linux "
 "section for more details about compile time options."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:346
+#: docs/manual/project/install.rst:365
 msgid ""
 "If you get some errors while linking with iconv, it is caused by two "
 "incompatible iconv libraries available on the system. You can override the "
@@ -21886,35 +21939,35 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:350
+#: docs/manual/project/install.rst:369
 msgid "cmake -D ICONV_LIBRARIES=\"/opt/local/lib/libiconv.dylib\" .."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:352
+#: docs/manual/project/install.rst:371
 msgid "Or completely disable iconv support:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:356
+#: docs/manual/project/install.rst:375
 msgid "cmake -DWITH_Iconv=OFF .."
 msgstr ""
 
 #. type: Title -
-#: docs/manual/project/install.rst:359
+#: docs/manual/project/install.rst:378
 #, no-wrap
 msgid "Cross compilation for Windows on Linux"
 msgstr "Compilazione multipla per Windows su Linux"
 
 #. type: Plain text
-#: docs/manual/project/install.rst:363
+#: docs/manual/project/install.rst:382
 msgid ""
 "First install all :ref:`deps` and :ref:`opt-deps` into your mingw build "
 "environment."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:367
+#: docs/manual/project/install.rst:386
 msgid ""
 "Only cross compilation using `CMake`_ has been tested. You need to install "
 "MinGW cross tool chain and run time. On Debian you can do it by apt-get "
@@ -21922,50 +21975,50 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:374
+#: docs/manual/project/install.rst:393
 msgid ""
 "mkdir build-win32 cd build-win32 cmake .. -DCMAKE_TOOLCHAIN_FILE=../cmake/"
 "Toolchain-mingw32.cmake make"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:376
+#: docs/manual/project/install.rst:395
 msgid "There is also toolchain configuration for Win64 available:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:383
+#: docs/manual/project/install.rst:402
 msgid ""
 "mkdir build-win64 cd build-win64 cmake .. -DCMAKE_TOOLCHAIN_FILE=../cmake/"
 "Toolchain-mingw64.cmake make"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:386
+#: docs/manual/project/install.rst:405
 msgid ""
 "If your MinGW cross compiler binaries are not found automatically, you can "
 "specify their different names in cmake/Toolchain-mingw32.cmake."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:388
+#: docs/manual/project/install.rst:407
 msgid "To build just bare static library without any dependencies, use:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:392
+#: docs/manual/project/install.rst:411
 msgid "cmake .. -DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchain-mingw32.cmake \\"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:398
+#: docs/manual/project/install.rst:417
 msgid ""
 "-DBUILD_SHARED_LIBS=OFF \\ -DWITH_MySQL=OFF \\ -DWITH_Postgres=OFF \\ -"
 "DWITH_GettextLibs=OFF \\ -DWITH_Iconv=OFF \\ -DWITH_CURL=OFF"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:405
+#: docs/manual/project/install.rst:424
 msgid ""
 "To be compatible with current Python on Windows, we need to build against "
 "matching Microsoft C Runtime library. For Python 2.4 and 2.5 MSVCR71 was "
@@ -21976,13 +22029,13 @@ msgid ""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/project/install.rst:407
+#: docs/manual/project/install.rst:426
 #, no-wrap
 msgid "Third party libraries"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:412
+#: docs/manual/project/install.rst:431
 msgid ""
 "The easies way to link with third party libraries is to add path to their "
 "installation to cmake/Toolchain-mingw32.cmake or to list these paths in "
@@ -21990,40 +22043,40 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:419
+#: docs/manual/project/install.rst:438
 msgid ""
 "You can download MySQL binaries from <http://dev.mysql.com/>, but then need "
 "some tweaks:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:425
+#: docs/manual/project/install.rst:444
 msgid ""
 "cd mysql/lib/opt reimp.exe -d libmysql.lib i586-mingw32msvc-dlltool --kill-"
 "at --input-def libmysql.def \\"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:426
+#: docs/manual/project/install.rst:445
 msgid "--dllname libmysql.dll --output-lib libmysql.a"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:429
+#: docs/manual/project/install.rst:448
 msgid ""
 "reimp.exe is part of mingw-utils and can be run through wine, I didn't try "
 "to compile native binary from it."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:436
+#: docs/manual/project/install.rst:455
 msgid ""
 "You can download PostgreSQL binaries from <http://www.postgresql.org/>, but "
 "then you need to add wldap32.dll library to bin."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:444
+#: docs/manual/project/install.rst:463
 msgid ""
 "For Gettext (internationalization support), you need gettext-0.14.4-bin.zip, "
 "gettext-0.14.4-dep.zip, gettext-0.14.4-lib.zip from <http://gnuwin32."
@@ -22031,38 +22084,38 @@ msgid ""
 msgstr ""
 
 #. type: Title ~
-#: docs/manual/project/install.rst:447
+#: docs/manual/project/install.rst:466
 #, no-wrap
 msgid "CURL"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:451
+#: docs/manual/project/install.rst:470
 msgid ""
 "For CURL support, you need curl-7.19.0-devel-mingw32.zip from <http://curl."
 "haxx.se/>."
 msgstr ""
 
 #. type: Title -
-#: docs/manual/project/install.rst:453
+#: docs/manual/project/install.rst:472
 #, no-wrap
 msgid "Crosscompiling to different platform"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:457
+#: docs/manual/project/install.rst:476
 msgid ""
 "To cross compile Gammu to different architecture (or platform) you need to "
 "provide CMake toolchain file for that and invoke `CMake`_ with it:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:461
+#: docs/manual/project/install.rst:480
 msgid "cmake -DCMAKE_TOOLCHAIN_FILE=~/Toolchain-eldk-ppc74xx.cmake .."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:465
+#: docs/manual/project/install.rst:484
 msgid ""
 "More information on creating that is described in `CMake Cross Compiling`_ "
 "wiki page. Also distributions like `OpenEmbedded`_ usually already come with "
@@ -22070,23 +22123,23 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:467
+#: docs/manual/project/install.rst:486
 msgid "_CMake Cross Compiling: http://www.vtk.org/Wiki/CMake_Cross_Compiling"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:468
+#: docs/manual/project/install.rst:487
 msgid "_OpenEmbedded: http://www.openembedded.org/"
 msgstr ""
 
 #. type: Title -
-#: docs/manual/project/install.rst:470
+#: docs/manual/project/install.rst:489
 #, no-wrap
 msgid "Advanced Build Options"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:475
+#: docs/manual/project/install.rst:494
 msgid ""
 "The build system accepts wide range of options. You can see them all by "
 "running GUI version of `CMake`_ or by inspecting :file:`CMakeCache.txt` in "
@@ -22094,115 +22147,115 @@ msgid ""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/project/install.rst:477
+#: docs/manual/project/install.rst:496
 #, no-wrap
 msgid "Limiting set of installed data"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:481
+#: docs/manual/project/install.rst:500
 msgid ""
 "By setting following flags you can control which additional parts will be "
 "installed:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:483
+#: docs/manual/project/install.rst:502
 msgid "INSTALL_GNAPPLET - Install Gnapplet binaries"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:484
+#: docs/manual/project/install.rst:503
 msgid "INSTALL_MEDIA - Install sample media files"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:485
+#: docs/manual/project/install.rst:504
 msgid "INSTALL_PHP_EXAMPLES - Install PHP example scripts"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:486
+#: docs/manual/project/install.rst:505
 msgid "INSTALL_BASH_COMPLETION - Install bash completion script for Gammu"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:487
+#: docs/manual/project/install.rst:506
 msgid "INSTALL_LSB_INIT - Install LSB compatible init script for Gammu"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:488
+#: docs/manual/project/install.rst:507
 msgid "INSTALL_DOC - Install documentation"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:489
+#: docs/manual/project/install.rst:508
 msgid "INSTALL_LOC - Install locales data"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:491
+#: docs/manual/project/install.rst:510
 msgid "For example:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:495
+#: docs/manual/project/install.rst:514
 msgid "cmake -DINSTALL_DOC=OFF"
 msgstr ""
 
 #. type: Title +
-#: docs/manual/project/install.rst:498
+#: docs/manual/project/install.rst:517
 #, no-wrap
 msgid "Debugging build failures"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:502
+#: docs/manual/project/install.rst:521
 msgid ""
 "If there is some build failure (eg. some dependencies are not correctly "
 "detected), please attach :file:`CMakeCache.txt`,"
 msgstr ""
 
 #. type: Attribute :file:
-#: docs/manual/project/install.rst:502
+#: docs/manual/project/install.rst:521
 #, no-wrap
 msgid "`CMakeFiles/CMakeError.log` and :file:`CMakeFiles/CMakeOutput.log` files"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:505
+#: docs/manual/project/install.rst:524
 msgid ""
 "to the report. It will help diagnose what was detected on the system and "
 "possibly fix these errors."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:508
+#: docs/manual/project/install.rst:527
 msgid ""
 "To find out what is going on during compilation, add ``-"
 "DCMAKE_VERBOSE_MAKEFILE=ON`` to :program:`cmake` command line or run"
 msgstr ""
 
 #. type: Attribute :program:
-#: docs/manual/project/install.rst:508
+#: docs/manual/project/install.rst:527
 #, no-wrap
 msgid "`make` with ``VERBOSE=1``:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:513
+#: docs/manual/project/install.rst:532
 msgid "make VERBOSE=1"
 msgstr ""
 
 #. type: Title +
-#: docs/manual/project/install.rst:515
+#: docs/manual/project/install.rst:534
 #, no-wrap
 msgid "Debugging crashes"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:520
+#: docs/manual/project/install.rst:539
 msgid ""
 "To debug program crashes, you might want to build Gammu with ``-"
 "DENABLE_PROTECTION=OFF``, otherwise debugging tools are somehow confused "
@@ -22210,13 +22263,13 @@ msgid ""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/project/install.rst:523
+#: docs/manual/project/install.rst:542
 #, no-wrap
 msgid "Compliling python-gammu"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:528
+#: docs/manual/project/install.rst:547
 msgid ""
 "Currently python-gammu is distributed together with Gammu, so all you need "
 "to get it is to build Gammu with Python support (it should be automatically "
@@ -22224,7 +22277,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:533
+#: docs/manual/project/install.rst:552
 msgid ""
 "Gammu uses CMake_ to generate build environment (for example Makefiles for "
 "UNIX, Visual Studio projects, Eclipse projects, etc.) which you can later "
@@ -22234,14 +22287,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:536
+#: docs/manual/project/install.rst:555
 msgid ""
 "Alternatively you can use standard distutils, for which :file:`setup.py` is "
 "placed in `python` subdirectory."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:537
+#: docs/manual/project/install.rst:556
 msgid "_CMake: http://www.cmake.org/"
 msgstr ""
 

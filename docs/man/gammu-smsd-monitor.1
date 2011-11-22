@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSD-MONITOR" "1" "September 02, 2011" "1.30.90" "Gammu"
+.TH "GAMMU-SMSD-MONITOR" "1" "November 09, 2011" "1.30.91" "Gammu"
 .SH NAME
 gammu-smsd-monitor \- Monitor state of SMS daemon for Gammu
 .
@@ -50,38 +50,32 @@ accepted on some platforms):
 .INDENT 0.0
 .TP
 .B \-h, \-\-help
-.sp
 Shows help.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-v, \-\-version
-.sp
 Shows version information and compiled in features.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-c, \-\-config=file
-.sp
 Configuration file to use, default is /etc/gammu\-smsdrc, on Windows there
 is no default and configuration file path has to be always specified.
 .UNINDENT
 .INDENT 0.0
 .TP
-.B \-l, \-\-loops=count
-.sp
+.B \-n, \-\-loops=count
 Number of loops, by default monitor loops infinitely.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-d, \-\-delay=seconds
-.sp
 Delay betwen polling SMSD state, default is 20 seconds.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-C, \-\-csv
-.sp
 Print output in comma separated values format:
 .sp
 .nf
@@ -89,6 +83,16 @@ Print output in comma separated values format:
 client;phone ID;IMEI;sent;received;failed;battery;signal
 .ft P
 .fi
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-l, \-\-use\-log
+Use logging as configured in config file.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-L, \-\-no\-use\-log
+Do not use logging as configured in config file (default).
 .UNINDENT
 .SH AUTHOR
 Michal Čihař <michal@cihar.com>
