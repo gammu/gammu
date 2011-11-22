@@ -876,7 +876,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 	Config->prevSMSID[0] 	  = 0;
 	Config->relativevalidity  = -1;
 	Config->Status = NULL;
-	Config->IncompleteMessageID = 0;
+	Config->IncompleteMessageID = -1;
 	Config->IncompleteMessageTime = 0;
 
 	return ERR_NONE;
@@ -1286,7 +1286,7 @@ gboolean SMSD_CheckMultipart(GSM_SMSDConfig *Config, GSM_MultiSMSMessage *MultiS
 	}
 
 	/* Do we have same id as last incomplete? */
-	same_id = (Config->IncompleteMessageID == current_id);
+	same_id = (Config->IncompleteMessageID != -1 && Config->IncompleteMessageID == current_id);
 
 	/* Some logging */
 	SMSD_Log(DEBUG_INFO, Config, "Multipart message 0x%02X, %d parts of %d",
@@ -1302,6 +1302,7 @@ gboolean SMSD_CheckMultipart(GSM_SMSDConfig *Config, GSM_MultiSMSMessage *MultiS
 		if (Config->IncompleteMessageTime != 0 && difftime(time(NULL), Config->IncompleteMessageTime) > Config->multiparttimeout) {
 			SMSD_Log(DEBUG_INFO, Config, "Incomplete multipart message 0x%02X, processing after timeout",
 				Config->IncompleteMessageID);
+			Config->IncompleteMessageID = -1;
 		} else {
 			SMSD_Log(DEBUG_INFO, Config, "Incomplete multipart message 0x%02X, waiting for other parts (waited %.0f seconds)",
 				Config->IncompleteMessageID,
@@ -1330,6 +1331,7 @@ success:
 	/* Clean multipart wait flag */
 	if (same_id) {
 		Config->IncompleteMessageTime = 0;
+		Config->IncompleteMessageID = -1;
 	}
 	return TRUE;
 }
