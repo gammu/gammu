@@ -1288,6 +1288,10 @@ gboolean SMSD_CheckMultipart(GSM_SMSDConfig *Config, GSM_MultiSMSMessage *MultiS
 	/* Do we have same id as last incomplete? */
 	same_id = (Config->IncompleteMessageID == current_id);
 
+	/* Some logging */
+	SMSD_Log(DEBUG_INFO, Config, "Multipart message 0x%02X, %d parts of %d",
+		current_id, MultiSMS->Number, MultiSMS->SMS[0].UDH.AllParts);
+
 	/* Check if we have all parts */
 	if (MultiSMS->SMS[0].UDH.AllParts == MultiSMS->Number) {
 		goto success;
