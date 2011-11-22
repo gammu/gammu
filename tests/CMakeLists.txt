@@ -643,6 +643,19 @@ if (WITH_ATGEN)
     endif (WITH_BACKUP)
 endif (WITH_ATGEN)
 
+if (WITH_OBEXGEN)
+    # OBEX entries splitting
+    add_executable(obex-vcard-split obex-vcard-split.c)
+    target_link_libraries(obex-vcard-split libGammu ${LIBINTL_LIBRARIES})
+
+    # Tests
+    add_test(obex-vcard-split-se-3
+            "${GAMMU_TEST_PATH}/obex-vcard-split${GAMMU_TEST_SUFFIX}"
+            "${Gammu_SOURCE_DIR}/tests/vcards/se-3.vcf"
+            493)
+
+endif (WITH_OBEXGEN)
+
 # SMS encoding
 add_executable(sms-encode-decode sms-encode-decode.c)
 target_link_libraries(sms-encode-decode libGammu ${LIBINTL_LIBRARIES})
