@@ -1124,9 +1124,16 @@ Backing up and restoring commands
     * ``.ics`` - iCalendar, supports calendar and todo.
     * Any other extension is Gammu backup file and it supports all data mentioned above, see :ref:`gammu-backup` for more details.
 
+    By default this command is interactive and asks which items tou want to backup.
+
+    Use -yes for answering yes to all questions.
+
 .. option:: backupsms file [-yes|-all]
 
     Stores all SMSes from phone to file into :ref:`gammu-smsbackup`.
+
+    By default this command is interactive and asks which folders you want
+    to backup and whether you want to remove messages from phone afterwards.
 
     Use -yes for answering yes to all questions (backup all messages and
     delete them from phone), or -all to just backup all folders while keeping
