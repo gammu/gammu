@@ -331,9 +331,7 @@ msgstr "``at``"
 #: docs/manual/config/index.rst:76
 #, fuzzy
 msgid "generic AT commands based connection"
-msgstr ""
-"    ``at``             \n"
-"        generic AT commands based connection\n"
+msgstr "generic AT commands based connection"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:79
