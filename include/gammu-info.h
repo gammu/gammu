@@ -703,6 +703,8 @@ typedef enum {
 	 */
 	F_NO_STOP_CUSD,
 
+	F_READ_SMSTEXTMODE,
+
 	/**
 	 * Just marker of highest feature code, should not be used.
 	 */

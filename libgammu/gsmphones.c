@@ -125,6 +125,7 @@ GSM_FeatureName AllFeatureNames[] = {
 	{"SAMSUNG_UTF8", F_SAMSUNG_UTF8},
 	{"SMS_UTF8_ENCODED", F_SMS_UTF8_ENCODED},
 	{"NO_STOP_CUSD", F_NO_STOP_CUSD},
+	{"READ_SMSTEXTMODE", F_READ_SMSTEXTMODE},
 	{"", 0},
 };
 
@@ -466,6 +467,7 @@ GSM_PhoneModel allmodels[] = {
 	{"B2100",         "SAMSUNG B2100", "", {F_DISABLE_CMGL,
 						F_SMS_SM, F_SMS_ME,
 						F_SMS_UTF8_ENCODED,
+						F_READ_SMSTEXTMODE,
 						F_NO_UTF8, F_SAMSUNG_UTF8,
 						F_TSSPCSW, F_OBEX, F_IRMC_LEVEL_2, 0}},
 

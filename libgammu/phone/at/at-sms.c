@@ -23,6 +23,7 @@
 #include <time.h>
 #include <ctype.h>
 #include <stdarg.h>
+#include <assert.h>
 
 #include "../../gsmcomon.h"
 #include "../../gsmphones.h"
@@ -301,6 +302,36 @@ GSM_Error ATGEN_SetSMSMemory(GSM_StateMachine *s, gboolean SIM, gboolean for_wri
 	return error;
 }
 
+GSM_Error ATGEN_SetSMSMode(GSM_StateMachine *s, int mode)
+{
+	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
+  	GSM_Error error = ERR_NONE;
+	if (mode == SMS_AT_PDU)
+	{
+		ATGEN_WaitForAutoLen(s, "AT+CMGF=0\r", 0x00, 9, ID_GetSMSMode);
+		if (error == ERR_NONE)
+			Priv->SMSMode = SMS_AT_PDU;
+		return error;
+	}
+	else
+	{
+		ATGEN_WaitForAutoLen(s, "AT+CMGF=1\r", 0x00, 9, ID_GetSMSMode);
+		if (error == ERR_NONE)
+		{
+			Priv->SMSMode = SMS_AT_TXT;
+			ATGEN_WaitForAutoLen(s, "AT+CSDH=1\r", 0x00, 3, ID_GetSMSMode);
+
+			if (error == ERR_NONE) {
+				Priv->SMSTextDetails = TRUE;
+			} else {
+				error = ERR_NONE;
+			}
+		}
+		return error;
+	}
+
+}
+
 GSM_Error ATGEN_GetSMSMode(GSM_StateMachine *s)
 {
   	GSM_Error error = ERR_NONE;
@@ -315,27 +346,12 @@ GSM_Error ATGEN_GetSMSMode(GSM_StateMachine *s)
 		smprintf(s, "Forcibily enabled SMS text mode\n");
 	} else {
 		smprintf(s, "Trying SMS PDU mode\n");
-		ATGEN_WaitForAutoLen(s, "AT+CMGF=0\r", 0x00, 9, ID_GetSMSMode);
-
-		if (error == ERR_NONE) {
-			Priv->SMSMode = SMS_AT_PDU;
+		if (ATGEN_SetSMSMode(s, SMS_AT_PDU) == ERR_NONE) {
 			return ERR_NONE;
 		}
 	}
 	smprintf(s, "Trying SMS text mode\n");
-	ATGEN_WaitForAutoLen(s, "AT+CMGF=1\r", 0x00, 9, ID_GetSMSMode);
-
-	if (error == ERR_NONE) {
-		Priv->SMSMode = SMS_AT_TXT;
-		smprintf(s, "Enabling displaying all parameters in text mode\n");
-		ATGEN_WaitForAutoLen(s, "AT+CSDH=1\r", 0x00, 3, ID_GetSMSMode);
-
-		if (error == ERR_NONE) {
-			Priv->SMSTextDetails = TRUE;
-		} else {
-			error = ERR_NONE;
-		}
-	}
+	ATGEN_SetSMSMode(s, SMS_AT_TXT);
 	return error;
 }
 
@@ -874,19 +890,26 @@ GSM_Error ATGEN_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 	unsigned char req[20] = {'\0'}, folderid = 0;
 	int location = 0, getfolder = 0, add = 0, length = 0;
+	GSM_AT_SMS_Modes oldmode;
 
 	/* Set mode of SMS */
 	error = ATGEN_GetSMSMode(s);
-
 	if (error != ERR_NONE) {
 		return error;
 	}
+
+	oldmode = Priv->SMSMode;
+
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_READ_SMSTEXTMODE)) {
+		ATGEN_SetSMSMode(s, SMS_AT_TXT);
+	}
+
 	/* Clear SMS structure of any possible junk */
 	GSM_SetDefaultReceivedSMSData(&sms->SMS[0]);
 	error = ATGEN_GetSMSLocation(s, &sms->SMS[0], &folderid, &location, FALSE);
 
 	if (error != ERR_NONE) {
-		return error;
+		goto fail;
 	}
 	if (Priv->SMSMemory == MEM_ME && GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMSME900)) {
 		add = 899;
@@ -898,13 +921,13 @@ GSM_Error ATGEN_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 		error = ATGEN_SetCharset(s, AT_PREF_CHARSET_NORMAL);
 
 		if (error != ERR_NONE) {
-			return error;
+			goto fail;
 		}
 	}
 	error = ATGEN_GetManufacturer(s);
 
 	if (error != ERR_NONE) {
-		return error;
+		goto fail;
 	}
 	s->Phone.Data.GetSMSMessage = sms;
 	smprintf(s, "Getting SMS\n");
@@ -918,7 +941,12 @@ GSM_Error ATGEN_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 		sms->SMS[0].Memory = MEM_SM;
 		if (getfolder > 2) sms->SMS[0].Memory = MEM_ME;
 	}
+ fail:
+	if (oldmode != Priv->SMSMode)
+		ATGEN_SetSMSMode(s, oldmode);
+
 	return error;
+
 }
 
 GSM_Error ATGEN_ReplyGetMessageList(GSM_Protocol_Message *msg, GSM_StateMachine *s)
