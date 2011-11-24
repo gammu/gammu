@@ -43,45 +43,51 @@
 
 GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device)
 {
-	GSM_Device_BlueToothData 	*d = &s->Device.Data.BlueTooth;
-	struct sockaddr_rc 		laddr, raddr;
-	bdaddr_t			bdaddr;
-	int 				fd;
+	int tries;
+	for (tries = 0; tries < 5; tries++) {
+		GSM_Device_BlueToothData 	*d = &s->Device.Data.BlueTooth;
+		struct sockaddr_rc 		laddr, raddr;
+		bdaddr_t			bdaddr;
+		int 				fd;
 
-	memset(&laddr, 0, sizeof(laddr));
-	memset(&raddr, 0, sizeof(raddr));
+		if (tries)
+			sleep (1);
+		
+		memset(&laddr, 0, sizeof(laddr));
+		memset(&raddr, 0, sizeof(raddr));
+		
+		smprintf(s, "Connecting to RF channel %i\n",port);
+		
+		fd = socket(PF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM);
+		if (fd < 0) {
+			smprintf(s, "Can't create socket\n");
+			continue;
+		}
 
-	smprintf(s, "Connecting to RF channel %i\n",port);
+		bacpy(&laddr.rc_bdaddr, BDADDR_ANY);
+		laddr.rc_family 	= AF_BLUETOOTH;
+		laddr.rc_channel 	= 0;
 
-	fd = socket(PF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM);
-	if (fd < 0) {
-		smprintf(s, "Can't create socket\n");
-		return ERR_DEVICENODRIVER;
+		if (bind(fd, (struct sockaddr *)&laddr, sizeof(laddr)) < 0) {
+			smprintf(s, "Can't bind socket (%d, %s)\n", errno, strerror(errno));
+			close(fd);
+			continue;
+		}
+
+		str2ba(device, &bdaddr);
+		bacpy(&raddr.rc_bdaddr, &bdaddr);
+		raddr.rc_family 	= AF_BLUETOOTH;
+		raddr.rc_channel 	= port;
+
+		if (connect(fd, (struct sockaddr *)&raddr, sizeof(raddr)) < 0) {
+			smprintf(s, "Can't connect (%d, %s)\n", errno, strerror(errno));
+			close(fd);
+			continue;
+		}
+		d->hPhone = fd;
+		return ERR_NONE;
 	}
-
-	bacpy(&laddr.rc_bdaddr, BDADDR_ANY);
-	laddr.rc_family 	= AF_BLUETOOTH;
-	laddr.rc_channel 	= 0;
-
-	if (bind(fd, (struct sockaddr *)&laddr, sizeof(laddr)) < 0) {
-		smprintf(s, "Can't bind socket (%d, %s)\n", errno, strerror(errno));
-		close(fd);
-		return ERR_DEVICEOPENERROR;
-	}
-
-	str2ba(device, &bdaddr);
-	bacpy(&raddr.rc_bdaddr, &bdaddr);
-	raddr.rc_family 	= AF_BLUETOOTH;
-	raddr.rc_channel 	= port;
-
-	if (connect(fd, (struct sockaddr *)&raddr, sizeof(raddr)) < 0) {
-		smprintf(s, "Can't connect (%d, %s)\n", errno, strerror(errno));
-		close(fd);
-		return ERR_DEVICEOPENERROR;
-	}
-
-	d->hPhone = fd;
-    	return ERR_NONE;
+	return ERR_DEVICEOPENERROR;
 }
 
 #ifdef BLUETOOTH_RF_SEARCHING
