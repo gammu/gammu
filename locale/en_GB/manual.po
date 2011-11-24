@@ -351,8 +351,9 @@ msgstr "For IrDA connections use one of following:"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:83
+#, fuzzy
 msgid "``irdaphonet``"
-msgstr ""
+msgstr "``irdaphonet``"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:84 docs/manual/config/index.rst:95
