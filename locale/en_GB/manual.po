@@ -91,7 +91,7 @@ msgstr "``.\\gammurc``"
 #: docs/manual/utils/jadmaker.rst:16 docs/manual/utils/gammu-detect.rst:19
 #, fuzzy, no-wrap
 msgid "Description"
-msgstr "Fields description:"
+msgstr "Description"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:26
