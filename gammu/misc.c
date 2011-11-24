@@ -787,7 +787,9 @@ int TerminateID = -1;
 
 void IncomingCall0(GSM_StateMachine *sm UNUSED, GSM_Call *call, void * user_data)
 {
-	if (call->CallIDAvailable) TerminateID = call->CallID;
+	if (call->CallIDAvailable) {
+		TerminateID = call->CallID;
+	}
 }
 
 void MakeTerminatedCall(int argc, char *argv[])
