@@ -363,8 +363,9 @@ msgstr "Phonet connection for Nokia phones."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:85
+#, fuzzy
 msgid "``irdaat``"
-msgstr ""
+msgstr "``irdaat``"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:86
