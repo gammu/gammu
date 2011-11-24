@@ -389,8 +389,9 @@ msgstr "OBEX (IrMC or file transfer) connection for most of phones."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:89
+#, fuzzy
 msgid "``irdagnapbus``"
-msgstr ""
+msgstr "``irdagnapbus``"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:90 docs/manual/config/index.rst:101
