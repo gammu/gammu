@@ -103,7 +103,8 @@ msgstr "Gammu requires configuration to be able to properly talk to your phone."
 #: docs/manual/config/index.rst:26
 #, fuzzy, no-wrap
 msgid "`gammu` reads configuration from a config file. It's location is determined"
-msgstr "gammu-smsd reads configuration from a config file. It's location can be specified on command line, otherwise default path ``/etc/gammu-smsdrc`` is used."
+msgstr ""
+"`gammu` reads configuration from a config file. It's location is determined"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:28
