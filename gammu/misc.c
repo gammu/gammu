@@ -825,6 +825,9 @@ void MakeTerminatedCall(int argc, char *argv[])
 	if (TerminateID != -1) {
 		error = GSM_CancelCall(gsm, TerminateID, FALSE);
 		Print_Error(error);
+	} else {
+		error = GSM_CancelCall(gsm, 0, TRUE);
+		Print_Error(error);
 	}
 
 	GSM_Terminate();
