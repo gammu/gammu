@@ -269,8 +269,9 @@ msgstr "DLR-3 and compatible cables"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:62
+#, fuzzy
 msgid "``dku2``"
-msgstr ""
+msgstr "``dku2``"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:63
