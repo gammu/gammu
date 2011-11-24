@@ -783,7 +783,7 @@ void DialVoice(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-int TerminateID = -1;
+volatile int TerminateID = -1;
 
 void IncomingCall0(GSM_StateMachine *sm UNUSED, GSM_Call *call, void * user_data)
 {
