@@ -1893,7 +1893,7 @@ Retrieving USSD replies
 
 For example for retrieving prepaid card status or retrieving various network info:
 
-.. code-bloc:: sh
+.. code-block:: sh
 
     gammu getussd #555#
 
