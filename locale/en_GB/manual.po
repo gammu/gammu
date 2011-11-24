@@ -311,11 +311,9 @@ msgid ""
 "for ARK3116 based cables) or ``-nopower``, but Gammu should be able to "
 "detect this automatically."
 msgstr ""
-"    If you use some non original cable, you might need to append ``-nodtr`` "
-"(eg. for\n"
-"    ARK3116 based cables) or ``-nopower``, but Gammu should be able to "
-"detect this\n"
-"    automatically.\n"
+"If you use some non original cable, you might need to append ``-nodtr`` (eg. "
+"for ARK3116 based cables) or ``-nopower``, but Gammu should be able to "
+"detect this automatically."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:73
