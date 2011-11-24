@@ -359,7 +359,7 @@ msgstr "``irdaphonet``"
 #: docs/manual/config/index.rst:84 docs/manual/config/index.rst:95
 #, fuzzy
 msgid "Phonet connection for Nokia phones."
-msgstr "    Perform tests for Nokia DCT3 phones.\n"
+msgstr "Phonet connection for Nokia phones."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:85
