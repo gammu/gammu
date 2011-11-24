@@ -257,8 +257,9 @@ msgstr "serial FBUS connection"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:60
+#, fuzzy
 msgid "``dlr3``"
-msgstr ""
+msgstr "``dlr3``"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:61
