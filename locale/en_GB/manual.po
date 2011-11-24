@@ -403,7 +403,7 @@ msgstr "GNapplet based connection for Symbian phones, see :ref:`gnapplet`."
 #: docs/manual/config/index.rst:92
 #, fuzzy
 msgid "For Bluetooth connection use one of following:"
-msgstr "    For Bluetooth connection use one of following:\n"
+msgstr "For Bluetooth connection use one of following:"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:94
