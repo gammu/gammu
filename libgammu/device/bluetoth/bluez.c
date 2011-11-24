@@ -44,6 +44,8 @@
 GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device)
 {
 	int tries;
+
+	/* Some phones need time till they are accessible after SDP browsing */
 	for (tries = 0; tries < 5; tries++) {
 		GSM_Device_BlueToothData 	*d = &s->Device.Data.BlueTooth;
 		struct sockaddr_rc 		laddr, raddr;
