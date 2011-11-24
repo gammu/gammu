@@ -23,7 +23,6 @@
 #include <time.h>
 #include <ctype.h>
 #include <stdarg.h>
-#include <assert.h>
 
 #include "../../gsmcomon.h"
 #include "../../gsmphones.h"
