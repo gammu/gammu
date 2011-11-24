@@ -179,7 +179,7 @@ msgstr ""
 #: docs/manual/config/index.rst:49
 #, fuzzy, no-wrap
 msgid "Device connection parameters"
-msgstr "Device connection parameters ++++++++++++++++++++++++++++"
+msgstr "Device connection parameters"
 
 #. type: Labeled list
 #: docs/manual/config/index.rst:51 docs/manual/config/index.rst:106
