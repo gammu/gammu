@@ -301,7 +301,7 @@ msgstr "``mbus``"
 #: docs/manual/config/index.rst:67
 #, fuzzy
 msgid "serial MBUS connection"
-msgstr "    Terminates connection.\n"
+msgstr "serial MBUS connection"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:71
