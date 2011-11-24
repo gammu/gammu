@@ -223,7 +223,7 @@ msgstr "Device connection parameters"
 #: docs/manual/smsd/config.rst:493 docs/manual/smsd/config.rst:501
 #, fuzzy, no-wrap
 msgid ".. config:option"
-msgstr ".. config:option:: PC"
+msgstr ".. config:option"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:52
