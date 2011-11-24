@@ -796,10 +796,12 @@ void MakeTerminatedCall(int argc, char *argv[])
 	GSM_Error error;
 
 	if (argc > 4) {
-		if (strcasecmp(argv[4],"show") == 0) {		ShowNumber = GSM_CALL_ShowNumber;
-		} else if (strcasecmp(argv[4],"hide") == 0) {	ShowNumber = GSM_CALL_HideNumber;
+		if (strcasecmp(argv[4], "show") == 0) {
+			ShowNumber = GSM_CALL_ShowNumber;
+		} else if (strcasecmp(argv[4], "hide") == 0) {
+			ShowNumber = GSM_CALL_HideNumber;
 		} else {
-			printf(_("Unknown parameter (\"%s\")\n"),argv[4]);
+			printf(_("Unknown parameter (\"%s\")\n"), argv[4]);
 			Terminate(2);
 		}
 	}
