@@ -308,15 +308,13 @@ GSM_Error ATGEN_SetSMSMode(GSM_StateMachine *s, int mode)
 	if (mode == SMS_AT_PDU)
 	{
 		ATGEN_WaitForAutoLen(s, "AT+CMGF=0\r", 0x00, 9, ID_GetSMSMode);
-		if (error == ERR_NONE)
+		if (error == ERR_NONE) {
 			Priv->SMSMode = SMS_AT_PDU;
+		}
 		return error;
-	}
-	else
-	{
+	} else {
 		ATGEN_WaitForAutoLen(s, "AT+CMGF=1\r", 0x00, 9, ID_GetSMSMode);
-		if (error == ERR_NONE)
-		{
+		if (error == ERR_NONE) {
 			Priv->SMSMode = SMS_AT_TXT;
 			ATGEN_WaitForAutoLen(s, "AT+CSDH=1\r", 0x00, 3, ID_GetSMSMode);
 
@@ -941,8 +939,9 @@ GSM_Error ATGEN_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 		if (getfolder > 2) sms->SMS[0].Memory = MEM_ME;
 	}
  fail:
-	if (oldmode != Priv->SMSMode)
+	if (oldmode != Priv->SMSMode) {
 		ATGEN_SetSMSMode(s, oldmode);
+	}
 
 	return error;
 
