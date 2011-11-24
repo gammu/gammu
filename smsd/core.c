@@ -1299,7 +1299,7 @@ gboolean SMSD_CheckMultipart(GSM_SMSDConfig *Config, GSM_MultiSMSMessage *MultiS
 
 	/* Have we seen this message recently? */
 	if (same_id) {
-		if (Config->IncompleteMessageTime != 0 && difftime(time(NULL), Config->IncompleteMessageTime) > Config->multiparttimeout) {
+		if (Config->IncompleteMessageTime != 0 && difftime(time(NULL), Config->IncompleteMessageTime) >= Config->multiparttimeout) {
 			SMSD_Log(DEBUG_INFO, Config, "Incomplete multipart message 0x%02X, processing after timeout",
 				Config->IncompleteMessageID);
 			Config->IncompleteMessageID = -1;
