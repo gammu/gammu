@@ -811,17 +811,17 @@ void MakeTerminatedCall(int argc, char *argv[])
 	TerminateID = -1;
 	GSM_SetIncomingCallCallback(gsm, IncomingCall0, NULL);
 
-	error=GSM_SetIncomingCall(gsm,TRUE);
+	error = GSM_SetIncomingCall(gsm, TRUE);
 	Print_Error(error);
 
-	error=GSM_DialVoice(gsm, argv[2], ShowNumber);
+	error = GSM_DialVoice(gsm, argv[2], ShowNumber);
 	Print_Error(error);
 
 	sleep(GetInt(argv[3]));
-	GSM_ReadDevice(gsm,TRUE);
+	GSM_ReadDevice(gsm, TRUE);
 
 	if (TerminateID != -1) {
-		error=GSM_CancelCall(gsm,TerminateID,FALSE);
+		error = GSM_CancelCall(gsm, TerminateID, FALSE);
 		Print_Error(error);
 	}
 
