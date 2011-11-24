@@ -237,7 +237,7 @@ GSM_Error GSM_DecodeSMSFrameText(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsign
 {
 	int		off=0;	 	/* length of the User Data Header */
 	int 		w,i;
-	unsigned char	output[161];
+	unsigned char	output[1024];
 
 	SMS->UDH.Length = 0;
 	/* UDH header available */
