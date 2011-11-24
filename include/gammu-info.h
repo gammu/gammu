@@ -702,7 +702,9 @@ typedef enum {
 	 * Avoid forcibly stopping CUSD session.
 	 */
 	F_NO_STOP_CUSD,
-
+	/**
+	 * Reading og SMSes in text mode.
+	 */
 	F_READ_SMSTEXTMODE,
 
 	/**
