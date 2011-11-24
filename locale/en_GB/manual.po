@@ -95,8 +95,9 @@ msgstr "Description"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:26
+#, fuzzy
 msgid "Gammu requires configuration to be able to properly talk to your phone."
-msgstr ""
+msgstr "Gammu requires configuration to be able to properly talk to your phone."
 
 #. type: Attribute :ref:
 #: docs/manual/config/index.rst:26
