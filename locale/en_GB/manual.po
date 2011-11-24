@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-11-02 09:09+0100\n"
-"PO-Revision-Date: 2011-11-24 04:02+0200\n"
+"PO-Revision-Date: 2011-11-24 04:03+0200\n"
 "Last-Translator: dannybeckett <daniel.beckett@gmail.com>\n"
 "Language-Team: none\n"
 "Language: en_GB\n"
@@ -229,7 +229,7 @@ msgstr ".. config:option"
 #: docs/manual/config/index.rst:52
 #, fuzzy
 msgid "Connection"
-msgstr ".. data:: Connections"
+msgstr "Connection"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:54
