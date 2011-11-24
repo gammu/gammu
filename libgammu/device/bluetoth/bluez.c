@@ -50,14 +50,15 @@ GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device)
 		bdaddr_t			bdaddr;
 		int 				fd;
 
-		if (tries)
+		if (tries) {
 			sleep (1);
-		
+		}
+
 		memset(&laddr, 0, sizeof(laddr));
 		memset(&raddr, 0, sizeof(raddr));
-		
-		smprintf(s, "Connecting to RF channel %i\n",port);
-		
+
+		smprintf(s, "Connecting to RF channel %i\n", port);
+
 		fd = socket(PF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM);
 		if (fd < 0) {
 			smprintf(s, "Can't create socket\n");
@@ -76,15 +77,17 @@ GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device)
 
 		str2ba(device, &bdaddr);
 		bacpy(&raddr.rc_bdaddr, &bdaddr);
-		raddr.rc_family 	= AF_BLUETOOTH;
-		raddr.rc_channel 	= port;
+		raddr.rc_family = AF_BLUETOOTH;
+		raddr.rc_channel = port;
 
 		if (connect(fd, (struct sockaddr *)&raddr, sizeof(raddr)) < 0) {
 			smprintf(s, "Can't connect (%d, %s)\n", errno, strerror(errno));
 			close(fd);
 			continue;
 		}
+
 		d->hPhone = fd;
+
 		return ERR_NONE;
 	}
 	return ERR_DEVICEOPENERROR;
