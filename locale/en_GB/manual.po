@@ -323,8 +323,9 @@ msgstr "For non-Nokia phones connected using cable you generally want:"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:75
+#, fuzzy
 msgid "``at``"
-msgstr ""
+msgstr "``at``"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:76
