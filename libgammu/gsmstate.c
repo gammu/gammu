@@ -429,6 +429,7 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 						GSM_AddPhoneFeature(model, F_RADIO);
 						GSM_AddPhoneFeature(model, F_NOTES);
 						GSM_AddPhoneFeature(model, F_SMS_FILES);
+						GSM_AddPhoneFeature(model, F_6230iCALLER);
 					}
 				}
 				if (strncmp(s->Phone.Data.Model, "RH-", 3) == 0) {
