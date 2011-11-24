@@ -1895,7 +1895,7 @@ For example for retrieving prepaid card status or retrieving various network inf
 
 .. code-block:: sh
 
-    gammu getussd #555#
+    gammu getussd '#555#'
 
 Uploading files to Nokia
 ------------------------
