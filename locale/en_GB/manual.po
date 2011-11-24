@@ -245,8 +245,9 @@ msgstr "For Nokia cables you want to use one of following:"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:58
+#, fuzzy
 msgid "``fbus``"
-msgstr ""
+msgstr "``fbus``"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:59
