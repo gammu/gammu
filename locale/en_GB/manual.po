@@ -319,7 +319,7 @@ msgstr ""
 #: docs/manual/config/index.rst:73
 #, fuzzy
 msgid "For non-Nokia phones connected using cable you generally want:"
-msgstr "    For non-Nokia phones connected using cable you generally want:\n"
+msgstr "For non-Nokia phones connected using cable you generally want:"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:75
