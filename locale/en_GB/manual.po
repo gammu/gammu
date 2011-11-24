@@ -373,8 +373,7 @@ msgstr "``irdaat``"
 msgid ""
 "AT commands connection for most of phones (this is not supported on Linux)."
 msgstr ""
-"B<irdaat> - AT commands connection for most of phones (this is not supported "
-"on Linux)."
+"AT commands connection for most of phones (this is not supported on Linux)."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:87
