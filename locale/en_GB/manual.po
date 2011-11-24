@@ -379,7 +379,7 @@ msgstr ""
 #: docs/manual/config/index.rst:87
 #, fuzzy
 msgid "``irdaobex``"
-msgstr "``None``"
+msgstr "``irdaobex``"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:88 docs/manual/config/index.rst:99
