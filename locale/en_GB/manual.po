@@ -253,7 +253,7 @@ msgstr "``fbus``"
 #: docs/manual/config/index.rst:59
 #, fuzzy
 msgid "serial FBUS connection"
-msgstr "    Terminates connection.\n"
+msgstr "serial FBUS connection"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:60
