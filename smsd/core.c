@@ -1539,7 +1539,7 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config)
 	if (error != ERR_NONE) {
 		/* Unknown error - escape */
 		SMSD_Log(DEBUG_INFO, Config, "Error in outbox on '%s'", Config->SMSID);
-		for (i=0;i<sms.Number;i++) {
+		for (i = 0; i < sms.Number; i++) {
 			Config->Status->Failed++;
 			Config->Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_ERROR, -1);
 		}
