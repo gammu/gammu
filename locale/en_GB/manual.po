@@ -397,7 +397,7 @@ msgstr "``irdagnapbus``"
 #: docs/manual/config/index.rst:90 docs/manual/config/index.rst:101
 #, fuzzy
 msgid "GNapplet based connection for Symbian phones, see :ref:`gnapplet`."
-msgstr "B<irdagnapbus> - GNapplet based connection for Symbian phones"
+msgstr "GNapplet based connection for Symbian phones, see :ref:`gnapplet`."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:92
