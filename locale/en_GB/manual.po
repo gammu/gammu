@@ -277,7 +277,7 @@ msgstr "``dku2``"
 #: docs/manual/config/index.rst:63
 #, fuzzy
 msgid "DKU-2 and compatible cables"
-msgstr "B<dku2> - DKU-2 and compatible cables"
+msgstr "DKU-2 and compatible cables"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:64
