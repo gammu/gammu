@@ -160,7 +160,7 @@ msgstr ""
 #: docs/manual/smsd/config.rst:47
 #, fuzzy, no-wrap
 msgid ".. config:section"
-msgstr ".. config:section:: [sql]"
+msgstr ".. config:section"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:45
