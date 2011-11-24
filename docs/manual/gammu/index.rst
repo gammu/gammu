@@ -1887,6 +1887,16 @@ Send protected message with ringtone:
 
     gammu sendsms EMS 123456 -protected 2 -variablebitmaplong ala.bmp -toneSElong axelf.txt -toneSE ring.txt
 
+
+Retrieving USSD replies
+-----------------------
+
+For example for retrieving prepaid card status or retrieving various network info:
+
+.. code-bloc:: sh
+
+    gammu getussd #555#
+
 Uploading files to Nokia
 ------------------------
 
