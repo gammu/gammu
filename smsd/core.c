@@ -1947,7 +1947,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 
 		/* Sleep some time before another loop */
 		current_time = time(NULL);
-		if (Config->loopsleep <= 1) {
+		if (Config->loopsleep == 1) {
 			sleep(1);
 		} else if (difftime(current_time, lastloop) < Config->loopsleep) {
 			sleep(Config->loopsleep - difftime(current_time, lastloop));
