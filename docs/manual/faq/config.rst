@@ -1,3 +1,5 @@
+.. _faq-config:
+
 Configuring Gammu FAQ
 =====================
 

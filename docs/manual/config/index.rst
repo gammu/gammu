@@ -103,6 +103,8 @@ Device connection parameters
 
         .. versionadded:: 1.29.90
 
+    .. seealso:: :ref:`faq-config`
+
 .. config:option:: Device
 
     .. versionadded:: 1.27.95
@@ -171,6 +173,8 @@ Device connection parameters
 
             modprobe ircomm-tty
             modprobe irtty-sir
+
+    .. seealso:: :ref:`faq-config`
 
 .. config:option:: Port
 
