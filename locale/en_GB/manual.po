@@ -108,8 +108,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/config/index.rst:28
+#, fuzzy
 msgid "on runtime, see above for search paths."
-msgstr ""
+msgstr "on runtime, see above for search paths."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:31
