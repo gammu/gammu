@@ -20,7 +20,7 @@ one - for example only one of them can receive USSD notifications.
     acutally behave like a modem and not like a disk containing drivers for
     Windows.
 
-.. seealso:: :ref:`faq-devname`
+.. seealso:: :ref:`faq-devname`, :ref:`gammurc`
 
 .. _usb-modeswitch: http://www.draisberghof.de/usb_modeswitch/
 
@@ -31,7 +31,7 @@ The only support for Symbian phones is using applet installed to phone and
 Bluetooth connection. You should use ``blues60`` :config:option:`Connection`
 and Bluetooth address of phone as :config:option:`Device`.
 
-.. seealso:: :ref:`s60`
+.. seealso:: :ref:`s60`, :ref:`gammurc`
 
 How to configure Nokia phone?
 -----------------------------
@@ -49,10 +49,12 @@ older ones with ``dlr3`` as :config:option:`Connection`.
 Should you have old phone with serial cable (and USB to serial converter),
 ``fbus`` :config:option:`Connection` is the right one.
 
+.. seealso:: :ref:`gammurc`
+
 How to configure phone not listed above?
 ----------------------------------------
 
 First check whether your phone is supported. In case it is, it most likely
 falls into one of above categories.
 
-.. seealso:: :ref:`faq-phones`
+.. seealso:: :ref:`faq-phones`, :ref:`gammurc`
