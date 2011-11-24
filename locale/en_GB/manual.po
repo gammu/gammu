@@ -293,8 +293,9 @@ msgstr "DKU-5 and compatible cables"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:66
+#, fuzzy
 msgid "``mbus``"
-msgstr ""
+msgstr "``mbus``"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:67
