@@ -241,7 +241,7 @@ msgstr "Protocol which will be used to talk to your phone."
 #: docs/manual/config/index.rst:56
 #, fuzzy
 msgid "For Nokia cables you want to use one of following:"
-msgstr "    For Nokia cables you want to use one of following:\n"
+msgstr "For Nokia cables you want to use one of following:"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:58
