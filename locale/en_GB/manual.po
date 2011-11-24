@@ -265,7 +265,7 @@ msgstr "``dlr3``"
 #: docs/manual/config/index.rst:61
 #, fuzzy
 msgid "DLR-3 and compatible cables"
-msgstr "B<dlr3> - DLR-3 and compatible cables"
+msgstr "DLR-3 and compatible cables"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:62
