@@ -102,7 +102,7 @@ struct _GSM_SMSDConfig {
 	unsigned int 	retries;
 	int		currdeliveryreport;
 	unsigned char 	SMSID[200],	 prevSMSID[200];
-	GSM_SMSC	SMSC;
+	GSM_SMSC	SMSC, SMSCCache;
 	const char	*skipsmscnumber;
 
 #if defined(HAVE_MYSQL_MYSQL_H) || defined(HAVE_POSTGRESQL_LIBPQ_FE_H) || defined(LIBDBI_FOUND) || defined(ODBC_FOUND)

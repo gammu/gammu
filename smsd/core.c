@@ -804,7 +804,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 
 	str = INI_GetValue(Config->smsdcfgfile, "smsd", "smsc", FALSE);
 	if (str) {
-		Config->SMSC.Location		= 1;
+		Config->SMSC.Location		= 0;
 		Config->SMSC.DefaultNumber[0]	= 0;
 		Config->SMSC.DefaultNumber[1]	= 0;
 		Config->SMSC.Name[0]		= 0;
@@ -813,8 +813,11 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 		Config->SMSC.Format		= SMS_FORMAT_Text;
 		EncodeUnicode(Config->SMSC.Number, str, strlen(str));
 	} else {
-		Config->SMSC.Location     = 0;
+		Config->SMSC.Location		= -1;
 	}
+
+	/* Clear cache */
+	Config->SMSCCache.Location     = 0;
 
 	/* Read service specific configuration */
 	error = Config->Service->ReadConfiguration(Config);
@@ -1572,21 +1575,31 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config)
 	}
 
 	for (i = 0; i < sms.Number; i++) {
+		if (sms.SMS[i].SMSC.Location == 0 && UnicodeLength(sms.SMS[i].SMSC.Number) == 0 && Config->SMSC.Location == 0) {
+			SMSD_Log(DEBUG_INFO, Config, "Message without SMSC, using configured one");
+			memcpy(&sms.SMS[i].SMSC,&Config->SMSC,sizeof(GSM_SMSC));
+			sms.SMS[i].SMSC.Location = 0;
+			if (Config->relativevalidity != -1) {
+				sms.SMS[i].SMSC.Validity.Format	  = SMS_Validity_RelativeFormat;
+				sms.SMS[i].SMSC.Validity.Relative = Config->relativevalidity;
+			}
+
+		}
 		if (sms.SMS[i].SMSC.Location == 0 && UnicodeLength(sms.SMS[i].SMSC.Number) == 0) {
 			SMSD_Log(DEBUG_INFO, Config, "Message without SMSC, assuming you want to use the one from phone");
 			sms.SMS[i].SMSC.Location = 1;
 		}
 		if (sms.SMS[i].SMSC.Location != 0) {
-			if (Config->SMSC.Location != sms.SMS[i].SMSC.Location) {
-				Config->SMSC.Location = sms.SMS[i].SMSC.Location;
-				error = GSM_GetSMSC(Config->gsm,&Config->SMSC);
+			if (Config->SMSCCache.Location != sms.SMS[i].SMSC.Location) {
+				Config->SMSCCache.Location = sms.SMS[i].SMSC.Location;
+				error = GSM_GetSMSC(Config->gsm,&Config->SMSCCache);
 				if (error!=ERR_NONE) {
 					SMSD_Log(DEBUG_ERROR, Config, "Error getting SMSC from phone");
 					return ERR_UNKNOWN;
 				}
 
 			}
-			memcpy(&sms.SMS[i].SMSC,&Config->SMSC,sizeof(GSM_SMSC));
+			memcpy(&sms.SMS[i].SMSC,&Config->SMSCCache,sizeof(GSM_SMSC));
 			sms.SMS[i].SMSC.Location = 0;
 			if (Config->relativevalidity != -1) {
 				sms.SMS[i].SMSC.Validity.Format	  = SMS_Validity_RelativeFormat;
