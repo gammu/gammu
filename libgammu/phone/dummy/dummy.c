@@ -693,7 +693,8 @@ GSM_Error DUMMY_DialService(GSM_StateMachine *s, char *number)
 
 GSM_Error DUMMY_AnswerCall(GSM_StateMachine *s, int ID, gboolean all)
 {
-	return ERR_NOTIMPLEMENTED;
+	fprintf(Priv->log_file, "Answering call %d (%d)\n", ID, all);
+	return ERR_NONE;
 }
 
 GSM_Error DUMMY_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo)
@@ -751,7 +752,8 @@ GSM_Error DUMMY_Reset(GSM_StateMachine *s, gboolean hard)
 
 GSM_Error DUMMY_CancelCall(GSM_StateMachine *s, int ID, gboolean all)
 {
-	return ERR_NOTIMPLEMENTED;
+	fprintf(Priv->log_file, "Canceling call %d (%d)\n", ID, all);
+	return ERR_NONE;
 }
 
 GSM_Error DUMMY_SendSavedSMS(GSM_StateMachine *s, int Folder, int Location)
