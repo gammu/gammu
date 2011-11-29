@@ -29,6 +29,7 @@ ChangeLog
 [-] * Fixed double reply detection (bug #1544).
 [-] * Increase maximal number of caller groups (bug #1541).
 [-] * Cancel all calls on maketerminated call if we don't get call ID.
+[-] * Fixed SMSC handling in some cases in SMSD (bug #1547).
     
 20111107 - 1.30.90
 
