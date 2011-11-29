@@ -19,7 +19,7 @@ the issue.
 ChangeLog
 =========
     
-2011???? - 1.30.91
+20111129 - 1.30.91
 
 [+] * Improved documentation for configuring Gammu.
 [-] * Fixed parsing birthday from vCard in some cases.
