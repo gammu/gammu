@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSDRC" "5" "November 09, 2011" "1.30.91" "Gammu"
+.TH "GAMMU-SMSDRC" "5" "November 29, 2011" "1.30.92" "Gammu"
 .SH NAME
 gammu-smsdrc \- gammu-smsd(1) configuration file
 .
@@ -256,6 +256,9 @@ The number of seconds how long will SMSD sleep before checking for some
 activity. Please note that setting this to higher value than 1 will have
 effects to other time based configurations, because they will be effectively
 rounded to multiply of this value.
+.sp
+Setting this to 0 disables sleeping. Please not this might cause Gammu to
+consume quite a lot of CPU power.
 .sp
 Default is 1.
 .UNINDENT

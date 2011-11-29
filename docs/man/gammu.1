@@ -1,4 +1,4 @@
-.TH "GAMMU" "1" "November 09, 2011" "1.30.91" "Gammu"
+.TH "GAMMU" "1" "November 29, 2011" "1.30.92" "Gammu"
 .SH NAME
 gammu \- Does some neat things with your cellular phone or modem.
 .
@@ -1347,11 +1347,18 @@ based on file extension:
 .IP \(bu 2
 Any other extension is Gammu backup file and it supports all data mentioned above, see \fIgammu\-backup\fP for more details.
 .UNINDENT
+.sp
+By default this command is interactive and asks which items tou want to backup.
+.sp
+Use \-yes for answering yes to all questions.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B backupsms file [\-yes|\-all]
 Stores all SMSes from phone to file into \fIgammu\-smsbackup\fP.
+.sp
+By default this command is interactive and asks which folders you want
+to backup and whether you want to remove messages from phone afterwards.
 .sp
 Use \-yes for answering yes to all questions (backup all messages and
 delete them from phone), or \-all to just backup all folders while keeping
@@ -2322,6 +2329,15 @@ Send protected message with ringtone:
 .nf
 .ft C
 gammu sendsms EMS 123456 \-protected 2 \-variablebitmaplong ala.bmp \-toneSElong axelf.txt \-toneSE ring.txt
+.ft P
+.fi
+.SS Retrieving USSD replies
+.sp
+For example for retrieving prepaid card status or retrieving various network info:
+.sp
+.nf
+.ft C
+gammu getussd \(aq#555#\(aq
 .ft P
 .fi
 .SS Uploading files to Nokia
