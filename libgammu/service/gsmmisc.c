@@ -530,7 +530,7 @@ gboolean ReadVCALText(char *Buffer, const char *Start, unsigned char *Value, con
 		if (*pos == ';') {
 			pos++;
 		} else {
-			dbgprintf(NULL, "Could not parse!\n");
+			dbgprintf(NULL, "Could not parse! (stopped at string: %s)\n", pos);
 			goto fail;
 		}
 		found = FALSE;
