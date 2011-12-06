@@ -1806,8 +1806,8 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(GSM_Debug_Info *di, char *Buffer, size_t *Po
 			/* Read Mozilla calendar entries. Some of them will not be used here. Notably alarm time
 			   can defined in several ways. We will use the trigger value only since this is the value
 			   Mozilla calendar uses when importing ics-files. */
-			if (strncmp(Line, "UID:", 4) == 0) {
-				ReadVCALText(Line, "UID", Buff, CalVer == Mozilla_iCalendar, NULL);  /*  Any use for UIDs? */
+			if (ReadVCALText(Line, "UID", Buff, CalVer == Mozilla_iCalendar, NULL)) {
+				/*  Any use for UIDs? */
 				break;
 			}
 #if 0
@@ -1952,8 +1952,8 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(GSM_Debug_Info *di, char *Buffer, size_t *Po
 				GSM_Translate_Category_From_VCal(Line+11, &ToDo->Type);
 			}
 
-			if (strncmp(Line, "UID:", 4) == 0) {
-				ReadVCALText(Line, "UID", Buff, ToDoVer == Mozilla_VToDo, NULL);  /*  Any use for UIDs? */
+			if (ReadVCALText(Line, "UID", Buff, ToDoVer == Mozilla_VToDo, NULL)){
+				/*  Any use for UIDs? */
 				break;
 			}
 #if 0
@@ -1964,15 +1964,11 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(GSM_Debug_Info *di, char *Buffer, size_t *Po
 				}
 			}
 #endif
-			if (strstr(Line,"X-MOZILLA-ALARM-DEFAULT-LENGTH:")) {
-				if (ReadVCALInt(Line, "X-MOZILLA-ALARM-DEFAULT-LENGTH", &deltatime)) {
-					break;
-				}
+			if (ReadVCALInt(Line, "X-MOZILLA-ALARM-DEFAULT-LENGTH", &deltatime)) {
+				break;
 			}
-			if (strstr(Line,"X-SONYERICSSON-DST:")) {
-				if (ReadVCALInt(Line, "X-SONYERICSSON-DST", &dstflag)) {
-					break;
-				}
+			if (ReadVCALInt(Line, "X-SONYERICSSON-DST", &dstflag)) {
+				break;
 			}
 
 			if (ReadVCALDate(Line, "DUE", &Date, &is_date_only)) {
