@@ -5,6 +5,7 @@
 
 #include <gammu-file.h>
 #include <gammu-info.h>
+#include <gammu-memory.h>
 
 /**
  * Resets all members of GSM_BatteryCharge structure.
@@ -54,7 +55,7 @@ GSM_Error VC_StoreText(char *Buffer, const size_t buff_len, size_t *Length, cons
  * \param Value Storage for value.
  * \param UTF8 Whether string should be treated as utf-8.
  */
-gboolean ReadVCALText(char *Buffer, const char *Start, unsigned char *Value, const gboolean UTF8);
+gboolean ReadVCALText(char *Buffer, const char *Start, unsigned char *Value, const gboolean UTF8, GSM_EntryLocation *location);
 
 gboolean ReadVCALInt(char *Buffer, const char *Start, int *Value);
 

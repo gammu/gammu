@@ -683,6 +683,7 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 	int		version = 1;
 	GSM_Error	error;
 	char	*Line = NULL;
+	GSM_EntryLocation location;
 
 	Buff[0]	 = 0;
 	Pbk->EntriesNum = 0;
@@ -710,7 +711,7 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 				version = atoi(Line + 8);
 				dbgprintf(di, "vCard version %d\n", version);
 			}
-			if (ReadVCALText(Line, "N", Buff,  (version >= 3))) {
+			if (ReadVCALText(Line, "N", Buff,  (version >= 3), NULL)) {
 				pos = 0;
 				s = VCALGetTextPart(Buff, &pos);
 				if (s == NULL) {
@@ -767,208 +768,142 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 				continue;
 			}
 
-			if (ReadVCALText(Line, "TEL",		   Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;VOICE",	     Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;TYPE=MAIN",	     Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;TYPE=VOICE",	     Buff,  (version >= 3))) {
+			if (ReadVCALText(Line, "TEL",		   Buff,  (version >= 3), &location) ||
+			    ReadVCALText(Line, "TEL;VOICE",	     Buff,  (version >= 3), &location) ||
+			    ReadVCALText(Line, "TEL;TYPE=MAIN",	     Buff,  (version >= 3), &location) ||
+			    ReadVCALText(Line, "TEL;TYPE=VOICE",	     Buff,  (version >= 3), &location)) {
 				if (Buff[1] == '+') {
 					GSM_TweakInternationalNumber(Buff, NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN);
 				}
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_General;
-				Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Unknown;
+				Pbk->Entries[Pbk->EntriesNum].Location = location;
 				Pbk->Entries[Pbk->EntriesNum].SMSList[0] = 0;
 				Pbk->Entries[Pbk->EntriesNum].VoiceTag = 0;
 				Pbk->EntriesNum++;
 				continue;
 			}
-			if (ReadVCALText(Line, "TEL;VIDEO",	     Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;TYPE=VIDEO",	     Buff,  (version >= 3))) {
+			if (ReadVCALText(Line, "TEL;VIDEO",	     Buff,  (version >= 3), &location) ||
+			    ReadVCALText(Line, "TEL;TYPE=VIDEO",	     Buff,  (version >= 3), &location)) {
 				if (Buff[1] == '+') {
 					GSM_TweakInternationalNumber(Buff, NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN);
 				}
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Video;
-				Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Unknown;
+				Pbk->Entries[Pbk->EntriesNum].Location = location;
 				Pbk->Entries[Pbk->EntriesNum].SMSList[0] = 0;
 				Pbk->Entries[Pbk->EntriesNum].VoiceTag = 0;
 				Pbk->EntriesNum++;
 				continue;
 			}
-			if (ReadVCALText(Line, "TEL;CELL",	      Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;CELL;VOICE",	Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;TYPE=CELL",	 Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;TYPE=CELL,VOICE",   Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;TYPE=CELL;TYPE=VOICE",   Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;TYPE=CELL;VOICE",   Buff,  (version >= 3))) {
+			if (ReadVCALText(Line, "TEL;CELL",	      Buff,  (version >= 3), &location) ||
+			    ReadVCALText(Line, "TEL;CELL;VOICE",	Buff,  (version >= 3), &location) ||
+			    ReadVCALText(Line, "TEL;TYPE=CELL",	 Buff,  (version >= 3), &location) ||
+			    ReadVCALText(Line, "TEL;TYPE=CELL,VOICE",   Buff,  (version >= 3), &location) ||
+			    ReadVCALText(Line, "TEL;TYPE=CELL;TYPE=VOICE",   Buff,  (version >= 3), &location) ||
+			    ReadVCALText(Line, "TEL;TYPE=CELL;VOICE",   Buff,  (version >= 3), &location)) {
 				if (Buff[1] == '+') {
 					GSM_TweakInternationalNumber(Buff, NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN);
 				}
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Mobile;
-				Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Unknown;
+				Pbk->Entries[Pbk->EntriesNum].Location = location;
 				Pbk->Entries[Pbk->EntriesNum].SMSList[0] = 0;
 				Pbk->Entries[Pbk->EntriesNum].VoiceTag = 0;
 				Pbk->EntriesNum++;
 				continue;
 			}
-			if (ReadVCALText(Line, "TEL;CELL;WORK",	      Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;CELL;WORK;VOICE",	Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;TYPE=CELL;TYPE=WORK",	 Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;TYPE=CELL;TYPE=WORK;TYPE=VOICE",   Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;TYPE=CELL;TYPE=WORK;VOICE",   Buff,  (version >= 3))) {
-				if (Buff[1] == '+') {
-					GSM_TweakInternationalNumber(Buff, NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN);
-				}
-				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
-				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Mobile;
-				Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Work;
-				Pbk->Entries[Pbk->EntriesNum].SMSList[0] = 0;
-				Pbk->Entries[Pbk->EntriesNum].VoiceTag = 0;
-				Pbk->EntriesNum++;
-				continue;
-			}
-			if (ReadVCALText(Line, "TEL;CELL;HOME",	      Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;CELL;HOME;VOICE",	Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;TYPE=CELL;TYPE=HOME",	 Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;TYPE=CELL;TYPE=HOME;TYPE=VOICE",   Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;TYPE=CELL;TYPE=HOME;VOICE",   Buff,  (version >= 3))) {
-				if (Buff[1] == '+') {
-					GSM_TweakInternationalNumber(Buff, NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN);
-				}
-				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
-				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Mobile;
-				Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Home;
-				Pbk->Entries[Pbk->EntriesNum].SMSList[0] = 0;
-				Pbk->Entries[Pbk->EntriesNum].VoiceTag = 0;
-				Pbk->EntriesNum++;
-				continue;
-			}
-			if (ReadVCALText(Line, "TEL;WORK",	      Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;TYPE=WORK",	 Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;WORK;VOICE",	Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;TYPE=WORK;VOICE",   Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;TYPE=WORK;TYPE=VOICE",   Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;TYPE=WORK,VOICE",   Buff,  (version >= 3))) {
-				if (Buff[1] == '+') {
-					GSM_TweakInternationalNumber(Buff, NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN);
-				}
-				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
-				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_General;
-				Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Work;
-				Pbk->Entries[Pbk->EntriesNum].SMSList[0] = 0;
-				Pbk->Entries[Pbk->EntriesNum].VoiceTag = 0;
-				Pbk->EntriesNum++;
-				continue;
-			}
-			if (ReadVCALText(Line, "TEL;OTHER",	      Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;TYPE=OTHER",	 Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;OTHER;VOICE",	Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;TYPE=OTHER;VOICE",   Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;TYPE=OTHER;TYPE=VOICE",   Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;TYPE=OTHER,VOICE",   Buff,  (version >= 3))) {
+			if (ReadVCALText(Line, "TEL;OTHER",	      Buff,  (version >= 3), &location) ||
+			    ReadVCALText(Line, "TEL;TYPE=OTHER",	 Buff,  (version >= 3), &location) ||
+			    ReadVCALText(Line, "TEL;OTHER;VOICE",	Buff,  (version >= 3), &location) ||
+			    ReadVCALText(Line, "TEL;TYPE=OTHER;VOICE",   Buff,  (version >= 3), &location) ||
+			    ReadVCALText(Line, "TEL;TYPE=OTHER;TYPE=VOICE",   Buff,  (version >= 3), &location) ||
+			    ReadVCALText(Line, "TEL;TYPE=OTHER,VOICE",   Buff,  (version >= 3), &location)) {
 				if (Buff[1] == '+') {
 					GSM_TweakInternationalNumber(Buff, NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN);
 				}
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Other;
-				Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Unknown;
+				Pbk->Entries[Pbk->EntriesNum].Location = location;
 				Pbk->Entries[Pbk->EntriesNum].SMSList[0] = 0;
 				Pbk->Entries[Pbk->EntriesNum].VoiceTag = 0;
 				Pbk->EntriesNum++;
 				continue;
 			}
-			if (ReadVCALText(Line, "TEL;PAGER",	      Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;TYPE=PAGER",	 Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;PAGER;VOICE",	Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;TYPE=PAGER;VOICE",   Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;TYPE=PAGER;TYPE=VOICE",   Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;TYPE=PAGER,VOICE",   Buff,  (version >= 3))) {
+			if (ReadVCALText(Line, "TEL;PAGER",	      Buff,  (version >= 3), &location) ||
+			    ReadVCALText(Line, "TEL;TYPE=PAGER",	 Buff,  (version >= 3), &location) ||
+			    ReadVCALText(Line, "TEL;PAGER;VOICE",	Buff,  (version >= 3), &location) ||
+			    ReadVCALText(Line, "TEL;TYPE=PAGER;VOICE",   Buff,  (version >= 3), &location) ||
+			    ReadVCALText(Line, "TEL;TYPE=PAGER;TYPE=VOICE",   Buff,  (version >= 3), &location) ||
+			    ReadVCALText(Line, "TEL;TYPE=PAGER,VOICE",   Buff,  (version >= 3), &location)) {
 				if (Buff[1] == '+') {
 					GSM_TweakInternationalNumber(Buff, NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN);
 				}
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Other;
-				Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Unknown;
+				Pbk->Entries[Pbk->EntriesNum].Location = location;
 				Pbk->Entries[Pbk->EntriesNum].SMSList[0] = 0;
 				Pbk->Entries[Pbk->EntriesNum].VoiceTag = 0;
 				Pbk->EntriesNum++;
 				continue;
 			}
-			if (ReadVCALText(Line, "TEL;MSG",	      Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;TYPE=MSG",	 Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;MSG;VOICE",	Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;TYPE=MSG;VOICE",   Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;TYPE=MSG;TYPE=VOICE",   Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;TYPE=MSG,VOICE",   Buff,  (version >= 3))) {
+			if (ReadVCALText(Line, "TEL;MSG",	      Buff,  (version >= 3), &location) ||
+			    ReadVCALText(Line, "TEL;TYPE=MSG",	 Buff,  (version >= 3), &location) ||
+			    ReadVCALText(Line, "TEL;MSG;VOICE",	Buff,  (version >= 3), &location) ||
+			    ReadVCALText(Line, "TEL;TYPE=MSG;VOICE",   Buff,  (version >= 3), &location) ||
+			    ReadVCALText(Line, "TEL;TYPE=MSG;TYPE=VOICE",   Buff,  (version >= 3), &location) ||
+			    ReadVCALText(Line, "TEL;TYPE=MSG,VOICE",   Buff,  (version >= 3), &location)) {
 				if (Buff[1] == '+') {
 					GSM_TweakInternationalNumber(Buff, NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN);
 				}
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Other;
-				Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Unknown;
+				Pbk->Entries[Pbk->EntriesNum].Location = location;
 				Pbk->Entries[Pbk->EntriesNum].SMSList[0] = 0;
 				Pbk->Entries[Pbk->EntriesNum].VoiceTag = 0;
 				Pbk->EntriesNum++;
 				continue;
 			}
 			/* FAX + VOICE looks like nonsense */
-			if (ReadVCALText(Line, "TEL;FAX",	       Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;TYPE=FAX",	  Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;FAX;VOICE",	 Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;TYPE=FAX;VOICE",    Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;TYPE=FAX;TYPE=VOICE",    Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;TYPE=FAX,VOICE",    Buff,  (version >= 3))) {
+			if (ReadVCALText(Line, "TEL;FAX",	       Buff,  (version >= 3), &location) ||
+			    ReadVCALText(Line, "TEL;TYPE=FAX",	  Buff,  (version >= 3), &location) ||
+			    ReadVCALText(Line, "TEL;FAX;VOICE",	 Buff,  (version >= 3), &location) ||
+			    ReadVCALText(Line, "TEL;TYPE=FAX;VOICE",    Buff,  (version >= 3), &location) ||
+			    ReadVCALText(Line, "TEL;TYPE=FAX;TYPE=VOICE",    Buff,  (version >= 3), &location) ||
+			    ReadVCALText(Line, "TEL;TYPE=FAX,VOICE",    Buff,  (version >= 3), &location)) {
 				if (Buff[1] == '+') {
 					GSM_TweakInternationalNumber(Buff, NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN);
 				}
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Fax;
-				Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Unknown;
+				Pbk->Entries[Pbk->EntriesNum].Location = location;
 				Pbk->Entries[Pbk->EntriesNum].SMSList[0] = 0;
 				Pbk->Entries[Pbk->EntriesNum].VoiceTag = 0;
 				Pbk->EntriesNum++;
 				continue;
 			}
-			if (ReadVCALText(Line, "TEL;HOME",	      Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;TYPE=HOME",	 Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;HOME;VOICE",	Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;TYPE=HOME,VOICE",   Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;TYPE=HOME;TYPE=VOICE",   Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "TEL;TYPE=HOME;VOICE",   Buff,  (version >= 3))) {
-				if (Buff[1] == '+') {
-					GSM_TweakInternationalNumber(Buff, NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN);
-				}
-				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
-				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_General;
-				Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Home;
-				Pbk->Entries[Pbk->EntriesNum].SMSList[0] = 0;
-				Pbk->Entries[Pbk->EntriesNum].VoiceTag = 0;
-				Pbk->EntriesNum++;
-				continue;
-			}
-			if (ReadVCALText(Line, "TITLE", Buff,  (version >= 3))) {
+			if (ReadVCALText(Line, "TITLE", Buff,  (version >= 3), &location)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_JobTitle;
-				Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Unknown;
+				Pbk->Entries[Pbk->EntriesNum].Location = location;
 				Pbk->EntriesNum++;
 				continue;
 			}
-			if (ReadVCALText(Line, "NOTE", Buff,  (version >= 3))) {
+			if (ReadVCALText(Line, "NOTE", Buff,  (version >= 3), &location)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Note;
-				Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Unknown;
+				Pbk->Entries[Pbk->EntriesNum].Location = location;
 				Pbk->EntriesNum++;
 				continue;
 			}
-			if (ReadVCALText(Line, "LABEL", Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "ADR", Buff,  (version >= 3))) {
+			if (ReadVCALText(Line, "LABEL", Buff,  (version >= 3), &location) ||
+			    ReadVCALText(Line, "ADR", Buff,  (version >= 3), &location)) {
 				pos = 0;
 				s = VCALGetTextPart(Buff, &pos); /* PO box, ignore for now */
 				if (s == NULL) {
 					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Postal;
-					Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Unknown;
+					Pbk->Entries[Pbk->EntriesNum].Location = location;
 					Pbk->EntriesNum++;
 					continue;
 				} else {
@@ -978,7 +913,7 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 					if (s == NULL) continue;
 					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_StreetAddress;
-					Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Unknown;
+					Pbk->Entries[Pbk->EntriesNum].Location = location;
 					Pbk->EntriesNum++;
 					CHECK_NUM_ENTRIES;
 
@@ -986,7 +921,7 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 					if (s == NULL) continue;
 					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_City;
-					Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Unknown;
+					Pbk->Entries[Pbk->EntriesNum].Location = location;
 					Pbk->EntriesNum++;
 					CHECK_NUM_ENTRIES;
 
@@ -994,7 +929,7 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 					if (s == NULL) continue;
 					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_State;
-					Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Unknown;
+					Pbk->Entries[Pbk->EntriesNum].Location = location;
 					Pbk->EntriesNum++;
 					CHECK_NUM_ENTRIES;
 
@@ -1002,7 +937,7 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 					if (s == NULL) continue;
 					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Zip;
-					Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Unknown;
+					Pbk->Entries[Pbk->EntriesNum].Location = location;
 					Pbk->EntriesNum++;
 					CHECK_NUM_ENTRIES;
 
@@ -1010,229 +945,121 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 					if (s == NULL) continue;
 					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Country;
-					Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Unknown;
+					Pbk->Entries[Pbk->EntriesNum].Location = location;
 					Pbk->EntriesNum++;
 					continue;
 				}
 			}
-			if (ReadVCALText(Line, "ADR;HOME", Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "ADR;TYPE=HOME", Buff,  (version >= 3))) {
-				pos = 0;
-				s = VCALGetTextPart(Buff, &pos); /* PO box, ignore for now */
-				if (s == NULL) {
-					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
-					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Postal;
-					Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Home;
-					Pbk->EntriesNum++;
-					continue;
-				} else {
-					s = VCALGetTextPart(Buff, &pos); /* Don't know ... */
-
-					s = VCALGetTextPart(Buff, &pos);
-					if (s == NULL) continue;
-					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
-					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_StreetAddress;
-					Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Home;
-					Pbk->EntriesNum++;
-					CHECK_NUM_ENTRIES;
-
-					s = VCALGetTextPart(Buff, &pos);
-					if (s == NULL) continue;
-					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
-					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_City;
-					Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Home;
-					Pbk->EntriesNum++;
-					CHECK_NUM_ENTRIES;
-
-					s = VCALGetTextPart(Buff, &pos);
-					if (s == NULL) continue;
-					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
-					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_State;
-					Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Home;
-					Pbk->EntriesNum++;
-					CHECK_NUM_ENTRIES;
-
-					s = VCALGetTextPart(Buff, &pos);
-					if (s == NULL) continue;
-					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
-					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Zip;
-					Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Home;
-					Pbk->EntriesNum++;
-					CHECK_NUM_ENTRIES;
-
-					s = VCALGetTextPart(Buff, &pos);
-					if (s == NULL) continue;
-					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
-					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Country;
-					Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Home;
-					Pbk->EntriesNum++;
-					continue;
-				}
-			}
-			if (ReadVCALText(Line, "ADR;WORK", Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "ADR;TYPE=WORK", Buff,  (version >= 3))) {
-				pos = 0;
-				s = VCALGetTextPart(Buff, &pos); /* PO box, ignore for now */
-				if (s == NULL) {
-					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
-					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Postal;
-					Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Work;
-					Pbk->EntriesNum++;
-					continue;
-				} else {
-					s = VCALGetTextPart(Buff, &pos); /* Don't know ... */
-
-					s = VCALGetTextPart(Buff, &pos);
-					if (s == NULL) continue;
-					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
-					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_StreetAddress;
-					Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Work;
-					Pbk->EntriesNum++;
-					CHECK_NUM_ENTRIES;
-
-					s = VCALGetTextPart(Buff, &pos);
-					if (s == NULL) continue;
-					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
-					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_City;
-					Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Work;
-					Pbk->EntriesNum++;
-					CHECK_NUM_ENTRIES;
-
-					s = VCALGetTextPart(Buff, &pos);
-					if (s == NULL) continue;
-					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
-					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_State;
-					Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Work;
-					Pbk->EntriesNum++;
-					CHECK_NUM_ENTRIES;
-
-					s = VCALGetTextPart(Buff, &pos);
-					if (s == NULL) continue;
-					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
-					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Zip;
-					Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Work;
-					Pbk->EntriesNum++;
-					CHECK_NUM_ENTRIES;
-
-					s = VCALGetTextPart(Buff, &pos);
-					if (s == NULL) continue;
-					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
-					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Country;
-					Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Work;
-					Pbk->EntriesNum++;
-					continue;
-				}
-			}
-			if (ReadVCALText(Line, "EMAIL", Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "EMAIL;TYPE=OTHER", Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "EMAIL;TYPE=INTERNET", Buff,  (version >= 3)) ||
-			    ReadVCALText(Line, "EMAIL;INTERNET", Buff,  (version >= 3))) {
+			if (ReadVCALText(Line, "EMAIL", Buff,  (version >= 3), &location) ||
+			    ReadVCALText(Line, "EMAIL;TYPE=OTHER", Buff,  (version >= 3), &location) ||
+			    ReadVCALText(Line, "EMAIL;TYPE=INTERNET", Buff,  (version >= 3), &location) ||
+			    ReadVCALText(Line, "EMAIL;INTERNET", Buff,  (version >= 3), &location)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Email;
-				Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Unknown;
+				Pbk->Entries[Pbk->EntriesNum].Location = location;
 				Pbk->EntriesNum++;
 				continue;
 			}
-			if (ReadVCALText(Line, "X-IRMC-LUID", Buff,  (version >= 3))) {
+			if (ReadVCALText(Line, "X-IRMC-LUID", Buff,  (version >= 3), &location)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_LUID;
-				Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Unknown;
+				Pbk->Entries[Pbk->EntriesNum].Location = location;
 				Pbk->EntriesNum++;
 				continue;
 			}
-			if (ReadVCALText(Line, "X-DTMF", Buff,  (version >= 3))) {
+			if (ReadVCALText(Line, "X-DTMF", Buff,  (version >= 3), &location)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_DTMF;
-				Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Unknown;
+				Pbk->Entries[Pbk->EntriesNum].Location = location;
 				Pbk->EntriesNum++;
 				continue;
 			}
-			if (ReadVCALText(Line, "X-SIP", Buff,  (version >= 3))) {
+			if (ReadVCALText(Line, "X-SIP", Buff,  (version >= 3), &location)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_SIP;
-				Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Unknown;
+				Pbk->Entries[Pbk->EntriesNum].Location = location;
 				Pbk->EntriesNum++;
 				continue;
 			}
-			if (ReadVCALText(Line, "X-SIP;VOIP", Buff,  (version >= 3))) {
+			if (ReadVCALText(Line, "X-SIP;VOIP", Buff,  (version >= 3), &location)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_VOIP;
-				Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Unknown;
+				Pbk->Entries[Pbk->EntriesNum].Location = location;
 				Pbk->EntriesNum++;
 				continue;
 			}
-			if (ReadVCALText(Line, "X-WV-ID", Buff,  (version >= 3))) {
+			if (ReadVCALText(Line, "X-WV-ID", Buff,  (version >= 3), &location)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_WVID;
-				Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Unknown;
+				Pbk->Entries[Pbk->EntriesNum].Location = location;
 				Pbk->EntriesNum++;
 				continue;
 			}
-			if (ReadVCALText(Line, "X-SIP;SWIS", Buff,  (version >= 3))) {
+			if (ReadVCALText(Line, "X-SIP;SWIS", Buff,  (version >= 3), &location)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_SWIS;
-				Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Unknown;
+				Pbk->Entries[Pbk->EntriesNum].Location = location;
 				Pbk->EntriesNum++;
 				continue;
 			}
-			if (ReadVCALText(Line, "X-SIP;POC", Buff,  (version >= 3))) {
+			if (ReadVCALText(Line, "X-SIP;POC", Buff,  (version >= 3), &location)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_PushToTalkID;
-				Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Unknown;
+				Pbk->Entries[Pbk->EntriesNum].Location = location;
 				Pbk->EntriesNum++;
 				continue;
 			}
-			if (ReadVCALText(Line, "URL", Buff,  (version >= 3))) {
+			if (ReadVCALText(Line, "URL", Buff,  (version >= 3), &location)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_URL;
-				Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Unknown;
+				Pbk->Entries[Pbk->EntriesNum].Location = location;
 				Pbk->EntriesNum++;
 				continue;
 			}
-			if (ReadVCALText(Line, "ORG", Buff,  (version >= 3))) {
+			if (ReadVCALText(Line, "ORG", Buff,  (version >= 3), &location)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Company;
-				Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Unknown;
+				Pbk->Entries[Pbk->EntriesNum].Location = location;
 				Pbk->EntriesNum++;
 				continue;
 			}
-			if (ReadVCALText(Line, "NICKNAME", Buff,  (version >= 3))) {
+			if (ReadVCALText(Line, "NICKNAME", Buff,  (version >= 3), &location)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_NickName;
-				Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Unknown;
+				Pbk->Entries[Pbk->EntriesNum].Location = location;
 				Pbk->EntriesNum++;
 				continue;
 			}
-			if (ReadVCALText(Line, "FN", Buff,  (version >= 3))) {
+			if (ReadVCALText(Line, "FN", Buff,  (version >= 3), &location)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_FormalName;
-				Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Unknown;
+				Pbk->Entries[Pbk->EntriesNum].Location = location;
 				Pbk->EntriesNum++;
 				continue;
 			}
-			if (ReadVCALText(Line, "X-NAME-PREFIX", Buff,  (version >= 3))) {
+			if (ReadVCALText(Line, "X-NAME-PREFIX", Buff,  (version >= 3), &location)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_NamePrefix;
-				Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Unknown;
+				Pbk->Entries[Pbk->EntriesNum].Location = location;
 				Pbk->EntriesNum++;
 				continue;
 			}
-			if (ReadVCALText(Line, "X-NAME-SUFFIX", Buff,  (version >= 3))) {
+			if (ReadVCALText(Line, "X-NAME-SUFFIX", Buff,  (version >= 3), &location)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_NameSuffix;
-				Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Unknown;
+				Pbk->Entries[Pbk->EntriesNum].Location = location;
 				Pbk->EntriesNum++;
 				continue;
 			}
-			if (ReadVCALText(Line, "CATEGORIES", Buff,  (version >= 3))) {
+			if (ReadVCALText(Line, "CATEGORIES", Buff,  (version >= 3), &location)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].Number = -1;
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Category;
-				Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Unknown;
+				Pbk->Entries[Pbk->EntriesNum].Location = location;
 				Pbk->EntriesNum++;
 				continue;
 			}
-			if (ReadVCALText(Line, "BDAY", Buff,  (version >= 3))) {
+			if (ReadVCALText(Line, "BDAY", Buff,  (version >= 3), NULL)) {
 				if (ReadVCALDateTime(DecodeUnicodeString(Buff), &Pbk->Entries[Pbk->EntriesNum].Date)) {
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Date;
 					Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Unknown;
@@ -1240,7 +1067,7 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 					continue;
 				}
 			}
-			if (ReadVCALText(Line, "LAST-MODIFIED", Buff,  (version >= 3))) {
+			if (ReadVCALText(Line, "LAST-MODIFIED", Buff,  (version >= 3), NULL)) {
 				if (ReadVCALDateTime(DecodeUnicodeString(Buff), &Pbk->Entries[Pbk->EntriesNum].Date)) {
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_LastModified;
 					Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Unknown;
@@ -1248,24 +1075,24 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 					continue;
 				}
 			}
-			if (ReadVCALText(Line, "X-PRIVATE", Buff,  (version >= 3))) {
+			if (ReadVCALText(Line, "X-PRIVATE", Buff,  (version >= 3), NULL)) {
 				Pbk->Entries[Pbk->EntriesNum].Number = atoi(DecodeUnicodeString(Buff));
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Private;
 				Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Unknown;
 				Pbk->EntriesNum++;
 				continue;
 			}
-			if (ReadVCALText(Line, "X-CALLER-GROUP", Buff,  (version >= 3))) {
+			if (ReadVCALText(Line, "X-CALLER-GROUP", Buff,  (version >= 3), NULL)) {
 				Pbk->Entries[Pbk->EntriesNum].Number = atoi(DecodeUnicodeString(Buff));
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Caller_Group;
 				Pbk->Entries[Pbk->EntriesNum].Location = PBK_Location_Unknown;
 				Pbk->EntriesNum++;
 				continue;
 			}
-			if (ReadVCALText(Line, "X-GAMMU-LOCATION", Buff,  (version >= 3))) {
+			if (ReadVCALText(Line, "X-GAMMU-LOCATION", Buff,  (version >= 3), NULL)) {
 				Pbk->Location = atoi(DecodeUnicodeString(Buff));
 			}
-			if (ReadVCALText(Line, "X-GAMMU-MEMORY", Buff,  (version >= 3))) {
+			if (ReadVCALText(Line, "X-GAMMU-MEMORY", Buff,  (version >= 3), NULL)) {
 				Pbk->MemoryType = GSM_StringToMemoryType(DecodeUnicodeString(Buff));
 			}
 			break;

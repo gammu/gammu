@@ -337,11 +337,11 @@ gboolean ReadVCALDate(char *Buffer, const char *Start, GSM_DateTime *Date, gbool
 	char fullstart[200];
 	unsigned char datestring[200];
 
-	if (!ReadVCALText(Buffer, Start, datestring, FALSE)) {
+	if (!ReadVCALText(Buffer, Start, datestring, FALSE, NULL)) {
 		fullstart[0] = 0;
 		strcat(fullstart, Start);
 		strcat(fullstart, ";VALUE=DATE");
-		if (!ReadVCALText(Buffer, fullstart, datestring, FALSE)) {
+		if (!ReadVCALText(Buffer, fullstart, datestring, FALSE, NULL)) {
 			return FALSE;
 		}
 		*is_date_only = TRUE;
@@ -460,7 +460,7 @@ unsigned char *VCALGetTextPart(unsigned char *Buff, int *pos)
  *
  * When all tokens are matched we found matching line.
  */
-gboolean ReadVCALText(char *Buffer, const char *Start, unsigned char *Value, const gboolean UTF8)
+gboolean ReadVCALText(char *Buffer, const char *Start, unsigned char *Value, const gboolean UTF8, GSM_EntryLocation *location)
 {
 	char *line = NULL;
 	char **tokens = NULL;
@@ -520,6 +520,8 @@ gboolean ReadVCALText(char *Buffer, const char *Start, unsigned char *Value, con
 	pos += len;
 	/* No need to check this token anymore */
 	tokens[0][0] = 0;
+	if (location)
+	  *location = PBK_Location_Unknown;
 
 	/* Check remaining tokens */
 	while (*pos != ':') {
@@ -601,6 +603,26 @@ gboolean ReadVCALText(char *Buffer, const char *Start, unsigned char *Value, con
 				/* We ignore pref token */
 				pos += 4;
 				found = TRUE;
+			} else if (location && strncasecmp(pos, "WORK", 4) == 0) {
+				/* We ignore pref token */
+				pos += 4;
+				found = TRUE;
+				*location = PBK_Location_Work;
+			} else if (location && strncasecmp(pos, "TYPE=WORK", 9) == 0) {
+				/* We ignore pref token */
+				pos += 9;
+				found = TRUE;
+				*location = PBK_Location_Work;
+			} else if (location && strncasecmp(pos, "HOME", 4) == 0) {
+				/* We ignore pref token */
+				pos += 4;
+				found = TRUE;
+				*location = PBK_Location_Home;
+			} else if (location && strncasecmp(pos, "TYPE=HOME", 9) == 0) {
+				/* We ignore pref token */
+				pos += 9;
+				found = TRUE;
+				*location = PBK_Location_Home;
 			}
 			if (!found) {
 				dbgprintf(NULL, "%s not found!\n", Start);
