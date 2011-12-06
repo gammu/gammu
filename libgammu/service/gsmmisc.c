@@ -458,6 +458,11 @@ unsigned char *VCALGetTextPart(unsigned char *Buff, int *pos)
  * We separate matching text (Start) to tokens and then try to find all
  * tokens in Buffer. We also accept tokens like PREF, CHARSET or ENCODING.
  *
+ * Also it parses TYPE=* tokens, matching it to text types passed in Start
+ * parameter. For example Start "TEL;FAX;VOICE" matches "TEL;TYPE=FAX,VOICE"
+ * or "TEL;FAX;TYPE=VOICE" or "TEL;TYPE=FAX;TYPE=VOICE" and of course
+ * "TEL;FAX;VOICE".
+ *
  * When all tokens are matched we found matching line.
  */
 gboolean ReadVCALText(char *Buffer, const char *Start, unsigned char *Value, const gboolean UTF8, GSM_EntryLocation *location)
