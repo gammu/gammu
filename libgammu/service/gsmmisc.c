@@ -520,8 +520,10 @@ gboolean ReadVCALText(char *Buffer, const char *Start, unsigned char *Value, con
 	pos += len;
 	/* No need to check this token anymore */
 	tokens[0][0] = 0;
-	if (location)
-	  *location = PBK_Location_Unknown;
+	/* Initialize location */
+	if (location != NULL) {
+		*location = PBK_Location_Unknown;
+	}
 
 	/* Check remaining tokens */
 	while (*pos != ':') {
