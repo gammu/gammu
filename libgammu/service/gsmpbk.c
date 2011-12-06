@@ -770,8 +770,7 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 
 			if (ReadVCALText(Line, "TEL",		   Buff,  (version >= 3), &location) ||
 			    ReadVCALText(Line, "TEL;VOICE",	     Buff,  (version >= 3), &location) ||
-			    ReadVCALText(Line, "TEL;TYPE=MAIN",	     Buff,  (version >= 3), &location) ||
-			    ReadVCALText(Line, "TEL;TYPE=VOICE",	     Buff,  (version >= 3), &location)) {
+			    ReadVCALText(Line, "TEL;MAIN",	     Buff,  (version >= 3), &location)) {
 				if (Buff[1] == '+') {
 					GSM_TweakInternationalNumber(Buff, NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN);
 				}
@@ -783,8 +782,7 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 				Pbk->EntriesNum++;
 				continue;
 			}
-			if (ReadVCALText(Line, "TEL;VIDEO",	     Buff,  (version >= 3), &location) ||
-			    ReadVCALText(Line, "TEL;TYPE=VIDEO",	     Buff,  (version >= 3), &location)) {
+			if (ReadVCALText(Line, "TEL;VIDEO",	     Buff,  (version >= 3), &location)) {
 				if (Buff[1] == '+') {
 					GSM_TweakInternationalNumber(Buff, NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN);
 				}
@@ -797,11 +795,7 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 				continue;
 			}
 			if (ReadVCALText(Line, "TEL;CELL",	      Buff,  (version >= 3), &location) ||
-			    ReadVCALText(Line, "TEL;CELL;VOICE",	Buff,  (version >= 3), &location) ||
-			    ReadVCALText(Line, "TEL;TYPE=CELL",	 Buff,  (version >= 3), &location) ||
-			    ReadVCALText(Line, "TEL;TYPE=CELL,VOICE",   Buff,  (version >= 3), &location) ||
-			    ReadVCALText(Line, "TEL;TYPE=CELL;TYPE=VOICE",   Buff,  (version >= 3), &location) ||
-			    ReadVCALText(Line, "TEL;TYPE=CELL;VOICE",   Buff,  (version >= 3), &location)) {
+			    ReadVCALText(Line, "TEL;CELL;VOICE",	Buff,  (version >= 3), &location)) {
 				if (Buff[1] == '+') {
 					GSM_TweakInternationalNumber(Buff, NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN);
 				}
@@ -814,11 +808,7 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 				continue;
 			}
 			if (ReadVCALText(Line, "TEL;OTHER",	      Buff,  (version >= 3), &location) ||
-			    ReadVCALText(Line, "TEL;TYPE=OTHER",	 Buff,  (version >= 3), &location) ||
-			    ReadVCALText(Line, "TEL;OTHER;VOICE",	Buff,  (version >= 3), &location) ||
-			    ReadVCALText(Line, "TEL;TYPE=OTHER;VOICE",   Buff,  (version >= 3), &location) ||
-			    ReadVCALText(Line, "TEL;TYPE=OTHER;TYPE=VOICE",   Buff,  (version >= 3), &location) ||
-			    ReadVCALText(Line, "TEL;TYPE=OTHER,VOICE",   Buff,  (version >= 3), &location)) {
+			    ReadVCALText(Line, "TEL;OTHER;VOICE",	Buff,  (version >= 3), &location)) {
 				if (Buff[1] == '+') {
 					GSM_TweakInternationalNumber(Buff, NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN);
 				}
@@ -831,11 +821,7 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 				continue;
 			}
 			if (ReadVCALText(Line, "TEL;PAGER",	      Buff,  (version >= 3), &location) ||
-			    ReadVCALText(Line, "TEL;TYPE=PAGER",	 Buff,  (version >= 3), &location) ||
-			    ReadVCALText(Line, "TEL;PAGER;VOICE",	Buff,  (version >= 3), &location) ||
-			    ReadVCALText(Line, "TEL;TYPE=PAGER;VOICE",   Buff,  (version >= 3), &location) ||
-			    ReadVCALText(Line, "TEL;TYPE=PAGER;TYPE=VOICE",   Buff,  (version >= 3), &location) ||
-			    ReadVCALText(Line, "TEL;TYPE=PAGER,VOICE",   Buff,  (version >= 3), &location)) {
+			    ReadVCALText(Line, "TEL;PAGER;VOICE",	Buff,  (version >= 3), &location)) {
 				if (Buff[1] == '+') {
 					GSM_TweakInternationalNumber(Buff, NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN);
 				}
@@ -848,11 +834,7 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 				continue;
 			}
 			if (ReadVCALText(Line, "TEL;MSG",	      Buff,  (version >= 3), &location) ||
-			    ReadVCALText(Line, "TEL;TYPE=MSG",	 Buff,  (version >= 3), &location) ||
-			    ReadVCALText(Line, "TEL;MSG;VOICE",	Buff,  (version >= 3), &location) ||
-			    ReadVCALText(Line, "TEL;TYPE=MSG;VOICE",   Buff,  (version >= 3), &location) ||
-			    ReadVCALText(Line, "TEL;TYPE=MSG;TYPE=VOICE",   Buff,  (version >= 3), &location) ||
-			    ReadVCALText(Line, "TEL;TYPE=MSG,VOICE",   Buff,  (version >= 3), &location)) {
+			    ReadVCALText(Line, "TEL;MSG;VOICE",	Buff,  (version >= 3), &location)) {
 				if (Buff[1] == '+') {
 					GSM_TweakInternationalNumber(Buff, NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN);
 				}
@@ -866,11 +848,7 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 			}
 			/* FAX + VOICE looks like nonsense */
 			if (ReadVCALText(Line, "TEL;FAX",	       Buff,  (version >= 3), &location) ||
-			    ReadVCALText(Line, "TEL;TYPE=FAX",	  Buff,  (version >= 3), &location) ||
-			    ReadVCALText(Line, "TEL;FAX;VOICE",	 Buff,  (version >= 3), &location) ||
-			    ReadVCALText(Line, "TEL;TYPE=FAX;VOICE",    Buff,  (version >= 3), &location) ||
-			    ReadVCALText(Line, "TEL;TYPE=FAX;TYPE=VOICE",    Buff,  (version >= 3), &location) ||
-			    ReadVCALText(Line, "TEL;TYPE=FAX,VOICE",    Buff,  (version >= 3), &location)) {
+			    ReadVCALText(Line, "TEL;FAX;VOICE",	 Buff,  (version >= 3), &location)) {
 				if (Buff[1] == '+') {
 					GSM_TweakInternationalNumber(Buff, NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN);
 				}
@@ -951,8 +929,7 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 				}
 			}
 			if (ReadVCALText(Line, "EMAIL", Buff,  (version >= 3), &location) ||
-			    ReadVCALText(Line, "EMAIL;TYPE=OTHER", Buff,  (version >= 3), &location) ||
-			    ReadVCALText(Line, "EMAIL;TYPE=INTERNET", Buff,  (version >= 3), &location) ||
+			    ReadVCALText(Line, "EMAIL;OTHER", Buff,  (version >= 3), &location) ||
 			    ReadVCALText(Line, "EMAIL;INTERNET", Buff,  (version >= 3), &location)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Email;
