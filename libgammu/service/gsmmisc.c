@@ -597,10 +597,69 @@ gboolean ReadVCALText(char *Buffer, const char *Start, unsigned char *Value, con
 				}
 				pos = end;
 				found = TRUE;
-			} else if (strncasecmp(pos, "TYPE=PREF", 9) == 0) {
-				/* We ignore pref token */
-				pos += 9;
-				found = TRUE;
+			} else if (strncasecmp(pos, "TYPE=", 5) == 0) {
+				/* We ignore TYPE= prefix */
+				pos += 5;
+
+				/* Now process types, which should be comma separated */
+				while (*pos != ':' && *pos != ';') {
+					found = FALSE;
+
+					/* Go through tokens to match */
+					for (token = 0; token < numtokens; token++) {
+						len = strlen(tokens[token]);
+						/* Skip already matched tokens */
+						if (len == 0) {
+							continue;
+						}
+						if (strncasecmp(pos, tokens[token], len) == 0) {
+							dbgprintf(NULL, "Found %s\n", tokens[token]);
+							/* Advance position */
+							pos += len;
+							/* We need to check one token less */
+							tokens[token][0] = 0;
+							found = TRUE;
+							break;
+						}
+					}
+
+					if (!found) {
+						if (strncasecmp(pos, "PREF", 4) == 0) {
+							/* We ignore pref token */
+							pos += 4;
+							found = TRUE;
+						} else if (strncasecmp(pos, "WORK", 4) == 0) {
+							/* We ignore work token */
+							pos += 4;
+							found = TRUE;
+							if (location != NULL) {
+								*location = PBK_Location_Work;
+							}
+						} else if (strncasecmp(pos, "HOME", 4) == 0) {
+							/* We ignore home token */
+							pos += 4;
+							found = TRUE;
+							if (location != NULL) {
+								*location = PBK_Location_Home;
+							}
+						} else {
+							dbgprintf(NULL, "%s not found! (%s)\n", Start, pos);
+							goto fail;
+						}
+					}
+
+					if (*pos == ';' || *pos == ':') {
+						dbgprintf(NULL, "End of TYPE= string\n");
+						break;
+					} else if (*pos == ',') {
+						/* Advance past separator */
+						pos++;
+					} else {
+						dbgprintf(NULL, "Could not parse TYPE=! (stopped at string: %s)\n", pos);
+						goto fail;
+					}
+
+				}
 			} else if (strncasecmp(pos, "PREF", 4) == 0) {
 				/* We ignore pref token */
 				pos += 4;
@@ -610,19 +669,9 @@ gboolean ReadVCALText(char *Buffer, const char *Start, unsigned char *Value, con
 				pos += 4;
 				found = TRUE;
 				*location = PBK_Location_Work;
-			} else if (location && strncasecmp(pos, "TYPE=WORK", 9) == 0) {
-				/* We ignore pref token */
-				pos += 9;
-				found = TRUE;
-				*location = PBK_Location_Work;
 			} else if (location && strncasecmp(pos, "HOME", 4) == 0) {
 				/* We ignore pref token */
 				pos += 4;
-				found = TRUE;
-				*location = PBK_Location_Home;
-			} else if (location && strncasecmp(pos, "TYPE=HOME", 9) == 0) {
-				/* We ignore pref token */
-				pos += 9;
 				found = TRUE;
 				*location = PBK_Location_Home;
 			}
