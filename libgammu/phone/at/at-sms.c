@@ -580,7 +580,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 			}
 
 			/* Siemens MC35 (only ?) */
-			if (strstr(msg->Buffer,"+CMGR: 0,,0")!=NULL) {
+			if (strcmp(buffer, "+CMGR: 0,,0") == 0) {
 				return ERR_EMPTY;
 			}
 
