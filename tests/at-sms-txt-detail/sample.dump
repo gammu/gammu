@@ -1,0 +1,4 @@
+AT+CMGR=303
++CMGR:"REC READ","+393488535999",,"07/04/05,18:02:28+08",145,4,0,0,"+393492000466",145,93
+You have a missed called. Freeinformation provided by your operator.
+OK
