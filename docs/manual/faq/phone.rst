@@ -23,6 +23,15 @@ option seem to be Siemens modems (eg. ES75/MC35i/MC55i). Slightly cheaper,
 while still good are modems made by Huawei (eg. E160/E220/E1750/...). You can
 check other user experiences in `Gammu Phones Database`_.
 
+.. _faq-nokia:
+
+Are Nokia phones supported?
+---------------------------
+
+It depends on used operating systems Series40 and older phones should work 
+(see :ref:`faq-config-nokia` for information how to configure them), Symbian 
+based phones are covered in separate topic, check :ref:`faq-symbian`.
+
 .. _faq-symbian:
 
 Are Symbian phones supported?
