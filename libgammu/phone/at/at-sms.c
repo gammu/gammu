@@ -559,6 +559,8 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 	int current = 0, i = 0;
 	int state;
 	unsigned char *ptr;
+	char *comma;
+	char *expected_comma;
 
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
@@ -855,8 +857,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 				case SMS_Coding_Unicode_No_Compression:
 				case SMS_Coding_8bit:
 					if ((firstbyte & 0x40)==0x40 && GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMS_UTF8_ENCODED)) {
-						char *comma = strchr (msg->Buffer+current, ',');
-						char *expected_comma;
+						comma = strchr (msg->Buffer+current, ',');
 
 						if (sms->Coding == SMS_Coding_Default_No_Compression) {
 							expected_comma = (char *)msg->Buffer+current + ((7 * TPUDL + 7) / 8) * 2;
