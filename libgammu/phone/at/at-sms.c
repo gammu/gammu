@@ -557,6 +557,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 	const char *line;
 	size_t length = 0;
 	int current = 0, i = 0;
+	int state;
 
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
@@ -567,8 +568,6 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 
 		switch (Priv->SMSMode) {
 		case SMS_AT_PDU:
-		{
-			int state;
 			CopyLineString(buffer, msg->Buffer, &Priv->Lines, 2);
 
 			/* Siemens MC35 (only ?) */
@@ -579,7 +578,6 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 			state = atoi(buffer + 7);
 			error = ATGEN_DecodePDUMessage(s, GetLineString(msg->Buffer,&Priv->Lines,3), state);
 			return error;
-		}
 		case SMS_AT_TXT:
 			GSM_SetDefaultReceivedSMSData(sms);
 
