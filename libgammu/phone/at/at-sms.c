@@ -558,6 +558,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 	size_t length = 0;
 	int current = 0, i = 0;
 	int state;
+	unsigned char *ptr;
 
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
@@ -597,23 +598,20 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 			current += ATGEN_ExtractOneParameter(msg->Buffer+current, buffer);
 			smprintf(s, "%d: %s\n", __LINE__, buffer);
 
-			{
-				unsigned char *ptr;
-				for (ptr = buffer; *ptr == '"'; ptr++);
-				smprintf(s, "%d: %s\n", __LINE__, buffer);
-				if (ptr != buffer)
-					memmove (buffer, ptr, strlen (ptr) + 1);
-				smprintf(s, "%d: %s\n", __LINE__, buffer);
-				for (ptr = buffer; *ptr; ptr++);
-				smprintf(s, "%d: %s\n", __LINE__, buffer);
+			for (ptr = buffer; *ptr == '"'; ptr++);
+			smprintf(s, "%d: %s\n", __LINE__, buffer);
+			if (ptr != buffer)
+				memmove (buffer, ptr, strlen (ptr) + 1);
+			smprintf(s, "%d: %s\n", __LINE__, buffer);
+			for (ptr = buffer; *ptr; ptr++);
+			smprintf(s, "%d: %s\n", __LINE__, buffer);
+			ptr--;
+			while (ptr >= buffer && *ptr == '"')
 				ptr--;
-				while (ptr >= buffer && *ptr == '"')
-					ptr--;
-				ptr++;
-				smprintf(s, "%d: %s\n", __LINE__, buffer);
-				*ptr = 0;
+			ptr++;
+			smprintf(s, "%d: %s\n", __LINE__, buffer);
+			*ptr = 0;
 
-			}
 			if (!strcmp(buffer,"0") || !strcmp(buffer,"REC UNREAD")) {
 				smprintf(s, "SMS type - deliver\n");
 				sms->State 	 = SMS_UnRead;
