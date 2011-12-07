@@ -755,10 +755,10 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 
 					smprintf(s, "\"%s\"\n",buffer);
 
-					if (*buffer)
+					if (*buffer) {
 						error = ATGEN_DecodeDateTime(s, &sms->DateTime, buffer);
 						if (error != ERR_NONE) return error;
-					else {
+					} else {
 						/* FIXME: What is the proper undefined GSM_DateTime ? */
 						memset(&sms->DateTime, 0, sizeof(sms->DateTime));
 					}
