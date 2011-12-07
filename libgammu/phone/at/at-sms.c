@@ -573,12 +573,17 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 		case SMS_AT_PDU:
 			CopyLineString(buffer, msg->Buffer, &Priv->Lines, 2);
 
+			/* Parse reply */
+			error = ATGEN_ParseReply(s, buffer, "+CMGR: @i, @0", &state);
+			if (error != ERR_NONE) {
+				return error;
+			}
+
 			/* Siemens MC35 (only ?) */
 			if (strstr(msg->Buffer,"+CMGR: 0,,0")!=NULL) {
 				return ERR_EMPTY;
 			}
-			/* @bug Hardcoded position is wrong! */
-			state = atoi(buffer + 7);
+
 			error = ATGEN_DecodePDUMessage(s, GetLineString(msg->Buffer,&Priv->Lines,3), state);
 			return error;
 		case SMS_AT_TXT:
