@@ -3811,34 +3811,6 @@ static GSM_Error N6510_ShowStartInfo(GSM_StateMachine *s, gboolean enable)
 	}
 }
 
-#ifdef DEVELOP
-
-static GSM_Error N6510_ReplyEnableGPRSAccessPoint(GSM_Protocol_Message *msg, GSM_StateMachine *s)
-{
-	if (msg->Buffer[13] == 0x02) return ERR_NONE;
-	return ERR_UNKNOWNRESPONSE;
-}
-
-static GSM_Error N6510_EnableGPRSAccessPoint(GSM_StateMachine *s)
-{
-	GSM_Error	error;
-	int	 	i;
-	unsigned char 	req[] = {
-		N7110_FRAME_HEADER, 0x05, 0x00, 0x00, 0x00, 0x2C, 0x00,
-		0x04, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00};
-
-	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOGPRSPOINT)) return ERR_NOTSUPPORTED;
-
-	for (i=0;i<3;i++) {
-		smprintf(s, "Activating full GPRS access point support\n");
-		error = GSM_WaitFor (s, req, 16, 0x43, s->Phone.Data.Priv.N6510.Timeout, ID_EnableGPRSPoint);
-		if (error != ERR_NONE) return error;
-	}
-	return error;
-}
-
-#endif
-
 static GSM_Error N6510_ReplyGetGPRSAccessPoint(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_GPRSAccessPoint *point = s->Phone.Data.GPRSPoint;
@@ -3881,11 +3853,6 @@ static GSM_Error N6510_GetGPRSAccessPoint(GSM_StateMachine *s, GSM_GPRSAccessPoi
 	if (point->Location > 5) return ERR_INVALIDLOCATION;
 
 	s->Phone.Data.GPRSPoint = point;
-
-#ifdef DEVELOP
-	error = N6510_EnableGPRSAccessPoint(s);
-	if (error != ERR_NONE) return error;
-#endif
 
 	smprintf(s, "Getting GPRS access point name\n");
 	error=GSM_WaitFor (s, Name, 16, 0x43, s->Phone.Data.Priv.N6510.Timeout, ID_GetGPRSPoint);
@@ -3935,11 +3902,6 @@ static GSM_Error N6510_SetGPRSAccessPoint(GSM_StateMachine *s, GSM_GPRSAccessPoi
 	if (point->Location > 5) return ERR_INVALIDLOCATION;
 
 	s->Phone.Data.GPRSPoint = point;
-
-#ifdef DEVELOP
-	error = N6510_EnableGPRSAccessPoint(s);
-	if (error != ERR_NONE) return error;
-#endif
 
 	smprintf(s, "Getting GPRS access point name\n");
 	error=GSM_WaitFor (s, Name, 16, 0x43, s->Phone.Data.Priv.N6510.Timeout, ID_SetGPRSPoint);
@@ -4422,9 +4384,6 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N6510_ReplySetOperatorLogo,	  "\x43",0x03,0x08,ID_SetBitmap		  },
 	{N6510_ReplyGetGPRSAccessPoint,	  "\x43",0x03,0x06,ID_GetGPRSPoint	  },
 	{N6510_ReplySetGPRSAccessPoint1,  "\x43",0x03,0x06,ID_SetGPRSPoint	  },
-#ifdef DEVELOP
-	{N6510_ReplyEnableGPRSAccessPoint,"\x43",0x03,0x06,ID_EnableGPRSPoint	  },
-#endif
 	{N6510_ReplyGetSyncMLSettings,	  "\x43",0x03,0x06,ID_GetSyncMLSettings	  },
 	{N6510_ReplyGetSyncMLName,	  "\x43",0x03,0x06,ID_GetSyncMLName	  },
 	{NoneReply,			  "\x43",0x03,0x08,ID_SetGPRSPoint	  },
