@@ -24,6 +24,22 @@ one - for example only one of them can receive USSD notifications.
 
 .. _usb-modeswitch: http://www.draisberghof.de/usb_modeswitch/
 
+Example configuration on Linux:
+
+.. code-block:: ini
+
+    [gammu]
+    device = /dev/ttyACM3
+    connection = at
+
+Example configuration on Windows:
+
+.. code-block:: ini
+
+    [gammu]
+    device = COM12:
+    connection = at
+
 How to configure Symbian based phone?
 -------------------------------------
 
@@ -32,6 +48,14 @@ Bluetooth connection. You should use ``blues60`` :config:option:`Connection`
 and Bluetooth address of phone as :config:option:`Device`.
 
 .. seealso:: :ref:`s60`, :ref:`gammurc`
+
+Example configuration:
+
+.. code-block:: ini
+
+    [gammu]
+    device = 11:22:33:44:55:66 # Bluetooth address of your phone
+    connection = blues60
 
 How to configure Nokia phone?
 -----------------------------
@@ -50,6 +74,37 @@ Should you have old phone with serial cable (and USB to serial converter),
 ``fbus`` :config:option:`Connection` is the right one.
 
 .. seealso:: :ref:`gammurc`
+
+Example configuration for Bluetooth:
+
+.. code-block:: ini
+
+    [gammu]
+    device = 11:22:33:44:55:66 # Bluetooth address of your phone
+    connection = bluephonet
+
+Example configuration for newer phones:
+
+.. code-block:: ini
+
+    [gammu]
+    connection = dku2
+
+Example configuration for older phones on Linux:
+
+.. code-block:: ini
+
+    [gammu]
+    device = /dev/ttyACM3
+    connection = dlr3
+
+Example configuration for older phones on Windows:
+
+.. code-block:: ini
+
+    [gammu]
+    device = COM12:
+    connection = dlr3
 
 How to configure phone not listed above?
 ----------------------------------------
