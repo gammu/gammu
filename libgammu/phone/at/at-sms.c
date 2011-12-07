@@ -671,6 +671,9 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 					sms->Folder = 4; /*OUTBOX ME*/
 				}
 				sms->InboxFolder = FALSE;
+			} else {
+				smprintf(s, "Uknown message state: %s\n", buffer);
+				return ERR_UNKNOWN;
 			}
 
 			/* Do we have detailed format? */
