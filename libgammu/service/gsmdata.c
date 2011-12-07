@@ -134,29 +134,9 @@ void NOKIA_EncodeWAPMMSSettingsSMSText(unsigned char *Buffer, size_t *Length, GS
 				/* PPP_AUTHSECRET (password) */
 				AddWAPSMSParameterText(Buffer, Length, 0x24, DecodeUnicodeString(settings->Password), UnicodeLength(settings->Password));
 				break;
-#ifdef DEVELOP
-			case WAPSETTINGS_BEARER_SMS:
-				/* Bearer */
-				AddWAPSMSParameterInt(Buffer, Length, 0x12, 0x41);
-				/* PROXY */
-				AddWAPSMSParameterText(Buffer, Length, 0x13, DecodeUnicodeString(settings->Server), UnicodeLength(settings->Server));
-				/* SMS_SMSC_ADDRESS */
-				/*  ..... */
-				break;
-			case WAPSETTINGS_BEARER_USSD:
-				/* FIXME */
-				/* Bearer */
-				AddWAPSMSParameterInt(Buffer, Length, 0x12, 0x41);
-				/* PROXY */
-				AddWAPSMSParameterText(Buffer, Length, 0x13, DecodeUnicodeString(settings->Service), UnicodeLength(settings->Service));
-				/* USSD_SERVICE_CODE */
-				/* FIXME */
-				AddWAPSMSParameterText(Buffer, Length, 0x13, DecodeUnicodeString(settings->Code), UnicodeLength(settings->Code));
-#else
 			case WAPSETTINGS_BEARER_SMS:
 			case WAPSETTINGS_BEARER_USSD:
 				break;
-#endif
 			}
 			/* PORT */
 			if (settings->IsSecurity) {
