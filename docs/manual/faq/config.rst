@@ -3,6 +3,8 @@
 Configuring Gammu FAQ
 =====================
 
+.. _faq-config-at:
+
 How to configure 3G/UMTS/... modem or AT capable phone?
 -------------------------------------------------------
 
@@ -40,6 +42,8 @@ Example configuration on Windows:
     device = COM12:
     connection = at
 
+.. _faq-config-symbian:
+
 How to configure Symbian based phone?
 -------------------------------------
 
@@ -56,6 +60,8 @@ Example configuration:
     [gammu]
     device = 11:22:33:44:55:66 # Bluetooth address of your phone
     connection = blues60
+
+.. _faq-config-nokia:
 
 How to configure Nokia phone?
 -----------------------------
@@ -112,4 +118,8 @@ How to configure phone not listed above?
 First check whether your phone is supported. In case it is, it most likely
 falls into one of above categories.
 
+You can also find additional user experiences in `Gammu Phones Database`_.
+
 .. seealso:: :ref:`faq-phones`, :ref:`gammurc`
+
+.. _Gammu Phones Database: http://wammu.eu/phones/

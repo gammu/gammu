@@ -10,6 +10,8 @@ Generally any phone capable of AT commands or IrMC should be supported. Also
 any Nokia phone using Nokia OS should work. For Symbian please check separate
 topic. You can check other user experiences in `Gammu Phones Database`_.
 
+For information how to configure your phone, see :ref:`faq-config`.
+
 .. seealso:: :ref:`faq-symbian`, :ref:`faq-android`, :ref:`faq-blackberry`, :ref:`faq-iphone`, :ref:`gammurc`
 
 Which phone is best for SMS gateway?
@@ -30,6 +32,8 @@ You need to install applet to the phone to allow Gammu talk to it. For older
 phones (Symbian 9.0 and older), install gnapplet (see :ref:`gnapplet`). Newer
 phones can use Python based applet called Series60-remote (see :ref:`s60`).
 This option is supported since Gammu 1.29.90.
+
+.. seealso:: :ref:`faq-config-symbian`
 
 .. _faq-android:
 
