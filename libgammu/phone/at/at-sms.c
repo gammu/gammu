@@ -592,22 +592,25 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 				current++;
 			}
 			current++;
-			while (msg->Buffer[current] == ' ')
+			while (msg->Buffer[current] == ' ') {
 				current++;
+			}
 			smprintf(s, "buffer %s\n", &msg->Buffer[current]);
 			current += ATGEN_ExtractOneParameter(msg->Buffer+current, buffer);
 			smprintf(s, "%d: %s\n", __LINE__, buffer);
 
 			for (ptr = buffer; *ptr == '"'; ptr++);
 			smprintf(s, "%d: %s\n", __LINE__, buffer);
-			if (ptr != buffer)
+			if (ptr != buffer) {
 				memmove (buffer, ptr, strlen (ptr) + 1);
+			}
 			smprintf(s, "%d: %s\n", __LINE__, buffer);
 			for (ptr = buffer; *ptr; ptr++);
 			smprintf(s, "%d: %s\n", __LINE__, buffer);
 			ptr--;
-			while (ptr >= buffer && *ptr == '"')
+			while (ptr >= buffer && *ptr == '"') {
 				ptr--;
+			}
 			ptr++;
 			smprintf(s, "%d: %s\n", __LINE__, buffer);
 			*ptr = 0;
@@ -681,8 +684,9 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 						sms->Text + (2 * sms->Length),
 						sizeof(sms->Text) - (2 * sms->Length),
 						TRUE, FALSE);
-					if (error != ERR_NONE)
+					if (error != ERR_NONE) {
 						return error;
+					}
 					sms->Length += length;
 				}
 				return ERR_NONE;
@@ -757,7 +761,9 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 
 					if (*buffer) {
 						error = ATGEN_DecodeDateTime(s, &sms->DateTime, buffer);
-						if (error != ERR_NONE) return error;
+						if (error != ERR_NONE) {
+							return error;
+						}
 					} else {
 						/* FIXME: What is the proper undefined GSM_DateTime ? */
 						memset(&sms->DateTime, 0, sizeof(sms->DateTime));
@@ -848,23 +854,24 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 					}
 				case SMS_Coding_Unicode_No_Compression:
 				case SMS_Coding_8bit:
-					if ((firstbyte & 0x40)==0x40 && GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMS_UTF8_ENCODED))
-					{
+					if ((firstbyte & 0x40)==0x40 && GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMS_UTF8_ENCODED)) {
 						char *comma = strchr (msg->Buffer+current, ',');
 						char *expected_comma;
 
-						if (sms->Coding == SMS_Coding_Default_No_Compression)
+						if (sms->Coding == SMS_Coding_Default_No_Compression) {
 							expected_comma = (char *)msg->Buffer+current + ((7 * TPUDL + 7) / 8) * 2;
-						else
+						} else {
 							expected_comma = (char *)msg->Buffer+current + TPUDL * 2;
-						if (comma == expected_comma || !comma)
+						}
+						if (comma == expected_comma || !comma) {
 							comma = expected_comma;
-						else {
+						} else {
 							smprintf (s, "UDL fix: %d,", TPUDL);
-							if (sms->Coding == SMS_Coding_Default_No_Compression)
+							if (sms->Coding == SMS_Coding_Default_No_Compression) {
 								TPUDL = ((comma - ((char *)msg->Buffer+current)) * 4) / 7;
-							else
+							} else {
 								TPUDL = (comma - ((char *)msg->Buffer+current)) / 2;
+							}
 							smprintf (s, "%d\n", TPUDL);
 						}
 						DecodeHexBin(buffer+PHONE_SMSDeliver.Text, msg->Buffer+current, comma - (char *) (msg->Buffer+current));
