@@ -619,6 +619,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 			ptr++;
 			*ptr = 0;
 
+			/* Check message type */
 			if (!strcmp(buffer,"0") || !strcmp(buffer,"REC UNREAD")) {
 				smprintf(s, "SMS type - deliver\n");
 				sms->State 	 = SMS_UnRead;
@@ -664,6 +665,8 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 				}
 				sms->InboxFolder = FALSE;
 			}
+
+			/* Do we have detailed format? */
 			if (Priv->SMSTextDetails == FALSE) {
 				sms->Class = 1;
 				sms->Coding = SMS_Coding_Default_No_Compression;
