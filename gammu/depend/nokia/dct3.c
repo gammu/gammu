@@ -347,9 +347,6 @@ void DCT3netmonitor(int argc, char *argv[])
 	Print_Error(error);
 
 	printf("%s\n",value);
-#ifdef GSM_ENABLE_BEEP
-	if (GetInt(argv[2]) == 243) GSM_PhoneBeep();
-#endif
 	GSM_Terminate();
 }
 
@@ -500,9 +497,6 @@ void DCT3ResetTest36(int argc, char *argv[])
 	error=GSM_WaitFor (gsm, req, 5, 0x40, 4, ID_User2);
 	Print_Error(error);
 
-#ifdef GSM_ENABLE_BEEP
-	GSM_PhoneBeep();
-#endif
 	GSM_Terminate();
 }
 

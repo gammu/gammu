@@ -142,11 +142,6 @@
  */
 /*#define DEVELOP*/
 
-/* By default disabled. It allows one to make short beep after such things
- * like changing logo in phone (like in Logo Manager)
- */
-/*#define GSM_ENABLE_BEEP*/
-
 /* ---------------------- C language specific --------------------------- */
 
 /* Do we have gettext support? */

@@ -1293,10 +1293,6 @@ void SetBitmap(int argc, char *argv[])
 	error=GSM_SetBitmap(gsm,&Bitmap);
 	Print_Error(error);
 
-#ifdef GSM_ENABLE_BEEP
-	GSM_PhoneBeep();
-#endif
-
 	GSM_Terminate();
 }
 
@@ -1349,9 +1345,6 @@ void SetRingtone(int argc, char *argv[])
 	GSM_Init(TRUE);
 	error=GSM_SetRingtone(gsm, &ringtone, &i);
 	Print_Error(error);
-#ifdef GSM_ENABLE_BEEP
-	GSM_PhoneBeep();
-#endif
 	GSM_Terminate();
 }
 

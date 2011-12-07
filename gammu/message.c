@@ -322,9 +322,6 @@ void DeleteSMS(int argc, char *argv[])
 		error=GSM_DeleteSMS(gsm, &sms);
 		Print_Error(error);
 	}
-#ifdef GSM_ENABLE_BEEP
-	GSM_PhoneBeep();
-#endif
 	GSM_Terminate();
 }
 
@@ -386,9 +383,6 @@ void GetAllSMS(int argc, char *argv[])
 	printf("\n");
 	fflush(stdout);
 
-#ifdef GSM_ENABLE_BEEP
-	GSM_PhoneBeep();
-#endif
 #ifdef GSM_ENABLE_BACKUP
 	GSM_FreeBackup(&Backup);
 #endif
@@ -461,10 +455,6 @@ void GetEachSMS(int argc, char *argv[])
 	}
 	fprintf(stderr,"\n");
 	fflush(stderr);
-
-#ifdef GSM_ENABLE_BEEP
-	GSM_PhoneBeep();
-#endif
 
 	error = GSM_LinkSMS(GSM_GetDebug(gsm), GetSMSData, SortedSMS, ems);
 	Print_Error(error);

@@ -60,9 +60,6 @@ void Cleanup(void);
 NORETURN
 void Terminate(int code);
 
-#ifdef GSM_ENABLE_BEEP
-void GSM_PhoneBeep(void);
-#endif
 #endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.
