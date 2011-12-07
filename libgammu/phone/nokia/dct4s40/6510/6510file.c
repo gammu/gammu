@@ -210,10 +210,8 @@ GSM_Error N6510_ReplyGetFileFolderInfo1(GSM_Protocol_Message *msg, GSM_StateMach
 				File->Type = GSM_File_Video_3GP;
 			else if (msg->Buffer[i]==0x10 && msg->Buffer[i+2]==0x01)
 				File->Type = GSM_File_Java_JAR;
-#ifdef DEVELOP
 			else if (msg->Buffer[i]==0x00 && msg->Buffer[i+2]==0x01)
 				File->Type = GSM_File_MMS;
-#endif
 		}
 		return ERR_NONE;
 	case 0x2F:
@@ -611,7 +609,6 @@ static GSM_Error N6510_AddFilePart1(GSM_StateMachine *s, GSM_File *File, int *Po
 			case GSM_File_Sound_NRT    : Header[231]=0x04; Header[233]=0x06; break;
 			case GSM_File_Video_3GP    : Header[231]=0x08; Header[233]=0x05; break;
 			case GSM_File_Java_JAR     : Header[231]=0x10; Header[233]=0x01; break;
-#ifdef DEVELOP
 			case GSM_File_MMS:
 				Header[214]=0x07;
 				Header[215]=0xd3;
@@ -622,7 +619,6 @@ static GSM_Error N6510_AddFilePart1(GSM_StateMachine *s, GSM_File *File, int *Po
 				Header[220]=0x29;
 				Header[233]=0x01;
 				break;
-#endif
 			default		    : Header[231]=0x01; Header[233]=0x05;
 		}
 		Header[235] = 0x01;
@@ -690,7 +686,6 @@ static GSM_Error N6510_AddFilePart1(GSM_StateMachine *s, GSM_File *File, int *Po
 				case GSM_File_Sound_NRT    : Header[231]=0x04; Header[233]=0x06; break;
 				case GSM_File_Video_3GP    : Header[231]=0x08; Header[233]=0x05; break;
 				case GSM_File_Java_JAR     : Header[231]=0x10; Header[233]=0x01; break;
-#ifdef DEVELOP
 				case GSM_File_MMS:
 					Header[214]=0x07;
 					Header[215]=0xd3;
@@ -701,7 +696,6 @@ static GSM_Error N6510_AddFilePart1(GSM_StateMachine *s, GSM_File *File, int *Po
 					Header[220]=0x29;
 					Header[233]=0x01;
 					break;
-#endif
 				default		    : Header[231]=0x01; Header[233]=0x05;
 			}
 			Header[235] = 0x01;
