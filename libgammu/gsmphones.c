@@ -468,6 +468,7 @@ GSM_PhoneModel allmodels[] = {
 						F_SMS_SM, F_SMS_ME,
 						F_SMS_UTF8_ENCODED,
 						F_READ_SMSTEXTMODE,
+						F_FORCE_UTF8,
 						F_NO_UTF8, F_SAMSUNG_UTF8,
 						F_TSSPCSW, F_OBEX, F_IRMC_LEVEL_2, 0}},
 
