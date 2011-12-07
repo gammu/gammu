@@ -244,7 +244,7 @@ GSM_Error MOBEX_GetNextEntry(GSM_StateMachine *s, const char *path, const gboole
 
 	/* Increment to next */
 	if (*data != NULL) {
-		*pos += ((*data)[*pos& + 2] << 8) + (*data)[*pos + 3];
+		*pos += ((*data)[*pos + 2] << 8) + (*data)[*pos + 3];
 		/* To take in account the space used by the ID and the size
 		 * of the record */
 		*pos += 4;
