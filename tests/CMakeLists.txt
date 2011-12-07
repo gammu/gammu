@@ -408,10 +408,24 @@ if (WITH_ATGEN)
 
     foreach(TESTMESSAGE ${MESSAGES})
         string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
-        add_test("sms-at-parse-${TESTNAME}"
+        add_test("sms-at-parse-txt-${TESTNAME}"
             "${GAMMU_TEST_PATH}/sms-at-parse${GAMMU_TEST_SUFFIX}"
             "${Gammu_SOURCE_DIR}/tests/at-sms-txt/${TESTMESSAGE}"
             "TXT")
+    endforeach(TESTMESSAGE $MESSAGES)
+
+    # List test cases for TXT mode
+    file(GLOB MESSAGES
+        RELATIVE "${Gammu_SOURCE_DIR}/tests/at-sms-txt-detail"
+        "${Gammu_SOURCE_DIR}/tests/at-sms-txt-detail/*.dump")
+    list(SORT MESSAGES)
+
+    foreach(TESTMESSAGE ${MESSAGES})
+        string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
+        add_test("sms-at-parse-txtdetail-${TESTNAME}"
+            "${GAMMU_TEST_PATH}/sms-at-parse${GAMMU_TEST_SUFFIX}"
+            "${Gammu_SOURCE_DIR}/tests/at-sms-txt-detail/${TESTMESSAGE}"
+            "TXTDETAIL")
     endforeach(TESTMESSAGE $MESSAGES)
 
     # List test cases for failure
