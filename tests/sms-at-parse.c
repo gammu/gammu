@@ -34,7 +34,7 @@ int main(int argc, char **argv)
 
 	/* Check parameters */
 	if (argc != 2 && argc != 3) {
-		printf("Not enough parameters!\nUsage: sms-at-parse comm.dump [PDU|TXT]\n");
+		printf("Not enough parameters!\nUsage: sms-at-parse comm.dump [PDU|TXT|TXTDETAIL]\n");
 		return 1;
 	}
 
@@ -78,6 +78,10 @@ int main(int argc, char **argv)
 	Priv->Charset = AT_CHARSET_GSM;
 	if (argc == 3 && strcmp(argv[2], "TXT") == 0) {
 		Priv->SMSMode = SMS_AT_TXT;
+		Priv->SMSTextDetails = FALSE;
+	} else if (argc == 3 && strcmp(argv[2], "TXTDETAIL") == 0) {
+		Priv->SMSMode = SMS_AT_TXT;
+		Priv->SMSTextDetails = TRUE;
 	} else {
 		Priv->SMSMode = SMS_AT_PDU;
 	}
