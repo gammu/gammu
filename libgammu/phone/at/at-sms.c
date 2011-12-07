@@ -553,7 +553,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 	GSM_Error error = ERR_UNKNOWN;
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_SMSMessage *sms = &s->Phone.Data.GetSMSMessage->SMS[0];
-	unsigned char buffer[300] = {'\0'}, firstbyte = 0, TPDCS = 0, TPUDL = 0, TPStatus = 0;
+	unsigned char buffer[3000] = {'\0'}, firstbyte = 0, TPDCS = 0, TPUDL = 0, TPStatus = 0, TPPID = 0;
 	const char *line;
 	size_t length = 0;
 	int current = 0, i = 0;
@@ -582,14 +582,39 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 		}
 		case SMS_AT_TXT:
 			GSM_SetDefaultReceivedSMSData(sms);
-			error = ATGEN_ParseReply(s,
-					GetLineString(msg->Buffer, &Priv->Lines, 2),
-					"+CMGR: @r, @p, @d",
-					buffer, sizeof(buffer), sms->Number, sizeof(sms->Number),
-					&sms->DateTime);
 
-			if (error != ERR_NONE) {
-				return error;
+			/*
+			 * This is just a hack until proper parsing of text mode is done.
+			 * It uses old style of manual parsing, to skip entries parsed above.
+			 */
+			current = 0;
+
+			while (msg->Buffer[current]!=':') {
+				current++;
+			}
+			current++;
+			while (msg->Buffer[current] == ' ')
+			  current++;
+			smprintf(s, "buffer %s\n", &msg->Buffer[current]);
+			current += ATGEN_ExtractOneParameter(msg->Buffer+current, buffer);
+			smprintf(s, "%d: %s\n", __LINE__, buffer);
+
+			{
+				unsigned char *ptr;
+				for (ptr = buffer; *ptr == '"'; ptr++);
+				smprintf(s, "%d: %s\n", __LINE__, buffer);
+				if (ptr != buffer)
+				  memmove (buffer, ptr, strlen (ptr) + 1);
+				smprintf(s, "%d: %s\n", __LINE__, buffer);
+				for (ptr = buffer; *ptr; ptr++);
+				smprintf(s, "%d: %s\n", __LINE__, buffer);
+				ptr--;
+				while (ptr >= buffer && *ptr == '"')
+					ptr--;
+				ptr++;
+				smprintf(s, "%d: %s\n", __LINE__, buffer);
+				*ptr = 0;
+
 			}
 			if (!strcmp(buffer,"0") || !strcmp(buffer,"REC UNREAD")) {
 				smprintf(s, "SMS type - deliver\n");
@@ -667,39 +692,22 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 				return ERR_NONE;
 			}
 
-			/*
-			 * This is just a hack until proper parsing of text mode is done.
-			 * It uses old style of manual parsing, to skip entries parsed above.
-			 */
-			current = 0;
-
-			while (msg->Buffer[current]!='"') {
-				current++;
-			}
 			current += ATGEN_ExtractOneParameter(msg->Buffer+current, buffer);
-			current += ATGEN_ExtractOneParameter(msg->Buffer+current, buffer);
-
 			/* It's delivery report according to Nokia AT standards */
-			if (sms->Folder == 1 && buffer[0]!=0 && buffer[0]!='"') {
+			if ((sms->Folder == 1 || sms->Folder == 3) && buffer[0]!=0 && buffer[0]!='"') {
 				/* ??? */
 				current+=ATGEN_ExtractOneParameter(msg->Buffer+current, buffer);
 
-				/* format of sender number */
+				/* Sender number */
 				current+=ATGEN_ExtractOneParameter(msg->Buffer+current, buffer);
 
-				/* Sender number */
 				/* FIXME: support for all formats */
 				EncodeUnicode(sms->Number,buffer+1,strlen(buffer)-2);
 				smprintf(s, "Sender \"%s\"\n",DecodeUnicodeString(sms->Number));
 
-				/* ??? */
 				current+=ATGEN_ExtractOneParameter(msg->Buffer+current, buffer);
+				firstbyte = atoi(buffer);
 
-				/* Sending datetime */
-				current+=ATGEN_ExtractOneParameter(msg->Buffer+current, buffer);
-				i = strlen(buffer);
-				buffer[i] = ',';
-				i++;
 				current+=ATGEN_ExtractOneParameter(msg->Buffer+current, buffer+i);
 				smprintf(s, "\"%s\"\n",buffer);
 				error = ATGEN_DecodeDateTime(s, &sms->DateTime, buffer);
@@ -722,6 +730,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 				/* TPStatus */
 				current+=ATGEN_ExtractOneParameter(msg->Buffer+current, buffer);
 				TPStatus = atoi(buffer);
+				buffer[PHONE_SMSDeliver.firstbyte]     = firstbyte;
 				buffer[PHONE_SMSStatusReport.TPStatus] = TPStatus;
 				error = GSM_DecodeSMSFrameStatusReportData(&(s->di), sms, buffer, PHONE_SMSStatusReport);
 
@@ -734,31 +743,20 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 				sms->PDU = SMS_Status_Report;
 				sms->ReplyViaSameSMSC = FALSE;
 			} else {
-				/* Sender number */
 				/* FIXME: support for all formats */
 				EncodeUnicode(sms->Number,buffer+1,strlen(buffer)-2);
-
-				/* Sender number in alphanumeric format ? */
-				current += ATGEN_ExtractOneParameter(msg->Buffer+current, buffer);
 
 				if (strlen(buffer)!=0) {
 					EncodeUnicode(sms->Number,buffer+1,strlen(buffer)-2);
 				}
 				smprintf(s, "Sender \"%s\"\n",DecodeUnicodeString(sms->Number));
+				current+=ATGEN_ExtractOneParameter(msg->Buffer+current, buffer);
 
 				/* Sending datetime */
+
 				if (sms->Folder == 1 || sms->Folder == 3) {
 					current+=ATGEN_ExtractOneParameter(msg->Buffer+current, buffer);
-					/* FIXME: ATGEN_ExtractOneParameter() is broken as it doesn't respect
-					 * quoting of parameters and thus +FOO: "ab","cd,ef" will consider
-					 * as three arguments: "ab" >> "cd >> ef"
-					 */
-					if (*buffer=='"') {
-						i = strlen(buffer);
-						buffer[i] = ',';
-						i++;
-						current+=ATGEN_ExtractOneParameter(msg->Buffer+current, buffer+i);
-					}
+
 					smprintf(s, "\"%s\"\n",buffer);
 
 					if (*buffer)
@@ -774,39 +772,45 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 						return error;
 					}
 				}
-				/* Sender number format */
+
+				/* address type */
 				current+=ATGEN_ExtractOneParameter(msg->Buffer+current, buffer);
 
 				/* First byte */
 				current+=ATGEN_ExtractOneParameter(msg->Buffer+current, buffer);
 				firstbyte = atoi(buffer);
 				sms->ReplyViaSameSMSC = FALSE;
+				smprintf (s, "buffer firstbyte:%s\n", buffer);
+
+				/* TP PID */
+				current+=ATGEN_ExtractOneParameter(msg->Buffer+current, buffer);
+				sms->ReplaceMessage = 0;
+
+				TPPID = atoi(buffer);
+
+				/* TP DCS */
+				current+=ATGEN_ExtractOneParameter(msg->Buffer+current, buffer);
+				TPDCS = atoi(buffer);
+				/* SMSC number */
+				/* FIXME: support for all formats */
+				current+=ATGEN_ExtractOneParameter(msg->Buffer+current, buffer);
+
+				if (buffer[0] != '"' && buffer[0]) {
+					/*TP VP */
+					current+=ATGEN_ExtractOneParameter(msg->Buffer+current, buffer);
+				}
+
+				EncodeUnicode(sms->SMSC.Number,buffer+1,strlen(buffer)-2);
 
 				/* GSM 03.40 section 9.2.3.17 (TP-Reply-Path) */
 				if ((firstbyte & 128)==128) {
 					sms->ReplyViaSameSMSC = TRUE;
 				}
-				/* TP PID */
-				current+=ATGEN_ExtractOneParameter(msg->Buffer+current, buffer);
-				sms->ReplaceMessage = 0;
 
-				if (atoi(buffer) > 0x40 && atoi(buffer) < 0x48) {
-					sms->ReplaceMessage = atoi(buffer) - 0x40;
+				if (TPPID > 0x40 && TPPID < 0x48) {
+					sms->ReplaceMessage = TPPID - 0x40;
 				}
-				smprintf(s, "TPPID: %02x %i\n",atoi(buffer),atoi(buffer));
-
-				/* TP DCS */
-				current+=ATGEN_ExtractOneParameter(msg->Buffer+current, buffer);
-				TPDCS = atoi(buffer);
-
-				if (sms->Folder == 2 || sms->Folder == 4) {
-					/*TP VP */
-					current+=ATGEN_ExtractOneParameter(msg->Buffer+current, buffer);
-				}
-				/* SMSC number */
-				/* FIXME: support for all formats */
-				current+=ATGEN_ExtractOneParameter(msg->Buffer+current, buffer);
-				EncodeUnicode(sms->SMSC.Number,buffer+1,strlen(buffer)-2);
+				smprintf(s, "TPPID: %02x %i\n", TPPID, TPPID);
 
 				/* Format of SMSC number */
 				current+=ATGEN_ExtractOneParameter(msg->Buffer+current, buffer);
@@ -848,10 +852,37 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 					}
 				case SMS_Coding_Unicode_No_Compression:
 				case SMS_Coding_8bit:
+					if ((firstbyte & 0x40)==0x40 && GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMS_UTF8_ENCODED))
+					    {
+					      char *comma = strchr (msg->Buffer+current, ',');
+					      char *expected_comma;
+
+					      if (sms->Coding == SMS_Coding_Default_No_Compression)
+						      expected_comma = (char *)msg->Buffer+current + ((7 * TPUDL + 7) / 8) * 2;
+					      else
+						      expected_comma = (char *)msg->Buffer+current + TPUDL * 2;
+					      if (comma == expected_comma || !comma)
+						      comma = expected_comma;
+					      else {
+						      smprintf (s, "UDL fix: %d,", TPUDL);
+						      if (sms->Coding == SMS_Coding_Default_No_Compression)
+							      TPUDL = ((comma - ((char *)msg->Buffer+current)) * 4) / 7;
+						      else
+							      TPUDL = (comma - ((char *)msg->Buffer+current)) / 2;
+						      smprintf (s, "%d\n", TPUDL);
+					      }
+					      DecodeHexBin(buffer+PHONE_SMSDeliver.Text, msg->Buffer+current, comma - (char *) (msg->Buffer+current));
+					      buffer[PHONE_SMSDeliver.firstbyte] 	= firstbyte;
+					      buffer[PHONE_SMSDeliver.TPDCS] 		= TPDCS;
+					      buffer[PHONE_SMSDeliver.TPUDL] 		= TPUDL;
+					      return GSM_DecodeSMSFrameText(&(s->di), sms, buffer, PHONE_SMSDeliver);
+					    }
+				      
 					if (sms->Coding == SMS_Coding_Unicode_No_Compression && GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMS_UTF8_ENCODED)) {
 						DecodeUTF8(buffer+PHONE_SMSDeliver.Text, msg->Buffer+current, TPUDL);
+						TPUDL = 2 * UnicodeLength (buffer+PHONE_SMSDeliver.Text);
 					} else {
-						DecodeHexBin(buffer+PHONE_SMSDeliver.Text, msg->Buffer+current, TPUDL*2);
+					  DecodeHexBin(buffer+PHONE_SMSDeliver.Text, msg->Buffer+current, TPUDL*2);
 					}
 					buffer[PHONE_SMSDeliver.firstbyte] 	= firstbyte;
 					buffer[PHONE_SMSDeliver.TPDCS] 		= TPDCS;
