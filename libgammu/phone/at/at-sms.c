@@ -867,7 +867,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 					if ((firstbyte & 0x40)!=0x40) {
 						sms->UDH.Type	= UDH_NoUDH;
 						sms->Length	= TPUDL;
-						EncodeUnicode(sms->Text,msg->Buffer+Priv->Lines.numbers[2*2],TPUDL);
+						EncodeUnicode(sms->Text, msg->Buffer+Priv->Lines.numbers[2*2], TPUDL);
 						break;
 					}
 				case SMS_Coding_Unicode_No_Compression:
