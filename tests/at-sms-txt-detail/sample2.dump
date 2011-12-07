@@ -1,0 +1,4 @@
+AT+CMGR=1
++CMGR: "REC READ","+85291234567",,"07/02/18,00:05:10+32",145,4,0,0,"+85290000000",145,49
+It is easy to read text messages via AT commands.
+OK
