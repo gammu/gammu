@@ -624,6 +624,8 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 			ptr++;
 			*ptr = 0;
 
+			smprintf(s, "Message type: %s\n", buffer);
+
 			/* Check message type */
 			if (!strcmp(buffer,"0") || !strcmp(buffer,"REC UNREAD")) {
 				smprintf(s, "SMS type - deliver\n");
@@ -805,6 +807,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 				/* TP DCS */
 				current+=ATGEN_ExtractOneParameter(msg->Buffer+current, buffer);
 				TPDCS = atoi(buffer);
+				smprintf(s, "TPDCS: %02x\n", TPDCS);
 				/* SMSC number */
 				/* FIXME: support for all formats */
 				current+=ATGEN_ExtractOneParameter(msg->Buffer+current, buffer);
