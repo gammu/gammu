@@ -25,7 +25,7 @@ typedef enum {
 	N7110_PBK_NUMBER 	 = 0x0B, /* Phone number 			*/
 	N7110_PBK_RINGTONE_ID	 = 0x0C, /* Ringtone ID 			*/
 	N7110_PBK_DATETIME    	 = 0x13, /* Call register: date and time	*/
-	N7110_PBK_UNKNOWN1	 = 0x19, /* Call register: with missed calls	*/
+	N7110_PBK_MISSED		 = 0x19, /* Call register: with missed calls	*/
 	N7110_PBK_SPEEDDIAL	 = 0x1A, /* Speed dial 				*/
 	N7110_PBK_GROUPLOGO	 = 0x1B, /* Caller group: logo 			*/
 	N7110_PBK_LOGOON	 = 0x1C, /* Caller group: is logo on ?		*/

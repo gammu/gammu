@@ -1341,7 +1341,7 @@ static GSM_Error DCT4_ReplyGetPBKFeatures(GSM_Protocol_Message *msg, GSM_StateMa
 		case N7110_PBK_NUMBER 	    	: printf("%s", _(" (Phone number)"));				break;
 		case N7110_PBK_RINGTONE_ID  	: printf("%s", _(" (Ringtone ID)"));				break;
 		case N7110_PBK_DATETIME    	: printf("%s", _(" (Call register: date and time)"));		break;
-		case N7110_PBK_UNKNOWN1	    	: printf("%s", _(" (Call register: with missed calls)"));	break;
+		case N7110_PBK_MISSED	    	: printf("%s", _(" (Call register: with missed calls)"));	break;
 		case N7110_PBK_SPEEDDIAL    	: printf("%s", _(" (Speed dial)"));				break;
 		case N7110_PBK_GROUPLOGO    	: printf("%s", _(" (Caller group: logo)"));			break;
 		case N7110_PBK_LOGOON	    	: printf("%s", _(" (Caller group: is logo on ?)"));		break;

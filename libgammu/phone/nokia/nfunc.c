@@ -375,6 +375,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 	GSM_EntryLocation	Location = PBK_Location_Unknown;
 	gboolean					found=FALSE;
 	gboolean					foundbb5add=FALSE;
+	gboolean missed_call = FALSE;
 	int favorite_messaging_numbers[10];
 	size_t used_favorite_messaging_numbers = 0;
 
@@ -858,8 +859,12 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			entry->Entries[Block[5]-1].SMSList[i]   = Block[9];
 			continue;
 		}
-		if (Block[0] == N7110_PBK_UNKNOWN1
-		    || Block[0] == N7110_PBK_UNKNOWN2
+		if (Block[0] == N7110_PBK_MISSED) {
+			missed_call = TRUE;
+			smprintf(s,"Unknown entry type 0x%02x data length %d\n", Block[0], bs-6);
+			continue;
+		}
+		if (Block[0] == N7110_PBK_UNKNOWN2
 		    || Block[0] == N7110_PBK_UNKNOWN3
 		    || Block[0] == N3600_PBK_UNKNOWN1
 		    || Block[0] == N6303_PBK_UNKNOWN1) {
@@ -915,7 +920,16 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 		return ERR_UNKNOWNRESPONSE;
 	}
 
-	if (entry->EntriesNum == 0) return ERR_EMPTY;
+	if (entry->EntriesNum == 0) {
+		if (missed_call) {
+			smprintf(s, "Empty entry with missed call reference, adding blank number!\n");
+			entry->Entries[entry->EntriesNum].EntryType = PBK_Number_General;
+			entry->Entries[entry->EntriesNum].Location = PBK_Location_Unknown;
+			EncodeUnicode(entry->Entries[entry->EntriesNum].Text, "", 0);
+		} else {
+			return ERR_EMPTY;
+		}
+	}
 
 	/* Process favorite messaging numbers */
 	for (i = 0; i < (int)used_favorite_messaging_numbers; i++) {

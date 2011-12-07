@@ -22,6 +22,7 @@ ChangeLog
 2011???? - 1.30.92
 
 [-] * Improved vCard parser to better handle location for various fields, thanks to Vladimir Serbinenko for initial patch.
+[-] * Fixed reading calls from some Nokia phones (bug #1553).
     
 20111129 - 1.30.91
 
