@@ -600,29 +600,23 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 				current++;
 			}
 
-			smprintf(s, "buffer %s\n", &msg->Buffer[current]);
 			/* Grab first parameter */
 			current += ATGEN_ExtractOneParameter(msg->Buffer+current, buffer);
-			smprintf(s, "%d: %s\n", __LINE__, buffer);
 
 			/* Remove leading " */
 			for (ptr = buffer; *ptr == '"'; ptr++);
-			smprintf(s, "%d: %s\n", __LINE__, buffer);
 			if (ptr != buffer) {
 				memmove (buffer, ptr, strlen (ptr) + 1);
 			}
 
-			smprintf(s, "%d: %s\n", __LINE__, buffer);
 			/* Go to the end of string */
 			for (ptr = buffer; *ptr; ptr++);
-			smprintf(s, "%d: %s\n", __LINE__, buffer);
 			/* Remove trailing " */
 			ptr--;
 			while (ptr >= buffer && *ptr == '"') {
 				ptr--;
 			}
 			ptr++;
-			smprintf(s, "%d: %s\n", __LINE__, buffer);
 			*ptr = 0;
 
 			if (!strcmp(buffer,"0") || !strcmp(buffer,"REC UNREAD")) {
