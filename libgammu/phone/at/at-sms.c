@@ -850,22 +850,11 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 				current++;
 				sms->Coding = GSM_GetMessageCoding(&(s->di), TPDCS);
 				sms->Class = -1;
-
-				if ((TPDCS & 0xD0) == 0x10) {
-					/* bits 7..4 set to 00x1 */
-					if ((TPDCS & 0xC) == 0xC) {
-						smprintf(s, "WARNING: reserved alphabet value in TPDCS\n");
-					} else {
-						sms->Class = (TPDCS & 3);
-					}
-				} else if ((TPDCS & 0xF0) == 0xF0) {
-					/* bits 7..4 set to 1111 */
-					if ((TPDCS & 8) == 8) {
-						smprintf(s, "WARNING: set reserved bit 3 in TPDCS\n");
-					} else {
-						sms->Class = (TPDCS & 3);
-					}
+				/* GSM 03.40 section 9.2.3.10 (TP-Data-Coding-Scheme) and GSM 03.38 section 4 */
+				if ((TPDCS & 0xD0) == 0x10 || (TPDCS & 0xF0) == 0xF0) {
+					sms->Class = TPDCS & 3;
 				}
+
 				smprintf(s, "SMS class: %i\n",sms->Class);
 
 				switch (sms->Coding) {
