@@ -137,11 +137,6 @@
  */
 #cmakedefine GSM_ENABLE_BACKUP
 
-/* Bu default commented: some parts of source are not ready or not tested
- * at all (or aren't good tested). Uncomment, if you want them
- */
-/*#define DEVELOP*/
-
 /* ---------------------- C language specific --------------------------- */
 
 /* Do we have gettext support? */
