@@ -590,7 +590,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 			 */
 			current = 0;
 
-			while (msg->Buffer[current]!=':') {
+			while (msg->Buffer[current] != ':') {
 				current++;
 			}
 			current++;
