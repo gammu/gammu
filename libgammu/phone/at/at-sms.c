@@ -865,6 +865,14 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 					if ((firstbyte & 0x40)!=0x40) {
 						sms->UDH.Type	= UDH_NoUDH;
 						error = ATGEN_ReadSMSText(msg, s, sms);
+						if (sms->Length	== TPUDL + 4) {
+							char *tail;
+							tail = sms->Text + 2 * (UnicodeLength (sms->Text) - 4);
+							if (tail[0] == 0 && tail[1] == ',' && tail[4] == 0 && tail[5] == ',') {
+								tail[1] = 0;
+								sms->Length = TPUDL;
+							}
+						}
 						if (sms->Length	!= TPUDL) {
 							smprintf(s, "WARNING: Indicated message length (%d) does not match real (%d)\n", TPUDL, sms->Length);
 						}
