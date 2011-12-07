@@ -866,11 +866,8 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 					/* If UDH available, treat it as Unicode or 8 bit */
 					if ((firstbyte & 0x40)!=0x40) {
 						sms->UDH.Type	= UDH_NoUDH;
-						sms->Length	= strlen(msg->Buffer+Priv->Lines.numbers[2*2]);
-						if (TPUDL != sms->Length) {
-							smprintf(s, "WARNING: Indicated message length (%d) does not match real (%d)\n", TPUDL, sms->Length);
-						}
-						EncodeUnicode(sms->Text, msg->Buffer+Priv->Lines.numbers[2*2], sms->Length);
+						sms->Length	= TPUDL;
+						EncodeUnicode(sms->Text, msg->Buffer+Priv->Lines.numbers[2*2], TPUDL);
 						break;
 					}
 				case SMS_Coding_Unicode_No_Compression:
