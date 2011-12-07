@@ -1,0 +1,4 @@
+AT+CMGR=3
++CMGR: "REC READ","+31625044454",,"07/07/05,09:56:03+08"
+Test message 2
+OK
