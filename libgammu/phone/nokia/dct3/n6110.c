@@ -2113,7 +2113,7 @@ static GSM_Error N6110_ReplyIncomingSMS(GSM_Protocol_Message *msg, GSM_StateMach
 
 static GSM_Error N6110_ReplyAddCalendar(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
-        smprintf(s, "Writting calendar note: ");
+        smprintf(s, "Writing calendar note: ");
         switch (msg->Buffer[4]) {
                 case 0x01:
                         smprintf(s, "OK\n");
