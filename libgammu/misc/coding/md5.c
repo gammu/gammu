@@ -272,7 +272,7 @@ void MD5Transform(uint32 buf[4], uint32 const in[16])
 	buf[3] += d;
 }
 
-void CalculateMD5(unsigned char *buffer, int length, unsigned char *checksum)
+void CalculateMD5(unsigned char *buffer, int length, char *checksum)
 {
 	int 		i;
 	struct MD5Context 	m_md5;
