@@ -1,5 +1,6 @@
 #include "md5.h"
 #include <stdio.h>
+#include <string.h>
 
 /*
  * This code implements the MD5 message-digest algorithm.
@@ -40,7 +41,6 @@ void MD5Transform(uint32 buf[4], uint32 const in[16]);
 typedef struct MD5Context MD5_CTX;
 
 /* md5.c */
-#include <string.h>
 
 /*
  * Note: this code is harmless on little-endian machines.
