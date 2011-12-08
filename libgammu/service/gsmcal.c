@@ -435,27 +435,6 @@ GSM_Error GSM_Translate_Category_To_VCal (char *string, const GSM_CalendarNoteTy
 }
 
 /**
- * Grabs single value of type from calendar note starting with record
- * start.
- */
-GSM_Error GSM_Calendar_GetValue(const GSM_CalendarEntry *note, int *start, const GSM_CalendarType type, int *number, GSM_DateTime *date)
-{
-	for (; *start < note->EntriesNum; (*start)++) {
-		if (note->Entries[*start].EntryType == type) {
-			if (number != NULL) {
-				*number = note->Entries[*start].Number;
-			}
-			if (date != NULL) {
-				*date = note->Entries[*start].Date;
-			}
-			(*start)++;
-			return ERR_NONE;
-		}
-	}
-	return ERR_EMPTY;
-}
-
-/**
  * Converts Gammu recurrence to vCal format. See GSM_DecodeVCAL_RRULE
  * for grammar description.
  */
