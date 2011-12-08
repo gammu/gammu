@@ -1457,10 +1457,6 @@ void GSM_DumpMessageLevel3Recv(GSM_StateMachine *s, unsigned const char *message
 
 void GSM_OSErrorInfo(GSM_StateMachine *s, const char *description);
 
-#ifdef GSM_ENABLE_BACKUP
-void GSM_GetPhoneFeaturesForBackup(GSM_StateMachine *s, GSM_Backup_Info *info);
-#endif
-
 #endif
 /*@}*/
 
