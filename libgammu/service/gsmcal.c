@@ -1200,15 +1200,6 @@ GSM_Error GSM_EncodeVTODO(char *Buffer, const size_t buff_len, size_t *Length, c
 	return ERR_NONE;
 }
 
-GSM_TimeUnit ReadVCALTimeUnits (unsigned char *Buffer)
-{
-	if (strcasestr(Buffer,"days"))	return GSM_TimeUnit_Days;
-	if (strcasestr(Buffer,"hours"))	return GSM_TimeUnit_Hours;
-	if (strcasestr(Buffer,"minutes")) return GSM_TimeUnit_Minutes;
-	if (strcasestr(Buffer,"seconds")) return GSM_TimeUnit_Seconds;
-	return GSM_TimeUnit_Unknown;
-}
-
 GSM_DeltaTime ReadVCALTriggerTime (unsigned char *Buffer)
 {
 	GSM_DeltaTime 	dt;
@@ -1789,14 +1780,7 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(GSM_Debug_Info *di, char *Buffer, size_t *Po
 				/*  Any use for UIDs? */
 				break;
 			}
-#if 0
-			if (strstr(Line,"X-MOZILLA-ALARM-DEFAULT-UNITS:")) {
-				if (ReadVCALText(Line, "X-MOZILLA-ALARM-DEFAULT-UNITS", Buff, CalVer == Mozilla_iCalendar, NULL)) {
-					unit = ReadVCALTimeUnits(DecodeUnicodeString(Buff));
-					break;
-				}
-			}
-#endif
+
 			if (strstr(Line,"X-MOZILLA-ALARM-DEFAULT-LENGTH:")) {
 				if (ReadVCALInt(Line, "X-MOZILLA-ALARM-DEFAULT-LENGTH", &deltatime)) {
 					break;
@@ -1935,14 +1919,7 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(GSM_Debug_Info *di, char *Buffer, size_t *Po
 				/*  Any use for UIDs? */
 				break;
 			}
-#if 0
-			if (strstr(Line,"X-MOZILLA-ALARM-DEFAULT-UNITS:")) {
-				if (ReadVCALText(Line, "X-MOZILLA-ALARM-DEFAULT-UNITS", Buff, ToDoVer == Mozilla_VToDo, NULL)) {
-					unit = ReadVCALTimeUnits(DecodeUnicodeString(Buff));
-					break;
-				}
-			}
-#endif
+
 			if (ReadVCALInt(Line, "X-MOZILLA-ALARM-DEFAULT-LENGTH", &deltatime)) {
 				break;
 			}
