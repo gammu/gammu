@@ -24,6 +24,7 @@ ChangeLog
 [-] * Improved vCard parser to better handle location for various fields, thanks to Vladimir Serbinenko for initial patch.
 [-] * Fixed reading calls from some Nokia phones (bug #1553).
 [-] * Improved text mode SMS parsing in AT driver, thanks to Vladimir Serbinenko.
+[-] * Use glib's MD5 implementation if available.
     
 20111129 - 1.30.91
 
