@@ -980,7 +980,7 @@ gboolean ReadBackup(const char *filename, GSM_Backup *Backup)
 		fprintf(stderr, LISTFORMAT "%s\n", _("File created by"), Backup->Creator);
 	}
 
-	if (Backup->MD5Calculated[0] != 0 && strcmp(Backup->MD5Original, Backup->MD5Calculated) != 0) {
+	if (Backup->MD5Calculated[0] != 0 && strcasecmp(Backup->MD5Original, Backup->MD5Calculated) != 0) {
 		if (!answer_yes(_("Checksum in backup file do not match (original: %s, new: %s). Continue?"), Backup->MD5Original, Backup->MD5Calculated)) {
 			return FALSE;
 		}
