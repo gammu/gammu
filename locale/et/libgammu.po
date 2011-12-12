@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-11-02 09:09+0100\n"
+"POT-Creation-Date: 2011-12-12 09:47+0100\n"
 "PO-Revision-Date: 2009-01-27 14:28+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -332,19 +332,19 @@ msgstr ""
 msgid "Personal"
 msgstr ""
 
-#: libgammu/phone/nokia/dct3/n6110.c:1971 libgammu/phone/nokia/nfunc.c:1141
+#: libgammu/phone/nokia/dct3/n6110.c:1971 libgammu/phone/nokia/nfunc.c:1155
 msgid "Car"
 msgstr ""
 
-#: libgammu/phone/nokia/dct3/n6110.c:1973 libgammu/phone/nokia/nfunc.c:1143
+#: libgammu/phone/nokia/dct3/n6110.c:1973 libgammu/phone/nokia/nfunc.c:1157
 msgid "Headset"
 msgstr ""
 
-#: libgammu/phone/nokia/dct3/n6110.c:1979 libgammu/phone/nokia/nfunc.c:1131
+#: libgammu/phone/nokia/dct3/n6110.c:1979 libgammu/phone/nokia/nfunc.c:1145
 msgid "General"
 msgstr ""
 
-#: libgammu/phone/nokia/dct3/n6110.c:1981 libgammu/phone/nokia/nfunc.c:1133
+#: libgammu/phone/nokia/dct3/n6110.c:1981 libgammu/phone/nokia/nfunc.c:1147
 msgid "Silent"
 msgstr ""
 
@@ -377,35 +377,35 @@ msgstr ""
 msgid "Saved items"
 msgstr ""
 
-#: libgammu/phone/nokia/nfunc.c:947
+#: libgammu/phone/nokia/nfunc.c:961
 msgid "Family"
 msgstr ""
 
-#: libgammu/phone/nokia/nfunc.c:949
+#: libgammu/phone/nokia/nfunc.c:963
 msgid "VIP"
 msgstr ""
 
-#: libgammu/phone/nokia/nfunc.c:951
+#: libgammu/phone/nokia/nfunc.c:965
 msgid "Friends"
 msgstr ""
 
-#: libgammu/phone/nokia/nfunc.c:953
+#: libgammu/phone/nokia/nfunc.c:967
 msgid "Colleagues"
 msgstr ""
 
-#: libgammu/phone/nokia/nfunc.c:955
+#: libgammu/phone/nokia/nfunc.c:969
 msgid "Other"
 msgstr ""
 
-#: libgammu/phone/nokia/nfunc.c:1135
+#: libgammu/phone/nokia/nfunc.c:1149
 msgid "Meeting"
 msgstr ""
 
-#: libgammu/phone/nokia/nfunc.c:1137
+#: libgammu/phone/nokia/nfunc.c:1151
 msgid "Outdoor"
 msgstr ""
 
-#: libgammu/phone/nokia/nfunc.c:1139
+#: libgammu/phone/nokia/nfunc.c:1153
 msgid "Pager"
 msgstr ""
 

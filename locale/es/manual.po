@@ -5,7 +5,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu-manual 1.30.90\n"
+"Project-Id-Version: Gammu-manual 1.30.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-11-02 09:09+0100\n"
 "PO-Revision-Date: 2011-11-02 20:18+0200\n"
@@ -1416,7 +1416,7 @@ msgstr ""
 #: docs/manual/protocol/n6110.rst:48
 #, no-wrap
 msgid "0x01: Call Information\n"
-msgstr ""
+msgstr "Información del teléfono"
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:49

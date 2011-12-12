@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-09-27 08:58+0200\n"
+"POT-Creation-Date: 2011-12-12 09:47+0100\n"
 "PO-Revision-Date: 2009-01-27 14:28+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -75,7 +75,7 @@ msgstr "Fout tijdens opslaan backup"
 #: gammu/backup.c:241 gammu/backup.c:424 gammu/backup.c:496 gammu/backup.c:531
 #: gammu/backup.c:565 gammu/backup.c:633 gammu/backup.c:670 gammu/backup.c:707
 #: gammu/backup.c:744 gammu/backup.c:781 gammu/backup.c:819 gammu/backup.c:860
-#: gammu/backup.c:894 gammu/backup.c:931 gammu/message.c:432
+#: gammu/backup.c:894 gammu/backup.c:931 gammu/message.c:426
 msgid "Reading"
 msgstr ""
 
@@ -435,7 +435,7 @@ msgstr ""
 msgid "Unknown memory type (\"%s\")\n"
 msgstr ""
 
-#: gammu/backup.c:1635 gammu/memory.c:70 gammu/misc.c:773 gammu/misc.c:802
+#: gammu/backup.c:1635 gammu/memory.c:70 gammu/misc.c:773 gammu/misc.c:806
 #: helper/message-cmdline.c:1032
 #, c-format
 msgid "Unknown parameter (\"%s\")\n"
@@ -661,7 +661,7 @@ msgid "Silent alarm"
 msgstr ""
 
 #: gammu/calendar.c:217 gammu/calendar.c:551 gammu/calendar.c:771
-#: gammu/calendar.c:993 gammu/message.c:225 gammu/misc.c:1132
+#: gammu/calendar.c:993 gammu/message.c:225 gammu/misc.c:1139
 #: helper/memory-display.c:167 helper/message-display.c:434
 msgid "Text"
 msgstr "Tekst"
@@ -1065,13 +1065,13 @@ msgstr ""
 msgid "Security status"
 msgstr ""
 
-#: gammu/common.c:312 gammu/misc.c:1163 gammu/misc.c:1178 gammu/misc.c:1185
-#: gammu/misc.c:1192 gammu/misc.c:1222
+#: gammu/common.c:312 gammu/misc.c:1170 gammu/misc.c:1185 gammu/misc.c:1192
+#: gammu/misc.c:1199 gammu/misc.c:1229
 msgid "More parameters required!"
 msgstr ""
 
 #: gammu/common.c:318 gammu/common.c:328 gammu/depend/nokia/dct4.c:687
-#: gammu/misc.c:1338
+#: gammu/misc.c:1341
 msgid "Please enumerate locations from 1"
 msgstr ""
 
@@ -1736,7 +1736,7 @@ msgstr ""
 msgid "What file type (\"%s\") ?\n"
 msgstr ""
 
-#: gammu/files.c:746 gammu/misc.c:1334 gammu/nokia.c:955
+#: gammu/files.c:746 gammu/misc.c:1337 gammu/nokia.c:955
 #: helper/message-cmdline.c:1311
 msgid "Parameter missing!"
 msgstr ""
@@ -1765,7 +1765,7 @@ msgstr ""
 msgid "Network"
 msgstr ""
 
-#: gammu/gammu.c:80 gammu/message.c:218 gammu/misc.c:968 gammu/misc.c:1135
+#: gammu/gammu.c:80 gammu/message.c:218 gammu/misc.c:975 gammu/misc.c:1142
 #: gammu/misc.c:1872 gammu/misc.c:1911 gammu/misc.c:2206 gammu/mms.c:112
 #: helper/memory-display.c:217 helper/message-display.c:237
 msgid "Name"
@@ -2163,107 +2163,107 @@ msgstr ""
 msgid "Maximum time"
 msgstr ""
 
-#: gammu/message.c:371 gammu/message.c:446 gammu/message.c:720
+#: gammu/message.c:368 gammu/message.c:440 gammu/message.c:710
 msgid "Corrupted message, skipping"
 msgstr ""
 
-#: gammu/message.c:385 gammu/message.c:504
+#: gammu/message.c:382 gammu/message.c:494
 #, c-format
 msgid "%i SMS parts in %i SMS sequences"
 msgstr ""
 
-#: gammu/message.c:436
+#: gammu/message.c:430
 msgid "SMS counter overflow"
 msgstr ""
 
-#: gammu/message.c:525
+#: gammu/message.c:515
 msgid ", SIM memory"
 msgstr ""
 
-#: gammu/message.c:526
+#: gammu/message.c:516
 msgid ", phone memory"
 msgstr ""
 
-#: gammu/message.c:527
+#: gammu/message.c:517
 msgid ", phone or SIM memory"
 msgstr ""
 
-#: gammu/message.c:530 gammu/mms.c:30
+#: gammu/message.c:520 gammu/mms.c:30
 msgid ", Inbox folder"
 msgstr ""
 
-#: gammu/message.c:531
+#: gammu/message.c:521
 msgid ", Outbox folder"
 msgstr ""
 
-#: gammu/message.c:547
+#: gammu/message.c:537
 msgid "..OK"
 msgstr ""
 
-#: gammu/message.c:550
+#: gammu/message.c:540
 #, c-format
 msgid "..error %i"
 msgstr ""
 
-#: gammu/message.c:553
+#: gammu/message.c:543
 #, c-format
 msgid ", message reference=%d"
 msgstr ""
 
-#: gammu/message.c:586
+#: gammu/message.c:576
 msgid "Message number"
 msgstr ""
 
-#: gammu/message.c:591
+#: gammu/message.c:581
 msgid "Number of messages"
 msgstr ""
 
-#: gammu/message.c:602 gammu/message.c:642
+#: gammu/message.c:592 gammu/message.c:632
 msgid "If you want break, press Ctrl+C..."
 msgstr ""
 
-#: gammu/message.c:607
+#: gammu/message.c:597
 #, c-format
 msgid "Saving SMS %i/%i\n"
 msgstr ""
 
-#: gammu/message.c:610
+#: gammu/message.c:600
 #, c-format
 msgid "Saved in folder number %d \"%s\", location %i"
 msgstr ""
 
-#: gammu/message.c:615
+#: gammu/message.c:605
 msgid "SIM"
 msgstr "SIM"
 
-#: gammu/message.c:617
+#: gammu/message.c:607
 msgid "phone"
 msgstr ""
 
-#: gammu/message.c:621
+#: gammu/message.c:611
 #, c-format
 msgid "Sending sms from folder \"%s\", location %i\n"
 msgstr ""
 
-#: gammu/message.c:627 gammu/message.c:653
+#: gammu/message.c:617 gammu/message.c:643
 msgid "....waiting for network answer"
 msgstr ""
 
-#: gammu/message.c:648
+#: gammu/message.c:638
 #, c-format
 msgid "Sending SMS %i/%i"
 msgstr ""
 
-#: gammu/message.c:667
+#: gammu/message.c:657
 msgid "Something went wrong, uknown message operation!\n"
 msgstr ""
 
-#: gammu/message.c:703
+#: gammu/message.c:693
 #, c-format
 msgid "Too high folder number (max. %i)\n"
 msgstr ""
 
-#: gammu/message.c:709
+#: gammu/message.c:699
 #, c-format
 msgid "Deleting SMS from \"%s\" folder: "
 msgstr ""
@@ -2675,106 +2675,106 @@ msgstr ""
 msgid " format, ringtone \"%s\"\n"
 msgstr ""
 
-#: gammu/misc.c:942
+#: gammu/misc.c:949
 #, c-format
 msgid "What type of reset do you want (\"%s\") ?\n"
 msgstr ""
 
-#: gammu/misc.c:969 gammu/misc.c:1016 helper/memory-display.c:178
+#: gammu/misc.c:976 gammu/misc.c:1023 helper/memory-display.c:178
 #: helper/message-display.c:467
 msgid "Address"
 msgstr ""
 
-#: gammu/misc.c:1011
+#: gammu/misc.c:1018
 #, c-format
 msgid "%i. Access point %i"
 msgstr ""
 
-#: gammu/misc.c:1013 gammu/misc.c:1537 gammu/misc.c:1544 gammu/misc.c:1579
+#: gammu/misc.c:1020 gammu/misc.c:1537 gammu/misc.c:1544 gammu/misc.c:1579
 #: gammu/misc.c:1592 gammu/misc.c:1631 gammu/misc.c:1680 gammu/misc.c:2060
 msgid " (active)"
 msgstr ""
 
-#: gammu/misc.c:1041 gammu/misc.c:1197
+#: gammu/misc.c:1048 gammu/misc.c:1204
 msgid "Maximal location for caller logo can be 5"
 msgstr ""
 
-#: gammu/misc.c:1054
+#: gammu/misc.c:1061
 #, c-format
 msgid "What type of logo do you want to get (\"%s\") ?\n"
 msgstr ""
 
-#: gammu/misc.c:1070
+#: gammu/misc.c:1077
 msgid "Group name"
 msgstr ""
 
-#: gammu/misc.c:1071 gammu/misc.c:1074
+#: gammu/misc.c:1078 gammu/misc.c:1081
 msgid "default"
 msgstr ""
 
-#: gammu/misc.c:1074 gammu/misc.c:1076 gammu/misc.c:1089 gammu/misc.c:1096
+#: gammu/misc.c:1081 gammu/misc.c:1083 gammu/misc.c:1096 gammu/misc.c:1103
 #: helper/memory-display.c:101
 #, fuzzy
 msgid "Ringtone"
 msgstr "Taken lezen"
 
-#: gammu/misc.c:1090
+#: gammu/misc.c:1097
 #, c-format
 msgid "(file with ID %i)\n"
 msgstr ""
 
 #. l10n: Ringtone name and ID format
-#: gammu/misc.c:1100 gammu/misc.c:2079
+#: gammu/misc.c:1107 gammu/misc.c:2079
 #, c-format
 msgid "\"%s\" (ID %i)\n"
 msgstr ""
 
 #. l10n: Ringtone ID format
-#: gammu/misc.c:1103 gammu/misc.c:2082
+#: gammu/misc.c:1110 gammu/misc.c:2082
 #, c-format
 msgid "ID %i\n"
 msgstr ""
 
-#: gammu/misc.c:1109 gammu/misc.c:1111
+#: gammu/misc.c:1116 gammu/misc.c:1118
 msgid "Bitmap"
 msgstr ""
 
-#: gammu/misc.c:1109 gammu/misc.c:1639 gammu/misc.c:1642 gammu/mms.c:102
+#: gammu/misc.c:1116 gammu/misc.c:1639 gammu/misc.c:1642 gammu/mms.c:102
 msgid "enabled"
 msgstr ""
 
-#: gammu/misc.c:1111 gammu/misc.c:1640 gammu/misc.c:1643 gammu/mms.c:104
+#: gammu/misc.c:1118 gammu/misc.c:1640 gammu/misc.c:1643 gammu/mms.c:104
 msgid "disabled"
 msgstr "Uitgeschakeld"
 
-#: gammu/misc.c:1114
+#: gammu/misc.c:1121
 msgid "Bitmap ID"
 msgstr ""
 
-#: gammu/misc.c:1127
+#: gammu/misc.c:1134
 msgid "No operator logo in phone"
 msgstr ""
 
-#: gammu/misc.c:1133 gammu/mms.c:71 helper/message-display.c:465
+#: gammu/misc.c:1140 gammu/mms.c:71 helper/message-display.c:465
 msgid "Sender"
 msgstr ""
 
-#: gammu/misc.c:1139
+#: gammu/misc.c:1146
 #, c-format
 msgid "Welcome note text is \"%s\"\n"
 msgstr ""
 
-#: gammu/misc.c:1142
+#: gammu/misc.c:1149
 #, c-format
 msgid "Dealer note text is \"%s\"\n"
 msgstr ""
 
-#: gammu/misc.c:1280
+#: gammu/misc.c:1287
 #, c-format
 msgid "What type of logo do you want to set (\"%s\") ?\n"
 msgstr ""
 
-#: gammu/misc.c:1321
+#: gammu/misc.c:1324
 #, c-format
 msgid "Unknown parameter (\"%s\")"
 msgstr ""

@@ -5,7 +5,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu-manual 1.30.90\n"
+"Project-Id-Version: Gammu-manual 1.30.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-11-02 09:09+0100\n"
 "PO-Revision-Date: 2011-01-10 12:07+0100\n"
@@ -690,7 +690,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/config/index.rst:176
 msgid "Port"
-msgstr ""
+msgstr "Port"
 
 #. type: Labeled list
 #: docs/manual/config/index.rst:177 docs/manual/smsd/config.rst:73
@@ -5178,7 +5178,7 @@ msgstr ""
 #: docs/manual/protocol/carkit.rst:354 docs/manual/protocol/carkit.rst:511
 #, no-wrap
 msgid "Incoming call"
-msgstr ""
+msgstr "Panggilan masuk"
 
 #. type: Plain text
 #: docs/manual/protocol/carkit.rst:73
@@ -5202,7 +5202,7 @@ msgstr ""
 #: docs/manual/protocol/carkit.rst:368 docs/manual/protocol/carkit.rst:541
 #, no-wrap
 msgid "Connected"
-msgstr ""
+msgstr "Terkoneksi"
 
 #. type: Plain text
 #: docs/manual/protocol/carkit.rst:80 docs/manual/protocol/carkit.rst:200
@@ -19218,7 +19218,7 @@ msgstr "Informasi telepon"
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1457
 msgid "battery"
-msgstr ""
+msgstr "baterai"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1459
@@ -23352,7 +23352,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:23
 msgid "SMSC"
-msgstr ""
+msgstr "SMSC"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:25
@@ -24277,7 +24277,7 @@ msgstr "Garis Bawah"
 #. type: Plain text
 #: docs/manual/python/objects.rst:383
 msgid "Strikethrough"
-msgstr ""
+msgstr "Coret"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:387 docs/manual/python/objects.rst:782

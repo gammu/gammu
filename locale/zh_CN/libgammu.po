@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-11-02 09:09+0100\n"
+"POT-Creation-Date: 2011-12-12 09:47+0100\n"
 "PO-Revision-Date: 2010-02-10 10:20+0200\n"
 "Last-Translator: shanyan baishui <Siramizu@gmail.com>\n"
 "Language-Team: none\n"
@@ -342,19 +342,19 @@ msgstr "模板"
 msgid "Personal"
 msgstr "个人的"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1971 libgammu/phone/nokia/nfunc.c:1141
+#: libgammu/phone/nokia/dct3/n6110.c:1971 libgammu/phone/nokia/nfunc.c:1155
 msgid "Car"
 msgstr "小汽车"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1973 libgammu/phone/nokia/nfunc.c:1143
+#: libgammu/phone/nokia/dct3/n6110.c:1973 libgammu/phone/nokia/nfunc.c:1157
 msgid "Headset"
 msgstr "耳机"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1979 libgammu/phone/nokia/nfunc.c:1131
+#: libgammu/phone/nokia/dct3/n6110.c:1979 libgammu/phone/nokia/nfunc.c:1145
 msgid "General"
 msgstr "通常"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1981 libgammu/phone/nokia/nfunc.c:1133
+#: libgammu/phone/nokia/dct3/n6110.c:1981 libgammu/phone/nokia/nfunc.c:1147
 msgid "Silent"
 msgstr "安静"
 
@@ -387,35 +387,35 @@ msgstr "已发送项目"
 msgid "Saved items"
 msgstr "已存项目"
 
-#: libgammu/phone/nokia/nfunc.c:947
+#: libgammu/phone/nokia/nfunc.c:961
 msgid "Family"
 msgstr "家人"
 
-#: libgammu/phone/nokia/nfunc.c:949
+#: libgammu/phone/nokia/nfunc.c:963
 msgid "VIP"
 msgstr ""
 
-#: libgammu/phone/nokia/nfunc.c:951
+#: libgammu/phone/nokia/nfunc.c:965
 msgid "Friends"
 msgstr "朋友"
 
-#: libgammu/phone/nokia/nfunc.c:953
+#: libgammu/phone/nokia/nfunc.c:967
 msgid "Colleagues"
 msgstr "同事"
 
-#: libgammu/phone/nokia/nfunc.c:955
+#: libgammu/phone/nokia/nfunc.c:969
 msgid "Other"
 msgstr "其他"
 
-#: libgammu/phone/nokia/nfunc.c:1135
+#: libgammu/phone/nokia/nfunc.c:1149
 msgid "Meeting"
 msgstr "会议"
 
-#: libgammu/phone/nokia/nfunc.c:1137
+#: libgammu/phone/nokia/nfunc.c:1151
 msgid "Outdoor"
 msgstr "户外"
 
-#: libgammu/phone/nokia/nfunc.c:1139
+#: libgammu/phone/nokia/nfunc.c:1153
 msgid "Pager"
 msgstr "传呼机"
 

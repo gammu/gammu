@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libGammu 1.30.90\n"
+"Project-Id-Version: libGammu 1.30.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-11-02 09:09+0100\n"
+"POT-Creation-Date: 2011-12-12 09:47+0100\n"
 "PO-Revision-Date: 2011-02-27 02:27+0200\n"
 "Last-Translator: <grandelg@tiscali.it>\n"
 "Language-Team: Language =it\n"
@@ -385,19 +385,19 @@ msgstr "Modelli"
 msgid "Personal"
 msgstr "Personale"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1971 libgammu/phone/nokia/nfunc.c:1141
+#: libgammu/phone/nokia/dct3/n6110.c:1971 libgammu/phone/nokia/nfunc.c:1155
 msgid "Car"
 msgstr "Auto"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1973 libgammu/phone/nokia/nfunc.c:1143
+#: libgammu/phone/nokia/dct3/n6110.c:1973 libgammu/phone/nokia/nfunc.c:1157
 msgid "Headset"
 msgstr "Auricolare"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1979 libgammu/phone/nokia/nfunc.c:1131
+#: libgammu/phone/nokia/dct3/n6110.c:1979 libgammu/phone/nokia/nfunc.c:1145
 msgid "General"
 msgstr "Generale"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1981 libgammu/phone/nokia/nfunc.c:1133
+#: libgammu/phone/nokia/dct3/n6110.c:1981 libgammu/phone/nokia/nfunc.c:1147
 msgid "Silent"
 msgstr "Silenzioso"
 
@@ -430,35 +430,35 @@ msgstr "Inviato"
 msgid "Saved items"
 msgstr "Salvato"
 
-#: libgammu/phone/nokia/nfunc.c:947
+#: libgammu/phone/nokia/nfunc.c:961
 msgid "Family"
 msgstr "Famiglia"
 
-#: libgammu/phone/nokia/nfunc.c:949
+#: libgammu/phone/nokia/nfunc.c:963
 msgid "VIP"
 msgstr "VIP"
 
-#: libgammu/phone/nokia/nfunc.c:951
+#: libgammu/phone/nokia/nfunc.c:965
 msgid "Friends"
 msgstr "Amici"
 
-#: libgammu/phone/nokia/nfunc.c:953
+#: libgammu/phone/nokia/nfunc.c:967
 msgid "Colleagues"
 msgstr "Colleghi"
 
-#: libgammu/phone/nokia/nfunc.c:955
+#: libgammu/phone/nokia/nfunc.c:969
 msgid "Other"
 msgstr "Altri"
 
-#: libgammu/phone/nokia/nfunc.c:1135
+#: libgammu/phone/nokia/nfunc.c:1149
 msgid "Meeting"
 msgstr "Riunione"
 
-#: libgammu/phone/nokia/nfunc.c:1137
+#: libgammu/phone/nokia/nfunc.c:1151
 msgid "Outdoor"
 msgstr "Esterno"
 
-#: libgammu/phone/nokia/nfunc.c:1139
+#: libgammu/phone/nokia/nfunc.c:1153
 msgid "Pager"
 msgstr "Impaginatore"
 
