@@ -965,7 +965,7 @@ msgstr "Menunggu PUK."
 
 #: gammu/common.c:54
 msgid "Waiting for PUK2."
-msgstr "Menunggu PUK2"
+msgstr "Menunggu PUK2."
 
 #: gammu/common.c:57
 msgid "Waiting for phone code."
