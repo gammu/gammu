@@ -30615,9 +30615,9 @@ msgstr ""
 
 #. type: Title -
 #: docs/manual/c/examples.rst:38
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Custom configuration"
-msgstr "Fitur string buruk dalam konfigurasi."
+msgstr "Konfigurasi buatan"
 
 #. type: Plain text
 #: docs/manual/c/examples.rst:41
