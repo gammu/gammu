@@ -1559,7 +1559,7 @@ msgstr ""
 
 #: gammu-detect/main.c:91 gammu/gammu.c:335
 msgid "There is NO WARRANTY, to the extent permitted by law."
-msgstr "TIDAK ADA JAMINAN, sampai batas-batas yang diijinkan oleh hukum. "
+msgstr "Tidak terdapat JAMINAN, sampai batas-batas yang diijinkan oleh hukum."
 
 #: gammu-detect/main.c:93 gammu/gammu.c:339
 msgid "Check <http://wammu.eu/gammu/> for updates."
