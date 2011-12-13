@@ -32959,9 +32959,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/c/ringtone.rst:7
-#, fuzzy
 msgid "GSM_GetRingtone"
-msgstr "Nada dering"
+msgstr "GSM_GetRingtone"
 
 #. type: Plain text
 #: docs/manual/c/ringtone.rst:8
