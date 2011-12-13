@@ -261,7 +261,7 @@ msgstr "Memeriksa jalur akses GPRS telepon"
 
 #: gammu/backup.c:925
 msgid "Backup phone GPRS access points?"
-msgstr "Buat cadangan jalur akses GPRS telepon"
+msgstr "Buat cadangan jalur akses GPRS telepon?"
 
 #: gammu/backup.c:971
 msgid "Time of backup"
