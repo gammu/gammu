@@ -18200,9 +18200,8 @@ msgstr ""
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1026
-#, fuzzy
 msgid "Reads all notes from the phone."
-msgstr "Gagal mengambil nomor SMSC dari telepon."
+msgstr "Membaca semua catatan dari telepon."
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1031
