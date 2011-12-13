@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-13 17:01+0200\n"
+"PO-Revision-Date: 2011-12-13 17:02+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1803,7 +1803,7 @@ msgstr "Telah tersedia versi stabil Gammu yang terbaru! (%s selain dari %s)\n"
 #: gammu/gammu.c:314
 #, c-format
 msgid "There is newer testing Gammu version available! (%s instead of %s)\n"
-msgstr "Telah tersedia versi pengujian Gammu terbaru!(%s selain dari %s)\n"
+msgstr "Telah tersedia versi pengujian Gammu yang terbaru! (%s selain dari %s)\n"
 
 #: gammu/gammu.c:327
 #, fuzzy
