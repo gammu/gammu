@@ -202,7 +202,7 @@ msgstr ""
 #~ msgstr "0x3E: Radio FM"
 
 #~ msgid "get configuration pins"
-#~ msgstr "Layanan konfigurasi hilang."
+#~ msgstr "mendapatkan pins konfigurasi"
 
 #~ msgid "Default value:"
 #~ msgstr "Gunakan nilai default."
