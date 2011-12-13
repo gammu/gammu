@@ -8,21 +8,21 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.30.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-23 16:58+0100\n"
-"PO-Revision-Date: 2011-05-12 10:01+0200\n"
-"Last-Translator: Triatmoko <tr_mbil@yahoo.com>\n"
+"PO-Revision-Date: 2011-11-30 06:29+0200\n"
+"Last-Translator: Anonymous Pootle User\n"
 "Language-Team: none\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Pootle 2.0.5\n"
+"X-Generator: Pootle 2.1.6\n"
 
 #. type: Title =
 #: README:2
 #, no-wrap
 msgid "Gammu All Mobile Management Utilities"
-msgstr "Gammu Perangkat managemen semua handphone"
+msgstr "Utilitas Manajemen Gammu Semua Perangkat Ponsel"
 
 #. type: Plain text
 #: README:6
