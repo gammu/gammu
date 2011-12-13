@@ -10293,9 +10293,9 @@ msgstr ""
 
 #. type: Title -
 #: docs/manual/protocol/tdma_5120.rst:42
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "get memory"
-msgstr "Memori"
+msgstr "mengambil memori"
 
 #. type: Labeled list
 #: docs/manual/protocol/tdma_5120.rst:44
