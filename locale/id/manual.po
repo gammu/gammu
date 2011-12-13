@@ -19303,9 +19303,8 @@ msgstr "Pengaturan telepon"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1497
-#, fuzzy
 msgid "getcalendarsettings"
-msgstr "Catatan kalender"
+msgstr "getcalendarsettings"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1500
