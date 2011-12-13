@@ -226,7 +226,7 @@ msgstr ""
 #~ msgstr "Pengguna"
 
 #~ msgid "Password"
-#~ msgstr "kata sandi"
+#~ msgstr "Password"
 
 #~ msgid "Try to connect to phone if not connected."
 #~ msgstr "Telepon tidak terhubung."
