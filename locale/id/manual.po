@@ -18133,9 +18133,8 @@ msgstr ""
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:997
-#, fuzzy
 msgid "getallcalendar"
-msgstr "Kalender"
+msgstr "getallcalendar"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:999
