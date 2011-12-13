@@ -25547,9 +25547,8 @@ msgstr ""
 
 #. type: delimited block =
 #: docs/manual/python/data.rst:37
-#, fuzzy
 msgid "Errors"
-msgstr "Tidak ada Kesalahan"
+msgstr "Eror"
 
 #. type: delimited block =
 #: docs/manual/python/data.rst:39
