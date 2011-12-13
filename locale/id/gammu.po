@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-13 17:26+0200\n"
+"PO-Revision-Date: 2011-12-13 17:27+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -3050,7 +3050,7 @@ msgstr "Format apa untuk file ringtone (\"%s\") ?\n"
 #: gammu/misc.c:1823
 #, c-format
 msgid "Unknown key/function name: \"%c\"\n"
-msgstr "Kunci tidak diketahui/ nama fungsi: \"%c\"\n"
+msgstr "Nama key/function tidak dikenal: \"%c\"\n"
 
 #: gammu/misc.c:1853 gammu/misc.c:1891
 #, c-format
