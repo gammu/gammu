@@ -19275,9 +19275,8 @@ msgstr ""
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1436
-#, fuzzy
 msgid "Get WAP settings from phone."
-msgstr "Pengaturan telepon"
+msgstr "Mengambil pengaturan WAP dari telepon."
 
 #. type: Title -
 #: docs/manual/gammu/index.rst:1440
