@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-13 21:57+0200\n"
+"PO-Revision-Date: 2011-12-13 21:58+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -229,7 +229,7 @@ msgstr "Memeriksa setting SyncML telepon"
 
 #: gammu/backup.c:776
 msgid "Backup phone SyncML settings?"
-msgstr "Buat cadangan setting SyncML telepon"
+msgstr "Buat cadangan pengaturan SyncML telepon?"
 
 #: gammu/backup.c:808
 msgid "Checking phone user ringtones"
