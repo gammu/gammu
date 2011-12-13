@@ -31433,9 +31433,8 @@ msgstr "GSM_CategoryType"
 
 #. type: Plain text
 #: docs/manual/c/category.rst:9
-#, fuzzy
 msgid "GSM_Category"
-msgstr "Kategori"
+msgstr "GSM_Category"
 
 #. type: Plain text
 #: docs/manual/c/category.rst:9
