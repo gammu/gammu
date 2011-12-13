@@ -29338,9 +29338,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/internal/reply.rst:2
-#, fuzzy
 msgid "_reply-functions:"
-msgstr "Nada dering"
+msgstr "_reply-functions:"
 
 #. type: Title =
 #: docs/manual/internal/reply.rst:4
