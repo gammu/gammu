@@ -17734,9 +17734,8 @@ msgstr ""
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:816
-#, fuzzy
 msgid "getfilesystemstatus"
-msgstr "File sistem"
+msgstr "getfilesystemstatus"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:819
