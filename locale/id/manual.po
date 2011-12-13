@@ -30952,9 +30952,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/c/calendar.rst:24
-#, fuzzy
 msgid "GSM_SetCalendar"
-msgstr "Kalender"
+msgstr "GSM_SetCalendar"
 
 #. type: Plain text
 #: docs/manual/c/calendar.rst:25
