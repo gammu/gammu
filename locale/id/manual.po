@@ -33629,7 +33629,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/utils/gammu-detect.rst:63
 msgid "Disables scanning using Bluez."
-msgstr "Non-aktiv pencarian menggunakan Bluez"
+msgstr "Nokaktifkan pencarian dengan Bluez."
 
 #. type: Plain text
 #: docs/manual/utils/gammu-detect.rst:65
