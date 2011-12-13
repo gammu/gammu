@@ -439,7 +439,7 @@ msgstr "Pager"
 
 #: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1763
 msgid "Outbox"
-msgstr "Kotak Keluar"
+msgstr "Kotak keluar"
 
 #~ msgid "Empty SMSC number. Set in phone or use -smscnumber."
 #~ msgstr "angka SMSC kosong. Atur telepon atau gunakan -smscnumber"
