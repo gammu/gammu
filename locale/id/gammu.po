@@ -1127,7 +1127,7 @@ msgstr "Tidak dapat dilakukan dengan protokol telepon sat ini"
 #: gammu/depend/nokia/dct4.c:80
 #, c-format
 msgid "%s (yes/no) ? "
-msgstr "%s (ya/tidak) ?"
+msgstr "%s (ya/tidak) ? "
 
 #: gammu/depend/nokia/dct4.c:265
 msgid "Setting done"
