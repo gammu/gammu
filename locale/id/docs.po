@@ -626,7 +626,7 @@ msgstr ""
 #~ "terhubung/salah pengaturan."
 
 #~ msgid "Error setting device DTR or RTS."
-#~ msgstr "Kesalahan pengaturan perangakat DTR atau RTS"
+#~ msgstr "Kesalahan pengaturan perangkat DTR atau RTS."
 
 #~ msgid "Error setting device speed. Maybe speed not supported."
 #~ msgstr ""
