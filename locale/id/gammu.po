@@ -1180,7 +1180,7 @@ msgstr "Kode keamanan diatur ke \"12345\"\n"
 
 #: gammu/depend/nokia/dct4.c:512
 msgid "Unknown reason. Can't reset your security code"
-msgstr "Alasan tidak diketahui. Tidak dapat mereset kode keamanan anda."
+msgstr "Alasan tidak diketahui. Tidak dapat mereset kode keamanan anda"
 
 #: gammu/depend/nokia/dct4.c:536
 #, c-format
