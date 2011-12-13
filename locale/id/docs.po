@@ -193,7 +193,7 @@ msgstr ""
 #~ msgstr "sisanya tidak dikenal"
 
 #~ msgid "To test:"
-#~ msgstr "Tes telepon"
+#~ msgstr "Tes telepon:"
 
 #~ msgid "Filesystem access"
 #~ msgstr "File sistem"
