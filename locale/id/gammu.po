@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-13 21:59+0200\n"
+"PO-Revision-Date: 2011-12-13 22:00+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -399,7 +399,7 @@ msgstr "Pulihkan bookmark WAP telepon?"
 
 #: gammu/backup.c:1407
 msgid "Deleting old bookmarks:"
-msgstr "Hapus bookmark telepon?"
+msgstr "Menghapus bookmark lama:"
 
 #: gammu/backup.c:1444
 msgid "Restore phone WAP settings?"
