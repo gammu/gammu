@@ -1607,7 +1607,7 @@ msgstr "Nomor Berurutan:"
 
 #: gammu-detect/udev.c:74
 msgid "Device File:"
-msgstr "File Alat"
+msgstr "File Perangkat:"
 
 #: gammu-detect/udev.c:77
 msgid "Properties:"
