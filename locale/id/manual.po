@@ -23995,9 +23995,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:220
-#, fuzzy
 msgid "Name of the SMSC configuration"
-msgstr "Fitur string buruk dalam konfigurasi."
+msgstr "Nama konfigurasi SMSC"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:222
