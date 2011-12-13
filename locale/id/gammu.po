@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-13 22:21+0200\n"
+"PO-Revision-Date: 2011-12-13 22:23+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1167,7 +1167,7 @@ msgstr "Tidak diketahui (%x)"
 
 #: gammu/depend/nokia/dct4.c:376
 msgid " (startup)"
-msgstr "(startup)"
+msgstr " (startup)"
 
 #: gammu/depend/nokia/dct4.c:497 gammu/depend/nokia/dct4.c:1006
 msgid "Press any key to continue..."
