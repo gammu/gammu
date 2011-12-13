@@ -53,6 +53,10 @@ and Bluetooth address of phone as :config:option:`Device`.
 
 .. seealso:: :ref:`s60`, :ref:`gammurc`
 
+.. note::
+
+    Do not forget to start the applet before trying to connect to the phone.
+
 Example configuration:
 
 .. code-block:: ini
