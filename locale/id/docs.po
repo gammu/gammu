@@ -503,7 +503,7 @@ msgstr ""
 #~ msgstr "Informasi telepon"
 
 #~ msgid "Custom configuration"
-#~ msgstr "Fitur string buruk dalam konfigurasi."
+#~ msgstr "Konfigurasi buatan"
 
 #~ msgid "Miscellaneous"
 #~ msgstr "Miscellaneous"
