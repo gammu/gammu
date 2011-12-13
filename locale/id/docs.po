@@ -463,7 +463,7 @@ msgstr ""
 #~ msgstr "      Membaca IMEI/nomor serial dari telepon.\n"
 
 #~ msgid "      Resets phone settings.\n"
-#~ msgstr "Pengaturan telepon"
+#~ msgstr "      Reset pengaturan telepon.\n"
 
 #~ msgid "      Sets memory (phonebooks or calls) entry.\n"
 #~ msgstr "Memori (buku telepon dan panggilan)"
