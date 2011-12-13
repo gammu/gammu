@@ -20889,8 +20889,8 @@ msgid ""
 "Gammu is library and command line utility for mobile phones. It is released "
 "under GNU GPL version 2."
 msgstr ""
-"Gammu adalah library dan command line untuk Mobile telepon. Gammu "
-"dikeluarkan dibawah GNU GPL versi 2"
+"Gammu adalah utiliti library dan command line untuk telepon selular. Gammu "
+"dirilis di bawah GNU GPL versi 2."
 
 #. type: Plain text
 #: docs/manual/project/about.rst:10
