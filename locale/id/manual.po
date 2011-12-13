@@ -21585,9 +21585,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/project/install.rst:226
-#, fuzzy
 msgid "make test"
-msgstr "Tes telepon"
+msgstr "lakukan tes"
 
 #. type: Plain text
 #: docs/manual/project/install.rst:228
