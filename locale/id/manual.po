@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-11-02 09:09+0100\n"
-"PO-Revision-Date: 2011-12-13 15:58+0200\n"
+"PO-Revision-Date: 2011-12-13 15:59+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -30957,9 +30957,8 @@ msgstr "GSM_SetCalendar"
 
 #. type: Plain text
 #: docs/manual/c/calendar.rst:25
-#, fuzzy
 msgid "GSM_AddCalendar"
-msgstr "Kalender"
+msgstr "GSM_AddCalendar"
 
 #. type: Plain text
 #: docs/manual/c/calendar.rst:26
