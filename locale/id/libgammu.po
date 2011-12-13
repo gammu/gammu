@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: libGammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2010-03-17 17:52+0200\n"
-"Last-Translator: Azhari Harahap <azhari.harahap@yahoo.com>\n"
+"PO-Revision-Date: 2011-12-12 11:04+0200\n"
+"Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Pootle 2.0.1\n"
+"X-Generator: Pootle 2.1.6\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
@@ -45,7 +45,8 @@ msgstr "Kesalahan membuka perangkat, anda tidak punya ijin."
 #: libgammu/gsmcomon.c:90
 msgid "Error opening device. No required driver in operating system."
 msgstr ""
-"Kesalahan membuka perangkat, Tidak dibutuhkan driver dalam sistem operasi."
+"Kesalahan dalam membuka perangkat. Tidak ada driver yang dibutuhkan dalam "
+"sistem operasi."
 
 #: libgammu/gsmcomon.c:91
 msgid "Error opening device. Some hardware not connected/wrongly configured."
