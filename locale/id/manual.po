@@ -2637,9 +2637,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:471 docs/manual/protocol/n7110.rst:219
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "0x13: Calendar notes\n"
-msgstr "Catatan kalender"
+msgstr "0x13: Catatan kalender\n"
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:472
