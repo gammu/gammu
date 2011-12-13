@@ -1971,7 +1971,7 @@ msgstr "-f / --debug-file <filename> ... file untuk mencatat pesan kesalahan"
 
 #: gammu/gammu.c:756
 msgid "Commands can be specified with or without leading --."
-msgstr "Perintah dapat diikuti dengan atau tanpa awalan --"
+msgstr "Perintah dapat dispesifikasikan dengan atau tanpa awalan --."
 
 #: gammu/gammu.c:759
 msgid ""
