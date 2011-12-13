@@ -28679,9 +28679,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:1094
-#, fuzzy
 msgid "errorsdate"
-msgstr "Tidak ada Kesalahan"
+msgstr "errorsdate"
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:1096
