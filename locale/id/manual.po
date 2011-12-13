@@ -14308,9 +14308,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/smsd/config.rst:479
-#, fuzzy
 msgid "``unicode``"
-msgstr "Unicode"
+msgstr "``unicode``"
 
 #. type: Plain text
 #: docs/manual/smsd/config.rst:480
