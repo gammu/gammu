@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-13 14:46+0100\n"
-"PO-Revision-Date: 2011-12-13 16:01+0200\n"
+"PO-Revision-Date: 2011-12-13 16:02+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -32780,9 +32780,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/c/memory.rst:23
-#, fuzzy
 msgid "GSM_EntryLocation"
-msgstr "Lokasi"
+msgstr "GSM_EntryLocation"
 
 #. type: Plain text
 #: docs/manual/c/memory.rst:24
@@ -33128,15 +33127,13 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/c/ringtone.rst:7
-#, fuzzy
 msgid "GSM_GetRingtone"
-msgstr "Nada dering"
+msgstr "GSM_GetRingtone"
 
 #. type: Plain text
 #: docs/manual/c/ringtone.rst:8
-#, fuzzy
 msgid "GSM_SetRingtone"
-msgstr "Nada dering"
+msgstr "GSM_SetRingtone"
 
 #. type: Plain text
 #: docs/manual/c/ringtone.rst:9
