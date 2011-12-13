@@ -1503,7 +1503,7 @@ msgstr "Non-aktiv pencarian dari udev."
 
 #: gammu-detect/main.c:61
 msgid "Disables scanning using Bluez."
-msgstr "Non-aktiv pencarian menggunakan Bluez"
+msgstr "Nonaktifkan pencarian dengan Bluez."
 
 #: gammu-detect/main.c:64
 msgid "Disables scanning of Windows serial ports."
