@@ -1361,7 +1361,7 @@ msgstr " (Teks: catatan)"
 
 #: gammu/depend/nokia/dct4.c:1341
 msgid " (Phone number)"
-msgstr "(Nomor telepon)"
+msgstr " (Nomor telepon)"
 
 #: gammu/depend/nokia/dct4.c:1342
 msgid " (Ringtone ID)"
