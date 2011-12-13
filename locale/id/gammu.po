@@ -1074,7 +1074,7 @@ msgstr "Status keamanan"
 #: gammu/common.c:312 gammu/misc.c:1170 gammu/misc.c:1185 gammu/misc.c:1192
 #: gammu/misc.c:1199 gammu/misc.c:1229
 msgid "More parameters required!"
-msgstr "Parameter lain dibutuhkan"
+msgstr "Dibutuhkan parameter tambahan!"
 
 #: gammu/common.c:318 gammu/common.c:328 gammu/depend/nokia/dct4.c:687
 #: gammu/misc.c:1341
