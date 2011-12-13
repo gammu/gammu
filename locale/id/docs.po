@@ -491,7 +491,7 @@ msgstr ""
 #~ msgstr "Informasi gammu"
 
 #~ msgid "File formats used by Gammu"
-#~ msgstr "Format file tidak didukung oleh Gammu."
+#~ msgstr "Format file yang digunakan Gammu"
 
 #~ msgid "Call"
 #~ msgstr "Panggilan"
