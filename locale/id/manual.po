@@ -33267,9 +33267,8 @@ msgstr "GSM_Ringtone"
 
 #. type: Plain text
 #: docs/manual/c/ringtone.rst:35
-#, fuzzy
 msgid "GSM_RingtoneInfo"
-msgstr "Nada dering"
+msgstr "GSM_RingtoneInfo"
 
 #. type: Plain text
 #: docs/manual/c/ringtone.rst:35
