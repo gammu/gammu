@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-13 17:15+0200\n"
+"PO-Revision-Date: 2011-12-13 17:16+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -800,7 +800,7 @@ msgstr "24 jam"
 
 #: gammu/calendar.c:417
 msgid "Date format is "
-msgstr "Format tanggal adalah"
+msgstr "Format tanggal adalah "
 
 #: gammu/calendar.c:420
 msgid "DD MM YYYY"
