@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: libGammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-13 21:28+0200\n"
+"PO-Revision-Date: 2011-12-13 21:29+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -327,7 +327,7 @@ msgstr "Tidak dapat terhubung ke server."
 
 #: libgammu/gsmcomon.c:151
 msgid "Could not resolve the host name."
-msgstr "Tidak dapat mengartikan nama host"
+msgstr "Tidak dapat mengartikan nama host."
 
 #: libgammu/gsmcomon.c:152
 msgid "Failed to get SMSC number from phone."
