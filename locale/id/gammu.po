@@ -953,7 +953,7 @@ msgstr "Menunggu untuk Kode Keamanan."
 
 #: gammu/common.c:45
 msgid "Waiting for PIN."
-msgstr "Menunggu PIN"
+msgstr "Menunggu PIN."
 
 #: gammu/common.c:48
 msgid "Waiting for PIN2."
