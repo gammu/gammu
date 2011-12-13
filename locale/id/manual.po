@@ -8710,9 +8710,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/protocol/nokia-s40-sms.rst:15
-#, fuzzy
 msgid "rest is not known"
-msgstr "Layanan tidak berjalan."
+msgstr "sisanya tidak diketahui"
 
 #. type: Plain text
 #: docs/manual/protocol/nokia-s40-sms.rst:16
