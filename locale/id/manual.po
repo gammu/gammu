@@ -30358,9 +30358,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/c/call.rst:21
-#, fuzzy
 msgid "GSM_Call"
-msgstr "Panggilan"
+msgstr "GSM_Call"
 
 #. type: Plain text
 #: docs/manual/c/call.rst:22
