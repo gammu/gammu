@@ -1234,7 +1234,7 @@ msgstr "hasil mentah %10i "
 #: gammu/depend/nokia/dct4.c:1024
 #, c-format
 msgid "unit result %10i "
-msgstr "hasil unit % 10i"
+msgstr "hasil unit % 10i "
 
 #: gammu/depend/nokia/dct4.c:1037
 msgid "Battery voltage, divided:"
