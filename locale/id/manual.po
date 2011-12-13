@@ -32215,9 +32215,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/c/message.rst:43
-#, fuzzy
 msgid "GSM_SMSCounter"
-msgstr "Kategori"
+msgstr "GSM_SMSCounter"
 
 #. type: Plain text
 #: docs/manual/c/message.rst:44
