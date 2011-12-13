@@ -31040,9 +31040,8 @@ msgstr "Catatan kalender"
 
 #. type: Plain text
 #: docs/manual/c/calendar.rst:41
-#, fuzzy
 msgid "GSM_CalendarType"
-msgstr "Kalender"
+msgstr "GSM_CalendarType"
 
 #. type: Plain text
 #: docs/manual/c/calendar.rst:42
