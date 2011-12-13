@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-13 14:46+0100\n"
-"PO-Revision-Date: 2011-12-13 16:02+0200\n"
+"PO-Revision-Date: 2011-12-13 16:03+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -33247,9 +33247,8 @@ msgstr "GSM_NoteRingtone"
 
 #. type: Plain text
 #: docs/manual/c/ringtone.rst:31
-#, fuzzy
 msgid "GSM_NokiaBinaryRingtone"
-msgstr "Nada dering"
+msgstr "GSM_NokiaBinaryRingtone"
 
 #. type: Plain text
 #: docs/manual/c/ringtone.rst:32
