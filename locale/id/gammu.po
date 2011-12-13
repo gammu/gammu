@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-13 17:17+0200\n"
+"PO-Revision-Date: 2011-12-13 17:18+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1228,7 +1228,7 @@ msgstr "Apa yang harus saya lakukan (\"%s\") ?\n"
 #: gammu/depend/nokia/dct4.c:1020
 #, c-format
 msgid "raw result %10i "
-msgstr "hasil mentah %10i"
+msgstr "hasil mentah %10i "
 
 #. l10n: Processed data for A/D convertor
 #: gammu/depend/nokia/dct4.c:1024
