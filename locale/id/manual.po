@@ -5277,9 +5277,9 @@ msgstr ""
 #. type: Title ~
 #: docs/manual/protocol/carkit.rst:116 docs/manual/protocol/carkit.rst:260
 #: docs/manual/protocol/carkit.rst:461 docs/manual/protocol/carkit.rst:621
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Disconnected"
-msgstr "Telepon tidak terhubung."
+msgstr "Tidak terhubung"
 
 #. type: Plain text
 #: docs/manual/protocol/carkit.rst:120
