@@ -28461,9 +28461,9 @@ msgstr ""
 
 #. type: delimited block -
 #: docs/manual/python/gammu.rst:955
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "      Sets memory (phonebooks or calls) entry.\n"
-msgstr "Memori (buku telepon dan panggilan)"
+msgstr "      Mengatur memori (buku telepon atau panggilan) entri.\n"
 
 #. type: delimited block -
 #: docs/manual/python/gammu.rst:963
