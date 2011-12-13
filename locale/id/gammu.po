@@ -742,7 +742,7 @@ msgstr " pada tiap-tiap "
 #: gammu/calendar.c:330
 #, c-format
 msgid " on each %d. "
-msgstr "pada tiap-tiap %d."
+msgstr " pada tiap-tiap %d. "
 
 #: gammu/calendar.c:335
 #, c-format
