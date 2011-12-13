@@ -1438,7 +1438,7 @@ msgstr "(ID Grup (6230i atau lebih baru)"
 
 #: gammu/depend/nokia/dct4.c:1363
 msgid ", type "
-msgstr ", tipe"
+msgstr ", tipe "
 
 #: gammu/depend/nokia/dct4.c:1365
 msgid "string"
