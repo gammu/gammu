@@ -32612,9 +32612,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/c/memory.rst:23
-#, fuzzy
 msgid "GSM_EntryLocation"
-msgstr "Lokasi"
+msgstr "GSM_EntryLocation"
 
 #. type: Plain text
 #: docs/manual/c/memory.rst:24
