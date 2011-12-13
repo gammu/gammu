@@ -395,7 +395,7 @@ msgstr ""
 #~ msgstr "Keabsahan"
 
 #~ msgid "Unknown"
-#~ msgstr "Kesalahan tidak diketahui."
+#~ msgstr "Tidak dikenal"
 
 #~ msgid "Left"
 #~ msgstr "Kiri"
