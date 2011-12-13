@@ -1217,7 +1217,7 @@ msgstr "UEM"
 #: gammu/depend/nokia/dct4.c:961
 #, c-format
 msgid "What lights should I enable (\"%s\") ?\n"
-msgstr "Lampu apa yang harus saya aktifkan (\"%s\") ? \n"
+msgstr "Lampu apa yang harus saya aktifkan (\"%s\") ?\n"
 
 #: gammu/depend/nokia/dct4.c:968
 #, c-format
