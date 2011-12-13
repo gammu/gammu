@@ -1731,7 +1731,7 @@ msgstr "%lu Bytes dalam %li detik, %lu Bytes/detik"
 #: gammu/files.c:452
 #, c-format
 msgid "  Saving to %s\n"
-msgstr "Menyimpan ke %s\n"
+msgstr "  Simpan ke %s\n"
 
 #: gammu/files.c:702 gammu/nokia.c:946
 #, c-format
