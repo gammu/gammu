@@ -616,7 +616,8 @@ msgstr ""
 
 #~ msgid "Error opening device. No required driver in operating system."
 #~ msgstr ""
-#~ "Kesalahan membuka perangkat, Tidak dibutuhkan driver dalam sistem operasi."
+#~ "Kesalahan dalam membuka perangkat. Tidak ada driver yang dibutuhkan dalam "
+#~ "sistem operasi."
 
 #~ msgid ""
 #~ "Error opening device. Some hardware not connected/wrongly configured."
