@@ -3081,9 +3081,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:575 docs/manual/protocol/n7110.rst:521
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "where: error=0x05\n"
-msgstr "Tidak ada Kesalahan"
+msgstr "dimana: eror=0x05\n"
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:576
