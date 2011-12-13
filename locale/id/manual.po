@@ -14026,7 +14026,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/smsd/config.rst:362
 msgid "Password"
-msgstr "kata sandi"
+msgstr "Password"
 
 #. type: Plain text
 #: docs/manual/smsd/config.rst:364
