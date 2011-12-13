@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-13 14:46+0100\n"
-"PO-Revision-Date: 2011-12-13 15:59+0200\n"
+"PO-Revision-Date: 2011-12-13 16:00+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -31530,9 +31530,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/c/info.rst:28
-#, fuzzy
 msgid "GSM_NetworkInfo"
-msgstr "Jaringan"
+msgstr "GSM_NetworkInfo"
 
 #. type: Plain text
 #: docs/manual/c/info.rst:29
@@ -31597,15 +31596,13 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/c/category.rst:8
-#, fuzzy
 msgid "GSM_CategoryType"
-msgstr "Kategori"
+msgstr "GSM_CategoryType"
 
 #. type: Plain text
 #: docs/manual/c/category.rst:9
-#, fuzzy
 msgid "GSM_Category"
-msgstr "Kategori"
+msgstr "GSM_Category"
 
 #. type: Plain text
 #: docs/manual/c/category.rst:9
