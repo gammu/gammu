@@ -399,7 +399,7 @@ msgstr "Kotak masuk"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:580
 msgid "Sent items"
-msgstr "Terkirim."
+msgstr "Item terkirim"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:581
 msgid "Saved items"
