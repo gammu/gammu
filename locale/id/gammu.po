@@ -2028,7 +2028,7 @@ msgstr "Konfigurasi tidak dapat diolah!"
 
 #: gammu/gammu.c:1086
 msgid "No configuration file found!"
-msgstr "File konfigurasi tidak ditemukan"
+msgstr "File konfigurasi tidak ditemukan!"
 
 #: gammu/gammu.c:1106
 msgid "Failed to allocate memory, aborting!\n"
