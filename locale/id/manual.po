@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-13 14:46+0100\n"
-"PO-Revision-Date: 2011-12-13 16:00+0200\n"
+"PO-Revision-Date: 2011-12-13 16:01+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -32383,9 +32383,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/c/message.rst:43
-#, fuzzy
 msgid "GSM_SMSCounter"
-msgstr "Kategori"
+msgstr "GSM_SMSCounter"
 
 #. type: Plain text
 #: docs/manual/c/message.rst:44
@@ -32609,9 +32608,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/c/file.rst:19
-#, fuzzy
 msgid "GSM_FileSystemStatus"
-msgstr "File sistem"
+msgstr "GSM_FileSystemStatus"
 
 #. type: Plain text
 #: docs/manual/c/file.rst:20
@@ -32661,9 +32659,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/c/inifile.rst:11
-#, fuzzy
 msgid "GSM_StringToBool"
-msgstr "Nada dering"
+msgstr "GSM_StringToBool"
 
 #. type: Plain text
 #: docs/manual/c/inifile.rst:13
