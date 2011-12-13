@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-13 17:24+0200\n"
+"PO-Revision-Date: 2011-12-13 17:25+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -662,7 +662,7 @@ msgstr "Alarm nada"
 #: gammu/calendar.c:178 gammu/calendar.c:199
 #, c-format
 msgid "forever on each %i. day of %s"
-msgstr "selamanya pada setiap % i. hari dari % s"
+msgstr "selamanya pada setiap %i. hari dari %s"
 
 #: gammu/calendar.c:197 gammu/calendar.c:209 gammu/calendar.c:761
 msgid "Silent alarm"
