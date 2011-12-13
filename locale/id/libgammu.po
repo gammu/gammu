@@ -159,7 +159,7 @@ msgstr "Diperlukan memori lebih..."
 
 #: libgammu/gsmcomon.c:113
 msgid "Operation not allowed by phone."
-msgstr "Operasi tidak diizinkan oleh telepon,"
+msgstr "Operasi tidak diijinkan oleh telepon."
 
 #: libgammu/gsmcomon.c:114
 msgid ""
