@@ -386,7 +386,7 @@ msgstr ""
 #~ msgstr "``NokiaRingtone``"
 
 #~ msgid "Name of the SMSC configuration"
-#~ msgstr "Fitur string buruk dalam konfigurasi."
+#~ msgstr "Nama konfigurasi SMSC"
 
 #~ msgid "Format"
 #~ msgstr "Format"
