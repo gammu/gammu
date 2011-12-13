@@ -19479,9 +19479,8 @@ msgstr ""
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1518
-#, fuzzy
 msgid "Clear phone settings."
-msgstr "Pengaturan telepon"
+msgstr "Kosongkan pengaturan telepon."
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1520
