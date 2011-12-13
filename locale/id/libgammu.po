@@ -431,7 +431,7 @@ msgstr "Rapat"
 
 #: libgammu/phone/nokia/nfunc.c:1151
 msgid "Outdoor"
-msgstr "Luar ruangan."
+msgstr "Luar ruangan"
 
 #: libgammu/phone/nokia/nfunc.c:1153
 msgid "Pager"
