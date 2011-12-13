@@ -179,7 +179,7 @@ msgstr ""
 #~ msgstr "Telepon tidak terhubung."
 
 #~ msgid "0x7a: settings\n"
-#~ msgstr "Pengaturan telepon"
+#~ msgstr "0x7a: pengaturan\n"
 
 #~ msgid "Phone Protocols"
 #~ msgstr "Tes telepon"
