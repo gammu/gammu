@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-13 17:02+0200\n"
+"PO-Revision-Date: 2011-12-13 17:03+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1537,11 +1537,10 @@ msgid "Windows serial port probing"
 msgstr "Penyelidikan Windows serial port."
 
 #: gammu-detect/main.c:87
-#, fuzzy
 msgid ""
 "Copyright (C) 2010 - 2011 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
-"Copyright (C) 2003 - 2009 Michal Cihar <michal@cihar.com> dan penulis "
+"Copyright (C) 2010 - 2011 Michal Cihar <michal@cihar.com> dan penulis "
 "lainnya."
 
 #: gammu-detect/main.c:89 gammu/gammu.c:331
