@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-13 22:23+0200\n"
+"PO-Revision-Date: 2011-12-13 22:24+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1353,7 +1353,7 @@ msgstr "(Teks: alamat email)"
 
 #: gammu/depend/nokia/dct4.c:1339
 msgid " (Text: postal address)"
-msgstr "(teks: alamat post)"
+msgstr "(Teks: alamat pos)"
 
 #: gammu/depend/nokia/dct4.c:1340
 msgid " (Text: note)"
