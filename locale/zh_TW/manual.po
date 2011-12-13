@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu-manual 1.30.92\n"
+"Project-Id-Version: Gammu-manual 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-11-02 09:09+0100\n"
+"POT-Creation-Date: 2011-12-13 14:46+0100\n"
 "PO-Revision-Date: 2011-01-10 12:07+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -162,13 +162,13 @@ msgid "Device connection parameters"
 msgstr ""
 
 #. type: Labeled list
-#: docs/manual/config/index.rst:51 docs/manual/config/index.rst:106
-#: docs/manual/config/index.rst:175 docs/manual/config/index.rst:181
-#: docs/manual/config/index.rst:199 docs/manual/config/index.rst:212
-#: docs/manual/config/index.rst:216 docs/manual/config/index.rst:227
-#: docs/manual/config/index.rst:236 docs/manual/config/index.rst:258
-#: docs/manual/config/index.rst:269 docs/manual/config/index.rst:275
-#: docs/manual/config/index.rst:284 docs/manual/smsd/sql.rst:106
+#: docs/manual/config/index.rst:51 docs/manual/config/index.rst:108
+#: docs/manual/config/index.rst:179 docs/manual/config/index.rst:185
+#: docs/manual/config/index.rst:203 docs/manual/config/index.rst:216
+#: docs/manual/config/index.rst:220 docs/manual/config/index.rst:231
+#: docs/manual/config/index.rst:240 docs/manual/config/index.rst:262
+#: docs/manual/config/index.rst:273 docs/manual/config/index.rst:279
+#: docs/manual/config/index.rst:288 docs/manual/smsd/sql.rst:106
 #: docs/manual/smsd/sql.rst:116 docs/manual/smsd/sql.rst:134
 #: docs/manual/smsd/sql.rst:145 docs/manual/smsd/sql.rst:162
 #: docs/manual/smsd/sql.rst:179 docs/manual/smsd/sql.rst:190
@@ -180,27 +180,28 @@ msgstr ""
 #: docs/manual/smsd/sql.rst:383 docs/manual/smsd/config.rst:56
 #: docs/manual/smsd/config.rst:93 docs/manual/smsd/config.rst:98
 #: docs/manual/smsd/config.rst:103 docs/manual/smsd/config.rst:108
-#: docs/manual/smsd/config.rst:120 docs/manual/smsd/config.rst:136
-#: docs/manual/smsd/config.rst:142 docs/manual/smsd/config.rst:149
-#: docs/manual/smsd/config.rst:155 docs/manual/smsd/config.rst:163
-#: docs/manual/smsd/config.rst:170 docs/manual/smsd/config.rst:179
-#: docs/manual/smsd/config.rst:187 docs/manual/smsd/config.rst:193
-#: docs/manual/smsd/config.rst:199 docs/manual/smsd/config.rst:205
-#: docs/manual/smsd/config.rst:214 docs/manual/smsd/config.rst:228
-#: docs/manual/smsd/config.rst:241 docs/manual/smsd/config.rst:250
-#: docs/manual/smsd/config.rst:261 docs/manual/smsd/config.rst:280
-#: docs/manual/smsd/config.rst:295 docs/manual/smsd/config.rst:302
-#: docs/manual/smsd/config.rst:309 docs/manual/smsd/config.rst:316
-#: docs/manual/smsd/config.rst:323 docs/manual/smsd/config.rst:332
-#: docs/manual/smsd/config.rst:340 docs/manual/smsd/config.rst:357
-#: docs/manual/smsd/config.rst:361 docs/manual/smsd/config.rst:365
-#: docs/manual/smsd/config.rst:381 docs/manual/smsd/config.rst:387
-#: docs/manual/smsd/config.rst:393 docs/manual/smsd/config.rst:399
-#: docs/manual/smsd/config.rst:411 docs/manual/smsd/config.rst:430
-#: docs/manual/smsd/config.rst:435 docs/manual/smsd/config.rst:447
-#: docs/manual/smsd/config.rst:453 docs/manual/smsd/config.rst:459
-#: docs/manual/smsd/config.rst:466 docs/manual/smsd/config.rst:472
-#: docs/manual/smsd/config.rst:493 docs/manual/smsd/config.rst:501
+#: docs/manual/smsd/config.rst:120 docs/manual/smsd/config.rst:138
+#: docs/manual/smsd/config.rst:154 docs/manual/smsd/config.rst:160
+#: docs/manual/smsd/config.rst:167 docs/manual/smsd/config.rst:173
+#: docs/manual/smsd/config.rst:181 docs/manual/smsd/config.rst:188
+#: docs/manual/smsd/config.rst:200 docs/manual/smsd/config.rst:208
+#: docs/manual/smsd/config.rst:214 docs/manual/smsd/config.rst:220
+#: docs/manual/smsd/config.rst:226 docs/manual/smsd/config.rst:235
+#: docs/manual/smsd/config.rst:249 docs/manual/smsd/config.rst:262
+#: docs/manual/smsd/config.rst:271 docs/manual/smsd/config.rst:282
+#: docs/manual/smsd/config.rst:301 docs/manual/smsd/config.rst:316
+#: docs/manual/smsd/config.rst:323 docs/manual/smsd/config.rst:330
+#: docs/manual/smsd/config.rst:337 docs/manual/smsd/config.rst:344
+#: docs/manual/smsd/config.rst:353 docs/manual/smsd/config.rst:361
+#: docs/manual/smsd/config.rst:378 docs/manual/smsd/config.rst:382
+#: docs/manual/smsd/config.rst:386 docs/manual/smsd/config.rst:402
+#: docs/manual/smsd/config.rst:408 docs/manual/smsd/config.rst:414
+#: docs/manual/smsd/config.rst:420 docs/manual/smsd/config.rst:432
+#: docs/manual/smsd/config.rst:451 docs/manual/smsd/config.rst:456
+#: docs/manual/smsd/config.rst:468 docs/manual/smsd/config.rst:474
+#: docs/manual/smsd/config.rst:480 docs/manual/smsd/config.rst:487
+#: docs/manual/smsd/config.rst:493 docs/manual/smsd/config.rst:514
+#: docs/manual/smsd/config.rst:522
 #, fuzzy, no-wrap
 msgid ".. config:option"
 msgstr "手機資訊"
@@ -390,14 +391,15 @@ msgid "Connection to Series60 applet in S60 phones, see :ref:`s60`."
 msgstr ""
 
 #. type: Labeled list
-#: docs/manual/config/index.rst:104 docs/manual/config/index.rst:108
+#: docs/manual/config/index.rst:104 docs/manual/config/index.rst:110
 #: docs/manual/smsd/tables.rst:109 docs/manual/smsd/tables.rst:115
-#: docs/manual/smsd/config.rst:67 docs/manual/smsd/config.rst:216
-#: docs/manual/smsd/config.rst:282 docs/manual/smsd/config.rst:334
-#: docs/manual/smsd/config.rst:342 docs/manual/smsd/config.rst:379
-#: docs/manual/smsd/config.rst:426 docs/manual/gammu/index.rst:1192
-#: docs/manual/testing/dummy-driver.rst:6 docs/manual/python/gammu.rst:1124
-#: docs/manual/python/gammu.rst:1168 docs/manual/utils/gammu-detect.rst:7
+#: docs/manual/smsd/config.rst:67 docs/manual/smsd/config.rst:136
+#: docs/manual/smsd/config.rst:237 docs/manual/smsd/config.rst:303
+#: docs/manual/smsd/config.rst:355 docs/manual/smsd/config.rst:363
+#: docs/manual/smsd/config.rst:400 docs/manual/smsd/config.rst:447
+#: docs/manual/gammu/index.rst:1199 docs/manual/testing/dummy-driver.rst:6
+#: docs/manual/python/gammu.rst:1124 docs/manual/python/gammu.rst:1168
+#: docs/manual/utils/gammu-detect.rst:7
 #, no-wrap
 msgid ".. versionadded"
 msgstr ""
@@ -408,23 +410,46 @@ msgstr ""
 msgid "1.29.90"
 msgstr ""
 
+#. type: Labeled list
+#: docs/manual/config/index.rst:106 docs/manual/config/index.rst:177
+#: docs/manual/smsd/sql.rst:35 docs/manual/smsd/config.rst:51
+#: docs/manual/smsd/config.rst:449 docs/manual/gammu/index.rst:1195
+#: docs/manual/gammu/index.rst:1205 docs/manual/project/directories.rst:165
+#: docs/manual/project/directories.rst:199 docs/manual/project/testing.rst:8
+#: docs/manual/project/install.rst:71 docs/manual/project/install.rst:78
+#: docs/manual/project/install.rst:86 docs/manual/project/install.rst:93
+#: docs/manual/project/install.rst:100 docs/manual/project/install.rst:107
+#: docs/manual/project/install.rst:114 docs/manual/project/install.rst:123
+#: docs/manual/project/install.rst:132 docs/manual/project/install.rst:139
+#: docs/manual/project/install.rst:146 docs/manual/project/install.rst:153
+#: docs/manual/project/install.rst:160 docs/manual/formats/backup.rst:56
+#: docs/manual/c/porting.rst:51
+#, no-wrap
+msgid ".. seealso"
+msgstr ""
+
 #. type: Plain text
-#: docs/manual/config/index.rst:107
+#: docs/manual/config/index.rst:107 docs/manual/config/index.rst:178
+msgid ":ref:`faq-config`"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/config/index.rst:109
 msgid "Device"
 msgstr "設備"
 
 #. type: Plain text
-#: docs/manual/config/index.rst:109 docs/manual/config/index.rst:178
+#: docs/manual/config/index.rst:111 docs/manual/config/index.rst:182
 msgid "1.27.95"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:111
+#: docs/manual/config/index.rst:113
 msgid "Device node or address of phone. It depends on used connection."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:117
+#: docs/manual/config/index.rst:119
 msgid ""
 "For **cables** or emulated serial ports, you enter device name (for example "
 "``/dev/ttyS0``, ``/dev/ttyACM0``, ``/dev/ircomm0``, ``/dev/rfcomm0`` on "
@@ -435,20 +460,20 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:120
+#: docs/manual/config/index.rst:122
 msgid ""
 "For **USB** connections (currently only fbususb and dku2 on Linux), you can "
 "specify to which USB device Gammu should connect. You can either provide"
 msgstr ""
 
 #. type: Labeled list
-#: docs/manual/config/index.rst:120
+#: docs/manual/config/index.rst:122
 #, no-wrap
 msgid "vendor/product IDs or device address on USB"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:127
+#: docs/manual/config/index.rst:129
 #, no-wrap
 msgid ""
 "Device = 0x1234:0x5678  # Match device by vendor and product id\n"
@@ -459,20 +484,20 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:129 docs/manual/config/index.rst:165
-#: docs/manual/config/index.rst:232 docs/manual/protocol/n6110.rst:26
+#: docs/manual/config/index.rst:131 docs/manual/config/index.rst:167
+#: docs/manual/config/index.rst:236 docs/manual/protocol/n6110.rst:26
 #: docs/manual/protocol/n7110.rst:23 docs/manual/protocol/nokia.rst:32
 #: docs/manual/protocol/index.rst:26 docs/manual/smsd/dbi.rst:15
 #: docs/manual/smsd/dbi.rst:43 docs/manual/smsd/tables.rst:490
 #: docs/manual/smsd/pgsql.rst:25 docs/manual/smsd/run.rst:26
-#: docs/manual/smsd/config.rst:90 docs/manual/smsd/config.rst:374
-#: docs/manual/smsd/config.rst:489 docs/manual/smsd/mysql.rst:27
+#: docs/manual/smsd/config.rst:90 docs/manual/smsd/config.rst:395
+#: docs/manual/smsd/config.rst:510 docs/manual/smsd/mysql.rst:27
 #: docs/manual/smsd/mysql.rst:42 docs/manual/gammu/index.rst:471
 #: docs/manual/gammu/index.rst:571 docs/manual/gammu/index.rst:581
 #: docs/manual/gammu/index.rst:595 docs/manual/gammu/index.rst:982
 #: docs/manual/gammu/index.rst:1028 docs/manual/gammu/index.rst:1056
-#: docs/manual/gammu/index.rst:1065 docs/manual/gammu/index.rst:1320
-#: docs/manual/gammu/index.rst:1344 docs/manual/gammu/index.rst:1838
+#: docs/manual/gammu/index.rst:1065 docs/manual/gammu/index.rst:1327
+#: docs/manual/gammu/index.rst:1351 docs/manual/gammu/index.rst:1845
 #: docs/manual/project/directories.rst:113
 #: docs/manual/project/motivation.rst:5 docs/manual/formats/smsbackup.rst:44
 #: docs/manual/c/hints.rst:161 docs/manual/utils/gammu-detect.rst:24
@@ -481,7 +506,7 @@ msgid "note::"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:134
+#: docs/manual/config/index.rst:136
 msgid ""
 "On Linux systems, you might lack permissions for some device nodes.  You "
 "might need to be member of some group (eg. :samp:`plugdev` or :samp:"
@@ -490,7 +515,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:138
+#: docs/manual/config/index.rst:140
 msgid ""
 "For Nokia phones you can put follofing file (also available in sources as :"
 "file:`contrib/udev/45-nokiadku2.rules`) as :file:`/etc/udev/rules.d/45-"
@@ -498,7 +523,7 @@ msgid ""
 msgstr ""
 
 #. type: Labeled list
-#: docs/manual/config/index.rst:139 docs/manual/config/index.rst:362
+#: docs/manual/config/index.rst:141 docs/manual/config/index.rst:366
 #: docs/manual/smsd/dbi.rst:39 docs/manual/smsd/pgsql.rst:21
 #: docs/manual/smsd/mysql.rst:38 docs/manual/python/examples.rst:12
 #: docs/manual/python/examples.rst:18 docs/manual/python/examples.rst:24
@@ -511,17 +536,17 @@ msgid ".. literalinclude"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:140
+#: docs/manual/config/index.rst:142
 msgid "../../../contrib/udev/45-nokiadku2.rules"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:141
+#: docs/manual/config/index.rst:143
 msgid ":language: sh"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:145
+#: docs/manual/config/index.rst:147
 msgid ""
 "In case your USB device appears as the serial port in the system (eg.  ``/"
 "dev/ttyACM0`` on Linux or ``COM5:`` on Windows), just use same setup as with "
@@ -529,7 +554,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:150
+#: docs/manual/config/index.rst:152
 msgid ""
 "For **Bluetooth** connection you have to enter Bluetooth address of your "
 "phone (you can list Bluetooth devices in range on Linux using :command:"
@@ -538,29 +563,29 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:153
+#: docs/manual/config/index.rst:155
 msgid ""
 "Before using Gammu, your device should be paired with computer or you should "
 "have set up automatic pairing."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:155
+#: docs/manual/config/index.rst:157
 msgid "For **IrDA** connections, this parameters is not used at all."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:158
+#: docs/manual/config/index.rst:160
 msgid ""
 "If IrDA does not work on Linux, you might need to bring up the interface and "
 "enable discovery (you need to run these commands as root):"
 msgstr ""
 
 #. type: Labeled list
-#: docs/manual/config/index.rst:159 docs/manual/config/index.rst:170
-#: docs/manual/config/index.rst:301 docs/manual/config/index.rst:310
-#: docs/manual/config/index.rst:319 docs/manual/config/index.rst:327
-#: docs/manual/config/index.rst:341 docs/manual/smsd/sql.rst:112
+#: docs/manual/config/index.rst:161 docs/manual/config/index.rst:172
+#: docs/manual/config/index.rst:305 docs/manual/config/index.rst:314
+#: docs/manual/config/index.rst:323 docs/manual/config/index.rst:331
+#: docs/manual/config/index.rst:345 docs/manual/smsd/sql.rst:112
 #: docs/manual/smsd/sql.rst:122 docs/manual/smsd/sql.rst:140
 #: docs/manual/smsd/sql.rst:151 docs/manual/smsd/sql.rst:168
 #: docs/manual/smsd/sql.rst:185 docs/manual/smsd/sql.rst:196
@@ -574,30 +599,30 @@ msgstr ""
 #: docs/manual/smsd/tables.rst:426 docs/manual/smsd/tables.rst:456
 #: docs/manual/smsd/run.rst:103 docs/manual/smsd/run.rst:114
 #: docs/manual/smsd/run.rst:129 docs/manual/smsd/run.rst:145
-#: docs/manual/smsd/run.rst:162 docs/manual/smsd/config.rst:546
-#: docs/manual/smsd/config.rst:562 docs/manual/smsd/config.rst:579
-#: docs/manual/smsd/config.rst:592 docs/manual/smsd/config.rst:601
-#: docs/manual/smsd/config.rst:624 docs/manual/smsd/config.rst:631
-#: docs/manual/smsd/config.rst:641 docs/manual/smsd/inject.rst:11
-#: docs/manual/smsd/inject.rst:53 docs/manual/smsd/inject.rst:59
-#: docs/manual/smsd/inject.rst:65 docs/manual/smsd/inject.rst:71
-#: docs/manual/smsd/inject.rst:77 docs/manual/smsd/inject.rst:83
-#: docs/manual/smsd/inject.rst:89 docs/manual/smsd/mysql.rst:20
+#: docs/manual/smsd/run.rst:162 docs/manual/smsd/config.rst:567
+#: docs/manual/smsd/config.rst:583 docs/manual/smsd/config.rst:600
+#: docs/manual/smsd/config.rst:613 docs/manual/smsd/config.rst:622
+#: docs/manual/smsd/config.rst:645 docs/manual/smsd/config.rst:652
+#: docs/manual/smsd/config.rst:662 docs/manual/smsd/inject.rst:11
+#: docs/manual/smsd/inject.rst:61 docs/manual/smsd/inject.rst:67
+#: docs/manual/smsd/inject.rst:73 docs/manual/smsd/inject.rst:79
+#: docs/manual/smsd/inject.rst:85 docs/manual/smsd/inject.rst:91
+#: docs/manual/smsd/inject.rst:97 docs/manual/smsd/mysql.rst:20
 #: docs/manual/smsd/monitor.rst:11 docs/manual/smsd/monitor.rst:52
-#: docs/manual/smsd/smsd.rst:11 docs/manual/smsd/smsd.rst:109
-#: docs/manual/smsd/smsd.rst:115 docs/manual/smsd/smsd.rst:134
-#: docs/manual/smsd/smsd.rst:140 docs/manual/smsd/smsd.rst:148
-#: docs/manual/smsd/smsd.rst:163 docs/manual/gammu/index.rst:12
-#: docs/manual/gammu/index.rst:1234 docs/manual/gammu/index.rst:1240
-#: docs/manual/gammu/index.rst:1246 docs/manual/gammu/index.rst:1843
-#: docs/manual/gammu/index.rst:1849 docs/manual/gammu/index.rst:1855
-#: docs/manual/gammu/index.rst:1861 docs/manual/gammu/index.rst:1867
-#: docs/manual/gammu/index.rst:1873 docs/manual/gammu/index.rst:1879
-#: docs/manual/gammu/index.rst:1888 docs/manual/gammu/index.rst:1894
-#: docs/manual/gammu/index.rst:1903 docs/manual/gammu/index.rst:1917
-#: docs/manual/gammu/index.rst:1923 docs/manual/gammu/index.rst:1929
-#: docs/manual/gammu/index.rst:1943 docs/manual/gammu/index.rst:1952
-#: docs/manual/project/documentation.rst:18
+#: docs/manual/smsd/smsd.rst:11 docs/manual/smsd/smsd.rst:117
+#: docs/manual/smsd/smsd.rst:123 docs/manual/smsd/smsd.rst:142
+#: docs/manual/smsd/smsd.rst:148 docs/manual/smsd/smsd.rst:156
+#: docs/manual/smsd/smsd.rst:171 docs/manual/gammu/index.rst:12
+#: docs/manual/gammu/index.rst:1241 docs/manual/gammu/index.rst:1247
+#: docs/manual/gammu/index.rst:1253 docs/manual/gammu/index.rst:1850
+#: docs/manual/gammu/index.rst:1856 docs/manual/gammu/index.rst:1862
+#: docs/manual/gammu/index.rst:1868 docs/manual/gammu/index.rst:1874
+#: docs/manual/gammu/index.rst:1880 docs/manual/gammu/index.rst:1886
+#: docs/manual/gammu/index.rst:1896 docs/manual/gammu/index.rst:1905
+#: docs/manual/gammu/index.rst:1911 docs/manual/gammu/index.rst:1920
+#: docs/manual/gammu/index.rst:1934 docs/manual/gammu/index.rst:1940
+#: docs/manual/gammu/index.rst:1946 docs/manual/gammu/index.rst:1960
+#: docs/manual/gammu/index.rst:1969 docs/manual/project/documentation.rst:18
 #: docs/manual/project/documentation.rst:25
 #: docs/manual/project/documentation.rst:47
 #: docs/manual/project/documentation.rst:55
@@ -609,11 +634,12 @@ msgstr ""
 #: docs/manual/project/install.rst:204 docs/manual/project/install.rst:211
 #: docs/manual/project/install.rst:217 docs/manual/project/install.rst:223
 #: docs/manual/project/install.rst:229 docs/manual/project/install.rst:264
-#: docs/manual/project/install.rst:366 docs/manual/project/install.rst:372
-#: docs/manual/project/install.rst:387 docs/manual/project/install.rst:396
-#: docs/manual/project/install.rst:408 docs/manual/project/install.rst:439
-#: docs/manual/project/install.rst:477 docs/manual/project/install.rst:511
-#: docs/manual/project/install.rst:529 docs/manual/testing/dummy-driver.rst:73
+#: docs/manual/project/install.rst:275 docs/manual/project/install.rst:374
+#: docs/manual/project/install.rst:380 docs/manual/project/install.rst:395
+#: docs/manual/project/install.rst:404 docs/manual/project/install.rst:416
+#: docs/manual/project/install.rst:447 docs/manual/project/install.rst:485
+#: docs/manual/project/install.rst:519 docs/manual/project/install.rst:537
+#: docs/manual/testing/dummy-driver.rst:73
 #: docs/manual/testing/dummy-driver.rst:82 docs/manual/internal/reply.rst:42
 #: docs/manual/internal/reply.rst:57 docs/manual/internal/reply.rst:70
 #: docs/manual/internal/reply.rst:84 docs/manual/formats/smsbackup.rst:35
@@ -632,25 +658,25 @@ msgid ".. code-block"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:160 docs/manual/config/index.rst:171
+#: docs/manual/config/index.rst:162 docs/manual/config/index.rst:173
 #: docs/manual/smsd/tables.rst:399 docs/manual/smsd/run.rst:115
 #: docs/manual/smsd/run.rst:130 docs/manual/smsd/run.rst:146
-#: docs/manual/smsd/inject.rst:54 docs/manual/smsd/inject.rst:60
-#: docs/manual/smsd/inject.rst:66 docs/manual/smsd/inject.rst:72
-#: docs/manual/smsd/inject.rst:78 docs/manual/smsd/inject.rst:84
-#: docs/manual/smsd/inject.rst:90 docs/manual/smsd/smsd.rst:110
-#: docs/manual/smsd/smsd.rst:116 docs/manual/smsd/smsd.rst:135
-#: docs/manual/smsd/smsd.rst:141 docs/manual/smsd/smsd.rst:149
-#: docs/manual/smsd/smsd.rst:164 docs/manual/gammu/index.rst:1235
-#: docs/manual/gammu/index.rst:1241 docs/manual/gammu/index.rst:1247
-#: docs/manual/gammu/index.rst:1844 docs/manual/gammu/index.rst:1850
-#: docs/manual/gammu/index.rst:1856 docs/manual/gammu/index.rst:1862
-#: docs/manual/gammu/index.rst:1868 docs/manual/gammu/index.rst:1874
-#: docs/manual/gammu/index.rst:1880 docs/manual/gammu/index.rst:1889
-#: docs/manual/gammu/index.rst:1895 docs/manual/gammu/index.rst:1904
-#: docs/manual/gammu/index.rst:1918 docs/manual/gammu/index.rst:1924
-#: docs/manual/gammu/index.rst:1930 docs/manual/gammu/index.rst:1953
-#: docs/manual/project/documentation.rst:19
+#: docs/manual/smsd/inject.rst:62 docs/manual/smsd/inject.rst:68
+#: docs/manual/smsd/inject.rst:74 docs/manual/smsd/inject.rst:80
+#: docs/manual/smsd/inject.rst:86 docs/manual/smsd/inject.rst:92
+#: docs/manual/smsd/inject.rst:98 docs/manual/smsd/smsd.rst:118
+#: docs/manual/smsd/smsd.rst:124 docs/manual/smsd/smsd.rst:143
+#: docs/manual/smsd/smsd.rst:149 docs/manual/smsd/smsd.rst:157
+#: docs/manual/smsd/smsd.rst:172 docs/manual/gammu/index.rst:1242
+#: docs/manual/gammu/index.rst:1248 docs/manual/gammu/index.rst:1254
+#: docs/manual/gammu/index.rst:1851 docs/manual/gammu/index.rst:1857
+#: docs/manual/gammu/index.rst:1863 docs/manual/gammu/index.rst:1869
+#: docs/manual/gammu/index.rst:1875 docs/manual/gammu/index.rst:1881
+#: docs/manual/gammu/index.rst:1887 docs/manual/gammu/index.rst:1897
+#: docs/manual/gammu/index.rst:1906 docs/manual/gammu/index.rst:1912
+#: docs/manual/gammu/index.rst:1921 docs/manual/gammu/index.rst:1935
+#: docs/manual/gammu/index.rst:1941 docs/manual/gammu/index.rst:1947
+#: docs/manual/gammu/index.rst:1970 docs/manual/project/documentation.rst:19
 #: docs/manual/project/documentation.rst:26
 #: docs/manual/project/documentation.rst:48
 #: docs/manual/project/documentation.rst:56
@@ -658,16 +684,17 @@ msgstr ""
 #: docs/manual/project/install.rst:191 docs/manual/project/install.rst:205
 #: docs/manual/project/install.rst:212 docs/manual/project/install.rst:218
 #: docs/manual/project/install.rst:224 docs/manual/project/install.rst:230
-#: docs/manual/project/install.rst:265 docs/manual/project/install.rst:367
-#: docs/manual/project/install.rst:373 docs/manual/project/install.rst:388
-#: docs/manual/project/install.rst:397 docs/manual/project/install.rst:409
-#: docs/manual/project/install.rst:440 docs/manual/project/install.rst:478
-#: docs/manual/project/install.rst:512 docs/manual/project/install.rst:530
+#: docs/manual/project/install.rst:265 docs/manual/project/install.rst:276
+#: docs/manual/project/install.rst:375 docs/manual/project/install.rst:381
+#: docs/manual/project/install.rst:396 docs/manual/project/install.rst:405
+#: docs/manual/project/install.rst:417 docs/manual/project/install.rst:448
+#: docs/manual/project/install.rst:486 docs/manual/project/install.rst:520
+#: docs/manual/project/install.rst:538
 msgid "sh"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:163
+#: docs/manual/config/index.rst:165
 #, no-wrap
 msgid ""
 "ip l s dev irda0 up          # Enables irda0 device\n"
@@ -675,7 +702,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:169
+#: docs/manual/config/index.rst:171
 msgid ""
 "Native IrDA is not supported on Linux, you need to setup virtual serial port "
 "for it (eg. ``/dev/ircomm0``) and use it same way as cable.  This can be "
@@ -683,43 +710,43 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:174
+#: docs/manual/config/index.rst:176
 msgid "modprobe ircomm-tty modprobe irtty-sir"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:176
+#: docs/manual/config/index.rst:180
 #, fuzzy
 msgid "Port"
 msgstr "重要性"
 
 #. type: Labeled list
-#: docs/manual/config/index.rst:177 docs/manual/smsd/config.rst:73
+#: docs/manual/config/index.rst:181 docs/manual/smsd/config.rst:73
 #: docs/manual/smsd/config.rst:79 docs/manual/smsd/config.rst:87
-#: docs/manual/smsd/config.rst:385
+#: docs/manual/smsd/config.rst:406
 #, no-wrap
 msgid ".. deprecated"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:180
+#: docs/manual/config/index.rst:184
 msgid "Alias for :config:option:`Device`, kept for backward compatibility."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:182 docs/manual/python/gammu.rst:1286
+#: docs/manual/config/index.rst:186 docs/manual/python/gammu.rst:1286
 msgid "Model"
 msgstr "型號"
 
 #. type: Plain text
-#: docs/manual/config/index.rst:185
+#: docs/manual/config/index.rst:189
 msgid ""
 "Do not use this parameter unless really needed! The only use case for this "
 "is when Gammu does not know your phone and misdetects it's features."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:189
+#: docs/manual/config/index.rst:193
 msgid ""
 "The only special case for using model is to force special type of OBEX "
 "connection instead of letting Gammu try the best suited for selected "
@@ -727,55 +754,55 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:191
+#: docs/manual/config/index.rst:195
 msgid "``obexfs``"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:192
+#: docs/manual/config/index.rst:196
 msgid "force using of file browsing service (file system support)"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:193
+#: docs/manual/config/index.rst:197
 msgid "``obexirmc``"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:194
+#: docs/manual/config/index.rst:198
 msgid "force using of IrMC service (contacts, calendar and notes support)"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:195
+#: docs/manual/config/index.rst:199
 #, fuzzy
 msgid "``obexnone``"
 msgstr "手機鈴聲"
 
 #. type: Plain text
-#: docs/manual/config/index.rst:196
+#: docs/manual/config/index.rst:200
 msgid ""
 "none service chosen, this has only limited use for sending file (:option:"
 "`gammu sendfile` command)"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:197
+#: docs/manual/config/index.rst:201
 msgid "``mobex``"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:198
+#: docs/manual/config/index.rst:202
 msgid "m-obex service for Samsung phones"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:200
+#: docs/manual/config/index.rst:204
 msgid "Use_Locking"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:206
+#: docs/manual/config/index.rst:210
 msgid ""
 "On Posix systems, you might want to lock serial device when it is being used "
 "using UUCP-style lock files. Enabling this option (setting to yes) will make "
@@ -785,34 +812,34 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:208
+#: docs/manual/config/index.rst:212
 msgid "This option has no meaning on Windows."
 msgstr ""
 
 #. type: Title +
-#: docs/manual/config/index.rst:210
+#: docs/manual/config/index.rst:214
 #, no-wrap
 msgid "Connection options"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:213
+#: docs/manual/config/index.rst:217
 msgid "SynchronizeTime"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:215
+#: docs/manual/config/index.rst:219
 msgid ""
 "If you want to set time from computer to phone during starting connection."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:217
+#: docs/manual/config/index.rst:221
 msgid "StartInfo"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:222
+#: docs/manual/config/index.rst:226
 msgid ""
 "This option allow to set, that you want (setting ``yes``) to see message on "
 "the phone screen or phone should enable light for a moment during starting "
@@ -821,128 +848,128 @@ msgid ""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/config/index.rst:225
+#: docs/manual/config/index.rst:229
 #, no-wrap
 msgid "Debugging options"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:228 docs/manual/smsd/config.rst:109
+#: docs/manual/config/index.rst:232 docs/manual/smsd/config.rst:109
 msgid "LogFile"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:230
+#: docs/manual/config/index.rst:234
 msgid "Path to file where information about communication will be stored."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:235
+#: docs/manual/config/index.rst:239
 msgid ""
 "For most debug levels (excluding ``errors``) the log file is overwritten on "
 "each execution."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:237
+#: docs/manual/config/index.rst:241
 msgid "LogFormat"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:239
+#: docs/manual/config/index.rst:243
 msgid ""
 "Determines what all will be logged to :config:option:`LogFile`. Possible "
 "values are:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:241
+#: docs/manual/config/index.rst:245
 msgid "``nothing``"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:242
+#: docs/manual/config/index.rst:246
 msgid "no debug level"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:243
+#: docs/manual/config/index.rst:247
 msgid "``text``"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:244
+#: docs/manual/config/index.rst:248
 #, fuzzy
 msgid "transmission dump in text format"
 msgstr "手機資訊"
 
 #. type: Plain text
-#: docs/manual/config/index.rst:245
-msgid "``textall``"
-msgstr ""
-
-#. type: Plain text
-#: docs/manual/config/index.rst:246
-#, fuzzy
-msgid "all possible info in text format"
-msgstr "手機資訊"
-
-#. type: Plain text
-#: docs/manual/config/index.rst:247
-msgid "``textalldate``"
-msgstr ""
-
-#. type: Plain text
-#: docs/manual/config/index.rst:248
-msgid "all possible info in text format, with time stamp"
-msgstr ""
-
-#. type: Plain text
 #: docs/manual/config/index.rst:249
-msgid "``errors``"
+msgid "``textall``"
 msgstr ""
 
 #. type: Plain text
 #: docs/manual/config/index.rst:250
 #, fuzzy
-msgid "errors in text format"
+msgid "all possible info in text format"
 msgstr "手機資訊"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:251
-msgid "``errorsdate``"
+msgid "``textalldate``"
 msgstr ""
 
 #. type: Plain text
 #: docs/manual/config/index.rst:252
+msgid "all possible info in text format, with time stamp"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/config/index.rst:253
+msgid "``errors``"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/config/index.rst:254
+#, fuzzy
+msgid "errors in text format"
+msgstr "手機資訊"
+
+#. type: Plain text
+#: docs/manual/config/index.rst:255
+msgid "``errorsdate``"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/config/index.rst:256
 #, fuzzy
 msgid "errors in text format, with time stamp"
 msgstr "手機資訊"
 
 #. type: Plain text
-#: docs/manual/config/index.rst:253
+#: docs/manual/config/index.rst:257
 msgid "``binary``"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:254
+#: docs/manual/config/index.rst:258
 msgid "transmission dump in binary format"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:257
+#: docs/manual/config/index.rst:261
 msgid ""
 "For debugging use either ``textalldate`` or ``textall``, it contains all "
 "needed information to diagnose problems."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:259
+#: docs/manual/config/index.rst:263
 msgid "Features"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:265
+#: docs/manual/config/index.rst:269
 msgid ""
 "Custom features for phone. This can be used as override when values coded in "
 "``common/gsmphones.c`` are bad or missing. Consult ``include/gammu-info.h`` "
@@ -951,18 +978,18 @@ msgid ""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/config/index.rst:267
+#: docs/manual/config/index.rst:271
 #, no-wrap
 msgid "Locales and character set options"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:270
+#: docs/manual/config/index.rst:274
 msgid "GammuCoding"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:274
+#: docs/manual/config/index.rst:278
 msgid ""
 "Forces using specified codepage (for example ``1250`` will force CP-1250 or "
 "``utf8`` for UTF-8). This should not be needed, Gammu detects it according "
@@ -970,12 +997,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:276
+#: docs/manual/config/index.rst:280
 msgid "GammuLoc"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:280
+#: docs/manual/config/index.rst:284
 msgid ""
 "Path to directory with localisation files (the directory should contain "
 "``LANG/LC_MESSAGES/gammu.mo``). If gammu is properly installed it should "
@@ -983,18 +1010,18 @@ msgid ""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/config/index.rst:282
+#: docs/manual/config/index.rst:286
 #, fuzzy, no-wrap
 msgid "Other options"
 msgstr "手機資訊"
 
 #. type: Plain text
-#: docs/manual/config/index.rst:285
+#: docs/manual/config/index.rst:289
 msgid "DataPath"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:290
+#: docs/manual/config/index.rst:294
 msgid ""
 "Additional path where to search for data files. The default path is "
 "configured on build time (and defaults to ``/usr/share/data/gammu`` on Unix "
@@ -1003,10 +1030,10 @@ msgid ""
 msgstr ""
 
 #. type: Title =
-#: docs/manual/config/index.rst:292 docs/manual/smsd/tables.rst:387
-#: docs/manual/smsd/run.rst:95 docs/manual/smsd/config.rst:535
-#: docs/manual/smsd/inject.rst:46 docs/manual/smsd/smsd.rst:102
-#: docs/manual/gammu/index.rst:1826 docs/manual/testing/dummy-driver.rst:69
+#: docs/manual/config/index.rst:296 docs/manual/smsd/tables.rst:387
+#: docs/manual/smsd/run.rst:95 docs/manual/smsd/config.rst:556
+#: docs/manual/smsd/inject.rst:54 docs/manual/smsd/smsd.rst:110
+#: docs/manual/gammu/index.rst:1833 docs/manual/testing/dummy-driver.rst:69
 #: docs/manual/python/objects.rst:123 docs/manual/formats/backup.rst:11
 #: docs/manual/formats/ini.rst:14 docs/manual/c/examples.rst:2
 #, no-wrap
@@ -1014,32 +1041,32 @@ msgid "Examples"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:295
+#: docs/manual/config/index.rst:299
 msgid ""
 "There is more complete example available in Gammu documentation, see :ref:"
 "`gammu`."
 msgstr ""
 
 #. type: Title +
-#: docs/manual/config/index.rst:297
+#: docs/manual/config/index.rst:301
 #, no-wrap
 msgid "Connection examples"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:300
+#: docs/manual/config/index.rst:304
 msgid "Gammu configuration for Nokia phone using DLR-3 cable:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:302 docs/manual/config/index.rst:311
-#: docs/manual/config/index.rst:320 docs/manual/config/index.rst:328
-#: docs/manual/config/index.rst:342 docs/manual/smsd/usage.rst:49
-#: docs/manual/smsd/run.rst:104 docs/manual/smsd/config.rst:547
-#: docs/manual/smsd/config.rst:563 docs/manual/smsd/config.rst:580
-#: docs/manual/smsd/config.rst:593 docs/manual/smsd/config.rst:602
-#: docs/manual/smsd/config.rst:625 docs/manual/smsd/config.rst:632
-#: docs/manual/smsd/config.rst:642 docs/manual/gammu/index.rst:1944
+#: docs/manual/config/index.rst:306 docs/manual/config/index.rst:315
+#: docs/manual/config/index.rst:324 docs/manual/config/index.rst:332
+#: docs/manual/config/index.rst:346 docs/manual/smsd/usage.rst:49
+#: docs/manual/smsd/run.rst:104 docs/manual/smsd/config.rst:568
+#: docs/manual/smsd/config.rst:584 docs/manual/smsd/config.rst:601
+#: docs/manual/smsd/config.rst:614 docs/manual/smsd/config.rst:623
+#: docs/manual/smsd/config.rst:646 docs/manual/smsd/config.rst:653
+#: docs/manual/smsd/config.rst:663 docs/manual/gammu/index.rst:1961
 #: docs/manual/testing/dummy-driver.rst:74
 #: docs/manual/testing/dummy-driver.rst:83
 #: docs/manual/formats/smsbackup.rst:36 docs/manual/formats/smsbackup.rst:109
@@ -1048,54 +1075,54 @@ msgid "ini"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:306
+#: docs/manual/config/index.rst:310
 msgid "[gammu] device = /dev/ttyACM0 connection = dlr3"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:309
+#: docs/manual/config/index.rst:313
 msgid ""
 "Gammu configuration for Sony-Ericsson phone (or any other AT compatible "
 "phone) connected using USB cable:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:315
+#: docs/manual/config/index.rst:319
 msgid "[gammu] device = /dev/ttyACM0 connection = at"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:318
+#: docs/manual/config/index.rst:322
 msgid ""
 "Gammu configuration for Sony-Ericsson (or any other AT compatible phone) "
 "connected using bluetooth:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:324
+#: docs/manual/config/index.rst:328
 msgid "[gammu] device = B0:0B:00:00:FA:CE connection = blueat"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:326
+#: docs/manual/config/index.rst:330
 msgid ""
 "Gammu configuration for phone which needs to manually adjust Bluetooth "
 "channel to use channel 42:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:332
+#: docs/manual/config/index.rst:336
 msgid "[gammu] device = B0:0B:00:00:FA:CE/42 connection = blueat"
 msgstr ""
 
 #. type: Title +
-#: docs/manual/config/index.rst:334
+#: docs/manual/config/index.rst:338
 #, no-wrap
 msgid "Working with multiple phones"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:340
+#: docs/manual/config/index.rst:344
 msgid ""
 "Gammu can be configured for multiple phones (however only one connection is "
 "used at one time, you can choose which one to use with :option:`gammu -s` "
@@ -1104,45 +1131,45 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:346
+#: docs/manual/config/index.rst:350
 msgid "[gammu] device = /dev/ttyS0 connection = at"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:350
+#: docs/manual/config/index.rst:354
 msgid "[gammmu1] device = /dev/ttyS1 connection = at"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:354
+#: docs/manual/config/index.rst:358
 msgid "[gammmu2] device = /dev/ttyS2 connection = at"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:356
+#: docs/manual/config/index.rst:360
 msgid "_Fully documented example:"
 msgstr ""
 
 #. type: Title +
-#: docs/manual/config/index.rst:358
+#: docs/manual/config/index.rst:362
 #, no-wrap
 msgid "Fully documented example"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:361
+#: docs/manual/config/index.rst:365
 msgid ""
 "You can find this sample file as :file:`docs/config/gammurc` in Gammu "
 "sources."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:363
+#: docs/manual/config/index.rst:367
 msgid "../../../docs/config/gammurc"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/config/index.rst:364
+#: docs/manual/config/index.rst:368
 msgid ":language: ini"
 msgstr ""
 
@@ -10842,23 +10869,6 @@ msgstr ""
 msgid ":config:option:`DBDir` - sqlite/sqlite3 directory with database"
 msgstr ""
 
-#. type: Labeled list
-#: docs/manual/smsd/sql.rst:35 docs/manual/smsd/config.rst:51
-#: docs/manual/smsd/config.rst:428 docs/manual/gammu/index.rst:1188
-#: docs/manual/gammu/index.rst:1198 docs/manual/project/directories.rst:165
-#: docs/manual/project/directories.rst:199 docs/manual/project/testing.rst:8
-#: docs/manual/project/install.rst:71 docs/manual/project/install.rst:78
-#: docs/manual/project/install.rst:86 docs/manual/project/install.rst:93
-#: docs/manual/project/install.rst:100 docs/manual/project/install.rst:107
-#: docs/manual/project/install.rst:114 docs/manual/project/install.rst:123
-#: docs/manual/project/install.rst:132 docs/manual/project/install.rst:139
-#: docs/manual/project/install.rst:146 docs/manual/project/install.rst:153
-#: docs/manual/project/install.rst:160 docs/manual/formats/backup.rst:56
-#: docs/manual/c/porting.rst:51
-#, no-wrap
-msgid ".. seealso"
-msgstr ""
-
 #. type: Plain text
 #: docs/manual/smsd/sql.rst:36
 msgid "The variables are fully described in :ref:`gammurc` documentation."
@@ -11769,7 +11779,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/usage.rst:53 docs/manual/smsd/config.rst:645
+#: docs/manual/smsd/usage.rst:53 docs/manual/smsd/config.rst:666
 msgid "[smsd] debuglevel = 255 logfile = smsd.log"
 msgstr ""
 
@@ -12826,7 +12836,7 @@ msgid "message."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:18 docs/manual/smsd/config.rst:270
+#: docs/manual/smsd/run.rst:18 docs/manual/smsd/config.rst:291
 msgid ""
 "This parameter is executed through shell, so you might need to escape some "
 "special characters and you can include any number of parameters. "
@@ -12837,7 +12847,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/run.rst:24 docs/manual/smsd/config.rst:276
+#: docs/manual/smsd/run.rst:24 docs/manual/smsd/config.rst:297
 msgid ""
 "Gammu SMSD waits for the script to terminate. If you make some time "
 "consuming there, it will make SMSD not receive new messages. However to "
@@ -13368,7 +13378,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/smsd/config.rst:68 docs/manual/smsd/config.rst:74
 #: docs/manual/smsd/config.rst:80 docs/manual/smsd/config.rst:88
-#: docs/manual/smsd/config.rst:283 docs/manual/smsd/config.rst:427
+#: docs/manual/smsd/config.rst:304 docs/manual/smsd/config.rst:448
 msgid "1.28.93"
 msgstr ""
 
@@ -13493,105 +13503,172 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/smsd/config.rst:121
-msgid "DebugLevel"
+msgid "LogFacility"
 msgstr ""
 
 #. type: Plain text
 #: docs/manual/smsd/config.rst:124
+msgid ""
+"Facility to use on logging backends which support it (currently only "
+"syslog). One of following chouces:"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/config.rst:126
+msgid "``DAEMON`` (default)"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/config.rst:127
+msgid "``USER``"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/config.rst:128
+msgid "``LOCAL0``"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/config.rst:129
+msgid "``LOCAL1``"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/config.rst:130
+msgid "``LOCAL2``"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/config.rst:131
+msgid "``LOCAL3``"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/config.rst:132
+msgid "``LOCAL4``"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/config.rst:133
+msgid "``LOCAL5``"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/config.rst:134
+msgid "``LOCAL6``"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/config.rst:135
+msgid "``LOCAL7``"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/config.rst:137
+msgid "1.30.91"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/config.rst:139
+msgid "DebugLevel"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/config.rst:142
 msgid ""
 "Debug level for SMSD. The integer value should be sum of all flags you want "
 "to enable."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:126
+#: docs/manual/smsd/config.rst:144
 msgid "1"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:127
+#: docs/manual/smsd/config.rst:145
 msgid "enables basic debugging information"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:128
+#: docs/manual/smsd/config.rst:146
 msgid "2"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:129
+#: docs/manual/smsd/config.rst:147
 msgid "enables logging of SQL queries of service backends"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:130
+#: docs/manual/smsd/config.rst:148
 msgid "4"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:131
+#: docs/manual/smsd/config.rst:149
 msgid "enables logging of gammu debug information"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:133
+#: docs/manual/smsd/config.rst:151
 msgid "Generally to get as much debug information as possible, use 255."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:135
+#: docs/manual/smsd/config.rst:153
 msgid "Default is 0, what should mean no extra information."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:137
+#: docs/manual/smsd/config.rst:155
 msgid "CommTimeout"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:139
+#: docs/manual/smsd/config.rst:157
 msgid "How many seconds should SMSD wait after there is no message in outbox."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:141 docs/manual/smsd/config.rst:148
+#: docs/manual/smsd/config.rst:159 docs/manual/smsd/config.rst:166
 msgid "Default is 30."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:143
+#: docs/manual/smsd/config.rst:161
 msgid "SendTimeout"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:146
+#: docs/manual/smsd/config.rst:164
 msgid ""
 "Shows how many seconds SMSD should wait for network answer during sending "
 "sms. If nothing happen during this time, sms will be resent."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:150
+#: docs/manual/smsd/config.rst:168
 msgid "MaxRetries"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:152
+#: docs/manual/smsd/config.rst:170
 msgid "How many times will SMSD try to resend message if sending fails."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:154 docs/manual/smsd/config.rst:178
+#: docs/manual/smsd/config.rst:172 docs/manual/smsd/config.rst:199
 msgid "Default is 1."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:156
+#: docs/manual/smsd/config.rst:174
 msgid "ReceiveFrequency"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:160
+#: docs/manual/smsd/config.rst:178
 msgid ""
 "The number of seconds between testing for received SMSes, when the phone is "
 "busy sending SMSes. Normally a test for received SMSes is done every :config:"
@@ -13599,35 +13676,35 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:162 docs/manual/smsd/config.rst:213
-#: docs/manual/smsd/config.rst:227
+#: docs/manual/smsd/config.rst:180 docs/manual/smsd/config.rst:234
+#: docs/manual/smsd/config.rst:248
 msgid "Default is 0 (not used)."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:164
+#: docs/manual/smsd/config.rst:182
 msgid "StatusFrequency"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:167
+#: docs/manual/smsd/config.rst:185
 msgid ""
 "The number of seconds between refreshing phone status (battery, signal) "
 "stored in shared memory and possibly in service backends. Use 0 to disable."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:169
+#: docs/manual/smsd/config.rst:187
 msgid "Default is 15."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:171
+#: docs/manual/smsd/config.rst:189
 msgid "LoopSleep"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:176
+#: docs/manual/smsd/config.rst:194
 msgid ""
 "The number of seconds how long will SMSD sleep before checking for some "
 "activity. Please note that setting this to higher value than 1 will have "
@@ -13636,12 +13713,19 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:180
+#: docs/manual/smsd/config.rst:197
+msgid ""
+"Setting this to 0 disables sleeping. Please not this might cause Gammu to "
+"consume quite a lot of CPU power."
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/config.rst:201
 msgid "MultipartTimeout"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:184
+#: docs/manual/smsd/config.rst:205
 msgid ""
 "The number of seconds how long will SMSD wait for all parts of multipart "
 "message. If all parts won't arrive in time, parts will be processed as "
@@ -13649,53 +13733,53 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:186 docs/manual/smsd/config.rst:249
+#: docs/manual/smsd/config.rst:207 docs/manual/smsd/config.rst:270
 msgid "Default is 600 (10 minutes)."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:188
+#: docs/manual/smsd/config.rst:209
 msgid "CheckSecurity"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:190
+#: docs/manual/smsd/config.rst:211
 msgid "Whether to check if phone wants to enter PIN."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:192 docs/manual/smsd/config.rst:198
-#: docs/manual/smsd/config.rst:204
+#: docs/manual/smsd/config.rst:213 docs/manual/smsd/config.rst:219
+#: docs/manual/smsd/config.rst:225
 msgid "Default is 1 (enabled)."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:194
+#: docs/manual/smsd/config.rst:215
 msgid "CheckBattery"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:196
+#: docs/manual/smsd/config.rst:217
 msgid "Whether to check phone battery state periodically."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:200
+#: docs/manual/smsd/config.rst:221
 msgid "CheckSignal"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:202
+#: docs/manual/smsd/config.rst:223
 msgid "Whether to check signal level periodically."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:206
+#: docs/manual/smsd/config.rst:227
 msgid "ResetFrequency"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:211
+#: docs/manual/smsd/config.rst:232
 msgid ""
 "The number of seconds between performing a preventive soft reset in order to "
 "minimize the cases of hanging phones e.g. Nokia 5110 will sometimes freeze "
@@ -13704,93 +13788,93 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:215
+#: docs/manual/smsd/config.rst:236
 msgid "HardResetFrequency"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:217 docs/manual/smsd/config.rst:380
-#: docs/manual/smsd/config.rst:386
+#: docs/manual/smsd/config.rst:238 docs/manual/smsd/config.rst:401
+#: docs/manual/smsd/config.rst:407
 msgid "1.28.92"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:219 docs/manual/gammu/index.rst:181
+#: docs/manual/smsd/config.rst:240 docs/manual/gammu/index.rst:181
 #: docs/manual/gammu/index.rst:346 docs/manual/gammu/index.rst:490
-#: docs/manual/gammu/index.rst:825 docs/manual/gammu/index.rst:1138
-#: docs/manual/gammu/index.rst:1151 docs/manual/gammu/index.rst:1622
+#: docs/manual/gammu/index.rst:825 docs/manual/gammu/index.rst:1145
+#: docs/manual/gammu/index.rst:1158 docs/manual/gammu/index.rst:1629
 #: docs/manual/project/directories.rst:118 docs/manual/c/index.rst:16
 #: docs/manual/c/api.rst:5
 msgid "warning::"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:222
+#: docs/manual/smsd/config.rst:243
 msgid ""
 "For some phones hard reset means deleting all data in it. Use :config:option:"
 "`ResetFrequency`, unless you know what you are doing."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:225
+#: docs/manual/smsd/config.rst:246
 msgid ""
 "The number of seconds between performing a preventive hard reset in order to "
 "minimize the cases of hanging phones."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:229
+#: docs/manual/smsd/config.rst:250
 msgid "DeliveryReport"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:231
+#: docs/manual/smsd/config.rst:252
 msgid ""
 "Whether delivery reports should be used, one of ``no``, ``log``, ``sms``."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:233
+#: docs/manual/smsd/config.rst:254
 msgid "``log``"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:234
+#: docs/manual/smsd/config.rst:255
 msgid "one line log entry,"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:235
+#: docs/manual/smsd/config.rst:256
 msgid "``sms``"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:236
+#: docs/manual/smsd/config.rst:257
 msgid "store in inbox as a received SMS"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:237
+#: docs/manual/smsd/config.rst:258
 msgid "``no``"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:238
+#: docs/manual/smsd/config.rst:259
 msgid "no delivery reports"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:240
+#: docs/manual/smsd/config.rst:261
 msgid "Default is ``no``."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:242
+#: docs/manual/smsd/config.rst:263
 msgid "DeliveryReportDelay"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:247
+#: docs/manual/smsd/config.rst:268
 msgid ""
 "Delay in seconds how long is still delivery report considered valid. This "
 "depends on brokeness of your network (delivery report should have same "
@@ -13799,19 +13883,19 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:251
+#: docs/manual/smsd/config.rst:272
 msgid "PhoneID"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:254
+#: docs/manual/smsd/config.rst:275
 msgid ""
 "String with info about phone used for sending/receiving. This can be useful "
 "if you want to run several SMS daemons."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:258
+#: docs/manual/smsd/config.rst:279
 msgid ""
 "When you set PhoneID, all messages (including injected ones) will be marked "
 "by this string (stored as SenderID in the database) and it allows more SMS "
@@ -13819,46 +13903,46 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:260
+#: docs/manual/smsd/config.rst:281
 msgid "This option has actually no effect with :ref:`gammu-smsd-files`."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:262
+#: docs/manual/smsd/config.rst:283
 msgid "RunOnReceive"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:264
+#: docs/manual/smsd/config.rst:285
 msgid "Executes a program after receiving message."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:279
+#: docs/manual/smsd/config.rst:300
 msgid ""
 "The process has available lot of information about received message in "
 "environment, check :ref:`gammu-smsd-run` for more details."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:281
+#: docs/manual/smsd/config.rst:302
 msgid "RunOnFailure"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:285
+#: docs/manual/smsd/config.rst:306
 msgid "Executes a program on failure."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:288
+#: docs/manual/smsd/config.rst:309
 msgid ""
 "This can be used to proactively react on some failures or to interactively "
 "detect failure of sending message."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:292
+#: docs/manual/smsd/config.rst:313
 msgid ""
 "The program will receive optional parameter, which can currently be either "
 "``INIT`` (meaning failure during phone initialization) or message ID, which "
@@ -13866,27 +13950,27 @@ msgid ""
 msgstr ""
 
 #. type: Labeled list
-#: docs/manual/smsd/config.rst:293 docs/manual/gammu/index.rst:813
-#: docs/manual/gammu/index.rst:1541 docs/manual/gammu/index.rst:1593
+#: docs/manual/smsd/config.rst:314 docs/manual/gammu/index.rst:813
+#: docs/manual/gammu/index.rst:1548 docs/manual/gammu/index.rst:1600
 #: docs/manual/project/install.rst:121 docs/manual/project/install.rst:130
 #, no-wrap
 msgid ".. note"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:294
+#: docs/manual/smsd/config.rst:315
 msgid ""
 "The environment with message (as is in :config:option:`RunOnReceive`) is not "
 "passed to the command."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:296
+#: docs/manual/smsd/config.rst:317
 msgid "IncludeNumbersFile"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:301
+#: docs/manual/smsd/config.rst:322
 msgid ""
 "File with list of numbers which are accepted by SMSD. The file contains one "
 "number per line, blank lines are ignored. The file is read at startup and is "
@@ -13895,12 +13979,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:303
+#: docs/manual/smsd/config.rst:324
 msgid "ExcludeNumbersFile"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:308
+#: docs/manual/smsd/config.rst:329
 msgid ""
 "File with list of numbers which are not accepted by SMSD. The file contains "
 "one number per line, blank lines are ignored. The file is read at startup "
@@ -13909,12 +13993,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:310
+#: docs/manual/smsd/config.rst:331
 msgid "IncludeSMSCFile"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:315
+#: docs/manual/smsd/config.rst:336
 msgid ""
 "File with list of SMSC numbers which are accepted by SMSD. The file contains "
 "one number per line, blank lines are ignored. The file is read at startup "
@@ -13923,12 +14007,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:317
+#: docs/manual/smsd/config.rst:338
 msgid "ExcludeSMSCFile"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:322
+#: docs/manual/smsd/config.rst:343
 msgid ""
 "File with list of SMSC numbers which are not accepted by SMSD. The file "
 "contains one number per line, blank lines are ignored. The file is read at "
@@ -13937,120 +14021,120 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:324
+#: docs/manual/smsd/config.rst:345
 msgid "BackendRetries"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:326
+#: docs/manual/smsd/config.rst:347
 msgid "How many times will SMSD backend retry operation."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:329
+#: docs/manual/smsd/config.rst:350
 msgid ""
 "The implementation on different backends is different, for database backends "
 "it generally means how many times it will try to reconnect to the server."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:331
+#: docs/manual/smsd/config.rst:352
 msgid "Default is 10."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:333
+#: docs/manual/smsd/config.rst:354
 msgid "Send"
 msgstr "發送"
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:335 docs/manual/smsd/config.rst:343
+#: docs/manual/smsd/config.rst:356 docs/manual/smsd/config.rst:364
 msgid "1.28.91"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:337
+#: docs/manual/smsd/config.rst:358
 msgid "Whether to enable sending of messages."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:339 docs/manual/smsd/config.rst:347
+#: docs/manual/smsd/config.rst:360 docs/manual/smsd/config.rst:368
 msgid "Default is True."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:341
+#: docs/manual/smsd/config.rst:362
 msgid "Receive"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:345
+#: docs/manual/smsd/config.rst:366
 msgid "Whether to enable receiving of messages."
 msgstr ""
 
 #. type: Title -
-#: docs/manual/smsd/config.rst:350
+#: docs/manual/smsd/config.rst:371
 #, no-wrap
 msgid "Database backends options"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:353
+#: docs/manual/smsd/config.rst:374
 msgid "All DBI, ODBC, MYSQL and PGSQL backends (see :ref:`gammu-smsd-mysql`,"
 msgstr ""
 
 #. type: Attribute :ref:
-#: docs/manual/smsd/config.rst:353
+#: docs/manual/smsd/config.rst:374
 #, no-wrap
 msgid "`gammu-smsd-odbc`, :ref:`gammu-smsd-pgsql`, :ref:`gammu-smsd-dbi` for"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:356
+#: docs/manual/smsd/config.rst:377
 msgid ""
 "their documentation) supports same options for configuring connection to a "
 "database:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:358
+#: docs/manual/smsd/config.rst:379
 msgid "User"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:360
+#: docs/manual/smsd/config.rst:381
 msgid "User name used for connection to a database."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:362
+#: docs/manual/smsd/config.rst:383
 msgid "Password"
 msgstr "密碼"
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:364
+#: docs/manual/smsd/config.rst:385
 msgid "Password used for connection to a database."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:366
+#: docs/manual/smsd/config.rst:387
 msgid "Host"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:370
+#: docs/manual/smsd/config.rst:391
 msgid ""
 "Database server address. It can also contain port or socket path after "
 "semicolon, for example ``localhost:/path/to/socket`` or ``192.168.1.1:8000``."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:372
+#: docs/manual/smsd/config.rst:393
 msgid "For ODBC this is used as Data source name."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:378
+#: docs/manual/smsd/config.rst:399
 msgid ""
 "Some database servers differentiate usage of ``localhost`` (to use local "
 "socket) and ``127.0.0.1`` (to use locat TCP/IP connection).  Please make "
@@ -14058,22 +14142,22 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:382
+#: docs/manual/smsd/config.rst:403
 msgid "PC"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:384
+#: docs/manual/smsd/config.rst:405
 msgid "Synonym for :config:option:`Host`."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:388
+#: docs/manual/smsd/config.rst:409
 msgid "Database"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:392
+#: docs/manual/smsd/config.rst:413
 msgid ""
 "Name of database to use. Please note that you should create tables in this "
 "database before using gammu-smsd. SQL files for creating needed tables are "
@@ -14081,12 +14165,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:394
+#: docs/manual/smsd/config.rst:415
 msgid "SkipSMSCNumber"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:398
+#: docs/manual/smsd/config.rst:419
 msgid ""
 "When you send sms from some SMS centere you can have delivery reports from "
 "other SMSC number. You can set here number of this SMSC used by you and "
@@ -14094,24 +14178,24 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:400
+#: docs/manual/smsd/config.rst:421
 msgid "Driver"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:402
+#: docs/manual/smsd/config.rst:423
 msgid "SQL driver to use."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:405
+#: docs/manual/smsd/config.rst:426
 msgid ""
 "Can be either one of native drivers (``odbc``, ``native_mysql`` or "
 "``native_pgsql``) or :ref:`gammu-smsd-dbi` driver."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:410
+#: docs/manual/smsd/config.rst:431
 msgid ""
 "Depends on what DBI drivers you have installed, DBI supports: ``mysql``, "
 "``freetds`` (provides access to MS SQL Server and Sybase), ``pgsql``, "
@@ -14120,302 +14204,302 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:412
+#: docs/manual/smsd/config.rst:433
 msgid "SQL"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:415
+#: docs/manual/smsd/config.rst:436
 msgid ""
 "SQL dialect to use. This is specially useful with :ref:`gammu-smsd-odbc` "
 "where SMSD does not know which server it is actually talking to."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:417
+#: docs/manual/smsd/config.rst:438
 msgid "Possible values:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:419
+#: docs/manual/smsd/config.rst:440
 msgid "``mysql`` - MySQL"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:420
+#: docs/manual/smsd/config.rst:441
 msgid "``pgsql`` - PostgreSQL"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:421
+#: docs/manual/smsd/config.rst:442
 msgid "``sqlite`` - SQLite"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:422
+#: docs/manual/smsd/config.rst:443
 msgid "``mssql`` - Microsoft SQL Server"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:423
+#: docs/manual/smsd/config.rst:444
 msgid "``sybase`` - Sybase"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:424
+#: docs/manual/smsd/config.rst:445
 msgid "``access`` - Microsoft Access"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:425
+#: docs/manual/smsd/config.rst:446
 msgid "``odbc`` - Generic ODBC"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:429
+#: docs/manual/smsd/config.rst:450
 msgid ""
 "You can also completely customize SQL queries used as described in :ref:`SQL "
 "Queries`."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:431
+#: docs/manual/smsd/config.rst:452
 msgid "DriversPath"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:434
+#: docs/manual/smsd/config.rst:455
 msgid ""
 "Path, where DBI drivers are stored, this usually does not have to be set if "
 "you have properly installed drivers."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:436
+#: docs/manual/smsd/config.rst:457
 msgid "DBDir"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:439
+#: docs/manual/smsd/config.rst:460
 msgid ""
 "Database directory for some (currently only sqlite) DBI drivers. Set here "
 "path where sqlite database files are stored."
 msgstr ""
 
 #. type: Title +
-#: docs/manual/smsd/config.rst:441
+#: docs/manual/smsd/config.rst:462
 #, no-wrap
 msgid "Files backend options"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:444
+#: docs/manual/smsd/config.rst:465
 msgid "The FILES backend accepts following configuration options. See"
 msgstr ""
 
 #. type: Attribute :ref:
-#: docs/manual/smsd/config.rst:444
+#: docs/manual/smsd/config.rst:465
 #, no-wrap
 msgid "`gammu-smsd-files` for more detailed service backend description. Please note"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:446
+#: docs/manual/smsd/config.rst:467
 msgid ""
 "that all path should contain trailing path separator (/ on Unix systems):"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:448
+#: docs/manual/smsd/config.rst:469
 msgid "InboxPath"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:450
+#: docs/manual/smsd/config.rst:471
 msgid "Where the received SMSes are stored."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:452 docs/manual/smsd/config.rst:458
+#: docs/manual/smsd/config.rst:473 docs/manual/smsd/config.rst:479
 msgid "Default is current directory."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:454
+#: docs/manual/smsd/config.rst:475
 msgid "OutboxPath"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:456
+#: docs/manual/smsd/config.rst:477
 msgid "Where SMSes to be sent should be placed."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:460
+#: docs/manual/smsd/config.rst:481
 msgid "SentSMSPath"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:463
+#: docs/manual/smsd/config.rst:484
 msgid ""
 "Where the transmitted SMSes are placed, if same as :config:option:"
 "`OutboxPath` transmitted messages are deleted."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:465
+#: docs/manual/smsd/config.rst:486
 msgid "Default is to delete transmitted messages."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:467
+#: docs/manual/smsd/config.rst:488
 msgid "ErrorSMSPath"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:469
+#: docs/manual/smsd/config.rst:490
 msgid "Where SMSes with error in transmission is placed."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:471
+#: docs/manual/smsd/config.rst:492
 msgid "Default is same as :config:option:`SentSMSPath`."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:473
+#: docs/manual/smsd/config.rst:494
 msgid "InboxFormat"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:475
+#: docs/manual/smsd/config.rst:496
 msgid ""
 "The format in which the SMS will be stored: ``detail``, ``unicode``, "
 "``standard``."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:477
+#: docs/manual/smsd/config.rst:498
 msgid "``detail``"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:478
+#: docs/manual/smsd/config.rst:499
 msgid ""
 "format used for message backup by :ref:`gammu`, see :ref:`gammu-smsbackup`."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:479
+#: docs/manual/smsd/config.rst:500
 #, fuzzy
 msgid "``unicode``"
 msgstr "Unicode"
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:480
+#: docs/manual/smsd/config.rst:501
 msgid "message text stored in unicode (UTF-16)"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:481
+#: docs/manual/smsd/config.rst:502
 msgid "``standard``"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:482
+#: docs/manual/smsd/config.rst:503
 msgid "message text stored in system charset"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:485
+#: docs/manual/smsd/config.rst:506
 msgid ""
 "The ``standard`` and ``unicode`` settings do not apply for 8-bit messages, "
 "which are always written raw as they are received with extension .bin."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:487
+#: docs/manual/smsd/config.rst:508
 msgid "Default is ``unicode``."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:492
+#: docs/manual/smsd/config.rst:513
 msgid ""
 "In ``detail`` format, all message parts are stored into signle file, for all "
 "others each message part is saved separately."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:494
+#: docs/manual/smsd/config.rst:515
 msgid "OutboxFormat"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:497
+#: docs/manual/smsd/config.rst:518
 msgid ""
 "The format in which messages created by :ref:`gammu-smsd-inject` will be "
 "stored, it accepts same values as InboxFormat."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:500
+#: docs/manual/smsd/config.rst:521
 msgid ""
 "Default is ``detail`` if Gammu is compiled in with backup functions, "
 "``unicode`` otherwise."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:502
+#: docs/manual/smsd/config.rst:523
 msgid "TransmitFormat"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:504
+#: docs/manual/smsd/config.rst:525
 msgid "The format for transmitting the SMS: ``auto``, ``unicode``, ``7bit``."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:506
+#: docs/manual/smsd/config.rst:527
 msgid "Default is ``auto``."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:508
+#: docs/manual/smsd/config.rst:529
 msgid "_message_filtering:"
 msgstr ""
 
 #. type: Title -
-#: docs/manual/smsd/config.rst:510
+#: docs/manual/smsd/config.rst:531
 #, no-wrap
 msgid "Message filtering"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:514
+#: docs/manual/smsd/config.rst:535
 msgid ""
 "SMSD allows one to process only limited subset of incoming messages. You can "
 "define filters for sender number in :config:section:`[include_numbers]` and"
 msgstr ""
 
 #. type: Attribute :config:
-#: docs/manual/smsd/config.rst:514
+#: docs/manual/smsd/config.rst:535
 #, no-wrap
 msgid "section:`[exclude_numbers]` sections or using"
 msgstr ""
 
 #. type: Attribute :config:
-#: docs/manual/smsd/config.rst:515
+#: docs/manual/smsd/config.rst:536
 #, no-wrap
 msgid "option:`IncludeNumbersFile` and :config:option:`ExcludeNumbersFile`"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:517
+#: docs/manual/smsd/config.rst:538
 msgid "directives."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:522
+#: docs/manual/smsd/config.rst:543
 msgid ""
 "If :config:section:`[include_numbers]` section exists, all values (keys are "
 "ignored) from it are used as allowed phone numbers and no other message is "
@@ -14424,7 +14508,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:528
+#: docs/manual/smsd/config.rst:549
 msgid ""
 "Lists from both sources are merged together. If there is any number in "
 "include list, only include list is used and only messages in this list are "
@@ -14434,25 +14518,25 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:531
+#: docs/manual/smsd/config.rst:552
 msgid ""
 "Similar filtering rules can be used for SMSC number filtering, they just use "
 "different set of configuration options - :config:section:`[include_smsc]` and"
 msgstr ""
 
 #. type: Attribute :config:
-#: docs/manual/smsd/config.rst:531
+#: docs/manual/smsd/config.rst:552
 #, no-wrap
 msgid "section:`[exclude_smsc]` sections or :config:option:`IncludeSMSCFile`"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:533
+#: docs/manual/smsd/config.rst:554
 msgid "and :config:option:`ExcludeSMSCFile` directives."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:540
+#: docs/manual/smsd/config.rst:561
 msgid ""
 "There is more complete example available in Gammu documentation. Please note "
 "that for simplicity following examples do not include :config:section:`"
@@ -14461,18 +14545,18 @@ msgid ""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/smsd/config.rst:542
+#: docs/manual/smsd/config.rst:563
 #, no-wrap
 msgid "Files service"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:545
+#: docs/manual/smsd/config.rst:566
 msgid "SMSD configuration file for FILES backend could look like:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:556
+#: docs/manual/smsd/config.rst:577
 msgid ""
 "[smsd] Service = files PIN = 1234 LogFile = syslog InboxPath = /var/spool/"
 "sms/inbox/ OutboPpath = /var/spool/sms/outbox/ SentSMSPath = /var/spool/sms/"
@@ -14480,114 +14564,114 @@ msgid ""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/smsd/config.rst:558
+#: docs/manual/smsd/config.rst:579
 #, no-wrap
 msgid "MySQL service"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:561
+#: docs/manual/smsd/config.rst:582
 msgid "If you want to use MYSQL backend, you will need something like this:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:573
+#: docs/manual/smsd/config.rst:594
 msgid ""
 "[smsd] Service = sql Driver = native_mysql PIN = 1234 LogFile = syslog User "
 "= smsd Password = smsd PC = localhost Database = smsd"
 msgstr ""
 
 #. type: Title +
-#: docs/manual/smsd/config.rst:575
+#: docs/manual/smsd/config.rst:596
 #, no-wrap
 msgid "DBI service using SQLite"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:578
+#: docs/manual/smsd/config.rst:599
 msgid "For :ref:`gammu-smsd-dbi` backend, in this particular case SQLite:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:586
+#: docs/manual/smsd/config.rst:607
 msgid ""
 "[smsd] Service = sql Driver = sqlite3 DBDir = /var/lib/sqlite3 Database = "
 "smsd.db"
 msgstr ""
 
 #. type: Title +
-#: docs/manual/smsd/config.rst:588
+#: docs/manual/smsd/config.rst:609
 #, no-wrap
 msgid "ODBC service using MySQL"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:591
+#: docs/manual/smsd/config.rst:612
 msgid ""
 "For :ref:`gammu-smsd-odbc` backend, in this particular case using DSN "
 "``smsd`` server:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:598
+#: docs/manual/smsd/config.rst:619
 msgid "[smsd] Service = sql Driver = odbc Host = smsd"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:600
+#: docs/manual/smsd/config.rst:621
 msgid ""
 "The DSN definition (in :file:`~/.odbc.ini` on UNIX) for using MySQL server "
 "would look like:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:612
+#: docs/manual/smsd/config.rst:633
 msgid ""
 "[smsd] Description\t\t= MySQL Driver\t\t= MySQL Server\t\t= 127.0.0.1 "
 "Database\t\t= smsd Port\t\t= Socket\t\t= Option\t\t= Stmt\t\t="
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:617
+#: docs/manual/smsd/config.rst:638
 msgid ""
 "[smsdsuse] Driver\t\t= MySQL ODBC 3.51.27r695 Driver DATABASE\t\t= smsd "
 "SERVER\t\t= 127.0.0.1"
 msgstr ""
 
 #. type: Title +
-#: docs/manual/smsd/config.rst:620
+#: docs/manual/smsd/config.rst:641
 #, no-wrap
 msgid "Numbers filtering"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:623
+#: docs/manual/smsd/config.rst:644
 msgid "Process only messages from 123456 number:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:628
+#: docs/manual/smsd/config.rst:649
 msgid "[include_numbers] number1 = 123456"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:630
+#: docs/manual/smsd/config.rst:651
 msgid "Do not process messages from evil number 666:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:635
+#: docs/manual/smsd/config.rst:656
 msgid "[exclude_numbers] number1 = 666"
 msgstr ""
 
 #. type: Title -
-#: docs/manual/smsd/config.rst:637 docs/manual/c/hints.rst:167
+#: docs/manual/smsd/config.rst:658 docs/manual/c/hints.rst:167
 #, no-wrap
 msgid "Debugging"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/config.rst:640
+#: docs/manual/smsd/config.rst:661
 msgid "Enabling debugging:"
 msgstr ""
 
@@ -14820,10 +14904,12 @@ msgstr ""
 
 #. type: Labeled list
 #: docs/manual/smsd/inject.rst:29 docs/manual/smsd/inject.rst:33
-#: docs/manual/smsd/inject.rst:37 docs/manual/smsd/monitor.rst:27
+#: docs/manual/smsd/inject.rst:37 docs/manual/smsd/inject.rst:42
+#: docs/manual/smsd/inject.rst:46 docs/manual/smsd/monitor.rst:27
 #: docs/manual/smsd/monitor.rst:31 docs/manual/smsd/monitor.rst:35
 #: docs/manual/smsd/monitor.rst:40 docs/manual/smsd/monitor.rst:44
-#: docs/manual/smsd/monitor.rst:48 docs/manual/smsd/smsd.rst:31
+#: docs/manual/smsd/monitor.rst:48 docs/manual/smsd/monitor.rst:56
+#: docs/manual/smsd/monitor.rst:60 docs/manual/smsd/smsd.rst:31
 #: docs/manual/smsd/smsd.rst:35 docs/manual/smsd/smsd.rst:39
 #: docs/manual/smsd/smsd.rst:50 docs/manual/smsd/smsd.rst:54
 #: docs/manual/smsd/smsd.rst:58 docs/manual/smsd/smsd.rst:62
@@ -14831,6 +14917,7 @@ msgstr ""
 #: docs/manual/smsd/smsd.rst:74 docs/manual/smsd/smsd.rst:78
 #: docs/manual/smsd/smsd.rst:82 docs/manual/smsd/smsd.rst:86
 #: docs/manual/smsd/smsd.rst:90 docs/manual/smsd/smsd.rst:95
+#: docs/manual/smsd/smsd.rst:101 docs/manual/smsd/smsd.rst:105
 #: docs/manual/gammu/index.rst:31 docs/manual/gammu/index.rst:35
 #: docs/manual/gammu/index.rst:39 docs/manual/gammu/index.rst:43
 #: docs/manual/gammu/index.rst:51 docs/manual/gammu/index.rst:55
@@ -14915,44 +15002,44 @@ msgstr ""
 #: docs/manual/gammu/index.rst:1070 docs/manual/gammu/index.rst:1072
 #: docs/manual/gammu/index.rst:1074 docs/manual/gammu/index.rst:1076
 #: docs/manual/gammu/index.rst:1082 docs/manual/gammu/index.rst:1098
-#: docs/manual/gammu/index.rst:1103 docs/manual/gammu/index.rst:1127
-#: docs/manual/gammu/index.rst:1135 docs/manual/gammu/index.rst:1148
-#: docs/manual/gammu/index.rst:1157 docs/manual/gammu/index.rst:1162
-#: docs/manual/gammu/index.rst:1167 docs/manual/gammu/index.rst:1174
-#: docs/manual/gammu/index.rst:1181 docs/manual/gammu/index.rst:1190
-#: docs/manual/gammu/index.rst:1204 docs/manual/gammu/index.rst:1208
-#: docs/manual/gammu/index.rst:1214 docs/manual/gammu/index.rst:1219
-#: docs/manual/gammu/index.rst:1226 docs/manual/gammu/index.rst:1228
-#: docs/manual/gammu/index.rst:1259 docs/manual/gammu/index.rst:1264
-#: docs/manual/gammu/index.rst:1266 docs/manual/gammu/index.rst:1268
-#: docs/manual/gammu/index.rst:1270 docs/manual/gammu/index.rst:1272
-#: docs/manual/gammu/index.rst:1278 docs/manual/gammu/index.rst:1280
-#: docs/manual/gammu/index.rst:1285 docs/manual/gammu/index.rst:1307
-#: docs/manual/gammu/index.rst:1309 docs/manual/gammu/index.rst:1325
-#: docs/manual/gammu/index.rst:1335 docs/manual/gammu/index.rst:1339
-#: docs/manual/gammu/index.rst:1349 docs/manual/gammu/index.rst:1351
-#: docs/manual/gammu/index.rst:1353 docs/manual/gammu/index.rst:1371
-#: docs/manual/gammu/index.rst:1375 docs/manual/gammu/index.rst:1377
-#: docs/manual/gammu/index.rst:1383 docs/manual/gammu/index.rst:1388
+#: docs/manual/gammu/index.rst:1103 docs/manual/gammu/index.rst:1131
+#: docs/manual/gammu/index.rst:1142 docs/manual/gammu/index.rst:1155
+#: docs/manual/gammu/index.rst:1164 docs/manual/gammu/index.rst:1169
+#: docs/manual/gammu/index.rst:1174 docs/manual/gammu/index.rst:1181
+#: docs/manual/gammu/index.rst:1188 docs/manual/gammu/index.rst:1197
+#: docs/manual/gammu/index.rst:1211 docs/manual/gammu/index.rst:1215
+#: docs/manual/gammu/index.rst:1221 docs/manual/gammu/index.rst:1226
+#: docs/manual/gammu/index.rst:1233 docs/manual/gammu/index.rst:1235
+#: docs/manual/gammu/index.rst:1266 docs/manual/gammu/index.rst:1271
+#: docs/manual/gammu/index.rst:1273 docs/manual/gammu/index.rst:1275
+#: docs/manual/gammu/index.rst:1277 docs/manual/gammu/index.rst:1279
+#: docs/manual/gammu/index.rst:1285 docs/manual/gammu/index.rst:1287
+#: docs/manual/gammu/index.rst:1292 docs/manual/gammu/index.rst:1314
+#: docs/manual/gammu/index.rst:1316 docs/manual/gammu/index.rst:1332
+#: docs/manual/gammu/index.rst:1342 docs/manual/gammu/index.rst:1346
+#: docs/manual/gammu/index.rst:1356 docs/manual/gammu/index.rst:1358
+#: docs/manual/gammu/index.rst:1360 docs/manual/gammu/index.rst:1378
+#: docs/manual/gammu/index.rst:1382 docs/manual/gammu/index.rst:1384
 #: docs/manual/gammu/index.rst:1390 docs/manual/gammu/index.rst:1395
-#: docs/manual/gammu/index.rst:1397 docs/manual/gammu/index.rst:1401
-#: docs/manual/gammu/index.rst:1405 docs/manual/gammu/index.rst:1410
-#: docs/manual/gammu/index.rst:1416 docs/manual/gammu/index.rst:1418
-#: docs/manual/gammu/index.rst:1420 docs/manual/gammu/index.rst:1426
-#: docs/manual/gammu/index.rst:1435 docs/manual/gammu/index.rst:1437
-#: docs/manual/gammu/index.rst:1439 docs/manual/gammu/index.rst:1441
-#: docs/manual/gammu/index.rst:1443 docs/manual/gammu/index.rst:1449
-#: docs/manual/gammu/index.rst:1456 docs/manual/gammu/index.rst:1460
-#: docs/manual/gammu/index.rst:1462 docs/manual/gammu/index.rst:1468
-#: docs/manual/gammu/index.rst:1472 docs/manual/gammu/index.rst:1476
-#: docs/manual/gammu/index.rst:1496 docs/manual/gammu/index.rst:1501
-#: docs/manual/gammu/index.rst:1503 docs/manual/gammu/index.rst:1543
-#: docs/manual/gammu/index.rst:1548 docs/manual/gammu/index.rst:1555
-#: docs/manual/gammu/index.rst:1561 docs/manual/gammu/index.rst:1584
-#: docs/manual/gammu/index.rst:1596 docs/manual/gammu/index.rst:1604
-#: docs/manual/gammu/index.rst:1617 docs/manual/gammu/index.rst:1627
-#: docs/manual/gammu/index.rst:1637 docs/manual/gammu/index.rst:1643
-#: docs/manual/gammu/index.rst:1647 docs/manual/gammu/index.rst:1652
+#: docs/manual/gammu/index.rst:1397 docs/manual/gammu/index.rst:1402
+#: docs/manual/gammu/index.rst:1404 docs/manual/gammu/index.rst:1408
+#: docs/manual/gammu/index.rst:1412 docs/manual/gammu/index.rst:1417
+#: docs/manual/gammu/index.rst:1423 docs/manual/gammu/index.rst:1425
+#: docs/manual/gammu/index.rst:1427 docs/manual/gammu/index.rst:1433
+#: docs/manual/gammu/index.rst:1442 docs/manual/gammu/index.rst:1444
+#: docs/manual/gammu/index.rst:1446 docs/manual/gammu/index.rst:1448
+#: docs/manual/gammu/index.rst:1450 docs/manual/gammu/index.rst:1456
+#: docs/manual/gammu/index.rst:1463 docs/manual/gammu/index.rst:1467
+#: docs/manual/gammu/index.rst:1469 docs/manual/gammu/index.rst:1475
+#: docs/manual/gammu/index.rst:1479 docs/manual/gammu/index.rst:1483
+#: docs/manual/gammu/index.rst:1503 docs/manual/gammu/index.rst:1508
+#: docs/manual/gammu/index.rst:1510 docs/manual/gammu/index.rst:1550
+#: docs/manual/gammu/index.rst:1555 docs/manual/gammu/index.rst:1562
+#: docs/manual/gammu/index.rst:1568 docs/manual/gammu/index.rst:1591
+#: docs/manual/gammu/index.rst:1603 docs/manual/gammu/index.rst:1611
+#: docs/manual/gammu/index.rst:1624 docs/manual/gammu/index.rst:1634
+#: docs/manual/gammu/index.rst:1644 docs/manual/gammu/index.rst:1650
+#: docs/manual/gammu/index.rst:1654 docs/manual/gammu/index.rst:1659
 #: docs/manual/utils/gammu-config.rst:23 docs/manual/utils/gammu-config.rst:27
 #: docs/manual/utils/gammu-config.rst:31 docs/manual/utils/jadmaker.rst:24
 #: docs/manual/utils/jadmaker.rst:28 docs/manual/utils/jadmaker.rst:32
@@ -15003,89 +15090,111 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/inject.rst:44
+#: docs/manual/smsd/inject.rst:43 docs/manual/smsd/monitor.rst:57
+#: docs/manual/smsd/smsd.rst:102
+msgid "-l, --use-log"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/inject.rst:45 docs/manual/smsd/monitor.rst:59
+msgid "Use logging as configured in config file."
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/inject.rst:47 docs/manual/smsd/monitor.rst:61
+#: docs/manual/smsd/smsd.rst:106
+msgid "-L, --no-use-log"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/inject.rst:49 docs/manual/smsd/monitor.rst:63
+msgid "Do not use logging as configured in config file (default)."
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/inject.rst:52
 msgid ""
 "For description of message types and their parameters, please check "
 "documentation for :option:`gammu savesms`."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/inject.rst:49
+#: docs/manual/smsd/inject.rst:57
 msgid "To check it out, you need to have configuration file for SMSD, see"
 msgstr ""
 
 #. type: Attribute :ref:
-#: docs/manual/smsd/inject.rst:49
+#: docs/manual/smsd/inject.rst:57
 #, no-wrap
 msgid "`gammu-smsdrc` for more details about it."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/inject.rst:52
+#: docs/manual/smsd/inject.rst:60
 msgid "Inject text message up to standard 160 chars:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/inject.rst:56
+#: docs/manual/smsd/inject.rst:64
 msgid "echo \"All your base are belong to us\" | gammu-smsd-inject TEXT 123456"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/smsd/inject.rst:58 docs/manual/smsd/inject.rst:70
-#: docs/manual/smsd/inject.rst:76 docs/manual/gammu/index.rst:1848
-#: docs/manual/gammu/index.rst:1860 docs/manual/gammu/index.rst:1866
+#: docs/manual/smsd/inject.rst:66 docs/manual/smsd/inject.rst:78
+#: docs/manual/smsd/inject.rst:84 docs/manual/gammu/index.rst:1855
+#: docs/manual/gammu/index.rst:1867 docs/manual/gammu/index.rst:1873
 msgid "or"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/inject.rst:62
+#: docs/manual/smsd/inject.rst:70
 msgid "gammu-smsd-inject TEXT 123456 -text \"All your base are belong to us\""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/inject.rst:64
+#: docs/manual/smsd/inject.rst:72
 msgid "Inject long text message:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/inject.rst:68
+#: docs/manual/smsd/inject.rst:76
 msgid ""
 "echo \"All your base are belong to us\" | gammu-smsd-inject TEXT 123456 -len "
 "400"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/inject.rst:74
+#: docs/manual/smsd/inject.rst:82
 msgid ""
 "gammu-smsd-inject TEXT 123456 -len 400 -text \"All your base are belong to us"
 "\""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/inject.rst:80
+#: docs/manual/smsd/inject.rst:88
 msgid "gammu-smsd-inject EMS 123456 -text \"All your base are belong to us\""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/inject.rst:82
+#: docs/manual/smsd/inject.rst:90
 msgid ""
 "Inject some funky message with predefined sound and animation from 2 bitmaps:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/inject.rst:86
+#: docs/manual/smsd/inject.rst:94
 msgid ""
 "gammu-smsd-inject EMS 123456 -text \"Greetings\" -defsound 1 -text \"from "
 "Gammu\" -tone10 axelf.txt -animation 2 file1.bmp file2.bmp"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/inject.rst:88
+#: docs/manual/smsd/inject.rst:96
 msgid "Inject protected message with ringtone:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/inject.rst:91
+#: docs/manual/smsd/inject.rst:99
 msgid ""
 "gammu-smsd-inject EMS 123456 -protected 2 -variablebitmaplong ala.bmp -"
 "toneSElong axelf.txt -toneSE ring.txt"
@@ -15590,7 +15699,7 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/smsd/monitor.rst:41
-msgid "-l, --loops=count"
+msgid "-n, --loops=count"
 msgstr ""
 
 #. type: Plain text
@@ -15619,7 +15728,7 @@ msgid "Print output in comma separated values format:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/monitor.rst:54
+#: docs/manual/smsd/monitor.rst:55
 msgid "client;phone ID;IMEI;sent;received;failed;battery;signal"
 msgstr ""
 
@@ -15805,43 +15914,53 @@ msgid ""
 "differently. Default is \"GammuSMSD\"."
 msgstr ""
 
+#. type: Plain text
+#: docs/manual/smsd/smsd.rst:104
+msgid "Use logging as configured in config file (default)."
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/smsd/smsd.rst:108
+msgid "Do not use logging as configured in config file."
+msgstr ""
+
 #. type: Title +
-#: docs/manual/smsd/smsd.rst:105
+#: docs/manual/smsd/smsd.rst:113
 #, no-wrap
 msgid "Linux/Unix Examples"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/smsd.rst:108
+#: docs/manual/smsd/smsd.rst:116
 msgid "Start SMSD as a daemon on Linux:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/smsd.rst:112
+#: docs/manual/smsd/smsd.rst:120
 msgid ""
 "gammu-smsd --config /etc/gammu-smsdrc --pid /var/run/gammu-smsd.pid --daemon"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/smsd.rst:114
+#: docs/manual/smsd/smsd.rst:122
 msgid "Start SMSD as a daemon on Linux with reduced privileges:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/smsd.rst:118
+#: docs/manual/smsd/smsd.rst:126
 msgid ""
 "gammu-smsd --config /etc/gammu-smsdrc --pid /var/run/gammu-smsd.pid --daemon "
 "--user gammu --group gammu"
 msgstr ""
 
 #. type: Title +
-#: docs/manual/smsd/smsd.rst:120
+#: docs/manual/smsd/smsd.rst:128
 #, no-wrap
 msgid "SMSD as a system wide daemon"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/smsd.rst:125
+#: docs/manual/smsd/smsd.rst:133
 msgid ""
 "To use SMSD as a daemon, you might want to use init script which is shipped "
 "with Gammu in contrib/init directory. It is not installed by default, either "
@@ -15849,61 +15968,61 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/smsd.rst:128
+#: docs/manual/smsd/smsd.rst:136
 msgid ""
 "Under Windows 7 you might need to disable UAC (user account control) before "
 "you will be able to install SMSD service."
 msgstr ""
 
 #. type: Title +
-#: docs/manual/smsd/smsd.rst:130
+#: docs/manual/smsd/smsd.rst:138
 #, no-wrap
 msgid "Windows Service Examples"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/smsd.rst:133
+#: docs/manual/smsd/smsd.rst:141
 msgid "Install Gammu SMSD Windows service:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/smsd.rst:137
+#: docs/manual/smsd/smsd.rst:145
 msgid "gammu-smsd.exe -c c:\\Gammu\\smsdrc -i"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/smsd.rst:139
+#: docs/manual/smsd/smsd.rst:147
 msgid "Install two instances of SMSD Windows service:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/smsd.rst:143
+#: docs/manual/smsd/smsd.rst:151
 msgid "gammu-smsd.exe -c c:\\Gammu\\smsdrc-1 -n Gammu-first-phone -i"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/smsd.rst:145
+#: docs/manual/smsd/smsd.rst:153
 msgid "gammu-smsd.exe -c c:\\Gammu\\smsdrc-2 -n Gammu-second-phone -i"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/smsd.rst:147
+#: docs/manual/smsd/smsd.rst:155
 msgid "To uninstall a Windows service:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/smsd.rst:151
+#: docs/manual/smsd/smsd.rst:159
 msgid "gammu-smsd.exe -u"
 msgstr ""
 
 #. type: Title +
-#: docs/manual/smsd/smsd.rst:153
+#: docs/manual/smsd/smsd.rst:161
 #, no-wrap
 msgid "Troubleshooting Windows Service"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/smsd.rst:160
+#: docs/manual/smsd/smsd.rst:168
 msgid ""
 "If Gammu fails to start as a Windows service (you will usually get \"Error "
 "1053: The service did not respond to the start or control request in a "
@@ -15913,30 +16032,30 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/smsd.rst:162
+#: docs/manual/smsd/smsd.rst:170
 msgid "For example the command line can look like:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/smsd.rst:166
+#: docs/manual/smsd/smsd.rst:174
 msgid "gammu-smsd.exe -c smsdrc"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/smsd.rst:169
+#: docs/manual/smsd/smsd.rst:177
 msgid ""
 "You now should be able to get errors from SMSD even if it fails to start as "
 "a service."
 msgstr ""
 
 #. type: Title -
-#: docs/manual/smsd/smsd.rst:171
+#: docs/manual/smsd/smsd.rst:179
 #, no-wrap
 msgid "Known Limitations"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/smsd.rst:177
+#: docs/manual/smsd/smsd.rst:185
 msgid ""
 "You can not use same phone by more programs in same time. However in case "
 "you did not enable locking in :config:section:`[gammu]` section, it might be "
@@ -15945,7 +16064,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/smsd/smsd.rst:180
+#: docs/manual/smsd/smsd.rst:188
 msgid ""
 "There is no way to detect that SMS message is reply to another by looking at "
 "message headers. The only way to achieve this is to add some token to the "
@@ -16441,8 +16560,8 @@ msgstr ""
 #: docs/manual/gammu/index.rst:215 docs/manual/gammu/index.rst:238
 #: docs/manual/gammu/index.rst:255 docs/manual/gammu/index.rst:675
 #: docs/manual/gammu/index.rst:735 docs/manual/gammu/index.rst:958
-#: docs/manual/gammu/index.rst:1415 docs/manual/gammu/index.rst:1425
-#: docs/manual/gammu/index.rst:1431
+#: docs/manual/gammu/index.rst:1422 docs/manual/gammu/index.rst:1432
+#: docs/manual/gammu/index.rst:1438
 msgid "Locations are numerated from 1."
 msgstr ""
 
@@ -18458,16 +18577,35 @@ msgstr ""
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1128
-msgid "backupsms file [-yes|-all]"
+msgid ""
+"By default this command is interactive and asks which items tou want to "
+"backup."
 msgstr ""
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1130
-msgid "Stores all SMSes from phone to file into :ref:`gammu-smsbackup`."
+msgid "Use -yes for answering yes to all questions."
+msgstr ""
+
+#. type: delimited block _
+#: docs/manual/gammu/index.rst:1132
+msgid "backupsms file [-yes|-all]"
 msgstr ""
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1134
+msgid "Stores all SMSes from phone to file into :ref:`gammu-smsbackup`."
+msgstr ""
+
+#. type: delimited block _
+#: docs/manual/gammu/index.rst:1137
+msgid ""
+"By default this command is interactive and asks which folders you want to "
+"backup and whether you want to remove messages from phone afterwards."
+msgstr ""
+
+#. type: delimited block _
+#: docs/manual/gammu/index.rst:1141
 msgid ""
 "Use -yes for answering yes to all questions (backup all messages and delete "
 "them from phone), or -all to just backup all folders while keeping messages "
@@ -18475,79 +18613,79 @@ msgid ""
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1136
+#: docs/manual/gammu/index.rst:1143
 msgid "restore file [-yes]"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1141
+#: docs/manual/gammu/index.rst:1148
 msgid ""
 "Please note that restoring deletes all current content in phone. If you want "
 "only to add entries to phone, use :option:`gammu addnew`."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1143
+#: docs/manual/gammu/index.rst:1150
 msgid ""
 "Restore settings written in file created using :option:`gammu backup` "
 "command."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1147
+#: docs/manual/gammu/index.rst:1154
 msgid ""
 "In some phones restoring calendar notes will not show error, but won't be "
 "done, when phone doesn't have set clock inside."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1149
+#: docs/manual/gammu/index.rst:1156
 msgid "restoresms file [-yes]"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1153
+#: docs/manual/gammu/index.rst:1160
 msgid ""
 "Please note that this overwrites existing messages in phone (if it supports "
 "it)."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1156
+#: docs/manual/gammu/index.rst:1163
 msgid ""
 "Restores SMSes from file (format like :option:`gammu backupsms` uses) to "
 "selected folder in phone."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1158
+#: docs/manual/gammu/index.rst:1165
 msgid "savefile TYPE [type options]"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1161
+#: docs/manual/gammu/index.rst:1168
 msgid ""
 "Converts between various file formats supported by Gammu, following types "
 "are supported:"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1163
+#: docs/manual/gammu/index.rst:1170
 msgid "BOOKMARK target.url file location"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1166
+#: docs/manual/gammu/index.rst:1173
 msgid "Converts backup format supported by Gammu to vBookmark file."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1168
+#: docs/manual/gammu/index.rst:1175
 msgid "CALENDAR target.vcs file location"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1173
+#: docs/manual/gammu/index.rst:1180
 msgid ""
 "Allows one to convert between various backup formats which gammu supports "
 "for calendar events. The file type is guessed (for input file guess is based "
@@ -18555,12 +18693,12 @@ msgid ""
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1175
+#: docs/manual/gammu/index.rst:1182
 msgid "TODO target.vcs file location"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1180
+#: docs/manual/gammu/index.rst:1187
 msgid ""
 "Allows one to convert between various backup formats which gammu supports "
 "for todo events. The file type is guessed (for input file guess is based on "
@@ -18568,12 +18706,12 @@ msgid ""
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1182
+#: docs/manual/gammu/index.rst:1189
 msgid "VCARD10|VCARD21 target.vcf file SM|ME location"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1187
+#: docs/manual/gammu/index.rst:1194
 msgid ""
 "Allows one to convert between various backup formats which gammu supports "
 "for phonebook events. The file type is guessed (for input file guess is "
@@ -18581,22 +18719,22 @@ msgid ""
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1189
+#: docs/manual/gammu/index.rst:1196
 msgid ":option:`gammu convertbackup`"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1191
+#: docs/manual/gammu/index.rst:1198
 msgid "convertbackup source.file output.file"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1193
+#: docs/manual/gammu/index.rst:1200
 msgid "1.28.94"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1197
+#: docs/manual/gammu/index.rst:1204
 msgid ""
 "Converts backup between formats supported by Gammu. Unlike :option:`gammu "
 "savefile`, this does not give you any options what to convert, it simply "
@@ -18604,33 +18742,33 @@ msgid ""
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1199
+#: docs/manual/gammu/index.rst:1206
 msgid ":option:`gammu savefile`"
 msgstr ""
 
 #. type: Title -
-#: docs/manual/gammu/index.rst:1202
+#: docs/manual/gammu/index.rst:1209
 #, no-wrap
 msgid "Nokia specific commands"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1205
+#: docs/manual/gammu/index.rst:1212
 msgid "nokiaaddfile TYPE [type options]"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1207
+#: docs/manual/gammu/index.rst:1214
 msgid "Uploads file to phone to specific location for the type:"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1209
+#: docs/manual/gammu/index.rst:1216
 msgid "APPLICATION|GAME file [-readonly] [-overwrite] [-overwriteall]"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1213
+#: docs/manual/gammu/index.rst:1220
 msgid ""
 "Install the ``*.jar/*.jad`` file pair of a midlet in the application or game "
 "menu of the phone. You need to specify filename without the jar/jad suffix, "
@@ -18638,93 +18776,93 @@ msgid ""
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1215
+#: docs/manual/gammu/index.rst:1222
 msgid "-overwrite"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1218
+#: docs/manual/gammu/index.rst:1225
 msgid ""
 "Delete the application's .jad and .jar files before installing, but doesn't "
 "delete the application data."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1220
+#: docs/manual/gammu/index.rst:1227
 msgid "-overwriteall"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1223
+#: docs/manual/gammu/index.rst:1230
 msgid ""
 "Delete the application (same as :option:`-overwrite`) and all it's data."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1225
+#: docs/manual/gammu/index.rst:1232
 msgid "You can use :ref:`jadmaker` to generate a .jad file from a .jar file."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1227
+#: docs/manual/gammu/index.rst:1234
 msgid ""
 "GALLERY|GALLERY2|CAMERA|TONES|TONES2|RECORDS|VIDEO|PLAYLIST|MEMORYCARD file "
 "[-name name] [-protected] [-readonly] [-system] [-hidden] [-newtime]"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1229
+#: docs/manual/gammu/index.rst:1236
 msgid "nokiaaddplaylists"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1231
+#: docs/manual/gammu/index.rst:1238
 msgid ""
 "Goes through phone memory and generated playlist for all music files found."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1233
+#: docs/manual/gammu/index.rst:1240
 msgid "To manually manage playlists:"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1237
+#: docs/manual/gammu/index.rst:1244
 msgid "gammu addfile a:\\\\predefplaylist filename.m3u"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1239
+#: docs/manual/gammu/index.rst:1246
 msgid "Will add playlist filename.m3u"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1243
+#: docs/manual/gammu/index.rst:1250
 msgid "gammu getfilesystem"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1245
+#: docs/manual/gammu/index.rst:1252
 msgid "Will get list of all files (including names of files with playlists)"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1249
+#: docs/manual/gammu/index.rst:1256
 msgid "gammu deletefiles a:\\\\predefplaylist\\\\filename.m3u"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1251
+#: docs/manual/gammu/index.rst:1258
 msgid "Will delete playlist filename.m3u"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1253
+#: docs/manual/gammu/index.rst:1260
 msgid "Format of m3u playlist is easy (standard mp3 playlist):"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1257
+#: docs/manual/gammu/index.rst:1264
 msgid ""
 "First line is ``#EXTM3U``, next lines contain names of files (``b:\\file1."
 "mp3``, ``b:\\folder1\\file2.mp3``, etc.). File needs t have ``\\r\\n`` "
@@ -18733,44 +18871,44 @@ msgid ""
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1260
+#: docs/manual/gammu/index.rst:1267
 msgid "nokiacomposer file"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1263
+#: docs/manual/gammu/index.rst:1270
 msgid ""
 "Show, how to enter RTTL ringtone in composer existing in many Nokia phones "
 "(and how should it look like)."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1265
+#: docs/manual/gammu/index.rst:1272
 msgid "nokiadebug filename [[v11-22] [,v33-44]...]"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1267
+#: docs/manual/gammu/index.rst:1274
 msgid "nokiadisplayoutput"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1269
+#: docs/manual/gammu/index.rst:1276
 msgid "nokiadisplaytest number"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1271
+#: docs/manual/gammu/index.rst:1278
 msgid "nokiagetadc"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1273
+#: docs/manual/gammu/index.rst:1280
 msgid "nokiagetoperatorname"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1277
+#: docs/manual/gammu/index.rst:1284
 msgid ""
 "6110.c phones have place for name for one GSM network (of course, with "
 "flashing it's possible to change all names, but Gammu is not flasher ;-)). "
@@ -18778,27 +18916,27 @@ msgid ""
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1279
+#: docs/manual/gammu/index.rst:1286
 msgid "nokiagetpbkfeatures memorytype"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1281
+#: docs/manual/gammu/index.rst:1288
 msgid "nokiagett9"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1284
+#: docs/manual/gammu/index.rst:1291
 msgid "This option should display T9 dictionary content from DCT4 phones."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1286
+#: docs/manual/gammu/index.rst:1293
 msgid "nokiagetvoicerecord location"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1290
+#: docs/manual/gammu/index.rst:1297
 msgid ""
 "Get voice record from location and save to WAV file. File is coded using GSM "
 "6.10 codec (available for example in win32). Name of file is like name of "
@@ -18806,7 +18944,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1294
+#: docs/manual/gammu/index.rst:1301
 msgid ""
 "Created WAV files require GSM 6.10 codec to be played. In Win XP it's "
 "included by Microsoft. If you deleted it by accident in this operating "
@@ -18814,92 +18952,92 @@ msgid ""
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1296
+#: docs/manual/gammu/index.rst:1303
 msgid "Control Panel"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1297
+#: docs/manual/gammu/index.rst:1304
 msgid "Add hardware"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1298
+#: docs/manual/gammu/index.rst:1305
 msgid "click Next"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1299
+#: docs/manual/gammu/index.rst:1306
 msgid "select \"Yes. I have already connected the hardware"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1300
+#: docs/manual/gammu/index.rst:1307
 msgid "select \"Add a new hardware device"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1301
+#: docs/manual/gammu/index.rst:1308
 msgid "select \"Install the hardware that I manually select from a list"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1302
+#: docs/manual/gammu/index.rst:1309
 msgid "select \"Sound, video and game controllers"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1303
+#: docs/manual/gammu/index.rst:1310
 msgid "select \"Audio codecs"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1304
+#: docs/manual/gammu/index.rst:1311
 msgid "select \"windows\\\\system32\" directory and file \"mmdriver.inf"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1305
+#: docs/manual/gammu/index.rst:1312
 msgid ""
 "if You will be asked for file msgsm32.acm, it should unpacked from Windows CD"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1306
+#: docs/manual/gammu/index.rst:1313
 msgid ""
 "now You can be asked if want to install unsigned driver (YES), about select "
 "codec configuration (select what you want) and rebotting PC (make it)"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1308
+#: docs/manual/gammu/index.rst:1315
 msgid "nokiamakecamerashoot"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1310
+#: docs/manual/gammu/index.rst:1317
 msgid "nokianetmonitor test"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1312
+#: docs/manual/gammu/index.rst:1319
 msgid "Takes output or set netmonitor for Nokia DCT3 phones."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1314 docs/manual/gammu/index.rst:1330
+#: docs/manual/gammu/index.rst:1321 docs/manual/gammu/index.rst:1337
 msgid "seealso::"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1318 docs/manual/gammu/index.rst:1334
+#: docs/manual/gammu/index.rst:1325 docs/manual/gammu/index.rst:1341
 msgid ""
 "For more info about this option, please visit `Marcin's page <http://www."
 "mwiacek.com/>`_ and read netmonitor manual there."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1324
+#: docs/manual/gammu/index.rst:1331
 msgid ""
 "test ``243`` enables all tests (after using command :command:`gammu "
 "nokianetmonitor 243` in some phones like 6210 or 9210 have to reboot them to "
@@ -18907,37 +19045,37 @@ msgid ""
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1326
+#: docs/manual/gammu/index.rst:1333
 msgid "nokianetmonitor36"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1328
+#: docs/manual/gammu/index.rst:1335
 msgid "Reset counters from netmonitor test 36 in Nokia DCT3 phones."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1336
+#: docs/manual/gammu/index.rst:1343
 msgid "nokiasecuritycode"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1338
+#: docs/manual/gammu/index.rst:1345
 msgid "Get/reset to \"12345\" security code"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1340
+#: docs/manual/gammu/index.rst:1347
 msgid "nokiaselftests"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1342
+#: docs/manual/gammu/index.rst:1349
 msgid "Perform tests for Nokia DCT3 phones."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1348
+#: docs/manual/gammu/index.rst:1355
 msgid ""
 "EEPROM test can show an error when your phone has an EEPROM in flash (like "
 "82xx/7110/62xx/33xx). The clock test will show an error when the phone doesn?"
@@ -18945,280 +19083,280 @@ msgid ""
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1350
+#: docs/manual/gammu/index.rst:1357
 msgid "nokiasetlights keypad|display|torch on|off"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1352
+#: docs/manual/gammu/index.rst:1359
 msgid "nokiasetoperatorname [networkcode name]"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1354
+#: docs/manual/gammu/index.rst:1361
 msgid "nokiasetphonemenus"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1356
+#: docs/manual/gammu/index.rst:1363
 msgid "Enable all (?) possible menus for DCT3 Nokia phones:"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1358 docs/manual/gammu/index.rst:1367
+#: docs/manual/gammu/index.rst:1365 docs/manual/gammu/index.rst:1374
 msgid "ALS (Alternative Line Service) option menu"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1359
+#: docs/manual/gammu/index.rst:1366
 msgid "vibra menu for 3210"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1360
+#: docs/manual/gammu/index.rst:1367
 msgid "3315 features in 3310 5.45 and higher"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1361
+#: docs/manual/gammu/index.rst:1368
 msgid "two additional games (React and Logic) for 3210 5.31 and higher"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1362
+#: docs/manual/gammu/index.rst:1369
 msgid "WellMate menu for 6150"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1363
+#: docs/manual/gammu/index.rst:1370
 msgid "NetMonitor"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1365
+#: docs/manual/gammu/index.rst:1372
 msgid "and for DCT4:"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1368
+#: docs/manual/gammu/index.rst:1375
 msgid "Bluetooth, WAP bookmarks and settings menu, ... (6310i)"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1369
+#: docs/manual/gammu/index.rst:1376
 msgid "GPRS Always Online"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1370
+#: docs/manual/gammu/index.rst:1377
 msgid "and others..."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1372
+#: docs/manual/gammu/index.rst:1379
 msgid "nokiasetvibralevel level"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1374
+#: docs/manual/gammu/index.rst:1381
 msgid "Set vibra power to \"level\" (given in percent)"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1376
+#: docs/manual/gammu/index.rst:1383
 msgid "nokiatuneradio"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1378
+#: docs/manual/gammu/index.rst:1385
 msgid "nokiavibratest"
 msgstr ""
 
 #. type: Title -
-#: docs/manual/gammu/index.rst:1381
+#: docs/manual/gammu/index.rst:1388
 #, no-wrap
 msgid "Siemens specific commands"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1384
+#: docs/manual/gammu/index.rst:1391
 msgid "siemensnetmonact netmon_type"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1387
+#: docs/manual/gammu/index.rst:1394
 msgid ""
 "Enables network monitor in Siemens phone. Currently known values for type "
 "are 1 for full and 2 for simple mode."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1389
+#: docs/manual/gammu/index.rst:1396
 msgid "siemensnetmonitor test"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1391
+#: docs/manual/gammu/index.rst:1398
 msgid "siemenssatnetmon"
 msgstr ""
 
 #. type: Title -
-#: docs/manual/gammu/index.rst:1393
+#: docs/manual/gammu/index.rst:1400
 #, no-wrap
 msgid "Network commands"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1396
+#: docs/manual/gammu/index.rst:1403
 msgid "getgprspoint start [stop]"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1398
+#: docs/manual/gammu/index.rst:1405
 msgid "listnetworks [country]"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1400
+#: docs/manual/gammu/index.rst:1407
 msgid "Show names/codes of GSM networks known for Gammu"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1402
+#: docs/manual/gammu/index.rst:1409
 msgid "networkinfo"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1404
+#: docs/manual/gammu/index.rst:1411
 msgid "Show information about network status from the phone."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1406
+#: docs/manual/gammu/index.rst:1413
 msgid "setautonetworklogin"
 msgstr ""
 
 #. type: Title -
-#: docs/manual/gammu/index.rst:1408
+#: docs/manual/gammu/index.rst:1415
 #, no-wrap
 msgid "WAP settings and bookmarks commands"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1411
+#: docs/manual/gammu/index.rst:1418
 msgid "deletewapbookmark start [stop]"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1413
+#: docs/manual/gammu/index.rst:1420
 msgid "Delete WAP bookmarks from phone."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1417
+#: docs/manual/gammu/index.rst:1424
 msgid "getchatsettings start [stop]"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1419
+#: docs/manual/gammu/index.rst:1426
 msgid "getsyncmlsettings start [stop]"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1421
+#: docs/manual/gammu/index.rst:1428
 msgid "getwapbookmark start [stop]"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1423
+#: docs/manual/gammu/index.rst:1430
 msgid "Get WAP bookmarks from phone."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1427
+#: docs/manual/gammu/index.rst:1434
 msgid "getwapsettings start [stop]"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1429
+#: docs/manual/gammu/index.rst:1436
 msgid "Get WAP settings from phone."
 msgstr ""
 
 #. type: Title -
-#: docs/manual/gammu/index.rst:1433
+#: docs/manual/gammu/index.rst:1440
 #, no-wrap
 msgid "MMS and MMS settings commands"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1436
+#: docs/manual/gammu/index.rst:1443
 msgid "getallmms [-save]"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1438
+#: docs/manual/gammu/index.rst:1445
 msgid "geteachmms [-save]"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1440
+#: docs/manual/gammu/index.rst:1447
 msgid "getmmsfolders"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1442
+#: docs/manual/gammu/index.rst:1449
 msgid "getmmssettings start [stop]"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1444
+#: docs/manual/gammu/index.rst:1451
 msgid "readmmsfile file [-save]"
 msgstr ""
 
 #. type: Title -
-#: docs/manual/gammu/index.rst:1447
+#: docs/manual/gammu/index.rst:1454
 #, no-wrap
 msgid "FM radio commands"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1450
+#: docs/manual/gammu/index.rst:1457
 msgid "getfmstation start [stop]"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1452
+#: docs/manual/gammu/index.rst:1459
 msgid "Show info about FM stations in phone"
 msgstr ""
 
 #. type: Title -
-#: docs/manual/gammu/index.rst:1454
+#: docs/manual/gammu/index.rst:1461
 #, fuzzy, no-wrap
 msgid "Phone information commands"
 msgstr "手機資訊"
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1457
+#: docs/manual/gammu/index.rst:1464
 msgid "battery"
 msgstr "電池"
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1459
+#: docs/manual/gammu/index.rst:1466
 msgid "Displays information about battery and power source."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1461
+#: docs/manual/gammu/index.rst:1468
 msgid "getdisplaystatus"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1463
+#: docs/manual/gammu/index.rst:1470
 msgid "getlocation"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1467
+#: docs/manual/gammu/index.rst:1474
 msgid ""
 "Gets network information from phone (same as networkinfo)  and prints "
 "location (latitude and longitude) based on information from `OpenCellID "
@@ -19226,450 +19364,450 @@ msgid ""
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1469
+#: docs/manual/gammu/index.rst:1476
 msgid "getsecuritystatus"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1471
+#: docs/manual/gammu/index.rst:1478
 msgid "Show, if phone wait for security code (like PIN, PUK, etc.) or not"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1473
+#: docs/manual/gammu/index.rst:1480
 msgid "identify"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1475
+#: docs/manual/gammu/index.rst:1482
 msgid "Show the most important phone data."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1477
+#: docs/manual/gammu/index.rst:1484
 msgid "monitor [times]"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1480
+#: docs/manual/gammu/index.rst:1487
 msgid ""
 "Retrieves phone status and writes it continuously to standard output. Press :"
 "kbd:`Ctrl+C` to interrupt this command."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1483
+#: docs/manual/gammu/index.rst:1490
 msgid ""
 "If no parameter is given, the program runs until interrupted, otherwise only "
 "given number of iterations is performed."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1485
+#: docs/manual/gammu/index.rst:1492
 msgid "This command outputs almost all information Gammu supports:"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1487
+#: docs/manual/gammu/index.rst:1494
 msgid "Number of contacts, calendar and todo entries, messages, calls, etc."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1488
+#: docs/manual/gammu/index.rst:1495
 msgid "Signal strength."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1489
+#: docs/manual/gammu/index.rst:1496
 msgid "Battery state."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1490
+#: docs/manual/gammu/index.rst:1497
 msgid "Currently used network."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1491
+#: docs/manual/gammu/index.rst:1498
 msgid "Notifications of incoming messages and calls."
 msgstr ""
 
 #. type: Title -
-#: docs/manual/gammu/index.rst:1494
+#: docs/manual/gammu/index.rst:1501
 #, fuzzy, no-wrap
 msgid "Phone settings commands"
 msgstr "手機資訊"
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1497
+#: docs/manual/gammu/index.rst:1504
 msgid "getcalendarsettings"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1500
+#: docs/manual/gammu/index.rst:1507
 msgid ""
 "Displays calendar settings like first day of week or automatic deleting of "
 "old entries."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1502
+#: docs/manual/gammu/index.rst:1509
 msgid "getprofile start [stop]"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1504
+#: docs/manual/gammu/index.rst:1511
 msgid "resetphonesettings PHONE|DEV|UIF|ALL|FACTORY"
 msgstr ""
 
 #. type: Labeled list
-#: docs/manual/gammu/index.rst:1505 docs/manual/gammu/index.rst:1594
+#: docs/manual/gammu/index.rst:1512 docs/manual/gammu/index.rst:1601
 #, no-wrap
 msgid ".. warning"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1506
+#: docs/manual/gammu/index.rst:1513
 msgid "This will delete user data, be careful."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1508
+#: docs/manual/gammu/index.rst:1515
 msgid "Reset phone settings."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1510
+#: docs/manual/gammu/index.rst:1517
 msgid "``PHONE``"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1511
+#: docs/manual/gammu/index.rst:1518
 msgid "Clear phone settings."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1513
+#: docs/manual/gammu/index.rst:1520
 msgid "``DEV``"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1514
+#: docs/manual/gammu/index.rst:1521
 msgid "Clear device settings."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1516
+#: docs/manual/gammu/index.rst:1523
 msgid "``ALL``"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1517
+#: docs/manual/gammu/index.rst:1524
 msgid "Clear user settings."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1519
+#: docs/manual/gammu/index.rst:1526
 msgid "removes or set logos to default"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1520
+#: docs/manual/gammu/index.rst:1527
 msgid "set default phonebook and other menu settings"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1521
+#: docs/manual/gammu/index.rst:1528
 msgid "clear T9 words,"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1522
+#: docs/manual/gammu/index.rst:1529
 msgid "clear call register info"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1523
+#: docs/manual/gammu/index.rst:1530
 msgid "set default profiles settings"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1524
+#: docs/manual/gammu/index.rst:1531
 msgid "clear user ringtones"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1526
+#: docs/manual/gammu/index.rst:1533
 msgid "``UIF``"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1527
+#: docs/manual/gammu/index.rst:1534
 msgid "Clear user settings and disables hidden menus."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1529
+#: docs/manual/gammu/index.rst:1536
 msgid "changes like after ``ALL``"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1530
+#: docs/manual/gammu/index.rst:1537
 msgid "disables netmon and PPS (all \"hidden\" menus)"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1532
+#: docs/manual/gammu/index.rst:1539
 msgid "``FACTORY``"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1533
+#: docs/manual/gammu/index.rst:1540
 msgid "Reset to factory defaults."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1535
+#: docs/manual/gammu/index.rst:1542
 msgid "changes like after ``UIF``"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1536
+#: docs/manual/gammu/index.rst:1543
 msgid "clear date/time"
 msgstr ""
 
 #. type: Title -
-#: docs/manual/gammu/index.rst:1539
+#: docs/manual/gammu/index.rst:1546
 #, no-wrap
 msgid "Dumps decoding commands"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1542
+#: docs/manual/gammu/index.rst:1549
 msgid ""
 "These commands are available only if Gammu was compiled with debugging "
 "options."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1544
+#: docs/manual/gammu/index.rst:1551
 msgid "decodebinarydump file [phonemodel]"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1547
+#: docs/manual/gammu/index.rst:1554
 msgid ""
 "Decodes a dump made by Gammu with :config:option:`LogFormat` set to "
 "``binary``."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1549
+#: docs/manual/gammu/index.rst:1556
 msgid "decodesniff MBUS2|IRDA file [phonemodel]"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1551
+#: docs/manual/gammu/index.rst:1558
 msgid ""
 "Allows one to decode sniffs. See :ref:`Discovering protocol` for more "
 "details."
 msgstr ""
 
 #. type: Title -
-#: docs/manual/gammu/index.rst:1553
+#: docs/manual/gammu/index.rst:1560
 #, no-wrap
 msgid "Other commands"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1556
+#: docs/manual/gammu/index.rst:1563
 msgid "entersecuritycode PIN|PUK|PIN2|PUK2|PHONE|NETWORK code|- [newpin|-]"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1558
+#: docs/manual/gammu/index.rst:1565
 msgid ""
 "Allow one to enter security code from PC. When code is ``-``, it is read "
 "from stdin."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1560
+#: docs/manual/gammu/index.rst:1567
 msgid "In case entering PUK, some phones require you to set new PIN as well."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1562
+#: docs/manual/gammu/index.rst:1569
 msgid "presskeysequence mMnNpPuUdD+-123456789*0#gGrR<>[]hHcCjJfFoOmMdD@"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1564
+#: docs/manual/gammu/index.rst:1571
 msgid "Press specified key sequence on phone keyboard"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1566
+#: docs/manual/gammu/index.rst:1573
 msgid "``mM``"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1567
+#: docs/manual/gammu/index.rst:1574
 msgid "Menu"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1568
+#: docs/manual/gammu/index.rst:1575
 msgid "``nN``"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1569
+#: docs/manual/gammu/index.rst:1576
 msgid "Names key"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1570
+#: docs/manual/gammu/index.rst:1577
 msgid "``pP``"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1571
+#: docs/manual/gammu/index.rst:1578
 msgid "Power"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1572
+#: docs/manual/gammu/index.rst:1579
 msgid "``uU``"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1573
+#: docs/manual/gammu/index.rst:1580
 msgid "Up"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1574
+#: docs/manual/gammu/index.rst:1581
 msgid "``dD``"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1575
+#: docs/manual/gammu/index.rst:1582
 msgid "Down"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1576
+#: docs/manual/gammu/index.rst:1583
 msgid "``+-``"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1577
+#: docs/manual/gammu/index.rst:1584
 msgid "+-"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1578
+#: docs/manual/gammu/index.rst:1585
 msgid "``gG``"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1579
+#: docs/manual/gammu/index.rst:1586
 msgid "Green"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1580
+#: docs/manual/gammu/index.rst:1587
 msgid "``rR``"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1581
+#: docs/manual/gammu/index.rst:1588
 msgid "Red"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1582
+#: docs/manual/gammu/index.rst:1589
 msgid "``123456789*0#``"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1583
+#: docs/manual/gammu/index.rst:1590
 msgid "numeric keyboard"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1585
+#: docs/manual/gammu/index.rst:1592
 msgid "reset SOFT|HARD"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1587
+#: docs/manual/gammu/index.rst:1594
 msgid "Make phone reset:"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1589
+#: docs/manual/gammu/index.rst:1596
 msgid "``SOFT``"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1590
+#: docs/manual/gammu/index.rst:1597
 msgid "without asking for PIN"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1591
+#: docs/manual/gammu/index.rst:1598
 msgid "``HARD``"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1592
+#: docs/manual/gammu/index.rst:1599
 msgid "with asking for PIN"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1594
+#: docs/manual/gammu/index.rst:1601
 msgid "Some phones will ask for PIN even with ``SOFT`` option."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1595
+#: docs/manual/gammu/index.rst:1602
 msgid "Some phones will reset user data on ``HARD`` reset."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1597
+#: docs/manual/gammu/index.rst:1604
 msgid "screenshot filename"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1600
+#: docs/manual/gammu/index.rst:1607
 msgid ""
 "Captures phone screenshot and saves it as filename. The extension is "
 "automatically appended to filename based on what data phone provides."
 msgstr ""
 
 #. type: Title -
-#: docs/manual/gammu/index.rst:1602
+#: docs/manual/gammu/index.rst:1609
 #, no-wrap
 msgid "Batch mode commands"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1605
+#: docs/manual/gammu/index.rst:1612
 msgid "batch [file]"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1609
+#: docs/manual/gammu/index.rst:1616
 msgid ""
 "Starts Gammu in a batch mode. In this mode you can issue several commands "
 "each on one line. Lines starting with # are treated as a comments."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1613
+#: docs/manual/gammu/index.rst:1620
 msgid ""
 "By default, commands are read from standard input, but you can optionally "
 "specify a file from where they would be read (special case ``-`` means "
@@ -19677,23 +19815,23 @@ msgid ""
 msgstr ""
 
 #. type: Title -
-#: docs/manual/gammu/index.rst:1615
+#: docs/manual/gammu/index.rst:1622
 #, fuzzy, no-wrap
 msgid "Configuration commands"
 msgstr "手機資訊"
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1618
+#: docs/manual/gammu/index.rst:1625
 msgid "searchphone [-debug]"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1620
+#: docs/manual/gammu/index.rst:1627
 msgid "Attempts to search for a connected phone."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1626
+#: docs/manual/gammu/index.rst:1633
 msgid ""
 "Please note that this can take a very long time, but in case you have no "
 "clue how to configure phone connection, this is a convenient way to find "
@@ -19701,35 +19839,35 @@ msgid ""
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1628
+#: docs/manual/gammu/index.rst:1635
 msgid "install"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1630
+#: docs/manual/gammu/index.rst:1637
 msgid "Installs applet for currently configured connection to the phone."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1633
+#: docs/manual/gammu/index.rst:1640
 msgid ""
 "You can configure search path for instllation files by :config:option:"
 "`DataPath`."
 msgstr ""
 
 #. type: Title -
-#: docs/manual/gammu/index.rst:1635
+#: docs/manual/gammu/index.rst:1642
 #, no-wrap
 msgid "Gammu information commands"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1638
+#: docs/manual/gammu/index.rst:1645
 msgid "checkversion [STABLE]"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1642
+#: docs/manual/gammu/index.rst:1649
 msgid ""
 "Checks whether there is newer Gammu version available online (if Gammu has "
 "been compiled with CURL). If you pass additional parameter ``STABLE``, only "
@@ -19737,51 +19875,51 @@ msgid ""
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1644
+#: docs/manual/gammu/index.rst:1651
 msgid "features"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1646
+#: docs/manual/gammu/index.rst:1653
 msgid "Print information about compiled in features."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1648
+#: docs/manual/gammu/index.rst:1655
 msgid "help [topic]"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1651
+#: docs/manual/gammu/index.rst:1658
 msgid ""
 "Print help. By default general help is printed, but you can also specify a "
 "help category to get more detailed help on some topic."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1653
+#: docs/manual/gammu/index.rst:1660
 msgid "version"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1655
+#: docs/manual/gammu/index.rst:1662
 msgid "Print version information and license."
 msgstr ""
 
 #. type: Title +
-#: docs/manual/gammu/index.rst:1658
+#: docs/manual/gammu/index.rst:1665
 #, no-wrap
 msgid "Return values"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1662
+#: docs/manual/gammu/index.rst:1669
 msgid ""
 "gammu returns 0 on success. In case of failure non zero code is returned."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1675
+#: docs/manual/gammu/index.rst:1682
 #, no-wrap
 msgid ""
 "1\n"
@@ -19799,13 +19937,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1678
+#: docs/manual/gammu/index.rst:1685
 msgid ""
 "Errors codes greater than 100 map to the GSM_Error values increased by 100:"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1823
+#: docs/manual/gammu/index.rst:1830
 #, no-wrap
 msgid ""
 "101\n"
@@ -19955,202 +20093,220 @@ msgid ""
 msgstr ""
 
 #. type: Title -
-#: docs/manual/gammu/index.rst:1829
+#: docs/manual/gammu/index.rst:1836
 #, fuzzy, no-wrap
 msgid "Configuration"
 msgstr "手機資訊"
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1832
+#: docs/manual/gammu/index.rst:1839
 msgid "To check it out, you need to have configuration file for gammu, see"
 msgstr ""
 
 #. type: Attribute :ref:
-#: docs/manual/gammu/index.rst:1832
+#: docs/manual/gammu/index.rst:1839
 #, no-wrap
 msgid "`gammurc` for more details about it."
 msgstr ""
 
 #. type: Title -
-#: docs/manual/gammu/index.rst:1835
+#: docs/manual/gammu/index.rst:1842
 #, no-wrap
 msgid "Sending messages"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1840
+#: docs/manual/gammu/index.rst:1847
 msgid ""
 "All messages bellow are sent to number 123456, replace it with proper "
 "destination."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1842
+#: docs/manual/gammu/index.rst:1849
 msgid "Send text message up to standard 160 chars:"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1846
+#: docs/manual/gammu/index.rst:1853
 msgid "echo \"All your base are belong to us\" | gammu sendsms TEXT 123456"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1852
+#: docs/manual/gammu/index.rst:1859
 msgid "gammu sendsms TEXT 123456 -text \"All your base are belong to us\""
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1854
+#: docs/manual/gammu/index.rst:1861
 msgid "Send long text message:"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1858
+#: docs/manual/gammu/index.rst:1865
 msgid ""
 "echo \"All your base are belong to us\" | gammu sendsms TEXT 123456 -len 400"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1864
+#: docs/manual/gammu/index.rst:1871
 msgid ""
 "gammu sendsms TEXT 123456 -len 400 -text \"All your base are belong to us\""
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1870
+#: docs/manual/gammu/index.rst:1877
 msgid "gammu sendsms EMS 123456 -text \"All your base are belong to us\""
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1872
+#: docs/manual/gammu/index.rst:1879
 msgid ""
 "Send some funky message with predefined sound and animation from 2 bitmaps:"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1876
+#: docs/manual/gammu/index.rst:1883
 msgid ""
 "gammu sendsms EMS 123456 -text \"Greetings\" -defsound 1 -text \"from Gammu -"
 "tone10 axelf.txt -animation 2 file1.bmp file2.bmp"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1878
+#: docs/manual/gammu/index.rst:1885
 msgid "Send protected message with ringtone:"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1882
+#: docs/manual/gammu/index.rst:1889
 msgid ""
 "gammu sendsms EMS 123456 -protected 2 -variablebitmaplong ala.bmp -"
 "toneSElong axelf.txt -toneSE ring.txt"
 msgstr ""
 
 #. type: Title -
-#: docs/manual/gammu/index.rst:1884
+#: docs/manual/gammu/index.rst:1892
+#, no-wrap
+msgid "Retrieving USSD replies"
+msgstr ""
+
+#. type: delimited block _
+#: docs/manual/gammu/index.rst:1895
+msgid ""
+"For example for retrieving prepaid card status or retrieving various network "
+"info:"
+msgstr ""
+
+#. type: delimited block _
+#: docs/manual/gammu/index.rst:1899
+msgid "gammu getussd '#555#'"
+msgstr ""
+
+#. type: Title -
+#: docs/manual/gammu/index.rst:1901
 #, no-wrap
 msgid "Uploading files to Nokia"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1887
+#: docs/manual/gammu/index.rst:1904
 msgid ""
 "Add Alien to applications in your phone (you need to have files Alien.JAD "
 "and Alien.JAR in current directory):"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1891
+#: docs/manual/gammu/index.rst:1908
 msgid "gammu nokiaaddfile APPLICATION Alien"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1893
+#: docs/manual/gammu/index.rst:1910
 msgid "Add file.mid to ringtones folder:"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1897
+#: docs/manual/gammu/index.rst:1914
 msgid "gammu nokiaaddfile TONES file.mid"
 msgstr ""
 
 #. type: Title -
-#: docs/manual/gammu/index.rst:1899
+#: docs/manual/gammu/index.rst:1916
 #, no-wrap
 msgid "Setting operator logo"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1902
+#: docs/manual/gammu/index.rst:1919
 msgid "Set logo for network ``230 03`` (Vodafone CZ):"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1906
+#: docs/manual/gammu/index.rst:1923
 msgid "gammu setbitmap OPERATOR ala.bmp \"230 03\""
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1908
+#: docs/manual/gammu/index.rst:1925
 msgid "_converting-formats:"
 msgstr ""
 
 #. type: Title -
-#: docs/manual/gammu/index.rst:1910
+#: docs/manual/gammu/index.rst:1927
 #, no-wrap
 msgid "Converting file formats"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1913
+#: docs/manual/gammu/index.rst:1930
 msgid "The formats conversion can done using :option:`gammu savefile` or"
 msgstr ""
 
 #. type: Attribute :option:
-#: docs/manual/gammu/index.rst:1913
+#: docs/manual/gammu/index.rst:1930
 #, no-wrap
 msgid "`gammu convertbackup` commands."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1916
+#: docs/manual/gammu/index.rst:1933
 msgid ""
 "Convert single entry (at position 260) from :ref:`gammu-backup` to vCalendar:"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1920
+#: docs/manual/gammu/index.rst:1937
 msgid "gammu savefile CALENDAR output.vcs myCalendar.backup 260"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1922
+#: docs/manual/gammu/index.rst:1939
 msgid "Convert first phonebook entry from :ref:`gammu-backup` to vCard:"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1926
+#: docs/manual/gammu/index.rst:1943
 msgid "gammu savefile VCARD21 output.vcf phone.backup ME 1"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1928
+#: docs/manual/gammu/index.rst:1945
 msgid "Convert all contacts from backup to vCard:"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1932
+#: docs/manual/gammu/index.rst:1949
 msgid "gammu convertbackup phone.backup output.vcf"
 msgstr ""
 
 #. type: Title -
-#: docs/manual/gammu/index.rst:1935
+#: docs/manual/gammu/index.rst:1952
 #, no-wrap
 msgid "Reporting bugs"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1940
+#: docs/manual/gammu/index.rst:1957
 msgid ""
 "There are definitely many bugs, reporting to author is welcome. Please "
 "include some useful information when sending bug reports (especially debug "
@@ -20158,28 +20314,28 @@ msgid ""
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1942
+#: docs/manual/gammu/index.rst:1959
 msgid "To generate debug log, enable it in :ref:`gammurc`:"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1949
+#: docs/manual/gammu/index.rst:1966
 msgid ""
 "[gammu] YOUR CONNECTION SETTINGS logfile = /tmp/gammu.log logformat = textall"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1951
+#: docs/manual/gammu/index.rst:1968
 msgid "Alternatively you can specify logging on command line:"
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1955
+#: docs/manual/gammu/index.rst:1972
 msgid "gammu -d textall -f /tmp/gammu.log ..."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1959
+#: docs/manual/gammu/index.rst:1976
 msgid ""
 "With this settings, Gammu generates /tmp/gammu.log on each connection to "
 "phone and stores dump of communication there. You can also find some hints "
@@ -20187,13 +20343,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1961
+#: docs/manual/gammu/index.rst:1978
 msgid ""
 "See <http://wammu.eu/support/bugs/> for more information on reporting bugs."
 msgstr ""
 
 #. type: delimited block _
-#: docs/manual/gammu/index.rst:1962
+#: docs/manual/gammu/index.rst:1979
 msgid "Please report bugs to `Gammu bug tracker <http://bugs.cihar.com/>`_."
 msgstr ""
 
@@ -21317,7 +21473,7 @@ msgid "http://www.gnu.org/software/libiconv/"
 msgstr ""
 
 #. type: Title ~
-#: docs/manual/project/install.rst:96 docs/manual/project/install.rst:458
+#: docs/manual/project/install.rst:96 docs/manual/project/install.rst:466
 #, no-wrap
 msgid "Gettext"
 msgstr ""
@@ -21333,7 +21489,7 @@ msgid "http://www.gnu.org/software/gettext/"
 msgstr ""
 
 #. type: Title ~
-#: docs/manual/project/install.rst:103 docs/manual/project/install.rst:434
+#: docs/manual/project/install.rst:103 docs/manual/project/install.rst:442
 #, no-wrap
 msgid "MySQL"
 msgstr ""
@@ -21349,7 +21505,7 @@ msgid "http://mysql.com/"
 msgstr ""
 
 #. type: Title ~
-#: docs/manual/project/install.rst:110 docs/manual/project/install.rst:451
+#: docs/manual/project/install.rst:110 docs/manual/project/install.rst:459
 #, no-wrap
 msgid "PostgreSQL"
 msgstr ""
@@ -21704,19 +21860,31 @@ msgid ""
 "gammu.conf"
 msgstr ""
 
+#. type: Plain text
+#: docs/manual/project/install.rst:274
+msgid ""
+"You can also avoid changing ldconfig configuration by installing Gammu to "
+"paths where it already searches, for examble by:"
+msgstr ""
+
+#. type: Plain text
+#: docs/manual/project/install.rst:278
+msgid "cmake .. -DCMAKE_INSTALL_PREFIX=\"/usr\""
+msgstr ""
+
 #. type: Title -
-#: docs/manual/project/install.rst:273
+#: docs/manual/project/install.rst:281
 #, no-wrap
 msgid "Compiling on Microsoft Windows"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:276 docs/manual/project/install.rst:353
+#: docs/manual/project/install.rst:284 docs/manual/project/install.rst:361
 msgid "First install all :ref:`deps` and :ref:`opt-deps`."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:283
+#: docs/manual/project/install.rst:291
 msgid ""
 "`CMake`_ is able to generate projects for various tools including Microsoft "
 "Visual Studio, Borland toolchains, Cygwin or Mingw32. Just click on "
@@ -21727,18 +21895,18 @@ msgid ""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/project/install.rst:285
+#: docs/manual/project/install.rst:293
 #, no-wrap
 msgid "Compiling using MS Visual C++"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:288
+#: docs/manual/project/install.rst:296
 msgid "You will probably need additional SDKs:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:294
+#: docs/manual/project/install.rst:302
 msgid ""
 "Microsoft Windows Platform SDK (required especially for Bluetooth).  It's "
 "given for free. Below are links to different releases (if you have problems "
@@ -21747,108 +21915,108 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:296
+#: docs/manual/project/install.rst:304
 msgid ""
 "For free Visual C++ Express 2005 you need to set compiler to work with "
 "Platform SDK (see description)."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:298
+#: docs/manual/project/install.rst:306
 msgid ""
 "MySQL include/library files from MySQL install package (for MySQL support in "
 "SMSD)."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:300
+#: docs/manual/project/install.rst:308
 msgid ""
 "PostgreSQL include/library files from PostgreSQL install package (for "
 "PostgreSQL support in SMSD)."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:302
+#: docs/manual/project/install.rst:310
 msgid ""
 "For gettext (internationalization) support, you will need gettext packages "
 "from GnuWin32 project."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:304
+#: docs/manual/project/install.rst:312
 msgid ""
 "As build is now based on CMake, you will need to get it from http://cmake."
 "org/."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:306
+#: docs/manual/project/install.rst:314
 msgid "After downloading and installing them into your system:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:310
+#: docs/manual/project/install.rst:318
 msgid ""
 "Now you should be able to execute cmake by clicking on CMakeLists.txt file "
 "in Gammu sources, this should pop up dialog with configuration options."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:313
+#: docs/manual/project/install.rst:321
 msgid ""
 "You can also start CMakeSetup from start menu and select source directory "
 "(just point to it to Gammu sources)."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:315
+#: docs/manual/project/install.rst:323
 msgid ""
 "Select directory where binaries will be stored, I suggest this is different "
 "than source one, eg. append subdirectory build."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:316
+#: docs/manual/project/install.rst:324
 msgid "Select compiler you want to use in Build for select."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:319
+#: docs/manual/project/install.rst:327
 msgid ""
 "In list bellow, you can tweak paths to some optional libraries and project "
 "configuration."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:321
+#: docs/manual/project/install.rst:329
 msgid ""
 "Then just press Configure button, which will do the hard job. After this, "
 "just click OK button to generate Visual Studio project."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:323
+#: docs/manual/project/install.rst:331
 msgid ""
 "Project files for Visual Studio should be now generated in directory you "
 "selected, just open it in Visual Studio and compile :-)."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:326
+#: docs/manual/project/install.rst:334
 msgid ""
 "Project file should be named Gammu.dsw or Gammu.sln depending on what MSVC "
 "version you choose."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:328
+#: docs/manual/project/install.rst:336
 msgid ""
 "You should see ALL_BUILD target, which builds everything needed, simmilar to "
 "make all on Linux."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:333
+#: docs/manual/project/install.rst:341
 msgid ""
 "I know this guide is incomplete, I don't have environment to test, you're "
 "welcome to improve it!. Some more information can be found in howtos for "
@@ -21857,13 +22025,13 @@ msgid ""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/project/install.rst:335
+#: docs/manual/project/install.rst:343
 #, no-wrap
 msgid "Compiling using Borland C++"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:343
+#: docs/manual/project/install.rst:351
 msgid ""
 "Borland toolchain - you can download compiler at <http://www.codegear.com/"
 "downloads/free/cppbuilder>. You need to add c:/Borland/BCC55/Bin to system "
@@ -21873,24 +22041,24 @@ msgid ""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/project/install.rst:345
+#: docs/manual/project/install.rst:353
 #, no-wrap
 msgid "Compiling using Cygwin"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:348
+#: docs/manual/project/install.rst:356
 msgid "This should work pretty much same as on Linux."
 msgstr ""
 
 #. type: Title -
-#: docs/manual/project/install.rst:350
+#: docs/manual/project/install.rst:358
 #, no-wrap
 msgid "Compiling on Mac OS X"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:358
+#: docs/manual/project/install.rst:366
 msgid ""
 "Gammu should be compilable on Mac OS X, you need to have installed Developer "
 "Tols (version 2.4.1 was tested) and `CMake`_ (there is a Mac OS X \"Darwin\" "
@@ -21899,14 +22067,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:361
+#: docs/manual/project/install.rst:369
 msgid ""
 "The rest of the compilation should be pretty same as on Linux, see Linux "
 "section for more details about compile time options."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:365
+#: docs/manual/project/install.rst:373
 msgid ""
 "If you get some errors while linking with iconv, it is caused by two "
 "incompatible iconv libraries available on the system. You can override the "
@@ -21914,35 +22082,35 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:369
+#: docs/manual/project/install.rst:377
 msgid "cmake -D ICONV_LIBRARIES=\"/opt/local/lib/libiconv.dylib\" .."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:371
+#: docs/manual/project/install.rst:379
 msgid "Or completely disable iconv support:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:375
+#: docs/manual/project/install.rst:383
 msgid "cmake -DWITH_Iconv=OFF .."
 msgstr ""
 
 #. type: Title -
-#: docs/manual/project/install.rst:378
+#: docs/manual/project/install.rst:386
 #, no-wrap
 msgid "Cross compilation for Windows on Linux"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:382
+#: docs/manual/project/install.rst:390
 msgid ""
 "First install all :ref:`deps` and :ref:`opt-deps` into your mingw build "
 "environment."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:386
+#: docs/manual/project/install.rst:394
 msgid ""
 "Only cross compilation using `CMake`_ has been tested. You need to install "
 "MinGW cross tool chain and run time. On Debian you can do it by apt-get "
@@ -21950,50 +22118,50 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:393
+#: docs/manual/project/install.rst:401
 msgid ""
 "mkdir build-win32 cd build-win32 cmake .. -DCMAKE_TOOLCHAIN_FILE=../cmake/"
 "Toolchain-mingw32.cmake make"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:395
+#: docs/manual/project/install.rst:403
 msgid "There is also toolchain configuration for Win64 available:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:402
+#: docs/manual/project/install.rst:410
 msgid ""
 "mkdir build-win64 cd build-win64 cmake .. -DCMAKE_TOOLCHAIN_FILE=../cmake/"
 "Toolchain-mingw64.cmake make"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:405
+#: docs/manual/project/install.rst:413
 msgid ""
 "If your MinGW cross compiler binaries are not found automatically, you can "
 "specify their different names in cmake/Toolchain-mingw32.cmake."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:407
+#: docs/manual/project/install.rst:415
 msgid "To build just bare static library without any dependencies, use:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:411
+#: docs/manual/project/install.rst:419
 msgid "cmake .. -DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchain-mingw32.cmake \\"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:417
+#: docs/manual/project/install.rst:425
 msgid ""
 "-DBUILD_SHARED_LIBS=OFF \\ -DWITH_MySQL=OFF \\ -DWITH_Postgres=OFF \\ -"
 "DWITH_GettextLibs=OFF \\ -DWITH_Iconv=OFF \\ -DWITH_CURL=OFF"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:424
+#: docs/manual/project/install.rst:432
 msgid ""
 "To be compatible with current Python on Windows, we need to build against "
 "matching Microsoft C Runtime library. For Python 2.4 and 2.5 MSVCR71 was "
@@ -22004,13 +22172,13 @@ msgid ""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/project/install.rst:426
+#: docs/manual/project/install.rst:434
 #, no-wrap
 msgid "Third party libraries"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:431
+#: docs/manual/project/install.rst:439
 msgid ""
 "The easies way to link with third party libraries is to add path to their "
 "installation to cmake/Toolchain-mingw32.cmake or to list these paths in "
@@ -22018,40 +22186,40 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:438
+#: docs/manual/project/install.rst:446
 msgid ""
 "You can download MySQL binaries from <http://dev.mysql.com/>, but then need "
 "some tweaks:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:444
+#: docs/manual/project/install.rst:452
 msgid ""
 "cd mysql/lib/opt reimp.exe -d libmysql.lib i586-mingw32msvc-dlltool --kill-"
 "at --input-def libmysql.def \\"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:445
+#: docs/manual/project/install.rst:453
 msgid "--dllname libmysql.dll --output-lib libmysql.a"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:448
+#: docs/manual/project/install.rst:456
 msgid ""
 "reimp.exe is part of mingw-utils and can be run through wine, I didn't try "
 "to compile native binary from it."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:455
+#: docs/manual/project/install.rst:463
 msgid ""
 "You can download PostgreSQL binaries from <http://www.postgresql.org/>, but "
 "then you need to add wldap32.dll library to bin."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:463
+#: docs/manual/project/install.rst:471
 msgid ""
 "For Gettext (internationalization support), you need gettext-0.14.4-bin.zip, "
 "gettext-0.14.4-dep.zip, gettext-0.14.4-lib.zip from <http://gnuwin32."
@@ -22059,38 +22227,38 @@ msgid ""
 msgstr ""
 
 #. type: Title ~
-#: docs/manual/project/install.rst:466
+#: docs/manual/project/install.rst:474
 #, no-wrap
 msgid "CURL"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:470
+#: docs/manual/project/install.rst:478
 msgid ""
 "For CURL support, you need curl-7.19.0-devel-mingw32.zip from <http://curl."
 "haxx.se/>."
 msgstr ""
 
 #. type: Title -
-#: docs/manual/project/install.rst:472
+#: docs/manual/project/install.rst:480
 #, no-wrap
 msgid "Crosscompiling to different platform"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:476
+#: docs/manual/project/install.rst:484
 msgid ""
 "To cross compile Gammu to different architecture (or platform) you need to "
 "provide CMake toolchain file for that and invoke `CMake`_ with it:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:480
+#: docs/manual/project/install.rst:488
 msgid "cmake -DCMAKE_TOOLCHAIN_FILE=~/Toolchain-eldk-ppc74xx.cmake .."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:484
+#: docs/manual/project/install.rst:492
 msgid ""
 "More information on creating that is described in `CMake Cross Compiling`_ "
 "wiki page. Also distributions like `OpenEmbedded`_ usually already come with "
@@ -22098,23 +22266,23 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:486
+#: docs/manual/project/install.rst:494
 msgid "_CMake Cross Compiling: http://www.vtk.org/Wiki/CMake_Cross_Compiling"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:487
+#: docs/manual/project/install.rst:495
 msgid "_OpenEmbedded: http://www.openembedded.org/"
 msgstr ""
 
 #. type: Title -
-#: docs/manual/project/install.rst:489
+#: docs/manual/project/install.rst:497
 #, no-wrap
 msgid "Advanced Build Options"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:494
+#: docs/manual/project/install.rst:502
 msgid ""
 "The build system accepts wide range of options. You can see them all by "
 "running GUI version of `CMake`_ or by inspecting :file:`CMakeCache.txt` in "
@@ -22122,115 +22290,115 @@ msgid ""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/project/install.rst:496
+#: docs/manual/project/install.rst:504
 #, no-wrap
 msgid "Limiting set of installed data"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:500
+#: docs/manual/project/install.rst:508
 msgid ""
 "By setting following flags you can control which additional parts will be "
 "installed:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:502
+#: docs/manual/project/install.rst:510
 msgid "INSTALL_GNAPPLET - Install Gnapplet binaries"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:503
+#: docs/manual/project/install.rst:511
 msgid "INSTALL_MEDIA - Install sample media files"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:504
+#: docs/manual/project/install.rst:512
 msgid "INSTALL_PHP_EXAMPLES - Install PHP example scripts"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:505
+#: docs/manual/project/install.rst:513
 msgid "INSTALL_BASH_COMPLETION - Install bash completion script for Gammu"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:506
+#: docs/manual/project/install.rst:514
 msgid "INSTALL_LSB_INIT - Install LSB compatible init script for Gammu"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:507
+#: docs/manual/project/install.rst:515
 msgid "INSTALL_DOC - Install documentation"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:508
+#: docs/manual/project/install.rst:516
 msgid "INSTALL_LOC - Install locales data"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:510
+#: docs/manual/project/install.rst:518
 msgid "For example:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:514
+#: docs/manual/project/install.rst:522
 msgid "cmake -DINSTALL_DOC=OFF"
 msgstr ""
 
 #. type: Title +
-#: docs/manual/project/install.rst:517
+#: docs/manual/project/install.rst:525
 #, no-wrap
 msgid "Debugging build failures"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:521
+#: docs/manual/project/install.rst:529
 msgid ""
 "If there is some build failure (eg. some dependencies are not correctly "
 "detected), please attach :file:`CMakeCache.txt`,"
 msgstr ""
 
 #. type: Attribute :file:
-#: docs/manual/project/install.rst:521
+#: docs/manual/project/install.rst:529
 #, no-wrap
 msgid "`CMakeFiles/CMakeError.log` and :file:`CMakeFiles/CMakeOutput.log` files"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:524
+#: docs/manual/project/install.rst:532
 msgid ""
 "to the report. It will help diagnose what was detected on the system and "
 "possibly fix these errors."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:527
+#: docs/manual/project/install.rst:535
 msgid ""
 "To find out what is going on during compilation, add ``-"
 "DCMAKE_VERBOSE_MAKEFILE=ON`` to :program:`cmake` command line or run"
 msgstr ""
 
 #. type: Attribute :program:
-#: docs/manual/project/install.rst:527
+#: docs/manual/project/install.rst:535
 #, no-wrap
 msgid "`make` with ``VERBOSE=1``:"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:532
+#: docs/manual/project/install.rst:540
 msgid "make VERBOSE=1"
 msgstr ""
 
 #. type: Title +
-#: docs/manual/project/install.rst:534
+#: docs/manual/project/install.rst:542
 #, no-wrap
 msgid "Debugging crashes"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:539
+#: docs/manual/project/install.rst:547
 msgid ""
 "To debug program crashes, you might want to build Gammu with ``-"
 "DENABLE_PROTECTION=OFF``, otherwise debugging tools are somehow confused "
@@ -22238,13 +22406,13 @@ msgid ""
 msgstr ""
 
 #. type: Title +
-#: docs/manual/project/install.rst:542
+#: docs/manual/project/install.rst:550
 #, no-wrap
 msgid "Compliling python-gammu"
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:547
+#: docs/manual/project/install.rst:555
 msgid ""
 "Currently python-gammu is distributed together with Gammu, so all you need "
 "to get it is to build Gammu with Python support (it should be automatically "
@@ -22252,7 +22420,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:552
+#: docs/manual/project/install.rst:560
 msgid ""
 "Gammu uses CMake_ to generate build environment (for example Makefiles for "
 "UNIX, Visual Studio projects, Eclipse projects, etc.) which you can later "
@@ -22262,14 +22430,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:555
+#: docs/manual/project/install.rst:563
 msgid ""
 "Alternatively you can use standard distutils, for which :file:`setup.py` is "
 "placed in `python` subdirectory."
 msgstr ""
 
 #. type: Plain text
-#: docs/manual/project/install.rst:556
+#: docs/manual/project/install.rst:564
 msgid "_CMake: http://www.cmake.org/"
 msgstr ""
 

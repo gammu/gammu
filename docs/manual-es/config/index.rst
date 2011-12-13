@@ -112,6 +112,8 @@ Parámetros de conexión al dispositivo
 
         .. versionadded::         1.29.90
 
+    .. seealso::     :ref:`faq-config`
+
 .. config:option:: Dispositivo
 
     .. versionadded::     1.27.95
@@ -185,6 +187,8 @@ Parámetros de conexión al dispositivo
         .. code-block::         sh
 
             modprobe ircomm-tty modprobe irtty-sir
+
+    .. seealso::     :ref:`faq-config`
 
 .. config:option:: Puerto
 
@@ -351,10 +355,10 @@ Bluetooth para forzar el uso del canal 42:
 Trabajando con múltiples teléfonos
 ++++++++++++++++++++++++++++++++++++
 
-Gammu can be configured for multiple phones (however only one connection is
-used at one time, you can choose which one to use with :option:`gammu -s`
-parameter). Configuration for phones on three serial ports would look like
-following:
+Gammu puede ser configurado para el uso de múltiples teléfonos (sin embargo
+no se utiliza más de una conexión simultáneamente, puede elegir aquella a
+utilizar con el parámetro :option:`gammu -s`). La configuración de teléfonos
+en tres puertos seriales se vería como sigue:
 
 .. code-block:: ini
 
@@ -366,11 +370,11 @@ following:
 
 .. _Fully documented example:
 
-Fully documented example
-++++++++++++++++++++++++
+Ejemplo completamente documentado
++++++++++++++++++++++++++++++++++
 
-You can find this sample file as :file:`docs/config/gammurc` in Gammu
-sources.
+Puede encontrar este archivo de ejemplo como :fil:`docs/config/gammurc` en
+el código fuente de Gammu.
 
 .. literalinclude:: ../../../docs/config/gammurc
    :language: ini
