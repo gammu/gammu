@@ -335,7 +335,7 @@ msgstr ""
 #~ msgstr "Pengaturan telepon"
 
 #~ msgid "Reset phone settings."
-#~ msgstr "Pengaturan telepon"
+#~ msgstr "Reset pengaturan telepon."
 
 #~ msgid "Clear phone settings."
 #~ msgstr "Pengaturan telepon"
