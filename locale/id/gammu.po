@@ -1711,8 +1711,8 @@ msgid ""
 "File checksum calculated by phone doesn't match with value calculated by "
 "Gammu. File is damaged or there is a error in Gammu."
 msgstr ""
-"Checksum file yang dikalkulasikan oleh telepon tidak cocok dengan nilai "
-"kalkulasi oleh Gammu. File rusak atau ada kesalahan dalam Gammu"
+"File checksum yang dikalkulasikan oleh telepon tidak cocok dengan nilai yang "
+"dikalkulasikan oleh Gammu. File rusak atau ada kesalahan dalam Gammu."
 
 #: gammu/files.c:421
 #, c-format
