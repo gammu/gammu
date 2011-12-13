@@ -169,7 +169,7 @@ msgstr ""
 #~ msgstr "File sistem"
 
 #~ msgid "Phone connected to PC"
-#~ msgstr "Telepon tidak terhubung."
+#~ msgstr "Telepon terhubung ke PC"
 
 #~ msgid "Disconnected"
 #~ msgstr "Telepon tidak terhubung."
