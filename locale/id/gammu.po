@@ -2283,7 +2283,7 @@ msgstr "Nomor folder terlalu tinggi (maks. %i)\n"
 #: gammu/message.c:699
 #, c-format
 msgid "Deleting SMS from \"%s\" folder: "
-msgstr "Menghapus SMS dari folder \"%s\" :"
+msgstr "Menghapus SMS dari folder \"%s\":"
 
 #: gammu/misc.c:35
 msgid "Network state"
