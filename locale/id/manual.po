@@ -746,9 +746,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/config/index.rst:195
-#, fuzzy
 msgid "``obexnone``"
-msgstr "Nada dering"
+msgstr "``obexnone``"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:196
