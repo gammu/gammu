@@ -14,7 +14,7 @@
 #include <gammu-statemachine.h>
 
 /* Hack to avoid need for including libusb.h in this header, these are just pointers anyway */
-#ifndef __LIBUSB_H__
+#if !defined(__LIBUSB_H__) && !defined(LIBUSB_H)
 #define libusb_context void
 #define libusb_device_handle void
 #define struct_libusb_device_descriptor void
