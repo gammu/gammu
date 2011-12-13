@@ -1357,7 +1357,7 @@ msgstr "(Teks: alamat pos)"
 
 #: gammu/depend/nokia/dct4.c:1340
 msgid " (Text: note)"
-msgstr "(teks: catatan)"
+msgstr " (Teks: catatan)"
 
 #: gammu/depend/nokia/dct4.c:1341
 msgid " (Phone number)"
