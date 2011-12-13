@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-13 14:46+0100\n"
-"PO-Revision-Date: 2011-12-13 15:58+0200\n"
+"PO-Revision-Date: 2011-12-13 15:59+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -31125,15 +31125,13 @@ msgstr "GSM_SetCalendar"
 
 #. type: Plain text
 #: docs/manual/c/calendar.rst:25
-#, fuzzy
 msgid "GSM_AddCalendar"
-msgstr "Kalender"
+msgstr "GSM_AddCalendar"
 
 #. type: Plain text
 #: docs/manual/c/calendar.rst:26
-#, fuzzy
 msgid "GSM_DeleteCalendar"
-msgstr "Kalender"
+msgstr "GSM_DeleteCalendar"
 
 #. type: Plain text
 #: docs/manual/c/calendar.rst:27
@@ -31199,9 +31197,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/c/calendar.rst:39
-#, fuzzy
 msgid "GSM_CalendarStatus"
-msgstr "Kalender"
+msgstr "GSM_CalendarStatus"
 
 #. type: Plain text
 #: docs/manual/c/calendar.rst:40
@@ -31211,9 +31208,8 @@ msgstr "Catatan kalender"
 
 #. type: Plain text
 #: docs/manual/c/calendar.rst:41
-#, fuzzy
 msgid "GSM_CalendarType"
-msgstr "Kalender"
+msgstr "GSM_CalendarType"
 
 #. type: Plain text
 #: docs/manual/c/calendar.rst:42
@@ -31222,9 +31218,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/c/calendar.rst:43
-#, fuzzy
 msgid "GSM_CalendarEntry"
-msgstr "Kalender"
+msgstr "GSM_CalendarEntry"
 
 #. type: Plain text
 #: docs/manual/c/calendar.rst:44
