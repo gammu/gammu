@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: libGammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-13 21:25+0200\n"
+"PO-Revision-Date: 2011-12-13 21:26+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -28,7 +28,7 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:86
 msgid "Error opening device, it is locked."
-msgstr "Kesalahan membuka perangkat, terkunci"
+msgstr "Kesalahan membuka perangkat, perangkat terkunci."
 
 #: libgammu/gsmcomon.c:87
 msgid "Error opening device, it doesn't exist."
