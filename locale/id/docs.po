@@ -175,7 +175,7 @@ msgstr ""
 #~ msgstr "Telepon tidak terhubung."
 
 #~ msgid "Phone connected to CARC91"
-#~ msgstr "Telepon tidak terhubung."
+#~ msgstr "Telepon terhubung ke CARC91"
 
 #~ msgid "0x7a: settings\n"
 #~ msgstr "0x7a: pengaturan\n"
