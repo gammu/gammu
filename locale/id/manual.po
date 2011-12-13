@@ -30962,9 +30962,8 @@ msgstr "GSM_AddCalendar"
 
 #. type: Plain text
 #: docs/manual/c/calendar.rst:26
-#, fuzzy
 msgid "GSM_DeleteCalendar"
-msgstr "Kalender"
+msgstr "GSM_DeleteCalendar"
 
 #. type: Plain text
 #: docs/manual/c/calendar.rst:27
