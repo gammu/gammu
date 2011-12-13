@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-13 22:00+0200\n"
+"PO-Revision-Date: 2011-12-13 22:01+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -845,8 +845,7 @@ msgstr "Mengatur waktu di telepon dengan waktu yang ada di komputer."
 
 #: gammu/calendar.c:513
 msgid "Updating specified parts of date and time in phone."
-msgstr ""
-"memperbarui bagian-bagian tertentu dari tanggal dan waktu dalam telepon"
+msgstr "Memperbarui bagian tertentu dari tanggal dan waktu dalam telepon."
 
 #: gammu/calendar.c:536
 #, c-format
