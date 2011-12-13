@@ -24297,9 +24297,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:403
-#, fuzzy
 msgid "Bookmark"
-msgstr "Pengaturan WAP dan bookmark"
+msgstr "Bookmark"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:405
