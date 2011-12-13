@@ -19035,9 +19035,9 @@ msgstr ""
 
 #. type: Title -
 #: docs/manual/gammu/index.rst:1381
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Siemens specific commands"
-msgstr "Spesifik Siemens"
+msgstr "Perintah spesifik Siemens"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1384
