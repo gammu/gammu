@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-11-02 09:09+0100\n"
-"PO-Revision-Date: 2011-12-13 15:52+0200\n"
+"PO-Revision-Date: 2011-12-13 15:53+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -22640,9 +22640,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/index.rst:29
-#, fuzzy
 msgid ":ref:`formats` -- file formats supported by Gammu"
-msgstr "Format file tidak didukung oleh Gammu."
+msgstr ":ref:`formats` -- format file yang didukung Gammu"
 
 #. type: Title -
 #: docs/manual/index.rst:31
