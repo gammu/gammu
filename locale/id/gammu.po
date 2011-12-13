@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-13 22:08+0200\n"
+"PO-Revision-Date: 2011-12-13 22:09+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -2045,7 +2045,7 @@ msgstr "Gagal membaca bagian [gammu%d] dari file konfigurasi (gammurc)!\n"
 
 #: gammu/gammu.c:1152 gammu/gammu.c:1163
 msgid "No configuration read, using builtin defaults!"
-msgstr "Konfigurasi tidak terbaca, menggunakan konfigurasi awal"
+msgstr "Tidak ada pembacaan konfigurasi, menggunakan konfigurasi bawaan!"
 
 #: gammu/gammu.c:1202
 #, fuzzy, c-format
