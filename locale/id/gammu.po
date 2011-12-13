@@ -2024,7 +2024,7 @@ msgstr "Pilihan buruk!"
 
 #: gammu/gammu.c:1084
 msgid "Configuration could not be parsed!"
-msgstr "Konfigurasi tidak dapat diolah"
+msgstr "Konfigurasi tidak dapat diolah!"
 
 #: gammu/gammu.c:1086
 msgid "No configuration file found!"
