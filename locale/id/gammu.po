@@ -237,7 +237,7 @@ msgstr "Memeriksa nada dering pengguna telepon"
 
 #: gammu/backup.c:813
 msgid "Backup phone user ringtones?"
-msgstr "Buat cadangan nada dering pengguna telepon"
+msgstr "Buat cadangan nada dering telepon pengguna?"
 
 #: gammu/backup.c:851
 msgid "Checking phone profiles"
