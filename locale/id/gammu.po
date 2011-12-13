@@ -751,7 +751,7 @@ msgstr " dalam %d. minggu dari "
 
 #: gammu/calendar.c:338
 msgid " in "
-msgstr "dalam"
+msgstr " dalam "
 
 #: gammu/calendar.c:344 gammu/calendar.c:352
 msgid "each month"
