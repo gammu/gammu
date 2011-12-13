@@ -680,7 +680,7 @@ msgstr ""
 #~ msgstr "Diperlukan memori lebih..."
 
 #~ msgid "Operation not allowed by phone."
-#~ msgstr "Fungsi tidak didukung oleh telepon"
+#~ msgstr "Operasi tidak diijinkan oleh telepon."
 
 #~ msgid ""
 #~ "No SMSC number given. Provide it manually or use the one configured in "
