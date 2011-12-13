@@ -1287,7 +1287,7 @@ msgstr "Headset interkoneksi:"
 
 #: gammu/depend/nokia/dct4.c:1044
 msgid "Hook interconnection:"
-msgstr "Interkoneksi dibelokkan"
+msgstr "Interkoneksi dibelokkan:"
 
 #: gammu/depend/nokia/dct4.c:1045
 msgid "Light sensor:"
