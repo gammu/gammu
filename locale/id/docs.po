@@ -473,7 +473,7 @@ msgstr ""
 #~ msgstr "Mengambil informasi versi."
 
 #~ msgid "Debugging configuration"
-#~ msgstr "Fitur string buruk dalam konfigurasi."
+#~ msgstr "Konfigurasi debugging"
 
 #~ msgid "errors"
 #~ msgstr "Tidak ada Kesalahan"
