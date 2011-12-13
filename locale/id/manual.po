@@ -30732,9 +30732,8 @@ msgstr "GSM_GetWAPSettings"
 
 #. type: Plain text
 #: docs/manual/c/wap.rst:10
-#, fuzzy
 msgid "GSM_SetWAPSettings"
-msgstr "Pengaturan telepon"
+msgstr "GSM_SetWAPSettings"
 
 #. type: Plain text
 #: docs/manual/c/wap.rst:11
