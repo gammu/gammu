@@ -603,7 +603,7 @@ msgstr ""
 #~ "Kesalahan membuka perangkat. Tidak dikenali, sibuk atau tidak diijinkan."
 
 #~ msgid "Error opening device, it is locked."
-#~ msgstr "Kesalahan membuka perangkat, terkunci"
+#~ msgstr "Kesalahan membuka perangkat, perangkat terkunci."
 
 #~ msgid "Error opening device, it doesn't exist."
 #~ msgstr "Kesalahan membuka perangkat, tidak tersedia."
