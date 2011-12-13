@@ -16089,11 +16089,12 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:18
-#, fuzzy
 msgid ""
 "Commands actually indicate which operation should Gammu perform. They can be "
 "specified with or without leading ``--``."
-msgstr "Perintah dapat diikuti dengan atau tanpa awalan --"
+msgstr ""
+"Perintah-perintah mengindikasikan operasi apa yang harus dilakukan Gammu. "
+"Perintah tersebut dapat dispesifikasikan dengan atau tanpa tanda ``--``."
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:24
