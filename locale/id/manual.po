@@ -18515,9 +18515,8 @@ msgstr "Pengaturan WAP dan bookmark"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1114
-#, fuzzy
 msgid "WAP settings"
-msgstr "Pengaturan telepon"
+msgstr "Pengaturan WAP"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1115
