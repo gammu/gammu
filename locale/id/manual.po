@@ -29366,9 +29366,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/internal/reply.rst:12
-#, fuzzy
 msgid "GSM_Reply_Function"
-msgstr "Nada dering"
+msgstr "GSM_Reply_Function"
 
 #. type: Plain text
 #: docs/manual/internal/reply.rst:14
