@@ -23914,9 +23914,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:179
-#, fuzzy
 msgid "``NokiaRingtone``"
-msgstr "Nada dering"
+msgstr "``NokiaRingtone``"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:180
