@@ -338,7 +338,7 @@ msgstr ""
 #~ msgstr "Reset pengaturan telepon."
 
 #~ msgid "Clear phone settings."
-#~ msgstr "Pengaturan telepon"
+#~ msgstr "Kosongkan pengaturan telepon."
 
 #~ msgid "Dumps decoding commands"
 #~ msgstr "Tumpukan sedang didecode"
