@@ -30727,9 +30727,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/c/wap.rst:9
-#, fuzzy
 msgid "GSM_GetWAPSettings"
-msgstr "Pengaturan telepon"
+msgstr "GSM_GetWAPSettings"
 
 #. type: Plain text
 #: docs/manual/c/wap.rst:10
