@@ -334,9 +334,8 @@ msgid "Failed to get SMSC number from phone."
 msgstr "Gagal mengambil nomor SMSC dari telepon."
 
 #: libgammu/gsmcomon.c:153
-#, fuzzy
 msgid "Operation aborted."
-msgstr "Operasi tidak diizinkan oleh telepon"
+msgstr "Operasi dibatalkan."
 
 #: libgammu/gsmcomon.c:154
 msgid ""
