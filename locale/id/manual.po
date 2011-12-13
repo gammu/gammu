@@ -380,9 +380,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/config/index.rst:102
-#, fuzzy
 msgid "``blues60``"
-msgstr "Nada dering"
+msgstr "``blues60``"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:103
