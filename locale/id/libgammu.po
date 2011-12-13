@@ -131,7 +131,7 @@ msgstr "Masukan kosong."
 
 #: libgammu/gsmcomon.c:106
 msgid "Security error. Maybe no PIN?"
-msgstr "Kesalahan keamanan. Mungkin tidak ada PIN."
+msgstr "Kesalahan keamanan. Mungkin tidak ada PIN?"
 
 #: libgammu/gsmcomon.c:107
 msgid "Invalid location. Maybe too high?"
