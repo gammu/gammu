@@ -961,7 +961,7 @@ msgstr "Menunggu PIN2."
 
 #: gammu/common.c:51
 msgid "Waiting for PUK."
-msgstr "Menunggu PUK"
+msgstr "Menunggu PUK."
 
 #: gammu/common.c:54
 msgid "Waiting for PUK2."
