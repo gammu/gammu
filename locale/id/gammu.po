@@ -1603,7 +1603,7 @@ msgstr "Pengendali:"
 
 #: gammu-detect/udev.c:73
 msgid "Sequential Number:"
-msgstr "Nomer berurutan"
+msgstr "Nomor Berurutan:"
 
 #: gammu-detect/udev.c:74
 msgid "Device File:"
