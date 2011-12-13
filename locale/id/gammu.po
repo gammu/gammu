@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-13 16:42+0200\n"
+"PO-Revision-Date: 2011-12-13 16:43+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -3076,7 +3076,7 @@ msgstr "Ketikan kode keamanan salah"
 #: gammu/misc.c:1981
 #, c-format
 msgid "Enter %s code: "
-msgstr "Masukkan kode  %s "
+msgstr "Masukkan kode %s: "
 
 #: gammu/misc.c:1993 gammu/misc.c:2015
 msgid "No PIN code entered!"
