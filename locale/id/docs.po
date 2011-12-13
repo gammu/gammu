@@ -457,7 +457,7 @@ msgstr ""
 #~ msgstr "      Menambah memori (buku telepon atau panggilan) entri.\n"
 
 #~ msgid "      Deletes memory (phonebooks or calls) entry.\n"
-#~ msgstr "Memori (buku telepon dan panggilan)"
+#~ msgstr "      Menghapus memori (buku telepon atau panggilan) entri.\n"
 
 #~ msgid "      Reads IMEI/serial number from phone.\n"
 #~ msgstr "Gagal mengambil nomor SMSC dari telepon."
