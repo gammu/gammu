@@ -11033,9 +11033,8 @@ msgstr ""
 #: docs/manual/smsd/sql.rst:288 docs/manual/smsd/sql.rst:303
 #: docs/manual/smsd/sql.rst:328 docs/manual/smsd/sql.rst:352
 #: docs/manual/smsd/sql.rst:378 docs/manual/smsd/sql.rst:388
-#, fuzzy
 msgid "Default value:"
-msgstr "Gunakan nilai default."
+msgstr "Nilai baku:"
 
 #. type: Plain text
 #: docs/manual/smsd/sql.rst:113 docs/manual/smsd/sql.rst:123
