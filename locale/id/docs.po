@@ -190,7 +190,7 @@ msgstr ""
 #~ msgstr "Catatan"
 
 #~ msgid "rest is not known"
-#~ msgstr "Layanan tidak berjalan."
+#~ msgstr "sisanya tidak dikenal"
 
 #~ msgid "To test:"
 #~ msgstr "Tes telepon"
