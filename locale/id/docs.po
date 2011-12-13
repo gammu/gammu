@@ -667,7 +667,7 @@ msgstr ""
 #~ msgstr "Masukan kosong."
 
 #~ msgid "Security error. Maybe no PIN?"
-#~ msgstr "Kesalahan keamanan. Mungkin tidak ada PIN."
+#~ msgstr "Kesalahan keamanan. Mungkin tidak ada PIN?"
 
 #~ msgid "Invalid location. Maybe too high?"
 #~ msgstr "Kesalahan lokasi. Mungkin terlalu tinggi?"
