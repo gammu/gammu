@@ -841,7 +841,7 @@ msgstr ", pemisah waktu adalah %c\n"
 
 #: gammu/calendar.c:463
 msgid "Setting time in phone to the same time as is set in computer."
-msgstr "Menyamakan waktu di telepon dengan waktu yang ada di dalam komputer"
+msgstr "Mengatur waktu di telepon dengan waktu yang ada di komputer."
 
 #: gammu/calendar.c:513
 msgid "Updating specified parts of date and time in phone."
