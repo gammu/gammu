@@ -8,13 +8,15 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-11-02 09:09+0100\n"
-"PO-Revision-Date: 2011-01-10 12:07+0100\n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2011-12-13 13:42+0200\n"
+"Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Pootle 2.1.6\n"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:2
@@ -26625,9 +26627,9 @@ msgstr ""
 
 #. type: delimited block -
 #: docs/manual/python/gammu.rst:67
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "      Adds memory (phonebooks or calls) entry.\n"
-msgstr "Memori (buku telepon dan panggilan)"
+msgstr "      Menambah memori (buku telepon atau panggilan) entri.\n"
 
 #. type: delimited block -
 #: docs/manual/python/gammu.rst:72 docs/manual/python/gammu.rst:960
