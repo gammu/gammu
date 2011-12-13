@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-13 14:46+0100\n"
-"PO-Revision-Date: 2011-12-13 15:49+0200\n"
+"PO-Revision-Date: 2011-12-13 15:58+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -18493,9 +18493,8 @@ msgstr ""
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1109
-#, fuzzy
 msgid "calendar notes"
-msgstr "Catatan kalender"
+msgstr "catatan kalender"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1110
@@ -18532,9 +18531,8 @@ msgstr ""
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1116
-#, fuzzy
 msgid "user ringtones"
-msgstr "Nada dering"
+msgstr "nadadering pengguna"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1119
@@ -18749,9 +18747,9 @@ msgstr ""
 
 #. type: Title -
 #: docs/manual/gammu/index.rst:1209
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Nokia specific commands"
-msgstr "Spesifik Nokia"
+msgstr "Perintah spesifik Nokia"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1212
@@ -18839,9 +18837,8 @@ msgstr ""
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1250
-#, fuzzy
 msgid "gammu getfilesystem"
-msgstr "File sistem"
+msgstr "gammu getfilesystem"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1252
@@ -19176,9 +19173,9 @@ msgstr ""
 
 #. type: Title -
 #: docs/manual/gammu/index.rst:1388
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Siemens specific commands"
-msgstr "Spesifik Siemens"
+msgstr "Perintah spesifik Siemens"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1391
@@ -19225,9 +19222,8 @@ msgstr ""
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1409
-#, fuzzy
 msgid "networkinfo"
-msgstr "Jaringan"
+msgstr "networkinfo"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1411
@@ -19445,9 +19441,8 @@ msgstr "Pengaturan telepon"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1504
-#, fuzzy
 msgid "getcalendarsettings"
-msgstr "Catatan kalender"
+msgstr "getcalendarsettings"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1507
@@ -19511,9 +19506,8 @@ msgstr ""
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1524
-#, fuzzy
 msgid "Clear user settings."
-msgstr "MMS dan pengaturan MMS"
+msgstr "Kosongkan pengaturan pengguna."
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1526
@@ -21747,9 +21741,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/project/install.rst:226
-#, fuzzy
 msgid "make test"
-msgstr "Tes telepon"
+msgstr "lakukan tes"
 
 #. type: Plain text
 #: docs/manual/project/install.rst:228
@@ -22815,9 +22808,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/index.rst:29
-#, fuzzy
 msgid ":ref:`formats` -- file formats supported by Gammu"
-msgstr "Format file tidak didukung oleh Gammu."
+msgstr ":ref:`formats` -- format file yang didukung Gammu"
 
 #. type: Title -
 #: docs/manual/index.rst:31
@@ -23760,7 +23752,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:115
 msgid "State"
-msgstr "keadaan"
+msgstr "Keadaan"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:117
@@ -24427,7 +24419,7 @@ msgstr "Miring"
 #. type: Plain text
 #: docs/manual/python/objects.rst:379
 msgid "Underlined"
-msgstr "Garis Bawah"
+msgstr "Garisbawah"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:383
@@ -24473,9 +24465,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:403
-#, fuzzy
 msgid "Bookmark"
-msgstr "Pengaturan WAP dan bookmark"
+msgstr "Bookmark"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:405
@@ -24484,9 +24475,9 @@ msgstr ""
 
 #. type: Title =
 #: docs/manual/python/objects.rst:407 docs/manual/c/settings.rst:2
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Settings"
-msgstr "MMS dan pengaturan MMS"
+msgstr "Pengaturan"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:409
@@ -25724,9 +25715,8 @@ msgstr ""
 
 #. type: delimited block =
 #: docs/manual/python/data.rst:37
-#, fuzzy
 msgid "Errors"
-msgstr "Tidak ada Kesalahan"
+msgstr "Eror"
 
 #. type: delimited block =
 #: docs/manual/python/data.rst:39
@@ -28842,9 +28832,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:1091
-#, fuzzy
 msgid "errors"
-msgstr "Tidak ada Kesalahan"
+msgstr "eror"
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:1092
@@ -28858,9 +28847,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:1094
-#, fuzzy
 msgid "errorsdate"
-msgstr "Tidak ada Kesalahan"
+msgstr "errorsdate"
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:1096
@@ -29252,9 +29240,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:1318
-#, fuzzy
 msgid "GSMNetworks"
-msgstr "Jaringan"
+msgstr "GSMNetworks"
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:1320
@@ -29519,9 +29506,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/internal/reply.rst:2
-#, fuzzy
 msgid "_reply-functions:"
-msgstr "Nada dering"
+msgstr "_reply-functions:"
 
 #. type: Title =
 #: docs/manual/internal/reply.rst:4
@@ -29548,9 +29534,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/internal/reply.rst:12
-#, fuzzy
 msgid "GSM_Reply_Function"
-msgstr "Nada dering"
+msgstr "GSM_Reply_Function"
 
 #. type: Plain text
 #: docs/manual/internal/reply.rst:14
@@ -30152,9 +30137,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/formats/index.rst:2
-#, fuzzy
 msgid "_formats:"
-msgstr "Format"
+msgstr "_formats:"
 
 #. type: Title =
 #: docs/manual/formats/index.rst:4
@@ -30542,9 +30526,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/c/call.rst:21
-#, fuzzy
 msgid "GSM_Call"
-msgstr "Panggilan"
+msgstr "GSM_Call"
 
 #. type: Plain text
 #: docs/manual/c/call.rst:22
@@ -30912,15 +30895,13 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/c/wap.rst:9
-#, fuzzy
 msgid "GSM_GetWAPSettings"
-msgstr "Pengaturan telepon"
+msgstr "GSM_GetWAPSettings"
 
 #. type: Plain text
 #: docs/manual/c/wap.rst:10
-#, fuzzy
 msgid "GSM_SetWAPSettings"
-msgstr "Pengaturan telepon"
+msgstr "GSM_SetWAPSettings"
 
 #. type: Plain text
 #: docs/manual/c/wap.rst:11
@@ -30942,15 +30923,13 @@ msgstr "Pengaturan telepon"
 
 #. type: Plain text
 #: docs/manual/c/wap.rst:14
-#, fuzzy
 msgid "GSM_WAPSettings"
-msgstr "Pengaturan telepon"
+msgstr "GSM_WAPSettings"
 
 #. type: Plain text
 #: docs/manual/c/wap.rst:14
-#, fuzzy
 msgid "GSM_MultiWAPSettings"
-msgstr "Pengaturan telepon"
+msgstr "GSM_MultiWAPSettings"
 
 #. type: Title =
 #: docs/manual/c/nokia.rst:2
@@ -31131,9 +31110,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/c/calendar.rst:22
-#, fuzzy
 msgid "GSM_GetCalendar"
-msgstr "Kalender"
+msgstr "GSM_GetCalendar"
 
 #. type: Plain text
 #: docs/manual/c/calendar.rst:23
@@ -31142,9 +31120,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/c/calendar.rst:24
-#, fuzzy
 msgid "GSM_SetCalendar"
-msgstr "Kalender"
+msgstr "GSM_SetCalendar"
 
 #. type: Plain text
 #: docs/manual/c/calendar.rst:25
