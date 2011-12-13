@@ -637,7 +637,7 @@ msgstr "Pelatihan / Perjalanan"
 
 #: gammu/calendar.c:106
 msgid "Training/Winter Games"
-msgstr "Pelatihan / Permainan Musim dingin"
+msgstr "Pelatihan/Permainan Musim Dingin"
 
 #: gammu/calendar.c:110
 msgid "unknown type!"
