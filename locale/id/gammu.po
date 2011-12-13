@@ -331,7 +331,7 @@ msgid ""
 "again."
 msgstr ""
 "Kemungkinan grup panggilan telah hilang dari cadangan anda, tambahkan dan "
-"gunakan --restore  lagi."
+"gunakan lagi --restore."
 
 #: gammu/backup.c:1100 gammu/backup.c:1159
 #, c-format
