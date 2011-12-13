@@ -32491,9 +32491,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/c/inifile.rst:11
-#, fuzzy
 msgid "GSM_StringToBool"
-msgstr "Nada dering"
+msgstr "GSM_StringToBool"
 
 #. type: Plain text
 #: docs/manual/c/inifile.rst:13
