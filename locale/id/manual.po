@@ -32969,9 +32969,8 @@ msgstr "GSM_SetRingtone"
 
 #. type: Plain text
 #: docs/manual/c/ringtone.rst:9
-#, fuzzy
 msgid "GSM_GetRingtonesInfo"
-msgstr "Nada dering"
+msgstr "GSM_GetRingtonesInfo"
 
 #. type: Plain text
 #: docs/manual/c/ringtone.rst:10
