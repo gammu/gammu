@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-05-12 10:11+0200\n"
-"Last-Translator: Triatmoko <tr_mbil@yahoo.com>\n"
+"PO-Revision-Date: 2011-12-12 11:04+0200\n"
+"Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Pootle 2.0.5\n"
+"X-Generator: Pootle 2.1.6\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -3464,9 +3464,9 @@ msgid "What folder type (\"%s\") ?\n"
 msgstr ""
 
 #: gammu/nokia.c:556 gammu/nokia.c:563 gammu/nokia.c:570
-#, fuzzy, c-format
+#, c-format
 msgid "Can not open file %s\n"
-msgstr "Tidak dapat membuka file yang ditentukan."
+msgstr "Tidak dapat membuka file %s\n"
 
 #: gammu/nokia.c:591 gammu/nokia.c:665
 msgid "Folder not found. Probably function not supported!"
