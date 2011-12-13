@@ -16590,9 +16590,8 @@ msgstr ""
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:281
-#, fuzzy
 msgid "save to specified folder."
-msgstr "Tidak dapat membuka file yang ditentukan."
+msgstr "simpan ke folder tertentu."
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:283
