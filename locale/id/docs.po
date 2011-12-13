@@ -794,7 +794,7 @@ msgstr ""
 #~ msgstr "Tidak dapat terhubung ke server."
 
 #~ msgid "Could not resolve the host name."
-#~ msgstr "Tidak dapat memutuskan nama host"
+#~ msgstr "Tidak dapat mengartikan nama host."
 
 #~ msgid "REPORTING BUGS"
 #~ msgstr "PELAPORAN BUGS"
