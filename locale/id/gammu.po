@@ -621,7 +621,7 @@ msgstr "Pelatihan / Berlayar"
 
 #: gammu/calendar.c:94
 msgid "Training/Street Games"
-msgstr "Pelatihan / Permainan Jalanan"
+msgstr "Pelatihan/Permainan Jalanan"
 
 #: gammu/calendar.c:97
 msgid "Training/Swimming"
