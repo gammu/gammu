@@ -581,7 +581,7 @@ msgstr ""
 #~ msgstr "Tampilkan ringkasan dari pilihan."
 
 #~ msgid "Show version information and compiled in features."
-#~ msgstr "Informasi telepon"
+#~ msgstr "Tampilkan informasi versi dan kompilasi dalam fitur-fitur."
 
 #~ msgid "NAME"
 #~ msgstr "NAMA"
