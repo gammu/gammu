@@ -2595,7 +2595,7 @@ msgstr "%3d kosong"
 
 #: gammu/misc.c:607
 msgid "Entering monitor mode..."
-msgstr "masuk modus monitor"
+msgstr "Memasuki modus monitor..."
 
 #: gammu/misc.c:617
 msgid "Enabling info about incoming SMS"
