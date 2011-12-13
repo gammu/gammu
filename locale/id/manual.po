@@ -19368,9 +19368,8 @@ msgstr ""
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1517
-#, fuzzy
 msgid "Clear user settings."
-msgstr "MMS dan pengaturan MMS"
+msgstr "Kosongkan pengaturan pengguna."
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1519
