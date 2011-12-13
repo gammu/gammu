@@ -1341,7 +1341,7 @@ msgstr "  entri ID %02X"
 
 #: gammu/depend/nokia/dct4.c:1336
 msgid " (Speed dial on SIM)"
-msgstr "(Panggilan cepat pada SIM)"
+msgstr " (Panggilan cepat pada SIM)"
 
 #: gammu/depend/nokia/dct4.c:1337
 msgid " (Text: name (always the only one))"
