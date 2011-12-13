@@ -29072,9 +29072,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:1318
-#, fuzzy
 msgid "GSMNetworks"
-msgstr "Jaringan"
+msgstr "GSMNetworks"
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:1320
