@@ -1981,8 +1981,8 @@ msgid ""
 "For more details, call help on specific topic (gammu --help topic). Topics "
 "are:"
 msgstr ""
-"Untuk lebih jelasnya, panggil bantuan pada topik yang spesifik (gammu --"
-"topik bantuan). Topiknya adalah:"
+"Rincian lebih lanjut, gunakan bantuan pada topik spesifik (gammu --help "
+"topik). Topiknya adalah:"
 
 #: gammu/gammu.c:857
 msgid "Unknown help topic specified!"
