@@ -3597,9 +3597,9 @@ msgstr ""
 
 #. l10n: Call length format string hour:minute:second
 #: helper/memory-display.c:32
-#, fuzzy, c-format
+#, c-format
 msgid "%02i:%02i:%02i\n"
-msgstr "Waktu: %02d:%02d\n"
+msgstr "%02i:%02i:%02i\n"
 
 #: helper/memory-display.c:38
 msgid "Date and time"
