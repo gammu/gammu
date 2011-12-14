@@ -2787,7 +2787,7 @@ msgstr "Teks dealer adalah \"%s\"\n"
 #: gammu/misc.c:1287
 #, c-format
 msgid "What type of logo do you want to set (\"%s\") ?\n"
-msgstr "Tipe logo apa yang Anda inginkan untuk diatur (\"%s\") ?\n"
+msgstr "Tipe logo apa yang ingin anda atur (\"%s\") ?\n"
 
 #: gammu/misc.c:1324
 #, c-format
