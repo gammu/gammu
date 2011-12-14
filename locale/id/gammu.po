@@ -3723,7 +3723,7 @@ msgstr "DTMF"
 
 #: helper/memory-display.c:218
 msgid "Last name"
-msgstr ""
+msgstr "Nama belakang"
 
 #: helper/memory-display.c:219
 msgid "First name"
