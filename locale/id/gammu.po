@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-14 06:05+0200\n"
+"PO-Revision-Date: 2011-12-14 06:06+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -3263,7 +3263,7 @@ msgstr "Aksi divert tak dikenal (\"%s\")\n"
 #: gammu/misc.c:2356
 #, c-format
 msgid "Unknown divert type (\"%s\")\n"
-msgstr ""
+msgstr "Tipe divert tak dikenal (\"%s\")\n"
 
 #: gammu/misc.c:2369
 #, c-format
