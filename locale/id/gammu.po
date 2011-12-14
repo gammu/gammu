@@ -3799,7 +3799,7 @@ msgstr "ID push to talk"
 
 #: helper/memory-display.c:239
 msgid "unknown field type"
-msgstr "Tipe field tidak dikenal"
+msgstr "tipe field tidak dikenal"
 
 #: helper/memory-display.c:246 helper/message-display.c:128
 msgid "home"
