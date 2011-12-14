@@ -4060,7 +4060,7 @@ msgstr "SM ditimpa oleh SC"
 
 #: helper/message-display.c:184 helper/message-display.c:200
 msgid "Congestion"
-msgstr ""
+msgstr "Kemacetan"
 
 #: helper/message-display.c:185 helper/message-display.c:201
 msgid "SME busy"
