@@ -3176,7 +3176,7 @@ msgstr "Berdering"
 
 #: gammu/misc.c:2145
 msgid "Beep once"
-msgstr ""
+msgstr "Beep sekali"
 
 #: gammu/misc.c:2146
 msgid "Ring once"
