@@ -367,7 +367,7 @@ msgstr "Hapus catatan lama:"
 #: gammu/backup.c:1560 gammu/misc.c:1385 gammu/misc.c:1430 gammu/misc.c:1454
 #: gammu/misc.c:1502
 msgid "Done"
-msgstr "selesai"
+msgstr "Selesai"
 
 #: gammu/backup.c:1249
 msgid "Restore phone todo?"
