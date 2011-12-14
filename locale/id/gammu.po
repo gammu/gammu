@@ -4072,7 +4072,7 @@ msgstr "Tidak ada respon dari SME"
 
 #: helper/message-display.c:187 helper/message-display.c:203
 msgid "Service rejected"
-msgstr ""
+msgstr "Layanan ditolak"
 
 #: helper/message-display.c:188 helper/message-display.c:194
 #: helper/message-display.c:204
