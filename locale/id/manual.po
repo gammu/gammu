@@ -467,7 +467,7 @@ msgstr "Perangkat"
 #. type: Plain text
 #: docs/manual/config/index.rst:111 docs/manual/config/index.rst:182
 msgid "1.27.95"
-msgstr ""
+msgstr "1.27.95"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:113
