@@ -3329,7 +3329,7 @@ msgstr "Respon:"
 
 #: gammu/misc.c:2493
 msgid "The application has been successfully sent to the phone."
-msgstr ""
+msgstr "Aplikasi telah sukses dikirimkan ke telepon."
 
 #: gammu/misc.c:2494
 msgid "Please find received files in Inbox and install them."
