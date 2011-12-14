@@ -1413,7 +1413,7 @@ msgstr "(ID nada dering dari file sistem/internal)"
 
 #: gammu/depend/nokia/dct4.c:1356
 msgid " (Text: user ID)"
-msgstr "(teks: ID pengguna)"
+msgstr " (Teks: ID pengguna)"
 
 #: gammu/depend/nokia/dct4.c:1357
 msgid " (conversation list ID)"
