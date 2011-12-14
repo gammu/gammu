@@ -1095,7 +1095,7 @@ static GSM_Error N6510_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 	case GSM_CallerGroupLogo:
 		if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBK35)) return ERR_NOTSUPPORTED;
 		if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_6230iCALLER)) {
-			pbk.MemoryType	= MEM6510_CG2;
+			pbk.MemoryType	= (GSM_MemoryType)MEM6510_CG2;
 			pbk.Location	= Bitmap->Location;
 			smprintf(s, "Getting caller group logo method 2\n");
 			return N6510_GetMemory(s,&pbk);
@@ -1103,7 +1103,7 @@ static GSM_Error N6510_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 		Bitmap->BitmapWidth  	 = 72;
 		Bitmap->BitmapHeight 	 = 14;
 		GSM_ClearBitmap(Bitmap);
-		pbk.MemoryType	= MEM7110_CG;
+		pbk.MemoryType	= (GSM_MemoryType)MEM7110_CG;
 		pbk.Location	= Bitmap->Location;
 		smprintf(s, "Getting caller group logo\n");
 		error=N6510_GetMemory(s,&pbk);
@@ -3301,7 +3301,7 @@ static GSM_Error N6510_GetSpeedDial(GSM_StateMachine *s, GSM_SpeedDial *SpeedDia
 	GSM_MemoryEntry 	pbk;
 	GSM_Error		error;
 
-	pbk.MemoryType			= MEM7110_SP;
+	pbk.MemoryType			= (GSM_MemoryType)MEM7110_SP;
 	pbk.Location			= SpeedDial->Location;
 	SpeedDial->MemoryLocation 	= 0;
 	s->Phone.Data.SpeedDial		= SpeedDial;
