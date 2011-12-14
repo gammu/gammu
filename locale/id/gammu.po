@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-14 05:04+0200\n"
+"PO-Revision-Date: 2011-12-14 05:05+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -4319,7 +4319,7 @@ msgstr "Logo pemanggil"
 #: helper/message-display.c:418
 #, c-format
 msgid "Operator logo for %s network"
-msgstr "Logo Operator untuk %s Jaringan"
+msgstr "Logo operator untuk jaringan %s"
 
 #: helper/message-display.c:438
 msgid "Profile"
