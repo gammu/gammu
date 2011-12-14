@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-14 11:39+0200\n"
+"PO-Revision-Date: 2011-12-14 11:40+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -4093,7 +4093,7 @@ msgstr "Tujuan yang tidak kompatibel"
 
 #: helper/message-display.c:192
 msgid "Connection rejected by SME"
-msgstr ""
+msgstr "Koneksi ditolak oleh SME"
 
 #: helper/message-display.c:193
 msgid "Not obtainable"
