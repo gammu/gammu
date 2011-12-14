@@ -3317,7 +3317,7 @@ msgstr "faks"
 
 #: gammu/misc.c:2428 gammu/misc.c:2453
 msgid "data"
-msgstr ""
+msgstr "data"
 
 #: gammu/misc.c:2431
 msgid "data & fax & voice"
