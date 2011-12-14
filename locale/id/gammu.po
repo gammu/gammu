@@ -2913,7 +2913,7 @@ msgstr "Otomatis"
 
 #: gammu/misc.c:1554 gammu/misc.c:1556 gammu/misc.c:1600 gammu/misc.c:1602
 msgid "Authentication type"
-msgstr "tipe autentikasi"
+msgstr "Tipe autentifikasi"
 
 #: gammu/misc.c:1554 gammu/misc.c:1600
 msgid "Normal"
