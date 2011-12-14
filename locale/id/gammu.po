@@ -3276,7 +3276,7 @@ msgstr "Query:"
 
 #: gammu/misc.c:2380 gammu/misc.c:2397
 msgid "Divert type"
-msgstr ""
+msgstr "Tipe divert"
 
 #: gammu/misc.c:2395
 msgid "Changed:"
