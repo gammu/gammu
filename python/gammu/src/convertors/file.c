@@ -194,7 +194,7 @@ int FileFromPython(PyObject * dict, GSM_File * file, gboolean check)
 		return 0;
 	}
 
-	memset(file, 0, sizeof(file));
+	memset(file, 0, sizeof(GSM_File));
 
 	if ((file->Used = GetIntFromDict(dict, "Used")) == INT_INVALID) {
 		// We don't need Used in all cases, we can get size from buffer

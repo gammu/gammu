@@ -1443,7 +1443,7 @@ msgstr ""
 #: docs/manual/protocol/n6110.rst:48
 #, no-wrap
 msgid "0x01: Call Information\n"
-msgstr "Información del teléfono"
+msgstr "Información del teléfono\n"
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:49

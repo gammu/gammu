@@ -265,7 +265,7 @@ static SQL_Error SMSDDBI_Query(GSM_SMSDConfig * Config, const char *query, SQL_r
 			return SQL_TIMEOUT;
 		}
 	}
-	return ERR_TIMEOUT;
+	return SQL_TIMEOUT;
 }
 
 /* free sql results */

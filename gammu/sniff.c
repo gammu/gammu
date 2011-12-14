@@ -215,7 +215,7 @@ static void prepareStateMachine(void)
 	Phone->DateTime			= &DateTime;
 	Phone->Alarm			= &Alarm;
 	Phone->Memory			= &Memory;
-	Phone->Memory->MemoryType	= MEM7110_CG;
+	Phone->Memory->MemoryType	= (GSM_MemoryType)MEM7110_CG;
 	Phone->MemoryStatus		= &MemoryStatus;
 	Phone->SMSC			= &SMSC;
 	Phone->GetSMSMessage		= &GetSMSMessage;

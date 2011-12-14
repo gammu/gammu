@@ -651,7 +651,7 @@ static GSM_Error N7110_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 		smprintf(s, "Getting dealer note\n");
 		return N71_92_GetPhoneSetting(s, ID_GetBitmap, 0x17);
 	case GSM_CallerGroupLogo:
-		pbk.MemoryType = MEM7110_CG;
+		pbk.MemoryType = (GSM_MemoryType)MEM7110_CG;
 		pbk.Location   = Bitmap->Location;
 		smprintf(s, "Getting caller group logo\n");
 		error=N7110_GetMemory(s,&pbk);
@@ -1322,7 +1322,7 @@ static GSM_Error N7110_GetSpeedDial(GSM_StateMachine *s, GSM_SpeedDial *SpeedDia
 	GSM_MemoryEntry 	pbk;
 	GSM_Error		error;
 
-	pbk.MemoryType			= MEM7110_SP;
+	pbk.MemoryType			= (GSM_MemoryType)MEM7110_SP;
 	pbk.Location			= SpeedDial->Location;
 	SpeedDial->MemoryLocation 	= 0;
 	s->Phone.Data.SpeedDial		= SpeedDial;
