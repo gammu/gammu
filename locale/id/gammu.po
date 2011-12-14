@@ -4187,7 +4187,7 @@ msgstr "Aktifkan indikator suara"
 
 #: helper/message-display.c:287
 msgid "Disables fax indicator"
-msgstr ""
+msgstr "Nonaktifkan indikator faks"
 
 #: helper/message-display.c:288
 msgid "Enables fax indicator"
