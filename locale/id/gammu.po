@@ -4089,7 +4089,7 @@ msgstr "Eror pada remote procedure"
 
 #: helper/message-display.c:191
 msgid "Incompatibile destination"
-msgstr ""
+msgstr "Tujuan yang tidak kompatibel"
 
 #: helper/message-display.c:192
 msgid "Connection rejected by SME"
