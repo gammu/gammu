@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-14 06:02+0200\n"
+"PO-Revision-Date: 2011-12-14 06:03+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -3217,7 +3217,7 @@ msgstr "Apa tipe reset pengaturan telepon (\"%s\") ?\n"
 
 #: gammu/misc.c:2260
 msgid "Currently shown on the display"
-msgstr ""
+msgstr "Tampilan saat ini di layar"
 
 #: gammu/misc.c:2265
 msgid "Call active"
