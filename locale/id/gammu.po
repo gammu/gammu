@@ -1369,7 +1369,7 @@ msgstr " (ID nada dering)"
 
 #: gammu/depend/nokia/dct4.c:1343
 msgid " (Call register: date and time)"
-msgstr "(Register panggilan: tanggal dan waktu)"
+msgstr " (Register panggilan: tanggal dan waktu)"
 
 #: gammu/depend/nokia/dct4.c:1344
 msgid " (Call register: with missed calls)"
