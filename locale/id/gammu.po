@@ -3092,7 +3092,7 @@ msgstr "(Profil head set)"
 
 #: gammu/misc.c:2063
 msgid " (Car kit profile)"
-msgstr ""
+msgstr "(profil car kit)"
 
 #: gammu/misc.c:2072 helper/memory-display.c:106
 msgid "Ringtone ID"
