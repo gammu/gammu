@@ -3829,7 +3829,7 @@ msgstr "Di mana nama file nadadering?"
 #: helper/message-cmdline.c:282 helper/message-cmdline.c:300
 #: helper/message-cmdline.c:351
 msgid "Where is logo filename?"
-msgstr ""
+msgstr "Di mana nama file logo?"
 
 #: helper/message-cmdline.c:318
 msgid "Where is number of frames?"
