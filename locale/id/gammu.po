@@ -3681,9 +3681,8 @@ msgid "Home address"
 msgstr "Alamat rumah"
 
 #: helper/memory-display.c:175
-#, fuzzy
 msgid "Work address"
-msgstr "IP address"
+msgstr "Alamat kantor"
 
 #: helper/memory-display.c:186
 msgid "Home email"
