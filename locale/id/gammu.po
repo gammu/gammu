@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-14 03:25+0200\n"
+"PO-Revision-Date: 2011-12-14 03:26+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -3011,7 +3011,7 @@ msgstr "aktif"
 
 #: gammu/misc.c:1730
 msgid "Read only"
-msgstr "hanya dibaca"
+msgstr "Hanya dibaca"
 
 #: gammu/misc.c:1755
 msgid "Startup logo"
