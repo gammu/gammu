@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-14 02:54+0200\n"
+"PO-Revision-Date: 2011-12-14 02:55+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1690,7 +1690,7 @@ msgstr "Atribut idak diketahui (%s)\n"
 
 #: gammu/files.c:307
 msgid "Part of folder only"
-msgstr "bagian dari folder saja"
+msgstr "Bagian dari folder saja"
 
 #: gammu/files.c:371
 #, c-format
