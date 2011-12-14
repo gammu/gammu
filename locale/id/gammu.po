@@ -4038,7 +4038,7 @@ msgstr "Rincian"
 
 #: helper/message-display.c:173 helper/message-display.c:178
 msgid "Temporary error, "
-msgstr ""
+msgstr "Eror sementara,"
 
 #: helper/message-display.c:175
 msgid "Permanent error, "
