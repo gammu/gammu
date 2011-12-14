@@ -2933,7 +2933,7 @@ msgstr "ISDN"
 
 #: gammu/misc.c:1561
 msgid "Analogue"
-msgstr "analog"
+msgstr "Analog"
 
 #: gammu/misc.c:1565 gammu/misc.c:1568 gammu/misc.c:1571
 msgid "Data call speed"
