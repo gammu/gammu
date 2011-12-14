@@ -3471,7 +3471,7 @@ msgstr "Folder tidak ditemukan. Kemungkinan fungsi tidak mendukung!"
 
 #: gammu/nokia.c:614
 msgid "Searching for phone folder: "
-msgstr ""
+msgstr "Pencarian folder telepon:"
 
 #: gammu/nokia.c:691
 msgid "No vendor info in JAD file"
