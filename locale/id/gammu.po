@@ -4257,7 +4257,7 @@ msgstr ", ID (8 bit) %i"
 #: helper/message-display.c:308
 #, c-format
 msgid ", ID (16 bit) %i"
-msgstr ""
+msgstr ", ID (16 bit) %i"
 
 #: helper/message-display.c:311
 #, c-format
