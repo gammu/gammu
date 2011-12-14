@@ -3778,7 +3778,7 @@ msgstr ""
 
 #: helper/memory-display.c:229
 msgid "State"
-msgstr "keadaan"
+msgstr "Keadaan"
 
 #: helper/memory-display.c:230
 msgid "Zip code"
