@@ -3525,7 +3525,7 @@ msgstr "Menulis file JAD:"
 
 #: gammu/nokia.c:901
 msgid "Writing JAR file:"
-msgstr ""
+msgstr "Menulis file JAR:"
 
 #: gammu/nokia.c:976
 msgid "Writing file:"
