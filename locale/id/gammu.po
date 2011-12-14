@@ -3100,7 +3100,7 @@ msgstr "ID nadadering"
 
 #: gammu/misc.c:2074
 msgid "Message alert tone ID"
-msgstr "ID "
+msgstr "ID bunyi pengingat pesan"
 
 #: gammu/misc.c:2087
 msgid "Call alert for"
