@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-13 14:46+0100\n"
-"PO-Revision-Date: 2011-12-14 14:12+0200\n"
+"PO-Revision-Date: 2011-12-14 14:13+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -325,6 +325,8 @@ msgid ""
 "You can optionally specify speed of the connection, eg. ``at19200``, but it "
 "is not needed for modern USB cables."
 msgstr ""
+"Anda dapat leluasa menspesifikasikan kecepatan koneksinya, contohnya "
+"``at19200``, tetapi ini tidak diperlukan untuk kabel USB yang modern."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:81
