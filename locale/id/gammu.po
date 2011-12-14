@@ -2925,7 +2925,7 @@ msgstr "Aman"
 
 #: gammu/misc.c:1559 gammu/misc.c:1561
 msgid "Data call type"
-msgstr "tipe data panggilan"
+msgstr "Tipe data panggilan"
 
 #: gammu/misc.c:1559
 msgid "ISDN"
