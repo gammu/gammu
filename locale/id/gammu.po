@@ -3566,8 +3566,7 @@ msgstr[0] "%d menit"
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d jam"
 
 #: helper/formats.h:5
 #, c-format
