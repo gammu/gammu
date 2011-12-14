@@ -4262,7 +4262,7 @@ msgstr ", ID (16 bit) %i"
 #: helper/message-display.c:311
 #, c-format
 msgid ", part %i of %i"
-msgstr ""
+msgstr ", part %i of %i"
 
 #: helper/message-display.c:313
 #, c-format
