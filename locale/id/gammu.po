@@ -3895,7 +3895,7 @@ msgstr "String validity tidak dikenal (\"%s\")\n"
 #: helper/message-cmdline.c:1173
 #, c-format
 msgid "You have to give number of EMS frames between 1 and 4 (\"%s\")\n"
-msgstr ""
+msgstr "Anda harus memberikan jumlah frame EMS antara 1 dan 4 (\"%s\")\n"
 
 #: helper/message-cmdline.c:1185 helper/message-cmdline.c:1202
 #, c-format
