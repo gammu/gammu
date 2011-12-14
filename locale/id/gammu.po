@@ -3253,7 +3253,7 @@ msgstr "Name stasiun"
 
 #: gammu/misc.c:2322
 msgid "Frequency"
-msgstr ""
+msgstr "Frekuensi"
 
 #: gammu/misc.c:2343
 #, c-format
