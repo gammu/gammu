@@ -3148,7 +3148,7 @@ msgstr "Penjawab otomatis"
 
 #: gammu/misc.c:2120
 msgid "Lights"
-msgstr ""
+msgstr "Cahaya"
 
 #: gammu/misc.c:2128
 msgid "Level 1"
