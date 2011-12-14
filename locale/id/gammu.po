@@ -3096,7 +3096,7 @@ msgstr "(profil car kit)"
 
 #: gammu/misc.c:2072 helper/memory-display.c:106
 msgid "Ringtone ID"
-msgstr ""
+msgstr "ID nadadering"
 
 #: gammu/misc.c:2074
 msgid "Message alert tone ID"
