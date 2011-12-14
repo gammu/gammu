@@ -3309,7 +3309,7 @@ msgstr "Tipe panggilan"
 
 #: gammu/misc.c:2422 gammu/misc.c:2447
 msgid "voice"
-msgstr ""
+msgstr "suara"
 
 #: gammu/misc.c:2425 gammu/misc.c:2450 helper/message-display.c:115
 msgid "fax"
