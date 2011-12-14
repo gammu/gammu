@@ -3619,7 +3619,7 @@ msgstr "Nama gambar"
 
 #: helper/memory-display.c:116
 msgid "Picture ID"
-msgstr ""
+msgstr "ID gambar"
 
 #: helper/memory-display.c:119
 msgid "Photo"
