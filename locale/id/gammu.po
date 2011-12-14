@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-14 05:27+0200\n"
+"PO-Revision-Date: 2011-12-14 05:31+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1616,7 +1616,7 @@ msgstr "Properti:"
 #: gammu-detect/udev.c:170 gammu-detect/win32-serial.c:44
 #, c-format
 msgid "Phone on serial port %s"
-msgstr ""
+msgstr "Telepon pada port serial %s"
 
 #: gammu-detect/udev.c:172
 #, c-format
