@@ -3192,7 +3192,7 @@ msgstr "Grup pemanggil"
 
 #: gammu/misc.c:2149
 msgid "Standard"
-msgstr ""
+msgstr "Standar"
 
 #: gammu/misc.c:2150
 msgid "Special"
