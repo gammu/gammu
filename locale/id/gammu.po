@@ -4097,7 +4097,7 @@ msgstr "Koneksi ditolak oleh SME"
 
 #: helper/message-display.c:193
 msgid "Not obtainable"
-msgstr ""
+msgstr "Tidak dapat diperoleh"
 
 #: helper/message-display.c:195
 msgid "No internetworking available"
