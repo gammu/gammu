@@ -3751,7 +3751,7 @@ msgstr "Nama inisial"
 
 #: helper/memory-display.c:225
 msgid "Company"
-msgstr ""
+msgstr "Perusahaan"
 
 #: helper/memory-display.c:226
 msgid "Job title"
