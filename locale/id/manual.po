@@ -256,7 +256,7 @@ msgstr "koneksi serial FBUS"
 #. type: Plain text
 #: docs/manual/config/index.rst:60
 msgid "``dlr3``"
-msgstr ""
+msgstr "``dlr3``"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:61
