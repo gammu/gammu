@@ -3767,7 +3767,7 @@ msgstr "Kota"
 
 #: helper/memory-display.c:229
 msgid "State"
-msgstr "Keadaan"
+msgstr "Propinsi"
 
 #: helper/memory-display.c:230
 msgid "Zip code"
