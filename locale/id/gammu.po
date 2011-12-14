@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-14 07:19+0200\n"
+"PO-Revision-Date: 2011-12-14 07:22+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -3411,7 +3411,7 @@ msgstr "Nadadering \"%s\" (tempo = %i Beat Per Menit)"
 #: gammu/nokia.c:63
 #, c-format
 msgid "length=%i notes, but you will enter only first 50 tones."
-msgstr ""
+msgstr "panjang=%i catatan, tetapi anda hanya akan memasukkan 50 bunyi pertama."
 
 #: gammu/nokia.c:66
 msgid "This ringtone in Nokia Composer in phone should look:"
