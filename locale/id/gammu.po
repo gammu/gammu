@@ -3663,7 +3663,7 @@ msgstr "Nomor faks kantor"
 
 #: helper/memory-display.c:165
 msgid "Pager number"
-msgstr ""
+msgstr "Nomor pager"
 
 #: helper/memory-display.c:166
 msgid "Other number"
