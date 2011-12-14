@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-14 08:43+0200\n"
+"PO-Revision-Date: 2011-12-14 08:44+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -3890,7 +3890,7 @@ msgstr "Anda harus memberikan nomor antara 1 dan 7 (\"%s\")\n"
 #: helper/message-cmdline.c:1135
 #, c-format
 msgid "Unknown validity string (\"%s\")\n"
-msgstr ""
+msgstr "String validity tidak dikenal (\"%s\")\n"
 
 #: helper/message-cmdline.c:1173
 #, c-format
