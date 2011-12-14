@@ -4223,7 +4223,7 @@ msgstr "Nadadering Nokia"
 
 #: helper/message-display.c:297
 msgid "Nokia GSM operator logo"
-msgstr ""
+msgstr "Logo operator GSM Nokia"
 
 #: helper/message-display.c:298
 msgid "Nokia caller logo"
