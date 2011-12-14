@@ -3958,7 +3958,7 @@ msgstr "Gunakan opsi -smscnumber untuk memberikan nomor SMSC"
 #: helper/message-display.c:26
 #, c-format
 msgid "Location %i, folder \"%s\""
-msgstr ""
+msgstr "Lokasi %i, folder \"%s\""
 
 #: helper/message-display.c:33
 msgid "SIM memory"
