@@ -602,6 +602,9 @@ msgid ""
 "dev/ttyACM0`` on Linux or ``COM5:`` on Windows), just use same setup as with "
 "serial port."
 msgstr ""
+"Bilamana perangkat USB anda muncul sebagai port serial dalam sistem "
+"(contohnya ``/dev/ttyACM0`` pada Linux atau ``COM5:`` pada Windows), gunakan "
+"pengaturan yang sama dengan pengaturan port serial."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:152
