@@ -317,7 +317,7 @@ msgstr "``at``"
 #. type: Plain text
 #: docs/manual/config/index.rst:76
 msgid "generic AT commands based connection"
-msgstr ""
+msgstr "koneksi berbasis perintah AT generik"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:79
