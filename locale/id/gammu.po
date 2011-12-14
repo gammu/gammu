@@ -2011,7 +2011,7 @@ msgstr "Parameter bantuan"
 #: gammu/gammu.c:973
 #, c-format
 msgid "Too many parameters (function accepts %d)\n"
-msgstr "Terlalu banyak parameter (Fungsi menerima %d)\n"
+msgstr "Terlalu banyak parameter (fungsi menerima %d)\n"
 
 #: gammu/gammu.c:976
 #, c-format
