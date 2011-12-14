@@ -1389,7 +1389,7 @@ msgstr " (Grup pemanggil: apakah logo dipasang ?)"
 
 #: gammu/depend/nokia/dct4.c:1348
 msgid " (Caller group number in pbk entry)"
-msgstr "(Nomor grup pemanggil dalam pbk entry)"
+msgstr " (Nomor grup pemanggil dalam entri pbk)"
 
 #: gammu/depend/nokia/dct4.c:1351
 msgid " (Text: URL address)"
