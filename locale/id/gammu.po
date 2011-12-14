@@ -3448,6 +3448,8 @@ msgid ""
 "Your phone model is not supported. Please report it to authors (see <http://"
 "wammu.eu/support/bugs/>). Thank you."
 msgstr ""
+"Model telepon anda tidak didukung. Silahkan laporkan ke pembuat program "
+"(lihat <http://wammu.eu/support/bugs/>). Terima kasih."
 
 #: gammu/nokia.c:454
 msgid "Problem with deleting playlist"
