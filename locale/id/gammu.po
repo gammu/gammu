@@ -3639,7 +3639,7 @@ msgstr "Nomor kantor"
 
 #: helper/memory-display.c:132
 msgid "General number"
-msgstr ""
+msgstr "Nomor umum"
 
 #: helper/memory-display.c:136
 #, fuzzy
