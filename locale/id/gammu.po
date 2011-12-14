@@ -3607,7 +3607,7 @@ msgstr "Grup pemanggil"
 
 #: helper/memory-display.c:71
 msgid "Caller group number too high, please increase buffer in sources!"
-msgstr ""
+msgstr "Jumlah grup pemanggil terlalu tinggi, tingkatkan buffer di sumber! "
 
 #: helper/memory-display.c:110
 msgid "User ID"
