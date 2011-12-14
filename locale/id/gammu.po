@@ -3578,8 +3578,7 @@ msgstr[0] "%d hari"
 #, c-format
 msgid "%d week"
 msgid_plural "%d weeks"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d minggu"
 
 #: helper/formats.h:7
 #, c-format
