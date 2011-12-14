@@ -4231,7 +4231,7 @@ msgstr "Logo pemanggil Nokia"
 
 #: helper/message-display.c:299
 msgid "Nokia profile"
-msgstr ""
+msgstr "Profil Nokia"
 
 #: helper/message-display.c:300
 msgid "Nokia calendar note"
