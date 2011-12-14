@@ -3854,7 +3854,7 @@ msgstr "Pengaturan WAP tidak ditemukan pada file"
 
 #: helper/message-cmdline.c:429
 msgid "Sorry. For now there is only support for GPRS or DATA bearers end"
-msgstr ""
+msgstr "Maaf. Mulai sekarang hanya mendukung GPRS atau DATA bearer"
 
 #: helper/message-cmdline.c:452
 msgid "MMS settings not found in file"
