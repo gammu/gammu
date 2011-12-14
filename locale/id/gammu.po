@@ -4018,7 +4018,7 @@ msgstr[1] ""
 
 #: helper/message-display.c:165 helper/message-display.c:230
 msgid "Reference number"
-msgstr ""
+msgstr "Nomor referensi"
 
 #: helper/message-display.c:167 helper/message-display.c:215
 msgid "SMSC number"
