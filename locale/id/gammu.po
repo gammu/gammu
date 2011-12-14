@@ -3866,7 +3866,7 @@ msgstr "Maaf. GPRS bearer tidak ditemukan dalam pengaturan MMS"
 
 #: helper/message-cmdline.c:512
 msgid "ToDo note not found in file"
-msgstr ""
+msgstr "Catatan rencana kerja tidak ditemukan dalam file"
 
 #: helper/message-cmdline.c:574
 msgid "Backup functionality not compiled in!"
