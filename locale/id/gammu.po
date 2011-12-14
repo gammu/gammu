@@ -3284,7 +3284,7 @@ msgstr "Perubahan:"
 
 #: gammu/misc.c:2402
 msgid "when busy"
-msgstr ""
+msgstr "saat sibuk"
 
 #: gammu/misc.c:2405
 msgid "when not answered"
