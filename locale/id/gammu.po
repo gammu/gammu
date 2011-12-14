@@ -2881,7 +2881,7 @@ msgstr "SMS"
 
 #: gammu/misc.c:1539
 msgid "Server number"
-msgstr "nomor penyedia layanan"
+msgstr "Nomor server"
 
 #: gammu/misc.c:1540 gammu/misc.c:1586 gammu/misc.c:1587
 msgid "Service number"
