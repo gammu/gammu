@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-13 14:46+0100\n"
-"PO-Revision-Date: 2011-12-14 14:09+0200\n"
+"PO-Revision-Date: 2011-12-14 14:11+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -307,7 +307,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/config/index.rst:73
 msgid "For non-Nokia phones connected using cable you generally want:"
-msgstr ""
+msgstr "Untuk koneksi telepon non-Nokia anda dapat menggunakan kabel umum:"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:75
