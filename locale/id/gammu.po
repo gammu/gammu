@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-14 05:36+0200\n"
+"PO-Revision-Date: 2011-12-14 05:37+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -3136,7 +3136,7 @@ msgstr "Bunyi peringatan (permainan)"
 
 #: gammu/misc.c:2117 helper/message-display.c:428
 msgid "Screen saver"
-msgstr ""
+msgstr "Screen saver"
 
 #: gammu/misc.c:2118
 msgid "Screen saver timeout"
