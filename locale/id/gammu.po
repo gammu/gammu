@@ -4109,7 +4109,7 @@ msgstr "Periode Validitas SM Kadaluarsa"
 
 #: helper/message-display.c:197
 msgid "SM deleted by originating SME"
-msgstr ""
+msgstr "SM dihapus oleh SME awal"
 
 #: helper/message-display.c:198
 msgid "SM Deleted by SC Administration"
