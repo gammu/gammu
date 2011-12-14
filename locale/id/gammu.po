@@ -4191,7 +4191,7 @@ msgstr "Nonaktifkan indikator faks"
 
 #: helper/message-display.c:288
 msgid "Enables fax indicator"
-msgstr ""
+msgstr "Aktifkan indikator faks"
 
 #: helper/message-display.c:289
 msgid "Disables email indicator"
