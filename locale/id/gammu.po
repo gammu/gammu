@@ -4052,6 +4052,7 @@ msgstr "SM diterima oleh SME"
 msgid ""
 "SM forwarded by the SC to the SME but the SC is unable to confirm delivery"
 msgstr ""
+"SM diforward oleh SC ke SME tetapi SC tidak bisa mengkonfirmasi pengiriman"
 
 #: helper/message-display.c:183
 msgid "SM replaced by the SC"
