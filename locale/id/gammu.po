@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-14 03:07+0200\n"
+"PO-Revision-Date: 2011-12-14 03:08+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -2312,7 +2312,7 @@ msgstr "registrasi ke jaringan ditolak"
 #: gammu/misc.c:42 gammu/misc.c:44 gammu/misc.c:69 gammu/misc.c:71
 #: gammu/misc.c:169 gammu/misc.c:191
 msgid "unknown"
-msgstr "Tidak dikenali"
+msgstr "tidak dikenal"
 
 #: gammu/misc.c:58 gammu/misc.c:85
 msgid "Name in phone"
