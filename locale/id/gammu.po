@@ -3292,7 +3292,7 @@ msgstr "saat tidak dijawab"
 
 #: gammu/misc.c:2408
 msgid "when phone off or no coverage"
-msgstr ""
+msgstr "saat telepon mati atau di luar jangkauan"
 
 #: gammu/misc.c:2411
 msgid "all types of diverts"
