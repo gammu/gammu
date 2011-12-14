@@ -226,7 +226,7 @@ msgstr "Parameter koneksi perangkat"
 #: docs/manual/smsd/config.rst:522
 #, no-wrap
 msgid ".. config:option"
-msgstr ""
+msgstr ".. config:option"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:52
