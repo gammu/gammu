@@ -1417,7 +1417,7 @@ msgstr " (Teks: ID pengguna)"
 
 #: gammu/depend/nokia/dct4.c:1357
 msgid " (conversation list ID)"
-msgstr "(ID daftar percakapan)"
+msgstr " (ID daftar percakapan)"
 
 #: gammu/depend/nokia/dct4.c:1358
 msgid " (Instant Messaging service list ID ?)"
