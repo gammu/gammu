@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-14 05:11+0200\n"
+"PO-Revision-Date: 2011-12-14 05:13+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1409,7 +1409,7 @@ msgstr " (Penetapan gambar ID)"
 
 #: gammu/depend/nokia/dct4.c:1355
 msgid " (Ringtone ID from filesystem/internal)"
-msgstr "(ID nada dering dari file sistem/internal)"
+msgstr " (ID nadadering dari file sistem/internal)"
 
 #: gammu/depend/nokia/dct4.c:1356
 msgid " (Text: user ID)"
