@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-14 05:05+0200\n"
+"PO-Revision-Date: 2011-12-14 05:06+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -490,7 +490,7 @@ msgstr "Buat cadangan sms dari folder \"%s\"%s?"
 
 #: gammu/backupsms.c:58 gammu/backupsms.c:183
 msgid " (SIM)"
-msgstr "(SIM)"
+msgstr " (SIM)"
 
 #: gammu/backupsms.c:84
 #, c-format
