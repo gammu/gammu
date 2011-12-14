@@ -3112,7 +3112,7 @@ msgstr "Nomor screen saver"
 
 #: gammu/misc.c:2111
 msgid "Incoming call alert"
-msgstr ""
+msgstr "Pengingat panggilan masuk"
 
 #: gammu/misc.c:2112
 msgid "Ringtone volume"
