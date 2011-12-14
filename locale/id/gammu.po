@@ -3019,7 +3019,7 @@ msgstr "Logo startup"
 
 #: gammu/misc.c:1756
 msgid "Operator logo"
-msgstr "logo operator"
+msgstr "Logo operator"
 
 #: gammu/misc.c:1757 helper/message-display.c:432
 msgid "Picture"
