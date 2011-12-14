@@ -4215,7 +4215,7 @@ msgstr "Logo operator Nokia"
 
 #: helper/message-display.c:294
 msgid "Nokia WAP bookmark or WAP/MMS settings"
-msgstr ""
+msgstr "Bookmark WAP Nokia atau pengaturan WAP/MMS"
 
 #: helper/message-display.c:295 helper/message-display.c:296
 msgid "Nokia ringtone"
