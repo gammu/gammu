@@ -4227,7 +4227,7 @@ msgstr "Logo operator GSM Nokia"
 
 #: helper/message-display.c:298
 msgid "Nokia caller logo"
-msgstr ""
+msgstr "Logo pemanggil Nokia"
 
 #: helper/message-display.c:299
 msgid "Nokia profile"
