@@ -3367,7 +3367,7 @@ msgstr "CC"
 
 #: gammu/mms.c:94
 msgid "Message type"
-msgstr ""
+msgstr "Tipe pesan"
 
 #: gammu/mms.c:97 helper/message-display.c:466
 msgid "Subject"
