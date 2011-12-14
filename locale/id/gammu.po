@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-14 06:49+0200\n"
+"PO-Revision-Date: 2011-12-14 07:19+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -3406,7 +3406,7 @@ msgstr "Ini bisa menjadi nadadering RTTL hanya dengan opsi ini"
 #: gammu/nokia.c:54
 #, c-format
 msgid "Ringtone \"%s\" (tempo = %i Beats Per Minute)"
-msgstr ""
+msgstr "Nadadering \"%s\" (tempo = %i Beat Per Menit)"
 
 #: gammu/nokia.c:63
 #, c-format
