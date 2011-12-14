@@ -3880,7 +3880,7 @@ msgstr "Kesalahan panjang pesan (\"%s\")\n"
 #: helper/message-cmdline.c:1078
 #, c-format
 msgid "Unknown GSM network code (\"%s\")\n"
-msgstr ""
+msgstr "Kode jaringan GSM tidak dikenal (\"%s\")\n"
 
 #: helper/message-cmdline.c:1097
 #, c-format
