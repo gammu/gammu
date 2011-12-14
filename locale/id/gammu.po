@@ -2615,7 +2615,7 @@ msgstr "Mengaktifkan info USSD"
 
 #: gammu/misc.c:640
 msgid "Todos"
-msgstr "Todos"
+msgstr "Rencana kerja"
 
 #: gammu/misc.c:644
 msgid "Calendar"
