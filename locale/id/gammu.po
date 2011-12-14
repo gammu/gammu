@@ -3208,7 +3208,7 @@ msgstr "Getar dulu"
 
 #: gammu/misc.c:2194
 msgid " speed dial not assigned"
-msgstr "speed dial tidak ditetapkan"
+msgstr " speed dial tidak ditetapkan"
 
 #: gammu/misc.c:2226
 #, c-format
