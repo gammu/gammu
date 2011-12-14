@@ -2995,7 +2995,7 @@ msgstr "Sinkronisasi buku telepon"
 
 #: gammu/misc.c:1641
 msgid "Sync. calendar"
-msgstr "sinkronisasi kalender"
+msgstr "Sinkronisasi kalender"
 
 #: gammu/misc.c:1646 gammu/misc.c:1687
 msgid "Connection set name"
