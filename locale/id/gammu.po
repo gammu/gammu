@@ -3996,9 +3996,8 @@ msgid "pager"
 msgstr ""
 
 #: helper/message-display.c:121
-#, fuzzy
 msgid "general"
-msgstr "Umum"
+msgstr "umum"
 
 #: helper/message-display.c:150
 msgid "SMS status report"
