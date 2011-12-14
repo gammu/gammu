@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-02-23 16:58+0100\n"
-"PO-Revision-Date: 2011-12-13 17:07+0200\n"
+"PO-Revision-Date: 2011-12-13 21:56+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -30,8 +30,8 @@ msgid ""
 "Gammu is library and command line utility for mobile phones. It is released "
 "under GNU GPL version 2."
 msgstr ""
-"Gammu adalah library dan command line untuk Mobile telepon. Gammu "
-"dikeluarkan dibawah GNU GPL versi 2"
+"Gammu adalah utiliti library dan command line untuk telepon selular. Gammu "
+"dirilis di bawah GNU GPL versi 2."
 
 #. type: Plain text
 #: README:11
@@ -41,10 +41,10 @@ msgid ""
 "mwiacek.com> projects. Gammu was former (up to version 0.58) called "
 "MyGnokii2."
 msgstr ""
-"Gammu dikeluarkan oleh Marcin Wiacek dan beberapa programmer. Code asli "
-"berdasarkan Gnokii <http://www.gnokii.org> dan proyek MyGnokii "
-"<http://www.mwiacek.com>. Gammu berasal ( mulai dari versi 0.58 ) dari "
-"MyGnokii2"
+"Produk ini telah diinisiasi oleh Marcin Wiacek dan beberapa orang lainnya. "
+"Kode asli berbasis Gnokii <http://www.gnokii.org> dan proyek terbaru "
+"MyGnokii <http://www.mwiacek.com>. Gammu sebelumnya (mulai dari versi 0.58) "
+"disebut MyGnokii2."
 
 #. type: Plain text
 #: README:14
@@ -52,8 +52,8 @@ msgid ""
 "Currently the project is lead by Michal Cihar <michal@cihar.com> with help "
 "of many contributors."
 msgstr ""
-"Sekarang proyek Gammu dipimpin oleh Michal Cihar <michal@cihar.com> dengan "
-"bantuan beberapa kontibutor. "
+"Proyek saat ini dipimpin oleh Michal Cihar <michal@cihar.com> dengan bantuan "
+"dari banyak kontributor."
 
 #. type: Title =
 #: README:17
@@ -117,8 +117,8 @@ msgid ""
 "See docs/manual/project/install.rst for installation guide or see chapter "
 "\"Compiling Gammu\" in The Gammu Manual."
 msgstr ""
-"See docs/manual/project/install.rst for installation guide or see chapter "
-"\"Compiling Gammu\" in The Gammu Manual."
+"Lihat docs/manual/project/install.rst untuk petunjuk instalasi atau lihat "
+"bab \"Compiling Gammu\" dalam Manual Gammu."
 
 #~ msgid "Gammu Configuration File"
 #~ msgstr "Informasi gammu"
@@ -136,7 +136,7 @@ msgstr ""
 #~ msgstr "0x01: Informasi Panggilan\n"
 
 #~ msgid "Note:"
-#~ msgstr "Catatan"
+#~ msgstr "Catatan:"
 
 #~ msgid "0x04: Phone Status\n"
 #~ msgstr "0x04: Status Telepon\n"
@@ -169,10 +169,10 @@ msgstr ""
 #~ msgstr "File sistem"
 
 #~ msgid "Phone connected to PC"
-#~ msgstr "Telepon tidak terhubung."
+#~ msgstr "Telepon terhubung ke PC"
 
 #~ msgid "Disconnected"
-#~ msgstr "Telepon tidak terhubung."
+#~ msgstr "Tidak terhubung"
 
 #~ msgid "Phone connected to CARC91"
 #~ msgstr "Telepon terhubung ke CARC91"
@@ -190,10 +190,10 @@ msgstr ""
 #~ msgstr "Catatan"
 
 #~ msgid "rest is not known"
-#~ msgstr "Layanan tidak berjalan."
+#~ msgstr "sisanya tidak dikenal"
 
 #~ msgid "To test:"
-#~ msgstr "Tes telepon"
+#~ msgstr "Tes telepon:"
 
 #~ msgid "Filesystem access"
 #~ msgstr "File sistem"
@@ -202,10 +202,10 @@ msgstr ""
 #~ msgstr "0x3E: Radio FM"
 
 #~ msgid "get configuration pins"
-#~ msgstr "Layanan konfigurasi hilang."
+#~ msgstr "mendapatkan pins konfigurasi"
 
 #~ msgid "Default value:"
-#~ msgstr "Gunakan nilai default."
+#~ msgstr "Nilai baku:"
 
 #~ msgid "PIN"
 #~ msgstr "PILIHAN"
@@ -226,7 +226,7 @@ msgstr ""
 #~ msgstr "Pengguna"
 
 #~ msgid "Password"
-#~ msgstr "kata sandi"
+#~ msgstr "Password"
 
 #~ msgid "Try to connect to phone if not connected."
 #~ msgstr "Telepon tidak terhubung."
@@ -260,7 +260,7 @@ msgstr ""
 #~ msgstr "File sistem"
 
 #~ msgid "-system"
-#~ msgstr "File sistem"
+#~ msgstr "-system"
 
 #~ msgid "getfilesystemstatus"
 #~ msgstr "File sistem"
@@ -335,10 +335,10 @@ msgstr ""
 #~ msgstr "Pengaturan telepon"
 
 #~ msgid "Reset phone settings."
-#~ msgstr "Pengaturan telepon"
+#~ msgstr "Reset pengaturan telepon."
 
 #~ msgid "Clear phone settings."
-#~ msgstr "Pengaturan telepon"
+#~ msgstr "Kosongkan pengaturan telepon."
 
 #~ msgid "Dumps decoding commands"
 #~ msgstr "Tumpukan sedang didecode"
@@ -377,16 +377,16 @@ msgstr ""
 #~ msgstr "Lokasi"
 
 #~ msgid "Memory"
-#~ msgstr "Memori penuh."
+#~ msgstr "Memori"
 
 #~ msgid "Type"
 #~ msgstr "Tipe"
 
 #~ msgid "``NokiaRingtone``"
-#~ msgstr "Nada dering"
+#~ msgstr "``NokiaRingtone``"
 
 #~ msgid "Name of the SMSC configuration"
-#~ msgstr "Fitur string buruk dalam konfigurasi."
+#~ msgstr "Nama konfigurasi SMSC"
 
 #~ msgid "Format"
 #~ msgstr "Format"
@@ -395,7 +395,7 @@ msgstr ""
 #~ msgstr "Keabsahan"
 
 #~ msgid "Unknown"
-#~ msgstr "Kesalahan tidak diketahui."
+#~ msgstr "Tidak dikenal"
 
 #~ msgid "Left"
 #~ msgstr "Kiri"
@@ -470,10 +470,10 @@ msgstr ""
 #~ msgstr "      Pengaturan memori (buku telepon atau panggilan) entri.\n"
 
 #~ msgid "Get version information."
-#~ msgstr "Informasi telepon"
+#~ msgstr "Mengambil informasi versi."
 
 #~ msgid "Debugging configuration"
-#~ msgstr "Fitur string buruk dalam konfigurasi."
+#~ msgstr "Konfigurasi debugging"
 
 #~ msgid "errors"
 #~ msgstr "Tidak ada Kesalahan"
@@ -491,7 +491,7 @@ msgstr ""
 #~ msgstr "Informasi gammu"
 
 #~ msgid "File formats used by Gammu"
-#~ msgstr "Format file tidak didukung oleh Gammu."
+#~ msgstr "Format file yang digunakan Gammu"
 
 #~ msgid "Call"
 #~ msgstr "Panggilan"
@@ -503,7 +503,7 @@ msgstr ""
 #~ msgstr "Informasi telepon"
 
 #~ msgid "Custom configuration"
-#~ msgstr "Fitur string buruk dalam konfigurasi."
+#~ msgstr "Konfigurasi buatan"
 
 #~ msgid "Miscellaneous"
 #~ msgstr "Miscellaneous"
@@ -539,7 +539,7 @@ msgstr ""
 #~ msgstr "Kategori"
 
 #~ msgid "For per state machine configuration:"
-#~ msgstr "Fitur string buruk dalam konfigurasi."
+#~ msgstr "Untuk konfigurasi masing-masing mesin:"
 
 #~ msgid "GSM_FileSystemStatus"
 #~ msgstr "File sistem"
@@ -581,7 +581,7 @@ msgstr ""
 #~ msgstr "Tampilkan ringkasan dari pilihan."
 
 #~ msgid "Show version information and compiled in features."
-#~ msgstr "Informasi telepon"
+#~ msgstr "Tampilkan informasi versi dan kompilasi dalam fitur-fitur."
 
 #~ msgid "NAME"
 #~ msgstr "NAMA"
@@ -600,10 +600,10 @@ msgstr ""
 
 #~ msgid "Error opening device. Unknown, busy or no permissions."
 #~ msgstr ""
-#~ "Kesalahan membuka perangkat. Tidak dikenali, sibuk atau tidak diijinkan"
+#~ "Kesalahan membuka perangkat. Tidak dikenali, sibuk atau tidak diijinkan."
 
 #~ msgid "Error opening device, it is locked."
-#~ msgstr "Kesalahan membuka perangkat, terkunci"
+#~ msgstr "Kesalahan membuka perangkat, perangkat terkunci."
 
 #~ msgid "Error opening device, it doesn't exist."
 #~ msgstr "Kesalahan membuka perangkat, tidak tersedia."
@@ -626,7 +626,7 @@ msgstr ""
 #~ "terhubung/salah pengaturan."
 
 #~ msgid "Error setting device DTR or RTS."
-#~ msgstr "Kesalahan pengaturan perangakat DTR atau RTS"
+#~ msgstr "Kesalahan pengaturan perangkat DTR atau RTS."
 
 #~ msgid "Error setting device speed. Maybe speed not supported."
 #~ msgstr ""
@@ -657,17 +657,17 @@ msgstr ""
 #~ "Some functions not available for your system (disabled in config or not "
 #~ "implemented)."
 #~ msgstr ""
-#~ "Beberapa fungsi tidak tersedia untuk sistem anda (matikan di config atau "
-#~ "jangan laksanakan)"
+#~ "Beberapa fungsi tidak tersedia untuk sistem anda (nonaktifkan di config atau "
+#~ "jangan implementasikan)."
 
 #~ msgid "Function not supported by phone."
-#~ msgstr "Fungsi tidak didukung oleh telepon"
+#~ msgstr "Fungsi tidak didukung oleh telepon."
 
 #~ msgid "Entry is empty."
 #~ msgstr "Masukan kosong."
 
 #~ msgid "Security error. Maybe no PIN?"
-#~ msgstr "Kesalahan keamanan. Mungkin tidak ada PIN."
+#~ msgstr "Kesalahan keamanan. Mungkin tidak ada PIN?"
 
 #~ msgid "Invalid location. Maybe too high?"
 #~ msgstr "Kesalahan lokasi. Mungkin terlalu tinggi?"
@@ -680,7 +680,7 @@ msgstr ""
 #~ msgstr "Diperlukan memori lebih..."
 
 #~ msgid "Operation not allowed by phone."
-#~ msgstr "Fungsi tidak didukung oleh telepon"
+#~ msgstr "Operasi tidak diijinkan oleh telepon."
 
 #~ msgid ""
 #~ "No SMSC number given. Provide it manually or use the one configured in "
@@ -732,7 +732,7 @@ msgstr ""
 #~ msgstr "Memori telepon salah, mungkin cuma bisa dibaca saja."
 
 #~ msgid "Invalid data given to phone."
-#~ msgstr "Data tidak valid diberikan ke telepon"
+#~ msgstr "Data tidak valid diberikan ke telepon."
 
 #~ msgid "File with specified name already exists."
 #~ msgstr "File dengan nama yang ditentukan sudah tersedia."
@@ -794,7 +794,7 @@ msgstr ""
 #~ msgstr "Tidak dapat terhubung ke server."
 
 #~ msgid "Could not resolve the host name."
-#~ msgstr "Tidak dapat memutuskan nama host"
+#~ msgstr "Tidak dapat mengartikan nama host."
 
 #~ msgid "REPORTING BUGS"
 #~ msgstr "PELAPORAN BUGS"
@@ -803,7 +803,7 @@ msgstr ""
 #~ msgstr "LIHAT JUGA"
 
 #~ msgid "Empty SMSC number. Set in phone or use -smscnumber."
-#~ msgstr "angka SMSC kosong. Atur telepon atau gunakan -smscnumber"
+#~ msgstr "Nomor SMSC kosong. Atur telepon atau gunakan -smscnumber."
 
 #~ msgid "Permission to file/device required..."
 #~ msgstr "Ijin ke file/perangkat dibutuhkan..."

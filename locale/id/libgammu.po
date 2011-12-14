@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: libGammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-13 17:03+0200\n"
+"PO-Revision-Date: 2011-12-14 05:29+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -19,16 +19,16 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
-msgstr "Tidak ada Kesalahan"
+msgstr "Tidak ada kesalahan."
 
 #: libgammu/gsmcomon.c:85
 msgid "Error opening device. Unknown, busy or no permissions."
 msgstr ""
-"Kesalahan membuka perangkat. Tidak dikenali, sibuk atau tidak diijinkan"
+"Kesalahan membuka perangkat. Tidak dikenali, sibuk atau tidak diijinkan."
 
 #: libgammu/gsmcomon.c:86
 msgid "Error opening device, it is locked."
-msgstr "Kesalahan membuka perangkat, terkunci"
+msgstr "Kesalahan membuka perangkat, perangkat terkunci."
 
 #: libgammu/gsmcomon.c:87
 msgid "Error opening device, it doesn't exist."
@@ -56,7 +56,7 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:92
 msgid "Error setting device DTR or RTS."
-msgstr "Kesalahan pengaturan perangakat DTR atau RTS"
+msgstr "Kesalahan pengaturan perangkat DTR atau RTS."
 
 #: libgammu/gsmcomon.c:93
 msgid "Error setting device speed. Maybe speed not supported."
@@ -118,12 +118,12 @@ msgid ""
 "Some functions not available for your system (disabled in config or not "
 "implemented)."
 msgstr ""
-"Beberapa fungsi tidak tersedia untuk sistem anda (matikan di config atau "
-"jangan laksanakan)"
+"Beberapa fungsi tidak tersedia untuk sistem anda (nonaktifkan di config atau "
+"jangan implementasikan)."
 
 #: libgammu/gsmcomon.c:104
 msgid "Function not supported by phone."
-msgstr "Fungsi tidak didukung oleh telepon"
+msgstr "Fungsi tidak didukung oleh telepon."
 
 #: libgammu/gsmcomon.c:105
 msgid "Entry is empty."
@@ -131,7 +131,7 @@ msgstr "Masukan kosong."
 
 #: libgammu/gsmcomon.c:106
 msgid "Security error. Maybe no PIN?"
-msgstr "Kesalahan keamanan. Mungkin tidak ada PIN."
+msgstr "Kesalahan keamanan. Mungkin tidak ada PIN?"
 
 #: libgammu/gsmcomon.c:107
 msgid "Invalid location. Maybe too high?"
@@ -159,7 +159,7 @@ msgstr "Diperlukan memori lebih..."
 
 #: libgammu/gsmcomon.c:113
 msgid "Operation not allowed by phone."
-msgstr "Operasi tidak diizinkan oleh telepon"
+msgstr "Operasi tidak diijinkan oleh telepon."
 
 #: libgammu/gsmcomon.c:114
 msgid ""
@@ -230,7 +230,7 @@ msgstr "Memori telepon salah, mungkin cuma bisa dibaca saja."
 
 #: libgammu/gsmcomon.c:127
 msgid "Invalid data given to phone."
-msgstr "Data tidak valid diberikan ke telepon"
+msgstr "Data tidak valid diberikan ke telepon."
 
 #: libgammu/gsmcomon.c:128
 msgid "File with specified name already exists."
@@ -327,27 +327,27 @@ msgstr "Tidak dapat terhubung ke server."
 
 #: libgammu/gsmcomon.c:151
 msgid "Could not resolve the host name."
-msgstr "Tidak dapat mengartikan nama host"
+msgstr "Tidak dapat mengartikan nama host."
 
 #: libgammu/gsmcomon.c:152
 msgid "Failed to get SMSC number from phone."
 msgstr "Gagal mengambil nomor SMSC dari telepon."
 
 #: libgammu/gsmcomon.c:153
-#, fuzzy
 msgid "Operation aborted."
-msgstr "Operasi tidak diizinkan oleh telepon"
+msgstr "Operasi dibatalkan."
 
 #: libgammu/gsmcomon.c:154
 msgid ""
 "Installation data not found, please consult debug log and/or documentation "
 "for more details."
 msgstr ""
+"Data instalasi tidak ditemukan, konsultasikan log debug dan/atau dokumentasi "
+"untuk rincian selanjutnya."
 
 #: libgammu/gsmcomon.c:155
-#, fuzzy
 msgid "Entry is read only."
-msgstr "Masukan kosong."
+msgstr "Entri hanya bisa dibaca."
 
 #: libgammu/gsmcomon.c:188
 msgid "Unknown error description."
@@ -400,7 +400,7 @@ msgstr "Kotak masuk"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:580
 msgid "Sent items"
-msgstr "Terkirim."
+msgstr "Item terkirim"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:581
 msgid "Saved items"
@@ -408,7 +408,7 @@ msgstr "Tersimpan"
 
 #: libgammu/phone/nokia/nfunc.c:961
 msgid "Family"
-msgstr "Keluarga."
+msgstr "Keluarga"
 
 #: libgammu/phone/nokia/nfunc.c:963
 msgid "VIP"
@@ -432,7 +432,7 @@ msgstr "Rapat"
 
 #: libgammu/phone/nokia/nfunc.c:1151
 msgid "Outdoor"
-msgstr "Luar ruangan."
+msgstr "Luar ruangan"
 
 #: libgammu/phone/nokia/nfunc.c:1153
 msgid "Pager"
@@ -440,7 +440,7 @@ msgstr "Pager"
 
 #: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1763
 msgid "Outbox"
-msgstr "Kotak Keluar"
+msgstr "Kotak keluar"
 
 #~ msgid "Empty SMSC number. Set in phone or use -smscnumber."
 #~ msgstr "angka SMSC kosong. Atur telepon atau gunakan -smscnumber"

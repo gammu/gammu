@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-13 14:46+0100\n"
-"PO-Revision-Date: 2011-12-13 16:04+0200\n"
+"PO-Revision-Date: 2011-12-13 21:45+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1427,9 +1427,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:90
-#, fuzzy
 msgid "Note:"
-msgstr "Catatan"
+msgstr "Catatan:"
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:91
@@ -5140,9 +5139,9 @@ msgstr ""
 
 #. type: Title +
 #: docs/manual/protocol/carkit.rst:27 docs/manual/protocol/carkit.rst:319
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Phone connected to PC"
-msgstr "Telepon tidak terhubung."
+msgstr "Telepon terhubung ke PC"
 
 #. type: Title ~
 #: docs/manual/protocol/carkit.rst:30 docs/manual/protocol/carkit.rst:135
@@ -5278,9 +5277,9 @@ msgstr ""
 #. type: Title ~
 #: docs/manual/protocol/carkit.rst:116 docs/manual/protocol/carkit.rst:260
 #: docs/manual/protocol/carkit.rst:461 docs/manual/protocol/carkit.rst:621
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Disconnected"
-msgstr "Telepon tidak terhubung."
+msgstr "Tidak terhubung"
 
 #. type: Plain text
 #: docs/manual/protocol/carkit.rst:120
@@ -5311,9 +5310,9 @@ msgstr ""
 
 #. type: Title +
 #: docs/manual/protocol/carkit.rst:132 docs/manual/protocol/carkit.rst:476
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Phone connected to CARC91"
-msgstr "Telepon tidak terhubung."
+msgstr "Telepon terhubung ke CARC91"
 
 #. type: Plain text
 #: docs/manual/protocol/carkit.rst:179
@@ -8829,9 +8828,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/protocol/nokia-s40-sms.rst:74
-#, fuzzy
 msgid "To test:"
-msgstr "Tes telepon"
+msgstr "Tes telepon:"
 
 #. type: Plain text
 #: docs/manual/protocol/nokia-s40-sms.rst:74
@@ -10026,9 +10024,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/protocol/n6510.rst:736
-#, fuzzy
 msgid "0x3E: FM Radio"
-msgstr "Radio FM"
+msgstr "0x3E: Radio FM"
 
 #. type: Plain text
 #: docs/manual/protocol/n6510.rst:738
@@ -11036,9 +11033,8 @@ msgstr ""
 #: docs/manual/smsd/sql.rst:288 docs/manual/smsd/sql.rst:303
 #: docs/manual/smsd/sql.rst:328 docs/manual/smsd/sql.rst:352
 #: docs/manual/smsd/sql.rst:378 docs/manual/smsd/sql.rst:388
-#, fuzzy
 msgid "Default value:"
-msgstr "Gunakan nilai default."
+msgstr "Nilai baku:"
 
 #. type: Plain text
 #: docs/manual/smsd/sql.rst:113 docs/manual/smsd/sql.rst:123
@@ -13443,9 +13439,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/smsd/config.rst:94
-#, fuzzy
 msgid "PIN"
-msgstr "PILIHAN"
+msgstr "PIN"
 
 #. type: Plain text
 #: docs/manual/smsd/config.rst:97
@@ -18499,9 +18494,8 @@ msgstr "catatan kalender"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1110
-#, fuzzy
 msgid "SMSC settings"
-msgstr "MMS dan pengaturan MMS"
+msgstr "Pengaturan SMSC"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1111
@@ -18521,9 +18515,8 @@ msgstr "Pengaturan WAP dan bookmark"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1114
-#, fuzzy
 msgid "WAP settings"
-msgstr "Pengaturan telepon"
+msgstr "Pengaturan WAP"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1115
@@ -19269,9 +19262,8 @@ msgstr ""
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1430
-#, fuzzy
 msgid "Get WAP bookmarks from phone."
-msgstr "Pengaturan WAP dan bookmark"
+msgstr "Mengambil bookmark WAP dari telepon."
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1434
@@ -19280,9 +19272,8 @@ msgstr ""
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1436
-#, fuzzy
 msgid "Get WAP settings from phone."
-msgstr "Pengaturan telepon"
+msgstr "Mengambil pengaturan WAP dari telepon."
 
 #. type: Title -
 #: docs/manual/gammu/index.rst:1440
@@ -19475,9 +19466,8 @@ msgstr ""
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1515
-#, fuzzy
 msgid "Reset phone settings."
-msgstr "Pengaturan telepon"
+msgstr "Reset pengaturan telepon."
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1517
@@ -19486,9 +19476,8 @@ msgstr ""
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1518
-#, fuzzy
 msgid "Clear phone settings."
-msgstr "Pengaturan telepon"
+msgstr "Kosongkan pengaturan telepon."
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:1520
@@ -20897,8 +20886,8 @@ msgid ""
 "Gammu is library and command line utility for mobile phones. It is released "
 "under GNU GPL version 2."
 msgstr ""
-"Gammu adalah library dan command line untuk Mobile telepon. Gammu "
-"dikeluarkan dibawah GNU GPL versi 2"
+"Gammu adalah utiliti library dan command line untuk telepon selular. Gammu "
+"dirilis di bawah GNU GPL versi 2."
 
 #. type: Plain text
 #: docs/manual/project/about.rst:10
@@ -23322,9 +23311,9 @@ msgstr ""
 
 #. type: Title +
 #: docs/manual/testing/testsuite.rst:153
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Database backends configuration"
-msgstr "Fitur string buruk dalam konfigurasi."
+msgstr "Konfigurasi backend basisdata"
 
 #. type: Plain text
 #: docs/manual/testing/testsuite.rst:173
@@ -23915,9 +23904,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:179
-#, fuzzy
 msgid "``NokiaRingtone``"
-msgstr "Nada dering"
+msgstr "``NokiaRingtone``"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:180
@@ -24004,9 +23992,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:220
-#, fuzzy
 msgid "Name of the SMSC configuration"
-msgstr "Fitur string buruk dalam konfigurasi."
+msgstr "Nama konfigurasi SMSC"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:222
@@ -28762,9 +28749,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:1063
-#, fuzzy
 msgid "Get version information."
-msgstr "Informasi telepon"
+msgstr "Mengambil informasi versi."
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:1066
@@ -28775,9 +28761,9 @@ msgstr ""
 
 #. type: Title -
 #: docs/manual/python/gammu.rst:1068
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Debugging configuration"
-msgstr "Fitur string buruk dalam konfigurasi."
+msgstr "Konfigurasi debugging"
 
 #. type: Plain text
 #: docs/manual/python/gammu.rst:1071
@@ -30143,9 +30129,9 @@ msgstr "_formats:"
 
 #. type: Title =
 #: docs/manual/formats/index.rst:4
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "File formats used by Gammu"
-msgstr "Format file tidak didukung oleh Gammu."
+msgstr "Format file yang digunakan Gammu"
 
 #. type: Plain text
 #: docs/manual/formats/index.rst:8
@@ -30626,9 +30612,9 @@ msgstr ""
 
 #. type: Title -
 #: docs/manual/c/examples.rst:38
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Custom configuration"
-msgstr "Fitur string buruk dalam konfigurasi."
+msgstr "Konfigurasi buatan"
 
 #. type: Plain text
 #: docs/manual/c/examples.rst:41
@@ -31988,9 +31974,8 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/c/hints.rst:180
-#, fuzzy
 msgid "For per state machine configuration:"
-msgstr "Fitur string buruk dalam konfigurasi."
+msgstr "Untuk konfigurasi masing-masing mesin:"
 
 #. type: Plain text
 #: docs/manual/c/hints.rst:186
@@ -33620,9 +33605,8 @@ msgstr "Lihat keluaran debugging untuk medeteksi perangkat."
 
 #. type: Plain text
 #: docs/manual/utils/gammu-detect.rst:55
-#, fuzzy
 msgid "Show version information and compiled in features."
-msgstr "Informasi telepon"
+msgstr "Tampilkan informasi versi dan kompilasi dalam fitur-fitur."
 
 #. type: Plain text
 #: docs/manual/utils/gammu-detect.rst:57
@@ -33642,7 +33626,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/utils/gammu-detect.rst:63
 msgid "Disables scanning using Bluez."
-msgstr "Non-aktiv pencarian menggunakan Bluez"
+msgstr "Nokaktifkan pencarian dengan Bluez."
 
 #. type: Plain text
 #: docs/manual/utils/gammu-detect.rst:65
