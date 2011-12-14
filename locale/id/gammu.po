@@ -3966,7 +3966,7 @@ msgstr "Memori SIM"
 
 #: helper/message-display.c:36
 msgid "phone memory"
-msgstr ""
+msgstr "memori telepon"
 
 #: helper/message-display.c:39
 msgid "phone or SIM memory"
