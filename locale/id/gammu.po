@@ -3615,7 +3615,7 @@ msgstr "ID pengguna"
 
 #: helper/memory-display.c:113
 msgid "Picture name"
-msgstr ""
+msgstr "Nama gambar"
 
 #: helper/memory-display.c:116
 msgid "Picture ID"
