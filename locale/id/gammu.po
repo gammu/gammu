@@ -3690,9 +3690,8 @@ msgid "Email address 2"
 msgstr "Alamat email 2"
 
 #: helper/memory-display.c:201
-#, fuzzy
 msgid "Home website"
-msgstr "Nomor rumah"
+msgstr "Situs rumah"
 
 #: helper/memory-display.c:204
 msgid "Work website"
