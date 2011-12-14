@@ -2191,7 +2191,7 @@ msgstr "%i bagian SMS di %i urutan SMS"
 
 #: gammu/message.c:430
 msgid "SMS counter overflow"
-msgstr "pencacah SMS di atas batas atas"
+msgstr "Pencacah SMS melebihi batas"
 
 #: gammu/message.c:515
 msgid ", SIM memory"
