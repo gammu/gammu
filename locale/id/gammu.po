@@ -3677,9 +3677,8 @@ msgid "Other number"
 msgstr ""
 
 #: helper/memory-display.c:172
-#, fuzzy
 msgid "Home address"
-msgstr "IP address"
+msgstr "Alamat rumah"
 
 #: helper/memory-display.c:175
 #, fuzzy
