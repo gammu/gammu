@@ -2949,7 +2949,7 @@ msgstr "Nama pengguna"
 
 #: gammu/misc.c:1575 gammu/misc.c:1607 gammu/misc.c:1634 gammu/misc.c:1684
 msgid "Password"
-msgstr "kata sandi"
+msgstr "Password"
 
 #: gammu/misc.c:1578
 msgid "USSD"
