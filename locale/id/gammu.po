@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-14 05:23+0200\n"
+"PO-Revision-Date: 2011-12-14 05:24+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -2513,7 +2513,7 @@ msgstr "Firmware"
 
 #: gammu/misc.c:404
 msgid "Hardware"
-msgstr "Hardware"
+msgstr "Perangkat keras"
 
 #: gammu/misc.c:415
 msgid "Original IMEI"
