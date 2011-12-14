@@ -473,6 +473,8 @@ msgstr "1.27.95"
 #: docs/manual/config/index.rst:113
 msgid "Device node or address of phone. It depends on used connection."
 msgstr ""
+"Node perangkat atau alamat dari telepon. Ini tergantung dari penggunaan "
+"koneksinya."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:119
