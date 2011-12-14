@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-14 03:21+0200\n"
+"PO-Revision-Date: 2011-12-14 03:22+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -2611,7 +2611,7 @@ msgstr "Mengaktifkan info panggilan"
 
 #: gammu/misc.c:623
 msgid "Enabling info about USSD"
-msgstr "mengaktifkan info USSD"
+msgstr "Mengaktifkan info USSD"
 
 #: gammu/misc.c:640
 msgid "Todos"
