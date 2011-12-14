@@ -3393,7 +3393,7 @@ msgstr "Apakah anda ingin menyimpan lampiran ini?"
 #: gammu/mms.c:170
 #, c-format
 msgid "Folder %s\n"
-msgstr ""
+msgstr "Folder %s\n"
 
 #: gammu/mms.c:171
 msgid "  File filesystem ID"
