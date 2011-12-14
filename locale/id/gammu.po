@@ -4134,7 +4134,7 @@ msgstr "Tersimpan"
 
 #: helper/message-display.c:216
 msgid " (set for reply)"
-msgstr ""
+msgstr "(diatur untuk membalas)"
 
 #: helper/message-display.c:225
 msgid "SMS replacing ID"
