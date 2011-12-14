@@ -4085,7 +4085,7 @@ msgstr "Eror pada SME"
 
 #: helper/message-display.c:190
 msgid "Remote procedure error"
-msgstr ""
+msgstr "Eror pada remote procedure"
 
 #: helper/message-display.c:191
 msgid "Incompatibile destination"
