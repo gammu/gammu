@@ -4286,6 +4286,8 @@ msgstr "Tipe PDU tidak dikenal: 0x%x\n"
 msgid ""
 "Some details were ignored (unknown or not implemented in decoding functions)"
 msgstr ""
+"Beberapa rincian diabaikan (tidak dikenal atau tidak diimplementasikan dalam "
+"dekoding fungsi)"
 
 #: helper/message-display.c:388
 msgid "Siemens OTA file"
