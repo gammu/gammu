@@ -457,7 +457,7 @@ msgstr ".. seealso"
 #. type: Plain text
 #: docs/manual/config/index.rst:107 docs/manual/config/index.rst:178
 msgid ":ref:`faq-config`"
-msgstr ""
+msgstr ":ref:`faq-config`"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:109
