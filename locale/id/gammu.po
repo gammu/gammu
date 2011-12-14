@@ -3144,7 +3144,7 @@ msgstr "Batas waktu screen saver"
 
 #: gammu/misc.c:2119
 msgid "Automatic answer"
-msgstr ""
+msgstr "Penjawab otomatis"
 
 #: gammu/misc.c:2120
 msgid "Lights"
