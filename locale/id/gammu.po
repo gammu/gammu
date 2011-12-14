@@ -3623,7 +3623,7 @@ msgstr "ID gambar"
 
 #: helper/memory-display.c:119
 msgid "Photo"
-msgstr ""
+msgstr "Foto"
 
 #: helper/memory-display.c:119
 msgid "Displaying not supported"
