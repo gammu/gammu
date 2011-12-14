@@ -3743,7 +3743,7 @@ msgstr "Prefiks nama"
 
 #: helper/memory-display.c:223
 msgid "Name suffix"
-msgstr ""
+msgstr "Sufiks nama"
 
 #: helper/memory-display.c:224
 msgid "Nick name"
