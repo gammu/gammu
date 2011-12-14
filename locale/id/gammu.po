@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-14 08:05+0200\n"
+"PO-Revision-Date: 2011-12-14 08:06+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -3441,7 +3441,7 @@ msgstr "Masalah pada penambahan daftar putar"
 #: gammu/nokia.c:383
 #, c-format
 msgid "Writing file %s:"
-msgstr ""
+msgstr "Menulis file %s:"
 
 #: gammu/nokia.c:438
 msgid ""
