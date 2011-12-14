@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-14 08:07+0200\n"
+"PO-Revision-Date: 2011-12-14 08:08+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -3467,7 +3467,7 @@ msgstr "Tidak dapat membuka file %s\n"
 
 #: gammu/nokia.c:591 gammu/nokia.c:665
 msgid "Folder not found. Probably function not supported!"
-msgstr ""
+msgstr "Folder tidak ditemukan. Kemungkinan fungsi tidak mendukung!"
 
 #: gammu/nokia.c:614
 msgid "Searching for phone folder: "
