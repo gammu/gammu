@@ -3371,7 +3371,7 @@ msgstr "Tipe pesan"
 
 #: gammu/mms.c:97 helper/message-display.c:466
 msgid "Subject"
-msgstr ""
+msgstr "Subjek"
 
 #: gammu/mms.c:100
 msgid "Delivery report"
