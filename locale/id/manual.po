@@ -44,6 +44,7 @@ msgid ""
 "On Linux, MacOS X, BSD and other Unix-like systems, the config file is "
 "searched in following order:"
 msgstr ""
+"Pada Linux, MacOS X, BSD dan sistem Unix lainnya, file config dicari pada:"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:13
