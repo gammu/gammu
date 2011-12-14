@@ -3905,7 +3905,7 @@ msgstr "Tidak dapat membuka file \"%s\"\n"
 #: helper/message-cmdline.c:1251
 #, c-format
 msgid "Unknown parameter (\"%c\")\n"
-msgstr ""
+msgstr "Paramater tidak dikenal (\"%c\")\n"
 
 #: helper/message-cmdline.c:1256
 msgid "Last parameter wasn't text"
