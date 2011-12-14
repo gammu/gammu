@@ -1349,7 +1349,7 @@ msgstr " (Teks: nama (hanya satu saja))"
 
 #: gammu/depend/nokia/dct4.c:1338
 msgid " (Text: email address)"
-msgstr "(Teks: alamat email)"
+msgstr " (Teks: alamat email)"
 
 #: gammu/depend/nokia/dct4.c:1339
 msgid " (Text: postal address)"
