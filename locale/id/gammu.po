@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-14 12:02+0200\n"
+"PO-Revision-Date: 2011-12-14 12:04+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -3432,7 +3432,7 @@ msgstr "Pemeriksaan %s\n"
 
 #: gammu/nokia.c:257
 msgid "  Only part handled!"
-msgstr "Hanya sebagian yang ditangani!"
+msgstr " Hanya sebagian yang ditangani!"
 
 #: gammu/nokia.c:336
 msgid "  Problem with adding playlist"
