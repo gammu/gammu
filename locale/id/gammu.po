@@ -3538,7 +3538,7 @@ msgstr "Koneksi \"%s\" pada perangkat \"%s\"\n"
 
 #: gammu/search.c:182 gammu/search.c:189
 msgid "Error creating thread\n"
-msgstr ""
+msgstr "Eror saat membuat thread\n"
 
 #: helper/cmdline.c:26
 #, c-format
