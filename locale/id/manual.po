@@ -251,7 +251,7 @@ msgstr "``fbus``"
 #. type: Plain text
 #: docs/manual/config/index.rst:59
 msgid "serial FBUS connection"
-msgstr ""
+msgstr "koneksi serial FBUS"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:60
