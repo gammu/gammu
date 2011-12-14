@@ -2565,7 +2565,7 @@ msgstr "panggilan berakhir dari sisi kita"
 #: gammu/misc.c:558
 #, c-format
 msgid "call end from remote side (code %i)\n"
-msgstr "Panggilan berakhir dari sisi luar (kode %i)\n"
+msgstr "panggilan berakhir dari luar (kode %i)\n"
 
 #: gammu/misc.c:559
 msgid "call established. Waiting for answer"
