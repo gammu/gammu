@@ -3428,7 +3428,7 @@ msgstr "(longer)"
 #: gammu/nokia.c:252
 #, c-format
 msgid "Checking %s\n"
-msgstr ""
+msgstr "Pemeriksaan %s\n"
 
 #: gammu/nokia.c:257
 msgid "  Only part handled!"
