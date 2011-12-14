@@ -2636,7 +2636,7 @@ msgstr "Tingkat jaringan"
 
 #: gammu/misc.c:663
 msgid "Bit error rate"
-msgstr "tingkat error bit"
+msgstr "Bit error rate"
 
 #: gammu/misc.c:671
 msgid "SIM SMS status"
