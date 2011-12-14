@@ -414,7 +414,7 @@ msgstr "``blues60``"
 #. type: Plain text
 #: docs/manual/config/index.rst:103
 msgid "Connection to Series60 applet in S60 phones, see :ref:`s60`."
-msgstr ""
+msgstr "Koneksi ke applet Series60 pada telepon S60, lihat :ref:`s60`."
 
 #. type: Labeled list
 #: docs/manual/config/index.rst:104 docs/manual/config/index.rst:110
