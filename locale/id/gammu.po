@@ -3258,7 +3258,7 @@ msgstr "Frekuensi"
 #: gammu/misc.c:2343
 #, c-format
 msgid "Unknown divert action (\"%s\")\n"
-msgstr ""
+msgstr "Aksi divert tak dikenal (\"%s\")\n"
 
 #: gammu/misc.c:2356
 #, c-format
