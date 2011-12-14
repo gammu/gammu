@@ -4138,7 +4138,7 @@ msgstr "(diatur untuk membalas)"
 
 #: helper/message-display.c:225
 msgid "SMS replacing ID"
-msgstr ""
+msgstr "ID SMS pengganti"
 
 #: helper/message-display.c:240
 msgid "Class"
