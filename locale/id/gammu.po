@@ -3739,7 +3739,7 @@ msgstr "Nama resmi"
 
 #: helper/memory-display.c:222
 msgid "Name prefix"
-msgstr ""
+msgstr "Prefiks nama"
 
 #: helper/memory-display.c:223
 msgid "Name suffix"
