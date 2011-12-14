@@ -3842,7 +3842,7 @@ msgstr "Terlalu banyak frame pada animasi!"
 #: helper/message-cmdline.c:357
 #, c-format
 msgid "File \"%s\"\n"
-msgstr ""
+msgstr "File \"%s\"\n"
 
 #: helper/message-cmdline.c:384
 msgid "Bookmark not found in file"
