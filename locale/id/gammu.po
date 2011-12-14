@@ -3493,7 +3493,7 @@ msgstr ""
 
 #: gammu/nokia.c:731
 msgid "No JAR size info in JAD file. Added by Gammu."
-msgstr "Tidak ada info ukuran JAD pada file JAD. Ditambahkan oleh Gammu."
+msgstr "Tidak ada info ukuran JAR pada file JAD. Ditambahkan oleh Gammu."
 
 #: gammu/nokia.c:740
 #, c-format
