@@ -3221,7 +3221,7 @@ msgstr "Tampilan saat ini di layar"
 
 #: gammu/misc.c:2265
 msgid "Call active"
-msgstr ""
+msgstr "Panggilan aktif"
 
 #: gammu/misc.c:2268
 msgid "Unread SMS"
