@@ -2756,7 +2756,7 @@ msgstr "Bitmap"
 
 #: gammu/misc.c:1116 gammu/misc.c:1639 gammu/misc.c:1642 gammu/mms.c:102
 msgid "enabled"
-msgstr "Diaktifkan"
+msgstr "aktif"
 
 #: gammu/misc.c:1118 gammu/misc.c:1640 gammu/misc.c:1643 gammu/mms.c:104
 msgid "disabled"
