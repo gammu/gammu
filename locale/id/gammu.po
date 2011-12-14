@@ -3775,7 +3775,7 @@ msgstr "Kodepos"
 
 #: helper/memory-display.c:231
 msgid "Country"
-msgstr ""
+msgstr "Negara"
 
 #: helper/memory-display.c:232
 msgid "Custom text 1"
