@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-14 11:57+0200\n"
+"PO-Revision-Date: 2011-12-14 11:58+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -4242,7 +4242,7 @@ msgstr "Entri buku telepon Nokia"
 
 #: helper/message-display.c:302
 msgid "User UDH"
-msgstr ""
+msgstr "UDH pengguna"
 
 #: helper/message-display.c:303
 msgid "MMS indicator"
