@@ -289,7 +289,7 @@ int TodoFromPython(PyObject * dict, GSM_ToDoEntry * entry, int needs_location)
 		return 0;
 	}
 
-	memset(entry, 0, sizeof(entry));
+	memset(entry, 0, sizeof(GSM_ToDoEntry));
 
 	if (needs_location) {
 		entry->Location = GetIntFromDict(dict, "Location");

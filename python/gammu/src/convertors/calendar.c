@@ -535,7 +535,7 @@ int CalendarFromPython(PyObject * dict, GSM_CalendarEntry * entry,
 		return 0;
 	}
 
-	memset(entry, 0, sizeof(entry));
+	memset(entry, 0, sizeof(GSM_CalendarEntry));
 
 	if (needs_location) {
 		entry->Location = GetIntFromDict(dict, "Location");

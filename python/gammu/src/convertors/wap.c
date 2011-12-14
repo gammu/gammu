@@ -97,7 +97,7 @@ int MMSIndicatorFromPython(PyObject * dict, GSM_MMSIndicator * mms)
 		return 0;
 	}
 
-	memset(mms, 0, sizeof(mms));
+	memset(mms, 0, sizeof(GSM_MMSIndicator));
 
 	s = GetCStringFromDict(dict, "Address");
 	if (strlen(s) > 499) {
@@ -167,7 +167,7 @@ int WAPBookmarkFromPython(PyObject * dict, GSM_WAPBookmark * wap)
 		return 0;
 	}
 
-	memset(wap, 0, sizeof(wap));
+	memset(wap, 0, sizeof(GSM_WAPBookmark));
 
 	wap->Location = GetIntFromDict(dict, "Location");
 	if (wap->Location == INT_INVALID)

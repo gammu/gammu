@@ -349,7 +349,7 @@ int MemoryEntryFromPython(PyObject * dict, GSM_MemoryEntry * entry,
 		return 0;
 	}
 
-	memset(entry, 0, sizeof(entry));
+	memset(entry, 0, sizeof(GSM_MemoryEntry));
 
 	entry->Location = GetIntFromDict(dict, "Location");
 	if (entry->Location == INT_INVALID) {

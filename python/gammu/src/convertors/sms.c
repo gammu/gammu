@@ -267,7 +267,7 @@ int SMSCFromPython(PyObject * dict, GSM_SMSC * smsc, gboolean complete)
 		return 0;
 	}
 
-	memset(smsc, 0, sizeof(smsc));
+	memset(smsc, 0, sizeof(GSM_SMSC));
 
 	if (!complete) {
 		smsc->Location = GetIntFromDict(dict, "Location");
@@ -601,7 +601,7 @@ int UDHFromPython(PyObject * dict, GSM_UDHHeader * udh)
 		return 0;
 	}
 
-	memset(udh, 0, sizeof(udh));
+	memset(udh, 0, sizeof(GSM_UDHHeader));
 
 	udh->ID8bit = GetIntFromDict(dict, "ID8bit");
 	if (udh->ID8bit == INT_INVALID) {
@@ -686,7 +686,7 @@ int SMSFromPython(PyObject * dict, GSM_SMSMessage * sms, int needslocation,
 		return 0;
 	}
 
-	memset(sms, 0, sizeof(sms));
+	memset(sms, 0, sizeof(GSM_SMSMessage));
 	GSM_SetDefaultSMSData(sms);
 
 	o = PyDict_GetItemString(dict, "SMSC");
