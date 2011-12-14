@@ -3168,7 +3168,7 @@ msgstr "Level 4"
 
 #: gammu/misc.c:2134
 msgid "Level 5"
-msgstr ""
+msgstr "Level 5"
 
 #: gammu/misc.c:2143
 msgid "Ringing"
