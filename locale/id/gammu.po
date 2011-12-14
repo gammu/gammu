@@ -3919,7 +3919,7 @@ msgstr "Nama SMS terlalu panjang (\"%s\"), diabaikan\n"
 #: helper/message-cmdline.c:1330
 #, c-format
 msgid "Enter the message text and press %s:\n"
-msgstr ""
+msgstr "Masukkan teks pesan dan tekan %s:\n"
 
 #: helper/message-cmdline.c:1332
 msgid "Ctrl+Z"
