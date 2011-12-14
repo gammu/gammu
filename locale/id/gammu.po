@@ -4300,7 +4300,7 @@ msgstr "- VCARD"
 #: helper/message-display.c:404
 #, c-format
 msgid "Ringtone \"%s\"\n"
-msgstr ""
+msgstr "Nadadering \"%s\"\n"
 
 #: helper/message-display.c:409
 msgid "Do you want to play it?"
