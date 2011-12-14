@@ -3572,8 +3572,7 @@ msgstr[0] "%d jam"
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d hari"
 
 #: helper/formats.h:6
 #, c-format
