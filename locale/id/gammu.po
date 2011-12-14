@@ -3870,7 +3870,7 @@ msgstr "Catatan rencana kerja tidak ditemukan dalam file"
 
 #: helper/message-cmdline.c:574
 msgid "Backup functionality not compiled in!"
-msgstr ""
+msgstr "Fungsionalitas cadangan tidak dikompilasi di dalamnya!"
 
 #: helper/message-cmdline.c:1055
 #, c-format
