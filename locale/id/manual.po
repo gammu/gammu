@@ -341,7 +341,7 @@ msgstr "``irdaphonet``"
 #. type: Plain text
 #: docs/manual/config/index.rst:84 docs/manual/config/index.rst:95
 msgid "Phonet connection for Nokia phones."
-msgstr ""
+msgstr "Koneksi phonet untuk telepon Nokia."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:85
