@@ -3196,7 +3196,7 @@ msgstr "Standar"
 
 #: gammu/misc.c:2150
 msgid "Special"
-msgstr ""
+msgstr "Spesial"
 
 #: gammu/misc.c:2152
 msgid "Personal"
