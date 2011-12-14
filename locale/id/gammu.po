@@ -3816,7 +3816,7 @@ msgstr "Parameter tidak cukup!"
 #: helper/message-cmdline.c:208
 #, c-format
 msgid "What format of sms (\"%s\") ?\n"
-msgstr ""
+msgstr "Apa format sms (\"%s\") ?\n"
 
 #: helper/message-cmdline.c:233 helper/message-cmdline.c:250
 msgid "Where are parameters?"
