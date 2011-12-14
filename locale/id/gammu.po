@@ -2556,7 +2556,7 @@ msgstr "memulai panggilan"
 
 #: gammu/misc.c:556
 msgid "end of call (unknown side)"
-msgstr "Akhir panggilan (bagian tidak dikenali)"
+msgstr "akhir panggilan (bagian tidak dikenal)"
 
 #: gammu/misc.c:557
 msgid "call end from our side"
