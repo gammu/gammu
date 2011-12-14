@@ -519,11 +519,11 @@ msgid ""
 "Device = 10             # Match device by usb device address\n"
 "Device = serial:123456  # Match device by serial string\n"
 msgstr ""
-"Device = 0x1234:0x5678   # Kecocokan perangkat pada id vendor dan produk\n"
-"Device = 0x1234:-1   # Kecocokan perangkat pada id vendor\n"
-"Device = 1.10   # Kecocokan perangkat pada usb bus dan alamat perangkat\n"
-"Device = 10   # Kecocokan perangkat pada alamat perangkat usb\n"
-"Device = serial:123456   # Kecocokan perangkat pada string serial\n"
+"Device = 0x1234:0x5678  # Kecocokan perangkat pada id vendor dan produk\n"
+"Device = 0x1234:-1  # Kecocokan perangkat pada id vendor\n"
+"Device = 1.10  # Kecocokan perangkat pada usb bus dan alamat perangkat\n"
+"Device = 10  # Kecocokan perangkat pada alamat perangkat usb\n"
+"Device = serial:123456  # Kecocokan perangkat pada string serial\n"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:131 docs/manual/config/index.rst:167
