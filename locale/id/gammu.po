@@ -3479,7 +3479,7 @@ msgstr "Tidak ada info vendor pada file JAD"
 
 #: gammu/nokia.c:696
 msgid "No name info in JAD file"
-msgstr ""
+msgstr "Tidak ada info nama pada file JAD"
 
 #: gammu/nokia.c:701
 msgid "No JAR URL info in JAD file"
