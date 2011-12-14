@@ -2909,7 +2909,7 @@ msgstr "Manual"
 
 #: gammu/misc.c:1551 gammu/misc.c:1597
 msgid "Automatic"
-msgstr "otomatis"
+msgstr "Otomatis"
 
 #: gammu/misc.c:1554 gammu/misc.c:1556 gammu/misc.c:1600 gammu/misc.c:1602
 msgid "Authentication type"
