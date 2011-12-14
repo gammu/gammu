@@ -4026,7 +4026,7 @@ msgstr "Nomor SMSC"
 
 #: helper/message-display.c:168
 msgid "SMSC response"
-msgstr ""
+msgstr "Respon SMSC"
 
 #: helper/message-display.c:169
 msgid "Delivery status"
