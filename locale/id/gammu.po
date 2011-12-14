@@ -3458,7 +3458,7 @@ msgstr "Masalah pada penghapusan daftar putar"
 #: gammu/nokia.c:548
 #, c-format
 msgid "What folder type (\"%s\") ?\n"
-msgstr ""
+msgstr "Apa tipe folder (\"%s\") ?\n"
 
 #: gammu/nokia.c:556 gammu/nokia.c:563 gammu/nokia.c:570
 #, c-format
