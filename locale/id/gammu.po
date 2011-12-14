@@ -3858,7 +3858,7 @@ msgstr "Maaf. Mulai sekarang hanya mendukung GPRS atau DATA bearer"
 
 #: helper/message-cmdline.c:452
 msgid "MMS settings not found in file"
-msgstr ""
+msgstr "Pengaturan MMS tidak ditemukan dalam file"
 
 #: helper/message-cmdline.c:466
 msgid "Sorry. No GPRS bearer found in MMS settings"
