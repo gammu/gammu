@@ -3272,7 +3272,7 @@ msgstr "Tipe panggilan tak dikenal (\"%s\")\n"
 
 #: gammu/misc.c:2378
 msgid "Query:"
-msgstr ""
+msgstr "Query:"
 
 #: gammu/misc.c:2380 gammu/misc.c:2397
 msgid "Divert type"
