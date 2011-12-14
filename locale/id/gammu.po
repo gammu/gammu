@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-14 05:10+0200\n"
+"PO-Revision-Date: 2011-12-14 05:11+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1405,7 +1405,7 @@ msgstr " (Pengiriman tag suara)"
 
 #: gammu/depend/nokia/dct4.c:1354
 msgid " (Picture ID assignment)"
-msgstr "(Penugasan gambar ID)"
+msgstr " (Penetapan gambar ID)"
 
 #: gammu/depend/nokia/dct4.c:1355
 msgid " (Ringtone ID from filesystem/internal)"
