@@ -3982,7 +3982,7 @@ msgstr "mobile"
 
 #: helper/message-display.c:118
 msgid "pager"
-msgstr ""
+msgstr "pager"
 
 #: helper/message-display.c:121
 msgid "general"
