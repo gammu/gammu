@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-13 14:46+0100\n"
-"PO-Revision-Date: 2011-12-14 13:50+0200\n"
+"PO-Revision-Date: 2011-12-14 13:51+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -69,7 +69,7 @@ msgstr "``/etc/gammurc``"
 #. type: Plain text
 #: docs/manual/config/index.rst:18
 msgid "On Microsoft Windows:"
-msgstr ""
+msgstr "Pada Microsoft Windows:"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:20
