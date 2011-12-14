@@ -4030,7 +4030,7 @@ msgstr "Respon SMSC"
 
 #: helper/message-display.c:169
 msgid "Delivery status"
-msgstr ""
+msgstr "Status pengiriman"
 
 #: helper/message-display.c:170
 msgid "Details"
