@@ -555,6 +555,11 @@ msgid ""
 "`dialout`) or or add special udev rules to enable you access these devices "
 "as non-root."
 msgstr ""
+"Pada sistem Linux, anda dihadapkan pada keterbatasan hak akses ke beberapa "
+"node perangkat.  anda mungkin harus menjadi anggora dari beberapa grup "
+"(contohnya :samp:`plugdev` atau :samp:`dialout`) atau menambahkan khusus "
+"aturan udev yang mengijinkan anda untuk mengakses perangkat tersebut sebagai "
+"non-root."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:140
