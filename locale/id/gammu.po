@@ -3140,7 +3140,7 @@ msgstr "Screen saver"
 
 #: gammu/misc.c:2118
 msgid "Screen saver timeout"
-msgstr ""
+msgstr "Batas waktu screen saver"
 
 #: gammu/misc.c:2119
 msgid "Automatic answer"
