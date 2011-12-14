@@ -3807,7 +3807,7 @@ msgstr "rumah"
 
 #: helper/memory-display.c:249 helper/message-display.c:131
 msgid "work"
-msgstr ""
+msgstr "kantor"
 
 #: helper/message-cmdline.c:184
 msgid "Not enough parameters!"
