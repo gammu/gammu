@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-14 03:27+0200\n"
+"PO-Revision-Date: 2011-12-14 03:28+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1644,7 +1644,7 @@ msgstr "gambar: %i, suara: %i, tema: %i"
 #. l10n: One char to indicate protected file
 #: gammu/files.c:119 gammu/files.c:208 gammu/files.c:329
 msgid "P"
-msgstr "p"
+msgstr "P"
 
 #. l10n: One char to indicate read only file
 #: gammu/files.c:125 gammu/files.c:210 gammu/files.c:331
