@@ -3642,9 +3642,8 @@ msgid "General number"
 msgstr "Nomor umum"
 
 #: helper/memory-display.c:136
-#, fuzzy
 msgid "Video number"
-msgstr "Nomor ponsel"
+msgstr "Nomor video"
 
 #: helper/memory-display.c:141
 #, fuzzy
