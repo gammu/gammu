@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-14 13:38+0200\n"
+"PO-Revision-Date: 2011-12-14 13:39+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -3355,7 +3355,7 @@ msgstr "Beberapa fitur-fitur file MMS tidak dikenal oleh dekoder Gammu"
 
 #: gammu/mms.c:73 gammu/mms.c:81 gammu/mms.c:89
 msgid "phone "
-msgstr "telepon"
+msgstr "telepon "
 
 #: gammu/mms.c:79
 msgid "Recipient"
