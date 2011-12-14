@@ -241,7 +241,7 @@ msgstr "Protokol yang akan digunakan untuk berkomunikasi dengan telepon anda."
 #. type: Plain text
 #: docs/manual/config/index.rst:56
 msgid "For Nokia cables you want to use one of following:"
-msgstr ""
+msgstr "Untuk kabel Nokia anda akan menggunakan salah satunya:"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:58
