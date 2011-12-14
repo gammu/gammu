@@ -1397,7 +1397,7 @@ msgstr " (Teks: alamat URL)"
 
 #: gammu/depend/nokia/dct4.c:1352
 msgid " (SMS list assignment)"
-msgstr "(Penugasan tugas SMS)"
+msgstr " (daftar pengiriman SMS)"
 
 #: gammu/depend/nokia/dct4.c:1353
 msgid " (Voice tag assignment)"
