@@ -4211,7 +4211,7 @@ msgstr "Bookmark WAP Nokia"
 
 #: helper/message-display.c:293
 msgid "Nokia operator logo"
-msgstr ""
+msgstr "Logo operator Nokia"
 
 #: helper/message-display.c:294
 msgid "Nokia WAP bookmark or WAP/MMS settings"
