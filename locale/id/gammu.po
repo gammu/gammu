@@ -3679,7 +3679,7 @@ msgstr "Alamat kantor"
 
 #: helper/memory-display.c:186
 msgid "Home email"
-msgstr ""
+msgstr "Email rumah"
 
 #: helper/memory-display.c:189
 msgid "Work email"
