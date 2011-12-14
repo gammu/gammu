@@ -59,7 +59,7 @@ msgstr "``~/.config/gammu/config``"
 #. type: Plain text
 #: docs/manual/config/index.rst:15
 msgid "``~/.gammurc``"
-msgstr ""
+msgstr "``~/.gammurc``"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:16
