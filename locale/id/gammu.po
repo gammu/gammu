@@ -2885,7 +2885,7 @@ msgstr "Nomor server"
 
 #: gammu/misc.c:1540 gammu/misc.c:1586 gammu/misc.c:1587
 msgid "Service number"
-msgstr "nomor layanan"
+msgstr "Nomor layanan"
 
 #: gammu/misc.c:1543
 msgid "Data (CSD)"
