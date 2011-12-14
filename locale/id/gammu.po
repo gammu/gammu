@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-14 08:18+0200\n"
+"PO-Revision-Date: 2011-12-14 08:19+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -3699,7 +3699,7 @@ msgstr "Situs kantor"
 
 #: helper/memory-display.c:207
 msgid "Website"
-msgstr ""
+msgstr "Situs"
 
 #: helper/memory-display.c:212
 msgid "VOIP"
