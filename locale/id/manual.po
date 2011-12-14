@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-13 14:46+0100\n"
-"PO-Revision-Date: 2011-12-14 14:22+0200\n"
+"PO-Revision-Date: 2011-12-14 14:26+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -499,6 +499,9 @@ msgid ""
 "For **USB** connections (currently only fbususb and dku2 on Linux), you can "
 "specify to which USB device Gammu should connect. You can either provide"
 msgstr ""
+"Untuk koneksi **USB** (hanya fbususb dan dku2 pada Linux), anda dapat "
+"menspesifikasikan perangkat USB yang mana yang harus digunakan Gammu dalam "
+"berkoneksi. Anda juga dapat menyediakan"
 
 #. type: Labeled list
 #: docs/manual/config/index.rst:122
