@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-14 03:26+0200\n"
+"PO-Revision-Date: 2011-12-14 03:27+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1512,7 +1512,7 @@ msgstr "Non-aktiv pencarian Windows serial ports."
 #: gammu-detect/main.c:71
 #, c-format
 msgid "Gammu-detect version %s"
-msgstr "Gammu-detect Versi %s"
+msgstr "Gammu-detect versi %s"
 
 #: gammu-detect/main.c:73
 #, c-format
