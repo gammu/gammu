@@ -3388,7 +3388,7 @@ msgstr "(%s dalam SMIL)"
 
 #: gammu/mms.c:130
 msgid "Do you want to save this attachment?"
-msgstr ""
+msgstr "Apakah anda ingin menyimpan lampiran ini?"
 
 #: gammu/mms.c:170
 #, c-format
