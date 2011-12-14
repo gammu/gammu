@@ -452,7 +452,7 @@ msgstr "1.29.90"
 #: docs/manual/c/porting.rst:51
 #, no-wrap
 msgid ".. seealso"
-msgstr ""
+msgstr ".. seealso"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:107 docs/manual/config/index.rst:178
