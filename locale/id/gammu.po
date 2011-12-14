@@ -3846,7 +3846,7 @@ msgstr "File \"%s\"\n"
 
 #: helper/message-cmdline.c:384
 msgid "Bookmark not found in file"
-msgstr ""
+msgstr "Bookmark tidak ditemukan pada file"
 
 #: helper/message-cmdline.c:408
 msgid "WAP settings not found in file"
