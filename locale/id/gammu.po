@@ -2307,7 +2307,7 @@ msgstr "tidak tergabung dalam jaringan"
 
 #: gammu/misc.c:41 gammu/misc.c:68
 msgid "registration to network denied"
-msgstr "Registrasi ke jaringan ditolak"
+msgstr "registrasi ke jaringan ditolak"
 
 #: gammu/misc.c:42 gammu/misc.c:44 gammu/misc.c:69 gammu/misc.c:71
 #: gammu/misc.c:169 gammu/misc.c:191
