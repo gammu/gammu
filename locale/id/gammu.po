@@ -2987,7 +2987,7 @@ msgstr "Basisdata kalender"
 
 #: gammu/misc.c:1637
 msgid "Server"
-msgstr "server"
+msgstr "Server"
 
 #: gammu/misc.c:1638
 msgid "Sync. phonebook"
