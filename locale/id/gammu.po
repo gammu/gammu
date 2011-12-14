@@ -3108,7 +3108,7 @@ msgstr "Pengingat panggilan untuk"
 
 #: gammu/misc.c:2108
 msgid "Screen saver number"
-msgstr ""
+msgstr "Nomor screen saver"
 
 #: gammu/misc.c:2111
 msgid "Incoming call alert"
