@@ -1195,7 +1195,7 @@ msgstr "Kode keamana adalah %s\n"
 #: gammu/depend/nokia/dct4.c:800
 #, c-format
 msgid "device address %02x%02x%02x%02x%02x%02x\n"
-msgstr "Alamat perangkat %02x%02x%02x%02x%02x%02x\n"
+msgstr "alamat perangkat %02x%02x%02x%02x%02x%02x\n"
 
 #: gammu/depend/nokia/dct4.c:824
 msgid "Old simlock"
