@@ -3351,7 +3351,7 @@ msgstr "Tersimpan ke file %s\n"
 
 #: gammu/mms.c:65
 msgid "Some MMS file features unknown for Gammu decoder"
-msgstr ""
+msgstr "Beberapa fitur-fitur file MMS tidak dikenal oleh dekoder Gammu"
 
 #: gammu/mms.c:73 gammu/mms.c:81 gammu/mms.c:89
 msgid "phone "
