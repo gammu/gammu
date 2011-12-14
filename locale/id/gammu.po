@@ -3296,7 +3296,7 @@ msgstr "saat telepon mati atau di luar jangkauan"
 
 #: gammu/misc.c:2411
 msgid "all types of diverts"
-msgstr ""
+msgstr "Semua tipe divert"
 
 #: gammu/misc.c:2414 gammu/misc.c:2434 gammu/misc.c:2456
 #, c-format
