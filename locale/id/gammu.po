@@ -4167,7 +4167,7 @@ msgstr "Alfabet baku GSM (terkompresi)"
 #. l10n: 8-bit message coding
 #: helper/message-display.c:258
 msgid "8-bit"
-msgstr ""
+msgstr "8-bit"
 
 #: helper/message-display.c:281
 msgid "User Data Header"
