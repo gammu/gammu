@@ -3503,7 +3503,7 @@ msgstr "Menambahkan \"%s\""
 #: gammu/nokia.c:741
 #, c-format
 msgid " version %s"
-msgstr "versi %s"
+msgstr " versi %s"
 
 #: gammu/nokia.c:742
 #, c-format
