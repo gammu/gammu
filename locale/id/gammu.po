@@ -2689,7 +2689,7 @@ msgstr "SMAF (MMF)"
 #: gammu/misc.c:735
 #, c-format
 msgid " format, ringtone \"%s\"\n"
-msgstr "format, nada dering \"%s\"\n"
+msgstr " format, nadadering \"%s\"\n"
 
 #: gammu/misc.c:949
 #, c-format
