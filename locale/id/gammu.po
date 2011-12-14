@@ -3949,7 +3949,7 @@ msgstr "Nadadering terlalu panjang. %i persen bagiannya dipotong\n"
 #: helper/message-cmdline.c:1424
 #, c-format
 msgid "There are %i SMS messages packed and the limit is %i. Exiting\n"
-msgstr ""
+msgstr "Terdapat %i paket pesan SMS dan batasannya adalah %i. Keluar\n"
 
 #: helper/message-cmdline.c:1434
 msgid "Use -smscnumber option to give SMSC number"
