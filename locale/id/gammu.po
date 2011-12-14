@@ -2983,7 +2983,7 @@ msgstr "Basisdata bukutelepon"
 
 #: gammu/misc.c:1636
 msgid "Calendar database"
-msgstr "database kalender"
+msgstr "Basisdata kalender"
 
 #: gammu/misc.c:1637
 msgid "Server"
