@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: libGammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-14 05:29+0200\n"
+"PO-Revision-Date: 2011-12-14 13:41+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -309,9 +309,8 @@ msgid "Bluetooth configuration requires channel option."
 msgstr "Konfigurasi bluetooth memerlukan pilihan channel."
 
 #: libgammu/gsmcomon.c:147
-#, fuzzy
 msgid "Service is not running."
-msgstr "Layanan tidak berjalan."
+msgstr "Layanan tidak aktif."
 
 #: libgammu/gsmcomon.c:148
 msgid "Service configuration is missing."
