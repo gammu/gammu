@@ -3517,7 +3517,7 @@ msgstr "Aplikasi sudah ada. Dihapus oleh Gammu."
 #: gammu/nokia.c:826 gammu/nokia.c:859
 #, c-format
 msgid "  Deleting %s\n"
-msgstr " Menghapus %s\n"
+msgstr "Menghapus %s\n"
 
 #: gammu/nokia.c:882
 msgid "Writing JAD file:"
