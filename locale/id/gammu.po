@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-14 13:42+0200\n"
+"PO-Revision-Date: 2011-12-14 13:43+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -3397,7 +3397,7 @@ msgstr "Folder %s\n"
 
 #: gammu/mms.c:171
 msgid "  File filesystem ID"
-msgstr " ID file filesystem"
+msgstr "ID file sistem"
 
 #: gammu/nokia.c:43
 msgid "It can be RTTL ringtone only used with this option"
