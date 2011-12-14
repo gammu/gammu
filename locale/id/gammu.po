@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-14 05:16+0200\n"
+"PO-Revision-Date: 2011-12-14 05:17+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -2709,7 +2709,7 @@ msgstr "%i. Access point %i"
 #: gammu/misc.c:1020 gammu/misc.c:1537 gammu/misc.c:1544 gammu/misc.c:1579
 #: gammu/misc.c:1592 gammu/misc.c:1631 gammu/misc.c:1680 gammu/misc.c:2060
 msgid " (active)"
-msgstr "(aktif)"
+msgstr " (aktif)"
 
 #: gammu/misc.c:1048 gammu/misc.c:1204
 msgid "Maximal location for caller logo can be 5"
