@@ -3120,7 +3120,7 @@ msgstr "Volume nadadering"
 
 #: gammu/misc.c:2113
 msgid "Vibrating alert"
-msgstr ""
+msgstr "Pengingat getar"
 
 #: gammu/misc.c:2114
 msgid "Message alert tone"
