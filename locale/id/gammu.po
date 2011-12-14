@@ -1896,7 +1896,7 @@ msgstr "Backing up dan restoring"
 
 #: gammu/gammu.c:717
 msgid "Nokia specific"
-msgstr "Spesifik Nokia"
+msgstr "Spesifikasi Nokia"
 
 #: gammu/gammu.c:720
 msgid "Siemens specific"
