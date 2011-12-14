@@ -3124,7 +3124,7 @@ msgstr "Pengingat getar"
 
 #: gammu/misc.c:2114
 msgid "Message alert tone"
-msgstr ""
+msgstr "Bunyi pengingat pesan"
 
 #: gammu/misc.c:2115
 msgid "Keypad tones"
