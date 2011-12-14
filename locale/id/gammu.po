@@ -3791,7 +3791,7 @@ msgstr "Teks buatan 3"
 
 #: helper/memory-display.c:235
 msgid "Custom text 4"
-msgstr ""
+msgstr "Teks buatan 4"
 
 #: helper/memory-display.c:236
 msgid "Push to talk ID"
