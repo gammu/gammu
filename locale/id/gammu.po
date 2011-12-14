@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-14 08:24+0200\n"
+"PO-Revision-Date: 2011-12-14 08:25+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -3850,7 +3850,7 @@ msgstr "Bookmark tidak ditemukan pada file"
 
 #: helper/message-cmdline.c:408
 msgid "WAP settings not found in file"
-msgstr ""
+msgstr "Pengaturan WAP tidak ditemukan pada file"
 
 #: helper/message-cmdline.c:429
 msgid "Sorry. For now there is only support for GPRS or DATA bearers end"
