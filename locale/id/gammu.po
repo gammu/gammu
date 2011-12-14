@@ -3241,7 +3241,7 @@ msgstr "Panggilan data"
 
 #: gammu/misc.c:2280
 msgid "Keypad locked"
-msgstr ""
+msgstr "Keypad terkunci"
 
 #: gammu/misc.c:2283
 msgid "SMS memory full"
