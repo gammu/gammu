@@ -4068,7 +4068,7 @@ msgstr "SME sibuk"
 
 #: helper/message-display.c:186 helper/message-display.c:202
 msgid "No response from SME"
-msgstr ""
+msgstr "Tidak ada respon dari SME"
 
 #: helper/message-display.c:187 helper/message-display.c:203
 msgid "Service rejected"
