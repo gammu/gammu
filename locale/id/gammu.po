@@ -4146,7 +4146,7 @@ msgstr "Class"
 
 #: helper/message-display.c:242
 msgid "Coding"
-msgstr ""
+msgstr "Koding"
 
 #: helper/message-display.c:245
 msgid "Unicode (no compression)"
