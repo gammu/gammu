@@ -3436,7 +3436,7 @@ msgstr " Hanya sebagian yang ditangani!"
 
 #: gammu/nokia.c:336
 msgid "  Problem with adding playlist"
-msgstr "Masalah pada penambahan daftar putar"
+msgstr " Masalah pada penambahan daftar putar"
 
 #: gammu/nokia.c:383
 #, c-format
