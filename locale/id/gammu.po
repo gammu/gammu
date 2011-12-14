@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-14 03:19+0200\n"
+"PO-Revision-Date: 2011-12-14 03:20+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -2573,7 +2573,7 @@ msgstr "panggilan siap. Menunggu jawaban"
 
 #: gammu/misc.c:560
 msgid "call held"
-msgstr "Panggilan ditahan"
+msgstr "panggilan ditahan"
 
 #: gammu/misc.c:561
 msgid "call resumed"
