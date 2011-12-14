@@ -3023,7 +3023,7 @@ msgstr "Logo operator"
 
 #: gammu/misc.c:1757 helper/message-display.c:432
 msgid "Picture"
-msgstr "gambar"
+msgstr "Gambar"
 
 #: gammu/misc.c:1758
 msgid "Caller group logo"
