@@ -1049,7 +1049,7 @@ msgstr "Rabu"
 
 #: gammu/common.c:135
 msgid "Thursday"
-msgstr "kamis"
+msgstr "Kamis"
 
 #: gammu/common.c:138
 msgid "Friday"
