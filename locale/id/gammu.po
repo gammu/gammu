@@ -3763,7 +3763,7 @@ msgstr "Alamat"
 
 #: helper/memory-display.c:228
 msgid "City"
-msgstr ""
+msgstr "Kota"
 
 #: helper/memory-display.c:229
 msgid "State"
