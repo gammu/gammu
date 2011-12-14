@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-14 09:01+0200\n"
+"PO-Revision-Date: 2011-12-14 09:02+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -4004,7 +4004,7 @@ msgstr "Sudah dibaca"
 
 #: helper/message-display.c:156 helper/message-display.c:276
 msgid "UnRead"
-msgstr ""
+msgstr "Tak terbaca"
 
 #: helper/message-display.c:157 helper/message-display.c:277
 msgid "UnSent"
