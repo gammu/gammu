@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-13 14:46+0100\n"
-"PO-Revision-Date: 2011-12-14 13:55+0200\n"
+"PO-Revision-Date: 2011-12-14 13:56+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -127,6 +127,9 @@ msgid ""
 "For hints about configuring your phone, you can check Gammu Phone Database "
 "<http://wammu.eu/phones/> to see what user users experienced."
 msgstr ""
+"Untuk petunjuk tentang pengkonfigurasian telepon anda, anda dapat "
+"memeriksanya pada Basisdata Telepon Gammu di <http://wammu.eu/phones/> untuk "
+"melihat pengalaman-pengalaman dari pengguna lainnya."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:37 docs/manual/smsd/config.rst:14
