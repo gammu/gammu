@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-14 08:23+0200\n"
+"PO-Revision-Date: 2011-12-14 08:24+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -3833,7 +3833,7 @@ msgstr "Di mana nama file logo?"
 
 #: helper/message-cmdline.c:318
 msgid "Where is number of frames?"
-msgstr ""
+msgstr "Di mana jumlah framenya?"
 
 #: helper/message-cmdline.c:326
 msgid "Too many animation frames!"
