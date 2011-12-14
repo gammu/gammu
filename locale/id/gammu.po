@@ -1393,7 +1393,7 @@ msgstr " (Nomor grup pemanggil dalam entri pbk)"
 
 #: gammu/depend/nokia/dct4.c:1351
 msgid " (Text: URL address)"
-msgstr "(Teks: alamat URL)"
+msgstr " (Teks: alamat URL)"
 
 #: gammu/depend/nokia/dct4.c:1352
 msgid " (SMS list assignment)"
