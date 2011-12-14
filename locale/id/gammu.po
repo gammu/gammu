@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-14 02:57+0200\n"
+"PO-Revision-Date: 2011-12-14 03:03+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -2299,7 +2299,7 @@ msgstr "menjelajahi jaringan"
 
 #: gammu/misc.c:39 gammu/misc.c:66
 msgid "requesting network"
-msgstr "Meminta jaringan"
+msgstr "meminta jaringan"
 
 #: gammu/misc.c:40 gammu/misc.c:67
 msgid "not logged into network"
