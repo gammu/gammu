@@ -1385,7 +1385,7 @@ msgstr " (Grup pemanggil: logo)"
 
 #: gammu/depend/nokia/dct4.c:1347
 msgid " (Caller group: is logo on ?)"
-msgstr "(Grup pemanggil: apakah logo dipasang?)"
+msgstr " (Grup pemanggil: apakah logo dipasang ?)"
 
 #: gammu/depend/nokia/dct4.c:1348
 msgid " (Caller group number in pbk entry)"
