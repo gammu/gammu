@@ -3233,7 +3233,7 @@ msgstr "Panggilan suara"
 
 #: gammu/misc.c:2274
 msgid "Fax call"
-msgstr ""
+msgstr "Panggilan faks"
 
 #: gammu/misc.c:2277
 msgid "Data call"
