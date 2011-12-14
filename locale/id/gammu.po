@@ -3755,7 +3755,7 @@ msgstr "Perusahaan"
 
 #: helper/memory-display.c:226
 msgid "Job title"
-msgstr ""
+msgstr "Titel jabatan"
 
 #: helper/memory-display.c:227
 msgid "Street address"
