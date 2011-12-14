@@ -4294,7 +4294,7 @@ msgstr "File OTA Siemens"
 
 #: helper/message-display.c:390
 msgid " - VCARD"
-msgstr "- VCARD"
+msgstr " - VCARD"
 
 #: helper/message-display.c:404
 #, c-format
