@@ -4126,7 +4126,7 @@ msgstr ""
 
 #: helper/message-display.c:211 helper/message-display.c:228
 msgid "SMS message"
-msgstr ""
+msgstr "Pesan SMS"
 
 #: helper/message-display.c:213
 msgid "Saved"
