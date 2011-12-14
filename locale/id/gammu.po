@@ -3512,7 +3512,7 @@ msgstr "dibuat oleh %s\n"
 
 #: gammu/nokia.c:793 gammu/nokia.c:845
 msgid "Application already exists. Deleting by Gammu."
-msgstr ""
+msgstr "Aplikasi sudah ada. Dihapus oleh Gammu."
 
 #: gammu/nokia.c:826 gammu/nokia.c:859
 #, c-format
