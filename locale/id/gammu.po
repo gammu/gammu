@@ -4077,7 +4077,7 @@ msgstr "Layanan ditolak"
 #: helper/message-display.c:188 helper/message-display.c:194
 #: helper/message-display.c:204
 msgid "Quality of service not available"
-msgstr ""
+msgstr "Kualitas layanan tidak tersedia"
 
 #: helper/message-display.c:189 helper/message-display.c:205
 msgid "Error in SME"
