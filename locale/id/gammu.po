@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-14 02:50+0200\n"
+"PO-Revision-Date: 2011-12-14 02:53+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1377,7 +1377,7 @@ msgstr "(Register panggilan: dengan panggilan tak terjawab)"
 
 #: gammu/depend/nokia/dct4.c:1345
 msgid " (Speed dial)"
-msgstr "(panggilan cepat)"
+msgstr " (Panggilan cepat)"
 
 #: gammu/depend/nokia/dct4.c:1346
 msgid " (Caller group: logo)"
