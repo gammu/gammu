@@ -3990,7 +3990,7 @@ msgstr "umum"
 
 #: helper/message-display.c:150
 msgid "SMS status report"
-msgstr ""
+msgstr "Laporan status SMS"
 
 #: helper/message-display.c:154 helper/message-display.c:166
 #: helper/message-display.c:218 helper/message-display.c:233
