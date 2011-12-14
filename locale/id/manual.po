@@ -404,7 +404,7 @@ msgstr "``blueobex``"
 #. type: Plain text
 #: docs/manual/config/index.rst:100
 msgid "``bluerfgnapbus``"
-msgstr ""
+msgstr "``bluerfgnapbus``"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:102
