@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-14 08:25+0200\n"
+"PO-Revision-Date: 2011-12-14 08:26+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -3862,7 +3862,7 @@ msgstr "Pengaturan MMS tidak ditemukan dalam file"
 
 #: helper/message-cmdline.c:466
 msgid "Sorry. No GPRS bearer found in MMS settings"
-msgstr ""
+msgstr "Maaf. GPRS bearer tidak ditemukan dalam pengaturan MMS"
 
 #: helper/message-cmdline.c:512
 msgid "ToDo note not found in file"
