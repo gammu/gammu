@@ -3534,7 +3534,7 @@ msgstr "Menulis file:"
 #: gammu/search.c:145
 #, c-format
 msgid "Connection \"%s\" on device \"%s\"\n"
-msgstr ""
+msgstr "Koneksi \"%s\" pada perangkat \"%s\"\n"
 
 #: gammu/search.c:182 gammu/search.c:189
 msgid "Error creating thread\n"
