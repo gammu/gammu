@@ -3560,8 +3560,7 @@ msgstr[0] "%d detik"
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d menit"
 
 #: helper/formats.h:4
 #, c-format
