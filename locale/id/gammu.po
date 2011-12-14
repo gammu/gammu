@@ -1425,7 +1425,7 @@ msgstr "(ID daftar layanan pesan instan)"
 
 #: gammu/depend/nokia/dct4.c:1359
 msgid " (presence list ID ?)"
-msgstr "(ID daftar kehadiran)"
+msgstr " (ketersediaan daftar ID ?)"
 
 #: gammu/depend/nokia/dct4.c:1360
 msgid " (SIP Address (Push to Talk address))"
