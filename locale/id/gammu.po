@@ -4314,7 +4314,7 @@ msgstr "Apakah anda ingin memainkannya?"
 
 #: helper/message-display.c:414
 msgid "Caller logo"
-msgstr "Logo Pemanggil"
+msgstr "Logo pemanggil"
 
 #: helper/message-display.c:418
 #, c-format
