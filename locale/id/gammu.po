@@ -3432,7 +3432,7 @@ msgstr "Pemeriksaan %s\n"
 
 #: gammu/nokia.c:257
 msgid "  Only part handled!"
-msgstr ""
+msgstr "Hanya sebagian yang ditangani!"
 
 #: gammu/nokia.c:336
 msgid "  Problem with adding playlist"
