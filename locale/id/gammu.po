@@ -3132,7 +3132,7 @@ msgstr "Bunyi keypad"
 
 #: gammu/misc.c:2116
 msgid "Warning (games) tones"
-msgstr ""
+msgstr "Bunyi peringatan (permainan)"
 
 #: gammu/misc.c:2117 helper/message-display.c:428
 msgid "Screen saver"
