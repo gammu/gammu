@@ -3811,7 +3811,7 @@ msgstr "kantor"
 
 #: helper/message-cmdline.c:184
 msgid "Not enough parameters!"
-msgstr ""
+msgstr "Parameter tidak cukup!"
 
 #: helper/message-cmdline.c:208
 #, c-format
