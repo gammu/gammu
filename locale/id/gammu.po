@@ -3184,7 +3184,7 @@ msgstr "Dering sekali"
 
 #: gammu/misc.c:2147 gammu/misc.c:2151
 msgid "Ascending"
-msgstr ""
+msgstr "Urut menaik"
 
 #: gammu/misc.c:2148
 msgid "Caller groups"
