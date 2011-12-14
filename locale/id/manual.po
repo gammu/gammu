@@ -379,7 +379,7 @@ msgstr "Koneksi berbasis GNapplet untuk telepon Symbian, lihat :ref:`gnapplet`."
 #. type: Plain text
 #: docs/manual/config/index.rst:92
 msgid "For Bluetooth connection use one of following:"
-msgstr ""
+msgstr "Untuk koneksi Bluetooth gunakan salah satunya:"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:94
