@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-14 06:10+0200\n"
+"PO-Revision-Date: 2011-12-14 06:11+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -3337,7 +3337,7 @@ msgstr "Silahkan cari file yang diterima di Inbox dan instalasikan."
 
 #: gammu/mms.c:49
 msgid "Do you want to save this MMS file?"
-msgstr ""
+msgstr "Anda ingin menyimpan file MMS ini?"
 
 #: gammu/mms.c:53 gammu/mms.c:134
 #, c-format
