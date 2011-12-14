@@ -167,7 +167,7 @@ msgstr ".. config:section"
 #. type: Plain text
 #: docs/manual/config/index.rst:45
 msgid "[gammu]"
-msgstr ""
+msgstr "[gammu]"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:47
