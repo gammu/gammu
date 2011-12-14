@@ -3508,7 +3508,7 @@ msgstr " versi %s"
 #: gammu/nokia.c:742
 #, c-format
 msgid " created by %s\n"
-msgstr "dibuat oleh %s\n"
+msgstr " dibuat oleh %s\n"
 
 #: gammu/nokia.c:793 gammu/nokia.c:845
 msgid "Application already exists. Deleting by Gammu."
