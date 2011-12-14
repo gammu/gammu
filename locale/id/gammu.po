@@ -1433,7 +1433,7 @@ msgstr " (Alamat SIP (alamat Tekan untuk Bicara))"
 
 #: gammu/depend/nokia/dct4.c:1361
 msgid " (Group ID (6230i or later))"
-msgstr "(ID Grup (6230i atau lebih baru))"
+msgstr " (ID Grup (6230i atau lebih baru))"
 
 #: gammu/depend/nokia/dct4.c:1363
 msgid ", type "
