@@ -4121,7 +4121,7 @@ msgstr "SM tidak ada"
 #: helper/message-display.c:206
 #, c-format
 msgid "Reserved/Specific to SC: %x"
-msgstr ""
+msgstr "Reserved/Spesifik ke SC: %x"
 
 #: helper/message-display.c:211 helper/message-display.c:228
 msgid "SMS message"
