@@ -4310,7 +4310,7 @@ msgstr ""
 
 #: helper/message-display.c:409
 msgid "Do you want to play it?"
-msgstr "Apakah Anda ingin memainkan/memutarnya?"
+msgstr "Apakah anda ingin memainkannya?"
 
 #: helper/message-display.c:414
 msgid "Caller logo"
