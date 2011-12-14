@@ -4150,7 +4150,7 @@ msgstr "Koding"
 
 #: helper/message-display.c:245
 msgid "Unicode (no compression)"
-msgstr ""
+msgstr "Unicode (tanpa kompresi)"
 
 #: helper/message-display.c:248
 msgid "Unicode (compression)"
