@@ -4034,7 +4034,7 @@ msgstr "Status pengiriman"
 
 #: helper/message-display.c:170
 msgid "Details"
-msgstr ""
+msgstr "Rincian"
 
 #: helper/message-display.c:173 helper/message-display.c:178
 msgid "Temporary error, "
