@@ -1053,7 +1053,7 @@ msgstr "Kamis"
 
 #: gammu/common.c:138
 msgid "Friday"
-msgstr "Friday"
+msgstr "Jumat"
 
 #: gammu/common.c:141
 msgid "Saturday"
