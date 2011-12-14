@@ -3824,7 +3824,7 @@ msgstr "Di mana parameternya?"
 
 #: helper/message-cmdline.c:264
 msgid "Where is ringtone filename?"
-msgstr ""
+msgstr "Di mana nama file nadadering?"
 
 #: helper/message-cmdline.c:282 helper/message-cmdline.c:300
 #: helper/message-cmdline.c:351
