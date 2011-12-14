@@ -3128,7 +3128,7 @@ msgstr "Bunyi pengingat pesan"
 
 #: gammu/misc.c:2115
 msgid "Keypad tones"
-msgstr ""
+msgstr "Bunyi keypad"
 
 #: gammu/misc.c:2116
 msgid "Warning (games) tones"
