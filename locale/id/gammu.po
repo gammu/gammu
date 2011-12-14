@@ -4280,7 +4280,7 @@ msgstr "SMS 8 bit, tidak dapat ditampilkan di sini"
 #: helper/message-display.c:336
 #, c-format
 msgid "Unknown PDU type: 0x%x\n"
-msgstr ""
+msgstr "Tipe PDU tidak dikenal: 0x%x\n"
 
 #: helper/message-display.c:383
 msgid ""
