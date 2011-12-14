@@ -4267,7 +4267,7 @@ msgstr ", bagian %i dari %i"
 #: helper/message-display.c:313
 #, c-format
 msgid ", %i parts"
-msgstr ", %i parts"
+msgstr ", %i bagian"
 
 #: helper/message-display.c:324
 msgid "Siemens file"
