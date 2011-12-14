@@ -3683,7 +3683,7 @@ msgstr "Email rumah"
 
 #: helper/memory-display.c:189
 msgid "Work email"
-msgstr ""
+msgstr "Email kantor"
 
 #: helper/memory-display.c:196
 msgid "Email address 2"
