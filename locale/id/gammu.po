@@ -3631,7 +3631,7 @@ msgstr "Menampilkan yang tidak didukung"
 
 #: helper/memory-display.c:121
 msgid "Favorite messaging number"
-msgstr ""
+msgstr "Nomor favorit pesan"
 
 #: helper/memory-display.c:129
 msgid "Work number"
