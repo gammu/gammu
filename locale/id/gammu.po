@@ -1146,7 +1146,7 @@ msgstr "Lewatkan"
 
 #: gammu/depend/nokia/dct4.c:370
 msgid "Fail"
-msgstr "gagal"
+msgstr "Gagal"
 
 #: gammu/depend/nokia/dct4.c:371
 msgid "Not executed"
