@@ -3803,7 +3803,7 @@ msgstr "Tipe field tidak dikenal"
 
 #: helper/memory-display.c:246 helper/message-display.c:128
 msgid "home"
-msgstr ""
+msgstr "rumah"
 
 #: helper/memory-display.c:249 helper/message-display.c:131
 msgid "work"
