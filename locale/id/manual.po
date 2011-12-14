@@ -394,7 +394,7 @@ msgstr "``blueat``"
 #. type: Plain text
 #: docs/manual/config/index.rst:97
 msgid "AT commands connection for most of phones."
-msgstr ""
+msgstr "Koneksi perintah AT untuk kebanyakan telepon."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:98
