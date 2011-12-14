@@ -3687,7 +3687,7 @@ msgstr "Email kantor"
 
 #: helper/memory-display.c:196
 msgid "Email address 2"
-msgstr ""
+msgstr "Alamat email 2"
 
 #: helper/memory-display.c:201
 #, fuzzy
