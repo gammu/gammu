@@ -4158,7 +4158,7 @@ msgstr "Unicode (terkompresi)"
 
 #: helper/message-display.c:251
 msgid "Default GSM alphabet (no compression)"
-msgstr ""
+msgstr "Alfabet baku GSM (tanpa kompresi)"
 
 #: helper/message-display.c:254
 msgid "Default GSM alphabet (compression)"
