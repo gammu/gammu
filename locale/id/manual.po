@@ -300,6 +300,9 @@ msgid ""
 "for ARK3116 based cables) or ``-nopower``, but Gammu should be able to "
 "detect this automatically."
 msgstr ""
+"Bila anda menggunakan kabel non orisinil, anda mungkin akan membutuhkan "
+"untuk menambahkan ``-nodtr`` (contoh untuk kabel berbasis ARK3116) atau "
+"``-nopower``, tetapi Gammu harus dapat mendeteksinya secara otomatis."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:73
