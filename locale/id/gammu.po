@@ -3923,7 +3923,7 @@ msgstr "Masukkan teks pesan dan tekan %s:\n"
 
 #: helper/message-cmdline.c:1332
 msgid "Ctrl+Z"
-msgstr ""
+msgstr "Ctrl+Z"
 
 #: helper/message-cmdline.c:1334
 msgid "Ctrl+D"
