@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-13 22:25+0200\n"
+"PO-Revision-Date: 2011-12-14 02:46+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -117,7 +117,7 @@ msgstr "Memeriksa bukutelepon telepon"
 
 #: gammu/backup.c:405
 msgid "Backup phone phonebook?"
-msgstr "membuat cadangan buku telepon?"
+msgstr "Membuat cadangan buku telepon?"
 
 #: gammu/backup.c:409
 msgid "Checking SIM phonebook"
