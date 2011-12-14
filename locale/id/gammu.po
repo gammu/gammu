@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-14 08:57+0200\n"
+"PO-Revision-Date: 2011-12-14 08:59+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -3953,7 +3953,7 @@ msgstr "Terdapat %i paket pesan SMS dan batasannya adalah %i. Keluar\n"
 
 #: helper/message-cmdline.c:1434
 msgid "Use -smscnumber option to give SMSC number"
-msgstr ""
+msgstr "Gunakan opsi -smscnumber untuk memberikan nomor SMSC"
 
 #: helper/message-display.c:26
 #, c-format
