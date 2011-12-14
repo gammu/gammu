@@ -2991,7 +2991,7 @@ msgstr "Server"
 
 #: gammu/misc.c:1638
 msgid "Sync. phonebook"
-msgstr "sinkronisasi daftar kontak"
+msgstr "Sinkronisasi buku telepon"
 
 #: gammu/misc.c:1641
 msgid "Sync. calendar"
