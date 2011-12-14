@@ -4179,7 +4179,7 @@ msgstr "Pesan yang tergabung (terkait)"
 
 #: helper/message-display.c:285
 msgid "Disables voice indicator"
-msgstr ""
+msgstr "Nonaktifkan indikator suara"
 
 #: helper/message-display.c:286
 msgid "Enables voice indicator"
