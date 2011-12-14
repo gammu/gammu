@@ -2603,7 +2603,7 @@ msgstr "Mengaktifkan info SMS yang masuk"
 
 #: gammu/misc.c:619
 msgid "Enabling info about incoming CB"
-msgstr "mengaktifkan info CB masuk"
+msgstr "Mengaktifkan info CB yang masuk"
 
 #: gammu/misc.c:621
 msgid "Enabling info about calls"
