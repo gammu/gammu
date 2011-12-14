@@ -1365,7 +1365,7 @@ msgstr " (Nomor telepon)"
 
 #: gammu/depend/nokia/dct4.c:1342
 msgid " (Ringtone ID)"
-msgstr "(ID nada dering)"
+msgstr " (ID nada dering)"
 
 #: gammu/depend/nokia/dct4.c:1343
 msgid " (Call register: date and time)"
