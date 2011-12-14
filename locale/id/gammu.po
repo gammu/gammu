@@ -3229,7 +3229,7 @@ msgstr "SMS tak terbaca"
 
 #: gammu/misc.c:2271
 msgid "Voice call"
-msgstr ""
+msgstr "Panggilan suara"
 
 #: gammu/misc.c:2274
 msgid "Fax call"
