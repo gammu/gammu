@@ -3695,7 +3695,7 @@ msgstr "Situs rumah"
 
 #: helper/memory-display.c:204
 msgid "Work website"
-msgstr ""
+msgstr "Situs kantor"
 
 #: helper/memory-display.c:207
 msgid "Website"
