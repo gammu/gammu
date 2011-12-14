@@ -3529,7 +3529,7 @@ msgstr "Menulis file JAR:"
 
 #: gammu/nokia.c:976
 msgid "Writing file:"
-msgstr ""
+msgstr "Menulis file:"
 
 #: gammu/search.c:145
 #, c-format
