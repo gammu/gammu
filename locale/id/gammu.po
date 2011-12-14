@@ -3974,7 +3974,7 @@ msgstr "memori telepon atau SIM"
 
 #: helper/message-display.c:46
 msgid "Inbox folder"
-msgstr ""
+msgstr "Folder inbox"
 
 #: helper/message-display.c:112
 msgid "mobile"
