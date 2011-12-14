@@ -1373,7 +1373,7 @@ msgstr " (Register panggilan: tanggal dan waktu)"
 
 #: gammu/depend/nokia/dct4.c:1344
 msgid " (Call register: with missed calls)"
-msgstr "(Register panggilan: dengan panggilan tak terjawab)"
+msgstr " (Register panggilan: dengan panggilan tak terjawab)"
 
 #: gammu/depend/nokia/dct4.c:1345
 msgid " (Speed dial)"
