@@ -3603,7 +3603,7 @@ msgstr "Tanggal dan waktu"
 #: helper/memory-display.c:66 helper/memory-display.c:70
 #: helper/memory-display.c:79 helper/memory-display.c:90
 msgid "Caller group"
-msgstr ""
+msgstr "Grup pemanggil"
 
 #: helper/memory-display.c:71
 msgid "Caller group number too high, please increase buffer in sources!"
