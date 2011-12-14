@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-14 05:24+0200\n"
+"PO-Revision-Date: 2011-12-14 05:25+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -2897,7 +2897,7 @@ msgstr "Nomor dial-up"
 
 #: gammu/misc.c:1547 gammu/misc.c:1583 gammu/misc.c:1584 gammu/misc.c:1605
 msgid "IP address"
-msgstr "IP address"
+msgstr "Alamat IP"
 
 #: gammu/misc.c:1549 gammu/misc.c:1551 gammu/misc.c:1595 gammu/misc.c:1597
 msgid "Login type"
