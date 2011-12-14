@@ -3321,7 +3321,7 @@ msgstr "data"
 
 #: gammu/misc.c:2431
 msgid "data & fax & voice"
-msgstr ""
+msgstr "data & faks & suara"
 
 #: gammu/misc.c:2439
 msgid "Response:"
