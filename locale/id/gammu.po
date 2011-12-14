@@ -3650,9 +3650,8 @@ msgid "Home mobile number"
 msgstr "Nomor ponsel rumah"
 
 #: helper/memory-display.c:144
-#, fuzzy
 msgid "Work mobile number"
-msgstr "Nomor ponsel"
+msgstr "Nomor ponsel kerja"
 
 #: helper/memory-display.c:155
 #, fuzzy
