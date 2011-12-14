@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-13 14:46+0100\n"
-"PO-Revision-Date: 2011-12-14 13:56+0200\n"
+"PO-Revision-Date: 2011-12-14 13:58+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -135,7 +135,7 @@ msgstr ""
 #: docs/manual/config/index.rst:37 docs/manual/smsd/config.rst:14
 #: docs/manual/formats/smsbackup.rst:10 docs/manual/formats/backup.rst:9
 msgid "This file use ini file syntax, see :ref:`ini`."
-msgstr ""
+msgstr "File ini menggunakan sintak file, lihat :ref:`ini`."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:43
