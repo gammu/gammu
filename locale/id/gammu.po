@@ -3727,7 +3727,7 @@ msgstr "Nama belakang"
 
 #: helper/memory-display.c:219
 msgid "First name"
-msgstr ""
+msgstr "Nama depan"
 
 #: helper/memory-display.c:220
 #, fuzzy
