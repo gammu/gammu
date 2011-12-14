@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-12 09:47+0100\n"
-"PO-Revision-Date: 2011-12-14 03:28+0200\n"
+"PO-Revision-Date: 2011-12-14 04:59+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1900,7 +1900,7 @@ msgstr "Spesifik Nokia"
 
 #: gammu/gammu.c:720
 msgid "Siemens specific"
-msgstr "Spesifik Siemens"
+msgstr "Spesifikasi Siemens"
 
 #: gammu/gammu.c:723
 msgid "WAP settings and bookmarks"
