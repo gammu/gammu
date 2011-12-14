@@ -641,7 +641,7 @@ msgstr "Pelatihan/Permainan Musim Dingin"
 
 #: gammu/calendar.c:110
 msgid "unknown type!"
-msgstr "Tipe tidak diketahui!"
+msgstr "tipe tidak dikenal!"
 
 #: gammu/calendar.c:156
 msgid "Start"
