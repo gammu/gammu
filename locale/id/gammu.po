@@ -3015,7 +3015,7 @@ msgstr "Hanya dibaca"
 
 #: gammu/misc.c:1755
 msgid "Startup logo"
-msgstr "logo startup"
+msgstr "Logo startup"
 
 #: gammu/misc.c:1756
 msgid "Operator logo"
