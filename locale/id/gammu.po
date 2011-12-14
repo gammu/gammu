@@ -4275,7 +4275,7 @@ msgstr "File Siemens"
 
 #: helper/message-display.c:329
 msgid "8 bit SMS, cannot be displayed here"
-msgstr ""
+msgstr "SMS 8 bit, tidak dapat ditampilkan di sini"
 
 #: helper/message-display.c:336
 #, c-format
