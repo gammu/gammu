@@ -336,7 +336,7 @@ msgstr "Untuk koneksi IrDA gunakan salah satunya:"
 #. type: Plain text
 #: docs/manual/config/index.rst:83
 msgid "``irdaphonet``"
-msgstr ""
+msgstr "``irdaphonet``"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:84 docs/manual/config/index.rst:95
