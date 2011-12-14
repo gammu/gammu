@@ -3584,8 +3584,7 @@ msgstr[0] "%d minggu"
 #, c-format
 msgid "%d year"
 msgid_plural "%d years"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d tahun"
 
 #: helper/memory-display.c:30
 msgid "Call length"
