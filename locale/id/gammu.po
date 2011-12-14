@@ -2945,7 +2945,7 @@ msgstr "Otomatis"
 
 #: gammu/misc.c:1574 gammu/misc.c:1606
 msgid "User name"
-msgstr "nama user"
+msgstr "Nama pengguna"
 
 #: gammu/misc.c:1575 gammu/misc.c:1607 gammu/misc.c:1634 gammu/misc.c:1684
 msgid "Password"
