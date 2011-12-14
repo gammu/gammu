@@ -777,7 +777,7 @@ msgstr "Umur"
 
 #: gammu/calendar.c:392
 msgid "Date and time not set in phone"
-msgstr "tanggal dan waktu tidak diatur dalam telepon"
+msgstr "Tanggal dan waktu tidak diatur dalam telepon"
 
 #: gammu/calendar.c:395
 #, c-format
