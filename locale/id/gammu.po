@@ -2048,10 +2048,10 @@ msgid "No configuration read, using builtin defaults!"
 msgstr "Tidak ada pembacaan konfigurasi, menggunakan konfigurasi bawaan!"
 
 #: gammu/gammu.c:1202
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
-msgstr "Versi libGammu.so (%s) berbeda dengan versi Gammu (%s)\n"
+msgstr "Versi libGammu.so (%s) yang diinstalasi berbeda dengan versi Gammu (%s)\n"
 
 #: gammu/memory.c:80
 msgid ""
