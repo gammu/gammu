@@ -3759,7 +3759,7 @@ msgstr "Titel jabatan"
 
 #: helper/memory-display.c:227
 msgid "Street address"
-msgstr ""
+msgstr "Alamat"
 
 #: helper/memory-display.c:228
 msgid "City"
