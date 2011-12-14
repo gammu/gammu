@@ -3730,9 +3730,8 @@ msgid "First name"
 msgstr "Nama depan"
 
 #: helper/memory-display.c:220
-#, fuzzy
 msgid "Second name"
-msgstr "Detik proxy"
+msgstr "Nama kedua"
 
 #: helper/memory-display.c:221
 msgid "Formal name"
