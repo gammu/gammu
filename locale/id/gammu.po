@@ -3900,7 +3900,7 @@ msgstr "Anda harus memberikan jumlah frame EMS antara 1 dan 4 (\"%s\")\n"
 #: helper/message-cmdline.c:1185 helper/message-cmdline.c:1202
 #, c-format
 msgid "Can't open file \"%s\"\n"
-msgstr ""
+msgstr "Tidak dapat membuka file \"%s\"\n"
 
 #: helper/message-cmdline.c:1251
 #, c-format
