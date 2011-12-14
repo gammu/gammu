@@ -4046,7 +4046,7 @@ msgstr "Eror permanen,"
 
 #: helper/message-display.c:181
 msgid "SM received by the SME"
-msgstr ""
+msgstr "SM diterima oleh SME"
 
 #: helper/message-display.c:182
 msgid ""
