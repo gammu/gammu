@@ -3654,9 +3654,8 @@ msgid "Work mobile number"
 msgstr "Nomor ponsel kerja"
 
 #: helper/memory-display.c:155
-#, fuzzy
 msgid "Home fax number"
-msgstr "Nomor rumah"
+msgstr "Nomor faks rumah"
 
 #: helper/memory-display.c:158
 #, fuzzy
