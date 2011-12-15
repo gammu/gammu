@@ -1096,6 +1096,8 @@ msgid ""
 "``utf8`` for UTF-8). This should not be needed, Gammu detects it according "
 "to your locales."
 msgstr ""
+"Memaksakan menggunakan codepage yang dispesifikasikan (sebagai contoh "
+"``1250`` akan mengarahkan CP-1250 atau ``utf8`` untuk UTF-8)."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:280
