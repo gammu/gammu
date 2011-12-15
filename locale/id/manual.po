@@ -1466,7 +1466,7 @@ msgstr "block:\n"
 #: docs/manual/protocol/n6110.rst:54
 #, no-wrap
 msgid "data call (non digital lines):\n"
-msgstr ""
+msgstr "data call (non digital lines):\n"
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:56
