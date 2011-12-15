@@ -1124,7 +1124,7 @@ msgstr "Opsi lainnya"
 #. type: Plain text
 #: docs/manual/config/index.rst:289
 msgid "DataPath"
-msgstr ""
+msgstr "DataPath"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:294
