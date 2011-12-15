@@ -1661,7 +1661,7 @@ msgstr "untuk menjawab panggilan:"
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:100
 msgid "1.send \"Answer call part 1\" 2.send \"Answer call part 2\""
-msgstr ""
+msgstr "1.kirim \"Answer call part 1\" 2.kirim \"Answer call part 2\""
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:102
