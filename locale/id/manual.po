@@ -1111,6 +1111,9 @@ msgid ""
 "``LANG/LC_MESSAGES/gammu.mo``). If gammu is properly installed it should "
 "find these files automatically."
 msgstr ""
+"Lokasi path dari direktori yang berisi file lokalisasi (direktori harus "
+"berisi ``LANG/LC_MESSAGES/gammu.mo``). Bila gammu tidak diinstalasikan "
+"secara benar maka akan diarahkan secara otomatis untuk menemukan file ini."
 
 #. type: Title +
 #: docs/manual/config/index.rst:286
