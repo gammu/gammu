@@ -887,6 +887,12 @@ msgid ""
 "need additional privileges to use locking (eg. you need to be member of uucp "
 "group)."
 msgstr ""
+"Pada sistem Posix, anda mungkin harus mengunci perangkat serial saat dipakai "
+"dengan menggunakan UUCP-style lock files. Mengaktifkan opsi ini (atur "
+"menjadi ya) akan membuat Gammu menghormati penguncian ini dan membuatkannya "
+"dalam startup. Dalam kebanyakan distribusi anda akan membutuhkan tambahan "
+"kewenangan untuk melakukan proses penguncian (contoh anda mungkin terlebih "
+"dulu harus menjadi anggota dari grup uucp)."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:212
