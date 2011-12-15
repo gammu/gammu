@@ -1530,7 +1530,7 @@ msgid ""
 "0x03: on\n"
 "0x02: off\n"
 msgstr ""
-"0x01: preset (depends on network)\n"
+"0x01: preset (tergantung jaringan)\n"
 "0x03: on\n"
 "0x02: off\n"
 
