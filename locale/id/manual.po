@@ -1631,7 +1631,7 @@ msgstr "1.kirim \"Make call\" untuk non digital lines"
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:93
 msgid "2.send \"Sent after issuing data call (non digital lines)\""
-msgstr ""
+msgstr "2.kirim \"Sent after issuing data call (non digital lines)\""
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:94
