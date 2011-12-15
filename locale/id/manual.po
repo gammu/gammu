@@ -1018,7 +1018,7 @@ msgstr "``textalldate``"
 #. type: Plain text
 #: docs/manual/config/index.rst:252
 msgid "all possible info in text format, with time stamp"
-msgstr "semua info yang memungkinkan dalam format teks, dengan tambahan waktu"
+msgstr "semua info yang memungkinkan dalam format teks, dengan data waktu"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:253
