@@ -836,7 +836,7 @@ msgstr "``obexfs``"
 #. type: Plain text
 #: docs/manual/config/index.rst:196
 msgid "force using of file browsing service (file system support)"
-msgstr "memaksakan menggunakan layanan browsing file (file system support)"
+msgstr "memaksakan menggunakan layanan browsing file (mendukung file system)"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:197
