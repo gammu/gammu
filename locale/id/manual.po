@@ -1444,7 +1444,7 @@ msgstr "s Make call  { 0x0001, \"number\", type, block }\n"
 #: docs/manual/protocol/n6110.rst:50
 #, no-wrap
 msgid "where type:\n"
-msgstr ""
+msgstr "where type:\n"
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:52
