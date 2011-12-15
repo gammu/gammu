@@ -1698,6 +1698,9 @@ msgid ""
 "0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }\n"
 "for disable cell broadcast ?\n"
 msgstr ""
+"for enable cell broadcast ?\n"
+"0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }\n"
+"for disable cell broadcast ?\n"
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:116
