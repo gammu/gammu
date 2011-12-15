@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-13 14:46+0100\n"
-"PO-Revision-Date: 2011-12-15 10:58+0200\n"
+"PO-Revision-Date: 2011-12-15 10:59+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1028,7 +1028,7 @@ msgstr "``errors``"
 #. type: Plain text
 #: docs/manual/config/index.rst:254
 msgid "errors in text format"
-msgstr ""
+msgstr "eror pada format teks"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:255
