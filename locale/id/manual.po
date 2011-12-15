@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-13 14:46+0100\n"
-"PO-Revision-Date: 2011-12-15 18:39+0200\n"
+"PO-Revision-Date: 2011-12-15 18:40+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1571,7 +1571,7 @@ msgstr ""
 #: docs/manual/protocol/n6110.rst:81
 #, no-wrap
 msgid "0x07,0xa3,0xb8,0x81,0x20,0x15,0x63,0x80 }\n"
-msgstr ""
+msgstr "0x07,0xa3,0xb8,0x81,0x20,0x15,0x63,0x80 }\n"
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:82
