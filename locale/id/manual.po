@@ -988,7 +988,7 @@ msgstr "``nothing``"
 #. type: Plain text
 #: docs/manual/config/index.rst:246
 msgid "no debug level"
-msgstr ""
+msgstr "tidak ada level debug"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:247
