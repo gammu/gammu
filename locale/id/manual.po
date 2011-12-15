@@ -764,8 +764,8 @@ msgid ""
 "ip l s dev irda0 up          # Enables irda0 device\n"
 "sysctl net.irda.discovery=1  # Enables device discovery on IrDA\n"
 msgstr ""
-"ip l s dev irda0 up  # Mengaktifkan perangkat irda0\n"
-"sysctl net.irda.discovery=1  # Mengaktifkan discovery perangkat IrDA\n"
+"ip l s dev irda0 up   # Mengaktifkan perangkat irda0\n"
+"sysctl net.irda.discovery=1   # Mengaktifkan discovery perangkat IrDA\n"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:171
