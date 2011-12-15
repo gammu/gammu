@@ -1520,7 +1520,7 @@ msgstr "where:\n"
 #: docs/manual/protocol/n6110.rst:64
 #, no-wrap
 msgid "sendnum (own number sending):\n"
-msgstr ""
+msgstr "sendnum (pengiriman nomor sendiri):\n"
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:67
