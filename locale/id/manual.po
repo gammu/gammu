@@ -1641,7 +1641,7 @@ msgstr "untuk membuat data panggilan (digital lines):"
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:95
 msgid "1.send \"Answer call part 1\""
-msgstr ""
+msgstr "1.kirim \"Answer call part 1\""
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:96
