@@ -1248,6 +1248,10 @@ msgid ""
 "parameter). Configuration for phones on three serial ports would look like "
 "following:"
 msgstr ""
+"Gammu dapat dikonfigurasi untuk multi telepon (namun hanya satu koneksi saja "
+"yang digunakan dalam satu waktu, anda dapat memilih salah satunya dengan "
+":option:`gammu -s` parameter). Konfigurasi untuk telepon pada tiga port "
+"serial akan tampak seperti berikut:"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:350
