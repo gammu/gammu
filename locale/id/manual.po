@@ -1271,7 +1271,7 @@ msgstr "[gammmu2] device = /dev/ttyS2 connection = at"
 #. type: Plain text
 #: docs/manual/config/index.rst:360
 msgid "_Fully documented example:"
-msgstr ""
+msgstr "_Fully documented example:"
 
 #. type: Title +
 #: docs/manual/config/index.rst:362
