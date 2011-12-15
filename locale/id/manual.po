@@ -1621,7 +1621,7 @@ msgstr "Catatan:"
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:91
 msgid "to make data call (non digital lines):"
-msgstr ""
+msgstr "untuk membuat data panggilan (non digital lines):"
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:92
