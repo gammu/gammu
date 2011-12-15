@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-13 14:46+0100\n"
-"PO-Revision-Date: 2011-12-15 11:47+0200\n"
+"PO-Revision-Date: 2011-12-15 11:48+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1227,7 +1227,7 @@ msgid ""
 "channel to use channel 42:"
 msgstr ""
 "Konfigurasi Gammu untuk telepon yang membutuhkan setelan manual pada saluran "
-"Bluetooth untuk  menggunakan saluran 42:"
+"Bluetooth untuk menggunakan saluran 42:"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:336
