@@ -841,7 +841,7 @@ msgstr "memaksakan menggunakan layanan browsing file (file system support)"
 #. type: Plain text
 #: docs/manual/config/index.rst:197
 msgid "``obexirmc``"
-msgstr ""
+msgstr "``obexirmc``"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:198
