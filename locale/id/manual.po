@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-13 14:46+0100\n"
-"PO-Revision-Date: 2011-12-15 05:31+0200\n"
+"PO-Revision-Date: 2011-12-15 05:44+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -641,6 +641,9 @@ msgid ""
 "If IrDA does not work on Linux, you might need to bring up the interface and "
 "enable discovery (you need to run these commands as root):"
 msgstr ""
+"Bila IrDA tidak dapat berjalan pada Linux, anda mungkin perlu untuk membuka "
+"antarmukanya dan mengaktifkan proses discovery (anda perlu untuk menjalankan "
+"perintah-perintah ini pada root):"
 
 #. type: Labeled list
 #: docs/manual/config/index.rst:161 docs/manual/config/index.rst:172
