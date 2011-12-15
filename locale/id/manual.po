@@ -871,7 +871,7 @@ msgstr "``mobex``"
 #. type: Plain text
 #: docs/manual/config/index.rst:202
 msgid "m-obex service for Samsung phones"
-msgstr ""
+msgstr "layanan m-obex untuk telepon Samsung"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:204
