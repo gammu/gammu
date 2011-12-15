@@ -1266,7 +1266,7 @@ msgstr "[gammmu1] device = /dev/ttyS1 connection = at"
 #. type: Plain text
 #: docs/manual/config/index.rst:358
 msgid "[gammmu2] device = /dev/ttyS2 connection = at"
-msgstr ""
+msgstr "[gammmu2] device = /dev/ttyS2 connection = at"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:360
