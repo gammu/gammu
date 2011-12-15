@@ -1134,6 +1134,11 @@ msgid ""
 "systems). Currently it is used only for searching files to upload to phone "
 "using :option:`gammu install`."
 msgstr ""
+"Path tambahan sebagai lokasi pencarian file-file data. Path yang baku "
+"dikonfigurasi saat proses kompilasi (pada sistem Unix bakunya adalah "
+"``/usr/share/data/gammu``). Penggunaan saat ini hanya untuk pencarian file-"
+"file yang akan diunggah ke telepon dengan menggunakan opsi :option:`gammu "
+"install`."
 
 #. type: Title =
 #: docs/manual/config/index.rst:296 docs/manual/smsd/tables.rst:387
