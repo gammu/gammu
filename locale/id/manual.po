@@ -1666,7 +1666,7 @@ msgstr "1.kirim \"Answer call part 1\" 2.kirim \"Answer call part 2\""
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:102
 msgid "0x02: SMS handling"
-msgstr ""
+msgstr "0x02: SMS handling"
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:110
