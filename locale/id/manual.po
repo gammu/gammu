@@ -1453,6 +1453,8 @@ msgid ""
 "0x01 - data call\n"
 "0x05 - voice call\n"
 msgstr ""
+"0x01 - data call\n"
+"0x05 - voice call\n"
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:53
