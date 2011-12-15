@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-13 14:46+0100\n"
-"PO-Revision-Date: 2011-12-15 11:48+0200\n"
+"PO-Revision-Date: 2011-12-15 11:49+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1395,7 +1395,7 @@ msgstr "0x00: Monitoring values"
 #: docs/manual/protocol/n6110.rst:42
 #, no-wrap
 msgid "r monitoring value      {+0x01, 0x01, block... }\n"
-msgstr "r monitoring value  {+0x01, 0x01, block... }\n"
+msgstr "r monitoring value   {+0x01, 0x01, block... }\n"
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:43
