@@ -908,7 +908,7 @@ msgstr "Opsi koneksi"
 #. type: Plain text
 #: docs/manual/config/index.rst:217
 msgid "SynchronizeTime"
-msgstr ""
+msgstr "SynchronizeTime"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:219
