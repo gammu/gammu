@@ -1408,7 +1408,7 @@ msgstr "where block: 0x5e, 0x05, 0x7a(?), 0xd0(?), 0x85(?), 0x02, percentHI, "
 #: docs/manual/protocol/n6110.rst:44
 #, no-wrap
 msgid "Battery percent level\n"
-msgstr ""
+msgstr "Persentase level baterai\n"
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:45
