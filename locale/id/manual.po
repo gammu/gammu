@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-13 14:46+0100\n"
-"PO-Revision-Date: 2011-12-15 05:58+0200\n"
+"PO-Revision-Date: 2011-12-15 05:59+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -813,6 +813,9 @@ msgid ""
 "Do not use this parameter unless really needed! The only use case for this "
 "is when Gammu does not know your phone and misdetects it's features."
 msgstr ""
+"Jangan gunakan paramater ini hingga benar-benar diperlukan! Hanya gunakan "
+"saat Gammu tidak mengenali telepon anda dan salah deteksi atas fitur-"
+"fiturnya."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:193
