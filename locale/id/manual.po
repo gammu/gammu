@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-13 14:46+0100\n"
-"PO-Revision-Date: 2011-12-15 11:01+0200\n"
+"PO-Revision-Date: 2011-12-15 11:02+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1056,6 +1056,8 @@ msgid ""
 "For debugging use either ``textalldate`` or ``textall``, it contains all "
 "needed information to diagnose problems."
 msgstr ""
+"Untuk debugging gunakan ``textalldate`` or ``textall``, yang mengandung "
+"semua informasi yang dibutuhkan untuk diagnosa masalah."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:263
