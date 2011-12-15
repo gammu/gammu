@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-13 14:46+0100\n"
-"PO-Revision-Date: 2011-12-15 05:59+0200\n"
+"PO-Revision-Date: 2011-12-15 08:02+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -824,6 +824,9 @@ msgid ""
 "connection instead of letting Gammu try the best suited for selected "
 "operation:"
 msgstr ""
+"Kondisi khusus untuk menggunakan model adalah dengan memaksakan tipe khusus "
+"koneksi OBEX daripada membiarkan Gammu mencoba yang terbaik menurutnya untuk "
+"operasi terpilih:"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:195
