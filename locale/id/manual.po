@@ -1482,7 +1482,7 @@ msgstr ""
 #: docs/manual/protocol/n6110.rst:57
 #, no-wrap
 msgid "data call (digital lines):\n"
-msgstr ""
+msgstr "data call (digital lines):\n"
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:60
