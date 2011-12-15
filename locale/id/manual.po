@@ -1401,7 +1401,8 @@ msgstr "r monitoring value  {+0x01, 0x01, block... }\n"
 #: docs/manual/protocol/n6110.rst:43
 #, no-wrap
 msgid "where block: 0x5e, 0x05, 0x7a(?), 0xd0(?), 0x85(?), 0x02, percentHI, percentLO\n"
-msgstr ""
+msgstr "where block: 0x5e, 0x05, 0x7a(?), 0xd0(?), 0x85(?), 0x02, percentHI, "
+"percentLO\n"
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:44
