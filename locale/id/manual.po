@@ -1226,6 +1226,8 @@ msgid ""
 "Gammu configuration for phone which needs to manually adjust Bluetooth "
 "channel to use channel 42:"
 msgstr ""
+"Konfigurasi Gammu untuk telepon yang membutuhkan setelan manual pada saluran "
+"Bluetooth untuk  menggunakan saluran 42:"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:336
