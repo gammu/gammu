@@ -1296,7 +1296,7 @@ msgstr "../../../docs/config/gammurc"
 #. type: Plain text
 #: docs/manual/config/index.rst:368
 msgid ":language: ini"
-msgstr ""
+msgstr ":language: ini"
 
 #. type: Title =
 #: docs/manual/protocol/n6110.rst:2
