@@ -1048,7 +1048,7 @@ msgstr "``binary``"
 #. type: Plain text
 #: docs/manual/config/index.rst:258
 msgid "transmission dump in binary format"
-msgstr ""
+msgstr "pengiriman sampah dalam format binary"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:261
