@@ -1072,6 +1072,11 @@ msgid ""
 "for possible values (all :c:type:`GSM_Feature` values without leading ``F_`` "
 "prefix). Please report correct values to Gammu authors."
 msgstr ""
+"Fitur buatan untuk telepon. Ini bisa digunakan sebagai override saat "
+"kodifikasi nilai-nilai dalam ``common/gsmphones.c`` bermasalah atau hilang. "
+"Lihat ``include/gammu-info.h`` untuk kemungkinan nilai-nilai (semua nilai "
+":c:type:`GSM_Feature` tanpa awalan ``F_``). Laporkan temuan nilai-nilai yang "
+"cocok ke pembuat program Gammu."
 
 #. type: Title +
 #: docs/manual/config/index.rst:271
