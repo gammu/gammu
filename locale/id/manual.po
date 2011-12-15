@@ -977,6 +977,8 @@ msgid ""
 "Determines what all will be logged to :config:option:`LogFile`. Possible "
 "values are:"
 msgstr ""
+"Mencerminkan apa saja yang akan dicatat ke :config:option:`LogFile`. "
+"Kemungkinan nilai-nilainya adalah:"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:245
