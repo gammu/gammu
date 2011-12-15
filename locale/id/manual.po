@@ -1438,7 +1438,7 @@ msgstr "0x01: Informasi panggilan\n"
 #: docs/manual/protocol/n6110.rst:49
 #, no-wrap
 msgid "s Make call             { 0x0001, \"number\", type, block }\n"
-msgstr "s Make call { 0x0001, \"number\", type, block }\n"
+msgstr "s Make call  { 0x0001, \"number\", type, block }\n"
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:50
