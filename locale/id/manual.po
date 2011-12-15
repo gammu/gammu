@@ -1157,6 +1157,8 @@ msgid ""
 "There is more complete example available in Gammu documentation, see :ref:"
 "`gammu`."
 msgstr ""
+"Terdapat contoh yang lebih lengkap tersedia di dokumentasi Gammu, see "
+":ref:`gammu`."
 
 #. type: Title +
 #: docs/manual/config/index.rst:301
