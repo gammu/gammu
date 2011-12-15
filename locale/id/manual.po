@@ -1420,7 +1420,7 @@ msgstr "0x5e, 0x0c, 0x52(?), 0x4b(?), 0x6f(?), 0x02, voltageHI, voltageLO\n"
 #: docs/manual/protocol/n6110.rst:46
 #, no-wrap
 msgid "Battery standby voltage\n"
-msgstr ""
+msgstr "Voltase standby baterai\n"
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:47
