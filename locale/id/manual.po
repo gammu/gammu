@@ -1008,7 +1008,7 @@ msgstr "``textall``"
 #. type: Plain text
 #: docs/manual/config/index.rst:250
 msgid "all possible info in text format"
-msgstr ""
+msgstr "semua info yang memungkinkan dalam format teks"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:251
