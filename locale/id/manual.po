@@ -1198,6 +1198,8 @@ msgid ""
 "Gammu configuration for Sony-Ericsson phone (or any other AT compatible "
 "phone) connected using USB cable:"
 msgstr ""
+"Konfigurasi Gammu untuk telepon Sony-Ericsson (atau telepon lainnya yang "
+"kompatibel dengan AT) dengan koneksi menggunakan kabel USB:"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:319
