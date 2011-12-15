@@ -1395,7 +1395,7 @@ msgstr "0x00: Monitoring values"
 #: docs/manual/protocol/n6110.rst:42
 #, no-wrap
 msgid "r monitoring value      {+0x01, 0x01, block... }\n"
-msgstr ""
+msgstr "r monitoring value  {+0x01, 0x01, block... }\n"
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:43
