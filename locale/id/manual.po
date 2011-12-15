@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.30.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-13 14:46+0100\n"
-"PO-Revision-Date: 2011-12-15 11:37+0200\n"
+"PO-Revision-Date: 2011-12-15 11:39+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1368,6 +1368,8 @@ msgid ""
 "Document describing frames used in GSM/PCN Nokia 6110 and derivatives (Nokia "
 "6130, 6150, 6190, 5110, 5130, 5150, 5190, 3210, 3310)"
 msgstr ""
+"Dokumen yang menjelaskan frame-frame yang digunakan pada GSM/PCN Nokia 6110 "
+"dan setaranya (Nokia 6130, 6150, 6190, 5110, 5130, 5150, 5190, 3210, 3310)"
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:37
