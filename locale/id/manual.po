@@ -915,6 +915,8 @@ msgstr "SynchronizeTime"
 msgid ""
 "If you want to set time from computer to phone during starting connection."
 msgstr ""
+"Bila anda ingin mengatur waktu dari komputer ke telepon selama memulai "
+"koneksi."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:221
