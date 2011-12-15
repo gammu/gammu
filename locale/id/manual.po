@@ -998,7 +998,7 @@ msgstr "``text``"
 #. type: Plain text
 #: docs/manual/config/index.rst:248
 msgid "transmission dump in text format"
-msgstr ""
+msgstr "pengiriman sampah dalam format teks"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:249
