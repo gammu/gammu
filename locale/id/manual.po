@@ -1277,7 +1277,7 @@ msgstr "_Fully documented example:"
 #: docs/manual/config/index.rst:362
 #, no-wrap
 msgid "Fully documented example"
-msgstr ""
+msgstr "Contoh dokumentasi lengkap"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:365
