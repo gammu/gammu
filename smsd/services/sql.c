@@ -240,16 +240,12 @@ static SQL_Error SMSDSQL_Query(GSM_SMSDConfig * Config, const char *query, SQL_r
 		/* We will try to reconnect */
 		SMSD_Log(DEBUG_INFO, Config, "reconnecting to database!");
 		error = SQL_TIMEOUT;
-		while (error != SQL_OK && attempts <= Config->backend_retries) {
+		while (error != SQL_OK && attempts < Config->backend_retries) {
 			SMSD_Log(DEBUG_INFO, Config, "Reconnecting after %d seconds...", attempts * attempts);
 			sleep(attempts * attempts);
 			db->Free(Config);
 			error = db->Connect(Config);
 			attempts++;
-		}
-		/* Give it chance to do the query again */
-		if (error == SQL_OK) {
-			attempts--;
 		}
 	}
 	return error;
