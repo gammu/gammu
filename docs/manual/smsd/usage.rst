@@ -19,7 +19,7 @@ of them support :ref:`gammu-smsd-inject`, which can be used to construct
 the message, or you can just insert message manually to the backend storage.
 
 Alternatively you can use :c:func:`SMSD_InjectSMS` (from C) or using
-:meth:`gammu.smsd.SMSD.GetStatus` (from Python).
+:meth:`gammu.smsd.SMSD.InjectSMS` (from Python).
 
 Notification about Received Messages
 ------------------------------------
