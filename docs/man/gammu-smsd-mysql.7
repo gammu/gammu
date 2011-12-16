@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSD-MYSQL" "7" "December 13, 2011" "1.30.93" "Gammu"
+.TH "GAMMU-SMSD-MYSQL" "7" "December 16, 2011" "1.30.93" "Gammu"
 .SH NAME
 gammu-smsd-mysql \- gammu-smsd(1) backend using MySQL database server as a message storage
 .
@@ -30,6 +30,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 ..
 .\" Man page generated from reStructeredText.
 .
+.SH DESCRIPTION
 .sp
 MYSQL backend stores all data in a \fI\%MySQL\fP database server, which parameters are
 defined by configuration (see \fIgammu\-smsdrc\fP for description of configuration
@@ -38,6 +39,25 @@ options).
 For tables description see \fIgammu\-smsd\-tables\fP.
 .sp
 This backend is based on \fIgammu\-smsd\-sql\fP.
+.SH CONFIGURATION
+.sp
+Before running \fIgammu\-smsd\fP you need to create necessary tables in the
+database, which is described bellow.
+.sp
+The configuration file then can look like:
+.sp
+.nf
+.ft C
+[smsd]
+service = sql
+driver = native_mysql
+host = localhost
+.ft P
+.fi
+.IP "See also"
+.sp
+\fIgammu\-smsdrc\fP
+.RE
 .SH PRIVILEGES
 .sp
 The user accessing the database does not need much privileges, the following
@@ -54,7 +74,7 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON \(gasmsd\(ga.* TO \(aqsmsd\(aq@\(aqlocal
 For creating the SQL tables you need more privileges, especially for
 creating triggers, which are used for some functionality.
 .RE
-.SH EXAMPLE
+.SH CREATING TABLES
 .sp
 SQL script for creating tables in MySQL database:
 .sp

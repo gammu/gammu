@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSD-PGSQL" "7" "December 13, 2011" "1.30.93" "Gammu"
+.TH "GAMMU-SMSD-PGSQL" "7" "December 16, 2011" "1.30.93" "Gammu"
 .SH NAME
 gammu-smsd-pgsql \- gammu-smsd(1) backend using PostgreSQL database server as a message storage
 .
@@ -30,6 +30,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 ..
 .\" Man page generated from reStructeredText.
 .
+.SH DESCRIPTION
 .sp
 PGSQL backend stores all data in a \fI\%PostgreSQL\fP database server, which
 parameters are defined by configuration (see \fIgammu\-smsdrc\fP for description of
@@ -38,7 +39,26 @@ configuration options).
 For tables description see \fIgammu\-smsd\-tables\fP.
 .sp
 This backend is based on \fIgammu\-smsd\-sql\fP.
-.SH EXAMPLE
+.SH CONFIGURATION
+.sp
+Before running \fIgammu\-smsd\fP you need to create necessary tables in the
+database, which is described below.
+.sp
+The configuration file then can look like:
+.sp
+.nf
+.ft C
+[smsd]
+service = sql
+driver = native_pgsql
+host = localhost
+.ft P
+.fi
+.IP "See also"
+.sp
+\fIgammu\-smsdrc\fP
+.RE
+.SH CREATING TABLES
 .sp
 SQL script for creating tables in PostgreSQL database:
 .sp

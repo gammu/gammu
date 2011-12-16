@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSD-NULL" "7" "December 13, 2011" "1.30.93" "Gammu"
+.TH "GAMMU-SMSD-NULL" "7" "December 16, 2011" "1.30.93" "Gammu"
 .SH NAME
 gammu-smsd-null \- gammu-smsd(1) backend not storing messages
 .
@@ -30,10 +30,26 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 ..
 .\" Man page generated from reStructeredText.
 .
+.SH DESCRIPTION
 .sp
 NULL backend does not store data at all. It could be useful in case you
 don\(aqt want to store messages at all and you want to process then in
 \fBRunOnReceive\fP handler.
+.SH CONFIGURATION
+.sp
+The configuration file then can look like:
+.sp
+.nf
+.ft C
+[smsd]
+Service = null
+RunOnReceive = /usr/local/bin/process\-sms
+.ft P
+.fi
+.IP "See also"
+.sp
+\fIgammu\-smsdrc\fP
+.RE
 .SH AUTHOR
 Michal Čihař <michal@cihar.com>
 .SH COPYRIGHT
