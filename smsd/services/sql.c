@@ -221,7 +221,7 @@ static SQL_Error SMSDSQL_Query(GSM_SMSDConfig * Config, const char *query, SQL_r
 	int attempts = 1;
 	struct GSM_SMSDdbobj *db = Config->db;
 
-	for (attempts = 1; attempts < Config->backend_retries; attempts++) {
+	for (attempts = 1; attempts <= Config->backend_retries; attempts++) {
 		SMSD_Log(DEBUG_SQL, Config, "Execute SQL: %s", query);
 		error = db->Query(Config, query, res);
 		if (error == SQL_OK) {
