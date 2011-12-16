@@ -248,6 +248,10 @@ static SQL_Error SMSDSQL_Query(GSM_SMSDConfig * Config, const char *query, SQL_r
 			error = db->Connect(Config);
 			attempts++;
 		}
+		/* Give it chance to do the query again */
+		if (error == SQL_OK) {
+			attempts--;
+		}
 	}
 	return error;
 }
