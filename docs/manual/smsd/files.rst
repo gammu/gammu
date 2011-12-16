@@ -3,11 +3,14 @@
 Files backend
 =============
 
+Description
+-----------
+
 FILES backend stores all data on a filesystem in folders defined by
 configuration (see :ref:`gammu-smsdrc` for description of configuration options).
 
 Receiving of messages
-+++++++++++++++++++++
+---------------------
 
 Received messages are stored in a folder defined by configuration. The
 filename will be ``IN<date>_<time>_<serial>_<sender>_<sequence>.<ext>``,
@@ -32,7 +35,7 @@ The content of the file is content of the message and the format is defined by
 configuration directive :config:option:`InboxFormat` (see :ref:`gammu-smsdrc`).
 
 Transmitting of messages
-++++++++++++++++++++++++
+------------------------
 
 Transmitted messages are read from a folder defined by configuration. The
 filename should be one of the following formats:

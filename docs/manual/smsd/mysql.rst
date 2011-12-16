@@ -3,6 +3,9 @@
 MySQL Backend
 =============
 
+Description
+-----------
+
 MYSQL backend stores all data in a `MySQL`_ database server, which parameters are
 defined by configuration (see :ref:`gammu-smsdrc` for description of configuration
 options).
@@ -10,6 +13,23 @@ options).
 For tables description see :ref:`gammu-smsd-tables`.
 
 This backend is based on :ref:`gammu-smsd-sql`.
+
+Configuration
+-------------
+
+Before running :ref:`gammu-smsd` you need to create necessary tables in the
+database, which is described bellow.
+
+The configuration file then can look like:
+
+.. code-block:: ini
+
+    [smsd]
+    service = sql
+    driver = native_mysql
+    host = localhost
+
+.. seealso:: :ref:`gammu-smsdrc`
 
 Privileges
 ----------
@@ -30,8 +50,8 @@ privleges should be enough:
 
 .. _MySQL: http://www.mysql.com/
 
-Example
--------
+Creating tables
+---------------
 
 SQL script for creating tables in MySQL database:
 

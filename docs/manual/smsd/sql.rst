@@ -3,6 +3,9 @@
 SQL Service
 ===========
 
+Description
+-----------
+
 SQL service stores all its data in database. It can use one of these SQL backends
 (configuration option :config:option:`Driver` in smsd section):
 

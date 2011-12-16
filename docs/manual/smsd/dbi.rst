@@ -3,6 +3,9 @@
 DBI Backend
 ===========
 
+Description
+-----------
+
 DBI backend stores all data in any database supported by `libdbi`_, which
 parameters are defined by configuration (see :ref:`gammu-smsdrc` for description of
 configuration options).
@@ -16,6 +19,24 @@ This backend is based on :ref:`gammu-smsd-sql`.
     The DBI driver is currently not supported on Windows because libdbi
     library does not support this platform.
 
+
+Configuration
+-------------
+
+Before running :ref:`gammu-smsd` you need to create necessary tables in the
+database. You can use examples given in database specific backends parts of
+this manual to do that.
+
+The configuration file then can look like:
+
+.. code-block:: ini
+
+    [smsd]
+    service = sql
+    driver = DBI_DRIVER
+    host = localhost
+
+.. seealso:: :ref:`gammu-smsdrc`
 
 Supported drivers
 -----------------
@@ -31,8 +52,8 @@ drivers for example include:
 .. _libdbi: http://libdbi.sourceforge.net/
 .. _libdbi-drivers: http://libdbi-drivers.sourceforge.net/
 
-Example
--------
+Creating tables
+---------------
 
 SQL script for creating tables in SQLite database:
 

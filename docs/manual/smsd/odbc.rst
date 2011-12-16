@@ -3,6 +3,9 @@
 ODBC Backend
 ============
 
+Description
+-----------
+
 .. versionadded:: 1.29.92
 
 ODBC backend stores all data in any database supported by `ODBC`_, which
@@ -33,6 +36,10 @@ Partially this can be configured using :config:option:`SQL`.
 Configuration
 -------------
 
+Before running :ref:`gammu-smsd` you need to create necessary tables in the
+database. You can use examples given in database specific backends parts of
+this manual to do that.
+
 You specify data source name (DSN) as :config:option:`Host` in
 :ref:`gammu-smsdrc`. The data source is configured depending on your platform.
 
@@ -56,3 +63,5 @@ Example configuration:
     sql = sql_variant_to_use
     user = username
     password = password
+
+.. seealso:: :ref:`gammu-smsdrc`
