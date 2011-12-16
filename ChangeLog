@@ -22,6 +22,9 @@ ChangeLog
 2011???? - 1.30.93
 
 [-] * Fixed compilation with latest libusb.
+[-] * Improved error handling in SQL backend of SMSD.
+[-] * SMSD documentation improvements.
+[-] * Indonesian translation updates.
     
 20111213 - 1.30.92
 
