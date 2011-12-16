@@ -1166,19 +1166,22 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 
 	Config->db = NULL;
 #ifdef HAVE_MYSQL_MYSQL_H
-	if (!strcasecmp(Config->driver, "native_mysql"))
+	if (!strcasecmp(Config->driver, "native_mysql")) {
 		Config->db = &SMSDMySQL;
+	}
 #endif
 #ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
-	if (!strcasecmp(Config->driver, "native_pgsql"))
+	if (!strcasecmp(Config->driver, "native_pgsql")) {
 		Config->db = &SMSDPgSQL;
+	}
 #endif
 #ifdef ODBC_FOUND
-	if (!strcasecmp(Config->driver, "odbc"))
+	if (!strcasecmp(Config->driver, "odbc")) {
 		Config->db = &SMSDODBC;
 		if (Config->sql == NULL) {
 			SMSD_Log(DEBUG_INFO, Config, "Using generic SQL for ODBC, this might fail. In such case please set SQL configuration option.");
 		}
+	}
 #endif
 	if (Config->db == NULL) {
 #ifdef LIBDBI_FOUND
