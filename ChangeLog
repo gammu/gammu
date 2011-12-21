@@ -19,6 +19,8 @@ the issue.
 ChangeLog
 =========
     
+2012???? - 1.31.90
+    
 20111221 - 1.31.0
 
 [-] * Fixed compilation with latest libusb.
