@@ -19,7 +19,7 @@ the issue.
 ChangeLog
 =========
     
-2011???? - 1.30.93
+20111221 - 1.31.0
 
 [-] * Fixed compilation with latest libusb.
 [-] * Improved error handling in SQL backend of SMSD.
