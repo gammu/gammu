@@ -103,6 +103,8 @@ int bluetooth_checkservicename(GSM_StateMachine *s, const char *name)
 
 	/* AT */
 	} else if (s->ConnectionType == GCT_BLUEAT) {
+		/* Nokia */
+		if (strstr(name, "Dial-Up Networking") != NULL) return 2;
 		/* Sony-Ericsson */
 		if (strstr(name, "Serial Port 1") != NULL) return 3;
 		if (strstr(name, "Serial Port") != NULL) return 2;
