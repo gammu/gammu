@@ -1391,6 +1391,21 @@ end:
 	return error;
 }
 
+int ATGEN_PrintReplyLines(GSM_StateMachine *s)
+{
+	int i = 0;
+	GSM_Phone_ATGENData 	*Priv 	= &s->Phone.Data.Priv.ATGEN;
+	GSM_Protocol_Message	*msg	= s->Phone.Data.RequestMsg;
+
+	/* Find number of lines */
+	while (Priv->Lines.numbers[i*2+1] != 0) {
+		/* FIXME: handle special chars correctly */
+		smprintf(s, "%i \"%s\"\n",i+1,GetLineString(msg->Buffer,&Priv->Lines,i+1));
+		i++;
+	}
+	return i;
+}
+
 GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 {
 	GSM_Phone_ATGENData 	*Priv 	= &s->Phone.Data.Priv.ATGEN;
@@ -1403,11 +1418,7 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 	SplitLines(msg->Buffer, msg->Length, &Priv->Lines, "\x0D\x0A", 2, "\"", 1, TRUE);
 
 	/* Find number of lines */
-	while (Priv->Lines.numbers[i*2+1] != 0) {
-		/* FIXME: handle special chars correctly */
-		smprintf(s, "%i \"%s\"\n",i+1,GetLineString(msg->Buffer,&Priv->Lines,i+1));
-		i++;
-	}
+	i = ATGEN_PrintReplyLines(s);
 
 	/* Check for duplicated command in response (bug#1069) */
 	if (i >= 2) {
@@ -1427,6 +1438,7 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 				/* Remove first line */
 				memmove(Priv->Lines.numbers, Priv->Lines.numbers + 2, (Priv->Lines.allocated - 2) * sizeof(int));
 				i--;
+				ATGEN_PrintReplyLines(s);
 			}
 		}
 		/* Free allocated memory */
