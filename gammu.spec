@@ -134,7 +134,7 @@ BuildRequires: unixODBC-devel
 BuildRequires: libgudev1-devel glib2-devel
 %else
 %if 0%{?mandriva_version}
-BuildRequires: libgudev-1.0-devel glib2-devel
+BuildRequires: libgudev1.0-devel glib2-devel
 %else
 BuildRequires: libgudev-1_0-devel glib2-devel
 %endif
