@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSD-DBI" "7" "December 21, 2011" "1.31.90" "Gammu"
+.TH "GAMMU-SMSD-DBI" "7" "January 06, 2012" "1.31.90" "Gammu"
 .SH NAME
 gammu-smsd-dbi \- gammu-smsd(1) backend using DBI abstraction layer to use any supported database as a message storage
 .
@@ -237,6 +237,14 @@ CREATE TRIGGER update_sentitems_time UPDATE ON sentitems
 You can find the script in \fBdocs/sql/sqlite.sql\fP as well. There are
 also scripts for other databases in same folder.
 .RE
+.SH UPGRADING TABLES
+.sp
+The easiest way to upgrade database structure is to backup old one and start
+with creating new one based on example above.
+.sp
+For upgrading existing database, you can use changes described in
+\fIsmsd\-tables\-history\fP and then manually update \fBVersion\fP field in
+\fBgammu\fP table.
 .SH AUTHOR
 Michal Čihař <michal@cihar.com>
 .SH COPYRIGHT

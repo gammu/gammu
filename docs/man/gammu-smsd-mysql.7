@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSD-MYSQL" "7" "December 21, 2011" "1.31.90" "Gammu"
+.TH "GAMMU-SMSD-MYSQL" "7" "January 06, 2012" "1.31.90" "Gammu"
 .SH NAME
 gammu-smsd-mysql \- gammu-smsd(1) backend using MySQL database server as a message storage
 .
@@ -368,6 +368,14 @@ DELIMITER ;
 .IP Note
 You can find the script in \fBdocs/sql/mysql.sql\fP as well.
 .RE
+.SH UPGRADING TABLES
+.sp
+The easiest way to upgrade database structure is to backup old one and start
+with creating new one based on example above.
+.sp
+For upgrading existing database, you can use changes described in
+\fIsmsd\-tables\-history\fP and then manually update \fBVersion\fP field in
+\fBgammu\fP table.
 .SH AUTHOR
 Michal Čihař <michal@cihar.com>
 .SH COPYRIGHT
