@@ -340,6 +340,10 @@ History of schema versions:
     Added ``SendBefore`` and ``SendAfter`` fields.
 
     .. versionchanged:: 1.29.90
+
+    Also PostgreSQL fields are now case sensitive (same as other backends).
+
+    .. versionchanged:: 1.29.93
 12
     the changes only affect MySQL structure changing default values for
     timestamps from ``0000-00-00 00:00:00`` to ``CURRENT_TIMESTAMP()`` by
