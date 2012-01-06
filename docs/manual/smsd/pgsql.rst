@@ -44,3 +44,13 @@ SQL script for creating tables in PostgreSQL database:
 .. note::
 
     You can find the script in :file:`docs/sql/pgsql.sql` as well.
+
+Upgrading tables
+----------------
+
+The easiest way to upgrade database structure is to backup old one and start
+with creating new one based on example above.
+
+For upgrading existing database, you can use changes described in
+:ref:`smsd-tables-history` and then manually update ``Version`` field in
+``gammu`` table.
