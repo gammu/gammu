@@ -334,6 +334,13 @@ Not used by SMSD currently, included only for application usage.
 History of database structure
 -----------------------------
 
+.. note::
+
+    Testing versions (see :ref:`versioning`) do not have to keep same table
+    structure as final releases. Bellow mentioned versions are for
+    informational purposes only, you should always use stable versions in
+    production environment.
+
 History of schema versions:
 
 13
