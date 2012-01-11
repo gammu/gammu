@@ -104,6 +104,7 @@ driver = odbc
 pc = @ODBC_DSN@
 user = @MYSQL_USER@
 password = @MYSQL_PASSWORD@
+sql = mysql
 EOT
         ;;
     null)
