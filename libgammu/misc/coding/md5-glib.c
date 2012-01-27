@@ -7,5 +7,8 @@
 
 void CalculateMD5(unsigned char *buffer, int length, char *checksum)
 {
-    strcpy(checksum, g_compute_checksum_for_data(G_CHECKSUM_MD5, buffer, length));
+    gchar *ret;
+    ret = g_compute_checksum_for_data(G_CHECKSUM_MD5, buffer, length);
+    strcpy(checksum, ret);
+    g_free(ret);
 }
