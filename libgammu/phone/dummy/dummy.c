@@ -1168,7 +1168,7 @@ GSM_Error DUMMY_GetFolderListing(GSM_StateMachine *s, GSM_File *File, gboolean s
 			closedir(Priv->dir[DUMMY_MAX_FS_DEPTH]);
 		}
 		path = DUMMY_GetFSFilePath(s, File->ID_FullName);
-		printf("listing %s\n", path);
+		smprintf(s, "listing %s\n", path);
 		strcpy(Priv->dirnames[DUMMY_MAX_FS_DEPTH], path);
 		Priv->dir[DUMMY_MAX_FS_DEPTH] = opendir(path);
 		free(path);

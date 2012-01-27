@@ -2747,13 +2747,13 @@ static GSM_Error N6510_ReplySaveSMSMessage(GSM_Protocol_Message *msg, GSM_StateM
 			smprintf(s, "Done OK\n");
 			break;
 		case 0x02:
-			printf("Incorrect location\n");
+			smprintf(s, "Incorrect location\n");
 			return ERR_INVALIDLOCATION;
 		case 0x03:
-			printf("Memory full (for example no empty space in SIM)\n");
+			smprintf(s, "Memory full (for example no empty space in SIM)\n");
 			return ERR_FULL;
 		case 0x05:
-			printf("Incorrect folder\n");
+			smprintf(s, "Incorrect folder\n");
 			return ERR_INVALIDLOCATION;
 		default:
 			smprintf(s, "ERROR: unknown reply on saving message %i\n",msg->Buffer[4]);
