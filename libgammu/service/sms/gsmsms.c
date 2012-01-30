@@ -767,6 +767,10 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, const unsi
 				break;
 			case SMS_Coding_8bit:
 				SMS->Length=buffer[pos] - SMS->UDH.Length;
+				if (SMS->Length < 0) {
+					smfprintf(di, "Invalid message length!\n");
+					return ERR_CORRUPTED;
+				}
 				memcpy(SMS->Text,buffer+(pos + 1+SMS->UDH.Length),SMS->Length);
 #ifdef DEBUG
 				smfprintf(di, "8 bit SMS, length %i\n",SMS->Length);
@@ -775,6 +779,10 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, const unsi
 				break;
 			case SMS_Coding_Unicode_No_Compression:
 				SMS->Length=(buffer[pos] - SMS->UDH.Length) / 2;
+				if (SMS->Length < 0) {
+					smfprintf(di, "Invalid message length!\n");
+					return ERR_CORRUPTED;
+				}
 				DecodeUnicodeSpecialNOKIAChars(SMS->Text,buffer+(pos + 1+SMS->UDH.Length), SMS->Length);
 #ifdef DEBUG
 				smfprintf(di, "Unicode SMS, length %i\n",SMS->Length);
