@@ -795,6 +795,11 @@ GSM_Error GSM_UnpackSemiOctetNumber(GSM_Debug_Info *di, unsigned char *retval, c
 		Buffer[0]='+';
 		DecodeBCD(Buffer+1,Number+*pos+2, length);
 		break;
+	case 0:
+		smfprintf(di, "Unknown number type!\n");
+		ret = ERR_UNKNOWN;
+		goto out;
+		break;
 	default:
 		DecodeBCD (Buffer, Number+*pos+2, length);
 		break;
