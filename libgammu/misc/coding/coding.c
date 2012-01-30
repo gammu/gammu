@@ -796,16 +796,6 @@ GSM_Error GSM_UnpackSemiOctetNumber(GSM_Debug_Info *di, unsigned char *retval, c
 		DecodeBCD(Buffer+1,Number+*pos+2, length);
 		break;
 	default:
-		smfprintf(di, "Default number %02x (%d %d %d %d|%d %d %d %d)\n",Number[*pos],
-				Number[*pos] & 0x80 ? 1 : 0,
-				Number[*pos] & 0x40 ? 1 : 0,
-				Number[*pos] & 0x20 ? 1 : 0,
-				Number[*pos] & 0x10 ? 1 : 0,
-				Number[*pos] & 0x08 ? 1 : 0,
-				Number[*pos] & 0x04 ? 1 : 0,
-				Number[*pos] & 0x02 ? 1 : 0,
-				Number[*pos] & 0x01 ? 1 : 0
-				);
 		DecodeBCD (Buffer, Number+*pos+2, length);
 		break;
 	}
