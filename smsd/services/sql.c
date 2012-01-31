@@ -29,6 +29,18 @@
 #include "../core.h"
 #include "../../helper/string.h"
 
+/**
+ * Returns name of the SQL dialect to use.
+ */
+const char *SMSDSQL_SQLName(GSM_SMSDConfig * Config)
+{
+	if (Config->sql != NULL) {
+		return Config->sql;
+	} else {
+		return Config->driver;
+	}
+}
+
 /* FIXME: I know this is broken, need to figure out better way */
 const char now_plus_odbc[] = "{fn CURRENT_TIMESTAMP()} + INTERVAL %d SECOND";
 const char now_plus_mysql[] = "(NOW() + INTERVAL %d SECOND) + 0";
@@ -46,11 +58,7 @@ static const char *SMSDSQL_NowPlus(GSM_SMSDConfig * Config, int seconds)
 	const char *driver_name;
 	static char result[100];
 
-	if (Config->sql != NULL) {
-		driver_name = Config->sql;
-	} else {
-		driver_name = Config->driver;
-	}
+	driver_name = SMSDSQL_SQLName(Config);
 
 	if (strcasecmp(driver_name, "mysql") == 0 || strcasecmp(driver_name, "native_mysql") == 0) {
 		sprintf(result, now_plus_mysql, seconds);
@@ -81,11 +89,7 @@ static const char *SMSDSQL_EscapeChar(GSM_SMSDConfig * Config)
 {
 	const char *driver_name;
 
-	if (Config->sql != NULL) {
-		driver_name = Config->sql;
-	} else {
-		driver_name = Config->driver;
-	}
+	driver_name = SMSDSQL_SQLName(Config);
 
 	if (strcasecmp(driver_name, "mysql") == 0 || strcasecmp(driver_name, "native_mysql") == 0) {
 		return escape_char_mysql;
@@ -110,11 +114,7 @@ static const char *SMSDSQL_TopClause(GSM_SMSDConfig * Config, const char *count)
 	const char *driver_name;
 	static char result[100];
 
-	if (Config->sql != NULL) {
-		driver_name = Config->sql;
-	} else {
-		driver_name = Config->driver;
-	}
+	driver_name = SMSDSQL_SQLName(Config);
 
 	if (strcasecmp(driver_name, "access") == 0) {
 		strcpy(result, top_clause_access);
@@ -134,11 +134,7 @@ static const char *SMSDSQL_LimitClause(GSM_SMSDConfig * Config, const char *coun
 	const char *driver_name;
 	static char result[100];
 
-	if (Config->sql != NULL) {
-		driver_name = Config->sql;
-	} else {
-		driver_name = Config->driver;
-	}
+	driver_name = SMSDSQL_SQLName(Config);
 
 	if (strcasecmp(driver_name, "access") == 0) {
 		return limit_clause_access;
@@ -169,11 +165,7 @@ static const char *SMSDSQL_CurrentTime(GSM_SMSDConfig * Config)
 {
 	const char *driver_name;
 
-	if (Config->sql != NULL) {
-		driver_name = Config->sql;
-	} else {
-		driver_name = Config->driver;
-	}
+	driver_name = SMSDSQL_SQLName(Config);
 
 	if (strcasecmp(driver_name, "mysql") == 0 || strcasecmp(driver_name, "native_mysql") == 0) {
 		return currtime_mysql;
@@ -193,11 +185,7 @@ static const char *SMSDSQL_Now(GSM_SMSDConfig * Config)
 {
 	const char *driver_name;
 
-	if (Config->sql != NULL) {
-		driver_name = Config->sql;
-	} else {
-		driver_name = Config->driver;
-	}
+	driver_name = SMSDSQL_SQLName(Config);
 
 	if (strcasecmp(driver_name, "mysql") == 0 || strcasecmp(driver_name, "native_mysql") == 0) {
 		return now_mysql;
@@ -252,11 +240,7 @@ void SMSDSQL_Time2String(GSM_SMSDConfig * Config, time_t timestamp, char *static
 	struct tm *timestruct;
 	const char *driver_name;
 
-	if (Config->sql != NULL) {
-		driver_name = Config->sql;
-	} else {
-		driver_name = Config->driver;
-	}
+	driver_name = SMSDSQL_SQLName(Config);
 
 	if (timestamp == -2) {
 		strcpy(static_buff, "0000-00-00 00:00:00");
