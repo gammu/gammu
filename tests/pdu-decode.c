@@ -302,9 +302,9 @@ int pdu_decode(const char *buffer)
 		printf("\n");
 	}
 
-	if (buffer[pos] != '\r' && buffer[pos] != '\n' && buffer[pos] != '\0') {
+	if (buffer[pos] != '\r' && buffer[pos] != '\n' && buffer[pos] != '"' && buffer[pos] != '\xff' && buffer[pos] != '\0') {
 		printf("Did not reach end: %s\n", buffer + pos);
-		return 1;
+		return -1;
 	}
 
 	return 0;
