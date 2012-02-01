@@ -742,6 +742,11 @@ GSM_Error GSM_UnpackSemiOctetNumber(GSM_Debug_Info *di, unsigned char *retval, c
 
 	smfprintf(di, "Number Length=%ld\n", (long)length);
 
+	if (length == 0) {
+		strcpy(Buffer, "");
+		goto out;
+	}
+
 	/* Default ouput on error */
 	strcpy(Buffer, "<NOT DECODED>");
 
