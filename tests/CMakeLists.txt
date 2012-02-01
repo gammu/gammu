@@ -381,9 +381,6 @@ if (WITH_ATGEN)
     target_link_libraries(sms-at-parse libGammu ${LIBINTL_LIBRARIES})
     target_link_libraries(sms-at-parse messagedisplay)
 
-    # AT SMS parsing - simple PDU decoder
-    add_executable(pdu-decode pdu-decode.c)
-
     # List test cases for success
     file(GLOB MESSAGES
         RELATIVE "${Gammu_SOURCE_DIR}/tests/at-sms"
@@ -394,9 +391,6 @@ if (WITH_ATGEN)
         string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
         add_test("sms-at-parse-${TESTNAME}"
             "${GAMMU_TEST_PATH}/sms-at-parse${GAMMU_TEST_SUFFIX}"
-            "${Gammu_SOURCE_DIR}/tests/at-sms/${TESTMESSAGE}")
-        add_test("pdu-decode-${TESTNAME}"
-            "${GAMMU_TEST_PATH}/pdu-decode${GAMMU_TEST_SUFFIX}"
             "${Gammu_SOURCE_DIR}/tests/at-sms/${TESTMESSAGE}")
     endforeach(TESTMESSAGE $MESSAGES)
 
@@ -439,13 +433,6 @@ if (WITH_ATGEN)
         add_test("sms-at-parse-fail-${TESTNAME}"
             "${GAMMU_TEST_PATH}/sms-at-parse${GAMMU_TEST_SUFFIX}"
             "${Gammu_SOURCE_DIR}/tests/at-sms-failing/${TESTMESSAGE}")
-        add_test("pdu-decode-fail-${TESTNAME}"
-            "${GAMMU_TEST_PATH}/pdu-decode${GAMMU_TEST_SUFFIX}"
-            "${Gammu_SOURCE_DIR}/tests/at-sms-failing/${TESTMESSAGE}")
-        set_tests_properties(
-            "pdu-decode-fail-${TESTNAME}"
-            "sms-at-parse-fail-${TESTNAME}"
-            PROPERTIES WILL_FAIL TRUE)
     endforeach(TESTMESSAGE $MESSAGES)
 
     # List test cases
