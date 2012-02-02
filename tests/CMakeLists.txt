@@ -433,6 +433,9 @@ if (WITH_ATGEN)
         add_test("sms-at-parse-fail-${TESTNAME}"
             "${GAMMU_TEST_PATH}/sms-at-parse${GAMMU_TEST_SUFFIX}"
             "${Gammu_SOURCE_DIR}/tests/at-sms-failing/${TESTMESSAGE}")
+        set_tests_properties(
+            "sms-at-parse-fail-${TESTNAME}"
+            PROPERTIES WILL_FAIL TRUE)
     endforeach(TESTMESSAGE $MESSAGES)
 
     # List test cases
