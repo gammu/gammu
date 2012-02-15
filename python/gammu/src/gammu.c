@@ -3303,7 +3303,6 @@ StateMachine_SendDTMF(StateMachineObject *self, PyObject *args, PyObject *kwds) 
     Py_RETURN_NONE;
 }
 
-#if 0
 /*****************/
 /* GetCallDivert */
 /*****************/
@@ -3315,9 +3314,10 @@ static char StateMachine_GetCallDivert__doc__[] =
 static PyObject *
 StateMachine_GetCallDivert(StateMachineObject *self, PyObject *args, PyObject *kwds) {
     GSM_Error           error;
+    GSM_MultiCallDivert divert;
 
     BEGIN_PHONE_COMM
-    error = GSM_GetCallDivert(self->s);
+    error = GSM_GetCallDivert(self->s, &divert);
     END_PHONE_COMM
 
     if (!checkError(self->s, error, "GetCallDivert")) return NULL;
@@ -3336,9 +3336,10 @@ static char StateMachine_SetCallDivert__doc__[] =
 static PyObject *
 StateMachine_SetCallDivert(StateMachineObject *self, PyObject *args, PyObject *kwds) {
     GSM_Error           error;
+    GSM_MultiCallDivert divert;
 
     BEGIN_PHONE_COMM
-    error = GSM_SetCallDivert(self->s);
+    error = GSM_SetCallDivert(self->s, &divert);
     END_PHONE_COMM
 
     if (!checkError(self->s, error, "SetCallDivert")) return NULL;
@@ -3367,6 +3368,7 @@ StateMachine_CancelAllDiverts(StateMachineObject *self, PyObject *args, PyObject
     Py_RETURN_NONE;
 }
 
+#if 0
 /***************/
 /* GetRingtone */
 /***************/
@@ -5158,10 +5160,10 @@ static struct PyMethodDef StateMachine_methods[] = {
     {"TransferCall",	(PyCFunction)StateMachine_TransferCall,	METH_VARARGS|METH_KEYWORDS,	StateMachine_TransferCall__doc__},
     {"SwitchCall",	(PyCFunction)StateMachine_SwitchCall,	METH_VARARGS|METH_KEYWORDS,	StateMachine_SwitchCall__doc__},
     {"SendDTMF",	(PyCFunction)StateMachine_SendDTMF,	METH_VARARGS|METH_KEYWORDS,	StateMachine_SendDTMF__doc__},
-#if 0
     {"GetCallDivert",	(PyCFunction)StateMachine_GetCallDivert,	METH_VARARGS|METH_KEYWORDS,	StateMachine_GetCallDivert__doc__},
     {"SetCallDivert",	(PyCFunction)StateMachine_SetCallDivert,	METH_VARARGS|METH_KEYWORDS,	StateMachine_SetCallDivert__doc__},
     {"CancelAllDiverts",	(PyCFunction)StateMachine_CancelAllDiverts,	METH_VARARGS|METH_KEYWORDS,	StateMachine_CancelAllDiverts__doc__},
+#if 0
     {"GetRingtone",	(PyCFunction)StateMachine_GetRingtone,	METH_VARARGS|METH_KEYWORDS,	StateMachine_GetRingtone__doc__},
     {"SetRingtone",	(PyCFunction)StateMachine_SetRingtone,	METH_VARARGS|METH_KEYWORDS,	StateMachine_SetRingtone__doc__},
     {"GetRingtonesInfo",	(PyCFunction)StateMachine_GetRingtonesInfo,	METH_VARARGS|METH_KEYWORDS,	StateMachine_GetRingtonesInfo__doc__},
