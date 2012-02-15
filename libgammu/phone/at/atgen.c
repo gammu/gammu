@@ -4679,6 +4679,7 @@ GSM_Error ATGEN_GetCallDivert(GSM_StateMachine *s, GSM_CallDivert *request, GSM_
 	/* Set reason (can not get it from phone) */
 	for (i = 0; i < GSM_MAX_CALL_DIVERTS; i++) {
 		response->Entries[i].DivertType = request->DivertType;
+		response->Entries[i].Time = 0;
 	}
 
 	s->Phone.Data.Divert = response;
