@@ -34,38 +34,38 @@ GSM_Divert_CallTypes DivertCallTypeFromString(const char *str)
     } else if (strcasecmp(str, "All") == 0) {
         return GSM_DIVERT_AllCalls;
     } else {
-		PyErr_Format(PyExc_ValueError,
-			     "Bad value for GSM_Divert_CallTypes: %s", str);
+        PyErr_Format(PyExc_ValueError,
+                 "Bad value for GSM_Divert_CallTypes: %s", str);
         return 0;
     }
 }
 
 char *DivertCallTypeToString(GSM_Divert_CallTypes ct)
 {
-	char *s = NULL;
+    char *s = NULL;
 
-	switch (ct) {
-		case GSM_DIVERT_VoiceCalls:
-			s = strdup("Voice");
-			break;
-		case GSM_DIVERT_FaxCalls:
-			s = strdup("Fax");
-			break;
-		case GSM_DIVERT_DataCalls:
-			s = strdup("Data");
-			break;
-		case GSM_DIVERT_AllCalls:
-			s = strdup("All");
-			break;
-	}
+    switch (ct) {
+        case GSM_DIVERT_VoiceCalls:
+            s = strdup("Voice");
+            break;
+        case GSM_DIVERT_FaxCalls:
+            s = strdup("Fax");
+            break;
+        case GSM_DIVERT_DataCalls:
+            s = strdup("Data");
+            break;
+        case GSM_DIVERT_AllCalls:
+            s = strdup("All");
+            break;
+    }
 
-	if (s == NULL) {
-		PyErr_Format(PyExc_ValueError,
-			     "Bad value for GSM_Divert_CallTypes from Gammu: '%d'", ct);
-		return NULL;
-	}
+    if (s == NULL) {
+        PyErr_Format(PyExc_ValueError,
+                 "Bad value for GSM_Divert_CallTypes from Gammu: '%d'", ct);
+        return NULL;
+    }
 
-	return s;
+    return s;
 }
 
 GSM_Divert_DivertTypes DivertTypeFromString(const char *str)
@@ -79,38 +79,38 @@ GSM_Divert_DivertTypes DivertTypeFromString(const char *str)
     } else if (strcasecmp(str, "AllTypes") == 0) {
         return GSM_DIVERT_AllTypes;
     } else {
-		PyErr_Format(PyExc_ValueError,
-			     "Bad value for GSM_Divert_DivertTypes: %s", str);
+        PyErr_Format(PyExc_ValueError,
+                 "Bad value for GSM_Divert_DivertTypes: %s", str);
         return 0;
     }
 }
 
 char *DivertTypeToString(GSM_Divert_DivertTypes ct)
 {
-	char *s = NULL;
+    char *s = NULL;
 
-	switch (ct) {
-		case GSM_DIVERT_Busy:
-			s = strdup("Busy");
-			break;
-		case GSM_DIVERT_NoAnswer:
-			s = strdup("NoAnswer");
-			break;
-		case GSM_DIVERT_OutOfReach:
-			s = strdup("OutOfReach");
-			break;
-		case GSM_DIVERT_AllTypes:
-			s = strdup("AllTypes");
-			break;
-	}
+    switch (ct) {
+        case GSM_DIVERT_Busy:
+            s = strdup("Busy");
+            break;
+        case GSM_DIVERT_NoAnswer:
+            s = strdup("NoAnswer");
+            break;
+        case GSM_DIVERT_OutOfReach:
+            s = strdup("OutOfReach");
+            break;
+        case GSM_DIVERT_AllTypes:
+            s = strdup("AllTypes");
+            break;
+    }
 
-	if (s == NULL) {
-		PyErr_Format(PyExc_ValueError,
-			     "Bad value for GSM_Divert_DivertTypes from Gammu: '%d'", ct);
-		return NULL;
-	}
+    if (s == NULL) {
+        PyErr_Format(PyExc_ValueError,
+                 "Bad value for GSM_Divert_DivertTypes from Gammu: '%d'", ct);
+        return NULL;
+    }
 
-	return s;
+    return s;
 }
 
 PyObject *CallDivertsToPython(GSM_MultiCallDivert *cd)
@@ -154,7 +154,7 @@ PyObject *CallDivertsToPython(GSM_MultiCallDivert *cd)
             Py_DECREF(ret);
             return NULL;
         }
-		if (PyList_Append(ret, entry) != 0) {
+        if (PyList_Append(ret, entry) != 0) {
             Py_DECREF(ret);
             Py_DECREF(entry);
             return NULL;
