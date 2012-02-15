@@ -316,6 +316,19 @@ This module wraps all python-gammu functionality.
       :rtype: dict
 
 
+   .. method:: GetCallDivert(Divert = 'AllTypes', Type = 'All')
+
+      .. versionadded:: 1.31.90
+
+      Gets call diverts.
+
+      :param Divert: When to do the divert.
+      :type Divert: :ref:`divert-type`
+      :param Type: What call types to divert.
+      :type Type: :ref:`divert-call`
+      :return: List of call diverts.
+      :rtype: :ref:`divert-entry`
+
    .. method:: GetCategory(Type, Location)
 
       Reads category from phone.

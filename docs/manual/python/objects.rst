@@ -842,3 +842,24 @@ The call type for diverts can have one of folowing values:
 * ``Fax``
 * ``Data``
 * ``All``
+
+.. _divert-entry:
+
+Call Divert Objects
+-------------------
+
+.. attribute:: DivertType
+
+    When to do the divert, see :ref:`divert-type`.
+
+.. attribute:: CallType
+
+    What call types to divert, see :ref:`divert-call`.
+
+.. attribute:: Number
+
+    Phone number where to divert.
+    
+.. attribute:: Timeout
+
+    Timeout after which the divert will happen.
