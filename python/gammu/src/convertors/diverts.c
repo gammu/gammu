@@ -140,7 +140,7 @@ PyObject *CallDivertsToPython(GSM_MultiCallDivert *cd)
             free(dt);
             return NULL;
         }
-        entry = Py_BuildValue("{s:s,s:s,s:o,s:i}",
+        entry = Py_BuildValue("{s:s,s:s,s:O,s:i}",
             "DivertType", dt,
             "CallType", ct,
             "Number", num,
