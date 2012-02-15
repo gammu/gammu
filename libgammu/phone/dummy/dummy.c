@@ -364,6 +364,33 @@ GSM_Error DUMMY_Initialise(GSM_StateMachine *s)
 	Priv->locale.DateFormat = GSM_Date_DDMMYYYY;
 	Priv->locale.DateSeparator = '.';
 
+	Priv->diverts.EntriesNum = 5;
+
+	Priv->diverts.Entries[0].DivertType = GSM_DIVERT_Busy;
+	Priv->diverts.Entries[0].CallType = GSM_DIVERT_VoiceCalls;
+	Priv->diverts.Entries[0].Timeout = 10;
+	EncodeUnicode(Priv->diverts.Entries[0].Number, "", 0);
+
+	Priv->diverts.Entries[1].DivertType = GSM_DIVERT_NoAnswer;
+	Priv->diverts.Entries[1].CallType = GSM_DIVERT_FaxCalls;
+	Priv->diverts.Entries[1].Timeout = 20;
+	EncodeUnicode(Priv->diverts.Entries[1].Number, "123", 3);
+
+	Priv->diverts.Entries[2].DivertType = GSM_DIVERT_OutOfReach;
+	Priv->diverts.Entries[2].CallType = GSM_DIVERT_DataCalls;
+	Priv->diverts.Entries[2].Timeout = 30;
+	EncodeUnicode(Priv->diverts.Entries[2].Number, "123", 3);
+
+	Priv->diverts.Entries[3].DivertType = GSM_DIVERT_NoAnswer;
+	Priv->diverts.Entries[3].CallType = GSM_DIVERT_VoiceCalls;
+	Priv->diverts.Entries[3].Timeout = 40;
+	EncodeUnicode(Priv->diverts.Entries[3].Number, "123", 3);
+
+	Priv->diverts.Entries[4].DivertType = GSM_DIVERT_AllTypes;
+	Priv->diverts.Entries[4].CallType = GSM_DIVERT_AllCalls;
+	Priv->diverts.Entries[4].Timeout = 0;
+	EncodeUnicode(Priv->diverts.Entries[4].Number, "", 0);
+
 	return ERR_NONE;
 }
 
@@ -860,32 +887,18 @@ GSM_Error DUMMY_GetSIMIMSI(GSM_StateMachine *s, char *IMSI)
 
 GSM_Error DUMMY_GetCallDivert(GSM_StateMachine *s, GSM_CallDivert *request, GSM_MultiCallDivert *response)
 {
-	response->EntriesNum = 5;
+	int i;
+	GSM_Phone_DUMMYData	*Priv = &s->Phone.Data.Priv.DUMMY;
 
-	response->Entries[0].DivertType = GSM_DIVERT_Busy;
-	response->Entries[0].CallType = GSM_DIVERT_VoiceCalls;
-	response->Entries[0].Timeout = 10;
-	EncodeUnicode(response->Entries[0].Number, "", 0);
+	response->EntriesNum = 0;
 
-	response->Entries[1].DivertType = GSM_DIVERT_NoAnswer;
-	response->Entries[1].CallType = GSM_DIVERT_FaxCalls;
-	response->Entries[1].Timeout = 20;
-	EncodeUnicode(response->Entries[1].Number, "123", 3);
-
-	response->Entries[2].DivertType = GSM_DIVERT_OutOfReach;
-	response->Entries[2].CallType = GSM_DIVERT_DataCalls;
-	response->Entries[2].Timeout = 30;
-	EncodeUnicode(response->Entries[2].Number, "123", 3);
-
-	response->Entries[3].DivertType = GSM_DIVERT_NoAnswer;
-	response->Entries[3].CallType = GSM_DIVERT_VoiceCalls;
-	response->Entries[3].Timeout = 40;
-	EncodeUnicode(response->Entries[3].Number, "123", 3);
-
-	response->Entries[4].DivertType = GSM_DIVERT_AllTypes;
-	response->Entries[4].CallType = GSM_DIVERT_AllCalls;
-	response->Entries[4].Timeout = 0;
-	EncodeUnicode(response->Entries[4].Number, "", 0);
+	for (i = 0; i < Priv->diverts.EntriesNum; i++) {
+		if ((request->DivertType == GSM_DIVERT_AllTypes || request->DivertType == Priv->diverts.Entries[i].DivertType) &&
+		    (request->CallType == GSM_DIVERT_AllCalls || request->CallType == Priv->diverts.Entries[i].CallType)) {
+			response->Entries[response->EntriesNum] = Priv->diverts.Entries[i];
+			response->EntriesNum++;
+		}
+	}
 
 	return ERR_NONE;
 }
