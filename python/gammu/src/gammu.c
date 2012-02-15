@@ -3347,7 +3347,7 @@ StateMachine_GetCallDivert(StateMachineObject *self, PyObject *args, PyObject *k
 
     if (!checkError(self->s, error, "GetCallDivert")) return NULL;
 
-    Py_RETURN_NONE;
+    return CallDivertsToPython(&result);
 }
 
 /*****************/

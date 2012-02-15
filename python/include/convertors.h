@@ -433,5 +433,6 @@ GSM_Divert_CallTypes DivertCallTypeFromString(const char *str);
 char *DivertCallTypeToString(GSM_Divert_CallTypes ct);
 GSM_Divert_DivertTypes DivertTypeFromString(const char *str);
 char *DivertTypeToString(GSM_Divert_DivertTypes ct);
+PyObject *CallDivertsToPython(GSM_MultiCallDivert *cd);
 
 #endif

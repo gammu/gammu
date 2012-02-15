@@ -112,3 +112,56 @@ char *DivertTypeToString(GSM_Divert_DivertTypes ct)
 
 	return s;
 }
+
+PyObject *CallDivertsToPython(GSM_MultiCallDivert *cd)
+{
+    int i;
+    PyObject *ret, *num, *entry;
+    char *dt, *ct;
+
+    ret = PyList_New(0);
+
+    for (i = 0; i < cd->EntriesNum; i++) {
+        num = UnicodeStringToPython(cd->Entries[i].Number);
+        if (num == NULL) {
+            Py_DECREF(ret);
+            return NULL;
+        }
+        dt = DivertTypeToString(cd->Entries[i].DivertType);
+        if (dt == NULL) {
+            Py_DECREF(ret);
+            Py_DECREF(num);
+            return NULL;
+        }
+        ct = DivertCallTypeToString(cd->Entries[i].CallType);
+        if (dt == NULL) {
+            Py_DECREF(ret);
+            Py_DECREF(num);
+            free(dt);
+            return NULL;
+        }
+        entry = Py_BuildValue("{s:s,s:s,s:o,s:i}",
+            "DivertType", dt,
+            "CallType", ct,
+            "Number", num,
+            "Timeout", cd->Entries[i].Timeout);
+
+        Py_DECREF(ret);
+        Py_DECREF(num);
+        free(dt);
+        free(ct);
+
+        if (entry == NULL) {
+            Py_DECREF(ret);
+            return NULL;
+        }
+		if (PyList_Append(ret, entry) != 0) {
+            Py_DECREF(ret);
+            Py_DECREF(entry);
+            return NULL;
+        }
+        Py_DECREF(entry);
+    }
+
+    return ret;
+}
