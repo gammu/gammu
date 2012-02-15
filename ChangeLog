@@ -23,6 +23,7 @@ ChangeLog
 
 [-] * Improved compatibility with ES75 (bug #1586).
 [!] * Changed API for call diverts.
+[+] * Added support for call diverts in Python API.
     
 20111221 - 1.31.0
 
