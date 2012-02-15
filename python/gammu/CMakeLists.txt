@@ -49,6 +49,7 @@ set (PYTHON_GAMMU_SRC
     src/convertors/bitmap.c
     src/convertors/calendar.c
     src/convertors/call.c
+    src/convertors/diverts.c
     src/convertors/file.c
     src/convertors/memory.c
     src/convertors/misc.c

@@ -429,4 +429,9 @@ GSM_UDH StringToUDHType(const char *s);;
  */
 GSM_Coding_Type StringToSMSCoding(const char *s);
 
+GSM_Divert_CallTypes DivertCallTypeFromString(const char *str);
+char *DivertCallTypeToString(GSM_Divert_CallTypes ct);
+GSM_Divert_DivertTypes DivertTypeFromString(const char *str);
+char *DivertTypeToString(GSM_Divert_DivertTypes ct);
+
 #endif

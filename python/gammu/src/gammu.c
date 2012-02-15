@@ -3338,6 +3338,24 @@ static PyObject *
 StateMachine_SetCallDivert(StateMachineObject *self, PyObject *args, PyObject *kwds) {
     GSM_Error           error;
     GSM_CallDivert divert;
+    static char         *kwlist[] = {"Condition", "Type", "Number", "Timeout", NULL};
+    char                *cond, *type, *number;
+
+    divert.Timeout = 0;
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "sss|i", kwlist,
+                &cond, &type, &number, &(divert.Timeout)))
+        return NULL;
+
+    divert.CallType = DivertCallTypeFromString(type);
+    if (divert.CallType == 0) {
+        return NULL;
+    }
+
+    divert.DivertType = DivertTypeFromString(cond);
+    if (divert.DivertType == 0) {
+        return NULL;
+    }
 
     BEGIN_PHONE_COMM
     error = GSM_SetCallDivert(self->s, &divert);
