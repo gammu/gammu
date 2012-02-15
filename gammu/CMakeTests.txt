@@ -146,7 +146,7 @@ macro (gammu_test _name _expression)
     else (_params_count GREATER 0)
         set(__extraname "")
     endif (_params_count GREATER 0)
-    gammu_test_named("${_name}" "${_name}${__extraname}" "${_expression}" ${ARGN})
+    gammu_test_named("${_name}${__extraname}" "${_name}" "${_expression}" ${ARGN})
 endmacro (gammu_test _name _expression)
 
 # Tests which require GetNext* working
