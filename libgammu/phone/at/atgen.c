@@ -4570,6 +4570,15 @@ GSM_Error ATGEN_SetAutoNetworkLogin(GSM_StateMachine *s)
 	return error;
 }
 
+GSM_Error ATGEN_CancelAllDiverts(GSM_StateMachine *s)
+{
+	GSM_Error error;
+
+	ATGEN_WaitForAutoLen(s, "AT+CCFC=4,4\r", 0x00, 4, ID_Divert);
+
+	return error;
+}
+
 GSM_Error ATGEN_SendDTMF(GSM_StateMachine *s, char *sequence)
 {
 	GSM_Error error;
@@ -5771,6 +5780,9 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {SAMSUNG_ReplyGetRingtone,	"AT+MELR="		,0x00,0x00,ID_GetRingtone	 },
 {SAMSUNG_ReplySetRingtone,	"SDNDCRC ="		,0x00,0x00,ID_SetRingtone	 },
 
+/* Call diverstion */
+{ATGEN_GenericReply,		"AT+CCFC=4,4"		,0x00,0x00,ID_Divert		 },
+
 /* Protocol probing */
 {ATGEN_GenericReply,		"AT+ORGI?"		,0x00,0x00,ID_GetProtocol	 },
 {ATGEN_GenericReply,		"AT+SSHT?"		,0x00,0x00,ID_GetProtocol	 },
@@ -5915,7 +5927,7 @@ GSM_Phone_Functions ATGENPhone = {
  	NOTSUPPORTED,			/* 	SwitchCall		*/
  	NOTSUPPORTED,			/* 	GetCallDivert		*/
  	NOTSUPPORTED,			/* 	SetCallDivert		*/
- 	NOTSUPPORTED,			/* 	CancelAllDiverts	*/
+ 	ATGEN_CancelAllDiverts,
 	ATGEN_SetIncomingCall,
 	ATGEN_SetIncomingUSSD,
 	ATGEN_SendDTMF,
