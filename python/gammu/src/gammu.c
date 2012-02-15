@@ -3338,7 +3338,7 @@ static PyObject *
 StateMachine_SetCallDivert(StateMachineObject *self, PyObject *args, PyObject *kwds) {
     GSM_Error           error;
     GSM_CallDivert divert;
-    static char         *kwlist[] = {"Condition", "Type", "Number", "Timeout", NULL};
+    static char         *kwlist[] = {"Divert", "Type", "Number", "Timeout", NULL};
     char                *cond, *type, *number;
     size_t number_len;
 
