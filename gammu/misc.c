@@ -2442,6 +2442,26 @@ void CallDivert(int argc, char *argv[])
 
 		for (i = 0; i < cd.EntriesNum; i++) {
 			printf("\n");
+			printf("  " LISTFORMAT, _("Divert type"));
+
+			switch (cd.Entries[i].DivertType) {
+				case GSM_DIVERT_Busy:
+					printf("%s", _("when busy"));
+					break;
+				case GSM_DIVERT_NoAnswer:
+					printf("%s", _("when not answered"));
+					break;
+				case GSM_DIVERT_OutOfReach:
+					printf("%s", _("when phone off or no coverage"));
+					break;
+				case GSM_DIVERT_AllTypes:
+					printf("%s", _("all types of diverts"));
+					break;
+				default:
+					printf(_("unknown %i"),cd.Entries[i].DivertType);
+					break;
+			}
+			printf("\n");
 			printf("  " LISTFORMAT, _("Call type"));
 			switch (cd.Entries[i].CallType) {
 				case GSM_DIVERT_VoiceCalls:
