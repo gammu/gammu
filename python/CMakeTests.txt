@@ -85,6 +85,9 @@ if (WITH_BACKUP)
 
     configure_file("examples/dialvoice.py" "${CMAKE_CURRENT_BINARY_DIR}/dialvoice.py" COPY_ONLY)
     add_test("py-dialvoice" ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/dialvoice.py" "${CMAKE_CURRENT_BINARY_DIR}/.gammurc" "1234")
+
+    configure_file("examples/setdiverts.py" "${CMAKE_CURRENT_BINARY_DIR}/setdiverts.py" COPY_ONLY)
+    add_test("py-setdiverts" ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/setdiverts.py" "${CMAKE_CURRENT_BINARY_DIR}/.gammurc" "1234")
 endif (WITH_BACKUP)
 
 configure_file("examples/setconfig.py" "${CMAKE_CURRENT_BINARY_DIR}/setconfig.py" COPY_ONLY)
