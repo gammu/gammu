@@ -1,7 +1,7 @@
 /**
  * \file gammu-call.h
  * \author Michal Čihař
- * 
+ *
  * Call data and functions.
  */
 #ifndef __gammu_call_h
@@ -176,11 +176,8 @@ typedef struct {
  * \ingroup Divert
  */
 typedef struct {
-	GSM_CallDivert Request;
-	struct {
-		int EntriesNum;
-		GSM_CallDivert Entries[10];
-	} Response;
+	int EntriesNum;
+	GSM_CallDivert Entries[10];
 } GSM_MultiCallDivert;
 
 /**
@@ -334,13 +331,14 @@ GSM_Error GSM_SwitchCall(GSM_StateMachine * s, int ID, gboolean next);
  * Gets call diverts.
  *
  * \param s State machine pointer.
- * \param divert Storage for diversions information.
+ * \param request Which diverts to get.
+ * \param result Storage for diversions information.
  *
  * \return Error code
  *
  * \ingroup Divert
  */
-GSM_Error GSM_GetCallDivert(GSM_StateMachine * s, GSM_MultiCallDivert * divert);
+GSM_Error GSM_GetCallDivert(GSM_StateMachine *s, GSM_CallDivert *request, GSM_MultiCallDivert *result);
 
 /**
  * Sets call diverts.
@@ -352,7 +350,7 @@ GSM_Error GSM_GetCallDivert(GSM_StateMachine * s, GSM_MultiCallDivert * divert);
  *
  * \ingroup Divert
  */
-GSM_Error GSM_SetCallDivert(GSM_StateMachine * s, GSM_MultiCallDivert * divert);
+GSM_Error GSM_SetCallDivert(GSM_StateMachine * s, GSM_CallDivert * divert);
 
 /**
  * Cancels all diverts.

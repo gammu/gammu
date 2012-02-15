@@ -1460,7 +1460,7 @@ GSM_Error N7110_AnswerCall(GSM_StateMachine *s, int ID, gboolean all)
 	return DCT3_AnswerAllCalls(s);
 }
 
-GSM_Error N7110_SetCallDivert(GSM_StateMachine *s, GSM_MultiCallDivert *divert)
+GSM_Error N7110_SetCallDivert(GSM_StateMachine *s, GSM_CallDivert *divert)
 {
 	GSM_Error	error;
 	int		i;

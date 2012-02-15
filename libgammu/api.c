@@ -952,20 +952,20 @@ GSM_Error GSM_SwitchCall(GSM_StateMachine *s, int ID, gboolean next)
 /**
  * Gets call diverts.
  */
-GSM_Error GSM_GetCallDivert(GSM_StateMachine *s, GSM_MultiCallDivert *divert)
+GSM_Error GSM_GetCallDivert(GSM_StateMachine *s, GSM_CallDivert *request, GSM_MultiCallDivert *result)
 {
 	GSM_Error err;
 
 	CHECK_PHONE_CONNECTION();
 
-	err = s->Phone.Functions->GetCallDivert(s, divert);
+	err = s->Phone.Functions->GetCallDivert(s, request, result);
 	PRINT_LOG_ERROR(err);
 	return err;
 }
 /**
  * Sets call diverts.
  */
-GSM_Error GSM_SetCallDivert(GSM_StateMachine *s, GSM_MultiCallDivert *divert)
+GSM_Error GSM_SetCallDivert(GSM_StateMachine *s, GSM_CallDivert *divert)
 {
 	GSM_Error err;
 

@@ -1017,11 +1017,11 @@ typedef struct {
 	/**
 	 * Gets call diverts.
 	 */
-	GSM_Error (*GetCallDivert)      (GSM_StateMachine *s, GSM_MultiCallDivert *divert);
+	GSM_Error (*GetCallDivert)      (GSM_StateMachine *s, GSM_CallDivert *request, GSM_MultiCallDivert *result);
 	/**
 	 * Sets call diverts.
 	 */
-	GSM_Error (*SetCallDivert)      (GSM_StateMachine *s, GSM_MultiCallDivert *divert);
+	GSM_Error (*SetCallDivert)      (GSM_StateMachine *s, GSM_CallDivert *divert);
 	/**
 	 * Cancels all diverts.
 	 */

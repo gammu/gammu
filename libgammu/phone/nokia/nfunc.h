@@ -56,8 +56,8 @@ GSM_Error DCT3DCT4_CancelCall			(GSM_StateMachine *s, int ID);
 GSM_Error DCT3DCT4_GetActiveConnectSet		(GSM_StateMachine *s);
 GSM_Error DCT3DCT4_SetActiveConnectSet		(GSM_StateMachine *s, GSM_MultiWAPSettings *settings);
 GSM_Error DCT3DCT4_CancelAllDiverts		(GSM_StateMachine *s);
-GSM_Error DCT3DCT4_SetCallDivert		(GSM_StateMachine *s, GSM_MultiCallDivert *divert);
-GSM_Error DCT3DCT4_GetCallDivert		(GSM_StateMachine *s, GSM_MultiCallDivert *divert);
+GSM_Error DCT3DCT4_SetCallDivert		(GSM_StateMachine *s, GSM_CallDivert *divert);
+GSM_Error DCT3DCT4_GetCallDivert		(GSM_StateMachine *s, GSM_CallDivert *reqest, GSM_MultiCallDivert *response);
 
 GSM_CalendarNoteType N71_65_FindCalendarType(GSM_CalendarNoteType Type, GSM_PhoneModel *model);
 int 		NOKIA_SetUnicodeString		(GSM_StateMachine *s, unsigned char *dest, unsigned char *string, gboolean FullLength);

@@ -1180,31 +1180,34 @@ GSM_Error DCT3DCT4_ReplyCallDivert(GSM_Protocol_Message *msg, GSM_StateMachine *
 	      		case 0x15: smprintf(s,"all types of diverts");		break;
 	      		default:   smprintf(s,"unknown %i",msg->Buffer[6]);	break;
 	    	}
-		/* 6150 */
-		if (msg->Length == 0x0b) {
-			cd->Response.EntriesNum = 0;
+		if (cd == NULL) {
 			return ERR_NONE;
 		}
-		cd->Response.EntriesNum = msg->Buffer[10];
-		for (i=0;i<cd->Response.EntriesNum;i++) {
+		/* 6150 */
+		if (msg->Length == 0x0b) {
+			cd->EntriesNum = 0;
+			return ERR_NONE;
+		}
+		cd->EntriesNum = msg->Buffer[10];
+		for (i=0;i<cd->EntriesNum;i++) {
 		    	smprintf(s,"\n   Calls type : ");
 		      	switch (msg->Buffer[pos]) {
         		case 0x0b:
 				smprintf(s,"voice");
-				cd->Response.Entries[i].CallType = GSM_DIVERT_VoiceCalls;
+				cd->Entries[i].CallType = GSM_DIVERT_VoiceCalls;
 				break;
         		case 0x0d:
 				smprintf(s,"fax");
-				cd->Response.Entries[i].CallType = GSM_DIVERT_FaxCalls;
+				cd->Entries[i].CallType = GSM_DIVERT_FaxCalls;
 				break;
  		       	case 0x19:
 				smprintf(s,"data");
-				cd->Response.Entries[i].CallType = GSM_DIVERT_DataCalls;
+				cd->Entries[i].CallType = GSM_DIVERT_DataCalls;
 				break;
         		default:
 				smprintf(s,"unknown %i",msg->Buffer[pos]);
 				/* 6310i */
-				cd->Response.EntriesNum = 0;
+				cd->EntriesNum = 0;
 				return ERR_NONE;
 	    		}
 		    	smprintf(s,"\n");
@@ -1212,12 +1215,12 @@ GSM_Error DCT3DCT4_ReplyCallDivert(GSM_Protocol_Message *msg, GSM_StateMachine *
 			while (msg->Buffer[j] != 0x00) j++;
 			msg->Buffer[pos+1] = j - pos - 2;
 			number_pos = pos + 1;
-			error = GSM_UnpackSemiOctetNumber(&(s->di), cd->Response.Entries[i].Number, msg->Buffer, &number_pos, msg->Length, FALSE);
+			error = GSM_UnpackSemiOctetNumber(&(s->di), cd->Entries[i].Number, msg->Buffer, &number_pos, msg->Length, FALSE);
 			if (error != ERR_NONE) {
 				return error;
 			}
-	      		smprintf(s,"   Number     : %s\n",DecodeUnicodeString(cd->Response.Entries[i].Number));
-	        	cd->Response.Entries[i].Timeout = msg->Buffer[pos+34];
+	      		smprintf(s,"   Number     : %s\n",DecodeUnicodeString(cd->Entries[i].Number));
+	        	cd->Entries[i].Timeout = msg->Buffer[pos+34];
 	 	     	smprintf(s,"   Timeout    : %i seconds\n",msg->Buffer[pos+34]);
 			pos+=35;
 	    	}
@@ -1229,7 +1232,7 @@ GSM_Error DCT3DCT4_ReplyCallDivert(GSM_Protocol_Message *msg, GSM_StateMachine *
 	return ERR_UNKNOWNRESPONSE;
 }
 
-static GSM_Error DCT3DCT4_CallDivert(GSM_StateMachine *s, GSM_MultiCallDivert *divert, gboolean get)
+static GSM_Error DCT3DCT4_CallDivert(GSM_StateMachine *s, GSM_CallDivert *request, GSM_MultiCallDivert *response, gboolean get)
 {
 	int 		length = 0x09;
 	unsigned char 	req[55] = {N6110_FRAME_HEADER, 0x01,
@@ -1240,17 +1243,17 @@ static GSM_Error DCT3DCT4_CallDivert(GSM_StateMachine *s, GSM_MultiCallDivert *d
 	 			   0x00};
 
 	if (!get) {
-		if (UnicodeLength(divert->Request.Number) == 0) {
+		if (UnicodeLength(request->Number) == 0) {
 			req[4]  = 0x04;
 		} else {
 			req[4]  = 0x03;
 			req[8]  = 0x01;
-			req[29] = GSM_PackSemiOctetNumber(divert->Request.Number, req + 9, FALSE);
-			req[52] = divert->Request.Timeout;
+			req[29] = GSM_PackSemiOctetNumber(request->Number, req + 9, FALSE);
+			req[52] = request->Timeout;
 			length  = 55;
 		}
 	}
-  	switch (divert->Request.DivertType) {
+  	switch (request->DivertType) {
     		case GSM_DIVERT_AllTypes  : req[6] = 0x15; break;
     		case GSM_DIVERT_Busy      : req[6] = 0x43; break;
     		case GSM_DIVERT_NoAnswer  : req[6] = 0x3d; break;
@@ -1258,7 +1261,7 @@ static GSM_Error DCT3DCT4_CallDivert(GSM_StateMachine *s, GSM_MultiCallDivert *d
     		default                   : return ERR_NOTIMPLEMENTED;
   	}
 
-  	switch (divert->Request.CallType) {
+  	switch (request->CallType) {
     		case GSM_DIVERT_AllCalls  :                break;
     		case GSM_DIVERT_VoiceCalls: req[7] = 0x0b; break;
     		case GSM_DIVERT_FaxCalls  : req[7] = 0x0d; break;
@@ -1266,19 +1269,19 @@ static GSM_Error DCT3DCT4_CallDivert(GSM_StateMachine *s, GSM_MultiCallDivert *d
     		default                   : return ERR_NOTIMPLEMENTED;
   	}
 
-	s->Phone.Data.Divert = divert;
+	s->Phone.Data.Divert = response;
 	smprintf(s, "Call divert\n");
 	return GSM_WaitFor (s, req, length, 0x06, 10, ID_Divert);
 }
 
-GSM_Error DCT3DCT4_GetCallDivert(GSM_StateMachine *s, GSM_MultiCallDivert *divert)
+GSM_Error DCT3DCT4_GetCallDivert(GSM_StateMachine *s, GSM_CallDivert *request, GSM_MultiCallDivert *response)
 {
-	return DCT3DCT4_CallDivert(s,divert,TRUE);
+	return DCT3DCT4_CallDivert(s, request, response, TRUE);
 }
 
-GSM_Error DCT3DCT4_SetCallDivert(GSM_StateMachine *s, GSM_MultiCallDivert *divert)
+GSM_Error DCT3DCT4_SetCallDivert(GSM_StateMachine *s, GSM_CallDivert *divert)
 {
-	return DCT3DCT4_CallDivert(s,divert,FALSE);
+	return DCT3DCT4_CallDivert(s, divert, NULL, FALSE);
 }
 
 GSM_Error DCT3DCT4_CancelAllDiverts(GSM_StateMachine *s)

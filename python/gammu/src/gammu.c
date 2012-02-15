@@ -3314,10 +3314,11 @@ static char StateMachine_GetCallDivert__doc__[] =
 static PyObject *
 StateMachine_GetCallDivert(StateMachineObject *self, PyObject *args, PyObject *kwds) {
     GSM_Error           error;
-    GSM_MultiCallDivert divert;
+    GSM_MultiCallDivert result;
+    GSM_CallDivert request;
 
     BEGIN_PHONE_COMM
-    error = GSM_GetCallDivert(self->s, &divert);
+    error = GSM_GetCallDivert(self->s, &request, &result);
     END_PHONE_COMM
 
     if (!checkError(self->s, error, "GetCallDivert")) return NULL;
@@ -3336,7 +3337,7 @@ static char StateMachine_SetCallDivert__doc__[] =
 static PyObject *
 StateMachine_SetCallDivert(StateMachineObject *self, PyObject *args, PyObject *kwds) {
     GSM_Error           error;
-    GSM_MultiCallDivert divert;
+    GSM_CallDivert divert;
 
     BEGIN_PHONE_COMM
     error = GSM_SetCallDivert(self->s, &divert);

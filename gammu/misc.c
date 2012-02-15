@@ -2332,6 +2332,7 @@ void CallDivert(int argc, char *argv[])
 {
 	GSM_Error error;
 	GSM_MultiCallDivert cd;
+	GSM_CallDivert request;
 	gboolean get = FALSE;
 	int i;
 
@@ -2345,26 +2346,26 @@ void CallDivert(int argc, char *argv[])
 	}
 
 	if (strcasecmp("all", argv[3]) == 0) {
-		cd.Request.DivertType = GSM_DIVERT_AllTypes;
+		request.DivertType = GSM_DIVERT_AllTypes;
 	} else if (strcasecmp("busy", argv[3]) == 0) {
-		cd.Request.DivertType = GSM_DIVERT_Busy;
+		request.DivertType = GSM_DIVERT_Busy;
 	} else if (strcasecmp("noans", argv[3]) == 0) {
-		cd.Request.DivertType = GSM_DIVERT_NoAnswer;
+		request.DivertType = GSM_DIVERT_NoAnswer;
 	} else if (strcasecmp("outofreach", argv[3]) == 0) {
-		cd.Request.DivertType = GSM_DIVERT_OutOfReach;
+		request.DivertType = GSM_DIVERT_OutOfReach;
 	} else {
 		printf(_("Unknown divert type (\"%s\")\n"), argv[3]);
 		Terminate(2);
 	}
 
 	if (strcasecmp("all", argv[4]) == 0) {
-		cd.Request.CallType = GSM_DIVERT_AllCalls;
+		request.CallType = GSM_DIVERT_AllCalls;
 	} else if (strcasecmp("voice", argv[4]) == 0) {
-		cd.Request.CallType = GSM_DIVERT_VoiceCalls;
+		request.CallType = GSM_DIVERT_VoiceCalls;
 	} else if (strcasecmp("fax", argv[4]) == 0) {
-		cd.Request.CallType = GSM_DIVERT_FaxCalls;
+		request.CallType = GSM_DIVERT_FaxCalls;
 	} else if (strcasecmp("data", argv[4]) == 0) {
-		cd.Request.CallType = GSM_DIVERT_DataCalls;
+		request.CallType = GSM_DIVERT_DataCalls;
 	} else {
 		printf(_("Unknown call type (\"%s\")\n"), argv[4]);
 		Terminate(2);
@@ -2373,31 +2374,31 @@ void CallDivert(int argc, char *argv[])
 	GSM_Init(TRUE);
 
 	if (get) {
-		error = GSM_GetCallDivert(gsm,&cd);
+		error = GSM_GetCallDivert(gsm, &request, &cd);
 		Print_Error(error);
 		printf("%s", _("Query:"));
 		printf("\n");
 		printf("  " LISTFORMAT, _("Divert type"));
 	} else {
-		cd.Request.Number[0] = 0;
-		cd.Request.Number[1] = 0;
+		request.Number[0] = 0;
+		request.Number[1] = 0;
 		if (argc > 5) {
-			EncodeUnicode(cd.Request.Number,argv[5],strlen(argv[5]));
+			EncodeUnicode(request.Number,argv[5],strlen(argv[5]));
 		}
 
-		cd.Request.Timeout = 0;
+		request.Timeout = 0;
 		if (argc > 6) {
-			cd.Request.Timeout = GetInt(argv[6]);
+			request.Timeout = GetInt(argv[6]);
 		}
 
-		error = GSM_SetCallDivert(gsm,&cd);
+		error = GSM_SetCallDivert(gsm, &request);
 		Print_Error(error);
 		printf("%s", _("Changed:"));
 		printf("\n");
 		printf("  " LISTFORMAT, _("Divert type"));
 	}
 
-	switch (cd.Request.DivertType) {
+	switch (request.DivertType) {
 		case GSM_DIVERT_Busy:
 			printf("%s", _("when busy"));
 			break;
@@ -2411,13 +2412,13 @@ void CallDivert(int argc, char *argv[])
 			printf("%s", _("all types of diverts"));
 			break;
 		default:
-			printf(_("unknown %i"),cd.Request.DivertType);
+			printf(_("unknown %i"),request.DivertType);
 			break;
 	}
 	printf("\n");
 
 	printf("  " LISTFORMAT, _("Call type"));
-	switch (cd.Request.CallType) {
+	switch (request.CallType) {
 		case GSM_DIVERT_VoiceCalls:
 			printf("%s", _("voice"));
 			break;
@@ -2431,7 +2432,7 @@ void CallDivert(int argc, char *argv[])
 			printf("%s", _("data & fax & voice"));
 			break;
 		default:
-			printf(_("unknown %i"),cd.Request.CallType);
+			printf(_("unknown %i"),request.CallType);
 			break;
 	}
 	printf("\n");
@@ -2439,10 +2440,10 @@ void CallDivert(int argc, char *argv[])
 	printf("%s", _("Response:"));
 	printf("\n");
 
-	for (i = 0; i < cd.Response.EntriesNum; i++) {
+	for (i = 0; i < cd.EntriesNum; i++) {
 		printf("\n");
 		printf("  " LISTFORMAT, _("Call type"));
-		switch (cd.Response.Entries[i].CallType) {
+		switch (cd.Entries[i].CallType) {
 			case GSM_DIVERT_VoiceCalls:
 				printf("%s", _("voice"));
 				break;
@@ -2453,16 +2454,16 @@ void CallDivert(int argc, char *argv[])
 				printf("%s", _("data"));
 				break;
 			default:
-				printf(_("unknown %i"),cd.Response.Entries[i].CallType);
+				printf(_("unknown %i"),cd.Entries[i].CallType);
 				break;
 		}
 		printf("\n");
 
 		printf("  " LISTFORMAT, _("Timeout"));
-		PRINTSECONDS(cd.Response.Entries[i].Timeout);
+		PRINTSECONDS(cd.Entries[i].Timeout);
 		printf("\n");
 
-		printf("  " LISTFORMAT "%s\n", _("Number"), DecodeUnicodeString(cd.Response.Entries[i].Number));
+		printf("  " LISTFORMAT "%s\n", _("Number"), DecodeUnicodeString(cd.Entries[i].Number));
 	}
 	printf("\n");
 
