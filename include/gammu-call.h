@@ -177,7 +177,7 @@ typedef struct {
  */
 typedef struct {
 	int EntriesNum;
-	GSM_CallDivert Entries[10];
+	GSM_CallDivert Entries[GSM_MAX_CALL_DIVERTS];
 } GSM_MultiCallDivert;
 
 /**

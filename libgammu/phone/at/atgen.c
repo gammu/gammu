@@ -4576,7 +4576,8 @@ GSM_Error ATGEN_ReplyGetDivert(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	const char *str;
 	int line, number_type;
-	int status, class;
+	int status, class, ignore;
+	char ignore_buf[100];
 	GSM_MultiCallDivert *response = s->Phone.Data.Divert;
 
 	response->EntriesNum = 0;
@@ -4608,6 +4609,32 @@ GSM_Error ATGEN_ReplyGetDivert(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 				response->Entries[response->EntriesNum].Number,
 				sizeof(response->Entries[response->EntriesNum].Number),
 				&number_type
+				);
+		}
+		if (error != ERR_NONE) {
+			error = ATGEN_ParseReply(s, str,
+				"+CCFC: @i, @i, @p, @I, @s, @i",
+				&status,
+				&class,
+				response->Entries[response->EntriesNum].Number,
+				sizeof(response->Entries[response->EntriesNum].Number),
+				&number_type,
+				ignore_buf, sizeof(ignore_buf),
+				&ignore
+				);
+		}
+
+		if (error != ERR_NONE) {
+			error = ATGEN_ParseReply(s, str,
+				"+CCFC: @i, @i, @p, @I, @s, @i, @i",
+				&status,
+				&class,
+				response->Entries[response->EntriesNum].Number,
+				sizeof(response->Entries[response->EntriesNum].Number),
+				&number_type,
+				ignore_buf, sizeof(ignore_buf),
+				&ignore,
+				response->Entries[response->EntriesNum].Timeout
 				);
 		}
 
@@ -4679,7 +4706,7 @@ GSM_Error ATGEN_GetCallDivert(GSM_StateMachine *s, GSM_CallDivert *request, GSM_
 	/* Set reason (can not get it from phone) */
 	for (i = 0; i < GSM_MAX_CALL_DIVERTS; i++) {
 		response->Entries[i].DivertType = request->DivertType;
-		response->Entries[i].Time = 0;
+		response->Entries[i].Timeout = 0;
 	}
 
 	s->Phone.Data.Divert = response;
