@@ -146,7 +146,6 @@ PyObject *CallDivertsToPython(GSM_MultiCallDivert *cd)
             "Number", num,
             "Timeout", cd->Entries[i].Timeout);
 
-        Py_DECREF(ret);
         Py_DECREF(num);
         free(dt);
         free(ct);
