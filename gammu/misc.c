@@ -2378,7 +2378,6 @@ void CallDivert(int argc, char *argv[])
 		Print_Error(error);
 		printf("%s", _("Query:"));
 		printf("\n");
-		printf("  " LISTFORMAT, _("Divert type"));
 	} else {
 		request.Number[0] = 0;
 		request.Number[1] = 0;
@@ -2395,8 +2394,8 @@ void CallDivert(int argc, char *argv[])
 		Print_Error(error);
 		printf("%s", _("Changed:"));
 		printf("\n");
-		printf("  " LISTFORMAT, _("Divert type"));
 	}
+	printf("  " LISTFORMAT, _("Divert type"));
 
 	switch (request.DivertType) {
 		case GSM_DIVERT_Busy:
