@@ -3316,6 +3316,30 @@ StateMachine_GetCallDivert(StateMachineObject *self, PyObject *args, PyObject *k
     GSM_Error           error;
     GSM_MultiCallDivert result;
     GSM_CallDivert request;
+    static char         *kwlist[] = {"Divert", "Type", NULL};
+    char                *cond = NULL, *type = NULL;
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|ss", kwlist,
+                &cond, &type))
+        return NULL;
+
+    if (type == NULL) {
+        request.CallType = GSM_DIVERT_AllCalls;
+    } else {
+        request.CallType = DivertCallTypeFromString(type);
+        if (request.CallType == 0) {
+            return NULL;
+        }
+    }
+
+    if (cond == NULL) {
+        request.DivertType = GSM_DIVERT_AllTypes;
+    } else {
+        request.DivertType = DivertTypeFromString(cond);
+        if (request.DivertType == 0) {
+            return NULL;
+        }
+    }
 
     BEGIN_PHONE_COMM
     error = GSM_GetCallDivert(self->s, &request, &result);
