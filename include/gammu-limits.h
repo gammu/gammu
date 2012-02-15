@@ -318,6 +318,13 @@
  */
 #define GSM_MAX_GPRS_AP_URL_LENGTH 249
 
+/**
+ * Maximal number of call diverts.
+ *
+ * \ingroup Limits
+ */
+#define GSM_MAX_CALL_DIVERTS 20
+
 
 #endif
 

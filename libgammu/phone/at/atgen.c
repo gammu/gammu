@@ -4570,6 +4570,78 @@ GSM_Error ATGEN_SetAutoNetworkLogin(GSM_StateMachine *s)
 	return error;
 }
 
+GSM_Error ATGEN_ReplyGetDivert(GSM_Protocol_Message *msg, GSM_StateMachine *s)
+{
+	GSM_Error error;
+	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
+	const char *str;
+	int line, number_type;
+	int status, class;
+	GSM_MultiCallDivert *response = s->Phone.Data.Divert;
+
+	response->EntriesNum = 0;
+
+	if (Priv->ReplyState != AT_Reply_OK) {
+		switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
+		case AT_Reply_Error:
+			return ERR_NOTSUPPORTED;
+		case AT_Reply_CMSError:
+			return ATGEN_HandleCMSError(s);
+		case AT_Reply_CMEError:
+			return ATGEN_HandleCMEError(s);
+		default:
+			return ERR_UNKNOWNRESPONSE;
+		}
+	}
+
+	for (line = 2; strcmp("OK", str = GetLineString(msg->Buffer, &Priv->Lines, line)) != 0; line++) {
+
+		error = ATGEN_ParseReply(s, str,
+			"+CCFC: @i, @i",
+			&status,
+			&class);
+		if (error != ERR_NONE) {
+			error = ATGEN_ParseReply(s, str,
+				"+CCFC: @i, @i, @p, @I",
+				&status,
+				&class,
+				response->Entries[response->EntriesNum].Number,
+				sizeof(response->Entries[response->EntriesNum].Number),
+				&number_type
+				);
+		}
+
+		if (error != ERR_NONE) {
+			return error;
+		}
+
+		/* We handle only active entries */
+		if (status == 1) {
+			switch (class) {
+				case 1:
+					response->Entries[response->EntriesNum].CallType = GSM_DIVERT_VoiceCalls;
+					break;
+				case 2:
+					response->Entries[response->EntriesNum].CallType = GSM_DIVERT_DataCalls;
+					break;
+				case 4:
+					response->Entries[response->EntriesNum].CallType = GSM_DIVERT_FaxCalls;
+					break;
+				case 7:
+					response->Entries[response->EntriesNum].CallType = GSM_DIVERT_AllCalls;
+					break;
+				default:
+					smprintf(s, "WARNING: Unknown divert class %d, assuming all numbers\n", class);
+					response->Entries[response->EntriesNum].CallType = GSM_DIVERT_AllCalls;
+					break;
+			}
+
+			response->EntriesNum++;
+		}
+	}
+	return ERR_NONE;
+}
+
 GSM_Error ATGEN_CancelAllDiverts(GSM_StateMachine *s)
 {
 	GSM_Error error;
@@ -4584,6 +4656,7 @@ GSM_Error ATGEN_GetCallDivert(GSM_StateMachine *s, GSM_CallDivert *request, GSM_
 	GSM_Error error;
 	int reason = 0;
 	char buffer[50];
+	int i;
 
 	switch (request->DivertType) {
 		case GSM_DIVERT_Busy:
@@ -4602,6 +4675,13 @@ GSM_Error ATGEN_GetCallDivert(GSM_StateMachine *s, GSM_CallDivert *request, GSM_
 			smprintf(s, "Invalid divert type: %d\n", request->DivertType);
 			return ERR_BUG;
 	}
+
+	/* Set reason (can not get it from phone) */
+	for (i = 0; i < GSM_MAX_CALL_DIVERTS; i++) {
+		response->Entries[i].DivertType = request->DivertType;
+	}
+
+	s->Phone.Data.Divert = response;
 
 	smprintf(s, "Getting diversions\n");
 	sprintf(buffer, "AT+CCFS=%d,2\r", reason);
@@ -5876,6 +5956,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 
 /* Call diverstion */
 {ATGEN_GenericReply,		"AT+CCFC="		,0x00,0x00,ID_SetDivert		 },
+{ATGEN_ReplyGetDivert,		"AT+CCFC="		,0x00,0x00,ID_Divert		 },
 
 /* Protocol probing */
 {ATGEN_GenericReply,		"AT+ORGI?"		,0x00,0x00,ID_GetProtocol	 },
