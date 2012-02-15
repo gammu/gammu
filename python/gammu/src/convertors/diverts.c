@@ -25,13 +25,13 @@
 
 GSM_Divert_CallTypes DivertCallTypeFromString(const char *str)
 {
-    if (strcasecmp(str, "VoiceCalls") == 0) {
+    if (strcasecmp(str, "Voice") == 0) {
         return GSM_DIVERT_VoiceCalls;
-    } else if (strcasecmp(str, "FaxCalls") == 0) {
+    } else if (strcasecmp(str, "Fax") == 0) {
         return GSM_DIVERT_FaxCalls;
-    } else if (strcasecmp(str, "DataCalls") == 0) {
+    } else if (strcasecmp(str, "Data") == 0) {
         return GSM_DIVERT_DataCalls;
-    } else if (strcasecmp(str, "AllCalls") == 0) {
+    } else if (strcasecmp(str, "All") == 0) {
         return GSM_DIVERT_AllCalls;
     } else {
 		PyErr_Format(PyExc_ValueError,
@@ -46,16 +46,16 @@ char *DivertCallTypeToString(GSM_Divert_CallTypes ct)
 
 	switch (ct) {
 		case GSM_DIVERT_VoiceCalls:
-			s = strdup("VoiceCalls");
+			s = strdup("Voice");
 			break;
 		case GSM_DIVERT_FaxCalls:
-			s = strdup("FaxCalls");
+			s = strdup("Fax");
 			break;
 		case GSM_DIVERT_DataCalls:
-			s = strdup("DataCalls");
+			s = strdup("Data");
 			break;
 		case GSM_DIVERT_AllCalls:
-			s = strdup("AllCalls");
+			s = strdup("All");
 			break;
 	}
 
