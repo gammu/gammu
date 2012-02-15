@@ -15,8 +15,8 @@ if len(sys.argv) != 2:
     print 'Usage: setdiverts.py NUMBER'
     sys.exit(1)
 
-sm.SetCallDiverts('AllTypes', 'All', sys.argv[1])
-diverts = sm.GetCallDiverts()
+sm.SetCallDivert('AllTypes', 'All', sys.argv[1])
+diverts = sm.GetCallDivert()
 
 for x in diverts:
     print x

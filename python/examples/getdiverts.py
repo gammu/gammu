@@ -11,7 +11,7 @@ else:
     sm.ReadConfig()
 sm.Init()
 
-diverts = sm.GetCallDiverts()
+diverts = sm.GetCallDivert()
 
 for x in diverts:
     print x
