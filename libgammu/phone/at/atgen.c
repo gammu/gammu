@@ -4610,7 +4610,7 @@ GSM_Error ATGEN_GetCallDivert(GSM_StateMachine *s, GSM_CallDivert *request, GSM_
 	return error;
 }
 
-GSM_Error ATEGN_SetCallDivert(GSM_StateMachine *s, GSM_CallDivert *divert)
+GSM_Error ATGEN_SetCallDivert(GSM_StateMachine *s, GSM_CallDivert *divert)
 {
 	GSM_Error error;
 	int reason = 0, class = 0;
@@ -6020,7 +6020,7 @@ GSM_Phone_Functions ATGENPhone = {
  	NOTSUPPORTED,			/* 	TransferCall		*/
  	NOTSUPPORTED,			/* 	SwitchCall		*/
  	ATGEN_GetCallDivert,
- 	ATEGN_SetCallDivert,
+ 	ATGEN_SetCallDivert,
  	ATGEN_CancelAllDiverts,
 	ATGEN_SetIncomingCall,
 	ATGEN_SetIncomingUSSD,
