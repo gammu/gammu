@@ -604,6 +604,10 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 
 			/* Parse reply */
 			error = ATGEN_ParseReply(s, buffer, "+CMGR: @i, @0", &state);
+			if (error == ERR_UNKNOWNRESPONSE) {
+				/* Some phones like ES75 lack state information, which we ignore anywa */
+				error = ATGEN_ParseReply(s, buffer, "+CMGR: @i", &state);
+			}
 			if (error != ERR_NONE) {
 				return error;
 			}
