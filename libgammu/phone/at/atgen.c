@@ -4634,7 +4634,7 @@ GSM_Error ATGEN_ReplyGetDivert(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 				&number_type,
 				ignore_buf, sizeof(ignore_buf),
 				&ignore,
-				response->Entries[response->EntriesNum].Timeout
+				&(response->Entries[response->EntriesNum].Timeout)
 				);
 		}
 
