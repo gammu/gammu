@@ -11,7 +11,11 @@ else:
     sm.ReadConfig()
 sm.Init()
 
-sm.SetCallDiverts('AllTypes', 'All', '+420800123456')
+if len(sys.argv) != 2:
+    print 'Usage: setdiverts.py NUMBER'
+    sys.exit(1)
+
+sm.SetCallDiverts('AllTypes', 'All', sys.argv[1])
 diverts = sm.GetCallDiverts()
 
 for x in diverts:
