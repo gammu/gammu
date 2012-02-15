@@ -826,6 +826,8 @@ This module wraps all python-gammu functionality.
 
    .. method:: SetCallDivert(Divert, Type, Number, Timeout=0)
 
+      .. versionadded:: 1.31.90
+
       Sets call divert.
 
       :param Divert: When to do the divert.
