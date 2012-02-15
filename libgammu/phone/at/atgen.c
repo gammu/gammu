@@ -4579,6 +4579,37 @@ GSM_Error ATGEN_CancelAllDiverts(GSM_StateMachine *s)
 	return error;
 }
 
+GSM_Error ATGEN_GetCallDivert(GSM_StateMachine *s, GSM_CallDivert *request, GSM_MultiCallDivert *response)
+{
+	GSM_Error error;
+	int reason = 0;
+	char buffer[50];
+
+	switch (request->DivertType) {
+		case GSM_DIVERT_Busy:
+			reason = 1;
+			break;
+		case GSM_DIVERT_NoAnswer:
+			reason = 2;
+			break;
+		case GSM_DIVERT_OutOfReach:
+			reason = 3;
+			break;
+		case GSM_DIVERT_AllTypes:
+			reason = 4;
+			break;
+		default:
+			smprintf(s, "Invalid divert type: %d\n", request->DivertType);
+			return ERR_BUG;
+	}
+
+	smprintf(s, "Getting diversions\n");
+	sprintf(buffer, "AT+CCFS=%d,2\r", reason);
+	ATGEN_WaitForAutoLen(s, buffer, 0x00, 40, ID_Divert);
+
+	return error;
+}
+
 GSM_Error ATEGN_SetCallDivert(GSM_StateMachine *s, GSM_CallDivert *divert)
 {
 	GSM_Error error;
@@ -5988,7 +6019,7 @@ GSM_Phone_Functions ATGENPhone = {
  	NOTSUPPORTED,			/* 	SplitCall		*/
  	NOTSUPPORTED,			/* 	TransferCall		*/
  	NOTSUPPORTED,			/* 	SwitchCall		*/
- 	NOTSUPPORTED,			/* 	GetCallDivert		*/
+ 	ATGEN_GetCallDivert,
  	ATEGN_SetCallDivert,
  	ATGEN_CancelAllDiverts,
 	ATGEN_SetIncomingCall,
