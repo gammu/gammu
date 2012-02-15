@@ -824,6 +824,20 @@ This module wraps all python-gammu functionality.
       :return: None
       :rtype: None
 
+   .. method:: SetCallDivert(Divert, Type, Number, Timeout=0)
+
+      Sets call divert.
+
+      :param Divert: When to do the divert.
+      :type Divert: :ref:`divert-type`
+      :param Type: What call types to divert.
+      :type Type: :ref:`divert-call`
+      :param Number: Phone number where to divert.
+      :type Number: string
+      :param Timeout: Optional timeout when divert happens.
+      :type Timeout: int
+      :return: None
+      :rtype: None
 
    .. method:: SetDateTime(Date)
 
