@@ -818,3 +818,27 @@ Example::
         'Finished': 0,
         'Pos': 0,
     }
+
+.. _divert-type:
+
+Divert Type
+-----------
+
+Thel divert type can have one of folowing values:
+
+* ``Busy``
+* ``NoAnswer``
+* ``OutOfReach``
+* ``AllTypes``
+
+.. _divert-call:
+
+Call Type
+---------
+
+The call type for diverts can have one of folowing values:
+
+* ``Voice``
+* ``Fax``
+* ``Data``
+* ``All``
