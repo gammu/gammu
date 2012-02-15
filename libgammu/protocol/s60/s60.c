@@ -40,10 +40,6 @@ static GSM_Error S60_WriteMessage (GSM_StateMachine *s, unsigned const char *Msg
 		return ERR_NONE;
 	}
 
-	/* Debugging */
-	GSM_DumpMessageLevel3(s, MsgBuffer, MsgLength, MsgType);
-	GSM_DumpMessageLevel2(s, MsgBuffer, MsgLength, MsgType);
-
 	/* Allocate buffer for composing message */
 	buflen = MIN(MAX_LENGTH, MsgLength) + 10;
 	buffer = (unsigned char *)malloc(buflen);
@@ -68,6 +64,11 @@ static GSM_Error S60_WriteMessage (GSM_StateMachine *s, unsigned const char *Msg
 	memcpy(buffer + bufpos, MsgBuffer + pos, length);
 	buffer[bufpos + length] = '\n';
 	length += bufpos + 1;
+
+	/* Debugging */
+	GSM_DumpMessageLevel3(s, buffer, length, MsgType);
+	GSM_DumpMessageLevel2(s, buffer, length, MsgType);
+
 	sent = s->Device.Functions->WriteDevice(s, buffer, length);
 	free(buffer);
 	if (sent != length) {
