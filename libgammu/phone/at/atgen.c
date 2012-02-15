@@ -4583,7 +4583,8 @@ GSM_Error ATEGN_SetCallDivert(GSM_StateMachine *s, GSM_CallDivert *divert)
 {
 	GSM_Error error;
 	int reason = 0, class = 0;
-	char buffer[200];
+	char buffer[50 + 2 * GSM_MAX_NUMBER_LENGTH], number[2 * GSM_MAX_NUMBER_LENGTH + 1];
+	size_t len;
 
 	switch (divert->DivertType) {
 		case GSM_DIVERT_Busy:
@@ -4621,9 +4622,15 @@ GSM_Error ATEGN_SetCallDivert(GSM_StateMachine *s, GSM_CallDivert *divert)
 			return ERR_BUG;
 	}
 
+	error = ATGEN_EncodeText(s, divert->Number, UnicodeLength(divert->Number), number, sizeof(number), &len);
+	if (error != ERR_NONE) {
+		return error;
+	}
+
 	smprintf(s, "Setting diversion\n");
-	sprintf(buffer, "AT+CCFS=%d,3,num,numtype,\"\",128,%d\r",
+	sprintf(buffer, "AT+CCFS=%d,3,\"%s\",129,\"\",128,%d\r",
 		reason,
+		number,
 		class);
 
 	ATGEN_WaitForAutoLen(s, buffer, 0x00, 40, ID_SetDivert);
