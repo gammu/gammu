@@ -126,6 +126,7 @@ typedef enum {
 	ID_DeleteAllToDo,
 	ID_SetLight,
 	ID_Divert,
+	ID_SetDivert,
 	ID_SetToDo,
 	ID_AddToDo,
 	ID_PlayTone,

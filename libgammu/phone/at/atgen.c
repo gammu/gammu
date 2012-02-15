@@ -4574,7 +4574,63 @@ GSM_Error ATGEN_CancelAllDiverts(GSM_StateMachine *s)
 {
 	GSM_Error error;
 
-	ATGEN_WaitForAutoLen(s, "AT+CCFC=4,4\r", 0x00, 4, ID_Divert);
+	ATGEN_WaitForAutoLen(s, "AT+CCFC=4,4\r", 0x00, 4, ID_SetDivert);
+
+	return error;
+}
+
+GSM_Error ATEGN_SetCallDivert(GSM_StateMachine *s, GSM_CallDivert *divert)
+{
+	GSM_Error error;
+	int reason = 0, class = 0;
+	char buffer[200];
+
+	switch (divert->DivertType) {
+		case GSM_DIVERT_Busy:
+			reason = 1;
+			break;
+		case GSM_DIVERT_NoAnswer:
+			reason = 2;
+			break;
+		case GSM_DIVERT_OutOfReach:
+			reason = 3;
+			break;
+		case GSM_DIVERT_AllTypes:
+			reason = 4;
+			break;
+		default:
+			smprintf(s, "Invalid divert type: %d\n", divert->DivertType);
+			return ERR_BUG;
+	}
+
+	switch (divert->CallType) {
+		case GSM_DIVERT_VoiceCalls:
+			class = 1;
+			break;
+		case GSM_DIVERT_FaxCalls:
+			class = 4;
+			break;
+		case GSM_DIVERT_DataCalls:
+			class = 2;
+			break;
+		case GSM_DIVERT_AllCalls:
+			class = 7;
+			break;
+		default:
+			smprintf(s, "Invalid divert call type: %d\n", divert->CallType);
+			return ERR_BUG;
+	}
+
+	smprintf(s, "Setting diversion\n");
+	sprintf(buffer, "AT+CCFS=%d,3,num,numtype,\"\",128,%d\r",
+		reason,
+		class);
+
+	ATGEN_WaitForAutoLen(s, buffer, 0x00, 40, ID_SetDivert);
+
+	smprintf(s, "Enabling diversion\n");
+	sprintf(buffer, "AT+CCFS=%d,1\r", reason);
+	ATGEN_WaitForAutoLen(s, buffer, 0x00, 40, ID_SetDivert);
 
 	return error;
 }
@@ -4601,7 +4657,7 @@ GSM_Error ATGEN_SendDTMF(GSM_StateMachine *s, char *sequence)
 	req[pos++] = '\r';
 	req[pos++] = '\0';
 	smprintf(s, "Sending DTMF\n");
-	ATGEN_WaitForAutoLen(s, req, 0x00, 4, ID_SendDTMF);
+	ATGEN_WaitForAutoLen(s, req, 0x00, 40, ID_SendDTMF);
 	return error;
 }
 
@@ -5781,7 +5837,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {SAMSUNG_ReplySetRingtone,	"SDNDCRC ="		,0x00,0x00,ID_SetRingtone	 },
 
 /* Call diverstion */
-{ATGEN_GenericReply,		"AT+CCFC=4,4"		,0x00,0x00,ID_Divert		 },
+{ATGEN_GenericReply,		"AT+CCFC="		,0x00,0x00,ID_SetDivert		 },
 
 /* Protocol probing */
 {ATGEN_GenericReply,		"AT+ORGI?"		,0x00,0x00,ID_GetProtocol	 },
@@ -5926,7 +5982,7 @@ GSM_Phone_Functions ATGENPhone = {
  	NOTSUPPORTED,			/* 	TransferCall		*/
  	NOTSUPPORTED,			/* 	SwitchCall		*/
  	NOTSUPPORTED,			/* 	GetCallDivert		*/
- 	NOTSUPPORTED,			/* 	SetCallDivert		*/
+ 	ATEGN_SetCallDivert,
  	ATGEN_CancelAllDiverts,
 	ATGEN_SetIncomingCall,
 	ATGEN_SetIncomingUSSD,
