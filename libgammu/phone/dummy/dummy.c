@@ -903,6 +903,23 @@ GSM_Error DUMMY_GetCallDivert(GSM_StateMachine *s, GSM_CallDivert *request, GSM_
 	return ERR_NONE;
 }
 
+GSM_Error DUMMY_SetCallDivert(GSM_StateMachine *s, GSM_CallDivert *request)
+{
+	int i;
+	GSM_Phone_DUMMYData	*Priv = &s->Phone.Data.Priv.DUMMY;
+
+	for (i = 0; i < Priv->diverts.EntriesNum; i++) {
+		if ((request->DivertType == Priv->diverts.Entries[i].DivertType) &&
+		    (request->CallType == Priv->diverts.Entries[i].CallType)) {
+			break;
+		}
+	}
+	Priv->diverts.Entries[i] = *request;
+	Priv->diverts.EntriesNum = i + 1;
+
+	return ERR_NONE;
+}
+
 GSM_Error DUMMY_CancelAllDiverts(GSM_StateMachine *s)
 {
 	GSM_Phone_DUMMYData	*Priv = &s->Phone.Data.Priv.DUMMY;
@@ -1987,7 +2004,7 @@ GSM_Phone_Functions DUMMYPhone = {
  	NOTSUPPORTED,			/* 	TransferCall		*/
  	NOTSUPPORTED,			/* 	SwitchCall		*/
 	DUMMY_GetCallDivert,
- 	NOTSUPPORTED,			/* 	SetCallDivert		*/
+ 	DUMMY_SetCallDivert,
  	DUMMY_CancelAllDiverts,
 	DUMMY_SetIncomingCall,
 	DUMMY_SetIncomingUSSD,
