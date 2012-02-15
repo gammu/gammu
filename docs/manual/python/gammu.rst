@@ -112,6 +112,15 @@ This module wraps all python-gammu functionality.
       :return: None
       :rtype: None
 
+   .. method:: CancelAllDiverts()
+
+      .. versionadded:: 1.31.90
+
+      Cancels all call diverts.
+
+      :return: None
+      :rtype: None
+
 
    .. method:: CancelCall(ID, All)
 
