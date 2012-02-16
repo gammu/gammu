@@ -893,8 +893,7 @@ GSM_Error DUMMY_GetCallDivert(GSM_StateMachine *s, GSM_CallDivert *request, GSM_
 	response->EntriesNum = 0;
 
 	for (i = 0; i < Priv->diverts.EntriesNum; i++) {
-		if ((request->DivertType == GSM_DIVERT_AllTypes || request->DivertType == Priv->diverts.Entries[i].DivertType) &&
-		    (request->CallType == GSM_DIVERT_AllCalls || request->CallType == Priv->diverts.Entries[i].CallType)) {
+		if (request->DivertType == Priv->diverts.Entries[i].DivertType && request->CallType == Priv->diverts.Entries[i].CallType) {
 			response->Entries[response->EntriesNum] = Priv->diverts.Entries[i];
 			response->EntriesNum++;
 		}
