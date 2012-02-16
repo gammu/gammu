@@ -4696,7 +4696,7 @@ GSM_Error ATGEN_GetCallDivert(GSM_StateMachine *s, GSM_CallDivert *request, GSM_
 			reason = 3;
 			break;
 		case GSM_DIVERT_AllTypes:
-			reason = 4;
+			reason = 0;
 			break;
 		default:
 			smprintf(s, "Invalid divert type: %d\n", request->DivertType);
@@ -4736,7 +4736,7 @@ GSM_Error ATGEN_SetCallDivert(GSM_StateMachine *s, GSM_CallDivert *divert)
 			reason = 3;
 			break;
 		case GSM_DIVERT_AllTypes:
-			reason = 4;
+			reason = 0;
 			break;
 		default:
 			smprintf(s, "Invalid divert type: %d\n", divert->DivertType);
