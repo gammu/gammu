@@ -190,7 +190,9 @@ UDH dictionary can consist of following fields:
 
    UDH content
 
-Example::
+Example:
+
+.. code-block:: python
 
     UDH = {
         'ID8bit': 0xcd,
@@ -240,7 +242,9 @@ SMSC dictionary can consist of following fields:
 * ``nM``, ``nH``, ``nD``, ``nW`` - period defined in minutes, hours, days or
   weeks, eg. ``3W``
 
-Example::
+Example:
+
+.. code-block:: python
 
     SMSC = {
         'Location': 1,
@@ -276,7 +280,9 @@ Message info dictionary can consist of following fields:
 
    Actual message data, see :ref:`sms_info_part_obj`.
 
-Example::
+Example:
+
+.. code-block:: python
 
     SMSINFO = {
         'Class': 1,
@@ -488,7 +494,9 @@ Todo entry is a dictionary consisting of following fields:
 
    Actual entries, see :ref:`todo_entry_obj`
 
-Example::
+Example:
+
+.. code-block:: python
 
     TODO = {
         'Type': 'MEMO',
@@ -574,7 +582,9 @@ Calendar entry is a dictionary consisting of following fields:
 
    Actual entries, see :ref:`cal_entry_obj`
 
-Example::
+Example:
+
+.. code-block:: python
 
     CAL = {
         'Type': 'MEMO',
@@ -640,7 +650,9 @@ Phonebook entry is a dictionary consisting of following fields:
 
    Actual entries, see :ref:`pbk_entry_obj`
 
-Example::
+Example:
+
+.. code-block:: python
 
     PBK = {
         'Location': 1000,
