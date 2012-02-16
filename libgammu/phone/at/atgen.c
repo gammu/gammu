@@ -4712,7 +4712,7 @@ GSM_Error ATGEN_GetCallDivert(GSM_StateMachine *s, GSM_CallDivert *request, GSM_
 	s->Phone.Data.Divert = response;
 
 	smprintf(s, "Getting diversions\n");
-	sprintf(buffer, "AT+CCFS=%d,2\r", reason);
+	sprintf(buffer, "AT+CCFC=%d,2\r", reason);
 	ATGEN_WaitForAutoLen(s, buffer, 0x00, 40, ID_Divert);
 
 	return error;
@@ -4767,7 +4767,7 @@ GSM_Error ATGEN_SetCallDivert(GSM_StateMachine *s, GSM_CallDivert *divert)
 	}
 
 	smprintf(s, "Setting diversion\n");
-	sprintf(buffer, "AT+CCFS=%d,3,\"%s\",129,\"\",128,%d\r",
+	sprintf(buffer, "AT+CCFC=%d,3,\"%s\",129,\"\",128,%d\r",
 		reason,
 		number,
 		class);
@@ -4775,7 +4775,7 @@ GSM_Error ATGEN_SetCallDivert(GSM_StateMachine *s, GSM_CallDivert *divert)
 	ATGEN_WaitForAutoLen(s, buffer, 0x00, 40, ID_SetDivert);
 
 	smprintf(s, "Enabling diversion\n");
-	sprintf(buffer, "AT+CCFS=%d,1\r", reason);
+	sprintf(buffer, "AT+CCFC=%d,1\r", reason);
 	ATGEN_WaitForAutoLen(s, buffer, 0x00, 40, ID_SetDivert);
 
 	return error;
