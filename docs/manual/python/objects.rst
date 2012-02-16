@@ -820,7 +820,7 @@ Example:
 
     FILE = {
         'ID_FullName': PATH,
-        'Name': os.path.basename(PATH)
+        'Name': os.path.basename(PATH),
         'Buffer': data,
         'Protected': 0,
         'ReadOnly': 0,
