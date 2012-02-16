@@ -826,10 +826,10 @@ Divert Type
 
 Thel divert type can have one of folowing values:
 
-* ``Busy``
-* ``NoAnswer``
-* ``OutOfReach``
-* ``AllTypes``
+* ``Busy`` - Divert when busy.
+* ``NoAnswer`` - Divert when not answered.
+* ``OutOfReach`` - Divert when phone off or no coverage.
+* ``AllTypes`` - Divert all calls without ringing.
 
 .. _divert-call:
 
@@ -838,10 +838,10 @@ Call Type
 
 The call type for diverts can have one of folowing values:
 
-* ``Voice``
-* ``Fax``
-* ``Data``
-* ``All``
+* ``Voice`` - Voice calls.
+* ``Fax`` - Fax calls.
+* ``Data`` - Data calls.
+* ``All`` - All calls.
 
 .. _divert-entry:
 
