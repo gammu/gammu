@@ -802,7 +802,9 @@ File is a dictionary consisting of following fields:
 
    Boolean value indicating completed file transfer.
 
-Example::
+Example:
+
+.. code-block:: python
 
     FILE = {
         'ID_FullName': PATH,
