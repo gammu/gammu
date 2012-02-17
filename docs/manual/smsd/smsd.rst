@@ -106,6 +106,18 @@ accepted on some platforms):
 
     Do not use logging as configured in config file.
 
+Signals
+-------
+
+SMSD can be controlled using following POSIX signals (if your platform supports this):
+
+SIGHUP
+    Reload configuration and reconnect to phone.
+SIGINT, SIGTERM
+    Gracefully shutdown the daemon.
+SIGALRM
+    Used internally for :option:`gammu-smsd -X`
+
 Examples
 --------
 
