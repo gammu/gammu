@@ -122,6 +122,10 @@ SIGUSR1
 SIGUSR2
     Resumes SMSD operattion (after previous suspend).
 
+.. versionchanged:: 1.22.91
+    Added support for SIGHUP.
+.. versionchanged:: 1.22.95
+    Added support for SIGALRM.
 .. versionchanged:: 1.31.90
     Added support for SIGUSR1 and SIGUSR2.
 
