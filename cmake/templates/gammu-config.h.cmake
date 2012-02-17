@@ -209,6 +209,12 @@
 #ifndef HAVE_SIGHUP
 #cmakedefine HAVE_SIGHUP
 #endif
+#ifndef HAVE_SIGUSR1
+#cmakedefine HAVE_SIGUSR1
+#endif
+#ifndef HAVE_SIGUSR2
+#cmakedefine HAVE_SIGUSR2
+#endif
 
 #ifndef HAVE_GETPWNAM
 #cmakedefine HAVE_GETPWNAM

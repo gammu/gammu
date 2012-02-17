@@ -36,6 +36,7 @@ const char default_config[] = "/etc/gammu-smsdrc";
 
 GSM_SMSDConfig *config;
 volatile gboolean reconfigure = FALSE;
+volatile gboolean standby = FALSE;
 
 void smsd_interrupt(int signum)
 {
@@ -47,6 +48,18 @@ void smsd_reconfigure(int signum)
 {
 	reconfigure = TRUE;
 	SMSD_Shutdown(config);
+}
+
+void smsd_standby(int signum)
+{
+	standby = TRUE;
+	reconfigure = TRUE;
+	SMSD_Shutdown(config);
+}
+
+void smsd_resume(int signum)
+{
+	standby = FALSE;
 }
 
 NORETURN void version(void)
@@ -299,6 +312,10 @@ void configure_daemon(SMSD_Parameters * params)
 #ifdef HAVE_ALARM
 	signal(SIGALRM, smsd_interrupt);
 #endif
+#if defined(HAVE_SIGUSR1) && defined(HAVE_SIGUSR2)
+	signal(SIGUSR1, smsd_standby);
+	signal(SIGUSR2, smsd_resume);
+#endif
 
 #ifdef HAVE_DAEMON
 	/* Daemonize has to be before writing PID as it changes it */
@@ -442,6 +459,7 @@ read_config:
 		configure_daemon(&params);
 
 	reconfigure = FALSE;
+	standby = FALSE;
 	error = SMSD_MainLoop(config, FALSE, params.max_failures);
 	if (error != ERR_NONE) {
 		printf("Failed to run SMSD: %s\n", GSM_ErrorString(error));
@@ -450,6 +468,14 @@ read_config:
 	}
 
 	SMSD_FreeConfig(config);
+
+	/*
+	 * Wait while we should be suspended.
+	 * Later we fall back to reconfigure bellow.
+	 */
+	while (standby) {
+		sleep(1);
+	}
 
 	if (reconfigure) {
 		goto read_config;

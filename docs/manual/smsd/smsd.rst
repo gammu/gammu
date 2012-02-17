@@ -117,6 +117,13 @@ SIGINT, SIGTERM
     Gracefully shutdown the daemon.
 SIGALRM
     Used internally for :option:`gammu-smsd -X`
+SIGUSR1
+    Suspends SMSD operartion, closing connection to phone and database.
+SIGUSR2
+    Resumes SMSD operattion (after previous suspend).
+
+.. versionchanged:: 1.31.90
+    Added support for SIGUSR1 and SIGUSR2.
 
 Examples
 --------

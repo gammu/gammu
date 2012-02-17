@@ -25,6 +25,7 @@ ChangeLog
 [!] * Changed API for call diverts.
 [+] * Added support for call diverts in Python API.
 [+] * AT backend supports manipulating with call diverts.
+[+] * Added support for suspending/resuming SMSD using SIGUSR1/2.
     
 20111221 - 1.31.0
 
