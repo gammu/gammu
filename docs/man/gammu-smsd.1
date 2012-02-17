@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSD" "1" "February 16, 2012" "1.31.90" "Gammu"
+.TH "GAMMU-SMSD" "1" "February 17, 2012" "1.31.90" "Gammu"
 .SH NAME
 gammu-smsd \- SMS daemon for Gammu
 .
@@ -145,6 +145,32 @@ Use logging as configured in config file (default).
 .B \-L, \-\-no\-use\-log
 Do not use logging as configured in config file.
 .UNINDENT
+.SH SIGNALS
+.sp
+SMSD can be controlled using following POSIX signals (if your platform supports this):
+.INDENT 0.0
+.TP
+.B SIGHUP
+Reload configuration and reconnect to phone.
+.TP
+.B SIGINT, SIGTERM
+Gracefully shutdown the daemon.
+.TP
+.B SIGALRM
+Used internally for \fI\%gammu-smsd -X\fP
+.TP
+.B SIGUSR1
+Suspends SMSD operartion, closing connection to phone and database.
+.TP
+.B SIGUSR2
+Resumes SMSD operattion (after previous suspend).
+.UNINDENT
+.sp
+Changed in version 1.22.91: Added support for SIGHUP.
+.sp
+Changed in version 1.22.95: Added support for SIGALRM.
+.sp
+Changed in version 1.31.90: Added support for SIGUSR1 and SIGUSR2.
 .SH EXAMPLES
 .SS Linux/Unix Examples
 .sp
