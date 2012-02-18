@@ -269,6 +269,10 @@ been installed. Some examples:
     # Gammu installed to /usr/local
     echo /usr/local/lib > /etc/ld.so.conf.d/gammu.conf
 
+The similar situation exists with Python modules, if you install in path when
+your Python interpreter does not search it won't load newly installed Gammu
+bindings.
+
 You can also avoid changing ldconfig configuration by installing Gammu to paths
 where it already searches, for examble by:
 
