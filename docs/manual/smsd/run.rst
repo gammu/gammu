@@ -8,7 +8,8 @@ Description
 
 Gammu SMSD can be configured by :config:option:`RunOnReceive` directive (see
 :ref:`gammu-smsdrc` for details) to run defined program after receiving
-message.
+every message. It can receive single message or more messages, which are parts
+of one multipart message.
 
 This parameter is executed through shell, so you might need to escape some
 special characters and you can include any number of parameters. Additionally
