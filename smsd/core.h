@@ -144,6 +144,8 @@ struct _GSM_SMSDConfig {
 	/* database data structure */
 	struct GSM_SMSDdbobj *db;
 	SQL_conn conn;
+	/* configurable SQL queries */
+	char * SMSDSQL_queries[SQL_QUERY_LAST_NO];
 #endif
 
 	INI_Section 		*smsdcfgfile;
