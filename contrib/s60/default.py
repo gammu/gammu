@@ -256,6 +256,7 @@ class Mobile(object):
 
             header = int(parts[0])
             message = unicode(parts[1], "utf8")
+            message_parts = message.split(NUM_SEPERATOR)
 
             if (header != NUM_PARTIAL_MESSAGE and self.__partialMessage):
                 message = self.__partialMessage + message
@@ -268,7 +269,7 @@ class Mobile(object):
                     self.send(NUM_HELLO_REPLY)
 
             elif (header == NUM_SYSINFO_REQUEST):
-                full = bool(int(message.split(NUM_SEPERATOR)[0]))
+                full = bool(int(message_parts[0]))
                 self.sendSysinfo(full)
 
             elif (header == NUM_LOCATION_REQUEST):
@@ -276,7 +277,7 @@ class Mobile(object):
 
             elif (header == NUM_DIAL):
                 try:
-                    telephone.dial(message.split(NUM_SEPERATOR)[0])
+                    telephone.dial(message_parts[0])
                 except:
                     pass
 
@@ -296,7 +297,7 @@ class Mobile(object):
                 self.send(NUM_CONTACTS_REPLY_COUNT, len(self.contactDb))
 
             elif (header == NUM_CONTACTS_REQUEST_CONTACT):
-                key = int(message.split(NUM_SEPERATOR)[0])
+                key = int(message_parts[0])
                 try:
                     contact = self.contactDb[key]
                     self.sendContact(contact)
@@ -317,17 +318,17 @@ class Mobile(object):
                     del self.contactDb[id]
 
             elif (header == NUM_CONTACTS_CHANGE_ADDFIELD):
-                id = int(message.split(NUM_SEPERATOR)[0])
-                type = unicode(message.split(NUM_SEPERATOR)[1])
-                location = unicode(message.split(NUM_SEPERATOR)[2])
-                value = unicode(message.split(NUM_SEPERATOR)[3])
+                id = int(message_parts[0])
+                type = unicode(message_parts[1])
+                location = unicode(message_parts[2])
+                value = unicode(message_parts[3])
                 self.modifyContact("add",  id,  type,  location,  value)
 
             elif (header == NUM_CONTACTS_CHANGE_REMOVEFIELD):
-                id = int(message.split(NUM_SEPERATOR)[0])
-                type = unicode(message.split(NUM_SEPERATOR)[1])
-                location = unicode(message.split(NUM_SEPERATOR)[2])
-                value = unicode(message.split(NUM_SEPERATOR)[3])
+                id = int(message_parts[0])
+                type = unicode(message_parts[1])
+                location = unicode(message_parts[2])
+                value = unicode(message_parts[3])
                 self.modifyContact("remove",  id,  type,  location,  value)
 
             elif (header == NUM_CALENDAR_REQUEST_COUNT):
@@ -340,7 +341,7 @@ class Mobile(object):
             #    self.sendCalendarHashSingle()
 
             elif (header == NUM_CALENDAR_REQUEST_ENTRY):
-                key = int(message.split(NUM_SEPERATOR)[0])
+                key = int(message_parts[0])
                 try:
                     entry = self.calendarDb[key]
                     self.sendCalendarEntry(entry)
@@ -359,48 +360,46 @@ class Mobile(object):
                     pass
 
             elif (header == NUM_CALENDAR_ENTRY_CHANGE or header == NUM_CALENDAR_ENTRY_ADD):
-                ms = message.split(NUM_SEPERATOR)
-
                 if (header == NUM_CALENDAR_ENTRY_CHANGE):
-                    id = int(ms[0])
+                    id = int(message_parts[0])
                 elif (header == NUM_CALENDAR_ENTRY_ADD):
-                    type = str(ms[0])
+                    type = str(message_parts[0])
 
-                content = unicode(ms[1])
-                location = unicode(ms[2])
-                #start = float(ms[3]) if ms[3] else 0
-                if ms[3]:
-                    start = float(ms[3])
+                content = unicode(message_parts[1])
+                location = unicode(message_parts[2])
+                #start = float(message_parts[3]) if message_parts[3] else 0
+                if message_parts[3]:
+                    start = float(message_parts[3])
                 else:
                     start = 0.0
-                #end = float(ms[4]) if ms[4] else None
-                if ms[4]:
-                    end = float(ms[4])
+                #end = float(message_parts[4]) if message_parts[4] else None
+                if message_parts[4]:
+                    end = float(message_parts[4])
                 else:
                     end = None
-                replication = str(ms[5])
-                #alarm = float(ms[6]) if ms[6] else None
-                if ms[6]:
-                    alarm = float(ms[6])
+                replication = str(message_parts[5])
+                #alarm = float(message_parts[6]) if message_parts[6] else None
+                if message_parts[6]:
+                    alarm = float(message_parts[6])
                 else:
                     alarm = None
-                priority = int(ms[7])
-                repeat_type = str(ms[8])
-                repeat_days = str(ms[9])
-                repeat_exceptions = str(ms[10])
-                #repeat_start = float(ms[11]) if ms[11] else 0
-                if ms[11]:
-                    repeat_start = float(ms[11])
+                priority = int(message_parts[7])
+                repeat_type = str(message_parts[8])
+                repeat_days = str(message_parts[9])
+                repeat_exceptions = str(message_parts[10])
+                #repeat_start = float(message_parts[11]) if message_parts[11] else 0
+                if message_parts[11]:
+                    repeat_start = float(message_parts[11])
                 else:
                     repeat_start = 0.0
-                #repeat_end = float(ms[12]) if ms[12] else None
-                if ms[12]:
-                    repeat_end = float(ms[12])
+                #repeat_end = float(message_parts[12]) if message_parts[12] else None
+                if message_parts[12]:
+                    repeat_end = float(message_parts[12])
                 else:
                     repeat_end = None
-                #repeat_interval = int(ms[13]) if ms[13] else 1
-                if ms[13]:
-                    repeat_interval = int(ms[13])
+                #repeat_interval = int(message_parts[13]) if message_parts[13] else 1
+                if message_parts[13]:
+                    repeat_interval = int(message_parts[13])
                 else:
                     repeat_interval = 1
 
@@ -412,11 +411,11 @@ class Mobile(object):
                                         repeat_days,  repeat_exceptions,  repeat_start,  repeat_end,  repeat_interval)
 
             elif (header == NUM_MESSAGE_REQUEST):
-                lastId = int(message.split(NUM_SEPERATOR)[0])
+                lastId = int(message_parts[0])
                 self.sendAllMessages(lastId)
 
             elif (header == NUM_MESSAGE_REQUEST_ONE):
-                lastId = int(message.split(NUM_SEPERATOR)[0])
+                lastId = int(message_parts[0])
                 self.sendOneMessage(lastId)
 
             elif (header == NUM_MESSAGE_REQUEST_UNREAD):
@@ -429,19 +428,19 @@ class Mobile(object):
                 self.sendMessagesCount()
 
             elif (header == NUM_MESSAGE_SEND_REQUEST):
-                name = unicode(message.split(NUM_SEPERATOR)[0])
-                phone = unicode(message.split(NUM_SEPERATOR)[1])
-                enc = str(message.split(NUM_SEPERATOR)[2])
-                msg = unicode(message.split(NUM_SEPERATOR)[3])
+                name = unicode(message_parts[0])
+                phone = unicode(message_parts[1])
+                enc = str(message_parts[2])
+                msg = unicode(message_parts[3])
                 self.sendMessage(name, phone, enc,  msg)
 
             elif (header == NUM_SET_READ):
-                id = int(message.split(NUM_SEPERATOR)[0])
-                state = bool(message.split(NUM_SEPERATOR)[1])
+                id = int(message_parts[0])
+                state = bool(message_parts[1])
                 self.setRead(id, state)
 
             elif (header == NUM_MESSAGE_DELETE):
-                id = int(message.split(NUM_SEPERATOR)[0])
+                id = int(message_parts[0])
                 self.messageDelete(id)
 
             elif (header == NUM_SCREENSHOT):
