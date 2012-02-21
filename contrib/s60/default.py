@@ -56,6 +56,7 @@ class Mobile(object):
         self.port = PORT
 
         self.loadConfig()
+        self.initUi()
 
         self.inbox = inbox.Inbox(inbox.EInbox)
         self.sent = inbox.Inbox(inbox.ESent)
@@ -67,7 +68,6 @@ class Mobile(object):
         self.inbox.bind(self.newMessage)
         #telephone.call_state(self.handleCall)
 
-        self.initUi()
         self.startService()
 
     def getCurrentDir(self):
