@@ -714,51 +714,46 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 	SQL_result res;
 	struct GSM_SMSDdbobj *db = Config->db;
 	int i;
-	gboolean found = FALSE;
 	time_t timestamp;
 	const char *coding;
 	const char *text;
-	const char *sender_id;
 	size_t text_len;
 	const char *text_decoded;
 	const char *destination;
 	const char *udh;
 	const char *q;
 	size_t udh_len;
-	unsigned int limit = 1;
 	SQL_Var vars[3];
 
-	/* Min. limit is 8 SMS, limit grows with higher loopsleep setting  Max. limit is 30 messages.*/
-	limit = Config->loopsleep>1 ? Config->loopsleep * 4 : 8;
-	limit = limit>30 ? 30 : limit;
-
 	vars[0].type = SQL_TYPE_INT;
-	vars[0].v.i = limit;
+	vars[0].v.i = 1;
 	vars[1].type = SQL_TYPE_NONE;
 
-	if (SMSDSQL_NamedQuery(Config, Config->SMSDSQL_queries[SQL_QUERY_FIND_OUTBOX_SMS_ID], NULL, vars, &res) != SQL_OK) {
-		SMSD_Log(DEBUG_INFO, Config, "Error reading from database (%s)", __FUNCTION__);
-		return ERR_UNKNOWN;
-	}
+	while (TRUE) {
+		if (SMSDSQL_NamedQuery(Config, Config->SMSDSQL_queries[SQL_QUERY_FIND_OUTBOX_SMS_ID], NULL, vars, &res) != SQL_OK) {
+			SMSD_Log(DEBUG_INFO, Config, "Error reading from database (%s)", __FUNCTION__);
+			return ERR_UNKNOWN;
+		}
 
-	while (db->NextRow(Config, &res)) {
+		if (db->NextRow(Config, &res) != 1) {
+			db->FreeResult(Config, &res);
+			return ERR_EMPTY;
+		}
+
 		sprintf(ID, "%ld", (long)db->GetNumber(Config, &res, 0));
 		timestamp = db->GetDate(Config, &res, 1);
+
+		db->FreeResult(Config, &res);
+
 		if (timestamp == -1) {
 			SMSD_Log(DEBUG_INFO, Config, "Invalid date for InsertIntoDB.");
 			return ERR_UNKNOWN;
 		}
+
 		SMSDSQL_Time2String(Config, timestamp, Config->DT, sizeof(Config->DT));
 		if (SMSDSQL_RefreshSendStatus(Config, ID) == ERR_NONE) {
-			found = TRUE;
 			break;
 		}
-	}
-
-	db->FreeResult(Config, &res);
-
-	if (!found) {
-		return ERR_EMPTY;
 	}
 
 	sms->Number = 0;
