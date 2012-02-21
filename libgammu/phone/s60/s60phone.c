@@ -45,10 +45,10 @@ GSM_Error S60_Install(GSM_StateMachine *s, const char *ExtraPath)
 	AppletFile.Buffer 	= NULL;
 	AppletFile.Used 	= 0;
 
-	error = PHONE_FindDataFile(s, &AppletFile, ExtraPath, "series60-remote.sis");
+	error = PHONE_FindDataFile(s, &AppletFile, ExtraPath, "gammu-s60-remote.sis");
 	if (error != ERR_NONE) {
 		smprintf(s, "Failed to find applet, trying another filename!\n");
-		error = PHONE_FindDataFile(s, &AppletFile, ExtraPath, "series60-remote-sign.sis");
+		error = PHONE_FindDataFile(s, &AppletFile, ExtraPath, "gammu-s60-remote-sign.sis");
 		if (error != ERR_NONE) {
 			smprintf(s, "Failed to load applet data!\n");
 			return ERR_INSTALL_NOT_FOUND;

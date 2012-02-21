@@ -24,7 +24,7 @@ set (GNAPPLET_FILES
     )
 
 set (S60_FILES
-    s60/series60-remote.sis
+    s60/gammu-s60-remote.sis
     )
 
 file(GLOB MEDIA_FILES "media/*.txt" "media/*.nlm")

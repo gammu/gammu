@@ -20,7 +20,7 @@ Before using this connection type, you need to install the applet to the
 phone. The applet can be found in ``contrib/s60`` directory and there are two
 variants of the applets:
 
-``series60-remote.sis``
+``gammu-s60-remote.sis``
     Not signed applet, which can be installed to the phone if it has enabled
     installation of unsigned applications (see :ref:`s60-unsigned`). 
 
@@ -29,7 +29,7 @@ variants of the applets:
         This applet also lacks some capabilities, so for example you will not
         be able to get network information.
 
-``series60-remote-sign.sis``
+``gammu-s60-remote-sign.sis``
     Applet ready for signing using `Open Signed Online`_. This will allow you
     to install applet to your phone only (it is bound to IMEI), but you don't
     need to allow installation of unsigned applications.
@@ -138,7 +138,7 @@ And now you can send files to your phone:
 .. code-block:: sh
 
     gammu sendfile Python_2.0.0.sis
-    gammu sendfile contrib/s60/series60-remote.sis
+    gammu sendfile contrib/s60/gammu-s60-remote.sis
 
 Files should appear in inbox in your phone and you can install them from
 there.
