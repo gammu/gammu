@@ -174,7 +174,7 @@ GSM_Error S60_Initialise(GSM_StateMachine *s)
 		return error;
 	}
 
-	if (Priv->MajorVersion != 1 || Priv->MinorVersion != 5) {
+	if (Priv->MajorVersion != 1 || Priv->MinorVersion != 6) {
 		smprintf(s, "Unsupported protocol version\n");
 		return ERR_NOTSUPPORTED;
 	}

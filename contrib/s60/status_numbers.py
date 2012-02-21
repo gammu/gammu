@@ -98,4 +98,4 @@ NUM_END_HEADER = chr(0x02)   # Start of Text
 NUM_SEPERATOR = chr(0x1E)   # Record Separator
 NUM_END_TEXT = chr(0x03)   # End of Text
 
-PROTOCOL_VERSION = 1.5
+PROTOCOL_VERSION = 1.6
