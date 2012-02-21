@@ -17,7 +17,7 @@ python2.5 $PYS60DIR/ensymble.py py2sis \
     --version=$VERSION \
     --lang=EN \
     --shortcaption="Gammu S60" \
-    --caption="Gammu 60 Remote" \
+    --caption="Gammu S60 Remote" \
     --vendor="Michal Cihar" \
     --caps=LocalServices+ReadUserData+WriteUserData+WriteUserData+NetworkServices+UserEnvironment \
     --icon="$CURDIR/icon.svg" \
@@ -30,7 +30,7 @@ python2.5 $PYS60DIR/ensymble.py py2sis \
     --version=$VERSION \
     --lang=EN \
     --shortcaption="Gammu S60" \
-    --caption="Gammu 60 Remote" \
+    --caption="Gammu S60 Remote" \
     --vendor="Michal Cihar" \
     --caps=LocalServices+Location+ReadDeviceData+ReadUserData+WriteUserData+WriteUserData+NetworkServices+UserEnvironment \
     --icon="$CURDIR/icon.svg" \
