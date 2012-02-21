@@ -749,12 +749,9 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 			return ERR_UNKNOWN;
 		}
 		SMSDSQL_Time2String(Config, timestamp, Config->DT, sizeof(Config->DT));
-		sender_id = db->GetString(Config, &res, 3);
-		if (sender_id == NULL || strlen(sender_id) == 0 || !strcmp(sender_id, Config->PhoneID)) {
-			if (SMSDSQL_RefreshSendStatus(Config, ID) == ERR_NONE) {
-				found = TRUE;
-				break;
-			}
+		if (SMSDSQL_RefreshSendStatus(Config, ID) == ERR_NONE) {
+			found = TRUE;
+			break;
 		}
 	}
 
