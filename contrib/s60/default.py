@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 # Copyright (c) 2008 - 2010 Lukas Hetzenecker <LuHe@gmx.at>
+# Copyright (c) 2011 - 2012 Michal Čihař <michal@cihar.com>
 
 import sys
 sys.path.append('e:\python\libs')
