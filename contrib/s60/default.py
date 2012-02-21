@@ -252,9 +252,10 @@ class Mobile(object):
     def wait(self):
         while(True):
             data = self.fis.readline()
+            parts = data.split(NUM_END_HEADER)
 
-            header = int(data.split(NUM_END_HEADER)[0])
-            message = unicode(data.split(NUM_END_HEADER)[1],  "utf8")
+            header = int(parts[0])
+            message = unicode(parts[1], "utf8")
 
             if (header != NUM_PARTIAL_MESSAGE and self.__partialMessage):
                 message = self.__partialMessage + message
