@@ -2,7 +2,7 @@
 # Create series60-remote.sis
 
 PYS60DIR=~/PythonForS60
-VERSION=0.4.80
+VERSION=0.6
 CURDIR=$PWD
 
 
@@ -23,7 +23,7 @@ python2.5 $PYS60DIR/ensymble.py py2sis \
     --icon="$CURDIR/icon.svg" \
     --verbose \
     $CURDIR/tmp \
-    $CURDIR/series60-remote.sis
+    $CURDIR/gammu-s60-remote.sis
 
 python2.5 $PYS60DIR/ensymble.py py2sis \
     --appname="Gammu S60 Remote" \
@@ -36,7 +36,7 @@ python2.5 $PYS60DIR/ensymble.py py2sis \
     --icon="$CURDIR/icon.svg" \
     --verbose \
     $CURDIR/tmp \
-    $CURDIR/series60-remote-sign.sis
+    $CURDIR/gamm-s60-remote-sign.sis
 
 cd $CURDIR
 
