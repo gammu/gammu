@@ -6,8 +6,8 @@ Series60 Remote Protocol
 .. note:: 
 
     The original applet has been created for
-    <http://series60-remote.sourceforge.net/>. Gammu currently uses slightly
-    extended version which will be hopefully merged back.
+    <http://series60-remote.sourceforge.net/>. Gammu uses
+    extended version which is probably not fully compatible with original.
 
 .. warning::
 
