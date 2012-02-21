@@ -2,7 +2,7 @@
 # Create series60-remote.sis
 
 PYS60DIR=~/PythonForS60
-VERSION=0.6
+VERSION=0.6.0
 CURDIR=$PWD
 
 
