@@ -1910,6 +1910,7 @@ GSM_Error S60_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, gboolean
 GSM_Error S60_SendSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 {
 	char buffer[((GSM_MAX_SMS_LENGTH + 1) * 2) + ((GSM_MAX_SMS_NAME_LENGTH + 1) * 2) + ((GSM_MAX_NUMBER_LENGTH + 1) * 2)];
+	char textbuffer[((GSM_MAX_SMS_LENGTH + 1) * 2)];
 
 	if (sms->UDH.Type != UDH_NoUDH) {
 		return ERR_NOTSUPPORTED;
@@ -1933,7 +1934,8 @@ GSM_Error S60_SendSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 			break;
 	}
 	strcat(buffer, NUM_SEPERATOR_STR);
-	EncodeUTF8(buffer + strlen(buffer), sms->Text);
+	EncodeUTF8(textbuffer, sms->Text);
+	EncodeSpecialChars(buffer + strlen(buffer), textbuffer);
 	strcat(buffer, NUM_SEPERATOR_STR);
 
 	return GSM_WaitFor(s, buffer, strlen(buffer), NUM_MESSAGE_SEND_REQUEST, S60_TIMEOUT, ID_None);

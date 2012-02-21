@@ -432,7 +432,7 @@ class Mobile(object):
                 name = unicode(message_parts[0])
                 phone = unicode(message_parts[1])
                 enc = str(message_parts[2])
-                msg = unicode(message_parts[3])
+                msg = unicode(message_parts[3]).decode('string_escape')
                 self.sendMessage(name, phone, enc,  msg)
 
             elif (header == NUM_SET_READ):
