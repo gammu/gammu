@@ -36,7 +36,7 @@ python2.5 $PYS60DIR/ensymble.py py2sis \
     --icon="$CURDIR/icon.svg" \
     --verbose \
     $CURDIR/tmp \
-    $CURDIR/gamm-s60-remote-sign.sis
+    $CURDIR/gammu-s60-remote-sign.sis
 
 cd $CURDIR
 
