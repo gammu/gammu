@@ -38,7 +38,7 @@ import socket as pysocket
 import cPickle
 
 
-VERSION = 0.5
+VERSION = 0.6
 PORT = 18
 
 # For hash functions
