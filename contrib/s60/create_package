@@ -13,12 +13,12 @@ cp *.py tmp/
 cd $PYS60DIR
 
 python2.5 $PYS60DIR/ensymble.py py2sis \
-    --appname="Series60 - Remote" \
+    --appname="Gammu S60 Remote" \
     --version=$VERSION \
     --lang=EN \
-    --shortcaption="S60-Remote" \
-    --caption="Series60 - Remote" \
-    --vendor="Gammu team" \
+    --shortcaption="Gammu S60" \
+    --caption="Gammu 60 Remote" \
+    --vendor="Michal Cihar" \
     --caps=LocalServices+ReadUserData+WriteUserData+WriteUserData+NetworkServices+UserEnvironment \
     --icon="$CURDIR/icon.svg" \
     --verbose \
@@ -26,12 +26,12 @@ python2.5 $PYS60DIR/ensymble.py py2sis \
     $CURDIR/series60-remote.sis
 
 python2.5 $PYS60DIR/ensymble.py py2sis \
-    --appname="Series60 - Remote" \
+    --appname="Gammu S60 Remote" \
     --version=$VERSION \
     --lang=EN \
-    --shortcaption="S60-Remote" \
-    --caption="Series60 - Remote" \
-    --vendor="Gammu team" \
+    --shortcaption="Gammu S60" \
+    --caption="Gammu 60 Remote" \
+    --vendor="Michal Cihar" \
     --caps=LocalServices+Location+ReadDeviceData+ReadUserData+WriteUserData+WriteUserData+NetworkServices+UserEnvironment \
     --icon="$CURDIR/icon.svg" \
     --verbose \

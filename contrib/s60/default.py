@@ -90,7 +90,7 @@ class Mobile(object):
         return os.path.join(self.getCurrentDir(), name)
 
     def getConfigFilename(self):
-        return self.getFilename('s60.cfg')
+        return self.getFilename('gammu-s60.cfg')
 
     def getScreenshotFilename(self):
         return self.getFilename('screenshot.png')
@@ -120,7 +120,7 @@ class Mobile(object):
             pass
 
     def initUi(self):
-        app.title = u"Series 60 - Remote"
+        app.title = u"Gammu S60 Remote"
 
         if self.useCanvas:
             self.canvas = Canvas(redraw_callback=self.statusUpdate)
@@ -1168,7 +1168,7 @@ class Mobile(object):
             self.startService()
 
     def aboutHandler(self):
-        query(u'Series60 - remote\nVersion %s\nModified for Gammu\nhttp://wammu.eu/' % (VERSION) , 'query')
+        query(u'Gammu S60 Remote\nVersion %s\nhttp://wammu.eu/' % (VERSION) , 'query')
 
     def toggleHandler(self):
         e32.start_exe(u'BtToggleApp.exe','')
@@ -1197,7 +1197,7 @@ except Exception, e:
     err_msg = u"This programs was unexpectedly closed due to the following error: "
     err_msg += unicode(repr(e)) + new_line
     err_msg += u"Please, copy and paste the text presented here and "
-    err_msg += u"send it to series60-remote-devel@lists.sourceforge.net. "
+    err_msg += u"send it to gammu-users@lists.sourceforge.net. "
     err_msg += u"Thanks in advance and sorry for this inconvenience." + new_line*2
     err_msg += u"Call stack:" + new_line + call_stack
 

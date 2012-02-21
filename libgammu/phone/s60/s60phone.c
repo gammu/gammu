@@ -308,7 +308,7 @@ static GSM_Error S60_Reply_Connect(GSM_Protocol_Message *msg, GSM_StateMachine *
 		return ERR_UNKNOWN;
 	}
 	Priv->MinorVersion = atoi(pos + 1);
-	smprintf(s, "Connected to series60-remote version %d.%d\n", Priv->MajorVersion, Priv->MinorVersion);
+	smprintf(s, "Connected to Gammu S60 Remote version %d.%d\n", Priv->MajorVersion, Priv->MinorVersion);
 
 	return ERR_NONE;
 }
