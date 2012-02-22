@@ -25,7 +25,7 @@ unsigned char GNAPGEN_MEMORY_TYPES[] = {
 	  0x00,		 0x00
 };
 
-GSM_Error GNAPGEN_Install(GSM_StateMachine *s, const char *ExtraPath)
+GSM_Error GNAPGEN_Install(GSM_StateMachine *s, const char *ExtraPath, gboolean Minimal)
 {
 	GSM_StateMachine *gsm;
 	GSM_Debug_Info *debug_info;

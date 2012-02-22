@@ -734,7 +734,7 @@ typedef struct {
 	/**
 	 * Installs required applets to the phone.
 	 */
-	GSM_Error (*Install)	 	(GSM_StateMachine *s, const char *ExtraPath);
+	GSM_Error (*Install)	 	(GSM_StateMachine *s, const char *ExtraPath, gboolean Minimal);
 	/**
 	 * Initializes phone.
 	 */

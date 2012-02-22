@@ -2502,14 +2502,19 @@ void CancelAllDiverts(int argc UNUSED, char *argv[] UNUSED)
 	GSM_Terminate();
 }
 
-void Install(int argc UNUSED, char *argv[] UNUSED)
+void Install(int argc, char *argv[])
 {
 	GSM_Error error;
+	gboolean Minimal = FALSE;
+
+	if (argc == 3 && strcasecmp(argv[2], "-minimal") == 0) {
+		Minimal = TRUE;
+	}
 
 	GSM_Init(FALSE);
 
 	/* TODO: make search path configurable */
-	error = GSM_Install(gsm, INI_GetValue(cfg, "gammu", "datapath", FALSE));
+	error = GSM_Install(gsm, INI_GetValue(cfg, "gammu", "datapath", FALSE), Minimal);
 	Print_Error(error);
 
 	printf("%s\n", _("The application has been successfully sent to the phone."));

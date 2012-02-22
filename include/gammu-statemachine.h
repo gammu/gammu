@@ -305,11 +305,13 @@ GSM_ConnectionType GSM_GetUsedConnection(GSM_StateMachine * s);
  *
  * \param s State machine data.
  * \param ExtraPath Extra path where to search for installation data.
+ * \param Minimal Whether to do minimal installation (eg. without support
+ * libraries), useful for applet updates
  * \return Result of operation.
  *
  * \ingroup StateMachine
  */
-GSM_Error GSM_Install(GSM_StateMachine *s, const char *ExtraPath);
+GSM_Error GSM_Install(GSM_StateMachine *s, const char *ExtraPath, gboolean Minimal);
 
 #endif
 

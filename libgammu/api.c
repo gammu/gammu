@@ -1865,11 +1865,11 @@ GSM_Error GSM_GetScreenshot(GSM_StateMachine *s, GSM_BinaryPicture *picture)
 /**
  * Gets phone screenshot
  */
-GSM_Error GSM_Install(GSM_StateMachine *s, const char *ExtraPath)
+GSM_Error GSM_Install(GSM_StateMachine *s, const char *ExtraPath, gboolean Minimal)
 {
 	GSM_Error err;
 
-	err = s->Phone.Functions->Install(s, ExtraPath);
+	err = s->Phone.Functions->Install(s, ExtraPath, Minimal);
 	PRINT_LOG_ERROR(err);
 	return err;
 }

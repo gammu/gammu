@@ -29,7 +29,7 @@
 
 #if defined(GSM_ENABLE_S60)
 
-GSM_Error S60_Install(GSM_StateMachine *s, const char *ExtraPath)
+GSM_Error S60_Install(GSM_StateMachine *s, const char *ExtraPath, gboolean Minimal)
 {
 	GSM_StateMachine *gsm;
 	GSM_Debug_Info *debug_info;
@@ -55,22 +55,30 @@ GSM_Error S60_Install(GSM_StateMachine *s, const char *ExtraPath)
 		}
 	}
 
-	error = PHONE_FindDataFile(s, &PythonFile, ExtraPath, "Python_2.0.0.sis");
-	if (error == ERR_NONE) {
-		install_python = TRUE;
-	} else {
-		smprintf(s, "Could not find Python for S60 to install, skipping!\n");
+	if (Minimal) {
+
 		install_python = FALSE;
 		install_pips = FALSE;
-	}
 
-	if (install_python) {
-		error = PHONE_FindDataFile(s, &PIPSFile, ExtraPath, "pips.sis");
+	} else {
+
+		error = PHONE_FindDataFile(s, &PythonFile, ExtraPath, "Python_2.0.0.sis");
 		if (error == ERR_NONE) {
-			install_pips = TRUE;
+			install_python = TRUE;
 		} else {
-			smprintf(s, "Could not find PIPS to install, skipping!\n");
+			smprintf(s, "Could not find Python for S60 to install, skipping!\n");
+			install_python = FALSE;
 			install_pips = FALSE;
+		}
+
+		if (install_python) {
+			error = PHONE_FindDataFile(s, &PIPSFile, ExtraPath, "pips.sis");
+			if (error == ERR_NONE) {
+				install_pips = TRUE;
+			} else {
+				smprintf(s, "Could not find PIPS to install, skipping!\n");
+				install_pips = FALSE;
+			}
 		}
 	}
 

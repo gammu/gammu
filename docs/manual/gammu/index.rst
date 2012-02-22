@@ -1631,12 +1631,15 @@ Configuration commands
        no clue how to configure phone connection, this is a convenient way to
        find working setup for Gammu.
 
-.. option:: install
+.. option:: install [-minimal]
 
     Installs applet for currently configured connection to the phone.
 
     You can configure search path for instllation files by
     :config:option:`DataPath`.
+
+    The -minimal parameter forces installation of applet only without possible
+    support libraries, this can be useful for updates.
 
 Gammu information commands
 --------------------------
