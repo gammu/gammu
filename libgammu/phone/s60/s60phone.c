@@ -279,7 +279,7 @@ static GSM_Error S60_Reply_SendSMS(GSM_Protocol_Message *msg, GSM_StateMachine *
 			if (s->User.SendSMSStatus != NULL) {
 				s->User.SendSMSStatus(s, 1, -1, s->User.SendSMSStatusUserData);
 			}
-			return ERR_UNKNOWN;
+			return ERR_BUSY;
 		case NUM_MESSAGE_SEND_REPLY_STATUS:
 			return ERR_NONE;
 		case NUM_MESSAGE_SEND_REPLY_OK:
