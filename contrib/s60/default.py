@@ -1088,7 +1088,7 @@ class Mobile(object):
             self.send(NUM_MESSAGE_SEND_REPLY_STATUS,  "Moved to outbox.")
         elif status == messaging.EScheduledForSend:
             self.send(NUM_MESSAGE_SEND_REPLY_STATUS,  "Scheduled for send.")
-        if status == messaging.ESent:
+        elif status == messaging.ESent:
             self.send(NUM_MESSAGE_SEND_REPLY_STATUS,  "Message sent.")
         elif status == messaging.EDeleted:
             self.send(NUM_MESSAGE_SEND_REPLY_OK,  "The SMS message has been deleted from device's outbox queue.")
@@ -1100,6 +1100,8 @@ class Mobile(object):
             self.send(NUM_MESSAGE_SEND_REPLY_FAILURE,  "No service centre.")
         elif status == messaging.EFatalServerError:
             self.send(NUM_MESSAGE_SEND_REPLY_FAILURE,  "SMS send failed! If the device is in offline-mode or with no network connection the message is added to the device's outgoing message queue.")
+        else:
+            self.send(NUM_MESSAGE_SEND_REPLY_STATUS, "Unknown status: %s" % status)
 
     def newMessage(self, sms):
         if not self.connected:
