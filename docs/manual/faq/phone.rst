@@ -26,7 +26,7 @@ cheaper, while still good are modems made by Huawei (eg. E160/E220/E1750/...).
 We have heard also positive experiences with cheap modems from various Chinese 
 resellers like DealExtreme or Alibaba.
 
-.. seelaso:: You can check other user experiences in `Gammu Phones Database`_.
+.. seealso:: You can check other user experiences in `Gammu Phones Database`_.
 
 .. _faq-nokia:
 
