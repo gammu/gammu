@@ -46,7 +46,7 @@ void eventlog_log(void *handle, int level, const char *message)
 			evtype = EVENTLOG_INFORMATION_TYPE;
 			break;
 		default:
-			eventid = EVENT_MSG_GAMMU;
+			eventid = EVENT_MSG_OTHER;
 			evtype = EVENTLOG_INFORMATION_TYPE;
 			break;
 	}

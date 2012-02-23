@@ -64,7 +64,7 @@ Language=English
 %0
 .
 
-MessageId=0x102
+MessageId=0x103
 Severity=Informational
 Facility=Runtime
 SymbolicName=EVENT_MSG_SQL
@@ -72,10 +72,18 @@ Language=English
 %0
 .
 
-MessageId=0x102
+MessageId=0x104
 Severity=Informational
 Facility=Runtime
 SymbolicName=EVENT_MSG_GAMMU
+Language=English
+%0
+.
+
+MessageId=0x105
+Severity=Informational
+Facility=Runtime
+SymbolicName=EVENT_MSG_OTHER
 Language=English
 %0
 .
