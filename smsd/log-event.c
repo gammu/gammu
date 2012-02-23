@@ -25,6 +25,8 @@ void eventlog_log(void *handle, int level, const char *message)
 			evtype = EVENTLOG_ERROR_TYPE;
 			break;
 		case DEBUG_INFO:
+			evtype = EVENTLOG_SUCCESS;
+			break;
 		case DEBUG_NOTICE:
 		default:
 			evtype = EVENTLOG_INFORMATION_TYPE;
