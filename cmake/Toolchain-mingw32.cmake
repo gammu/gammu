@@ -14,6 +14,7 @@ SET(CMAKE_OBJCOPY i686-w64-mingw32-objcopy)
 SET(CMAKE_OBJDUMP i686-w64-mingw32-objdump)
 SET(CMAKE_RANLIB i686-w64-mingw32-ranlib)
 SET(CMAKE_STRIP i686-w64-mingw32-strip)
+SET(CMAKE_MC i686-w64-mingw32-windmc)
 
 # here is the target environment located
 SET(CMAKE_FIND_ROOT_PATH  /usr/i686-w64-mingw32/sys-root/mingw/ /usr/i686-pc-mingw32/sys-root/mingw/ /home/mcihar/win-cross/crosscompiled)

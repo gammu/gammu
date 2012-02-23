@@ -5,7 +5,7 @@
 #include <winsock2.h>
 #include <windows.h>
 #include <stdio.h>
-#include "event/smsd.h"
+#include "smsd.h"
 #include "core.h"
 
 void *eventlog_init(void)

@@ -110,6 +110,7 @@ endif (HAVE_SHM OR WIN32)
 
 include_directories (
     "${CMAKE_CURRENT_BINARY_DIR}/../include"
+    "${CMAKE_CURRENT_BINARY_DIR}/"
     )
 
 # Tune options for found libraries
@@ -151,6 +152,18 @@ if (HAVE_SHM OR WIN32)
             COMPONENT smsd
             )
 endif (HAVE_SHM OR WIN32)
+
+# Windows Event Log support
+if (WIN32)
+    add_custom_command(
+        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/smsd.h ${CMAKE_CURRENT_BINARY_DIR}/smsd.rc
+        COMMAND ${CMAKE_MC} ${CMAKE_CURRENT_SOURCE_DIR}/event/smsd.mc -r ${CMAKE_CURRENT_BINARY_DIR} -h ${CMAKE_CURRENT_BINARY_DIR}
+        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/event/smsd.mc)
+    set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/smsd.h ${CMAKE_CURRENT_BINARY_DIR}/smsd.rc
+        PROPERTIES GENERATED TRUE)
+    add_custom_target(smsd.mc ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/smsd.h ${CMAKE_CURRENT_BINARY_DIR}/smsd.rc)
+#    add_dependencies(gsmsd ${CMAKE_CURRENT_BINARY_DIR}/smsd.h)
+endif (WIN32)
 
 # Testing
 include(CMakeTests.txt)
