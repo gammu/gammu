@@ -3,6 +3,9 @@
 Series60 Remote Protocol
 ========================
 
+.. versonchanged:: 1.31.90
+    There were some changes in the protocol and applet has been renamed.
+
 .. note:: 
 
     The original applet has been created for
