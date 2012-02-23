@@ -2,8 +2,11 @@
  * Windows event log logging backend.
  */
 
+#include <winsock2.h>
 #include <windows.h>
 #include <stdio.h>
+#include "event/smsd.h"
+#include "core.h"
 
 void *eventlog_init(void)
 {
@@ -18,17 +21,32 @@ void *eventlog_init(void)
 void eventlog_log(void *handle, int level, const char *message)
 {
         LPCTSTR lpstrings[1];
-        WORD evtype= EVENTLOG_ERROR_TYPE;
+        WORD evtype = EVENTLOG_ERROR_TYPE;
+	DWORD eventid = 0;
 
 	switch (level) {
 		case DEBUG_ERROR:
 			evtype = EVENTLOG_ERROR_TYPE;
+			eventid = EVENT_MSG_ERROR;
 			break;
 		case DEBUG_INFO:
 			evtype = EVENTLOG_SUCCESS;
+			eventid = EVENT_MSG_INFO;
 			break;
 		case DEBUG_NOTICE:
+			eventid = EVENT_MSG_NOTICE;
+			evtype = EVENTLOG_INFORMATION_TYPE;
+			break;
+		case DEBUG_SQL:
+			eventid = EVENT_MSG_SQL;
+			evtype = EVENTLOG_INFORMATION_TYPE;
+			break;
+		case DEBUG_GAMMU:
+			eventid = EVENT_MSG_GAMMU;
+			evtype = EVENTLOG_INFORMATION_TYPE;
+			break;
 		default:
+			eventid = EVENT_MSG_GAMMU;
 			evtype = EVENTLOG_INFORMATION_TYPE;
 			break;
 	}
@@ -37,7 +55,7 @@ void eventlog_log(void *handle, int level, const char *message)
 	 * @todo: 1024 is probably wrong, we should use mc to get proper
 	 * event identifiers.
 	 */
-	ReportEvent(handle, evtype, 0, 1024, NULL, 1, 0,
+	ReportEvent(handle, evtype, 0, eventid, NULL, 1, 0,
 		lpstrings, NULL);
 }
 
