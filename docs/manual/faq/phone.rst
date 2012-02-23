@@ -17,11 +17,16 @@ For information how to configure your phone, see :ref:`faq-config`.
 Which phone is best for SMS gateway?
 ------------------------------------
 
-Forget about using standard phones, they tend not to be reliable for long time
-connection to PC. Best option are GSM (GPRS, UMTS) terminals/modems. The best
-option seem to be Siemens modems (eg. ES75/MC35i/MC55i). Slightly cheaper,
-while still good are modems made by Huawei (eg. E160/E220/E1750/...). You can
-check other user experiences in `Gammu Phones Database`_.
+Standard phones usually do not perform good when used long term as a modem. So
+it's always better to choose some GSM (GPRS, EDGE, UMTS) terminals/modems, which
+are designed to be used long for term in connection with computer.
+
+The best option seem to be Siemens modems (eg. ES75/MC35i/MC55i). Slightly
+cheaper, while still good are modems made by Huawei (eg. E160/E220/E1750/...). 
+We have heard also positive experiences with cheap modems from various Chinese 
+resellers like DealExtreme or Alibaba.
+
+.. seelaso:: You can check other user experiences in `Gammu Phones Database`_.
 
 .. _faq-nokia:
 
