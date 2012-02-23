@@ -6,7 +6,11 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <unistd.h>
+#ifdef WIN32
+#  include <io.h>
+#else
+#  include <unistd.h>
+#endif
 #include "../libgammu/protocol/protocol.h"	/* Needed for GSM_Protocol_Message */
 #include "../libgammu/gsmstate.h"	/* Needed for state machine internals */
 #include "../libgammu/gsmphones.h"	/* Phone data */
