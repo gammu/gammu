@@ -12,7 +12,7 @@ topic. You can check other user experiences in `Gammu Phones Database`_.
 
 For information how to configure your phone, see :ref:`faq-config`.
 
-.. seealso:: :ref:`faq-symbian`, :ref:`faq-android`, :ref:`faq-blackberry`, :ref:`faq-iphone`, :ref:`gammurc`
+.. seealso:: :ref:`faq-symbian`, :ref:`faq-android`, :ref:`faq-blackberry`, :ref:`faq-iphone`, :ref:`faq-config`, :ref:`gammurc`
 
 Which phone is best for SMS gateway?
 ------------------------------------
