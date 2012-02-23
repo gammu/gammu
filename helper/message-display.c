@@ -152,20 +152,20 @@ void DisplayMessageHex(GSM_SMSMessage *sms) {
 }
 
 #ifdef GSM_ENABLE_BACKUP
-void DisplaySingleSMSInfo(GSM_SMSMessage sms, gboolean displaytext, gboolean displayudh, const GSM_Backup *Info)
+void DisplaySingleSMSInfo(GSM_SMSMessage *sms, gboolean displaytext, gboolean displayudh, const GSM_Backup *Info)
 #else
-void DisplaySingleSMSInfo(GSM_SMSMessage sms, gboolean displaytext, gboolean displayudh, const void *Info)
+void DisplaySingleSMSInfo(GSM_SMSMessage *sms, gboolean displaytext, gboolean displayudh, const void *Info)
 #endif
 {
 	GSM_SiemensOTASMSInfo 	SiemensOTA;
 	int			i;
 
-	switch (sms.PDU) {
+	switch (sms->PDU) {
 	case SMS_Status_Report:
 		printf("%s\n", _("SMS status report"));
 
 		printf(LISTFORMAT, _("Status"));
-		switch (sms.State) {
+		switch (sms->State) {
 			case SMS_Sent	: printf("%s", _("Sent"));	break;
 			case SMS_Read	: printf("%s", _("Read"));	break;
 			case SMS_UnRead	: printf("%s", _("UnRead"));	break;
@@ -174,25 +174,25 @@ void DisplaySingleSMSInfo(GSM_SMSMessage sms, gboolean displaytext, gboolean dis
 		printf("\n");
 
 		printf(LISTFORMAT, _("Remote number"));
-		PrintPhoneNumber(sms.Number, Info);
+		PrintPhoneNumber(sms->Number, Info);
 		printf("\n");
 
-		printf(LISTFORMAT "%d\n", _("Reference number"),sms.MessageReference);
-		printf(LISTFORMAT "%s\n", _("Sent"),OSDateTime(sms.DateTime,TRUE));
-		printf(LISTFORMAT "\"%s\"\n", _("SMSC number"),DecodeUnicodeConsole(sms.SMSC.Number));
-		printf(LISTFORMAT "%s\n", _("SMSC response"),OSDateTime(sms.SMSCTime,TRUE));
-		printf(LISTFORMAT "%s\n", _("Delivery status"),DecodeUnicodeConsole(sms.Text));
+		printf(LISTFORMAT "%d\n", _("Reference number"),sms->MessageReference);
+		printf(LISTFORMAT "%s\n", _("Sent"),OSDateTime(sms->DateTime,TRUE));
+		printf(LISTFORMAT "\"%s\"\n", _("SMSC number"),DecodeUnicodeConsole(sms->SMSC.Number));
+		printf(LISTFORMAT "%s\n", _("SMSC response"),OSDateTime(sms->SMSCTime,TRUE));
+		printf(LISTFORMAT "%s\n", _("Delivery status"),DecodeUnicodeConsole(sms->Text));
 		printf(LISTFORMAT, _("Details"));
-		if (sms.DeliveryStatus & 0x40) {
-			if (sms.DeliveryStatus & 0x20) {
+		if (sms->DeliveryStatus & 0x40) {
+			if (sms->DeliveryStatus & 0x20) {
 				printf("%s", _("Temporary error, "));
 			} else {
 	     			printf("%s", _("Permanent error, "));
 			}
-	    	} else if (sms.DeliveryStatus & 0x20) {
+	    	} else if (sms->DeliveryStatus & 0x20) {
 			printf("%s", _("Temporary error, "));
 		}
-		switch (sms.DeliveryStatus) {
+		switch (sms->DeliveryStatus) {
 			case 0x00: printf("%s", _("SM received by the SME"));				break;
 			case 0x01: printf("%s", _("SM forwarded by the SC to the SME but the SC is unable to confirm delivery"));break;
 			case 0x02: printf("%s", _("SM replaced by the SC"));				break;
@@ -218,44 +218,44 @@ void DisplaySingleSMSInfo(GSM_SMSMessage sms, gboolean displaytext, gboolean dis
 		        case 0x63: printf("%s", _("Service rejected"));				break;
 		        case 0x64: printf("%s", _("Quality of service not available"));		break;
 		        case 0x65: printf("%s", _("Error in SME"));					break;
-		        default  : printf(_("Reserved/Specific to SC: %x"),sms.DeliveryStatus);	break;
+		        default  : printf(_("Reserved/Specific to SC: %x"),sms->DeliveryStatus);	break;
 		}
 		printf("\n");
 		break;
 	case SMS_Deliver:
 		printf("%s\n", _("SMS message"));
-		if (sms.State==SMS_UnSent && sms.Memory==MEM_ME) {
-			printf(LISTFORMAT "%s\n", _("Saved"), OSDateTime(sms.DateTime,TRUE));
+		if (sms->State==SMS_UnSent && sms->Memory==MEM_ME) {
+			printf(LISTFORMAT "%s\n", _("Saved"), OSDateTime(sms->DateTime,TRUE));
 		} else {
-			printf(LISTFORMAT "\"%s\"", _("SMSC number"), DecodeUnicodeConsole(sms.SMSC.Number));
-			if (sms.ReplyViaSameSMSC) printf("%s", _(" (set for reply)"));
+			printf(LISTFORMAT "\"%s\"", _("SMSC number"), DecodeUnicodeConsole(sms->SMSC.Number));
+			if (sms->ReplyViaSameSMSC) printf("%s", _(" (set for reply)"));
 			printf("\n");
-			printf(LISTFORMAT "%s\n", _("Sent"), OSDateTime(sms.DateTime,TRUE));
+			printf(LISTFORMAT "%s\n", _("Sent"), OSDateTime(sms->DateTime,TRUE));
 		}
 		/* No break. The only difference for SMS_Deliver and SMS_Submit is,
 		 * that SMS_Deliver contains additional data. We wrote them and then go
 		 * for data shared with SMS_Submit
 		 */
 	case SMS_Submit:
-		if (sms.ReplaceMessage != 0) printf(LISTFORMAT "%i\n", _("SMS replacing ID"),sms.ReplaceMessage);
+		if (sms->ReplaceMessage != 0) printf(LISTFORMAT "%i\n", _("SMS replacing ID"),sms->ReplaceMessage);
 		/* If we went here from "case SMS_Deliver", we don't write "SMS Message" */
-		if (sms.PDU==SMS_Submit) {
+		if (sms->PDU==SMS_Submit) {
 			printf("%s\n", _("SMS message"));
-			if (sms.State == SMS_Sent) {
-				printf(LISTFORMAT "%d\n", _("Reference number"),sms.MessageReference);
+			if (sms->State == SMS_Sent) {
+				printf(LISTFORMAT "%d\n", _("Reference number"),sms->MessageReference);
 			}
-			if (CheckDate(&(sms.DateTime)) && CheckTime(&(sms.DateTime))) {
-				printf(LISTFORMAT "%s\n", _("Sent"), OSDateTime(sms.DateTime,TRUE));
+			if (CheckDate(&(sms->DateTime)) && CheckTime(&(sms->DateTime))) {
+				printf(LISTFORMAT "%s\n", _("Sent"), OSDateTime(sms->DateTime,TRUE));
 			}
 		}
-		if (sms.Name[0] != 0x00 || sms.Name[1] != 0x00) {
-			printf(LISTFORMAT "\"%s\"\n", _("Name"),DecodeUnicodeConsole(sms.Name));
+		if (sms->Name[0] != 0x00 || sms->Name[1] != 0x00) {
+			printf(LISTFORMAT "\"%s\"\n", _("Name"),DecodeUnicodeConsole(sms->Name));
 		}
-		if (sms.Class != -1) {
-			printf(LISTFORMAT "%i\n", _("Class"),sms.Class);
+		if (sms->Class != -1) {
+			printf(LISTFORMAT "%i\n", _("Class"),sms->Class);
 		}
 		printf(LISTFORMAT, _("Coding"));
-		switch (sms.Coding) {
+		switch (sms->Coding) {
 			case SMS_Coding_Unicode_No_Compression 	:
 				printf("%s", _("Unicode (no compression)"));
 				break;
@@ -274,27 +274,27 @@ void DisplaySingleSMSInfo(GSM_SMSMessage sms, gboolean displaytext, gboolean dis
 				break;
 		}
 		printf("\n");
-		if (sms.State==SMS_UnSent && sms.Memory==MEM_ME) {
+		if (sms->State==SMS_UnSent && sms->Memory==MEM_ME) {
 		} else {
-			printf(LISTFORMAT, ngettext("Remote number", "Remote numbers", sms.OtherNumbersNum + 1));
-			PrintPhoneNumber(sms.Number, Info);
-			for (i=0;i<sms.OtherNumbersNum;i++) {
+			printf(LISTFORMAT, ngettext("Remote number", "Remote numbers", sms->OtherNumbersNum + 1));
+			PrintPhoneNumber(sms->Number, Info);
+			for (i=0;i<sms->OtherNumbersNum;i++) {
 				printf(", ");
-				PrintPhoneNumber(sms.OtherNumbers[i], Info);
+				PrintPhoneNumber(sms->OtherNumbers[i], Info);
 			}
 			printf("\n");
 		}
 		printf(LISTFORMAT, _("Status"));
-		switch (sms.State) {
+		switch (sms->State) {
 			case SMS_Sent	:	printf("%s", _("Sent"));	break;
 			case SMS_Read	:	printf("%s", _("Read"));	break;
 			case SMS_UnRead	:	printf("%s", _("UnRead"));	break;
 			case SMS_UnSent	:	printf("%s", _("UnSent"));	break;
 		}
 		printf("\n");
-		if (sms.UDH.Type != UDH_NoUDH) {
+		if (sms->UDH.Type != UDH_NoUDH) {
 			printf(LISTFORMAT, _("User Data Header"));
-			switch (sms.UDH.Type) {
+			switch (sms->UDH.Type) {
 			case UDH_ConcatenatedMessages	   : printf("%s", _("Concatenated (linked) message")); 	 break;
 			case UDH_ConcatenatedMessages16bit : printf("%s", _("Concatenated (linked) message")); 	 break;
 			case UDH_DisableVoice		   : printf("%s", _("Disables voice indicator"));	 	 break;
@@ -318,14 +318,14 @@ void DisplaySingleSMSInfo(GSM_SMSMessage sms, gboolean displaytext, gboolean dis
 			case UDH_MMSIndicatorLong	   : printf("%s", _("MMS indicator"));			 	 break;
 			case UDH_NoUDH:								 		 break;
 			}
-			if (sms.UDH.Type != UDH_NoUDH) {
-				if (sms.UDH.ID8bit != -1) printf(_(", ID (8 bit) %i"),sms.UDH.ID8bit);
-				if (sms.UDH.ID16bit != -1) printf(_(", ID (16 bit) %i"),sms.UDH.ID16bit);
-				if (sms.UDH.PartNumber != -1 && sms.UDH.AllParts != -1) {
+			if (sms->UDH.Type != UDH_NoUDH) {
+				if (sms->UDH.ID8bit != -1) printf(_(", ID (8 bit) %i"),sms->UDH.ID8bit);
+				if (sms->UDH.ID16bit != -1) printf(_(", ID (16 bit) %i"),sms->UDH.ID16bit);
+				if (sms->UDH.PartNumber != -1 && sms->UDH.AllParts != -1) {
 					if (displayudh) {
-						printf(_(", part %i of %i"),sms.UDH.PartNumber,sms.UDH.AllParts);
+						printf(_(", part %i of %i"),sms->UDH.PartNumber,sms->UDH.AllParts);
 					} else {
-						printf(_(", %i parts"),sms.UDH.AllParts);
+						printf(_(", %i parts"),sms->UDH.AllParts);
 					}
 				}
 			}
@@ -333,18 +333,18 @@ void DisplaySingleSMSInfo(GSM_SMSMessage sms, gboolean displaytext, gboolean dis
 		}
 		if (displaytext) {
 			printf("\n");
-			if (sms.Coding != SMS_Coding_8bit) {
-				printf("%s\n", DecodeUnicodeConsole(sms.Text));
-			} else if (GSM_DecodeSiemensOTASMS(GSM_GetGlobalDebug(), &SiemensOTA,&sms)) {
+			if (sms->Coding != SMS_Coding_8bit) {
+				printf("%s\n", DecodeUnicodeConsole(sms->Text));
+			} else if (GSM_DecodeSiemensOTASMS(GSM_GetGlobalDebug(), &SiemensOTA, sms)) {
 				printf("%s\n", _("Siemens file"));
 			} else {
-				DisplayMessageHex(&sms);
+				DisplayMessageHex(sms);
 			}
 		}
 		break;
 #ifndef CHECK_CASES
 	default:
-		printf(_("Unknown PDU type: 0x%x\n"), sms.PDU);
+		printf(_("Unknown PDU type: 0x%x\n"), sms->PDU);
 		break;
 #endif
 	}
@@ -372,17 +372,17 @@ void DisplayMultiSMSInfo (GSM_MultiSMSMessage *sms, gboolean eachsms, gboolean e
 		if (GSM_DecodeSiemensOTASMS(GSM_GetGlobalDebug(), &SiemensOTA,&sms->SMS[0])) udhinfo = FALSE;
 		if (sms->SMS[0].UDH.Type != UDH_NoUDH && sms->SMS[0].UDH.AllParts == sms->Number) udhinfo = FALSE;
 		if (RetVal && !udhinfo) {
-			DisplaySingleSMSInfo(sms->SMS[0],FALSE,FALSE,Info);
+			DisplaySingleSMSInfo(&(sms->SMS[0]),FALSE,FALSE,Info);
 			printf("\n");
 		} else {
 			for (j=0;j<sms->Number;j++) {
-				DisplaySingleSMSInfo(sms->SMS[j],!RetVal,udhinfo,Info);
+				DisplaySingleSMSInfo(&(sms->SMS[j]),!RetVal,udhinfo,Info);
 				printf("\n");
 			}
 		}
 	} else {
 		for (j=0;j<sms->Number;j++) {
-			DisplaySingleSMSInfo(sms->SMS[j],!RetVal,TRUE,Info);
+			DisplaySingleSMSInfo(&(sms->SMS[j]),!RetVal,TRUE,Info);
 			printf("\n");
 		}
 	}
