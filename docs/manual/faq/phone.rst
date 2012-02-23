@@ -67,19 +67,4 @@ Are iPhone phones supported?
 
 Unfortunately no at the moment. Any help in this area is welcome.
 
-What are free alternatives to Gammu?
-------------------------------------
-
-It depends on your phone. For Nokia or AT based phones, you can try `Gnokii`_,
-but Gammu should be superior in most cases. For Symbian phone you can try using
-`Series60-Remote`_, which works pretty well with S60 phones.
-
-If you are looking for synchronisation, try using something what supports
-SyncML to retrieve contacts or calendar from your phone, for example
-`OpenSync`_ or `syncEvolution`_.
-
 .. _Gammu Phones Database: http://wammu.eu/phones/
-.. _Series60-Remote: http://series60-remote.sourceforge.net/
-.. _OpenSync: http://www.opensync.org/
-.. _syncEvolution: http://syncevolution.org/
-.. _Gnokii: http://gnokii.org/

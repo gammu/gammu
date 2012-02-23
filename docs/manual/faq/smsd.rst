@@ -42,3 +42,4 @@ resellers like DealExtreme or Alibaba.
 .. _MySQL: http://www.mysql.com/
 .. _PostgreSQL: http://www.postgresql.org/
 .. _libdbi: http://libdbi.sourceforge.net/
+.. _Gammu Phones Database: http://wammu.eu/phones/
