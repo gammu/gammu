@@ -156,13 +156,12 @@ endif (HAVE_SHM OR WIN32)
 # Windows Event Log support
 if (WIN32)
     add_custom_command(
-        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/smsd.h ${CMAKE_CURRENT_BINARY_DIR}/smsd.rc
-        COMMAND ${CMAKE_MC} ${CMAKE_CURRENT_SOURCE_DIR}/event/smsd.mc -r ${CMAKE_CURRENT_BINARY_DIR} -h ${CMAKE_CURRENT_BINARY_DIR}
-        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/event/smsd.mc)
-    set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/smsd.h ${CMAKE_CURRENT_BINARY_DIR}/smsd.rc
+        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/smsd-event.h ${CMAKE_CURRENT_BINARY_DIR}/smsd-event.rc
+        COMMAND ${CMAKE_MC} ${CMAKE_CURRENT_SOURCE_DIR}/smsd-event.mc -r ${CMAKE_CURRENT_BINARY_DIR} -h ${CMAKE_CURRENT_BINARY_DIR}
+        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/smsd-event.mc)
+    set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/smsd-event.h ${CMAKE_CURRENT_BINARY_DIR}/smsd-event.rc
         PROPERTIES GENERATED TRUE)
-    add_custom_target(smsd.mc ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/smsd.h ${CMAKE_CURRENT_BINARY_DIR}/smsd.rc)
-#    add_dependencies(gsmsd ${CMAKE_CURRENT_BINARY_DIR}/smsd.h)
+    add_custom_target(smsd-event.mc ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/smsd-event.h ${CMAKE_CURRENT_BINARY_DIR}/smsd-event.rc)
 endif (WIN32)
 
 # Testing
