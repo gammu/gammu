@@ -21,11 +21,11 @@ void eventlog_log(void *handle, int level, const char *message)
         WORD evtype= EVENTLOG_ERROR_TYPE;
 
 	switch (level) {
-		case -1:
+		case DEBUG_ERROR:
 			evtype = EVENTLOG_ERROR_TYPE;
 			break;
-		case 0:
-		case 1:
+		case DEBUG_INFO:
+		case DEBUG_NOTICE:
 		default:
 			evtype = EVENTLOG_INFORMATION_TYPE;
 			break;

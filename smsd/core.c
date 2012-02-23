@@ -264,13 +264,13 @@ void SMSD_Log(SMSD_DebugLevel level, GSM_SMSDConfig *Config, const char *format,
 		case SMSD_LOG_SYSLOG:
 #ifdef HAVE_SYSLOG
 			switch (level) {
-				case -1:
+				case DEBUG_ERROR:
 					priority = LOG_ERR;
 					break;
-				case 0:
+				case DEBUG_INFO:
 					priority = LOG_NOTICE;
 					break;
-				case 1:
+				case DEBUG_NOTICE:
 					priority = LOG_INFO;
 					break;
 				default:
