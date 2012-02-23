@@ -136,6 +136,21 @@ void PrintPhoneNumber(const unsigned char *number, const void *Info)
 #endif
 }
 
+void DisplayMessageHex(GSM_SMSMessage *sms) {
+	size_t len;
+	char *hexbuf;
+
+	len = strlen(sms->Text);
+	hexbuf = malloc(len * 2 + 1);
+	printf("%s\n", _("8 bit SMS, cannot be displayed here"));
+	if (hexbuf == NULL) {
+		return;
+	}
+	EncodeHexBin(hexbuf, sms->Text, len);
+	printf("(hex: %s)\n", hexbuf);
+	free(hexbuf);
+}
+
 #ifdef GSM_ENABLE_BACKUP
 void DisplaySingleSMSInfo(GSM_SMSMessage sms, gboolean displaytext, gboolean displayudh, const GSM_Backup *Info)
 #else
@@ -323,11 +338,7 @@ void DisplaySingleSMSInfo(GSM_SMSMessage sms, gboolean displaytext, gboolean dis
 			} else if (GSM_DecodeSiemensOTASMS(GSM_GetGlobalDebug(), &SiemensOTA,&sms)) {
 				printf("%s\n", _("Siemens file"));
 			} else {
-				size_t len = strlen(sms.Text);
-				char hexbuf[len * 2 + 1];
-				EncodeHexBin (hexbuf, sms.Text, len);
-				printf("%s\n", _("8 bit SMS, cannot be displayed here"));
-				printf("(hex: %s)\n", hexbuf);
+				DisplayMessageHex(&sms);
 			}
 		}
 		break;
