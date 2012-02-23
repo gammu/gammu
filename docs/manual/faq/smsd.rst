@@ -22,6 +22,8 @@ Yes. You can use some of example interfaces distributed with gammu in ``contrib`
 directory. Or there is full featured separate interface written in PHP called
 `Kalkun`_.
 
+.. _faq-smsd-phone:
+
 Which phone is best for SMSD gateway?
 -------------------------------------
 
