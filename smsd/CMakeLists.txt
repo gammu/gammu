@@ -65,8 +65,20 @@ if(DEBUG)
     add_definitions(-DCHECK_CASES)
 endif(DEBUG)
 
+# Windows Event Log support
+if (WIN32)
+    enable_language(RC)
+    add_custom_command(
+        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/smsd-event.h ${CMAKE_CURRENT_BINARY_DIR}/smsd-event.rc ${CMAKE_CURRENT_BINARY_DIR}/MSG00001.bin
+        COMMAND ${CMAKE_MC} ${CMAKE_CURRENT_SOURCE_DIR}/smsd-event.mc -r ${CMAKE_CURRENT_BINARY_DIR} -h ${CMAKE_CURRENT_BINARY_DIR}
+        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/smsd-event.mc)
+    set(RESOURCES ${CMAKE_CURRENT_BINARY_DIR}/smsd-event.h)
+else (WIN32)
+    set(RESOURCES )
+endif (WIN32)
+
 # SMSD library
-add_library (gsmsd ${LIBRARY_SRC})
+add_library (gsmsd ${LIBRARY_SRC} ${RESOURCES})
 set_target_properties (gsmsd PROPERTIES
     VERSION ${GAMMU_SOVERSION}.${GAMMU_VERSION}
     SOVERSION ${GAMMU_SOVERSION})
@@ -152,17 +164,6 @@ if (HAVE_SHM OR WIN32)
             COMPONENT smsd
             )
 endif (HAVE_SHM OR WIN32)
-
-# Windows Event Log support
-if (WIN32)
-    add_custom_command(
-        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/smsd-event.h ${CMAKE_CURRENT_BINARY_DIR}/smsd-event.rc
-        COMMAND ${CMAKE_MC} ${CMAKE_CURRENT_SOURCE_DIR}/smsd-event.mc -r ${CMAKE_CURRENT_BINARY_DIR} -h ${CMAKE_CURRENT_BINARY_DIR}
-        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/smsd-event.mc)
-    set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/smsd-event.h ${CMAKE_CURRENT_BINARY_DIR}/smsd-event.rc
-        PROPERTIES GENERATED TRUE)
-    add_custom_target(smsd-event.mc ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/smsd-event.h ${CMAKE_CURRENT_BINARY_DIR}/smsd-event.rc)
-endif (WIN32)
 
 # Testing
 include(CMakeTests.txt)
