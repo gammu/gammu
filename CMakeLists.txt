@@ -969,6 +969,12 @@ if (WIN32 AND NOT CYGWIN)
   set (CPACK_NSIS_URL_INFO_ABOUT "http://wammu.eu/gammu/")
   set (CPACK_NSIS_CONTACT "michal@cihar.com")
   set (CPACK_NSIS_MODIFY_PATH ON)
+  SET(CPACK_NSIS_EXTRA_INSTALL_COMMANDS "
+		    ExecWait  \\\"$INSTDIR\\\\gammu-smsd.exe -e \\\"
+            ")
+  SET(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS "
+		    ExecWait  \\\"$INSTDIR\\\\gammu-smsd.exe -E \\\"
+            ")
 else (WIN32 AND NOT CYGWIN)
   set (CPACK_STRIP_FILES "gammu")
   set (CPACK_SOURCE_STRIP_FILES "")
