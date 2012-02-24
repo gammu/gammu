@@ -80,7 +80,7 @@ tmp=`mktemp -dt $repo-build-XXXXXX`
 cd $tmp
 echo Working in $tmp
 echo "Creating release $version from $checkout"
-git clone $srcdir $repo-$version
+git clone --shared $srcdir $repo-$version
 cd $repo-$version
 git checkout $checkout
 git submodule update --init
