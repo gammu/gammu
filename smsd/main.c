@@ -431,15 +431,6 @@ int main(int argc, char **argv)
 	}
 #endif
 
-	if (params.config_file == NULL) {
-#ifdef HAVE_DEFAULT_CONFIG
-		params.config_file = default_config;
-#else
-		fprintf(stderr, "No config file specified!\n");
-		help();
-		exit(1);
-#endif
-	}
 #ifdef HAVE_WINDOWS_EVENT_LOG
 	if (params.install_evlog) {
 		if (eventlog_register()) {
@@ -460,6 +451,15 @@ int main(int argc, char **argv)
 		}
 	}
 #endif
+	if (params.config_file == NULL) {
+#ifdef HAVE_DEFAULT_CONFIG
+		params.config_file = default_config;
+#else
+		fprintf(stderr, "No config file specified!\n");
+		help();
+		exit(1);
+#endif
+	}
 #ifdef HAVE_WINDOWS_SERVICE
 	if (params.install_service) {
 		if (install_smsd_service(&params)) {
