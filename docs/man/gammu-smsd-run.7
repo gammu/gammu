@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSD-RUN" "7" "February 17, 2012" "1.31.90" "Gammu"
+.TH "GAMMU-SMSD-RUN" "7" "February 24, 2012" "1.31.90" "Gammu"
 .SH NAME
 gammu-smsd-run \- documentation for RunOnReceive directive
 .
@@ -34,7 +34,8 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 Gammu SMSD can be configured by \fBRunOnReceive\fP directive (see
 \fIgammu\-smsdrc\fP for details) to run defined program after receiving
-message.
+every message. It can receive single message or more messages, which are parts
+of one multipart message.
 .sp
 This parameter is executed through shell, so you might need to escape some
 special characters and you can include any number of parameters. Additionally

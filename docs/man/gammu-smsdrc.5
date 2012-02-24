@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSDRC" "5" "February 17, 2012" "1.31.90" "Gammu"
+.TH "GAMMU-SMSDRC" "5" "February 24, 2012" "1.31.90" "Gammu"
 .SH NAME
 gammu-smsdrc \- gammu-smsd(1) configuration file
 .
@@ -158,6 +158,11 @@ absolute path to log file as startup directory might be different than you
 expect.
 .sp
 Default is to provide no logging.
+.IP Note
+For logging to Windows Event Log, it is recommended to install Event Log
+source by invoking \fIgammu\-smsd \-e\fP (this is automatically done during
+installation of Gammu).
+.RE
 .UNINDENT
 .INDENT 0.0
 .TP

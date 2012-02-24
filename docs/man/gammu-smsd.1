@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSD" "1" "February 17, 2012" "1.31.90" "Gammu"
+.TH "GAMMU-SMSD" "1" "February 24, 2012" "1.31.90" "Gammu"
 .SH NAME
 gammu-smsd \- SMS daemon for Gammu
 .
@@ -144,6 +144,20 @@ Use logging as configured in config file (default).
 .TP
 .B \-L, \-\-no\-use\-log
 Do not use logging as configured in config file.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-e, \-\-install\-event\-log
+Installs Windows EventLog description to registry.
+.sp
+New in version 1.31.90.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-E, \-\-uninstall\-event\-log
+Uninstalls Windows EventLog description to registry.
+.sp
+New in version 1.31.90.
 .UNINDENT
 .SH SIGNALS
 .sp

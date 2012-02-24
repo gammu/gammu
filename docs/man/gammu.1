@@ -1,4 +1,4 @@
-.TH "GAMMU" "1" "February 17, 2012" "1.31.90" "Gammu"
+.TH "GAMMU" "1" "February 24, 2012" "1.31.90" "Gammu"
 .SH NAME
 gammu \- Does some neat things with your cellular phone or modem.
 .
@@ -1991,11 +1991,14 @@ find working setup for Gammu.
 .UNINDENT
 .INDENT 0.0
 .TP
-.B install
+.B install [\-minimal]
 Installs applet for currently configured connection to the phone.
 .sp
 You can configure search path for instllation files by
 \fBDataPath\fP.
+.sp
+The \-minimal parameter forces installation of applet only without possible
+support libraries, this can be useful for updates.
 .UNINDENT
 .SS Gammu information commands
 .INDENT 0.0
