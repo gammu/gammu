@@ -72,13 +72,15 @@ if (WIN32)
         OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/smsd-event.h ${CMAKE_CURRENT_BINARY_DIR}/smsd-event.rc ${CMAKE_CURRENT_BINARY_DIR}/MSG00001.bin
         COMMAND ${CMAKE_MC} ${CMAKE_CURRENT_SOURCE_DIR}/smsd-event.mc -r ${CMAKE_CURRENT_BINARY_DIR} -h ${CMAKE_CURRENT_BINARY_DIR}
         DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/smsd-event.mc)
-    set(RESOURCES ${CMAKE_CURRENT_BINARY_DIR}/smsd-event.h)
+    set(EXTRA_SOURCES ${CMAKE_CURRENT_BINARY_DIR}/smsd-event.h)
+    set(SMSD_RESOURCES ${CMAKE_CURRENT_BINARY_DIR}/smsd-event.rc)
 else (WIN32)
-    set(RESOURCES )
+    set(EXTRA_SOURCES )
+    set(SMSD_RESOURCES )
 endif (WIN32)
 
 # SMSD library
-add_library (gsmsd ${LIBRARY_SRC} ${RESOURCES})
+add_library (gsmsd ${LIBRARY_SRC} ${EXTRA_SOURCES})
 set_target_properties (gsmsd PROPERTIES
     VERSION ${GAMMU_SOVERSION}.${GAMMU_VERSION}
     SOVERSION ${GAMMU_SOVERSION})
@@ -100,7 +102,7 @@ endif (NOT HAVE_STRPTIME)
 target_link_libraries (gsmsd array)
 
 # Gammu-smsd program
-add_executable (gammu-smsd ${DAEMON_SRC})
+add_executable (gammu-smsd ${DAEMON_SRC} ${SMSD_RESOURCES})
 
 target_link_libraries (gammu-smsd libGammu)
 target_link_libraries (gammu-smsd gsmsd)

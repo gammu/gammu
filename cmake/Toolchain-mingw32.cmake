@@ -19,6 +19,9 @@ SET(CMAKE_MC i686-w64-mingw32-windmc)
 # here is the target environment located
 SET(CMAKE_FIND_ROOT_PATH  /usr/i686-w64-mingw32/sys-root/mingw/ /usr/i686-pc-mingw32/sys-root/mingw/ /home/mcihar/win-cross/crosscompiled)
 
+SET(CMAKE_RC_COMPILE_OBJECT
+    "<CMAKE_RC_COMPILER> <FLAGS> <DEFINES> -O coff -o <OBJECT> <SOURCE>")
+
 # adjust the default behaviour of the FIND_XXX() commands:
 # search headers and libraries in the target environment, search 
 # programs in the host environment
