@@ -106,6 +106,14 @@ accepted on some platforms):
 
     Do not use logging as configured in config file.
 
+.. option:: -e, --install-event-log
+
+    Installs Windows EventLog description to registry.
+
+.. option:: -E, --uninstall-event-log
+
+    Uninstalls Windows EventLog description to registry.
+
 Signals
 -------
 

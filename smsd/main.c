@@ -170,6 +170,10 @@ void help(void)
 #endif
 	print_option("l", "use-log", "use logging configuration from config file (default)");
 	print_option("L", "no-use-log", "do not use logging configuration from config file");
+#ifdef HAVE_WINDOWS_EVENT_LOG
+	print_option("e", "install-event-log", "installs Windows EventLog description to registry");
+	print_option("E", "uninstall-event-log", "uninstalls Windows EventLog description to registry");
+#endif
 }
 
 NORETURN void wrong_params(void)
