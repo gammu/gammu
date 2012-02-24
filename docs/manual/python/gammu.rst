@@ -223,6 +223,11 @@ This module wraps all python-gammu functionality.
       :return: None
       :rtype: None
 
+      .. note::
+
+            In most cases you want to use Folder=0 as in this mode it will accept locations
+            as GetNextSMS returns them.
+
 
    .. method:: DeleteSMSFolder(ID)
 
