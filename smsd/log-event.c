@@ -4,9 +4,136 @@
 
 #include <winsock2.h>
 #include <windows.h>
+#include <winreg.h>
 #include <stdio.h>
 #include "smsd-event.h"
 #include "core.h"
+
+gboolean eventlog_deregister(void)
+{
+	LONG ret;
+
+	ret = RegDeleteKey(
+		HKEY_LOCAL_MACHINE,
+		"System\\CurrentControlSet\\Services\\EventLog\\Application\\GammuSMSD"
+		);
+
+	return (ret == ERROR_SUCCESS);
+}
+
+gboolean eventlog_register(void)
+{
+	LONG ret;
+	HKEY hKey;
+	DWORD data;
+
+	SECURITY_DESCRIPTOR SD;
+	SECURITY_ATTRIBUTES SA;
+
+	char program_name[MAX_PATH];
+
+	if (GetModuleFileName(NULL, program_name, sizeof(program_name)) == 0)
+		return FALSE;
+
+	if (!InitializeSecurityDescriptor(&SD, SECURITY_DESCRIPTOR_REVISION)) {
+		return FALSE;
+	}
+
+	if(!SetSecurityDescriptorDacl(&SD, TRUE, 0, FALSE)) {
+		return FALSE;
+	}
+
+	SA.nLength = sizeof(SA);
+	SA.lpSecurityDescriptor = &SD;
+	SA.bInheritHandle = FALSE;
+
+	ret = RegCreateKeyEx(
+		HKEY_LOCAL_MACHINE,
+		"System\\CurrentControlSet\\Services\\EventLog\\Application\\GammuSMSD",
+		0,
+		NULL,
+		REG_OPTION_NON_VOLATILE,
+		KEY_WRITE,
+		&SA,
+		&hKey,
+		NULL);
+
+	if (ret != ERROR_SUCCESS) {
+		fprintf(stderr, "Failed to create registry key!\n");
+		return FALSE;
+	}
+
+	data = 3;
+	ret = RegSetValueEx(
+		hKey,
+		"CategoryCount",
+		0,
+		REG_DWORD,
+		(BYTE *)&data,
+		sizeof(DWORD));
+
+	if (ret != ERROR_SUCCESS) {
+		fprintf(stderr, "Failed to write CategoryCount to registry!\n");
+		return FALSE;
+	}
+
+	ret = RegSetValueEx(
+		hKey,
+		"CategoryMessageFile",
+		0,
+		REG_SZ,
+		(BYTE *)program_name,
+		strlen(program_name) + 1);
+
+	if (ret != ERROR_SUCCESS) {
+		fprintf(stderr, "Failed to write CategoryMessageFile to registry!\n");
+		return FALSE;
+	}
+
+	ret = RegSetValueEx(
+		hKey,
+		"EventMessageFile",
+		0,
+		REG_SZ,
+		(BYTE *)program_name,
+		strlen(program_name) + 1);
+
+	if (ret != ERROR_SUCCESS) {
+		fprintf(stderr, "Failed to write EventMessageFile to registry!\n");
+		return FALSE;
+	}
+
+	ret = RegSetValueEx(
+		hKey,
+		"ParameterMessageFile",
+		0,
+		REG_SZ,
+		(BYTE *)program_name,
+		strlen(program_name) + 1);
+
+	if (ret != ERROR_SUCCESS) {
+		fprintf(stderr, "Failed to write ParameterMessageFile to registry!\n");
+		return FALSE;
+	}
+
+	data = EVENTLOG_ERROR_TYPE | EVENTLOG_INFORMATION_TYPE | EVENTLOG_WARNING_TYPE;
+	ret = RegSetValueEx(
+		hKey,
+		"TypesSupported",
+		0,
+		REG_DWORD,
+		(BYTE *)&data,
+		sizeof(DWORD));
+
+	if (ret != ERROR_SUCCESS) {
+		fprintf(stderr, "Failed to write TypesSupported to registry!\n");
+		return FALSE;
+	}
+
+	RegCloseKey(hKey);
+
+	return TRUE;
+}
 
 void *eventlog_init(void)
 {

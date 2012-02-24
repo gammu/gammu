@@ -19,6 +19,8 @@ typedef struct {
 	gboolean run_service;
 	gboolean install_service;
 	gboolean uninstall_service;
+	gboolean install_evlog;
+	gboolean uninstall_evlog;
 	gboolean use_log;
 	int max_failures;
 } SMSD_Parameters;

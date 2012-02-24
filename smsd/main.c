@@ -28,6 +28,9 @@
 #define HAVE_UID
 #include "uid.h"
 #endif
+#ifdef HAVE_WINDOWS_EVENT_LOG
+#include "log-event.h"
+#endif
 
 #if !defined(WIN32)
 #define HAVE_DEFAULT_CONFIG
@@ -198,13 +201,15 @@ void process_commandline(int argc, char **argv, SMSD_Parameters * params)
 		{"max-failures", 1, 0, 'f'},
 		{"use-log", 0, 0, 'l'},
 		{"no-use-log", 0, 0, 'L'},
+		{"install-event-log", 0, 0, 'e'},
+		{"uninstall-event-log", 0, 0, 'E'},
 		{0, 0, 0, 0}
 	};
 	int option_index;
 
-	while ((opt = getopt_long(argc, argv, "hvdc:p:iusSkU:G:n:X:f:lL", long_options, &option_index)) != -1) {
+	while ((opt = getopt_long(argc, argv, "hvdc:p:iusSkU:G:n:X:f:lLeE", long_options, &option_index)) != -1) {
 #elif defined(HAVE_GETOPT)
-	while ((opt = getopt(argc, argv, "hvdc:p:iusSkU:G:n:X:f:lL")) != -1) {
+	while ((opt = getopt(argc, argv, "hvdc:p:iusSkU:G:n:X:f:lLeE")) != -1) {
 #else
 	/* Poor mans getopt replacement */
 	int i;
@@ -251,6 +256,14 @@ void process_commandline(int argc, char **argv, SMSD_Parameters * params)
 #ifdef HAVE_DAEMON
 			case 'd':
 				params->daemonize = TRUE;
+				break;
+#endif
+#ifdef HAVE_WINDOWS_EVENT_LOG
+			case 'e':
+				params->install_evlog = TRUE;
+				break;
+			case 'E':
+				params->uninstall_evlog = TRUE;
 				break;
 #endif
 #ifdef HAVE_WINDOWS_SERVICE
@@ -377,6 +390,8 @@ int main(int argc, char **argv)
 		FALSE,
 		FALSE,
 		FALSE,
+		FALSE,
+		FALSE,
 		TRUE,
 		0
 	};
@@ -421,6 +436,26 @@ int main(int argc, char **argv)
 		exit(1);
 #endif
 	}
+#ifdef HAVE_WINDOWS_EVENT_LOG
+	if (params.install_evlog) {
+		if (eventlog_register()) {
+			printf("Installed event log description\n");
+			exit(0);
+		} else {
+			printf("Failed to install event log description!\n");
+			exit(1);
+		}
+	}
+	if (params.uninstall_evlog) {
+		if (eventlog_deregister()) {
+			printf("Uninstalled event log description\n");
+			exit(0);
+		} else {
+			printf("Failed to uninstall event log description!\n");
+			exit(1);
+		}
+	}
+#endif
 #ifdef HAVE_WINDOWS_SERVICE
 	if (params.install_service) {
 		if (install_smsd_service(&params)) {
