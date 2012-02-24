@@ -23,7 +23,7 @@ MessageIdTypedef=WORD
 MessageId=0x1
 SymbolicName=EVENT_CAT_SMSD
 Language=English
-Category 1
+SMSD
 .
 
 MessageId=0x2
