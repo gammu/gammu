@@ -28,6 +28,7 @@ ChangeLog
 [+] * Added support for suspending/resuming SMSD using SIGUSR1/2.
 [!] * Changed protocol for S60 applet.
 [+] * S60 applet now handles SMS with new lines.
+[+] * Improved support for Windows Event Log.
     
 20111221 - 1.31.0
 

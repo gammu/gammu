@@ -110,9 +110,13 @@ accepted on some platforms):
 
     Installs Windows EventLog description to registry.
 
+    .. versionadded:: 1.31.90
+
 .. option:: -E, --uninstall-event-log
 
     Uninstalls Windows EventLog description to registry.
+
+    .. versionadded:: 1.31.90
 
 Signals
 -------
