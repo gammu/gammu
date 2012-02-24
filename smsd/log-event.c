@@ -11,17 +11,17 @@
 void *eventlog_init(void)
 {
 	HANDLE handle;
-        handle = RegisterEventSource(NULL, "gammu-smsd");
-        if (handle == NULL) {
-            fprintf(stderr, "Error opening event log!\n");
-        }
+	handle = RegisterEventSource(NULL, "gammu-smsd");
+	if (handle == NULL) {
+	    fprintf(stderr, "Error opening event log!\n");
+	}
 	return (void *)handle;
 }
 
 void eventlog_log(void *handle, int level, const char *message)
 {
-        LPCTSTR lpstrings[1];
-        WORD evtype = EVENTLOG_ERROR_TYPE;
+	LPCTSTR lpstrings[1];
+	WORD evtype = EVENTLOG_ERROR_TYPE;
 	DWORD eventid = 0;
 	DWORD eventcat = 0;
 
