@@ -23,31 +23,38 @@ void eventlog_log(void *handle, int level, const char *message)
         LPCTSTR lpstrings[1];
         WORD evtype = EVENTLOG_ERROR_TYPE;
 	DWORD eventid = 0;
+	DWORD eventcat = 0;
 
 	switch (level) {
 		case DEBUG_ERROR:
 			evtype = EVENTLOG_ERROR_TYPE;
 			eventid = EVENT_MSG_ERROR;
+			eventcat = EVENT_CAT_SMSD;
 			break;
 		case DEBUG_INFO:
 			evtype = EVENTLOG_SUCCESS;
 			eventid = EVENT_MSG_INFO;
+			eventcat = EVENT_CAT_SMSD;
 			break;
 		case DEBUG_NOTICE:
 			eventid = EVENT_MSG_NOTICE;
 			evtype = EVENTLOG_INFORMATION_TYPE;
+			eventcat = EVENT_CAT_SMSD;
 			break;
 		case DEBUG_SQL:
 			eventid = EVENT_MSG_SQL;
 			evtype = EVENTLOG_INFORMATION_TYPE;
+			eventcat = EVENT_CAT_SQL;
 			break;
 		case DEBUG_GAMMU:
 			eventid = EVENT_MSG_GAMMU;
 			evtype = EVENTLOG_INFORMATION_TYPE;
+			eventcat = EVENT_CAT_GAMMU;
 			break;
 		default:
 			eventid = EVENT_MSG_OTHER;
 			evtype = EVENTLOG_INFORMATION_TYPE;
+			eventcat = EVENT_CAT_SMSD;
 			break;
 	}
 	lpstrings[0] = message;
@@ -55,7 +62,7 @@ void eventlog_log(void *handle, int level, const char *message)
 	 * @todo: 1024 is probably wrong, we should use mc to get proper
 	 * event identifiers.
 	 */
-	ReportEvent(handle, evtype, EVENT_CAT_SMSD, eventid, NULL, 1, 0,
+	ReportEvent(handle, evtype, eventcat, eventid, NULL, 1, 0,
 		lpstrings, NULL);
 }
 
