@@ -55,7 +55,7 @@ void eventlog_log(void *handle, int level, const char *message)
 	 * @todo: 1024 is probably wrong, we should use mc to get proper
 	 * event identifiers.
 	 */
-	ReportEvent(handle, evtype, 0, eventid, NULL, 1, 0,
+	ReportEvent(handle, evtype, EVENT_CAT_SMSD, eventid, NULL, 1, 0,
 		lpstrings, NULL);
 }
 
