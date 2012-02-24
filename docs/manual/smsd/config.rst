@@ -117,6 +117,12 @@ General parameters of SMS daemon
 
     Default is to provide no logging.
 
+    .. note:: 
+
+        For logging to Windows Event Log, it is recommended to install Event Log
+        source by invoking :option:`gammu-smsd -e` (this is automatically done during 
+        installation of Gammu).
+
 .. config:option:: LogFacility
 
     Facility to use on logging backends which support it (currently only
