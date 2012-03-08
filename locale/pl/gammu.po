@@ -444,9 +444,9 @@ msgstr "Nieznany typ pamięci (\"%s\")\n"
 
 #: gammu/backup.c:1635 gammu/memory.c:70 gammu/misc.c:773 gammu/misc.c:806
 #: helper/message-cmdline.c:1032
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown parameter (\"%s\")\n"
-msgstr "BŁĄD: nieznany typ pamięci (\"%s\")\n"
+msgstr "Nieznany parametr (\"%s\")\n"
 
 #: gammu/backup.c:1667 gammu/backup.c:1695
 #, c-format
