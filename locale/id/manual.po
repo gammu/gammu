@@ -5,7 +5,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu-manual 1.30.93\n"
+"Project-Id-Version: Gammu-manual 1.31.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-13 14:46+0100\n"
 "PO-Revision-Date: 2011-12-15 18:51+0200\n"
@@ -102,9 +102,7 @@ msgstr ""
 #: docs/manual/config/index.rst:26
 #, no-wrap
 msgid "`gammu` reads configuration from a config file. It's location is determined"
-msgstr ""
-"`gammu` membaca konfigurasi dari sebuah file config. Lokasi file config "
-"perlu ditentukan"
+msgstr "`gammu` membaca konfigurasi dari sebuah file config. Lokasi file config perlu ditentukan"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:28
@@ -147,13 +145,13 @@ msgid ""
 "section:`[gammu]` has number 0) as a parameter to :ref:`gammu` and it will "
 "then use only this section."
 msgstr ""
-"File konfigurasi gammu dapat berisi beberapa bagian - ``[gammu]``, "
-"``[gammu1]``, ``[gammuN]``, ... Setiap bagian mengkonfigurasikan pengaturan "
-"koneksi dan secara baku gammu mencoba semuanya secara berurutan berdasarkan "
-"urutan numerik. Anda dapat pula menspesifikasikan bagian konfigurasi yang "
-"mana yang akan digunakan dengan memberinya nomor (:config:section:`[gammu]` "
-"has number 0) sebagai sebuah parameter untuk :ref:`gammu` dan itu akan "
-"membuatnya hanya diproses pada bagian ini saja."
+"File konfigurasi gammu dapat berisi beberapa bagian - ``[gammu]``, ``[gammu1]"
+"``, ``[gammuN]``, ... Setiap bagian mengkonfigurasikan pengaturan koneksi "
+"dan secara baku gammu mencoba semuanya secara berurutan berdasarkan urutan "
+"numerik. Anda dapat pula menspesifikasikan bagian konfigurasi yang mana yang "
+"akan digunakan dengan memberinya nomor (:config:section:`[gammu]` has number "
+"0) sebagai sebuah parameter untuk :ref:`gammu` dan itu akan membuatnya hanya "
+"diproses pada bagian ini saja."
 
 #. type: Labeled list
 #: docs/manual/config/index.rst:44 docs/manual/smsd/config.rst:25
@@ -301,8 +299,8 @@ msgid ""
 "detect this automatically."
 msgstr ""
 "Bila anda menggunakan kabel non orisinil, anda mungkin akan membutuhkan "
-"untuk menambahkan ``-nodtr`` (contoh untuk kabel berbasis ARK3116) atau "
-"``-nopower``, tetapi Gammu harus dapat mendeteksinya secara otomatis."
+"untuk menambahkan ``-nodtr`` (contoh untuk kabel berbasis ARK3116) atau ``-"
+"nopower``, tetapi Gammu harus dapat mendeteksinya secara otomatis."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:73
@@ -374,7 +372,8 @@ msgstr "``irdagnapbus``"
 #. type: Plain text
 #: docs/manual/config/index.rst:90 docs/manual/config/index.rst:101
 msgid "GNapplet based connection for Symbian phones, see :ref:`gnapplet`."
-msgstr "Koneksi berbasis GNapplet untuk telepon Symbian, lihat :ref:`gnapplet`."
+msgstr ""
+"Koneksi berbasis GNapplet untuk telepon Symbian, lihat :ref:`gnapplet`."
 
 #. type: Plain text
 #: docs/manual/config/index.rst:92
@@ -487,10 +486,10 @@ msgid ""
 "ignored."
 msgstr ""
 "Untuk **cables** atau port serial yang diemulasi, anda masukkan nama "
-"perangkatnya (sebagai contoh ``/dev/ttyS0``, ``/dev/ttyACM0``, "
-"``/dev/ircomm0``, ``/dev/rfcomm0`` pada Linux, ``/dev/cuad0`` pada FreeBSD "
-"atau ``COM1:`` pada Windows). Pengecualian khusus pada kabel DKU-2 dan DKU-5 "
-"di Windows, di mana perangkat ini terdeteksi secara otomatis dari informasi "
+"perangkatnya (sebagai contoh ``/dev/ttyS0``, ``/dev/ttyACM0``, ``/dev/"
+"ircomm0``, ``/dev/rfcomm0`` pada Linux, ``/dev/cuad0`` pada FreeBSD atau "
+"``COM1:`` pada Windows). Pengecualian khusus pada kabel DKU-2 dan DKU-5 di "
+"Windows, di mana perangkat ini terdeteksi secara otomatis dari informasi "
 "driver dan parameter-parameter tersebut di atas diabaikan."
 
 #. type: Plain text
@@ -569,8 +568,8 @@ msgid ""
 "nokiadku2.rules`:"
 msgstr ""
 "Untuk telepon Nokia anda dapat menempatkan file berikut (tersedia juga pada "
-"sumber-sumber seperti :file:`contrib/udev/45-nokiadku2.rules`) sebagai "
-":file:`/etc/udev/rules.d/45-nokiadku2.rules`:"
+"sumber-sumber seperti :file:`contrib/udev/45-nokiadku2.rules`) sebagai :file:"
+"`/etc/udev/rules.d/45-nokiadku2.rules`:"
 
 #. type: Labeled list
 #: docs/manual/config/index.rst:141 docs/manual/config/index.rst:366
@@ -1074,8 +1073,8 @@ msgid ""
 msgstr ""
 "Fitur buatan untuk telepon. Ini bisa digunakan sebagai override saat "
 "kodifikasi nilai-nilai dalam ``common/gsmphones.c`` bermasalah atau hilang. "
-"Lihat ``include/gammu-info.h`` untuk kemungkinan nilai-nilai (semua nilai "
-":c:type:`GSM_Feature` tanpa awalan ``F_``). Laporkan temuan nilai-nilai yang "
+"Lihat ``include/gammu-info.h`` untuk kemungkinan nilai-nilai (semua nilai :c:"
+"type:`GSM_Feature` tanpa awalan ``F_``). Laporkan temuan nilai-nilai yang "
 "cocok ke pembuat program Gammu."
 
 #. type: Title +
@@ -1136,9 +1135,9 @@ msgid ""
 "using :option:`gammu install`."
 msgstr ""
 "Path tambahan sebagai lokasi pencarian file-file data. Path yang baku "
-"dikonfigurasi saat proses kompilasi (pada sistem Unix bakunya adalah "
-"``/usr/share/data/gammu``). Penggunaan saat ini hanya untuk pencarian file-"
-"file yang akan diunggah ke telepon dengan menggunakan opsi :option:`gammu "
+"dikonfigurasi saat proses kompilasi (pada sistem Unix bakunya adalah ``/usr/"
+"share/data/gammu``). Penggunaan saat ini hanya untuk pencarian file-file "
+"yang akan diunggah ke telepon dengan menggunakan opsi :option:`gammu "
 "install`."
 
 #. type: Title =
@@ -1158,8 +1157,8 @@ msgid ""
 "There is more complete example available in Gammu documentation, see :ref:"
 "`gammu`."
 msgstr ""
-"Terdapat contoh yang lebih lengkap tersedia di dokumentasi Gammu, see "
-":ref:`gammu`."
+"Terdapat contoh yang lebih lengkap tersedia di dokumentasi Gammu, see :ref:"
+"`gammu`."
 
 #. type: Title +
 #: docs/manual/config/index.rst:301
@@ -1250,8 +1249,8 @@ msgid ""
 "following:"
 msgstr ""
 "Gammu dapat dikonfigurasi untuk multi telepon (namun hanya satu koneksi saja "
-"yang digunakan dalam satu waktu, anda dapat memilih salah satunya dengan "
-":option:`gammu -s` parameter). Konfigurasi untuk telepon pada tiga port "
+"yang digunakan dalam satu waktu, anda dapat memilih salah satunya dengan :"
+"option:`gammu -s` parameter). Konfigurasi untuk telepon pada tiga port "
 "serial akan tampak seperti berikut:"
 
 #. type: Plain text
@@ -1378,8 +1377,8 @@ msgid ""
 "Correct format is FBUS version 2/Direct IRDA/MBUS version 2 (see nokia.txt "
 "for protocol details):"
 msgstr ""
-"Format yang benar adalah FBUS versi 2/Direct IRDA/MBUS versi 2 (lihat "
-"nokia.txt untuk rincian protokol):"
+"Format yang benar adalah FBUS versi 2/Direct IRDA/MBUS versi 2 (lihat nokia."
+"txt untuk rincian protokol):"
 
 #. type: Labeled list
 #: docs/manual/protocol/n6110.rst:38 docs/manual/protocol/n7110.rst:34
@@ -1402,8 +1401,7 @@ msgstr "r monitoring value   {+0x01, 0x01, block... }\n"
 #: docs/manual/protocol/n6110.rst:43
 #, no-wrap
 msgid "where block: 0x5e, 0x05, 0x7a(?), 0xd0(?), 0x85(?), 0x02, percentHI, percentLO\n"
-msgstr "where block: 0x5e, 0x05, 0x7a(?), 0xd0(?), 0x85(?), 0x02, percentHI, "
-"percentLO\n"
+msgstr "where block: 0x5e, 0x05, 0x7a(?), 0xd0(?), 0x85(?), 0x02, percentHI, percentLO\n"
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:44
@@ -1564,8 +1562,7 @@ msgstr ""
 "r call held { 0x0023, seqnr, 0x01 }\n"
 "r call resumed { 0x0025, seqnr, 0x01 }\n"
 "r Send DTMF/voice call { 0x0040}\n"
-"s Answer call part 1 { "
-"0x0042,0x05,0x01,0x07,0xa2,0x88,0x81,0x21,0x15,0x63,0xa8,0x00,0x00,\n"
+"s Answer call part 1 { 0x0042,0x05,0x01,0x07,0xa2,0x88,0x81,0x21,0x15,0x63,0xa8,0x00,0x00,\n"
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:81
@@ -1577,8 +1574,7 @@ msgstr "0x07,0xa3,0xb8,0x81,0x20,0x15,0x63,0x80 }\n"
 #: docs/manual/protocol/n6110.rst:82
 #, no-wrap
 msgid "s Sent after issuing    { 0x0042,0x05,0x81,0x07,0xa1,0x88,0x89,0x21,0x15,0x63,0xa0,0x00,0x06,\n"
-msgstr "s Sent after issuing { "
-"0x0042,0x05,0x81,0x07,0xa1,0x88,0x89,0x21,0x15,0x63,0xa0,0x00,0x06,\n"
+msgstr "s Sent after issuing { 0x0042,0x05,0x81,0x07,0xa1,0x88,0x89,0x21,0x15,0x63,0xa0,0x00,0x06,\n"
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:84
@@ -1594,8 +1590,7 @@ msgstr ""
 #: docs/manual/protocol/n6110.rst:85
 #, no-wrap
 msgid "s Sent after issuing    { 0x0042,0x05,0x01,0x07,0xa2,0xc8,0x81,0x21,0x15,0x63,0xa8,0x00,0x00,\n"
-msgstr "s Sent after issuing { "
-"0x0042,0x05,0x01,0x07,0xa2,0xc8,0x81,0x21,0x15,0x63,0xa8,0x00,0x00,\n"
+msgstr "s Sent after issuing { 0x0042,0x05,0x01,0x07,0xa2,0xc8,0x81,0x21,0x15,0x63,0xa8,0x00,0x00,\n"
 
 #. type: Plain text
 #: docs/manual/protocol/n6110.rst:87
@@ -16888,7 +16883,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/gammu/index.rst:273 docs/manual/python/objects.rst:216
 msgid "SMSC number"
-msgstr ""
+msgstr "Nomor SMSC"
 
 #. type: delimited block _
 #: docs/manual/gammu/index.rst:275
@@ -23799,7 +23794,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:64 docs/manual/python/objects.rst:272
 msgid "Class"
-msgstr ""
+msgstr "Class"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:66 docs/manual/python/objects.rst:274
@@ -23880,7 +23875,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:93
 msgid "Coding"
-msgstr ""
+msgstr "Koding"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:95
@@ -31140,7 +31135,7 @@ msgstr ""
 #: docs/manual/c/datetime.rst:2
 #, no-wrap
 msgid "Date and time"
-msgstr ""
+msgstr "Tanggal dan waktu"
 
 #. type: Plain text
 #: docs/manual/c/datetime.rst:5

@@ -1,14 +1,14 @@
 # libGammu translation.
-# Copyright (C) 2003 - 2011 Michal Čihař <michal@cihar.com>
+# Copyright (C) 2003 - 2012 Michal Čihař <michal@cihar.com>
 # This file is distributed under the same license as the libGammu package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: libgammu 1.30.93\n"
+"Project-Id-Version: libgammu 1.31.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-12-13 14:46+0100\n"
+"POT-Creation-Date: 2012-03-08 11:08+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -324,7 +324,7 @@ msgstr ""
 msgid "Unknown error description."
 msgstr ""
 
-#: libgammu/phone/dummy/dummy.c:603
+#: libgammu/phone/dummy/dummy.c:630
 msgid "Templates"
 msgstr ""
 
@@ -365,7 +365,7 @@ msgid "SIM"
 msgstr ""
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:579 libgammu/phone/pfunc.c:41
-#: libgammu/phone/s60/s60phone.c:1762
+#: libgammu/phone/s60/s60phone.c:1770
 msgid "Inbox"
 msgstr ""
 
@@ -409,6 +409,6 @@ msgstr ""
 msgid "Pager"
 msgstr ""
 
-#: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1763
+#: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1771
 msgid "Outbox"
 msgstr ""

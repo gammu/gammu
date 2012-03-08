@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.27.96\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-12-12 09:47+0100\n"
+"POT-Creation-Date: 2012-03-08 11:08+0100\n"
 "PO-Revision-Date: 2011-04-05 16:14+0200\n"
 "Last-Translator: Robert Readman <robert_readman@hotmail.com>\n"
 "Language-Team: none\n"
@@ -342,7 +342,7 @@ msgstr "Entry is read only."
 msgid "Unknown error description."
 msgstr "Unknown error description."
 
-#: libgammu/phone/dummy/dummy.c:603
+#: libgammu/phone/dummy/dummy.c:630
 msgid "Templates"
 msgstr "Templates"
 
@@ -383,7 +383,7 @@ msgid "SIM"
 msgstr "SIM"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:579 libgammu/phone/pfunc.c:41
-#: libgammu/phone/s60/s60phone.c:1762
+#: libgammu/phone/s60/s60phone.c:1770
 msgid "Inbox"
 msgstr "Inbox"
 
@@ -427,6 +427,6 @@ msgstr "Outdoor"
 msgid "Pager"
 msgstr "Pager"
 
-#: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1763
+#: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1771
 msgid "Outbox"
 msgstr "Outbox"

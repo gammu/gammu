@@ -4,9 +4,9 @@
 # Automatically generated, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: libGammu 1.30.93\n"
+"Project-Id-Version: libGammu 1.31.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-12-12 09:47+0100\n"
+"POT-Creation-Date: 2012-03-08 11:08+0100\n"
 "PO-Revision-Date: 2011-12-14 13:41+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
@@ -51,8 +51,8 @@ msgstr ""
 #: libgammu/gsmcomon.c:91
 msgid "Error opening device. Some hardware not connected/wrongly configured."
 msgstr ""
-"Kesalahan dalam membuka perangkat. Beberapa perangkat keras tidak "
-"terhubung/salah pengaturan."
+"Kesalahan dalam membuka perangkat. Beberapa perangkat keras tidak terhubung/"
+"salah pengaturan."
 
 #: libgammu/gsmcomon.c:92
 msgid "Error setting device DTR or RTS."
@@ -352,7 +352,7 @@ msgstr "Entri hanya bisa dibaca."
 msgid "Unknown error description."
 msgstr "Deskripsi kesalahan tidak diketahui."
 
-#: libgammu/phone/dummy/dummy.c:603
+#: libgammu/phone/dummy/dummy.c:630
 msgid "Templates"
 msgstr "Template-template"
 
@@ -393,7 +393,7 @@ msgid "SIM"
 msgstr "SIM"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:579 libgammu/phone/pfunc.c:41
-#: libgammu/phone/s60/s60phone.c:1762
+#: libgammu/phone/s60/s60phone.c:1770
 msgid "Inbox"
 msgstr "Kotak masuk"
 
@@ -437,7 +437,7 @@ msgstr "Luar ruangan"
 msgid "Pager"
 msgstr "Pager"
 
-#: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1763
+#: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1771
 msgid "Outbox"
 msgstr "Kotak keluar"
 

@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libGammu 1.30.93\n"
+"Project-Id-Version: libGammu 1.31.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-12-12 09:47+0100\n"
+"POT-Creation-Date: 2012-03-08 11:08+0100\n"
 "PO-Revision-Date: 2011-12-16 13:42+0200\n"
 "Last-Translator: Anonymous Pootle User\n"
 "Language-Team: Language =pl\n"
@@ -400,7 +400,7 @@ msgstr "Pozycja jest pusta"
 msgid "Unknown error description."
 msgstr "Nieznany opis błędu."
 
-#: libgammu/phone/dummy/dummy.c:603
+#: libgammu/phone/dummy/dummy.c:630
 #, fuzzy
 msgid "Templates"
 msgstr "Szablony"
@@ -442,7 +442,7 @@ msgid "SIM"
 msgstr "SIM"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:579 libgammu/phone/pfunc.c:41
-#: libgammu/phone/s60/s60phone.c:1762
+#: libgammu/phone/s60/s60phone.c:1770
 msgid "Inbox"
 msgstr "Skrzynka odbiorcza"
 
@@ -487,7 +487,7 @@ msgstr "Skrzynka nadawcza"
 msgid "Pager"
 msgstr "Pager"
 
-#: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1763
+#: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1771
 msgid "Outbox"
 msgstr "Skrzynka nadawcza"
 

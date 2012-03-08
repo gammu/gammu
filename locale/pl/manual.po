@@ -5,7 +5,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu-manual 1.30.93\n"
+"Project-Id-Version: Gammu-manual 1.31.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-13 14:46+0100\n"
 "PO-Revision-Date: 2011-01-10 12:07+0100\n"
@@ -20911,6 +20911,8 @@ msgid ""
 "Gammu is library and command line utility for mobile phones. It is released "
 "under GNU GPL version 2."
 msgstr ""
+"Gammu jest biblioteką i linią komend narzędzia dla telefonów komórkowych. "
+"Jest udostępniany na licencji GNU GPL w wersji 2."
 
 #. type: Plain text
 #: docs/manual/project/about.rst:10

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-12-12 09:47+0100\n"
+"POT-Creation-Date: 2012-03-08 11:08+0100\n"
 "PO-Revision-Date: 2010-02-20 13:07+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: none\n"
@@ -339,7 +339,7 @@ msgstr "הרשומה ריקה."
 msgid "Unknown error description."
 msgstr "תיאור השגיאה אינו ידוע."
 
-#: libgammu/phone/dummy/dummy.c:603
+#: libgammu/phone/dummy/dummy.c:630
 msgid "Templates"
 msgstr "תבניות"
 
@@ -380,7 +380,7 @@ msgid "SIM"
 msgstr "SIM"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:579 libgammu/phone/pfunc.c:41
-#: libgammu/phone/s60/s60phone.c:1762
+#: libgammu/phone/s60/s60phone.c:1770
 msgid "Inbox"
 msgstr "דואר נכנס"
 
@@ -424,7 +424,7 @@ msgstr "מחוץ למבנה"
 msgid "Pager"
 msgstr "זימונית"
 
-#: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1763
+#: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1771
 msgid "Outbox"
 msgstr "דואר יוצא"
 
