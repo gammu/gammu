@@ -81,9 +81,8 @@ msgid "Reading"
 msgstr "Czytam"
 
 #: gammu/backup.c:247 gammu/backup.c:292
-#, fuzzy
 msgid "Only part of data saved, please increase the limit."
-msgstr "Zapisano tylko fragment danych, prosimy zwiększyć %s."
+msgstr "Zapisano tylko fragment danych, prosimy zwiększyć limit."
 
 #: gammu/backup.c:268 gammu/backup.c:310 gammu/backup.c:475 gammu/mms.c:182
 msgid "Reading:"
