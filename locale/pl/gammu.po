@@ -1583,9 +1583,8 @@ msgid "Name:"
 msgstr "Nazwa:"
 
 #: gammu-detect/udev.c:68
-#, fuzzy
 msgid "Type:"
-msgstr "Typ"
+msgstr "Typ:"
 
 #: gammu-detect/udev.c:69
 msgid "Subsystem:"
