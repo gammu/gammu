@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.31.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-08 11:08+0100\n"
-"PO-Revision-Date: 2012-03-09 05:25+0200\n"
+"PO-Revision-Date: 2012-03-09 05:26+0200\n"
 "Last-Translator: Bartosz Feński <fenio@debian.org>\n"
 "Language-Team: Language =pl\n"
 "Language: pl\n"
@@ -968,9 +968,8 @@ msgid "Waiting for PUK2."
 msgstr "Oczekiwanie na PUK2."
 
 #: gammu/common.c:57
-#, fuzzy
 msgid "Waiting for phone code."
-msgstr "Oczekiwanie na kod bezpieczeństwa."
+msgstr "Oczekiwanie na kod telefonu."
 
 #: gammu/common.c:60
 #, fuzzy
