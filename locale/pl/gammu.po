@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.31.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-08 11:08+0100\n"
-"PO-Revision-Date: 2012-03-09 05:32+0200\n"
+"PO-Revision-Date: 2012-03-09 05:33+0200\n"
 "Last-Translator: Bartosz Feński <fenio@debian.org>\n"
 "Language-Team: Language =pl\n"
 "Language: pl\n"
@@ -1714,9 +1714,9 @@ msgid ""
 msgstr ""
 
 #: gammu/files.c:421
-#, fuzzy, c-format
+#, c-format
 msgid "%i percent done."
-msgstr "%i procent"
+msgstr "%i procent zakończono."
 
 #: gammu/files.c:423
 #, c-format
