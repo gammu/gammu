@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.31.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-08 11:08+0100\n"
-"PO-Revision-Date: 2012-03-09 05:24+0200\n"
+"PO-Revision-Date: 2012-03-09 05:25+0200\n"
 "Last-Translator: Bartosz Feński <fenio@debian.org>\n"
 "Language-Team: Language =pl\n"
 "Language: pl\n"
@@ -922,9 +922,8 @@ msgid "Due time"
 msgstr "   Numer      : %s\n"
 
 #: gammu/calendar.c:741
-#, fuzzy
 msgid "Start time"
-msgstr "Start"
+msgstr "Czas rozpoczęcia"
 
 #: gammu/calendar.c:746
 #, fuzzy
