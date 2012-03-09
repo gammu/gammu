@@ -926,9 +926,8 @@ msgid "Start time"
 msgstr "Czas rozpoczęcia"
 
 #: gammu/calendar.c:746
-#, fuzzy
 msgid "Completed time"
-msgstr "Ukończono"
+msgstr "Czas zakończenia"
 
 #: gammu/calendar.c:751
 msgid "Completed"
