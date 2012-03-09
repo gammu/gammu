@@ -1603,9 +1603,8 @@ msgid "Driver:"
 msgstr "Sterownik:"
 
 #: gammu-detect/udev.c:73
-#, fuzzy
 msgid "Sequential Number:"
-msgstr "   Numer      : %s\n"
+msgstr "Numer seryjny:"
 
 #: gammu-detect/udev.c:74
 #, fuzzy
