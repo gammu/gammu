@@ -1759,9 +1759,9 @@ msgid "Networks for %s:"
 msgstr ""
 
 #: gammu/gammu.c:75
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown country name: %s."
-msgstr "Nieznany błąd."
+msgstr "Nieznana nazwa kraju: %s."
 
 #: gammu/gammu.c:80 gammu/gammu.c:722 gammu/misc.c:48
 msgid "Network"
