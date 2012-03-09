@@ -1591,9 +1591,8 @@ msgid "Subsystem:"
 msgstr ""
 
 #: gammu-detect/udev.c:70
-#, fuzzy
 msgid "Number:"
-msgstr "   Numer      : %s\n"
+msgstr "Numer:\n"
 
 #: gammu-detect/udev.c:71
 msgid "Path:"
