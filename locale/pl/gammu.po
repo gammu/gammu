@@ -1318,9 +1318,8 @@ msgid "Initial battery voltage:"
 msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1051
-#, fuzzy
 msgid "Battery Current:"
-msgstr "Usuń bieżący"
+msgstr "Stan baterii:"
 
 #: gammu/depend/nokia/dct4.c:1052
 msgid "Battery Current Fast:"
