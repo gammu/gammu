@@ -839,9 +839,8 @@ msgid ", date separator is %c\n"
 msgstr ", separator daty: %c\n"
 
 #: gammu/calendar.c:463
-#, fuzzy
 msgid "Setting time in phone to the same time as is set in computer."
-msgstr "Ustawianie czasu w telefonie zgodnie z czasem PC."
+msgstr "Ustawianie czasu w telefonie zgodnie z czasem komputera"
 
 #: gammu/calendar.c:513
 msgid "Updating specified parts of date and time in phone."
