@@ -972,9 +972,8 @@ msgid "Waiting for phone code."
 msgstr "Oczekiwanie na kod telefonu."
 
 #: gammu/common.c:60
-#, fuzzy
 msgid "Waiting for network code."
-msgstr "Oczekiwanie na kod bezpieczeństwa."
+msgstr "Oczekiwanie na kod sieci."
 
 #: gammu/common.c:63
 msgid "Nothing to enter."
