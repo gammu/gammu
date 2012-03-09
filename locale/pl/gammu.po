@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.31.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-08 11:08+0100\n"
-"PO-Revision-Date: 2012-03-09 05:28+0200\n"
+"PO-Revision-Date: 2012-03-09 05:29+0200\n"
 "Last-Translator: Bartosz Feński <fenio@debian.org>\n"
 "Language-Team: Language =pl\n"
 "Language: pl\n"
@@ -1515,9 +1515,9 @@ msgid "Disables scanning of Windows serial ports."
 msgstr ""
 
 #: gammu-detect/main.c:71
-#, fuzzy, c-format
+#, c-format
 msgid "Gammu-detect version %s"
-msgstr "Wersja Gammu"
+msgstr "Wersja Gammu-detect %s"
 
 #: gammu-detect/main.c:73
 #, fuzzy, c-format
