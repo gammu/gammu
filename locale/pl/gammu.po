@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.31.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-08 11:08+0100\n"
-"PO-Revision-Date: 2012-03-09 05:29+0200\n"
+"PO-Revision-Date: 2012-03-09 05:31+0200\n"
 "Last-Translator: Bartosz Feński <fenio@debian.org>\n"
 "Language-Team: Language =pl\n"
 "Language: pl\n"
@@ -1542,10 +1542,10 @@ msgid "Windows serial port probing"
 msgstr "Port telefonu"
 
 #: gammu-detect/main.c:87
-#, fuzzy
 msgid ""
 "Copyright (C) 2010 - 2011 Michal Cihar <michal@cihar.com> and other authors."
-msgstr "Copyright \\(co 2003 - 2008 Michal Cihar E<lt>I<michal@cihar.com>E<gt>"
+msgstr ""
+"Copyright (C) 2010 - 2011 Michal Cihar <michal@cihar.com> i inni autorzy."
 
 #: gammu-detect/main.c:89 gammu/gammu.c:331
 msgid ""
