@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.31.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-08 11:08+0100\n"
-"PO-Revision-Date: 2012-03-08 17:05+0200\n"
+"PO-Revision-Date: 2012-03-09 05:24+0200\n"
 "Last-Translator: Bartosz Feński <fenio@debian.org>\n"
 "Language-Team: Language =pl\n"
 "Language: pl\n"
@@ -470,9 +470,8 @@ msgid "Add phone ToDo?"
 msgstr "Dodać Zadania w telefonie?"
 
 #: gammu/backup.c:1774
-#, fuzzy
 msgid "Add notes to phone?"
-msgstr "Wyślij plik do telefonu"
+msgstr "Dodać notatki do telefonu?"
 
 #: gammu/backup.c:1797
 msgid "Add phone WAP bookmarks?"
