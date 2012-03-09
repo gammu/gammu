@@ -1625,9 +1625,8 @@ msgid "Phone on USB serial port %s %s"
 msgstr "Port telefonu"
 
 #: gammu/files.c:48
-#, fuzzy
 msgid "Phone memory"
-msgstr "Pamięć pełna."
+msgstr "Pamięć telefonu"
 
 #: gammu/files.c:49
 #, c-format
