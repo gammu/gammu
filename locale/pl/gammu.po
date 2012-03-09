@@ -1162,9 +1162,9 @@ msgid "Timeout"
 msgstr "Przekroczono limit czasu"
 
 #: gammu/depend/nokia/dct4.c:374
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown (%x)"
-msgstr "Nieznany błąd(%x)."
+msgstr "Nieznany (%x)."
 
 #: gammu/depend/nokia/dct4.c:376
 msgid " (startup)"
