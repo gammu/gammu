@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.31.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-08 11:08+0100\n"
-"PO-Revision-Date: 2012-03-09 05:26+0200\n"
+"PO-Revision-Date: 2012-03-09 05:27+0200\n"
 "Last-Translator: Bartosz Feński <fenio@debian.org>\n"
 "Language-Team: Language =pl\n"
 "Language: pl\n"
@@ -1280,9 +1280,8 @@ msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1042 gammu/depend/nokia/dct4.c:1046
 #: gammu/depend/nokia/dct4.c:1047
-#, fuzzy
 msgid "K"
-msgstr "OK"
+msgstr "K"
 
 #: gammu/depend/nokia/dct4.c:1043
 #, fuzzy
