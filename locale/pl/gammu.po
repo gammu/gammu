@@ -1520,11 +1520,9 @@ msgid "Gammu-detect version %s"
 msgstr "Wersja Gammu-detect %s"
 
 #: gammu-detect/main.c:73
-#, fuzzy, c-format
+#, c-format
 msgid "Built %s on %s using %s"
-msgstr ""
-"[Wersja Gammu %s zbudowana %s %s]\n"
-"\n"
+msgstr "Wersja Gammu %s zbudowana na %s używając %s"
 
 #: gammu-detect/main.c:76 gammu/gammu.c:100
 msgid "Compiled in features:"
