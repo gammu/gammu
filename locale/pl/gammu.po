@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.31.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-08 11:08+0100\n"
-"PO-Revision-Date: 2012-03-09 05:31+0200\n"
+"PO-Revision-Date: 2012-03-09 05:32+0200\n"
 "Last-Translator: Bartosz Feński <fenio@debian.org>\n"
 "Language-Team: Language =pl\n"
 "Language: pl\n"
@@ -1607,9 +1607,8 @@ msgid "Sequential Number:"
 msgstr "Numer seryjny:"
 
 #: gammu-detect/udev.c:74
-#, fuzzy
 msgid "Device File:"
-msgstr "Nazwa pliku: %s"
+msgstr "Plik urządzenia:"
 
 #: gammu-detect/udev.c:77
 msgid "Properties:"
