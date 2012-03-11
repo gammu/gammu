@@ -333,9 +333,8 @@ msgstr ""
 "פרטים נוספים."
 
 #: libgammu/gsmcomon.c:155
-#, fuzzy
 msgid "Entry is read only."
-msgstr "הרשומה ריקה."
+msgstr "הרשומה היא לקריאה בלבד."
 
 #: libgammu/gsmcomon.c:188
 msgid "Unknown error description."
