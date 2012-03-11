@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-08 11:08+0100\n"
-"PO-Revision-Date: 2012-03-11 12:56+0200\n"
+"PO-Revision-Date: 2012-03-11 12:57+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: none\n"
 "Language: he\n"
@@ -58,7 +58,7 @@ msgstr "סוג הזיכרון „%s“ אינו מוכר"
 #: gammu/backup.c:181
 #, c-format
 msgid "Unknown backup format: \"%s\"\n"
-msgstr ""
+msgstr "תבנית הגיבוי אינה מוכרת: „%s“"
 
 #: gammu/backup.c:187
 msgid "Error while opening file for writing!\n"
