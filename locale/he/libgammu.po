@@ -318,7 +318,7 @@ msgstr "לא ניתן לפתור את שם המארח."
 
 #: libgammu/gsmcomon.c:152
 msgid "Failed to get SMSC number from phone."
-msgstr ""
+msgstr "לא ניתן לקבל את מספר מרכז ההודעות (SMSC) מהטלפון."
 
 #: libgammu/gsmcomon.c:153
 #, fuzzy
