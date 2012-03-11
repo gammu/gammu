@@ -321,9 +321,8 @@ msgid "Failed to get SMSC number from phone."
 msgstr "לא ניתן לקבל את מספר מרכז ההודעות (SMSC) מהטלפון."
 
 #: libgammu/gsmcomon.c:153
-#, fuzzy
 msgid "Operation aborted."
-msgstr "הפעולה אינה מורשית על ידי הטלפון."
+msgstr "הפעולה בוטלה."
 
 #: libgammu/gsmcomon.c:154
 msgid ""
