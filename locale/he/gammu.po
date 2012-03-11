@@ -77,7 +77,7 @@ msgstr "אירעה שגיאה בעת סגירת הקובץ!"
 #: gammu/backup.c:744 gammu/backup.c:781 gammu/backup.c:819 gammu/backup.c:860
 #: gammu/backup.c:894 gammu/backup.c:931 gammu/message.c:426
 msgid "Reading"
-msgstr ""
+msgstr "בקריאה"
 
 #: gammu/backup.c:247 gammu/backup.c:292
 msgid "Only part of data saved, please increase the limit."
