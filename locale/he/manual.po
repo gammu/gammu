@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.31.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-13 14:46+0100\n"
-"PO-Revision-Date: 2012-03-11 12:54+0200\n"
+"PO-Revision-Date: 2012-03-11 13:01+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: none\n"
 "Language: he\n"
@@ -33454,7 +33454,7 @@ msgstr ""
 #: docs/manual/utils/gammu-config.rst:26 docs/manual/utils/jadmaker.rst:27
 #: docs/manual/utils/gammu-detect.rst:47
 msgid "Show summary of options."
-msgstr ""
+msgstr "Show summary of options."
 
 #. type: Plain text
 #: docs/manual/utils/gammu-config.rst:28 docs/manual/utils/jadmaker.rst:29
