@@ -62,7 +62,7 @@ msgstr "תבנית הגיבוי אינה מוכרת: „%s“"
 
 #: gammu/backup.c:187
 msgid "Error while opening file for writing!\n"
-msgstr ""
+msgstr "אירעה שגיאה בעת פתיחת הקובץ לכתיבה!"
 
 #: gammu/backup.c:191 gammu/files.c:454 helper/message-cmdline.c:1110
 msgid "Error while writing file!\n"
