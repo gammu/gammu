@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-08 11:08+0100\n"
-"PO-Revision-Date: 2012-03-11 12:54+0200\n"
+"PO-Revision-Date: 2012-03-11 12:55+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: none\n"
 "Language: he\n"
@@ -31,7 +31,7 @@ msgstr "הערת לוח השנה לא נמצאה בקובץ"
 
 #: gammu/backup.c:86
 msgid "WAP bookmark not found in file"
-msgstr ""
+msgstr "סימניית ה־WAP לא נמצאה בקובץ"
 
 #: gammu/backup.c:107
 msgid "Note not found in file"
