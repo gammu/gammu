@@ -43,7 +43,7 @@ msgstr "המטלה לביצוע לא נמצאה בקובץ"
 
 #: gammu/backup.c:137 helper/message-cmdline.c:525
 msgid "Where is backup filename and location and memory type?"
-msgstr ""
+msgstr "מה הם שם הקובץ, המיקום וסוג הזיכרון של הגיבוי?"
 
 #: gammu/backup.c:150 gammu/backup.c:161 helper/message-cmdline.c:537
 #: helper/message-cmdline.c:547
