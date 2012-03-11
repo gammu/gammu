@@ -35,7 +35,7 @@ msgstr "סימניית ה־WAP לא נמצאה בקובץ"
 
 #: gammu/backup.c:107
 msgid "Note not found in file"
-msgstr ""
+msgstr "לא נמצאה הערה בקובץ"
 
 #: gammu/backup.c:128
 msgid "Todo note not found in file"
