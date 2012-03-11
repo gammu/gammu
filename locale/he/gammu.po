@@ -48,7 +48,7 @@ msgstr "מה הם שם הקובץ, המיקום וסוג הזיכרון של ה�
 #: gammu/backup.c:150 gammu/backup.c:161 helper/message-cmdline.c:537
 #: helper/message-cmdline.c:547
 msgid "Phonebook entry not found in file"
-msgstr ""
+msgstr "רשומת ספר הטלפונים לא נמצאה בקובץ"
 
 #: gammu/backup.c:167 helper/message-cmdline.c:552
 #, c-format
