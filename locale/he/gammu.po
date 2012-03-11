@@ -106,7 +106,7 @@ msgstr "%i אחוז"
 #: gammu/calendar.c:982 gammu/memory.c:24 gammu/memory.c:312
 #: gammu/memory.c:376 gammu/message.c:133 gammu/misc.c:205 gammu/misc.c:606
 msgid "Press Ctrl+C to break..."
-msgstr ""
+msgstr "יש ללחוץ על Ctrl+C כדי להפסיק..."
 
 #: gammu/backup.c:372
 msgid "Use Unicode subformat of backup file?"
