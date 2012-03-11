@@ -70,7 +70,7 @@ msgstr "אירעה שגיאה בעת כתיבת הקובץ!"
 
 #: gammu/backup.c:194
 msgid "Error while closing file!\n"
-msgstr ""
+msgstr "אירעה שגיאה בעת סגירת הקובץ!"
 
 #: gammu/backup.c:241 gammu/backup.c:424 gammu/backup.c:496 gammu/backup.c:531
 #: gammu/backup.c:565 gammu/backup.c:633 gammu/backup.c:670 gammu/backup.c:707
