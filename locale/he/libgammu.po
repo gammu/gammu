@@ -297,7 +297,6 @@ msgid "Bluetooth configuration requires channel option."
 msgstr "תצורת ה־Bluetooth דורשת אפשרות ערוץ."
 
 #: libgammu/gsmcomon.c:147
-#, fuzzy
 msgid "Service is not running."
 msgstr "השירות אינו פעיל."
 
