@@ -27,7 +27,7 @@ msgstr "מהו שם קובץ ומיקום הגיבוי?"
 
 #: gammu/backup.c:63 helper/message-cmdline.c:489
 msgid "Calendar note not found in file"
-msgstr ""
+msgstr "הערת לוח השנה לא נמצאה בקובץ"
 
 #: gammu/backup.c:86
 msgid "WAP bookmark not found in file"
