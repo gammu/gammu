@@ -39,7 +39,7 @@ msgstr "לא נמצאה הערה בקובץ"
 
 #: gammu/backup.c:128
 msgid "Todo note not found in file"
-msgstr ""
+msgstr "המטלה לביצוע לא נמצאה בקובץ"
 
 #: gammu/backup.c:137 helper/message-cmdline.c:525
 msgid "Where is backup filename and location and memory type?"
