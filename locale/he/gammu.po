@@ -66,7 +66,7 @@ msgstr "אירעה שגיאה בעת פתיחת הקובץ לכתיבה!"
 
 #: gammu/backup.c:191 gammu/files.c:454 helper/message-cmdline.c:1110
 msgid "Error while writing file!\n"
-msgstr ""
+msgstr "אירעה שגיאה בעת כתיבת הקובץ!"
 
 #: gammu/backup.c:194
 msgid "Error while closing file!\n"
