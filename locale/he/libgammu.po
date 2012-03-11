@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-08 11:08+0100\n"
-"PO-Revision-Date: 2012-03-11 12:51+0200\n"
+"PO-Revision-Date: 2012-03-11 12:52+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: none\n"
 "Language: he\n"
@@ -329,6 +329,8 @@ msgid ""
 "Installation data not found, please consult debug log and/or documentation "
 "for more details."
 msgstr ""
+"נתוני ההתקנה לא נמצאו, נא לפנות אל יומן ניפוי השגיאות ו/או לתיעוד לקבלת "
+"פרטים נוספים."
 
 #: libgammu/gsmcomon.c:155
 #, fuzzy
