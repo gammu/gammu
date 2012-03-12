@@ -53,24 +53,24 @@ msgstr "רשומת ספר הטלפונים לא נמצאה בקובץ"
 #: gammu/backup.c:167 helper/message-cmdline.c:552
 #, c-format
 msgid "Unknown memory type: \"%s\"\n"
-msgstr "סוג הזיכרון „%s“ אינו מוכר"
+msgstr "סוג הזיכרון „%s“ אינו מוכר\n"
 
 #: gammu/backup.c:181
 #, c-format
 msgid "Unknown backup format: \"%s\"\n"
-msgstr "תבנית הגיבוי אינה מוכרת: „%s“"
+msgstr "תבנית הגיבוי אינה מוכרת: „%s“\n"
 
 #: gammu/backup.c:187
 msgid "Error while opening file for writing!\n"
-msgstr "אירעה שגיאה בעת פתיחת הקובץ לכתיבה!"
+msgstr "אירעה שגיאה בעת פתיחת הקובץ לכתיבה!\n"
 
 #: gammu/backup.c:191 gammu/files.c:454 helper/message-cmdline.c:1110
 msgid "Error while writing file!\n"
-msgstr "אירעה שגיאה בעת כתיבת הקובץ!"
+msgstr "אירעה שגיאה בעת כתיבת הקובץ!\n"
 
 #: gammu/backup.c:194
 msgid "Error while closing file!\n"
-msgstr "אירעה שגיאה בעת סגירת הקובץ!"
+msgstr "אירעה שגיאה בעת סגירת הקובץ!\n"
 
 #: gammu/backup.c:241 gammu/backup.c:424 gammu/backup.c:496 gammu/backup.c:531
 #: gammu/backup.c:565 gammu/backup.c:633 gammu/backup.c:670 gammu/backup.c:707
