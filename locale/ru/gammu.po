@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.31.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2012-03-08 11:08+0100\n"
+"POT-Creation-Date: 2012-03-14 13:55+0100\n"
 "PO-Revision-Date: 2008-01-27 17:07+0100\n"
 "Last-Translator: Даниил Аплеев <apleev@mail.ru>\n"
 "Language-Team: Language =ru\n"
@@ -3873,17 +3873,17 @@ msgstr "Поиск папки телефона: "
 
 #: gammu/nokia.c:691
 #, fuzzy
-msgid "No vendor info in JAD file"
+msgid "No vendor info in JAD file!"
 msgstr "В JAD-файле нет информации о производителе\n"
 
 #: gammu/nokia.c:696
 #, fuzzy
-msgid "No name info in JAD file"
+msgid "No name info in JAD file!"
 msgstr "В JAD-файле нет информации о названии\n"
 
 #: gammu/nokia.c:701
 #, fuzzy
-msgid "No JAR URL info in JAD file"
+msgid "No JAR URL info in JAD file!"
 msgstr "В JAD-файле нет информации об URL для JAR\n"
 
 #: gammu/nokia.c:707

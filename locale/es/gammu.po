@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2012-03-08 11:08+0100\n"
+"POT-Creation-Date: 2012-03-14 13:55+0100\n"
 "PO-Revision-Date: 2012-03-08 16:26+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
@@ -3500,15 +3500,18 @@ msgid "Searching for phone folder: "
 msgstr "Buscando la carpeta del teléfono:"
 
 #: gammu/nokia.c:691
-msgid "No vendor info in JAD file"
+#, fuzzy
+msgid "No vendor info in JAD file!"
 msgstr "No hay información del vendedor en el archivo JAD"
 
 #: gammu/nokia.c:696
-msgid "No name info in JAD file"
+#, fuzzy
+msgid "No name info in JAD file!"
 msgstr "no hay información del nombre en el archivo JAD"
 
 #: gammu/nokia.c:701
-msgid "No JAR URL info in JAD file"
+#, fuzzy
+msgid "No JAR URL info in JAD file!"
 msgstr "no hay información de URL JAR en el archivo JAD"
 
 #: gammu/nokia.c:707

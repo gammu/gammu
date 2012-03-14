@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.31.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2012-03-08 11:08+0100\n"
+"POT-Creation-Date: 2012-03-14 13:55+0100\n"
 "PO-Revision-Date: 2012-03-09 05:33+0200\n"
 "Last-Translator: Bartosz Feński <fenio@debian.org>\n"
 "Language-Team: Language =pl\n"
@@ -3518,17 +3518,17 @@ msgstr ""
 
 #: gammu/nokia.c:691
 #, fuzzy
-msgid "No vendor info in JAD file"
+msgid "No vendor info in JAD file!"
 msgstr "Brak informacji o producencie w pliku JAD\n"
 
 #: gammu/nokia.c:696
 #, fuzzy
-msgid "No name info in JAD file"
+msgid "No name info in JAD file!"
 msgstr "Brak informacji o nazwie w pliku JAD\n"
 
 #: gammu/nokia.c:701
 #, fuzzy
-msgid "No JAR URL info in JAD file"
+msgid "No JAR URL info in JAD file!"
 msgstr "Brak informacji JAR URL w pliku JAD\n"
 
 #: gammu/nokia.c:707
