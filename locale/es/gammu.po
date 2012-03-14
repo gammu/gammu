@@ -3508,9 +3508,8 @@ msgid "No name info in JAD file!"
 msgstr "¡No hay información del nombre en el archivo JAD!"
 
 #: gammu/nokia.c:701
-#, fuzzy
 msgid "No JAR URL info in JAD file!"
-msgstr "no hay información de URL JAR en el archivo JAD"
+msgstr "¡No hay URL para el JAR en el archivo JAD!"
 
 #: gammu/nokia.c:707
 msgid "Declared JAR file size is different than real. Fixed by Gammu."
