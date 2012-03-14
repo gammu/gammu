@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.31.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-13 14:46+0100\n"
-"PO-Revision-Date: 2012-03-14 12:52+0200\n"
+"PO-Revision-Date: 2012-03-14 14:40+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: none\n"
 "Language: he\n"
@@ -5280,9 +5280,9 @@ msgstr ""
 #. type: Title ~
 #: docs/manual/protocol/carkit.rst:116 docs/manual/protocol/carkit.rst:260
 #: docs/manual/protocol/carkit.rst:461 docs/manual/protocol/carkit.rst:621
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Disconnected"
-msgstr "הטלפון אינו מחובר."
+msgstr "אין טלפון מחובר"
 
 #. type: Plain text
 #: docs/manual/protocol/carkit.rst:120
@@ -14045,7 +14045,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/smsd/config.rst:354
 msgid "Send"
-msgstr ""
+msgstr "שליחה"
 
 #. type: Plain text
 #: docs/manual/smsd/config.rst:356 docs/manual/smsd/config.rst:364
@@ -16483,7 +16483,7 @@ msgstr ""
 #: docs/manual/c/hints.rst:140 docs/manual/c/unicode.rst:2
 #, no-wrap
 msgid "Unicode"
-msgstr ""
+msgstr "יוניקוד"
 
 #. type: Plain text
 #: docs/manual/gammu/index.rst:179
@@ -23507,7 +23507,7 @@ msgstr ""
 #: docs/manual/python/objects.rst:27 docs/manual/python/objects.rst:214
 #: docs/manual/python/objects.rst:391
 msgid "Number"
-msgstr ""
+msgstr "מספר"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:29
@@ -23542,7 +23542,7 @@ msgstr ""
 #: docs/manual/internal/reply.rst:53
 #, no-wrap
 msgid "Text"
-msgstr ""
+msgstr "טקסט"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:42
@@ -23564,7 +23564,7 @@ msgstr ""
 #: docs/manual/python/objects.rst:442 docs/manual/python/objects.rst:537
 #: docs/manual/python/objects.rst:632 docs/manual/python/objects.rst:714
 msgid "Location"
-msgstr ""
+msgstr "מיקום"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:50
@@ -23643,9 +23643,9 @@ msgstr ""
 
 #. type: Title =
 #: docs/manual/python/objects.rst:80 docs/manual/c/memory.rst:2
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Memory"
-msgstr "הזיכרון מלא."
+msgstr "זיכרון"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:82 docs/manual/python/objects.rst:638
@@ -23658,7 +23658,7 @@ msgstr ""
 #: docs/manual/python/objects.rst:541 docs/manual/python/objects.rst:595
 #: docs/manual/python/objects.rst:660 docs/manual/python/objects.rst:753
 msgid "Type"
-msgstr ""
+msgstr "סוג"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:86
@@ -23749,7 +23749,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:115
 msgid "State"
-msgstr ""
+msgstr "מצב"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:117
@@ -24702,7 +24702,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:479
 msgid "Priority"
-msgstr ""
+msgstr "עדיפות"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:481
@@ -30220,7 +30220,7 @@ msgstr ""
 #: docs/manual/c/call.rst:2
 #, no-wrap
 msgid "Call"
-msgstr ""
+msgstr "התקשרות"
 
 #. type: Labeled list
 #: docs/manual/c/call.rst:4 docs/manual/c/call.rst:5 docs/manual/c/call.rst:6
