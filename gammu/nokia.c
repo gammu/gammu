@@ -688,17 +688,17 @@ void NokiaAddFile(int argc, char *argv[])
 		error = GSM_JADFindData(&File, Vendor, Name, JAR, Version, &Size);
 		if (error == ERR_FILENOTSUPPORTED) {
 			if (Vendor[0] == 0x00) {
-				fprintf(stderr, "%s\n", _("No vendor info in JAD file"));
+				fprintf(stderr, "%s\n", _("No vendor info in JAD file!"));
 				GSM_Terminate();
 				return;
 			}
 			if (Name[0] == 0x00) {
-				fprintf(stderr, "%s\n", _("No name info in JAD file"));
+				fprintf(stderr, "%s\n", _("No name info in JAD file!"));
 				GSM_Terminate();
 				return;
 			}
 			if (JAR[0] == 0x00) {
-				fprintf(stderr, "%s\n", _("No JAR URL info in JAD file"));
+				fprintf(stderr, "%s\n", _("No JAR URL info in JAD file!"));
 				GSM_Terminate();
 				return;
 			}
