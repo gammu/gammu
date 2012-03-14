@@ -23507,7 +23507,7 @@ msgstr ""
 #: docs/manual/python/objects.rst:27 docs/manual/python/objects.rst:214
 #: docs/manual/python/objects.rst:391
 msgid "Number"
-msgstr ""
+msgstr "מספר"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:29
