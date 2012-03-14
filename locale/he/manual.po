@@ -24702,7 +24702,7 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/python/objects.rst:479
 msgid "Priority"
-msgstr ""
+msgstr "עדיפות"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:481
