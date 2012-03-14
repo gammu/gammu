@@ -23542,7 +23542,7 @@ msgstr ""
 #: docs/manual/internal/reply.rst:53
 #, no-wrap
 msgid "Text"
-msgstr ""
+msgstr "טקסט"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:42
