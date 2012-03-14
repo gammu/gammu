@@ -2114,7 +2114,7 @@ msgstr ""
 
 #: gammu/message.c:220 gammu/misc.c:2207 gammu/misc.c:2486
 msgid "Number"
-msgstr ""
+msgstr "מספר"
 
 #: gammu/message.c:221
 msgid "Default number"
