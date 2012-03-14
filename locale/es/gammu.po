@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-14 13:55+0100\n"
-"PO-Revision-Date: 2012-03-08 16:26+0200\n"
+"PO-Revision-Date: 2012-03-14 19:59+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Weblate 0.4\n"
+"X-Generator: Weblate 0.6\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -3500,9 +3500,8 @@ msgid "Searching for phone folder: "
 msgstr "Buscando la carpeta del teléfono:"
 
 #: gammu/nokia.c:691
-#, fuzzy
 msgid "No vendor info in JAD file!"
-msgstr "No hay información del vendedor en el archivo JAD"
+msgstr "¡No hay información del proveedor en el archivo JAD!"
 
 #: gammu/nokia.c:696
 #, fuzzy
