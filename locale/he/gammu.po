@@ -923,7 +923,7 @@ msgstr ""
 
 #: gammu/calendar.c:751
 msgid "Completed"
-msgstr ""
+msgstr "הושלם"
 
 #: gammu/calendar.c:786 gammu/calendar.c:791 helper/memory-display.c:45
 #: helper/memory-display.c:55 helper/memory-display.c:57
