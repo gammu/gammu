@@ -23643,9 +23643,9 @@ msgstr ""
 
 #. type: Title =
 #: docs/manual/python/objects.rst:80 docs/manual/c/memory.rst:2
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Memory"
-msgstr "הזיכרון מלא."
+msgstr "זיכרון"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:82 docs/manual/python/objects.rst:638
