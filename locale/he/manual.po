@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.31.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-13 14:46+0100\n"
-"PO-Revision-Date: 2012-03-14 14:39+0200\n"
+"PO-Revision-Date: 2012-03-14 14:40+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: none\n"
 "Language: he\n"
@@ -5280,9 +5280,9 @@ msgstr ""
 #. type: Title ~
 #: docs/manual/protocol/carkit.rst:116 docs/manual/protocol/carkit.rst:260
 #: docs/manual/protocol/carkit.rst:461 docs/manual/protocol/carkit.rst:621
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Disconnected"
-msgstr "הטלפון אינו מחובר."
+msgstr "אין טלפון מחובר"
 
 #. type: Plain text
 #: docs/manual/protocol/carkit.rst:120
