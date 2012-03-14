@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.31.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-13 14:46+0100\n"
-"PO-Revision-Date: 2012-03-14 14:29+0200\n"
+"PO-Revision-Date: 2012-03-14 14:30+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: none\n"
 "Language: he\n"
@@ -23658,7 +23658,7 @@ msgstr ""
 #: docs/manual/python/objects.rst:541 docs/manual/python/objects.rst:595
 #: docs/manual/python/objects.rst:660 docs/manual/python/objects.rst:753
 msgid "Type"
-msgstr ""
+msgstr "סוג"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:86
