@@ -886,7 +886,7 @@ msgstr ""
 
 #: gammu/calendar.c:713
 msgid "Priority"
-msgstr ""
+msgstr "עדיפות"
 
 #: gammu/calendar.c:716
 msgid "Low"
