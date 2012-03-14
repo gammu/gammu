@@ -544,7 +544,7 @@ msgstr ""
 
 #: gammu/calendar.c:43 gammu/calendar.c:756
 msgid "Alarm"
-msgstr ""
+msgstr "תזכורת"
 
 #: gammu/calendar.c:46
 msgid "Shopping"
