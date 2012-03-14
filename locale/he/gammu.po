@@ -663,7 +663,7 @@ msgstr ""
 #: gammu/calendar.c:993 gammu/message.c:225 gammu/misc.c:1139
 #: helper/memory-display.c:167 helper/message-display.c:445
 msgid "Text"
-msgstr ""
+msgstr "טקסט"
 
 #: gammu/calendar.c:222 gammu/calendar.c:825
 msgid "Description"
