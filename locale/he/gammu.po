@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-14 13:55+0100\n"
-"PO-Revision-Date: 2012-03-14 14:29+0200\n"
+"PO-Revision-Date: 2012-03-14 14:30+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: none\n"
 "Language: he\n"
@@ -851,7 +851,7 @@ msgstr ""
 
 #: gammu/calendar.c:542 gammu/calendar.c:545 gammu/mms.c:95
 msgid "Date"
-msgstr ""
+msgstr "תאריך"
 
 #: gammu/calendar.c:543
 msgid "Every day"
