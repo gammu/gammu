@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-manual 1.31.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2011-12-13 14:46+0100\n"
-"PO-Revision-Date: 2012-03-11 13:01+0200\n"
+"PO-Revision-Date: 2012-03-14 12:48+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: none\n"
 "Language: he\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Weblate 0.4\n"
+"X-Generator: Weblate 0.6\n"
 
 #. type: Plain text
 #: docs/manual/config/index.rst:2
@@ -23518,7 +23518,7 @@ msgstr ""
 #: docs/manual/python/objects.rst:31 docs/manual/python/objects.rst:218
 #: docs/manual/python/objects.rst:741
 msgid "Name"
-msgstr ""
+msgstr "שם"
 
 #. type: Plain text
 #: docs/manual/python/objects.rst:34
