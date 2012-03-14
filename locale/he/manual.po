@@ -30220,7 +30220,7 @@ msgstr ""
 #: docs/manual/c/call.rst:2
 #, no-wrap
 msgid "Call"
-msgstr ""
+msgstr "התקשרות"
 
 #. type: Labeled list
 #: docs/manual/c/call.rst:4 docs/manual/c/call.rst:5 docs/manual/c/call.rst:6
