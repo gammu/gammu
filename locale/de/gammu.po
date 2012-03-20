@@ -3491,9 +3491,8 @@ msgid "No vendor info in JAD file!"
 msgstr "Keine Anbieterinformationen in der JAD-Datei!"
 
 #: gammu/nokia.c:696
-#, fuzzy
 msgid "No name info in JAD file!"
-msgstr "Keine Namensinformationen in der JAD-Datei gefunden"
+msgstr "Keine Namensinformationen in der JAD-Datei!"
 
 #: gammu/nokia.c:701
 #, fuzzy
