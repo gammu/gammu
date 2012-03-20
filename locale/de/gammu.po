@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: Gammu 1.31.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-14 13:55+0100\n"
-"PO-Revision-Date: 2011-03-12 16:43+0200\n"
-"Last-Translator: <mynetx@gmx.de>\n"
+"PO-Revision-Date: 2012-03-20 12:33+0200\n"
+"Last-Translator: Philip Blatter <cihar@jamit.de>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Pootle 2.0.5\n"
+"X-Generator: Weblate 0.7\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -1811,11 +1811,10 @@ msgstr ""
 "INFO: Es ist eine neuere Testversion von Gammu (%s anstatt %s) verfügbar!\n"
 
 #: gammu/gammu.c:327
-#, fuzzy
 msgid ""
 "Copyright (C) 2003 - 2012 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
-"Copyright (C) 2003 - 2010 Michal Cihar <michal@cihar.com> und andere "
+"Copyright (C) 2003 - 2010 Michal Cihar <michal@cihar.com> und anderen "
 "Authoren."
 
 #: gammu/gammu.c:365
