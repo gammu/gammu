@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.31.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-14 13:55+0100\n"
-"PO-Revision-Date: 2012-03-23 10:27+0200\n"
+"PO-Revision-Date: 2012-03-23 10:28+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -933,7 +933,7 @@ msgstr "Čas dokončení"
 
 #: gammu/calendar.c:751
 msgid "Completed"
-msgstr "Dokončený"
+msgstr "Hotovo"
 
 #: gammu/calendar.c:786 gammu/calendar.c:791 helper/memory-display.c:45
 #: helper/memory-display.c:55 helper/memory-display.c:57
