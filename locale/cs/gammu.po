@@ -553,7 +553,7 @@ msgstr "Dovolená"
 
 #: gammu/calendar.c:43 gammu/calendar.c:756
 msgid "Alarm"
-msgstr "Budík"
+msgstr "Upozornění"
 
 #: gammu/calendar.c:46
 msgid "Shopping"
