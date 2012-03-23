@@ -2758,7 +2758,7 @@ msgstr "ID %i\n"
 
 #: gammu/misc.c:1116 gammu/misc.c:1118
 msgid "Bitmap"
-msgstr "Bitmapa"
+msgstr "Obrázek"
 
 #: gammu/misc.c:1116 gammu/misc.c:1639 gammu/misc.c:1642 gammu/mms.c:102
 msgid "enabled"
