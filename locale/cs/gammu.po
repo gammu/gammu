@@ -687,7 +687,7 @@ msgstr "LUID"
 #: gammu/memory.c:141 gammu/message.c:215 gammu/misc.c:1868 gammu/misc.c:1901
 #: gammu/misc.c:2191 gammu/misc.c:2315
 msgid "Location"
-msgstr "Pozice"
+msgstr "Umístění"
 
 #: gammu/calendar.c:242 gammu/calendar.c:776 helper/memory-display.c:62
 msgid "Private"
