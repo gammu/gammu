@@ -2143,7 +2143,7 @@ msgstr "Jiný klient již odpověděl"
 
 #: gammu/message.c:102
 msgid "Not supported"
-msgstr "Není podporováno"
+msgstr "Nepodporovaný"
 
 #: gammu/message.c:114
 msgid "Service reply"
