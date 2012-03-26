@@ -4028,7 +4028,7 @@ msgstr "Přečtená"
 
 #: helper/message-display.c:171 helper/message-display.c:291
 msgid "UnRead"
-msgstr "Nepřečteno"
+msgstr "Nepřečtená"
 
 #: helper/message-display.c:172 helper/message-display.c:292
 msgid "UnSent"
