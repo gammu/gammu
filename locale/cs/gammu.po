@@ -4032,7 +4032,7 @@ msgstr "Nepřečtená"
 
 #: helper/message-display.c:172 helper/message-display.c:292
 msgid "UnSent"
-msgstr "Neodesláno"
+msgstr "Neodeslaná"
 
 #: helper/message-display.c:176 helper/message-display.c:279
 msgid "Remote number"
