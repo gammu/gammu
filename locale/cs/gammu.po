@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.31.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-14 13:55+0100\n"
-"PO-Revision-Date: 2012-03-26 15:48+0200\n"
+"PO-Revision-Date: 2012-03-26 15:49+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -2766,7 +2766,7 @@ msgstr "povoleno"
 
 #: gammu/misc.c:1118 gammu/misc.c:1640 gammu/misc.c:1643 gammu/mms.c:104
 msgid "disabled"
-msgstr "zakázáno"
+msgstr "vypnuté"
 
 #: gammu/misc.c:1121
 msgid "Bitmap ID"
