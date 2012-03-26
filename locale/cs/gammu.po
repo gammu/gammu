@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.31.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-14 13:55+0100\n"
-"PO-Revision-Date: 2012-03-23 10:30+0200\n"
+"PO-Revision-Date: 2012-03-26 15:45+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -4020,7 +4020,7 @@ msgstr "Informace o stavu SMS"
 #: helper/message-display.c:233 helper/message-display.c:248
 #: helper/message-display.c:289
 msgid "Sent"
-msgstr "Odesláno"
+msgstr "Odeslaná"
 
 #: helper/message-display.c:170 helper/message-display.c:290
 msgid "Read"
