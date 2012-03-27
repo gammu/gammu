@@ -533,11 +533,12 @@ void SendSMSStatus (GSM_StateMachine *sm, int status, int MessageReference, void
 {
 	smprintf(gsm, "Sent SMS on device: \"%s\"\n", GSM_GetConfig(sm, -1)->Device);
 
+	printf("..");
 	if (status==0) {
-		printf("%s", _("..OK"));
+		printf("%s", _("OK"));
 		SMSStatus = ERR_NONE;
 	} else {
-		printf(_("..error %i"),status);
+		printf(_("error %i"),status);
 		SMSStatus = ERR_UNKNOWN;
 	}
 	printf(_(", message reference=%d"),MessageReference);
