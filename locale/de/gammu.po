@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: Gammu 1.31.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-27 10:47+0200\n"
-"PO-Revision-Date: 2012-03-20 12:34+0200\n"
-"Last-Translator: Philip Blatter <cihar@jamit.de>\n"
+"PO-Revision-Date: 2012-03-27 16:18+0200\n"
+"Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Weblate 0.7\n"
+"X-Generator: Weblate 0.8\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -717,8 +717,8 @@ msgstr "Wiederholung"
 #, c-format
 msgid "for %d time "
 msgid_plural "for %d times "
-msgstr[0] "einmal"
-msgstr[1] "%d Mal"
+msgstr[0] "einmal "
+msgstr[1] "%d Mal "
 
 #: gammu/calendar.c:317
 msgid "forever"
