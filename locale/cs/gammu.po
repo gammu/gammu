@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.31.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-14 13:55+0100\n"
-"PO-Revision-Date: 2012-03-14 14:22+0200\n"
+"PO-Revision-Date: 2012-03-26 15:49+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 0.6\n"
+"X-Generator: Weblate 0.8\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -529,7 +529,7 @@ msgstr "Připomínka (datum)"
 
 #: gammu/calendar.c:25
 msgid "Call"
-msgstr "Hovor"
+msgstr "Zavolat"
 
 #: gammu/calendar.c:28
 msgid "Meeting"
@@ -553,7 +553,7 @@ msgstr "Dovolená"
 
 #: gammu/calendar.c:43 gammu/calendar.c:756
 msgid "Alarm"
-msgstr "Budík"
+msgstr "Upozornění"
 
 #: gammu/calendar.c:46
 msgid "Shopping"
@@ -687,7 +687,7 @@ msgstr "LUID"
 #: gammu/memory.c:141 gammu/message.c:215 gammu/misc.c:1868 gammu/misc.c:1901
 #: gammu/misc.c:2191 gammu/misc.c:2315
 msgid "Location"
-msgstr "Pozice"
+msgstr "Umístění"
 
 #: gammu/calendar.c:242 gammu/calendar.c:776 helper/memory-display.c:62
 msgid "Private"
@@ -933,7 +933,7 @@ msgstr "Čas dokončení"
 
 #: gammu/calendar.c:751
 msgid "Completed"
-msgstr "Dokončený"
+msgstr "Hotovo"
 
 #: gammu/calendar.c:786 gammu/calendar.c:791 helper/memory-display.c:45
 #: helper/memory-display.c:55 helper/memory-display.c:57
@@ -1290,7 +1290,7 @@ msgstr "Připojení headsetu:"
 
 #: gammu/depend/nokia/dct4.c:1044
 msgid "Hook interconnection:"
-msgstr "Připojení zavěšení"
+msgstr "Připojení zavěšení:"
 
 #: gammu/depend/nokia/dct4.c:1045
 msgid "Light sensor:"
@@ -2143,7 +2143,7 @@ msgstr "Jiný klient již odpověděl"
 
 #: gammu/message.c:102
 msgid "Not supported"
-msgstr "Není podporováno"
+msgstr "Nepodporovaný"
 
 #: gammu/message.c:114
 msgid "Service reply"
@@ -2758,7 +2758,7 @@ msgstr "ID %i\n"
 
 #: gammu/misc.c:1116 gammu/misc.c:1118
 msgid "Bitmap"
-msgstr "Bitmapa"
+msgstr "Obrázek"
 
 #: gammu/misc.c:1116 gammu/misc.c:1639 gammu/misc.c:1642 gammu/mms.c:102
 msgid "enabled"
@@ -2766,7 +2766,7 @@ msgstr "povoleno"
 
 #: gammu/misc.c:1118 gammu/misc.c:1640 gammu/misc.c:1643 gammu/mms.c:104
 msgid "disabled"
-msgstr "zakázáno"
+msgstr "vypnuté"
 
 #: gammu/misc.c:1121
 msgid "Bitmap ID"
@@ -2915,7 +2915,7 @@ msgstr "Ruční"
 
 #: gammu/misc.c:1551 gammu/misc.c:1597
 msgid "Automatic"
-msgstr "Automatické"
+msgstr "Automaticky"
 
 #: gammu/misc.c:1554 gammu/misc.c:1556 gammu/misc.c:1600 gammu/misc.c:1602
 msgid "Authentication type"
@@ -4020,19 +4020,19 @@ msgstr "Informace o stavu SMS"
 #: helper/message-display.c:233 helper/message-display.c:248
 #: helper/message-display.c:289
 msgid "Sent"
-msgstr "Odesláno"
+msgstr "Odeslaná"
 
 #: helper/message-display.c:170 helper/message-display.c:290
 msgid "Read"
-msgstr "Přečteno"
+msgstr "Přečtená"
 
 #: helper/message-display.c:171 helper/message-display.c:291
 msgid "UnRead"
-msgstr "Nepřečteno"
+msgstr "Nepřečtená"
 
 #: helper/message-display.c:172 helper/message-display.c:292
 msgid "UnSent"
-msgstr "Neodesláno"
+msgstr "Neodeslaná"
 
 #: helper/message-display.c:176 helper/message-display.c:279
 msgid "Remote number"
