@@ -22574,7 +22574,7 @@ msgstr ""
 #: docs/manual/gammu/index.rst:1952
 #, no-wrap
 msgid "Reporting bugs"
-msgstr ""
+msgstr "Reportando erros"
 
 # type: Plain text
 #. type: delimited block _

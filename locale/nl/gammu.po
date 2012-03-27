@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2012-03-14 13:55+0100\n"
+"POT-Creation-Date: 2012-03-27 10:47+0200\n"
 "PO-Revision-Date: 2009-01-27 14:28+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -2099,7 +2099,7 @@ msgstr ""
 #: gammu/message.c:86 helper/message-display.c:167
 #: helper/message-display.c:287
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: gammu/message.c:90
 msgid "No action needed"
@@ -2163,7 +2163,7 @@ msgstr ""
 msgid "Maximum time"
 msgstr ""
 
-#: gammu/message.c:368 gammu/message.c:440 gammu/message.c:710
+#: gammu/message.c:368 gammu/message.c:440 gammu/message.c:711
 msgid "Corrupted message, skipping"
 msgstr ""
 
@@ -2196,74 +2196,74 @@ msgstr ""
 msgid ", Outbox folder"
 msgstr ""
 
-#: gammu/message.c:537
-msgid "..OK"
-msgstr ""
+#: gammu/message.c:538
+msgid "OK"
+msgstr "OK"
 
-#: gammu/message.c:540
+#: gammu/message.c:541
 #, c-format
-msgid "..error %i"
+msgid "error %i"
 msgstr ""
 
-#: gammu/message.c:543
+#: gammu/message.c:544
 #, c-format
 msgid ", message reference=%d"
 msgstr ""
 
-#: gammu/message.c:576
+#: gammu/message.c:577
 msgid "Message number"
 msgstr ""
 
-#: gammu/message.c:581
+#: gammu/message.c:582
 msgid "Number of messages"
 msgstr ""
 
-#: gammu/message.c:592 gammu/message.c:632
+#: gammu/message.c:593 gammu/message.c:633
 msgid "If you want break, press Ctrl+C..."
 msgstr ""
 
-#: gammu/message.c:597
+#: gammu/message.c:598
 #, c-format
 msgid "Saving SMS %i/%i\n"
 msgstr ""
 
-#: gammu/message.c:600
+#: gammu/message.c:601
 #, c-format
 msgid "Saved in folder number %d \"%s\", location %i"
 msgstr ""
 
-#: gammu/message.c:605
+#: gammu/message.c:606
 msgid "SIM"
 msgstr "SIM"
 
-#: gammu/message.c:607
+#: gammu/message.c:608
 msgid "phone"
 msgstr ""
 
-#: gammu/message.c:611
+#: gammu/message.c:612
 #, c-format
 msgid "Sending sms from folder \"%s\", location %i\n"
 msgstr ""
 
-#: gammu/message.c:617 gammu/message.c:643
+#: gammu/message.c:618 gammu/message.c:644
 msgid "....waiting for network answer"
 msgstr ""
 
-#: gammu/message.c:638
+#: gammu/message.c:639
 #, c-format
 msgid "Sending SMS %i/%i"
 msgstr ""
 
-#: gammu/message.c:657
+#: gammu/message.c:658
 msgid "Something went wrong, uknown message operation!\n"
 msgstr ""
 
-#: gammu/message.c:693
+#: gammu/message.c:694
 #, c-format
 msgid "Too high folder number (max. %i)\n"
 msgstr ""
 
-#: gammu/message.c:699
+#: gammu/message.c:700
 #, c-format
 msgid "Deleting SMS from \"%s\" folder: "
 msgstr ""

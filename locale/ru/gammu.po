@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.31.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2012-03-14 13:55+0100\n"
+"POT-Creation-Date: 2012-03-27 10:47+0200\n"
 "PO-Revision-Date: 2008-01-27 17:07+0100\n"
 "Last-Translator: Даниил Аплеев <apleev@mail.ru>\n"
 "Language-Team: Language =ru\n"
@@ -2404,7 +2404,7 @@ msgstr "Достоверность  : "
 msgid "Maximum time"
 msgstr "Макс. время"
 
-#: gammu/message.c:368 gammu/message.c:440 gammu/message.c:710
+#: gammu/message.c:368 gammu/message.c:440 gammu/message.c:711
 msgid "Corrupted message, skipping"
 msgstr ""
 
@@ -2438,80 +2438,80 @@ msgstr ", папка Входящие"
 msgid ", Outbox folder"
 msgstr ", папка Входящие"
 
-#: gammu/message.c:537
-msgid "..OK"
+#: gammu/message.c:538
+msgid "OK"
 msgstr ""
 
-#: gammu/message.c:540
-#, c-format
-msgid "..error %i"
+#: gammu/message.c:541
+#, fuzzy, c-format
+msgid "error %i"
 msgstr "..ошибка %i"
 
-#: gammu/message.c:543
+#: gammu/message.c:544
 #, fuzzy, c-format
 msgid ", message reference=%d"
 msgstr ", ссылка на сообщение=%d\n"
 
-#: gammu/message.c:576
+#: gammu/message.c:577
 #, fuzzy
 msgid "Message number"
 msgstr "Пейджер         "
 
-#: gammu/message.c:581
+#: gammu/message.c:582
 #, fuzzy
 msgid "Number of messages"
 msgstr ""
 "\n"
 "Количество SMS: %i\n"
 
-#: gammu/message.c:592 gammu/message.c:632
+#: gammu/message.c:593 gammu/message.c:633
 #, fuzzy
 msgid "If you want break, press Ctrl+C..."
 msgstr "Чтобы прервать, нажмите Ctrl+C...\n"
 
-#: gammu/message.c:597
+#: gammu/message.c:598
 #, c-format
 msgid "Saving SMS %i/%i\n"
 msgstr "Сохранение SMS %i/%i\n"
 
-#: gammu/message.c:600
+#: gammu/message.c:601
 #, fuzzy, c-format
 msgid "Saved in folder number %d \"%s\", location %i"
 msgstr "Сохранено в папке \"%s\", размещение %i"
 
-#: gammu/message.c:605
+#: gammu/message.c:606
 msgid "SIM"
 msgstr "SIM"
 
-#: gammu/message.c:607
+#: gammu/message.c:608
 #, fuzzy
 msgid "phone"
 msgstr ", телефон\n"
 
-#: gammu/message.c:611
+#: gammu/message.c:612
 #, c-format
 msgid "Sending sms from folder \"%s\", location %i\n"
 msgstr "Отправляется SMS из папки \"%s\", размещение %i\n"
 
-#: gammu/message.c:617 gammu/message.c:643
+#: gammu/message.c:618 gammu/message.c:644
 msgid "....waiting for network answer"
 msgstr "...ожидается ответ сети"
 
-#: gammu/message.c:638
+#: gammu/message.c:639
 #, c-format
 msgid "Sending SMS %i/%i"
 msgstr "Отправляется SMS %i/%i"
 
-#: gammu/message.c:657
+#: gammu/message.c:658
 msgid "Something went wrong, uknown message operation!\n"
 msgstr ""
 
-#: gammu/message.c:693
+#: gammu/message.c:694
 #, c-format
 msgid "Too high folder number (max. %i)\n"
 msgstr "Слишком много каталогов (макс. %i)\n"
 
-#: gammu/message.c:699
+#: gammu/message.c:700
 #, c-format
 msgid "Deleting SMS from \"%s\" folder: "
 msgstr "Удаление SMS из каталога \"%s\": "
