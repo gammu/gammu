@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-08 11:08+0100\n"
-"PO-Revision-Date: 2009-06-01 14:02+0200\n"
-"Last-Translator: Cédric Corazza <cedric.corazza@wanadoo.fr>\n"
+"PO-Revision-Date: 2012-03-28 10:05+0200\n"
+"Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: none\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Pootle 1.2.1\n"
+"X-Generator: Weblate 0.8\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
@@ -225,8 +225,7 @@ msgstr "Le téléphone doit envoyer une autre trame de réponse."
 
 #: libgammu/gsmcomon.c:123
 msgid "Current connection type doesn't support called function."
-msgstr ""
-"La fonction appelée n'est pas supporté par le type actuel de connexion. "
+msgstr "La fonction appelée n'est pas supporté par le type actuel de connexion."
 
 #: libgammu/gsmcomon.c:124
 msgid "CRC error."
