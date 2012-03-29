@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.31.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-27 10:47+0200\n"
-"PO-Revision-Date: 2012-03-27 16:18+0200\n"
+"PO-Revision-Date: 2012-03-29 17:12+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -648,7 +648,7 @@ msgstr "unbekannt"
 
 #: gammu/calendar.c:156
 msgid "Start"
-msgstr "Beginn"
+msgstr "Anfang"
 
 #: gammu/calendar.c:163
 msgid "Stop"
@@ -899,7 +899,7 @@ msgstr "Der Eintrag wurde gelöscht"
 
 #: gammu/calendar.c:713
 msgid "Priority"
-msgstr "Priorität"
+msgstr "Dringlichkeit"
 
 #: gammu/calendar.c:716
 msgid "Low"
@@ -936,7 +936,7 @@ msgstr "Erledigt"
 
 #: gammu/calendar.c:751
 msgid "Completed"
-msgstr "Erledigt"
+msgstr "Fertig"
 
 #: gammu/calendar.c:786 gammu/calendar.c:791 helper/memory-display.c:45
 #: helper/memory-display.c:55 helper/memory-display.c:57
@@ -1673,7 +1673,7 @@ msgstr "Teil des Verzeichnisses"
 
 #: gammu/files.c:160 gammu/files.c:173 gammu/files.c:199 gammu/files.c:324
 msgid "Folder"
-msgstr "Verzeichnis"
+msgstr "Ordner"
 
 #: gammu/files.c:184 gammu/files.c:315
 msgid "File;"
@@ -2528,7 +2528,7 @@ msgstr "Hardware"
 
 #: gammu/misc.c:415
 msgid "Original IMEI"
-msgstr "Original IMEI"
+msgstr "Original-IMEI"
 
 #: gammu/misc.c:422
 msgid "Manufactured"
@@ -2536,11 +2536,11 @@ msgstr "Hergestellt"
 
 #: gammu/misc.c:428
 msgid "Product code"
-msgstr "Produkt-Code"
+msgstr "Produktnummer"
 
 #: gammu/misc.c:438
 msgid "SIM IMSI"
-msgstr "SIM IMSI"
+msgstr "SIM-IMSI"
 
 #: gammu/misc.c:547
 msgid "Call info"
@@ -2630,7 +2630,7 @@ msgstr "Aufgaben"
 
 #: gammu/misc.c:644
 msgid "Calendar"
-msgstr "Kalendernotiz"
+msgstr "Kalender"
 
 #: gammu/misc.c:653
 msgid "Signal strength"
@@ -2771,7 +2771,7 @@ msgstr "eingeschaltet"
 
 #: gammu/misc.c:1118 gammu/misc.c:1640 gammu/misc.c:1643 gammu/mms.c:104
 msgid "disabled"
-msgstr "ausgeschaltet"
+msgstr "Deaktiviert"
 
 #: gammu/misc.c:1121
 msgid "Bitmap ID"
@@ -3387,7 +3387,7 @@ msgstr "Betreff"
 
 #: gammu/mms.c:100
 msgid "Delivery report"
-msgstr "Sendebericht"
+msgstr "Empfangsbestätigung"
 
 #: gammu/mms.c:107 gammu/mms.c:110
 msgid "Content type"
@@ -3720,7 +3720,7 @@ msgstr "Website gesch."
 
 #: helper/memory-display.c:207
 msgid "Website"
-msgstr "Website"
+msgstr "Webseite"
 
 #: helper/memory-display.c:212
 msgid "VOIP"
@@ -4274,7 +4274,7 @@ msgstr "Benutzer-UDH"
 
 #: helper/message-display.c:318
 msgid "MMS indicator"
-msgstr "MMS-Kennung"
+msgstr "MMS Indikator"
 
 #: helper/message-display.c:322
 #, c-format

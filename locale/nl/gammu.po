@@ -8,14 +8,15 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-27 10:47+0200\n"
-"PO-Revision-Date: 2009-01-27 14:28+0100\n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2012-03-29 17:19+0200\n"
+"Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: none\n"
-"Language: \n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Weblate 0.8\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -1859,9 +1860,8 @@ msgid "Logo and pictures"
 msgstr ""
 
 #: gammu/gammu.c:707
-#, fuzzy
 msgid "Ringtones"
-msgstr "Taken lezen"
+msgstr "Ringtones"
 
 #: gammu/gammu.c:708
 msgid "Calendar notes"
@@ -1912,9 +1912,8 @@ msgid "FM radio"
 msgstr ""
 
 #: gammu/gammu.c:727
-#, fuzzy
 msgid "Phone information"
-msgstr "Telefoon informatie"
+msgstr "Telefooninformatie"
 
 #: gammu/gammu.c:728
 msgid "Phone settings"
@@ -2118,9 +2117,8 @@ msgid "Another client replied"
 msgstr ""
 
 #: gammu/message.c:102
-#, fuzzy
 msgid "Not supported"
-msgstr "Niet ondersteund id: %s"
+msgstr "Niet ondersteund"
 
 #: gammu/message.c:114
 msgid "Service reply"
@@ -2509,7 +2507,7 @@ msgstr ""
 
 #: gammu/misc.c:428
 msgid "Product code"
-msgstr "Product code"
+msgstr "Productcode"
 
 #: gammu/misc.c:438
 msgid "SIM IMSI"
@@ -2821,7 +2819,7 @@ msgstr ""
 
 #: gammu/misc.c:1519 gammu/misc.c:1521
 msgid "Connection type"
-msgstr "Verbindingstype"
+msgstr "Type verbinding"
 
 #: gammu/misc.c:1519
 msgid "Continuous"
