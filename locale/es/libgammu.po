@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-08 11:08+0100\n"
-"PO-Revision-Date: 2011-03-10 19:27+0200\n"
+"PO-Revision-Date: 2012-03-28 20:58+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Pootle 2.0.5\n"
+"X-Generator: Weblate 0.8\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
@@ -113,7 +113,7 @@ msgstr "Modo de conexión desconocido. Verifice el archivo de configuración."
 
 #: libgammu/gsmcomon.c:102
 msgid "Unknown model type string. Check config file."
-msgstr "Modelo desconocido. Verifique el archivo de configuración"
+msgstr "Modelo desconocido. Verifique el archivo de configuración."
 
 #: libgammu/gsmcomon.c:103
 msgid ""
@@ -443,7 +443,7 @@ msgstr "Exterior"
 
 #: libgammu/phone/nokia/nfunc.c:1153
 msgid "Pager"
-msgstr "Mensáfono"
+msgstr "Buscapersonas"
 
 #: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1771
 msgid "Outbox"
