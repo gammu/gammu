@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Gammu 1.31.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-27 10:47+0200\n"
-"PO-Revision-Date: 2012-03-09 05:33+0200\n"
-"Last-Translator: Bartosz Feński <fenio@debian.org>\n"
+"PO-Revision-Date: 2012-03-29 17:04+0200\n"
+"Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =pl\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 0.4\n"
+"X-Generator: Weblate 0.8\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -1916,9 +1916,8 @@ msgid "FM radio"
 msgstr ""
 
 #: gammu/gammu.c:727
-#, fuzzy
 msgid "Phone information"
-msgstr "Pobierz informację o telefonie"
+msgstr "Informacje o telefonie"
 
 #: gammu/gammu.c:728
 msgid "Phone settings"
@@ -2141,9 +2140,8 @@ msgid "Another client replied"
 msgstr ""
 
 #: gammu/message.c:102
-#, fuzzy
 msgid "Not supported"
-msgstr "Nie obsługiwane id: %s"
+msgstr "Nie obsługiwane"
 
 #: gammu/message.c:114
 msgid "Service reply"
