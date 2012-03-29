@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-08 11:08+0100\n"
-"PO-Revision-Date: 2012-03-28 10:05+0200\n"
+"PO-Revision-Date: 2012-03-29 17:18+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: none\n"
 "Language: fr\n"
@@ -407,7 +407,7 @@ msgstr "Personnalisé"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:578
 msgid "SIM"
-msgstr "Carte SIM"
+msgstr "carte SIM"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:579 libgammu/phone/pfunc.c:41
 #: libgammu/phone/s60/s60phone.c:1770
@@ -440,7 +440,7 @@ msgstr "Collègues"
 
 #: libgammu/phone/nokia/nfunc.c:969
 msgid "Other"
-msgstr "Divers"
+msgstr "Autres"
 
 #: libgammu/phone/nokia/nfunc.c:1149
 msgid "Meeting"
