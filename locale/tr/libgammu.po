@@ -8,30 +8,31 @@ msgstr ""
 "Project-Id-Version: libgammu 1.28.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-08 11:08+0100\n"
-"PO-Revision-Date: 2010-09-03 14:46+0200\n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2012-03-30 14:44+0200\n"
+"Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
 "Language-Team: none\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 0.8\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
-msgstr ""
+msgstr "Hata yok."
 
 #: libgammu/gsmcomon.c:85
 msgid "Error opening device. Unknown, busy or no permissions."
-msgstr ""
+msgstr "Cihazı açarken hata. Bilinmiyor, meşgul ya da izinler yok."
 
 #: libgammu/gsmcomon.c:86
 msgid "Error opening device, it is locked."
-msgstr ""
+msgstr "Cihazı açarken hata, kilitli."
 
 #: libgammu/gsmcomon.c:87
 msgid "Error opening device, it doesn't exist."
-msgstr ""
+msgstr "Cihazı açarken hata, mevcut değil."
 
 #: libgammu/gsmcomon.c:88
 msgid "Error opening device, it is already opened by other application."
@@ -307,9 +308,8 @@ msgid "Failed to get SMSC number from phone."
 msgstr ""
 
 #: libgammu/gsmcomon.c:153
-#, fuzzy
 msgid "Operation aborted."
-msgstr "Süreçteki işlem"
+msgstr ""
 
 #: libgammu/gsmcomon.c:154
 msgid ""
@@ -318,9 +318,8 @@ msgid ""
 msgstr ""
 
 #: libgammu/gsmcomon.c:155
-#, fuzzy
 msgid "Entry is read only."
-msgstr "Girdi oluşturuldu!"
+msgstr ""
 
 #: libgammu/gsmcomon.c:188
 msgid "Unknown error description."
