@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: gammu 1.28.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-27 10:47+0200\n"
-"PO-Revision-Date: 2012-03-28 11:13+0200\n"
-"Last-Translator: irfan evrens <irfanevrens@gmail.com>\n"
+"PO-Revision-Date: 2012-03-30 21:58+0200\n"
+"Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
 "Language-Team: none\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -23,19 +23,19 @@ msgstr ""
 #: helper/message-cmdline.c:441 helper/message-cmdline.c:478
 #: helper/message-cmdline.c:501
 msgid "Where is backup filename and location?"
-msgstr "Yedek dosyasının konumunu belirtiniz."
+msgstr ""
 
 #: gammu/backup.c:63 helper/message-cmdline.c:489
 msgid "Calendar note not found in file"
-msgstr ""
+msgstr "Dosya içinde takvim notu bulunamadı"
 
 #: gammu/backup.c:86
 msgid "WAP bookmark not found in file"
-msgstr ""
+msgstr "Dosyanın içinde WAP yer imi bulunamadı"
 
 #: gammu/backup.c:107
 msgid "Note not found in file"
-msgstr ""
+msgstr "Dosya içinde not bulunamadı"
 
 #: gammu/backup.c:128
 msgid "Todo note not found in file"
@@ -58,7 +58,7 @@ msgstr ""
 #: gammu/backup.c:181
 #, c-format
 msgid "Unknown backup format: \"%s\"\n"
-msgstr ""
+msgstr "Bilinmeyen yedekleme biçimi: \"%s\"\n"
 
 #: gammu/backup.c:187
 msgid "Error while opening file for writing!\n"
@@ -636,7 +636,7 @@ msgstr ""
 
 #: gammu/calendar.c:156
 msgid "Start"
-msgstr "Başlat"
+msgstr "Başlangıç"
 
 #: gammu/calendar.c:163
 msgid "Stop"
@@ -1484,9 +1484,8 @@ msgid "Show debugging output for detecting devices."
 msgstr ""
 
 #: gammu-detect/main.c:56
-#, fuzzy
 msgid "Show version information and compiled in features."
-msgstr "Telefon bilgisi"
+msgstr ""
 
 #: gammu-detect/main.c:58
 msgid "Disables scanning of udev."
@@ -1501,9 +1500,9 @@ msgid "Disables scanning of Windows serial ports."
 msgstr ""
 
 #: gammu-detect/main.c:71
-#, fuzzy, c-format
+#, c-format
 msgid "Gammu-detect version %s"
-msgstr "Gammu sürüm"
+msgstr ""
 
 #: gammu-detect/main.c:73
 #, c-format
@@ -1563,41 +1562,36 @@ msgid "option parsing failed: %s\n"
 msgstr ""
 
 #: gammu-detect/udev.c:67
-#, fuzzy
 msgid "Name:"
-msgstr "Adı"
+msgstr "Adı:"
 
 #: gammu-detect/udev.c:68
-#, fuzzy
 msgid "Type:"
-msgstr "Tip"
+msgstr "Türü:"
 
 #: gammu-detect/udev.c:69
 msgid "Subsystem:"
 msgstr ""
 
 #: gammu-detect/udev.c:70
-#, fuzzy
 msgid "Number:"
-msgstr "Numara"
+msgstr "Numara:"
 
 #: gammu-detect/udev.c:71
 msgid "Path:"
 msgstr ""
 
 #: gammu-detect/udev.c:72
-#, fuzzy
 msgid "Driver:"
-msgstr "Kullanılacak sürücü"
+msgstr "Sürücü:"
 
 #: gammu-detect/udev.c:73
 msgid "Sequential Number:"
 msgstr ""
 
 #: gammu-detect/udev.c:74
-#, fuzzy
 msgid "Device File:"
-msgstr "Dosya adı: %s"
+msgstr "Cihaz Adı:"
 
 #: gammu-detect/udev.c:77
 msgid "Properties:"
@@ -2086,7 +2080,7 @@ msgstr ""
 #: gammu/message.c:86 helper/message-display.c:167
 #: helper/message-display.c:287
 msgid "Status"
-msgstr "Estado"
+msgstr "Durum"
 
 #: gammu/message.c:90
 msgid "No action needed"
@@ -2482,7 +2476,7 @@ msgstr "Ürün bilgisi"
 
 #: gammu/misc.c:404
 msgid "Hardware"
-msgstr "Bilgisayar parçası"
+msgstr "Donanım"
 
 #: gammu/misc.c:415
 msgid "Original IMEI"
@@ -2699,7 +2693,6 @@ msgstr ""
 
 #: gammu/misc.c:1081 gammu/misc.c:1083 gammu/misc.c:1096 gammu/misc.c:1103
 #: helper/memory-display.c:101
-#, fuzzy
 msgid "Ringtone"
 msgstr "Zil sesi"
 
@@ -2973,7 +2966,7 @@ msgstr ""
 
 #: gammu/misc.c:1682 gammu/misc.c:1732
 msgid "Homepage"
-msgstr ""
+msgstr "Ana sayfa"
 
 #: gammu/misc.c:1726
 msgid "active"
@@ -3614,9 +3607,8 @@ msgid "General number"
 msgstr ""
 
 #: helper/memory-display.c:136
-#, fuzzy
 msgid "Video number"
-msgstr "Yanlış telefon numarası"
+msgstr ""
 
 #: helper/memory-display.c:141
 msgid "Home mobile number"
@@ -3643,43 +3635,36 @@ msgid "Other number"
 msgstr ""
 
 #: helper/memory-display.c:172
-#, fuzzy
 msgid "Home address"
-msgstr "Adresten"
+msgstr "Ev adresi"
 
 #: helper/memory-display.c:175
-#, fuzzy
 msgid "Work address"
-msgstr "Adresten"
+msgstr "İş adresi"
 
 #: helper/memory-display.c:186
-#, fuzzy
 msgid "Home email"
-msgstr "E-posta adresiniz"
+msgstr "Ev için eposta"
 
 #: helper/memory-display.c:189
-#, fuzzy
 msgid "Work email"
-msgstr "E-posta adresiniz"
+msgstr "İş için eposta"
 
 #: helper/memory-display.c:196
 msgid "Email address 2"
 msgstr ""
 
 #: helper/memory-display.c:201
-#, fuzzy
 msgid "Home website"
-msgstr "&Websitesi"
+msgstr "Ev web sitesi"
 
 #: helper/memory-display.c:204
-#, fuzzy
 msgid "Work website"
-msgstr "&Websitesi"
+msgstr "İş web sitesi"
 
 #: helper/memory-display.c:207
-#, fuzzy
 msgid "Website"
-msgstr "&Websitesi"
+msgstr "Web sitesi"
 
 #: helper/memory-display.c:212
 msgid "VOIP"
@@ -3694,9 +3679,8 @@ msgid "WVID"
 msgstr ""
 
 #: helper/memory-display.c:215
-#, fuzzy
 msgid "SIP"
-msgstr "SIM"
+msgstr ""
 
 #: helper/memory-display.c:216
 msgid "DTMF"
@@ -3711,18 +3695,16 @@ msgid "First name"
 msgstr ""
 
 #: helper/memory-display.c:220
-#, fuzzy
 msgid "Second name"
-msgstr "Adınız"
+msgstr "İkinci adınız"
 
 #: helper/memory-display.c:221
 msgid "Formal name"
 msgstr ""
 
 #: helper/memory-display.c:222
-#, fuzzy
 msgid "Name prefix"
-msgstr "Ön numara"
+msgstr "Ad öneki"
 
 #: helper/memory-display.c:223
 msgid "Name suffix"
