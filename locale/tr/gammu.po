@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.28.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-27 10:47+0200\n"
-"PO-Revision-Date: 2012-03-30 21:58+0200\n"
+"PO-Revision-Date: 2012-03-31 11:38+0200\n"
 "Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
 "Language-Team: none\n"
 "Language: tr\n"
@@ -902,7 +902,7 @@ msgstr ""
 
 #: gammu/calendar.c:725
 msgid "None"
-msgstr "Hiç"
+msgstr "Yok"
 
 #: gammu/calendar.c:729 gammu/message.c:111 gammu/misc.c:2122
 #: gammu/misc.c:2165
@@ -2472,7 +2472,7 @@ msgstr "Model"
 
 #: gammu/misc.c:392
 msgid "Firmware"
-msgstr "Ürün bilgisi"
+msgstr "Donanım Yazılımı"
 
 #: gammu/misc.c:404
 msgid "Hardware"
@@ -2488,7 +2488,7 @@ msgstr ""
 
 #: gammu/misc.c:428
 msgid "Product code"
-msgstr "Ürün Kodu"
+msgstr "Ürün kodu"
 
 #: gammu/misc.c:438
 msgid "SIM IMSI"
