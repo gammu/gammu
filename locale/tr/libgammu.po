@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.28.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-08 11:08+0100\n"
-"PO-Revision-Date: 2012-03-30 14:44+0200\n"
+"PO-Revision-Date: 2012-03-31 21:06+0200\n"
 "Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
 "Language-Team: none\n"
 "Language: tr\n"
@@ -24,15 +24,15 @@ msgstr "Hata yok."
 
 #: libgammu/gsmcomon.c:85
 msgid "Error opening device. Unknown, busy or no permissions."
-msgstr "Cihazı açarken hata. Bilinmiyor, meşgul ya da izinler yok."
+msgstr "Cihazı açarken hata oldu. Bilinmiyor, meşgul ya da izinler yok."
 
 #: libgammu/gsmcomon.c:86
 msgid "Error opening device, it is locked."
-msgstr "Cihazı açarken hata, kilitli."
+msgstr "Cihazı açarken hata oldu, kilitli."
 
 #: libgammu/gsmcomon.c:87
 msgid "Error opening device, it doesn't exist."
-msgstr "Cihazı açarken hata, mevcut değil."
+msgstr "Cihazı açarken hata oldu, mevcut değil."
 
 #: libgammu/gsmcomon.c:88
 msgid "Error opening device, it is already opened by other application."
