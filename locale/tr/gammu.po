@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.28.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-27 10:47+0200\n"
-"PO-Revision-Date: 2012-03-31 11:38+0200\n"
+"PO-Revision-Date: 2012-04-01 07:48+0200\n"
 "Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
 "Language-Team: none\n"
 "Language: tr\n"
@@ -2799,7 +2799,7 @@ msgstr ""
 
 #: gammu/misc.c:1519 gammu/misc.c:1521
 msgid "Connection type"
-msgstr "Bağlantı tipi"
+msgstr "Bağlantı türü"
 
 #: gammu/misc.c:1519
 msgid "Continuous"
