@@ -22,7 +22,7 @@ Phone Protocols
     s60
     gnapplet
 
-.. note::
+.. seealso::
 
     You can also find documentation for some protocols and vendor extensions
-    in separate git repository at http://gitorious.org/gammu/gsm-docs
+    in separate git repository at http://github.com/gammu/gsm-docs

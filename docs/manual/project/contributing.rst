@@ -15,7 +15,7 @@ As we use `Git <http://git-scm.com/>`_ for development, the preferred way to
 get patches is in form which can be directly applied to Git. So start with
 cloning our Git repository::
 
-    git clone git://gitorious.org/gammu/mainline.git gammu
+    git clone git://github.com/gammu/gammu.git gammu
 
 Once you have done that, do some fixes and commit them (see
 `Git tutorial <http://www.kernel.org/pub/software/scm/git/docs/gittutorial.html>`_
