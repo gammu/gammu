@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Gammu 1.31.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-27 10:47+0200\n"
-"PO-Revision-Date: 2012-03-29 17:12+0200\n"
-"Last-Translator: Michal Čihař <michal@cihar.com>\n"
+"PO-Revision-Date: 2012-04-06 16:59+0200\n"
+"Last-Translator: Holger Ronecker <holger@ronecker.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -2226,12 +2226,12 @@ msgstr ", Postausgangsordner"
 
 #: gammu/message.c:538
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: gammu/message.c:541
-#, fuzzy, c-format
+#, c-format
 msgid "error %i"
-msgstr "..Fehler %i"
+msgstr "Fehler %i"
 
 #: gammu/message.c:544
 #, c-format
