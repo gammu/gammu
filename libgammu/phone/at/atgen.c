@@ -3659,7 +3659,7 @@ GSM_Error ATGEN_GetMemoryInfo(GSM_StateMachine *s, GSM_MemoryStatus *Status, GSM
 		} else {
 			len = sprintf(req, "AT+CPBR=%i,%i\r", start, end);
 		}
-		ATGEN_WaitFor(s, req, len, 0x00, 20, ID_GetMemoryStatus);
+		ATGEN_WaitFor(s, req, len, 0x00, 50, ID_GetMemoryStatus);
 
 		if (error == ERR_SECURITYERROR) {
 			/* Some Samsung phones fail to read more entries at once */
