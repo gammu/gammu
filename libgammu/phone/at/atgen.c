@@ -5288,16 +5288,26 @@ GSM_Error ATGEN_ReplyGetBatteryCharge(GSM_Protocol_Message *msg, GSM_StateMachin
 				&bcs,
 				&bcl);
 
+			/* Arduino GPRS shield adds extra value */
 			if (error != ERR_NONE) {
-				/* LG phones reply just with value */
+				error = ATGEN_ParseReply(s,
+					GetLineString(msg->Buffer, &Priv->Lines, 2),
+					"+CBC: @i, @i, @0",
+					&bcs,
+					&bcl);
+			}
+
+			/* LG phones reply just with value */
+			if (error != ERR_NONE) {
 				error = ATGEN_ParseReply(s,
 					GetLineString(msg->Buffer, &Priv->Lines, 2),
 					"@i, @i",
 					&bcs,
 					&bcl);
-				if (error != ERR_NONE) {
-					return error;
-				}
+			}
+
+			if (error != ERR_NONE) {
+				return error;
 			}
 			BatteryCharge->BatteryPercent = bcl;
 
