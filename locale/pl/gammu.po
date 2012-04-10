@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Gammu 1.31.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-27 10:47+0200\n"
-"PO-Revision-Date: 2012-03-29 17:04+0200\n"
-"Last-Translator: Michal Čihař <michal@cihar.com>\n"
+"PO-Revision-Date: 2012-04-09 11:04+0200\n"
+"Last-Translator: Bartosz Feński <fenio@debian.org>\n"
 "Language-Team: Language =pl\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
@@ -840,7 +840,7 @@ msgstr ", separator daty: %c\n"
 
 #: gammu/calendar.c:463
 msgid "Setting time in phone to the same time as is set in computer."
-msgstr "Ustawianie czasu w telefonie zgodnie z czasem komputera"
+msgstr "Ustawianie czasu w telefonie zgodnie z czasem komputera."
 
 #: gammu/calendar.c:513
 msgid "Updating specified parts of date and time in phone."
@@ -1069,7 +1069,7 @@ msgstr "Nieprawidłowy dzień!"
 
 #: gammu/common.c:194
 msgid "Security status"
-msgstr "Status bezpieczeństwa."
+msgstr "Status bezpieczeństwa"
 
 #: gammu/common.c:312 gammu/misc.c:1170 gammu/misc.c:1185 gammu/misc.c:1192
 #: gammu/misc.c:1199 gammu/misc.c:1229
@@ -1079,7 +1079,7 @@ msgstr "Potrzeba więcej parametrów!"
 #: gammu/common.c:318 gammu/common.c:328 gammu/depend/nokia/dct4.c:687
 #: gammu/misc.c:1341
 msgid "Please enumerate locations from 1"
-msgstr "Proszę wyliczyć lokalizację od 1."
+msgstr "Proszę wyliczyć lokalizację od 1"
 
 #: gammu/common.c:333
 msgid "Swapping start and end location"
@@ -1121,16 +1121,16 @@ msgstr "NIE (zawsze)"
 
 #: gammu/depend/nokia/dct4.c:66
 msgid "Can't do it with current phone protocol"
-msgstr "Nie można tego zrobić w obecnie użytym protokole."
+msgstr "Nie można tego zrobić w obecnie użytym protokole"
 
 #: gammu/depend/nokia/dct4.c:80
 #, c-format
 msgid "%s (yes/no) ? "
-msgstr "%s (tak/nie)?"
+msgstr "%s (tak/nie) ? "
 
 #: gammu/depend/nokia/dct4.c:265
 msgid "Setting done"
-msgstr "Ustawienia gotowe."
+msgstr "Ustawienia gotowe"
 
 #: gammu/depend/nokia/dct4.c:303
 #, fuzzy
@@ -1164,7 +1164,7 @@ msgstr "Przekroczono limit czasu"
 #: gammu/depend/nokia/dct4.c:374
 #, c-format
 msgid "Unknown (%x)"
-msgstr "Nieznany (%x)."
+msgstr "Nieznany (%x)"
 
 #: gammu/depend/nokia/dct4.c:376
 msgid " (startup)"
@@ -1181,7 +1181,7 @@ msgstr "Kod bezpieczeństwa ustawiony na \"12345\"\n"
 
 #: gammu/depend/nokia/dct4.c:512
 msgid "Unknown reason. Can't reset your security code"
-msgstr "Nieznany powód. Nie można zresetować Twojego kodu bezpieczeństwa."
+msgstr "Nieznany powód. Nie można zresetować Twojego kodu bezpieczeństwa"
 
 #: gammu/depend/nokia/dct4.c:536
 #, c-format
