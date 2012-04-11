@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Gammu 1.31.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-27 10:47+0200\n"
-"PO-Revision-Date: 2012-04-06 16:59+0200\n"
-"Last-Translator: Holger Ronecker <holger@ronecker.com>\n"
+"PO-Revision-Date: 2012-04-11 09:27+0200\n"
+"Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -143,7 +143,7 @@ msgstr "Sollen die Kalendereinträge des Telefons gesichert werden?"
 #: gammu/backup.c:905 gammu/backup.c:942
 #, c-format
 msgid "Only part of data saved, please increase %s."
-msgstr "Nur ein Teil der Daten wurde gespeichert - bitte vergrößern Sie %s"
+msgstr "Nur ein Teil der Daten wurde gespeichert - bitte vergrößern Sie %s."
 
 #: gammu/backup.c:450
 msgid "Checking phone todos"
@@ -300,7 +300,7 @@ msgstr ""
 msgid "Use addnew command if you just want to add some entries to your phone."
 msgstr ""
 "Verwenden Sie den \"addnew\" Befehl, wenn Sie nur einige Einträge Ihrem "
-"Telefon hinzufügen möchten"
+"Telefon hinzufügen möchten."
 
 #: gammu/backup.c:1034
 msgid "Restore phone caller groups and logos?"
@@ -402,7 +402,7 @@ msgstr "Telefon-WAP-Lesezeichen wiederherstellen?"
 
 #: gammu/backup.c:1407
 msgid "Deleting old bookmarks:"
-msgstr "Lösche alte Lesezeichen: "
+msgstr "Lösche alte Lesezeichen:"
 
 #: gammu/backup.c:1444
 msgid "Restore phone WAP settings?"
@@ -435,7 +435,7 @@ msgstr "UKW-Radiosender wieder herstellen?"
 
 #: gammu/backup.c:1557
 msgid "Deleting old FM stations:"
-msgstr "Lösche alte UKW-Radiosender: "
+msgstr "Lösche alte UKW-Radiosender:"
 
 #: gammu/backup.c:1583
 msgid "Restore phone GPRS Points?"
@@ -644,7 +644,7 @@ msgstr "Training/Wintersport"
 
 #: gammu/calendar.c:110
 msgid "unknown type!"
-msgstr "unbekannt"
+msgstr "unbekannt!"
 
 #: gammu/calendar.c:156
 msgid "Start"
@@ -741,7 +741,7 @@ msgstr "von %s bis %s"
 
 #: gammu/calendar.c:328
 msgid " on each "
-msgstr " an jedem"
+msgstr " an jedem "
 
 #: gammu/calendar.c:330
 #, c-format
@@ -755,7 +755,7 @@ msgstr " in der %d. Woche von "
 
 #: gammu/calendar.c:338
 msgid " in "
-msgstr " in"
+msgstr " in "
 
 #: gammu/calendar.c:344 gammu/calendar.c:352
 msgid "each month"
@@ -764,7 +764,7 @@ msgstr "jeden Monat"
 #: gammu/calendar.c:347
 #, c-format
 msgid "%d. day of "
-msgstr "%d. Tag im"
+msgstr "%d. Tag im "
 
 #: gammu/calendar.c:355
 #, c-format
@@ -1074,7 +1074,7 @@ msgstr "Ungültiger Tag!"
 
 #: gammu/common.c:194
 msgid "Security status"
-msgstr "Sicherheitsstatus:"
+msgstr "Sicherheitsstatus"
 
 #: gammu/common.c:312 gammu/misc.c:1170 gammu/misc.c:1185 gammu/misc.c:1192
 #: gammu/misc.c:1199 gammu/misc.c:1229
@@ -1126,12 +1126,12 @@ msgstr "NEIN (immer)"
 
 #: gammu/depend/nokia/dct4.c:66
 msgid "Can't do it with current phone protocol"
-msgstr "Dies kann mit dem gegenwärtigen Handyprotokoll nicht gemacht werden."
+msgstr "Dies kann mit dem gegenwärtigen Handyprotokoll nicht gemacht werden"
 
 #: gammu/depend/nokia/dct4.c:80
 #, c-format
 msgid "%s (yes/no) ? "
-msgstr "%s (yes/no) ?"
+msgstr "%s (yes/no) ? "
 
 #: gammu/depend/nokia/dct4.c:265
 msgid "Setting done"
@@ -1144,7 +1144,7 @@ msgid ""
 msgstr ""
 "Entschuldigung, aber die Konfigurations-Matrix für dieses Telefon wurde noch "
 "nicht eingefügt. Lesen Sie bitte unter <http://cihar.com/gammu/report> wo "
-"sie diese melden können"
+"sie diese melden können."
 
 #: gammu/depend/nokia/dct4.c:369
 msgid "Passed"
@@ -1444,7 +1444,7 @@ msgstr "(Gruppen-ID (6230i oder neuer))"
 
 #: gammu/depend/nokia/dct4.c:1363
 msgid ", type "
-msgstr "Eintragstyp"
+msgstr ", Eintragstyp "
 
 #: gammu/depend/nokia/dct4.c:1365
 msgid "string"
@@ -1506,15 +1506,15 @@ msgstr "Versionsinformationen und beinhaltete Funktionen anzeigen."
 
 #: gammu-detect/main.c:58
 msgid "Disables scanning of udev."
-msgstr "Scannen von udev deaktivieren"
+msgstr "Scannen von udev deaktivieren."
 
 #: gammu-detect/main.c:61
 msgid "Disables scanning using Bluez."
-msgstr "Scannen mit Bluez deaktivieren"
+msgstr "Scannen mit Bluez deaktivieren."
 
 #: gammu-detect/main.c:64
 msgid "Disables scanning of Windows serial ports."
-msgstr "Scannen der seriellen Schnittstellen deaktivieren"
+msgstr "Scannen der seriellen Schnittstellen deaktivieren."
 
 #: gammu-detect/main.c:71
 #, c-format
@@ -1627,7 +1627,7 @@ msgstr "Mobiltelefon an Port %s angeschlossen"
 #: gammu-detect/udev.c:172
 #, c-format
 msgid "Phone on USB serial port %s %s"
-msgstr "Telefon an serielle USB-Schnittstelle %s %s angeschlossen."
+msgstr "Telefon an serielle USB-Schnittstelle %s %s angeschlossen"
 
 #: gammu/files.c:48
 msgid "Phone memory"
@@ -1729,7 +1729,7 @@ msgstr "%i Prozent erledigt."
 #: gammu/files.c:423
 #, c-format
 msgid "%lu Bytes in %li seconds, %lu Bytes/sec"
-msgstr "%lu Bytes in %li Sekunden, %lu Bytes/Sek."
+msgstr "%lu Bytes in %li Sekunden, %lu Bytes/Sek"
 
 #: gammu/files.c:452
 #, c-format
@@ -1814,12 +1814,12 @@ msgstr ""
 msgid ""
 "Copyright (C) 2003 - 2012 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
-"Copyright (C) 2003 - 2010 Michal Cihar <michal@cihar.com> und anderen "
-"Authoren."
+"Copyright (C) 2003 - 2012 Michal Čihař <michal@cihar.com> und andere "
+"Autoren."
 
 #: gammu/gammu.c:365
 msgid "standard input"
-msgstr "Standardeingabe "
+msgstr "Standardeingabe"
 
 #: gammu/gammu.c:376
 #, c-format
@@ -2088,7 +2088,7 @@ msgstr "Speicher %s, Speicherplatz %i\n"
 
 #: gammu/memory.c:104 gammu/misc.c:1909 gammu/misc.c:2318
 msgid "Entry is empty"
-msgstr "Eintrag ist leer."
+msgstr "Eintrag ist leer"
 
 #: gammu/memory.c:116
 #, c-format
@@ -2240,7 +2240,7 @@ msgstr ", Nachricht-Referenz=%d"
 
 #: gammu/message.c:577
 msgid "Message number"
-msgstr "Nachricht Nummer  "
+msgstr "Nachricht Nummer"
 
 #: gammu/message.c:582
 msgid "Number of messages"
@@ -2549,7 +2549,7 @@ msgstr "Anrufinfo"
 #: gammu/misc.c:550
 #, c-format
 msgid "ID %i, "
-msgstr "Kennung %i,"
+msgstr "Kennung %i, "
 
 #: gammu/misc.c:553
 #, c-format
@@ -2580,7 +2580,7 @@ msgstr "Gesprächsende durch Gegenstelle (Code %i)\n"
 
 #: gammu/misc.c:559
 msgid "call established. Waiting for answer"
-msgstr "Verbindung hergestellt. Warte auf Antwort."
+msgstr "Verbindung hergestellt. Warte auf Antwort"
 
 #: gammu/misc.c:560
 msgid "call held"
@@ -3091,7 +3091,7 @@ msgstr "Keine PIN eingegeben!"
 #: gammu/misc.c:2003
 #, c-format
 msgid "Enter new PIN code: "
-msgstr "neuen PIN-Code eingeben:"
+msgstr "neuen PIN-Code eingeben: "
 
 #: gammu/misc.c:2061
 msgid " (default name)"
@@ -3367,7 +3367,7 @@ msgstr "Gammu kennt nicht alle Eigenschaften dieses MMS"
 
 #: gammu/mms.c:73 gammu/mms.c:81 gammu/mms.c:89
 msgid "phone "
-msgstr "Telefon"
+msgstr "Telefon "
 
 #: gammu/mms.c:79
 msgid "Recipient"
@@ -3427,11 +3427,11 @@ msgstr "Länge=%i Noten, aber Sie können nur die ersten 50 eingeben."
 
 #: gammu/nokia.c:66
 msgid "This ringtone in Nokia Composer in phone should look:"
-msgstr "Dieser Klingelton sollte im Nokia Composer der Telefons so aussehen: "
+msgstr "Dieser Klingelton sollte im Nokia Composer der Telefons so aussehen:"
 
 #: gammu/nokia.c:105
 msgid "To enter it please press:"
-msgstr "Zum Eingeben drücken Sie bitte: "
+msgstr "Zum Eingeben drücken Sie bitte:"
 
 #: gammu/nokia.c:124
 msgid "(longer)"
@@ -3488,15 +3488,15 @@ msgstr "Suche nach Telefon-Ordnern: "
 
 #: gammu/nokia.c:691
 msgid "No vendor info in JAD file!"
-msgstr "Keine Anbieterinformationen in der JAD-Datei!"
+msgstr "Keine Anbieterinformationen in der JAD-Datei gefunden!"
 
 #: gammu/nokia.c:696
 msgid "No name info in JAD file!"
-msgstr "Keine Namensinformationen in der JAD-Datei!"
+msgstr "Keine Namensinformationen in der JAD-Datei gefunden!"
 
 #: gammu/nokia.c:701
 msgid "No JAR URL info in JAD file!"
-msgstr "Keine JAR-URL-Informationen in der JAD-Datei!"
+msgstr "Keine JAR-URL-Informationen in der JAD-Datei gefunden!"
 
 #: gammu/nokia.c:707
 msgid "Declared JAR file size is different than real. Fixed by Gammu."
@@ -3568,42 +3568,42 @@ msgstr "Der Parameter %s ist keine Zahl\n"
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
-msgstr[0] "1 Sekunde"
+msgstr[0] "%d Sekunde"
 msgstr[1] "%d Sekunden"
 
 #: helper/formats.h:3
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
-msgstr[0] "1 Minute"
-msgstr[1] "%i Minuten"
+msgstr[0] "%d Minute"
+msgstr[1] "%d Minuten"
 
 #: helper/formats.h:4
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
-msgstr[0] "1 Stunde"
+msgstr[0] "%d Stunde"
 msgstr[1] "%d Stunden"
 
 #: helper/formats.h:5
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
-msgstr[0] "1 Tag"
+msgstr[0] "%d Tag"
 msgstr[1] "%d Tage"
 
 #: helper/formats.h:6
 #, c-format
 msgid "%d week"
 msgid_plural "%d weeks"
-msgstr[0] "1 Woche"
+msgstr[0] "%d Woche"
 msgstr[1] "%d Wochen"
 
 #: helper/formats.h:7
 #, c-format
 msgid "%d year"
 msgid_plural "%d years"
-msgstr[0] "1 Jahr"
+msgstr[0] "%d Jahr"
 msgstr[1] "%d Jahre"
 
 #: helper/memory-display.c:30
@@ -3672,7 +3672,7 @@ msgstr "Handynummer privat"
 
 #: helper/memory-display.c:144
 msgid "Work mobile number"
-msgstr "Handynummer gesch."
+msgstr "Handynummer gesch"
 
 #: helper/memory-display.c:155
 msgid "Home fax number"
@@ -3680,7 +3680,7 @@ msgstr "Faxnummer privat"
 
 #: helper/memory-display.c:158
 msgid "Work fax number"
-msgstr "Faxnummer gesch."
+msgstr "Handynummer gesch."
 
 #: helper/memory-display.c:165
 msgid "Pager number"
@@ -4000,7 +4000,7 @@ msgstr "Posteingangsordner"
 
 #: helper/message-display.c:112
 msgid "mobile"
-msgstr "Handy     "
+msgstr "Handy"
 
 #: helper/message-display.c:118
 msgid "pager"
