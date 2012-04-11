@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: libGammu 1.31.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-08 11:08+0100\n"
-"PO-Revision-Date: 2012-03-28 10:05+0200\n"
+"PO-Revision-Date: 2012-04-11 09:28+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -26,7 +26,7 @@ msgstr "Kein Fehler."
 #: libgammu/gsmcomon.c:85
 msgid "Error opening device. Unknown, busy or no permissions."
 msgstr ""
-"Fehler beim Öffnen des Gerätes. Unbekannt, belegt oder keine Berechtigung"
+"Fehler beim Öffnen des Gerätes. Unbekannt, belegt oder keine Berechtigung."
 
 #: libgammu/gsmcomon.c:86
 msgid "Error opening device, it is locked."
@@ -66,7 +66,7 @@ msgstr "Fehler beim Setzen der seriellen Schnittstelle, DTR oder RTS."
 msgid "Error setting device speed. Maybe speed not supported."
 msgstr ""
 "Fehler beim Setzen der Übertragungs-Geschwindigkeit. Vielleicht keine "
-"Unterstützung?"
+"Unterstützung."
 
 #: libgammu/gsmcomon.c:94
 msgid "Error writing to the device."
@@ -84,7 +84,7 @@ msgstr "Kann die Parität auf dem Gerät nicht setzen."
 msgid "No response in specified timeout. Probably phone not connected."
 msgstr ""
 "Keine Rückmeldung in der spezifizierten Zeit. Telefon möglicherweise nicht "
-"angeschlossen?"
+"angeschlossen."
 
 #: libgammu/gsmcomon.c:98
 msgid ""
@@ -297,7 +297,7 @@ msgstr "Fehler beim Schreiben auf die Platte."
 
 #: libgammu/gsmcomon.c:141
 msgid "No such section exists."
-msgstr "Angegebene Sektion existiert nicht"
+msgstr "Angegebene Sektion existiert nicht."
 
 #: libgammu/gsmcomon.c:142
 msgid "Using default values."
