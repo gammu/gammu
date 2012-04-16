@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-27 10:47+0200\n"
-"PO-Revision-Date: 2012-03-29 17:17+0200\n"
-"Last-Translator: Michal Čihař <michal@cihar.com>\n"
+"PO-Revision-Date: 2012-04-14 15:05+0200\n"
+"Last-Translator: Roland Kosicexx <info@world-evolution.tk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 0.8\n"
+"X-Generator: Weblate 0.9\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -1496,9 +1496,8 @@ msgid "Show debugging output for detecting devices."
 msgstr ""
 
 #: gammu-detect/main.c:56
-#, fuzzy
 msgid "Show version information and compiled in features."
-msgstr "Zobrazí verziu programu."
+msgstr "Zobraziť informácie o verzii a zostavených funkcií."
 
 #: gammu-detect/main.c:58
 msgid "Disables scanning of udev."
@@ -1513,14 +1512,14 @@ msgid "Disables scanning of Windows serial ports."
 msgstr ""
 
 #: gammu-detect/main.c:71
-#, fuzzy, c-format
+#, c-format
 msgid "Gammu-detect version %s"
-msgstr "Verzia Gammu"
+msgstr "Gammu-detect verzia %s"
 
 #: gammu-detect/main.c:73
-#, fuzzy, c-format
+#, c-format
 msgid "Built %s on %s using %s"
-msgstr "[Gammu verzia %s skompilovaná %s dňa %s s použitím %s]"
+msgstr "Zkompilované dňa %s v %s pomocou %s"
 
 #: gammu-detect/main.c:76 gammu/gammu.c:100
 msgid "Compiled in features:"
@@ -1535,16 +1534,14 @@ msgid "Bluez probing"
 msgstr ""
 
 #: gammu-detect/main.c:84
-#, fuzzy
 msgid "Windows serial port probing"
-msgstr "&Telefón"
+msgstr "Prehľadávanie sériových portov vo Windows"
 
 #: gammu-detect/main.c:87
-#, fuzzy
 msgid ""
 "Copyright (C) 2010 - 2011 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
-"Copyright (C) 2003 - 2010 Michal Čihař <michal@cihar.com> a ďalší autori."
+"Copyright (C) 2010 - 2011 Michal Čihař <michal@cihar.com> a ďalší autori."
 
 #: gammu-detect/main.c:89 gammu/gammu.c:331
 msgid ""
@@ -1582,52 +1579,45 @@ msgid "option parsing failed: %s\n"
 msgstr ""
 
 #: gammu-detect/udev.c:67
-#, fuzzy
 msgid "Name:"
-msgstr "Meno"
+msgstr "Meno:"
 
 #: gammu-detect/udev.c:68
-#, fuzzy
 msgid "Type:"
-msgstr "Typ"
+msgstr "Typ:"
 
 #: gammu-detect/udev.c:69
-#, fuzzy
 msgid "Subsystem:"
-msgstr "Súbory"
+msgstr "Subsystém:"
 
 #: gammu-detect/udev.c:70
-#, fuzzy
 msgid "Number:"
-msgstr "Číslo"
+msgstr "Číslo:"
 
 #: gammu-detect/udev.c:71
 msgid "Path:"
 msgstr ""
 
 #: gammu-detect/udev.c:72
-#, fuzzy
 msgid "Driver:"
-msgstr "Použiť ovladač"
+msgstr "Ovládač:"
 
 #: gammu-detect/udev.c:73
-#, fuzzy
 msgid "Sequential Number:"
-msgstr "Všeobecné číslo"
+msgstr "Sekvenčné číslo:"
 
 #: gammu-detect/udev.c:74
-#, fuzzy
 msgid "Device File:"
-msgstr "Názov súboru: %s"
+msgstr "Meno zariadenia:"
 
 #: gammu-detect/udev.c:77
 msgid "Properties:"
 msgstr ""
 
 #: gammu-detect/udev.c:170 gammu-detect/win32-serial.c:44
-#, fuzzy, c-format
+#, c-format
 msgid "Phone on serial port %s"
-msgstr "&Telefón"
+msgstr "Telefón na sériovom porte %s"
 
 #: gammu-detect/udev.c:172
 #, fuzzy, c-format
