@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-27 10:47+0200\n"
-"PO-Revision-Date: 2012-04-16 01:18+0200\n"
+"PO-Revision-Date: 2012-04-16 18:29+0200\n"
 "Last-Translator: Robin Pepermans <robinp.1273@gmail.com>\n"
 "Language-Team: none\n"
 "Language: nl\n"
@@ -31,7 +31,7 @@ msgstr ""
 
 #: gammu/backup.c:86
 msgid "WAP bookmark not found in file"
-msgstr ""
+msgstr "WAP-bladwijzer niet gevonden in het bestand"
 
 #: gammu/backup.c:107
 msgid "Note not found in file"
@@ -100,7 +100,7 @@ msgstr "Aan het lezen:"
 #: gammu/misc.c:659 gammu/misc.c:664 gammu/misc.c:1376 gammu/mms.c:183
 #, c-format
 msgid "%i percent"
-msgstr ""
+msgstr "%i procent"
 
 #: gammu/backup.c:367 gammu/backup.c:1026 gammu/backup.c:1645
 #: gammu/calendar.c:632 gammu/calendar.c:882 gammu/calendar.c:957
@@ -279,7 +279,7 @@ msgstr "IMEI"
 
 #: gammu/backup.c:980
 msgid "File created by"
-msgstr ""
+msgstr "Bestand aangemaakt door"
 
 #: gammu/backup.c:984
 #, c-format
@@ -331,7 +331,7 @@ msgstr ""
 #: gammu/backup.c:1100 gammu/backup.c:1159
 #, c-format
 msgid "Location %d"
-msgstr ""
+msgstr "Locatie %d"
 
 #: gammu/backup.c:1139
 msgid "Restore SIM phonebook?"
@@ -4351,12 +4351,12 @@ msgstr ""
 #. l10n: Generic prefix for warning messages
 #: helper/printing.c:34
 msgid "Warning"
-msgstr ""
+msgstr "Waarschuwing"
 
 #. l10n: Generic prefix for informational messages
 #: helper/printing.c:50
 msgid "Information"
-msgstr ""
+msgstr "Informatie"
 
 #, fuzzy
 #~ msgid "Mobile number (home)"
