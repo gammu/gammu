@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: libGammu 1.31.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-08 11:08+0100\n"
-"PO-Revision-Date: 2012-03-29 17:11+0200\n"
-"Last-Translator: Michal Čihař <michal@cihar.com>\n"
+"PO-Revision-Date: 2012-04-19 00:42+0200\n"
+"Last-Translator: Andrew Shadura <bugzilla@tut.by>\n"
 "Language-Team: Language =ru\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -17,14 +17,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 0.8\n"
+"X-Generator: Weblate 0.9\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
 msgstr "Нет ошибки."
 
 #: libgammu/gsmcomon.c:85
-#, fuzzy
 msgid "Error opening device. Unknown, busy or no permissions."
 msgstr "Ошибка подключения к устройству: неизвестно, занято или нет доступа."
 
@@ -38,7 +37,6 @@ msgid "Error opening device, it doesn't exist."
 msgstr "Ошибка открытия устройства: его не существует."
 
 #: libgammu/gsmcomon.c:88
-#, fuzzy
 msgid "Error opening device, it is already opened by other application."
 msgstr "Ошибка подключения к устройству: используется другим приложением."
 
@@ -53,7 +51,6 @@ msgstr ""
 "необходимый драйвер."
 
 #: libgammu/gsmcomon.c:91
-#, fuzzy
 msgid "Error opening device. Some hardware not connected/wrongly configured."
 msgstr ""
 "Ошибка подключения к устройству: оборудование не подключено или неправильно "
@@ -70,17 +67,14 @@ msgstr ""
 "поддерживается."
 
 #: libgammu/gsmcomon.c:94
-#, fuzzy
 msgid "Error writing to the device."
 msgstr "Ошибка записи в устройство."
 
 #: libgammu/gsmcomon.c:95
-#, fuzzy
 msgid "Error during reading from the device."
 msgstr "Ошибка чтения из устройства."
 
 #: libgammu/gsmcomon.c:96
-#, fuzzy
 msgid "Can't set parity on the device."
 msgstr "Невозможно установить проверку чётности для устройства."
 
@@ -89,30 +83,27 @@ msgid "No response in specified timeout. Probably phone not connected."
 msgstr "Превышен тайм-аут ожидания ответа. Возможно, телефон не подключён."
 
 #: libgammu/gsmcomon.c:98
-#, fuzzy
 msgid ""
 "Frame not requested right now. See <http://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
-"Неизвестный отклик от телефона. На странице <http://cihar.com/gammu/report> "
+"Неизвестный отклик от телефона. На странице <http://wammu.eu/support/bugs/> "
 "рассказано как сообщить об этом."
 
 #: libgammu/gsmcomon.c:99
-#, fuzzy
 msgid ""
 "Unknown response from phone. See <http://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
-"Неизвестный отклик от телефона. На странице <http://cihar.com/gammu/report> "
+"Неизвестный отклик от телефона. На странице <http://wammu.eu/support/bugs/> "
 "рассказано как сообщить об этом."
 
 #: libgammu/gsmcomon.c:100
-#, fuzzy
 msgid ""
 "Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
 "report it."
 msgstr ""
-"Неизвестный отклик от телефона. На странице <http://cihar.com/gammu/report> "
+"Неизвестный отклик от телефона. На странице <http://wammu.eu/support/bugs/> "
 "рассказано как сообщить об этом."
 
 #: libgammu/gsmcomon.c:101
@@ -124,7 +115,6 @@ msgid "Unknown model type string. Check config file."
 msgstr "Указана неизвестная модель. Проверьте конфигурационный файл."
 
 #: libgammu/gsmcomon.c:103
-#, fuzzy
 msgid ""
 "Some functions not available for your system (disabled in config or not "
 "implemented)."
@@ -137,22 +127,18 @@ msgid "Function not supported by phone."
 msgstr "Функция не поддерживается телефоном."
 
 #: libgammu/gsmcomon.c:105
-#, fuzzy
 msgid "Entry is empty."
 msgstr "Запись пуста."
 
 #: libgammu/gsmcomon.c:106
-#, fuzzy
 msgid "Security error. Maybe no PIN?"
 msgstr "Ошибка защиты. Возможно, отсутствует PIN-код?"
 
 #: libgammu/gsmcomon.c:107
-#, fuzzy
 msgid "Invalid location. Maybe too high?"
 msgstr "Недопустимое размещение. Возможно, слишком высокое значение?"
 
 #: libgammu/gsmcomon.c:108
-#, fuzzy
 msgid "Functionality not implemented. You are welcome to help authors with it."
 msgstr "Функция ещё не написана. Если хотите помочь, то свяжитесь с авторами."
 
@@ -165,16 +151,14 @@ msgid "Unknown error."
 msgstr "Неизвестная ошибка."
 
 #: libgammu/gsmcomon.c:111
-#, fuzzy
 msgid "Can not open specified file."
-msgstr "Невозможно открыть указанный файл. Доступен только для чтения?"
+msgstr "Невозможно открыть указанный файл."
 
 #: libgammu/gsmcomon.c:112
 msgid "More memory required..."
 msgstr "Нехватка памяти..."
 
 #: libgammu/gsmcomon.c:113
-#, fuzzy
 msgid "Operation not allowed by phone."
 msgstr "Функция не поддерживается телефоном."
 
@@ -182,21 +166,20 @@ msgstr "Функция не поддерживается телефоном."
 msgid ""
 "No SMSC number given. Provide it manually or use the one configured in phone."
 msgstr ""
+"Не задан номер SMS-центра. Укажите его вручную или используйте настроенный в "
+"телефоне."
 
 #: libgammu/gsmcomon.c:115
-#, fuzzy
 msgid "You're inside phone menu (maybe editing?). Leave it and try again."
 msgstr ""
 "Вы находитесь внутри телефонного меню (в процессе редактирования?). Выйдите "
 "из него и попробуйте ещё раз."
 
 #: libgammu/gsmcomon.c:116
-#, fuzzy
 msgid "Phone is not connected."
-msgstr "аккумулятор не подключён"
+msgstr "Телефон не подключён."
 
 #: libgammu/gsmcomon.c:117
-#, fuzzy
 msgid ""
 "Function is currently being implemented. If you want to help, please contact "
 "authors."
@@ -224,7 +207,7 @@ msgstr "Передача прервана телефоном. Возможно, 
 
 #: libgammu/gsmcomon.c:122
 msgid "Phone module need to send another answer frame."
-msgstr ""
+msgstr "Телефонному модулю необходимо отправить ещё один пакет ответа."
 
 #: libgammu/gsmcomon.c:123
 msgid "Current connection type doesn't support called function."
@@ -247,7 +230,6 @@ msgid "Invalid data given to phone."
 msgstr "Телефону переданы неверные данные."
 
 #: libgammu/gsmcomon.c:128
-#, fuzzy
 msgid "File with specified name already exists."
 msgstr "Файл с указанным именем уже существует."
 
@@ -256,12 +238,10 @@ msgid "File with specified name doesn't exist."
 msgstr "Файл с указанным именем не существует."
 
 #: libgammu/gsmcomon.c:130
-#, fuzzy
 msgid "You have to give folder name and not file name."
 msgstr "Необходимо указать имя каталога, а не файла."
 
 #: libgammu/gsmcomon.c:131
-#, fuzzy
 msgid "You have to give file name and not folder name."
 msgstr "Необходимо указать имя файла, а не каталога."
 
@@ -276,7 +256,7 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:134
 msgid "Only part of folder has been listed."
-msgstr ""
+msgstr "Только часть каталога была указана."
 
 #: libgammu/gsmcomon.c:135
 msgid "Folder must be empty."
@@ -291,28 +271,24 @@ msgid "Gammu is not configured."
 msgstr "Gammu не настроена."
 
 #: libgammu/gsmcomon.c:138
-#, fuzzy
 msgid "Wrong folder used."
-msgstr ", папка Входящие"
+msgstr "Указан неверный каталог."
 
 #: libgammu/gsmcomon.c:139
-#, fuzzy
 msgid "Internal phone error."
 msgstr "Неизвестная ошибка."
 
 #: libgammu/gsmcomon.c:140
-#, fuzzy
 msgid "Error writing file to disk."
-msgstr "Ошибка записи в устройство."
+msgstr "Ошибка записи файла на диск."
 
 #: libgammu/gsmcomon.c:141
 msgid "No such section exists."
-msgstr ""
+msgstr "Секция не существует."
 
 #: libgammu/gsmcomon.c:142
-#, fuzzy
 msgid "Using default values."
-msgstr " (имя по умолчанию)"
+msgstr "Используются значения по умолчанию."
 
 #: libgammu/gsmcomon.c:143
 msgid "Corrupted data returned by phone."
