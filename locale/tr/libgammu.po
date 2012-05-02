@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.28.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-08 11:08+0100\n"
-"PO-Revision-Date: 2012-03-31 21:06+0200\n"
+"PO-Revision-Date: 2012-05-01 22:02+0200\n"
 "Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
 "Language-Team: none\n"
 "Language: tr\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 0.8\n"
+"X-Generator: Weblate 0.10\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
@@ -28,15 +28,15 @@ msgstr "Cihazı açarken hata oldu. Bilinmiyor, meşgul ya da izinler yok."
 
 #: libgammu/gsmcomon.c:86
 msgid "Error opening device, it is locked."
-msgstr "Cihazı açarken hata oldu, kilitli."
+msgstr "Cihazı açarken hata oldu, cihaz kilitli."
 
 #: libgammu/gsmcomon.c:87
 msgid "Error opening device, it doesn't exist."
-msgstr "Cihazı açarken hata oldu, mevcut değil."
+msgstr "Cihazı açarken hata oldu, cihaz mevcut değil."
 
 #: libgammu/gsmcomon.c:88
 msgid "Error opening device, it is already opened by other application."
-msgstr ""
+msgstr "Cihazı açarken hata oldu, cihaz zaten diğer uygulama tarafından açık."
 
 #: libgammu/gsmcomon.c:89
 msgid "Error opening device, you don't have permissions."
