@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.28.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-04-10 11:40+0200\n"
-"PO-Revision-Date: 2012-04-10 15:50+0200\n"
+"PO-Revision-Date: 2012-05-01 22:08+0200\n"
 "Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
 "Language-Team: none\n"
 "Language: tr\n"
@@ -16,14 +16,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 0.8\n"
+"X-Generator: Weblate 0.10\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
 #: helper/message-cmdline.c:441 helper/message-cmdline.c:478
 #: helper/message-cmdline.c:501
 msgid "Where is backup filename and location?"
-msgstr ""
+msgstr "Yedek dosya adı ve yeri nerede?"
 
 #: gammu/backup.c:63 helper/message-cmdline.c:489
 msgid "Calendar note not found in file"
@@ -39,21 +39,21 @@ msgstr "Dosya içinde not bulunamadı"
 
 #: gammu/backup.c:128
 msgid "Todo note not found in file"
-msgstr ""
+msgstr "Yapılacak notu dosyada bulunamadı"
 
 #: gammu/backup.c:137 helper/message-cmdline.c:525
 msgid "Where is backup filename and location and memory type?"
-msgstr ""
+msgstr "Yedek dosya adı ve yeri ve bellek türü nerede?"
 
 #: gammu/backup.c:150 gammu/backup.c:161 helper/message-cmdline.c:537
 #: helper/message-cmdline.c:547
 msgid "Phonebook entry not found in file"
-msgstr ""
+msgstr "Telefon rehberi girişi dosyada bulunamadı"
 
 #: gammu/backup.c:167 helper/message-cmdline.c:552
 #, c-format
 msgid "Unknown memory type: \"%s\"\n"
-msgstr ""
+msgstr "Bilinmeyen bellek türü: \"%s\"\n"
 
 #: gammu/backup.c:181
 #, c-format
@@ -62,22 +62,22 @@ msgstr "Bilinmeyen yedekleme biçimi: \"%s\"\n"
 
 #: gammu/backup.c:187
 msgid "Error while opening file for writing!\n"
-msgstr ""
+msgstr "Yazmak için dosya açılırken hata oldu!\n"
 
 #: gammu/backup.c:191 gammu/files.c:454 helper/message-cmdline.c:1110
 msgid "Error while writing file!\n"
-msgstr ""
+msgstr "Dosyaya yazılırken hata oldu!\n"
 
 #: gammu/backup.c:194
 msgid "Error while closing file!\n"
-msgstr ""
+msgstr "Dosya kapanırken hata oldu!\n"
 
 #: gammu/backup.c:241 gammu/backup.c:424 gammu/backup.c:496 gammu/backup.c:531
 #: gammu/backup.c:565 gammu/backup.c:633 gammu/backup.c:670 gammu/backup.c:707
 #: gammu/backup.c:744 gammu/backup.c:781 gammu/backup.c:819 gammu/backup.c:860
 #: gammu/backup.c:894 gammu/backup.c:931 gammu/message.c:426
 msgid "Reading"
-msgstr ""
+msgstr "Okunuyor"
 
 #: gammu/backup.c:247 gammu/backup.c:292
 msgid "Only part of data saved, please increase the limit."
