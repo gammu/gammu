@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-27 10:47+0200\n"
-"PO-Revision-Date: 2009-01-27 17:27+0100\n"
-"Last-Translator: js <osmoze.linux@gmail.com>\n"
+"PO-Revision-Date: 2012-05-17 15:12+0200\n"
+"Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: none\n"
-"Language: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Pootle 1.1.0\n"
+"X-Generator: Weblate 1.0\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -338,7 +338,7 @@ msgid ""
 "again."
 msgstr ""
 "Probablement que le groupe d'appel ne se trouve pas dans la sauvegarde. "
-"Rajoutez le et utilisez à nouveau la commande --restore "
+"Rajoutez le et utilisez à nouveau la commande --restore."
 
 #: gammu/backup.c:1100 gammu/backup.c:1159
 #, c-format
