@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.31.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-27 10:47+0200\n"
-"PO-Revision-Date: 2012-03-29 17:19+0200\n"
+"PO-Revision-Date: 2012-05-17 15:13+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 0.8\n"
+"X-Generator: Weblate 1.0\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -2286,7 +2286,7 @@ msgstr "Nomor folder terlalu tinggi (maks. %i)\n"
 #: gammu/message.c:700
 #, c-format
 msgid "Deleting SMS from \"%s\" folder: "
-msgstr "Menghapus SMS dari folder \"%s\":"
+msgstr "Menghapus SMS dari folder \"%s\": "
 
 #: gammu/misc.c:35
 msgid "Network state"
