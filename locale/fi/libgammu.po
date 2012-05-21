@@ -8,14 +8,15 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-08 11:08+0100\n"
-"PO-Revision-Date: 2009-01-27 14:28+0100\n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2012-05-19 23:32+0200\n"
+"Last-Translator: Jukka Penttinen <tikkakalja@hotmail.com>\n"
 "Language-Team: none\n"
-"Language: \n"
+"Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Weblate 1.0\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
@@ -23,57 +24,57 @@ msgstr "Ei virhettä."
 
 #: libgammu/gsmcomon.c:85
 msgid "Error opening device. Unknown, busy or no permissions."
-msgstr ""
+msgstr "Virhe laitetta avattaessa. Tuntematon, käytössä tai ei oikeuksia."
 
 #: libgammu/gsmcomon.c:86
 msgid "Error opening device, it is locked."
-msgstr ""
+msgstr "Virhe avattaessa laitetta, laite lukittu."
 
 #: libgammu/gsmcomon.c:87
 msgid "Error opening device, it doesn't exist."
-msgstr ""
+msgstr "Virhe laitetta avattaessa, laitetta ei ole."
 
 #: libgammu/gsmcomon.c:88
 msgid "Error opening device, it is already opened by other application."
-msgstr ""
+msgstr "Virhe laitetta avattaessa, laite on jo käytössä toisessa sovelluksessa."
 
 #: libgammu/gsmcomon.c:89
 msgid "Error opening device, you don't have permissions."
-msgstr ""
+msgstr "Virhe laitetta avattaessa, sinulla ei ole oikeuksia."
 
 #: libgammu/gsmcomon.c:90
 msgid "Error opening device. No required driver in operating system."
 msgstr ""
+"Virhe laitetta avattaessa. Käyttöjäjestelmässä ei ole tarvittavaa ajuria."
 
 #: libgammu/gsmcomon.c:91
 msgid "Error opening device. Some hardware not connected/wrongly configured."
 msgstr ""
+"Virhe laitetta avattaessa. Jokin laite ei ole kytketty/väärin määritelty."
 
 #: libgammu/gsmcomon.c:92
 msgid "Error setting device DTR or RTS."
-msgstr ""
+msgstr "Virhe asettaessa laiteen vuonohjausta DTR tai RTS."
 
 #: libgammu/gsmcomon.c:93
 msgid "Error setting device speed. Maybe speed not supported."
-msgstr ""
+msgstr "Virheellinen nopeus. Nopeus ei ehkä ole tuettu."
 
 #: libgammu/gsmcomon.c:94
-#, fuzzy
 msgid "Error writing to the device."
-msgstr "Yhdistä laite"
+msgstr "Virhe kirjoitettaessa laitteeseen."
 
 #: libgammu/gsmcomon.c:95
 msgid "Error during reading from the device."
-msgstr ""
+msgstr "Virhe luettaessa laitteelta."
 
 #: libgammu/gsmcomon.c:96
-#, fuzzy
 msgid "Can't set parity on the device."
-msgstr "Yhdistä laite"
+msgstr "Pariteetin asettaminen ei onnistu."
 
 #: libgammu/gsmcomon.c:97
 msgid "No response in specified timeout. Probably phone not connected."
-msgstr ""
+msgstr "Ei vastausta määritellyssä ajassa. Puhelin ei ehkä ole kytketty."
 
 #: libgammu/gsmcomon.c:98
 msgid ""
@@ -124,11 +125,10 @@ msgid "Invalid location. Maybe too high?"
 msgstr ""
 
 #: libgammu/gsmcomon.c:108
-#, fuzzy
 msgid "Functionality not implemented. You are welcome to help authors with it."
 msgstr ""
-"Tämä toiminne ei ole puhelintasi varten. Jos haluat apua välineen kanssa, "
-"ole hyvä ja ota yhteyttä ohjelman tekijään."
+"Tämä toimintoa ei ole toteutettu. Olet tervetullut auttamaan tekijöitä tämän "
+"kanssa."
 
 #: libgammu/gsmcomon.c:109
 msgid "Memory full."
@@ -139,9 +139,8 @@ msgid "Unknown error."
 msgstr "Tuntematon virhe."
 
 #: libgammu/gsmcomon.c:111
-#, fuzzy
 msgid "Can not open specified file."
-msgstr "Tiedostoa ei voi luoda!"
+msgstr "Tiedostoa ei voi avata."
 
 #: libgammu/gsmcomon.c:112
 msgid "More memory required..."
@@ -162,16 +161,15 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:116
 msgid "Phone is not connected."
-msgstr "Puhelin ei ole kytketty"
+msgstr "Puhelin ei ole kytketty."
 
 #: libgammu/gsmcomon.c:117
-#, fuzzy
 msgid ""
 "Function is currently being implemented. If you want to help, please contact "
 "authors."
 msgstr ""
-"Tämä toiminne ei ole puhelintasi varten. Jos haluat apua välineen kanssa, "
-"ole hyvä ja ota yhteyttä ohjelman tekijään."
+"Tämä toiminto ei ole vielä toteutettu. Jos haluat apua, ota yhteyttä "
+"ohjelman tekijöihin."
 
 #: libgammu/gsmcomon.c:118
 msgid "Phone is disabled and connected to charger."
@@ -179,7 +177,7 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:119
 msgid "File format not supported by Gammu."
-msgstr "Gammu ei pysty avaamaan kyseistä tiedostomuotoa"
+msgstr "Gammu ei pysty avaamaan kyseistä tiedostomuotoa."
 
 #: libgammu/gsmcomon.c:120
 msgid ""
@@ -300,32 +298,28 @@ msgid "Service is not running."
 msgstr ""
 
 #: libgammu/gsmcomon.c:148
-#, fuzzy
 msgid "Service configuration is missing."
-msgstr "Asetuksia ei löytynyt"
+msgstr "Huoltoasetuksia ei löytynyt."
 
 #: libgammu/gsmcomon.c:149
 msgid "Command rejected because device was busy. Wait and restart."
 msgstr ""
 
 #: libgammu/gsmcomon.c:150
-#, fuzzy
 msgid "Could not connect to the server."
-msgstr "Yhdistetään IMAP palvelimeen..."
+msgstr "Palvelimeen ei saa yhteyttä."
 
 #: libgammu/gsmcomon.c:151
-#, fuzzy
 msgid "Could not resolve the host name."
-msgstr "Tallennettua viestiä ei pysty avaamaan!"
+msgstr "Palvelimen nimeä ei voi selvittää."
 
 #: libgammu/gsmcomon.c:152
 msgid "Failed to get SMSC number from phone."
 msgstr ""
 
 #: libgammu/gsmcomon.c:153
-#, fuzzy
 msgid "Operation aborted."
-msgstr "Toiminto käynnissä"
+msgstr "Toiminto keskeytetty."
 
 #: libgammu/gsmcomon.c:154
 msgid ""
@@ -334,9 +328,8 @@ msgid ""
 msgstr ""
 
 #: libgammu/gsmcomon.c:155
-#, fuzzy
 msgid "Entry is read only."
-msgstr "Kansiota ei voi luoda!"
+msgstr "Kohde on vain luettava."
 
 #: libgammu/gsmcomon.c:188
 msgid "Unknown error description."
