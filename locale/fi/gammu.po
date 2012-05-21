@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-27 10:47+0200\n"
-"PO-Revision-Date: 2011-04-21 14:15+0200\n"
-"Last-Translator: Michal Čihař <michal@cihar.com>\n"
+"PO-Revision-Date: 2012-05-19 23:41+0200\n"
+"Last-Translator: Jukka Penttinen <tikkakalja@hotmail.com>\n"
 "Language-Team: none\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Pootle 2.0.5\n"
+"X-Generator: Weblate 1.0\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -206,7 +206,7 @@ msgstr ""
 
 #: gammu/backup.c:665
 msgid "Backup phone WAP settings?"
-msgstr "Varmuuskopioi puhelimen WAP asetukset"
+msgstr "Varmuuskopioi puhelimen WAP asetukset?"
 
 #: gammu/backup.c:698
 msgid "Checking phone MMS settings"
@@ -336,7 +336,7 @@ msgstr "Sijainti %d"
 
 #: gammu/backup.c:1139
 msgid "Restore SIM phonebook?"
-msgstr "Palautetaanko SIM osoitekirja"
+msgstr "Palautetaanko SIM osoitekirja?"
 
 #: gammu/backup.c:1184 gammu/backup.c:1717
 msgid ""
@@ -1273,19 +1273,16 @@ msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1042 gammu/depend/nokia/dct4.c:1046
 #: gammu/depend/nokia/dct4.c:1047
-#, fuzzy
 msgid "K"
-msgstr "OK"
+msgstr "K"
 
 #: gammu/depend/nokia/dct4.c:1043
-#, fuzzy
 msgid "Headset interconnection:"
-msgstr "Yhteys"
+msgstr "Kuuloke yhteys:"
 
 #: gammu/depend/nokia/dct4.c:1044
-#, fuzzy
 msgid "Hook interconnection:"
-msgstr "Yhteys"
+msgstr "Kuulokeyhteys:"
 
 #: gammu/depend/nokia/dct4.c:1045
 msgid "Light sensor:"
@@ -1312,9 +1309,8 @@ msgid "Initial battery voltage:"
 msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1051
-#, fuzzy
 msgid "Battery Current:"
-msgstr "Tuhoa nykyinen"
+msgstr "Akun jännite:"
 
 #: gammu/depend/nokia/dct4.c:1052
 msgid "Battery Current Fast:"
@@ -1493,9 +1489,8 @@ msgid "Show debugging output for detecting devices."
 msgstr ""
 
 #: gammu-detect/main.c:56
-#, fuzzy
 msgid "Show version information and compiled in features."
-msgstr "Puhelimen tiedot"
+msgstr "Näytä versio tiedot ja ominaisuudet."
 
 #: gammu-detect/main.c:58
 msgid "Disables scanning of udev."
@@ -1510,9 +1505,9 @@ msgid "Disables scanning of Windows serial ports."
 msgstr ""
 
 #: gammu-detect/main.c:71
-#, fuzzy, c-format
+#, c-format
 msgid "Gammu-detect version %s"
-msgstr "Gammu versio"
+msgstr "Gammu-tunnistus versio %s"
 
 #: gammu-detect/main.c:73
 #, c-format
@@ -1573,55 +1568,50 @@ msgid "option parsing failed: %s\n"
 msgstr ""
 
 #: gammu-detect/udev.c:67
-#, fuzzy
 msgid "Name:"
-msgstr "Nimi"
+msgstr "Nimi:"
 
 #: gammu-detect/udev.c:68
-#, fuzzy
 msgid "Type:"
-msgstr "Tyyppi"
+msgstr "Tyyppi:"
 
 #: gammu-detect/udev.c:69
 msgid "Subsystem:"
 msgstr ""
 
 #: gammu-detect/udev.c:70
-#, fuzzy
 msgid "Number:"
-msgstr "Numero"
+msgstr "Numero:"
 
 #: gammu-detect/udev.c:71
 msgid "Path:"
 msgstr ""
 
 #: gammu-detect/udev.c:72
-#, fuzzy
 msgid "Driver:"
-msgstr "Käytä ajuria"
+msgstr "Ajuri:"
 
 #: gammu-detect/udev.c:73
 msgid "Sequential Number:"
 msgstr ""
 
 #: gammu-detect/udev.c:74
-#, fuzzy
 msgid "Device File:"
-msgstr "Tiedosto: %s"
+msgstr "Laitetiedosto:"
 
 #: gammu-detect/udev.c:77
 msgid "Properties:"
 msgstr ""
 
 #: gammu-detect/udev.c:170 gammu-detect/win32-serial.c:44
-#, fuzzy, c-format
+#, c-format
 msgid "Phone on serial port %s"
-msgstr "Puhelin"
+msgstr "Puhelin sarjaportissa %s"
 
 #: gammu-detect/udev.c:172
-#, fuzzy, c-format
+#, c-format
 msgid "Phone on USB serial port %s %s"
-msgstr "Puhelin"
+msgstr "Puhelin USB sarjaportissa %s %s"
 
 #: gammu/files.c:48
 msgid "Phone memory"
@@ -1859,9 +1849,8 @@ msgid "Logo and pictures"
 msgstr ""
 
 #: gammu/gammu.c:707
-#, fuzzy
 msgid "Ringtones"
-msgstr "Luetaan tehtäviä"
+msgstr "Soittoäänet"
 
 #: gammu/gammu.c:708
 msgid "Calendar notes"
@@ -2117,9 +2106,8 @@ msgid "Another client replied"
 msgstr ""
 
 #: gammu/message.c:102
-#, fuzzy
 msgid "Not supported"
-msgstr "Ei tuettu id: %s"
+msgstr "Ei tuettu"
 
 #: gammu/message.c:114
 msgid "Service reply"
@@ -2713,9 +2701,8 @@ msgstr ""
 
 #: gammu/misc.c:1081 gammu/misc.c:1083 gammu/misc.c:1096 gammu/misc.c:1103
 #: helper/memory-display.c:101
-#, fuzzy
 msgid "Ringtone"
-msgstr "Luetaan tehtäviä"
+msgstr "Soittoääni"
 
 #: gammu/misc.c:1097
 #, c-format
@@ -3443,9 +3430,9 @@ msgid "What folder type (\"%s\") ?\n"
 msgstr ""
 
 #: gammu/nokia.c:556 gammu/nokia.c:563 gammu/nokia.c:570
-#, fuzzy, c-format
+#, c-format
 msgid "Can not open file %s\n"
-msgstr "Tiedostoa ei voi luoda!"
+msgstr "Ei voi avata tiedostoa %s↵"
 
 #: gammu/nokia.c:591 gammu/nokia.c:665
 msgid "Folder not found. Probably function not supported!"
