@@ -3432,7 +3432,7 @@ msgstr ""
 #: gammu/nokia.c:556 gammu/nokia.c:563 gammu/nokia.c:570
 #, c-format
 msgid "Can not open file %s\n"
-msgstr "Ei voi avata tiedostoa %s↵"
+msgstr "Ei voi avata tiedostoa %s\n"
 
 #: gammu/nokia.c:591 gammu/nokia.c:665
 msgid "Folder not found. Probably function not supported!"
