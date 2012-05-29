@@ -2981,7 +2981,7 @@ static void ReadProfileEntry(INI_Section *file_info, char *section, GSM_Profile 
 				readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 				for (j = 0; j < 5; j++) {
 					Profile->CallerGroups[j] = FALSE;
-					if (strstr(readvalue, "1" + j) != NULL) {
+					if (strchr(readvalue, '1' + j) != NULL) {
 						Profile->CallerGroups[j] = TRUE;
 					}
 				}
