@@ -114,6 +114,9 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		/* Samsung reply to SSHT in some cases */
 		{"SAMSUNG PTS DG Test", 1},
 
+		/* Cross PD1101wi reply to almost anything */
+		{"NOT FOND ^,NOT CUSTOM AT", 1},
+
 		/* Motorola banner */
 		{"+MBAN:"	,1},
 
