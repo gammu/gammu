@@ -2979,9 +2979,11 @@ static void ReadProfileEntry(INI_Section *file_info, char *section, GSM_Profile 
 				Profile->FeatureID[Profile->FeaturesNumber]=Profile_CallerGroups;
 				sprintf(buffer,"Value%02i",num);
 				readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
-				for (j=0;j<5;j++) {
-					Profile->CallerGroups[j]=FALSE;
-					if (strstr(readvalue,"1"+j)!=NULL) Profile->CallerGroups[j]=TRUE;
+				for (j = 0; j < 5; j++) {
+					Profile->CallerGroups[j] = FALSE;
+					if (strstr(readvalue, "1" + j) != NULL) {
+						Profile->CallerGroups[j] = TRUE;
+					}
 				}
 				Profile->FeaturesNumber++;
 			} else if (strcasecmp(readvalue,"IncomingCallAlert") == 0) {
