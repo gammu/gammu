@@ -280,6 +280,7 @@ GSM_Error MOTOROLA_ReplyGetMemory(GSM_Protocol_Message *msg, GSM_StateMachine *s
 					&number_type,
 					Memory->Entries[1].Text, sizeof(Memory->Entries[1].Text),
 					&entry_type);
+		Memory->Location = Memory->Location + 1 - Priv->MotorolaFirstMemoryEntry;
 		switch (entry_type) {
 			case 0:
 				Memory->Entries[0].EntryType = PBK_Number_General;
