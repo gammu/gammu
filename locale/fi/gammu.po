@@ -3505,7 +3505,7 @@ msgstr ""
 #: helper/cmdline.c:26
 #, c-format
 msgid "Number out of range: %s\n"
-msgstr "Numero rajojen ulkopuolella: %s↵ "
+msgstr "Numero rajojen ulkopuolella: %s\n"
 
 #: helper/cmdline.c:31
 #, c-format
@@ -3843,7 +3843,7 @@ msgstr ""
 #: helper/message-cmdline.c:1055
 #, c-format
 msgid "Wrong message length (\"%s\")\n"
-msgstr "Väärän mitteinen viesti (\"%s\")↵"
+msgstr "Väärän mitteinen viesti (\"%s\")\n"
 
 #: helper/message-cmdline.c:1078
 #, c-format
