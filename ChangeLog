@@ -25,6 +25,7 @@ ChangeLog
 [-] * Improved support for Arduino GPRS shield (bug #1592).
 [-] * Fixed communication with Cross PD1101wi (bug #1617).
 [-] * Ignore another unknown block in Nokia phonebook (bug #1614).
+[-] * Do not encode number when setting up diverts.
     
 20120224 - 1.31.90
 

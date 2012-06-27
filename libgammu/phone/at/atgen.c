@@ -4761,10 +4761,8 @@ GSM_Error ATGEN_SetCallDivert(GSM_StateMachine *s, GSM_CallDivert *divert)
 			return ERR_BUG;
 	}
 
-	error = ATGEN_EncodeText(s, divert->Number, UnicodeLength(divert->Number), number, sizeof(number), &len);
-	if (error != ERR_NONE) {
-		return error;
-	}
+	len = UnicodeLength(divert->Number);
+	EncodeDefault(number, divert->Number, &len, TRUE, NULL);
 
 	smprintf(s, "Setting diversion\n");
 	sprintf(buffer, "AT+CCFC=%d,3,\"%s\",129,\"\",128,%d\r",
