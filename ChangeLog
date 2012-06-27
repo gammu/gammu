@@ -19,7 +19,7 @@ the issue.
 ChangeLog
 =========
     
-2012???? - 1.31.91
+20120627 - 1.32.0
 
 [-] * Fixed auto installation of EventLog registry.
 [-] * Improved support for Arduino GPRS shield (bug #1592).
