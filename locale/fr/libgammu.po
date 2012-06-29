@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2012-03-08 11:08+0100\n"
+"POT-Creation-Date: 2012-06-29 16:15+0200\n"
 "PO-Revision-Date: 2012-03-29 17:18+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: none\n"
@@ -225,7 +225,8 @@ msgstr "Le téléphone doit envoyer une autre trame de réponse."
 
 #: libgammu/gsmcomon.c:123
 msgid "Current connection type doesn't support called function."
-msgstr "La fonction appelée n'est pas supporté par le type actuel de connexion."
+msgstr ""
+"La fonction appelée n'est pas supporté par le type actuel de connexion."
 
 #: libgammu/gsmcomon.c:124
 msgid "CRC error."
@@ -377,19 +378,19 @@ msgstr "Modèles"
 msgid "Personal"
 msgstr "Personnel"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1971 libgammu/phone/nokia/nfunc.c:1155
+#: libgammu/phone/nokia/dct3/n6110.c:1971 libgammu/phone/nokia/nfunc.c:1156
 msgid "Car"
 msgstr "Voiture"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1973 libgammu/phone/nokia/nfunc.c:1157
+#: libgammu/phone/nokia/dct3/n6110.c:1973 libgammu/phone/nokia/nfunc.c:1158
 msgid "Headset"
 msgstr "Écouteurs"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1979 libgammu/phone/nokia/nfunc.c:1145
+#: libgammu/phone/nokia/dct3/n6110.c:1979 libgammu/phone/nokia/nfunc.c:1146
 msgid "General"
 msgstr "Général"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1981 libgammu/phone/nokia/nfunc.c:1147
+#: libgammu/phone/nokia/dct3/n6110.c:1981 libgammu/phone/nokia/nfunc.c:1148
 msgid "Silent"
 msgstr "Silencieux"
 
@@ -422,35 +423,35 @@ msgstr "Éléments envoyés"
 msgid "Saved items"
 msgstr "Éléments sauvegardés"
 
-#: libgammu/phone/nokia/nfunc.c:961
+#: libgammu/phone/nokia/nfunc.c:962
 msgid "Family"
 msgstr "Famille"
 
-#: libgammu/phone/nokia/nfunc.c:963
+#: libgammu/phone/nokia/nfunc.c:964
 msgid "VIP"
 msgstr "VIP"
 
-#: libgammu/phone/nokia/nfunc.c:965
+#: libgammu/phone/nokia/nfunc.c:966
 msgid "Friends"
 msgstr "Amis"
 
-#: libgammu/phone/nokia/nfunc.c:967
+#: libgammu/phone/nokia/nfunc.c:968
 msgid "Colleagues"
 msgstr "Collègues"
 
-#: libgammu/phone/nokia/nfunc.c:969
+#: libgammu/phone/nokia/nfunc.c:970
 msgid "Other"
 msgstr "Autres"
 
-#: libgammu/phone/nokia/nfunc.c:1149
+#: libgammu/phone/nokia/nfunc.c:1150
 msgid "Meeting"
 msgstr "Réunion"
 
-#: libgammu/phone/nokia/nfunc.c:1151
+#: libgammu/phone/nokia/nfunc.c:1152
 msgid "Outdoor"
 msgstr "À l'extérieur"
 
-#: libgammu/phone/nokia/nfunc.c:1153
+#: libgammu/phone/nokia/nfunc.c:1154
 msgid "Pager"
 msgstr "Pager"
 
