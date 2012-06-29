@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-08 11:08+0100\n"
-"PO-Revision-Date: 2012-03-29 17:20+0200\n"
-"Last-Translator: Michal Čihař <michal@cihar.com>\n"
+"PO-Revision-Date: 2012-06-28 15:10+0200\n"
+"Last-Translator: Alexsandro Preis Dubinski <alexsandroeco@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Weblate 0.8\n"
+"X-Generator: Weblate 1.1\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
@@ -62,7 +62,7 @@ msgstr "Erro configurando a velocidade do dispos. Pode ser veloc. inválida."
 
 #: libgammu/gsmcomon.c:94
 msgid "Error writing to the device."
-msgstr "Erro ao Conectar ao dispositivo"
+msgstr "Erro ao Conectar ao dispositivo."
 
 #: libgammu/gsmcomon.c:95
 msgid "Error during reading from the device."
@@ -70,7 +70,7 @@ msgstr "Erro durante leitura do dispositivo."
 
 #: libgammu/gsmcomon.c:96
 msgid "Can't set parity on the device."
-msgstr "Não configurada a paridade do dispositivo"
+msgstr "Não foi possível configurar a paridade do dispositivo."
 
 #: libgammu/gsmcomon.c:97
 msgid "No response in specified timeout. Probably phone not connected."
@@ -147,7 +147,7 @@ msgstr "Erro desconhecido."
 
 #: libgammu/gsmcomon.c:111
 msgid "Can not open specified file."
-msgstr "Não conseguiu abrir arquivo!"
+msgstr "Não foi possível abrir o arquivo."
 
 #: libgammu/gsmcomon.c:112
 msgid "More memory required..."
@@ -178,7 +178,7 @@ msgstr "Telefone não está conectado."
 msgid ""
 "Function is currently being implemented. If you want to help, please contact "
 "authors."
-msgstr "Função em implementação... Por favor contacte os desenvolvedores!"
+msgstr "Função em implementação... Por favor contate os desenvolvedores."
 
 #: libgammu/gsmcomon.c:118
 msgid "Phone is disabled and connected to charger."
@@ -215,7 +215,7 @@ msgstr "Erro no CRC."
 
 #: libgammu/gsmcomon.c:125
 msgid "Invalid date or time specified."
-msgstr "Data ou hora inválida foi especificada"
+msgstr "Data ou hora inválida foi especificada."
 
 #: libgammu/gsmcomon.c:126
 msgid "Phone memory error, maybe it is read only."
@@ -271,11 +271,11 @@ msgstr "Pasta informada errada."
 
 #: libgammu/gsmcomon.c:139
 msgid "Internal phone error."
-msgstr "Erro interno telefone"
+msgstr "Erro interno do telefone."
 
 #: libgammu/gsmcomon.c:140
 msgid "Error writing file to disk."
-msgstr "Erro quando gravando em disco"
+msgstr "Erro ao gravar no disco."
 
 #: libgammu/gsmcomon.c:141
 msgid "No such section exists."
@@ -317,7 +317,7 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:150
 msgid "Could not connect to the server."
-msgstr "Não pode conectar ao servidor IMAP"
+msgstr "Não foi possível conectar com o servidor."
 
 #: libgammu/gsmcomon.c:151
 msgid "Could not resolve the host name."
