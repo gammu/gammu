@@ -11,42 +11,44 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-27 10:47+0200\n"
-"PO-Revision-Date: 2012-03-28 20:52+0200\n"
-"Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
+"PO-Revision-Date: 2012-06-28 00:24+0200\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitoschido@gmail.com>\n"
 "Language-Team: Español\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Weblate 0.8\n"
+"X-Generator: Weblate 1.1\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
 #: helper/message-cmdline.c:441 helper/message-cmdline.c:478
 #: helper/message-cmdline.c:501
 msgid "Where is backup filename and location?"
-msgstr "¿Ruta y nombre del archivo de backup?"
+msgstr "¿Dónde se encuentra el nombre de archivo y ubicación del respaldo?"
 
 #: gammu/backup.c:63 helper/message-cmdline.c:489
 msgid "Calendar note not found in file"
-msgstr "No se encontró notas de calendario en el archivo"
+msgstr "No se encontró la nota del calendario en el archivo"
 
 #: gammu/backup.c:86
 msgid "WAP bookmark not found in file"
-msgstr "Marcador WAP no encontrado en el archivo"
+msgstr "No se encontró el marcador WAP en el archivo"
 
 #: gammu/backup.c:107
 msgid "Note not found in file"
-msgstr "Nota no encontrada en el archivo"
+msgstr "No se encontró la nota en el archivo"
 
 #: gammu/backup.c:128
 msgid "Todo note not found in file"
-msgstr "Lista de tareas no encontrada en el archivo"
+msgstr "No se encontró la lista de tareas por hacer en el archivo"
 
 #: gammu/backup.c:137 helper/message-cmdline.c:525
 msgid "Where is backup filename and location and memory type?"
-msgstr "¿Ruta, nombre y tipo de memoria del archivo de backup?"
+msgstr ""
+"¿Dónde está el nombre de archivo y ubicación del respaldo, y el tipo de "
+"memoria?"
 
 #: gammu/backup.c:150 gammu/backup.c:161 helper/message-cmdline.c:537
 #: helper/message-cmdline.c:547

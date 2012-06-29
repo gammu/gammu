@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-27 10:47+0200\n"
-"PO-Revision-Date: 2012-05-17 15:24+0200\n"
-"Last-Translator: Michal Čihař <michal@cihar.com>\n"
+"PO-Revision-Date: 2012-06-28 15:05+0200\n"
+"Last-Translator: Alexsandro Preis Dubinski <alexsandroeco@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Weblate 1.0\n"
+"X-Generator: Weblate 1.1\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -240,7 +240,7 @@ msgstr "Verificando ringtones do telefone"
 
 #: gammu/backup.c:813
 msgid "Backup phone user ringtones?"
-msgstr "Salvando ringtones do telefone"
+msgstr "Salvar ringtones do telefone?"
 
 #: gammu/backup.c:851
 msgid "Checking phone profiles"
@@ -264,7 +264,7 @@ msgstr "Verificando pontos de acesso GPRS do telefone"
 
 #: gammu/backup.c:925
 msgid "Backup phone GPRS access points?"
-msgstr "Salvar pontos de acesso GPRS do telefone"
+msgstr "Salvar pontos de acesso GPRS do telefone?"
 
 #: gammu/backup.c:971
 msgid "Time of backup"
@@ -315,7 +315,7 @@ msgstr "Restaurar grupos de ligação e logotipos?"
 #: gammu/backup.c:1760 gammu/backup.c:1782 gammu/backup.c:1806
 #: gammu/files.c:753
 msgid "Writing:"
-msgstr "Gravando"
+msgstr "Gravando:"
 
 #: gammu/backup.c:1070 gammu/backup.c:1138 gammu/backup.c:1199
 #: gammu/backup.c:1247 gammu/backup.c:1340 gammu/backup.c:1665
@@ -350,8 +350,8 @@ msgid ""
 "Do you want to set phone date/time? (NOTE: in some phones it's required to "
 "correctly restore calendar notes and other items)"
 msgstr ""
-"Você deseja ajustar a data/hora? (em alguns telefones é requerido restaurar "
-"corretamente anotações na agenda e outros itens)."
+"Você deseja ajustar a data/hora? (NOTA: em alguns telefones é requerido "
+"restaurar corretamente anotações na agenda e outros itens)."
 
 #: gammu/backup.c:1200
 msgid "Restore phone calendar notes?"
@@ -362,9 +362,8 @@ msgid "Restore notes from the past?"
 msgstr "Restaurar notas da Agenda do passado?"
 
 #: gammu/backup.c:1207 gammu/backup.c:1346
-#, fuzzy
 msgid "Deleting old notes:"
-msgstr "Apagar notas velhas da Agenda?"
+msgstr "Apagando notas antigas:"
 
 #: gammu/backup.c:1219 gammu/backup.c:1269 gammu/backup.c:1502
 #: gammu/backup.c:1560 gammu/misc.c:1385 gammu/misc.c:1430 gammu/misc.c:1454
@@ -390,11 +389,11 @@ msgstr "Restaurar perfis do SIM (chip) SMSC?"
 
 #: gammu/backup.c:1390
 msgid "Restore phone startup logo/text?"
-msgstr "Restaurar logotipo/texto de ativação do telefone"
+msgstr "Restaurar logotipo/texto de ativação do telefone?"
 
 #: gammu/backup.c:1394
 msgid "Restore phone operator logo?"
-msgstr "Restaurar logotipo do operador do telefone"
+msgstr "Restaurar logotipo do operador do telefone?"
 
 #: gammu/backup.c:1403
 msgid "Restore phone WAP bookmarks?"
@@ -402,7 +401,7 @@ msgstr "Restaurar endereços do WAP do telefone?"
 
 #: gammu/backup.c:1407
 msgid "Deleting old bookmarks:"
-msgstr "Apagando endereços antigos do WAP"
+msgstr "Apagando endereços antigos do WAP:"
 
 #: gammu/backup.c:1444
 msgid "Restore phone WAP settings?"
@@ -435,7 +434,7 @@ msgstr "Restaurar estações de rádio FM do telefone?"
 
 #: gammu/backup.c:1557
 msgid "Deleting old FM stations:"
-msgstr "Apagando estações de rádio FM antigas"
+msgstr "Apagando estações de rádio FM antigas:"
 
 #: gammu/backup.c:1583
 msgid "Restore phone GPRS Points?"
@@ -845,11 +844,11 @@ msgstr ", separador datas é %c\n"
 
 #: gammu/calendar.c:463
 msgid "Setting time in phone to the same time as is set in computer."
-msgstr "Configure o horário do telefone igual ao horário do computador"
+msgstr "Configure o horário do telefone igual ao horário do computador."
 
 #: gammu/calendar.c:513
 msgid "Updating specified parts of date and time in phone."
-msgstr "Atualizando partes especificadas de data e hora no telefone"
+msgstr "Atualizando partes especificadas de data e hora no telefone."
 
 #: gammu/calendar.c:536
 #, c-format
@@ -953,35 +952,35 @@ msgstr "Texto de busca muito longo, truncado para %d caracteres!\n"
 
 #: gammu/common.c:42
 msgid "Waiting for Security Code."
-msgstr "Aguardando pelo código de Segurança"
+msgstr "Aguardando pelo código de Segurança."
 
 #: gammu/common.c:45
 msgid "Waiting for PIN."
-msgstr "Aguardando pelo PIN"
+msgstr "Aguardando pelo PIN."
 
 #: gammu/common.c:48
 msgid "Waiting for PIN2."
-msgstr "Aguardando PIN2"
+msgstr "Aguardando PIN2."
 
 #: gammu/common.c:51
 msgid "Waiting for PUK."
-msgstr "Aguardando pelo PUK"
+msgstr "Aguardando pelo PUK."
 
 #: gammu/common.c:54
 msgid "Waiting for PUK2."
-msgstr "Aguardando pelo PUK2"
+msgstr "Aguardando pelo PUK2."
 
 #: gammu/common.c:57
 msgid "Waiting for phone code."
-msgstr "Aguardando código do telefone"
+msgstr "Aguardando código do telefone."
 
 #: gammu/common.c:60
 msgid "Waiting for network code."
-msgstr "Aguardando código da rede"
+msgstr "Aguardando código da rede."
 
 #: gammu/common.c:63
 msgid "Nothing to enter."
-msgstr "Nada a digitar"
+msgstr "Nada a digitar."
 
 #: gammu/common.c:67
 msgid "Unknown security status."
@@ -1037,7 +1036,7 @@ msgstr "Dezembro"
 
 #: gammu/common.c:114
 msgid "Bad month!"
-msgstr "Mês inválido"
+msgstr "Mês inválido!"
 
 #: gammu/common.c:126
 msgid "Monday"
@@ -1134,7 +1133,7 @@ msgstr "%s (sim/não)? "
 
 #: gammu/depend/nokia/dct4.c:265
 msgid "Setting done"
-msgstr "Configuração concluída."
+msgstr "Configuração concluída"
 
 #: gammu/depend/nokia/dct4.c:303
 msgid ""
@@ -1175,7 +1174,7 @@ msgstr "Iniciado"
 
 #: gammu/depend/nokia/dct4.c:497 gammu/depend/nokia/dct4.c:1006
 msgid "Press any key to continue..."
-msgstr "Pressione qualquer tecla para continuar"
+msgstr "Pressione qualquer tecla para continuar..."
 
 #: gammu/depend/nokia/dct4.c:509
 #, c-format
@@ -1257,7 +1256,7 @@ msgstr "Voltagem Bateria, escala:"
 
 #: gammu/depend/nokia/dct4.c:1039
 msgid "Charger voltage:"
-msgstr "Voltagem Carregador"
+msgstr "Voltagem do carregador:"
 
 #: gammu/depend/nokia/dct4.c:1040
 msgid "Charger current:"
@@ -1287,11 +1286,11 @@ msgstr "K"
 
 #: gammu/depend/nokia/dct4.c:1043
 msgid "Headset interconnection:"
-msgstr "Conexão Fone de Ouvido"
+msgstr "Conexão do fone de ouvido:"
 
 #: gammu/depend/nokia/dct4.c:1044
 msgid "Hook interconnection:"
-msgstr "InterConexão"
+msgstr "Gancho de conexão:"
 
 #: gammu/depend/nokia/dct4.c:1045
 msgid "Light sensor:"
@@ -1319,7 +1318,7 @@ msgstr "Voltagem inicial bateria:"
 
 #: gammu/depend/nokia/dct4.c:1051
 msgid "Battery Current:"
-msgstr "Bateria atual"
+msgstr "Bateria atual:"
 
 #: gammu/depend/nokia/dct4.c:1052
 msgid "Battery Current Fast:"
@@ -2063,8 +2062,8 @@ msgid ""
 "You will have null names in entries. Upgrade firmware in phone to higher "
 "than 4.06"
 msgstr ""
-"Você tem entradas com nomes nulos. Faça atualização firmware do telefone "
-"para maior 4.06."
+"Você tem entradas com nomes nulos. Faça atualização do firmware do telefone "
+"para maior que 4.06"
 
 #: gammu/memory.c:86
 msgid ""
@@ -2082,7 +2081,7 @@ msgstr "Memória %s, Localização %i\n"
 
 #: gammu/memory.c:104 gammu/misc.c:1909 gammu/misc.c:2318
 msgid "Entry is empty"
-msgstr "Entrada vazia."
+msgstr "Entrada vazia"
 
 #: gammu/memory.c:116
 #, c-format
@@ -2223,9 +2222,9 @@ msgid "OK"
 msgstr "OK"
 
 #: gammu/message.c:541
-#, fuzzy, c-format
+#, c-format
 msgid "error %i"
-msgstr "..erro %i"
+msgstr "erro %i"
 
 #: gammu/message.c:544
 #, c-format
@@ -2434,7 +2433,7 @@ msgstr "Ion Lithium"
 
 #: gammu/misc.c:182
 msgid "Lithium Polymer"
-msgstr "Lithium Polymer"
+msgstr "Polímero de Lítio"
 
 #: gammu/misc.c:185
 msgid "NiMH"
@@ -2574,7 +2573,7 @@ msgstr "chamada terminada lado remoto (código %i)\n"
 
 #: gammu/misc.c:559
 msgid "call established. Waiting for answer"
-msgstr "chamada estabelecida. Aguardando resposta!"
+msgstr "chamada estabelecida. Aguardando resposta"
 
 #: gammu/misc.c:560
 msgid "call held"
@@ -2769,7 +2768,7 @@ msgstr "desabilitado"
 
 #: gammu/misc.c:1121
 msgid "Bitmap ID"
-msgstr "Bitmap ID"
+msgstr "ID do Bitmap"
 
 #: gammu/misc.c:1134
 msgid "No operator logo in phone"
@@ -3359,7 +3358,7 @@ msgstr "Salvo arquivo %s\n"
 
 #: gammu/mms.c:65
 msgid "Some MMS file features unknown for Gammu decoder"
-msgstr "Alguns arquivos MMS são desconhecidos para decodificador Gammu!"
+msgstr "Alguns arquivos MMS são desconhecidos para o decodificador Gammu"
 
 #: gammu/mms.c:73 gammu/mms.c:81 gammu/mms.c:89
 msgid "phone "
@@ -3869,27 +3868,27 @@ msgstr "Arquivo \"%s\"\n"
 
 #: helper/message-cmdline.c:384
 msgid "Bookmark not found in file"
-msgstr "Marca (bookmark) não encontrado no arquivo!"
+msgstr "Bookmark não encontrado no arquivo"
 
 #: helper/message-cmdline.c:408
 msgid "WAP settings not found in file"
-msgstr "Configurações WAP não encontradas no arquivo!"
+msgstr "Configurações WAP não encontradas no arquivo"
 
 #: helper/message-cmdline.c:429
 msgid "Sorry. For now there is only support for GPRS or DATA bearers end"
-msgstr "Desculpe. Atualmente só há suporte para terminais GPRS ou DADOS!"
+msgstr "Desculpe. Atualmente só há suporte para terminais GPRS ou DADOS"
 
 #: helper/message-cmdline.c:452
 msgid "MMS settings not found in file"
-msgstr "Configurações MMS não encontradas no arquivo!"
+msgstr "Configurações MMS não encontradas no arquivo"
 
 #: helper/message-cmdline.c:466
 msgid "Sorry. No GPRS bearer found in MMS settings"
-msgstr "Desculpe! Nenhum terminal GPRS encontrado nas configurações MMS."
+msgstr "Desculpe! Nenhum terminal GPRS encontrado nas configurações MMS"
 
 #: helper/message-cmdline.c:512
 msgid "ToDo note not found in file"
-msgstr "Anotação compromisso não encontrada no arquivo!"
+msgstr "Anotação compromisso não encontrada no arquivo"
 
 #: helper/message-cmdline.c:574
 msgid "Backup functionality not compiled in!"
@@ -4079,8 +4078,8 @@ msgstr "SM recebida pelo SME"
 msgid ""
 "SM forwarded by the SC to the SME but the SC is unable to confirm delivery"
 msgstr ""
-"SM encaminhado pelo SC para o SME pas o SC que está incapacitado de "
-"confirmar o envio."
+"SM encaminhado pelo SC para o SME mas o SC está incapacitado de confirmar o "
+"envio."
 
 #: helper/message-display.c:198
 msgid "SM replaced by the SC"
