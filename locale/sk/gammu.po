@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-27 10:47+0200\n"
-"PO-Revision-Date: 2012-05-17 15:14+0200\n"
+"PO-Revision-Date: 2012-07-01 11:00+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 1.0\n"
+"X-Generator: Weblate 1.1\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -1071,7 +1071,7 @@ msgstr "Nesprávny deň!"
 
 #: gammu/common.c:194
 msgid "Security status"
-msgstr "Bezpečnostný stav."
+msgstr "Bezpečnostný stav"
 
 #: gammu/common.c:312 gammu/misc.c:1170 gammu/misc.c:1185 gammu/misc.c:1192
 #: gammu/misc.c:1199 gammu/misc.c:1229
@@ -1672,7 +1672,7 @@ msgstr "Zložka"
 
 #: gammu/files.c:184 gammu/files.c:315
 msgid "File;"
-msgstr "Súbor:"
+msgstr "Súbor;"
 
 #: gammu/files.c:224
 #, c-format
@@ -3466,7 +3466,7 @@ msgstr "Chyba pri otváraní súboru %s\n"
 
 #: gammu/nokia.c:591 gammu/nokia.c:665
 msgid "Folder not found. Probably function not supported!"
-msgstr "Adresár nenájdený. Táto funkcia nie je pravdepodobne podporovaná."
+msgstr "Adresár nenájdený. Táto funkcia nie je pravdepodobne podporovaná!"
 
 #: gammu/nokia.c:614
 msgid "Searching for phone folder: "
@@ -3512,7 +3512,7 @@ msgstr " vytvoril %s\n"
 
 #: gammu/nokia.c:793 gammu/nokia.c:845
 msgid "Application already exists. Deleting by Gammu."
-msgstr "Aplikácia už existuje. Mažem"
+msgstr "Aplikácia už existuje. Mažem."
 
 #: gammu/nokia.c:826 gammu/nokia.c:859
 #, c-format
