@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: gammu 1.31.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-04-10 11:40+0200\n"
-"PO-Revision-Date: 2012-04-10 11:40+0200\n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2012-06-30 07:24+0200\n"
+"Last-Translator: Rax G <admin@dvizho.ks.ua>\n"
 "Language-Team: none\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 1.1\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -270,7 +271,7 @@ msgstr ""
 
 #: gammu/backup.c:974 gammu/calendar.c:237 gammu/calendar.c:820
 msgid "Phone"
-msgstr ""
+msgstr "Телефон"
 
 #: gammu/backup.c:977 gammu/misc.c:410
 msgid "IMEI"
@@ -520,7 +521,7 @@ msgstr ""
 
 #: gammu/calendar.c:25
 msgid "Call"
-msgstr ""
+msgstr "Телефонувати"
 
 #: gammu/calendar.c:28
 msgid "Meeting"
@@ -544,7 +545,7 @@ msgstr ""
 
 #: gammu/calendar.c:43 gammu/calendar.c:756
 msgid "Alarm"
-msgstr ""
+msgstr "Будильник"
 
 #: gammu/calendar.c:46
 msgid "Shopping"
@@ -663,7 +664,7 @@ msgstr ""
 #: gammu/calendar.c:993 gammu/message.c:225 gammu/misc.c:1139
 #: helper/memory-display.c:167 helper/message-display.c:445
 msgid "Text"
-msgstr ""
+msgstr "Текст"
 
 #: gammu/calendar.c:222 gammu/calendar.c:825
 msgid "Description"
@@ -678,7 +679,7 @@ msgstr ""
 #: gammu/memory.c:141 gammu/message.c:215 gammu/misc.c:1868 gammu/misc.c:1901
 #: gammu/misc.c:2191 gammu/misc.c:2315
 msgid "Location"
-msgstr ""
+msgstr "Розташування"
 
 #: gammu/calendar.c:242 gammu/calendar.c:776 helper/memory-display.c:62
 msgid "Private"
@@ -852,7 +853,7 @@ msgstr ""
 
 #: gammu/calendar.c:542 gammu/calendar.c:545 gammu/mms.c:95
 msgid "Date"
-msgstr ""
+msgstr "Дата"
 
 #: gammu/calendar.c:543
 msgid "Every day"
@@ -887,7 +888,7 @@ msgstr ""
 
 #: gammu/calendar.c:713
 msgid "Priority"
-msgstr ""
+msgstr "Пріоритет"
 
 #: gammu/calendar.c:716
 msgid "Low"
@@ -903,12 +904,12 @@ msgstr ""
 
 #: gammu/calendar.c:725
 msgid "None"
-msgstr ""
+msgstr "Немає"
 
 #: gammu/calendar.c:729 gammu/message.c:111 gammu/misc.c:2122
 #: gammu/misc.c:2165
 msgid "Unknown"
-msgstr ""
+msgstr "Невідомо"
 
 #: gammu/calendar.c:736
 msgid "Due time"
@@ -924,7 +925,7 @@ msgstr ""
 
 #: gammu/calendar.c:751
 msgid "Completed"
-msgstr ""
+msgstr "Завершено"
 
 #: gammu/calendar.c:786 gammu/calendar.c:791 helper/memory-display.c:45
 #: helper/memory-display.c:55 helper/memory-display.c:57
@@ -1755,7 +1756,7 @@ msgstr ""
 #: gammu/misc.c:1872 gammu/misc.c:1911 gammu/misc.c:2206 gammu/mms.c:112
 #: helper/memory-display.c:217 helper/message-display.c:252
 msgid "Name"
-msgstr ""
+msgstr "Назва"
 
 #: gammu/gammu.c:91
 #, c-format
@@ -1825,7 +1826,7 @@ msgstr ""
 
 #: gammu/gammu.c:702
 msgid "Calls"
-msgstr ""
+msgstr "Дзвінки"
 
 #: gammu/gammu.c:703
 msgid "SMS and EMS"
@@ -2081,7 +2082,7 @@ msgstr ""
 #: gammu/message.c:86 helper/message-display.c:167
 #: helper/message-display.c:287
 msgid "Status"
-msgstr ""
+msgstr "Стан"
 
 #: gammu/message.c:90
 msgid "No action needed"
@@ -2114,7 +2115,7 @@ msgstr ""
 
 #: gammu/message.c:220 gammu/misc.c:2207 gammu/misc.c:2486
 msgid "Number"
-msgstr ""
+msgstr "Номер"
 
 #: gammu/message.c:221
 msgid "Default number"
@@ -2215,11 +2216,11 @@ msgstr ""
 
 #: gammu/message.c:606
 msgid "SIM"
-msgstr ""
+msgstr "SIM"
 
 #: gammu/message.c:608
 msgid "phone"
-msgstr ""
+msgstr "телефон"
 
 #: gammu/message.c:612
 #, c-format
@@ -2465,7 +2466,7 @@ msgstr ""
 
 #: gammu/misc.c:383 gammu/search.c:89
 msgid "Manufacturer"
-msgstr ""
+msgstr "Виробник"
 
 #: gammu/misc.c:386 gammu/search.c:101
 msgid "Model"
@@ -2473,15 +2474,15 @@ msgstr ""
 
 #: gammu/misc.c:392
 msgid "Firmware"
-msgstr ""
+msgstr "Прошивка"
 
 #: gammu/misc.c:404
 msgid "Hardware"
-msgstr ""
+msgstr "Апаратне забезпечення"
 
 #: gammu/misc.c:415
 msgid "Original IMEI"
-msgstr ""
+msgstr "Оригінальний IMEI"
 
 #: gammu/misc.c:422
 msgid "Manufactured"
@@ -2489,11 +2490,11 @@ msgstr ""
 
 #: gammu/misc.c:428
 msgid "Product code"
-msgstr ""
+msgstr "Код продукту"
 
 #: gammu/misc.c:438
 msgid "SIM IMSI"
-msgstr ""
+msgstr "SIM IMSI"
 
 #: gammu/misc.c:547
 msgid "Call info"
@@ -2579,11 +2580,11 @@ msgstr ""
 
 #: gammu/misc.c:640
 msgid "Todos"
-msgstr ""
+msgstr "Задачі"
 
 #: gammu/misc.c:644
 msgid "Calendar"
-msgstr ""
+msgstr "Календар"
 
 #: gammu/misc.c:653
 msgid "Signal strength"
@@ -2881,7 +2882,7 @@ msgstr ""
 
 #: gammu/misc.c:1554 gammu/misc.c:1600
 msgid "Normal"
-msgstr ""
+msgstr "Типовий"
 
 #: gammu/misc.c:1556 gammu/misc.c:1602
 msgid "Secure"
@@ -3339,7 +3340,7 @@ msgstr ""
 
 #: gammu/mms.c:100
 msgid "Delivery report"
-msgstr ""
+msgstr "Звіт про доставку"
 
 #: gammu/mms.c:107 gammu/mms.c:110
 msgid "Content type"
@@ -3972,11 +3973,11 @@ msgstr ""
 #: helper/message-display.c:233 helper/message-display.c:248
 #: helper/message-display.c:289
 msgid "Sent"
-msgstr ""
+msgstr "Надіслати"
 
 #: helper/message-display.c:170 helper/message-display.c:290
 msgid "Read"
-msgstr ""
+msgstr "Прочитані"
 
 #: helper/message-display.c:171 helper/message-display.c:291
 msgid "UnRead"
