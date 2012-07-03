@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.28.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-06-29 16:15+0200\n"
-"PO-Revision-Date: 2012-05-01 22:08+0200\n"
+"PO-Revision-Date: 2012-07-02 14:39+0200\n"
 "Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
 "Language-Team: none\n"
 "Language: tr\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 0.10\n"
+"X-Generator: Weblate 1.1\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -1485,7 +1485,7 @@ msgstr ""
 
 #: gammu-detect/main.c:56
 msgid "Show version information and compiled in features."
-msgstr "Telefon bilgisi"
+msgstr ""
 
 #: gammu-detect/main.c:58
 msgid "Disables scanning of udev."
