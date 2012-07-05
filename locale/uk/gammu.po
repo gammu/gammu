@@ -5,11 +5,11 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gammu 1.31.91\n"
+"Project-Id-Version: Wammu 0.37\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-04-10 11:40+0200\n"
-"PO-Revision-Date: 2012-06-30 07:24+0200\n"
-"Last-Translator: Rax G <admin@dvizho.ks.ua>\n"
+"PO-Revision-Date: 2012-07-05 18:02+0300\n"
+"Last-Translator: Rax Garfield <admin@dvizho.ks.ua>\n"
 "Language-Team: none\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
@@ -275,7 +275,7 @@ msgstr "Телефон"
 
 #: gammu/backup.c:977 gammu/misc.c:410
 msgid "IMEI"
-msgstr ""
+msgstr "IMEI"
 
 #: gammu/backup.c:980
 msgid "File created by"
@@ -637,7 +637,7 @@ msgstr ""
 
 #: gammu/calendar.c:156
 msgid "Start"
-msgstr ""
+msgstr "Початок"
 
 #: gammu/calendar.c:163
 msgid "Stop"
@@ -687,11 +687,11 @@ msgstr ""
 
 #: gammu/calendar.c:244
 msgid "Yes"
-msgstr ""
+msgstr "Так"
 
 #: gammu/calendar.c:244
 msgid "No"
-msgstr ""
+msgstr "Ні"
 
 #: gammu/calendar.c:256 gammu/calendar.c:262 gammu/calendar.c:267
 #: gammu/calendar.c:805 gammu/calendar.c:811
@@ -1199,7 +1199,7 @@ msgstr ""
 
 #: gammu/depend/nokia/dct4.c:872
 msgid "Bluetooth"
-msgstr ""
+msgstr "Bluetooth"
 
 #: gammu/depend/nokia/dct4.c:888
 msgid "UEM"
@@ -1653,7 +1653,7 @@ msgstr ""
 
 #: gammu/files.c:160 gammu/files.c:173 gammu/files.c:199 gammu/files.c:324
 msgid "Folder"
-msgstr ""
+msgstr "Тека"
 
 #: gammu/files.c:184 gammu/files.c:315
 msgid "File;"
@@ -1846,7 +1846,7 @@ msgstr ""
 
 #: gammu/gammu.c:707
 msgid "Ringtones"
-msgstr ""
+msgstr "Рингтони"
 
 #: gammu/gammu.c:708
 msgid "Calendar notes"
@@ -1898,7 +1898,7 @@ msgstr ""
 
 #: gammu/gammu.c:727
 msgid "Phone information"
-msgstr ""
+msgstr "Отримання інформації про телефон"
 
 #: gammu/gammu.c:728
 msgid "Phone settings"
@@ -2102,7 +2102,7 @@ msgstr ""
 
 #: gammu/message.c:102
 msgid "Not supported"
-msgstr ""
+msgstr "Не підтримується"
 
 #: gammu/message.c:114
 msgid "Service reply"
@@ -2462,7 +2462,7 @@ msgstr ""
 
 #: gammu/misc.c:379
 msgid "Device"
-msgstr ""
+msgstr "Пристрій"
 
 #: gammu/misc.c:383 gammu/search.c:89
 msgid "Manufacturer"
@@ -2470,7 +2470,7 @@ msgstr "Виробник"
 
 #: gammu/misc.c:386 gammu/search.c:101
 msgid "Model"
-msgstr ""
+msgstr "Модель"
 
 #: gammu/misc.c:392
 msgid "Firmware"
@@ -2725,7 +2725,7 @@ msgstr ""
 
 #: gammu/misc.c:1118 gammu/misc.c:1640 gammu/misc.c:1643 gammu/mms.c:104
 msgid "disabled"
-msgstr ""
+msgstr "вимкнено"
 
 #: gammu/misc.c:1121
 msgid "Bitmap ID"
@@ -2801,7 +2801,7 @@ msgstr ""
 
 #: gammu/misc.c:1519 gammu/misc.c:1521
 msgid "Connection type"
-msgstr ""
+msgstr "Тип з’єднання"
 
 #: gammu/misc.c:1519
 msgid "Continuous"
@@ -3973,7 +3973,7 @@ msgstr ""
 #: helper/message-display.c:233 helper/message-display.c:248
 #: helper/message-display.c:289
 msgid "Sent"
-msgstr "Надіслати"
+msgstr "Надіслане"
 
 #: helper/message-display.c:170 helper/message-display.c:290
 msgid "Read"
