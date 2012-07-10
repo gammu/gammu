@@ -114,7 +114,7 @@ Vendor:         Michal Čihař <michal@cihar.com>
 BuildRequires: %{dist_bluez_libs}
 %endif
 
-%if pqsql
+%if %pqsql
 BuildRequires: %{dist_postgres_libs}
 %endif
 
