@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: Gammu 1.32.0\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-27 10:47+0200\n"
-"PO-Revision-Date: 2012-05-17 15:13+0200\n"
-"Last-Translator: Michal Čihař <michal@cihar.com>\n"
+"PO-Revision-Date: 2012-07-11 10:14+0200\n"
+"Last-Translator: Hascore Eleven <hascore@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 1.0\n"
+"X-Generator: Weblate 1.1\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -1803,12 +1803,10 @@ msgstr ""
 "Telah tersedia versi pengujian Gammu yang terbaru! (%s selain dari %s)\n"
 
 #: gammu/gammu.c:327
-#, fuzzy
 msgid ""
 "Copyright (C) 2003 - 2012 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
-"Copyright (C) 2003 - 2011 Michal Cihar <michal@cihar.com> dan penulis "
-"lainnya."
+"Copyright (C) 2003-2012 Michal Cihar <michal@cihar.com> dan penulis lain."
 
 #: gammu/gammu.c:365
 msgid "standard input"
@@ -2218,12 +2216,12 @@ msgstr ", Folder outbox"
 
 #: gammu/message.c:538
 msgid "OK"
-msgstr ""
+msgstr "Oke"
 
 #: gammu/message.c:541
-#, fuzzy, c-format
+#, c-format
 msgid "error %i"
-msgstr "..eror %i"
+msgstr "error %i"
 
 #: gammu/message.c:544
 #, c-format
@@ -3478,19 +3476,16 @@ msgid "Searching for phone folder: "
 msgstr "Pencarian folder telepon: "
 
 #: gammu/nokia.c:691
-#, fuzzy
 msgid "No vendor info in JAD file!"
-msgstr "Tidak ada info vendor pada file JAD"
+msgstr "Tidak ada info vendor pada berkas JAD!"
 
 #: gammu/nokia.c:696
-#, fuzzy
 msgid "No name info in JAD file!"
-msgstr "Tidak ada info nama pada file JAD"
+msgstr "Tidak ada info nama pada berkas JAD!"
 
 #: gammu/nokia.c:701
-#, fuzzy
 msgid "No JAR URL info in JAD file!"
-msgstr "Tidak ada info URL JAR pada file JAD"
+msgstr "Tidak ada info URL JAR pada berkas JAD!"
 
 #: gammu/nokia.c:707
 msgid "Declared JAR file size is different than real. Fixed by Gammu."
