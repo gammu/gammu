@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-06-29 16:15+0200\n"
-"PO-Revision-Date: 2010-02-10 10:20+0200\n"
+"PO-Revision-Date: 2012-07-21 12:02+0200\n"
 "Last-Translator: shanyan baishui <Siramizu@gmail.com>\n"
 "Language-Team: none\n"
 "Language: zh_CN\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Pootle 2.0.1\n"
+"X-Generator: Weblate 1.1\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
@@ -149,9 +149,8 @@ msgid "More memory required..."
 msgstr "内存不足"
 
 #: libgammu/gsmcomon.c:113
-#, fuzzy
 msgid "Operation not allowed by phone."
-msgstr "手机不支持该功能。"
+msgstr "手机不允许该操作。"
 
 #: libgammu/gsmcomon.c:114
 msgid ""
@@ -236,7 +235,7 @@ msgstr "无法访问 SIM 卡。"
 
 #: libgammu/gsmcomon.c:133
 msgid "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
-msgstr ""
+msgstr "手机上的 GNAPPLET 版本错误。使用 Gammu 当前所用版本。"
 
 #: libgammu/gsmcomon.c:134
 msgid "Only part of folder has been listed."
@@ -291,7 +290,6 @@ msgid "Bluetooth configuration requires channel option."
 msgstr "蓝牙配置需要频道选项。"
 
 #: libgammu/gsmcomon.c:147
-#, fuzzy
 msgid "Service is not running."
 msgstr "服务未运行。"
 
@@ -316,19 +314,18 @@ msgid "Failed to get SMSC number from phone."
 msgstr "从手机获取SMSC号码失败。"
 
 #: libgammu/gsmcomon.c:153
-#, fuzzy
 msgid "Operation aborted."
-msgstr "操作进行中"
+msgstr "操作已中止。"
 
 #: libgammu/gsmcomon.c:154
 msgid ""
 "Installation data not found, please consult debug log and/or documentation "
 "for more details."
-msgstr ""
+msgstr "未找到安装数据，请查阅调试信息和/或文档以获得详细信息。"
 
 #: libgammu/gsmcomon.c:155
 msgid "Entry is read only."
-msgstr ""
+msgstr "记录是只读的。"
 
 #: libgammu/gsmcomon.c:188
 msgid "Unknown error description."
@@ -393,7 +390,7 @@ msgstr "家人"
 
 #: libgammu/phone/nokia/nfunc.c:964
 msgid "VIP"
-msgstr ""
+msgstr "VIP"
 
 #: libgammu/phone/nokia/nfunc.c:966
 msgid "Friends"
