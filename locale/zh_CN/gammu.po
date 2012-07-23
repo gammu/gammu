@@ -43,7 +43,7 @@ msgstr "文件中未找到待办事项"
 
 #: gammu/backup.c:137 helper/message-cmdline.c:525
 msgid "Where is backup filename and location and memory type?"
-msgstr ""
+msgstr "备份文件名称和位置和内存类型？"
 
 #: gammu/backup.c:150 gammu/backup.c:161 helper/message-cmdline.c:537
 #: helper/message-cmdline.c:547
@@ -81,7 +81,7 @@ msgstr "正在读取"
 
 #: gammu/backup.c:247 gammu/backup.c:292
 msgid "Only part of data saved, please increase the limit."
-msgstr ""
+msgstr "仅保存部分数据，请增加限制。"
 
 #: gammu/backup.c:268 gammu/backup.c:310 gammu/backup.c:475 gammu/mms.c:182
 msgid "Reading:"
@@ -110,7 +110,7 @@ msgstr "按 Ctrl+C 取消..."
 
 #: gammu/backup.c:372
 msgid "Use Unicode subformat of backup file?"
-msgstr ""
+msgstr "备份文件使用 Unicode 子格式？"
 
 #: gammu/backup.c:404
 msgid "Checking phone phonebook"
@@ -142,7 +142,7 @@ msgstr "备份手机日历？"
 #: gammu/backup.c:905 gammu/backup.c:942
 #, c-format
 msgid "Only part of data saved, please increase %s."
-msgstr ""
+msgstr "仅保存部分数据，请增加 %s 。"
 
 #: gammu/backup.c:450
 msgid "Checking phone todos"
@@ -194,79 +194,79 @@ msgstr ""
 
 #: gammu/backup.c:624
 msgid "Checking phone WAP bookmarks"
-msgstr ""
+msgstr "正在检查手机 WAP 书签"
 
 #: gammu/backup.c:628
 msgid "Backup phone WAP bookmarks?"
-msgstr ""
+msgstr "备份手机 WAP 书签？"
 
 #: gammu/backup.c:661
 msgid "Checking phone WAP settings"
-msgstr ""
+msgstr "正在检查手机 WAP 设置"
 
 #: gammu/backup.c:665
 msgid "Backup phone WAP settings?"
-msgstr ""
+msgstr "备份手机 WAP 设置？"
 
 #: gammu/backup.c:698
 msgid "Checking phone MMS settings"
-msgstr ""
+msgstr "正在检查手机彩信设置"
 
 #: gammu/backup.c:702
 msgid "Backup phone MMS settings?"
-msgstr ""
+msgstr "备份手机彩信设置？"
 
 #: gammu/backup.c:735
 msgid "Checking phone Chat settings"
-msgstr ""
+msgstr "正在检查手机聊天设置"
 
 #: gammu/backup.c:739
 msgid "Backup phone Chat settings?"
-msgstr ""
+msgstr "备份手机聊天设置？"
 
 #: gammu/backup.c:772
 msgid "Checking phone SyncML settings"
-msgstr ""
+msgstr "正在检查手机 SyncML 设置"
 
 #: gammu/backup.c:776
 msgid "Backup phone SyncML settings?"
-msgstr ""
+msgstr "备份手机 SyncML 设置？"
 
 #: gammu/backup.c:808
 msgid "Checking phone user ringtones"
-msgstr ""
+msgstr "正在检查手机用户铃声"
 
 #: gammu/backup.c:813
 msgid "Backup phone user ringtones?"
-msgstr ""
+msgstr "备份手机用户铃声？"
 
 #: gammu/backup.c:851
 msgid "Checking phone profiles"
-msgstr ""
+msgstr "正在检查手机配置文件"
 
 #: gammu/backup.c:855
 msgid "Backup phone profiles?"
-msgstr ""
+msgstr "备份手机配置文件？"
 
 #: gammu/backup.c:884
 msgid "Checking phone FM radio stations"
-msgstr ""
+msgstr "正在检查手机调频收音机频道"
 
 #: gammu/backup.c:888
 msgid "Backup phone FM radio stations?"
-msgstr ""
+msgstr "备份手机调频收音机频道？"
 
 #: gammu/backup.c:921
 msgid "Checking phone GPRS access points"
-msgstr ""
+msgstr "正在检查手机 GPRS 接入点"
 
 #: gammu/backup.c:925
 msgid "Backup phone GPRS access points?"
-msgstr ""
+msgstr "备份手机 GPRS 接入点？"
 
 #: gammu/backup.c:971
 msgid "Time of backup"
-msgstr ""
+msgstr "备份时间"
 
 #: gammu/backup.c:974 gammu/calendar.c:237 gammu/calendar.c:820
 msgid "Phone"
@@ -283,17 +283,17 @@ msgstr ""
 #: gammu/backup.c:984
 #, c-format
 msgid "Checksum in backup file do not match (original: %s, new: %s). Continue?"
-msgstr ""
+msgstr "备份文件校验不符 (原: %s, 新: %s)。继续？"
 
 #: gammu/backup.c:1022
 msgid ""
 "Please note that restoring data will cause existing data in phone to be "
 "deleted."
-msgstr ""
+msgstr "请注意恢复数据将会删除手机中的现有数据。"
 
 #: gammu/backup.c:1023
 msgid "Use addnew command if you just want to add some entries to your phone."
-msgstr ""
+msgstr "如果您要添加一些记录请使用 addnew 命令。"
 
 #: gammu/backup.c:1034
 msgid "Restore phone caller groups and logos?"
@@ -344,15 +344,15 @@ msgstr ""
 
 #: gammu/backup.c:1200
 msgid "Restore phone calendar notes?"
-msgstr ""
+msgstr "回复手机日历？"
 
 #: gammu/backup.c:1201
 msgid "Restore notes from the past?"
-msgstr ""
+msgstr "恢复以前的便签？"
 
 #: gammu/backup.c:1207 gammu/backup.c:1346
 msgid "Deleting old notes:"
-msgstr ""
+msgstr "正在删除原有便签:"
 
 #: gammu/backup.c:1219 gammu/backup.c:1269 gammu/backup.c:1502
 #: gammu/backup.c:1560 gammu/misc.c:1385 gammu/misc.c:1430 gammu/misc.c:1454
@@ -362,19 +362,19 @@ msgstr "已完成"
 
 #: gammu/backup.c:1249
 msgid "Restore phone todo?"
-msgstr ""
+msgstr "恢复手机待办事项？"
 
 #: gammu/backup.c:1257
 msgid "Deleting old todos:"
-msgstr ""
+msgstr "正在删除原有待办事项:"
 
 #: gammu/backup.c:1342
 msgid "Restore phone notes?"
-msgstr ""
+msgstr "恢复手机便签？"
 
 #: gammu/backup.c:1373
 msgid "Restore SIM SMSC profiles?"
-msgstr ""
+msgstr "恢复 SIM SMSC 配置文件？"
 
 #: gammu/backup.c:1390
 msgid "Restore phone startup logo/text?"
@@ -386,23 +386,23 @@ msgstr ""
 
 #: gammu/backup.c:1403
 msgid "Restore phone WAP bookmarks?"
-msgstr ""
+msgstr "恢复手机 WAP 书签？"
 
 #: gammu/backup.c:1407
 msgid "Deleting old bookmarks:"
-msgstr ""
+msgstr "正在删除原有书签:"
 
 #: gammu/backup.c:1444
 msgid "Restore phone WAP settings?"
-msgstr ""
+msgstr "恢复手机 WAP 设置？"
 
 #: gammu/backup.c:1469
 msgid "Restore phone MMS settings?"
-msgstr ""
+msgstr "恢复手机彩信设置？"
 
 #: gammu/backup.c:1495 gammu/misc.c:1498
 msgid "Delete all phone user ringtones?"
-msgstr ""
+msgstr "删除所有用户铃声？"
 
 #: gammu/backup.c:1499 gammu/misc.c:1417 gammu/misc.c:1441 gammu/misc.c:1465
 #: gammu/misc.c:1481 gammu/misc.c:1499
@@ -411,109 +411,108 @@ msgstr "正在删除"
 
 #: gammu/backup.c:1504
 msgid "Restore user ringtones?"
-msgstr ""
+msgstr "恢复用户铃声？"
 
 #: gammu/backup.c:1530
 msgid "Restore phone profiles?"
-msgstr ""
+msgstr "恢复手机配置文件？"
 
 #: gammu/backup.c:1553
 msgid "Restore phone FM radio stations?"
-msgstr ""
+msgstr "恢复手机调频收音机频道？"
 
 #: gammu/backup.c:1557
 msgid "Deleting old FM stations:"
-msgstr ""
+msgstr "正在删除原有收音机频道:"
 
 #: gammu/backup.c:1583
 msgid "Restore phone GPRS Points?"
-msgstr ""
+msgstr "恢复手机 GPRS 接入点？"
 
 #: gammu/backup.c:1631 gammu/memory.c:29 gammu/memory.c:60 gammu/memory.c:132
 #: gammu/memory.c:168
 #, c-format
 msgid "Unknown memory type (\"%s\")\n"
-msgstr ""
+msgstr "未知内存类型 (\"%s\")\n"
 
 #: gammu/backup.c:1635 gammu/memory.c:70 gammu/misc.c:773 gammu/misc.c:806
 #: helper/message-cmdline.c:1032
 #, c-format
 msgid "Unknown parameter (\"%s\")\n"
-msgstr ""
+msgstr "未知参数 (\"%s\")\n"
 
 #: gammu/backup.c:1667 gammu/backup.c:1695
 #, c-format
 msgid "Memory has only %i free locations.Exiting\n"
-msgstr ""
+msgstr "内存还剩 %i 个可用空间。正在退出\n"
 
 #: gammu/backup.c:1668
 msgid "Add phone phonebook entries?"
-msgstr ""
+msgstr "添加手机联系人记录？"
 
 #: gammu/backup.c:1696
 msgid "Add SIM phonebook entries?"
-msgstr ""
+msgstr "添加 SIM 卡联系人记录？"
 
 #: gammu/backup.c:1728
 msgid "Add phone calendar notes?"
-msgstr ""
+msgstr "添加手机日历？"
 
 #: gammu/backup.c:1752
 msgid "Add phone ToDo?"
-msgstr ""
+msgstr "添加手机待办事项？"
 
 #: gammu/backup.c:1774
-#, fuzzy
 msgid "Add notes to phone?"
-msgstr "发送文件到手机"
+msgstr "添加便签到手机？"
 
 #: gammu/backup.c:1797
 msgid "Add phone WAP bookmarks?"
-msgstr ""
+msgstr "添加手机 WAP 书签？"
 
 #: gammu/backupsms.c:51
 msgid "Delete each sms after backup?"
-msgstr ""
+msgstr "在备份后删除每个短信？"
 
 #: gammu/backupsms.c:56
 #, c-format
 msgid "Backup sms from folder \"%s\"%s?"
-msgstr ""
+msgstr "备份 \"%s\"%s 的短信？"
 
 #: gammu/backupsms.c:58 gammu/backupsms.c:183
 msgid " (SIM)"
-msgstr ""
+msgstr " (SIM 卡)"
 
 #: gammu/backupsms.c:84
 #, c-format
 msgid "   Increase %s\n"
-msgstr ""
+msgstr "   增加 %s\n"
 
 #: gammu/backupsms.c:107 gammu/misc.c:1375
 msgid "Deleting:"
-msgstr ""
+msgstr "正在删除:"
 
 #: gammu/backupsms.c:141
 msgid "Restore message?"
-msgstr ""
+msgstr "恢复信息？"
 
 #: gammu/backupsms.c:168
 msgid "Do you want to restore binary SMS?"
-msgstr ""
+msgstr "您要恢复二进制短信吗？"
 
 #: gammu/backupsms.c:180
 #, c-format
 msgid "Restore %03i sms to folder \"%s\"%s?"
-msgstr ""
+msgstr "恢复 %03i 短信到 \"%s\"%s ？"
 
 #: gammu/backupsms.c:184
 #, c-format
 msgid "saving %i SMS\n"
-msgstr ""
+msgstr "正在保存 %i 短信\n"
 
 #: gammu/calendar.c:19
 msgid "Note type"
-msgstr "备注类型"
+msgstr "便签类型"
 
 #: gammu/calendar.c:22
 msgid "Reminder (Date)"
@@ -533,7 +532,7 @@ msgstr "生日 (纪念日)"
 
 #: gammu/calendar.c:34
 msgid "Memo (Miscellaneous)"
-msgstr ""
+msgstr "备忘 (其它)"
 
 #: gammu/calendar.c:37
 msgid "Travel"
@@ -633,7 +632,7 @@ msgstr ""
 
 #: gammu/calendar.c:110
 msgid "unknown type!"
-msgstr ""
+msgstr "未知类型！"
 
 #: gammu/calendar.c:156
 msgid "Start"
@@ -711,7 +710,7 @@ msgstr[1] ""
 
 #: gammu/calendar.c:317
 msgid "forever"
-msgstr ""
+msgstr "永远"
 
 #: gammu/calendar.c:319
 #, c-format
@@ -775,7 +774,7 @@ msgstr ""
 #: gammu/calendar.c:395
 #, c-format
 msgid "Phone time is %s\n"
-msgstr ""
+msgstr "手机时间是 %s\n"
 
 #: gammu/calendar.c:409
 msgid "Time format is "
@@ -879,11 +878,11 @@ msgstr ""
 
 #: gammu/calendar.c:693 gammu/memory.c:150
 msgid "Entry was empty"
-msgstr ""
+msgstr "记录为空"
 
 #: gammu/calendar.c:695 gammu/memory.c:152
 msgid "Entry was deleted"
-msgstr ""
+msgstr "记录已删除"
 
 #: gammu/calendar.c:713
 msgid "Priority"
@@ -938,7 +937,7 @@ msgstr "联系人"
 #: gammu/calendar.c:900 gammu/memory.c:316 gammu/memory.c:393
 #, c-format
 msgid "Search text too long, truncating to %d chars!\n"
-msgstr ""
+msgstr "搜索文本过长，截取到 %d 个字符!\n"
 
 #: gammu/common.c:42
 msgid "Waiting for Security Code."
@@ -970,7 +969,7 @@ msgstr "等待网络码。"
 
 #: gammu/common.c:63
 msgid "Nothing to enter."
-msgstr ""
+msgstr "无需输入。"
 
 #: gammu/common.c:67
 msgid "Unknown security status."
@@ -1072,11 +1071,11 @@ msgstr "需要更多参数！"
 #: gammu/common.c:318 gammu/common.c:328 gammu/depend/nokia/dct4.c:687
 #: gammu/misc.c:1341
 msgid "Please enumerate locations from 1"
-msgstr ""
+msgstr "请从 1 列举位置"
 
 #: gammu/common.c:333
 msgid "Swapping start and end location"
-msgstr ""
+msgstr "交换位置"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
 #: gammu/common.c:355 gammu/common.c:384 gammu/depend/nokia/dct4.c:85
@@ -1119,11 +1118,11 @@ msgstr ""
 #: gammu/depend/nokia/dct4.c:80
 #, c-format
 msgid "%s (yes/no) ? "
-msgstr ""
+msgstr "%s (是/否) ? "
 
 #: gammu/depend/nokia/dct4.c:265
 msgid "Setting done"
-msgstr ""
+msgstr "设置完成"
 
 #: gammu/depend/nokia/dct4.c:303
 msgid ""
@@ -1158,7 +1157,7 @@ msgstr "未知 (%x)"
 
 #: gammu/depend/nokia/dct4.c:376
 msgid " (startup)"
-msgstr ""
+msgstr " (启动)"
 
 #: gammu/depend/nokia/dct4.c:497 gammu/depend/nokia/dct4.c:1006
 msgid "Press any key to continue..."
@@ -1202,7 +1201,7 @@ msgstr "蓝牙"
 
 #: gammu/depend/nokia/dct4.c:888
 msgid "UEM"
-msgstr ""
+msgstr "UEM"
 
 #: gammu/depend/nokia/dct4.c:961
 #, c-format
@@ -1236,7 +1235,7 @@ msgstr ""
 #: gammu/depend/nokia/dct4.c:1048 gammu/depend/nokia/dct4.c:1049
 #: gammu/depend/nokia/dct4.c:1050
 msgid "mV"
-msgstr ""
+msgstr "毫伏"
 
 #: gammu/depend/nokia/dct4.c:1038
 msgid "Battery voltage, scaled:"
@@ -1432,23 +1431,23 @@ msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1363
 msgid ", type "
-msgstr ""
+msgstr "，类型 "
 
 #: gammu/depend/nokia/dct4.c:1365
 msgid "string"
-msgstr ""
+msgstr "字符串"
 
 #: gammu/depend/nokia/dct4.c:1366
 msgid "byte"
-msgstr ""
+msgstr "字节"
 
 #: gammu/depend/nokia/dct4.c:1367
 msgid "2 bytes"
-msgstr ""
+msgstr "2 字节"
 
 #: gammu/depend/nokia/dct4.c:1368
 msgid "4 bytes"
-msgstr ""
+msgstr "4 字节"
 
 #: gammu/depend/nokia/dct4.c:1375
 #, c-format
@@ -1482,7 +1481,7 @@ msgstr "未知号码"
 #: gammu/depend/nokia/dct4.c:1407
 #, c-format
 msgid "ERROR: unknown memory type (\"%s\")\n"
-msgstr ""
+msgstr "错误: 未知内存类型 (\"%s\")\n"
 
 #: gammu-detect/main.c:55
 msgid "Show debugging output for detecting devices."
@@ -1630,7 +1629,7 @@ msgstr ""
 #: gammu/files.c:56
 #, c-format
 msgid "images: %i, sounds: %i, themes: %i"
-msgstr ""
+msgstr "图片: %i, 声音: %i, 主题: %i"
 
 #. l10n: One char to indicate protected file
 #: gammu/files.c:119 gammu/files.c:208 gammu/files.c:329
@@ -1662,7 +1661,7 @@ msgstr "文件夹"
 
 #: gammu/files.c:184 gammu/files.c:315
 msgid "File;"
-msgstr ""
+msgstr "文件;"
 
 #: gammu/files.c:224
 #, c-format
@@ -1677,7 +1676,7 @@ msgstr ""
 #: gammu/files.c:256
 #, c-format
 msgid "Unknown attribute (%s)\n"
-msgstr ""
+msgstr "未知属性 (%s)\n"
 
 #: gammu/files.c:307
 msgid "Part of folder only"
@@ -1721,7 +1720,7 @@ msgstr ""
 #: gammu/files.c:702 gammu/nokia.c:946
 #, c-format
 msgid "Parameter \"%s\" unknown\n"
-msgstr ""
+msgstr "参数 \"%s\" 未知\n"
 
 #: gammu/files.c:737
 #, c-format
@@ -1766,7 +1765,7 @@ msgstr "名称"
 #: gammu/gammu.c:91
 #, c-format
 msgid "[Gammu version %s built %s on %s using %s]"
-msgstr ""
+msgstr "[Gammu 版本 %s 构建 %s 于 %s 使用 %s]"
 
 #: gammu/gammu.c:102
 msgid "Protocols"
@@ -2262,23 +2261,23 @@ msgstr "网络状态"
 
 #: gammu/misc.c:37 gammu/misc.c:64
 msgid "home network"
-msgstr ""
+msgstr "本地"
 
 #: gammu/misc.c:38 gammu/misc.c:65
 msgid "roaming network"
-msgstr ""
+msgstr "漫游"
 
 #: gammu/misc.c:39 gammu/misc.c:66
 msgid "requesting network"
-msgstr ""
+msgstr "正在请求"
 
 #: gammu/misc.c:40 gammu/misc.c:67
 msgid "not logged into network"
-msgstr ""
+msgstr "未连接"
 
 #: gammu/misc.c:41 gammu/misc.c:68
 msgid "registration to network denied"
-msgstr ""
+msgstr "注册被拒绝"
 
 #: gammu/misc.c:42 gammu/misc.c:44 gammu/misc.c:69 gammu/misc.c:71
 #: gammu/misc.c:169 gammu/misc.c:191
@@ -2315,39 +2314,39 @@ msgstr ""
 
 #: gammu/misc.c:111
 msgid "Battery capacity"
-msgstr ""
+msgstr "电池容量"
 
 #: gammu/misc.c:112
 #, c-format
 msgid "%i mAh"
-msgstr ""
+msgstr "%i 毫安时"
 
 #: gammu/misc.c:116
 msgid "Battery temperature"
-msgstr ""
+msgstr "电池温度"
 
 #. l10n: This means degrees Celsius
 #: gammu/misc.c:118 gammu/misc.c:123
 #, c-format
 msgid "%i C"
-msgstr ""
+msgstr "%i 摄氏度"
 
 #: gammu/misc.c:122
 msgid "Phone temperature"
-msgstr ""
+msgstr "手机温度"
 
 #: gammu/misc.c:127
 msgid "Battery voltage"
-msgstr ""
+msgstr "电池电压"
 
 #: gammu/misc.c:128 gammu/misc.c:133
 #, c-format
 msgid "%i mV"
-msgstr ""
+msgstr "%i 毫伏"
 
 #: gammu/misc.c:132
 msgid "Charge voltage"
-msgstr ""
+msgstr "充电电压"
 
 #: gammu/misc.c:137
 msgid "Charge current"
@@ -2356,7 +2355,7 @@ msgstr ""
 #: gammu/misc.c:138 gammu/misc.c:143
 #, c-format
 msgid "%i mA"
-msgstr ""
+msgstr "%i 毫安"
 
 #: gammu/misc.c:142
 msgid "Phone current"
@@ -2364,7 +2363,7 @@ msgstr ""
 
 #: gammu/misc.c:147
 msgid "Charge state"
-msgstr ""
+msgstr "充电状态"
 
 #: gammu/misc.c:150
 msgid "powered from battery"
@@ -2392,19 +2391,19 @@ msgstr ""
 
 #: gammu/misc.c:176
 msgid "Battery type"
-msgstr ""
+msgstr "电池类型"
 
 #: gammu/misc.c:179
 msgid "Lithium Ion"
-msgstr ""
+msgstr "锂离子电池"
 
 #: gammu/misc.c:182
 msgid "Lithium Polymer"
-msgstr ""
+msgstr "锂聚合物电池"
 
 #: gammu/misc.c:185
 msgid "NiMH"
-msgstr ""
+msgstr "镍氢电池"
 
 #: gammu/misc.c:261
 msgid "Not logged to network!\n"
@@ -2452,15 +2451,15 @@ msgstr ""
 
 #: gammu/misc.c:355
 msgid "Latitude"
-msgstr ""
+msgstr "纬度"
 
 #: gammu/misc.c:356
 msgid "Longitude"
-msgstr ""
+msgstr "经度"
 
 #: gammu/misc.c:357
 msgid "Range"
-msgstr ""
+msgstr "范围"
 
 #: gammu/misc.c:358
 msgid "Number of samples"
@@ -2764,7 +2763,7 @@ msgstr ""
 #: gammu/misc.c:1324
 #, c-format
 msgid "Unknown parameter (\"%s\")"
-msgstr ""
+msgstr "未知参数 (\"%s\")"
 
 #: gammu/misc.c:1405
 msgid "Delete phone phonebook?"
@@ -2812,11 +2811,11 @@ msgstr "连接类型"
 
 #: gammu/misc.c:1519
 msgid "Continuous"
-msgstr ""
+msgstr "持续"
 
 #: gammu/misc.c:1521
 msgid "Temporary"
-msgstr ""
+msgstr "临时"
 
 #: gammu/misc.c:1524 gammu/misc.c:1526
 msgid "Connection security"
@@ -2897,19 +2896,19 @@ msgstr "安全"
 
 #: gammu/misc.c:1559 gammu/misc.c:1561
 msgid "Data call type"
-msgstr ""
+msgstr "数据呼叫类型"
 
 #: gammu/misc.c:1559
 msgid "ISDN"
-msgstr ""
+msgstr "ISDN"
 
 #: gammu/misc.c:1561
 msgid "Analogue"
-msgstr ""
+msgstr "模拟"
 
 #: gammu/misc.c:1565 gammu/misc.c:1568 gammu/misc.c:1571
 msgid "Data call speed"
-msgstr ""
+msgstr "数据呼叫速率"
 
 #: gammu/misc.c:1571 gammu/misc.c:2158
 msgid "Auto"
@@ -2925,11 +2924,11 @@ msgstr "密码"
 
 #: gammu/misc.c:1578
 msgid "USSD"
-msgstr ""
+msgstr "USSD"
 
 #: gammu/misc.c:1581
 msgid "Service code"
-msgstr ""
+msgstr "服务码"
 
 #: gammu/misc.c:1583 gammu/misc.c:1586
 msgid "Address type"
@@ -2979,7 +2978,7 @@ msgstr "主页"
 
 #: gammu/misc.c:1726
 msgid "active"
-msgstr ""
+msgstr "激活"
 
 #: gammu/misc.c:1730
 msgid "Read only"
@@ -3034,7 +3033,7 @@ msgstr ""
 #: gammu/misc.c:1937
 #, c-format
 msgid "Text too long, truncating to %d chars!\n"
-msgstr ""
+msgstr "文本太长，截取到 %d 个字符!\n"
 
 #: gammu/misc.c:1976
 msgid "Invalid security code type"
@@ -3043,7 +3042,7 @@ msgstr ""
 #: gammu/misc.c:1981
 #, c-format
 msgid "Enter %s code: "
-msgstr ""
+msgstr "输入 %s 码: "
 
 #: gammu/misc.c:1993 gammu/misc.c:2015
 msgid "No PIN code entered!"
@@ -3108,15 +3107,15 @@ msgstr ""
 
 #: gammu/misc.c:2117 helper/message-display.c:439
 msgid "Screen saver"
-msgstr ""
+msgstr "屏幕保护"
 
 #: gammu/misc.c:2118
 msgid "Screen saver timeout"
-msgstr ""
+msgstr "屏幕保护超时"
 
 #: gammu/misc.c:2119
 msgid "Automatic answer"
-msgstr ""
+msgstr "自动应答"
 
 #: gammu/misc.c:2120
 msgid "Lights"
@@ -3225,7 +3224,7 @@ msgstr ""
 
 #: gammu/misc.c:2322
 msgid "Frequency"
-msgstr ""
+msgstr "频率"
 
 #: gammu/misc.c:2344
 #, c-format
@@ -3252,23 +3251,23 @@ msgstr ""
 
 #: gammu/misc.c:2398 gammu/misc.c:2445
 msgid "Divert type"
-msgstr ""
+msgstr "转移类型"
 
 #: gammu/misc.c:2402 gammu/misc.c:2449
 msgid "when busy"
-msgstr ""
+msgstr "忙时转移"
 
 #: gammu/misc.c:2405 gammu/misc.c:2452
 msgid "when not answered"
-msgstr ""
+msgstr "无应答转移"
 
 #: gammu/misc.c:2408 gammu/misc.c:2455
 msgid "when phone off or no coverage"
-msgstr ""
+msgstr "关机或不在服务区转移"
 
 #: gammu/misc.c:2411 gammu/misc.c:2458
 msgid "all types of diverts"
-msgstr ""
+msgstr "无条件转移"
 
 #: gammu/misc.c:2414 gammu/misc.c:2434 gammu/misc.c:2461 gammu/misc.c:2477
 #, c-format
@@ -3277,23 +3276,23 @@ msgstr ""
 
 #: gammu/misc.c:2419 gammu/misc.c:2465
 msgid "Call type"
-msgstr ""
+msgstr "呼叫类型"
 
 #: gammu/misc.c:2422 gammu/misc.c:2468
 msgid "voice"
-msgstr ""
+msgstr "语音"
 
 #: gammu/misc.c:2425 gammu/misc.c:2471 helper/message-display.c:115
 msgid "fax"
-msgstr ""
+msgstr "传真"
 
 #: gammu/misc.c:2428 gammu/misc.c:2474
 msgid "data"
-msgstr ""
+msgstr "数据"
 
 #: gammu/misc.c:2431
 msgid "data & fax & voice"
-msgstr ""
+msgstr "数据 & 传真 & 语音"
 
 #: gammu/misc.c:2440
 msgid "Response:"
@@ -3335,7 +3334,7 @@ msgstr ""
 
 #: gammu/mms.c:87
 msgid "CC"
-msgstr ""
+msgstr "抄送"
 
 #: gammu/mms.c:94
 msgid "Message type"
@@ -3343,7 +3342,7 @@ msgstr ""
 
 #: gammu/mms.c:97 helper/message-display.c:477
 msgid "Subject"
-msgstr ""
+msgstr "主题"
 
 #: gammu/mms.c:100
 msgid "Delivery report"
@@ -3400,7 +3399,7 @@ msgstr ""
 #: gammu/nokia.c:252
 #, c-format
 msgid "Checking %s\n"
-msgstr ""
+msgstr "正在检查 %s\n"
 
 #: gammu/nokia.c:257
 msgid "  Only part handled!"
@@ -3431,9 +3430,9 @@ msgid "What folder type (\"%s\") ?\n"
 msgstr ""
 
 #: gammu/nokia.c:556 gammu/nokia.c:563 gammu/nokia.c:570
-#, fuzzy, c-format
+#, c-format
 msgid "Can not open file %s\n"
-msgstr "无法打开文件。"
+msgstr "无法打开文件 %s\n"
 
 #: gammu/nokia.c:591 gammu/nokia.c:665
 msgid "Folder not found. Probably function not supported!"
@@ -3471,7 +3470,7 @@ msgstr ""
 #: gammu/nokia.c:741
 #, c-format
 msgid " version %s"
-msgstr ""
+msgstr " 版本 %s"
 
 #: gammu/nokia.c:742
 #, c-format
@@ -3489,15 +3488,15 @@ msgstr ""
 
 #: gammu/nokia.c:882
 msgid "Writing JAD file:"
-msgstr ""
+msgstr "正在写 JAD 文件:"
 
 #: gammu/nokia.c:901
 msgid "Writing JAR file:"
-msgstr ""
+msgstr "正在写 JAR 文件:"
 
 #: gammu/nokia.c:976
 msgid "Writing file:"
-msgstr ""
+msgstr "正在写文件:"
 
 #: gammu/search.c:145
 #, c-format
@@ -3506,7 +3505,7 @@ msgstr ""
 
 #: gammu/search.c:182 gammu/search.c:189
 msgid "Error creating thread\n"
-msgstr ""
+msgstr "线程创建失败\n"
 
 #: helper/cmdline.c:26
 #, c-format
@@ -3714,13 +3713,12 @@ msgid "Formal name"
 msgstr ""
 
 #: helper/memory-display.c:222
-#, fuzzy
 msgid "Name prefix"
-msgstr "数字前缀"
+msgstr "名字前缀"
 
 #: helper/memory-display.c:223
 msgid "Name suffix"
-msgstr ""
+msgstr "名字后缀"
 
 #: helper/memory-display.c:224
 msgid "Nick name"
@@ -3756,19 +3754,19 @@ msgstr "国家"
 
 #: helper/memory-display.c:232
 msgid "Custom text 1"
-msgstr ""
+msgstr "自定义文本 1"
 
 #: helper/memory-display.c:233
 msgid "Custom text 2"
-msgstr ""
+msgstr "自定义文本 2"
 
 #: helper/memory-display.c:234
 msgid "Custom text 3"
-msgstr ""
+msgstr "自定义文本 3"
 
 #: helper/memory-display.c:235
 msgid "Custom text 4"
-msgstr ""
+msgstr "自定义文本 4"
 
 #: helper/memory-display.c:236
 msgid "Push to talk ID"
@@ -3776,7 +3774,7 @@ msgstr ""
 
 #: helper/memory-display.c:239
 msgid "unknown field type"
-msgstr ""
+msgstr "未知字段类型"
 
 #: helper/memory-display.c:246 helper/message-display.c:128
 msgid "home"
@@ -3788,7 +3786,7 @@ msgstr ""
 
 #: helper/message-cmdline.c:184
 msgid "Not enough parameters!"
-msgstr ""
+msgstr "缺少参数！"
 
 #: helper/message-cmdline.c:208
 #, c-format
@@ -3819,7 +3817,7 @@ msgstr ""
 #: helper/message-cmdline.c:357
 #, c-format
 msgid "File \"%s\"\n"
-msgstr ""
+msgstr "文件 \"%s\"\n"
 
 #: helper/message-cmdline.c:384
 msgid "Bookmark not found in file"
@@ -3877,16 +3875,16 @@ msgstr ""
 #: helper/message-cmdline.c:1185 helper/message-cmdline.c:1202
 #, c-format
 msgid "Can't open file \"%s\"\n"
-msgstr ""
+msgstr "无法打开文件 \"%s\"\n"
 
 #: helper/message-cmdline.c:1251
 #, c-format
 msgid "Unknown parameter (\"%c\")\n"
-msgstr ""
+msgstr "未知参数 (\"%c\")\n"
 
 #: helper/message-cmdline.c:1256
 msgid "Last parameter wasn't text"
-msgstr ""
+msgstr "最后一个参数不是文本"
 
 #: helper/message-cmdline.c:1290
 #, c-format
@@ -3951,7 +3949,7 @@ msgstr "手机或 SIM 卡内存"
 
 #: helper/message-display.c:46
 msgid "Inbox folder"
-msgstr ""
+msgstr "收件箱"
 
 #: helper/message-display.c:112
 msgid "mobile"
@@ -3967,11 +3965,11 @@ msgstr ""
 
 #: helper/message-display.c:145
 msgid "8 bit SMS, cannot be displayed here"
-msgstr ""
+msgstr "8 位短信，无法在此显示"
 
 #: helper/message-display.c:165
 msgid "SMS status report"
-msgstr ""
+msgstr "短信状态报告"
 
 #: helper/message-display.c:169 helper/message-display.c:181
 #: helper/message-display.c:233 helper/message-display.c:248
@@ -4003,27 +4001,27 @@ msgstr ""
 
 #: helper/message-display.c:182 helper/message-display.c:230
 msgid "SMSC number"
-msgstr ""
+msgstr "SMSC 号码"
 
 #: helper/message-display.c:183
 msgid "SMSC response"
-msgstr ""
+msgstr "SMSC 响应"
 
 #: helper/message-display.c:184
 msgid "Delivery status"
-msgstr ""
+msgstr "发送状态"
 
 #: helper/message-display.c:185
 msgid "Details"
-msgstr ""
+msgstr "详细"
 
 #: helper/message-display.c:188 helper/message-display.c:193
 msgid "Temporary error, "
-msgstr ""
+msgstr "临时错误，"
 
 #: helper/message-display.c:190
 msgid "Permanent error, "
-msgstr ""
+msgstr "永久错误，"
 
 #: helper/message-display.c:196
 msgid "SM received by the SME"
@@ -4044,7 +4042,7 @@ msgstr ""
 
 #: helper/message-display.c:200 helper/message-display.c:216
 msgid "SME busy"
-msgstr ""
+msgstr "SME 忙"
 
 #: helper/message-display.c:201 helper/message-display.c:217
 msgid "No response from SME"
@@ -4061,7 +4059,7 @@ msgstr ""
 
 #: helper/message-display.c:204 helper/message-display.c:220
 msgid "Error in SME"
-msgstr ""
+msgstr "SME 错误"
 
 #: helper/message-display.c:205
 msgid "Remote procedure error"
@@ -4106,11 +4104,11 @@ msgstr ""
 
 #: helper/message-display.c:226 helper/message-display.c:243
 msgid "SMS message"
-msgstr ""
+msgstr "短信"
 
 #: helper/message-display.c:228
 msgid "Saved"
-msgstr ""
+msgstr "已保存"
 
 #: helper/message-display.c:231
 msgid " (set for reply)"
@@ -4126,15 +4124,15 @@ msgstr ""
 
 #: helper/message-display.c:257
 msgid "Coding"
-msgstr ""
+msgstr "编码"
 
 #: helper/message-display.c:260
 msgid "Unicode (no compression)"
-msgstr ""
+msgstr "Unicode (无压缩)"
 
 #: helper/message-display.c:263
 msgid "Unicode (compression)"
-msgstr ""
+msgstr "Unicode (压缩)"
 
 #: helper/message-display.c:266
 msgid "Default GSM alphabet (no compression)"
@@ -4147,11 +4145,11 @@ msgstr ""
 #. l10n: 8-bit message coding
 #: helper/message-display.c:273
 msgid "8-bit"
-msgstr ""
+msgstr "8 位"
 
 #: helper/message-display.c:296
 msgid "User Data Header"
-msgstr ""
+msgstr "用户数据头"
 
 #: helper/message-display.c:298 helper/message-display.c:299
 msgid "Concatenated (linked) message"
@@ -4195,7 +4193,7 @@ msgstr ""
 
 #: helper/message-display.c:309
 msgid "Nokia WAP bookmark or WAP/MMS settings"
-msgstr ""
+msgstr "诺基亚 WAP 书签或 WAP/彩信 设置"
 
 #: helper/message-display.c:310 helper/message-display.c:311
 msgid "Nokia ringtone"
@@ -4219,11 +4217,11 @@ msgstr ""
 
 #: helper/message-display.c:316
 msgid "Nokia phonebook entry"
-msgstr ""
+msgstr "诺基亚联系人记录"
 
 #: helper/message-display.c:317
 msgid "User UDH"
-msgstr ""
+msgstr "用户 UDH"
 
 #: helper/message-display.c:318
 msgid "MMS indicator"
@@ -4269,7 +4267,7 @@ msgstr ""
 
 #: helper/message-display.c:401
 msgid " - VCARD"
-msgstr ""
+msgstr " - VCARD"
 
 #: helper/message-display.c:415
 #, c-format
@@ -4295,11 +4293,11 @@ msgstr ""
 
 #: helper/message-display.c:470
 msgid "EMS sound ID"
-msgstr ""
+msgstr "EMS 声音编号"
 
 #: helper/message-display.c:473
 msgid "EMS animation ID"
-msgstr ""
+msgstr "EMS 动画编号"
 
 #: helper/message-display.c:479
 msgid "Message size"
@@ -4312,7 +4310,7 @@ msgstr "错误"
 
 #: helper/message-display.c:545
 msgid "Data PDU"
-msgstr ""
+msgstr "数据 PDU"
 
 #: helper/message-display.c:546
 msgid "Number of bits"
@@ -4320,11 +4318,11 @@ msgstr ""
 
 #: helper/message-display.c:548
 msgid "UDH"
-msgstr ""
+msgstr "UDH"
 
 #: helper/message-display.c:564
 msgid "Whole PDU"
-msgstr ""
+msgstr "完全 PDU"
 
 #. l10n: Generic prefix for warning messages
 #: helper/printing.c:34
