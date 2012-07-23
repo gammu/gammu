@@ -424,7 +424,7 @@ static GSM_Error S60_Reply_GetInfo(GSM_Protocol_Message *msg, GSM_StateMachine *
 		strcpy(s->Phone.Data.IMEI, Priv->MessageParts[1]);
 	} else if (strcmp(Priv->MessageParts[0], "model") == 0) {
 		/* Parse manufacturer */
-		pos = strstr(Priv->MessageParts[1], "(C)");
+		pos = strcasestr(Priv->MessageParts[1], "(C)");
 		if (pos != NULL) {
 			strcpy(s->Phone.Data.Manufacturer, pos + 3);
 		}
