@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-06-29 16:15+0200\n"
-"PO-Revision-Date: 2012-07-21 12:02+0200\n"
+"PO-Revision-Date: 2012-07-21 12:03+0200\n"
 "Last-Translator: shanyan baishui <Siramizu@gmail.com>\n"
 "Language-Team: none\n"
 "Language: zh_CN\n"
@@ -118,7 +118,7 @@ msgstr "手机不支持该功能。"
 
 #: libgammu/gsmcomon.c:105
 msgid "Entry is empty."
-msgstr "条目为空"
+msgstr "记录为空。"
 
 #: libgammu/gsmcomon.c:106
 msgid "Security error. Maybe no PIN?"
@@ -146,7 +146,7 @@ msgstr "无法打开文件。"
 
 #: libgammu/gsmcomon.c:112
 msgid "More memory required..."
-msgstr "内存不足"
+msgstr "需要更多内存。。。"
 
 #: libgammu/gsmcomon.c:113
 msgid "Operation not allowed by phone."
@@ -211,7 +211,7 @@ msgstr "手机内存错误，可能是只读的。"
 
 #: libgammu/gsmcomon.c:127
 msgid "Invalid data given to phone."
-msgstr "向手机发送了无效的数据"
+msgstr "向手机发送了无效的数据。"
 
 #: libgammu/gsmcomon.c:128
 msgid "File with specified name already exists."
