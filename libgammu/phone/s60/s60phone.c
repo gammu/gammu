@@ -16,6 +16,7 @@
  */
 
 
+#define _GNU_SOURCE
 #include "../../gsmstate.h"
 #include "../../protocol/s60/s60-ids.h"
 #include "../../gsmcomon.h"
@@ -26,6 +27,8 @@
 #include "../../misc/locales.h"
 #include "../pfunc.h"
 #include <string.h>
+
+#include "../../../helper/string.h"
 
 #if defined(GSM_ENABLE_S60)
 
