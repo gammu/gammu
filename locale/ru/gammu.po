@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: Gammu 1.32.0\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-27 10:47+0200\n"
-"PO-Revision-Date: 2012-04-19 00:24+0200\n"
-"Last-Translator: Andrew Shadura <bugzilla@tut.by>\n"
-"Language-Team: Language =ru\n"
+"PO-Revision-Date: 2012-08-11 16:06+0200\n"
+"Last-Translator: Nikita Putko <ktototam98@inbox.ru>\n"
+"Language-Team: Russian <http://l10n.cihar.com/projects/gammu/gammu/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 0.9\n"
+"X-Generator: Weblate 1.2\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -4137,7 +4137,6 @@ msgid "Work website"
 msgstr "Состояние сети     : "
 
 #: helper/memory-display.c:207
-#, fuzzy
 msgid "Website"
 msgstr "Веб-сайт"
 
