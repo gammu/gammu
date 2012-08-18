@@ -1245,6 +1245,7 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, gboole
 	if (start) {
 		/* Start from beginning */
 		sms->SMS[0].Location = 0;
+		Priv->LastSMSRead = 0;
 
 		/* Get list of messages */
 		error = ATGEN_GetSMSList(s, TRUE);
