@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: Gammu 1.32.0\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-27 10:47+0200\n"
-"PO-Revision-Date: 2012-04-09 11:04+0200\n"
-"Last-Translator: Bartosz Feński <fenio@debian.org>\n"
-"Language-Team: Language =pl\n"
+"PO-Revision-Date: 2012-08-26 23:57+0200\n"
+"Last-Translator: Damian Majchrzak <damiax.m@gmail.com>\n"
+"Language-Team: Polish <http://l10n.cihar.com/projects/gammu/gammu/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 0.8\n"
+"X-Generator: Weblate 1.2\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -32,7 +32,7 @@ msgstr "Nie znaleziono notatki z kalendarza w pliku"
 
 #: gammu/backup.c:86
 msgid "WAP bookmark not found in file"
-msgstr "Nie znaleziono zakładki WAP w pliku"
+msgstr "Nie znaleziono zakładki WAP z pliku"
 
 #: gammu/backup.c:107
 msgid "Note not found in file"
@@ -40,7 +40,7 @@ msgstr "Nie znaleziono notatki w pliku"
 
 #: gammu/backup.c:128
 msgid "Todo note not found in file"
-msgstr "Nie znaleziono notatka \"Do zrobienia\" w pliku"
+msgstr "Nie znaleziono notatki \"Do zrobienia\" w pliku"
 
 #: gammu/backup.c:137 helper/message-cmdline.c:525
 msgid "Where is backup filename and location and memory type?"
@@ -936,16 +936,16 @@ msgstr "Ukończono"
 #: gammu/calendar.c:786 gammu/calendar.c:791 helper/memory-display.c:45
 #: helper/memory-display.c:55 helper/memory-display.c:57
 msgid "Category"
-msgstr ""
+msgstr "Kategoria"
 
 #: gammu/calendar.c:815
 msgid "Contact"
-msgstr ""
+msgstr "Kontakt"
 
 #: gammu/calendar.c:900 gammu/memory.c:316 gammu/memory.c:393
 #, c-format
 msgid "Search text too long, truncating to %d chars!\n"
-msgstr ""
+msgstr "Tekst wyszukiwania jest zbyt długi, Skróć do %d znaków!"
 
 #: gammu/common.c:42
 msgid "Waiting for Security Code."
@@ -977,7 +977,7 @@ msgstr "Oczekiwanie na kod sieci."
 
 #: gammu/common.c:63
 msgid "Nothing to enter."
-msgstr "Nic do wpisania."
+msgstr "Nic nie wpisano."
 
 #: gammu/common.c:67
 msgid "Unknown security status."
@@ -1151,7 +1151,7 @@ msgstr "Niepowodzenie"
 
 #: gammu/depend/nokia/dct4.c:371
 msgid "Not executed"
-msgstr "Nie wykonane"
+msgstr "Nie wykonano"
 
 #: gammu/depend/nokia/dct4.c:372
 msgid "No signal"
@@ -1168,7 +1168,7 @@ msgstr "Nieznany (%x)"
 
 #: gammu/depend/nokia/dct4.c:376
 msgid " (startup)"
-msgstr ""
+msgstr "Uruchamianie"
 
 #: gammu/depend/nokia/dct4.c:497 gammu/depend/nokia/dct4.c:1006
 msgid "Press any key to continue..."
@@ -1199,12 +1199,13 @@ msgid "device address %02x%02x%02x%02x%02x%02x\n"
 msgstr "adres urządzenia %02x%02x%02x%02x%02x%02x\n"
 
 #: gammu/depend/nokia/dct4.c:824
+#, fuzzy
 msgid "Old simlock"
-msgstr ""
+msgstr "Stary simlock"
 
 #: gammu/depend/nokia/dct4.c:845
 msgid "Simlock data"
-msgstr ""
+msgstr "Dane simlocka"
 
 #: gammu/depend/nokia/dct4.c:872
 msgid "Bluetooth"
@@ -1212,7 +1213,7 @@ msgstr "Bluetooth"
 
 #: gammu/depend/nokia/dct4.c:888
 msgid "UEM"
-msgstr ""
+msgstr "UEM"
 
 #: gammu/depend/nokia/dct4.c:961
 #, c-format
@@ -1228,17 +1229,17 @@ msgstr "Co powinienem zrobić (\"%s\")?\n"
 #: gammu/depend/nokia/dct4.c:1020
 #, c-format
 msgid "raw result %10i "
-msgstr ""
+msgstr "Surowy wynik %10i"
 
 #. l10n: Processed data for A/D convertor
 #: gammu/depend/nokia/dct4.c:1024
 #, c-format
 msgid "unit result %10i "
-msgstr ""
+msgstr "Jednostka i wynik %10i "
 
 #: gammu/depend/nokia/dct4.c:1037
 msgid "Battery voltage, divided:"
-msgstr ""
+msgstr "Napięcie akumulatora podzielone:"
 
 #: gammu/depend/nokia/dct4.c:1037 gammu/depend/nokia/dct4.c:1038
 #: gammu/depend/nokia/dct4.c:1039 gammu/depend/nokia/dct4.c:1043
@@ -1246,37 +1247,36 @@ msgstr ""
 #: gammu/depend/nokia/dct4.c:1048 gammu/depend/nokia/dct4.c:1049
 #: gammu/depend/nokia/dct4.c:1050
 msgid "mV"
-msgstr ""
+msgstr "mV"
 
 #: gammu/depend/nokia/dct4.c:1038
 msgid "Battery voltage, scaled:"
-msgstr ""
+msgstr "Napięcie baterii, skalowane:"
 
 #: gammu/depend/nokia/dct4.c:1039
 msgid "Charger voltage:"
-msgstr ""
+msgstr "Napięcie ładowania:"
 
 #: gammu/depend/nokia/dct4.c:1040
-#, fuzzy
 msgid "Charger current:"
-msgstr "Usuń bieżący"
+msgstr "Ładowarka podłączona:"
 
 #: gammu/depend/nokia/dct4.c:1040 gammu/depend/nokia/dct4.c:1051
 #: gammu/depend/nokia/dct4.c:1052
 msgid "mA"
-msgstr ""
+msgstr "mA"
 
 #: gammu/depend/nokia/dct4.c:1041
 msgid "Battery size indicator:"
-msgstr ""
+msgstr "Rozmiar wskaźnika baterii:"
 
 #: gammu/depend/nokia/dct4.c:1041
 msgid "Ohms"
-msgstr ""
+msgstr "Ohms"
 
 #: gammu/depend/nokia/dct4.c:1042
 msgid "Battery temperature:"
-msgstr ""
+msgstr "Temperatura baterii:"
 
 #: gammu/depend/nokia/dct4.c:1042 gammu/depend/nokia/dct4.c:1046
 #: gammu/depend/nokia/dct4.c:1047
@@ -1289,25 +1289,24 @@ msgid "Headset interconnection:"
 msgstr "Wybierz typ połączenia"
 
 #: gammu/depend/nokia/dct4.c:1044
-#, fuzzy
 msgid "Hook interconnection:"
-msgstr "Połączenie z telefonem"
+msgstr "Połączenie z telefonem:"
 
 #: gammu/depend/nokia/dct4.c:1045
 msgid "Light sensor:"
-msgstr ""
+msgstr "Czujnik oświetlenia:"
 
 #: gammu/depend/nokia/dct4.c:1046
 msgid "Power amplifier temperature:"
-msgstr ""
+msgstr "Temperatura wzmacniacza mocy:"
 
 #: gammu/depend/nokia/dct4.c:1047
 msgid "VCXO temperature:"
-msgstr ""
+msgstr "Temperatura VCXO:"
 
 #: gammu/depend/nokia/dct4.c:1048
 msgid "Resistive keyboard 1/headint2:"
-msgstr ""
+msgstr "Odpornościowy przewodów klawiatury 1/headint2:"
 
 #: gammu/depend/nokia/dct4.c:1049
 msgid "Resistive keyboard 1/auxdet:"
