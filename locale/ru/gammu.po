@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Gammu 1.32.0\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-27 10:47+0200\n"
-"PO-Revision-Date: 2012-08-11 16:06+0200\n"
-"Last-Translator: Nikita Putko <ktototam98@inbox.ru>\n"
+"PO-Revision-Date: 2012-08-27 10:53+0200\n"
+"Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Russian <http://l10n.cihar.com/projects/gammu/gammu/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -590,9 +590,8 @@ msgid "Reminder (Date)"
 msgstr "Напоминание (дата)\n"
 
 #: gammu/calendar.c:25
-#, fuzzy
 msgid "Call"
-msgstr "Позвонить\n"
+msgstr "Вызов"
 
 #: gammu/calendar.c:28
 msgid "Meeting"
@@ -619,9 +618,8 @@ msgid "Vacation"
 msgstr "Отпуск\n"
 
 #: gammu/calendar.c:43 gammu/calendar.c:756
-#, fuzzy
 msgid "Alarm"
-msgstr "Будильник\n"
+msgstr "Будильник"
 
 #: gammu/calendar.c:46
 msgid "Shopping"
@@ -733,9 +731,8 @@ msgid "unknown type!"
 msgstr "неизвестно"
 
 #: gammu/calendar.c:156
-#, fuzzy
 msgid "Start"
-msgstr "Стандартный\n"
+msgstr "Начало"
 
 #: gammu/calendar.c:163
 msgid "Stop"
@@ -779,9 +776,8 @@ msgstr ""
 #: gammu/calendar.c:687 gammu/calendar.c:711 gammu/calendar.c:830
 #: gammu/memory.c:141 gammu/message.c:215 gammu/misc.c:1868 gammu/misc.c:1901
 #: gammu/misc.c:2191 gammu/misc.c:2315
-#, fuzzy
 msgid "Location"
-msgstr "Местонахождение %i\n"
+msgstr "Местонахождение"
 
 #: gammu/calendar.c:242 gammu/calendar.c:776 helper/memory-display.c:62
 msgid "Private"
@@ -961,9 +957,8 @@ msgid "Alarm in location %i:\n"
 msgstr "Местонахождение %i\n"
 
 #: gammu/calendar.c:542 gammu/calendar.c:545 gammu/mms.c:95
-#, fuzzy
 msgid "Date"
-msgstr "Дата: %s\n"
+msgstr "Дата"
 
 #: gammu/calendar.c:543
 msgid "Every day"
@@ -1001,9 +996,8 @@ msgid "Entry was deleted"
 msgstr "Запись удалена\n"
 
 #: gammu/calendar.c:713
-#, fuzzy
 msgid "Priority"
-msgstr "Приоритет    : "
+msgstr "Приоритет"
 
 #: gammu/calendar.c:716
 #, fuzzy
@@ -1021,15 +1015,13 @@ msgid "High"
 msgstr "Высокий\n"
 
 #: gammu/calendar.c:725
-#, fuzzy
 msgid "None"
-msgstr "Готово\n"
+msgstr "Не применять"
 
 #: gammu/calendar.c:729 gammu/message.c:111 gammu/misc.c:2122
 #: gammu/misc.c:2165
-#, fuzzy
 msgid "Unknown"
-msgstr "Неизвестно\n"
+msgstr "Неизвестно"
 
 #: gammu/calendar.c:736
 #, fuzzy
@@ -1047,9 +1039,8 @@ msgid "Completed time"
 msgstr "Завершено    : %s\n"
 
 #: gammu/calendar.c:751
-#, fuzzy
 msgid "Completed"
-msgstr "Завершено    : %s\n"
+msgstr "Завершено"
 
 #: gammu/calendar.c:786 gammu/calendar.c:791 helper/memory-display.c:45
 #: helper/memory-display.c:55 helper/memory-display.c:57
@@ -2037,9 +2028,8 @@ msgid ""
 msgstr ""
 
 #: gammu/gammu.c:702
-#, fuzzy
 msgid "Calls"
-msgstr "Позвонить\n"
+msgstr "Вызовы"
 
 #: gammu/gammu.c:703
 msgid "SMS and EMS"
@@ -2334,9 +2324,8 @@ msgstr "Получено SMS\n"
 
 #: gammu/message.c:86 helper/message-display.c:167
 #: helper/message-display.c:287
-#, fuzzy
 msgid "Status"
-msgstr "Стандартный\n"
+msgstr "Состояние"
 
 #: gammu/message.c:90
 msgid "No action needed"
@@ -2369,9 +2358,8 @@ msgid "Invalid SMSC location: %s\n"
 msgstr ""
 
 #: gammu/message.c:220 gammu/misc.c:2207 gammu/misc.c:2486
-#, fuzzy
 msgid "Number"
-msgstr "ноября"
+msgstr "Номер"
 
 #: gammu/message.c:221
 #, fuzzy
@@ -2755,18 +2743,16 @@ msgid "Device"
 msgstr "Устройство"
 
 #: gammu/misc.c:383 gammu/search.c:89
-#, fuzzy
 msgid "Manufacturer"
-msgstr "Производитель : %s\n"
+msgstr "Производитель"
 
 #: gammu/misc.c:386 gammu/search.c:101
 msgid "Model"
 msgstr "Модель"
 
 #: gammu/misc.c:392
-#, fuzzy
 msgid "Firmware"
-msgstr "Прошивка      : %s"
+msgstr "Прошивка"
 
 # Не слишком жаргонно?
 #: gammu/misc.c:404
@@ -2774,9 +2760,8 @@ msgid "Hardware"
 msgstr "Оборудование"
 
 #: gammu/misc.c:415
-#, fuzzy
 msgid "Original IMEI"
-msgstr "Исходный IMEI : %s\n"
+msgstr "Оригинальный IMEI"
 
 #: gammu/misc.c:422
 #, fuzzy
@@ -2784,9 +2769,8 @@ msgid "Manufactured"
 msgstr "Произведён    : %s\n"
 
 #: gammu/misc.c:428
-#, fuzzy
 msgid "Product code"
-msgstr "Код продукта  : %s\n"
+msgstr "Код продукта"
 
 #: gammu/misc.c:438
 msgid "SIM IMSI"
@@ -2896,9 +2880,8 @@ msgid "Todos"
 msgstr "Список дел"
 
 #: gammu/misc.c:644
-#, fuzzy
 msgid "Calendar"
-msgstr "Nokia: заметка в календаре"
+msgstr "Календарь"
 
 #: gammu/misc.c:653
 #, fuzzy
@@ -3136,9 +3119,8 @@ msgid "Delete all phone FM radio stations?"
 msgstr "Проверяются FM-радиостанции телефона\n"
 
 #: gammu/misc.c:1519 gammu/misc.c:1521
-#, fuzzy
 msgid "Connection type"
-msgstr "Название соединения : %s\n"
+msgstr "Тип подключения"
 
 #: gammu/misc.c:1519
 #, fuzzy
@@ -3224,9 +3206,8 @@ msgid "Manual"
 msgstr "января"
 
 #: gammu/misc.c:1551 gammu/misc.c:1597
-#, fuzzy
 msgid "Automatic"
-msgstr "Автоматический ответ  : "
+msgstr "Автоматический"
 
 #: gammu/misc.c:1554 gammu/misc.c:1556 gammu/misc.c:1600 gammu/misc.c:1602
 #, fuzzy
