@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: libGammu 1.32.0\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-08-27 11:26+0200\n"
-"PO-Revision-Date: 2012-03-29 17:17+0200\n"
+"PO-Revision-Date: 2012-08-27 11:39+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
-"Language-Team: Language =pl\n"
+"Language-Team: Polish <http://l10n.cihar.com/projects/gammu/libgammu/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 0.8\n"
+"X-Generator: Weblate 1.2\n"
 
 #: libgammu/gsmcomon.c:84
 #, fuzzy
@@ -65,7 +65,7 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:92
 msgid "Error setting device DTR or RTS."
-msgstr "Błąd podczas ustawiania linii DTR lub RTS"
+msgstr "Błąd podczas ustawiania linii DTR lub RTS."
 
 #: libgammu/gsmcomon.c:93
 msgid "Error setting device speed. Maybe speed not supported."
@@ -245,7 +245,7 @@ msgstr "Bieżący typ połączenia nie wspiera wywołanej funkcji."
 
 #: libgammu/gsmcomon.c:124
 msgid "CRC error."
-msgstr "Błąd CRC"
+msgstr "Błąd CRC."
 
 #: libgammu/gsmcomon.c:125
 msgid "Invalid date or time specified."
@@ -278,7 +278,7 @@ msgstr "Musisz podać nazwę pliku, a nie katalogu."
 
 #: libgammu/gsmcomon.c:132
 msgid "Can not access SIM card."
-msgstr "Brak dostępu do karty SIM"
+msgstr "Brak dostępu do karty SIM."
 
 #: libgammu/gsmcomon.c:133
 msgid "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
