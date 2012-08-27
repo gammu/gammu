@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.28.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2012-06-29 16:15+0200\n"
+"POT-Creation-Date: 2012-08-27 11:26+0200\n"
 "PO-Revision-Date: 2012-07-02 14:39+0200\n"
 "Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
 "Language-Team: none\n"
@@ -1485,7 +1485,7 @@ msgstr ""
 
 #: gammu-detect/main.c:56
 msgid "Show version information and compiled in features."
-msgstr ""
+msgstr "Telefon bilgisi"
 
 #: gammu-detect/main.c:58
 msgid "Disables scanning of udev."

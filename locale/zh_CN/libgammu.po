@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wammu 0.37\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2012-06-29 16:15+0200\n"
+"POT-Creation-Date: 2012-08-27 11:26+0200\n"
 "PO-Revision-Date: 2012-07-24 01:22+0800\n"
 "Last-Translator: shanyan baishui <Siramizu@gmail.com>\n"
 "Language-Team: none\n"
@@ -372,7 +372,7 @@ msgid "SIM"
 msgstr "SIM卡"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:579 libgammu/phone/pfunc.c:41
-#: libgammu/phone/s60/s60phone.c:1770
+#: libgammu/phone/s60/s60phone.c:1773
 msgid "Inbox"
 msgstr "收件箱"
 
@@ -416,7 +416,7 @@ msgstr "户外"
 msgid "Pager"
 msgstr "传呼机"
 
-#: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1771
+#: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1774
 msgid "Outbox"
 msgstr "发件箱"
 
