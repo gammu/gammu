@@ -8,25 +8,25 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-08-27 11:26+0200\n"
-"PO-Revision-Date: 2012-03-29 17:18+0200\n"
+"PO-Revision-Date: 2012-08-27 11:39+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
-"Language-Team: none\n"
+"Language-Team: French <http://l10n.cihar.com/projects/gammu/libgammu/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Weblate 0.8\n"
+"X-Generator: Weblate 1.2\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
-msgstr "Aucune erreur"
+msgstr "Aucune erreur."
 
 #: libgammu/gsmcomon.c:85
 msgid "Error opening device. Unknown, busy or no permissions."
 msgstr ""
 "Erreur à l'ouverture du périphérique : périphérique inconnu, occupé ou "
-"problème de permissions"
+"problème de permissions."
 
 #: libgammu/gsmcomon.c:86
 msgid "Error opening device, it is locked."
@@ -60,7 +60,7 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:92
 msgid "Error setting device DTR or RTS."
-msgstr "Erreur lors de la mise en place sur le périphérique de DTR ou de RTS"
+msgstr "Erreur lors de la mise en place sur le périphérique de DTR ou de RTS."
 
 #: libgammu/gsmcomon.c:93
 msgid "Error setting device speed. Maybe speed not supported."
