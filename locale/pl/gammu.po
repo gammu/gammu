@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Gammu 1.32.0\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-27 10:47+0200\n"
-"PO-Revision-Date: 2012-08-26 23:57+0200\n"
-"Last-Translator: Damian Majchrzak <damiax.m@gmail.com>\n"
+"PO-Revision-Date: 2012-08-27 10:53+0200\n"
+"Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Polish <http://l10n.cihar.com/projects/gammu/gammu/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
@@ -54,7 +54,7 @@ msgstr "Nie znaleziono wpisu książki telefonicznej w pliku"
 #: gammu/backup.c:167 helper/message-cmdline.c:552
 #, c-format
 msgid "Unknown memory type: \"%s\"\n"
-msgstr "BŁĄD: nieznany typ pamięci (\"%s\")\n"
+msgstr "Nieznany typ pamięci: \"%s\"\n"
 
 #: gammu/backup.c:181
 #, c-format
@@ -555,7 +555,7 @@ msgstr "Alarm"
 
 #: gammu/calendar.c:46
 msgid "Shopping"
-msgstr ""
+msgstr "Zakupy"
 
 #: gammu/calendar.c:49
 msgid "Daily alarm"
@@ -945,7 +945,7 @@ msgstr "Kontakt"
 #: gammu/calendar.c:900 gammu/memory.c:316 gammu/memory.c:393
 #, c-format
 msgid "Search text too long, truncating to %d chars!\n"
-msgstr "Tekst wyszukiwania jest zbyt długi, Skróć do %d znaków!"
+msgstr "Tekst wyszukiwania jest zbyt długi, skróć do %d znaków!\n"
 
 #: gammu/common.c:42
 msgid "Waiting for Security Code."
@@ -1229,7 +1229,7 @@ msgstr "Co powinienem zrobić (\"%s\")?\n"
 #: gammu/depend/nokia/dct4.c:1020
 #, c-format
 msgid "raw result %10i "
-msgstr "Surowy wynik %10i"
+msgstr "Surowy wynik %10i "
 
 #. l10n: Processed data for A/D convertor
 #: gammu/depend/nokia/dct4.c:1024
@@ -2152,9 +2152,8 @@ msgid "Invalid SMSC location: %s\n"
 msgstr ""
 
 #: gammu/message.c:220 gammu/misc.c:2207 gammu/misc.c:2486
-#, fuzzy
 msgid "Number"
-msgstr "   Numer      : %s\n"
+msgstr "Numer"
 
 #: gammu/message.c:221
 msgid "Default number"
@@ -2514,9 +2513,8 @@ msgid "Device"
 msgstr "Urządzenie"
 
 #: gammu/misc.c:383 gammu/search.c:89
-#, fuzzy
 msgid "Manufacturer"
-msgstr "   Producent     : %s\n"
+msgstr "Producent"
 
 #: gammu/misc.c:386 gammu/search.c:101
 msgid "Model"
@@ -2855,9 +2853,8 @@ msgid "Delete all phone FM radio stations?"
 msgstr ""
 
 #: gammu/misc.c:1519 gammu/misc.c:1521
-#, fuzzy
 msgid "Connection type"
-msgstr "   Numer      : %s\n"
+msgstr "Typ połączenia"
 
 #: gammu/misc.c:1519
 msgid "Continuous"
@@ -2935,9 +2932,8 @@ msgid "Manual"
 msgstr "Styczeń"
 
 #: gammu/misc.c:1551 gammu/misc.c:1597
-#, fuzzy
 msgid "Automatic"
-msgstr "Skrzynka nadawcza"
+msgstr "Automatycznie"
 
 #: gammu/misc.c:1554 gammu/misc.c:1556 gammu/misc.c:1600 gammu/misc.c:1602
 msgid "Authentication type"
@@ -4107,14 +4103,12 @@ msgstr ""
 #: helper/message-display.c:169 helper/message-display.c:181
 #: helper/message-display.c:233 helper/message-display.c:248
 #: helper/message-display.c:289
-#, fuzzy
 msgid "Sent"
-msgstr "Milczy"
+msgstr "Wysłane"
 
 #: helper/message-display.c:170 helper/message-display.c:290
-#, fuzzy
 msgid "Read"
-msgstr "  Usuwam %s\n"
+msgstr "Przeczytane"
 
 #: helper/message-display.c:171 helper/message-display.c:291
 #, fuzzy
