@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: Gammu 1.32.0\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-27 10:47+0200\n"
-"PO-Revision-Date: 2012-05-17 15:14+0200\n"
+"PO-Revision-Date: 2012-08-27 10:53+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
-"Language-Team: Language =it\n"
+"Language-Team: Italian <http://l10n.cihar.com/projects/gammu/gammu/it/>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Weblate 1.0\n"
+"X-Generator: Weblate 1.2\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -604,14 +604,12 @@ msgid "Reminder (Date)"
 msgstr "Promemoria (Appuntamento)\n"
 
 #: gammu/calendar.c:25
-#, fuzzy
 msgid "Call"
-msgstr "Chiamata\n"
+msgstr "Chiama"
 
 #: gammu/calendar.c:28
-#, fuzzy
 msgid "Meeting"
-msgstr "Cancellazione delle vecchie stazioni FM: "
+msgstr "Riunione"
 
 #: gammu/calendar.c:31
 #, fuzzy
@@ -634,9 +632,8 @@ msgid "Vacation"
 msgstr "Vacanza\n"
 
 #: gammu/calendar.c:43 gammu/calendar.c:756
-#, fuzzy
 msgid "Alarm"
-msgstr "Sveglia\n"
+msgstr "Sveglia"
 
 #: gammu/calendar.c:46
 msgid "Shopping"
@@ -729,9 +726,8 @@ msgid "unknown type!"
 msgstr "sconosciuto"
 
 #: gammu/calendar.c:156
-#, fuzzy
 msgid "Start"
-msgstr "Normale\n"
+msgstr "Avvio"
 
 #: gammu/calendar.c:163
 msgid "Stop"
@@ -775,9 +771,8 @@ msgstr ""
 #: gammu/calendar.c:687 gammu/calendar.c:711 gammu/calendar.c:830
 #: gammu/memory.c:141 gammu/message.c:215 gammu/misc.c:1868 gammu/misc.c:1901
 #: gammu/misc.c:2191 gammu/misc.c:2315
-#, fuzzy
 msgid "Location"
-msgstr "Locazione %i\n"
+msgstr "Posizione"
 
 #: gammu/calendar.c:242 gammu/calendar.c:776 helper/memory-display.c:62
 msgid "Private"
@@ -954,9 +949,8 @@ msgid "Alarm in location %i:\n"
 msgstr "Locazione %i\n"
 
 #: gammu/calendar.c:542 gammu/calendar.c:545 gammu/mms.c:95
-#, fuzzy
 msgid "Date"
-msgstr "Data   : %s\n"
+msgstr "Data"
 
 #: gammu/calendar.c:543
 msgid "Every day"
@@ -994,9 +988,8 @@ msgid "Entry was deleted"
 msgstr "L'elemento è stato cancellato\n"
 
 #: gammu/calendar.c:713
-#, fuzzy
 msgid "Priority"
-msgstr "Priorità     : "
+msgstr "Priorità"
 
 #: gammu/calendar.c:716
 #, fuzzy
@@ -1014,15 +1007,13 @@ msgid "High"
 msgstr "Alta\n"
 
 #: gammu/calendar.c:725
-#, fuzzy
 msgid "None"
-msgstr "Fatto\n"
+msgstr "Nessuno"
 
 #: gammu/calendar.c:729 gammu/message.c:111 gammu/misc.c:2122
 #: gammu/misc.c:2165
-#, fuzzy
 msgid "Unknown"
-msgstr "Sconosciuto\n"
+msgstr "Sconosciuto"
 
 #: gammu/calendar.c:736
 #, fuzzy
@@ -1040,9 +1031,8 @@ msgid "Completed time"
 msgstr "Completato   : %s\n"
 
 #: gammu/calendar.c:751
-#, fuzzy
 msgid "Completed"
-msgstr "Completato   : %s\n"
+msgstr "Completato"
 
 #: gammu/calendar.c:786 gammu/calendar.c:791 helper/memory-display.c:45
 #: helper/memory-display.c:55 helper/memory-display.c:57
@@ -2018,9 +2008,8 @@ msgid ""
 msgstr ""
 
 #: gammu/gammu.c:702
-#, fuzzy
 msgid "Calls"
-msgstr "Chiamata\n"
+msgstr "Chiamate"
 
 #: gammu/gammu.c:703
 msgid "SMS and EMS"
@@ -2307,9 +2296,8 @@ msgstr "SMS ricevuto\n"
 
 #: gammu/message.c:86 helper/message-display.c:167
 #: helper/message-display.c:287
-#, fuzzy
 msgid "Status"
-msgstr "Normale\n"
+msgstr "Stato"
 
 #: gammu/message.c:90
 msgid "No action needed"
@@ -2342,9 +2330,8 @@ msgid "Invalid SMSC location: %s\n"
 msgstr ""
 
 #: gammu/message.c:220 gammu/misc.c:2207 gammu/misc.c:2486
-#, fuzzy
 msgid "Number"
-msgstr "Novembre"
+msgstr "Numero"
 
 #: gammu/message.c:221
 #, fuzzy
@@ -2729,27 +2716,24 @@ msgid "Device"
 msgstr "Periferica"
 
 #: gammu/misc.c:383 gammu/search.c:89
-#, fuzzy
 msgid "Manufacturer"
-msgstr "Produttore         : %s\n"
+msgstr "Produttore"
 
 #: gammu/misc.c:386 gammu/search.c:101
 msgid "Model"
 msgstr "Modello"
 
 #: gammu/misc.c:392
-#, fuzzy
 msgid "Firmware"
-msgstr "Firmware           : %s"
+msgstr "Firmware"
 
 #: gammu/misc.c:404
 msgid "Hardware"
 msgstr "Hardware"
 
 #: gammu/misc.c:415
-#, fuzzy
 msgid "Original IMEI"
-msgstr "IMEI Originale     : %s\n"
+msgstr "IMEI originale"
 
 #: gammu/misc.c:422
 #, fuzzy
@@ -2757,9 +2741,8 @@ msgid "Manufactured"
 msgstr "Data di produzione : %s\n"
 
 #: gammu/misc.c:428
-#, fuzzy
 msgid "Product code"
-msgstr "Codice prodotto    : %s\n"
+msgstr "Codice prodotto"
 
 #: gammu/misc.c:438
 msgid "SIM IMSI"
@@ -2867,9 +2850,8 @@ msgid "Todos"
 msgstr "Promemoria"
 
 #: gammu/misc.c:644
-#, fuzzy
 msgid "Calendar"
-msgstr "Gruppo chiamante : \"%s\"\n"
+msgstr "Calendario"
 
 #: gammu/misc.c:653
 #, fuzzy
@@ -3107,9 +3089,8 @@ msgid "Delete all phone FM radio stations?"
 msgstr "Controllo i profili del telefono\n"
 
 #: gammu/misc.c:1519 gammu/misc.c:1521
-#, fuzzy
 msgid "Connection type"
-msgstr "Sicurezza              : On\n"
+msgstr "Tipo di connessione"
 
 #: gammu/misc.c:1519
 #, fuzzy
@@ -3194,9 +3175,8 @@ msgid "Manual"
 msgstr "Gennaio"
 
 #: gammu/misc.c:1551 gammu/misc.c:1597
-#, fuzzy
 msgid "Automatic"
-msgstr "Risposta automatica   : "
+msgstr "Automatico"
 
 #: gammu/misc.c:1554 gammu/misc.c:1556 gammu/misc.c:1600 gammu/misc.c:1602
 #, fuzzy
@@ -3530,9 +3510,8 @@ msgid "Special"
 msgstr "Speciale\n"
 
 #: gammu/misc.c:2152
-#, fuzzy
 msgid "Personal"
-msgstr "Personale\n"
+msgstr "Personale"
 
 #: gammu/misc.c:2157
 #, fuzzy
