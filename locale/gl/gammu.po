@@ -8,13 +8,15 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-27 10:47+0200\n"
-"PO-Revision-Date: 2009-01-27 14:28+0100\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"Language: \n"
+"PO-Revision-Date: 2012-08-27 11:41+0200\n"
+"Last-Translator: Michal Čihař <michal@cihar.com>\n"
+"Language-Team: Galician <http://l10n.cihar.com/projects/gammu/gammu/gl/>\n"
+"Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Weblate 1.2\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -1953,7 +1955,7 @@ msgstr ""
 # type: Plain text
 #: gammu/gammu.c:756
 msgid "Commands can be specified with or without leading --."
-msgstr "Os comandos ou instruccións especifícanse con ou sen poñer --"
+msgstr "Os comandos ou instruccións especifícanse con ou sen poñer --."
 
 #: gammu/gammu.c:759
 msgid ""
