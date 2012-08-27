@@ -1983,7 +1983,7 @@ msgstr "Więcej parametrów wymaganych (funkcja wymaga %d)\n"
 #: gammu/gammu.c:955
 #, c-format
 msgid "More parameters required (function requires %d to %d)\n"
-msgstr "Więcej parametrów wymaganych (funkcja wymaga %d z % d)"
+msgstr "Więcej parametrów wymaganych (funkcja wymaga %d z % d)\n"
 
 #: gammu/gammu.c:961 gammu/gammu.c:982
 msgid "Parameters help"
@@ -2033,7 +2033,7 @@ msgstr ""
 #, c-format
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
-msgstr "Wersja zainstalowanego libGammu.so (% a) jest różna od wersji Gammu (%s)\n"
+msgstr "Wersja zainstalowanego libGammu.so (%s) jest różna od wersji Gammu (%s)\n"
 
 #: gammu/memory.c:80
 msgid ""

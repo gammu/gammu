@@ -705,8 +705,7 @@ msgstr "重复"
 #, c-format
 msgid "for %d time "
 msgid_plural "for %d times "
-msgstr[0] "%d 次 "
-msgstr[1] ""
+msgstr[0] "%d 次"
 
 #: gammu/calendar.c:317
 msgid "forever"
@@ -3522,42 +3521,36 @@ msgstr ""
 msgid "%d second"
 msgid_plural "%d seconds"
 msgstr[0] "%d 秒"
-msgstr[1] ""
 
 #: helper/formats.h:3
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d 分"
-msgstr[1] ""
 
 #: helper/formats.h:4
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d 时"
-msgstr[1] ""
 
 #: helper/formats.h:5
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] "%d 天"
-msgstr[1] ""
 
 #: helper/formats.h:6
 #, c-format
 msgid "%d week"
 msgid_plural "%d weeks"
 msgstr[0] "%d 周"
-msgstr[1] ""
 
 #: helper/formats.h:7
 #, c-format
 msgid "%d year"
 msgid_plural "%d years"
 msgstr[0] "%d 年"
-msgstr[1] ""
 
 #: helper/memory-display.c:30
 msgid "Call length"
