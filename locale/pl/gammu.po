@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Gammu 1.32.0\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-27 10:47+0200\n"
-"PO-Revision-Date: 2012-08-27 11:30+0200\n"
-"Last-Translator: Michal Čihař <michal@cihar.com>\n"
+"PO-Revision-Date: 2012-08-27 12:58+0200\n"
+"Last-Translator: Damian Majchrzak <damiax.m@gmail.com>\n"
 "Language-Team: Polish <http://l10n.cihar.com/projects/gammu/gammu/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
@@ -917,9 +917,8 @@ msgid "Unknown"
 msgstr "Nieznany"
 
 #: gammu/calendar.c:736
-#, fuzzy
 msgid "Due time"
-msgstr "   Numer      : %s\n"
+msgstr "Czas realizacji"
 
 #: gammu/calendar.c:741
 msgid "Start time"
@@ -1133,12 +1132,11 @@ msgid "Setting done"
 msgstr "Ustawienia gotowe"
 
 #: gammu/depend/nokia/dct4.c:303
-#, fuzzy
 msgid ""
 "Sorry, but configuration matrix for this model has not yet been added. See "
 "<http://wammu.eu/support/bugs/> for information how to report it."
 msgstr ""
-"Telefon wysłał nieznany sygnał. Zobacz <http://cihar.com/gammu/report> w "
+"Telefon wysłał nieznany sygnał. Zobacz <http://cihar.com/gammu/bugs> w "
 "poszukiwaniu informacji o tym jak to zgłosić."
 
 #: gammu/depend/nokia/dct4.c:369
@@ -1199,7 +1197,6 @@ msgid "device address %02x%02x%02x%02x%02x%02x\n"
 msgstr "adres urządzenia %02x%02x%02x%02x%02x%02x\n"
 
 #: gammu/depend/nokia/dct4.c:824
-#, fuzzy
 msgid "Old simlock"
 msgstr "Stary simlock"
 
@@ -1284,9 +1281,8 @@ msgid "K"
 msgstr "K"
 
 #: gammu/depend/nokia/dct4.c:1043
-#, fuzzy
 msgid "Headset interconnection:"
-msgstr "Wybierz typ połączenia"
+msgstr "Wybierz typ połączenia:"
 
 #: gammu/depend/nokia/dct4.c:1044
 msgid "Hook interconnection:"
@@ -1302,7 +1298,7 @@ msgstr "Temperatura wzmacniacza mocy:"
 
 #: gammu/depend/nokia/dct4.c:1047
 msgid "VCXO temperature:"
-msgstr "Temperatura VCXO:"
+msgstr "Temperatura VCXO :"
 
 #: gammu/depend/nokia/dct4.c:1048
 msgid "Resistive keyboard 1/headint2:"
@@ -1351,7 +1347,6 @@ msgid " (Text: name (always the only one))"
 msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1338
-#, fuzzy
 msgid " (Text: email address)"
 msgstr " (Tekst: adres email)"
 
@@ -1536,9 +1531,8 @@ msgid "Bluez probing"
 msgstr ""
 
 #: gammu-detect/main.c:84
-#, fuzzy
 msgid "Windows serial port probing"
-msgstr "Port telefonu"
+msgstr "Sondowanie przez port szeregowy systemu Windows"
 
 #: gammu-detect/main.c:87
 msgid ""
@@ -1614,14 +1608,14 @@ msgid "Properties:"
 msgstr ""
 
 #: gammu-detect/udev.c:170 gammu-detect/win32-serial.c:44
-#, fuzzy, c-format
+#, c-format
 msgid "Phone on serial port %s"
-msgstr "Port telefonu"
+msgstr "Telefon na porcie szeregowym %s"
 
 #: gammu-detect/udev.c:172
-#, fuzzy, c-format
+#, c-format
 msgid "Phone on USB serial port %s %s"
-msgstr "Port telefonu"
+msgstr "Port telefonu USB %s %s"
 
 #: gammu/files.c:48
 msgid "Phone memory"
@@ -1693,9 +1687,9 @@ msgid "Part of folder only"
 msgstr ""
 
 #: gammu/files.c:371
-#, fuzzy, c-format
+#, c-format
 msgid "Getting \"%s\"\n"
-msgstr "Dodaję \"%s\""
+msgstr "Uzyskiwanie \"%s\"\n"
 
 #: gammu/files.c:379
 msgid "Is a folder. Please give only file names."
@@ -1723,9 +1717,9 @@ msgid "%lu Bytes in %li seconds, %lu Bytes/sec"
 msgstr ""
 
 #: gammu/files.c:452
-#, fuzzy, c-format
+#, c-format
 msgid "  Saving to %s\n"
-msgstr "  Usuwam %s\n"
+msgstr "  Zapisywanie do %s\n"
 
 #: gammu/files.c:702 gammu/nokia.c:946
 #, c-format
@@ -1773,11 +1767,9 @@ msgid "Name"
 msgstr "Nazwa"
 
 #: gammu/gammu.c:91
-#, fuzzy, c-format
+#, c-format
 msgid "[Gammu version %s built %s on %s using %s]"
-msgstr ""
-"[Wersja Gammu %s zbudowana %s %s]\n"
-"\n"
+msgstr "[Wersja Gammu %s zbudowana %s %s za pomocą % s]"
 
 #: gammu/gammu.c:102
 msgid "Protocols"
@@ -1792,25 +1784,24 @@ msgid "Miscellaneous"
 msgstr ""
 
 #: gammu/gammu.c:296
-#, fuzzy, c-format
+#, c-format
 msgid "There is newer stable Gammu version available! (%s instead of %s)\n"
 msgstr "INFO: nowa wersja stabilna Gammu (%s zamiast %s) jest osiągalna !\n"
 
 #: gammu/gammu.c:314
-#, fuzzy, c-format
+#, c-format
 msgid "There is newer testing Gammu version available! (%s instead of %s)\n"
 msgstr "INFO: nowa wersja testowa Gammu (%s zamiast %s) jest osiągalna !\n"
 
 #: gammu/gammu.c:327
-#, fuzzy
 msgid ""
 "Copyright (C) 2003 - 2012 Michal Cihar <michal@cihar.com> and other authors."
-msgstr "Copyright \\(co 2003 - 2008 Michal Cihar E<lt>I<michal@cihar.com>E<gt>"
+msgstr ""
+"Copyright (C) 2003 - 2008 Michal Cihar <michal@cihar.com> oraz inni autorzy."
 
 #: gammu/gammu.c:365
-#, fuzzy
 msgid "standard input"
-msgstr "   Numer      : %s\n"
+msgstr "wejście standardowe"
 
 #: gammu/gammu.c:376
 #, c-format
@@ -1935,11 +1926,8 @@ msgid "Gammu information"
 msgstr ""
 
 #: gammu/gammu.c:749
-#, fuzzy
 msgid "Usage: gammu [parameters] <command> [options]"
-msgstr ""
-"Użycie: gammu [confign] [nothing|text|textall|binary|errors] [options]\n"
-"\n"
+msgstr "Sposób użycia: gammu [parametr] <komenda> [opcje]"
 
 # type: Plain text
 #: gammu/gammu.c:750
@@ -1969,78 +1957,67 @@ msgid "Commands can be specified with or without leading --."
 msgstr ""
 
 #: gammu/gammu.c:759
-#, fuzzy
 msgid ""
 "For more details, call help on specific topic (gammu --help topic). Topics "
 "are:"
 msgstr ""
-"By uzyskać więcej informacji przeczytaj pomoc na określony temat (gammu --"
-"help temat). Tematy:\n"
-"\n"
+"Aby uzyskać więcej informacji, dotyczących  pomocy na określony temat wpisz "
+"(gammu --help temat). Tematy:"
 
 #: gammu/gammu.c:857
-#, fuzzy
 msgid "Unknown help topic specified!"
-msgstr "Podano nieznany temat pomocy!\n"
+msgstr "Wpisano nieznany temat pomocy!"
 
 #: gammu/gammu.c:861
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Gammu commands, topic: %s\n"
 "\n"
-msgstr ""
-"Parametry Gammu, temat: %s\n"
-"\n"
+msgstr "Polecenia Gammu, temat:%s\n"
 
 #: gammu/gammu.c:952
-#, fuzzy, c-format
+#, c-format
 msgid "More parameters required (function requires %d)\n"
-msgstr "Za mało parametrów!\n"
+msgstr "Więcej parametrów wymaganych (funkcja wymaga %d)\n"
 
 #: gammu/gammu.c:955
-#, fuzzy, c-format
+#, c-format
 msgid "More parameters required (function requires %d to %d)\n"
-msgstr "Za mało parametrów!\n"
+msgstr "Więcej parametrów wymaganych (funkcja wymaga %d z % d)"
 
 #: gammu/gammu.c:961 gammu/gammu.c:982
-#, fuzzy
 msgid "Parameters help"
-msgstr ""
-"Parametry Gammu, temat: %s\n"
-"\n"
+msgstr "Parametry pomoc"
 
 #: gammu/gammu.c:973
-#, fuzzy, c-format
+#, c-format
 msgid "Too many parameters (function accepts %d)\n"
-msgstr "Za mało parametrów!\n"
+msgstr "Zbyt wiele parametrów (funkcja akceptuje %d)\n"
 
 #: gammu/gammu.c:976
-#, fuzzy, c-format
+#, c-format
 msgid "Too many parameters (function accepts %d to %d)\n"
-msgstr "Za mało parametrów!\n"
+msgstr "Zbyt wiele parametrów (funkcja akceptuje %d z %d)\n"
 
 #: gammu/gammu.c:1003
 msgid "Bad option!"
 msgstr ""
 
 #: gammu/gammu.c:1084
-#, fuzzy
 msgid "Configuration could not be parsed!"
-msgstr "Ostrzeżenie: Nie znaleziono pliku konfiguracji!\n"
+msgstr "Nie można przeanalizować konfiguracji!"
 
 #: gammu/gammu.c:1086
-#, fuzzy
 msgid "No configuration file found!"
-msgstr "Ostrzeżenie: Nie znaleziono pliku konfiguracji!\n"
+msgstr "Nie znaleziono pliku konfiguracyjnego!"
 
 #: gammu/gammu.c:1106
 msgid "Failed to allocate memory, aborting!\n"
 msgstr ""
 
 #: gammu/gammu.c:1137
-#, fuzzy
 msgid "Too few parameters!"
-msgstr "Za mało parametrów!\n"
+msgstr "Zbyt mało parametrów!"
 
 #: gammu/gammu.c:1150
 #, c-format
@@ -2048,17 +2025,15 @@ msgid "Failed to read [gammu%d] section from configuration file (gammurc)!\n"
 msgstr ""
 
 #: gammu/gammu.c:1152 gammu/gammu.c:1163
-#, fuzzy
 msgid "No configuration read, using builtin defaults!"
-msgstr "Ostrzeżenie: Nie znaleziono pliku konfiguracji!\n"
+msgstr ""
+"Nie odnaleziono żadnej konfiguracji, zostały użyte wbudowane ustawienia !"
 
 #: gammu/gammu.c:1202
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
-msgstr ""
-"BŁĄD: wersja zainstalowanej biblioteki libGammu.so (%s) jest inna niż wersja "
-"Gammu (%s)\n"
+msgstr "Wersja zainstalowanego libGammu.so (% a) jest różna od wersji Gammu (%s)\n"
 
 #: gammu/memory.c:80
 msgid ""
@@ -2221,9 +2196,9 @@ msgid "OK"
 msgstr "OK"
 
 #: gammu/message.c:541
-#, fuzzy, c-format
+#, c-format
 msgid "error %i"
-msgstr "Nie ma błędu."
+msgstr "Błąd: %i"
 
 #: gammu/message.c:544
 #, c-format
@@ -2231,19 +2206,16 @@ msgid ", message reference=%d"
 msgstr ""
 
 #: gammu/message.c:577
-#, fuzzy
 msgid "Message number"
-msgstr "   Numer      : %s\n"
+msgstr "Numer wiadomości"
 
 #: gammu/message.c:582
-#, fuzzy
 msgid "Number of messages"
-msgstr "   Numer      : %s\n"
+msgstr "Liczba wiadomości"
 
 #: gammu/message.c:593 gammu/message.c:633
-#, fuzzy
 msgid "If you want break, press Ctrl+C..."
-msgstr "Jeśli chcesz przerwać, wciśnij Ctrl+C...\n"
+msgstr "Jeśli chcesz zakończyć działanie, naciśnij klawisz Ctrl+C..."
 
 #: gammu/message.c:598
 #, c-format
@@ -2261,7 +2233,7 @@ msgstr "SIM"
 
 #: gammu/message.c:608
 msgid "phone"
-msgstr ""
+msgstr "Telefon"
 
 #: gammu/message.c:612
 #, c-format
@@ -2325,14 +2297,12 @@ msgid "Name in phone"
 msgstr "Nazwa w telefonie"
 
 #: gammu/misc.c:62
-#, fuzzy
 msgid "Packet network state"
-msgstr "Status sieci"
+msgstr "Stan pakietów sieci"
 
 #: gammu/misc.c:75
-#, fuzzy
 msgid "Packet network"
-msgstr "sieć domowa"
+msgstr "Pakiet sieci"
 
 #: gammu/misc.c:90 gammu/misc.c:1591
 msgid "GPRS"
@@ -2444,14 +2414,12 @@ msgid "NiMH"
 msgstr ""
 
 #: gammu/misc.c:261
-#, fuzzy
 msgid "Not logged to network!\n"
-msgstr "nie zalogowany do sieci"
+msgstr "Nie zalogowany do sieci!\n"
 
 #: gammu/misc.c:272
-#, fuzzy
 msgid "Wrong network code from phone!\n"
-msgstr "sieć domowa"
+msgstr "Nieprawidłowy kod sieci z telefonu!\n"
 
 #: gammu/misc.c:300
 msgid "Request for information from OpenCellID failed!\n"
@@ -2494,19 +2462,16 @@ msgid "Latitude"
 msgstr ""
 
 #: gammu/misc.c:356
-#, fuzzy
 msgid "Longitude"
-msgstr "   Numer      : %s\n"
+msgstr "Długość geograficzna"
 
 #: gammu/misc.c:357
-#, fuzzy
 msgid "Range"
-msgstr "Czytam"
+msgstr "Zakres"
 
 #: gammu/misc.c:358
-#, fuzzy
 msgid "Number of samples"
-msgstr "   Numer      : %s\n"
+msgstr "Liczba próbek"
 
 #: gammu/misc.c:379
 msgid "Device"
@@ -2533,9 +2498,8 @@ msgid "Original IMEI"
 msgstr "Orginalny IMEI"
 
 #: gammu/misc.c:422
-#, fuzzy
 msgid "Manufactured"
-msgstr "   Producent     : %s\n"
+msgstr "Producent"
 
 #: gammu/misc.c:428
 msgid "Product code"
@@ -2640,9 +2604,9 @@ msgid "Signal strength"
 msgstr ""
 
 #: gammu/misc.c:654
-#, fuzzy, c-format
+#, c-format
 msgid "%i dBm"
-msgstr "Piątek"
+msgstr "%i dBm"
 
 #: gammu/misc.c:658
 msgid "Network level"
@@ -2657,9 +2621,9 @@ msgid "SIM SMS status"
 msgstr ""
 
 #: gammu/misc.c:672 gammu/misc.c:682
-#, fuzzy, c-format
+#, c-format
 msgid "%i used"
-msgstr "Piątek"
+msgstr "%i użycie"
 
 #: gammu/misc.c:674 gammu/misc.c:684
 #, c-format
@@ -2712,9 +2676,8 @@ msgstr ""
 
 #: gammu/misc.c:976 gammu/misc.c:1023 helper/memory-display.c:178
 #: helper/message-display.c:478
-#, fuzzy
 msgid "Address"
-msgstr "Dodaję \"%s\""
+msgstr "Adres"
 
 #: gammu/misc.c:1018
 #, c-format
@@ -2745,9 +2708,8 @@ msgstr ""
 
 #: gammu/misc.c:1081 gammu/misc.c:1083 gammu/misc.c:1096 gammu/misc.c:1103
 #: helper/memory-display.c:101
-#, fuzzy
 msgid "Ringtone"
-msgstr "Dodaję \"%s\""
+msgstr "Dzwonek"
 
 #: gammu/misc.c:1097
 #, c-format
@@ -2806,9 +2768,9 @@ msgid "What type of logo do you want to set (\"%s\") ?\n"
 msgstr ""
 
 #: gammu/misc.c:1324
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown parameter (\"%s\")"
-msgstr "BŁĄD: nieznany typ pamięci {(}\"%s\")\n"
+msgstr "Nieznany parametr (\"%s\")"
 
 #: gammu/misc.c:1405
 msgid "Delete phone phonebook?"
@@ -2835,14 +2797,12 @@ msgid "Delete phone calendar notes?"
 msgstr ""
 
 #: gammu/misc.c:1438
-#, fuzzy
 msgid "Delete phone todos?"
-msgstr "  Usuwam %s\n"
+msgstr "Usunąć todos telefonu?"
 
 #: gammu/misc.c:1462
-#, fuzzy
 msgid "Delete phone notes?"
-msgstr "  Usuwam %s\n"
+msgstr "Usunąć notatki telefoniczne?"
 
 #: gammu/misc.c:1480
 msgid "Delete phone WAP bookmarks?"
@@ -2865,9 +2825,8 @@ msgid "Temporary"
 msgstr ""
 
 #: gammu/misc.c:1524 gammu/misc.c:1526
-#, fuzzy
 msgid "Connection security"
-msgstr "Nieznany status bezpieczeństwa."
+msgstr "Połączenie zabezpieczone"
 
 #: gammu/misc.c:1524 gammu/misc.c:2156
 msgid "On"
@@ -2899,37 +2858,32 @@ msgid "SMS"
 msgstr ""
 
 #: gammu/misc.c:1539
-#, fuzzy
 msgid "Server number"
-msgstr "   Numer      : %s\n"
+msgstr "Numer serwera"
 
 #: gammu/misc.c:1540 gammu/misc.c:1586 gammu/misc.c:1587
-#, fuzzy
 msgid "Service number"
-msgstr "   Numer      : %s\n"
+msgstr "Numer usługi"
 
 #: gammu/misc.c:1543
 msgid "Data (CSD)"
 msgstr ""
 
 #: gammu/misc.c:1546
-#, fuzzy
 msgid "Dial-up number"
-msgstr "   Numer      : %s\n"
+msgstr "Numer Dial-up"
 
 #: gammu/misc.c:1547 gammu/misc.c:1583 gammu/misc.c:1584 gammu/misc.c:1605
 msgid "IP address"
 msgstr ""
 
 #: gammu/misc.c:1549 gammu/misc.c:1551 gammu/misc.c:1595 gammu/misc.c:1597
-#, fuzzy
 msgid "Login type"
-msgstr "   Numer      : %s\n"
+msgstr "Typ logowania"
 
 #: gammu/misc.c:1549 gammu/misc.c:1595
-#, fuzzy
 msgid "Manual"
-msgstr "Styczeń"
+msgstr "Ręcznie"
 
 #: gammu/misc.c:1551 gammu/misc.c:1597
 msgid "Automatic"
@@ -2964,9 +2918,8 @@ msgid "Data call speed"
 msgstr ""
 
 #: gammu/misc.c:1571 gammu/misc.c:2158
-#, fuzzy
 msgid "Auto"
-msgstr "Skrzynka nadawcza"
+msgstr "Automatycznie"
 
 #: gammu/misc.c:1574 gammu/misc.c:1606
 msgid "User name"
@@ -2985,9 +2938,8 @@ msgid "Service code"
 msgstr ""
 
 #: gammu/misc.c:1583 gammu/misc.c:1586
-#, fuzzy
 msgid "Address type"
-msgstr "Dodaję \"%s\""
+msgstr "Typ adresu"
 
 #: gammu/misc.c:1604
 msgid "Access point"
@@ -3013,7 +2965,7 @@ msgstr ""
 
 #: gammu/misc.c:1637
 msgid "Server"
-msgstr ""
+msgstr "Serwer"
 
 #: gammu/misc.c:1638
 msgid "Sync. phonebook"
@@ -3028,18 +2980,16 @@ msgid "Connection set name"
 msgstr ""
 
 #: gammu/misc.c:1682 gammu/misc.c:1732
-#, fuzzy
 msgid "Homepage"
-msgstr "Strona domowa\n"
+msgstr "Strona domowa"
 
 #: gammu/misc.c:1726
 msgid "active"
 msgstr ""
 
 #: gammu/misc.c:1730
-#, fuzzy
 msgid "Read only"
-msgstr "  Usuwam %s\n"
+msgstr "Tylko do odczytu"
 
 #: gammu/misc.c:1755
 msgid "Startup logo"
@@ -3123,9 +3073,8 @@ msgid " (Car kit profile)"
 msgstr ""
 
 #: gammu/misc.c:2072 helper/memory-display.c:106
-#, fuzzy
 msgid "Ringtone ID"
-msgstr "Dodaję \"%s\""
+msgstr "Identyfikator dzwonka"
 
 #: gammu/misc.c:2074
 msgid "Message alert tone ID"
@@ -3136,18 +3085,16 @@ msgid "Call alert for"
 msgstr ""
 
 #: gammu/misc.c:2108
-#, fuzzy
 msgid "Screen saver number"
-msgstr "   Numer      : %s\n"
+msgstr "Numer wygaszacza ekranu"
 
 #: gammu/misc.c:2111
 msgid "Incoming call alert"
 msgstr ""
 
 #: gammu/misc.c:2112
-#, fuzzy
 msgid "Ringtone volume"
-msgstr "Dodaję \"%s\""
+msgstr "Głośność dzwonka"
 
 #: gammu/misc.c:2113
 msgid "Vibrating alert"
@@ -3210,9 +3157,8 @@ msgid "Beep once"
 msgstr ""
 
 #: gammu/misc.c:2146
-#, fuzzy
 msgid "Ring once"
-msgstr "Dodaję \"%s\""
+msgstr "Dzwonek"
 
 #: gammu/misc.c:2147 gammu/misc.c:2151
 msgid "Ascending"
@@ -3276,33 +3222,31 @@ msgid "Keypad locked"
 msgstr ""
 
 #: gammu/misc.c:2283
-#, fuzzy
 msgid "SMS memory full"
-msgstr "Pamięć pełna."
+msgstr "Pełna pamięć SMS"
 
 #: gammu/misc.c:2321
-#, fuzzy
 msgid "Station name"
-msgstr "   Numer      : %s\n"
+msgstr "Nazwa stacji"
 
 #: gammu/misc.c:2322
 msgid "Frequency"
 msgstr ""
 
 #: gammu/misc.c:2344
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown divert action (\"%s\")\n"
-msgstr "BŁĄD: nieznany typ pamięci {(}\"%s\")\n"
+msgstr "Nieznana akcja (\"%s\")\n"
 
 #: gammu/misc.c:2357
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown divert type (\"%s\")\n"
-msgstr "BŁĄD: nieznany typ pamięci {(}\"%s\")\n"
+msgstr "Nieznany typ przekierowania (\"%s\")\n"
 
 #: gammu/misc.c:2370
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown call type (\"%s\")\n"
-msgstr "BŁĄD: nieznany typ pamięci {(}\"%s\")\n"
+msgstr "Nieznany typ połączenia (\"%s\")\n"
 
 #: gammu/misc.c:2379
 msgid "Query:"
@@ -3313,9 +3257,8 @@ msgid "Changed:"
 msgstr ""
 
 #: gammu/misc.c:2398 gammu/misc.c:2445
-#, fuzzy
 msgid "Divert type"
-msgstr "   Numer      : %s\n"
+msgstr "Typ przekierowania"
 
 #: gammu/misc.c:2402 gammu/misc.c:2449
 msgid "when busy"
@@ -3339,9 +3282,8 @@ msgid "unknown %i"
 msgstr ""
 
 #: gammu/misc.c:2419 gammu/misc.c:2465
-#, fuzzy
 msgid "Call type"
-msgstr ", typ "
+msgstr "Typ transmisji"
 
 #: gammu/misc.c:2422 gammu/misc.c:2468
 msgid "voice"
@@ -3376,9 +3318,9 @@ msgid "Do you want to save this MMS file?"
 msgstr ""
 
 #: gammu/mms.c:53 gammu/mms.c:134
-#, fuzzy, c-format
+#, c-format
 msgid "Error while saving to file %s!\n"
-msgstr "  Usuwam %s\n"
+msgstr "Błąd podczas zapisywania do pliku %s !\n"
 
 #: gammu/mms.c:55 gammu/mms.c:136
 #, c-format
@@ -3402,9 +3344,8 @@ msgid "CC"
 msgstr ""
 
 #: gammu/mms.c:94
-#, fuzzy
 msgid "Message type"
-msgstr "   Numer      : %s\n"
+msgstr "Typ wiadomości"
 
 #: gammu/mms.c:97 helper/message-display.c:477
 msgid "Subject"
@@ -3415,9 +3356,8 @@ msgid "Delivery report"
 msgstr "Raport dostarczenia"
 
 #: gammu/mms.c:107 gammu/mms.c:110
-#, fuzzy
 msgid "Content type"
-msgstr "   Numer      : %s\n"
+msgstr "Typ zawartości"
 
 #: gammu/mms.c:114
 #, c-format
@@ -3464,9 +3404,9 @@ msgid "(longer)"
 msgstr ""
 
 #: gammu/nokia.c:252
-#, fuzzy, c-format
+#, c-format
 msgid "Checking %s\n"
-msgstr "  Usuwam %s\n"
+msgstr "Sprawdzanie %s\n"
 
 #: gammu/nokia.c:257
 msgid "  Only part handled!"
@@ -3477,9 +3417,9 @@ msgid "  Problem with adding playlist"
 msgstr ""
 
 #: gammu/nokia.c:383
-#, fuzzy, c-format
+#, c-format
 msgid "Writing file %s:"
-msgstr "Błąd zapisu do urządzenia."
+msgstr "Zapisywanie pliku %s:"
 
 #: gammu/nokia.c:438
 msgid ""
@@ -3497,9 +3437,9 @@ msgid "What folder type (\"%s\") ?\n"
 msgstr ""
 
 #: gammu/nokia.c:556 gammu/nokia.c:563 gammu/nokia.c:570
-#, fuzzy, c-format
+#, c-format
 msgid "Can not open file %s\n"
-msgstr "Nie można ustawić parzystości w urządzeniu."
+msgstr "Nie można otworzyć pliku %s\n"
 
 #: gammu/nokia.c:591 gammu/nokia.c:665
 msgid "Folder not found. Probably function not supported!"
@@ -3510,32 +3450,26 @@ msgid "Searching for phone folder: "
 msgstr ""
 
 #: gammu/nokia.c:691
-#, fuzzy
 msgid "No vendor info in JAD file!"
-msgstr "Brak informacji o producencie w pliku JAD\n"
+msgstr "Brak informacji o producencie w pliku JAD !"
 
 #: gammu/nokia.c:696
-#, fuzzy
 msgid "No name info in JAD file!"
-msgstr "Brak informacji o nazwie w pliku JAD\n"
+msgstr "Brak informacji o nazwie w pliku JAD !"
 
 #: gammu/nokia.c:701
-#, fuzzy
 msgid "No JAR URL info in JAD file!"
-msgstr "Brak informacji JAR URL w pliku JAD\n"
+msgstr "Brak informacji JAR adres URL w pliku JAD !"
 
 #: gammu/nokia.c:707
-#, fuzzy
 msgid "Declared JAR file size is different than real. Fixed by Gammu."
 msgstr ""
-"INFO: zadeklarowany rozmiar pliku JAR jest inny niż rzeczywisty. Popraione "
-"przez Gammu\n"
+"Deklarowanych rozmiar pliku JAR jest inny niż rzeczywistym. Ustalone przez "
+"Gammu."
 
 #: gammu/nokia.c:731
-#, fuzzy
 msgid "No JAR size info in JAD file. Added by Gammu."
-msgstr ""
-"INFO: brak informacji o rozmiarze pliku JAR w pliku JAD. Dodana przez Gammu\n"
+msgstr "Brak informacji o rozmiarze JAR w pliku JAD. Dodane przez Gammu."
 
 #: gammu/nokia.c:740
 #, c-format
@@ -3553,9 +3487,8 @@ msgid " created by %s\n"
 msgstr " utworzone przez %s\n"
 
 #: gammu/nokia.c:793 gammu/nokia.c:845
-#, fuzzy
 msgid "Application already exists. Deleting by Gammu."
-msgstr "INFO: Aplikacja już istnieje. Usuwanie przez Gammu\n"
+msgstr "Aplikacja już istnieje. Usuwanie przez Gammu."
 
 #: gammu/nokia.c:826 gammu/nokia.c:859
 #, c-format
@@ -3563,9 +3496,8 @@ msgid "  Deleting %s\n"
 msgstr "  Usuwam %s\n"
 
 #: gammu/nokia.c:882
-#, fuzzy
 msgid "Writing JAD file:"
-msgstr "Brak informacji o producencie w pliku JAD\n"
+msgstr "Zapisywanie pliku JAD:"
 
 #: gammu/nokia.c:901
 msgid "Writing JAR file:"
@@ -3581,14 +3513,15 @@ msgid "Connection \"%s\" on device \"%s\"\n"
 msgstr ""
 
 #: gammu/search.c:182 gammu/search.c:189
-#, fuzzy
 msgid "Error creating thread\n"
-msgstr "Błąd zapisu do urządzenia."
+msgstr "Błąd podczas tworzenia wątku\n"
 
 #: helper/cmdline.c:26
-#, fuzzy, c-format
+#, c-format
 msgid "Number out of range: %s\n"
-msgstr "   Numer      : %s\n"
+msgstr ""
+"Numer poza zakresem: %s\n"
+"\n"
 
 #: helper/cmdline.c:31
 #, c-format
@@ -3596,68 +3529,66 @@ msgid "Parameter is not a number: %s\n"
 msgstr ""
 
 #: helper/formats.h:2
-#, fuzzy, c-format
+#, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
 msgstr[0] "%d sekunda"
-msgstr[1] "%d sekund"
-msgstr[2] ""
+msgstr[1] "%d sekundy"
+msgstr[2] "%d sekund"
 
 #: helper/formats.h:3
-#, fuzzy, c-format
+#, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d minuta"
-msgstr[1] "%d minut"
-msgstr[2] ""
+msgstr[1] "%d minuty"
+msgstr[2] "%d minut"
 
 #: helper/formats.h:4
-#, fuzzy, c-format
+#, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d godzina"
 msgstr[1] "%d godzin"
-msgstr[2] ""
+msgstr[2] "%d godzin"
 
 #: helper/formats.h:5
-#, fuzzy, c-format
+#, c-format
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] "%d dzień"
 msgstr[1] "%d dni"
-msgstr[2] ""
+msgstr[2] "%d dni"
 
 #: helper/formats.h:6
-#, fuzzy, c-format
+#, c-format
 msgid "%d week"
 msgid_plural "%d weeks"
 msgstr[0] "%d tydzień"
-msgstr[1] "%d tygodni"
-msgstr[2] ""
+msgstr[1] "%d tygodnie"
+msgstr[2] "%d tygodni"
 
 #: helper/formats.h:7
-#, fuzzy, c-format
+#, c-format
 msgid "%d year"
 msgid_plural "%d years"
 msgstr[0] "%d rok"
 msgstr[1] "%d lat"
-msgstr[2] ""
+msgstr[2] "%d lat"
 
 #: helper/memory-display.c:30
-#, fuzzy
 msgid "Call length"
-msgstr ", typ "
+msgstr "Długość rozmów"
 
 #. l10n: Call length format string hour:minute:second
 #: helper/memory-display.c:32
-#, fuzzy, c-format
+#, c-format
 msgid "%02i:%02i:%02i\n"
-msgstr "Czas: %02d:%02d\n"
+msgstr "%02i:%02i:%02i\n"
 
 #: helper/memory-display.c:38
-#, fuzzy
 msgid "Date and time"
-msgstr "   Numer      : %s\n"
+msgstr "Data i czas"
 
 #: helper/memory-display.c:66 helper/memory-display.c:70
 #: helper/memory-display.c:79 helper/memory-display.c:90
@@ -3681,9 +3612,8 @@ msgid "Picture ID"
 msgstr ""
 
 #: helper/memory-display.c:119
-#, fuzzy
 msgid "Photo"
-msgstr "Telefon"
+msgstr "Zdjęcie"
 
 #: helper/memory-display.c:119
 msgid "Displaying not supported"
@@ -3694,89 +3624,72 @@ msgid "Favorite messaging number"
 msgstr ""
 
 #: helper/memory-display.c:129
-#, fuzzy
 msgid "Work number"
-msgstr "   Numer      : %s\n"
+msgstr "Numer pracy"
 
 #: helper/memory-display.c:132
-#, fuzzy
 msgid "General number"
-msgstr "   Numer      : %s\n"
+msgstr "Numer ogólny"
 
 #: helper/memory-display.c:136
-#, fuzzy
 msgid "Video number"
-msgstr "Numer komórki"
+msgstr "Numer wideo"
 
 #: helper/memory-display.c:141
-#, fuzzy
 msgid "Home mobile number"
-msgstr "Numer komórki"
+msgstr "Domowy numer telefonu"
 
 #: helper/memory-display.c:144
-#, fuzzy
 msgid "Work mobile number"
-msgstr "Numer komórki"
+msgstr "Numer komórkowy pracy"
 
 #: helper/memory-display.c:155
-#, fuzzy
 msgid "Home fax number"
-msgstr "Numer domowy"
+msgstr "Domowy numer faksu"
 
 #: helper/memory-display.c:158
-#, fuzzy
 msgid "Work fax number"
-msgstr "   Numer      : %s\n"
+msgstr "Numer faksu dla pracy"
 
 #: helper/memory-display.c:165
-#, fuzzy
 msgid "Pager number"
-msgstr "   Numer      : %s\n"
+msgstr "Numer pagera"
 
 #: helper/memory-display.c:166
-#, fuzzy
 msgid "Other number"
-msgstr "   Numer      : %s\n"
+msgstr "Inny numer"
 
 #: helper/memory-display.c:172
-#, fuzzy
 msgid "Home address"
-msgstr "Dodaję \"%s\""
+msgstr "Adres domowy"
 
 #: helper/memory-display.c:175
-#, fuzzy
 msgid "Work address"
-msgstr "Dodaję \"%s\""
+msgstr "Adres pracy"
 
 #: helper/memory-display.c:186
-#, fuzzy
 msgid "Home email"
-msgstr "Twój email:"
+msgstr "E-mail domowy"
 
 #: helper/memory-display.c:189
-#, fuzzy
 msgid "Work email"
-msgstr "Twój email:"
+msgstr "Służbowy adres e-mail"
 
 #: helper/memory-display.c:196
-#, fuzzy
 msgid "Email address 2"
-msgstr "Dodaję \"%s\""
+msgstr "Adres e-mail 2"
 
 #: helper/memory-display.c:201
-#, fuzzy
 msgid "Home website"
-msgstr "Numer domowy"
+msgstr "Strona domowa"
 
 #: helper/memory-display.c:204
-#, fuzzy
 msgid "Work website"
-msgstr "Status sieci"
+msgstr "Strona pracy"
 
 #: helper/memory-display.c:207
-#, fuzzy
 msgid "Website"
-msgstr "&Strona www"
+msgstr "Strona internetowa"
 
 #: helper/memory-display.c:212
 msgid "VOIP"
@@ -3791,38 +3704,32 @@ msgid "WVID"
 msgstr ""
 
 #: helper/memory-display.c:215
-#, fuzzy
 msgid "SIP"
-msgstr "SIM"
+msgstr "SIP"
 
 #: helper/memory-display.c:216
 msgid "DTMF"
 msgstr ""
 
 #: helper/memory-display.c:218
-#, fuzzy
 msgid "Last name"
-msgstr "   Numer      : %s\n"
+msgstr "Nazwisko"
 
 #: helper/memory-display.c:219
-#, fuzzy
 msgid "First name"
-msgstr "   Numer      : %s\n"
+msgstr "Imię"
 
 #: helper/memory-display.c:220
-#, fuzzy
 msgid "Second name"
-msgstr "   Numer      : %s\n"
+msgstr "Drugie imię"
 
 #: helper/memory-display.c:221
-#, fuzzy
 msgid "Formal name"
-msgstr "   Numer      : %s\n"
+msgstr "Imię formalne"
 
 #: helper/memory-display.c:222
-#, fuzzy
 msgid "Name prefix"
-msgstr "Prefiks numeru"
+msgstr "Prefiks nazwy"
 
 #: helper/memory-display.c:223
 msgid "Name suffix"
@@ -3841,27 +3748,24 @@ msgid "Job title"
 msgstr ""
 
 #: helper/memory-display.c:227
-#, fuzzy
 msgid "Street address"
-msgstr "Dodaję \"%s\""
+msgstr "Ulica"
 
 #: helper/memory-display.c:228
 msgid "City"
 msgstr ""
 
 #: helper/memory-display.c:229
-#, fuzzy
 msgid "State"
-msgstr "Start"
+msgstr "Państwo"
 
 #: helper/memory-display.c:230
 msgid "Zip code"
 msgstr ""
 
 #: helper/memory-display.c:231
-#, fuzzy
 msgid "Country"
-msgstr "   Numer      : %s\n"
+msgstr "Kraj"
 
 #: helper/memory-display.c:232
 msgid "Custom text 1"
@@ -3884,101 +3788,89 @@ msgid "Push to talk ID"
 msgstr ""
 
 #: helper/memory-display.c:239
-#, fuzzy
 msgid "unknown field type"
-msgstr "BŁĄD: nieznany typ pamięci {(}\"%s\")\n"
+msgstr "nieznany typ pola"
 
 #: helper/memory-display.c:246 helper/message-display.c:128
-#, fuzzy
 msgid "home"
-msgstr "Telefon"
+msgstr "Strona domowa"
 
 #: helper/memory-display.c:249 helper/message-display.c:131
-#, fuzzy
 msgid "work"
-msgstr "Sieć"
+msgstr "praca"
 
 #: helper/message-cmdline.c:184
-#, fuzzy
 msgid "Not enough parameters!"
-msgstr "Za mało parametrów!\n"
+msgstr "Za mało parametrów!"
 
 #: helper/message-cmdline.c:208
-#, fuzzy, c-format
+#, c-format
 msgid "What format of sms (\"%s\") ?\n"
-msgstr "Co powinienem zrobić (\"%s\")?\n"
+msgstr "Jaki format sms (\"%s\")?\n"
 
 #: helper/message-cmdline.c:233 helper/message-cmdline.c:250
-#, fuzzy
 msgid "Where are parameters?"
-msgstr "Za mało parametrów!\n"
+msgstr "Gdzie są parametry?"
 
 #: helper/message-cmdline.c:264
-#, fuzzy
 msgid "Where is ringtone filename?"
-msgstr "Za mało parametrów!\n"
+msgstr "Gdzie jest nazwa pliku dzwonka?"
 
 #: helper/message-cmdline.c:282 helper/message-cmdline.c:300
 #: helper/message-cmdline.c:351
-#, fuzzy
 msgid "Where is logo filename?"
-msgstr "Za mało parametrów!\n"
+msgstr "Gdzie jest logo nazwy pliku?"
 
 #: helper/message-cmdline.c:318
-#, fuzzy
 msgid "Where is number of frames?"
-msgstr "Za mało parametrów!\n"
+msgstr "Gdzie jest liczba klatek?"
 
 #: helper/message-cmdline.c:326
 msgid "Too many animation frames!"
 msgstr ""
 
 #: helper/message-cmdline.c:357
-#, fuzzy, c-format
+#, c-format
 msgid "File \"%s\"\n"
-msgstr "Dodaję \"%s\""
+msgstr "Plik \"%s\"\n"
 
 #: helper/message-cmdline.c:384
-#, fuzzy
 msgid "Bookmark not found in file"
-msgstr "Brak informacji o producencie w pliku JAD\n"
+msgstr "Zakładki nie znaleziono w pliku"
 
 #: helper/message-cmdline.c:408
-#, fuzzy
 msgid "WAP settings not found in file"
-msgstr "Brak informacji o producencie w pliku JAD\n"
+msgstr "Nie znaleziono ustawień WAP w pliku"
 
 #: helper/message-cmdline.c:429
 msgid "Sorry. For now there is only support for GPRS or DATA bearers end"
 msgstr ""
 
 #: helper/message-cmdline.c:452
-#, fuzzy
 msgid "MMS settings not found in file"
-msgstr "Brak informacji o producencie w pliku JAD\n"
+msgstr "Nie odnaleziono ustawień MMS w pliku"
 
 #: helper/message-cmdline.c:466
 msgid "Sorry. No GPRS bearer found in MMS settings"
 msgstr ""
 
 #: helper/message-cmdline.c:512
-#, fuzzy
 msgid "ToDo note not found in file"
-msgstr "Brak informacji o nazwie w pliku JAD\n"
+msgstr "Nie odnaleziono ToDo w pliku"
 
 #: helper/message-cmdline.c:574
 msgid "Backup functionality not compiled in!"
 msgstr ""
 
 #: helper/message-cmdline.c:1055
-#, fuzzy, c-format
+#, c-format
 msgid "Wrong message length (\"%s\")\n"
-msgstr "Zapisywanie wiadomości..."
+msgstr "Nieprawidłowa długość wiadomości (\"%s\")\n"
 
 #: helper/message-cmdline.c:1078
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown GSM network code (\"%s\")\n"
-msgstr "BŁĄD: nieznany typ pamięci {(}\"%s\")\n"
+msgstr "Nieznany kod sieci GSM (\"%s\")\n"
 
 #: helper/message-cmdline.c:1097
 #, c-format
@@ -3986,9 +3878,9 @@ msgid "You have to give number between 1 and 7 (\"%s\")\n"
 msgstr ""
 
 #: helper/message-cmdline.c:1135
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown validity string (\"%s\")\n"
-msgstr "BŁĄD: nieznany typ pamięci {(}\"%s\")\n"
+msgstr "Nieznana ważność ciągu (\"%s\")\n"
 
 #: helper/message-cmdline.c:1173
 #, c-format
@@ -3996,14 +3888,14 @@ msgid "You have to give number of EMS frames between 1 and 4 (\"%s\")\n"
 msgstr ""
 
 #: helper/message-cmdline.c:1185 helper/message-cmdline.c:1202
-#, fuzzy, c-format
+#, c-format
 msgid "Can't open file \"%s\"\n"
-msgstr "Nie można ustawić parzystości w urządzeniu."
+msgstr "Nie można otworzyć pliku \"%s\"\n"
 
 #: helper/message-cmdline.c:1251
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown parameter (\"%c\")\n"
-msgstr "BŁĄD: nieznany typ pamięci {(}\"%s\")\n"
+msgstr "Nieznany parametr (\"%c\")\n"
 
 #: helper/message-cmdline.c:1256
 msgid "Last parameter wasn't text"
@@ -4032,9 +3924,8 @@ msgid "No chars read, assuming it is okay!"
 msgstr ""
 
 #: helper/message-cmdline.c:1368
-#, fuzzy
 msgid "No network code"
-msgstr "sieć domowa"
+msgstr "Brak kodu sieciowego"
 
 #: helper/message-cmdline.c:1374
 msgid "You have to set network code!"
@@ -4060,19 +3951,16 @@ msgid "Location %i, folder \"%s\""
 msgstr ""
 
 #: helper/message-display.c:33
-#, fuzzy
 msgid "SIM memory"
-msgstr "Pamięć pełna."
+msgstr "Pamięci karty SIM"
 
 #: helper/message-display.c:36
-#, fuzzy
 msgid "phone memory"
-msgstr "Pamięć pełna."
+msgstr "Pamięć telefonu"
 
 #: helper/message-display.c:39
-#, fuzzy
 msgid "phone or SIM memory"
-msgstr "Pamięć pełna."
+msgstr "Telefon lub pamięci SIM"
 
 #: helper/message-display.c:46
 msgid "Inbox folder"
@@ -4083,14 +3971,12 @@ msgid "mobile"
 msgstr ""
 
 #: helper/message-display.c:118
-#, fuzzy
 msgid "pager"
 msgstr "Pager"
 
 #: helper/message-display.c:121
-#, fuzzy
 msgid "general"
-msgstr "Ogólny"
+msgstr "Ogólne"
 
 #: helper/message-display.c:145
 msgid "8 bit SMS, cannot be displayed here"
@@ -4111,40 +3997,35 @@ msgid "Read"
 msgstr "Przeczytane"
 
 #: helper/message-display.c:171 helper/message-display.c:291
-#, fuzzy
 msgid "UnRead"
-msgstr "  Usuwam %s\n"
+msgstr "Nieprzeczytane"
 
 #: helper/message-display.c:172 helper/message-display.c:292
-#, fuzzy
 msgid "UnSent"
-msgstr "Milczy"
+msgstr "Niewysłane"
 
 #: helper/message-display.c:176 helper/message-display.c:279
-#, fuzzy
 msgid "Remote number"
 msgid_plural "Remote numbers"
-msgstr[0] "   Numer      : %s\n"
-msgstr[1] "   Numer      : %s\n"
+msgstr[0] "Numer zdalny"
+msgstr[1] "Numery zdalne"
+msgstr[2] "Numery zdalne"
 
 #: helper/message-display.c:180 helper/message-display.c:245
-#, fuzzy
 msgid "Reference number"
-msgstr "   Numer      : %s\n"
+msgstr "Numer referencyjny"
 
 #: helper/message-display.c:182 helper/message-display.c:230
-#, fuzzy
 msgid "SMSC number"
-msgstr "   Numer      : %s\n"
+msgstr "Numer SMSC"
 
 #: helper/message-display.c:183
 msgid "SMSC response"
 msgstr ""
 
 #: helper/message-display.c:184
-#, fuzzy
 msgid "Delivery status"
-msgstr "Status bezpieczeństwa."
+msgstr "Stan dostawy"
 
 #: helper/message-display.c:185
 msgid "Details"
@@ -4184,9 +4065,8 @@ msgid "No response from SME"
 msgstr ""
 
 #: helper/message-display.c:202 helper/message-display.c:218
-#, fuzzy
 msgid "Service rejected"
-msgstr "   Numer      : %s\n"
+msgstr "Usługa odrzucona"
 
 #: helper/message-display.c:203 helper/message-display.c:209
 #: helper/message-display.c:219
@@ -4210,9 +4090,8 @@ msgid "Connection rejected by SME"
 msgstr ""
 
 #: helper/message-display.c:208
-#, fuzzy
 msgid "Not obtainable"
-msgstr "Brak sygnału"
+msgstr "Nie wynika"
 
 #: helper/message-display.c:210
 msgid "No internetworking available"
@@ -4240,12 +4119,10 @@ msgid "Reserved/Specific to SC: %x"
 msgstr ""
 
 #: helper/message-display.c:226 helper/message-display.c:243
-#, fuzzy
 msgid "SMS message"
-msgstr "   Numer      : %s\n"
+msgstr "Wiadomość SMS"
 
 #: helper/message-display.c:228
-#, fuzzy
 msgid "Saved"
 msgstr "Zapisane"
 
@@ -4262,9 +4139,8 @@ msgid "Class"
 msgstr ""
 
 #: helper/message-display.c:257
-#, fuzzy
 msgid "Coding"
-msgstr "  Usuwam %s\n"
+msgstr "Kodowanie"
 
 #: helper/message-display.c:260
 msgid "Unicode (no compression)"
@@ -4336,9 +4212,8 @@ msgid "Nokia WAP bookmark or WAP/MMS settings"
 msgstr ""
 
 #: helper/message-display.c:310 helper/message-display.c:311
-#, fuzzy
 msgid "Nokia ringtone"
-msgstr "Dodaję \"%s\""
+msgstr "Dzwonka Nokia"
 
 #: helper/message-display.c:312
 msgid "Nokia GSM operator logo"
@@ -4393,9 +4268,9 @@ msgid "Siemens file"
 msgstr ""
 
 #: helper/message-display.c:347
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown PDU type: 0x%x\n"
-msgstr "BŁĄD: nieznany typ pamięci {(}\"%s\")\n"
+msgstr "Nieznany typ PDU: 0x%x\n"
 
 #: helper/message-display.c:394
 msgid ""
@@ -4411,9 +4286,9 @@ msgid " - VCARD"
 msgstr ""
 
 #: helper/message-display.c:415
-#, fuzzy, c-format
+#, c-format
 msgid "Ringtone \"%s\"\n"
-msgstr "Dodaję \"%s\""
+msgstr "Dzwonek \"%s\"\n"
 
 #: helper/message-display.c:420
 msgid "Do you want to play it?"
@@ -4441,9 +4316,8 @@ msgid "EMS animation ID"
 msgstr ""
 
 #: helper/message-display.c:479
-#, fuzzy
 msgid "Message size"
-msgstr "Wiadomości"
+msgstr "Rozmiar wiadomości"
 
 #. l10n: Generic prefix for error messages
 #: helper/message-display.c:512 helper/printing.c:18
@@ -4455,9 +4329,8 @@ msgid "Data PDU"
 msgstr ""
 
 #: helper/message-display.c:546
-#, fuzzy
 msgid "Number of bits"
-msgstr "   Numer      : %s\n"
+msgstr "Liczba bitów"
 
 #: helper/message-display.c:548
 msgid "UDH"
@@ -4474,9 +4347,8 @@ msgstr "Ostrzeżenie"
 
 #. l10n: Generic prefix for informational messages
 #: helper/printing.c:50
-#, fuzzy
 msgid "Information"
-msgstr "Lokalizacja"
+msgstr "Informacja"
 
 #, fuzzy
 #~ msgid "Mobile number (work)"
