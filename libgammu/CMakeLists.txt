@@ -74,11 +74,11 @@ set (LIBRARY_SRC
     phone/s60/s60phone.c)
 
 # Own or glib based MD5 implementation
-if (GLIB_FOUND)
+if (Glib_FOUND)
     list (APPEND LIBRARY_SRC misc/coding/md5-glib.c)
-else (GLIB_FOUND)
+else (Glib_FOUND)
     list (APPEND LIBRARY_SRC misc/coding/md5.c)
-endif (GLIB_FOUND)
+endif (Glib_FOUND)
 
 if (WITH_BACKUP)
     list (APPEND LIBRARY_SRC phone/dummy/dummy.c)
@@ -126,10 +126,10 @@ endif(CMAKE_COMPILER_IS_MINGW AND BUILD_SHARED_LIBS)
 
 target_link_libraries (libGammu string)
 
-if (GLIB_FOUND)
-    target_link_libraries (libGammu ${GLIB_LIBRARIES} ${GOBJECT_LIBRARIES})
-    include_directories(${GLIB_INCLUDE_DIRS} ${GOBJECT_INCLUDE_DIRS})
-endif (GLIB_FOUND)
+if (Glib_FOUND)
+    target_link_libraries (libGammu ${Glib_LIBRARIES} ${GObject_LIBRARIES})
+    include_directories(${Glib_INCLUDE_DIRS} ${GObject_INCLUDE_DIRS})
+endif (Glib_FOUND)
 
 if (BLUEZ_FOUND)
     target_link_libraries (libGammu ${BLUEZ_LIBRARIES})

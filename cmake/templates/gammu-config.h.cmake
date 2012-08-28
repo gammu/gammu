@@ -361,6 +361,9 @@
 /* Enable Bluetooth channnel searching? */
 #cmakedefine BLUETOOTH_RF_SEARCHING
 
+/* Enable Glib */
+#cmakedefine Glib_FOUND
+
 /* MS Visual C++ Express 2005 warnings */
 #if _MSC_VER == 1400
 #  pragma warning( disable : 4996 4244 4333)

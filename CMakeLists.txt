@@ -227,8 +227,8 @@ if (BUILD_PYTHON)
         NO_SYSTEM_ENVIRONMENT_PATH
       )
 else (BUILD_PYTHON)
-    find_package(PythonInterp)
-    find_package(PythonLibs)
+    find_package(PythonInterp 2)
+    find_package(PythonLibs 2)
 
     if (PYTHONINTERP_FOUND AND PYTHONLIBS_FOUND)
         set (WITH_PYTHON TRUE CACHE BOOL "Build Python bindings")
@@ -258,7 +258,7 @@ macro_optional_find_package (Libintl)
 macro_optional_find_package (Iconv)
 macro_optional_find_package (CURL)
 macro_optional_find_package (Glib)
-macro_optional_find_package (Gobject)
+macro_optional_find_package (GObject)
 
 # Gudev stuff
 pkg_check_modules(GUDEV gudev-1.0)
@@ -818,11 +818,11 @@ if (WIN32 AND NOT CYGWIN)
     endif (CURL_FOUND)
 
     # Glib and dependencies
-    if (GLIB_FOUND)
+    if (Glib_FOUND)
         foreach(lib ${WIN_LIB_GLIB})
-            ADD_DLL("${lib}" "${GLIB_LIBRARIES}")
+            ADD_DLL("${lib}" "${Glib_LIBRARIES}")
         endforeach(lib ${WIN_LIB_GLIB})
-    endif (GLIB_FOUND)
+    endif (Glib_FOUND)
 
     install (FILES ${WIN32_INSTALL_DLL}
             DESTINATION "${INSTALL_BIN_DIR}"
