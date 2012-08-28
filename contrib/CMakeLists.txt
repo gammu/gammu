@@ -103,7 +103,7 @@ endif (INSTALL_LSB_INIT)
 
 if (INSTALL_UDEV_RULES)
     install (
-        FILES contrib/udev/45-nokiadku2.rules
+        FILES udev/45-nokiadku2.rules
         DESTINATION "/etc/udev/rules.d"
         COMPONENT "udev"
         )
