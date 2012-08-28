@@ -228,6 +228,9 @@ static void Features(int argc UNUSED, char *argv[]UNUSED)
 #ifdef CURL_FOUND
 	printf("  - %s\n", "CURL");
 #endif
+#ifdef Glib_FOUND
+	printf("  - %s\n", "GLIB");
+#endif
 }
 
 /**
