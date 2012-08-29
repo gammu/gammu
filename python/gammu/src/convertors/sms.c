@@ -223,24 +223,39 @@ PyObject *SMSCToPython(GSM_SMSC * smsc)
 	char *val, *fmt;
 
 	name = strGammuToPython(smsc->Name);
-	if (name == NULL)
+	if (name == NULL) {
 		return NULL;
+	}
 
 	number = strGammuToPython(smsc->Number);
-	if (number == NULL)
+	if (number == NULL) {
+		free(name);
 		return NULL;
+	}
 
 	defaultn = strGammuToPython(smsc->DefaultNumber);
-	if (defaultn == NULL)
+	if (defaultn == NULL) {
+		free(name);
+		free(number);
 		return NULL;
+	}
 
 	val = SMSValidityToString(smsc->Validity);
-	if (val == NULL)
+	if (val == NULL) {
+		free(name);
+		free(number);
+		free(defaultn);
 		return NULL;
+	}
 
 	fmt = SMSFormatToString(smsc->Format);
-	if (fmt == NULL)
+	if (fmt == NULL) {
+		free(name);
+		free(number);
+		free(defaultn);
+		free(val);
 		return NULL;
+	}
 
 	ret = Py_BuildValue("{s:i,s:u,s:s,s:s,s:u,s:u}",
 			    "Location", smsc->Location,
