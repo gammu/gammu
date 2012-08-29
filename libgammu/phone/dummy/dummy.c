@@ -1139,17 +1139,20 @@ GSM_Error DUMMY_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *
 
 	file = fopen(path, "w");
 	if (file == NULL) {
+		free(path);
 		error = DUMMY_Error(s, "fopen(w) failed");
 		if (error == ERR_EMPTY) return ERR_PERMISSION;
 		return error;
 	}
 	if (fwrite(File->Buffer, 1, File->Used, file) != File->Used) {
+		free(path);
 		error = DUMMY_Error(s, "fwrite failed");
 		fclose(file);
 		if (error == ERR_EMPTY) return ERR_PERMISSION;
 		return error;
 	}
 	if (fclose(file) != 0) {
+		free(path);
 		error = DUMMY_Error(s, "fclose failed");
 		if (error == ERR_EMPTY) return ERR_PERMISSION;
 		return error;
