@@ -2529,6 +2529,8 @@ GSM_Error ATGEN_ReplyGetCNMIMode(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 		Priv->CNMIMode = 3; /* 3 = send messages directly */
 	}
 	else {
+		free(range);
+		range = NULL;
 		return ERR_NONE; /* we don't want: 1 = ignore new messages, 0 = store messages and no indication */
 	}
 	free(range);
