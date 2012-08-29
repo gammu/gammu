@@ -1215,11 +1215,15 @@ GSM_Error GSM_LinkSMS(GSM_Debug_Info *di, GSM_MultiSMSMessage **InputMessages, G
 	i = 0;
 	while (InputMessages[i] != NULL) i++;
 
-	InputMessagesSorted = calloc(i, sizeof(gboolean));
-	if (InputMessagesSorted == NULL) return ERR_MOREMEMORY;
-
 	OutputMessagesNum = 0;
 	OutputMessages[0] = NULL;
+
+	if (i == 0) {
+		return ERR_NONE;
+	}
+
+	InputMessagesSorted = calloc(i, sizeof(gboolean));
+	if (InputMessagesSorted == NULL) return ERR_MOREMEMORY;
 
 	if (ems) {
 		for (i = 0; InputMessages[i] != NULL; i++) {
