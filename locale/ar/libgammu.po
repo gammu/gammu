@@ -8,222 +8,239 @@ msgstr ""
 "Project-Id-Version: libgammu 1.28.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-08-27 11:26+0200\n"
-"PO-Revision-Date: 2010-09-03 14:46+0200\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2012-08-30 19:34+0200\n"
+"Last-Translator: مترجم حرّ <metehyi@gmail.com>\n"
+"Language-Team: Arabic <http://l10n.cihar.com/projects/gammu/libgammu/ar/>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Weblate 1.2\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
-msgstr ""
+msgstr "لا يوجد خطأ."
 
 #: libgammu/gsmcomon.c:85
 msgid "Error opening device. Unknown, busy or no permissions."
-msgstr ""
+msgstr "خطأ عند فتح الجهاز. الجهاز غير معروف ، مشغول أو لا يوجد أذونات."
 
 #: libgammu/gsmcomon.c:86
 msgid "Error opening device, it is locked."
-msgstr ""
+msgstr "خطأ عند فتح الجهاز، فهو مقفول."
 
 #: libgammu/gsmcomon.c:87
 msgid "Error opening device, it doesn't exist."
-msgstr ""
+msgstr "خطأ عند فتح الجهاز، فهو غير موجود."
 
 #: libgammu/gsmcomon.c:88
 msgid "Error opening device, it is already opened by other application."
-msgstr ""
+msgstr "خطأ عند فتح الجهاز، فهو قد تم فتحه من قبل تطبيق آخر."
 
 #: libgammu/gsmcomon.c:89
 msgid "Error opening device, you don't have permissions."
-msgstr ""
+msgstr "خطأ عند فتح الجهاز، ليس لديك الأذونات."
 
 #: libgammu/gsmcomon.c:90
 msgid "Error opening device. No required driver in operating system."
-msgstr ""
+msgstr "خطأ عند فتح الجهاز. لا يوجد سائق مناسب في نظام التشغيل."
 
 #: libgammu/gsmcomon.c:91
 msgid "Error opening device. Some hardware not connected/wrongly configured."
-msgstr ""
+msgstr "خطأ عند فتح الجهاز. ثمة عتاد غير موصول/غير كامل التكوين."
 
 #: libgammu/gsmcomon.c:92
 msgid "Error setting device DTR or RTS."
-msgstr ""
+msgstr "حطأ تعيين الــ DTR أو RTS للجهاز."
 
 #: libgammu/gsmcomon.c:93
 msgid "Error setting device speed. Maybe speed not supported."
-msgstr ""
+msgstr "خطأ تعيين سرعة لجهاز. ربما السرعة غير مدعومة."
 
 #: libgammu/gsmcomon.c:94
 msgid "Error writing to the device."
-msgstr ""
+msgstr "خطأ عند محاولة الكتابة إلى الجهاز."
 
 #: libgammu/gsmcomon.c:95
 msgid "Error during reading from the device."
-msgstr ""
+msgstr "خطأ عند محاولة القراءة من الجهاز."
 
 #: libgammu/gsmcomon.c:96
 msgid "Can't set parity on the device."
-msgstr ""
+msgstr "غير قادر على تعيين التكافؤ على الجهاز."
 
 #: libgammu/gsmcomon.c:97
 msgid "No response in specified timeout. Probably phone not connected."
-msgstr ""
+msgstr "لا جواب في المهلة المحددة. من المحتمل أن الجهاز غير موصول."
 
 #: libgammu/gsmcomon.c:98
 msgid ""
 "Frame not requested right now. See <http://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
+"الإطار غير مطلوب الآن. أنظر إلى <http://wammu.eu/support/bugs/> للمزيد من "
+"المعلومات عن كيفية التبليغ عنه."
 
 #: libgammu/gsmcomon.c:99
 msgid ""
 "Unknown response from phone. See <http://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
+"جواب غير معروف من الهاتف. أنظر إلى <http://wammu.eu/support/bugs/> لمزيد من "
+"المعلومات عن كيفية التبليغ عنه."
 
 #: libgammu/gsmcomon.c:100
 msgid ""
 "Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
 "report it."
 msgstr ""
+"إطار غير معروف. أنظر إلى <http://wammu.eu/support/bugs/> لمعلومات عن كيفية "
+"التبليغ عنه."
 
 #: libgammu/gsmcomon.c:101
 msgid "Unknown connection type string. Check config file."
-msgstr ""
+msgstr "نوع سلسلة إتصال غير معروفة. إفحص ملف التكوين."
 
 #: libgammu/gsmcomon.c:102
 msgid "Unknown model type string. Check config file."
-msgstr ""
+msgstr "نوع سلسلة النموذج غير معروف. إفحص ملف التكوين."
 
 #: libgammu/gsmcomon.c:103
 msgid ""
 "Some functions not available for your system (disabled in config or not "
 "implemented)."
-msgstr ""
+msgstr "ثمة وظائف غير متوفرة لنظامك ) معطلة في التشكيل أو غير مثبتة(."
 
 #: libgammu/gsmcomon.c:104
 msgid "Function not supported by phone."
-msgstr ""
+msgstr "وظيفة غير معتمدة من قبل الهاتف."
 
 #: libgammu/gsmcomon.c:105
 msgid "Entry is empty."
-msgstr ""
+msgstr "الإدخال فارغ."
 
 #: libgammu/gsmcomon.c:106
 msgid "Security error. Maybe no PIN?"
-msgstr ""
+msgstr "خطأ أمني. ربما لا يوجد رقم PIN ؟"
 
 #: libgammu/gsmcomon.c:107
 msgid "Invalid location. Maybe too high?"
-msgstr ""
+msgstr "موقع غير صالح. ربما عالي جداً ؟"
 
 #: libgammu/gsmcomon.c:108
 msgid "Functionality not implemented. You are welcome to help authors with it."
-msgstr ""
+msgstr "وظيفة غير تامة الإنجاز بعد. أنت مدعو لمساعدة المؤلفين بها."
 
 #: libgammu/gsmcomon.c:109
 msgid "Memory full."
-msgstr ""
+msgstr "إنّ الذاكرة مليئة."
 
 #: libgammu/gsmcomon.c:110
 msgid "Unknown error."
-msgstr ""
+msgstr "خطأ غير معروف."
 
 #: libgammu/gsmcomon.c:111
 msgid "Can not open specified file."
-msgstr ""
+msgstr "لا يمكن فتح الملف المحدد."
 
 #: libgammu/gsmcomon.c:112
 msgid "More memory required..."
-msgstr ""
+msgstr "مطلوب المزيد من الذاكرة..."
 
 #: libgammu/gsmcomon.c:113
 msgid "Operation not allowed by phone."
-msgstr ""
+msgstr "العملية غير مسموح بها من قبل الهاتف."
 
 #: libgammu/gsmcomon.c:114
 msgid ""
 "No SMSC number given. Provide it manually or use the one configured in phone."
 msgstr ""
+"لم يعطى أي رقم لمركز الــ SMS . زود به يدوياً أو إستعمل ذلك الموجود في "
+"الهاتف."
 
 #: libgammu/gsmcomon.c:115
 msgid "You're inside phone menu (maybe editing?). Leave it and try again."
 msgstr ""
+"أنت داخل لائحة خيارات الهاتف (ربما أنك تحرّر شيئ ما ؟ ). أتركه و حاول مرة "
+"أخرى."
 
 #: libgammu/gsmcomon.c:116
 msgid "Phone is not connected."
-msgstr ""
+msgstr "الهاتف غير موصول."
 
 #: libgammu/gsmcomon.c:117
 msgid ""
 "Function is currently being implemented. If you want to help, please contact "
 "authors."
 msgstr ""
+"يجري حالياً تطوير هذه الوظيفة من اجل تثبيتها. الرجاء الإتصال بالمؤلفين إذا "
+"كنت تريد المساعدة."
 
 #: libgammu/gsmcomon.c:118
 msgid "Phone is disabled and connected to charger."
-msgstr ""
+msgstr "الهاتف معطل التشغيل و هو موصول بالشاحن."
 
 #: libgammu/gsmcomon.c:119
 msgid "File format not supported by Gammu."
-msgstr ""
+msgstr "هيئة الملف غير معتمدة من قبل غامو."
 
 #: libgammu/gsmcomon.c:120
 msgid ""
 "Nobody is perfect, some bug appeared in protocol implementation. Please "
 "contact authors."
 msgstr ""
+"لا أحد عاري من الشوائب، لقد ظهر بعض العطل في مراسم التنفيذ. الرجاء الإتصال "
+"بالمؤلفين."
 
 #: libgammu/gsmcomon.c:121
 msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
-msgstr ""
+msgstr "الهاتف قام بإلغاء التنقل، ربما أنك ضغطت على الزرً إلغاء على الهاتف."
 
 #: libgammu/gsmcomon.c:122
 msgid "Phone module need to send another answer frame."
-msgstr ""
+msgstr "وحدة الهاتف يجب أن ترسل إطار جواب مختلف."
 
 #: libgammu/gsmcomon.c:123
 msgid "Current connection type doesn't support called function."
-msgstr ""
+msgstr "نوع الوصلة الحالي لا يدعم الوظيفة المدعوة."
 
 #: libgammu/gsmcomon.c:124
 msgid "CRC error."
-msgstr ""
+msgstr "CRC خطأ."
 
 #: libgammu/gsmcomon.c:125
 msgid "Invalid date or time specified."
-msgstr ""
+msgstr "تاريخ أو وقت محدد غير صالح."
 
 #: libgammu/gsmcomon.c:126
 msgid "Phone memory error, maybe it is read only."
-msgstr ""
+msgstr "خطأ ذاكرة الهاتف، ربما هي للقراءة فقظ."
 
 #: libgammu/gsmcomon.c:127
 msgid "Invalid data given to phone."
-msgstr ""
+msgstr "بيانات غير صالحة أعطيت إلى الهاتف."
 
 #: libgammu/gsmcomon.c:128
 msgid "File with specified name already exists."
-msgstr ""
+msgstr "الملف ذات الاسم المحدد هو موجود مسبقاً."
 
 #: libgammu/gsmcomon.c:129
 msgid "File with specified name doesn't exist."
-msgstr ""
+msgstr "الملف ذات الاسم المحدد هو غير موجود."
 
 #: libgammu/gsmcomon.c:130
 msgid "You have to give folder name and not file name."
-msgstr ""
+msgstr "يجب أن تعطي اسم المجلد و لا اسم الملف."
 
 #: libgammu/gsmcomon.c:131
 msgid "You have to give file name and not folder name."
-msgstr ""
+msgstr "يجب أن تعطي اسم الملف و لا اسم المجلد."
 
 #: libgammu/gsmcomon.c:132
 msgid "Can not access SIM card."
-msgstr ""
+msgstr "لا يمكن الوصول إلى بطاقة SIM."
 
 #: libgammu/gsmcomon.c:133
 msgid "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
@@ -231,51 +248,51 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:134
 msgid "Only part of folder has been listed."
-msgstr ""
+msgstr "فقط جزء من المجلد تم إدراجه."
 
 #: libgammu/gsmcomon.c:135
 msgid "Folder must be empty."
-msgstr ""
+msgstr "يجب أن يكون المجلد خالي من الموجودات."
 
 #: libgammu/gsmcomon.c:136
 msgid "Data were converted."
-msgstr ""
+msgstr "تم تحويل البيانات."
 
 #: libgammu/gsmcomon.c:137
 msgid "Gammu is not configured."
-msgstr ""
+msgstr "لم يتم تشكيل جامو."
 
 #: libgammu/gsmcomon.c:138
 msgid "Wrong folder used."
-msgstr ""
+msgstr "المجلد المستعمل غير صحيح."
 
 #: libgammu/gsmcomon.c:139
 msgid "Internal phone error."
-msgstr ""
+msgstr "حطأ داخلي للهاتف."
 
 #: libgammu/gsmcomon.c:140
 msgid "Error writing file to disk."
-msgstr ""
+msgstr "خطأ عند كتابة الملف إلى القرص."
 
 #: libgammu/gsmcomon.c:141
 msgid "No such section exists."
-msgstr ""
+msgstr "لا يوجد شعبة كهذه."
 
 #: libgammu/gsmcomon.c:142
 msgid "Using default values."
-msgstr ""
+msgstr "مستخدماّ القيم الإفتراضية."
 
 #: libgammu/gsmcomon.c:143
 msgid "Corrupted data returned by phone."
-msgstr ""
+msgstr "البيانات القادمة من الهاتف هي فاسدة."
 
 #: libgammu/gsmcomon.c:144
 msgid "Bad feature string in configuration."
-msgstr ""
+msgstr "سلسلة ميزة في التشكيل غير جيدة."
 
 #: libgammu/gsmcomon.c:145
 msgid "Desired functionality has been disabled on compile time."
-msgstr ""
+msgstr "لقد تم تعطيل الوظيفة المجوة عند وقت التجميع."
 
 #: libgammu/gsmcomon.c:146
 msgid "Bluetooth configuration requires channel option."
@@ -283,131 +300,133 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:147
 msgid "Service is not running."
-msgstr ""
+msgstr "لم يتم تشغيل الخدمة."
 
 #: libgammu/gsmcomon.c:148
 msgid "Service configuration is missing."
-msgstr ""
+msgstr "خدمة التشكيلة هي مفقودة."
 
 #: libgammu/gsmcomon.c:149
 msgid "Command rejected because device was busy. Wait and restart."
-msgstr ""
+msgstr "الأمر رفض لأن الجهاز كان مشغولاً. إنتظر ثم أعد التشغيل."
 
 #: libgammu/gsmcomon.c:150
 msgid "Could not connect to the server."
-msgstr ""
+msgstr "تعذر الإتصال بالخادم."
 
 #: libgammu/gsmcomon.c:151
 msgid "Could not resolve the host name."
-msgstr ""
+msgstr "لم أتمكن من حل اسم المضيف."
 
 #: libgammu/gsmcomon.c:152
 msgid "Failed to get SMSC number from phone."
-msgstr ""
+msgstr "لم أتمكن من الحصول على رقم الــSMSC من الهاتف."
 
 #: libgammu/gsmcomon.c:153
 msgid "Operation aborted."
-msgstr ""
+msgstr "تم إجهاض العملية."
 
 #: libgammu/gsmcomon.c:154
 msgid ""
 "Installation data not found, please consult debug log and/or documentation "
 "for more details."
 msgstr ""
+"لم توجد بيانات التثبيت، الرجاء مراجعة سجل كشف الأخطاء و/أو التوثيق للمزيد من "
+"التفاصيل."
 
 #: libgammu/gsmcomon.c:155
 msgid "Entry is read only."
-msgstr ""
+msgstr "المدخلة هي للقراءة فقط."
 
 #: libgammu/gsmcomon.c:188
 msgid "Unknown error description."
-msgstr ""
+msgstr "وصف خطأ غير معروف."
 
 #: libgammu/phone/dummy/dummy.c:630
 msgid "Templates"
-msgstr ""
+msgstr "القوالب"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1969
 msgid "Personal"
-msgstr ""
+msgstr "شخصي"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1971 libgammu/phone/nokia/nfunc.c:1156
 msgid "Car"
-msgstr ""
+msgstr "السيارة"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1973 libgammu/phone/nokia/nfunc.c:1158
 msgid "Headset"
-msgstr ""
+msgstr "سماعة الرأس"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1979 libgammu/phone/nokia/nfunc.c:1146
 msgid "General"
-msgstr ""
+msgstr "العام"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1981 libgammu/phone/nokia/nfunc.c:1148
 msgid "Silent"
-msgstr ""
+msgstr "ساكت"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1983
 msgid "Discreet"
-msgstr ""
+msgstr "كتوم"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1985
 msgid "Loud"
-msgstr ""
+msgstr "مدو"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1987
 msgid "My style"
-msgstr ""
+msgstr "أسلوبي"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:578
 msgid "SIM"
-msgstr ""
+msgstr "SIM"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:579 libgammu/phone/pfunc.c:41
 #: libgammu/phone/s60/s60phone.c:1773
 msgid "Inbox"
-msgstr ""
+msgstr "صندوق بريد الوارد"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:580
 msgid "Sent items"
-msgstr ""
+msgstr "البنود المرسلة"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:581
 msgid "Saved items"
-msgstr ""
+msgstr "البنود المحفوظة"
 
 #: libgammu/phone/nokia/nfunc.c:962
 msgid "Family"
-msgstr ""
+msgstr "العائلة"
 
 #: libgammu/phone/nokia/nfunc.c:964
 msgid "VIP"
-msgstr ""
+msgstr "شخصية ذات أهمية"
 
 #: libgammu/phone/nokia/nfunc.c:966
 msgid "Friends"
-msgstr ""
+msgstr "الأصدقاء"
 
 #: libgammu/phone/nokia/nfunc.c:968
 msgid "Colleagues"
-msgstr ""
+msgstr "الزملاء"
 
 #: libgammu/phone/nokia/nfunc.c:970
 msgid "Other"
-msgstr ""
+msgstr "آخر"
 
 #: libgammu/phone/nokia/nfunc.c:1150
 msgid "Meeting"
-msgstr ""
+msgstr "الإجتماع"
 
 #: libgammu/phone/nokia/nfunc.c:1152
 msgid "Outdoor"
-msgstr ""
+msgstr "في الخارج"
 
 #: libgammu/phone/nokia/nfunc.c:1154
 msgid "Pager"
-msgstr ""
+msgstr "جهاز الإشعار"
 
 #: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1774
 msgid "Outbox"
-msgstr ""
+msgstr "صندوق الصادر"
