@@ -208,8 +208,11 @@ are selected for default queries during initialization.
 
     .. code-block:: sql
 
-        UPDATE outbox SET SendingTimeOut = (NOW() + INTERVAL locktime SECOND) + 0
+        UPDATE outbox SET SendingTimeOut = (NOW() + INTERVAL 60 SECOND) + 0
         WHERE ID = %1 AND (SendingTimeOut < NOW() OR SendingTimeOut IS NULL)
+
+    The default query calculates sending timeout based on :config:option:`LoopSleep`
+    value.
 
     Query specific parameters:
 
