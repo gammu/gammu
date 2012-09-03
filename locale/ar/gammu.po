@@ -8,34 +8,35 @@ msgstr ""
 "Project-Id-Version: gammu 1.28.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-27 10:47+0200\n"
-"PO-Revision-Date: 2010-09-03 14:46+0200\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2012-09-02 18:44+0200\n"
+"Last-Translator: مترجم حرّ <metehyi@gmail.com>\n"
+"Language-Team: Arabic <http://l10n.cihar.com/projects/gammu/gammu/ar/>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
-"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Weblate 1.2\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
 #: helper/message-cmdline.c:441 helper/message-cmdline.c:478
 #: helper/message-cmdline.c:501
 msgid "Where is backup filename and location?"
-msgstr ""
+msgstr "أين هو اسم ملف النسخ الأحتياط و موقعه ؟"
 
 #: gammu/backup.c:63 helper/message-cmdline.c:489
 msgid "Calendar note not found in file"
-msgstr ""
+msgstr "لم يتم العثور على ملاحظة التقويم في الملف"
 
 #: gammu/backup.c:86
 msgid "WAP bookmark not found in file"
-msgstr ""
+msgstr "لم أعثر على علامة القراءة WAP في الملف"
 
 #: gammu/backup.c:107
 msgid "Note not found in file"
-msgstr ""
+msgstr "لم أعثر على الملاحظة في الملف"
 
 #: gammu/backup.c:128
 msgid "Todo note not found in file"
@@ -53,39 +54,39 @@ msgstr ""
 #: gammu/backup.c:167 helper/message-cmdline.c:552
 #, c-format
 msgid "Unknown memory type: \"%s\"\n"
-msgstr ""
+msgstr "نوع الذاكرة غير معروف: \"%s\"\n"
 
 #: gammu/backup.c:181
 #, c-format
 msgid "Unknown backup format: \"%s\"\n"
-msgstr ""
+msgstr "هيئة نسخة الأحتياط غير معروفة: \"%s\"\n"
 
 #: gammu/backup.c:187
 msgid "Error while opening file for writing!\n"
-msgstr ""
+msgstr "خطأ عند محاولة فتح الملف للكتابة !\n"
 
 #: gammu/backup.c:191 gammu/files.c:454 helper/message-cmdline.c:1110
 msgid "Error while writing file!\n"
-msgstr ""
+msgstr "﻿حدث خطأ أثناء كتابة الملف!\n"
 
 #: gammu/backup.c:194
 msgid "Error while closing file!\n"
-msgstr ""
+msgstr "خطأ عند إقفال الملف!\n"
 
 #: gammu/backup.c:241 gammu/backup.c:424 gammu/backup.c:496 gammu/backup.c:531
 #: gammu/backup.c:565 gammu/backup.c:633 gammu/backup.c:670 gammu/backup.c:707
 #: gammu/backup.c:744 gammu/backup.c:781 gammu/backup.c:819 gammu/backup.c:860
 #: gammu/backup.c:894 gammu/backup.c:931 gammu/message.c:426
 msgid "Reading"
-msgstr ""
+msgstr "قيد القراءة"
 
 #: gammu/backup.c:247 gammu/backup.c:292
 msgid "Only part of data saved, please increase the limit."
-msgstr ""
+msgstr "تم حفظ جزء من البيانات فقظ، الرجاء زيادة الحد."
 
 #: gammu/backup.c:268 gammu/backup.c:310 gammu/backup.c:475 gammu/mms.c:182
 msgid "Reading:"
-msgstr ""
+msgstr "قراءة:"
 
 #: gammu/backup.c:269 gammu/backup.c:311 gammu/backup.c:476
 #: gammu/backup.c:1045 gammu/backup.c:1120 gammu/backup.c:1173
@@ -99,7 +100,7 @@ msgstr ""
 #: gammu/misc.c:659 gammu/misc.c:664 gammu/misc.c:1376 gammu/mms.c:183
 #, c-format
 msgid "%i percent"
-msgstr ""
+msgstr "%i بالمئة"
 
 #: gammu/backup.c:367 gammu/backup.c:1026 gammu/backup.c:1645
 #: gammu/calendar.c:632 gammu/calendar.c:882 gammu/calendar.c:957
@@ -142,7 +143,7 @@ msgstr ""
 #: gammu/backup.c:905 gammu/backup.c:942
 #, c-format
 msgid "Only part of data saved, please increase %s."
-msgstr ""
+msgstr "تم حفظ جزء من البيانات فقط، الرجاء زيادة %s."
 
 #: gammu/backup.c:450
 msgid "Checking phone todos"
@@ -266,11 +267,11 @@ msgstr ""
 
 #: gammu/backup.c:971
 msgid "Time of backup"
-msgstr ""
+msgstr "زمن النسخ الأحتياطي"
 
 #: gammu/backup.c:974 gammu/calendar.c:237 gammu/calendar.c:820
 msgid "Phone"
-msgstr ""
+msgstr "الهاتف"
 
 #: gammu/backup.c:977 gammu/misc.c:410
 msgid "IMEI"
@@ -278,7 +279,7 @@ msgstr ""
 
 #: gammu/backup.c:980
 msgid "File created by"
-msgstr ""
+msgstr "تمّ غنشاء الملف من قبل"
 
 #: gammu/backup.c:984
 #, c-format
@@ -308,18 +309,18 @@ msgstr ""
 #: gammu/backup.c:1760 gammu/backup.c:1782 gammu/backup.c:1806
 #: gammu/files.c:753
 msgid "Writing:"
-msgstr ""
+msgstr "الكتابة:"
 
 #: gammu/backup.c:1070 gammu/backup.c:1138 gammu/backup.c:1199
 #: gammu/backup.c:1247 gammu/backup.c:1340 gammu/backup.c:1665
 #: gammu/backup.c:1693
 #, c-format
 msgid "%i entries in backup file\n"
-msgstr ""
+msgstr "%i مدخلات في ملف النسخ الاحتياطي\n"
 
 #: gammu/backup.c:1071
 msgid "Restore phone phonebook?"
-msgstr ""
+msgstr "إستعادة دليل هاتف الهاتف؟"
 
 #: gammu/backup.c:1090
 msgid ""
@@ -330,7 +331,7 @@ msgstr ""
 #: gammu/backup.c:1100 gammu/backup.c:1159
 #, c-format
 msgid "Location %d"
-msgstr ""
+msgstr "الموقع %d"
 
 #: gammu/backup.c:1139
 msgid "Restore SIM phonebook?"
@@ -486,7 +487,7 @@ msgstr ""
 #: gammu/backupsms.c:84
 #, c-format
 msgid "   Increase %s\n"
-msgstr ""
+msgstr "   زيادة %s\n"
 
 #: gammu/backupsms.c:107 gammu/misc.c:1375
 msgid "Deleting:"
@@ -494,7 +495,7 @@ msgstr ""
 
 #: gammu/backupsms.c:141
 msgid "Restore message?"
-msgstr ""
+msgstr "إستعادة الرسالة؟"
 
 #: gammu/backupsms.c:168
 msgid "Do you want to restore binary SMS?"
@@ -520,15 +521,15 @@ msgstr ""
 
 #: gammu/calendar.c:25
 msgid "Call"
-msgstr ""
+msgstr "كلّم"
 
 #: gammu/calendar.c:28
 msgid "Meeting"
-msgstr ""
+msgstr "الإجتماع"
 
 #: gammu/calendar.c:31
 msgid "Birthday (Anniversary)"
-msgstr ""
+msgstr "يوم الميلاد (عيد الميلاد)"
 
 #: gammu/calendar.c:34
 msgid "Memo (Miscellaneous)"
@@ -536,27 +537,27 @@ msgstr ""
 
 #: gammu/calendar.c:37
 msgid "Travel"
-msgstr ""
+msgstr "السفر"
 
 #: gammu/calendar.c:40
 msgid "Vacation"
-msgstr ""
+msgstr "العطلة"
 
 #: gammu/calendar.c:43 gammu/calendar.c:756
 msgid "Alarm"
-msgstr ""
+msgstr "المنبه"
 
 #: gammu/calendar.c:46
 msgid "Shopping"
-msgstr ""
+msgstr "التسوق"
 
 #: gammu/calendar.c:49
 msgid "Daily alarm"
-msgstr ""
+msgstr "المنبه اليومي"
 
 #: gammu/calendar.c:52
 msgid "Training/Athletism"
-msgstr ""
+msgstr "التدرب/رياضة البدن"
 
 #: gammu/calendar.c:55
 msgid "Training/Ball Games"
@@ -564,7 +565,7 @@ msgstr ""
 
 #: gammu/calendar.c:58
 msgid "Training/Cycling"
-msgstr ""
+msgstr "التدرب/الدراجة"
 
 #: gammu/calendar.c:61
 msgid "Training/Budo"
@@ -572,19 +573,19 @@ msgstr ""
 
 #: gammu/calendar.c:64
 msgid "Training/Dance"
-msgstr ""
+msgstr "التدرب/الرقص"
 
 #: gammu/calendar.c:67
 msgid "Training/Extreme Sports"
-msgstr ""
+msgstr "التدرب/الرياضات القاصية"
 
 #: gammu/calendar.c:70
 msgid "Training/Football"
-msgstr ""
+msgstr "التدرب/قرة القدم"
 
 #: gammu/calendar.c:73
 msgid "Training/Golf"
-msgstr ""
+msgstr "التدرب/الغولف"
 
 #: gammu/calendar.c:76
 msgid "Training/Gym"
@@ -592,7 +593,7 @@ msgstr ""
 
 #: gammu/calendar.c:79
 msgid "Training/Horse Races"
-msgstr ""
+msgstr "التدرب/سبق الخيل"
 
 #: gammu/calendar.c:82
 msgid "Training/Hockey"
@@ -600,7 +601,7 @@ msgstr ""
 
 #: gammu/calendar.c:85
 msgid "Training/Races"
-msgstr ""
+msgstr "التدرب/السباق"
 
 #: gammu/calendar.c:88
 msgid "Training/Rugby"
@@ -608,43 +609,43 @@ msgstr ""
 
 #: gammu/calendar.c:91
 msgid "Training/Sailing"
-msgstr ""
+msgstr "التدرب/الملاحة"
 
 #: gammu/calendar.c:94
 msgid "Training/Street Games"
-msgstr ""
+msgstr "التدرب/ألعاب الشوارع"
 
 #: gammu/calendar.c:97
 msgid "Training/Swimming"
-msgstr ""
+msgstr "التدرب/السباحة"
 
 #: gammu/calendar.c:100
 msgid "Training/Tennis"
-msgstr ""
+msgstr "التدرب/كرة المضرب"
 
 #: gammu/calendar.c:103
 msgid "Training/Travels"
-msgstr ""
+msgstr "التدرب/السفريات"
 
 #: gammu/calendar.c:106
 msgid "Training/Winter Games"
-msgstr ""
+msgstr "التدرب/الألعاب الشتوية"
 
 #: gammu/calendar.c:110
 msgid "unknown type!"
-msgstr ""
+msgstr "نوع غير معروف!"
 
 #: gammu/calendar.c:156
 msgid "Start"
-msgstr ""
+msgstr "إنطلق"
 
 #: gammu/calendar.c:163
 msgid "Stop"
-msgstr ""
+msgstr "قفّ"
 
 #: gammu/calendar.c:170 gammu/calendar.c:766 helper/memory-display.c:41
 msgid "Last modified"
-msgstr ""
+msgstr "آخر تغيير"
 
 #: gammu/calendar.c:176 gammu/calendar.c:188
 msgid "Tone alarm"
@@ -667,7 +668,7 @@ msgstr "نص"
 
 #: gammu/calendar.c:222 gammu/calendar.c:825
 msgid "Description"
-msgstr ""
+msgstr "الوصف"
 
 #: gammu/calendar.c:227 gammu/calendar.c:835 helper/memory-display.c:211
 msgid "LUID"
@@ -678,19 +679,19 @@ msgstr ""
 #: gammu/memory.c:141 gammu/message.c:215 gammu/misc.c:1868 gammu/misc.c:1901
 #: gammu/misc.c:2191 gammu/misc.c:2315
 msgid "Location"
-msgstr "موقع"
+msgstr "الموقع"
 
 #: gammu/calendar.c:242 gammu/calendar.c:776 helper/memory-display.c:62
 msgid "Private"
-msgstr ""
+msgstr "خصوصي"
 
 #: gammu/calendar.c:244
 msgid "Yes"
-msgstr ""
+msgstr "نعم"
 
 #: gammu/calendar.c:244
 msgid "No"
-msgstr ""
+msgstr "لا"
 
 #: gammu/calendar.c:256 gammu/calendar.c:262 gammu/calendar.c:267
 #: gammu/calendar.c:805 gammu/calendar.c:811
@@ -699,7 +700,7 @@ msgstr ""
 
 #: gammu/calendar.c:310
 msgid "Repeating"
-msgstr ""
+msgstr "يتكرر"
 
 #: gammu/calendar.c:313
 #, c-format
@@ -710,31 +711,31 @@ msgstr[1] ""
 
 #: gammu/calendar.c:317
 msgid "forever"
-msgstr ""
+msgstr "إلى الأبد"
 
 #: gammu/calendar.c:319
 #, c-format
 msgid "till %s"
-msgstr ""
+msgstr "حتى %s"
 
 #: gammu/calendar.c:321
 #, c-format
 msgid "since %s"
-msgstr ""
+msgstr "منذ %s"
 
 #: gammu/calendar.c:323
 #, c-format
 msgid "since %s till %s"
-msgstr ""
+msgstr "منذ %s حتى %s"
 
 #: gammu/calendar.c:328
 msgid " on each "
-msgstr ""
+msgstr " عند كل "
 
 #: gammu/calendar.c:330
 #, c-format
 msgid " on each %d. "
-msgstr ""
+msgstr " عند كل %d. "
 
 #: gammu/calendar.c:335
 #, c-format
@@ -743,11 +744,11 @@ msgstr ""
 
 #: gammu/calendar.c:338
 msgid " in "
-msgstr ""
+msgstr " في "
 
 #: gammu/calendar.c:344 gammu/calendar.c:352
 msgid "each month"
-msgstr ""
+msgstr "كل شهر"
 
 #: gammu/calendar.c:347
 #, c-format
@@ -757,11 +758,11 @@ msgstr ""
 #: gammu/calendar.c:355
 #, c-format
 msgid "%d. day of year"
-msgstr ""
+msgstr "%d. يوم من سنة"
 
 #: gammu/calendar.c:357
 msgid "day"
-msgstr ""
+msgstr "يوم"
 
 #: gammu/calendar.c:373
 msgid "Age"
@@ -769,26 +770,26 @@ msgstr ""
 
 #: gammu/calendar.c:392
 msgid "Date and time not set in phone"
-msgstr ""
+msgstr "ليس التاريخ و الوقت محددان في الهاتف"
 
 #: gammu/calendar.c:395
 #, c-format
 msgid "Phone time is %s\n"
-msgstr ""
+msgstr "وتوقيت الهاتف هو %s\n"
 
 #: gammu/calendar.c:409
 msgid "Time format is "
-msgstr ""
+msgstr "هيئة الوقت هي "
 
 #. l10n: AM/PM time
 #: gammu/calendar.c:412
 msgid "12 hours"
-msgstr ""
+msgstr "12 ساعات"
 
 #. l10n: 24 hours time
 #: gammu/calendar.c:415
 msgid "24 hours"
-msgstr ""
+msgstr "24 ساعات"
 
 #: gammu/calendar.c:417
 msgid "Date format is "
@@ -824,7 +825,7 @@ msgstr ""
 
 #: gammu/calendar.c:441
 msgid "OFF"
-msgstr ""
+msgstr "موقف"
 
 #: gammu/calendar.c:446
 #, c-format
@@ -855,12 +856,12 @@ msgstr "تاريخ"
 
 #: gammu/calendar.c:543
 msgid "Every day"
-msgstr ""
+msgstr "كل يوم"
 
 #: gammu/calendar.c:548
 #, c-format
 msgid "Time: %02d:%02d\n"
-msgstr ""
+msgstr "الوقت: %02d:%02d\n"
 
 #: gammu/calendar.c:662
 msgid "Auto deleting disabled"
@@ -874,11 +875,11 @@ msgstr ""
 #: gammu/calendar.c:668
 #, c-format
 msgid "Week starts on %s"
-msgstr ""
+msgstr "الأسبوع يبدء ال %s"
 
 #: gammu/calendar.c:693 gammu/memory.c:150
 msgid "Entry was empty"
-msgstr ""
+msgstr "المدخلة كانت فارغة"
 
 #: gammu/calendar.c:695 gammu/memory.c:152
 msgid "Entry was deleted"
@@ -886,40 +887,40 @@ msgstr ""
 
 #: gammu/calendar.c:713
 msgid "Priority"
-msgstr "أولوية"
+msgstr "الأولوية"
 
 #: gammu/calendar.c:716
 msgid "Low"
-msgstr ""
+msgstr "منخفضة"
 
 #: gammu/calendar.c:719
 msgid "Medium"
-msgstr ""
+msgstr "متوسطة"
 
 #: gammu/calendar.c:722
 msgid "High"
-msgstr ""
+msgstr "عالية"
 
 #: gammu/calendar.c:725
 msgid "None"
-msgstr ""
+msgstr "لا شيء"
 
 #: gammu/calendar.c:729 gammu/message.c:111 gammu/misc.c:2122
 #: gammu/misc.c:2165
 msgid "Unknown"
-msgstr ""
+msgstr "غير معروف"
 
 #: gammu/calendar.c:736
 msgid "Due time"
-msgstr ""
+msgstr "زمن الإستحقاق"
 
 #: gammu/calendar.c:741
 msgid "Start time"
-msgstr ""
+msgstr "زمن البدء"
 
 #: gammu/calendar.c:746
 msgid "Completed time"
-msgstr ""
+msgstr "الوقت المنصرم"
 
 #: gammu/calendar.c:751
 msgid "Completed"
@@ -928,36 +929,36 @@ msgstr "تامّ"
 #: gammu/calendar.c:786 gammu/calendar.c:791 helper/memory-display.c:45
 #: helper/memory-display.c:55 helper/memory-display.c:57
 msgid "Category"
-msgstr ""
+msgstr "الصنف"
 
 #: gammu/calendar.c:815
 msgid "Contact"
-msgstr ""
+msgstr "المراسل"
 
 #: gammu/calendar.c:900 gammu/memory.c:316 gammu/memory.c:393
 #, c-format
 msgid "Search text too long, truncating to %d chars!\n"
-msgstr ""
+msgstr "إن سلسلة البحث طويلة جداً، سيتم البتر إلى %d أحرف!\n"
 
 #: gammu/common.c:42
 msgid "Waiting for Security Code."
-msgstr ""
+msgstr "في إنتظار رمز الحماية."
 
 #: gammu/common.c:45
 msgid "Waiting for PIN."
-msgstr ""
+msgstr "في إنتظار الــ PIN."
 
 #: gammu/common.c:48
 msgid "Waiting for PIN2."
-msgstr ""
+msgstr "في إنتظار الــ PIN2."
 
 #: gammu/common.c:51
 msgid "Waiting for PUK."
-msgstr ""
+msgstr "في إنتظار الــ PUK."
 
 #: gammu/common.c:54
 msgid "Waiting for PUK2."
-msgstr ""
+msgstr "في إنتظار الــ PUK2."
 
 #: gammu/common.c:57
 msgid "Waiting for phone code."
@@ -965,63 +966,63 @@ msgstr ""
 
 #: gammu/common.c:60
 msgid "Waiting for network code."
-msgstr ""
+msgstr "في إنتظار رمز الشبكة."
 
 #: gammu/common.c:63
 msgid "Nothing to enter."
-msgstr ""
+msgstr "لا شيئ للإدخال."
 
 #: gammu/common.c:67
 msgid "Unknown security status."
-msgstr ""
+msgstr "حالة الحماية غير معروفة."
 
 #: gammu/common.c:78
 msgid "January"
-msgstr ""
+msgstr "كانون الثاني/يناير"
 
 #: gammu/common.c:81
 msgid "February"
-msgstr ""
+msgstr "شباط/فبراير"
 
 #: gammu/common.c:84
 msgid "March"
-msgstr ""
+msgstr "آذار/مارس"
 
 #: gammu/common.c:87
 msgid "April"
-msgstr ""
+msgstr "نيسان/أبريل"
 
 #: gammu/common.c:90
 msgid "May"
-msgstr ""
+msgstr "أيار/مايو"
 
 #: gammu/common.c:93
 msgid "June"
-msgstr ""
+msgstr "حزيران/يونيوه"
 
 #: gammu/common.c:96
 msgid "July"
-msgstr ""
+msgstr "تموز/يوليوه"
 
 #: gammu/common.c:99
 msgid "August"
-msgstr ""
+msgstr "آب/أغسطس"
 
 #: gammu/common.c:102
 msgid "September"
-msgstr ""
+msgstr "أيلول/سبتمبر"
 
 #: gammu/common.c:105
 msgid "October"
-msgstr ""
+msgstr "تشرين الأول/أكتوبر"
 
 #: gammu/common.c:108
 msgid "November"
-msgstr ""
+msgstr "تشرين الثاني/نوفمبر"
 
 #: gammu/common.c:111
 msgid "December"
-msgstr ""
+msgstr "كانون الأول/ديسمبر"
 
 #: gammu/common.c:114
 msgid "Bad month!"
@@ -1824,7 +1825,7 @@ msgstr ""
 
 #: gammu/gammu.c:702
 msgid "Calls"
-msgstr ""
+msgstr "المكالمات"
 
 #: gammu/gammu.c:703
 msgid "SMS and EMS"
@@ -2133,7 +2134,7 @@ msgstr ""
 
 #: gammu/message.c:228
 msgid "Pager"
-msgstr ""
+msgstr "جهاز الإشعار"
 
 #: gammu/message.c:232
 msgid "Validity"
@@ -2214,11 +2215,11 @@ msgstr ""
 
 #: gammu/message.c:606
 msgid "SIM"
-msgstr ""
+msgstr "SIM"
 
 #: gammu/message.c:608
 msgid "phone"
-msgstr ""
+msgstr "الهاتف"
 
 #: gammu/message.c:612
 #, c-format
@@ -2464,7 +2465,7 @@ msgstr ""
 
 #: gammu/misc.c:383 gammu/search.c:89
 msgid "Manufacturer"
-msgstr ""
+msgstr "المصنّع"
 
 #: gammu/misc.c:386 gammu/search.c:101
 msgid "Model"
@@ -2476,11 +2477,11 @@ msgstr ""
 
 #: gammu/misc.c:404
 msgid "Hardware"
-msgstr ""
+msgstr "العتاد"
 
 #: gammu/misc.c:415
 msgid "Original IMEI"
-msgstr ""
+msgstr "الــ الأصليIMEI"
 
 #: gammu/misc.c:422
 msgid "Manufactured"
@@ -2488,7 +2489,7 @@ msgstr ""
 
 #: gammu/misc.c:428
 msgid "Product code"
-msgstr ""
+msgstr "رمز المنتوج"
 
 #: gammu/misc.c:438
 msgid "SIM IMSI"
@@ -2723,7 +2724,7 @@ msgstr ""
 
 #: gammu/misc.c:1118 gammu/misc.c:1640 gammu/misc.c:1643 gammu/mms.c:104
 msgid "disabled"
-msgstr ""
+msgstr "معطّل"
 
 #: gammu/misc.c:1121
 msgid "Bitmap ID"
@@ -2880,7 +2881,7 @@ msgstr ""
 
 #: gammu/misc.c:1554 gammu/misc.c:1600
 msgid "Normal"
-msgstr ""
+msgstr "عادي"
 
 #: gammu/misc.c:1556 gammu/misc.c:1602
 msgid "Secure"
@@ -2966,7 +2967,7 @@ msgstr ""
 
 #: gammu/misc.c:1682 gammu/misc.c:1732
 msgid "Homepage"
-msgstr ""
+msgstr "الصفحة الرئيسية"
 
 #: gammu/misc.c:1726
 msgid "active"
@@ -3163,7 +3164,7 @@ msgstr ""
 
 #: gammu/misc.c:2152
 msgid "Personal"
-msgstr ""
+msgstr "شخصي"
 
 #: gammu/misc.c:2157
 msgid "Vibrate first"
@@ -3338,7 +3339,7 @@ msgstr ""
 
 #: gammu/mms.c:100
 msgid "Delivery report"
-msgstr ""
+msgstr "تقرير عن التسليم"
 
 #: gammu/mms.c:107 gammu/mms.c:110
 msgid "Content type"
@@ -3865,7 +3866,7 @@ msgstr ""
 #: helper/message-cmdline.c:1185 helper/message-cmdline.c:1202
 #, c-format
 msgid "Can't open file \"%s\"\n"
-msgstr ""
+msgstr "غير قادر على فتح الملف \"%s\"\n"
 
 #: helper/message-cmdline.c:1251
 #, c-format
@@ -3884,7 +3885,7 @@ msgstr ""
 #: helper/message-cmdline.c:1330
 #, c-format
 msgid "Enter the message text and press %s:\n"
-msgstr ""
+msgstr "أدخل نص الرسالة ثم اضغط على %s:\n"
 
 #: helper/message-cmdline.c:1332
 msgid "Ctrl+Z"
@@ -3900,7 +3901,7 @@ msgstr ""
 
 #: helper/message-cmdline.c:1368
 msgid "No network code"
-msgstr ""
+msgstr "لا يوجد رمز الشبكة"
 
 #: helper/message-cmdline.c:1374
 msgid "You have to set network code!"
@@ -3927,15 +3928,15 @@ msgstr ""
 
 #: helper/message-display.c:33
 msgid "SIM memory"
-msgstr ""
+msgstr "ذاكرة شريحة وحدة تعريف المشترك"
 
 #: helper/message-display.c:36
 msgid "phone memory"
-msgstr ""
+msgstr "ذاكرة الهاتف"
 
 #: helper/message-display.c:39
 msgid "phone or SIM memory"
-msgstr ""
+msgstr "ذاكرة الهاتف أو ذاكرة شريحة وحدة تعريف المشترك"
 
 #: helper/message-display.c:46
 msgid "Inbox folder"
@@ -3951,7 +3952,7 @@ msgstr ""
 
 #: helper/message-display.c:121
 msgid "general"
-msgstr ""
+msgstr "العام"
 
 #: helper/message-display.c:145
 msgid "8 bit SMS, cannot be displayed here"
@@ -3959,25 +3960,25 @@ msgstr ""
 
 #: helper/message-display.c:165
 msgid "SMS status report"
-msgstr ""
+msgstr "تقرير عن وضع خدمة الرسائل القصيرة"
 
 #: helper/message-display.c:169 helper/message-display.c:181
 #: helper/message-display.c:233 helper/message-display.c:248
 #: helper/message-display.c:289
 msgid "Sent"
-msgstr ""
+msgstr "صادر"
 
 #: helper/message-display.c:170 helper/message-display.c:290
 msgid "Read"
-msgstr ""
+msgstr "إقراء"
 
 #: helper/message-display.c:171 helper/message-display.c:291
 msgid "UnRead"
-msgstr ""
+msgstr "غير المقروء"
 
 #: helper/message-display.c:172 helper/message-display.c:292
 msgid "UnSent"
-msgstr ""
+msgstr "غير المرسل"
 
 #: helper/message-display.c:176 helper/message-display.c:279
 msgid "Remote number"
@@ -3987,31 +3988,31 @@ msgstr[1] ""
 
 #: helper/message-display.c:180 helper/message-display.c:245
 msgid "Reference number"
-msgstr ""
+msgstr "رقم المرجع"
 
 #: helper/message-display.c:182 helper/message-display.c:230
 msgid "SMSC number"
-msgstr ""
+msgstr "رقم مركز خدمة الرسائل القصيرة"
 
 #: helper/message-display.c:183
 msgid "SMSC response"
-msgstr ""
+msgstr "ردّ مركز خدمة الرسائل القصيرة"
 
 #: helper/message-display.c:184
 msgid "Delivery status"
-msgstr ""
+msgstr "حالة التسليم"
 
 #: helper/message-display.c:185
 msgid "Details"
-msgstr ""
+msgstr "التفاصيل"
 
 #: helper/message-display.c:188 helper/message-display.c:193
 msgid "Temporary error, "
-msgstr ""
+msgstr "خطأ مؤقت،"
 
 #: helper/message-display.c:190
 msgid "Permanent error, "
-msgstr ""
+msgstr "خطأ دائم،"
 
 #: helper/message-display.c:196
 msgid "SM received by the SME"
@@ -4028,7 +4029,7 @@ msgstr ""
 
 #: helper/message-display.c:199 helper/message-display.c:215
 msgid "Congestion"
-msgstr ""
+msgstr "إزدحام"
 
 #: helper/message-display.c:200 helper/message-display.c:216
 msgid "SME busy"
@@ -4040,12 +4041,12 @@ msgstr ""
 
 #: helper/message-display.c:202 helper/message-display.c:218
 msgid "Service rejected"
-msgstr ""
+msgstr "رفض الخدمة"
 
 #: helper/message-display.c:203 helper/message-display.c:209
 #: helper/message-display.c:219
 msgid "Quality of service not available"
-msgstr ""
+msgstr "جودة الخدمة غير متوفرة"
 
 #: helper/message-display.c:204 helper/message-display.c:220
 msgid "Error in SME"
@@ -4065,7 +4066,7 @@ msgstr ""
 
 #: helper/message-display.c:208
 msgid "Not obtainable"
-msgstr ""
+msgstr "لا يمكن الحصول عليه"
 
 #: helper/message-display.c:210
 msgid "No internetworking available"
@@ -4094,11 +4095,11 @@ msgstr ""
 
 #: helper/message-display.c:226 helper/message-display.c:243
 msgid "SMS message"
-msgstr ""
+msgstr "رسالة خدمة الرسائل القصيرة"
 
 #: helper/message-display.c:228
 msgid "Saved"
-msgstr ""
+msgstr "تم حفظه"
 
 #: helper/message-display.c:231
 msgid " (set for reply)"
@@ -4235,7 +4236,7 @@ msgstr ""
 #: helper/message-display.c:328
 #, c-format
 msgid ", %i parts"
-msgstr ""
+msgstr ", %i أجزاء"
 
 #: helper/message-display.c:339
 msgid "Siemens file"
@@ -4291,12 +4292,12 @@ msgstr ""
 
 #: helper/message-display.c:479
 msgid "Message size"
-msgstr ""
+msgstr "حجم الرسالة"
 
 #. l10n: Generic prefix for error messages
 #: helper/message-display.c:512 helper/printing.c:18
 msgid "Error"
-msgstr ""
+msgstr "خطأ"
 
 #: helper/message-display.c:545
 msgid "Data PDU"
@@ -4317,9 +4318,9 @@ msgstr ""
 #. l10n: Generic prefix for warning messages
 #: helper/printing.c:34
 msgid "Warning"
-msgstr ""
+msgstr "تحذير"
 
 #. l10n: Generic prefix for informational messages
 #: helper/printing.c:50
 msgid "Information"
-msgstr ""
+msgstr "معلومات"
