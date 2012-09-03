@@ -521,6 +521,10 @@ GSM_Error ATGEN_DecodePDUMessage(GSM_StateMachine *s, const char *PDU, const int
 	/* Set folder */
 	switch (sms->PDU) {
 		case SMS_Deliver:
+			/* Fix possibly wrong state */
+			if (sms->State == SMS_Sent) {
+				sms->State = SMS_Read;
+			}
 			/* @bug Broken when MEM_SM is not available */
 			if (Priv->SMSMemory == MEM_SM) {
 				sms->Folder = 1; /*INBOX SIM*/
