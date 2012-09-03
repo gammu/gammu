@@ -124,7 +124,7 @@ are selected for default queries during initialization.
 
     .. code-block:: sql
 
-        INSERT INTO phones (IMEI, ID, Send, Receive, InsertIntoDB, TimeOut, Client, Battery, SignalStrength)
+        INSERT INTO phones (IMEI, ID, Send, Receive, InsertIntoDB, TimeOut, Client, Battery, Signal)
         VALUES (%I, %P, %1, %2, NOW(), (NOW() + INTERVAL 10 SECOND) + 0, %N, -1, -1)
 
     Query specific parameters:
@@ -392,7 +392,7 @@ are selected for default queries during initialization.
     .. code-block:: sql
 
         UPDATE phones SET TimeOut= (NOW() + INTERVAL 10 SECOND) + 0,
-        Battery = %1, SignalStrength = %2 WHERE IMEI = %I
+        Battery = %1, Signal = %2 WHERE IMEI = %I
 
     Query specific parameters:
 
