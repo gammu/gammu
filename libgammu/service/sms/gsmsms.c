@@ -625,7 +625,7 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, const unsi
 		if ((buffer[pos] & 0xD0) == 0x10 || (buffer[pos] & 0xF0) == 0xF0) {
 			SMS->Class = buffer[pos] & 3;
 		}
-		smfprintf(di, "SMS class: %i\n",SMS->Class);
+		smfprintf(di, "SMS class: %i\n", SMS->Class);
 
 		pos++;
 		if (pos >= length) {

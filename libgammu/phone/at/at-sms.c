@@ -511,6 +511,9 @@ GSM_Error ATGEN_DecodePDUMessage(GSM_StateMachine *s, const char *PDU, const int
 
 		if (buffer[parse_len] == 0xff) {
 			smprintf(s, "Assuming broken phone which pads SMS data with FF\n");
+		} else if (buffer[parse_len] == 0x89) {
+			/* Not sure what the data here means, see tests/at-sms/39.dump */
+			smprintf(s, "Assuming we can ignore anything starting with 0x89\n");
 		} else {
 			free(buffer);
 			return ERR_UNKNOWN;
