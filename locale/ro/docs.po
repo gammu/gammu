@@ -1,0 +1,104 @@
+# Gammu documentation translation
+# Copyright (C) 2003 - 2012 Michal Čihař <michal@cihar.com>
+# This file is distributed under the same license as the Gammu-docs package.
+# Automatically generated, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Gammu-docs 1.32.0\n"
+"Report-Msgid-Bugs-To: michal@cihar.com\n"
+"POT-Creation-Date: 2012-06-29 16:16+0300\n"
+"PO-Revision-Date: 2012-06-29 16:16+0300\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: ro\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ASCII\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
+"20)) ? 1 : 2;\n"
+
+#. type: Title =
+#: README:2
+#, no-wrap
+msgid "Gammu All Mobile Management Utilities"
+msgstr ""
+
+#. type: Plain text
+#: README:6
+msgid ""
+"Gammu is library and command line utility for mobile phones. It is released "
+"under GNU GPL version 2."
+msgstr ""
+
+#. type: Plain text
+#: README:11
+msgid ""
+"It has been initiated by Marcin Wiacek and other people. Originally the code "
+"was based on Gnokii <http://www.gnokii.org> and later MyGnokii <http://www."
+"mwiacek.com> projects. Gammu was former (up to version 0.58) called "
+"MyGnokii2."
+msgstr ""
+
+#. type: Plain text
+#: README:14
+msgid ""
+"Currently the project is lead by Michal Cihar <michal@cihar.com> with help "
+"of many contributors."
+msgstr ""
+
+#. type: Title =
+#: README:17
+#, no-wrap
+msgid "More information"
+msgstr ""
+
+#. type: Plain text
+#: README:20
+msgid "You can find more information on <http://wammu.eu/gammu/>."
+msgstr ""
+
+#. type: Plain text
+#: README:24
+msgid ""
+"There is also Gammu manual available in docs/manual. You can build HTML "
+"version of it using make manual-html which is viewable online at <http://"
+"wammu.eu/docs/manual/>."
+msgstr ""
+
+#. type: Title =
+#: README:27
+#, no-wrap
+msgid "Feedback and bug reports"
+msgstr ""
+
+#. type: Plain text
+#: README:31
+msgid ""
+"Any feedback is welcome, see <http://wammu.eu/support/> for information how "
+"to contact developers."
+msgstr ""
+
+#. type: Title =
+#: README:34
+#, no-wrap
+msgid "Support developers"
+msgstr ""
+
+#. type: Plain text
+#: README:36
+msgid "You can appreciate developers work at <http://wammu.eu/donate/>."
+msgstr ""
+
+#. type: Title =
+#: INSTALL:2
+#, no-wrap
+msgid "Gammu All Mobile Management Utilities - Installation"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:5
+msgid ""
+"See docs/manual/project/install.rst for installation guide or see chapter "
+"\"Compiling Gammu\" in The Gammu Manual."
+msgstr ""
