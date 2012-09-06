@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: gammu 1.28.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-27 10:47+0200\n"
-"PO-Revision-Date: 2012-09-05 09:57+0200\n"
-"Last-Translator: Michal Čihař <michal@cihar.com>\n"
+"PO-Revision-Date: 2012-09-06 22:22+0200\n"
+"Last-Translator: مترجم حرّ <metehyi@gmail.com>\n"
 "Language-Team: Arabic <http://l10n.cihar.com/projects/gammu/gammu/ar/>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
@@ -40,16 +40,16 @@ msgstr "لم أعثر على الملاحظة في الملف"
 
 #: gammu/backup.c:128
 msgid "Todo note not found in file"
-msgstr ""
+msgstr "لم أعثر على ملاحظة الواجب  في الملف"
 
 #: gammu/backup.c:137 helper/message-cmdline.c:525
 msgid "Where is backup filename and location and memory type?"
-msgstr ""
+msgstr "أين هو ملف الاحتياطي و الموقع و نوع الذاكرة؟"
 
 #: gammu/backup.c:150 gammu/backup.c:161 helper/message-cmdline.c:537
 #: helper/message-cmdline.c:547
 msgid "Phonebook entry not found in file"
-msgstr ""
+msgstr "لم أعثر على مدخلة دفتر العناوين في الملف"
 
 #: gammu/backup.c:167 helper/message-cmdline.c:552
 #, c-format
@@ -115,23 +115,23 @@ msgstr ""
 
 #: gammu/backup.c:404
 msgid "Checking phone phonebook"
-msgstr ""
+msgstr "يجري فحص دفتر عناوين الهاتف"
 
 #: gammu/backup.c:405
 msgid "Backup phone phonebook?"
-msgstr ""
+msgstr "أنسخ إحتياطياً دفتر عناوين الهاتف؟"
 
 #: gammu/backup.c:409
 msgid "Checking SIM phonebook"
-msgstr ""
+msgstr "جاري فحص دفتر عناوين شريحة وحدة تعريف المشترك"
 
 #: gammu/backup.c:410
 msgid "Backup SIM phonebook?"
-msgstr ""
+msgstr "أنسخ إحتياطياً دفتر عناوين شريحة وحدة تعريف المشترك؟"
 
 #: gammu/backup.c:415
 msgid "Checking phone calendar"
-msgstr ""
+msgstr "جاري فحص رزنامة الهاتف"
 
 #: gammu/backup.c:419
 msgid "Backup phone calendar notes?"
@@ -147,19 +147,19 @@ msgstr "تم حفظ جزء من البيانات فقط، الرجاء زياد�
 
 #: gammu/backup.c:450
 msgid "Checking phone todos"
-msgstr ""
+msgstr "جاري فحص واجبات المسجلة في الهاتف"
 
 #: gammu/backup.c:453
 msgid "Backup phone todos?"
-msgstr ""
+msgstr "أنسخ إحتياطياً واجبات الهاتف؟"
 
 #: gammu/backup.c:487
 msgid "Checking phone notes"
-msgstr ""
+msgstr "جاري فحص ملاحظات الهاتف"
 
 #: gammu/backup.c:491
 msgid "Backup phone notes?"
-msgstr ""
+msgstr "أنسخ إحتياطياً ملاحظات الهاتف؟"
 
 #: gammu/backup.c:522
 msgid "Checking phone caller logos"
@@ -179,11 +179,11 @@ msgstr ""
 
 #: gammu/backup.c:589
 msgid "Checking phone startup text"
-msgstr ""
+msgstr "جاري فحص نص بداية تشغيل الهاتف"
 
 #: gammu/backup.c:593
 msgid "Backup phone startup logo/text?"
-msgstr ""
+msgstr "أنسخ إحتياطياً نص/شعار بداية تشغيل الهاتف؟"
 
 #: gammu/backup.c:608
 msgid "Checking phone operator logo"
@@ -279,7 +279,7 @@ msgstr ""
 
 #: gammu/backup.c:980
 msgid "File created by"
-msgstr "تمّ غنشاء الملف من قبل"
+msgstr "تمّ إنشاء الملف من قبل"
 
 #: gammu/backup.c:984
 #, c-format
@@ -316,11 +316,11 @@ msgstr "الكتابة:"
 #: gammu/backup.c:1693
 #, c-format
 msgid "%i entries in backup file\n"
-msgstr "%i مدخلات في ملف النسخ الاحتياطي\n"
+msgstr "%i مدخلات في ملف النسخ الإحتياطي\n"
 
 #: gammu/backup.c:1071
 msgid "Restore phone phonebook?"
-msgstr "إستعادة دليل هاتف الهاتف؟"
+msgstr "إستعادة دفتر عناوين الهاتف؟"
 
 #: gammu/backup.c:1090
 msgid ""
@@ -335,7 +335,7 @@ msgstr "الموقع %d"
 
 #: gammu/backup.c:1139
 msgid "Restore SIM phonebook?"
-msgstr ""
+msgstr "إستعادة دفتر عناوين شريحة وحدة تعريف المشترك؟"
 
 #: gammu/backup.c:1184 gammu/backup.c:1717
 msgid ""
@@ -345,33 +345,33 @@ msgstr ""
 
 #: gammu/backup.c:1200
 msgid "Restore phone calendar notes?"
-msgstr ""
+msgstr "إستعادة ملاحظات رزنامة الهاتف؟"
 
 #: gammu/backup.c:1201
 msgid "Restore notes from the past?"
-msgstr ""
+msgstr "إستعادة الملاحظات من الماضي؟"
 
 #: gammu/backup.c:1207 gammu/backup.c:1346
 msgid "Deleting old notes:"
-msgstr ""
+msgstr "حذف الملاحظات القديمة:"
 
 #: gammu/backup.c:1219 gammu/backup.c:1269 gammu/backup.c:1502
 #: gammu/backup.c:1560 gammu/misc.c:1385 gammu/misc.c:1430 gammu/misc.c:1454
 #: gammu/misc.c:1502
 msgid "Done"
-msgstr ""
+msgstr "إنتهيت"
 
 #: gammu/backup.c:1249
 msgid "Restore phone todo?"
-msgstr ""
+msgstr "إستعادة واجبات الهاتف؟"
 
 #: gammu/backup.c:1257
 msgid "Deleting old todos:"
-msgstr ""
+msgstr "حذف الواجبات القديمة:"
 
 #: gammu/backup.c:1342
 msgid "Restore phone notes?"
-msgstr ""
+msgstr "﻿استعادة ملاحظات الهاتف؟"
 
 #: gammu/backup.c:1373
 msgid "Restore SIM SMSC profiles?"
@@ -391,7 +391,7 @@ msgstr ""
 
 #: gammu/backup.c:1407
 msgid "Deleting old bookmarks:"
-msgstr ""
+msgstr "حذف علامات القراءة القديمة:"
 
 #: gammu/backup.c:1444
 msgid "Restore phone WAP settings?"
@@ -408,11 +408,11 @@ msgstr ""
 #: gammu/backup.c:1499 gammu/misc.c:1417 gammu/misc.c:1441 gammu/misc.c:1465
 #: gammu/misc.c:1481 gammu/misc.c:1499
 msgid "Deleting"
-msgstr ""
+msgstr "جاري المحو"
 
 #: gammu/backup.c:1504
 msgid "Restore user ringtones?"
-msgstr ""
+msgstr "﻿إستعادة نغمات المستخدم؟"
 
 #: gammu/backup.c:1530
 msgid "Restore phone profiles?"
@@ -434,7 +434,7 @@ msgstr ""
 #: gammu/memory.c:168
 #, c-format
 msgid "Unknown memory type (\"%s\")\n"
-msgstr ""
+msgstr "﻿نوع الذاكرة غير معروف (\"%s\")\n"
 
 #: gammu/backup.c:1635 gammu/memory.c:70 gammu/misc.c:773 gammu/misc.c:806
 #: helper/message-cmdline.c:1032
@@ -445,11 +445,11 @@ msgstr ""
 #: gammu/backup.c:1667 gammu/backup.c:1695
 #, c-format
 msgid "Memory has only %i free locations.Exiting\n"
-msgstr ""
+msgstr "في الذاكرة فقط %i مواقع خالية.الخروج\n"
 
 #: gammu/backup.c:1668
 msgid "Add phone phonebook entries?"
-msgstr ""
+msgstr "هل أضيف مدخلات في دفتر العناوين للهاتف؟"
 
 #: gammu/backup.c:1696
 msgid "Add SIM phonebook entries?"
@@ -461,11 +461,11 @@ msgstr ""
 
 #: gammu/backup.c:1752
 msgid "Add phone ToDo?"
-msgstr ""
+msgstr "هل أضف واجب على الهاتف؟"
 
 #: gammu/backup.c:1774
 msgid "Add notes to phone?"
-msgstr ""
+msgstr "هل أضف ملاحظات على الهاتف؟"
 
 #: gammu/backup.c:1797
 msgid "Add phone WAP bookmarks?"
@@ -482,7 +482,7 @@ msgstr ""
 
 #: gammu/backupsms.c:58 gammu/backupsms.c:183
 msgid " (SIM)"
-msgstr ""
+msgstr " (وحدة تعريف المشترك)"
 
 #: gammu/backupsms.c:84
 #, c-format
@@ -491,7 +491,7 @@ msgstr "   زيادة %s\n"
 
 #: gammu/backupsms.c:107 gammu/misc.c:1375
 msgid "Deleting:"
-msgstr ""
+msgstr "حذف:"
 
 #: gammu/backupsms.c:141
 msgid "Restore message?"
@@ -509,15 +509,15 @@ msgstr ""
 #: gammu/backupsms.c:184
 #, c-format
 msgid "saving %i SMS\n"
-msgstr ""
+msgstr "جاري حفظ %i رسالة خدمة الرسائل الصقصيرة\n"
 
 #: gammu/calendar.c:19
 msgid "Note type"
-msgstr ""
+msgstr "نوع الملاحظة"
 
 #: gammu/calendar.c:22
 msgid "Reminder (Date)"
-msgstr ""
+msgstr "التذكير (التاريخ)"
 
 #: gammu/calendar.c:25
 msgid "Call"
@@ -2579,11 +2579,11 @@ msgstr ""
 
 #: gammu/misc.c:640
 msgid "Todos"
-msgstr ""
+msgstr "الواجبات"
 
 #: gammu/misc.c:644
 msgid "Calendar"
-msgstr ""
+msgstr "الرزنامة"
 
 #: gammu/misc.c:653
 msgid "Signal strength"
@@ -3966,7 +3966,7 @@ msgstr "تقرير عن وضع خدمة الرسائل القصيرة"
 #: helper/message-display.c:233 helper/message-display.c:248
 #: helper/message-display.c:289
 msgid "Sent"
-msgstr "صادر"
+msgstr "الصادر"
 
 #: helper/message-display.c:170 helper/message-display.c:290
 msgid "Read"
@@ -4231,7 +4231,7 @@ msgstr ""
 #: helper/message-display.c:326
 #, c-format
 msgid ", part %i of %i"
-msgstr ""
+msgstr "، الجزء %i من %i"
 
 #: helper/message-display.c:328
 #, c-format
@@ -4263,11 +4263,11 @@ msgstr ""
 #: helper/message-display.c:415
 #, c-format
 msgid "Ringtone \"%s\"\n"
-msgstr ""
+msgstr "النغمة \"%s\"\n"
 
 #: helper/message-display.c:420
 msgid "Do you want to play it?"
-msgstr ""
+msgstr "هل تريد تشغيله؟"
 
 #: helper/message-display.c:425
 msgid "Caller logo"
@@ -4305,7 +4305,7 @@ msgstr ""
 
 #: helper/message-display.c:546
 msgid "Number of bits"
-msgstr ""
+msgstr "عدد البتات"
 
 #: helper/message-display.c:548
 msgid "UDH"
@@ -4323,4 +4323,4 @@ msgstr "تحذير"
 #. l10n: Generic prefix for informational messages
 #: helper/printing.c:50
 msgid "Information"
-msgstr "معلومات"
+msgstr "المعلومات"
