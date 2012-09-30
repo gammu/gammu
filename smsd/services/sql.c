@@ -268,6 +268,16 @@ static SQL_Error SMSDSQL_NamedQuery(GSM_SMSDConfig * Config, const char *sql_que
 	int n, argc = 0;
 	struct GSM_SMSDdbobj *db = Config->db;
 
+	GSM_NetworkInfo NetInfo;
+	GSM_Error error;
+	char *NetCode, *NetName;
+	if ( (error = GSM_GetNetworkInfo(Config->gsm,&NetInfo)) == ERR_NONE) {
+		NetCode = NetInfo.NetworkCode;
+		if (NetInfo.NetworkName[0] != 0x00 || NetInfo.NetworkName[1] != 0x00) {
+			NetName = DecodeUnicodeConsole(NetInfo.NetworkName);
+		}
+	}
+
 	if (params != NULL) {
 		while (params[argc].type != SQL_TYPE_NONE) argc++;
 	}
@@ -313,6 +323,12 @@ static SQL_Error SMSDSQL_NamedQuery(GSM_SMSDConfig * Config, const char *sql_que
 				break;
 			case 'P':
 				to_print = Config->PhoneID;
+				break;
+			case 'O':
+				to_print = NetCode;
+				break;
+			case 'M':
+				to_print = NetName;
 				break;
 			case 'N':
 				snprintf(static_buff, sizeof(static_buff), "Gammu %s, %s, %s", GAMMU_VERSION, GetOS(), GetCompiler());
@@ -1177,6 +1193,8 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 		"INSERT INTO phones (",
 			ESCAPE_FIELD("IMEI"),
 			", ", ESCAPE_FIELD("ID"),
+			", ", ESCAPE_FIELD("NetCode"),
+			", ", ESCAPE_FIELD("NetName"),
 			", ", ESCAPE_FIELD("Send"),
 			", ", ESCAPE_FIELD("Receive"),
 			", ", ESCAPE_FIELD("InsertIntoDB"),
@@ -1184,7 +1202,7 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 			", ", ESCAPE_FIELD("Client"),
 			", ", ESCAPE_FIELD("Battery"),
 			", ", ESCAPE_FIELD("Signal"),
-			") VALUES (%I, %P, %1, %2, ",
+			") VALUES (%I, %P, %O, %M, %1, %2, ",
 			SMSDSQL_Now(Config),
 			", ",
 			SMSDSQL_NowPlus(Config, 10),
@@ -1384,6 +1402,8 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 			ESCAPE_FIELD("TimeOut"), "= ", SMSDSQL_NowPlus(Config, 10),
 			", ", ESCAPE_FIELD("Battery"), " = %1"
 			", ", ESCAPE_FIELD("Signal"), " = %2"
+			", ", ESCAPE_FIELD("NetCode"), " = %O"
+			", ", ESCAPE_FIELD("NetName"), " = %M"
 			" WHERE ", ESCAPE_FIELD("IMEI"), " = %I", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
