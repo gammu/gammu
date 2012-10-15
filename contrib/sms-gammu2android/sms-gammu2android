@@ -1,10 +1,18 @@
 #!/usr/bin/perl
 
+# $Id$
 # Nokia To Android SMS Converter
 # Copyright (C) 2009 Thilo-Alexander Ginkel <thilo@ginkel.com>
 #
 # For instructions, refer to:
 # http://blog.ginkel.com/2009/12/transferring-sms-from-nokia-to-android/
+#
+# Modify by Stéphane Pontier <shadow.walker@free.fr>
+# - Take into account old and recent gammu backup (Sent and DateTime)
+# - Recognize multipart sent message
+# - Set a timestamp to sent message (based on previous message timestamp)
+# - Carriage return are properly encoded
+# - Set the sms count (allow smsbackup restore to have a correct progress bar)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,91 +27,155 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+use strict;
+use warnings;
 use Date::Parse;
 use HTML::Entities;
 
-print <<HEADER;
-<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
-<smses>
-HEADER
+my ( $time, $address, $msgid, $seqno, $type, $text, $id );
+my %multipart;
+my $latesttime;
+my ( %multiplemessageindex, @messages, $messageid );
 
 while (<>) {
-	chomp;
-	s/^(.*)\r$/$1/;
+    chomp;
+    s/^(.*)\r$/$1/;
 
-	if (/^DateTime = (.*)/) {
-		$time = str2time($1);
-	} elsif (/^Number = "(.*)"/) {
-		$address = $1;
-	} elsif (/^UDH = 050003(.*)(\p{XDigit}{2})/) {
-		$msgid = $1;
-		$seqno = $2;
-	} elsif (/^State = (.*)/) {
-		if ($1 eq "Sent") {
-			$type = 2;
-		} elsif ($1 eq "Read") {
-			$type = 1;
-		}
-	} elsif (/^Text\d+ = (.*)/) {
-		my $encoded = $1;
-		$encoded =~ s/([0-9A-F]{4})/&utf8(hex($1))/gei;
-		$text .= $encoded;
-		# print $text, "\n";
-	} elsif (/^$/ and defined($address)) {
-		unless ($msgid) {
-			print_message($address, $time, $type, $text);
-		} else {
-			my $msg = {};
-			my $parts = {};
+    if (/^Sent = (.*)/) {
+        $time = str2time($1);
+    } elsif (/^DateTime = (.*)/) {
+        $time = str2time($1);
+    } elsif (/^Number = "(.*)"/) {
+        $address = $1;
+    } elsif (/^UDH = 050003(.*)(\p{XDigit}{2})/) {
+        $msgid = $1;
+        $seqno = $2;
+    } elsif (/^UDH = 060804(.*)(\p{XDigit}{2})/) {
+        $msgid = $1;
+        $seqno = $2;
+    } elsif (/^MessageReference = (.*)/) {
+        $messageid = $1;
+    } elsif (/^State = (.*)/) {
+        if ( $1 eq 'Sent' or $1 eq 'UnSent' ) {
+            $type = 2;
+        } elsif ( $1 eq 'Read' ) {
+            $type = 1;
+        }
 
-			$id = $address . $msgid;
+        # adjust time if missing
+        #if (!defined $time) {
+        #    $time = 0;
+        #}
+        if ( defined $time ) {
+            $latesttime = $time;
+        } else {
+            $latesttime += 10;
+            $time = $latesttime;
+        }
+    } elsif (/^Text\d+ = (.*)/) {
+        my $encoded = $1;
+        $encoded =~ s/([0-9A-F]{4})/&utf8(hex($1))/gei;
+        $text .= $encoded;
 
-			if (defined($multipart{$id})) {
-				$msg = $multipart{$id};
-			} else {
-				$msg->{'date'} = $time;
-				$msg->{'address'} = $address;
-				$msg->{'type'} = $type;
-			}
+        # print $text, "\n";
+    } elsif ( /^$/ and defined $address ) {
+        unless ($msgid) {
+            push @messages,
+                {
+                address   => $address,
+                date      => $time,
+                type      => $type,
+                text      => $text,
+                messageid => $messageid,
+                };
+        } else {
+            my $msg   = {};
+            my $parts = {};
 
-			if (defined($msg->{'parts'})) {
-				$parts = $msg->{'parts'};
-			}
+            $id = $address . $msgid;
 
-			$parts->{$seqno} = $text;
+            #multiplemessageindex contain the position of the multiple message
+            $multiplemessageindex{$id} = scalar @messages unless defined $multiplemessageindex{$id};
+            if ( defined $multipart{$id} ) {
+                $msg = $multipart{$id};
+            } else {
+                $msg->{'date'}      = $time;
+                $msg->{'address'}   = $address;
+                $msg->{'type'}      = $type;
+                $msg->{'messageid'} = $messageid;
+            }
 
-			$msg->{'parts'} = $parts;
-			$multipart{$id} = $msg;
-		}
+            if ( defined( $msg->{'parts'} ) ) {
+                $parts = $msg->{'parts'};
+            }
 
-		$time = undef;
-		$address = undef;
-		$msgid = undef;
-		$seqno = undef;
-		$type = undef;
-		$text = undef;
-	}
+            $parts->{$seqno} = $text;
+
+            $msg->{'parts'}                         = $parts;
+            $multipart{$id}                         = $msg;
+            $messages[ $multiplemessageindex{$id} ] = $msg;
+        }
+
+        $time    = undef;
+        $address = undef;
+        $msgid   = undef;
+        $seqno   = undef;
+        $type    = undef;
+        $text    = undef;
+    }
 }
 
-# output any multipart messages
-foreach $msg (values %multipart) {
-	my $body;
-	my $parts = $msg->{'parts'};
-	foreach $seqno (sort keys %$parts) {
-		$body .= $parts->{$seqno};
-	}
-	print_message($msg->{'address'}, $msg->{'date'}, $msg->{'type'}, $body);
+my $msgnb = scalar @messages;
+print <<"HEADER";
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<smses count="$msgnb">
+HEADER
+
+foreach my $message ( sort mysort @messages ) {
+    if ( defined $message->{'text'} ) {
+        print_message( $message->{'address'}, $message->{'date'}, $message->{'type'}, $message->{'text'}, $message->{'messageid'} );
+    } elsif ( defined $message->{'parts'} ) {
+        my $body;
+        my $parts = $message->{'parts'};
+        foreach my $seqno ( sort keys %{$parts} ) {
+            $body .= $parts->{$seqno};
+        }
+        print_message( $message->{'address'}, $message->{'date'}, $message->{'type'}, $body, $message->{'messageid'} );
+    } else {
+        print "SOMETHING gone wrong\n";
+    }
 }
 
 print "</smses>\n";
 
-sub utf8 { local($_)=@_;
-    return $_ < 0x80 ? chr($_) : 
-	$_ < 0x800 ? chr($_>>6&0x3F|0xC0) . chr($_&0x3F|0x80) :
-	    chr($_>>12&0x0F|0xE0).chr($_>>6&0x3F|0x80).chr($_&0x3F|0x80);
+sub mysort {
+    if ( $a->{'date'} == $b->{'date'} ) {
+        $a->{'messageid'} <=> $b->{'messageid'};
+    } else {
+        $a->{'date'} <=> $b->{'date'};
+    }
+}
+
+sub utf8 {
+    local ($_) = @_;
+    return
+          $_ < 0x80  ? chr($_)
+        : $_ < 0x800 ? chr( $_ >> 6 & 0x3F | 0xC0 ) . chr( $_ & 0x3F | 0x80 )
+        :              chr( $_ >> 12 & 0x0F | 0xE0 ) . chr( $_ >> 6 & 0x3F | 0x80 ) . chr( $_ & 0x3F | 0x80 );
 }
 
 sub print_message {
-	my ($address, $date, $type, $text) = @_;
-	print "<sms protocol=\"0\" address=\"" . encode_entities($address, "<>&'\"") . "\" date=\"${date}000\" type=\"$type\" subject=\"null\" body=\"" . encode_entities($text, "<>&'\"") . "\" toa=\"null\" sc_toa=\"null\" service_center=\"\" read=\"1\" status=\"-1\" />\n";
-} 
+    my ( $address2, $date2, $type2, $text2, $messageid2 ) = @_;
+    print '<sms protocol="0" address="';
+    print encode_entities( $address2, "<>&'\"" );
+    if ( $date2 != 0 ) {
+        print "\" date=\"${date2}000\" ";
+    } else {
+        printf '" date="%013d" ', $messageid2;
+    }
+    $text2 = encode_entities( $text2, "<>&'\"" );
+    $text2 =~ s/\n/&#10;/g;
+    print "type=\"$type2\" subject=\"null\" body=\"";
+    print $text2 . "\" toa=\"null\" sc_toa=\"null\" service_center=\"\" read=\"1\" status=\"-1\" />\n";
+    return;
+}
