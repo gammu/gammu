@@ -94,10 +94,6 @@ if (APPLE)
         # if we do for 10.4
         MACRO_TUNE_COMPILER("-mmacosx-version-min=10.4 -isysroot /Developer/SDKs/MacOSX10.4u.sdk")
         MACRO_TUNE_COMPILER("-arch i386")
-    else (ENABLE_TIGER)
-        # else try to be compatible with 10.5
-        MACRO_TUNE_COMPILER("-mmacosx-version-min=10.5 -isysroot /Developer/SDKs/MacOSX10.5.sdk")
-        MACRO_TUNE_COMPILER("-arch x86_64")
     endif (ENABLE_TIGER)
 endif (APPLE)
 
