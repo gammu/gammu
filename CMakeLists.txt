@@ -2,9 +2,7 @@
 # Copyright (c) 2007 - 2010 Michal Cihar
 # vim: expandtab sw=4 ts=4 sts=4:
 
-# I didn't check older versions
-# However 2.6 is needed for crosscompiling, Cpack components and other useful things
-cmake_minimum_required (VERSION 2.4.2)
+cmake_minimum_required (VERSION 2.6)
 INCLUDE (CMakeForceCompiler)
 if (ENABLE_TIGER)
     # In order to build for tiger we need to force to gcc-4.0
@@ -122,10 +120,6 @@ else (HAVE_WCHAR_H)
 endif (HAVE_WCHAR_H)
 check_symbol_exists (I_SETSIG "stropts.h" HAVE_I_SETSIG)
 check_include_file (strings.h HAVE_STRINGS_H)
-# These checks are required for check_type_size() on cmake < 2.6.0
-check_include_file (sys/types.h HAVE_SYS_TYPES_H)
-check_include_file (stdint.h HAVE_STDINT_H)
-check_include_file (stddef.h HAVE_STDDEF_H)
 check_function_exists (scandir HAVE_SCANDIR)
 check_function_exists (alphasort HAVE_ALPHASORT)
 check_symbol_exists (getopt "unistd.h" HAVE_GETOPT)
