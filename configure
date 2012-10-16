@@ -56,7 +56,6 @@ CMAKE_CROSS=
 CMAKE_PROTECTION=
 CMAKE_PYTHON=
 CMAKE_GNAP=
-CMAKE_TIGER=
 CMAKE_COMPLETE=
 
 # process command line
@@ -107,9 +106,6 @@ while [ "$#" -gt 0 ] ; do
         --without-completion)
             CMAKE_COMPLETE="-DINSTALL_BASH_COMPLETION=OFF"
             ;;
-        --enable-tiger)
-            CMAKE_TIGER="-DENABLE_TIGER=ON"
-            ;;
         --build=*)
             ;;
         --disable-dependency-tracking)
@@ -146,4 +142,4 @@ fi
 cd "$BUILD_DIR"
 
 # invoke cmake to do configuration
-cmake $SOURCE_DIR $CMAKE_PREFIX $CMAKE_SHARED $CMAKE_DEBUG $CMAKE_BACKUP $CMAKE_CROSS $CMAKE_PROTECTION $CMAKE_PYTHON $CMAKE_GNAP $CMAKE_TIGER $CMAKE_COMPLETE
+cmake $SOURCE_DIR $CMAKE_PREFIX $CMAKE_SHARED $CMAKE_DEBUG $CMAKE_BACKUP $CMAKE_CROSS $CMAKE_PROTECTION $CMAKE_PYTHON $CMAKE_GNAP $CMAKE_COMPLETE

@@ -4,10 +4,6 @@
 
 cmake_minimum_required (VERSION 2.6)
 INCLUDE (CMakeForceCompiler)
-if (ENABLE_TIGER)
-    # In order to build for tiger we need to force to gcc-4.0
-    CMAKE_FORCE_C_COMPILER   (gcc-4.0 i686-apple-darwin10-gcc-4.0.1)
-endif(ENABLE_TIGER)
 
 project (Gammu C)
 
@@ -87,13 +83,6 @@ macro_optional_find_package (Doxygen)
 
 # I'd say this is task of CMake to export this
 check_symbol_exists (__clang__ "" CLANG_COMPILER)
-if (APPLE)
-    if (ENABLE_TIGER)
-        # if we do for 10.4
-        MACRO_TUNE_COMPILER("-mmacosx-version-min=10.4 -isysroot /Developer/SDKs/MacOSX10.4u.sdk")
-        MACRO_TUNE_COMPILER("-arch i386")
-    endif (ENABLE_TIGER)
-endif (APPLE)
 
 # Configuration checks
 check_symbol_exists (strncasecmp "string.h" HAVE_STRNCASECMP)
