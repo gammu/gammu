@@ -243,8 +243,8 @@ macro_optional_find_package (GObject)
 pkg_check_modules(GUDEV gudev-1.0)
 
 if (CMAKE_CROSSCOMPILING AND MINGW)
-    set (HAVE_WINT_T 4 CACHE INTERNAL "")
-    set (HAVE_WCHAR_T 4 CACHE INTERNAL "")
+    set (HAVE_WINT_T True CACHE INTERNAL "")
+    set (HAVE_WCHAR_T True CACHE INTERNAL "")
 else (CMAKE_CROSSCOMPILING AND MINGW)
     # Search for needed includes and functions
     if (HAVE_WCHAR_H)
