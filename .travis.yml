@@ -1,5 +1,5 @@
 language: c
 compiler:
   - gcc
-    - clang
+  - clang
 script: ./configure && make && make test
