@@ -2,4 +2,4 @@ language: c
 compiler:
   - gcc
   - clang
-script: mkdir build && cd build && cmake .. -DCMAKE_CC_COMPILER=$CC && make && make test
+script: mkdir build && cd build && cmake .. -DCMAKE_C_COMPILER=$CC && make && make test
