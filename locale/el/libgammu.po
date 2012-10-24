@@ -8,14 +8,15 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-08-27 11:26+0200\n"
-"PO-Revision-Date: 2009-01-27 14:28+0100\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"Language: \n"
+"PO-Revision-Date: 2012-09-27 11:47+0200\n"
+"Last-Translator: Panagiotis Papazoglou <papaz_p@yahoo.com>\n"
+"Language-Team: Greek <http://l10n.cihar.com/projects/gammu/libgammu/el/>\n"
+"Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Weblate 1.2\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
@@ -58,18 +59,16 @@ msgid "Error setting device speed. Maybe speed not supported."
 msgstr ""
 
 #: libgammu/gsmcomon.c:94
-#, fuzzy
 msgid "Error writing to the device."
-msgstr "Σφάλμα κατά το άνοιγμα της συσκεύης"
+msgstr "Σφάλμα εγγραφής στη συσκεύη."
 
 #: libgammu/gsmcomon.c:95
 msgid "Error during reading from the device."
 msgstr ""
 
 #: libgammu/gsmcomon.c:96
-#, fuzzy
 msgid "Can't set parity on the device."
-msgstr "Συνδέστε τη συσκευή"
+msgstr "Αδύνατος ο ορισμός ισότητας στη συσκευή."
 
 #: libgammu/gsmcomon.c:97
 msgid "No response in specified timeout. Probably phone not connected."
@@ -124,11 +123,10 @@ msgid "Invalid location. Maybe too high?"
 msgstr ""
 
 #: libgammu/gsmcomon.c:108
-#, fuzzy
 msgid "Functionality not implemented. You are welcome to help authors with it."
 msgstr ""
-"Αυτή η λειτουργία δεν είναι ακόμη εφαρμοσμένη στο τηλέφωνό σας. Εάν θέλετε "
-"βοήθεια με την εφαρμογή παρακαλώ επικοινωνήστε με τους συγγραφείς."
+"Αυτή η λειτουργία δεν εφαρμοστηκε. Εάν θέλετε, μπορείτε να βοηθήστε τους "
+"δημιουργούς με αυτή."
 
 #: libgammu/gsmcomon.c:109
 msgid "Memory full."
@@ -139,9 +137,8 @@ msgid "Unknown error."
 msgstr ""
 
 #: libgammu/gsmcomon.c:111
-#, fuzzy
 msgid "Can not open specified file."
-msgstr "Αδυναμία δημιουργίας αρχείου!"
+msgstr "Αδύνατο το άνοιγμα του συγκεκριμένου αρχείου."
 
 #: libgammu/gsmcomon.c:112
 msgid "More memory required..."
@@ -161,18 +158,16 @@ msgid "You're inside phone menu (maybe editing?). Leave it and try again."
 msgstr ""
 
 #: libgammu/gsmcomon.c:116
-#, fuzzy
 msgid "Phone is not connected."
-msgstr "Πληροφορίες τηλεφώνου"
+msgstr "Το τηλέφωνο δεν συνδέθηκε."
 
 #: libgammu/gsmcomon.c:117
-#, fuzzy
 msgid ""
 "Function is currently being implemented. If you want to help, please contact "
 "authors."
 msgstr ""
-"Αυτή η λειτουργία δεν είναι ακόμη εφαρμοσμένη στο τηλέφωνό σας. Εάν θέλετε "
-"βοήθεια με την εφαρμογή παρακαλώ επικοινωνήστε με τους συγγραφείς."
+"Αυτή η λειτουργία δεν εφαρμόστηκε. Εάν θέλετε να βοηθήσετε, επικοινωνήστε με "
+"τους συγγραφείς."
 
 #: libgammu/gsmcomon.c:118
 msgid "Phone is disabled and connected to charger."
@@ -297,32 +292,28 @@ msgid "Service is not running."
 msgstr ""
 
 #: libgammu/gsmcomon.c:148
-#, fuzzy
 msgid "Service configuration is missing."
-msgstr "Τομέας επιλογής διαμόρφωσης"
+msgstr "Η ρύμιση υπηρεσίας λείπει."
 
 #: libgammu/gsmcomon.c:149
 msgid "Command rejected because device was busy. Wait and restart."
 msgstr ""
 
 #: libgammu/gsmcomon.c:150
-#, fuzzy
 msgid "Could not connect to the server."
-msgstr "Σύνδεση στον IMAP διακομιστή"
+msgstr "Αδύνατη η σύνδεση με τον διακομιστή."
 
 #: libgammu/gsmcomon.c:151
-#, fuzzy
 msgid "Could not resolve the host name."
-msgstr "Δεν κατέστη δυνατή η ανάγνωση του αποθηκευμένου μηνύματος!"
+msgstr "Αδύνατη η μετάφραση του ονόματος φιλοξενητή."
 
 #: libgammu/gsmcomon.c:152
 msgid "Failed to get SMSC number from phone."
 msgstr ""
 
 #: libgammu/gsmcomon.c:153
-#, fuzzy
 msgid "Operation aborted."
-msgstr "Λειτουργία σε διαδικασία."
+msgstr "Η λειτουργία διακόπηκε."
 
 #: libgammu/gsmcomon.c:154
 msgid ""
@@ -331,9 +322,8 @@ msgid ""
 msgstr ""
 
 #: libgammu/gsmcomon.c:155
-#, fuzzy
 msgid "Entry is read only."
-msgstr "Η εγγραφή δημιουργήθηκε!"
+msgstr "Η εισαγωγή είναι μόνο για ανάγνωση."
 
 #: libgammu/gsmcomon.c:188
 msgid "Unknown error description."

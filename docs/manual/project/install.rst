@@ -385,6 +385,13 @@ Or completely disable iconv support:
 
    cmake -DWITH_Iconv=OFF ..
 
+To build backward compatible binaries, you need CMake 2.8 or newer. The
+command line then would look like:
+
+.. code-block:: sh
+
+    cmake -DCMAKE_OSX_ARCHITECTURES="ppc;i386;x86_64" -DCMAKE_OSX_DEPLOYMENT_TARGET=10.4
+
 
 Cross compilation for Windows on Linux
 --------------------------------------

@@ -2,14 +2,8 @@
 # Copyright (c) 2007 - 2010 Michal Cihar
 # vim: expandtab sw=4 ts=4 sts=4:
 
-# I didn't check older versions
-# However 2.6 is needed for crosscompiling, Cpack components and other useful things
-cmake_minimum_required (VERSION 2.4.2)
+cmake_minimum_required (VERSION 2.6)
 INCLUDE (CMakeForceCompiler)
-if (ENABLE_TIGER)
-    # In order to build for tiger we need to force to gcc-4.0
-    CMAKE_FORCE_C_COMPILER   (gcc-4.0 i686-apple-darwin10-gcc-4.0.1)
-endif(ENABLE_TIGER)
 
 project (Gammu C)
 
@@ -89,17 +83,6 @@ macro_optional_find_package (Doxygen)
 
 # I'd say this is task of CMake to export this
 check_symbol_exists (__clang__ "" CLANG_COMPILER)
-if (APPLE)
-    if (ENABLE_TIGER)
-        # if we do for 10.4
-        MACRO_TUNE_COMPILER("-mmacosx-version-min=10.4 -isysroot /Developer/SDKs/MacOSX10.4u.sdk")
-        MACRO_TUNE_COMPILER("-arch i386")
-    else (ENABLE_TIGER)
-        # else try to be compatible with 10.5
-        MACRO_TUNE_COMPILER("-mmacosx-version-min=10.5 -isysroot /Developer/SDKs/MacOSX10.5.sdk")
-        MACRO_TUNE_COMPILER("-arch x86_64")
-    endif (ENABLE_TIGER)
-endif (APPLE)
 
 # Configuration checks
 check_symbol_exists (strncasecmp "string.h" HAVE_STRNCASECMP)
@@ -126,10 +109,6 @@ else (HAVE_WCHAR_H)
 endif (HAVE_WCHAR_H)
 check_symbol_exists (I_SETSIG "stropts.h" HAVE_I_SETSIG)
 check_include_file (strings.h HAVE_STRINGS_H)
-# These checks are required for check_type_size() on cmake < 2.6.0
-check_include_file (sys/types.h HAVE_SYS_TYPES_H)
-check_include_file (stdint.h HAVE_STDINT_H)
-check_include_file (stddef.h HAVE_STDDEF_H)
 check_function_exists (scandir HAVE_SCANDIR)
 check_function_exists (alphasort HAVE_ALPHASORT)
 check_symbol_exists (getopt "unistd.h" HAVE_GETOPT)
@@ -264,27 +243,27 @@ macro_optional_find_package (GObject)
 pkg_check_modules(GUDEV gudev-1.0)
 
 if (CMAKE_CROSSCOMPILING AND MINGW)
-    set (HAVE_WINT_T 4 CACHE INTERNAL "")
-    set (HAVE_WCHAR_T 4 CACHE INTERNAL "")
+    set (HAVE_WINT_T True CACHE INTERNAL "")
+    set (HAVE_WCHAR_T True CACHE INTERNAL "")
 else (CMAKE_CROSSCOMPILING AND MINGW)
     # Search for needed includes and functions
     if (HAVE_WCHAR_H)
         set (CMAKE_EXTRA_INCLUDE_FILES wchar.h)
-        check_type_size (wchar_t HAVE_WCHAR_T)
-        check_type_size (wint_t  HAVE_WINT_T)
+        check_type_size (wchar_t WCHAR_T)
+        check_type_size (wint_t  WINT_T)
     endif (HAVE_WCHAR_H)
     set (CMAKE_EXTRA_INCLUDE_FILES)
 endif (CMAKE_CROSSCOMPILING AND MINGW)
 
 set (CMAKE_EXTRA_INCLUDE_FILES stdio.h)
-check_type_size (ssize_t HAVE_SSIZE_T)
+check_type_size (ssize_t SSIZE_T)
 set (CMAKE_EXTRA_INCLUDE_FILES)
 if (HAVE_UNISTD_H)
     set (CMAKE_EXTRA_INCLUDE_FILES unistd.h)
-    check_type_size(intptr_t HAVE_INTPTR_T)
+    check_type_size(intptr_t INTPTR_T)
     set (CMAKE_EXTRA_INCLUDE_FILES)
 else(HAVE_UNISTD_H)
-    check_type_size(intptr_t HAVE_INTPTR_T)
+    check_type_size(intptr_t INTPTR_T)
 endif (HAVE_UNISTD_H)
 
 check_c_source_compiles ("

@@ -8,14 +8,15 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-27 10:47+0200\n"
-"PO-Revision-Date: 2009-01-27 14:28+0100\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"Language: \n"
+"PO-Revision-Date: 2012-10-03 08:05+0200\n"
+"Last-Translator: Panagiotis Papazoglou <papaz_p@yahoo.com>\n"
+"Language-Team: Greek <http://l10n.cihar.com/projects/gammu/gammu/el/>\n"
+"Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Weblate 1.2\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -68,9 +69,8 @@ msgid "Error while writing file!\n"
 msgstr ""
 
 #: gammu/backup.c:194
-#, fuzzy
 msgid "Error while closing file!\n"
-msgstr "Σφάλμα κατά την αποθήκευση του αντιγράφου ασφαλείας"
+msgstr "Σφάλμα κατά το κλείσιμο αρχείου!\n"
 
 #: gammu/backup.c:241 gammu/backup.c:424 gammu/backup.c:496 gammu/backup.c:531
 #: gammu/backup.c:565 gammu/backup.c:633 gammu/backup.c:670 gammu/backup.c:707
@@ -274,7 +274,7 @@ msgstr "Τηλέφωνο"
 
 #: gammu/backup.c:977 gammu/misc.c:410
 msgid "IMEI"
-msgstr ""
+msgstr "IMEI"
 
 #: gammu/backup.c:980
 msgid "File created by"
@@ -463,9 +463,8 @@ msgid "Add phone ToDo?"
 msgstr ""
 
 #: gammu/backup.c:1774
-#, fuzzy
 msgid "Add notes to phone?"
-msgstr "Αποστολή αρχείου στο τηλέφωνο"
+msgstr "Προσθήκη σημειώσεων στο τηλέφωνο;"
 
 #: gammu/backup.c:1797
 msgid "Add phone WAP bookmarks?"
@@ -919,9 +918,8 @@ msgid "Start time"
 msgstr ""
 
 #: gammu/calendar.c:746
-#, fuzzy
 msgid "Completed time"
-msgstr "Ολοκληρωμένο"
+msgstr "Χρόνος ολοκλήρωσης"
 
 #: gammu/calendar.c:751
 msgid "Completed"
@@ -1248,9 +1246,8 @@ msgid "Charger voltage:"
 msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1040
-#, fuzzy
 msgid "Charger current:"
-msgstr "Διαγραφή παρόντος"
+msgstr "Τρέχων φορτιστής:"
 
 #: gammu/depend/nokia/dct4.c:1040 gammu/depend/nokia/dct4.c:1051
 #: gammu/depend/nokia/dct4.c:1052
@@ -1275,14 +1272,12 @@ msgid "K"
 msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1043
-#, fuzzy
 msgid "Headset interconnection:"
-msgstr "Σύνδεση τηλεφώνου"
+msgstr "Διασύνδεση μικροφωνο-ακουστικού:"
 
 #: gammu/depend/nokia/dct4.c:1044
-#, fuzzy
 msgid "Hook interconnection:"
-msgstr "Σύνδεση τηλεφώνου"
+msgstr "Διασύνδεση άγκιστρου:"
 
 #: gammu/depend/nokia/dct4.c:1045
 msgid "Light sensor:"
@@ -1309,9 +1304,8 @@ msgid "Initial battery voltage:"
 msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1051
-#, fuzzy
 msgid "Battery Current:"
-msgstr "Διαγραφή παρόντος"
+msgstr "Τρέχουσα Μπαταρία:"
 
 #: gammu/depend/nokia/dct4.c:1052
 msgid "Battery Current Fast:"
@@ -1490,9 +1484,8 @@ msgid "Show debugging output for detecting devices."
 msgstr ""
 
 #: gammu-detect/main.c:56
-#, fuzzy
 msgid "Show version information and compiled in features."
-msgstr "Πληροφορίες τηλεφώνου"
+msgstr "Προβολή πληροφοριών έκδοσης και μετατροπή σε χαρακτηριστικά."
 
 #: gammu-detect/main.c:58
 msgid "Disables scanning of udev."
@@ -1507,9 +1500,9 @@ msgid "Disables scanning of Windows serial ports."
 msgstr ""
 
 #: gammu-detect/main.c:71
-#, fuzzy, c-format
+#, c-format
 msgid "Gammu-detect version %s"
-msgstr "Έκδοση Gammu"
+msgstr "Gammu-ανίχνευση έκδοσης %s"
 
 #: gammu-detect/main.c:73
 #, c-format
@@ -1529,9 +1522,8 @@ msgid "Bluez probing"
 msgstr ""
 
 #: gammu-detect/main.c:84
-#, fuzzy
 msgid "Windows serial port probing"
-msgstr "Θύρα τηλεφώνου"
+msgstr "Διερεύνηση της σειριακής θύρας του Windows"
 
 #: gammu-detect/main.c:87
 msgid ""
@@ -1570,55 +1562,50 @@ msgid "option parsing failed: %s\n"
 msgstr ""
 
 #: gammu-detect/udev.c:67
-#, fuzzy
 msgid "Name:"
-msgstr "Όνομα"
+msgstr "Όνομα:"
 
 #: gammu-detect/udev.c:68
-#, fuzzy
 msgid "Type:"
-msgstr "Είδος"
+msgstr "Είδος:"
 
 #: gammu-detect/udev.c:69
 msgid "Subsystem:"
 msgstr ""
 
 #: gammu-detect/udev.c:70
-#, fuzzy
 msgid "Number:"
-msgstr "Αριθμός"
+msgstr "Αριθμός:"
 
 #: gammu-detect/udev.c:71
 msgid "Path:"
 msgstr ""
 
 #: gammu-detect/udev.c:72
-#, fuzzy
 msgid "Driver:"
-msgstr "Οδηγός προς σύνδεση"
+msgstr "Οδηγός:"
 
 #: gammu-detect/udev.c:73
 msgid "Sequential Number:"
 msgstr ""
 
 #: gammu-detect/udev.c:74
-#, fuzzy
 msgid "Device File:"
-msgstr "Όνομα αρχείου: %s"
+msgstr "Αρχείο Συσκευής:"
 
 #: gammu-detect/udev.c:77
 msgid "Properties:"
 msgstr ""
 
 #: gammu-detect/udev.c:170 gammu-detect/win32-serial.c:44
-#, fuzzy, c-format
+#, c-format
 msgid "Phone on serial port %s"
-msgstr "Θύρα τηλεφώνου"
+msgstr "Τηλέφωνο στη σειριακή θύρα %s"
 
 #: gammu-detect/udev.c:172
-#, fuzzy, c-format
+#, c-format
 msgid "Phone on USB serial port %s %s"
-msgstr "Θύρα τηλεφώνου"
+msgstr "Τηλέφωνο σε σειριακή θύρα USB %s %s"
 
 #: gammu/files.c:48
 msgid "Phone memory"
@@ -2232,7 +2219,7 @@ msgstr "Κάρτα SIM"
 
 #: gammu/message.c:608
 msgid "phone"
-msgstr ""
+msgstr "τηλέφωνο"
 
 #: gammu/message.c:612
 #, c-format
@@ -2469,9 +2456,8 @@ msgid "Range"
 msgstr ""
 
 #: gammu/misc.c:358
-#, fuzzy
 msgid "Number of samples"
-msgstr "Πρόθεμα τηλεφώνου"
+msgstr "Αριθμός δειγμάτων"
 
 #: gammu/misc.c:379
 msgid "Device"
@@ -2708,9 +2694,8 @@ msgstr ""
 
 #: gammu/misc.c:1081 gammu/misc.c:1083 gammu/misc.c:1096 gammu/misc.c:1103
 #: helper/memory-display.c:101
-#, fuzzy
 msgid "Ringtone"
-msgstr "Ήχοι κλήσης"
+msgstr "Ήχος κλήσης"
 
 #: gammu/misc.c:1097
 #, c-format
@@ -2966,7 +2951,7 @@ msgstr ""
 
 #: gammu/misc.c:1637
 msgid "Server"
-msgstr ""
+msgstr "Διακομιστής"
 
 #: gammu/misc.c:1638
 msgid "Sync. phonebook"
@@ -3438,9 +3423,9 @@ msgid "What folder type (\"%s\") ?\n"
 msgstr ""
 
 #: gammu/nokia.c:556 gammu/nokia.c:563 gammu/nokia.c:570
-#, fuzzy, c-format
+#, c-format
 msgid "Can not open file %s\n"
-msgstr "Αδυναμία δημιουργίας αρχείου!"
+msgstr "Αδύνατο το άνοιγμα αρχείου %s\n"
 
 #: gammu/nokia.c:591 gammu/nokia.c:665
 msgid "Folder not found. Probably function not supported!"
@@ -3516,9 +3501,9 @@ msgid "Error creating thread\n"
 msgstr ""
 
 #: helper/cmdline.c:26
-#, fuzzy, c-format
+#, c-format
 msgid "Number out of range: %s\n"
-msgstr "Πρόθεμα τηλεφώνου"
+msgstr "Αριθμός εκτός εύρους: %s\n"
 
 #: helper/cmdline.c:31
 #, c-format
@@ -3623,19 +3608,16 @@ msgid "General number"
 msgstr ""
 
 #: helper/memory-display.c:136
-#, fuzzy
 msgid "Video number"
-msgstr "Άκυρος αριθμός τηλεφώνου"
+msgstr "Αριθμός βίντεο"
 
 #: helper/memory-display.c:141
-#, fuzzy
 msgid "Home mobile number"
-msgstr "Σειριακός αριθμός (IMEI)"
+msgstr "Αριθμός κινητού σπιτιού"
 
 #: helper/memory-display.c:144
-#, fuzzy
 msgid "Work mobile number"
-msgstr "Σειριακός αριθμός (IMEI)"
+msgstr "Αριθμού κινητού εργασίας"
 
 #: helper/memory-display.c:155
 msgid "Home fax number"
@@ -3658,38 +3640,32 @@ msgid "Home address"
 msgstr ""
 
 #: helper/memory-display.c:175
-#, fuzzy
 msgid "Work address"
-msgstr "Λειτουργούντα χαρακτηριστικά"
+msgstr "Διευθυνση εργασίας"
 
 #: helper/memory-display.c:186
-#, fuzzy
 msgid "Home email"
-msgstr "Το email σας:"
+msgstr "Ηλεκτρονική διευθυνση σπιτιού"
 
 #: helper/memory-display.c:189
-#, fuzzy
 msgid "Work email"
-msgstr "Το email σας:"
+msgstr "Ηλεκτρονική διεύθυνση εργασίας"
 
 #: helper/memory-display.c:196
 msgid "Email address 2"
 msgstr ""
 
 #: helper/memory-display.c:201
-#, fuzzy
 msgid "Home website"
-msgstr "&Ιστοσελίδα"
+msgstr "Ιστοσελίδα σπιτιού"
 
 #: helper/memory-display.c:204
-#, fuzzy
 msgid "Work website"
-msgstr "&Ιστοσελίδα"
+msgstr "Ιστοσελίδα εργασίας"
 
 #: helper/memory-display.c:207
-#, fuzzy
 msgid "Website"
-msgstr "&Ιστοσελίδα"
+msgstr "Ιστοσελίδα"
 
 #: helper/memory-display.c:212
 msgid "VOIP"
@@ -3704,9 +3680,8 @@ msgid "WVID"
 msgstr ""
 
 #: helper/memory-display.c:215
-#, fuzzy
 msgid "SIP"
-msgstr "Κάρτα SIM"
+msgstr "SIP"
 
 #: helper/memory-display.c:216
 msgid "DTMF"
@@ -3721,18 +3696,16 @@ msgid "First name"
 msgstr ""
 
 #: helper/memory-display.c:220
-#, fuzzy
 msgid "Second name"
-msgstr "Το όνομά σας:"
+msgstr "Δεύτερο όνομα"
 
 #: helper/memory-display.c:221
 msgid "Formal name"
 msgstr ""
 
 #: helper/memory-display.c:222
-#, fuzzy
 msgid "Name prefix"
-msgstr "Πρόθεμα τηλεφώνου"
+msgstr "Πρόθεμα ονόματος"
 
 #: helper/memory-display.c:223
 msgid "Name suffix"
@@ -3866,9 +3839,9 @@ msgid "Backup functionality not compiled in!"
 msgstr ""
 
 #: helper/message-cmdline.c:1055
-#, fuzzy, c-format
+#, c-format
 msgid "Wrong message length (\"%s\")\n"
-msgstr "Συγγραφή μηνύματος(των)"
+msgstr "Εσφαλμένο μήκος μηνύματος («%s»)\n"
 
 #: helper/message-cmdline.c:1078
 #, c-format
@@ -4318,9 +4291,8 @@ msgid "EMS animation ID"
 msgstr ""
 
 #: helper/message-display.c:479
-#, fuzzy
 msgid "Message size"
-msgstr "Μηνύματα"
+msgstr "Μέγεθος μηνύματος"
 
 #. l10n: Generic prefix for error messages
 #: helper/message-display.c:512 helper/printing.c:18
