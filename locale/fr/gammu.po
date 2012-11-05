@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2012-03-27 10:47+0200\n"
-"PO-Revision-Date: 2012-09-07 20:40+0200\n"
-"Last-Translator: مترجم حرّ <metehyi@gmail.com>\n"
+"PO-Revision-Date: 2012-11-05 10:34+0200\n"
+"Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: French <http://l10n.cihar.com/projects/gammu/gammu/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Weblate 1.2\n"
+"X-Generator: Weblate 1.3-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -89,7 +89,7 @@ msgstr ""
 
 #: gammu/backup.c:268 gammu/backup.c:310 gammu/backup.c:475 gammu/mms.c:182
 msgid "Reading:"
-msgstr "En lecture:"
+msgstr "En lecture : "
 
 #: gammu/backup.c:269 gammu/backup.c:311 gammu/backup.c:476
 #: gammu/backup.c:1045 gammu/backup.c:1120 gammu/backup.c:1173
@@ -319,7 +319,7 @@ msgstr "Restaurer les groupes d'appelant et les logos du téléphone ?"
 #: gammu/backup.c:1760 gammu/backup.c:1782 gammu/backup.c:1806
 #: gammu/files.c:753
 msgid "Writing:"
-msgstr "Ecriture:"
+msgstr "Ecriture : "
 
 #: gammu/backup.c:1070 gammu/backup.c:1138 gammu/backup.c:1199
 #: gammu/backup.c:1247 gammu/backup.c:1340 gammu/backup.c:1665
@@ -368,7 +368,7 @@ msgstr "Restaurer les notes dont la date est périmée ?"
 
 #: gammu/backup.c:1207 gammu/backup.c:1346
 msgid "Deleting old notes:"
-msgstr "Effacement des anciennes notes :"
+msgstr "Effacement des anciennes notes : "
 
 #: gammu/backup.c:1219 gammu/backup.c:1269 gammu/backup.c:1502
 #: gammu/backup.c:1560 gammu/misc.c:1385 gammu/misc.c:1430 gammu/misc.c:1454
@@ -382,7 +382,7 @@ msgstr "Restaurer les tâches à faire du téléphone ?"
 
 #: gammu/backup.c:1257
 msgid "Deleting old todos:"
-msgstr "Effacer les anciennes tâches à faire:"
+msgstr "Effacer les anciennes tâches à faire : "
 
 #: gammu/backup.c:1342
 msgid "Restore phone notes?"
@@ -406,7 +406,7 @@ msgstr "Restaurer les favoris WAP du téléphone ?"
 
 #: gammu/backup.c:1407
 msgid "Deleting old bookmarks:"
-msgstr "Effacer les anciens favoris:"
+msgstr "Effacer les anciens favoris : "
 
 #: gammu/backup.c:1444
 msgid "Restore phone WAP settings?"
@@ -439,7 +439,7 @@ msgstr "Rétablir les émetteurs de radio FM du téléphone ?"
 
 #: gammu/backup.c:1557
 msgid "Deleting old FM stations:"
-msgstr "Suppression des anciennes stations FM :"
+msgstr "Suppression des anciennes stations FM : "
 
 #: gammu/backup.c:1583
 msgid "Restore phone GPRS Points?"
@@ -506,7 +506,7 @@ msgstr "   Augmenter %s\n"
 
 #: gammu/backupsms.c:107 gammu/misc.c:1375
 msgid "Deleting:"
-msgstr "Suppression :"
+msgstr "Suppression : "
 
 #: gammu/backupsms.c:141
 msgid "Restore message?"
@@ -1134,7 +1134,7 @@ msgstr "Ne peux pas le faire avec le protocole de téléphone actuel"
 #: gammu/depend/nokia/dct4.c:80
 #, c-format
 msgid "%s (yes/no) ? "
-msgstr "%s (oui/non)?"
+msgstr "%s (oui/non)? "
 
 #: gammu/depend/nokia/dct4.c:265
 msgid "Setting done"
@@ -1243,7 +1243,7 @@ msgstr "résultat unité %10i "
 
 #: gammu/depend/nokia/dct4.c:1037
 msgid "Battery voltage, divided:"
-msgstr "Tension de la batterie, divisée:"
+msgstr "Tension de la batterie, divisée : "
 
 #: gammu/depend/nokia/dct4.c:1037 gammu/depend/nokia/dct4.c:1038
 #: gammu/depend/nokia/dct4.c:1039 gammu/depend/nokia/dct4.c:1043
@@ -1255,15 +1255,15 @@ msgstr "mV"
 
 #: gammu/depend/nokia/dct4.c:1038
 msgid "Battery voltage, scaled:"
-msgstr "Tension de la batterie, mise à l'échelle :"
+msgstr "Tension de la batterie, mise à l'échelle : "
 
 #: gammu/depend/nokia/dct4.c:1039
 msgid "Charger voltage:"
-msgstr "Tension du chargeur:"
+msgstr "Tension du chargeur : "
 
 #: gammu/depend/nokia/dct4.c:1040
 msgid "Charger current:"
-msgstr "Courant du chargeur :"
+msgstr "Courant du chargeur : "
 
 #: gammu/depend/nokia/dct4.c:1040 gammu/depend/nokia/dct4.c:1051
 #: gammu/depend/nokia/dct4.c:1052
@@ -1272,7 +1272,7 @@ msgstr "mA"
 
 #: gammu/depend/nokia/dct4.c:1041
 msgid "Battery size indicator:"
-msgstr "Indicateur de taille de batterie :"
+msgstr "Indicateur de taille de batterie : "
 
 #: gammu/depend/nokia/dct4.c:1041
 msgid "Ohms"
@@ -1280,7 +1280,7 @@ msgstr "Ohms"
 
 #: gammu/depend/nokia/dct4.c:1042
 msgid "Battery temperature:"
-msgstr "Température de la batterie :"
+msgstr "Température de la batterie : "
 
 #: gammu/depend/nokia/dct4.c:1042 gammu/depend/nokia/dct4.c:1046
 #: gammu/depend/nokia/dct4.c:1047
@@ -1289,7 +1289,7 @@ msgstr "K"
 
 #: gammu/depend/nokia/dct4.c:1043
 msgid "Headset interconnection:"
-msgstr "Casque d'interconnexion:"
+msgstr "Casque d'interconnexion : "
 
 #: gammu/depend/nokia/dct4.c:1044
 msgid "Hook interconnection:"
@@ -1297,15 +1297,15 @@ msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1045
 msgid "Light sensor:"
-msgstr "Capteur de lumière :"
+msgstr "Capteur de lumière : "
 
 #: gammu/depend/nokia/dct4.c:1046
 msgid "Power amplifier temperature:"
-msgstr "Température amplificateur de puissance :"
+msgstr "Température amplificateur de puissance : "
 
 #: gammu/depend/nokia/dct4.c:1047
 msgid "VCXO temperature:"
-msgstr "Température de VCXO :"
+msgstr "Température de VCXO : "
 
 #: gammu/depend/nokia/dct4.c:1048
 msgid "Resistive keyboard 1/headint2:"
@@ -1317,15 +1317,15 @@ msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1050
 msgid "Initial battery voltage:"
-msgstr "Tension de la batterie initiale :"
+msgstr "Tension de la batterie initiale : "
 
 #: gammu/depend/nokia/dct4.c:1051
 msgid "Battery Current:"
-msgstr "Courant batterie :"
+msgstr "Courant batterie : "
 
 #: gammu/depend/nokia/dct4.c:1052
 msgid "Battery Current Fast:"
-msgstr "Courant batterie rapide:"
+msgstr "Courant batterie rapide : "
 
 #: gammu/depend/nokia/dct4.c:1158
 msgid "Phone seems not to support radio"
@@ -1347,7 +1347,7 @@ msgstr "  entrée ID %02X"
 
 #: gammu/depend/nokia/dct4.c:1336
 msgid " (Speed dial on SIM)"
-msgstr "(Numérotation abrégée sur la carte SIM)"
+msgstr " (Numérotation abrégée sur la carte SIM)"
 
 #: gammu/depend/nokia/dct4.c:1337
 msgid " (Text: name (always the only one))"
@@ -1581,11 +1581,11 @@ msgstr ""
 
 #: gammu-detect/udev.c:67
 msgid "Name:"
-msgstr "Nom :"
+msgstr "Nom : "
 
 #: gammu-detect/udev.c:68
 msgid "Type:"
-msgstr "Type:"
+msgstr "Type : "
 
 #: gammu-detect/udev.c:69
 msgid "Subsystem:"
@@ -1593,7 +1593,7 @@ msgstr ""
 
 #: gammu-detect/udev.c:70
 msgid "Number:"
-msgstr "Numéro:"
+msgstr "Numéro : "
 
 #: gammu-detect/udev.c:71
 msgid "Path:"
@@ -1601,7 +1601,7 @@ msgstr ""
 
 #: gammu-detect/udev.c:72
 msgid "Driver:"
-msgstr "Pilote logiciel:"
+msgstr "Pilote logiciel : "
 
 #: gammu-detect/udev.c:73
 msgid "Sequential Number:"
@@ -1609,7 +1609,7 @@ msgstr ""
 
 #: gammu-detect/udev.c:74
 msgid "Device File:"
-msgstr "Fichier de périphérique:"
+msgstr "Fichier de périphérique : "
 
 #: gammu-detect/udev.c:77
 msgid "Properties:"
@@ -1940,7 +1940,7 @@ msgstr ""
 # type: Plain text
 #: gammu/gammu.c:750
 msgid "Parameters before command configure gammu behaviour:"
-msgstr "Les paramètres avant la commande modifient le comportement de gammu:"
+msgstr "Les paramètres avant la commande modifient le comportement de gammu : "
 
 #: gammu/gammu.c:751
 msgid "-c / --config <filename> ... name of configuration file"
