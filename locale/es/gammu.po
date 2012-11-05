@@ -9,10 +9,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gammu\n"
-"Report-Msgid-Bugs-To: michal@cihar.com\n"
+"Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2012-03-27 10:47+0200\n"
-"PO-Revision-Date: 2012-11-05 09:46+0200\n"
-"Last-Translator: Michal Čihař <michal@cihar.com>\n"
+"PO-Revision-Date: 2012-11-05 12:57+0200\n"
+"Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Spanish <http://l10n.cihar.com/projects/gammu/gammu/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -501,7 +501,7 @@ msgstr " (SIM)"
 #: gammu/backupsms.c:84
 #, c-format
 msgid "   Increase %s\n"
-msgstr " \tAumentar %s\n"
+msgstr "   Aumentar %s\n"
 
 #: gammu/backupsms.c:107 gammu/misc.c:1375
 msgid "Deleting:"
@@ -1376,7 +1376,7 @@ msgstr " (Número de teléfono)"
 
 #: gammu/depend/nokia/dct4.c:1342
 msgid " (Ringtone ID)"
-msgstr "(ID Tono)"
+msgstr " (ID Tono)"
 
 #: gammu/depend/nokia/dct4.c:1343
 msgid " (Call register: date and time)"
@@ -1396,56 +1396,56 @@ msgstr " (Grupo de llamada: logotipo)"
 
 #: gammu/depend/nokia/dct4.c:1347
 msgid " (Caller group: is logo on ?)"
-msgstr "(Grupo de llamada: ¿está el logo activado?)"
+msgstr " (Grupo de llamada: ¿está el logo activado?)"
 
 # from what I could see pbk == PhoneBooK
 #: gammu/depend/nokia/dct4.c:1348
 msgid " (Caller group number in pbk entry)"
-msgstr "(Número de grupo de llamada en entrada de la agenda)"
+msgstr " (Número de grupo de llamada en entrada de la agenda)"
 
 #: gammu/depend/nokia/dct4.c:1351
 msgid " (Text: URL address)"
-msgstr "(Texto: Dirección web)"
+msgstr " (Texto: Dirección web)"
 
 #: gammu/depend/nokia/dct4.c:1352
 msgid " (SMS list assignment)"
-msgstr "(Lista de asignación de SMS)"
+msgstr " (Lista de asignación de SMS)"
 
 #: gammu/depend/nokia/dct4.c:1353
 msgid " (Voice tag assignment)"
-msgstr "(Asignación de etiqueta de voz)"
+msgstr " (Asignación de etiqueta de voz)"
 
 #: gammu/depend/nokia/dct4.c:1354
 msgid " (Picture ID assignment)"
-msgstr "(Asignación de ID de imagen)"
+msgstr " (Asignación de ID de imagen)"
 
 #: gammu/depend/nokia/dct4.c:1355
 msgid " (Ringtone ID from filesystem/internal)"
-msgstr "_(Id de tono interno o del sistema de archivos)"
+msgstr " (Id de tono interno o del sistema de archivos)"
 
 #: gammu/depend/nokia/dct4.c:1356
 msgid " (Text: user ID)"
-msgstr "_(Texto: ID de usuario)"
+msgstr " (Texto: ID de usuario)"
 
 #: gammu/depend/nokia/dct4.c:1357
 msgid " (conversation list ID)"
-msgstr "_(ID de lista de conversaciones)"
+msgstr " (ID de lista de conversaciones)"
 
 #: gammu/depend/nokia/dct4.c:1358
 msgid " (Instant Messaging service list ID ?)"
-msgstr "_(ID de servicio de Mensajería Instantánea)"
+msgstr " (ID de servicio de Mensajería Instantánea)"
 
 #: gammu/depend/nokia/dct4.c:1359
 msgid " (presence list ID ?)"
-msgstr "_(ID de \"Presencia\")"
+msgstr " (ID de \"Presencia\")"
 
 #: gammu/depend/nokia/dct4.c:1360
 msgid " (SIP Address (Push to Talk address))"
-msgstr "_(Dirección SIP (Dirección Push to Talk))"
+msgstr " (Dirección SIP (Dirección Push to Talk))"
 
 #: gammu/depend/nokia/dct4.c:1361
 msgid " (Group ID (6230i or later))"
-msgstr "_(ID de grupo (6230i o posterior))"
+msgstr " (ID de grupo (6230i o posterior))"
 
 #: gammu/depend/nokia/dct4.c:1363
 msgid ", type "
@@ -1716,7 +1716,7 @@ msgstr "es una carpeta. Por favor, indique sólamente nombres de archivo."
 #: gammu/files.c:399 gammu/files.c:616
 #, c-format
 msgid " (%02i:%02i minutes left)"
-msgstr "(quedan %02i:%02i minutos)"
+msgstr " (quedan %02i:%02i minutos)"
 
 #: gammu/files.c:410 gammu/files.c:627
 msgid ""
@@ -2716,7 +2716,7 @@ msgstr "SMAF (MMF)"
 #: gammu/misc.c:735
 #, c-format
 msgid " format, ringtone \"%s\"\n"
-msgstr "_ formato, tono \"%s\"\n"
+msgstr " formato, tono \"%s\"\n"
 
 #: gammu/misc.c:949
 #, c-format
@@ -3235,7 +3235,7 @@ msgstr "Vibrar antes"
 
 #: gammu/misc.c:2194
 msgid " speed dial not assigned"
-msgstr "_velocidad de marcado no asignada"
+msgstr " velocidad de marcado no asignada"
 
 #: gammu/misc.c:2226
 #, c-format
@@ -3413,7 +3413,7 @@ msgstr "Tipo de contenido"
 #: gammu/mms.c:114
 #, c-format
 msgid " (%s in SMIL)"
-msgstr "(%s en SMIL)"
+msgstr " (%s en SMIL)"
 
 #: gammu/mms.c:130
 msgid "Do you want to save this attachment?"
@@ -4178,7 +4178,7 @@ msgstr "Guardado"
 
 #: helper/message-display.c:231
 msgid " (set for reply)"
-msgstr "_(configurado para respuesta)"
+msgstr " (configurado para respuesta)"
 
 #: helper/message-display.c:240
 msgid "SMS replacing ID"
@@ -4335,7 +4335,7 @@ msgstr "Archivo OTA Siemens"
 
 #: helper/message-display.c:401
 msgid " - VCARD"
-msgstr "- VCARD"
+msgstr " - VCARD"
 
 #: helper/message-display.c:415
 #, c-format
