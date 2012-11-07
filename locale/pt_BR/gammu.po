@@ -6,10 +6,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
-"Report-Msgid-Bugs-To: michal@cihar.com\n"
+"Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2012-03-27 10:47+0200\n"
-"PO-Revision-Date: 2012-11-05 09:48+0200\n"
-"Last-Translator: Michal Čihař <michal@cihar.com>\n"
+"PO-Revision-Date: 2012-11-08 00:21+0200\n"
+"Last-Translator: gilberto dos santos alves <gsavix@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) "
 "<http://l10n.cihar.com/projects/gammu/gammu/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -1385,11 +1385,11 @@ msgstr " (Discagem Rápida)"
 
 #: gammu/depend/nokia/dct4.c:1346
 msgid " (Caller group: logo)"
-msgstr "(Grupo da Chamada: logotipo)"
+msgstr " (Grupo da Chamada: logotipo)"
 
 #: gammu/depend/nokia/dct4.c:1347
 msgid " (Caller group: is logo on ?)"
-msgstr "(Grupo chamada: logotipo está habilitado?)"
+msgstr " (Grupo chamada: logotipo está habilitado?)"
 
 #: gammu/depend/nokia/dct4.c:1348
 msgid " (Caller group number in pbk entry)"
@@ -1397,39 +1397,39 @@ msgstr "(Grupo Chamada: número nas entradas pbk)"
 
 #: gammu/depend/nokia/dct4.c:1351
 msgid " (Text: URL address)"
-msgstr "(Texto: endereço URL)"
+msgstr " (Texto: endereço URL)"
 
 #: gammu/depend/nokia/dct4.c:1352
 msgid " (SMS list assignment)"
-msgstr "(SMS lista de assinalamentos)"
+msgstr " (SMS lista de assinalamentos)"
 
 #: gammu/depend/nokia/dct4.c:1353
 msgid " (Voice tag assignment)"
-msgstr "(Assinalamento etiqueta de Voz)"
+msgstr " (Assinalamento etiqueta de Voz)"
 
 #: gammu/depend/nokia/dct4.c:1354
 msgid " (Picture ID assignment)"
-msgstr "(Assinalamento ID Foto)"
+msgstr " (Assinalamento ID Foto)"
 
 #: gammu/depend/nokia/dct4.c:1355
 msgid " (Ringtone ID from filesystem/internal)"
-msgstr "(ID do Toque do sistema de arquivos/interno)"
+msgstr " (ID do Toque do sistema de arquivos/interno)"
 
 #: gammu/depend/nokia/dct4.c:1356
 msgid " (Text: user ID)"
-msgstr "(Texto: ID Identificação usuário)"
+msgstr " (Texto: ID Identificação usuário)"
 
 #: gammu/depend/nokia/dct4.c:1357
 msgid " (conversation list ID)"
-msgstr "(IDentificação lista conversação)"
+msgstr " (IDentificação lista conversação)"
 
 #: gammu/depend/nokia/dct4.c:1358
 msgid " (Instant Messaging service list ID ?)"
-msgstr "(IDentificação serviço lista Mensagem Instântanea?)"
+msgstr " (IDentificação Lista Serviço de Mensagem Instântanea?)"
 
 #: gammu/depend/nokia/dct4.c:1359
 msgid " (presence list ID ?)"
-msgstr "(IDentificação lista presença?)"
+msgstr " (IDentificação lista presença?)"
 
 #: gammu/depend/nokia/dct4.c:1360
 msgid " (SIP Address (Push to Talk address))"
@@ -1437,7 +1437,7 @@ msgstr " (Endereço SIP (enviado para o endereço da Conversa))"
 
 #: gammu/depend/nokia/dct4.c:1361
 msgid " (Group ID (6230i or later))"
-msgstr "(ID Grupo (6230i ou posterior))"
+msgstr " (ID Grupo (6230i ou posterior))"
 
 #: gammu/depend/nokia/dct4.c:1363
 msgid ", type "
@@ -2694,7 +2694,7 @@ msgstr "SMAF (MMF)"
 #: gammu/misc.c:735
 #, c-format
 msgid " format, ringtone \"%s\"\n"
-msgstr "formato, toque \"%s\"\n"
+msgstr " formato, toque \"%s\"↵"
 
 #: gammu/misc.c:949
 #, c-format
@@ -2714,7 +2714,7 @@ msgstr "%i. Ponto de Acesso %i"
 #: gammu/misc.c:1020 gammu/misc.c:1537 gammu/misc.c:1544 gammu/misc.c:1579
 #: gammu/misc.c:1592 gammu/misc.c:1631 gammu/misc.c:1680 gammu/misc.c:2060
 msgid " (active)"
-msgstr "(ativo)"
+msgstr " (ativo)"
 
 #: gammu/misc.c:1048 gammu/misc.c:1204
 msgid "Maximal location for caller logo can be 5"
@@ -3089,15 +3089,15 @@ msgstr "Entre novo código PIN: "
 
 #: gammu/misc.c:2061
 msgid " (default name)"
-msgstr "(nome padrão)"
+msgstr " (nome padrão)"
 
 #: gammu/misc.c:2062
 msgid " (Head set profile)"
-msgstr "(perfil Fone Ouvido)"
+msgstr " (perfil Fone Ouvido)"
 
 #: gammu/misc.c:2063
 msgid " (Car kit profile)"
-msgstr "(Perfil Kit Carro)"
+msgstr " (Perfil Kit Carro)"
 
 #: gammu/misc.c:2072 helper/memory-display.c:106
 msgid "Ringtone ID"
@@ -3213,7 +3213,7 @@ msgstr "Vibrar Primeiro"
 
 #: gammu/misc.c:2194
 msgid " speed dial not assigned"
-msgstr "Discagem Rápida não configurada"
+msgstr " Discagem Rápida não configurada"
 
 #: gammu/misc.c:2226
 #, c-format
@@ -3392,7 +3392,7 @@ msgstr "Tipo de Conteúdo"
 #: gammu/mms.c:114
 #, c-format
 msgid " (%s in SMIL)"
-msgstr "(%s em SMIL)"
+msgstr " (%s em SMIL)"
 
 #: gammu/mms.c:130
 msgid "Do you want to save this attachment?"
@@ -3511,12 +3511,12 @@ msgstr "Adicionando \"%s\""
 #: gammu/nokia.c:741
 #, c-format
 msgid " version %s"
-msgstr "versão %s"
+msgstr " versão %s"
 
 #: gammu/nokia.c:742
 #, c-format
 msgid " created by %s\n"
-msgstr "criado por %s\n"
+msgstr " criado por %s\n"
 
 #: gammu/nokia.c:793 gammu/nokia.c:845
 msgid "Application already exists. Deleting by Gammu."
@@ -3525,7 +3525,7 @@ msgstr "Aplicação já existe. Removida pelo Gammu."
 #: gammu/nokia.c:826 gammu/nokia.c:859
 #, c-format
 msgid "  Deleting %s\n"
-msgstr "Apagando %s\n"
+msgstr " Apagando %s\n"
 
 #: gammu/nokia.c:882
 msgid "Writing JAD file:"
@@ -4319,7 +4319,7 @@ msgstr "Arquivo Siemens OTA"
 
 #: helper/message-display.c:401
 msgid " - VCARD"
-msgstr "- VCARD"
+msgstr " - VCARD"
 
 #: helper/message-display.c:415
 #, c-format
