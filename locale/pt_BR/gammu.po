@@ -2694,7 +2694,7 @@ msgstr "SMAF (MMF)"
 #: gammu/misc.c:735
 #, c-format
 msgid " format, ringtone \"%s\"\n"
-msgstr " formato, toque \"%s\"↵"
+msgstr " formato, toque \"%s\"\n"
 
 #: gammu/misc.c:949
 #, c-format
