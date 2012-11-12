@@ -59,19 +59,8 @@ Collecting results
 ------------------
 
 The tests are ran daily on several platforms and you can find the
-results on `dashboard <https://cdash.cihar.com/index.php?project=Gammu>`_.
+results on `Travis <https://travis-ci.org/gammu/gammu>`_.
 
-You are welcome to join this effort, all you need is to setup job to pull
-current Gammu sources and execute the test suite every day (the preferred time
-it 3:00 CET)::
-
-    git pull
-    make -C build-configure Nightly
-
-or also with checking for memory leaks::
-
-    git pull
-    make -C build-configure NightlyMemCheck
 
 Testing of SMSD
 ---------------
