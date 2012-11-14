@@ -6,17 +6,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
-"Report-Msgid-Bugs-To: michal@cihar.com\n"
+"Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2012-08-27 11:26+0200\n"
-"PO-Revision-Date: 2012-06-28 15:10+0200\n"
-"Last-Translator: Alexsandro Preis Dubinski <alexsandroeco@gmail.com>\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2012-11-14 22:41+0200\n"
+"Last-Translator: gilberto dos santos alves <gsavix@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) "
+"<http://l10n.cihar.com/projects/gammu/libgammu/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Weblate 1.1\n"
+"X-Generator: Weblate 1.3-dev\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
@@ -28,7 +29,7 @@ msgstr "Erro abrindo dispositivo. Desconhecido, ocupado ou sem permissões."
 
 #: libgammu/gsmcomon.c:86
 msgid "Error opening device, it is locked."
-msgstr "Erro abrindo dispositivo, está em lock."
+msgstr "Erro abrindo dispositivo, está travado."
 
 #: libgammu/gsmcomon.c:87
 msgid "Error opening device, it doesn't exist."
@@ -44,13 +45,14 @@ msgstr "Erro abrindo dispositivo, você não tem permissões."
 
 #: libgammu/gsmcomon.c:90
 msgid "Error opening device. No required driver in operating system."
-msgstr "Erro abrindo dispositivo. Não há os drivers no sistema operacional."
+msgstr ""
+"Erro abrindo dispositivo. Não há drivers requeridos no sistema operacional."
 
 #: libgammu/gsmcomon.c:91
 msgid "Error opening device. Some hardware not connected/wrongly configured."
 msgstr ""
 "Erro abrindo dispositivo. Equipamento não conectado ou configurado "
-"inadequado."
+"inadequadamente."
 
 #: libgammu/gsmcomon.c:92
 msgid "Error setting device DTR or RTS."
@@ -58,11 +60,13 @@ msgstr "Erro configurando dispositivo DTR ou RTS."
 
 #: libgammu/gsmcomon.c:93
 msgid "Error setting device speed. Maybe speed not supported."
-msgstr "Erro configurando a velocidade do dispos. Pode ser veloc. inválida."
+msgstr ""
+"Erro configurando a velocidade do dispositivo. Pode ser velocidade não "
+"suportada."
 
 #: libgammu/gsmcomon.c:94
 msgid "Error writing to the device."
-msgstr "Erro ao Conectar ao dispositivo."
+msgstr "Erro ao gravar no dispositivo."
 
 #: libgammu/gsmcomon.c:95
 msgid "Error during reading from the device."
@@ -74,7 +78,7 @@ msgstr "Não foi possível configurar a paridade do dispositivo."
 
 #: libgammu/gsmcomon.c:97
 msgid "No response in specified timeout. Probably phone not connected."
-msgstr "Sem resposta no tempo especificado. Provávelmente tel desconectado."
+msgstr "Sem resposta no tempo especificado. Provávelmente celular desconectado."
 
 #: libgammu/gsmcomon.c:98
 msgid ""
@@ -82,7 +86,7 @@ msgid ""
 "information how to report it."
 msgstr ""
 "Frame não requerido agora. Veja <http://wammu.eu/support/bugs/> para "
-"informações para reportá-lo."
+"informações de que maneira reportar isto."
 
 #: libgammu/gsmcomon.c:99
 msgid ""
@@ -97,16 +101,17 @@ msgid ""
 "Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
 "report it."
 msgstr ""
-"Frame Desconhecido. Veja <http://wammu.eu/support/bugs/> para como reportá-"
-"lo."
+"Frame Desconhecido. Veja <http://wammu.eu/support/bugs/> para como reportar "
+"isto."
 
 #: libgammu/gsmcomon.c:101
 msgid "Unknown connection type string. Check config file."
-msgstr "String da Conexão desconhecida. Veja arquivo configuração."
+msgstr ""
+"String do tipo de Conexão desconhecida. Veja arquivo configuração gammurc."
 
 #: libgammu/gsmcomon.c:102
 msgid "Unknown model type string. Check config file."
-msgstr "String de Modelo desconhecido. Veja arquivo configuração."
+msgstr "String de Modelo desconhecido. Veja arquivo configuração gammurc."
 
 #: libgammu/gsmcomon.c:103
 msgid ""
@@ -118,7 +123,7 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:104
 msgid "Function not supported by phone."
-msgstr "Função não suportada pelo telefone."
+msgstr "Função não suportada pelo celular."
 
 #: libgammu/gsmcomon.c:105
 msgid "Entry is empty."
@@ -135,7 +140,7 @@ msgstr "Localização inválida. Pode ser muito alta?"
 #: libgammu/gsmcomon.c:108
 msgid "Functionality not implemented. You are welcome to help authors with it."
 msgstr ""
-"Funcionalidade não implementada. Você é pode ajudar os autores nessa tarefa."
+"Funcionalidade não implementada. Você pode ajudar os autores nessa tarefa."
 
 #: libgammu/gsmcomon.c:109
 msgid "Memory full."
@@ -147,7 +152,7 @@ msgstr "Erro desconhecido."
 
 #: libgammu/gsmcomon.c:111
 msgid "Can not open specified file."
-msgstr "Não foi possível abrir o arquivo."
+msgstr "Não foi possível abrir o arquivo especificado."
 
 #: libgammu/gsmcomon.c:112
 msgid "More memory required..."
@@ -155,14 +160,14 @@ msgstr "Mais memória requerida..."
 
 #: libgammu/gsmcomon.c:113
 msgid "Operation not allowed by phone."
-msgstr "Operação não permitida pelo telefone."
+msgstr "Operação não permitida pelo celular."
 
 #: libgammu/gsmcomon.c:114
 msgid ""
 "No SMSC number given. Provide it manually or use the one configured in phone."
 msgstr ""
-"Nenhum número SMSC foi dado. Providencie manualmente ou utilize um já "
-"configurado."
+"Nenhum número SMSC foi obtido. Providencie manualmente ou utilize um já "
+"configurado no celular."
 
 #: libgammu/gsmcomon.c:115
 msgid "You're inside phone menu (maybe editing?). Leave it and try again."
@@ -172,17 +177,17 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:116
 msgid "Phone is not connected."
-msgstr "Telefone não está conectado."
+msgstr "Celular não está conectado."
 
 #: libgammu/gsmcomon.c:117
 msgid ""
 "Function is currently being implemented. If you want to help, please contact "
 "authors."
-msgstr "Função em implementação... Por favor contate os desenvolvedores."
+msgstr "Função sendo implementada... Por favor contate os desenvolvedores."
 
 #: libgammu/gsmcomon.c:118
 msgid "Phone is disabled and connected to charger."
-msgstr "Telefone está desabilitado e conectado ao carregador."
+msgstr "Celular está desabilitado e conectado ao carregador."
 
 #: libgammu/gsmcomon.c:119
 msgid "File format not supported by Gammu."
@@ -193,13 +198,14 @@ msgid ""
 "Nobody is perfect, some bug appeared in protocol implementation. Please "
 "contact authors."
 msgstr ""
-"Erro indeterminado na implementação do protocolo. Por favor contacte "
+"Erro indeterminado na utiliza do protocolo. Por favor contactar "
 "desenvolvedores."
 
 #: libgammu/gsmcomon.c:121
 msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
 msgstr ""
-"Transferência cancelada pelo telefone, pode ser foi pressionada tecla cancel."
+"Transferência cancelada pelo celular, pode ter sido pressionada a tecla "
+"cancel."
 
 #: libgammu/gsmcomon.c:122
 msgid "Phone module need to send another answer frame."
@@ -215,15 +221,15 @@ msgstr "Erro no CRC."
 
 #: libgammu/gsmcomon.c:125
 msgid "Invalid date or time specified."
-msgstr "Data ou hora inválida foi especificada."
+msgstr "Data ou hora especificada é inválida."
 
 #: libgammu/gsmcomon.c:126
 msgid "Phone memory error, maybe it is read only."
-msgstr "Erro de memória do telefone, pode ser só leitura."
+msgstr "Erro de memória do celular, pode ser só leitura."
 
 #: libgammu/gsmcomon.c:127
 msgid "Invalid data given to phone."
-msgstr "Dados inválidos fornecidos para o telefone."
+msgstr "Dados inválidos fornecidos para o celular."
 
 #: libgammu/gsmcomon.c:128
 msgid "File with specified name already exists."
@@ -231,15 +237,15 @@ msgstr "Arquivo com o nome especificado já existe."
 
 #: libgammu/gsmcomon.c:129
 msgid "File with specified name doesn't exist."
-msgstr "Arquivo com o nome especificado não existe."
+msgstr "Nome arquivo especificado não existe."
 
 #: libgammu/gsmcomon.c:130
 msgid "You have to give folder name and not file name."
-msgstr "Você precisa informar o nome da pasta e não o nome do arquivo."
+msgstr "Informar o nome da pasta e não o nome do Arquivo."
 
 #: libgammu/gsmcomon.c:131
 msgid "You have to give file name and not folder name."
-msgstr "Você precisa dar o nome do arquivo e não o nome da pasta."
+msgstr "Informar o nome do Arquivo e não o nome da Pasta."
 
 #: libgammu/gsmcomon.c:132
 msgid "Can not access SIM card."
@@ -247,7 +253,7 @@ msgstr "Não pode acessar cartão SIM."
 
 #: libgammu/gsmcomon.c:133
 msgid "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
-msgstr "Versão GNAPPLET errada no telefone. Utilize a versão atual do Gammu."
+msgstr "Versão GNAPPLET errada no celular. Utilize a versão atual do Gammu."
 
 #: libgammu/gsmcomon.c:134
 msgid "Only part of folder has been listed."
@@ -267,11 +273,11 @@ msgstr "Gammu não foi configurado."
 
 #: libgammu/gsmcomon.c:138
 msgid "Wrong folder used."
-msgstr "Pasta informada errada."
+msgstr "Pasta Informada está errada."
 
 #: libgammu/gsmcomon.c:139
 msgid "Internal phone error."
-msgstr "Erro interno do telefone."
+msgstr "Erro interno do celular."
 
 #: libgammu/gsmcomon.c:140
 msgid "Error writing file to disk."
@@ -287,11 +293,11 @@ msgstr "Usando valores padrões."
 
 #: libgammu/gsmcomon.c:143
 msgid "Corrupted data returned by phone."
-msgstr "Dados corrompidos retornaram do telefone."
+msgstr "Dados corrompidos retornaram do celular."
 
 #: libgammu/gsmcomon.c:144
 msgid "Bad feature string in configuration."
-msgstr "Configuração de string errada."
+msgstr "String de Configuração de funcionalidade errada."
 
 #: libgammu/gsmcomon.c:145
 msgid "Desired functionality has been disabled on compile time."
@@ -307,7 +313,7 @@ msgstr "Serviço não está rodando."
 
 #: libgammu/gsmcomon.c:148
 msgid "Service configuration is missing."
-msgstr "Serviço de configuração inexistente."
+msgstr "Configuração do Serviço inexistente."
 
 #: libgammu/gsmcomon.c:149
 msgid "Command rejected because device was busy. Wait and restart."
@@ -325,7 +331,7 @@ msgstr "Não conseguiu resolver nome host."
 
 #: libgammu/gsmcomon.c:152
 msgid "Failed to get SMSC number from phone."
-msgstr "Falhou em obter o número SMSC do telefone."
+msgstr "Falhou em obter o número SMSC do celular."
 
 #: libgammu/gsmcomon.c:153
 msgid "Operation aborted."
@@ -337,7 +343,7 @@ msgid ""
 "for more details."
 msgstr ""
 "Dados da Instalação não encontrados, por favor consulte o registro de "
-"depuração (log) e/ou a documentação para mais detalhes."
+"depuração (debug/log) e/ou a documentação para mais detalhes."
 
 #: libgammu/gsmcomon.c:155
 msgid "Entry is read only."
@@ -357,7 +363,7 @@ msgstr "Pessoal"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1971 libgammu/phone/nokia/nfunc.c:1156
 msgid "Car"
-msgstr "Carro"
+msgstr "Automóvel"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1973 libgammu/phone/nokia/nfunc.c:1158
 msgid "Headset"
@@ -402,7 +408,7 @@ msgstr "Itens Salvos"
 
 #: libgammu/phone/nokia/nfunc.c:962
 msgid "Family"
-msgstr "Familia"
+msgstr "Família"
 
 #: libgammu/phone/nokia/nfunc.c:964
 msgid "VIP"
