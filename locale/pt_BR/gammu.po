@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2012-03-27 10:47+0200\n"
-"PO-Revision-Date: 2012-11-08 00:21+0200\n"
+"PO-Revision-Date: 2012-11-14 22:15+0200\n"
 "Last-Translator: gilberto dos santos alves <gsavix@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) "
 "<http://l10n.cihar.com/projects/gammu/gammu/pt_BR/>\n"
@@ -28,7 +28,7 @@ msgstr "Onde está o nome e a localização da cópia de segurança?"
 
 #: gammu/backup.c:63 helper/message-cmdline.c:489
 msgid "Calendar note not found in file"
-msgstr "Nota do calendário não encontrada no ficheiro"
+msgstr "Nota do calendário não encontrada no arquivo"
 
 #: gammu/backup.c:86
 msgid "WAP bookmark not found in file"
@@ -36,11 +36,11 @@ msgstr "Marca WAP não encontrada no ficheiro"
 
 #: gammu/backup.c:107
 msgid "Note not found in file"
-msgstr "Nota não encontrada no ficheiro"
+msgstr "Nota não encontrada no arquivo"
 
 #: gammu/backup.c:128
 msgid "Todo note not found in file"
-msgstr "Nota \"todo\" não encontrada no ficheiro"
+msgstr "Nota \"todo\" não encontrada no arquivo"
 
 #: gammu/backup.c:137 helper/message-cmdline.c:525
 msgid "Where is backup filename and location and memory type?"
@@ -50,7 +50,7 @@ msgstr ""
 #: gammu/backup.c:150 gammu/backup.c:161 helper/message-cmdline.c:537
 #: helper/message-cmdline.c:547
 msgid "Phonebook entry not found in file"
-msgstr "Entrada da agenda não encontrada no ficheiro"
+msgstr "Entrada da agenda não encontrada no arquivo"
 
 #: gammu/backup.c:167 helper/message-cmdline.c:552
 #, c-format
@@ -64,11 +64,11 @@ msgstr "Formato de cópia de segurança desconhecido: \"%s\"\n"
 
 #: gammu/backup.c:187
 msgid "Error while opening file for writing!\n"
-msgstr "Erro ao abrir ficheiro para escrita!\n"
+msgstr "Erro ao abrir arquivo para gravação!\n"
 
 #: gammu/backup.c:191 gammu/files.c:454 helper/message-cmdline.c:1110
 msgid "Error while writing file!\n"
-msgstr "Erro ao escrever ficheiro!\n"
+msgstr "Erro ao gravar arquivo!\n"
 
 #: gammu/backup.c:194
 msgid "Error while closing file!\n"
@@ -79,15 +79,15 @@ msgstr "Erro enquanto fechava arquivo!\n"
 #: gammu/backup.c:744 gammu/backup.c:781 gammu/backup.c:819 gammu/backup.c:860
 #: gammu/backup.c:894 gammu/backup.c:931 gammu/message.c:426
 msgid "Reading"
-msgstr "A ler"
+msgstr "Lendo"
 
 #: gammu/backup.c:247 gammu/backup.c:292
 msgid "Only part of data saved, please increase the limit."
-msgstr "Somente parte dos dados foram guardados, por favor aumente o limite."
+msgstr "Somente parte dos dados foram salvos, por favor aumente o limite."
 
 #: gammu/backup.c:268 gammu/backup.c:310 gammu/backup.c:475 gammu/mms.c:182
 msgid "Reading:"
-msgstr "A ler:"
+msgstr "Lendo:"
 
 #: gammu/backup.c:269 gammu/backup.c:311 gammu/backup.c:476
 #: gammu/backup.c:1045 gammu/backup.c:1120 gammu/backup.c:1173
@@ -101,7 +101,7 @@ msgstr "A ler:"
 #: gammu/misc.c:659 gammu/misc.c:664 gammu/misc.c:1376 gammu/mms.c:183
 #, c-format
 msgid "%i percent"
-msgstr "%i por cento"
+msgstr "%i porcentual"
 
 #: gammu/backup.c:367 gammu/backup.c:1026 gammu/backup.c:1645
 #: gammu/calendar.c:632 gammu/calendar.c:882 gammu/calendar.c:957
@@ -112,19 +112,19 @@ msgstr "Pressionar Ctrl+C para interromper..."
 
 #: gammu/backup.c:372
 msgid "Use Unicode subformat of backup file?"
-msgstr "Usar sub-formato Unicode do ficheiro da cópia de segurança?"
+msgstr "Usar codificação Unicode do arquivo de cópia de segurança?"
 
 #: gammu/backup.c:404
 msgid "Checking phone phonebook"
-msgstr "A analisar agenda do telemóvel"
+msgstr "Verificando agenda do celular"
 
 #: gammu/backup.c:405
 msgid "Backup phone phonebook?"
-msgstr "Fazer cópia de segurança da agenda do telemóvel?"
+msgstr "Fazer cópia de segurança da agenda do celular?"
 
 #: gammu/backup.c:409
 msgid "Checking SIM phonebook"
-msgstr "A analisar agenda do cartão SIM"
+msgstr "Analisando agenda do cartão SIM"
 
 #: gammu/backup.c:410
 msgid "Backup SIM phonebook?"
@@ -132,12 +132,11 @@ msgstr "Fazer cópia de segurança do cartão SIM?"
 
 #: gammu/backup.c:415
 msgid "Checking phone calendar"
-msgstr "A analisar calendário do telemóvel"
+msgstr "Analisando calendário do celular"
 
 #: gammu/backup.c:419
 msgid "Backup phone calendar notes?"
-msgstr ""
-"Fazer cópia de segurança de todas as entradas do calendário do telemóvel?"
+msgstr "Fazer cópia de segurança de todas as entradas do calendário do celular?"
 
 #: gammu/backup.c:432 gammu/backup.c:467 gammu/backup.c:504 gammu/backup.c:541
 #: gammu/backup.c:576 gammu/backup.c:642 gammu/backup.c:679 gammu/backup.c:716
@@ -149,95 +148,95 @@ msgstr "Dados parcialmente guardados, por favor aumentar %s."
 
 #: gammu/backup.c:450
 msgid "Checking phone todos"
-msgstr "A analisar \"todos\" de telemóvel"
+msgstr "Analisando agenda de tarefas do celular"
 
 #: gammu/backup.c:453
 msgid "Backup phone todos?"
-msgstr "Fazer cópia de segurança de \"todos\" do telemóvel?"
+msgstr "Fazer cópia de segurança da agenda de tarefas do celular?"
 
 #: gammu/backup.c:487
 msgid "Checking phone notes"
-msgstr "A analisar as notas do telemóvel"
+msgstr "A analisar anotações do celular"
 
 #: gammu/backup.c:491
 msgid "Backup phone notes?"
-msgstr "Fazer cópia de segurança das notas do telemóvel?"
+msgstr "Fazer cópia de segurança das anotações do celular?"
 
 #: gammu/backup.c:522
 msgid "Checking phone caller logos"
-msgstr "A analisar registos de chamadas"
+msgstr "Analisando registos de chamadas do celular"
 
 #: gammu/backup.c:527
 msgid "Backup phone caller groups and logos?"
-msgstr "Fazer cópia de segurança de todos os registos do telemóvel?"
+msgstr "Fazer cópia de segurança de todos os registos de chamadas do celular?"
 
 #: gammu/backup.c:560
 msgid "Checking SIM SMS profiles"
-msgstr "A analisar perfis SMS do cartão SIM"
+msgstr "Analisando perfis SMS do cartão SIM"
 
 #: gammu/backup.c:561
 msgid "Backup SIM SMS profiles?"
-msgstr "Fazer cópia de segurança de perfis SMS do cartão SIM?"
+msgstr "Fazer cópia de segurança dos perfis SMS do cartão SIM?"
 
 #: gammu/backup.c:589
 msgid "Checking phone startup text"
-msgstr "A analisar texto de início de sessão do telemóvel"
+msgstr "Analisando texto de início de sessão do celular"
 
 #: gammu/backup.c:593
 msgid "Backup phone startup logo/text?"
-msgstr "Fazer cópia de segurança do texto/logo de início de sessão?"
+msgstr "Fazer cópia de segurança do texto/logo de início de sessão do celular?"
 
 #: gammu/backup.c:608
 msgid "Checking phone operator logo"
-msgstr "A analisar logo do operador"
+msgstr "Analisando logo da empresa telefonia"
 
 #: gammu/backup.c:613
 msgid "Backup phone operator logo?"
-msgstr "Fazer cópia de segurança do logo do operador?"
+msgstr "Fazer cópia de segurança do logo da empresa de telefonia?"
 
 #: gammu/backup.c:624
 msgid "Checking phone WAP bookmarks"
-msgstr "A analisar marcadores WAP do telemóvel"
+msgstr "Analisando favoritos WAP do celular"
 
 #: gammu/backup.c:628
 msgid "Backup phone WAP bookmarks?"
-msgstr "Fazer cópia de segurança de marcadores WAP do telemóvel?"
+msgstr "Fazer cópia de segurança dos favoritos WAP do celular?"
 
 #: gammu/backup.c:661
 msgid "Checking phone WAP settings"
-msgstr "A analisar definições WAP do telemóvel"
+msgstr "Analisando configurações WAP do celular"
 
 #: gammu/backup.c:665
 msgid "Backup phone WAP settings?"
-msgstr "Fazer cópia de segurança das definições WAP do telemóvel?"
+msgstr "Fazer cópia de segurança das configurações WAP do celular?"
 
 #: gammu/backup.c:698
 msgid "Checking phone MMS settings"
-msgstr "A analisar definições MMS do telemóvel"
+msgstr "Analisando configurações MMS do celular"
 
 #: gammu/backup.c:702
 msgid "Backup phone MMS settings?"
-msgstr "Fazer cópia de segurança das definições MMS do telemóvel?"
+msgstr "Fazer cópia de segurança das configurações MMS do celular?"
 
 #: gammu/backup.c:735
 msgid "Checking phone Chat settings"
-msgstr "A analisar definições de Chat do telemóvel"
+msgstr "Analisando de Chat do celular"
 
 #: gammu/backup.c:739
 msgid "Backup phone Chat settings?"
-msgstr "Fazer cópia de segurança das definições de Chat do telemóvel?"
+msgstr "Fazer cópia de segurança das configurações de Chat do celular?"
 
 #: gammu/backup.c:772
 msgid "Checking phone SyncML settings"
-msgstr "A analisar definições SyncML do telemóvel"
+msgstr "Analisando configurações SyncML do celular"
 
 #: gammu/backup.c:776
 msgid "Backup phone SyncML settings?"
-msgstr "Fazer cópia de segurança das definições SyncML do telemóvel?"
+msgstr "Fazer cópia de segurança das configurações SyncML do celular?"
 
 #: gammu/backup.c:808
 msgid "Checking phone user ringtones"
-msgstr "Verificando ringtones do telefone"
+msgstr "Analisando toques do celular"
 
 #: gammu/backup.c:813
 msgid "Backup phone user ringtones?"
@@ -245,27 +244,27 @@ msgstr "Salvar ringtones do telefone?"
 
 #: gammu/backup.c:851
 msgid "Checking phone profiles"
-msgstr "verificando perfis do telefone"
+msgstr "Analisando perfis do celular"
 
 #: gammu/backup.c:855
 msgid "Backup phone profiles?"
-msgstr "Salvar perfis do telefone?"
+msgstr "Salvar perfis do celular?"
 
 #: gammu/backup.c:884
 msgid "Checking phone FM radio stations"
-msgstr "Verificando as estações de rádio FM do telefone"
+msgstr "Analisando estações de rádio FM do celular"
 
 #: gammu/backup.c:888
 msgid "Backup phone FM radio stations?"
-msgstr "Salvar estações rádio FM do telefone?"
+msgstr "Salvar estações rádio FM do celular?"
 
 #: gammu/backup.c:921
 msgid "Checking phone GPRS access points"
-msgstr "Verificando pontos de acesso GPRS do telefone"
+msgstr "Analisando pontos de acesso GPRS do celular"
 
 #: gammu/backup.c:925
 msgid "Backup phone GPRS access points?"
-msgstr "Salvar pontos de acesso GPRS do telefone?"
+msgstr "Salvar pontos de acesso GPRS do celular?"
 
 #: gammu/backup.c:971
 msgid "Time of backup"
@@ -273,7 +272,7 @@ msgstr "Data da Cópia de Segurança / Backup"
 
 #: gammu/backup.c:974 gammu/calendar.c:237 gammu/calendar.c:820
 msgid "Phone"
-msgstr "Telefone"
+msgstr "Celular"
 
 #: gammu/backup.c:977 gammu/misc.c:410
 msgid "IMEI"
@@ -287,7 +286,7 @@ msgstr "Arquivo criado por"
 #, c-format
 msgid "Checksum in backup file do not match (original: %s, new: %s). Continue?"
 msgstr ""
-"Verificação (checksum) do arquivo cópia difere do:original: %s, novo: %s . "
+"Verificação (checksum) do arquivo cópia difere. (original: %s, novo: %s). "
 "Continuar?"
 
 #: gammu/backup.c:1022
@@ -295,17 +294,16 @@ msgid ""
 "Please note that restoring data will cause existing data in phone to be "
 "deleted."
 msgstr ""
-"Por favor, saiba que: restaurar dados causa a regravação dos dados "
-"atuaisexistentes no telefone."
+"Por favor, saiba que restaurar os dados causa a regravação (sobreposição) "
+"dos dados atuais/existentes no celular."
 
 #: gammu/backup.c:1023
 msgid "Use addnew command if you just want to add some entries to your phone."
-msgstr ""
-"Use o comando (adic. novo) se você deseja adicionar algo ao seu celular."
+msgstr "Use o comando (addnew) se você deseja adicionar algo ao seu celular."
 
 #: gammu/backup.c:1034
 msgid "Restore phone caller groups and logos?"
-msgstr "Restaurar grupos de ligação e logotipos?"
+msgstr "Restaurar grupos de contatos e logotipos?"
 
 #: gammu/backup.c:1044 gammu/backup.c:1119 gammu/backup.c:1172
 #: gammu/backup.c:1230 gammu/backup.c:1279 gammu/backup.c:1307
@@ -327,15 +325,15 @@ msgstr "%i entradas no arquivo cópia de segurança\n"
 
 #: gammu/backup.c:1071
 msgid "Restore phone phonebook?"
-msgstr "Restaurar lista de contatos do telefone?"
+msgstr "Restaurar lista de contatos do celular?"
 
 #: gammu/backup.c:1090
 msgid ""
 "Probably caller group is missing from your backup, add it and use --restore "
 "again."
 msgstr ""
-"Grupo de chamada provavelmente não existe na cópia de segurança, adicione-o "
-"efaça a recuperação novamente."
+"Grupo de contato não existe na cópia de segurança, adicione-o ou faça a "
+"restauração novamente."
 
 #: gammu/backup.c:1100 gammu/backup.c:1159
 #, c-format
@@ -344,7 +342,7 @@ msgstr "Localização %d"
 
 #: gammu/backup.c:1139
 msgid "Restore SIM phonebook?"
-msgstr "Recuperar contatos do SIM (chip)?"
+msgstr "Restaurar contatos do SIM (chip)?"
 
 #: gammu/backup.c:1184 gammu/backup.c:1717
 msgid ""
@@ -356,15 +354,15 @@ msgstr ""
 
 #: gammu/backup.c:1200
 msgid "Restore phone calendar notes?"
-msgstr "Restaurar notas da Agenda do Celular?"
+msgstr "Restaurar anotações da Agenda do Celular?"
 
 #: gammu/backup.c:1201
 msgid "Restore notes from the past?"
-msgstr "Restaurar notas da Agenda do passado?"
+msgstr "Restaurar anotações da Agenda do passado?"
 
 #: gammu/backup.c:1207 gammu/backup.c:1346
 msgid "Deleting old notes:"
-msgstr "Apagando notas antigas:"
+msgstr "Apagando anotações antigas:"
 
 #: gammu/backup.c:1219 gammu/backup.c:1269 gammu/backup.c:1502
 #: gammu/backup.c:1560 gammu/misc.c:1385 gammu/misc.c:1430 gammu/misc.c:1454
@@ -374,15 +372,15 @@ msgstr "Concluído"
 
 #: gammu/backup.c:1249
 msgid "Restore phone todo?"
-msgstr "Restaurar compromissos do telefone?"
+msgstr "Restaurar agenda de tarefas do celular?"
 
 #: gammu/backup.c:1257
 msgid "Deleting old todos:"
-msgstr "Apagando compromissos antigos:"
+msgstr "Apagando tarefas / compromissos antigos:"
 
 #: gammu/backup.c:1342
 msgid "Restore phone notes?"
-msgstr "Restaurar anotações do telefone?"
+msgstr "Restaurar anotações do celular?"
 
 #: gammu/backup.c:1373
 msgid "Restore SIM SMSC profiles?"
@@ -390,31 +388,31 @@ msgstr "Restaurar perfis do SIM (chip) SMSC?"
 
 #: gammu/backup.c:1390
 msgid "Restore phone startup logo/text?"
-msgstr "Restaurar logotipo/texto de ativação do telefone?"
+msgstr "Restaurar logotipo/texto de ativação do celular?"
 
 #: gammu/backup.c:1394
 msgid "Restore phone operator logo?"
-msgstr "Restaurar logotipo do operador do telefone?"
+msgstr "Restaurar logotipo da operadora de telefonia do celular?"
 
 #: gammu/backup.c:1403
 msgid "Restore phone WAP bookmarks?"
-msgstr "Restaurar endereços do WAP do telefone?"
+msgstr "Restaurar favoritos de WAP do celular?"
 
 #: gammu/backup.c:1407
 msgid "Deleting old bookmarks:"
-msgstr "Apagando endereços antigos do WAP:"
+msgstr "Apagando favoritos WAP antigos do celular:"
 
 #: gammu/backup.c:1444
 msgid "Restore phone WAP settings?"
-msgstr "Restaurar configurações WAP do telefone?"
+msgstr "Restaurar configurações WAP do celular?"
 
 #: gammu/backup.c:1469
 msgid "Restore phone MMS settings?"
-msgstr "Restaurar configurações MMS do telefone?"
+msgstr "Restaurar configurações MMS do celular?"
 
 #: gammu/backup.c:1495 gammu/misc.c:1498
 msgid "Delete all phone user ringtones?"
-msgstr "Apagar todos os toques do telefone?"
+msgstr "Apagar todos os (sons) toques do celular?"
 
 #: gammu/backup.c:1499 gammu/misc.c:1417 gammu/misc.c:1441 gammu/misc.c:1465
 #: gammu/misc.c:1481 gammu/misc.c:1499
@@ -423,15 +421,15 @@ msgstr "Apagando"
 
 #: gammu/backup.c:1504
 msgid "Restore user ringtones?"
-msgstr "Restaurar os toques?"
+msgstr "Restaurar os (sons) toques?"
 
 #: gammu/backup.c:1530
 msgid "Restore phone profiles?"
-msgstr "Restaurar perfis do telefone?"
+msgstr "Restaurar perfis do celular?"
 
 #: gammu/backup.c:1553
 msgid "Restore phone FM radio stations?"
-msgstr "Restaurar estações de rádio FM do telefone?"
+msgstr "Restaurar config. das estações de rádio FM?"
 
 #: gammu/backup.c:1557
 msgid "Deleting old FM stations:"
@@ -445,7 +443,7 @@ msgstr "Restaurar pontos GPRS do telefone?"
 #: gammu/memory.c:168
 #, c-format
 msgid "Unknown memory type (\"%s\")\n"
-msgstr "Tipo de memória desconhecida (\"%s\")\n"
+msgstr "Tipo de memória desconhecido (\"%s\")\n"
 
 #: gammu/backup.c:1635 gammu/memory.c:70 gammu/misc.c:773 gammu/misc.c:806
 #: helper/message-cmdline.c:1032
@@ -460,27 +458,27 @@ msgstr "Memória tem somente %i entradas disponíveis.Saindo.\n"
 
 #: gammu/backup.c:1668
 msgid "Add phone phonebook entries?"
-msgstr "Adicione entradas em contatos no telefone?"
+msgstr "Adicione novos contatos no celular?"
 
 #: gammu/backup.c:1696
 msgid "Add SIM phonebook entries?"
-msgstr "Adicione entradas nos contatos no SIM?"
+msgstr "Adicione novos nos contatos do SIM?"
 
 #: gammu/backup.c:1728
 msgid "Add phone calendar notes?"
-msgstr "Adicione notas na agenda do telefone?"
+msgstr "Adicione anotação na agenda do celular?"
 
 #: gammu/backup.c:1752
 msgid "Add phone ToDo?"
-msgstr "Adicione compromisso no telefone?"
+msgstr "Adicionar tarefa / compromisso no celular?"
 
 #: gammu/backup.c:1774
 msgid "Add notes to phone?"
-msgstr "Adicionar anotações ao telefone?"
+msgstr "Adicionar anotações no celular?"
 
 #: gammu/backup.c:1797
 msgid "Add phone WAP bookmarks?"
-msgstr "Adicione endereços WAP?"
+msgstr "Adicione endereços favoritos WAP?"
 
 #: gammu/backupsms.c:51
 msgid "Delete each sms after backup?"
@@ -580,7 +578,7 @@ msgstr "Treinamento / Ciclismo"
 
 #: gammu/calendar.c:61
 msgid "Training/Budo"
-msgstr "Treinamento / Budo"
+msgstr "Treinamento / Artes Marciais"
 
 #: gammu/calendar.c:64
 msgid "Training/Dance"
@@ -588,7 +586,7 @@ msgstr "Treinamento Dança"
 
 #: gammu/calendar.c:67
 msgid "Training/Extreme Sports"
-msgstr "Treinamento Exportes Extremos"
+msgstr "Treinamento Esportes Radicais"
 
 #: gammu/calendar.c:70
 msgid "Training/Football"
@@ -600,11 +598,11 @@ msgstr "Treinamento Golfe"
 
 #: gammu/calendar.c:76
 msgid "Training/Gym"
-msgstr "Treinamento Gym"
+msgstr "Treinamento em Ginásio"
 
 #: gammu/calendar.c:79
 msgid "Training/Horse Races"
-msgstr "Treinamento / Cavalos"
+msgstr "Treinamento / Montaria"
 
 #: gammu/calendar.c:82
 msgid "Training/Hockey"
@@ -620,7 +618,7 @@ msgstr "Treinamento Rugby"
 
 #: gammu/calendar.c:91
 msgid "Training/Sailing"
-msgstr "Treinamento Velejar"
+msgstr "Treinamento Vela"
 
 #: gammu/calendar.c:94
 msgid "Training/Street Games"
@@ -648,7 +646,7 @@ msgstr "tipo desconhecido!"
 
 #: gammu/calendar.c:156
 msgid "Start"
-msgstr "Início"
+msgstr "Iniciar"
 
 #: gammu/calendar.c:163
 msgid "Stop"
@@ -665,7 +663,7 @@ msgstr "Tom alarme"
 #: gammu/calendar.c:178 gammu/calendar.c:199
 #, c-format
 msgid "forever on each %i. day of %s"
-msgstr "repita para cada %i dia de %s"
+msgstr "repita para cada %i. dia de %s"
 
 #: gammu/calendar.c:197 gammu/calendar.c:209 gammu/calendar.c:761
 msgid "Silent alarm"
@@ -717,8 +715,8 @@ msgstr "Repetindo"
 #, c-format
 msgid "for %d time "
 msgid_plural "for %d times "
-msgstr[0] "por %d tempo "
-msgstr[1] "por %d tempos "
+msgstr[0] "por %d vez  "
+msgstr[1] "por %d vezes  "
 
 #: gammu/calendar.c:317
 msgid "forever"
@@ -764,12 +762,12 @@ msgstr "cada mês"
 #: gammu/calendar.c:347
 #, c-format
 msgid "%d. day of "
-msgstr "%d dia de "
+msgstr "%d. dia de  "
 
 #: gammu/calendar.c:355
 #, c-format
 msgid "%d. day of year"
-msgstr "%d dia do ano"
+msgstr "%d. dia do ano"
 
 #: gammu/calendar.c:357
 msgid "day"
@@ -781,12 +779,12 @@ msgstr "Idade"
 
 #: gammu/calendar.c:392
 msgid "Date and time not set in phone"
-msgstr "Data e Hora não configuradas no telefone"
+msgstr "Data e Hora não configuradas no celular"
 
 #: gammu/calendar.c:395
 #, c-format
 msgid "Phone time is %s\n"
-msgstr "Horário do telefone é %s\n"
+msgstr "Data do celular é %s\n"
 
 #: gammu/calendar.c:409
 msgid "Time format is "
@@ -849,12 +847,12 @@ msgstr "Configure o horário do telefone igual ao horário do computador."
 
 #: gammu/calendar.c:513
 msgid "Updating specified parts of date and time in phone."
-msgstr "Atualizando partes especificadas de data e hora no telefone."
+msgstr "Atualizando partes especificadas de data e hora no celular."
 
 #: gammu/calendar.c:536
 #, c-format
 msgid "Alarm (%i) not set in phone\n"
-msgstr "Alarme (%i) não configurado no telefone\n"
+msgstr "Alarme (%i) não configurado no celular\n"
 
 #: gammu/calendar.c:540
 #, c-format
@@ -910,7 +908,7 @@ msgstr "Médio"
 
 #: gammu/calendar.c:722
 msgid "High"
-msgstr "Alto"
+msgstr "Alta"
 
 #: gammu/calendar.c:725
 msgid "None"
@@ -953,7 +951,7 @@ msgstr "Texto de busca muito longo, truncado para %d caracteres!\n"
 
 #: gammu/common.c:42
 msgid "Waiting for Security Code."
-msgstr "Aguardando pelo código de Segurança."
+msgstr "Aguardando pelo código de Segurança. (PIN)."
 
 #: gammu/common.c:45
 msgid "Waiting for PIN."
@@ -973,7 +971,7 @@ msgstr "Aguardando pelo PUK2."
 
 #: gammu/common.c:57
 msgid "Waiting for phone code."
-msgstr "Aguardando código do telefone."
+msgstr "Aguardando código do celular."
 
 #: gammu/common.c:60
 msgid "Waiting for network code."
@@ -985,7 +983,7 @@ msgstr "Nada a digitar."
 
 #: gammu/common.c:67
 msgid "Unknown security status."
-msgstr "Situação securança desconhecida!."
+msgstr "Situação segurança desconhecida!."
 
 #: gammu/common.c:78
 msgid "January"
@@ -997,7 +995,7 @@ msgstr "Fevereiro"
 
 #: gammu/common.c:84
 msgid "March"
-msgstr "março"
+msgstr "Março"
 
 #: gammu/common.c:87
 msgid "April"
@@ -1041,7 +1039,7 @@ msgstr "Mês inválido!"
 
 #: gammu/common.c:126
 msgid "Monday"
-msgstr "Segunda"
+msgstr "Segunda-feira"
 
 #: gammu/common.c:129
 msgid "Tuesday"
@@ -1087,7 +1085,7 @@ msgstr "Por Favor enumere os locais a partir de 1"
 
 #: gammu/common.c:333
 msgid "Swapping start and end location"
-msgstr "Trocando locais inicial e final"
+msgstr "Trocando local (inicial e final)"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
 #: gammu/common.c:355 gammu/common.c:384 gammu/depend/nokia/dct4.c:85
@@ -1125,7 +1123,7 @@ msgstr "NÃO (sempre)"
 
 #: gammu/depend/nokia/dct4.c:66
 msgid "Can't do it with current phone protocol"
-msgstr "Não é possivel esta operação neste protocolo do telefone"
+msgstr "Operação não é possivel com este protocolo de comunicação"
 
 #: gammu/depend/nokia/dct4.c:80
 #, c-format
@@ -1142,7 +1140,8 @@ msgid ""
 "<http://wammu.eu/support/bugs/> for information how to report it."
 msgstr ""
 "Desculpe, mas matriz de configuração para este modelo ainda não foi "
-"adicionada.Veja: <http://wammu.eu/support/bugs/> para reportar ocorrência."
+"adicionada.Veja: <http://wammu.eu/support/bugs/> para saber como reportar a "
+"ocorrência."
 
 #: gammu/depend/nokia/dct4.c:369
 msgid "Passed"
@@ -1231,7 +1230,7 @@ msgstr "O que faremos (\"%s\") ?\n"
 #: gammu/depend/nokia/dct4.c:1020
 #, c-format
 msgid "raw result %10i "
-msgstr "fila resultante %10i "
+msgstr "resultante %10i "
 
 #. l10n: Processed data for A/D convertor
 #: gammu/depend/nokia/dct4.c:1024
@@ -1261,7 +1260,7 @@ msgstr "Voltagem do carregador:"
 
 #: gammu/depend/nokia/dct4.c:1040
 msgid "Charger current:"
-msgstr "Carga atual:"
+msgstr "Corrente Carregador:"
 
 #: gammu/depend/nokia/dct4.c:1040 gammu/depend/nokia/dct4.c:1051
 #: gammu/depend/nokia/dct4.c:1052
@@ -1291,7 +1290,7 @@ msgstr "Conexão do fone de ouvido:"
 
 #: gammu/depend/nokia/dct4.c:1044
 msgid "Hook interconnection:"
-msgstr "Gancho de conexão:"
+msgstr "Conector:"
 
 #: gammu/depend/nokia/dct4.c:1045
 msgid "Light sensor:"
@@ -1299,7 +1298,7 @@ msgstr "Sensor Luzes:"
 
 #: gammu/depend/nokia/dct4.c:1046
 msgid "Power amplifier temperature:"
-msgstr "Amplitude temperatura Energia:"
+msgstr "Amplitude temperatura:"
 
 #: gammu/depend/nokia/dct4.c:1047
 msgid "VCXO temperature:"
@@ -1319,11 +1318,11 @@ msgstr "Voltagem inicial bateria:"
 
 #: gammu/depend/nokia/dct4.c:1051
 msgid "Battery Current:"
-msgstr "Bateria atual:"
+msgstr "Corrente Bateria:"
 
 #: gammu/depend/nokia/dct4.c:1052
 msgid "Battery Current Fast:"
-msgstr "Bateria Atual Rápida:"
+msgstr "Carga Rápida Bateria:"
 
 #: gammu/depend/nokia/dct4.c:1158
 msgid "Phone seems not to support radio"
@@ -1331,7 +1330,7 @@ msgstr "Telefone parece não suportar rádio"
 
 #: gammu/depend/nokia/dct4.c:1165
 msgid "Please connect headset. Required as antenna"
-msgstr "Por favor conecte fone ouvido. requerido como antena"
+msgstr "Por favor conecte fone ouvido. Requerido como antena"
 
 #: gammu/depend/nokia/dct4.c:1331
 #, c-format
@@ -1373,11 +1372,11 @@ msgstr " (ID do toque)"
 
 #: gammu/depend/nokia/dct4.c:1343
 msgid " (Call register: date and time)"
-msgstr " (registrador chamadas: data e hora)"
+msgstr " (Registrador Chamadas: Data e Hora)"
 
 #: gammu/depend/nokia/dct4.c:1344
 msgid " (Call register: with missed calls)"
-msgstr " (Registrador Chamadas: chamadas perdidas)"
+msgstr " (Registrador Chamadas: Chamadas Perdidas)"
 
 #: gammu/depend/nokia/dct4.c:1345
 msgid " (Speed dial)"
@@ -1385,15 +1384,15 @@ msgstr " (Discagem Rápida)"
 
 #: gammu/depend/nokia/dct4.c:1346
 msgid " (Caller group: logo)"
-msgstr " (Grupo da Chamada: logotipo)"
+msgstr " (Grupo de Contato: logotipo)"
 
 #: gammu/depend/nokia/dct4.c:1347
 msgid " (Caller group: is logo on ?)"
-msgstr " (Grupo chamada: logotipo está habilitado?)"
+msgstr " (Grupo Contato: Logotipo está habilitado?)"
 
 #: gammu/depend/nokia/dct4.c:1348
 msgid " (Caller group number in pbk entry)"
-msgstr "(Grupo Chamada: número nas entradas pbk)"
+msgstr "(Grupo Contato: número nas entradas pbk)"
 
 #: gammu/depend/nokia/dct4.c:1351
 msgid " (Text: URL address)"
@@ -1405,7 +1404,7 @@ msgstr " (SMS lista de assinalamentos)"
 
 #: gammu/depend/nokia/dct4.c:1353
 msgid " (Voice tag assignment)"
-msgstr " (Assinalamento etiqueta de Voz)"
+msgstr " (Assinalamento ID de Voz)"
 
 #: gammu/depend/nokia/dct4.c:1354
 msgid " (Picture ID assignment)"
@@ -1413,7 +1412,7 @@ msgstr " (Assinalamento ID Foto)"
 
 #: gammu/depend/nokia/dct4.c:1355
 msgid " (Ringtone ID from filesystem/internal)"
-msgstr " (ID do Toque do sistema de arquivos/interno)"
+msgstr " (ID do Toque do sistema de arquivo interno)"
 
 #: gammu/depend/nokia/dct4.c:1356
 msgid " (Text: user ID)"
@@ -1466,27 +1465,27 @@ msgstr "%i tipos de número telefônico\n"
 
 #: gammu/depend/nokia/dct4.c:1378 helper/memory-display.c:126
 msgid "Home number"
-msgstr "Casa"
+msgstr "Número de Casa"
 
 #: gammu/depend/nokia/dct4.c:1379 helper/memory-display.c:147
 msgid "Mobile number"
-msgstr "Celular"
+msgstr "Número Celular"
 
 #: gammu/depend/nokia/dct4.c:1380 helper/memory-display.c:161
 msgid "Fax number"
-msgstr "FAX"
+msgstr "Número FAX"
 
 #: gammu/depend/nokia/dct4.c:1381
 msgid "Office number"
-msgstr "Escritório"
+msgstr "Número Escritório"
 
 #: gammu/depend/nokia/dct4.c:1382
 msgid "Standard number"
-msgstr "Padrão"
+msgstr "Número Padrão"
 
 #: gammu/depend/nokia/dct4.c:1383
 msgid "Unknown number"
-msgstr "Desconhecido"
+msgstr "Número Desconhecido"
 
 #: gammu/depend/nokia/dct4.c:1407
 #, c-format
@@ -1495,7 +1494,7 @@ msgstr "ERROR: tipo de memória desconhecido (\"%s\")\n"
 
 #: gammu-detect/main.c:55
 msgid "Show debugging output for detecting devices."
-msgstr "Exibir saída da depuração na detecção de dispositivos."
+msgstr "Exibir Log saída da depuração na detecção de dispositivos."
 
 # type: Plain text
 #: gammu-detect/main.c:56
@@ -1526,7 +1525,7 @@ msgstr "Gammu compilado  %s sob  %s usando %s"
 
 #: gammu-detect/main.c:76 gammu/gammu.c:100
 msgid "Compiled in features:"
-msgstr "Configuração da Compilação:"
+msgstr "Compilação com as seguintes funcionalidades:"
 
 #: gammu-detect/main.c:78
 msgid "udev probing"
@@ -1544,7 +1543,7 @@ msgstr "Provando porta serial do Windows"
 msgid ""
 "Copyright (C) 2010 - 2011 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
-"Copyright (C) 2003 - 2011 Michal Cihar <michal@cihar.com> e outros autores."
+"Copyright (C) 2003 - 2012 Michal Cihar <michal@cihar.com> e outros autores."
 
 #: gammu-detect/main.c:89 gammu/gammu.c:331
 msgid ""
@@ -1557,7 +1556,8 @@ msgstr ""
 #: gammu-detect/main.c:90 gammu/gammu.c:333
 msgid "This is free software: you are free to change and redistribute it."
 msgstr ""
-"Este é um software livre e você é livre para trocá-lo ou redistribuí-lo."
+"Este é um software livre e você tem a liberdade para modificar ou "
+"redistribuir o Gammu."
 
 #: gammu-detect/main.c:91 gammu/gammu.c:335
 msgid "There is NO WARRANTY, to the extent permitted by law."
@@ -1578,7 +1578,7 @@ msgstr "Por favor verifique o Manual Gammu para mais informações."
 #: gammu-detect/main.c:160
 #, c-format
 msgid "option parsing failed: %s\n"
-msgstr "opção passada falhou: %s\n"
+msgstr "opção de parse falhou: %s\n"
 
 #: gammu-detect/udev.c:67
 msgid "Name:"
@@ -1620,16 +1620,16 @@ msgstr "Propriedades:"
 #: gammu-detect/udev.c:170 gammu-detect/win32-serial.c:44
 #, c-format
 msgid "Phone on serial port %s"
-msgstr "Telefone na porta serial %s"
+msgstr "Celular na porta serial %s"
 
 #: gammu-detect/udev.c:172
 #, c-format
 msgid "Phone on USB serial port %s %s"
-msgstr "Telefone na porta USB serial %s %s"
+msgstr "Celular na porta USB serial %s %s"
 
 #: gammu/files.c:48
 msgid "Phone memory"
-msgstr "Memória do Telefone"
+msgstr "Memória do Celular"
 
 #: gammu/files.c:49
 #, c-format
@@ -1638,7 +1638,7 @@ msgstr "%i bytes (livres %i bytes, usados %i bytes)"
 
 #: gammu/files.c:55
 msgid "Usage details"
-msgstr "Utilização detalhes"
+msgstr "Detalhes de Utilização"
 
 #: gammu/files.c:56
 #, c-format
@@ -1680,7 +1680,7 @@ msgstr "Arquivo;"
 #: gammu/files.c:224
 #, c-format
 msgid "Used in phone: %li bytes"
-msgstr "Usado no telefone: %li bytes"
+msgstr "Usado no celular: %li bytes"
 
 #: gammu/files.c:226
 #, c-format
@@ -1694,7 +1694,7 @@ msgstr "Atributo desconhecido (%s)\n"
 
 #: gammu/files.c:307
 msgid "Part of folder only"
-msgstr "Parte da pasta somente"
+msgstr "Somente Parte da Pasta"
 
 #: gammu/files.c:371
 #, c-format
@@ -1715,8 +1715,8 @@ msgid ""
 "File checksum calculated by phone doesn't match with value calculated by "
 "Gammu. File is damaged or there is a error in Gammu."
 msgstr ""
-"Verificação checksum do Arquivo calculada peleo telefone não combina "
-"comcalculada Gammu.Gammu. Arquivo está corrompido ou há erro no Gammu."
+"Verificação checksum do Arquivo calculada pelo celular não combina com a "
+"calculada pelo Gammu. Arquivo está corrompido ou há erro no Gammu."
 
 #: gammu/files.c:421
 #, c-format
@@ -1798,12 +1798,13 @@ msgstr "Diversos"
 #: gammu/gammu.c:296
 #, c-format
 msgid "There is newer stable Gammu version available! (%s instead of %s)\n"
-msgstr "Existe uma versão Gammu estável disponível! (%s em vez de %s)\n"
+msgstr "Existe uma versão estável mais recente do Gammu disponível! (%s em vez de %"
+"s)\n"
 
 #: gammu/gammu.c:314
 #, c-format
 msgid "There is newer testing Gammu version available! (%s instead of %s)\n"
-msgstr "Existe uma nova versão teste, Gammu, disponível! (%s em vez de %s)\n"
+msgstr "Existe uma versão TESTE mais nova do Gammu, disponível! (%s em vez de %s)\n"
 
 #: gammu/gammu.c:327
 msgid ""
@@ -1826,7 +1827,7 @@ msgstr "Erro lendo batch! Encerrando.\n"
 
 #: gammu/gammu.c:389
 msgid "Batch processed, terminating.\n"
-msgstr "Processo Batch terminando.\n"
+msgstr "Batch processado, concluindo.\n"
 
 #: gammu/gammu.c:426
 #, c-format
@@ -1838,16 +1839,16 @@ msgid ""
 "SMS daemon is now in separate binary, please use gammu-smsd-inject instead "
 "of gammu sendsmsdsms!"
 msgstr ""
-"Daemon SMS está em binário separado. Por favor use gammu-smsd-inject em vez "
-"de gammu sendsmsdsms!"
+"Serviço Daemon SMS está em binário separado. Por favor use gammu-smsd-inject "
+"em vez de gammu sendsmsdsms!"
 
 #: gammu/gammu.c:456
 msgid ""
 "SMS daemon is now in separate binary, please use gammu-smsd instead of gammu "
 "smsd!"
 msgstr ""
-"Daemon SMS está em binário separado, Por favoruse gammu-smsd em vez de gammu "
-"smsd!"
+"Serviço Daemon SMS está em binário separado, Por favor use gammu-smsd em vez "
+"de gammu smsd!"
 
 #: gammu/gammu.c:702
 msgid "Calls"
@@ -1859,15 +1860,15 @@ msgstr "SMS e EMS"
 
 #: gammu/gammu.c:704
 msgid "Memory (phonebooks and calls)"
-msgstr "Memória (agenda e chamadas)"
+msgstr "Memória (contatos e chamadas)"
 
 #: gammu/gammu.c:705
 msgid "Filesystem"
-msgstr "Sistema Arquivo"
+msgstr "Sistema Arquivos"
 
 #: gammu/gammu.c:706
 msgid "Logo and pictures"
-msgstr "Logotipo e Imagens"
+msgstr "Logotipos e Imagens"
 
 #: gammu/gammu.c:707
 msgid "Ringtones"
@@ -1879,7 +1880,7 @@ msgstr "Anotações Agenda"
 
 #: gammu/gammu.c:709
 msgid "To do lists"
-msgstr "Tarefas"
+msgstr "Tarefas / Compromissos"
 
 #: gammu/gammu.c:710
 msgid "Notes"
@@ -1899,7 +1900,7 @@ msgstr "Salvando e Restaurando"
 
 #: gammu/gammu.c:717
 msgid "Nokia specific"
-msgstr "Específico Nokia"
+msgstr "Específico para Nokia"
 
 #: gammu/gammu.c:720
 msgid "Siemens specific"
@@ -1907,15 +1908,15 @@ msgstr "Específico Siemens"
 
 #: gammu/gammu.c:723
 msgid "WAP settings and bookmarks"
-msgstr "configurações e endereços WAP"
+msgstr "Configurações e Favoritos WAP"
 
 #: gammu/gammu.c:724
 msgid "MMS and MMS settings"
-msgstr "configurações MMS"
+msgstr "Configurações MMS"
 
 #: gammu/gammu.c:725
 msgid "Phone tests"
-msgstr "Testes Telefone"
+msgstr "Testes Celular"
 
 #: gammu/gammu.c:726
 msgid "FM radio"
@@ -1923,11 +1924,11 @@ msgstr "Rádio FM"
 
 #: gammu/gammu.c:727
 msgid "Phone information"
-msgstr "Informação do telefone"
+msgstr "Informações do Celular"
 
 #: gammu/gammu.c:728
 msgid "Phone settings"
-msgstr "Configuração telefone"
+msgstr "Configurações Celular"
 
 #: gammu/gammu.c:730
 msgid "Dumps decoding"
@@ -1935,7 +1936,7 @@ msgstr "Decodificando Conteúdo"
 
 #: gammu/gammu.c:732
 msgid "Functions that don't fit elsewhere"
-msgstr "Funções que não se enquadram em outras"
+msgstr "Demais Funções Diversas"
 
 #: gammu/gammu.c:733
 msgid "Gammu information"
@@ -1948,29 +1949,30 @@ msgstr "Uso: gammu [parâmetros] <comandos> [opções]"
 # type: Plain text
 #: gammu/gammu.c:750
 msgid "Parameters before command configure gammu behaviour:"
-msgstr "Os parâmetros antes do comando configuram o funcionamento do gammu:"
+msgstr "Os parâmetros antes do comando definem o funcionamento do gammu:"
 
 #: gammu/gammu.c:751
 msgid "-c / --config <filename> ... name of configuration file"
-msgstr "-c / --config <filename> ... nome do arquivo de configuração"
+msgstr "-c / --config <arquivo-config> ... nome do arquivo de configuração"
 
 #: gammu/gammu.c:752
 msgid "-s / --section <confign> ... section of config file to use, eg. 42"
-msgstr "-s / --section <confign> ...seção do arquivo de configuração, Ex. 42"
+msgstr ""
+"-s / --section <seção-número> ...seção do arquivo de configuração, Ex. 42"
 
 #: gammu/gammu.c:753
 msgid ""
 "-d / --debug <level> ... debug level (nothing|text|textall|textalldate|"
 "binary|errors)"
 msgstr ""
-"-d / --debug <level> ... nível debug (nothing|text|textall|textalldate|"
-"binary|errors)"
+"-d / --debug <nível> ... nível depuração "
+"(nothing|text|textall|textalldate|binary|errors)"
 
 #: gammu/gammu.c:754
 msgid "-f / --debug-file <filename> ... file for logging debug messages"
 msgstr ""
-"-f / --debug-file <filename> ... arquivo onde serão gravadas as mensagens "
-"depuração"
+"-f / --debug-file <nome-do-arquivo-debug> ... arquivo onde serão gravadas as "
+"mensagens  da depuração"
 
 # type: Plain text
 #: gammu/gammu.c:756
@@ -1982,7 +1984,7 @@ msgid ""
 "For more details, call help on specific topic (gammu --help topic). Topics "
 "are:"
 msgstr ""
-"Para mais detalhes, chame help (ajuda) no tópico específico (gammu --help "
+"Para mais detalhes, utilize help (ajuda) no tópico específico (gammu --help "
 "tópico). Os tópicos são:"
 
 #: gammu/gammu.c:857
@@ -2006,7 +2008,7 @@ msgstr "Mais parâmetros requeridos (função requer %d)\n"
 #: gammu/gammu.c:955
 #, c-format
 msgid "More parameters required (function requires %d to %d)\n"
-msgstr "Mais parâmetros requeridos (função requer %d para %d)\n"
+msgstr "Mais parâmetros requeridos (função requer: entre %d e %d parâmetros)\n"
 
 #: gammu/gammu.c:961 gammu/gammu.c:982
 msgid "Parameters help"
@@ -2020,7 +2022,7 @@ msgstr "Muitos parâmetros (função aceita %d)\n"
 #: gammu/gammu.c:976
 #, c-format
 msgid "Too many parameters (function accepts %d to %d)\n"
-msgstr "Muitos parâmetros (função aceita %d para %d)\n"
+msgstr "Muitos parâmetros (função aceita entre %d e %d)\n"
 
 #: gammu/gammu.c:1003
 msgid "Bad option!"
@@ -2040,7 +2042,7 @@ msgstr "Falhou em alocar memória, cancelando!\n"
 
 #: gammu/gammu.c:1137
 msgid "Too few parameters!"
-msgstr "Faltam parametros!"
+msgstr "Faltam parâmetros!"
 
 #: gammu/gammu.c:1150
 #, c-format
@@ -2095,7 +2097,7 @@ msgstr "Mensagem SMS recebida"
 
 #: gammu/message.c:41
 msgid "We already have one pending, ignoring this one!"
-msgstr "Nós já temos uma pendente, ignorando esta!"
+msgstr "Já temos uma pendente, ignorando esta!"
 
 #: gammu/message.c:63 gammu/message.c:295
 #, c-format
@@ -2192,7 +2194,7 @@ msgstr "Mensagem corrompida, saltando"
 #: gammu/message.c:382 gammu/message.c:494
 #, c-format
 msgid "%i SMS parts in %i SMS sequences"
-msgstr "Parte %i SMS em %i SMS sequências"
+msgstr "Parte %i SMS em %i sequências SMS"
 
 #: gammu/message.c:430
 msgid "SMS counter overflow"
@@ -2204,11 +2206,11 @@ msgstr ", Memória SIM"
 
 #: gammu/message.c:516
 msgid ", phone memory"
-msgstr ", memória do telefone"
+msgstr ", memória do Celular"
 
 #: gammu/message.c:517
 msgid ", phone or SIM memory"
-msgstr ", memória do telefone ou SIM"
+msgstr ", memória do Celular ou SIM"
 
 #: gammu/message.c:520 gammu/mms.c:30
 msgid ", Inbox folder"
@@ -2260,7 +2262,7 @@ msgstr "SIM"
 
 #: gammu/message.c:608
 msgid "phone"
-msgstr "Telefone"
+msgstr "Celular"
 
 #: gammu/message.c:612
 #, c-format
@@ -2312,7 +2314,7 @@ msgstr "não conectado na rede"
 
 #: gammu/misc.c:41 gammu/misc.c:68
 msgid "registration to network denied"
-msgstr "registro na rede negado"
+msgstr "conexão com a rede negada"
 
 #: gammu/misc.c:42 gammu/misc.c:44 gammu/misc.c:69 gammu/misc.c:71
 #: gammu/misc.c:169 gammu/misc.c:191
@@ -2321,7 +2323,7 @@ msgstr "desconhecido"
 
 #: gammu/misc.c:58 gammu/misc.c:85
 msgid "Name in phone"
-msgstr "Nome no telefone"
+msgstr "Nome no Celular"
 
 #: gammu/misc.c:62
 msgid "Packet network state"
@@ -2341,7 +2343,7 @@ msgstr "anexado"
 
 #: gammu/misc.c:96
 msgid "detached"
-msgstr "desanexado"
+msgstr "desconectado"
 
 #: gammu/misc.c:106
 msgid "Battery level"
@@ -2368,7 +2370,7 @@ msgstr "%i C"
 
 #: gammu/misc.c:122
 msgid "Phone temperature"
-msgstr "Temperatura Telefone"
+msgstr "Temperatura Celular"
 
 #: gammu/misc.c:127
 msgid "Battery voltage"
@@ -2394,7 +2396,7 @@ msgstr "%i mA"
 
 #: gammu/misc.c:142
 msgid "Phone current"
-msgstr "Telefone Atual"
+msgstr "Celular Atual"
 
 #: gammu/misc.c:147
 msgid "Charge state"
@@ -2422,7 +2424,7 @@ msgstr "bateria não conectada"
 
 #: gammu/misc.c:165
 msgid "detected power failure"
-msgstr "detectada falha em ligar"
+msgstr "detectada falha ao ligar"
 
 #: gammu/misc.c:176
 msgid "Battery type"
@@ -2446,7 +2448,7 @@ msgstr "Não conectado na rede!\n"
 
 #: gammu/misc.c:272
 msgid "Wrong network code from phone!\n"
-msgstr "Código de rede errado no telefone!\n"
+msgstr "Código de rede errado no celular!\n"
 
 #: gammu/misc.c:300
 msgid "Request for information from OpenCellID failed!\n"
@@ -2624,7 +2626,7 @@ msgstr "Tarefas"
 
 #: gammu/misc.c:644
 msgid "Calendar"
-msgstr "Calendário"
+msgstr "Agenda"
 
 #: gammu/misc.c:653
 msgid "Signal strength"
@@ -2773,7 +2775,7 @@ msgstr "ID do Bitmap"
 
 #: gammu/misc.c:1134
 msgid "No operator logo in phone"
-msgstr "Não há logo de operador no telefone"
+msgstr "Não há logo de empresa telefonia no celular"
 
 #: gammu/misc.c:1140 gammu/mms.c:71 helper/message-display.c:476
 msgid "Sender"
@@ -2801,7 +2803,7 @@ msgstr "Parâmetro desconhecido (\"%s\")"
 
 #: gammu/misc.c:1405
 msgid "Delete phone phonebook?"
-msgstr "Apagar lista contatos telefone?"
+msgstr "Apagar lista contatos celular?"
 
 #: gammu/misc.c:1406
 msgid "Delete SIM phonebook?"
@@ -2821,23 +2823,23 @@ msgstr "Apagar chamadas recebidas?"
 
 #: gammu/misc.c:1414
 msgid "Delete phone calendar notes?"
-msgstr "Apagar anotações no calendário telefone?"
+msgstr "Apagar anotações no agenda celular?"
 
 #: gammu/misc.c:1438
 msgid "Delete phone todos?"
-msgstr "Apagar compromissos telefone?"
+msgstr "Apagar tarefas / compromissos celular?"
 
 #: gammu/misc.c:1462
 msgid "Delete phone notes?"
-msgstr "Apagar anotações telefone?"
+msgstr "Apagar anotações celular?"
 
 #: gammu/misc.c:1480
 msgid "Delete phone WAP bookmarks?"
-msgstr "Apagar anotações WAP no telefone?"
+msgstr "Apagar favoritos WAP no celular?"
 
 #: gammu/misc.c:1507
 msgid "Delete all phone FM radio stations?"
-msgstr "Apagar estações rádio FM no telefone?"
+msgstr "Apagar todas estações rádio FM no celular?"
 
 #: gammu/misc.c:1519 gammu/misc.c:1521
 msgid "Connection type"
@@ -2861,7 +2863,7 @@ msgstr "Ligada"
 
 #: gammu/misc.c:1526 gammu/misc.c:2142
 msgid "Off"
-msgstr "Desligado"
+msgstr "Desligada"
 
 #: gammu/misc.c:1528
 msgid "Proxy"
@@ -2898,7 +2900,7 @@ msgstr "Dados (CSD)"
 
 #: gammu/misc.c:1546
 msgid "Dial-up number"
-msgstr "Número discado"
+msgstr "Número Dial-up discado"
 
 #: gammu/misc.c:1547 gammu/misc.c:1583 gammu/misc.c:1584 gammu/misc.c:1605
 msgid "IP address"
@@ -2984,7 +2986,7 @@ msgstr "Usuário"
 
 #: gammu/misc.c:1635
 msgid "Phonebook database"
-msgstr "Banco Dados do Telefone"
+msgstr "Banco Dados de Contatos"
 
 #: gammu/misc.c:1636
 msgid "Calendar database"
@@ -3000,7 +3002,7 @@ msgstr "Sincronizar Contatos"
 
 #: gammu/misc.c:1641
 msgid "Sync. calendar"
-msgstr "Sincronizar Calendário"
+msgstr "Sincronizar Agenda"
 
 #: gammu/misc.c:1646 gammu/misc.c:1687
 msgid "Connection set name"
@@ -3032,7 +3034,7 @@ msgstr "Foto"
 
 #: gammu/misc.c:1758
 msgid "Caller group logo"
-msgstr "Logo do Chamador"
+msgstr "Logo do Grupo do Chamador"
 
 #: gammu/misc.c:1761
 #, c-format
@@ -3067,7 +3069,7 @@ msgstr "Qual tipo de categoria você deseja adicionar (\"%s\")?\n"
 #: gammu/misc.c:1937
 #, c-format
 msgid "Text too long, truncating to %d chars!\n"
-msgstr "Texto muito longo, truncando para %d caractéres!\n"
+msgstr "Texto muito longo, truncado para %d caracteres!\n"
 
 #: gammu/misc.c:1976
 msgid "Invalid security code type"
@@ -3101,7 +3103,7 @@ msgstr " (Perfil Kit Carro)"
 
 #: gammu/misc.c:2072 helper/memory-display.c:106
 msgid "Ringtone ID"
-msgstr "ID toque"
+msgstr "ID Toque"
 
 #: gammu/misc.c:2074
 msgid "Message alert tone ID"
@@ -3121,7 +3123,7 @@ msgstr "Alerta de chamada sendo recebida"
 
 #: gammu/misc.c:2112
 msgid "Ringtone volume"
-msgstr "Toque volume"
+msgstr "Volume do Toque"
 
 #: gammu/misc.c:2113
 msgid "Vibrating alert"
@@ -3141,15 +3143,15 @@ msgstr "Tons Aviso Jogos"
 
 #: gammu/misc.c:2117 helper/message-display.c:439
 msgid "Screen saver"
-msgstr "Salva Tela"
+msgstr "Protetor Tela"
 
 #: gammu/misc.c:2118
 msgid "Screen saver timeout"
-msgstr "Tempo Salva Tela"
+msgstr "Tempo Protetor Tela"
 
 #: gammu/misc.c:2119
 msgid "Automatic answer"
-msgstr "Atende Automático"
+msgstr "Atendimento Automático"
 
 #: gammu/misc.c:2120
 msgid "Lights"
@@ -3193,7 +3195,7 @@ msgstr "Aumentando"
 
 #: gammu/misc.c:2148
 msgid "Caller groups"
-msgstr "Grupos Chamadas"
+msgstr "Grupos Contatos"
 
 #: gammu/misc.c:2149
 msgid "Standard"
@@ -3218,7 +3220,7 @@ msgstr " Discagem Rápida não configurada"
 #: gammu/misc.c:2226
 #, c-format
 msgid "What type of reset phone settings (\"%s\") ?\n"
-msgstr "Qual tipo de (reset) de configuração do telefone (\"%s\")?\n"
+msgstr "Qual tipo de (reset) de configuração do celular (\"%s\")?\n"
 
 #: gammu/misc.c:2260
 msgid "Currently shown on the display"
@@ -3293,7 +3295,7 @@ msgstr "quando ocupado"
 
 #: gammu/misc.c:2405 gammu/misc.c:2452
 msgid "when not answered"
-msgstr "quando não respondido"
+msgstr "quando não atendido"
 
 #: gammu/misc.c:2408 gammu/misc.c:2455
 msgid "when phone off or no coverage"
@@ -3334,7 +3336,7 @@ msgstr "Resposta:"
 
 #: gammu/misc.c:2520
 msgid "The application has been successfully sent to the phone."
-msgstr "A aplicação foi enviada com sucesso para o telefone."
+msgstr "A aplicação foi enviada com sucesso para o celular."
 
 # gsavix 02.02.2011
 #: gammu/misc.c:2521
@@ -3359,11 +3361,13 @@ msgstr "Salvo arquivo %s\n"
 
 #: gammu/mms.c:65
 msgid "Some MMS file features unknown for Gammu decoder"
-msgstr "Alguns arquivos MMS são desconhecidos para o decodificador Gammu"
+msgstr ""
+"Alguns funcionalidades de arquivos MMS são desconhecidas para o "
+"decodificador Gammu"
 
 #: gammu/mms.c:73 gammu/mms.c:81 gammu/mms.c:89
 msgid "phone "
-msgstr "telefone "
+msgstr "Celular  "
 
 #: gammu/mms.c:79
 msgid "Recipient"
@@ -3423,7 +3427,7 @@ msgstr "tamanho = %i notas, mas entre só os 50 toques iniciais."
 
 #: gammu/nokia.c:66
 msgid "This ringtone in Nokia Composer in phone should look:"
-msgstr "Esse toque é Compositor Nokia no telefone e parece:"
+msgstr "Esse toque do Compositor Nokia no celular e parece:"
 
 #: gammu/nokia.c:105
 msgid "To enter it please press:"
@@ -3444,7 +3448,7 @@ msgstr "  Só parcialmente manipulado!"
 
 #: gammu/nokia.c:336
 msgid "  Problem with adding playlist"
-msgstr "  Problema com adição lista"
+msgstr "  Problema com adição de playlist"
 
 #: gammu/nokia.c:383
 #, c-format
@@ -3456,12 +3460,12 @@ msgid ""
 "Your phone model is not supported. Please report it to authors (see <http://"
 "wammu.eu/support/bugs/>). Thank you."
 msgstr ""
-"Modelo de telefone não suportado. Por favor reporte aos autores.\n"
+"Modelo de telefone não suportado. Por favor reporte ao site.\n"
 "(veja <http://wammu.eu/support/bugs/>). Muito Obrigado!."
 
 #: gammu/nokia.c:454
 msgid "Problem with deleting playlist"
-msgstr "Problema quando apagando lista"
+msgstr "Problema quando apagando playlista"
 
 #: gammu/nokia.c:548
 #, c-format
@@ -3483,7 +3487,7 @@ msgstr "Procurando pasta no telefone: "
 
 #: gammu/nokia.c:691
 msgid "No vendor info in JAD file!"
-msgstr "Não há informação de fornecedor no arquivo JAD!"
+msgstr "Não há informação de fabricante no arquivo JAD!"
 
 #: gammu/nokia.c:696
 msgid "No name info in JAD file!"
@@ -3546,7 +3550,7 @@ msgstr "Conexão \"%s\" no dispositivo \"%s\"\n"
 
 #: gammu/search.c:182 gammu/search.c:189
 msgid "Error creating thread\n"
-msgstr "Erro criando tarefa\n"
+msgstr "Erro criando instância de tarefa\n"
 
 #: helper/cmdline.c:26
 #, c-format
@@ -3617,12 +3621,13 @@ msgstr "Data e Hora"
 #: helper/memory-display.c:66 helper/memory-display.c:70
 #: helper/memory-display.c:79 helper/memory-display.c:90
 msgid "Caller group"
-msgstr "Grupo Chamada"
+msgstr "Grupo do Chamador"
 
 #: helper/memory-display.c:71
 msgid "Caller group number too high, please increase buffer in sources!"
 msgstr ""
-"Número do Grupo de Chamada muito alto, por favor aumente o buffer nos fontes!"
+"Número do Grupo do Chamador muito alto, por favor aumente o buffer nos "
+"fontes!"
 
 #: helper/memory-display.c:110
 msgid "User ID"
@@ -3646,7 +3651,7 @@ msgstr "Exibição não suportada"
 
 #: helper/memory-display.c:121
 msgid "Favorite messaging number"
-msgstr "Número de mensagem favorito"
+msgstr "Número da mensagem favorita"
 
 #: helper/memory-display.c:129
 msgid "Work number"
@@ -3869,7 +3874,7 @@ msgstr "Arquivo \"%s\"\n"
 
 #: helper/message-cmdline.c:384
 msgid "Bookmark not found in file"
-msgstr "Bookmark não encontrado no arquivo"
+msgstr "Favoritos não encontrado no arquivo"
 
 #: helper/message-cmdline.c:408
 msgid "WAP settings not found in file"
@@ -3889,7 +3894,7 @@ msgstr "Desculpe! Nenhum terminal GPRS encontrado nas configurações MMS"
 
 #: helper/message-cmdline.c:512
 msgid "ToDo note not found in file"
-msgstr "Anotação compromisso não encontrada no arquivo"
+msgstr "Anotação tarefa / compromisso não encontrada no arquivo"
 
 #: helper/message-cmdline.c:574
 msgid "Backup functionality not compiled in!"
@@ -3918,7 +3923,7 @@ msgstr "Validade desconhecida (\"%s\")\n"
 #: helper/message-cmdline.c:1173
 #, c-format
 msgid "You have to give number of EMS frames between 1 and 4 (\"%s\")\n"
-msgstr "O número de frames deve estar entre 1 e 4 (\"%s\")\n"
+msgstr "O número de frames EMS deve estar entre 1 e 4 (\"%s\")\n"
 
 #: helper/message-cmdline.c:1185 helper/message-cmdline.c:1202
 #, c-format
@@ -3954,7 +3959,7 @@ msgstr "Ctrl+D"
 
 #: helper/message-cmdline.c:1348
 msgid "No chars read, assuming it is okay!"
-msgstr "Nenhum caracter lido, assumindo OK!"
+msgstr "Nenhum caracter lido, assumindo que está OK!"
 
 #: helper/message-cmdline.c:1368
 msgid "No network code"
@@ -3962,17 +3967,17 @@ msgstr "Sem código da rede"
 
 #: helper/message-cmdline.c:1374
 msgid "You have to set network code!"
-msgstr "Você não configurou código da rede!"
+msgstr "Você precisa configurar código da rede!"
 
 #: helper/message-cmdline.c:1413
 #, c-format
 msgid "Ringtone too long. %i percent part cut\n"
-msgstr "Toque muito longo. Cortado parte %i percentual.\n"
+msgstr "Toque muito longo. Cortado parte %i porcentual.\n"
 
 #: helper/message-cmdline.c:1424
 #, c-format
 msgid "There are %i SMS messages packed and the limit is %i. Exiting\n"
-msgstr "Existem %i mensagens SMS compactadas e o limite é %i. Saindo.\n"
+msgstr "Existem %i mensagens SMS compactadas mas o limite é %i. Saindo.\n"
 
 #: helper/message-cmdline.c:1434
 msgid "Use -smscnumber option to give SMSC number"
@@ -3989,11 +3994,11 @@ msgstr "Memória SIM"
 
 #: helper/message-display.c:36
 msgid "phone memory"
-msgstr "memória telefone"
+msgstr "memória celular"
 
 #: helper/message-display.c:39
 msgid "phone or SIM memory"
-msgstr "Telefone ou Memória SIM"
+msgstr "Celular ou Memória SIM"
 
 #: helper/message-display.c:46
 msgid "Inbox folder"
@@ -4013,7 +4018,7 @@ msgstr "geral"
 
 #: helper/message-display.c:145
 msgid "8 bit SMS, cannot be displayed here"
-msgstr "8 bits SMS, não podem ser exibidas aqui"
+msgstr "SMS de 8 bits, não podem ser exibidas aqui"
 
 #: helper/message-display.c:165
 msgid "SMS status report"
@@ -4027,15 +4032,15 @@ msgstr "Enviadas"
 
 #: helper/message-display.c:170 helper/message-display.c:290
 msgid "Read"
-msgstr "Ler"
+msgstr "Lidas"
 
 #: helper/message-display.c:171 helper/message-display.c:291
 msgid "UnRead"
-msgstr "Não Lidos"
+msgstr "Não Lidas"
 
 #: helper/message-display.c:172 helper/message-display.c:292
 msgid "UnSent"
-msgstr "Não Enviados"
+msgstr "Não Enviadas"
 
 #: helper/message-display.c:176 helper/message-display.c:279
 msgid "Remote number"
@@ -4129,7 +4134,7 @@ msgstr "Não pode ser obtido"
 
 #: helper/message-display.c:210
 msgid "No internetworking available"
-msgstr "Não há internet disponível"
+msgstr "Não há disponibilidade entre as redes"
 
 #: helper/message-display.c:211
 msgid "SM Validity Period Expired"
@@ -4162,7 +4167,7 @@ msgstr "Salvo"
 
 #: helper/message-display.c:231
 msgid " (set for reply)"
-msgstr " (ative para retorno)"
+msgstr " (configure para retorno)"
 
 #: helper/message-display.c:240
 msgid "SMS replacing ID"
@@ -4182,7 +4187,7 @@ msgstr "Unicode (sem compressão)"
 
 #: helper/message-display.c:263
 msgid "Unicode (compression)"
-msgstr "Unicode (compressão)"
+msgstr "Unicode (com compressão)"
 
 #: helper/message-display.c:266
 msgid "Default GSM alphabet (no compression)"
@@ -4235,7 +4240,7 @@ msgstr "SMS Proibido"
 
 #: helper/message-display.c:307
 msgid "Nokia WAP bookmark"
-msgstr "Anotações Nokia WAP"
+msgstr "Favoritos WAP Nokia"
 
 #: helper/message-display.c:308
 msgid "Nokia operator logo"
@@ -4243,7 +4248,7 @@ msgstr "Logotipo Operador Nokia"
 
 #: helper/message-display.c:309
 msgid "Nokia WAP bookmark or WAP/MMS settings"
-msgstr "Anotações Nokia WAP ou configurações MMS"
+msgstr "Favoritos WAP Nokia ou configurações WAP/MMS"
 
 #: helper/message-display.c:310 helper/message-display.c:311
 msgid "Nokia ringtone"
@@ -4263,7 +4268,7 @@ msgstr "Perfil Nokia"
 
 #: helper/message-display.c:315
 msgid "Nokia calendar note"
-msgstr "Nota Agenda Nokia"
+msgstr "Anotação Agenda Nokia"
 
 #: helper/message-display.c:316
 msgid "Nokia phonebook entry"
@@ -4328,7 +4333,7 @@ msgstr "Toque \"%s\"\n"
 
 #: helper/message-display.c:420
 msgid "Do you want to play it?"
-msgstr "Você deseja tocar este?"
+msgstr "Tocar este?"
 
 #: helper/message-display.c:425
 msgid "Caller logo"
@@ -4345,7 +4350,7 @@ msgstr "Perfil"
 
 #: helper/message-display.c:470
 msgid "EMS sound ID"
-msgstr "Som de Id. EMS"
+msgstr "ID som EMS"
 
 #: helper/message-display.c:473
 msgid "EMS animation ID"
@@ -4374,7 +4379,7 @@ msgstr "UDH"
 
 #: helper/message-display.c:564
 msgid "Whole PDU"
-msgstr "PDU Integral"
+msgstr "PDU Inteiro"
 
 #. l10n: Generic prefix for warning messages
 #: helper/printing.c:34
