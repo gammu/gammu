@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSD-SQL" "7" "June 27, 2012" "1.32.0" "Gammu"
+.TH "GAMMU-SMSD-SQL" "7" "November 21, 2012" "1.32.90" "Gammu"
 .SH NAME
 gammu-smsd-sql \- gammu-smsd(1) backend using SQL abstraction layer to use any supported database as a message storage
 .
@@ -183,7 +183,7 @@ Default value:
 .sp
 .nf
 .ft C
-INSERT INTO phones (IMEI, ID, Send, Receive, InsertIntoDB, TimeOut, Client, Battery, SignalStrength)
+INSERT INTO phones (IMEI, ID, Send, Receive, InsertIntoDB, TimeOut, Client, Battery, Signal)
 VALUES (%I, %P, %1, %2, NOW(), (NOW() + INTERVAL 10 SECOND) + 0, %N, \-1, \-1)
 .ft P
 .fi
@@ -294,10 +294,13 @@ Default value:
 .sp
 .nf
 .ft C
-UPDATE outbox SET SendingTimeOut = (NOW() + INTERVAL locktime SECOND) + 0
+UPDATE outbox SET SendingTimeOut = (NOW() + INTERVAL 60 SECOND) + 0
 WHERE ID = %1 AND (SendingTimeOut < NOW() OR SendingTimeOut IS NULL)
 .ft P
 .fi
+.sp
+The default query calculates sending timeout based on \fBLoopSleep\fP
+value.
 .sp
 Query specific parameters:
 .INDENT 7.0
@@ -539,7 +542,7 @@ Default value:
 .nf
 .ft C
 UPDATE phones SET TimeOut= (NOW() + INTERVAL 10 SECOND) + 0,
-Battery = %1, SignalStrength = %2 WHERE IMEI = %I
+Battery = %1, Signal = %2 WHERE IMEI = %I
 .ft P
 .fi
 .sp
