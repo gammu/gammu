@@ -29,6 +29,7 @@ ChangeLog
 [-] * Various documentation improvements.
 [-] * Updated version of sms-gammu2android, thanks to Shadow Walker.
 [-] * Fixed compilation on Mac OS X, thanks to Soren Jorvang.
+[-] * Fixed SMSD with CheckSecurity = 0 (bug #1672).
     
 20120627 - 1.32.0
 

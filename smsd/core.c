@@ -1912,12 +1912,14 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 	 		lastreceive = time(NULL);
 
 			/* Do we need to check security? */
-			if (Config->checksecurity && !SMSD_CheckSecurity(Config)) {
-				errors++;
-				initerrors++;
-				continue;
-			} else {
-				errors = 0;
+			if (Config->checksecurity) {
+				if (!SMSD_CheckSecurity(Config)) {
+					errors++;
+					initerrors++;
+					continue;
+				} else {
+					errors = 0;
+				}
 			}
 
 			initerrors = 0;
