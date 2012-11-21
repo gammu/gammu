@@ -20,6 +20,15 @@ ChangeLog
 =========
     
 2012???? - 1.32.90
+
+[-] * Various translation improvements.
+[-] * Improved support for Huawei E173, thanks to Gautier Minster.
+[-] * Fixed buffer overflow in MMS decoder.
+[-] * Fixed several memory leaks.
+[-] * Improved compatibility with Qualcomm devices (bug #1654).
+[-] * Various documentation improvements.
+[-] * Updated version of sms-gammu2android, thanks to Shadow Walker.
+[-] * Fixed compilation on Mac OS X, thanks to Soren Jorvang.
     
 20120627 - 1.32.0
 
