@@ -118,6 +118,7 @@ static const char *SMSDSQL_TopClause(GSM_SMSDConfig * Config, const char *count)
 		strcpy(result, top_clause_access);
 		strcat(result, " ");
 		strcat(result, count);
+		strcat(result, " ");
 		return result;
 	} else {
 		return top_clause_fallback;
