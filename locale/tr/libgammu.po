@@ -6,17 +6,17 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.28.91\n"
-"Report-Msgid-Bugs-To: michal@cihar.com\n"
+"Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2012-08-27 11:26+0200\n"
-"PO-Revision-Date: 2012-05-01 22:02+0200\n"
-"Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2012-11-22 23:16+0200\n"
+"Last-Translator: blueangel blueangel <blueangel@asia.com>\n"
+"Language-Team: Turkish <http://l10n.cihar.com/projects/gammu/libgammu/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 0.10\n"
+"X-Generator: Weblate 1.4-dev\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
@@ -40,35 +40,35 @@ msgstr "Cihazı açarken hata oldu, cihaz zaten diğer uygulama tarafından aç�
 
 #: libgammu/gsmcomon.c:89
 msgid "Error opening device, you don't have permissions."
-msgstr ""
+msgstr "Aygıt açma hatası, yetkiniz bulunmamaktadıt."
 
 #: libgammu/gsmcomon.c:90
 msgid "Error opening device. No required driver in operating system."
-msgstr ""
+msgstr "Aygıt açma hatası. Gerekli sürücü işletim sisteminizde yok."
 
 #: libgammu/gsmcomon.c:91
 msgid "Error opening device. Some hardware not connected/wrongly configured."
-msgstr ""
+msgstr "Aygıt açma hatası. Donanım bağlanamadı/hatalı configürasyon."
 
 #: libgammu/gsmcomon.c:92
 msgid "Error setting device DTR or RTS."
-msgstr ""
+msgstr "Hatalı DTR veya RTS aygıt ayarı."
 
 #: libgammu/gsmcomon.c:93
 msgid "Error setting device speed. Maybe speed not supported."
-msgstr ""
+msgstr "Hatalı aygıt hızı ayarı. Hız desteklenmiyor olabilir."
 
 #: libgammu/gsmcomon.c:94
 msgid "Error writing to the device."
-msgstr ""
+msgstr "Aygıta yazma hatası."
 
 #: libgammu/gsmcomon.c:95
 msgid "Error during reading from the device."
-msgstr ""
+msgstr "Aygıttan okunurken hata."
 
 #: libgammu/gsmcomon.c:96
 msgid "Can't set parity on the device."
-msgstr ""
+msgstr "Aygıt üzerinde eşitleme yapılamıyor."
 
 #: libgammu/gsmcomon.c:97
 msgid "No response in specified timeout. Probably phone not connected."
@@ -79,12 +79,16 @@ msgid ""
 "Frame not requested right now. See <http://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
+"Çerçeve şu anda gerekli değil. Nasıl raporlandığı bilgisi için "
+"<http://wammu.eu/support/bugs/> adresine bak."
 
 #: libgammu/gsmcomon.c:99
 msgid ""
 "Unknown response from phone. See <http://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
+"Telefondan bilinmeyen yanıt. Nasıl raporlandığı bilgisi için "
+"<http://wammu.eu/support/bugs/> adresine bak."
 
 #: libgammu/gsmcomon.c:100
 msgid ""
@@ -94,7 +98,7 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:101
 msgid "Unknown connection type string. Check config file."
-msgstr ""
+msgstr "Bilinmeyen bağlantı tipi. Config dosyasını kontrol edin."
 
 #: libgammu/gsmcomon.c:102
 msgid "Unknown model type string. Check config file."
@@ -105,10 +109,12 @@ msgid ""
 "Some functions not available for your system (disabled in config or not "
 "implemented)."
 msgstr ""
+"Bazı fonksiyonlar sisteminiz için uygun değil (yapılandırma içinde kapalı "
+"yada yapılandırılmadı)."
 
 #: libgammu/gsmcomon.c:104
 msgid "Function not supported by phone."
-msgstr ""
+msgstr "Fonksiyon telefon tarafından desteklenmiyor."
 
 #: libgammu/gsmcomon.c:105
 msgid "Entry is empty."
@@ -116,11 +122,11 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:106
 msgid "Security error. Maybe no PIN?"
-msgstr ""
+msgstr "Güvenlik hatası. PIN olmayabilir mi?"
 
 #: libgammu/gsmcomon.c:107
 msgid "Invalid location. Maybe too high?"
-msgstr ""
+msgstr "Geçersiz bölge. Belki çok yüksek?"
 
 #: libgammu/gsmcomon.c:108
 msgid "Functionality not implemented. You are welcome to help authors with it."
@@ -128,23 +134,23 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:109
 msgid "Memory full."
-msgstr ""
+msgstr "Hafıza dolu."
 
 #: libgammu/gsmcomon.c:110
 msgid "Unknown error."
-msgstr ""
+msgstr "Bilinmeyen hata."
 
 #: libgammu/gsmcomon.c:111
 msgid "Can not open specified file."
-msgstr ""
+msgstr "Belirli dosya açılamıyor."
 
 #: libgammu/gsmcomon.c:112
 msgid "More memory required..."
-msgstr ""
+msgstr "Daha fazla hafıza gerekli..."
 
 #: libgammu/gsmcomon.c:113
 msgid "Operation not allowed by phone."
-msgstr ""
+msgstr "Telefondan operasyona izin verilmedi."
 
 #: libgammu/gsmcomon.c:114
 msgid ""
@@ -157,7 +163,7 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:116
 msgid "Phone is not connected."
-msgstr ""
+msgstr "Telefon bağlanamadı."
 
 #: libgammu/gsmcomon.c:117
 msgid ""
@@ -171,17 +177,21 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:119
 msgid "File format not supported by Gammu."
-msgstr ""
+msgstr "Gammu tarafından dosya formatı desteklenmiyor."
 
 #: libgammu/gsmcomon.c:120
 msgid ""
 "Nobody is perfect, some bug appeared in protocol implementation. Please "
 "contact authors."
 msgstr ""
+"Kimse mükemmel değildir, bazı hatalar protokol yapılandırımasındadır. Lütfen "
+"yazarlar ile irtibat kurun."
 
 #: libgammu/gsmcomon.c:121
 msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
 msgstr ""
+"Aktarım telefon tarafından ertelendi, Telefonda vazgeç butonuna basmış "
+"olabilirsin."
 
 #: libgammu/gsmcomon.c:122
 msgid "Phone module need to send another answer frame."
@@ -189,19 +199,19 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:123
 msgid "Current connection type doesn't support called function."
-msgstr ""
+msgstr "Varsayılan bağlantı tipi çağırılan fonksiyonda desteklenmiyor."
 
 #: libgammu/gsmcomon.c:124
 msgid "CRC error."
-msgstr ""
+msgstr "CRC hatası."
 
 #: libgammu/gsmcomon.c:125
 msgid "Invalid date or time specified."
-msgstr ""
+msgstr "Geçersiz tarih yada saat."
 
 #: libgammu/gsmcomon.c:126
 msgid "Phone memory error, maybe it is read only."
-msgstr ""
+msgstr "Telefon hafıza hatası, Belki sadece okunabilir hafıza."
 
 #: libgammu/gsmcomon.c:127
 msgid "Invalid data given to phone."
