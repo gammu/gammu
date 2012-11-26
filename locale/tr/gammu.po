@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: gammu 1.28.91\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2012-08-27 11:26+0200\n"
-"PO-Revision-Date: 2012-11-22 23:17+0200\n"
-"Last-Translator: blueangel blueangel <blueangel@asia.com>\n"
+"PO-Revision-Date: 2012-11-26 11:16+0200\n"
+"Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
 "Language-Team: Turkish <http://l10n.cihar.com/projects/gammu/gammu/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -81,7 +81,7 @@ msgstr "Okunuyor"
 
 #: gammu/backup.c:247 gammu/backup.c:292
 msgid "Only part of data saved, please increase the limit."
-msgstr "sadece verinin parçası kaydedildi, lütfen limiti artırın."
+msgstr "Sadece verinin parçası kaydedildi, lütfen sınırı arttırın."
 
 #: gammu/backup.c:268 gammu/backup.c:310 gammu/backup.c:475 gammu/mms.c:182
 msgid "Reading:"
@@ -99,7 +99,7 @@ msgstr "Okunuyor:"
 #: gammu/misc.c:659 gammu/misc.c:664 gammu/misc.c:1376 gammu/mms.c:183
 #, c-format
 msgid "%i percent"
-msgstr "%i yüzde"
+msgstr "yüzde %i"
 
 #: gammu/backup.c:367 gammu/backup.c:1026 gammu/backup.c:1645
 #: gammu/calendar.c:632 gammu/calendar.c:882 gammu/calendar.c:957
