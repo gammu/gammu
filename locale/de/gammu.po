@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.32.0\n"
-"Report-Msgid-Bugs-To: michal@cihar.com\n"
+"Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2012-03-27 10:47+0200\n"
-"PO-Revision-Date: 2012-11-05 10:35+0200\n"
+"PO-Revision-Date: 2012-12-13 13:01+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: German <http://l10n.cihar.com/projects/gammu/gammu/de/>\n"
 "Language: de\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Weblate 1.3-dev\n"
+"X-Generator: Weblate 1.4-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -1252,7 +1252,7 @@ msgstr "Batteriespannung, geteilt:"
 #: gammu/depend/nokia/dct4.c:1048 gammu/depend/nokia/dct4.c:1049
 #: gammu/depend/nokia/dct4.c:1050
 msgid "mV"
-msgstr " mV"
+msgstr "mV"
 
 #: gammu/depend/nokia/dct4.c:1038
 msgid "Battery voltage, scaled:"
@@ -1269,7 +1269,7 @@ msgstr "Ladestrom:"
 #: gammu/depend/nokia/dct4.c:1040 gammu/depend/nokia/dct4.c:1051
 #: gammu/depend/nokia/dct4.c:1052
 msgid "mA"
-msgstr " mA"
+msgstr "mA"
 
 #: gammu/depend/nokia/dct4.c:1041
 msgid "Battery size indicator:"
@@ -1277,7 +1277,7 @@ msgstr "Batteriegrößen Anzeige:"
 
 #: gammu/depend/nokia/dct4.c:1041
 msgid "Ohms"
-msgstr " Ohm"
+msgstr "Ohm"
 
 #: gammu/depend/nokia/dct4.c:1042
 msgid "Battery temperature:"
@@ -1286,7 +1286,7 @@ msgstr "Batterietemperatur:"
 #: gammu/depend/nokia/dct4.c:1042 gammu/depend/nokia/dct4.c:1046
 #: gammu/depend/nokia/dct4.c:1047
 msgid "K"
-msgstr " K"
+msgstr "K"
 
 #: gammu/depend/nokia/dct4.c:1043
 msgid "Headset interconnection:"
@@ -1636,7 +1636,7 @@ msgstr "Telefonspeicher"
 #: gammu/files.c:49
 #, c-format
 msgid "%i bytes (free %i bytes, used %i bytes)"
-msgstr " %i Bytes (%i Bytes frei, %i Bytes belegt)"
+msgstr "%i Bytes (%i Bytes frei, %i Bytes belegt)"
 
 #: gammu/files.c:55
 msgid "Usage details"
@@ -3018,7 +3018,7 @@ msgstr "Homepage"
 
 #: gammu/misc.c:1726
 msgid "active"
-msgstr " aktiv"
+msgstr "aktiv"
 
 #: gammu/misc.c:1730
 msgid "Read only"
@@ -3444,11 +3444,11 @@ msgstr "Überprüfe %s\n"
 
 #: gammu/nokia.c:257
 msgid "  Only part handled!"
-msgstr "    Nur ein Teil behandelt!"
+msgstr "  Nur ein Teil behandelt!"
 
 #: gammu/nokia.c:336
 msgid "  Problem with adding playlist"
-msgstr "    Ein Problem ist aufgetreten bei Anhängen an die Playliste"
+msgstr "  Ein Problem ist aufgetreten bei Anhängen an die Playliste"
 
 #: gammu/nokia.c:383
 #, c-format
@@ -3465,7 +3465,7 @@ msgstr ""
 
 #: gammu/nokia.c:454
 msgid "Problem with deleting playlist"
-msgstr "    Ein Problem ist aufgetreten beim Löschen der Playliste"
+msgstr "Ein Problem ist aufgetreten beim Löschen der Playliste"
 
 #: gammu/nokia.c:548
 #, c-format
