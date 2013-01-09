@@ -6,17 +6,17 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
-"Report-Msgid-Bugs-To: michal@cihar.com\n"
+"Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2012-08-27 11:26+0200\n"
-"PO-Revision-Date: 2012-08-27 11:39+0200\n"
-"Last-Translator: Michal Čihař <michal@cihar.com>\n"
+"PO-Revision-Date: 2013-01-09 12:49+0200\n"
+"Last-Translator: Maxime Thébault <maxime@th.ebau.lt>\n"
 "Language-Team: French <http://l10n.cihar.com/projects/gammu/libgammu/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Weblate 1.2\n"
+"X-Generator: Weblate 1.4-dev\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
@@ -96,7 +96,6 @@ msgstr ""
 "report> pour savoir comment rapporter cette information."
 
 #: libgammu/gsmcomon.c:99
-#, fuzzy
 msgid ""
 "Unknown response from phone. See <http://wammu.eu/support/bugs/> for "
 "information how to report it."
@@ -105,7 +104,6 @@ msgstr ""
 "savoir comment rapporter cette information."
 
 #: libgammu/gsmcomon.c:100
-#, fuzzy
 msgid ""
 "Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
 "report it."
@@ -170,9 +168,8 @@ msgid "More memory required..."
 msgstr "Il faut plus de mémoire..."
 
 #: libgammu/gsmcomon.c:113
-#, fuzzy
 msgid "Operation not allowed by phone."
-msgstr "Fonctionnalités non supportées par votre téléphone."
+msgstr "Fonctionnalités non supportées par le téléphone."
 
 #: libgammu/gsmcomon.c:114
 msgid ""
@@ -245,9 +242,8 @@ msgid "Invalid data given to phone."
 msgstr "Données invalides envoyées au téléphone."
 
 #: libgammu/gsmcomon.c:128
-#, fuzzy
 msgid "File with specified name already exists."
-msgstr "Un fichier ayant ce nom existe déjà."
+msgstr "Un fichier portant ce nom existe déjà."
 
 #: libgammu/gsmcomon.c:129
 msgid "File with specified name doesn't exist."
@@ -324,7 +320,6 @@ msgid "Bluetooth configuration requires channel option."
 msgstr "Le canal est nécessaire à la bonne configuration du Bluetooth."
 
 #: libgammu/gsmcomon.c:147
-#, fuzzy
 msgid "Service is not running."
 msgstr "Le service n'est pas lancé."
 
@@ -337,23 +332,20 @@ msgid "Command rejected because device was busy. Wait and restart."
 msgstr ""
 
 #: libgammu/gsmcomon.c:150
-#, fuzzy
 msgid "Could not connect to the server."
-msgstr "Connexion au serveur IMAP ..."
+msgstr "Impossible de se connecter au serveur."
 
 #: libgammu/gsmcomon.c:151
-#, fuzzy
 msgid "Could not resolve the host name."
-msgstr "Imposible de lire le message sauvegardé !"
+msgstr "Impossible de résoudre le nom de l'hôte."
 
 #: libgammu/gsmcomon.c:152
 msgid "Failed to get SMSC number from phone."
 msgstr ""
 
 #: libgammu/gsmcomon.c:153
-#, fuzzy
 msgid "Operation aborted."
-msgstr "Opération en cours"
+msgstr "Opération annulée."
 
 #: libgammu/gsmcomon.c:154
 msgid ""
@@ -362,9 +354,8 @@ msgid ""
 msgstr ""
 
 #: libgammu/gsmcomon.c:155
-#, fuzzy
 msgid "Entry is read only."
-msgstr "L'entrée est vide."
+msgstr "L'entrée est en lecture seule."
 
 #: libgammu/gsmcomon.c:188
 msgid "Unknown error description."
