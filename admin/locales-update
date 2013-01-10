@@ -40,9 +40,9 @@ fi
 
 for loc in $LOCS ; do
     cd locale/$loc
-    msgmerge -U -C ../../../wammu/locale/$loc/docs.po -C ../../../wammu/locale/$loc/wammu.po -C gammu.po -C libgammu.po docs.po ../docs.pot
+    msgmerge --previous -U -C ../../../wammu/locale/$loc/docs.po -C ../../../wammu/locale/$loc/wammu.po -C gammu.po -C libgammu.po docs.po ../docs.pot
     if [ -f  ../../..//wammu_web/locale/$loc/LC_MESSAGES/django.po ] ; then
-        msgmerge -C ../../../wammu_web/locale/$loc/LC_MESSAGES/django.po -U docs.po ../docs.pot
+        msgmerge --previous -C ../../../wammu_web/locale/$loc/LC_MESSAGES/django.po -U docs.po ../docs.pot
     fi
     cd ../..
 done
