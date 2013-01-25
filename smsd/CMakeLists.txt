@@ -80,7 +80,11 @@ else (WIN32)
 endif (WIN32)
 
 # SMSD library
-add_library (gsmsd ${LIBRARY_SRC} ${EXTRA_SOURCES})
+if(MSVC)
+    add_library (gsmsd STATIC ${LIBRARY_SRC} ${EXTRA_SOURCES})
+else(MSVC)
+    add_library (gsmsd ${LIBRARY_SRC} ${EXTRA_SOURCES})
+endif(MSVC)
 set_target_properties (gsmsd PROPERTIES
     VERSION ${GAMMU_SOVERSION}.${GAMMU_VERSION}
     SOVERSION ${GAMMU_SOVERSION})

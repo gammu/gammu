@@ -107,7 +107,11 @@ if (WIN32 AND NOT CYGWIN)
 endif (WIN32 AND NOT CYGWIN)
 
 # Library
-add_library (libGammu ${LIBRARY_SRC})
+if(MSVC)
+    add_library (libGammu STATIC ${LIBRARY_SRC})
+else(MSVC)
+    add_library (libGammu ${LIBRARY_SRC})
+endif(MSVC)
 set_target_properties (libGammu PROPERTIES
     VERSION ${GAMMU_SOVERSION}.${GAMMU_VERSION}
     SOVERSION ${GAMMU_SOVERSION}
