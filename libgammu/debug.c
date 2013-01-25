@@ -15,6 +15,10 @@
 #  define COMMIT_FLAG ""
 #endif
 
+#if defined _WIN64 || defined _WIN32
+#define strcasecmp _stricmp
+#endif
+
 GSM_Debug_Info GSM_none_debug = {
 	0,
 	NULL,
