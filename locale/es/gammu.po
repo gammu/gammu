@@ -11,15 +11,15 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2012-03-27 10:47+0200\n"
-"PO-Revision-Date: 2012-12-13 12:02+0200\n"
-"Last-Translator: Michal Čihař <michal@cihar.com>\n"
+"PO-Revision-Date: 2013-02-17 10:10+0200\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitoschido@gmail.com>\n"
 "Language-Team: Spanish <http://l10n.cihar.com/projects/gammu/gammu/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Weblate 1.4-dev\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 1.5-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -1883,7 +1883,7 @@ msgstr "Logotipos y imágenes"
 
 #: gammu/gammu.c:707
 msgid "Ringtones"
-msgstr "Tonos de llamada"
+msgstr "Tonos de timbre"
 
 #: gammu/gammu.c:708
 msgid "Calendar notes"
@@ -2556,7 +2556,7 @@ msgstr "Código de producto"
 
 #: gammu/misc.c:438
 msgid "SIM IMSI"
-msgstr "SIM IMSI"
+msgstr "IMSI del SIM"
 
 #: gammu/misc.c:547
 msgid "Call info"
@@ -4044,7 +4044,7 @@ msgstr "Enviado"
 
 #: helper/message-display.c:170 helper/message-display.c:290
 msgid "Read"
-msgstr "Leído"
+msgstr "Leídos"
 
 #: helper/message-display.c:171 helper/message-display.c:291
 msgid "UnRead"
