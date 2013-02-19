@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2012-03-27 10:47+0200\n"
-"PO-Revision-Date: 2013-02-17 10:10+0200\n"
+"PO-Revision-Date: 2013-02-19 17:40+0200\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitoschido@gmail.com>\n"
 "Language-Team: Spanish <http://l10n.cihar.com/projects/gammu/gammu/es/>\n"
 "Language: es\n"
@@ -535,7 +535,7 @@ msgstr "Recordatorio (Fecha)"
 
 #: gammu/calendar.c:25
 msgid "Call"
-msgstr "Llamada"
+msgstr "Llamar"
 
 #: gammu/calendar.c:28
 msgid "Meeting"
@@ -2556,7 +2556,7 @@ msgstr "Código de producto"
 
 #: gammu/misc.c:438
 msgid "SIM IMSI"
-msgstr "IMSI del SIM"
+msgstr "IMSI de la SIM"
 
 #: gammu/misc.c:547
 msgid "Call info"
