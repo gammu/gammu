@@ -6,225 +6,249 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
-"Report-Msgid-Bugs-To: michal@cihar.com\n"
+"Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2012-08-27 11:26+0200\n"
-"PO-Revision-Date: 2009-01-27 14:28+0100\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"Language: \n"
+"PO-Revision-Date: 2013-02-20 18:32+0200\n"
+"Last-Translator: Kristjan Räts <kristjanrats@gmail.com>\n"
+"Language-Team: Estonian <http://l10n.cihar.com/projects/gammu/libgammu/et/>\n"
+"Language: et\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 1.5-dev\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
-msgstr ""
+msgstr "Viga ei ole."
 
 #: libgammu/gsmcomon.c:85
 msgid "Error opening device. Unknown, busy or no permissions."
-msgstr ""
+msgstr "Viga seadme avamisel. Tundmatu, kasutuses või õigused puuduvad."
 
 #: libgammu/gsmcomon.c:86
 msgid "Error opening device, it is locked."
-msgstr ""
+msgstr "Viga seadme avamisel, see on lukustatud."
 
 #: libgammu/gsmcomon.c:87
 msgid "Error opening device, it doesn't exist."
-msgstr ""
+msgstr "Viga seadme avamisel, seadet ei ole."
 
 #: libgammu/gsmcomon.c:88
 msgid "Error opening device, it is already opened by other application."
-msgstr ""
+msgstr "Viga seadme avamisel, seadme on avanud mingi muu programm."
 
 #: libgammu/gsmcomon.c:89
 msgid "Error opening device, you don't have permissions."
-msgstr ""
+msgstr "Viga seadme avamisel, sul puuduvad õigused."
 
 #: libgammu/gsmcomon.c:90
+#, fuzzy
 msgid "Error opening device. No required driver in operating system."
-msgstr ""
+msgstr "Viga seadme avamisel. Puudub seadme ajur."
 
 #: libgammu/gsmcomon.c:91
 msgid "Error opening device. Some hardware not connected/wrongly configured."
 msgstr ""
+"Viga seadme avamisel. Osa riistvarast ei ole kas ühendatud või on "
+"seadistatud valesti."
 
 #: libgammu/gsmcomon.c:92
 msgid "Error setting device DTR or RTS."
-msgstr ""
+msgstr "Viga seadme DTR või RTS signaali muutmisel."
 
 #: libgammu/gsmcomon.c:93
 msgid "Error setting device speed. Maybe speed not supported."
-msgstr ""
+msgstr "Viga ühenduskiiruse muutmisel. Kiirus ei ole võib-olla toetatud."
 
 #: libgammu/gsmcomon.c:94
 msgid "Error writing to the device."
-msgstr ""
+msgstr "Viga seadmesse kirjutamisel."
 
 #: libgammu/gsmcomon.c:95
 msgid "Error during reading from the device."
-msgstr ""
+msgstr "Viga seadmest lugemisel."
 
 #: libgammu/gsmcomon.c:96
 msgid "Can't set parity on the device."
-msgstr ""
+msgstr "Seadme paarsuse muutmine ei õnnestu."
 
 #: libgammu/gsmcomon.c:97
 msgid "No response in specified timeout. Probably phone not connected."
-msgstr ""
+msgstr "Määratud aja jooksul vastust ei tulnud. Telefon ei ole vist ühendatud."
 
 #: libgammu/gsmcomon.c:98
+#, fuzzy
 msgid ""
 "Frame not requested right now. See <http://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
+"Freimi ei küsitud hetkel. Vaata lehelt <http://wammu.eu/support/bugs/> "
+"kuidas sellest raporteerida."
 
 #: libgammu/gsmcomon.c:99
+#, fuzzy
 msgid ""
 "Unknown response from phone. See <http://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
+"Tundmatu vastus telefonilt. Vaata lehelt <http://wammu.eu/support/bugs/> "
+"kuidas sellest raporteerida."
 
 #: libgammu/gsmcomon.c:100
 msgid ""
 "Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
 "report it."
 msgstr ""
+"Tundmatu freim. Vaata lehelt <http://wammu.eu/support/bugs/> kuidas sellest "
+"raporteerida."
 
 #: libgammu/gsmcomon.c:101
 msgid "Unknown connection type string. Check config file."
-msgstr ""
+msgstr "Ühenduse tüübi string on tundmatu. Palun kontrolli seadistuste faili."
 
 #: libgammu/gsmcomon.c:102
 msgid "Unknown model type string. Check config file."
-msgstr ""
+msgstr "Mudeli tüübi string on tundmatu. Palun kontrolli seadistuste faili."
 
 #: libgammu/gsmcomon.c:103
 msgid ""
 "Some functions not available for your system (disabled in config or not "
 "implemented)."
 msgstr ""
+"Osa funktsionaalsust ei ole sinu süsteemile saadaval (keelatud kas "
+"seadistustes või ei ole valmis)."
 
 #: libgammu/gsmcomon.c:104
 msgid "Function not supported by phone."
-msgstr ""
+msgstr "Telefon ei toeta funktsiooni."
 
 #: libgammu/gsmcomon.c:105
 msgid "Entry is empty."
-msgstr ""
+msgstr "Kirje on tühi."
 
 #: libgammu/gsmcomon.c:106
 msgid "Security error. Maybe no PIN?"
-msgstr ""
+msgstr "Turvaviga. Võib-olla puudub PIN?"
 
 #: libgammu/gsmcomon.c:107
+#, fuzzy
 msgid "Invalid location. Maybe too high?"
-msgstr ""
+msgstr "Vigane asukoht. Võib-olla liiga kõrgel?"
 
 #: libgammu/gsmcomon.c:108
 msgid "Functionality not implemented. You are welcome to help authors with it."
 msgstr ""
+"Funktsionaalsus ei ole valmis. Oled oodatud kaasa lööma selle valmimisele."
 
 #: libgammu/gsmcomon.c:109
 msgid "Memory full."
-msgstr ""
+msgstr "Mälu täis."
 
 #: libgammu/gsmcomon.c:110
 msgid "Unknown error."
-msgstr ""
+msgstr "Tundmatu viga."
 
 #: libgammu/gsmcomon.c:111
 msgid "Can not open specified file."
-msgstr ""
+msgstr "Faili ei saa avada."
 
 #: libgammu/gsmcomon.c:112
 msgid "More memory required..."
-msgstr ""
+msgstr "Rohkem mälu on vaja..."
 
 #: libgammu/gsmcomon.c:113
 msgid "Operation not allowed by phone."
-msgstr ""
+msgstr "Telefon ei toeta operatsiooni."
 
 #: libgammu/gsmcomon.c:114
 msgid ""
 "No SMSC number given. Provide it manually or use the one configured in phone."
 msgstr ""
+"SMSC number on sisestamata. Palun siseta see käsitsi või kasuta telefonis "
+"seadistatut."
 
 #: libgammu/gsmcomon.c:115
 msgid "You're inside phone menu (maybe editing?). Leave it and try again."
-msgstr ""
+msgstr "Oled telefoni menüüs (võib-olla muutmas?). Välju ja proovi uuesti."
 
 #: libgammu/gsmcomon.c:116
 msgid "Phone is not connected."
-msgstr ""
+msgstr "Telefon ei ole ühendatud."
 
 #: libgammu/gsmcomon.c:117
 msgid ""
 "Function is currently being implemented. If you want to help, please contact "
 "authors."
 msgstr ""
+"Funktsionaalsus on loomisel. Palun võta ühendust autoritega, kui soovid "
+"aidata."
 
 #: libgammu/gsmcomon.c:118
 msgid "Phone is disabled and connected to charger."
-msgstr ""
+msgstr "Telefon on mitteaktiivne ja ühendatud laadijaga."
 
 #: libgammu/gsmcomon.c:119
 msgid "File format not supported by Gammu."
-msgstr ""
+msgstr "Gammu ei toeta faili formaati."
 
 #: libgammu/gsmcomon.c:120
 msgid ""
 "Nobody is perfect, some bug appeared in protocol implementation. Please "
 "contact authors."
 msgstr ""
+"Keegi ei ole veatu: protokolli teostuses ilmus mingi viga. Palun võta "
+"ühendust autoritega."
 
 #: libgammu/gsmcomon.c:121
 msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
 msgstr ""
+"Telefon katkestas andmevahetuse, võib-olla sa vajutasid telefonil klahvil "
+"\"Katkesta\"."
 
 #: libgammu/gsmcomon.c:122
 msgid "Phone module need to send another answer frame."
-msgstr ""
+msgstr "Telefonimoodul peab saatma vastuse teisele freimile."
 
 #: libgammu/gsmcomon.c:123
 msgid "Current connection type doesn't support called function."
-msgstr ""
+msgstr "Aktiivne ühenduse tüüp ei toeta kasutatud funktsionaalsust."
 
 #: libgammu/gsmcomon.c:124
 msgid "CRC error."
-msgstr ""
+msgstr "CRC viga."
 
 #: libgammu/gsmcomon.c:125
 msgid "Invalid date or time specified."
-msgstr ""
+msgstr "Sisestati vigane kuupäev või kellaaeg."
 
 #: libgammu/gsmcomon.c:126
 msgid "Phone memory error, maybe it is read only."
-msgstr ""
+msgstr "Telefoni mälu viga, võib-olla on see ainult loetav."
 
 #: libgammu/gsmcomon.c:127
 msgid "Invalid data given to phone."
-msgstr ""
+msgstr "Telefoni saadeti vigased andmed."
 
 #: libgammu/gsmcomon.c:128
 msgid "File with specified name already exists."
-msgstr ""
+msgstr "Sellise nimega fail on juba olemas."
 
 #: libgammu/gsmcomon.c:129
 msgid "File with specified name doesn't exist."
-msgstr ""
+msgstr "Sellise nimega faili ei ole olemas."
 
 #: libgammu/gsmcomon.c:130
 msgid "You have to give folder name and not file name."
-msgstr ""
+msgstr "Sa pead sisestama kataloogi nime, mitte faili nime."
 
 #: libgammu/gsmcomon.c:131
 msgid "You have to give file name and not folder name."
-msgstr ""
+msgstr "Sa pead sisestama faili nime, mitte kataloogi nime."
 
 #: libgammu/gsmcomon.c:132
 msgid "Can not access SIM card."
-msgstr ""
+msgstr "Ei saa suhelda SIM kaardiga."
 
 #: libgammu/gsmcomon.c:133
 msgid "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
@@ -362,7 +386,7 @@ msgstr ""
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:578
 msgid "SIM"
-msgstr ""
+msgstr "SIM"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:579 libgammu/phone/pfunc.c:41
 #: libgammu/phone/s60/s60phone.c:1773
