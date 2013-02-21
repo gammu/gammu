@@ -22,7 +22,7 @@ void PrintNoteType(GSM_CalendarNoteType Type)
 			printf("%s\n", _("Reminder (Date)"));
 			break;
 		case GSM_CAL_CALL:
-			printf("%s\n", _("Call"));
+			printf("%s\n", pgettext("Calendar note type", "Call"));
 			break;
 		case GSM_CAL_MEETING:
 			printf("%s\n", _("Meeting"));

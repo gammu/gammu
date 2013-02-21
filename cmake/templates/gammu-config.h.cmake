@@ -142,6 +142,9 @@
 /* Do we have gettext support? */
 #cmakedefine LIBINTL_LIB_FOUND
 
+/* Does gettext support pgettext? */
+#cmakedefine LIBINTL_HAS_PGETTEXT
+
 /* are the scandir functions available */
 #ifndef HAVE_DIRENT_H
 #cmakedefine HAVE_DIRENT_H
