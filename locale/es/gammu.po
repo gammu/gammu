@@ -9,9 +9,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gammu\n"
-"Report-Msgid-Bugs-To: michal@cihar.com\n"
+"Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-02-21 10:29+0100\n"
-"PO-Revision-Date: 2013-02-21 05:13+0200\n"
+"PO-Revision-Date: 2013-02-21 14:14+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone+weblate@gmail.com>\n"
 "Language-Team: Spanish <http://l10n.cihar.com/projects/gammu/gammu/es/>\n"
 "Language: es\n"
@@ -534,7 +534,6 @@ msgid "Reminder (Date)"
 msgstr "Recordatorio (Fecha)"
 
 #: gammu/calendar.c:25
-#, fuzzy
 msgctxt "Calendar note type"
 msgid "Call"
 msgstr "Llamada"
