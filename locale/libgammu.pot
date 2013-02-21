@@ -1,14 +1,14 @@
 # libGammu translation.
-# Copyright (C) 2003 - 2012 Michal Čihař <michal@cihar.com>
+# Copyright (C) 2003 - 2013 Michal Čihař <michal@cihar.com>
 # This file is distributed under the same license as the libGammu package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: libgammu 1.32.0\n"
+"Project-Id-Version: libgammu 1.32.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2012-08-27 11:26+0200\n"
+"POT-Creation-Date: 2013-02-21 10:29+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
