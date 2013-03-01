@@ -6,10 +6,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
-"Report-Msgid-Bugs-To: michal@cihar.com\n"
+"Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-02-21 10:29+0100\n"
-"PO-Revision-Date: 2013-02-08 14:44+0200\n"
-"Last-Translator: Michal Čihař <michal@cihar.com>\n"
+"PO-Revision-Date: 2013-03-01 17:06+0200\n"
+"Last-Translator: Dieter Adriaenssens <ruleant@users.sourceforge.net>\n"
 "Language-Team: Dutch <http://l10n.cihar.com/projects/gammu/gammu/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
@@ -65,9 +65,8 @@ msgid "Error while opening file for writing!\n"
 msgstr "Fout bij openen bestand voor schrijven!\n"
 
 #: gammu/backup.c:191 gammu/files.c:454 helper/message-cmdline.c:1110
-#, fuzzy
 msgid "Error while writing file!\n"
-msgstr "Fout tijdens schrijven bestand!\n"
+msgstr "Fout tijdens schrijven van bestand!\n"
 
 #: gammu/backup.c:194
 msgid "Error while closing file!\n"
@@ -464,9 +463,8 @@ msgid "Add phone ToDo?"
 msgstr ""
 
 #: gammu/backup.c:1774
-#, fuzzy
 msgid "Add notes to phone?"
-msgstr "Stuur bestand naar telefoon"
+msgstr "Stuur notities naar telefoon?"
 
 #: gammu/backup.c:1797
 msgid "Add phone WAP bookmarks?"
