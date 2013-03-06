@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
-"Report-Msgid-Bugs-To: michal@cihar.com\n"
+"Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-02-21 10:29+0100\n"
-"PO-Revision-Date: 2013-02-17 22:13+0200\n"
+"PO-Revision-Date: 2013-03-06 08:14+0200\n"
 "Last-Translator: Kristjan Räts <kristjanrats@gmail.com>\n"
 "Language-Team: Estonian <http://l10n.cihar.com/projects/gammu/gammu/et/>\n"
 "Language: et\n"
@@ -527,7 +527,7 @@ msgstr "Helista"
 
 #: gammu/calendar.c:28
 msgid "Meeting"
-msgstr ""
+msgstr "Koosolek"
 
 #: gammu/calendar.c:31
 msgid "Birthday (Anniversary)"
@@ -2142,7 +2142,7 @@ msgstr ""
 
 #: gammu/message.c:228
 msgid "Pager"
-msgstr ""
+msgstr "Piipar"
 
 #: gammu/message.c:232
 msgid "Validity"
@@ -3172,7 +3172,7 @@ msgstr ""
 
 #: gammu/misc.c:2152
 msgid "Personal"
-msgstr ""
+msgstr "Isiklik"
 
 #: gammu/misc.c:2157
 msgid "Vibrate first"
