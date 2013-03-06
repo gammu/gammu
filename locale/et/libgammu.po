@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
-"Report-Msgid-Bugs-To: michal@cihar.com\n"
+"Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-02-21 10:29+0100\n"
-"PO-Revision-Date: 2013-02-20 18:32+0200\n"
+"PO-Revision-Date: 2013-03-06 08:20+0200\n"
 "Last-Translator: Kristjan Räts <kristjanrats@gmail.com>\n"
 "Language-Team: Estonian <http://l10n.cihar.com/projects/gammu/libgammu/et/>\n"
 "Language: et\n"
@@ -43,9 +43,8 @@ msgid "Error opening device, you don't have permissions."
 msgstr "Viga seadme avamisel, sul puuduvad õigused."
 
 #: libgammu/gsmcomon.c:90
-#, fuzzy
 msgid "Error opening device. No required driver in operating system."
-msgstr "Viga seadme avamisel. Puudub seadme ajur."
+msgstr "Viga seadme avamisel. Seadme kasutamiseks puudub ajur."
 
 #: libgammu/gsmcomon.c:91
 msgid "Error opening device. Some hardware not connected/wrongly configured."
@@ -78,21 +77,19 @@ msgid "No response in specified timeout. Probably phone not connected."
 msgstr "Määratud aja jooksul vastust ei tulnud. Telefon ei ole vist ühendatud."
 
 #: libgammu/gsmcomon.c:98
-#, fuzzy
 msgid ""
 "Frame not requested right now. See <http://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
-"Freimi ei küsitud hetkel. Vaata lehelt <http://wammu.eu/support/bugs/> "
+"Freimi ei küsitud hetkel. Vaata lehelt <http://wammu.eu/support/bugs/>, "
 "kuidas sellest raporteerida."
 
 #: libgammu/gsmcomon.c:99
-#, fuzzy
 msgid ""
 "Unknown response from phone. See <http://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
-"Tundmatu vastus telefonilt. Vaata lehelt <http://wammu.eu/support/bugs/> "
+"Tundmatu vastus telefonilt. Vaata lehelt <http://wammu.eu/support/bugs/>, "
 "kuidas sellest raporteerida."
 
 #: libgammu/gsmcomon.c:100
@@ -132,9 +129,8 @@ msgid "Security error. Maybe no PIN?"
 msgstr "Turvaviga. Võib-olla puudub PIN?"
 
 #: libgammu/gsmcomon.c:107
-#, fuzzy
 msgid "Invalid location. Maybe too high?"
-msgstr "Vigane asukoht. Võib-olla liiga kõrgel?"
+msgstr "Vigane asukoht. Võib-olla liiga kõrge?"
 
 #: libgammu/gsmcomon.c:108
 msgid "Functionality not implemented. You are welcome to help authors with it."
@@ -253,136 +249,140 @@ msgstr "Ei saa suhelda SIM kaardiga."
 #: libgammu/gsmcomon.c:133
 msgid "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
 msgstr ""
+"Telefonis on paigaldatud vale GNAPPLETi versioon. Paigalda versiooni, mida "
+"Gammu hetkel kasutab."
 
 #: libgammu/gsmcomon.c:134
 msgid "Only part of folder has been listed."
-msgstr ""
+msgstr "Kausta sisu kuvatakse osaliselt."
 
 #: libgammu/gsmcomon.c:135
 msgid "Folder must be empty."
-msgstr ""
+msgstr "Kaust peab olema tühi."
 
 #: libgammu/gsmcomon.c:136
 msgid "Data were converted."
-msgstr ""
+msgstr "Andmed teisendati."
 
 #: libgammu/gsmcomon.c:137
 msgid "Gammu is not configured."
-msgstr ""
+msgstr "Gammu on seadistamata."
 
 #: libgammu/gsmcomon.c:138
 msgid "Wrong folder used."
-msgstr ""
+msgstr "Kasutatakse valet kausta."
 
 #: libgammu/gsmcomon.c:139
 msgid "Internal phone error."
-msgstr ""
+msgstr "Sisemine telefoni viga."
 
 #: libgammu/gsmcomon.c:140
 msgid "Error writing file to disk."
-msgstr ""
+msgstr "Viga faili kettale kirjutamisel."
 
 #: libgammu/gsmcomon.c:141
 msgid "No such section exists."
-msgstr ""
+msgstr "Sellist sektsiooni ei ole olemas."
 
 #: libgammu/gsmcomon.c:142
 msgid "Using default values."
-msgstr ""
+msgstr "Kasutan vaikeväärtuseid."
 
 #: libgammu/gsmcomon.c:143
 msgid "Corrupted data returned by phone."
-msgstr ""
+msgstr "Telefon tagastas rikutud andmed."
 
 #: libgammu/gsmcomon.c:144
 msgid "Bad feature string in configuration."
-msgstr ""
+msgstr "Seadistustes on halb tunnuse string."
 
 #: libgammu/gsmcomon.c:145
 msgid "Desired functionality has been disabled on compile time."
-msgstr ""
+msgstr "Soovitud funktsionaalsus on kompileerimisel keelatud."
 
 #: libgammu/gsmcomon.c:146
 msgid "Bluetooth configuration requires channel option."
-msgstr ""
+msgstr "Bluetoothi seadistamine vajab kanali seadeid."
 
 #: libgammu/gsmcomon.c:147
 msgid "Service is not running."
-msgstr ""
+msgstr "Teenus ei tööta."
 
 #: libgammu/gsmcomon.c:148
 msgid "Service configuration is missing."
-msgstr ""
+msgstr "Teenuse seadistust ei leitud."
 
 #: libgammu/gsmcomon.c:149
 msgid "Command rejected because device was busy. Wait and restart."
-msgstr ""
+msgstr "Käsklust eirati, sest seade oli hõivatud. Oota ja proovi uuesti."
 
 #: libgammu/gsmcomon.c:150
 msgid "Could not connect to the server."
-msgstr ""
+msgstr "Serveriga ei saa ühendus."
 
 #: libgammu/gsmcomon.c:151
 msgid "Could not resolve the host name."
-msgstr ""
+msgstr "Serveri nime lahendamine ei õnnestunud."
 
 #: libgammu/gsmcomon.c:152
 msgid "Failed to get SMSC number from phone."
-msgstr ""
+msgstr "SMSC numbri hankimine telefonist ebaõnnestus."
 
 #: libgammu/gsmcomon.c:153
 msgid "Operation aborted."
-msgstr ""
+msgstr "Toiming katkestatud."
 
 #: libgammu/gsmcomon.c:154
 msgid ""
 "Installation data not found, please consult debug log and/or documentation "
 "for more details."
 msgstr ""
+"Paigaldamise andmeid ei leitud, palun vaata silumislogi ja/või "
+"dokumentatsiooniga, et täiendava info leidmiseks."
 
 #: libgammu/gsmcomon.c:155
 msgid "Entry is read only."
-msgstr ""
+msgstr "Kanne ei ole muudetav."
 
 #: libgammu/gsmcomon.c:188
 msgid "Unknown error description."
-msgstr ""
+msgstr "Tundmatu vea kirjeldus."
 
 #: libgammu/phone/dummy/dummy.c:630
 msgid "Templates"
-msgstr ""
+msgstr "Mallid"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1969
 msgid "Personal"
-msgstr ""
+msgstr "Isiklik"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1971 libgammu/phone/nokia/nfunc.c:1156
 msgid "Car"
-msgstr ""
+msgstr "Auto"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1973 libgammu/phone/nokia/nfunc.c:1158
 msgid "Headset"
-msgstr ""
+msgstr "Käed-vaba süsteem"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1979 libgammu/phone/nokia/nfunc.c:1146
 msgid "General"
-msgstr ""
+msgstr "Üldine"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1981 libgammu/phone/nokia/nfunc.c:1148
 msgid "Silent"
-msgstr ""
+msgstr "Hääletu"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1983
 msgid "Discreet"
-msgstr ""
+msgstr "Diskreetne"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1985
 msgid "Loud"
-msgstr ""
+msgstr "Vali"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1987
 msgid "My style"
-msgstr ""
+msgstr "Minu stiil"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:578
 msgid "SIM"
@@ -391,48 +391,48 @@ msgstr "SIM"
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:579 libgammu/phone/pfunc.c:41
 #: libgammu/phone/s60/s60phone.c:1773
 msgid "Inbox"
-msgstr ""
+msgstr "Sissetulevad"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:580
 msgid "Sent items"
-msgstr ""
+msgstr "Saadetud"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:581
 msgid "Saved items"
-msgstr ""
+msgstr "Salvestatud"
 
 #: libgammu/phone/nokia/nfunc.c:962
 msgid "Family"
-msgstr ""
+msgstr "Perekond"
 
 #: libgammu/phone/nokia/nfunc.c:964
 msgid "VIP"
-msgstr ""
+msgstr "VIP"
 
 #: libgammu/phone/nokia/nfunc.c:966
 msgid "Friends"
-msgstr ""
+msgstr "Sõbrad"
 
 #: libgammu/phone/nokia/nfunc.c:968
 msgid "Colleagues"
-msgstr ""
+msgstr "Kolleegid"
 
 #: libgammu/phone/nokia/nfunc.c:970
 msgid "Other"
-msgstr ""
+msgstr "Muu"
 
 #: libgammu/phone/nokia/nfunc.c:1150
 msgid "Meeting"
-msgstr ""
+msgstr "Koosolek"
 
 #: libgammu/phone/nokia/nfunc.c:1152
 msgid "Outdoor"
-msgstr ""
+msgstr "Õues"
 
 #: libgammu/phone/nokia/nfunc.c:1154
 msgid "Pager"
-msgstr ""
+msgstr "Piipar"
 
 #: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1774
 msgid "Outbox"
-msgstr ""
+msgstr "Välja minevad"
