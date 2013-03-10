@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-02-21 10:29+0100\n"
-"PO-Revision-Date: 2013-03-06 08:53+0200\n"
+"PO-Revision-Date: 2013-03-10 10:57+0200\n"
 "Last-Translator: Kristjan Räts <kristjanrats@gmail.com>\n"
 "Language-Team: Estonian <http://l10n.cihar.com/projects/gammu/gammu/et/>\n"
 "Language: et\n"
@@ -23,19 +23,19 @@ msgstr ""
 #: helper/message-cmdline.c:441 helper/message-cmdline.c:478
 #: helper/message-cmdline.c:501
 msgid "Where is backup filename and location?"
-msgstr ""
+msgstr "Kus on varukoopia faili nimi ja asukoht?"
 
 #: gammu/backup.c:63 helper/message-cmdline.c:489
 msgid "Calendar note not found in file"
-msgstr ""
+msgstr "Kalendri märget failist ei leitud"
 
 #: gammu/backup.c:86
 msgid "WAP bookmark not found in file"
-msgstr ""
+msgstr "WAP järjehoidjat ei leitud failist"
 
 #: gammu/backup.c:107
 msgid "Note not found in file"
-msgstr ""
+msgstr "Märget ei leitud failist"
 
 #: gammu/backup.c:128
 msgid "Todo note not found in file"
@@ -463,9 +463,8 @@ msgid "Add phone ToDo?"
 msgstr ""
 
 #: gammu/backup.c:1774
-#, fuzzy
 msgid "Add notes to phone?"
-msgstr "&Impordi"
+msgstr "Lisa märkmed telefoni?"
 
 #: gammu/backup.c:1797
 msgid "Add phone WAP bookmarks?"
@@ -520,7 +519,6 @@ msgid "Reminder (Date)"
 msgstr ""
 
 #: gammu/calendar.c:25
-#, fuzzy
 msgctxt "Calendar note type"
 msgid "Call"
 msgstr "Helista"
@@ -921,9 +919,8 @@ msgid "Start time"
 msgstr ""
 
 #: gammu/calendar.c:746
-#, fuzzy
 msgid "Completed time"
-msgstr "Valmis"
+msgstr "Lõpetati"
 
 #: gammu/calendar.c:751
 msgid "Completed"
@@ -1566,23 +1563,20 @@ msgid "option parsing failed: %s\n"
 msgstr ""
 
 #: gammu-detect/udev.c:67
-#, fuzzy
 msgid "Name:"
-msgstr "Nimi"
+msgstr "Nimi:"
 
 #: gammu-detect/udev.c:68
-#, fuzzy
 msgid "Type:"
-msgstr "Tüüp"
+msgstr "Tüüp:"
 
 #: gammu-detect/udev.c:69
 msgid "Subsystem:"
 msgstr ""
 
 #: gammu-detect/udev.c:70
-#, fuzzy
 msgid "Number:"
-msgstr "Number"
+msgstr "Number:"
 
 #: gammu-detect/udev.c:71
 msgid "Path:"
@@ -1658,7 +1652,7 @@ msgstr ""
 
 #: gammu/files.c:160 gammu/files.c:173 gammu/files.c:199 gammu/files.c:324
 msgid "Folder"
-msgstr ""
+msgstr "Kaust"
 
 #: gammu/files.c:184 gammu/files.c:315
 msgid "File;"
@@ -4298,9 +4292,8 @@ msgid "EMS animation ID"
 msgstr ""
 
 #: helper/message-display.c:479
-#, fuzzy
 msgid "Message size"
-msgstr "Sõnumi eelvaade"
+msgstr "Sõnumi suurus"
 
 #. l10n: Generic prefix for error messages
 #: helper/message-display.c:512 helper/printing.c:18
