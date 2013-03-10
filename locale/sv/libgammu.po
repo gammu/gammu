@@ -6,26 +6,25 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
-"Report-Msgid-Bugs-To: michal@cihar.com\n"
+"Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2012-08-27 11:26+0200\n"
-"PO-Revision-Date: 2012-03-29 17:18+0200\n"
-"Last-Translator: Michal Čihař <michal@cihar.com>\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2013-03-10 18:42+0200\n"
+"Last-Translator: Anders Jonsson <jonars03@student.umu.se>\n"
+"Language-Team: Swedish <http://l10n.cihar.com/projects/gammu/libgammu/sv/>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Weblate 0.8\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 1.5-dev\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
 msgstr "Inget fel."
 
 #: libgammu/gsmcomon.c:85
-#, fuzzy
 msgid "Error opening device. Unknown, busy or no permissions."
-msgstr "Fel vid öppnade av enhet. Okänd/upptagen eller ingen behörighet."
+msgstr "Fel vid öppnade av enhet. Okänd, upptagen eller ingen behörighet."
 
 #: libgammu/gsmcomon.c:86
 msgid "Error opening device, it is locked."
@@ -49,10 +48,9 @@ msgstr ""
 "Fel vid öppnade av enheten. Nödvändig drivrutin saknas i operativsystemet."
 
 #: libgammu/gsmcomon.c:91
-#, fuzzy
 msgid "Error opening device. Some hardware not connected/wrongly configured."
 msgstr ""
-"Fel vid öppnade av enheten. Viss hårdvara är inte ansluten/felkonfigurerad."
+"Fel vid öppnande av enhet. Viss hårdvara är inte ansluten/felkonfigurerad."
 
 #: libgammu/gsmcomon.c:92
 msgid "Error setting device DTR or RTS."
@@ -63,12 +61,10 @@ msgid "Error setting device speed. Maybe speed not supported."
 msgstr "Fel vid inställning av enhetshastighet. Hastighet kanske inte stöds."
 
 #: libgammu/gsmcomon.c:94
-#, fuzzy
 msgid "Error writing to the device."
 msgstr "Fel vid skrivning till enheten."
 
 #: libgammu/gsmcomon.c:95
-#, fuzzy
 msgid "Error during reading from the device."
 msgstr "Fel vid läsning från enheten."
 
@@ -92,12 +88,11 @@ msgstr ""
 "information om hur man rapporterar det."
 
 #: libgammu/gsmcomon.c:99
-#, fuzzy
 msgid ""
 "Unknown response from phone. See <http://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
-"Okänt svar från telefonen. Se <http://cihar.com/gammu/report> för "
+"Okänt svar från telefonen. Se <http://wammu.eu/support/bugs/> för "
 "information om hur man rapporterar det."
 
 #: libgammu/gsmcomon.c:100
@@ -118,22 +113,20 @@ msgid "Unknown model type string. Check config file."
 msgstr "Okänd modelltypssträng. Kontrollera konfigurationsfilen."
 
 #: libgammu/gsmcomon.c:103
-#, fuzzy
 msgid ""
 "Some functions not available for your system (disabled in config or not "
 "implemented)."
 msgstr ""
 "Vissa funktioner är inte tillgängliga för ditt system (inaktiverade i "
-"konfigurationen eller inte skrivna)."
+"konfigurationen eller inte implementerade)."
 
 #: libgammu/gsmcomon.c:104
 msgid "Function not supported by phone."
 msgstr "Funktionen stöds inte av telefonen."
 
 #: libgammu/gsmcomon.c:105
-#, fuzzy
 msgid "Entry is empty."
-msgstr "Posten är tom"
+msgstr "Posten är tom."
 
 #: libgammu/gsmcomon.c:106
 msgid "Security error. Maybe no PIN?"
@@ -159,9 +152,8 @@ msgid "Unknown error."
 msgstr "Okänt fel."
 
 #: libgammu/gsmcomon.c:111
-#, fuzzy
 msgid "Can not open specified file."
-msgstr "Kan inte öppna angiven fil. Skrivskyddad?"
+msgstr "Kan inte öppna angiven fil."
 
 #: libgammu/gsmcomon.c:112
 msgid "More memory required..."
@@ -241,9 +233,8 @@ msgid "Invalid data given to phone."
 msgstr "Ogiltigt data gavs till telefon."
 
 #: libgammu/gsmcomon.c:128
-#, fuzzy
 msgid "File with specified name already exists."
-msgstr "Fil med angivet namn finns redan."
+msgstr "Det finns redan en fil med angivet namn."
 
 #: libgammu/gsmcomon.c:129
 msgid "File with specified name doesn't exist."
@@ -251,11 +242,11 @@ msgstr "Fil med angivet namn finns inte."
 
 #: libgammu/gsmcomon.c:130
 msgid "You have to give folder name and not file name."
-msgstr ""
+msgstr "Du måste ange mappnamn och inte filnamn."
 
 #: libgammu/gsmcomon.c:131
 msgid "You have to give file name and not folder name."
-msgstr ""
+msgstr "Du måste ange filnamn och inte mappnamn."
 
 #: libgammu/gsmcomon.c:132
 msgid "Can not access SIM card."
@@ -320,7 +311,6 @@ msgid "Bluetooth configuration requires channel option."
 msgstr "Konfiguration av Bluetooth kräver channel-flaggan."
 
 #: libgammu/gsmcomon.c:147
-#, fuzzy
 msgid "Service is not running."
 msgstr "Tjänsten är inte igång."
 
@@ -333,9 +323,8 @@ msgid "Command rejected because device was busy. Wait and restart."
 msgstr ""
 
 #: libgammu/gsmcomon.c:150
-#, fuzzy
 msgid "Could not connect to the server."
-msgstr "Ansluter till IMAP-server..."
+msgstr "Kunde inte ansluta till servern."
 
 #: libgammu/gsmcomon.c:151
 #, fuzzy
@@ -347,9 +336,8 @@ msgid "Failed to get SMSC number from phone."
 msgstr ""
 
 #: libgammu/gsmcomon.c:153
-#, fuzzy
 msgid "Operation aborted."
-msgstr "Operation pågår"
+msgstr "Operation avbruten."
 
 #: libgammu/gsmcomon.c:154
 msgid ""
@@ -358,9 +346,8 @@ msgid ""
 msgstr ""
 
 #: libgammu/gsmcomon.c:155
-#, fuzzy
 msgid "Entry is read only."
-msgstr "Posten är tom"
+msgstr "Posten är skrivskyddad."
 
 #: libgammu/gsmcomon.c:188
 msgid "Unknown error description."
