@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-02-21 10:29+0100\n"
-"PO-Revision-Date: 2013-03-11 00:19+0200\n"
+"PO-Revision-Date: 2013-03-15 09:23+0200\n"
 "Last-Translator: Anders Jonsson <jonars03@student.umu.se>\n"
 "Language-Team: Swedish <http://l10n.cihar.com/projects/gammu/gammu/sv/>\n"
 "Language: sv\n"
@@ -62,11 +62,11 @@ msgstr "Okänd backup-format: \"%s\"\n"
 
 #: gammu/backup.c:187
 msgid "Error while opening file for writing!\n"
-msgstr ""
+msgstr "Fel då filen öppnades för skrivning!\n"
 
 #: gammu/backup.c:191 gammu/files.c:454 helper/message-cmdline.c:1110
 msgid "Error while writing file!\n"
-msgstr ""
+msgstr "Fel under skrivning till fil!\n"
 
 #: gammu/backup.c:194
 msgid "Error while closing file!\n"
@@ -99,7 +99,7 @@ msgstr ""
 #: gammu/misc.c:659 gammu/misc.c:664 gammu/misc.c:1376 gammu/mms.c:183
 #, c-format
 msgid "%i percent"
-msgstr ""
+msgstr "%i procent"
 
 #: gammu/backup.c:367 gammu/backup.c:1026 gammu/backup.c:1645
 #: gammu/calendar.c:632 gammu/calendar.c:882 gammu/calendar.c:957
@@ -278,7 +278,7 @@ msgstr "IMEI"
 
 #: gammu/backup.c:980
 msgid "File created by"
-msgstr ""
+msgstr "Fil skapad av"
 
 #: gammu/backup.c:984
 #, c-format
@@ -358,7 +358,7 @@ msgstr ""
 #: gammu/backup.c:1560 gammu/misc.c:1385 gammu/misc.c:1430 gammu/misc.c:1454
 #: gammu/misc.c:1502
 msgid "Done"
-msgstr ""
+msgstr "Klar"
 
 #: gammu/backup.c:1249
 msgid "Restore phone todo?"
@@ -439,7 +439,7 @@ msgstr ""
 #: helper/message-cmdline.c:1032
 #, c-format
 msgid "Unknown parameter (\"%s\")\n"
-msgstr ""
+msgstr "Okänd parameter (\"%s\")\n"
 
 #: gammu/backup.c:1667 gammu/backup.c:1695
 #, c-format
@@ -551,7 +551,7 @@ msgstr "Alarm"
 
 #: gammu/calendar.c:46
 msgid "Shopping"
-msgstr ""
+msgstr "Shopping"
 
 #: gammu/calendar.c:49
 msgid "Daily alarm"
@@ -563,11 +563,11 @@ msgstr ""
 
 #: gammu/calendar.c:55
 msgid "Training/Ball Games"
-msgstr ""
+msgstr "Träning/Bollsporter"
 
 #: gammu/calendar.c:58
 msgid "Training/Cycling"
-msgstr ""
+msgstr "Träning/Cykling"
 
 #: gammu/calendar.c:61
 msgid "Training/Budo"
@@ -575,11 +575,11 @@ msgstr ""
 
 #: gammu/calendar.c:64
 msgid "Training/Dance"
-msgstr ""
+msgstr "Träning/Dans"
 
 #: gammu/calendar.c:67
 msgid "Training/Extreme Sports"
-msgstr ""
+msgstr "Träning/Extremsporter"
 
 #: gammu/calendar.c:70
 msgid "Training/Football"
@@ -587,7 +587,7 @@ msgstr ""
 
 #: gammu/calendar.c:73
 msgid "Training/Golf"
-msgstr ""
+msgstr "Träning/Golf"
 
 #: gammu/calendar.c:76
 msgid "Training/Gym"
@@ -607,11 +607,11 @@ msgstr ""
 
 #: gammu/calendar.c:88
 msgid "Training/Rugby"
-msgstr ""
+msgstr "Träning/Rugby"
 
 #: gammu/calendar.c:91
 msgid "Training/Sailing"
-msgstr ""
+msgstr "Träning/Segling"
 
 #: gammu/calendar.c:94
 msgid "Training/Street Games"
@@ -619,11 +619,11 @@ msgstr ""
 
 #: gammu/calendar.c:97
 msgid "Training/Swimming"
-msgstr ""
+msgstr "Träning/Simning"
 
 #: gammu/calendar.c:100
 msgid "Training/Tennis"
-msgstr ""
+msgstr "Träning/Tennis"
 
 #: gammu/calendar.c:103
 msgid "Training/Travels"
@@ -635,7 +635,7 @@ msgstr ""
 
 #: gammu/calendar.c:110
 msgid "unknown type!"
-msgstr ""
+msgstr "okänd typ!"
 
 #: gammu/calendar.c:156
 msgid "Start"
@@ -881,11 +881,11 @@ msgstr "Veckan börjar på %s"
 
 #: gammu/calendar.c:693 gammu/memory.c:150
 msgid "Entry was empty"
-msgstr ""
+msgstr "Posten var tom"
 
 #: gammu/calendar.c:695 gammu/memory.c:152
 msgid "Entry was deleted"
-msgstr ""
+msgstr "Posten togs bort"
 
 #: gammu/calendar.c:713
 msgid "Priority"
@@ -977,7 +977,7 @@ msgstr ""
 
 #: gammu/common.c:67
 msgid "Unknown security status."
-msgstr ""
+msgstr "Okänd säkerhetsstatus."
 
 #: gammu/common.c:78
 msgid "January"
@@ -1070,7 +1070,7 @@ msgstr "Säkerhetsstatus"
 #: gammu/common.c:312 gammu/misc.c:1170 gammu/misc.c:1185 gammu/misc.c:1192
 #: gammu/misc.c:1199 gammu/misc.c:1229
 msgid "More parameters required!"
-msgstr ""
+msgstr "Fler parametrar krävs!"
 
 #: gammu/common.c:318 gammu/common.c:328 gammu/depend/nokia/dct4.c:687
 #: gammu/misc.c:1341
@@ -1129,13 +1129,12 @@ msgid "Setting done"
 msgstr ""
 
 #: gammu/depend/nokia/dct4.c:303
-#, fuzzy
 msgid ""
 "Sorry, but configuration matrix for this model has not yet been added. See "
 "<http://wammu.eu/support/bugs/> for information how to report it."
 msgstr ""
-"Okänt svar från telefonen. Se <http://cihar.com/gammu/report> för "
-"information om hur man rapporterar det."
+"Tyvärr, inställningsmatrisen för denna modell har ännu inte lagts till. Se "
+"<http://wammu.eu/support/bugs/> för information om hur man rapporterar det."
 
 #: gammu/depend/nokia/dct4.c:369
 msgid "Passed"
@@ -1151,7 +1150,7 @@ msgstr ""
 
 #: gammu/depend/nokia/dct4.c:372
 msgid "No signal"
-msgstr ""
+msgstr "Ingen signal"
 
 #: gammu/depend/nokia/dct4.c:373 gammu/message.c:105 gammu/misc.c:2482
 msgid "Timeout"
@@ -1242,7 +1241,7 @@ msgstr ""
 #: gammu/depend/nokia/dct4.c:1048 gammu/depend/nokia/dct4.c:1049
 #: gammu/depend/nokia/dct4.c:1050
 msgid "mV"
-msgstr ""
+msgstr "mV"
 
 #: gammu/depend/nokia/dct4.c:1038
 msgid "Battery voltage, scaled:"
@@ -1260,7 +1259,7 @@ msgstr "Ta bort nuvarande"
 #: gammu/depend/nokia/dct4.c:1040 gammu/depend/nokia/dct4.c:1051
 #: gammu/depend/nokia/dct4.c:1052
 msgid "mA"
-msgstr ""
+msgstr "mA"
 
 #: gammu/depend/nokia/dct4.c:1041
 msgid "Battery size indicator:"
@@ -1268,7 +1267,7 @@ msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1041
 msgid "Ohms"
-msgstr ""
+msgstr "Ohm"
 
 #: gammu/depend/nokia/dct4.c:1042
 msgid "Battery temperature:"
@@ -1276,9 +1275,8 @@ msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1042 gammu/depend/nokia/dct4.c:1046
 #: gammu/depend/nokia/dct4.c:1047
-#, fuzzy
 msgid "K"
-msgstr "OK"
+msgstr "K"
 
 #: gammu/depend/nokia/dct4.c:1043
 #, fuzzy
@@ -1496,9 +1494,8 @@ msgid "Show debugging output for detecting devices."
 msgstr ""
 
 #: gammu-detect/main.c:56
-#, fuzzy
 msgid "Show version information and compiled in features."
-msgstr "Telefoninformation"
+msgstr "Visa versionsinformation och inkompilerade funktioner."
 
 #: gammu-detect/main.c:58
 msgid "Disables scanning of udev."
@@ -1560,15 +1557,15 @@ msgstr ""
 
 #: gammu-detect/main.c:93 gammu/gammu.c:342
 msgid "Check <http://wammu.eu/gammu/> for updates."
-msgstr ""
+msgstr "Kontrollera <http://wammu.eu/gammu/> för uppdateringar."
 
 #: gammu-detect/main.c:102
 msgid "Configuration file generated by gammu-detect."
-msgstr ""
+msgstr "Konfigurationsfil skapad av gammu-detect."
 
 #: gammu-detect/main.c:103
 msgid "Please check The Gammu Manual for more information."
-msgstr ""
+msgstr "Var god se Gammu-manualen för mer information."
 
 #: gammu-detect/main.c:160
 #, c-format
@@ -1597,9 +1594,8 @@ msgid "Path:"
 msgstr ""
 
 #: gammu-detect/udev.c:72
-#, fuzzy
 msgid "Driver:"
-msgstr "Drivrutin att använda"
+msgstr "Drivrutin:"
 
 #: gammu-detect/udev.c:73
 msgid "Sequential Number:"
@@ -1717,7 +1713,7 @@ msgstr ""
 #: gammu/files.c:421
 #, c-format
 msgid "%i percent done."
-msgstr ""
+msgstr "%i procent klar."
 
 #: gammu/files.c:423
 #, c-format
@@ -1905,7 +1901,7 @@ msgstr ""
 
 #: gammu/gammu.c:727
 msgid "MMS and MMS settings"
-msgstr ""
+msgstr "MMS och MMS-inställningar"
 
 #: gammu/gammu.c:728
 msgid "Phone tests"
@@ -1913,7 +1909,7 @@ msgstr ""
 
 #: gammu/gammu.c:729
 msgid "FM radio"
-msgstr ""
+msgstr "FM-radio"
 
 #: gammu/gammu.c:730
 msgid "Phone information"
@@ -1929,11 +1925,11 @@ msgstr ""
 
 #: gammu/gammu.c:735
 msgid "Functions that don't fit elsewhere"
-msgstr ""
+msgstr "Funktioner som inte passar in någon annanstans"
 
 #: gammu/gammu.c:736
 msgid "Gammu information"
-msgstr ""
+msgstr "Gammu-information"
 
 #: gammu/gammu.c:752
 msgid "Usage: gammu [parameters] <command> [options]"
@@ -2017,7 +2013,7 @@ msgstr ""
 
 #: gammu/gammu.c:1089
 msgid "No configuration file found!"
-msgstr ""
+msgstr "Ingen konfigurationsfil funnen!"
 
 #: gammu/gammu.c:1109
 msgid "Failed to allocate memory, aborting!\n"
@@ -2148,11 +2144,11 @@ msgstr ""
 
 #: gammu/message.c:226
 msgid "Fax"
-msgstr ""
+msgstr "Fax"
 
 #: gammu/message.c:227 helper/memory-display.c:192
 msgid "Email"
-msgstr ""
+msgstr "E-post"
 
 #: gammu/message.c:228
 msgid "Pager"
@@ -2204,9 +2200,9 @@ msgid "OK"
 msgstr "OK"
 
 #: gammu/message.c:541
-#, fuzzy, c-format
+#, c-format
 msgid "error %i"
-msgstr "Inget fel."
+msgstr "fel %i"
 
 #: gammu/message.c:544
 #, c-format
@@ -2241,7 +2237,7 @@ msgstr "SIM"
 
 #: gammu/message.c:608
 msgid "phone"
-msgstr ""
+msgstr "telefon"
 
 #: gammu/message.c:612
 #, c-format
@@ -2339,17 +2335,17 @@ msgstr ""
 
 #: gammu/misc.c:116
 msgid "Battery temperature"
-msgstr ""
+msgstr "Batteritemperatur"
 
 #. l10n: This means degrees Celsius
 #: gammu/misc.c:118 gammu/misc.c:123
 #, c-format
 msgid "%i C"
-msgstr ""
+msgstr "%i C"
 
 #: gammu/misc.c:122
 msgid "Phone temperature"
-msgstr ""
+msgstr "Telefontemperatur"
 
 #: gammu/misc.c:127
 msgid "Battery voltage"
@@ -2358,7 +2354,7 @@ msgstr ""
 #: gammu/misc.c:128 gammu/misc.c:133
 #, c-format
 msgid "%i mV"
-msgstr ""
+msgstr "%i mV"
 
 #: gammu/misc.c:132
 msgid "Charge voltage"
@@ -2371,7 +2367,7 @@ msgstr ""
 #: gammu/misc.c:138 gammu/misc.c:143
 #, c-format
 msgid "%i mA"
-msgstr ""
+msgstr "%i mA"
 
 #: gammu/misc.c:142
 msgid "Phone current"
@@ -2467,12 +2463,11 @@ msgstr ""
 
 #: gammu/misc.c:355
 msgid "Latitude"
-msgstr ""
+msgstr "Latitud"
 
 #: gammu/misc.c:356
-#, fuzzy
 msgid "Longitude"
-msgstr "Inloggningstyp"
+msgstr "Longitud"
 
 #: gammu/misc.c:357
 #, fuzzy
@@ -2719,9 +2714,8 @@ msgstr ""
 
 #: gammu/misc.c:1081 gammu/misc.c:1083 gammu/misc.c:1096 gammu/misc.c:1103
 #: helper/memory-display.c:101
-#, fuzzy
 msgid "Ringtone"
-msgstr "Ringsignaler"
+msgstr "Ringsignal"
 
 #: gammu/misc.c:1097
 #, c-format
@@ -2965,7 +2959,7 @@ msgstr ""
 
 #: gammu/misc.c:1633 gammu/misc.c:1683
 msgid "User"
-msgstr ""
+msgstr "Användare"
 
 #: gammu/misc.c:1635
 msgid "Phonebook database"
@@ -2977,7 +2971,7 @@ msgstr ""
 
 #: gammu/misc.c:1637
 msgid "Server"
-msgstr ""
+msgstr "Server"
 
 #: gammu/misc.c:1638
 msgid "Sync. phonebook"
@@ -3581,13 +3575,13 @@ msgstr[1] "%d år"
 
 #: helper/memory-display.c:30
 msgid "Call length"
-msgstr ""
+msgstr "Samtalslängd"
 
 #. l10n: Call length format string hour:minute:second
 #: helper/memory-display.c:32
-#, fuzzy, c-format
+#, c-format
 msgid "%02i:%02i:%02i\n"
-msgstr "Tid: %02d.%02d\n"
+msgstr "%02i:%02i:%02i\n"
 
 #: helper/memory-display.c:38
 msgid "Date and time"
@@ -3717,9 +3711,8 @@ msgid "WVID"
 msgstr ""
 
 #: helper/memory-display.c:215
-#, fuzzy
 msgid "SIP"
-msgstr "SIM"
+msgstr "SIP"
 
 #: helper/memory-display.c:216
 msgid "DTMF"
@@ -3727,7 +3720,7 @@ msgstr ""
 
 #: helper/memory-display.c:218
 msgid "Last name"
-msgstr ""
+msgstr "Efternamn"
 
 #: helper/memory-display.c:219
 msgid "First name"
@@ -3743,13 +3736,12 @@ msgid "Formal name"
 msgstr "Tilltalsnamn"
 
 #: helper/memory-display.c:222
-#, fuzzy
 msgid "Name prefix"
-msgstr "Nummerprefix"
+msgstr "Namnprefix"
 
 #: helper/memory-display.c:223
 msgid "Name suffix"
-msgstr ""
+msgstr "Namnsuffix"
 
 #: helper/memory-display.c:224
 msgid "Nick name"
@@ -3817,7 +3809,7 @@ msgstr ""
 
 #: helper/message-cmdline.c:184
 msgid "Not enough parameters!"
-msgstr ""
+msgstr "För få parametrar!"
 
 #: helper/message-cmdline.c:208
 #, c-format
@@ -3879,9 +3871,9 @@ msgid "Backup functionality not compiled in!"
 msgstr ""
 
 #: helper/message-cmdline.c:1055
-#, fuzzy, c-format
+#, c-format
 msgid "Wrong message length (\"%s\")\n"
-msgstr "Skriver meddelande(n)..."
+msgstr "Fel meddelandelängd (\"%s\")\n"
 
 #: helper/message-cmdline.c:1078
 #, c-format
@@ -3906,12 +3898,12 @@ msgstr ""
 #: helper/message-cmdline.c:1185 helper/message-cmdline.c:1202
 #, c-format
 msgid "Can't open file \"%s\"\n"
-msgstr ""
+msgstr "Kan inte öppna filen \"%s\"\n"
 
 #: helper/message-cmdline.c:1251
 #, c-format
 msgid "Unknown parameter (\"%c\")\n"
-msgstr ""
+msgstr "Okänd parameter (\"%c\")\n"
 
 #: helper/message-cmdline.c:1256
 msgid "Last parameter wasn't text"
@@ -4332,9 +4324,8 @@ msgid "EMS animation ID"
 msgstr ""
 
 #: helper/message-display.c:479
-#, fuzzy
 msgid "Message size"
-msgstr "Meddelanden"
+msgstr "Meddelandestorlek"
 
 #. l10n: Generic prefix for error messages
 #: helper/message-display.c:512 helper/printing.c:18
