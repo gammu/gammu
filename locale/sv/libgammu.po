@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2012-08-27 11:26+0200\n"
-"PO-Revision-Date: 2013-03-10 18:42+0200\n"
+"PO-Revision-Date: 2013-03-15 11:18+0200\n"
 "Last-Translator: Anders Jonsson <jonars03@student.umu.se>\n"
 "Language-Team: Swedish <http://l10n.cihar.com/projects/gammu/libgammu/sv/>\n"
 "Language: sv\n"
@@ -69,7 +69,6 @@ msgid "Error during reading from the device."
 msgstr "Fel vid läsning från enheten."
 
 #: libgammu/gsmcomon.c:96
-#, fuzzy
 msgid "Can't set parity on the device."
 msgstr "Kan inte ställa in paritet på enheten."
 
@@ -79,12 +78,11 @@ msgstr ""
 "Inget svar inom angiven tidsgräns. Antagligen är inte telefonen ansluten."
 
 #: libgammu/gsmcomon.c:98
-#, fuzzy
 msgid ""
 "Frame not requested right now. See <http://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
-"Okänt svar från telefonen. Se <http://cihar.com/gammu/report> för "
+"Ramen ej efterfrågad just nu. Se <http://wammu.eu/support/bugs/> för "
 "information om hur man rapporterar det."
 
 #: libgammu/gsmcomon.c:99
@@ -96,13 +94,12 @@ msgstr ""
 "information om hur man rapporterar det."
 
 #: libgammu/gsmcomon.c:100
-#, fuzzy
 msgid ""
 "Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
 "report it."
 msgstr ""
-"Okänt svar från telefonen. Se <http://cihar.com/gammu/report> för "
-"information om hur man rapporterar det."
+"Okänt ram. Se <http://wammu.eu/support/bugs/> för information om hur man "
+"rapporterar det."
 
 #: libgammu/gsmcomon.c:101
 msgid "Unknown connection type string. Check config file."
@@ -137,11 +134,10 @@ msgid "Invalid location. Maybe too high?"
 msgstr "Ogiltig plats. Kanske för hög?"
 
 #: libgammu/gsmcomon.c:108
-#, fuzzy
 msgid "Functionality not implemented. You are welcome to help authors with it."
 msgstr ""
-"Funktionen är under utveckling. Kontakta upphovsmännen om du vill hjälpa "
-"till."
+"Funktionen är ej implementerad. Du är välkommen att hjälpa upphovsmännen med "
+"det."
 
 #: libgammu/gsmcomon.c:109
 msgid "Memory full."
@@ -160,14 +156,15 @@ msgid "More memory required..."
 msgstr "Mer minne behövs..."
 
 #: libgammu/gsmcomon.c:113
-#, fuzzy
 msgid "Operation not allowed by phone."
-msgstr "Funktionen stöds inte av telefonen."
+msgstr "Operationen tillåts inte av telefonen."
 
 #: libgammu/gsmcomon.c:114
 msgid ""
 "No SMSC number given. Provide it manually or use the one configured in phone."
 msgstr ""
+"Inget SMSC-nummer angivet. Ange det manuellt eller använd det som är "
+"konfigurerat i telefonen."
 
 #: libgammu/gsmcomon.c:115
 msgid "You're inside phone menu (maybe editing?). Leave it and try again."
@@ -179,7 +176,6 @@ msgid "Phone is not connected."
 msgstr "Telefonen är inte ansluten."
 
 #: libgammu/gsmcomon.c:117
-#, fuzzy
 msgid ""
 "Function is currently being implemented. If you want to help, please contact "
 "authors."
@@ -206,11 +202,11 @@ msgstr ""
 #: libgammu/gsmcomon.c:121
 msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
 msgstr ""
-"Överföringen avbröts av telefonen. Kanske tryckte du Avbryt på telefonen?"
+"Överföringen avbröts av telefonen. Du kanske tryckte Avbryt på telefonen."
 
 #: libgammu/gsmcomon.c:122
 msgid "Phone module need to send another answer frame."
-msgstr ""
+msgstr "Telefonmodulen behöver sända ännu en svarsram."
 
 #: libgammu/gsmcomon.c:123
 msgid "Current connection type doesn't support called function."
@@ -226,7 +222,7 @@ msgstr "Ogiltigt datum eller tid angivet."
 
 #: libgammu/gsmcomon.c:126
 msgid "Phone memory error, maybe it is read only."
-msgstr "Fel i telefonminne. Kanske är det skrivskyddat?"
+msgstr "Fel i telefonminne, det är kanske skrivskyddat."
 
 #: libgammu/gsmcomon.c:127
 msgid "Invalid data given to phone."
@@ -320,20 +316,19 @@ msgstr "Tjänstekonfigurationen saknas."
 
 #: libgammu/gsmcomon.c:149
 msgid "Command rejected because device was busy. Wait and restart."
-msgstr ""
+msgstr "Kommando avslaget eftersom enheten var upptagen. Vänta och starta om."
 
 #: libgammu/gsmcomon.c:150
 msgid "Could not connect to the server."
 msgstr "Kunde inte ansluta till servern."
 
 #: libgammu/gsmcomon.c:151
-#, fuzzy
 msgid "Could not resolve the host name."
-msgstr "Kunde inte läsa sparat meddelande!"
+msgstr "Kunde inte slå upp värdnamnet."
 
 #: libgammu/gsmcomon.c:152
 msgid "Failed to get SMSC number from phone."
-msgstr ""
+msgstr "Kunde inte erhålla SMSC-nummer från telefonen."
 
 #: libgammu/gsmcomon.c:153
 msgid "Operation aborted."
@@ -344,6 +339,8 @@ msgid ""
 "Installation data not found, please consult debug log and/or documentation "
 "for more details."
 msgstr ""
+"Installationsdata ej funnet, konsultera felsökningsloggen och/eller "
+"dokumentationen för mer detaljer."
 
 #: libgammu/gsmcomon.c:155
 msgid "Entry is read only."
