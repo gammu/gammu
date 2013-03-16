@@ -2273,7 +2273,7 @@ msgid "Sending SMS %i/%i"
 msgstr "Odosielam SMS %i/%i"
 
 #: gammu/message.c:658
-msgid "Something went wrong, uknown message operation!\n"
+msgid "Something went wrong, unknown message operation!\n"
 msgstr "Nastala nejaká chyba, neznáma operácia so správou!\n"
 
 #: gammu/message.c:694

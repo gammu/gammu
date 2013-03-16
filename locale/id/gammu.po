@@ -2275,7 +2275,7 @@ msgid "Sending SMS %i/%i"
 msgstr "Pengiriman SMS %i/%i"
 
 #: gammu/message.c:658
-msgid "Something went wrong, uknown message operation!\n"
+msgid "Something went wrong, unknown message operation!\n"
 msgstr "Ada yang salah, operasi pesan tidak dikenali!\n"
 
 #: gammu/message.c:694

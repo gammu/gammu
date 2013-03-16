@@ -655,7 +655,7 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 			}
 			break;
 		default:
-			printf_err("%s", _("Something went wrong, uknown message operation!\n"));
+			printf_err("%s", _("Something went wrong, unknown message operation!\n"));
 	}
 
 	GSM_Terminate();
