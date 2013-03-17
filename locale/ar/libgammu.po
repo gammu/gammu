@@ -6,10 +6,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.28.91\n"
-"Report-Msgid-Bugs-To: michal@cihar.com\n"
+"Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2012-08-27 11:26+0200\n"
-"PO-Revision-Date: 2012-08-30 19:34+0200\n"
-"Last-Translator: مترجم حرّ <metehyi@gmail.com>\n"
+"PO-Revision-Date: 2013-03-17 10:26+0200\n"
+"Last-Translator: Hassan San <san@sintoria.com>\n"
 "Language-Team: Arabic <http://l10n.cihar.com/projects/gammu/libgammu/ar/>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Weblate 1.2\n"
+"X-Generator: Weblate 1.5-dev\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
@@ -216,7 +216,7 @@ msgstr "تاريخ أو وقت محدد غير صالح."
 
 #: libgammu/gsmcomon.c:126
 msgid "Phone memory error, maybe it is read only."
-msgstr "خطأ ذاكرة الهاتف، ربما هي للقراءة فقظ."
+msgstr "خطأ في ذاكرة الهاتف، ربما تم تعيينها للقراءة فقط."
 
 #: libgammu/gsmcomon.c:127
 msgid "Invalid data given to phone."
@@ -232,11 +232,11 @@ msgstr "الملف ذات الاسم المحدد هو غير موجود."
 
 #: libgammu/gsmcomon.c:130
 msgid "You have to give folder name and not file name."
-msgstr "يجب أن تعطي اسم المجلد و لا اسم الملف."
+msgstr "يجب أن تعطي اسم المجلد و ليس اسم الملف."
 
 #: libgammu/gsmcomon.c:131
 msgid "You have to give file name and not folder name."
-msgstr "يجب أن تعطي اسم الملف و لا اسم المجلد."
+msgstr "يجب أن تعطي اسم الملف و ليس اسم المجلد."
 
 #: libgammu/gsmcomon.c:132
 msgid "Can not access SIM card."
