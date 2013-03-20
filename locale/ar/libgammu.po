@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: libgammu 1.28.91\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2012-08-27 11:26+0200\n"
-"PO-Revision-Date: 2013-03-17 10:26+0200\n"
-"Last-Translator: Hassan San <san@sintoria.com>\n"
+"PO-Revision-Date: 2013-03-20 22:29+0200\n"
+"Last-Translator: mohamed amin boubaker <mohamed.amin.02@gmail.com>\n"
 "Language-Team: Arabic <http://l10n.cihar.com/projects/gammu/libgammu/ar/>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
@@ -119,7 +119,7 @@ msgstr "وظيفة غير معتمدة من قبل الهاتف."
 
 #: libgammu/gsmcomon.c:105
 msgid "Entry is empty."
-msgstr "الإدخال فارغ."
+msgstr "المعطى فارغ."
 
 #: libgammu/gsmcomon.c:106
 msgid "Security error. Maybe no PIN?"
@@ -139,7 +139,7 @@ msgstr "إنّ الذاكرة مليئة."
 
 #: libgammu/gsmcomon.c:110
 msgid "Unknown error."
-msgstr "خطأ غير معروف."
+msgstr "خطأ مجهول."
 
 #: libgammu/gsmcomon.c:111
 msgid "Can not open specified file."
@@ -208,7 +208,7 @@ msgstr "نوع الوصلة الحالي لا يدعم الوظيفة المدع
 
 #: libgammu/gsmcomon.c:124
 msgid "CRC error."
-msgstr "CRC خطأ."
+msgstr "خطأ CRC."
 
 #: libgammu/gsmcomon.c:125
 msgid "Invalid date or time specified."
@@ -216,7 +216,7 @@ msgstr "تاريخ أو وقت محدد غير صالح."
 
 #: libgammu/gsmcomon.c:126
 msgid "Phone memory error, maybe it is read only."
-msgstr "خطأ في ذاكرة الهاتف، ربما تم تعيينها للقراءة فقط."
+msgstr "خطأ في ذاكرة الهاتف، ربّما تمّ تعيينها للقراءة فقط."
 
 #: libgammu/gsmcomon.c:127
 msgid "Invalid data given to phone."
@@ -240,31 +240,33 @@ msgstr "يجب أن تعطي اسم الملف و ليس اسم المجلد."
 
 #: libgammu/gsmcomon.c:132
 msgid "Can not access SIM card."
-msgstr "لا يمكن الوصول إلى بطاقة SIM."
+msgstr "لا يمكن الْوصول إلى بطاقة SIM."
 
 #: libgammu/gsmcomon.c:133
 msgid "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
 msgstr ""
+"نسخة GNAPPLET الموجودة في الهاتف غير صحيحة. عليك استخدام النّسخة المعطات مع "
+"نسخة Gammu هذه."
 
 #: libgammu/gsmcomon.c:134
 msgid "Only part of folder has been listed."
-msgstr "فقط جزء من المجلد تم إدراجه."
+msgstr "فقط جزء من المجلّد تمّ إدراجه."
 
 #: libgammu/gsmcomon.c:135
 msgid "Folder must be empty."
-msgstr "يجب أن يكون المجلد خالي من الموجودات."
+msgstr "يجب أن يكون المجلّد فارغ."
 
 #: libgammu/gsmcomon.c:136
 msgid "Data were converted."
-msgstr "تم تحويل البيانات."
+msgstr "تمّ تحويل البيانات."
 
 #: libgammu/gsmcomon.c:137
 msgid "Gammu is not configured."
-msgstr "لم يتم تشكيل جامو."
+msgstr "لم يتمّ تهيئة Gammu."
 
 #: libgammu/gsmcomon.c:138
 msgid "Wrong folder used."
-msgstr "المجلد المستعمل غير صحيح."
+msgstr "المجلّد المستعمل غير صحيح."
 
 #: libgammu/gsmcomon.c:139
 msgid "Internal phone error."
@@ -360,7 +362,7 @@ msgstr "سماعة الرأس"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1979 libgammu/phone/nokia/nfunc.c:1146
 msgid "General"
-msgstr "العام"
+msgstr "عام"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1981 libgammu/phone/nokia/nfunc.c:1148
 msgid "Silent"
