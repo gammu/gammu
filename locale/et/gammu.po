@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-02-21 10:29+0100\n"
-"PO-Revision-Date: 2013-03-13 07:36+0200\n"
+"PO-Revision-Date: 2013-03-24 21:08+0200\n"
 "Last-Translator: Kristjan Räts <kristjanrats@gmail.com>\n"
 "Language-Team: Estonian <http://l10n.cihar.com/projects/gammu/gammu/et/>\n"
 "Language: et\n"
@@ -2462,7 +2462,7 @@ msgstr ""
 
 #: gammu/misc.c:379
 msgid "Device"
-msgstr ""
+msgstr "Seade"
 
 #: gammu/misc.c:383 gammu/search.c:89
 msgid "Manufacturer"
@@ -2470,7 +2470,7 @@ msgstr "Valmistaja"
 
 #: gammu/misc.c:386 gammu/search.c:101
 msgid "Model"
-msgstr ""
+msgstr "Mudel"
 
 #: gammu/misc.c:392
 msgid "Firmware"
