@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.28.91\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-02-21 10:29+0100\n"
-"PO-Revision-Date: 2013-04-27 09:10+0200\n"
+"PO-Revision-Date: 2013-04-27 23:14+0200\n"
 "Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
 "Language-Team: Turkish <http://l10n.cihar.com/projects/gammu/libgammu/tr/>\n"
 "Language: tr\n"
@@ -231,157 +231,161 @@ msgstr "Telefona geçersiz veri yollandı."
 
 #: libgammu/gsmcomon.c:128
 msgid "File with specified name already exists."
-msgstr ""
+msgstr "Belirlenmiş isimde dosya zaten mevcut."
 
 #: libgammu/gsmcomon.c:129
 msgid "File with specified name doesn't exist."
-msgstr ""
+msgstr "Belirlenmiş isimde dosya mevcut değil."
 
 #: libgammu/gsmcomon.c:130
 msgid "You have to give folder name and not file name."
-msgstr ""
+msgstr "Klasör adı vermek zorundasınız, dosya adı değil."
 
 #: libgammu/gsmcomon.c:131
 msgid "You have to give file name and not folder name."
-msgstr ""
+msgstr "Dosya adı vermek zorundasınız, klasör adı değil."
 
 #: libgammu/gsmcomon.c:132
 msgid "Can not access SIM card."
-msgstr ""
+msgstr "SIM karta erişilemiyor."
 
 #: libgammu/gsmcomon.c:133
 msgid "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
 msgstr ""
+"Telefonda yanlış GNAPPLET sürümü. Şu anda kullanılan Gammu'daki sürümü "
+"kullanın."
 
 #: libgammu/gsmcomon.c:134
 msgid "Only part of folder has been listed."
-msgstr ""
+msgstr "Sadece klasörün bir kısmı listelendi."
 
 #: libgammu/gsmcomon.c:135
 msgid "Folder must be empty."
-msgstr ""
+msgstr "Klasör boş olmak zorundadır."
 
 #: libgammu/gsmcomon.c:136
 msgid "Data were converted."
-msgstr ""
+msgstr "Veri dönüştürüldü."
 
 #: libgammu/gsmcomon.c:137
 msgid "Gammu is not configured."
-msgstr ""
+msgstr "Gammu yapılandırılmamış."
 
 #: libgammu/gsmcomon.c:138
 msgid "Wrong folder used."
-msgstr ""
+msgstr "Yanlış klasör kullanıldı."
 
 #: libgammu/gsmcomon.c:139
 msgid "Internal phone error."
-msgstr ""
+msgstr "Dahili telefon hatası."
 
 #: libgammu/gsmcomon.c:140
 msgid "Error writing file to disk."
-msgstr ""
+msgstr "Diske dosya yazma hatası."
 
 #: libgammu/gsmcomon.c:141
 msgid "No such section exists."
-msgstr ""
+msgstr "Böyle bir bölüm mevcut değil."
 
 #: libgammu/gsmcomon.c:142
 msgid "Using default values."
-msgstr ""
+msgstr "Varsayılan değerler kullanılıyor."
 
 #: libgammu/gsmcomon.c:143
 msgid "Corrupted data returned by phone."
-msgstr ""
+msgstr "Telefon tarafından döndürülen bozuk veri."
 
 #: libgammu/gsmcomon.c:144
 msgid "Bad feature string in configuration."
-msgstr ""
+msgstr "Yapılandırmada kötü özellik dizgisi."
 
 #: libgammu/gsmcomon.c:145
 msgid "Desired functionality has been disabled on compile time."
-msgstr ""
+msgstr "Derleme zamanında istenilen işlevsellik etkisizleştirildi."
 
 #: libgammu/gsmcomon.c:146
 msgid "Bluetooth configuration requires channel option."
-msgstr ""
+msgstr "Bluetooth yapılandırması kanal seçeneği gerektirir."
 
 #: libgammu/gsmcomon.c:147
 msgid "Service is not running."
-msgstr ""
+msgstr "Hizmet çalışmıyor."
 
 #: libgammu/gsmcomon.c:148
 msgid "Service configuration is missing."
-msgstr ""
+msgstr "Hizmet yapılandırması eksik."
 
 #: libgammu/gsmcomon.c:149
 msgid "Command rejected because device was busy. Wait and restart."
-msgstr ""
+msgstr "Komut reddedildi çünkü cihaz meşguldü. Bekleyin ve yeniden başlatın."
 
 #: libgammu/gsmcomon.c:150
 msgid "Could not connect to the server."
-msgstr ""
+msgstr "Sunucuya bağlanamadı."
 
 #: libgammu/gsmcomon.c:151
 msgid "Could not resolve the host name."
-msgstr ""
+msgstr "Anamakine adı çözülemedi."
 
 #: libgammu/gsmcomon.c:152
 msgid "Failed to get SMSC number from phone."
-msgstr ""
+msgstr "Telefondan SMSC numarasını alma başarısız."
 
 #: libgammu/gsmcomon.c:153
 msgid "Operation aborted."
-msgstr ""
+msgstr "İşlem iptal edildi."
 
 #: libgammu/gsmcomon.c:154
 msgid ""
 "Installation data not found, please consult debug log and/or documentation "
 "for more details."
 msgstr ""
+"Kurulum verisi bulunamadı, lütfen daha fazla ayrıntı için hata ayıklama "
+"günlüğü ve/veya belgelerine başvurun."
 
 #: libgammu/gsmcomon.c:155
 msgid "Entry is read only."
-msgstr ""
+msgstr "Giriş salt okunur."
 
 #: libgammu/gsmcomon.c:188
 msgid "Unknown error description."
-msgstr ""
+msgstr "Bilinmeyen hata açıklaması."
 
 #: libgammu/phone/dummy/dummy.c:630
 msgid "Templates"
-msgstr ""
+msgstr "Şablonlar"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1969
 msgid "Personal"
-msgstr ""
+msgstr "Kişisel"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1971 libgammu/phone/nokia/nfunc.c:1156
 msgid "Car"
-msgstr ""
+msgstr "Araç"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1973 libgammu/phone/nokia/nfunc.c:1158
 msgid "Headset"
-msgstr ""
+msgstr "Kulaklık"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1979 libgammu/phone/nokia/nfunc.c:1146
 msgid "General"
-msgstr ""
+msgstr "Genel"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1981 libgammu/phone/nokia/nfunc.c:1148
 msgid "Silent"
-msgstr ""
+msgstr "Sessiz"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1983
 msgid "Discreet"
-msgstr ""
+msgstr "Titreşim"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1985
 msgid "Loud"
-msgstr ""
+msgstr "Yüksek"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1987
 msgid "My style"
-msgstr ""
+msgstr "Stilim"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:578
 msgid "SIM"
@@ -390,31 +394,31 @@ msgstr "SIM"
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:579 libgammu/phone/pfunc.c:41
 #: libgammu/phone/s60/s60phone.c:1773
 msgid "Inbox"
-msgstr ""
+msgstr "Gelen kutusu"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:580
 msgid "Sent items"
-msgstr ""
+msgstr "Gönderilmiş öğeler"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:581
 msgid "Saved items"
-msgstr ""
+msgstr "Kaydedilmiş öğeler"
 
 #: libgammu/phone/nokia/nfunc.c:962
 msgid "Family"
-msgstr ""
+msgstr "Aile"
 
 #: libgammu/phone/nokia/nfunc.c:964
 msgid "VIP"
-msgstr ""
+msgstr "VIP"
 
 #: libgammu/phone/nokia/nfunc.c:966
 msgid "Friends"
-msgstr ""
+msgstr "Arkadaşlar"
 
 #: libgammu/phone/nokia/nfunc.c:968
 msgid "Colleagues"
-msgstr ""
+msgstr "İş Arkadaşları"
 
 #: libgammu/phone/nokia/nfunc.c:970
 msgid "Other"
@@ -422,16 +426,16 @@ msgstr "Diğer"
 
 #: libgammu/phone/nokia/nfunc.c:1150
 msgid "Meeting"
-msgstr ""
+msgstr "Toplantı"
 
 #: libgammu/phone/nokia/nfunc.c:1152
 msgid "Outdoor"
-msgstr ""
+msgstr "Dışarıda"
 
 #: libgammu/phone/nokia/nfunc.c:1154
 msgid "Pager"
-msgstr ""
+msgstr "Çağrı"
 
 #: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1774
 msgid "Outbox"
-msgstr ""
+msgstr "Giden kutusu"
