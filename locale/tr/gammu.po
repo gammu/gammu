@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.28.91\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-02-21 10:29+0100\n"
-"PO-Revision-Date: 2013-04-26 08:21+0200\n"
+"PO-Revision-Date: 2013-04-27 23:11+0200\n"
 "Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
 "Language-Team: Turkish <http://l10n.cihar.com/projects/gammu/gammu/tr/>\n"
 "Language: tr\n"
@@ -81,7 +81,7 @@ msgstr "Okunuyor"
 
 #: gammu/backup.c:247 gammu/backup.c:292
 msgid "Only part of data saved, please increase the limit."
-msgstr "Sadece verinin parçası kaydedildi, lütfen sınırı arttırın."
+msgstr "Sadece verinin bir kısmı kaydedildi, lütfen sınırı arttırın."
 
 #: gammu/backup.c:268 gammu/backup.c:310 gammu/backup.c:475 gammu/mms.c:182
 msgid "Reading:"
@@ -162,111 +162,111 @@ msgstr "Telefon notları yedeklensin mi?"
 
 #: gammu/backup.c:522
 msgid "Checking phone caller logos"
-msgstr ""
+msgstr "Telefon arayan logoları kontrol ediliyor"
 
 #: gammu/backup.c:527
 msgid "Backup phone caller groups and logos?"
-msgstr ""
+msgstr "Telefon arayan grupları ve logoları yedeklensin mi?"
 
 #: gammu/backup.c:560
 msgid "Checking SIM SMS profiles"
-msgstr ""
+msgstr "SIM SMS profilleri kontrol ediliyor"
 
 #: gammu/backup.c:561
 msgid "Backup SIM SMS profiles?"
-msgstr ""
+msgstr "SIM SMS profilleri yedeklensin mi?"
 
 #: gammu/backup.c:589
 msgid "Checking phone startup text"
-msgstr ""
+msgstr "Telefon açılış metni kontrol ediliyor"
 
 #: gammu/backup.c:593
 msgid "Backup phone startup logo/text?"
-msgstr ""
+msgstr "Telefon açılış logosu/metni yedeklensin mi?"
 
 #: gammu/backup.c:608
 msgid "Checking phone operator logo"
-msgstr ""
+msgstr "Telefon operatör logosu kontrol ediliyor"
 
 #: gammu/backup.c:613
 msgid "Backup phone operator logo?"
-msgstr ""
+msgstr "Telefon operatör logosu yedeklensin mi?"
 
 #: gammu/backup.c:624
 msgid "Checking phone WAP bookmarks"
-msgstr ""
+msgstr "Telefon WAP yer imleri kontrol ediliyor"
 
 #: gammu/backup.c:628
 msgid "Backup phone WAP bookmarks?"
-msgstr ""
+msgstr "Telefon WAP yer imleri yedeklensin mi?"
 
 #: gammu/backup.c:661
 msgid "Checking phone WAP settings"
-msgstr ""
+msgstr "Telefon WAP ayarları kontrol ediliyor"
 
 #: gammu/backup.c:665
 msgid "Backup phone WAP settings?"
-msgstr ""
+msgstr "Telefon WAP ayarları yedeklensin mi?"
 
 #: gammu/backup.c:698
 msgid "Checking phone MMS settings"
-msgstr ""
+msgstr "Telefon MMS ayarları kontrol ediliyor"
 
 #: gammu/backup.c:702
 msgid "Backup phone MMS settings?"
-msgstr ""
+msgstr "Telefon MMS ayarları yedeklensin mi?"
 
 #: gammu/backup.c:735
 msgid "Checking phone Chat settings"
-msgstr ""
+msgstr "Telefon Sohbet ayarları kontrol ediliyor"
 
 #: gammu/backup.c:739
 msgid "Backup phone Chat settings?"
-msgstr ""
+msgstr "Telefon sohbet ayarları yedeklensin mi?"
 
 #: gammu/backup.c:772
 msgid "Checking phone SyncML settings"
-msgstr ""
+msgstr "Telefon SyncML ayarları kontrol ediliyor"
 
 #: gammu/backup.c:776
 msgid "Backup phone SyncML settings?"
-msgstr ""
+msgstr "Telefon SyncML ayarları yedeklensin mi?"
 
 #: gammu/backup.c:808
 msgid "Checking phone user ringtones"
-msgstr ""
+msgstr "Telefon kullanıcı zil sesleri kontrol ediliyor"
 
 #: gammu/backup.c:813
 msgid "Backup phone user ringtones?"
-msgstr ""
+msgstr "Telefon kullanıcı zil sesleri yedeklensin mi?"
 
 #: gammu/backup.c:851
 msgid "Checking phone profiles"
-msgstr ""
+msgstr "Telefon profilleri kontrol ediliyor"
 
 #: gammu/backup.c:855
 msgid "Backup phone profiles?"
-msgstr ""
+msgstr "Telefon profilleri yedeklensin mi?"
 
 #: gammu/backup.c:884
 msgid "Checking phone FM radio stations"
-msgstr ""
+msgstr "Telefon FM radyo istasyonları kontrol ediliyor"
 
 #: gammu/backup.c:888
 msgid "Backup phone FM radio stations?"
-msgstr ""
+msgstr "Telefon FM radyo istasyonları yedeklensin mi?"
 
 #: gammu/backup.c:921
 msgid "Checking phone GPRS access points"
-msgstr ""
+msgstr "Telefon GPRS erişim noktaları kontrol ediliyor"
 
 #: gammu/backup.c:925
 msgid "Backup phone GPRS access points?"
-msgstr ""
+msgstr "Telefon GPRS erişim noktaları yedeklensin mi?"
 
 #: gammu/backup.c:971
 msgid "Time of backup"
-msgstr ""
+msgstr "Yedekleme zamanı"
 
 #: gammu/backup.c:974 gammu/calendar.c:237 gammu/calendar.c:820
 msgid "Phone"
@@ -278,7 +278,7 @@ msgstr "IMEI"
 
 #: gammu/backup.c:980
 msgid "File created by"
-msgstr ""
+msgstr "Dosyayı oluşturan"
 
 #: gammu/backup.c:984
 #, c-format
@@ -525,7 +525,7 @@ msgstr "Çağrı"
 
 #: gammu/calendar.c:28
 msgid "Meeting"
-msgstr ""
+msgstr "Toplantı"
 
 #: gammu/calendar.c:31
 msgid "Birthday (Anniversary)"
@@ -2134,7 +2134,7 @@ msgstr ""
 
 #: gammu/message.c:228
 msgid "Pager"
-msgstr ""
+msgstr "Çağrı"
 
 #: gammu/message.c:232
 msgid "Validity"
@@ -3164,7 +3164,7 @@ msgstr ""
 
 #: gammu/misc.c:2152
 msgid "Personal"
-msgstr ""
+msgstr "Kişisel"
 
 #: gammu/misc.c:2157
 msgid "Vibrate first"
