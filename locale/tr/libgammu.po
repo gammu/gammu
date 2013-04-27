@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.28.91\n"
-"Report-Msgid-Bugs-To: michal@cihar.com\n"
+"Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-02-21 10:29+0100\n"
-"PO-Revision-Date: 2012-11-30 22:18+0200\n"
+"PO-Revision-Date: 2013-04-27 09:10+0200\n"
 "Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
 "Language-Team: Turkish <http://l10n.cihar.com/projects/gammu/libgammu/tr/>\n"
 "Language: tr\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 1.4-dev\n"
+"X-Generator: Weblate 1.6-dev\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
@@ -74,6 +74,8 @@ msgstr "Cihazda eşitlik ayarlanamıyor."
 #: libgammu/gsmcomon.c:97
 msgid "No response in specified timeout. Probably phone not connected."
 msgstr ""
+"Belirtilmiş zaman aşımı süresi içinde yanıt yok. Muhtemelen telefon bağlı "
+"değil."
 
 #: libgammu/gsmcomon.c:98
 msgid ""
@@ -96,6 +98,8 @@ msgid ""
 "Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
 "report it."
 msgstr ""
+"Bilinmeyen çerçeve. Bilgiyi nasıl bildireceğiniz için "
+"<http://wammu.eu/support/bugs/> adresine bakın."
 
 #: libgammu/gsmcomon.c:101
 msgid "Unknown connection type string. Check config file."
@@ -103,7 +107,7 @@ msgstr "Bilinmeyen bağlantı türü dizgisi. Yapılandırma dosyasını kontrol
 
 #: libgammu/gsmcomon.c:102
 msgid "Unknown model type string. Check config file."
-msgstr ""
+msgstr "Bilinmeyen model türü dizgisi. Yapılandırma dosyasını kontrol edin."
 
 #: libgammu/gsmcomon.c:103
 msgid ""
@@ -132,6 +136,7 @@ msgstr "Geçersiz yer. Belki çok mu yüksek?"
 #: libgammu/gsmcomon.c:108
 msgid "Functionality not implemented. You are welcome to help authors with it."
 msgstr ""
+"İşlevsellik uygulanmadı. Bununla yazarlara yardımcı olmanızı bekliyoruz."
 
 #: libgammu/gsmcomon.c:109
 msgid "Memory full."
@@ -157,10 +162,14 @@ msgstr "Telefon tarafından işleme izin verilmedi."
 msgid ""
 "No SMSC number given. Provide it manually or use the one configured in phone."
 msgstr ""
+"Verilen SMSC numarası yok. El ile verin ya da telefonda yapılandırılmış "
+"birini kullanın."
 
 #: libgammu/gsmcomon.c:115
 msgid "You're inside phone menu (maybe editing?). Leave it and try again."
 msgstr ""
+"Telefon menüsü içindesiniz (belkide düzenlemede mi?). Buradan çıkın ve "
+"tekrar deneyin."
 
 #: libgammu/gsmcomon.c:116
 msgid "Phone is not connected."
@@ -171,10 +180,12 @@ msgid ""
 "Function is currently being implemented. If you want to help, please contact "
 "authors."
 msgstr ""
+"İşlev şu anda uygulanmaktadır. Yardım etmek istiyorsanız, lütfen yazarlarla "
+"temasa geçin."
 
 #: libgammu/gsmcomon.c:118
 msgid "Phone is disabled and connected to charger."
-msgstr ""
+msgstr "Telefon etkisizleştirildi ve şarj cihazına bağlandı."
 
 #: libgammu/gsmcomon.c:119
 msgid "File format not supported by Gammu."
@@ -196,7 +207,7 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:122
 msgid "Phone module need to send another answer frame."
-msgstr ""
+msgstr "Telefon modülünün başka bir yanıt çerçevesi göndermesi gerekli."
 
 #: libgammu/gsmcomon.c:123
 msgid "Current connection type doesn't support called function."
@@ -216,7 +227,7 @@ msgstr "Telefon hafızası hatası, belki salt okunurdur."
 
 #: libgammu/gsmcomon.c:127
 msgid "Invalid data given to phone."
-msgstr ""
+msgstr "Telefona geçersiz veri yollandı."
 
 #: libgammu/gsmcomon.c:128
 msgid "File with specified name already exists."
