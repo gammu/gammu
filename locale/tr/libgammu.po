@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.28.91\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-02-21 10:29+0100\n"
-"PO-Revision-Date: 2013-04-27 23:14+0200\n"
+"PO-Revision-Date: 2013-05-03 21:36+0200\n"
 "Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
 "Language-Team: Turkish <http://l10n.cihar.com/projects/gammu/libgammu/tr/>\n"
 "Language: tr\n"
@@ -434,7 +434,7 @@ msgstr "Dışarıda"
 
 #: libgammu/phone/nokia/nfunc.c:1154
 msgid "Pager"
-msgstr "Çağrı"
+msgstr "Çağrı Cihazı"
 
 #: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1774
 msgid "Outbox"
