@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-02-21 10:29+0100\n"
-"PO-Revision-Date: 2013-02-21 11:59+0200\n"
-"Last-Translator: Helder Santana <helder.bs.santana@gmail.com>\n"
+"PO-Revision-Date: 2013-05-03 16:58+0200\n"
+"Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Portuguese (Brazil) "
 "<http://l10n.cihar.com/projects/gammu/gammu/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 1.5-dev\n"
+"X-Generator: Weblate 1.6-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -351,7 +351,7 @@ msgid ""
 "correctly restore calendar notes and other items)"
 msgstr ""
 "Você deseja ajustar a data/hora? (NOTA: em alguns telefones é requerido "
-"restaurar corretamente anotações na agenda e outros itens)."
+"restaurar corretamente anotações na agenda e outros itens)"
 
 #: gammu/backup.c:1200
 msgid "Restore phone calendar notes?"
@@ -1394,7 +1394,7 @@ msgstr " (Grupo Contato: Logotipo está habilitado?)"
 
 #: gammu/depend/nokia/dct4.c:1348
 msgid " (Caller group number in pbk entry)"
-msgstr "(Grupo Contato: número nas entradas pbk)"
+msgstr " (Grupo Contato: número nas entradas pbk)"
 
 #: gammu/depend/nokia/dct4.c:1351
 msgid " (Text: URL address)"
@@ -3533,7 +3533,7 @@ msgstr "Aplicação já existe. Removida pelo Gammu."
 #: gammu/nokia.c:826 gammu/nokia.c:859
 #, c-format
 msgid "  Deleting %s\n"
-msgstr " Apagando %s\n"
+msgstr "  Apagando %s\n"
 
 #: gammu/nokia.c:882
 msgid "Writing JAD file:"
