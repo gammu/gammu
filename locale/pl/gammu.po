@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Gammu 1.32.90\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-02-21 10:29+0100\n"
-"PO-Revision-Date: 2013-02-24 15:37+0200\n"
-"Last-Translator: Marcin Kozioł <lord_dark@wp.pl>\n"
+"PO-Revision-Date: 2013-05-03 16:27+0200\n"
+"Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Polish <http://l10n.cihar.com/projects/gammu/gammu/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 1.5-dev\n"
+"X-Generator: Weblate 1.6-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -1275,7 +1275,7 @@ msgstr "Rozmiar wskaźnika baterii:"
 
 #: gammu/depend/nokia/dct4.c:1041
 msgid "Ohms"
-msgstr "Ohms"
+msgstr "Omów"
 
 #: gammu/depend/nokia/dct4.c:1042
 msgid "Battery temperature:"
