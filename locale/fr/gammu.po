@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-02-21 10:29+0100\n"
-"PO-Revision-Date: 2013-04-25 15:50+0200\n"
-"Last-Translator: Michal Čihař <michal@cihar.com>\n"
+"PO-Revision-Date: 2013-05-07 22:42+0200\n"
+"Last-Translator: Jean-Noël AVILA <jn.avila@free.fr>\n"
 "Language-Team: French <http://l10n.cihar.com/projects/gammu/gammu/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -476,7 +476,7 @@ msgstr "Ajouter des notes de calendrier de téléphone ?"
 
 #: gammu/backup.c:1752
 msgid "Add phone ToDo?"
-msgstr ""
+msgstr "Ajouter une tâche au téléphone ?"
 
 #: gammu/backup.c:1774
 msgid "Add notes to phone?"
@@ -535,10 +535,9 @@ msgid "Reminder (Date)"
 msgstr "Rappel (Date)"
 
 #: gammu/calendar.c:25
-#, fuzzy
 msgctxt "Calendar note type"
 msgid "Call"
-msgstr "Appeler"
+msgstr "Appel"
 
 #: gammu/calendar.c:28
 msgid "Meeting"
@@ -666,7 +665,7 @@ msgstr "Dernière modification"
 
 #: gammu/calendar.c:176 gammu/calendar.c:188
 msgid "Tone alarm"
-msgstr ""
+msgstr "Sonnerie"
 
 #: gammu/calendar.c:178 gammu/calendar.c:199
 #, c-format
@@ -752,16 +751,16 @@ msgstr " chaque "
 #: gammu/calendar.c:330
 #, c-format
 msgid " on each %d. "
-msgstr ""
+msgstr "pour chaque %d."
 
 #: gammu/calendar.c:335
 #, c-format
 msgid " in %d. week of "
-msgstr ""
+msgstr " dans %d. semaine de "
 
 #: gammu/calendar.c:338
 msgid " in "
-msgstr ""
+msgstr " dans "
 
 #: gammu/calendar.c:344 gammu/calendar.c:352
 msgid "each month"
@@ -770,7 +769,7 @@ msgstr "chaque mois"
 #: gammu/calendar.c:347
 #, c-format
 msgid "%d. day of "
-msgstr ""
+msgstr "%d. jour de "
 
 #: gammu/calendar.c:355
 #, c-format
@@ -851,11 +850,12 @@ msgstr ", séparateur de date est %c\n"
 
 #: gammu/calendar.c:463
 msgid "Setting time in phone to the same time as is set in computer."
-msgstr ""
+msgstr "Synchronisation de l'heure de téléphone à celle de l'ordinateur."
 
 #: gammu/calendar.c:513
 msgid "Updating specified parts of date and time in phone."
 msgstr ""
+"Mise à jour des parties indiquée de la date et de l'heure dans le téléphone."
 
 #: gammu/calendar.c:536
 #, c-format
@@ -1147,6 +1147,8 @@ msgid ""
 "Sorry, but configuration matrix for this model has not yet been added. See "
 "<http://wammu.eu/support/bugs/> for information how to report it."
 msgstr ""
+"Désolé, la matrice de configuration pour ce modèle n'a pas encore été "
+"ajoutée. Voir <http://wammu.eu/support/bugs/> pour toute information."
 
 #: gammu/depend/nokia/dct4.c:369
 msgid "Passed"
@@ -1166,7 +1168,7 @@ msgstr "Aucun signal"
 
 #: gammu/depend/nokia/dct4.c:373 gammu/message.c:105 gammu/misc.c:2482
 msgid "Timeout"
-msgstr ""
+msgstr "Délai expiré"
 
 #: gammu/depend/nokia/dct4.c:374
 #, c-format
