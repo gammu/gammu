@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-02-21 10:29+0100\n"
-"PO-Revision-Date: 2013-05-07 15:19+0200\n"
-"Last-Translator: Michal Čihař <michal@cihar.com>\n"
+"PO-Revision-Date: 2013-05-07 15:40+0200\n"
+"Last-Translator: Matías Bellone <matiasbellone+weblate@gmail.com>\n"
 "Language-Team: Spanish <http://l10n.cihar.com/projects/gammu/gammu/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -2115,7 +2115,7 @@ msgstr "Mensaje SMS recibido"
 
 #: gammu/message.c:41
 msgid "We already have one pending, ignoring this one!"
-msgstr "Aún hay uno pendiente, ignorando el actual!"
+msgstr "¡Aún hay uno pendiente, ignorando el actual!"
 
 #: gammu/message.c:63 gammu/message.c:295
 #, c-format
