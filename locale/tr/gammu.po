@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.28.91\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-02-21 10:29+0100\n"
-"PO-Revision-Date: 2013-05-03 21:36+0200\n"
+"PO-Revision-Date: 2013-05-10 16:32+0200\n"
 "Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
 "Language-Team: Turkish <http://l10n.cihar.com/projects/gammu/gammu/tr/>\n"
 "Language: tr\n"
@@ -947,7 +947,7 @@ msgstr "İletişim"
 #: gammu/calendar.c:900 gammu/memory.c:316 gammu/memory.c:393
 #, c-format
 msgid "Search text too long, truncating to %d chars!\n"
-msgstr "Arama metni çok uzun, %d karakter kesiliyor!\n"
+msgstr "Arama metni çok uzun, %d karaktere kısaltılıyor!\n"
 
 #: gammu/common.c:42
 msgid "Waiting for Security Code."
@@ -975,7 +975,7 @@ msgstr "Telefon kodu için bekleniyor."
 
 #: gammu/common.c:60
 msgid "Waiting for network code."
-msgstr "Ağ kodu için bekleniyor."
+msgstr "Şebeke kodu için bekleniyor."
 
 #: gammu/common.c:63
 msgid "Nothing to enter."
@@ -1339,7 +1339,7 @@ msgstr "%i giriş yazılır\n"
 #: gammu/depend/nokia/dct4.c:1334
 #, c-format
 msgid "  entry ID %02X"
-msgstr "  giriş kimliği %02X"
+msgstr "  giriş Kimliği %02X"
 
 #: gammu/depend/nokia/dct4.c:1336
 msgid " (Speed dial on SIM)"
@@ -1415,19 +1415,19 @@ msgstr " (Dosya sisteminden/dahiliden Zil Sesi Kimliği)"
 
 #: gammu/depend/nokia/dct4.c:1356
 msgid " (Text: user ID)"
-msgstr " (Metin: kullanıcı kimliği)"
+msgstr " (Metin: kullanıcı Kimliği)"
 
 #: gammu/depend/nokia/dct4.c:1357
 msgid " (conversation list ID)"
-msgstr " (konuşma listesi kimliği)"
+msgstr " (konuşma listesi Kimliği)"
 
 #: gammu/depend/nokia/dct4.c:1358
 msgid " (Instant Messaging service list ID ?)"
-msgstr " (Anlık Mesajlaşma hizmeti listesi kimliği ?)"
+msgstr " (Anlık Mesajlaşma hizmeti listesi Kimliği ?)"
 
 #: gammu/depend/nokia/dct4.c:1359
 msgid " (presence list ID ?)"
-msgstr " (varlık listesi kimliği ?)"
+msgstr " (varlık listesi Kimliği ?)"
 
 #: gammu/depend/nokia/dct4.c:1360
 msgid " (SIP Address (Push to Talk address))"
@@ -1738,7 +1738,7 @@ msgstr "Parametre \"%s\" bilinmiyor\n"
 #: gammu/files.c:737
 #, c-format
 msgid "What file type (\"%s\") ?\n"
-msgstr "Ne dosya türü (\"%s\") ?\n"
+msgstr "Ne tür dosy (\"%s\") ?\n"
 
 #: gammu/files.c:746 gammu/misc.c:1337 gammu/nokia.c:955
 #: helper/message-cmdline.c:1311
@@ -1748,12 +1748,12 @@ msgstr "Parametre eksik!"
 #: gammu/files.c:755
 #, c-format
 msgid "ID of new file is \"%s\"\n"
-msgstr "Yeni dosyanın kimliği \"%s\"\n"
+msgstr "Yeni dosyanın Kimliği \"%s\"\n"
 
 #: gammu/files.c:776
 #, c-format
 msgid "ID of new folder is \"%s\"\n"
-msgstr "Yeni klasörün kimliği \"%s\"\n"
+msgstr "Yeni klasörün Kimliği \"%s\"\n"
 
 #: gammu/gammu.c:69
 #, c-format
@@ -1767,7 +1767,7 @@ msgstr "Bilinmeyen ülke adı: %s."
 
 #: gammu/gammu.c:80 gammu/gammu.c:725 gammu/misc.c:48
 msgid "Network"
-msgstr "Ağ"
+msgstr "Şebeke"
 
 #: gammu/gammu.c:80 gammu/message.c:218 gammu/misc.c:975 gammu/misc.c:1142
 #: gammu/misc.c:1872 gammu/misc.c:1911 gammu/misc.c:2206 gammu/mms.c:112
@@ -1973,7 +1973,7 @@ msgstr ""
 
 #: gammu/gammu.c:759
 msgid "Commands can be specified with or without leading --."
-msgstr "Komutlar, -- başında ya da başında olmadan belirlenebilir."
+msgstr "Komutlar, -- başta ya da başta olmadan belirlenebilir."
 
 #: gammu/gammu.c:762
 msgid ""
@@ -2175,19 +2175,16 @@ msgid "Pager"
 msgstr "Çağrı Cihazı"
 
 #: gammu/message.c:232
-#, fuzzy
 msgid "Validity"
 msgstr "Geçerlilik"
 
 #: gammu/message.c:251
-#, fuzzy
 msgid "Maximum time"
-msgstr "En uzun süre"
+msgstr "En fazla süre"
 
 #: gammu/message.c:368 gammu/message.c:440 gammu/message.c:711
-#, fuzzy
 msgid "Corrupted message, skipping"
-msgstr "Bozuk ileti, atlama"
+msgstr "Bozuk ileti, atlanıyor"
 
 #: gammu/message.c:382 gammu/message.c:494
 #, c-format
@@ -2196,63 +2193,63 @@ msgstr "%i SMS kısmı, %i SMS sıralaması içinde"
 
 #: gammu/message.c:430
 msgid "SMS counter overflow"
-msgstr ""
+msgstr "SMS sayacı aşması"
 
 #: gammu/message.c:515
 msgid ", SIM memory"
-msgstr ""
+msgstr ", SIM hafızası"
 
 #: gammu/message.c:516
 msgid ", phone memory"
-msgstr ""
+msgstr ", telefon hafızası"
 
 #: gammu/message.c:517
 msgid ", phone or SIM memory"
-msgstr ""
+msgstr ", telefon veya SIM hafızası"
 
 #: gammu/message.c:520 gammu/mms.c:30
 msgid ", Inbox folder"
-msgstr ""
+msgstr ", Gelen kutusu klasörü"
 
 #: gammu/message.c:521
 msgid ", Outbox folder"
-msgstr ""
+msgstr ", Giden kutusu klasörü"
 
 #: gammu/message.c:538
 msgid "OK"
-msgstr ""
+msgstr "TAMAM"
 
 #: gammu/message.c:541
 #, c-format
 msgid "error %i"
-msgstr ""
+msgstr "hata %i"
 
 #: gammu/message.c:544
 #, c-format
 msgid ", message reference=%d"
-msgstr ""
+msgstr ", ileti referansı=%d"
 
 #: gammu/message.c:577
 msgid "Message number"
-msgstr ""
+msgstr "İleti numarası"
 
 #: gammu/message.c:582
 msgid "Number of messages"
-msgstr ""
+msgstr "İleti sayısı"
 
 #: gammu/message.c:593 gammu/message.c:633
 msgid "If you want break, press Ctrl+C..."
-msgstr ""
+msgstr "Yarıda kesmek istiyorsanız, Ctrl+C tuşlarına basın..."
 
 #: gammu/message.c:598
 #, c-format
 msgid "Saving SMS %i/%i\n"
-msgstr ""
+msgstr "SMS %i/%i kaydediliyor\n"
 
 #: gammu/message.c:601
 #, c-format
 msgid "Saved in folder number %d \"%s\", location %i"
-msgstr ""
+msgstr "Klasöre kaydedilen numarası %d \"%s\", yeri %i"
 
 #: gammu/message.c:606
 msgid "SIM"
@@ -2265,240 +2262,240 @@ msgstr "telefon"
 #: gammu/message.c:612
 #, c-format
 msgid "Sending sms from folder \"%s\", location %i\n"
-msgstr ""
+msgstr "%i yerinde, \"%s\" klasöründen sms gönderiliyor\n"
 
 #: gammu/message.c:618 gammu/message.c:644
 msgid "....waiting for network answer"
-msgstr ""
+msgstr "...şebeke yanıtı için bekleniyor"
 
 #: gammu/message.c:639
 #, c-format
 msgid "Sending SMS %i/%i"
-msgstr ""
+msgstr "SMS %i/%i gönderiliyor"
 
 #: gammu/message.c:658
 msgid "Something went wrong, unknown message operation!\n"
-msgstr ""
+msgstr "Bir şey yanlış gitti, bilinmeyen ileti işlemi!\n"
 
 #: gammu/message.c:694
 #, c-format
 msgid "Too high folder number (max. %i)\n"
-msgstr ""
+msgstr "Çok yüksek klasör numarası (en fazla %i)\n"
 
 #: gammu/message.c:700
 #, c-format
 msgid "Deleting SMS from \"%s\" folder: "
-msgstr ""
+msgstr "\"%s\" klasöründen SMS siliniyor: "
 
 #: gammu/misc.c:35
 msgid "Network state"
-msgstr ""
+msgstr "Şebeke durumu"
 
 #: gammu/misc.c:37 gammu/misc.c:64
 msgid "home network"
-msgstr ""
+msgstr "şebeke ağı"
 
 #: gammu/misc.c:38 gammu/misc.c:65
 msgid "roaming network"
-msgstr ""
+msgstr "dolaşım şebekesi"
 
 #: gammu/misc.c:39 gammu/misc.c:66
 msgid "requesting network"
-msgstr ""
+msgstr "istekte bulunan şebeke"
 
 #: gammu/misc.c:40 gammu/misc.c:67
 msgid "not logged into network"
-msgstr ""
+msgstr "şebeke içine oturum açılmadı"
 
 #: gammu/misc.c:41 gammu/misc.c:68
 msgid "registration to network denied"
-msgstr ""
+msgstr "şebekeye kayıt ettirme reddedildi"
 
 #: gammu/misc.c:42 gammu/misc.c:44 gammu/misc.c:69 gammu/misc.c:71
 #: gammu/misc.c:169 gammu/misc.c:191
 msgid "unknown"
-msgstr ""
+msgstr "bilinmiyor"
 
 #: gammu/misc.c:58 gammu/misc.c:85
 msgid "Name in phone"
-msgstr ""
+msgstr "Telefondaki isim"
 
 #: gammu/misc.c:62
 msgid "Packet network state"
-msgstr ""
+msgstr "Paket şebekesi durumu"
 
 #: gammu/misc.c:75
 msgid "Packet network"
-msgstr ""
+msgstr "Paket şebekesi"
 
 #: gammu/misc.c:90 gammu/misc.c:1591
 msgid "GPRS"
-msgstr ""
+msgstr "GPRS"
 
 #: gammu/misc.c:93
 msgid "attached"
-msgstr ""
+msgstr "eklenmiş"
 
 #: gammu/misc.c:96
 msgid "detached"
-msgstr ""
+msgstr "ayrılmış"
 
 #: gammu/misc.c:106
 msgid "Battery level"
-msgstr ""
+msgstr "Batarya seviyesi"
 
 #: gammu/misc.c:111
 msgid "Battery capacity"
-msgstr ""
+msgstr "Batarya kapasitesi"
 
 #: gammu/misc.c:112
 #, c-format
 msgid "%i mAh"
-msgstr ""
+msgstr "%i mAh"
 
 #: gammu/misc.c:116
 msgid "Battery temperature"
-msgstr ""
+msgstr "Batarya sıcaklığı"
 
 #. l10n: This means degrees Celsius
 #: gammu/misc.c:118 gammu/misc.c:123
 #, c-format
 msgid "%i C"
-msgstr ""
+msgstr "%i C"
 
 #: gammu/misc.c:122
 msgid "Phone temperature"
-msgstr ""
+msgstr "Telefon sıcaklık"
 
 #: gammu/misc.c:127
 msgid "Battery voltage"
-msgstr ""
+msgstr "Batarya voltajı"
 
 #: gammu/misc.c:128 gammu/misc.c:133
 #, c-format
 msgid "%i mV"
-msgstr ""
+msgstr "%i mV"
 
 #: gammu/misc.c:132
 msgid "Charge voltage"
-msgstr ""
+msgstr "Şarj voltajı"
 
 #: gammu/misc.c:137
 msgid "Charge current"
-msgstr ""
+msgstr "Şarj akımı"
 
 #: gammu/misc.c:138 gammu/misc.c:143
 #, c-format
 msgid "%i mA"
-msgstr ""
+msgstr "%i mA"
 
 #: gammu/misc.c:142
 msgid "Phone current"
-msgstr ""
+msgstr "Telefon akımı"
 
 #: gammu/misc.c:147
 msgid "Charge state"
-msgstr ""
+msgstr "Şarj durumu"
 
 #: gammu/misc.c:150
 msgid "powered from battery"
-msgstr ""
+msgstr "bataryadan güç alır"
 
 #: gammu/misc.c:153
 msgid "battery connected, but not powered from battery"
-msgstr ""
+msgstr "batarya bağlı değil ama bataryadan güç alamaz"
 
 #: gammu/misc.c:156
 msgid "battery connected and is being charged"
-msgstr ""
+msgstr "batarya bağlı ve şarj ediliyor"
 
 #: gammu/misc.c:159
 msgid "battery connected and is fully charged"
-msgstr ""
+msgstr "batarya bağlı ve dolu"
 
 #: gammu/misc.c:162
 msgid "battery not connected"
-msgstr ""
+msgstr "batarya bağlı değil"
 
 #: gammu/misc.c:165
 msgid "detected power failure"
-msgstr ""
+msgstr "güç kesintisi algılandı"
 
 #: gammu/misc.c:176
 msgid "Battery type"
-msgstr ""
+msgstr "Batarya tipi"
 
 #: gammu/misc.c:179
 msgid "Lithium Ion"
-msgstr ""
+msgstr "Lityum İyon"
 
 #: gammu/misc.c:182
 msgid "Lithium Polymer"
-msgstr ""
+msgstr "Lityum Polimer"
 
 #: gammu/misc.c:185
 msgid "NiMH"
-msgstr ""
+msgstr "NiMH"
 
 #: gammu/misc.c:261
 msgid "Not logged to network!\n"
-msgstr ""
+msgstr "Şebekeye oturum açılmadı!\n"
 
 #: gammu/misc.c:272
 msgid "Wrong network code from phone!\n"
-msgstr ""
+msgstr "Telefondan yanlış şebeke kodu!\n"
 
 #: gammu/misc.c:300
 msgid "Request for information from OpenCellID failed!\n"
-msgstr ""
+msgstr "OpenCellID'den bilgi için istek başarısız!\n"
 
 #: gammu/misc.c:306
 msgid "Failed to find latitude in OpenCellID reply!\n"
-msgstr ""
+msgstr "OpenCellID yanıtında enlemi bulmak başarısız!\n"
 
 #: gammu/misc.c:311
 msgid "Failed to parse latitude from OpenCellID reply!\n"
-msgstr ""
+msgstr "OpenCellID yanıtından enlemi ayrıştırmak başarısız!\n"
 
 #: gammu/misc.c:317
 msgid "Failed to find longitude in OpenCellID reply!\n"
-msgstr ""
+msgstr "OpenCellID yanıtında boylamı bulmak başarısız!\n"
 
 #: gammu/misc.c:322
 msgid "Failed to parse longitude from OpenCellID reply!\n"
-msgstr ""
+msgstr "OpenCellID yanıtından boylamı ayrıştırmak başarısız!\n"
 
 #: gammu/misc.c:328
 msgid "Failed to find range in OpenCellID reply!\n"
-msgstr ""
+msgstr "OpenCellID yanıtında aralığı bulmak başarısız!\n"
 
 #: gammu/misc.c:333
 msgid "Failed to parse range from OpenCellID reply!\n"
-msgstr ""
+msgstr "OpenCellID yanıtından aralığı ayrıştırmak başarısız!\n"
 
 #: gammu/misc.c:339
 msgid "Failed to find nbSamples in OpenCellID reply!\n"
-msgstr ""
+msgstr "OpenCellID yanıtında NbSamples bulmak başarısız!\n"
 
 #: gammu/misc.c:344
 msgid "Failed to parse nbSamples from OpenCellID reply!\n"
-msgstr ""
+msgstr "OpenCellID yanıtından NbSamples ayrıştırmak başarısız!\n"
 
 #: gammu/misc.c:355
 msgid "Latitude"
-msgstr ""
+msgstr "Enlem"
 
 #: gammu/misc.c:356
 msgid "Longitude"
-msgstr ""
+msgstr "Boylam"
 
 #: gammu/misc.c:357
 msgid "Range"
-msgstr ""
+msgstr "Aralık"
 
 #: gammu/misc.c:358
 msgid "Number of samples"
-msgstr ""
+msgstr "Örnek sayısı"
 
 #: gammu/misc.c:379
 msgid "Device"
@@ -2526,7 +2523,7 @@ msgstr "Orijinal IMEI"
 
 #: gammu/misc.c:422
 msgid "Manufactured"
-msgstr ""
+msgstr "Üretim"
 
 #: gammu/misc.c:428
 msgid "Product code"
@@ -2538,85 +2535,85 @@ msgstr "SIM IMSI"
 
 #: gammu/misc.c:547
 msgid "Call info"
-msgstr ""
+msgstr "Arama bilgisi"
 
 #: gammu/misc.c:550
 #, c-format
 msgid "ID %i, "
-msgstr ""
+msgstr "Kimlik %i, "
 
 #: gammu/misc.c:553
 #, c-format
 msgid "incoming call from \"%s\"\n"
-msgstr ""
+msgstr "\"%s\" üzerinden gelen arama\n"
 
 #: gammu/misc.c:554
 #, c-format
 msgid "outgoing call to \"%s\"\n"
-msgstr ""
+msgstr "\"%s\" giden arama\n"
 
 #: gammu/misc.c:555
 msgid "call started"
-msgstr ""
+msgstr "arama başladı"
 
 #: gammu/misc.c:556
 msgid "end of call (unknown side)"
-msgstr ""
+msgstr "arama sonu (bilinmeyen taraf)"
 
 #: gammu/misc.c:557
 msgid "call end from our side"
-msgstr ""
+msgstr "bizim taraftan arama sonlandırıldı"
 
 #: gammu/misc.c:558
 #, c-format
 msgid "call end from remote side (code %i)\n"
-msgstr ""
+msgstr "uzak taraftan arama sonlandırıldı (kod %i)\n"
 
 #: gammu/misc.c:559
 msgid "call established. Waiting for answer"
-msgstr ""
+msgstr "arama kuruldu. Yanıt için bekleniyor"
 
 #: gammu/misc.c:560
 msgid "call held"
-msgstr ""
+msgstr "arama bekletildi"
 
 #: gammu/misc.c:561
 msgid "call resumed"
-msgstr ""
+msgstr "aramaya devam edildi"
 
 #: gammu/misc.c:562
 msgid "call switched"
-msgstr ""
+msgstr "arama değiştirildi"
 
 #: gammu/misc.c:569
 #, c-format
 msgid "%3d used"
-msgstr ""
+msgstr "%3d kullanılmış"
 
 #: gammu/misc.c:571
 #, c-format
 msgid "%3d free"
-msgstr ""
+msgstr "%3d boş"
 
 #: gammu/misc.c:607
 msgid "Entering monitor mode..."
-msgstr ""
+msgstr "Monitör kipine giriliyor..."
 
 #: gammu/misc.c:617
 msgid "Enabling info about incoming SMS"
-msgstr ""
+msgstr "Gelen SMS hakkında bilgi etkinleştiriliyor"
 
 #: gammu/misc.c:619
 msgid "Enabling info about incoming CB"
-msgstr ""
+msgstr "Gelen CB hakkında bilgi etkinleştiriliyor"
 
 #: gammu/misc.c:621
 msgid "Enabling info about calls"
-msgstr ""
+msgstr "Aramalar hakkında bilgi etkinleştiriliyor"
 
 #: gammu/misc.c:623
 msgid "Enabling info about USSD"
-msgstr ""
+msgstr "USSD hakkında bilgi etkinleştiriliyor"
 
 #: gammu/misc.c:640
 msgid "Todos"
@@ -2628,110 +2625,110 @@ msgstr "Takvim"
 
 #: gammu/misc.c:653
 msgid "Signal strength"
-msgstr ""
+msgstr "Sinyal gücü"
 
 #: gammu/misc.c:654
 #, c-format
 msgid "%i dBm"
-msgstr ""
+msgstr "%i dBm"
 
 #: gammu/misc.c:658
 msgid "Network level"
-msgstr ""
+msgstr "Şebeke seviyesi"
 
 #: gammu/misc.c:663
 msgid "Bit error rate"
-msgstr ""
+msgstr "Bit hata oranı"
 
 #: gammu/misc.c:671
 msgid "SIM SMS status"
-msgstr ""
+msgstr "SIM SMS durumu"
 
 #: gammu/misc.c:672 gammu/misc.c:682
 #, c-format
 msgid "%i used"
-msgstr ""
+msgstr "%i kullanılmış"
 
 #: gammu/misc.c:674 gammu/misc.c:684
 #, c-format
 msgid "%i unread"
-msgstr ""
+msgstr "%i okunmamış"
 
 #: gammu/misc.c:676 gammu/misc.c:686
 #, c-format
 msgid "%i locations"
-msgstr ""
+msgstr "%i yer"
 
 #: gammu/misc.c:681
 msgid "Phone SMS status"
-msgstr ""
+msgstr "Telefon SMS durumu"
 
 #: gammu/misc.c:689
 #, c-format
 msgid "%i templates"
-msgstr ""
+msgstr "%i şablon"
 
 #: gammu/misc.c:702
 msgid "Leaving monitor mode..."
-msgstr ""
+msgstr "Monitör kipinden çıkılıyor..."
 
 #: gammu/misc.c:730
 msgid "Smart Messaging"
-msgstr ""
+msgstr "Akıllı Mesajlaşma"
 
 #: gammu/misc.c:731
 msgid "Nokia binary"
-msgstr ""
+msgstr "Nokia binari"
 
 #: gammu/misc.c:732
 msgid "MIDI"
-msgstr ""
+msgstr "MIDI"
 
 #: gammu/misc.c:733
 msgid "SMAF (MMF)"
-msgstr ""
+msgstr "SMAF (MMF)"
 
 #: gammu/misc.c:735
 #, c-format
 msgid " format, ringtone \"%s\"\n"
-msgstr ""
+msgstr " biçim, zil sesi \"%s\"\n"
 
 #: gammu/misc.c:949
 #, c-format
 msgid "What type of reset do you want (\"%s\") ?\n"
-msgstr ""
+msgstr "Ne tür bir sıfırlama istiyorsunuz (\"%s\")?\n"
 
 #: gammu/misc.c:976 gammu/misc.c:1023 helper/memory-display.c:178
 #: helper/message-display.c:478
 msgid "Address"
-msgstr ""
+msgstr "Adres"
 
 #: gammu/misc.c:1018
 #, c-format
 msgid "%i. Access point %i"
-msgstr ""
+msgstr "%i. Erişim noktası %i"
 
 #: gammu/misc.c:1020 gammu/misc.c:1537 gammu/misc.c:1544 gammu/misc.c:1579
 #: gammu/misc.c:1592 gammu/misc.c:1631 gammu/misc.c:1680 gammu/misc.c:2060
 msgid " (active)"
-msgstr ""
+msgstr " (aktif)"
 
 #: gammu/misc.c:1048 gammu/misc.c:1204
 msgid "Maximal location for caller logo can be 5"
-msgstr ""
+msgstr "Arayan logosu için en fazla yer 5 olabilir"
 
 #: gammu/misc.c:1061
 #, c-format
 msgid "What type of logo do you want to get (\"%s\") ?\n"
-msgstr ""
+msgstr "Ne tür logo almak istiyorsunuz (\"%s\") ?\n"
 
 #: gammu/misc.c:1077
 msgid "Group name"
-msgstr ""
+msgstr "Grup adı"
 
 #: gammu/misc.c:1078 gammu/misc.c:1081
 msgid "default"
-msgstr ""
+msgstr "varsayılan"
 
 #: gammu/misc.c:1081 gammu/misc.c:1083 gammu/misc.c:1096 gammu/misc.c:1103
 #: helper/memory-display.c:101
@@ -2741,103 +2738,103 @@ msgstr "Zil sesi"
 #: gammu/misc.c:1097
 #, c-format
 msgid "(file with ID %i)\n"
-msgstr ""
+msgstr "(Kimlik %i ile dosya)\n"
 
 #. l10n: Ringtone name and ID format
 #: gammu/misc.c:1107 gammu/misc.c:2079
 #, c-format
 msgid "\"%s\" (ID %i)\n"
-msgstr ""
+msgstr "\"%s\" (Kimlik %i)\n"
 
 #. l10n: Ringtone ID format
 #: gammu/misc.c:1110 gammu/misc.c:2082
 #, c-format
 msgid "ID %i\n"
-msgstr ""
+msgstr "Kimlik %i\n"
 
 #: gammu/misc.c:1116 gammu/misc.c:1118
 msgid "Bitmap"
-msgstr ""
+msgstr "Bit eşlem"
 
 #: gammu/misc.c:1116 gammu/misc.c:1639 gammu/misc.c:1642 gammu/mms.c:102
 msgid "enabled"
-msgstr ""
+msgstr "etkinleştirildi"
 
 #: gammu/misc.c:1118 gammu/misc.c:1640 gammu/misc.c:1643 gammu/mms.c:104
 msgid "disabled"
-msgstr "etkin değil"
+msgstr "etkisizleştirildi"
 
 #: gammu/misc.c:1121
 msgid "Bitmap ID"
-msgstr ""
+msgstr "Bit eşlem Kimliği"
 
 #: gammu/misc.c:1134
 msgid "No operator logo in phone"
-msgstr ""
+msgstr "Telefonda operatör logosu yok"
 
 #: gammu/misc.c:1140 gammu/mms.c:71 helper/message-display.c:476
 msgid "Sender"
-msgstr ""
+msgstr "Gönderen"
 
 #: gammu/misc.c:1146
 #, c-format
 msgid "Welcome note text is \"%s\"\n"
-msgstr ""
+msgstr "Karşılama notu metni \"%s\"\n"
 
 #: gammu/misc.c:1149
 #, c-format
 msgid "Dealer note text is \"%s\"\n"
-msgstr ""
+msgstr "Aramayı yapan notu metni \"%s\"\n"
 
 #: gammu/misc.c:1287
 #, c-format
 msgid "What type of logo do you want to set (\"%s\") ?\n"
-msgstr ""
+msgstr "Ne tür logo ayarlamak istiyorsunuz (\"%s\") ?\n"
 
 #: gammu/misc.c:1324
 #, c-format
 msgid "Unknown parameter (\"%s\")"
-msgstr ""
+msgstr "Bilinmeyen parametre (\"%s\")"
 
 #: gammu/misc.c:1405
 msgid "Delete phone phonebook?"
-msgstr ""
+msgstr "Telefon rehberi silinsin mi?"
 
 #: gammu/misc.c:1406
 msgid "Delete SIM phonebook?"
-msgstr ""
+msgstr "SIM rehberi silinsin mi?"
 
 #: gammu/misc.c:1407
 msgid "Delete missed calls?"
-msgstr ""
+msgstr "Cevapsız aramalar silinsin mi?"
 
 #: gammu/misc.c:1408
 msgid "Delete dialled calls?"
-msgstr ""
+msgstr "Yapılan aramalar silinsin mi?"
 
 #: gammu/misc.c:1409
 msgid "Delete received calls?"
-msgstr ""
+msgstr "Gelen aramalar silinsin mi?"
 
 #: gammu/misc.c:1414
 msgid "Delete phone calendar notes?"
-msgstr ""
+msgstr "Telefon takvim notları silinsin mi?"
 
 #: gammu/misc.c:1438
 msgid "Delete phone todos?"
-msgstr ""
+msgstr "Telefon yapılacakları silinsin mi?"
 
 #: gammu/misc.c:1462
 msgid "Delete phone notes?"
-msgstr ""
+msgstr "Telefon notları silinsin mi?"
 
 #: gammu/misc.c:1480
 msgid "Delete phone WAP bookmarks?"
-msgstr ""
+msgstr "Telefon WAP yer imleri silinsin mi?"
 
 #: gammu/misc.c:1507
 msgid "Delete all phone FM radio stations?"
-msgstr ""
+msgstr "Tüm telefon FM radyo istasyonları silinsin mi?"
 
 #: gammu/misc.c:1519 gammu/misc.c:1521
 msgid "Connection type"
@@ -2845,72 +2842,72 @@ msgstr "Bağlantı türü"
 
 #: gammu/misc.c:1519
 msgid "Continuous"
-msgstr ""
+msgstr "Sürekli"
 
 #: gammu/misc.c:1521
 msgid "Temporary"
-msgstr ""
+msgstr "Geçici"
 
 #: gammu/misc.c:1524 gammu/misc.c:1526
 msgid "Connection security"
-msgstr ""
+msgstr "Bağlantı güvenliği"
 
 #: gammu/misc.c:1524 gammu/misc.c:2156
 msgid "On"
-msgstr ""
+msgstr "Açık"
 
 #: gammu/misc.c:1526 gammu/misc.c:2142
 msgid "Off"
-msgstr ""
+msgstr "Kapalı"
 
 #: gammu/misc.c:1528
 msgid "Proxy"
-msgstr ""
+msgstr "Proksi"
 
 #: gammu/misc.c:1529 gammu/misc.c:1532
 #, c-format
 msgid "address \"%s\", port %i"
-msgstr ""
+msgstr "adres \"%s\", bağlantı noktası %i"
 
 #: gammu/misc.c:1531
 msgid "Second proxy"
-msgstr ""
+msgstr "İkinci proksi"
 
 #: gammu/misc.c:1536 gammu/misc.c:1543 gammu/misc.c:1578 gammu/misc.c:1591
 msgid "Bearer"
-msgstr ""
+msgstr "Taşıyıcı"
 
 #: gammu/misc.c:1536
 msgid "SMS"
-msgstr ""
+msgstr "SMS"
 
 #: gammu/misc.c:1539
 msgid "Server number"
-msgstr ""
+msgstr "Sunucu numarası"
 
 #: gammu/misc.c:1540 gammu/misc.c:1586 gammu/misc.c:1587
 msgid "Service number"
-msgstr ""
+msgstr "Hizmet numarası"
 
 #: gammu/misc.c:1543
 msgid "Data (CSD)"
-msgstr ""
+msgstr "Veri (CSD)"
 
 #: gammu/misc.c:1546
 msgid "Dial-up number"
-msgstr ""
+msgstr "Çevirmeli bağlantı numarası"
 
 #: gammu/misc.c:1547 gammu/misc.c:1583 gammu/misc.c:1584 gammu/misc.c:1605
 msgid "IP address"
-msgstr ""
+msgstr "IP adresi"
 
 #: gammu/misc.c:1549 gammu/misc.c:1551 gammu/misc.c:1595 gammu/misc.c:1597
 msgid "Login type"
-msgstr ""
+msgstr "Oturum açma türü"
 
 #: gammu/misc.c:1549 gammu/misc.c:1595
 msgid "Manual"
-msgstr ""
+msgstr "Elle"
 
 #: gammu/misc.c:1551 gammu/misc.c:1597
 msgid "Automatic"
@@ -2918,7 +2915,7 @@ msgstr "Otomatik"
 
 #: gammu/misc.c:1554 gammu/misc.c:1556 gammu/misc.c:1600 gammu/misc.c:1602
 msgid "Authentication type"
-msgstr ""
+msgstr "Kimlik doğrulama türü"
 
 #: gammu/misc.c:1554 gammu/misc.c:1600
 msgid "Normal"
@@ -2926,69 +2923,69 @@ msgstr "Normal"
 
 #: gammu/misc.c:1556 gammu/misc.c:1602
 msgid "Secure"
-msgstr ""
+msgstr "Güvenli"
 
 #: gammu/misc.c:1559 gammu/misc.c:1561
 msgid "Data call type"
-msgstr ""
+msgstr "Veri arama türü"
 
 #: gammu/misc.c:1559
 msgid "ISDN"
-msgstr ""
+msgstr "ISDN"
 
 #: gammu/misc.c:1561
 msgid "Analogue"
-msgstr ""
+msgstr "Analog"
 
 #: gammu/misc.c:1565 gammu/misc.c:1568 gammu/misc.c:1571
 msgid "Data call speed"
-msgstr ""
+msgstr "Veri arama hızı"
 
 #: gammu/misc.c:1571 gammu/misc.c:2158
 msgid "Auto"
-msgstr ""
+msgstr "Oto"
 
 #: gammu/misc.c:1574 gammu/misc.c:1606
 msgid "User name"
-msgstr ""
+msgstr "Kullanıcı adı"
 
 #: gammu/misc.c:1575 gammu/misc.c:1607 gammu/misc.c:1634 gammu/misc.c:1684
 msgid "Password"
-msgstr "Şifre"
+msgstr "Parola"
 
 #: gammu/misc.c:1578
 msgid "USSD"
-msgstr ""
+msgstr "USSD"
 
 #: gammu/misc.c:1581
 msgid "Service code"
-msgstr ""
+msgstr "Hizmet kodu"
 
 #: gammu/misc.c:1583 gammu/misc.c:1586
 msgid "Address type"
-msgstr ""
+msgstr "Adres türü"
 
 #: gammu/misc.c:1604
 msgid "Access point"
-msgstr ""
+msgstr "Erişim noktası"
 
 #: gammu/misc.c:1627 gammu/misc.c:1648 gammu/misc.c:1676 gammu/misc.c:1689
 #: gammu/misc.c:1721
 #, c-format
 msgid "Set %i"
-msgstr ""
+msgstr "%i ayarla"
 
 #: gammu/misc.c:1633 gammu/misc.c:1683
 msgid "User"
-msgstr ""
+msgstr "Kullanıcı"
 
 #: gammu/misc.c:1635
 msgid "Phonebook database"
-msgstr ""
+msgstr "Telefon rehberi veritabanı"
 
 #: gammu/misc.c:1636
 msgid "Calendar database"
-msgstr ""
+msgstr "Takvim veritabanı"
 
 #: gammu/misc.c:1637
 msgid "Server"
@@ -2996,15 +2993,15 @@ msgstr "Sunucu"
 
 #: gammu/misc.c:1638
 msgid "Sync. phonebook"
-msgstr ""
+msgstr "Telefon rehberini eşitle"
 
 #: gammu/misc.c:1641
 msgid "Sync. calendar"
-msgstr ""
+msgstr "Takvimi eşitle"
 
 #: gammu/misc.c:1646 gammu/misc.c:1687
 msgid "Connection set name"
-msgstr ""
+msgstr "Bağlantı grubu adı"
 
 #: gammu/misc.c:1682 gammu/misc.c:1732
 msgid "Homepage"
@@ -3012,196 +3009,196 @@ msgstr "Ana sayfa"
 
 #: gammu/misc.c:1726
 msgid "active"
-msgstr ""
+msgstr "aktif"
 
 #: gammu/misc.c:1730
 msgid "Read only"
-msgstr ""
+msgstr "Salt okunur"
 
 #: gammu/misc.c:1755
 msgid "Startup logo"
-msgstr ""
+msgstr "Başlangıç logosu"
 
 #: gammu/misc.c:1756
 msgid "Operator logo"
-msgstr ""
+msgstr "Operatör logosu"
 
 #: gammu/misc.c:1757 helper/message-display.c:443
 msgid "Picture"
-msgstr ""
+msgstr "Resim"
 
 #: gammu/misc.c:1758
 msgid "Caller group logo"
-msgstr ""
+msgstr "Arayan grubu logosu"
 
 #: gammu/misc.c:1761
 #, c-format
 msgid ", width %i, height %i\n"
-msgstr ""
+msgstr ", genişlik %i, yükseklik %i\n"
 
 #: gammu/misc.c:1778
 #, c-format
 msgid "What format of output file logo (\"%s\") ?\n"
-msgstr ""
+msgstr "Çıktı dosyasının logosu biçimi nedir (\"%s\") ?\n"
 
 #: gammu/misc.c:1803
 #, c-format
 msgid "What format of output ringtone file (\"%s\") ?\n"
-msgstr ""
+msgstr "Çıktı zil sesi dosyasının biçimi nedir (\"%s\") ?\n"
 
 #: gammu/misc.c:1823
 #, c-format
 msgid "Unknown key/function name: \"%c\"\n"
-msgstr ""
+msgstr "Bilinmeyen anahtar/işlev adı: \"%c\"\n"
 
 #: gammu/misc.c:1853 gammu/misc.c:1891
 #, c-format
 msgid "What type of categories do you want to get (\"%s\") ?\n"
-msgstr ""
+msgstr "Ne tür kategorileri almak istiyorsunuz (\"%s\") ?\n"
 
 #: gammu/misc.c:1929
 #, c-format
 msgid "What type of category do you want to add (\"%s\") ?\n"
-msgstr ""
+msgstr "Ne tür kategori eklemek istiyorsunuz (\"%s\") ?\n"
 
 #: gammu/misc.c:1937
 #, c-format
 msgid "Text too long, truncating to %d chars!\n"
-msgstr ""
+msgstr "Metin çok uzun, %d karaktere kısaltılıyor!\n"
 
 #: gammu/misc.c:1976
 msgid "Invalid security code type"
-msgstr ""
+msgstr "Geçersiz güvenlik kodu türü"
 
 #: gammu/misc.c:1981
 #, c-format
 msgid "Enter %s code: "
-msgstr ""
+msgstr "%s kodunu girin: "
 
 #: gammu/misc.c:1993 gammu/misc.c:2015
 msgid "No PIN code entered!"
-msgstr ""
+msgstr "Girilen PIN kodu yok!"
 
 #: gammu/misc.c:2003
 #, c-format
 msgid "Enter new PIN code: "
-msgstr ""
+msgstr "Yeni PIN kodunu girin: "
 
 #: gammu/misc.c:2061
 msgid " (default name)"
-msgstr ""
+msgstr " (varsayılan adı)"
 
 #: gammu/misc.c:2062
 msgid " (Head set profile)"
-msgstr ""
+msgstr " (Kulaklık profili)"
 
 #: gammu/misc.c:2063
 msgid " (Car kit profile)"
-msgstr ""
+msgstr " (Araç kiti profili)"
 
 #: gammu/misc.c:2072 helper/memory-display.c:106
 msgid "Ringtone ID"
-msgstr ""
+msgstr "Zil sesi Kimliği"
 
 #: gammu/misc.c:2074
 msgid "Message alert tone ID"
-msgstr ""
+msgstr "Mesaj uyarı sesi Kimliği"
 
 #: gammu/misc.c:2087
 msgid "Call alert for"
-msgstr ""
+msgstr "Arama uyarısı için"
 
 #: gammu/misc.c:2108
 msgid "Screen saver number"
-msgstr ""
+msgstr "Ekran koruyucu numarası"
 
 #: gammu/misc.c:2111
 msgid "Incoming call alert"
-msgstr ""
+msgstr "Gelen arama uyarısı"
 
 #: gammu/misc.c:2112
 msgid "Ringtone volume"
-msgstr ""
+msgstr "Zil sesi seviyesi"
 
 #: gammu/misc.c:2113
 msgid "Vibrating alert"
-msgstr ""
+msgstr "Titreşimli uyarı"
 
 #: gammu/misc.c:2114
 msgid "Message alert tone"
-msgstr ""
+msgstr "Mesaj uyarı sesi"
 
 #: gammu/misc.c:2115
 msgid "Keypad tones"
-msgstr ""
+msgstr "Tuş sesleri"
 
 #: gammu/misc.c:2116
 msgid "Warning (games) tones"
-msgstr ""
+msgstr "Uyarı (oyunlar) sesleri"
 
 #: gammu/misc.c:2117 helper/message-display.c:439
 msgid "Screen saver"
-msgstr ""
+msgstr "Ekran koruyucu"
 
 #: gammu/misc.c:2118
 msgid "Screen saver timeout"
-msgstr ""
+msgstr "Ekran koruyucu zaman aşımı"
 
 #: gammu/misc.c:2119
 msgid "Automatic answer"
-msgstr ""
+msgstr "Otomatik yanıt"
 
 #: gammu/misc.c:2120
 msgid "Lights"
-msgstr ""
+msgstr "Işıklar"
 
 #: gammu/misc.c:2128
 msgid "Level 1"
-msgstr ""
+msgstr "Seviye 1"
 
 #: gammu/misc.c:2130
 msgid "Level 2"
-msgstr ""
+msgstr "Seviye 2"
 
 #: gammu/misc.c:2132
 msgid "Level 3"
-msgstr ""
+msgstr "Seviye 3"
 
 #: gammu/misc.c:2133
 msgid "Level 4"
-msgstr ""
+msgstr "Seviye 4"
 
 #: gammu/misc.c:2134
 msgid "Level 5"
-msgstr ""
+msgstr "Seviye 5"
 
 #: gammu/misc.c:2143
 msgid "Ringing"
-msgstr ""
+msgstr "Çalıyor"
 
 #: gammu/misc.c:2145
 msgid "Beep once"
-msgstr ""
+msgstr "Tek bip"
 
 #: gammu/misc.c:2146
 msgid "Ring once"
-msgstr ""
+msgstr "Bir kez çal"
 
 #: gammu/misc.c:2147 gammu/misc.c:2151
 msgid "Ascending"
-msgstr ""
+msgstr "Artarak"
 
 #: gammu/misc.c:2148
 msgid "Caller groups"
-msgstr ""
+msgstr "Arayan grupları"
 
 #: gammu/misc.c:2149
 msgid "Standard"
-msgstr ""
+msgstr "Standart"
 
 #: gammu/misc.c:2150
 msgid "Special"
-msgstr ""
+msgstr "Özel"
 
 #: gammu/misc.c:2152
 msgid "Personal"
@@ -3209,174 +3206,174 @@ msgstr "Kişisel"
 
 #: gammu/misc.c:2157
 msgid "Vibrate first"
-msgstr ""
+msgstr "Önce titreşim"
 
 #: gammu/misc.c:2194
 msgid " speed dial not assigned"
-msgstr ""
+msgstr " hızlı arama atanmamış"
 
 #: gammu/misc.c:2226
 #, c-format
 msgid "What type of reset phone settings (\"%s\") ?\n"
-msgstr ""
+msgstr "Ne tür telefon ayarları sıfırlansın (\"%s\")?\n"
 
 #: gammu/misc.c:2260
 msgid "Currently shown on the display"
-msgstr ""
+msgstr "Şu anda ekranda gösterilen"
 
 #: gammu/misc.c:2265
 msgid "Call active"
-msgstr ""
+msgstr "Arama aktif"
 
 #: gammu/misc.c:2268
 msgid "Unread SMS"
-msgstr ""
+msgstr "Okunmamış SMS"
 
 #: gammu/misc.c:2271
 msgid "Voice call"
-msgstr ""
+msgstr "Sesli arama"
 
 #: gammu/misc.c:2274
 msgid "Fax call"
-msgstr ""
+msgstr "Faks araması"
 
 #: gammu/misc.c:2277
 msgid "Data call"
-msgstr ""
+msgstr "Veri araması"
 
 #: gammu/misc.c:2280
 msgid "Keypad locked"
-msgstr ""
+msgstr "Tuş takımı kilitli"
 
 #: gammu/misc.c:2283
 msgid "SMS memory full"
-msgstr ""
+msgstr "SMS hafızası dolu"
 
 #: gammu/misc.c:2321
 msgid "Station name"
-msgstr ""
+msgstr "İstasyon adı"
 
 #: gammu/misc.c:2322
 msgid "Frequency"
-msgstr ""
+msgstr "Frekans"
 
 #: gammu/misc.c:2344
 #, c-format
 msgid "Unknown divert action (\"%s\")\n"
-msgstr ""
+msgstr "Bilinmeyen yönlendirme eylemi (\"%s\")\n"
 
 #: gammu/misc.c:2357
 #, c-format
 msgid "Unknown divert type (\"%s\")\n"
-msgstr ""
+msgstr "Bilinmeyen yönlendirme türü (\"%s\")\n"
 
 #: gammu/misc.c:2370
 #, c-format
 msgid "Unknown call type (\"%s\")\n"
-msgstr ""
+msgstr "Bilinmeyen arama türü (\"%s\")\n"
 
 #: gammu/misc.c:2379
 msgid "Query:"
-msgstr ""
+msgstr "Sorgu:"
 
 #: gammu/misc.c:2395
 msgid "Changed:"
-msgstr ""
+msgstr "Değişen:"
 
 #: gammu/misc.c:2398 gammu/misc.c:2445
 msgid "Divert type"
-msgstr ""
+msgstr "Yönlendirme türü"
 
 #: gammu/misc.c:2402 gammu/misc.c:2449
 msgid "when busy"
-msgstr ""
+msgstr "meşgul olduğunda"
 
 #: gammu/misc.c:2405 gammu/misc.c:2452
 msgid "when not answered"
-msgstr ""
+msgstr "yanıt verilmediğinde"
 
 #: gammu/misc.c:2408 gammu/misc.c:2455
 msgid "when phone off or no coverage"
-msgstr ""
+msgstr "telefon kapalı veya kapsama alanı dışında olduğunda"
 
 #: gammu/misc.c:2411 gammu/misc.c:2458
 msgid "all types of diverts"
-msgstr ""
+msgstr "tüm yönlendirme türleri"
 
 #: gammu/misc.c:2414 gammu/misc.c:2434 gammu/misc.c:2461 gammu/misc.c:2477
 #, c-format
 msgid "unknown %i"
-msgstr ""
+msgstr "bilinmeyen %i"
 
 #: gammu/misc.c:2419 gammu/misc.c:2465
 msgid "Call type"
-msgstr ""
+msgstr "Arama türü"
 
 #: gammu/misc.c:2422 gammu/misc.c:2468
 msgid "voice"
-msgstr ""
+msgstr "ses"
 
 #: gammu/misc.c:2425 gammu/misc.c:2471 helper/message-display.c:115
 msgid "fax"
-msgstr ""
+msgstr "faks"
 
 #: gammu/misc.c:2428 gammu/misc.c:2474
 msgid "data"
-msgstr ""
+msgstr "veri"
 
 #: gammu/misc.c:2431
 msgid "data & fax & voice"
-msgstr ""
+msgstr "veri ve faks ve ses"
 
 #: gammu/misc.c:2440
 msgid "Response:"
-msgstr ""
+msgstr "Yanıt:"
 
 #: gammu/misc.c:2520
 msgid "The application has been successfully sent to the phone."
-msgstr ""
+msgstr "Uygulama başarılı olarak telefona gönderildi."
 
 #: gammu/misc.c:2521
 msgid "Please find received files in Inbox and install them."
-msgstr ""
+msgstr "Lütfen gelen kutusunda alınan dosyaları bulun ve onları yükleyin."
 
 #: gammu/mms.c:49
 msgid "Do you want to save this MMS file?"
-msgstr ""
+msgstr "Bu MMS dosyasını kaydetmek istiyor musunuz?"
 
 #: gammu/mms.c:53 gammu/mms.c:134
 #, c-format
 msgid "Error while saving to file %s!\n"
-msgstr ""
+msgstr "%s dosyasına yazarken hata!\n"
 
 #: gammu/mms.c:55 gammu/mms.c:136
 #, c-format
 msgid "Saved to file %s\n"
-msgstr ""
+msgstr "%s dosyasına kaydedildi\n"
 
 #: gammu/mms.c:65
 msgid "Some MMS file features unknown for Gammu decoder"
-msgstr ""
+msgstr "Bazı MMS dosyası özellikleri Gammu çözücüsü için bilinmeyen"
 
 #: gammu/mms.c:73 gammu/mms.c:81 gammu/mms.c:89
 msgid "phone "
-msgstr ""
+msgstr "telefon "
 
 #: gammu/mms.c:79
 msgid "Recipient"
-msgstr ""
+msgstr "Alıcı"
 
 #: gammu/mms.c:87
 msgid "CC"
-msgstr ""
+msgstr "CC"
 
 #: gammu/mms.c:94
 msgid "Message type"
-msgstr ""
+msgstr "İleti türü"
 
 #: gammu/mms.c:97 helper/message-display.c:477
 msgid "Subject"
-msgstr ""
+msgstr "Konu"
 
 #: gammu/mms.c:100
 msgid "Delivery report"
@@ -3384,297 +3381,295 @@ msgstr "İletim raporu"
 
 #: gammu/mms.c:107 gammu/mms.c:110
 msgid "Content type"
-msgstr ""
+msgstr "İçerik türü"
 
 #: gammu/mms.c:114
 #, c-format
 msgid " (%s in SMIL)"
-msgstr ""
+msgstr " (SMIL içinde %s)"
 
 #: gammu/mms.c:130
 msgid "Do you want to save this attachment?"
-msgstr ""
+msgstr "Bu eki kaydetmek istiyor musunuz?"
 
 #: gammu/mms.c:170
 #, c-format
 msgid "Folder %s\n"
-msgstr ""
+msgstr "Klasör %s\n"
 
 #: gammu/mms.c:171
 msgid "  File filesystem ID"
-msgstr ""
+msgstr "  Dosya, dosya sistemi Kimliği"
 
 #: gammu/nokia.c:43
 msgid "It can be RTTL ringtone only used with this option"
-msgstr ""
+msgstr "Sadece bu seçenek ile kullanılan RTTL zil sesi olabilir"
 
 #: gammu/nokia.c:54
 #, c-format
 msgid "Ringtone \"%s\" (tempo = %i Beats Per Minute)"
-msgstr ""
+msgstr "Zil sesi \"%s\" (tempo %i Dakika Başına Atış)"
 
 #: gammu/nokia.c:63
 #, c-format
 msgid "length=%i notes, but you will enter only first 50 tones."
-msgstr ""
+msgstr "uzunluk=%i not, ancak sadece ilk 50 tonu gireceksiniz."
 
 #: gammu/nokia.c:66
 msgid "This ringtone in Nokia Composer in phone should look:"
-msgstr ""
+msgstr "Telefondaki Nokia Bestecisi içinde bu zil sesi şöyle görünmeli:"
 
 #: gammu/nokia.c:105
 msgid "To enter it please press:"
-msgstr ""
+msgstr "Girmek için lütfen şuna basın:"
 
 #: gammu/nokia.c:124
 msgid "(longer)"
-msgstr ""
+msgstr "(uzun)"
 
 #: gammu/nokia.c:252
 #, c-format
 msgid "Checking %s\n"
-msgstr ""
+msgstr "%s kontrol ediliyor\n"
 
 #: gammu/nokia.c:257
 msgid "  Only part handled!"
-msgstr ""
+msgstr "  Sadece bir kısım işlendi!"
 
 #: gammu/nokia.c:336
 msgid "  Problem with adding playlist"
-msgstr ""
+msgstr "  Çalma listesine eklemede sorun"
 
 #: gammu/nokia.c:383
 #, c-format
 msgid "Writing file %s:"
-msgstr ""
+msgstr "Yazılan %s dosyası:"
 
 #: gammu/nokia.c:438
 msgid ""
 "Your phone model is not supported. Please report it to authors (see <http://"
 "wammu.eu/support/bugs/>). Thank you."
 msgstr ""
+"Telefon modeliniz desteklenmiyor. Lütfen yazarlara bildirin "
+"(<http://wammu.eu/support/bugs/> adresine bakın). Teşekkür ederiz."
 
 #: gammu/nokia.c:454
 msgid "Problem with deleting playlist"
-msgstr ""
+msgstr "Çalma listesini silmede sorun"
 
 #: gammu/nokia.c:548
 #, c-format
 msgid "What folder type (\"%s\") ?\n"
-msgstr ""
+msgstr "Ne klasör türü (\"%s\")?\n"
 
 #: gammu/nokia.c:556 gammu/nokia.c:563 gammu/nokia.c:570
 #, c-format
 msgid "Can not open file %s\n"
-msgstr ""
+msgstr "%s dosyası açılamıyor\n"
 
 #: gammu/nokia.c:591 gammu/nokia.c:665
 msgid "Folder not found. Probably function not supported!"
-msgstr ""
+msgstr "Klasör bulunamadı. Muhtemelen işlev desteklenmiyor!"
 
 #: gammu/nokia.c:614
 msgid "Searching for phone folder: "
-msgstr ""
+msgstr "Telefon klasörü aranıyor: "
 
 #: gammu/nokia.c:691
 msgid "No vendor info in JAD file!"
-msgstr ""
+msgstr "JAD dosyasında satıcı bilgisi yok!"
 
 #: gammu/nokia.c:696
 msgid "No name info in JAD file!"
-msgstr ""
+msgstr "JAD dosyasında isim bilgisi yok!"
 
 #: gammu/nokia.c:701
 msgid "No JAR URL info in JAD file!"
-msgstr ""
+msgstr "JAD dosyasında JAR URL bilgisi yok!"
 
 #: gammu/nokia.c:707
 msgid "Declared JAR file size is different than real. Fixed by Gammu."
 msgstr ""
+"Bildirilen JAR dosyası boyutu gerçekten farklı. Gammu tarafından düzeltildi."
 
 #: gammu/nokia.c:731
 msgid "No JAR size info in JAD file. Added by Gammu."
-msgstr ""
+msgstr "JAD dosyasında JAR boyutu bilgisi yok. Gammu tarafından eklendi."
 
 #: gammu/nokia.c:740
 #, c-format
 msgid "Adding \"%s\""
-msgstr ""
+msgstr "\"%s\" ekleniyor"
 
 #: gammu/nokia.c:741
 #, c-format
 msgid " version %s"
-msgstr ""
+msgstr " sürüm %s"
 
 #: gammu/nokia.c:742
 #, c-format
 msgid " created by %s\n"
-msgstr ""
+msgstr " %s tarafından oluşturuldu\n"
 
 #: gammu/nokia.c:793 gammu/nokia.c:845
 msgid "Application already exists. Deleting by Gammu."
-msgstr ""
+msgstr "Uygulama zaten mevcut. Gammu tarafından siliniyor."
 
 #: gammu/nokia.c:826 gammu/nokia.c:859
 #, c-format
 msgid "  Deleting %s\n"
-msgstr ""
+msgstr "  %s siliniyor\n"
 
 #: gammu/nokia.c:882
 msgid "Writing JAD file:"
-msgstr ""
+msgstr "Yazılan JAD dosyası:"
 
 #: gammu/nokia.c:901
 msgid "Writing JAR file:"
-msgstr ""
+msgstr "Yazılan JAR dosyası:"
 
 #: gammu/nokia.c:976
 msgid "Writing file:"
-msgstr ""
+msgstr "Yazılan dosya:"
 
 #: gammu/search.c:145
 #, c-format
 msgid "Connection \"%s\" on device \"%s\"\n"
-msgstr ""
+msgstr "\"%s\" bağlantısı, \"%s\" cihazında\n"
 
 #: gammu/search.c:182 gammu/search.c:189
 msgid "Error creating thread\n"
-msgstr ""
+msgstr "İşlem oluşturmada hata\n"
 
 #: helper/cmdline.c:26
 #, c-format
 msgid "Number out of range: %s\n"
-msgstr ""
+msgstr "Sayı aralık dışında: %s\n"
 
 #: helper/cmdline.c:31
 #, c-format
 msgid "Parameter is not a number: %s\n"
-msgstr ""
+msgstr "Parametre bir sayı değil: %s\n"
 
 #: helper/formats.h:2
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d saniye"
 
 #: helper/formats.h:3
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d dakika"
 
 #: helper/formats.h:4
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d saat"
 
 #: helper/formats.h:5
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d gün"
 
 #: helper/formats.h:6
 #, c-format
 msgid "%d week"
 msgid_plural "%d weeks"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d hafta"
 
 #: helper/formats.h:7
 #, c-format
 msgid "%d year"
 msgid_plural "%d years"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d yıl"
 
 #: helper/memory-display.c:30
 msgid "Call length"
-msgstr ""
+msgstr "Arama uzunluğu"
 
 #. l10n: Call length format string hour:minute:second
 #: helper/memory-display.c:32
 #, c-format
 msgid "%02i:%02i:%02i\n"
-msgstr ""
+msgstr "%02i:%02i:%02i\n"
 
 #: helper/memory-display.c:38
 msgid "Date and time"
-msgstr ""
+msgstr "Tarih ve saat"
 
 #: helper/memory-display.c:66 helper/memory-display.c:70
 #: helper/memory-display.c:79 helper/memory-display.c:90
 msgid "Caller group"
-msgstr ""
+msgstr "Arayan grubu"
 
 #: helper/memory-display.c:71
 msgid "Caller group number too high, please increase buffer in sources!"
 msgstr ""
+"Arayan grup numarası çok yüksek, lütfen kaynaklardaki arabelleği arttırın!"
 
 #: helper/memory-display.c:110
 msgid "User ID"
-msgstr ""
+msgstr "Kullanıcı Kimliği"
 
 #: helper/memory-display.c:113
 msgid "Picture name"
-msgstr ""
+msgstr "Resim adı"
 
 #: helper/memory-display.c:116
 msgid "Picture ID"
-msgstr ""
+msgstr "Resim Kimliği"
 
 #: helper/memory-display.c:119
 msgid "Photo"
-msgstr ""
+msgstr "Fotoğraf"
 
 #: helper/memory-display.c:119
 msgid "Displaying not supported"
-msgstr ""
+msgstr "Görüntüleme desteklenmiyor"
 
 #: helper/memory-display.c:121
 msgid "Favorite messaging number"
-msgstr ""
+msgstr "Sık kullanılan mesajlaşma numarası"
 
 #: helper/memory-display.c:129
 msgid "Work number"
-msgstr ""
+msgstr "İş numarası"
 
 #: helper/memory-display.c:132
 msgid "General number"
-msgstr ""
+msgstr "Genel numara"
 
 #: helper/memory-display.c:136
 msgid "Video number"
-msgstr ""
+msgstr "Görüntü numarası"
 
 #: helper/memory-display.c:141
 msgid "Home mobile number"
-msgstr ""
+msgstr "Ev mobil numarası"
 
 #: helper/memory-display.c:144
 msgid "Work mobile number"
-msgstr ""
+msgstr "İş mobil numarası"
 
 #: helper/memory-display.c:155
 msgid "Home fax number"
-msgstr ""
+msgstr "Ev faks numarası"
 
 #: helper/memory-display.c:158
 msgid "Work fax number"
-msgstr ""
+msgstr "İş faks numarası"
 
 #: helper/memory-display.c:165
 msgid "Pager number"
-msgstr ""
+msgstr "Çağrı cihazı numarası"
 
 #: helper/memory-display.c:166
 msgid "Other number"
-msgstr ""
+msgstr "Diğer numara"
 
 #: helper/memory-display.c:172
 msgid "Home address"
@@ -3694,7 +3689,7 @@ msgstr "İş için eposta"
 
 #: helper/memory-display.c:196
 msgid "Email address 2"
-msgstr ""
+msgstr "Eposta adresi 2"
 
 #: helper/memory-display.c:201
 msgid "Home website"
@@ -3710,31 +3705,31 @@ msgstr "Web sitesi"
 
 #: helper/memory-display.c:212
 msgid "VOIP"
-msgstr ""
+msgstr "VOIP"
 
 #: helper/memory-display.c:213
 msgid "SWIS"
-msgstr ""
+msgstr "SWIS"
 
 #: helper/memory-display.c:214
 msgid "WVID"
-msgstr ""
+msgstr "WVID"
 
 #: helper/memory-display.c:215
 msgid "SIP"
-msgstr ""
+msgstr "SIP"
 
 #: helper/memory-display.c:216
 msgid "DTMF"
-msgstr ""
+msgstr "DTMF"
 
 #: helper/memory-display.c:218
 msgid "Last name"
-msgstr ""
+msgstr "Soyadınız"
 
 #: helper/memory-display.c:219
 msgid "First name"
-msgstr ""
+msgstr "Adınız"
 
 #: helper/memory-display.c:220
 msgid "Second name"
@@ -3742,7 +3737,7 @@ msgstr "İkinci adınız"
 
 #: helper/memory-display.c:221
 msgid "Formal name"
-msgstr ""
+msgstr "Resmi adınız"
 
 #: helper/memory-display.c:222
 msgid "Name prefix"
@@ -3750,621 +3745,622 @@ msgstr "Ad öneki"
 
 #: helper/memory-display.c:223
 msgid "Name suffix"
-msgstr ""
+msgstr "Ad soneki"
 
 #: helper/memory-display.c:224
 msgid "Nick name"
-msgstr ""
+msgstr "Takma adınız"
 
 #: helper/memory-display.c:225
 msgid "Company"
-msgstr ""
+msgstr "Şirket"
 
 #: helper/memory-display.c:226
 msgid "Job title"
-msgstr ""
+msgstr "Ünvanınız"
 
 #: helper/memory-display.c:227
 msgid "Street address"
-msgstr ""
+msgstr "Açık adresiniz"
 
 #: helper/memory-display.c:228
 msgid "City"
-msgstr ""
+msgstr "Şehir"
 
 #: helper/memory-display.c:229
 msgid "State"
-msgstr "Estado"
+msgstr "İl"
 
 #: helper/memory-display.c:230
 msgid "Zip code"
-msgstr ""
+msgstr "Posta kodu"
 
 #: helper/memory-display.c:231
 msgid "Country"
-msgstr ""
+msgstr "Ülke"
 
 #: helper/memory-display.c:232
 msgid "Custom text 1"
-msgstr ""
+msgstr "Özel metin 1"
 
 #: helper/memory-display.c:233
 msgid "Custom text 2"
-msgstr ""
+msgstr "Özel metin 2"
 
 #: helper/memory-display.c:234
 msgid "Custom text 3"
-msgstr ""
+msgstr "Özel metin 3"
 
 #: helper/memory-display.c:235
 msgid "Custom text 4"
-msgstr ""
+msgstr "Özel metin 4"
 
 #: helper/memory-display.c:236
 msgid "Push to talk ID"
-msgstr ""
+msgstr "Bas konuş Kimliği"
 
 #: helper/memory-display.c:239
 msgid "unknown field type"
-msgstr ""
+msgstr "bilinmeyen alan türü"
 
 #: helper/memory-display.c:246 helper/message-display.c:128
 msgid "home"
-msgstr ""
+msgstr "ev"
 
 #: helper/memory-display.c:249 helper/message-display.c:131
 msgid "work"
-msgstr ""
+msgstr "iş"
 
 #: helper/message-cmdline.c:184
 msgid "Not enough parameters!"
-msgstr ""
+msgstr "Yeterli parametre yok!"
 
 #: helper/message-cmdline.c:208
 #, c-format
 msgid "What format of sms (\"%s\") ?\n"
-msgstr ""
+msgstr "Ne biçimde sms (\"%s\") ?\n"
 
 #: helper/message-cmdline.c:233 helper/message-cmdline.c:250
 msgid "Where are parameters?"
-msgstr ""
+msgstr "Parametreler nerede?"
 
 #: helper/message-cmdline.c:264
 msgid "Where is ringtone filename?"
-msgstr ""
+msgstr "Zil sesi dosyası adı nerede?"
 
 #: helper/message-cmdline.c:282 helper/message-cmdline.c:300
 #: helper/message-cmdline.c:351
 msgid "Where is logo filename?"
-msgstr ""
+msgstr "Logo dosyası adı nerede?"
 
 #: helper/message-cmdline.c:318
 msgid "Where is number of frames?"
-msgstr ""
+msgstr "Kare numaraları nerede?"
 
 #: helper/message-cmdline.c:326
 msgid "Too many animation frames!"
-msgstr ""
+msgstr "Çok fazla canlandrımalı kare!"
 
 #: helper/message-cmdline.c:357
 #, c-format
 msgid "File \"%s\"\n"
-msgstr ""
+msgstr "Dosya \"%s\"\n"
 
 #: helper/message-cmdline.c:384
 msgid "Bookmark not found in file"
-msgstr ""
+msgstr "Dosyada yer imi bulunamadı"
 
 #: helper/message-cmdline.c:408
 msgid "WAP settings not found in file"
-msgstr ""
+msgstr "Dosyada WAP ayarları bulunamadı"
 
 #: helper/message-cmdline.c:429
 msgid "Sorry. For now there is only support for GPRS or DATA bearers end"
 msgstr ""
+"Üzgünüz. Şu an için sadece GPRS veya VERİ taşıyıcıların sonu için destek var"
 
 #: helper/message-cmdline.c:452
 msgid "MMS settings not found in file"
-msgstr ""
+msgstr "Dosyada MMS ayarları bulunamadı"
 
 #: helper/message-cmdline.c:466
 msgid "Sorry. No GPRS bearer found in MMS settings"
-msgstr ""
+msgstr "Üzgünüz. MMS ayarları içinde bulunan GPRS taşıyıcısı yok"
 
 #: helper/message-cmdline.c:512
 msgid "ToDo note not found in file"
-msgstr ""
+msgstr "Dosyada Yapılacaklar notu bulunamadı"
 
 #: helper/message-cmdline.c:574
 msgid "Backup functionality not compiled in!"
-msgstr ""
+msgstr "Yedekleme işlevselliği derlenmiş değil!"
 
 #: helper/message-cmdline.c:1055
 #, c-format
 msgid "Wrong message length (\"%s\")\n"
-msgstr ""
+msgstr "Yanlış ileti uzunluğu (\"%s\")\n"
 
 #: helper/message-cmdline.c:1078
 #, c-format
 msgid "Unknown GSM network code (\"%s\")\n"
-msgstr ""
+msgstr "Bilinmeyen GSM şebeke kodu (\"%s\")\n"
 
 #: helper/message-cmdline.c:1097
 #, c-format
 msgid "You have to give number between 1 and 7 (\"%s\")\n"
-msgstr ""
+msgstr "1 ve 7 (\"%s\") arasında bir sayı vermek zorundasınız\n"
 
 #: helper/message-cmdline.c:1135
 #, c-format
 msgid "Unknown validity string (\"%s\")\n"
-msgstr ""
+msgstr "Bilinmeyen geçerlilik dizgisi (\"%s\")\n"
 
 #: helper/message-cmdline.c:1173
 #, c-format
 msgid "You have to give number of EMS frames between 1 and 4 (\"%s\")\n"
-msgstr ""
+msgstr "1 ve 4 (\"%s\") arasında EMS karesi sayısını vermek zorundasınız\n"
 
 #: helper/message-cmdline.c:1185 helper/message-cmdline.c:1202
 #, c-format
 msgid "Can't open file \"%s\"\n"
-msgstr ""
+msgstr "\"%s\" dosyası açılamıyor\n"
 
 #: helper/message-cmdline.c:1251
 #, c-format
 msgid "Unknown parameter (\"%c\")\n"
-msgstr ""
+msgstr "Bilinmeyen parametre (\"%c\")\n"
 
 #: helper/message-cmdline.c:1256
 msgid "Last parameter wasn't text"
-msgstr ""
+msgstr "Son parametre metin değildi"
 
 #: helper/message-cmdline.c:1290
 #, c-format
 msgid "Too long SMS name (\"%s\"), ignored\n"
-msgstr ""
+msgstr "Çok uzun SMS adı (\"%s\"), yoksayıldı\n"
 
 #: helper/message-cmdline.c:1330
 #, c-format
 msgid "Enter the message text and press %s:\n"
-msgstr ""
+msgstr "İleti metnini girin ve %s basın:\n"
 
 #: helper/message-cmdline.c:1332
 msgid "Ctrl+Z"
-msgstr ""
+msgstr "Ctrl+Z"
 
 #: helper/message-cmdline.c:1334
 msgid "Ctrl+D"
-msgstr ""
+msgstr "Ctrl+D"
 
 #: helper/message-cmdline.c:1348
 msgid "No chars read, assuming it is okay!"
-msgstr ""
+msgstr "Okunan karakter yok, tamam olduğu varsayılıyor!"
 
 #: helper/message-cmdline.c:1368
 msgid "No network code"
-msgstr ""
+msgstr "Şebeke kodu yok"
 
 #: helper/message-cmdline.c:1374
 msgid "You have to set network code!"
-msgstr ""
+msgstr "Şebeke kodunu ayarlamak zorundasınız!"
 
 #: helper/message-cmdline.c:1413
 #, c-format
 msgid "Ringtone too long. %i percent part cut\n"
-msgstr ""
+msgstr "Zil sesi çok uzun. Yüzde %i kısmı kesildi\n"
 
 #: helper/message-cmdline.c:1424
 #, c-format
 msgid "There are %i SMS messages packed and the limit is %i. Exiting\n"
-msgstr ""
+msgstr "Paketlenmiş %i SMS iletisi var ve sınırı %i. Çıkılıyor\n"
 
 #: helper/message-cmdline.c:1434
 msgid "Use -smscnumber option to give SMSC number"
-msgstr ""
+msgstr "SMSC numarası vermek için -smscnumber seçeneğini kullanın"
 
 #: helper/message-display.c:26
 #, c-format
 msgid "Location %i, folder \"%s\""
-msgstr ""
+msgstr "Konum %i, \"%s\" klasörü"
 
 #: helper/message-display.c:33
 msgid "SIM memory"
-msgstr ""
+msgstr "SIM hafızası"
 
 #: helper/message-display.c:36
 msgid "phone memory"
-msgstr ""
+msgstr "telefon hafızası"
 
 #: helper/message-display.c:39
 msgid "phone or SIM memory"
-msgstr ""
+msgstr "telefon ya da SIM hafızası"
 
 #: helper/message-display.c:46
 msgid "Inbox folder"
-msgstr ""
+msgstr "Gelen Kutusu klasörü"
 
 #: helper/message-display.c:112
 msgid "mobile"
-msgstr ""
+msgstr "mobil"
 
 #: helper/message-display.c:118
 msgid "pager"
-msgstr ""
+msgstr "çağrı cihazı"
 
 #: helper/message-display.c:121
 msgid "general"
-msgstr ""
+msgstr "genel"
 
 #: helper/message-display.c:145
 msgid "8 bit SMS, cannot be displayed here"
-msgstr ""
+msgstr "8 bit SMS, burada görüntülenemiyor"
 
 #: helper/message-display.c:165
 msgid "SMS status report"
-msgstr ""
+msgstr "SMS durum raporu"
 
 #: helper/message-display.c:169 helper/message-display.c:181
 #: helper/message-display.c:233 helper/message-display.c:248
 #: helper/message-display.c:289
 msgid "Sent"
-msgstr "Gönder"
+msgstr "Gönderildi"
 
 #: helper/message-display.c:170 helper/message-display.c:290
 msgid "Read"
-msgstr "Oku"
+msgstr "Okundu"
 
 #: helper/message-display.c:171 helper/message-display.c:291
 msgid "UnRead"
-msgstr ""
+msgstr "Okunmadı"
 
 #: helper/message-display.c:172 helper/message-display.c:292
 msgid "UnSent"
-msgstr ""
+msgstr "Gönderilmedi"
 
 #: helper/message-display.c:176 helper/message-display.c:279
 msgid "Remote number"
 msgid_plural "Remote numbers"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Uzak numarası"
 
 #: helper/message-display.c:180 helper/message-display.c:245
 msgid "Reference number"
-msgstr ""
+msgstr "Referans numarası"
 
 #: helper/message-display.c:182 helper/message-display.c:230
 msgid "SMSC number"
-msgstr ""
+msgstr "SMSC numarası"
 
 #: helper/message-display.c:183
 msgid "SMSC response"
-msgstr ""
+msgstr "SMSC yanıtı"
 
 #: helper/message-display.c:184
 msgid "Delivery status"
-msgstr ""
+msgstr "Teslimat durumu"
 
 #: helper/message-display.c:185
 msgid "Details"
-msgstr ""
+msgstr "Ayrıntılar"
 
 #: helper/message-display.c:188 helper/message-display.c:193
 msgid "Temporary error, "
-msgstr ""
+msgstr "Geçici hata, "
 
 #: helper/message-display.c:190
 msgid "Permanent error, "
-msgstr ""
+msgstr "Kalıcı hata, "
 
 #: helper/message-display.c:196
 msgid "SM received by the SME"
-msgstr ""
+msgstr "SME tarafından SM alındı"
 
 #: helper/message-display.c:197
 msgid ""
 "SM forwarded by the SC to the SME but the SC is unable to confirm delivery"
-msgstr ""
+msgstr "SM, SC tarafından SME'ye yönlendirildi ancak SC teslimatı onaylayamaz"
 
 #: helper/message-display.c:198
 msgid "SM replaced by the SC"
-msgstr ""
+msgstr "SC tarafından SM değiştirildi"
 
 #: helper/message-display.c:199 helper/message-display.c:215
 msgid "Congestion"
-msgstr ""
+msgstr "Tıkanıklık"
 
 #: helper/message-display.c:200 helper/message-display.c:216
 msgid "SME busy"
-msgstr ""
+msgstr "SME meşgul"
 
 #: helper/message-display.c:201 helper/message-display.c:217
 msgid "No response from SME"
-msgstr ""
+msgstr "SME'den yanıt yok"
 
 #: helper/message-display.c:202 helper/message-display.c:218
 msgid "Service rejected"
-msgstr ""
+msgstr "Hizmet reddedildi"
 
 #: helper/message-display.c:203 helper/message-display.c:209
 #: helper/message-display.c:219
 msgid "Quality of service not available"
-msgstr ""
+msgstr "Kaliteli hizmet mevcut değil"
 
 #: helper/message-display.c:204 helper/message-display.c:220
 msgid "Error in SME"
-msgstr ""
+msgstr "SME'de hata"
 
 #: helper/message-display.c:205
 msgid "Remote procedure error"
-msgstr ""
+msgstr "Uzak yordam hatası"
 
 #: helper/message-display.c:206
 msgid "Incompatibile destination"
-msgstr ""
+msgstr "Uyumsuz hedef"
 
 #: helper/message-display.c:207
 msgid "Connection rejected by SME"
-msgstr ""
+msgstr "SME tarafından bağlantı reddedildi"
 
 #: helper/message-display.c:208
 msgid "Not obtainable"
-msgstr ""
+msgstr "Temin edilemez"
 
 #: helper/message-display.c:210
 msgid "No internetworking available"
-msgstr ""
+msgstr "Mevcut internet çalışması yok"
 
 #: helper/message-display.c:211
 msgid "SM Validity Period Expired"
-msgstr ""
+msgstr "SM Geçerlilik Süresi Doldu"
 
 #: helper/message-display.c:212
 msgid "SM deleted by originating SME"
-msgstr ""
+msgstr "SME kaynaklı olarak SM silindi"
 
 #: helper/message-display.c:213
 msgid "SM Deleted by SC Administration"
-msgstr ""
+msgstr "SC Yönetimi tarafından SM Silindi"
 
 #: helper/message-display.c:214
 msgid "SM does not exist"
-msgstr ""
+msgstr "SM mevcut değil"
 
 #: helper/message-display.c:221
 #, c-format
 msgid "Reserved/Specific to SC: %x"
-msgstr ""
+msgstr "SC'ye Özgü/Ayrılmış: %x"
 
 #: helper/message-display.c:226 helper/message-display.c:243
 msgid "SMS message"
-msgstr ""
+msgstr "SMS iletisi"
 
 #: helper/message-display.c:228
 msgid "Saved"
-msgstr ""
+msgstr "Kaydedildi"
 
 #: helper/message-display.c:231
 msgid " (set for reply)"
-msgstr ""
+msgstr " (yanıtı ayarla)"
 
 #: helper/message-display.c:240
 msgid "SMS replacing ID"
-msgstr ""
+msgstr "Kimliği değiştirilen SMS"
 
 #: helper/message-display.c:255
 msgid "Class"
-msgstr ""
+msgstr "Sınıf"
 
 #: helper/message-display.c:257
 msgid "Coding"
-msgstr ""
+msgstr "Kodlama"
 
 #: helper/message-display.c:260
 msgid "Unicode (no compression)"
-msgstr ""
+msgstr "Evrensel kod (sıkıştırma yok)"
 
 #: helper/message-display.c:263
 msgid "Unicode (compression)"
-msgstr ""
+msgstr "Evrensel kod (sıkıştırma)"
 
 #: helper/message-display.c:266
 msgid "Default GSM alphabet (no compression)"
-msgstr ""
+msgstr "Varsayılan GSM alfabesi (sıkıştırma yok)"
 
 #: helper/message-display.c:269
 msgid "Default GSM alphabet (compression)"
-msgstr ""
+msgstr "Varsayılan GSM alfabesi (sıkıştırma)"
 
 #. l10n: 8-bit message coding
 #: helper/message-display.c:273
 msgid "8-bit"
-msgstr ""
+msgstr "8-bit"
 
 #: helper/message-display.c:296
 msgid "User Data Header"
-msgstr ""
+msgstr "Kullanıcı Veri Başlığı"
 
 #: helper/message-display.c:298 helper/message-display.c:299
 msgid "Concatenated (linked) message"
-msgstr ""
+msgstr "Birleşik (bağlantılı) ileti"
 
 #: helper/message-display.c:300
 msgid "Disables voice indicator"
-msgstr ""
+msgstr "Ses göstergesini etkisizleştirir"
 
 #: helper/message-display.c:301
 msgid "Enables voice indicator"
-msgstr ""
+msgstr "Ses göstergesini etkinleştirir"
 
 #: helper/message-display.c:302
 msgid "Disables fax indicator"
-msgstr ""
+msgstr "Faks göstergesini etkisizleştirir"
 
 #: helper/message-display.c:303
 msgid "Enables fax indicator"
-msgstr ""
+msgstr "Faks göstergesini etkinleştirir"
 
 #: helper/message-display.c:304
 msgid "Disables email indicator"
-msgstr ""
+msgstr "Eposta göstergesini etkisizleştirir"
 
 #: helper/message-display.c:305
 msgid "Enables email indicator"
-msgstr ""
+msgstr "Eposta göstergesini etkinleştirir"
 
 #: helper/message-display.c:306
 msgid "Void SMS"
-msgstr ""
+msgstr "Geçersiz SMS"
 
 #: helper/message-display.c:307
 msgid "Nokia WAP bookmark"
-msgstr ""
+msgstr "Nokia WAP yer imi"
 
 #: helper/message-display.c:308
 msgid "Nokia operator logo"
-msgstr ""
+msgstr "Nokia operatör logosu"
 
 #: helper/message-display.c:309
 msgid "Nokia WAP bookmark or WAP/MMS settings"
-msgstr ""
+msgstr "Nokia WAP yer imi veya WAP/MMS ayarları"
 
 #: helper/message-display.c:310 helper/message-display.c:311
 msgid "Nokia ringtone"
-msgstr ""
+msgstr "Nokia zil sesi"
 
 #: helper/message-display.c:312
 msgid "Nokia GSM operator logo"
-msgstr ""
+msgstr "Nokia GSM operatör logosu"
 
 #: helper/message-display.c:313
 msgid "Nokia caller logo"
-msgstr ""
+msgstr "Nokia arayan logosu"
 
 #: helper/message-display.c:314
 msgid "Nokia profile"
-msgstr ""
+msgstr "Nokia profili"
 
 #: helper/message-display.c:315
 msgid "Nokia calendar note"
-msgstr ""
+msgstr "Nokia takvim notu"
 
 #: helper/message-display.c:316
 msgid "Nokia phonebook entry"
-msgstr ""
+msgstr "Nokia rehber girişi"
 
 #: helper/message-display.c:317
 msgid "User UDH"
-msgstr ""
+msgstr "Kullanıcı UDH"
 
 #: helper/message-display.c:318
 msgid "MMS indicator"
-msgstr ""
+msgstr "MMS göstergesi"
 
 #: helper/message-display.c:322
 #, c-format
 msgid ", ID (8 bit) %i"
-msgstr ""
+msgstr ", ID (8 bit) %i"
 
 #: helper/message-display.c:323
 #, c-format
 msgid ", ID (16 bit) %i"
-msgstr ""
+msgstr ", ID (16 bit) %i"
 
 #: helper/message-display.c:326
 #, c-format
 msgid ", part %i of %i"
-msgstr ""
+msgstr ", kısım %i / %i"
 
 #: helper/message-display.c:328
 #, c-format
 msgid ", %i parts"
-msgstr ""
+msgstr ", %i kısım"
 
 #: helper/message-display.c:339
 msgid "Siemens file"
-msgstr ""
+msgstr "Siemens dosyası"
 
 #: helper/message-display.c:347
 #, c-format
 msgid "Unknown PDU type: 0x%x\n"
-msgstr ""
+msgstr "Bilinmeyen PDU türü: 0x%x\n"
 
 #: helper/message-display.c:394
 msgid ""
 "Some details were ignored (unknown or not implemented in decoding functions)"
 msgstr ""
+"Bazı ayrıntılar yoksayıldı (bilinmeyen veya çözülen işlevlerde uygulanmadı)"
 
 #: helper/message-display.c:399
 msgid "Siemens OTA file"
-msgstr ""
+msgstr "Siemens OTA dosyası"
 
 #: helper/message-display.c:401
 msgid " - VCARD"
-msgstr ""
+msgstr " - VCARD"
 
 #: helper/message-display.c:415
 #, c-format
 msgid "Ringtone \"%s\"\n"
-msgstr ""
+msgstr "Zil sesi \"%s\"\n"
 
 #: helper/message-display.c:420
 msgid "Do you want to play it?"
-msgstr ""
+msgstr "Oynamak istiyor musunuz?"
 
 #: helper/message-display.c:425
 msgid "Caller logo"
-msgstr ""
+msgstr "Arayan logosu"
 
 #: helper/message-display.c:429
 #, c-format
 msgid "Operator logo for %s network"
-msgstr ""
+msgstr "%s şebekesi için operatör logosu"
 
 #: helper/message-display.c:449
 msgid "Profile"
-msgstr ""
+msgstr "Profil"
 
 #: helper/message-display.c:470
 msgid "EMS sound ID"
-msgstr ""
+msgstr "EMS ses Kimliği"
 
 #: helper/message-display.c:473
 msgid "EMS animation ID"
-msgstr ""
+msgstr "EMS canlandırma Kimliği"
 
 #: helper/message-display.c:479
 msgid "Message size"
-msgstr ""
+msgstr "İleti boyutu"
 
 #. l10n: Generic prefix for error messages
 #: helper/message-display.c:512 helper/printing.c:18
 msgid "Error"
-msgstr ""
+msgstr "Hata"
 
 #: helper/message-display.c:545
 msgid "Data PDU"
-msgstr ""
+msgstr "Veri PDU"
 
 #: helper/message-display.c:546
 msgid "Number of bits"
-msgstr ""
+msgstr "Bit sayısı"
 
 #: helper/message-display.c:548
 msgid "UDH"
-msgstr ""
+msgstr "UDH"
 
 #: helper/message-display.c:564
 msgid "Whole PDU"
-msgstr ""
+msgstr "Bütün PDU"
 
 #. l10n: Generic prefix for warning messages
 #: helper/printing.c:34
 msgid "Warning"
-msgstr ""
+msgstr "Uyarı"
 
 #. l10n: Generic prefix for informational messages
 #: helper/printing.c:50
 msgid "Information"
-msgstr ""
+msgstr "Bilgi"
 
 #, fuzzy
 #~ msgid "Number:   %s"
