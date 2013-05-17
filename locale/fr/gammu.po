@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-02-21 10:29+0100\n"
-"PO-Revision-Date: 2013-05-17 19:10+0200\n"
+"PO-Revision-Date: 2013-05-17 23:05+0200\n"
 "Last-Translator: Jean-Noël AVILA <jn.avila@free.fr>\n"
 "Language-Team: French <http://l10n.cihar.com/projects/gammu/gammu/fr/>\n"
 "Language: fr\n"
@@ -146,7 +146,7 @@ msgstr "Sauvegarder les notes du calendrier du téléphone ?"
 #: gammu/backup.c:905 gammu/backup.c:942
 #, c-format
 msgid "Only part of data saved, please increase %s."
-msgstr "Les données n'ont pas toutes pu être sauvées, veuillez augmenter %s."
+msgstr "Les données n'ont pas pu être toutes sauvées, veuillez augmenter %s."
 
 #: gammu/backup.c:450
 msgid "Checking phone todos"
