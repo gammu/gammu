@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-02-21 10:29+0100\n"
-"PO-Revision-Date: 2013-05-09 09:26+0200\n"
-"Last-Translator: Michal Čihař <michal@cihar.com>\n"
+"PO-Revision-Date: 2013-05-17 19:10+0200\n"
+"Last-Translator: Jean-Noël AVILA <jn.avila@free.fr>\n"
 "Language-Team: French <http://l10n.cihar.com/projects/gammu/gammu/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -72,7 +72,7 @@ msgstr "Erreur lors de l'écriture du fichier !\n"
 
 #: gammu/backup.c:194
 msgid "Error while closing file!\n"
-msgstr "Erreur pendant la fermeture du fichier!\n"
+msgstr "Erreur lors de la fermeture du fichier !\n"
 
 #: gammu/backup.c:241 gammu/backup.c:424 gammu/backup.c:496 gammu/backup.c:531
 #: gammu/backup.c:565 gammu/backup.c:633 gammu/backup.c:670 gammu/backup.c:707
@@ -146,8 +146,7 @@ msgstr "Sauvegarder les notes du calendrier du téléphone ?"
 #: gammu/backup.c:905 gammu/backup.c:942
 #, c-format
 msgid "Only part of data saved, please increase %s."
-msgstr ""
-"Seulement une partie des données a été sauvegardée, prière d'augmenter %s."
+msgstr "Les données n'ont pas toutes pu être sauvées, veuillez augmenter %s."
 
 #: gammu/backup.c:450
 msgid "Checking phone todos"
@@ -354,9 +353,9 @@ msgid ""
 "Do you want to set phone date/time? (NOTE: in some phones it's required to "
 "correctly restore calendar notes and other items)"
 msgstr ""
-"Voulez vous ajuster la date et l'heure du téléphone ? (NOTE: il est "
-"necessaire pour quelques téléphones de restaurer correctement les notes du "
-"calendrier et autres éléments)"
+"Voulez-vous régler la date et l'heure du téléphone ? (NB : sur certains "
+"modèles, cela est nécessaire pour rétablir correctement les entrées du "
+"calendrier, ainsi que certaines autres données)"
 
 #: gammu/backup.c:1200
 msgid "Restore phone calendar notes?"
@@ -364,7 +363,7 @@ msgstr "Restaurer les notes du calendrier du téléphone ?"
 
 #: gammu/backup.c:1201
 msgid "Restore notes from the past?"
-msgstr "Restaurer les notes dont la date est périmée ?"
+msgstr "Rétablir les événements passés ?"
 
 #: gammu/backup.c:1207 gammu/backup.c:1346
 msgid "Deleting old notes:"
@@ -418,16 +417,17 @@ msgstr "Restaurer les paramètres MMS du téléphone ?"
 
 #: gammu/backup.c:1495 gammu/misc.c:1498
 msgid "Delete all phone user ringtones?"
-msgstr "Supprimer toutes les sonneries de l'utilisateur du téléphone ?"
+msgstr ""
+"Supprimer du téléphone toutes les sonneries ajoutées par l'utilisateur  ?"
 
 #: gammu/backup.c:1499 gammu/misc.c:1417 gammu/misc.c:1441 gammu/misc.c:1465
 #: gammu/misc.c:1481 gammu/misc.c:1499
 msgid "Deleting"
-msgstr "Suppression"
+msgstr "Suppression en cours"
 
 #: gammu/backup.c:1504
 msgid "Restore user ringtones?"
-msgstr "Restaurer les sonneries de l'utilisateur ?"
+msgstr "Restaurer les sonneries ajoutées par l'utilisateur ?"
 
 #: gammu/backup.c:1530
 msgid "Restore phone profiles?"
@@ -435,11 +435,11 @@ msgstr "Rétablir les profils de téléphone ?"
 
 #: gammu/backup.c:1553
 msgid "Restore phone FM radio stations?"
-msgstr "Rétablir les émetteurs de radio FM du téléphone ?"
+msgstr "Restaurer les stations radio FM ?"
 
 #: gammu/backup.c:1557
 msgid "Deleting old FM stations:"
-msgstr "Suppression des anciennes stations FM : "
+msgstr "Suppression des anciennes stations radio :"
 
 #: gammu/backup.c:1583
 msgid "Restore phone GPRS Points?"
@@ -1305,31 +1305,32 @@ msgstr "Capteur de lumière : "
 
 #: gammu/depend/nokia/dct4.c:1046
 msgid "Power amplifier temperature:"
-msgstr "Température amplificateur de puissance : "
+msgstr "Température de l'amplificateur de puissance : "
 
 #: gammu/depend/nokia/dct4.c:1047
 msgid "VCXO temperature:"
-msgstr "Température de VCXO : "
+msgstr "Température du VCXO : "
 
 #: gammu/depend/nokia/dct4.c:1048
+#, fuzzy
 msgid "Resistive keyboard 1/headint2:"
-msgstr ""
+msgstr "clavier résistif 1/casque 2 :"
 
 #: gammu/depend/nokia/dct4.c:1049
 msgid "Resistive keyboard 1/auxdet:"
-msgstr ""
+msgstr "Clavier résistif 1/auxdet :"
 
 #: gammu/depend/nokia/dct4.c:1050
 msgid "Initial battery voltage:"
-msgstr "Tension de la batterie initiale : "
+msgstr "Tension initiale de la batterie : "
 
 #: gammu/depend/nokia/dct4.c:1051
 msgid "Battery Current:"
-msgstr "Courant batterie : "
+msgstr "Courant de la batterie : "
 
 #: gammu/depend/nokia/dct4.c:1052
 msgid "Battery Current Fast:"
-msgstr "Courant batterie rapide : "
+msgstr "Courant rapide batterie : "
 
 #: gammu/depend/nokia/dct4.c:1158
 msgid "Phone seems not to support radio"
@@ -1395,11 +1396,11 @@ msgstr " (Groupe d'appelant : logo)"
 
 #: gammu/depend/nokia/dct4.c:1347
 msgid " (Caller group: is logo on ?)"
-msgstr ""
+msgstr " (groupe d'appel : logo activé ?)"
 
 #: gammu/depend/nokia/dct4.c:1348
 msgid " (Caller group number in pbk entry)"
-msgstr ""
+msgstr " (nombre de groupes d'appelant dans l'entrée pbk)"
 
 #: gammu/depend/nokia/dct4.c:1351
 msgid " (Text: URL address)"
@@ -1415,60 +1416,60 @@ msgstr " (Affectation de balise de voix)"
 
 #: gammu/depend/nokia/dct4.c:1354
 msgid " (Picture ID assignment)"
-msgstr ""
+msgstr " (affection d'ID d'image)"
 
 #: gammu/depend/nokia/dct4.c:1355
 msgid " (Ringtone ID from filesystem/internal)"
-msgstr ""
+msgstr " (ID de sonnerie depuis le système de fichier/interne)"
 
 #: gammu/depend/nokia/dct4.c:1356
 msgid " (Text: user ID)"
-msgstr ""
+msgstr " (Texte : ID de l'utilisateur)"
 
 #: gammu/depend/nokia/dct4.c:1357
 msgid " (conversation list ID)"
-msgstr ""
+msgstr " (ID de liste de conversation)"
 
 #: gammu/depend/nokia/dct4.c:1358
 msgid " (Instant Messaging service list ID ?)"
-msgstr ""
+msgstr " (ID de liste de service de messagerie instantanée ?)"
 
 #: gammu/depend/nokia/dct4.c:1359
 msgid " (presence list ID ?)"
-msgstr ""
+msgstr " (ID de liste de présence ?)"
 
 #: gammu/depend/nokia/dct4.c:1360
 msgid " (SIP Address (Push to Talk address))"
-msgstr ""
+msgstr " (Adresse SIP (numérotation rapide))"
 
 #: gammu/depend/nokia/dct4.c:1361
 msgid " (Group ID (6230i or later))"
-msgstr ""
+msgstr " (ID de groupe (6230i ou plus récent))"
 
 #: gammu/depend/nokia/dct4.c:1363
 msgid ", type "
-msgstr ""
+msgstr ", type "
 
 #: gammu/depend/nokia/dct4.c:1365
 msgid "string"
-msgstr ""
+msgstr "chaîne"
 
 #: gammu/depend/nokia/dct4.c:1366
 msgid "byte"
-msgstr ""
+msgstr "octet"
 
 #: gammu/depend/nokia/dct4.c:1367
 msgid "2 bytes"
-msgstr ""
+msgstr "2 octets"
 
 #: gammu/depend/nokia/dct4.c:1368
 msgid "4 bytes"
-msgstr ""
+msgstr "4 octets"
 
 #: gammu/depend/nokia/dct4.c:1375
 #, c-format
 msgid "%i phone number types\n"
-msgstr ""
+msgstr "%i types de numéros de téléphone\n"
 
 #: gammu/depend/nokia/dct4.c:1378 helper/memory-display.c:126
 msgid "Home number"
@@ -1488,7 +1489,7 @@ msgstr "Numéro bureau"
 
 #: gammu/depend/nokia/dct4.c:1382
 msgid "Standard number"
-msgstr ""
+msgstr "Numéro standard"
 
 #: gammu/depend/nokia/dct4.c:1383
 msgid "Unknown number"
@@ -1497,11 +1498,11 @@ msgstr "Numéro inconnu"
 #: gammu/depend/nokia/dct4.c:1407
 #, c-format
 msgid "ERROR: unknown memory type (\"%s\")\n"
-msgstr ""
+msgstr "ERREUR : type de mémoire inconnu (\"%s\")\n"
 
 #: gammu-detect/main.c:55
 msgid "Show debugging output for detecting devices."
-msgstr ""
+msgstr "Afficher les informations de débogage pour la détection d'appareils."
 
 #: gammu-detect/main.c:56
 msgid "Show version information and compiled in features."
@@ -1509,15 +1510,15 @@ msgstr "Afficher la version et les caractéristiques au compilement."
 
 #: gammu-detect/main.c:58
 msgid "Disables scanning of udev."
-msgstr ""
+msgstr "Désactive la surveillance de udev."
 
 #: gammu-detect/main.c:61
 msgid "Disables scanning using Bluez."
-msgstr ""
+msgstr "Désactive la surveillance par Bluez."
 
 #: gammu-detect/main.c:64
 msgid "Disables scanning of Windows serial ports."
-msgstr ""
+msgstr "Désactive le balayage des ports série Windows."
 
 #: gammu-detect/main.c:71
 #, c-format
@@ -1527,19 +1528,19 @@ msgstr "Version detectée par Gammu %s"
 #: gammu-detect/main.c:73
 #, c-format
 msgid "Built %s on %s using %s"
-msgstr ""
+msgstr "Construit %s sur %s en utilisant %s"
 
 #: gammu-detect/main.c:76 gammu/gammu.c:100
 msgid "Compiled in features:"
-msgstr ""
+msgstr "Fonctionnalités incluses :"
 
 #: gammu-detect/main.c:78
 msgid "udev probing"
-msgstr ""
+msgstr "test udev"
 
 #: gammu-detect/main.c:81
 msgid "Bluez probing"
-msgstr ""
+msgstr "test Bluez"
 
 #: gammu-detect/main.c:84
 msgid "Windows serial port probing"
@@ -1557,31 +1558,37 @@ msgid ""
 "License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
 "GPL/2.0/>."
 msgstr ""
+"Licence GPLv2: GNU GPL version 2 "
+"<http://creativecommons.org/licenses/GPL/2.0/>."
 
 #: gammu-detect/main.c:90 gammu/gammu.c:336
 msgid "This is free software: you are free to change and redistribute it."
 msgstr ""
+"Ceci est un logiciel libre ; vous être libre de le modifier et de le "
+"redistribuer."
 
 #: gammu-detect/main.c:91 gammu/gammu.c:338
 msgid "There is NO WARRANTY, to the extent permitted by law."
 msgstr ""
+"Aucune garantie n'est fournie, dans la mesure de ce que la loi autorise."
 
 #: gammu-detect/main.c:93 gammu/gammu.c:342
 msgid "Check <http://wammu.eu/gammu/> for updates."
-msgstr ""
+msgstr "Recherchez des mises à jour sur <http://wammu.eu/gammu/> ."
 
 #: gammu-detect/main.c:102
 msgid "Configuration file generated by gammu-detect."
 msgstr "Fichier de configuration généré par gammu-detect."
 
 #: gammu-detect/main.c:103
+#, fuzzy
 msgid "Please check The Gammu Manual for more information."
-msgstr ""
+msgstr "Merci de consulter le manuel de Gammu pour plus d'informations."
 
 #: gammu-detect/main.c:160
 #, c-format
 msgid "option parsing failed: %s\n"
-msgstr ""
+msgstr "échec de l'analyse des options : %s\n"
 
 #: gammu-detect/udev.c:67
 msgid "Name:"
@@ -1593,7 +1600,7 @@ msgstr "Type : "
 
 #: gammu-detect/udev.c:69
 msgid "Subsystem:"
-msgstr ""
+msgstr "Sous-système :"
 
 #: gammu-detect/udev.c:70
 msgid "Number:"
@@ -1601,7 +1608,7 @@ msgstr "Numéro : "
 
 #: gammu-detect/udev.c:71
 msgid "Path:"
-msgstr ""
+msgstr "Chemin :"
 
 #: gammu-detect/udev.c:72
 msgid "Driver:"
@@ -1609,7 +1616,7 @@ msgstr "Pilote logiciel : "
 
 #: gammu-detect/udev.c:73
 msgid "Sequential Number:"
-msgstr ""
+msgstr "Numéro séquentiel :"
 
 #: gammu-detect/udev.c:74
 msgid "Device File:"
@@ -1631,16 +1638,16 @@ msgstr "Téléphone sur le port USB série %s%s"
 
 #: gammu/files.c:48
 msgid "Phone memory"
-msgstr ""
+msgstr "Mémoire du téléphone"
 
 #: gammu/files.c:49
 #, c-format
 msgid "%i bytes (free %i bytes, used %i bytes)"
-msgstr ""
+msgstr "%i octets (%i octets libres, %i octets utilisés)"
 
 #: gammu/files.c:55
 msgid "Usage details"
-msgstr ""
+msgstr "Détails d'utilisation"
 
 #: gammu/files.c:56
 #, c-format
@@ -1650,22 +1657,22 @@ msgstr "images : %i, sons : %i, thèmes : %i"
 #. l10n: One char to indicate protected file
 #: gammu/files.c:119 gammu/files.c:208 gammu/files.c:329
 msgid "P"
-msgstr ""
+msgstr "P"
 
 #. l10n: One char to indicate read only file
 #: gammu/files.c:125 gammu/files.c:210 gammu/files.c:331
 msgid "R"
-msgstr ""
+msgstr "R"
 
 #. l10n: One char to indicate hidden file
 #: gammu/files.c:131 gammu/files.c:212 gammu/files.c:333
 msgid "H"
-msgstr ""
+msgstr "C"
 
 #. l10n: One char to indicate system file
 #: gammu/files.c:137 gammu/files.c:214 gammu/files.c:335
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #: gammu/files.c:158 gammu/files.c:171 gammu/files.c:197
 msgid "Part of folder"
@@ -1677,22 +1684,22 @@ msgstr "Dossier"
 
 #: gammu/files.c:184 gammu/files.c:315
 msgid "File;"
-msgstr ""
+msgstr "Fichier ;"
 
 #: gammu/files.c:224
 #, c-format
 msgid "Used in phone: %li bytes"
-msgstr ""
+msgstr "Utilisé par appareil : %li octets"
 
 #: gammu/files.c:226
 #, c-format
 msgid ", used in card: %li bytes"
-msgstr ""
+msgstr ", utilisé sur la carte : %li octets"
 
 #: gammu/files.c:256
 #, c-format
 msgid "Unknown attribute (%s)\n"
-msgstr ""
+msgstr "Attribut inconnu (%s)\n"
 
 #: gammu/files.c:307
 msgid "Part of folder only"
@@ -4337,7 +4344,7 @@ msgstr ""
 
 #: helper/message-display.c:564
 msgid "Whole PDU"
-msgstr ""
+msgstr "Tout le PDU"
 
 #. l10n: Generic prefix for warning messages
 #: helper/printing.c:34
