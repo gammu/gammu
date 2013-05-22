@@ -8,7 +8,7 @@ ver=`sed -n 's/set (GAMMU_VERSION "\([^"]*\)".*)/\1/p' CMakeLists.txt`
 
 xgettext \
     -d gammu \
-    --msgid-bugs-address=michal@cihar.com \
+    --msgid-bugs-address=gammu-users@lists.sourceforge.net \
     -o locale/gammu.pot \
     --language=C \
     --keyword=_ \
@@ -22,7 +22,7 @@ xgettext \
 
 xgettext \
     -d libgammu \
-    --msgid-bugs-address=michal@cihar.com \
+    --msgid-bugs-address=gammu-users@lists.sourceforge.net \
     -o locale/libgammu.pot \
     --language=C \
     --keyword=_ \
