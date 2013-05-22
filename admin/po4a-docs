@@ -7,7 +7,7 @@ LOCS=`ls locale/*/gammu.po | sed 's@.*/\(.*\)/[^/]*@\1@'`
 ver=`sed -n 's/set (GAMMU_VERSION "\([^"]*\)".*)/\1/p' CMakeLists.txt`
 
 po4a \
-    --msgid-bugs-address michal@cihar.com \
+    --msgid-bugs-address gammu-users@lists.sourceforge.net \
     --copyright-holder "Michal Čihař <michal@cihar.com>" \
     --package-name Gammu-docs \
     --package-version $ver \
