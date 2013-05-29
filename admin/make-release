@@ -84,8 +84,9 @@ git clone --shared $srcdir $repo-$version
 cd $repo-$version
 git checkout $checkout
 git submodule update --init
-find . -type d -name .git | xargs -r rm -rf
+find . -name .git | xargs -r rm -rf
 find . -type f -name .gitignore | xargs -r rm -f
+find . -type f -name .gitmodules | xargs -r rm -f
 cd ..
 
 echo 'Creating source tarballs...'
