@@ -1,4 +1,4 @@
-.TH "GAMMU" "1" "November 21, 2012" "1.32.90" "Gammu"
+.TH "GAMMU" "1" "May 29, 2013" "1.33.0" "Gammu"
 .SH NAME
 gammu \- Does some neat things with your cellular phone or modem.
 .
@@ -28,15 +28,19 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.\" Man page generated from reStructeredText.
+.\" Man page generated from reStructuredText.
 .
 .SH SYNOPSIS
+.INDENT 0.0
+.INDENT 3.5
 .sp
 .nf
 .ft C
 gammu [parameters] <command> [options]
 .ft P
 .fi
+.UNINDENT
+.UNINDENT
 .sp
 Commands actually indicate which operation should Gammu perform. They can be
 specified with or without leading \fB\-\-\fP.
@@ -217,10 +221,14 @@ few others
 .sp
 With \fIUnicode\fP single SMS can contain at most 70 chars, but these can be
 any chars including all national and special ones.
-.IP Warning
+.sp
+\fBWARNING:\fP
+.INDENT 0.0
+.INDENT 3.5
 Please note, that some older phones might have problems displaying such
 message.
-.RE
+.UNINDENT
+.UNINDENT
 .SS Conversion
 .sp
 Gammu tries to do the best to handle non ASCII characters in your message.
@@ -401,11 +409,15 @@ more items).
 .B CALLER file
 Save caller logo as sms in Nokia (Smart Messaging)
 format \- size 72x14, two colors.
-.IP Warning
+.sp
+\fBWARNING:\fP
+.INDENT 7.0
+.INDENT 3.5
 Please note, that it isn\(aqt designed for colour logos available for
 example in DCT4/TIKU \- you need to put bitmap file there inside
 phone using filesystem commands.
-.RE
+.UNINDENT
+.UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -595,11 +607,15 @@ Save operator logo as sms in Nokia (Smart Messaging) format \- size
 .B \-biglogo
 Use 78x21 formatted logo instead of standard 72x14.
 .UNINDENT
-.IP Note
+.sp
+\fBNOTE:\fP
+.INDENT 7.0
+.INDENT 3.5
 This isn\(aqt designed for colour logos available for example in newer
 phones \- you need to put bitmap file there inside phone using
 filesystem commands.
-.RE
+.UNINDENT
+.UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -613,10 +629,14 @@ and saved with text) or Alcatel format and send/save over SMS.
 .B PROFILE  [\-name name] [\-bitmap bitmap] [\-ringtone ringtone]
 Read ringtone (RTTL) format, bitmap (Picture Image size) and name, format into
 Smart Messaging profile and send/save as SMS.
-.IP Warning
+.sp
+\fBWARNING:\fP
+.INDENT 7.0
+.INDENT 3.5
 Please note, that this format is abandoned by Nokia and supported
 by some (older) devices only like Nokia 3310.
-.RE
+.UNINDENT
+.UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -705,21 +725,29 @@ vibrate or turn on light. Text will be cut to 1 sms.
 .TP
 .B \-unicode
 SMS will be saved in Unicode format
-.IP Note
+.sp
+\fBNOTE:\fP
+.INDENT 7.0
+.INDENT 3.5
 The \fB~\fP char in SMS text and \fI\%-unicode\fP option
 (Unicode coding required) can cause text of SMS after \fB~\fP
 char  blink in some phones (like Nokia 33xx).
-.RE
+.UNINDENT
+.UNINDENT
 .UNINDENT
 .INDENT 7.0
 .TP
 .B \-inputunicode
 input text is in Unicode.
-.IP Note
+.sp
+\fBNOTE:\fP
+.INDENT 7.0
+.INDENT 3.5
 You can create Unicode file using WordPad in Windows (during
 saving select "Unicode Text Document" format). In Unix can use
 for example YUdit or vim.
-.RE
+.UNINDENT
+.UNINDENT
 .UNINDENT
 .INDENT 7.0
 .TP
@@ -730,11 +758,15 @@ get text from command line instead of stdin.
 .TP
 .B \-textutf8
 get text in UTF\-8 from command line instead of stdin.
-.IP Note
+.sp
+\fBNOTE:\fP
+.INDENT 7.0
+.INDENT 3.5
 Gammu detects your locales and uses by default encoding based
 on this. Use this option only when you know the input will be
 in UTF\-8 in all cases.
-.RE
+.UNINDENT
+.UNINDENT
 .UNINDENT
 .INDENT 7.0
 .TP
@@ -760,12 +792,16 @@ reading text for the message.
 For example replacement \fB1\fP (0x0061) with \fBa\fP (0x0031) would
 be done by file with following content (hex dump, first two bytes
 is BOM):
+.INDENT 7.0
+.INDENT 3.5
 .sp
 .nf
 .ft C
 ff fe 61 00 31 00
 .ft P
 .fi
+.UNINDENT
+.UNINDENT
 .UNINDENT
 .UNINDENT
 .INDENT 0.0
@@ -985,9 +1021,13 @@ there are displayed full file/folder details like ID (first parameter in line)
 .TP
 .B \-flat
 .UNINDENT
-.IP Note
+.sp
+\fBNOTE:\fP
+.INDENT 7.0
+.INDENT 3.5
 In some phones (like N6230) content of some folders (with more files) can be cut (only part of files will be displayed) for example on infrared connection. This is not Gammu issue, but phone firmware problem.
-.RE
+.UNINDENT
+.UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -999,12 +1039,16 @@ bytes available, used or used by some specific content.
 .TP
 .B getfolderlisting folderID
 Display files and folders available in folder with given folder ID. You can get ID\(aqs using getfilesystem \-flatall.
-.IP Warning
+.sp
+\fBWARNING:\fP
+.INDENT 7.0
+.INDENT 3.5
 Please note, that in some phones (like N6230) content of some folders
 (with more files) can be cut (only part of files will be displayed) for
 example on infrared connection. This is not Gammu issue, but phone
 firmware problem.
-.RE
+.UNINDENT
+.UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1181,10 +1225,14 @@ Scale information will be added to each note of RTTL ringtone. It will
 avoid scale problems available during editing ringtone in composer
 from phone menu (for example, in Nokia 33xx).
 .UNINDENT
-.IP Note
+.sp
+\fBNOTE:\fP
+.INDENT 7.0
+.INDENT 3.5
 When use \fB~\fP char in ringtone name, in some phones (like 33xx) name
 will blink later in phone menus.
-.RE
+.UNINDENT
+.UNINDENT
 .UNINDENT
 .SS Calendar notes commands
 .sp
@@ -1225,10 +1273,14 @@ Retrieves selected todo entries from phone.
 .TP
 .B getallnotes
 Reads all notes from the phone.
-.IP Note
+.sp
+\fBNOTE:\fP
+.INDENT 7.0
+.INDENT 3.5
 Not all phones supports this function, especially most Sony Ericsson
 phones even if they have notes inside phone.
-.RE
+.UNINDENT
+.UNINDENT
 .UNINDENT
 .SS Date, time and alarm commands
 .INDENT 0.0
@@ -1253,15 +1305,23 @@ Sets repeating alarm in phone on selected time.
 Set date and time in phone to date and time set in computer. Please
 note, that this option doesn\(aqt show clock on phone screen. It only set
 date and time.
-.IP Note
+.sp
+\fBNOTE:\fP
+.INDENT 7.0
+.INDENT 3.5
 You can make such synchronization each time, when will connect your
 phone and use Gammu. See \fBSynchronizeTime\fP in \fIgammurc\fP for details.
-.RE
+.UNINDENT
+.UNINDENT
 .UNINDENT
 .SS Categories commands
-.IP Note
+.sp
+\fBNOTE:\fP
+.INDENT 0.0
+.INDENT 3.5
 Categories are supported only on few phones (Alcatel).
-.RE
+.UNINDENT
+.UNINDENT
 .INDENT 0.0
 .TP
 .B addcategory TODO|PHONEBOOK text
@@ -1367,10 +1427,14 @@ messages in phone.
 .INDENT 0.0
 .TP
 .B restore file [\-yes]
-.IP Warning
+.sp
+\fBWARNING:\fP
+.INDENT 7.0
+.INDENT 3.5
 Please note that restoring deletes all current content in phone. If you
 want only to add entries to phone, use \fI\%gammu addnew\fP.
-.RE
+.UNINDENT
+.UNINDENT
 .sp
 Restore settings written in file created using \fI\%gammu backup\fP command.
 .sp
@@ -1380,9 +1444,13 @@ be done, when phone doesn\(aqt have set clock inside.
 .INDENT 0.0
 .TP
 .B restoresms file [\-yes]
-.IP Warning
+.sp
+\fBWARNING:\fP
+.INDENT 7.0
+.INDENT 3.5
 Please note that this overwrites existing messages in phone (if it supports it).
-.RE
+.UNINDENT
+.UNINDENT
 .sp
 Restores SMSes from file (format like \fI\%gammu backupsms\fP uses) to
 selected folder in phone.
@@ -1422,10 +1490,13 @@ supports for phonebook events. The file type is guessed (for input file
 guess is based on extension and file content, for output solely on
 extension).
 .UNINDENT
+.INDENT 7.0
+.INDENT 3.5
 .IP "See also"
 .sp
 \fI\%gammu convertbackup\fP
-.RE
+.UNINDENT
+.UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1435,10 +1506,13 @@ New in version 1.28.94.
 Converts backup between formats supported by Gammu. Unlike
 \fI\%gammu savefile\fP, this does not give you any options what to
 convert, it simply takes converts all what can be saved into output file.
+.INDENT 7.0
+.INDENT 3.5
 .IP "See also"
 .sp
 \fI\%gammu savefile\fP
-.RE
+.UNINDENT
+.UNINDENT
 .UNINDENT
 .SS Nokia specific commands
 .INDENT 0.0
@@ -1477,28 +1551,40 @@ You can use \fIjadmaker\fP to generate a .jad file from a .jar file.
 Goes through phone memory and generated playlist for all music files found.
 .sp
 To manually manage playlists:
+.INDENT 7.0
+.INDENT 3.5
 .sp
 .nf
 .ft C
 gammu addfile a:\e\epredefplaylist filename.m3u
 .ft P
 .fi
+.UNINDENT
+.UNINDENT
 .sp
 Will add playlist filename.m3u
+.INDENT 7.0
+.INDENT 3.5
 .sp
 .nf
 .ft C
 gammu getfilesystem
 .ft P
 .fi
+.UNINDENT
+.UNINDENT
 .sp
 Will get list of all files (including names of files with playlists)
+.INDENT 7.0
+.INDENT 3.5
 .sp
 .nf
 .ft C
 gammu deletefiles a:\e\epredefplaylist\e\efilename.m3u
 .ft P
 .fi
+.UNINDENT
+.UNINDENT
 .sp
 Will delete playlist filename.m3u
 .sp
@@ -1590,28 +1676,38 @@ now You can be asked if want to install unsigned driver (YES), about select code
 .TP
 .B nokianetmonitor test
 Takes output or set netmonitor for Nokia DCT3 phones.
+.INDENT 7.0
+.INDENT 3.5
 .IP "See also"
 .sp
 For more info about this option, please visit
 \fI\%Marcin's page\fP and read netmonitor manual
 there.
-.RE
-.IP Note
+.UNINDENT
+.UNINDENT
+.sp
+\fBNOTE:\fP
+.INDENT 7.0
+.INDENT 3.5
 test \fB243\fP enables all tests (after using command
 \fBgammu nokianetmonitor 243\fP in some phones like 6210 or 9210 have to reboot
 them to see netmonitor menu)
-.RE
+.UNINDENT
+.UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
 .B nokianetmonitor36
 Reset counters from netmonitor test 36 in Nokia DCT3 phones.
+.INDENT 7.0
+.INDENT 3.5
 .IP "See also"
 .sp
 For more info about this option, please visit
 \fI\%Marcin's page\fP and read netmonitor manual
 there.
-.RE
+.UNINDENT
+.UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1622,11 +1718,15 @@ Get/reset to "12345" security code
 .TP
 .B nokiaselftests
 Perform tests for Nokia DCT3 phones.
-.IP Note
+.sp
+\fBNOTE:\fP
+.INDENT 7.0
+.INDENT 3.5
 EEPROM test can show an error when your phone has an EEPROM in flash
 (like 82xx/7110/62xx/33xx). The clock test will show an error when the
 phone doesn?t have an internal battery for the clock (like 3xxx).
-.RE
+.UNINDENT
+.UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1835,9 +1935,13 @@ week or automatic deleting of old entries.
 .INDENT 0.0
 .TP
 .B resetphonesettings PHONE|DEV|UIF|ALL|FACTORY
-.IP Warning
+.sp
+\fBWARNING:\fP
+.INDENT 7.0
+.INDENT 3.5
 This will delete user data, be careful.
-.RE
+.UNINDENT
+.UNINDENT
 .sp
 Reset phone settings.
 .INDENT 7.0
@@ -1885,9 +1989,13 @@ clear date/time
 .UNINDENT
 .UNINDENT
 .SS Dumps decoding commands
-.IP Note
+.sp
+\fBNOTE:\fP
+.INDENT 0.0
+.INDENT 3.5
 These commands are available only if Gammu was compiled with debugging options.
-.RE
+.UNINDENT
+.UNINDENT
 .INDENT 0.0
 .TP
 .B decodebinarydump file [phonemodel]
@@ -1953,12 +2061,20 @@ without asking for PIN
 .B \fBHARD\fP
 with asking for PIN
 .UNINDENT
-.IP Note
+.sp
+\fBNOTE:\fP
+.INDENT 7.0
+.INDENT 3.5
 Some phones will ask for PIN even with \fBSOFT\fP option.
-.RE
-.IP Warning
+.UNINDENT
+.UNINDENT
+.sp
+\fBWARNING:\fP
+.INDENT 7.0
+.INDENT 3.5
 Some phones will reset user data on \fBHARD\fP reset.
-.RE
+.UNINDENT
+.UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1983,11 +2099,15 @@ input).
 .TP
 .B searchphone [\-debug]
 Attempts to search for a connected phone.
-.IP Warning
+.sp
+\fBWARNING:\fP
+.INDENT 7.0
+.INDENT 3.5
 Please note that this can take a very long time, but in case you have
 no clue how to configure phone connection, this is a convenient way to
 find working setup for Gammu.
-.RE
+.UNINDENT
+.UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -2275,128 +2395,188 @@ Entry is read only.
 To check it out, you need to have configuration file for gammu, see
 \fIgammurc\fP for more details about it.
 .SS Sending messages
-.IP Note
+.sp
+\fBNOTE:\fP
+.INDENT 0.0
+.INDENT 3.5
 All messages bellow are sent to number 123456, replace it with proper destination.
-.RE
+.UNINDENT
+.UNINDENT
 .sp
 Send text message up to standard 160 chars:
+.INDENT 0.0
+.INDENT 3.5
 .sp
 .nf
 .ft C
 echo "All your base are belong to us" | gammu sendsms TEXT 123456
 .ft P
 .fi
+.UNINDENT
+.UNINDENT
 .sp
 or
+.INDENT 0.0
+.INDENT 3.5
 .sp
 .nf
 .ft C
 gammu sendsms TEXT 123456 \-text "All your base are belong to us"
 .ft P
 .fi
+.UNINDENT
+.UNINDENT
 .sp
 Send long text message:
+.INDENT 0.0
+.INDENT 3.5
 .sp
 .nf
 .ft C
 echo "All your base are belong to us" | gammu sendsms TEXT 123456 \-len 400
 .ft P
 .fi
+.UNINDENT
+.UNINDENT
 .sp
 or
+.INDENT 0.0
+.INDENT 3.5
 .sp
 .nf
 .ft C
 gammu sendsms TEXT 123456 \-len 400 \-text "All your base are belong to us"
 .ft P
 .fi
+.UNINDENT
+.UNINDENT
 .sp
 or
+.INDENT 0.0
+.INDENT 3.5
 .sp
 .nf
 .ft C
 gammu sendsms EMS 123456 \-text "All your base are belong to us"
 .ft P
 .fi
+.UNINDENT
+.UNINDENT
 .sp
 Send some funky message with predefined sound and animation from 2 bitmaps:
+.INDENT 0.0
+.INDENT 3.5
 .sp
 .nf
 .ft C
 gammu sendsms EMS 123456 \-text "Greetings" \-defsound 1 \-text "from Gammu \-tone10 axelf.txt \-animation 2 file1.bmp file2.bmp
 .ft P
 .fi
+.UNINDENT
+.UNINDENT
 .sp
 Send protected message with ringtone:
+.INDENT 0.0
+.INDENT 3.5
 .sp
 .nf
 .ft C
 gammu sendsms EMS 123456 \-protected 2 \-variablebitmaplong ala.bmp \-toneSElong axelf.txt \-toneSE ring.txt
 .ft P
 .fi
+.UNINDENT
+.UNINDENT
 .SS Retrieving USSD replies
 .sp
 For example for retrieving prepaid card status or retrieving various network info:
+.INDENT 0.0
+.INDENT 3.5
 .sp
 .nf
 .ft C
 gammu getussd \(aq#555#\(aq
 .ft P
 .fi
+.UNINDENT
+.UNINDENT
 .SS Uploading files to Nokia
 .sp
 Add Alien to applications in your phone (you need to have files Alien.JAD and Alien.JAR in current directory):
+.INDENT 0.0
+.INDENT 3.5
 .sp
 .nf
 .ft C
 gammu nokiaaddfile APPLICATION Alien
 .ft P
 .fi
+.UNINDENT
+.UNINDENT
 .sp
 Add file.mid to ringtones folder:
+.INDENT 0.0
+.INDENT 3.5
 .sp
 .nf
 .ft C
 gammu nokiaaddfile TONES file.mid
 .ft P
 .fi
+.UNINDENT
+.UNINDENT
 .SS Setting operator logo
 .sp
 Set logo for network \fB230 03\fP (Vodafone CZ):
+.INDENT 0.0
+.INDENT 3.5
 .sp
 .nf
 .ft C
 gammu setbitmap OPERATOR ala.bmp "230 03"
 .ft P
 .fi
+.UNINDENT
+.UNINDENT
 .SS Converting file formats
 .sp
 The formats conversion can done using \fI\%gammu savefile\fP or
 \fI\%gammu convertbackup\fP commands.
 .sp
 Convert single entry (at position 260) from \fIgammu\-backup\fP to vCalendar:
+.INDENT 0.0
+.INDENT 3.5
 .sp
 .nf
 .ft C
 gammu savefile CALENDAR output.vcs myCalendar.backup 260
 .ft P
 .fi
+.UNINDENT
+.UNINDENT
 .sp
 Convert first phonebook entry from \fIgammu\-backup\fP to vCard:
+.INDENT 0.0
+.INDENT 3.5
 .sp
 .nf
 .ft C
 gammu savefile VCARD21 output.vcf phone.backup ME 1
 .ft P
 .fi
+.UNINDENT
+.UNINDENT
 .sp
 Convert all contacts from backup to vCard:
+.INDENT 0.0
+.INDENT 3.5
 .sp
 .nf
 .ft C
 gammu convertbackup phone.backup output.vcf
 .ft P
 .fi
+.UNINDENT
+.UNINDENT
 .SS Reporting bugs
 .sp
 There are definitely many bugs, reporting to author is welcome. Please include
@@ -2404,6 +2584,8 @@ some useful information when sending bug reports (especially debug logs,
 operating system, it\(aqs version and phone information are needed).
 .sp
 To generate debug log, enable it in \fIgammurc\fP:
+.INDENT 0.0
+.INDENT 3.5
 .sp
 .nf
 .ft C
@@ -2413,14 +2595,20 @@ logfile = /tmp/gammu.log
 logformat = textall
 .ft P
 .fi
+.UNINDENT
+.UNINDENT
 .sp
 Alternatively you can specify logging on command line:
+.INDENT 0.0
+.INDENT 3.5
 .sp
 .nf
 .ft C
 gammu \-d textall \-f /tmp/gammu.log ...
 .ft P
 .fi
+.UNINDENT
+.UNINDENT
 .sp
 With this settings, Gammu generates /tmp/gammu.log on each connection to
 phone and stores dump of communication there. You can also find some
@@ -2434,5 +2622,4 @@ Michal Čihař <michal@cihar.com>
 .SH COPYRIGHT
 2009-2012, Michal Čihař <michal@cihar.com>
 .\" Generated by docutils manpage writer.
-.\" 
 .

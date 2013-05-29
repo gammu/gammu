@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSDRC" "5" "November 21, 2012" "1.32.90" "Gammu"
+.TH "GAMMU-SMSDRC" "5" "May 29, 2013" "1.33.0" "Gammu"
 .SH NAME
 gammu-smsdrc \- gammu-smsd(1) configuration file
 .
@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.\" Man page generated from reStructeredText.
+.\" Man page generated from reStructuredText.
 .
 .SH DESCRIPTION
 .sp
@@ -78,10 +78,13 @@ List of SMSC numbers from which reject messages, see \fI\%Message filtering\fP.
 .TP
 .B [sql]
 Configure SQL queries used by \fIgammu\-smsd\-sql\fP, you usually don\(aqt have to modify them.
+.INDENT 7.0
+.INDENT 3.5
 .IP "See also"
 .sp
 \fIConfigurable queries\fP
-.RE
+.UNINDENT
+.UNINDENT
 .UNINDENT
 .SH GENERAL PARAMETERS OF SMS DAEMON
 .INDENT 0.0
@@ -124,9 +127,13 @@ details
 .sp
 Deprecated since version 1.28.93.
 .UNINDENT
-.IP Note
+.sp
+\fBNOTE:\fP
+.INDENT 7.0
+.INDENT 3.5
 Availability of backends depends on platform and compile time configuration.
-.RE
+.UNINDENT
+.UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -158,11 +165,15 @@ absolute path to log file as startup directory might be different than you
 expect.
 .sp
 Default is to provide no logging.
-.IP Note
+.sp
+\fBNOTE:\fP
+.INDENT 7.0
+.INDENT 3.5
 For logging to Windows Event Log, it is recommended to install Event Log
 source by invoking \fIgammu\-smsd \-e\fP (this is automatically done during
 installation of Gammu).
-.RE
+.UNINDENT
+.UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -311,10 +322,14 @@ Default is 0 (not used).
 .TP
 .B HardResetFrequency
 New in version 1.28.92.
-.IP Warning
+.sp
+\fBWARNING:\fP
+.INDENT 7.0
+.INDENT 3.5
 For some phones hard reset means deleting all data in it. Use
 \fI\%ResetFrequency\fP, unless you know what you are doing.
-.RE
+.UNINDENT
+.UNINDENT
 .sp
 The number of seconds between performing a preventive hard reset in order to
 minimize the cases of hanging phones.
@@ -394,9 +409,13 @@ detect failure of sending message.
 The program will receive optional parameter, which can currently be either
 \fBINIT\fP (meaning failure during phone initialization) or message ID,
 which would indicate error while sending the message.
-.IP Note
+.sp
+\fBNOTE:\fP
+.INDENT 7.0
+.INDENT 3.5
 The environment with message (as is in \fI\%RunOnReceive\fP) is not passed to the command.
-.RE
+.UNINDENT
+.UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -482,11 +501,15 @@ semicolon, for example \fBlocalhost:/path/to/socket\fP or
 \fB192.168.1.1:8000\fP.
 .sp
 For ODBC this is used as Data source name.
-.IP Note
+.sp
+\fBNOTE:\fP
+.INDENT 7.0
+.INDENT 3.5
 Some database servers differentiate usage of \fBlocalhost\fP (to use
 local socket) and \fB127.0.0.1\fP (to use locat TCP/IP connection).
 Please make sure your SMSD settings match the database server ones.
-.RE
+.UNINDENT
+.UNINDENT
 .sp
 New in version 1.28.92.
 .UNINDENT
@@ -549,10 +572,13 @@ Possible values:
 .UNINDENT
 .sp
 New in version 1.28.93.
+.INDENT 7.0
+.INDENT 3.5
 .IP "See also"
 .sp
 You can also completely customize SQL queries used as described in \fISQL Queries\fP.
-.RE
+.UNINDENT
+.UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -620,10 +646,14 @@ The \fBstandard\fP and \fBunicode\fP settings do not apply for 8\-bit messages, 
 are always written raw as they are received with extension .bin.
 .sp
 Default is \fBunicode\fP.
-.IP Note
+.sp
+\fBNOTE:\fP
+.INDENT 7.0
+.INDENT 3.5
 In \fBdetail\fP format, all message parts are stored into signle file,
 for all others each message part is saved separately.
-.RE
+.UNINDENT
+.UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -672,6 +702,8 @@ section, you can look into \fIgammurc\fP for some examples how it can look like.
 .SS Files service
 .sp
 SMSD configuration file for FILES backend could look like:
+.INDENT 0.0
+.INDENT 3.5
 .sp
 .nf
 .ft C
@@ -685,9 +717,13 @@ SentSMSPath = /var/spool/sms/sent/
 ErrorSMSPath = /var/spool/sms/error/
 .ft P
 .fi
+.UNINDENT
+.UNINDENT
 .SS MySQL service
 .sp
 If you want to use MYSQL backend, you will need something like this:
+.INDENT 0.0
+.INDENT 3.5
 .sp
 .nf
 .ft C
@@ -702,9 +738,13 @@ PC = localhost
 Database = smsd
 .ft P
 .fi
+.UNINDENT
+.UNINDENT
 .SS DBI service using SQLite
 .sp
 For \fIgammu\-smsd\-dbi\fP backend, in this particular case SQLite:
+.INDENT 0.0
+.INDENT 3.5
 .sp
 .nf
 .ft C
@@ -715,9 +755,13 @@ DBDir = /var/lib/sqlite3
 Database = smsd.db
 .ft P
 .fi
+.UNINDENT
+.UNINDENT
 .SS ODBC service using MySQL
 .sp
 For \fIgammu\-smsd\-odbc\fP backend, in this particular case using DSN \fBsmsd\fP server:
+.INDENT 0.0
+.INDENT 3.5
 .sp
 .nf
 .ft C
@@ -727,8 +771,12 @@ Driver = odbc
 Host = smsd
 .ft P
 .fi
+.UNINDENT
+.UNINDENT
 .sp
 The DSN definition (in \fB~/.odbc.ini\fP on UNIX) for using MySQL server would look like:
+.INDENT 0.0
+.INDENT 3.5
 .sp
 .nf
 .ft C
@@ -748,9 +796,13 @@ DATABASE            = smsd
 SERVER              = 127.0.0.1
 .ft P
 .fi
+.UNINDENT
+.UNINDENT
 .SS Numbers filtering
 .sp
 Process only messages from 123456 number:
+.INDENT 0.0
+.INDENT 3.5
 .sp
 .nf
 .ft C
@@ -758,8 +810,12 @@ Process only messages from 123456 number:
 number1 = 123456
 .ft P
 .fi
+.UNINDENT
+.UNINDENT
 .sp
 Do not process messages from evil number 666:
+.INDENT 0.0
+.INDENT 3.5
 .sp
 .nf
 .ft C
@@ -767,9 +823,13 @@ Do not process messages from evil number 666:
 number1 = 666
 .ft P
 .fi
+.UNINDENT
+.UNINDENT
 .SS Debugging
 .sp
 Enabling debugging:
+.INDENT 0.0
+.INDENT 3.5
 .sp
 .nf
 .ft C
@@ -778,10 +838,11 @@ debuglevel = 255
 logfile = smsd.log
 .ft P
 .fi
+.UNINDENT
+.UNINDENT
 .SH AUTHOR
 Michal Čihař <michal@cihar.com>
 .SH COPYRIGHT
 2009-2012, Michal Čihař <michal@cihar.com>
 .\" Generated by docutils manpage writer.
-.\" 
 .
