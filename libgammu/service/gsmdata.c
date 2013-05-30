@@ -354,6 +354,7 @@ void GSM_EncodeMMSIndicatorSMSText(unsigned char *Buffer, size_t *Length, GSM_MM
 	/* Message class */
 	switch (Indicator.Class) {
 		case GSM_MMS_None:
+		case GSM_MMS_INVALID:
 			break;
 		case GSM_MMS_Personal:
 			Buffer[(*Length)++] = 0x8a;

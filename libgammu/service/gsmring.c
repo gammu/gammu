@@ -59,6 +59,7 @@ int GSM_RingNoteGetFrequency(GSM_RingNote Note)
 		case Note_Ais: freq = 93230; 				break;
 		case Note_H  : freq = 98780; 				break;
 		case Note_Pause:	     				break;
+		case Note_INVALID:	     				break;
 	}
 	if (Note.Note != Note_Pause) {
 		switch (Note.Scale) {
@@ -83,12 +84,14 @@ int GSM_RingNoteGetFullDuration(GSM_RingNote Note)
 		case Duration_1_8  : duration = 16;			break;
 		case Duration_1_16 : duration = 8;			break;
 		case Duration_1_32 : duration = 4;			break;
+		case Duration_INVALID:					break;
 	}
 	switch (Note.DurationSpec) {
 		case NoSpecialDuration	: 				break;
 		case DottedNote		: duration = duration * 3/2;	break;
 		case DoubleDottedNote	: duration = duration * 9/4;	break;
 		case Length_2_3		: duration = duration * 2/3;	break;
+		case DurationSpec_INVALID:				break;
 	}
 	return duration;
 }
@@ -239,6 +242,7 @@ GSM_Error GSM_SaveRingtoneRttl(FILE *file, GSM_Ringtone *ringtone)
 	DefNoteDuration = k * 32;
 	dbgprintf(NULL, "DefNoteDuration=%d\n", DefNoteDuration);
 	switch (DefNoteDuration) {
+		case Duration_INVALID: break;
 		case Duration_Full:fprintf(file,"d=1"); break;
 		case Duration_1_2 :fprintf(file,"d=2"); break;
 		case Duration_1_4 :fprintf(file,"d=4"); break;
@@ -278,6 +282,7 @@ GSM_Error GSM_SaveRingtoneRttl(FILE *file, GSM_Ringtone *ringtone)
 		/* Trick from PPM Edit */
 		if (Note->DurationSpec == DoubleDottedNote) {
 			switch (Note->Duration) {
+				case Duration_INVALID: break;
 				case Duration_Full:Note->Duration = Duration_Full;break;
 				case Duration_1_2 :Note->Duration = Duration_Full;break;
 				case Duration_1_4 :Note->Duration = Duration_1_2; break;
@@ -295,6 +300,7 @@ GSM_Error GSM_SaveRingtoneRttl(FILE *file, GSM_Ringtone *ringtone)
 				case StaccatoStyle	: fprintf(file,"s=S,"); break;
 				case NaturalStyle 	: fprintf(file,"s=N,"); break;
 				case ContinuousStyle	:			break;
+				case INVALIDStyle: break;
 			}
 			/* Save the default tempo */
 			fprintf(file,"b=%i:",DefNoteTempo);
@@ -314,6 +320,7 @@ GSM_Error GSM_SaveRingtoneRttl(FILE *file, GSM_Ringtone *ringtone)
 				case StaccatoStyle  : fprintf(file,"s=S"); break;
 				case NaturalStyle   : fprintf(file,"s=N"); break;
 				case ContinuousStyle: fprintf(file,"s=C"); break;
+				case INVALIDStyle: break;
 			}
 		}
 		if (Note->Tempo!=DefNoteTempo) {
@@ -329,6 +336,7 @@ GSM_Error GSM_SaveRingtoneRttl(FILE *file, GSM_Ringtone *ringtone)
 			if (!firstcomma) fprintf(file,",");
 			firstcomma = FALSE;
 			switch (Note->Duration) {
+				case Duration_INVALID: break;
 				case Duration_Full:fprintf(file,"1"); break;
 				case Duration_1_2 :fprintf(file,"2"); break;
 				case Duration_1_4 :fprintf(file,"4"); break;
@@ -1518,6 +1526,7 @@ static void Binary2RTTL(GSM_Ringtone *dest, GSM_Ringtone *src)
 						/* Trick from PPM Edit */
 						if (Note->DurationSpec == DoubleDottedNote) {
 							switch (Note->Duration) {
+							case Duration_INVALID: break;
 							case Duration_Full:Note->Duration = Duration_Full;break;
 							case Duration_1_2 :Note->Duration = Duration_Full;break;
 							case Duration_1_4 :Note->Duration = Duration_1_2; break;
@@ -1613,6 +1622,7 @@ unsigned char GSM_EncodeEMSSound(GSM_Ringtone *ringtone, unsigned char *package,
 			/* Save default style */
 			DefNoteStyle = Note->Style;
 			switch (DefNoteStyle) {
+				case INVALIDStyle: break;
 				case NaturalStyle   :Len+=sprintf(package+Len,"STYLE:S0%c%c",13,10); break;
 				case ContinuousStyle:Len+=sprintf(package+Len,"STYLE:S1%c%c",13,10); break;
 				case StaccatoStyle  :Len+=sprintf(package+Len,"STYLE:S2%c%c",13,10); break;
@@ -1654,6 +1664,7 @@ unsigned char GSM_EncodeEMSSound(GSM_Ringtone *ringtone, unsigned char *package,
 				case Note_Ais	:Len+=sprintf(package+Len,"#a");break;
 				case Note_H  	:Len+=sprintf(package+Len,"b");	break;
 				case Note_Pause	:Len+=sprintf(package+Len,"r");	break;
+				case Note_INVALID: break;
 			}
 			switch (Note->Duration) {
 				case Duration_Full : package[Len++]='0';	break;

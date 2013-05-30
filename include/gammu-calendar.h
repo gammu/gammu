@@ -430,7 +430,8 @@ typedef enum {
 	GSM_Priority_None = 0,
 	GSM_Priority_High,
 	GSM_Priority_Medium,
-	GSM_Priority_Low
+	GSM_Priority_Low,
+	GSM_Priority_INVALID
 } GSM_ToDo_Priority;
 
 /**

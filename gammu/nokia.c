@@ -73,6 +73,7 @@ void NokiaComposer(int argc UNUSED, char *argv[])
 			}
 			if (started) {
 				switch (Note->Duration) {
+					case Duration_INVALID: break;
 					case Duration_Full: printf("1"); break;
 					case Duration_1_2 : printf("2"); break;
 					case Duration_1_4 : printf("4"); break;
@@ -82,6 +83,7 @@ void NokiaComposer(int argc UNUSED, char *argv[])
 				}
 				if (Note->DurationSpec == DottedNote) printf(".");
 				switch (Note->Note) {
+					case Note_INVALID: break;
 					case Note_C  	: printf("c");	break;
 					case Note_Cis	: printf("#c");	break;
 					case Note_D  	 :printf("d");	break;

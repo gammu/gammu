@@ -68,6 +68,9 @@ char *FileTypeToString(GSM_FileType type)
 			case GSM_File_Other:
 				s = strdup("Other");
 				break;
+			case GSM_File_INVALID:
+				s = strdup("");
+				break;
 		}
 	}
 
@@ -111,7 +114,7 @@ GSM_FileType StringToFileType(char *s)
 		return 0;
 
 	PyErr_Format(PyExc_ValueError, "Bad value for GSM_FileType '%s'", s);
-	return ENUM_INVALID;
+	return GSM_File_INVALID;
 }
 
 PyObject *FileToPython(GSM_File * file)
@@ -237,8 +240,9 @@ int FileFromPython(PyObject * dict, GSM_File * file, gboolean check)
 		}
 	} else {
 		file->Type = StringToFileType(s);
-		if (file->Type == ENUM_INVALID)
+		if (file->Type == GSM_File_INVALID) {
 			return 0;
+		}
 	}
 
 	if (!CopyStringFromDict(dict, "ID_FullName", 800, file->ID_FullName)) {

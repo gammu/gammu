@@ -105,6 +105,8 @@ GSM_Error PHONE_RTTLPlayOneNote(GSM_StateMachine *s, GSM_RingNote note, gboolean
 
 	/* Is it correct ? Experimental values here */
 	switch (note.Style) {
+		case INVALIDStyle:
+			break;
 		case StaccatoStyle:
 			usleep(7500000);
 			error=s->Phone.Functions->PlayTone(s,0,0,FALSE);

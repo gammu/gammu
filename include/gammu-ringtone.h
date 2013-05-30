@@ -31,7 +31,9 @@ typedef enum {
 	/**
 	 * Staccato style (shorter notes and longer rest period)
 	 */
-	StaccatoStyle = 0x02 << 6
+	StaccatoStyle = 0x02 << 6,
+
+	INVALIDStyle
 } GSM_RingNoteStyle;
 
 typedef enum {
@@ -47,7 +49,9 @@ typedef enum {
 	Note_Gis = 0x09 << 4,
 	Note_A = 0x0a << 4,
 	Note_Ais = 0x0b << 4,
-	Note_H = 0x0c << 4
+	Note_H = 0x0c << 4,
+
+	Note_INVALID
 } GSM_RingNoteNote;
 
 typedef enum {
@@ -56,14 +60,18 @@ typedef enum {
 	Duration_1_4 = 0x02 << 5,
 	Duration_1_8 = 0x03 << 5,
 	Duration_1_16 = 0x04 << 5,
-	Duration_1_32 = 0x05 << 5
+	Duration_1_32 = 0x05 << 5,
+
+	Duration_INVALID
 } GSM_RingNoteDuration;
 
 typedef enum {
 	NoSpecialDuration = 0x00 << 6,
 	DottedNote = 0x01 << 6,
 	DoubleDottedNote = 0x02 << 6,
-	Length_2_3 = 0x03 << 6
+	Length_2_3 = 0x03 << 6,
+
+	DurationSpec_INVALID
 } GSM_RingNoteDurationSpec;
 
 typedef enum {

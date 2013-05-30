@@ -2261,7 +2261,7 @@ StateMachine_SetSpeedDial(StateMachineObject *self, PyObject *args, PyObject *kw
     if (Speed.MemoryLocation == INT_INVALID) return NULL;
 
     Speed.MemoryType = GetMemoryTypeFromDict(value, "MemoryType");
-    if (Speed.MemoryType == ENUM_INVALID) return NULL;
+    if (Speed.MemoryType == MEM_INVALID) return NULL;
 
     BEGIN_PHONE_COMM
     error = GSM_SetSpeedDial(self->s, &Speed);

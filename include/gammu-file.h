@@ -49,7 +49,9 @@ typedef enum {
 	 */
 	GSM_File_Sound_NRT,
 	GSM_File_Sound_MIDI,
-	GSM_File_MMS
+	GSM_File_MMS,
+
+	GSM_File_INVALID
 } GSM_FileType;
 
 /**

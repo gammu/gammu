@@ -39,6 +39,7 @@ char *MMSClassToString(GSM_MMS_Class c)
 			s = strdup("Auto");
 			break;
 		case GSM_MMS_None:
+		case GSM_MMS_INVALID:
 			s = strdup("");
 			break;
 	}
@@ -65,7 +66,7 @@ GSM_MMS_Class MMSClassFromString(const char *s)
 	else if (strcmp("", s) == 0)
 		return GSM_MMS_None;
 	PyErr_Format(PyExc_MemoryError, "Bad value for MMS Class Type '%s'", s);
-	return ENUM_INVALID;
+	return GSM_MMS_INVALID;
 }
 
 PyObject *MMSIndicatorToPython(GSM_MMSIndicator * mms)
@@ -128,7 +129,7 @@ int MMSIndicatorFromPython(PyObject * dict, GSM_MMSIndicator * mms)
 	s = GetCStringFromDict(dict, "Class");
 	if (s != NULL) {
 		mms->Class = MMSClassFromString(s);
-		if (mms->Class == ENUM_INVALID) {
+		if (mms->Class == GSM_MMS_INVALID) {
 			return 0;
 		}
 	}

@@ -74,7 +74,7 @@ GSM_MemoryType GetMemoryTypeFromDict(PyObject * dict, const char *key)
 	char *s;
 	s = GetCharFromDict(dict, key);
 	if (s == NULL)
-		return ENUM_INVALID;
+		return MEM_INVALID;
 
 	return StringToMemoryType(s);
 }

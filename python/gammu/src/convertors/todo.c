@@ -40,6 +40,9 @@ char *TodoPriorityToString(GSM_ToDo_Priority p)
 		case GSM_Priority_None:
 			s = strdup("None");
 			break;
+		case GSM_Priority_INVALID:
+			s = strdup("");
+			break;
 	}
 
 	if (s == NULL) {
@@ -63,7 +66,7 @@ GSM_ToDo_Priority StringToTodoPriority(const char *s)
 		return GSM_Priority_None;
 
 	PyErr_Format(PyExc_MemoryError, "Bad value for Todo Priority '%s'", s);
-	return ENUM_INVALID;
+	return GSM_Priority_INVALID;
 }
 
 PyObject *TodoToPython(const GSM_ToDoEntry * entry)
@@ -308,7 +311,7 @@ int TodoFromPython(PyObject * dict, GSM_ToDoEntry * entry, int needs_location)
 	if (p == NULL)
 		return 0;
 	entry->Priority = StringToTodoPriority(p);
-	if (entry->Priority == ENUM_INVALID)
+	if (entry->Priority == GSM_Priority_INVALID)
 		return 0;
 
 	o = PyDict_GetItemString(dict, "Entries");

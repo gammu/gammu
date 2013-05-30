@@ -360,7 +360,7 @@ int MemoryEntryFromPython(PyObject * dict, GSM_MemoryEntry * entry,
 	}
 
 	entry->MemoryType = GetMemoryTypeFromDict(dict, "MemoryType");
-	if (entry->MemoryType == ENUM_INVALID) {
+	if (entry->MemoryType == MEM_INVALID) {
 		if (needs_location) {
 			return 0;
 		}

@@ -70,6 +70,8 @@ typedef enum {
 	 * Automatic message class.
 	 */
 	GSM_MMS_Auto,
+
+	GSM_MMS_INVALID
 } GSM_MMS_Class;
 
 /**

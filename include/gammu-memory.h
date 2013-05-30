@@ -71,7 +71,12 @@ typedef enum {
 	/**
 	 * Quick dialing choices.
 	 */
-	MEM_QD
+	MEM_QD,
+
+	/**
+	 * Invalid memory type.
+	 */
+	MEM_INVALID
 } GSM_MemoryType;
 
 /**

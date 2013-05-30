@@ -46,6 +46,9 @@ char *RingNoteDurationToString(GSM_RingNoteDuration type)
 		case Duration_1_32:
 			s = strdup("1_32");
 			break;
+		case Duration_INVALID:
+			s = strdup("");
+			break;
 	}
 
 	if (s == NULL) {
@@ -75,7 +78,7 @@ GSM_RingNoteDuration StringToRingNoteDuration(char *s)
 
 	PyErr_Format(PyExc_ValueError,
 		     "Bad value for GSM_RingNoteDuration '%s'", s);
-	return ENUM_INVALID;
+	return Duration_INVALID;
 }
 
 char *RingNoteDurationSpecToString(GSM_RingNoteDurationSpec type)
@@ -94,6 +97,9 @@ char *RingNoteDurationSpecToString(GSM_RingNoteDurationSpec type)
 			break;
 		case Length_2_3:
 			s = strdup("Length_2_3");
+			break;
+		case DurationSpec_INVALID:
+			s = strdup("");
 			break;
 	}
 
@@ -120,7 +126,7 @@ GSM_RingNoteDurationSpec StringToRingNoteDurationSpec(char *s)
 
 	PyErr_Format(PyExc_ValueError,
 		     "Bad value for GSM_RingNoteDurationSpec '%s'", s);
-	return ENUM_INVALID;
+	return DurationSpec_INVALID;
 }
 
 char *RingNoteNoteToString(GSM_RingNoteNote type)
@@ -167,6 +173,9 @@ char *RingNoteNoteToString(GSM_RingNoteNote type)
 		case Note_H:
 			s = strdup("H");
 			break;
+		case Note_INVALID:
+			s = strdup("");
+			break;
 	}
 
 	if (s == NULL) {
@@ -210,7 +219,7 @@ GSM_RingNoteNote StringToRingNoteNote(char *s)
 
 	PyErr_Format(PyExc_ValueError, "Bad value for GSM_RingNoteNote '%s'",
 		     s);
-	return ENUM_INVALID;
+	return Note_INVALID;
 }
 
 char *RingNoteStyleToString(GSM_RingNoteStyle type)
@@ -226,6 +235,9 @@ char *RingNoteStyleToString(GSM_RingNoteStyle type)
 			break;
 		case StaccatoStyle:
 			s = strdup("Staccato");
+			break;
+		case INVALIDStyle:
+			s = strdup("");
 			break;
 	}
 
@@ -250,7 +262,7 @@ GSM_RingNoteStyle StringToRingNoteStyle(char *s)
 
 	PyErr_Format(PyExc_ValueError, "Bad value for GSM_RingNoteStyle '%s'",
 		     s);
-	return ENUM_INVALID;
+	return INVALIDStyle;
 }
 
 char *RingCommandTypeToString(GSM_RingCommandType type)
@@ -484,28 +496,28 @@ int RingCommadFromPython(PyObject * dict, GSM_RingCommand * cmd)
 	if (s == NULL)
 		return 0;
 	cmd->Note.Style = StringToRingNoteStyle(s);
-	if (cmd->Note.Style == ENUM_INVALID)
+	if (cmd->Note.Style == INVALIDStyle)
 		return 0;
 
 	s = GetCharFromDict(dict, "Note");
 	if (s == NULL)
 		return 0;
 	cmd->Note.Note = StringToRingNoteNote(s);
-	if (cmd->Note.Note == ENUM_INVALID)
+	if (cmd->Note.Note == Note_INVALID)
 		return 0;
 
 	s = GetCharFromDict(dict, "DurationSpec");
 	if (s == NULL)
 		return 0;
 	cmd->Note.DurationSpec = StringToRingNoteDurationSpec(s);
-	if (cmd->Note.DurationSpec == ENUM_INVALID)
+	if (cmd->Note.DurationSpec == DurationSpec_INVALID)
 		return 0;
 
 	s = GetCharFromDict(dict, "Duration");
 	if (s == NULL)
 		return 0;
 	cmd->Note.Duration = StringToRingNoteDuration(s);
-	if (cmd->Note.Duration == ENUM_INVALID)
+	if (cmd->Note.Duration == Duration_INVALID)
 		return 0;
 
 	return 1;
