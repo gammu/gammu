@@ -22,6 +22,7 @@ ChangeLog
 2013???? - 1.33.90
 
 [+] * Store network name and code in SMSD tables.
+[-] * Fixed build with recent clang compiler.
     
 20130529 - 1.33.00
 
