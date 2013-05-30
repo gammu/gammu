@@ -428,12 +428,8 @@ int MemoryEntryFromPython(PyObject * dict, GSM_MemoryEntry * entry,
 			PyErr_Clear();
 		}
 
-		/* Get AddError flag */
-		entry->Entries[i].AddError = GetIntFromDict(item, "AddError");
-		if (entry->Entries[i].AddError == INT_INVALID) {
-			entry->Entries[i].AddError = ERR_NONE;
-			PyErr_Clear();
-		}
+		/* Clear AddError flag */
+		entry->Entries[i].AddError = ERR_NONE;
 
 		if (strcmp("Number_General", type) == 0) {
 			valuetype = 't';

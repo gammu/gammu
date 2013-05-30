@@ -685,13 +685,8 @@ int CalendarFromPython(PyObject * dict, GSM_CalendarEntry * entry,
 				break;
 		}
 
-		/* Get AddError flag */
-		entry->Entries[i].AddError = GetIntFromDict(item, "AddError");
-		if (entry->Entries[i].AddError == INT_INVALID) {
-			entry->Entries[i].AddError = ERR_NONE;
-			PyErr_Clear();
-		}
-
+		/* Clear AddError flag */
+		entry->Entries[i].AddError = ERR_NONE;
 	}			/* end for */
 
 	return 1;
