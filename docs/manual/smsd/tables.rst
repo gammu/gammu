@@ -343,6 +343,12 @@ History of database structure
 
 History of schema versions:
 
+14
+
+    Added ``NetCode`` and ``NetName`` fields.
+
+    .. versionchanged:: 1.34.0
+
 13
     Added ``SendBefore`` and ``SendAfter`` fields.
 
