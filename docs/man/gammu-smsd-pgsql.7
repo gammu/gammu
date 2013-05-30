@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSD-PGSQL" "7" "May 29, 2013" "1.33.0" "Gammu"
+.TH "GAMMU-SMSD-PGSQL" "7" "May 30, 2013" "1.33.90" "Gammu"
 .SH NAME
 gammu-smsd-pgsql \- gammu-smsd(1) backend using PostgreSQL database server as a message storage
 .
@@ -155,7 +155,7 @@ CREATE TABLE gammu (
 \-\- Dumping data for table "gammu"
 \-\- 
 
-INSERT INTO gammu ("Version") VALUES (13);
+INSERT INTO gammu ("Version") VALUES (14);
 
 \-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 
@@ -309,6 +309,8 @@ CREATE TABLE phones (
   "Send" boolean NOT NULL DEFAULT \(aqno\(aq,
   "Receive" boolean NOT NULL DEFAULT \(aqno\(aq,
   "IMEI" varchar(35) PRIMARY KEY NOT NULL,
+  "NetCode" varchar(10) DEFAULT \(aqERROR\(aq,
+  "NetName" varchar(35) DEFAULT \(aqERROR\(aq,
   "Client" text NOT NULL,
   "Battery" integer NOT NULL DEFAULT \-1,
   "Signal" integer NOT NULL DEFAULT \-1,

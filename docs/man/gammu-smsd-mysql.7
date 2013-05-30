@@ -1,4 +1,4 @@
-.TH "GAMMU-SMSD-MYSQL" "7" "May 29, 2013" "1.33.0" "Gammu"
+.TH "GAMMU-SMSD-MYSQL" "7" "May 30, 2013" "1.33.90" "Gammu"
 .SH NAME
 gammu-smsd-mysql \- gammu-smsd(1) backend using MySQL database server as a message storage
 .
@@ -139,7 +139,7 @@ CREATE TABLE \(gagammu\(ga (
 \-\- Dumping data for table \(gagammu\(ga
 \-\- 
 
-INSERT INTO \(gagammu\(ga (\(gaVersion\(ga) VALUES (13);
+INSERT INTO \(gagammu\(ga (\(gaVersion\(ga) VALUES (14);
 
 \-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 
@@ -276,6 +276,8 @@ CREATE TABLE \(gaphones\(ga (
   \(gaSend\(ga enum(\(aqyes\(aq,\(aqno\(aq) NOT NULL default \(aqno\(aq,
   \(gaReceive\(ga enum(\(aqyes\(aq,\(aqno\(aq) NOT NULL default \(aqno\(aq,
   \(gaIMEI\(ga varchar(35) NOT NULL,
+  \(gaNetCode\(ga varchar(10) default \(aqERROR\(aq,
+  \(gaNetName\(ga varchar(35) default \(aqERROR\(aq,
   \(gaClient\(ga text NOT NULL,
   \(gaBattery\(ga integer NOT NULL DEFAULT \-1,
   \(gaSignal\(ga integer NOT NULL DEFAULT \-1,
