@@ -177,6 +177,8 @@ CREATE TABLE `phones` (
   `Send` enum('yes','no') NOT NULL default 'no',
   `Receive` enum('yes','no') NOT NULL default 'no',
   `IMEI` varchar(35) NOT NULL,
+  `NetCode` varchar(10) default 'ERROR',
+  `NetName` varchar(35) default 'ERROR',
   `Client` text NOT NULL,
   `Battery` integer NOT NULL DEFAULT -1,
   `Signal` integer NOT NULL DEFAULT -1,
