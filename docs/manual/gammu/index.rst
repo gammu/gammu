@@ -1979,4 +1979,4 @@ hints for improving support for your phone in this log.
 
 See <http://wammu.eu/support/bugs/> for more information on reporting bugs.
 
-Please report bugs to `Gammu bug tracker <http://bugs.cihar.com/>`_.
+Please report bugs to `Gammu bug tracker <https://github.com/gammu/gammu/issues>`_.

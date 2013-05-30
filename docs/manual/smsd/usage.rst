@@ -40,7 +40,7 @@ Alternatively you can get the same functionality from libGammu using
 Reporting Bugs
 --------------
 
-Please report bugs to <http://bugs.cihar.com>.
+Please report bugs to <https://github.com/gammu/gammu/issues>.
 
 Before reporting a bug, please enable verbose logging in SMSD configuration:
 
