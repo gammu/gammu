@@ -1,78 +1,72 @@
-#! /bin/bash  
+#!/bin/sh
 #
-# chkconfig: 345 65 35
-# description: starts/stops Gammu
-# written by Frank Vestergaard Pedersen <fvp@linuxhouse.dk>
+# gammu-smsd: gammu SMS daemon
 #
+# chkconfig: - 65 35
+# description: gammu SMS daemon
+# processname: gammu-smsd
+# config: /etc/gammu-smsdrc
+# pidfile: /var/run/gammu-smsd.pid
 
-###################################################
-# change these values to fit yur installation
-user="gammu"
-group="gammu"
-bin="/usr/local/gammu/bin/gammu-smsd"
-configfile="/etc/gammu-smsdrc"
-pidfile="/var/run/gammu.pid"
+# Source function library.
+. /etc/init.d/functions
 
-####################################################
-# It should not be nesserry to edit below this line
-####################################################
+# Additional environment file
+if [ -f /etc/sysconfig/gammu-smsd ]; then
+      . /etc/sysconfig/gammu-smsd
+fi
 
-proc_name=`basename $0`
-PID=`cat $pidfile`
+RETVAL=0
+prog="gammu-smsd"
+config="/etc/gammu-smsdrc"
+pidfile=${PIDFILE-/var/run/gammu-smsd.pid}
+lockfile=${LOCKFILE-/var/lock/subsys/gammu-smsd}
 
-function START_CMD {
-
-  $bin -c $configfile -p $pidfile -U $user -G $group -d
-  if [ "$?" != "0" ];then
-    echo "ERROR - gammu did not start!"
-  fi
+start () {
+	echo -n $"Starting $prog: "
+	dir=$(dirname ${pidfile})
+	[ -d $dir ] || mkdir $dir
+	$prog -c $config -p ${pidfile} -d
+	RETVAL=$?
+	echo
+	[ $RETVAL -eq 0 ] && touch ${lockfile}
 }
 
-function STATUS {
-  PID=`cat $pidfile`
-  if [ -n "$PID" ] ; then
-    echo "$proc_name running PID: $PID"
-  else
-    echo "$proc_name not running"
-  fi
+
+stop () {
+	echo -n $"Stopping $prog: "
+	killproc -p ${pidfile} php-fpm
+	RETVAL=$?
+	echo
+	if [ $RETVAL -eq 0 ] ; then
+		rm -f ${lockfile} ${pidfile}
+	fi
 }
 
-# See how we were called.
+restart () {
+        stop
+        start
+}
+
+
 case "$1" in
   start)
-    if [ -n "$PID" ]; then  
-      if [ "`ps -p "$PID" -o comm=`" = "" ]; then
-        START_CMD
-        STATUS
-      else
-        echo "Error - $proc_name already running!"
-        STATUS
-      fi
-    else
-      START_CMD
-      STATUS
-    fi
-  ;;
-  status)
-    STATUS
-  ;;
-
+	start
+	;;
   stop)
-    if [ -n "$PID" ] ; then
-      echo "$proc_name stopping PID: $PID"
-      kill $PID
-      sleep 1
-      echo "" > $pidfile
-      echo "$proc_name stopped"
-    fi
-  ;;
-  restart|reload)
-    $0 stop
-    $0 start
-  ;;
+	stop
+	;;
+  status)
+	status -p ${pidfile} gammu-smsd
+	RETVAL=$?
+	;;
+  restart)
+	restart
+	;;
   *)
-       echo $"Usage: $0 {start|stop|restart|reload|status}"
-        exit 1
+	echo $"Usage: $0 {start|stop|status|restart}"
+	RETVAL=2
+        ;;
 esac
 
-exit 0
+exit $RETVAL
