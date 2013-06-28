@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-02-21 10:29+0100\n"
-"PO-Revision-Date: 2013-05-29 10:16+0200\n"
+"PO-Revision-Date: 2013-06-28 19:41+0200\n"
 "Last-Translator: Kristjan Räts <kristjanrats@gmail.com>\n"
 "Language-Team: Estonian <http://l10n.cihar.com/projects/gammu/gammu/et/>\n"
 "Language: et\n"
@@ -58,34 +58,34 @@ msgstr "Tundmatu mälu tüüp: \"%s\"\n"
 #: gammu/backup.c:181
 #, c-format
 msgid "Unknown backup format: \"%s\"\n"
-msgstr ""
+msgstr "Tundmatu varundusvorming: \"%s\"\n"
 
 #: gammu/backup.c:187
 msgid "Error while opening file for writing!\n"
-msgstr ""
+msgstr "Viga faili avamisel kirjutamiseks!\n"
 
 #: gammu/backup.c:191 gammu/files.c:454 helper/message-cmdline.c:1110
 msgid "Error while writing file!\n"
-msgstr ""
+msgstr "Viga faili kirjutamisel!\n"
 
 #: gammu/backup.c:194
 msgid "Error while closing file!\n"
-msgstr ""
+msgstr "Viga faili sulgemisel!\n"
 
 #: gammu/backup.c:241 gammu/backup.c:424 gammu/backup.c:496 gammu/backup.c:531
 #: gammu/backup.c:565 gammu/backup.c:633 gammu/backup.c:670 gammu/backup.c:707
 #: gammu/backup.c:744 gammu/backup.c:781 gammu/backup.c:819 gammu/backup.c:860
 #: gammu/backup.c:894 gammu/backup.c:931 gammu/message.c:426
 msgid "Reading"
-msgstr ""
+msgstr "Lugemine"
 
 #: gammu/backup.c:247 gammu/backup.c:292
 msgid "Only part of data saved, please increase the limit."
-msgstr ""
+msgstr "Andmetest salvestati ainult osa, palun suurenda limiiti."
 
 #: gammu/backup.c:268 gammu/backup.c:310 gammu/backup.c:475 gammu/mms.c:182
 msgid "Reading:"
-msgstr ""
+msgstr "Lugemine:"
 
 #: gammu/backup.c:269 gammu/backup.c:311 gammu/backup.c:476
 #: gammu/backup.c:1045 gammu/backup.c:1120 gammu/backup.c:1173
@@ -99,26 +99,26 @@ msgstr ""
 #: gammu/misc.c:659 gammu/misc.c:664 gammu/misc.c:1376 gammu/mms.c:183
 #, c-format
 msgid "%i percent"
-msgstr ""
+msgstr "%i protsenti"
 
 #: gammu/backup.c:367 gammu/backup.c:1026 gammu/backup.c:1645
 #: gammu/calendar.c:632 gammu/calendar.c:882 gammu/calendar.c:957
 #: gammu/calendar.c:982 gammu/memory.c:24 gammu/memory.c:312
 #: gammu/memory.c:376 gammu/message.c:133 gammu/misc.c:205 gammu/misc.c:606
 msgid "Press Ctrl+C to break..."
-msgstr ""
+msgstr "Katkestamiseks vajuta Ctrl+C..."
 
 #: gammu/backup.c:372
 msgid "Use Unicode subformat of backup file?"
-msgstr ""
+msgstr "Kas kasutada varukoopia failis Unicode vormingut?"
 
 #: gammu/backup.c:404
 msgid "Checking phone phonebook"
-msgstr ""
+msgstr "Kontrollitakse telefoniraamatut"
 
 #: gammu/backup.c:405
 msgid "Backup phone phonebook?"
-msgstr ""
+msgstr "Kas telefoni teha telefoniraamatust varukoopia?"
 
 #: gammu/backup.c:409
 msgid "Checking SIM phonebook"
@@ -274,7 +274,7 @@ msgstr "Telefon"
 
 #: gammu/backup.c:977 gammu/misc.c:410
 msgid "IMEI"
-msgstr ""
+msgstr "IMEI"
 
 #: gammu/backup.c:980
 msgid "File created by"
@@ -687,11 +687,11 @@ msgstr ""
 
 #: gammu/calendar.c:244
 msgid "Yes"
-msgstr ""
+msgstr "Jah"
 
 #: gammu/calendar.c:244
 msgid "No"
-msgstr ""
+msgstr "Ei"
 
 #: gammu/calendar.c:256 gammu/calendar.c:262 gammu/calendar.c:267
 #: gammu/calendar.c:805 gammu/calendar.c:811
@@ -1845,7 +1845,7 @@ msgstr ""
 
 #: gammu/gammu.c:710
 msgid "Ringtones"
-msgstr ""
+msgstr "Helinad"
 
 #: gammu/gammu.c:711
 msgid "Calendar notes"
@@ -1897,7 +1897,7 @@ msgstr ""
 
 #: gammu/gammu.c:730
 msgid "Phone information"
-msgstr ""
+msgstr "Telefoni informatsioon"
 
 #: gammu/gammu.c:731
 msgid "Phone settings"
@@ -2102,7 +2102,7 @@ msgstr ""
 
 #: gammu/message.c:102
 msgid "Not supported"
-msgstr ""
+msgstr "Ei ole toetatud"
 
 #: gammu/message.c:114
 msgid "Service reply"
@@ -2725,7 +2725,7 @@ msgstr ""
 
 #: gammu/misc.c:1118 gammu/misc.c:1640 gammu/misc.c:1643 gammu/mms.c:104
 msgid "disabled"
-msgstr ""
+msgstr "keelatud"
 
 #: gammu/misc.c:1121
 msgid "Bitmap ID"
@@ -2914,7 +2914,7 @@ msgstr ""
 
 #: gammu/misc.c:1575 gammu/misc.c:1607 gammu/misc.c:1634 gammu/misc.c:1684
 msgid "Password"
-msgstr ""
+msgstr "Salasõna"
 
 #: gammu/misc.c:1578
 msgid "USSD"
@@ -2952,7 +2952,7 @@ msgstr ""
 
 #: gammu/misc.c:1637
 msgid "Server"
-msgstr ""
+msgstr "Server"
 
 #: gammu/misc.c:1638
 msgid "Sync. phonebook"
