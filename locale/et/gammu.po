@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-02-21 10:29+0100\n"
-"PO-Revision-Date: 2013-07-01 07:05+0200\n"
+"PO-Revision-Date: 2013-07-05 21:27+0200\n"
 "Last-Translator: Kristjan Räts <kristjanrats@gmail.com>\n"
 "Language-Team: Estonian <http://l10n.cihar.com/projects/gammu/gammu/et/>\n"
 "Language: et\n"
@@ -186,7 +186,7 @@ msgstr "Kas teha varukoopia telefoni tervituslogost/-tekstist?"
 
 #: gammu/backup.c:608
 msgid "Checking phone operator logo"
-msgstr ""
+msgstr "Kontrollitakse telefoni operaatori logo"
 
 #: gammu/backup.c:613
 msgid "Backup phone operator logo?"
