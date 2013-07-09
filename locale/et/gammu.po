@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-02-21 10:29+0100\n"
-"PO-Revision-Date: 2013-07-05 21:27+0200\n"
+"PO-Revision-Date: 2013-07-09 12:45+0200\n"
 "Last-Translator: Kristjan Räts <kristjanrats@gmail.com>\n"
 "Language-Team: Estonian <http://l10n.cihar.com/projects/gammu/gammu/et/>\n"
 "Language: et\n"
@@ -174,63 +174,63 @@ msgstr "Kontrollitakse SIM kaardi SMS profiile"
 
 #: gammu/backup.c:561
 msgid "Backup SIM SMS profiles?"
-msgstr "Kas varundata SIM kaardi SMS profiilid?"
+msgstr "Kas teha varukoopia SIM kaardi SMS profiilidest?"
 
 #: gammu/backup.c:589
 msgid "Checking phone startup text"
-msgstr "Kontrollitakse telefoni tervitusteksti"
+msgstr "Kontrollitakse tervitusteksti telefonis"
 
 #: gammu/backup.c:593
 msgid "Backup phone startup logo/text?"
-msgstr "Kas teha varukoopia telefoni tervituslogost/-tekstist?"
+msgstr "Kas teha varukoopia tervituslogost/-tekstist telefonis?"
 
 #: gammu/backup.c:608
 msgid "Checking phone operator logo"
-msgstr "Kontrollitakse telefoni operaatori logo"
+msgstr "Kontrollitakse operaatori logo telefonis"
 
 #: gammu/backup.c:613
 msgid "Backup phone operator logo?"
-msgstr ""
+msgstr "Kas teha varukoopia operaatori logost telefonis?"
 
 #: gammu/backup.c:624
 msgid "Checking phone WAP bookmarks"
-msgstr ""
+msgstr "Kontrollitakse WAP kohaviitu telefonis"
 
 #: gammu/backup.c:628
 msgid "Backup phone WAP bookmarks?"
-msgstr ""
+msgstr "Kas teha varukoopia WAP kohaviitadest telefonis?"
 
 #: gammu/backup.c:661
 msgid "Checking phone WAP settings"
-msgstr ""
+msgstr "Kontrollitakse WAPi seadeid telefonis"
 
 #: gammu/backup.c:665
 msgid "Backup phone WAP settings?"
-msgstr ""
+msgstr "Kas teha varukoopia WAPi seadedest telefonis?"
 
 #: gammu/backup.c:698
 msgid "Checking phone MMS settings"
-msgstr ""
+msgstr "Kontrollitakse MMSi seadeid telefonis"
 
 #: gammu/backup.c:702
 msgid "Backup phone MMS settings?"
-msgstr ""
+msgstr "Kas teha varukoopia MMSi seadetest telefonis?"
 
 #: gammu/backup.c:735
 msgid "Checking phone Chat settings"
-msgstr ""
+msgstr "Kontrollitakse vestluse seadeid telefonis"
 
 #: gammu/backup.c:739
 msgid "Backup phone Chat settings?"
-msgstr ""
+msgstr "Kas teha varukoopia vestluse seadetest telefonis?"
 
 #: gammu/backup.c:772
 msgid "Checking phone SyncML settings"
-msgstr ""
+msgstr "Kontrollitakse SyncMLi seadeid telefonis"
 
 #: gammu/backup.c:776
 msgid "Backup phone SyncML settings?"
-msgstr ""
+msgstr "Kas teha varikoopia SyncMLi seadetest telefonis?"
 
 #: gammu/backup.c:808
 msgid "Checking phone user ringtones"
