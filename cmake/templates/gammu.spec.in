@@ -92,8 +92,11 @@ Vendor:         Michal Čihař <michal@cihar.com>
 
 # Fedora / Redhat / Centos
 %if 0%{?fedora_version} || 0%{?centos_version} || 0%{?rhel_version} || 0%{?fedora} || 0%{?rhel}
-
+%if 0%{?opensuse_bs}
 %define dist_usb_libs libusb1-devel
+%else
+%define dist_usb_libs libusb-1_0-devel
+%endif
 %define dist_dbi_libs libdbi-devel libdbi-dbd-sqlite sqlite
 %define dist_bluez_libs bluez-libs-devel >= 2.0
 %define dist_postgres_libs postgresql-devel
