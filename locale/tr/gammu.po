@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: gammu 1.28.91\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-02-21 10:29+0100\n"
-"PO-Revision-Date: 2013-07-12 15:03+0200\n"
-"Last-Translator: Michal Čihař <michal@cihar.com>\n"
+"PO-Revision-Date: 2013-07-12 20:51+0200\n"
+"Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
 "Language-Team: Turkish <http://l10n.cihar.com/projects/gammu/gammu/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -662,9 +662,9 @@ msgid "Tone alarm"
 msgstr "Sesli alarm"
 
 #: gammu/calendar.c:178 gammu/calendar.c:199
-#, c-format, fuzzy
+#, c-format
 msgid "forever on each %i. day of %s"
-msgstr "sürekli %s ayının her %i. gününde"
+msgstr "sürekli her %i %s tarihinde"
 
 #: gammu/calendar.c:197 gammu/calendar.c:209 gammu/calendar.c:761
 msgid "Silent alarm"
