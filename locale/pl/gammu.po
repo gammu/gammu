@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.32.90\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-02-21 10:29+0100\n"
-"PO-Revision-Date: 2013-05-03 16:27+0200\n"
+"PO-Revision-Date: 2013-07-12 14:32+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Polish <http://l10n.cihar.com/projects/gammu/gammu/pl/>\n"
 "Language: pl\n"
@@ -1775,7 +1775,7 @@ msgstr "Nazwa"
 #: gammu/gammu.c:91
 #, c-format
 msgid "[Gammu version %s built %s on %s using %s]"
-msgstr "[Wersja Gammu %s zbudowana %s %s za pomocą % s]"
+msgstr "[Wersja Gammu %s zbudowana %s %s za pomocą %s]"
 
 #: gammu/gammu.c:102
 msgid "Protocols"
@@ -1989,7 +1989,7 @@ msgstr "Więcej parametrów wymaganych (funkcja wymaga %d)\n"
 #: gammu/gammu.c:958
 #, c-format
 msgid "More parameters required (function requires %d to %d)\n"
-msgstr "Więcej parametrów wymaganych (funkcja wymaga %d z % d)\n"
+msgstr "Więcej parametrów wymaganych (funkcja wymaga %d z %d)\n"
 
 #: gammu/gammu.c:964 gammu/gammu.c:985
 msgid "Parameters help"
