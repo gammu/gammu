@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu-docs 1.32.90\n"
-"Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-02-23 16:58+0100\n"
+"Project-Id-Version: Gammu-docs 1.33.90\n"
+"Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
+"POT-Creation-Date: 2013-08-05 10:25+0300\n"
 "PO-Revision-Date: 2009-05-25 12:11+0200\n"
 "Last-Translator: Joop van der Linden <joopjrvdlinden@hotmail.com>\n"
 "Language-Team: none\n"

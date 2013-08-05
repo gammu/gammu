@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu-docs 1.32.90\n"
-"Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-02-23 16:58+0100\n"
+"Project-Id-Version: Gammu-docs 1.33.90\n"
+"Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
+"POT-Creation-Date: 2013-08-05 10:25+0300\n"
 "PO-Revision-Date: 2011-12-19 09:43+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: none\n"
@@ -27,18 +27,33 @@ msgstr "Gammu Zarządzanie wszystkimi telefonami"
 
 #. type: Plain text
 #: README:6
-msgid "Gammu is library and command line utility for mobile phones. It is released under GNU GPL version 2."
-msgstr "Gammu jest biblioteką i linią komend narzędzia dla telefonów komórkowych. Jest udostępniany na licencji GNU GPL w wersji 2."
+msgid ""
+"Gammu is library and command line utility for mobile phones. It is released "
+"under GNU GPL version 2."
+msgstr ""
+"Gammu jest biblioteką i linią komend narzędzia dla telefonów komórkowych. "
+"Jest udostępniany na licencji GNU GPL w wersji 2."
 
 #. type: Plain text
 #: README:11
-msgid "It has been initiated by Marcin Wiacek and other people. Originally the code was based on Gnokii <http://www.gnokii.org> and later MyGnokii <http://www.mwiacek.com> projects. Gammu was former (up to version 0.58) called MyGnokii2."
-msgstr "Został on zainicjowany przez Marcina Wiącka i innych ludzi. Oryginalny kod był oparty na Gnokii <http://www.gnokii.org> i później mygnokii <http://www.mwiacek.com>. Gammu był (do wersji 0.58) z nazwą MyGnokii2."
+msgid ""
+"It has been initiated by Marcin Wiacek and other people. Originally the code "
+"was based on Gnokii <http://www.gnokii.org> and later MyGnokii <http://www."
+"mwiacek.com> projects. Gammu was former (up to version 0.58) called "
+"MyGnokii2."
+msgstr ""
+"Został on zainicjowany przez Marcina Wiącka i innych ludzi. Oryginalny kod "
+"był oparty na Gnokii <http://www.gnokii.org> i później mygnokii <http://www."
+"mwiacek.com>. Gammu był (do wersji 0.58) z nazwą MyGnokii2."
 
 #. type: Plain text
 #: README:14
-msgid "Currently the project is lead by Michal Cihar <michal@cihar.com> with help of many contributors."
-msgstr "Obecnie projekt jest prowadzony przez Michal Cihar <michal@cihar.com> z pomocą wielu użytkowników."
+msgid ""
+"Currently the project is lead by Michal Cihar <michal@cihar.com> with help "
+"of many contributors."
+msgstr ""
+"Obecnie projekt jest prowadzony przez Michal Cihar <michal@cihar.com> z "
+"pomocą wielu użytkowników."
 
 #. type: Title =
 #: README:17
@@ -53,8 +68,14 @@ msgstr "Możesz znaleźć więcej informacji na temat <http://wammu.eu/gammu/>."
 
 #. type: Plain text
 #: README:24
-msgid "There is also Gammu manual available in docs/manual. You can build HTML version of it using make manual-html which is viewable online at <http://wammu.eu/docs/manual/>."
-msgstr "Istnieje również podręcznik Gammu dostępny w docs/manual. Możesz budować wersję HTML za pomocą zrobić manual-html, który jest na: <http://wammu.eu/docs/manual/>."
+msgid ""
+"There is also Gammu manual available in docs/manual. You can build HTML "
+"version of it using make manual-html which is viewable online at <http://"
+"wammu.eu/docs/manual/>."
+msgstr ""
+"Istnieje również podręcznik Gammu dostępny w docs/manual. Możesz budować "
+"wersję HTML za pomocą zrobić manual-html, który jest na: <http://wammu.eu/"
+"docs/manual/>."
 
 #. type: Title =
 #: README:27
@@ -64,8 +85,12 @@ msgstr "Opinie i raporty o błędach"
 
 #. type: Plain text
 #: README:31
-msgid "Any feedback is welcome, see <http://wammu.eu/support/> for information how to contact developers."
-msgstr "Wszelkie uwagi są mile widziane, patrz <http://wammu.eu/support/> po informację jak skontaktować się z programistami."
+msgid ""
+"Any feedback is welcome, see <http://wammu.eu/support/> for information how "
+"to contact developers."
+msgstr ""
+"Wszelkie uwagi są mile widziane, patrz <http://wammu.eu/support/> po "
+"informację jak skontaktować się z programistami."
 
 #. type: Title =
 #: README:34
@@ -86,8 +111,12 @@ msgstr "Gammu Zarządzanie wszystkimi telefonami - Instalacja"
 
 #. type: Plain text
 #: INSTALL:5
-msgid "See docs/manual/project/install.rst for installation guide or see chapter \"Compiling Gammu\" in The Gammu Manual."
-msgstr "Zobacz docs/manual/project/install.rst dla instrukcji instalacji lub w rozdziale \"Kompilacja Gammu\" w Podręczniku Gammu."
+msgid ""
+"See docs/manual/project/install.rst for installation guide or see chapter "
+"\"Compiling Gammu\" in The Gammu Manual."
+msgstr ""
+"Zobacz docs/manual/project/install.rst dla instrukcji instalacji lub w "
+"rozdziale \"Kompilacja Gammu\" w Podręczniku Gammu."
 
 #~ msgid "Gammu Configuration File"
 #~ msgstr "Pobierz informację o telefonie"

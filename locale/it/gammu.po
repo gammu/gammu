@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu 1.32.90\n"
+"Project-Id-Version: Gammu 1.33.90\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2013-05-22 14:39+0200\n"
+"POT-Creation-Date: 2013-08-05 10:27+0200\n"
 "PO-Revision-Date: 2012-08-27 10:53+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Italian <http://l10n.cihar.com/projects/gammu/gammu/it/>\n"
@@ -114,8 +114,8 @@ msgid "%i percent"
 msgstr "%cScrittura : %i%"
 
 #: gammu/backup.c:367 gammu/backup.c:1026 gammu/backup.c:1645
-#: gammu/calendar.c:632 gammu/calendar.c:882 gammu/calendar.c:957
-#: gammu/calendar.c:982 gammu/memory.c:24 gammu/memory.c:312
+#: gammu/calendar.c:632 gammu/calendar.c:885 gammu/calendar.c:960
+#: gammu/calendar.c:985 gammu/memory.c:24 gammu/memory.c:312
 #: gammu/memory.c:376 gammu/message.c:133 gammu/misc.c:205 gammu/misc.c:606
 #, fuzzy
 msgid "Press Ctrl+C to break..."
@@ -318,7 +318,7 @@ msgstr "Controllo i profili del telefono\n"
 msgid "Time of backup"
 msgstr "Data ed ora del backup : %s\n"
 
-#: gammu/backup.c:974 gammu/calendar.c:237 gammu/calendar.c:820
+#: gammu/backup.c:974 gammu/calendar.c:237 gammu/calendar.c:823
 msgid "Phone"
 msgstr "Telefono"
 
@@ -633,7 +633,7 @@ msgstr "Viaggio\n"
 msgid "Vacation"
 msgstr "Vacanza\n"
 
-#: gammu/calendar.c:43 gammu/calendar.c:756
+#: gammu/calendar.c:43 gammu/calendar.c:759
 msgid "Alarm"
 msgstr "Sveglia"
 
@@ -735,7 +735,7 @@ msgstr "Avvio"
 msgid "Stop"
 msgstr ""
 
-#: gammu/calendar.c:170 gammu/calendar.c:766 helper/memory-display.c:41
+#: gammu/calendar.c:170 gammu/calendar.c:769 helper/memory-display.c:41
 msgid "Last modified"
 msgstr ""
 
@@ -749,34 +749,34 @@ msgstr "Con allarme  : %s\n"
 msgid "forever on each %i. day of %s"
 msgstr ""
 
-#: gammu/calendar.c:197 gammu/calendar.c:209 gammu/calendar.c:761
+#: gammu/calendar.c:197 gammu/calendar.c:209 gammu/calendar.c:764
 #, fuzzy
 msgid "Silent alarm"
 msgstr "Senza allarme: %s\n"
 
-#: gammu/calendar.c:217 gammu/calendar.c:551 gammu/calendar.c:771
-#: gammu/calendar.c:993 gammu/message.c:225 gammu/misc.c:1139
+#: gammu/calendar.c:217 gammu/calendar.c:551 gammu/calendar.c:774
+#: gammu/calendar.c:996 gammu/message.c:225 gammu/misc.c:1139
 #: helper/memory-display.c:167 helper/message-display.c:445
 msgid "Text"
 msgstr "Testo"
 
-#: gammu/calendar.c:222 gammu/calendar.c:825
+#: gammu/calendar.c:222 gammu/calendar.c:828
 #, fuzzy
 msgid "Description"
 msgstr "Locazione    : \"%s\"\n"
 
-#: gammu/calendar.c:227 gammu/calendar.c:835 helper/memory-display.c:211
+#: gammu/calendar.c:227 gammu/calendar.c:838 helper/memory-display.c:211
 msgid "LUID"
 msgstr ""
 
 #: gammu/calendar.c:232 gammu/calendar.c:599 gammu/calendar.c:643
-#: gammu/calendar.c:687 gammu/calendar.c:711 gammu/calendar.c:830
+#: gammu/calendar.c:687 gammu/calendar.c:711 gammu/calendar.c:833
 #: gammu/memory.c:141 gammu/message.c:215 gammu/misc.c:1868 gammu/misc.c:1901
 #: gammu/misc.c:2191 gammu/misc.c:2315
 msgid "Location"
 msgstr "Posizione"
 
-#: gammu/calendar.c:242 gammu/calendar.c:776 helper/memory-display.c:62
+#: gammu/calendar.c:242 gammu/calendar.c:779 helper/memory-display.c:62
 msgid "Private"
 msgstr ""
 
@@ -789,7 +789,7 @@ msgid "No"
 msgstr "No"
 
 #: gammu/calendar.c:256 gammu/calendar.c:262 gammu/calendar.c:267
-#: gammu/calendar.c:805 gammu/calendar.c:811
+#: gammu/calendar.c:808 gammu/calendar.c:814
 #, fuzzy
 msgid "Contact ID"
 msgstr "ID Contatto  : %d\n"
@@ -994,60 +994,64 @@ msgid "Priority"
 msgstr "Priorità"
 
 #: gammu/calendar.c:716
+msgid "Invalid"
+msgstr ""
+
+#: gammu/calendar.c:719
 #, fuzzy
 msgid "Low"
 msgstr "Bassa\n"
 
-#: gammu/calendar.c:719
+#: gammu/calendar.c:722
 #, fuzzy
 msgid "Medium"
 msgstr "Media\n"
 
-#: gammu/calendar.c:722
+#: gammu/calendar.c:725
 #, fuzzy
 msgid "High"
 msgstr "Alta\n"
 
-#: gammu/calendar.c:725
+#: gammu/calendar.c:728
 msgid "None"
 msgstr "Nessuno"
 
-#: gammu/calendar.c:729 gammu/message.c:111 gammu/misc.c:2122
+#: gammu/calendar.c:732 gammu/message.c:111 gammu/misc.c:2122
 #: gammu/misc.c:2165
 msgid "Unknown"
 msgstr "Sconosciuto"
 
-#: gammu/calendar.c:736
+#: gammu/calendar.c:739
 #, fuzzy
 msgid "Due time"
 msgstr "Data ed ora      : %s\n"
 
-#: gammu/calendar.c:741
+#: gammu/calendar.c:744
 #, fuzzy
 msgid "Start time"
 msgstr "Normale\n"
 
-#: gammu/calendar.c:746
+#: gammu/calendar.c:749
 #, fuzzy
 msgid "Completed time"
 msgstr "Completato   : %s\n"
 
-#: gammu/calendar.c:751
+#: gammu/calendar.c:754
 msgid "Completed"
 msgstr "Completato"
 
-#: gammu/calendar.c:786 gammu/calendar.c:791 helper/memory-display.c:45
+#: gammu/calendar.c:789 gammu/calendar.c:794 helper/memory-display.c:45
 #: helper/memory-display.c:55 helper/memory-display.c:57
 #, fuzzy
 msgid "Category"
 msgstr "Categoria    : %i\n"
 
-#: gammu/calendar.c:815
+#: gammu/calendar.c:818
 #, fuzzy
 msgid "Contact"
 msgstr "ID Contatto  : %d\n"
 
-#: gammu/calendar.c:900 gammu/memory.c:316 gammu/memory.c:393
+#: gammu/calendar.c:903 gammu/memory.c:316 gammu/memory.c:393
 #, c-format
 msgid "Search text too long, truncating to %d chars!\n"
 msgstr "Stringa di ricerca troppo lunga, la tronco a %d caratteri!\n"
@@ -1890,7 +1894,7 @@ msgstr ""
 msgid "  Saving to %s\n"
 msgstr "  Sto salvando su %s\n"
 
-#: gammu/files.c:702 gammu/nokia.c:946
+#: gammu/files.c:702 gammu/nokia.c:948
 #, c-format
 msgid "Parameter \"%s\" unknown\n"
 msgstr "Parametro \"%s\" sconosciuto\n"
@@ -1900,7 +1904,7 @@ msgstr "Parametro \"%s\" sconosciuto\n"
 msgid "What file type (\"%s\") ?\n"
 msgstr "Che tipo di file (\"%s\") ?\n"
 
-#: gammu/files.c:746 gammu/misc.c:1337 gammu/nokia.c:955
+#: gammu/files.c:746 gammu/misc.c:1337 gammu/nokia.c:957
 #: helper/message-cmdline.c:1311
 #, fuzzy
 msgid "Parameter missing!"
@@ -3757,7 +3761,7 @@ msgstr ""
 "\n"
 "Questa suoneria, nel compositore del telefono, dovrebbe essere: "
 
-#: gammu/nokia.c:105
+#: gammu/nokia.c:107
 #, fuzzy
 msgid "To enter it please press:"
 msgstr ""
@@ -3765,116 +3769,116 @@ msgstr ""
 "\n"
 "Per inserirlo, premere: "
 
-#: gammu/nokia.c:124
+#: gammu/nokia.c:126
 msgid "(longer)"
 msgstr "(più a lungo)"
 
-#: gammu/nokia.c:252
+#: gammu/nokia.c:254
 #, fuzzy, c-format
 msgid "Checking %s\n"
 msgstr "Controllo i profili del telefono\n"
 
-#: gammu/nokia.c:257
+#: gammu/nokia.c:259
 msgid "  Only part handled!"
 msgstr ""
 
-#: gammu/nokia.c:336
+#: gammu/nokia.c:338
 msgid "  Problem with adding playlist"
 msgstr ""
 
-#: gammu/nokia.c:383
+#: gammu/nokia.c:385
 #, fuzzy, c-format
 msgid "Writing file %s:"
 msgstr "Errore durante la scrittura sul dispositivo."
 
-#: gammu/nokia.c:438
+#: gammu/nokia.c:440
 msgid ""
 "Your phone model is not supported. Please report it to authors (see <http://"
 "wammu.eu/support/bugs/>). Thank you."
 msgstr ""
 
-#: gammu/nokia.c:454
+#: gammu/nokia.c:456
 msgid "Problem with deleting playlist"
 msgstr ""
 
-#: gammu/nokia.c:548
+#: gammu/nokia.c:550
 #, c-format
 msgid "What folder type (\"%s\") ?\n"
 msgstr "Che tipo di cartella (\"%s\") ?\n"
 
-#: gammu/nokia.c:556 gammu/nokia.c:563 gammu/nokia.c:570
+#: gammu/nokia.c:558 gammu/nokia.c:565 gammu/nokia.c:572
 #, fuzzy, c-format
 msgid "Can not open file %s\n"
 msgstr "Impossibile aprire il file \"%s\"\n"
 
-#: gammu/nokia.c:591 gammu/nokia.c:665
+#: gammu/nokia.c:593 gammu/nokia.c:667
 #, fuzzy
 msgid "Folder not found. Probably function not supported!"
 msgstr "Cartella non trovata. Probabilmente la funzione non è supportata !\n"
 
-#: gammu/nokia.c:614
+#: gammu/nokia.c:616
 msgid "Searching for phone folder: "
 msgstr "Sto cercando le cartelle nel telefono: "
 
-#: gammu/nokia.c:691
+#: gammu/nokia.c:693
 #, fuzzy
 msgid "No vendor info in JAD file!"
 msgstr "Nessuna informazione sul produttore nel file JAD\n"
 
-#: gammu/nokia.c:696
+#: gammu/nokia.c:698
 #, fuzzy
 msgid "No name info in JAD file!"
 msgstr "Nessun nome specificato nel JAD\n"
 
-#: gammu/nokia.c:701
+#: gammu/nokia.c:703
 #, fuzzy
 msgid "No JAR URL info in JAD file!"
 msgstr "Nessun informazione sull'URL del JAR nel file JAD\n"
 
-#: gammu/nokia.c:707
+#: gammu/nokia.c:709
 #, fuzzy
 msgid "Declared JAR file size is different than real. Fixed by Gammu."
 msgstr "Nessun informazione sull'URL del JAR nel file JAD\n"
 
-#: gammu/nokia.c:731
+#: gammu/nokia.c:733
 #, fuzzy
 msgid "No JAR size info in JAD file. Added by Gammu."
 msgstr "Nessun informazione sull'URL del JAR nel file JAD\n"
 
-#: gammu/nokia.c:740
+#: gammu/nokia.c:742
 #, c-format
 msgid "Adding \"%s\""
 msgstr "Sto aggiungendo \"%s\""
 
-#: gammu/nokia.c:741
+#: gammu/nokia.c:743
 #, c-format
 msgid " version %s"
 msgstr " versione %s"
 
-#: gammu/nokia.c:742
+#: gammu/nokia.c:744
 #, c-format
 msgid " created by %s\n"
 msgstr " creato da %s\n"
 
-#: gammu/nokia.c:793 gammu/nokia.c:845
+#: gammu/nokia.c:795 gammu/nokia.c:847
 msgid "Application already exists. Deleting by Gammu."
 msgstr ""
 
-#: gammu/nokia.c:826 gammu/nokia.c:859
+#: gammu/nokia.c:828 gammu/nokia.c:861
 #, fuzzy, c-format
 msgid "  Deleting %s\n"
 msgstr "Cancellazione delle vecchie stazioni FM: "
 
-#: gammu/nokia.c:882
+#: gammu/nokia.c:884
 #, fuzzy
 msgid "Writing JAD file:"
 msgstr "Nessuna informazione sul produttore nel file JAD\n"
 
-#: gammu/nokia.c:901
+#: gammu/nokia.c:903
 msgid "Writing JAR file:"
 msgstr ""
 
-#: gammu/nokia.c:976
+#: gammu/nokia.c:978
 msgid "Writing file:"
 msgstr ""
 

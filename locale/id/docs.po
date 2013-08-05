@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu-docs 1.32.90\n"
-"Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-02-23 16:58+0100\n"
+"Project-Id-Version: Gammu-docs 1.33.90\n"
+"Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
+"POT-Creation-Date: 2013-08-05 10:25+0300\n"
 "PO-Revision-Date: 2011-12-13 21:56+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
@@ -102,8 +102,8 @@ msgstr "Dukungan pengembang"
 #: README:36
 msgid "You can appreciate developers work at <http://wammu.eu/donate/>."
 msgstr ""
-"Kamu dapat menghargai pengembang yang sudah bekerja di "
-"<http://wammu.eu/donate/>."
+"Kamu dapat menghargai pengembang yang sudah bekerja di <http://wammu.eu/"
+"donate/>."
 
 #. type: Title =
 #: INSTALL:2
@@ -657,8 +657,8 @@ msgstr ""
 #~ "Some functions not available for your system (disabled in config or not "
 #~ "implemented)."
 #~ msgstr ""
-#~ "Beberapa fungsi tidak tersedia untuk sistem anda (nonaktifkan di config atau "
-#~ "jangan implementasikan)."
+#~ "Beberapa fungsi tidak tersedia untuk sistem anda (nonaktifkan di config "
+#~ "atau jangan implementasikan)."
 
 #~ msgid "Function not supported by phone."
 #~ msgstr "Fungsi tidak didukung oleh telepon."

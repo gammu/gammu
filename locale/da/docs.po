@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu-docs 1.32.90\n"
-"Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2011-02-23 16:58+0100\n"
+"Project-Id-Version: Gammu-docs 1.33.90\n"
+"Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
+"POT-Creation-Date: 2013-08-05 10:25+0300\n"
 "PO-Revision-Date: 2011-08-30 15:35+0200\n"
 "Last-Translator: Jørgen Thomsen <opensource@jth.net>\n"
 "Language-Team: none\n"
@@ -42,9 +42,9 @@ msgid ""
 "MyGnokii2."
 msgstr ""
 "Det er udviklet af Marcin Wiacek og andre personer. Oprindeligt var koden "
-"baseret på Gnokii <http://www.gnokii.org> og senere MyGnokii "
-"<http://www.mwiacek.com> projekterne. Gammu blev tidligere (op til version "
-"0.58) kaldt MyGnokii2."
+"baseret på Gnokii <http://www.gnokii.org> og senere MyGnokii <http://www."
+"mwiacek.com> projekterne. Gammu blev tidligere (op til version 0.58) kaldt "
+"MyGnokii2."
 
 #. type: Plain text
 #: README:14
@@ -102,8 +102,8 @@ msgstr "Supporter udviklerne"
 #: README:36
 msgid "You can appreciate developers work at <http://wammu.eu/donate/>."
 msgstr ""
-"Du kan vise din taknemmelighed for udviklernes arbejde på "
-"<http://wammu.eu/donate/>"
+"Du kan vise din taknemmelighed for udviklernes arbejde på <http://wammu.eu/"
+"donate/>"
 
 #. type: Title =
 #: INSTALL:2
