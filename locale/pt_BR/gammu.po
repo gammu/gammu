@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-08-05 10:27+0200\n"
-"PO-Revision-Date: 2013-05-21 14:29+0200\n"
-"Last-Translator: Michal Čihař <michal@cihar.com>\n"
-"Language-Team: Portuguese (Brazil) <http://l10n.cihar.com/projects/gammu/"
-"gammu/pt_BR/>\n"
+"PO-Revision-Date: 2013-08-05 13:51+0200\n"
+"Last-Translator: Helder Santana <helder.bs.santana@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) "
+"<http://l10n.cihar.com/projects/gammu/gammu/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 1.6-dev\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 1.7-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -902,7 +902,7 @@ msgstr "Prioridade"
 
 #: gammu/calendar.c:716
 msgid "Invalid"
-msgstr ""
+msgstr "Inválido"
 
 #: gammu/calendar.c:719
 msgid "Low"
