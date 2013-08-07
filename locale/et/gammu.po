@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-08-05 10:27+0200\n"
-"PO-Revision-Date: 2013-07-31 19:59+0200\n"
+"PO-Revision-Date: 2013-08-07 19:49+0200\n"
 "Last-Translator: Kristjan Räts <kristjanrats@gmail.com>\n"
 "Language-Team: Estonian <http://l10n.cihar.com/projects/gammu/gammu/et/>\n"
 "Language: et\n"
@@ -454,75 +454,75 @@ msgstr "Mälus on ainult %i vaba kohta. Väljutakse\n"
 
 #: gammu/backup.c:1668
 msgid "Add phone phonebook entries?"
-msgstr ""
+msgstr "Kas lisata telefoniraamatu kirjed telefoni?"
 
 #: gammu/backup.c:1696
 msgid "Add SIM phonebook entries?"
-msgstr ""
+msgstr "Kas lisada telefoniraamatu kirjed SIM kaardile?"
 
 #: gammu/backup.c:1728
 msgid "Add phone calendar notes?"
-msgstr ""
+msgstr "Kas lisada kalendri märkmed telefoni?"
 
 #: gammu/backup.c:1752
 msgid "Add phone ToDo?"
-msgstr ""
+msgstr "Kas lisada ülesanded telefoni?"
 
 #: gammu/backup.c:1774
 msgid "Add notes to phone?"
-msgstr "Lisa märkmed telefoni?"
+msgstr "Kas lisada märkmed telefoni?"
 
 #: gammu/backup.c:1797
 msgid "Add phone WAP bookmarks?"
-msgstr ""
+msgstr "Kas lisada WAP kohaviidad telefoni?"
 
 #: gammu/backupsms.c:51
 msgid "Delete each sms after backup?"
-msgstr ""
+msgstr "Kas kustutada SMS pärast varundamist?"
 
 #: gammu/backupsms.c:56
 #, c-format
 msgid "Backup sms from folder \"%s\"%s?"
-msgstr ""
+msgstr "Kas teha varukoopia SMS sõnumitest kaustas \"%s\"%s?"
 
 #: gammu/backupsms.c:58 gammu/backupsms.c:183
 msgid " (SIM)"
-msgstr ""
+msgstr " (SIM kaart)"
 
 #: gammu/backupsms.c:84
 #, c-format
 msgid "   Increase %s\n"
-msgstr ""
+msgstr "   Juurdekasv %s\n"
 
 #: gammu/backupsms.c:107 gammu/misc.c:1375
 msgid "Deleting:"
-msgstr ""
+msgstr "Kustutatakse:"
 
 #: gammu/backupsms.c:141
 msgid "Restore message?"
-msgstr ""
+msgstr "Kas taastada sõnum?"
 
 #: gammu/backupsms.c:168
 msgid "Do you want to restore binary SMS?"
-msgstr ""
+msgstr "Kas taastada binaar-SMS sõnumid?"
 
 #: gammu/backupsms.c:180
 #, c-format
 msgid "Restore %03i sms to folder \"%s\"%s?"
-msgstr ""
+msgstr "Kas taastada %03i SMS sõnumit kasuta \"%s\"%s?"
 
 #: gammu/backupsms.c:184
 #, c-format
 msgid "saving %i SMS\n"
-msgstr ""
+msgstr "Salvestati %i SMS-sõnumit\n"
 
 #: gammu/calendar.c:19
 msgid "Note type"
-msgstr ""
+msgstr "Märkme tüüp"
 
 #: gammu/calendar.c:22
 msgid "Reminder (Date)"
-msgstr ""
+msgstr "Meeldetuletus (daatum)"
 
 #: gammu/calendar.c:25
 msgctxt "Calendar note type"
@@ -535,19 +535,19 @@ msgstr "Koosolek"
 
 #: gammu/calendar.c:31
 msgid "Birthday (Anniversary)"
-msgstr ""
+msgstr "Sünnipäev (aastapäev)"
 
 #: gammu/calendar.c:34
 msgid "Memo (Miscellaneous)"
-msgstr ""
+msgstr "Meeldetuletus (muu)"
 
 #: gammu/calendar.c:37
 msgid "Travel"
-msgstr ""
+msgstr "Reis"
 
 #: gammu/calendar.c:40
 msgid "Vacation"
-msgstr ""
+msgstr "Puhkus"
 
 #: gammu/calendar.c:43 gammu/calendar.c:759
 msgid "Alarm"
@@ -555,27 +555,27 @@ msgstr "Alarm"
 
 #: gammu/calendar.c:46
 msgid "Shopping"
-msgstr ""
+msgstr "Ostlemine"
 
 #: gammu/calendar.c:49
 msgid "Daily alarm"
-msgstr ""
+msgstr "Igapäevane alarm"
 
 #: gammu/calendar.c:52
 msgid "Training/Athletism"
-msgstr ""
+msgstr "Trenn/atleetika"
 
 #: gammu/calendar.c:55
 msgid "Training/Ball Games"
-msgstr ""
+msgstr "Trenn/pallimängud"
 
 #: gammu/calendar.c:58
 msgid "Training/Cycling"
-msgstr ""
+msgstr "Trenn/rattasõit"
 
 #: gammu/calendar.c:61
 msgid "Training/Budo"
-msgstr ""
+msgstr "Trenn/budo"
 
 #: gammu/calendar.c:64
 msgid "Training/Dance"
