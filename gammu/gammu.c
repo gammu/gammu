@@ -409,20 +409,57 @@ static void RunBatch(int argc, char *argv[])
 		}
 
 		/* split words into strings in the array argsv */
+		// added support for params that contain space(s) by adam-pl
 		i = 0;
 		j = 0;
 		argsc = 0;
 		len = strlen(ln);
+		token = 0x00;
 		while (i <= len) {
-			if (ln[i] == ' ' || ln[i] == 0) {
-				argsc++;
-				argsv[argsc] = malloc(i - j + 1);
-				strncpy(argsv[argsc], ln + j, i - j);
-				argsv[argsc][i - j] = 0;
-				j = i + 1;
-			}
-			i++;
+		  switch (token) {
+		    case 0x27:
+		    case 0x22: // ' or " char
+		      if (ln[i] == token) {
+		        //printf( "(B) Found start token at i=%zu\n", i);
+		        token = 0x00;
+		        n = i - j;
+		        argsc++;
+		        argsv[argsc] = malloc(n + 1);
+		        strncpy(argsv[argsc], ln + j, n);
+		        argsv[argsc][n] = 0;
+		        i++;
+		        j = i + 1;
+		        //printf( "n=%i, value=%s\n", n, argsv[argsc]);
+		      }
+		      break;
+		    default:
+		      if (ln[i] == ' ' || ln[i] == 0) {
+		        argsc++;
+		        n = i - j;
+		        argsv[argsc] = malloc(n + 1);
+		        strncpy(argsv[argsc], ln + j, n);
+		        argsv[argsc][n] = 0;
+		        j = i + 1;
+		      }
+		      else if (ln[i] == 0x27 || ln[i] == 0x22) {
+			      //printf( "(A) Found end token at i=%zu\n", i);
+			      token = ln[i];
+			      j = i + 1;
+		      }
+		      break;
+		  }
+		  i++;
 		}
+		
+		/* show params list */
+		/*
+		if (argsc > 0) {
+		  printf( "\nSummary of params:\n");
+		  for (j = 1; j <= argsc; j++) {
+		    printf( "Parameter %i=[%s]\n", j, argsv[j]);
+		  }
+		}
+		*/
 		if (argsc > 0) {
 			/* we have some usable command and parameters, send them into standard processing */
 			printf ("----------------------------------------------------------------------------\n");
