@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-08-05 10:27+0200\n"
-"PO-Revision-Date: 2013-08-23 13:55+0200\n"
+"PO-Revision-Date: 2013-08-23 19:46+0200\n"
 "Last-Translator: Kristjan Räts <kristjanrats@gmail.com>\n"
 "Language-Team: Estonian <http://l10n.cihar.com/projects/gammu/gammu/et/>\n"
 "Language: et\n"
@@ -1376,31 +1376,31 @@ msgstr " (kõneregister: kuupäev ja kellaaeg)"
 
 #: gammu/depend/nokia/dct4.c:1344
 msgid " (Call register: with missed calls)"
-msgstr ""
+msgstr " (kõneregister: vastuvõtmata kõnedega)"
 
 #: gammu/depend/nokia/dct4.c:1345
 msgid " (Speed dial)"
-msgstr ""
+msgstr " (kiirvalimine)"
 
 #: gammu/depend/nokia/dct4.c:1346
 msgid " (Caller group: logo)"
-msgstr ""
+msgstr " (helistajate grupp: logo)"
 
 #: gammu/depend/nokia/dct4.c:1347
 msgid " (Caller group: is logo on ?)"
-msgstr ""
+msgstr " (helistajate grupp: logo aktiivne?)"
 
 #: gammu/depend/nokia/dct4.c:1348
 msgid " (Caller group number in pbk entry)"
-msgstr ""
+msgstr " (helistajategrupi number telefoniraamatus)"
 
 #: gammu/depend/nokia/dct4.c:1351
 msgid " (Text: URL address)"
-msgstr ""
+msgstr " (tekst: veebiaadress)"
 
 #: gammu/depend/nokia/dct4.c:1352
 msgid " (SMS list assignment)"
-msgstr ""
+msgstr " (SMS listi number)"
 
 #: gammu/depend/nokia/dct4.c:1353
 msgid " (Voice tag assignment)"
@@ -1412,11 +1412,11 @@ msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1355
 msgid " (Ringtone ID from filesystem/internal)"
-msgstr ""
+msgstr " (helina ID failisüsteemist/sisemine)"
 
 #: gammu/depend/nokia/dct4.c:1356
 msgid " (Text: user ID)"
-msgstr ""
+msgstr " (tekst: kasutaja ID)"
 
 #: gammu/depend/nokia/dct4.c:1357
 msgid " (conversation list ID)"
@@ -1436,61 +1436,61 @@ msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1361
 msgid " (Group ID (6230i or later))"
-msgstr ""
+msgstr " (grupi ID (6230i ja uuem))"
 
 #: gammu/depend/nokia/dct4.c:1363
 msgid ", type "
-msgstr ""
+msgstr ", tüüp "
 
 #: gammu/depend/nokia/dct4.c:1365
 msgid "string"
-msgstr ""
+msgstr "string"
 
 #: gammu/depend/nokia/dct4.c:1366
 msgid "byte"
-msgstr ""
+msgstr "bait"
 
 #: gammu/depend/nokia/dct4.c:1367
 msgid "2 bytes"
-msgstr ""
+msgstr "2 baiti"
 
 #: gammu/depend/nokia/dct4.c:1368
 msgid "4 bytes"
-msgstr ""
+msgstr "4 baiti"
 
 #: gammu/depend/nokia/dct4.c:1375
 #, c-format
 msgid "%i phone number types\n"
-msgstr ""
+msgstr "%i telefoninumbri tüüpi\n"
 
 #: gammu/depend/nokia/dct4.c:1378 helper/memory-display.c:126
 msgid "Home number"
-msgstr ""
+msgstr "Lauatelefon"
 
 #: gammu/depend/nokia/dct4.c:1379 helper/memory-display.c:147
 msgid "Mobile number"
-msgstr ""
+msgstr "Mobiiltelefon"
 
 #: gammu/depend/nokia/dct4.c:1380 helper/memory-display.c:161
 msgid "Fax number"
-msgstr ""
+msgstr "Faks"
 
 #: gammu/depend/nokia/dct4.c:1381
 msgid "Office number"
-msgstr ""
+msgstr "Töö telefon"
 
 #: gammu/depend/nokia/dct4.c:1382
 msgid "Standard number"
-msgstr ""
+msgstr "Muu telefon"
 
 #: gammu/depend/nokia/dct4.c:1383
 msgid "Unknown number"
-msgstr ""
+msgstr "Tundmatu"
 
 #: gammu/depend/nokia/dct4.c:1407
 #, c-format
 msgid "ERROR: unknown memory type (\"%s\")\n"
-msgstr ""
+msgstr "VIGA: tundmatu mälu tüüp (\"%s\")\n"
 
 #: gammu-detect/main.c:55
 msgid "Show debugging output for detecting devices."
