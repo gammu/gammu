@@ -15,9 +15,7 @@ if(COMMAND cmake_policy)
     cmake_policy(SET CMP0003 NEW)
 endif(COMMAND cmake_policy)
 
-if (NOT CLANG_COMPILER)
-    option (COVERAGE "Add flags for Coverage analysis" OFF)
-endif (NOT CLANG_COMPILER)
+option (COVERAGE "Add flags for Coverage analysis" OFF)
 
 option (ONLINE_TESTING "Enable testing of parts which use remote servers" OFF)
 option (PSQL_TESTING "Enable testing of PostgreSQL SMSD backend" OFF)
@@ -504,11 +502,9 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_MINGW OR
     endif (WIN32 AND NOT CYGWIN)
 
     # Enable coverage if requested
-    if (NOT CLANG_COMPILER)
-        if (COVERAGE)
-            MACRO_TUNE_COMPILER_LINKER("-fprofile-arcs -ftest-coverage")
-        endif (COVERAGE)
-    endif (NOT CLANG_COMPILER)
+    if (COVERAGE)
+        MACRO_TUNE_COMPILER_LINKER("-coverage")
+    endif (COVERAGE)
 
     # This is extremely noisy, use only in debug builds
     if (DEBUG)
