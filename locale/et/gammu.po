@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-08-05 10:27+0200\n"
-"PO-Revision-Date: 2013-08-22 19:07+0200\n"
+"PO-Revision-Date: 2013-08-23 13:55+0200\n"
 "Last-Translator: Kristjan Räts <kristjanrats@gmail.com>\n"
 "Language-Team: Estonian <http://l10n.cihar.com/projects/gammu/gammu/et/>\n"
 "Language: et\n"
@@ -1214,33 +1214,33 @@ msgstr "Bluetooth"
 
 #: gammu/depend/nokia/dct4.c:888
 msgid "UEM"
-msgstr ""
+msgstr "UEM"
 
 #: gammu/depend/nokia/dct4.c:961
 #, c-format
 msgid "What lights should I enable (\"%s\") ?\n"
-msgstr ""
+msgstr "Millised tuled lubada (\"%s\")?\n"
 
 #: gammu/depend/nokia/dct4.c:968
 #, c-format
 msgid "What should I do (\"%s\") ?\n"
-msgstr ""
+msgstr "Mida peab tegema (\"%s\")?\n"
 
 #. l10n: Raw data for A/D convertor
 #: gammu/depend/nokia/dct4.c:1020
 #, c-format
 msgid "raw result %10i "
-msgstr ""
+msgstr "teisendamata tulemus %10i "
 
 #. l10n: Processed data for A/D convertor
 #: gammu/depend/nokia/dct4.c:1024
 #, c-format
 msgid "unit result %10i "
-msgstr ""
+msgstr "teisendatud tulemus %10i "
 
 #: gammu/depend/nokia/dct4.c:1037
 msgid "Battery voltage, divided:"
-msgstr ""
+msgstr "Aku pinge, jagatud:"
 
 #: gammu/depend/nokia/dct4.c:1037 gammu/depend/nokia/dct4.c:1038
 #: gammu/depend/nokia/dct4.c:1039 gammu/depend/nokia/dct4.c:1043
@@ -1248,131 +1248,131 @@ msgstr ""
 #: gammu/depend/nokia/dct4.c:1048 gammu/depend/nokia/dct4.c:1049
 #: gammu/depend/nokia/dct4.c:1050
 msgid "mV"
-msgstr ""
+msgstr "mV"
 
 #: gammu/depend/nokia/dct4.c:1038
 msgid "Battery voltage, scaled:"
-msgstr ""
+msgstr "Aku pinge, skaleeritud:"
 
 #: gammu/depend/nokia/dct4.c:1039
 msgid "Charger voltage:"
-msgstr ""
+msgstr "Laadimispinge:"
 
 #: gammu/depend/nokia/dct4.c:1040
 msgid "Charger current:"
-msgstr ""
+msgstr "Laadimisvool:"
 
 #: gammu/depend/nokia/dct4.c:1040 gammu/depend/nokia/dct4.c:1051
 #: gammu/depend/nokia/dct4.c:1052
 msgid "mA"
-msgstr ""
+msgstr "mA"
 
 #: gammu/depend/nokia/dct4.c:1041
 msgid "Battery size indicator:"
-msgstr ""
+msgstr "Aku suuruse indikaator:"
 
 #: gammu/depend/nokia/dct4.c:1041
 msgid "Ohms"
-msgstr ""
+msgstr "oomi"
 
 #: gammu/depend/nokia/dct4.c:1042
 msgid "Battery temperature:"
-msgstr ""
+msgstr "Aku temperatuur:"
 
 #: gammu/depend/nokia/dct4.c:1042 gammu/depend/nokia/dct4.c:1046
 #: gammu/depend/nokia/dct4.c:1047
 msgid "K"
-msgstr ""
+msgstr "K"
 
 #: gammu/depend/nokia/dct4.c:1043
 msgid "Headset interconnection:"
-msgstr ""
+msgstr "Käed-vaba süsteemi ühendus:"
 
 #: gammu/depend/nokia/dct4.c:1044
 msgid "Hook interconnection:"
-msgstr ""
+msgstr "Kõrvaklappide ühendus:"
 
 #: gammu/depend/nokia/dct4.c:1045
 msgid "Light sensor:"
-msgstr ""
+msgstr "Valgussensor:"
 
 #: gammu/depend/nokia/dct4.c:1046
 msgid "Power amplifier temperature:"
-msgstr ""
+msgstr "Toitevõimendi temperatuur:"
 
 #: gammu/depend/nokia/dct4.c:1047
 msgid "VCXO temperature:"
-msgstr ""
+msgstr "VCXO temperatuur:"
 
 #: gammu/depend/nokia/dct4.c:1048
 msgid "Resistive keyboard 1/headint2:"
-msgstr ""
+msgstr "Takistuslik klaviatuur 1/headint2:"
 
 #: gammu/depend/nokia/dct4.c:1049
 msgid "Resistive keyboard 1/auxdet:"
-msgstr ""
+msgstr "Takistuslik klaviatuur 1/auxdet:"
 
 #: gammu/depend/nokia/dct4.c:1050
 msgid "Initial battery voltage:"
-msgstr ""
+msgstr "Algne aku pinge:"
 
 #: gammu/depend/nokia/dct4.c:1051
 msgid "Battery Current:"
-msgstr ""
+msgstr "Aku vool:"
 
 #: gammu/depend/nokia/dct4.c:1052
 msgid "Battery Current Fast:"
-msgstr ""
+msgstr "Aku kiirvool:"
 
 #: gammu/depend/nokia/dct4.c:1158
 msgid "Phone seems not to support radio"
-msgstr ""
+msgstr "Telefonis puudub raadio tugi"
 
 #: gammu/depend/nokia/dct4.c:1165
 msgid "Please connect headset. Required as antenna"
-msgstr ""
+msgstr "Palun ühendata käed-vaba süsteem. See on ka antenn"
 
 #: gammu/depend/nokia/dct4.c:1331
 #, c-format
 msgid "%i entries types\n"
-msgstr ""
+msgstr "%i kirjete tüüpi\n"
 
 #: gammu/depend/nokia/dct4.c:1334
 #, c-format
 msgid "  entry ID %02X"
-msgstr ""
+msgstr "  kirje ID %02X"
 
 #: gammu/depend/nokia/dct4.c:1336
 msgid " (Speed dial on SIM)"
-msgstr ""
+msgstr " (Kiirvalimine SIM-kaardil)"
 
 #: gammu/depend/nokia/dct4.c:1337
 msgid " (Text: name (always the only one))"
-msgstr ""
+msgstr " (tekst: nimi (alati üksikult))"
 
 #: gammu/depend/nokia/dct4.c:1338
 msgid " (Text: email address)"
-msgstr ""
+msgstr " (tekst: e-posti aadress)"
 
 #: gammu/depend/nokia/dct4.c:1339
 msgid " (Text: postal address)"
-msgstr ""
+msgstr " (tekst: postiaadress)"
 
 #: gammu/depend/nokia/dct4.c:1340
 msgid " (Text: note)"
-msgstr ""
+msgstr " (tekst: märkmed)"
 
 #: gammu/depend/nokia/dct4.c:1341
 msgid " (Phone number)"
-msgstr ""
+msgstr " (telefoni number)"
 
 #: gammu/depend/nokia/dct4.c:1342
 msgid " (Ringtone ID)"
-msgstr ""
+msgstr " (helina ID)"
 
 #: gammu/depend/nokia/dct4.c:1343
 msgid " (Call register: date and time)"
-msgstr ""
+msgstr " (kõneregister: kuupäev ja kellaaeg)"
 
 #: gammu/depend/nokia/dct4.c:1344
 msgid " (Call register: with missed calls)"
