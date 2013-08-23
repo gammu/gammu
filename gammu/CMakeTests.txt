@@ -9,6 +9,8 @@ file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/.gammu-batch" "
 identify
 dialvoice 123456
 reset SOFT
+sendsms TEXT 132465 -text 'Lorem ipsum'
+sendsms TEXT 132465 -text \"Lorem ipsum\"
 ")
 
 # Basic functionality tests
