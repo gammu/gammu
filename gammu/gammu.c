@@ -358,10 +358,10 @@ static void RunBatch(int argc, char *argv[])
 	/**
 	 * @todo Allocate memory dynamically.
 	 */
-	char ln[2000];
+	char ln[2000], token;
 	size_t i, len;
 	ssize_t pos;
-	int j, c = 0, argsc;
+	int j, c = 0, argsc, n;
 	char *argsv[20];
 	gboolean origbatch;
 	char *name;
