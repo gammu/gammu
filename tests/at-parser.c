@@ -139,7 +139,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 
 	Priv->Charset = AT_CHARSET_GSM;
 	error = ATGEN_ParseReply(s,
-				 "\"Lieber Kunde! Sie telefonieren innerhalb der EU aktiv um e 0.52; passiv um e 0.23; SMS e 0.13. Roaminginfo +43680680627, Euro Notruf 12. Ihr bob Team\"",
+				 "\"Lieber Kunde! Sie telefonieren innerhalb der EU aktiv um \x1be 0.52; passiv um \x1be 0.23; SMS \x1be 0.13. Roaminginfo +43680680627, Euro Notruf 12. Ihr bob Team\"",
 				 "@s", buffer, BUFFER_SIZE);
 	gammu_test_result(error, "@s");
 
