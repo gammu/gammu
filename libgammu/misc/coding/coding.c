@@ -1585,11 +1585,11 @@ void DecodeISO88591QuotedPrintable(unsigned char *dest, const unsigned char *src
 /* Make Unicode string from UTF8 string */
 void DecodeUTF8QuotedPrintable(unsigned char *dest, const char *src, int len)
 {
-	int 		i=0,j=0,z;
+	int 		i,j=0,z;
 	unsigned char	mychar[10];
 	wchar_t		ret;
 
-	while (i<=len) {
+	for (i = 0; i<=len; ) {
 		z=0;
 		while (TRUE) {
 			if (src[z*3+i] != '=' || z*3+i+3>len ||
