@@ -61,6 +61,9 @@ Collecting results
 The tests are ran daily on several platforms and you can find the
 results on `Travis <https://travis-ci.org/gammu/gammu>`_.
 
+The coverage reports are at 
+`Coveralls <https://coveralls.io/r/gammu/gammu>`_.
+
 
 Testing of SMSD
 ---------------
