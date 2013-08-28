@@ -72,6 +72,7 @@ include (MacroOptionalFindPackage)
 include (MacroAddDLL)
 include (MacroGammuOption)
 include (MacroTuneCompiler)
+include (GCoveralls)
 
 # WE use pkgconfig later
 find_package (PkgConfig)
@@ -503,7 +504,8 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_MINGW OR
 
     # Enable coverage if requested
     if (COVERAGE)
-        MACRO_TUNE_COMPILER_LINKER("-coverage")
+        ENABLE_GCOVERALLS()
+        MACRO_TUNE_COMPILER_LINKER("--coverage")
     endif (COVERAGE)
 
     # This is extremely noisy, use only in debug builds
