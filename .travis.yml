@@ -8,4 +8,4 @@ before_install:
 script:
   - mkdir build && cd build && cmake .. -DCMAKE_C_COMPILER=$CC -DCOVERAGE=ON -DCMAKE_BUILD_TYPE=Continuous && make && make test
 after_success:
-  - ./build/coveralls-upload
+  - ./coveralls-upload
