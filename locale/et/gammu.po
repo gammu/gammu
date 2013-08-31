@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-08-05 10:27+0200\n"
-"PO-Revision-Date: 2013-08-27 19:15+0200\n"
+"PO-Revision-Date: 2013-08-31 21:02+0200\n"
 "Last-Translator: Kristjan Räts <kristjanrats@gmail.com>\n"
 "Language-Team: Estonian <http://l10n.cihar.com/projects/gammu/gammu/et/>\n"
 "Language: et\n"
@@ -1711,60 +1711,62 @@ msgid ""
 "File checksum calculated by phone doesn't match with value calculated by "
 "Gammu. File is damaged or there is a error in Gammu."
 msgstr ""
+"Telefoni arvutatud kontrollsumma erineb Gammu arvutatud kontrollsummast. "
+"Fail on kas vigane või Gammus on viga."
 
 #: gammu/files.c:421
 #, c-format
 msgid "%i percent done."
-msgstr ""
+msgstr "%i protsenti valmis."
 
 #: gammu/files.c:423
 #, c-format
 msgid "%lu Bytes in %li seconds, %lu Bytes/sec"
-msgstr ""
+msgstr "%lu baiti %li sekundiga, %lu baiti/sekundis"
 
 #: gammu/files.c:452
 #, c-format
 msgid "  Saving to %s\n"
-msgstr ""
+msgstr "  Salvestatakse %s\n"
 
 #: gammu/files.c:702 gammu/nokia.c:948
 #, c-format
 msgid "Parameter \"%s\" unknown\n"
-msgstr ""
+msgstr "Tundmatu parameeter \"%s\"\n"
 
 #: gammu/files.c:737
 #, c-format
 msgid "What file type (\"%s\") ?\n"
-msgstr ""
+msgstr "Millist tüüpi fail (\"%s\")?\n"
 
 #: gammu/files.c:746 gammu/misc.c:1337 gammu/nokia.c:957
 #: helper/message-cmdline.c:1311
 msgid "Parameter missing!"
-msgstr ""
+msgstr "Parameeter puudub!"
 
 #: gammu/files.c:755
 #, c-format
 msgid "ID of new file is \"%s\"\n"
-msgstr ""
+msgstr "Uue faili ID on \"%s\"\n"
 
 #: gammu/files.c:776
 #, c-format
 msgid "ID of new folder is \"%s\"\n"
-msgstr ""
+msgstr "Uue kausta ID on \"%s\"\n"
 
 #: gammu/gammu.c:69
 #, c-format
 msgid "Networks for %s:"
-msgstr ""
+msgstr "%s võrgud:"
 
 #: gammu/gammu.c:75
 #, c-format
 msgid "Unknown country name: %s."
-msgstr ""
+msgstr "Tundmatu maa nimi: %s."
 
 #: gammu/gammu.c:80 gammu/gammu.c:725 gammu/misc.c:48
 msgid "Network"
-msgstr ""
+msgstr "Võrk"
 
 #: gammu/gammu.c:80 gammu/message.c:218 gammu/misc.c:975 gammu/misc.c:1142
 #: gammu/misc.c:1872 gammu/misc.c:1911 gammu/misc.c:2206 gammu/mms.c:112
@@ -1775,68 +1777,74 @@ msgstr "Nimi"
 #: gammu/gammu.c:91
 #, c-format
 msgid "[Gammu version %s built %s on %s using %s]"
-msgstr ""
+msgstr "[GAmmu versioon %s kompileeritud %s %s kasutades %s]"
 
 #: gammu/gammu.c:102
 msgid "Protocols"
-msgstr ""
+msgstr "Protokollid"
 
 #: gammu/gammu.c:170
 msgid "Phones"
-msgstr ""
+msgstr "Telefonid"
 
 #: gammu/gammu.c:215
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Mitmesugune"
 
 #: gammu/gammu.c:299
 #, c-format
 msgid "There is newer stable Gammu version available! (%s instead of %s)\n"
-msgstr ""
+msgstr "Gammu uus stabiilne versioon on saadaval! (%s %s asemel)\n"
 
 #: gammu/gammu.c:317
 #, c-format
 msgid "There is newer testing Gammu version available! (%s instead of %s)\n"
-msgstr ""
+msgstr "Gammu uus testversioon on saadaval! (%s %s asemel)\n"
 
 #: gammu/gammu.c:330
 msgid ""
 "Copyright (C) 2003 - 2012 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
+"Autoriõigus (C) 2003 - 2012 Michal Čihař <michal@cihar.com> ja teised "
+"autorid."
 
 #: gammu/gammu.c:368
 msgid "standard input"
-msgstr ""
+msgstr "standard sisend"
 
 #: gammu/gammu.c:379
 #, c-format
 msgid "Batch file could not be opened: %s\n"
-msgstr ""
+msgstr "Pakett-töötluse faili avamine ebaõnnestus: %s\n"
 
 #: gammu/gammu.c:390
 msgid "Error reading batch! Terminating.\n"
-msgstr ""
+msgstr "Pakett-töötluse faili lugemise viga! Lõpetatakse.\n"
 
 #: gammu/gammu.c:392
 msgid "Batch processed, terminating.\n"
-msgstr ""
+msgstr "Pakett-töötluse fail töödeldud. Lõpetatakse.\n"
 
 #: gammu/gammu.c:429
 #, c-format
 msgid "Executing batch \"%s\" - command %i: %s\n"
-msgstr ""
+msgstr "Käivitatakse pakett-töötluse fail \"%s\" - käsk %i: %s\n"
 
 #: gammu/gammu.c:452
 msgid ""
 "SMS daemon is now in separate binary, please use gammu-smsd-inject instead "
 "of gammu sendsmsdsms!"
 msgstr ""
+"SMS deemon on nüüd eraldi programm. Palun kasuta gammu sendsmsdsms asemel "
+"käsku gammu-smsd-inject!"
 
 #: gammu/gammu.c:459
 msgid ""
 "SMS daemon is now in separate binary, please use gammu-smsd instead of gammu "
 "smsd!"
 msgstr ""
+"SMS deemon on nüüd eraldi programm. Palun kasuta gammu smsd asemel käsku "
+"gammu-smsd!"
 
 #: gammu/gammu.c:705
 msgid "Calls"
@@ -1844,19 +1852,19 @@ msgstr "Kõned"
 
 #: gammu/gammu.c:706
 msgid "SMS and EMS"
-msgstr ""
+msgstr "SMS ja EMS"
 
 #: gammu/gammu.c:707
 msgid "Memory (phonebooks and calls)"
-msgstr ""
+msgstr "Mälu (teledoniraamatud ja kõned)"
 
 #: gammu/gammu.c:708
 msgid "Filesystem"
-msgstr ""
+msgstr "Failisüsteem"
 
 #: gammu/gammu.c:709
 msgid "Logo and pictures"
-msgstr ""
+msgstr "Logo ja pildid"
 
 #: gammu/gammu.c:710
 msgid "Ringtones"
@@ -1864,51 +1872,51 @@ msgstr "Helinad"
 
 #: gammu/gammu.c:711
 msgid "Calendar notes"
-msgstr ""
+msgstr "Kalendri märkmed"
 
 #: gammu/gammu.c:712
 msgid "To do lists"
-msgstr ""
+msgstr "Ülesanded"
 
 #: gammu/gammu.c:713
 msgid "Notes"
-msgstr ""
+msgstr "Märkmed"
 
 #: gammu/gammu.c:714
 msgid "Date, time and alarms"
-msgstr ""
+msgstr "Kuupäev, kellaaeg ja alarmid"
 
 #: gammu/gammu.c:715
 msgid "Categories"
-msgstr ""
+msgstr "Kategooriad"
 
 #: gammu/gammu.c:717
 msgid "Backing up and restoring"
-msgstr ""
+msgstr "Varundamine ja taastamine"
 
 #: gammu/gammu.c:720
 msgid "Nokia specific"
-msgstr ""
+msgstr "Nokia spetsiifiline"
 
 #: gammu/gammu.c:723
 msgid "Siemens specific"
-msgstr ""
+msgstr "Siemensi spetsiifiline"
 
 #: gammu/gammu.c:726
 msgid "WAP settings and bookmarks"
-msgstr ""
+msgstr "WAP seaded ja kohaviidad"
 
 #: gammu/gammu.c:727
 msgid "MMS and MMS settings"
-msgstr ""
+msgstr "MMS ja MMS-i seaded"
 
 #: gammu/gammu.c:728
 msgid "Phone tests"
-msgstr ""
+msgstr "Telefoni testid"
 
 #: gammu/gammu.c:729
 msgid "FM radio"
-msgstr ""
+msgstr "FM raadio"
 
 #: gammu/gammu.c:730
 msgid "Phone information"
@@ -1916,60 +1924,65 @@ msgstr "Telefoni informatsioon"
 
 #: gammu/gammu.c:731
 msgid "Phone settings"
-msgstr ""
+msgstr "Telefoni seaded"
 
 #: gammu/gammu.c:733
 msgid "Dumps decoding"
-msgstr ""
+msgstr "Andmekogumite dekodeerimine"
 
 #: gammu/gammu.c:735
 msgid "Functions that don't fit elsewhere"
-msgstr ""
+msgstr "Funktsioonid, mis mujale ei sobi"
 
 #: gammu/gammu.c:736
 msgid "Gammu information"
-msgstr ""
+msgstr "Gammu informatsioon"
 
 #: gammu/gammu.c:752
 msgid "Usage: gammu [parameters] <command> [options]"
-msgstr ""
+msgstr "Kasutamine: gammu [parameetrid] <käsk> [valikud]"
 
 # type: Plain text
 #: gammu/gammu.c:753
 msgid "Parameters before command configure gammu behaviour:"
-msgstr ""
+msgstr "Parameetrid enne käsku seadistavad gammu käitumist:"
 
 #: gammu/gammu.c:754
 msgid "-c / --config <filename> ... name of configuration file"
-msgstr ""
+msgstr "-c / --config <failinimi> ... konfiguratsiooni faili nimi"
 
 #: gammu/gammu.c:755
 msgid "-s / --section <confign> ... section of config file to use, eg. 42"
 msgstr ""
+"-s / --sektsioon <konfi nr> ... konfiguratsiooni faili sektsioon "
+"kasutamiseks, nt. 42"
 
 #: gammu/gammu.c:756
 msgid ""
 "-d / --debug <level> ... debug level (nothing|text|textall|textalldate|"
 "binary|errors)"
 msgstr ""
+"-d / --debug <tase> ... silumisinfo tase "
+"(nothing|text|textall|textalldate|binary|errors)"
 
 #: gammu/gammu.c:757
 msgid "-f / --debug-file <filename> ... file for logging debug messages"
-msgstr ""
+msgstr "-f / --debug-file <failinimi> ... fail, kuhu salvestada silumisinfo"
 
 #: gammu/gammu.c:759
 msgid "Commands can be specified with or without leading --."
-msgstr ""
+msgstr "Käsude eest võib -- puududa."
 
 #: gammu/gammu.c:762
 msgid ""
 "For more details, call help on specific topic (gammu --help topic). Topics "
 "are:"
 msgstr ""
+"Lisainfo saamiseks küsi temaatilist abi (gammu --help teema). Teemad on:"
 
 #: gammu/gammu.c:860
 msgid "Unknown help topic specified!"
-msgstr ""
+msgstr "Tundmatu abiinfo teema!"
 
 #: gammu/gammu.c:864
 #, c-format
@@ -1977,122 +1990,128 @@ msgid ""
 "Gammu commands, topic: %s\n"
 "\n"
 msgstr ""
+"Gammu käsud. teema %s\n"
+"\n"
 
 #: gammu/gammu.c:955
 #, c-format
 msgid "More parameters required (function requires %d)\n"
-msgstr ""
+msgstr "Vaja on rohkem parameetreid (funktsioon nõuab %d)\n"
 
 #: gammu/gammu.c:958
 #, c-format
 msgid "More parameters required (function requires %d to %d)\n"
-msgstr ""
+msgstr "Vaja on rohkem parameetreid (funktsioon nõuab %d kuni %d)↵\n"
 
 #: gammu/gammu.c:964 gammu/gammu.c:985
 msgid "Parameters help"
-msgstr ""
+msgstr "Parameetrite abi"
 
 #: gammu/gammu.c:976
 #, c-format
 msgid "Too many parameters (function accepts %d)\n"
-msgstr ""
+msgstr "Liiga palju parameetreid (funktsioon nõuab %d)\n"
 
 #: gammu/gammu.c:979
 #, c-format
 msgid "Too many parameters (function accepts %d to %d)\n"
-msgstr ""
+msgstr "Liiga palju parameetreid (funktsioon nõuab %d kuni %d)\n"
 
 #: gammu/gammu.c:1006
 msgid "Bad option!"
-msgstr ""
+msgstr "Vigane valik!"
 
 #: gammu/gammu.c:1087
 msgid "Configuration could not be parsed!"
-msgstr ""
+msgstr "Konfiguratsioonifaili parsimine ebaõnnestus!"
 
 #: gammu/gammu.c:1089
 msgid "No configuration file found!"
-msgstr ""
+msgstr "Konfiguratsioonifaili ei leitud!"
 
 #: gammu/gammu.c:1109
 msgid "Failed to allocate memory, aborting!\n"
-msgstr ""
+msgstr "Mälu küsimine ebaõnnestus, katkestatud!\n"
 
 #: gammu/gammu.c:1140
 msgid "Too few parameters!"
-msgstr ""
+msgstr "Liiga vähe parameetreid!"
 
 #: gammu/gammu.c:1153
 #, c-format
 msgid "Failed to read [gammu%d] section from configuration file (gammurc)!\n"
-msgstr ""
+msgstr "Sektsiooni [gammu%d] lugemine konfiguratsioonifailist (gammurc) ebaõnnestus!\n"
 
 #: gammu/gammu.c:1155 gammu/gammu.c:1166
 msgid "No configuration read, using builtin defaults!"
-msgstr ""
+msgstr "Konfiguratsiooni ei loetud, kasutatakse vaikimisi väärtuseid!"
 
 #: gammu/gammu.c:1205
 #, c-format
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
-msgstr ""
+msgstr "libGammu.so (%s) versioon erineb Gammu (%s) versioonist\n"
 
 #: gammu/memory.c:80
 msgid ""
 "You will have null names in entries. Upgrade firmware in phone to higher "
 "than 4.06"
 msgstr ""
+"Kirjetesse salvestatakse tühjad nimed. Uuenda telefoni tarkvara versioonile "
+"4.06 või kõrgem"
 
 #: gammu/memory.c:86
 msgid ""
 "You will have null names in entries. Upgrade firmware in phone to higher "
 "than 6.00"
 msgstr ""
+"Kirjetesse salvestatakse tühjad nimed. Uuenda telefoni tarkvara versioonile "
+"6.00 või kõrgem"
 
 #: gammu/memory.c:91 gammu/memory.c:109 gammu/memory.c:235 gammu/memory.c:352
 #: helper/memory-display.c:274
 #, c-format
 msgid "Memory %s, Location %i\n"
-msgstr ""
+msgstr "Mälu %s, asukoht %i\n"
 
 #: gammu/memory.c:104 gammu/misc.c:1909 gammu/misc.c:2318
 msgid "Entry is empty"
-msgstr ""
+msgstr "Kirje on tühi"
 
 #: gammu/memory.c:116
 #, c-format
 msgid "%i entries empty, %i entries filled\n"
-msgstr ""
+msgstr "%i tühja kirjet, %i täidetud kirjet\n"
 
 #: gammu/message.c:37
 msgid "SMS message received"
-msgstr ""
+msgstr "SMS sõnum vastu võetud"
 
 #: gammu/message.c:41
 msgid "We already have one pending, ignoring this one!"
-msgstr ""
+msgstr "Üks on juba lahtine, uut ignoreeritakse!"
 
 #: gammu/message.c:63 gammu/message.c:295
 #, c-format
 msgid "Location %i\n"
-msgstr ""
+msgstr "Asukoht %i\n"
 
 #: gammu/message.c:64 gammu/message.c:296
 msgid "Empty"
-msgstr ""
+msgstr "Tühi"
 
 #: gammu/message.c:78
 msgid "CB message received"
-msgstr ""
+msgstr "CB sõnum on vastu võetud"
 
 #: gammu/message.c:79
 #, c-format
 msgid "Channel %i, text \"%s\"\n"
-msgstr ""
+msgstr "Kanal %i, tekst \"%s\"\n"
 
 #: gammu/message.c:85
 msgid "USSD received"
-msgstr ""
+msgstr "USSD vastu võetud"
 
 #: gammu/message.c:86 helper/message-display.c:167
 #: helper/message-display.c:287
@@ -2101,19 +2120,19 @@ msgstr "Olek"
 
 #: gammu/message.c:90
 msgid "No action needed"
-msgstr ""
+msgstr "Midagi ei ole vaja teha"
 
 #: gammu/message.c:93
 msgid "Action needed"
-msgstr ""
+msgstr "Tegevus puudub"
 
 #: gammu/message.c:96
 msgid "Terminated"
-msgstr ""
+msgstr "Lõpetatud"
 
 #: gammu/message.c:99
 msgid "Another client replied"
-msgstr ""
+msgstr "Teine klient vastas"
 
 #: gammu/message.c:102
 msgid "Not supported"
@@ -2121,12 +2140,12 @@ msgstr "Ei ole toetatud"
 
 #: gammu/message.c:114
 msgid "Service reply"
-msgstr ""
+msgstr "Teenuse vastus"
 
 #: gammu/message.c:178
 #, c-format
 msgid "Invalid SMSC location: %s\n"
-msgstr ""
+msgstr "Vigane SMSC asukoht: %s\n"
 
 #: gammu/message.c:220 gammu/misc.c:2207 gammu/misc.c:2486
 msgid "Number"
@@ -2134,19 +2153,19 @@ msgstr "Number"
 
 #: gammu/message.c:221
 msgid "Default number"
-msgstr ""
+msgstr "Tavaline number"
 
 #: gammu/message.c:223
 msgid "Format"
-msgstr ""
+msgstr "Formaat"
 
 #: gammu/message.c:226
 msgid "Fax"
-msgstr ""
+msgstr "Faks"
 
 #: gammu/message.c:227 helper/memory-display.c:192
 msgid "Email"
-msgstr ""
+msgstr "E-mail"
 
 #: gammu/message.c:228
 msgid "Pager"
@@ -2154,80 +2173,80 @@ msgstr "Piipar"
 
 #: gammu/message.c:232
 msgid "Validity"
-msgstr ""
+msgstr "Kehtivus"
 
 #: gammu/message.c:251
 msgid "Maximum time"
-msgstr ""
+msgstr "Maksimaalne aeg"
 
 #: gammu/message.c:368 gammu/message.c:440 gammu/message.c:711
 msgid "Corrupted message, skipping"
-msgstr ""
+msgstr "Vigane sõnum, jäätakse vahele"
 
 #: gammu/message.c:382 gammu/message.c:494
 #, c-format
 msgid "%i SMS parts in %i SMS sequences"
-msgstr ""
+msgstr "%i SMS osa %i SMS jadas"
 
 #: gammu/message.c:430
 msgid "SMS counter overflow"
-msgstr ""
+msgstr "SMS loenduri ületäide"
 
 #: gammu/message.c:515
 msgid ", SIM memory"
-msgstr ""
+msgstr ", SIM mälu"
 
 #: gammu/message.c:516
 msgid ", phone memory"
-msgstr ""
+msgstr ", telefoni mälu"
 
 #: gammu/message.c:517
 msgid ", phone or SIM memory"
-msgstr ""
+msgstr ", telefoni või SIM mmälu"
 
 #: gammu/message.c:520 gammu/mms.c:30
 msgid ", Inbox folder"
-msgstr ""
+msgstr ", Sissetulevad kaust"
 
 #: gammu/message.c:521
 msgid ", Outbox folder"
-msgstr ""
+msgstr ", Väljuvad kaust"
 
 #: gammu/message.c:538
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: gammu/message.c:541
 #, c-format
 msgid "error %i"
-msgstr ""
+msgstr "viga %i"
 
 #: gammu/message.c:544
 #, c-format
 msgid ", message reference=%d"
-msgstr ""
+msgstr ", sõnumi viide=%d"
 
 #: gammu/message.c:577
 msgid "Message number"
-msgstr ""
+msgstr "Sõnumi number"
 
 #: gammu/message.c:582
 msgid "Number of messages"
-msgstr ""
+msgstr "Sõnumite arv"
 
 #: gammu/message.c:593 gammu/message.c:633
 msgid "If you want break, press Ctrl+C..."
-msgstr ""
+msgstr "Katkestamiseks vajuta Ctrl+C..."
 
 #: gammu/message.c:598
 #, c-format
 msgid "Saving SMS %i/%i\n"
-msgstr ""
+msgstr "Salvestatakse SMS %i/%i\n"
 
 #: gammu/message.c:601
 #, c-format
 msgid "Saved in folder number %d \"%s\", location %i"
-msgstr ""
+msgstr "Salvestatud kaustas nr %d \"%s\", asukohas %i"
 
 #: gammu/message.c:606
 msgid "SIM"
@@ -2240,240 +2259,240 @@ msgstr "telefon"
 #: gammu/message.c:612
 #, c-format
 msgid "Sending sms from folder \"%s\", location %i\n"
-msgstr ""
+msgstr "Saadetakse SMS sõnumeid kaustast \"%s\", asukoht %i\n"
 
 #: gammu/message.c:618 gammu/message.c:644
 msgid "....waiting for network answer"
-msgstr ""
+msgstr "... oodatakse võrgu vastust"
 
 #: gammu/message.c:639
 #, c-format
 msgid "Sending SMS %i/%i"
-msgstr ""
+msgstr "Saadekatse SMS sõnumit %i/%i"
 
 #: gammu/message.c:658
 msgid "Something went wrong, unknown message operation!\n"
-msgstr ""
+msgstr "Midagi läks valesti, tundmatu sõnumi käsk!\n"
 
 #: gammu/message.c:694
 #, c-format
 msgid "Too high folder number (max. %i)\n"
-msgstr ""
+msgstr "Liiga suur kausta number (max. %i)\n"
 
 #: gammu/message.c:700
 #, c-format
 msgid "Deleting SMS from \"%s\" folder: "
-msgstr ""
+msgstr "Kustutatakse SMS sõnumid kaustast \"%s\": "
 
 #: gammu/misc.c:35
 msgid "Network state"
-msgstr ""
+msgstr "Võrgu olek"
 
 #: gammu/misc.c:37 gammu/misc.c:64
 msgid "home network"
-msgstr ""
+msgstr "koduvõrk"
 
 #: gammu/misc.c:38 gammu/misc.c:65
 msgid "roaming network"
-msgstr ""
+msgstr "rändlusvõrk"
 
 #: gammu/misc.c:39 gammu/misc.c:66
 msgid "requesting network"
-msgstr ""
+msgstr "otsitakse võrku"
 
 #: gammu/misc.c:40 gammu/misc.c:67
 msgid "not logged into network"
-msgstr ""
+msgstr "võrku sisse logimata"
 
 #: gammu/misc.c:41 gammu/misc.c:68
 msgid "registration to network denied"
-msgstr ""
+msgstr "võrgus registreerimisest keelduti"
 
 #: gammu/misc.c:42 gammu/misc.c:44 gammu/misc.c:69 gammu/misc.c:71
 #: gammu/misc.c:169 gammu/misc.c:191
 msgid "unknown"
-msgstr ""
+msgstr "tundmatu"
 
 #: gammu/misc.c:58 gammu/misc.c:85
 msgid "Name in phone"
-msgstr ""
+msgstr "Nimi telefonis"
 
 #: gammu/misc.c:62
 msgid "Packet network state"
-msgstr ""
+msgstr "Pakettvõrgu olek"
 
 #: gammu/misc.c:75
 msgid "Packet network"
-msgstr ""
+msgstr "pakettvõrk"
 
 #: gammu/misc.c:90 gammu/misc.c:1591
 msgid "GPRS"
-msgstr ""
+msgstr "GPRS"
 
 #: gammu/misc.c:93
 msgid "attached"
-msgstr ""
+msgstr "ühendatud"
 
 #: gammu/misc.c:96
 msgid "detached"
-msgstr ""
+msgstr "ühendamata"
 
 #: gammu/misc.c:106
 msgid "Battery level"
-msgstr ""
+msgstr "Aku laetus"
 
 #: gammu/misc.c:111
 msgid "Battery capacity"
-msgstr ""
+msgstr "Aku mahtuvus"
 
 #: gammu/misc.c:112
 #, c-format
 msgid "%i mAh"
-msgstr ""
+msgstr "%i mAh"
 
 #: gammu/misc.c:116
 msgid "Battery temperature"
-msgstr ""
+msgstr "Aku temperatuur"
 
 #. l10n: This means degrees Celsius
 #: gammu/misc.c:118 gammu/misc.c:123
 #, c-format
 msgid "%i C"
-msgstr ""
+msgstr "%i C"
 
 #: gammu/misc.c:122
 msgid "Phone temperature"
-msgstr ""
+msgstr "Telefoni temperatuur"
 
 #: gammu/misc.c:127
 msgid "Battery voltage"
-msgstr ""
+msgstr "Aku pinge"
 
 #: gammu/misc.c:128 gammu/misc.c:133
 #, c-format
 msgid "%i mV"
-msgstr ""
+msgstr "%i mV"
 
 #: gammu/misc.c:132
 msgid "Charge voltage"
-msgstr ""
+msgstr "Laadimispinge"
 
 #: gammu/misc.c:137
 msgid "Charge current"
-msgstr ""
+msgstr "Laadimisvool"
 
 #: gammu/misc.c:138 gammu/misc.c:143
 #, c-format
 msgid "%i mA"
-msgstr ""
+msgstr "%i mA"
 
 #: gammu/misc.c:142
 msgid "Phone current"
-msgstr ""
+msgstr "Telefoni vool"
 
 #: gammu/misc.c:147
 msgid "Charge state"
-msgstr ""
+msgstr "Laadija olek"
 
 #: gammu/misc.c:150
 msgid "powered from battery"
-msgstr ""
+msgstr "töötab akult"
 
 #: gammu/misc.c:153
 msgid "battery connected, but not powered from battery"
-msgstr ""
+msgstr "aku ühendatud, kui ei tööta akult"
 
 #: gammu/misc.c:156
 msgid "battery connected and is being charged"
-msgstr ""
+msgstr "aku ühendatud ja laetakse"
 
 #: gammu/misc.c:159
 msgid "battery connected and is fully charged"
-msgstr ""
+msgstr "aku ühendatud ja täislaetud"
 
 #: gammu/misc.c:162
 msgid "battery not connected"
-msgstr ""
+msgstr "aku ühendamata"
 
 #: gammu/misc.c:165
 msgid "detected power failure"
-msgstr ""
+msgstr "tuvastati toite viga"
 
 #: gammu/misc.c:176
 msgid "Battery type"
-msgstr ""
+msgstr "Aku tüüp"
 
 #: gammu/misc.c:179
 msgid "Lithium Ion"
-msgstr ""
+msgstr "Liitium-ioon"
 
 #: gammu/misc.c:182
 msgid "Lithium Polymer"
-msgstr ""
+msgstr "Liitium-polümeer"
 
 #: gammu/misc.c:185
 msgid "NiMH"
-msgstr ""
+msgstr "NiMH"
 
 #: gammu/misc.c:261
 msgid "Not logged to network!\n"
-msgstr ""
+msgstr "Võrku sisse logimata!\n"
 
 #: gammu/misc.c:272
 msgid "Wrong network code from phone!\n"
-msgstr ""
+msgstr "Vale võrgu kood telefonist!\n"
 
 #: gammu/misc.c:300
 msgid "Request for information from OpenCellID failed!\n"
-msgstr ""
+msgstr "Informatsiooni päring OpenCellID-st ebaõnnestus!\n"
 
 #: gammu/misc.c:306
 msgid "Failed to find latitude in OpenCellID reply!\n"
-msgstr ""
+msgstr "Laiuskraadi leidmine OpenCellID vastusest ebaõnnestus!\n"
 
 #: gammu/misc.c:311
 msgid "Failed to parse latitude from OpenCellID reply!\n"
-msgstr ""
+msgstr "Laiuskraadi parsimine OpenCellID vastusest ebaõnnestus!\n"
 
 #: gammu/misc.c:317
 msgid "Failed to find longitude in OpenCellID reply!\n"
-msgstr ""
+msgstr "Pikkuskraadi leidmine OpenCellID vastusest ebaõnnestus!\n"
 
 #: gammu/misc.c:322
 msgid "Failed to parse longitude from OpenCellID reply!\n"
-msgstr ""
+msgstr "Pikkuskraadi parsimine OpenCellID vastusest ebaõnnestus!\n"
 
 #: gammu/misc.c:328
 msgid "Failed to find range in OpenCellID reply!\n"
-msgstr ""
+msgstr "Ulatuse leidmine OpenCellID vastusest ebaõnnestus!\n"
 
 #: gammu/misc.c:333
 msgid "Failed to parse range from OpenCellID reply!\n"
-msgstr ""
+msgstr "Ulatuse parsimine OpenCellID vastusest ebaõnnestus!\n"
 
 #: gammu/misc.c:339
 msgid "Failed to find nbSamples in OpenCellID reply!\n"
-msgstr ""
+msgstr "Mõõtetulemuste arvu leidmine OpenCellID vastusest ebaõnnestus!\n"
 
 #: gammu/misc.c:344
 msgid "Failed to parse nbSamples from OpenCellID reply!\n"
-msgstr ""
+msgstr "Mõõtetulemuste arvu parsimine OpenCellID vastusest ebaõnnestus!\n"
 
 #: gammu/misc.c:355
 msgid "Latitude"
-msgstr ""
+msgstr "Geograafiline laius"
 
 #: gammu/misc.c:356
 msgid "Longitude"
-msgstr ""
+msgstr "Geograafiline pikkus"
 
 #: gammu/misc.c:357
 msgid "Range"
-msgstr ""
+msgstr "Ulatus"
 
 #: gammu/misc.c:358
 msgid "Number of samples"
-msgstr ""
+msgstr "Mõõtetulemuste arv"
 
 #: gammu/misc.c:379
 msgid "Device"
@@ -2501,7 +2520,7 @@ msgstr "Originaal IMEI"
 
 #: gammu/misc.c:422
 msgid "Manufactured"
-msgstr ""
+msgstr "Toodetud"
 
 #: gammu/misc.c:428
 msgid "Product code"
@@ -2513,85 +2532,85 @@ msgstr "SIM IMSI"
 
 #: gammu/misc.c:547
 msgid "Call info"
-msgstr ""
+msgstr "Kõne info"
 
 #: gammu/misc.c:550
 #, c-format
 msgid "ID %i, "
-msgstr ""
+msgstr "ID %i, "
 
 #: gammu/misc.c:553
 #, c-format
 msgid "incoming call from \"%s\"\n"
-msgstr ""
+msgstr "sissetulev kõne \"%s\"\n"
 
 #: gammu/misc.c:554
 #, c-format
 msgid "outgoing call to \"%s\"\n"
-msgstr ""
+msgstr "väljuv kõne \"%s\"\n"
 
 #: gammu/misc.c:555
 msgid "call started"
-msgstr ""
+msgstr "kõne algus"
 
 #: gammu/misc.c:556
 msgid "end of call (unknown side)"
-msgstr ""
+msgstr "kõne lõpp (määratlemata lõpetaja)"
 
 #: gammu/misc.c:557
 msgid "call end from our side"
-msgstr ""
+msgstr "kõne lõpp meie poolt"
 
 #: gammu/misc.c:558
 #, c-format
 msgid "call end from remote side (code %i)\n"
-msgstr ""
+msgstr "kõne lõpp eemalt (kood %i)\n"
 
 #: gammu/misc.c:559
 msgid "call established. Waiting for answer"
-msgstr ""
+msgstr "kõne loodud, heliseb"
 
 #: gammu/misc.c:560
 msgid "call held"
-msgstr ""
+msgstr "kõne ootel"
 
 #: gammu/misc.c:561
 msgid "call resumed"
-msgstr ""
+msgstr "kõne jätkatakse"
 
 #: gammu/misc.c:562
 msgid "call switched"
-msgstr ""
+msgstr "kõne vahetatud"
 
 #: gammu/misc.c:569
 #, c-format
 msgid "%3d used"
-msgstr ""
+msgstr "%3d kasutusel"
 
 #: gammu/misc.c:571
 #, c-format
 msgid "%3d free"
-msgstr ""
+msgstr "%3d vaba"
 
 #: gammu/misc.c:607
 msgid "Entering monitor mode..."
-msgstr ""
+msgstr "Sisenetakse jälgimisrežiimi..."
 
 #: gammu/misc.c:617
 msgid "Enabling info about incoming SMS"
-msgstr ""
+msgstr "Lubatakse sisenevate SMS sõnumite info"
 
 #: gammu/misc.c:619
 msgid "Enabling info about incoming CB"
-msgstr ""
+msgstr "Lubatakse sisenevate kärjesõnumite info"
 
 #: gammu/misc.c:621
 msgid "Enabling info about calls"
-msgstr ""
+msgstr "Lubatakse kõnede info"
 
 #: gammu/misc.c:623
 msgid "Enabling info about USSD"
-msgstr ""
+msgstr "Lubatakse USSD info"
 
 #: gammu/misc.c:640
 msgid "Todos"
@@ -2603,140 +2622,140 @@ msgstr "Kalender"
 
 #: gammu/misc.c:653
 msgid "Signal strength"
-msgstr ""
+msgstr "Signaali tugevus"
 
 #: gammu/misc.c:654
 #, c-format
 msgid "%i dBm"
-msgstr ""
+msgstr "%i dBm"
 
 #: gammu/misc.c:658
 msgid "Network level"
-msgstr ""
+msgstr "Võrgu tase"
 
 #: gammu/misc.c:663
 msgid "Bit error rate"
-msgstr ""
+msgstr "Bitivea määr"
 
 #: gammu/misc.c:671
 msgid "SIM SMS status"
-msgstr ""
+msgstr "SIM-kaardi SMS olek"
 
 #: gammu/misc.c:672 gammu/misc.c:682
 #, c-format
 msgid "%i used"
-msgstr ""
+msgstr "%i kasutusel"
 
 #: gammu/misc.c:674 gammu/misc.c:684
 #, c-format
 msgid "%i unread"
-msgstr ""
+msgstr "%i lugemata"
 
 #: gammu/misc.c:676 gammu/misc.c:686
 #, c-format
 msgid "%i locations"
-msgstr ""
+msgstr "%i asukohta"
 
 #: gammu/misc.c:681
 msgid "Phone SMS status"
-msgstr ""
+msgstr "Telefoni SMS olek"
 
 #: gammu/misc.c:689
 #, c-format
 msgid "%i templates"
-msgstr ""
+msgstr "%i malli"
 
 #: gammu/misc.c:702
 msgid "Leaving monitor mode..."
-msgstr ""
+msgstr "Väljutakse jälgimisrežiimist..."
 
 #: gammu/misc.c:730
 msgid "Smart Messaging"
-msgstr ""
+msgstr "Tark sõnumivahetus"
 
 #: gammu/misc.c:731
 msgid "Nokia binary"
-msgstr ""
+msgstr "Nokia binaarne"
 
 #: gammu/misc.c:732
 msgid "MIDI"
-msgstr ""
+msgstr "MIDI"
 
 #: gammu/misc.c:733
 msgid "SMAF (MMF)"
-msgstr ""
+msgstr "SMAF (MMF)"
 
 #: gammu/misc.c:735
 #, c-format
 msgid " format, ringtone \"%s\"\n"
-msgstr ""
+msgstr " formaat, helin \"%s\"\n"
 
 #: gammu/misc.c:949
 #, c-format
 msgid "What type of reset do you want (\"%s\") ?\n"
-msgstr ""
+msgstr "Millist algseadistust sa soovid (\"%s\")?\n"
 
 #: gammu/misc.c:976 gammu/misc.c:1023 helper/memory-display.c:178
 #: helper/message-display.c:478
 msgid "Address"
-msgstr ""
+msgstr "Aadress"
 
 #: gammu/misc.c:1018
 #, c-format
 msgid "%i. Access point %i"
-msgstr ""
+msgstr "%i. pöörduspunkt %i"
 
 #: gammu/misc.c:1020 gammu/misc.c:1537 gammu/misc.c:1544 gammu/misc.c:1579
 #: gammu/misc.c:1592 gammu/misc.c:1631 gammu/misc.c:1680 gammu/misc.c:2060
 msgid " (active)"
-msgstr ""
+msgstr " (valitud)"
 
 #: gammu/misc.c:1048 gammu/misc.c:1204
 msgid "Maximal location for caller logo can be 5"
-msgstr ""
+msgstr "Helistaja logo maksimaalne asukoht saab olla 5"
 
 #: gammu/misc.c:1061
 #, c-format
 msgid "What type of logo do you want to get (\"%s\") ?\n"
-msgstr ""
+msgstr "Millist tüüpi logo sa soovid saada (\"%s\")?\n"
 
 #: gammu/misc.c:1077
 msgid "Group name"
-msgstr ""
+msgstr "Grupi nimi"
 
 #: gammu/misc.c:1078 gammu/misc.c:1081
 msgid "default"
-msgstr ""
+msgstr "vaikimisi"
 
 #: gammu/misc.c:1081 gammu/misc.c:1083 gammu/misc.c:1096 gammu/misc.c:1103
 #: helper/memory-display.c:101
 msgid "Ringtone"
-msgstr ""
+msgstr "Helin"
 
 #: gammu/misc.c:1097
 #, c-format
 msgid "(file with ID %i)\n"
-msgstr ""
+msgstr "(faili ID %i)\n"
 
 #. l10n: Ringtone name and ID format
 #: gammu/misc.c:1107 gammu/misc.c:2079
 #, c-format
 msgid "\"%s\" (ID %i)\n"
-msgstr ""
+msgstr "\"%s\" (ID %i)\n"
 
 #. l10n: Ringtone ID format
 #: gammu/misc.c:1110 gammu/misc.c:2082
 #, c-format
 msgid "ID %i\n"
-msgstr ""
+msgstr "ID %i\n"
 
 #: gammu/misc.c:1116 gammu/misc.c:1118
 msgid "Bitmap"
-msgstr ""
+msgstr "raster"
 
 #: gammu/misc.c:1116 gammu/misc.c:1639 gammu/misc.c:1642 gammu/mms.c:102
 msgid "enabled"
-msgstr ""
+msgstr "lubatud"
 
 #: gammu/misc.c:1118 gammu/misc.c:1640 gammu/misc.c:1643 gammu/mms.c:104
 msgid "disabled"
@@ -2744,75 +2763,75 @@ msgstr "keelatud"
 
 #: gammu/misc.c:1121
 msgid "Bitmap ID"
-msgstr ""
+msgstr "Rasterpildi ID"
 
 #: gammu/misc.c:1134
 msgid "No operator logo in phone"
-msgstr ""
+msgstr "Operaatori logo telefonis ei ole"
 
 #: gammu/misc.c:1140 gammu/mms.c:71 helper/message-display.c:476
 msgid "Sender"
-msgstr ""
+msgstr "Saatja"
 
 #: gammu/misc.c:1146
 #, c-format
 msgid "Welcome note text is \"%s\"\n"
-msgstr ""
+msgstr "Tevitustekstiks on \"%s\"\n"
 
 #: gammu/misc.c:1149
 #, c-format
 msgid "Dealer note text is \"%s\"\n"
-msgstr ""
+msgstr "Müüja märkme tekst on \"%s\"\n"
 
 #: gammu/misc.c:1287
 #, c-format
 msgid "What type of logo do you want to set (\"%s\") ?\n"
-msgstr ""
+msgstr "Millist tüüpi logo soovid valida (\"%s\")?\n"
 
 #: gammu/misc.c:1324
 #, c-format
 msgid "Unknown parameter (\"%s\")"
-msgstr ""
+msgstr "Tundmatu parameeter (\"%s\")"
 
 #: gammu/misc.c:1405
 msgid "Delete phone phonebook?"
-msgstr ""
+msgstr "Kas kustutada telefoniraamat telefonis?"
 
 #: gammu/misc.c:1406
 msgid "Delete SIM phonebook?"
-msgstr ""
+msgstr "Kas kustutada telefoniraamat SIM-kaardil?"
 
 #: gammu/misc.c:1407
 msgid "Delete missed calls?"
-msgstr ""
+msgstr "Kas kustudada vastamata kõned?"
 
 #: gammu/misc.c:1408
 msgid "Delete dialled calls?"
-msgstr ""
+msgstr "Kas kustutada valitud kõned?"
 
 #: gammu/misc.c:1409
 msgid "Delete received calls?"
-msgstr ""
+msgstr "Kas kustutada vastatud kõned?"
 
 #: gammu/misc.c:1414
 msgid "Delete phone calendar notes?"
-msgstr ""
+msgstr "Kas kustutada kalendri märkmed telefonis?"
 
 #: gammu/misc.c:1438
 msgid "Delete phone todos?"
-msgstr ""
+msgstr "Kas kustutada märkmed telefonis?"
 
 #: gammu/misc.c:1462
 msgid "Delete phone notes?"
-msgstr ""
+msgstr "Kas kustutada märkmed telefonis?"
 
 #: gammu/misc.c:1480
 msgid "Delete phone WAP bookmarks?"
-msgstr ""
+msgstr "Kas kustutada WAP kohaviidad telefonis?"
 
 #: gammu/misc.c:1507
 msgid "Delete all phone FM radio stations?"
-msgstr ""
+msgstr "Kas kustutada kõik FM raadiojaamad telefonis?"
 
 #: gammu/misc.c:1519 gammu/misc.c:1521
 msgid "Connection type"
@@ -2820,72 +2839,72 @@ msgstr "Ühenduse tüüp"
 
 #: gammu/misc.c:1519
 msgid "Continuous"
-msgstr ""
+msgstr "Pidev"
 
 #: gammu/misc.c:1521
 msgid "Temporary"
-msgstr ""
+msgstr "Ajutine"
 
 #: gammu/misc.c:1524 gammu/misc.c:1526
 msgid "Connection security"
-msgstr ""
+msgstr "Turvaline ühendus"
 
 #: gammu/misc.c:1524 gammu/misc.c:2156
 msgid "On"
-msgstr ""
+msgstr "jah"
 
 #: gammu/misc.c:1526 gammu/misc.c:2142
 msgid "Off"
-msgstr ""
+msgstr "ei"
 
 #: gammu/misc.c:1528
 msgid "Proxy"
-msgstr ""
+msgstr "Proksi"
 
 #: gammu/misc.c:1529 gammu/misc.c:1532
 #, c-format
 msgid "address \"%s\", port %i"
-msgstr ""
+msgstr "aadress \"%s\", port %i"
 
 #: gammu/misc.c:1531
 msgid "Second proxy"
-msgstr ""
+msgstr "Teine proksi"
 
 #: gammu/misc.c:1536 gammu/misc.c:1543 gammu/misc.c:1578 gammu/misc.c:1591
 msgid "Bearer"
-msgstr ""
+msgstr "Kandja"
 
 #: gammu/misc.c:1536
 msgid "SMS"
-msgstr ""
+msgstr "SMS"
 
 #: gammu/misc.c:1539
 msgid "Server number"
-msgstr ""
+msgstr "Serveri number"
 
 #: gammu/misc.c:1540 gammu/misc.c:1586 gammu/misc.c:1587
 msgid "Service number"
-msgstr ""
+msgstr "Teenuse number"
 
 #: gammu/misc.c:1543
 msgid "Data (CSD)"
-msgstr ""
+msgstr "GSM-data"
 
 #: gammu/misc.c:1546
 msgid "Dial-up number"
-msgstr ""
+msgstr "Sissehelistamise number"
 
 #: gammu/misc.c:1547 gammu/misc.c:1583 gammu/misc.c:1584 gammu/misc.c:1605
 msgid "IP address"
-msgstr ""
+msgstr "IP aadress"
 
 #: gammu/misc.c:1549 gammu/misc.c:1551 gammu/misc.c:1595 gammu/misc.c:1597
 msgid "Login type"
-msgstr ""
+msgstr "Logimise tüüp"
 
 #: gammu/misc.c:1549 gammu/misc.c:1595
 msgid "Manual"
-msgstr ""
+msgstr "Manuaalne"
 
 #: gammu/misc.c:1551 gammu/misc.c:1597
 msgid "Automatic"
@@ -2893,7 +2912,7 @@ msgstr "Automaatne"
 
 #: gammu/misc.c:1554 gammu/misc.c:1556 gammu/misc.c:1600 gammu/misc.c:1602
 msgid "Authentication type"
-msgstr ""
+msgstr "Autentimise tüüp"
 
 #: gammu/misc.c:1554 gammu/misc.c:1600
 msgid "Normal"
@@ -2901,31 +2920,31 @@ msgstr "Harilik"
 
 #: gammu/misc.c:1556 gammu/misc.c:1602
 msgid "Secure"
-msgstr ""
+msgstr "Turvaline"
 
 #: gammu/misc.c:1559 gammu/misc.c:1561
 msgid "Data call type"
-msgstr ""
+msgstr "Andmekõne tüüp"
 
 #: gammu/misc.c:1559
 msgid "ISDN"
-msgstr ""
+msgstr "ISDN"
 
 #: gammu/misc.c:1561
 msgid "Analogue"
-msgstr ""
+msgstr "Analoog"
 
 #: gammu/misc.c:1565 gammu/misc.c:1568 gammu/misc.c:1571
 msgid "Data call speed"
-msgstr ""
+msgstr "Andmekõne kiirus"
 
 #: gammu/misc.c:1571 gammu/misc.c:2158
 msgid "Auto"
-msgstr ""
+msgstr "Automaatne"
 
 #: gammu/misc.c:1574 gammu/misc.c:1606
 msgid "User name"
-msgstr ""
+msgstr "Kasutajanimi"
 
 #: gammu/misc.c:1575 gammu/misc.c:1607 gammu/misc.c:1634 gammu/misc.c:1684
 msgid "Password"
@@ -2933,37 +2952,37 @@ msgstr "Salasõna"
 
 #: gammu/misc.c:1578
 msgid "USSD"
-msgstr ""
+msgstr "USSD"
 
 #: gammu/misc.c:1581
 msgid "Service code"
-msgstr ""
+msgstr "Teenuse kood"
 
 #: gammu/misc.c:1583 gammu/misc.c:1586
 msgid "Address type"
-msgstr ""
+msgstr "Aadressi tüüp"
 
 #: gammu/misc.c:1604
 msgid "Access point"
-msgstr ""
+msgstr "Pöörduspunkt"
 
 #: gammu/misc.c:1627 gammu/misc.c:1648 gammu/misc.c:1676 gammu/misc.c:1689
 #: gammu/misc.c:1721
 #, c-format
 msgid "Set %i"
-msgstr ""
+msgstr "Vali %i"
 
 #: gammu/misc.c:1633 gammu/misc.c:1683
 msgid "User"
-msgstr ""
+msgstr "Kasutaja"
 
 #: gammu/misc.c:1635
 msgid "Phonebook database"
-msgstr ""
+msgstr "Telefoniraamatu andmebaas"
 
 #: gammu/misc.c:1636
 msgid "Calendar database"
-msgstr ""
+msgstr "Kalendri andmebaas"
 
 #: gammu/misc.c:1637
 msgid "Server"
@@ -2971,15 +2990,15 @@ msgstr "Server"
 
 #: gammu/misc.c:1638
 msgid "Sync. phonebook"
-msgstr ""
+msgstr "Sünk. telefoniraamat"
 
 #: gammu/misc.c:1641
 msgid "Sync. calendar"
-msgstr ""
+msgstr "Sünk. kalender"
 
 #: gammu/misc.c:1646 gammu/misc.c:1687
 msgid "Connection set name"
-msgstr ""
+msgstr "Ühenduste nimi"
 
 #: gammu/misc.c:1682 gammu/misc.c:1732
 msgid "Homepage"
@@ -2987,196 +3006,196 @@ msgstr "Koduleht"
 
 #: gammu/misc.c:1726
 msgid "active"
-msgstr ""
+msgstr "aktiivne"
 
 #: gammu/misc.c:1730
 msgid "Read only"
-msgstr ""
+msgstr "Ainult lugemiseks"
 
 #: gammu/misc.c:1755
 msgid "Startup logo"
-msgstr ""
+msgstr "Käivituslogo"
 
 #: gammu/misc.c:1756
 msgid "Operator logo"
-msgstr ""
+msgstr "Operaatori logo"
 
 #: gammu/misc.c:1757 helper/message-display.c:443
 msgid "Picture"
-msgstr ""
+msgstr "Pilt"
 
 #: gammu/misc.c:1758
 msgid "Caller group logo"
-msgstr ""
+msgstr "Helistjate grupi logo"
 
 #: gammu/misc.c:1761
 #, c-format
 msgid ", width %i, height %i\n"
-msgstr ""
+msgstr ", laius %i, kõrgus %i\n"
 
 #: gammu/misc.c:1778
 #, c-format
 msgid "What format of output file logo (\"%s\") ?\n"
-msgstr ""
+msgstr "Millist vormindust kasutada logo väljundfailis (\"%s\")?\n"
 
 #: gammu/misc.c:1803
 #, c-format
 msgid "What format of output ringtone file (\"%s\") ?\n"
-msgstr ""
+msgstr "Millist vormindust kasutada helina väljundfailis (\"%s\")?\n"
 
 #: gammu/misc.c:1823
 #, c-format
 msgid "Unknown key/function name: \"%c\"\n"
-msgstr ""
+msgstr "Tundmatu parameeter/funktsiooni nimi: \"%c\"\n"
 
 #: gammu/misc.c:1853 gammu/misc.c:1891
 #, c-format
 msgid "What type of categories do you want to get (\"%s\") ?\n"
-msgstr ""
+msgstr "Millist tüüpi kategooriaid soovid saada (\"%s\")?\n"
 
 #: gammu/misc.c:1929
 #, c-format
 msgid "What type of category do you want to add (\"%s\") ?\n"
-msgstr ""
+msgstr "Millist tüüpi kategooriaid soovid lisada (\"%s\")?\n"
 
 #: gammu/misc.c:1937
 #, c-format
 msgid "Text too long, truncating to %d chars!\n"
-msgstr ""
+msgstr "Tekst on liiga pikk, lühendatakse %d tärgini!\n"
 
 #: gammu/misc.c:1976
 msgid "Invalid security code type"
-msgstr ""
+msgstr "Vigane turvakoodi tüüp"
 
 #: gammu/misc.c:1981
 #, c-format
 msgid "Enter %s code: "
-msgstr ""
+msgstr "Sisesta %s kood: "
 
 #: gammu/misc.c:1993 gammu/misc.c:2015
 msgid "No PIN code entered!"
-msgstr ""
+msgstr "PIN1 koodi ei sisestatud!"
 
 #: gammu/misc.c:2003
 #, c-format
 msgid "Enter new PIN code: "
-msgstr ""
+msgstr "Sisesta PIN1 kood: "
 
 #: gammu/misc.c:2061
 msgid " (default name)"
-msgstr ""
+msgstr " (vaikimisi nimi)"
 
 #: gammu/misc.c:2062
 msgid " (Head set profile)"
-msgstr ""
+msgstr " (käed-vaba profiil)"
 
 #: gammu/misc.c:2063
 msgid " (Car kit profile)"
-msgstr ""
+msgstr " (auto komplekti profiil)"
 
 #: gammu/misc.c:2072 helper/memory-display.c:106
 msgid "Ringtone ID"
-msgstr ""
+msgstr "Helina ID"
 
 #: gammu/misc.c:2074
 msgid "Message alert tone ID"
-msgstr ""
+msgstr "SMS-sõnumi märguande heli ID"
 
 #: gammu/misc.c:2087
 msgid "Call alert for"
-msgstr ""
+msgstr "Kõne märguanne"
 
 #: gammu/misc.c:2108
 msgid "Screen saver number"
-msgstr ""
+msgstr "Ekraanisäästja number"
 
 #: gammu/misc.c:2111
 msgid "Incoming call alert"
-msgstr ""
+msgstr "Siseneva kõne märguanne"
 
 #: gammu/misc.c:2112
 msgid "Ringtone volume"
-msgstr ""
+msgstr "Helina tugevus"
 
 #: gammu/misc.c:2113
 msgid "Vibrating alert"
-msgstr ""
+msgstr "Värinaga märguanne"
 
 #: gammu/misc.c:2114
 msgid "Message alert tone"
-msgstr ""
+msgstr "Sõnumi märguande toon"
 
 #: gammu/misc.c:2115
 msgid "Keypad tones"
-msgstr ""
+msgstr "Klahvitoonid"
 
 #: gammu/misc.c:2116
 msgid "Warning (games) tones"
-msgstr ""
+msgstr "Hoiatuste (mängud) toonid"
 
 #: gammu/misc.c:2117 helper/message-display.c:439
 msgid "Screen saver"
-msgstr ""
+msgstr "Ekraanisäästja"
 
 #: gammu/misc.c:2118
 msgid "Screen saver timeout"
-msgstr ""
+msgstr "Ekraanisäästja aegumine"
 
 #: gammu/misc.c:2119
 msgid "Automatic answer"
-msgstr ""
+msgstr "Automaatvastus"
 
 #: gammu/misc.c:2120
 msgid "Lights"
-msgstr ""
+msgstr "Valgustus"
 
 #: gammu/misc.c:2128
 msgid "Level 1"
-msgstr ""
+msgstr "Tase 1"
 
 #: gammu/misc.c:2130
 msgid "Level 2"
-msgstr ""
+msgstr "Tase 2"
 
 #: gammu/misc.c:2132
 msgid "Level 3"
-msgstr ""
+msgstr "Tase 3"
 
 #: gammu/misc.c:2133
 msgid "Level 4"
-msgstr ""
+msgstr "Tase 4"
 
 #: gammu/misc.c:2134
 msgid "Level 5"
-msgstr ""
+msgstr "Tase 5"
 
 #: gammu/misc.c:2143
 msgid "Ringing"
-msgstr ""
+msgstr "Heliseb"
 
 #: gammu/misc.c:2145
 msgid "Beep once"
-msgstr ""
+msgstr "Üksik piiksatus"
 
 #: gammu/misc.c:2146
 msgid "Ring once"
-msgstr ""
+msgstr "Üksik helin"
 
 #: gammu/misc.c:2147 gammu/misc.c:2151
 msgid "Ascending"
-msgstr ""
+msgstr "Kasvav"
 
 #: gammu/misc.c:2148
 msgid "Caller groups"
-msgstr ""
+msgstr "Helistajate grupid"
 
 #: gammu/misc.c:2149
 msgid "Standard"
-msgstr ""
+msgstr "Tavaline"
 
 #: gammu/misc.c:2150
 msgid "Special"
-msgstr ""
+msgstr "Eriline"
 
 #: gammu/misc.c:2152
 msgid "Personal"
@@ -3184,174 +3203,174 @@ msgstr "Isiklik"
 
 #: gammu/misc.c:2157
 msgid "Vibrate first"
-msgstr ""
+msgstr "Esmalt vibreeri"
 
 #: gammu/misc.c:2194
 msgid " speed dial not assigned"
-msgstr ""
+msgstr " kiirvalik teostamata"
 
 #: gammu/misc.c:2226
 #, c-format
 msgid "What type of reset phone settings (\"%s\") ?\n"
-msgstr ""
+msgstr "Kuidas algväärtustada telefoni seaded (\"%s\")?\n"
 
 #: gammu/misc.c:2260
 msgid "Currently shown on the display"
-msgstr ""
+msgstr "Hetkel kuvatakse ekraanil"
 
 #: gammu/misc.c:2265
 msgid "Call active"
-msgstr ""
+msgstr "Kõne aktiivne"
 
 #: gammu/misc.c:2268
 msgid "Unread SMS"
-msgstr ""
+msgstr "Lugemata SMS"
 
 #: gammu/misc.c:2271
 msgid "Voice call"
-msgstr ""
+msgstr "Häälkõne"
 
 #: gammu/misc.c:2274
 msgid "Fax call"
-msgstr ""
+msgstr "Faksi kõne"
 
 #: gammu/misc.c:2277
 msgid "Data call"
-msgstr ""
+msgstr "Andmekõne"
 
 #: gammu/misc.c:2280
 msgid "Keypad locked"
-msgstr ""
+msgstr "Klaviatuur lukustatud"
 
 #: gammu/misc.c:2283
 msgid "SMS memory full"
-msgstr ""
+msgstr "SMS mälu täis"
 
 #: gammu/misc.c:2321
 msgid "Station name"
-msgstr ""
+msgstr "Jaama nimi"
 
 #: gammu/misc.c:2322
 msgid "Frequency"
-msgstr ""
+msgstr "Sagedus"
 
 #: gammu/misc.c:2344
 #, c-format
 msgid "Unknown divert action (\"%s\")\n"
-msgstr ""
+msgstr "Tundmatu suunamise käsk (\"%s\")\n"
 
 #: gammu/misc.c:2357
 #, c-format
 msgid "Unknown divert type (\"%s\")\n"
-msgstr ""
+msgstr "Tundmatu suunamise tüüp (\"%s\")\n"
 
 #: gammu/misc.c:2370
 #, c-format
 msgid "Unknown call type (\"%s\")\n"
-msgstr ""
+msgstr "Tundmatu kõne tüüp (\"%s\")\n"
 
 #: gammu/misc.c:2379
 msgid "Query:"
-msgstr ""
+msgstr "Päring:"
 
 #: gammu/misc.c:2395
 msgid "Changed:"
-msgstr ""
+msgstr "Muudetud:"
 
 #: gammu/misc.c:2398 gammu/misc.c:2445
 msgid "Divert type"
-msgstr ""
+msgstr "Suunamise tüüp"
 
 #: gammu/misc.c:2402 gammu/misc.c:2449
 msgid "when busy"
-msgstr ""
+msgstr "kui kinni"
 
 #: gammu/misc.c:2405 gammu/misc.c:2452
 msgid "when not answered"
-msgstr ""
+msgstr "kui ei vastatud"
 
 #: gammu/misc.c:2408 gammu/misc.c:2455
 msgid "when phone off or no coverage"
-msgstr ""
+msgstr "kui välja lülitatud või võrgust väljas"
 
 #: gammu/misc.c:2411 gammu/misc.c:2458
 msgid "all types of diverts"
-msgstr ""
+msgstr "kõik suunamised"
 
 #: gammu/misc.c:2414 gammu/misc.c:2434 gammu/misc.c:2461 gammu/misc.c:2477
 #, c-format
 msgid "unknown %i"
-msgstr ""
+msgstr "tundmatu %i"
 
 #: gammu/misc.c:2419 gammu/misc.c:2465
 msgid "Call type"
-msgstr ""
+msgstr "Kõne tüüp"
 
 #: gammu/misc.c:2422 gammu/misc.c:2468
 msgid "voice"
-msgstr ""
+msgstr "hääl"
 
 #: gammu/misc.c:2425 gammu/misc.c:2471 helper/message-display.c:115
 msgid "fax"
-msgstr ""
+msgstr "faks"
 
 #: gammu/misc.c:2428 gammu/misc.c:2474
 msgid "data"
-msgstr ""
+msgstr "andmed"
 
 #: gammu/misc.c:2431
 msgid "data & fax & voice"
-msgstr ""
+msgstr "andmed, faks & hääl"
 
 #: gammu/misc.c:2440
 msgid "Response:"
-msgstr ""
+msgstr "Vastus:"
 
 #: gammu/misc.c:2520
 msgid "The application has been successfully sent to the phone."
-msgstr ""
+msgstr "Avaldus saadeti edukalt telefoni."
 
 #: gammu/misc.c:2521
 msgid "Please find received files in Inbox and install them."
-msgstr ""
+msgstr "Palun leia vastu võetud failid kaustast Sisse ja paigalda need."
 
 #: gammu/mms.c:49
 msgid "Do you want to save this MMS file?"
-msgstr ""
+msgstr "Kas salvestada see MMS-sõnumi fail?"
 
 #: gammu/mms.c:53 gammu/mms.c:134
 #, c-format
 msgid "Error while saving to file %s!\n"
-msgstr ""
+msgstr "Viga salvestamisel faili %s!\n"
 
 #: gammu/mms.c:55 gammu/mms.c:136
 #, c-format
 msgid "Saved to file %s\n"
-msgstr ""
+msgstr "Salvestatu faili %s\n"
 
 #: gammu/mms.c:65
 msgid "Some MMS file features unknown for Gammu decoder"
-msgstr ""
+msgstr "Mõned MMS-sõnumi faili võimalused on Gammu dekoodrile tundmatud"
 
 #: gammu/mms.c:73 gammu/mms.c:81 gammu/mms.c:89
 msgid "phone "
-msgstr ""
+msgstr "telefon "
 
 #: gammu/mms.c:79
 msgid "Recipient"
-msgstr ""
+msgstr "Saaja"
 
 #: gammu/mms.c:87
 msgid "CC"
-msgstr ""
+msgstr "PK"
 
 #: gammu/mms.c:94
 msgid "Message type"
-msgstr ""
+msgstr "Sõnumi tüüp"
 
 #: gammu/mms.c:97 helper/message-display.c:477
 msgid "Subject"
-msgstr ""
+msgstr "Teema"
 
 #: gammu/mms.c:100
 msgid "Delivery report"
@@ -3359,393 +3378,396 @@ msgstr "Olekuraport"
 
 #: gammu/mms.c:107 gammu/mms.c:110
 msgid "Content type"
-msgstr ""
+msgstr "Sisu tüüp"
 
 #: gammu/mms.c:114
 #, c-format
 msgid " (%s in SMIL)"
-msgstr ""
+msgstr " (%s SMIL-is)"
 
 #: gammu/mms.c:130
 msgid "Do you want to save this attachment?"
-msgstr ""
+msgstr "Kas salvestada see manus?"
 
 #: gammu/mms.c:170
 #, c-format
 msgid "Folder %s\n"
-msgstr ""
+msgstr "Kaust %s\n"
 
 #: gammu/mms.c:171
 msgid "  File filesystem ID"
-msgstr ""
+msgstr "  Faili ID failisüsteemis"
 
 #: gammu/nokia.c:43
 msgid "It can be RTTL ringtone only used with this option"
-msgstr ""
+msgstr "Selle parameetriga on võimalik kasutada ainult RTTL helinat"
 
 #: gammu/nokia.c:54
 #, c-format
 msgid "Ringtone \"%s\" (tempo = %i Beats Per Minute)"
-msgstr ""
+msgstr "Helin \"%s\" (tempo = %i lööki minutis)"
 
 #: gammu/nokia.c:63
 #, c-format
 msgid "length=%i notes, but you will enter only first 50 tones."
-msgstr ""
+msgstr "pikkus=%i nooti, kuid sa sisestad ainult esimesed 50 tooni."
 
 #: gammu/nokia.c:66
 msgid "This ringtone in Nokia Composer in phone should look:"
-msgstr ""
+msgstr "See helin telefoni Nokia Composer-is peaks paistma:"
 
 #: gammu/nokia.c:107
 msgid "To enter it please press:"
-msgstr ""
+msgstr "Sisestamiseks vajuta:"
 
 #: gammu/nokia.c:126
 msgid "(longer)"
-msgstr ""
+msgstr "(pikem)"
 
 #: gammu/nokia.c:254
 #, c-format
 msgid "Checking %s\n"
-msgstr ""
+msgstr "Kontrollitakse %s\n"
 
 #: gammu/nokia.c:259
 msgid "  Only part handled!"
-msgstr ""
+msgstr "  Ainult osaliselt käsitletud!"
 
 #: gammu/nokia.c:338
 msgid "  Problem with adding playlist"
-msgstr ""
+msgstr "  Probleem esitlusloendisse lisamisel"
 
 #: gammu/nokia.c:385
 #, c-format
 msgid "Writing file %s:"
-msgstr ""
+msgstr "Kirjutatakse faili %s:"
 
 #: gammu/nokia.c:440
 msgid ""
 "Your phone model is not supported. Please report it to authors (see <http://"
 "wammu.eu/support/bugs/>). Thank you."
 msgstr ""
+"Sinu telefoni mudel ei ole toetatud. Palun teavita sellest autoreid (vaata "
+"<http://wammu.eu/support/bugs/>). Aitäh."
 
 #: gammu/nokia.c:456
 msgid "Problem with deleting playlist"
-msgstr ""
+msgstr "Probleem esitlusloendi kustutamisega"
 
 #: gammu/nokia.c:550
 #, c-format
 msgid "What folder type (\"%s\") ?\n"
-msgstr ""
+msgstr "Milline kausta tüüp (\"%s\")?\n"
 
 #: gammu/nokia.c:558 gammu/nokia.c:565 gammu/nokia.c:572
 #, c-format
 msgid "Can not open file %s\n"
-msgstr ""
+msgstr "Faili %s avamine ebaõnnestus\n"
 
 #: gammu/nokia.c:593 gammu/nokia.c:667
 msgid "Folder not found. Probably function not supported!"
-msgstr ""
+msgstr "Kausta ei leitud. Käsk ei ole vist toetatud!"
 
 #: gammu/nokia.c:616
 msgid "Searching for phone folder: "
-msgstr ""
+msgstr "Otsitakse telefoni kausta: "
 
 #: gammu/nokia.c:693
 msgid "No vendor info in JAD file!"
-msgstr ""
+msgstr "JAD fail ei sisalda tarnija nime!"
 
 #: gammu/nokia.c:698
 msgid "No name info in JAD file!"
-msgstr ""
+msgstr "JAD fail ei sisalda nime infot!"
 
 #: gammu/nokia.c:703
 msgid "No JAR URL info in JAD file!"
-msgstr ""
+msgstr "JAD fail ei sisalda JAR faili URL-i!"
 
 #: gammu/nokia.c:709
 msgid "Declared JAR file size is different than real. Fixed by Gammu."
-msgstr ""
+msgstr "Deklareeritud JAR faili suurus erineb tegelikust. Gammu parandas."
 
 #: gammu/nokia.c:733
 msgid "No JAR size info in JAD file. Added by Gammu."
-msgstr ""
+msgstr "JAR faili suuruse info puudub JAD failist. Gammu lisas."
 
 #: gammu/nokia.c:742
 #, c-format
 msgid "Adding \"%s\""
-msgstr ""
+msgstr "Lisatakse \"%s\""
 
 #: gammu/nokia.c:743
 #, c-format
 msgid " version %s"
-msgstr ""
+msgstr " versioon %s"
 
 #: gammu/nokia.c:744
 #, c-format
 msgid " created by %s\n"
-msgstr ""
+msgstr " %s loodud\n"
 
 #: gammu/nokia.c:795 gammu/nokia.c:847
 msgid "Application already exists. Deleting by Gammu."
-msgstr ""
+msgstr "Aplikatsioon on juba olemas. Gammu kustutas."
 
 #: gammu/nokia.c:828 gammu/nokia.c:861
 #, c-format
 msgid "  Deleting %s\n"
-msgstr ""
+msgstr "  Kustutatakse %s\n"
 
 #: gammu/nokia.c:884
 msgid "Writing JAD file:"
-msgstr ""
+msgstr "Kirjutatakse JAD fail:"
 
 #: gammu/nokia.c:903
 msgid "Writing JAR file:"
-msgstr ""
+msgstr "Kirjutatakse JAR fail:"
 
 #: gammu/nokia.c:978
 msgid "Writing file:"
-msgstr ""
+msgstr "Kirjutatakse fail:"
 
 #: gammu/search.c:145
 #, c-format
 msgid "Connection \"%s\" on device \"%s\"\n"
-msgstr ""
+msgstr "Ühendus \"%s\" seadmega \"%s\"\n"
 
 #: gammu/search.c:182 gammu/search.c:189
 msgid "Error creating thread\n"
-msgstr ""
+msgstr "Viga lõime loomisel\n"
 
 #: helper/cmdline.c:26
 #, c-format
 msgid "Number out of range: %s\n"
-msgstr ""
+msgstr "Number ei ole vahemikus: %s\n"
 
 #: helper/cmdline.c:31
 #, c-format
 msgid "Parameter is not a number: %s\n"
-msgstr ""
+msgstr "Parameeter ei ole arv: %s\n"
 
 #: helper/formats.h:2
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d sekund"
+msgstr[1] "%d sekundit"
 
 #: helper/formats.h:3
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d minut"
+msgstr[1] "%d minutit"
 
 #: helper/formats.h:4
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d tund"
+msgstr[1] "%d tundi"
 
 #: helper/formats.h:5
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d päev"
+msgstr[1] "%d päeva"
 
 #: helper/formats.h:6
 #, c-format
 msgid "%d week"
 msgid_plural "%d weeks"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d nädal"
+msgstr[1] "%d nädalat"
 
 #: helper/formats.h:7
 #, c-format
 msgid "%d year"
 msgid_plural "%d years"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d aasta"
+msgstr[1] "%d aastat"
 
 #: helper/memory-display.c:30
 msgid "Call length"
-msgstr ""
+msgstr "Kõne pikkus"
 
 #. l10n: Call length format string hour:minute:second
 #: helper/memory-display.c:32
 #, c-format
 msgid "%02i:%02i:%02i\n"
-msgstr ""
+msgstr "%02i:%02i:%02i\n"
 
 #: helper/memory-display.c:38
 msgid "Date and time"
-msgstr ""
+msgstr "Kuupäev ja kellaaeg"
 
 #: helper/memory-display.c:66 helper/memory-display.c:70
 #: helper/memory-display.c:79 helper/memory-display.c:90
 msgid "Caller group"
-msgstr ""
+msgstr "Helistajate grupp"
 
 #: helper/memory-display.c:71
 msgid "Caller group number too high, please increase buffer in sources!"
 msgstr ""
+"Helistajate grupi number on liiga suur, palun suurenda puhvrit lähtekoodis!"
 
 #: helper/memory-display.c:110
 msgid "User ID"
-msgstr ""
+msgstr "Kasutaja ID"
 
 #: helper/memory-display.c:113
 msgid "Picture name"
-msgstr ""
+msgstr "Pildi nimi"
 
 #: helper/memory-display.c:116
 msgid "Picture ID"
-msgstr ""
+msgstr "Pildi ID"
 
 #: helper/memory-display.c:119
 msgid "Photo"
-msgstr ""
+msgstr "Foto"
 
 #: helper/memory-display.c:119
 msgid "Displaying not supported"
-msgstr ""
+msgstr "Kuvamine ei ole toetatud"
 
 #: helper/memory-display.c:121
 msgid "Favorite messaging number"
-msgstr ""
+msgstr "Lemmik sõnumi number"
 
 #: helper/memory-display.c:129
 msgid "Work number"
-msgstr ""
+msgstr "Töö number"
 
 #: helper/memory-display.c:132
 msgid "General number"
-msgstr ""
+msgstr "Üldine number"
 
 #: helper/memory-display.c:136
 msgid "Video number"
-msgstr ""
+msgstr "Video number"
 
 #: helper/memory-display.c:141
 msgid "Home mobile number"
-msgstr ""
+msgstr "Kodumobiili number"
 
 #: helper/memory-display.c:144
 msgid "Work mobile number"
-msgstr ""
+msgstr "Töömobiili number"
 
 #: helper/memory-display.c:155
 msgid "Home fax number"
-msgstr ""
+msgstr "Koduse faksi number"
 
 #: helper/memory-display.c:158
 msgid "Work fax number"
-msgstr ""
+msgstr "Töö faksi number"
 
 #: helper/memory-display.c:165
 msgid "Pager number"
-msgstr ""
+msgstr "Piipari number"
 
 #: helper/memory-display.c:166
 msgid "Other number"
-msgstr ""
+msgstr "Muu number"
 
 #: helper/memory-display.c:172
 msgid "Home address"
-msgstr ""
+msgstr "Kodu aadress"
 
 #: helper/memory-display.c:175
 msgid "Work address"
-msgstr ""
+msgstr "Töö aadress"
 
 #: helper/memory-display.c:186
 msgid "Home email"
-msgstr ""
+msgstr "Kodu e-mail"
 
 #: helper/memory-display.c:189
 msgid "Work email"
-msgstr ""
+msgstr "Töö e-mail"
 
 #: helper/memory-display.c:196
 msgid "Email address 2"
-msgstr ""
+msgstr "E-maili aadress 2"
 
 #: helper/memory-display.c:201
 msgid "Home website"
-msgstr ""
+msgstr "Kodu veebileht"
 
 #: helper/memory-display.c:204
 msgid "Work website"
-msgstr ""
+msgstr "Töö veebileht"
 
 #: helper/memory-display.c:207
 msgid "Website"
-msgstr ""
+msgstr "Veebileht"
 
 #: helper/memory-display.c:212
 msgid "VOIP"
-msgstr ""
+msgstr "VOIP"
 
 #: helper/memory-display.c:213
 msgid "SWIS"
-msgstr ""
+msgstr "SWIS"
 
 #: helper/memory-display.c:214
 msgid "WVID"
-msgstr ""
+msgstr "WVID"
 
 #: helper/memory-display.c:215
 msgid "SIP"
-msgstr ""
+msgstr "SIP"
 
 #: helper/memory-display.c:216
 msgid "DTMF"
-msgstr ""
+msgstr "DTMF"
 
 #: helper/memory-display.c:218
 msgid "Last name"
-msgstr ""
+msgstr "Perekonna nimi"
 
 #: helper/memory-display.c:219
 msgid "First name"
-msgstr ""
+msgstr "Eesnimi"
 
 #: helper/memory-display.c:220
 msgid "Second name"
-msgstr ""
+msgstr "Teine nimi"
 
 #: helper/memory-display.c:221
 msgid "Formal name"
-msgstr ""
+msgstr "Ametlik nimi"
 
 #: helper/memory-display.c:222
 msgid "Name prefix"
-msgstr ""
+msgstr "Nime eesliide"
 
 #: helper/memory-display.c:223
 msgid "Name suffix"
-msgstr ""
+msgstr "Nime järelliide"
 
 #: helper/memory-display.c:224
 msgid "Nick name"
-msgstr ""
+msgstr "Hüüdnimi"
 
 #: helper/memory-display.c:225
 msgid "Company"
-msgstr ""
+msgstr "Firma"
 
 #: helper/memory-display.c:226
 msgid "Job title"
-msgstr ""
+msgstr "Ametinimetus"
 
 #: helper/memory-display.c:227
 msgid "Street address"
-msgstr ""
+msgstr "Tänava aadress"
 
 #: helper/memory-display.c:228
 msgid "City"
-msgstr ""
+msgstr "Linn"
 
 #: helper/memory-display.c:229
 msgid "State"
@@ -3753,230 +3775,230 @@ msgstr "Olek"
 
 #: helper/memory-display.c:230
 msgid "Zip code"
-msgstr ""
+msgstr "Postiindeks"
 
 #: helper/memory-display.c:231
 msgid "Country"
-msgstr ""
+msgstr "Riik"
 
 #: helper/memory-display.c:232
 msgid "Custom text 1"
-msgstr ""
+msgstr "Muu tekst 1"
 
 #: helper/memory-display.c:233
 msgid "Custom text 2"
-msgstr ""
+msgstr "Muu tekst 2"
 
 #: helper/memory-display.c:234
 msgid "Custom text 3"
-msgstr ""
+msgstr "Muu tekst 3"
 
 #: helper/memory-display.c:235
 msgid "Custom text 4"
-msgstr ""
+msgstr "Muu tekst 4"
 
 #: helper/memory-display.c:236
 msgid "Push to talk ID"
-msgstr ""
+msgstr "\"Push-to-Talk\" ID"
 
 #: helper/memory-display.c:239
 msgid "unknown field type"
-msgstr ""
+msgstr "tundmatu välja tüüp"
 
 #: helper/memory-display.c:246 helper/message-display.c:128
 msgid "home"
-msgstr ""
+msgstr "kodu"
 
 #: helper/memory-display.c:249 helper/message-display.c:131
 msgid "work"
-msgstr ""
+msgstr "töö"
 
 #: helper/message-cmdline.c:184
 msgid "Not enough parameters!"
-msgstr ""
+msgstr "Parameetreid on puudu!"
 
 #: helper/message-cmdline.c:208
 #, c-format
 msgid "What format of sms (\"%s\") ?\n"
-msgstr ""
+msgstr "Milline SMS-sõnumi formaat (\"%s\")?\n"
 
 #: helper/message-cmdline.c:233 helper/message-cmdline.c:250
 msgid "Where are parameters?"
-msgstr ""
+msgstr "Kus on parameetrid?"
 
 #: helper/message-cmdline.c:264
 msgid "Where is ringtone filename?"
-msgstr ""
+msgstr "Kus on helina failinimi?"
 
 #: helper/message-cmdline.c:282 helper/message-cmdline.c:300
 #: helper/message-cmdline.c:351
 msgid "Where is logo filename?"
-msgstr ""
+msgstr "Kus on logo failinimi?"
 
 #: helper/message-cmdline.c:318
 msgid "Where is number of frames?"
-msgstr ""
+msgstr "Kus on kaadrite arv?"
 
 #: helper/message-cmdline.c:326
 msgid "Too many animation frames!"
-msgstr ""
+msgstr "Liiga palju kaadreid animatsiooniks!"
 
 #: helper/message-cmdline.c:357
 #, c-format
 msgid "File \"%s\"\n"
-msgstr ""
+msgstr "Fail \"%s\"\n"
 
 #: helper/message-cmdline.c:384
 msgid "Bookmark not found in file"
-msgstr ""
+msgstr "Kohaviita ei leitud failist"
 
 #: helper/message-cmdline.c:408
 msgid "WAP settings not found in file"
-msgstr ""
+msgstr "WAP seadeid failist ei leitud"
 
 #: helper/message-cmdline.c:429
 msgid "Sorry. For now there is only support for GPRS or DATA bearers end"
-msgstr ""
+msgstr "Vabandust, hetkel on toetatud ainult GPRS või DATA kandjad"
 
 #: helper/message-cmdline.c:452
 msgid "MMS settings not found in file"
-msgstr ""
+msgstr "MMS-sõnumite seadeid failist ei leitud"
 
 #: helper/message-cmdline.c:466
 msgid "Sorry. No GPRS bearer found in MMS settings"
-msgstr ""
+msgstr "Vabandust, GPRS kandjat ei leitud MMS-sõnumite seadetest"
 
 #: helper/message-cmdline.c:512
 msgid "ToDo note not found in file"
-msgstr ""
+msgstr "Ülesannet ei leitud failist"
 
 #: helper/message-cmdline.c:574
 msgid "Backup functionality not compiled in!"
-msgstr ""
+msgstr "Varunduse funktsionaalsust ei ole programmi kompileeritud!"
 
 #: helper/message-cmdline.c:1055
 #, c-format
 msgid "Wrong message length (\"%s\")\n"
-msgstr ""
+msgstr "Vigane sõnumi pikkus (\"%s\")\n"
 
 #: helper/message-cmdline.c:1078
 #, c-format
 msgid "Unknown GSM network code (\"%s\")\n"
-msgstr ""
+msgstr "Tundmatu GSM võrgu kood (\"%s\")\n"
 
 #: helper/message-cmdline.c:1097
 #, c-format
 msgid "You have to give number between 1 and 7 (\"%s\")\n"
-msgstr ""
+msgstr "Sa pead sisestama on numbri vahemikust 1 kuni 7 (\"%s\")\n"
 
 #: helper/message-cmdline.c:1135
 #, c-format
 msgid "Unknown validity string (\"%s\")\n"
-msgstr ""
+msgstr "Tundmatu kehtivusega string (\"%s\")\n"
 
 #: helper/message-cmdline.c:1173
 #, c-format
 msgid "You have to give number of EMS frames between 1 and 4 (\"%s\")\n"
-msgstr ""
+msgstr "Sa pead sisestama EMS kaadrite arvu vahemikust 1 kuni 4 (\"%s\")\n"
 
 #: helper/message-cmdline.c:1185 helper/message-cmdline.c:1202
 #, c-format
 msgid "Can't open file \"%s\"\n"
-msgstr ""
+msgstr "Ei saa avada faili \"%s\"\n"
 
 #: helper/message-cmdline.c:1251
 #, c-format
 msgid "Unknown parameter (\"%c\")\n"
-msgstr ""
+msgstr "Tundmatu parameeter (\"%c\")\n"
 
 #: helper/message-cmdline.c:1256
 msgid "Last parameter wasn't text"
-msgstr ""
+msgstr "Viimane parameeter ei olnud tekst"
 
 #: helper/message-cmdline.c:1290
 #, c-format
 msgid "Too long SMS name (\"%s\"), ignored\n"
-msgstr ""
+msgstr "Liiga pikk SMS-sõnumi nimi (\"%s\"), ignoreeriti\n"
 
 #: helper/message-cmdline.c:1330
 #, c-format
 msgid "Enter the message text and press %s:\n"
-msgstr ""
+msgstr "Sisesta sõnumi tekst ja vajuta %s:\n"
 
 #: helper/message-cmdline.c:1332
 msgid "Ctrl+Z"
-msgstr ""
+msgstr "Ctrl+Z"
 
 #: helper/message-cmdline.c:1334
 msgid "Ctrl+D"
-msgstr ""
+msgstr "Ctrl+D"
 
 #: helper/message-cmdline.c:1348
 msgid "No chars read, assuming it is okay!"
-msgstr ""
+msgstr "Tähti ei loetud, loodetavasti on kõik korras!"
 
 #: helper/message-cmdline.c:1368
 msgid "No network code"
-msgstr ""
+msgstr "Puudub võrgu kood"
 
 #: helper/message-cmdline.c:1374
 msgid "You have to set network code!"
-msgstr ""
+msgstr "Sa oead määrama võrgu koodi!"
 
 #: helper/message-cmdline.c:1413
 #, c-format
 msgid "Ringtone too long. %i percent part cut\n"
-msgstr ""
+msgstr "Helin on liiga pikk. %i protsendine osa lõigati\n"
 
 #: helper/message-cmdline.c:1424
 #, c-format
 msgid "There are %i SMS messages packed and the limit is %i. Exiting\n"
-msgstr ""
+msgstr "%i SMS-sõnumit on pakitud ja piirang on %i. Väljutakse\n"
 
 #: helper/message-cmdline.c:1434
 msgid "Use -smscnumber option to give SMSC number"
-msgstr ""
+msgstr "Kasuta SMS keskuse numbri määramiseks parameetrit -smscnumber"
 
 #: helper/message-display.c:26
 #, c-format
 msgid "Location %i, folder \"%s\""
-msgstr ""
+msgstr "Asukoht %i, kaust \"%s\""
 
 #: helper/message-display.c:33
 msgid "SIM memory"
-msgstr ""
+msgstr "SIM-kaardi mälu"
 
 #: helper/message-display.c:36
 msgid "phone memory"
-msgstr ""
+msgstr "telefoni mälu"
 
 #: helper/message-display.c:39
 msgid "phone or SIM memory"
-msgstr ""
+msgstr "telefoni või SIM-kaardi mälu"
 
 #: helper/message-display.c:46
 msgid "Inbox folder"
-msgstr ""
+msgstr "Sisenevad kaust"
 
 #: helper/message-display.c:112
 msgid "mobile"
-msgstr ""
+msgstr "mobiil"
 
 #: helper/message-display.c:118
 msgid "pager"
-msgstr ""
+msgstr "piipar"
 
 #: helper/message-display.c:121
 msgid "general"
-msgstr ""
+msgstr "üldine"
 
 #: helper/message-display.c:145
 msgid "8 bit SMS, cannot be displayed here"
-msgstr ""
+msgstr "8-bitine SMS-sõnum, siin ei saa kuvada"
 
 #: helper/message-display.c:165
 msgid "SMS status report"
-msgstr ""
+msgstr "SMS oleku raport"
 
 #: helper/message-display.c:169 helper/message-display.c:181
 #: helper/message-display.c:233 helper/message-display.c:248
@@ -3990,321 +4012,325 @@ msgstr "Loe"
 
 #: helper/message-display.c:171 helper/message-display.c:291
 msgid "UnRead"
-msgstr ""
+msgstr "Lugemata"
 
 #: helper/message-display.c:172 helper/message-display.c:292
 msgid "UnSent"
-msgstr ""
+msgstr "Saatmata"
 
 #: helper/message-display.c:176 helper/message-display.c:279
 msgid "Remote number"
 msgid_plural "Remote numbers"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Number"
+msgstr[1] "Numbrit"
 
 #: helper/message-display.c:180 helper/message-display.c:245
 msgid "Reference number"
-msgstr ""
+msgstr "Viitenumber"
 
 #: helper/message-display.c:182 helper/message-display.c:230
 msgid "SMSC number"
-msgstr ""
+msgstr "SMSC number"
 
 #: helper/message-display.c:183
 msgid "SMSC response"
-msgstr ""
+msgstr "SMSC vastus"
 
 #: helper/message-display.c:184
 msgid "Delivery status"
-msgstr ""
+msgstr "Saatmise olek"
 
 #: helper/message-display.c:185
 msgid "Details"
-msgstr ""
+msgstr "Detailid"
 
 #: helper/message-display.c:188 helper/message-display.c:193
 msgid "Temporary error, "
-msgstr ""
+msgstr "Ajutine viga, "
 
 #: helper/message-display.c:190
 msgid "Permanent error, "
-msgstr ""
+msgstr "Alaline viga, "
 
 #: helper/message-display.c:196
 msgid "SM received by the SME"
-msgstr ""
+msgstr "SME võttis vastu lühisõnumi"
 
 #: helper/message-display.c:197
 msgid ""
 "SM forwarded by the SC to the SME but the SC is unable to confirm delivery"
 msgstr ""
+"Sõnumikeskus edastas lühisõnumi SME-le, kuid sõnumikeskus ei suuda "
+"kontrollida saatmist"
 
 #: helper/message-display.c:198
 msgid "SM replaced by the SC"
-msgstr ""
+msgstr "Sõnumikeskus asendas lühisõnumi"
 
 #: helper/message-display.c:199 helper/message-display.c:215
 msgid "Congestion"
-msgstr ""
+msgstr "Tulv"
 
 #: helper/message-display.c:200 helper/message-display.c:216
 msgid "SME busy"
-msgstr ""
+msgstr "SME on kinni"
 
 #: helper/message-display.c:201 helper/message-display.c:217
 msgid "No response from SME"
-msgstr ""
+msgstr "SME ei vastanud"
 
 #: helper/message-display.c:202 helper/message-display.c:218
 msgid "Service rejected"
-msgstr ""
+msgstr "Teenusest keelduti"
 
 #: helper/message-display.c:203 helper/message-display.c:209
 #: helper/message-display.c:219
 msgid "Quality of service not available"
-msgstr ""
+msgstr "Teenuse kvaliteet ei ole saadaval"
 
 #: helper/message-display.c:204 helper/message-display.c:220
 msgid "Error in SME"
-msgstr ""
+msgstr "SME-s on viga"
 
 #: helper/message-display.c:205
 msgid "Remote procedure error"
-msgstr ""
+msgstr "Kaugprotseduuri viga"
 
 #: helper/message-display.c:206
 msgid "Incompatibile destination"
-msgstr ""
+msgstr "Ühildumatu sihtpunkt"
 
 #: helper/message-display.c:207
 msgid "Connection rejected by SME"
-msgstr ""
+msgstr "SME keeldus ühendusest"
 
 #: helper/message-display.c:208
 msgid "Not obtainable"
-msgstr ""
+msgstr "Kättesaamatu"
 
 #: helper/message-display.c:210
 msgid "No internetworking available"
-msgstr ""
+msgstr "Võrguühendus puudub"
 
 #: helper/message-display.c:211
 msgid "SM Validity Period Expired"
-msgstr ""
+msgstr "Lühisõnumi kehtivusaeg ületatud"
 
 #: helper/message-display.c:212
 msgid "SM deleted by originating SME"
-msgstr ""
+msgstr "Lähte SME kustutas lühisõnumi"
 
 #: helper/message-display.c:213
 msgid "SM Deleted by SC Administration"
-msgstr ""
+msgstr "Sõnumikeskuse administratsioon kustutas lühisõnumi"
 
 #: helper/message-display.c:214
 msgid "SM does not exist"
-msgstr ""
+msgstr "Lühisõnumit ei ole olemas"
 
 #: helper/message-display.c:221
 #, c-format
 msgid "Reserved/Specific to SC: %x"
-msgstr ""
+msgstr "Reserveeritud/sõnumikesusele omane: %x"
 
 #: helper/message-display.c:226 helper/message-display.c:243
 msgid "SMS message"
-msgstr ""
+msgstr "SMS-sõnum"
 
 #: helper/message-display.c:228
 msgid "Saved"
-msgstr ""
+msgstr "Salvestatud"
 
 #: helper/message-display.c:231
 msgid " (set for reply)"
-msgstr ""
+msgstr " (määra vastuseks)"
 
 #: helper/message-display.c:240
 msgid "SMS replacing ID"
-msgstr ""
+msgstr "SMS-sõnumie asendamise ID"
 
 #: helper/message-display.c:255
 msgid "Class"
-msgstr ""
+msgstr "Klass"
 
 #: helper/message-display.c:257
 msgid "Coding"
-msgstr ""
+msgstr "Kodeering"
 
 #: helper/message-display.c:260
 msgid "Unicode (no compression)"
-msgstr ""
+msgstr "Unicode (pakkimata)"
 
 #: helper/message-display.c:263
 msgid "Unicode (compression)"
-msgstr ""
+msgstr "Unicode (pakitud)"
 
 #: helper/message-display.c:266
 msgid "Default GSM alphabet (no compression)"
-msgstr ""
+msgstr "Vaikimisi GSM tähestik (pakkimata)"
 
 #: helper/message-display.c:269
 msgid "Default GSM alphabet (compression)"
-msgstr ""
+msgstr "Vaikimisi GSM tähestik (pakitud)"
 
 #. l10n: 8-bit message coding
 #: helper/message-display.c:273
 msgid "8-bit"
-msgstr ""
+msgstr "8-bitine"
 
 #: helper/message-display.c:296
 msgid "User Data Header"
-msgstr ""
+msgstr "Kasutaja andmepäis"
 
 #: helper/message-display.c:298 helper/message-display.c:299
 msgid "Concatenated (linked) message"
-msgstr ""
+msgstr "Sidurdatud (lingitud) sõnum"
 
 #: helper/message-display.c:300
 msgid "Disables voice indicator"
-msgstr ""
+msgstr "Keelab hääle indikaatori"
 
 #: helper/message-display.c:301
 msgid "Enables voice indicator"
-msgstr ""
+msgstr "Lubab hääle indikaatori"
 
 #: helper/message-display.c:302
 msgid "Disables fax indicator"
-msgstr ""
+msgstr "Keelab faksi indikaatori"
 
 #: helper/message-display.c:303
 msgid "Enables fax indicator"
-msgstr ""
+msgstr "Lubab faksi indikaatori"
 
 #: helper/message-display.c:304
 msgid "Disables email indicator"
-msgstr ""
+msgstr "Keelab e-maili indikaatori"
 
 #: helper/message-display.c:305
 msgid "Enables email indicator"
-msgstr ""
+msgstr "Lubab e-maili indikaatori"
 
 #: helper/message-display.c:306
 msgid "Void SMS"
-msgstr ""
+msgstr "Tühi SMS"
 
 #: helper/message-display.c:307
 msgid "Nokia WAP bookmark"
-msgstr ""
+msgstr "Nokia WAP kohaviit"
 
 #: helper/message-display.c:308
 msgid "Nokia operator logo"
-msgstr ""
+msgstr "Nokia operaatori logo"
 
 #: helper/message-display.c:309
 msgid "Nokia WAP bookmark or WAP/MMS settings"
-msgstr ""
+msgstr "Nokia WAP kohaviit või WAP/MMS seaded"
 
 #: helper/message-display.c:310 helper/message-display.c:311
 msgid "Nokia ringtone"
-msgstr ""
+msgstr "Nokia helin"
 
 #: helper/message-display.c:312
 msgid "Nokia GSM operator logo"
-msgstr ""
+msgstr "Nokia GSM operaatori logo"
 
 #: helper/message-display.c:313
 msgid "Nokia caller logo"
-msgstr ""
+msgstr "Nokia helistaja logo"
 
 #: helper/message-display.c:314
 msgid "Nokia profile"
-msgstr ""
+msgstr "Nokia profiil"
 
 #: helper/message-display.c:315
 msgid "Nokia calendar note"
-msgstr ""
+msgstr "Nokia kalendri märge"
 
 #: helper/message-display.c:316
 msgid "Nokia phonebook entry"
-msgstr ""
+msgstr "Nokia telefoniraamatu kirje"
 
 #: helper/message-display.c:317
 msgid "User UDH"
-msgstr ""
+msgstr "Kasutaja UDH"
 
 #: helper/message-display.c:318
 msgid "MMS indicator"
-msgstr ""
+msgstr "MMS indikaator"
 
 #: helper/message-display.c:322
 #, c-format
 msgid ", ID (8 bit) %i"
-msgstr ""
+msgstr ", ID (8-bitine) %i"
 
 #: helper/message-display.c:323
 #, c-format
 msgid ", ID (16 bit) %i"
-msgstr ""
+msgstr ", ID (16-bitine) %i"
 
 #: helper/message-display.c:326
 #, c-format
 msgid ", part %i of %i"
-msgstr ""
+msgstr ", osa %i/%i"
 
 #: helper/message-display.c:328
 #, c-format
 msgid ", %i parts"
-msgstr ""
+msgstr ", %i osa"
 
 #: helper/message-display.c:339
 msgid "Siemens file"
-msgstr ""
+msgstr "Siemensi fail"
 
 #: helper/message-display.c:347
 #, c-format
 msgid "Unknown PDU type: 0x%x\n"
-msgstr ""
+msgstr "Tundmatu PDU tüüp: 0x%x\n"
 
 #: helper/message-display.c:394
 msgid ""
 "Some details were ignored (unknown or not implemented in decoding functions)"
 msgstr ""
+"Mõningaid detaile ignoreeriti (tundmatud või teostamata "
+"dekodeerimisfunktsioonides)"
 
 #: helper/message-display.c:399
 msgid "Siemens OTA file"
-msgstr ""
+msgstr "Siemensi OTA fail"
 
 #: helper/message-display.c:401
 msgid " - VCARD"
-msgstr ""
+msgstr " - VCARD"
 
 #: helper/message-display.c:415
 #, c-format
 msgid "Ringtone \"%s\"\n"
-msgstr ""
+msgstr "Helin \"%s\"\n"
 
 #: helper/message-display.c:420
 msgid "Do you want to play it?"
-msgstr ""
+msgstr "Kas sa soovid seda mängida?"
 
 #: helper/message-display.c:425
 msgid "Caller logo"
-msgstr ""
+msgstr "Helistaja logo"
 
 #: helper/message-display.c:429
 #, c-format
 msgid "Operator logo for %s network"
-msgstr ""
+msgstr "Operaatori logo %s võrgule"
 
 #: helper/message-display.c:449
 msgid "Profile"
-msgstr ""
+msgstr "Profiil"
 
 #: helper/message-display.c:470
 msgid "EMS sound ID"
-msgstr ""
+msgstr "EMS heli ID"
 
 #: helper/message-display.c:473
 msgid "EMS animation ID"
-msgstr ""
+msgstr "EMS animatsiooni ID"
 
 #: helper/message-display.c:479
 msgid "Message size"
@@ -4313,33 +4339,33 @@ msgstr "Sõnumi suurus"
 #. l10n: Generic prefix for error messages
 #: helper/message-display.c:512 helper/printing.c:18
 msgid "Error"
-msgstr ""
+msgstr "Viga"
 
 #: helper/message-display.c:545
 msgid "Data PDU"
-msgstr ""
+msgstr "Andmete PDU"
 
 #: helper/message-display.c:546
 msgid "Number of bits"
-msgstr ""
+msgstr "Bittide arv"
 
 #: helper/message-display.c:548
 msgid "UDH"
-msgstr ""
+msgstr "UDH"
 
 #: helper/message-display.c:564
 msgid "Whole PDU"
-msgstr ""
+msgstr "Terve PDU"
 
 #. l10n: Generic prefix for warning messages
 #: helper/printing.c:34
 msgid "Warning"
-msgstr ""
+msgstr "Hoiatus"
 
 #. l10n: Generic prefix for informational messages
 #: helper/printing.c:50
 msgid "Information"
-msgstr ""
+msgstr "Informatsioon"
 
 #, fuzzy
 #~ msgid "Number:   %s"
