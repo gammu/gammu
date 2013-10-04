@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: Wammu 0.37\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-08-05 10:27+0200\n"
-"PO-Revision-Date: 2013-05-03 17:09+0200\n"
-"Last-Translator: Michal Čihař <michal@cihar.com>\n"
-"Language-Team: Simplified Chinese <http://l10n.cihar.com/projects/gammu/"
-"gammu/zh_CN/>\n"
+"PO-Revision-Date: 2013-10-04 15:15+0200\n"
+"Last-Translator: Jeffrey Shao <shaojf2001@qq.com>\n"
+"Language-Team: Simplified Chinese "
+"<http://l10n.cihar.com/projects/gammu/gammu/zh_CN/>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 1.6-dev\n"
+"X-Generator: Weblate 1.7-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -163,7 +163,7 @@ msgstr "备份手机备注？"
 
 #: gammu/backup.c:522
 msgid "Checking phone caller logos"
-msgstr ""
+msgstr "正在检查手机呼叫人图像"
 
 #: gammu/backup.c:527
 msgid "Backup phone caller groups and logos?"
