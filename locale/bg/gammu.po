@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-08-05 10:27+0200\n"
-"PO-Revision-Date: 2013-04-25 15:45+0200\n"
-"Last-Translator: Michal Čihař <michal@cihar.com>\n"
+"PO-Revision-Date: 2013-10-17 15:55+0200\n"
+"Last-Translator: Nikolay Ninarski <ninio@shtrak.eu>\n"
 "Language-Team: Bulgarian <http://l10n.cihar.com/projects/gammu/gammu/bg/>\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 1.6-dev\n"
+"X-Generator: Weblate 1.7\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -39,7 +39,7 @@ msgstr "Бележката не е намерена във файла"
 
 #: gammu/backup.c:128
 msgid "Todo note not found in file"
-msgstr ""
+msgstr "Задачата не е намерена в файла"
 
 #: gammu/backup.c:137 helper/message-cmdline.c:525
 msgid "Where is backup filename and location and memory type?"
