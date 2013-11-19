@@ -8,54 +8,52 @@ msgstr ""
 "Project-Id-Version: Gammu 1.33.90\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-08-05 10:27+0200\n"
-"PO-Revision-Date: 2013-10-17 15:55+0200\n"
-"Last-Translator: Michal Čihař <michal@cihar.com>\n"
+"PO-Revision-Date: 2013-11-19 11:01+0200\n"
+"Last-Translator: Joe Mauri <asbruff@gmail.com>\n"
 "Language-Team: Italian <http://l10n.cihar.com/projects/gammu/gammu/it/>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 1.7\n"
+"X-Generator: Weblate 1.9-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
 #: helper/message-cmdline.c:441 helper/message-cmdline.c:478
 #: helper/message-cmdline.c:501
-#, fuzzy
 msgid "Where is backup filename and location?"
-msgstr "Dov'è la posizione ed il nome file del backup ?\n"
+msgstr "Dov'è la posizione ed il nome file del backup?"
 
 #: gammu/backup.c:63 helper/message-cmdline.c:489
 #, fuzzy
 msgid "Calendar note not found in file"
-msgstr "Elementi dell'agenda non trovati nel file\n"
+msgstr "Elementi dell'agenda non trovati nel file"
 
 #: gammu/backup.c:86
 #, fuzzy
 msgid "WAP bookmark not found in file"
-msgstr "Segnalibro WAP non trovato nel file\n"
+msgstr "Segnalibro WAP non trovato nel file"
 
 #: gammu/backup.c:107
 #, fuzzy
 msgid "Note not found in file"
-msgstr "Nota non trovata nel file\n"
+msgstr "Nota non trovata nel file"
 
 #: gammu/backup.c:128
-#, fuzzy
 msgid "Todo note not found in file"
-msgstr "Nota non trovata nel file\n"
+msgstr "Nota \"todo\" non trovata nel file"
 
 #: gammu/backup.c:137 helper/message-cmdline.c:525
 #, fuzzy
 msgid "Where is backup filename and location and memory type?"
-msgstr "Dove sono il nome file, posizione e tipo di memoria del backup ?\n"
+msgstr "Dove sono il nome file, posizione e tipo di memoria del backup ?"
 
 #: gammu/backup.c:150 gammu/backup.c:161 helper/message-cmdline.c:537
 #: helper/message-cmdline.c:547
 #, fuzzy
 msgid "Phonebook entry not found in file"
-msgstr "Nome della rubrica non trovato nel file\n"
+msgstr "Nome della rubrica non trovato nel file"
 
 #: gammu/backup.c:167 helper/message-cmdline.c:552
 #, c-format
@@ -65,39 +63,36 @@ msgstr "Tipo di memoria sconosciuto: \"%s\"\n"
 #: gammu/backup.c:181
 #, fuzzy, c-format
 msgid "Unknown backup format: \"%s\"\n"
-msgstr "Parametro sconosciuto \"%s\""
+msgstr "Parametro sconosciuto \"%s\"\n"
 
 #: gammu/backup.c:187
 #, fuzzy
 msgid "Error while opening file for writing!\n"
-msgstr "Errore durante la scrittura sul dispositivo."
+msgstr "Errore durante la scrittura sul dispositivo.\n"
 
 #: gammu/backup.c:191 gammu/files.c:454 helper/message-cmdline.c:1110
 #, fuzzy
 msgid "Error while writing file!\n"
-msgstr "Errore durante la scrittura sul dispositivo."
+msgstr "Errore durante la scrittura sul dispositivo.\n"
 
 #: gammu/backup.c:194
-#, fuzzy
 msgid "Error while closing file!\n"
-msgstr "Errore durante la scrittura sul dispositivo."
+msgstr "Errore durante la chiusura del file!\n"
 
 #: gammu/backup.c:241 gammu/backup.c:424 gammu/backup.c:496 gammu/backup.c:531
 #: gammu/backup.c:565 gammu/backup.c:633 gammu/backup.c:670 gammu/backup.c:707
 #: gammu/backup.c:744 gammu/backup.c:781 gammu/backup.c:819 gammu/backup.c:860
 #: gammu/backup.c:894 gammu/backup.c:931 gammu/message.c:426
-#, fuzzy
 msgid "Reading"
-msgstr "Cancellazione delle vecchie stazioni FM: "
+msgstr "Lettura"
 
 #: gammu/backup.c:247 gammu/backup.c:292
 msgid "Only part of data saved, please increase the limit."
 msgstr ""
 
 #: gammu/backup.c:268 gammu/backup.c:310 gammu/backup.c:475 gammu/mms.c:182
-#, fuzzy
 msgid "Reading:"
-msgstr "Cancellazione delle vecchie stazioni FM: "
+msgstr "Lettura:"
 
 #: gammu/backup.c:269 gammu/backup.c:311 gammu/backup.c:476
 #: gammu/backup.c:1045 gammu/backup.c:1120 gammu/backup.c:1173
@@ -109,9 +104,9 @@ msgstr "Cancellazione delle vecchie stazioni FM: "
 #: gammu/backup.c:1761 gammu/backup.c:1783 gammu/backup.c:1807
 #: gammu/backupsms.c:108 gammu/files.c:386 gammu/files.c:604 gammu/misc.c:107
 #: gammu/misc.c:659 gammu/misc.c:664 gammu/misc.c:1376 gammu/mms.c:183
-#, fuzzy, c-format
+#, c-format
 msgid "%i percent"
-msgstr "%cScrittura : %i%"
+msgstr "%i percento"
 
 #: gammu/backup.c:367 gammu/backup.c:1026 gammu/backup.c:1645
 #: gammu/calendar.c:632 gammu/calendar.c:885 gammu/calendar.c:960
@@ -119,7 +114,7 @@ msgstr "%cScrittura : %i%"
 #: gammu/memory.c:376 gammu/message.c:133 gammu/misc.c:205 gammu/misc.c:606
 #, fuzzy
 msgid "Press Ctrl+C to break..."
-msgstr "Premere Ctrl+C per interrompere...\n"
+msgstr "Premere Ctrl+C per interrompere..."
 
 #: gammu/backup.c:372
 msgid "Use Unicode subformat of backup file?"
@@ -128,32 +123,28 @@ msgstr "Usare il subformato unicode per il backup del file?"
 #: gammu/backup.c:404
 #, fuzzy
 msgid "Checking phone phonebook"
-msgstr "Controllo la rubrica del telefono\n"
+msgstr "Controllo la rubrica del telefono"
 
 #: gammu/backup.c:405
-#, fuzzy
 msgid "Backup phone phonebook?"
-msgstr "Controllo la rubrica del telefono\n"
+msgstr "Effettuare un backup della la rubrica?"
 
 #: gammu/backup.c:409
 #, fuzzy
 msgid "Checking SIM phonebook"
-msgstr "Controllo la rubrica della SIM\n"
+msgstr "Controllo la rubrica della SIM"
 
 #: gammu/backup.c:410
-#, fuzzy
 msgid "Backup SIM phonebook?"
-msgstr "Controllo la rubrica della SIM\n"
+msgstr "Effettuare un backup della rubrica della SIM?"
 
 #: gammu/backup.c:415
-#, fuzzy
 msgid "Checking phone calendar"
-msgstr "Controllo i profili del telefono\n"
+msgstr "Controllo del calendario del telefono"
 
 #: gammu/backup.c:419
-#, fuzzy
 msgid "Backup phone calendar notes?"
-msgstr "Cancello le note vecchie: "
+msgstr "Effettuare un backup delle note sul calendario del telefono?"
 
 #: gammu/backup.c:432 gammu/backup.c:467 gammu/backup.c:504 gammu/backup.c:541
 #: gammu/backup.c:576 gammu/backup.c:642 gammu/backup.c:679 gammu/backup.c:716
@@ -164,104 +155,84 @@ msgid "Only part of data saved, please increase %s."
 msgstr ""
 
 #: gammu/backup.c:450
-#, fuzzy
 msgid "Checking phone todos"
-msgstr "Controllo la rubrica del telefono\n"
+msgstr "Controllo la lista delle cose da fare del telefono"
 
 #: gammu/backup.c:453
-#, fuzzy
 msgid "Backup phone todos?"
-msgstr "Controllo la rubrica del telefono\n"
+msgstr "Effettuare un backup della lista delle cose da fare del telefono?"
 
 #: gammu/backup.c:487
-#, fuzzy
 msgid "Checking phone notes"
-msgstr "Controllo i profili del telefono\n"
+msgstr "Controllo le note del telefono"
 
 #: gammu/backup.c:491
-#, fuzzy
 msgid "Backup phone notes?"
-msgstr "Controllo i profili del telefono\n"
+msgstr "Effettuare un backup delle note del telefono?"
 
 #: gammu/backup.c:522
-#, fuzzy
 msgid "Checking phone caller logos"
-msgstr "Controllo i profili del telefono\n"
+msgstr "Controllo il logger delle chiamate del telefono"
 
 #: gammu/backup.c:527
-#, fuzzy
 msgid "Backup phone caller groups and logos?"
-msgstr "Controllo i profili del telefono\n"
+msgstr "Effettuare un backup del logger delle chiamate del telefono?"
 
 #: gammu/backup.c:560
-#, fuzzy
 msgid "Checking SIM SMS profiles"
-msgstr "Controllo i profili del telefono\n"
+msgstr "Controllo i profili SMS della SIM del telefono"
 
 #: gammu/backup.c:561
-#, fuzzy
 msgid "Backup SIM SMS profiles?"
-msgstr "Controllo i profili del telefono\n"
+msgstr "Effettuare un backup dei profili SMS della SIM del telefono?"
 
 #: gammu/backup.c:589
-#, fuzzy
 msgid "Checking phone startup text"
-msgstr "Controllo i profili del telefono\n"
+msgstr "Controllo il testo di avvio del telefono"
 
 #: gammu/backup.c:593
-#, fuzzy
 msgid "Backup phone startup logo/text?"
-msgstr "Controllo i profili del telefono\n"
+msgstr "Effettuare un backup del logo e del testo di avvio del telefono?"
 
 #: gammu/backup.c:608
-#, fuzzy
 msgid "Checking phone operator logo"
-msgstr "Controllo i profili del telefono\n"
+msgstr "Controllo il logo operatore del telefono"
 
 #: gammu/backup.c:613
-#, fuzzy
 msgid "Backup phone operator logo?"
-msgstr "Logo operatore Nokia"
+msgstr "Effettuare un backup del logo dell'operatore del telefono?"
 
 #: gammu/backup.c:624
-#, fuzzy
 msgid "Checking phone WAP bookmarks"
-msgstr "Controllo la rubrica del telefono\n"
+msgstr "Controllo i segnalibri WAP del telefono"
 
 #: gammu/backup.c:628
-#, fuzzy
 msgid "Backup phone WAP bookmarks?"
-msgstr "Controllo la rubrica del telefono\n"
+msgstr "Effettuare un backup dei segnalibri WAP del telefono?"
 
 #: gammu/backup.c:661
-#, fuzzy
 msgid "Checking phone WAP settings"
-msgstr "Controllo i profili del telefono\n"
+msgstr "Controllo delle impostazioni WAP"
 
 #: gammu/backup.c:665
-#, fuzzy
 msgid "Backup phone WAP settings?"
-msgstr "Controllo i profili del telefono\n"
+msgstr "Effettuare un backup delle impostazioni WAP?"
 
 #: gammu/backup.c:698
-#, fuzzy
 msgid "Checking phone MMS settings"
-msgstr "Controllo i profili del telefono\n"
+msgstr "Controllo le impostazioni MMS del telefono"
 
 #: gammu/backup.c:702
-#, fuzzy
 msgid "Backup phone MMS settings?"
-msgstr "Controllo i profili del telefono\n"
+msgstr "Effettuare un backup delle impostazioni MMS del telefono?"
 
 #: gammu/backup.c:735
-#, fuzzy
 msgid "Checking phone Chat settings"
-msgstr "Controllo i profili del telefono\n"
+msgstr "Controllo le impostazioni Chat del telefono"
 
 #: gammu/backup.c:739
-#, fuzzy
 msgid "Backup phone Chat settings?"
-msgstr "Controllo i profili del telefono\n"
+msgstr "Effettuare un backup delle impostazioni Chat del telefono?"
 
 #: gammu/backup.c:772
 #, fuzzy
