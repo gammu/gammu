@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Gammu 1.33.90\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-08-05 10:27+0200\n"
-"PO-Revision-Date: 2013-11-25 16:28+0200\n"
-"Last-Translator: Michal Čihař <michal@cihar.com>\n"
+"PO-Revision-Date: 2013-11-25 16:29+0200\n"
+"Last-Translator: Marta moja <marta.mojapoczta1@onet.pl>\n"
 "Language-Team: Polish <http://l10n.cihar.com/projects/gammu/gammu/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
@@ -1530,7 +1530,7 @@ msgstr "Wersja Gammu %s zbudowana na %s używając %s"
 
 #: gammu-detect/main.c:76 gammu/gammu.c:100
 msgid "Compiled in features:"
-msgstr ""
+msgstr "Skompilowane w elementach:"
 
 #: gammu-detect/main.c:78
 msgid "udev probing"
@@ -1559,6 +1559,8 @@ msgstr ""
 #: gammu-detect/main.c:90 gammu/gammu.c:336
 msgid "This is free software: you are free to change and redistribute it."
 msgstr ""
+"To jest bezpłatne oprogramowanie: masz możliwość wprowadzanie zmian i "
+"rozpowszechniania"
 
 #: gammu-detect/main.c:91 gammu/gammu.c:338
 msgid "There is NO WARRANTY, to the extent permitted by law."
