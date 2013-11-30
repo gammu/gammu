@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: Wammu 0.37\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-08-05 10:27+0200\n"
-"PO-Revision-Date: 2012-07-05 18:02+0300\n"
-"Last-Translator: Rax Garfield <admin@dvizho.ks.ua>\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2013-11-30 12:36+0200\n"
+"Last-Translator: Andriy Bandura <andriykopanytsia@gmail.com>\n"
+"Language-Team: Ukrainian <http://l10n.cihar.com/projects/gammu/gammu/uk/>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 1.1\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 1.9-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -527,7 +527,7 @@ msgstr "Телефонувати"
 
 #: gammu/calendar.c:28
 msgid "Meeting"
-msgstr ""
+msgstr "Зустріч"
 
 #: gammu/calendar.c:31
 msgid "Birthday (Anniversary)"
@@ -2141,7 +2141,7 @@ msgstr ""
 
 #: gammu/message.c:228
 msgid "Pager"
-msgstr ""
+msgstr "Пейджер"
 
 #: gammu/message.c:232
 msgid "Validity"
@@ -2974,7 +2974,7 @@ msgstr ""
 
 #: gammu/misc.c:1682 gammu/misc.c:1732
 msgid "Homepage"
-msgstr ""
+msgstr "Домашня сторінка"
 
 #: gammu/misc.c:1726
 msgid "active"
@@ -3171,7 +3171,7 @@ msgstr ""
 
 #: gammu/misc.c:2152
 msgid "Personal"
-msgstr ""
+msgstr "Особистий"
 
 #: gammu/misc.c:2157
 msgid "Vibrate first"
