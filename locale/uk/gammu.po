@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Wammu 0.37\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-08-05 10:27+0200\n"
-"PO-Revision-Date: 2013-11-30 12:36+0200\n"
+"PO-Revision-Date: 2013-12-01 20:47+0200\n"
 "Last-Translator: Andriy Bandura <andriykopanytsia@gmail.com>\n"
 "Language-Team: Ukrainian <http://l10n.cihar.com/projects/gammu/gammu/uk/>\n"
 "Language: uk\n"
@@ -2880,7 +2880,7 @@ msgstr ""
 
 #: gammu/misc.c:1551 gammu/misc.c:1597
 msgid "Automatic"
-msgstr ""
+msgstr "Автоматичний"
 
 #: gammu/misc.c:1554 gammu/misc.c:1556 gammu/misc.c:1600 gammu/misc.c:1602
 msgid "Authentication type"
@@ -2920,7 +2920,7 @@ msgstr ""
 
 #: gammu/misc.c:1575 gammu/misc.c:1607 gammu/misc.c:1634 gammu/misc.c:1684
 msgid "Password"
-msgstr ""
+msgstr "Пароль"
 
 #: gammu/misc.c:1578
 msgid "USSD"
@@ -2958,7 +2958,7 @@ msgstr ""
 
 #: gammu/misc.c:1637
 msgid "Server"
-msgstr ""
+msgstr "Сервер"
 
 #: gammu/misc.c:1638
 msgid "Sync. phonebook"
