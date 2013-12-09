@@ -1,0 +1,18 @@
+[Unit]
+Description=SMS daemon for Gammu
+Documentation=man:gammu-smsd(1)
+After=syslog.target
+
+[Service]
+EnvironmentFile=-/etc/sysconfig/gammu-smsd
+# Run daemon as root user
+ExecStart=/usr/bin/gammu-smsd --pid=/var/run/gammu-smsd.pid --daemon
+# Run daemon as non-root user (set user/group in /etc/sysconfig/gammu-smsd)
+#ExecStart=/usr/bin/gammu-smsd --user=${GAMMU_USER} --group=${GAMMU_GROUP} --pid=/var/run/gammu-smsd.pid --daemon
+ExecReload=/bin/kill -HUP $MAINPID
+ExecStopPost=/bin/rm -f /var/run/gammu-smsd.pid
+Type=forking
+PIDFile=/var/run/gammu-smsd.pid
+
+[Install]
+WantedBy=multi-user.target
