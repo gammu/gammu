@@ -44,6 +44,7 @@ sphinx.domains.std.OptionXRefRole.process_link = gammu_process_link
 sys.path.insert(0, '@CMAKE_CURRENT_BINARY_DIR@/../../python')
 sys.path.append('@Gammu_SOURCE_DIR@/external/breathe')
 sys.path.append('@CMAKE_CURRENT_SOURCE_DIR@')
+sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 
 # General configuration
 # ---------------------
