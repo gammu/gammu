@@ -34,3 +34,9 @@ Support developers
 ==================
 
 You can appreciate developers work at <http://wammu.eu/donate/>.
+
+
+.. image:: https://d2weczhvl823v0.cloudfront.net/gammu/gammu/trend.png
+   :alt: Bitdeli badge
+   :target: https://bitdeli.com/free
+
