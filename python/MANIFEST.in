@@ -2,7 +2,7 @@ include AUTHORS
 include COPYING
 include INSTALL
 include ChangeLog
-include README
+include README.rst
 include Makefile
 include *.h
 recursive-include examples *.py
