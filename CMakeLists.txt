@@ -589,7 +589,7 @@ else (BUILD_SHARED_LIBS)
 endif (BUILD_SHARED_LIBS)
 
 set (DOCS
-    README
+    README.rst
     ChangeLog
     COPYING
     )
@@ -833,7 +833,7 @@ set (CPACK_PACKAGE_VENDOR "Michal Čihař")
 set (CPACK_PACKAGE_CONTACT "Michal Čihař <michal@cihar.com>")
 set (CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/installer/description.txt")
 # On Mac OS, the file needs .txt extension, give it to them
-configure_file("${CMAKE_CURRENT_SOURCE_DIR}/README" "${CMAKE_CURRENT_BINARY_DIR}/readme.txt" COPYONLY)
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/README.rst" "${CMAKE_CURRENT_BINARY_DIR}/readme.txt" COPYONLY)
 set (CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_BINARY_DIR}/readme.txt")
 set (CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/installer/license.txt")
 set (CPACK_PACKAGE_VERSION_MAJOR "${GAMMU_VERSION_MAJOR}")
