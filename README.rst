@@ -12,6 +12,13 @@ code was based on Gnokii <http://www.gnokii.org> and later MyGnokii
 Currently the project is lead by Michal Cihar <michal@cihar.com> with
 help of many contributors.
 
+.. image:: https://travis-ci.org/gammu/gammu.png?branch=master
+    :target: https://travis-ci.org/gammu/gammu
+
+.. image:: http://l10n.cihar.com/widgets/gammu-status-badge.png
+    :alt: Translation status
+    :target: http://l10n.cihar.com/engage/gammu/?utm_source=widget
+
 
 More information
 ================
