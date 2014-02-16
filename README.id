@@ -1,0 +1,47 @@
+Utilitas Manajemen Gammu Semua Perangkat Ponsel
+===============================================
+
+Gammu adalah utiliti library dan command line untuk telepon selular. Gammu
+dirilis di bawah GNU GPL versi 2.
+
+Produk ini telah diinisiasi oleh Marcin Wiacek dan beberapa orang
+lainnya. Kode asli berbasis Gnokii <http://www.gnokii.org> dan proyek
+terbaru MyGnokii <http://www.mwiacek.com>. Gammu sebelumnya (mulai dari
+versi 0.58) disebut MyGnokii2.
+
+Proyek saat ini dipimpin oleh Michal Cihar <michal@cihar.com> dengan bantuan
+dari banyak kontributor.
+
+.. image:: https://travis-ci.org/gammu/gammu.png?branch=master
+    :target: https://travis-ci.org/gammu/gammu
+
+.. image:: https://l10n.cihar.com/widgets/gammu-status-badge.png
+    :alt: Translation status :target:
+    https://l10n.cihar.com/engage/gammu/?utm_source=widget
+
+.. image:: https://d2weczhvl823v0.cloudfront.net/gammu/gammu/trend.png
+   :alt: Bitdeli badge :target: https://bitdeli.com/free
+
+
+Informasi lanjut
+================
+
+Anda dapat mencari lebih banyak informasi di <http://wammu.eu/gammu/>.
+
+Disana juga dapat ditemukan Manual Gammu di Docs/manual. Kamu bisa membangun
+versi HTML dengan cara membuat manual-html yang dapat diambil online di
+<http://wammu.eu/docs/manual/>.
+
+
+Laporan umpanbalik dan bug
+==========================
+
+Setiap umpanbalik kami tunggu, lihat <http://wammu.eu/support/> untuk
+informasi bagaimana menghubungi pengembang.
+
+
+Dukungan pengembang
+===================
+
+Kamu dapat menghargai pengembang yang sudah bekerja di
+<http://wammu.eu/donate/>.

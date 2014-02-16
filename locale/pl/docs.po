@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.33.90\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2013-08-05 10:25+0300\n"
+"POT-Creation-Date: 2014-02-16 12:25+0100\n"
 "PO-Revision-Date: 2011-12-19 09:43+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: none\n"
@@ -20,13 +20,13 @@ msgstr ""
 "X-Generator: Pootle 2.1.6\n"
 
 #. type: Title =
-#: README:2
+#: README.rst:2
 #, no-wrap
 msgid "Gammu All Mobile Management Utilities"
 msgstr "Gammu Zarządzanie wszystkimi telefonami"
 
 #. type: Plain text
-#: README:6
+#: README.rst:6
 msgid ""
 "Gammu is library and command line utility for mobile phones. It is released "
 "under GNU GPL version 2."
@@ -35,7 +35,7 @@ msgstr ""
 "Jest udostępniany na licencji GNU GPL w wersji 2."
 
 #. type: Plain text
-#: README:11
+#: README.rst:11
 msgid ""
 "It has been initiated by Marcin Wiacek and other people. Originally the code "
 "was based on Gnokii <http://www.gnokii.org> and later MyGnokii <http://www."
@@ -47,7 +47,7 @@ msgstr ""
 "mwiacek.com>. Gammu był (do wersji 0.58) z nazwą MyGnokii2."
 
 #. type: Plain text
-#: README:14
+#: README.rst:14
 msgid ""
 "Currently the project is lead by Michal Cihar <michal@cihar.com> with help "
 "of many contributors."
@@ -55,19 +55,59 @@ msgstr ""
 "Obecnie projekt jest prowadzony przez Michal Cihar <michal@cihar.com> z "
 "pomocą wielu użytkowników."
 
+#. type: Labeled list
+#: README.rst:15 README.rst:18 README.rst:22
+#, no-wrap
+msgid ".. image"
+msgstr ".. image"
+
+#. type: Plain text
+#: README.rst:16
+msgid "https://travis-ci.org/gammu/gammu.png?branch=master"
+msgstr "https://travis-ci.org/gammu/gammu.png?branch=master"
+
+#. type: Plain text
+#: README.rst:17
+msgid ":target: https://travis-ci.org/gammu/gammu"
+msgstr ":target: https://travis-ci.org/gammu/gammu"
+
+#. type: Plain text
+#: README.rst:19
+msgid "https://l10n.cihar.com/widgets/gammu-status-badge.png"
+msgstr "https://l10n.cihar.com/widgets/gammu-status-badge.png"
+
+#. type: Plain text
+#: README.rst:21
+msgid ""
+":alt: Translation status :target: https://l10n.cihar.com/engage/gammu/?"
+"utm_source=widget"
+msgstr ""
+":alt: Translation status :target: https://l10n.cihar.com/engage/gammu/?"
+"utm_source=widget"
+
+#. type: Plain text
+#: README.rst:23
+msgid "https://d2weczhvl823v0.cloudfront.net/gammu/gammu/trend.png"
+msgstr "https://d2weczhvl823v0.cloudfront.net/gammu/gammu/trend.png"
+
+#. type: Plain text
+#: README.rst:25
+msgid ":alt: Bitdeli badge :target: https://bitdeli.com/free"
+msgstr ":alt: Bitdeli badge :target: https://bitdeli.com/free"
+
 #. type: Title =
-#: README:17
+#: README.rst:28
 #, no-wrap
 msgid "More information"
 msgstr "Więcej informacji"
 
 #. type: Plain text
-#: README:20
+#: README.rst:31
 msgid "You can find more information on <http://wammu.eu/gammu/>."
 msgstr "Możesz znaleźć więcej informacji na temat <http://wammu.eu/gammu/>."
 
 #. type: Plain text
-#: README:24
+#: README.rst:35
 msgid ""
 "There is also Gammu manual available in docs/manual. You can build HTML "
 "version of it using make manual-html which is viewable online at <http://"
@@ -78,13 +118,13 @@ msgstr ""
 "docs/manual/>."
 
 #. type: Title =
-#: README:27
+#: README.rst:38
 #, no-wrap
 msgid "Feedback and bug reports"
 msgstr "Opinie i raporty o błędach"
 
 #. type: Plain text
-#: README:31
+#: README.rst:42
 msgid ""
 "Any feedback is welcome, see <http://wammu.eu/support/> for information how "
 "to contact developers."
@@ -93,13 +133,13 @@ msgstr ""
 "informację jak skontaktować się z programistami."
 
 #. type: Title =
-#: README:34
+#: README.rst:45
 #, no-wrap
 msgid "Support developers"
 msgstr "Wsparcie programistów"
 
 #. type: Plain text
-#: README:36
+#: README.rst:47
 msgid "You can appreciate developers work at <http://wammu.eu/donate/>."
 msgstr "Można docenić pracę programistów na <http://wammu.eu/donate/>."
 
