@@ -15,9 +15,9 @@ help of many contributors.
 .. image:: https://travis-ci.org/gammu/gammu.png?branch=master
     :target: https://travis-ci.org/gammu/gammu
 
-.. image:: http://l10n.cihar.com/widgets/gammu-status-badge.png
+.. image:: https://l10n.cihar.com/widgets/gammu-status-badge.png
     :alt: Translation status
-    :target: http://l10n.cihar.com/engage/gammu/?utm_source=widget
+    :target: https://l10n.cihar.com/engage/gammu/?utm_source=widget
 
 .. image:: https://d2weczhvl823v0.cloudfront.net/gammu/gammu/trend.png
    :alt: Bitdeli badge
