@@ -19,6 +19,10 @@ help of many contributors.
     :alt: Translation status
     :target: http://l10n.cihar.com/engage/gammu/?utm_source=widget
 
+.. image:: https://d2weczhvl823v0.cloudfront.net/gammu/gammu/trend.png
+   :alt: Bitdeli badge
+   :target: https://bitdeli.com/free
+
 
 More information
 ================
@@ -41,9 +45,3 @@ Support developers
 ==================
 
 You can appreciate developers work at <http://wammu.eu/donate/>.
-
-
-.. image:: https://d2weczhvl823v0.cloudfront.net/gammu/gammu/trend.png
-   :alt: Bitdeli badge
-   :target: https://bitdeli.com/free
-
