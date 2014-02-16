@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.28.91\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2013-08-05 10:27+0200\n"
+"POT-Creation-Date: 2014-02-16 12:20+0100\n"
 "PO-Revision-Date: 2013-08-05 20:36+0200\n"
 "Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
 "Language-Team: Turkish <http://l10n.cihar.com/projects/gammu/gammu/tr/>\n"
@@ -1768,7 +1768,7 @@ msgstr "%s için ağlar:"
 msgid "Unknown country name: %s."
 msgstr "Bilinmeyen ülke adı: %s."
 
-#: gammu/gammu.c:80 gammu/gammu.c:725 gammu/misc.c:48
+#: gammu/gammu.c:80 gammu/gammu.c:762 gammu/misc.c:48
 msgid "Network"
 msgstr "Şebeke"
 
@@ -1829,12 +1829,12 @@ msgstr "Toplu iş dosyasını okuma hatası! Sonlandırılıyor.\n"
 msgid "Batch processed, terminating.\n"
 msgstr "Toplu iş işlendi, sonlandırılıyor.\n"
 
-#: gammu/gammu.c:429
+#: gammu/gammu.c:466
 #, c-format
 msgid "Executing batch \"%s\" - command %i: %s\n"
 msgstr "\"%s\" toplu işi yürütülüyor - komut %i: %s\n"
 
-#: gammu/gammu.c:452
+#: gammu/gammu.c:489
 msgid ""
 "SMS daemon is now in separate binary, please use gammu-smsd-inject instead "
 "of gammu sendsmsdsms!"
@@ -1842,7 +1842,7 @@ msgstr ""
 "SMS daemon artık ayrı binari içindedir, lütfen gammu sendsmsdsms yerine "
 "gammu-smsd-inject kullanın!"
 
-#: gammu/gammu.c:459
+#: gammu/gammu.c:496
 msgid ""
 "SMS daemon is now in separate binary, please use gammu-smsd instead of gammu "
 "smsd!"
@@ -1850,117 +1850,117 @@ msgstr ""
 "SMS daemon artık ayrı binari içindedir, lütfen gammu smsd yerine gammu-smsd "
 "kullanın!"
 
-#: gammu/gammu.c:705
+#: gammu/gammu.c:742
 msgid "Calls"
 msgstr "Aramalar"
 
-#: gammu/gammu.c:706
+#: gammu/gammu.c:743
 msgid "SMS and EMS"
 msgstr "SMS ve EMS"
 
-#: gammu/gammu.c:707
+#: gammu/gammu.c:744
 msgid "Memory (phonebooks and calls)"
 msgstr "Hafıza (rehber ve aramalar)"
 
-#: gammu/gammu.c:708
+#: gammu/gammu.c:745
 msgid "Filesystem"
 msgstr "Dosya sistemi"
 
-#: gammu/gammu.c:709
+#: gammu/gammu.c:746
 msgid "Logo and pictures"
 msgstr "Logo ve resimler"
 
-#: gammu/gammu.c:710
+#: gammu/gammu.c:747
 msgid "Ringtones"
 msgstr "Zil sesleri"
 
-#: gammu/gammu.c:711
+#: gammu/gammu.c:748
 msgid "Calendar notes"
 msgstr "Takvim notları"
 
-#: gammu/gammu.c:712
+#: gammu/gammu.c:749
 msgid "To do lists"
 msgstr "Yapılacaklar listesi"
 
-#: gammu/gammu.c:713
+#: gammu/gammu.c:750
 msgid "Notes"
 msgstr "Notlar"
 
-#: gammu/gammu.c:714
+#: gammu/gammu.c:751
 msgid "Date, time and alarms"
 msgstr "Tarih, saat ve alarmlar"
 
-#: gammu/gammu.c:715
+#: gammu/gammu.c:752
 msgid "Categories"
 msgstr "Kategoriler"
 
-#: gammu/gammu.c:717
+#: gammu/gammu.c:754
 msgid "Backing up and restoring"
 msgstr "Yedekleme ve geri yükleme"
 
-#: gammu/gammu.c:720
+#: gammu/gammu.c:757
 msgid "Nokia specific"
 msgstr "Nokia'ya özgü"
 
-#: gammu/gammu.c:723
+#: gammu/gammu.c:760
 msgid "Siemens specific"
 msgstr "Siemens'e özgü"
 
-#: gammu/gammu.c:726
+#: gammu/gammu.c:763
 msgid "WAP settings and bookmarks"
 msgstr "WAP ayarları ve yer imleri"
 
-#: gammu/gammu.c:727
+#: gammu/gammu.c:764
 msgid "MMS and MMS settings"
 msgstr "MMS ve MMS ayarları"
 
-#: gammu/gammu.c:728
+#: gammu/gammu.c:765
 msgid "Phone tests"
 msgstr "Telefon denemeleri"
 
-#: gammu/gammu.c:729
+#: gammu/gammu.c:766
 msgid "FM radio"
 msgstr "FM radyo"
 
-#: gammu/gammu.c:730
+#: gammu/gammu.c:767
 msgid "Phone information"
 msgstr "Telefon bilgisi"
 
-#: gammu/gammu.c:731
+#: gammu/gammu.c:768
 msgid "Phone settings"
 msgstr "Telefon ayarları"
 
-#: gammu/gammu.c:733
+#: gammu/gammu.c:770
 msgid "Dumps decoding"
 msgstr "Arıza kodu çözme"
 
-#: gammu/gammu.c:735
+#: gammu/gammu.c:772
 msgid "Functions that don't fit elsewhere"
 msgstr "Başka bir yere uymayan işlevler"
 
-#: gammu/gammu.c:736
+#: gammu/gammu.c:773
 msgid "Gammu information"
 msgstr "Gammu bilgisi"
 
-#: gammu/gammu.c:752
+#: gammu/gammu.c:789
 msgid "Usage: gammu [parameters] <command> [options]"
 msgstr "Kullanım: gammu [parametreler] <komut> [seçenekler]"
 
-#: gammu/gammu.c:753
+#: gammu/gammu.c:790
 msgid "Parameters before command configure gammu behaviour:"
 msgstr "Komuttan önceki parametreler gammu davranışını yapılandırır:"
 
-#: gammu/gammu.c:754
+#: gammu/gammu.c:791
 msgid "-c / --config <filename> ... name of configuration file"
 msgstr "-c / --config <dosyaadı> ... yapılandırma dosyasının adı"
 
-#: gammu/gammu.c:755
+#: gammu/gammu.c:792
 msgid "-s / --section <confign> ... section of config file to use, eg. 42"
 msgstr ""
 "-s / --section <confign> ... kullanmak için yapılandırma dosyasının bölümü, "
 "örn. 42"
 
-#: gammu/gammu.c:756
+#: gammu/gammu.c:793
 msgid ""
 "-d / --debug <level> ... debug level (nothing|text|textall|textalldate|"
 "binary|errors)"
@@ -1968,17 +1968,17 @@ msgstr ""
 "-d / --debug <seviye> ... hata ayıklama seviyesi (nothing|text|textall|"
 "textalldate|binary|errors)"
 
-#: gammu/gammu.c:757
+#: gammu/gammu.c:794
 msgid "-f / --debug-file <filename> ... file for logging debug messages"
 msgstr ""
 "-f / --debug-file <dosyaadı> ... hata ayıklama mesajlarını günlüklemek için "
 "dosya"
 
-#: gammu/gammu.c:759
+#: gammu/gammu.c:796
 msgid "Commands can be specified with or without leading --."
 msgstr "Komutlar, -- başta ya da başta olmadan belirlenebilir."
 
-#: gammu/gammu.c:762
+#: gammu/gammu.c:799
 msgid ""
 "For more details, call help on specific topic (gammu --help topic). Topics "
 "are:"
@@ -1986,11 +1986,11 @@ msgstr ""
 "Daha fazla ayrıntı için belirli konuda yardım isteyin (gammu --help konu). "
 "Konular:"
 
-#: gammu/gammu.c:860
+#: gammu/gammu.c:897
 msgid "Unknown help topic specified!"
 msgstr "Bilinmeyen yardım konusu belirtildi!"
 
-#: gammu/gammu.c:864
+#: gammu/gammu.c:901
 #, c-format
 msgid ""
 "Gammu commands, topic: %s\n"
@@ -1999,61 +1999,61 @@ msgstr ""
 "Gammu komutları, konu: %s\n"
 "\n"
 
-#: gammu/gammu.c:955
+#: gammu/gammu.c:992
 #, c-format
 msgid "More parameters required (function requires %d)\n"
 msgstr "Daha fazla parametre gerekli (işlev %d gerektiriyor)\n"
 
-#: gammu/gammu.c:958
+#: gammu/gammu.c:995
 #, c-format
 msgid "More parameters required (function requires %d to %d)\n"
 msgstr "Daha fazla parametre gerekli (işlev %d'den %d'e gerektiriyor)\n"
 
-#: gammu/gammu.c:964 gammu/gammu.c:985
+#: gammu/gammu.c:1001 gammu/gammu.c:1022
 msgid "Parameters help"
 msgstr "Parametre yardımı"
 
-#: gammu/gammu.c:976
+#: gammu/gammu.c:1013
 #, c-format
 msgid "Too many parameters (function accepts %d)\n"
 msgstr "Çok fazla parametre (işlev %d kabul ediyor)\n"
 
-#: gammu/gammu.c:979
+#: gammu/gammu.c:1016
 #, c-format
 msgid "Too many parameters (function accepts %d to %d)\n"
 msgstr "Çok fazla parametre (işlev %d'den %d'e kabul ediyor)\n"
 
-#: gammu/gammu.c:1006
+#: gammu/gammu.c:1043
 msgid "Bad option!"
 msgstr "Hatalı seçenek!"
 
-#: gammu/gammu.c:1087
+#: gammu/gammu.c:1124
 msgid "Configuration could not be parsed!"
 msgstr "Yapılandırma ayrıştırılamadı!"
 
-#: gammu/gammu.c:1089
+#: gammu/gammu.c:1126
 msgid "No configuration file found!"
 msgstr "Bulunan yapılandırma dosyası yok!"
 
-#: gammu/gammu.c:1109
+#: gammu/gammu.c:1146
 msgid "Failed to allocate memory, aborting!\n"
 msgstr "Bellek ayırma başarısız, iptal ediliyor!\n"
 
-#: gammu/gammu.c:1140
+#: gammu/gammu.c:1177
 msgid "Too few parameters!"
 msgstr "Çok az parametre!"
 
-#: gammu/gammu.c:1153
+#: gammu/gammu.c:1190
 #, c-format
 msgid "Failed to read [gammu%d] section from configuration file (gammurc)!\n"
 msgstr ""
 "Yapılandırma dosyasından (gammurc) [gammu%d] bölümünü okuma başarısız!\n"
 
-#: gammu/gammu.c:1155 gammu/gammu.c:1166
+#: gammu/gammu.c:1192 gammu/gammu.c:1203
 msgid "No configuration read, using builtin defaults!"
 msgstr "Okunan yapılandırma yok, yerleşik varsayılanlar kullanılıyor!"
 
-#: gammu/gammu.c:1205
+#: gammu/gammu.c:1242
 #, c-format
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"

@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2013-08-05 10:27+0200\n"
+"POT-Creation-Date: 2014-02-16 12:20+0100\n"
 "PO-Revision-Date: 2013-08-05 13:51+0200\n"
 "Last-Translator: Helder Santana <helder.bs.santana@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) "
-"<http://l10n.cihar.com/projects/gammu/gammu/pt_BR/>\n"
+"Language-Team: Portuguese (Brazil) <http://l10n.cihar.com/projects/gammu/"
+"gammu/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1774,7 +1774,7 @@ msgstr "Rede para %s:"
 msgid "Unknown country name: %s."
 msgstr "Nome de País desconhecido: %s."
 
-#: gammu/gammu.c:80 gammu/gammu.c:725 gammu/misc.c:48
+#: gammu/gammu.c:80 gammu/gammu.c:762 gammu/misc.c:48
 msgid "Network"
 msgstr "Rede"
 
@@ -1837,12 +1837,12 @@ msgstr "Erro lendo batch! Encerrando.\n"
 msgid "Batch processed, terminating.\n"
 msgstr "Batch processado, concluindo.\n"
 
-#: gammu/gammu.c:429
+#: gammu/gammu.c:466
 #, c-format
 msgid "Executing batch \"%s\" - command %i: %s\n"
 msgstr "Executando batch \"%s\" - comando %i: %s\n"
 
-#: gammu/gammu.c:452
+#: gammu/gammu.c:489
 msgid ""
 "SMS daemon is now in separate binary, please use gammu-smsd-inject instead "
 "of gammu sendsmsdsms!"
@@ -1850,7 +1850,7 @@ msgstr ""
 "Serviço Daemon SMS está em binário separado. Por favor use gammu-smsd-inject "
 "em vez de gammu sendsmsdsms!"
 
-#: gammu/gammu.c:459
+#: gammu/gammu.c:496
 msgid ""
 "SMS daemon is now in separate binary, please use gammu-smsd instead of gammu "
 "smsd!"
@@ -1858,117 +1858,117 @@ msgstr ""
 "Serviço Daemon SMS está em binário separado, Por favor use gammu-smsd em vez "
 "de gammu smsd!"
 
-#: gammu/gammu.c:705
+#: gammu/gammu.c:742
 msgid "Calls"
 msgstr "Chamadas"
 
-#: gammu/gammu.c:706
+#: gammu/gammu.c:743
 msgid "SMS and EMS"
 msgstr "SMS e EMS"
 
-#: gammu/gammu.c:707
+#: gammu/gammu.c:744
 msgid "Memory (phonebooks and calls)"
 msgstr "Memória (contatos e chamadas)"
 
-#: gammu/gammu.c:708
+#: gammu/gammu.c:745
 msgid "Filesystem"
 msgstr "Sistema Arquivos"
 
-#: gammu/gammu.c:709
+#: gammu/gammu.c:746
 msgid "Logo and pictures"
 msgstr "Logotipos e Imagens"
 
-#: gammu/gammu.c:710
+#: gammu/gammu.c:747
 msgid "Ringtones"
 msgstr "Toques"
 
-#: gammu/gammu.c:711
+#: gammu/gammu.c:748
 msgid "Calendar notes"
 msgstr "Anotações Agenda"
 
-#: gammu/gammu.c:712
+#: gammu/gammu.c:749
 msgid "To do lists"
 msgstr "Tarefas / Compromissos"
 
-#: gammu/gammu.c:713
+#: gammu/gammu.c:750
 msgid "Notes"
 msgstr "Anotações"
 
-#: gammu/gammu.c:714
+#: gammu/gammu.c:751
 msgid "Date, time and alarms"
 msgstr "Data, Hora e Alarmes"
 
-#: gammu/gammu.c:715
+#: gammu/gammu.c:752
 msgid "Categories"
 msgstr "Categorias"
 
-#: gammu/gammu.c:717
+#: gammu/gammu.c:754
 msgid "Backing up and restoring"
 msgstr "Salvando e Restaurando"
 
-#: gammu/gammu.c:720
+#: gammu/gammu.c:757
 msgid "Nokia specific"
 msgstr "Específico para Nokia"
 
-#: gammu/gammu.c:723
+#: gammu/gammu.c:760
 msgid "Siemens specific"
 msgstr "Específico Siemens"
 
-#: gammu/gammu.c:726
+#: gammu/gammu.c:763
 msgid "WAP settings and bookmarks"
 msgstr "Configurações e Favoritos WAP"
 
-#: gammu/gammu.c:727
+#: gammu/gammu.c:764
 msgid "MMS and MMS settings"
 msgstr "Configurações MMS"
 
-#: gammu/gammu.c:728
+#: gammu/gammu.c:765
 msgid "Phone tests"
 msgstr "Testes Celular"
 
-#: gammu/gammu.c:729
+#: gammu/gammu.c:766
 msgid "FM radio"
 msgstr "Rádio FM"
 
-#: gammu/gammu.c:730
+#: gammu/gammu.c:767
 msgid "Phone information"
 msgstr "Informações do Celular"
 
-#: gammu/gammu.c:731
+#: gammu/gammu.c:768
 msgid "Phone settings"
 msgstr "Configurações Celular"
 
-#: gammu/gammu.c:733
+#: gammu/gammu.c:770
 msgid "Dumps decoding"
 msgstr "Decodificando Conteúdo"
 
-#: gammu/gammu.c:735
+#: gammu/gammu.c:772
 msgid "Functions that don't fit elsewhere"
 msgstr "Demais Funções Diversas"
 
-#: gammu/gammu.c:736
+#: gammu/gammu.c:773
 msgid "Gammu information"
 msgstr "Informação Gammu"
 
-#: gammu/gammu.c:752
+#: gammu/gammu.c:789
 msgid "Usage: gammu [parameters] <command> [options]"
 msgstr "Uso: gammu [parâmetros] <comandos> [opções]"
 
 # type: Plain text
-#: gammu/gammu.c:753
+#: gammu/gammu.c:790
 msgid "Parameters before command configure gammu behaviour:"
 msgstr "Os parâmetros antes do comando definem o funcionamento do gammu:"
 
-#: gammu/gammu.c:754
+#: gammu/gammu.c:791
 msgid "-c / --config <filename> ... name of configuration file"
 msgstr "-c / --config <arquivo-config> ... nome do arquivo de configuração"
 
-#: gammu/gammu.c:755
+#: gammu/gammu.c:792
 msgid "-s / --section <confign> ... section of config file to use, eg. 42"
 msgstr ""
 "-s / --section <seção-número> ...seção do arquivo de configuração, Ex. 42"
 
-#: gammu/gammu.c:756
+#: gammu/gammu.c:793
 msgid ""
 "-d / --debug <level> ... debug level (nothing|text|textall|textalldate|"
 "binary|errors)"
@@ -1976,18 +1976,18 @@ msgstr ""
 "-d / --debug <nível> ... nível depuração (nothing|text|textall|textalldate|"
 "binary|errors)"
 
-#: gammu/gammu.c:757
+#: gammu/gammu.c:794
 msgid "-f / --debug-file <filename> ... file for logging debug messages"
 msgstr ""
 "-f / --debug-file <nome-do-arquivo-debug> ... arquivo onde serão gravadas as "
 "mensagens  da depuração"
 
 # type: Plain text
-#: gammu/gammu.c:759
+#: gammu/gammu.c:796
 msgid "Commands can be specified with or without leading --."
 msgstr "Comandos podem ser especificados com ou sem -- no início."
 
-#: gammu/gammu.c:762
+#: gammu/gammu.c:799
 msgid ""
 "For more details, call help on specific topic (gammu --help topic). Topics "
 "are:"
@@ -1995,11 +1995,11 @@ msgstr ""
 "Para mais detalhes, utilize help (ajuda) no tópico específico (gammu --help "
 "tópico). Os tópicos são:"
 
-#: gammu/gammu.c:860
+#: gammu/gammu.c:897
 msgid "Unknown help topic specified!"
 msgstr "Tópico de ajuda desconhecido!"
 
-#: gammu/gammu.c:864
+#: gammu/gammu.c:901
 #, c-format
 msgid ""
 "Gammu commands, topic: %s\n"
@@ -2008,60 +2008,60 @@ msgstr ""
 "Comandos Gammu, tópicos: %s\n"
 "\n"
 
-#: gammu/gammu.c:955
+#: gammu/gammu.c:992
 #, c-format
 msgid "More parameters required (function requires %d)\n"
 msgstr "Mais parâmetros requeridos (função requer %d)\n"
 
-#: gammu/gammu.c:958
+#: gammu/gammu.c:995
 #, c-format
 msgid "More parameters required (function requires %d to %d)\n"
 msgstr "Mais parâmetros requeridos (função requer: entre %d e %d parâmetros)\n"
 
-#: gammu/gammu.c:964 gammu/gammu.c:985
+#: gammu/gammu.c:1001 gammu/gammu.c:1022
 msgid "Parameters help"
 msgstr "Parâmetros de Ajuda"
 
-#: gammu/gammu.c:976
+#: gammu/gammu.c:1013
 #, c-format
 msgid "Too many parameters (function accepts %d)\n"
 msgstr "Muitos parâmetros (função aceita %d)\n"
 
-#: gammu/gammu.c:979
+#: gammu/gammu.c:1016
 #, c-format
 msgid "Too many parameters (function accepts %d to %d)\n"
 msgstr "Muitos parâmetros (função aceita entre %d e %d)\n"
 
-#: gammu/gammu.c:1006
+#: gammu/gammu.c:1043
 msgid "Bad option!"
 msgstr "Opção inexiste!"
 
-#: gammu/gammu.c:1087
+#: gammu/gammu.c:1124
 msgid "Configuration could not be parsed!"
 msgstr "Configuração não pode ser passada!"
 
-#: gammu/gammu.c:1089
+#: gammu/gammu.c:1126
 msgid "No configuration file found!"
 msgstr "Não foi encontrado arquivo de configuração!"
 
-#: gammu/gammu.c:1109
+#: gammu/gammu.c:1146
 msgid "Failed to allocate memory, aborting!\n"
 msgstr "Falhou em alocar memória, cancelando!\n"
 
-#: gammu/gammu.c:1140
+#: gammu/gammu.c:1177
 msgid "Too few parameters!"
 msgstr "Faltam parâmetros!"
 
-#: gammu/gammu.c:1153
+#: gammu/gammu.c:1190
 #, c-format
 msgid "Failed to read [gammu%d] section from configuration file (gammurc)!\n"
 msgstr "Falhou em ler [gammu%d] seção do arquivo de configuração (gammurc)!\n"
 
-#: gammu/gammu.c:1155 gammu/gammu.c:1166
+#: gammu/gammu.c:1192 gammu/gammu.c:1203
 msgid "No configuration read, using builtin defaults!"
 msgstr "Nenhuma configuração lida, usando padrões da compilação!"
 
-#: gammu/gammu.c:1205
+#: gammu/gammu.c:1242
 #, c-format
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
