@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2014-02-16 12:20+0100\n"
-"PO-Revision-Date: 2014-02-17 20:21+0200\n"
+"PO-Revision-Date: 2014-02-25 00:01+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <https://l10n.cihar.com/projects/gammu/gammu/sv/>\n"
 "Language: sv\n"
@@ -1519,9 +1519,9 @@ msgid "Gammu-detect version %s"
 msgstr "Gammu version"
 
 #: gammu-detect/main.c:73
-#, fuzzy, c-format
+#, c-format
 msgid "Built %s on %s using %s"
-msgstr "[Gammu version %s, byggdes %s på %s med %s]"
+msgstr "Byggdes %s på %s med %s"
 
 #: gammu-detect/main.c:76 gammu/gammu.c:100
 msgid "Compiled in features:"
@@ -3010,9 +3010,8 @@ msgid "Operator logo"
 msgstr ""
 
 #: gammu/misc.c:1757 helper/message-display.c:443
-#, fuzzy
 msgid "Picture"
-msgstr "Säker"
+msgstr "Bild"
 
 #: gammu/misc.c:1758
 msgid "Caller group logo"
@@ -3643,14 +3642,12 @@ msgid "Home mobile number"
 msgstr "Fjärrnummer"
 
 #: helper/memory-display.c:144
-#, fuzzy
 msgid "Work mobile number"
-msgstr "Fjärrnummer"
+msgstr "Arbetsmobilnummer"
 
 #: helper/memory-display.c:155
-#, fuzzy
 msgid "Home fax number"
-msgstr "Fjärrnummer"
+msgstr "Hemfaxnummer"
 
 #: helper/memory-display.c:158
 msgid "Work fax number"
@@ -3665,38 +3662,32 @@ msgid "Other number"
 msgstr ""
 
 #: helper/memory-display.c:172
-#, fuzzy
 msgid "Home address"
-msgstr "IP-adress"
+msgstr "Hemadress"
 
 #: helper/memory-display.c:175
-#, fuzzy
 msgid "Work address"
-msgstr "IP-adress"
+msgstr "Arbetsadress"
 
 #: helper/memory-display.c:186
-#, fuzzy
 msgid "Home email"
-msgstr "Din e-postadress:"
+msgstr "E-post hemma"
 
 #: helper/memory-display.c:189
-#, fuzzy
 msgid "Work email"
-msgstr "Din e-postadress:"
+msgstr "E-post arbete"
 
 #: helper/memory-display.c:196
 msgid "Email address 2"
 msgstr ""
 
 #: helper/memory-display.c:201
-#, fuzzy
 msgid "Home website"
-msgstr "&Webbplats"
+msgstr "Webbplats hemma"
 
 #: helper/memory-display.c:204
-#, fuzzy
 msgid "Work website"
-msgstr "&Webbplats"
+msgstr "Webbplats arbete"
 
 #: helper/memory-display.c:207
 msgid "Website"
@@ -3987,9 +3978,8 @@ msgid "pager"
 msgstr ""
 
 #: helper/message-display.c:121
-#, fuzzy
 msgid "general"
-msgstr "Allmän"
+msgstr "allmän"
 
 #: helper/message-display.c:145
 msgid "8 bit SMS, cannot be displayed here"
