@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-05-22 14:39+0200\n"
-"PO-Revision-Date: 2012-04-16 18:42+0200\n"
-"Last-Translator: Robin Pepermans <robinp.1273@gmail.com>\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2014-02-27 17:20+0200\n"
+"Last-Translator: Dieter Adriaenssens <ruleant@users.sourceforge.net>\n"
+"Language-Team: Dutch <https://l10n.cihar.com/projects/gammu/libgammu/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Weblate 0.9\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 1.9-dev\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
@@ -59,18 +59,16 @@ msgid "Error setting device speed. Maybe speed not supported."
 msgstr ""
 
 #: libgammu/gsmcomon.c:94
-#, fuzzy
 msgid "Error writing to the device."
-msgstr "Toestel verbinden"
+msgstr "Fout bij schrijven naar het toestel."
 
 #: libgammu/gsmcomon.c:95
 msgid "Error during reading from the device."
 msgstr ""
 
 #: libgammu/gsmcomon.c:96
-#, fuzzy
 msgid "Can't set parity on the device."
-msgstr "Toestel verbinden"
+msgstr "Kan pariteit niet instellen op het toestel."
 
 #: libgammu/gsmcomon.c:97
 msgid "No response in specified timeout. Probably phone not connected."
@@ -125,11 +123,10 @@ msgid "Invalid location. Maybe too high?"
 msgstr "Ongeldige locatie. Misschien te hoog?"
 
 #: libgammu/gsmcomon.c:108
-#, fuzzy
 msgid "Functionality not implemented. You are welcome to help authors with it."
 msgstr ""
-"Deze functie is niet geïmplementeerd in jouw telefoon.  Indien je hulp wil "
-"voor de implementatie, contacteer de auteurs."
+"Deze functie is niet geïmplementeerd. Het staat je vrij om de auteurs te "
+"helpen bij de implementatie ervan."
 
 #: libgammu/gsmcomon.c:109
 msgid "Memory full."
@@ -161,18 +158,16 @@ msgid "You're inside phone menu (maybe editing?). Leave it and try again."
 msgstr ""
 
 #: libgammu/gsmcomon.c:116
-#, fuzzy
 msgid "Phone is not connected."
-msgstr "Telefoon informatie"
+msgstr "De telefoon is niet verbonden."
 
 #: libgammu/gsmcomon.c:117
-#, fuzzy
 msgid ""
 "Function is currently being implemented. If you want to help, please contact "
 "authors."
 msgstr ""
-"Deze functie is niet geïmplementeerd in jouw telefoon.  Indien je hulp wil "
-"voor de implementatie, contacteer de auteurs."
+"Deze functie wordt geïmplementeerd. Gelieve de auteurs te contacteren, "
+"indien je wil helpen bij de implementatie."
 
 #: libgammu/gsmcomon.c:118
 msgid "Phone is disabled and connected to charger."
@@ -297,32 +292,28 @@ msgid "Service is not running."
 msgstr ""
 
 #: libgammu/gsmcomon.c:148
-#, fuzzy
 msgid "Service configuration is missing."
-msgstr "Configuratie niet gevonden"
+msgstr "Dienstinstelling ontbreekt."
 
 #: libgammu/gsmcomon.c:149
 msgid "Command rejected because device was busy. Wait and restart."
 msgstr ""
 
 #: libgammu/gsmcomon.c:150
-#, fuzzy
 msgid "Could not connect to the server."
-msgstr "Bezig met verbinden met IMAP server..."
+msgstr "Kon niet verbinden met de server."
 
 #: libgammu/gsmcomon.c:151
-#, fuzzy
 msgid "Could not resolve the host name."
-msgstr "Kon het opgeslagen bericht niet lezen!"
+msgstr "Kon de hostnaam niet opzoeken."
 
 #: libgammu/gsmcomon.c:152
 msgid "Failed to get SMSC number from phone."
 msgstr ""
 
 #: libgammu/gsmcomon.c:153
-#, fuzzy
 msgid "Operation aborted."
-msgstr "Operatie in werking"
+msgstr "Operatie afgebroken."
 
 #: libgammu/gsmcomon.c:154
 msgid ""
@@ -331,9 +322,8 @@ msgid ""
 msgstr ""
 
 #: libgammu/gsmcomon.c:155
-#, fuzzy
 msgid "Entry is read only."
-msgstr "Het is aangeschakeld."
+msgstr "Invoer is enkel lezen."
 
 #: libgammu/gsmcomon.c:188
 msgid "Unknown error description."
