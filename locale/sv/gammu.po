@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2014-02-16 12:20+0100\n"
-"PO-Revision-Date: 2014-02-25 00:01+0200\n"
+"PO-Revision-Date: 2014-03-01 11:10+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <https://l10n.cihar.com/projects/gammu/gammu/sv/>\n"
 "Language: sv\n"
@@ -85,7 +85,7 @@ msgstr ""
 
 #: gammu/backup.c:268 gammu/backup.c:310 gammu/backup.c:475 gammu/mms.c:182
 msgid "Reading:"
-msgstr ""
+msgstr "Läser:"
 
 #: gammu/backup.c:269 gammu/backup.c:311 gammu/backup.c:476
 #: gammu/backup.c:1045 gammu/backup.c:1120 gammu/backup.c:1173
@@ -106,7 +106,7 @@ msgstr "%i procent"
 #: gammu/calendar.c:985 gammu/memory.c:24 gammu/memory.c:312
 #: gammu/memory.c:376 gammu/message.c:133 gammu/misc.c:205 gammu/misc.c:606
 msgid "Press Ctrl+C to break..."
-msgstr ""
+msgstr "Tryck Ctrl+C för att avbryta..."
 
 #: gammu/backup.c:372
 msgid "Use Unicode subformat of backup file?"
@@ -266,7 +266,7 @@ msgstr ""
 
 #: gammu/backup.c:971
 msgid "Time of backup"
-msgstr ""
+msgstr "Tid för backup"
 
 #: gammu/backup.c:974 gammu/calendar.c:237 gammu/calendar.c:823
 msgid "Phone"
@@ -290,6 +290,8 @@ msgid ""
 "Please note that restoring data will cause existing data in phone to be "
 "deleted."
 msgstr ""
+"Var medveten om att återställning av data kommer att ta bort existerande "
+"data i telefonen."
 
 #: gammu/backup.c:1023
 msgid "Use addnew command if you just want to add some entries to your phone."
@@ -308,7 +310,7 @@ msgstr ""
 #: gammu/backup.c:1760 gammu/backup.c:1782 gammu/backup.c:1806
 #: gammu/files.c:753
 msgid "Writing:"
-msgstr ""
+msgstr "Skriver:"
 
 #: gammu/backup.c:1070 gammu/backup.c:1138 gammu/backup.c:1199
 #: gammu/backup.c:1247 gammu/backup.c:1340 gammu/backup.c:1665
@@ -407,7 +409,7 @@ msgstr ""
 #: gammu/backup.c:1499 gammu/misc.c:1417 gammu/misc.c:1441 gammu/misc.c:1465
 #: gammu/misc.c:1481 gammu/misc.c:1499
 msgid "Deleting"
-msgstr ""
+msgstr "Tar bort"
 
 #: gammu/backup.c:1504
 msgid "Restore user ringtones?"
@@ -423,7 +425,7 @@ msgstr ""
 
 #: gammu/backup.c:1557
 msgid "Deleting old FM stations:"
-msgstr ""
+msgstr "Tar bort gamla FM-stationer:"
 
 #: gammu/backup.c:1583
 msgid "Restore phone GPRS Points?"
@@ -433,7 +435,7 @@ msgstr ""
 #: gammu/memory.c:168
 #, c-format
 msgid "Unknown memory type (\"%s\")\n"
-msgstr ""
+msgstr "Okänd minnestyp (\"%s\")\n"
 
 #: gammu/backup.c:1635 gammu/memory.c:70 gammu/misc.c:773 gammu/misc.c:806
 #: helper/message-cmdline.c:1032
@@ -482,7 +484,7 @@ msgstr ""
 
 #: gammu/backupsms.c:58 gammu/backupsms.c:183
 msgid " (SIM)"
-msgstr ""
+msgstr " (SIM)"
 
 #: gammu/backupsms.c:84
 #, c-format
@@ -491,11 +493,11 @@ msgstr ""
 
 #: gammu/backupsms.c:107 gammu/misc.c:1375
 msgid "Deleting:"
-msgstr ""
+msgstr "Tar bort:"
 
 #: gammu/backupsms.c:141
 msgid "Restore message?"
-msgstr ""
+msgstr "Återställ meddelande?"
 
 #: gammu/backupsms.c:168
 msgid "Do you want to restore binary SMS?"
@@ -509,7 +511,7 @@ msgstr ""
 #: gammu/backupsms.c:184
 #, c-format
 msgid "saving %i SMS\n"
-msgstr ""
+msgstr "sparar %i SMS\n"
 
 #: gammu/calendar.c:19
 msgid "Note type"
@@ -702,7 +704,7 @@ msgstr ""
 
 #: gammu/calendar.c:310
 msgid "Repeating"
-msgstr ""
+msgstr "Upprepande"
 
 #: gammu/calendar.c:313
 #, c-format
@@ -713,7 +715,7 @@ msgstr[1] ""
 
 #: gammu/calendar.c:317
 msgid "forever"
-msgstr ""
+msgstr "för alltid"
 
 #: gammu/calendar.c:319
 #, c-format
@@ -750,7 +752,7 @@ msgstr ""
 
 #: gammu/calendar.c:344 gammu/calendar.c:352
 msgid "each month"
-msgstr ""
+msgstr "varje månad"
 
 #: gammu/calendar.c:347
 #, c-format
@@ -764,7 +766,7 @@ msgstr ""
 
 #: gammu/calendar.c:357
 msgid "day"
-msgstr ""
+msgstr "dag"
 
 #: gammu/calendar.c:373
 msgid "Age"
@@ -977,7 +979,7 @@ msgstr "Väntar på nätverkskod."
 
 #: gammu/common.c:63
 msgid "Nothing to enter."
-msgstr ""
+msgstr "Inget att fylla i."
 
 #: gammu/common.c:67
 msgid "Unknown security status."
@@ -1275,7 +1277,7 @@ msgstr "Ohm"
 
 #: gammu/depend/nokia/dct4.c:1042
 msgid "Battery temperature:"
-msgstr ""
+msgstr "Batteritemperatur:"
 
 #: gammu/depend/nokia/dct4.c:1042 gammu/depend/nokia/dct4.c:1046
 #: gammu/depend/nokia/dct4.c:1047
@@ -1327,7 +1329,7 @@ msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1158
 msgid "Phone seems not to support radio"
-msgstr ""
+msgstr "Telefonen verkar inte stöda radio"
 
 #: gammu/depend/nokia/dct4.c:1165
 msgid "Please connect headset. Required as antenna"
@@ -1445,7 +1447,7 @@ msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1365
 msgid "string"
-msgstr ""
+msgstr "sträng"
 
 #: gammu/depend/nokia/dct4.c:1366
 msgid "byte"
@@ -1466,19 +1468,19 @@ msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1378 helper/memory-display.c:126
 msgid "Home number"
-msgstr ""
+msgstr "Hemnummer"
 
 #: gammu/depend/nokia/dct4.c:1379 helper/memory-display.c:147
 msgid "Mobile number"
-msgstr ""
+msgstr "Mobilnummer"
 
 #: gammu/depend/nokia/dct4.c:1380 helper/memory-display.c:161
 msgid "Fax number"
-msgstr ""
+msgstr "Faxnummer"
 
 #: gammu/depend/nokia/dct4.c:1381
 msgid "Office number"
-msgstr ""
+msgstr "Kontorsnummer"
 
 #: gammu/depend/nokia/dct4.c:1382
 msgid "Standard number"
@@ -1486,7 +1488,7 @@ msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1383
 msgid "Unknown number"
-msgstr ""
+msgstr "Okänt nummer"
 
 #: gammu/depend/nokia/dct4.c:1407
 #, c-format
@@ -1514,9 +1516,9 @@ msgid "Disables scanning of Windows serial ports."
 msgstr ""
 
 #: gammu-detect/main.c:71
-#, fuzzy, c-format
+#, c-format
 msgid "Gammu-detect version %s"
-msgstr "Gammu version"
+msgstr "Gammu-detect version %s"
 
 #: gammu-detect/main.c:73
 #, c-format
@@ -1544,12 +1546,16 @@ msgstr "Telefonport"
 msgid ""
 "Copyright (C) 2010 - 2011 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
+"Copyright (C) 2010 - 2011 Michal Cihar <michal@cihar.com> och andra "
+"upphovsmän."
 
 #: gammu-detect/main.c:89 gammu/gammu.c:334
 msgid ""
 "License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
 "GPL/2.0/>."
 msgstr ""
+"Licens GPLv2: GNU GPL version 2 "
+"<http://creativecommons.org/licenses/GPL/2.0/>."
 
 #: gammu-detect/main.c:90 gammu/gammu.c:336
 msgid "This is free software: you are free to change and redistribute it."
@@ -1595,7 +1601,7 @@ msgstr "Nummer:"
 
 #: gammu-detect/udev.c:71
 msgid "Path:"
-msgstr ""
+msgstr "Sökväg:"
 
 #: gammu-detect/udev.c:72
 msgid "Driver:"
@@ -1742,7 +1748,7 @@ msgstr ""
 #: gammu/files.c:746 gammu/misc.c:1337 gammu/nokia.c:957
 #: helper/message-cmdline.c:1311
 msgid "Parameter missing!"
-msgstr ""
+msgstr "Parameter saknas!"
 
 #: gammu/files.c:755
 #, c-format
@@ -2025,7 +2031,7 @@ msgstr ""
 
 #: gammu/gammu.c:1177
 msgid "Too few parameters!"
-msgstr ""
+msgstr "För få parametrar!"
 
 #: gammu/gammu.c:1190
 #, c-format
@@ -2071,7 +2077,7 @@ msgstr ""
 
 #: gammu/message.c:37
 msgid "SMS message received"
-msgstr ""
+msgstr "SMS-meddelande mottaget"
 
 #: gammu/message.c:41
 msgid "We already have one pending, ignoring this one!"
@@ -2423,7 +2429,7 @@ msgstr ""
 
 #: gammu/misc.c:261
 msgid "Not logged to network!\n"
-msgstr ""
+msgstr "Inte inloggad på nätverk!\n"
 
 #: gammu/misc.c:272
 msgid "Wrong network code from phone!\n"
@@ -2611,7 +2617,7 @@ msgstr "Kalender"
 
 #: gammu/misc.c:653
 msgid "Signal strength"
-msgstr ""
+msgstr "Signalstyrka"
 
 #: gammu/misc.c:654
 #, c-format
@@ -2633,17 +2639,17 @@ msgstr ""
 #: gammu/misc.c:672 gammu/misc.c:682
 #, c-format
 msgid "%i used"
-msgstr ""
+msgstr "%i använda"
 
 #: gammu/misc.c:674 gammu/misc.c:684
 #, c-format
 msgid "%i unread"
-msgstr ""
+msgstr "%i olästa"
 
 #: gammu/misc.c:676 gammu/misc.c:686
 #, c-format
 msgid "%i locations"
-msgstr ""
+msgstr "%i platser"
 
 #: gammu/misc.c:681
 msgid "Phone SMS status"
@@ -2652,7 +2658,7 @@ msgstr ""
 #: gammu/misc.c:689
 #, c-format
 msgid "%i templates"
-msgstr ""
+msgstr "%i mallar"
 
 #: gammu/misc.c:702
 msgid "Leaving monitor mode..."
@@ -2780,7 +2786,7 @@ msgstr ""
 #: gammu/misc.c:1324
 #, c-format
 msgid "Unknown parameter (\"%s\")"
-msgstr ""
+msgstr "Okänd parameter (\"%s\")"
 
 #: gammu/misc.c:1405
 msgid "Delete phone phonebook?"
@@ -2828,15 +2834,15 @@ msgstr "Anslutningstyp"
 
 #: gammu/misc.c:1519
 msgid "Continuous"
-msgstr ""
+msgstr "Kontinuerlig"
 
 #: gammu/misc.c:1521
 msgid "Temporary"
-msgstr ""
+msgstr "Temporär"
 
 #: gammu/misc.c:1524 gammu/misc.c:1526
 msgid "Connection security"
-msgstr ""
+msgstr "Anslutningssäkerhet"
 
 #: gammu/misc.c:1524 gammu/misc.c:2156
 msgid "On"
@@ -2949,7 +2955,7 @@ msgstr ""
 
 #: gammu/misc.c:1583 gammu/misc.c:1586
 msgid "Address type"
-msgstr ""
+msgstr "Adresstyp"
 
 #: gammu/misc.c:1604
 msgid "Access point"
@@ -2991,11 +2997,11 @@ msgstr ""
 
 #: gammu/misc.c:1682 gammu/misc.c:1732
 msgid "Homepage"
-msgstr ""
+msgstr "Hemsida"
 
 #: gammu/misc.c:1726
 msgid "active"
-msgstr ""
+msgstr "aktiv"
 
 #: gammu/misc.c:1730
 msgid "Read only"
@@ -3063,7 +3069,7 @@ msgstr ""
 
 #: gammu/misc.c:1993 gammu/misc.c:2015
 msgid "No PIN code entered!"
-msgstr ""
+msgstr "Ingen PIN-kod inmatad!"
 
 #: gammu/misc.c:2003
 #, c-format
@@ -3301,7 +3307,7 @@ msgstr ""
 
 #: gammu/misc.c:2425 gammu/misc.c:2471 helper/message-display.c:115
 msgid "fax"
-msgstr ""
+msgstr "fax"
 
 #: gammu/misc.c:2428 gammu/misc.c:2474
 msgid "data"
@@ -3482,12 +3488,12 @@ msgstr ""
 #: gammu/nokia.c:742
 #, c-format
 msgid "Adding \"%s\""
-msgstr ""
+msgstr "Lägger till \"%s\""
 
 #: gammu/nokia.c:743
 #, c-format
 msgid " version %s"
-msgstr ""
+msgstr " version %s"
 
 #: gammu/nokia.c:744
 #, c-format
@@ -3501,7 +3507,7 @@ msgstr ""
 #: gammu/nokia.c:828 gammu/nokia.c:861
 #, c-format
 msgid "  Deleting %s\n"
-msgstr ""
+msgstr "  Tar bort %s\n"
 
 #: gammu/nokia.c:884
 msgid "Writing JAD file:"
@@ -3513,7 +3519,7 @@ msgstr ""
 
 #: gammu/nokia.c:978
 msgid "Writing file:"
-msgstr ""
+msgstr "Skriver fil:"
 
 #: gammu/search.c:145
 #, c-format
@@ -3613,7 +3619,7 @@ msgstr ""
 
 #: helper/memory-display.c:119
 msgid "Photo"
-msgstr ""
+msgstr "Foto"
 
 #: helper/memory-display.c:119
 msgid "Displaying not supported"
@@ -3632,14 +3638,12 @@ msgid "General number"
 msgstr ""
 
 #: helper/memory-display.c:136
-#, fuzzy
 msgid "Video number"
-msgstr "Fjärrnummer"
+msgstr "Videonummer"
 
 #: helper/memory-display.c:141
-#, fuzzy
 msgid "Home mobile number"
-msgstr "Fjärrnummer"
+msgstr "Hemmobilnummer"
 
 #: helper/memory-display.c:144
 msgid "Work mobile number"
@@ -3651,15 +3655,15 @@ msgstr "Hemfaxnummer"
 
 #: helper/memory-display.c:158
 msgid "Work fax number"
-msgstr ""
+msgstr "Arbetsfaxnummer"
 
 #: helper/memory-display.c:165
 msgid "Pager number"
-msgstr ""
+msgstr "Sökarnummer"
 
 #: helper/memory-display.c:166
 msgid "Other number"
-msgstr ""
+msgstr "Annat nummer"
 
 #: helper/memory-display.c:172
 msgid "Home address"
@@ -3679,7 +3683,7 @@ msgstr "E-post arbete"
 
 #: helper/memory-display.c:196
 msgid "Email address 2"
-msgstr ""
+msgstr "E-postadress 2"
 
 #: helper/memory-display.c:201
 msgid "Home website"
@@ -3722,9 +3726,8 @@ msgid "First name"
 msgstr "Förnamn"
 
 #: helper/memory-display.c:220
-#, fuzzy
 msgid "Second name"
-msgstr "Stationsnamn"
+msgstr "Andranamn"
 
 #: helper/memory-display.c:221
 msgid "Formal name"
@@ -3792,7 +3795,7 @@ msgstr ""
 
 #: helper/memory-display.c:239
 msgid "unknown field type"
-msgstr ""
+msgstr "okänd fälttyp"
 
 #: helper/memory-display.c:246 helper/message-display.c:128
 msgid "home"
@@ -3971,11 +3974,11 @@ msgstr ""
 
 #: helper/message-display.c:112
 msgid "mobile"
-msgstr ""
+msgstr "mobil"
 
 #: helper/message-display.c:118
 msgid "pager"
-msgstr ""
+msgstr "personsökare"
 
 #: helper/message-display.c:121
 msgid "general"
@@ -4085,7 +4088,7 @@ msgstr ""
 
 #: helper/message-display.c:206
 msgid "Incompatibile destination"
-msgstr ""
+msgstr "Inkompatibelt mål"
 
 #: helper/message-display.c:207
 msgid "Connection rejected by SME"
