@@ -445,7 +445,7 @@ GSM_Error GSM_DecodeSMSStatusReportData(GSM_Debug_Info *di, GSM_SMSMessage *SMS,
 		smfprintf(di, "Remote procedure error");
 		break;
         case 0x41:
-		smfprintf(di, "Incompatibile destination");
+		smfprintf(di, "Incompatible destination");
 		break;
         case 0x42:
 		smfprintf(di, "Connection rejected by SME");

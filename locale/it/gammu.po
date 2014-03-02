@@ -4492,7 +4492,7 @@ msgid "Remote procedure error"
 msgstr "Errore nella procedura remota"
 
 #: helper/message-display.c:206
-msgid "Incompatibile destination"
+msgid "Incompatible destination"
 msgstr "Destinazione non compatibile"
 
 #: helper/message-display.c:207

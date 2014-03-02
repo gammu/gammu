@@ -203,7 +203,7 @@ void DisplaySingleSMSInfo(GSM_SMSMessage *sms, gboolean displaytext, gboolean di
 			case 0x24: printf("%s", _("Quality of service not available"));		break;
 			case 0x25: printf("%s", _("Error in SME"));					break;
 		        case 0x40: printf("%s", _("Remote procedure error"));				break;
-		        case 0x41: printf("%s", _("Incompatibile destination"));			break;
+		        case 0x41: printf("%s", _("Incompatible destination"));			break;
 		        case 0x42: printf("%s", _("Connection rejected by SME"));			break;
 		        case 0x43: printf("%s", _("Not obtainable"));					break;
 		        case 0x44: printf("%s", _("Quality of service not available"));		break;

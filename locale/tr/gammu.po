@@ -4097,7 +4097,7 @@ msgid "Remote procedure error"
 msgstr "Uzak yordam hatası"
 
 #: helper/message-display.c:206
-msgid "Incompatibile destination"
+msgid "Incompatible destination"
 msgstr "Uyumsuz hedef"
 
 #: helper/message-display.c:207

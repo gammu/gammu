@@ -4128,7 +4128,7 @@ msgid "Remote procedure error"
 msgstr "Chyba vzdialenej procedúry"
 
 #: helper/message-display.c:206
-msgid "Incompatibile destination"
+msgid "Incompatible destination"
 msgstr "Nekompatibilný cieľ"
 
 #: helper/message-display.c:207

@@ -4573,7 +4573,7 @@ msgid "Remote procedure error"
 msgstr "Ошибка удалённой процедуры"
 
 #: helper/message-display.c:206
-msgid "Incompatibile destination"
+msgid "Incompatible destination"
 msgstr "Несовместимое назначение"
 
 #: helper/message-display.c:207

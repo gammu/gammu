@@ -4060,7 +4060,7 @@ msgid "Remote procedure error"
 msgstr ""
 
 #: helper/message-display.c:206
-msgid "Incompatibile destination"
+msgid "Incompatible destination"
 msgstr ""
 
 #: helper/message-display.c:207

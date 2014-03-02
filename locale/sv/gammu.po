@@ -4087,7 +4087,7 @@ msgid "Remote procedure error"
 msgstr ""
 
 #: helper/message-display.c:206
-msgid "Incompatibile destination"
+msgid "Incompatible destination"
 msgstr "Inkompatibelt mål"
 
 #: helper/message-display.c:207

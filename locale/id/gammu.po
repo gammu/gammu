@@ -4099,7 +4099,7 @@ msgid "Remote procedure error"
 msgstr "Eror pada remote procedure"
 
 #: helper/message-display.c:206
-msgid "Incompatibile destination"
+msgid "Incompatible destination"
 msgstr "Tujuan yang tidak kompatibel"
 
 #: helper/message-display.c:207

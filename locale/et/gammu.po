@@ -4099,7 +4099,7 @@ msgid "Remote procedure error"
 msgstr "Kaugprotseduuri viga"
 
 #: helper/message-display.c:206
-msgid "Incompatibile destination"
+msgid "Incompatible destination"
 msgstr "Ühildumatu sihtpunkt"
 
 #: helper/message-display.c:207

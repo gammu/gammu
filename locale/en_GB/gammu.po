@@ -4095,8 +4095,8 @@ msgid "Remote procedure error"
 msgstr "Remote procedure error"
 
 #: helper/message-display.c:206
-msgid "Incompatibile destination"
-msgstr "Incompatibile destination"
+msgid "Incompatible destination"
+msgstr "Incompatible destination"
 
 #: helper/message-display.c:207
 msgid "Connection rejected by SME"
