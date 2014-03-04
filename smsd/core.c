@@ -69,6 +69,8 @@
 
 const char smsd_name[] = "gammu-smsd";
 
+time_t lastRing=0;
+
 /**
  * Checks whether database schema version matches current one.
  */
@@ -1785,6 +1787,32 @@ GSM_Error SMSD_FreeSharedMemory(GSM_SMSDConfig *Config, gboolean writable)
 	Config->Status = NULL;
 	return ERR_NONE;
 }
+
+/** handle incoming calls: hang up.
+ */
+void SMSD_IncomingCallCallback(GSM_StateMachine *s, GSM_Call *call, void *user_data) {
+       GSM_SMSDConfig *Config = user_data;
+       switch (call->Status) {
+       case GSM_CALL_IncomingCall: {
+               time_t now = time(NULL);
+               SMSD_Log(DEBUG_INFO, Config, "Incoming call! # avail? %d %s\n", call->CallIDAvailable, DecodeUnicodeString(call->PhoneNumber) );
+               if ( now - lastRing > 5 ) {
+                       // avoid multiple hangups.
+                       SMSD_Log(DEBUG_INFO, Config, "Incoming call! # hanging up @%ld %ld.\n", now, lastRing);
+                       lastRing = now;
+                       GSM_CancelCall(s, 0, TRUE);
+               }
+               break;
+       }
+       case  GSM_CALL_CallRemoteEnd:
+       case GSM_CALL_CallLocalEnd:
+               SMSD_Log(DEBUG_INFO, Config, "Call ended(%d).\n", call->Status );
+               lastRing = 0;
+               break;
+       default:
+               SMSD_Log(DEBUG_INFO, Config, "Call callback: Unknown status %d\n", call->Status);
+       }
+}
 /**
  * Main loop which takes care of connection to phone and processing of
  * messages.
@@ -1858,6 +1886,11 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 					initerrors++;
 					continue;
 				}
+				
+				// handle incoming calls:
+				GSM_SetIncomingCallCallback(Config->gsm, SMSD_IncomingCallCallback, Config);
+				GSM_SetIncomingCall(Config->gsm, TRUE);
+
 				GSM_SetSendSMSStatusCallback(Config->gsm, SMSD_SendSMSStatusCallback, Config);
 				/* On first start we need to initialize some variables */
 				if (first_start) {
