@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: Wammu 0.37\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2014-02-16 12:20+0100\n"
-"PO-Revision-Date: 2014-03-19 08:29+0200\n"
+"PO-Revision-Date: 2014-03-24 08:55+0200\n"
 "Last-Translator: Bohdan <bohdan009@gmail.com>\n"
 "Language-Team: Ukrainian <https://l10n.cihar.com/projects/gammu/gammu/uk/>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
+"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 1.9-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
@@ -361,7 +361,7 @@ msgstr ""
 #: gammu/backup.c:1560 gammu/misc.c:1385 gammu/misc.c:1430 gammu/misc.c:1454
 #: gammu/misc.c:1502
 msgid "Done"
-msgstr ""
+msgstr "Зроблено"
 
 #: gammu/backup.c:1249
 msgid "Restore phone todo?"
@@ -913,7 +913,7 @@ msgstr ""
 
 #: gammu/calendar.c:728
 msgid "None"
-msgstr "Немає"
+msgstr "Не застосовувати"
 
 #: gammu/calendar.c:732 gammu/message.c:111 gammu/misc.c:2122
 #: gammu/misc.c:2165
@@ -939,7 +939,7 @@ msgstr "Завершено"
 #: gammu/calendar.c:789 gammu/calendar.c:794 helper/memory-display.c:45
 #: helper/memory-display.c:55 helper/memory-display.c:57
 msgid "Category"
-msgstr ""
+msgstr "Категорія"
 
 #: gammu/calendar.c:818
 msgid "Contact"
@@ -948,31 +948,31 @@ msgstr ""
 #: gammu/calendar.c:903 gammu/memory.c:316 gammu/memory.c:393
 #, c-format
 msgid "Search text too long, truncating to %d chars!\n"
-msgstr ""
+msgstr "Тест, що шукається занадто довгий, обрізаний до %d символів!\n"
 
 #: gammu/common.c:42
 msgid "Waiting for Security Code."
-msgstr ""
+msgstr "Очікування коду захисту."
 
 #: gammu/common.c:45
 msgid "Waiting for PIN."
-msgstr ""
+msgstr "Очікування PIN-коду."
 
 #: gammu/common.c:48
 msgid "Waiting for PIN2."
-msgstr ""
+msgstr "Очікування PIN2-коду."
 
 #: gammu/common.c:51
 msgid "Waiting for PUK."
-msgstr ""
+msgstr "Очікування PUK-коду."
 
 #: gammu/common.c:54
 msgid "Waiting for PUK2."
-msgstr ""
+msgstr "Очікування PUK2-коду."
 
 #: gammu/common.c:57
 msgid "Waiting for phone code."
-msgstr ""
+msgstr "Очікування коду телефону."
 
 #: gammu/common.c:60
 msgid "Waiting for network code."
@@ -988,87 +988,87 @@ msgstr ""
 
 #: gammu/common.c:78
 msgid "January"
-msgstr ""
+msgstr "січня"
 
 #: gammu/common.c:81
 msgid "February"
-msgstr ""
+msgstr "лютого"
 
 #: gammu/common.c:84
 msgid "March"
-msgstr ""
+msgstr "березня"
 
 #: gammu/common.c:87
 msgid "April"
-msgstr ""
+msgstr "квітня"
 
 #: gammu/common.c:90
 msgid "May"
-msgstr ""
+msgstr "травня"
 
 #: gammu/common.c:93
 msgid "June"
-msgstr ""
+msgstr "червня"
 
 #: gammu/common.c:96
 msgid "July"
-msgstr ""
+msgstr "липня"
 
 #: gammu/common.c:99
 msgid "August"
-msgstr ""
+msgstr "серпня"
 
 #: gammu/common.c:102
 msgid "September"
-msgstr ""
+msgstr "вересня"
 
 #: gammu/common.c:105
 msgid "October"
-msgstr ""
+msgstr "жовтня"
 
 #: gammu/common.c:108
 msgid "November"
-msgstr ""
+msgstr "листопада"
 
 #: gammu/common.c:111
 msgid "December"
-msgstr ""
+msgstr "грудня"
 
 #: gammu/common.c:114
 msgid "Bad month!"
-msgstr ""
+msgstr "Невірний місяць!"
 
 #: gammu/common.c:126
 msgid "Monday"
-msgstr ""
+msgstr "понеділок"
 
 #: gammu/common.c:129
 msgid "Tuesday"
-msgstr ""
+msgstr "вівторок"
 
 #: gammu/common.c:132
 msgid "Wednesday"
-msgstr ""
+msgstr "середа"
 
 #: gammu/common.c:135
 msgid "Thursday"
-msgstr ""
+msgstr "червер"
 
 #: gammu/common.c:138
 msgid "Friday"
-msgstr ""
+msgstr "п'ятниця"
 
 #: gammu/common.c:141
 msgid "Saturday"
-msgstr ""
+msgstr "суботу"
 
 #: gammu/common.c:144
 msgid "Sunday"
-msgstr ""
+msgstr "неділю"
 
 #: gammu/common.c:147
 msgid "Bad day!"
-msgstr ""
+msgstr "Невірний день!"
 
 #: gammu/common.c:194
 msgid "Security status"
@@ -1092,22 +1092,22 @@ msgstr ""
 #: gammu/common.c:355 gammu/common.c:384 gammu/depend/nokia/dct4.c:85
 #: gammu/misc.c:1730
 msgid "yes"
-msgstr ""
+msgstr "так"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
 #: gammu/common.c:355 gammu/common.c:387 gammu/depend/nokia/dct4.c:86
 msgid "no"
-msgstr ""
+msgstr "ні"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
 #: gammu/common.c:356 gammu/common.c:379
 msgid "ALL"
-msgstr ""
+msgstr "ВСЕ"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
 #: gammu/common.c:356 gammu/common.c:374
 msgid "ONLY"
-msgstr ""
+msgstr "ЛИШЕ"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
 #: gammu/common.c:356 gammu/common.c:369
@@ -1116,11 +1116,11 @@ msgstr ""
 
 #: gammu/common.c:358
 msgid "YES (always)"
-msgstr ""
+msgstr "ТАК (завжди)"
 
 #: gammu/common.c:362
 msgid "NO (always)"
-msgstr ""
+msgstr "НІ (завжди)"
 
 #: gammu/depend/nokia/dct4.c:66
 msgid "Can't do it with current phone protocol"
@@ -1129,11 +1129,11 @@ msgstr ""
 #: gammu/depend/nokia/dct4.c:80
 #, c-format
 msgid "%s (yes/no) ? "
-msgstr ""
+msgstr "%s (так/ні) ? "
 
 #: gammu/depend/nokia/dct4.c:265
 msgid "Setting done"
-msgstr ""
+msgstr "Налаштування виконано"
 
 #: gammu/depend/nokia/dct4.c:303
 msgid ""
@@ -1155,7 +1155,7 @@ msgstr ""
 
 #: gammu/depend/nokia/dct4.c:372
 msgid "No signal"
-msgstr ""
+msgstr "Немає сигналу"
 
 #: gammu/depend/nokia/dct4.c:373 gammu/message.c:105 gammu/misc.c:2482
 msgid "Timeout"
@@ -1172,16 +1172,16 @@ msgstr ""
 
 #: gammu/depend/nokia/dct4.c:497 gammu/depend/nokia/dct4.c:1006
 msgid "Press any key to continue..."
-msgstr ""
+msgstr "Натисніть будь-яку клавішу для продовження..."
 
 #: gammu/depend/nokia/dct4.c:509
 #, c-format
 msgid "Security code set to \"12345\"\n"
-msgstr ""
+msgstr "Встановлений код захисту \"12345\"\n"
 
 #: gammu/depend/nokia/dct4.c:512
 msgid "Unknown reason. Can't reset your security code"
-msgstr ""
+msgstr "Невідома причина. Неможливо змінити захисний код"
 
 #: gammu/depend/nokia/dct4.c:536
 #, c-format
@@ -1191,7 +1191,7 @@ msgstr ""
 #: gammu/depend/nokia/dct4.c:555
 #, c-format
 msgid "Security code is %s\n"
-msgstr ""
+msgstr "Код захисту %s\n"
 
 #: gammu/depend/nokia/dct4.c:800
 #, c-format
@@ -1208,7 +1208,7 @@ msgstr ""
 
 #: gammu/depend/nokia/dct4.c:872
 msgid "Bluetooth"
-msgstr "Bluetooth"
+msgstr "Синій зуб"
 
 #: gammu/depend/nokia/dct4.c:888
 msgid "UEM"
@@ -4340,4 +4340,4 @@ msgstr ""
 #. l10n: Generic prefix for informational messages
 #: helper/printing.c:50
 msgid "Information"
-msgstr ""
+msgstr "Інформація"
