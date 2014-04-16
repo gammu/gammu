@@ -8,14 +8,15 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2014-02-16 12:20+0100\n"
-"PO-Revision-Date: 2009-02-02 18:24+0100\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"Language: \n"
+"PO-Revision-Date: 2014-04-16 04:28+0200\n"
+"Last-Translator: Claus Svalekjaer <just.my.smtp.server@gmail.com>\n"
+"Language-Team: Danish <https://l10n.cihar.com/projects/gammu/gammu/da/>\n"
+"Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 1.9-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -518,10 +519,9 @@ msgid "Reminder (Date)"
 msgstr ""
 
 #: gammu/calendar.c:25
-#, fuzzy
 msgctxt "Calendar note type"
 msgid "Call"
-msgstr "Opring"
+msgstr "Ring"
 
 #: gammu/calendar.c:28
 msgid "Meeting"
