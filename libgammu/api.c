@@ -295,6 +295,19 @@ GSM_Error GSM_SetLocale(GSM_StateMachine *s, GSM_Locale *locale)
 	return err;
 }
 /**
+ * Power on/off the phone.
+ */
+GSM_Error GSM_SetPower(GSM_StateMachine *s, gboolean on)
+{
+	GSM_Error err;
+
+	CHECK_PHONE_CONNECTION();
+
+	err = s->Phone.Functions->SetPower(s, on);
+	PRINT_LOG_ERROR(err);
+	return err;
+}
+/**
  * Emulates key press or key release.
  */
 GSM_Error GSM_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, gboolean Press)

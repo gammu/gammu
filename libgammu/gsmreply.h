@@ -193,6 +193,8 @@ typedef enum {
 	ID_AlcatelCreateField,
 	ID_AlcatelUpdateField,
 
+	ID_SetPower,
+
 	ID_IncomingFrame,
 
 	ID_User1,

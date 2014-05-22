@@ -1812,6 +1812,26 @@ void CopyRingtone(int argc, char *argv[])
 	Print_Error(error);
 }
 
+void SetPower(int argc UNUSED, char *argv[])
+{
+	gboolean on;
+	GSM_Error error;
+
+	if (strcasecmp(argv[2],"OFF") == 0) {		on=FALSE;
+	} else if (strcasecmp(argv[2],"ON") == 0) {	on=TRUE;
+	} else {
+	   printf(_("What type of power do you want (\"%s\") ?\n"),argv[2]);
+	   Terminate(2);
+	}
+
+	GSM_Init(TRUE);
+
+	error=GSM_SetPower(gsm, on);
+	Print_Error(error);
+
+	GSM_Terminate();
+}
+
 void PressKeySequence(int argc UNUSED, char *argv[])
 {
 	size_t i,Length;

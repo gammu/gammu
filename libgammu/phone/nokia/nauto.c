@@ -174,7 +174,8 @@ GSM_Phone_Functions NAUTOPhone = {
 	NOTSUPPORTED,			/* 	DeleteFolder		*/
 	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
 	NOTSUPPORTED,			/* 	SetGPRSAccessPoint	*/
-	NOTSUPPORTED			/* 	GetScreenshot		*/
+	NOTSUPPORTED,			/* 	GetScreenshot		*/
+	NOTSUPPORTED			/* 	SetPower		*/
 };
 
 #endif

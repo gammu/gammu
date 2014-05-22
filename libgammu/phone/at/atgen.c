@@ -5600,6 +5600,18 @@ GSM_Error ATGEN_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *ma
 	}
 }
 
+GSM_Error ATGEN_SetPower(GSM_StateMachine *s, gboolean on)
+{
+	GSM_Error error;
+
+	smprintf(s, "Set AT phone power %s\n", on ? "on" : "off");
+
+	/* Set power */
+	error = GSM_WaitForAutoLen(s, on ? "AT+CFUN=1\r" : "AT+CFUN=0\r", 0, 10, ID_SetPower);
+
+	return error;
+}
+
 GSM_Error ATGEN_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, gboolean Press)
 {
 	GSM_Error error;
@@ -6074,6 +6086,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReply,		"AT+CPROT=16" 	 	,0x00,0x00,ID_AlcatelConnect	 },
 #endif
 {ATGEN_GenericReply,		"OK"			,0x00,0x00,ID_Initialise	 },
+{ATGEN_GenericReply,		"AT+CFUN="	,0x00,0x00,ID_SetPower	 },
 
 {NULL,				"\x00"			,0x00,0x00,ID_None		 }
 };
@@ -6217,7 +6230,8 @@ GSM_Phone_Functions ATGENPhone = {
 	NOTSUPPORTED,			/* 	DeleteFolder		*/
 	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
 	NOTSUPPORTED,			/* 	SetGPRSAccessPoint	*/
-	SONYERICSSON_GetScreenshot
+	SONYERICSSON_GetScreenshot,
+	ATGEN_SetPower
 };
 
 #endif

@@ -59,6 +59,7 @@ extern GSM_Error ATGEN_SetAlarm(GSM_StateMachine *s, GSM_Alarm *Alarm);
 extern GSM_Error ATGEN_SetIncomingUSSD(GSM_StateMachine *s, gboolean enable);
 extern GSM_Error ATGEN_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, gboolean PhoneRingtone);
 extern GSM_Error ATGEN_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *maxlength);
+extern GSM_Error ATGEN_SetPower(GSM_StateMachine *s, gboolean on);
 extern GSM_Error ATGEN_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap);
 extern GSM_Error ATGEN_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap);
 

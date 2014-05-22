@@ -167,6 +167,16 @@ void EncodeHexBin(char *dest, const unsigned char *src, size_t len);
  */
 gboolean GSM_IsNewerVersion(const char *latest_version,
 			const char *current_version);
+
+/**
+ * Set Power On/Off the phone
+ *
+ * \param on TRUE to power on the phone, FALSE to power off
+ *
+ * \return Error code.
+  */
+GSM_Error GSM_SetPower(GSM_StateMachine *s, gboolean on);
+
 #endif
 
 /* Editor configuration

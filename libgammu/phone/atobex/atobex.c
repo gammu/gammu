@@ -616,6 +616,14 @@ GSM_Error ATOBEX_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *m
 	return ATGEN_SetRingtone(s, Ringtone, maxlength);
 }
 
+GSM_Error ATOBEX_SetPower(GSM_StateMachine *s, gboolean on)
+{
+	GSM_Error error;
+
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
+	return ATGEN_SetPower(s, on);
+}
+
 GSM_Error ATOBEX_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 {
 	GSM_Error error;
@@ -1668,7 +1676,8 @@ GSM_Phone_Functions ATOBEXPhone = {
 	ATOBEX_DeleteFile,	/* 	DeleteFolder		*/
 	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
 	NOTSUPPORTED,			/* 	SetGPRSAccessPoint	*/
-	SONYERICSSON_GetScreenshot
+	SONYERICSSON_GetScreenshot,			/* 	GetScreenshot		*/
+	ATOBEX_SetPower
 };
 
 #endif

@@ -2934,7 +2934,8 @@ GSM_Phone_Functions N6110Phone = {
 	NOTSUPPORTED,			/* 	DeleteFolder		*/
         NOTSUPPORTED,                   /*      GetGPRSAccessPoint      */
 	NOTSUPPORTED,			/* 	SetGPRSAccessPoint	*/
-	NOTSUPPORTED			/* 	GetScreenshot		*/
+	NOTSUPPORTED,			/* 	GetScreenshot		*/
+	NOTSUPPORTED			/* 	SetPower		*/
 };
 
 #endif

@@ -31,6 +31,7 @@ extern void GetChatSettings(int argc, char *argv[]);
 extern void GetWAPMMSSettings(int argc, char *argv[]);
 extern void CopyBitmap(int argc, char *argv[]);
 extern void CopyRingtone(int argc, char *argv[]);
+extern void SetPower(int argc, char *argv[]);
 extern void PressKeySequence(int argc, char *argv[]);
 extern void GetAllCategories(int argc, char *argv[]);
 extern void GetCategory(int argc, char *argv[]);

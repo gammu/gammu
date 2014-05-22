@@ -677,6 +677,7 @@ static GSM_Parameters Parameters[] = {
 	{"setbitmap",			1, 4, SetBitmap,		{H_Logo,0},			"DEALER text"},
 	{"copybitmap",		1, 3, CopyBitmap,		{H_Logo,0},			"inputfile [outputfile [OPERATOR|PICTURE|STARTUP|CALLER]]"},
 	{"presskeysequence",		1, 1, PressKeySequence,		{H_Other,0},			"mMnNpPuUdD+-123456789*0#gGrR<>[]hHcCjJfFoOmMdD@"},
+	{"setpower",			1, 1, SetPower,		{H_Other,0},		"ON|OFF"},
 #if defined(WIN32) || defined(HAVE_PTHREAD)
 	{"searchphone",		0, 1, SearchPhone,		{H_Other,0},			"[-debug]"},
 #endif

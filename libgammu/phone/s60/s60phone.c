@@ -2183,7 +2183,8 @@ GSM_Phone_Functions S60Phone = {
 	NOTIMPLEMENTED,                 /*      DeleteFile */		/* 	DeleteFolder		*/
 	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
 	NOTSUPPORTED,			/* 	SetGPRSAccessPoint	*/
-	S60_GetScreenshot
+	S60_GetScreenshot,
+	NOTSUPPORTED			/* 	SetPower		*/
 };
 #endif
 

@@ -1288,6 +1288,10 @@ typedef struct {
 	 * Gets phone screenshot
 	 */
 	GSM_Error (*GetScreenshot)	(GSM_StateMachine *s, GSM_BinaryPicture *picture);
+	/**
+	 * Sets phone power state
+	 */
+	GSM_Error (*SetPower)	(GSM_StateMachine *s, gboolean on);
 } GSM_Phone_Functions;
 
 	extern GSM_Phone_Functions NAUTOPhone;
