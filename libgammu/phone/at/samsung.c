@@ -324,6 +324,7 @@ GSM_Error SAMSUNG_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 
 	/* Remove extension from file name */
 	strncpy(name, DecodeUnicodeString(Bitmap->Name), 50);
+	name[49] = '\0';
 	if ((dot = strrchr(name, '.')) != NULL)
 		*dot = 0;
 
@@ -433,6 +434,7 @@ GSM_Error SAMSUNG_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *
 
 	/* Remove extension from file name */
 	strncpy(name, DecodeUnicodeString(Ringtone->Name), 50);
+	name[49] = '\0';
 	if ((dot = strrchr(name, '.')) != NULL) *dot = 0;
 
 	crc = GetCRC(Ringtone->BinaryTone.Buffer, Ringtone->BinaryTone.Length);
