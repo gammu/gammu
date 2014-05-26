@@ -939,7 +939,14 @@ static int GSM_EncodeSMSFrameText(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsig
 
 	if (SMS->UDH.Type!=UDH_NoUDH) {
 		buffer[Layout.firstbyte] |= 0x40;			/* GSM 03.40 section 9.2.3.23 (TP-User-Data-Header-Indicator) */
-		off = 1 + SMS->UDH.Text[0];				/* off - length of the User Data Header */
+		if (SMS->UDH.Length == 0) {
+			/* off - length of the User Data Header w/o data */
+			off = 1 + SMS->UDH.Text[0];
+			smfprintf(di, "UDL passed from API is 0, using UDHL+1 (%i)\n", off);
+		} else {
+			off = SMS->UDH.Length;
+			smfprintf(di, "UDL: %i, UDHL: %i\n", off, SMS->UDH.Text[0]);
+		}
 		memcpy(buffer+Layout.Text, SMS->UDH.Text, off);		/* we copy the udh */
 		smfprintf(di, "UDH, length %i\n",off);
 		DumpMessageText(di, SMS->UDH.Text, off);
