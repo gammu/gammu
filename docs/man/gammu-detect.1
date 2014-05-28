@@ -1,4 +1,6 @@
-.TH "GAMMU-DETECT" "1" "May 30, 2013" "1.33.90" "Gammu"
+.\" Man page generated from reStructuredText.
+.
+.TH "GAMMU-DETECT" "1" "May 28, 2014" "1.33.90" "Gammu"
 .SH NAME
 gammu-detect \- Gammu device detection
 .
@@ -28,10 +30,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.\" Man page generated from reStructuredText.
-.
 .sp
 New in version 1.28.95.
+
 .SH SYNOPSIS
 .INDENT 0.0
 .INDENT 3.5
@@ -45,7 +46,7 @@ gammu\-detect [OPTIONS]
 .UNINDENT
 .SH DESCRIPTION
 .sp
-Script to detect available devices, which might be suitable for \fIgammu\fP.
+Script to detect available devices, which might be suitable for \fIgammu\fP\&.
 .sp
 \fBNOTE:\fP
 .INDENT 0.0
@@ -72,7 +73,7 @@ Bluetooth devices using Bluez
 .INDENT 3.5
 Supported devices depend on platform you are using and compiled in
 features. You can find out what is actually compiled in by running
-\fI\%gammu-detect -v\fP.
+\fI\%gammu\-detect \-v\fP\&.
 .UNINDENT
 .UNINDENT
 .sp
@@ -110,18 +111,18 @@ Disables scanning of Windows serial ports.
 .UNINDENT
 .SH OUTPUT
 .sp
-The output of \fI\%gammu-detect\fP is configuration file for Gammu (see
+The output of \fI\%gammu\-detect\fP is configuration file for Gammu (see
 \fIgammurc\fP) with configuration section for every device which might be
-used with \fIgammu\fP.
+used with \fIgammu\fP\&.
 .sp
 \fBNOTE:\fP
 .INDENT 0.0
 .INDENT 3.5
-You can choose which section to use in \fIgammu\fP by \fIgammu \-s\fP.
+You can choose which section to use in \fIgammu\fP by \fIgammu \-s\fP\&.
 .UNINDENT
 .UNINDENT
 .sp
-When invoked as \fI\%gammu-detect -d\fP, also all examined devices are
+When invoked as \fI\%gammu\-detect \-d\fP, also all examined devices are
 listed as comments in the output.
 .SH EXAMPLE
 .INDENT 0.0

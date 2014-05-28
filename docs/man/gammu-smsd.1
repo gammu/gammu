@@ -1,4 +1,6 @@
-.TH "GAMMU-SMSD" "1" "May 30, 2013" "1.33.90" "Gammu"
+.\" Man page generated from reStructuredText.
+.
+.TH "GAMMU-SMSD" "1" "May 28, 2014" "1.33.90" "Gammu"
 .SH NAME
 gammu-smsd \- SMS daemon for Gammu
 .
@@ -28,8 +30,6 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.\" Man page generated from reStructuredText.
-.
 .SH SYNOPSIS
 .INDENT 0.0
 .INDENT 3.5
@@ -155,6 +155,7 @@ Do not use logging as configured in config file.
 Installs Windows EventLog description to registry.
 .sp
 New in version 1.31.90.
+
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -162,6 +163,7 @@ New in version 1.31.90.
 Uninstalls Windows EventLog description to registry.
 .sp
 New in version 1.31.90.
+
 .UNINDENT
 .SH SIGNALS
 .sp
@@ -175,7 +177,7 @@ Reload configuration and reconnect to phone.
 Gracefully shutdown the daemon.
 .TP
 .B SIGALRM
-Used internally for \fI\%gammu-smsd -X\fP
+Used internally for \fI\%gammu\-smsd \-X\fP
 .TP
 .B SIGUSR1
 Suspends SMSD operartion, closing connection to phone and database.
@@ -185,10 +187,13 @@ Resumes SMSD operattion (after previous suspend).
 .UNINDENT
 .sp
 Changed in version 1.22.91: Added support for SIGHUP.
+
 .sp
 Changed in version 1.22.95: Added support for SIGALRM.
+
 .sp
 Changed in version 1.31.90: Added support for SIGUSR1 and SIGUSR2.
+
 .SH EXAMPLES
 .SS Linux/Unix Examples
 .sp

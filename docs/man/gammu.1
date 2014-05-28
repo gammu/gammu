@@ -1,4 +1,6 @@
-.TH "GAMMU" "1" "May 30, 2013" "1.33.90" "Gammu"
+.\" Man page generated from reStructuredText.
+.
+.TH "GAMMU" "1" "May 28, 2014" "1.33.90" "Gammu"
 .SH NAME
 gammu \- Does some neat things with your cellular phone or modem.
 .
@@ -28,8 +30,6 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.\" Man page generated from reStructuredText.
-.
 .SH SYNOPSIS
 .INDENT 0.0
 .INDENT 3.5
@@ -43,11 +43,11 @@ gammu [parameters] <command> [options]
 .UNINDENT
 .sp
 Commands actually indicate which operation should Gammu perform. They can be
-specified with or without leading \fB\-\-\fP.
+specified with or without leading \fB\-\-\fP\&.
 .SH DESCRIPTION
 .sp
 This program is a tool for mobile phones. Many vendors and phones
-are supported, for actual listing see \fI\%Gammu Phones Database\fP.
+are supported, for actual listing see \fI\%Gammu Phones Database\fP\&.
 .SS Options
 .sp
 Parameters before command configure gammu behaviour:
@@ -272,12 +272,12 @@ behaves same like sendsms.
 Get all SMS from phone. In some phones you will have also SMS templates
 and info about locations used to save Picture Images. With each sms you
 will see location. If you want to get such sms from phone alone, use
-\fI\%gammu getsms\fP.
+\fI\%gammu getsms\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B geteachsms \-pbk
-Similiary to \fI\%gammu getallsms\fP. Difference is, that
+Similiary to \fI\%gammu getallsms\fP\&. Difference is, that
 links all concatenated sms
 .UNINDENT
 .INDENT 0.0
@@ -319,7 +319,7 @@ Saves SMS to phone, see bellow for \fBTYPE\fP options.
 .INDENT 0.0
 .TP
 .B \-smscset number
-SMSC number will be taken from phone stored SMSC configuration \fBnumber\fP.
+SMSC number will be taken from phone stored SMSC configuration \fBnumber\fP\&.
 .sp
 Default: 1
 .UNINDENT
@@ -422,7 +422,7 @@ phone using filesystem commands.
 .INDENT 0.0
 .TP
 .B EMS [\-unicode] [\-16bit] [\-format lcrasbiut] [\-text text] [\-unicodefiletext file] [\-defsound ID] [\-defanimation ID] [\-tone10 file] [\-tone10long file] [\-tone12 file] [\-tone12long file] [\-toneSE file] [\-toneSElong file] [\-fixedbitmap file] [\-variablebitmap file] [\-variablebitmaplong file] [\-animation frames file1 ...] [\-protected number]
-Saves EMS sequence. All format specific parameters (like \fI\%-defsound\fP) can be used few times.
+Saves EMS sequence. All format specific parameters (like \fI\%\-defsound\fP) can be used few times.
 .INDENT 7.0
 .TP
 .B \-text
@@ -729,7 +729,7 @@ SMS will be saved in Unicode format
 \fBNOTE:\fP
 .INDENT 7.0
 .INDENT 3.5
-The \fB~\fP char in SMS text and \fI\%-unicode\fP option
+The \fB~\fP char in SMS text and \fI\%\-unicode\fP option
 (Unicode coding required) can cause text of SMS after \fB~\fP
 char  blink in some phones (like Nokia 33xx).
 .UNINDENT
@@ -838,7 +838,7 @@ and saves in Nokia format as SMS
 .INDENT 0.0
 .TP
 .B sendsms TYPE destination [type parameters] [type options] [\-smscset number] [\-smscnumber number] [\-reply] [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]]
-Sends a message to a \fBdestination\fP number, most parameters are same as for \fI\%gammu savesms\fP.
+Sends a message to a \fBdestination\fP number, most parameters are same as for \fI\%gammu savesms\fP\&.
 .INDENT 7.0
 .TP
 .B \-save
@@ -904,28 +904,28 @@ sent SMS log
 .B deleteallmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL
 Deletes all entries from specified memory type.
 .sp
-For memory types description see \fI\%Memory types\fP.
+For memory types description see \fI\%Memory types\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B deletememory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL start [stop]
 Deletes entries in specified range from specified memory type.
 .sp
-For memory types description see \fI\%Memory types\fP.
+For memory types description see \fI\%Memory types\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B getallmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL
 Get all memory locations from phone.
 .sp
-For memory types description see \fI\%Memory types\fP.
+For memory types description see \fI\%Memory types\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B getmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL start [stop [\-nonempty]]
 Get memory location from phone.
 .sp
-For memory types description see \fI\%Memory types\fP.
+For memory types description see \fI\%Memory types\fP\&.
 .sp
 Locations are numerated from 1.
 .UNINDENT
@@ -939,7 +939,7 @@ Gets speed dial choices.
 .B searchmemory text
 Scans all memory entries for given text. It performs
 case insensitive substring lookup. You can interrupt searching by pressing
-\fBCtrl+C\fP.
+\fBCtrl+C\fP\&.
 .UNINDENT
 .SS Filesystem commands
 .sp
@@ -1000,12 +1000,12 @@ Delete folder with given ID.
 .UNINDENT
 .INDENT 0.0
 .TP
-.B getfilefolder fileID, fileID, ...
+.B getfilefolder fileID, fileID
 Retrieve files or all files from folder with given IDs from a phone filesytem.
 .UNINDENT
 .INDENT 0.0
 .TP
-.B getfiles fileID, fileID, ...
+.B getfiles fileID, fileID
 Retrieve files with given IDs from a phone filesytem.
 .UNINDENT
 .INDENT 0.0
@@ -1211,7 +1211,7 @@ Play aproximation of ringtone over phone buzzer. File can be in RTTL or BINARY (
 .TP
 .B playsavedringtone number
 Play one of built\-in ringtones. This option is available for DCT4 phones.
-For getting ringtones list use \fI\%gammu getringtoneslist\fP.
+For getting ringtones list use \fI\%gammu getringtoneslist\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1395,15 +1395,15 @@ There are various backup formats supported and the backup format is guessed
 based on file extension:
 .INDENT 7.0
 .IP \(bu 2
-\fB.lmb\fP \- Nokia backup, supports contacts, caller logos and startup logo.
+\fB\&.lmb\fP \- Nokia backup, supports contacts, caller logos and startup logo.
 .IP \(bu 2
-\fB.vcs\fP \- vCalendar, supports calendar and todo.
+\fB\&.vcs\fP \- vCalendar, supports calendar and todo.
 .IP \(bu 2
-\fB.vcf\fP \- vCard, supports contacts.
+\fB\&.vcf\fP \- vCard, supports contacts.
 .IP \(bu 2
-\fB.ldif\fP \- LDAP import, supports contacts.
+\fB\&.ldif\fP \- LDAP import, supports contacts.
 .IP \(bu 2
-\fB.ics\fP \- iCalendar, supports calendar and todo.
+\fB\&.ics\fP \- iCalendar, supports calendar and todo.
 .IP \(bu 2
 Any other extension is Gammu backup file and it supports all data mentioned above, see \fIgammu\-backup\fP for more details.
 .UNINDENT
@@ -1415,7 +1415,7 @@ Use \-yes for answering yes to all questions.
 .INDENT 0.0
 .TP
 .B backupsms file [\-yes|\-all]
-Stores all SMSes from phone to file into \fIgammu\-smsbackup\fP.
+Stores all SMSes from phone to file into \fIgammu\-smsbackup\fP\&.
 .sp
 By default this command is interactive and asks which folders you want
 to backup and whether you want to remove messages from phone afterwards.
@@ -1432,7 +1432,7 @@ messages in phone.
 .INDENT 7.0
 .INDENT 3.5
 Please note that restoring deletes all current content in phone. If you
-want only to add entries to phone, use \fI\%gammu addnew\fP.
+want only to add entries to phone, use \fI\%gammu addnew\fP\&.
 .UNINDENT
 .UNINDENT
 .sp
@@ -1490,10 +1490,10 @@ supports for phonebook events. The file type is guessed (for input file
 guess is based on extension and file content, for output solely on
 extension).
 .UNINDENT
+.sp
+\fBSEE ALSO:\fP
 .INDENT 7.0
 .INDENT 3.5
-.IP "See also"
-.sp
 \fI\%gammu convertbackup\fP
 .UNINDENT
 .UNINDENT
@@ -1502,14 +1502,15 @@ extension).
 .TP
 .B convertbackup source.file output.file
 New in version 1.28.94.
+
 .sp
 Converts backup between formats supported by Gammu. Unlike
 \fI\%gammu savefile\fP, this does not give you any options what to
 convert, it simply takes converts all what can be saved into output file.
+.sp
+\fBSEE ALSO:\fP
 .INDENT 7.0
 .INDENT 3.5
-.IP "See also"
-.sp
 \fI\%gammu savefile\fP
 .UNINDENT
 .UNINDENT
@@ -1534,7 +1535,7 @@ doesn\(aqt delete the application data.
 .INDENT 7.0
 .TP
 .B \-overwriteall
-Delete the application (same as \fI\%-overwrite\fP) and all it\(aqs
+Delete the application (same as \fI\%\-overwrite\fP) and all it\(aqs
 data.
 .UNINDENT
 .sp
@@ -1676,12 +1677,12 @@ now You can be asked if want to install unsigned driver (YES), about select code
 .TP
 .B nokianetmonitor test
 Takes output or set netmonitor for Nokia DCT3 phones.
+.sp
+\fBSEE ALSO:\fP
 .INDENT 7.0
 .INDENT 3.5
-.IP "See also"
-.sp
 For more info about this option, please visit
-\fI\%Marcin's page\fP and read netmonitor manual
+\fI\%Marcin\(aqs page\fP and read netmonitor manual
 there.
 .UNINDENT
 .UNINDENT
@@ -1699,12 +1700,12 @@ them to see netmonitor menu)
 .TP
 .B nokianetmonitor36
 Reset counters from netmonitor test 36 in Nokia DCT3 phones.
+.sp
+\fBSEE ALSO:\fP
 .INDENT 7.0
 .INDENT 3.5
-.IP "See also"
-.sp
 For more info about this option, please visit
-\fI\%Marcin's page\fP and read netmonitor manual
+\fI\%Marcin\(aqs page\fP and read netmonitor manual
 there.
 .UNINDENT
 .UNINDENT
@@ -1886,7 +1887,7 @@ Displays information about battery and power source.
 .B getlocation
 Gets network information from phone (same as networkinfo)
 and prints location (latitude and longitude) based on information from
-\fI\%OpenCellID\fP.
+\fI\%OpenCellID\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -2000,7 +2001,7 @@ These commands are available only if Gammu was compiled with debugging options.
 .TP
 .B decodebinarydump file [phonemodel]
 Decodes a dump made by Gammu with
-\fBLogFormat\fP set to \fBbinary\fP.
+\fBLogFormat\fP set to \fBbinary\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -2078,6 +2079,18 @@ Some phones will reset user data on \fBHARD\fP reset.
 .UNINDENT
 .INDENT 0.0
 .TP
+.B setpower ON|OFF
+Turns off or on the phone.
+.sp
+\fBNOTE:\fP
+.INDENT 7.0
+.INDENT 3.5
+This is usually required for built in modules in notebooks.
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
 .B screenshot filename
 Captures phone screenshot and saves it as filename. The extension is
 automatically appended to filename based on what data phone provides.
@@ -2115,7 +2128,7 @@ find working setup for Gammu.
 Installs applet for currently configured connection to the phone.
 .sp
 You can configure search path for instllation files by
-\fBDataPath\fP.
+\fBDataPath\fP\&.
 .sp
 The \-minimal parameter forces installation of applet only without possible
 support libraries, this can be useful for updates.
@@ -2166,7 +2179,7 @@ Program was interrupted.
 Gammu library version mismatch.
 .TP
 .B 99
-Functionality has been moved. For example to \fIgammu\-smsd\fP.
+Functionality has been moved. For example to \fIgammu\-smsd\fP\&.
 .UNINDENT
 .sp
 Errors codes greater than 100 map to the GSM_Error
@@ -2616,7 +2629,7 @@ hints for improving support for your phone in this log.
 .sp
 See <\fI\%http://wammu.eu/support/bugs/\fP> for more information on reporting bugs.
 .sp
-Please report bugs to \fI\%Gammu bug tracker\fP.
+Please report bugs to \fI\%Gammu bug tracker\fP\&.
 .SH AUTHOR
 Michal Čihař <michal@cihar.com>
 .SH COPYRIGHT

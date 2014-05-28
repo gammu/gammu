@@ -1,4 +1,6 @@
-.TH "GAMMU-SMSDRC" "5" "May 30, 2013" "1.33.90" "Gammu"
+.\" Man page generated from reStructuredText.
+.
+.TH "GAMMU-SMSDRC" "5" "May 28, 2014" "1.33.90" "Gammu"
 .SH NAME
 gammu-smsdrc \- gammu-smsd(1) configuration file
 .
@@ -28,19 +30,17 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.\" Man page generated from reStructuredText.
-.
 .SH DESCRIPTION
 .sp
 gammu\-smsd reads configuration from a config file. It\(aqs location can be
 specified on command line, otherwise default path \fB/etc/gammu\-smsdrc\fP
 is used.
 .sp
-This file use ini file syntax, see \fIini\fP.
+This file use ini file syntax, see \fIini\fP\&.
 .sp
 Configuration file of gammu\-smsd consists of at least two sections \-
-\fB[gammu]\fP and \fI\%[smsd]\fP. For \fIgammu\-smsd\-sql\fP
-you can also use \fI\%[sql]\fP.
+\fB[gammu]\fP and \fI\%[smsd]\fP\&. For \fIgammu\-smsd\-sql\fP
+you can also use \fI\%[sql]\fP\&.
 .sp
 The \fB[gammu]\fP section is configuration of a phone connection
 and is same as described in \fIgammurc\fP with the only exception that
@@ -57,31 +57,31 @@ then specific parameters for storage backends.
 .INDENT 0.0
 .TP
 .B [include_numbers]
-List of numbers from which accept messages, see \fI\%Message filtering\fP.
+List of numbers from which accept messages, see \fI\%Message filtering\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B [exclude_numbers]
-List of numbers from which reject messages, see \fI\%Message filtering\fP.
+List of numbers from which reject messages, see \fI\%Message filtering\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B [include_smsc]
-List of SMSC numbers from which accept messages, see \fI\%Message filtering\fP.
+List of SMSC numbers from which accept messages, see \fI\%Message filtering\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B [exclude_smsc]
-List of SMSC numbers from which reject messages, see \fI\%Message filtering\fP.
+List of SMSC numbers from which reject messages, see \fI\%Message filtering\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B [sql]
 Configure SQL queries used by \fIgammu\-smsd\-sql\fP, you usually don\(aqt have to modify them.
+.sp
+\fBSEE ALSO:\fP
 .INDENT 7.0
 .INDENT 3.5
-.IP "See also"
-.sp
 \fIConfigurable queries\fP
 .UNINDENT
 .UNINDENT
@@ -103,6 +103,7 @@ does not store messages at all, see \fIgammu\-smsd\-null\fP for details
 stores messages in SQL database, see \fIgammu\-smsd\-sql\fP for details
 .sp
 New in version 1.28.93.
+
 .TP
 .B \fBMYSQL\fP
 synonym for \fI\%Service\fP = \fBSQL\fP and \fI\%Driver\fP = \fBnative_mysql\fP
@@ -110,6 +111,7 @@ synonym for \fI\%Service\fP = \fBSQL\fP and \fI\%Driver\fP = \fBnative_mysql\fP
 stores messages in MySQL database, see \fIgammu\-smsd\-mysql\fP for details
 .sp
 Deprecated since version 1.28.93.
+
 .TP
 .B \fBPGSQL\fP
 synonym for \fI\%Service\fP = \fBSQL\fP and \fI\%Driver\fP = \fBnative_pgsql\fP
@@ -117,6 +119,7 @@ synonym for \fI\%Service\fP = \fBSQL\fP and \fI\%Driver\fP = \fBnative_pgsql\fP
 stores messages in PostgreSQL database, see \fIgammu\-smsd\-pgsql\fP for details
 .sp
 Deprecated since version 1.28.93.
+
 .TP
 .B \fBDBI\fP
 synonym for \fI\%Service\fP = \fBSQL\fP and \fI\%Driver\fP = DBI driver
@@ -126,6 +129,7 @@ MSSQL, MySQL, PostgreSQL or SQLite databases, see \fIgammu\-smsd\-dbi\fP for
 details
 .sp
 Deprecated since version 1.28.93.
+
 .UNINDENT
 .sp
 \fBNOTE:\fP
@@ -204,6 +208,7 @@ syslog). One of following chouces:
 .UNINDENT
 .sp
 New in version 1.30.91.
+
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -322,6 +327,7 @@ Default is 0 (not used).
 .TP
 .B HardResetFrequency
 New in version 1.28.92.
+
 .sp
 \fBWARNING:\fP
 .INDENT 7.0
@@ -339,7 +345,7 @@ Default is 0 (not used).
 .INDENT 0.0
 .TP
 .B DeliveryReport
-Whether delivery reports should be used, one of \fBno\fP, \fBlog\fP, \fBsms\fP.
+Whether delivery reports should be used, one of \fBno\fP, \fBlog\fP, \fBsms\fP\&.
 .INDENT 7.0
 .TP
 .B \fBlog\fP
@@ -352,7 +358,7 @@ store in inbox as a received SMS
 no delivery reports
 .UNINDENT
 .sp
-Default is \fBno\fP.
+Default is \fBno\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -374,7 +380,7 @@ When you set PhoneID, all messages (including injected ones) will be marked
 by this string (stored as SenderID in the database) and it allows more SMS
 daemons to share a single database.
 .sp
-This option has actually no effect with \fIgammu\-smsd\-files\fP.
+This option has actually no effect with \fIgammu\-smsd\-files\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -400,6 +406,7 @@ environment, check \fIgammu\-smsd\-run\fP for more details.
 .TP
 .B RunOnFailure
 New in version 1.28.93.
+
 .sp
 Executes a program on failure.
 .sp
@@ -463,6 +470,7 @@ Default is 10.
 .TP
 .B Send
 New in version 1.28.91.
+
 .sp
 Whether to enable sending of messages.
 .sp
@@ -472,6 +480,7 @@ Default is True.
 .TP
 .B Receive
 New in version 1.28.91.
+
 .sp
 Whether to enable receiving of messages.
 .sp
@@ -498,7 +507,7 @@ Password used for connection to a database.
 .B Host
 Database server address. It can also contain port or socket path after
 semicolon, for example \fBlocalhost:/path/to/socket\fP or
-\fB192.168.1.1:8000\fP.
+\fB192.168.1.1:8000\fP\&.
 .sp
 For ODBC this is used as Data source name.
 .sp
@@ -512,13 +521,15 @@ Please make sure your SMSD settings match the database server ones.
 .UNINDENT
 .sp
 New in version 1.28.92.
+
 .UNINDENT
 .INDENT 0.0
 .TP
 .B PC
-Synonym for \fI\%Host\fP.
+Synonym for \fI\%Host\fP\&.
 .sp
 Deprecated since version 1.28.92.
+
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -572,11 +583,12 @@ Possible values:
 .UNINDENT
 .sp
 New in version 1.28.93.
+
+.sp
+\fBSEE ALSO:\fP
 .INDENT 7.0
 .INDENT 3.5
-.IP "See also"
-.sp
-You can also completely customize SQL queries used as described in \fISQL Queries\fP.
+You can also completely customize SQL queries used as described in \fISQL Queries\fP\&.
 .UNINDENT
 .UNINDENT
 .UNINDENT
@@ -624,16 +636,16 @@ Default is to delete transmitted messages.
 .B ErrorSMSPath
 Where SMSes with error in transmission is placed.
 .sp
-Default is same as \fI\%SentSMSPath\fP.
+Default is same as \fI\%SentSMSPath\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B InboxFormat
-The format in which the SMS will be stored: \fBdetail\fP, \fBunicode\fP, \fBstandard\fP.
+The format in which the SMS will be stored: \fBdetail\fP, \fBunicode\fP, \fBstandard\fP\&.
 .INDENT 7.0
 .TP
 .B \fBdetail\fP
-format used for message backup by \fIgammu\fP, see \fIgammu\-smsbackup\fP.
+format used for message backup by \fIgammu\fP, see \fIgammu\-smsbackup\fP\&.
 .TP
 .B \fBunicode\fP
 message text stored in unicode (UTF\-16)
@@ -645,7 +657,7 @@ message text stored in system charset
 The \fBstandard\fP and \fBunicode\fP settings do not apply for 8\-bit messages, which
 are always written raw as they are received with extension .bin.
 .sp
-Default is \fBunicode\fP.
+Default is \fBunicode\fP\&.
 .sp
 \fBNOTE:\fP
 .INDENT 7.0
@@ -667,9 +679,9 @@ otherwise.
 .INDENT 0.0
 .TP
 .B TransmitFormat
-The format for transmitting the SMS: \fBauto\fP, \fBunicode\fP, \fB7bit\fP.
+The format for transmitting the SMS: \fBauto\fP, \fBunicode\fP, \fB7bit\fP\&.
 .sp
-Default is \fBauto\fP.
+Default is \fBauto\fP\&.
 .UNINDENT
 .SH MESSAGE FILTERING
 .sp

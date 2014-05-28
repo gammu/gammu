@@ -1,4 +1,6 @@
-.TH "GAMMU-SMSBACKUP" "5" "May 30, 2013" "1.33.90" "Gammu"
+.\" Man page generated from reStructuredText.
+.
+.TH "GAMMU-SMSBACKUP" "5" "May 28, 2014" "1.33.90" "Gammu"
 .SH NAME
 gammu-smsbackup \- gammu(1) SMS backup file format.
 .
@@ -28,16 +30,14 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.\" Man page generated from reStructuredText.
-.
 .sp
 The SMS backup format is text file encoded in current encoding of platform
 where Gammu is running.
 .sp
-This file use ini file syntax, see \fIini\fP.
+This file use ini file syntax, see \fIini\fP\&.
 .SH SECTIONS
 .sp
-The file consists of sections, whose name starts with \fBSMSBackup\fP. When
+The file consists of sections, whose name starts with \fBSMSBackup\fP\&. When
 creating the backup file, three digits are appended to this text defining
 order. While reading the backup, any part after \fBSMSBackup\fP text is ignored
 and everything which begins with this is processed. So you can as well give
