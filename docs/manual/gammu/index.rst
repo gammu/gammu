@@ -1602,6 +1602,8 @@ Other commands
 
 .. option:: setpower ON|OFF
 
+    .. versionadded:: 1.33.90
+
     Turns off or on the phone.
 
     .. note:: This is usually required for built in modules in notebooks.
