@@ -68,9 +68,10 @@ void GSM_Find_Free_Used_SMS2(GSM_Debug_Info *di, GSM_Coding_Type Coding,GSM_SMSM
 		(long)*FreeBytes);
 }
 
-void AlignIfSurrogatePair(GSM_Debug_Info	*di,
+int AlignIfSurrogatePair(GSM_Debug_Info	*di,
+			  size_t		*Copy,
 			  char			*Buffer,
-			  size_t		*Copy)
+			  size_t		BufferLen)
 {
 	/* Don't split a UTF-16 surrogate pair:
 	 *   If the final code unit to be copied is a lead surrogate, save
@@ -78,18 +79,66 @@ void AlignIfSurrogatePair(GSM_Debug_Info	*di,
 	 *   the proper four-byte UTF-16 character even if they're unable to
 	 *   reassemble the message (e.g. if a telecom strips off the UDH). */
 
-	size_t offset = 2 * (*Copy - 1);
+	size_t offset = (*Copy - 1) * 2;
 	unsigned char n = (unsigned char) Buffer[offset];
 
-	/* Make progress */
+	/* Require progress */
 	if (*Copy <= 1) {
-		return;
+		return 0;
 	}
 
 	/* Big-endian U+D800 - U+DBFF */
 	if (n >= 0xd8 && n < 0xdc) {
 		*Copy -= 1;
+		return 1;
 	}
+
+	return 0;
+}
+
+int AlignIfCombinedCharacter(GSM_Debug_Info	*di,
+			      size_t		*Copy,
+			      char		*Buffer,
+			      size_t		BufferLen)
+{
+	/* Don't split up a combining sequence:
+	 *   Peek at the next message segment to see if it begins with
+	 *   a combining character (e.g. a discritical mark). If it does,
+	 *   push the final character of this message segment in to the
+	 *   next message segment. This ensures that the recipient can
+	 *   visually combine the sequence, even if reassembly fails. */
+
+	size_t offset = *Copy * 2;
+
+	unsigned int n = (
+	  ((unsigned int) Buffer[offset] << 8)
+	    | (unsigned char) Buffer[offset + 1]
+	);
+
+	/* Precondition:
+	 *   If we only have one character to copy, or if there isn't any
+	 *   code unit outside of our copy window, don't change anything. */
+
+	if (*Copy <= 1 || *Copy >= BufferLen) {
+		return 0;
+	}
+
+	/* Unicode combining characters:
+	 *   Combining Half Marks (fe20 - fe2f)
+	 *   Combining Diacritical Marks (0300 - 036f)
+	 *   Combining Diacritical Marks Extended (1ab0 - 1aff)
+	 *   Combining Diacritical Marks Supplement (1dc0 - 1dff)
+	 *   Combining Diacritical Marks for Symbols (20d0 - 20ff) */
+
+	if ((n >= 0x0300 && n < 0x0370)
+	    || (n >= 0x1ab0 && n < 0x1b00) || (n >= 0x1dc0 && n < 0x1e00)
+	    || (n >= 0x20d0 && n < 0x2100) || (n >= 0xfe20 && n < 0xfe30)) {
+	
+		*Copy -= 1;
+		return 1;
+	}
+
+	return 0;
 }
 
 GSM_Error GSM_AddSMS_Text_UDH(GSM_Debug_Info *di,
@@ -97,7 +146,7 @@ GSM_Error GSM_AddSMS_Text_UDH(GSM_Debug_Info *di,
 		      		GSM_Coding_Type		Coding,
 		      		char 			*Buffer,
 		      		size_t			BufferLen,
-		      		gboolean 			UDH,
+		      		gboolean 		UDH,
 		      		size_t 			*UsedText,
 		      		size_t			*CopiedText,
 		      		size_t			*CopiedSMSText)
@@ -149,7 +198,9 @@ GSM_Error GSM_AddSMS_Text_UDH(GSM_Debug_Info *di,
 			SMS->SMS[SMS->Number].Length += i;
 			break;
 		case SMS_Coding_Unicode_No_Compression:
-			AlignIfSurrogatePair(di, Buffer, &Copy);
+			if (!AlignIfSurrogatePair(di, &Copy, Buffer, BufferLen)) {
+				AlignIfCombinedCharacter(di, &Copy, Buffer, BufferLen);
+			}
 			SMS->SMS[SMS->Number].Text[UnicodeLength(SMS->SMS[SMS->Number].Text)*2+Copy*2]   = 0;
 			SMS->SMS[SMS->Number].Text[UnicodeLength(SMS->SMS[SMS->Number].Text)*2+Copy*2+1] = 0;
 			memcpy(SMS->SMS[SMS->Number].Text+UnicodeLength(SMS->SMS[SMS->Number].Text)*2,Buffer,Copy*2);
