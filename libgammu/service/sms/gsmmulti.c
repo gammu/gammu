@@ -68,6 +68,30 @@ void GSM_Find_Free_Used_SMS2(GSM_Debug_Info *di, GSM_Coding_Type Coding,GSM_SMSM
 		(long)*FreeBytes);
 }
 
+void AlignIfSurrogatePair(GSM_Debug_Info	*di,
+			  char			*Buffer,
+			  size_t		*Copy)
+{
+	/* Don't split a UTF-16 surrogate pair:
+	 *   If the final code unit to be copied is a lead surrogate, save
+	 *   it for the next message segment. This allows recipients to view
+	 *   the proper four-byte UTF-16 character even if they're unable to
+	 *   reassemble the message (e.g. if a telecom strips off the UDH). */
+
+	size_t offset = 2 * (*Copy - 1);
+	unsigned char n = (unsigned char) Buffer[offset];
+
+	/* Make progress */
+	if (*Copy <= 1) {
+		return;
+	}
+
+	/* Big-endian U+D800 - U+DBFF */
+	if (n >= 0xd8 && n < 0xdc) {
+		*Copy -= 1;
+	}
+}
+
 GSM_Error GSM_AddSMS_Text_UDH(GSM_Debug_Info *di,
 				GSM_MultiSMSMessage 	*SMS,
 		      		GSM_Coding_Type		Coding,
@@ -125,6 +149,7 @@ GSM_Error GSM_AddSMS_Text_UDH(GSM_Debug_Info *di,
 			SMS->SMS[SMS->Number].Length += i;
 			break;
 		case SMS_Coding_Unicode_No_Compression:
+			AlignIfSurrogatePair(di, Buffer, &Copy);
 			SMS->SMS[SMS->Number].Text[UnicodeLength(SMS->SMS[SMS->Number].Text)*2+Copy*2]   = 0;
 			SMS->SMS[SMS->Number].Text[UnicodeLength(SMS->SMS[SMS->Number].Text)*2+Copy*2+1] = 0;
 			memcpy(SMS->SMS[SMS->Number].Text+UnicodeLength(SMS->SMS[SMS->Number].Text)*2,Buffer,Copy*2);
