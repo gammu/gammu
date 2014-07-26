@@ -126,14 +126,13 @@ int AlignIfCombinedCharacter(GSM_Debug_Info	*di,
 	/* Unicode combining characters:
 	 *   Combining Half Marks (U+FE20 - U+FE2F)
 	 *   Combining Diacritical Marks (U+300 - U+36F)
-	 *   Regional Indicator Symbols (U+1F1E6 - U+1F1FF)
 	 *   Combining Diacritical Marks Extended (U+1AB0 - U+1AFF)
 	 *   Combining Diacritical Marks Supplement (U+1DC0 - U+1DFF)
 	 *   Combining Diacritical Marks for Symbols (U+20D0 - U+20FF) */
 
-	if ((n >= 0xfe20 && n <= 0xfe2f) || (n >= 0x300 && n <= 0x36f)
-	    || (n >= 0x1f1e6 && n <= 0x1f1ff) || (n >= 0x1ab0 && n <= 0x1aff)
-	    || (n >= 0x01dc0 && n <= 0x01dff) || (n >= 0x20d0 && n <= 0x20ff)) {
+	if ((n >= 0xfe20 && n <= 0xfe2f)
+	    || (n >= 0x300 && n <= 0x36f) || (n >= 0x1ab0 && n <= 0x1aff)
+	    || (n >= 0x1dc0 && n <= 0x1dff) || (n >= 0x20d0 && n <= 0x20ff)) {
 	
 		*Copy -= 1;
 		return 1;
