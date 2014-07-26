@@ -82,7 +82,7 @@ int AlignIfSurrogatePair(GSM_Debug_Info	*di,
 	size_t offset = (*Copy - 1) * 2;
 	unsigned char n = (unsigned char) Buffer[offset];
 
-	/* Require progress */
+	/* Always make progress */
 	if (*Copy <= 1) {
 		return 0;
 	}
@@ -124,12 +124,12 @@ int AlignIfCombinedCharacter(GSM_Debug_Info	*di,
 	}
 
 	/* Unicode combining characters:
-	 *   Combining Half Marks (fe20 - fe2f)
-	 *   Combining Diacritical Marks (300 - 36f)
-	 *   Regional Indicator Symbols (1f1e6 - 1f1ff)
-	 *   Combining Diacritical Marks Extended (1ab0 - 1aff)
-	 *   Combining Diacritical Marks Supplement (1dc0 - 1dff)
-	 *   Combining Diacritical Marks for Symbols (20d0 - 20ff) */
+	 *   Combining Half Marks (U+FE20 - U+FE2F)
+	 *   Combining Diacritical Marks (U+300 - U+36F)
+	 *   Regional Indicator Symbols (U+1F1E6 - U+1F1FF)
+	 *   Combining Diacritical Marks Extended (U+1AB0 - U+1AFF)
+	 *   Combining Diacritical Marks Supplement (U+1DC0 - U+1DFF)
+	 *   Combining Diacritical Marks for Symbols (U+20D0 - U+20FF) */
 
 	if ((n >= 0xfe20 && n <= 0xfe2f) || (n >= 0x300 && n <= 0x36f)
 	    || (n >= 0x1f1e6 && n <= 0x1f1ff) || (n >= 0x1ab0 && n <= 0x1aff)
