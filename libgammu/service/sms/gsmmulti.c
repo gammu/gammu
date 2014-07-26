@@ -125,14 +125,15 @@ int AlignIfCombinedCharacter(GSM_Debug_Info	*di,
 
 	/* Unicode combining characters:
 	 *   Combining Half Marks (fe20 - fe2f)
-	 *   Combining Diacritical Marks (0300 - 036f)
+	 *   Combining Diacritical Marks (300 - 36f)
+	 *   Regional Indicator Symbols (1f1e6 - 1f1ff)
 	 *   Combining Diacritical Marks Extended (1ab0 - 1aff)
 	 *   Combining Diacritical Marks Supplement (1dc0 - 1dff)
 	 *   Combining Diacritical Marks for Symbols (20d0 - 20ff) */
 
-	if ((n >= 0x0300 && n < 0x0370)
-	    || (n >= 0x1ab0 && n < 0x1b00) || (n >= 0x1dc0 && n < 0x1e00)
-	    || (n >= 0x20d0 && n < 0x2100) || (n >= 0xfe20 && n < 0xfe30)) {
+	if ((n >= 0xfe20 && n <= 0xfe2f) || (n >= 0x300 && n <= 0x36f)
+	    || (n >= 0x1f1e6 && n <= 0x1f1ff) || (n >= 0x1ab0 && n <= 0x1aff)
+	    || (n >= 0x01dc0 && n <= 0x01dff) || (n >= 0x20d0 && n <= 0x20ff)) {
 	
 		*Copy -= 1;
 		return 1;
@@ -354,7 +355,7 @@ static void GSM_EncodeSMS30MultiPartSMS(GSM_MultiPartSMSInfo *Info,
 }
 
 /* Alcatel docs from www.alcatel.com/wap/ahead */
-GSM_Error GSM_EncodeAlcatelMultiPartSMS(GSM_Debug_Info *di, GSM_MultiSMSMessage 	*SMS,
+GSM_Error GSM_EncodeAlcatelMultiPartSMS(GSM_Debug_Info *di, GSM_MultiSMSMessage *SMS,
 					unsigned char 		*Data,
 					size_t			Len,
 					unsigned char		*Name,
