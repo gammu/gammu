@@ -2085,13 +2085,16 @@ GSM_Error OBEXGEN_SetMemoryLUID(GSM_StateMachine *s, GSM_MemoryEntry *Entry, con
 	}
 
 	/* Store vCard */
-	return OBEXGEN_SetFile(s, path, Data, Size, Size == 0 ? Priv->PbCap.HD : FALSE);
+	error = OBEXGEN_SetFile(s, path, Data, Size, Size == 0 ? Priv->PbCap.HD : FALSE);;
+	free(path);
+	return error;
 }
 
 GSM_Error OBEXGEN_SetMemoryIndex(GSM_StateMachine *s, GSM_MemoryEntry *Entry, const char *Data, int Size)
 {
 	char		*path=NULL;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+	GSM_Error		error;
 
 	/* Forget entry if we're deleting */
 	if (Size == 0) {
@@ -2107,7 +2110,9 @@ GSM_Error OBEXGEN_SetMemoryIndex(GSM_StateMachine *s, GSM_MemoryEntry *Entry, co
 	smprintf(s, "Seting vCard %s\n", path);
 
 	/* Store vCard */
-	return OBEXGEN_SetFile(s, path, Data, Size, FALSE);
+	error = OBEXGEN_SetFile(s, path, Data, Size, FALSE);;
+	free(path);
+	return error;
 }
 
 GSM_Error OBEXGEN_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
@@ -2552,13 +2557,16 @@ GSM_Error OBEXGEN_SetCalendarLUID(GSM_StateMachine *s, GSM_CalendarEntry *Entry,
 	}
 
 	/* Store vCalendar */
-	return OBEXGEN_SetFile(s, path, Data, Size, Size == 0 ? Priv->CalCap.HD : FALSE);
+	error = OBEXGEN_SetFile(s, path, Data, Size, Size == 0 ? Priv->CalCap.HD : FALSE);;
+	free(path);
+	return error;
 }
 
 GSM_Error OBEXGEN_SetCalendarIndex(GSM_StateMachine *s, GSM_CalendarEntry *Entry, const char *Data, int Size)
 {
 	char		*path=NULL;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+	GSM_Error		error;
 
 	/* Forget entry if we're deleting */
 	if (Size == 0) {
@@ -2574,7 +2582,9 @@ GSM_Error OBEXGEN_SetCalendarIndex(GSM_StateMachine *s, GSM_CalendarEntry *Entry
 	smprintf(s, "Seting vCalendar %s\n", path);
 
 	/* Store vCalendar */
-	return OBEXGEN_SetFile(s, path, Data, Size, FALSE);
+	error = OBEXGEN_SetFile(s, path, Data, Size, FALSE);;
+	free(path);
+	return error;
 }
 
 GSM_Error OBEXGEN_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
@@ -2969,13 +2979,16 @@ GSM_Error OBEXGEN_SetTodoLUID(GSM_StateMachine *s, GSM_ToDoEntry *Entry, const c
 	}
 
 	/* Store vTodo */
-	return OBEXGEN_SetFile(s, path, Data, Size, Size == 0 ? Priv->CalCap.HD : FALSE);
+	error = OBEXGEN_SetFile(s, path, Data, Size, Size == 0 ? Priv->CalCap.HD : FALSE);;
+	free(path);
+	return error;
 }
 
 GSM_Error OBEXGEN_SetTodoIndex(GSM_StateMachine *s, GSM_ToDoEntry *Entry, const char *Data, int Size)
 {
 	char		*path=NULL;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+	GSM_Error		error;
 
 	/* Forget entry if we're deleting */
 	if (Size == 0) {
@@ -2991,7 +3004,9 @@ GSM_Error OBEXGEN_SetTodoIndex(GSM_StateMachine *s, GSM_ToDoEntry *Entry, const 
 	smprintf(s, "Seting vTodo %s\n", path);
 
 	/* Store vTodo */
-	return OBEXGEN_SetFile(s, path, Data, Size, FALSE);
+	error = OBEXGEN_SetFile(s, path, Data, Size, FALSE);;
+	free(path);
+	return error;
 }
 
 GSM_Error OBEXGEN_SetTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
@@ -3384,13 +3399,16 @@ GSM_Error OBEXGEN_SetNoteLUID(GSM_StateMachine *s, GSM_NoteEntry *Entry, const c
 	}
 
 	/* Store vCard */
-	return OBEXGEN_SetFile(s, path, Data, Size, Size == 0 ? Priv->NoteCap.HD : FALSE);
+	error = OBEXGEN_SetFile(s, path, Data, Size, Size == 0 ? Priv->NoteCap.HD : FALSE);;
+	free(path);
+	return error;
 }
 
 GSM_Error OBEXGEN_SetNoteIndex(GSM_StateMachine *s, GSM_NoteEntry *Entry, const char *Data, int Size)
 {
 	char		*path=NULL;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+	GSM_Error		error;
 
 	/* Forget entry if we're deleting */
 	if (Size == 0) {
@@ -3406,7 +3424,9 @@ GSM_Error OBEXGEN_SetNoteIndex(GSM_StateMachine *s, GSM_NoteEntry *Entry, const 
 	smprintf(s, "Seting vNote %s\n", path);
 
 	/* Store vCard */
-	return OBEXGEN_SetFile(s, path, Data, Size, FALSE);
+	error = OBEXGEN_SetFile(s, path, Data, Size, FALSE);;
+	free(path);
+	return error;
 }
 
 GSM_Error OBEXGEN_SetNote(GSM_StateMachine *s, GSM_NoteEntry *Entry)
