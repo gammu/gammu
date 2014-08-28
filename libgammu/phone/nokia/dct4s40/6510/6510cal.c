@@ -980,8 +980,9 @@ GSM_Error N6510_ReplyGetToDo2(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 	Date.Hour 	= msg->Buffer[38];
 	Date.Minute 	= msg->Buffer[39];
 	Date.Second	= 0;
+	Date.Timezone	= 0;
 	Last->Entries[1].EntryType = TODO_END_DATETIME;
-	memcpy(&Last->Entries[1].Date,&Date,sizeof(GSM_DateTime));
+	memcpy(&Last->Entries[1].Date, &Date, sizeof(GSM_DateTime));
 
 	smprintf(s,"StartTime: %04i-%02i-%02i %02i:%02i\n",
 		msg->Buffer[28]*256+msg->Buffer[29],
@@ -993,6 +994,7 @@ GSM_Error N6510_ReplyGetToDo2(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 	Date.Hour 	= msg->Buffer[32];
 	Date.Minute 	= msg->Buffer[33];
 	Date.Second	= 0;
+	Date.Timezone	= 0;
 
 	Last->EntriesNum = 2;
 
