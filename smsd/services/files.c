@@ -58,13 +58,15 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfi
 				sms->SMS[i].DateTime.Hour, sms->SMS[i].DateTime.Minute, sms->SMS[i].DateTime.Second, j, buffer2, i, ext);
 			strcpy(FullName, Config->inboxpath);
 			strcat(FullName, FileName);
-			if (file)
+			if (file) {
 				fclose(file);
+			}
 			file = fopen(FullName, "r");
 		} while ((i == 0) && file != NULL && (++j < 100));
 
 		if (file) {
 			fclose(file);
+			file = NULL;
 			if (i == 0) {
 				SMSD_Log(DEBUG_ERROR, Config, "Cannot save %s. No available file names", FileName);
 				return ERR_CANTOPENFILE;
@@ -127,6 +129,7 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfi
 						break;
 				}
 				fclose(file);
+				file = NULL;
 			}
 
 			if (error != ERR_NONE) {
@@ -138,6 +141,9 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfi
 	}
 	return ERR_NONE;
 fail:
+	if (file) {
+		fclose(file);
+	}
 	return ERR_WRITING_FILE;
 }
 
