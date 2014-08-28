@@ -1129,11 +1129,12 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 						out_i = va_arg(ap, int *);
 						length = ATGEN_GrabString(s, input_pos, &buffer);
 						*out_i = strtol(buffer, &endptr, 10);
-						free(buffer);
 						if (endptr == (char *)buffer) {
+							free(buffer);
 							error = ERR_UNKNOWNRESPONSE;
 							goto end;
 						}
+						free(buffer);
 						smprintf(s, "Parsed int %d\n", *out_i);
 						input_pos += length;
 						break;
