@@ -15,6 +15,6 @@ addons:
       name: "gammu/gammu"
       description: "Build submitted via Travis CI"
     notification_email: michal@cihar.com
-    build_command_prepend: "./configure; make clean"
-    build_command:   "make -j 4"
+    build_command_prepend: "mkdir coverity && cd coverity && cmake .."
+    build_command: "cd coverity && make"
     branch_pattern: master
