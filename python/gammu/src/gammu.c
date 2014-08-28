@@ -6023,6 +6023,9 @@ gammu_SaveRingtone(PyObject *self, PyObject *args, PyObject *kwds)
     } else if (strcmp(s, "ott") == 0) {
         GSM_SaveRingtoneOtt(f,&ringtone);
     } else {
+        if (closefile) {
+            fclose(f);
+        }
         PyErr_Format(PyExc_ValueError, "Bad value for format: '%s'", s);
         return NULL;
     }
