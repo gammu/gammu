@@ -1383,13 +1383,11 @@ gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config)
 
 					if (GetSMSData[GetSMSNumber] == NULL) {
 						SMSD_Log(DEBUG_ERROR, Config, "Failed to allocate memory");
-						if (GetSMSData != NULL) {
-							for (i = 0; GetSMSData[i] != NULL; i++) {
-								free(GetSMSData[i]);
-								GetSMSData[i] = NULL;
-							}
-							free(GetSMSData);
+						for (i = 0; GetSMSData[i] != NULL; i++) {
+							free(GetSMSData[i]);
+							GetSMSData[i] = NULL;
 						}
+						free(GetSMSData);
 						return FALSE;
 					}
 
