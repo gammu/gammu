@@ -9,3 +9,12 @@ script:
   - mkdir build && cd build && cmake .. -DCMAKE_C_COMPILER=$CC -DCOVERAGE=ON -DCMAKE_BUILD_TYPE=Continuous && make && make test
 after_success:
   - ./coveralls-upload
+addons:
+  coverity_scan:
+    project:
+      name: "gammu/gammu"
+      description: "Build submitted via Travis CI"
+    notification_email: michal@cihar.com
+    build_command_prepend: "./configure; make clean"
+    build_command:   "make -j 4"
+    branch_pattern: master
