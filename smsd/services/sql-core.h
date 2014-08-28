@@ -75,7 +75,7 @@ typedef union __sql_conn {
 	struct {
 		SQLHENV env;        /* Environment */
 		SQLHDBC dbc;        /* DBC */
-		char * retstr[SMSD_ODBC_MAX_RETURN_STRINGS];	    /* Retrun strings */
+		char * retstr[SMSD_ODBC_MAX_RETURN_STRINGS + 1];	    /* Return strings */
 	} odbc;
 #endif
 } SQL_conn;
