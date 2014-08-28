@@ -20,6 +20,6 @@ addons:
       name: "gammu/gammu"
       description: "Build submitted via Travis CI"
     notification_email: michal@cihar.com
-    build_command_prepend: "cmake .."
-    build_command: "make"
+    build_command_prepend: cmake ..
+    build_command: cmake --build .
     branch_pattern: coverity_scan
