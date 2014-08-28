@@ -153,7 +153,7 @@ typedef struct {
 	/**
 	 * For operator logos: Network operator code
 	 */
-	char NetworkCode[7];
+	char NetworkCode[10];
 	/**
 	 * For picture images: number of sender
 	 */
