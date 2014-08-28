@@ -9,9 +9,9 @@ before_script:
   - mkdir _build
   - cd _build
 script:
-  - cmake .. -DCMAKE_C_COMPILER=$CC -DCOVERAGE=ON -DCMAKE_BUILD_TYPE=Continuous
-  - make
-  - make test
+  - if [ ${COVERITY_SCAN_BRANCH} != 1 ] ; then cmake .. -DCMAKE_C_COMPILER=$CC -DCOVERAGE=ON -DCMAKE_BUILD_TYPE=Continuous ; fi
+  - if [ ${COVERITY_SCAN_BRANCH} != 1 ] ; then make ; fi
+  - if [ ${COVERITY_SCAN_BRANCH} != 1 ] ; then make test ; fi
 after_success:
   - ../coveralls-upload
 addons:
@@ -21,5 +21,5 @@ addons:
       description: "Build submitted via Travis CI"
     notification_email: michal@cihar.com
     build_command_prepend: cmake ..
-    build_command: cmake --build .
+    build_command: make
     branch_pattern: coverity_scan
