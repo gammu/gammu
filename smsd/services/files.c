@@ -511,13 +511,15 @@ static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDCo
 				1900 + timeinfo->tm_year, timeinfo->tm_mon + 1, timeinfo->tm_mday, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, buffer2, j, ext);
 			strcpy(FullName, Config->outboxpath);
 			strcat(FullName, FileName);
-			if (file)
+			if (file) {
 				fclose(file);
+			}
 			file = fopen(FullName, "r");
 		} while (file != NULL && (++j < 100));
 
 		if (file) {
 			fclose(file);
+			file = NULL;
 			if (i == 0) {
 				SMSD_Log(DEBUG_ERROR, Config, "Cannot save %s. No available file names", FileName);
 				return ERR_CANTOPENFILE;
@@ -566,6 +568,7 @@ static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDCo
 					break;
 			}
 			fclose(file);
+			file = NULL;
 		}
 
 		SMSD_Log(DEBUG_INFO, Config, "Created outbox message %s", FileName);
@@ -577,6 +580,9 @@ static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDCo
 
 	return ERR_NONE;
 fail:
+	if (file) {
+		fclose(file);
+	}
 	return ERR_WRITING_FILE;
 }
 
