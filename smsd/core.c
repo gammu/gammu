@@ -526,6 +526,7 @@ GSM_Error SMSD_LoadNumbersFile(GSM_SMSDConfig *Config, GSM_StringArray *Array, c
 			if (len == 0) continue;
 			/* Add line to array */
 			if (!GSM_StringArray_Add(Array, buffer)) {
+				fclose(listfd);
 				return ERR_MOREMEMORY;
 			}
 		}
