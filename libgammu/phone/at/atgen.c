@@ -524,6 +524,8 @@ GSM_Error ATGEN_EncodeText(GSM_StateMachine *s,
 			break;
   		case AT_CHARSET_IRA:
   		case AT_CHARSET_ASCII:
+			free(uname);
+			uname = NULL;
 			return ERR_NOTSUPPORTED;
   		case AT_CHARSET_UTF8:
   		case AT_CHARSET_UTF_8:
