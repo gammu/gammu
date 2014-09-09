@@ -12,12 +12,17 @@ code was based on Gnokii <http://www.gnokii.org> and later MyGnokii
 Currently the project is lead by Michal Cihar <michal@cihar.com> with
 help of many contributors.
 
-.. image:: https://travis-ci.org/gammu/gammu.png?branch=master
+.. image:: https://travis-ci.org/gammu/gammu.svg?branch=master
+    :alt: Build status
     :target: https://travis-ci.org/gammu/gammu
 
 .. image:: https://l10n.cihar.com/widgets/gammu-status-badge.png
     :alt: Translation status
     :target: https://l10n.cihar.com/engage/gammu/?utm_source=widget
+
+.. image:: https://scan.coverity.com/projects/2890/badge.svg?flat=1
+    :alt: Coverity scan
+    :target: https://scan.coverity.com/projects/2890
 
 More information
 ================
