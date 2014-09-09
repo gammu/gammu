@@ -308,10 +308,11 @@ GSM_Error lock_device(GSM_StateMachine *s, const char* port, char **lock_name)
 	}
 	sprintf(buffer, "%10ld gammu\n", (long)getpid());
 	wrotebytes = write(fd, buffer, strlen(buffer));
-	if (wrotebytes != strlen(buffer)) {
-		return ERR_WRITING_FILE;
-	}
 	close(fd);
+	if (wrotebytes != strlen(buffer)) {
+		error = ERR_WRITING_FILE;
+		goto failed;
+	}
 	*lock_name = lock_file;
 	return ERR_NONE;
 failread:
