@@ -25,6 +25,7 @@ ChangeLog
 [!] * Removed deprecated Python modules gammu.Data and gammu.Worker.
 [+] * Store network name and code in SMSD tables.
 [-] * Fixed build with recent clang compiler.
+[-] * Fixed several possible issues found by Coverity scan.
     
 20130529 - 1.33.00
 
