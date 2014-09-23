@@ -5610,7 +5610,7 @@ GSM_Error ATGEN_SetPower(GSM_StateMachine *s, gboolean on)
 	smprintf(s, "Set AT phone power %s\n", on ? "on" : "off");
 
 	/* Set power */
-	error = GSM_WaitForAutoLen(s, on ? "AT+CFUN=1\r" : "AT+CFUN=0\r", 0, 10, ID_SetPower);
+	error = GSM_WaitForAutoLen(s, on ? "AT+CFUN=1\r" : "AT+CFUN=4\r", 0, 10, ID_SetPower);
 
 	return error;
 }
