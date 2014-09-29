@@ -26,6 +26,7 @@ ChangeLog
 [+] * Store network name and code in SMSD tables.
 [-] * Fixed build with recent clang compiler.
 [-] * Fixed several possible issues found by Coverity scan.
+[-] * Fixed possible crash on SMSD startup.
     
 20130529 - 1.33.00
 
