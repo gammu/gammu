@@ -382,6 +382,16 @@ GSM_SMSDConfig *SMSD_NewConfig(const char *name)
 	Config->ServiceName = NULL;
 	Config->Service = NULL;
 
+#if defined(HAVE_MYSQL_MYSQL_H)
+	Config->conn.my = NULL;
+#endif
+#if defined(LIBDBI_FOUND)
+	Config->conn.dbi = NULL;
+#endif
+#if defined(HAVE_POSTGRESQL_LIBPQ_FE_H)
+	Config->conn.pg = NULL;
+#endif
+
 	/* Prepare lists */
 	GSM_StringArray_New(&(Config->IncludeNumbersList));
 	GSM_StringArray_New(&(Config->ExcludeNumbersList));
