@@ -25030,7 +25030,7 @@ msgstr ""
 
 #. type: Plain text
 #: docs/manual/project/localization.rst:42
-msgid "_translation server: http://l10n.cihar.com/projects/gammu/"
+msgid "_translation server: http://hosted.weblate.org/projects/gammu/"
 msgstr ""
 
 #. type: Plain text

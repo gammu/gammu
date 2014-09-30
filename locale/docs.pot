@@ -64,14 +64,14 @@ msgstr ""
 
 #. type: Plain text
 #: README.rst:19
-msgid "https://l10n.cihar.com/widgets/gammu-status-badge.png"
+msgid "https://hosted.weblate.org/widgets/gammu-status-badge.png"
 msgstr ""
 
 #. type: Plain text
 #: README.rst:21
 msgid ""
 ":alt: Translation status :target: "
-"https://l10n.cihar.com/engage/gammu/?utm_source=widget"
+"https://hosted.weblate.org/engage/gammu/?utm_source=widget"
 msgstr ""
 
 #. type: Plain text

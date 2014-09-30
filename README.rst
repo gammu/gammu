@@ -16,9 +16,9 @@ help of many contributors.
     :alt: Build status
     :target: https://travis-ci.org/gammu/gammu
 
-.. image:: https://l10n.cihar.com/widgets/gammu-status-badge.png
+.. image:: https://hosted.weblate.org/widgets/gammu-status-badge.png
     :alt: Translation status
-    :target: https://l10n.cihar.com/engage/gammu/?utm_source=widget
+    :target: https://hosted.weblate.org/engage/gammu/?utm_source=widget
 
 .. image:: https://scan.coverity.com/projects/2890/badge.svg?flat=1
     :alt: Coverity scan

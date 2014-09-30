@@ -28354,9 +28354,9 @@ msgstr ""
 #. type: Plain text
 #: docs/manual/project/localization.rst:42
 #, fuzzy
-msgid "_translation server: http://l10n.cihar.com/projects/gammu/"
+msgid "_translation server: http://hosted.weblate.org/projects/gammu/"
 msgstr ""
-".. _translation server: http://l10n.cihar.com/projects/gammu/ .. _Michal "
+".. _translation server: http://hosted.weblate.org/projects/gammu/ .. _Michal "
 "ÄihaÅ: mailto:michal@cihar.com"
 
 #. type: Plain text
