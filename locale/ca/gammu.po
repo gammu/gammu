@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2014-05-28 11:31+0200\n"
-"PO-Revision-Date: 2013-02-17 10:54+0200\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitoschido@gmail.com>\n"
-"Language-Team: Catalan <http://hosted.weblate.org/projects/gammu/gammu/ca/>\n"
+"PO-Revision-Date: 2014-10-01 22:46+0200\n"
+"Last-Translator: josep constanti <jconstanti@ovi.com>\n"
+"Language-Team: Catalan <https://hosted.weblate.org/projects/gammu/gammu/ca/>"
+"\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 1.5-dev\n"
+"X-Generator: Weblate 1.10-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -69,9 +70,8 @@ msgid "Error while writing file!\n"
 msgstr ""
 
 #: gammu/backup.c:194
-#, fuzzy
 msgid "Error while closing file!\n"
-msgstr "S'ha produït un error mentres s'estava desant la còpia de seguretat "
+msgstr "S'ha produït un error mentre s'estava tancant el fitxer\n"
 
 #: gammu/backup.c:241 gammu/backup.c:424 gammu/backup.c:496 gammu/backup.c:531
 #: gammu/backup.c:565 gammu/backup.c:633 gammu/backup.c:670 gammu/backup.c:707
@@ -464,9 +464,8 @@ msgid "Add phone ToDo?"
 msgstr ""
 
 #: gammu/backup.c:1774
-#, fuzzy
 msgid "Add notes to phone?"
-msgstr "S'està enviant l'arxiu al telèfon"
+msgstr "Afegim les anotacions al telèfon ?"
 
 #: gammu/backup.c:1797
 msgid "Add phone WAP bookmarks?"
@@ -521,10 +520,9 @@ msgid "Reminder (Date)"
 msgstr ""
 
 #: gammu/calendar.c:25
-#, fuzzy
 msgctxt "Calendar note type"
 msgid "Call"
-msgstr "Truca"
+msgstr "Trucada"
 
 #: gammu/calendar.c:28
 msgid "Meeting"
@@ -926,9 +924,8 @@ msgid "Start time"
 msgstr ""
 
 #: gammu/calendar.c:749
-#, fuzzy
 msgid "Completed time"
-msgstr "Completat"
+msgstr "Temps complert"
 
 #: gammu/calendar.c:754
 msgid "Completed"
@@ -1277,14 +1274,12 @@ msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1042 gammu/depend/nokia/dct4.c:1046
 #: gammu/depend/nokia/dct4.c:1047
-#, fuzzy
 msgid "K"
-msgstr "D'acord"
+msgstr "K"
 
 #: gammu/depend/nokia/dct4.c:1043
-#, fuzzy
 msgid "Headset interconnection:"
-msgstr "Connexió"
+msgstr "Connexió amb auriculars:"
 
 #: gammu/depend/nokia/dct4.c:1044
 #, fuzzy
