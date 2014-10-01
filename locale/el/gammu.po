@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2014-05-28 11:31+0200\n"
-"PO-Revision-Date: 2013-03-08 12:51+0200\n"
-"Last-Translator: Panagiotis Papazoglou <papaz_p@yahoo.com>\n"
-"Language-Team: Greek <http://hosted.weblate.org/projects/gammu/gammu/el/>\n"
+"PO-Revision-Date: 2014-10-01 13:01+0200\n"
+"Last-Translator: Efstathios Iosifidis <iefstathios@gmail.com>\n"
+"Language-Team: Greek <https://hosted.weblate.org/projects/gammu/gammu/el/>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 1.5-dev\n"
+"X-Generator: Weblate 1.10-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -66,7 +66,7 @@ msgstr ""
 
 #: gammu/backup.c:191 gammu/files.c:454 helper/message-cmdline.c:1110
 msgid "Error while writing file!\n"
-msgstr ""
+msgstr "Σφάλμα κατά την εγγραφή αρχείου!\n"
 
 #: gammu/backup.c:194
 msgid "Error while closing file!\n"
@@ -77,7 +77,7 @@ msgstr "Σφάλμα κατά το κλείσιμο αρχείου!\n"
 #: gammu/backup.c:744 gammu/backup.c:781 gammu/backup.c:819 gammu/backup.c:860
 #: gammu/backup.c:894 gammu/backup.c:931 gammu/message.c:426
 msgid "Reading"
-msgstr ""
+msgstr "Ανάγνωση"
 
 #: gammu/backup.c:247 gammu/backup.c:292
 msgid "Only part of data saved, please increase the limit."
@@ -85,7 +85,7 @@ msgstr ""
 
 #: gammu/backup.c:268 gammu/backup.c:310 gammu/backup.c:475 gammu/mms.c:182
 msgid "Reading:"
-msgstr ""
+msgstr "Ανάγνωση:"
 
 #: gammu/backup.c:269 gammu/backup.c:311 gammu/backup.c:476
 #: gammu/backup.c:1045 gammu/backup.c:1120 gammu/backup.c:1173
@@ -99,14 +99,14 @@ msgstr ""
 #: gammu/misc.c:659 gammu/misc.c:664 gammu/misc.c:1376 gammu/mms.c:183
 #, c-format
 msgid "%i percent"
-msgstr ""
+msgstr "%i τοις εκατό"
 
 #: gammu/backup.c:367 gammu/backup.c:1026 gammu/backup.c:1645
 #: gammu/calendar.c:632 gammu/calendar.c:885 gammu/calendar.c:960
 #: gammu/calendar.c:985 gammu/memory.c:24 gammu/memory.c:312
 #: gammu/memory.c:376 gammu/message.c:133 gammu/misc.c:205 gammu/misc.c:606
 msgid "Press Ctrl+C to break..."
-msgstr ""
+msgstr "Πατήστε Ctrl+C για διακοπή..."
 
 #: gammu/backup.c:372
 msgid "Use Unicode subformat of backup file?"
@@ -114,7 +114,7 @@ msgstr ""
 
 #: gammu/backup.c:404
 msgid "Checking phone phonebook"
-msgstr ""
+msgstr "Έλεγχος καταλόγου τηλεφώνου"
 
 #: gammu/backup.c:405
 msgid "Backup phone phonebook?"
@@ -122,7 +122,7 @@ msgstr ""
 
 #: gammu/backup.c:409
 msgid "Checking SIM phonebook"
-msgstr ""
+msgstr "Έλεγχος καταλόγου SIM"
 
 #: gammu/backup.c:410
 msgid "Backup SIM phonebook?"
@@ -130,7 +130,7 @@ msgstr ""
 
 #: gammu/backup.c:415
 msgid "Checking phone calendar"
-msgstr ""
+msgstr "Έλεγχος ημερολογίου τηλεφώνου"
 
 #: gammu/backup.c:419
 msgid "Backup phone calendar notes?"
@@ -154,11 +154,11 @@ msgstr ""
 
 #: gammu/backup.c:487
 msgid "Checking phone notes"
-msgstr ""
+msgstr "Έλεγχος σημειώσεων τηλεφώνου"
 
 #: gammu/backup.c:491
 msgid "Backup phone notes?"
-msgstr ""
+msgstr "Αντίγραφο ασφαλείας σημειώσεων τηλεφώνου;"
 
 #: gammu/backup.c:522
 msgid "Checking phone caller logos"
