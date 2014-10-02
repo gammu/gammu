@@ -2216,7 +2216,7 @@ static GSM_Error N6110_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *N
                                         req[22]++;              /* one additional char */
                                         req[current++] = 0x01;  /* we use now subset 1 */
                                         for (i=0;i<((int)UnicodeLength(Note->Entries[Text].Text));i++) {
-						j = EncodeWithUTF8Alphabet(Note->Entries[Text].Text[i*2],Note->Entries[Text].Text[i*2+1],req+current);
+						j = EncodeWithUTF8Alphabet(Note->Entries[Text].Text[i*2]*256+Note->Entries[Text].Text[i*2+1],req+current);
 						if (j > 1) {
                                                         req[23]= 0x03; /* use subset 3         */
                                                         req[22]+=j-1;  /* few additional chars */

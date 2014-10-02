@@ -1463,12 +1463,10 @@ void StringToDouble(char *text, double *d)
 }
 
 /* When char can be converted, convert it from Unicode to UTF8 */
-int EncodeWithUTF8Alphabet(unsigned char mychar1, unsigned char mychar2, char *ret)
+int EncodeWithUTF8Alphabet(unsigned long src, char *ret)
 {
-	unsigned long src = mychar1 * 256 + mychar2;
-
 	if (src < 0x80) {
-		ret[0] = mychar2;
+		ret[0] = src;
 		return 1;
 	} else if (src < 0x800) {
 		ret[0] = 192 + (src / 64);
@@ -1502,8 +1500,7 @@ int EncodeWithUTF8Alphabet(unsigned char mychar1, unsigned char mychar2, char *r
 		return 6;
 	}
 
-	/* Unicode 0000-007F -> UTF8 0xxxxxxx */
-	ret[0] = mychar2;
+	ret[0] = src;
 	return 1;
 }
 
@@ -1517,7 +1514,7 @@ gboolean EncodeUTF8QuotedPrintable(char *dest, const unsigned char *src)
 	len = UnicodeLength(src);
 
 	for (i = 0; i < len; i++) {
-		z = EncodeWithUTF8Alphabet(src[i * 2], src[i * 2 + 1], mychar);
+		z = EncodeWithUTF8Alphabet(src[i * 2] * 256 + src[i * 2 + 1], mychar);
 		if (z == 1 && mychar[0] < 32) {
 			/* Need quoted printable for chars < 32 */
 			sprintf(dest + j, "=%02X", mychar[0]);
@@ -1550,7 +1547,7 @@ gboolean EncodeUTF8(char *dest, const unsigned char *src)
 	len = (int)UnicodeLength(src);
 
 	for (i = 0; i < len; i++) {
-		z = EncodeWithUTF8Alphabet(src[i * 2], src[i * 2 + 1], mychar);
+		z = EncodeWithUTF8Alphabet(src[i * 2] * 256 + src[i * 2 + 1], mychar);
 		memcpy(dest + j, mychar, z);
 		j += z;
 		if (z > 1) {
@@ -1718,7 +1715,7 @@ void DecodeXMLUTF8(unsigned char *dest, const char *src, int len)
 			}
 			dbgprintf(NULL, "Unicode char 0x%04lx\n", c);
 			tmplen = strlen(tmp);
-			tmplen += EncodeWithUTF8Alphabet((c >> 8) & 0xff, c & 0xff, tmp + tmplen);
+			tmplen += EncodeWithUTF8Alphabet(c, tmp + tmplen);
 			tmp[tmplen] = 0;
 		} else if (strcmp(entity, "amp") == 0) {
 			strcat(tmp, "&");
