@@ -1543,11 +1543,20 @@ gboolean EncodeUTF8(char *dest, const unsigned char *src)
 	unsigned char	mychar[8];
 	gboolean		retval = FALSE;
 	int len;
+	unsigned long value, second;
 
 	len = (int)UnicodeLength(src);
 
 	for (i = 0; i < len; i++) {
-		z = EncodeWithUTF8Alphabet(src[i * 2] * 256 + src[i * 2 + 1], mychar);
+		value = src[i * 2] * 256 + src[i * 2 + 1];
+		/* Decode UTF-16 */
+		if (value >= 0xD800 && value <= 0xDBFF && (i + 1) < len) {
+			second = src[(i + 1) * 2] * 256 + src[(i + 1) * 2 + 1];
+			if (second >= 0xDC00 && second <= 0xDFFF) {
+				value = ((value - 0xD800) << 10) + (second - 0xDC00) + 0x010000;
+			}
+		}
+		z = EncodeWithUTF8Alphabet(value, mychar);
 		memcpy(dest + j, mychar, z);
 		j += z;
 		if (z > 1) {
