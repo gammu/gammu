@@ -1465,7 +1465,7 @@ void StringToDouble(char *text, double *d)
 /* When char can be converted, convert it from Unicode to UTF8 */
 int EncodeWithUTF8Alphabet(unsigned char mychar1, unsigned char mychar2, char *ret)
 {
-	int src = mychar1 * 256 + mychar2;
+	unsigned long src = mychar1 * 256 + mychar2;
 
 	if (src < 0x80) {
 		ret[0] = mychar2;
@@ -1492,7 +1492,7 @@ int EncodeWithUTF8Alphabet(unsigned char mychar1, unsigned char mychar2, char *r
 		ret[3] = 128 + ((src / 64) % 64);
 		ret[4] = 128 + (src % 64);
 		return 5;
-	} else if (src < 0x80000000) {
+	} else if (src < 0x80000000L) {
 		ret[0] = 252 + (src / (64 * 64 * 64 * 64 * 64));
 		ret[1] = 128 + ((src / (64 * 64 * 64 * 64)) % 64);
 		ret[2] = 128 + ((src / (64 * 64 * 64)) % 64);
