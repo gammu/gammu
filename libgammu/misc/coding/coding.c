@@ -1520,7 +1520,7 @@ gboolean EncodeUTF8QuotedPrintable(char *dest, const unsigned char *src)
 		z = EncodeWithUTF8Alphabet(src[i * 2], src[i * 2 + 1], mychar);
 		if (z == 1 && mychar[0] < 32) {
 			/* Need quoted printable for chars < 32 */
-			sprintf(dest + j, "=%02X", src[i * 2] * 256 + src[ i *2 + 1]);
+			sprintf(dest + j, "=%02X", mychar[0]);
 			j = j + 3;
 		} else {
 			/* Quoted printable unicode */
