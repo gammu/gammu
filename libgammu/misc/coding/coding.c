@@ -1465,16 +1465,16 @@ void StringToDouble(char *text, double *d)
 /* When char can be converted, convert it from Unicode to UTF8 */
 int EncodeWithUTF8Alphabet(unsigned char mychar1, unsigned char mychar2, char *ret)
 {
-	int src = mychar1*256+mychar2;
+	int src = mychar1 * 256 + mychar2;
 
 	/* Unicode 0080-07FF -> UTF8 110xxxxx 10xxxxxx */
-	if (src >=128 && src <=2047) {
+	if (src >= 128 && src <= 2047) {
 		ret[0] = 192 + (src / 64);
 		ret[1] = 128 + (src % 64);
 		return 2;
 	}
 	/* Unicode 0800-FFFF -> UTF8 1110xxxx 10xxxxxx 10xxxxxx */
-	if (src >2047) {
+	if (src > 2047) {
 		ret[0] = 224 + (src / 4096);
 		ret[1] = 128 + ((src / 64) % 64);
 		ret[2] = 128 + (src % 64);
@@ -1522,18 +1522,21 @@ gboolean EncodeUTF8(char *dest, const unsigned char *src)
 	int		i,j=0,z;
 	unsigned char	mychar[3];
 	gboolean		retval = FALSE;
+	int len;
 
-	for (i = 0; i < (int)(UnicodeLength(src)); i++) {
-		z = EncodeWithUTF8Alphabet(src[i*2],src[i*2+1],mychar);
-		if (z>1) {
-			memcpy(dest+j,mychar,z);
-			j+=z;
+	len = (int)UnicodeLength(src);
+
+	for (i = 0; i < len; i++) {
+		z = EncodeWithUTF8Alphabet(src[i * 2], src[i * 2 + 1], mychar);
+		if (z > 1) {
+			memcpy(dest + j, mychar, z);
+			j += z;
 			retval = TRUE;
 		} else {
-			j+= DecodeWithUnicodeAlphabet(((wchar_t)(src[i*2]*256+src[i*2+1])), dest + j);
+			j += DecodeWithUnicodeAlphabet(((wchar_t)(src[i * 2] * 256 + src[i * 2 + 1])), dest + j);
 	    	}
 	}
-	dest[j]=0;
+	dest[j] = 0;
 	return retval;
 }
 
