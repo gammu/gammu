@@ -1518,23 +1518,22 @@ gboolean EncodeUTF8QuotedPrintable(char *dest, const unsigned char *src)
 
 	for (i = 0; i < len; i++) {
 		z = EncodeWithUTF8Alphabet(src[i*2],src[i*2+1],mychar);
-		if (z>1) {
-			for (w=0;w<z;w++) {
-				sprintf(dest+j, "=%02X",mychar[w]);
-				j = j+3;
-			}
-			retval  = TRUE;
+		if (z == 1 && mychar[0] < 32) {
+			/* Need quoted printable for chars < 32 */
+			sprintf(dest + j, "=%02X", src[i * 2] * 256 + src[ i *2 + 1]);
+			j = j + 3;
 		} else {
-			/* Encode low ASCII chars */
-			if (src[i*2]*256 + src[i*2+1] < 32) {
-				sprintf(dest+j, "=%02X", src[i*2]*256+src[i*2+1]);
-				j = j+3;
-			} else {
-				j += DecodeWithUnicodeAlphabet(((wchar_t)(src[i*2]*256+src[i*2+1])), dest + j);
+			/* Quoted printable unicode */
+			for (w = 0; w < z; w++) {
+				sprintf(dest + j, "=%02X", mychar[w]);
+				j = j + 3;
+			}
+			if (z > 1) {
+				retval = TRUE;
 			}
 	    	}
 	}
-	dest[j]=0;
+	dest[j] = 0;
 	return retval;
 }
 
@@ -1549,13 +1548,11 @@ gboolean EncodeUTF8(char *dest, const unsigned char *src)
 
 	for (i = 0; i < len; i++) {
 		z = EncodeWithUTF8Alphabet(src[i * 2], src[i * 2 + 1], mychar);
+		memcpy(dest + j, mychar, z);
+		j += z;
 		if (z > 1) {
-			memcpy(dest + j, mychar, z);
-			j += z;
 			retval = TRUE;
-		} else {
-			j += DecodeWithUnicodeAlphabet(((wchar_t)(src[i * 2] * 256 + src[i * 2 + 1])), dest + j);
-	    	}
+		}
 	}
 	dest[j] = 0;
 	return retval;
