@@ -9,15 +9,15 @@ msgstr ""
 "Project-Id-Version: Gammu 1.33.90\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2014-05-28 11:31+0200\n"
-"PO-Revision-Date: 2013-08-06 13:14+0200\n"
+"PO-Revision-Date: 2014-10-02 09:35+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
-"Language-Team: Czech <http://hosted.weblate.org/projects/gammu/gammu/cs/>\n"
+"Language-Team: Czech <https://hosted.weblate.org/projects/gammu/gammu/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 1.7-dev\n"
+"X-Generator: Weblate 1.10-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -3056,9 +3056,9 @@ msgid "What format of output ringtone file (\"%s\") ?\n"
 msgstr "V jakém formátu se má vyzvánění uložit (\"%s\") ?\n"
 
 #: gammu/misc.c:1825
-#, fuzzy, c-format
+#, c-format
 msgid "What type of power do you want (\"%s\") ?\n"
-msgstr "Který typ resetu chcete provést (\"%s\") ?\n"
+msgstr "Který typ napájení chcete provést (\"%s\") ?\n"
 
 #: gammu/misc.c:1845
 #, c-format
