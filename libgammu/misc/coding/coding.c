@@ -1539,13 +1539,12 @@ gboolean EncodeUTF8QuotedPrintable(char *dest, const unsigned char *src)
 
 gboolean EncodeUTF8(char *dest, const unsigned char *src)
 {
-	int		i,j=0,z;
+	size_t i, j=0, z, len;
 	unsigned char	mychar[8];
 	gboolean		retval = FALSE;
-	int len;
 	unsigned long value, second;
 
-	len = (int)UnicodeLength(src);
+	len = UnicodeLength(src);
 
 	for (i = 0; i < len; i++) {
 		value = src[i * 2] * 256 + src[i * 2 + 1];
