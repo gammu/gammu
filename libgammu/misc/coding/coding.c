@@ -1522,6 +1522,9 @@ gboolean EncodeUTF8QuotedPrintable(char *dest, const unsigned char *src)
 			/* Need quoted printable for chars < 32 */
 			sprintf(dest + j, "=%02X", mychar[0]);
 			j = j + 3;
+		} else if (z == 1) {
+			memcpy(dest + j, mychar, z);
+			j += z;
 		} else {
 			/* Quoted printable unicode */
 			for (w = 0; w < z; w++) {
