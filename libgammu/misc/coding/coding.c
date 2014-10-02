@@ -1475,7 +1475,7 @@ int EncodeWithUTF8Alphabet(unsigned char mychar1, unsigned char mychar2, char *r
 		ret[1] = 128 + (src % 64);
 		return 2;
 	} else if (src < 0x1000) {
-		ret[1] = 224 + (src / (64 * 64);
+		ret[1] = 224 + (src / (64 * 64));
 		ret[1] = 128 + ((src / 64) % 64);
 		ret[2] = 128 + (src % 64);
 		return 3;
