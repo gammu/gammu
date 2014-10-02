@@ -1463,7 +1463,7 @@ void StringToDouble(char *text, double *d)
 }
 
 /* When char can be converted, convert it from Unicode to UTF8 */
-int EncodeWithUTF8Alphabet(unsigned long src, char *ret)
+int EncodeWithUTF8Alphabet(unsigned long src, unsigned char *ret)
 {
 	if (src < 0x80) {
 		ret[0] = src;

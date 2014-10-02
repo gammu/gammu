@@ -92,7 +92,7 @@ void DecodeUTF8QuotedPrintable(unsigned char *dest, const char *src,
  *
  * \ingroup Unicode
  */
-int EncodeWithUTF8Alphabet(unsigned long src, char *ret);
+int EncodeWithUTF8Alphabet(unsigned long src, unsigned char *ret);
 /**
  * Decodes string from UTF-8.
  *
