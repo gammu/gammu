@@ -1465,20 +1465,41 @@ void StringToDouble(char *text, double *d)
 /* When char can be converted, convert it from Unicode to UTF8 */
 int EncodeWithUTF8Alphabet(unsigned char mychar1, unsigned char mychar2, char *ret)
 {
-	int src = mychar1*256+mychar2;
+	int src = mychar1 * 256 + mychar2;
 
-	/* Unicode 0080-07FF -> UTF8 110xxxxx 10xxxxxx */
-	if (src >=128 && src <=2047) {
+	if (src < 0x80) {
+		ret[0] = mychar2;
+		return 1;
+	} else if (src < 0x800) {
 		ret[0] = 192 + (src / 64);
 		ret[1] = 128 + (src % 64);
 		return 2;
-	}
-	/* Unicode 0800-FFFF -> UTF8 1110xxxx 10xxxxxx 10xxxxxx */
-	if (src >2047) {
-		ret[0] = 224 + (src / 4096);
+	} else if (src < 0x1000) {
+		ret[1] = 224 + (src / (64 * 64);
 		ret[1] = 128 + ((src / 64) % 64);
 		ret[2] = 128 + (src % 64);
 		return 3;
+	} else if (src < 0x20000) {
+		ret[0] = 240 + (src / (64 * 64 * 64));
+		ret[1] = 128 + ((src / (64 * 64)) % 64);
+		ret[2] = 128 + ((src / 64) % 64);
+		ret[3] = 128 + (src % 64);
+		return 4;
+	} else if (src < 0x400000) {
+		ret[0] = 248 + (src / (64 * 64 * 64 * 64));
+		ret[1] = 128 + ((src / (64 * 64 * 64)) % 64);
+		ret[2] = 128 + ((src / (64 * 64)) % 64);
+		ret[3] = 128 + ((src / 64) % 64);
+		ret[4] = 128 + (src % 64);
+		return 5;
+	} else if (src < 0x80000000) {
+		ret[0] = 252 + (src / (64 * 64 * 64 * 64 * 64));
+		ret[1] = 128 + ((src / (64 * 64 * 64 * 64)) % 64);
+		ret[2] = 128 + ((src / (64 * 64 * 64)) % 64);
+		ret[3] = 128 + ((src / (64 * 64)) % 64);
+		ret[4] = 128 + ((src / 64) % 64);
+		ret[5] = 128 + (src % 64);
+		return 6;
 	}
 
 	/* Unicode 0000-007F -> UTF8 0xxxxxxx */
@@ -1490,50 +1511,50 @@ int EncodeWithUTF8Alphabet(unsigned char mychar1, unsigned char mychar2, char *r
 gboolean EncodeUTF8QuotedPrintable(char *dest, const unsigned char *src)
 {
 	int		i,j=0,z,w;
-	unsigned char	mychar[3];
+	unsigned char	mychar[8];
 	gboolean		retval = FALSE;
 	int len;
 	len = UnicodeLength(src);
 
 	for (i = 0; i < len; i++) {
 		z = EncodeWithUTF8Alphabet(src[i*2],src[i*2+1],mychar);
-		if (z>1) {
-			for (w=0;w<z;w++) {
-				sprintf(dest+j, "=%02X",mychar[w]);
-				j = j+3;
-			}
-			retval  = TRUE;
+		if (z == 1 && mychar[0] < 32) {
+			/* Need quoted printable for chars < 32 */
+			sprintf(dest + j, "=%02X", src[i * 2] * 256 + src[ i *2 + 1]);
+			j = j + 3;
 		} else {
-			/* Encode low ASCII chars */
-			if (src[i*2]*256 + src[i*2+1] < 32) {
-				sprintf(dest+j, "=%02X", src[i*2]*256+src[i*2+1]);
-				j = j+3;
-			} else {
-				j += DecodeWithUnicodeAlphabet(((wchar_t)(src[i*2]*256+src[i*2+1])), dest + j);
+			/* Quoted printable unicode */
+			for (w = 0; w < z; w++) {
+				sprintf(dest + j, "=%02X", mychar[w]);
+				j = j + 3;
+			}
+			if (z > 1) {
+				retval = TRUE;
 			}
 	    	}
 	}
-	dest[j]=0;
+	dest[j] = 0;
 	return retval;
 }
 
 gboolean EncodeUTF8(char *dest, const unsigned char *src)
 {
 	int		i,j=0,z;
-	unsigned char	mychar[3];
+	unsigned char	mychar[8];
 	gboolean		retval = FALSE;
+	int len;
 
-	for (i = 0; i < (int)(UnicodeLength(src)); i++) {
-		z = EncodeWithUTF8Alphabet(src[i*2],src[i*2+1],mychar);
-		if (z>1) {
-			memcpy(dest+j,mychar,z);
-			j+=z;
+	len = (int)UnicodeLength(src);
+
+	for (i = 0; i < len; i++) {
+		z = EncodeWithUTF8Alphabet(src[i * 2], src[i * 2 + 1], mychar);
+		memcpy(dest + j, mychar, z);
+		j += z;
+		if (z > 1) {
 			retval = TRUE;
-		} else {
-			j+= DecodeWithUnicodeAlphabet(((wchar_t)(src[i*2]*256+src[i*2+1])), dest + j);
-	    	}
+		}
 	}
-	dest[j]=0;
+	dest[j] = 0;
 	return retval;
 }
 
@@ -1647,7 +1668,7 @@ void DecodeXMLUTF8(unsigned char *dest, const char *src, int len)
 	int tmplen;
 
 	/* Allocate buffer */
-	tmp = (char *)calloc(len + 1, sizeof(char));
+	tmp = (char *)calloc(2 * len, sizeof(char));
 	if (tmp == NULL) {
 		/* We have no memory for XML decoding */
 		DecodeUTF8(dest, src, len);
