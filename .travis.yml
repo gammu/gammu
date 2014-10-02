@@ -13,7 +13,7 @@ script:
   - if [ ${COVERITY_SCAN_BRANCH} != 1 ] ; then make ; fi
   - if [ ${COVERITY_SCAN_BRANCH} != 1 ] ; then make test ; fi
 after_success:
-  - ../coveralls-upload
+  - ./coveralls-upload
 addons:
   coverity_scan:
     project:
