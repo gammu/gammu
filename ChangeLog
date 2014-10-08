@@ -28,6 +28,7 @@ ChangeLog
 [-] * Fixed several possible issues found by Coverity scan.
 [-] * Fixed possible crash on SMSD startup.
 [-] * Fixed decoding unicode SMS messages.
+[-] * Added identification for several Nokia phones.
     
 
 20130529 - 1.33.00
