@@ -8,16 +8,17 @@ msgstr ""
 "Project-Id-Version: Gammu 1.33.90\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2014-05-28 11:31+0200\n"
-"PO-Revision-Date: 2013-11-17 01:33+0200\n"
-"Last-Translator: Nikolay Marepa <nikolasar2013@ya.ru>\n"
-"Language-Team: Russian <http://hosted.weblate.org/projects/gammu/gammu/ru/>\n"
+"PO-Revision-Date: 2014-10-08 14:27+0200\n"
+"Last-Translator: Alexey Rubinov <orion1979@yandex.ru>\n"
+"Language-Team: Russian <https://hosted.weblate.org/projects/gammu/gammu/ru/>"
+"\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 1.9-dev\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
+"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 1.10-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -106,9 +107,9 @@ msgstr "Чтение"
 #: gammu/backup.c:1761 gammu/backup.c:1783 gammu/backup.c:1807
 #: gammu/backupsms.c:108 gammu/files.c:386 gammu/files.c:604 gammu/misc.c:107
 #: gammu/misc.c:659 gammu/misc.c:664 gammu/misc.c:1376 gammu/mms.c:183
-#, fuzzy, c-format
+#, c-format
 msgid "%i percent"
-msgstr "%c  %i процент"
+msgstr "%i процента(ов)"
 
 #: gammu/backup.c:367 gammu/backup.c:1026 gammu/backup.c:1645
 #: gammu/calendar.c:632 gammu/calendar.c:885 gammu/calendar.c:960
@@ -118,46 +119,40 @@ msgid "Press Ctrl+C to break..."
 msgstr "Чтобы прервать, нажмите Ctrl+C..."
 
 #: gammu/backup.c:372
-#, fuzzy
 msgid "Use Unicode subformat of backup file?"
-msgstr "Используйте юникодовый формат файла с резервной копией"
+msgstr "Использовать юникод для создания файла резервной копии?"
 
 #: gammu/backup.c:404
 msgid "Checking phone phonebook"
 msgstr "Проверяется телефонная книга телефона"
 
 #: gammu/backup.c:405
-#, fuzzy
 msgid "Backup phone phonebook?"
-msgstr "   Выполняется резервное копирование телефонной книги телефона"
+msgstr "Выполнить резервное копирование телефонной книги телефона?"
 
 #: gammu/backup.c:409
 msgid "Checking SIM phonebook"
 msgstr "Проверяется телефонная книга SIM-карты"
 
 #: gammu/backup.c:410
-#, fuzzy
 msgid "Backup SIM phonebook?"
-msgstr "   Выполняется резервное копирование телефонной книги SIM-карты"
+msgstr "Выполнить резервное копирование телефонной книги SIM-карты?"
 
 #: gammu/backup.c:415
 msgid "Checking phone calendar"
 msgstr "Проверяется календарь телефона"
 
 #: gammu/backup.c:419
-#, fuzzy
 msgid "Backup phone calendar notes?"
-msgstr "   Выполняется резервное копирование заметок из календаря телефона"
+msgstr "Выполнить резервное копирование заметок из календаря телефона?"
 
 #: gammu/backup.c:432 gammu/backup.c:467 gammu/backup.c:504 gammu/backup.c:541
 #: gammu/backup.c:576 gammu/backup.c:642 gammu/backup.c:679 gammu/backup.c:716
 #: gammu/backup.c:753 gammu/backup.c:789 gammu/backup.c:829 gammu/backup.c:871
 #: gammu/backup.c:905 gammu/backup.c:942
-#, fuzzy, c-format
+#, c-format
 msgid "Only part of data saved, please increase %s."
-msgstr ""
-"\n"
-"   Сохранена только часть данных - увеличьте %s"
+msgstr "Сохранена только часть данных - пожалуйста, увеличьте %s."
 
 #: gammu/backup.c:450
 #, fuzzy
@@ -165,138 +160,121 @@ msgid "Checking phone todos"
 msgstr "Проверяется список заданий телефона"
 
 #: gammu/backup.c:453
-#, fuzzy
 msgid "Backup phone todos?"
-msgstr "   Выполняется резервное копирование списка заданий телефона"
+msgstr "Выполнить резервное копирование списка заданий телефона?"
 
 #: gammu/backup.c:487
 msgid "Checking phone notes"
 msgstr "Проверяются заметки телефона"
 
 #: gammu/backup.c:491
-#, fuzzy
 msgid "Backup phone notes?"
-msgstr "   Выполняется резервное копирование заметок телефона"
+msgstr "Выполнить резервное копирование заметок телефона?"
 
 #: gammu/backup.c:522
 msgid "Checking phone caller logos"
 msgstr "Проверяются логотипы абонентов в телефоне"
 
 #: gammu/backup.c:527
-#, fuzzy
 msgid "Backup phone caller groups and logos?"
-msgstr ""
-"   Выполняется резервное копирование групп и логотипов абонентов в телефоне"
+msgstr "Выполнить резервное копирование групп и логотипов абонентов в телефоне?"
 
 #: gammu/backup.c:560
 msgid "Checking SIM SMS profiles"
 msgstr "Проверяются SMS-профили SIM-карты"
 
 #: gammu/backup.c:561
-#, fuzzy
 msgid "Backup SIM SMS profiles?"
-msgstr "   Выполняется резервное копирование SMS-профилей SIM-карты"
+msgstr "Выполнить резервное копирование SMS-профилей SIM-карты?"
 
 #: gammu/backup.c:589
 msgid "Checking phone startup text"
 msgstr "Проверяется текст приветствия телефона"
 
 #: gammu/backup.c:593
-#, fuzzy
 msgid "Backup phone startup logo/text?"
-msgstr "Выполняется резервное копирование текста приветствия телефона"
+msgstr "Выполнить резервное копирование текста приветствия телефона?"
 
 #: gammu/backup.c:608
 msgid "Checking phone operator logo"
 msgstr "Проверяется логотип оператора телефона"
 
 #: gammu/backup.c:613
-#, fuzzy
 msgid "Backup phone operator logo?"
-msgstr "   Выполняется резервное копирование логотипа оператора телефона"
+msgstr "Выполнить резервное копирование логотипа оператора телефона?"
 
 #: gammu/backup.c:624
 msgid "Checking phone WAP bookmarks"
 msgstr "Проверяются WAP-закладки телефона"
 
 #: gammu/backup.c:628
-#, fuzzy
 msgid "Backup phone WAP bookmarks?"
-msgstr "   Выполняется резервное копирование WAP-закладок телефона"
+msgstr "Выполнить резервное копирование WAP-закладок телефона?"
 
 #: gammu/backup.c:661
 msgid "Checking phone WAP settings"
 msgstr "Проверяются настройки WAP телефона"
 
 #: gammu/backup.c:665
-#, fuzzy
 msgid "Backup phone WAP settings?"
-msgstr "   Выполняется резервное копирование настроек WAP телефона"
+msgstr "Выполнить резервное копирование настроек WAP телефона?"
 
 #: gammu/backup.c:698
 msgid "Checking phone MMS settings"
 msgstr "Проверяются настройки MMS телефона"
 
 #: gammu/backup.c:702
-#, fuzzy
 msgid "Backup phone MMS settings?"
-msgstr "   Выполняется резервное копирование настроек MMS телефона"
+msgstr "Выполнить резервное копирование настроек MMS телефона?"
 
 #: gammu/backup.c:735
 msgid "Checking phone Chat settings"
 msgstr "Проверяются настройки чата телефона"
 
 #: gammu/backup.c:739
-#, fuzzy
 msgid "Backup phone Chat settings?"
-msgstr "Выполняется резервное копирование настроек чата телефона"
+msgstr "Выполнить резервное копирование настроек чата телефона?"
 
 #: gammu/backup.c:772
 msgid "Checking phone SyncML settings"
 msgstr "Проверяются настройки синхронизации телефона"
 
 #: gammu/backup.c:776
-#, fuzzy
 msgid "Backup phone SyncML settings?"
-msgstr "   Выполняется резервное копирование настроек синхронизации телефона"
+msgstr "Выполнить резервное копирование настроек синхронизации телефона?"
 
 #: gammu/backup.c:808
 msgid "Checking phone user ringtones"
 msgstr "Проверяются пользовательские мелодии звонков телефона"
 
 #: gammu/backup.c:813
-#, fuzzy
 msgid "Backup phone user ringtones?"
 msgstr ""
-"   Выполняется резервное копирование пользовательских мелодий звонков "
-"телефона"
+"Выполнить резервное копирование пользовательских мелодий звонков телефона?"
 
 #: gammu/backup.c:851
 msgid "Checking phone profiles"
 msgstr "Проверяются режимы телефона"
 
 #: gammu/backup.c:855
-#, fuzzy
 msgid "Backup phone profiles?"
-msgstr "   Выполняется резервное копирование режимов телефона"
+msgstr "Выполнить резервное копирование профилей телефона?"
 
 #: gammu/backup.c:884
 msgid "Checking phone FM radio stations"
 msgstr "Проверяются FM-радиостанции телефона"
 
 #: gammu/backup.c:888
-#, fuzzy
 msgid "Backup phone FM radio stations?"
-msgstr "   Выполняется резервное копирование FM-радиостанций телефона"
+msgstr "Выполнить резервное копирование FM-радиостанций телефона?"
 
 #: gammu/backup.c:921
 msgid "Checking phone GPRS access points"
 msgstr "Проверяются точки доступа GPRS телефона"
 
 #: gammu/backup.c:925
-#, fuzzy
 msgid "Backup phone GPRS access points?"
-msgstr "   Выполняется резервное копирование точек доступа GPRS телефона"
+msgstr "Выполнить резервное копирование точек доступа GPRS телефона?"
 
 #: gammu/backup.c:971
 msgid "Time of backup"
@@ -315,9 +293,11 @@ msgid "File created by"
 msgstr "Файл создан"
 
 #: gammu/backup.c:984
-#, fuzzy, c-format
+#, c-format
 msgid "Checksum in backup file do not match (original: %s, new: %s). Continue?"
-msgstr "Неверная контрольная сумма файла резервной копии. Продолжить"
+msgstr ""
+"Неверная контрольная сумма файла резервной копии (контрольное значение: %s, "
+"новое значение: %s). Продолжить?"
 
 #: gammu/backup.c:1022
 msgid ""
