@@ -8,22 +8,22 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2014-05-28 11:31+0200\n"
-"PO-Revision-Date: 2012-08-27 11:41+0200\n"
-"Last-Translator: Michal Čihař <michal@cihar.com>\n"
-"Language-Team: Korean <http://hosted.weblate.org/projects/gammu/gammu/ko/>\n"
+"PO-Revision-Date: 2014-11-01 04:11+0200\n"
+"Last-Translator: 권 조 <chobkwon@gmail.com>\n"
+"Language-Team: Korean <https://hosted.weblate.org/projects/gammu/gammu/ko/>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 1.2\n"
+"X-Generator: Weblate 2.0-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
 #: helper/message-cmdline.c:441 helper/message-cmdline.c:478
 #: helper/message-cmdline.c:501
 msgid "Where is backup filename and location?"
-msgstr "백업파일이 어디에 있습니까?"
+msgstr "백업 파일일과 위치는 어디에 있습니까?"
 
 #: gammu/backup.c:63 helper/message-cmdline.c:489
 msgid "Calendar note not found in file"
@@ -31,62 +31,61 @@ msgstr "달력 노트를 파일에서 찾을 수 없습니다"
 
 #: gammu/backup.c:86
 msgid "WAP bookmark not found in file"
-msgstr ""
+msgstr "WAP 북마크를 파일에서 찾을 수 없습니다"
 
 #: gammu/backup.c:107
 msgid "Note not found in file"
-msgstr ""
+msgstr "노트를 파일에서 찾을 수 없습니다"
 
 #: gammu/backup.c:128
 msgid "Todo note not found in file"
-msgstr ""
+msgstr "해야할 노트를 파일에서 찾을 수 없습니다"
 
 #: gammu/backup.c:137 helper/message-cmdline.c:525
 msgid "Where is backup filename and location and memory type?"
-msgstr ""
+msgstr "백업 파일 이름 및 위치는 어디에 잇습니까? 그리고 메모리 종류는?"
 
 #: gammu/backup.c:150 gammu/backup.c:161 helper/message-cmdline.c:537
 #: helper/message-cmdline.c:547
 msgid "Phonebook entry not found in file"
-msgstr ""
+msgstr "전화 번호부 항목을 파일에서 찾을 수 없습니다"
 
 #: gammu/backup.c:167 helper/message-cmdline.c:552
 #, c-format
 msgid "Unknown memory type: \"%s\"\n"
-msgstr ""
+msgstr "알 수 없는 메모리 유형: \"%s\"\n"
 
 #: gammu/backup.c:181
 #, c-format
 msgid "Unknown backup format: \"%s\"\n"
-msgstr ""
+msgstr "알 수 없는 백업 형식: \"%s\"\n"
 
 #: gammu/backup.c:187
 msgid "Error while opening file for writing!\n"
-msgstr ""
+msgstr "쓰기 위해 파일을 여는 동안 오류가 발생 했습니다!\n"
 
 #: gammu/backup.c:191 gammu/files.c:454 helper/message-cmdline.c:1110
 msgid "Error while writing file!\n"
-msgstr ""
+msgstr "파일을 쓰는 동안 오류가 발생 했습니다!\n"
 
 #: gammu/backup.c:194
-#, fuzzy
 msgid "Error while closing file!\n"
-msgstr "백업 저장 중 오류"
+msgstr "파일을 닫는 동안 오류가 발생 했습니다!\n"
 
 #: gammu/backup.c:241 gammu/backup.c:424 gammu/backup.c:496 gammu/backup.c:531
 #: gammu/backup.c:565 gammu/backup.c:633 gammu/backup.c:670 gammu/backup.c:707
 #: gammu/backup.c:744 gammu/backup.c:781 gammu/backup.c:819 gammu/backup.c:860
 #: gammu/backup.c:894 gammu/backup.c:931 gammu/message.c:426
 msgid "Reading"
-msgstr ""
+msgstr "읽기"
 
 #: gammu/backup.c:247 gammu/backup.c:292
 msgid "Only part of data saved, please increase the limit."
-msgstr ""
+msgstr "저장된 데이터의 일부만, 한계를 증가 하십시오."
 
 #: gammu/backup.c:268 gammu/backup.c:310 gammu/backup.c:475 gammu/mms.c:182
 msgid "Reading:"
-msgstr ""
+msgstr "읽기"
 
 #: gammu/backup.c:269 gammu/backup.c:311 gammu/backup.c:476
 #: gammu/backup.c:1045 gammu/backup.c:1120 gammu/backup.c:1173
@@ -100,42 +99,42 @@ msgstr ""
 #: gammu/misc.c:659 gammu/misc.c:664 gammu/misc.c:1376 gammu/mms.c:183
 #, c-format
 msgid "%i percent"
-msgstr ""
+msgstr "%i 퍼센트"
 
 #: gammu/backup.c:367 gammu/backup.c:1026 gammu/backup.c:1645
 #: gammu/calendar.c:632 gammu/calendar.c:885 gammu/calendar.c:960
 #: gammu/calendar.c:985 gammu/memory.c:24 gammu/memory.c:312
 #: gammu/memory.c:376 gammu/message.c:133 gammu/misc.c:205 gammu/misc.c:606
 msgid "Press Ctrl+C to break..."
-msgstr ""
+msgstr "Ctrl + C를 눌러 휴식..."
 
 #: gammu/backup.c:372
 msgid "Use Unicode subformat of backup file?"
-msgstr ""
+msgstr "백업 파일의 유니코드 하위형식을 사용할까요?"
 
 #: gammu/backup.c:404
 msgid "Checking phone phonebook"
-msgstr ""
+msgstr "전화 번호부를 확인"
 
 #: gammu/backup.c:405
 msgid "Backup phone phonebook?"
-msgstr ""
+msgstr "전화 번호부를 백업할까요?"
 
 #: gammu/backup.c:409
 msgid "Checking SIM phonebook"
-msgstr ""
+msgstr "SIM 전화번호부를 확인"
 
 #: gammu/backup.c:410
 msgid "Backup SIM phonebook?"
-msgstr ""
+msgstr "SIM 전화번호부를 백업할까요?"
 
 #: gammu/backup.c:415
 msgid "Checking phone calendar"
-msgstr ""
+msgstr "휴대 전화 캘린더 확인"
 
 #: gammu/backup.c:419
 msgid "Backup phone calendar notes?"
-msgstr ""
+msgstr "휴대 전화 캘린더 노트를 백업할까요?"
 
 #: gammu/backup.c:432 gammu/backup.c:467 gammu/backup.c:504 gammu/backup.c:541
 #: gammu/backup.c:576 gammu/backup.c:642 gammu/backup.c:679 gammu/backup.c:716
@@ -143,31 +142,31 @@ msgstr ""
 #: gammu/backup.c:905 gammu/backup.c:942
 #, c-format
 msgid "Only part of data saved, please increase %s."
-msgstr ""
+msgstr "저장된 데이터의 일부만, %s를 증가 하십시오."
 
 #: gammu/backup.c:450
 msgid "Checking phone todos"
-msgstr ""
+msgstr "휴대 전화 해야할 일 확인"
 
 #: gammu/backup.c:453
 msgid "Backup phone todos?"
-msgstr ""
+msgstr "휴대 전화 해야할 일 백업할까요?"
 
 #: gammu/backup.c:487
 msgid "Checking phone notes"
-msgstr ""
+msgstr "휴대 전화 노트 확인"
 
 #: gammu/backup.c:491
 msgid "Backup phone notes?"
-msgstr ""
+msgstr "휴대 전화 노트를 백업할까요?"
 
 #: gammu/backup.c:522
 msgid "Checking phone caller logos"
-msgstr ""
+msgstr "휴대전화 발신자 로고 확인"
 
 #: gammu/backup.c:527
 msgid "Backup phone caller groups and logos?"
-msgstr ""
+msgstr "전화 발신자 그룹 및 로고를 백업할까요?"
 
 #: gammu/backup.c:560
 msgid "Checking SIM SMS profiles"
