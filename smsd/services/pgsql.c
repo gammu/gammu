@@ -2,7 +2,7 @@
 /* Copyright (c) 2009 - 2011 Michal Cihar <michal@cihar.com> */
 
 #define _XOPEN_SOURCE
-#define _BSD_SOURCE
+#define _DEFAULT_SOURCE
 #include <time.h>
 
 #include <gammu.h>

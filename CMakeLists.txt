@@ -467,6 +467,7 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_MINGW OR
     #
     # Warnings related flags
     #
+    MACRO_TUNE_COMPILER("-O2")
     MACRO_TUNE_COMPILER("-Wall")
     MACRO_TUNE_COMPILER("-Werror-implicit-function-declaration")
     MACRO_TUNE_COMPILER("-Wno-deprecated-declarations")
