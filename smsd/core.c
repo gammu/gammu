@@ -255,6 +255,13 @@ void SMSD_Log(SMSD_DebugLevel level, GSM_SMSDConfig *Config, const char *format,
 	vsprintf(Buffer,format, argp);
 	va_end(argp);
 
+	if (level != DEBUG_ERROR &&
+			level != DEBUG_INFO &&
+			(level & Config->debug_level) == 0) {
+		return;
+	}
+
+
 	switch (Config->log_type) {
 		case SMSD_LOG_EVENTLOG:
 #ifdef HAVE_WINDOWS_EVENT_LOG
@@ -281,12 +288,6 @@ void SMSD_Log(SMSD_DebugLevel level, GSM_SMSDConfig *Config, const char *format,
 #endif
 			break;
 		case SMSD_LOG_FILE:
-			if (level != DEBUG_ERROR &&
-					level != DEBUG_INFO &&
-					(level & Config->debug_level) == 0) {
-				return;
-			}
-
 			GSM_GetCurrentDateTime(&date_time);
 
 			if (Config->use_timestamps) {
