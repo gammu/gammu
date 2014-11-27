@@ -5,7 +5,9 @@
 
 #ifdef HAVE_STRPTIME
 #define _XOPEN_SOURCE
+#ifndef _BSD_SOURCE
 #define _BSD_SOURCE
+#endif
 #include <time.h>
 #else
 #include <time.h>

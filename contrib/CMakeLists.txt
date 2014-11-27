@@ -94,7 +94,7 @@ endif (INSTALL_BASH_COMPLETION)
 if (INSTALL_SYSTEMD)
     install (
         FILES init/gammu-smsd.service
-        DESTINATION "/lib/system/system"
+        DESTINATION "/lib/systemd/system"
         COMPONENT "systemd"
     )
 endif (INSTALL_SYSTEMD)
