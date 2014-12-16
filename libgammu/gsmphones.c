@@ -452,6 +452,7 @@ GSM_PhoneModel allmodels[] = {
 	{"ME45" ,	  "3618" ,	  "",				   {0}},
 	{"S55" ,	  "S55" ,	  "",				   {0}},
 	{"S65" ,	  "S65" ,	  "SIEMENS S65",		   {F_SIEMENS_PBK, 0}},
+	{"C72" ,	  "C72" ,	  "SIEMENS C72",		   {F_SIEMENS_PBK, 0}},
 	{"S68",		  "S68",	  "",				   {F_OBEX,F_SQWE, 0}},
 	{"MC75" ,	  "MC75",	  "",				   {F_NO_ATOBEX, 0}},
 	{"AX75",	  "AX75",	  "SIEMENS AX75",		   {F_SIEMENS_PBK, 0}},
