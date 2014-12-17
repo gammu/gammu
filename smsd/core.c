@@ -250,7 +250,7 @@ void SMSD_Log(SMSD_DebugLevel level, GSM_SMSDConfig *Config, const char *format,
 	char 		Buffer[65535];
 	va_list		argp;
 #ifdef HAVE_SYSLOG
-        int priority;
+	int priority;
 #endif
 
 	va_start(argp, format);
@@ -1816,27 +1816,27 @@ GSM_Error SMSD_FreeSharedMemory(GSM_SMSDConfig *Config, gboolean writable)
 /** handle incoming calls: hang up.
  */
 void SMSD_IncomingCallCallback(GSM_StateMachine *s, GSM_Call *call, void *user_data) {
-       GSM_SMSDConfig *Config = user_data;
-       switch (call->Status) {
-       case GSM_CALL_IncomingCall: {
-               time_t now = time(NULL);
-               SMSD_Log(DEBUG_INFO, Config, "Incoming call! # avail? %d %s\n", call->CallIDAvailable, DecodeUnicodeString(call->PhoneNumber) );
-               if ( now - lastRing > 5 ) {
-                       // avoid multiple hangups.
-                       SMSD_Log(DEBUG_INFO, Config, "Incoming call! # hanging up @%ld %ld.\n", now, lastRing);
-                       lastRing = now;
-                       GSM_CancelCall(s, 0, TRUE);
-               }
-               break;
-       }
-       case  GSM_CALL_CallRemoteEnd:
-       case GSM_CALL_CallLocalEnd:
-               SMSD_Log(DEBUG_INFO, Config, "Call ended(%d).\n", call->Status );
-               lastRing = 0;
-               break;
-       default:
-               SMSD_Log(DEBUG_INFO, Config, "Call callback: Unknown status %d\n", call->Status);
-       }
+	GSM_SMSDConfig *Config = user_data;
+	switch (call->Status) {
+	case GSM_CALL_IncomingCall: {
+		time_t now = time(NULL);
+		SMSD_Log(DEBUG_INFO, Config, "Incoming call! # avail? %d %s\n", call->CallIDAvailable, DecodeUnicodeString(call->PhoneNumber) );
+		if ( now - lastRing > 5 ) {
+			// avoid multiple hangups.
+			SMSD_Log(DEBUG_INFO, Config, "Incoming call! # hanging up @%ld %ld.\n", now, lastRing);
+			lastRing = now;
+			GSM_CancelCall(s, 0, TRUE);
+		}
+		break;
+	}
+	case  GSM_CALL_CallRemoteEnd:
+	case GSM_CALL_CallLocalEnd:
+		SMSD_Log(DEBUG_INFO, Config, "Call ended(%d).\n", call->Status );
+		lastRing = 0;
+		break;
+	default:
+		SMSD_Log(DEBUG_INFO, Config, "Call callback: Unknown status %d\n", call->Status);
+	}
 }
 /**
  * Main loop which takes care of connection to phone and processing of
