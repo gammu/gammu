@@ -592,8 +592,8 @@ void Monitor(int argc, char *argv[])
 	GSM_ToDoStatus		ToDoStatus;
 	GSM_CalendarStatus	CalendarStatus;
 	GSM_NetworkInfo		NetInfo;
-    	GSM_BatteryCharge   	BatteryCharge;
-    	GSM_SignalQuality   	SignalQuality;
+	GSM_BatteryCharge   	BatteryCharge;
+	GSM_SignalQuality   	SignalQuality;
 	GSM_Error		error;
 	int 			count = -1;
 
@@ -646,25 +646,25 @@ void Monitor(int argc, char *argv[])
 		CHECK_EXIT;
 		if ( (error = GSM_GetBatteryCharge(gsm,&BatteryCharge)) == ERR_NONE) {
 			PrintBatteryCharge(&BatteryCharge);
-        	}
+		}
 		CHECK_EXIT;
 		if ( (error = GSM_GetSignalQuality(gsm,&SignalQuality)) == ERR_NONE) {
-            		if (SignalQuality.SignalStrength != -1) {
+			if (SignalQuality.SignalStrength != -1) {
 				printf(LISTFORMAT, _("Signal strength"));
 				printf(_("%i dBm"), SignalQuality.SignalStrength);
-                		printf("\n");
+				printf("\n");
 			}
-            		if (SignalQuality.SignalPercent  != -1) {
+			if (SignalQuality.SignalPercent  != -1) {
 				printf(LISTFORMAT, _("Network level"));
 				printf(_("%i percent"), SignalQuality.SignalPercent);
-                		printf("\n");
+				printf("\n");
 			}
-            		if (SignalQuality.BitErrorRate   != -1) {
+			if (SignalQuality.BitErrorRate   != -1) {
 				printf(LISTFORMAT, _("Bit error rate"));
 				printf(_("%i percent"), SignalQuality.BitErrorRate);
-                		printf("\n");
+				printf("\n");
 			}
-        	}
+		}
 		CHECK_EXIT;
 		if ( (error = GSM_GetSMSStatus(gsm,&SMSStatus)) == ERR_NONE) {
 			if (SMSStatus.SIMSize > 0) {
@@ -1090,7 +1090,7 @@ void GetBitmap(int argc, char *argv[])
 
 			error = GSM_GetFilePart(gsm,&File,&Handle,&Size);
 
-		    	if (error != ERR_EMPTY && error != ERR_WRONGCRC) Print_Error(error);
+			if (error != ERR_EMPTY && error != ERR_WRONGCRC) Print_Error(error);
 			error = ERR_NONE;
 
 			printf(LISTFORMAT "\"%s\" ", _("Ringtone"), DecodeUnicodeString(File.Name));
@@ -1557,7 +1557,7 @@ void DisplayConnectionSettings(GSM_MultiWAPSettings *settings,int j)
 		}
 		if (settings->Settings[j].IsISDNCall) {
 			printf(LISTFORMAT "%s\n", _("Data call type"), _("ISDN"));
-              	} else {
+		} else {
 			printf(LISTFORMAT "%s\n", _("Data call type"), _("Analogue"));
 		}
 		switch (settings->Settings[j].Speed) {
@@ -1866,11 +1866,11 @@ void GetAllCategories(int argc UNUSED, char *argv[])
 	GSM_Error error;
 
 	if (strcasecmp(argv[2],"TODO") == 0) {
-        	Category.Type 	= Category_ToDo;
-        	Status.Type 	= Category_ToDo;
+		Category.Type 	= Category_ToDo;
+		Status.Type 	= Category_ToDo;
 	} else if (strcasecmp(argv[2],"PHONEBOOK") == 0) {
 	        Category.Type 	= Category_Phonebook;
-        	Status.Type 	= Category_Phonebook;
+		Status.Type 	= Category_Phonebook;
 	} else {
 		printf(_("What type of categories do you want to get (\"%s\") ?\n"),argv[2]);
 		Terminate(2);
@@ -1883,7 +1883,7 @@ void GetAllCategories(int argc UNUSED, char *argv[])
 
 	for (count=0,j=1;count<Status.Used;j++)
 	{
-    		Category.Location=j;
+		Category.Location=j;
 		error=GSM_GetCategory(gsm, &Category);
 
 		if (error != ERR_EMPTY) {
@@ -1893,7 +1893,7 @@ void GetAllCategories(int argc UNUSED, char *argv[])
 
 			printf(LISTFORMAT "\"%s\"\n\n", _("Name"),DecodeUnicodeConsole(Category.Name));
 			count++;
-    		}
+		}
 	}
 
 	GSM_Terminate();
@@ -1906,9 +1906,9 @@ void GetCategory(int argc, char *argv[])
 	GSM_Error error;
 
 	if (strcasecmp(argv[2],"TODO") == 0) {
-    		Category.Type = Category_ToDo;
+		Category.Type = Category_ToDo;
 	} else if (strcasecmp(argv[2],"PHONEBOOK") == 0) {
-    		Category.Type = Category_Phonebook;
+		Category.Type = Category_Phonebook;
 	} else {
 		printf(_("What type of categories do you want to get (\"%s\") ?\n"),argv[2]);
 		Terminate(2);
@@ -1920,7 +1920,7 @@ void GetCategory(int argc, char *argv[])
 
 	for (j=start;j<=stop;j++)
 	{
-    		printf(LISTFORMAT "%i\n", _("Location"),j);
+		printf(LISTFORMAT "%i\n", _("Location"),j);
 
 		Category.Location=j;
 
@@ -1930,8 +1930,8 @@ void GetCategory(int argc, char *argv[])
 		if (error == ERR_EMPTY) {
 			printf("%s\n", _("Entry is empty"));
 		} else {
-        		printf(LISTFORMAT "\"%s\"\n\n", _("Name"),DecodeUnicodeConsole(Category.Name));
-    		}
+			printf(LISTFORMAT "\"%s\"\n\n", _("Name"),DecodeUnicodeConsole(Category.Name));
+		}
 	}
 
 	GSM_Terminate();
@@ -1944,9 +1944,9 @@ void AddCategory(int argc UNUSED, char *argv[])
 	GSM_Error error;
 
 	if (strcasecmp(argv[2],"TODO") == 0) {
-    		Category.Type = Category_ToDo;
+		Category.Type = Category_ToDo;
 	} else if (strcasecmp(argv[2],"PHONEBOOK") == 0) {
-    		Category.Type = Category_Phonebook;
+		Category.Type = Category_Phonebook;
 	} else {
 		printf(_("What type of category do you want to add (\"%s\") ?\n"),argv[2]);
 		Terminate(2);
