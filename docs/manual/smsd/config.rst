@@ -217,6 +217,12 @@ General parameters of SMS daemon
 
     Default is 1 (enabled).
 
+.. config:option:: HangupCalls
+
+    Whether to automatically hangup any incoming calls.
+
+    Default is 0 (disabled).
+
 .. config:option:: CheckBattery
 
     Whether to check phone battery state periodically.
