@@ -1825,7 +1825,11 @@ void SMSD_IncomingCallCallback(GSM_StateMachine *s, GSM_Call *call, void *user_d
 			// avoid multiple hangups.
 			SMSD_Log(DEBUG_INFO, Config, "Incoming call! # hanging up @%ld %ld.\n", now, lastRing);
 			lastRing = now;
-			GSM_CancelCall(s, 0, TRUE);
+			if (call->CallIDAvailable) {
+				GSM_CancelCall(s, call->CallID, TRUE);
+			} else {
+				GSM_CancelCall(s, 0, TRUE);
+			}
 		}
 		break;
 	}
