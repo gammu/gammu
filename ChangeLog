@@ -31,6 +31,7 @@ ChangeLog
 [-] * Added identification for several Nokia phones.
 [-] * Fixed compilation issues on various platforms.
 [-] * SMSD now honors loglevel for all logging targets.
+[+] * SMSD can automatically hangup incoming calls.
     
 
 20130529 - 1.33.00
