@@ -117,6 +117,12 @@ Device connection parameters
     DKU-2 and DKU-5 cables on Windows, where the device is automatically detected
     from driver information and this parameters is ignored.
 
+    .. note::
+
+        Some USB modems expose several interfaces, in such cases Gammu works best
+        with "User" one, you can find more information on
+        <http://www.dd-wrt.com/wiki/index.php/Mobile_Broadband>.
+
     For **USB** connections (currently only fbususb and dku2 on Linux), you can
     specify to which USB device Gammu should connect. You can either provide
     vendor/product IDs or device address on USB::
