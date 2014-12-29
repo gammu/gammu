@@ -105,6 +105,7 @@ if (INSTALL_LSB_INIT)
         DESTINATION "/etc/init.d"
         RENAME "gammu-smsd"
         COMPONENT "initscript"
+        PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
         )
 else (INSTALL_LSB_INIT)
     message (STATUS "Init script not being installed, install it by -DINSTALL_LSB_INIT=ON")
