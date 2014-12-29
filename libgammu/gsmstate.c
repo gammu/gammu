@@ -1115,7 +1115,7 @@ GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 	}
 
 	if (disp) {
-		smprintf(s,". If you can, please report it (see <http://wammu.eu/support/bugs/>). Thank you\n");
+		smprintf(s,". Please report the error, see <http://wammu.eu/support/bugs/>. Thank you\n");
 		if (Phone->SentMsg != NULL) {
 			smprintf(s,"LAST SENT frame ");
 			smprintf(s, "type 0x%02X/length %ld", Phone->SentMsg->Type, (long)Phone->SentMsg->Length);
