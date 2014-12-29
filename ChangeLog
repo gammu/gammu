@@ -32,7 +32,9 @@ ChangeLog
 [-] * Fixed compilation issues on various platforms.
 [-] * SMSD now honors loglevel for all logging targets.
 [+] * SMSD can automatically hangup incoming calls.
+[-] * Correctly detect Network errors.
     
+
 
 20130529 - 1.33.00
 

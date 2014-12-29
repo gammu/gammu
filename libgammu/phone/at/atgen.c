@@ -335,6 +335,10 @@ GSM_Error ATGEN_HandleCMEError(GSM_StateMachine *s)
 		case 26:
 		case 27:
 			return ERR_INVALIDDATA;
+		case 30:
+		case 31:
+		case 32:
+			return ERR_NETWORK_ERROR;
 		default:
 			return ERR_UNKNOWN;
 	}
@@ -359,6 +363,16 @@ GSM_Error ATGEN_HandleCMSError(GSM_StateMachine *s)
 		case 300:
 		case 320:
 			return ERR_PHONE_INTERNAL;
+		case 38:
+		case 41:
+		case 42:
+		case 47:
+		case 111:
+		case 331:
+		case 332:
+		case 615:
+		case 616:
+			return ERR_NETWORK_ERROR;
 		case 304:
 			return ERR_NOTSUPPORTED;
 		case 305:

@@ -153,6 +153,7 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{ERR_ABORTED, "ABORTED", N_("Operation aborted.")},
 	{ERR_INSTALL_NOT_FOUND, "INSTALL_NOT_FOUND", N_("Installation data not found, please consult debug log and/or documentation for more details.")},
 	{ERR_READ_ONLY, "READ_ONLY", N_("Entry is read only.")},
+	{ERR_NETWORK_ERROR, "NETWORK_ERROR", N_("Network error.")},
 
 	{0,	"",				""}
 };

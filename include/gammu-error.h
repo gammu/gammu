@@ -319,6 +319,10 @@ typedef enum {
 	 * Entry is read only.
 	 */
 	ERR_READ_ONLY,
+	/**
+	 * Network error.
+	 */
+	ERR_NETWORK_ERROR,
 
 	/**
 	 * Just marker of highest error code, should not be used.
