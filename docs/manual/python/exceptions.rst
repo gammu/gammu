@@ -147,3 +147,11 @@
     :show-inheritance:
 .. autoexception:: gammu.ERR_GETTING_SMSC
     :show-inheritance:
+.. autoexception:: gammu.ERR_ABORTED
+    :show-inheritance:
+.. autoexception:: gammu.ERR_INSTALL_NOT_FOUND
+    :show-inheritance:
+.. autoexception:: gammu.ERR_READ_ONLY
+    :show-inheritance:
+.. autoexception:: gammu.ERR_NETWORK_ERROR
+    :show-inheritance:
