@@ -19,7 +19,7 @@ the issue.
 ChangeLog
 =========
     
-20141229 - 1.34.0
+20141230 - 1.34.0
 
 [+] * Add phone power ON/OFF function.
 [!] * Removed deprecated Python modules gammu.Data and gammu.Worker.
