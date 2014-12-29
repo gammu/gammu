@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMURC" "5" "May 28, 2014" "1.33.90" "Gammu"
+.TH "GAMMURC" "5" "December 29, 2014" "1.34.0" "Gammu"
 .SH NAME
 gammurc \- gammu(1) configuration file
 .
@@ -175,6 +175,15 @@ For \fBcables\fP or emulated serial ports, you enter device name (for example
 \fB/dev/cuad0\fP on FreeBSD or \fBCOM1:\fP on Windows). The special exception are
 DKU\-2 and DKU\-5 cables on Windows, where the device is automatically detected
 from driver information and this parameters is ignored.
+.sp
+\fBNOTE:\fP
+.INDENT 7.0
+.INDENT 3.5
+Some USB modems expose several interfaces, in such cases Gammu works best
+with "User" one, you can find more information on
+<\fI\%http://www.dd\-wrt.com/wiki/index.php/Mobile_Broadband\fP>.
+.UNINDENT
+.UNINDENT
 .sp
 For \fBUSB\fP connections (currently only fbususb and dku2 on Linux), you can
 specify to which USB device Gammu should connect. You can either provide
