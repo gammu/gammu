@@ -309,6 +309,7 @@ mkdir build-dir
 cd build-dir
 cmake ../ \
     -DBUILD_SHARED_LIBS=ON \
+    -DINSTALL_LSB_INIT=ON \
     -DBUILD_PYTHON=/usr/bin/python \
     -DCMAKE_INSTALL_PREFIX=%_prefix \
     -DINSTALL_DOC_DIR=%gammu_docdir \
