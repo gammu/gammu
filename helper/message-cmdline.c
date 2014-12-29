@@ -1437,7 +1437,10 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 
 		PhoneSMSC.Location = SMSCSet;
 		error = GSM_GetSMSC(sm, &PhoneSMSC);
-		if (error != ERR_NONE) goto end_compose;
+		if (error != ERR_NONE) {
+			error = ERR_GETTING_SMSC;
+			goto end_compose;
+		}
 
 		CopyUnicodeString(SMSC, PhoneSMSC.Number);
 		SMSCSet = 0;
