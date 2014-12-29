@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu-docs 1.33.90\n"
+"Project-Id-Version: Gammu-docs 1.34.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2014-02-16 12:25+0100\n"
+"POT-Creation-Date: 2014-12-29 11:51+0100\n"
 "PO-Revision-Date: 2011-06-02 23:02+0200\n"
 "Last-Translator: Andrei Falbot <falbot@gmail.com>\n"
 "Language-Team: none\n"
@@ -56,28 +56,32 @@ msgstr ""
 "ajuda de vários contribuidores."
 
 #. type: Labeled list
-#: README.rst:15 README.rst:18 README.rst:22
+#: README.rst:15 README.rst:19 README.rst:23
 #, no-wrap
 msgid ".. image"
 msgstr ".. image"
 
 #. type: Plain text
 #: README.rst:16
-msgid "https://travis-ci.org/gammu/gammu.png?branch=master"
+#, fuzzy
+#| msgid "https://travis-ci.org/gammu/gammu.png?branch=master"
+msgid "https://travis-ci.org/gammu/gammu.svg?branch=master"
 msgstr "https://travis-ci.org/gammu/gammu.png?branch=master"
 
 #. type: Plain text
-#: README.rst:17
-msgid ":target: https://travis-ci.org/gammu/gammu"
+#: README.rst:18
+#, fuzzy
+#| msgid ":target: https://travis-ci.org/gammu/gammu"
+msgid ":alt: Build status :target: https://travis-ci.org/gammu/gammu"
 msgstr ":target: https://travis-ci.org/gammu/gammu"
 
 #. type: Plain text
-#: README.rst:19
+#: README.rst:20
 msgid "https://hosted.weblate.org/widgets/gammu-status-badge.png"
 msgstr "https://hosted.weblate.org/widgets/gammu-status-badge.png"
 
 #. type: Plain text
-#: README.rst:21
+#: README.rst:22
 msgid ""
 ":alt: Translation status :target: https://hosted.weblate.org/engage/gammu/?"
 "utm_source=widget"
@@ -86,13 +90,15 @@ msgstr ""
 "utm_source=widget"
 
 #. type: Plain text
-#: README.rst:23
-msgid "https://d2weczhvl823v0.cloudfront.net/gammu/gammu/trend.png"
-msgstr "https://d2weczhvl823v0.cloudfront.net/gammu/gammu/trend.png"
+#: README.rst:24
+msgid "https://scan.coverity.com/projects/2890/badge.svg?flat=1"
+msgstr ""
 
 #. type: Plain text
-#: README.rst:25
-msgid ":alt: Bitdeli badge :target: https://bitdeli.com/free"
+#: README.rst:26
+#, fuzzy
+#| msgid ":alt: Bitdeli badge :target: https://bitdeli.com/free"
+msgid ":alt: Coverity scan :target: https://scan.coverity.com/projects/2890"
 msgstr ":alt: Bitdeli badge :target: https://bitdeli.com/free"
 
 #. type: Title =
@@ -159,6 +165,9 @@ msgid ""
 msgstr ""
 "Veja docs/manual/project/install.rst para guia de instalação ou veja o "
 "capítulo \"Compilando Gammu\" no manual do Gammu."
+
+#~ msgid "https://d2weczhvl823v0.cloudfront.net/gammu/gammu/trend.png"
+#~ msgstr "https://d2weczhvl823v0.cloudfront.net/gammu/gammu/trend.png"
 
 #~ msgid "_gammurc:"
 #~ msgstr "I<~/.gammurc>"

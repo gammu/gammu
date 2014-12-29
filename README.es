@@ -12,16 +12,15 @@ MyGnokii2.
 Actualmente el proyecto es liderado por Michal Cihar <michal@cihar.com> con
 la ayuda de muchos contribuyentes.
 
-.. image:: https://travis-ci.org/gammu/gammu.png?branch=master
-    :target: https://travis-ci.org/gammu/gammu
+.. image:: https://travis-ci.org/gammu/gammu.svg?branch=master
+    :alt: Build status :target: https://travis-ci.org/gammu/gammu
 
 .. image:: https://hosted.weblate.org/widgets/gammu-status-badge.png
     :alt: Translation status :target:
     https://hosted.weblate.org/engage/gammu/?utm_source=widget
 
-.. image:: https://d2weczhvl823v0.cloudfront.net/gammu/gammu/trend.png
-   :alt: Bitdeli badge :target: https://bitdeli.com/free
-
+.. image:: https://scan.coverity.com/projects/2890/badge.svg?flat=1
+    :alt: Coverity scan :target: https://scan.coverity.com/projects/2890
 
 Más información
 ===============
