@@ -2310,6 +2310,9 @@ GSM_Error ATGEN_IncomingSMSInfo(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 			}
 		} else if (strncmp(buffer, "SM", 2) == 0 || strncmp(buffer, "\"SM\"", 4) == 0) {
 			sms.Folder = 1;
+		} else if (strncmp(buffer, "SR", 2) == 0 || strncmp(buffer, "\"SR\"", 4) == 0) {
+			sms.Folder = 1;
+			sms.PDU = SMS_Status_Report;
 		} else {
 			return ERR_UNKNOWNRESPONSE;
 		}
