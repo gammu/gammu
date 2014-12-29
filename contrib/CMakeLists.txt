@@ -16,8 +16,6 @@ else (BASH_BIN)
 endif (BASH_BIN)
 
 option(INSTALL_LSB_INIT "Install LSB compatible init script for Gammu" OFF)
-option(INSTALL_SYSTEMD "Install systemd unit file for Gammu" ON)
-set (SYSTEMD_PATH "/usr/lib/systemd/system" CACHE FILEPATH "Path where systemd units are installed")
 option(INSTALL_UDEV_RULES "Install udev rules for Gammu" OFF)
 
 set (GNAPPLET_FILES
@@ -92,13 +90,13 @@ if (INSTALL_BASH_COMPLETION)
         )
 endif (INSTALL_BASH_COMPLETION)
 
-if (INSTALL_SYSTEMD)
+if (WITH_SYSTEMD)
     install (
         FILES init/gammu-smsd.service
-        DESTINATION "${SYSTEMD_PATH}"
+        DESTINATION "${SYSTEMD_SERVICES_INSTALL_DIR}"
         COMPONENT "systemd"
     )
-endif (INSTALL_SYSTEMD)
+endif (WITH_SYSTEMD)
 
 if (INSTALL_LSB_INIT)
     install (

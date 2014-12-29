@@ -237,6 +237,7 @@ macro_optional_find_package (Iconv)
 macro_optional_find_package (CURL)
 macro_optional_find_package (Glib)
 macro_optional_find_package (GObject)
+macro_optional_find_package (SystemD)
 
 # Gudev stuff
 pkg_check_modules(GUDEV gudev-1.0)

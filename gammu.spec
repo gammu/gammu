@@ -143,6 +143,10 @@ BuildRequires: libgudev-1_0-devel glib2-devel
 %endif
 %endif
 
+%if 0%{?suse_version} >= 1140 || 0%{?fedora_version} >= 15 || 0%{?centos_version} >= 700 || 0%{?rhel_version} >= 700
+BuildRequires: systemd
+%endif
+
 BuildRequires: python-devel
 
 %if 0%{?centos_version} || 0%{?rhel_version} || 0%{?rhel} || 0%{?suse_version} < 1100
@@ -397,7 +401,9 @@ fi
 %_mandir/man1/gammu-smsd*
 %_mandir/man7/gammu-smsd*
 %_mandir/man5/gammu-smsd*
+%if 0%{?suse_version} >= 1140 || 0%{?fedora_version} >= 15 || 0%{?centos_version} >= 700 || 0%{?rhel_version} >= 700
 /usr/lib/systemd/system/gammu-smsd.service
+%endif
 %attr(755,root,root) %config /etc/init.d/gammu-smsd
 %config /etc/gammu-smsdrc
 
