@@ -10,14 +10,7 @@ The Gammu Manual
 
 This manual is in written in rst format and built using
 `Sphinx <http://sphinx.pocoo.org/>`_ with
-`breathe <https://github.com/michaeljones/breathe>`_ extension. As Gammu uses
-latest version of this extension, it is shipped within Gammu sources, but if
-you use git, you need to check out it separately as git submodule (you should
-update it as well any time you update Gammu git):
-
-.. code-block:: sh
-
-    git submodule update --init
+`breathe <https://github.com/michaeljones/breathe>`_ extension.
 
 To generate the documentation there are various ``manual-*`` targets for make.
 You can build HTML, PDF, PS, HTMLHELP and Latex versions of it:

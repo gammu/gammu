@@ -42,7 +42,6 @@ sphinx.domains.std.OptionXRefRole.process_link = gammu_process_link
 # is relative to the documentation root, use os.path.abspath to make it
 # absolute, like shown here.
 sys.path.insert(0, '@CMAKE_CURRENT_BINARY_DIR@/../../python')
-sys.path.append('@Gammu_SOURCE_DIR@/external/breathe')
 sys.path.append('@CMAKE_CURRENT_SOURCE_DIR@')
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 
@@ -67,7 +66,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Gammu'
-copyright = u'2009-2012, Michal Čihař <michal@cihar.com>'
+copyright = u'2009-2014, Michal Čihař <michal@cihar.com>'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -223,14 +222,14 @@ latex_domain_indices = True
 
 breathe_projects = {
     'api':'@DOXYGEN_OUTPUT@/xml',
-    }
+}
 
 breathe_default_project = 'api'
 
 
 breathe_domain_by_extension = {
     "h" : "c",
-    }
+}
 
 man_pages = [
     ('smsd/files', 'gammu-smsd-files', 'gammu-smsd(1) backend using filesystem as a message storage', u'Michal Čihař <michal@cihar.com>', 7),

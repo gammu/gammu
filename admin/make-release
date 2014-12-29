@@ -42,7 +42,6 @@ echo "Creating release $version from $checkout"
 git clone --shared $srcdir $repo-$version
 cd $repo-$version
 git checkout $checkout
-git submodule update --init
 find . -name .git | xargs -r rm -rf
 find . -type f -name .gitignore | xargs -r rm -f
 find . -type f -name .gitmodules | xargs -r rm -f
