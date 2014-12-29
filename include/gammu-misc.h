@@ -171,6 +171,7 @@ gboolean GSM_IsNewerVersion(const char *latest_version,
 /**
  * Set Power On/Off the phone
  *
+ * \param s State machine pointer.
  * \param on TRUE to power on the phone, FALSE to power off
  *
  * \return Error code.
