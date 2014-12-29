@@ -1287,7 +1287,7 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 #if defined(WIN32) || defined(DJGPP)
         static const char *DefaultPort		= "com2:";
 #else
-        static const char *DefaultPort		= "/dev/ttyACM0";
+        static const char *DefaultPort		= "/dev/ttyUSB0";
 #endif
         static const char *DefaultModel		= "";
         static const char *DefaultConnection		= "at";
