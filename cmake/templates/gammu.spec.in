@@ -32,7 +32,7 @@ Release:            1
 %endif
 
 Summary:            Mobile phone management utility
-License:            GPLv2
+License:            GPL-2.0
 %if 0%{?suse_version}
 Group:              Hardware/Mobile
 %else
@@ -184,7 +184,6 @@ Currently supported phones include:
 This package contains Gammu binary as well as some examples.
 
 %package devel
-License:      GPL v2
 Summary:      Development files for Gammu
 %if 0%{?suse_version}
 Group:              Development/Libraries/C and C++
@@ -212,7 +211,6 @@ Currently supported phones include:
 This package contain files needed for development.
 
 %package -n python-gammu
-License:    GPL v2
 Summary:    Python module to communicate with mobile phones
 %if 0%{?suse_version}
 Group:      Development/Libraries/Python
