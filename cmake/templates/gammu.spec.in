@@ -397,7 +397,7 @@ fi
 %_mandir/man1/gammu-smsd*
 %_mandir/man7/gammu-smsd*
 %_mandir/man5/gammu-smsd*
-/lib/systemd/system/gammu-smsd.service
+/usr/lib/systemd/system/gammu-smsd.service
 %attr(755,root,root) %config /etc/init.d/gammu-smsd
 %config /etc/gammu-smsdrc
 
