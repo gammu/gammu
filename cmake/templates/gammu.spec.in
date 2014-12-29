@@ -397,6 +397,7 @@ fi
 %_mandir/man1/gammu-smsd*
 %_mandir/man7/gammu-smsd*
 %_mandir/man5/gammu-smsd*
+/lib/systemd/system/gammu-smsd.service
 %attr(755,root,root) %config /etc/init.d/gammu-smsd
 %config /etc/gammu-smsdrc
 
@@ -425,52 +426,3 @@ fi
 rm -rf %buildroot
 
 %changelog
-* Fri Apr  3 2009 Michal Čihař <michal@cihar.com> - 1.23.93-1
-- do not define own %%version, %%name, %%rel
-- always use pkgconfig, pkg-config provides it
-- do not delete build root on SUSE
-- fix some package names (DBI and libusb) for Fedora
-- drop support for Fedora 8
-
-* Thu Jan 22 2009 Michal Čihař <michal@cihar.com> - 1.21.91-1
-- merged python-gammu packaging as upstream merged the code
-
-* Fri Oct 24 2008 Michal Čihař <michal@cihar.com> - 1.21.0-1
-- fixed according to Fedora policy
-
-* Wed Oct  8 2008  Michal Cihar <michal@cihar.com>
-- do not remove build root in %%install
-- move make test to %%check
-
-* Tue Oct  7 2008  Michal Cihar <michal@cihar.com>
-- use find_lang macro
-
-* Thu Mar 28 2007  Michal Cihar <michal@cihar.com>
-- update to current code status
-
-* Thu Jan  6 2005  Michal Cihar <michal@cihar.com>
-- add support for Mandrake, thanks to Olivier BERTEN <Olivier.Berten@advalvas.be> for testing
-- use new disable-bluetooth
-
-* Wed Nov 12 2003 Michal Cihar <michal@cihar.com>
-- distiguish between packaging on SUSE and Redhat
-- build depends on bluez if wanted
-
-* Mon Nov 10 2003 Peter Soos <sp@osb.hu>
-- using rpm macros where is possible
-- added ldconfig to post/postun
-
-* Mon Nov 03 2003 Michal Cihar <michal@cihar.com>
-- split devel package
-
-* Thu Jan 02 2003 Michal Cihar <michal@cihar.com>
-- made it install in directories that are defined in rpm
-
-* Sun Nov 10 2002 Marcin Wiacek <marcin@mwiacek.com>
-- topnet.pl email no more available
-
-* Sun Sep 30 2002 Marcin Wiacek <marcin-wiacek@topnet.pl>
-- build system is now really working OK
-
-* Sat Sep 15 2002 R P Herrold <herrold@owlriver.com>
-- initial packaging
