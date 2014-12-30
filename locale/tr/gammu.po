@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.28.91\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2014-05-28 11:31+0200\n"
-"PO-Revision-Date: 2014-10-02 18:56+0200\n"
+"PO-Revision-Date: 2014-12-30 18:09+0200\n"
 "Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/gammu/gammu/tr/>"
 "\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 1.10-dev\n"
+"X-Generator: Weblate 2.2-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -1726,9 +1726,9 @@ msgid "%i percent done."
 msgstr "Yüzde %i bitti."
 
 #: gammu/files.c:423
-#, c-format, fuzzy
+#, c-format
 msgid "%lu Bytes in %li seconds, %lu Bytes/sec"
-msgstr "%li saniyede %lu Bayt, %lu Bayt/san"
+msgstr "%lu Bayt %li saniye içinde, %lu Bayt/san"
 
 #: gammu/files.c:452
 #, c-format
