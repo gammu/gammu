@@ -2001,7 +2001,7 @@ msgstr "Vaja on rohkem parameetreid (funktsioon nõuab %d)\n"
 #: gammu/gammu.c:996
 #, c-format
 msgid "More parameters required (function requires %d to %d)\n"
-msgstr "Vaja on rohkem parameetreid (funktsioon nõuab %d kuni %d)↵\n"
+msgstr "Vaja on rohkem parameetreid (funktsioon nõuab %d kuni %d)\n"
 
 #: gammu/gammu.c:1002 gammu/gammu.c:1023
 msgid "Parameters help"

@@ -54,7 +54,7 @@ msgstr "Запис телефонної книги не знайдено у фа
 #: gammu/backup.c:167 helper/message-cmdline.c:552
 #, c-format
 msgid "Unknown memory type: \"%s\"\n"
-msgstr "Невідомий тип пам'яті: \"%s\"↵\n"
+msgstr "Невідомий тип пам'яті: \"%s\"\n"
 
 #: gammu/backup.c:181
 #, c-format
