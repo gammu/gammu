@@ -1726,7 +1726,7 @@ msgid "%i percent done."
 msgstr "Yüzde %i bitti."
 
 #: gammu/files.c:423
-#, c-format
+#, c-format, fuzzy
 msgid "%lu Bytes in %li seconds, %lu Bytes/sec"
 msgstr "%li saniyede %lu Bayt, %lu Bayt/san"
 
