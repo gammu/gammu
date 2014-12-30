@@ -18,6 +18,7 @@ cd $REL
 put gammu-$REL.tar.bz2
 put gammu-$REL.tar.xz
 put gammu-$REL.tar.gz
+put gammu-$REL.zip
 EOT
 
 sftp web <<EOT
@@ -25,4 +26,5 @@ cd /srv/http/dl.cihar.com/gammu/releases/
 put gammu-$REL.tar.bz2
 put gammu-$REL.tar.xz
 put gammu-$REL.tar.gz
+put gammu-$REL.zip
 EOT
