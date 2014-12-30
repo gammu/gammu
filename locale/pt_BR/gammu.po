@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2014-05-28 11:31+0200\n"
-"PO-Revision-Date: 2014-12-08 16:00+0200\n"
+"PO-Revision-Date: 2014-12-30 09:07+0200\n"
 "Last-Translator: Fabricia Bastos <fabricia-bastos@hotmail.com>\n"
 "Language-Team: Portuguese (Brazil) "
 "<https://hosted.weblate.org/projects/gammu/gammu/pt_BR/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.1\n"
+"X-Generator: Weblate 2.2-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -3062,7 +3062,7 @@ msgstr "Qual o formato de saída do arquivo de toque (\"%s\")?\n"
 #: gammu/misc.c:1825
 #, c-format
 msgid "What type of power do you want (\"%s\") ?\n"
-msgstr "Qual tipo de (reset) você deseja (\"%s\")?↵\n"
+msgstr "Qual tipo de (reset) você deseja (\"%s\")?↵"
 
 #: gammu/misc.c:1845
 #, c-format
