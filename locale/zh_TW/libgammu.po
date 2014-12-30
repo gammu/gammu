@@ -8,13 +8,16 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-05-22 14:39+0200\n"
-"PO-Revision-Date: 2009-01-27 14:28+0100\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"Language: \n"
+"PO-Revision-Date: 2014-12-30 09:16+0200\n"
+"Last-Translator: Michal Čihař <michal@cihar.com>\n"
+"Language-Team: Traditional Chinese "
+"<https://hosted.weblate.org/projects/gammu/libgammu/zh_TW/>\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 2.2-dev\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
@@ -378,7 +381,7 @@ msgstr "SIM卡"
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:579 libgammu/phone/pfunc.c:41
 #: libgammu/phone/s60/s60phone.c:1773
 msgid "Inbox"
-msgstr ""
+msgstr "收件箱"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:580
 msgid "Sent items"
