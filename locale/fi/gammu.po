@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2014-05-28 11:31+0200\n"
-"PO-Revision-Date: 2014-12-30 09:06+0200\n"
-"Last-Translator: Michal Čihař <michal@cihar.com>\n"
+"PO-Revision-Date: 2015-01-06 13:37+0200\n"
+"Last-Translator: Jonas Sahlberg <tf.gaiming@gmail.com>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/gammu/gammu/fi/>"
 "\n"
 "Language: fi\n"
@@ -522,7 +522,6 @@ msgid "Reminder (Date)"
 msgstr ""
 
 #: gammu/calendar.c:25
-#, fuzzy
 msgctxt "Calendar note type"
 msgid "Call"
 msgstr "Puhelu"
