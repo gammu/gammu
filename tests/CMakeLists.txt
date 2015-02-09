@@ -44,6 +44,11 @@ add_executable(array-test array-test.c)
 target_link_libraries (array-test array)
 add_test(array "${GAMMU_TEST_PATH}/array-test${GAMMU_TEST_SUFFIX}")
 
+# UTF-8 manipulation tests
+add_executable(utf-8 utf-8.c)
+target_link_libraries (utf-8 libGammu)
+add_test(utf-8 "${GAMMU_TEST_PATH}/utf-8${GAMMU_TEST_SUFFIX}")
+
 # SQL backend date parsing
 if (HAVE_MYSQL_MYSQL_H OR LIBDBI_FOUND OR HAVE_POSTGRESQL_LIBPQ_FE_H)
     if (LIBDBI_FOUND)
