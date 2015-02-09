@@ -20,7 +20,9 @@ ChangeLog
 =========
     
 2015???? - 1.34.90
-    
+
+[!] * Fixed encoding of UTF-8 for higher code points.
+
 20141230 - 1.34.0
 
 [+] * Add phone power ON/OFF function.
@@ -35,8 +37,6 @@ ChangeLog
 [-] * SMSD now honors loglevel for all logging targets.
 [+] * SMSD can automatically hangup incoming calls.
 [-] * Correctly detect Network errors.
-    
-
 
 20130529 - 1.33.00
 
