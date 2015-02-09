@@ -1472,18 +1472,18 @@ int EncodeWithUTF8Alphabet(unsigned long src, unsigned char *ret)
 		ret[0] = 192 + (src / 64);
 		ret[1] = 128 + (src % 64);
 		return 2;
-	} else if (src < 0x1000) {
-		ret[1] = 224 + (src / (64 * 64));
+	} else if (src < 0x10000) {
+		ret[0] = 224 + (src / (64 * 64));
 		ret[1] = 128 + ((src / 64) % 64);
 		ret[2] = 128 + (src % 64);
 		return 3;
-	} else if (src < 0x20000) {
+	} else if (src < 0x200000) {
 		ret[0] = 240 + (src / (64 * 64 * 64));
 		ret[1] = 128 + ((src / (64 * 64)) % 64);
 		ret[2] = 128 + ((src / 64) % 64);
 		ret[3] = 128 + (src % 64);
 		return 4;
-	} else if (src < 0x400000) {
+	} else if (src < 0x4000000) {
 		ret[0] = 248 + (src / (64 * 64 * 64 * 64));
 		ret[1] = 128 + ((src / (64 * 64 * 64)) % 64);
 		ret[2] = 128 + ((src / (64 * 64)) % 64);
