@@ -111,7 +111,10 @@ static SQL_Error SMSDMySQL_Connect(GSM_SMSDConfig * Config)
 		return SQL_FAIL;
 	}
 
-	mysql_query(Config->conn.my, "SET NAMES utf8;");
+	/* Try using utf8mb4 if MySQL server supports it */
+	if (mysql_query(Config->conn.my, "SET NAMES utf8mb4;") != 0) {
+		mysql_query(Config->conn.my, "SET NAMES utf8;");
+	}
 	SMSD_Log(DEBUG_INFO, Config, "Connected to Database: %s on %s", Config->database, Config->host);
 	return SQL_OK;
 }
