@@ -141,10 +141,10 @@ Device connection parameters
         these devices as non-root.
 
         For Nokia phones you can put follofing file (also available in sources
-        as :file:`contrib/udev/45-nokiadku2.rules`) as
-        :file:`/etc/udev/rules.d/45-nokiadku2.rules`:
+        as :file:`contrib/udev/69-gammu-acl.rules`) as
+        :file:`/etc/udev/rules.d/69-gammu-acl.rules`:
 
-        .. literalinclude:: ../../../contrib/udev/45-nokiadku2.rules
+        .. literalinclude:: ../../../contrib/udev/69-gammu-acl.rules
            :language: sh
 
     In case your USB device appears as the serial port in the system (eg.

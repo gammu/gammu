@@ -1,0 +1,16 @@
+#
+# udev rule to give users access to USB device to be used by Gammu
+#
+
+ACTION!="add|change", GOTO="gammu_acl_rules_end"
+
+KERNEL!="ttyACM[0-9]*", GOTO="gammu_acl_rules_end"
+SUBSYSTEM!="tty", GOTO="gammu_acl_rules_end"
+
+# Nokia devices
+ATTRS{manufacturer}=="Nokia", TAG+="uaccess"
+
+# Example for Sony Ericsson J108i Cedar
+# ATTRS{idVendor}=="0fce", ATTRS{idProduct}=="d14e", TAG+="uaccess"
+
+LABEL="gammu_acl_rules_end"

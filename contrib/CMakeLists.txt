@@ -112,7 +112,7 @@ endif (INSTALL_LSB_INIT)
 
 if (INSTALL_UDEV_RULES)
     install (
-        FILES udev/45-nokiadku2.rules
+        FILES udev/69-gammu-acl.rules
         DESTINATION "/etc/udev/rules.d"
         COMPONENT "udev"
         )
