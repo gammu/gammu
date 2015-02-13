@@ -61,6 +61,11 @@ Phone Specific Parameters
     PHONE ID (hostname)
 ``%N``
     client name (eg. Gammu 1.12.3)
+``%O``
+    network code
+``%M``
+    network name
+    
 
 .. _SMS Specific Parameters:
 
