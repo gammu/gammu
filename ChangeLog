@@ -23,6 +23,7 @@ ChangeLog
 
 [!] * Fixed encoding of UTF-8 for higher code points.
 [!] * Improved provided udev rules.
+[!] * Fixed possible lock while getting network status in SMSD.
 
 20141230 - 1.34.0
 

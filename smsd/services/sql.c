@@ -280,7 +280,11 @@ static SQL_Error SMSDSQL_NamedQuery(GSM_SMSDConfig * Config, const char *sql_que
 	NetCode = empty;
 	NetName = empty;
 
-	if ( GSM_GetNetworkInfo(Config->gsm, &NetInfo) == ERR_NONE) {
+	/* Query network status only if we need it */
+	if (
+		(strstr(sql_query, "%O") != NULL || strstr(sql_query, "%M") != NULL)
+		&& GSM_GetNetworkInfo(Config->gsm, &NetInfo) == ERR_NONE
+	) {
 		NetCode = NetInfo.NetworkCode;
 		if (NetInfo.NetworkName[0] != 0x00 || NetInfo.NetworkName[1] != 0x00) {
 			NetName = DecodeUnicodeConsole(NetInfo.NetworkName);
