@@ -1561,6 +1561,7 @@ gboolean EncodeUTF8(char *dest, const unsigned char *src)
 		if (value >= 0xD800 && value <= 0xDBFF && (i + 1) < len) {
 			second = src[(i + 1) * 2] * 256 + src[(i + 1) * 2 + 1];
 			if (second >= 0xDC00 && second <= 0xDFFF) {
+				i++;
 				value = ((value - 0xD800) << 10) + (second - 0xDC00) + 0x010000;
 			}
 		}
