@@ -28,6 +28,12 @@ int main(int argc UNUSED, char **argv UNUSED)
     test_result(out[2] == 0x8d);
     test_result(out[3] == 0x88);
 
+    test_result(EncodeWithUTF8Alphabet(0x1F44D, out) == 4);
+    test_result(out[0] == 0xf0);
+    test_result(out[1] == 0x9f);
+    test_result(out[2] == 0x91);
+    test_result(out[3] == 0x8d);
+
 	return 0;
 }
 
