@@ -47,7 +47,7 @@ static void SMSDODBC_LogError(GSM_SMSDConfig * Config, SQLRETURN origret, SQLSMA
 long long SMSDODBC_GetNumber(GSM_SMSDConfig * Config, SQL_result *res, unsigned int field)
 {
 	SQLRETURN ret;
-	SQLINTEGER value;
+	SQLINTEGER value = -1;
 
 	ret = SQLGetData(res->odbc, field + 1, SQL_C_SLONG, &value, 0, NULL);
 	if (!SQL_SUCCEEDED(ret)) {
