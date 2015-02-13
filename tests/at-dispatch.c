@@ -72,7 +72,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 
 	s->Phone.Data.RequestID = ID_GetSignalQuality;
 	s->Phone.Data.SignalQuality = &Signal;
-	do_test("AT+CSQ\r\nAT+CSQ\r\n+CME ERROR: 515", AT_Reply_CMEError, ERR_UNKNOWN);
+	do_test("AT+CSQ\r\nAT+CSQ\r\n+CME ERROR: 515", AT_Reply_CMEError, ERR_BUSY);
 
 	s->Phone.Data.RequestID = ID_SetMemoryType;
 	do_test("AT+CPMS=\"ME\"\rAT+CPMS=\"ME\"\r\r\n+CPMS: 2,300,2,300,2,300\r\n\r\n+CPMS: 2,300,2,300,2,300\r\n\r\nOK\r\n", AT_Reply_OK, ERR_NONE);
