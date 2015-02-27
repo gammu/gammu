@@ -458,8 +458,10 @@ Injecting long message using SQL
 ++++++++++++++++++++++++++++++++
 
 Inserting multipart messages is a bit more tricky, you need to construct also
-UDH header and store it hexadecimally written into UDH field. Unless you have
-a good reason to do this manually, use :ref:`gammu-smsd-inject`.
+UDH header and store it hexadecimally written into UDH field. Unless you have a
+good reason to do this manually, use :ref:`gammu-smsd-inject`, C library
+(:c:func:`SMSD_InjectSMS`) or Python library
+(:meth:`gammu.smsd.SMSD.InjectSMS`).
 
 For long text message, the UDH starts with ``050003`` followed by byte as a
 message reference (you can put anything there, but it should be different for
