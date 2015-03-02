@@ -51,7 +51,7 @@ echo 'Creating source tarballs...'
 tar cfz $repo-$version.tar.gz $repo-$version
 tar cfj $repo-$version.tar.bz2 $repo-$version
 tar cfJ $repo-$version.tar.xz $repo-$version
-zip -r $repo-$version.tar.xz $repo-$version
+zip -r $repo-$version.zip $repo-$version
 
 # We're done
 echo "Release is in $tmp directory"
