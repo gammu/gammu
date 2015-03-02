@@ -19,7 +19,7 @@ the issue.
 ChangeLog
 =========
     
-2015???? - 1.34.90
+20150302 - 1.35.0
 
 [!] * Fixed encoding of UTF-8 for higher code points.
 [!] * Improved provided udev rules.

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMURC" "5" "December 30, 2014" "1.34.90" "Gammu"
+.TH "GAMMURC" "5" "March 02, 2015" "1.35.0" "Gammu"
 .SH NAME
 gammurc \- gammu(1) configuration file
 .
@@ -212,28 +212,29 @@ You might need to be member of some group (eg. \fBplugdev\fP or
 these devices as non\-root.
 .sp
 For Nokia phones you can put follofing file (also available in sources
-as \fBcontrib/udev/45\-nokiadku2.rules\fP) as
-\fB/etc/udev/rules.d/45\-nokiadku2.rules\fP:
+as \fBcontrib/udev/69\-gammu\-acl.rules\fP) as
+\fB/etc/udev/rules.d/69\-gammu\-acl.rules\fP:
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .nf
 .ft C
-# udev rules file for nokia dku2 devices (udev >= 0.98)
-# Put it to /etc/udev/rules.d/ directory
-# Taken from http://git.savannah.gnu.org/cgit/gnokii.git/tree/Docs/sample/45\-nokiadku2.rules
+#
+# udev rule to give users access to USB device to be used by Gammu
 #
 
-ACTION!="add", GOTO="nokiadku2_rules_end"
-SUBSYSTEM=="usb", GOTO="nokiadku2_rules"
-# This one is for the old kernels
-SUBSYSTEM=="usb_device", GOTO="nokiadku2_rules"
-GOTO="nokiadku2_rules_end"
+ACTION!="add|change", GOTO="gammu_acl_rules_end"
 
-LABEL="nokiadku2_rules"
-ATTRS{manufacturer}=="Nokia", MODE="0660", GROUP="plugdev"
+KERNEL!="ttyACM[0\-9]*", GOTO="gammu_acl_rules_end"
+SUBSYSTEM!="tty", GOTO="gammu_acl_rules_end"
 
-LABEL="nokiadku2_rules_end"
+# Nokia devices
+ATTRS{manufacturer}=="Nokia", TAG+="uaccess"
+
+# Example for Sony Ericsson J108i Cedar
+# ATTRS{idVendor}=="0fce", ATTRS{idProduct}=="d14e", TAG+="uaccess"
+
+LABEL="gammu_acl_rules_end"
 
 .ft P
 .fi
