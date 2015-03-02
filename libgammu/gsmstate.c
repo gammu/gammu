@@ -712,12 +712,7 @@ GSM_Error GSM_InitConnection_Log(GSM_StateMachine *s, int ReplyNum, GSM_Log_Func
 			}
 		}
 
-		smprintf_level(s, D_ERROR, "[Gammu            - %s built %s %s using %s]\n",
-				GAMMU_VERSION,
-				__TIME__,
-				__DATE__,
-				GetCompiler()
-				);
+		smprintf_level(s, D_ERROR, "[Gammu            - %s]\n", GAMMU_VERSION);
 		StripSpaces(s->CurrentConfig->Connection);
 		StripSpaces(s->CurrentConfig->Model);
 		StripSpaces(s->CurrentConfig->Device);

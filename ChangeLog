@@ -20,7 +20,9 @@ ChangeLog
 =========
     
 2015???? - 1.35.90
-    
+
+[!] * Removed usage of __TIME__ and __DATE__ macros in codebase.
+
 20150302 - 1.35.0
 
 [-] * Fixed encoding of UTF-8 for higher code points.

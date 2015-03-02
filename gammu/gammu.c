@@ -88,8 +88,7 @@ static void ListNetworks(int argc, char *argv[])
 
 static void PrintVersion(void)
 {
-	printf(_("[Gammu version %s built %s on %s using %s]"),
-	       GAMMU_VERSION, __TIME__, __DATE__, GetCompiler());
+	printf(_("[Gammu version %s"), GAMMU_VERSION);
 	printf("\n\n");
 }
 
@@ -450,7 +449,7 @@ static void RunBatch(int argc, char *argv[])
 		  }
 		  i++;
 		}
-		
+
 		/* show params list */
 		/*
 		if (argsc > 0) {

@@ -70,8 +70,6 @@ void print_version(void)
 {
 	printf(_("Gammu-detect version %s"), GAMMU_VERSION);
 	printf("\n");
-	printf(_("Built %s on %s using %s"), __TIME__, __DATE__, GetCompiler());
-	printf("\n");
 	printf("\n");
 	printf("%s\n", _("Compiled in features:"));
 #ifdef GUDEV_FOUND

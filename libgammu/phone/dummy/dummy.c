@@ -347,7 +347,7 @@ GSM_Error DUMMY_Initialise(GSM_StateMachine *s)
 	strcpy(s->Phone.Data.Manufacturer, "Gammu");
 	strcpy(s->Phone.Data.Model, "Dummy");
 	strcpy(s->Phone.Data.Version, GAMMU_VERSION);
-	strcpy(s->Phone.Data.VerDate, __DATE__);
+	strcpy(s->Phone.Data.VerDate, "20150101");
 
 	EncodeUnicode(Priv->SMSC.Number, "123456", 6);
 	EncodeUnicode(Priv->SMSC.Name, "Default", 7);
@@ -462,7 +462,7 @@ GSM_Error DUMMY_GetPPM (GSM_StateMachine *s, char *value)
 GSM_Error DUMMY_GetFirmware(GSM_StateMachine *s)
 {
 	strcpy(s->Phone.Data.Version, GAMMU_VERSION);
-	strcpy(s->Phone.Data.VerDate, __DATE__);
+	strcpy(s->Phone.Data.VerDate, "20150101");
 	GSM_CreateFirmwareNumber(s);
 	return ERR_NONE;
 }

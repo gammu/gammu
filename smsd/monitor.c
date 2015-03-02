@@ -35,7 +35,6 @@ void smsd_interrupt(int signum)
 NORETURN void version(void)
 {
 	printf("Gammu-smsd-monitor version %s\n", GAMMU_VERSION);
-	printf("Built %s on %s using %s\n", __TIME__, __DATE__, GetCompiler());
 	printf("Compiled in features:\n");
 	printf("OS support:\n");
 #ifdef HAVE_SHM
