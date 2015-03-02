@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSD-TABLES" "7" "March 02, 2015" "1.35.0" "Gammu"
+.TH "GAMMU-SMSD-TABLES" "7" "March 02, 2015" "1.35.90" "Gammu"
 .SH NAME
 gammu-smsd-tables \- description of tables for database backends of gammu-smsd(1)
 .
@@ -514,15 +514,17 @@ INSERT INTO outbox (
 .SS Injecting long message using SQL
 .sp
 Inserting multipart messages is a bit more tricky, you need to construct also
-UDH header and store it hexadecimally written into UDH field. Unless you have
-a good reason to do this manually, use \fIgammu\-smsd\-inject\fP\&.
+UDH header and store it hexadecimally written into UDH field. Unless you have a
+good reason to do this manually, use \fIgammu\-smsd\-inject\fP, C library
+(\fBSMSD_InjectSMS()\fP) or Python library
+(\fBgammu.smsd.SMSD.InjectSMS()\fP).
 .sp
 For long text message, the UDH starts with \fB050003\fP followed by byte as a
-message reference (you can put anything there, but it should be different for
-each message, \fBD3\fP in following example), byte for number of messages (\fB02\fP
-in example, it should be unique for each message you send to same phone number)
-and byte for number of current message (\fB01\fP for first message, \fB02\fP for
-second, etc.).
+message reference (you can put any hex value there, but it should be different
+for each message, \fBD3\fP in following example), byte for number of messages
+(\fB02\fP in example, it should be unique for each message you send to same phone
+number) and byte for number of current message (\fB01\fP for first message,
+\fB02\fP for second, etc.).
 .sp
 For example long text message of two parts could look like following:
 .INDENT 0.0
