@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-03-03 10:40+0100\n"
+"POT-Creation-Date: 2015-03-03 11:05+0100\n"
 "PO-Revision-Date: 2012-03-14 14:34+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: none\n"
@@ -1759,7 +1759,7 @@ msgstr "שם"
 
 #: gammu/gammu.c:91
 #, c-format
-msgid "[Gammu version %s"
+msgid "[Gammu version %s]"
 msgstr ""
 
 #: gammu/gammu.c:101

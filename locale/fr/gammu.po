@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-03-03 10:40+0100\n"
+"POT-Creation-Date: 2015-03-03 11:05+0100\n"
 "PO-Revision-Date: 2013-09-30 17:45+0200\n"
 "Last-Translator: Olivier Vandewynckele <olivierv75@gmail.com>\n"
 "Language-Team: French <http://hosted.weblate.org/projects/gammu/gammu/fr/>\n"
@@ -1787,7 +1787,7 @@ msgstr "Nom"
 
 #: gammu/gammu.c:91
 #, fuzzy, c-format
-msgid "[Gammu version %s"
+msgid "[Gammu version %s]"
 msgstr "Version de Gammu"
 
 #: gammu/gammu.c:101

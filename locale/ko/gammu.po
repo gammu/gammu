@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-03-03 10:40+0100\n"
+"POT-Creation-Date: 2015-03-03 11:05+0100\n"
 "PO-Revision-Date: 2014-12-17 03:17+0200\n"
 "Last-Translator: 권 조 <chobkwon@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/gammu/gammu/ko/>\n"
@@ -1771,7 +1771,7 @@ msgstr "이름"
 
 #: gammu/gammu.c:91
 #, fuzzy, c-format
-msgid "[Gammu version %s"
+msgid "[Gammu version %s]"
 msgstr "Gammu 버전"
 
 #: gammu/gammu.c:101

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wammu 0.37\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-03-03 10:40+0100\n"
+"POT-Creation-Date: 2015-03-03 11:05+0100\n"
 "PO-Revision-Date: 2014-03-24 08:55+0200\n"
 "Last-Translator: Bohdan <bohdan009@gmail.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/gammu/gammu/uk/"
@@ -1765,7 +1765,7 @@ msgstr "Назва"
 
 #: gammu/gammu.c:91
 #, fuzzy, c-format
-msgid "[Gammu version %s"
+msgid "[Gammu version %s]"
 msgstr "Версія Gammu"
 
 #: gammu/gammu.c:101
