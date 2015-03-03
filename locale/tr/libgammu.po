@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: libgammu 1.28.91\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2015-03-03 10:40+0100\n"
-"PO-Revision-Date: 2013-05-03 21:36+0200\n"
+"PO-Revision-Date: 2015-03-03 11:03+0200\n"
 "Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
-"Language-Team: Turkish <http://hosted.weblate.org/projects/gammu/libgammu/tr/"
-">\n"
+"Language-Team: Turkish "
+"<https://hosted.weblate.org/projects/gammu/libgammu/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 1.6-dev\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 2.3-dev\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
@@ -349,9 +349,8 @@ msgid "Entry is read only."
 msgstr "Giriş salt okunur."
 
 #: libgammu/gsmcomon.c:156
-#, fuzzy
 msgid "Network error."
-msgstr "Hata yok."
+msgstr "Ağ hatası."
 
 #: libgammu/gsmcomon.c:189
 msgid "Unknown error description."
