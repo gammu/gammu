@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: libGammu 1.35.90\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2015-03-03 10:40+0100\n"
-"PO-Revision-Date: 2011-02-23 17:03+0100\n"
-"Last-Translator: Pavlína Raszyková <pavlina.raszykova@gmail.com>\n"
-"Language-Team: Czech <cs@li.org>\n"
+"PO-Revision-Date: 2015-03-03 11:03+0200\n"
+"Last-Translator: Michal Čihař <michal@cihar.com>\n"
+"Language-Team: Czech <https://hosted.weblate.org/projects/gammu/libgammu/cs/>"
+"\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Pootle 2.0.5\n"
+"X-Generator: Weblate 2.3-dev\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
@@ -343,9 +344,8 @@ msgid "Entry is read only."
 msgstr "Záznam je jen pro čtení."
 
 #: libgammu/gsmcomon.c:156
-#, fuzzy
 msgid "Network error."
-msgstr "Žadná chyba."
+msgstr "Chyba sítě."
 
 #: libgammu/gsmcomon.c:189
 msgid "Unknown error description."
