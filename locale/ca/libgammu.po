@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2013-05-22 14:39+0200\n"
+"POT-Creation-Date: 2015-03-03 10:40+0100\n"
 "PO-Revision-Date: 2009-01-27 14:28+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -328,7 +328,11 @@ msgstr ""
 msgid "Entry is read only."
 msgstr "No es pot crear el directori!"
 
-#: libgammu/gsmcomon.c:188
+#: libgammu/gsmcomon.c:156
+msgid "Network error."
+msgstr ""
+
+#: libgammu/gsmcomon.c:189
 msgid "Unknown error description."
 msgstr ""
 

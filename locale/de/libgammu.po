@@ -6,9 +6,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libGammu 1.34.0\n"
+"Project-Id-Version: libGammu 1.35.90\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2013-05-22 14:39+0200\n"
+"POT-Creation-Date: 2015-03-03 10:40+0100\n"
 "PO-Revision-Date: 2012-04-11 09:28+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =de\n"
@@ -362,7 +362,12 @@ msgstr ""
 msgid "Entry is read only."
 msgstr "Eintrag ist nur lesbar."
 
-#: libgammu/gsmcomon.c:188
+#: libgammu/gsmcomon.c:156
+#, fuzzy
+msgid "Network error."
+msgstr "Kein Fehler."
+
+#: libgammu/gsmcomon.c:189
 msgid "Unknown error description."
 msgstr "Unbekannte Fehlerbeschreibung."
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wammu 0.37\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2013-05-22 14:39+0200\n"
+"POT-Creation-Date: 2015-03-03 10:40+0100\n"
 "PO-Revision-Date: 2012-07-24 01:22+0800\n"
 "Last-Translator: shanyan baishui <Siramizu@gmail.com>\n"
 "Language-Team: none\n"
@@ -327,7 +327,12 @@ msgstr "未找到安装数据，请查阅调试信息和/或文档以获得详�
 msgid "Entry is read only."
 msgstr "记录是只读的。"
 
-#: libgammu/gsmcomon.c:188
+#: libgammu/gsmcomon.c:156
+#, fuzzy
+msgid "Network error."
+msgstr "没有错误。"
+
+#: libgammu/gsmcomon.c:189
 msgid "Unknown error description."
 msgstr "未知的错误描述。"
 

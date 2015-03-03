@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2013-05-22 14:39+0200\n"
+"POT-Creation-Date: 2015-03-03 10:40+0100\n"
 "PO-Revision-Date: 2014-12-30 09:16+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
-"Language-Team: Traditional Chinese "
-"<https://hosted.weblate.org/projects/gammu/libgammu/zh_TW/>\n"
+"Language-Team: Traditional Chinese <https://hosted.weblate.org/projects/"
+"gammu/libgammu/zh_TW/>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -334,7 +334,11 @@ msgstr ""
 msgid "Entry is read only."
 msgstr ""
 
-#: libgammu/gsmcomon.c:188
+#: libgammu/gsmcomon.c:156
+msgid "Network error."
+msgstr ""
+
+#: libgammu/gsmcomon.c:189
 msgid "Unknown error description."
 msgstr ""
 

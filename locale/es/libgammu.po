@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2013-05-22 14:39+0200\n"
+"POT-Creation-Date: 2015-03-03 10:40+0100\n"
 "PO-Revision-Date: 2012-03-28 20:58+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: Español\n"
@@ -356,7 +356,12 @@ msgstr ""
 msgid "Entry is read only."
 msgstr "La entrada es sólo de lectura."
 
-#: libgammu/gsmcomon.c:188
+#: libgammu/gsmcomon.c:156
+#, fuzzy
+msgid "Network error."
+msgstr "Sin error."
+
+#: libgammu/gsmcomon.c:189
 msgid "Unknown error description."
 msgstr "Descripción del error desconocida."
 

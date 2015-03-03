@@ -5,18 +5,19 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libGammu 1.34.0\n"
+"Project-Id-Version: libGammu 1.35.90\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-08-27 11:26+0200\n"
+"POT-Creation-Date: 2015-03-03 10:40+0100\n"
 "PO-Revision-Date: 2013-04-25 15:45+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
-"Language-Team: Russian <http://hosted.weblate.org/projects/gammu/libgammu/ru/>\n"
+"Language-Team: Russian <http://hosted.weblate.org/projects/gammu/libgammu/ru/"
+">\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 1.6-dev\n"
 
 #: libgammu/gsmcomon.c:84
@@ -349,7 +350,12 @@ msgstr ""
 msgid "Entry is read only."
 msgstr "Запись пуста."
 
-#: libgammu/gsmcomon.c:188
+#: libgammu/gsmcomon.c:156
+#, fuzzy
+msgid "Network error."
+msgstr "Нет ошибки."
+
+#: libgammu/gsmcomon.c:189
 #, fuzzy
 msgid "Unknown error description."
 msgstr "Неизвестная ошибка."
