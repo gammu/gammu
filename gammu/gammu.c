@@ -88,7 +88,7 @@ static void ListNetworks(int argc, char *argv[])
 
 static void PrintVersion(void)
 {
-	printf(_("[Gammu version %s"), GAMMU_VERSION);
+	printf(_("[Gammu version %s]"), GAMMU_VERSION);
 	printf("\n\n");
 }
 
