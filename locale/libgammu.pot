@@ -1,14 +1,14 @@
 # libGammu translation.
-# Copyright (C) 2003 - 2014 Michal Čihař <michal@cihar.com>
+# Copyright (C) 2003 - 2015 Michal Čihař <michal@cihar.com>
 # This file is distributed under the same license as the libGammu package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: libgammu 1.34.0\n"
+"Project-Id-Version: libgammu 1.35.90\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2014-12-29 11:52+0100\n"
+"POT-Creation-Date: 2015-03-03 10:34+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -320,7 +320,11 @@ msgstr ""
 msgid "Entry is read only."
 msgstr ""
 
-#: libgammu/gsmcomon.c:188
+#: libgammu/gsmcomon.c:156
+msgid "Network error."
+msgstr ""
+
+#: libgammu/gsmcomon.c:189
 msgid "Unknown error description."
 msgstr ""
 
