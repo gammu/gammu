@@ -16,7 +16,7 @@ help of many contributors.
     :alt: Build status
     :target: https://travis-ci.org/gammu/gammu
 
-.. image:: https://hosted.weblate.org/widgets/gammu-status-badge.png
+.. image:: https://hosted.weblate.org/widgets/gammu/-/svg-badge.svg
     :alt: Translation status
     :target: https://hosted.weblate.org/engage/gammu/?utm_source=widget
 
