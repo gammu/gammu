@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2015-03-03 11:05+0100\n"
-"PO-Revision-Date: 2013-09-30 17:45+0200\n"
-"Last-Translator: Olivier Vandewynckele <olivierv75@gmail.com>\n"
-"Language-Team: French <http://hosted.weblate.org/projects/gammu/gammu/fr/>\n"
+"PO-Revision-Date: 2015-03-08 23:22+0200\n"
+"Last-Translator: Tuux <tuxa@galaxie.eu.org>\n"
+"Language-Team: French <https://hosted.weblate.org/projects/gammu/gammu/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 1.7-dev\n"
+"X-Generator: Weblate 2.3-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -1673,7 +1673,6 @@ msgid "S"
 msgstr "S"
 
 #: gammu/files.c:158 gammu/files.c:171 gammu/files.c:197
-#, fuzzy
 msgid "Part of folder"
 msgstr "Partie d'un dossier"
 
@@ -1701,7 +1700,6 @@ msgid "Unknown attribute (%s)\n"
 msgstr "Attribut inconnu (%s)\n"
 
 #: gammu/files.c:307
-#, fuzzy
 msgid "Part of folder only"
 msgstr "Partie d'un dossier uniquement"
 
@@ -1724,6 +1722,9 @@ msgid ""
 "File checksum calculated by phone doesn't match with value calculated by "
 "Gammu. File is damaged or there is a error in Gammu."
 msgstr ""
+"Le Checksum du fichier calculé par le téléphone ne correspond pas à la "
+"valeur calculée par Gammu. Le fichier est endommagé ou il y a une erreur "
+"dans Gammu."
 
 #: gammu/files.c:421
 #, c-format
@@ -1733,7 +1734,7 @@ msgstr "%i pourcent effectué."
 #: gammu/files.c:423
 #, c-format
 msgid "%lu Bytes in %li seconds, %lu Bytes/sec"
-msgstr ""
+msgstr "%lu Octets en %li secondes, %lu Octets/sec"
 
 #: gammu/files.c:452
 #, c-format
@@ -1766,9 +1767,9 @@ msgid "ID of new folder is \"%s\"\n"
 msgstr "L'identifiant (ID) du nouveau dossier est \"%s\"\n"
 
 #: gammu/gammu.c:69
-#, fuzzy, c-format
+#, c-format
 msgid "Networks for %s:"
-msgstr "Réseaux pour %s:"
+msgstr "Réseaux pour %s :"
 
 #: gammu/gammu.c:75
 #, c-format
@@ -1786,13 +1787,13 @@ msgid "Name"
 msgstr "Nom"
 
 #: gammu/gammu.c:91
-#, fuzzy, c-format
+#, c-format
 msgid "[Gammu version %s]"
-msgstr "Version de Gammu"
+msgstr "[Version de Gammu %s]"
 
 #: gammu/gammu.c:101
 msgid "Protocols"
-msgstr ""
+msgstr "Protocoles"
 
 #: gammu/gammu.c:169
 msgid "Phones"
@@ -1837,7 +1838,7 @@ msgstr "L'exécution du script est en cours de finalisation\n"
 #: gammu/gammu.c:465
 #, c-format
 msgid "Executing batch \"%s\" - command %i: %s\n"
-msgstr ""
+msgstr "Exécution bath \"%s\" - commande %i: %s↵\n"
 
 #: gammu/gammu.c:488
 msgid ""
