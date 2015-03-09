@@ -24,6 +24,10 @@ help of many contributors.
     :alt: Coverity scan
     :target: https://scan.coverity.com/projects/2890
 
+.. image:: https://www.bountysource.com/badge/team?team_id=23177&style=bounties_received
+    :alt: Bountysource
+    :target: https://www.bountysource.com/teams/gammu/issues?utm_source=Gammu&utm_medium=shield&utm_campaign=bounties_received
+
 More information
 ================
 
