@@ -419,14 +419,14 @@ GSM_Error ATGEN_HandleCMSError(GSM_StateMachine *s)
  * \ref GSM_WaitFor.
  */
 GSM_Error ATGEN_WaitFor(GSM_StateMachine *s, const char * cmd, size_t len,
-			int type, int time, GSM_Phone_RequestID request)
+			int type, int timeout, GSM_Phone_RequestID request)
 {
 	GSM_Error error;
         error = MOTOROLA_SetMode(s, cmd);
         if (error != ERR_NONE) {
 		return error;
 	}
-        error = GSM_WaitFor(s, cmd, len, type, time, request);
+        error = GSM_WaitFor(s, cmd, len, type, timeout, request);
 	return error;
 }
 
