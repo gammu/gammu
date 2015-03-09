@@ -25,6 +25,9 @@
 #include <errno.h>
 #include <signal.h>
 #include <sys/wait.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 #include "sms_cgi.h"
 
@@ -62,7 +65,7 @@ static int cgi_get_error_fd(GSM_StateMachine *s, const char*script_name) {
 	strcat(err_file, ERR_SUFFIX);
 
 	/* open an error log file .. */
-	errfd = fileno(fopen(err_file, "a"));
+	errfd = open(err_file, O_APPEND);
 	if(errfd == -1) {
 		smprintf(s, CGI_ENGINE "could not open error log file %s : %s\n", err_file, strerror(errno));
 		smprintf(s, CGI_ENGINE "May be you did not set the right path in cgi-bin. Please check your gammurc file.\n");
