@@ -3130,7 +3130,7 @@ GSM_Error ATGEN_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo)
 	netinfo->GPRS = 0;
 
 	smprintf(s, "Enable full network info\n");
-	error = ATGEN_WaitForAutoLen(s, "AT+CREG=2\r", 0x00, 4, ID_GetNetworkInfo);
+	error = ATGEN_WaitForAutoLen(s, "AT+CREG=2\r", 0x00, 4, ID_ConfigureNetworkInfo);
 
 	if ((error != ERR_NONE) &&
 	    (s->Phone.Data.Priv.ATGEN.Manufacturer != AT_Siemens) &&
@@ -3139,13 +3139,13 @@ GSM_Error ATGEN_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo)
 	}
 
 	smprintf(s, "Enable full packet network info\n");
-	error = ATGEN_WaitForAutoLen(s, "AT+CGREG=2\r", 0x00, 4, ID_GetNetworkInfo);
+	error = ATGEN_WaitForAutoLen(s, "AT+CGREG=2\r", 0x00, 4, ID_ConfigureNetworkInfo);
 	if (error != ERR_NONE) {
 		return error;
 	}
 
 	smprintf(s, "Getting GPRS state\n");
-	error = ATGEN_WaitForAutoLen(s, "AT+CGATT?\r", 0x00, 4, ID_GetNetworkInfo);
+	error = ATGEN_WaitForAutoLen(s, "AT+CGATT?\r", 0x00, 4, ID_GetGPRSState);
 
 	if (error != ERR_NONE) {
 		return error;
@@ -3165,7 +3165,7 @@ GSM_Error ATGEN_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo)
 	if (netinfo->State == GSM_HomeNetwork || netinfo->State == GSM_RoamingNetwork) {
 		/* Set numeric format for AT+COPS? */
 		smprintf(s, "Setting short network name format\n");
-		error = ATGEN_WaitForAutoLen(s, "AT+COPS=3,2\r", 0x00, 4, ID_GetNetworkInfo);
+		error = ATGEN_WaitForAutoLen(s, "AT+COPS=3,2\r", 0x00, 4, ID_ConfigureNetworkInfo);
 
 		/* Get operator code */
 		smprintf(s, "Getting network code\n");
@@ -3173,7 +3173,7 @@ GSM_Error ATGEN_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo)
 
 		/* Set string format for AT+COPS? */
 		smprintf(s, "Setting long string network name format\n");
-		error = ATGEN_WaitForAutoLen(s, "AT+COPS=3,0\r", 0x00, 4, ID_GetNetworkInfo);
+		error = ATGEN_WaitForAutoLen(s, "AT+COPS=3,0\r", 0x00, 4, ID_ConfigureNetworkInfo);
 
 		/* Get operator code */
 		smprintf(s, "Getting network code\n");
@@ -5970,10 +5970,10 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 
 {ATGEN_ReplyGetNetworkLAC_CID,	"AT+CREG?"		,0x00,0x00,ID_GetNetworkInfo	 },
 {ATGEN_ReplyGetPacketNetworkLAC_CID,	"AT+CGREG?"		,0x00,0x00,ID_GetNetworkInfo	 },
-{ATGEN_ReplyGetGPRSState,	"AT+CGATT?"		,0x00,0x00,ID_GetNetworkInfo	 },
-{ATGEN_GenericReply,		"AT+CREG=2"		,0x00,0x00,ID_GetNetworkInfo	 },
-{ATGEN_GenericReply,		"AT+CGREG=2"		,0x00,0x00,ID_GetNetworkInfo	 },
-{ATGEN_GenericReply,		"AT+COPS="		,0x00,0x00,ID_GetNetworkInfo	 },
+{ATGEN_ReplyGetGPRSState,	"AT+CGATT?"		,0x00,0x00,ID_GetGPRSState	 },
+{ATGEN_GenericReply,		"AT+CREG=2"		,0x00,0x00,ID_ConfigureNetworkInfo	 },
+{ATGEN_GenericReply,		"AT+CGREG=2"		,0x00,0x00,ID_ConfigureNetworkInfo	 },
+{ATGEN_GenericReply,		"AT+COPS="		,0x00,0x00,ID_ConfigureNetworkInfo	 },
 {ATGEN_GenericReply,		"AT+COPS="		,0x00,0x00,ID_SetAutoNetworkLogin},
 {ATGEN_ReplyGetNetworkCode,	"AT+COPS"		,0x00,0x00,ID_GetNetworkCode	 },
 {ATGEN_ReplyGetNetworkName,	"AT+COPS"		,0x00,0x00,ID_GetNetworkName	 },
