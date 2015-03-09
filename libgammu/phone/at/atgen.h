@@ -27,6 +27,7 @@
 #include <gammu-error.h>
 #include <gammu-statemachine.h>
 
+#include "../../gsmreply.h" /* For GSM_Phone_RequestID */
 #include "../../misc/misc.h" /* For GSM_CutLines */
 
 #include "motorola.h"
@@ -423,10 +424,8 @@ GSM_Error ATGEN_DispatchMessage	(GSM_StateMachine *s);
  * correct Motorola mode. It accepts same parameters as
  * \ref GSM_WaitFor.
  */
-#define ATGEN_WaitFor(s, cmd, len, type, time, request) \
-        error = MOTOROLA_SetMode(s, cmd); \
-        if (error != ERR_NONE) return error; \
-        error = GSM_WaitFor(s, cmd, len, type, time, request);
+GSM_Error ATGEN_WaitFor(GSM_StateMachine *s, const char * cmd, size_t len,
+			int type, int time, GSM_Phone_RequestID request);
 
 /**
  * Wrapper around \ref ATGEN_WaitFor which automatically sets
