@@ -92,8 +92,11 @@ GSM_Error PrintMemorySubEntry(GSM_SubMemoryEntry *entry, GSM_StateMachine *sm)
 	case PBK_RingtoneID	     :
 		if (!ringinit && sm != NULL) {
 			error=GSM_GetRingtonesInfo(sm,&ringtones_info);
-			if (error != ERR_NOTSUPPORTED) return error;
-			if (error == ERR_NONE) ringinit = TRUE;
+			if (error == ERR_NONE) {
+				ringinit = TRUE;
+			} else if (error != ERR_NOTSUPPORTED) {
+				return error;
+			}
 		}
 		if (ringinit) {
 			for (z=0;z<ringtones_info.Number;z++) {
