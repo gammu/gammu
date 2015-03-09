@@ -33,7 +33,7 @@ gboolean GSM_StringArray_Add(GSM_StringArray *array, const char *string)
 
 	/* Allocate extra space if needed */
 	if (array->used + 1 > array->allocated) {
-		newdata = realloc(array->data, (array->allocated + 10) * sizeof(char **));
+		newdata = realloc(array->data, (array->allocated + 10) * sizeof(char *));
 		if (newdata == NULL) return FALSE;
 		array->allocated += 10;
 		array->data = newdata;
