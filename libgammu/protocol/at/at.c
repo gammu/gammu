@@ -48,6 +48,7 @@ static GSM_Error AT_WriteMessage (GSM_StateMachine *s, unsigned const char *buff
 typedef struct {
 	const char	*text;
 	int	lines;
+	GSM_Phone_RequestID requestid;
 } SpecialAnswersStruct;
 
 static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
@@ -83,57 +84,57 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 	 */
 	static const SpecialAnswersStruct SpecialAnswers[] = {
 		/* Standard GSM */
-		{"+CGREG:"	,1},
-		{"+CBM:"	,1},
-		{"+CMT:"	,2},
-		{"+CMTI:"	,1},
-		{"+CDS:"	,2},
-		{"+CREG:"	,1},
-		{"+CUSD"	,1},
-		{"+COLP"	,1},
-		{"+CLIP"	,1},
-		{"+CRING"	,1},
-		{"+CCWA"	,1},
+		{"+CGREG:"	,1, ID_GetNetworkInfo},
+		{"+CBM:"	,1, ID_None},
+		{"+CMT:"	,2, ID_None},
+		{"+CMTI:"	,1, ID_None},
+		{"+CDS:"	,2, ID_None},
+		{"+CREG:"	,1, ID_GetNetworkInfo},
+		{"+CUSD"	,1, ID_None},
+		{"+COLP"	,1, ID_None},
+		{"+CLIP"	,1, ID_None},
+		{"+CRING"	,1, ID_None},
+		{"+CCWA"	,1, ID_None},
 
 		/* Standard AT */
-		{"RING"		,1},
-		{"NO CARRIER"	,1},
-		{"NO ANSWER"	,1},
+		{"RING"		,1, ID_None},
+		{"NO CARRIER"	,1, ID_None},
+		{"NO ANSWER"	,1, ID_None},
 
 		/* GlobeTrotter */
-		{"_OSIGQ:"	,1},
-		{"_OBS:"	,1},
+		{"_OSIGQ:"	,1, ID_None},
+		{"_OBS:"	,1, ID_None},
 
-		{"^SCN:"	,1},
+		{"^SCN:"	,1, ID_None},
 
 		/* Sony-Ericsson */
-		{"*EBCA"	,1},
+		{"*EBCA"	,1, ID_None},
 
 		/* Samsung binary transfer end */
-		{"SDNDCRC ="	,1},
+		{"SDNDCRC ="	,1, ID_None},
 		/* Samsung reply to SSHT in some cases */
-		{"SAMSUNG PTS DG Test", 1},
+		{"SAMSUNG PTS DG Test", 1, ID_None},
 
 		/* Cross PD1101wi reply to almost anything */
-		{"NOT FOND ^,NOT CUSTOM AT", 1},
+		{"NOT FOND ^,NOT CUSTOM AT", 1, ID_None},
 
 		/* Motorola banner */
-		{"+MBAN:"	,1},
+		{"+MBAN:"	,1, ID_None},
 
 		/* HSPA CORPORATION */
-		{"+ZEND"	,1},
+		{"+ZEND"	,1, ID_None},
 
 		/* Huawei */
-		{"^RSSI:"	,1}, /* ^RSSI:18 */
-		{"^DSFLOWRPT:"	,1}, /* ^DSFLOWRPT:00000124,00000082,00000EA6,0000000000012325,000000000022771D,0000BB80,0001F400 */
-		{"^BOOT:"	,1}, /* ^BOOT:27710117,0,0,0,75 */
-		{"^MODE:"	,1}, /* ^MODE:3,3 */
-		{"^CSNR:"	,1}, /* ^CSNR:-93,-23 */
+		{"^RSSI:"	,1, ID_None}, /* ^RSSI:18 */
+		{"^DSFLOWRPT:"	,1, ID_None}, /* ^DSFLOWRPT:00000124,00000082,00000EA6,0000000000012325,000000000022771D,0000BB80,0001F400 */
+		{"^BOOT:"	,1, ID_None}, /* ^BOOT:27710117,0,0,0,75 */
+		{"^MODE:"	,1, ID_None}, /* ^MODE:3,3 */
+		{"^CSNR:"	,1, ID_None}, /* ^CSNR:-93,-23 */
 
 		/* ONDA */
-		{"+ZUSIMR:"	,1}, /* +ZUSIMR:2 */
+		{"+ZUSIMR:"	,1, ID_None}, /* +ZUSIMR:2 */
 
-		{NULL		,1}};
+		{NULL		,1, ID_None}};
 
     	/* Ignore leading CR, LF and ESC */
     	if (d->Msg.Length == 0) {
@@ -189,9 +190,7 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 							d->Msg.Buffer + d->LineStart,
 							strlen(SpecialAnswers[i].text)) == 0) {
 					/* We need something better here */
-				  	if (s->Phone.Data.RequestID == ID_GetNetworkInfo &&
-							(strcmp(SpecialAnswers[i].text, "+CREG:") == 0 ||
-							strcmp(SpecialAnswers[i].text, "+CGREG:") == 0)) {
+					if (s->Phone.Data.RequestID == SpecialAnswers[i].requestid) {
 						i++;
 						continue;
 					}
