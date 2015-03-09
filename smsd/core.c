@@ -684,14 +684,18 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 
 #ifdef HAVE_SHM
 	/* Calculate key for shared memory */
-	if (realpath(filename, fullpath) == NULL) {
+	if (filename == NULL) {
+		strcpy(fullpath, ":default:");
+	} else if (realpath(filename, fullpath) == NULL) {
 		strncpy(fullpath, filename, PATH_MAX);
 		fullpath[PATH_MAX] = 0;
 	}
 	Config->shm_key = ftok(fullpath, SMSD_SHM_KEY);
 #endif
 #ifdef WIN32
-	if (GetFullPathName(filename, sizeof(config_name), config_name, NULL) == 0) {
+	if (filename == NULL) {
+		strcpy(config_name, ":default:");
+	} else if (GetFullPathName(filename, sizeof(config_name), config_name, NULL) == 0) {
 		return FALSE;
 	}
 
