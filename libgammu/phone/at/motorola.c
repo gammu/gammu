@@ -347,7 +347,7 @@ GSM_Error MOTOROLA_LockCalendar(GSM_StateMachine *s)
 {
 	GSM_Error error;
 
-	ATGEN_WaitForAutoLen(s, "AT+MDBL=1\r", 0x00, 10, ID_SetCalendarNote);
+	error = ATGEN_WaitForAutoLen(s, "AT+MDBL=1\r", 0x00, 10, ID_SetCalendarNote);
 
 	return error;
 }
@@ -356,7 +356,7 @@ GSM_Error MOTOROLA_UnlockCalendar(GSM_StateMachine *s)
 {
 	GSM_Error error;
 
-	ATGEN_WaitForAutoLen(s, "AT+MDBL=0\r", 0x00, 10, ID_SetCalendarNote);
+	error = ATGEN_WaitForAutoLen(s, "AT+MDBL=0\r", 0x00, 10, ID_SetCalendarNote);
 
 	return error;
 }
@@ -405,7 +405,7 @@ GSM_Error MOTOROLA_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *St
 
 	s->Phone.Data.CalStatus = Status;
 
-	ATGEN_WaitForAutoLen(s, "AT+MDBR=?\r", 0x00, 10, ID_GetCalendarNotesInfo);
+	error = ATGEN_WaitForAutoLen(s, "AT+MDBR=?\r", 0x00, 10, ID_GetCalendarNotesInfo);
 
 	return error;
 }
@@ -578,7 +578,7 @@ GSM_Error MOTOROLA_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 
 	len = sprintf(req, "AT+MDBR=%d\r", Note->Location - 1);
 
-	ATGEN_WaitFor(s, req, len, 0x00, 10, ID_GetCalendarNote);
+	error = ATGEN_WaitFor(s, req, len, 0x00, 10, ID_GetCalendarNote);
 	MOTOROLA_UnlockCalendar(s);
 	return error;
 }
@@ -599,7 +599,7 @@ GSM_Error MOTOROLA_DelCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 
 	len = sprintf(req, "AT+MDBWE=%d,0,0\r", Note->Location);
 
-	ATGEN_WaitFor(s, req, len, 0x00, 10, ID_DeleteCalendarNote);
+	error = ATGEN_WaitFor(s, req, len, 0x00, 10, ID_DeleteCalendarNote);
 	MOTOROLA_UnlockCalendar(s);
 	return error;
 }
