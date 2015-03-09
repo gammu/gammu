@@ -2406,6 +2406,8 @@ StateMachine_GetSMS(StateMachineObject *self, PyObject *args, PyObject *kwds) {
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "II", kwlist, &(sms.SMS[0].Folder), &(sms.SMS[0].Location)))
         return NULL;
 
+    sms.Number = 0;
+
     BEGIN_PHONE_COMM
     error = GSM_GetSMS(self->s, &sms);
     END_PHONE_COMM
