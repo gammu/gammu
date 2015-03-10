@@ -18,9 +18,3 @@ for x in locale/*/docs.po  ; do
     echo -n "$lang: "
     msgfmt --statistics --check -o - $x > /dev/null
 done
-echo manual.po:
-for x in locale/*/manual.po  ; do 
-    lang=`echo $x | sed 's@locale/\(.*\)/manual.po@\1@'`
-    echo -n "$lang: "
-    msgfmt --statistics --check -o - $x > /dev/null
-done

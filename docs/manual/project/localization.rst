@@ -34,8 +34,6 @@ There are several po files to translate:
 ``docs.po``
     Basic documentation shipped withing package (eg. :file:`README.rst` and
     :file:`INSTALL` files).
-``manual.po``
-    The Gammu Manual translation (this manual).
 
 
 .. _translation server: http://hosted.weblate.org/projects/gammu/

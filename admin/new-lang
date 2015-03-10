@@ -15,6 +15,5 @@ for loc in docs gammu libgammu manual ; do
 done
 
 sed -i "s/\(.*po4a_langs.*\)/\1 $1/" admin/po4a-docs.config
-sed -i "s/\(.*po4a_langs.*\)/\1 $1/" admin/po4a-manual.config
 
 git add locale/$1
