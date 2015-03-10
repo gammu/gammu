@@ -868,8 +868,8 @@ int GSM_ReadDevice (GSM_StateMachine *s, gboolean waitforreply)
 	}
 
 	GSM_GetCurrentDateTime (&Date);
-	i=Date.Second;
-	while (i==Date.Second && !s->Abort) {
+	i = Date.Second;
+	while (i == Date.Second && !s->Abort) {
 		res = s->Device.Functions->ReadDevice(s, buff, sizeof(buff));
 
 		if (!waitforreply) {
@@ -882,7 +882,7 @@ int GSM_ReadDevice (GSM_StateMachine *s, gboolean waitforreply)
 		GSM_GetCurrentDateTime(&Date);
 	}
 	for (count = 0; count < res; count++) {
-		s->Protocol.Functions->StateMachine(s,buff[count]);
+		s->Protocol.Functions->StateMachine(s, buff[count]);
 	}
 	return res;
 }
@@ -936,7 +936,7 @@ GSM_Error GSM_WaitForOnce(GSM_StateMachine *s, unsigned const char *buffer,
 			sentmsg.Length 	= length;
 			sentmsg.Type	= type;
 			sentmsg.Buffer 	= (unsigned char *)malloc(length);
-			memcpy(sentmsg.Buffer,buffer,length);
+			memcpy(sentmsg.Buffer, buffer, length);
 			Phone->SentMsg  = &sentmsg;
 		}
 
@@ -957,11 +957,11 @@ GSM_Error GSM_WaitForOnce(GSM_StateMachine *s, unsigned const char *buffer,
 		}
 
 		/* Request completed */
-		if (Phone->RequestID==ID_None) {
+		if (Phone->RequestID == ID_None) {
 			return Phone->DispatchError;
 		}
 		i++;
-	} while (i<timeout);
+	} while (i < timeout);
 
 	return ERR_TIMEOUT;
 }
@@ -984,12 +984,14 @@ GSM_Error GSM_WaitFor (GSM_StateMachine *s, unsigned const char *buffer,
 	Phone->RequestID	= request;
 	Phone->DispatchError	= ERR_TIMEOUT;
 
-	for (reply=0;reply<s->ReplyNum;reply++) {
-		if (reply!=0) {
+	for (reply = 0; reply < s->ReplyNum; reply++) {
+		if (reply != 0) {
 			smprintf_level(s, D_ERROR, "[Retrying %i type 0x%02X]\n", reply, type);
 		}
 		error = s->Protocol.Functions->WriteMessage(s, buffer, length, type);
-		if (error!=ERR_NONE) return error;
+		if (error != ERR_NONE) {
+			return error;
+		}
 
 		/* Special case when no reply is expected */
 		if (request == ID_None) {
@@ -997,7 +999,9 @@ GSM_Error GSM_WaitFor (GSM_StateMachine *s, unsigned const char *buffer,
 		}
 
 		error = GSM_WaitForOnce(s, buffer, length, type, timeout);
-		if (error != ERR_TIMEOUT) return error;
+		if (error != ERR_TIMEOUT) {
+			return error;
+		}
         }
 
 	return ERR_TIMEOUT;
