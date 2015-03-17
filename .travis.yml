@@ -2,6 +2,9 @@ language: c
 compiler:
   - gcc
   - clang
+python:
+  - "2.7"
+  - "2.6"
 before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -qq libbluetooth-dev libusb-1.0-0-dev libgudev-1.0-dev unixodbc-dev libdbi-dev libdbd-sqlite3
