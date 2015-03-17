@@ -28,7 +28,12 @@
 #include <locale.h>
 
 /* Strings */
-#include "../../../helper/string.h"
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
 
 /* For locking */
 #ifdef WITH_THREAD
