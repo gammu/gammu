@@ -37,7 +37,7 @@
 
 /* For locking */
 #ifdef WITH_THREAD
-#include "pythread.h"
+#include <pythread.h>
 #endif
 
 /* Convertors between Gammu and Python types */
