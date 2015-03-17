@@ -167,7 +167,7 @@ typedef struct {
 	/**
 	 * Number where to divert.
 	 */
-	char Number[(GSM_MAX_NUMBER_LENGTH + 1) * 2];
+	unsigned char Number[(GSM_MAX_NUMBER_LENGTH + 1) * 2];
 } GSM_CallDivert;
 
 /**
