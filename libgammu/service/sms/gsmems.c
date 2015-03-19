@@ -628,8 +628,6 @@ gboolean GSM_DecodeEMSMultiPartSMS(GSM_Debug_Info *di,
 					case 0x0b84:
 						smfprintf(di, "UDH part - MMS notification\n");
 						return GSM_DecodeMMSIndication(di, Info, SMS);
-//						Info->Entries[Info->EntriesNum].ID = SMS_MMSIndicatorLong;
-						break;
 					default:
 						smfprintf(di, "UDH part - unknown application data - 0x%04x\n", Info->Entries[Info->EntriesNum].Number);
 						break;
