@@ -23,6 +23,7 @@ ChangeLog
 
 [!] * Removed usage of __TIME__ and __DATE__ macros in codebase.
 [-] * Fixed encoding of special chars to iCalendar format.
+[-] * Fixed decoding of priority from vTODO.
 
 20150302 - 1.35.0
 
