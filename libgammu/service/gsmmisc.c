@@ -372,10 +372,10 @@ GSM_Error VC_StoreText(char *Buffer, const size_t buff_len, size_t *Pos, const u
 	if (buffer == NULL) return ERR_MOREMEMORY;
 
 	if (UTF8) {
-		EncodeUTF8(buffer, Text);
+		EncodeUTF8QuotedPrintable(buffer, Text);
 		error =  VC_StoreLine(Buffer, buff_len, Pos, "%s:%s", Start, buffer);
 	} else {
-		EncodeUTF8QuotedPrintable(buffer,Text);
+		EncodeUTF8QuotedPrintable(buffer, Text);
 		if (UnicodeLength(Text) == strlen(buffer)) {
 			/* Text is plain ASCII */
 			error =  VC_StoreLine(Buffer, buff_len, Pos, "%s:%s", Start, buffer);
