@@ -243,7 +243,7 @@ void execute_actions(void)
 
 int main(int argc, char *argv[])
 {
-	unsigned char buf[5000];
+	char buf[5000];
 
 	first_connect = TRUE;
 	DBName[0] = 0;
