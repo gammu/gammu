@@ -1550,7 +1550,7 @@ msgid ""
 "License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
 "GPL/2.0/>."
 msgstr ""
-"Licence GPLv2: GNU GPL verze 2 <http://creativecommons.org/licenses/GPL/2.0/"
+"Licence GPLv2: GNU GPL verze 2 <https://spdx.org/licenses/GPL-2.0"
 ">."
 
 # type: Plain text

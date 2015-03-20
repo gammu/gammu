@@ -1550,7 +1550,7 @@ msgid ""
 "License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
 "GPL/2.0/>."
 msgstr ""
-"Lisans GPLv2: GNU GPL sürüm 2 <http://creativecommons.org/licenses/GPL/2.0/>."
+"Lisans GPLv2: GNU GPL sürüm 2 <https://spdx.org/licenses/GPL-2.0>."
 
 #: gammu-detect/main.c:88 gammu/gammu.c:335
 msgid "This is free software: you are free to change and redistribute it."

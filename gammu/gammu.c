@@ -330,7 +330,7 @@ static void Version(int argc UNUSED, char *argv[]UNUSED)
 
 	printf("\n");
 
-	printf("%s\n", _("License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/GPL/2.0/>."));
+	printf("%s\n", _("License GPLv2: GNU GPL version 2 <https://spdx.org/licenses/GPL-2.0>."));
 
 	printf("%s\n", _("This is free software: you are free to change and redistribute it."));
 

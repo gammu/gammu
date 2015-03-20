@@ -1550,7 +1550,7 @@ msgid ""
 "License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
 "GPL/2.0/>."
 msgstr ""
-"Licens GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/GPL/2.0/"
+"Licens GPLv2: GNU GPL version 2 <https://spdx.org/licenses/GPL-2.0"
 ">."
 
 #: gammu-detect/main.c:88 gammu/gammu.c:335
