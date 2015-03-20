@@ -3230,7 +3230,10 @@ GSM_Error LoadBackup(const char *FileName, GSM_Backup *backup)
 	readvalue = ReadCFGText(file_info, buffer, "Phone", UseUnicode);
 	if (readvalue!=NULL) strcpy(backup->Model,readvalue);
 	readvalue = ReadCFGText(file_info, buffer, "Creator", UseUnicode);
-	if (readvalue!=NULL) strcpy(backup->Creator,readvalue);
+	if (readvalue!=NULL) {
+		strncpy(backup->Creator,readvalue, sizeof(backup->Creator) - 1);
+		backup->Creator[sizeof(backup->Creator) - 1] = 0;
+	}
 	readvalue = ReadCFGText(file_info, buffer, "DateTime", UseUnicode);
 	if (readvalue != NULL && ReadVCALDateTime(readvalue, &backup->DateTime)) {
 		backup->DateTimeAvailable = TRUE;
