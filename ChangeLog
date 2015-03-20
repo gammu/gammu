@@ -25,6 +25,7 @@ ChangeLog
 [-] * Fixed encoding of special chars to iCalendar format.
 [-] * Fixed decoding of priority from vTODO.
 [-] * Avoid infinite loops with ignored messages.
+[-] * Improved stability of checking phone SMS memory.
 
 20150302 - 1.35.0
 

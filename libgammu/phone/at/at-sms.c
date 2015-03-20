@@ -174,7 +174,7 @@ GSM_Error ATGEN_GetSMSMemories(GSM_StateMachine *s)
 	}
 
 	smprintf(s, "Getting available SMS memories\n");
-	error = ATGEN_WaitForAutoLen(s, "AT+CPMS=?\r", 0x00, 20, ID_GetSMSMemories);
+	error = ATGEN_WaitForAutoLen(s, "AT+CPMS=?\r", 0x00, 200, ID_GetSMSMemories);
 
 	if (error != ERR_NONE) {
 		return error;
@@ -287,7 +287,7 @@ GSM_Error ATGEN_SetSMSMemory(GSM_StateMachine *s, gboolean SIM, gboolean for_wri
 			cpmsCmdReq[14] = 'M'; cpmsCmdReq[15] = 'E';
 		}
 		smprintf(s, "Setting SMS memory type to ME\n");
-		error = ATGEN_WaitFor(s, cpmsCmdReq, cpmsCmdReqLength, 0x00, 20, ID_SetMemoryType);
+		error = ATGEN_WaitFor(s, cpmsCmdReq, cpmsCmdReqLength, 0x00, 200, ID_SetMemoryType);
 
 		if (Priv->PhoneSMSMemory == 0 && error == ERR_NONE) {
 			Priv->PhoneSMSMemory = AT_AVAILABLE;
@@ -1500,10 +1500,10 @@ GSM_Error ATGEN_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status)
 		smprintf(s, "Getting SIM SMS status\n");
 
 		if (Priv->SIMSaveSMS == AT_AVAILABLE) {
-			error = ATGEN_WaitForAutoLen(s, "AT+CPMS=\"SM\",\"SM\"\r", 0x00, 20, ID_GetSMSStatus);
+			error = ATGEN_WaitForAutoLen(s, "AT+CPMS=\"SM\",\"SM\"\r", 0x00, 200, ID_GetSMSStatus);
 			Priv->SMSMemoryWrite = TRUE;
 		} else {
-			error = ATGEN_WaitForAutoLen(s, "AT+CPMS=\"SM\"\r", 0x00, 20, ID_GetSMSStatus);
+			error = ATGEN_WaitForAutoLen(s, "AT+CPMS=\"SM\"\r", 0x00, 200, ID_GetSMSStatus);
 			Priv->SMSMemoryWrite = FALSE;
 		}
 		if (error != ERR_NONE) {
@@ -1520,14 +1520,14 @@ GSM_Error ATGEN_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status)
 
 		if (Priv->PhoneSaveSMS == AT_AVAILABLE) {
 			if (Priv->MotorolaSMS) {
-				error = ATGEN_WaitForAutoLen(s, "AT+CPMS=\"MT\"\r", 0x00, 20, ID_GetSMSStatus);
+				error = ATGEN_WaitForAutoLen(s, "AT+CPMS=\"MT\"\r", 0x00, 200, ID_GetSMSStatus);
 				Priv->SMSMemoryWrite = FALSE;
 			} else {
-				error = ATGEN_WaitForAutoLen(s, "AT+CPMS=\"ME\",\"ME\"\r", 0x00, 20, ID_GetSMSStatus);
+				error = ATGEN_WaitForAutoLen(s, "AT+CPMS=\"ME\",\"ME\"\r", 0x00, 200, ID_GetSMSStatus);
 				Priv->SMSMemoryWrite = TRUE;
 			}
 		} else {
-			error = ATGEN_WaitForAutoLen(s, "AT+CPMS=\"ME\"\r", 0x00, 20, ID_GetSMSStatus);
+			error = ATGEN_WaitForAutoLen(s, "AT+CPMS=\"ME\"\r", 0x00, 200, ID_GetSMSStatus);
 			Priv->SMSMemoryWrite = FALSE;
 		}
 		if (error != ERR_NONE) {
