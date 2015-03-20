@@ -706,6 +706,10 @@ typedef enum {
 	 * Reading og SMSes in text mode.
 	 */
 	F_READ_SMSTEXTMODE,
+	/**
+	 * Reset phone after timeout.
+	 */
+	F_RESET_AFTER_TIMEOUT,
 
 	/**
 	 * Just marker of highest feature code, should not be used.
