@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.35.90\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-03-03 11:05+0100\n"
+"POT-Creation-Date: 2015-03-20 16:53+0100\n"
 "PO-Revision-Date: 2014-12-29 11:40+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/gammu/gammu/de/>\n"
@@ -674,7 +674,7 @@ msgstr "Lautloser Alarm"
 
 #: gammu/calendar.c:217 gammu/calendar.c:551 gammu/calendar.c:774
 #: gammu/calendar.c:996 gammu/message.c:225 gammu/misc.c:1139
-#: helper/memory-display.c:167 helper/message-display.c:445
+#: helper/memory-display.c:170 helper/message-display.c:445
 msgid "Text"
 msgstr "Text"
 
@@ -682,7 +682,7 @@ msgstr "Text"
 msgid "Description"
 msgstr "Beschreibung"
 
-#: gammu/calendar.c:227 gammu/calendar.c:838 helper/memory-display.c:211
+#: gammu/calendar.c:227 gammu/calendar.c:838 helper/memory-display.c:214
 msgid "LUID"
 msgstr "LUID"
 
@@ -1472,15 +1472,15 @@ msgstr "4 Bytes"
 msgid "%i phone number types\n"
 msgstr "%i Arten von Telefonnummern\n"
 
-#: gammu/depend/nokia/dct4.c:1378 helper/memory-display.c:126
+#: gammu/depend/nokia/dct4.c:1378 helper/memory-display.c:129
 msgid "Home number"
 msgstr "Privatnummer"
 
-#: gammu/depend/nokia/dct4.c:1379 helper/memory-display.c:147
+#: gammu/depend/nokia/dct4.c:1379 helper/memory-display.c:150
 msgid "Mobile number"
 msgstr "Handynummer"
 
-#: gammu/depend/nokia/dct4.c:1380 helper/memory-display.c:161
+#: gammu/depend/nokia/dct4.c:1380 helper/memory-display.c:164
 msgid "Fax number"
 msgstr "Faxnummer"
 
@@ -1549,9 +1549,11 @@ msgstr ""
 "Copyright (C) 2010 - 2011 Michal Cihar <michal@cihar.com> und andere Autoren."
 
 #: gammu-detect/main.c:87 gammu/gammu.c:333
-msgid ""
-"License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
-"GPL/2.0/>."
+#, fuzzy
+#| msgid ""
+#| "License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
+#| "GPL/2.0/>."
+msgid "License GPLv2: GNU GPL version 2 <https://spdx.org/licenses/GPL-2.0>."
 msgstr ""
 "License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
 "GPL/2.0/>."
@@ -1777,7 +1779,7 @@ msgstr "Netzname"
 
 #: gammu/gammu.c:80 gammu/message.c:218 gammu/misc.c:975 gammu/misc.c:1142
 #: gammu/misc.c:1894 gammu/misc.c:1933 gammu/misc.c:2228 gammu/mms.c:112
-#: helper/memory-display.c:217 helper/message-display.c:252
+#: helper/memory-display.c:220 helper/message-display.c:252
 msgid "Name"
 msgstr "Name"
 
@@ -2080,7 +2082,7 @@ msgstr ""
 "Telefonfirmware auf Version 6.00 oder höher"
 
 #: gammu/memory.c:91 gammu/memory.c:109 gammu/memory.c:235 gammu/memory.c:352
-#: helper/memory-display.c:274
+#: helper/memory-display.c:277
 #, c-format
 msgid "Memory %s, Location %i\n"
 msgstr "Speicher %s, Speicherplatz %i\n"
@@ -2174,7 +2176,7 @@ msgstr "Format"
 msgid "Fax"
 msgstr "Fax"
 
-#: gammu/message.c:227 helper/memory-display.c:192
+#: gammu/message.c:227 helper/memory-display.c:195
 msgid "Email"
 msgstr "E-Mail"
 
@@ -2706,7 +2708,7 @@ msgstr " Format, Klingelton \"%s\"\n"
 msgid "What type of reset do you want (\"%s\") ?\n"
 msgstr "Welche Art Reset möchten Sie (\"%s\")?\n"
 
-#: gammu/misc.c:976 gammu/misc.c:1023 helper/memory-display.c:178
+#: gammu/misc.c:976 gammu/misc.c:1023 helper/memory-display.c:181
 #: helper/message-display.c:478
 msgid "Address"
 msgstr "Adresse"
@@ -2739,7 +2741,7 @@ msgid "default"
 msgstr "Standard"
 
 #: gammu/misc.c:1081 gammu/misc.c:1083 gammu/misc.c:1096 gammu/misc.c:1103
-#: helper/memory-display.c:101
+#: helper/memory-display.c:104
 msgid "Ringtone"
 msgstr "Klingelton"
 
@@ -3109,7 +3111,7 @@ msgstr " (Head-Set-Profil)"
 msgid " (Car kit profile)"
 msgstr " (Freisprechanlagen-Profil)"
 
-#: gammu/misc.c:2094 helper/memory-display.c:106
+#: gammu/misc.c:2094 helper/memory-display.c:109
 msgid "Ringtone ID"
 msgstr "Klingelton-ID"
 
@@ -3634,203 +3636,203 @@ msgid "Caller group number too high, please increase buffer in sources!"
 msgstr ""
 "Anrufergruppennummer zu groß, bitte vergrößern Sie den Puffer in den Quellen!"
 
-#: helper/memory-display.c:110
+#: helper/memory-display.c:113
 msgid "User ID"
 msgstr "Benutzer-ID"
 
-#: helper/memory-display.c:113
+#: helper/memory-display.c:116
 msgid "Picture name"
 msgstr "Name des Bildes"
 
-#: helper/memory-display.c:116
+#: helper/memory-display.c:119
 msgid "Picture ID"
 msgstr "Bild-ID"
 
-#: helper/memory-display.c:119
+#: helper/memory-display.c:122
 msgid "Photo"
 msgstr "Foto"
 
-#: helper/memory-display.c:119
+#: helper/memory-display.c:122
 msgid "Displaying not supported"
 msgstr "Anzeigen wird nicht unterstützt"
 
-#: helper/memory-display.c:121
+#: helper/memory-display.c:124
 msgid "Favorite messaging number"
 msgstr "Bevorzugte Nummer für Textnachrichten"
 
-#: helper/memory-display.c:129
+#: helper/memory-display.c:132
 msgid "Work number"
 msgstr "Geschäftsnummer"
 
-#: helper/memory-display.c:132
+#: helper/memory-display.c:135
 msgid "General number"
 msgstr "Allgemeine Nummer"
 
-#: helper/memory-display.c:136
+#: helper/memory-display.c:139
 msgid "Video number"
 msgstr "Videonummer"
 
-#: helper/memory-display.c:141
+#: helper/memory-display.c:144
 msgid "Home mobile number"
 msgstr "Handynummer privat"
 
-#: helper/memory-display.c:144
+#: helper/memory-display.c:147
 msgid "Work mobile number"
 msgstr "Handynummer gesch"
 
-#: helper/memory-display.c:155
+#: helper/memory-display.c:158
 msgid "Home fax number"
 msgstr "Faxnummer privat"
 
-#: helper/memory-display.c:158
+#: helper/memory-display.c:161
 msgid "Work fax number"
 msgstr "Handynummer geschäftlich"
 
-#: helper/memory-display.c:165
+#: helper/memory-display.c:168
 msgid "Pager number"
 msgstr "Pagernummer"
 
-#: helper/memory-display.c:166
+#: helper/memory-display.c:169
 msgid "Other number"
 msgstr "Andere Nummer"
 
-#: helper/memory-display.c:172
+#: helper/memory-display.c:175
 msgid "Home address"
 msgstr "Anschrift privat"
 
-#: helper/memory-display.c:175
+#: helper/memory-display.c:178
 msgid "Work address"
 msgstr "Anschrift geschäftlich"
 
-#: helper/memory-display.c:186
+#: helper/memory-display.c:189
 msgid "Home email"
 msgstr "E-Mail privat"
 
-#: helper/memory-display.c:189
+#: helper/memory-display.c:192
 msgid "Work email"
 msgstr "E-Mail geschäftlich"
 
-#: helper/memory-display.c:196
+#: helper/memory-display.c:199
 msgid "Email address 2"
 msgstr "E-Mail-Adresse 2"
 
-#: helper/memory-display.c:201
+#: helper/memory-display.c:204
 msgid "Home website"
 msgstr "Website privat"
 
-#: helper/memory-display.c:204
+#: helper/memory-display.c:207
 msgid "Work website"
 msgstr "Website geschäftlich"
 
-#: helper/memory-display.c:207
+#: helper/memory-display.c:210
 msgid "Website"
 msgstr "Webseite"
 
-#: helper/memory-display.c:212
+#: helper/memory-display.c:215
 msgid "VOIP"
 msgstr "VOIP"
 
-#: helper/memory-display.c:213
+#: helper/memory-display.c:216
 msgid "SWIS"
 msgstr "SWIS"
 
-#: helper/memory-display.c:214
+#: helper/memory-display.c:217
 msgid "WVID"
 msgstr "WVID"
 
-#: helper/memory-display.c:215
+#: helper/memory-display.c:218
 msgid "SIP"
 msgstr "SIP"
 
-#: helper/memory-display.c:216
+#: helper/memory-display.c:219
 msgid "DTMF"
 msgstr "DTMF"
 
-#: helper/memory-display.c:218
+#: helper/memory-display.c:221
 msgid "Last name"
 msgstr "Nachname"
 
-#: helper/memory-display.c:219
+#: helper/memory-display.c:222
 msgid "First name"
 msgstr "Vorname"
 
-#: helper/memory-display.c:220
+#: helper/memory-display.c:223
 msgid "Second name"
 msgstr "Vorname 2"
 
-#: helper/memory-display.c:221
+#: helper/memory-display.c:224
 msgid "Formal name"
 msgstr "Name (förmlich)"
 
-#: helper/memory-display.c:222
+#: helper/memory-display.c:225
 msgid "Name prefix"
 msgstr "Titel"
 
-#: helper/memory-display.c:223
+#: helper/memory-display.c:226
 msgid "Name suffix"
 msgstr "Namensnachsatz"
 
-#: helper/memory-display.c:224
+#: helper/memory-display.c:227
 msgid "Nick name"
 msgstr "Spitzname"
 
-#: helper/memory-display.c:225
+#: helper/memory-display.c:228
 msgid "Company"
 msgstr "Firma"
 
-#: helper/memory-display.c:226
+#: helper/memory-display.c:229
 msgid "Job title"
 msgstr "Tätigkeit"
 
-#: helper/memory-display.c:227
+#: helper/memory-display.c:230
 msgid "Street address"
 msgstr "Straße"
 
-#: helper/memory-display.c:228
+#: helper/memory-display.c:231
 msgid "City"
 msgstr "Ort"
 
-#: helper/memory-display.c:229
+#: helper/memory-display.c:232
 msgid "State"
 msgstr "Bundesland / Kanton"
 
-#: helper/memory-display.c:230
+#: helper/memory-display.c:233
 msgid "Zip code"
 msgstr "Postleitzahl"
 
-#: helper/memory-display.c:231
+#: helper/memory-display.c:234
 msgid "Country"
 msgstr "Land"
 
-#: helper/memory-display.c:232
+#: helper/memory-display.c:235
 msgid "Custom text 1"
 msgstr "Benutzer-Text 1"
 
-#: helper/memory-display.c:233
+#: helper/memory-display.c:236
 msgid "Custom text 2"
 msgstr "Benutzer-Text 2"
 
-#: helper/memory-display.c:234
+#: helper/memory-display.c:237
 msgid "Custom text 3"
 msgstr "Benutzer-Text 3"
 
-#: helper/memory-display.c:235
+#: helper/memory-display.c:238
 msgid "Custom text 4"
 msgstr "Benutzer-Text 4"
 
-#: helper/memory-display.c:236
+#: helper/memory-display.c:239
 msgid "Push to talk ID"
 msgstr "\"Push to talk\" ID"
 
-#: helper/memory-display.c:239
+#: helper/memory-display.c:242
 msgid "unknown field type"
 msgstr "unbekannter Feldtyp"
 
-#: helper/memory-display.c:246 helper/message-display.c:128
+#: helper/memory-display.c:249 helper/message-display.c:128
 msgid "home"
 msgstr "Privat"
 
-#: helper/memory-display.c:249 helper/message-display.c:131
+#: helper/memory-display.c:252 helper/message-display.c:131
 msgid "work"
 msgstr "Geschäftlich"
 
