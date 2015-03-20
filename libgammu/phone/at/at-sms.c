@@ -51,7 +51,7 @@ GSM_Error ATGEN_SetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 	}
 	smprintf(s, "Setting SMSC\n");
 	sprintf(smscCmdReq, "AT+CSCA=\"%s\"\r",DecodeUnicodeString(smsc->Number));
-	error = ATGEN_WaitForAutoLen(s, smscCmdReq, 0x00, 4, ID_SetSMSC);
+	error = ATGEN_WaitForAutoLen(s, smscCmdReq, 0x00, 40, ID_SetSMSC);
 	return error;
 }
 
@@ -1705,7 +1705,7 @@ GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *message, unsig
 			req[PHONE_SMSDeliver.TPVP],
 			req[PHONE_SMSDeliver.TPPID],
 			req[PHONE_SMSDeliver.TPDCS]);
-		error = ATGEN_WaitFor(s, buffer, len, 0x00, 4, ID_SetSMSParameters);
+		error = ATGEN_WaitFor(s, buffer, len, 0x00, 40, ID_SetSMSParameters);
 
 		if (error == ERR_NOTSUPPORTED) {
 			/* Nokia Communicator 9000i doesn't support <vp> parameter */
@@ -1713,7 +1713,7 @@ GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *message, unsig
 				req[PHONE_SMSDeliver.firstbyte],
 				req[PHONE_SMSDeliver.TPPID],
 				req[PHONE_SMSDeliver.TPDCS]);
-			error = ATGEN_WaitFor(s, buffer, len, 0x00, 4, ID_SetSMSParameters);
+			error = ATGEN_WaitFor(s, buffer, len, 0x00, 40, ID_SetSMSParameters);
 		}
 		if (error != ERR_NONE) {
 			smprintf(s, "WARNING: Failed to set message parameters, continuing without them!\n");
@@ -2153,7 +2153,7 @@ GSM_Error ATGEN_GetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 	/* Issue command */
 	s->Phone.Data.SMSC = smsc;
 	smprintf(s, "Getting SMSC\n");
-	error = ATGEN_WaitForAutoLen(s, "AT+CSCA?\r", 0x00, 4, ID_GetSMSC);
+	error = ATGEN_WaitForAutoLen(s, "AT+CSCA?\r", 0x00, 40, ID_GetSMSC);
 	return error;
 }
 
@@ -2261,10 +2261,10 @@ GSM_Error ATGEN_SetFastSMSSending(GSM_StateMachine *s, gboolean enable)
 
 	if (enable) {
 		smprintf(s, "Enabling fast SMS sending\n");
-		error = ATGEN_WaitForAutoLen(s, "AT+CMMS=2\r", 0x00, 4, ID_SetFastSMSSending);
+		error = ATGEN_WaitForAutoLen(s, "AT+CMMS=2\r", 0x00, 40, ID_SetFastSMSSending);
 	} else {
 		smprintf(s, "Disabling fast SMS sending\n");
-		error = ATGEN_WaitForAutoLen(s, "AT+CMMS=0\r", 0x00, 4, ID_SetFastSMSSending);
+		error = ATGEN_WaitForAutoLen(s, "AT+CMMS=0\r", 0x00, 40, ID_SetFastSMSSending);
 	}
 	return error;
 }
@@ -2628,7 +2628,7 @@ GSM_Error ATGEN_GetCNMIMode(GSM_StateMachine *s)
 {
 	GSM_Error error;
 
-	error = ATGEN_WaitForAutoLen(s, "AT+CNMI=?\r", 0x00, 4, ID_GetCNMIMode);
+	error = ATGEN_WaitForAutoLen(s, "AT+CNMI=?\r", 0x00, 40, ID_GetCNMIMode);
 	return error;
 }
 
@@ -2659,11 +2659,11 @@ GSM_Error ATGEN_SetIncomingCB(GSM_StateMachine *s, gboolean enable)
 		if (enable) {
 			smprintf(s, "Enabling incoming CB\n");
 			length = sprintf(buffer, "AT+CNMI=%d,,%d\r", Priv->CNMIMode, Priv->CNMIBroadcastProcedure);
-			error = ATGEN_WaitFor(s, buffer, length, 0x00, 4, ID_SetIncomingCB);
+			error = ATGEN_WaitFor(s, buffer, length, 0x00, 40, ID_SetIncomingCB);
 		} else {
 			smprintf(s, "Disabling incoming CB\n");
 			length = sprintf(buffer, "AT+CNMI=%d,,%d\r", Priv->CNMIMode, 0);
-			error = ATGEN_WaitFor(s, buffer, length, 0x00, 4, ID_SetIncomingCB);
+			error = ATGEN_WaitFor(s, buffer, length, 0x00, 40, ID_SetIncomingCB);
 		}
 		return error;
 	}
@@ -2717,7 +2717,7 @@ GSM_Error ATGEN_SetIncomingSMS(GSM_StateMachine *s, gboolean enable)
 			/* Delivery reports */
 			if (Priv->CNMIDeliverProcedure != 0) {
 				length = sprintf(buffer, "AT+CNMI=%d,,,%d\r", Priv->CNMIMode, Priv->CNMIDeliverProcedure);
-				error = ATGEN_WaitFor(s, buffer, length, 0x00, 4, ID_SetIncomingSMS);
+				error = ATGEN_WaitFor(s, buffer, length, 0x00, 40, ID_SetIncomingSMS);
 
 				if (error != ERR_NONE) {
 					return error;
@@ -2727,7 +2727,7 @@ GSM_Error ATGEN_SetIncomingSMS(GSM_StateMachine *s, gboolean enable)
 			/* Normal messages */
 			if (Priv->CNMIProcedure != 0) {
 				length = sprintf(buffer, "AT+CNMI=%d,%d\r", Priv->CNMIMode, Priv->CNMIProcedure);
-				error = ATGEN_WaitFor(s, buffer, length, 0x00, 4, ID_SetIncomingSMS);
+				error = ATGEN_WaitFor(s, buffer, length, 0x00, 40, ID_SetIncomingSMS);
 
 				if (error != ERR_NONE) {
 					return error;
@@ -2738,7 +2738,7 @@ GSM_Error ATGEN_SetIncomingSMS(GSM_StateMachine *s, gboolean enable)
 
 			/* Delivery reports */
 			length = sprintf(buffer,"AT+CNMI=%d,,,%d\r", Priv->CNMIMode, 0);
-			error = ATGEN_WaitFor(s, buffer, length, 0x00, 4, ID_SetIncomingSMS);
+			error = ATGEN_WaitFor(s, buffer, length, 0x00, 40, ID_SetIncomingSMS);
 
 			if (error != ERR_NONE) {
 				return error;
@@ -2746,7 +2746,7 @@ GSM_Error ATGEN_SetIncomingSMS(GSM_StateMachine *s, gboolean enable)
 
 			/* Normal messages */
 			length = sprintf(buffer, "AT+CNMI=%d,%d\r", Priv->CNMIMode, 0);
-			error = ATGEN_WaitFor(s, buffer, length, 0x00, 4, ID_SetIncomingSMS);
+			error = ATGEN_WaitFor(s, buffer, length, 0x00, 40, ID_SetIncomingSMS);
 
 			if (error != ERR_NONE) {
 				return error;
