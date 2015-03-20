@@ -384,6 +384,7 @@ GSM_SMSDConfig *SMSD_NewConfig(const char *name)
 	Config->debug_level = 0;
 	Config->ServiceName = NULL;
 	Config->Service = NULL;
+	Config->IgnoredMessages = 0;
 
 #if defined(HAVE_MYSQL_MYSQL_H)
 	Config->conn.my = NULL;
@@ -1378,6 +1379,7 @@ gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config)
 	int i, j;
 
 	/* Read messages from phone */
+	Config->IgnoredMessages = 0;
 	start=TRUE;
 	sms.Number = 0;
 	sms.SMS[0].Location = 0;
@@ -1412,6 +1414,8 @@ gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config)
 					*(GetSMSData[GetSMSNumber]) = sms;
 					GetSMSNumber++;
 					GetSMSData[GetSMSNumber] = NULL;
+				} else {
+					Config->IgnoredMessages++;
 				}
 				break;
 			default:
@@ -1507,7 +1511,7 @@ gboolean SMSD_CheckSMSStatus(GSM_SMSDConfig *Config)
 	/* First try SMS status */
 	error = GSM_GetSMSStatus(Config->gsm,&SMSStatus);
 	if (error == ERR_NONE) {
-		new_message = (SMSStatus.SIMUsed + SMSStatus.PhoneUsed > 0);
+		new_message = (SMSStatus.SIMUsed + SMSStatus.PhoneUsed - Config->IgnoredMessages > 0);
 	} else if (error == ERR_NOTSUPPORTED || error == ERR_NOTIMPLEMENTED) {
 		/* Fallback to GetNext */
 		sms.Number = 0;
