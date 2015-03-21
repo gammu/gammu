@@ -2628,7 +2628,7 @@ GSM_Error ATGEN_GetCNMIMode(GSM_StateMachine *s)
 {
 	GSM_Error error;
 
-	error = ATGEN_WaitForAutoLen(s, "AT+CNMI=?\r", 0x00, 40, ID_GetCNMIMode);
+	error = ATGEN_WaitForAutoLen(s, "AT+CNMI=?\r", 0x00, 80, ID_GetCNMIMode);
 	return error;
 }
 
@@ -2663,7 +2663,7 @@ GSM_Error ATGEN_SetIncomingCB(GSM_StateMachine *s, gboolean enable)
 		} else {
 			smprintf(s, "Disabling incoming CB\n");
 			length = sprintf(buffer, "AT+CNMI=%d,,%d\r", Priv->CNMIMode, 0);
-			error = ATGEN_WaitFor(s, buffer, length, 0x00, 40, ID_SetIncomingCB);
+			error = ATGEN_WaitFor(s, buffer, length, 0x00, 80, ID_SetIncomingCB);
 		}
 		return error;
 	}
@@ -2717,7 +2717,7 @@ GSM_Error ATGEN_SetIncomingSMS(GSM_StateMachine *s, gboolean enable)
 			/* Delivery reports */
 			if (Priv->CNMIDeliverProcedure != 0) {
 				length = sprintf(buffer, "AT+CNMI=%d,,,%d\r", Priv->CNMIMode, Priv->CNMIDeliverProcedure);
-				error = ATGEN_WaitFor(s, buffer, length, 0x00, 40, ID_SetIncomingSMS);
+				error = ATGEN_WaitFor(s, buffer, length, 0x00, 80, ID_SetIncomingSMS);
 
 				if (error != ERR_NONE) {
 					return error;
@@ -2727,7 +2727,7 @@ GSM_Error ATGEN_SetIncomingSMS(GSM_StateMachine *s, gboolean enable)
 			/* Normal messages */
 			if (Priv->CNMIProcedure != 0) {
 				length = sprintf(buffer, "AT+CNMI=%d,%d\r", Priv->CNMIMode, Priv->CNMIProcedure);
-				error = ATGEN_WaitFor(s, buffer, length, 0x00, 40, ID_SetIncomingSMS);
+				error = ATGEN_WaitFor(s, buffer, length, 0x00, 80, ID_SetIncomingSMS);
 
 				if (error != ERR_NONE) {
 					return error;
@@ -2738,7 +2738,7 @@ GSM_Error ATGEN_SetIncomingSMS(GSM_StateMachine *s, gboolean enable)
 
 			/* Delivery reports */
 			length = sprintf(buffer,"AT+CNMI=%d,,,%d\r", Priv->CNMIMode, 0);
-			error = ATGEN_WaitFor(s, buffer, length, 0x00, 40, ID_SetIncomingSMS);
+			error = ATGEN_WaitFor(s, buffer, length, 0x00, 80, ID_SetIncomingSMS);
 
 			if (error != ERR_NONE) {
 				return error;
@@ -2746,7 +2746,7 @@ GSM_Error ATGEN_SetIncomingSMS(GSM_StateMachine *s, gboolean enable)
 
 			/* Normal messages */
 			length = sprintf(buffer, "AT+CNMI=%d,%d\r", Priv->CNMIMode, 0);
-			error = ATGEN_WaitFor(s, buffer, length, 0x00, 40, ID_SetIncomingSMS);
+			error = ATGEN_WaitFor(s, buffer, length, 0x00, 80, ID_SetIncomingSMS);
 
 			if (error != ERR_NONE) {
 				return error;
