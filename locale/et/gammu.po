@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2016-02-04 10:40+0100\n"
-"PO-Revision-Date: 2015-03-23 08:15+0200\n"
+"PO-Revision-Date: 2016-04-11 13:39+0000\n"
 "Last-Translator: Kristjan Räts <kristjanrats@gmail.com>\n"
-"Language-Team: Estonian <https://hosted.weblate.org/projects/gammu/gammu/et/"
-">\n"
+"Language-Team: Estonian <https://hosted.weblate.org/projects/gammu/gammu/et/>"
+"\n"
 "Language: et\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.3-dev\n"
+"X-Generator: Weblate 2.6-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -1794,14 +1794,13 @@ msgid "There is newer testing Gammu version available! (%s instead of %s)\n"
 msgstr "Gammu uus testversioon on saadaval! (%s %s asemel)\n"
 
 #: gammu/gammu.c:332
-#, fuzzy
 #| msgid ""
 #| "Copyright (C) 2003 - 2012 Michal Cihar <michal@cihar.com> and other "
 #| "authors."
 msgid ""
 "Copyright (C) 2003 - 2015 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
-"Autoriõigus (C) 2003 - 2012 Michal Čihař <michal@cihar.com> ja teised "
+"Autoriõigus (C) 2003 - 2015 Michal Čihař <michal@cihar.com> ja teised "
 "autorid."
 
 #: gammu/gammu.c:370
