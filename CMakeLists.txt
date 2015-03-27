@@ -488,7 +488,8 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_MINGW OR
 #    MACRO_TUNE_COMPILER("-Wcast-qual")
 
     # Does not work well with default cases for enums
-    #MACRO_TUNE_COMPILER("-Wunreachable-code")
+    MACRO_TUNE_COMPILER("-Wunreachable-code")
+    MACRO_TUNE_COMPILER("-Wno-error=unreachable-code")
 
     # Just silent this for now, too much code to fix here
     MACRO_TUNE_COMPILER("-Wno-pointer-sign")
