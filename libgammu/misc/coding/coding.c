@@ -1319,7 +1319,7 @@ GSM_Error MyGetLine(char *Buffer, size_t *Pos, char *OutBuffer, size_t MaxLen, s
 			} else {
 				if (MergeLines) {
 					/* (Quote printable new line) Does string end with = ? */
-					if (OutBuffer[pos - 1] == '=' && quoted_printable) {
+					if (quoted_printable && pos > 0 && OutBuffer[pos - 1] == '=') {
 						pos--;
 						OutBuffer[pos] = 0;
 						skip = TRUE;
