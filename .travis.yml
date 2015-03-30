@@ -21,12 +21,12 @@ addons:
 # install build dependencies
   apt:
     packages:
-      - libbluetooth-dev
-      - libusb-1.0-0-dev
-      - libgudev-1.0-dev
-      - unixodbc-dev
-      - libdbi-dev
-      - libdbd-sqlite3
+    - libbluetooth-dev
+    - libusb-1.0-0-dev
+    - libgudev-1.0-dev
+    - unixodbc-dev
+    - libdbi-dev
+    - libdbd-sqlite3
 # Coverity scan
   coverity_scan:
     project:
