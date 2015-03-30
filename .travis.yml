@@ -11,23 +11,14 @@ script:
   - if [ ${COVERITY_SCAN_BRANCH} != 1 ] ; then make test ; fi
 after_success:
   - ./coveralls-upload
-addons:
-  coverity_scan:
-    project:
-      name: "gammu/gammu"
-      description: "Build submitted via Travis CI"
-    notification_email: michal@cihar.com
-    build_command_prepend: cmake ..
-    build_command: make
-    branch_pattern: coverity_scan
 # trigger Buildtime Trend Service to parse Travis CI log
 notifications:
   webhooks:
     - https://buildtimetrend.herokuapp.com/travis
 # use docker based faster build
 sudo: false
-# install build dependencies
 addons:
+# install build dependencies
   apt:
     packages:
       - libbluetooth-dev
@@ -36,3 +27,12 @@ addons:
       - unixodbc-dev
       - libdbi-dev
       - libdbd-sqlite3
+# Coverity scan
+  coverity_scan:
+    project:
+      name: "gammu/gammu"
+      description: "Build submitted via Travis CI"
+    notification_email: michal@cihar.com
+    build_command_prepend: cmake ..
+    build_command: make
+    branch_pattern: coverity_scan
