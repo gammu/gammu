@@ -2,9 +2,6 @@ language: c
 compiler:
   - gcc
   - clang
-before_install:
-  - sudo apt-get update -qq
-  - sudo apt-get install -qq libbluetooth-dev libusb-1.0-0-dev libgudev-1.0-dev unixodbc-dev libdbi-dev libdbd-sqlite3
 before_script:
   - mkdir _build
   - cd _build
@@ -27,3 +24,15 @@ addons:
 notifications:
   webhooks:
     - https://buildtimetrend.herokuapp.com/travis
+# use docker based faster build
+sudo: false
+# install build dependencies
+addons:
+  apt:
+    packages:
+      - libbluetooth-dev
+      - libusb-1.0-0-dev
+      - libgudev-1.0-dev
+      - unixodbc-dev
+      - libdbi-dev
+      - libdbd-sqlite3
