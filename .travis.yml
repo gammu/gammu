@@ -17,8 +17,8 @@ notifications:
     - https://buildtimetrend.herokuapp.com/travis
 # use docker based faster build
 sudo: false
+# install build dependencies and enable Coverity scan
 addons:
-# install build dependencies
   apt:
     packages:
     - libbluetooth-dev
@@ -27,7 +27,6 @@ addons:
     - unixodbc-dev
     - libdbi-dev
     - libdbd-sqlite3
-# Coverity scan
   coverity_scan:
     project:
       name: "gammu/gammu"
