@@ -5,8 +5,8 @@ Gammu is library and command line utility for mobile phones. It is
 released under GNU GPL version 2.
 
 It has been initiated by Marcin Wiacek and other people. Originally the
-code was based on Gnokii <http://www.gnokii.org> and later MyGnokii
-<http://www.mwiacek.com> projects. Gammu  was former (up to version
+code was based on Gnokii <http://www.gnokii.org/> and later MyGnokii
+<http://www.mwiacek.com/> projects. Gammu  was former (up to version
 0.58) called MyGnokii2.
 
 Currently the project is lead by Michal Cihar <michal@cihar.com> with
