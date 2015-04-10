@@ -4565,7 +4565,7 @@ GSM_Error ATGEN_Reset(GSM_StateMachine *s, gboolean hard)
 {
 	GSM_Error error;
 
-	if (!hard) {
+	if (hard) {
 		return ERR_NOTSUPPORTED;
 	}
 	smprintf(s, "Resetting device\n");
