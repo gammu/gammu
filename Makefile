@@ -4,7 +4,7 @@
 
 BUILD_DIR=build-configure
 
-.PHONY: all clean package package_source pydoc apidoc interndoc translations gammu install distclean test NightlyMemoryCheck Nightly
+.PHONY: all clean package package_source apidoc interndoc translations gammu install distclean test NightlyMemoryCheck Nightly
 
 all: $(BUILD_DIR)
 	$(MAKE) -C $(BUILD_DIR)
@@ -20,12 +20,6 @@ package_source: $(BUILD_DIR)
 
 apidoc: $(BUILD_DIR)
 	$(MAKE) -C $(BUILD_DIR) apidoc
-
-pydoc: $(BUILD_DIR)
-	$(MAKE) -C $(BUILD_DIR) pydoc
-
-pydoc-html: $(BUILD_DIR)
-	$(MAKE) -C $(BUILD_DIR) pydoc-html
 
 manual-html: $(BUILD_DIR)
 	$(MAKE) -C $(BUILD_DIR) manual-html
