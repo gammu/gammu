@@ -19,10 +19,10 @@ the issue.
 ChangeLog
 =========
     
-2015???? - 1.36.0
+20150413 - 1.36.0
 
-[!] * Removed usage of __TIME__ and __DATE__ macros in codebase.
 [!] * The python-gammu module is now shipped separately.
+[!] * Removed usage of __TIME__ and __DATE__ macros in codebase.
 [-] * Fixed encoding of special chars to iCalendar format.
 [-] * Fixed decoding of priority from vTODO.
 [-] * Avoid infinite loops with ignored messages.
