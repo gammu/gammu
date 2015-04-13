@@ -79,9 +79,9 @@ $(BUILD_DIR):
 
 # Developer commands
 
-update-man:
-	@make -C build manual-man
-	@cp build/docs/manual/man/* docs/man/
+update-man: $(BUILD_DIR)
+	@make -C $(BUILD_DIR) manual-man
+	@cp $(BUILD_DIR)/docs/manual/man/* docs/man/
 
 check-man:
 	@for f in docs/man/*.[0-9] ; do echo $$f: ; LANG=en_US.UTF-8 MANWIDTH=80 man --warnings -E UTF-8 -l $$f >/dev/null ; done

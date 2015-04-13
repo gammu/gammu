@@ -19,7 +19,7 @@ the issue.
 ChangeLog
 =========
     
-2015???? - 1.35.90
+2015???? - 1.36.0
 
 [!] * Removed usage of __TIME__ and __DATE__ macros in codebase.
 [-] * Fixed encoding of special chars to iCalendar format.
