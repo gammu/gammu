@@ -20,11 +20,6 @@ Release:            1
 # Change if using tar.gz sources
 %define extension   bz2
 
-# Python name
-%{!?__python: %define __python python}
-%define g_python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")
-%define g_python_major_version %(%{__python} -c 'import sys; print sys.version.split(" ")[0][:3]')
-
 %if 0%{?fedora_version} || 0%{?centos_version} || 0%{?rhel_version} || 0%{?fedora} || 0%{?rhel}
 %define gammu_docdir %_docdir/%{name}-%{version}
 %else
@@ -147,8 +142,6 @@ BuildRequires: libgudev-1_0-devel glib2-devel
 BuildRequires: systemd
 %endif
 
-BuildRequires: python-devel
-
 %if 0%{?centos_version} || 0%{?rhel_version} || 0%{?rhel} || 0%{?suse_version} < 1100
 BuildRequires: curl-devel
 %else
@@ -209,20 +202,6 @@ Currently supported phones include:
 * Symbian phones through gnapplet.
 
 This package contain files needed for development.
-
-%package -n python-gammu
-Summary:    Python module to communicate with mobile phones
-%if 0%{?suse_version}
-Group:      Development/Libraries/Python
-%else
-Group:      Development/Languages
-%endif
-Requires: python >= %{g_python_major_version}, python < %{g_python_major_version}.99
-%{?py_requires}
-
-%description -n python-gammu
-This provides gammu module, that can work with any phone Gammu
-supports - many Nokias, Siemens, Alcatel, ...
 
 %package smsd
 Summary:    SMS message daemon
@@ -312,7 +291,6 @@ cd build-dir
 cmake ../ \
     -DBUILD_SHARED_LIBS=ON \
     -DINSTALL_LSB_INIT=ON \
-    -DBUILD_PYTHON=/usr/bin/python \
     -DCMAKE_INSTALL_PREFIX=%_prefix \
     -DINSTALL_DOC_DIR=%gammu_docdir \
     -DINSTALL_LIB_DIR=%_lib \
@@ -420,11 +398,6 @@ fi
 %_libdir/pkgconfig/%name.pc
 %_libdir/pkgconfig/%name-smsd.pc
 %_libdir/*.so
-
-%files -n python-gammu
-%defattr(-,root,root)
-%doc README.Python python/examples
-%g_python_sitearch/*
 
 %clean
 rm -rf %buildroot

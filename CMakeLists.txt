@@ -171,61 +171,7 @@ find_program(MYSQL_BIN mysql)
 find_program(PSQL_BIN psql)
 
 # Check for Python
-set (BUILD_PYTHON "" CACHE FILEPATH "Path to python interpreter")
-
-if (BUILD_PYTHON)
-    set (WITH_PYTHON TRUE CACHE BOOL "Build Python bindings")
-    set (PYTHON_EXECUTABLE ${BUILD_PYTHON})
-    execute_process(
-        COMMAND
-            ${PYTHON_EXECUTABLE} -c "import sys; print('.'.join([str(x) for x in sys.version_info[:2]]))"
-        OUTPUT_VARIABLE PYTHON_VERSION
-        OUTPUT_STRIP_TRAILING_WHITESPACE
-        )
-    if("${PYTHON_VERSION}" STREQUAL "")
-        message(FATAL_ERROR "Failed to execute defined Python: ${BUILD_PYTHON}")
-    endif("${PYTHON_VERSION}" STREQUAL "")
-
-    message (STATUS "Compiling for Python ${PYTHON_VERSION}")
-    execute_process(
-        COMMAND
-            ${PYTHON_EXECUTABLE} -c "import distutils.sysconfig; print(distutils.sysconfig.get_python_inc())"
-        OUTPUT_VARIABLE PYTHON_INCLUDE_PATH
-        OUTPUT_STRIP_TRAILING_WHITESPACE
-        )
-
-    string (REPLACE "." "" PYTHON_VERSION_NO_DOTS "${PYTHON_VERSION}")
-    find_library (PYTHON_LIBRARY
-        NAMES python${PYTHON_VERSION_NO_DOTS} python${PYTHON_VERSION}
-        PATHS
-          [HKEY_LOCAL_MACHINE\\SOFTWARE\\Python\\PythonCore\\${PYTHON_VERSION}\\InstallPath]/libs
-        PATH_SUFFIXES
-          python${PYTHON_VERSION}/config
-        # Avoid finding the .dll in the PATH.  We want the .lib.
-        NO_SYSTEM_ENVIRONMENT_PATH
-      )
-else (BUILD_PYTHON)
-    find_package(PythonInterp 2)
-    find_package(PythonLibs 2)
-
-    if (PYTHONINTERP_FOUND AND PYTHONLIBS_FOUND)
-        set (WITH_PYTHON TRUE CACHE BOOL "Build Python bindings")
-    else (PYTHONINTERP_FOUND AND PYTHONLIBS_FOUND)
-        set (WITH_PYTHON FALSE CACHE BOOL "Build Python bindings" FORCE)
-    endif (PYTHONINTERP_FOUND AND PYTHONLIBS_FOUND)
-endif (BUILD_PYTHON)
-
-if (PYTHON_EXECUTABLE)
-    execute_process(
-        COMMAND ${PYTHON_EXECUTABLE} -c "import sys; print(sys.version_info[0])"
-        OUTPUT_VARIABLE PYTHON_MAJOR_VERSION
-        OUTPUT_STRIP_TRAILING_WHITESPACE
-        )
-    if ("${PYTHON_MAJOR_VERSION}" GREATER 2)
-        message("Python 3.x is not currently supported!")
-        set (WITH_PYTHON FALSE CACHE BOOL "Build Python bindings" FORCE)
-    endif ("${PYTHON_MAJOR_VERSION}" GREATER 2)
-endif (PYTHON_EXECUTABLE)
+find_package(PythonInterp 2)
 
 # Packages in sources
 macro_optional_find_package (MySQL)
@@ -748,7 +694,7 @@ add_custom_target (interndoc ${DOXYGEN_EXECUTABLE} doxygen/Doxyfile-internal
 # CPP check
 find_program(CPPCHECK_EXECUTABLE NAMES cppcheck
     DOC "cppcheck - code checking tool")
-add_custom_target (cppcheck ${CPPCHECK_EXECUTABLE} -a -f -q "${CMAKE_CURRENT_SOURCE_DIR}/gammu" "${CMAKE_CURRENT_SOURCE_DIR}/smsd" "${CMAKE_CURRENT_SOURCE_DIR}/helper" "${CMAKE_CURRENT_SOURCE_DIR}/libgammu" "${CMAKE_CURRENT_SOURCE_DIR}/python/gammu/src" "${CMAKE_CURRENT_SOURCE_DIR}/tests" "${CMAKE_CURRENT_SOURCE_DIR}/docs/manual/examples" "${CMAKE_CURRENT_SOURCE_DIR}/contrib/smscgi"
+add_custom_target (cppcheck ${CPPCHECK_EXECUTABLE} -a -f -q "${CMAKE_CURRENT_SOURCE_DIR}/gammu" "${CMAKE_CURRENT_SOURCE_DIR}/smsd" "${CMAKE_CURRENT_SOURCE_DIR}/helper" "${CMAKE_CURRENT_SOURCE_DIR}/libgammu" "${CMAKE_CURRENT_SOURCE_DIR}/tests" "${CMAKE_CURRENT_SOURCE_DIR}/docs/manual/examples" "${CMAKE_CURRENT_SOURCE_DIR}/contrib/smscgi"
     COMMENT "Checking C code")
 
 
@@ -820,9 +766,6 @@ install (
 # done in Wine. This is better than nothing, even though Wine is a bit
 # more fault tolerant when linking DLLs.
 
-# Valgrind supressions for python
-set (MEMORYCHECK_SUPPRESSIONS_FILE ${CMAKE_CURRENT_SOURCE_DIR}/cmake/valgrind-python.supp CACHE FILEPATH "File that contains suppressions for the memory checker")
-
 # Testing and dashboard
 include(CTest)
 enable_testing()
@@ -858,9 +801,6 @@ endif (EXISTS "/etc/SuSE-release")
 
 # Components
 set (CPACK_COMPONENTS_ALL gammu library smsd headers utils manpages docs pkgconfig symbian examples manual)
-if (WITH_PYTHON)
-    list (APPEND CPACK_COMPONENTS_ALL python)
-endif (WITH_PYTHON)
 if (WIN32 AND NOT CYGWIN AND WIN32_INSTALL_DLL)
     list (APPEND CPACK_COMPONENTS_ALL dlls)
 endif (WIN32 AND NOT CYGWIN AND WIN32_INSTALL_DLL)
@@ -876,7 +816,6 @@ set (CPACK_COMPONENT_PKGCONFIG_DISPLAY_NAME "Pkg-config Data")
 set (CPACK_COMPONENT_SYMBIAN_DISPLAY_NAME "Applet for Symbian Phones")
 set (CPACK_COMPONENT_EXAMPLES_DISPLAY_NAME "Examples Using Gammu")
 set (CPACK_COMPONENT_MANUAL_DISPLAY_NAME "Gammu Manual")
-set (CPACK_COMPONENT_PYTHON_DISPLAY_NAME "Python Module")
 set (CPACK_COMPONENT_MEDIA_DISPLAY_NAME "Media Files")
 
 set (CPACK_COMPONENT_DLLS_HIDDEN TRUE)
@@ -894,7 +833,6 @@ set (CPACK_COMPONENT_PKGCONFIG_DESCRIPTION "Data for pkg-config program (automat
 set (CPACK_COMPONENT_SYMBIAN_DESCRIPTION "Applet for Symbian phones, install it to phone to communicate with them using Gammu.")
 set (CPACK_COMPONENT_EXAMPLES_DESCRIPTION "Examples showing how to use Gammu, in PHP, Perl or C.")
 set (CPACK_COMPONENT_MANUAL_DESCRIPTION "User and Developer Manual")
-set (CPACK_COMPONENT_PYTHON_DESCRIPTION "Python module for Gammu.")
 set (CPACK_COMPONENT_MEDIA_DESCRIPTION "Various media files which can be used with Gammu.")
 
 set (CPACK_COMPONENT_GROUP_RUNTIME_DESCRIPTION "Programs and libraries for general usage.")
@@ -907,7 +845,6 @@ set(CPACK_COMPONENT_LIBRARY_DEPENDS dlls)
 endif (WIN32 AND NOT CYGWIN AND WIN32_INSTALL_DLL)
 set(CPACK_COMPONENT_SMSD_DEPENDS library)
 set(CPACK_COMPONENT_HEADERS_DEPENDS library)
-set(CPACK_COMPONENT_PYTHON_DEPENDS library)
 set(CPACK_COMPONENT_UTILS_DEPENDS gammu)
 set(CPACK_COMPONENT_PKGCONFIG_DEPENDS headers)
 
@@ -915,7 +852,6 @@ set (CPACK_COMPONENT_GAMMU_GROUP "Runtime")
 set (CPACK_COMPONENT_SMSD_GROUP "Runtime")
 set (CPACK_COMPONENT_UTILS_GROUP "Runtime")
 set (CPACK_COMPONENT_LIBRARY_GROUP "Runtime")
-set (CPACK_COMPONENT_PYTHON_GROUP "Runtime")
 
 set (CPACK_COMPONENT_HEADERS_GROUP "Development")
 set (CPACK_COMPONENT_PKGCONFIG_GROUP "Development")
@@ -939,7 +875,6 @@ set (CPACK_COMPONENT_PKGCONFIG_INSTALL_TYPES Developer Full)
 set (CPACK_COMPONENT_SYMBIAN_INSTALL_TYPES Standard Developer Full)
 set (CPACK_COMPONENT_EXAMPLES_INSTALL_TYPES Developer Full)
 set (CPACK_COMPONENT_MANUAL_INSTALL_TYPES Developer Full)
-set (CPACK_COMPONENT_PYTHON_INSTALL_TYPES Developer Full)
 set (CPACK_COMPONENT_MEDIA_INSTALL_TYPES Full)
 
 if (WIN32 AND NOT CYGWIN)
@@ -1001,10 +936,4 @@ if(INSTALL_DOC)
 endif(INSTALL_DOC)
 
 add_subdirectory(contrib)
-
-if (WITH_PYTHON)
-    add_subdirectory(python)
-else (WITH_PYTHON)
-    message ("Python bindings are disabled!")
-endif (WITH_PYTHON)
 

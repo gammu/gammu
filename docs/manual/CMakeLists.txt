@@ -33,7 +33,6 @@ if (SPHINX_BUILD_EXECUTABLE)
                 -D latex_paper_size=${SPHINX_PAPER_SIZE}
                 ${CMAKE_CURRENT_SOURCE_DIR}/
                 ${CMAKE_CURRENT_BINARY_DIR}/${_format}
-            DEPENDS ${PYFILES} ${PYTHON_GAMMU_SRC}
             COMMENT "Generating Sphinx documentation (${_format})")
         add_dependencies(manual-${_format} apidoc)
     endmacro(sphinxdoc _format)

@@ -240,9 +240,6 @@ Useful cmake parameters:
 * ``-DCMAKE_INSTALL_PREFIX="/usr"`` change installation prefix
 * ``-DENABLE_PROTECTION=OFF`` disables various compile time protections
   against buffer overflows and similar attacks
-* ``-DBUILD_PYTHON=/usr/bin/python2.6`` changes Python used for build Python
-  module
-* ``-DWITH_PYTHON=OFF`` disables build of python-gammu
 
 You can also disable support for whole set of phones, e.g.:
 
@@ -560,16 +557,8 @@ with protections GCC makes and produce bogus back traces.
 Compliling python-gammu
 +++++++++++++++++++++++
 
-Currently python-gammu is distributed together with Gammu, so all you need
-to get it is to build Gammu with Python support (it should be automatically
-detected if you have development environment installed for Python).
-
-Gammu uses CMake_ to generate build environment (for example Makefiles for
-UNIX, Visual Studio projects, Eclipse projects, etc.) which you can later use
-for building. You can use ``-DBUILD_PYTHON=/path/to/python`` to define path to
-another Python interpreter to use than default one available in the system.
-
-Alternatively you can use standard distutils, for which :file:`setup.py` is placed in
-`python` subdirectory.
+Currently python-gammu is distributed as a separate package, which follows
+Python usual method for building modules - distutils, so use :file:`setup.py`
+is placed in the top level directory.
 
 .. _CMake: http://www.cmake.org/
