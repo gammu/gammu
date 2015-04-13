@@ -28,8 +28,6 @@ sed -i "
     s/set (GAMMU_VERSION \"[^\"]*\"\\(.*\\))/set (GAMMU_VERSION \"$version\"\1)/; 
     s/set (GAMMU_SOVERSION \"[^\"]*\"\\(.*\\))/set (GAMMU_SOVERSION \"$soversion\"\1)/; 
     " CMakeLists.txt
-# python/setup.py
-sed -i "s/VERSION = '[0-9.]*'/VERSION = '$version'/" python/setup.py
 
 # Update ChangeLog
 if ! grep -q " - $version" ChangeLog ; then
