@@ -12,7 +12,7 @@ How can I use python-gammu?
 ---------------------------
 
 There are lot of examples shipped with Gammu, you can find them in
-python/examples subdirectory.
+the :file:`examples` subdirectory.
 
 .. seealso:: :ref:`python`, :ref:`python-gammu-examples`
 
