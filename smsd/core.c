@@ -1726,7 +1726,11 @@ GSM_Error SMSD_InitSharedMemory(GSM_SMSDConfig *Config, gboolean writable)
 	Config->shm_handle = shmget(Config->shm_key, sizeof(GSM_SMSDStatus), writable ? (IPC_CREAT | S_IRWXU | S_IRGRP | S_IROTH) : 0);
 	if (Config->shm_handle == -1) {
 		SMSD_Terminate(Config, "Failed to allocate shared memory segment!", ERR_NONE, TRUE, -1);
-		return ERR_UNKNOWN;
+		if (writable) {
+			return ERR_UNKNOWN;
+		} else {
+			return ERR_NOTRUNNING;
+		}
 	}
 	Config->Status = shmat(Config->shm_handle, NULL, 0);
 	if (Config->Status == (void *) -1) {
