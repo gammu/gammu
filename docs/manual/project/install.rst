@@ -561,4 +561,10 @@ Currently python-gammu is distributed as a separate package, which follows
 Python usual method for building modules - distutils, so use :file:`setup.py`
 is placed in the top level directory.
 
+You can install it using pip installer:
+
+.. code-block:: sh
+
+    pip install python-gammu
+
 .. _CMake: http://www.cmake.org/
