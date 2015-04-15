@@ -58,6 +58,10 @@ long long SMSDDBI_GetNumber(GSM_SMSDConfig * Config, SQL_result *res, unsigned i
 			}
 			SMSD_Log(DEBUG_ERROR, Config, "Wrong decimal field subtype from DBI: %d", type);
 			return -1;
+#ifdef DBI_TYPE_XDECIMAL
+		case DBI_TYPE_XDECIMAL:
+			return dbi_result_get_as_longlong_idx(res->dbi, field);
+#endif
 		default:
 			SMSD_Log(DEBUG_ERROR, Config, "Wrong field type for number (not INTEGER nor DECIMAL) from DBI: %d", type);
 			return -1;

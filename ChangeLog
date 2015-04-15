@@ -20,7 +20,9 @@ ChangeLog
 =========
     
 2015???? - 1.36.1
-    
+
+[-] * Compatibility with libdbi from git.
+
 20150413 - 1.36.0
 
 [!] * The python-gammu module is now shipped separately.
