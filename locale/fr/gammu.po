@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2015-03-20 16:53+0100\n"
-"PO-Revision-Date: 2015-03-08 23:22+0200\n"
-"Last-Translator: Tuux <tuxa@galaxie.eu.org>\n"
+"PO-Revision-Date: 2015-04-16 00:42+0200\n"
+"Last-Translator: Francois Polito <francois.polito@openmailbox.org>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gammu/gammu/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -1847,12 +1847,16 @@ msgid ""
 "SMS daemon is now in separate binary, please use gammu-smsd-inject instead "
 "of gammu sendsmsdsms!"
 msgstr ""
+"Le tâche SMS est maintenant un service à part, veuillez utiliser gammu-smsd-"
+"inject à la place de gammu sendsmsdsms!"
 
 #: gammu/gammu.c:495
 msgid ""
 "SMS daemon is now in separate binary, please use gammu-smsd instead of gammu "
 "smsd!"
 msgstr ""
+"Le tâche SMS est maintenant un service à part, veuillez utiliser gammu-smsd "
+"à la place de gammu smsd!"
 
 #: gammu/gammu.c:742
 msgid "Calls"
@@ -1865,15 +1869,15 @@ msgstr "SMS et MMS"
 
 #: gammu/gammu.c:744
 msgid "Memory (phonebooks and calls)"
-msgstr ""
+msgstr "Mémoire (appels et carnets d'adresses)"
 
 #: gammu/gammu.c:745
 msgid "Filesystem"
-msgstr ""
+msgstr "Système de fichier"
 
 #: gammu/gammu.c:746
 msgid "Logo and pictures"
-msgstr ""
+msgstr "Logo et images"
 
 #: gammu/gammu.c:747
 msgid "Ringtones"
@@ -1885,15 +1889,15 @@ msgstr ""
 
 #: gammu/gammu.c:749
 msgid "To do lists"
-msgstr ""
+msgstr "Litses de tâches"
 
 #: gammu/gammu.c:750
 msgid "Notes"
-msgstr ""
+msgstr "Notes"
 
 #: gammu/gammu.c:751
 msgid "Date, time and alarms"
-msgstr ""
+msgstr "Date, heure et alarmes"
 
 #: gammu/gammu.c:752
 msgid "Categories"
@@ -1901,19 +1905,19 @@ msgstr "Catégories"
 
 #: gammu/gammu.c:754
 msgid "Backing up and restoring"
-msgstr ""
+msgstr "Sauvegarder et restaurer"
 
 #: gammu/gammu.c:757
 msgid "Nokia specific"
-msgstr ""
+msgstr "Spécifique à Nokia"
 
 #: gammu/gammu.c:760
 msgid "Siemens specific"
-msgstr ""
+msgstr "Spécifique à Siemens"
 
 #: gammu/gammu.c:763
 msgid "WAP settings and bookmarks"
-msgstr ""
+msgstr "Réglages WAP et signets"
 
 #: gammu/gammu.c:764
 msgid "MMS and MMS settings"
@@ -1925,7 +1929,7 @@ msgstr ""
 
 #: gammu/gammu.c:766
 msgid "FM radio"
-msgstr ""
+msgstr "Radio FM"
 
 #: gammu/gammu.c:767
 msgid "Phone information"
@@ -1933,7 +1937,7 @@ msgstr "Information sur le téléphone"
 
 #: gammu/gammu.c:768
 msgid "Phone settings"
-msgstr ""
+msgstr "Réglages du téléphone"
 
 #: gammu/gammu.c:770
 msgid "Dumps decoding"
@@ -1941,11 +1945,11 @@ msgstr ""
 
 #: gammu/gammu.c:772
 msgid "Functions that don't fit elsewhere"
-msgstr ""
+msgstr "Autres fonctions"
 
 #: gammu/gammu.c:773
 msgid "Gammu information"
-msgstr ""
+msgstr "Informations Gammu"
 
 #: gammu/gammu.c:789
 msgid "Usage: gammu [parameters] <command> [options]"
@@ -1987,7 +1991,7 @@ msgstr ""
 
 #: gammu/gammu.c:897
 msgid "Unknown help topic specified!"
-msgstr ""
+msgstr "Rubrique d'aide spécifiée inconnue!"
 
 #: gammu/gammu.c:901
 #, c-format
@@ -1995,6 +1999,9 @@ msgid ""
 "Gammu commands, topic: %s\n"
 "\n"
 msgstr ""
+"Commandes Gammu, sujet: %s↵\n"
+"↵\n"
+"\n"
 
 #: gammu/gammu.c:992
 #, c-format
@@ -2008,7 +2015,7 @@ msgstr ""
 
 #: gammu/gammu.c:1001 gammu/gammu.c:1022
 msgid "Parameters help"
-msgstr ""
+msgstr "paramètres d'aide"
 
 #: gammu/gammu.c:1013
 #, c-format
@@ -2022,28 +2029,30 @@ msgstr ""
 
 #: gammu/gammu.c:1043
 msgid "Bad option!"
-msgstr ""
+msgstr "Mauvaise option"
 
 #: gammu/gammu.c:1124
 msgid "Configuration could not be parsed!"
-msgstr ""
+msgstr "La configuration n'a pas pu être analysée!"
 
 #: gammu/gammu.c:1126
 msgid "No configuration file found!"
-msgstr ""
+msgstr "Aucun fichier de configuration trouvé!"
 
 #: gammu/gammu.c:1146
 msgid "Failed to allocate memory, aborting!\n"
-msgstr ""
+msgstr "Impossible d'allouer de la mémoire, abandon! ↵\n"
 
 #: gammu/gammu.c:1177
 msgid "Too few parameters!"
-msgstr ""
+msgstr "Trop peu de paramètres!"
 
 #: gammu/gammu.c:1190
 #, c-format
 msgid "Failed to read [gammu%d] section from configuration file (gammurc)!\n"
 msgstr ""
+"Impossible de lire la section [gammu%d] depuis le fichier de configuration "
+"(gammurc)!↵\n"
 
 #: gammu/gammu.c:1192 gammu/gammu.c:1203
 msgid "No configuration read, using builtin defaults!"
@@ -2054,6 +2063,8 @@ msgstr ""
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
 msgstr ""
+"La version libGammu.so (%s) installé est différente de la version Gammu (% s)"
+" ↵\n"
 
 #: gammu/memory.c:80
 msgid ""
@@ -2084,7 +2095,7 @@ msgstr ""
 
 #: gammu/message.c:37
 msgid "SMS message received"
-msgstr ""
+msgstr "Message SMS reçu"
 
 #: gammu/message.c:41
 msgid "We already have one pending, ignoring this one!"
@@ -2097,11 +2108,11 @@ msgstr ""
 
 #: gammu/message.c:64 gammu/message.c:296
 msgid "Empty"
-msgstr ""
+msgstr "Vide"
 
 #: gammu/message.c:78
 msgid "CB message received"
-msgstr ""
+msgstr "Message DC reçu"
 
 #: gammu/message.c:79
 #, c-format
@@ -2119,19 +2130,19 @@ msgstr "État"
 
 #: gammu/message.c:90
 msgid "No action needed"
-msgstr ""
+msgstr "Aucune action requise"
 
 #: gammu/message.c:93
 msgid "Action needed"
-msgstr ""
+msgstr "Action requise"
 
 #: gammu/message.c:96
 msgid "Terminated"
-msgstr ""
+msgstr "Terminé"
 
 #: gammu/message.c:99
 msgid "Another client replied"
-msgstr ""
+msgstr "Un autre client a répondu"
 
 #: gammu/message.c:102
 msgid "Not supported"
@@ -2160,11 +2171,11 @@ msgstr ""
 
 #: gammu/message.c:226
 msgid "Fax"
-msgstr ""
+msgstr "Fax"
 
 #: gammu/message.c:227 helper/memory-display.c:195
 msgid "Email"
-msgstr ""
+msgstr "E-mail"
 
 #: gammu/message.c:228
 msgid "Pager"
@@ -2172,11 +2183,11 @@ msgstr "Pager"
 
 #: gammu/message.c:232
 msgid "Validity"
-msgstr ""
+msgstr "Validité"
 
 #: gammu/message.c:251
 msgid "Maximum time"
-msgstr ""
+msgstr "Temps maximum"
 
 #: gammu/message.c:368 gammu/message.c:440 gammu/message.c:711
 msgid "Corrupted message, skipping"
@@ -2193,11 +2204,11 @@ msgstr ""
 
 #: gammu/message.c:515
 msgid ", SIM memory"
-msgstr ""
+msgstr ", Mémoire SIM"
 
 #: gammu/message.c:516
 msgid ", phone memory"
-msgstr ""
+msgstr ", mémoire du téléphone"
 
 #: gammu/message.c:517
 msgid ", phone or SIM memory"
@@ -2227,25 +2238,25 @@ msgstr ""
 
 #: gammu/message.c:577
 msgid "Message number"
-msgstr ""
+msgstr "Numéro du message"
 
 #: gammu/message.c:582
 msgid "Number of messages"
-msgstr ""
+msgstr "Nombre de messages"
 
 #: gammu/message.c:593 gammu/message.c:633
 msgid "If you want break, press Ctrl+C..."
-msgstr ""
+msgstr "Si vous désirez interrompre, appuyez sur Ctrl + C..."
 
 #: gammu/message.c:598
 #, c-format
 msgid "Saving SMS %i/%i\n"
-msgstr ""
+msgstr "Sauvegarde des SMS %i/%i↵\n"
 
 #: gammu/message.c:601
 #, c-format
 msgid "Saved in folder number %d \"%s\", location %i"
-msgstr ""
+msgstr "Sauvegardé dans le répertoire numéro %d \"%s\", emplacement %i"
 
 #: gammu/message.c:606
 msgid "SIM"
@@ -2258,7 +2269,7 @@ msgstr "téléphone"
 #: gammu/message.c:612
 #, c-format
 msgid "Sending sms from folder \"%s\", location %i\n"
-msgstr ""
+msgstr "Envoie SMS du répertoire \"%s\", emplacement %i↵\n"
 
 #: gammu/message.c:618 gammu/message.c:644
 msgid "....waiting for network answer"
