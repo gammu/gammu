@@ -79,6 +79,9 @@ time_t SMSDDBI_GetDate(GSM_SMSDConfig * Config, SQL_result *res, unsigned int fi
 	switch (type) {
 		case DBI_TYPE_INTEGER:
 		case DBI_TYPE_DECIMAL:
+#ifdef DBI_TYPE_XDECIMAL
+		case DBI_TYPE_XDECIMAL:
+#endif
 			return SMSDDBI_GetNumber(Config, res, field);
 		case DBI_TYPE_STRING:
 			date = dbi_result_get_string_idx(res->dbi, field);
@@ -104,6 +107,9 @@ gboolean SMSDDBI_GetBool(GSM_SMSDConfig * Config, SQL_result *res, unsigned int 
 	switch (type) {
 		case DBI_TYPE_INTEGER:
 		case DBI_TYPE_DECIMAL:
+#ifdef DBI_TYPE_XDECIMAL
+		case DBI_TYPE_XDECIMAL:
+#endif
 			num = SMSDDBI_GetNumber(Config, res, field);
 			if (num == -1) {
 				return -1;
