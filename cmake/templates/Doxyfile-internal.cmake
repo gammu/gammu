@@ -1,4 +1,4 @@
-# Doxyfile 1.8.7
+# Doxyfile 1.8.8
 
 # This file describes the settings to be used by the documentation system
 # doxygen (www.doxygen.org) for a project.
@@ -680,8 +680,7 @@ LAYOUT_FILE            =
 # to be installed. See also http://en.wikipedia.org/wiki/BibTeX for more info.
 # For LaTeX the style of the bibliography can be controlled using
 # LATEX_BIB_STYLE. To use this feature you need bibtex and perl available in the
-# search path. Do not use file names with spaces, bibtex cannot handle them. See
-# also \cite for info how to create references.
+# search path. See also \cite for info how to create references.
 
 CITE_BIB_FILES         =
 
@@ -1073,13 +1072,15 @@ HTML_FOOTER            =
 
 HTML_STYLESHEET        =
 
-# The HTML_EXTRA_STYLESHEET tag can be used to specify an additional user-
-# defined cascading style sheet that is included after the standard style sheets
+# The HTML_EXTRA_STYLESHEET tag can be used to specify additional user-defined
+# cascading style sheets that are included after the standard style sheets
 # created by doxygen. Using this option one can overrule certain style aspects.
 # This is preferred over using HTML_STYLESHEET since it does not replace the
 # standard style sheet and is therefor more robust against future updates.
-# Doxygen will copy the style sheet file to the output directory. For an example
-# see the documentation.
+# Doxygen will copy the style sheet files to the output directory.
+# Note: The order of the extra stylesheet files is of importance (e.g. the last
+# stylesheet in the list overrules the setting of the previous ones in the
+# list). For an example see the documentation.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
 HTML_EXTRA_STYLESHEET  =
@@ -1617,17 +1618,19 @@ EXTRA_PACKAGES         =
 #
 # Note: Only use a user-defined header if you know what you are doing! The
 # following commands have a special meaning inside the header: $title,
-# $datetime, $date, $doxygenversion, $projectname, $projectnumber. Doxygen will
-# replace them by respectively the title of the page, the current date and time,
-# only the current date, the version number of doxygen, the project name (see
-# PROJECT_NAME), or the project number (see PROJECT_NUMBER).
+# $datetime, $date, $doxygenversion, $projectname, $projectnumber,
+# $projectbrief, $projectlogo. Doxygen will replace $title with the empy string,
+# for the replacement values of the other commands the user is refered to
+# HTML_HEADER.
 # This tag requires that the tag GENERATE_LATEX is set to YES.
 
 LATEX_HEADER           =
 
 # The LATEX_FOOTER tag can be used to specify a personal LaTeX footer for the
 # generated LaTeX document. The footer should contain everything after the last
-# chapter. If it is left blank doxygen will generate a standard footer.
+# chapter. If it is left blank doxygen will generate a standard footer. See
+# LATEX_HEADER for more information on how to generate a default footer and what
+# special commands can be used inside the footer.
 #
 # Note: Only use a user-defined footer if you know what you are doing!
 # This tag requires that the tag GENERATE_LATEX is set to YES.
@@ -1651,7 +1654,7 @@ LATEX_EXTRA_FILES      =
 
 PDF_HYPERLINKS         = NO
 
-# If the LATEX_PDFLATEX tag is set to YES, doxygen will use pdflatex to generate
+# If the USE_PDFLATEX tag is set to YES, doxygen will use pdflatex to generate
 # the PDF file directly from the LaTeX files. Set this option to YES to get a
 # higher quality PDF documentation.
 # The default value is: YES.
@@ -1837,6 +1840,15 @@ GENERATE_DOCBOOK       = NO
 # This tag requires that the tag GENERATE_DOCBOOK is set to YES.
 
 DOCBOOK_OUTPUT         = docbook
+
+# If the DOCBOOK_PROGRAMLISTING tag is set to YES doxygen will include the
+# program listings (including syntax highlighting and cross-referencing
+# information) to the DOCBOOK output. Note that enabling this will significantly
+# increase the size of the DOCBOOK output.
+# The default value is: NO.
+# This tag requires that the tag GENERATE_DOCBOOK is set to YES.
+
+DOCBOOK_PROGRAMLISTING = NO
 
 #---------------------------------------------------------------------------
 # Configuration options for the AutoGen Definitions output
@@ -2057,7 +2069,7 @@ HIDE_UNDOC_RELATIONS   = YES
 # http://www.graphviz.org/), a graph visualization toolkit from AT&T and Lucent
 # Bell Labs. The other options in this section have no effect if this option is
 # set to NO
-# The default value is: YES.
+# The default value is: NO.
 
 HAVE_DOT               = @HAVE_DOT@
 
@@ -2071,7 +2083,7 @@ HAVE_DOT               = @HAVE_DOT@
 
 DOT_NUM_THREADS        = 0
 
-# When you want a differently looking font n the dot files that doxygen
+# When you want a differently looking font in the dot files that doxygen
 # generates you can specify the font name using DOT_FONTNAME. You need to make
 # sure dot is able to find the font, which can be done by putting it in a
 # standard location or by setting the DOTFONTPATH environment variable or by
@@ -2209,9 +2221,7 @@ DIRECTORY_GRAPH        = YES
 # Note: If you choose svg you need to set HTML_FILE_EXTENSION to xhtml in order
 # to make the SVG files visible in IE 9+ (other browsers do not have this
 # requirement).
-# Possible values are: png, png:cairo, png:cairo:cairo, png:cairo:gd, png:gd,
-# png:gd:gd, jpg, jpg:cairo, jpg:cairo:gd, jpg:gd, jpg:gd:gd, gif, gif:cairo,
-# gif:cairo:gd, gif:gd, gif:gd:gd and svg.
+# Possible values are: png, jpg, gif and svg.
 # The default value is: png.
 # This tag requires that the tag HAVE_DOT is set to YES.
 
@@ -2253,6 +2263,15 @@ MSCFILE_DIRS           =
 # command).
 
 DIAFILE_DIRS           =
+
+# When using plantuml, the PLANTUML_JAR_PATH tag should be used to specify the
+# path where java can find the plantuml.jar file. If left blank, it is assumed
+# PlantUML is not used or called during a preprocessing step. Doxygen will
+# generate a warning when it encounters a \startuml command in this case and
+# will not generate output for the diagram.
+# This tag requires that the tag HAVE_DOT is set to YES.
+
+PLANTUML_JAR_PATH      =
 
 # The DOT_GRAPH_MAX_NODES tag can be used to set the maximum number of nodes
 # that will be shown in the graph. If the number of nodes in a graph becomes
