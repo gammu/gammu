@@ -11,10 +11,8 @@ project (Gammu C)
 set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
 # Silent some warnings from CMake 2.6
-if(COMMAND cmake_policy)
-    cmake_policy(SET CMP0003 NEW)
-    cmake_policy(set CMP0009 NEW)
-endif(COMMAND cmake_policy)
+cmake_policy(SET CMP0003 NEW)
+cmake_policy(set CMP0009 NEW)
 
 option (COVERAGE "Add flags for Coverage analysis" OFF)
 
