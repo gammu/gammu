@@ -555,11 +555,16 @@ with protections GCC makes and produce bogus back traces.
 
 
 Compliling python-gammu
-+++++++++++++++++++++++
+-----------------------
 
 Currently python-gammu is distributed as a separate package, which follows
 Python usual method for building modules - distutils, so use :file:`setup.py`
-is placed in the top level directory.
+is placed in the top level directory:
+
+.. code-block:: sh
+
+    ./setup.py build
+    sudo ./setup.py install
 
 You can install it using pip installer:
 
