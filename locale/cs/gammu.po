@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.36.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2015-03-20 16:53+0100\n"
-"PO-Revision-Date: 2015-03-03 11:09+0200\n"
+"PO-Revision-Date: 2015-04-30 09:25+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/gammu/gammu/cs/>\n"
 "Language: cs\n"
@@ -1546,7 +1546,6 @@ msgstr ""
 "Copyright (C) 2010 - 2011 Michal Čihař <michal@cihar.com> a další autoři."
 
 #: gammu-detect/main.c:87 gammu/gammu.c:333
-#, fuzzy
 #| msgid ""
 #| "License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
 #| "GPL/2.0/>."
