@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.37.1\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2016-02-04 10:40+0100\n"
-"PO-Revision-Date: 2015-04-30 09:25+0200\n"
+"PO-Revision-Date: 2016-03-04 09:09+0000\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/gammu/gammu/cs/>\n"
 "Language: cs\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 2.3-dev\n"
+"X-Generator: Weblate 2.5-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -1803,14 +1803,13 @@ msgid "There is newer testing Gammu version available! (%s instead of %s)\n"
 msgstr "Nová testovací verze Gammu je dostupná! (%s místo %s)\n"
 
 #: gammu/gammu.c:332
-#, fuzzy
 #| msgid ""
 #| "Copyright (C) 2003 - 2012 Michal Cihar <michal@cihar.com> and other "
 #| "authors."
 msgid ""
 "Copyright (C) 2003 - 2015 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
-"Copyright (C) 2003 - 2012 Michal Čihař <michal@cihar.com> a další autoři."
+"Copyright (C) 2003 - 2015 Michal Čihař <michal@cihar.com> a další autoři."
 
 #: gammu/gammu.c:370
 msgid "standard input"
