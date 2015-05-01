@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2015-03-20 16:53+0100\n"
-"PO-Revision-Date: 2012-03-14 14:34+0200\n"
-"Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2015-05-01 14:25+0200\n"
+"Last-Translator: Rafi Yehezak-el <rafi3456@gmail.com>\n"
+"Language-Team: Hebrew <https://hosted.weblate.org/projects/gammu/gammu/he/>\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Weblate 0.6\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.3-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -3343,7 +3343,7 @@ msgstr ""
 
 #: gammu/mms.c:100
 msgid "Delivery report"
-msgstr ""
+msgstr "דו\"ח מסירה"
 
 #: gammu/mms.c:107 gammu/mms.c:110
 msgid "Content type"
@@ -3972,7 +3972,7 @@ msgstr ""
 #: helper/message-display.c:233 helper/message-display.c:248
 #: helper/message-display.c:289
 msgid "Sent"
-msgstr ""
+msgstr "נשלח"
 
 #: helper/message-display.c:170 helper/message-display.c:290
 msgid "Read"
