@@ -203,10 +203,30 @@ static const char *SMSDSQL_Now(GSM_SMSDConfig * Config)
 		return now_fallback;
 	}
 }
+
+static SQL_Error SMSDSQL_Reconnect(GSM_SMSDConfig * Config)
+{
+	SQL_Error error = SQL_TIMEOUT;
+	int attempts;
+	struct GSM_SMSDdbobj *db = Config->db;
+
+	SMSD_Log(DEBUG_INFO, Config, "Reconnecting to the database!");
+	for (attempts = 1; attempts <= Config->backend_retries; attempts++) {
+		SMSD_Log(DEBUG_INFO, Config, "Reconnecting after %d seconds...", attempts * attempts);
+		sleep(attempts * attempts);
+		db->Free(Config);
+		error = db->Connect(Config);
+		if (error == SQL_OK) {
+			return error;
+		}
+	}
+	return error;
+}
+
 static SQL_Error SMSDSQL_Query(GSM_SMSDConfig * Config, const char *query, SQL_result * res)
 {
 	SQL_Error error = SQL_TIMEOUT;
-	int attempts = 1;
+	int attempts;
 	struct GSM_SMSDdbobj *db = Config->db;
 
 	for (attempts = 1; attempts <= Config->backend_retries; attempts++) {
@@ -223,13 +243,9 @@ static SQL_Error SMSDSQL_Query(GSM_SMSDConfig * Config, const char *query, SQL_r
 
 		SMSD_Log(DEBUG_INFO, Config, "SQL failed (timeout): %s", query);
 		/* We will try to reconnect */
-		SMSD_Log(DEBUG_INFO, Config, "reconnecting to database!");
-		while (error != SQL_OK && attempts < Config->backend_retries) {
-			SMSD_Log(DEBUG_INFO, Config, "Reconnecting after %d seconds...", attempts * attempts);
-			sleep(attempts * attempts);
-			db->Free(Config);
-			error = db->Connect(Config);
-			attempts++;
+		error = SMSDSQL_Reconnect(Config);
+		if (error != SQL_OK) {
+			break;
 		}
 	}
 	return error;
