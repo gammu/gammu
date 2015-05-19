@@ -536,7 +536,8 @@ that all path should contain trailing path separator (/ on Unix systems):
     The format for transmitting the SMS: ``auto``, ``unicode``, ``7bit``.
 
     This option is used only if :config:option:`OutboxFormat` is not set to
-    ``detail``. In such case encoding specified in the message is used.
+    ``detail``. In such case encoding specified in the message is used (you can
+    specify it to :ref:`gammu-smsd-inject`).
 
     Default is ``auto``.
 
