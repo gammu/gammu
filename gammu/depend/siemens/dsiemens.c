@@ -37,8 +37,14 @@ GSM_Error ATSIEMENS_Reply_GetSAT(GSM_Protocol_Message *msg, GSM_StateMachine *sm
     	int				freq_tmp,frequency[24];
    	GSM_NetworkInfo			Network;
 
-    	if (Priv->ReplyState!=AT_Reply_OK) return ERR_UNKNOWN;
-    	if (sm->Protocol.Data.AT.EditMode) sm->Protocol.Data.AT.EditMode = FALSE;
+	if (Priv->ReplyState != AT_Reply_OK) {
+		return ERR_UNKNOWN;
+	}
+	if (sm->Protocol.Data.AT.EditMode) {
+		sm->Protocol.Data.AT.EditMode = FALSE;
+		return ERR_NONE;
+	}
+
 	if (strstr(GetLineString(msg->Buffer,&Priv->Lines,2),"SSTK")) {
     	    length = strlen(GetLineString(msg->Buffer,&Priv->Lines,2))-7;
     	    DecodeHexBin(buf, GetLineString(msg->Buffer,&Priv->Lines,2)+7,length);

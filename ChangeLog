@@ -22,6 +22,7 @@ ChangeLog
 2015???? - 1.36.1
 
 [-] * Compatibility with libdbi from git.
+[-] * Fix siemenssatnetmon (Daniel Glöckner).
 
 20150413 - 1.36.0
 
