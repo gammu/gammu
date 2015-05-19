@@ -68,6 +68,147 @@ void GSM_Find_Free_Used_SMS2(GSM_Debug_Info *di, GSM_Coding_Type Coding,GSM_SMSM
 		(long)*FreeBytes);
 }
 
+unsigned int ReassembleCharacter(char *Buffer, size_t character_index)
+{
+	size_t offset = character_index * 2;
+
+	return (
+	  (unsigned int) ((unsigned char) Buffer[offset] << 8)
+	    + (unsigned char) Buffer[offset + 1]
+	);
+}
+
+int AlignIfSurrogatePair(GSM_Debug_Info	*di,
+			 size_t		*Copy,
+			 char		*Buffer,
+			 size_t		BufferLen)
+{
+	int rv = 0;
+	unsigned int n;
+
+	/* Precondition:
+	 *   Resulting copy must always be non-zero. */
+
+	if (*Copy <= 1) {
+		return rv;
+	}
+
+	/* Don't split a UTF-16 surrogate pair:
+	 *   If the final code unit to be copied is a lead surrogate, save
+	 *   it for the next message segment. This allows recipients to view
+	 *   the proper four-byte UTF-16 character even if they're unable to
+	 *   reassemble the message (e.g. if a telecom strips off the UDH). */
+
+	n = ReassembleCharacter(Buffer, *Copy - 1);
+
+	/* UTF-16 leading surrogate:
+	 *   First character in pair is always between U+D800 and U+DBFF */
+
+	if (n >= 0xd800 && n <= 0xdbff) {
+		*Copy -= 1;
+		++rv;
+	}
+
+	return rv;
+}
+
+int AlignIfCombinedCharacter(GSM_Debug_Info	*di,
+			      size_t		*Copy,
+			      char		*Buffer,
+			      size_t		BufferLen)
+{
+	int rv = 0;
+	unsigned int n;
+
+	/* Precondition:
+	 *   If we only have one character to copy, or if there isn't any
+	 *   code unit following our copy window, don't change anything. */
+
+	if (*Copy <= 1 || *Copy >= BufferLen) {
+		return rv;
+	}
+
+	/* Don't split up a combining sequence:
+	 *   Peek at the next message segment to see if it begins with
+	 *   a combining character (e.g. a discritical mark). If it does,
+	 *   push the final character of this message segment in to the
+	 *   next message segment. This ensures that the recipient can
+	 *   visually combine the sequence, even if reassembly fails. */
+
+	n = ReassembleCharacter(Buffer, *Copy);
+
+	/* Unicode combining characters:
+	 *   Combining Half Marks (U+FE20 - U+FE2F)
+	 *   Combining Diacritical Marks (U+300 - U+36F)
+	 *   Combining Diacritical Marks Extended (U+1AB0 - U+1AFF)
+	 *   Combining Diacritical Marks Supplement (U+1DC0 - U+1DFF)
+	 *   Combining Diacritical Marks for Symbols (U+20D0 - U+20FF) */
+
+	if ((n >= 0xfe20 && n <= 0xfe2f) ||
+	    (n >= 0x300 && n <= 0x36f) || (n >= 0x1ab0 && n <= 0x1aff) ||
+	    (n >= 0x1dc0 && n <= 0x1dff) || (n >= 0x20d0 && n <= 0x20ff)) {
+		*Copy -= 1;
+		++rv;
+	}
+
+	return rv;
+}
+
+int AlignIfCombinedSurrogate(GSM_Debug_Info	*di,
+			     size_t		*Copy,
+			     char		*Buffer,
+			     size_t		BufferLen)
+{
+	int rv = 0;
+	unsigned int l1, l2, r1, r2;
+
+	/* Precondition:
+	 *   If we have two or fewer characters to copy, omitting two
+	 *   of them would cause us to send empty message segments. If
+	 *   there aren't at least two characters remaining *after* the
+	 *   copy boundary, then there can't possibly be space for a
+	 *   second surrogate pair there. In either case, send as-is. */
+
+	if (*Copy <= 2 || (*Copy + 2) >= BufferLen) {
+		return rv;
+	}
+
+	/* Fetch characters:
+	 *   We retrieve two UTF-16 characters directly preceeding the
+	 *   copy boundary, and two directly following the copy boundary. */
+
+	l1 = ReassembleCharacter(Buffer, *Copy - 2);
+	l2 = ReassembleCharacter(Buffer, *Copy - 1);
+	r1 = ReassembleCharacter(Buffer, *Copy);
+	r2 = ReassembleCharacter(Buffer, *Copy + 1);
+
+	/* Regional Indicator Symbol (U+1F1E6 - U+1F1FF)
+	 *   UTF-16 surrogate pairs: 0xd83c 0xdde6 - 0xd83c 0xddff */
+
+	if (l1 == 0xd83c && r1 == 0xd83c &&
+	    l2 >= 0xdde6 && l2 <= 0xddff && r2 >= 0xdde6 && r2 <= 0xddff) {
+		*Copy -= 2;
+		rv += 2;
+	}
+		
+	return rv;
+}
+
+int AlignSegmentForContent(GSM_Debug_Info	*di,
+			   size_t		*Copy,
+			   char			*Buffer,
+			   size_t		BufferLen)
+{
+	int rv = 0;
+
+	if (!(rv += AlignIfSurrogatePair(di, Copy, Buffer, BufferLen))) {
+		rv += AlignIfCombinedCharacter(di, Copy, Buffer, BufferLen);
+	}
+
+	rv += AlignIfCombinedSurrogate(di, Copy, Buffer, BufferLen);
+	return rv;
+}
+
 GSM_Error GSM_AddSMS_Text_UDH(GSM_Debug_Info *di,
 				GSM_MultiSMSMessage 	*SMS,
 		      		GSM_Coding_Type		Coding,
@@ -125,6 +266,7 @@ GSM_Error GSM_AddSMS_Text_UDH(GSM_Debug_Info *di,
 			SMS->SMS[SMS->Number].Length += i;
 			break;
 		case SMS_Coding_Unicode_No_Compression:
+			AlignSegmentForContent(di, &Copy, Buffer, BufferLen);
 			SMS->SMS[SMS->Number].Text[UnicodeLength(SMS->SMS[SMS->Number].Text)*2+Copy*2]   = 0;
 			SMS->SMS[SMS->Number].Text[UnicodeLength(SMS->SMS[SMS->Number].Text)*2+Copy*2+1] = 0;
 			memcpy(SMS->SMS[SMS->Number].Text+UnicodeLength(SMS->SMS[SMS->Number].Text)*2,Buffer,Copy*2);
