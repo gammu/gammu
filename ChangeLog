@@ -23,6 +23,8 @@ ChangeLog
 
 [-] * Compatibility with libdbi from git.
 [-] * Fix siemenssatnetmon (Daniel Glöckner).
+[-] * Fixed reconnecting to SQL server.
+[+] * Don't split a surrogate pair between message segments (David Brown).
 
 20150413 - 1.36.0
 
