@@ -11,6 +11,7 @@ script:
   - if [ ${COVERITY_SCAN_BRANCH} != 1 ] ; then make test ; fi
 after_success:
   - ./coveralls-upload
+  - bash <(curl -s https://codecov.io/bash)
 # trigger Buildtime Trend Service to parse Travis CI log
 notifications:
   webhooks:
