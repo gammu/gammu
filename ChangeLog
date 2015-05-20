@@ -19,7 +19,7 @@ the issue.
 ChangeLog
 =========
     
-2015???? - 1.36.1
+20150520 - 1.36.1
 
 [-] * Compatibility with libdbi from git.
 [-] * Fix siemenssatnetmon (Daniel Glöckner).
