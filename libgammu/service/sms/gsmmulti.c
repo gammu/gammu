@@ -190,7 +190,7 @@ int AlignIfCombinedSurrogate(GSM_Debug_Info	*di,
 		*Copy -= 2;
 		rv += 2;
 	}
-		
+
 	return rv;
 }
 
@@ -498,13 +498,13 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 	gboolean		EMS	= FALSE;
 	int		textnum = 0;
 
+	if (Info->EntriesNum == 0) return ERR_EMPTY;
+
 	Buffer = malloc(GSM_MAX_SMS_LENGTH * 2 * GSM_MAX_MULTI_SMS);
 	Buffer2 = malloc(GSM_MAX_SMS_LENGTH * 2 * GSM_MAX_MULTI_SMS);
 	if (Buffer == NULL || Buffer2 == NULL) {
 		return ERR_MOREMEMORY;
 	}
-
-	if (Info->EntriesNum == 0) return ERR_EMPTY;
 
 	SMS->Number = 0;
 
