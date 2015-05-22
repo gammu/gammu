@@ -154,14 +154,12 @@ GSM_Error GSM_SetDebugFile(const char *info, GSM_Debug_Info *privdi)
 		case DL_TEXTERROR:
 		case DL_TEXTERRORDATE:
 			testfile = fopen(info,"a" COMMIT_FLAG);
-			if (!testfile) {
-				dbgprintf(privdi, "Can't open debug file\n");
-				return ERR_CANTOPENFILE;
-			}
-			fseek(testfile, 0, SEEK_END);
-			if (ftell(testfile) > 5000000) {
-				fclose(testfile);
-				testfile = fopen(info,"w" COMMIT_FLAG);
+			if (testfile != NULL) {
+				fseek(testfile, 0, SEEK_END);
+				if (ftell(testfile) > 5000000) {
+					fclose(testfile);
+					testfile = fopen(info,"w" COMMIT_FLAG);
+				}
 			}
 			break;
 		default:
