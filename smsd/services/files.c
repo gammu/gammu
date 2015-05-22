@@ -637,11 +637,15 @@ GSM_Error SMSDFiles_ReadConfiguration(GSM_SMSDConfig *Config)
 		Config->transmitformat);
 
 	Config->sentsmspath=INI_GetValue(Config->smsdcfgfile, "smsd", "sentsmspath", FALSE);
-	if (Config->sentsmspath == NULL) Config->sentsmspath = Config->outboxpath;
+	if (Config->sentsmspath == NULL) {
+		Config->sentsmspath = Config->outboxpath;
+	}
 	SMSD_Log(DEBUG_NOTICE, Config, "Sent SMS moved to \"%s\"",Config->sentsmspath);
 
 	Config->errorsmspath=INI_GetValue(Config->smsdcfgfile, "smsd", "errorsmspath", FALSE);
-	if (Config->errorsmspath == NULL) Config->errorsmspath = Config->sentsmspath;
+	if (Config->errorsmspath == NULL) {
+		Config->errorsmspath = Config->sentsmspath;
+	}
 	SMSD_Log(DEBUG_NOTICE, Config, "SMS with errors moved to \"%s\"",Config->errorsmspath);
 
 	return ERR_NONE;
