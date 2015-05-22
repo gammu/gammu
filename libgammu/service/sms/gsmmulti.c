@@ -486,8 +486,8 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 				 GSM_MultiPartSMSInfo		*Info,
 			    	 GSM_MultiSMSMessage		*SMS)
 {
-	unsigned char	Buffer[GSM_MAX_SMS_LENGTH*2*GSM_MAX_MULTI_SMS];
-	unsigned char	Buffer2[GSM_MAX_SMS_LENGTH*2*GSM_MAX_MULTI_SMS];
+	unsigned char	*Buffer;
+	unsigned char	*Buffer2;
 	int		i, Class = -1, j;
 	size_t p;
 	size_t Length = 0, smslen;
@@ -497,6 +497,12 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 	GSM_UDHHeader 	UDHHeader;
 	gboolean		EMS	= FALSE;
 	int		textnum = 0;
+
+	Buffer = malloc(GSM_MAX_SMS_LENGTH * 2 * GSM_MAX_MULTI_SMS);
+	Buffer2 = malloc(GSM_MAX_SMS_LENGTH * 2 * GSM_MAX_MULTI_SMS);
+	if (Buffer == NULL || Buffer2 == NULL) {
+		return ERR_MOREMEMORY;
+	}
 
 	if (Info->EntriesNum == 0) return ERR_EMPTY;
 
