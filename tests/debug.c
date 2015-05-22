@@ -8,10 +8,10 @@
 GSM_StateMachine *s;
 
 #ifdef WIN32
-# define NUL "NUL"
+# define NONE_LOG ".\\none.log"
 char debug_filename[] = ".\\gammu-debug-test.log";
 #else
-# define NUL "/dev/null"
+# define NONE_LOG "/dev/null"
 char debug_filename[] = "./gammu-debug-test.log";
 #endif
 
@@ -88,8 +88,8 @@ int main(int argc UNUSED, char **argv UNUSED)
 	debug_file = fopen(debug_filename, "w+");
 	test_result(debug_file != NULL);
 	test_result(GSM_SetDebugGlobal(FALSE, di_sm) == TRUE);
-	error = GSM_SetDebugFile(NUL, di_global);
-	gammu_test_result(error, "GSM_SetDebugFile(NUL, di_global)");
+	error = GSM_SetDebugFile(NONE_LOG, di_global);
+	gammu_test_result(error, "GSM_SetDebugFile(NONE_LOG, di_global)");
 	error = GSM_SetDebugFileDescriptor(debug_file, TRUE, di_sm);
 	gammu_test_result(error, "GSM_SetDebugFileDescriptor(debug_file, TRUE, di_sm)");
 	check_log(debug_file, TRUE, "2. global_file=NULL, sm_file=TEMP, use_global=FALSE");
@@ -104,8 +104,8 @@ int main(int argc UNUSED, char **argv UNUSED)
 	debug_file = fopen(debug_filename, "w+");
 	test_result(debug_file != NULL);
 	test_result(GSM_SetDebugGlobal(TRUE, di_sm) == TRUE);
-	error = GSM_SetDebugFile(NUL, di_global);
-	gammu_test_result(error, "GSM_SetDebugFile(NUL, di_global)");
+	error = GSM_SetDebugFile(NONE_LOG, di_global);
+	gammu_test_result(error, "GSM_SetDebugFile(NONE_LOG, di_global)");
 	error = GSM_SetDebugFileDescriptor(debug_file, TRUE, di_sm);
 	gammu_test_result(error, "GSM_SetDebugFileDescriptor(debug_file, TRUE, di_sm)");
 	check_log(debug_file, FALSE, "3. global_file=NULL, sm_file=TEMP, use_global=TRUE");
@@ -120,8 +120,8 @@ int main(int argc UNUSED, char **argv UNUSED)
 	debug_file = fopen(debug_filename, "w+");
 	test_result(debug_file != NULL);
 	test_result(GSM_SetDebugGlobal(TRUE, di_sm) == TRUE);
-	error = GSM_SetDebugFile(NUL, di_sm);
-	gammu_test_result(error, "GSM_SetDebugFile(NUL, di_sm)");
+	error = GSM_SetDebugFile(NONE_LOG, di_sm);
+	gammu_test_result(error, "GSM_SetDebugFile(NONE_LOG, di_sm)");
 	error = GSM_SetDebugFileDescriptor(debug_file, TRUE, di_global);
 	gammu_test_result(error, "GSM_SetDebugFileDescriptor(debug_file, TRUE, di_global)");
 	check_log(debug_file, TRUE, "4. global_file=TEMP, sm_file=NULL, use_global=TRUE");
@@ -136,8 +136,8 @@ int main(int argc UNUSED, char **argv UNUSED)
 	debug_file = fopen(debug_filename, "w+");
 	test_result(debug_file != NULL);
 	test_result(GSM_SetDebugGlobal(FALSE, di_sm) == TRUE);
-	error = GSM_SetDebugFile(NUL, di_sm);
-	gammu_test_result(error, "GSM_SetDebugFile(NUL, di_sm)");
+	error = GSM_SetDebugFile(NONE_LOG, di_sm);
+	gammu_test_result(error, "GSM_SetDebugFile(NONE_LOG, di_sm)");
 	error = GSM_SetDebugFileDescriptor(debug_file, TRUE, di_global);
 	gammu_test_result(error, "GSM_SetDebugFileDescriptor(debug_file, TRUE, di_global)");
 	check_log(debug_file, FALSE, "5. global_file=TEMP, sm_file=NULL, use_global=FALSE");
@@ -152,8 +152,8 @@ int main(int argc UNUSED, char **argv UNUSED)
 	debug_file = fopen(debug_filename, "w+");
 	test_result(debug_file != NULL);
 	test_result(GSM_SetDebugGlobal(TRUE, di_sm) == TRUE);
-	error = GSM_SetDebugFile(NUL, di_global);
-	gammu_test_result(error, "GSM_SetDebugFile(NUL, di_global)");
+	error = GSM_SetDebugFile(NONE_LOG, di_global);
+	gammu_test_result(error, "GSM_SetDebugFile(NONE_LOG, di_global)");
 	error = GSM_SetDebugFileDescriptor(debug_file, TRUE, di_sm);
 	gammu_test_result(error, "GSM_SetDebugFileDescriptor(debug_file, TRUE, di_sm)");
 	test_result(GSM_SetDebugGlobal(FALSE, di_sm) == TRUE);
@@ -169,8 +169,8 @@ int main(int argc UNUSED, char **argv UNUSED)
 	debug_file = fopen(debug_filename, "w+");
 	test_result(debug_file != NULL);
 	test_result(GSM_SetDebugGlobal(FALSE, di_sm) == TRUE);
-	error = GSM_SetDebugFile(NUL, di_global);
-	gammu_test_result(error, "GSM_SetDebugFile(NUL, di_global)");
+	error = GSM_SetDebugFile(NONE_LOG, di_global);
+	gammu_test_result(error, "GSM_SetDebugFile(NONE_LOG, di_global)");
 	error = GSM_SetDebugFileDescriptor(debug_file, TRUE, di_sm);
 	gammu_test_result(error, "GSM_SetDebugFileDescriptor(debug_file, TRUE, di_sm)");
 	test_result(GSM_SetDebugGlobal(TRUE, di_sm) == TRUE);
@@ -186,8 +186,8 @@ int main(int argc UNUSED, char **argv UNUSED)
 	debug_file = fopen(debug_filename, "w+");
 	test_result(debug_file != NULL);
 	test_result(GSM_SetDebugGlobal(FALSE, di_sm) == TRUE);
-	error = GSM_SetDebugFile(NUL, di_sm);
-	gammu_test_result(error, "GSM_SetDebugFile(NUL, di_sm)");
+	error = GSM_SetDebugFile(NONE_LOG, di_sm);
+	gammu_test_result(error, "GSM_SetDebugFile(NONE_LOG, di_sm)");
 	error = GSM_SetDebugFileDescriptor(debug_file, TRUE, di_global);
 	gammu_test_result(error, "GSM_SetDebugFileDescriptor(debug_file, TRUE, di_global)");
 	test_result(GSM_SetDebugGlobal(TRUE, di_sm) == TRUE);
@@ -203,8 +203,8 @@ int main(int argc UNUSED, char **argv UNUSED)
 	debug_file = fopen(debug_filename, "w+");
 	test_result(debug_file != NULL);
 	test_result(GSM_SetDebugGlobal(TRUE, di_sm) == TRUE);
-	error = GSM_SetDebugFile(NUL, di_sm);
-	gammu_test_result(error, "GSM_SetDebugFile(NUL, di_sm)");
+	error = GSM_SetDebugFile(NONE_LOG, di_sm);
+	gammu_test_result(error, "GSM_SetDebugFile(NONE_LOG, di_sm)");
 	error = GSM_SetDebugFileDescriptor(debug_file, TRUE, di_global);
 	gammu_test_result(error, "GSM_SetDebugFileDescriptor(debug_file, TRUE, di_global)");
 	test_result(GSM_SetDebugGlobal(FALSE, di_sm) == TRUE);
@@ -220,8 +220,8 @@ int main(int argc UNUSED, char **argv UNUSED)
 	debug_file = fopen(debug_filename, "w+");
 	test_result(debug_file != NULL);
 	test_result(GSM_SetDebugGlobal(TRUE, di_sm) == TRUE);
-	error = GSM_SetDebugFile(NUL, di_sm);
-	gammu_test_result(error, "GSM_SetDebugFile(NUL, di_sm)");
+	error = GSM_SetDebugFile(NONE_LOG, di_sm);
+	gammu_test_result(error, "GSM_SetDebugFile(NONE_LOG, di_sm)");
 	error = GSM_SetDebugFileDescriptor(debug_file, TRUE, di_global);
 	gammu_test_result(error, "GSM_SetDebugFileDescriptor(debug_file, TRUE, di_global)");
 	error = GSM_SetDebugFunction(Log_Function, NULL, di_sm);
@@ -239,8 +239,8 @@ int main(int argc UNUSED, char **argv UNUSED)
 	debug_file = fopen(debug_filename, "w+");
 	test_result(debug_file != NULL);
 	test_result(GSM_SetDebugGlobal(TRUE, di_sm) == TRUE);
-	error = GSM_SetDebugFile(NUL, di_global);
-	gammu_test_result(error, "GSM_SetDebugFile(NUL, di_global)");
+	error = GSM_SetDebugFile(NONE_LOG, di_global);
+	gammu_test_result(error, "GSM_SetDebugFile(NONE_LOG, di_global)");
 	error = GSM_SetDebugFileDescriptor(debug_file, TRUE, di_global);
 	gammu_test_result(error, "GSM_SetDebugFileDescriptor(debug_file, TRUE, di_global)");
 	error = GSM_SetDebugFunction(Log_Function, NULL, di_global);
