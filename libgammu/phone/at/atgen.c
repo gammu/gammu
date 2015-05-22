@@ -461,7 +461,7 @@ INLINE gboolean ATGEN_HasOnlyDigits(const char *text, const size_t length)
 	size_t i = 0;
 
 	for (i = 0; i < length; i++) {
-		if (!isdigit((int)text[i])) {
+		if (!isdigit((int)(unsigned char)text[i])) {
 			return FALSE;
 		}
 	}
