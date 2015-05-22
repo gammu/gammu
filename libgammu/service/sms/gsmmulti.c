@@ -548,11 +548,13 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 			Length 			= Length + smslen;
 			break;
 		default:
-			return ERR_UNKNOWN;
+			error = ERR_UNKNOWN;
+			goto out;
 		}
 		}
 		Buffer[0] = Buffer[0] * 2;
-		return GSM_EncodeAlcatelMultiPartSMS(di, SMS,Buffer,Length,Info->Entries[0].Buffer,ALCATELTDD_SMSTEMPLATE);
+		error = GSM_EncodeAlcatelMultiPartSMS(di, SMS,Buffer,Length,Info->Entries[0].Buffer,ALCATELTDD_SMSTEMPLATE);
+		goto out;
 	}
 
 	for (i=0;i<Info->EntriesNum;i++) {
@@ -599,20 +601,26 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 	}
 	if (EMS) {
 		error=GSM_EncodeEMSMultiPartSMS(di, Info,SMS,UDH_NoUDH);
-		if (error != ERR_NONE) return error;
+		if (error != ERR_NONE) {
+			goto out;
+		}
 		if (SMS->Number != 1) {
 			SMS->Number = 0;
 			for (i=0;i<Info->EntriesNum;i++) {
 				if (Info->Entries[i].ID == SMS_ConcatenatedTextLong16bit) {
-					return GSM_EncodeEMSMultiPartSMS(di, Info,SMS,UDH_ConcatenatedMessages);
+					error = GSM_EncodeEMSMultiPartSMS(di, Info,SMS,UDH_ConcatenatedMessages);
+					goto out;
 				}
 			}
-			return GSM_EncodeEMSMultiPartSMS(di, Info,SMS,UDH_ConcatenatedMessages16bit);
+			error = GSM_EncodeEMSMultiPartSMS(di, Info,SMS,UDH_ConcatenatedMessages16bit);
 		}
-		return error;
+		goto out;
 	}
 
-	if (Info->EntriesNum != 1) return ERR_UNKNOWN;
+	if (Info->EntriesNum != 1) {
+		error = ERR_UNKNOWN;
+		goto out;
+	}
 
 	switch (Info->Entries[0].ID) {
 	case SMS_AlcatelMonoBitmapLong:
@@ -620,7 +628,8 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 		Buffer[1] = Info->Entries[0].Bitmap->Bitmap[0].BitmapHeight;
 		PHONE_EncodeBitmap(GSM_AlcatelBMMIPicture, Buffer+2, &Info->Entries[0].Bitmap->Bitmap[0]);
 		Length = PHONE_GetBitmapSize(GSM_AlcatelBMMIPicture,Info->Entries[0].Bitmap->Bitmap[0].BitmapWidth,Info->Entries[0].Bitmap->Bitmap[0].BitmapHeight)+2;
-		return GSM_EncodeAlcatelMultiPartSMS(di, SMS,Buffer,Length,Info->Entries[0].Bitmap->Bitmap[0].Text,ALCATELTDD_PICTURE);
+		error = GSM_EncodeAlcatelMultiPartSMS(di, SMS,Buffer,Length,Info->Entries[0].Bitmap->Bitmap[0].Text,ALCATELTDD_PICTURE);
+		goto out;
 	case SMS_AlcatelMonoAnimationLong:
 		/* Number of sequence words */
 		Buffer[0] = (Info->Entries[0].Bitmap->Number+1) % 256;
@@ -646,7 +655,8 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 			PHONE_EncodeBitmap(GSM_AlcatelBMMIPicture, Buffer+Length, &Info->Entries[0].Bitmap->Bitmap[i]);
 			Length += PHONE_GetBitmapSize(GSM_AlcatelBMMIPicture,Info->Entries[0].Bitmap->Bitmap[i].BitmapWidth,Info->Entries[0].Bitmap->Bitmap[i].BitmapHeight);
 		}
-		return GSM_EncodeAlcatelMultiPartSMS(di, SMS,Buffer,Length,Info->Entries[0].Bitmap->Bitmap[0].Text,ALCATELTDD_ANIMATION);
+		error = GSM_EncodeAlcatelMultiPartSMS(di, SMS,Buffer,Length,Info->Entries[0].Bitmap->Bitmap[0].Text,ALCATELTDD_ANIMATION);
+		goto out;
 	case SMS_MMSIndicatorLong:
 		Class	= 1;
 		UDH	= UDH_MMSIndicatorLong;
@@ -730,7 +740,9 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 			Coding = SMS_Coding_8bit;
 		}
 		error = GSM_EncodeVCARD(di, Buffer, sizeof(Buffer), &Length,Info->Entries[0].Phonebook,TRUE,Nokia_VCard10);
-		if (error != ERR_NONE) return error;
+		if (error != ERR_NONE) {
+			goto out;
+		}
 		if (Coding == SMS_Coding_Default_No_Compression) {
 			memcpy(Buffer2,Buffer,Length);
 			EncodeUnicode(Buffer,Buffer2,Length);
@@ -747,7 +759,9 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 			Coding = SMS_Coding_8bit;
 		}
 		error = GSM_EncodeVCARD(di, Buffer, sizeof(Buffer), &Length,Info->Entries[0].Phonebook,TRUE,Nokia_VCard21);
-		if (error != ERR_NONE) return error;
+		if (error != ERR_NONE) {
+			goto out;
+		}
 		if (Coding == SMS_Coding_Default_No_Compression) {
 			memcpy(Buffer2,Buffer,Length);
 			EncodeUnicode(Buffer,Buffer2,Length);
@@ -755,7 +769,9 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 		break;
 	case SMS_VCARD10Long:
 		error = GSM_EncodeVCARD(di, Buffer, sizeof(Buffer), &Length,Info->Entries[0].Phonebook,TRUE,Nokia_VCard10);
-		if (error != ERR_NONE) return error;
+		if (error != ERR_NONE) {
+			goto out;
+		}
 		if (Length>GSM_MAX_SMS_CHARS_LENGTH) UDH = UDH_ConcatenatedMessages;
 		Coding = SMS_Coding_Default_No_Compression;
 		memcpy(Buffer2,Buffer,Length);
@@ -763,7 +779,9 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 		break;
 	case SMS_VCARD21Long:
 		error = GSM_EncodeVCARD(di, Buffer, sizeof(Buffer), &Length,Info->Entries[0].Phonebook,TRUE,Nokia_VCard21);
-		if (error != ERR_NONE) return error;
+		if (error != ERR_NONE) {
+			goto out;
+		}
 		if (Length>GSM_MAX_SMS_CHARS_LENGTH) UDH = UDH_ConcatenatedMessages;
 		Coding = SMS_Coding_Default_No_Compression;
 		memcpy(Buffer2,Buffer,Length);
@@ -780,7 +798,9 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 			Coding = SMS_Coding_8bit;
 		}
 		error=GSM_EncodeVCALENDAR(Buffer, sizeof(Buffer),&Length,Info->Entries[0].Calendar,TRUE,Nokia_VCalendar);
-		if (error != ERR_NONE) return error;
+		if (error != ERR_NONE) {
+			goto out;
+		}
 		if (Coding == SMS_Coding_Default_No_Compression) {
 			memcpy(Buffer2,Buffer,Length);
 			EncodeUnicode(Buffer,Buffer2,Length);
@@ -788,7 +808,9 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 		break;
 	case SMS_NokiaVTODOLong:
 		error=GSM_EncodeVTODO(Buffer, sizeof(Buffer),&Length,Info->Entries[0].ToDo,TRUE,Nokia_VToDo);
-		if (error != ERR_NONE) return error;
+		if (error != ERR_NONE) {
+			goto out;
+		}
 		UDH = UDH_NokiaCalendarLong;
 		Coding = SMS_Coding_Default_No_Compression;
 		memcpy(Buffer2,Buffer,Length);
@@ -884,7 +906,11 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 		break;
 	}
 	GSM_MakeMultiPartSMS(di, SMS,Buffer,Length,UDH,Coding,Class,Info->ReplaceMessage);
-	return ERR_NONE;
+	error = ERR_NONE;
+out:
+	free(Buffer);
+	free(Buffer2);
+	return error;
 }
 
 void GSM_ClearMultiPartSMSInfo(GSM_MultiPartSMSInfo *Info)
