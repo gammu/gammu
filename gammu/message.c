@@ -392,7 +392,7 @@ void GetAllSMS(int argc, char *argv[])
 void GetEachSMS(int argc, char *argv[])
 {
 	GSM_Error error;
-	GSM_MultiSMSMessage	*GetSMSData[GSM_PHONE_MAXSMSINFOLDER],*SortedSMS[GSM_PHONE_MAXSMSINFOLDER],sms;
+	GSM_MultiSMSMessage	**GetSMSData,**SortedSMS,sms;
 	GSM_SMSFolders		folders;
 	gboolean		start=TRUE, ems=TRUE;
 	int			GetSMSNumber=0,i=0,j=0,smsnum=0,smspos=0;
@@ -405,6 +405,8 @@ void GetEachSMS(int argc, char *argv[])
 	GSM_ClearBackup(&Backup);
 	BackupPtr = &Backup;
 #endif
+	GetSMSData = malloc(GSM_PHONE_MAXSMSINFOLDER * sizeof(GSM_MultiSMSMessage*));
+	SortedSMS = malloc(GSM_PHONE_MAXSMSINFOLDER * sizeof(GSM_MultiSMSMessage*));
 
 	sms.Number = 0;
 	sms.SMS[0].Location = 0;
@@ -489,6 +491,8 @@ void GetEachSMS(int argc, char *argv[])
 #ifdef GSM_ENABLE_BACKUP
 	GSM_FreeBackup(&Backup);
 #endif
+	free(SortedSMS);
+	free(GetSMSData);
 
 	printf("\n");
 	printf(_("%i SMS parts in %i SMS sequences"),smsnum,smspos);
