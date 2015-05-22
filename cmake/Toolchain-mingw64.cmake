@@ -14,7 +14,7 @@ SET(CMAKE_OBJCOPY x86_64-w64-mingw32-objcopy)
 SET(CMAKE_OBJDUMP x86_64-w64-mingw32-objdump)
 SET(CMAKE_RANLIB x86_64-w64-mingw32-ranlib)
 SET(CMAKE_STRIP x86_64-w64-mingw32-strip)
-SET(CMAKE_MC x86_64-w64-mingw32-windmc)
+SET(CMAKE_MC_COMPILER x86_64-w64-mingw32-windmc)
 
 # here is the target environment located
 SET(CMAKE_FIND_ROOT_PATH  /usr/x86_64-w64-mingw32/sys-root/mingw/ /usr/x86_64-pc-mingw32/sys-root/mingw/)
