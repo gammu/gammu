@@ -45,7 +45,7 @@ void check_log(FILE * f, gboolean match, const char *test_name)
 		fail(11);
 	}
 	if (!match && result == 0) {
-		printf("%s: Matchech but should not!\n", test_name);
+		printf("%s: Matched but should not!\n", test_name);
 		fail(12);
 	}
 done:
