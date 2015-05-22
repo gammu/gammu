@@ -8,6 +8,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <sys/stat.h>
 
 #ifdef WIN32
 #include <io.h>
@@ -596,12 +597,36 @@ static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage * sms UNUSED, GSM_
 	return ERR_NONE;
 }
 
+GSM_Error SMSD_Check_Dir(GSM_SMSDConfig *Config, const char *path, const char *name)
+{
+	struct stat s;
+
+	if (stat(path, &s) < 0) {
+		SMSD_Log(DEBUG_ERROR, Config, "Failed to stat \"%s\" (%s)", path, name);
+		return ERR_FILENOTEXIST;
+	}
+
+	if (!S_ISDIR(s.st_mode)) {
+		SMSD_Log(DEBUG_ERROR, Config, "The path \"%s\" (%s) is not a folder", path, name);
+		return ERR_FILENOTEXIST;
+	}
+	return ERR_NONE;
+}
+
 GSM_Error SMSDFiles_ReadConfiguration(GSM_SMSDConfig *Config)
 {
 	static unsigned char	emptyPath[1] = "\0";
+	GSM_Error error;
 
 	Config->inboxpath=INI_GetValue(Config->smsdcfgfile, "smsd", "inboxpath", FALSE);
-	if (Config->inboxpath == NULL) Config->inboxpath = emptyPath;
+	if (Config->inboxpath == NULL) {
+		Config->inboxpath = emptyPath;
+	} else {
+		error = SMSD_Check_Dir(Config, Config->inboxpath, "inboxpath");
+		if (error != ERR_NONE) {
+			return error;
+		}
+	}
 
 	Config->inboxformat=INI_GetValue(Config->smsdcfgfile, "smsd", "inboxformat", FALSE);
 	if (Config->inboxformat == NULL ||
@@ -614,7 +639,14 @@ GSM_Error SMSDFiles_ReadConfiguration(GSM_SMSDConfig *Config)
 
 
 	Config->outboxpath=INI_GetValue(Config->smsdcfgfile, "smsd", "outboxpath", FALSE);
-	if (Config->outboxpath == NULL) Config->outboxpath = emptyPath;
+	if (Config->outboxpath == NULL) {
+		Config->outboxpath = emptyPath;
+	} else {
+		error = SMSD_Check_Dir(Config, Config->outboxpath, "outboxpath");
+		if (error != ERR_NONE) {
+			return error;
+		}
+	}
 
 	Config->transmitformat=INI_GetValue(Config->smsdcfgfile, "smsd", "transmitformat", FALSE);
 	if (Config->transmitformat == NULL || (strcasecmp(Config->transmitformat, "auto") != 0 && strcasecmp(Config->transmitformat, "unicode") != 0)) {
@@ -639,12 +671,22 @@ GSM_Error SMSDFiles_ReadConfiguration(GSM_SMSDConfig *Config)
 	Config->sentsmspath=INI_GetValue(Config->smsdcfgfile, "smsd", "sentsmspath", FALSE);
 	if (Config->sentsmspath == NULL) {
 		Config->sentsmspath = Config->outboxpath;
+	} else {
+		error = SMSD_Check_Dir(Config, Config->sentsmspath, "sentsmspath");
+		if (error != ERR_NONE) {
+			return error;
+		}
 	}
 	SMSD_Log(DEBUG_NOTICE, Config, "Sent SMS moved to \"%s\"",Config->sentsmspath);
 
 	Config->errorsmspath=INI_GetValue(Config->smsdcfgfile, "smsd", "errorsmspath", FALSE);
 	if (Config->errorsmspath == NULL) {
 		Config->errorsmspath = Config->sentsmspath;
+	} else {
+		error = SMSD_Check_Dir(Config, Config->errorsmspath, "errorsmspath");
+		if (error != ERR_NONE) {
+			return error;
+		}
 	}
 	SMSD_Log(DEBUG_NOTICE, Config, "SMS with errors moved to \"%s\"",Config->errorsmspath);
 
