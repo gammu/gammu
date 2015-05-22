@@ -488,6 +488,7 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 {
 	unsigned char	*Buffer;
 	unsigned char	*Buffer2;
+	size_t		buffer_size = GSM_MAX_SMS_LENGTH * 2 * GSM_MAX_MULTI_SMS;
 	int		i, Class = -1, j;
 	size_t p;
 	size_t Length = 0, smslen;
@@ -500,8 +501,8 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 
 	if (Info->EntriesNum == 0) return ERR_EMPTY;
 
-	Buffer = malloc(GSM_MAX_SMS_LENGTH * 2 * GSM_MAX_MULTI_SMS);
-	Buffer2 = malloc(GSM_MAX_SMS_LENGTH * 2 * GSM_MAX_MULTI_SMS);
+	Buffer = malloc(buffer_size);
+	Buffer2 = malloc(buffer_size);
 	if (Buffer == NULL || Buffer2 == NULL) {
 		return ERR_MOREMEMORY;
 	}
@@ -739,7 +740,7 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 			UDH = UDH_NokiaPhonebookLong;
 			Coding = SMS_Coding_8bit;
 		}
-		error = GSM_EncodeVCARD(di, Buffer, sizeof(Buffer), &Length,Info->Entries[0].Phonebook,TRUE,Nokia_VCard10);
+		error = GSM_EncodeVCARD(di, Buffer, buffer_size, &Length,Info->Entries[0].Phonebook,TRUE,Nokia_VCard10);
 		if (error != ERR_NONE) {
 			goto out;
 		}
@@ -758,7 +759,7 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 			UDH = UDH_NokiaPhonebookLong;
 			Coding = SMS_Coding_8bit;
 		}
-		error = GSM_EncodeVCARD(di, Buffer, sizeof(Buffer), &Length,Info->Entries[0].Phonebook,TRUE,Nokia_VCard21);
+		error = GSM_EncodeVCARD(di, Buffer, buffer_size, &Length,Info->Entries[0].Phonebook,TRUE,Nokia_VCard21);
 		if (error != ERR_NONE) {
 			goto out;
 		}
@@ -768,7 +769,7 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 		}
 		break;
 	case SMS_VCARD10Long:
-		error = GSM_EncodeVCARD(di, Buffer, sizeof(Buffer), &Length,Info->Entries[0].Phonebook,TRUE,Nokia_VCard10);
+		error = GSM_EncodeVCARD(di, Buffer, buffer_size, &Length,Info->Entries[0].Phonebook,TRUE,Nokia_VCard10);
 		if (error != ERR_NONE) {
 			goto out;
 		}
@@ -778,7 +779,7 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 		EncodeUnicode(Buffer,Buffer2,Length);
 		break;
 	case SMS_VCARD21Long:
-		error = GSM_EncodeVCARD(di, Buffer, sizeof(Buffer), &Length,Info->Entries[0].Phonebook,TRUE,Nokia_VCard21);
+		error = GSM_EncodeVCARD(di, Buffer, buffer_size, &Length,Info->Entries[0].Phonebook,TRUE,Nokia_VCard21);
 		if (error != ERR_NONE) {
 			goto out;
 		}
@@ -797,7 +798,7 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 			UDH = UDH_NokiaCalendarLong;
 			Coding = SMS_Coding_8bit;
 		}
-		error=GSM_EncodeVCALENDAR(Buffer, sizeof(Buffer),&Length,Info->Entries[0].Calendar,TRUE,Nokia_VCalendar);
+		error=GSM_EncodeVCALENDAR(Buffer, buffer_size,&Length,Info->Entries[0].Calendar,TRUE,Nokia_VCalendar);
 		if (error != ERR_NONE) {
 			goto out;
 		}
@@ -807,7 +808,7 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 		}
 		break;
 	case SMS_NokiaVTODOLong:
-		error=GSM_EncodeVTODO(Buffer, sizeof(Buffer),&Length,Info->Entries[0].ToDo,TRUE,Nokia_VToDo);
+		error=GSM_EncodeVTODO(Buffer, buffer_size,&Length,Info->Entries[0].ToDo,TRUE,Nokia_VToDo);
 		if (error != ERR_NONE) {
 			goto out;
 		}
