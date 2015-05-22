@@ -35,6 +35,10 @@ GSM_Error INI_ReadFile(const char *FileName, gboolean Unicode, INI_Section **res
 
 	*result = NULL;
 
+	if (FileName == NULL) {
+		return ERR_CANTOPENFILE;
+	}
+
 	f = fopen(FileName,"rb");
 	if (f == NULL) {
 		return ERR_CANTOPENFILE;
