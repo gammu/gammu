@@ -442,7 +442,7 @@ INLINE gboolean ATGEN_HasOnlyHexChars(const char *text, const size_t length)
 	size_t i = 0;
 
 	for (i = 0; i < length; i++) {
-		if (!isxdigit((int)text[i])) {
+		if (!isxdigit((int)(unsigned char)text[i])) {
 			return FALSE;
 		}
 	}
