@@ -12,6 +12,9 @@
 
 #ifdef WIN32
 #include <io.h>
+#ifndef S_ISDIR
+#define S_ISDIR(mode)  (((mode) & S_IFMT) == S_IFDIR)
+#endif
 #endif
 #if defined HAVE_DIRENT_H && defined HAVE_SCANDIR && defined HAVE_ALPHASORT
 #define HAVE_DIRBROWSING
