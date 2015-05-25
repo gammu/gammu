@@ -8,6 +8,7 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <signal.h>
+#include <string.h>
 #ifndef WIN32
 #include <unistd.h>
 #endif
