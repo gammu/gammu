@@ -13,7 +13,7 @@
 #ifdef WIN32
 #include <windows.h>
 #ifndef __GNUC__
-#pragma comment(lib, "libodbc32.lib")
+#pragma comment(lib, "odbc32.lib")
 #endif
 #endif
 
