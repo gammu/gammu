@@ -691,6 +691,10 @@ database. For routing the messages, you need to set different
 :config:option:`PhoneID` for each instance and set ``SenderID`` column in
 :ref:`outbox` table.
 
+Following example shows configuration for two modems, but you can have any
+number of SMSD instances. The only limitation is performance of your hardware,
+especially if all modems are connected using USB.
+
 Configuration for first SMSD:
 
 .. code-block:: ini
