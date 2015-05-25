@@ -78,8 +78,8 @@ if (WITH_BACKUP)
         )
 
     foreach (PROGRAM gammu-smsd gammu-smsd-monitor gammu-smsd-inject)
-        add_test(${PROGRAM}-help "${CMAKE_CURRENT_BINARY_DIR}/${PROGRAM}${GAMMU_TEST_SUFFIX}" --help)
-        add_test(${PROGRAM}-version "${CMAKE_CURRENT_BINARY_DIR}/${PROGRAM}${GAMMU_TEST_SUFFIX}" --version)
+        add_test(${PROGRAM}-help "${CMAKE_CURRENT_BINARY_DIR}/${PROGRAM}${GAMMU_TEST_SUFFIX}" -h)
+        add_test(${PROGRAM}-version "${CMAKE_CURRENT_BINARY_DIR}/${PROGRAM}${GAMMU_TEST_SUFFIX}" -v)
         set_tests_properties(${PROGRAM}-version PROPERTIES
             PASS_REGULAR_EXPRESSION "${GAMMU_VERSION}"
             )
