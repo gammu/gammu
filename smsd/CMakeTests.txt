@@ -25,16 +25,16 @@ if (WITH_BACKUP)
             FAIL_REGULAR_EXPRESSION "ERROR: ;ODBC diagnostics;DBI error ([^5]:|[0-9][^:]);Wrong;Process finished successfully;Process failed with exit status [^4]"
             )
 
-        add_test("smsd-inject-${_driver}" "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd-inject${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/.smsdrc" TEXT 123465 -text "Lorem ipsum.")
+        add_test("smsd-inject-${_driver}" "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd-inject${CMAKE_EXECUTABLE_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/.smsdrc" TEXT 123465 -text "Lorem ipsum.")
         set_tests_properties("smsd-inject-${_driver}" PROPERTIES
             FAIL_REGULAR_EXPRESSION "DBI error;SQL failed;ODBC diagnostics"
             )
-        add_test("smsd-inject-long-${_driver}" "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd-inject${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/.smsdrc" EMS 123465 -text "Mqukqirip ya konej eqniu rejropocejor hugiygydewl tfej nrupxujob xuemymiyliralj. Te tvyjuh qaxumur ibewfoiws zuucoz tdygu gelum L ejqigqesykl kya jdytbezy ucixh mqudemiywty nzihriduwlo yxylyujvghpv. Tiekoohunl dloijoda qelejocewu bfe bxuahadempivog. Ev mfegijox vleinley ewig qihopqu fafozmuvipc ernogtipeq acuoclzyv m poujhyerbjpipc vyq. Xty ljietenea ypep ti dik ela jozmyihipup xopujoqyjaw jojyuhietry mexykpih ysec yum zyhniet dezjiyup nuyryfsohnir Zeyoekemdoj tayqgh. Xvujuxy gysun dahyfecpetk uziyecz jogovxi fbypexsotn exymnomeatd ayiostiyvoxfy iqilo redvejf gfeypavlvaqu vfyjonytbug rgyxn siuybmulijub bxu xewz qisubevumxyzk ufuylehyzc. Nse xobq dfolizygqysj t bvowsyhyhyemim ovutpapeaempye giuuwbib.")
+        add_test("smsd-inject-long-${_driver}" "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd-inject${CMAKE_EXECUTABLE_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/.smsdrc" EMS 123465 -text "Mqukqirip ya konej eqniu rejropocejor hugiygydewl tfej nrupxujob xuemymiyliralj. Te tvyjuh qaxumur ibewfoiws zuucoz tdygu gelum L ejqigqesykl kya jdytbezy ucixh mqudemiywty nzihriduwlo yxylyujvghpv. Tiekoohunl dloijoda qelejocewu bfe bxuahadempivog. Ev mfegijox vleinley ewig qihopqu fafozmuvipc ernogtipeq acuoclzyv m poujhyerbjpipc vyq. Xty ljietenea ypep ti dik ela jozmyihipup xopujoqyjaw jojyuhietry mexykpih ysec yum zyhniet dezjiyup nuyryfsohnir Zeyoekemdoj tayqgh. Xvujuxy gysun dahyfecpetk uziyecz jogovxi fbypexsotn exymnomeatd ayiostiyvoxfy iqilo redvejf gfeypavlvaqu vfyjonytbug rgyxn siuybmulijub bxu xewz qisubevumxyzk ufuylehyzc. Nse xobq dfolizygqysj t bvowsyhyhyemim ovutpapeaempye giuuwbib.")
         set_tests_properties("smsd-inject-long-${_driver}" PROPERTIES
             FAIL_REGULAR_EXPRESSION "DBI error;SQL failed;ODBC diagnostics"
             )
         if (HAVE_ALARM)
-            add_test("smsd-daemon-${_driver}" "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/.smsdrc" -X 10 -p ${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/smsd.pid)
+            add_test("smsd-daemon-${_driver}" "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd${CMAKE_EXECUTABLE_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/.smsdrc" -X 10 -p ${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/smsd.pid)
             set_tests_properties("smsd-daemon-${_driver}" PROPERTIES
                 FAIL_REGULAR_EXPRESSION "DBI error;SQL failed;ODBC diagnostics"
                 )
@@ -78,12 +78,12 @@ if (WITH_BACKUP)
         )
 
     foreach (PROGRAM gammu-smsd gammu-smsd-monitor gammu-smsd-inject)
-        add_test(${PROGRAM}-help "${CMAKE_CURRENT_BINARY_DIR}/${PROGRAM}${GAMMU_TEST_SUFFIX}" -h)
-        add_test(${PROGRAM}-version "${CMAKE_CURRENT_BINARY_DIR}/${PROGRAM}${GAMMU_TEST_SUFFIX}" -v)
+        add_test(${PROGRAM}-help "${CMAKE_CURRENT_BINARY_DIR}/${PROGRAM}${CMAKE_EXECUTABLE_SUFFIX}" -h)
+        add_test(${PROGRAM}-version "${CMAKE_CURRENT_BINARY_DIR}/${PROGRAM}${CMAKE_EXECUTABLE_SUFFIX}" -v)
         set_tests_properties(${PROGRAM}-version PROPERTIES
             PASS_REGULAR_EXPRESSION "${GAMMU_VERSION}"
             )
-        add_test(${PROGRAM}-fail "${CMAKE_CURRENT_BINARY_DIR}/${PROGRAM}${GAMMU_TEST_SUFFIX}" --nonsense)
+        add_test(${PROGRAM}-fail "${CMAKE_CURRENT_BINARY_DIR}/${PROGRAM}${CMAKE_EXECUTABLE_SUFFIX}" --nonsense)
         set_tests_properties(
             ${PROGRAM}-fail
             PROPERTIES WILL_FAIL TRUE)

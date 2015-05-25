@@ -39,3 +39,5 @@ set(WIN_LIB_GLIB libglib-2.0-0.dll libgobject-2.0-0.dll libgthread-2.0-0.dll)
 
 # Disable pkg-config lookups
 set(PKG_CONFIG_EXECUTABLE /bin/false)
+
+set(CMAKE_EXECUTABLE_SUFFIX .exe)

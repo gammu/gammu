@@ -48,7 +48,7 @@ for x in `ls ../include/ | grep -v gammu.h | grep -v CMake` ; do
 	cecho "# Test for header $x"
 	cecho "add_executable($executable $filename)"
 	cecho "target_link_libraries($executable libGammu \${LIBINTL_LIBRARIES})"
-	cecho "add_test($executable \"\${GAMMU_TEST_PATH}/$executable\${GAMMU_TEST_SUFFIX}\")"
+	cecho "add_test($executable \"\${GAMMU_TEST_PATH}/$executable\${CMAKE_EXECUTABLE_SUFFIX}\")"
 
 done
 

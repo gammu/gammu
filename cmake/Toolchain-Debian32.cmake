@@ -3,3 +3,4 @@ set(CMAKE_C_COMPILER gcc -m32)
 set(CMAKE_CXX_COMPILER g++ -m32)
 set(CMAKE_FIND_ROOT_PATH /emul/ia32-linux)
 
+set(CMAKE_EXECUTABLE_SUFFIX .exe)

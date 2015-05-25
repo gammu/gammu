@@ -15,23 +15,23 @@ sendsms TEXT 132465 -text \"Lorem ipsum\"
 
 # Basic functionality tests
 
-add_test(gammu-help "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" help)
+add_test(gammu-help "${CMAKE_CURRENT_BINARY_DIR}/gammu${CMAKE_EXECUTABLE_SUFFIX}" help)
 set_tests_properties(gammu-help PROPERTIES
     PASS_REGULAR_EXPRESSION "${GAMMU_VERSION}"
     )
-add_test(gammu-features "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" features)
-add_test(gammu-version "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" version)
+add_test(gammu-features "${CMAKE_CURRENT_BINARY_DIR}/gammu${CMAKE_EXECUTABLE_SUFFIX}" features)
+add_test(gammu-version "${CMAKE_CURRENT_BINARY_DIR}/gammu${CMAKE_EXECUTABLE_SUFFIX}" version)
 
-add_test(gammu-help-all "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" help all)
+add_test(gammu-help-all "${CMAKE_CURRENT_BINARY_DIR}/gammu${CMAKE_EXECUTABLE_SUFFIX}" help all)
 set_tests_properties(gammu-help-all PROPERTIES
     PASS_REGULAR_EXPRESSION "batch"
     )
 
-add_test(gammu-nets "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" listnetworks)
+add_test(gammu-nets "${CMAKE_CURRENT_BINARY_DIR}/gammu${CMAKE_EXECUTABLE_SUFFIX}" listnetworks)
 set_tests_properties(gammu-nets PROPERTIES
     PASS_REGULAR_EXPRESSION "901 29     Telenor"
     )
-add_test(gammu-nets-230 "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" listnetworks 230)
+add_test(gammu-nets-230 "${CMAKE_CURRENT_BINARY_DIR}/gammu${CMAKE_EXECUTABLE_SUFFIX}" listnetworks 230)
 set_tests_properties(gammu-nets-230 PROPERTIES
     PASS_REGULAR_EXPRESSION "230 03     Vodafone"
     )
@@ -39,9 +39,9 @@ set_tests_properties(gammu-nets-230 PROPERTIES
 # Bitmap conversions
 
 foreach(EXT nlm ngg nol xpm nsl wbmp bmp)
-    add_test(gammu-copybitmap-${EXT} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}"
+    add_test(gammu-copybitmap-${EXT} "${CMAKE_CURRENT_BINARY_DIR}/gammu${CMAKE_EXECUTABLE_SUFFIX}"
         copybitmap ${LOGO_TEST_FILE} "${CMAKE_CURRENT_BINARY_DIR}/test-bmp.${EXT}" PICTURE)
-    add_test(gammu-displaybitmap-${EXT} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}"
+    add_test(gammu-displaybitmap-${EXT} "${CMAKE_CURRENT_BINARY_DIR}/gammu${CMAKE_EXECUTABLE_SUFFIX}"
         copybitmap "${CMAKE_CURRENT_BINARY_DIR}/test-bmp.${EXT}")
     # Reading of xpm is not supported
     if (${EXT} STREQUAL xpm)
@@ -51,23 +51,23 @@ foreach(EXT nlm ngg nol xpm nsl wbmp bmp)
     endif (${EXT} STREQUAL xpm)
 endforeach(EXT)
 
-add_test(gammu-copyringtone-binary "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}"
+add_test(gammu-copyringtone-binary "${CMAKE_CURRENT_BINARY_DIR}/gammu${CMAKE_EXECUTABLE_SUFFIX}"
     copyringtone ${RINGTONE_TEST_FILE} "${CMAKE_CURRENT_BINARY_DIR}/test-rng.bin" BINARY)
-add_test(gammu-copyringtone-binary-binary "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}"
+add_test(gammu-copyringtone-binary-binary "${CMAKE_CURRENT_BINARY_DIR}/gammu${CMAKE_EXECUTABLE_SUFFIX}"
     copyringtone "${CMAKE_CURRENT_BINARY_DIR}/test-rng.bin" "${CMAKE_CURRENT_BINARY_DIR}/test-rng-bin.bin" BINARY)
 
 # Ringtone conversions
 
 foreach(EXT ott rng mid imy ime wav rttl)
-    add_test(gammu-copyringtone-${EXT} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}"
+    add_test(gammu-copyringtone-${EXT} "${CMAKE_CURRENT_BINARY_DIR}/gammu${CMAKE_EXECUTABLE_SUFFIX}"
         copyringtone ${RINGTONE_TEST_FILE} "${CMAKE_CURRENT_BINARY_DIR}/test-rng.${EXT}" RTTL)
-    add_test(gammu-copyringtone-binary-${EXT} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}"
+    add_test(gammu-copyringtone-binary-${EXT} "${CMAKE_CURRENT_BINARY_DIR}/gammu${CMAKE_EXECUTABLE_SUFFIX}"
         copyringtone "${CMAKE_CURRENT_BINARY_DIR}/test-rng.bin" "${CMAKE_CURRENT_BINARY_DIR}/test-rng-bin.${EXT}" RTTL)
-    add_test(gammu-copyringtone-${EXT}-binary "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}"
+    add_test(gammu-copyringtone-${EXT}-binary "${CMAKE_CURRENT_BINARY_DIR}/gammu${CMAKE_EXECUTABLE_SUFFIX}"
         copyringtone ${RINGTONE_TEST_FILE} "${CMAKE_CURRENT_BINARY_DIR}/test-rng-${EXT}.bin" BINARY)
 
     foreach(EXT2 ott rng mid imy ime wav rttl)
-        add_test(gammu-copyringtone-${EXT}-${EXT} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}"
+        add_test(gammu-copyringtone-${EXT}-${EXT} "${CMAKE_CURRENT_BINARY_DIR}/gammu${CMAKE_EXECUTABLE_SUFFIX}"
             copyringtone "${CMAKE_CURRENT_BINARY_DIR}/test-rng.${EXT}" "${CMAKE_CURRENT_BINARY_DIR}/test-rng-${EXT}.${EXT2}" RTTL)
         # Reading midi is not supported
         if (${EXT} STREQUAL mid OR ${EXT} STREQUAL wav)
@@ -83,16 +83,16 @@ if (WITH_BACKUP)
     file(GLOB VFORMATS "${CMAKE_CURRENT_SOURCE_DIR}/../tests/vcards/*.vcf")
     foreach(VCF ${VFORMATS})
         get_filename_component(TESTNAME "${VCF}" NAME_WE)
-        add_test(gammu-savefile-vcf1-${TESTNAME} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" savefile VCARD10 ${TESTNAME}.1.vcf ${VCF} ME 1)
-        add_test(gammu-savefile-vcf2-${TESTNAME} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" savefile VCARD21 ${TESTNAME}.2.vcf ${VCF} ME 1)
-        add_test(gammu-convertbackup-${TESTNAME} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" convertbackup ${VCF} ${TESTNAME}.3.vcf)
+        add_test(gammu-savefile-vcf1-${TESTNAME} "${CMAKE_CURRENT_BINARY_DIR}/gammu${CMAKE_EXECUTABLE_SUFFIX}" savefile VCARD10 ${TESTNAME}.1.vcf ${VCF} ME 1)
+        add_test(gammu-savefile-vcf2-${TESTNAME} "${CMAKE_CURRENT_BINARY_DIR}/gammu${CMAKE_EXECUTABLE_SUFFIX}" savefile VCARD21 ${TESTNAME}.2.vcf ${VCF} ME 1)
+        add_test(gammu-convertbackup-${TESTNAME} "${CMAKE_CURRENT_BINARY_DIR}/gammu${CMAKE_EXECUTABLE_SUFFIX}" convertbackup ${VCF} ${TESTNAME}.3.vcf)
     endforeach(VCF)
 
     file(GLOB VFORMATS "${CMAKE_CURRENT_SOURCE_DIR}/../tests/vnote/*.vnt")
     foreach(VNT ${VFORMATS})
         get_filename_component(TESTNAME "${VNT}" NAME_WE)
-        add_test(gammu-savefile-vnt-${TESTNAME} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" savefile NOTE ${TESTNAME}.2.vnt ${VNT} 1)
-        add_test(gammu-convertbackup-${TESTNAME} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" convertbackup ${VNT} ${TESTNAME}.3.vnt)
+        add_test(gammu-savefile-vnt-${TESTNAME} "${CMAKE_CURRENT_BINARY_DIR}/gammu${CMAKE_EXECUTABLE_SUFFIX}" savefile NOTE ${TESTNAME}.2.vnt ${VNT} 1)
+        add_test(gammu-convertbackup-${TESTNAME} "${CMAKE_CURRENT_BINARY_DIR}/gammu${CMAKE_EXECUTABLE_SUFFIX}" convertbackup ${VNT} ${TESTNAME}.3.vnt)
     endforeach(VNT)
 
     file(GLOB VFORMATS
@@ -100,30 +100,30 @@ if (WITH_BACKUP)
         "${CMAKE_CURRENT_SOURCE_DIR}/../tests/vcal/*.vcs")
     foreach(VCS ${VFORMATS})
         get_filename_component(TESTNAME "${VCS}" NAME_WE)
-        add_test(gammu-savefile-vcs-cal-${TESTNAME} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" savefile CALENDAR ${TESTNAME}-cal.vcs ${VCS} 1)
+        add_test(gammu-savefile-vcs-cal-${TESTNAME} "${CMAKE_CURRENT_BINARY_DIR}/gammu${CMAKE_EXECUTABLE_SUFFIX}" savefile CALENDAR ${TESTNAME}-cal.vcs ${VCS} 1)
         if (TESTNAME MATCHES "01|02")
             set_tests_properties(
                 gammu-savefile-vcs-cal-${TESTNAME}
                 PROPERTIES WILL_FAIL TRUE)
         endif (TESTNAME MATCHES "01|02")
-        add_test(gammu-savefile-vcs-todo-${TESTNAME} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" savefile TODO ${TESTNAME}-todo.vcs ${VCS} 1)
+        add_test(gammu-savefile-vcs-todo-${TESTNAME} "${CMAKE_CURRENT_BINARY_DIR}/gammu${CMAKE_EXECUTABLE_SUFFIX}" savefile TODO ${TESTNAME}-todo.vcs ${VCS} 1)
         if (TESTNAME MATCHES "dtstart|rrule|UK32Holidays|badline|rrule-1|p990|k770|outlook")
             set_tests_properties(
                 gammu-savefile-vcs-todo-${TESTNAME}
                 PROPERTIES WILL_FAIL TRUE)
         endif (TESTNAME MATCHES "dtstart|rrule|UK32Holidays|badline|rrule-1|p990|k770|outlook")
-        add_test(gammu-convertbackup-${TESTNAME} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" convertbackup ${VCS} ${TESTNAME}.3.vcs)
+        add_test(gammu-convertbackup-${TESTNAME} "${CMAKE_CURRENT_BINARY_DIR}/gammu${CMAKE_EXECUTABLE_SUFFIX}" convertbackup ${VCS} ${TESTNAME}.3.vcs)
     endforeach(VCS)
 endif (WITH_BACKUP)
 
 # Dummy phone tests
 macro (gammu_test_named _testname _name _expression)
     if (WITH_BACKUP)
-        add_test("gammu-dummy-${_testname}" "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/.gammurc" "${_name}" ${ARGN})
+        add_test("gammu-dummy-${_testname}" "${CMAKE_CURRENT_BINARY_DIR}/gammu${CMAKE_EXECUTABLE_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/.gammurc" "${_name}" ${ARGN})
         set_tests_properties("gammu-dummy-${_testname}" PROPERTIES
             PASS_REGULAR_EXPRESSION "${_expression}"
             )
-        add_test("gammu-dummy-nonext-${_testname}" "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" -s 2 -c "${CMAKE_CURRENT_BINARY_DIR}/.gammurc" "${_name}" ${ARGN})
+        add_test("gammu-dummy-nonext-${_testname}" "${CMAKE_CURRENT_BINARY_DIR}/gammu${CMAKE_EXECUTABLE_SUFFIX}" -s 2 -c "${CMAKE_CURRENT_BINARY_DIR}/.gammurc" "${_name}" ${ARGN})
         set_tests_properties("gammu-dummy-nonext-${_testname}" PROPERTIES
             PASS_REGULAR_EXPRESSION "${_expression}"
             )
@@ -171,7 +171,7 @@ macro (gammu_test_next _name _expression)
         else (_params_count GREATER 0)
             set(__extraname "")
         endif (_params_count GREATER 0)
-        add_test("gammu-dummy-${_name}${__extraname}" "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/.gammurc" "${_name}" ${ARGN})
+        add_test("gammu-dummy-${_name}${__extraname}" "${CMAKE_CURRENT_BINARY_DIR}/gammu${CMAKE_EXECUTABLE_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/.gammurc" "${_name}" ${ARGN})
         set_tests_properties("gammu-dummy-${_name}${__extraname}" PROPERTIES
             PASS_REGULAR_EXPRESSION "${_expression}"
             )
@@ -197,12 +197,12 @@ macro (gammu_test_fail _name _expression)
         else (${_params_count} GREATER 0)
             set(__extraname "")
         endif (${_params_count} GREATER 0)
-        add_test("gammu-dummy-fail-${_name}${__extraname}" "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/.gammurc" "${_name}" ${ARGN})
+        add_test("gammu-dummy-fail-${_name}${__extraname}" "${CMAKE_CURRENT_BINARY_DIR}/gammu${CMAKE_EXECUTABLE_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/.gammurc" "${_name}" ${ARGN})
         set_tests_properties("gammu-dummy-fail-${_name}${__extraname}" PROPERTIES
             FAIL_REGULAR_EXPRESSION "${_expression}"
             WILL_FAIL TRUE
             )
-        add_test("gammu-dummy-nonext-fail-${_name}${__extraname}" "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" -s 2 -c "${CMAKE_CURRENT_BINARY_DIR}/.gammurc" "${_name}" ${ARGN})
+        add_test("gammu-dummy-nonext-fail-${_name}${__extraname}" "${CMAKE_CURRENT_BINARY_DIR}/gammu${CMAKE_EXECUTABLE_SUFFIX}" -s 2 -c "${CMAKE_CURRENT_BINARY_DIR}/.gammurc" "${_name}" ${ARGN})
         set_tests_properties("gammu-dummy-nonext-fail-${_name}${__extraname}" PROPERTIES
             FAIL_REGULAR_EXPRESSION "${_expression}"
             WILL_FAIL TRUE
@@ -215,7 +215,7 @@ gammu_test_fail(identify "Too many parameters" 1)
 gammu_test_fail(reset "More parameters required")
 
 if (WITH_BACKUP)
-    add_test("gammu-dummy-99-identify" "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/.gammurc" -s 99 identify)
+    add_test("gammu-dummy-99-identify" "${CMAKE_CURRENT_BINARY_DIR}/gammu${CMAKE_EXECUTABLE_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/.gammurc" -s 99 identify)
     set_tests_properties("gammu-dummy-99-identify" PROPERTIES
         PASS_REGULAR_EXPRESSION "DUMMY-001"
         )

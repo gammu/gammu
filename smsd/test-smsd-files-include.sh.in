@@ -73,7 +73,7 @@ mkdir -p $sms $DUMMY_PATH/sms/3
 mkdir -p $sms $DUMMY_PATH/sms/4
 mkdir -p $sms $DUMMY_PATH/sms/5
 
-@CMAKE_CURRENT_BINARY_DIR@/gammu-smsd@GAMMU_TEST_SUFFIX@ -c "$CONFIG_PATH" &
+@CMAKE_CURRENT_BINARY_DIR@/gammu-smsd@CMAKE_EXECUTABLE_SUFFIX@ -c "$CONFIG_PATH" &
 SMSD_PID=$!
 
 sleep 5
@@ -84,7 +84,7 @@ done
 
 # Inject messages
 cp @CMAKE_CURRENT_SOURCE_DIR@/tests/OUT* @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/outbox/
-@CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-inject@GAMMU_TEST_SUFFIX@ -c "$CONFIG_PATH" TEXT 123465 -text "Lorem ipsum."
+@CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-inject@CMAKE_EXECUTABLE_SUFFIX@ -c "$CONFIG_PATH" TEXT 123465 -text "Lorem ipsum."
 
 sleep 5
 
@@ -93,8 +93,8 @@ for sms in 10 16 26 ; do
 done
 
 TIMEOUT=0
-while ! @CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-monitor@GAMMU_TEST_SUFFIX@ -C -c "$CONFIG_PATH" -n 1 -d 0 | grep -q ";999999999999999;4;3;0;100;42" ; do
-    @CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-monitor@GAMMU_TEST_SUFFIX@ -C -c "$CONFIG_PATH" -n 1 -d 0
+while ! @CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-monitor@CMAKE_EXECUTABLE_SUFFIX@ -C -c "$CONFIG_PATH" -n 1 -d 0 | grep -q ";999999999999999;4;3;0;100;42" ; do
+    @CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-monitor@CMAKE_EXECUTABLE_SUFFIX@ -C -c "$CONFIG_PATH" -n 1 -d 0
     sleep 1
     TIMEOUT=$(($TIMEOUT + 1))
     if [ $TIMEOUT -gt 60 ] ; then
@@ -105,7 +105,7 @@ done
 
 sleep 5
 
-@CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-monitor@GAMMU_TEST_SUFFIX@ -C -c "$CONFIG_PATH" -n 1 -d 0
+@CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-monitor@CMAKE_EXECUTABLE_SUFFIX@ -C -c "$CONFIG_PATH" -n 1 -d 0
 
 if [ `wc -l < @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/received.log` -ne 3 ] ; then
     echo "ERROR: Wrong number of messages received!"
