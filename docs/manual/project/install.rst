@@ -335,6 +335,9 @@ After downloading and installing them into your system:
   * You should see ALL_BUILD target, which builds everything needed,
     simmilar to make all on Linux.
 
+* For running testsuite, you need working sh and sed. The easiest way to
+  install them is from MinGW project <http://mingw.org/>.
+
 * I know this guide is incomplete, I don't have environment to test,
   you're welcome to improve it!. Some more information can be found in
   howtos for other projects using CMake, eg. Blender, SIM, KDE, VTK,
