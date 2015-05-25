@@ -129,6 +129,7 @@ target_link_libraries (gsmsd libGammu)
 if (NOT HAVE_STRPTIME)
     target_link_libraries (gsmsd strptime)
 endif (NOT HAVE_STRPTIME)
+target_link_libraries (gsmsd string)
 target_link_libraries (gsmsd array)
 
 # Gammu-smsd program
