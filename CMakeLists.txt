@@ -401,6 +401,7 @@ endif (POSTGRES_FOUND)
 if(MSVC)
     # MSVC needs different flags at all
     MACRO_TUNE_COMPILER("/W3")
+    add_definitions(-D_CRT_SECURE_NO_WARNINGS=1)
 endif(MSVC)
 
 if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_MINGW OR
