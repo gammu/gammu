@@ -602,6 +602,7 @@ static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage * sms UNUSED, GSM_
 
 GSM_Error SMSD_Check_Dir(GSM_SMSDConfig *Config, const char *path, const char *name)
 {
+#ifndef WIN32
 	struct stat s;
 
 	if (stat(path, &s) < 0) {
@@ -613,6 +614,20 @@ GSM_Error SMSD_Check_Dir(GSM_SMSDConfig *Config, const char *path, const char *n
 		SMSD_Log(DEBUG_ERROR, Config, "The path \"%s\" (%s) is not a folder", path, name);
 		return ERR_FILENOTEXIST;
 	}
+#else
+	DWORD dwAttrib;
+
+	dwAttrib = GetFileAttributes(path);
+	if (dwAttrib == INVALID_FILE_ATTRIBUTES) {
+		SMSD_Log(DEBUG_ERROR, Config, "Failed to stat \"%s\" (%s)", path, name);
+		return ERR_FILENOTEXIST;
+	}
+
+	if ((dwAttrib & FILE_ATTRIBUTE_DIRECTORY) == 0) {
+		SMSD_Log(DEBUG_ERROR, Config, "The path \"%s\" (%s) is not a folder", path, name);
+		return ERR_FILENOTEXIST;
+	}
+#endif
 	return ERR_NONE;
 }
 
