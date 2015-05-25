@@ -10,7 +10,7 @@ More SMS daemons can share single database. If you do not specify PhoneID in
 their configuration, all are treated equally and you have no guarantee which
 one sends outgoing message. If you configure PhoneID and use it when inserting
 message to the ``outbox`` table (:ref:`gammu-smsd-inject` does this), each SMS
-daemon will have separate outbox queue.
+daemon will have separate outbox queue. See also :ref:`smsd-multi`.
 
 Receiving of messages
 ---------------------
@@ -147,7 +147,9 @@ Fields description:
     SMS relative validity like encoded using GSM specs
 
 ``SenderID`` (text)
-    which SMSD instance should send this one sequence, see :config:option:`PhoneID`
+    which SMSD instance should send this one sequence, see
+    :config:option:`PhoneID` and :ref:`smsd-multi`. If blank, first SMSD who
+    sees this message will process it.
 
 ``SendingTimeOut`` (timestamp)
     used by SMSD instance for own targets
@@ -156,8 +158,7 @@ Fields description:
     when default is used, Delivery Report is used or not according to SMSD instance settings; yes forces Delivery Report.
 
 ``CreatorID`` (text)
-    sender identification, it has to match PhoneID in SMSD configuration to make
-    SMSD process this message
+    identification of program created the message
 
 .. _outbox_multipart:
 
@@ -316,7 +317,7 @@ Fields description:
     SMS relative validity like encoded using GSM specs
 
 ``CreatorID`` (text)
-    copied from CreatorID from outbox table, matches PhoneID
+    copied from CreatorID from outbox table
 
 
 pbk

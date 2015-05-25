@@ -283,7 +283,7 @@ General parameters of SMS daemon
 .. config:option:: PhoneID
 
     String with info about phone used for sending/receiving. This can be useful if
-    you want to run several SMS daemons.
+    you want to run several SMS daemons (see :ref:`smsd-multi`);
 
     When you set PhoneID, all messages (including injected ones) will be marked
     by this string (stored as SenderID in the database) and it allows more SMS
@@ -680,3 +680,51 @@ Enabling debugging:
     [smsd]
     debuglevel = 255
     logfile = smsd.log
+
+.. _smsd-multi:
+
+Multiple modems
++++++++++++++++
+
+You can run any number of SMSD instances and they can even share same backend
+database. For routing the messages, you need to set different
+:config:option:`PhoneID` for each instance and set ``SenderID`` column in
+:ref:`outbox` table.
+
+Configuration for first SMSD:
+
+.. code-block:: ini
+
+    [gammu]
+    device = /dev/ttyACM0
+    connection = at
+
+    [smsd]
+    Service = sql
+    Driver = native_mysql
+    PIN = 1234
+    LogFile = syslog
+    User = smsd
+    Password = smsd
+    PC = localhost
+    Database = smsd
+    PhoneID = first
+
+Configuration for second SMSD:
+
+.. code-block:: ini
+
+    [gammu]
+    device = /dev/ttyACM1
+    connection = at
+
+    [smsd]
+    Service = sql
+    Driver = native_mysql
+    PIN = 1234
+    LogFile = syslog
+    User = smsd
+    Password = smsd
+    PC = localhost
+    Database = smsd
+    PhoneID = second
