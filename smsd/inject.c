@@ -126,7 +126,7 @@ int process_commandline(int argc, char **argv, SMSD_Parameters * params)
 
 	for (i = 1; i < argc; i++) {
 		if (strlen(argv[i]) != 2 || argv[i][0] != '-') {
-			wrong_params();
+			return i;
 		}
 		opt = argv[i][1];
 #endif
