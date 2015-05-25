@@ -728,3 +728,10 @@ Configuration for second SMSD:
     PC = localhost
     Database = smsd
     PhoneID = second
+
+You can then start two separate instances of SMSD:
+
+.. code-block:: sh
+
+    gammu-smsd -c /path/to/first-smsdrc
+    gammu-smsd -c /path/to/second-smsdrc
