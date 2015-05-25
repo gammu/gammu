@@ -2,7 +2,7 @@
 # Copyright (c) 2007 - 2010 Michal Cihar
 # vim: expandtab sw=4 ts=4 sts=4:
 
-cmake_minimum_required (VERSION 2.6)
+cmake_minimum_required (VERSION 2.8)
 INCLUDE (CMakeForceCompiler)
 
 project (Gammu C)
