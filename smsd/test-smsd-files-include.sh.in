@@ -109,7 +109,7 @@ done
 
 sleep 5
 
-@CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-monitor@CMAKE_EXECUTABLE_SUFFIX@ -C -c "$CONFIG_PATH" -n 1 -d 0
+$SMSD_MONITOR_CMD -C -c "$CONFIG_PATH" -n 1 -d 0
 
 if [ `wc -l < @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/received.log` -ne 3 ] ; then
     echo "ERROR: Wrong number of messages received!"
