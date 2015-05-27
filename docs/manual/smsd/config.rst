@@ -291,6 +291,14 @@ General parameters of SMS daemon
     
     This option has actually no effect with :ref:`gammu-smsd-files`.
 
+.. config:option:: SMSC
+
+    SMSC number to use for sending messages if not specified in the message
+    (see options of :ref:`gammu-smsd-inject`).
+
+    In most cases you don't need this settings as Gammu tries to read correct
+    SMSC from phone, but sometimes this fails (try :option:`gammu getsmsc`).
+
 .. config:option:: RunOnReceive
 
     Executes a program after receiving message.
