@@ -427,9 +427,12 @@ database:
 
 .. config:option:: Database
 
-    Name of database to use. Please note that you should create tables in this
-    database before using gammu-smsd. SQL files for creating needed tables are
-    included in documentation.
+    Name of database (or schema) to use and where SMSD can find it's tables.
+
+    Please note that you should create tables in this database before using
+    gammu-smsd. SQL files for creating needed tables are included in
+    documentation for individual database backends: :ref:`gammu-smsd-mysql`,
+    :ref:`gammu-smsd-odbc`, :ref:`gammu-smsd-pgsql`, :ref:`gammu-smsd-dbi`
 
 .. config:option:: SkipSMSCNumber
 
