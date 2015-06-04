@@ -682,11 +682,9 @@ configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/internals.desc.cmak
 
 # Target for generating API documentation
 add_custom_target (apidoc ${DOXYGEN_EXECUTABLE} doxygen/Doxyfile
-    COMMAND find ${DOXYGEN_OUTPUT}/html -name '*.html' -print0 | xargs -0 sed -i 's@text/html\;charset=iso-8859-1@text/html\;charset=utf-8@'
     COMMENT "Generating API documentation")
 
 add_custom_target (interndoc ${DOXYGEN_EXECUTABLE} doxygen/Doxyfile-internal
-    COMMAND find ${DOXYGEN_INTERNAL_OUTPUT}/html -name '*.html' -print0 | xargs -0 sed -i 's@text/html\;charset=iso-8859-1@text/html\;charset=utf-8@'
     COMMENT "Generating internal documentation")
 
 # CPP check
