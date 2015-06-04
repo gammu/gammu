@@ -106,9 +106,9 @@ This module wraps all python-gammu functionality.
       Accept current incoming call.
 
       :param ID: ID of call
-      :type ID: integer
+      :type ID: int
       :param All: Answer all calls?
-      :type All: boolean
+      :type All: bool
       :return: None
       :rtype: None
 
@@ -127,9 +127,9 @@ This module wraps all python-gammu functionality.
       Deny current incoming call.
 
       :param ID: ID of call
-      :type ID: integer
+      :type ID: int
       :param All: Cancel all calls?
-      :type All: boolean
+      :type All: bool
       :return: None
       :rtype: None
 
@@ -139,7 +139,7 @@ This module wraps all python-gammu functionality.
       Initiates conference call.
 
       :param ID: ID of call
-      :type ID: integer
+      :type ID: int
       :return: None
       :rtype: None
 
@@ -266,7 +266,7 @@ This module wraps all python-gammu functionality.
       :param Number: Number to dial
       :type Number: string
       :param ShowNumber: Identifies whether to enable CLIR (None = keep default phone settings). Default is None
-      :type ShowNumber: boolean or None
+      :type ShowNumber: bool or None
       :return: None
       :rtype: None
 
@@ -423,7 +423,7 @@ This module wraps all python-gammu functionality.
       :param Folder: Folder to list
       :type Folder: string
       :param Start: Whether we're starting listing. Defaults to False.
-      :type Start: boolean
+      :type Start: bool
       :return: File data as dict, see :ref:`file_obj`
       :rtype: dict
 
@@ -509,7 +509,7 @@ This module wraps all python-gammu functionality.
       Retrieves calendar entry. This is useful for continuous reading of all calendar entries.
 
       :param Start: Whether to start. This can not be used together with Location
-      :type Start: boolean
+      :type Start: bool
       :param Location: Last read location. This can not be used together with Start
       :type Location: int
       :return: Dictionary with calendar values, see :ref:`cal_obj`
@@ -521,7 +521,7 @@ This module wraps all python-gammu functionality.
       Gets next filename from filesystem.
 
       :param Start: Whether we're starting listing. Defaults to False.
-      :type Start: boolean
+      :type Start: bool
       :return: File data as dict, see :ref:`file_obj`
       :rtype: dict
 
@@ -533,7 +533,7 @@ This module wraps all python-gammu functionality.
       :param Type: Memory type, one of ``ME``, ``SM``, ``ON``, ``DC``, ``RC``, ``MC``, ``MT``, ``FD``, ``VM``
       :type Type: string
       :param Start: Whether to start. This can not be used together with Location
-      :type Start: boolean
+      :type Start: bool
       :param Location: Last read location. This can not be used together with Start
       :type Location: int
       :return: Memory entry as dict, see :ref:`pbk_obj`
@@ -556,7 +556,7 @@ This module wraps all python-gammu functionality.
       :param Folder: Folder where to read entry (0 is emulated flat memory)
       :type Folder: int
       :param Start: Whether to start. This can not be used together with Location
-      :type Start: boolean
+      :type Start: bool
       :param Location: Location last read entry. This can not be used together with Start
       :type Location: int
       :return: Dictionary with SMS data, see :ref:`sms_obj`
@@ -568,7 +568,7 @@ This module wraps all python-gammu functionality.
       Reads ToDo from phone.
 
       :param Start: Whether to start. This can not be used together with Location
-      :type Start: boolean
+      :type Start: bool
       :param Location: Last read location. This can not be used together with Start
       :type Location: int
       :return: Dictionary with ToDo values, see :ref:`todo_obj`
@@ -693,7 +693,7 @@ This module wraps all python-gammu functionality.
       Holds call.
 
       :param ID: ID of call
-      :type ID: integer
+      :type ID: int
       :return: None
       :rtype: None
 
@@ -715,7 +715,7 @@ This module wraps all python-gammu functionality.
       :param Key: What key to press
       :type Key: string
       :param Press: Whether to emulate press or release.
-      :type Press: boolean
+      :type Press: bool
       :return: None
       :rtype: None
 
@@ -739,7 +739,7 @@ This module wraps all python-gammu functionality.
       Reads data from device.
 
       :param Wait: Whether to wait, default is not to wait.
-      :type Wait: boolean
+      :type Wait: bool
       :return: Number of bytes read
       :rtype: int
 
@@ -749,7 +749,7 @@ This module wraps all python-gammu functionality.
       Performs phone reset.
 
       :param Hard: Whether to make hard reset
-      :type Hard: boolean
+      :type Hard: bool
       :return: None
       :rtype: None
 
@@ -790,7 +790,7 @@ This module wraps all python-gammu functionality.
 
       :param Value: SMS data, see :ref:`sms_obj`
       :type Value: dict
-      :return: Message reference as integer
+      :return: Message reference as int
       :rtype: int
 
 
@@ -802,7 +802,7 @@ This module wraps all python-gammu functionality.
       :type Folder: int
       :param Location: Location of entry to send
       :type Location: int
-      :return: Message reference as integer
+      :return: Message reference as int
       :rtype: int
 
 
@@ -815,7 +815,7 @@ This module wraps all python-gammu functionality.
       :param Location: Location of alarm to set. Defaults to 1.
       :type Location: int
       :param Repeating: Whether alarm should be repeating. Defaults to True.
-      :type Repeating: boolean
+      :type Repeating: bool
       :param Text: Text to be displayed on alarm. Defaults to empty.
       :type Text: string
       :return: None
@@ -885,7 +885,7 @@ This module wraps all python-gammu functionality.
       :param File: File where to write debug stuff (as configured by :meth:`SetDebugLevel`). Can be either None for no file, Python file object or filename.
       :type File: mixed
       :param Global: Whether to use global debug structure (overrides File)
-      :type Global: boolean
+      :type Global: bool
       :return: None
       :rtype: None
 
@@ -915,13 +915,13 @@ This module wraps all python-gammu functionality.
       :param Filename: File to modify
       :type Filename: string
       :param ReadOnly: Whether file is read only. Default to False.
-      :type ReadOnly: boolean
+      :type ReadOnly: bool
       :param Protected: Whether file is protected. Default to False.
-      :type Protected: boolean
+      :type Protected: bool
       :param System: Whether file is system. Default to False.
-      :type System: boolean
+      :type System: bool
       :param Hidden: Whether file is hidden. Default to False.
-      :type Hidden: boolean
+      :type Hidden: bool
       :return: None
       :rtype: None
 
@@ -930,7 +930,7 @@ This module wraps all python-gammu functionality.
 
       Gets network information from phone.
 
-      :type Enable: boolean
+      :type Enable: bool
       :param Enable: Whether to enable notifications, default is True
       :return: None
       :rtype: None
@@ -940,7 +940,7 @@ This module wraps all python-gammu functionality.
 
       Activates/deactivates noticing about incoming calls.
 
-      :type Enable: boolean
+      :type Enable: bool
       :param Enable: Whether to enable notifications, default is True
       :return: None
       :rtype: None
@@ -962,7 +962,7 @@ This module wraps all python-gammu functionality.
 
       Enable/disable notification on incoming SMS.
 
-      :type Enable: boolean
+      :type Enable: bool
       :param Enable: Whether to enable notifications, default is True
       :return: None
       :rtype: None
@@ -972,7 +972,7 @@ This module wraps all python-gammu functionality.
 
       Activates/deactivates noticing about incoming USSDs (UnStructured Supplementary Services).
 
-      :type Enable: boolean
+      :type Enable: bool
       :param Enable: Whether to enable notifications, default is True
       :return: None
       :rtype: None
@@ -987,7 +987,7 @@ This module wraps all python-gammu functionality.
       :param DateFormat: Date format, one of ``DDMMYYYY``, ``MMDDYYYY``, ``YYYYMMDD``
       :type DateFormat: string
       :param AMPMTime: Whether to use AM/PM time.
-      :type AMPMTime: boolean
+      :type AMPMTime: bool
       :return: None
       :rtype: None
 
@@ -1047,7 +1047,7 @@ This module wraps all python-gammu functionality.
       Splits call.
 
       :param ID: ID of call
-      :type ID: integer
+      :type ID: int
       :return: None
       :rtype: None
 
@@ -1057,7 +1057,7 @@ This module wraps all python-gammu functionality.
       Switches call.
 
       :param ID: ID of call
-      :type ID: integer
+      :type ID: int
       :return: None
       :rtype: None
 
@@ -1081,7 +1081,7 @@ This module wraps all python-gammu functionality.
       Transfers call.
 
       :param ID: ID of call
-      :type ID: integer
+      :type ID: int
       :return: None
       :rtype: None
 
@@ -1091,7 +1091,7 @@ This module wraps all python-gammu functionality.
       Unholds call.
 
       :param ID: ID of call
-      :type ID: integer
+      :type ID: int
       :return: None
       :rtype: None
 
@@ -1145,7 +1145,7 @@ Message processing
     Links multi part SMS messages.
 
     :type Messages: list
-    :type EMS: boolean
+    :type EMS: bool
     :param Messages: List of messages to link, see :ref:`sms_obj`
     :param EMS: Whether to detect ems, defauls to True
     :return: List of linked messages, see :ref:`sms_obj`
@@ -1173,7 +1173,7 @@ Message processing
     :param Messages: Nessages to decode, see :ref:`sms_obj`
     :type Messages: list
     :param EMS: Whether to use EMS, defalt to True
-    :type EMS: boolean
+    :type EMS: bool
     :return: Multi part message information, see :ref:`sms_info_obj`
     :rtype: dict
 
@@ -1193,7 +1193,7 @@ Message processing
     :param Data: PDU data, need to be binary not hex encoded
     :type Data: string
     :param SMSC: Whether PDU includes SMSC.
-    :type SMSC: boolean
+    :type SMSC: bool
     :return: Message data, see :ref:`sms_obj`
     :rtype: dict
 
