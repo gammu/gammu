@@ -41,7 +41,6 @@ sphinx.domains.std.OptionXRefRole.process_link = gammu_process_link
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-sys.path.insert(0, '@CMAKE_CURRENT_BINARY_DIR@/../../python')
 sys.path.append('@CMAKE_CURRENT_SOURCE_DIR@')
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 
