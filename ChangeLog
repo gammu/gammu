@@ -19,6 +19,8 @@ the issue.
 ChangeLog
 =========
     
+2015???? - 1.36.3
+    
 20150615 - 1.36.2
 
 [-] * Fixed compilation using MSVC.
