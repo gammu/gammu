@@ -83,9 +83,13 @@ if (INSTALL_PHP_EXAMPLES)
 endif (INSTALL_PHP_EXAMPLES)
 
 if (INSTALL_BASH_COMPLETION)
+    macro_optional_find_package (bash-completion QUIET)
+    if (NOT BASH_COMPLETION_FOUND)
+        set (BASH_COMPLETION_COMPLETIONSDIR "/etc/bash_completion.d")
+    endif (NOT BASH_COMPLETION_FOUND)
     install (
         FILES bash-completion/gammu
-        DESTINATION "/etc/bash_completion.d"
+        DESTINATION ${BASH_COMPLETION_COMPLETIONSDIR}
         COMPONENT "bash"
         )
 endif (INSTALL_BASH_COMPLETION)
