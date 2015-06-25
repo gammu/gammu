@@ -1,0 +1,115 @@
+#!/usr/bin/env python
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along
+# with this program; if not, write to the Free Software Foundation, Inc.,
+# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+#
+# Copyright (c) 2015 Michal Cihar <michal@cihar.com>
+#
+"""Generates gsmnet databse from wikipedia"""
+import urllib
+import re
+from unidecode import unidecode
+
+URL = 'https://en.wikipedia.org/w/index.php?title=Mobile_country_code&action=raw'
+TABLE_RE = re.compile(
+    r'^\|[ \t]*(?P<mcc>[0-9]+)[ \t]*\|\|[ \t]*(?P<mnc>[0-9]+)?[ \t]*\|\|'
+)
+WIKILINK = re.compile(r'\[\[([^|\]]+\|)?(?P<text>[^\]]+)\]\]')
+URLLINK = re.compile(r'\[([^ \]]+ )(?P<text>[^\]]+)\]')
+
+
+def parse_line(line):
+    line = line.strip('|\r\n\t ')
+    parts = line.split('||')
+    return {
+        'mcc': parts[0].strip(),
+        'mnc': parts[1].strip(),
+        'brand': parts[2].strip(),
+        'operator': parts[3].strip(),
+    }
+
+
+def print_out(result):
+    for code, name in sorted(result):
+        print '\t{{"{0}", "{1}"}},'.format(
+            code, 
+            unidecode(name.decode('utf-8')).replace('&amp;', '&')
+        )
+    
+
+def print_countries(data):
+    country = None
+    result = []
+    for line in data.splitlines():
+        if line.startswith('==== [['):
+            country = line[7:].split(']')[0].split('|')[-1]
+            current = set()
+            continue
+        elif 'International operators' in line:
+            country = 'International operators'
+            current = set()
+            continue
+        if not country:
+            continue
+        if TABLE_RE.match(line) is None:
+            continue
+        match = parse_line(line)
+        if match['mcc'] not in current:
+            current.add(match['mcc'])
+            result.append((match['mcc'], country))
+
+    print_out(result)
+
+
+def print_networks(data):
+    result = []
+    for line in data.splitlines():
+        if TABLE_RE.match(line) is None:
+            continue
+        match = parse_line(line)
+        if not match['mnc']:
+            continue
+        if match['brand']:
+            brand = match['brand']
+        elif match['operator']:
+            brand = match['operator']
+        else:
+            brand = ''
+        if brand == "''Unassigned''":
+            brand = ''
+
+        brand = WIKILINK.sub(r'\g<text>', brand)
+        brand = URLLINK.sub(r'\g<text>', brand)
+        brand = brand.replace('<sub>2</sub>', '2')
+
+        result.append((
+            '{0} {1}'.format(match['mcc'], match['mnc']),
+            brand
+        ))
+
+    print_out(result)
+
+
+def main():
+    handle = urllib.urlopen(URL)
+    data = handle.read()
+    print_countries(data)
+    print
+    print '-' * 80
+    print
+    print_networks(data)
+
+
+if __name__ == "__main__":
+    main()
