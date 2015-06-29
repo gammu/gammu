@@ -631,6 +631,7 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 
 				if (strcmp(smsc, smsc_message) != 0) {
 					if (Config->skipsmscnumber[0] == 0 || strcmp(Config->skipsmscnumber, smsc)) {
+						SMSD_Log(DEBUG_ERROR, Config, "Failed to match SMSC, you might want to use SkipSMSCNumber (sent: %s, received: %s)", smsc_message, smsc);
 						continue;
 					}
 				}
