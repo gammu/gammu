@@ -684,6 +684,8 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 					return ERR_UNKNOWN;
 				}
 				db->FreeResult(Config, &res2);
+			} else {
+				SMSD_Log(DEBUG_ERROR, Config, "Failed to find SMS for TPMR=%i, Number=%s", sms->SMS[i].MessageReference, sms->SMS[i].Number);
 			}
 			db->FreeResult(Config, &res);
 			continue;
