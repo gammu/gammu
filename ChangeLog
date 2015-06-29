@@ -23,6 +23,7 @@ ChangeLog
 
 [-] * Updated list of GSM country codes and networks.
 [-] * Fixed bash completition install path (Ville Skyttä).
+[-] * Better logging of delivery report failures in SMSD.
 
 20150615 - 1.36.2
 
