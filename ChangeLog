@@ -19,7 +19,7 @@ the issue.
 ChangeLog
 =========
     
-2015???? - 1.36.3
+20150707 - 1.36.3
 
 [-] * Updated list of GSM country codes and networks.
 [-] * Fixed bash completition install path (Ville Skyttä).
