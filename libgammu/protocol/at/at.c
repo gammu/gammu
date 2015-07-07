@@ -130,6 +130,7 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		{"^BOOT:"	,1, ID_None}, /* ^BOOT:27710117,0,0,0,75 */
 		{"^MODE:"	,1, ID_None}, /* ^MODE:3,3 */
 		{"^CSNR:"	,1, ID_None}, /* ^CSNR:-93,-23 */
+		{"^HCSQ:"	,1, ID_None}, /* ^HCSQ:"LTE",59,50,161,24 */
 
 		/* ONDA */
 		{"+ZUSIMR:"	,1, ID_None}, /* +ZUSIMR:2 */
