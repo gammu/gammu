@@ -28,7 +28,7 @@ if (LARGE_FILES)
 endif (LARGE_FILES)
 
 # Set version
-set (GAMMU_VERSION "1.36.3" CACHE INTERNAL "")
+set (GAMMU_VERSION "1.36.4" CACHE INTERNAL "")
 string (REGEX REPLACE "^([0-9]*)\\.([0-9]*)\\.([0-9]*)$" "\\1" "GAMMU_VERSION_MAJOR" "${GAMMU_VERSION}")
 string (REGEX REPLACE "^([0-9]*)\\.([0-9]*)\\.([0-9]*)$" "\\2" "GAMMU_VERSION_MINOR" "${GAMMU_VERSION}")
 string (REGEX REPLACE "^([0-9]*)\\.([0-9]*)\\.([0-9]*)$" "\\3" "GAMMU_VERSION_PATCH" "${GAMMU_VERSION}")
