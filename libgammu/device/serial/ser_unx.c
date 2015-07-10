@@ -26,6 +26,8 @@
 #include <termios.h>
 #include <errno.h>
 #include <assert.h>
+#include <unistd.h>
+#include <fcntl.h>
 #ifdef HAVE_I_SETSIG
 #include <stropts.h>
 #endif
@@ -156,6 +158,9 @@ static GSM_Error serial_close(GSM_StateMachine *s)
 	/* Restores old settings */
 	tcsetattr(d->hPhone, TCSANOW, &d->old_settings);
 
+	/* Remove advisory lock */
+	flock(d->hPhone, LOCK_UN);
+
 	/* Closes device */
 	close(d->hPhone);
 
@@ -193,6 +198,14 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 	/* Disable any signals from this file */
 	ioctl(d->hPhone, I_SETSIG, (char *) 0);
 #endif
+
+	/* Try advisory locks */
+	if (flock(d->hPhone, LOCK_EX | LOCK_NB) != 0) {
+		if (errno == EWOULDBLOCK) {
+			GSM_OSErrorInfo(s, "failed to lock device, probably opened by other process");
+			return ERR_DEVICEOPENERROR;
+		}
+	}
 
 	if (tcgetattr(d->hPhone, &d->old_settings) == -1) {
 		close(d->hPhone);
