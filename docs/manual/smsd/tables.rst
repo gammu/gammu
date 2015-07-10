@@ -471,6 +471,8 @@ for each message**, ``D3`` in following example), byte for number of messages
 number) and byte for number of current message (``01`` for first message,
 ``02`` for second, etc.).
 
+I most cases, the mutlipart message has to be class 1.
+
 For example long text message of two parts could look like following:
 
 .. code-block:: sql
@@ -481,14 +483,16 @@ For example long text message of two parts could look like following:
         DestinationNumber,
         UDH,
         TextDecoded,
-        Coding
+        Coding,
+        Class
     ) VALUES (
         'Gammu 1.23.91',
         'true',
         '123465',
         '050003D30201',
         'Mqukqirip ya konej eqniu rejropocejor hugiygydewl tfej nrupxujob xuemymiyliralj. Te tvyjuh qaxumur ibewfoiws zuucoz tdygu gelum L ejqigqesykl kya jdytbez',
-        'Default_No_Compression'
+        'Default_No_Compression',
+        1
     )
 
     INSERT INTO outbox_multipart (
@@ -497,13 +501,15 @@ For example long text message of two parts could look like following:
         Class,
         TextDecoded,
         ID,
-        Coding
+        Coding,
+        Class
     ) VALUES (
         2,
         '050003D30202',
         'u xewz qisubevumxyzk ufuylehyzc. Nse xobq dfolizygqysj t bvowsyhyhyemim ovutpapeaempye giuuwbib.',
         <ID_OF_INSERTED_RECORD_IN_OUBOX_TABLE>,
-        'Default_No_Compression'
+        'Default_No_Compression',
+        1
     )
 
 .. note::
