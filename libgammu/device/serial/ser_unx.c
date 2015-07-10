@@ -38,8 +38,6 @@
 #endif
 
 #ifdef __NetBSD__
-#  define FNONBLOCK O_NONBLOCK
-
 #ifndef B57600
 #  define  B57600   0010001
 #endif
