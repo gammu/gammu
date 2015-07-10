@@ -186,6 +186,7 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 
 #ifdef TIOCEXCL
 	/* open() calls from other applications shall fail now */
+	/* this works only with CAP_SYS_ADMIN on Linux though */
 	ioctl(d->hPhone, TIOCEXCL, (char *) 0);
 #endif
 #ifdef HAVE_I_SETSIG
