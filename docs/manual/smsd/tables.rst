@@ -465,8 +465,8 @@ good reason to do this manually, use :ref:`gammu-smsd-inject`, C library
 (:meth:`gammu.smsd.SMSD.InjectSMS`).
 
 For long text message, the UDH starts with ``050003`` followed by byte as a
-message reference (you can put any hex value there, but it should be different
-for each message, ``D3`` in following example), byte for number of messages
+message reference (you can put any hex value there, but it should be **different
+for each message**, ``D3`` in following example), byte for number of messages
 (``02`` in example, it should be unique for each message you send to same phone
 number) and byte for number of current message (``01`` for first message,
 ``02`` for second, etc.).
