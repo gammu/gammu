@@ -1,0 +1,7 @@
+#!/bin/sh
+INBOX=/path/to/smsd/inbox
+PROGRAM=/bin/cat
+for ID in "$@" ; do
+    $PROGRAM < $INBOX/$ID
+done
+

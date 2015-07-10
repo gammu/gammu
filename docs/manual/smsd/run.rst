@@ -112,14 +112,8 @@ Processing messages from the files backend
 Following script (if used as :config:option:`RunOnReceive` handler) passes
 message data to other program. This works only with the :ref:`gammu-smsd-files`.
 
-.. code-block:: sh
-
-    #!/bin/sh
-    INBOX=/path/to/smsd/inbox
-    PROGRAM=/bin/cat
-    for ID in "$@" ; do
-        $PROGRAM < $INBOX/$ID
-    done
+.. literalinclude:: ../../../contrib/smsd-scripts/receive-files
+    :language: sh
 
 Passing message text to program
 +++++++++++++++++++++++++++++++
@@ -127,14 +121,8 @@ Passing message text to program
 Following script (if used as :config:option:`RunOnReceive` handler) passes
 message text and sender to external program.
 
-.. code-block:: sh
-
-    #!/bin/sh
-    PROGRAM=/bin/echo
-    for i in `seq $SMS_MESSAGES` ; do
-        eval "$PROGRAM \"\${SMS_${i}_NUMBER}\" \"\${SMS_${i}_TEXT}\""
-    done
-
+.. literalinclude:: ../../../contrib/smsd-scripts/receive-exec
+    :language: sh
 
 Passing MMS indication parameters to external program
 +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -143,16 +131,8 @@ Following script (if used as :config:option:`RunOnReceive` handler) will write
 information about each received MMS indication to the log file. Just replace
 echo command with your own program to do custom processing.
 
-.. code-block:: sh
-
-    #!/bin/sh
-    if [ $DECODED_PARTS -eq 0 ] ; then
-        # No decoded parts, nothing to process
-        exit
-    fi
-    if [ "$DECODED_1_MMS_ADDRESS" ] ; then
-        echo "$DECODED_1_MMS_ADDRESS" "$DECODED_1_MMS_SENDER" "$DECODED_1_MMS_TITLE" >> /tmp/smsd-mms.log
-    fi
+.. literalinclude:: ../../../contrib/smsd-scripts/receive-mms
+    :language: sh
 
 Processing message text in Python
 +++++++++++++++++++++++++++++++++
@@ -160,25 +140,5 @@ Processing message text in Python
 Following script (if used as :config:option:`RunOnReceive` handler) written
 in Python will concatenate all text from received message:
 
-.. code-block:: python
-
-    #!/usr/bin/python
-    import os
-    import sys
-
-    numparts = int(os.environ['DECODED_PARTS'])
-
-    # Are there any decoded parts?
-    if numparts == 0:
-        print('No decoded parts!')
-        sys.exit(1)
-
-    # Get all text parts
-    text = ''
-    for i in range(1, numparts + 1):
-        varname = 'DECODED_%d_TEXT' % i
-        if varname in os.environ:
-            text = text + os.environ[varname]
-
-    # Do something with the text
-    print('Number %s have sent text: %s' % (os.environ['SMS_1_NUMBER'], text))
+.. literalinclude:: ../../../contrib/smsd-scripts/receive-python
+    :language: python
