@@ -1627,6 +1627,9 @@ GSM_StateMachine *GSM_AllocStateMachine(void)
 {
 	GSM_StateMachine *ret;
 	ret = (GSM_StateMachine *)calloc(1, sizeof(GSM_StateMachine));
+	if (ret == NULL) {
+		return ret;
+	}
 	ret->CurrentConfig = &(ret->Config[0]);
 	ret->Abort = FALSE;
 	return ret;
