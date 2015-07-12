@@ -1,0 +1,79 @@
+#!/bin/sh
+set -e
+
+ec=
+exec 5>/dev/null
+
+if false; then
+    fn_ec() {
+        >&2 echo "$@"
+        "$@"
+    }
+    ec=fn_ec
+    exec 5>&2 #/dev/null
+fi
+
+>&5 echo "$0 $*"
+
+d=${1:?}
+test -c "$d"
+exec 4<>"$d"
+
+mainpid=$$
+>&5 echo mainpid=$mainpid
+
+fmt=${fmt:-"%s\n"}
+pref="C:"
+
+fn_cat() {
+while IFS= read -r line; do
+  printf "${pref}$fmt" "$line" >&5
+  printf "$fmt" "$line"
+done
+}
+
+CR=$'\r'
+ESC=$'\033'
+
+fn_cat_filter() {
+prevline=
+while IFS= read -r line; do
+  escline=$line
+  escline=${escline//"$CR"/\\r}
+  escline=${escline//"$ESC"/\\033}
+  printf "${pref}$fmt" "$escline" >&5
+
+  line=$prevline$line
+  case $line in
+    $'\r') prevline=$prevline$line$'\n' ;;
+    $'\r\n''^LTERSRP:'*|$'\r\n''^RSSI:'*) prevline= ;; # workaround 4g signal strength messages
+    $'\033\rAT\r\r') : ;; # workaround initial echo on
+    *) prevline=; printf "$fmt" "$line" ;;
+  esac
+done
+}
+
+CAT=fn_cat
+CAT="tee /proc/self/fd/2"
+CAT=cat
+
+(
+    #CAT='grep -v ^\^\(LTERSRP\|RSSI\):'
+    #CAT='grep -v aadasdad'
+    CAT=fn_cat_filter
+    catpid=
+    trap '>&5 $ec kill -KILL $catpid; exit 1' INT TERM
+    pref="S:"
+    $CAT <&4 &
+    catpid=$!
+    >&5 echo catpid=$catpid
+    wait $catpid || >&5 $ec kill -KILL $mainpid
+) &
+
+>&5 echo subshellpid=$!
+
+trap '>&5 $ec kill -TERM $!; >&5 $ec kill -KILL $mainpid' INT TERM
+
+$CAT >&4
+
+>&5 $ec kill -TERM $!
