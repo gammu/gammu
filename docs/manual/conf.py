@@ -20,6 +20,12 @@ import shlex
 import sphinx.domains.std
 import re
 
+try:
+    import alabaster
+    has_alabaster = True
+except ImportError:
+    has_alabaster = False
+
 on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 
 def gammu_process_link(self, env, refnode, has_explicit_title, title, target):
@@ -135,7 +141,7 @@ todo_include_todos = False
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-if on_rtd:
+if on_rtd or not has_alabaster:
     html_theme = 'default'
 else:
     html_theme = 'alabaster'
