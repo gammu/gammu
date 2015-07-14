@@ -15,6 +15,7 @@
 #endif
 #include <stdarg.h>
 #include <stdlib.h>
+#include <fcntl.h>
 
 #include <gammu-smsd.h>
 
@@ -1121,10 +1122,19 @@ gboolean SMSD_RunOn(const char *command, GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 gboolean SMSD_RunOn(const char *command, GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, const char *locations)
 {
 	int pid;
+	int pipefd[2];
 	int i;
 	pid_t w;
 	int status;
 	char *cmdline;
+	ssize_t bytes;
+	char buffer[4097];
+	gboolean result = FALSE;
+
+	if (pipe(pipefd) == -1) {
+		SMSD_LogErrno(Config, "Failed to open pipe for child process!");
+		return FALSE;
+	}
 
 	pid = fork();
 
@@ -1135,12 +1145,22 @@ gboolean SMSD_RunOn(const char *command, GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 
 	if (pid != 0) {
 		/* We are the parent, wait for child */
+
+		/* Close write end of pipe */
+		close(pipefd[1]);
+		fcntl(pipefd[0], F_SETFL, O_NONBLOCK);
+
 		i = 0;
 		do {
+			while ((bytes = read(pipefd[0], buffer, 4096)) > 0) {
+				buffer[bytes] = '\0';
+				SMSD_Log(DEBUG_INFO, Config, "Subprocess output: %s", buffer);
+			}
 			w = waitpid(pid, &status, WUNTRACED | WCONTINUED);
 			if (w == -1) {
 				SMSD_Log(DEBUG_INFO, Config, "Failed to wait for process");
-				return FALSE;
+				result = FALSE;
+				goto out;
 			}
 
 			if (WIFEXITED(status)) {
@@ -1149,10 +1169,12 @@ gboolean SMSD_RunOn(const char *command, GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 				} else {
 					SMSD_Log(DEBUG_ERROR, Config, "Process failed with exit status %d", WEXITSTATUS(status));
 				}
-				return (WEXITSTATUS(status) == 0);
+				result = (WEXITSTATUS(status) == 0);
+				goto out;
 			} else if (WIFSIGNALED(status)) {
 				SMSD_Log(DEBUG_ERROR, Config, "Process killed by signal %d", WTERMSIG(status));
-				return FALSE;
+				result = FALSE;
+				goto out;
 			} else if (WIFSTOPPED(status)) {
 				SMSD_Log(DEBUG_INFO, Config, "Process stopped by signal %d", WSTOPSIG(status));
 			} else if (WIFCONTINUED(status)) {
@@ -1162,14 +1184,24 @@ gboolean SMSD_RunOn(const char *command, GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 
 			if (i++ > 1200) {
 				SMSD_Log(DEBUG_INFO, Config, "Waited two minutes for child process, giving up");
-				return TRUE;
+				result = TRUE;
+				goto out;
 			}
 		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
+out:
+		while ((bytes = read(pipefd[0], buffer, 4096)) > 0) {
+			buffer[bytes] = '\0';
+			SMSD_Log(DEBUG_INFO, Config, "Subprocess output: %s", buffer);
+		}
+		close(pipefd[0]);
 
-		return TRUE;
+		return result;
 	}
 
 	/* we are the child */
+
+	/* Close read end of pipe */
+	close(pipefd[0]);
 
 	/* Prepare environment */
 	if (sms != NULL) {
@@ -1182,18 +1214,21 @@ gboolean SMSD_RunOn(const char *command, GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 
 	/* Close all file descriptors */
 	for (i = 0; i < 255; i++) {
-		close(i);
+		if (i != pipefd[1]) {
+			close(i);
+		}
 	}
+
+	/* Connect stdout and stderr to pipe */
+	dup2(pipefd[1], 1);
+	dup2(pipefd[1], 2);
 
 	/* Run the program */
-	status = system(cmdline);
+	execl("/bin/sh", "sh", "-c", cmdline, NULL);
 
-	/* Propagate error code */
-	if (WIFEXITED(status)) {
-		exit(WEXITSTATUS(status));
-	} else {
-		exit(127);
-	}
+	/* Happens only in case of error */
+	SMSD_LogErrno(Config, "Error executing new process");
+	exit(127);
 }
 #endif
 

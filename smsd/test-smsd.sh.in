@@ -155,6 +155,7 @@ cat > @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/received.sh << EOT
 #!@SH_BIN@
 echo "\$@" >> @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/received.log
 env >> @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/env.log
+echo "Executed script!"
 exit 4
 EOT
 chmod +x @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/received.sh
