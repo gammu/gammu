@@ -23,6 +23,8 @@ ChangeLog
 
 [-] * Use advisory locking to prevent two Gammu instances share one device.
 [!] * Include child process stdout and stderr in SMSD logs to ease debugging.
+[-] * Fix string quoting with ODBC driver.
+
 
 20150707 - 1.36.3
 

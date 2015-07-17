@@ -274,7 +274,12 @@ char * SMSDODBC_QuoteString(GSM_SMSDConfig * Config, const char *string)
 		driver_name = Config->driver;
 	}
 
-	if (strcasecmp(driver_name, "access") == 0) {
+	if (strcasecmp(driver_name, "mysql") == 0 ||
+			strcasecmp(driver_name, "native_mysql") == 0 ||
+			strcasecmp(driver_name, "pgsql") == 0 ||
+			strcasecmp(driver_name, "native_pgsql") == 0 ||
+			strncasecmp(driver_name, "sqlite", 6) == 0 ||
+			strcasecmp(Config->driver, "access") == 0) {
 		quote = '\'';
 	}
 
