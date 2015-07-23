@@ -590,12 +590,65 @@ fail:
 
 static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage * sms UNUSED, GSM_SMSDConfig * Config, char *ID UNUSED, int Part, GSM_SMSDSendingError err, int TPMR)
 {
+	FILE *file;
+	size_t flen = 0;
+	unsigned char FullPath[400];
+	char Buffer[(GSM_MAX_SMS_LENGTH * GSM_MAX_MULTI_SMS + 1) * 2];
+	char *lineStart, *lineEnd;
+	/* MessageReference TPMR maximum is "255" */
+	char MessageReferenceBuffer[sizeof("MessageReference = \n") + 4];
+	int written;
+
 	if (err == SMSD_SEND_OK) {
 		SMSD_Log(DEBUG_INFO, Config, "Transmitted %s (%s: %i) to %s, message reference 0x%02x",
 			 Config->SMSID, (Part == sms->Number ? "total" : "part"), Part, DecodeUnicodeString(sms->SMS[0].Number), TPMR);
 	}
 
+	strcpy(FullPath, Config->outboxpath);
+	strcat(FullPath, Config->SMSID);
+
+	file = fopen(FullPath, "r");
+	if (file == NULL) {
+		return ERR_CANTOPENFILE;
+	}
+
+	flen = fread(Buffer, 1, sizeof(Buffer), file);
+	fclose(file);
+
+	lineStart = Buffer;
+	lineEnd = strchr(lineStart, '\n');
+
+	while (lineStart - Buffer +1 < flen) {
+		lineStart = lineEnd + 1;
+		lineEnd = strchr(lineStart, '\n');
+
+		if(!strncmp("MessageReference = ", lineStart, 19)) {
+			break;
+		}
+	}
+
+	file = fopen(FullPath, "w");
+	if (file == NULL) {
+		return ERR_CANTOPENFILE;
+	}
+
+	chk_fwrite(Buffer, lineStart - Buffer, 1, file);
+
+	snprintf(MessageReferenceBuffer, sizeof(MessageReferenceBuffer),
+		 "MessageReference = %d\n", TPMR);
+
+	chk_fwrite(MessageReferenceBuffer, strlen(MessageReferenceBuffer), 1, file);
+
+	chk_fwrite(lineEnd + 1, (size_t)((Buffer + flen - 1) - lineEnd), 1, file);
+
+	fclose(file);
+
 	return ERR_NONE;
+fail:
+	if (file) {
+		fclose(file);
+	}
+	return ERR_WRITING_FILE;
 }
 
 GSM_Error SMSD_Check_Dir(GSM_SMSDConfig *Config, const char *path, const char *name)
