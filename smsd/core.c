@@ -826,6 +826,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 
 	Config->RunOnReceive = INI_GetValue(Config->smsdcfgfile, "smsd", "runonreceive", FALSE);
 	Config->RunOnFailure = INI_GetValue(Config->smsdcfgfile, "smsd", "runonfailure", FALSE);
+	Config->RunOnSent = INI_GetValue(Config->smsdcfgfile, "smsd", "runonsent", FALSE);
 
 	str = INI_GetValue(Config->smsdcfgfile, "smsd", "smsc", FALSE);
 	if (str) {
@@ -1735,6 +1736,11 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config)
 		SMSD_LogError(DEBUG_ERROR, Config, "Error moving message", error);
 		Config->Service->MoveSMS(&sms,Config, Config->SMSID, TRUE, FALSE);
 	}
+
+	if (Config->RunOnSent != NULL && error == ERR_NONE) {
+		SMSD_RunOn(Config->RunOnSent, &sms, Config, Config->SMSID);
+	}
+
 	return ERR_NONE;
 failure_unsent:
 	if (Config->RunOnFailure != NULL) {
