@@ -134,11 +134,6 @@ int process_commandline(int argc, char **argv, SMSD_Parameters * params)
 #else
 	/* Poor mans getopt replacement */
 	int i;
-#ifndef _GETOPT_H
-	int optind = -1;
-#else
-	optind = -1;
-#endif
 
 #define optarg argv[++i]
 
