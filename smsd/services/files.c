@@ -591,9 +591,9 @@ fail:
 static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage * sms UNUSED, GSM_SMSDConfig * Config, char *ID UNUSED, int Part, GSM_SMSDSendingError err, int TPMR)
 {
 	FILE *file;
-	ssize_t flen = 0;
+	ssize_t flen = 0, filesize;
 	unsigned char FullPath[400];
-	char Buffer[(GSM_MAX_SMS_LENGTH * GSM_MAX_MULTI_SMS + 1) * 2];
+	char *Buffer = NULL;
 	char *lineStart, *lineEnd;
 	/* MessageReference TPMR maximum is "255" */
 	char MessageReferenceBuffer[sizeof("MessageReference = \n") + 4];
@@ -607,12 +607,29 @@ static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage * sms UNUSED, GSM_
 	strcat(FullPath, Config->SMSID);
 
 	file = fopen(FullPath, "r");
+
 	if (file == NULL) {
 		return ERR_CANTOPENFILE;
 	}
 
-	flen = fread(Buffer, 1, sizeof(Buffer), file);
+	fseek(file, 0, SEEK_END);
+	filesize = ftell(file);
+	fseek(file, 0, SEEK_SET);
+
+	Buffer = malloc(filesize + 200);
+	if (Buffer == NULL) {
+		fclose(file);
+		return ERR_MOREMEMORY;
+	}
+
+	flen = fread(Buffer, 1, filesize, file);
 	fclose(file);
+
+	if (flen != filesize) {
+		free(Buffer);
+		return ERR_CANTOPENFILE;
+	}
+	Buffer[flen] = '\0';
 
 	lineStart = Buffer;
 	lineEnd = strchr(lineStart, '\n');
@@ -628,6 +645,7 @@ static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage * sms UNUSED, GSM_
 
 	file = fopen(FullPath, "w");
 	if (file == NULL) {
+		free(Buffer);
 		return ERR_CANTOPENFILE;
 	}
 
@@ -642,10 +660,14 @@ static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage * sms UNUSED, GSM_
 
 	fclose(file);
 
+	free(Buffer);
 	return ERR_NONE;
 fail:
 	if (file) {
 		fclose(file);
+	}
+	if (Buffer) {
+		free(Buffer);
 	}
 	return ERR_WRITING_FILE;
 }
