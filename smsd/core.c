@@ -379,6 +379,8 @@ GSM_SMSDConfig *SMSD_NewConfig(const char *name)
 	Config->gammu_log_buffer_size = 0;
 	Config->logfilename = NULL;
 	Config->RunOnFailure = NULL;
+	Config->RunOnSent = NULL;
+	Config->RunOnReceive = NULL;
 	Config->smsdcfgfile = NULL;
 	Config->log_handle = NULL;
 	Config->log_type = SMSD_LOG_NONE;
