@@ -634,13 +634,19 @@ static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage * sms UNUSED, GSM_
 	lineStart = Buffer;
 	lineEnd = strchr(lineStart, '\n');
 
-	while (lineStart - Buffer + 1 < flen) {
+	while (lineEnd && lineStart - Buffer + 1 < flen) {
 		lineStart = lineEnd + 1;
 		lineEnd = strchr(lineStart, '\n');
 
 		if(!strncmp("MessageReference = ", lineStart, 19)) {
 			break;
 		}
+	}
+
+	/* Message reference not found */
+	if (lineEnd == NULL || strncmp("MessageReference = ", lineStart, 19) == 0) {
+		free(Buffer);
+		return ERR_NONE;
 	}
 
 	file = fopen(FullPath, "w");
@@ -654,9 +660,10 @@ static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage * sms UNUSED, GSM_
 	snprintf(MessageReferenceBuffer, sizeof(MessageReferenceBuffer),
 		 "MessageReference = %d\n", TPMR);
 
+
 	chk_fwrite(MessageReferenceBuffer, strlen(MessageReferenceBuffer), 1, file);
 
-	chk_fwrite(lineEnd + 1, (size_t)((Buffer + flen - 1) - lineEnd), 1, file);
+	chk_fwrite(lineEnd + 1, (Buffer - lineEnd) + flen - 1, 1, file);
 
 	fclose(file);
 
