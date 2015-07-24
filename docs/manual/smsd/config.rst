@@ -333,6 +333,15 @@ General parameters of SMS daemon
 
     .. note:: The environment with message (as is in :config:option:`RunOnReceive`) is not passed to the command.
 
+.. config:option:: RunOnSent
+
+    .. versionadded:: 1.36.4
+
+    Executes a program after sending message.
+
+    The program will receive optional parameter a message ID and environment
+    with message details as described in :ref:`gammu-smsd-run`.
+
 .. config:option:: IncludeNumbersFile
 
     File with list of numbers which are accepted by SMSD. The file contains one
