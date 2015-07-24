@@ -591,7 +591,7 @@ fail:
 static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage * sms UNUSED, GSM_SMSDConfig * Config, char *ID UNUSED, int Part, GSM_SMSDSendingError err, int TPMR)
 {
 	FILE *file;
-	size_t flen = 0;
+	ssize_t flen = 0;
 	unsigned char FullPath[400];
 	char Buffer[(GSM_MAX_SMS_LENGTH * GSM_MAX_MULTI_SMS + 1) * 2];
 	char *lineStart, *lineEnd;
@@ -618,7 +618,7 @@ static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage * sms UNUSED, GSM_
 	lineStart = Buffer;
 	lineEnd = strchr(lineStart, '\n');
 
-	while (lineStart - Buffer +1 < flen) {
+	while (lineStart - Buffer + 1 < flen) {
 		lineStart = lineEnd + 1;
 		lineEnd = strchr(lineStart, '\n');
 
