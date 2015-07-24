@@ -109,7 +109,7 @@ NORETURN void wrong_params(void)
 	exit(1);
 }
 
-int process_commandline(int argc, char **argv, SMSD_Parameters * params)
+void process_commandline(int argc, char **argv, SMSD_Parameters * params)
 {
 	int opt;
 
@@ -134,11 +134,6 @@ int process_commandline(int argc, char **argv, SMSD_Parameters * params)
 #else
 	/* Poor mans getopt replacement */
 	int i;
-#ifndef HAVE_OPTIND
-	int optind = -1;
-#else
-	optind = -1;
-#endif
 
 #define optarg argv[++i]
 
@@ -176,19 +171,18 @@ int process_commandline(int argc, char **argv, SMSD_Parameters * params)
 				help();
 				exit(0);
 			default:
-#if defined(HAVE_GETOPT) || defined(HAVE_GETOPT_LONG)
 				wrong_params();
-#else
-				optind = 1;
-#endif
 				break;
 		}
-#if !defined(HAVE_GETOPT) && !defined(HAVE_GETOPT_LONG)
-		if (optind != -1) break;
-#endif
 	}
 
-	return optind;
+#if defined(HAVE_GETOPT) || defined(HAVE_GETOPT_LONG)
+	if (optind < argc) {
+		wrong_params();
+	}
+#endif
+
+	return;
 
 }
 
