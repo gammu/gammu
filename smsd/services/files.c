@@ -597,7 +597,6 @@ static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage * sms UNUSED, GSM_
 	char *lineStart, *lineEnd;
 	/* MessageReference TPMR maximum is "255" */
 	char MessageReferenceBuffer[sizeof("MessageReference = \n") + 4];
-	int written;
 
 	if (err == SMSD_SEND_OK) {
 		SMSD_Log(DEBUG_INFO, Config, "Transmitted %s (%s: %i) to %s, message reference 0x%02x",
