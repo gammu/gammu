@@ -120,7 +120,12 @@ int process_commandline(int argc, char **argv, SMSD_Parameters * params)
 	while ((opt = getopt(argc, argv, "+hvc:lL")) != -1) {
 #else
 	/* Poor mans getopt replacement */
-	int i, optind = -1;
+	int i;
+#ifndef _GETOPT_H
+	int optind = -1;
+#else
+	optind = -1;
+#endif
 
 #define optarg argv[++i]
 
