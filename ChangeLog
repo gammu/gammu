@@ -25,6 +25,7 @@ ChangeLog
 [!] * Include child process stdout and stderr in SMSD logs to ease debugging.
 [-] * Fix string quoting with ODBC driver.
 [+] * Added RunOnSent option to SMSD.
+[+] * Store message reference in outbox in files SMSD.
 
 20150707 - 1.36.3
 
