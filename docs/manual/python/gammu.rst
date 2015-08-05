@@ -736,7 +736,8 @@ This module wraps all python-gammu functionality.
 
    .. method:: ReadDevice(Wait)
 
-      Reads data from device.
+      Reads data from device. This should be used in busy wait loop in case you
+      are waiting for incoming events on the device.
 
       :param Wait: Whether to wait, default is not to wait.
       :type Wait: bool
