@@ -17,13 +17,7 @@ State machine
 
 .. doxygenstruct:: GSM_Config
 
-.. c:type:: GSM_Log_Function
-
-    :param text: Text to be printed, \n will be also sent (as a separate message).
-    :param data: Arbitrary logger data, as passed to :c:func:`GSM_InitConnection_Log`.
-    :returns: void
-
-    Type of callback function for logging.
+.. doxygentypedef:: GSM_Log_Function
 
 .. doxygenfunction:: GSM_ReadDevice
 .. doxygenfunction:: GSM_IsConnected

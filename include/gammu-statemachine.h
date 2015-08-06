@@ -21,6 +21,8 @@
  *
  * \param text Text to be printed, \n will be also sent (as a separate
  * message).
+ * \param data Arbitrary logger data, as passed to \ref GSM_InitConnection_Log.
+ *
  */
 typedef void (*GSM_Log_Function) (const char *text, void *data);
 
