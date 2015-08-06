@@ -16,6 +16,7 @@ State machine
 .. doxygenenum:: GSM_ConnectionType
 
 .. doxygenstruct:: GSM_Config
+    :members:
 
 .. doxygentypedef:: GSM_Log_Function
 
