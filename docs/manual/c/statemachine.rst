@@ -1,67 +1,21 @@
 State machine
 =============
 
-.. c:function:: GSM_Error GSM_InitConnection_Log(GSM_StateMachine * s, int ReplyNum, GSM_Log_Function log_function, void *user_data)
+.. doxygenfuncion:: GSM_InitConnection_Log
 
-    :param s: State machine data
-    :param ReplyNum: Number of replies to await (usually 3).
-    :param log_function: Logging function, see :c:type:`GSM_SetDebugFunction`.
-    :param user_data: User data for logging function, see :c:type:`GSM_SetDebugFunction`.
-    :return: Error code
+.. doxygenfuncion:: GSM_InitConnection
 
-    Initiates connection with custom logging callback.
+.. doxygenfuncion:: GSM_TerminateConnection
 
-.. c:function:: GSM_Error GSM_InitConnection(GSM_StateMachine * s, int ReplyNum)
+.. doxygenfuncion:: GSM_AbortOperation
 
-    :param s: State machine data
-    :param ReplyNum: Number of replies to await (usually 1). Higher value makes sense only on unreliable links.
-    :return: Error code
+.. doxygenfunction:: GSM_Install
 
-    Initiates connection.
+.. doxygenstruct:: GSM_StateMachine
 
+.. doxygenenum:: GSM_ConnectionType
 
-.. c:function:: GSM_Error GSM_TerminateConnection(GSM_StateMachine * s)
-
-    :param s: State machine data
-    :return: Error code
-
-    Terminates connection.
-
-.. c:function:: GSM_Error GSM_AbortOperation(GSM_StateMachine * s)
-
-    :param s: State machine data
-    :return: Error code
-
-    Aborts current operation.
- 
-    This is thread safe call to abort any existing operations with the
-    phone.
-
-.. c:function: GSM_Error GSM_Install(GSM_StateMachine *s, const char *ExtraPath)
-
-    :param s: State machine data.
-    :param ExtraPath: Extra path where to search for installation data.
-    :return: Result of operation.
-
-    Installs applet required for configured connection to the phone.
-
-.. c:type:: GSM_StateMachine
-
-    Private structure holding information about phone connection. Should
-    be allocated by :c:func:`GSM_AllocStateMachine` and freed by
-    :c:func:`GSM_FreeStateMachine`.
-
-.. c:type:: GSM_ConnectionType
-
-     Connection types definitions.
-
-.. c:type:: GSM_Config
-
-    Configuration of state machine.
-
-    .. c:member:: char Model[50]
-
-        Model from config file.
+.. doxygenstruct:: GSM_Config
 
 .. c:type:: GSM_Log_Function
 
