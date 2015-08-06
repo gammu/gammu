@@ -23,7 +23,7 @@ To link you need to pass from pkg-config::
     pkg-config --libs gammu
 
 
-Gammu stores all its data in a GSM_StateMachine struct. This structure is not
+Gammu stores all its data in a :c:type:`GSM_StateMachine`. This structure is not
 public, so all you can define is a pointer to it:
 
 .. code-block:: c
@@ -31,7 +31,7 @@ public, so all you can define is a pointer to it:
     GSM_StateMachine *state_machine;
 
 You'll want to check for errors from time to time.  Do it using a
-function something like this:
+function something like this with help of :c:func:`GSM_ErrorString`:
 
 .. code-block:: c
 
@@ -46,13 +46,14 @@ function something like this:
 
 As libGammu does interact with strings in your local encoding, it is good idea
 to initialize locales subsystem first (otherwise you would get broken non
-ASCII characters):
+ASCII characters) by calling :c:func:`GSM_InitLocales`:
 
 .. code-block:: c
 
     GSM_InitLocales(NULL);
 
-You first need to allocate a state machine structure:
+You first need to allocate a state machine structure
+using :c:func:`GSM_AllocStateMachine`:
 
 .. code-block:: c
 
@@ -80,7 +81,7 @@ Now think about the configuration file.  To use the default
     GSM_SetConfigNum(s, 1);
 
 OK, now initialise the connection (1 means number of replies you want to wait
-for in case of failure):
+for in case of failure) by :c:func:`GSM_InitConnection`:
 
 .. code-block:: c
 
@@ -88,14 +89,15 @@ for in case of failure):
     check_error(error);
 
 Now you are ready to communicate with the phone, for example you can read
-manufacturer name:
+manufacturer name by :c:func:`GSM_GetManufacturer`:
 
 .. code-block:: c
 
     error = GSM_GetManufacturer(s, buffer);
     check_error(error);
 
-When you're finished, you need to disconnect and free allocated memory:
+When you're finished, you need to disconnect and free allocated memory
+using :c:func:`GSM_FreeStateMachine`:
 
 .. code-block:: c
 
@@ -142,8 +144,8 @@ Unicode
 Gammu stores all strings internally in UCS-2-BE encoding (terminated by two
 zero bytes). This is used mostly for historical reasons and today the obvious
 choice would be ``wchar_t``.  To work with these strings, various functions
-are provided (``UnicodeLength``, ``DecodeUnicode``, ``EncodeUnicode``,
-``CopyUnicodeString``, etc.).
+are provided (:c:func:`UnicodeLength`, :c:func:`DecodeUnicode`,
+:c:func:`EncodeUnicode`, :c:func:`CopyUnicodeString`, etc.).
 
 For printing on console you should use:
 
@@ -184,3 +186,17 @@ For per state machine configuration:
 	GSM_SetDebugGlobal(FALSE, debug_info);
 	GSM_SetDebugFileDescriptor(stderr, FALSE, debug_info);
 	GSM_SetDebugLevel("textall", debug_info);
+
+Waiting for incoming events
+---------------------------
+
+If you expect some incoming events, you need to maintain communication with the
+phone. The best way it can be :c:func:`GSM_ReadDevice`. For example you can use
+following busy loop:
+
+
+.. code-block:: c
+
+    while (!gshutdown) {
+            GSM_ReadDevice(s, TRUE);
+    }
