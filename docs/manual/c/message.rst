@@ -42,31 +42,50 @@ Messages
 .. doxygenfunction:: GSM_SMSCounter
 .. doxygenenum:: GSM_MMS_Class
 .. doxygenstruct:: GSM_MMSIndicator
+    :members:
 .. doxygenstruct:: GSM_CBMessage
+    :members:
 .. doxygenenum:: GSM_USSDStatus
 .. doxygenstruct:: GSM_USSDMessage
+    :members:
 .. doxygenstruct:: GSM_SMSMemoryStatus
+    :members:
 .. doxygenenum:: GSM_SMSFormat
 .. doxygenenum:: GSM_ValidityPeriod
 .. doxygenenum:: GSM_ValidityPeriodFormat
 .. doxygenstruct:: GSM_SMSValidity
+    :members:
 .. doxygenstruct:: GSM_SMSC
+    :members:
 .. doxygenenum:: GSM_SMS_State
 .. doxygenenum:: GSM_Coding_Type
 .. doxygenenum:: GSM_UDH
 .. doxygenstruct:: GSM_UDHHeader
+    :members:
 .. doxygenenum:: GSM_SMSMessageType
 .. doxygenstruct:: GSM_SMSMessage
+    :members:
 .. doxygenstruct:: GSM_SMSMessageLayout
+    :members:
 .. doxygenstruct:: GSM_OneSMSFolder
+    :members:
 .. doxygenstruct:: GSM_SMSFolders
+    :members:
 .. doxygenstruct:: GSM_SiemensOTASMSInfo
+    :members:
 .. doxygenstruct:: GSM_MultiSMSMessage
+    :members:
 .. doxygenstruct:: GSM_OneMMSFolder
+    :members:
 .. doxygenstruct:: GSM_MMSFolders
+    :members:
 .. doxygenenum:: EncodeMultiPartSMSID
 .. doxygenstruct:: GSM_MultiPartSMSEntry
+    :members:
 .. doxygenstruct:: GSM_MultiPartSMSInfo
+    :members:
 .. doxygenenum:: MMSAddressType
 .. doxygenstruct:: GSM_EncodedMultiPartMMSEntry
+    :members:
 .. doxygenstruct:: GSM_EncodedMultiPartMMSInfo
+    :members:

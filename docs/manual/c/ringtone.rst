@@ -24,12 +24,20 @@ Ringtone
 .. doxygenenum:: GSM_RingNoteDurationSpec
 .. doxygenenum:: GSM_RingNoteScale
 .. doxygenstruct:: GSM_RingNote
+    :members:
 .. doxygenenum:: GSM_RingCommandType
 .. doxygenstruct:: GSM_RingCommand
+    :members:
 .. doxygenstruct:: GSM_NoteRingtone
+    :members:
 .. doxygenstruct:: GSM_NokiaBinaryRingtone
+    :members:
 .. doxygenstruct:: GSM_BinaryTone
+    :members:
 .. doxygenenum:: GSM_RingtoneFormat
 .. doxygenstruct:: GSM_Ringtone
+    :members:
 .. doxygenstruct:: GSM_RingtoneInfo
+    :members:
 .. doxygenstruct:: GSM_AllRingtonesInfo
+    :members:

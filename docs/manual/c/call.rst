@@ -18,8 +18,11 @@ Call
 .. doxygenfunction:: GSM_SendDTMF
 .. doxygenenum:: GSM_CallStatus
 .. doxygenstruct:: GSM_Call
+    :members:
 .. doxygenenum:: GSM_Divert_DivertTypes
 .. doxygenenum:: GSM_Divert_CallTypes
 .. doxygenstruct:: GSM_CallDivert
+    :members:
 .. doxygenstruct:: GSM_MultiCallDivert
+    :members:
 .. doxygenenum:: GSM_CallShowNumber

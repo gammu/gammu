@@ -82,4 +82,5 @@ State machine
 .. doxygenfunction:: GSM_FreeStateMachine
 .. doxygenfunction:: GSM_GetUsedConnection
 .. doxygenstruct:: GSM_Config
+    :members:
 

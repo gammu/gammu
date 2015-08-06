@@ -16,5 +16,7 @@ File
 .. doxygenfunction:: GSM_AddFolder
 .. doxygenfunction:: GSM_DeleteFolder
 .. doxygenstruct:: GSM_FileSystemStatus
+    :members:
 .. doxygenenum:: GSM_FileType
 .. doxygenstruct:: GSM_File
+    :members:

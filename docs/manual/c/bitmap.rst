@@ -12,7 +12,10 @@ Bitmap
 .. doxygenfunction:: GSM_ClearBitmap
 .. doxygenenum:: GSM_BinaryPicture_Types
 .. doxygenstruct:: GSM_BinaryPicture
+    :members:
 .. doxygenenum:: GSM_Bitmap_Types
 .. doxygenstruct:: GSM_Bitmap
+    :members:
 .. doxygenstruct:: GSM_MultiBitmap
+    :members:
 .. doxygenfunction:: GSM_GetScreenshot

@@ -14,4 +14,6 @@ Date and time
 .. doxygenfunction:: GSM_GetDateTime
 .. doxygenfunction:: GSM_SetDateTime
 .. doxygenstruct:: GSM_DateTime
+    :members:
 .. doxygenstruct:: GSM_DeltaTime
+    :members:

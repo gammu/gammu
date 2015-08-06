@@ -12,4 +12,6 @@ INI files
 .. doxygentypedef:: INI_Entry
 .. doxygentypedef:: INI_Section
 .. doxygenstruct:: _INI_Entry
+    :members:
 .. doxygenstruct:: _INI_Section
+    :members:

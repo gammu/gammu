@@ -25,11 +25,16 @@ Info
 .. doxygenenum:: GSM_NetworkInfo_State
 .. doxygenenum:: GSM_GPRS_State
 .. doxygenstruct:: GSM_NetworkInfo
+    :members:
 .. doxygenstruct:: GSM_SignalQuality
+    :members:
 .. doxygenenum:: GSM_ChargeState
 .. doxygenenum:: GSM_BatteryType
 .. doxygenstruct:: GSM_BatteryCharge
+    :members:
 .. doxygenenum:: GSM_DisplayFeature
 .. doxygenstruct:: GSM_DisplayFeatures
+    :members:
 .. doxygenenum:: GSM_Feature
 .. doxygenstruct:: GSM_PhoneModel
+    :members:

@@ -18,9 +18,13 @@ Memory
 .. doxygenfunction:: GSM_FreeMemoryEntry
 .. doxygenenum:: GSM_MemoryType
 .. doxygenstruct:: GSM_MemoryStatus
+    :members:
 .. doxygenenum:: GSM_EntryType
 .. doxygenenum:: GSM_EntryLocation
 .. doxygenstruct:: GSM_SubMemoryEntry
+    :members:
 .. doxygenstruct:: GSM_MemoryEntry
+    :members:
 .. doxygenstruct:: GSM_SpeedDial
+    :members:
 .. doxygenenum:: GSM_VCardVersion

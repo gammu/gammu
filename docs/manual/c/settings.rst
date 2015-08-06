@@ -20,13 +20,20 @@ Settings
 .. doxygenfunction:: GSM_GetGPRSAccessPoint
 .. doxygenfunction:: GSM_SetGPRSAccessPoint
 .. doxygenstruct:: GSM_SyncMLSettings
+    :members:
 .. doxygenenum:: GSM_ResetSettingsType
 .. doxygenstruct:: GSM_ChatSettings
+    :members:
 .. doxygenenum:: GSM_Profile_Feat_Value
 .. doxygenenum:: GSM_Profile_Feat_ID
 .. doxygenstruct:: GSM_Profile
+    :members:
 .. doxygenstruct:: GSM_FMStation
+    :members:
 .. doxygenstruct:: GSM_GPRSAccessPoint
+    :members:
 .. doxygenenum:: GSM_DateFormat
 .. doxygenstruct:: GSM_Locale
+    :members:
 .. doxygenstruct:: GSM_Profile_PhoneTableValue
+    :members:
