@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSDRC" "5" "July 07, 2015" "1.36.4" "Gammu"
+.TH "GAMMU-SMSDRC" "5" "August 14, 2015" "1.36.4" "Gammu"
 .SH NAME
 gammu-smsdrc \- gammu-smsd(1) configuration file
 .
@@ -439,6 +439,17 @@ which would indicate error while sending the message.
 The environment with message (as is in \fI\%RunOnReceive\fP) is not passed to the command.
 .UNINDENT
 .UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B RunOnSent
+New in version 1.36.4.
+
+.sp
+Executes a program after sending message.
+.sp
+The program will receive optional parameter a message ID and environment
+with message details as described in gammu\-smsd\-run\&.
 .UNINDENT
 .INDENT 0.0
 .TP

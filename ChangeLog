@@ -19,7 +19,7 @@ the issue.
 ChangeLog
 =========
     
-2015???? - 1.36.4
+20150814 - 1.36.4
 
 [-] * Use advisory locking to prevent two Gammu instances share one device.
 [!] * Include child process stdout and stderr in SMSD logs to ease debugging.
