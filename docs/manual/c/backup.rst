@@ -19,3 +19,4 @@ Backup
 .. doxygenenum:: GSM_BackupFormat
 .. doxygenstruct:: GSM_Backup_Info
     :members:
+.. doxygendefine:: GSM_BACKUP_MAX_SMS

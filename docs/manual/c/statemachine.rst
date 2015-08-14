@@ -1,17 +1,17 @@
 State machine
 =============
 
-.. doxygenfuncion:: GSM_InitConnection_Log
+.. doxygenfunction:: GSM_InitConnection_Log
 
-.. doxygenfuncion:: GSM_InitConnection
+.. doxygenfunction:: GSM_InitConnection
 
-.. doxygenfuncion:: GSM_TerminateConnection
+.. doxygenfunction:: GSM_TerminateConnection
 
-.. doxygenfuncion:: GSM_AbortOperation
+.. doxygenfunction:: GSM_AbortOperation
 
 .. doxygenfunction:: GSM_Install
 
-.. doxygenstruct:: GSM_StateMachine
+.. doxygentypedef:: GSM_StateMachine
 
 .. doxygenenum:: GSM_ConnectionType
 
@@ -30,6 +30,3 @@ State machine
 .. doxygenfunction:: GSM_AllocStateMachine
 .. doxygenfunction:: GSM_FreeStateMachine
 .. doxygenfunction:: GSM_GetUsedConnection
-.. doxygenstruct:: GSM_Config
-    :members:
-
