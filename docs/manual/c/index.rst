@@ -12,12 +12,6 @@ is to ``#include <gammu.h>`` and then use Gammu functions. You can check
 docs/examples/ for some small example applications. You don't need real phone
 for testing, use :ref:`dummy-driver` instead.
 
-.. warning::
-
-   The C API documentation is still more complete in Doxygen format
-   available on Gammu website. This still lacks some parts due to
-   problems in Doxygen - Sphinx bridge.
-
 .. toctree::
     :maxdepth: 3
 
