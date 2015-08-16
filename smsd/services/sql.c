@@ -46,7 +46,7 @@ const char *SMSDSQL_SQLName(GSM_SMSDConfig * Config)
 const char now_plus_odbc[] = "{fn CURRENT_TIMESTAMP()} + INTERVAL %d SECOND";
 const char now_plus_mysql[] = "(NOW() + INTERVAL %d SECOND) + 0";
 const char now_plus_pgsql[] = "now() + interval '%d seconds'";
-const char now_plus_sqlite[] = "datetime('now', '+%d seconds')";
+const char now_plus_sqlite[] = "datetime('now', '+%d seconds', 'localtime')";
 const char now_plus_freetds[] = "DATEADD('second', %d, CURRENT_TIMESTAMP)";
 const char now_plus_access[] = "now()+#00:00:%d#";
 const char now_plus_fallback[] = "NOW() + INTERVAL %d SECOND";
@@ -149,7 +149,7 @@ static const char *SMSDSQL_LimitClause(GSM_SMSDConfig * Config, const char *coun
 const char now_odbc[] = "{fn CURRENT_TIMESTAMP()}";
 const char now_mysql[] = "NOW()";
 const char now_pgsql[] = "now()";
-const char now_sqlite[] = "datetime('now')";
+const char now_sqlite[] = "datetime('now', 'localtime')";
 const char now_freetds[] = "CURRENT_TIMESTAMP";
 const char now_access[] = "now()";
 const char now_fallback[] = "NOW()";
@@ -157,7 +157,7 @@ const char now_fallback[] = "NOW()";
 const char currtime_odbc[] = "{fn CURTIME()}";
 const char currtime_mysql[] = "CURTIME()";
 const char currtime_pgsql[] = "localtime";
-const char currtime_sqlite[] = "time('now')";
+const char currtime_sqlite[] = "time('now', 'localtime')";
 const char currtime_freetds[] = "CURRENT_TIME";
 const char currtime_fallback[] = "CURTIME()";
 
