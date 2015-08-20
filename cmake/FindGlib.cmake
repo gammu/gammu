@@ -8,7 +8,7 @@
 include(LibFindMacros)
 
 # Use pkg-config to get hints about paths
-libfind_pkg_check_modules(Glib_PKGCONF glib-2.0)
+libfind_pkg_check_modules(Glib_PKGCONF glib-2.0>=2.16)
 
 # Main include dir
 find_path(Glib_INCLUDE_DIR
