@@ -1,7 +1,7 @@
 /**
  * SMSD message inject program
  */
-/* Copyright (c) 2009 - 2011 Michal Cihar <michal@cihar.com> */
+/* Copyright (c) 2009 - 2015 Michal Cihar <michal@cihar.com> */
 /* Licensend under GNU GPL 2 */
 
 #include <gammu-smsd.h>
