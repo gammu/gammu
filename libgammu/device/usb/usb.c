@@ -313,7 +313,7 @@ GSM_Error GSM_USB_Probe(GSM_StateMachine *s, GSM_USB_Match_Function matcher)
 		smprintf(s, "Will change configuration, unhooking all interfaces!\n");
 		for (i = 0; i < config->bNumInterfaces; i++) {
 			if (libusb_kernel_driver_active(d->handle, i) == 1) {
-				smprintf(s, "Detaching kernel driver from inteface %d\n", i);
+				smprintf(s, "Detaching kernel driver from interface %d\n", i);
 				rc = libusb_detach_kernel_driver(d->handle, i);
 				if (rc != 0) {
 					smprintf(s, "Failed to detach kernel driver!\n");
@@ -341,7 +341,7 @@ GSM_Error GSM_USB_Probe(GSM_StateMachine *s, GSM_USB_Match_Function matcher)
 		smprintf(s, "Configuration change not required, unhooking only required interfaces!\n");
 
 		if (libusb_kernel_driver_active(d->handle, d->control_iface) == 1) {
-			smprintf(s, "Detaching kernel driver from inteface %d\n", d->control_iface);
+			smprintf(s, "Detaching kernel driver from interface %d\n", d->control_iface);
 			rc = libusb_detach_kernel_driver(d->handle, d->control_iface);
 			if (rc != 0) {
 				smprintf(s, "Failed to detach kernel driver!\n");
@@ -354,7 +354,7 @@ GSM_Error GSM_USB_Probe(GSM_StateMachine *s, GSM_USB_Match_Function matcher)
 		}
 
 		if (libusb_kernel_driver_active(d->handle, d->data_iface) == 1) {
-			smprintf(s, "Detaching kernel driver from inteface %d\n", d->data_iface);
+			smprintf(s, "Detaching kernel driver from interface %d\n", d->data_iface);
 			rc = libusb_detach_kernel_driver(d->handle, d->data_iface);
 			if (rc != 0) {
 				smprintf(s, "Failed to detach kernel driver!\n");
