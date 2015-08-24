@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMURC" "5" "August 14, 2015" "1.36.4" "Gammu"
+.TH "GAMMURC" "5" "August 24, 2015" "1.36.5" "Gammu"
 .SH NAME
 gammurc \- gammu(1) configuration file
 .
@@ -350,10 +350,10 @@ If you want to set time from computer to phone during starting connection.
 .INDENT 0.0
 .TP
 .B StartInfo
-This option allow to set, that you want (setting \fByes\fP) to see message on the
-phone screen or phone should enable light for a moment during starting
-connection. Phone will not beep during starting connection with this
-option. This works only with some Nokia phones.
+This option allows one to set, that you want (setting \fByes\fP) to see
+message on the phone screen or phone should enable light for a moment
+during starting connection. Phone will not beep during starting connection
+with this option. This works only with some Nokia phones.
 .UNINDENT
 .SS Debugging options
 .INDENT 0.0
@@ -372,7 +372,7 @@ each execution.
 .INDENT 0.0
 .TP
 .B LogFormat
-Determines what all will be logged to \fBLogFile\fP\&. Possible values are:
+Determines what all will be logged to \fI\%LogFile\fP\&. Possible values are:
 .INDENT 7.0
 .TP
 .B \fBnothing\fP
@@ -677,7 +677,7 @@ connection = fbusblue
 ;                 | when to reset phone during connection (in some phones need
 ;                 | to set time again after restart)
 ; GammuLoc        | name of localisation file
-; StartInfo       | this option allow to set, that you want (setting "yes")
+; StartInfo       | this option allows one to set, that you want (setting "yes")
 ;                 | to see message on the phone screen or phone should enable
 ;                 | light for a moment during starting connection. Phone
 ;                 | WON\(aqT beep during starting connection with this option.
