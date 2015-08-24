@@ -146,7 +146,7 @@ connection = fbusblue
 ;                 | when to reset phone during connection (in some phones need
 ;                 | to set time again after restart)
 ; GammuLoc        | name of localisation file
-; StartInfo       | this option allow to set, that you want (setting "yes")
+; StartInfo       | this option allows one to set, that you want (setting "yes")
 ;                 | to see message on the phone screen or phone should enable
 ;                 | light for a moment during starting connection. Phone
 ;                 | WON'T beep during starting connection with this option.
