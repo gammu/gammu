@@ -614,6 +614,10 @@ static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage * sms UNUSED, GSM_
 
 	fseek(file, 0, SEEK_END);
 	filesize = ftell(file);
+	if (filesize < 0) {
+		fclose(file);
+		return ERR_CANTOPENFILE;
+	}
 	fseek(file, 0, SEEK_SET);
 
 	Buffer = malloc(filesize + 200);
