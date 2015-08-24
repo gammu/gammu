@@ -89,6 +89,7 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		{"+CMT:"	,2, ID_None},
 		{"+CMTI:"	,1, ID_None},
 		{"+CDS:"	,2, ID_None},
+		{"+CDSI:"	,1, ID_None},
 		{"+CREG:"	,1, ID_GetNetworkInfo},
 		{"+CUSD"	,1, ID_None},
 		{"+COLP"	,1, ID_None},
