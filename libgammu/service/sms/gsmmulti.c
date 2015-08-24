@@ -502,8 +502,12 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 	if (Info->EntriesNum == 0) return ERR_EMPTY;
 
 	Buffer = malloc(buffer_size);
+	if (Buffer == NULL) {
+		return ERR_MOREMEMORY;
+	}
 	Buffer2 = malloc(buffer_size);
-	if (Buffer == NULL || Buffer2 == NULL) {
+	if (Buffer2 == NULL) {
+		free(Buffer);
 		return ERR_MOREMEMORY;
 	}
 
