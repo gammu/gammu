@@ -225,10 +225,10 @@ Connection options
 
 .. config:option:: StartInfo
 
-    This option allow to set, that you want (setting ``yes``) to see message on the
-    phone screen or phone should enable light for a moment during starting
-    connection. Phone will not beep during starting connection with this
-    option. This works only with some Nokia phones.
+    This option allows one to set, that you want (setting ``yes``) to see
+    message on the phone screen or phone should enable light for a moment
+    during starting connection. Phone will not beep during starting connection
+    with this option. This works only with some Nokia phones.
 
 
 Debugging options
