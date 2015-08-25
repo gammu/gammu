@@ -219,6 +219,8 @@ General parameters of SMS daemon
 
 .. config:option:: HangupCalls
 
+    .. versionadded:: 1.34.0
+
     Whether to automatically hangup any incoming calls.
 
     Default is 0 (disabled).
