@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSDRC" "5" "August 24, 2015" "1.36.5" "Gammu"
+.TH "GAMMU-SMSDRC" "5" "August 26, 2015" "1.36.5" "Gammu"
 .SH NAME
 gammu-smsdrc \- gammu-smsd(1) configuration file
 .
@@ -44,7 +44,7 @@ you can also use \fI\%[sql]\fP\&.
 .sp
 The \fB[gammu]\fP section is configuration of a phone connection
 and is same as described in gammurc with the only exception that
-\fBLogFile\fP is ignored and common logging for gammu library and
+\fI\%LogFile\fP is ignored and common logging for gammu library and
 SMS daemon is used. However the \fBLogFormat\fP directive still
 configures how much messages gammu emits.
 .INDENT 0.0
@@ -302,6 +302,9 @@ Default is 1 (enabled).
 .INDENT 0.0
 .TP
 .B HangupCalls
+New in version 1.34.0.
+
+.sp
 Whether to automatically hangup any incoming calls.
 .sp
 Default is 0 (disabled).
