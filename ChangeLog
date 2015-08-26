@@ -19,7 +19,7 @@ the issue.
 ChangeLog
 =========
     
-2015???? - 1.36.5
+20150826 - 1.36.5
 
 [-] * Properly use timezones with SQLite in SMSD.
 [-] * Improve support for Huawei E1752.
