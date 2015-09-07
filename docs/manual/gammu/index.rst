@@ -30,7 +30,7 @@ Parameters before command configure gammu behaviour:
 
 .. option:: -c, --config <filename>
 
-    name of configuration file
+    name of configuration file (see :ref:`gammurc`)
 
 .. option:: -s, --section <confign>
 
