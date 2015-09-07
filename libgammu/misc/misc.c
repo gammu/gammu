@@ -142,12 +142,12 @@ char *DayOfWeek (unsigned int year, unsigned int month, unsigned int day)
 }
 
 int GSM_GetLocalTimezoneOffset() {
-	struct tm *tg, *tl;
+	struct tm tg, tl;
 	time_t now = time(NULL);
-	tg = gmtime(&now);
-	tl = localtime(&now);
+	gmtime_r(&now, &tg);
+	localtime_r(&now, &tl);
 	// Returns offset including daylight saving (found as boolean in tl.tm_isdst).
-	return (tl->tm_hour - tg->tm_hour) * 3600 + (tl->tm_min - tg->tm_min) * 60 + (tl->tm_sec - tg->tm_sec);
+	return mktime(&tl) - mktime(&tg);
 }
 
 void GSM_DateTimeToTimestamp(GSM_DateTime *Date, char *str)
