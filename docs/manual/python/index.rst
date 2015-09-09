@@ -1,7 +1,7 @@
 .. _python:
 
-python-gammu API
-================
+python-gammu
+============
 
 A taste of python-gammu
 -----------------------

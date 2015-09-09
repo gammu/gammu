@@ -3,6 +3,28 @@
 Quick starter guide
 ===================
 
+Gammu family
+------------
+
+Gammu family consists of several programs and libraries:
+
+:ref:`gammu`
+    Command line utility to talk to the phone. It performs one time operations
+    only.
+`Wammu <http://wammu.eu/wammu>`_
+    Graphical interface for Gammu, providing basic functions.
+:ref:`gammu-smsd`
+    Daemon to receive and send messages using your phone.
+:ref:`gammu-smsd-inject`
+    Injects outgoing messages into :ref:`gammu-smsd` queue.
+:ref:`gammu-detect`
+    Simple utility to detect phones or modems connected to computer.
+:ref:`python`
+    Python bindings for Gammu, use it from Python scripts.
+:ref:`libgammu`
+    Core library, used by all other parts and you can use it directly in your C
+    programs.
+
 Installing Gammu
 ----------------
 
