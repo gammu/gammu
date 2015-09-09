@@ -58,11 +58,12 @@ General parameters of SMS daemon
     SMSD service to use, one of following choices:
 
     ``FILES``
-        stores messages in files, see :ref:`gammu-smsd-files` for details
+        Stores messages in files, see :ref:`gammu-smsd-files` for details.
     ``NULL``
-        does not store messages at all, see :ref:`gammu-smsd-null` for details
+        Does not store messages at all, see :ref:`gammu-smsd-null` for details.
     ``SQL``
-        stores messages in SQL database, see :ref:`gammu-smsd-sql` for details
+        Stores messages in SQL database, see :ref:`gammu-smsd-sql` for details,
+        choose database type to use by :config:option:`Driver`.
 
         .. versionadded:: 1.28.93
     ``MYSQL``
@@ -70,23 +71,24 @@ General parameters of SMS daemon
             
             Use :config:option:`Service` = ``SQL`` and :config:option:`Driver` = ``native_mysql`` instead.
 
-        stores messages in MySQL database, see :ref:`gammu-smsd-mysql` for details
+        Compatibility option for older configuration files, stores messages in
+        MySQL database, see :ref:`gammu-smsd-mysql` for details.
 
     ``PGSQL``
         .. deprecated:: 1.28.93
         
             Use :config:option:`Service` = ``SQL`` and :config:option:`Driver` = ``native_pgsql`` instead.
 
-        stores messages in PostgreSQL database, see :ref:`gammu-smsd-pgsql` for details
+        Compatibility option for older configuration files, stores messages in
+        PostgreSQL database, see :ref:`gammu-smsd-pgsql` for details.
 
     ``DBI``
         .. deprecated:: 1.28.93
         
             Use :config:option:`Service` = ``SQL`` and :config:option:`Driver` = DBI driver instead.
 
-        stores messages in any database supported by libdbi, this includes
-        MSSQL, MySQL, PostgreSQL or SQLite databases, see :ref:`gammu-smsd-dbi` for
-        details
+        Compatibility option for older configuration files, stores messages in
+        any database supported by libdbi, see :ref:`gammu-smsd-dbi` for details.
 
     .. note::
 
@@ -457,15 +459,31 @@ database:
 
 .. config:option:: Driver
 
-    SQL driver to use.
+    SQL driver to use, Gammu supports several native drivers and generic
+    interface using ODBC and DBI. Availability of the backends depdens on
+    compile time options.
 
-    Can be either one of native drivers (``odbc``, ``native_mysql`` or
-    ``native_pgsql``) or :ref:`gammu-smsd-dbi` driver.
+    Available drivers:
 
-    Depends on what DBI drivers you have installed, DBI
-    supports: ``mysql``, ``freetds`` (provides access to MS SQL Server and
-    Sybase), ``pgsql``, ``sqlite``, ``sqlite3``, ``firebird`` and ``ingres``,
-    ``msql`` and ``oracle`` drivers are under development.
+    ``odbc``
+
+        Connects to the database using ODBC, see :ref:`gammu-smsd-odbc`.
+        
+    ``native_mysql``
+        
+        Stores messages in MySQL database, see :ref:`gammu-smsd-mysql` for
+        details.
+
+    ``native_pgsql``
+        
+        Stores messages in PostgreSQL database, see :ref:`gammu-smsd-pgsql` for
+        details.
+
+    ``db2``, ``firebird``, ``freetds``, ``ingres``, ``msql``, ``mysql``, ``oracle``, ``pgsql``, ``sqlite``, ``sqlite3``
+
+        Stores messages using DBI library in given backend. You need to have
+        installed appropriate DBI driver to make it work. See
+        :ref:`gammu-smsd-dbi` for details.
 
 .. config:option:: SQL
 
