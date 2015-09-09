@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSDRC" "5" "August 26, 2015" "1.36.6" "Gammu"
+.TH "GAMMU-SMSDRC" "5" "September 09, 2015" "1.36.6" "Gammu"
 .SH NAME
 gammu-smsdrc \- gammu-smsd(1) configuration file
 .
@@ -94,42 +94,38 @@ SMSD service to use, one of following choices:
 .INDENT 7.0
 .TP
 .B \fBFILES\fP
-stores messages in files, see gammu\-smsd\-files for details
+Stores messages in files, see gammu\-smsd\-files for details.
 .TP
 .B \fBNULL\fP
-does not store messages at all, see gammu\-smsd\-null for details
+Does not store messages at all, see gammu\-smsd\-null for details.
 .TP
 .B \fBSQL\fP
-stores messages in SQL database, see gammu\-smsd\-sql for details
+Stores messages in SQL database, see gammu\-smsd\-sql for details,
+choose database type to use by \fI\%Driver\fP\&.
 .sp
 New in version 1.28.93.
 
 .TP
 .B \fBMYSQL\fP
-synonym for \fI\%Service\fP = \fBSQL\fP and \fI\%Driver\fP = \fBnative_mysql\fP
-.sp
-stores messages in MySQL database, see gammu\-smsd\-mysql for details
-.sp
-Deprecated since version 1.28.93.
+Deprecated since version 1.28.93: Use \fI\%Service\fP = \fBSQL\fP and \fI\%Driver\fP = \fBnative_mysql\fP instead.
 
+.sp
+Compatibility option for older configuration files, stores messages in
+MySQL database, see gammu\-smsd\-mysql for details.
 .TP
 .B \fBPGSQL\fP
-synonym for \fI\%Service\fP = \fBSQL\fP and \fI\%Driver\fP = \fBnative_pgsql\fP
-.sp
-stores messages in PostgreSQL database, see gammu\-smsd\-pgsql for details
-.sp
-Deprecated since version 1.28.93.
+Deprecated since version 1.28.93: Use \fI\%Service\fP = \fBSQL\fP and \fI\%Driver\fP = \fBnative_pgsql\fP instead.
 
+.sp
+Compatibility option for older configuration files, stores messages in
+PostgreSQL database, see gammu\-smsd\-pgsql for details.
 .TP
 .B \fBDBI\fP
-synonym for \fI\%Service\fP = \fBSQL\fP and \fI\%Driver\fP = DBI driver
-.sp
-stores messages in any database supported by libdbi, this includes
-MSSQL, MySQL, PostgreSQL or SQLite databases, see gammu\-smsd\-dbi for
-details
-.sp
-Deprecated since version 1.28.93.
+Deprecated since version 1.28.93: Use \fI\%Service\fP = \fBSQL\fP and \fI\%Driver\fP = DBI driver instead.
 
+.sp
+Compatibility option for older configuration files, stores messages in
+any database supported by libdbi, see gammu\-smsd\-dbi for details.
 .UNINDENT
 .sp
 \fBNOTE:\fP
@@ -278,7 +274,7 @@ activity. Please note that setting this to higher value than 1 will have
 effects to other time based configurations, because they will be effectively
 rounded to multiply of this value.
 .sp
-Setting this to 0 disables sleeping. Please not this might cause Gammu to
+Setting this to 0 disables sleeping. Please note this might cause Gammu to
 consume quite a lot of CPU power.
 .sp
 Default is 1.
@@ -343,7 +339,8 @@ New in version 1.28.92.
 .INDENT 7.0
 .INDENT 3.5
 For some phones hard reset means deleting all data in it. Use
-\fI\%ResetFrequency\fP, unless you know what you are doing.
+\fI\%ResetFrequency\fP instead, unless you know what you are
+doing.
 .UNINDENT
 .UNINDENT
 .sp
@@ -384,7 +381,7 @@ Default is 600 (10 minutes).
 .TP
 .B PhoneID
 String with info about phone used for sending/receiving. This can be useful if
-you want to run several SMS daemons (see \fI\%Multiple modems\fP);
+you want to run several SMS daemons (see \fI\%Multiple modems\fP).
 .sp
 When you set PhoneID, all messages (including injected ones) will be marked
 by this string (stored as SenderID in the database) and it allows more SMS
@@ -556,10 +553,10 @@ New in version 1.28.92.
 .INDENT 0.0
 .TP
 .B PC
-Synonym for \fI\%Host\fP\&.
-.sp
-Deprecated since version 1.28.92.
+Deprecated since version 1.28.92: Please use \fI\%Host\fP instead.
 
+.sp
+Synonym for \fI\%Host\fP, kept for backwards compatibility.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -581,15 +578,43 @@ will not check it\(aqs number during assigning reports to sent SMS.
 .INDENT 0.0
 .TP
 .B Driver
-SQL driver to use.
+SQL driver to use, Gammu supports several native drivers and generic
+interface using ODBC and DBI. Availability of the backends depdens on
+compile time options.
 .sp
-Can be either one of native drivers (\fBodbc\fP, \fBnative_mysql\fP or
-\fBnative_pgsql\fP) or gammu\-smsd\-dbi driver.
+Available drivers:
 .sp
-Depends on what DBI drivers you have installed, DBI
-supports: \fBmysql\fP, \fBfreetds\fP (provides access to MS SQL Server and
-Sybase), \fBpgsql\fP, \fBsqlite\fP, \fBsqlite3\fP, \fBfirebird\fP and \fBingres\fP,
-\fBmsql\fP and \fBoracle\fP drivers are under development.
+\fBodbc\fP
+.INDENT 7.0
+.INDENT 3.5
+Connects to the database using ODBC, see gammu\-smsd\-odbc\&.
+.UNINDENT
+.UNINDENT
+.sp
+\fBnative_mysql\fP
+.INDENT 7.0
+.INDENT 3.5
+Stores messages in MySQL database, see gammu\-smsd\-mysql for
+details.
+.UNINDENT
+.UNINDENT
+.sp
+\fBnative_pgsql\fP
+.INDENT 7.0
+.INDENT 3.5
+Stores messages in PostgreSQL database, see gammu\-smsd\-pgsql for
+details.
+.UNINDENT
+.UNINDENT
+.sp
+\fBdb2\fP, \fBfirebird\fP, \fBfreetds\fP, \fBingres\fP, \fBmsql\fP, \fBmysql\fP, \fBoracle\fP, \fBpgsql\fP, \fBsqlite\fP, \fBsqlite3\fP
+.INDENT 7.0
+.INDENT 3.5
+Stores messages using DBI library in given backend. You need to have
+installed appropriate DBI driver to make it work. See
+gammu\-smsd\-dbi for details.
+.UNINDENT
+.UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP

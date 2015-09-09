@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSD-MYSQL" "7" "August 26, 2015" "1.36.6" "Gammu"
+.TH "GAMMU-SMSD-MYSQL" "7" "September 09, 2015" "1.36.6" "Gammu"
 .SH NAME
 gammu-smsd-mysql \- gammu-smsd(1) backend using MySQL database server as a message storage
 .
@@ -68,7 +68,7 @@ gammu\-smsdrc
 .SH PRIVILEGES
 .sp
 The user accessing the database does not need much privileges, the following
-privleges should be enough:
+privileges should be enough:
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -77,6 +77,8 @@ privleges should be enough:
 GRANT USAGE ON *.* TO \(aqsmsd\(aq@\(aqlocalhost\(aq IDENTIFIED BY \(aqpassword\(aq;
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON \(gasmsd\(ga.* TO \(aqsmsd\(aq@\(aqlocalhost\(aq;
+
+CREATE DATABASE smsd;
 .ft P
 .fi
 .UNINDENT

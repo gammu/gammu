@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSD-INJECT" "1" "August 26, 2015" "1.36.6" "Gammu"
+.TH "GAMMU-SMSD-INJECT" "1" "September 09, 2015" "1.36.6" "Gammu"
 .SH NAME
 gammu-smsd-inject \- Inject messages into queue of SMS daemon for Gammu
 .
@@ -106,6 +106,18 @@ or
 .nf
 .ft C
 gammu\-smsd\-inject TEXT 123456 \-text "All your base are belong to us"
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Inject unicode text message:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+gammu\-smsd\-inject TEXT 123456 \-unicode \-text "Zkouška sirén"
 .ft P
 .fi
 .UNINDENT
