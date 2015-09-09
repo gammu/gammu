@@ -103,7 +103,11 @@ MySQL server. Now connect as administrative user to the server (usually
 
 Once this is ready, you should import the tables structure. It is shipped as
 :file:`docs/sql/mysql.sql` with Gammu, so all you have to do is to import this
-file (see :ref:`mysql-create` for more details).
+file (see :ref:`mysql-create` for more details):
+
+.. code-block:: console
+
+    $ mysql -u root -p password smsd < docs/sql/mysql.sql
 
 Configuring SMSD
 ++++++++++++++++
