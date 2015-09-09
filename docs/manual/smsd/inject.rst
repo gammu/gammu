@@ -68,6 +68,12 @@ or
 
     gammu-smsd-inject TEXT 123456 -text "All your base are belong to us"
 
+Inject unicode text message:
+
+.. code-block:: sh
+
+    gammu-smsd-inject TEXT 123456 -unicode -text "Zkouška sirén"
+
 Inject long text message:
 
 .. code-block:: sh
