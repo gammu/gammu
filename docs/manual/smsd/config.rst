@@ -198,7 +198,7 @@ General parameters of SMS daemon
     effects to other time based configurations, because they will be effectively
     rounded to multiply of this value.
 
-    Setting this to 0 disables sleeping. Please not this might cause Gammu to
+    Setting this to 0 disables sleeping. Please note this might cause Gammu to
     consume quite a lot of CPU power.
 
     Default is 1.
