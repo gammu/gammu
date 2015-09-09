@@ -35,7 +35,7 @@ Privileges
 ----------
 
 The user accessing the database does not need much privileges, the following
-privleges should be enough:
+privileges should be enough:
 
 .. code-block:: sql
 
@@ -43,12 +43,16 @@ privleges should be enough:
 
     GRANT SELECT, INSERT, UPDATE, DELETE ON `smsd`.* TO 'smsd'@'localhost';
 
+    CREATE DATABASE smsd;
+
 .. note::
 
    For creating the SQL tables you need more privileges, especially for
    creating triggers, which are used for some functionality.
 
 .. _MySQL: http://www.mysql.com/
+
+.. _mysql-create:
 
 Creating tables
 ---------------
