@@ -50,6 +50,8 @@ accepted on some platforms):
 For description of message types and their parameters, please check documentation
 for :option:`gammu savesms`.
 
+.. _smsd-inject-examples:
+
 Examples
 --------
 
