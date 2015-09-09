@@ -14,7 +14,7 @@ Receiving of messages
 
 Received messages are stored in a folder defined by configuration. The
 filename will be ``IN<date>_<time>_<serial>_<sender>_<sequence>.<ext>``,
-for example ``NN20021130_021531_00_+45409000931640979_00.txt``.
+for example ``IN20021130_021531_00_+45409000931640979_00.txt``.
 
 Explanation of fields:
 
