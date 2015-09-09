@@ -21,9 +21,11 @@ ChangeLog
     
 2015???? - 1.36.6
 
+
 [-] * Fixed installation of bash-completion script.
 [-] * Fixed timezone manipulation in SMSD.
 [-] * Documentation improvements.
+[-] * Fixed licensing of helper/win32-dirent.*.
     
 20150826 - 1.36.5
 
