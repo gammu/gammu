@@ -290,7 +290,7 @@ General parameters of SMS daemon
 .. config:option:: PhoneID
 
     String with info about phone used for sending/receiving. This can be useful if
-    you want to run several SMS daemons (see :ref:`smsd-multi`);
+    you want to run several SMS daemons (see :ref:`smsd-multi`).
 
     When you set PhoneID, all messages (including injected ones) will be marked
     by this string (stored as SenderID in the database) and it allows more SMS
