@@ -3,6 +3,24 @@
 #
 
 
+%define so_ver @GAMMU_SOVERSION@
+
+# Change if using tar.gz sources
+%define extension   xz
+
+Name:           gammu
+Version:        @GAMMU_VERSION@
+Release:        0
+Summary:        Mobile phone management utility
+License:        GPL-2.0
+%if 0%{?suse_version}
+Group:          Hardware/Mobile
+%else
+Group:          Applications/Communications
+%endif
+Url:            http://wammu.eu/gammu/
+Source0:        http://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.%{extension}
+
 # Set to 0 to disable PostgreSQL support
 %define pqsql     1
 # Set to 0 to disable MySQL support
@@ -13,50 +31,41 @@
 %define odbc      1
 # Set to 0 to disable USB support
 %define usb       1
-# Change if using tar.gz sources
-%define extension   bz2
 # Set to 0 to disable bluetooth support
 %if 0%{?opensuse_bs} && 0%{?sles_version} == 9
 %define bluetooth   0
 %else
 %define bluetooth   1
 %endif
+# Docdir
 %if 0%{?fedora_version} || 0%{?centos_version} || 0%{?rhel_version} || 0%{?fedora} || 0%{?rhel}
 %define gammu_docdir %{_docdir}/%{name}-%{version}
 %else
 %define gammu_docdir %{_docdir}/%{name}
 %endif
-# Detect build requires, I really hate this crap
+# Detect build requires
 # SUSE
 %if 0%{?suse_version}
 %define dist_usb_libs libusb-1_0-devel
-%define dist_dbi_libs libdbi-devel libdbi-drivers-dbd-sqlite3 sqlite
-%define dist_postgres_libs postgresql-devel
-# 11.1 changed name of devel package for Bluetooth
-%if 0%{?suse_version} >= 1110
+%define dist_dbi_libs libdbi-devel libdbi-drivers-dbd-sqlite3 sqlite3
 %define dist_bluez_libs bluez-devel
-%else
-%define dist_bluez_libs bluez-libs >= 2.0
-%endif
+%define dist_postgres_libs postgresql-devel
 %else
 # Mandriva
 %if 0%{?mandriva_version}
-%define dist_usb_libs libusb-1.0-devel
-%define dist_dbi_libs libdbi-devel libdbi-drivers-dbd-sqlite3 sqlite3-tools
 # 64-bit Mandriva has 64 in package name
 %ifarch x86_64
 %define mandriva_hack 64
 %endif
-# Bluetooth things got renamed several times
-%if 0%{?mandriva_version} > 2007
+%if 0%{?mandriva_version} > 200910
+%define dist_usb_libs lib%{?mandriva_hack}usb1.0-devel
+%else
+%define dist_usb_libs lib%{?mandriva_hack}usb-devel
+%endif
+%if 0%{?mandriva_version} > 2010
+%define dist_dbi_libs lib%{?mandriva_hack}dbi-devel libdbi-drivers-dbd-sqlite3 sqlite3-tools
+%endif
 %define dist_bluez_libs lib%{?mandriva_hack}bluez-devel
-%else
-%if 0%{?mandriva_version} > 2006
-%define dist_bluez_libs lib%{?mandriva_hack}bluez2-devel
-%else
-%define dist_bluez_libs libbluez1-devel >= 2.0
-%endif
-%endif
 # postgresql-devel does not work for whatever reason in buildservice
 %if 0%{?mandriva_version} == 2009
 %define dist_postgres_libs postgresql8.3-devel
@@ -66,16 +75,16 @@
 %else
 # Fedora / Redhat / Centos
 %if 0%{?fedora_version} || 0%{?centos_version} || 0%{?rhel_version} || 0%{?fedora} || 0%{?rhel}
-%define dist_dbi_libs libdbi-devel libdbi-dbd-sqlite sqlite
-%define dist_bluez_libs bluez-libs-devel >= 2.0
-%define dist_postgres_libs postgresql-devel
 %if 0%{?opensuse_bs}
 %define dist_usb_libs libusb1-devel
 %else
 %define dist_usb_libs libusb-1_0-devel
 %endif
+%define dist_dbi_libs libdbi-devel libdbi-dbd-sqlite sqlite
+%define dist_bluez_libs bluez-libs-devel >= 2.0
+%define dist_postgres_libs postgresql-devel
 %else
-#Defaults for not know distributions
+# Defaults for not known distributions
 %define dist_usb_libs libusb1-devel
 %define dist_dbi_libs libdbi-devel libdbi-dbd-sqlite sqlite
 %define dist_bluez_libs bluez-libs-devel >= 2.0
@@ -83,23 +92,11 @@
 %endif
 %endif
 %endif
-Name:           gammu
-Version:        @GAMMU_VERSION@
-Release:        0
-Summary:        Mobile phone management utility
-License:        GPL-2.0
-Url:            http://wammu.eu/gammu/
-Source:         http://dl.cihar.com/gammu/releases/gammu-%{version}.tar.%{extension}
 BuildRequires:  cmake
 BuildRequires:  gcc
 BuildRequires:  gettext
 BuildRequires:  pkgconfig
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
-%if 0%{?suse_version}
-Group:          Hardware/Mobile
-%else
-Group:          Applications/Communications
-%endif
 %if %{bluetooth}
 BuildRequires:  %{dist_bluez_libs}
 %endif
@@ -159,12 +156,13 @@ This package contains Gammu binary as well as some examples.
 
 %package devel
 Summary:        Development files for Gammu
-Requires:       %{name} = %{version}-%{release} pkgconfig
 %if 0%{?suse_version}
 Group:          Development/Libraries/C and C++
 %else
 Group:          Development/Libraries
 %endif
+Requires:       libGammu%{so_ver} = %{version}
+Requires:       libgsmsd%{so_ver} = %{version}
 
 %description devel
 Gammu is command line utility and library to work with mobile phones
@@ -217,14 +215,14 @@ Currently supported phones include:
 * OBEX and IrMC capable phones (Sony-Ericsson, Motorola).
 * Symbian phones through gnapplet.
 
-This package contains Gammu SMS Daemon and tool to inject messages
+This package contains the Gammu SMS Daemon and tool to inject messages
 into the queue.
 
-%package -n libGammu@GAMMU_SOVERSION@
+%package -n libGammu%{so_ver}
 Summary:        Mobile phone management library
 Group:          System/Libraries
 
-%description -n libGammu@GAMMU_SOVERSION@
+%description -n libGammu%{so_ver}
 Gammu is command line utility and library to work with mobile phones
 from many vendors. Support for different models differs, but basic
 functions should work with majority of them. Program can work with
@@ -240,13 +238,13 @@ Currently supported phones include:
 * OBEX and IrMC capable phones (Sony-Ericsson, Motorola).
 * Symbian phones through gnapplet.
 
-This package contains Gammu shared library.
+This package contains the Gammu shared library.
 
-%package -n libgsmsd@GAMMU_SOVERSION@
+%package -n libgsmsd%{so_ver}
 Summary:        SMS daemon helper library
 Group:          System/Libraries
 
-%description -n libgsmsd@GAMMU_SOVERSION@
+%description -n libgsmsd%{so_ver}
 Gammu is command line utility and library to work with mobile phones
 from many vendors. Support for different models differs, but basic
 functions should work with majority of them. Program can work with
@@ -262,45 +260,50 @@ Currently supported phones include:
 * OBEX and IrMC capable phones (Sony-Ericsson, Motorola).
 * Symbian phones through gnapplet.
 
-This package contains Gammu SMS daemon shared library.
+This package contains the Gammu SMS daemon shared library.
 
 %prep
 %setup -q
 
 %build
-mkdir build-dir
-cd build-dir
-# FIXME: you should use %%cmake macros
+mkdir build
+cd build
+export CFLAGS="%{optflags}"
+export CXXFLAGS="%{optflags}"
 cmake ../ \
     -DBUILD_SHARED_LIBS=ON \
-    -DINSTALL_LSB_INIT=ON \
     -DCMAKE_INSTALL_PREFIX=%{_prefix} \
     -DINSTALL_DOC_DIR=%{gammu_docdir} \
     -DINSTALL_LIB_DIR=%{_lib} \
-    -DINSTALL_LIBDATA_DIR=%{_lib}
-make %{?_smp_mflags} %{!?_smp_mflags:%{?_smp_mflags}}
+    -DINSTALL_LIBDATA_DIR=%{_lib} \
+    -DINSTALL_LSB_INIT=ON \
+    -DINSTALL_UDEV_RULES=ON
+make %{?_smp_mflags} VERBOSE=1
 
 %check
-cd build-dir
+cd build
 ctest -V
+cd ..
 
 %install
 %if 0%{?suse_version} == 0
 mkdir %{buildroot}
 %endif
-make -C build-dir install DESTDIR=%{buildroot}
+make -C build install DESTDIR=%{buildroot}
+
+# Install config file
+install -pm 0644 docs/config/smsdrc %{buildroot}%{_sysconfdir}/gammu-smsdrc
+
 %find_lang %{name}
 %find_lang libgammu
-cat libgammu.lang >> %{name}.lang
-install -m644 docs/config/smsdrc %{buildroot}%{_sysconfdir}/gammu-smsdrc
 
-%post -n libGammu@GAMMU_SOVERSION@ -p /sbin/ldconfig
+%post -n libGammu%{so_ver} -p /sbin/ldconfig
 
-%post -n libgsmsd@GAMMU_SOVERSION@ -p /sbin/ldconfig
+%postun -n libGammu%{so_ver} -p /sbin/ldconfig
 
-%postun -n libGammu@GAMMU_SOVERSION@ -p /sbin/ldconfig
+%post -n libgsmsd%{so_ver} -p /sbin/ldconfig
 
-%postun -n libgsmsd@GAMMU_SOVERSION@ -p /sbin/ldconfig
+%postun -n libgsmsd%{so_ver} -p /sbin/ldconfig
 
 %post smsd
 %if 0%{?mandriva_version}
@@ -336,49 +339,59 @@ fi
 
 
 %files -f %{name}.lang
-%defattr(-,root,root)
-%doc %{gammu_docdir}
+%defattr(-,root,root,-)
 %config %{_sysconfdir}/bash_completion.d/gammu
 %{_bindir}/gammu
 %{_bindir}/gammu-config
 %{_bindir}/gammu-detect
 %{_bindir}/jadmaker
-%{_mandir}/man1/gammu.1*
-%{_mandir}/man1/gammu-config.1*
-%{_mandir}/man1/gammu-detect.1*
-%{_mandir}/man1/jadmaker.1*
-%{_mandir}/man5/gammurc.5*
-%{_mandir}/man5/gammu-backup.5*
-%{_mandir}/man5/gammu-smsbackup.5*
+%doc %{gammu_docdir}
+%doc %{_mandir}/man1/gammu-config.1*
+%doc %{_mandir}/man1/gammu-detect.1*
+%doc %{_mandir}/man1/gammu.1*
+%doc %{_mandir}/man1/jadmaker.1*
+%doc %{_mandir}/man5/gammu-backup.5*
+%doc %{_mandir}/man5/gammu-smsbackup.5*
+%doc %{_mandir}/man5/gammurc.5*
+
+%files devel
+%defattr(-,root,root,-)
+%{_includedir}/gammu/
+%{_libdir}/*.so
+%{_libdir}/pkgconfig/gammu-smsd.pc
+%{_libdir}/pkgconfig/gammu.pc
 
 %files smsd
 %defattr(-,root,root)
+%attr(755,root,root) %config %{_initddir}/gammu-smsd
+%config %{_sysconfdir}/gammu-smsdrc
 %{_bindir}/gammu-smsd
 %{_bindir}/gammu-smsd-inject
 %{_bindir}/gammu-smsd-monitor
-%{_mandir}/man1/gammu-smsd*
-%{_mandir}/man7/gammu-smsd*
-%{_mandir}/man5/gammu-smsd*
+%doc %{_mandir}/man1/gammu-smsd-inject.1*
+%doc %{_mandir}/man1/gammu-smsd-monitor.1*
+%doc %{_mandir}/man1/gammu-smsd.1*
+%doc %{_mandir}/man5/gammu-smsdrc.5*
+%doc %{_mandir}/man7/gammu-smsd-dbi.7*
+%doc %{_mandir}/man7/gammu-smsd-files.7*
+%doc %{_mandir}/man7/gammu-smsd-mysql.7*
+%doc %{_mandir}/man7/gammu-smsd-null.7*
+%doc %{_mandir}/man7/gammu-smsd-odbc.7*
+%doc %{_mandir}/man7/gammu-smsd-pgsql.7*
+%doc %{_mandir}/man7/gammu-smsd-run.7*
+%doc %{_mandir}/man7/gammu-smsd-sql.7*
+%doc %{_mandir}/man7/gammu-smsd-tables.7*
 %if 0%{?suse_version} > 1310 || 0%{?fedora_version} >= 15 || 0%{?centos_version} >= 700 || 0%{?rhel_version} >= 700 || 0%{?scientificlinux_version} >= 600
 %{_libexecdir}/systemd/system/gammu-smsd.service
 %endif
-%attr(755,root,root) %config %{_initddir}/gammu-smsd
-%config %{_sysconfdir}/gammu-smsdrc
 
-%files -n libGammu@GAMMU_SOVERSION@
-%defattr(-,root,root)
-%{_libdir}/libGammu*.so.*
+%files -n libGammu%{so_ver} -f libgammu.lang
+%defattr(-,root,root,-)
+%{_libdir}/libGammu.so.%{so_ver}*
 %{_datadir}/gammu/
 
-%files -n libgsmsd@GAMMU_SOVERSION@
-%defattr(-,root,root)
-%{_libdir}/libgsmsd*.so.*
-
-%files devel
-%defattr(-,root,root)
-%{_includedir}/%{name}
-%{_libdir}/pkgconfig/%{name}.pc
-%{_libdir}/pkgconfig/%{name}-smsd.pc
-%{_libdir}/*.so
+%files -n libgsmsd%{so_ver}
+%defattr(-,root,root,-)
+%{_libdir}/libgsmsd.so.%{so_ver}*
 
 %changelog
