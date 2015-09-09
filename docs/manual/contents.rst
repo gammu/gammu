@@ -7,6 +7,7 @@ Gammu Documentation Contents
     :maxdepth: 2
 
     project/index
+    quick/index
     faq/index
     python/index
     c/index

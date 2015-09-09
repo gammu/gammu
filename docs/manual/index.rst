@@ -16,6 +16,7 @@ Continue reading
 .. hlist::
     :columns: 2
 
+    * :ref:`quick` -- quick starter guide
     * :ref:`project` -- learn about Gammu project
     * :ref:`smsd` -- comprehensive SMSD documentation
     * :ref:`gammu` -- the Gammu utility
