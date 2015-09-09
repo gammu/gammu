@@ -66,25 +66,27 @@ General parameters of SMS daemon
 
         .. versionadded:: 1.28.93
     ``MYSQL``
-        synonym for :config:option:`Service` = ``SQL`` and :config:option:`Driver` = ``native_mysql``
+        .. deprecated:: 1.28.93
+            
+            Use :config:option:`Service` = ``SQL`` and :config:option:`Driver` = ``native_mysql`` instead.
 
         stores messages in MySQL database, see :ref:`gammu-smsd-mysql` for details
 
-        .. deprecated:: 1.28.93
     ``PGSQL``
-        synonym for :config:option:`Service` = ``SQL`` and :config:option:`Driver` = ``native_pgsql``
+        .. deprecated:: 1.28.93
+        
+            Use :config:option:`Service` = ``SQL`` and :config:option:`Driver` = ``native_pgsql`` instead.
 
         stores messages in PostgreSQL database, see :ref:`gammu-smsd-pgsql` for details
 
-        .. deprecated:: 1.28.93
     ``DBI``
-        synonym for :config:option:`Service` = ``SQL`` and :config:option:`Driver` = DBI driver
+        .. deprecated:: 1.28.93
+        
+            Use :config:option:`Service` = ``SQL`` and :config:option:`Driver` = DBI driver instead.
 
         stores messages in any database supported by libdbi, this includes
         MSSQL, MySQL, PostgreSQL or SQLite databases, see :ref:`gammu-smsd-dbi` for
         details
-
-        .. deprecated:: 1.28.93
 
     .. note::
 
@@ -432,9 +434,11 @@ database:
 
 .. config:option:: PC
 
-    Synonym for :config:option:`Host`.
-
     .. deprecated:: 1.28.92
+
+        Please use :config:option:`Host` instead.
+
+    Synonym for :config:option:`Host`, kept for backwards compatibility.
 
 .. config:option:: Database
 

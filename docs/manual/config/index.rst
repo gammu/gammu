@@ -186,6 +186,8 @@ Device connection parameters
 
     .. deprecated:: 1.27.95
 
+        Please use :config:option:`Device` instead.
+
     Alias for :config:option:`Device`, kept for backward compatibility.
 
 .. config:option:: Model
