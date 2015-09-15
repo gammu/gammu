@@ -1023,8 +1023,8 @@ static GSM_Error CheckReplyFunctions(GSM_StateMachine *s, GSM_Reply_Function *Re
 	gboolean				available = FALSE;
 	int				i	  = 0;
 
-	while (Reply[i].requestID!=ID_None) {
-		execute=FALSE;
+	while (Reply[i].requestID != ID_None) {
+		execute = FALSE;
 		/* Long ID frames like S60 */
 		if (Reply[i].msgtype[0] == 0 && Reply[i].subtypechar == 0) {
 			if (Reply[i].subtype == msg->Type) {
@@ -1038,7 +1038,9 @@ static GSM_Error CheckReplyFunctions(GSM_StateMachine *s, GSM_Reply_Function *Re
 						if (msg->Buffer[Reply[i].subtypechar]==Reply[i].subtype)
 							execute=TRUE;
 					}
-				} else execute=TRUE;
+				} else {
+					execute=TRUE;
+				}
 			}
 		} else {
 			if (strlen(Reply[i].msgtype) < msg->Length) {
@@ -1049,13 +1051,13 @@ static GSM_Error CheckReplyFunctions(GSM_StateMachine *s, GSM_Reply_Function *Re
 		}
 
 		if (execute) {
-			*reply=i;
+			*reply = i;
 			if (Reply[i].requestID == ID_IncomingFrame ||
 			    Reply[i].requestID == Data->RequestID ||
 			    Data->RequestID    == ID_EachFrame) {
 				return ERR_NONE;
 			}
-			available=TRUE;
+			available = TRUE;
 		}
 		i++;
 	}
