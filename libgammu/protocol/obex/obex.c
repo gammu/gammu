@@ -23,8 +23,8 @@ static GSM_Error OBEX_WriteMessage (GSM_StateMachine *s, unsigned const char *Ms
 
 	OBEXAddBlock(buffer, &length, type, MsgBuffer, MsgLength);
 
-	GSM_DumpMessageLevel2(s, buffer+3, MsgLength, type);
-	GSM_DumpMessageLevel3(s, buffer+3, MsgLength, type);
+	GSM_DumpMessageText(s, buffer+3, MsgLength, type);
+	GSM_DumpMessageBinary(s, buffer+3, MsgLength, type);
 
 	/* Send it out... */
 	sent = s->Device.Functions->WriteDevice(s,buffer,length);

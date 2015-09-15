@@ -18,7 +18,7 @@ static GSM_Error GNAPBUS_WriteMessage (GSM_StateMachine *s, unsigned const char 
 	int		sent=0,length=0,i=0;
 	unsigned char	checksum=0;
 
-	GSM_DumpMessageLevel3(s, MsgBuffer, MsgLength, MsgType);
+	GSM_DumpMessageBinary(s, MsgBuffer, MsgLength, MsgType);
 
 	buffer = (unsigned char *)malloc(MsgLength + 10);
 
@@ -43,8 +43,8 @@ static GSM_Error GNAPBUS_WriteMessage (GSM_StateMachine *s, unsigned const char 
 	for (i = 1; i < length; i+=2) checksum ^= buffer[i];
 	buffer[length++] 	= checksum;
 
-/* 	GSM_DumpMessageLevel2(s, buffer, length, MsgType); */
-	GSM_DumpMessageLevel2(s, MsgBuffer, MsgLength, MsgType);
+/* 	GSM_DumpMessageText(s, buffer, length, MsgType); */
+	GSM_DumpMessageText(s, MsgBuffer, MsgLength, MsgType);
 
 	/* Sending to phone */
 	sent = s->Device.Functions->WriteDevice(s,buffer,length);
@@ -101,7 +101,7 @@ static GSM_Error GNAPBUS_StateMachine(GSM_StateMachine *s, unsigned char rx_char
 
 		if (d->Msg.Count != ((d->Msg.Length+3)& ~1)) return ERR_NONE;
 
-/* 	GSM_DumpMessageLevel2(s, d->Msg.Buffer, d->Msg.Count, d->Msg.Type); */
+/* 	GSM_DumpMessageText(s, d->Msg.Buffer, d->Msg.Count, d->Msg.Type); */
 /* printf("\n%02x %02x\n",d->Msg.CheckSum[0],d->Msg.CheckSum[1]); */
 		/* Checksum is incorrect */
 		if (d->Msg.CheckSum[0] != d->Msg.CheckSum[1]) {

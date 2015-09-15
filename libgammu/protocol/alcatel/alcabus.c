@@ -73,8 +73,8 @@ static GSM_Error ALCABUS_WriteMessage (GSM_StateMachine *s, unsigned const char 
 	buffer[size] = checksum;
 	size ++;
 
-	GSM_DumpMessageLevel2(s, buffer, size, type);
-	GSM_DumpMessageLevel3(s, buffer, size, type);
+	GSM_DumpMessageText(s, buffer, size, type);
+	GSM_DumpMessageBinary(s, buffer, size, type);
 
 	while (sent != size ) {
 		i = s->Device.Functions->WriteDevice(s,buffer + sent, size - sent);

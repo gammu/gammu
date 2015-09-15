@@ -16,8 +16,8 @@ static GSM_Error AT_WriteMessage (GSM_StateMachine *s, unsigned const char *buff
 {
 	int sent=0, write_data=0, i=0;
 
-	GSM_DumpMessageLevel2(s, buffer, length, type);
-	GSM_DumpMessageLevel3(s, buffer, length, type);
+	GSM_DumpMessageText(s, buffer, length, type);
+	GSM_DumpMessageBinary(s, buffer, length, type);
 
 	if (s->Protocol.Data.AT.FastWrite) {
 		while (sent != length) {

@@ -85,7 +85,7 @@ static GSM_Error FBUS2_WriteMessage (GSM_StateMachine 	*s,
 	GSM_Protocol_FBUS2Data	*d = &s->Protocol.Data.FBUS2;
 	GSM_Error 		error;
 
-	GSM_DumpMessageLevel3(s, MsgBuffer, MsgLength, MsgType);
+	GSM_DumpMessageBinary(s, MsgBuffer, MsgLength, MsgType);
 
 	nom  = (MsgLength + FBUS2_MAX_TRANSMIT_LENGTH - 1) / FBUS2_MAX_TRANSMIT_LENGTH;
 	togo = MsgLength;
@@ -108,7 +108,7 @@ static GSM_Error FBUS2_WriteMessage (GSM_StateMachine 	*s,
 		buffer[thislength + 1]	= seqnum;
 		togo = togo - thislength;
 
-		GSM_DumpMessageLevel2(s, buffer, thislength, MsgType);
+		GSM_DumpMessageText(s, buffer, thislength, MsgType);
 
 		error = FBUS2_WriteFrame(s, buffer, thislength + 2, MsgType);
 
@@ -323,7 +323,7 @@ static void FBUS2_WriteDLR3(GSM_StateMachine *s, const char *command, int length
 	int			w = 0,recvlen=0;
 	gboolean		wassomething = FALSE;
 
-	GSM_DumpMessageLevel2(s, command, length, 0xff);
+	GSM_DumpMessageText(s, command, length, 0xff);
 	s->Device.Functions->WriteDevice(s, command, length);
 
 	for (w = 0; w < timeout; w++) {
@@ -332,7 +332,7 @@ static void FBUS2_WriteDLR3(GSM_StateMachine *s, const char *command, int length
 		if (wassomething && recvlen == 0) {
 			return;
 		} else if (recvlen > 0) {
-			GSM_DumpMessageLevel2Recv(s, buff, recvlen, 0xff);
+			GSM_DumpMessageTextRecv(s, buff, recvlen, 0xff);
 			wassomething = TRUE;
 		}
 		usleep(50000);

@@ -21,7 +21,7 @@ static GSM_Error MBUS2_WriteMessage (GSM_StateMachine 	*s,
 	GSM_Protocol_MBUS2Data 		*d = &s->Protocol.Data.MBUS2;
 	int 				i=0, sent=0, length=0;
 
-	GSM_DumpMessageLevel3(s, MsgBuffer, MsgLength, MsgType);
+	GSM_DumpMessageBinary(s, MsgBuffer, MsgLength, MsgType);
 
 	buffer = (unsigned char *)malloc(MsgLength + 8);
 
@@ -56,7 +56,7 @@ static GSM_Error MBUS2_WriteMessage (GSM_StateMachine 	*s,
 	buffer[length++] = d->MsgSequenceNumber;
 	buffer[length++] = checksum;
 
-	GSM_DumpMessageLevel2(s, buffer+6, MsgLength, MsgType);
+	GSM_DumpMessageText(s, buffer+6, MsgLength, MsgType);
 
 	/* Sending to phone */
 	sent=s->Device.Functions->WriteDevice(s,buffer,length);

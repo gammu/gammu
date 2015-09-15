@@ -33,7 +33,7 @@ static GSM_Error PHONET_WriteMessage (GSM_StateMachine 	*s,
 	int			sent=0,length=0;
 	GSM_Protocol_PHONETData *d = &s->Protocol.Data.PHONET;
 
-	GSM_DumpMessageLevel3(s, MsgBuffer, MsgLength, MsgType);
+	GSM_DumpMessageBinary(s, MsgBuffer, MsgLength, MsgType);
 	length=MsgLength + 6;
 
 	buffer = (unsigned char *)malloc(length);
@@ -50,7 +50,7 @@ static GSM_Error PHONET_WriteMessage (GSM_StateMachine 	*s,
 
 	memcpy(buffer + 6, MsgBuffer, MsgLength);
 
-	GSM_DumpMessageLevel2(s, buffer + 6, MsgLength, MsgType);
+	GSM_DumpMessageText(s, buffer + 6, MsgLength, MsgType);
 
 	/* Sending to phone */
 	sent = s->Device.Functions->WriteDevice(s, buffer, length);

@@ -66,8 +66,8 @@ static GSM_Error S60_WriteMessage (GSM_StateMachine *s, unsigned const char *Msg
 	length += bufpos + 1;
 
 	/* Debugging */
-	GSM_DumpMessageLevel3(s, buffer, length, MsgType);
-	GSM_DumpMessageLevel2(s, buffer, length, MsgType);
+	GSM_DumpMessageBinary(s, buffer, length, MsgType);
+	GSM_DumpMessageText(s, buffer, length, MsgType);
 
 	sent = s->Device.Functions->WriteDevice(s, buffer, length);
 	free(buffer);

@@ -1074,8 +1074,8 @@ GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 	GSM_Reply_Function	*Reply;
 	int			reply;
 
-	GSM_DumpMessageLevel2Recv(s, msg->Buffer, msg->Length, msg->Type);
-	GSM_DumpMessageLevel3Recv(s, msg->Buffer, msg->Length, msg->Type);
+	GSM_DumpMessageTextRecv(s, msg->Buffer, msg->Length, msg->Type);
+	GSM_DumpMessageBinaryRecv(s, msg->Buffer, msg->Length, msg->Type);
 
 	Reply = s->User.UserReplyFunctions;
 	if (Reply != NULL) {
@@ -1485,7 +1485,7 @@ fail:
 	return error;
 }
 
-void GSM_DumpMessageLevel2_Text(GSM_StateMachine *s, unsigned const char *message, int messagesize, int type, const char *text)
+void GSM_DumpMessageText_Custom(GSM_StateMachine *s, unsigned const char *message, int messagesize, int type, const char *text)
 {
 	GSM_Debug_Info *curdi;
 
@@ -1502,17 +1502,17 @@ void GSM_DumpMessageLevel2_Text(GSM_StateMachine *s, unsigned const char *messag
 	}
 }
 
-void GSM_DumpMessageLevel2(GSM_StateMachine *s, unsigned const char *message, int messagesize, int type)
+void GSM_DumpMessageText(GSM_StateMachine *s, unsigned const char *message, int messagesize, int type)
 {
-	GSM_DumpMessageLevel2_Text(s, message, messagesize, type, "SENDING frame");
+	GSM_DumpMessageText_Custom(s, message, messagesize, type, "SENDING frame");
 }
 
-void GSM_DumpMessageLevel2Recv(GSM_StateMachine *s, unsigned const char *message, int messagesize, int type)
+void GSM_DumpMessageTextRecv(GSM_StateMachine *s, unsigned const char *message, int messagesize, int type)
 {
-	GSM_DumpMessageLevel2_Text(s, message, messagesize, type, "RECEIVED frame");
+	GSM_DumpMessageText_Custom(s, message, messagesize, type, "RECEIVED frame");
 }
 
-void GSM_DumpMessageLevel3_Custom(GSM_StateMachine *s, unsigned const char *message, int messagesize, int type, int direction)
+void GSM_DumpMessageBinary_Custom(GSM_StateMachine *s, unsigned const char *message, int messagesize, int type, int direction)
 {
 	int i=0;
 	GSM_Debug_Info *curdi;
@@ -1530,14 +1530,14 @@ void GSM_DumpMessageLevel3_Custom(GSM_StateMachine *s, unsigned const char *mess
 		}
 	}
 }
-void GSM_DumpMessageLevel3(GSM_StateMachine *s, unsigned const char *message, int messagesize, int type)
+void GSM_DumpMessageBinary(GSM_StateMachine *s, unsigned const char *message, int messagesize, int type)
 {
-	GSM_DumpMessageLevel3_Custom(s, message, messagesize, type, 0x01);
+	GSM_DumpMessageBinary_Custom(s, message, messagesize, type, 0x01);
 }
 
-void GSM_DumpMessageLevel3Recv(GSM_StateMachine *s, unsigned const char *message, int messagesize, int type)
+void GSM_DumpMessageBinaryRecv(GSM_StateMachine *s, unsigned const char *message, int messagesize, int type)
 {
-	GSM_DumpMessageLevel3_Custom(s, message, messagesize, type, 0x02);
+	GSM_DumpMessageBinary_Custom(s, message, messagesize, type, 0x02);
 }
 
 void GSM_OSErrorInfo(GSM_StateMachine *s, const char *description)
