@@ -1495,7 +1495,7 @@ void GSM_DumpMessageLevel2_Text(GSM_StateMachine *s, unsigned const char *messag
 			curdi->dl == DL_TEXTALL ||
 			curdi->dl == DL_TEXTDATE ||
 			curdi->dl == DL_TEXTALLDATE) {
-		smprintf(s, "%s", text);
+		smprintf(s, "%s ", text);
 		smprintf(s, "type 0x%02X/length 0x%02X/%i",
 				type, messagesize, messagesize);
 		DumpMessage(curdi, message, messagesize);
