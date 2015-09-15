@@ -21,11 +21,11 @@ ChangeLog
     
 2015???? - 1.36.6
 
-
 [-] * Fixed installation of bash-completion script.
 [-] * Fixed timezone manipulation in SMSD.
 [-] * Documentation improvements.
 [-] * Fixed licensing of helper/win32-dirent.*.
+[*] * Increased default speed for AT connection to 115200.
     
 20150826 - 1.36.5
 

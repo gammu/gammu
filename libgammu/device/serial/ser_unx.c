@@ -56,7 +56,9 @@ typedef struct {
 	int	value;
 } baud_record;
 
-#ifdef B19200
+#ifdef B115200
+#  define SERIAL_DEFAULT_SPEED 115200
+#elif defined(B19200)
 #  define SERIAL_DEFAULT_SPEED 19200
 #else
 #  define SERIAL_DEFAULT_SPEED 9600
