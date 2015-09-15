@@ -1079,21 +1079,21 @@ GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 
 	Reply = s->User.UserReplyFunctions;
 	if (Reply != NULL) {
-		error = CheckReplyFunctions(s,Reply,&reply);
+		error = CheckReplyFunctions(s, Reply, &reply);
 	}
 
 	if (error == ERR_UNKNOWNFRAME) {
 		Reply = s->Phone.Functions->ReplyFunctions;
-		error = CheckReplyFunctions(s,Reply,&reply);
+		error = CheckReplyFunctions(s, Reply, &reply);
 	}
 
-	if (error==ERR_NONE) {
-		error=Reply[reply].Function(msg, s);
-		if (Reply[reply].requestID==Phone->RequestID) {
+	if (error == ERR_NONE) {
+		error = Reply[reply].Function(msg, s);
+		if (Reply[reply].requestID == Phone->RequestID) {
 			if (error == ERR_NEEDANOTHERANSWER) {
 				error = ERR_NONE;
 			} else {
-				Phone->RequestID=ID_None;
+				Phone->RequestID = ID_None;
 			}
 		}
 	}
