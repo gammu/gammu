@@ -6081,8 +6081,12 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReplyIgnore, 	"^BOOT:"		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore, 	"^MODE:"		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore, 	"^DSFLOWRPT:"		,0x00,0x00,ID_IncomingFrame	 },
+{ATGEN_GenericReplyIgnore, 	"^CSNR:"		,0x00,0x00,ID_IncomingFrame	 },
+{ATGEN_GenericReplyIgnore, 	"^HCSQ:"		,0x00,0x00,ID_IncomingFrame	 },
+{ATGEN_GenericReplyIgnore, 	"^SRVST:"		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore, 	"+ZUSIMR:"		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore, 	"+ZEND"			,0x00,0x00,ID_IncomingFrame	 },
+{ATGEN_GenericReplyIgnore, 	"+CDSI:"		,0x00,0x00,ID_IncomingFrame	 },
 
 /* Sony Ericsson screenshot */
 {SONYERICSSON_Reply_Screenshot,	"AT*ZISI=?\r",		0x00,0x00,ID_Screenshot		},
