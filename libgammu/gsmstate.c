@@ -978,7 +978,9 @@ GSM_Error GSM_WaitFor (GSM_StateMachine *s, unsigned const char *buffer,
 	if (s->CurrentConfig->StartInfo) {
 		if (Phone->StartInfoCounter > 0) {
 			Phone->StartInfoCounter--;
-			if (Phone->StartInfoCounter == 0) s->Phone.Functions->ShowStartInfo(s,FALSE);
+			if (Phone->StartInfoCounter == 0) {
+				s->Phone.Functions->ShowStartInfo(s,FALSE);
+			}
 		}
 	}
 
