@@ -944,9 +944,6 @@ GSM_Error GSM_WaitForOnce(GSM_StateMachine *s, unsigned const char *buffer,
 		if (GSM_ReadDevice(s, TRUE) > 0) {
 			i = 0;
 		} else {
-			if (s->Abort) {
-				return ERR_ABORTED;
-			}
 			usleep(10000);
 		}
 
@@ -954,6 +951,10 @@ GSM_Error GSM_WaitForOnce(GSM_StateMachine *s, unsigned const char *buffer,
 			free(sentmsg.Buffer);
 			sentmsg.Buffer = NULL;
 			Phone->SentMsg = NULL;
+		}
+
+		if (s->Abort) {
+			return ERR_ABORTED;
 		}
 
 		/* Request completed */
