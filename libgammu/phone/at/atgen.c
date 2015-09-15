@@ -5911,7 +5911,6 @@ GSM_Error ATGEN_ReplyCheckProt(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 }
 
 GSM_Reply_Function ATGENReplyFunctions[] = {
-{ATGEN_GenericReply,		"AT\r"			,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReply,		"ATE1" 	 		,0x00,0x00,ID_EnableEcho	 },
 {ATGEN_GenericReply,		"ERROR" 	 	,0x00,0x00,ID_EnableEcho	 },
 {ATGEN_GenericReply,		"OK"		 	,0x00,0x00,ID_EnableEcho	 },
@@ -6125,8 +6124,11 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ALCATEL_ProtocolVersionReply,	"AT+CPROT=?" 	 	,0x00,0x00,ID_AlcatelProtocol	 },
 {ATGEN_GenericReply,		"AT+CPROT=16" 	 	,0x00,0x00,ID_AlcatelConnect	 },
 #endif
-{ATGEN_GenericReply,		"OK"			,0x00,0x00,ID_Initialise	 },
 {ATGEN_GenericReply,		"AT+CFUN="	,0x00,0x00,ID_SetPower	 },
+{ATGEN_GenericReply,		"AT\r"			,0x00,0x00,ID_Initialise	 },
+{ATGEN_GenericReply,		"AT\n"			,0x00,0x00,ID_Initialise	 },
+{ATGEN_GenericReply,		"OK"			,0x00,0x00,ID_Initialise	 },
+{ATGEN_GenericReply,		"AT\r"			,0x00,0x00,ID_IncomingFrame	 },
 
 {NULL,				"\x00"			,0x00,0x00,ID_None		 }
 };
