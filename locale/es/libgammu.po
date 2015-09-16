@@ -11,15 +11,16 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2015-03-03 10:40+0100\n"
-"PO-Revision-Date: 2012-03-28 20:58+0200\n"
-"Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
-"Language-Team: Español\n"
+"PO-Revision-Date: 2015-09-16 23:30+0200\n"
+"Last-Translator: Ronnie Simon <ronniesimonf@gmail.com>\n"
+"Language-Team: Spanish "
+"<https://hosted.weblate.org/projects/gammu/libgammu/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Weblate 0.8\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.4-dev\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
@@ -357,9 +358,8 @@ msgid "Entry is read only."
 msgstr "La entrada es sólo de lectura."
 
 #: libgammu/gsmcomon.c:156
-#, fuzzy
 msgid "Network error."
-msgstr "Sin error."
+msgstr "Error de red."
 
 #: libgammu/gsmcomon.c:189
 msgid "Unknown error description."
