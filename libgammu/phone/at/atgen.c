@@ -2225,7 +2225,6 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 		/* We don't care about error here */
 		error = ATGEN_WaitForAutoLen(s, "AT+SYNCML=?\r", 0x00, 20, ID_SetOBEX);
 		error = ERR_NONE;
-		smprintf(s, "Checking for SYNCML/OBEX support\n");
 		/* We don't care about error here */
 		error = ATGEN_WaitForAutoLen(s, "AT$TSSPCSW=?\r", 0x00, 20, ID_SetOBEX);
 		error = ERR_NONE;
