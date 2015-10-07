@@ -6,7 +6,7 @@
 %define so_ver 7
 
 # Change if using tar.gz sources
-%define extension   xz
+%define extension   bz2
 
 Name:           gammu
 Version:        1.36.6
@@ -92,7 +92,7 @@ Source0:        http://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.%{exte
 %endif
 %endif
 %endif
-BuildRequires:  cmake
+BuildRequires:  cmake >= 2.8
 BuildRequires:  gcc
 BuildRequires:  gettext
 BuildRequires:  pkgconfig
@@ -277,7 +277,10 @@ cmake ../ \
     -DINSTALL_LIB_DIR=%{_lib} \
     -DINSTALL_LIBDATA_DIR=%{_lib} \
     -DINSTALL_LSB_INIT=ON \
-    -DINSTALL_UDEV_RULES=ON
+    -DINSTALL_UDEV_RULES=ON \
+    -DSYSTEMD_FOUND=ON \
+    -DWITH_SYSTEMD=ON \
+    -DSYSTEMD_SERVICES_INSTALL_DIR=%{_libexecdir}/systemd/system
 make %{?_smp_mflags} VERBOSE=1
 
 %check
@@ -286,13 +289,16 @@ ctest -V
 cd ..
 
 %install
-%if 0%{?suse_version} == 0
-mkdir %{buildroot}
-%endif
 make -C build install DESTDIR=%{buildroot}
 
 # Install config file
 install -pm 0644 docs/config/smsdrc %{buildroot}%{_sysconfdir}/gammu-smsdrc
+
+# Move init script to correct location
+if [ /etc/init.d != %{_initddir} ] ; then
+    install -d -m 0755 %{buildroot}%{_initddir}
+    mv %{buildroot}/etc/init.d/gammu-smsd %{buildroot}%{_initddir}
+fi
 
 %find_lang %{name}
 %find_lang libgammu
@@ -381,14 +387,13 @@ fi
 %doc %{_mandir}/man7/gammu-smsd-run.7*
 %doc %{_mandir}/man7/gammu-smsd-sql.7*
 %doc %{_mandir}/man7/gammu-smsd-tables.7*
-%if 0%{?suse_version} > 1310 || 0%{?fedora_version} >= 15 || 0%{?centos_version} >= 700 || 0%{?rhel_version} >= 700 || 0%{?scientificlinux_version} >= 600
 %{_libexecdir}/systemd/system/gammu-smsd.service
-%endif
 
 %files -n libGammu%{so_ver} -f libgammu.lang
 %defattr(-,root,root,-)
 %{_libdir}/libGammu.so.%{so_ver}*
 %{_datadir}/gammu/
+/etc/udev/rules.d/69-gammu-acl.rules
 
 %files -n libgsmsd%{so_ver}
 %defattr(-,root,root,-)
