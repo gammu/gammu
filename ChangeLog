@@ -19,7 +19,7 @@ the issue.
 ChangeLog
 =========
     
-2015???? - 1.36.6
+20151012 - 1.36.6
 
 [-] * Fixed installation of bash-completion script.
 [-] * Fixed timezone manipulation in SMSD.
