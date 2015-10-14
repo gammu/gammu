@@ -102,7 +102,7 @@ const char *SMSDODBC_GetString(GSM_SMSDConfig * Config, SQL_result *res, unsigne
 	/*
 	 * This hack seems to be needed to avoid type breakage on Win64, don't ask me why.
 	 *
-	 * Might be actually bug in MinGW compiler, but when using SQLLEN type bellow
+	 * Might be actually bug in MinGW compiler, but when using SQLLEN type below
 	 * anything fails (it does not match to SQL_NULL_DATA and realloc always fails).
 	 */
 	size = sqllen;

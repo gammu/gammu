@@ -259,7 +259,7 @@ ____________
 
 .. option:: savesms TYPE [type parameters] [type options] [-folder id] [-unread] [-read] [-unsent] [-sent] [-sender number] [-smsname name] [-smscset number] [-smscnumber number] [-reply] [-maxsms num]
 
-   Saves SMS to phone, see bellow for ``TYPE`` options.
+   Saves SMS to phone, see below for ``TYPE`` options.
 
     .. option:: -smscset number
 
@@ -1854,7 +1854,7 @@ Sending messages
 
 .. note::
 
-    All messages bellow are sent to number 123456, replace it with proper destination.
+    All messages below are sent to number 123456, replace it with proper destination.
 
 Send text message up to standard 160 chars:
 
