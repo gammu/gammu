@@ -535,7 +535,7 @@ GSM_Error MOTOROLA_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note,
 	GSM_Error error;
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	if (start) {
-		/* One bellow actual first position */
+		/* One below actual first position */
 		Note->Location = 0;
 		error = MOTOROLA_GetCalendarStatus(s, &Priv->CalendarStatus);
 		if (error != ERR_NONE) {

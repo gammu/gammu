@@ -1094,7 +1094,7 @@ GSM_Error SAMSUNG_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, 
 	}
 
 	if (start) {
-		/* One bellow actual first position */
+		/* One below actual first position */
 		Note->Location = 0;
 		error = SAMSUNG_GetCalendarStatus(s, &Priv->CalendarStatus);
 		if (error != ERR_NONE) {

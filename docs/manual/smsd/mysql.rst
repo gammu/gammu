@@ -18,7 +18,7 @@ Configuration
 -------------
 
 Before running :ref:`gammu-smsd` you need to create necessary tables in the
-database, which is described bellow.
+database, which is described below.
 
 The configuration file then can look like:
 

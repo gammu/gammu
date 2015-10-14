@@ -509,7 +509,7 @@ read_config:
 
 	/*
 	 * Wait while we should be suspended.
-	 * Later we fall back to reconfigure bellow.
+	 * Later we fall back to reconfigure below.
 	 */
 	while (standby) {
 		sleep(1);

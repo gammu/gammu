@@ -231,7 +231,7 @@ And finally install it:
     sudo make install
 
 You can configure build parameters either by command line (see
-parameters bellow), or using TUI - ccmake.
+parameters below), or using TUI - ccmake.
 
 Useful cmake parameters:
 
@@ -323,7 +323,7 @@ After downloading and installing them into your system:
     different than source one, eg. append subdirectory build.
   * Select compiler you want to use in Build for select.
 
-* In list bellow, you can tweak paths to some optional libraries and
+* In list below, you can tweak paths to some optional libraries and
   project configuration.
 * Then just press Configure button, which will do the hard job. After
   this, just click OK button to generate Visual Studio project.

@@ -187,7 +187,7 @@ GSM_Error OBEXGEN_Connect(GSM_StateMachine *s, OBEX_Service service)
 	unsigned char 	req[200] = {
 		0x10,			/* Version 1.0 			*/
 		0x00,			/* no flags 			*/
-		0x04,0x00};		/* max size of packet (changed bellow for m-obex) */
+		0x04,0x00};		/* max size of packet (changed below for m-obex) */
 
 	/* Are we requsted for initial service? */
 	if (service == 0) {
@@ -1826,7 +1826,7 @@ GSM_Error OBEXGEN_GetMemoryIndex(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 	if (error != ERR_NONE) return error;
 
 	/* Calculate path */
-	path = (char *)malloc(20 + 22); /* Length of string bellow + length of number */
+	path = (char *)malloc(20 + 22); /* Length of string below + length of number */
 	if (path == NULL) {
 		return ERR_MOREMEMORY;
 	}
@@ -1870,7 +1870,7 @@ GSM_Error OBEXGEN_GetMemoryLUID(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 	if (Priv->PbLUID[Entry->Location] == NULL) return ERR_EMPTY;
 
 	/* Calculate path */
-	path = (char *)malloc(strlen(Priv->PbLUID[Entry->Location]) + 22); /* Length of string bellow */
+	path = (char *)malloc(strlen(Priv->PbLUID[Entry->Location]) + 22); /* Length of string below */
 	if (path == NULL) {
 		return ERR_MOREMEMORY;
 	}
@@ -2070,7 +2070,7 @@ GSM_Error OBEXGEN_SetMemoryLUID(GSM_StateMachine *s, GSM_MemoryEntry *Entry, con
 	}
 
 	/* Calculate path */
-	path = (char *)malloc(strlen(Priv->PbLUID[Entry->Location]) + 22); /* Length of string bellow */
+	path = (char *)malloc(strlen(Priv->PbLUID[Entry->Location]) + 22); /* Length of string below */
 	if (path == NULL) {
 		return ERR_MOREMEMORY;
 	}
@@ -2102,7 +2102,7 @@ GSM_Error OBEXGEN_SetMemoryIndex(GSM_StateMachine *s, GSM_MemoryEntry *Entry, co
 	}
 
 	/* Calculate path */
-	path = (char *)malloc(20 + 22); /* Length of string bellow + length of number */
+	path = (char *)malloc(20 + 22); /* Length of string below + length of number */
 	if (path == NULL) {
 		return ERR_MOREMEMORY;
 	}
@@ -2305,7 +2305,7 @@ GSM_Error OBEXGEN_GetCalendarIndex(GSM_StateMachine *s, GSM_CalendarEntry *Entry
 	if (error != ERR_NONE) return error;
 
 	/* Calculate path */
-	path = (char *)malloc(20 + 22); /* Length of string bellow + length of number */
+	path = (char *)malloc(20 + 22); /* Length of string below + length of number */
 	if (path == NULL) {
 		return ERR_MOREMEMORY;
 	}
@@ -2348,7 +2348,7 @@ GSM_Error OBEXGEN_GetCalendarLUID(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 	if (Priv->CalLUID[Entry->Location] == NULL) return ERR_EMPTY;
 
 	/* Calculate path */
-	path = (char *)malloc(strlen(Priv->CalLUID[Entry->Location]) + 22); /* Length of string bellow */
+	path = (char *)malloc(strlen(Priv->CalLUID[Entry->Location]) + 22); /* Length of string below */
 	if (path == NULL) {
 		return ERR_MOREMEMORY;
 	}
@@ -2542,7 +2542,7 @@ GSM_Error OBEXGEN_SetCalendarLUID(GSM_StateMachine *s, GSM_CalendarEntry *Entry,
 	}
 
 	/* Calculate path */
-	path = (char *)malloc(strlen(Priv->CalLUID[Entry->Location]) + 22); /* Length of string bellow */
+	path = (char *)malloc(strlen(Priv->CalLUID[Entry->Location]) + 22); /* Length of string below */
 	if (path == NULL) {
 		return ERR_MOREMEMORY;
 	}
@@ -2574,7 +2574,7 @@ GSM_Error OBEXGEN_SetCalendarIndex(GSM_StateMachine *s, GSM_CalendarEntry *Entry
 	}
 
 	/* Calculate path */
-	path = (char *)malloc(20 + 22); /* Length of string bellow + length of number */
+	path = (char *)malloc(20 + 22); /* Length of string below + length of number */
 	if (path == NULL) {
 		return ERR_MOREMEMORY;
 	}
@@ -2724,7 +2724,7 @@ GSM_Error OBEXGEN_GetTodoIndex(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 	GSM_CalendarEntry	Cal;
 
 	/* Todoculate path */
-	path = (char *)malloc(20 + 22); /* Length of string bellow + length of number */
+	path = (char *)malloc(20 + 22); /* Length of string below + length of number */
 	if (path == NULL) {
 		return ERR_MOREMEMORY;
 	}
@@ -2767,7 +2767,7 @@ GSM_Error OBEXGEN_GetTodoLUID(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 	if (Priv->TodoLUID[Entry->Location] == NULL) return ERR_EMPTY;
 
 	/* Todoculate path */
-	path = (char *)malloc(strlen(Priv->TodoLUID[Entry->Location]) + 22); /* Length of string bellow */
+	path = (char *)malloc(strlen(Priv->TodoLUID[Entry->Location]) + 22); /* Length of string below */
 	if (path == NULL) {
 		return ERR_MOREMEMORY;
 	}
@@ -2964,7 +2964,7 @@ GSM_Error OBEXGEN_SetTodoLUID(GSM_StateMachine *s, GSM_ToDoEntry *Entry, const c
 	}
 
 	/* Calculate path */
-	path = (char *)malloc(strlen(Priv->TodoLUID[Entry->Location]) + 22); /* Length of string bellow */
+	path = (char *)malloc(strlen(Priv->TodoLUID[Entry->Location]) + 22); /* Length of string below */
 	if (path == NULL) {
 		return ERR_MOREMEMORY;
 	}
@@ -2996,7 +2996,7 @@ GSM_Error OBEXGEN_SetTodoIndex(GSM_StateMachine *s, GSM_ToDoEntry *Entry, const 
 	}
 
 	/* Todoculate path */
-	path = (char *)malloc(20 + 22); /* Length of string bellow + length of number */
+	path = (char *)malloc(20 + 22); /* Length of string below + length of number */
 	if (path == NULL) {
 		return ERR_MOREMEMORY;
 	}
@@ -3164,7 +3164,7 @@ GSM_Error OBEXGEN_GetNoteIndex(GSM_StateMachine *s, GSM_NoteEntry *Entry)
 	if (error != ERR_NONE) return error;
 
 	/* Calculate path */
-	path = (char *)malloc(20 + 22); /* Length of string bellow + length of number */
+	path = (char *)malloc(20 + 22); /* Length of string below + length of number */
 	if (path == NULL) {
 		return ERR_MOREMEMORY;
 	}
@@ -3206,7 +3206,7 @@ GSM_Error OBEXGEN_GetNoteLUID(GSM_StateMachine *s, GSM_NoteEntry *Entry)
 	if (Priv->NoteLUID[Entry->Location] == NULL) return ERR_EMPTY;
 
 	/* Calculate path */
-	path = (char *)malloc(strlen(Priv->NoteLUID[Entry->Location]) + 22); /* Length of string bellow */
+	path = (char *)malloc(strlen(Priv->NoteLUID[Entry->Location]) + 22); /* Length of string below */
 	if (path == NULL) {
 		return ERR_MOREMEMORY;
 	}
@@ -3384,7 +3384,7 @@ GSM_Error OBEXGEN_SetNoteLUID(GSM_StateMachine *s, GSM_NoteEntry *Entry, const c
 	}
 
 	/* Calculate path */
-	path = (char *)malloc(strlen(Priv->NoteLUID[Entry->Location]) + 22); /* Length of string bellow */
+	path = (char *)malloc(strlen(Priv->NoteLUID[Entry->Location]) + 22); /* Length of string below */
 	if (path == NULL) {
 		return ERR_MOREMEMORY;
 	}
@@ -3416,7 +3416,7 @@ GSM_Error OBEXGEN_SetNoteIndex(GSM_StateMachine *s, GSM_NoteEntry *Entry, const 
 	}
 
 	/* Calculate path */
-	path = (char *)malloc(20 + 22); /* Length of string bellow + length of number */
+	path = (char *)malloc(20 + 22); /* Length of string below + length of number */
 	if (path == NULL) {
 		return ERR_MOREMEMORY;
 	}
