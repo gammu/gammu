@@ -3131,7 +3131,7 @@ GSM_Error ATGEN_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo)
 	smprintf(s, "Enable full network info\n");
 	error = ATGEN_WaitForAutoLen(s, "AT+CREG=2\r", 0x00, 40, ID_ConfigureNetworkInfo);
 
-	if (error == ERR_UNKNONW) {
+	if (error == ERR_UNKNOWN) {
 		/* Try basic info at least */
 		error = ATGEN_WaitForAutoLen(s, "AT+CREG=1\r", 0x00, 40, ID_ConfigureNetworkInfo);
 	}
