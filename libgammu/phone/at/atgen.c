@@ -3131,14 +3131,21 @@ GSM_Error ATGEN_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo)
 	smprintf(s, "Enable full network info\n");
 	error = ATGEN_WaitForAutoLen(s, "AT+CREG=2\r", 0x00, 40, ID_ConfigureNetworkInfo);
 
-	if ((error != ERR_NONE) &&
-	    (s->Phone.Data.Priv.ATGEN.Manufacturer != AT_Siemens) &&
-	    (s->Phone.Data.Priv.ATGEN.Manufacturer != AT_Ericsson)) {
+	if (error == ERR_UNKNONW) {
+		/* Try basic info at least */
+		error = ATGEN_WaitForAutoLen(s, "AT+CREG=1\r", 0x00, 40, ID_ConfigureNetworkInfo);
+	}
+
+	if (error != ERR_NONE) {
 		return error;
 	}
 
 	smprintf(s, "Enable full packet network info\n");
 	error = ATGEN_WaitForAutoLen(s, "AT+CGREG=2\r", 0x00, 40, ID_ConfigureNetworkInfo);
+	if (error == ERR_UNKNONW) {
+		/* Try basic info at least */
+		error = ATGEN_WaitForAutoLen(s, "AT+CGREG=1\r", 0x00, 40, ID_ConfigureNetworkInfo);
+	}
 	if (error != ERR_NONE) {
 		return error;
 	}
@@ -5969,6 +5976,8 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_ReplyGetNetworkLAC_CID,	"AT+CREG?"		,0x00,0x00,ID_GetNetworkInfo	 },
 {ATGEN_ReplyGetPacketNetworkLAC_CID,	"AT+CGREG?"		,0x00,0x00,ID_GetNetworkInfo	 },
 {ATGEN_ReplyGetGPRSState,	"AT+CGATT?"		,0x00,0x00,ID_GetGPRSState	 },
+{ATGEN_GenericReply,		"AT+CREG=1"		,0x00,0x00,ID_ConfigureNetworkInfo	 },
+{ATGEN_GenericReply,		"AT+CGREG=1"		,0x00,0x00,ID_ConfigureNetworkInfo	 },
 {ATGEN_GenericReply,		"AT+CREG=2"		,0x00,0x00,ID_ConfigureNetworkInfo	 },
 {ATGEN_GenericReply,		"AT+CGREG=2"		,0x00,0x00,ID_ConfigureNetworkInfo	 },
 {ATGEN_GenericReply,		"AT+COPS="		,0x00,0x00,ID_ConfigureNetworkInfo	 },

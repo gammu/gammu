@@ -20,7 +20,9 @@ ChangeLog
 =========
     
 2015???? - 1.36.7
-    
+
+[-] * Support devices which do not report full network status.
+
 20151012 - 1.36.6
 
 [-] * Fixed installation of bash-completion script.
