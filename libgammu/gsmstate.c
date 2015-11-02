@@ -1294,9 +1294,9 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 	char		*Temp = NULL;
 
 #if defined(WIN32) || defined(DJGPP)
-        static const char *DefaultPort		= "com2:";
+        static const char *DefaultDevice		= "com2:";
 #else
-        static const char *DefaultPort		= "/dev/ttyUSB0";
+        static const char *DefaultDevice		= "/dev/ttyUSB0";
 #endif
         static const char *DefaultModel		= "";
         static const char *DefaultConnection		= "at";
@@ -1343,7 +1343,7 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 	if (!cfg->Device) {
 		cfg->Device 	 = INI_GetValue(cfg_info, section, "port", 		FALSE);
 		if (!cfg->Device) {
-			cfg->Device		 	 = strdup(DefaultPort);
+			cfg->Device		 	 = strdup(DefaultDevice);
 		} else {
 			cfg->Device			 = strdup(cfg->Device);
 		}
@@ -1469,7 +1469,7 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 fail:
 	/* Special case, this config needs to be somehow valid */
 	if (num == 0) {
-		cfg->Device		 	 = strdup(DefaultPort);
+		cfg->Device		 	 = strdup(DefaultDevice);
 		cfg->Connection	 		 = strdup(DefaultConnection);
 		cfg->SyncTime		 	 = DefaultSynchronizeTime;
 		cfg->DebugFile		 	 = strdup(DefaultDebugFile);
