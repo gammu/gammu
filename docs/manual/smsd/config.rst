@@ -632,7 +632,7 @@ SMSD configuration file for FILES backend could look like:
     PIN = 1234
     LogFile = syslog
     InboxPath = /var/spool/sms/inbox/
-    OutboPpath = /var/spool/sms/outbox/
+    OutboxPath = /var/spool/sms/outbox/
     SentSMSPath = /var/spool/sms/sent/
     ErrorSMSPath = /var/spool/sms/error/
 
