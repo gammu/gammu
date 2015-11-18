@@ -6163,6 +6163,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 #endif
 {ATGEN_GenericReply,		"AT+CFUN="	,0x00,0x00,ID_SetPower	 },
 {ATGEN_GenericReply,		"AT^CURC="	,0x00,0x00,ID_SetIncomingCall	 },
+{ATGEN_GenericReply,		"AT^PORTSEL="	,0x00,0x00,ID_SetIncomingCall	 },
 {ATGEN_GenericReply,		"AT\r"			,0x00,0x00,ID_Initialise	 },
 {ATGEN_GenericReply,		"AT\n"			,0x00,0x00,ID_Initialise	 },
 {ATGEN_GenericReply,		"OK"			,0x00,0x00,ID_Initialise	 },
