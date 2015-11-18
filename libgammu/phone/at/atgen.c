@@ -2047,6 +2047,22 @@ GSM_Error ATGEN_GetFirmware(GSM_StateMachine *s)
 	return error;
 }
 
+GSM_Error ATGEN_PostConnect(GSM_StateMachine *s)
+{
+	GSM_Phone_ATGENData     *Priv = &s->Phone.Data.Priv.ATGEN;
+	GSM_Error error;
+
+	if (Priv->Manufacturer == AT_Huawei) {
+		/* Disable Huawei specific unsolicited codes */
+		error = ATGEN_WaitForAutoLen(s, "AT^CURC=0\r", 0x00, 10, ID_SetIncomingCall);
+		if (error != ERR_NONE) {
+			return error;
+		}
+	}
+
+	return ERR_NONE;
+}
+
 GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 {
 	GSM_Phone_ATGENData     *Priv = &s->Phone.Data.Priv.ATGEN;
@@ -6134,6 +6150,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReply,		"AT+CPROT=16" 	 	,0x00,0x00,ID_AlcatelConnect	 },
 #endif
 {ATGEN_GenericReply,		"AT+CFUN="	,0x00,0x00,ID_SetPower	 },
+{ATGEN_GenericReply,		"AT^CURC="	,0x00,0x00,ID_SetIncomingCall	 },
 {ATGEN_GenericReply,		"AT\r"			,0x00,0x00,ID_Initialise	 },
 {ATGEN_GenericReply,		"AT\n"			,0x00,0x00,ID_Initialise	 },
 {ATGEN_GenericReply,		"OK"			,0x00,0x00,ID_Initialise	 },
@@ -6283,7 +6300,7 @@ GSM_Phone_Functions ATGENPhone = {
 	NOTSUPPORTED,			/* 	SetGPRSAccessPoint	*/
 	SONYERICSSON_GetScreenshot,
 	ATGEN_SetPower,
-	NOTSUPPORTED			/* 	PostConnect	*/
+	ATGEN_PostConnect
 };
 
 #endif

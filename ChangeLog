@@ -22,6 +22,7 @@ ChangeLog
 2015???? - 1.36.7
 
 [-] * Support devices which do not report full network status.
+[-] * Disable Huawei unsolicited messages on startup.
 
 20151012 - 1.36.6
 
