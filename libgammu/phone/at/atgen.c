@@ -2058,6 +2058,12 @@ GSM_Error ATGEN_PostConnect(GSM_StateMachine *s)
 		if (error != ERR_NONE) {
 			return error;
 		}
+
+		/* Power on the modem */
+		error = GSM_WaitForAutoLen(s, "AT+CFUN=1\r", 0, 40, ID_SetPower);
+		if (error != ERR_NONE) {
+			return error;
+		}
 	}
 
 	return ERR_NONE;
