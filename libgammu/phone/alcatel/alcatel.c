@@ -4200,7 +4200,8 @@ GSM_Phone_Functions ALCATELPhone = {
 	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
 	NOTSUPPORTED,			/* 	SetGPRSAccessPoint	*/
 	NOTSUPPORTED,			/* 	GetScreenshot		*/
-	NOTSUPPORTED			/* 	SetPower		*/
+	NOTSUPPORTED,			/* 	SetPower		*/
+	NOTSUPPORTED			/* 	PostConnect	*/
 };
 
 #endif

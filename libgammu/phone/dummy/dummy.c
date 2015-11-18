@@ -2073,7 +2073,8 @@ GSM_Phone_Functions DUMMYPhone = {
 	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
 	NOTSUPPORTED,			/* 	SetGPRSAccessPoint	*/
 	NOTSUPPORTED,			/* 	GetScreenshot		*/
-	NOTSUPPORTED			/* 	SetPower		*/
+	NOTSUPPORTED,			/* 	SetPower		*/
+	NOTSUPPORTED			/* 	PostConnect	*/
 };
 
 /*@}*/

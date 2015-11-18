@@ -1677,7 +1677,8 @@ GSM_Phone_Functions ATOBEXPhone = {
 	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
 	NOTSUPPORTED,			/* 	SetGPRSAccessPoint	*/
 	SONYERICSSON_GetScreenshot,			/* 	GetScreenshot		*/
-	ATOBEX_SetPower
+	ATOBEX_SetPower,
+	NOTSUPPORTED			/* 	PostConnect	*/
 };
 
 #endif

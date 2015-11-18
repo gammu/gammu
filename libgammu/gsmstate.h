@@ -1292,6 +1292,10 @@ typedef struct {
 	 * Sets phone power state
 	 */
 	GSM_Error (*SetPower)	(GSM_StateMachine *s, gboolean on);
+	/**
+	 * Post connect hook
+	 */
+	GSM_Error (*PostConnect)	(GSM_StateMachine *s);
 } GSM_Phone_Functions;
 
 	extern GSM_Phone_Functions NAUTOPhone;

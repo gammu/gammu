@@ -6282,7 +6282,8 @@ GSM_Phone_Functions ATGENPhone = {
 	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
 	NOTSUPPORTED,			/* 	SetGPRSAccessPoint	*/
 	SONYERICSSON_GetScreenshot,
-	ATGEN_SetPower
+	ATGEN_SetPower,
+	NOTSUPPORTED			/* 	PostConnect	*/
 };
 
 #endif

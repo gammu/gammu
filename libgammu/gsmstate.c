@@ -846,6 +846,12 @@ autodetect:
 			return error;
 		}
 
+		error=s->Phone.Functions->PostConnect(s);
+		if (error != ERR_NONE && error != ERR_NOTSUPPORTED) {
+			GSM_LogError(s, "Init:Phone->PostConnect" , error);
+			return error;
+		}
+
 		smprintf(s,"[Connected]\n");
 		return ERR_NONE;
 	}
