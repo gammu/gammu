@@ -2064,6 +2064,12 @@ GSM_Error ATGEN_PostConnect(GSM_StateMachine *s)
 		if (error != ERR_NONE) {
 			return error;
 		}
+
+		/* Tell device that this is modem port */
+		error = ATGEN_WaitForAutoLen(s, "AT^PORTSEL=1\r", 0x00, 10, ID_SetIncomingCall);
+		if (error != ERR_NONE) {
+			return error;
+		}
 	}
 
 	return ERR_NONE;
