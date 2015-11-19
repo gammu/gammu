@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.37.1\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2016-02-04 10:40+0100\n"
-"PO-Revision-Date: 2015-11-19 09:26+0000\n"
+"PO-Revision-Date: 2016-07-10 18:02+0000\n"
 "Last-Translator: armagetron <armagetron@live.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/gammu/gammu/de/>\n"
 "Language: de\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.5-dev\n"
+"X-Generator: Weblate 2.8-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -1806,14 +1806,13 @@ msgstr ""
 "INFO: Es ist eine neuere Testversion von Gammu (%s anstatt %s) verfügbar!\n"
 
 #: gammu/gammu.c:332
-#, fuzzy
 #| msgid ""
 #| "Copyright (C) 2003 - 2012 Michal Cihar <michal@cihar.com> and other "
 #| "authors."
 msgid ""
 "Copyright (C) 2003 - 2015 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
-"Copyright (C) 2003 - 2012 Michal Čihař <michal@cihar.com> und andere Autoren."
+"Copyright (C) 2003 - 2015 Michal Čihař <michal@cihar.com> und andere Autoren."
 
 #: gammu/gammu.c:370
 msgid "standard input"
