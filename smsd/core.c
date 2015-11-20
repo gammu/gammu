@@ -1631,24 +1631,19 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config)
 		return ERR_NONE;
 	}
 
-	if (Config->SMSID[0] != 0 && strcmp(Config->prevSMSID, Config->SMSID) == 0) {
-		SMSD_Log(DEBUG_NOTICE, Config, "Same message as previous one: %s", Config->SMSID);
-		Config->retries++;
-		if (Config->retries > Config->maxretries) {
-			Config->retries = 0;
-			strcpy(Config->prevSMSID, "");
+	if (Config->SMSID[0] != 0 && (Config->retries > Config->maxretries)) {
+		SMSD_Log(DEBUG_NOTICE, Config, "Max liczba prob wysylki %s", Config->SMSID);
+
 			SMSD_Log(DEBUG_INFO, Config, "Moved to errorbox: %s", Config->SMSID);
 			for (i=0;i<sms.Number;i++) {
 				Config->Status->Failed++;
-				Config->Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_ERROR, -1);
+				Config->Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i + 1, SMSD_SEND_SENDING_ERROR, Config->TPMR);
 			}
 			Config->Service->MoveSMS(&sms,Config, Config->SMSID, TRUE,FALSE);
 			return ERR_UNKNOWN;
-		}
 	} else {
 		SMSD_Log(DEBUG_NOTICE, Config, "New message to send: %s", Config->SMSID);
-		Config->retries = 0;
-		strcpy(Config->prevSMSID, Config->SMSID);
+		Config->retries++;
 	}
 
 	for (i = 0; i < sms.Number; i++) {
@@ -1749,13 +1744,15 @@ failure_unsent:
 		SMSD_RunOn(Config->RunOnFailure, NULL, Config, Config->SMSID);
 	}
 	Config->Status->Failed++;
-	Config->Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i + 1, SMSD_SEND_SENDING_ERROR, Config->TPMR);
-	Config->Service->MoveSMS(&sms,Config, Config->SMSID, TRUE, FALSE);
+
+    Config->Service->UpdateRetries(Config, Config->SMSID);
+	
+       sleep(60);
 	return ERR_UNKNOWN;
 failure_sent:
-	if (Config->Service->MoveSMS(&sms,Config, Config->SMSID, FALSE, TRUE) != ERR_NONE) {
-		Config->Service->MoveSMS(&sms,Config, Config->SMSID, TRUE, FALSE);
-	}
+
+	Config->Service->UpdateRetries(Config, Config->SMSID);
+	
 	return ERR_UNKNOWN;
 }
 
