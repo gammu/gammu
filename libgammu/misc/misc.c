@@ -18,6 +18,8 @@
 #  define WIN32_LEAN_AND_MEAN
 #  include <windows.h>
 #  include <locale.h>
+#  define gmtime_r(x, y) gmtime_s(y, x)
+#  define localtime_r(x, y) localtime_s(y, x)
 #endif
 #ifdef HAVE_SYS_UTSNAME_H
 #  include <sys/utsname.h>

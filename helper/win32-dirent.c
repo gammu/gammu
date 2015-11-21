@@ -24,9 +24,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <windows.h>
-#include <dirent.h>
+//#include <dirent.h>
 
-#include "w32lib.h"
+//#include "w32lib.h"
+#include "win32-dirent.h"
 
 
 
