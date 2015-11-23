@@ -32,7 +32,7 @@ DIR *
 opendir ( const char *name )
 {
   DIR *dir;
-  
+
   dir = calloc (1, sizeof *dir + strlen (name));
   if (!dir)
     return NULL;
@@ -40,7 +40,7 @@ opendir ( const char *name )
   return dir;
 }
 
-int 
+int
 closedir (DIR *dir)
 {
   FindClose( (HANDLE)dir->dd_handle );
@@ -54,12 +54,12 @@ readdir( DIR *dir )
   WIN32_FIND_DATA fInfo;
   struct dirent *xdirent;
   int ret;
-  
+
   if ( !dir->dd_handle )
     {
       char *dirname;
-      
-      if (*dir->dd_name) 
+
+      if (*dir->dd_name)
         {
           size_t n = strlen (dir->dd_name);
           dirname = malloc (n + 4 + 1);
@@ -79,14 +79,14 @@ readdir( DIR *dir )
         ret = 0;
       else
         ret = 1;
-    } 
+    }
   else if ( dir->dd_handle != -1l )
     {
         ret = FindNextFile ((HANDLE)dir->dd_handle, &fInfo);
     }
   else
     ret = 0;
-  if ( !ret ) 
+  if ( !ret )
     return NULL;
 
   xdirent = calloc ( 1, sizeof *xdirent);
