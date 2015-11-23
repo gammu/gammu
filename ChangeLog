@@ -23,6 +23,8 @@ ChangeLog
 
 [-] * Support devices which do not report full network status.
 [-] * Disable Huawei unsolicited messages on startup.
+[-] * Various improvements for Huawei modems.
+[-] * Fixed compilation on Windows.
 
 20151012 - 1.36.6
 
