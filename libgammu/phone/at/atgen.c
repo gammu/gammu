@@ -1624,7 +1624,7 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 	GSM_Error error;
 	unsigned char *pos = NULL;
 	int code = 0;
-	int gsm7 = 0;
+	int dcs = 0;
 	char hex_encoded[2 * (GSM_MAX_USSD_LENGTH + 1)] = {0};
 	char packed[GSM_MAX_USSD_LENGTH + 1] = {0};
 	char decoded[GSM_MAX_USSD_LENGTH + 1] = {0};
@@ -1685,22 +1685,22 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 		ussd.Text[0] = 0;
 		ussd.Text[1] = 0;
 
-		if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_ENCODED_USSD)) {
-			error = ATGEN_ParseReply(s, pos,
-						"+CUSD: @i, @r, @i @0",
-						&code,
-						hex_encoded, sizeof(hex_encoded),
-						&gsm7);
+		error = ATGEN_ParseReply(s, pos,
+					"+CUSD: @i, @r, @i @0",
+					&code,
+					hex_encoded, sizeof(hex_encoded),
+					&dcs);
 
+		if (error == ERR_NONE || GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_ENCODED_USSD)) {
 			if (error != ERR_NONE) {
-				gsm7 = 0;
+				dcs = 0;
 				ATGEN_ParseReply(s, pos,
 						"+CUSD: @i, @r @0",
 						&code,
 						hex_encoded, sizeof(hex_encoded));
 			}
 
-			if (gsm7 == 15) {
+			if (dcs == 15) {
 				DecodeHexBin(packed, hex_encoded, strlen(hex_encoded));
 				GSM_UnpackEightBitsToSeven(0, strlen(hex_encoded), sizeof(decoded), packed, decoded);
 			} else {
