@@ -222,14 +222,22 @@ int DecodeWithUnicodeAlphabet(wchar_t src, unsigned char *dest)
 
 void DecodeUnicode (const unsigned char *src, char *dest)
 {
- 	int 		i=0,o=0;
- 	wchar_t 	wc;
+	int		i=0,o=0;
+	wchar_t		value, second;
 
- 	while (src[(2*i)+1]!=0x00 || src[2*i]!=0x00) {
- 		wc = src[(2*i)+1] | (src[2*i] << 8);
-		o += DecodeWithUnicodeAlphabet(wc, dest + o);
- 		i++;
- 	}
+	while (src[(2*i)+1]!=0x00 || src[2*i]!=0x00) {
+		value = src[i * 2] * 256 + src[i * 2 + 1];
+		/* Decode UTF-16 */
+		if (value >= 0xD800 && value <= 0xDBFF) {
+			second = src[(i + 1) * 2] * 256 + src[(i + 1) * 2 + 1];
+			if (second >= 0xDC00 && second <= 0xDFFF) {
+				i++;
+				value = ((value - 0xD800) << 10) + (second - 0xDC00) + 0x010000;
+			}
+		}
+		o += DecodeWithUnicodeAlphabet(value, dest + o);
+		i++;
+	}
 	dest[o]=0;
 }
 
