@@ -14,6 +14,14 @@
 
 extern GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message *msg, GSM_StateMachine * s);
 
+void IncomingUSSD(GSM_StateMachine *sm UNUSED, GSM_USSDMessage *ussd, void *user_data UNUSED)
+{
+        printf("Status: %d\n", ussd->Status);
+        printf("Response: %s\n", DecodeUnicodeConsole(ussd->Text));
+}
+
+
+
 int main(int argc, char **argv)
 {
 	GSM_Debug_Info *debug_info;
@@ -53,6 +61,7 @@ int main(int argc, char **argv)
 	fclose(f);
 
 	/* Configure state machine */
+	GSM_InitLocales(NULL);
 	debug_info = GSM_GetGlobalDebug();
 	GSM_SetDebugFileDescriptor(stderr, FALSE, debug_info);
 	GSM_SetDebugLevel("textall", debug_info);
@@ -70,7 +79,8 @@ int main(int argc, char **argv)
 	Priv->ReplyState = AT_Reply_OK;
 	Priv->SMSMode = SMS_AT_PDU;
 	Priv->Charset = AT_CHARSET_GSM;
-	s->User.IncomingUSSD = NULL;
+	s->User.IncomingUSSD = IncomingUSSD;
+	s->User.IncomingUSSDUserData = NULL;
 	s->Phone.Data.EnableIncomingUSSD = TRUE;
 
 	/* Init message */
@@ -89,7 +99,7 @@ int main(int argc, char **argv)
 	/* Free state machine */
 	GSM_FreeStateMachine(s);
 
-	gammu_test_result(error, "ATGEN_ReplyGetCNMIMode");
+	gammu_test_result(error, "ATGEN_ReplyGetUSSD");
 
 	return 0;
 }
