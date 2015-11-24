@@ -120,6 +120,9 @@ int bluetooth_checkservicename(GSM_StateMachine *s, const char *name)
 		if (strstr(name, "SerialPort1") != NULL) return 3;
 		if (strstr(name, "SerialPort") != NULL) return 2;
 
+		/* MyPhoneExplorer client on Android */
+		if (strstr(name, "MyPhoneExplorer") != NULL) return 3;
+
 		if (strstr(name, "COM1") != NULL) return 3;
 		if (strstr(name, "COM") != NULL) return 1;
 	}
