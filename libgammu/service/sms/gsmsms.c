@@ -261,7 +261,8 @@ void GSM_DecodeUDHHeader(GSM_Debug_Info *di, GSM_UDHHeader *UDH)
 GSM_Coding_Type GSM_GetMessageCoding(GSM_Debug_Info *di, const char TPDCS) {
 
 	/* GSM 03.40 section 9.2.3.10 (TP-Data-Coding-Scheme) and GSM 03.38 section 4 */
-	if ((TPDCS & 0xC0) == 0) {
+	if ((TPDCS & 0xC0) == 0 || (TPDCS & 0xC0) == 0x40) {
+		/* 0x40 is marked for automatic deletion, we ignore that bit */
 		/* bits 7..4 set to 00xx */
 		if ((TPDCS & 0xC) == 0xC) {
 			smfprintf(di, "WARNING: reserved alphabet value in TPDCS\n");
