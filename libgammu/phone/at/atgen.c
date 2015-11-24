@@ -4122,9 +4122,6 @@ GSM_Error ATGEN_PrivGetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, int 
 	error = ATGEN_GetManufacturer(s);
 	if (error != ERR_NONE) return error;
 
-	error = ATGEN_SetPBKMemory(s, entry->MemoryType);
-	if (error != ERR_NONE) return error;
-
 	/* For reading we prefer unicode */
 	error = ATGEN_SetCharset(s, AT_PREF_CHARSET_UNICODE);
 	if (error != ERR_NONE) return error;
@@ -4145,11 +4142,17 @@ GSM_Error ATGEN_PrivGetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, int 
 			goto read_memory;
 		}
 		if (Priv->PBK_SPBR == AT_AVAILABLE) {
+			error = ATGEN_SetPBKMemory(s, entry->MemoryType);
+			if (error != ERR_NONE) return error;
+
 			/* FirstMemoryEntry is not applied here, it is always 1 */
 			len = sprintf(req, "AT+SPBR=%i\r", entry->Location);
 			goto read_memory;
 		}
 		if (Priv->PBK_MPBR == AT_AVAILABLE) {
+			error = ATGEN_SetPBKMemory(s, entry->MemoryType);
+			if (error != ERR_NONE) return error;
+
 			if (Priv->MotorolaFirstMemoryEntry == -1) {
 				ATGEN_CheckMPBR(s);
 			}
@@ -4161,6 +4164,9 @@ GSM_Error ATGEN_PrivGetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, int 
 			goto read_memory;
 		}
 	}
+
+	error = ATGEN_SetPBKMemory(s, entry->MemoryType);
+	if (error != ERR_NONE) return error;
 
 	if (Priv->FirstMemoryEntry == -1) {
 		error = ATGEN_GetMemoryInfo(s, NULL, AT_First);

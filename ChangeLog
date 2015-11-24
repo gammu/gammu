@@ -25,6 +25,7 @@ ChangeLog
 [-] * Disable Huawei unsolicited messages on startup.
 [-] * Various improvements for Huawei modems.
 [-] * Fixed compilation on Windows.
+[-] * Fixed regression with Siemens AX75.
 
 20151012 - 1.36.6
 
