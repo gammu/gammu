@@ -1625,6 +1625,8 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 	unsigned char *pos = NULL;
 	int code = 0;
 	int dcs = 0;
+	int offset = 0;
+	GSM_Coding_Type coding;
 	char hex_encoded[2 * (GSM_MAX_USSD_LENGTH + 1)] = {0};
 	char packed[GSM_MAX_USSD_LENGTH + 1] = {0};
 	char decoded[GSM_MAX_USSD_LENGTH + 1] = {0};
@@ -1700,13 +1702,44 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 						hex_encoded, sizeof(hex_encoded));
 			}
 
-			if (dcs == 15) {
+			if ((dcs & 0xc0) == 0) {
+				if ((dcs & 0x30) != 0x10) {
+					/* GSM-7 */
+					coding = SMS_Coding_Default_No_Compression;
+				} else {
+					if ((dcs & 0xf) == 0) {
+						/* GSM-7 */
+						coding = SMS_Coding_Default_No_Compression;
+					} else if ((dcs & 0xf) == 1) {
+						offset = 2;
+						coding = SMS_Coding_Unicode_No_Compression;
+					} else {
+						smprintf(s, "WARNING: unknown DCS: 0x%02x\n", dcs);
+						coding = SMS_Coding_Default_No_Compression;
+					}
+				}
+			} else {
+				/* Fallback to SMS coding */
+				coding = GSM_GetMessageCoding(&(s->di), dcs);
+			}
+
+			smprintf(s, "coding %d -> %d\n", dcs, coding);
+
+			if (coding == SMS_Coding_Default_No_Compression) {
 				DecodeHexBin(packed, hex_encoded, strlen(hex_encoded));
 				GSM_UnpackEightBitsToSeven(0, strlen(hex_encoded), sizeof(decoded), packed, decoded);
-			} else {
+				DecodeDefault(ussd.Text, decoded, strlen(decoded), TRUE, NULL);
+
+			} else if (coding == SMS_Coding_Unicode_No_Compression) {
+				DecodeHexUnicode(ussd.Text, hex_encoded + offset, strlen(hex_encoded));
+			} else if (coding == SMS_Coding_8bit) {
 				DecodeHexBin(decoded, hex_encoded, strlen(hex_encoded));
+				GSM_UnpackEightBitsToSeven(0, strlen(hex_encoded), sizeof(decoded), packed, decoded);
+				DecodeDefault(ussd.Text, decoded, strlen(decoded), TRUE, NULL);
+				smprintf(s, "WARNING: 8-bit encoding!\n");
+			} else {
+				smprintf(s, "WARNING: unknown encoding!\n");
 			}
-			DecodeDefault(ussd.Text, decoded, strlen(decoded), TRUE, NULL);
 		} else {
 			ATGEN_ParseReply(s, pos,
 					"+CUSD: @i, @s @0",

@@ -26,6 +26,7 @@ ChangeLog
 [-] * Various improvements for Huawei modems.
 [-] * Fixed compilation on Windows.
 [-] * Fixed regression with Siemens AX75.
+[-] * Improved decoding of USSD responses.
 
 20151012 - 1.36.6
 
