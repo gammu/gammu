@@ -85,7 +85,6 @@ GSM_Error GNAPGEN_Install(GSM_StateMachine *s, const char *ExtraPath, gboolean M
 	}
 
 	error = PHONE_UploadFile(gsm, &INIFile);
-	free(AppletFile.Buffer);
 	if (error != ERR_NONE) {
 		return error;
 	}
