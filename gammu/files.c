@@ -79,7 +79,7 @@ void GetFileSystem(int argc, char *argv[])
 	GSM_File Files;
 	int j;
 	long usedphone = 0, usedcard = 0;
-	char FolderName[256], IDUTF[200];
+	char FolderName[2*GSM_MAX_FILENAME_ID_LENGTH], IDUTF[200];
 
 	GSM_Init(TRUE);
 
