@@ -803,6 +803,7 @@ GSM_SMSDService SMSDFiles = {
 	SMSDFiles_MoveSMS,
 	SMSDFiles_CreateOutboxSMS,
 	SMSDFiles_AddSentSMSInfo,
+	NOTIMPLEMENTED,		/* UpdateRetries        */
 	NOTIMPLEMENTED,		/* RefreshSendStatus    */
 	NOTIMPLEMENTED,		/* RefreshPhoneStatus   */
 	SMSDFiles_ReadConfiguration

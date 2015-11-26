@@ -16,6 +16,7 @@ GSM_SMSDService SMSDNull = {
 	NONEFUNCTION,		/* MoveSMS              */
 	NONEFUNCTION,		/* CreateOutboxSMS      */
 	NONEFUNCTION,		/* AddSentSMSInfo       */
+	NOTIMPLEMENTED,		/* UpdateRetries        */
 	NOTIMPLEMENTED,		/* RefreshSendStatus    */
 	NOTIMPLEMENTED,		/* RefreshPhoneStatus   */
 	NONEFUNCTION		/* ReadConfiguration    */
