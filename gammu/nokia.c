@@ -539,6 +539,8 @@ void NokiaAddFile(int argc, char *argv[])
 	int Size, Size2;
 	int nextlong, j;
 
+	buffer[0] = 0;
+
 	while (Folder[i].parameter[0] != 0) {
 		if (strcasecmp(argv[2],Folder[i].parameter) == 0) {
 			Found = TRUE;
