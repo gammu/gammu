@@ -754,6 +754,32 @@ static GSM_Error SMSDSQL_RefreshSendStatus(GSM_SMSDConfig * Config, char *ID)
 	return ERR_NONE;
 }
 
+
+
+static GSM_Error SMSDSQL_UpdateRetries(GSM_SMSDConfig * Config, char *ID)
+{
+	SQL_result res;
+	struct GSM_SMSDdbobj *db = Config->db;
+	SQL_Var vars[3] = {
+		{SQL_TYPE_STRING, {ID}},
+		{SQL_TYPE_INT, {NULL}},
+		{SQL_TYPE_NONE, {NULL}}};
+	vars[1].v.i = Config->retries;
+
+	if (SMSDSQL_NamedQuery(Config, Config->SMSDSQL_queries[SQL_QUERY_UPDATE_RETRIES], NULL, vars, &res) != SQL_OK) {
+		SMSD_Log(DEBUG_INFO, Config, "Error writing to database (%s)", __FUNCTION__);
+		return ERR_UNKNOWN;
+	}
+
+	if (db->AffectedRows(Config, &res) == 0) {
+		db->FreeResult(Config, &res);
+		return ERR_UNKNOWN;
+	}
+
+	db->FreeResult(Config, &res);
+	return ERR_NONE;
+}
+
 /* Find one multi SMS to sending and return it (or return ERR_EMPTY)
  * There is also set ID for SMS
  */
@@ -911,6 +937,7 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 			Config->relativevalidity = db->GetNumber(Config, &res, 8);
 
 			Config->currdeliveryreport = db->GetBool(Config, &res, 9);
+			Config->retries = db->GetNumber(Config, &res, 11);
 
 			/* Is this a multipart message? */
 			if (!db->GetBool(Config, &res, 7)) {
@@ -1306,6 +1333,14 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 			" OR ", ESCAPE_FIELD("SendingTimeOut"), " IS NULL)", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
+	
+	if (SMSDSQL_option(Config, SQL_QUERY_UPDATE_RETRIES, "update_retries",
+		"UPDATE outbox SET ",
+			ESCAPE_FIELD("SendingTimeOut"), " = ", SMSDSQL_NowPlus(Config, 600),
+			", ",ESCAPE_FIELD("retries"), " = %2"
+			" WHERE ", ESCAPE_FIELD("ID"), " = %1", NULL) != ERR_NONE) {
+		return ERR_UNKNOWN;
+	}
 
 	if (SMSDSQL_option(Config, SQL_QUERY_FIND_OUTBOX_SMS_ID, "find_outbox_sms_id",
 		"SELECT ", SMSDSQL_TopClause(Config, "%1"),
@@ -1336,6 +1371,7 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 			", ", ESCAPE_FIELD("RelativeValidity"),
 			", ", ESCAPE_FIELD("DeliveryReport"),
 			", ", ESCAPE_FIELD("CreatorID"),
+			", ", ESCAPE_FIELD("retries"),
 			" FROM outbox WHERE ",
 			ESCAPE_FIELD("ID"), "=%1", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
@@ -1483,6 +1519,7 @@ GSM_SMSDService SMSDSQL = {
 	SMSDSQL_CreateOutboxSMS,
 	SMSDSQL_AddSentSMSInfo,
 	SMSDSQL_RefreshSendStatus,
+	SMSDSQL_UpdateRetries,
 	SMSDSQL_RefreshPhoneStatus,
 	SMSDSQL_ReadConfiguration
 };
