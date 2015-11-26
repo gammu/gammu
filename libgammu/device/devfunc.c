@@ -274,6 +274,7 @@ GSM_Error lock_device(GSM_StateMachine *s, const char* port, char **lock_name)
 			buf[n] = 0;
 			sscanf(buf, "%d", &pid);
 		}
+		close(fd);
 
 
 		if (pid > 0 && kill((pid_t)pid, 0) < 0 && errno == ESRCH) {
