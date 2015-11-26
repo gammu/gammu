@@ -259,8 +259,12 @@ void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned char *IDF
 			printf("%s\n", _("  Only part handled!"));
 			break;
 		}
-		if (error == ERR_EMPTY) break;
-		if (error == ERR_FILENOTEXIST) return;
+		if (error == ERR_EMPTY) {
+			break;
+		}
+		if (error == ERR_FILENOTEXIST) {
+			return;
+		}
 	    	Print_Error(error);
 
 		if (!Files.Folder) {
@@ -300,10 +304,10 @@ void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned char *IDF
 
 		Start = FALSE;
 	}
-	if (First!=NULL) {
+	if (First != NULL) {
 		/* sorting songs names */
-		Entry=First;
-		while (Entry->Next!=NULL) {
+		Entry = First;
+		while (Entry->Next != NULL) {
 			if (strcmp(Entry->NameUP,Entry->Next->NameUP)>0) {
 				Pointer=Entry->Next->Name;
 				Entry->Next->Name = Entry->Name;
@@ -313,10 +317,10 @@ void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned char *IDF
 				Entry->Next->NameUP = Entry->NameUP;
 				Entry->NameUP = Pointer;
 
-				Entry=First;
+				Entry = First;
 				continue;
 			}
-			Entry=Entry->Next;
+			Entry = Entry->Next;
 		}
 		/* we checking, if file already exist.if yes, we look for another... */
 		i 		= 0;
@@ -369,12 +373,12 @@ void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned char *IDF
 		Files2.Buffer = (unsigned char *)realloc(Files2.Buffer,10);
 		sprintf(Files2.Buffer,"#EXTM3U%c%c",13,10);
 		Files2.Used = 9;
-		Entry=First;
-		while (Entry!=NULL) {
-			Files2.Buffer = (unsigned char *)realloc(Files2.Buffer,Files2.Used+strlen(Entry->Name)+2+1);
-			sprintf(Files2.Buffer+Files2.Used,"%s%c%c",Entry->Name,13,10);
-			Files2.Used+=strlen(Entry->Name)+2;
-			Entry=Entry->Next;
+		Entry = First;
+		while (Entry != NULL) {
+			Files2.Buffer = (unsigned char *)realloc(Files2.Buffer, Files2.Used+strlen(Entry->Name) + 2 + 1);
+			sprintf(Files2.Buffer + Files2.Used, "%s%c%c", Entry->Name, 13, 10);
+			Files2.Used += strlen(Entry->Name) + 2;
+			Entry = Entry->Next;
 		}
 		Files2.Used	 -= 2;
 		for (i=0;i<Files2.Used;i++) {
@@ -387,19 +391,21 @@ void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned char *IDF
 
 		/* cleaning buffers */
 		free(Files2.Buffer);
-		Files2.Buffer=NULL;
-		while (Entry!=NULL) {
-			Entry=First;
-			Prev=NULL;
-			while (Entry->Next!=NULL) {
-				Prev=Entry;
-				Entry=Entry->Next;
+		Files2.Buffer = NULL;
+		while (Entry != NULL) {
+			Entry = First;
+			Prev = NULL;
+			while (Entry->Next != NULL) {
+				Prev = Entry;
+				Entry = Entry->Next;
 			}
 			free(Entry->Name);
 			free(Entry->NameUP);
 			free(Entry);
-			Entry=NULL;
-			if (Prev!=NULL) Prev->Next = NULL;
+			Entry = NULL;
+			if (Prev!=NULL) {
+				Prev->Next = NULL;
+			}
 		}
 	}
 
