@@ -243,6 +243,7 @@ static GSM_Error LoadLMBCallerEntry(unsigned char *buffer UNUSED, unsigned char 
 	bitmap.Type		= GSM_CallerGroupLogo;
 	bitmap.DefaultRingtone 	= FALSE;
 	bitmap.RingtoneID		= buffer2[buffer2[1]+2];
+	bitmap.FileSystemRingtone = FALSE;
 
 	EncodeUnicode(bitmap.Text,buffer2+2,buffer2[1]);
 	if (bitmap.Text[0] == 0x00 && bitmap.Text[1] == 0x00) {
