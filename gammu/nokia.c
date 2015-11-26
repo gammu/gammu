@@ -392,20 +392,14 @@ void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned char *IDF
 		/* cleaning buffers */
 		free(Files2.Buffer);
 		Files2.Buffer = NULL;
+
+		Entry = First;
 		while (Entry != NULL) {
-			Entry = First;
-			Prev = NULL;
-			while (Entry->Next != NULL) {
-				Prev = Entry;
-				Entry = Entry->Next;
-			}
-			free(Entry->Name);
-			free(Entry->NameUP);
-			free(Entry);
-			Entry = NULL;
-			if (Prev!=NULL) {
-				Prev->Next = NULL;
-			}
+			Prev = Entry;
+			Entry = Entry->Next;
+			free(Prev->Name);
+			free(Prev->NameUP);
+			free(Prev);
 		}
 	}
 
