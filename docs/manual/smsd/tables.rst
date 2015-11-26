@@ -347,6 +347,12 @@ History of database structure
 
 History of schema versions:
 
+15
+
+    Added ``Retries`` field.
+
+    .. versionchanged:: 1.36.7
+
 14
 
     Added ``NetCode`` and ``NetName`` fields.
