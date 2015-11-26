@@ -3264,6 +3264,7 @@ static GSM_Error ALCATEL_GetAlarm(GSM_StateMachine *s, GSM_Alarm *Alarm)
 	if (!Found) return ERR_EMPTY;
 
 	Note.Location = Priv->CalendarItems[i];
+	Note.Type = 0;
 
 	if ((error = ALCATEL_GetCalendar(s, &Note))!= ERR_NONE) return error;
 
