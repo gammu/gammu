@@ -212,6 +212,9 @@ typedef struct _GSM_User	 	GSM_User;
 #ifdef GSM_ENABLE_BLUETOOTHDEVICE
 #  include "device/bluetoth/bluetoth.h"
 #endif
+#ifndef WIN32
+#  include "device/proxy/proxy.h"
+#endif
 
 #include "debug.h"
 #include "gsmreply.h"
@@ -277,6 +280,12 @@ extern GSM_Device_Functions BlueToothDevice;
  */
 extern GSM_Device_Functions FBUSUSBDevice;
 #endif
+#ifndef WIN32
+/**
+ * Proxy device functions.
+ */
+extern GSM_Device_Functions ProxyDevice;
+#endif
 
 /**
  * Structure containing device specific data and pointer to device functions -
@@ -312,6 +321,12 @@ typedef struct {
 		 * Data for libusb-1.0 backend.
 		 */
 		GSM_Device_USBData		USB;
+#endif
+#ifndef WIN32
+		/**
+		 * Data for shell proxy.
+		 */
+		GSM_Device_ProxyData		Proxy;
 #endif
 	} Data;
 	/**

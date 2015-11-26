@@ -140,6 +140,14 @@ static const GSM_ConnectionInfo GSM_Connections[] = {
 	{"blues60", GCT_BLUES60, FALSE},
 	{"bluerfs60", GCT_BLUES60, FALSE},
 
+	/* proxy */
+	{"proxyobex", GCT_PROXYOBEX, FALSE},
+	{"proxyphonet", GCT_PROXYPHONET, FALSE},
+	{"proxyat", GCT_PROXYAT, FALSE},
+	{"proxygnapbus", GCT_PROXYGNAPBUS, FALSE},
+	{"proxyfbus", GCT_PROXYFBUS2, FALSE},
+	{"proxys60", GCT_PROXYS60, FALSE},
+
 	/* old "serial" irda */
 	{"infrared", GCT_FBUS2IRDA, FALSE},
 	{"fbusirda", GCT_FBUS2IRDA, FALSE},
@@ -307,6 +315,26 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, const char *con
 #ifdef GSM_ENABLE_BLUEOBEX
 	GSM_RegisterConnection(s, GCT_BLUEOBEX,   &BlueToothDevice,&OBEXProtocol);
 #endif
+#ifndef WIN32
+#ifdef GSM_ENABLE_S60
+	GSM_RegisterConnection(s, GCT_PROXYS60,	  &ProxyDevice,&S60Protocol);
+#endif
+#ifdef GSM_ENABLE_GNAPGEN
+	GSM_RegisterConnection(s, GCT_PROXYGNAPBUS,&ProxyDevice,&GNAPBUSProtocol);
+#endif
+#ifdef GSM_ENABLE_FBUS2
+	GSM_RegisterConnection(s, GCT_PROXYFBUS2,  &ProxyDevice,&FBUS2Protocol);
+#endif
+#ifdef GSM_ENABLE_DKU2PHONET
+	GSM_RegisterConnection(s, GCT_PROXYPHONET, &ProxyDevice,&PHONETProtocol);
+#endif
+#ifdef GSM_ENABLE_ATGEN
+	GSM_RegisterConnection(s, GCT_PROXYAT, 	  &ProxyDevice,&ATProtocol);
+#endif
+#ifdef GSM_ENABLE_OBEXGEN
+	GSM_RegisterConnection(s, GCT_PROXYOBEX,   &ProxyDevice,&OBEXProtocol);
+#endif
+#endif
 	if (s->Device.Functions == NULL || s->Protocol.Functions == NULL) {
 		smprintf(s, "Connection %s is know but was disabled on compile time\n", connection);
 		return ERR_DISABLED;
@@ -347,7 +375,7 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 		model = GetModelData(s, NULL, s->Phone.Data.Model, NULL);
 #ifdef GSM_ENABLE_ATGEN
 		/* With ATgen and auto model we can work with unknown models too */
-		if (s->ConnectionType==GCT_AT || s->ConnectionType==GCT_BLUEAT || s->ConnectionType==GCT_IRDAAT || s->ConnectionType==GCT_DKU2AT) {
+		if (s->ConnectionType==GCT_AT || s->ConnectionType==GCT_PROXYAT || s->ConnectionType==GCT_IRDAAT || s->ConnectionType==GCT_DKU2AT) {
 #ifdef GSM_ENABLE_ALCATEL
 			/* If phone provides Alcatel specific functions, enable them */
 			if (model->model[0] != 0 && GSM_IsPhoneFeatureAvailable(model, F_ALCATEL)) {
@@ -371,7 +399,7 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 #endif
 		/* With OBEXgen and auto model we can work with unknown models too */
 #ifdef GSM_ENABLE_OBEXGEN
-		if (s->ConnectionType==GCT_BLUEOBEX || s->ConnectionType==GCT_IRDAOBEX) {
+		if (s->ConnectionType==GCT_BLUEOBEX || s->ConnectionType==GCT_PROXYOBEX || s->ConnectionType==GCT_IRDAOBEX) {
 			smprintf(s,"[Module           - \"%s\"]\n",OBEXGENPhone.models);
 			s->Phone.Functions = &OBEXGENPhone;
 			return ERR_NONE;
@@ -388,14 +416,14 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 
 		/* With GNAPgen and auto model we can work with unknown models too */
 #ifdef GSM_ENABLE_GNAPGEN
-		if (s->ConnectionType == GCT_BLUEGNAPBUS || s->ConnectionType == GCT_IRDAGNAPBUS) {
+		if (s->ConnectionType == GCT_BLUEGNAPBUS || s->ConnectionType == GCT_PROXYGNAPBUS || s->ConnectionType == GCT_IRDAGNAPBUS) {
 			smprintf(s,"[Module           - \"%s\"]\n",GNAPGENPhone.models);
 			s->Phone.Functions = &GNAPGENPhone;
 			return ERR_NONE;
 		}
 #endif
 #ifdef GSM_ENABLE_S60
-		if (s->ConnectionType == GCT_BLUES60) {
+		if (s->ConnectionType == GCT_BLUES60 || s->ConnectionType == GCT_PROXYS60) {
 			smprintf(s,"[Module           - \"%s\"]\n",S60Phone.models);
 			s->Phone.Functions = &S60Phone;
 			return ERR_NONE;
@@ -415,6 +443,8 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 				s->ConnectionType ==  GCT_PHONETBLUE ||
 				s->ConnectionType ==  GCT_IRDAPHONET ||
 				s->ConnectionType ==  GCT_BLUEFBUS2 ||
+				s->ConnectionType ==  GCT_PROXYFBUS2 ||
+				s->ConnectionType ==  GCT_PROXYPHONET ||
 				s->ConnectionType ==  GCT_BLUEPHONET) {
 			/* Try to detect phone type */
 			if (strcmp(model->model, "unknown") == 0 && model->features[0] == 0) {
@@ -459,7 +489,7 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 	s->Phone.Functions = NULL;
 #ifdef GSM_ENABLE_ATGEN
 	/* AT module can have the same models ID to "normal" Nokia modules */
-	if (s->ConnectionType==GCT_AT || s->ConnectionType==GCT_BLUEAT || s->ConnectionType==GCT_IRDAAT || s->ConnectionType==GCT_DKU2AT) {
+	if (s->ConnectionType==GCT_AT || s->ConnectionType==GCT_PROXYAT || s->ConnectionType==GCT_BLUEAT || s->ConnectionType==GCT_IRDAAT || s->ConnectionType==GCT_DKU2AT) {
 		GSM_RegisterModule(s,&ATGENPhone);
 		if (s->Phone.Functions != NULL) return ERR_NONE;
 	}
@@ -595,6 +625,7 @@ GSM_Error GSM_TryGetModel(GSM_StateMachine *s)
 #ifdef GSM_ENABLE_ATGEN
 			case GCT_AT:
 			case GCT_BLUEAT:
+			case GCT_PROXYAT:
 			case GCT_IRDAAT:
 			case GCT_DKU2AT:
 				s->Phone.Functions = &ATGENPhone;
@@ -602,18 +633,21 @@ GSM_Error GSM_TryGetModel(GSM_StateMachine *s)
 #endif
 #ifdef GSM_ENABLE_OBEXGEN
 			case GCT_IRDAOBEX:
+			case GCT_PROXYOBEX:
 			case GCT_BLUEOBEX:
 				s->Phone.Functions = &OBEXGENPhone;
 				break;
 #endif
 #ifdef GSM_ENABLE_GNAPGEN
 			case GCT_BLUEGNAPBUS:
+			case GCT_PROXYGNAPBUS:
 			case GCT_IRDAGNAPBUS:
 				s->Phone.Functions = &GNAPGENPhone;
 				break;
 #endif
 #ifdef GSM_ENABLE_S60
 			case GCT_BLUES60:
+			case GCT_PROXYS60:
 				s->Phone.Functions = &S60Phone;
 				break;
 #endif
@@ -630,7 +664,9 @@ GSM_Error GSM_TryGetModel(GSM_StateMachine *s)
 			case GCT_PHONETBLUE:
 			case GCT_IRDAPHONET:
 			case GCT_BLUEFBUS2:
+			case GCT_PROXYFBUS2:
 			case GCT_BLUEPHONET:
+			case GCT_PROXYPHONET:
 				s->Phone.Functions = &NAUTOPhone;
 				break;
 #endif
@@ -746,8 +782,11 @@ autodetect:
 				s->ConnectionType != GCT_NONE &&
 				s->ConnectionType != GCT_IRDAOBEX &&
 				s->ConnectionType != GCT_BLUEOBEX &&
+				s->ConnectionType != GCT_PROXYOBEX &&
 				s->ConnectionType != GCT_BLUEGNAPBUS &&
+				s->ConnectionType != GCT_PROXYGNAPBUS &&
 				s->ConnectionType != GCT_IRDAGNAPBUS &&
+				s->ConnectionType != GCT_PROXYS60 &&
 				s->ConnectionType != GCT_BLUES60) {
 			error = GSM_TryGetModel(s);
 			/* Fall back to other configuraitons if the device is not existing (or similar error) */

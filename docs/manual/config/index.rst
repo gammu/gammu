@@ -92,6 +92,8 @@ Device connection parameters
 
     ``bluephonet``
         Phonet connection for Nokia phones.
+    ``bluefbus``
+        FBUS connection for Nokia phones.
     ``blueat``
         AT commands connection for most of phones.
     ``blueobex``
@@ -102,6 +104,27 @@ Device connection parameters
         Connection to Series60 applet in S60 phones, see :ref:`s60`.
 
         .. versionadded:: 1.29.90
+
+
+    .. versionadded:: 1.36.7
+
+        Gammu now supports connecting using proxy command.
+
+    You can also proxy the connection using shell command, for example to
+    different host. This can be done using proxy connections:
+
+    ``proxyphonet``
+        Phonet connection for Nokia phones.
+    ``proxyfbus``
+        FBUS connection for Nokia phones.
+    ``proxyat``
+        AT commands connection for most of phones.
+    ``proxyobex``
+        OBEX (IrMC or file transfer) connection for most of phones.
+    ``proxygnapbus``
+        GNapplet based connection for Symbian phones, see :ref:`gnapplet`.
+    ``proxys60``
+        Connection to Series60 applet in S60 phones, see :ref:`s60`.
 
     .. seealso:: :ref:`faq-config`
 
@@ -158,6 +181,11 @@ Device connection parameters
 
     Before using Gammu, your device should be paired with computer or you should
     have set up automatic pairing.
+
+    For **Proxy** connections, you need to specify command which should be
+    executed. It is supposed to pass bidirectional communication from Gammu to
+    the device. This can happen for example over network, for example using
+    ``remserial`` tool.
 
     For **IrDA** connections, this parameters is not used at all.
 
