@@ -1702,6 +1702,7 @@ void DecodeXMLUTF8(unsigned char *dest, const char *src, int len)
 	}
 	if (src == NULL) {
 		*dest = 0;
+		free(tmp);
 		return;
 	}
 
