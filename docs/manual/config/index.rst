@@ -184,8 +184,7 @@ Device connection parameters
 
     For **Proxy** connections, you need to specify command which should be
     executed. It is supposed to pass bidirectional communication from Gammu to
-    the device. This can happen for example over network, for example using
-    ``remserial`` tool.
+    the device. This can happen for example over network.
 
     For **IrDA** connections, this parameters is not used at all.
 
@@ -391,6 +390,21 @@ like following:
     [gammmu2]
     device = /dev/ttyS2
     connection = at
+
+Connecting to remote phone
+++++++++++++++++++++++++++
+
+.. versionadded:: 1.36.7
+
+You can connect using Gammu to phone running on different host. This can be
+achieved using proxy connection, which executes command to forward
+bi-directional communication with the phone.
+
+.. code-block:: ini
+
+    [gammu]
+    device = ssh root@my.router /usr/local/bin/myscript /dev/ttyUSB0
+    connection = proxyat
 
 .. _Fully documented example:
 
