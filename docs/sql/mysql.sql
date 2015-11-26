@@ -88,7 +88,7 @@ CREATE TABLE `outbox` (
   `SendingTimeOut` timestamp NULL default '0000-00-00 00:00:00',
   `DeliveryReport` enum('default','yes','no') default 'default',
   `CreatorID` text NOT NULL,
-  `retries` int(3) default 0,
+  `Retries` int(3) default 0,
   PRIMARY KEY `ID` (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 

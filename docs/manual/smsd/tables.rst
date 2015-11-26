@@ -160,6 +160,9 @@ Fields description:
 ``CreatorID`` (text)
     identification of program created the message
 
+``Retries`` (integer)
+    number of attempted retries when sending this message
+
 .. _outbox_multipart:
 
 outbox_multipart

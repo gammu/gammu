@@ -50,6 +50,7 @@ CREATE TABLE outbox (
   SendingTimeOut NUMERIC NOT NULL DEFAULT (datetime('now')),
   DeliveryReport TEXT DEFAULT 'default',
   CreatorID TEXT NOT NULL,
+  Retries INTEGER DEFAULT '0',
   CHECK (Coding IN 
   ('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression')),
   CHECK (DeliveryReport IN ('default','yes','no'))

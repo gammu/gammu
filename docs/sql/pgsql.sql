@@ -142,6 +142,7 @@ CREATE TABLE outbox (
   "SendingTimeOut" timestamp(0) WITHOUT time zone NOT NULL DEFAULT LOCALTIMESTAMP(0),
   "DeliveryReport" varchar(10) DEFAULT 'default',
   "CreatorID" text NOT NULL,
+  "Retries" integer DEFAULT "0",
   CHECK ("Coding" IN 
   ('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression')),
   CHECK ("DeliveryReport" IN ('default','yes','no'))
