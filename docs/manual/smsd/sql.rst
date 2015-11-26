@@ -408,3 +408,19 @@ are selected for default queries during initialization.
         battery percent
     ``%2``
         signal percent
+
+.. config:option:: update_retries
+
+    Update number of retries for outbox message.
+
+    .. code-block:: sql
+
+        UPDATE outbox SET SendngTimeOut = (NOW() + INTERVAL 600 SECOND) + 0,
+        Retries = %2 WHERE ID = %1
+
+    Query specific parameters:
+
+    ``%1``
+        message ID
+    ``%2``
+        number of retries

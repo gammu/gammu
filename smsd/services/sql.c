@@ -1333,11 +1333,11 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 			" OR ", ESCAPE_FIELD("SendingTimeOut"), " IS NULL)", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
-	
+
 	if (SMSDSQL_option(Config, SQL_QUERY_UPDATE_RETRIES, "update_retries",
 		"UPDATE outbox SET ",
 			ESCAPE_FIELD("SendingTimeOut"), " = ", SMSDSQL_NowPlus(Config, 600),
-			", ",ESCAPE_FIELD("retries"), " = %2"
+			", ",ESCAPE_FIELD("Retries"), " = %2"
 			" WHERE ", ESCAPE_FIELD("ID"), " = %1", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
