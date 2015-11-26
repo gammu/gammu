@@ -1691,6 +1691,7 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(GSM_Debug_Info *di, char *Buffer, size_t *Po
 
 	Calendar->EntriesNum 	= 0;
 	ToDo->EntriesNum 	= 0;
+	ToDo->Location	 	= 0;
 	lBuffer = strlen(Buffer);
 	trigger.Timezone = -999 * 3600;
 

@@ -121,7 +121,7 @@ GSM_Error LoadVCalendarPrivate(const char *FileName, GSM_Backup *backup, GSM_VCa
 				error = ERR_MOREMEMORY;
 				break;
 			}
-			memcpy(backup->ToDo[numToDo],&ToDo,sizeof(GSM_ToDoEntry));
+			memcpy(backup->ToDo[numToDo], &ToDo, sizeof(GSM_ToDoEntry));
 			backup->ToDo[numToDo]->Location = numToDo + 1;
 			numToDo++;
 		}
