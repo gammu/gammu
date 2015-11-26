@@ -176,7 +176,8 @@ General parameters of SMS daemon
 
 .. config:option:: MaxRetries
 
-    How many times will SMSD try to resend message if sending fails.
+    How many times will SMSD try to resend message if sending fails. This 
+    is tracked per message and currently supported only with SQL backends.
 
     Default is 1.
 

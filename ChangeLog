@@ -29,6 +29,7 @@ ChangeLog
 [-] * Improved decoding of USSD responses.
 [-] * Properly decode emojis to console or files backend.
 [+] * Added support for proxying the connection through arbitrary command.
+[+] * SMSD now tracks retries count per message.
 
 20151012 - 1.36.6
 
