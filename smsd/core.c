@@ -1743,7 +1743,7 @@ failure_unsent:
 	}
 	Config->Status->Failed++;
 
-    Config->Service->UpdateRetries(Config, Config->SMSID);
+	Config->Service->UpdateRetries(Config, Config->SMSID);
 
        sleep(60);
 	return ERR_UNKNOWN;
