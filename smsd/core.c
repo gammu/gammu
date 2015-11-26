@@ -1632,9 +1632,7 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config)
 	}
 
 	if (Config->SMSID[0] != 0 && (Config->retries > Config->maxretries)) {
-		SMSD_Log(DEBUG_NOTICE, Config, "Max liczba prob wysylki %s", Config->SMSID);
-
-		SMSD_Log(DEBUG_INFO, Config, "Moved to errorbox: %s", Config->SMSID);
+		SMSD_Log(DEBUG_NOTICE, Config, "Moved to errorbox, reached MaxRetries: %s", Config->SMSID);
 		for (i=0;i<sms.Number;i++) {
 			Config->Status->Failed++;
 			Config->Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i + 1, SMSD_SEND_SENDING_ERROR, Config->TPMR);
