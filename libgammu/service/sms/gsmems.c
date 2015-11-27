@@ -27,7 +27,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_Debug_Info *di,
 	ssize_t			Length;
 	size_t EncodeLength;
 	unsigned int		Len;
-	size_t FreeText,FreeBytes,UsedText,Width,Height,x,y,Width2;
+	size_t FreeText=0,FreeBytes=0,UsedText=0,Width,Height,x,y,Width2;
 	size_t 			Used,CopiedText,CopiedSMSText;
 	unsigned char		UDHID;
 	GSM_Bitmap		Bitmap,Bitmap2;
@@ -81,7 +81,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_Debug_Info *di,
 					if (Entry->Underlined) 		Buffer[4] |= 64;
 				    	if (Entry->Strikethrough) 	Buffer[4] |= 128;
 					GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,5,TRUE,&UsedText,&CopiedText,&CopiedSMSText);
-					GSM_Find_Free_Used_SMS2(di, Coding,SMS->SMS[SMS->Number], &UsedText, &FreeText, &FreeBytes);
+					GSM_Find_Free_Used_SMS2(di, Coding, &(SMS->SMS[SMS->Number]), &UsedText, &FreeText, &FreeBytes);
 					if (FreeText == 0) continue;
 				}
 				GSM_AddSMS_Text_UDH(di, SMS,Coding,Entry->Buffer+Len*2,UnicodeLength(Entry->Buffer) - Len,FALSE,&UsedText,&CopiedText,&CopiedSMSText);
@@ -181,7 +181,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_Debug_Info *di,
 			}
 
 			/* Find free place in first SMS */
-			GSM_Find_Free_Used_SMS2(di, Coding,SMS->SMS[SMS->Number], &UsedText, &FreeText, &FreeBytes);
+			GSM_Find_Free_Used_SMS2(di, Coding, &(SMS->SMS[SMS->Number]), &UsedText, &FreeText, &FreeBytes);
 			Length = FreeBytes - 3;
 			if (Entry->Protected) 	Length = Length - 4;
 			if (Length < 0) 	Length = 128;
@@ -236,7 +236,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_Debug_Info *di,
 			GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,3,TRUE,&UsedText,&CopiedText,&CopiedSMSText);
 
 			/* Find free place in first SMS */
-			GSM_Find_Free_Used_SMS2(di, Coding,SMS->SMS[SMS->Number], &UsedText, &FreeText, &FreeBytes);
+			GSM_Find_Free_Used_SMS2(di, Coding, &(SMS->SMS[SMS->Number]), &UsedText, &FreeText, &FreeBytes);
 			Length 	= FreeBytes - 3;
 			if (Length < 0) 	Length = 128;
 			if (Length > 128) 	Length = 128;
@@ -375,7 +375,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_Debug_Info *di,
 			}
 
 			/* Find free place in first SMS */
-			GSM_Find_Free_Used_SMS2(di, Coding,SMS->SMS[SMS->Number], &UsedText, &FreeText, &FreeBytes);
+			GSM_Find_Free_Used_SMS2(di, Coding, &(SMS->SMS[SMS->Number]), &UsedText, &FreeText, &FreeBytes);
 			Used 	= 0;
 			Length 	= FreeBytes - 3;
 			if (Entry->Protected)	Length = Length - 4;
@@ -412,7 +412,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_Debug_Info *di,
 
 			/* Find free place in first SMS */
 			GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,3,TRUE,&UsedText,&CopiedText,&CopiedSMSText);
-			GSM_Find_Free_Used_SMS2(di, Coding,SMS->SMS[SMS->Number], &UsedText, &FreeText, &FreeBytes);
+			GSM_Find_Free_Used_SMS2(di, Coding, &(SMS->SMS[SMS->Number]), &UsedText, &FreeText, &FreeBytes);
 			Length 	= FreeBytes - 3;
 			if (Length < 0) 	Length = 128;
 			if (Length > 128) 	Length = 128;

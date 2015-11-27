@@ -34,34 +34,34 @@ unsigned char GSM_MakeSMSIDFromTime(void)
 	return retval;
 }
 
-void GSM_Find_Free_Used_SMS2(GSM_Debug_Info *di, GSM_Coding_Type Coding,GSM_SMSMessage SMS, size_t *UsedText, size_t *FreeText, size_t *FreeBytes)
+void GSM_Find_Free_Used_SMS2(GSM_Debug_Info *di, GSM_Coding_Type Coding,GSM_SMSMessage *SMS, size_t *UsedText, size_t *FreeText, size_t *FreeBytes)
 {
 	size_t UsedBytes = 0;
 
 	switch (Coding) {
 	case SMS_Coding_Default_No_Compression:
-		FindDefaultAlphabetLen(SMS.Text,&UsedBytes,UsedText,500);
+		FindDefaultAlphabetLen(SMS->Text,&UsedBytes,UsedText,500);
 		UsedBytes = *UsedText * 7 / 8;
 		if (UsedBytes * 8 / 7 != *UsedText) UsedBytes++;
-		*FreeBytes = GSM_MAX_8BIT_SMS_LENGTH - SMS.UDH.Length - UsedBytes;
-		*FreeText = (GSM_MAX_8BIT_SMS_LENGTH - SMS.UDH.Length) * 8 / 7 - *UsedText;
+		*FreeBytes = GSM_MAX_8BIT_SMS_LENGTH - SMS->UDH.Length - UsedBytes;
+		*FreeText = (GSM_MAX_8BIT_SMS_LENGTH - SMS->UDH.Length) * 8 / 7 - *UsedText;
 		break;
 	case SMS_Coding_Unicode_No_Compression:
-		*UsedText = UnicodeLength(SMS.Text);
+		*UsedText = UnicodeLength(SMS->Text);
 		UsedBytes = *UsedText * 2;
-		*FreeBytes = GSM_MAX_8BIT_SMS_LENGTH - SMS.UDH.Length - UsedBytes;
+		*FreeBytes = GSM_MAX_8BIT_SMS_LENGTH - SMS->UDH.Length - UsedBytes;
 		*FreeText = *FreeBytes / 2;
 		break;
 	case SMS_Coding_8bit:
-		*UsedText = UsedBytes = SMS.Length;
-		*FreeBytes = GSM_MAX_8BIT_SMS_LENGTH - SMS.UDH.Length - UsedBytes;
+		*UsedText = UsedBytes = SMS->Length;
+		*FreeBytes = GSM_MAX_8BIT_SMS_LENGTH - SMS->UDH.Length - UsedBytes;
 		*FreeText = *FreeBytes;
 		break;
 	default:
 		break;
 	}
 	smfprintf(di, "UDH len %i, UsedBytes %ld, FreeText %ld, UsedText %ld, FreeBytes %ld\n",
-		SMS.UDH.Length,
+		SMS->UDH.Length,
 		(long)UsedBytes,
 		(long)*FreeText,
 		(long)*UsedText,
@@ -222,14 +222,20 @@ GSM_Error GSM_AddSMS_Text_UDH(GSM_Debug_Info *di,
 	size_t FreeText=0,FreeBytes=0,Copy,i,j;
 
 	smfprintf(di, "Checking used: ");
-	GSM_Find_Free_Used_SMS2(di, Coding,SMS->SMS[SMS->Number], UsedText, &FreeText, &FreeBytes);
+	GSM_Find_Free_Used_SMS2(
+		di, Coding, &(SMS->SMS[SMS->Number]),
+		UsedText, &FreeText, &FreeBytes
+	);
 
 	if (UDH) {
 		smfprintf(di, "Adding UDH\n");
 		if (FreeBytes - BufferLen <= 0) {
 			smfprintf(di, "Going to the new SMS\n");
 			SMS->Number++;
-			GSM_Find_Free_Used_SMS2(di, Coding,SMS->SMS[SMS->Number], UsedText, &FreeText, &FreeBytes);
+			GSM_Find_Free_Used_SMS2(
+				di, Coding, &(SMS->SMS[SMS->Number]),
+				UsedText, &FreeText, &FreeBytes
+			);
 		}
 		if (SMS->SMS[SMS->Number].UDH.Length == 0) {
 			SMS->SMS[SMS->Number].UDH.Length  = 1;
@@ -245,7 +251,10 @@ GSM_Error GSM_AddSMS_Text_UDH(GSM_Debug_Info *di,
 		if (FreeText == 0) {
 			smfprintf(di, "Going to the new SMS\n");
 			SMS->Number++;
-			GSM_Find_Free_Used_SMS2(di, Coding,SMS->SMS[SMS->Number], UsedText, &FreeText, &FreeBytes);
+			GSM_Find_Free_Used_SMS2(
+				di, Coding, &(SMS->SMS[SMS->Number]),
+				UsedText, &FreeText, &FreeBytes
+			);
 		}
 
 		Copy = FreeText;
@@ -285,7 +294,10 @@ GSM_Error GSM_AddSMS_Text_UDH(GSM_Debug_Info *di,
 	}
 
 	smfprintf(di, "Checking at the end: ");
-	GSM_Find_Free_Used_SMS2(di, Coding,SMS->SMS[SMS->Number], UsedText, &FreeText, &FreeBytes);
+	GSM_Find_Free_Used_SMS2(
+		di, Coding, &(SMS->SMS[SMS->Number]),
+		UsedText, &FreeText, &FreeBytes
+	);
 
 	return ERR_NONE;
 }
@@ -352,7 +364,10 @@ void GSM_SMSCounter(GSM_Debug_Info *di,
 
 	MultiSMS.Number = 0;
 	GSM_MakeMultiPartSMS(di, &MultiSMS,MessageBuffer,UnicodeLength(MessageBuffer),UDHType,Coding,-1,FALSE);
-	GSM_Find_Free_Used_SMS2(di, Coding,MultiSMS.SMS[MultiSMS.Number-1], &UsedText, CharsLeft, &FreeBytes);
+	GSM_Find_Free_Used_SMS2(
+		di, Coding, &(MultiSMS.SMS[MultiSMS.Number-1]),
+		&UsedText, CharsLeft, &FreeBytes
+	);
 	*SMSNum = MultiSMS.Number;
 }
 
