@@ -989,9 +989,9 @@ GSM_Error DCT3_SetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 	int			i,pos,phone1=-1,phone2=-1,phone3=-1;
 	int			ID=0,locations[4] = {0, 0, 0, 0},loc1=-1,loc2=-1,loc3=-1;
 	unsigned char 		req[]  = {N6110_FRAME_HEADER,0x15,
-					  0x00};	/* Location */
+					  0x00, 0x00};	/* Location */
 	unsigned char 		req2[] = {N6110_FRAME_HEADER,0x1b,
-					  0x00};	/* Location */
+					  0x00, 0x00};	/* Location */
 	unsigned char SetReq[200]  = {N7110_FRAME_HEADER, 0x18,
 				      0x00}; 		/* Location */
 	unsigned char SetReq2[200] = {N7110_FRAME_HEADER, 0x1e,

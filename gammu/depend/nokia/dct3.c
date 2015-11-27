@@ -268,7 +268,7 @@ void DCT3GetADC(int argc, char *argv[])
 	GSM_Error error;
 	unsigned char	GetRaw[] = {0x00, 0x01, 0x68};
 	unsigned char	GetUnit[] = {0x00, 0x01, 0x91,
-				     0x02};		/* Test number */
+				     0x02, 0x00, 0x00};		/* Test number */
 
 	CheckDCT3();
 
