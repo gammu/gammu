@@ -1023,11 +1023,7 @@ void AddBufferByte(unsigned char *Destination,
 		   unsigned char Source,
 		   size_t		 BitsToProcess)
 {
-	unsigned char Byte;
-
-	Byte = Source;
-
-	AddBuffer(Destination, CurrentBit, &Byte, BitsToProcess);
+	AddBuffer(Destination, CurrentBit, &Source, BitsToProcess);
 }
 
 void GetBuffer(unsigned char *Source,
