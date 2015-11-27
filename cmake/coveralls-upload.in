@@ -1,6 +1,7 @@
 #!/bin/bash
 
-gcov --source-prefix @CMAKE_SOURCE_DIR@ --preserve-paths --relative-only $(find -iname *.gcda) 1>/dev/null || exit 0
+#gcov --source-prefix @CMAKE_SOURCE_DIR@ --preserve-paths --relative-only $(find -iname *.gcda) 1>/dev/null || exit 0
+gcov --preserve-paths --relative-only $(find -iname *.gcda) 1>/dev/null || exit 0
 
 if [ ! -z "${TRAVIS_JOB_ID}" ]
 then
@@ -56,5 +57,3 @@ cat >coverage.json <(head -n -1 coverage.json.tmp) <(echo -e "    }\n  ]\n}")
 rm coverage.json.tmp
 
 curl -F json_file=@coverage.json https://coveralls.io/api/v1/jobs
-
-rm *.gcov
