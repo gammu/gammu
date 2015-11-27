@@ -220,7 +220,7 @@ GSM_Error S60_SplitValues(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 	}
 
 	while ((pos - msg->Buffer) < (ssize_t)msg->Length) {
-		if (i >  sizeof(Priv->MessageParts) / sizeof(Priv->MessageParts[0])) {
+		if (i >=  sizeof(Priv->MessageParts) / sizeof(Priv->MessageParts[0])) {
 			smprintf(s, "Too many reply parts!\n");
 			return ERR_MOREMEMORY;
 		}
