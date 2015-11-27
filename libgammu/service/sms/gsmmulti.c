@@ -219,7 +219,7 @@ GSM_Error GSM_AddSMS_Text_UDH(GSM_Debug_Info *di,
 		      		size_t			*CopiedText,
 		      		size_t			*CopiedSMSText)
 {
-	size_t FreeText,FreeBytes,Copy,i,j;
+	size_t FreeText=0,FreeBytes=0,Copy,i,j;
 
 	smfprintf(di, "Checking used: ");
 	GSM_Find_Free_Used_SMS2(di, Coding,SMS->SMS[SMS->Number], UsedText, &FreeText, &FreeBytes);
@@ -347,7 +347,7 @@ void GSM_SMSCounter(GSM_Debug_Info *di,
 		    int 		*SMSNum,
 		    size_t 		*CharsLeft)
 {
-	size_t			UsedText,FreeBytes;
+	size_t			UsedText=0,FreeBytes=0;
 	GSM_MultiSMSMessage 	MultiSMS;
 
 	MultiSMS.Number = 0;
