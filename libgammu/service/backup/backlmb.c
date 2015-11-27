@@ -21,7 +21,7 @@
 #define chk_fwrite(data, size, count, file) \
 	if (fwrite(data, size, count, file) != count) goto fail;
 
-static GSM_Error SaveLMBStartupEntry(FILE *file, GSM_Bitmap bitmap)
+static GSM_Error SaveLMBStartupEntry(FILE *file, GSM_Bitmap *bitmap)
 {
 	size_t count = 13;
 	GSM_Phone_Bitmap_Types 	Type;
@@ -32,25 +32,25 @@ static GSM_Error SaveLMBStartupEntry(FILE *file, GSM_Bitmap bitmap)
 		0x02,00,00,00,00,00,
 		0x00};              /*number of blocks (like in 6110 frame)*/
 
-	if (bitmap.Type == GSM_StartupLogo) {
+	if (bitmap->Type == GSM_StartupLogo) {
 		req[count++] = 0x01;
-		req[count++] = bitmap.BitmapHeight;
-		req[count++] = bitmap.BitmapWidth;
+		req[count++] = bitmap->BitmapHeight;
+		req[count++] = bitmap->BitmapWidth;
 		Type = GSM_NokiaStartupLogo;
-	        switch (bitmap.BitmapHeight) {
+	        switch (bitmap->BitmapHeight) {
 			case 65: Type = GSM_Nokia7110StartupLogo; break;
 			case 60: Type = GSM_Nokia6210StartupLogo; break;
 		}
-		PHONE_EncodeBitmap(Type, req+count, &bitmap);
+		PHONE_EncodeBitmap(Type, req+count, bitmap);
 		count = count + PHONE_GetBitmapSize(Type, 0, 0);
 
 		req[12]++;
 	}
-	if (bitmap.Type == GSM_WelcomeNote_Text) {
+	if (bitmap->Type == GSM_WelcomeNote_Text) {
 		req[count++]=0x02;
-		req[count++]=UnicodeLength(bitmap.Text);
-		memcpy(req+count,DecodeUnicodeString(bitmap.Text),UnicodeLength(bitmap.Text));
-		count=count+UnicodeLength(bitmap.Text);
+		req[count++]=UnicodeLength(bitmap->Text);
+		memcpy(req+count,DecodeUnicodeString(bitmap->Text),UnicodeLength(bitmap->Text));
+		count=count+UnicodeLength(bitmap->Text);
 
 		req[12]++;
 	}
@@ -64,7 +64,7 @@ fail:
 	return ERR_WRITING_FILE;
 }
 
-static GSM_Error SaveLMBCallerEntry(FILE *file, GSM_Bitmap bitmap)
+static GSM_Error SaveLMBCallerEntry(FILE *file, GSM_Bitmap *bitmap)
 {
 	size_t count = 12, textlen;
 	char req[500] = {
@@ -74,34 +74,34 @@ static GSM_Error SaveLMBCallerEntry(FILE *file, GSM_Bitmap bitmap)
 		00,                 /*group number=0,1,etc.*/
 		00,00,00};
 
-	req[count++] = bitmap.Location - 1;
-	if (bitmap.DefaultName) {
+	req[count++] = bitmap->Location - 1;
+	if (bitmap->DefaultName) {
 		req[count++] = 0;
 	} else {
-		textlen = UnicodeLength(bitmap.Text);
+		textlen = UnicodeLength(bitmap->Text);
 		req[count++] = textlen;
-		memcpy(req+count,DecodeUnicodeString(bitmap.Text),textlen);
+		memcpy(req+count,DecodeUnicodeString(bitmap->Text),textlen);
 		count += textlen;
 	}
-	if (bitmap.DefaultRingtone) {
+	if (bitmap->DefaultRingtone) {
 		req[count++] = 0x16;
 	} else {
-		req[count++] = bitmap.RingtoneID;
+		req[count++] = bitmap->RingtoneID;
 	}
-	if (bitmap.BitmapEnabled) req[count++] = 0x01; else req[count++] = 0x00;
+	if (bitmap->BitmapEnabled) req[count++] = 0x01; else req[count++] = 0x00;
 	req[count++] = (PHONE_GetBitmapSize(GSM_NokiaCallerLogo,0,0) + 4) >> 8;
 	req[count++] = (PHONE_GetBitmapSize(GSM_NokiaCallerLogo,0,0) + 4) % 0xff;
-	if (bitmap.DefaultBitmap) {
-		bitmap.BitmapWidth  = 72;
-		bitmap.BitmapHeight = 14;
-		GSM_ClearBitmap(&bitmap);
+	if (bitmap->DefaultBitmap) {
+		bitmap->BitmapWidth  = 72;
+		bitmap->BitmapHeight = 14;
+		GSM_ClearBitmap(bitmap);
 	}
-	NOKIA_CopyBitmap(GSM_NokiaCallerLogo, &bitmap, req, &count);
+	NOKIA_CopyBitmap(GSM_NokiaCallerLogo, bitmap, req, &count);
 	req[count++]=0;
 
 	req[4]=(count-12)%256;
 	req[5]=(count-12)/256;
-	req[8]=bitmap.Location;
+	req[8]=bitmap->Location;
 
 	chk_fwrite(req, 1, count, file);
 	return ERR_NONE;
@@ -200,7 +200,7 @@ GSM_Error SaveLMB(const char *FileName, GSM_Backup *backup)
 	}
 	i=0;
 	while (backup->CallerLogos[i]!=NULL) {
-		error = SaveLMBCallerEntry(file, *backup->CallerLogos[i]);
+		error = SaveLMBCallerEntry(file, backup->CallerLogos[i]);
 		if (error != ERR_NONE) {
 			fclose(file);
 			return error;
@@ -208,7 +208,7 @@ GSM_Error SaveLMB(const char *FileName, GSM_Backup *backup)
 		i++;
 	}
 	if (backup->StartupLogo!=NULL) {
-		error = SaveLMBStartupEntry(file, *backup->StartupLogo);
+		error = SaveLMBStartupEntry(file, backup->StartupLogo);
 		if (error != ERR_NONE) {
 			fclose(file);
 			return error;
