@@ -750,42 +750,36 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 		NOKIA_EncodeWAPMMSSettingsSMSText(Buffer,&Length,Info->Entries[0].Settings,TRUE);
 		break;
 	case SMS_NokiaVCARD10Long:
+		Coding = SMS_Coding_Default_No_Compression;
 		/* is 1 SMS ? 8 = length of ..SCKE2 */
 		if (Length<=GSM_MAX_SMS_CHARS_LENGTH-8) {
 			sprintf(Buffer,"//SCKE2 ");
 			Length = 8;
-			Coding = SMS_Coding_Default_No_Compression;
 		} else {
 			UDH = UDH_NokiaPhonebookLong;
-			Coding = SMS_Coding_8bit;
 		}
 		error = GSM_EncodeVCARD(di, Buffer, buffer_size, &Length,Info->Entries[0].Phonebook,TRUE,Nokia_VCard10);
 		if (error != ERR_NONE) {
 			goto out;
 		}
-		if (Coding == SMS_Coding_Default_No_Compression) {
-			memcpy(Buffer2,Buffer,Length);
-			EncodeUnicode(Buffer,Buffer2,Length);
-		}
+		memcpy(Buffer2,Buffer,Length);
+		EncodeUnicode(Buffer,Buffer2,Length);
 		break;
 	case SMS_NokiaVCARD21Long:
 		error = GSM_EncodeVCARD(di, Buffer, buffer_size, &Length,Info->Entries[0].Phonebook,TRUE,Nokia_VCard21);
 		if (error != ERR_NONE) {
 			goto out;
 		}
+		Coding = SMS_Coding_Default_No_Compression;
 		/* Is 1 SMS ? 12 = length of ..SCKL23F4 */
 		if (Length <= GSM_MAX_SMS_CHARS_LENGTH - 12) {
 			sprintf(Buffer,"//SCKL23F4%c%c",13,10);
 			Length = 12;
-			Coding = SMS_Coding_Default_No_Compression;
 		} else {
 			UDH = UDH_NokiaPhonebookLong;
-			Coding = SMS_Coding_8bit;
 		}
-		if (Coding == SMS_Coding_Default_No_Compression) {
-			memcpy(Buffer2,Buffer,Length);
-			EncodeUnicode(Buffer,Buffer2,Length);
-		}
+		memcpy(Buffer2,Buffer,Length);
+		EncodeUnicode(Buffer,Buffer2,Length);
 		break;
 	case SMS_VCARD10Long:
 		error = GSM_EncodeVCARD(di, Buffer, buffer_size, &Length,Info->Entries[0].Phonebook,TRUE,Nokia_VCard10);
@@ -812,19 +806,16 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 		if (error != ERR_NONE) {
 			goto out;
 		}
+		Coding = SMS_Coding_Default_No_Compression;
 		/* Is 1 SMS ? 8 = length of ..SCKE4 */
 		if (Length <= GSM_MAX_SMS_CHARS_LENGTH - 8) {
 			sprintf(Buffer,"//SCKE4 ");
 			Length = 8;
-			Coding = SMS_Coding_Default_No_Compression;
 		} else {
 			UDH = UDH_NokiaCalendarLong;
-			Coding = SMS_Coding_8bit;
 		}
-		if (Coding == SMS_Coding_Default_No_Compression) {
-			memcpy(Buffer2,Buffer,Length);
-			EncodeUnicode(Buffer,Buffer2,Length);
-		}
+		memcpy(Buffer2,Buffer,Length);
+		EncodeUnicode(Buffer,Buffer2,Length);
 		break;
 	case SMS_NokiaVTODOLong:
 		error=GSM_EncodeVTODO(Buffer, buffer_size,&Length,Info->Entries[0].ToDo,TRUE,Nokia_VToDo);
