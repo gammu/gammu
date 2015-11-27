@@ -299,6 +299,9 @@ GSM_Error DUMMY_Initialise(GSM_StateMachine *s)
 	path = DUMMY_GetFilePath(s, "sms/5");
 	MKDIR(path);
 	free(path);
+	path = DUMMY_GetFilePath(s, "pbk");
+	MKDIR(path);
+	free(path);
 	path = DUMMY_GetFilePath(s, "pbk/ME");
 	MKDIR(path);
 	free(path);
