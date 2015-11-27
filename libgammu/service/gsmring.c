@@ -411,8 +411,6 @@ static void WriteVarLen(unsigned char* midifile, size_t* current, long value)
 	}
 }
 
-#define singlepauses
-
 /* FIXME: need adding tempo before each note and scale too ? */
 GSM_Error GSM_SaveRingtoneMidi(FILE* file, GSM_Ringtone *ringtone)
 {
@@ -451,12 +449,6 @@ GSM_Error GSM_SaveRingtoneMidi(FILE* file, GSM_Ringtone *ringtone)
 			duration = GSM_RingNoteGetFullDuration(*Note);
 			if (Note->Note == Note_Pause) {
 				pause_time += duration;
-#ifdef singlepauses
-				WriteVarLen(midifile,&current,pause_time);
-				pause_time=0;
-				midifile[current++]=0x00;   /*  pause */
-				midifile[current++]=0x00;
-#endif
 			} else {
 				if (Note->Note >= Note_C && Note->Note <= Note_H) {
 					note = Note->Note/16 + 12 * Note->Scale - 1;
@@ -474,11 +466,6 @@ GSM_Error GSM_SaveRingtoneMidi(FILE* file, GSM_Ringtone *ringtone)
 				midifile[current++]=0x64;
 			}
 		}
-	}
-	if (pause_time) {
-		WriteVarLen(midifile,&current,pause_time);
-		midifile[current++]=0x00;   	/*  pause */
-		midifile[current++]=0x00;   	/*  */
 	}
 	midifile[current++] = 0x00;
 	midifile[current++] = 0xFF;   		/*  track end */
