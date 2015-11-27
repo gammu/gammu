@@ -47,13 +47,13 @@
 #include "../../../helper/string.h"
 
 #ifdef WIN32
-#define MKDIR(dir) if (_mkdir(dir) != 0 && errno != EEXIST) {smprintf(s, "Failed to create directory: %s\n", path); free(path); return ERR_DEVICENOPERMISSION;}
+#define MKDIR(dir) _mkdir(dir)
 #ifndef S_ISDIR
 #define S_ISDIR(mode) ((mode & _S_IFDIR) == _S_IFDIR)
 #endif
 #include "../../../helper/win32-dirent.h"
 #else
-#define MKDIR(dir) if (mkdir(dir, 0755) != 0 && errno != EEXIST) {smprintf(s, "Failed to create directory: %s\n", path); free(path); return ERR_DEVICENOPERMISSION;}
+#define MKDIR(dir) mkdir(dir, 0755)
 #include <dirent.h>
 #endif
 
@@ -266,7 +266,27 @@ GSM_Error DUMMY_Initialise(GSM_StateMachine *s)
 {
 	GSM_Phone_DUMMYData	*Priv = &s->Phone.Data.Priv.DUMMY;
 	char *log_file, *path;
-	int i;
+	const char * const paths[] = {
+		"fs",
+		"fs/incoming",
+		"sms",
+		"sms/1",
+		"sms/2",
+		"sms/3",
+		"sms/4",
+		"sms/5",
+		"pbk",
+		"pbk/ME",
+		"pbk/SM",
+		"pbk/MC",
+		"pbk/RC",
+		"pbk/DC",
+		"note",
+		"todo",
+		"calendar",
+		"alarm",
+	};
+	size_t i;
 
 	Priv->devlen = strlen(s->CurrentConfig->Device);
 
@@ -275,60 +295,16 @@ GSM_Error DUMMY_Initialise(GSM_StateMachine *s)
 	smprintf(s, "Log file %s\n", log_file);
 
 	/* Create some directories we might need */
-	path = DUMMY_GetFilePath(s, "fs");
-	MKDIR(path);
-	free(path);
-	path = DUMMY_GetFilePath(s, "fs/incoming");
-	MKDIR(path);
-	free(path);
-	path = DUMMY_GetFilePath(s, "sms");
-	MKDIR(path);
-	free(path);
-	path = DUMMY_GetFilePath(s, "sms/1");
-	MKDIR(path);
-	free(path);
-	path = DUMMY_GetFilePath(s, "sms/2");
-	MKDIR(path);
-	free(path);
-	path = DUMMY_GetFilePath(s, "sms/3");
-	MKDIR(path);
-	free(path);
-	path = DUMMY_GetFilePath(s, "sms/4");
-	MKDIR(path);
-	free(path);
-	path = DUMMY_GetFilePath(s, "sms/5");
-	MKDIR(path);
-	free(path);
-	path = DUMMY_GetFilePath(s, "pbk");
-	MKDIR(path);
-	free(path);
-	path = DUMMY_GetFilePath(s, "pbk/ME");
-	MKDIR(path);
-	free(path);
-	path = DUMMY_GetFilePath(s, "pbk/SM");
-	MKDIR(path);
-	free(path);
-	path = DUMMY_GetFilePath(s, "pbk/MC");
-	MKDIR(path);
-	free(path);
-	path = DUMMY_GetFilePath(s, "pbk/RC");
-	MKDIR(path);
-	free(path);
-	path = DUMMY_GetFilePath(s, "pbk/DC");
-	MKDIR(path);
-	free(path);
-	path = DUMMY_GetFilePath(s, "note");
-	MKDIR(path);
-	free(path);
-	path = DUMMY_GetFilePath(s, "todo");
-	MKDIR(path);
-	free(path);
-	path = DUMMY_GetFilePath(s, "calendar");
-	MKDIR(path);
-	free(path);
-	path = DUMMY_GetFilePath(s, "alarm");
-	MKDIR(path);
-	free(path);
+	for (i = 0; i < sizeof(paths) / sizeof(char *); i++) {
+		path = DUMMY_GetFilePath(s, "fs");
+		if (MKDIR(path) != 0 && errno != EEXIST) {
+			smprintf(s, "Failed to create directory: %s\n", path);
+			free(path);
+			free(log_file);
+			return ERR_DEVICENOPERMISSION;
+		}
+		free(path);
+	}
 
 	for (i = 0; i <= DUMMY_MAX_FS_DEPTH; i++) {
 		Priv->dir[i] = NULL;
@@ -1421,7 +1397,11 @@ GSM_Error DUMMY_AddFolder(GSM_StateMachine *s, GSM_File *File)
 	CopyUnicodeString(File->ID_FullName + 2 * pos, File->Name);
 
 	path = DUMMY_GetFSFilePath(s, File->ID_FullName);
-	MKDIR(path);
+	if (MKDIR(path) != 0) {
+		free(path);
+		path=NULL;
+		return DUMMY_Error(s, "mkdir failed");
+	}
 	free(path);
 	path=NULL;
 	return ERR_NONE;
