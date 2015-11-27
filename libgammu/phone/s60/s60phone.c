@@ -412,7 +412,7 @@ static GSM_Error S60_Reply_GetInfo(GSM_Protocol_Message *msg, GSM_StateMachine *
 	GSM_Phone_S60Data *Priv = &s->Phone.Data.Priv.S60;
 	GSM_Error error;
 	char *pos;
-	int signal;
+	int signal_value;
 	GSM_SignalQuality *Signal = s->Phone.Data.SignalQuality;
 	GSM_BatteryCharge *BatteryCharge = s->Phone.Data.BatteryCharge;
 
@@ -470,9 +470,9 @@ static GSM_Error S60_Reply_GetInfo(GSM_Protocol_Message *msg, GSM_StateMachine *
 	} else if (Signal != NULL && strcmp(Priv->MessageParts[0], "signal_dbm") == 0) {
 		Signal->SignalStrength = atoi(Priv->MessageParts[1]);
 	} else if (Signal != NULL && strcmp(Priv->MessageParts[0], "signal_bars") == 0) {
-		signal = atoi(Priv->MessageParts[1]);
-		if (signal != 0) {
-			Signal->SignalPercent = 100 * 7 / signal;
+		signal_value = atoi(Priv->MessageParts[1]);
+		if (signal_value != 0) {
+			Signal->SignalPercent = 100 * 7 / signal_value;
 		} else {
 			Signal->SignalPercent = 0;
 		}
