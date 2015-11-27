@@ -1005,15 +1005,14 @@ void AddBuffer(unsigned char 	*Destination,
 	       unsigned char 	*Source,
 	       size_t 		BitsToProcess)
 {
-	size_t i=0;
+	size_t i;
 
-	while (i!=BitsToProcess) {
+	for (i = 0; i < BitsToProcess; i++) {
 		if (GetBit(Source, i)) {
 			SetBit(Destination, (*CurrentBit)+i);
 		} else {
 			ClearBit(Destination, (*CurrentBit)+i);
 		}
-		i++;
 	}
 	(*CurrentBit) = (*CurrentBit) + BitsToProcess;
 }
