@@ -47,13 +47,13 @@
 #include "../../../helper/string.h"
 
 #ifdef WIN32
-#define MKDIR(dir) mkdir(dir)
+#define MKDIR(dir) if (_mkdir(dir) != 0) {free(path); return ERR_DEVICENOPERMISSION;}
 #ifndef S_ISDIR
 #define S_ISDIR(mode) ((mode & _S_IFDIR) == _S_IFDIR)
 #endif
 #include "../../../helper/win32-dirent.h"
 #else
-#define MKDIR(dir) mkdir(dir, 0755)
+#define MKDIR(dir) if (mkdir(dir, 0755) != 0) {free(path); return ERR_DEVICENOPERMISSION;}
 #include <dirent.h>
 #endif
 
@@ -1418,11 +1418,7 @@ GSM_Error DUMMY_AddFolder(GSM_StateMachine *s, GSM_File *File)
 	CopyUnicodeString(File->ID_FullName + 2 * pos, File->Name);
 
 	path = DUMMY_GetFSFilePath(s, File->ID_FullName);
-	if (MKDIR(path) != 0) {
-		free(path);
-		path=NULL;
-		return DUMMY_Error(s, "mkdir failed");
-	}
+	MKDIR(path);
 	free(path);
 	path=NULL;
 	return ERR_NONE;
