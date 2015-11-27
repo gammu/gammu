@@ -84,12 +84,12 @@ typedef enum {
 } GSM_Series40_30_Phonebook_Postal_Types;
 
 typedef struct {
-	unsigned int	Location[GSM_PHONE_MAXSMSINFOLDER]; /* locations of SMS messages in that folder */
+	unsigned int	Location[GSM_PHONE_MAXSMSINFOLDER + 1]; /* locations of SMS messages in that folder */
 	int		Number;				/* number of SMS messages in that folder */
 } GSM_NOKIASMSFolder;
 
 typedef struct {
-	int		Location[GSM_MAXCALENDARTODONOTES];
+	int		Location[GSM_MAXCALENDARTODONOTES + 1];
 	int		Number;
 } GSM_NOKIACalToDoLocations;
 
