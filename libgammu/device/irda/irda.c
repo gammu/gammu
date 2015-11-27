@@ -181,6 +181,7 @@ static GSM_Error irda_open (GSM_StateMachine *s)
     		strcpy(d->peer.irdaServiceName, "OBEX");
 		break;
     	default:
+		close(fd);
 		return ERR_UNKNOWN;
     	}
 
