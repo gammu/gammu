@@ -352,7 +352,7 @@ void configure_daemon(SMSD_Parameters * params)
 #endif
 
 #ifdef HAVE_UID
-	if (params->gid != -1 || params->uid != -1) {
+	if (params->gid >= 0 || params->uid >= 0) {
 		if (!set_uid_gid(params)) {
 			fprintf(stderr, "changing uid/gid failed! (%s)\n", strerror(errno));
 			exit(1);

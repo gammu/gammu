@@ -17,7 +17,7 @@ gboolean set_uid_gid(SMSD_Parameters *params)
         return FALSE;
 
     /* Only set group */
-    if (params->uid == -1)
+    if (params->uid < 0)
         return TRUE;
 
     if (initgroups(params->user, params->gid) != 0)
