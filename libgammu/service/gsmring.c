@@ -309,8 +309,6 @@ GSM_Error GSM_SaveRingtoneRttl(FILE *file, GSM_Ringtone *ringtone)
 			firstcomma 	= TRUE;
 		}
 
-		if (!started) continue;
-
 		if (Note->Style!=DefNoteStyle) {
 			/* And a separator */
 			if (!firstcomma) fprintf(file,",");
