@@ -304,7 +304,7 @@ GSM_Error GSM_EncodeURLFile(unsigned char *Buffer, size_t *Length, GSM_WAPBookma
 /* -------------------------------- MMS ------------------------------------ */
 
 /* SNIFFS, specs somewhere in http://www.wapforum.org */
-void GSM_EncodeMMSIndicatorSMSText(unsigned char *Buffer, size_t *Length, GSM_MMSIndicator Indicator)
+void GSM_EncodeMMSIndicatorSMSText(unsigned char *Buffer, size_t *Length, GSM_MMSIndicator *Indicator)
 {
 	unsigned char 	buffer[200];
 	int		i;
@@ -340,10 +340,10 @@ void GSM_EncodeMMSIndicatorSMSText(unsigned char *Buffer, size_t *Length, GSM_MM
 
 	/* Transaction ID, usually last part of address */
 	Buffer[(*Length)++] = 0x98;
-	i = strlen(Indicator.Address);
-	while (Indicator.Address[i] != '/' && i!=0) i--;
-	strcpy(Buffer+(*Length),Indicator.Address+i+1);
-	(*Length)=(*Length)+strlen(Indicator.Address+i+1);
+	i = strlen(Indicator->Address);
+	while (Indicator->Address[i] != '/' && i!=0) i--;
+	strcpy(Buffer+(*Length),Indicator->Address+i+1);
+	(*Length)=(*Length)+strlen(Indicator->Address+i+1);
 	Buffer[(*Length)++] = 0x00;
 
 	/* MMS version */
@@ -352,7 +352,7 @@ void GSM_EncodeMMSIndicatorSMSText(unsigned char *Buffer, size_t *Length, GSM_MM
 	Buffer[(*Length)++] = 0x92;
 
 	/* Message class */
-	switch (Indicator.Class) {
+	switch (Indicator->Class) {
 		case GSM_MMS_None:
 		case GSM_MMS_INVALID:
 			break;
@@ -374,20 +374,20 @@ void GSM_EncodeMMSIndicatorSMSText(unsigned char *Buffer, size_t *Length, GSM_MM
 			break;
 	}
 
-	if (Indicator.MessageSize > 0) {
+	if (Indicator->MessageSize > 0) {
 		/* Message size */
 		Buffer[(*Length)++] = 0x8e;
 		/* Length of size */
 		Buffer[(*Length)++] = 0x04;
-		Buffer[(*Length)++] = ((long)Indicator.MessageSize >> 24) & 0xff;
-		Buffer[(*Length)++] = ((long)Indicator.MessageSize >> 16) & 0xff;
-		Buffer[(*Length)++] = ((long)Indicator.MessageSize >>  8) & 0xff;
-		Buffer[(*Length)++] = ((long)Indicator.MessageSize >>  0) & 0xff;
+		Buffer[(*Length)++] = ((long)Indicator->MessageSize >> 24) & 0xff;
+		Buffer[(*Length)++] = ((long)Indicator->MessageSize >> 16) & 0xff;
+		Buffer[(*Length)++] = ((long)Indicator->MessageSize >>  8) & 0xff;
+		Buffer[(*Length)++] = ((long)Indicator->MessageSize >>  0) & 0xff;
 	}
 
 	/* Sender address */
 	Buffer[(*Length)++] = 0x89;
-	sprintf(buffer,"%s/TYPE=PLMN",Indicator.Sender);
+	sprintf(buffer,"%s/TYPE=PLMN",Indicator->Sender);
 	/* Field size */
 	Buffer[(*Length)++] = strlen(buffer) + 2;
 	/* Sender address is present */
@@ -399,8 +399,8 @@ void GSM_EncodeMMSIndicatorSMSText(unsigned char *Buffer, size_t *Length, GSM_MM
 
 	/* Subject */
 	Buffer[(*Length)++] = 0x96;
-	strcpy(Buffer+(*Length),Indicator.Title);
-	(*Length)=(*Length)+strlen(Indicator.Title);
+	strcpy(Buffer+(*Length),Indicator->Title);
+	(*Length)=(*Length)+strlen(Indicator->Title);
 	Buffer[(*Length)++] = 0x00;
 
 	strcpy(Buffer+(*Length),"\x88\x05\x81\x03\x02\xA3\xA3");
@@ -408,8 +408,8 @@ void GSM_EncodeMMSIndicatorSMSText(unsigned char *Buffer, size_t *Length, GSM_MM
 
 	/* Content location */
 	Buffer[(*Length)++] = 0x83;
-	strcpy(Buffer+(*Length),Indicator.Address);
-	(*Length)=(*Length)+strlen(Indicator.Address);
+	strcpy(Buffer+(*Length),Indicator->Address);
+	(*Length)=(*Length)+strlen(Indicator->Address);
 	Buffer[(*Length)++] = 0x00;
 }
 

@@ -14,7 +14,7 @@ void 		NOKIA_EncodeWAPBookmarkSMSText	(unsigned char *Buffer, size_t *Length, GS
 
 /* ------------------------------ MMS Indicator ---------------------------- */
 
-void GSM_EncodeMMSIndicatorSMSText(unsigned char *Buffer, size_t *Length, GSM_MMSIndicator Indicator);
+void GSM_EncodeMMSIndicatorSMSText(unsigned char *Buffer, size_t *Length, GSM_MMSIndicator *Indicator);
 
 void GSM_EncodeWAPIndicatorSMSText(unsigned char *Buffer, size_t *Length, char *Text, char *URL);
 

@@ -665,7 +665,7 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 	case SMS_MMSIndicatorLong:
 		Class	= 1;
 		UDH	= UDH_MMSIndicatorLong;
-		GSM_EncodeMMSIndicatorSMSText(Buffer,&Length,*Info->Entries[0].MMSIndicator);
+		GSM_EncodeMMSIndicatorSMSText(Buffer,&Length,Info->Entries[0].MMSIndicator);
 		break;
 	case SMS_WAPIndicatorLong:
 		Class	= 1;
