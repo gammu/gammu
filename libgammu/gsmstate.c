@@ -49,6 +49,20 @@
 #define PATH_MAX (MAX_PATH)
 #endif
 
+/* Default settings */
+#if defined(WIN32) || defined(DJGPP)
+#  define DEFAULT_DEVICE "com2:"
+#else
+#  define DEFAULT_DEVICE "/dev/ttyUSB0"
+#endif
+#define DEFAULT_MODEL ""
+#define DEFAULT_CONNECTION "at"
+#define DEFAULT_SYNCHRONIZE_TIME FALSE
+#define DEFAULT_DEBUG_FILE ""
+#define DEFAULT_DEBUG_LEVEL ""
+#define DEFAULT_LOCK_DEVICE FALSE
+#define DEFAULT_START_INFO FALSE
+
 /**
  * Returns current debuging descriptor. It honors use_global
  * flag.
@@ -1338,24 +1352,9 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 	gboolean	found = FALSE;
 	char		*Temp = NULL;
 
-#if defined(WIN32) || defined(DJGPP)
-        static const char *DefaultDevice		= "com2:";
-#else
-        static const char *DefaultDevice		= "/dev/ttyUSB0";
-#endif
-        static const char *DefaultModel		= "";
-        static const char *DefaultConnection		= "at";
-	static gboolean DefaultSynchronizeTime	= FALSE;
-	static const char *DefaultDebugFile		= "";
-	static const char *DefaultDebugLevel		= "";
-	static gboolean DefaultLockDevice		= FALSE;
-	static gboolean DefaultStartInfo		= FALSE;
-
-	/* By default all debug output will go to one filedescriptor */
-	static const gboolean DefaultUseGlobalDebugFile 	= TRUE;
 	GSM_Error error = ERR_UNKNOWN;
 
-	cfg->UseGlobalDebugFile	 = DefaultUseGlobalDebugFile;
+	cfg->UseGlobalDebugFile	 = TRUE;
 
 	/* If we don't have valid config, bail out */
 	if (cfg_info == NULL) {
@@ -1388,7 +1387,7 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 	if (!cfg->Device) {
 		cfg->Device 	 = INI_GetValue(cfg_info, section, "port", 		FALSE);
 		if (!cfg->Device) {
-			cfg->Device		 	 = strdup(DefaultDevice);
+			cfg->Device		 	 = strdup(DEFAULT_DEVICE);
 		} else {
 			cfg->Device			 = strdup(cfg->Device);
 		}
@@ -1400,31 +1399,31 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 	free(cfg->Connection);
 	cfg->Connection  = INI_GetValue(cfg_info, section, "connection", 	FALSE);
 	if (cfg->Connection == NULL) {
-		cfg->Connection	 		 = strdup(DefaultConnection);
+		cfg->Connection	 		 = strdup(DEFAULT_CONNECTION);
 	} else {
 		cfg->Connection			 = strdup(cfg->Connection);
 	}
 
 	/* Set time sync */
-	cfg->SyncTime = INI_GetBool(cfg_info, section, "synchronizetime", DefaultSynchronizeTime);
+	cfg->SyncTime = INI_GetBool(cfg_info, section, "synchronizetime", DEFAULT_SYNCHRONIZE_TIME);
 
 	/* Set debug file */
 	free(cfg->DebugFile);
 	cfg->DebugFile   = INI_GetValue(cfg_info, section, "logfile", 		FALSE);
 	if (cfg->DebugFile == NULL) {
-		cfg->DebugFile		 	 = strdup(DefaultDebugFile);
+		cfg->DebugFile		 	 = strdup(DEFAULT_DEBUG_FILE);
 	} else {
 		cfg->DebugFile			 = strdup(cfg->DebugFile);
 		GSM_ExpandUserPath(&cfg->DebugFile);
 	}
 
 	/* Set file locking */
-	cfg->LockDevice  = INI_GetBool(cfg_info, section, "use_locking", DefaultLockDevice);
+	cfg->LockDevice  = INI_GetBool(cfg_info, section, "use_locking", DEFAULT_LOCK_DEVICE);
 
 	/* Set model */
 	Temp		 = INI_GetValue(cfg_info, section, "model", 		FALSE);
 	if (Temp == NULL || strcmp(Temp, "auto") == 0) {
-		strcpy(cfg->Model,DefaultModel);
+		strcpy(cfg->Model,DEFAULT_MODEL);
 	} else {
 		if (strlen(Temp) >= sizeof(cfg->Model))
 			Temp[sizeof(cfg->Model) - 1] = '\0';
@@ -1435,7 +1434,7 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 	Temp		 = INI_GetValue(cfg_info, section, "logformat", 	FALSE);
 
 	if (Temp == NULL) {
-		strcpy(cfg->DebugLevel,DefaultDebugLevel);
+		strcpy(cfg->DebugLevel,DEFAULT_DEBUG_LEVEL);
 	} else {
 		if (strlen(Temp) >= sizeof(cfg->DebugLevel))
 			Temp[sizeof(cfg->DebugLevel) - 1] = '\0';
@@ -1443,7 +1442,7 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 	}
 
 	/* Set startup info */
-	cfg->StartInfo = INI_GetBool(cfg_info, section, "startinfo", DefaultStartInfo);
+	cfg->StartInfo = INI_GetBool(cfg_info, section, "startinfo", DEFAULT_START_INFO);
 
 	/* Read localised strings for some phones */
 
@@ -1514,14 +1513,14 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 fail:
 	/* Special case, this config needs to be somehow valid */
 	if (num == 0) {
-		cfg->Device		 	 = strdup(DefaultDevice);
-		cfg->Connection	 		 = strdup(DefaultConnection);
-		cfg->SyncTime		 	 = DefaultSynchronizeTime;
-		cfg->DebugFile		 	 = strdup(DefaultDebugFile);
-		cfg->LockDevice	 		 = DefaultLockDevice;
-		strcpy(cfg->Model,DefaultModel);
-		strcpy(cfg->DebugLevel,DefaultDebugLevel);
-		cfg->StartInfo	 		 = DefaultStartInfo;
+		cfg->Device		 	 = strdup(DEFAULT_DEVICE);
+		cfg->Connection	 		 = strdup(DEFAULT_CONNECTION);
+		cfg->SyncTime		 	 = DEFAULT_SYNCHRONIZE_TIME;
+		cfg->DebugFile		 	 = strdup(DEFAULT_DEBUG_FILE);
+		cfg->LockDevice	 		 = DEFAULT_LOCK_DEVICE;
+		strcpy(cfg->Model,DEFAULT_MODEL);
+		strcpy(cfg->DebugLevel,DEFAULT_DEBUG_LEVEL);
+		cfg->StartInfo	 		 = DEFAULT_START_INFO;
 		strcpy(cfg->TextReminder,"Reminder");
 		strcpy(cfg->TextMeeting,"Meeting");
 		strcpy(cfg->TextCall,"Call");
