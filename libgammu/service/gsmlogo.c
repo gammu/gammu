@@ -171,6 +171,7 @@ void PHONE_DecodeBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, GSM_Bitmap *B
 	Bitmap->DefaultBitmap		= FALSE;
 	Bitmap->DefaultRingtone		= FALSE;
 	Bitmap->RingtoneID		= 0;
+	Bitmap->FileSystemPicture	= 0;
 	Bitmap->NetworkCode[0]		= 0;
 	Bitmap->Sender[0]		= 0;
 	Bitmap->Sender[1]		= 0;

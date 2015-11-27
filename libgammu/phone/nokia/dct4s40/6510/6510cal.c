@@ -1218,6 +1218,7 @@ static GSM_Error N6510_AddToDo2(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 	Note.Type = GSM_CAL_MEETING;
 	DT.Year = 2004; DT.Month  = 1; 	DT.Day 	  = 1;
 	DT.Hour = 12; 	DT.Minute = 12; DT.Second = 0;
+	DT.Timezone = 0;
 	memcpy(&Note.Entries[0].Date,&DT,sizeof(GSM_DateTime));
 	Note.Entries[0].EntryType 	= CAL_START_DATETIME;
 	memcpy(&Note.Entries[1].Date,&DT,sizeof(GSM_DateTime));
