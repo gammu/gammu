@@ -1710,7 +1710,7 @@ void DecodeXMLUTF8(unsigned char *dest, const char *src, int len)
 		/* Skip ampersand */
 		pos++;
 		/* Detect end of string */
-		if (pos == 0) break;
+		if (*pos == 0) break;
 		/* Find entity length */
 		pos_end = strchr(pos, ';');
 		if (pos_end - pos > 6 || pos_end == NULL) {
