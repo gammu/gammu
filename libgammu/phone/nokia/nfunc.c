@@ -2345,7 +2345,7 @@ GSM_Error N71_65_AddCalendar1(GSM_StateMachine *s, GSM_CalendarEntry *Note, int 
 			seconds=Fill_Time_T(DT)-Fill_Time_T(Note->Entries[Alarm].Date);
 			if (seconds>=0L) {
 				count -= 2;
-				req[count++] = ((unsigned char)(seconds/60L)>>8);
+				req[count++] = (unsigned char)((seconds/60L)>>8);
 				req[count++] = (unsigned char)((seconds/60L)&0xff);
 			}
 		}
