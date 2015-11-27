@@ -214,7 +214,7 @@ GSM_Error lock_device(GSM_StateMachine *s, const char* port, char **lock_name)
 	char 		*lock_file = NULL;
 	char 		buffer[max_buf_len];
 	const char 	*aux;
-	int 		fd, len;
+	int 		fd = -1, len;
 	GSM_Error	error = ERR_NONE;
 	size_t wrotebytes;
 	char 	buf[max_buf_len];
@@ -275,6 +275,7 @@ GSM_Error lock_device(GSM_StateMachine *s, const char* port, char **lock_name)
 			sscanf(buf, "%d", &pid);
 		}
 		close(fd);
+		fd = -1;
 
 
 		if (pid > 0 && kill((pid_t)pid, 0) < 0 && errno == ESRCH) {
@@ -313,6 +314,7 @@ GSM_Error lock_device(GSM_StateMachine *s, const char* port, char **lock_name)
 	sprintf(buffer, "%10ld gammu\n", (long)getpid());
 	wrotebytes = write(fd, buffer, strlen(buffer));
 	close(fd);
+	fd = -1;
 	if (wrotebytes != strlen(buffer)) {
 		error = ERR_WRITING_FILE;
 		goto failed;
@@ -325,6 +327,9 @@ failread:
 	smprintf(s, "Cannot lock device\n");
 	error = ERR_UNKNOWN;
 failed:
+	if (fd != -1) {
+		close(fd);
+	}
 	free(lock_file);
 	*lock_name = NULL;
 	return error;
