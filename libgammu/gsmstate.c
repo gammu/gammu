@@ -1333,7 +1333,7 @@ void GSM_ExpandUserPath(char **string)
 	if (home == NULL) return;
 
 	/* Allocate memory */
-	tmp = (char *)malloc(strlen(home) + strlen(*string));
+	tmp = (char *)malloc(strlen(home) + strlen(*string) + 2);
 	if (tmp == NULL) return;
 
 	/* Create final path */
