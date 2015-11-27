@@ -257,7 +257,6 @@ void GetTimeDifference(unsigned long diff, GSM_DateTime *DT, gboolean Plus, int 
 	}
 
 	Fill_GSM_DateTime(DT, t_time);
-	DT->Year = DT->Year;
 	dbgprintf(NULL, "EndTime: %02i-%02i-%04i %02i:%02i:%02i\n",
 		DT->Day,DT->Month,DT->Year,DT->Hour,DT->Minute,DT->Second);
 }
