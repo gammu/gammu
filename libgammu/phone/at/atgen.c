@@ -1082,36 +1082,29 @@ GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned c
 		dt->Day = 0;
 	}
 
-	/* Do we have time? */
-	if (time_start != NULL) {
-		dt->Hour = atoi(time_start);
-		pos = strchr(time_start, ':');
-		if (pos == NULL) return ERR_UNKNOWN;
+	/* Parse time */
+	dt->Hour = atoi(time_start);
+	pos = strchr(time_start, ':');
+	if (pos == NULL) return ERR_UNKNOWN;
+	pos++;
+	dt->Minute = atoi(pos);
+	pos = strchr(pos, ':');
+	if (pos != NULL) {
+		/* seconds present */
 		pos++;
-		dt->Minute = atoi(pos);
-		pos = strchr(pos, ':');
-		if (pos != NULL) {
-			/* seconds present */
-			pos++;
-			dt->Second = atoi(pos);
-		} else {
-			dt->Second = 0;
-		}
-
-		pos = strchr(time_start, '+');
-		if (pos == NULL)
-		  pos = strchr(time_start, '-');
-
-		if (pos != NULL) {
-			/* timezone present */
-			dt->Timezone = (*pos == '+' ? 1 : -1) * atoi(pos+1) * 3600 / 4;
-		} else {
-			dt->Timezone = 0;
-		}
+		dt->Second = atoi(pos);
 	} else {
-		dt->Hour = 0;
-		dt->Minute = 0;
 		dt->Second = 0;
+	}
+
+	pos = strchr(time_start, '+');
+	if (pos == NULL)
+	  pos = strchr(time_start, '-');
+
+	if (pos != NULL) {
+		/* timezone present */
+		dt->Timezone = (*pos == '+' ? 1 : -1) * atoi(pos+1) * 3600 / 4;
+	} else {
 		dt->Timezone = 0;
 	}
 	smprintf(s, "Parsed date: %d-%d-%d %d:%d:%d, TZ %d\n",
