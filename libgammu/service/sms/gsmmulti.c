@@ -1291,7 +1291,7 @@ gboolean GSM_DecodeMultiPartSMS(GSM_Debug_Info *di,
 {
 	int 			i;
 	unsigned int		j;
-	gboolean 			emsexist = FALSE;
+	gboolean 			emsexist = FALSE, result;
 	GSM_SiemensOTASMSInfo	SiemensInfo;
 
 	GSM_ClearMultiPartSMSInfo(Info);
@@ -1382,6 +1382,19 @@ gboolean GSM_DecodeMultiPartSMS(GSM_Debug_Info *di,
 	if (SMS->SMS[0].UDH.Type == UDH_ConcatenatedMessages ||
 	    SMS->SMS[0].UDH.Type == UDH_ConcatenatedMessages16bit) {
 		return GSM_DecodeLinkedText(di, Info, SMS);
+	}
+	/* Nokia vCard/vCalendar */
+	if (SMS->SMS[0].UDH.Type == UDH_NokiaCalendarLong ||
+	    SMS->SMS[0].UDH.Type == UDH_NokiaPhonebookLong) {
+		result = GSM_DecodeLinkedText(di, Info, SMS);
+		if (result) {
+			if (SMS->SMS[0].UDH.Type == UDH_NokiaPhonebookLong) {
+				Info->Entries[0].ID = SMS_NokiaVCARD10Long;
+			} else {
+				Info->Entries[0].ID = SMS_NokiaVCALENDAR10Long;
+			}
+		}
+		return result;
 	}
 	/* MMS indication */
 	if (SMS->SMS[0].UDH.Type == UDH_MMSIndicatorLong) {
