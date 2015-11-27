@@ -1313,12 +1313,13 @@ gboolean GSM_DecodeMultiPartSMS(GSM_Debug_Info *di,
 		Info->Entries[0].File->Buffer 	= NULL;
 		Info->Entries[0].File->Used 	= 0;
 		for (i=0;i<SMS->Number;i++) {
-			GSM_DecodeSiemensOTASMS(di, &SiemensInfo,&SMS->SMS[i]);
-			j = SiemensInfo.AllDataLen - Info->Entries[0].File->Used;
-			if (j>SiemensInfo.DataLen) j = SiemensInfo.DataLen;
-			Info->Entries[0].File->Buffer = (unsigned char *)realloc(Info->Entries[0].File->Buffer,j+Info->Entries[0].File->Used);
-			memcpy(Info->Entries[0].File->Buffer+Info->Entries[0].File->Used,SiemensInfo.Data,j);
-			Info->Entries[0].File->Used += j;
+			if (GSM_DecodeSiemensOTASMS(di, &SiemensInfo,&SMS->SMS[i])) {
+				j = SiemensInfo.AllDataLen - Info->Entries[0].File->Used;
+				if (j>SiemensInfo.DataLen) j = SiemensInfo.DataLen;
+				Info->Entries[0].File->Buffer = (unsigned char *)realloc(Info->Entries[0].File->Buffer,j+Info->Entries[0].File->Used);
+				memcpy(Info->Entries[0].File->Buffer+Info->Entries[0].File->Used,SiemensInfo.Data,j);
+				Info->Entries[0].File->Used += j;
+			}
 		}
 		if (SiemensInfo.AllDataLen == Info->Entries[0].File->Used) {
 			Info->Entries[0].ID 	= SMS_SiemensFile;
