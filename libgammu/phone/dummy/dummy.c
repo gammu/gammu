@@ -296,7 +296,7 @@ GSM_Error DUMMY_Initialise(GSM_StateMachine *s)
 
 	/* Create some directories we might need */
 	for (i = 0; i < sizeof(paths) / sizeof(char *); i++) {
-		path = DUMMY_GetFilePath(s, "fs");
+		path = DUMMY_GetFilePath(s, paths[i]);
 		if (MKDIR(path) != 0 && errno != EEXIST) {
 			smprintf(s, "Failed to create directory: %s\n", path);
 			free(path);
