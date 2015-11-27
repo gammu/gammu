@@ -1726,9 +1726,9 @@ void DecodeXMLUTF8(unsigned char *dest, const char *src, int len)
 		/* Create entity */
 		/* strndup would be better, but not portable */
 		entity = strdup(pos);
+		if (entity == NULL) break;
 		entity[pos_end - pos] = 0;
 		dbgprintf(NULL, "Found XML entity: %s\n", entity);
-		if (entity == NULL) break;
 		if (entity[0] == '#') {
 			if (entity[1] == 'x' || entity[1] == 'X') {
 				c = strtoull(entity + 2, NULL, 16);
