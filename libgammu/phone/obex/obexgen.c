@@ -1624,7 +1624,7 @@ int OBEXGEN_GetFirstFreeLocation(int **IndexStorage, int *IndexCount) {
 
 	/* Update internal list */
 	(*IndexCount)++;
-	*IndexStorage = (int *)realloc(*IndexStorage, (*IndexCount) * sizeof(int));
+	*IndexStorage = (int *)realloc(*IndexStorage, (*IndexCount + 1) * sizeof(int));
 	(*IndexStorage)[*IndexCount] = max;
 
 	return max;
