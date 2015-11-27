@@ -853,9 +853,6 @@ static GSM_Error N6510_GetFolderListing1(GSM_StateMachine *s, GSM_File *File, gb
 		error = N6510_ShiftFileCache(s, -1);
 		if (error != ERR_NONE) return error;
 
-		/* 3510 for example */
-		if (error == ERR_EMPTY) continue;
-
 		break;
 	}
 	return error;
