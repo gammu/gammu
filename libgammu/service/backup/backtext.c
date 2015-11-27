@@ -3219,11 +3219,17 @@ GSM_Error LoadBackup(const char *FileName, GSM_Backup *backup)
 
 	readvalue = ReadCFGText(file_info, buffer, "Format", UseUnicode);
 	/* Did we read anything? */
-	if (readvalue == NULL) return ERR_FILENOTSUPPORTED;
+	if (readvalue == NULL) {
+		error = ERR_FILENOTSUPPORTED;
+		goto fail_error;
+	}
 	/* Is this format version supported ? */
 	if (strcmp(readvalue,"1.01")!=0 && strcmp(readvalue,"1.02")!=0 &&
             strcmp(readvalue,"1.05")!=0 &&
-            strcmp(readvalue,"1.03")!=0 && strcmp(readvalue,"1.04")!=0) return ERR_FILENOTSUPPORTED;
+            strcmp(readvalue,"1.03")!=0 && strcmp(readvalue,"1.04")!=0) {
+		error = ERR_FILENOTSUPPORTED;
+		goto fail_error;
+	}
 
 	readvalue = ReadCFGText(file_info, buffer, "IMEI", UseUnicode);
 	if (readvalue!=NULL) strcpy(backup->IMEI,readvalue);
@@ -3258,11 +3264,13 @@ GSM_Error LoadBackup(const char *FileName, GSM_Backup *backup)
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_PROFILES) {
 				backup->Profiles[num] = (GSM_Profile *)malloc(sizeof(GSM_Profile));
-			        if (backup->Profiles[num] == NULL) return ERR_MOREMEMORY;
+			        if (backup->Profiles[num] == NULL) {
+					goto fail_memory;
+				}
 				backup->Profiles[num + 1] = NULL;
 			} else {
 				dbgprintf(NULL, "Increase GSM_BACKUP_MAX_PROFILES\n");
-				return ERR_MOREMEMORY;
+				goto fail_memory;
 			}
 			ReadProfileEntry(file_info, h->SectionName, backup->Profiles[num], UseUnicode);
 			num++;
@@ -3282,11 +3290,13 @@ GSM_Error LoadBackup(const char *FileName, GSM_Backup *backup)
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_PHONEPHONEBOOK) {
 				backup->PhonePhonebook[num] = (GSM_MemoryEntry *)malloc(sizeof(GSM_MemoryEntry));
-			        if (backup->PhonePhonebook[num] == NULL) return ERR_MOREMEMORY;
+			        if (backup->PhonePhonebook[num] == NULL) {
+					goto fail_memory;
+				}
 				backup->PhonePhonebook[num + 1] = NULL;
 			} else {
 				dbgprintf(NULL, "Increase GSM_BACKUP_MAX_PHONEPHONEBOOK\n");
-				return ERR_MOREMEMORY;
+				goto fail_memory;
 			}
 			backup->PhonePhonebook[num]->Location	= atoi (readvalue);
 			backup->PhonePhonebook[num]->MemoryType	= MEM_ME;
@@ -3309,11 +3319,13 @@ GSM_Error LoadBackup(const char *FileName, GSM_Backup *backup)
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_SIMPHONEBOOK) {
 				backup->SIMPhonebook[num] = (GSM_MemoryEntry *)malloc(sizeof(GSM_MemoryEntry));
-			        if (backup->SIMPhonebook[num] == NULL) return ERR_MOREMEMORY;
+			        if (backup->SIMPhonebook[num] == NULL) {
+					goto fail_memory;
+				}
 				backup->SIMPhonebook[num + 1] = NULL;
 			} else {
 				dbgprintf(NULL, "Increase GSM_BACKUP_MAX_SIMPHONEBOOK\n");
-				return ERR_MOREMEMORY;
+				goto fail_memory;
 			}
 			backup->SIMPhonebook[num]->Location	= atoi (readvalue);
 			backup->SIMPhonebook[num]->MemoryType	= MEM_SM;
@@ -3335,15 +3347,19 @@ GSM_Error LoadBackup(const char *FileName, GSM_Backup *backup)
 			if (readvalue==NULL) break;
 			if (num < GSM_MAXCALENDARTODONOTES) {
 				backup->Calendar[num] = (GSM_CalendarEntry *)malloc(sizeof(GSM_CalendarEntry));
-			        if (backup->Calendar[num] == NULL) return ERR_MOREMEMORY;
+			        if (backup->Calendar[num] == NULL) {
+					goto fail_memory;
+				}
 				backup->Calendar[num + 1] = NULL;
 			} else {
 				dbgprintf(NULL, "Increase GSM_MAXCALENDARTODONOTES\n");
-				return ERR_MOREMEMORY;
+				goto fail_memory;
 			}
 			backup->Calendar[num]->Location = num + 1;
 			error = ReadCalendarEntry(file_info, h->SectionName, backup->Calendar[num],UseUnicode);
-			if (error != ERR_NONE) return error;
+			if (error != ERR_NONE) {
+				goto fail_error;
+			}
 			num++;
                 }
         }
@@ -3361,11 +3377,13 @@ GSM_Error LoadBackup(const char *FileName, GSM_Backup *backup)
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_CALLER) {
 				backup->CallerLogos[num] = (GSM_Bitmap *)malloc(sizeof(GSM_Bitmap));
-			        if (backup->CallerLogos[num] == NULL) return ERR_MOREMEMORY;
+			        if (backup->CallerLogos[num] == NULL) {
+					goto fail_memory;
+				}
 				backup->CallerLogos[num + 1] = NULL;
 			} else {
 				dbgprintf(NULL, "Increase GSM_BACKUP_MAX_CALLER\n");
-				return ERR_MOREMEMORY;
+				goto fail_memory;
 			}
 			backup->CallerLogos[num]->Location = atoi (readvalue);
 			ReadCallerEntry(file_info, h->SectionName, backup->CallerLogos[num],UseUnicode);
@@ -3386,11 +3404,13 @@ GSM_Error LoadBackup(const char *FileName, GSM_Backup *backup)
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_SMSC) {
 				backup->SMSC[num] = (GSM_SMSC *)malloc(sizeof(GSM_SMSC));
-			        if (backup->SMSC[num] == NULL) return ERR_MOREMEMORY;
+			        if (backup->SMSC[num] == NULL) {
+					goto fail_memory;
+				}
 				backup->SMSC[num + 1] = NULL;
 			} else {
 				dbgprintf(NULL, "Increase GSM_BACKUP_MAX_SMSC\n");
-				return ERR_MOREMEMORY;
+				goto fail_memory;
 			}
 			backup->SMSC[num]->Location = atoi (readvalue);
 			ReadSMSCEntry(file_info, h->SectionName, backup->SMSC[num],UseUnicode);
@@ -3418,11 +3438,13 @@ GSM_Error LoadBackup(const char *FileName, GSM_Backup *backup)
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_WAPBOOKMARK) {
 				backup->WAPBookmark[num] = (GSM_WAPBookmark *)malloc(sizeof(GSM_WAPBookmark));
-			        if (backup->WAPBookmark[num] == NULL) return ERR_MOREMEMORY;
+			        if (backup->WAPBookmark[num] == NULL) {
+					goto fail_memory;
+				}
 				backup->WAPBookmark[num + 1] = NULL;
 			} else {
 				dbgprintf(NULL, "Increase GSM_BACKUP_MAX_WAPBOOKMARK\n");
-				return ERR_MOREMEMORY;
+				goto fail_memory;
 			}
 			backup->WAPBookmark[num]->Location = num + 1;
 			ReadWAPBookmarkEntry(file_info, h->SectionName, backup->WAPBookmark[num],UseUnicode);
@@ -3450,11 +3472,13 @@ GSM_Error LoadBackup(const char *FileName, GSM_Backup *backup)
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_WAPSETTINGS) {
 				backup->WAPSettings[num] = (GSM_MultiWAPSettings *)malloc(sizeof(GSM_MultiWAPSettings));
-			        if (backup->WAPSettings[num] == NULL) return ERR_MOREMEMORY;
+			        if (backup->WAPSettings[num] == NULL) {
+					goto fail_memory;
+				}
 				backup->WAPSettings[num + 1] = NULL;
 			} else {
 				dbgprintf(NULL, "Increase GSM_BACKUP_MAX_WAPSETTINGS\n");
-				return ERR_MOREMEMORY;
+				goto fail_memory;
 			}
 			backup->WAPSettings[num]->Location = num + 1;
 			dbgprintf(NULL, "reading wap settings\n");
@@ -3476,11 +3500,13 @@ GSM_Error LoadBackup(const char *FileName, GSM_Backup *backup)
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_MMSSETTINGS) {
 				backup->MMSSettings[num] = (GSM_MultiWAPSettings *)malloc(sizeof(GSM_MultiWAPSettings));
-			        if (backup->MMSSettings[num] == NULL) return ERR_MOREMEMORY;
+			        if (backup->MMSSettings[num] == NULL) {
+					goto fail_memory;
+				}
 				backup->MMSSettings[num + 1] = NULL;
 			} else {
 				dbgprintf(NULL, "Increase GSM_BACKUP_MAX_MMSSETTINGS\n");
-				return ERR_MOREMEMORY;
+				goto fail_memory;
 			}
 			backup->MMSSettings[num]->Location = num + 1;
 			dbgprintf(NULL, "reading mms settings\n");
@@ -3502,11 +3528,13 @@ GSM_Error LoadBackup(const char *FileName, GSM_Backup *backup)
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_RINGTONES) {
 				backup->Ringtone[num] = (GSM_Ringtone *)malloc(sizeof(GSM_Ringtone));
-			        if (backup->Ringtone[num] == NULL) return ERR_MOREMEMORY;
+			        if (backup->Ringtone[num] == NULL) {
+					goto fail_memory;
+				}
 				backup->Ringtone[num + 1] = NULL;
 			} else {
 				dbgprintf(NULL, "Increase GSM_BACKUP_MAX_RINGTONES\n");
-				return ERR_MOREMEMORY;
+				goto fail_memory;
 			}
 			ReadRingtoneEntry(file_info, h->SectionName, backup->Ringtone[num],UseUnicode);
 			num++;
@@ -3526,15 +3554,19 @@ GSM_Error LoadBackup(const char *FileName, GSM_Backup *backup)
 			if (readvalue==NULL) break;
 			if (num < GSM_MAXCALENDARTODONOTES) {
 				backup->ToDo[num] = (GSM_ToDoEntry *)malloc(sizeof(GSM_ToDoEntry));
-			        if (backup->ToDo[num] == NULL) return ERR_MOREMEMORY;
+			        if (backup->ToDo[num] == NULL) {
+					goto fail_memory;
+				}
 				backup->ToDo[num + 1] = NULL;
 			} else {
 				dbgprintf(NULL, "Increase GSM_MAXCALENDARTODONOTES\n");
-				return ERR_MOREMEMORY;
+				goto fail_memory;
 			}
 			backup->ToDo[num]->Location = num + 1;
 			error = ReadToDoEntry(file_info, h->SectionName, backup->ToDo[num],UseUnicode);
-			if (error != ERR_NONE) return error;
+			if (error != ERR_NONE) {
+				goto fail_error;
+			}
 			num++;
                 }
         }
@@ -3545,14 +3577,18 @@ GSM_Error LoadBackup(const char *FileName, GSM_Backup *backup)
 	}
 	if (readvalue!=NULL) {
 		backup->StartupLogo = (GSM_Bitmap *)malloc(sizeof(GSM_Bitmap));
-	        if (backup->StartupLogo == NULL) return ERR_MOREMEMORY;
+	        if (backup->StartupLogo == NULL) {
+			goto fail_memory;
+		}
 		ReadStartupEntry(file_info, buffer, backup->StartupLogo,UseUnicode);
 	}
 	sprintf(buffer,"Operator");
 	readvalue = ReadCFGText(file_info, buffer, "Network", UseUnicode);
 	if (readvalue!=NULL) {
 		backup->OperatorLogo = (GSM_Bitmap *)malloc(sizeof(GSM_Bitmap));
-	        if (backup->OperatorLogo == NULL) return ERR_MOREMEMORY;
+	        if (backup->OperatorLogo == NULL) {
+			goto fail_memory;
+		}
 		ReadOperatorEntry(file_info, buffer, backup->OperatorLogo,UseUnicode);
 	}
 	num = 0;
@@ -3569,16 +3605,18 @@ GSM_Error LoadBackup(const char *FileName, GSM_Backup *backup)
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_FMSTATIONS) {
 				backup->FMStation[num] = (GSM_FMStation *)malloc(sizeof(GSM_FMStation));
-			        if (backup->FMStation[num] == NULL) return ERR_MOREMEMORY;
+			        if (backup->FMStation[num] == NULL) {
+					goto fail_memory;
+				}
 				backup->FMStation[num + 1] = NULL;
 			} else {
 				dbgprintf(NULL, "Increase GSM_BACKUP_MAX_FMSTATIONS\n");
-				return ERR_MOREMEMORY;
+				goto fail_memory;
 			}
 			backup->FMStation[num]->Location = num + 1;
 			error = ReadFMStationEntry(file_info, h->SectionName, backup->FMStation[num],UseUnicode);
 			if (error != ERR_NONE) {
-				return error;
+				goto fail_error;
 			}
 			num++;
                 }
@@ -3597,11 +3635,13 @@ GSM_Error LoadBackup(const char *FileName, GSM_Backup *backup)
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_GPRSPOINT) {
 				backup->GPRSPoint[num] = (GSM_GPRSAccessPoint *)malloc(sizeof(GSM_GPRSAccessPoint));
-			        if (backup->GPRSPoint[num] == NULL) return ERR_MOREMEMORY;
+			        if (backup->GPRSPoint[num] == NULL) {
+					goto fail_memory;
+				}
 				backup->GPRSPoint[num + 1] = NULL;
 			} else {
 				dbgprintf(NULL, "Increase GSM_BACKUP_MAX_GPRSPOINT\n");
-				return ERR_MOREMEMORY;
+				goto fail_memory;
 			}
 			backup->GPRSPoint[num]->Location = num + 1;
 			ReadGPRSPointEntry(file_info, h->SectionName, backup->GPRSPoint[num],UseUnicode);
@@ -3622,11 +3662,13 @@ GSM_Error LoadBackup(const char *FileName, GSM_Backup *backup)
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_NOTE) {
 				backup->Note[num] = (GSM_NoteEntry *)malloc(sizeof(GSM_NoteEntry));
-			        if (backup->Note[num] == NULL) return ERR_MOREMEMORY;
+			        if (backup->Note[num] == NULL) {
+					goto fail_memory;
+				}
 				backup->Note[num + 1] = NULL;
 			} else {
 				dbgprintf(NULL, "Increase GSM_BACKUP_MAX_NOTE\n");
-				return ERR_MOREMEMORY;
+				goto fail_memory;
 			}
 			ReadNoteEntry(file_info, h->SectionName, backup->Note[num],UseUnicode);
 			num++;
@@ -3759,10 +3801,17 @@ GSM_Error LoadBackup(const char *FileName, GSM_Backup *backup)
 		} else {
 	                if (strncasecmp("Note", h->SectionName, 4) == 0) found = TRUE;
 		}
-		if (!found) return ERR_NOTIMPLEMENTED;
+		if (!found) {
+			goto fail_memory;
+		}
         }
 	INI_Free(file_info);
 	return ERR_NONE;
+fail_memory:
+	error = ERR_MOREMEMORY;
+fail_error:
+	INI_Free(file_info);
+	return error;
 }
 
 /* ---------------------- backup files for SMS ----------------------------- */
