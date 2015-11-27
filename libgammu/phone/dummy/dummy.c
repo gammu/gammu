@@ -47,13 +47,13 @@
 #include "../../../helper/string.h"
 
 #ifdef WIN32
-#define MKDIR(dir) if (_mkdir(dir) != 0 && errno != EEXIST) {free(path); return ERR_DEVICENOPERMISSION;}
+#define MKDIR(dir) if (_mkdir(dir) != 0 && errno != EEXIST) {smprintf(s, "Failed to create directory: %s\n", path); free(path); return ERR_DEVICENOPERMISSION;}
 #ifndef S_ISDIR
 #define S_ISDIR(mode) ((mode & _S_IFDIR) == _S_IFDIR)
 #endif
 #include "../../../helper/win32-dirent.h"
 #else
-#define MKDIR(dir) if (mkdir(dir, 0755) != 0 && errno != EEXIST) {free(path); return ERR_DEVICENOPERMISSION;}
+#define MKDIR(dir) if (mkdir(dir, 0755) != 0 && errno != EEXIST) {smprintf(s, "Failed to create directory: %s\n", path); free(path); return ERR_DEVICENOPERMISSION;}
 #include <dirent.h>
 #endif
 
