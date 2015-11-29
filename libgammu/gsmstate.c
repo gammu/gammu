@@ -333,7 +333,7 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, const char *con
 #ifdef GSM_ENABLE_S60
 	GSM_RegisterConnection(s, GCT_PROXYS60,	  &ProxyDevice,&S60Protocol);
 #endif
-#ifdef GSM_ENABLE_GNAPGEN
+#ifdef GSM_ENABLE_BLUEGNAPBUS
 	GSM_RegisterConnection(s, GCT_PROXYGNAPBUS,&ProxyDevice,&GNAPBUSProtocol);
 #endif
 #ifdef GSM_ENABLE_FBUS2
