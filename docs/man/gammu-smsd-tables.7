@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSD-TABLES" "7" "October 14, 2015" "1.36.7" "Gammu"
+.TH "GAMMU-SMSD-TABLES" "7" "November 29, 2015" "1.36.8" "Gammu"
 .SH NAME
 gammu-smsd-tables \- description of tables for database backends of gammu-smsd(1)
 .
@@ -173,6 +173,9 @@ when default is used, Delivery Report is used or not according to SMSD instance 
 .TP
 .B \fBCreatorID\fP (text)
 identification of program created the message
+.TP
+.B \fBRetries\fP (integer)
+number of attempted retries when sending this message
 .UNINDENT
 .SS outbox_multipart
 .sp
@@ -364,6 +367,16 @@ production environment.
 .UNINDENT
 .sp
 History of schema versions:
+.sp
+15
+.INDENT 0.0
+.INDENT 3.5
+Added \fBRetries\fP field.
+.sp
+Changed in version 1.36.7.
+
+.UNINDENT
+.UNINDENT
 .sp
 14
 .INDENT 0.0

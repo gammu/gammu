@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMURC" "5" "October 14, 2015" "1.36.7" "Gammu"
+.TH "GAMMURC" "5" "November 29, 2015" "1.36.8" "Gammu"
 .SH NAME
 gammurc \- gammu(1) configuration file
 .
@@ -139,6 +139,9 @@ For Bluetooth connection use one of following:
 .B \fBbluephonet\fP
 Phonet connection for Nokia phones.
 .TP
+.B \fBbluefbus\fP
+FBUS connection for Nokia phones.
+.TP
 .B \fBblueat\fP
 AT commands connection for most of phones.
 .TP
@@ -153,6 +156,32 @@ Connection to Series60 applet in S60 phones, see s60\&.
 .sp
 New in version 1.29.90.
 
+.UNINDENT
+.sp
+New in version 1.36.7: Gammu now supports connecting using proxy command.
+
+.sp
+You can also proxy the connection using shell command, for example to
+different host. This can be done using proxy connections:
+.INDENT 7.0
+.TP
+.B \fBproxyphonet\fP
+Phonet connection for Nokia phones.
+.TP
+.B \fBproxyfbus\fP
+FBUS connection for Nokia phones.
+.TP
+.B \fBproxyat\fP
+AT commands connection for most of phones.
+.TP
+.B \fBproxyobex\fP
+OBEX (IrMC or file transfer) connection for most of phones.
+.TP
+.B \fBproxygnapbus\fP
+GNapplet based connection for Symbian phones, see gnapplet\&.
+.TP
+.B \fBproxys60\fP
+Connection to Series60 applet in S60 phones, see s60\&.
 .UNINDENT
 .sp
 \fBSEE ALSO:\fP
@@ -254,6 +283,10 @@ including channel number after slash.
 .sp
 Before using Gammu, your device should be paired with computer or you should
 have set up automatic pairing.
+.sp
+For \fBProxy\fP connections, you need to specify command which should be
+executed. It is supposed to pass bidirectional communication from Gammu to
+the device. This can happen for example over network.
 .sp
 For \fBIrDA\fP connections, this parameters is not used at all.
 .sp
@@ -517,6 +550,26 @@ connection = at
 [gammmu2]
 device = /dev/ttyS2
 connection = at
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.SS Connecting to remote phone
+.sp
+New in version 1.36.7.
+
+.sp
+You can connect using Gammu to phone running on different host. This can be
+achieved using proxy connection, which executes command to forward
+bi\-directional communication with the phone.
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+[gammu]
+device = ssh root@my.router /usr/local/bin/myscript /dev/ttyUSB0
+connection = proxyat
 .ft P
 .fi
 .UNINDENT

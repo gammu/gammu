@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSD-SQL" "7" "October 14, 2015" "1.36.7" "Gammu"
+.TH "GAMMU-SMSD-SQL" "7" "November 29, 2015" "1.36.8" "Gammu"
 .SH NAME
 gammu-smsd-sql \- gammu-smsd(1) backend using SQL abstraction layer to use any supported database as a message storage
 .
@@ -635,6 +635,32 @@ battery percent
 .TP
 .B \fB%2\fP
 signal percent
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B update_retries
+Update number of retries for outbox message.
+.INDENT 7.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+UPDATE outbox SET SendngTimeOut = (NOW() + INTERVAL 600 SECOND) + 0,
+Retries = %2 WHERE ID = %1
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Query specific parameters:
+.INDENT 7.0
+.TP
+.B \fB%1\fP
+message ID
+.TP
+.B \fB%2\fP
+number of retries
 .UNINDENT
 .UNINDENT
 .SH AUTHOR

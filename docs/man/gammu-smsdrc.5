@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSDRC" "5" "October 14, 2015" "1.36.7" "Gammu"
+.TH "GAMMU-SMSDRC" "5" "November 29, 2015" "1.36.8" "Gammu"
 .SH NAME
 gammu-smsdrc \- gammu-smsd(1) configuration file
 .
@@ -245,7 +245,8 @@ Default is 30.
 .INDENT 0.0
 .TP
 .B MaxRetries
-How many times will SMSD try to resend message if sending fails.
+How many times will SMSD try to resend message if sending fails. This
+is tracked per message and currently supported only with SQL backends.
 .sp
 Default is 1.
 .UNINDENT
@@ -786,7 +787,7 @@ Service = files
 PIN = 1234
 LogFile = syslog
 InboxPath = /var/spool/sms/inbox/
-OutboPpath = /var/spool/sms/outbox/
+OutboxPath = /var/spool/sms/outbox/
 SentSMSPath = /var/spool/sms/sent/
 ErrorSMSPath = /var/spool/sms/error/
 .ft P

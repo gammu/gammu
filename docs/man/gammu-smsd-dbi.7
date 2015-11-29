@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSD-DBI" "7" "October 14, 2015" "1.36.7" "Gammu"
+.TH "GAMMU-SMSD-DBI" "7" "November 29, 2015" "1.36.8" "Gammu"
 .SH NAME
 gammu-smsd-dbi \- gammu-smsd(1) backend using DBI abstraction layer to use any supported database as a message storage
 .
@@ -105,7 +105,7 @@ CREATE TABLE gammu (
   Version INTEGER NOT NULL DEFAULT \(aq0\(aq
 );
 
-INSERT INTO gammu (Version) VALUES (14);
+INSERT INTO gammu (Version) VALUES (15);
 
 CREATE TABLE inbox (
   UpdatedInDB NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq)),
@@ -148,6 +148,7 @@ CREATE TABLE outbox (
   SendingTimeOut NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq)),
   DeliveryReport TEXT DEFAULT \(aqdefault\(aq,
   CreatorID TEXT NOT NULL,
+  Retries INTEGER DEFAULT \(aq0\(aq,
   CHECK (Coding IN 
   (\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq)),
   CHECK (DeliveryReport IN (\(aqdefault\(aq,\(aqyes\(aq,\(aqno\(aq))

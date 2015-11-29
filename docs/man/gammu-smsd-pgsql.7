@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSD-PGSQL" "7" "October 14, 2015" "1.36.7" "Gammu"
+.TH "GAMMU-SMSD-PGSQL" "7" "November 29, 2015" "1.36.8" "Gammu"
 .SH NAME
 gammu-smsd-pgsql \- gammu-smsd(1) backend using PostgreSQL database server as a message storage
 .
@@ -155,7 +155,7 @@ CREATE TABLE gammu (
 \-\- Dumping data for table "gammu"
 \-\- 
 
-INSERT INTO gammu ("Version") VALUES (14);
+INSERT INTO gammu ("Version") VALUES (15);
 
 \-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 
@@ -217,6 +217,7 @@ CREATE TABLE outbox (
   "SendingTimeOut" timestamp(0) WITHOUT time zone NOT NULL DEFAULT LOCALTIMESTAMP(0),
   "DeliveryReport" varchar(10) DEFAULT \(aqdefault\(aq,
   "CreatorID" text NOT NULL,
+  "Retries" integer DEFAULT "0",
   CHECK ("Coding" IN 
   (\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq)),
   CHECK ("DeliveryReport" IN (\(aqdefault\(aq,\(aqyes\(aq,\(aqno\(aq))

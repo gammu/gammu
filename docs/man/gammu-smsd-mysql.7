@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSD-MYSQL" "7" "October 14, 2015" "1.36.7" "Gammu"
+.TH "GAMMU-SMSD-MYSQL" "7" "November 29, 2015" "1.36.8" "Gammu"
 .SH NAME
 gammu-smsd-mysql \- gammu-smsd(1) backend using MySQL database server as a message storage
 .
@@ -135,7 +135,7 @@ CREATE TABLE \(gagammu\(ga (
 \-\- Dumping data for table \(gagammu\(ga
 \-\- 
 
-INSERT INTO \(gagammu\(ga (\(gaVersion\(ga) VALUES (14);
+INSERT INTO \(gagammu\(ga (\(gaVersion\(ga) VALUES (15);
 
 \-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 
@@ -189,6 +189,7 @@ CREATE TABLE \(gaoutbox\(ga (
   \(gaSendingTimeOut\(ga timestamp NULL default \(aq0000\-00\-00 00:00:00\(aq,
   \(gaDeliveryReport\(ga enum(\(aqdefault\(aq,\(aqyes\(aq,\(aqno\(aq) default \(aqdefault\(aq,
   \(gaCreatorID\(ga text NOT NULL,
+  \(gaRetries\(ga int(3) default 0,
   PRIMARY KEY \(gaID\(ga (\(gaID\(ga)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
