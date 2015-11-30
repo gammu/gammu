@@ -187,7 +187,7 @@ General parameters of SMS daemon
     busy sending SMSes. Normally a test for received SMSes is done every
     :config:option:`CommTimeout` seconds and after each sent SMS.
 
-    Default is 0 (not used).
+    Default is 15.
 
 .. config:option:: StatusFrequency
 
