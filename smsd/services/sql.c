@@ -1371,7 +1371,7 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 			", ", ESCAPE_FIELD("RelativeValidity"),
 			", ", ESCAPE_FIELD("DeliveryReport"),
 			", ", ESCAPE_FIELD("CreatorID"),
-			", ", ESCAPE_FIELD("retries"),
+			", ", ESCAPE_FIELD("Retries"),
 			" FROM outbox WHERE ",
 			ESCAPE_FIELD("ID"), "=%1", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
