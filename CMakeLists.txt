@@ -167,6 +167,8 @@ find_program(SED_BIN sed)
 find_program(MYSQL_BIN mysql)
 find_program(PSQL_BIN psql)
 
+find_package (Threads)
+
 # Check for Python
 find_package(PythonInterp 2)
 

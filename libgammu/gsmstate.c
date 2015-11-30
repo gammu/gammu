@@ -329,7 +329,7 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, const char *con
 #ifdef GSM_ENABLE_BLUEOBEX
 	GSM_RegisterConnection(s, GCT_BLUEOBEX,   &BlueToothDevice,&OBEXProtocol);
 #endif
-#ifndef WIN32
+#if !defined(WIN32) && defined(HAVE_PTHREAD)
 #ifdef GSM_ENABLE_S60
 	GSM_RegisterConnection(s, GCT_PROXYS60,	  &ProxyDevice,&S60Protocol);
 #endif
