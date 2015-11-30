@@ -1457,7 +1457,7 @@ gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config)
 				}
 				break;
 			default:
-				SMSD_LogError(DEBUG_INFO, Config, "Error getting SMS", error);
+				SMSD_LogError(DEBUG_ERROR, Config, "Error getting SMS", error);
 				if (GetSMSData != NULL) {
 					for (i = 0; GetSMSData[i] != NULL; i++) {
 						free(GetSMSData[i]);
