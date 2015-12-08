@@ -19,11 +19,12 @@ the issue.
 ChangeLog
 =========
     
-2015???? - 1.36.8
+20151208 - 1.36.8
 
 [-] * Changed default value for ReceiveFrequency.
 [-] * Fixed compatibility for PostgreSQL.
 [-] * Fixed build failure with all disabled SMSD backends.
+[-] * Documentation improvements.
     
 20151129 - 1.36.7
 
