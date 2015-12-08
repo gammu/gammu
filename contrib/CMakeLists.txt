@@ -129,4 +129,7 @@ endif (INSTALL_UDEV_RULES)
 add_subdirectory(smscgi)
 add_subdirectory(convert)
 add_subdirectory(sqlreply)
-add_subdirectory(cpp-sample)
+
+if (DEBUG OR "$ENV{TRAVIS}" STREQUAL "true")
+    add_subdirectory(cpp-sample)
+endif (DEBUG OR "$ENV{TRAVIS}" STREQUAL "true")
