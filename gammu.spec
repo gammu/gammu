@@ -9,7 +9,7 @@
 %define extension   bz2
 
 Name:           gammu
-Version:        1.36.8
+Version:        1.36.90
 Release:        0
 Summary:        Mobile phone management utility
 License:        GPL-2.0
