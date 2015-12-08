@@ -25,6 +25,7 @@ ChangeLog
 [-] * Fixed compatibility for PostgreSQL.
 [-] * Fixed build failure with all disabled SMSD backends.
 [-] * Documentation improvements.
+[-] * Fixed mixing C++ code with SMSD.
     
 20151129 - 1.36.7
 
