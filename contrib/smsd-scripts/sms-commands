@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# Check for sender number
+if [ "$SMS_1_NUMBER" != "+420123456789" ] ; then
+    exit
+fi
+
+# Handle commands
+case "$SMS_1_TEXT" in
+    "DMS A")
+        /usr/bin/dms-a
+        ;;
+    "DMS B")
+        /usr/bin/dms-b
+        ;;
+esac
