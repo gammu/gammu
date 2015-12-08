@@ -33,7 +33,7 @@ sed -i "
 if ! grep -q " - $version" ChangeLog ; then
     sed -i -e '/^=========$/ a\
     ' -e '/^=========$/ a\
-2015???? - '"$version"'
+2016???? - '"$version"'
     ' ChangeLog
 fi
 
