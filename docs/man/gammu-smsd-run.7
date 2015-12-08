@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSD-RUN" "7" "November 29, 2015" "1.36.8" "Gammu"
+.TH "GAMMU-SMSD-RUN" "7" "December 08, 2015" "1.36.8" "Gammu"
 .SH NAME
 gammu-smsd-run \- documentation for RunOnReceive directive
 .
@@ -153,6 +153,36 @@ for ID in "$@" ; do
     $PROGRAM < $INBOX/$ID
 done
 
+
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.SS Invoking commands based on message text
+.sp
+Following script (if used as \fBRunOnReceive\fP handler) executes
+given programs based on message text.
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+#!/bin/sh
+
+# Check for sender number
+if [ "$SMS_1_NUMBER" != "+420123456789" ] ; then
+    exit
+fi
+
+# Handle commands
+case "$SMS_1_TEXT" in
+    "DMS A")
+        /usr/bin/dms\-a
+        ;;
+    "DMS B")
+        /usr/bin/dms\-b
+        ;;
+esac
 
 .ft P
 .fi
