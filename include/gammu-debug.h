@@ -12,6 +12,10 @@
  * Debuging handling.
  */
 
+#ifdef	__cplusplus
+extern "C" {
+#endif
+
 #include <stdio.h>
 
 #include <gammu-error.h>
@@ -151,6 +155,9 @@ void GSM_LogError(GSM_StateMachine * s, const char *message,
 PRINTF_STYLE(2, 3)
 int smprintf(GSM_StateMachine * s, const char *format, ...);
 
+#ifdef	__cplusplus
+}
+#endif
 #endif
 
 /* Editor configuration

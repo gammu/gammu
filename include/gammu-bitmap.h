@@ -12,6 +12,10 @@
  * Bitmaps manipulations.
  */
 
+#ifdef	__cplusplus
+extern "C" {
+#endif
+
 #include <gammu-limits.h>
 #include <gammu-types.h>
 #include <gammu-error.h>
@@ -289,6 +293,9 @@ void GSM_ClearBitmap(GSM_Bitmap * bmp);
  */
 GSM_Error GSM_GetScreenshot(GSM_StateMachine *s, GSM_BinaryPicture *picture);
 
+#ifdef	__cplusplus
+}
+#endif
 #endif
 
 /* Editor configuration

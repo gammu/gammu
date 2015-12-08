@@ -7,6 +7,10 @@
 #ifndef __gammu_smsd_h
 #define __gammu_smsd_h
 
+#ifdef	__cplusplus
+extern "C" {
+#endif
+
 #include <gammu-error.h>
 #include <gammu-message.h>
 #include <gammu-misc.h>
@@ -163,6 +167,9 @@ GSM_SMSDConfig *SMSD_NewConfig(const char *name);
  * \ingroup SMSD
  */
 void SMSD_FreeConfig(GSM_SMSDConfig * config);
+#ifdef	__cplusplus
+}
+#endif
 #endif
 
 /* Editor configuration

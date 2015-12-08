@@ -12,6 +12,10 @@
  * Generic state machine callback layer.
  */
 
+#ifdef	__cplusplus
+extern "C" {
+#endif
+
 #include <gammu-types.h>
 #include <gammu-message.h>
 #include <gammu-call.h>
@@ -118,6 +122,9 @@ void GSM_SetIncomingUSSDCallback(GSM_StateMachine * s,
 void GSM_SetSendSMSStatusCallback(GSM_StateMachine * s,
 				  SendSMSStatusCallback callback,
 				  void *user_data);
+#ifdef	__cplusplus
+}
+#endif
 #endif
 
 /* Editor configuration

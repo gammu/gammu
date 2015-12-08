@@ -7,6 +7,10 @@
 #ifndef __gammu_message_h
 #define __gammu_message_h
 
+#ifdef	__cplusplus
+extern "C" {
+#endif
+
 #include <gammu-limits.h>
 #include <gammu-memory.h>
 #include <gammu-datetime.h>
@@ -1422,6 +1426,9 @@ GSM_Error GSM_SetIncomingUSSD(GSM_StateMachine * s, gboolean enable);
 void GSM_SMSCounter(GSM_Debug_Info *di, unsigned char *MessageBuffer,
 	GSM_UDH UDHType, GSM_Coding_Type Coding, int *SMSNum, size_t *CharsLeft);
 
+#ifdef	__cplusplus
+}
+#endif
 #endif
 
 /* Editor configuration

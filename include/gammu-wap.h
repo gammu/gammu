@@ -7,6 +7,10 @@
 #ifndef __gammu_wap_h
 #define __gammu_wap_h
 
+#ifdef	__cplusplus
+extern "C" {
+#endif
+
 /**
  * \defgroup WAP WAP
  * WAP bookmars and settings manipulations.
@@ -272,6 +276,9 @@ GSM_Error GSM_GetWAPSettings(GSM_StateMachine * s,
  */
 GSM_Error GSM_SetWAPSettings(GSM_StateMachine * s,
 			     GSM_MultiWAPSettings * settings);
+#ifdef	__cplusplus
+}
+#endif
 #endif
 
 /* Editor configuration

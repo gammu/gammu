@@ -7,6 +7,10 @@
 #ifndef __gammu_misc_h
 #define __gammu_misc_h
 
+#ifdef	__cplusplus
+extern "C" {
+#endif
+
 #ifdef WIN32
 #  define WIN32_LEAN_AND_MEAN
 #  include <windows.h>
@@ -178,6 +182,9 @@ gboolean GSM_IsNewerVersion(const char *latest_version,
   */
 GSM_Error GSM_SetPower(GSM_StateMachine *s, gboolean on);
 
+#ifdef	__cplusplus
+}
+#endif
 #endif
 
 /* Editor configuration

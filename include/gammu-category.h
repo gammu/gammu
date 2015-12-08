@@ -12,6 +12,10 @@
  * Categories handling.
  */
 
+#ifdef	__cplusplus
+extern "C" {
+#endif
+
 #include <gammu-limits.h>
 #include <gammu-error.h>
 #include <gammu-statemachine.h>
@@ -102,6 +106,9 @@ GSM_Error GSM_AddCategory(GSM_StateMachine * s, GSM_Category * Category);
  */
 GSM_Error GSM_GetCategoryStatus(GSM_StateMachine * s,
 				GSM_CategoryStatus * Status);
+#ifdef	__cplusplus
+}
+#endif
 #endif
 
 /* Editor configuration

@@ -12,6 +12,10 @@
  * Date and time handling.
  */
 
+#ifdef	__cplusplus
+extern "C" {
+#endif
+
 #include <time.h>
 #include <gammu-error.h>
 #include <gammu-statemachine.h>
@@ -235,6 +239,9 @@ GSM_Error GSM_GetDateTime(GSM_StateMachine * s, GSM_DateTime * date_time);
  * \ingroup Category
  */
 GSM_Error GSM_SetDateTime(GSM_StateMachine * s, GSM_DateTime * date_time);
+#ifdef	__cplusplus
+}
+#endif
 #endif
 
 /* Editor configuration

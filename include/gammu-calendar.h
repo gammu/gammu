@@ -12,6 +12,10 @@
  * Calendar events manipulations.
  */
 
+#ifdef	__cplusplus
+extern "C" {
+#endif
+
 #include <gammu-datetime.h>
 #include <gammu-limits.h>
 #include <gammu-debug.h>
@@ -972,6 +976,9 @@ GSM_Error GSM_DeleteNote(GSM_StateMachine * s, GSM_NoteEntry * Note);
  */
 GSM_Error GSM_DeleteAllNotes(GSM_StateMachine * s);
 
+#ifdef	__cplusplus
+}
+#endif
 #endif
 
 /* Editor configuration

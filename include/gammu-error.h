@@ -12,6 +12,10 @@
  * Error handling and manipulation.
  */
 
+#ifdef	__cplusplus
+extern "C" {
+#endif
+
 /**
  * Error types.
  * \ingroup Error
@@ -349,6 +353,9 @@ const char *GSM_ErrorString(GSM_Error e);
  * \ingroup Error
  */
 const char *GSM_ErrorName(GSM_Error e);
+#ifdef	__cplusplus
+}
+#endif
 #endif
 
 /* Editor configuration

@@ -7,6 +7,10 @@
 #ifndef __gammu_types_h
 #define __gammu_types_h
 
+#ifdef	__cplusplus
+extern "C" {
+#endif
+
 /**
  * \defgroup Type Types
  * Definition of various useful types.
@@ -25,6 +29,9 @@ typedef int gboolean;
 #endif
 #endif
 
+#ifdef	__cplusplus
+}
+#endif
 #endif
 
 /* Editor configuration

@@ -7,6 +7,10 @@
 #ifndef __gammu_inifile_h
 #define __gammu_inifile_h
 
+#ifdef	__cplusplus
+extern "C" {
+#endif
+
 #include <gammu-types.h>
 #include <gammu-error.h>
 /**
@@ -156,6 +160,9 @@ gboolean INI_GetBool(INI_Section *cfg,
  */
 gboolean GSM_StringToBool(const char *value);
 
+#ifdef	__cplusplus
+}
+#endif
 #endif
 
 /* Editor configuration

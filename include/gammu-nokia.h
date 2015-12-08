@@ -1,11 +1,15 @@
 /**
  * \file gammu-nokia.h
  * \author Michal Čihař
- * 
+ *
  * Nokia data and functions.
  */
 #ifndef __gammu_nokia_h
 #define __gammu_nokia_h
+
+#ifdef	__cplusplus
+extern "C" {
+#endif
 
 /**
  * \defgroup Nokia Nokia
@@ -32,6 +36,9 @@ void NOKIA_GetDefaultCallerGroupName(GSM_Bitmap * Bitmap);
  * \ingroup Nokia
  */
 void NOKIA_GetDefaultProfileName(GSM_Profile * Profile);
+#ifdef	__cplusplus
+}
+#endif
 #endif
 
 /* Editor configuration

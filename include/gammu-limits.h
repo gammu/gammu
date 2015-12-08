@@ -7,6 +7,10 @@
 #ifndef __gammu_limits_h
 #define __gammu_limits_h
 
+#ifdef	__cplusplus
+extern "C" {
+#endif
+
 /**
  * \defgroup Limits Limits
  * Limits definitions.
@@ -326,6 +330,9 @@
 #define GSM_MAX_CALL_DIVERTS 20
 
 
+#ifdef	__cplusplus
+}
+#endif
 #endif
 
 /* Editor configuration

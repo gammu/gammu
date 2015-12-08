@@ -12,6 +12,10 @@
  * Files handling.
  */
 
+#ifdef	__cplusplus
+extern "C" {
+#endif
+
 #include <gammu-types.h>
 #include <gammu-datetime.h>
 #include <gammu-limits.h>
@@ -303,6 +307,9 @@ GSM_Error GSM_AddFolder(GSM_StateMachine * s, GSM_File * File);
  * \ingroup File
  */
 GSM_Error GSM_DeleteFolder(GSM_StateMachine * s, unsigned char *ID);
+#ifdef	__cplusplus
+}
+#endif
 #endif
 
 /* Editor configuration

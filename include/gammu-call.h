@@ -12,6 +12,10 @@
  * Call entries manipulations.
  */
 
+#ifdef	__cplusplus
+extern "C" {
+#endif
+
 #include <gammu-types.h>
 #include <gammu-limits.h>
 #include <gammu-error.h>
@@ -387,6 +391,9 @@ GSM_Error GSM_SetIncomingCall(GSM_StateMachine * s, gboolean enable);
  */
 GSM_Error GSM_SendDTMF(GSM_StateMachine * s, char *sequence);
 
+#ifdef	__cplusplus
+}
+#endif
 #endif
 
 /* Editor configuration

@@ -7,6 +7,10 @@
 #ifndef __gammu_unicode_h
 #define __gammu_unicode_h
 
+#ifdef	__cplusplus
+extern "C" {
+#endif
+
 /**
  * \defgroup Unicode Unicode
  * Unicode manipulation functions. Please note that most of functions
@@ -166,6 +170,9 @@ int EncodeWithUnicodeAlphabet(const unsigned char *value, wchar_t *dest);
  * Converts single character from wchar_t to unicode.
  */
 int DecodeWithUnicodeAlphabet(wchar_t value, unsigned char *dest);
+#ifdef	__cplusplus
+}
+#endif
 #endif
 
 /* Editor configuration

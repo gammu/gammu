@@ -7,6 +7,10 @@
 #ifndef __gammu_settings_h
 #define __gammu_settings_h
 
+#ifdef	__cplusplus
+extern "C" {
+#endif
+
 /**
  * \defgroup Settings Settings
  * Phone settings manipulations.
@@ -263,6 +267,9 @@ GSM_Error GSM_GetGPRSAccessPoint(GSM_StateMachine * s,
  */
 GSM_Error GSM_SetGPRSAccessPoint(GSM_StateMachine * s,
 				 GSM_GPRSAccessPoint * point);
+#ifdef	__cplusplus
+}
+#endif
 #endif
 
 /* Editor configuration

@@ -7,6 +7,10 @@
 #ifndef __gammu_statemachine_h
 #define __gammu_statemachine_h
 
+#ifdef	__cplusplus
+extern "C" {
+#endif
+
 /**
  * \defgroup StateMachine State machine
  * Generic state machine layer.
@@ -321,6 +325,9 @@ GSM_ConnectionType GSM_GetUsedConnection(GSM_StateMachine * s);
  */
 GSM_Error GSM_Install(GSM_StateMachine *s, const char *ExtraPath, gboolean Minimal);
 
+#ifdef	__cplusplus
+}
+#endif
 #endif
 
 /* Editor configuration

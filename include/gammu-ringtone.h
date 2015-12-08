@@ -7,6 +7,10 @@
 #ifndef __gammu_ringtone_h
 #define __gammu_ringtone_h
 
+#ifdef	__cplusplus
+extern "C" {
+#endif
+
 /**
  * \defgroup Ringtone Ringtone
  * Ringtones manipulations.
@@ -247,6 +251,9 @@ const unsigned char *GSM_GetRingtoneName(const GSM_AllRingtonesInfo * Info, cons
 
 int GSM_RTTLGetTempo(int Beats);
 
+#ifdef	__cplusplus
+}
+#endif
 #endif
 
 /* Editor configuration

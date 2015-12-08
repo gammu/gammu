@@ -7,6 +7,10 @@
 #ifndef __gammu_security_h
 #define __gammu_security_h
 
+#ifdef	__cplusplus
+extern "C" {
+#endif
+
 /**
  * \defgroup Security Security
  * Security related operations with phone.
@@ -94,6 +98,9 @@ GSM_Error GSM_EnterSecurityCode(GSM_StateMachine * s, GSM_SecurityCode * Code);
 GSM_Error GSM_GetSecurityStatus(GSM_StateMachine * s,
 				GSM_SecurityCodeType * Status);
 
+#ifdef	__cplusplus
+}
+#endif
 #endif
 
 /* Editor configuration

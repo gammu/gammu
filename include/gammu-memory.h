@@ -7,6 +7,10 @@
 #ifndef __gammu_memory_h
 #define __gammu_memory_h
 
+#ifdef	__cplusplus
+extern "C" {
+#endif
+
 /**
  * \defgroup Memory Memory
  * Memory entries manipulations.
@@ -666,6 +670,9 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info * di, char *Buffer, size_t * Pos,
  * \param[in] Entry Pointer to memory entry to process.
  */
 void GSM_FreeMemoryEntry(GSM_MemoryEntry * Entry);
+#ifdef	__cplusplus
+}
+#endif
 #endif
 
 /* Editor configuration

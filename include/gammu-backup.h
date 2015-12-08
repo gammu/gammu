@@ -12,6 +12,10 @@
  * Backups manipulations.
  */
 
+#ifdef	__cplusplus
+extern "C" {
+#endif
+
 #include <gammu-message.h>
 #include <gammu-memory.h>
 #include <gammu-calendar.h>
@@ -481,6 +485,9 @@ void GSM_GetBackupFileFeatures(GSM_BackupFormat Format, GSM_Backup_Info * info,
 
 #endif
 
+#ifdef	__cplusplus
+}
+#endif
 #endif
 
 /* Editor configuration

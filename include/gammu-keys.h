@@ -7,6 +7,10 @@
 #ifndef __gammu_keys_h
 #define __gammu_keys_h
 
+#ifdef	__cplusplus
+extern "C" {
+#endif
+
 /**
  * \defgroup Keys Keys
  * Keyboard manipulations.
@@ -139,6 +143,9 @@ GSM_Error MakeKeySequence(char *text, GSM_KeyCode * KeyCode, size_t * Length);
  * \ingroup Keys
  */
 GSM_Error GSM_PressKey(GSM_StateMachine * s, GSM_KeyCode Key, gboolean Press);
+#ifdef	__cplusplus
+}
+#endif
 #endif
 
 /* Editor configuration
