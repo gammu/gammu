@@ -70,7 +70,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	GSM_SetDebugLevel("textall", debug_info);
 
 	/*
-	 * Fill in SMS infor structure which will be used to generate
+	 * Fill in SMS info structure which will be used to generate
 	 * messages.
 	 */
 	GSM_ClearMultiPartSMSInfo(&SMSInfo);
