@@ -115,6 +115,15 @@ message data to other program. This works only with the :ref:`gammu-smsd-files`.
 .. literalinclude:: ../../../contrib/smsd-scripts/receive-files
     :language: sh
 
+Invoking commands based on message text
++++++++++++++++++++++++++++++++++++++++
+
+Following script (if used as :config:option:`RunOnReceive` handler) executes
+given programs based on message text.
+
+.. literalinclude:: ../../../contrib/smsd-scripts/sms-commands
+    :language: sh
+
 Passing message text to program
 +++++++++++++++++++++++++++++++
 
