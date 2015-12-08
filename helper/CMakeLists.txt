@@ -4,7 +4,6 @@
 
 project (gammu-helper C)
 
-include(GammuTuneCompiler)
 include(GammuTuneFlags)
 
 include_directories (

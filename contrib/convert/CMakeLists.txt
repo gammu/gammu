@@ -1,7 +1,5 @@
 project (Gammu-contrib-convert C)
 
-include(GammuTuneCompiler)
-
 # We use Gammu
 include_directories("${CMAKE_CURRENT_BINARY_DIR}/../../include")
 

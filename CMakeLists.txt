@@ -440,6 +440,12 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_MINGW OR
     # Just silent this for now, too much code to fix here
     MACRO_TUNE_COMPILER("-Wno-pointer-sign")
 
+    MACRO_TUNE_COMPILER("-Wwrite-strings")
+    MACRO_TUNE_COMPILER("-Wredundant-decls")
+    if (DEBUG)
+        MACRO_TUNE_COMPILER("-fstrict-aliasing")
+    endif (DEBUG)
+
     # Check format strings
     MACRO_TUNE_COMPILER("-Wshadow")
     MACRO_TUNE_COMPILER("-Wformat=2")

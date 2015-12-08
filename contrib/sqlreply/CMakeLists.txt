@@ -1,7 +1,5 @@
 project (Gammu-contrib-smscgi C)
 
-include(GammuTuneCompiler)
-
 # Test for build sqlreply code
 if (MYSQL_FOUND)
     if (WIN32)

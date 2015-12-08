@@ -4,8 +4,6 @@
 
 project (gammu-smsd C)
 
-include(GammuTuneCompiler)
-
 set (LIBRARY_SRC
     core.c
     services/files.c

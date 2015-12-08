@@ -4,8 +4,6 @@
 
 project (gammu-binary C)
 
-include(GammuTuneCompiler)
-
 if (HAVE_WNOUNUSEDPARAMETER)
     set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wno-unused-parameter")
 endif (HAVE_WNOUNUSEDPARAMETER)

@@ -4,8 +4,6 @@
 
 project (libGammu C)
 
-include(GammuTuneCompiler)
-
 set (LIBRARY_SRC
     gsmcomon.c
     gsmphones.c
