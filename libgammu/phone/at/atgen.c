@@ -2057,9 +2057,6 @@ GSM_Error ATGEN_GetFirmware(GSM_StateMachine *s)
 
 	if (s->Phone.Data.Version[0] != 0) return ERR_NONE;
 
-	error = ATGEN_GetManufacturer(s);
-	if (error != ERR_NONE) return error;
-
 	smprintf(s, "Getting firmware versions\n");
 	error = ATGEN_WaitForAutoLen(s, "AT+CGMR\r", 0x00, 16, ID_GetFirmware);
 
@@ -2519,10 +2516,6 @@ GSM_Error ATGEN_SetCharset(GSM_StateMachine *s, GSM_AT_Charset_Preference Prefer
 				Priv->Charset = AT_CHARSET_GSM;
 			}
 		}
-		/* We need to know manufacturer */
-		error = ATGEN_GetManufacturer(s);
-		if (error != ERR_NONE) return error;
-
 		/* Get available charsets */
 		error = ATGEN_WaitForAutoLen(s, "AT+CSCS=?\r", 0x00, 10, ID_GetMemoryCharset);
 
@@ -4146,9 +4139,6 @@ GSM_Error ATGEN_PrivGetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, int 
 
 	if (entry->Location == 0x00) return ERR_INVALIDLOCATION;
 
-	error = ATGEN_GetManufacturer(s);
-	if (error != ERR_NONE) return error;
-
 	/* For reading we prefer unicode */
 	error = ATGEN_SetCharset(s, AT_PREF_CHARSET_UNICODE);
 	if (error != ERR_NONE) return error;
@@ -4223,9 +4213,6 @@ GSM_Error ATGEN_GetNextMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, gboo
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error		error;
 	int			step = 0;
-
-	error = ATGEN_GetManufacturer(s);
-	if (error != ERR_NONE) return error;
 
 	if (entry->MemoryType == MEM_ME) {
 		if (Priv->PBKSBNR == 0) {

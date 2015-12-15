@@ -167,12 +167,6 @@ GSM_Error ATGEN_GetSMSMemories(GSM_StateMachine *s)
 	GSM_Error error;
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
-	error = ATGEN_GetManufacturer(s);
-
-	if (error != ERR_NONE) {
-		return error;
-	}
-
 	smprintf(s, "Getting available SMS memories\n");
 	error = ATGEN_WaitForAutoLen(s, "AT+CPMS=?\r", 0x00, 200, ID_GetSMSMemories);
 
@@ -1000,11 +994,6 @@ GSM_Error ATGEN_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 			goto fail;
 		}
 	}
-	error = ATGEN_GetManufacturer(s);
-
-	if (error != ERR_NONE) {
-		goto fail;
-	}
 	s->Phone.Data.GetSMSMessage = sms;
 	smprintf(s, "Getting SMS\n");
 	error = ATGEN_WaitFor(s, req, length, 0x00, 50, ID_GetSMSMessage);
@@ -1677,12 +1666,6 @@ GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *message, unsig
 		}
 		break;
 	case SMS_AT_TXT:
-		error = ATGEN_GetManufacturer(s);
-
-		if (error != ERR_NONE) {
-			return error;
-		}
-
 		if (Priv->Manufacturer != AT_Nokia) {
 			if (message->Coding != SMS_Coding_Default_No_Compression) {
 				return ERR_NOTSUPPORTED;
