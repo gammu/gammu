@@ -2073,7 +2073,6 @@ GSM_Error ATGEN_GetFirmware(GSM_StateMachine *s)
 
 GSM_Error ATGEN_PostConnect(GSM_StateMachine *s)
 {
-	GSM_Phone_ATGENData     *Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error error;
 
 	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_HUAWEI_INIT)) {
