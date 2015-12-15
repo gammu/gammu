@@ -2076,7 +2076,7 @@ GSM_Error ATGEN_PostConnect(GSM_StateMachine *s)
 	GSM_Phone_ATGENData     *Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error error;
 
-	if (Priv->Manufacturer == AT_Huawei || Priv->Manufacturer == AT_Qualcomm) {
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_HUAWEI_INIT)) {
 		/* Disable Huawei specific unsolicited codes */
 		error = ATGEN_WaitForAutoLen(s, "AT^CURC=0\r", 0x00, 10, ID_SetIncomingCall);
 		if (error != ERR_NONE) {

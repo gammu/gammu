@@ -714,6 +714,10 @@ typedef enum {
 	 * Reset phone after timeout.
 	 */
 	F_RESET_AFTER_TIMEOUT,
+	/**
+	 * Huawei style init.
+	 */
+	F_HUAWEI_INIT,
 
 	/**
 	 * Just marker of highest feature code, should not be used.
