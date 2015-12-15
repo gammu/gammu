@@ -1911,6 +1911,7 @@ GSM_Error ATGEN_ReplyGetManufacturer(GSM_Protocol_Message *msg, GSM_StateMachine
 		{"Motorola", AT_Motorola},
 		{"Option", AT_Option},
 		{"Wavecom", AT_Wavecom},
+		{"Qualcomm", AT_Qualcomm},
 		{"\0", 0}
 	};
 	vendors_t *vendor;
