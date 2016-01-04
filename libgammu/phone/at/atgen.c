@@ -2097,11 +2097,13 @@ GSM_Error ATGEN_PostConnect(GSM_StateMachine *s)
 	}
 
 	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_ZTE_INIT)) {
+		/* Disable CDROM mode */
 		error = ATGEN_WaitForAutoLen(s, "AT+ZCDRUN=8\r", 0x00, 10, ID_Initialise);
 		if (error != ERR_NONE) {
 			return error;
 		}
 
+		/* Stay online */
 		error = ATGEN_WaitForAutoLen(s, "AT+ZOPRT=5\r", 0x00, 10, ID_Initialise);
 		if (error != ERR_NONE) {
 			return error;
