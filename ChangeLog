@@ -20,7 +20,9 @@ ChangeLog
 =========
     
 2016???? - 1.36.90
-    
+
+[-] * Improved compatibility with ZTE MF190.
+
 20151208 - 1.36.8
 
 [-] * Changed default value for ReceiveFrequency.

@@ -2096,6 +2096,18 @@ GSM_Error ATGEN_PostConnect(GSM_StateMachine *s)
 		}
 	}
 
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_ZTE_INIT)) {
+		error = ATGEN_WaitForAutoLen(s, "AT+ZCDRUN=8\r", 0x00, 10, ID_Initialise);
+		if (error != ERR_NONE) {
+			return error;
+		}
+
+		error = ATGEN_WaitForAutoLen(s, "AT+ZOPRT=5\r", 0x00, 10, ID_Initialise);
+		if (error != ERR_NONE) {
+			return error;
+		}
+	}
+
 	return ERR_NONE;
 }
 
@@ -6184,6 +6196,8 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReply,		"AT+CFUN="	,0x00,0x00,ID_SetPower	 },
 {ATGEN_GenericReply,		"AT^CURC="	,0x00,0x00,ID_SetIncomingCall	 },
 {ATGEN_GenericReply,		"AT^PORTSEL="	,0x00,0x00,ID_SetIncomingCall	 },
+{ATGEN_GenericReply,		"AT+ZCDRUN="	,0x00,0x00,ID_Initialise	 },
+{ATGEN_GenericReply,		"AT+ZOPRT="	,0x00,0x00,ID_Initialise	 },
 {ATGEN_GenericReply,		"AT\r"			,0x00,0x00,ID_Initialise	 },
 {ATGEN_GenericReply,		"AT\n"			,0x00,0x00,ID_Initialise	 },
 {ATGEN_GenericReply,		"OK"			,0x00,0x00,ID_Initialise	 },

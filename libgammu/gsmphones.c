@@ -128,6 +128,7 @@ GSM_FeatureName AllFeatureNames[] = {
 	{"READ_SMSTEXTMODE", F_READ_SMSTEXTMODE},
 	{"RESET_AFTER_TIMEOUT", F_RESET_AFTER_TIMEOUT},
 	{"HUAWEI_INIT", F_HUAWEI_INIT},
+	{"ZTE_INIT", F_ZTE_INIT},
 	{"", 0},
 };
 
@@ -963,7 +964,7 @@ GSM_PhoneModel allmodels[] = {
 	{"K3765",	"K3765",	"",		{F_SMS_LOCATION_0, F_ENCODED_USSD, F_FOUR_DIGIT_YEAR, F_RESET_AFTER_TIMEOUT, F_HUAWEI_INIT, 0}},
 
 	/* ZTE */
-	{"MF190",	"MF190",	"",		{0}},
+	{"MF190",	"MF190",	"",		{F_ZTE_INIT, 0}},
 
 	/* Ubinetics */
 	{"GDC201",	"GDC201",	"",		{F_SMS_NO_ME, 0}},

@@ -718,6 +718,10 @@ typedef enum {
 	 * Huawei style init.
 	 */
 	F_HUAWEI_INIT,
+	/**
+	 * ZTE style init.
+	 */
+	F_ZTE_INIT,
 
 	/**
 	 * Just marker of highest feature code, should not be used.
