@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSD-RUN" "7" "December 08, 2015" "1.36.90" "Gammu"
+.TH "GAMMU-SMSD-RUN" "7" "January 04, 2016" "1.36.90" "Gammu"
 .SH NAME
 gammu-smsd-run \- documentation for RunOnReceive directive
 .
@@ -58,7 +58,10 @@ invoked, so you have to ensure to open files on your own.
 .UNINDENT
 .SH ENVIRONMENT
 .sp
-program is executed with environment which contains lot of information about
+New in version 1.28.0.
+
+.sp
+Program is executed with environment which contains lot of information about
 the message. You can use it together with NULL service (see
 gammu\-smsd\-null) to implement completely own processing of messages.
 .SS Global variables
