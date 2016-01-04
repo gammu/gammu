@@ -38,6 +38,31 @@ resellers like DealExtreme or Alibaba.
 
 .. seealso:: You can check other user experiences in `Gammu Phones Database`_.
 
+The RunOnReceive script fails, how to fix that?
+-----------------------------------------------
+
+There can be various reasons why the script you've supplied as
+:config:option:`RunOnReceive` has failed. You can usually find more information
+in the debug log (see :ref:`reporting-bugs-smsd`). For example it can look like
+following:
+
+.. code-block:: log
+
+    gammu-smsd[9886]: Starting run on receive: ../received.sh
+    gammu-smsd[9875]: Process failed with exit status 2
+    gammu-smsd[9875]: Subprocess output: ../received.sh: 7: ../received.sh: Syntax error: end of file unexpected (expecting "then")
+
+From here it's quite easy to diagnose it's a syntax error in the script causing
+troubles.
+
+.. note::
+
+    If process output is missing from your debug log, you're using older
+    version, which didn't support this. Please upgrade to version newer than
+    1.36.4.
+
+.. seealso:: :ref:`gammu-smsd-run`, :config:option:`RunOnReceive`
+
 .. _Kalkun: http://kalkun.sourceforge.net/
 .. _MySQL: http://www.mysql.com/
 .. _PostgreSQL: http://www.postgresql.org/

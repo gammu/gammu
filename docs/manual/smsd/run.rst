@@ -31,7 +31,9 @@ again.
 Environment
 -----------
 
-program is executed with environment which contains lot of information about
+.. versionadded:: 1.28.0
+
+Program is executed with environment which contains lot of information about
 the message. You can use it together with NULL service (see
 :ref:`gammu-smsd-null`) to implement completely own processing of messages.
 
