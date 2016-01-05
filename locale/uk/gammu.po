@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Wammu 0.37\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2015-03-20 16:53+0100\n"
-"PO-Revision-Date: 2015-12-27 11:15+0000\n"
+"PO-Revision-Date: 2016-01-05 21:14+0000\n"
 "Last-Translator: Андрій Бандура <andriykopanytsia@gmail.com>\n"
 "Language-Team: Ukrainian "
 "<https://hosted.weblate.org/projects/gammu/gammu/uk/>\n"
@@ -41,7 +41,7 @@ msgstr "Замітку не знайдено у файлі"
 
 #: gammu/backup.c:128
 msgid "Todo note not found in file"
-msgstr ""
+msgstr "Завдання не знайдено у файлі"
 
 #: gammu/backup.c:137 helper/message-cmdline.c:525
 msgid "Where is backup filename and location and memory type?"
@@ -60,19 +60,19 @@ msgstr "Невідомий тип пам'яті: \"%s\"\n"
 #: gammu/backup.c:181
 #, c-format
 msgid "Unknown backup format: \"%s\"\n"
-msgstr ""
+msgstr "Невідомий формат відновлення: \"%s\"\n"
 
 #: gammu/backup.c:187
 msgid "Error while opening file for writing!\n"
-msgstr ""
+msgstr "Помилка відкриття файлу для запису!\n"
 
 #: gammu/backup.c:191 gammu/files.c:454 helper/message-cmdline.c:1110
 msgid "Error while writing file!\n"
-msgstr ""
+msgstr "Помилка запису у файл!\n"
 
 #: gammu/backup.c:194
 msgid "Error while closing file!\n"
-msgstr ""
+msgstr "Помилка під час закриття файлу!\n"
 
 #: gammu/backup.c:241 gammu/backup.c:424 gammu/backup.c:496 gammu/backup.c:531
 #: gammu/backup.c:565 gammu/backup.c:633 gammu/backup.c:670 gammu/backup.c:707
@@ -83,7 +83,7 @@ msgstr "Читання"
 
 #: gammu/backup.c:247 gammu/backup.c:292
 msgid "Only part of data saved, please increase the limit."
-msgstr ""
+msgstr "Тільки частина даних збережена, збільшіть ліміт."
 
 #: gammu/backup.c:268 gammu/backup.c:310 gammu/backup.c:475 gammu/mms.c:182
 msgid "Reading:"
@@ -101,7 +101,7 @@ msgstr "Читання:"
 #: gammu/misc.c:659 gammu/misc.c:664 gammu/misc.c:1376 gammu/mms.c:183
 #, c-format
 msgid "%i percent"
-msgstr ""
+msgstr "%i відсоток(ків)"
 
 #: gammu/backup.c:367 gammu/backup.c:1026 gammu/backup.c:1645
 #: gammu/calendar.c:632 gammu/calendar.c:885 gammu/calendar.c:960
@@ -112,7 +112,7 @@ msgstr "Щоб зупинити, натисніть Ctrl + C..."
 
 #: gammu/backup.c:372
 msgid "Use Unicode subformat of backup file?"
-msgstr ""
+msgstr "Вживати юнікод для створення файлу резервної копії?"
 
 #: gammu/backup.c:404
 msgid "Checking phone phonebook"
@@ -120,7 +120,7 @@ msgstr "Перевіряється телефонна книга телефон�
 
 #: gammu/backup.c:405
 msgid "Backup phone phonebook?"
-msgstr ""
+msgstr "Здійснити резервне копіювання телефонної книги телефону?"
 
 #: gammu/backup.c:409
 msgid "Checking SIM phonebook"
@@ -128,7 +128,7 @@ msgstr "Перевіряється телефонна книга SIM-карти"
 
 #: gammu/backup.c:410
 msgid "Backup SIM phonebook?"
-msgstr ""
+msgstr "Виконати резервне копіювання телефонної книги SIM?"
 
 #: gammu/backup.c:415
 msgid "Checking phone calendar"
@@ -136,7 +136,7 @@ msgstr "Перевіряється календар телефону"
 
 #: gammu/backup.c:419
 msgid "Backup phone calendar notes?"
-msgstr ""
+msgstr "Виконати резервне копіювання нотаток з календаря телефону?"
 
 #: gammu/backup.c:432 gammu/backup.c:467 gammu/backup.c:504 gammu/backup.c:541
 #: gammu/backup.c:576 gammu/backup.c:642 gammu/backup.c:679 gammu/backup.c:716
@@ -144,15 +144,15 @@ msgstr ""
 #: gammu/backup.c:905 gammu/backup.c:942
 #, c-format
 msgid "Only part of data saved, please increase %s."
-msgstr ""
+msgstr "Збережено лише частину даних. Будь ласка, збільшіть %s."
 
 #: gammu/backup.c:450
 msgid "Checking phone todos"
-msgstr ""
+msgstr "Перевіряється список завдань в телефоні"
 
 #: gammu/backup.c:453
 msgid "Backup phone todos?"
-msgstr ""
+msgstr "Виконати резервне копіювання списку завдань телефону?"
 
 #: gammu/backup.c:487
 msgid "Checking phone notes"
@@ -160,7 +160,7 @@ msgstr "Перевіряються замітки телефону"
 
 #: gammu/backup.c:491
 msgid "Backup phone notes?"
-msgstr ""
+msgstr "Виконати резервне копіювання нотаток телефону?"
 
 #: gammu/backup.c:522
 msgid "Checking phone caller logos"
@@ -168,7 +168,7 @@ msgstr "Перевіряються логотипи абонентів в тел
 
 #: gammu/backup.c:527
 msgid "Backup phone caller groups and logos?"
-msgstr ""
+msgstr "Виконати резервне копіювання груп і логотипів абонентів в телефоні?"
 
 #: gammu/backup.c:560
 msgid "Checking SIM SMS profiles"
@@ -176,7 +176,7 @@ msgstr "Перевіряються SMS-профілі SIM-карти"
 
 #: gammu/backup.c:561
 msgid "Backup SIM SMS profiles?"
-msgstr ""
+msgstr "Виконати резервне копіювання SMS-профілів SIM-карти?"
 
 #: gammu/backup.c:589
 msgid "Checking phone startup text"
@@ -184,7 +184,7 @@ msgstr "Перевіряється текст привітання телефо�
 
 #: gammu/backup.c:593
 msgid "Backup phone startup logo/text?"
-msgstr ""
+msgstr "Виконати резервне копіювання тексту привітання телефону?"
 
 #: gammu/backup.c:608
 msgid "Checking phone operator logo"
@@ -192,7 +192,7 @@ msgstr "Перевіряється логотип оператора телеф�
 
 #: gammu/backup.c:613
 msgid "Backup phone operator logo?"
-msgstr ""
+msgstr "Виконати резервне копіювання логотипу оператора телефону?"
 
 #: gammu/backup.c:624
 msgid "Checking phone WAP bookmarks"
@@ -200,7 +200,7 @@ msgstr "Перевіряються WAP-закладки телефону"
 
 #: gammu/backup.c:628
 msgid "Backup phone WAP bookmarks?"
-msgstr ""
+msgstr "Виконати резервне копіювання WAP-закладок телефону?"
 
 #: gammu/backup.c:661
 msgid "Checking phone WAP settings"
@@ -208,7 +208,7 @@ msgstr "Перевіряються настройки WAP телефону"
 
 #: gammu/backup.c:665
 msgid "Backup phone WAP settings?"
-msgstr ""
+msgstr "Виконати резервне копіювання налаштувань телефону WAP?"
 
 #: gammu/backup.c:698
 msgid "Checking phone MMS settings"
@@ -216,7 +216,7 @@ msgstr "Перевіряються настройки MMS телефону"
 
 #: gammu/backup.c:702
 msgid "Backup phone MMS settings?"
-msgstr ""
+msgstr "Виконати резервне копіювання налаштувань MMS телефону?"
 
 #: gammu/backup.c:735
 msgid "Checking phone Chat settings"
@@ -224,7 +224,7 @@ msgstr "Перевіряються настройки чату телефону"
 
 #: gammu/backup.c:739
 msgid "Backup phone Chat settings?"
-msgstr ""
+msgstr "Виконати резервне копіювання налаштувань телефону чату?"
 
 #: gammu/backup.c:772
 msgid "Checking phone SyncML settings"
@@ -232,7 +232,7 @@ msgstr "Перевіряються налаштування синхроніза
 
 #: gammu/backup.c:776
 msgid "Backup phone SyncML settings?"
-msgstr ""
+msgstr "Виконати резервне копіювання налаштувань синхронізації телефону?"
 
 #: gammu/backup.c:808
 msgid "Checking phone user ringtones"
@@ -240,7 +240,7 @@ msgstr "Перевіряються користувацькі мелодії д�
 
 #: gammu/backup.c:813
 msgid "Backup phone user ringtones?"
-msgstr ""
+msgstr "Виконати резервне копіювання користувацьких мелодій дзвінків телефону?"
 
 #: gammu/backup.c:851
 msgid "Checking phone profiles"
@@ -248,7 +248,7 @@ msgstr "Перевіряються режими телефону"
 
 #: gammu/backup.c:855
 msgid "Backup phone profiles?"
-msgstr ""
+msgstr "Виконати резервне копіювання профілів телефону?"
 
 #: gammu/backup.c:884
 msgid "Checking phone FM radio stations"
@@ -256,7 +256,7 @@ msgstr "Перевіряються FM-радіостанції телефону"
 
 #: gammu/backup.c:888
 msgid "Backup phone FM radio stations?"
-msgstr ""
+msgstr "Виконати резервне копіювання FM-радіостанцій телефону?"
 
 #: gammu/backup.c:921
 msgid "Checking phone GPRS access points"
@@ -264,7 +264,7 @@ msgstr "Перевіряються точки доступу GPRS телефон
 
 #: gammu/backup.c:925
 msgid "Backup phone GPRS access points?"
-msgstr ""
+msgstr "Виконати резервне копіювання точок доступу GPRS телефону?"
 
 #: gammu/backup.c:971
 msgid "Time of backup"
@@ -286,6 +286,8 @@ msgstr "Файл створений"
 #, c-format
 msgid "Checksum in backup file do not match (original: %s, new: %s). Continue?"
 msgstr ""
+"Неправильна контрольна сума файлу резервної копії (контрольне значення: %s, "
+"нове значення: %s). Продовжити?"
 
 #: gammu/backup.c:1022
 msgid ""
@@ -298,10 +300,12 @@ msgstr ""
 #: gammu/backup.c:1023
 msgid "Use addnew command if you just want to add some entries to your phone."
 msgstr ""
+"Використовуйте команду addnew, якщо ви просто хочете додати декілька записів "
+"в телефон."
 
 #: gammu/backup.c:1034
 msgid "Restore phone caller groups and logos?"
-msgstr ""
+msgstr "Відновити групи та логотипи абонентів?"
 
 #: gammu/backup.c:1044 gammu/backup.c:1119 gammu/backup.c:1172
 #: gammu/backup.c:1230 gammu/backup.c:1279 gammu/backup.c:1307
@@ -312,7 +316,7 @@ msgstr ""
 #: gammu/backup.c:1760 gammu/backup.c:1782 gammu/backup.c:1806
 #: gammu/files.c:753
 msgid "Writing:"
-msgstr ""
+msgstr "Запис:"
 
 #: gammu/backup.c:1070 gammu/backup.c:1138 gammu/backup.c:1199
 #: gammu/backup.c:1247 gammu/backup.c:1340 gammu/backup.c:1665
@@ -323,40 +327,44 @@ msgstr "%i записів у резервному файлі\n"
 
 #: gammu/backup.c:1071
 msgid "Restore phone phonebook?"
-msgstr ""
+msgstr "Відновити телефонну книгу телефону?"
 
 #: gammu/backup.c:1090
 msgid ""
 "Probably caller group is missing from your backup, add it and use --restore "
 "again."
 msgstr ""
+"Здається, група номерів відсутня у вашій резервної копії, додайте її і "
+"скористайтеся --restore знову."
 
 #: gammu/backup.c:1100 gammu/backup.c:1159
 #, c-format
 msgid "Location %d"
-msgstr ""
+msgstr "Розташування %d"
 
 #: gammu/backup.c:1139
 msgid "Restore SIM phonebook?"
-msgstr ""
+msgstr "Відновити телефонну книгу SIM-карти?"
 
 #: gammu/backup.c:1184 gammu/backup.c:1717
 msgid ""
 "Do you want to set phone date/time? (NOTE: in some phones it's required to "
 "correctly restore calendar notes and other items)"
 msgstr ""
+"Хочете задати час і дату в телефоні? (Примітка: для деяких телефонів це "
+"необхідно для правильного відновлення нотатки в календарі та ін.)"
 
 #: gammu/backup.c:1200
 msgid "Restore phone calendar notes?"
-msgstr ""
+msgstr "Відновити нотатки в календарі?"
 
 #: gammu/backup.c:1201
 msgid "Restore notes from the past?"
-msgstr ""
+msgstr "Відновити нотатки з минулого?"
 
 #: gammu/backup.c:1207 gammu/backup.c:1346
 msgid "Deleting old notes:"
-msgstr ""
+msgstr "Видалення старих нотаток:"
 
 #: gammu/backup.c:1219 gammu/backup.c:1269 gammu/backup.c:1502
 #: gammu/backup.c:1560 gammu/misc.c:1385 gammu/misc.c:1430 gammu/misc.c:1454
@@ -366,7 +374,7 @@ msgstr "Зроблено"
 
 #: gammu/backup.c:1249
 msgid "Restore phone todo?"
-msgstr ""
+msgstr "Відновити список завдань телефону?"
 
 #: gammu/backup.c:1257
 msgid "Deleting old todos:"
@@ -410,7 +418,6 @@ msgstr ""
 
 #: gammu/backup.c:1499 gammu/misc.c:1417 gammu/misc.c:1441 gammu/misc.c:1465
 #: gammu/misc.c:1481 gammu/misc.c:1499
-#, fuzzy
 msgid "Deleting"
 msgstr "Видалення"
 
@@ -524,10 +531,9 @@ msgid "Reminder (Date)"
 msgstr ""
 
 #: gammu/calendar.c:25
-#, fuzzy
 msgctxt "Calendar note type"
 msgid "Call"
-msgstr "Телефонувати"
+msgstr "Подвонити"
 
 #: gammu/calendar.c:28
 msgid "Meeting"
@@ -1762,9 +1768,9 @@ msgid "Name"
 msgstr "Назва"
 
 #: gammu/gammu.c:91
-#, fuzzy, c-format
+#, c-format
 msgid "[Gammu version %s]"
-msgstr "Версія Gammu"
+msgstr "[Версія Gammu %s]"
 
 #: gammu/gammu.c:101
 msgid "Protocols"
