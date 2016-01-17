@@ -273,7 +273,7 @@ This module wraps all python-gammu functionality.
 
    .. method:: EnterSecurityCode(Type, Code, NewPIN)
 
-      Entres security code.
+      Enters security code.
 
       :param Type: What code to enter, one of ``PIN``, ``PUK``, ``PIN2``, ``PUK2``, ``Phone``.
       :type Type: string
@@ -470,7 +470,7 @@ This module wraps all python-gammu functionality.
 
    .. method:: GetMemory(Type, Location)
 
-      Reads entry from memory (phonebooks or calls). Which entry shouldbe read is defined in entry.
+      Reads entry from memory (phonebooks or calls). Which entry should be read is defined in entry.
 
       :param Type: Memory type, one of ``ME``, ``SM``, ``ON``, ``DC``, ``RC``, ``MC``, ``MT``, ``FD``, ``VM``
       :type Type: string
@@ -480,7 +480,7 @@ This module wraps all python-gammu functionality.
 
    .. method:: GetMemoryStatus(Type)
 
-      Gets memory (phonebooks or calls) status (eg. number of used andfree entries).
+      Gets memory (phonebooks or calls) status (eg. number of used and free entries).
 
       :param Type: Memory type, one of ``ME``, ``SM``, ``ON``, ``DC``, ``RC``, ``MC``, ``MT``, ``FD``, ``VM``
       :type Type: string
@@ -528,7 +528,7 @@ This module wraps all python-gammu functionality.
 
    .. method:: GetNextMemory(Type, Start, Location)
 
-      Reads entry from memory (phonebooks or calls). Which entry shouldbe read is defined in entry. This can be easily used for reading all entries.
+      Reads entry from memory (phonebooks or calls). Which entry should be read is defined in entry. This can be easily used for reading all entries.
 
       :param Type: Memory type, one of ``ME``, ``SM``, ``ON``, ``DC``, ``RC``, ``MC``, ``MT``, ``FD``, ``VM``
       :type Type: string
@@ -544,14 +544,14 @@ This module wraps all python-gammu functionality.
 
       Gets next root folder from filesystem. Start with empty folder name.
 
-      :param Folder: Previous read fodlder. Start with empty folder name.
+      :param Folder: Previous read folder. Start with empty folder name.
       :type Folder: string
       :return: Structure with folder information
 
 
    .. method:: GetNextSMS(Folder, Start, Location)
 
-      Reads next (or first if start set) SMS message. This might befaster for some phones than using :meth:`GetSMS` for each message.
+      Reads next (or first if start set) SMS message. This might be faster for some phones than using :meth:`GetSMS` for each message.
 
       :param Folder: Folder where to read entry (0 is emulated flat memory)
       :type Folder: int

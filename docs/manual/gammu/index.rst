@@ -960,7 +960,7 @@ Samsung).
 
 .. option:: playringtone file
 
-    Play aproximation of ringtone over phone buzzer. File can be in RTTL or BINARY (Nokia DCT3) format.
+    Play approximation of ringtone over phone buzzer. File can be in RTTL or BINARY (Nokia DCT3) format.
 
 .. option:: playsavedringtone number
 
@@ -1093,7 +1093,7 @@ Backing up and restoring commands
     restore all data).
 
     Use -memory parameter to force usage of defined memory type for storing entries
-    regardless what backu format says.
+    regardless what backup format says.
 
 .. option:: addsms folder file [-yes]
 
@@ -1351,7 +1351,7 @@ Nokia specific commands
 
        EEPROM test can show an error when your phone has an EEPROM in flash
        (like 82xx/7110/62xx/33xx). The clock test will show an error when the
-       phone doesn?t have an internal battery for the clock (like 3xxx).
+       phone doesn't have an internal battery for the clock (like 3xxx).
 
 .. option:: nokiasetlights keypad|display|torch on|off
 
@@ -1643,7 +1643,7 @@ Configuration commands
 
     Installs applet for currently configured connection to the phone.
 
-    You can configure search path for instllation files by
+    You can configure search path for installation files by
     :config:option:`DataPath`.
 
     The -minimal parameter forces installation of applet only without possible

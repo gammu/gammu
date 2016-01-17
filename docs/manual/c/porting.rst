@@ -24,7 +24,7 @@ API, which has to be done for various reasons:
 Changes you have to do in your code
 -----------------------------------
 
-Bellow examples expect ``sm`` to be state machine structure in your current
+Below examples expect ``sm`` to be state machine structure in your current
 code, change it to appropriate variable name if it differs.
 
 1. Use pointer to :c:type:`GSM_StateMachine` instead of it. API now do not expose

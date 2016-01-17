@@ -259,7 +259,7 @@ Fields description:
     Time of receiving delivery report (if it has been enabled).
 
 ``Status`` (enum('SendingOK', 'SendingOKNoReport', 'SendingError', 'DeliveryOK', 'DeliveryFailed', 'DeliveryPending', 'DeliveryUnknown', 'Error'))
-    Status of message sending. SendingError mens that phone failed to send the
+    Status of message sending. SendingError means that phone failed to send the
     message, Error indicates some other error while processing message.
 
     ``SendingOK``
@@ -341,7 +341,7 @@ History of database structure
 .. note::
 
     Testing versions (see :ref:`versioning`) do not have to keep same table
-    structure as final releases. Bellow mentioned versions are for
+    structure as final releases. Below mentioned versions are for
     informational purposes only, you should always use stable versions in
     production environment.
 

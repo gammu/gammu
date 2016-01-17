@@ -163,7 +163,7 @@ Device connection parameters
         :samp:`dialout`) or or add special udev rules to enable you access
         these devices as non-root.
 
-        For Nokia phones you can put follofing file (also available in sources
+        For Nokia phones you can put following file (also available in sources
         as :file:`contrib/udev/69-gammu-acl.rules`) as
         :file:`/etc/udev/rules.d/69-gammu-acl.rules`:
 

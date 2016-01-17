@@ -32,7 +32,7 @@ There are several po files to translate:
 ``gammu.po``
     Messages used by command line utilities (mostly :ref:`gammu`).
 ``docs.po``
-    Basic documentation shipped withing package (eg. :file:`README.rst` and
+    Basic documentation shipped within package (eg. :file:`README.rst` and
     :file:`INSTALL` files).
 
 

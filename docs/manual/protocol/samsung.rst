@@ -116,12 +116,12 @@ par23
 par24
     Repeat until year
 
-If par02 = 2, aniversary entry type
+If par02 = 2, anniversary entry type
 
 par03
     Empty
 par04
-    Ocassion name
+    Occasion name
 par05
     Alarm day
 par06

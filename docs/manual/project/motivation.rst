@@ -26,7 +26,7 @@ Motivation to fork Gnokii
 8. better user friendly interface
 9. no more 2 years rewriting source...
 10. it's easier to see, what frames are implemented, what not (in phone modules they're put line after line).
-11. better compatiblity with ANSI C = no warnings in MS VC 6
+11. better compatibility with ANSI C = no warnings in MS VC 6
 12. all locations for user start from 0 (in Gnokii some from 0, some from 1)
 13. some things like SMS can be accessed few ways
 14. when possible, there are used "constant" locations. I will explain
@@ -44,7 +44,7 @@ Motivation to fork Gnokii
     This is not good. When for example delete one entry from phonebook,
     other locations "stays" on their places. These are "constant" locations.
 
-    With "constans" locations, when delete one location from PC, don't have
+    With "constant" locations, when delete one location from PC, don't have
     to read full memory from phone.
 
 etc. etc.

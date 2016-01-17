@@ -110,8 +110,8 @@ using :c:func:`GSM_FreeStateMachine`:
 
 There are also other :doc:`examples`.
 
-Compling the code
------------------
+Compiling the code
+------------------
 
 To compile program using Gammu library, you need to pass include path to the
 compiler and library name and search path to the linker. This can be easiest

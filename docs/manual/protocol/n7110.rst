@@ -230,18 +230,18 @@ List::
         s Get calendar note     { 0x0019, location (2 bytes) }
         r Calendar note recvd   { 0x001a, location (2 bytes), entry type, 0x00, year (2 bytes), Month, Day, block}
                                 where: entry type - 0x01 - Meeting, 0x02 - Call, 0x04 - Birthday, 0x08 - Reminder
-                                       block: for Meeting:{hour,minute,alarm (two bytes),recurrance (two bytes),len,0x00,string(unicode)}
+                                       block: for Meeting:{hour,minute,alarm (two bytes),recurrence (two bytes),len,0x00,string(unicode)}
                                               where alarm=Number of minutes before the time of the meeting
                                                       that the alarm should be triggered:
                                                       For meetings with "No alarm"=0xFFFF (-1).
                                                       For "On time"=0x0000
                                                       half an hour=0x001E, and so on.
-                                                    Recurrance=in hours, between future occurances of this meeting.
+                                                    Recurrence=in hours, between future occurrences of this meeting.
                                                       If there is no repeat, this value is 0x0000. The special value 0xffff
                                                       means 1 Year!
-                                              for Call:{Hour,Minute,Alarm (as above),Recurrance (as above),namelen,numberlen,
+                                              for Call:{Hour,Minute,Alarm (as above),Recurrence (as above),namelen,numberlen,
                                                         name(unicode),number(unicode)}
-                                              for Reminder:{Recurrance (as above),len,0x00,string(unicode)}
+                                              for Reminder:{Recurrence (as above),len,0x00,string(unicode)}
                                               for Birthday:{byte1,byte2,alarm(4 bytes),yearofbirth,alarmtype,len,string(unicode)}
                                                         byte1 and byte2 may vary (???). Usually are 0x00 both (but not always)
                                                         In Birthday, the Year in the common part, usually contains a strange year.
@@ -437,7 +437,7 @@ List::
                                                    0x08 = Colleagues
                                                    0x10 = Others
                                          All logical OR among groups are valid, so if you select from one phone's profile
-                                         alert for Friends and Collegues, a 0x0c will return (because 0x04 OR 0x08 = 0x0c).
+                                         alert for Friends and Colleagues, a 0x0c will return (because 0x04 OR 0x08 = 0x0c).
                                      (*) If Callers==0xff, means "Alert for All calls". Then, in this case, you don't
                                          need to read other groups selection.
                                 for number2==0x09: (Automatic answer)

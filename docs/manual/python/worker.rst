@@ -35,7 +35,7 @@ which are used by this class.
 .. class:: GammuTask(name, commands)
    :module: gammu.worker
 
-   Storage of taks for gammu.
+   Storage of task for gammu.
 
 
    .. method:: GammuTask.get_name()
@@ -78,7 +78,7 @@ which are used by this class.
 .. class:: GammuWorker(callback)
    :module: gammu.worker
 
-   Wrapper class for asynchronous communication with Gammu. It spaws
+   Wrapper class for asynchronous communication with Gammu. It spawns
    own thread and then passes all commands to this thread. When task is
    done, caller is notified via callback.
 

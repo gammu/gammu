@@ -8,9 +8,9 @@ Introduction
 
 This is an attempt to document the m-obex protocol. It is a obex-variation by Samsung used to exchange PIM data and files over bluetooth.
 
-This documentation is by no means complete but is only a reference for the samsyncro implementation. As I don't know the obex protocol I can't say in which parts it differs from the standard-obex. The only thing I found strange is the fact, that you will always get 0xA0 as a response. Wich means Ok, sucess in obex. If there was an error you will find it's error code in the 0x42 header. If this is a normal behavior: Why are there so many response codes defined?
+This documentation is by no means complete but is only a reference for the samsyncro implementation. As I don't know the obex protocol I can't say in which parts it differs from the standard-obex. The only thing I found strange is the fact, that you will always get 0xA0 as a response. Which means Ok, success in obex. If there was an error you will find it's error code in the 0x42 header. If this is a normal behavior: Why are there so many response codes defined?
 
-The information about the protocol was gained by listening to the transfered data from Samsungs New PC Studio to a SGH-F480i and B2100 mobile.
+The information about the protocol was gained by listening to the transferred data from Samsungs New PC Studio to a SGH-F480i and B2100 mobile.
 
 Requirements
 ------------
@@ -43,7 +43,7 @@ In the following chapters I will describe the obex packages to read and edit dat
 |                                           |                                   |* Last byte: 0x00                          |
 +-------------------------------------------+-----------------------------------+-------------------------------------------+
 
-For detailed information about obex, for example what types of packages and headers exists, get the official Obex documentation from Inrared Data Association. But I don't know if this is available for free.
+For detailed information about obex, for example what types of packages and headers exists, get the official Obex documentation from Infared Data Association. But I don't know if this is available for free.
 
 Here is a list of the most used types for the Samsung mobiles:
 
@@ -58,7 +58,7 @@ Headers consists normally out of three blocks: First byte: Header type, second a
 +-----------------------+------+------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------+
 | Type                  | 0x42 | length of header       | Obex command for example "m-obex/contacts/list"                                                                                                   |
 +-----------------------+------+------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------+
-| Length                | 0xC3 |                        | Used in put operations and specifies the length of the transfered data (without header bytes). The length is represented in 4 bytes.              |
+| Length                | 0xC3 |                        | Used in put operations and specifies the length of the transferred data (without header bytes). The length is represented in 4 bytes.              |
 +-----------------------+------+------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------+
 | Body                  | 0x48 | length of header       | Data in a multi-package put operation                                                                                                             |
 +-----------------------+------+------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -111,7 +111,7 @@ Request
 *42* 00 18 6D 2D 6F 62 65 78 2F 63 6F 6E 74 61 63 74 73 2F 6C 6F 61 64 00
     m-obex Command: m-obex/contacts/load
 *4C* 00 06 01 00 00
-    First Byte unknown. Last two bytes: increment until all contacts recieved
+    First Byte unknown. Last two bytes: increment until all contacts received
 
 Answer
 ~~~~~~
