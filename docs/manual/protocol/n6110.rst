@@ -227,7 +227,7 @@ List::
                                  0x05     message alert tone             0=no tone, 1=standard, 2=special, 3=beep once, 4=ascending
                                  0x06     vibration                      0=off, 1=on
                                  0x07     warning and game tones         0xff=off, 0x04=on
-                                 0x08     incoming caller groups         1=family, 2=VIP, 4=friends, 8=collegues, 16=other
+                                 0x08     incoming caller groups         1=family, 2=VIP, 4=friends, 8=colleagues, 16=other
                                  0x09     automatic answer               0x00=off, 0x01=on
                                  -------------------------
                                  0x16     Anykey answer                  0x00=Off, 0x01=On
@@ -621,7 +621,7 @@ List::
                                   0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x77,0x80,
                                   0x77,0x80,0xf2,0x82,0x20,0x20,0x20,0x20,0x20,0x20,
                                   0x20,0x20,0x20,0x20
-                                This block enables probably all possible monitorred parameters.
+                                This block enables probably all possible monitored parameters.
                                 After it phone sends 0x00 message type values
         s Break monitoring      { 0x71 }
         r Break monitoring      { 0x71 }

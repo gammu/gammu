@@ -24,7 +24,7 @@ Detecting whether command is supported
 As Gammu is trying to support as much phones as possible, you should try to
 make it automatically detect whether connected phone supports the command.
 This can be done on first invocation of affected operation or on connecting to
-phone. As we want to avoid lenghty connecting to phone, in most cases you
+phone. As we want to avoid lengthy connecting to phone, in most cases you
 should probe for support on first attempt to use given functionality. The code
 might look like following:
 

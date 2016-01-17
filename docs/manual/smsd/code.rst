@@ -34,7 +34,7 @@ in ``GSM_SMSDService`` structure:
 
 .. c:function:: GSM_Error	GSM_SMSDService::InitAfterConnect   (GSM_SMSDConfig *Config)
 
-    Optional hook called after SMSD is connected to phone, can be used for storing infromation about phone in backend.
+    Optional hook called after SMSD is connected to phone, can be used for storing information about phone in backend.
 
     :param Config: Pointer to SMSD configuration data
     :return: Error code.

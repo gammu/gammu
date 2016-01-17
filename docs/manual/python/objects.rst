@@ -314,7 +314,7 @@ Message component can consist of following fields:
 * ``NokiaPictureImageLong`` -  Nokia Picture Image + (text)
 * ``NokiaScreenSaverLong`` -  Nokia screen saver + (text)
 * ``NokiaRingtone`` -  Nokia ringtone - old SM2.0 format`` 1 SMS
-* ``NokiaRingtoneLong`` -  Nokia ringtone contacenated`` when very long
+* ``NokiaRingtoneLong`` -  Nokia ringtone concatenated`` when very long
 * ``NokiaOperatorLogo`` -  Nokia 72x14 operator logo`` 1 SMS
 * ``NokiaOperatorLogoLong`` -  Nokia 72x14 op logo or 78x21 in 2 SMS
 * ``NokiaCallerLogo`` -  Nokia 72x14 caller logo`` 1 SMS
@@ -808,7 +808,7 @@ File is a dictionary consisting of following fields:
 
 .. attribute:: Pos
 
-   Current poosition of file upload
+   Current position of file upload
 
 .. attribute:: Finished
 
@@ -838,7 +838,7 @@ Example:
 Divert Type
 -----------
 
-Thel divert type can have one of folowing values:
+The divert type can have one of following values:
 
 * ``Busy`` - Divert when busy.
 * ``NoAnswer`` - Divert when not answered.
@@ -850,7 +850,7 @@ Thel divert type can have one of folowing values:
 Call Type
 ---------
 
-The call type for diverts can have one of folowing values:
+The call type for diverts can have one of following values:
 
 * ``Voice`` - Voice calls.
 * ``Fax`` - Fax calls.

@@ -16,7 +16,7 @@ answer::
 
     dd {+0x01, 0x00, 0x07, 0x08, (84 bytes => 84 cols x 8 bits bit0 first row )
 
-Cant figure out how to modify 6110 code to get & put the logo, not in a
+Can't figure out how to modify 6110 code to get & put the logo, not in a
 hi value to me now.
 
 got key press working
@@ -45,7 +45,7 @@ the getmemory::
     40 {+00 00 07 11 00 10 00 mem}
 
 get phonebook with the phone in bcd, but it seems to be a way to read
-chunks of memory with diferent numbers in the 6 place. in particular:
+chunks of memory with different numbers in the 6 place. in particular:
 
 get configuration pins::
 

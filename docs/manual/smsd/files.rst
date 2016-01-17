@@ -53,7 +53,7 @@ Explanation of fields:
 ``<ext>``
     ``txt`` for normal text SMS, ``smsbackup`` for :ref:`gammu-smsbackup`
 ``<note>``
-    any artibrary text which is ignored
+    any arbitrary text which is ignored
 
 For text messages, you can additionally append flags to extension:
 

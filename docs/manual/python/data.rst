@@ -15,7 +15,7 @@
 
 .. data:: CalendarTypes
 
-    Provides list of calendar envet types.
+    Provides list of calendar event types.
 
 .. data:: CalendarValueTypes
 
@@ -31,7 +31,7 @@
 
 .. data:: InternationalPrefixes
 
-    List of known internaltional prefixes.
+    List of known international prefixes.
 
 .. data:: Errors
 

@@ -222,12 +222,12 @@ Correct format is FBUS version 2/Infrared/MBUS version 2
                                                       For meetings with "No alarm"=0xFFFF (-1).
                                                       For "On time"=0x0000
                                                       half an hour=0x001E, and so on.
-                                                    Recurrance=in hours, between future occurances of this meeting.
+                                                    Recurrence=in hours, between future occurrences of this meeting.
                                                       If there is no repeat, this value is 0x0000. The special value 0xffff
                                                       means 1 Year!
-                                              for Call:{Hour,Minute,Alarm (as above),Recurrance (as above),namelen,numberlen,
+                                              for Call:{Hour,Minute,Alarm (as above),Recurrence (as above),namelen,numberlen,
                                                         name(unicode),number(unicode)}
-                                              for Reminder:{Recurrance (as above),len,0x00,string(unicode)}
+                                              for Reminder:{Recurrence (as above),len,0x00,string(unicode)}
                                               for Birthday:{byte1,byte2,alarm(4 bytes),yearofbirth,alarmtype,len,string(unicode)}
                                                         byte1 and byte2 may vary (???). Usually are 0x00 both (but not always)
                                                         In Birthday, the Year in the common part, usually contains a strange year.

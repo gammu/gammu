@@ -41,7 +41,7 @@ Nightly testing
     Currently several machines do compile and test Gammu every night. If
     you want to tak part of this, just ensure that your machine executes
     test suite every night (preferably after 3:00 CET). You can select
-    either ``make Nightly`` to do regullar testing or
+    either ``make Nightly`` to do regular testing or
     ``make NightlyMemoryCheck`` to test with valgrind. Also you can enable
     coverage tests as described above.
 
@@ -71,7 +71,7 @@ Testing of SMSD
 SMSD tests are performed using :ref:`dummy-driver` and uses file backend and
 sqlite database by default. For this you nee Gammu compiled with libdbi, have
 installed sqlite driver for libdbi and have :program:`sqlite3` binary available
-on the syste,.
+on the system.
 
 Testing of additional database backends must be enabled separately:
 

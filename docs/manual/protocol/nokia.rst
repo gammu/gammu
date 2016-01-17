@@ -87,7 +87,7 @@ Ack from Computer::
 Port settings:
      Speed 9600 bps, Bits 8, ParityOdd, Stop Bits 1, DTR and RTS logic 0
 
-In the MBUS bus, the phone has only one connector for transmition and
+In the MBUS bus, the phone has only one connector for transmission and
 reception.
 
 Because of this characteristics of the phone connector, every time that the

@@ -30,13 +30,13 @@ Unsigned char mess
 
 In many cases ``unsigned char`` is used without any reason.
 
-Extendability of libGammu
+Extensibility of libGammu
 -------------------------
 
 Current way of adding protocol specific functionality from applications using
 libGammu is broken. Actually only application using this is Gammu utility.
 This option should be either completely removed or rewritten from scratch not
-to be dependant on libGammu internals.
+to be dependent on libGammu internals.
 
 Built time configuration
 ------------------------

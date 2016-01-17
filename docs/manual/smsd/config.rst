@@ -282,7 +282,7 @@ General parameters of SMS daemon
 .. config:option:: DeliveryReportDelay
 
     Delay in seconds how long is still delivery report considered valid. This
-    depends on brokeness of your network (delivery report should have same
+    depends on brokenness of your network (delivery report should have same
     timestamp as sent message). Increase this if delivery reports are not paired
     with sent messages.
 
@@ -455,14 +455,14 @@ database:
 
 .. config:option:: SkipSMSCNumber
 
-    When you send sms from some SMS centere you can have delivery reports from
+    When you send sms from some SMS centers you can have delivery reports from
     other SMSC number. You can set here number of this SMSC used by you and Gammu
     will not check it's number during assigning reports to sent SMS.
 
 .. config:option:: Driver
 
     SQL driver to use, Gammu supports several native drivers and generic
-    interface using ODBC and DBI. Availability of the backends depdens on
+    interface using ODBC and DBI. Availability of the backends depends on
     compile time options.
 
     Available drivers:

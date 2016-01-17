@@ -43,7 +43,7 @@ accepted on some platforms):
 
 .. option:: -d, --delay=seconds
 
-    Delay betwen polling SMSD state, default is 20 seconds.
+    Delay between polling SMSD state, default is 20 seconds.
 
 .. option:: -C, --csv
 

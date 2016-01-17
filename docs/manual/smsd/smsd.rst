@@ -53,7 +53,7 @@ accepted on some platforms):
 
 .. option:: -U, --user=user
 
-    Drop daemon privileges to chosed user after starting.
+    Drop daemon privileges to chosen user after starting.
 
 .. option:: -G, --group=group
 
@@ -130,9 +130,9 @@ SIGINT, SIGTERM
 SIGALRM
     Used internally for :option:`gammu-smsd -X`
 SIGUSR1
-    Suspends SMSD operartion, closing connection to phone and database.
+    Suspends SMSD operation, closing connection to phone and database.
 SIGUSR2
-    Resumes SMSD operattion (after previous suspend).
+    Resumes SMSD operation (after previous suspend).
 
 .. versionchanged:: 1.22.91
     Added support for SIGHUP.

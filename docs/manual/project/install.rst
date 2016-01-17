@@ -333,7 +333,7 @@ After downloading and installing them into your system:
   * Project file should be named Gammu.dsw or Gammu.sln depending on
     what MSVC version you choose.
   * You should see ALL_BUILD target, which builds everything needed,
-    simmilar to make all on Linux.
+    similar to make all on Linux.
 
 * For running testsuite, you need working sh and sed. The easiest way to
   install them is from MinGW project <http://mingw.org/>.
@@ -444,7 +444,7 @@ CMakeLists.txt. You might need to tune it for your environment.
 Third party libraries
 +++++++++++++++++++++
 
-The easies way to link with third party libraries is to add path to
+The easiest way to link with third party libraries is to add path to
 their installation to cmake/Toolchain-mingw32.cmake or to list these
 paths in CMAKE_FIND_ROOT_PATH when invoking cmake.
 
@@ -557,8 +557,8 @@ To debug program crashes, you might want to build Gammu with
 with protections GCC makes and produce bogus back traces.
 
 
-Compliling python-gammu
------------------------
+Compiling python-gammu
+----------------------
 
 Currently python-gammu is distributed as a separate package, which follows
 Python usual method for building modules - distutils, so use :file:`setup.py`
