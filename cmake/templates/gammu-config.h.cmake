@@ -159,6 +159,9 @@
 #ifndef HAVE_PTHREAD
 #cmakedefine HAVE_PTHREAD
 #endif
+#ifndef HAVE_SIGTIMEDWAIT
+#cmakedefine HAVE_SIGTIMEDWAIT
+#endif
 #ifndef HAVE_SYS_IOCTL_H
 #cmakedefine HAVE_SYS_IOCTL_H
 #endif
@@ -391,6 +394,10 @@
 #if defined(WIN32) || defined(__CYGWIN__)
 #define HAVE_WINDOWS_SERVICE
 #define HAVE_WINDOWS_EVENT_LOG
+#endif
+
+#if !defined(WIN32) && defined(HAVE_PTHREAD) && defined(HAVE_SIGTIMEDWAIT)
+#define GSM_ENABLE_PROXY
 #endif
 
 #endif

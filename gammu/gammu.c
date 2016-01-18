@@ -165,6 +165,9 @@ static void Features(int argc UNUSED, char *argv[]UNUSED)
 #ifdef LIBUSB_FOUND
 	printf("  - %s\n", "FBUSUSB");
 #endif
+#ifdef GSM_ENABLE_PROXY
+	printf("  - %s\n", "PROXY");
+#endif
 
 	printf(" * %s\n", _("Phones"));
 #ifdef GSM_ENABLE_NOKIA650
