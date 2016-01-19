@@ -82,12 +82,12 @@ GSM_Error SMSD_CheckDBVersion(GSM_SMSDConfig *Config, int version)
 	if (version < SMSD_DB_VERSION) {
 		SMSD_Log(DEBUG_ERROR, Config, "Database structure is from older Gammu version");
 		SMSD_Log(DEBUG_INFO, Config, "Please update database, you can find SQL scripts in documentation");
-		return ERR_UNKNOWN;
+		return ERR_DB_VERSION;
 	}
 	if (version > SMSD_DB_VERSION) {
 		SMSD_Log(DEBUG_ERROR, Config, "Database structure is from newer Gammu version");
 		SMSD_Log(DEBUG_INFO, Config, "Please update Gammu to use this database");
-		return ERR_UNKNOWN;
+		return ERR_DB_VERSION;
 	}
 	return ERR_NONE;
 }

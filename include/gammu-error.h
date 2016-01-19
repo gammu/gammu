@@ -327,6 +327,10 @@ typedef enum {
 	 * Network error.
 	 */
 	ERR_NETWORK_ERROR,
+	/**
+	 * Invalid database version.
+	 */
+	ERR_DB_VERSION,
 
 	/**
 	 * Just marker of highest error code, should not be used.
