@@ -301,6 +301,8 @@ General parameters of SMS daemon
 
 .. config:option:: SMSC
 
+    .. versionadded:: 1.36.2
+
     SMSC number to use for sending messages if not specified in the message
     (see options of :ref:`gammu-smsd-inject`).
 
