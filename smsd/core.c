@@ -2104,7 +2104,7 @@ done:
 /**
  * Function to inject message to service backend.
  */
-GSM_Error SMSD_InjectSMS(GSM_SMSDConfig		*Config, GSM_MultiSMSMessage *sms, char *NewID)
+GSM_Error SMSD_InjectSMS(GSM_SMSDConfig *Config, GSM_MultiSMSMessage *sms, char *NewID)
 {
 	GSM_Error error;
 
