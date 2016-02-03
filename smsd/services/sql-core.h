@@ -85,7 +85,6 @@ typedef enum {
 	SQL_OK, /* all ok */
 	SQL_TIMEOUT, /* query or connection timeout */
 	SQL_FAIL, /* query failed */
-	SQL_LOCKED, /* locked table - currently unused */
 	SQL_BUG /* Internal error */
 } SQL_Error;
 
