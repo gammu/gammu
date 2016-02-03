@@ -90,7 +90,6 @@ GSM_Error SONYERICSSON_Reply_Screenshot(GSM_Protocol_Message *msg, GSM_StateMach
 	const char *string;
 	int line;
 	int h, w, param3, param4;
-	GSM_Error result = ERR_UNKNOWNRESPONSE;
 
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
@@ -134,7 +133,6 @@ GSM_Error SONYERICSSON_Reply_Screenshot(GSM_Protocol_Message *msg, GSM_StateMach
 				/* Remember the screen size */
 				Priv->ScreenWidth = w;
 				Priv->ScreenHeigth = h;
-				result = ERR_NONE;
 			}
 
 			line++;
@@ -149,13 +147,11 @@ GSM_Error SONYERICSSON_Reply_Screenshot(GSM_Protocol_Message *msg, GSM_StateMach
 	case AT_Reply_CMEError:
 	        return ATGEN_HandleCMEError(s);
 	default:
+        s->Phone.Data.Picture->Type = PICTURE_BMP;
+        s->Phone.Data.Picture->Buffer = NULL;
+        s->Phone.Data.Picture->Length = 0;
 		return ERR_UNKNOWNRESPONSE;
 	}
-
-	s->Phone.Data.Picture->Type = PICTURE_BMP;
-	s->Phone.Data.Picture->Buffer = NULL;
-	s->Phone.Data.Picture->Length = 0;
-	return result;
 }
 
 static void u32_store(u8 *p, u32 data) {
