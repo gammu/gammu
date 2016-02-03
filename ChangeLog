@@ -22,6 +22,8 @@ ChangeLog
 2016???? - 1.36.90
 
 [-] * Improved compatibility with ZTE MF190.
+[-] * Improved compatibility with Huawei E1750.
+[-] * Improved compatibility with Huawei E1752.
 [-] * Increased detail of reported errors from SMSD.
 
 20151208 - 1.36.8
