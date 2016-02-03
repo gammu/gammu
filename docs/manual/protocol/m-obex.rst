@@ -58,7 +58,7 @@ Headers consists normally out of three blocks: First byte: Header type, second a
 +-----------------------+------+------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------+
 | Type                  | 0x42 | length of header       | Obex command for example "m-obex/contacts/list"                                                                                                   |
 +-----------------------+------+------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------+
-| Length                | 0xC3 |                        | Used in put operations and specifies the length of the transferred data (without header bytes). The length is represented in 4 bytes.              |
+| Length                | 0xC3 |                        | Used in put operations and specifies the length of the transferred data (without header bytes). The length is represented in 4 bytes.             |
 +-----------------------+------+------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------+
 | Body                  | 0x48 | length of header       | Data in a multi-package put operation                                                                                                             |
 +-----------------------+------+------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------+
