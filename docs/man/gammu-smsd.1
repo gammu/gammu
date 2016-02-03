@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSD" "1" "January 04, 2016" "1.36.90" "Gammu"
+.TH "GAMMU-SMSD" "1" "February 03, 2016" "1.37.0" "Gammu"
 .SH NAME
 gammu-smsd \- SMS daemon for Gammu
 .
@@ -84,7 +84,7 @@ Lock file for storing pid, empty for no locking. Not supported on Windows.
 .INDENT 0.0
 .TP
 .B \-U, \-\-user=user
-Drop daemon privileges to chosed user after starting.
+Drop daemon privileges to chosen user after starting.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -180,10 +180,10 @@ Gracefully shutdown the daemon.
 Used internally for \fBgammu\-smsd \-X\fP
 .TP
 .B SIGUSR1
-Suspends SMSD operartion, closing connection to phone and database.
+Suspends SMSD operation, closing connection to phone and database.
 .TP
 .B SIGUSR2
-Resumes SMSD operattion (after previous suspend).
+Resumes SMSD operation (after previous suspend).
 .UNINDENT
 .sp
 Changed in version 1.22.91: Added support for SIGHUP.

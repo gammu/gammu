@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSDRC" "5" "January 04, 2016" "1.36.90" "Gammu"
+.TH "GAMMU-SMSDRC" "5" "February 03, 2016" "1.37.0" "Gammu"
 .SH NAME
 gammu-smsdrc \- gammu-smsd(1) configuration file
 .
@@ -372,7 +372,7 @@ Default is \fBno\fP\&.
 .TP
 .B DeliveryReportDelay
 Delay in seconds how long is still delivery report considered valid. This
-depends on brokeness of your network (delivery report should have same
+depends on brokenness of your network (delivery report should have same
 timestamp as sent message). Increase this if delivery reports are not paired
 with sent messages.
 .sp
@@ -393,6 +393,9 @@ This option has actually no effect with gammu\-smsd\-files\&.
 .INDENT 0.0
 .TP
 .B SMSC
+New in version 1.36.2.
+
+.sp
 SMSC number to use for sending messages if not specified in the message
 (see options of gammu\-smsd\-inject).
 .sp
@@ -572,7 +575,7 @@ gammu\-smsd\-odbc, gammu\-smsd\-pgsql, gammu\-smsd\-dbi
 .INDENT 0.0
 .TP
 .B SkipSMSCNumber
-When you send sms from some SMS centere you can have delivery reports from
+When you send sms from some SMS centers you can have delivery reports from
 other SMSC number. You can set here number of this SMSC used by you and Gammu
 will not check it\(aqs number during assigning reports to sent SMS.
 .UNINDENT
@@ -580,7 +583,7 @@ will not check it\(aqs number during assigning reports to sent SMS.
 .TP
 .B Driver
 SQL driver to use, Gammu supports several native drivers and generic
-interface using ODBC and DBI. Availability of the backends depdens on
+interface using ODBC and DBI. Availability of the backends depends on
 compile time options.
 .sp
 Available drivers:

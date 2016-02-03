@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSD-TABLES" "7" "January 04, 2016" "1.36.90" "Gammu"
+.TH "GAMMU-SMSD-TABLES" "7" "February 03, 2016" "1.37.0" "Gammu"
 .SH NAME
 gammu-smsd-tables \- description of tables for database backends of gammu-smsd(1)
 .
@@ -276,7 +276,7 @@ when message has been sent
 Time of receiving delivery report (if it has been enabled).
 .TP
 .B \fBStatus\fP (enum(\(aqSendingOK\(aq, \(aqSendingOKNoReport\(aq, \(aqSendingError\(aq, \(aqDeliveryOK\(aq, \(aqDeliveryFailed\(aq, \(aqDeliveryPending\(aq, \(aqDeliveryUnknown\(aq, \(aqError\(aq))
-Status of message sending. SendingError mens that phone failed to send the
+Status of message sending. SendingError means that phone failed to send the
 message, Error indicates some other error while processing message.
 .INDENT 7.0
 .TP
@@ -360,7 +360,7 @@ Not used by SMSD currently, included only for application usage.
 .INDENT 0.0
 .INDENT 3.5
 Testing versions (see versioning) do not have to keep same table
-structure as final releases. Bellow mentioned versions are for
+structure as final releases. Below mentioned versions are for
 informational purposes only, you should always use stable versions in
 production environment.
 .UNINDENT
