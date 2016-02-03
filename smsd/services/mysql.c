@@ -75,7 +75,7 @@ static int SMSDMySQL_LogError(GSM_SMSDConfig * Config)
 	return mysql_err;
 }
 
-static SQL_Error SMSDMySQL_Connect(GSM_SMSDConfig * Config)
+static GSM_Error SMSDMySQL_Connect(GSM_SMSDConfig * Config)
 {
 
 	unsigned int port = 0;
@@ -99,16 +99,16 @@ static SQL_Error SMSDMySQL_Connect(GSM_SMSDConfig * Config)
 	}
 	if (Config->conn.my == NULL) {
 		SMSD_Log(DEBUG_ERROR, Config, "MySQL allocation failed!");
-		return SQL_FAIL;
+		return ERR_DB_DRIVER;
 	}
 	if (!mysql_real_connect(Config->conn.my, Config->host, Config->user, Config->password, Config->database, port, socketname, 0)) {
 		SMSD_Log(DEBUG_ERROR, Config, "Error connecting to database!");
 		SMSDMySQL_LogError(Config);
 		error = mysql_errno(Config->conn.my);
 		if (error == 2006 || error == 2003 || error == 2002) { /* cant connect through socket */
-			return SQL_TIMEOUT;
+			return ERR_DB_TIMEOUT;
 		}
-		return SQL_FAIL;
+		return ERR_DB_CONNECT;
 	}
 
 	/* Try using utf8mb4 if MySQL server supports it */
@@ -116,10 +116,10 @@ static SQL_Error SMSDMySQL_Connect(GSM_SMSDConfig * Config)
 		mysql_query(Config->conn.my, "SET NAMES utf8;");
 	}
 	SMSD_Log(DEBUG_INFO, Config, "Connected to Database: %s on %s", Config->database, Config->host);
-	return SQL_OK;
+	return ERR_NONE;
 }
 
-static SQL_Error SMSDMySQL_Query(GSM_SMSDConfig * Config, const char *query, SQL_result *res)
+static GSM_Error SMSDMySQL_Query(GSM_SMSDConfig * Config, const char *query, SQL_result *res)
 {
 	int error;
 
@@ -127,16 +127,16 @@ static SQL_Error SMSDMySQL_Query(GSM_SMSDConfig * Config, const char *query, SQL
 		SMSDMySQL_LogError(Config);
 		error = mysql_errno(Config->conn.my);
 		if (error == 2006 || error == 2013 || error == 2012) { /* connection lost */
-			return SQL_TIMEOUT;
+			return ERR_DB_TIMEOUT;
 		}
-		return SQL_FAIL;
+		return ERR_SQL;
 	}
 
 	res->my.res = mysql_store_result(Config->conn.my);
 	res->my.row = NULL;
 	res->my.con = Config->conn.my;
 
-	return SQL_OK;
+	return ERR_NONE;
 }
 
 /* free mysql results */

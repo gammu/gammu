@@ -164,7 +164,7 @@ void SMSDODBC_Free(GSM_SMSDConfig * Config)
 }
 
 /* Connects to database */
-static SQL_Error SMSDODBC_Connect(GSM_SMSDConfig * Config)
+static GSM_Error SMSDODBC_Connect(GSM_SMSDConfig * Config)
 {
 	SQLRETURN ret;
 	int field;
@@ -178,19 +178,19 @@ static SQL_Error SMSDODBC_Connect(GSM_SMSDConfig * Config)
 	ret = SQLAllocHandle (SQL_HANDLE_ENV, SQL_NULL_HANDLE, &Config->conn.odbc.env);
 	if (!SQL_SUCCEEDED(ret)) {
 		SMSDODBC_LogError(Config, ret, SQL_HANDLE_ENV, Config->conn.odbc.env, "SQLAllocHandle(ENV) failed");
-		return SQL_FAIL;
+		return ERR_DB_DRIVER;
 	}
 
 	ret = SQLSetEnvAttr (Config->conn.odbc.env, SQL_ATTR_ODBC_VERSION, (void*)SQL_OV_ODBC3, 0);
 	if (!SQL_SUCCEEDED(ret)) {
 		SMSDODBC_LogError(Config, ret, SQL_HANDLE_ENV, Config->conn.odbc.env, "SQLSetEnvAttr failed");
-		return SQL_FAIL;
+		return ERR_DB_CONFIG;
 	}
 
 	ret = SQLAllocHandle (SQL_HANDLE_DBC, Config->conn.odbc.env, &Config->conn.odbc.dbc);
 	if (!SQL_SUCCEEDED(ret)) {
 		SMSDODBC_LogError(Config, ret, SQL_HANDLE_ENV, Config->conn.odbc.env, "SQLAllocHandle(DBC) failed");
-		return SQL_FAIL;
+		return ERR_DB_CONFIG;
 	}
 
 	ret = SQLConnect(Config->conn.odbc.dbc,
@@ -199,28 +199,28 @@ static SQL_Error SMSDODBC_Connect(GSM_SMSDConfig * Config)
 			  (SQLCHAR*)Config->password, SQL_NTS);
 	if (!SQL_SUCCEEDED(ret)) {
 		SMSDODBC_LogError(Config, ret, SQL_HANDLE_DBC, Config->conn.odbc.dbc, "SQLConnect failed");
-		return SQL_FAIL;
+		return ERR_DB_CONNECT;
 	}
 
 	ret = SQLGetInfo(Config->conn.odbc.dbc, SQL_DRIVER_NAME, driver_name, sizeof(driver_name), &len);
 	if (!SQL_SUCCEEDED(ret)) {
 		SMSDODBC_LogError(Config, ret, SQL_HANDLE_DBC, Config->conn.odbc.dbc, "SQLGetInfo failed");
-		return SQL_FAIL;
+		return ERR_DB_CONNECT;
 	} else{
 		SMSD_Log(DEBUG_NOTICE, Config, "Connected to driver %s", driver_name);
 	}
 
 
-	return SQL_OK;
+	return ERR_NONE;
 }
 
-static SQL_Error SMSDODBC_Query(GSM_SMSDConfig * Config, const char *query, SQL_result * res)
+static GSM_Error SMSDODBC_Query(GSM_SMSDConfig * Config, const char *query, SQL_result * res)
 {
 	SQLRETURN ret;
 
 	ret = SQLAllocHandle(SQL_HANDLE_STMT, Config->conn.odbc.dbc, &res->odbc);
 	if (!SQL_SUCCEEDED(ret)) {
-		return SQL_FAIL;
+		return ERR_SQL;
 	}
 
 	ret = SQLExecDirect (res->odbc, (SQLCHAR*)query, SQL_NTS);
@@ -230,11 +230,11 @@ static SQL_Error SMSDODBC_Query(GSM_SMSDConfig * Config, const char *query, SQL_
 	 * to SQLExecDirect returns SQL_NO_DATA.
 	 */
 	if (SQL_SUCCEEDED(ret) || ret == SQL_NO_DATA) {
-		return SQL_OK;
+		return ERR_NONE;
 	}
 
 	SMSDODBC_LogError(Config, ret, SQL_HANDLE_STMT, res->odbc, "SQLExecDirect failed");
-	return SQL_FAIL;
+	return ERR_SQL;
 }
 
 /* free sql results */

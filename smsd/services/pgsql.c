@@ -62,7 +62,7 @@ void SMSDPgSQL_Free(GSM_SMSDConfig * Config)
 }
 
 /* [Re]connects to database */
-static SQL_Error SMSDPgSQL_Connect(GSM_SMSDConfig * Config)
+static GSM_Error SMSDPgSQL_Connect(GSM_SMSDConfig * Config)
 {
 	unsigned char buf[400];
 	PGresult *Res;
@@ -83,7 +83,7 @@ static SQL_Error SMSDPgSQL_Connect(GSM_SMSDConfig * Config)
 	if (PQstatus(Config->conn.pg) != CONNECTION_OK) {
 		SMSD_Log(DEBUG_ERROR, Config, "Error connecting to database: %s", PQerrorMessage(Config->conn.pg));
 		PQfinish(Config->conn.pg);
-		return SQL_FAIL;
+		return ERR_DB_CONNECT;
 	}
 
 	Res = PQexec(Config->conn.pg, "SET NAMES UTF8");
@@ -91,7 +91,7 @@ static SQL_Error SMSDPgSQL_Connect(GSM_SMSDConfig * Config)
 	SMSD_Log(DEBUG_INFO, Config, "Connected to database: %s on %s. Server version: %d Protocol: %d",
 		 PQdb(Config->conn.pg), PQhost(Config->conn.pg), PQserverVersion(Config->conn.pg), PQprotocolVersion(Config->conn.pg));
 
-	return SQL_OK;
+	return ERR_NONE;
 }
 
 void SMSDPgSQL_FreeResult(GSM_SMSDConfig * Config, SQL_result *res)
@@ -117,7 +117,7 @@ static void SMSDPgSQL_LogError(GSM_SMSDConfig * Config, PGresult * Res)
 	}
 }
 
-static SQL_Error SMSDPgSQL_Query(GSM_SMSDConfig * Config, const char *query, SQL_result * Res)
+static GSM_Error SMSDPgSQL_Query(GSM_SMSDConfig * Config, const char *query, SQL_result * Res)
 {
 	ExecStatusType Status = PGRES_COMMAND_OK;
 
@@ -133,15 +133,13 @@ static SQL_Error SMSDPgSQL_Query(GSM_SMSDConfig * Config, const char *query, SQL
 			if (Res->pg.res != NULL)
 				PQclear(Res->pg.res);
 			if (PQstatus(Config->conn.pg) != CONNECTION_OK) {
-				return SQL_TIMEOUT;
+				return ERR_DB_TIMEOUT;
 			} else {
-				return SQL_FAIL;
+				return ERR_SQL;
 			}
 		}
-	} else {
-		return SQL_OK;
 	}
-	return SQL_OK;
+	return ERR_NONE;
 }
 
 /* Assume 2 * strlen(from) + 1 buffer in to */

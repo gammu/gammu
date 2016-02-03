@@ -161,7 +161,7 @@ void SMSDDBI_Free(GSM_SMSDConfig * Config)
 }
 
 /* Connects to database */
-static SQL_Error SMSDDBI_Connect(GSM_SMSDConfig * Config)
+static GSM_Error SMSDDBI_Connect(GSM_SMSDConfig * Config)
 {
 	int rc;
 	struct GSM_SMSDdbobj *db = Config->db;
@@ -171,17 +171,17 @@ static SQL_Error SMSDDBI_Connect(GSM_SMSDConfig * Config)
 	if (rc == 0) {
 		SMSD_Log(DEBUG_ERROR, Config, "DBI did not find any drivers, try using DriversPath option");
 		dbi_shutdown();
-		return SQL_FAIL;
+		return ERR_DB_DRIVER;
 	} else if (rc < 0) {
 		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to initialize!");
-		return SQL_FAIL;
+		return ERR_DB_DRIVER;
 	}
 
 	Config->conn.dbi = dbi_conn_new(Config->driver);
 	if (Config->conn.dbi == NULL) {
 		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to init %s driver!", Config->driver);
 		dbi_shutdown();
-		return SQL_FAIL;
+		return ERR_DB_DRIVER;
 	} else {
 		SMSD_Log(DEBUG_SQL, Config, "Using DBI driver '%s'", dbi_driver_get_name(dbi_conn_get_driver(Config->conn.dbi)));
 	}
@@ -191,49 +191,49 @@ static SQL_Error SMSDDBI_Connect(GSM_SMSDConfig * Config)
 	if (dbi_conn_set_option(Config->conn.dbi, "sqlite_dbdir", Config->dbdir) != 0) {
 		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to set sqlite_dbdir!");
 		SMSDDBI_Free(Config);
-		return SQL_FAIL;
+		return ERR_DB_CONFIG;
 	}
 	if (dbi_conn_set_option(Config->conn.dbi, "sqlite3_dbdir", Config->dbdir) != 0) {
 		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to set sqlite3_dbdir!");
 		SMSDDBI_Free(Config);
-		return SQL_FAIL;
+		return ERR_DB_CONFIG;
 	}
 	if (dbi_conn_set_option(Config->conn.dbi, "host", Config->host) != 0) {
 		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to set host!");
 		SMSDDBI_Free(Config);
-		return SQL_FAIL;
+		return ERR_DB_CONFIG;
 	}
 	if (dbi_conn_set_option(Config->conn.dbi, "username", Config->user) != 0) {
 		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to set username!");
 		SMSDDBI_Free(Config);
-		return SQL_FAIL;
+		return ERR_DB_CONFIG;
 	}
 	if (dbi_conn_set_option(Config->conn.dbi, "password", Config->password) != 0) {
 		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to set password!");
 		SMSDDBI_Free(Config);
-		return SQL_FAIL;
+		return ERR_DB_CONFIG;
 	}
 	if (dbi_conn_set_option(Config->conn.dbi, "dbname", Config->database) != 0) {
 		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to set dbname!");
 		SMSDDBI_Free(Config);
-		return SQL_FAIL;
+		return ERR_DB_CONFIG;
 	}
 	if (dbi_conn_set_option(Config->conn.dbi, "encoding", "UTF-8") != 0) {
 		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to set encoding!");
 		SMSDDBI_Free(Config);
-		return SQL_FAIL;
+		return ERR_DB_CONFIG;
 	}
 
 	if (dbi_conn_connect(Config->conn.dbi) != 0) {
 		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to connect!");
 		SMSDDBI_Free(Config);
-		return SQL_FAIL;
+		return ERR_DB_CONNECT;
 	}
 	Config->db = db;
-	return SQL_OK;
+	return ERR_NONE;
 }
 
-static SQL_Error SMSDDBI_Query(GSM_SMSDConfig * Config, const char *query, SQL_result * res)
+static GSM_Error SMSDDBI_Query(GSM_SMSDConfig * Config, const char *query, SQL_result * res)
 {
 	const char *msg;
 	int rc;
@@ -243,7 +243,7 @@ static SQL_Error SMSDDBI_Query(GSM_SMSDConfig * Config, const char *query, SQL_r
 	SMSD_Log(DEBUG_SQL, Config, "Execute SQL: %s", query);
 	res->dbi = dbi_conn_query(Config->conn.dbi, query);
 	if (res->dbi != NULL)
-		return SQL_OK;
+		return ERR_NONE;
 
 	SMSD_Log(DEBUG_INFO, Config, "SQL failed: %s", query);
 	/* Black magic to decide whether we should bail out or attempt to retry */
@@ -251,31 +251,31 @@ static SQL_Error SMSDDBI_Query(GSM_SMSDConfig * Config, const char *query, SQL_r
 	if (rc != -1) {
 		SMSD_Log(DEBUG_INFO, Config, "SQL failure: %s", msg);
 		if (strstr(msg, "syntax") != NULL) {
-			return SQL_FAIL;
+			return ERR_SQL;
 		}
 		if (strstr(msg, "violation") != NULL) {
-			return SQL_FAIL;
+			return ERR_SQL;
 		}
 		if (strstr(msg, "violates") != NULL) {
-			return SQL_FAIL;
+			return ERR_SQL;
 		}
 		if (strstr(msg, "SQL error") != NULL) {
-			return SQL_FAIL;
+			return ERR_SQL;
 		}
 		if (strstr(msg, "duplicate") != NULL) {
-			return SQL_FAIL;
+			return ERR_SQL;
 		}
 		if (strstr(msg, "unique") != NULL) {
-			return SQL_FAIL;
+			return ERR_SQL;
 		}
 		if (strstr(msg, "need to rewrite") != NULL) {
-			return SQL_FAIL;
+			return ERR_SQL;
 		}
 		if (strstr(msg, "locked") != NULL) {
-			return SQL_TIMEOUT;
+			return ERR_DB_TIMEOUT;
 		}
 	}
-	return SQL_TIMEOUT;
+	return ERR_DB_TIMEOUT;
 }
 
 /* free sql results */

@@ -155,6 +155,11 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{ERR_READ_ONLY, "READ_ONLY", N_("Entry is read only.")},
 	{ERR_NETWORK_ERROR, "NETWORK_ERROR", N_("Network error.")},
 	{ERR_DB_VERSION, "DB_VERSION", N_("Invalid database version.")},
+	{ERR_DB_DRIVER, "DB_DRIVER", N_("Failed to initialize DB driver.")},
+	{ERR_DB_CONFIG, "DB_CONFIG", N_("Failed to configure DB driver.")},
+	{ERR_DB_CONNECT, "DB_CONNECT", N_("Failed to connect to database.")},
+	{ERR_DB_TIMEOUT, "DB_TIMEOUT", N_("Database connection timeout.")},
+	{ERR_SQL, "SQL", N_("Error in executing SQL query.")},
 
 	{0,	"",				""}
 };

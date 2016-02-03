@@ -331,6 +331,26 @@ typedef enum {
 	 * Invalid database version.
 	 */
 	ERR_DB_VERSION,
+	/**
+	 * Failed to initialize DB driver.
+	 */
+	ERR_DB_DRIVER,
+	/**
+	 * Failed to configure DB driver.
+	 */
+	ERR_DB_CONFIG,
+	/**
+	 * Failed to connect to database.
+	 */
+	ERR_DB_CONNECT,
+	/**
+	 * Database connection timeout.
+	 */
+	ERR_DB_TIMEOUT,
+	/**
+	 * Error in executing SQL query.
+	 */
+	ERR_SQL,
 
 	/**
 	 * Just marker of highest error code, should not be used.

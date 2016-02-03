@@ -80,14 +80,6 @@ typedef union __sql_conn {
 #endif
 } SQL_conn;
 
-/* SQL errors */
-typedef enum {
-	SQL_OK, /* all ok */
-	SQL_TIMEOUT, /* query or connection timeout */
-	SQL_FAIL, /* query failed */
-	SQL_BUG /* Internal error */
-} SQL_Error;
-
 /* types passed to NamedQuery */
 typedef enum {
 	SQL_TYPE_NONE, /* used at end of array */
@@ -138,8 +130,8 @@ struct GSM_SMSDConfig;
 
 
 struct GSM_SMSDdbobj {
-	SQL_Error (* Connect)(GSM_SMSDConfig *);
-	SQL_Error (* Query)(GSM_SMSDConfig *, const char *, SQL_result *);
+	GSM_Error (* Connect)(GSM_SMSDConfig *);
+	GSM_Error (* Query)(GSM_SMSDConfig *, const char *, SQL_result *);
 	void (* Free)(GSM_SMSDConfig *); /* = close() */
 	void (* FreeResult)(GSM_SMSDConfig *, SQL_result *);
 	int (* NextRow)(GSM_SMSDConfig *, SQL_result *);
