@@ -63,6 +63,25 @@ troubles.
 
 .. seealso:: :ref:`gammu-smsd-run`, :config:option:`RunOnReceive`
 
+Why received delivery reports are not matched to sent messages?
+---------------------------------------------------------------
+
+This can occasinoally happen and can have several reasons.
+
+* If reports are arriving late, you can adjust
+  :config:option:`DeliveryReportDelay`.
+* If reports are coming from different SMSC than you're using for sending, set
+  :config:option:`SkipSMSCNumber`.
+* If SMSD is unable to match sent message with delivery report, it might be due
+  to missing international prefix in one of the numbes. Generally the best
+  approach is to always send messages to international number (eg. use
+  ``+32485xxxxxx`` instead of ``0485xxxxxx``).
+
+.. note::
+
+    If using Gammu 1.36.3 or newer, whenever first two cases happen, you will
+    see hint to adjust the configuration in the log.
+
 .. _Kalkun: http://kalkun.sourceforge.net/
 .. _MySQL: http://www.mysql.com/
 .. _PostgreSQL: http://www.postgresql.org/
