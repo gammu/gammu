@@ -2642,7 +2642,7 @@ GSM_Error ATGEN_SetIncomingCB(GSM_StateMachine *s, gboolean enable)
 		if (enable) {
 			smprintf(s, "Enabling incoming CB\n");
 			length = sprintf(buffer, "AT+CNMI=%d,,%d\r", Priv->CNMIMode, Priv->CNMIBroadcastProcedure);
-			error = ATGEN_WaitFor(s, buffer, length, 0x00, 40, ID_SetIncomingCB);
+			error = ATGEN_WaitFor(s, buffer, length, 0x00, 80, ID_SetIncomingCB);
 		} else {
 			smprintf(s, "Disabling incoming CB\n");
 			length = sprintf(buffer, "AT+CNMI=%d,,%d\r", Priv->CNMIMode, 0);
