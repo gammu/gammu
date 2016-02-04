@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-03-03 10:40+0100\n"
+"POT-Creation-Date: 2016-02-04 10:40+0100\n"
 "PO-Revision-Date: 2012-05-19 23:32+0200\n"
 "Last-Translator: Jukka Penttinen <tikkakalja@hotmail.com>\n"
 "Language-Team: none\n"
@@ -337,11 +337,41 @@ msgstr "Kohde on vain luettava."
 msgid "Network error."
 msgstr "Ei virhettä."
 
-#: libgammu/gsmcomon.c:189
+#: libgammu/gsmcomon.c:157
+msgid "Invalid database version."
+msgstr ""
+
+#: libgammu/gsmcomon.c:158
+msgid "Failed to initialize DB driver."
+msgstr ""
+
+#: libgammu/gsmcomon.c:159
+#, fuzzy
+#| msgid "Failed to connect to phone"
+msgid "Failed to configure DB driver."
+msgstr "Kytkeytyminen puhelimeen epäonnistui"
+
+#: libgammu/gsmcomon.c:160
+#, fuzzy
+#| msgid "Failed to connect to phone"
+msgid "Failed to connect to database."
+msgstr "Kytkeytyminen puhelimeen epäonnistui"
+
+#: libgammu/gsmcomon.c:161
+#, fuzzy
+#| msgid "Connection test"
+msgid "Database connection timeout."
+msgstr "Yhteyden testaus"
+
+#: libgammu/gsmcomon.c:162
+msgid "Error in executing SQL query."
+msgstr ""
+
+#: libgammu/gsmcomon.c:195
 msgid "Unknown error description."
 msgstr ""
 
-#: libgammu/phone/dummy/dummy.c:630
+#: libgammu/phone/dummy/dummy.c:609
 msgid "Templates"
 msgstr ""
 
@@ -382,7 +412,7 @@ msgid "SIM"
 msgstr "SIM"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:579 libgammu/phone/pfunc.c:41
-#: libgammu/phone/s60/s60phone.c:1773
+#: libgammu/phone/s60/s60phone.c:1779
 msgid "Inbox"
 msgstr ""
 
@@ -426,6 +456,6 @@ msgstr ""
 msgid "Pager"
 msgstr ""
 
-#: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1774
+#: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1780
 msgid "Outbox"
 msgstr ""

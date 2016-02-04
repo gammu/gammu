@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-03-03 10:40+0100\n"
+"POT-Creation-Date: 2016-02-04 10:40+0100\n"
 "PO-Revision-Date: 2015-03-06 09:05+0200\n"
 "Last-Translator: Helder Santana <helder.bs.santana@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) "
-"<https://hosted.weblate.org/projects/gammu/libgammu/pt_BR/>\n"
+"Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
+"gammu/libgammu/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -354,11 +354,43 @@ msgstr "Entrada só para leitura."
 msgid "Network error."
 msgstr "Erro de rede."
 
-#: libgammu/gsmcomon.c:189
+#: libgammu/gsmcomon.c:157
+#, fuzzy
+#| msgid "Invalid data given to phone."
+msgid "Invalid database version."
+msgstr "Dados inválidos fornecidos para o celular."
+
+#: libgammu/gsmcomon.c:158
+msgid "Failed to initialize DB driver."
+msgstr ""
+
+#: libgammu/gsmcomon.c:159
+#, fuzzy
+#| msgid "Failed to connect to phone"
+msgid "Failed to configure DB driver."
+msgstr "Falhou ao conectar-se com o telefone"
+
+#: libgammu/gsmcomon.c:160
+#, fuzzy
+#| msgid "Failed to connect to phone"
+msgid "Failed to connect to database."
+msgstr "Falhou ao conectar-se com o telefone"
+
+#: libgammu/gsmcomon.c:161
+#, fuzzy
+#| msgid "Device connection parameters"
+msgid "Database connection timeout."
+msgstr "Linha de comando com parâmetros inválidos."
+
+#: libgammu/gsmcomon.c:162
+msgid "Error in executing SQL query."
+msgstr ""
+
+#: libgammu/gsmcomon.c:195
 msgid "Unknown error description."
 msgstr "Descrição do erro desconhecida."
 
-#: libgammu/phone/dummy/dummy.c:630
+#: libgammu/phone/dummy/dummy.c:609
 msgid "Templates"
 msgstr "Modelos"
 
@@ -399,7 +431,7 @@ msgid "SIM"
 msgstr "SIM"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:579 libgammu/phone/pfunc.c:41
-#: libgammu/phone/s60/s60phone.c:1773
+#: libgammu/phone/s60/s60phone.c:1779
 msgid "Inbox"
 msgstr "Caixa Postal Entrada"
 
@@ -443,6 +475,6 @@ msgstr "Externo"
 msgid "Pager"
 msgstr "Pager"
 
-#: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1774
+#: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1780
 msgid "Outbox"
 msgstr "Caixa Postal Saída"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-03-03 10:40+0100\n"
+"POT-Creation-Date: 2016-02-04 10:40+0100\n"
 "PO-Revision-Date: 2010-06-29 16:04+0200\n"
 "Last-Translator: Michal ÄŒihaÅ™ <michal@cihar.com>\n"
 "Language-Team: none\n"
@@ -353,11 +353,43 @@ msgstr "Položka je prázdna."
 msgid "Network error."
 msgstr "Bez chyby."
 
-#: libgammu/gsmcomon.c:189
+#: libgammu/gsmcomon.c:157
+#, fuzzy
+#| msgid "Invalid data given to phone."
+msgid "Invalid database version."
+msgstr "Zadaná chybná hodnota."
+
+#: libgammu/gsmcomon.c:158
+msgid "Failed to initialize DB driver."
+msgstr ""
+
+#: libgammu/gsmcomon.c:159
+#, fuzzy
+#| msgid "Failed to connect to phone"
+msgid "Failed to configure DB driver."
+msgstr "Pripojenie k telefónu zlyhalo"
+
+#: libgammu/gsmcomon.c:160
+#, fuzzy
+#| msgid "Failed to connect to phone"
+msgid "Failed to connect to database."
+msgstr "Pripojenie k telefónu zlyhalo"
+
+#: libgammu/gsmcomon.c:161
+#, fuzzy
+#| msgid "Connection test"
+msgid "Database connection timeout."
+msgstr "Test pripojenia"
+
+#: libgammu/gsmcomon.c:162
+msgid "Error in executing SQL query."
+msgstr ""
+
+#: libgammu/gsmcomon.c:195
 msgid "Unknown error description."
 msgstr "Neznámy popis chyby."
 
-#: libgammu/phone/dummy/dummy.c:630
+#: libgammu/phone/dummy/dummy.c:609
 msgid "Templates"
 msgstr "Šablóny"
 
@@ -398,7 +430,7 @@ msgid "SIM"
 msgstr "SIM"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:579 libgammu/phone/pfunc.c:41
-#: libgammu/phone/s60/s60phone.c:1773
+#: libgammu/phone/s60/s60phone.c:1779
 msgid "Inbox"
 msgstr "Prijaté"
 
@@ -442,7 +474,7 @@ msgstr "Vonkajšie"
 msgid "Pager"
 msgstr "Pager"
 
-#: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1774
+#: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1780
 msgid "Outbox"
 msgstr "Odoslané"
 

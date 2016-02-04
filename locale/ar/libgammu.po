@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.28.91\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-03-03 10:40+0100\n"
+"POT-Creation-Date: 2016-02-04 10:40+0100\n"
 "PO-Revision-Date: 2013-03-20 22:29+0200\n"
 "Last-Translator: mohamed amin boubaker <mohamed.amin.02@gmail.com>\n"
 "Language-Team: Arabic <http://hosted.weblate.org/projects/gammu/libgammu/ar/"
@@ -345,11 +345,39 @@ msgstr "المدخلة هي للقراءة فقط."
 msgid "Network error."
 msgstr "لا يوجد خطأ."
 
-#: libgammu/gsmcomon.c:189
+#: libgammu/gsmcomon.c:157
+#, fuzzy
+#| msgid "Invalid data given to phone."
+msgid "Invalid database version."
+msgstr "بيانات غير صالحة أعطيت إلى الهاتف."
+
+#: libgammu/gsmcomon.c:158
+msgid "Failed to initialize DB driver."
+msgstr ""
+
+#: libgammu/gsmcomon.c:159
+msgid "Failed to configure DB driver."
+msgstr ""
+
+#: libgammu/gsmcomon.c:160
+#, fuzzy
+#| msgid "Could not connect to the server."
+msgid "Failed to connect to database."
+msgstr "تعذر الإتصال بالخادم."
+
+#: libgammu/gsmcomon.c:161
+msgid "Database connection timeout."
+msgstr ""
+
+#: libgammu/gsmcomon.c:162
+msgid "Error in executing SQL query."
+msgstr ""
+
+#: libgammu/gsmcomon.c:195
 msgid "Unknown error description."
 msgstr "وصف خطأ غير معروف."
 
-#: libgammu/phone/dummy/dummy.c:630
+#: libgammu/phone/dummy/dummy.c:609
 msgid "Templates"
 msgstr "القوالب"
 
@@ -390,7 +418,7 @@ msgid "SIM"
 msgstr "SIM"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:579 libgammu/phone/pfunc.c:41
-#: libgammu/phone/s60/s60phone.c:1773
+#: libgammu/phone/s60/s60phone.c:1779
 msgid "Inbox"
 msgstr "صندوق بريد الوارد"
 
@@ -434,6 +462,6 @@ msgstr "في الخارج"
 msgid "Pager"
 msgstr "جهاز الإشعار"
 
-#: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1774
+#: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1780
 msgid "Outbox"
 msgstr "صندوق الصادر"
