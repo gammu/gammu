@@ -761,6 +761,9 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 	GSM_SetConfigNum(Config->gsm, 1);
 	gammucfg->UseGlobalDebugFile = FALSE;
 
+	/* Gammu library wide logging to our log */
+	GSM_SetDebugFunction(SMSD_Log_Function, Config, GSM_GetGlobalDebug());
+
 	/* Force debug level in Gammu */
 	if ((DEBUG_GAMMU & Config->debug_level) != 0) {
 		strcpy(gammucfg->DebugLevel, "textall");
