@@ -66,14 +66,14 @@ troubles.
 Why received delivery reports are not matched to sent messages?
 ---------------------------------------------------------------
 
-This can occasinoally happen and can have several reasons.
+This can occasionally happen and can have several reasons.
 
 * If reports are arriving late, you can adjust
   :config:option:`DeliveryReportDelay`.
 * If reports are coming from different SMSC than you're using for sending, set
   :config:option:`SkipSMSCNumber`.
 * If SMSD is unable to match sent message with delivery report, it might be due
-  to missing international prefix in one of the numbes. Generally the best
+  to missing international prefix in one of the numbers. Generally the best
   approach is to always send messages to international number (eg. use
   ``+32485xxxxxx`` instead of ``0485xxxxxx``).
 
