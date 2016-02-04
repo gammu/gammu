@@ -49,6 +49,11 @@ by :config:option:`DebugLevel` and :config:option:`LogFile`:
 
 .. code-block:: ini
 
+    [gammu]
+    connection = your connection setting
+    port = your port name
+    logformat = textalldate
+
     [smsd]
     debuglevel = 255
     logfile = smsd.log
