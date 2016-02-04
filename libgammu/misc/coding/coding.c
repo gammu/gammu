@@ -380,7 +380,8 @@ char EncodeWithHexBinAlphabet (int digit)
 
 gboolean DecodeHexUnicode (unsigned char *dest, const char *src, size_t len)
 {
-	size_t i, current = 0, val0, val1, val2, val3;
+	size_t i, current = 0;
+	int val0, val1, val2, val3;
 
 	for (i = 0; i < len ; i += 4) {
 		val0 = DecodeWithHexBinAlphabet(src[i + 0]);
