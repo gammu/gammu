@@ -6143,6 +6143,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReply,		"AT+MDBWE="		,0x00,0x00,ID_DeleteCalendarNote },
 {MOTOROLA_ReplySetCalendar,	"AT+MDBW="		,0x00,0x00,ID_SetCalendarNote },
 {ATGEN_GenericReply,		"AT+MDBL="		,0x00,0x00,ID_SetCalendarNote },
+{ATGEN_GenericReply,		"AT+CIND?"		,0x00,0x00,ID_GetDisplayStatus },
 
 {ATGEN_GenericReplyIgnore,	"SAMSUNG PTS DG Test"	,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore,	"NOT FOND ^,NOT CUSTOM AT",0x00,0x00,ID_IncomingFrame	 },
