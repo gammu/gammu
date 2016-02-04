@@ -20,7 +20,9 @@ ChangeLog
 =========
     
 2016???? - 1.37.1
-    
+
+[-] * Properly report errors in HEX encoded strings from SMSD SQL backends.
+
 20160203 - 1.37.0
 
 [-] * Improved compatibility with ZTE MF190.

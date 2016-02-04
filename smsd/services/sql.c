@@ -915,11 +915,17 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 				case SMS_Coding_Unicode_No_Compression:
 
 				case SMS_Coding_Default_No_Compression:
-					DecodeHexUnicode(sms->SMS[sms->Number].Text, text, text_len);
+					if (! DecodeHexUnicode(sms->SMS[sms->Number].Text, text, text_len)) {
+						SMSD_Log(DEBUG_ERROR, Config, "Failed to decode Text HEX string: %s", text);
+						return ERR_UNKNOWN;
+					}
 					break;
 
 				case SMS_Coding_8bit:
-					DecodeHexBin(sms->SMS[sms->Number].Text, text, text_len);
+					if (! DecodeHexBin(sms->SMS[sms->Number].Text, text, text_len)) {
+						SMSD_Log(DEBUG_ERROR, Config, "Failed to decode Text HEX string: %s", text);
+						return ERR_UNKNOWN;
+					}
 					sms->SMS[sms->Number].Length = text_len / 2;
 					break;
 
@@ -943,7 +949,10 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 		if (udh != NULL && udh_len != 0) {
 			sms->SMS[sms->Number].UDH.Type = UDH_UserUDH;
 			sms->SMS[sms->Number].UDH.Length = udh_len / 2;
-			DecodeHexBin(sms->SMS[sms->Number].UDH.Text, udh, udh_len);
+			if (! DecodeHexBin(sms->SMS[sms->Number].UDH.Text, udh, udh_len)) {
+				SMSD_Log(DEBUG_ERROR, Config, "Failed to decode UDH HEX string: %s", udh);
+				return ERR_UNKNOWN;
+			}
 		}
 
 		sms->SMS[sms->Number].Class = db->GetNumber(Config, &res, 3);
