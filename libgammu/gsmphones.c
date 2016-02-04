@@ -969,6 +969,9 @@ GSM_PhoneModel allmodels[] = {
 	/* Ubinetics */
 	{"GDC201",	"GDC201",	"",		{F_SMS_NO_ME, 0}},
 
+	/* Other */
+	{"SIMCOM_SIM300D","SIMCOM_SIM300D","",		{F_ENCODED_USSD, 0}},
+
 	/* Qualcomm */
 	{"HP un2420 Mobile Broadband Module", "un2420", "", {F_NO_STOP_CUSD, 0}},
 
