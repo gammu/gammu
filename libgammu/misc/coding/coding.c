@@ -378,20 +378,27 @@ char EncodeWithHexBinAlphabet (int digit)
 	return 0;
 }
 
-void DecodeHexUnicode (unsigned char *dest, const char *src, size_t len)
+gboolean DecodeHexUnicode (unsigned char *dest, const char *src, size_t len)
 {
-	size_t i, current = 0;
+	size_t i, current = 0, val0, val1, val2, val3;
 
 	for (i = 0; i < len ; i += 4) {
-		dest[current++] =
-			(DecodeWithHexBinAlphabet(src[i + 0]) << 4) +
-			DecodeWithHexBinAlphabet(src[i + 1]);
-		dest[current++] =
-			(DecodeWithHexBinAlphabet(src[i + 2]) << 4) +
-			DecodeWithHexBinAlphabet(src[i + 3]);
+		val0 = DecodeWithHexBinAlphabet(src[i + 0]);
+		val1 = DecodeWithHexBinAlphabet(src[i + 1]);
+		val2 = DecodeWithHexBinAlphabet(src[i + 2]);
+		val3 = DecodeWithHexBinAlphabet(src[i + 3]);
+
+		if (val0 < 0 || val1 < 0 || val2 < 0 || val3 < 0) {
+			return FALSE;
+		}
+
+		dest[current++] = (val0 << 4) + val1;
+		dest[current++] = (val2 << 4) + val3;
 	}
 	dest[current++] = 0;
 	dest[current] = 0;
+
+	return TRUE;
 }
 
 void EncodeHexUnicode (char *dest, const unsigned char *src, size_t len)

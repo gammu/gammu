@@ -109,7 +109,7 @@ int DecodeWithUTF8Alphabet(const unsigned char *src, wchar_t * dest, int len);
  *
  * \ingroup Unicode
  */
-void DecodeHexUnicode(unsigned char *dest, const char *src, size_t len);
+gboolean DecodeHexUnicode(unsigned char *dest, const char *src, size_t len);
 
 /**
  * Encodes string to hex quoted unicode.
