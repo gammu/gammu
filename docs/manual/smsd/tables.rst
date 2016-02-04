@@ -26,10 +26,14 @@ of the same message from :ref:`outbox_multipart`.
 Description of tables
 ---------------------
 
+.. _daemons:
+
 daemons
 +++++++
 
 Information about running daemons.
+
+.. _gammu-table: 
 
 gammu
 +++++
@@ -191,6 +195,7 @@ Fields description:
     info, what is SMS number in SMS sequence (start at 2, first part is in :ref:`outbox`
     table).
 
+.. _phones:
 
 phones
 ++++++
@@ -237,6 +242,8 @@ Fields description:
 ``Received`` (integer)
     Number of received SMS messages (SMSD does not reset this counter, so it might
     overflow).
+
+.. _sentitems:
 
 sentitems
 +++++++++

@@ -150,6 +150,14 @@ struct _GSM_SMSDConfig {
 	SQL_conn conn;
 	/* configurable SQL queries */
 	char * SMSDSQL_queries[SQL_QUERY_LAST_NO];
+
+	const char *table_daemons;
+	const char *table_gammu;
+	const char *table_inbox;
+	const char *table_sentitems;
+	const char *table_outbox;
+	const char *table_outbox_multipart;
+	const char *table_phones;
 #endif
 
 	INI_Section 		*smsdcfgfile;

@@ -37,6 +37,51 @@ Specific for DBI:
 
 .. seealso:: The variables are fully described in :ref:`gammurc` documentation.
 
+.. _Custom tables:
+
+Tables
+------
+
+.. versionadded:: 1.37.1
+
+You can customize name of all tables in the :config:section:`[tables]`. The SQL
+queries will reflect this, so it's enough to change table name in this section.
+
+.. config:option:: daemons
+
+    Name of the :ref:`daemons` table.
+
+.. config:option:: gammu
+
+    Name of the :ref:`gammu-table` table.
+
+.. config:option:: inbox
+
+    Name of the :ref:`inbox` table.
+
+.. config:option:: sentitems
+
+    Name of the :ref:`sentitems` table.
+
+.. config:option:: outbox
+
+    Name of the :ref:`outbox` table.
+
+.. config:option:: outbox_multipart
+
+    Name of the :ref:`outbox_multipart` table.
+
+.. config:option:: phones
+
+    Name of the :ref:`phones` table.
+
+You can change any table name using these:
+
+.. code-block:: ini
+
+    [tables]
+    inbox = special_inbox
+
 .. _SQL Queries:
 
 SQL Queries

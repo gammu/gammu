@@ -477,11 +477,8 @@ static GSM_Error SMSDSQL_CheckTable(GSM_SMSDConfig * Config, const char *table)
 	char buffer[200];
 	GSM_Error error;
 	struct GSM_SMSDdbobj *db = Config->db;
-	const char *escape_char;
 
-	escape_char = SMSDSQL_EscapeChar(Config);
-
-	sprintf(buffer, "SELECT %s %sID%s FROM %s %s", SMSDSQL_TopClause(Config, "1"), escape_char, escape_char, table, SMSDSQL_LimitClause(Config, "1"));
+	sprintf(buffer, "SELECT %s * FROM %s %s", SMSDSQL_TopClause(Config, "1"), table, SMSDSQL_LimitClause(Config, "1"));
 	error = SMSDSQL_Query(Config, buffer, &res);
 	if (error != ERR_NONE) {
 		SMSD_Log(DEBUG_ERROR, Config, "Table %s not found, disconnecting!", table);
@@ -528,22 +525,51 @@ static GSM_Error SMSDSQL_Init(GSM_SMSDConfig * Config)
 	if (error != ERR_NONE)
 		return error;
 
-	error = SMSDSQL_CheckTable(Config, "outbox");
-	if (error != ERR_NONE)
+	error = SMSDSQL_CheckTable(Config, Config->table_daemons);
+	if (error != ERR_NONE) {
+		SMSD_Log(DEBUG_ERROR, Config, "Failed to open table %s", Config->table_daemons);
 		return error;
-	error = SMSDSQL_CheckTable(Config, "outbox_multipart");
-	if (error != ERR_NONE)
+	}
+
+	error = SMSDSQL_CheckTable(Config, Config->table_gammu);
+	if (error != ERR_NONE) {
+		SMSD_Log(DEBUG_ERROR, Config, "Failed to open table %s", Config->table_gammu);
 		return error;
-	error = SMSDSQL_CheckTable(Config, "sentitems");
-	if (error != ERR_NONE)
+	}
+
+	error = SMSDSQL_CheckTable(Config, Config->table_inbox);
+	if (error != ERR_NONE) {
+		SMSD_Log(DEBUG_ERROR, Config, "Failed to open table %s", Config->table_inbox);
 		return error;
-	error = SMSDSQL_CheckTable(Config, "inbox");
-	if (error != ERR_NONE)
+	}
+
+	error = SMSDSQL_CheckTable(Config, Config->table_sentitems);
+	if (error != ERR_NONE) {
+		SMSD_Log(DEBUG_ERROR, Config, "Failed to open table %s", Config->table_sentitems);
 		return error;
+	}
+
+	error = SMSDSQL_CheckTable(Config, Config->table_outbox);
+	if (error != ERR_NONE) {
+		SMSD_Log(DEBUG_ERROR, Config, "Failed to open table %s", Config->table_outbox);
+		return error;
+	}
+
+	error = SMSDSQL_CheckTable(Config, Config->table_outbox_multipart);
+	if (error != ERR_NONE) {
+		SMSD_Log(DEBUG_ERROR, Config, "Failed to open table %s", Config->table_outbox_multipart);
+		return error;
+	}
+
+	error = SMSDSQL_CheckTable(Config, Config->table_phones);
+	if (error != ERR_NONE) {
+		SMSD_Log(DEBUG_ERROR, Config, "Failed to open table %s", Config->table_phones);
+		return error;
+	}
 
 	escape_char = SMSDSQL_EscapeChar(Config);
 
-	sprintf(buffer, "SELECT %sVersion%s FROM gammu", escape_char, escape_char);
+	sprintf(buffer, "SELECT %sVersion%s FROM %s", escape_char, escape_char, Config->table_gammu);
 	error = SMSDSQL_Query(Config, buffer, &res);
 	if (error != ERR_NONE) {
 		db->Free(Config);
@@ -1236,6 +1262,35 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 		Config->database="sms";
 	}
 
+	Config->table_daemons = INI_GetValue(Config->smsdcfgfile, "tables", "daemons", FALSE);
+	if (Config->table_daemons == NULL){
+		Config->table_daemons = "daemons";
+	}
+	Config->table_gammu = INI_GetValue(Config->smsdcfgfile, "tables", "gammu", FALSE);
+	if (Config->table_gammu == NULL){
+		Config->table_gammu = "gammu";
+	}
+	Config->table_inbox = INI_GetValue(Config->smsdcfgfile, "tables", "inbox", FALSE);
+	if (Config->table_inbox == NULL){
+		Config->table_inbox = "inbox";
+	}
+	Config->table_sentitems = INI_GetValue(Config->smsdcfgfile, "tables", "sentitems", FALSE);
+	if (Config->table_sentitems == NULL){
+		Config->table_sentitems = "sentitems";
+	}
+	Config->table_outbox = INI_GetValue(Config->smsdcfgfile, "tables", "outbox", FALSE);
+	if (Config->table_outbox == NULL){
+		Config->table_outbox = "outbox";
+	}
+	Config->table_outbox_multipart = INI_GetValue(Config->smsdcfgfile, "tables", "outbox_multipart", FALSE);
+	if (Config->table_outbox_multipart == NULL){
+		Config->table_outbox_multipart = "outbox_multipart";
+	}
+	Config->table_phones = INI_GetValue(Config->smsdcfgfile, "tables", "phones", FALSE);
+	if (Config->table_phones == NULL){
+		Config->table_phones = "phones";
+	}
+
 	Config->driverspath = INI_GetValue(Config->smsdcfgfile, "smsd", "driverspath", FALSE);
 
 	Config->sql = INI_GetValue(Config->smsdcfgfile, "smsd", "sql", FALSE);
@@ -1282,12 +1337,12 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 	locktime = locktime < 60 ? 60 : locktime; /* Minimum time reserve is 60 sec */
 
 	if (SMSDSQL_option(Config, SQL_QUERY_DELETE_PHONE, "delete_phone",
-		"DELETE FROM phones WHERE ", ESCAPE_FIELD("IMEI"), " = %I", NULL) != ERR_NONE) {
+		"DELETE FROM ", Config->table_phones, " WHERE ", ESCAPE_FIELD("IMEI"), " = %I", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
 
 	if (SMSDSQL_option(Config, SQL_QUERY_INSERT_PHONE, "insert_phone",
-		"INSERT INTO phones (",
+		"INSERT INTO ", Config->table_phones, " (",
 			ESCAPE_FIELD("IMEI"),
 			", ", ESCAPE_FIELD("ID"),
 			", ", ESCAPE_FIELD("NetCode"),
@@ -1314,7 +1369,7 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 			", ", ESCAPE_FIELD("SendingDateTime"),
 			", ", ESCAPE_FIELD("DeliveryDateTime"),
 			", ", ESCAPE_FIELD("SMSCNumber"), " "
-			"FROM sentitems WHERE ",
+			"FROM ", Config->table_sentitems, " WHERE ",
 			ESCAPE_FIELD("DeliveryDateTime"), " IS NULL AND ",
 			ESCAPE_FIELD("SenderID"), " = %P AND ",
 			ESCAPE_FIELD("TPMR"), " = %t AND ",
@@ -1323,7 +1378,7 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 	}
 
 	if (SMSDSQL_option(Config, SQL_QUERY_SAVE_INBOX_SMS_UPDATE_DELIVERED, "save_inbox_sms_update_delivered",
-		"UPDATE sentitems "
+		"UPDATE ", Config->table_sentitems, " "
 			"SET ", ESCAPE_FIELD("DeliveryDateTime"), " = %C"
 			", ", ESCAPE_FIELD("Status"), " = %1"
 			", ", ESCAPE_FIELD("StatusError"), " = %e"
@@ -1333,7 +1388,7 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 	}
 
 	if (SMSDSQL_option(Config, SQL_QUERY_SAVE_INBOX_SMS_UPDATE, "save_inbox_sms_update",
-		"UPDATE sentitems "
+		"UPDATE ", Config->table_sentitems, " "
 			"SET ",	ESCAPE_FIELD("Status"), " = %1"
 			", ", ESCAPE_FIELD("StatusError"), " = %e"
 			" WHERE ", ESCAPE_FIELD("ID"), " = %2"
@@ -1342,7 +1397,7 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 	}
 
 	if (SMSDSQL_option(Config, SQL_QUERY_SAVE_INBOX_SMS_INSERT, "save_inbox_sms_insert",
-		"INSERT INTO inbox "
+		"INSERT INTO ", Config->table_inbox, " "
 			"(", ESCAPE_FIELD("ReceivingDateTime"),
 			", ", ESCAPE_FIELD("Text"),
 			", ", ESCAPE_FIELD("SenderNumber"),
@@ -1357,14 +1412,14 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 	}
 
 	if (SMSDSQL_option(Config, SQL_QUERY_UPDATE_RECEIVED, "update_received",
-		"UPDATE phones SET ",
+		"UPDATE ", Config->table_phones, " SET ",
 			ESCAPE_FIELD("Received"), " = ", ESCAPE_FIELD("Received"), " + 1"
 			" WHERE ", ESCAPE_FIELD("IMEI"), " = %I", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
 
 	if (SMSDSQL_option(Config, SQL_QUERY_REFRESH_SEND_STATUS, "refresh_send_status",
-		"UPDATE outbox SET ",
+		"UPDATE ", Config->table_outbox, " SET ",
 			ESCAPE_FIELD("SendingTimeOut"), " = ", SMSDSQL_NowPlus(Config, locktime),
 			" WHERE ", ESCAPE_FIELD("ID"), " = %1"
 			" AND (", ESCAPE_FIELD("SendingTimeOut"), " < ", SMSDSQL_Now(Config),
@@ -1373,7 +1428,7 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 	}
 
 	if (SMSDSQL_option(Config, SQL_QUERY_UPDATE_RETRIES, "update_retries",
-		"UPDATE outbox SET ",
+		"UPDATE ", Config->table_outbox, " SET ",
 			ESCAPE_FIELD("SendingTimeOut"), " = ", SMSDSQL_NowPlus(Config, 600),
 			", ",ESCAPE_FIELD("Retries"), " = %2"
 			" WHERE ", ESCAPE_FIELD("ID"), " = %1", NULL) != ERR_NONE) {
@@ -1386,7 +1441,7 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 			", ", ESCAPE_FIELD("InsertIntoDB"),
 			", ", ESCAPE_FIELD("SendingDateTime"),
 			", ", ESCAPE_FIELD("SenderID"),
-			" FROM outbox WHERE ",
+			" FROM ", Config->table_outbox, " WHERE ",
 			ESCAPE_FIELD("SendingDateTime"), " < ", SMSDSQL_Now(Config),
 			" AND ", ESCAPE_FIELD("SendingTimeOut"), " < ", SMSDSQL_Now(Config),
 			" AND ", ESCAPE_FIELD("SendBefore"), " >= ", SMSDSQL_CurrentTime(Config),
@@ -1410,7 +1465,7 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 			", ", ESCAPE_FIELD("DeliveryReport"),
 			", ", ESCAPE_FIELD("CreatorID"),
 			", ", ESCAPE_FIELD("Retries"),
-			" FROM outbox WHERE ",
+			" FROM ", Config->table_outbox, " WHERE ",
 			ESCAPE_FIELD("ID"), "=%1", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
@@ -1424,24 +1479,24 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 			", ", ESCAPE_FIELD("TextDecoded"),
 			", ", ESCAPE_FIELD("ID"),
 			", ", ESCAPE_FIELD("SequencePosition"),
-			" FROM outbox_multipart WHERE ",
+			" FROM ", Config->table_outbox_multipart, " WHERE ",
 			ESCAPE_FIELD("ID"), "=%1 AND ",
 			ESCAPE_FIELD("SequencePosition"), "=%2", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
 
 	if (SMSDSQL_option(Config, SQL_QUERY_DELETE_OUTBOX, "delete_outbox",
-		"DELETE FROM outbox WHERE ", ESCAPE_FIELD("ID"), "=%1", NULL) != ERR_NONE) {
+		"DELETE FROM ", Config->table_outbox, " WHERE ", ESCAPE_FIELD("ID"), "=%1", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
 
 	if (SMSDSQL_option(Config, SQL_QUERY_DELETE_OUTBOX_MULTIPART, "delete_outbox_multipart",
-		"DELETE FROM outbox_multipart WHERE ", ESCAPE_FIELD("ID"), "=%1", NULL) != ERR_NONE) {
+		"DELETE FROM ", Config->table_outbox_multipart, " WHERE ", ESCAPE_FIELD("ID"), "=%1", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
 
 	if (SMSDSQL_option(Config, SQL_QUERY_CREATE_OUTBOX, "create_outbox",
-		"INSERT INTO outbox "
+		"INSERT INTO ", Config->table_outbox, " "
 			"(", ESCAPE_FIELD("CreatorID"),
 			", ", ESCAPE_FIELD("SenderID"),
 			", ", ESCAPE_FIELD("DeliveryReport"),
@@ -1460,7 +1515,7 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 	}
 
 	if (SMSDSQL_option(Config, SQL_QUERY_CREATE_OUTBOX_MULTIPART, "create_outbox_multipart",
-		"INSERT INTO outbox_multipart "
+		"INSERT INTO ", Config->table_outbox_multipart, " "
 			"(", ESCAPE_FIELD("SequencePosition"),
 			", ", ESCAPE_FIELD("Text"),
 			", ", ESCAPE_FIELD("Coding"),
@@ -1472,7 +1527,7 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 	}
 
 	if (SMSDSQL_option(Config, SQL_QUERY_ADD_SENT_INFO, "add_sent_info",
-		"INSERT INTO sentitems "
+		"INSERT INTO ", Config->table_sentitems, " "
 			"(", ESCAPE_FIELD("CreatorID"),
 			", ", ESCAPE_FIELD("ID"),
 			", ", ESCAPE_FIELD("SequencePosition"),
@@ -1497,14 +1552,14 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 	}
 
 	if (SMSDSQL_option(Config, SQL_QUERY_UPDATE_SENT, "update_sent",
-		"UPDATE phones SET ",
+		"UPDATE ", Config->table_phones, " SET ",
 			ESCAPE_FIELD("Sent"), "= ", ESCAPE_FIELD("Sent"), " + 1"
 			" WHERE ", ESCAPE_FIELD("IMEI"), " = %I", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
 
 	if (SMSDSQL_option(Config, SQL_QUERY_REFRESH_PHONE_STATUS, "refresh_phone_status",
-		"UPDATE phones SET ",
+		"UPDATE ", Config->table_phones, " SET ",
 			ESCAPE_FIELD("TimeOut"), "= ", SMSDSQL_NowPlus(Config, 10),
 			", ", ESCAPE_FIELD("Battery"), " = %1"
 			", ", ESCAPE_FIELD("Signal"), " = %2"
