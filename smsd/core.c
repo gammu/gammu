@@ -1975,6 +1975,9 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 					GSM_SetIncomingCall(Config->gsm, TRUE);
 				}
 
+				/* We use polling so store messages to SIM */
+				GSM_SetIncomingSMS(Config->gsm, TRUE);
+
 				GSM_SetSendSMSStatusCallback(Config->gsm, SMSD_SendSMSStatusCallback, Config);
 				/* On first start we need to initialize some variables */
 				if (first_start) {
