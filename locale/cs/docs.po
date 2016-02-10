@@ -3438,7 +3438,7 @@ msgstr ""
 #~ msgstr "-maxnum číslo"
 
 #~ msgid ""
-#~ "Limit maximal number of messages which will be created. If there are more "
+#~ "Limit maximum number of messages which will be created. If there are more "
 #~ "messages, Gammu will terminate with failure."
 #~ msgstr ""
 #~ "Omezí maximální počet zpráv, které budou vytvořeny. Pokud by jich bylo "
@@ -3681,7 +3681,7 @@ msgstr ""
 #~ msgid "-variablebitmaplong"
 #~ msgstr "-variablebitmaplong"
 
-#~ msgid "bitmap with maximal size 96x128 saved in one or few sms"
+#~ msgid "bitmap with maximum size 96x128 saved in one or few sms"
 #~ msgstr ""
 #~ "obrázek o maximální velikosti 96x128 uložený v jedné nebo více zpráv"
 

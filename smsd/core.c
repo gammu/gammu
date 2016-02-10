@@ -1943,11 +1943,11 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 			/* Did we reach limit for errors? */
 			if (max_failures != 0 && initerrors > max_failures) {
 				Config->failure = ERR_TIMEOUT;
-				SMSD_Log(DEBUG_INFO, Config, "Reached maximal number of failures (%d), terminating", max_failures);
+				SMSD_Log(DEBUG_INFO, Config, "Reached maximum number of failures (%d), terminating", max_failures);
 				break;
 			}
 			if (initerrors++ > 3) {
-				SMSD_Log(DEBUG_INFO, Config, "Going to 30 seconds sleep because of too much connection errors");
+				SMSD_Log(DEBUG_INFO, Config, "Going to 30 seconds sleep because of too many connection errors");
 
 				for (i = 0; i < 60; i++) {
 					if (Config->shutdown)

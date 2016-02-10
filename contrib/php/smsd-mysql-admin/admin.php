@@ -9,7 +9,7 @@
 //these must be defined
 $dokument="admin.php"; //name of current document
 $delall = true; //should be Delete All available for folders ?
-$max_limit=1; //maximal number of sms for outgoing sms editor
+$max_limit=1; //maximum number of sms for outgoing sms editor
 
 #############################
 ## DO NOT CHANGE BELOW !!! ##

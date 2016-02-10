@@ -71,7 +71,7 @@ static gboolean irda_discover_device(GSM_StateMachine *state, SOCKET *fd)
 	}
 #endif
 
-    	/* can handle maximally 10 devices during discovering */
+    	/* can handle maximum 10 devices during discovering */
     	len  = sizeof(struct irda_device_list) + sizeof(struct irda_device_info) * 10;
     	buf  = (unsigned char *)malloc(len);
     	list = (struct irda_device_list *)buf;
