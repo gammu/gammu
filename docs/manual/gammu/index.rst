@@ -14,7 +14,7 @@ Synopsis
     gammu [parameters] <command> [options]
 
 Commands actually indicate which operation should Gammu perform. They can be
-specified with or without leading ``--``.
+specified with or without a leading ``--``.
 
 Description
 +++++++++++
@@ -312,7 +312,7 @@ ____________
 
     .. option:: -maxsms num
 
-        Limit maximal number of messages which will be
+        Limit maximum number of messages which will be
         created. If there are more messages, Gammu will terminate with failure.
 
     Types of messages:
@@ -408,7 +408,7 @@ ____________
 
         .. option:: -variablebitmaplong
 
-            bitmap with maximal size 96x128 saved in one or few sms
+            bitmap with maximum size 96x128 saved in one or few sms
 
         .. option:: -fixedbitmap
 

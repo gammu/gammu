@@ -575,7 +575,7 @@ msgstr ""
 #~ msgstr "B<-reply> - Antwort-SMSC setzen"
 
 #~ msgid ""
-#~ "Limit maximal number of messages which will be created. If there are more "
+#~ "Limit maximum number of messages which will be created. If there are more "
 #~ "messages, Gammu will terminate with failure."
 #~ msgstr ""
 #~ "Höchstanzahl der Nachrichten, die erstellt werden. Wenn sich mehr "

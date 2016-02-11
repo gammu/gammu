@@ -122,7 +122,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_Debug_Info *di,
 				GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,4,TRUE,&UsedText,&CopiedText,&CopiedSMSText);
 			}
 
-			EncodeLength = 128; /* 128 bytes is maximal length from specs */
+			EncodeLength = 128; /* 128 bytes is maximum length from specs */
 			switch (Entry->ID) {
 			case SMS_EMSSound10:
 				Entry->RingtoneNotes = GSM_EncodeEMSSound(Entry->Ringtone, Buffer+3, &EncodeLength, GSM_Ring_IMelody10, TRUE);
@@ -149,7 +149,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_Debug_Info *di,
 			Ring = *Entry->Ringtone;
 
 			/* First check if we can use classic format */
-			EncodeLength = 128; /* 128 bytes is maximal length from specs */
+			EncodeLength = 128; /* 128 bytes is maximum length from specs */
 			switch (Entry->ID) {
 			case SMS_EMSSound10Long:
 				Entry->RingtoneNotes = GSM_EncodeEMSSound(&Ring, Buffer+3, &EncodeLength, GSM_Ring_IMelody10, TRUE);
@@ -202,7 +202,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_Debug_Info *di,
 					}
 					Ring.NoteTone.NrCommands -= FreeBytes;
 					if (Ring.NoteTone.NrCommands == 0) break;
-					EncodeLength = 128; /* 128 bytes is maximal length from specs */
+					EncodeLength = 128; /* 128 bytes is maximum length from specs */
 				}
 				switch (Entry->ID) {
 				case SMS_EMSSound10Long:
@@ -255,7 +255,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_Debug_Info *di,
 					}
 					Ring.NoteTone.NrCommands -= FreeBytes;
 					if (Ring.NoteTone.NrCommands == 0) break;
-					EncodeLength = 128; /* 128 bytes is maximal length from specs */
+					EncodeLength = 128; /* 128 bytes is maximum length from specs */
 				}
 				switch (Entry->ID) {
 				case SMS_EMSSound10Long:

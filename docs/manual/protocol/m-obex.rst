@@ -96,7 +96,7 @@ Answer
 *4C* 00 05 00 00
     Error code
 *49* 00 07 07 D0 00 18
-    First two data bytes: maximal number of contacts (0x07D0 = 2000). Last two data bytes: Current number of contacts
+    First two data bytes: maximum number of contacts (0x07D0 = 2000). Last two data bytes: Current number of contacts
 
 
 List all

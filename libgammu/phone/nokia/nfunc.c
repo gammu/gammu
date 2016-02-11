@@ -909,7 +909,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 		}
 		if (Block[0] == N2630_PBK_FAVMESSAGING) {
 			if (used_favorite_messaging_numbers >= sizeof(favorite_messaging_numbers) / sizeof(int)) {
-				smprintf(s, "Too much favorite messaging numbers!\n");
+				smprintf(s, "Too many favorite messaging numbers!\n");
 				return ERR_MOREMEMORY;
 			}
 			favorite_messaging_numbers[used_favorite_messaging_numbers] = (int)Block[5];
@@ -1686,7 +1686,7 @@ GSM_Error N71_65_ReplyWritePhonebook(GSM_Protocol_Message *msg, GSM_StateMachine
 			smprintf(s, "Wrong entry type\n");
 			return ERR_NOTSUPPORTED;
 		case 0x3e:
-			smprintf(s, "Too much entries\n");
+			smprintf(s, "Too many entries\n");
 			return ERR_NOTSUPPORTED;
 		case 0x43:
 			smprintf(s, "Incorrect characters\n");

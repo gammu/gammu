@@ -124,10 +124,10 @@ static GSM_Error OBEXGEN_ReplyConnect(GSM_Protocol_Message *msg, GSM_StateMachin
 		/* Sample: 10 |00 |20 |00 |CB |00 |00 |00 |10 |4AJ|00 |08 |4DM|4FO|42B|45E|58X */
 		/* Byte 0 - OBEX version */
 		/* Byte 1 - flags */
-		/* Bytes 2,3 - maximal size of packet */
+		/* Bytes 2,3 - maximum size of packet */
 		if (msg->Length >= 4) {
 			s->Phone.Data.Priv.OBEXGEN.FrameSize = msg->Buffer[2]*256 + msg->Buffer[3];
-			smprintf(s,"Maximal size of frame is %i 0x%x\n",s->Phone.Data.Priv.OBEXGEN.FrameSize,s->Phone.Data.Priv.OBEXGEN.FrameSize);
+			smprintf(s,"Maximum size of frame is %i 0x%x\n",s->Phone.Data.Priv.OBEXGEN.FrameSize,s->Phone.Data.Priv.OBEXGEN.FrameSize);
 		}
 		/* Remaining bytes - optional headers */
 		for (i = 4; i < msg->Length;) {
@@ -1612,7 +1612,7 @@ int OBEXGEN_GetFirstFreeLocation(int **IndexStorage, int *IndexCount) {
 	int i;
 	int max = -1;
 
-	/* Find maximal used location */
+	/* Find maximum used location */
 	for (i = 0; i < *IndexCount; i++) {
 		if (*IndexStorage[i] > max) {
 			max = (*IndexStorage)[i];

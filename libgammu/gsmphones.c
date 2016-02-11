@@ -184,7 +184,7 @@ GSM_Error GSM_SetFeatureString(GSM_Feature *list, const char *string)
 		}
 		out++;
 		if (out >= GSM_MAX_PHONE_FEATURES) {
-			smfprintf(NULL, "Too much features: %s\n", pos);
+			smfprintf(NULL, "Too many features: %s\n", pos);
 			error = ERR_MOREMEMORY;
 			break;
 		}

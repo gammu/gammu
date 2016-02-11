@@ -153,7 +153,7 @@ List::
                                           yH, yL, xL }
                                 where code:
                                         0x3d - wrong entry type
-                                        0x3e - too much entries
+                                        0x3e - too many entries
         s Delete mem location   { 0x010f, 0x00, 0x01, 0x04, 0x00, 0x00, 0x0c, 0x01, 0xff, xH, xL,
                                           yH, yL, 0x00, 0x00}
                                           where   x: location

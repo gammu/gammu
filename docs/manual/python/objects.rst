@@ -238,7 +238,7 @@ SMSC dictionary can consist of following fields:
    Default message validity as a string
 
 * ``NA`` - validity not available
-* ``Max`` - maximal validity allowed by network
+* ``Max`` - maximum validity allowed by network
 * ``nM``, ``nH``, ``nD``, ``nW`` - period defined in minutes, hours, days or
   weeks, eg. ``3W``
 

@@ -967,7 +967,7 @@ size_t ATGEN_GrabString(GSM_StateMachine *s, const unsigned char *input, unsigne
  *
  * And tries to detect if the date is not in format MM-DD-YYYY.
  *
- * @todo Too much static buffers are used here.
+ * @todo Too many static buffers are used here.
  */
 GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned char *_input)
 {
@@ -5041,7 +5041,7 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 			DecodeDefault(uname, name, len, TRUE, NULL);
 
 			if (!mywstrncmp(uname, entry->Entries[Name].Text, len)) {
-				/* Get maximal text length */
+				/* Get maximum text length */
 				if (Priv->TextLength == 0) {
 					ATGEN_GetMemoryInfo(s, NULL, AT_Sizes);
 				}
