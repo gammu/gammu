@@ -1138,7 +1138,7 @@ void GetBitmap(int argc, char *argv[])
 		GSM_PrintBitmap(stdout,&MultiBitmap.Bitmap[0]);
 		printf(LISTFORMAT "\"%s\"\n", _("Text"),DecodeUnicodeConsole(MultiBitmap.Bitmap[0].Text));
 		printf(LISTFORMAT "\"%s\"\n", _("Sender"),DecodeUnicodeConsole(MultiBitmap.Bitmap[0].Sender));
-		if (MultiBitmap.Bitmap[0].Name)
+		if (MultiBitmap.Bitmap[0].Name[0])
 			printf(LISTFORMAT "\"%s\"\n", _("Name"),DecodeUnicodeConsole(MultiBitmap.Bitmap[0].Name));
 		if (argc>4) error=GSM_SaveBitmapFile(argv[4],&MultiBitmap);
 		break;
