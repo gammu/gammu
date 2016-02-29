@@ -240,7 +240,6 @@ static GSM_Error SMSDDBI_Query(GSM_SMSDConfig * Config, const char *query, SQL_r
 
 	res->dbi = NULL;
 
-	SMSD_Log(DEBUG_SQL, Config, "Execute SQL: %s", query);
 	res->dbi = dbi_conn_query(Config->conn.dbi, query);
 	if (res->dbi != NULL)
 		return ERR_NONE;
