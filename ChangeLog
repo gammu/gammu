@@ -23,6 +23,7 @@ ChangeLog
 
 [-] * Properly report errors in HEX encoded strings from SMSD SQL backends.
 [-] * Configurable SMSD table names.
+[-] * Improved support for Huawei E303.
 
 20160203 - 1.37.0
 
