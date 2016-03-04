@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: Wammu 0.37\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2016-02-04 10:40+0100\n"
-"PO-Revision-Date: 2016-01-13 10:38+0000\n"
-"Last-Translator: Андрій Бандура <andriykopanytsia@gmail.com>\n"
-"Language-Team: Ukrainian <https://hosted.weblate.org/projects/gammu/gammu/uk/"
-">\n"
+"PO-Revision-Date: 2016-03-02 16:14+0000\n"
+"Last-Translator: Olexandr Nesterenko <olexn@ukr.net>\n"
+"Language-Team: Ukrainian "
+"<https://hosted.weblate.org/projects/gammu/gammu/uk/>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
+"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 2.5-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
@@ -743,7 +743,7 @@ msgstr "з %s до %s"
 
 #: gammu/calendar.c:328
 msgid " on each "
-msgstr ""
+msgstr " кожний "
 
 #: gammu/calendar.c:330
 #, c-format
@@ -847,7 +847,7 @@ msgstr ", роздільник дати - %c\n"
 
 #: gammu/calendar.c:463
 msgid "Setting time in phone to the same time as is set in computer."
-msgstr ""
+msgstr "Синхронізація часу в телефоні із часом комп'ютера."
 
 #: gammu/calendar.c:513
 msgid "Updating specified parts of date and time in phone."
@@ -856,7 +856,7 @@ msgstr ""
 #: gammu/calendar.c:536
 #, c-format
 msgid "Alarm (%i) not set in phone\n"
-msgstr ""
+msgstr "Будильник (%i) в телефоні не встановлено\n"
 
 #: gammu/calendar.c:540
 #, c-format
@@ -888,15 +888,15 @@ msgstr "Автовидалення нотаток через %i днів"
 #: gammu/calendar.c:668
 #, c-format
 msgid "Week starts on %s"
-msgstr ""
+msgstr "Початок тижня: %s"
 
 #: gammu/calendar.c:693 gammu/memory.c:150
 msgid "Entry was empty"
-msgstr ""
+msgstr "Запис пустий"
 
 #: gammu/calendar.c:695 gammu/memory.c:152
 msgid "Entry was deleted"
-msgstr ""
+msgstr "Запис вилучено"
 
 #: gammu/calendar.c:713
 msgid "Priority"
@@ -908,15 +908,15 @@ msgstr ""
 
 #: gammu/calendar.c:719
 msgid "Low"
-msgstr ""
+msgstr "Низький"
 
 #: gammu/calendar.c:722
 msgid "Medium"
-msgstr ""
+msgstr "Середній"
 
 #: gammu/calendar.c:725
 msgid "High"
-msgstr ""
+msgstr "Високий"
 
 #: gammu/calendar.c:728
 msgid "None"
@@ -928,15 +928,15 @@ msgstr "Невідомо"
 
 #: gammu/calendar.c:739
 msgid "Due time"
-msgstr ""
+msgstr "Назначений час"
 
 #: gammu/calendar.c:744
 msgid "Start time"
-msgstr ""
+msgstr "Час початку"
 
 #: gammu/calendar.c:749
 msgid "Completed time"
-msgstr ""
+msgstr "Час завершення"
 
 #: gammu/calendar.c:754
 msgid "Completed"
@@ -949,7 +949,7 @@ msgstr "Категорія"
 
 #: gammu/calendar.c:818
 msgid "Contact"
-msgstr ""
+msgstr "Контакт"
 
 #: gammu/calendar.c:903 gammu/memory.c:316 gammu/memory.c:393
 #, c-format
@@ -1078,7 +1078,7 @@ msgstr "Невірний день!"
 
 #: gammu/common.c:194
 msgid "Security status"
-msgstr ""
+msgstr "Стан безпеки"
 
 #: gammu/common.c:312 gammu/misc.c:1170 gammu/misc.c:1185 gammu/misc.c:1192
 #: gammu/misc.c:1199 gammu/misc.c:1229
