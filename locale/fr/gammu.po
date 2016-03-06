@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2016-02-04 10:40+0100\n"
-"PO-Revision-Date: 2015-04-16 11:31+0200\n"
-"Last-Translator: Michal Čihař <michal@cihar.com>\n"
+"PO-Revision-Date: 2016-03-06 15:17+0000\n"
+"Last-Translator: Gautier <castelain.gautier@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gammu/gammu/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 2.3-dev\n"
+"X-Generator: Weblate 2.5-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -1300,7 +1300,7 @@ msgstr "Casque d'interconnexion : "
 
 #: gammu/depend/nokia/dct4.c:1044
 msgid "Hook interconnection:"
-msgstr ""
+msgstr "Crochet de connexion :"
 
 #: gammu/depend/nokia/dct4.c:1045
 msgid "Light sensor:"
@@ -1552,14 +1552,13 @@ msgstr ""
 "d'autres auteurs."
 
 #: gammu-detect/main.c:87 gammu/gammu.c:336
-#, fuzzy
 #| msgid ""
 #| "License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
 #| "GPL/2.0/>."
 msgid "License GPLv2: GNU GPL version 2 <https://spdx.org/licenses/GPL-2.0>."
 msgstr ""
-"Licence GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
-"GPL/2.0/>."
+"Licence GPLv2: GNU GPL version 2 <http://www.gnu.org/licenses/old-"
+"licenses/gpl-2.0.txt>."
 
 #: gammu-detect/main.c:88 gammu/gammu.c:338
 msgid "This is free software: you are free to change and redistribute it."
@@ -1888,7 +1887,7 @@ msgstr "Sonneries"
 
 #: gammu/gammu.c:751
 msgid "Calendar notes"
-msgstr ""
+msgstr "Note de Calendrier"
 
 #: gammu/gammu.c:752
 msgid "To do lists"
@@ -1923,12 +1922,13 @@ msgid "WAP settings and bookmarks"
 msgstr "Réglages WAP et signets"
 
 #: gammu/gammu.c:767
+#, fuzzy
 msgid "MMS and MMS settings"
-msgstr ""
+msgstr "Paramètres SMS et MMS"
 
 #: gammu/gammu.c:768
 msgid "Phone tests"
-msgstr ""
+msgstr "Tests Télephone"
 
 #: gammu/gammu.c:769
 msgid "FM radio"
@@ -1943,8 +1943,9 @@ msgid "Phone settings"
 msgstr "Réglages du téléphone"
 
 #: gammu/gammu.c:773
+#, fuzzy
 msgid "Dumps decoding"
-msgstr ""
+msgstr "Décodeur de tendance"
 
 #: gammu/gammu.c:775
 msgid "Functions that don't fit elsewhere"
@@ -1956,7 +1957,7 @@ msgstr "Informations Gammu"
 
 #: gammu/gammu.c:792
 msgid "Usage: gammu [parameters] <command> [options]"
-msgstr ""
+msgstr "Utilisation: gammu [parametre] <commande> [options]"
 
 # type: Plain text
 #: gammu/gammu.c:793
@@ -1965,21 +1966,27 @@ msgstr "Les paramètres avant la commande modifient le comportement de gammu : "
 
 #: gammu/gammu.c:794
 msgid "-c / --config <filename> ... name of configuration file"
-msgstr ""
+msgstr "-c / --config <nom_fichier> ... nom du fichier de configuration"
 
 #: gammu/gammu.c:795
 msgid "-s / --section <confign> ... section of config file to use, eg. 42"
 msgstr ""
+"-s / --section <confign> ... partie du fichier de configuration a utiliser, "
+"ex. 42"
 
 #: gammu/gammu.c:796
+#, fuzzy
 msgid ""
 "-d / --debug <level> ... debug level (nothing|text|textall|textalldate|"
 "binary|errors)"
 msgstr ""
+"-d / --debug <niveau> ... niveau de débogage (rien|texte|textuel|texte-"
+"daté|binaire|erreurs)"
 
 #: gammu/gammu.c:797
 msgid "-f / --debug-file <filename> ... file for logging debug messages"
 msgstr ""
+"-f / --debug-file <filename> ... fichier pour charger les messages déboge"
 
 # type: Plain text
 #: gammu/gammu.c:799
@@ -1991,6 +1998,8 @@ msgid ""
 "For more details, call help on specific topic (gammu --help topic). Topics "
 "are:"
 msgstr ""
+"Pour plus d'information, demander de l'aide sur les sujets spécifique (gammu "
+"--aide sujet). Sujets sont :"
 
 #: gammu/gammu.c:900
 msgid "Unknown help topic specified!"
@@ -2009,12 +2018,12 @@ msgstr ""
 #: gammu/gammu.c:995
 #, c-format
 msgid "More parameters required (function requires %d)\n"
-msgstr ""
+msgstr "Plus de paramètre requis (fonctionnalité requis %d 1)\n"
 
 #: gammu/gammu.c:998
 #, c-format
 msgid "More parameters required (function requires %d to %d)\n"
-msgstr ""
+msgstr "Plus de paramètre requis (fonction requis %d 1 a %d 2)\n"
 
 #: gammu/gammu.c:1004 gammu/gammu.c:1025
 msgid "Parameters help"
@@ -2023,12 +2032,12 @@ msgstr "paramètres d'aide"
 #: gammu/gammu.c:1016
 #, c-format
 msgid "Too many parameters (function accepts %d)\n"
-msgstr ""
+msgstr "Trop de paramètre (fonction accepté %d 1)\n"
 
 #: gammu/gammu.c:1019
 #, c-format
 msgid "Too many parameters (function accepts %d to %d)\n"
-msgstr ""
+msgstr "trop de paramètre (fonction accepté %d 1 à %d 2 )\n"
 
 #: gammu/gammu.c:1046
 msgid "Bad option!"
@@ -2059,7 +2068,7 @@ msgstr ""
 
 #: gammu/gammu.c:1195 gammu/gammu.c:1206
 msgid "No configuration read, using builtin defaults!"
-msgstr ""
+msgstr "Pas de lecture de configuration, utilisation des défauts innés !"
 
 #: gammu/gammu.c:1245
 #, c-format
@@ -2074,27 +2083,31 @@ msgid ""
 "You will have null names in entries. Upgrade firmware in phone to higher "
 "than 4.06"
 msgstr ""
+"Vous avez des noms vides en entrée. Mettre à jour le firmware du téléphone "
+"vers une version 4.06 ou plus"
 
 #: gammu/memory.c:86
 msgid ""
 "You will have null names in entries. Upgrade firmware in phone to higher "
 "than 6.00"
 msgstr ""
+"Vous avez des entrées null. Mettre à jour le firmware du télephone vers une "
+"version supérieur à 6.00"
 
 #: gammu/memory.c:91 gammu/memory.c:109 gammu/memory.c:235 gammu/memory.c:352
 #: helper/memory-display.c:277
 #, c-format
 msgid "Memory %s, Location %i\n"
-msgstr ""
+msgstr "Mémoire %s 1, Position %i 2\n"
 
 #: gammu/memory.c:104 gammu/misc.c:1931 gammu/misc.c:2340
 msgid "Entry is empty"
-msgstr ""
+msgstr "Entrée est null"
 
 #: gammu/memory.c:116
 #, c-format
 msgid "%i entries empty, %i entries filled\n"
-msgstr ""
+msgstr "%i 1 entrées vide, %i 2 entrée remplie\n"
 
 #: gammu/message.c:37
 msgid "SMS message received"
@@ -2102,12 +2115,12 @@ msgstr "Message SMS reçu"
 
 #: gammu/message.c:41
 msgid "We already have one pending, ignoring this one!"
-msgstr ""
+msgstr "Nous avons déjà une instance ouverte, ignoré celui-ci !"
 
 #: gammu/message.c:63 gammu/message.c:295
 #, c-format
 msgid "Location %i\n"
-msgstr ""
+msgstr "Localisation %i 1\n"
 
 #: gammu/message.c:64 gammu/message.c:296
 msgid "Empty"
@@ -2120,11 +2133,11 @@ msgstr "Message DC reçu"
 #: gammu/message.c:79
 #, c-format
 msgid "Channel %i, text \"%s\"\n"
-msgstr ""
+msgstr "Chaine %i 1, texte\"%s 2\"\n"
 
 #: gammu/message.c:85
 msgid "USSD received"
-msgstr ""
+msgstr "USSD reçu"
 
 #: gammu/message.c:86 helper/message-display.c:167 helper/message-display.c:287
 msgid "Status"
@@ -2152,12 +2165,12 @@ msgstr "Non supporté"
 
 #: gammu/message.c:114
 msgid "Service reply"
-msgstr ""
+msgstr "Réponse du service"
 
 #: gammu/message.c:178
 #, c-format
 msgid "Invalid SMSC location: %s\n"
-msgstr ""
+msgstr "mauvaise localisation SMSC : %s 1\n"
 
 #: gammu/message.c:220 gammu/misc.c:2229 gammu/misc.c:2508
 msgid "Number"
@@ -2165,11 +2178,11 @@ msgstr "Numéro"
 
 #: gammu/message.c:221
 msgid "Default number"
-msgstr ""
+msgstr "valeur par défaut"
 
 #: gammu/message.c:223
 msgid "Format"
-msgstr ""
+msgstr "Format"
 
 #: gammu/message.c:226
 msgid "Fax"
@@ -2193,16 +2206,16 @@ msgstr "Temps maximum"
 
 #: gammu/message.c:368 gammu/message.c:442 gammu/message.c:715
 msgid "Corrupted message, skipping"
-msgstr ""
+msgstr "Message corrompu, instable"
 
 #: gammu/message.c:382 gammu/message.c:498
 #, c-format
 msgid "%i SMS parts in %i SMS sequences"
-msgstr ""
+msgstr "%i 1 partie de SMS %i 2 suite SMS"
 
 #: gammu/message.c:432
 msgid "SMS counter overflow"
-msgstr ""
+msgstr "Compteur SMS saturé"
 
 #: gammu/message.c:519
 msgid ", SIM memory"
@@ -2214,15 +2227,15 @@ msgstr ", mémoire du téléphone"
 
 #: gammu/message.c:521
 msgid ", phone or SIM memory"
-msgstr ""
+msgstr ", téléphone ou Mémoire SIM"
 
 #: gammu/message.c:524 gammu/mms.c:30
 msgid ", Inbox folder"
-msgstr ""
+msgstr ", Boite de réception"
 
 #: gammu/message.c:525
 msgid ", Outbox folder"
-msgstr ""
+msgstr ", Boite d'envois"
 
 #: gammu/message.c:542
 msgid "OK"
@@ -2236,7 +2249,7 @@ msgstr "erreur %i"
 #: gammu/message.c:548
 #, c-format
 msgid ", message reference=%d"
-msgstr ""
+msgstr ", message de référence=%d 1"
 
 #: gammu/message.c:581
 msgid "Message number"
@@ -2275,192 +2288,192 @@ msgstr "Envoie SMS du répertoire \"%s\", emplacement %i↵\n"
 
 #: gammu/message.c:622 gammu/message.c:648
 msgid "....waiting for network answer"
-msgstr ""
+msgstr ".... Attente d'une réponse réseau"
 
 #: gammu/message.c:643
 #, c-format
 msgid "Sending SMS %i/%i"
-msgstr ""
+msgstr "Envois du SMS %i 1 / %i 2"
 
 #: gammu/message.c:662
 msgid "Something went wrong, unknown message operation!\n"
-msgstr ""
+msgstr "Erreur, opération de messagerie inconnu !\n"
 
 #: gammu/message.c:698
 #, c-format
 msgid "Too high folder number (max. %i)\n"
-msgstr ""
+msgstr "numéro de dossier trop élevé ( max. %i 1)\n"
 
 #: gammu/message.c:704
 #, c-format
 msgid "Deleting SMS from \"%s\" folder: "
-msgstr ""
+msgstr "Suppression SMS de \"%s 1\" dossier : "
 
 #: gammu/misc.c:35
 msgid "Network state"
-msgstr ""
+msgstr "État réseau"
 
 #: gammu/misc.c:37 gammu/misc.c:64
 msgid "home network"
-msgstr ""
+msgstr "réseau domestique"
 
 #: gammu/misc.c:38 gammu/misc.c:65
 msgid "roaming network"
-msgstr ""
+msgstr "itinérance réseau"
 
 #: gammu/misc.c:39 gammu/misc.c:66
 msgid "requesting network"
-msgstr ""
+msgstr "recherche reseau"
 
 #: gammu/misc.c:40 gammu/misc.c:67
 msgid "not logged into network"
-msgstr ""
+msgstr "non connecter au réseau"
 
 #: gammu/misc.c:41 gammu/misc.c:68
 msgid "registration to network denied"
-msgstr ""
+msgstr "refus d’authentification réseau"
 
 #: gammu/misc.c:42 gammu/misc.c:44 gammu/misc.c:69 gammu/misc.c:71
 #: gammu/misc.c:169 gammu/misc.c:191
 msgid "unknown"
-msgstr ""
+msgstr "inconnu"
 
 #: gammu/misc.c:58 gammu/misc.c:85
 msgid "Name in phone"
-msgstr ""
+msgstr "Nom du téléphone"
 
 #: gammu/misc.c:62
 msgid "Packet network state"
-msgstr ""
+msgstr "etat du réseau par paquets"
 
 #: gammu/misc.c:75
 msgid "Packet network"
-msgstr ""
+msgstr "réseau par paquets"
 
 #: gammu/misc.c:90 gammu/misc.c:1591
 msgid "GPRS"
-msgstr ""
+msgstr "GPRS"
 
 #: gammu/misc.c:93
 msgid "attached"
-msgstr ""
+msgstr "attaché"
 
 #: gammu/misc.c:96
 msgid "detached"
-msgstr ""
+msgstr "détaché"
 
 #: gammu/misc.c:106
 msgid "Battery level"
-msgstr ""
+msgstr "niveau batterie"
 
 #: gammu/misc.c:111
 msgid "Battery capacity"
-msgstr ""
+msgstr "Capacité batterie"
 
 #: gammu/misc.c:112
 #, c-format
 msgid "%i mAh"
-msgstr ""
+msgstr "%i 1 mAh"
 
 #: gammu/misc.c:116
 msgid "Battery temperature"
-msgstr ""
+msgstr "Température batterie"
 
 #. l10n: This means degrees Celsius
 #: gammu/misc.c:118 gammu/misc.c:123
 #, c-format
 msgid "%i C"
-msgstr ""
+msgstr "%i °C"
 
 #: gammu/misc.c:122
 msgid "Phone temperature"
-msgstr ""
+msgstr "température téléphone"
 
 #: gammu/misc.c:127
 msgid "Battery voltage"
-msgstr ""
+msgstr "Voltage Batterie"
 
 #: gammu/misc.c:128 gammu/misc.c:133
 #, c-format
 msgid "%i mV"
-msgstr ""
+msgstr "%i 1 mV"
 
 #: gammu/misc.c:132
 msgid "Charge voltage"
-msgstr ""
+msgstr "voltage de charge"
 
 #: gammu/misc.c:137
 msgid "Charge current"
-msgstr ""
+msgstr "chargement en cours"
 
 #: gammu/misc.c:138 gammu/misc.c:143
 #, c-format
 msgid "%i mA"
-msgstr ""
+msgstr "%i 1 mA"
 
 #: gammu/misc.c:142
 msgid "Phone current"
-msgstr ""
+msgstr "Téléphone présent"
 
 #: gammu/misc.c:147
 msgid "Charge state"
-msgstr ""
+msgstr "Etat de charge"
 
 #: gammu/misc.c:150
 msgid "powered from battery"
-msgstr ""
+msgstr "alimenté par batterie"
 
 #: gammu/misc.c:153
 msgid "battery connected, but not powered from battery"
-msgstr ""
+msgstr "Batterie connecté, mais non alimenté par batterie"
 
 #: gammu/misc.c:156
 msgid "battery connected and is being charged"
-msgstr ""
+msgstr "batterie connecté et en recharge"
 
 #: gammu/misc.c:159
 msgid "battery connected and is fully charged"
-msgstr ""
+msgstr "batterie connecté et pleinement rechargé"
 
 #: gammu/misc.c:162
 msgid "battery not connected"
-msgstr ""
+msgstr "batterie déconnecté"
 
 #: gammu/misc.c:165
 msgid "detected power failure"
-msgstr ""
+msgstr "détection erreur alimentation"
 
 #: gammu/misc.c:176
 msgid "Battery type"
-msgstr ""
+msgstr "type de batterie"
 
 #: gammu/misc.c:179
 msgid "Lithium Ion"
-msgstr ""
+msgstr "Lithium Ion"
 
 #: gammu/misc.c:182
 msgid "Lithium Polymer"
-msgstr ""
+msgstr "Lithium Polymer"
 
 #: gammu/misc.c:185
 msgid "NiMH"
-msgstr ""
+msgstr "NiMH"
 
 #: gammu/misc.c:261
 msgid "Not logged to network!\n"
-msgstr ""
+msgstr "Non connecté au réseau !\n"
 
 #: gammu/misc.c:272
 msgid "Wrong network code from phone!\n"
-msgstr ""
+msgstr "Mauvais code réseau du téléphone !\n"
 
 #: gammu/misc.c:300
 msgid "Request for information from OpenCellID failed!\n"
-msgstr ""
+msgstr "Demande d'information pour OpenCellID échoué !\n"
 
 #: gammu/misc.c:306
 msgid "Failed to find latitude in OpenCellID reply!\n"
-msgstr ""
+msgstr "Echec pour trouver la latitude dans la réponse OpenCellID !\n"
 
 #: gammu/misc.c:311
 msgid "Failed to parse latitude from OpenCellID reply!\n"
