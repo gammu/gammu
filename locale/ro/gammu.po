@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: gammu 1.32.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2016-02-04 10:40+0100\n"
-"PO-Revision-Date: 2013-01-08 09:14+0200\n"
-"Last-Translator: Michal Čihař <michal@cihar.com>\n"
-"Language-Team: Romanian <http://hosted.weblate.org/projects/gammu/gammu/ro/"
-">\n"
+"PO-Revision-Date: 2016-03-17 18:57+0000\n"
+"Last-Translator: Laurentiu Dobrota <rauldobrota@gmail.com>\n"
+"Language-Team: Romanian <https://hosted.weblate.org/projects/gammu/gammu/ro/>"
+"\n"
 "Language: ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
-"20)) ? 1 : 2);;\n"
-"X-Generator: Weblate 1.4-dev\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
+"20)) ? 1 : 2;\n"
+"X-Generator: Weblate 2.5\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -61,34 +61,34 @@ msgstr "Tip de memorie necunoscut: \"%s\"\n"
 #: gammu/backup.c:181
 #, c-format
 msgid "Unknown backup format: \"%s\"\n"
-msgstr ""
+msgstr "Format backup necunoscut: %s\n"
 
 #: gammu/backup.c:187
 msgid "Error while opening file for writing!\n"
-msgstr ""
+msgstr "Eroare la deschiderea fişierului pentru scriere!\n"
 
 #: gammu/backup.c:191 gammu/files.c:454 helper/message-cmdline.c:1110
 msgid "Error while writing file!\n"
-msgstr ""
+msgstr "Eroare la scrierea în fişier!\n"
 
 #: gammu/backup.c:194
 msgid "Error while closing file!\n"
-msgstr ""
+msgstr "Eroare la închiderea fişierului!\n"
 
 #: gammu/backup.c:241 gammu/backup.c:424 gammu/backup.c:496 gammu/backup.c:531
 #: gammu/backup.c:565 gammu/backup.c:633 gammu/backup.c:670 gammu/backup.c:707
 #: gammu/backup.c:744 gammu/backup.c:781 gammu/backup.c:819 gammu/backup.c:860
 #: gammu/backup.c:894 gammu/backup.c:931 gammu/message.c:428
 msgid "Reading"
-msgstr ""
+msgstr "Se citeşte"
 
 #: gammu/backup.c:247 gammu/backup.c:292
 msgid "Only part of data saved, please increase the limit."
-msgstr ""
+msgstr "Doar o parte din date salvate, trebuie să creşti limita."
 
 #: gammu/backup.c:268 gammu/backup.c:310 gammu/backup.c:475 gammu/mms.c:182
 msgid "Reading:"
-msgstr ""
+msgstr "Se citeşte:"
 
 #: gammu/backup.c:269 gammu/backup.c:311 gammu/backup.c:476 gammu/backup.c:1045
 #: gammu/backup.c:1120 gammu/backup.c:1173 gammu/backup.c:1231
@@ -102,42 +102,42 @@ msgstr ""
 #: gammu/misc.c:664 gammu/misc.c:1376 gammu/mms.c:183
 #, c-format
 msgid "%i percent"
-msgstr ""
+msgstr "%i procent"
 
 #: gammu/backup.c:367 gammu/backup.c:1026 gammu/backup.c:1645
 #: gammu/calendar.c:632 gammu/calendar.c:885 gammu/calendar.c:960
 #: gammu/calendar.c:985 gammu/memory.c:24 gammu/memory.c:312 gammu/memory.c:376
 #: gammu/message.c:133 gammu/misc.c:205 gammu/misc.c:606
 msgid "Press Ctrl+C to break..."
-msgstr ""
+msgstr "Apasă Ctrl+C pentru a întrerupe..."
 
 #: gammu/backup.c:372
 msgid "Use Unicode subformat of backup file?"
-msgstr ""
+msgstr "Foloseşti subformatul Unicode al fişierului de backup?"
 
 #: gammu/backup.c:404
 msgid "Checking phone phonebook"
-msgstr ""
+msgstr "Se verifică agenda telefonului"
 
 #: gammu/backup.c:405
 msgid "Backup phone phonebook?"
-msgstr ""
+msgstr "Faci backup la agenda telefonului?"
 
 #: gammu/backup.c:409
 msgid "Checking SIM phonebook"
-msgstr ""
+msgstr "Se verifică agenda SIM"
 
 #: gammu/backup.c:410
 msgid "Backup SIM phonebook?"
-msgstr ""
+msgstr "Faci backup la agenda SIM?"
 
 #: gammu/backup.c:415
 msgid "Checking phone calendar"
-msgstr ""
+msgstr "Se verifică calendarul telefonului"
 
 #: gammu/backup.c:419
 msgid "Backup phone calendar notes?"
-msgstr ""
+msgstr "Faci backup la calendarul telefonului?"
 
 #: gammu/backup.c:432 gammu/backup.c:467 gammu/backup.c:504 gammu/backup.c:541
 #: gammu/backup.c:576 gammu/backup.c:642 gammu/backup.c:679 gammu/backup.c:716
