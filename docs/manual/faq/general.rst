@@ -48,6 +48,12 @@ Better is to use vendor and product IDs (you can get them for example using :com
 
     ACTION=="add", SUBSYSTEMS=="usb", ATTRS{idVendor}=="xxxx", ATTRS{idProduct}=="yyyy", SYMLINK+="phone"
 
+If you're using 3G modem, it's quite likely that it exposes multiple interfaces
+and only one of them is good for Gammu usage. In this case you should match
+against interface number as well::
+
+    ACTION=="add", SUBSYSTEMS=="usb", ATTRS{idVendor}=="xxxx", ATTRS{idProduct}=="yyyy", ATTRS{bInterfaceNumber}=="00", SYMLINK+="phone"
+
 You can match by various attributes, you can figure them using udevadm command:
 
 .. code-block:: sh
