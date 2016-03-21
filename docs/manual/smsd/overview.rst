@@ -38,6 +38,36 @@ SMSD operation
 
 The SMSD operation consist of several steps.
 
+.. graphviz::
+
+    digraph smsloop {
+        start[shape="box", style=rounded, label="Startup"];
+        end[shape="box", style=rounded, label="Termination"];
+        connected[shape="diamond", style="", label="Phone connected?"];
+        connect[label="Connect to phone"];
+        security[label="Check for security code"];
+        receive[label="Receive messages"];
+        reset[label="Reset phone if needed"];
+        send[label="Send messages"];
+        status[label="Check phone status"];
+        sleep[label="Sleep"];
+        shutdown[shape="diamond", style="", label="Shutdown requested?"];
+
+        start -> connected;
+        connected -> connect [label="No"];
+        connected -> security [label="Yes"];
+        connect -> security;
+        security -> receive;
+        receive -> reset;
+        reset -> send;
+        send -> status;
+        status -> sleep;
+        sleep -> shutdown;
+
+        shutdown -> connected [label="No"];
+        shutdown -> end [label="Yes"];
+    }
+
 1. Process command line options.
 2. Configure backend service.
 3. Main loop is executed until it is signalled to be terminated.
