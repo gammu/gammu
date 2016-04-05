@@ -2848,6 +2848,8 @@ GSM_Error ATGEN_ReplyGetPacketNetworkLAC_CID(GSM_Protocol_Message *msg, GSM_Stat
 	GSM_NetworkInfo		*NetworkInfo = s->Phone.Data.NetworkInfo;
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	int i, state;
+	int act;
+	char rac[8];
 	GSM_Error error;
 
   	if (s->Phone.Data.RequestID != ID_GetNetworkInfo) {
@@ -2881,11 +2883,25 @@ GSM_Error ATGEN_ReplyGetPacketNetworkLAC_CID(GSM_Protocol_Message *msg, GSM_Stat
 	/* Full reply */
 	error = ATGEN_ParseReply(s,
 			GetLineString(msg->Buffer, &Priv->Lines, 2),
+			"+CGREG: @i, @i, @r, @r, @i, @r",
+			&i, /* Mode, ignored for now */
+			&state,
+			NetworkInfo->PacketLAC, sizeof(NetworkInfo->PacketLAC),
+			NetworkInfo->PacketCID, sizeof(NetworkInfo->PacketCID),
+			&act, /* Access Technology, ignored for now */
+			&rac, sizeof(rac) /* Routing Area Code, ignored for now */
+			);
+
+	/* Reply without ACT/RAC */
+	if (error == ERR_UNKNOWNRESPONSE) {
+	        error = ATGEN_ParseReply(s,
+			GetLineString(msg->Buffer, &Priv->Lines, 2),
 			"+CGREG: @i, @i, @r, @r",
 			&i, /* Mode, ignored for now */
 			&state,
 			NetworkInfo->PacketLAC, sizeof(NetworkInfo->PacketLAC),
 			NetworkInfo->PacketCID, sizeof(NetworkInfo->PacketCID));
+	}
 
 	/* Reply without LAC/CID */
 	if (error == ERR_UNKNOWNRESPONSE) {
@@ -2940,6 +2956,7 @@ GSM_Error ATGEN_ReplyGetNetworkLAC_CID(GSM_Protocol_Message *msg, GSM_StateMachi
 	GSM_NetworkInfo		*NetworkInfo = s->Phone.Data.NetworkInfo;
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	int i, state;
+	int act;
 	GSM_Error error;
 
   	if (s->Phone.Data.RequestID != ID_GetNetworkInfo) {
@@ -2973,11 +2990,24 @@ GSM_Error ATGEN_ReplyGetNetworkLAC_CID(GSM_Protocol_Message *msg, GSM_StateMachi
 	/* Full reply */
 	error = ATGEN_ParseReply(s,
 			GetLineString(msg->Buffer, &Priv->Lines, 2),
+			"+CREG: @i, @i, @r, @r, @i",
+			&i, /* Mode, ignored for now */
+			&state,
+			NetworkInfo->LAC, sizeof(NetworkInfo->LAC),
+			NetworkInfo->CID, sizeof(NetworkInfo->CID),
+			&act  /* Access Technology, ignored for now */
+			);
+
+	/* Reply without ACT */
+	if (error == ERR_UNKNOWNRESPONSE) {
+	        error = ATGEN_ParseReply(s,
+			GetLineString(msg->Buffer, &Priv->Lines, 2),
 			"+CREG: @i, @i, @r, @r",
 			&i, /* Mode, ignored for now */
 			&state,
 			NetworkInfo->LAC, sizeof(NetworkInfo->LAC),
 			NetworkInfo->CID, sizeof(NetworkInfo->CID));
+	}
 
 	/* Reply without mode */
 	if (error == ERR_UNKNOWNRESPONSE) {
