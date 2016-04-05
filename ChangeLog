@@ -25,6 +25,7 @@ ChangeLog
 [-] * Configurable SMSD table names.
 [-] * Improved support for Huawei E303.
 [-] * Improved support for Vodafone K4511.
+[-] * Improved support for Telit M2M modules.
 
 20160203 - 1.37.0
 
