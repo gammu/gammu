@@ -201,6 +201,8 @@ void SMSD_Terminate(GSM_SMSDConfig *Config, const char *msg, GSM_Error error, gb
 		SMSD_LogError(DEBUG_ERROR, Config, msg, error);
 	} else if (rc != 0) {
 		SMSD_LogErrno(Config, msg);
+	} else {
+		SMSD_LogError(DEBUG_INFO, Config, msg);
 	}
 
 	/* Disconnect from phone */
