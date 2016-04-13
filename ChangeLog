@@ -19,8 +19,10 @@ the issue.
 ChangeLog
 =========
     
-2016???? - 1.37.2
+20160413 - 1.37.2
     
+[-] * Fixed compilation of SMSD.
+
 20160413 - 1.37.1
 
 [-] * Properly report errors in HEX encoded strings from SMSD SQL backends.
