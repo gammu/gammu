@@ -19,7 +19,7 @@ the issue.
 ChangeLog
 =========
     
-2016???? - 1.37.1
+20160413 - 1.37.1
 
 [-] * Properly report errors in HEX encoded strings from SMSD SQL backends.
 [-] * Configurable SMSD table names.
