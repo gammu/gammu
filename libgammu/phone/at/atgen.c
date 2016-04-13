@@ -1689,10 +1689,13 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 		if (error == ERR_NONE || GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_ENCODED_USSD)) {
 			if (error != ERR_NONE) {
 				dcs = 0;
-				ATGEN_ParseReply(s, pos,
+				error = ATGEN_ParseReply(s, pos,
 						"+CUSD: @i, @r @0",
 						&code,
 						hex_encoded, sizeof(hex_encoded));
+			}
+			if (error != ERR_NONE) {
+				return error;
 			}
 
 			if ((dcs & 0xc0) == 0) {
@@ -1734,10 +1737,13 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 				smprintf(s, "WARNING: unknown encoding!\n");
 			}
 		} else {
-			ATGEN_ParseReply(s, pos,
+			error = ATGEN_ParseReply(s, pos,
 					"+CUSD: @i, @s @0",
 					&code,
 					ussd.Text, sizeof(ussd.Text));
+			if (error != ERR_NONE) {
+				return error;
+			}
 		}
 
 		/* Notify application */
@@ -5243,22 +5249,23 @@ GSM_Error ATGEN_SetIncomingCall(GSM_StateMachine *s, gboolean enable)
 /**
  * Extract number of incoming call from +CLIP: response.
  */
-void ATGEN_Extract_CLIP_number(GSM_StateMachine *s, unsigned char *dest, size_t destsize, const char *buf)
+GSM_Error ATGEN_Extract_CLIP_number(GSM_StateMachine *s, unsigned char *dest, size_t destsize, const char *buf)
 {
-	ATGEN_ParseReply(s, buf, "+CLIP: @p,@0", dest, destsize);
+	return ATGEN_ParseReply(s, buf, "+CLIP: @p,@0", dest, destsize);
 }
 
 /**
  * Extract number of incoming call from +CLIP: response.
  */
-void ATGEN_Extract_CCWA_number(GSM_StateMachine *s, unsigned char *dest, size_t destsize, const char *buf)
+GSM_Error ATGEN_Extract_CCWA_number(GSM_StateMachine *s, unsigned char *dest, size_t destsize, const char *buf)
 {
-	ATGEN_ParseReply(s, buf, "+CCWA: @p,@0", dest, destsize);
+	return ATGEN_ParseReply(s, buf, "+CCWA: @p,@0", dest, destsize);
 }
 
 GSM_Error ATGEN_ReplyIncomingCallInfo(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Call 		call;
+	GSM_Error		error;
 
 	memset(&call, 0, sizeof(call));
 
@@ -5280,16 +5287,25 @@ GSM_Error ATGEN_ReplyIncomingCallInfo(GSM_Protocol_Message *msg, GSM_StateMachin
 			smprintf(s, "generating event\n");
 			call.Status = GSM_CALL_IncomingCall;
 			call.CallIDAvailable 	= TRUE;
-			ATGEN_Extract_CLIP_number(s, call.PhoneNumber, sizeof(call.PhoneNumber), msg->Buffer);
+			error = ATGEN_Extract_CLIP_number(s, call.PhoneNumber, sizeof(call.PhoneNumber), msg->Buffer);
+			if (error != ERR_NONE) {
+				return error;
+			}
 		} else if (strstr(msg->Buffer, "CLIP:")) {
 			smprintf(s, "CLIP detected\n");
 			call.Status = GSM_CALL_IncomingCall;
 			call.CallIDAvailable 	= TRUE;
-			ATGEN_Extract_CLIP_number(s, call.PhoneNumber, sizeof(call.PhoneNumber), msg->Buffer);
+			error = ATGEN_Extract_CLIP_number(s, call.PhoneNumber, sizeof(call.PhoneNumber), msg->Buffer);
+			if (error != ERR_NONE) {
+				return error;
+			}
 		} else if (strstr(msg->Buffer, "CCWA:")) {
 			smprintf(s, "CCWA detected\n");
 			call.Status = GSM_CALL_IncomingCall;
-			ATGEN_Extract_CCWA_number(s, call.PhoneNumber, sizeof(call.PhoneNumber), msg->Buffer);
+			error = ATGEN_Extract_CCWA_number(s, call.PhoneNumber, sizeof(call.PhoneNumber), msg->Buffer);
+			if (error != ERR_NONE) {
+				return error;
+			}
 			call.CallIDAvailable 	= TRUE;
 		} else if (strstr(msg->Buffer, "NO CARRIER")) {
 			smprintf(s, "Call end detected\n");
@@ -5299,7 +5315,10 @@ GSM_Error ATGEN_ReplyIncomingCallInfo(GSM_Protocol_Message *msg, GSM_StateMachin
 			smprintf(s, "CLIP detected\n");
 			call.Status = GSM_CALL_CallStart;
 			call.CallIDAvailable 	= TRUE;
-			ATGEN_Extract_CLIP_number(s, call.PhoneNumber, sizeof(call.PhoneNumber), msg->Buffer);
+			error = ATGEN_Extract_CLIP_number(s, call.PhoneNumber, sizeof(call.PhoneNumber), msg->Buffer);
+			if (error != ERR_NONE) {
+				return error;
+			}
 		} else {
 			smprintf(s, "Incoming call error\n");
 			return ERR_NONE;
