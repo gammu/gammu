@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSDRC" "5" "February 03, 2016" "1.37.1" "Gammu"
+.TH "GAMMU-SMSDRC" "5" "April 13, 2016" "1.37.1" "Gammu"
 .SH NAME
 gammu-smsdrc \- gammu-smsd(1) configuration file
 .
@@ -40,7 +40,7 @@ This file use ini file syntax, see ini\&.
 .sp
 Configuration file of gammu\-smsd consists of at least two sections \-
 \fB[gammu]\fP and \fI\%[smsd]\fP\&. For gammu\-smsd\-sql
-you can also use \fI\%[sql]\fP\&.
+you can also use \fI\%[sql]\fP and \fI\%[tables]\fP\&.
 .sp
 The \fB[gammu]\fP section is configuration of a phone connection
 and is same as described in gammurc with the only exception that
@@ -83,6 +83,18 @@ Configure SQL queries used by gammu\-smsd\-sql, you usually don\(aqt have to mod
 .INDENT 7.0
 .INDENT 3.5
 Configurable queries
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B [tables]
+Configure SQL table names used by gammu\-smsd\-sql, you usually don\(aqt have to modify them.
+.sp
+\fBSEE ALSO:\fP
+.INDENT 7.0
+.INDENT 3.5
+Configurable tables
 .UNINDENT
 .UNINDENT
 .UNINDENT

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSD-SQL" "7" "February 03, 2016" "1.37.1" "Gammu"
+.TH "GAMMU-SMSD-SQL" "7" "April 13, 2016" "1.37.1" "Gammu"
 .SH NAME
 gammu-smsd-sql \- gammu-smsd(1) backend using SQL abstraction layer to use any supported database as a message storage
 .
@@ -87,6 +87,61 @@ Specific for DBI:
 .INDENT 0.0
 .INDENT 3.5
 The variables are fully described in gammurc documentation.
+.UNINDENT
+.UNINDENT
+.SH TABLES
+.sp
+New in version 1.37.1.
+
+.sp
+You can customize name of all tables in the \fB[tables]\fP\&. The SQL
+queries will reflect this, so it\(aqs enough to change table name in this section.
+.INDENT 0.0
+.TP
+.B daemons
+Name of the daemons table.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B gammu
+Name of the gammu\-table table.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B inbox
+Name of the inbox table.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B sentitems
+Name of the sentitems table.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B outbox
+Name of the outbox table.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B outbox_multipart
+Name of the outbox_multipart table.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B phones
+Name of the phones table.
+.UNINDENT
+.sp
+You can change any table name using these:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+[tables]
+inbox = special_inbox
+.ft P
+.fi
 .UNINDENT
 .UNINDENT
 .SH SQL QUERIES
