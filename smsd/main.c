@@ -492,6 +492,7 @@ read_config:
 		SMSD_FreeConfig(config);
 		return 2;
 	}
+	SMSD_EnableGlobalDebug(config);
 
 	if (!reconfigure)
 		configure_daemon(&params);

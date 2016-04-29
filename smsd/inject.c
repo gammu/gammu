@@ -228,6 +228,7 @@ int main(int argc, char **argv)
 		SMSD_FreeConfig(config);
 		return 2;
 	}
+	SMSD_EnableGlobalDebug(config);
 
 	error = SMSD_InjectSMS(config, &sms, newid);
 	if (error != ERR_NONE) {

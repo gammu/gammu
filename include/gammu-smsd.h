@@ -130,6 +130,13 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig * Config,
 			  gboolean uselog);
 
 /**
+ * Forces using global debug for smsd.
+ *
+ * This should be used only in case SMSD is not used in a library.
+ */
+void SMSD_EnableGlobalDebug(GSM_SMSDConfig *Config);
+
+/**
  * Main SMS daemon loop. It connects to phone, scans for messages and
  * sends messages from inbox. Can be interrupted by SMSD_Shutdown.
  *

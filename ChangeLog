@@ -23,7 +23,8 @@ ChangeLog
 
 [-] * Improved support for Huawei E398.
 [-] * Improved support for Huawei/Vodafone K4505.
-    
+[-] * Fixed possible crash if SMSD used in library.
+
 20160413 - 1.37.2
     
 [-] * Fixed compilation of SMSD.

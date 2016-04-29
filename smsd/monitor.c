@@ -245,6 +245,7 @@ int main(int argc, char **argv)
 		SMSD_FreeConfig(config);
 		return 2;
 	}
+	SMSD_EnableGlobalDebug(config);
 
 	while (!terminate && (limit_loops == -1 || limit_loops-- > 0)) {
 		error = SMSD_GetStatus(config, &status);
