@@ -1216,7 +1216,9 @@ GSM_Error ATGEN_GetSMSList(GSM_StateMachine *s, gboolean first)
 	}
 	if (used != Priv->SMSCount && (error == ERR_NONE || error == ERR_EMPTY)) {
 		smprintf(s, "WARNING: Used messages according to CPMS %d, but CMGL returned %d. Expect problems!\n", used, Priv->SMSCount);
-		smprintf(s, "HINT: Your might want to use F_USE_SMSTEXTMODE flag\n");
+		if (! GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_USE_SMSTEXTMODE)) {
+			smprintf(s, "HINT: Your might want to use F_USE_SMSTEXTMODE flag\n");
+		}
 		return ERR_NONE;
 	}
 	return error;
