@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2016-02-04 10:40+0100\n"
-"PO-Revision-Date: 2015-03-06 09:05+0200\n"
-"Last-Translator: Helder Santana <helder.bs.santana@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
-"gammu/libgammu/pt_BR/>\n"
+"PO-Revision-Date: 2016-05-28 14:16+0000\n"
+"Last-Translator: Renan Souza do Nascimento <renan.sn@icloud.com>\n"
+"Language-Team: Portuguese (Brazil) "
+"<https://hosted.weblate.org/projects/gammu/libgammu/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.3-dev\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 2.7-dev\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
@@ -355,36 +355,32 @@ msgid "Network error."
 msgstr "Erro de rede."
 
 #: libgammu/gsmcomon.c:157
-#, fuzzy
 #| msgid "Invalid data given to phone."
 msgid "Invalid database version."
-msgstr "Dados inválidos fornecidos para o celular."
+msgstr "Versão invalida do banco de dados."
 
 #: libgammu/gsmcomon.c:158
 msgid "Failed to initialize DB driver."
-msgstr ""
+msgstr "Falha ao inicializar o driver do banco de dados."
 
 #: libgammu/gsmcomon.c:159
-#, fuzzy
 #| msgid "Failed to connect to phone"
 msgid "Failed to configure DB driver."
-msgstr "Falhou ao conectar-se com o telefone"
+msgstr "Falhou ao configurar o driver do banco de dados."
 
 #: libgammu/gsmcomon.c:160
-#, fuzzy
 #| msgid "Failed to connect to phone"
 msgid "Failed to connect to database."
-msgstr "Falhou ao conectar-se com o telefone"
+msgstr "Falhou ao conectar-se com o banco de dados."
 
 #: libgammu/gsmcomon.c:161
-#, fuzzy
 #| msgid "Device connection parameters"
 msgid "Database connection timeout."
-msgstr "Linha de comando com parâmetros inválidos."
+msgstr "Conexão com o banco de dados excedida."
 
 #: libgammu/gsmcomon.c:162
 msgid "Error in executing SQL query."
-msgstr ""
+msgstr "Erro ao executar a pesquisa de SQL."
 
 #: libgammu/gsmcomon.c:195
 msgid "Unknown error description."
