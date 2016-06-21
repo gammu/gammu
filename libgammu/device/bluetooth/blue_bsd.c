@@ -24,7 +24,7 @@
 
 #include "../../gsmcomon.h"
 #include "../devfunc.h"
-#include "bluetoth.h"
+#include "bluetooth.h"
 
 /*
  * Handle FreeBSD compatibility
