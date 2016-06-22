@@ -21,7 +21,7 @@
 #include "../../misc/coding/coding.h"
 #include "../../gsmcomon.h"
 #include "../devfunc.h"
-#include "bluetoth.h"
+#include "bluetooth.h"
 #include "blue_w32.h"
 
 GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device)

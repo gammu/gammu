@@ -31,7 +31,7 @@ set (LIBRARY_SRC
     service/backup/backvcf.c
     service/backup/backics.c
     service/backup/backvnt.c
-    device/bluetoth/bluetoth.c
+    device/bluetooth/bluetooth.c
     device/irda/irda.c
     device/usb/usb.c
     device/devfunc.c
@@ -82,16 +82,16 @@ if (WITH_BACKUP)
     list (APPEND LIBRARY_SRC phone/dummy/dummy.c)
 endif (WITH_BACKUP)
 if (BLUEZ_FOUND)
-    list (APPEND LIBRARY_SRC device/bluetoth/bluez.c)
+    list (APPEND LIBRARY_SRC device/bluetooth/bluez.c)
 endif (BLUEZ_FOUND)
 if (BSD_BLUE_FOUND)
-    list (APPEND LIBRARY_SRC device/bluetoth/blue_bsd.c)
+    list (APPEND LIBRARY_SRC device/bluetooth/blue_bsd.c)
 endif (BSD_BLUE_FOUND)
 if (OSX_BLUE_FOUND)
-    list (APPEND LIBRARY_SRC device/bluetoth/blue_osx.c)
+    list (APPEND LIBRARY_SRC device/bluetooth/blue_osx.c)
 endif (OSX_BLUE_FOUND)
 if (WIN32 AND NOT CYGWIN)
-    list (APPEND LIBRARY_SRC device/bluetoth/blue_w32.c)
+    list (APPEND LIBRARY_SRC device/bluetooth/blue_w32.c)
 endif (WIN32 AND NOT CYGWIN)
 if (NOT WIN32 AND HAVE_PTHREAD AND HAVE_SIGTIMEDWAIT)
     list (APPEND LIBRARY_SRC device/proxy/proxy.c)

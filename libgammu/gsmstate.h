@@ -210,7 +210,7 @@ typedef struct _GSM_User	 	GSM_User;
 #  include "device/irda/irda.h"
 #endif
 #ifdef GSM_ENABLE_BLUETOOTHDEVICE
-#  include "device/bluetoth/bluetoth.h"
+#  include "device/bluetooth/bluetooth.h"
 #endif
 #ifndef WIN32
 #  include "device/proxy/proxy.h"

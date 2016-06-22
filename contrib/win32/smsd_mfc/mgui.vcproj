@@ -137,7 +137,7 @@
 				RelativePath=".\about.cpp">
 			</File>
 			<File
-				RelativePath="..\..\common\device\bluetoth\affix.c">
+				RelativePath="..\..\common\device\bluetooth\affix.c">
 			</File>
 			<File
 				RelativePath="..\..\common\protocol\alcatel\alcabus.c">
@@ -170,13 +170,13 @@
 				RelativePath="..\..\common\service\backup\backvcs.c">
 			</File>
 			<File
-				RelativePath="..\..\common\device\bluetoth\blue_w32.c">
+				RelativePath="..\..\common\device\bluetooth\blue_w32.c">
 			</File>
 			<File
-				RelativePath="..\..\common\device\bluetoth\bluetoth.c">
+				RelativePath="..\..\common\device\bluetooth\bluetooth.c">
 			</File>
 			<File
-				RelativePath="..\..\common\device\bluetoth\bluez.c">
+				RelativePath="..\..\common\device\bluetooth\bluez.c">
 			</File>
 			<File
 				RelativePath="..\..\common\misc\cfg.c">
@@ -337,7 +337,7 @@
 				RelativePath=".\about.h">
 			</File>
 			<File
-				RelativePath="..\..\common\device\bluetoth\affix.h">
+				RelativePath="..\..\common\device\bluetooth\affix.h">
 			</File>
 			<File
 				RelativePath="..\..\common\protocol\alcatel\alcabus.h">
@@ -370,13 +370,13 @@
 				RelativePath="..\..\common\service\backup\backvcs.h">
 			</File>
 			<File
-				RelativePath="..\..\common\device\bluetoth\blue_w32.h">
+				RelativePath="..\..\common\device\bluetooth\blue_w32.h">
 			</File>
 			<File
-				RelativePath="..\..\common\device\bluetoth\bluetoth.h">
+				RelativePath="..\..\common\device\bluetooth\bluetooth.h">
 			</File>
 			<File
-				RelativePath="..\..\common\device\bluetoth\bluez.h">
+				RelativePath="..\..\common\device\bluetooth\bluez.h">
 			</File>
 			<File
 				RelativePath="..\..\common\misc\cfg.h">
