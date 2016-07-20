@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2016-02-04 10:40+0100\n"
-"PO-Revision-Date: 2015-03-08 23:18+0200\n"
-"Last-Translator: Tuux <tuxa@galaxie.eu.org>\n"
-"Language-Team: French <https://hosted.weblate.org/projects/gammu/libgammu/fr/"
-">\n"
+"PO-Revision-Date: 2016-07-20 20:52+0000\n"
+"Last-Translator: Nabil BENDAFI <nabil@bendafi.fr>\n"
+"Language-Team: French "
+"<https://hosted.weblate.org/projects/gammu/libgammu/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 2.3-dev\n"
+"X-Generator: Weblate 2.8-dev\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
@@ -368,36 +368,32 @@ msgid "Network error."
 msgstr "Erreur réseau."
 
 #: libgammu/gsmcomon.c:157
-#, fuzzy
 #| msgid "Invalid data given to phone."
 msgid "Invalid database version."
-msgstr "Données invalides envoyées au téléphone."
+msgstr "Version de base de données non valide."
 
 #: libgammu/gsmcomon.c:158
 msgid "Failed to initialize DB driver."
-msgstr ""
+msgstr "Impossible d’initialiser le pilote de la DB."
 
 #: libgammu/gsmcomon.c:159
-#, fuzzy
 #| msgid "Failed to connect to phone"
 msgid "Failed to configure DB driver."
-msgstr "Échec de la connexion au téléphone"
+msgstr "Impossible de configurer le pilote de la DB."
 
 #: libgammu/gsmcomon.c:160
-#, fuzzy
 #| msgid "Failed to connect to phone"
 msgid "Failed to connect to database."
-msgstr "Échec de la connexion au téléphone"
+msgstr "Impossible de se connecter à la base de données."
 
 #: libgammu/gsmcomon.c:161
-#, fuzzy
 #| msgid "Connection test"
 msgid "Database connection timeout."
-msgstr "Test de connexion"
+msgstr "Délai de connexion de base de données."
 
 #: libgammu/gsmcomon.c:162
 msgid "Error in executing SQL query."
-msgstr ""
+msgstr "Erreur dans l’exécution de requête SQL."
 
 #: libgammu/gsmcomon.c:195
 msgid "Unknown error description."
