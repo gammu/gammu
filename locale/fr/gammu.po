@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2016-02-04 10:40+0100\n"
-"PO-Revision-Date: 2016-03-06 15:17+0000\n"
-"Last-Translator: Gautier <castelain.gautier@gmail.com>\n"
+"PO-Revision-Date: 2016-07-20 20:51+0000\n"
+"Last-Translator: Nabil BENDAFI <nabil@bendafi.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gammu/gammu/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 2.5-dev\n"
+"X-Generator: Weblate 2.8-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -1814,13 +1814,13 @@ msgid "There is newer testing Gammu version available! (%s instead of %s)\n"
 msgstr "Il une nouvelle version de test est disponible ! (%s au lieu de %s)\n"
 
 #: gammu/gammu.c:332
-#, fuzzy
 #| msgid ""
 #| "Copyright (C) 2003 - 2012 Michal Cihar <michal@cihar.com> and other "
 #| "authors."
 msgid ""
 "Copyright (C) 2003 - 2015 Michal Cihar <michal@cihar.com> and other authors."
-msgstr "Tous droits reservés (C) 2003-2012 à Michal Cihar <michal@cihar.com>."
+msgstr ""
+"Copyright (C) 2003-2015 Michal Cihar < michal@cihar.com > et autres auteurs."
 
 #: gammu/gammu.c:370
 msgid "standard input"
@@ -1858,7 +1858,7 @@ msgid ""
 "smsd!"
 msgstr ""
 "Le tâche SMS est maintenant un service à part, veuillez utiliser gammu-smsd "
-"à la place de gammu smsd!"
+"à la place de gammu smsd !"
 
 #: gammu/gammu.c:745
 msgid "Calls"
@@ -1891,7 +1891,7 @@ msgstr "Note de Calendrier"
 
 #: gammu/gammu.c:752
 msgid "To do lists"
-msgstr "Litses de tâches"
+msgstr "Listes de tâches"
 
 #: gammu/gammu.c:753
 msgid "Notes"
@@ -1922,7 +1922,6 @@ msgid "WAP settings and bookmarks"
 msgstr "Réglages WAP et signets"
 
 #: gammu/gammu.c:767
-#, fuzzy
 msgid "MMS and MMS settings"
 msgstr "Paramètres SMS et MMS"
 
@@ -1975,13 +1974,12 @@ msgstr ""
 "ex. 42"
 
 #: gammu/gammu.c:796
-#, fuzzy
 msgid ""
 "-d / --debug <level> ... debug level (nothing|text|textall|textalldate|"
 "binary|errors)"
 msgstr ""
-"-d / --debug <niveau> ... niveau de débogage (rien|texte|textuel|texte-"
-"daté|binaire|erreurs)"
+"-d / --debug <niveau> ... niveau de débogage "
+"(nothing|text|textall|textalldate|binary|errors)"
 
 #: gammu/gammu.c:797
 msgid "-f / --debug-file <filename> ... file for logging debug messages"
@@ -2003,7 +2001,7 @@ msgstr ""
 
 #: gammu/gammu.c:900
 msgid "Unknown help topic specified!"
-msgstr "Rubrique d'aide spécifiée inconnue!"
+msgstr "Rubrique d'aide spécifiée inconnue !"
 
 #: gammu/gammu.c:904
 #, c-format
@@ -2041,15 +2039,15 @@ msgstr "trop de paramètre (fonction accepté %d 1 à %d 2 )\n"
 
 #: gammu/gammu.c:1046
 msgid "Bad option!"
-msgstr "Mauvaise option"
+msgstr "Mauvaise option !"
 
 #: gammu/gammu.c:1127
 msgid "Configuration could not be parsed!"
-msgstr "La configuration n'a pas pu être analysée!"
+msgstr "La configuration n'a pas pu être analysée !"
 
 #: gammu/gammu.c:1129
 msgid "No configuration file found!"
-msgstr "Aucun fichier de configuration trouvé!"
+msgstr "Aucun fichier de configuration trouvé !"
 
 #: gammu/gammu.c:1149
 msgid "Failed to allocate memory, aborting!\n"
@@ -2057,7 +2055,7 @@ msgstr "Impossible d'allouer de la mémoire, abandon! ↵\n"
 
 #: gammu/gammu.c:1180
 msgid "Too few parameters!"
-msgstr "Trop peu de paramètres!"
+msgstr "Trop peu de paramètres !"
 
 #: gammu/gammu.c:1193
 #, c-format
@@ -2505,11 +2503,11 @@ msgstr ""
 
 #: gammu/misc.c:355
 msgid "Latitude"
-msgstr ""
+msgstr "Latitude"
 
 #: gammu/misc.c:356
 msgid "Longitude"
-msgstr ""
+msgstr "Longitude"
 
 #: gammu/misc.c:357
 msgid "Range"
@@ -2541,11 +2539,11 @@ msgstr "Matériel"
 
 #: gammu/misc.c:415
 msgid "Original IMEI"
-msgstr "L'IMEI original"
+msgstr "IMEI original"
 
 #: gammu/misc.c:422
 msgid "Manufactured"
-msgstr ""
+msgstr "Fabriqué"
 
 #: gammu/misc.c:428
 msgid "Product code"
@@ -2567,12 +2565,12 @@ msgstr ""
 #: gammu/misc.c:553
 #, c-format
 msgid "incoming call from \"%s\"\n"
-msgstr ""
+msgstr "appel entrant du \"%s\"\n"
 
 #: gammu/misc.c:554
 #, c-format
 msgid "outgoing call to \"%s\"\n"
-msgstr ""
+msgstr "appel sortant vers \"%s\"\n"
 
 #: gammu/misc.c:555
 msgid "call started"
@@ -2610,12 +2608,12 @@ msgstr ""
 #: gammu/misc.c:569
 #, c-format
 msgid "%3d used"
-msgstr ""
+msgstr "%3d utilisé"
 
 #: gammu/misc.c:571
 #, c-format
 msgid "%3d free"
-msgstr ""
+msgstr "%3d libre"
 
 #: gammu/misc.c:607
 msgid "Entering monitor mode..."
@@ -2623,7 +2621,7 @@ msgstr ""
 
 #: gammu/misc.c:617
 msgid "Enabling info about incoming SMS"
-msgstr ""
+msgstr "Activation infos SMS entrant"
 
 #: gammu/misc.c:619
 msgid "Enabling info about incoming CB"
@@ -2631,11 +2629,11 @@ msgstr ""
 
 #: gammu/misc.c:621
 msgid "Enabling info about calls"
-msgstr ""
+msgstr "Activation infos appels"
 
 #: gammu/misc.c:623
 msgid "Enabling info about USSD"
-msgstr ""
+msgstr "Activation infos USSD"
 
 #: gammu/misc.c:640
 msgid "Todos"
@@ -2647,12 +2645,12 @@ msgstr "Calendrier"
 
 #: gammu/misc.c:653
 msgid "Signal strength"
-msgstr ""
+msgstr "Puissance du signal"
 
 #: gammu/misc.c:654
 #, c-format
 msgid "%i dBm"
-msgstr ""
+msgstr "%i dBm"
 
 #: gammu/misc.c:658
 msgid "Network level"
@@ -2660,7 +2658,7 @@ msgstr ""
 
 #: gammu/misc.c:663
 msgid "Bit error rate"
-msgstr ""
+msgstr "Taux d'erreur"
 
 #: gammu/misc.c:671
 msgid "SIM SMS status"
@@ -2669,12 +2667,12 @@ msgstr ""
 #: gammu/misc.c:672 gammu/misc.c:682
 #, c-format
 msgid "%i used"
-msgstr ""
+msgstr "%i utilisé"
 
 #: gammu/misc.c:674 gammu/misc.c:684
 #, c-format
 msgid "%i unread"
-msgstr ""
+msgstr "%i non lu"
 
 #: gammu/misc.c:676 gammu/misc.c:686
 #, c-format
@@ -2713,7 +2711,7 @@ msgstr ""
 #: gammu/misc.c:735
 #, c-format
 msgid " format, ringtone \"%s\"\n"
-msgstr ""
+msgstr " format, sonnerie \"%s\"\n"
 
 #: gammu/misc.c:949
 #, c-format
@@ -2723,7 +2721,7 @@ msgstr ""
 #: gammu/misc.c:976 gammu/misc.c:1023 helper/memory-display.c:181
 #: helper/message-display.c:478
 msgid "Address"
-msgstr ""
+msgstr "Adresse"
 
 #: gammu/misc.c:1018
 #, c-format
@@ -2796,7 +2794,7 @@ msgstr ""
 
 #: gammu/misc.c:1140 gammu/mms.c:71 helper/message-display.c:476
 msgid "Sender"
-msgstr ""
+msgstr "Expediteur"
 
 #: gammu/misc.c:1146
 #, c-format
@@ -2816,7 +2814,7 @@ msgstr ""
 #: gammu/misc.c:1324
 #, c-format
 msgid "Unknown parameter (\"%s\")"
-msgstr ""
+msgstr "Paramètre inconnu (%s)"
 
 #: gammu/misc.c:1405
 msgid "Delete phone phonebook?"
@@ -2824,11 +2822,11 @@ msgstr ""
 
 #: gammu/misc.c:1406
 msgid "Delete SIM phonebook?"
-msgstr ""
+msgstr "Effacer répertoire SIM ?"
 
 #: gammu/misc.c:1407
 msgid "Delete missed calls?"
-msgstr ""
+msgstr "Effacer appels manqués ?"
 
 #: gammu/misc.c:1408
 msgid "Delete dialled calls?"
@@ -3056,7 +3054,7 @@ msgstr ""
 #: gammu/misc.c:1761
 #, c-format
 msgid ", width %i, height %i\n"
-msgstr ""
+msgstr ", largeur %i, hauteur %i\n"
 
 #: gammu/misc.c:1778
 #, c-format
@@ -3104,16 +3102,16 @@ msgstr ""
 
 #: gammu/misc.c:2015 gammu/misc.c:2037
 msgid "No PIN code entered!"
-msgstr ""
+msgstr "Aucun code PIN saisi !"
 
 #: gammu/misc.c:2025
 #, c-format
 msgid "Enter new PIN code: "
-msgstr ""
+msgstr "Saisir nouveau code PIN: "
 
 #: gammu/misc.c:2083
 msgid " (default name)"
-msgstr ""
+msgstr " (Nom par défaut)"
 
 #: gammu/misc.c:2084
 msgid " (Head set profile)"
@@ -4332,7 +4330,7 @@ msgstr ""
 
 #: helper/message-display.c:420
 msgid "Do you want to play it?"
-msgstr "Désirez vous le faire jouer ?"
+msgstr "Désirez vous le jouer ?"
 
 #: helper/message-display.c:425
 msgid "Caller logo"
