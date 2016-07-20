@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2016-02-04 10:40+0100\n"
-"PO-Revision-Date: 2013-03-15 11:18+0200\n"
-"Last-Translator: Anders Jonsson <jonars03@student.umu.se>\n"
-"Language-Team: Swedish <http://hosted.weblate.org/projects/gammu/libgammu/sv/"
-">\n"
+"PO-Revision-Date: 2016-07-20 21:08+0000\n"
+"Last-Translator: Nabil BENDAFI <nabil@bendafi.fr>\n"
+"Language-Team: Swedish "
+"<https://hosted.weblate.org/projects/gammu/libgammu/sv/>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 1.5-dev\n"
+"X-Generator: Weblate 2.8-dev\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
@@ -348,15 +348,13 @@ msgid "Entry is read only."
 msgstr "Posten är skrivskyddad."
 
 #: libgammu/gsmcomon.c:156
-#, fuzzy
 msgid "Network error."
-msgstr "Inget fel."
+msgstr "Nätverksfel."
 
 #: libgammu/gsmcomon.c:157
-#, fuzzy
 #| msgid "Invalid data given to phone."
 msgid "Invalid database version."
-msgstr "Ogiltigt data gavs till telefon."
+msgstr "Ogiltig databasversion."
 
 #: libgammu/gsmcomon.c:158
 msgid "Failed to initialize DB driver."
@@ -364,10 +362,9 @@ msgstr ""
 
 #  msgid "Failed to set exception handler."
 #: libgammu/gsmcomon.c:159
-#, fuzzy
 #| msgid "Failed to connect to phone"
 msgid "Failed to configure DB driver."
-msgstr "Misslyckades med att ansluta till telefonen"
+msgstr "Det gick inte att konfigurera DB drivrutinen."
 
 #  msgid "Failed to set exception handler."
 #: libgammu/gsmcomon.c:160
