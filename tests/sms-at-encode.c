@@ -10,7 +10,7 @@
 
 #include "common.h"
 
-extern GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine * s, GSM_SMSMessage * message, unsigned char *hexreq, int *current, int *length2);
+extern GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *message, unsigned char *hexreq, int *current, size_t *length2);
 
 #define BUFFER_SIZE 16384
 
@@ -24,7 +24,8 @@ int main(int argc, char **argv)
 	size_t len;
 	GSM_StateMachine *s;
 	GSM_Error error;
-	int current, current2;
+	int current;
+	size_t current2;
 	unsigned char hexreq[1000];
 	GSM_SMS_Backup Backup;
 	gboolean generate = FALSE;
