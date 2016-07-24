@@ -127,6 +127,7 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 
 		/* Huawei */
 		{"^RSSI:"	,1, ID_None}, /* ^RSSI:18 */
+		{"^HCSQ:"	,1, ID_None}, /* ^HCSQ:"WCDMA",39,29,45 */
 		{"^DSFLOWRPT:"	,1, ID_None}, /* ^DSFLOWRPT:00000124,00000082,00000EA6,0000000000012325,000000000022771D,0000BB80,0001F400 */
 		{"^BOOT:"	,1, ID_None}, /* ^BOOT:27710117,0,0,0,75 */
 		{"^MODE:"	,1, ID_None}, /* ^MODE:3,3 */
