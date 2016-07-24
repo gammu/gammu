@@ -1584,7 +1584,7 @@ GSM_Error ATGEN_ReplyAddSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 	return ERR_UNKNOWNRESPONSE;
 }
 
-GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *message, unsigned char *hexreq, int *current, int *length2)
+GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *message, unsigned char *hexreq, int *current, size_t *length2)
 {
 	GSM_Error 		error;
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
@@ -1708,7 +1708,7 @@ GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *message, unsig
 			/* If not SMS with UDH, it's as normal text */
 			if (message->UDH.Type == UDH_NoUDH) {
 				error = ATGEN_EncodeText(
-					s, hexreq, message->Text, UnicodeLength(message->Text), sizeof(hexreq), length2
+					s, message->Text, UnicodeLength(message->Text), hexreq, sizeof(hexreq), length2
 				);
 				if (error != ERR_NONE) {
 					return error;
@@ -1739,7 +1739,8 @@ GSM_Error ATGEN_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	GSM_Phone_Data		*Phone = &s->Phone.Data;
 	unsigned char		buffer[1000] = {'\0'}, hexreq[1000] = {'\0'},folderid = 0;
 	const char		*statetxt;
-	int			state = 0, Replies = 0, reply = 0, current = 0, length = 0, location = 0;
+	int			state = 0, Replies = 0, reply = 0, current = 0, location = 0;
+	size_t length = 0;
 	size_t len;
 
 	/* This phone supports only sent/unsent messages on SIM */
@@ -1952,7 +1953,8 @@ GSM_Error ATGEN_SendSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	GSM_Error error, error2;
 	GSM_Phone_Data *Phone = &s->Phone.Data;
 	unsigned char buffer[1000] = {'\0'}, hexreq[1000] = {'\0'};
-	int current = 0, length = 0, Replies = 0, retries = 0;
+	int current = 0, Replies = 0, retries = 0;
+	size_t length = 0;
 	size_t len;
 
 	if (sms->PDU == SMS_Deliver) {
