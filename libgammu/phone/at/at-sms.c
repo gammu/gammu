@@ -1707,8 +1707,12 @@ GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *message, unsig
 		case SMS_Coding_Default_No_Compression:
 			/* If not SMS with UDH, it's as normal text */
 			if (message->UDH.Type == UDH_NoUDH) {
-				strcpy(hexreq,DecodeUnicodeString(message->Text));
-				*length2 = UnicodeLength(message->Text);
+				error = ATGEN_EncodeText(
+					s, hexreq, message->Text, UnicodeLength(message->Text), sizeof(hexreq), length2
+				);
+				if (error != ERR_NONE) {
+					return error;
+				}
 				break;
 			}
 	        case SMS_Coding_Unicode_No_Compression:
