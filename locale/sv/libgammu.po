@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2016-02-04 10:40+0100\n"
-"PO-Revision-Date: 2016-07-28 10:11+0000\n"
+"PO-Revision-Date: 2016-07-28 10:13+0000\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish "
 "<https://hosted.weblate.org/projects/gammu/libgammu/sv/>\n"
@@ -99,7 +99,7 @@ msgid ""
 "Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
 "report it."
 msgstr ""
-"Okänt ram. Se <http://wammu.eu/support/bugs/> för information om hur man "
+"Okänd ram. Se <http://wammu.eu/support/bugs/> för information om hur man "
 "rapporterar det."
 
 #: libgammu/gsmcomon.c:101
@@ -364,7 +364,7 @@ msgstr "Misslyckades med att initiera DB-drivrutin."
 #: libgammu/gsmcomon.c:159
 #| msgid "Failed to connect to phone"
 msgid "Failed to configure DB driver."
-msgstr "Det gick inte att konfigurera DB drivrutinen."
+msgstr "Det gick inte att konfigurera DB-drivrutinen."
 
 #  msgid "Failed to set exception handler."
 #: libgammu/gsmcomon.c:160
