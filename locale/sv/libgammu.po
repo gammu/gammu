@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2016-02-04 10:40+0100\n"
-"PO-Revision-Date: 2016-07-20 21:08+0000\n"
-"Last-Translator: Nabil BENDAFI <nabil@bendafi.fr>\n"
+"PO-Revision-Date: 2016-07-28 10:11+0000\n"
+"Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish "
 "<https://hosted.weblate.org/projects/gammu/libgammu/sv/>\n"
 "Language: sv\n"
@@ -358,7 +358,7 @@ msgstr "Ogiltig databasversion."
 
 #: libgammu/gsmcomon.c:158
 msgid "Failed to initialize DB driver."
-msgstr ""
+msgstr "Misslyckades med att initiera DB-drivrutin."
 
 #  msgid "Failed to set exception handler."
 #: libgammu/gsmcomon.c:159
@@ -368,20 +368,18 @@ msgstr "Det gick inte att konfigurera DB drivrutinen."
 
 #  msgid "Failed to set exception handler."
 #: libgammu/gsmcomon.c:160
-#, fuzzy
 #| msgid "Failed to connect to phone"
 msgid "Failed to connect to database."
-msgstr "Misslyckades med att ansluta till telefonen"
+msgstr "Misslyckades med att ansluta till databas."
 
 #: libgammu/gsmcomon.c:161
-#, fuzzy
 #| msgid "Connection test"
 msgid "Database connection timeout."
-msgstr "Anslutningstest"
+msgstr "Tidsgräns för databasanslutning överskreds."
 
 #: libgammu/gsmcomon.c:162
 msgid "Error in executing SQL query."
-msgstr ""
+msgstr "Fel i exekvering av SQL-fråga."
 
 #: libgammu/gsmcomon.c:195
 msgid "Unknown error description."
