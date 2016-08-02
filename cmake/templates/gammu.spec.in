@@ -74,11 +74,11 @@ Source0:        http://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.%{exte
 %endif
 %else
 # Fedora / Redhat / Centos
-%if 0%{?fedora_version} || 0%{?centos_version} || 0%{?rhel_version} || 0%{?fedora} || 0%{?rhel}
-%if 0%{?opensuse_bs}
-%define dist_usb_libs libusb1-devel
+%if 0%{?fedora_version} || 0%{?centos_version} || 0%{?rhel_version} || 0%{?fedora} || 0%{?rhel} || 0%{?scilin_version}
+%if 0%{?fedora_version} || 0%{?centos_version} >= 700 || 0%{?rhel_version} >= 700 || 0%{?scilin_version} >= 700
+%define dist_usb_libs libusbx-devel
 %else
-%define dist_usb_libs libusb-1_0-devel
+%define dist_usb_libs libusb1-devel
 %endif
 %define dist_dbi_libs libdbi-devel libdbi-dbd-sqlite sqlite
 %define dist_bluez_libs bluez-libs-devel >= 2.0
