@@ -387,12 +387,16 @@ fi
 %doc %{_mandir}/man7/gammu-smsd-run.7*
 %doc %{_mandir}/man7/gammu-smsd-sql.7*
 %doc %{_mandir}/man7/gammu-smsd-tables.7*
+%dir %{_libexecdir}/systemd
+%dir %{_libexecdir}/systemd/system
 %{_libexecdir}/systemd/system/gammu-smsd.service
 
 %files -n libGammu%{so_ver} -f libgammu.lang
 %defattr(-,root,root,-)
 %{_libdir}/libGammu.so.%{so_ver}*
 %{_datadir}/gammu/
+%dir /etc/udev
+%dir /etc/udev/rules.d
 /etc/udev/rules.d/69-gammu-acl.rules
 
 %files -n libgsmsd%{so_ver}
