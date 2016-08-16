@@ -135,6 +135,7 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		{"^HCSQ:"	,1, ID_None}, /* ^HCSQ:"LTE",59,50,161,24 */
 		{"^SRVST:"	,1, ID_None}, /* ^SRVST:0 */
 		{"^SIMST:"	,1, ID_None}, /* ^SIMST:1 */
+		{"^STIN:"	,1, ID_None}, /* ^STIN: 7, 0, 0 */
 
 		/* ONDA */
 		{"+ZUSIMR:"	,1, ID_None}, /* +ZUSIMR:2 */

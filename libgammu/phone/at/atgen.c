@@ -6205,6 +6205,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReplyIgnore, 	"^HCSQ:"		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore, 	"^SRVST:"		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore, 	"^SIMST:"		,0x00,0x00,ID_IncomingFrame	 },
+{ATGEN_GenericReplyIgnore,	"^STIN:"		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore, 	"+ZUSIMR:"		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore, 	"+ZEND"			,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore, 	"+CDSI:"		,0x00,0x00,ID_IncomingFrame	 },
