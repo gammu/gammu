@@ -11,7 +11,7 @@ if [ ! -z "$2" ] ; then
     cd "$2"
 fi
 
-sftp nijel,gammu@frs.sourceforge.net -b - <<EOT
+sftp -b - nijel,gammu@frs.sourceforge.net <<EOT
 cd /home/frs/project/g/ga/gammu/gammu
 mkdir $REL
 cd $REL
@@ -21,7 +21,7 @@ put gammu-$REL.tar.gz
 put gammu-$REL.zip
 EOT
 
-sftp web -b - <<EOT
+sftp -b - web <<EOT
 cd /srv/http/dl.cihar.com/gammu/releases/
 put gammu-$REL.tar.bz2
 put gammu-$REL.tar.xz
