@@ -19,9 +19,11 @@ the issue.
 ChangeLog
 =========
     
-2016???? - 1.37.4
+20160816 - 1.37.4
     
 [-] * Improved support for Huawei E3131.
+[-] * Fixed SMS support for MULTIBAND 900E.
+[-] * Fixed SMS created in text mode.
 
 20160524 - 1.37.3
 
