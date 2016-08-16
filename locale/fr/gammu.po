@@ -1997,7 +1997,7 @@ msgid ""
 "are:"
 msgstr ""
 "Pour plus d'information, demander de l'aide sur les sujets spécifique (gammu "
-"--aide sujet). Sujets sont :"
+"--help sujet). Sujets sont :"
 
 #: gammu/gammu.c:900
 msgid "Unknown help topic specified!"
