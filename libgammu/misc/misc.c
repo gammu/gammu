@@ -149,7 +149,7 @@ int GSM_GetLocalTimezoneOffset() {
 	gmtime_r(&now, &tg);
 	localtime_r(&now, &tl);
 	// Returns offset including daylight saving (found as boolean in tl.tm_isdst).
-	return mktime(&tl) - mktime(&tg);
+	return (int)(mktime(&tl) - mktime(&tg));
 }
 
 void GSM_DateTimeToTimestamp(GSM_DateTime *Date, char *str)
