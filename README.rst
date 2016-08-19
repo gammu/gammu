@@ -16,6 +16,10 @@ help of many contributors.
     :alt: Build status
     :target: https://travis-ci.org/gammu/gammu
 
+.. image:: https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/master?svg=true
+    :alt: Windows Build status
+    :target: https://ci.appveyor.com/project/nijel/gammu/branch/master
+
 .. image:: https://hosted.weblate.org/widgets/gammu/-/svg-badge.svg
     :alt: Translation status
     :target: https://hosted.weblate.org/engage/gammu/?utm_source=widget
