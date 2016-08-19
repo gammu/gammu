@@ -6,8 +6,10 @@ compiler:
   - gcc
   - clang
 env:
-  - ARGS=""
-  - CTEST_OUTPUT_ON_FAILURE=1
+  matrix:
+    - ARGS=""
+  global:
+    - CTEST_OUTPUT_ON_FAILURE=1
 before_script:
   - mkdir _build
   - cd _build
