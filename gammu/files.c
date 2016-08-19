@@ -46,15 +46,15 @@ static GSM_Error PrintFileSystemStatus(void)
 	printf("\n");
 
 	printf(LISTFORMAT, _("Phone memory"));
-	printf(_("%i bytes (free %i bytes, used %i bytes)"),
-	       Status.Free + Status.Used, Status.Free, Status.Used);
+	printf(_("%ld bytes (free %ld bytes, used %ld bytes)"),
+	       (long)(Status.Free + Status.Used), (long)(Status.Free), (long)(Status.Used));
 	printf("\n");
 
 	if (Status.UsedImages != 0 || Status.UsedSounds != 0
 	    || Status.UsedThemes != 0) {
 		printf(LISTFORMAT, _("Usage details"));
-		printf(_("images: %i, sounds: %i, themes: %i"),
-		       Status.UsedImages, Status.UsedSounds, Status.UsedThemes);
+		printf(_("images: %ld, sounds: %ld, themes: %ld"),
+		       (long)(Status.UsedImages), (long)(Status.UsedSounds), (long)(Status.UsedThemes));
 		printf("\n");
 	}
 
