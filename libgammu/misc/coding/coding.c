@@ -1967,7 +1967,7 @@ void DecodeXMLUTF8(unsigned char *dest, const char *src, int len)
 	char *pos, *pos_end;
 	const char *lastpos;
 	char *entity;
-	unsigned long int c;
+	unsigned long long int c;
 	int tmplen;
 
 	/* Allocate buffer */
