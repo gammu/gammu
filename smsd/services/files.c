@@ -436,50 +436,73 @@ static GSM_Error SMSDFiles_MoveSMS(GSM_MultiSMSMessage * sms UNUSED, GSM_SMSDCon
 	size_t ilen = 0, olen = 0;
 	char Buffer[(GSM_MAX_SMS_LENGTH * GSM_MAX_MULTI_SMS + 1) * 2], ifilename[400], ofilename[400];
 	const char *sourcepath, *destpath;
+	GSM_Error error;
 
 	sourcepath = Config->outboxpath;
+
+	// Determine target based on status
 	if (sent) {
 		destpath = Config->sentsmspath;
 	} else {
 		destpath = Config->errorsmspath;
 	}
 
+	// Calculate source path
 	strcpy(ifilename, sourcepath);
 	strcat(ifilename, ID);
+	// Calculate destination path
 	strcpy(ofilename, destpath);
 	strcat(ofilename, ID);
 
+	// Do move only if paths are not same
 	if (strcmp(ifilename, ofilename) != 0) {
+		// First try rename
+		if (rename(ifilename, ofilename) == 0) {
+			return ERR_NONE;
+		}
+
+		// Move across devices
+		if (errno != EXDEV) {
+			SMSD_LogErrno(Config, "Can not move file");
+			SMSD_Log(DEBUG_INFO, Config, "Could move %s to %s", ifilename, ofilename);
+			return ERR_UNKNOWN;
+		}
+
+		// Read source file
 		iFile = fopen(ifilename, "r");
 		if (iFile == NULL) {
+			SMSD_LogErrno(Config, "Can not open file");
 			return ERR_CANTOPENFILE;
 		}
 		ilen = fread(Buffer, 1, sizeof(Buffer), iFile);
 		fclose(iFile);
+
+		// Write target file
 		oFile = fopen(ofilename, "w");
 		if (oFile == NULL) {
+			SMSD_LogErrno(Config, "Can not open file");
 			return ERR_CANTOPENFILE;
 		}
 		olen = fwrite(Buffer, 1, ilen, oFile);
 		fclose(oFile);
 	}
-	if (ilen == olen) {
-		if ((strcmp(ifilename, "/") == 0) || (remove(ifilename) != 0)) {
-			SMSD_LogErrno(Config, "Can not delete file");
-			SMSD_Log(DEBUG_INFO, Config, "Could not delete %s", ifilename);
+
+	// Did we write all data?
+	error = ERR_NONE;
+	if (ilen != olen) {
+		SMSD_Log(DEBUG_INFO, Config, "Failed to copy %s to %s", ifilename, ofilename);
+		error = ERR_UNKNOWN;
+	}
+
+	// Remove source file
+	if (error == ERR_NONE || alwaysDelete) {
+		if (unlink(ifilename) != 0) {
+			SMSD_LogErrno(Config, "Can not remove file");
 			return ERR_UNKNOWN;
 		}
-		return ERR_NONE;
-	} else {
-		SMSD_Log(DEBUG_INFO, Config, "Error copying SMS %s -> %s", ifilename, ofilename);
-		if (alwaysDelete) {
-			if ((strcmp(ifilename, "/") == 0) || (remove(ifilename) != 0)) {
-				SMSD_LogErrno(Config, "Can not delete file");
-				SMSD_Log(DEBUG_INFO, Config, "Could not delete %s", ifilename);
-			}
-		}
-		return ERR_UNKNOWN;
 	}
+
+	return error;
 }
 
 /* Adds SMS to Outbox */
