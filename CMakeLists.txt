@@ -402,7 +402,12 @@ endif (POSTGRES_FOUND)
 if(MSVC)
     # MSVC needs different flags at all
     MACRO_TUNE_COMPILER("/W3")
+    # we use old runtime
     add_definitions(-D_CRT_SECURE_NO_WARNINGS=1)
+    # we use strcpy instead of strcpy_s
+    add_definitions(-D_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES=1)
+    # we use ansi API for winsock
+    add_definitions(-D_WINSOCK_DEPRECATED_NO_WARNINGS=1)
 endif(MSVC)
 
 if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_MINGW OR
