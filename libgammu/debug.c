@@ -311,9 +311,9 @@ int smprintf_level(GSM_StateMachine * s, GSM_DebugSeverity severity, const char 
 #define CHARS_PER_LINE (16)
 
 /* Dumps a message */
-void DumpMessage(GSM_Debug_Info *d, const unsigned char *message, const int messagesize)
+void DumpMessage(GSM_Debug_Info *d, const unsigned char *message, const size_t messagesize)
 {
-	int i, j = 0;
+	size_t i, j = 0;
 	char buffer[(CHARS_PER_LINE * 5) + 1];
 
 	smfprintf(d, "\n");
@@ -368,7 +368,7 @@ void DumpMessage(GSM_Debug_Info *d, const unsigned char *message, const int mess
 
 #undef CHARS_PER_LINE
 
-void DumpMessageText(GSM_Debug_Info *d, const unsigned char *message, const int messagesize)
+void DumpMessageText(GSM_Debug_Info *d, const unsigned char *message, const size_t messagesize)
 {
 	if (d == NULL || (d->dl != DL_TEXTALL && d->dl == DL_TEXTALLDATE)) return;
 	DumpMessage(d, message, messagesize);

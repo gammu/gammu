@@ -10,8 +10,8 @@
 extern GSM_Debug_Info	GSM_global_debug;
 extern GSM_Debug_Info	GSM_none_debug;
 
-void DumpMessage(GSM_Debug_Info *d, const unsigned char *message, const int messagesize);
-void DumpMessageText(GSM_Debug_Info *d, const unsigned char *message, const int messagesize);
+void DumpMessage(GSM_Debug_Info *d, const unsigned char *message, const size_t messagesize);
+void DumpMessageText(GSM_Debug_Info *d, const unsigned char *message, const size_t messagesize);
 
 
 /* ------------------------------------------------------------------------- */
