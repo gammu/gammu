@@ -408,6 +408,8 @@ if(MSVC)
     add_definitions(-D_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES=1)
     # we use ansi API for winsock
     add_definitions(-D_WINSOCK_DEPRECATED_NO_WARNINGS=1)
+    # The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name
+    add_definitions(-D_CRT_NONSTDC_NO_WARNINGS=1)
 endif(MSVC)
 
 if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_MINGW OR
