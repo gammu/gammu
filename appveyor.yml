@@ -16,6 +16,5 @@ build:
   parallel: true
   verbosity: minimal
 
-#test_script:
-#  - ps: cd _builds
-#  - ctest -VV -C "%CONFIG%"
+test_script:
+  - msbuild RUN_TESTS.vcxproj
