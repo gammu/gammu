@@ -997,7 +997,7 @@ gboolean SMSD_CheckSecurity(GSM_SMSDConfig *Config)
 char *SMSD_RunOnCommand(const char *locations, const char *command)
 {
 	char *result;
-	int len;
+	size_t len;
 
 	assert(command != NULL);
 
