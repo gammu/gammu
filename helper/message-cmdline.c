@@ -1092,11 +1092,12 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			nextlong = 0;
 			break;
 		case 8:/* Reject duplicates ID */
-			SMSInfo.ReplaceMessage = GetInt(argv[i]);
-			if (SMSInfo.ReplaceMessage < 1 || SMSInfo.ReplaceMessage > 7) {
+			param_value = GetInt(argv[i]);
+			if (param_value < 1 || param_value > 7) {
 				printf(_("You have to give number between 1 and 7 (\"%s\")\n"),argv[i]);
 				exit(-1);
 			}
+			SMSInfo.ReplaceMessage = (unsigned char)param_value;
 			nextlong = 0;
 			break;
 		case 9:/* Replace file for text SMS */
