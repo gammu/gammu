@@ -149,7 +149,8 @@ void GetEachMMS(int argc, char *argv[])
 	GSM_File		File;
 	gboolean			start = TRUE;
 	GSM_MMSFolders 		folders;
-	int			Handle,Size,num = -1;
+	int			Handle,num = -1;
+	size_t			Size;
 	GSM_Error error;
 
 	if (argc>2 && strcasecmp(argv[2],"-save") == 0) num=0;

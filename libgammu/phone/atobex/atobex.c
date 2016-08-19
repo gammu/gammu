@@ -647,7 +647,7 @@ GSM_Error ATOBEX_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
  * @{
  */
 
-GSM_Error ATOBEX_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle)
+GSM_Error ATOBEX_AddFilePart(GSM_StateMachine *s, GSM_File *File, size_t *Pos, int *Handle)
 {
 	GSM_Error error;
 
@@ -658,7 +658,7 @@ GSM_Error ATOBEX_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int 
 	return OBEXGEN_AddFilePart(s, File, Pos, Handle);
 }
 
-GSM_Error ATOBEX_SendFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle)
+GSM_Error ATOBEX_SendFilePart(GSM_StateMachine *s, GSM_File *File, size_t *Pos, int *Handle)
 {
 	GSM_Error error;
 
@@ -669,7 +669,7 @@ GSM_Error ATOBEX_SendFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int
 	return OBEXGEN_SendFilePart(s, File, Pos, Handle);
 }
 
-GSM_Error ATOBEX_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, int *Size)
+GSM_Error ATOBEX_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, size_t *Size)
 {
 	GSM_Error error;
 

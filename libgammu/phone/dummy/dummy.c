@@ -1118,7 +1118,7 @@ GSM_Error DUMMY_SetFileAttributes(GSM_StateMachine *s, GSM_File *File)
 	return ERR_NONE;
 }
 
-GSM_Error DUMMY_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle)
+GSM_Error DUMMY_AddFilePart(GSM_StateMachine *s, GSM_File *File, size_t *Pos, int *Handle)
 {
 	char *path;
 	FILE *file;
@@ -1165,13 +1165,13 @@ GSM_Error DUMMY_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *
 	return ERR_EMPTY;
 }
 
-GSM_Error DUMMY_SendFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle)
+GSM_Error DUMMY_SendFilePart(GSM_StateMachine *s, GSM_File *File, size_t *Pos, int *Handle)
 {
 	EncodeUnicode(File->ID_FullName, "incoming" PATH_SEPARATOR, 9);
 	return DUMMY_AddFilePart(s, File, Pos, Handle);
 }
 
-GSM_Error DUMMY_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, int *Size)
+GSM_Error DUMMY_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, size_t *Size)
 {
 	char *path, *name, *pos;
 	GSM_Error error;

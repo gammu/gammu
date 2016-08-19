@@ -1033,7 +1033,8 @@ void GetBitmap(int argc, char *argv[])
 {
 	GSM_File		File;
 	GSM_MultiBitmap 	MultiBitmap;
-	int			location=0, Handle, Size;
+	int			location=0, Handle;
+	size_t Size;
 	GSM_AllRingtonesInfo 	Info = {0, NULL};
 	unsigned char		buffer[10];
 	const unsigned char *ringtonename;

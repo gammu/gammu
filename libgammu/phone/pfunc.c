@@ -172,7 +172,8 @@ GSM_Error PHONE_FindDataFile(GSM_StateMachine *s, GSM_File * File, const char *E
 
 GSM_Error PHONE_UploadFile(GSM_StateMachine *s, GSM_File * File)
 {
-	int Pos = 0, Handle = 0;
+	size_t Pos = 0;
+	int Handle = 0;
 	GSM_Error error = ERR_NONE;;
 
 	while (error == ERR_NONE) {

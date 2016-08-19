@@ -1266,15 +1266,15 @@ typedef struct {
 	/**
 	 * Retrieves file part.
 	 */
-	GSM_Error (*GetFilePart)	(GSM_StateMachine *s, GSM_File *File, int *Handle, int *Size);
+	GSM_Error (*GetFilePart)	(GSM_StateMachine *s, GSM_File *File, int *Handle, size_t *Size);
 	/**
 	 * Adds file part to filesystem.
 	 */
-	GSM_Error (*AddFilePart)	(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle);
+	GSM_Error (*AddFilePart)	(GSM_StateMachine *s, GSM_File *File, size_t *Pos, int *Handle);
 	/**
 	 * Sends file to phone, it's up to phone to decide what to do with it.
 	 */
-	GSM_Error (*SendFilePart)	(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle);
+	GSM_Error (*SendFilePart)	(GSM_StateMachine *s, GSM_File *File, size_t *Pos, int *Handle);
 	/**
 	 * Acquires filesystem status.
 	 */

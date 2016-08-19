@@ -379,7 +379,7 @@ static GSM_Error N6510_GetFileSystemStatus1(GSM_StateMachine *s, GSM_FileSystemS
 	return GSM_WaitFor (s, req, 10, 0x6D, 4, ID_FileSystemStatus);
 }
 
-static GSM_Error N6510_GetFilePart1(GSM_StateMachine *s, GSM_File *File, int *Handle UNUSED, int *Size)
+static GSM_Error N6510_GetFilePart1(GSM_StateMachine *s, GSM_File *File, int *Handle UNUSED, size_t *Size)
 {
 	GSM_Phone_N6510Data     *Priv = &s->Phone.Data.Priv.N6510;
 	int		     	old;
@@ -564,7 +564,7 @@ GSM_Error N6510_ReplyAddFilePart1(GSM_Protocol_Message *msg UNUSED, GSM_StateMac
 	return ERR_NONE;
 }
 
-static GSM_Error N6510_AddFilePart1(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle UNUSED)
+static GSM_Error N6510_AddFilePart1(GSM_StateMachine *s, GSM_File *File, size_t *Pos, int *Handle UNUSED)
 {
 	GSM_Phone_N6510Data     *Priv = &s->Phone.Data.Priv.N6510;
 	GSM_File		File2;
@@ -642,7 +642,7 @@ static GSM_Error N6510_AddFilePart1(GSM_StateMachine *s, GSM_File *File, int *Po
 	Add[12] = j / 256;
 	Add[13] = j % 256;
 	memcpy(Add+14,File->Buffer+(*Pos),j);
-	smprintf(s, "Adding file part %i %i\n",*Pos,j);
+	smprintf(s, "Adding file part %ld %i\n", (long)*Pos,j);
 	error=GSM_WaitFor (s, Add, 14+j, 0x6D, 4, ID_AddFile);
 	if (error != ERR_NONE) return error;
 	*Pos = *Pos + j;
@@ -1186,7 +1186,7 @@ static GSM_Error N6510_GetNextFileFolder2(GSM_StateMachine *s, GSM_File *File, g
 	return error;
 }
 
-static GSM_Error N6510_GetFilePart2(GSM_StateMachine *s, GSM_File *File, int *Handle, int *Size)
+static GSM_Error N6510_GetFilePart2(GSM_StateMachine *s, GSM_File *File, int *Handle, size_t *Size)
 {
 	int		    	old,j;
 	GSM_Error	       	error;
@@ -1318,7 +1318,7 @@ static GSM_Error N6510_SetFileAttributes2(GSM_StateMachine *s, GSM_File *File)
 	return ERR_NONE;
 }
 
-static GSM_Error N6510_AddFilePart2(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle)
+static GSM_Error N6510_AddFilePart2(GSM_StateMachine *s, GSM_File *File, size_t *Pos, int *Handle)
 {
 	GSM_Error	       	error;
 	int		     	j,P;
@@ -1365,7 +1365,7 @@ static GSM_Error N6510_AddFilePart2(GSM_StateMachine *s, GSM_File *File, int *Po
 	req[13]		 = j % 256;
 	memcpy(req+14,File->Buffer+(*Pos),j);
 
-	smprintf(s, "Adding file part %i %i\n",*Pos,j);
+	smprintf(s, "Adding file part %ld %i\n",(long)*Pos,j);
 	error=GSM_WaitFor (s, req, 14+j, 0x6D, 4, ID_AddFile);
 	if (error != ERR_NONE) return error;
 	*Pos = *Pos + j;
@@ -1681,7 +1681,7 @@ GSM_Error N6510_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, gboolean 
 	return N6510_GetNextFileFolder2(s,File,start);
 }
 
-GSM_Error N6510_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, int *Size)
+GSM_Error N6510_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, size_t *Size)
 {
 	GSM_File	File2;
 	char	    	buf[20 + (2 * (GSM_MAX_FILENAME_ID_LENGTH + 1))];
@@ -1711,7 +1711,7 @@ GSM_Error N6510_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, in
 	}
 }
 
-GSM_Error N6510_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle)
+GSM_Error N6510_AddFilePart(GSM_StateMachine *s, GSM_File *File, size_t *Pos, int *Handle)
 {
 	GSM_File	File2;
 	GSM_Error       error;
@@ -2126,7 +2126,8 @@ GSM_Error N6510_GetNextMMSFileInfo(GSM_StateMachine *s, unsigned char *FileID, i
 	GSM_Phone_N6510Data     *Priv = &s->Phone.Data.Priv.N6510;
 	GSM_Error		error;
 	GSM_File		file;
-	int			Handle,Size;
+	int			Handle;
+	size_t			Size;
 
 	if (start) {
 		error = N6510_GetMMSFolders(s, &folders);
@@ -2529,7 +2530,8 @@ GSM_Error N6510_GetNextFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 {
 	GSM_Phone_N6510Data	*Priv = &s->Phone.Data.Priv.N6510;
 	unsigned char		folderid;
-	int			location,Size,Handle;
+	int			location,Handle;
+	size_t			Size;
 	GSM_Error		error;
 	GSM_File		FFF;
 	gboolean			start2=start;

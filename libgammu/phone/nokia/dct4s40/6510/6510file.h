@@ -4,8 +4,8 @@ GSM_Error N6510_GetNextFileFolder		(GSM_StateMachine *s, GSM_File *File, gboolea
 GSM_Error N6510_GetFolderListing		(GSM_StateMachine *s, GSM_File *File, gboolean start);
 GSM_Error N6510_AddFolder			(GSM_StateMachine *s, GSM_File *File);
 GSM_Error N6510_DeleteFolder			(GSM_StateMachine *s, unsigned char *ID);
-GSM_Error N6510_GetFilePart			(GSM_StateMachine *s, GSM_File *File, int *Handle, int *Size);
-GSM_Error N6510_AddFilePart			(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle);
+GSM_Error N6510_GetFilePart			(GSM_StateMachine *s, GSM_File *File, int *Handle, size_t *Size);
+GSM_Error N6510_AddFilePart			(GSM_StateMachine *s, GSM_File *File, size_t *Pos, int *Handle);
 GSM_Error N6510_DeleteFile			(GSM_StateMachine *s, unsigned char *ID);
 GSM_Error N6510_SetFileAttributes		(GSM_StateMachine *s, GSM_File *File);
 GSM_Error N6510_GetNextRootFolder		(GSM_StateMachine *s, GSM_File *File);
