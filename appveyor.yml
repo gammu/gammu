@@ -11,8 +11,9 @@ environment:
 clone_folder: c:\projects\gammu
 
 before_build:
-  - "C:\\Program Files\\MySql\\MySQL Server 5.7\\bin\\mysql.exe" "--password=Password12!" --user=root -e "create database smsd;"
-  - cmake -G "%GENERATOR%" -DCMAKE_INSTALL_PREFIX=%P% -DODBC_DSN=mysql:host=localhost;dbname=smsd -DMYSQL_USER=root "-DMYSQL_PASSWORD=Password12!" -DODBC_TESTING=ON
+  - cmd: >-
+    "C:\Program Files\MySql\MySQL Server 5.7\bin\mysql.exe" "--password=Password12!" --user=root -e "create database smsd;"
+    cmake -G "%GENERATOR%" -DCMAKE_INSTALL_PREFIX=%P% -DODBC_DSN=mysql:host=localhost;dbname=smsd -DMYSQL_USER=root "-DMYSQL_PASSWORD=Password12!" -DODBC_TESTING=ON
 
 build:
   project: ALL_BUILD.vcxproj
