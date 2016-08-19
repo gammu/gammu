@@ -1,21 +1,22 @@
+version: {build}
+
 environment:
   matrix:
     - GENERATOR: "Visual Studio 14"
-      CONFIG: Debug
-
-    - GENERATOR: "Visual Studio 14"
-      CONFIG: Release
-
     - GENERATOR: "Visual Studio 14 Win64"
-      CONFIG: Debug
 
-    - GENERATOR: "Visual Studio 14 Win64"
-      CONFIG: Release
+clone_folder: c:\projects\gammu
 
-build_script:
-  - cmake "-G%GENERATOR%" -H. -B_builds
-  - cmake --build _builds --config "%CONFIG%"
+before_build:
+- cmd: >-
+    cd c:\projects\gammu
+    cmake -G "%GENERATOR%" -DCMAKE_INSTALL_PREFIX=%P%
 
-test_script:
-  - ps: cd _builds
-  - ctest -VV -C "%CONFIG%"
+build:
+  project: ALL_BUILD.vcxproj
+  parallel: true
+  verbosity: minimal
+
+#test_script:
+#  - ps: cd _builds
+#  - ctest -VV -C "%CONFIG%"
