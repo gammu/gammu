@@ -45,10 +45,12 @@ if (WITH_BACKUP)
         smsd_testsuite("dbi-sqlite3")
     endif (LIBDBI_FOUND AND SH_BIN AND SQLITE_BIN AND SED_BIN)
 
-    smsd_testsuite("files-unicode")
-    smsd_testsuite("files-standard")
-    smsd_testsuite("files-detail")
-    smsd_testsuite("null")
+    if (SH_BIN)
+        smsd_testsuite("files-unicode")
+        smsd_testsuite("files-standard")
+        smsd_testsuite("files-detail")
+        smsd_testsuite("null")
+    endif (SH_BIN)
 
     if (MYSQL_TESTING)
         if (MYSQL_FOUND)
@@ -71,11 +73,13 @@ if (WITH_BACKUP)
         endif (LIBDBI_FOUND)
     endif (PSQL_TESTING)
 
-    add_test(NAME "smsd-files-include-unicode" COMMAND "${SH_BIN}" "${CMAKE_CURRENT_BINARY_DIR}/test-smsd-files-include.sh" unicode "$<TARGET_FILE:gammu-smsd>" "$<TARGET_FILE:gammu-smsd-inject>" "$<TARGET_FILE:gammu-smsd-monitor>")
-    set_tests_properties("smsd-files-include-unicode" PROPERTIES
-        PASS_REGULAR_EXPRESSION ".999999999999999.4.3.0.100.42"
-        FAIL_REGULAR_EXPRESSION "ERROR: ;Wrong;Process failed with exit status"
-        )
+    if (SH_BIN)
+        add_test(NAME "smsd-files-include-unicode" COMMAND "${SH_BIN}" "${CMAKE_CURRENT_BINARY_DIR}/test-smsd-files-include.sh" unicode "$<TARGET_FILE:gammu-smsd>" "$<TARGET_FILE:gammu-smsd-inject>" "$<TARGET_FILE:gammu-smsd-monitor>")
+        set_tests_properties("smsd-files-include-unicode" PROPERTIES
+            PASS_REGULAR_EXPRESSION ".999999999999999.4.3.0.100.42"
+            FAIL_REGULAR_EXPRESSION "ERROR: ;Wrong;Process failed with exit status"
+            )
+    endif (SH_BIN)
 
     foreach (PROGRAM gammu-smsd gammu-smsd-monitor gammu-smsd-inject)
         add_test(NAME ${PROGRAM}-help COMMAND ${PROGRAM} -h)

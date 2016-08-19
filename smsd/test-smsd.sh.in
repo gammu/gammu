@@ -49,7 +49,7 @@ commtimeout = 5
 multiparttimeout = 5
 debuglevel = 255
 logfile = stderr
-runonreceive = @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/received.sh
+runonreceive = @SH_BIN@ @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/received.sh
 EOT
 
 # Add driver specific configuration
