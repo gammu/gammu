@@ -4,16 +4,20 @@ shallow_clone: true
 
 environment:
   CTEST_OUTPUT_ON_FAILURE: 1
+  MYSQL_PATH: C:\Program Files\MySql\MySQL Server 5.7
+  POSTGRES_PATH: C:\Program Files\PostgreSQL\9.5
   matrix:
     - GENERATOR: "Visual Studio 14"
     - GENERATOR: "Visual Studio 14 Win64"
 
 clone_folder: c:\projects\gammu
 
+install:
+  - "SET PATH=%POSTGRES_PATH%\\bin;%MYSQL_PATH%\\bin;%PATH%"
+
 before_build:
-  - cmd: >-
-    "C:\Program Files\MySql\MySQL Server 5.7\bin\mysql.exe" "--password=Password12!" --user=root -e "create database smsd;"
-    cmake -G "%GENERATOR%" -DCMAKE_INSTALL_PREFIX=%P% -DODBC_DSN=mysql:host=localhost;dbname=smsd -DMYSQL_USER=root "-DMYSQL_PASSWORD=Password12!" -DODBC_TESTING=ON
+  - mysql "--password=Password12!" --user=root -e "create database smsd;"
+  - cmake -G "%GENERATOR%" -DCMAKE_INSTALL_PREFIX=%P% -DODBC_DSN=mysql:host=localhost;dbname=smsd -DMYSQL_USER=root "-DMYSQL_PASSWORD=Password12!" -DODBC_TESTING=ON
 
 build:
   project: ALL_BUILD.vcxproj
