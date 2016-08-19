@@ -80,7 +80,7 @@ readdir( DIR *dir )
       else
         ret = 1;
     }
-  else if ( dir->dd_handle != -1l )
+  else if ( dir->dd_handle !=  INVALID_HANDLE_VALUE )
     {
         ret = FindNextFile (dir->dd_handle, &fInfo);
     }
