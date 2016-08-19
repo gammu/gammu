@@ -35,7 +35,7 @@
 struct dirent {
 	long d_ino;
 	unsigned short d_reclen;
-	unsigned short d_namlen;
+	size_t d_namlen;
 	char d_name[FILENAME_MAX];
 };
 
@@ -43,7 +43,7 @@ typedef struct
 {
 	struct _finddata_t	dd_dta;
 	struct dirent		dd_dir;
-	long			dd_handle;
+	HANDLE			dd_handle;
 	int			dd_stat;
 	char			dd_name[1];
 } DIR;

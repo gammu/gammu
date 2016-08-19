@@ -43,7 +43,7 @@ opendir ( const char *name )
 int
 closedir (DIR *dir)
 {
-  FindClose( (HANDLE)dir->dd_handle );
+  FindClose(dir->dd_handle);
   free( dir );
   return 0;
 }
@@ -73,7 +73,7 @@ readdir( DIR *dir )
       if (!dirname)
         return NULL; /* Error. */
 
-      dir->dd_handle = (long)FindFirstFile( dirname, &fInfo );
+      dir->dd_handle = FindFirstFile( dirname, &fInfo );
       free( dirname );
       if ( !dir->dd_handle )
         ret = 0;
@@ -82,7 +82,7 @@ readdir( DIR *dir )
     }
   else if ( dir->dd_handle != -1l )
     {
-        ret = FindNextFile ((HANDLE)dir->dd_handle, &fInfo);
+        ret = FindNextFile (dir->dd_handle, &fInfo);
     }
   else
     ret = 0;
