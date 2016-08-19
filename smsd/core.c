@@ -1527,13 +1527,10 @@ gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config)
 		for (j = 0; j < SortedSMS[i]->Number; j++) {
 			SortedSMS[i]->SMS[j].Folder = 0;
 			error = GSM_DeleteSMS(Config->gsm, &SortedSMS[i]->SMS[j]);
-			switch (error) {
-				case ERR_NONE:
-				case ERR_EMPTY:
-					break;
-				default:
-					SMSD_LogError(DEBUG_INFO, Config, "Error deleting SMS", error);
-					return FALSE;
+			// Empty error can happen if deleting message several times
+			if (error != ERR_NONE && error != ERR_EMPTY) {
+				SMSD_LogError(DEBUG_INFO, Config, "Error deleting SMS", error);
+				return FALSE;
 			}
 		}
 
