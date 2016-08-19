@@ -389,7 +389,7 @@ void GSM_EncodeMMSIndicatorSMSText(unsigned char *Buffer, size_t *Length, GSM_MM
 	Buffer[(*Length)++] = 0x89;
 	sprintf(buffer,"%s/TYPE=PLMN",Indicator->Sender);
 	/* Field size */
-	Buffer[(*Length)++] = strlen(buffer) + 2;
+	Buffer[(*Length)++] = (unsigned char)(strlen(buffer) + 2);
 	/* Sender address is present */
 	Buffer[(*Length)++] = 0x80;
 	strcpy(Buffer+(*Length),buffer);
