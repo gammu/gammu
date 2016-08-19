@@ -1908,7 +1908,8 @@ void DecodeISO88591QuotedPrintable(unsigned char *dest, const unsigned char *src
 /* Make Unicode string from UTF8 string */
 void DecodeUTF8QuotedPrintable(unsigned char *dest, const char *src, size_t len)
 {
-	size_t 		i,j=0,z;
+	size_t 		i,j=0;
+	int		z;
 	unsigned char	mychar[10];
 	wchar_t		ret;
 
@@ -1943,7 +1944,7 @@ void DecodeUTF8QuotedPrintable(unsigned char *dest, const char *src, size_t len)
 
 void DecodeUTF8(unsigned char *dest, const char *src, size_t len)
 {
-	int 		i=0,j=0,z;
+	size_t 		i=0,j=0,z;
 	wchar_t		ret;
 
 	while (i < len) {
