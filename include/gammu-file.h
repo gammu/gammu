@@ -26,11 +26,11 @@ extern "C" {
  * \ingroup File
  */
 typedef struct {
-	int Free;
-	int Used;
-	int UsedImages;
-	int UsedSounds;
-	int UsedThemes;
+	size_t Free;
+	size_t Used;
+	size_t UsedImages;
+	size_t UsedSounds;
+	size_t UsedThemes;
 } GSM_FileSystemStatus;
 
 /**
