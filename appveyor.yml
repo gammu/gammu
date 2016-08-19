@@ -1,5 +1,7 @@
 version: "{build}"
 
+shallow_clone: true
+
 environment:
   CTEST_OUTPUT_ON_FAILURE: 1
   matrix:
