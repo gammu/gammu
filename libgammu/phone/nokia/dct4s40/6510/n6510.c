@@ -2229,8 +2229,14 @@ static GSM_Error N6510_SetConnectionSettings(GSM_StateMachine *s, GSM_MultiWAPSe
 		if (((length + pad) % 2)) pad = 2; else pad = 0;
 		pos += NOKIA_SetUnicodeString(s, req + pos, settings->Settings[loc1].HomePage, TRUE);
 
-		if (settings->Settings[loc1].IsContinuous) req[pos] = 0x01; pos++;
-		if (settings->Settings[loc1].IsSecurity) req[pos] = 0x01; pos++;
+		if (settings->Settings[loc1].IsContinuous) {
+			req[pos] = 0x01;
+		}
+		pos++;
+		if (settings->Settings[loc1].IsSecurity) {
+			req[pos] = 0x01;
+		}
+		pos++;
 	} else if (loc2 != -1) {
 		/* Name */
 		length = UnicodeLength(settings->Settings[loc2].Title);
@@ -2242,8 +2248,14 @@ static GSM_Error N6510_SetConnectionSettings(GSM_StateMachine *s, GSM_MultiWAPSe
 		if (((length + pad) % 2)) pad = 2; else pad = 0;
 		pos += NOKIA_SetUnicodeString(s, req + pos, settings->Settings[loc2].HomePage, TRUE);
 
-		if (settings->Settings[loc2].IsContinuous) req[pos] = 0x01; pos++;
-		if (settings->Settings[loc2].IsSecurity) req[pos] = 0x01; pos++;
+		if (settings->Settings[loc2].IsContinuous) {
+			req[pos] = 0x01;
+		}
+		pos++;
+		if (settings->Settings[loc2].IsSecurity) {
+			req[pos] = 0x01;
+		}
+		pos++;
 	} else {
 		/* Name */
 		length = 0;
@@ -2295,8 +2307,14 @@ static GSM_Error N6510_SetConnectionSettings(GSM_StateMachine *s, GSM_MultiWAPSe
 		req[pos++] = length % 256;
 
 		if (loc1 != -1) {
-			if (!settings->Settings[loc1].IsNormalAuthentication) req[pos]=0x01; pos++;
-			if (settings->Settings[loc1].IsISDNCall) req[pos]=0x01;	pos++;
+			if (!settings->Settings[loc1].IsNormalAuthentication) {
+				req[pos]=0x01;
+			}
+			pos++;
+			if (settings->Settings[loc1].IsISDNCall) {
+				req[pos]=0x01;
+			}
+			pos++;
 			switch (settings->Settings[loc1].Speed) {
 				case WAPSETTINGS_SPEED_AUTO	: 		 break;
 				case WAPSETTINGS_SPEED_9600	: req[pos]=0x01; break;
@@ -2304,7 +2322,9 @@ static GSM_Error N6510_SetConnectionSettings(GSM_StateMachine *s, GSM_MultiWAPSe
 			}
 			pos++;
 			req[pos++]=0x01;
-			if (!settings->Settings[loc1].ManualLogin) req[pos] = 0x01; pos++;
+			if (!settings->Settings[loc1].ManualLogin) {
+				req[pos] = 0x01;
+			}pos++;
 
 			pos += NOKIA_SetUnicodeString(s, req + pos, settings->Settings[loc1].IPAddress, FALSE);
 			pos += NOKIA_SetUnicodeString(s, req + pos, settings->Settings[loc1].DialUp, TRUE);
@@ -2337,9 +2357,18 @@ static GSM_Error N6510_SetConnectionSettings(GSM_StateMachine *s, GSM_MultiWAPSe
 	req[pos++] = length % 256;
 
 	if (loc2 != -1) {
-		if (!settings->Settings[loc2].IsNormalAuthentication) req[pos] = 0x01; pos++;
-		if (!settings->Settings[loc2].IsContinuous) req[pos] = 0x01; pos++;
-		if (!settings->Settings[loc2].ManualLogin) req[pos] = 0x01; pos++;
+		if (!settings->Settings[loc2].IsNormalAuthentication) {
+			req[pos] = 0x01;
+		}
+		pos++;
+		if (!settings->Settings[loc2].IsContinuous) {
+			req[pos] = 0x01;
+		}
+		pos++;
+		if (!settings->Settings[loc2].ManualLogin) {
+			req[pos] = 0x01;
+		}
+		pos++;
 
 		pos += NOKIA_SetUnicodeString(s, req + pos, settings->Settings[loc2].DialUp, FALSE);
 		pos += NOKIA_SetUnicodeString(s, req + pos, settings->Settings[loc2].IPAddress, TRUE);
