@@ -2066,11 +2066,13 @@ static GSM_Error ALCATEL_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 					break;
 				case PBK_Text_LastName:
 					UpdatedFields[0] = TRUE;
-					if ((error = ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 0, entry->Entries[i].Text)) != ERR_NONE) return error; NameSet = TRUE;
+					if ((error = ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 0, entry->Entries[i].Text)) != ERR_NONE) return error;
+					NameSet = TRUE;
 					break;
 				case PBK_Text_FirstName:
 					UpdatedFields[1] = TRUE;
-					if ((error = ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 1, entry->Entries[i].Text)) != ERR_NONE) return error; NameSet = TRUE;
+					if ((error = ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 1, entry->Entries[i].Text)) != ERR_NONE) return error;
+					NameSet = TRUE;
 					break;
 				case PBK_Text_Company:
 					UpdatedFields[2] = TRUE;
