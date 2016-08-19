@@ -92,6 +92,7 @@ $SMSD_INJECT_CMD -c "$CONFIG_PATH" TEXT 123465 -text "Lorem ipsum."
 
 sleep 5
 
+# Incoming messages
 for sms in 10 16 26 ; do
     cp @CMAKE_CURRENT_SOURCE_DIR@/../tests/at-sms-encode/$sms.backup $DUMMY_PATH/sms/3/$sms
 done
@@ -111,7 +112,7 @@ sleep 5
 
 $SMSD_MONITOR_CMD -C -c "$CONFIG_PATH" -n 1 -d 0
 
-if [ `wc -l < @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/received.log` -ne 3 ] ; then
+if [ `wc -l @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/received.log` -ne 3 ] ; then
     echo "ERROR: Wrong number of messages received!"
     exit 1
 fi
