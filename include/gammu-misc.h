@@ -32,7 +32,7 @@ extern "C" {
  *
  * \return Length of read line, -1 on error.
  */
-int GetLine(FILE * File, char *Line, int count);
+size_t GetLine(FILE * File, char *Line, int count);
 
 /**
  * Gets Gammu library version.

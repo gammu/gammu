@@ -367,7 +367,7 @@ gboolean CheckTime(GSM_DateTime *date)
 		date->Second <= 59;
 }
 
-int GetLine(FILE *File, char *Line, int count)
+size_t GetLine(FILE *File, char *Line, int count)
 {
 	int num;
 
