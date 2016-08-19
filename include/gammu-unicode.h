@@ -61,7 +61,7 @@ void DecodeUnicode(const unsigned char *src, char *dest);
  *
  * \ingroup Unicode
  */
-void EncodeUnicode(unsigned char *dest, const char *src, int len);
+void EncodeUnicode(unsigned char *dest, const char *src, size_t len);
 
 /**
  * Decodes unicode file data with byte order mark (BOM).
@@ -90,7 +90,7 @@ gboolean EncodeUTF8QuotedPrintable(char *dest, const unsigned char *src);
  * \ingroup Unicode
  */
 void DecodeUTF8QuotedPrintable(unsigned char *dest, const char *src,
-			       int len);
+			       size_t len);
 /**
  * Encodes string to UTF-8.
  *
@@ -152,14 +152,14 @@ gboolean EncodeUTF8(char *dest, const unsigned char *src);
  *
  * \ingroup Unicode
  */
-void DecodeUTF8(unsigned char *dest, const char *src, int len);
+void DecodeUTF8(unsigned char *dest, const char *src, size_t len);
 
 /**
  * Decode hex encoded binary text.
  *
  * \ingroup Unicode
  */
-gboolean DecodeHexBin(unsigned char *dest, const unsigned char *src, int len);
+gboolean DecodeHexBin(unsigned char *dest, const unsigned char *src, size_t len);
 
 /**
  * Converts single character from unicode to wchar_t.
