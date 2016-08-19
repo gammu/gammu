@@ -8,9 +8,8 @@ environment:
 clone_folder: c:\projects\gammu
 
 before_build:
-- cmd: >-
-    cd c:\projects\gammu
-    cmake -G "%GENERATOR%" -DCMAKE_INSTALL_PREFIX=%P%
+  - cd c:\projects\gammu
+  - cmake -G "%GENERATOR%" -DCMAKE_INSTALL_PREFIX=%P%
 
 build:
   project: ALL_BUILD.vcxproj
