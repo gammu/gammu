@@ -279,9 +279,9 @@ char *DecodeUnicodeConsole(const unsigned char *src)
 }
 
 /* Encode string to Unicode. Len is number of input chars */
-void DecodeISO88591 (unsigned char *dest, const char *src, int len)
+void DecodeISO88591 (unsigned char *dest, const char *src, size_t len)
 {
-	int i;
+	size_t i;
 
 	for (i = 0; i < len; i++) {
 		/* Hack for Euro sign */
@@ -325,9 +325,10 @@ int DecodeWithBCDAlphabet(unsigned char value)
 	return 10*(value & 0x0f)+(value >> 4);
 }
 
-void DecodeBCD (unsigned char *dest, const unsigned char *src, int len)
+void DecodeBCD (unsigned char *dest, const unsigned char *src, size_t len)
 {
-	int i,current=0,digit;
+	size_t i,current=0;
+	int digit;
 
 	for (i = 0; i < len; i++) {
 	        digit=src[i] & 0x0f;
@@ -338,9 +339,9 @@ void DecodeBCD (unsigned char *dest, const unsigned char *src, int len)
 	dest[current]=0;
 }
 
-void EncodeBCD (unsigned char *dest, const unsigned char *src, int len, gboolean fill)
+void EncodeBCD (unsigned char *dest, const unsigned char *src, size_t len, gboolean fill)
 {
-	int i,current=0;
+	size_t i,current=0;
 
 	for (i = 0; i < len; i++) {
         	if (i & 0x01) {
@@ -949,7 +950,7 @@ void FindDefaultAlphabetLen(const unsigned char *src, size_t *srclen, size_t *sm
 
 #define ByteMask ((1 << Bits) - 1)
 
-int GSM_UnpackEightBitsToSeven(int offset, int in_length, int out_length,
+int GSM_UnpackEightBitsToSeven(size_t offset, size_t in_length, size_t out_length,
                            const unsigned char *input, unsigned char *output)
 {
 	/* (c) by Pavel Janik and Pawel Kot */
@@ -957,11 +958,11 @@ int GSM_UnpackEightBitsToSeven(int offset, int in_length, int out_length,
         unsigned char *output_pos 	= output; /* Current pointer to the output buffer */
         const unsigned char *input_pos  	= input;  /* Current pointer to the input buffer */
         unsigned char Rest 	= 0x00;
-        int	      Bits;
+        size_t	      Bits;
 
         Bits = offset ? offset : 7;
 
-        while ((input_pos - input) < in_length) {
+        while ((size_t)(input_pos - input) < in_length) {
 
                 *output_pos = ((*input_pos & ByteMask) << (7 - Bits)) | Rest;
                 Rest = *input_pos >> Bits;
@@ -972,7 +973,7 @@ int GSM_UnpackEightBitsToSeven(int offset, int in_length, int out_length,
                 if ((input_pos != input) || (Bits == 7)) output_pos++;
                 input_pos++;
 
-                if ((output_pos - output) >= out_length) break;
+                if ((size_t)(output_pos - output) >= out_length) break;
 
                 /* After reading 7 octets we have read 7 full characters but
                    we have 7 bits as well. This is the next character */
@@ -989,7 +990,7 @@ int GSM_UnpackEightBitsToSeven(int offset, int in_length, int out_length,
         return output_pos - output;
 }
 
-int GSM_PackSevenBitsToEight(int offset, const unsigned char *input, unsigned char *output, int length)
+int GSM_PackSevenBitsToEight(size_t offset, const unsigned char *input, unsigned char *output, size_t length)
 {
 	/* (c) by Pavel Janik and Pawel Kot */
 
@@ -1006,7 +1007,7 @@ int GSM_PackSevenBitsToEight(int offset, const unsigned char *input, unsigned ch
                 output_pos++;
         }
 
-        while ((input_pos - input) < length) {
+        while ((size_t)(input_pos - input) < length) {
                 unsigned char Byte = *input_pos;
 
                 *output_pos = Byte >> (7 - Bits);
@@ -1363,9 +1364,9 @@ void GetBufferI(unsigned char 	*Source,
  * We replace single ~ chars into it. When user give double ~, it's replaced
  * to single ~
  */
-void EncodeUnicodeSpecialNOKIAChars(unsigned char *dest, const unsigned char *src, int len)
+void EncodeUnicodeSpecialNOKIAChars(unsigned char *dest, const unsigned char *src, size_t len)
 {
-	int 	i,current = 0;
+	size_t 	i,current = 0;
 	gboolean 	special=FALSE;
 
 	for (i = 0; i < len; i++) {
@@ -1397,9 +1398,9 @@ void EncodeUnicodeSpecialNOKIAChars(unsigned char *dest, const unsigned char *sr
 	dest[current] = 0x00;
 }
 
-void DecodeUnicodeSpecialNOKIAChars(unsigned char *dest, const unsigned char *src, int len)
+void DecodeUnicodeSpecialNOKIAChars(unsigned char *dest, const unsigned char *src, size_t len)
 {
-	int i=0,current=0;
+	size_t i=0,current=0;
 
 	for (i=0;i<len;i++) {
 		switch (src[2*i]) {
@@ -1862,7 +1863,7 @@ gboolean EncodeUTF8(char *dest, const unsigned char *src)
 }
 
 /* Decode UTF8 char to Unicode char */
-int DecodeWithUTF8Alphabet(const unsigned char *src, wchar_t *dest, int len)
+int DecodeWithUTF8Alphabet(const unsigned char *src, wchar_t *dest, size_t len)
 {
 	if (len < 1) return 0;
 	if (src[0] < 128) {
@@ -1885,9 +1886,9 @@ int DecodeWithUTF8Alphabet(const unsigned char *src, wchar_t *dest, int len)
 
 
 /* Make Unicode string from ISO-8859-1 string */
-void DecodeISO88591QuotedPrintable(unsigned char *dest, const unsigned char *src, int len)
+void DecodeISO88591QuotedPrintable(unsigned char *dest, const unsigned char *src, size_t len)
 {
-	int 		i = 0, j = 0;
+	size_t 		i = 0, j = 0;
 
 	while (i < len) {
 		if (src[i] == '=' && i + 2 < len
@@ -1962,7 +1963,7 @@ void DecodeUTF8(unsigned char *dest, const char *src, size_t len)
 	dest[j] = 0;
 }
 
-void DecodeXMLUTF8(unsigned char *dest, const char *src, int len)
+void DecodeXMLUTF8(unsigned char *dest, const char *src, size_t len)
 {
 	char *tmp;
 	char *pos, *pos_end;
@@ -2047,9 +2048,9 @@ void DecodeXMLUTF8(unsigned char *dest, const char *src, int len)
 	tmp=NULL;
 }
 
-void DecodeUTF7(unsigned char *dest, const unsigned char *src, int len)
+void DecodeUTF7(unsigned char *dest, const unsigned char *src, size_t len)
 {
-	int 		i=0,j=0,z,p;
+	size_t 		i=0,j=0,z,p;
 	wchar_t		ret;
 
 	while (i<=len) {

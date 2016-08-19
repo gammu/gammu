@@ -33,8 +33,8 @@ gboolean 		myiswspace	  		(unsigned const char *src);
 
 void 		ReverseUnicodeString		(unsigned char *String);
 
-void 		DecodeUnicodeSpecialNOKIAChars	(unsigned char *dest, const unsigned char *src, int len);
-void 		EncodeUnicodeSpecialNOKIAChars	(unsigned char *dest, const unsigned char *src, int len);
+void 		DecodeUnicodeSpecialNOKIAChars	(unsigned char *dest, const unsigned char *src, size_t len);
+void 		EncodeUnicodeSpecialNOKIAChars	(unsigned char *dest, const unsigned char *src, size_t len);
 
 unsigned char *EncodeUnicodeSpecialChars(unsigned char *dest, const unsigned char *buffer);
 unsigned char *DecodeUnicodeSpecialChars(unsigned char *dest, const unsigned char *buffer);
@@ -43,21 +43,21 @@ unsigned char *DecodeUnicodeSpecialChars(unsigned char *dest, const unsigned cha
 unsigned char	EncodeWithBCDAlphabet		(int value);
 int		DecodeWithBCDAlphabet		(unsigned char value);
 
-void		DecodeBCD			(unsigned char *dest, const unsigned char *src, int len);
-void		EncodeBCD			(unsigned char *dest, const unsigned char *src, int len, gboolean fill);
+void		DecodeBCD			(unsigned char *dest, const unsigned char *src, size_t len);
+void		EncodeBCD			(unsigned char *dest, const unsigned char *src, size_t len, gboolean fill);
 
 /* ------------------------------ UTF7 ------------------------------------- */
-void 		DecodeUTF7			(unsigned char *dest, const unsigned char *src, int len);
+void 		DecodeUTF7			(unsigned char *dest, const unsigned char *src, size_t len);
 
 
 /* ---------------------------- ISO88591 ----------------------------------- */
-void		DecodeISO88591			(unsigned char *dest, const char *src, int len);
-void		DecodeISO88591QuotedPrintable	(unsigned char *dest, const unsigned char *src, int len);
+void		DecodeISO88591			(unsigned char *dest, const char *src, size_t len);
+void		DecodeISO88591QuotedPrintable	(unsigned char *dest, const unsigned char *src, size_t len);
 
 /**
  * Decodes UTF-8 text with XML entities to Unicode.
  */
-void DecodeXMLUTF8(unsigned char *dest, const char *src, int len);
+void DecodeXMLUTF8(unsigned char *dest, const char *src, size_t len);
 
 /* ------------------------------- BASE64 ---------------------------------- */
 void 		EncodeBASE64			(const unsigned char *Input, char *Output, const size_t Length);
@@ -68,8 +68,8 @@ void 		EncodeDefault			(unsigned char *dest, const unsigned char *src, size_t *l
 void		DecodeDefault			(unsigned char *dest, const unsigned char *src, size_t len, gboolean UseExtensions,  unsigned char *ExtraAlphabet);
 void 		FindDefaultAlphabetLen		(const unsigned char *src, size_t *srclen, size_t *smslen, size_t maxlen);
 
-int GSM_PackSevenBitsToEight	(int offset, const unsigned char *input, unsigned char *output, int length);
-int GSM_UnpackEightBitsToSeven	(int offset, int in_length, int out_length,
+int GSM_PackSevenBitsToEight	(size_t offset, const unsigned char *input, unsigned char *output, size_t length);
+int GSM_UnpackEightBitsToSeven	(size_t offset, size_t in_length, size_t out_length,
 				 const unsigned char *input, unsigned char *output);
 
 /* ----------------- Phone numbers according to GSM specs ------------------ */

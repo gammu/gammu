@@ -102,7 +102,7 @@ int EncodeWithUTF8Alphabet(unsigned long src, unsigned char *ret);
  *
  * \ingroup Unicode
  */
-int DecodeWithUTF8Alphabet(const unsigned char *src, wchar_t * dest, int len);
+int DecodeWithUTF8Alphabet(const unsigned char *src, wchar_t * dest, size_t len);
 
 /**
  * Decodes string from hex quoted unicode.
