@@ -149,8 +149,8 @@ void eventlog_log(void *handle, int level, const char *message)
 {
 	LPCTSTR lpstrings[1];
 	WORD evtype = EVENTLOG_ERROR_TYPE;
+	WORD eventcat = 0;
 	DWORD eventid = 0;
-	DWORD eventcat = 0;
 
 	switch (level) {
 		case DEBUG_ERROR:
