@@ -370,11 +370,20 @@
 /* Enable Glib */
 #cmakedefine Glib_FOUND
 
-/* MS Visual C++ Express 2005 warnings */
-#if _MSC_VER == 1400
-#  pragma warning( disable : 4996 4244 4333)
+/* MS Visual Studio warnings */
+#ifdef _MSC_VER
+/*
+ * Disable some warnings:
+ * - 4996 - The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name
+ * - we use strcpy instead of strcpy_s
+ * - we use ansi API for winsock
+ */
+#  pragma warning( disable : 4996 )
 #  ifndef _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES
 #    define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES  1
+#  endif
+#  ifndef _WINSOCK_DEPRECATED_NO_WARNINGS
+#    define _WINSOCK_DEPRECATED_NO_WARNINGS 1
 #  endif
 #endif
 
