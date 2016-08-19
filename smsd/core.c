@@ -5,6 +5,7 @@
 #include <signal.h>
 #include <time.h>
 #include <assert.h>
+#include <math.h>
 #ifndef WIN32
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -2097,7 +2098,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 		if (Config->loopsleep == 1) {
 			sleep(1);
 		} else if (difftime(current_time, lastloop) < Config->loopsleep) {
-			sleep(Config->loopsleep - difftime(current_time, lastloop));
+			sleep(Config->loopsleep - round(difftime(current_time, lastloop)));
 		}
 	}
 	Config->Service->Free(Config);
