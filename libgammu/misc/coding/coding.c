@@ -829,7 +829,8 @@ static unsigned char ConvertTable[] =
 
 void EncodeDefault(unsigned char *dest, const unsigned char *src, size_t *len, gboolean UseExtensions, unsigned char *ExtraAlphabet)
 {
-	size_t 	i,current=0,j,z;
+	size_t 	i,current=0;
+	int j,z;
 	char 	ret;
 	gboolean	FoundSpecial,FoundNormal;
 
