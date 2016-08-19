@@ -10,7 +10,11 @@
 #endif
 
 typedef struct {
+#ifdef WIN32
+	SOCKET 			hPhone;
+#else
 	int 			hPhone;
+#endif
 	struct sockaddr_irda	peer;
 } GSM_Device_IrdaData;
 
