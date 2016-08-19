@@ -195,9 +195,11 @@ GSM_Error ATSIEMENS_Reply_GetSAT(GSM_Protocol_Message *msg, GSM_StateMachine *sm
 
 	    result	= 0;
 	    GetBufferI(buf+14,&j,&result,5);
-	    if (new_variable)
+	    if (new_variable) {
 		   MeasureResult.NeighbourCell[i].ChFreq = frequency[result+1];
-	    else   MeasureResult.NeighbourCell[i].ChFreq = frequency[result];
+	    } else {
+		MeasureResult.NeighbourCell[i].ChFreq = frequency[result];
+		}
 
 	    result	= 0;
 	    GetBufferI(buf+14,&j,&result,3);
@@ -206,10 +208,11 @@ GSM_Error ATSIEMENS_Reply_GetSAT(GSM_Protocol_Message *msg, GSM_StateMachine *sm
 	    GetBufferI(buf+14,&j,&result,3);
 	    MeasureResult.NeighbourCell[i].NB +=  result;
 
-	    if (MeasureResult.NeighbourCell[i].ChFreq)
+	    if (MeasureResult.NeighbourCell[i].ChFreq) {
 		printf("CH = %i,\t",MeasureResult.NeighbourCell[i].ChFreq);
-	    else
+	    } else {
 		printf("CH = Unknown\t");
+	    }
 		printf("RX Lev = %i dBm\t",MeasureResult.NeighbourCell[i].RxLev);
 		printf("BSIC CELL = %i\n",MeasureResult.NeighbourCell[i].NB);
 	    }
