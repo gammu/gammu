@@ -458,6 +458,7 @@ static GSM_Error SMSDFiles_MoveSMS(GSM_MultiSMSMessage * sms UNUSED, GSM_SMSDCon
 	if (strcmp(ifilename, ofilename) != 0) {
 		// First try rename
 		if (rename(ifilename, ofilename) == 0) {
+			SMSD_Log(DEBUG_INFO, Config, "Renamed %s to %s", ifilename, ofilename);
 			return ERR_NONE;
 		}
 
