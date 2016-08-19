@@ -52,9 +52,11 @@
 #define S_ISDIR(mode) ((mode & _S_IFDIR) == _S_IFDIR)
 #endif
 #include "../../../helper/win32-dirent.h"
+#define PATH_SEPARATOR "\\"
 #else
 #define MKDIR(dir) mkdir(dir, 0755)
 #include <dirent.h>
+#define PATH_SEPARATOR "/"
 #endif
 
 GSM_Error DUMMY_Error(GSM_StateMachine *s, const char *message)
@@ -81,7 +83,7 @@ char * DUMMY_GetFilePath(GSM_StateMachine *s, const char *filename)
 	log_file = (char *)malloc(strlen(filename) + Priv->devlen + 2);
 
 	strcpy(log_file, s->CurrentConfig->Device);
-	strcat(log_file, "/");
+	strcat(log_file, PATH_SEPARATOR);
 	strcat(log_file, filename);
 
 	return log_file;
@@ -98,7 +100,9 @@ char * DUMMY_GetFSFilePath(GSM_StateMachine *s, const unsigned char *fullname)
 	path = (char *)malloc(strlen(filename) + Priv->devlen + 5);
 
 	strcpy(path, s->CurrentConfig->Device);
-	strcat(path, "/fs/");
+	strcat(path, PATH_SEPARATOR);
+	strcat(path, "fs");
+	strcat(path, PATH_SEPARATOR);
 	strcat(path, filename);
 
 	return path;
@@ -112,7 +116,7 @@ char * DUMMY_GetFSPath(GSM_StateMachine *s, const char *filename, int depth)
 	path = (char *)malloc(strlen(filename) + strlen(Priv->dirnames[depth]) + 2);
 
 	strcpy(path, Priv->dirnames[depth]);
-	strcat(path, "/");
+	strcat(path, PATH_SEPARATOR);
 	strcat(path, filename);
 
 	return path;
@@ -129,7 +133,15 @@ int DUMMY_GetCount(GSM_StateMachine *s, const char *dirname)
 	full_name = (char *)malloc(strlen(dirname) + Priv->devlen + 20);
 
 	for (i = 1; i <= DUMMY_MAX_LOCATION; i++) {
-		sprintf(full_name, "%s/%s/%d", s->CurrentConfig->Device, dirname, i);
+		sprintf(
+			full_name,
+			"%s%s%s%s%d",
+			s->CurrentConfig->Device,
+			PATH_SEPARATOR,
+			dirname,
+			PATH_SEPARATOR,
+			i
+		);
 		f = fopen(full_name, "r");
 		if (f == NULL) continue;
 		count++;
@@ -149,7 +161,15 @@ GSM_Error DUMMY_DeleteAll(GSM_StateMachine *s, const char *dirname)
 	full_name = (char *)malloc(strlen(dirname) + Priv->devlen + 20);
 
 	for (i = 1; i <= DUMMY_MAX_LOCATION; i++) {
-		sprintf(full_name, "%s/%s/%d", s->CurrentConfig->Device, dirname, i);
+		sprintf(
+			full_name,
+			"%s%s%s%s%d",
+			s->CurrentConfig->Device,
+			PATH_SEPARATOR,
+			dirname,
+			PATH_SEPARATOR,
+			i
+		);
 		/* @todo TODO: Maybe we should check error code here? */
 		unlink(full_name);
 	}
@@ -168,7 +188,7 @@ int DUMMY_GetFirstFree(GSM_StateMachine *s, const char *dirname)
 	full_name = (char *)malloc(strlen(dirname) + Priv->devlen + 20);
 
 	for (i = 1; i <= DUMMY_MAX_LOCATION; i++) {
-		sprintf(full_name, "%s/%s/%d", s->CurrentConfig->Device, dirname, i);
+		sprintf(full_name, "%s%s%s%s%d", s->CurrentConfig->Device, PATH_SEPARATOR, dirname, PATH_SEPARATOR, i);
 		f = fopen(full_name, "r");
 
 		if (f == NULL) {
@@ -193,7 +213,7 @@ int DUMMY_GetNext(GSM_StateMachine *s, const char *dirname, int current)
 	full_name = (char *)malloc(strlen(dirname) + Priv->devlen + 20);
 
 	for (i = current + 1; i <= DUMMY_MAX_LOCATION; i++) {
-		sprintf(full_name, "%s/%s/%d", s->CurrentConfig->Device, dirname, i);
+		sprintf(full_name, "%s%s%s%s%d", s->CurrentConfig->Device, PATH_SEPARATOR, dirname, PATH_SEPARATOR, i);
 		f = fopen(full_name, "r");
 		if (f != NULL) {
 			fclose(f);
@@ -220,42 +240,42 @@ char * DUMMY_GetSMSPath(GSM_StateMachine *s, GSM_SMSMessage *sms)
 		}
 	}
 
-	sprintf(smspath, "sms/%d/%d", sms->Folder, sms->Location);
+	sprintf(smspath, "sms%s%d%s%d", PATH_SEPARATOR, sms->Folder, PATH_SEPARATOR, sms->Location);
 	return DUMMY_GetFilePath(s, smspath);
 }
 
 char * DUMMY_MemoryPath(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
 	char path[100];
-	sprintf(path, "pbk/%s/%d", GSM_MemoryTypeToString(entry->MemoryType), entry->Location);
+	sprintf(path, "pbk%s%s%s%d", PATH_SEPARATOR, GSM_MemoryTypeToString(entry->MemoryType), PATH_SEPARATOR, entry->Location);
 	return DUMMY_GetFilePath(s, path);
 }
 
 char * DUMMY_ToDoPath(GSM_StateMachine *s, GSM_ToDoEntry *entry)
 {
 	char path[100];
-	sprintf(path, "todo/%d",  entry->Location);
+	sprintf(path, "todo%s%d", PATH_SEPARATOR, entry->Location);
 	return DUMMY_GetFilePath(s, path);
 }
 
 char * DUMMY_NotePath(GSM_StateMachine *s, GSM_NoteEntry *entry)
 {
 	char path[100];
-	sprintf(path, "note/%d",  entry->Location);
+	sprintf(path, "note%s%d", PATH_SEPARATOR, entry->Location);
 	return DUMMY_GetFilePath(s, path);
 }
 
 char * DUMMY_CalendarPath(GSM_StateMachine *s, GSM_CalendarEntry *entry)
 {
 	char path[100];
-	sprintf(path, "calendar/%d",  entry->Location);
+	sprintf(path, "calendar%s%d", PATH_SEPARATOR, entry->Location);
 	return DUMMY_GetFilePath(s, path);
 }
 
 char * DUMMY_AlarmPath(GSM_StateMachine *s, GSM_Alarm *entry)
 {
 	char path[100];
-	sprintf(path, "alarm/%d",  entry->Location);
+	sprintf(path, "alarm%s%d", PATH_SEPARATOR, entry->Location);
 	return DUMMY_GetFilePath(s, path);
 }
 
@@ -268,19 +288,19 @@ GSM_Error DUMMY_Initialise(GSM_StateMachine *s)
 	char *log_file, *path;
 	const char * const paths[] = {
 		"fs",
-		"fs/incoming",
+		"fs" PATH_SEPARATOR "incoming",
 		"sms",
-		"sms/1",
-		"sms/2",
-		"sms/3",
-		"sms/4",
-		"sms/5",
+		"sms" PATH_SEPARATOR "1",
+		"sms" PATH_SEPARATOR "2",
+		"sms" PATH_SEPARATOR "3",
+		"sms" PATH_SEPARATOR "4",
+		"sms" PATH_SEPARATOR "5",
 		"pbk",
-		"pbk/ME",
-		"pbk/SM",
-		"pbk/MC",
-		"pbk/RC",
-		"pbk/DC",
+		"pbk" PATH_SEPARATOR "ME",
+		"pbk" PATH_SEPARATOR "SM",
+		"pbk" PATH_SEPARATOR "MC",
+		"pbk" PATH_SEPARATOR "RC",
+		"pbk" PATH_SEPARATOR "DC",
 		"note",
 		"todo",
 		"calendar",
@@ -574,7 +594,7 @@ GSM_Error DUMMY_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 {
 	char dirname[20]={0};
 
-	sprintf(dirname, "sms/%d", sms->Folder);
+	sprintf(dirname, "sms%s%d", PATH_SEPARATOR, sms->Folder);
 	sms->Location = DUMMY_GetFirstFree(s, dirname);
 
 	if (sms->Location == -1) {
@@ -630,7 +650,7 @@ folder:
 	/* Convert location */
 	free(DUMMY_GetSMSPath(s, &(sms->SMS[0])));
 
-	sprintf(dirname, "sms/%d", sms->SMS[0].Folder);
+	sprintf(dirname, "sms%s%d", PATH_SEPARATOR, sms->SMS[0].Folder);
 
 	sms->SMS[0].Location = DUMMY_GetNext(s, dirname, sms->SMS[0].Location);
 
@@ -646,19 +666,19 @@ folder:
 GSM_Error DUMMY_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status)
 {
 	char dirname[20];
-	sprintf(dirname, "sms/%d", 5);
+	sprintf(dirname, "sms%s%d", PATH_SEPARATOR, 5);
 	status->TemplatesUsed	= DUMMY_GetCount(s, dirname);
 
-	sprintf(dirname, "sms/%d", 1);
+	sprintf(dirname, "sms%s%d", PATH_SEPARATOR, 1);
 	status->SIMUsed		= DUMMY_GetCount(s, dirname);
-	sprintf(dirname, "sms/%d", 2);
+	sprintf(dirname, "sms%s%d", PATH_SEPARATOR, 2);
 	status->SIMUsed		+= DUMMY_GetCount(s, dirname);
 	status->SIMUnRead 	= 0;
 	status->SIMSize		= DUMMY_MAX_SMS;
 
-	sprintf(dirname, "sms/%d", 3);
+	sprintf(dirname, "sms%s%d", PATH_SEPARATOR, 3);
 	status->PhoneUsed	= DUMMY_GetCount(s, dirname);
-	sprintf(dirname, "sms/%d", 4);
+	sprintf(dirname, "sms%s%d", PATH_SEPARATOR, 4);
 	status->PhoneUsed	+= DUMMY_GetCount(s, dirname);
 	status->PhoneUsed	+= status->TemplatesUsed;
 	status->PhoneUnRead 	= 0;
@@ -1068,11 +1088,11 @@ GSM_Error DUMMY_GetWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *bookmark)
 {
 	switch (bookmark->Location) {
 		case 1:
-			EncodeUnicode(bookmark->Address, "http://blog.cihar.com/", 22);
+			EncodeUnicode(bookmark->Address, "https://blog.cihar.com/", 22);
 			EncodeUnicode(bookmark->Title, "Michals weblog", 14);
 			return ERR_NONE;
 		case 2:
-			EncodeUnicode(bookmark->Address, "http://wammu.eu/", 16);
+			EncodeUnicode(bookmark->Address, "https://wammu.eu/", 16);
 			EncodeUnicode(bookmark->Title, "Wammu website", 13);
 			return ERR_NONE;
 		default:
@@ -1107,8 +1127,8 @@ GSM_Error DUMMY_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *
 	*Handle = 0;
 
 	pos = UnicodeLength(File->ID_FullName);
-	if (pos > 0 && (File->ID_FullName[2*pos - 2] != 0 || File->ID_FullName[2*pos - 1] != '/')) {
-		File->ID_FullName[2*pos + 1] = '/';
+	if (pos > 0 && (File->ID_FullName[2*pos - 2] != 0 || File->ID_FullName[2*pos - 1] != PATH_SEPARATOR[0])) {
+		File->ID_FullName[2*pos + 1] = PATH_SEPARATOR[0];
 		File->ID_FullName[2*pos + 0] = 0;
 		pos++;
 	}
@@ -1146,7 +1166,7 @@ GSM_Error DUMMY_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *
 
 GSM_Error DUMMY_SendFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle)
 {
-	EncodeUnicode(File->ID_FullName, "incoming/", 9);
+	EncodeUnicode(File->ID_FullName, "incoming" PATH_SEPARATOR, 9);
 	return DUMMY_AddFilePart(s, File, Pos, Handle);
 }
 
@@ -1162,12 +1182,12 @@ GSM_Error DUMMY_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, in
 	error = GSM_ReadFile(path, File);
 	*Size = File->Used;
 
-	name = strrchr(path, '/');
+	name = strrchr(path, PATH_SEPARATOR[0]);
 	if (name == NULL) name = path;
 	else name++;
 	EncodeUnicode(File->Name, name, strlen(name));
 	pos = path;
-	while (*pos != 0 && (pos = strchr(pos + 1, '/')) != NULL) File->Level++;
+	while (*pos != 0 && (pos = strchr(pos + 1, PATH_SEPARATOR[0])) != NULL) File->Level++;
 
 	free(path);
 	path=NULL;
@@ -1389,8 +1409,8 @@ GSM_Error DUMMY_AddFolder(GSM_StateMachine *s, GSM_File *File)
 	size_t pos;
 
 	pos = UnicodeLength(File->ID_FullName);
-	if (pos > 0 && (File->ID_FullName[2*pos - 2] != 0 || File->ID_FullName[2*pos - 1] != '/')) {
-		File->ID_FullName[2*pos + 1] = '/';
+	if (pos > 0 && (File->ID_FullName[2*pos - 2] != 0 || File->ID_FullName[2*pos - 1] != PATH_SEPARATOR[0])) {
+		File->ID_FullName[2*pos + 1] = PATH_SEPARATOR[0];
 		File->ID_FullName[2*pos + 0] = 0;
 		pos++;
 	}
@@ -1410,7 +1430,7 @@ GSM_Error DUMMY_AddFolder(GSM_StateMachine *s, GSM_File *File)
 GSM_Error DUMMY_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Status)
 {
 	char dirname[20];
-	sprintf(dirname, "pbk/%s", GSM_MemoryTypeToString(Status->MemoryType));
+	sprintf(dirname, "pbk%s%s", PATH_SEPARATOR, GSM_MemoryTypeToString(Status->MemoryType));
 	Status->MemoryUsed = DUMMY_GetCount(s, dirname);
 	Status->MemoryFree = DUMMY_MAX_MEM - Status->MemoryUsed;
 	return ERR_NONE;
@@ -1475,7 +1495,7 @@ GSM_Error DUMMY_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry, gbool
 		entry->Location = 0;
 	}
 
-	sprintf(dirname, "pbk/%s", GSM_MemoryTypeToString(entry->MemoryType));
+	sprintf(dirname, "pbk%s%s", PATH_SEPARATOR, GSM_MemoryTypeToString(entry->MemoryType));
 
 	entry->Location = DUMMY_GetNext(s, dirname, entry->Location);
 
@@ -1526,7 +1546,7 @@ GSM_Error DUMMY_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
 	char dirname[20]={0};
 
-	sprintf(dirname, "pbk/%s", GSM_MemoryTypeToString(entry->MemoryType));
+	sprintf(dirname, "pbk%s%s", PATH_SEPARATOR, GSM_MemoryTypeToString(entry->MemoryType));
 	entry->Location = DUMMY_GetFirstFree(s, dirname);
 
 	if (entry->Location == -1) return ERR_FULL;
@@ -1538,7 +1558,7 @@ GSM_Error DUMMY_DeleteAllMemory(GSM_StateMachine *s, GSM_MemoryType type)
 {
 	char dirname[20];
 
-	sprintf(dirname, "pbk/%s", GSM_MemoryTypeToString(type));
+	sprintf(dirname, "pbk%s%s", PATH_SEPARATOR, GSM_MemoryTypeToString(type));
 
 	return DUMMY_DeleteAll(s, dirname);
 }
