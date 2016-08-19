@@ -12,7 +12,7 @@ clone_folder: c:\projects\gammu
 
 before_build:
   - cd c:\projects\gammu
-  - "C:\Program Files\MySql\MySQL Server 5.7\bin\mysql" "--password=Password12!" --user=root -e "create database smsd;"
+  - mysql "--password=Password12!" --user=root -e "create database smsd;"
   - cmake -G "%GENERATOR%" -DCMAKE_INSTALL_PREFIX=%P% -DODBC_DSN=mysql:host=localhost;dbname=smsd -DMYSQL_USER=root "-DMYSQL_PASSWORD=Password12!"
 
 build:
