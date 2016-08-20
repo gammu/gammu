@@ -2019,7 +2019,7 @@ void DecodeXMLUTF8(unsigned char *dest, const char *src, size_t len)
 			} else {
 				c = strtoull(entity + 1, NULL, 10);
 			}
-			dbgprintf(NULL, "Unicode char 0x%04lx\n", c);
+			dbgprintf(NULL, "Unicode char 0x%04llx\n", c);
 			tmplen = strlen(tmp);
 			tmplen += EncodeWithUTF8Alphabet(c, tmp + tmplen);
 			tmp[tmplen] = 0;
