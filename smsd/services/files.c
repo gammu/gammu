@@ -402,7 +402,7 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConf
 		}
 
 		for (i = 0; i < sms->Number; i++) {
-			EncodeUnicode(sms->SMS[len].Number, pos1, phlen);
+			EncodeUnicode(sms->SMS[i].Number, pos1, phlen);
 		}
 	}
 
