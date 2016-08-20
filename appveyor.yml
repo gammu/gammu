@@ -36,3 +36,7 @@ test_script:
 
 services:
   - mysql
+
+artifacts:
+  - path: Gammu-*-Windows.exe
+    name: Installer
