@@ -638,12 +638,14 @@ static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage * sms UNUSED, GSM_
 	file = fopen(FullPath, "r");
 
 	if (file == NULL) {
+		SMSD_LogErrno(Config,  "AddSentSMSInfo: Can not open file");
 		return ERR_CANTOPENFILE;
 	}
 
 	fseek(file, 0, SEEK_END);
 	filesize = ftell(file);
 	if (filesize < 0) {
+		SMSD_LogErrno(Config,  "AddSentSMSInfo: File too small");
 		fclose(file);
 		return ERR_CANTOPENFILE;
 	}
@@ -651,6 +653,7 @@ static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage * sms UNUSED, GSM_
 
 	Buffer = malloc(filesize + 200);
 	if (Buffer == NULL) {
+		SMSD_LogErrno(Config,  "AddSentSMSInfo: Out of memory");
 		fclose(file);
 		return ERR_MOREMEMORY;
 	}
@@ -659,6 +662,7 @@ static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage * sms UNUSED, GSM_
 	fclose(file);
 
 	if (flen != filesize) {
+		SMSD_LogErrno(Config,  "AddSentSMSInfo: Failed to read file");
 		free(Buffer);
 		return ERR_CANTOPENFILE;
 	}
@@ -684,6 +688,7 @@ static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage * sms UNUSED, GSM_
 
 	file = fopen(FullPath, "w");
 	if (file == NULL) {
+		SMSD_LogErrno(Config,  "AddSentSMSInfo: Failed to open file for writing");
 		free(Buffer);
 		return ERR_CANTOPENFILE;
 	}
@@ -703,6 +708,7 @@ static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage * sms UNUSED, GSM_
 	free(Buffer);
 	return ERR_NONE;
 fail:
+	SMSD_LogErrno(Config,  "AddSentSMSInfo: Failed to write");
 	if (file) {
 		fclose(file);
 	}
