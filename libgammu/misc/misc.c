@@ -414,7 +414,7 @@ void SplitLines(const char *message, const size_t messagesize, GSM_CutLines *lin
 	/* Go through message */
 	for (i = 0; i < messagesize; i++) {
 		/* Reallocate buffer if needed */
-		if (number + 1 >= lines->allocated - 1) {
+		if (number + 2 >= lines->allocated) {
 			lines->allocated += 20;
 			lines->numbers = (size_t *)realloc(lines->numbers, lines->allocated * sizeof(size_t));
 			if (lines->numbers == NULL) {
