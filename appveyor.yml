@@ -16,7 +16,7 @@ install:
 
 before_build:
   - mysql "--password=Password12!" --user=root -e "create database smsd;"
-  - cmake -G "%GENERATOR%" -DCMAKE_INSTALL_PREFIX=%P% -DODBC_DSN=mysql:host=localhost;dbname=smsd -DMYSQL_USER=root "-DMYSQL_PASSWORD=Password12!" -DODBC_TESTING=ON -DMYSQL_ADD_INCLUDE_DIR=%MYSQL_PATH%\include -DMYSQL_ADD_LIBRARY_PATH=%MYSQL_PATH%\lib
+  - cmake -G "%GENERATOR%" -DCMAKE_INSTALL_PREFIX=%P% -DODBC_DSN=mysql:host=localhost;dbname=smsd -DMYSQL_USER=root "-DMYSQL_PASSWORD=Password12!" -DODBC_TESTING=ON "-DMYSQL_ADD_INCLUDE_DIR=%MYSQL_PATH%\\include" "-DMYSQL_ADD_LIBRARY_PATH=%MYSQL_PATH%\\lib"
 
 build:
   project: ALL_BUILD.vcxproj
