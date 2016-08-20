@@ -398,12 +398,12 @@ void FreeLines(GSM_CutLines *lines)
 	lines->retval = NULL;
 }
 
-void SplitLines(const char *message, const int messagesize, GSM_CutLines *lines,
-	const char *whitespaces, const int spaceslen,
-	const char *quotes, const int quoteslen,
+void SplitLines(const char *message, const size_t messagesize, GSM_CutLines *lines,
+	const char *whitespaces, const size_t spaceslen,
+	const char *quotes, const size_t quoteslen,
 	const gboolean eot)
 {
-	int 	 i=0,number=0,j=0, lastquote = -1;
+	size_t 	 i=0,number=0,j=0, lastquote = 0;
 	gboolean whitespace = TRUE, nowwhite = FALSE, insidequotes = FALSE;
 
 	/* Clean current lines */
@@ -416,7 +416,7 @@ void SplitLines(const char *message, const int messagesize, GSM_CutLines *lines,
 		/* Reallocate buffer if needed */
 		if (number + 1 >= lines->allocated - 1) {
 			lines->allocated += 20;
-			lines->numbers = (int *)realloc(lines->numbers, lines->allocated * sizeof(int));
+			lines->numbers = (size_t *)realloc(lines->numbers, lines->allocated * sizeof(size_t));
 			if (lines->numbers == NULL) {
 				return;
 			}

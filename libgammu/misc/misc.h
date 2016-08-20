@@ -35,11 +35,11 @@ typedef struct {
 	/**
 	 * Cut points.
 	 */
-	int *numbers;
+	size_t *numbers;
 	/**
 	 * Number of currently allocated entries.
 	 */
-	int allocated;
+	size_t allocated;
 	/**
 	 * Storage for return value.
 	 */
@@ -49,7 +49,7 @@ typedef struct {
 /**
  * Calculates string cut points to split it to lines.
  */
-void SplitLines(const char *message, const int messagesize, GSM_CutLines *lines, const char *whitespaces, const int spaceslen, const char *quotes, const int quoteslen, const gboolean eot);
+void SplitLines(const char *message, const size_t messagesize, GSM_CutLines *lines, const char *whitespaces, const size_t spaceslen, const char *quotes, const size_t quoteslen, const gboolean eot);
 
 /**
  * Returns pointer to static buffer containing line.
