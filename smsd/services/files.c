@@ -491,8 +491,10 @@ static GSM_Error SMSDFiles_MoveSMS(GSM_MultiSMSMessage * sms UNUSED, GSM_SMSDCon
 	// Did we write all data?
 	error = ERR_NONE;
 	if (ilen != olen) {
-		SMSD_Log(DEBUG_INFO, Config, "Failed to copy %s to %s", ifilename, ofilename);
+		SMSD_Log(DEBUG_ERROR, Config, "Failed to copy %s to %s", ifilename, ofilename);
 		error = ERR_UNKNOWN;
+	} else {
+		SMSD_Log(DEBUG_INFO, Config, "Copied %s to %s", ifilename, ofilename);
 	}
 
 	// Remove source file
