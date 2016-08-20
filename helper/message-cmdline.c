@@ -116,13 +116,13 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 	unsigned char			ReplaceBuffer2	[200],ReplaceBuffer[200];
 	char				InputBuffer	[SEND_SAVE_SMS_BUFFER_SIZE/2+1];
 	unsigned char			Buffer		[GSM_MAX_MULTI_SMS][SEND_SAVE_SMS_BUFFER_SIZE];
-	int				chars_read		= 0;
+	ssize_t				chars_read		= 0;
 	int 				nextlong		= 0;
 	gboolean				ReplyViaSameSMSC 	= FALSE;
 	int				MaxSMS			= -1;
 	gboolean				EMS16Bit		= FALSE;
 	int frames_num;
-	int param_value;
+	ssize_t param_value;
 
 	/* Parameters required only during saving */
 	int				Folder			= 1; /*Inbox by default */
@@ -1055,7 +1055,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 				printf(_("Wrong message length (\"%s\")\n"),argv[i]);
 				exit(-1);
 			}
-			printf("%d / %d\n", param_value, chars_read);
+			printf("%ld / %ld\n", (long)param_value, (long)chars_read);
 			if (param_value < chars_read) {
 				Buffer[0][param_value * 2]	= 0x00;
 				Buffer[0][param_value * 2 + 1]	= 0x00;
