@@ -96,7 +96,7 @@ gboolean eventlog_register(void)
 		0,
 		REG_SZ,
 		(BYTE *)program_name,
-		strlen(program_name) + 1);
+		(DWORD)strlen(program_name) + 1);
 
 	if (ret != ERROR_SUCCESS) {
 		fprintf(stderr, "Failed to write EventMessageFile to registry!\n");
@@ -109,7 +109,7 @@ gboolean eventlog_register(void)
 		0,
 		REG_SZ,
 		(BYTE *)program_name,
-		strlen(program_name) + 1);
+		(DWORD)strlen(program_name) + 1);
 
 	if (ret != ERROR_SUCCESS) {
 		fprintf(stderr, "Failed to write ParameterMessageFile to registry!\n");
