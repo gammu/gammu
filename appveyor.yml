@@ -1,5 +1,7 @@
 version: "{build}"
 
+configuration: Release
+
 shallow_clone: true
 
 environment:
