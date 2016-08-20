@@ -665,13 +665,14 @@ static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage * sms UNUSED, GSM_
 	}
 
 	flen = fread(Buffer, 1, filesize, file);
-	fclose(file);
 
 	if (flen != filesize) {
-		SMSD_Log(DEBUG_ERROR, Config, "AddSentSMSInfo: Failed to read file (read %ld, expected %ld)", (long)flen, (long)filesize);
+		SMSD_Log(DEBUG_ERROR, Config, "AddSentSMSInfo: Failed to read file (read %ld, expected %ld) EOF: %d ERROR: %d", (long)flen, (long)filesize, feof(file), ferror(file));
+		fclose(file);
 		free(Buffer);
 		return ERR_CANTOPENFILE;
 	}
+	fclose(file);
 	Buffer[flen] = '\0';
 
 	lineStart = Buffer;
