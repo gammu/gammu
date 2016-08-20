@@ -1731,6 +1731,7 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config)
 		Config->Status->Sent++;
 		error = Config->Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_OK, Config->TPMR);
 		if (error != ERR_NONE) {
+			SMSD_LogError(DEBUG_INFO, Config, "Error setting sent status", error);
 			goto failure_sent;
 		}
 	}
@@ -1754,7 +1755,7 @@ failure_unsent:
 
 	Config->Service->UpdateRetries(Config, Config->SMSID);
 
-       sleep(60);
+	sleep(60);
 	return ERR_UNKNOWN;
 failure_sent:
 
