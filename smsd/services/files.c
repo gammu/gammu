@@ -168,7 +168,8 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConf
 	unsigned char Buffer[(GSM_MAX_SMS_LENGTH * GSM_MAX_MULTI_SMS + 1) * 2];
 	unsigned char Buffer2[(GSM_MAX_SMS_LENGTH * GSM_MAX_MULTI_SMS + 1) * 2];
 	FILE *File;
-	int i, len, phlen;
+	int i;
+	size_t len, phlen;
 	char *pos1, *pos2, *options = NULL;
 	gboolean backup = FALSE;
 #ifdef GSM_ENABLE_BACKUP
@@ -400,7 +401,7 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConf
 			return ERR_UNKNOWN;
 		}
 
-		for (len = 0; len < sms->Number; len++) {
+		for (i = 0; i < sms->Number; i++) {
 			EncodeUnicode(sms->SMS[len].Number, pos1, phlen);
 		}
 	}
