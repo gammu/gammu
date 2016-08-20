@@ -642,14 +642,20 @@ static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage * sms UNUSED, GSM_
 		return ERR_CANTOPENFILE;
 	}
 
-	fseek(file, 0, SEEK_END);
+	if (fseek(file, 0, SEEK_END) < 0) {
+		SMSD_LogErrno(Config,  "AddSentSMSInfo: Can not seek to end");
+		return ERR_CANTOPENFILE;
+	}
 	filesize = ftell(file);
-	if (filesize < 0) {
+	if (filesize <= 0) {
 		SMSD_LogErrno(Config,  "AddSentSMSInfo: File too small");
 		fclose(file);
 		return ERR_CANTOPENFILE;
 	}
-	fseek(file, 0, SEEK_SET);
+	if (fseek(file, 0, SEEK_SET) < 0) {
+		SMSD_LogErrno(Config,  "AddSentSMSInfo: Can not seek to start");
+		return ERR_CANTOPENFILE;
+	}
 
 	Buffer = malloc(filesize + 200);
 	if (Buffer == NULL) {
@@ -662,7 +668,7 @@ static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage * sms UNUSED, GSM_
 	fclose(file);
 
 	if (flen != filesize) {
-		SMSD_LogErrno(Config,  "AddSentSMSInfo: Failed to read file");
+		SMSD_Log(DEBUG_ERROR, Config, "AddSentSMSInfo: Failed to read file (read %ld, expected %ld)", (long)flen, (long)filesize);
 		free(Buffer);
 		return ERR_CANTOPENFILE;
 	}
