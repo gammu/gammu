@@ -25,10 +25,10 @@ build:
   verbosity: minimal
 
 after_build:
-  - cmake --build . --target package
+  - cmake --build .  --config Release --target package
 
 test_script:
-  - ctest --output-on-failure --no-compress-output --dashboard ContinuousTest --config Release
+  - ctest --output-on-failure --no-compress-output --dashboard ExperimentalTest --config Release
   - ps: Copy-Item Testing\$(Get-Content Testing\TAG -TotalCount 1)\Test.xml test.xml
   - msxsl.exe test.xml admin/ctest-to-junit.xsl -o junit.xml
   - ps: >-
