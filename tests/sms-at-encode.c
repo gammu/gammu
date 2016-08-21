@@ -10,7 +10,7 @@
 
 #include "common.h"
 
-extern GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *message, unsigned char *hexreq, int *current, size_t *length2);
+extern GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *message, unsigned char *hexreq, size_t hexlength, int *current, size_t *length2);
 
 #define BUFFER_SIZE 16384
 
@@ -94,7 +94,7 @@ int main(int argc, char **argv)
 	Priv->SIMSMSMemory = AT_AVAILABLE;
 
 	/* Format SMS frame */
-	error = ATGEN_MakeSMSFrame(s, Backup.SMS[0], hexreq, &current, &current2);
+	error = ATGEN_MakeSMSFrame(s, Backup.SMS[0], hexreq, sizeof(hexreq), &current, &current2);
 	gammu_test_result(error, "ATGEN_MakeSMSFrame");
 
 	/* We don't need this anymore */

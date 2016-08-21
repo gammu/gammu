@@ -1584,7 +1584,7 @@ GSM_Error ATGEN_ReplyAddSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 	return ERR_UNKNOWNRESPONSE;
 }
 
-GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *message, unsigned char *hexreq, int *current, size_t *length2)
+GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *message, unsigned char *hexreq, size_t hexlength, int *current, size_t *length2)
 {
 	GSM_Error 		error;
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
@@ -1708,7 +1708,7 @@ GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *message, unsig
 			/* If not SMS with UDH, it's as normal text */
 			if (message->UDH.Type == UDH_NoUDH) {
 				error = ATGEN_EncodeText(
-					s, message->Text, UnicodeLength(message->Text), hexreq, sizeof(hexreq), length2
+					s, message->Text, UnicodeLength(message->Text), hexreq, hexlength, length2
 				);
 				if (error != ERR_NONE) {
 					return error;
@@ -1783,7 +1783,7 @@ GSM_Error ATGEN_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	}
 
 	/* Format SMS frame */
-	error = ATGEN_MakeSMSFrame(s, sms, hexreq, &current, &length);
+	error = ATGEN_MakeSMSFrame(s, sms, hexreq, sizeof(hexreq), &current, &length);
 
 	if (error != ERR_NONE) {
 		return error;
@@ -1803,7 +1803,7 @@ GSM_Error ATGEN_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 			/* No (good and 100% working) support for alphanumeric numbers */
 			if (sms->Number[1]!='+' && (sms->Number[1]<'0' || sms->Number[1]>'9')) {
 				EncodeUnicode(sms->Number,"123",3);
-				error = ATGEN_MakeSMSFrame(s, sms, hexreq, &current, &length);
+				error = ATGEN_MakeSMSFrame(s, sms, hexreq, sizeof(hexreq), &current, &length);
 				if (error != ERR_NONE) return error;
 			}
 		}
@@ -1960,7 +1960,7 @@ GSM_Error ATGEN_SendSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	if (sms->PDU == SMS_Deliver) {
 		sms->PDU = SMS_Submit;
 	}
-	error = ATGEN_MakeSMSFrame(s, sms, hexreq, &current, &length);
+	error = ATGEN_MakeSMSFrame(s, sms, hexreq, sizeof(hexreq), &current, &length);
 
 	if (error != ERR_NONE) {
 		return error;
