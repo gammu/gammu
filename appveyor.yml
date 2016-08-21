@@ -13,7 +13,7 @@ environment:
 clone_folder: c:\projects\gammu
 
 install:
-  - "SET PATH=%MYSQL_PATH%\\bin;%PATH%"
+  - "SET PATH=%MYSQL_PATH%\\bin;c:\\projects\\gammu;%PATH%"
 
 before_build:
   - appveyor DownloadFile https://download.microsoft.com/download/f/2/6/f263ac46-1fe9-4ae9-8fd3-21102100ebf5/msxsl.exe
