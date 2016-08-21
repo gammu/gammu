@@ -1,4 +1,4 @@
-MACRO (CHECK_LIBRARY_WORKS _header _include _library _target)
+MACRO (CHECK_LIBRARY_WORKS _library _target)
 
     if (DEFINED ${_target})
         message(STATUS "${_target} passed")
@@ -6,9 +6,6 @@ MACRO (CHECK_LIBRARY_WORKS _header _include _library _target)
 
     file(WRITE "${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeTmp/src.c"
       "
-//TEST
-#include <${_header}>
-
 int main(void) {
     return 0;
 }
@@ -18,7 +15,6 @@ int main(void) {
       ${CMAKE_BINARY_DIR}
       ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeTmp/src.c
       LINK_LIBRARIES "${_library}"
-      COMPILE_DEFINITIONS "-I${_include}"
       OUTPUT_VARIABLE OUTPUT
     )
     
