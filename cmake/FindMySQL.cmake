@@ -64,8 +64,8 @@ else(UNIX)
         set(MYSQL_ADD_LIBRARIES "")
         list(APPEND MYSQL_ADD_LIBRARIES "mysql")
     endif (WIN32)
-    set(MYSQL_ADD_INCLUDE_DIR "c:/msys/local/include" CACHE FILEPATH INTERNAL)
-    set(MYSQL_ADD_LIBRARY_PATH "c:/msys/local/lib" CACHE FILEPATH INTERNAL)
+    set(MYSQL_ADD_INCLUDE_DIR $ENV{ProgramFiles}/MySQL/*/include $ENV{SystemDrive}/MySQL/*/include "c:/msys/local/include" CACHE FILEPATH INTERNAL)
+    set(MYSQL_ADD_LIBRARY_PATH $ENV{ProgramFiles}/MySQL/*/lib $ENV{SystemDrive}/MySQL/*/lib "c:/msys/local/lib" CACHE FILEPATH INTERNAL)
 ENDIF(UNIX)
 
 find_path(MYSQL_INCLUDE_DIR mysql.h
