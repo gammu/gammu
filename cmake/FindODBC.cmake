@@ -1,11 +1,30 @@
 # Find ODBC (or UnixODBC)
 
 find_path(ODBC_INCLUDE_DIR NAMES sql.h
-          DOC "The ODBC include directory"
+	HINTS
+	/usr/include
+	/usr/include/odbc
+	/usr/local/include
+	/usr/local/include/odbc
+	/usr/local/odbc/include
+	"C:/Program Files/ODBC/include"
+	"C:/Program Files/Microsoft SDKs/Windows/v7.0/include" 
+	"C:/Program Files/Microsoft SDKs/Windows/v6.0a/include" 
+	"C:/ODBC/include"
+    DOC "The ODBC include directory"
 )
 
 find_library(ODBC_LIBRARY NAMES odbc odbc32
-          DOC "The ODBC library"
+	HINTS
+	/usr/lib
+	/usr/lib/odbc
+	/usr/local/lib
+	/usr/local/lib/odbc
+	/usr/local/odbc/lib
+	"C:/Program Files/ODBC/lib"
+	"C:/ODBC/lib/debug"
+    "C:/Program Files (x86)/Microsoft SDKs/Windows/v7.0A/Lib"
+    DOC "The ODBC library"
 )
 
 # handle the QUIETLY and REQUIRED arguments and set ODBC_FOUND to TRUE if 
