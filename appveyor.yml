@@ -18,7 +18,7 @@ install:
 before_build:
   - appveyor DownloadFile https://download.microsoft.com/download/f/2/6/f263ac46-1fe9-4ae9-8fd3-21102100ebf5/msxsl.exe
   - mysql "--password=Password12!" --user=root -e "create database smsd;"
-  - cmake -G "%GENERATOR%" -DCMAKE_INSTALL_PREFIX=%P% -DODBC_DSN=mysql:host=localhost;dbname=smsd -DMYSQL_USER=root "-DMYSQL_PASSWORD=Password12!" -DODBC_TESTING=ON -DMYSQL_TESTING=ON
+  - cmake -G "%GENERATOR%" -DCMAKE_INSTALL_PREFIX=%P% -DODBC_DSN=mysql:host=localhost;dbname=smsd -DMYSQL_USER=root "-DMYSQL_PASSWORD=Password12!" -DODBC_TESTING=ON "-DMYSQL_ADD_INCLUDE_DIR=%MYSQL_PATH%\\include" "-DMYSQL_ADD_LIBRARY_PATH=%MYSQL_PATH%\\lib" -DMYSQL_TESTING=ON
 
 build:
   project: ALL_BUILD.vcxproj

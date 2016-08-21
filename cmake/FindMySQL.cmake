@@ -1,103 +1,109 @@
-# TODO: Change to use mysqlconfig
-# TODO: Check library version
+# - Find MySQL
+# Find the MySQL includes and client library
+# This module defines
+#  MYSQL_INCLUDE_DIR, where to find mysql.h
+#  MYSQL_LIBRARIES, the libraries needed to use MySQL.
+#  MYSQL_FOUND, If false, do not try to use MySQL.
+#
+# Copyright (c) 2006, Jaroslaw Staniek, <js@iidea.pl>
+# Lot of adustmens by Michal Cihar <michal@cihar.com>
+#
+# vim: expandtab sw=4 ts=4 sts=4:
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
 
-if(MYSQL_INCLUDE_DIR AND MYSQL_LIBRARY)
-  # Already in cache, be silent
-  set(MYSQL_FIND_QUIETLY TRUE)
-else()
 
-  find_path(MYSQL_INCLUDE_DIR mysql.h
-    $ENV{MYSQL_INCLUDE_DIR}
-    $ENV{MYSQL_DIR}/include
-    /usr/include/mysql
-    /usr/local/include/mysql
-    /opt/mysql/mysql/include
-    /opt/mysql/mysql/include/mysql
+if(UNIX) 
+    set(MYSQL_CONFIG_PREFER_PATH "$ENV{MYSQL_HOME}/bin" CACHE FILEPATH
+        "preferred path to MySQL (mysql_config)")
+    find_program(MYSQL_CONFIG mysql_config
+        ${MYSQL_CONFIG_PREFER_PATH}
+        /usr/local/mysql/bin/
+        /usr/local/bin/
+        /usr/bin/
+        )
+    
+    if(MYSQL_CONFIG) 
+        message(STATUS "Using mysql-config: ${MYSQL_CONFIG}")
+        # set INCLUDE_DIR
+        exec_program(${MYSQL_CONFIG}
+            ARGS --include
+            OUTPUT_VARIABLE MY_TMP)
+
+        string(REGEX REPLACE "-I([^ ]+)( .*)?" "\\1" MY_TMP "${MY_TMP}")
+
+        set(MYSQL_ADD_INCLUDE_DIR ${MY_TMP} CACHE FILEPATH INTERNAL)
+
+        # set LIBRARY_DIR
+        exec_program(${MYSQL_CONFIG}
+            ARGS --libs
+            OUTPUT_VARIABLE MY_TMP)
+
+        set(MYSQL_ADD_LIBRARIES "")
+
+        string(REGEX MATCHALL "(^| )-l[^ ]+" MYSQL_LIB_LIST "${MY_TMP}")
+        foreach(LIB ${MYSQL_LIB_LIST})
+            string(REGEX REPLACE "[ ]*-l([^ ]*)" "\\1" LIB "${LIB}")
+            list(APPEND MYSQL_ADD_LIBRARIES "${LIB}")
+        endforeach(LIB ${MYSQL_LIBS})
+
+        set(MYSQL_ADD_LIBRARY_PATH "")
+
+        string(REGEX MATCHALL "-L[^ ]+" MYSQL_LIBDIR_LIST "${MY_TMP}")
+        foreach(LIB ${MYSQL_LIBDIR_LIST})
+            string(REGEX REPLACE "[ ]*-L([^ ]*)" "\\1" LIB "${LIB}")
+            list(APPEND MYSQL_ADD_LIBRARY_PATH "${LIB}")
+        endforeach(LIB ${MYSQL_LIBS})
+
+    else(MYSQL_CONFIG)
+        set(MYSQL_ADD_LIBRARIES "")
+        list(APPEND MYSQL_ADD_LIBRARIES "mysqlclient")
+    endif(MYSQL_CONFIG)
+else(UNIX)
+    if (WIN32)
+        set(MYSQL_ADD_LIBRARIES "")
+        list(APPEND MYSQL_ADD_LIBRARIES "mysql")
+    endif (WIN32)
+    set(MYSQL_ADD_INCLUDE_DIR "c:/msys/local/include" CACHE FILEPATH INTERNAL)
+    set(MYSQL_ADD_LIBRARY_PATH "c:/msys/local/lib" CACHE FILEPATH INTERNAL)
+ENDIF(UNIX)
+
+find_path(MYSQL_INCLUDE_DIR mysql.h
+    /usr/local/include
+    /usr/local/include/mysql 
     /usr/local/mysql/include
     /usr/local/mysql/include/mysql
-    $ENV{ProgramFiles}/MySQL/*/include
-    $ENV{SystemDrive}/MySQL/*/include)
+    /usr/include 
+    /usr/include/mysql
+    ${MYSQL_ADD_INCLUDE_DIR}
+)
 
-  if(WIN32)
-    # Set lib path suffixes
-    # dist = for mysql binary distributions
-    # build = for custom built tree
-    if(CMAKE_BUILD_TYPE STREQUAL Debug)
-      set(libsuffixDist debug)
-      set(libsuffixBuild Debug)
-    else()
-      set(libsuffixDist opt)
-      set(libsuffixBuild Release)
-      add_definitions(-DDBUG_OFF)
-    endif()
+set(TMP_MYSQL_LIBRARIES "")
 
-    find_library(MYSQL_LIBRARY NAMES mysqlclient
-      PATHS
-      $ENV{MYSQL_DIR}/lib/${libsuffixDist}
-      $ENV{MYSQL_DIR}/libmysql
-      $ENV{MYSQL_DIR}/libmysql/${libsuffixBuild}
-      $ENV{MYSQL_DIR}/client/${libsuffixBuild}
-      $ENV{MYSQL_DIR}/libmysql/${libsuffixBuild}
-      $ENV{ProgramFiles}/MySQL/*/lib/${libsuffixDist}
-      $ENV{SystemDrive}/MySQL/*/lib/${libsuffixDist})
-  else()
+foreach(LIB ${MYSQL_ADD_LIBRARIES})
+    find_library("MYSQL_LIBRARIES_${LIB}" NAMES ${LIB}
+        PATHS
+        ${MYSQL_ADD_LIBRARY_PATH}
+        /usr/lib/mysql
+        /usr/local/lib
+        /usr/local/lib/mysql
+        /usr/local/mysql/lib
+    )
+    list(APPEND TMP_MYSQL_LIBRARIES "${MYSQL_LIBRARIES_${LIB}}")
+endforeach(LIB ${MYSQL_ADD_LIBRARIES})
 
-    find_library(MYSQL_LIBRARY NAMES mysqlclient_r
-      PATHS
-      $ENV{MYSQL_DIR}/libmysql_r/.libs
-      $ENV{MYSQL_DIR}/lib
-      $ENV{MYSQL_DIR}/lib/mysql
-      /usr/lib/mysql
-      /usr/local/lib/mysql
-      /usr/local/mysql/lib
-      /usr/local/mysql/lib/mysql
-      /opt/mysql/mysql/lib
-      /opt/mysql/mysql/lib/mysql)
-  endif()
+if (TMP_MYSQL_LIBRARIES)
+    set(MYSQL_LIBRARIES ${TMP_MYSQL_LIBRARIES} CACHE FILEPATH "MySQL Libraries" FORCE)
+else (TMP_MYSQL_LIBRARIES)
+    set(MYSQL_LIBRARIES ${TMP_MYSQL_LIBRARIES} CACHE FILEPATH "MySQL Libraries")
+endif (TMP_MYSQL_LIBRARIES)
 
-  if(MYSQL_LIBRARY)
-    get_filename_component(MYSQL_LIBRARY_DIR ${MYSQL_LIBRARY} PATH)
-  endif()
+if(MYSQL_INCLUDE_DIR AND MYSQL_LIBRARIES)
+    set(MYSQL_FOUND TRUE CACHE INTERNAL "MySQL found")
+    message(STATUS "Found MySQL: ${MYSQL_INCLUDE_DIR}, ${MYSQL_LIBRARIES}")
+else(MYSQL_INCLUDE_DIR AND MYSQL_LIBRARIES)
+    set(MYSQL_FOUND FALSE CACHE INTERNAL "MySQL found")
+    message(STATUS "MySQL not found.")
+endif(MYSQL_INCLUDE_DIR AND MYSQL_LIBRARIES)
 
-  if(MYSQL_INCLUDE_DIR AND MYSQL_LIBRARY_DIR)
-    set(MYSQL_FOUND TRUE)
-
-    include_directories(${MYSQL_INCLUDE_DIR})
-    link_directories(${MYSQL_LIBRARY_DIR})
-
-    find_library(MYSQL_ZLIB zlib PATHS ${MYSQL_LIBRARY_DIR})
-    find_library(MYSQL_YASSL yassl PATHS ${MYSQL_LIBRARY_DIR})
-    find_library(MYSQL_TAOCRYPT taocrypt PATHS ${MYSQL_LIBRARY_DIR})
-
-    set(MYSQL_CLIENT_LIBS mysqlclient)
-
-    if(MYSQL_ZLIB)
-      set(MYSQL_CLIENT_LIBS ${MYSQL_CLIENT_LIBS} zlib)
-    endif()
-
-    if(MYSQL_YASSL)
-      set(MYSQL_CLIENT_LIBS ${MYSQL_CLIENT_LIBS} yassl)
-    endif()
-
-    if(MYSQL_TAOCRYPT)
-      set(MYSQL_CLIENT_LIBS ${MYSQL_CLIENT_LIBS} taocrypt)
-    endif()
-
-    # Added needed mysqlclient dependencies on Windows
-    if(WIN32)
-      set(MYSQL_CLIENT_LIBS ${MYSQL_CLIENT_LIBS} ws2_32)
-    endif()
-  endif()
-
-  set(MYSQL_LIBRARIES ${MYSQL_LIBRARY})
-
-  # Handle the QUIETLY and REQUIRED arguments and set SQLITE3_FOUND to TRUE
-  # if all listed variables are TRUE
-  include(FindPackageHandleStandardArgs)
-  find_package_handle_standard_args(MySQL DEFAULT_MSG
-    MYSQL_INCLUDE_DIR MYSQL_LIBRARIES)
-
-  # TODO: Do we want to mark these as advanced? --mloskot
-  # http://www.cmake.org/cmake/help/cmake2.6docs.html#command:mark_as_advanced
-  #mark_as_advanced(MYSQL_INCLUDE_DIR MYSQL_LIBRARIES)
-endif()
+mark_as_advanced(MYSQL_INCLUDE_DIR MYSQL_LIBRARIES)
