@@ -620,10 +620,10 @@ fail:
 static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage * sms UNUSED, GSM_SMSDConfig * Config, char *ID UNUSED, int Part, GSM_SMSDSendingError err, int TPMR)
 {
 	FILE *file;
-	ssize_t flen = 0, filesize;
+	GSM_File GSMFile;
+	GSM_Error error;
 	unsigned char FullPath[400];
-	char *Buffer = NULL;
-	char *lineStart, *lineEnd;
+	unsigned char *lineStart, *lineEnd;
 	/* MessageReference TPMR maximum is "255" */
 	char MessageReferenceBuffer[sizeof("MessageReference = \n") + 4];
 
@@ -635,50 +635,26 @@ static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage * sms UNUSED, GSM_
 	strcpy(FullPath, Config->outboxpath);
 	strcat(FullPath, Config->SMSID);
 
-	file = fopen(FullPath, "r");
+	// Read file content
+	GSMFile.Buffer = NULL;
+	GSMFile.Used = 0;
+	error = GSM_ReadFile(FullPath, &GSMFile);
 
-	if (file == NULL) {
-		SMSD_LogErrno(Config,  "AddSentSMSInfo: Can not open file");
-		return ERR_CANTOPENFILE;
+	if (error != ERR_NONE) {
+		SMSD_Log(DEBUG_ERROR, Config, "AddSentSMSInfo: Failed to read file!");
+		free(GSMFile.Buffer);
+		return error;
 	}
 
-	if (fseek(file, 0, SEEK_END) < 0) {
-		SMSD_LogErrno(Config,  "AddSentSMSInfo: Can not seek to end");
-		return ERR_CANTOPENFILE;
-	}
-	filesize = ftell(file);
-	if (filesize <= 0) {
-		SMSD_LogErrno(Config,  "AddSentSMSInfo: File too small");
-		fclose(file);
-		return ERR_CANTOPENFILE;
-	}
-	if (fseek(file, 0, SEEK_SET) < 0) {
-		SMSD_LogErrno(Config,  "AddSentSMSInfo: Can not seek to start");
-		return ERR_CANTOPENFILE;
-	}
+	// Allocate additional space
+	GSMFile.Buffer = realloc(GSMFile.Buffer, GSMFile.Used + 200);
 
-	Buffer = malloc(filesize + 200);
-	if (Buffer == NULL) {
-		SMSD_LogErrno(Config,  "AddSentSMSInfo: Out of memory");
-		fclose(file);
-		return ERR_MOREMEMORY;
-	}
+	GSMFile.Buffer[GSMFile.Used] = '\0';
 
-	flen = fread(Buffer, 1, filesize, file);
-
-	if (flen != filesize) {
-		SMSD_Log(DEBUG_ERROR, Config, "AddSentSMSInfo: Failed to read file (read %ld, expected %ld) EOF: %d ERROR: %d", (long)flen, (long)filesize, feof(file), ferror(file));
-		fclose(file);
-		free(Buffer);
-		return ERR_CANTOPENFILE;
-	}
-	fclose(file);
-	Buffer[flen] = '\0';
-
-	lineStart = Buffer;
+	lineStart = GSMFile.Buffer;
 	lineEnd = strchr(lineStart, '\n');
 
-	while (lineEnd && lineStart - Buffer + 1 < flen) {
+	while (lineEnd) {
 		lineStart = lineEnd + 1;
 		lineEnd = strchr(lineStart, '\n');
 
@@ -689,18 +665,18 @@ static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage * sms UNUSED, GSM_
 
 	/* Message reference not found */
 	if (lineEnd == NULL || strncmp("MessageReference = ", lineStart, 19) == 0) {
-		free(Buffer);
+		free(GSMFile.Buffer);
 		return ERR_NONE;
 	}
 
 	file = fopen(FullPath, "w");
 	if (file == NULL) {
 		SMSD_LogErrno(Config,  "AddSentSMSInfo: Failed to open file for writing");
-		free(Buffer);
+		free(GSMFile.Buffer);
 		return ERR_CANTOPENFILE;
 	}
 
-	chk_fwrite(Buffer, lineStart - Buffer, 1, file);
+	chk_fwrite(GSMFile.Buffer, lineStart -GSMFile. Buffer, 1, file);
 
 	snprintf(MessageReferenceBuffer, sizeof(MessageReferenceBuffer),
 		 "MessageReference = %d\n", TPMR);
@@ -708,19 +684,19 @@ static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage * sms UNUSED, GSM_
 
 	chk_fwrite(MessageReferenceBuffer, strlen(MessageReferenceBuffer), 1, file);
 
-	chk_fwrite(lineEnd + 1, (Buffer - lineEnd) + flen - 1, 1, file);
+	chk_fwrite(lineEnd + 1, (GSMFile.Buffer - lineEnd) + GSMFile.Used - 1, 1, file);
 
 	fclose(file);
 
-	free(Buffer);
+	free(GSMFile.Buffer);
 	return ERR_NONE;
 fail:
 	SMSD_LogErrno(Config,  "AddSentSMSInfo: Failed to write");
 	if (file) {
 		fclose(file);
 	}
-	if (Buffer) {
-		free(Buffer);
+	if (GSMFile.Buffer) {
+		free(GSMFile.Buffer);
 	}
 	return ERR_WRITING_FILE;
 }
