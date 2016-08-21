@@ -646,27 +646,23 @@ static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage * sms UNUSED, GSM_
 		return error;
 	}
 
-	// Allocate additional space
-	GSMFile.Buffer = realloc(GSMFile.Buffer, GSMFile.Used + 200);
+	// Allocate additional space for trailing zero
+	GSMFile.Buffer = realloc(GSMFile.Buffer, GSMFile.Used + 1);
 
 	GSMFile.Buffer[GSMFile.Used] = '\0';
 
-	lineStart = GSMFile.Buffer;
-	lineEnd = strchr(lineStart, '\n');
-
-	while (lineEnd) {
-		lineStart = lineEnd + 1;
-		lineEnd = strchr(lineStart, '\n');
-
-		if(!strncmp("MessageReference = ", lineStart, 19)) {
-			break;
-		}
-	}
+	lineStart = strstr(GSMFile.Buffer, "\nMessageReference = ");
 
 	/* Message reference not found */
-	if (lineEnd == NULL || strncmp("MessageReference = ", lineStart, 19) == 0) {
+	if (lineStart == NULL) {
 		free(GSMFile.Buffer);
 		return ERR_NONE;
+	}
+	lineStart++;
+	lineEnd = strchr(GSMFile.Buffer, '\n');
+	/* End of buffer? */
+	if (lineEnd == NULL) {
+		lineEnd = GSMFile.Buffer + GSMFile.Used;
 	}
 
 	file = fopen(FullPath, "w");
@@ -676,7 +672,7 @@ static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage * sms UNUSED, GSM_
 		return ERR_CANTOPENFILE;
 	}
 
-	chk_fwrite(GSMFile.Buffer, lineStart -GSMFile. Buffer, 1, file);
+	chk_fwrite(GSMFile.Buffer, lineStart - GSMFile.Buffer, 1, file);
 
 	snprintf(MessageReferenceBuffer, sizeof(MessageReferenceBuffer),
 		 "MessageReference = %d\n", TPMR);
