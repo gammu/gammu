@@ -14,6 +14,7 @@ clone_folder: c:\projects\gammu
 
 install:
   - "SET PATH=%MYSQL_PATH%\\bin;%PATH%"
+  - wget https://download.microsoft.com/download/f/2/6/f263ac46-1fe9-4ae9-8fd3-21102100ebf5/msxsl.exe
 
 before_build:
   - mysql "--password=Password12!" --user=root -e "create database smsd;"
