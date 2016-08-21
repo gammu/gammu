@@ -45,6 +45,7 @@ test_script:
 
 services:
   - mysql
+  - postgresql
 
 artifacts:
   - path: Gammu-*-Windows.exe
