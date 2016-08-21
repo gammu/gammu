@@ -351,7 +351,7 @@ void SMSD_Log_Function(const char *text, void *data)
 	newsize = pos + strlen(text) + 1;
 
 	/* Reallocate buffer if needed */
-	if (newsize > Config->gammu_log_buffer_size) {
+	if (newsize > Config->gammu_log_buffer_size || Config->gammu_log_buffer == NULL) {
 		newsize += 50;
 		Config->gammu_log_buffer = realloc(Config->gammu_log_buffer, newsize);
 		if (Config->gammu_log_buffer == NULL) {
