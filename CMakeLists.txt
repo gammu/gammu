@@ -165,8 +165,13 @@ find_program(SH_BIN sh)
 find_program(BASH_BIN bash)
 find_program(SQLITE_BIN sqlite3)
 find_program(SED_BIN sed)
+if (WIN32)
+find_program(MYSQL_BIN mysql $ENV{ProgramFiles}/MySQL/*/bin $ENV{SystemDrive}/MySQL/*/bin)
+find_program(PSQL_BIN psql $ENV{ProgramFiles}/PostgreSQL/*/bin $ENV{SystemDrive}/PostgreSQL/*/bin)
+else()
 find_program(MYSQL_BIN mysql)
 find_program(PSQL_BIN psql)
+endif()
 
 find_package (Threads)
 
