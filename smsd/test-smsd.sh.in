@@ -133,21 +133,21 @@ esac
 # Create database structures
 case $SERVICE in
     *sqlite3)
-        @SQLITE_BIN@ smsd.db < @CMAKE_CURRENT_SOURCE_DIR@/../docs/sql/sqlite.sql
+        "@SQLITE_BIN@" smsd.db < @CMAKE_CURRENT_SOURCE_DIR@/../docs/sql/sqlite.sql
         ;;
     *pgsql)
-        echo "DROP TABLE IF EXISTS daemons, gammu, inbox, outbox, outbox_multipart, pbk, pbk_groups, phones, sentitems;" | PGPASSWORD=@PSQL_PASSWORD@ @PSQL_BIN@ -h @PSQL_HOST@ -U @PSQL_USER@ @PSQL_DATABASE@
-        PGPASSWORD=@PSQL_PASSWORD@ @PSQL_BIN@ -h @PSQL_HOST@ -U @PSQL_USER@ @PSQL_DATABASE@ < @CMAKE_CURRENT_SOURCE_DIR@/../docs/sql/pgsql.sql 2>&1 | grep -v 'ERROR.*language "plpgsql" already exists'
+        echo "DROP TABLE IF EXISTS daemons, gammu, inbox, outbox, outbox_multipart, pbk, pbk_groups, phones, sentitems;" | PGPASSWORD="@PSQL_PASSWORD@" "@PSQL_BIN@" -h "@PSQL_HOST@" -U "@PSQL_USER@" "@PSQL_DATABASE@"
+        PGPASSWORD="@PSQL_PASSWORD@" "@PSQL_BIN@" -h "@PSQL_HOST@" -U "@PSQL_USER@" "@PSQL_DATABASE@" < "@CMAKE_CURRENT_SOURCE_DIR@/../docs/sql/pgsql.sql" 2>&1 | grep -v 'ERROR.*language "plpgsql" already exists'
         ;;
     *mysql|odbc)
-        echo "DROP TABLE IF EXISTS daemons, gammu, inbox, outbox, outbox_multipart, pbk, pbk_groups, phones, sentitems;" | @MYSQL_BIN@ -u@MYSQL_USER@ -h@MYSQL_HOST@ -p@MYSQL_PASSWORD@ @MYSQL_DATABASE@
-        @MYSQL_BIN@ -h@MYSQL_HOST@ -u@MYSQL_USER@ -p@MYSQL_PASSWORD@ @MYSQL_DATABASE@ < @CMAKE_CURRENT_SOURCE_DIR@/../docs/sql/mysql.sql
+        echo "DROP TABLE IF EXISTS daemons, gammu, inbox, outbox, outbox_multipart, pbk, pbk_groups, phones, sentitems;" | "@MYSQL_BIN@" "-u@MYSQL_USER@" "-h@MYSQL_HOST@" "-p@MYSQL_PASSWORD@" "@MYSQL_DATABASE@"
+        "@MYSQL_BIN@" "-h@MYSQL_HOST@" "-u@MYSQL_USER@" "-p@MYSQL_PASSWORD@" "@MYSQL_DATABASE@" < "@CMAKE_CURRENT_SOURCE_DIR@/../docs/sql/mysql.sql"
         ;;
     files*)
-        mkdir -p @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/inbox/
-        mkdir -p @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/outbox/
-        mkdir -p @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/sent/
-        mkdir -p @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/error/
+        mkdir -p "@CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/inbox/"
+        mkdir -p "@CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/outbox/"
+        mkdir -p "@CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/sent/"
+        mkdir -p "@CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/error/"
         ;;
 esac
 
@@ -180,10 +180,10 @@ case $SERVICE in
         echo "INSERT INTO outbox(DestinationNumber,TextDecoded,CreatorID,Coding) VALUES('800123465', 'This is a SQL test message', 'T3st', 'Default_No_Compression');" | @SQLITE_BIN@ smsd.db
         ;;
     *pgsql)
-        echo "INSERT INTO outbox(\"DestinationNumber\",\"TextDecoded\",\"CreatorID\",\"Coding\") VALUES('800123465', 'This is a SQL test message', 'T3st', 'Default_No_Compression');" | PGPASSWORD=@PSQL_PASSWORD@ @PSQL_BIN@ -h @PSQL_HOST@ -U @PSQL_USER@ @PSQL_DATABASE@
+        echo "INSERT INTO outbox(\"DestinationNumber\",\"TextDecoded\",\"CreatorID\",\"Coding\") VALUES('800123465', 'This is a SQL test message', 'T3st', 'Default_No_Compression');" | PGPASSWORD="@PSQL_PASSWORD@" "@PSQL_BIN@" -h "@PSQL_HOST@" -U "@PSQL_USER@" "@PSQL_DATABASE@"
         ;;
     *mysql|odbc)
-        echo "INSERT INTO outbox(DestinationNumber,TextDecoded,CreatorID,Coding) VALUES('800123465', 'This is a SQL test message', 'T3st', 'Default_No_Compression');" | @MYSQL_BIN@ -u@MYSQL_USER@ -h@MYSQL_HOST@ -p@MYSQL_PASSWORD@ @MYSQL_DATABASE@
+        echo "INSERT INTO outbox(DestinationNumber,TextDecoded,CreatorID,Coding) VALUES('800123465', 'This is a SQL test message', 'T3st', 'Default_No_Compression');" | "@MYSQL_BIN@" "-u@MYSQL_USER@" "-h@MYSQL_HOST@" "-p@MYSQL_PASSWORD@" "@MYSQL_DATABASE@"
         ;;
     files*)
         cp @CMAKE_CURRENT_SOURCE_DIR@/tests/OUT+4201234567890.txt @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/outbox/
