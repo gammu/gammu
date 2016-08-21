@@ -29,6 +29,8 @@ sudo: false
 # install build dependencies and enable Coverity scan
 addons:
   apt:
+    sources:
+      - george-edison55-precise-backports # cmake 3.2.3 / doxygen 1.8.3
     packages:
     - libbluetooth-dev
     - libusb-1.0-0-dev
@@ -36,6 +38,8 @@ addons:
     - unixodbc-dev
     - libdbi-dev
     - libdbd-sqlite3
+    - cmake
+    - cmake-data
   coverity_scan:
     project:
       name: "gammu/gammu"
