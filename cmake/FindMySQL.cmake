@@ -13,7 +13,7 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 
 
-if(UNIX) 
+if(UNIX)
     set(MYSQL_CONFIG_PREFER_PATH "$ENV{MYSQL_HOME}/bin" CACHE FILEPATH
         "preferred path to MySQL (mysql_config)")
     find_program(MYSQL_CONFIG mysql_config
@@ -22,8 +22,8 @@ if(UNIX)
         /usr/local/bin/
         /usr/bin/
         )
-    
-    if(MYSQL_CONFIG) 
+
+    if(MYSQL_CONFIG)
         message(STATUS "Using mysql-config: ${MYSQL_CONFIG}")
         # set INCLUDE_DIR
         exec_program(${MYSQL_CONFIG}
@@ -64,31 +64,60 @@ else(UNIX)
         set(MYSQL_ADD_LIBRARIES "")
         list(APPEND MYSQL_ADD_LIBRARIES "mysql")
     endif (WIN32)
-    set(MYSQL_ADD_INCLUDE_DIR $ENV{ProgramFiles}/MySQL/*/include $ENV{SystemDrive}/MySQL/*/include "c:/msys/local/include" CACHE FILEPATH INTERNAL)
-    set(MYSQL_ADD_LIBRARY_PATH $ENV{ProgramFiles}/MySQL/*/lib $ENV{SystemDrive}/MySQL/*/lib "c:/msys/local/lib" CACHE FILEPATH INTERNAL)
+    set(MYSQL_ADD_INCLUDE_DIR "c:/msys/local/include" CACHE FILEPATH INTERNAL)
+    set(MYSQL_ADD_LIBRARY_PATH "c:/msys/local/lib" CACHE FILEPATH INTERNAL)
 ENDIF(UNIX)
 
-find_path(MYSQL_INCLUDE_DIR mysql.h
-    /usr/local/include
-    /usr/local/include/mysql 
-    /usr/local/mysql/include
-    /usr/local/mysql/include/mysql
-    /usr/include 
-    /usr/include/mysql
-    ${MYSQL_ADD_INCLUDE_DIR}
-)
+if (WIN32)
+    find_path(MYSQL_INCLUDE_DIR mysql.h
+        /usr/local/include
+        /usr/local/include/mysql
+        /usr/local/mysql/include
+        /usr/local/mysql/include/mysql
+        /usr/include
+        /usr/include/mysql
+        $ENV{ProgramFiles}/MySQL/*/include
+        $ENV{SystemDrive}/MySQL/*/include
+        ${MYSQL_ADD_INCLUDE_DIR}
+    )
+else()
+    find_path(MYSQL_INCLUDE_DIR mysql.h
+        /usr/local/include
+        /usr/local/include/mysql
+        /usr/local/mysql/include
+        /usr/local/mysql/include/mysql
+        /usr/include
+        /usr/include/mysql
+        ${MYSQL_ADD_INCLUDE_DIR}
+    )
+endif()
 
 set(TMP_MYSQL_LIBRARIES "")
 
 foreach(LIB ${MYSQL_ADD_LIBRARIES})
-    find_library("MYSQL_LIBRARIES_${LIB}" NAMES ${LIB}
-        PATHS
-        ${MYSQL_ADD_LIBRARY_PATH}
-        /usr/lib/mysql
-        /usr/local/lib
-        /usr/local/lib/mysql
-        /usr/local/mysql/lib
-    )
+    if (WIN32)
+        find_library("MYSQL_LIBRARIES_${LIB}" NAMES ${LIB}
+            PATHS
+            ${MYSQL_ADD_LIBRARY_PATH}
+            /usr/lib/mysql
+            /usr/local/lib
+            /usr/local/lib/mysql
+            /usr/local/mysql/lib
+            $ENV{ProgramFiles}/MySQL/*/lib
+            $ENV{SystemDrive}/MySQL/*/lib
+            $ENV{ProgramFiles}/MySQL/*/lib/opt
+            $ENV{SystemDrive}/MySQL/*/lib/opt
+        )
+    else()
+        find_library("MYSQL_LIBRARIES_${LIB}" NAMES ${LIB}
+            PATHS
+            ${MYSQL_ADD_LIBRARY_PATH}
+            /usr/lib/mysql
+            /usr/local/lib
+            /usr/local/lib/mysql
+            /usr/local/mysql/lib
+        )
+    endif()
     list(APPEND TMP_MYSQL_LIBRARIES "${MYSQL_LIBRARIES_${LIB}}")
 endforeach(LIB ${MYSQL_ADD_LIBRARIES})
 
