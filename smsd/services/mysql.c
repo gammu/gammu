@@ -14,7 +14,7 @@
 #ifdef WIN32
 #include <windows.h>
 #ifndef __GNUC__
-#pragma comment(lib, "libmysql.lib")
+#pragma comment(lib, "mysqlclient.lib")
 #endif
 #endif
 
