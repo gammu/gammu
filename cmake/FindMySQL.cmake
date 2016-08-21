@@ -62,7 +62,7 @@ if(UNIX)
 else(UNIX)
     if (WIN32)
         set(MYSQL_ADD_LIBRARIES "")
-        list(APPEND MYSQL_ADD_LIBRARIES "mysql")
+        list(APPEND MYSQL_ADD_LIBRARIES "mysqlclient")
     endif (WIN32)
     set(MYSQL_ADD_INCLUDE_DIR "c:/msys/local/include" CACHE FILEPATH INTERNAL)
     set(MYSQL_ADD_LIBRARY_PATH "c:/msys/local/lib" CACHE FILEPATH INTERNAL)
@@ -76,6 +76,7 @@ if (WIN32)
         /usr/local/mysql/include/mysql
         /usr/include
         /usr/include/mysql
+        $ENV{MYSQL_DIR}/include
         $ENV{ProgramFiles}/MySQL/*/include
         $ENV{SystemDrive}/MySQL/*/include
         ${MYSQL_ADD_INCLUDE_DIR}
@@ -103,6 +104,7 @@ foreach(LIB ${MYSQL_ADD_LIBRARIES})
             /usr/local/lib
             /usr/local/lib/mysql
             /usr/local/mysql/lib
+            $ENV{MYSQL_DIR}/lib/opt
             $ENV{ProgramFiles}/MySQL/*/lib
             $ENV{SystemDrive}/MySQL/*/lib
             $ENV{ProgramFiles}/MySQL/*/lib/opt
