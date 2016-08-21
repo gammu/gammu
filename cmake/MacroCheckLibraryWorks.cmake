@@ -17,8 +17,8 @@ int main(void) {
     try_compile(TMP_${_target}
       ${CMAKE_BINARY_DIR}
       ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeTmp/src.c
-      LINK_LIBRARIES ${_library}
-      COMPILE_DEFINITIONS -I${_include}
+      LINK_LIBRARIES "${_library}"
+      COMPILE_DEFINITIONS "-I${_include}"
       OUTPUT_VARIABLE OUTPUT
     )
     
