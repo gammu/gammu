@@ -77,6 +77,7 @@ if (WIN32)
         /usr/include
         /usr/include/mysql
         $ENV{MYSQL_DIR}/include
+        "C:/Program Files/MySQL/*/include"
         $ENV{ProgramFiles}/MySQL/*/include
         $ENV{SystemDrive}/MySQL/*/include
         ${MYSQL_ADD_INCLUDE_DIR}
@@ -105,8 +106,10 @@ foreach(LIB ${MYSQL_ADD_LIBRARIES})
             /usr/local/lib/mysql
             /usr/local/mysql/lib
             $ENV{MYSQL_DIR}/lib/opt
+            "C:/Program Files/MySQL/*/lib"
             $ENV{ProgramFiles}/MySQL/*/lib
             $ENV{SystemDrive}/MySQL/*/lib
+            "C:/Program Files/MySQL/*/lib/opt"
             $ENV{ProgramFiles}/MySQL/*/lib/opt
             $ENV{SystemDrive}/MySQL/*/lib/opt
         )

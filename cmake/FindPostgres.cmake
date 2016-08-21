@@ -14,8 +14,10 @@ IF(WIN32)
         /usr/local/include /usr/include c:/msys/local/include
         $ENV{POSTGRESQL_PATH}/include/server
         $ENV{POSTGRESQL_PATH}/include
+        "C:/Program Files/PostgreSQL/*/include/server"
         $ENV{ProgramFiles}/PostgreSQL/*/include/server
         $ENV{SystemDrive}/PostgreSQL/*/include/server
+        "C:/Program Files/PostgreSQL/*/include"
         $ENV{ProgramFiles}/PostgreSQL/*/include
         $ENV{SystemDrive}/PostgreSQL/*/include
     )
@@ -26,9 +28,11 @@ IF(WIN32)
      /usr/local/lib /usr/lib c:/msys/local/lib
      $ENV{POSTGRESQL_PATH}/lib
      $ENV{ProgramFiles}/PostgreSQL/*/lib
+     "C:/Program Files/PostgreSQL/*/lib"
      $ENV{SystemDrive}/PostgreSQL/*/lib
      $ENV{POSTGRESQL_PATH}/lib/ms
      $ENV{ProgramFiles}/PostgreSQL/*/lib/ms
+     "C:/Program Files/PostgreSQL/*/lib/ms"
      $ENV{SystemDrive}/PostgreSQL/*/lib/ms
     )
   ENDIF (NOT POSTGRES_LIBRARY)
