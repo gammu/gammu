@@ -649,6 +649,10 @@ static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage * sms UNUSED, GSM_
 	// Allocate additional space for trailing zero
 	GSMFile.Buffer = realloc(GSMFile.Buffer, GSMFile.Used + 1);
 
+	if (GSMFile.Buffer == NULL) {
+		return ERR_MOREMEMORY;
+	}
+
 	GSMFile.Buffer[GSMFile.Used] = '\0';
 
 	lineStart = strstr(GSMFile.Buffer, "\nMessageReference = ");
@@ -691,9 +695,7 @@ fail:
 	if (file) {
 		fclose(file);
 	}
-	if (GSMFile.Buffer) {
-		free(GSMFile.Buffer);
-	}
+	free(GSMFile.Buffer);
 	return ERR_WRITING_FILE;
 }
 
