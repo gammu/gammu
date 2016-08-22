@@ -70,6 +70,9 @@ include (GCoveralls)
 # WE use pkgconfig later
 find_package (PkgConfig)
 
+# enable code coverage
+find_package(codecov)
+
 # Standard packages
 macro_optional_find_package (Doxygen)
 
