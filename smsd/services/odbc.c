@@ -82,8 +82,7 @@ time_t SMSDODBC_GetDate(GSM_SMSDConfig * Config, SQL_result *res, unsigned int f
 
 const char *SMSDODBC_GetString(GSM_SMSDConfig * Config, SQL_result *res, unsigned int field)
 {
-	SQLLEN sqllen;
-	int size;
+	SQLLEN size;
 	SQLRETURN ret;
 	char shortbuffer[1];
 
@@ -93,19 +92,11 @@ const char *SMSDODBC_GetString(GSM_SMSDConfig * Config, SQL_result *res, unsigne
 	}
 
 	/* Figure out string length */
-	ret = SQLGetData(res->odbc, field + 1, SQL_C_CHAR, shortbuffer, 0, &sqllen);
+	ret = SQLGetData(res->odbc, field + 1, SQL_C_CHAR, shortbuffer, 0, &size);
 	if (!SQL_SUCCEEDED(ret)) {
 		SMSDODBC_LogError(Config, ret, SQL_HANDLE_STMT, res->odbc, "SQLGetData(string,0) failed");
 		return NULL;
 	}
-
-	/*
-	 * This hack seems to be needed to avoid type breakage on Win64, don't ask me why.
-	 *
-	 * Might be actually bug in MinGW compiler, but when using SQLLEN type below
-	 * anything fails (it does not match to SQL_NULL_DATA and realloc always fails).
-	 */
-	size = sqllen;
 
 	/* Did not we get NULL? */
 	if (size == SQL_NULL_DATA) {
