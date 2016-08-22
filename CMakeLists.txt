@@ -65,7 +65,6 @@ include (MacroOptionalFindPackage)
 include (MacroAddDLL)
 include (MacroGammuOption)
 include (MacroTuneCompiler)
-include (GCoveralls)
 
 # WE use pkgconfig later
 find_package (PkgConfig)
