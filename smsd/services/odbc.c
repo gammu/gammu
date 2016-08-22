@@ -333,7 +333,7 @@ unsigned long SMSDODBC_AffectedRows(GSM_SMSDConfig * Config, SQL_result *res)
 		SMSDODBC_LogError(Config, ret, SQL_HANDLE_DBC, Config->conn.odbc.dbc, "SQLRowCount failed");
 		return 0;
 	}
-	return count;
+	return (unsigned long)count;
 }
 
 struct GSM_SMSDdbobj SMSDODBC = {
