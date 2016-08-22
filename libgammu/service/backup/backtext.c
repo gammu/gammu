@@ -3232,9 +3232,15 @@ GSM_Error LoadBackup(const char *FileName, GSM_Backup *backup)
 	}
 
 	readvalue = ReadCFGText(file_info, buffer, "IMEI", UseUnicode);
-	if (readvalue!=NULL) strcpy(backup->IMEI,readvalue);
+	if (readvalue!=NULL) {
+		strncpy(backup->IMEI, readvalue, sizeof(backup->IMEI) - 1);
+		backup->IMEI[sizeof(backup->IMEI) - 1] = 0;
+	}
 	readvalue = ReadCFGText(file_info, buffer, "Phone", UseUnicode);
-	if (readvalue!=NULL) strcpy(backup->Model,readvalue);
+	if (readvalue!=NULL) {
+		strncpy(backup->Model, readvalue, sizeof(backup->Model) - 1);
+		backup->Model[sizeof(backup->Model) - 1] = 0;
+	}
 	readvalue = ReadCFGText(file_info, buffer, "Creator", UseUnicode);
 	if (readvalue!=NULL) {
 		strncpy(backup->Creator,readvalue, sizeof(backup->Creator) - 1);
