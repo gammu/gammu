@@ -10,6 +10,8 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <sys/stat.h>
+#include <sys/types.h>
+#include <fcntl.h>
 
 #ifdef WIN32
 #include <io.h>
@@ -525,8 +527,9 @@ static GSM_Error SMSDFiles_MoveSMS(GSM_MultiSMSMessage * sms UNUSED, GSM_SMSDCon
 static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig * Config, char *NewID)
 {
 	int i, j;
+	int fd;
 	unsigned char FileName[100], FullName[400], ext[17], buffer[64], buffer2[400];
-	FILE *file;
+	FILE *file = NULL;
 	time_t rawtime;
 	struct tm *timeinfo;
 
@@ -547,22 +550,20 @@ static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDCo
 		}
 		DecodeUnicode(sms->SMS[i].Number, buffer2);
 
-		file = NULL;
-		do {
+		for (j = 0; j < 100; j++) {
 			sprintf(FileName,
 				"OUTC%04d%02d%02d_%02d%02d%02d_00_%s_sms%d.%s",
 				1900 + timeinfo->tm_year, timeinfo->tm_mon + 1, timeinfo->tm_mday, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, buffer2, j, ext);
 			strcpy(FullName, Config->outboxpath);
 			strcat(FullName, FileName);
-			if (file) {
-				fclose(file);
+			fd = open(FileName, O_CREAT | O_EXCL, 0644);
+			if (fd >= 0) {
+				close(fd);
+				break;
 			}
-			file = fopen(FullName, "r");
-		} while (file != NULL && (++j < 100));
+		}
 
-		if (file) {
-			fclose(file);
-			file = NULL;
+		if (j >= 100) {
 			if (i == 0) {
 				SMSD_Log(DEBUG_ERROR, Config, "Cannot save %s. No available file names", FileName);
 				return ERR_CANTOPENFILE;

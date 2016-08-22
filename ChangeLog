@@ -25,6 +25,7 @@ ChangeLog
 [!] * API changes in some parameter types.
 [-] * Fixed various Windows compilation issues.
 [-] * Fixed several resource leaks.
+[-] * Create outbox SMS atomically in FILES backend.
 
 20160816 - 1.37.4
     
