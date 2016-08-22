@@ -1854,7 +1854,9 @@ static void ReadPbkEntry(INI_Section *file_info, char *section, GSM_MemoryEntry 
 			}
 			sprintf(buffer,"Entry%02iType",num);
 			readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
-			if (strcasecmp(readvalue,"NumberGeneral") == 0) {
+			if (readvalue == NULL) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Other;
+			} else if (strcasecmp(readvalue,"NumberGeneral") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_General;
 			} else if (strcasecmp(readvalue,"NumberVideo") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Video;
@@ -3020,7 +3022,9 @@ static void ReadProfileEntry(INI_Section *file_info, char *section, GSM_Profile 
 			if (!unknown) {
 				sprintf(buffer,"Value%02i",num);
 				readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
-				if (strcasecmp(readvalue,"Level1") == 0) {
+				if (readvalue == NULL) {
+					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_VOLUME_LEVEL1;
+				} else if (strcasecmp(readvalue,"Level1") == 0) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_VOLUME_LEVEL1;
 					if (Profile->FeatureID[Profile->FeaturesNumber]==Profile_KeypadTone) {
 						Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_KEYPAD_LEVEL1;
