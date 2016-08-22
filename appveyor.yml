@@ -53,9 +53,9 @@ artifacts:
 
 on_finish:
   - ps: >-
-        Copy-Item Testing\$(Get-Content Testing\TAG -TotalCount 1)\Test.xml test.xml;
-        msxsl test.xml admin/ctest-to-junit.xsl -o junit.xml;
+        Copy-Item Testing\$(Get-Content Testing\TAG -TotalCount 1)\Test.xml test.xml
+        msxsl test.xml admin/ctest-to-junit.xsl -o junit.xml
         # upload results to AppVeyor
-        $wc = New-Object 'System.Net.WebClient';
+        $wc = New-Object 'System.Net.WebClient'
         $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\junit.xml))
 #  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
