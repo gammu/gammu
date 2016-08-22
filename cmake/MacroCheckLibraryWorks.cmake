@@ -1,36 +1,19 @@
 MACRO (CHECK_LIBRARY_WORKS _header _include _library _target)
 
-    if (DEFINED ${_target})
-        message(STATUS "${_target} passed")
-    else()
 
-    file(WRITE "${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeTmp/src.c"
-      "
-//TEST
+    set(CHECK_LIBRARY_WORKS_BACKUP_INCLUDES "${CMAKE_REQUIRED_INCLUDES}")
+    set(CHECK_LIBRARY_WORKS_BACKUP_LIBRARIES "${CMAKE_REQUIRED_LIBRARIES}")
+    set(CMAKE_REQUIRED_INCLUDES "${_include}")
+    set(CMAKE_REQUIRED_LIBRARIES "${_library}")
+    CHECK_C_SOURCE_COMPILES("
 #include <${_header}>
 
 int main(void) {
     return 0;
 }
-")
+" "${_target}")
 
-    try_compile(TMP_${_target}
-      ${CMAKE_BINARY_DIR}
-      ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeTmp/src.c
-      LINK_LIBRARIES "${_library}"
-      COMPILE_DEFINITIONS "-I${_include}"
-      OUTPUT_VARIABLE OUTPUT
-    )
+    set(CMAKE_REQUIRED_INCLUDES "${CHECK_LIBRARY_WORKS_BACKUP_INCLUDES}")
+    set(CMAKE_REQUIRED_LIBRARIES "${CHECK_LIBRARY_WORKS_BACKUP_LIBRARIES}")
     
-    if (TMP_${_target})
-        message(STATUS "${_target} passed")
-        set(${_target} TRUE CACHE INTERNAL "Test ${_target}")
-    else()
-        message(STATUS "${_target} failed")
-        set(${_target} FALSE CACHE INTERNAL "Test ${_target}")
-    endif()
-
-    
-    endif()
-
 ENDMACRO()
