@@ -751,13 +751,7 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 		break;
 	case SMS_NokiaVCARD10Long:
 		Coding = SMS_Coding_Default_No_Compression;
-		/* is 1 SMS ? 8 = length of ..SCKE2 */
-		if (Length <= GSM_MAX_SMS_CHARS_LENGTH - 8) {
-			sprintf(Buffer,"//SCKE2 ");
-			Length = 8;
-		} else {
-			UDH = UDH_NokiaPhonebookLong;
-		}
+		UDH = UDH_NokiaPhonebookLong;
 		error = GSM_EncodeVCARD(di, Buffer, buffer_size, &Length, Info->Entries[0].Phonebook, TRUE, Nokia_VCard10);
 		if (error != ERR_NONE) {
 			goto out;
@@ -771,13 +765,7 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 			goto out;
 		}
 		Coding = SMS_Coding_Default_No_Compression;
-		/* Is 1 SMS ? 12 = length of ..SCKL23F4 */
-		if (Length <= GSM_MAX_SMS_CHARS_LENGTH - 12) {
-			sprintf(Buffer,"//SCKL23F4%c%c",13,10);
-			Length = 12;
-		} else {
-			UDH = UDH_NokiaPhonebookLong;
-		}
+		UDH = UDH_NokiaPhonebookLong;
 		memcpy(Buffer2,Buffer,Length);
 		EncodeUnicode(Buffer,Buffer2,Length);
 		break;
