@@ -418,7 +418,7 @@ void DisplayMultiSMSInfo (GSM_MultiSMSMessage *sms, gboolean eachsms, gboolean e
 #if 0
 			/* Disabled for now */
 			if (answer_yes("%s", _("Do you want to play it?")))
-				GSM_PlayRingtone(*SMSInfo.Entries[i].Ringtone);
+				GSM_PlayRingtone(SMSInfo.Entries[i].Ringtone);
 #endif
 			break;
 		case SMS_NokiaCallerLogo:

@@ -47,7 +47,7 @@ extern void SetAutoNetworkLogin(int argc, char *argv[]);
 extern void GetFMStation(int argc, char *argv[]);
 extern void CallDivert(int argc, char *argv[]);
 extern void CancelAllDiverts(int argc, char *argv[]);
-extern GSM_Error GSM_PlayRingtone(GSM_Ringtone ringtone);
+extern GSM_Error GSM_PlayRingtone(GSM_Ringtone *ringtone);
 extern void Battery(int argc, char *argv[]);
 extern void Screenshot(int argc, char *argv[]);
 extern void Install(int argc, char *argv[]);

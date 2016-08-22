@@ -195,7 +195,7 @@ void PrintBatteryCharge(GSM_BatteryCharge *BatteryCharge)
 	}
 }
 
-GSM_Error GSM_PlayRingtone(GSM_Ringtone ringtone)
+GSM_Error GSM_PlayRingtone(GSM_Ringtone *ringtone)
 {
 	int 		i;
 	gboolean 		first=TRUE;
@@ -204,11 +204,11 @@ GSM_Error GSM_PlayRingtone(GSM_Ringtone ringtone)
 	signal(SIGINT, interrupt);
 	printf("%s\n", _("Press Ctrl+C to break..."));
 
-	for (i=0;i<ringtone.NoteTone.NrCommands;i++) {
+	for (i = 0; i < ringtone->NoteTone.NrCommands; i++) {
 		if (gshutdown) break;
-		if (ringtone.NoteTone.Commands[i].Type != RING_Note) continue;
-		error=PHONE_RTTLPlayOneNote(gsm,ringtone.NoteTone.Commands[i].Note,first);
-		if (error!=ERR_NONE) return error;
+		if (ringtone->NoteTone.Commands[i].Type != RING_Note) continue;
+		error = PHONE_RTTLPlayOneNote(gsm, ringtone->NoteTone.Commands[i].Note, first);
+		if (error != ERR_NONE) return error;
 		first = FALSE;
 	}
 
@@ -230,7 +230,7 @@ void PlayRingtone(int argc UNUSED, char *argv[])
 
 	GSM_Init(TRUE);
 
-	error=GSM_PlayRingtone(ringtone2);
+	error = GSM_PlayRingtone(&ringtone2);
 	Print_Error(error);
 
 	GSM_Terminate();
