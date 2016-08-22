@@ -22,6 +22,7 @@ script:
   - if [ ${COVERITY_SCAN_BRANCH} != 1 ] ; then cmake .. -DCMAKE_C_COMPILER=$CC -DENABLE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Continuous $TESTARGS $ARGS ; fi
   - if [ ${COVERITY_SCAN_BRANCH} != 1 ] ; then make ; fi
   - if [ ${COVERITY_SCAN_BRANCH} != 1 ] ; then make test ; fi
+  - if [ $CC = gcc ] ; then make gcov ; else make lcov ; fi
 after_success:
   - ./coveralls-upload
   - bash <(curl -s https://codecov.io/bash)
