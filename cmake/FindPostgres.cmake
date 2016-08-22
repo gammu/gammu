@@ -9,7 +9,6 @@
 #    POSTGRES_LIBRARY
 
 IF(WIN32)
-  IF (NOT POSTGRES_INCLUDE_DIR)
     FIND_PATH(POSTGRES_INCLUDE_DIR libpq-fe.h
         /usr/local/include /usr/include c:/msys/local/include
         $ENV{POSTGRESQL_PATH}/include/server
@@ -21,9 +20,7 @@ IF(WIN32)
         $ENV{ProgramFiles}/PostgreSQL/*/include
         $ENV{SystemDrive}/PostgreSQL/*/include
     )
-  ENDIF (NOT POSTGRES_INCLUDE_DIR)
 
-  IF (NOT POSTGRES_LIBRARY)
     FIND_LIBRARY(POSTGRES_LIBRARY NAMES pq libpq PATH 
      /usr/local/lib /usr/lib c:/msys/local/lib
      $ENV{POSTGRESQL_PATH}/lib
@@ -35,8 +32,6 @@ IF(WIN32)
      "C:/Program Files/PostgreSQL/*/lib/ms"
      $ENV{SystemDrive}/PostgreSQL/*/lib/ms
     )
-  ENDIF (NOT POSTGRES_LIBRARY)
-
 ELSE(WIN32)
   IF(UNIX) 
 
