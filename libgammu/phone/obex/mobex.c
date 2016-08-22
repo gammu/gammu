@@ -282,6 +282,9 @@ GSM_Error MOBEX_GetNextEntry(GSM_StateMachine *s, const char *path, const gboole
 	if (*pos + 4 > *size) {
 		return ERR_EMPTY;
 	}
+	if (*data == NULL) {
+		return ERR_BUG;
+	}
 
 	/* Return values */
 	*entry = *data + *pos + 4;
