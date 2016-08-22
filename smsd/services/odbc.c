@@ -28,7 +28,7 @@
 
 static void SMSDODBC_LogError(GSM_SMSDConfig * Config, SQLRETURN origret, SQLSMALLINT handle_type, SQLHANDLE handle, const char *message)
 {
-	SQLINTEGER	 i = 0;
+	SQLSMALLINT	 i = 0;
 	SQLINTEGER	 native;
 	SQLCHAR	 state[ 7 ];
 	SQLCHAR	 text[256];
