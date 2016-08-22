@@ -107,12 +107,12 @@ const char *SMSDODBC_GetString(GSM_SMSDConfig * Config, SQL_result *res, unsigne
 	/* Allocate string */
 	Config->conn.odbc.retstr[field] = realloc(Config->conn.odbc.retstr[field], size + 1);
 	if (Config->conn.odbc.retstr[field] == NULL) {
-		SMSD_Log(DEBUG_ERROR, Config, "Field %d returning NULL, failed to allocate %d bytes of memory", field, size + 1);
+		SMSD_Log(DEBUG_ERROR, Config, "Field %d returning NULL, failed to allocate %ld bytes of memory", field, (long)(size + 1));
 		return NULL;
 	}
 
 	/* Actually grab result from database */
-	ret = SQLGetData(res->odbc, field + 1, SQL_C_CHAR, Config->conn.odbc.retstr[field], size + 1, &sqllen);
+	ret = SQLGetData(res->odbc, field + 1, SQL_C_CHAR, Config->conn.odbc.retstr[field], size + 1, &size);
 	if (!SQL_SUCCEEDED(ret)) {
 		SMSDODBC_LogError(Config, ret, SQL_HANDLE_STMT, res->odbc, "SQLGetData(string) failed");
 		return NULL;
