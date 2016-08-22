@@ -21,7 +21,7 @@ IF(WIN32)
         $ENV{SystemDrive}/PostgreSQL/*/include
     )
 
-    FIND_LIBRARY(POSTGRES_LIBRARY NAMES libpq pq PATH 
+    FIND_LIBRARY(POSTGRES_LIBRARY NAMES libpq pq PATHS
      /usr/local/lib /usr/lib c:/msys/local/lib
      $ENV{POSTGRESQL_PATH}/lib
      $ENV{ProgramFiles}/PostgreSQL/*/lib
