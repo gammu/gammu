@@ -138,6 +138,8 @@ void GetUSSD(int argc UNUSED, char *argv[])
 	error=GSM_SetIncomingUSSD(gsm,TRUE);
 	Print_Error(error);
 
+	num_replies = 0;
+
 	error=GSM_DialService(gsm, argv[2]);
 	/* Fallback to voice call, it can work with some phones */
 	if (error == ERR_NOTIMPLEMENTED || error == ERR_NOTSUPPORTED) {
@@ -145,7 +147,6 @@ void GetUSSD(int argc UNUSED, char *argv[])
 	}
 	Print_Error(error);
 
-	num_replies = 0;
 	last_replies = 0;
 	last_reply = time(NULL);
 	while (!gshutdown) {
@@ -155,10 +156,11 @@ void GetUSSD(int argc UNUSED, char *argv[])
 		} else if (num_replies == 0 && difftime(time(NULL), last_reply) > 60) {
 			/* Wait one minute for reply */
 			gshutdown = TRUE;
-		} else if (num_replies > 0 && difftime(time(NULL), last_reply) > 30) {
-			/* Wait for consequent replies for 30 seconds */
+		} else if (num_replies > 0 && difftime(time(NULL), last_reply) > 10) {
+			/* Wait for consequent replies for 10 seconds */
 			gshutdown = TRUE;
 		}
+
 		GSM_ReadDevice(gsm, FALSE);
 	}
 
