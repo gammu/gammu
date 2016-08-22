@@ -43,11 +43,13 @@ services:
 
 artifacts:
   - path: Gammu-*-Windows.exe
-    name: Installer
+    name: Gammu Installer
   - path: CMakeFiles/CMakeOutput.log
     name: CMake log
   - path: CMakeFiles/CMakeError.log
     name: CMake errors
+  - path: CMakeFiles/CMakeCache.txt
+    name: CMake cache
 
 on_finish:
   - ps: >-
