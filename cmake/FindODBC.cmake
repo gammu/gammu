@@ -23,8 +23,8 @@ find_library(ODBC_LIBRARY NAMES iodbc odbc odbc32
 	/usr/local/odbc/lib
 	"C:/Program Files/ODBC/lib"
 	"C:/ODBC/lib/debug"
+    "$ENV{ProgramFiles}/Microsoft SDKs/Windows/*/Lib"
     "C:/Program Files/Microsoft SDKs/Windows/*/Lib"
-    "$ENV{programfiles}/Microsoft SDKs/Windows/*/Lib"
     DOC "The ODBC library"
 )
 
