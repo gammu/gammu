@@ -56,7 +56,7 @@ EOT
 case $SERVICE in
     dbi-sqlite3)
         cat >> .smsdrc <<EOT
-service = dbi
+service = sql
 driver = sqlite3
 database = smsd.db
 dbdir = @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/
@@ -64,7 +64,7 @@ EOT
         ;;
     dbi-pgsql)
         cat >> .smsdrc <<EOT
-service = dbi
+service = sql
 driver = pgsql
 pc = @PSQL_HOST@
 database = @PSQL_DATABASE@
@@ -74,7 +74,8 @@ EOT
         ;;
     pgsql)
         cat >> .smsdrc <<EOT
-service = pgsql
+service = sql
+driver = native_pgsql
 pc = @PSQL_HOST@
 database = @PSQL_DATABASE@
 user = @PSQL_USER@
@@ -83,7 +84,7 @@ EOT
         ;;
     dbi-mysql)
         cat >> .smsdrc <<EOT
-service = dbi
+service = sql
 driver = mysql
 pc = @MYSQL_HOST@
 database = @MYSQL_DATABASE@
@@ -93,7 +94,8 @@ EOT
         ;;
     mysql)
         cat >> .smsdrc <<EOT
-service = mysql
+service = sql
+driver = native_mysql
 pc = @MYSQL_HOST@
 database = @MYSQL_DATABASE@
 user = @MYSQL_USER@
