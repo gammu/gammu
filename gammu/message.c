@@ -553,10 +553,15 @@ void SendSMSStatus (GSM_StateMachine *sm, int status, int MessageReference, void
 void SendSaveDisplaySMS(int argc, char *argv[])
 {
 	GSM_Error error;
-	GSM_MultiSMSMessage sms;
+	GSM_MultiSMSMessage *sms;
 	GSM_Message_Type type;
 	GSM_SMSFolders folders;
 	int i=0;
+
+	sms = malloc(sizeof(GSM_MultiSMSMessage));
+	if (sms == NULL) {
+		return;
+	}
 
 	if (strcasestr(argv[1], "savesms") != NULL) {
 		type = SMS_Save;
@@ -567,23 +572,24 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 	} else if (strcasestr(argv[1], "displaysms") != NULL) {
 		type = SMS_Display;
 	} else {
+		free(sms);
 		return;
 	}
 
 	GSM_Init(TRUE);
 
-	error = CreateMessage(&type, &sms, argc, 2, argv, gsm);
+	error = CreateMessage(&type, sms, argc, 2, argv, gsm);
 	Print_Error(error);
 
 	switch (type) {
 		case SMS_Display:
-			for (i = 0; i < sms.Number; i++) {
+			for (i = 0; i < sms->Number; i++) {
 				printf(LISTFORMAT "%i\n", _("Message number"), i);
-				error = DisplaySMSFrame(&sms.SMS[i], gsm);
+				error = DisplaySMSFrame(&(sms->SMS[i]), gsm);
 				Print_Error(error);
 			}
 
-			printf(LISTFORMAT "%i\n", _("Number of messages"), sms.Number);
+			printf(LISTFORMAT "%i\n", _("Number of messages"), sms->Number);
 			break;
 		case SMS_Save:
 		case SMS_SendSaved:
@@ -598,15 +604,15 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 				fflush(stderr);
 			}
 
-			for (i=0;i<sms.Number;i++) {
-				printf(_("Saving SMS %i/%i\n"),i+1,sms.Number);
-				error = GSM_AddSMS(gsm, &sms.SMS[i]);
+			for (i = 0; i < sms->Number; i++) {
+				printf(_("Saving SMS %i/%i\n"),i+1,sms->Number);
+				error = GSM_AddSMS(gsm, &(sms->SMS[i]));
 				Print_Error(error);
 				printf(_("Saved in folder number %d \"%s\", location %i"),
-					sms.SMS[i].Folder,
-					DecodeUnicodeConsole(folders.Folder[sms.SMS[i].Folder-1].Name),
-					sms.SMS[i].Location);
-				if (sms.SMS[i].Memory == MEM_SM) {
+					sms->SMS[i].Folder,
+					DecodeUnicodeConsole(folders.Folder[sms->SMS[i].Folder-1].Name),
+					sms->SMS[i].Location);
+				if (sms->SMS[i].Memory == MEM_SM) {
 					printf(", %s\n", _("SIM"));
 				} else {
 					printf(", %s\n", _("phone"));
@@ -614,10 +620,10 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 
 				if (type == SMS_SendSaved) {
 					printf(_("Sending sms from folder \"%s\", location %i\n"),
-						DecodeUnicodeString(folders.Folder[sms.SMS[i].Folder-1].Name),sms.SMS[i].Location);
+						DecodeUnicodeString(folders.Folder[sms->SMS[i].Folder-1].Name),sms->SMS[i].Location);
 					fflush(stdout);
 					SMSStatus = ERR_TIMEOUT;
-					error = GSM_SendSavedSMS(gsm, 0, sms.SMS[i].Location);
+					error = GSM_SendSavedSMS(gsm, 0, sms->SMS[i].Location);
 					Print_Error(error);
 					printf("%s", _("....waiting for network answer"));
 					fflush(stdout);
@@ -639,11 +645,11 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 
 			GSM_SetSendSMSStatusCallback(gsm, SendSMSStatus, NULL);
 
-			for (i=0;i<sms.Number;i++) {
-				printf(_("Sending SMS %i/%i"),i+1,sms.Number);
+			for (i=0;i<sms->Number;i++) {
+				printf(_("Sending SMS %i/%i"),i+1,sms->Number);
 				fflush(stdout);
 				SMSStatus = ERR_TIMEOUT;
-				error=GSM_SendSMS(gsm, &sms.SMS[i]);
+				error=GSM_SendSMS(gsm, &(sms->SMS[i]));
 				Print_Error(error);
 				printf("%s", _("....waiting for network answer"));
 				fflush(stdout);
@@ -662,6 +668,7 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 			printf_err("%s", _("Something went wrong, unknown message operation!\n"));
 	}
 
+	free(sms);
 	GSM_Terminate();
 }
 
