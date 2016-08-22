@@ -22,6 +22,9 @@ ChangeLog
 2016???? - 1.37.90
     
 [-] * Improved support Huawei K3770.
+[!] * API changes in some parameter types.
+[-] * Fixed various Windows compilation issues.
+[-] * Fixed several resource leaks.
 
 20160816 - 1.37.4
     
