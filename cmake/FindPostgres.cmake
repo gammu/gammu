@@ -24,6 +24,9 @@ IF(WIN32)
     FIND_LIBRARY(POSTGRES_LIBRARY NAMES pq libpq PATH 
      /usr/local/lib /usr/lib c:/msys/local/lib
      $ENV{POSTGRESQL_PATH}/lib
+     $ENV{ProgramFiles}/PostgreSQL/*/bin
+     "C:/Program Files/PostgreSQL/*/bin"
+     $ENV{SystemDrive}/PostgreSQL/*/bin
      $ENV{ProgramFiles}/PostgreSQL/*/lib
      "C:/Program Files/PostgreSQL/*/lib"
      $ENV{SystemDrive}/PostgreSQL/*/lib
