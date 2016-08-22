@@ -17,7 +17,7 @@ before_script:
   - mkdir _build
   - cd _build
 script:
-  - if [ ${COVERITY_SCAN_BRANCH} != 1 ] ; then cmake .. -DCMAKE_C_COMPILER=$CC -DCOVERAGE=ON -DCMAKE_BUILD_TYPE=Continuous -DMYSQL_TESTING=on -DPOSTGRESQL_TESTING=ON -DMYSQL_USER=root -DPSQL_USER=postgres -DPSQL_PASSWORD= $ARGS ; fi
+  - if [ ${COVERITY_SCAN_BRANCH} != 1 ] ; then cmake .. -DCMAKE_C_COMPILER=$CC -DCOVERAGE=ON -DCMAKE_BUILD_TYPE=Continuous -DMYSQL_TESTING=on -DPSQL_TESTING=ON -DMYSQL_USER=root -DPSQL_USER=postgres -DPSQL_PASSWORD= $ARGS ; fi
   - if [ ${COVERITY_SCAN_BRANCH} != 1 ] ; then make ; fi
   - if [ ${COVERITY_SCAN_BRANCH} != 1 ] ; then make test ; fi
 after_success:
