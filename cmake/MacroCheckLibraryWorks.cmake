@@ -1,4 +1,4 @@
-MACRO (CHECK_LIBRARY_WORKS _header _include _library _target)
+MACRO (CHECK_LIBRARY_WORKS _header _code _include _library _target)
 
 
     set(CHECK_LIBRARY_WORKS_BACKUP_INCLUDES "${CMAKE_REQUIRED_INCLUDES}")
@@ -9,6 +9,7 @@ MACRO (CHECK_LIBRARY_WORKS _header _include _library _target)
 #include <${_header}>
 
 int main(void) {
+    ${_code}
     return 0;
 }
 " "${_target}")
