@@ -26,7 +26,7 @@ before_build:
          "%MYSQL_PATH%\\bin\\mysql.exe" "--password=Password12!" "--user=root" "-e" "create database smsd;"
   - cmd: >-
          "%POSTGRESQL_PATH%\\bin\\createdb.exe" smsd
-  - cmake -G "%GENERATOR%" -DCMAKE_INSTALL_PREFIX=%P% -DODBC_DSN=mysql:host=localhost;dbname=smsd -DMYSQL_USER=root "-DMYSQL_PASSWORD=Password12!" -DPSQL_USER=postgres "-DPSQL_PASSWORD=Password12!" -DODBC_TESTING=ON -DMYSQL_TESTING=ON -DPSQL_TESTING=ON
+  - cmake -G "%GENERATOR%" -DCMAKE_INSTALL_PREFIX=%P% "-DODBC_DSN=mysql:Driver={MySQL ODBC 5.3 Unicode Driver}:host=localhost;dbname=smsd" -DMYSQL_USER=root "-DMYSQL_PASSWORD=Password12!" -DPSQL_USER=postgres "-DPSQL_PASSWORD=Password12!" -DODBC_TESTING=ON -DMYSQL_TESTING=ON -DPSQL_TESTING=ON
 
 build:
   project: ALL_BUILD.vcxproj
@@ -69,5 +69,5 @@ artifacts:
   - path: CMakeFiles/CMakeError.log
     name: CMake errors
 
-on_finish:
-  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+#on_finish:
+#  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
