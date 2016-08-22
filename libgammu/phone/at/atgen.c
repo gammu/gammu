@@ -759,7 +759,10 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
 				return ERR_MOREMEMORY;
 			}
  			DecodeHexBin(buffer, input, length);
-			if (2 * strlen(buffer) >= outlength) return ERR_MOREMEMORY;
+			if (2 * strlen(buffer) >= outlength) {
+				free(buffer);
+				return ERR_MOREMEMORY;
+			}
 			DecodeDefault(output, buffer, strlen(buffer), TRUE, NULL);
 			free(buffer);
 			buffer = NULL;
