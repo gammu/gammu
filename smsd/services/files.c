@@ -39,7 +39,7 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfi
 	FILE *file;
 	size_t locations_size = 0, locations_pos = 0;
 #ifdef GSM_ENABLE_BACKUP
-	GSM_SMS_Backup backup;
+	GSM_SMS_Backup *backup;
 #endif
 	*Locations = NULL;
 
@@ -98,12 +98,18 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfi
 				SMSD_Log(DEBUG_ERROR, Config, "Saving in detail format not compiled in!");
 
 #else
-				for (j = 0; j < sms->Number; j++) {
-					backup.SMS[j] = &sms->SMS[j];
+				backup = malloc(sizeof(GSM_SMS_Backup));
+				if (backup == NULL) {
+					return ERR_MOREMEMORY;
 				}
-				backup.SMS[sms->Number] = NULL;
-				error = GSM_AddSMSBackupFile(FullName, &backup);
+
+				for (j = 0; j < sms->Number; j++) {
+					backup->SMS[j] = &sms->SMS[j];
+				}
+				backup->SMS[sms->Number] = NULL;
+				error = GSM_AddSMSBackupFile(FullName, backup);
 				done = TRUE;
+				free(backup);
 #endif
 			} else {
 				file = fopen(FullName, "wb");
@@ -173,7 +179,7 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConf
 	char *pos1, *pos2, *options = NULL;
 	gboolean backup = FALSE;
 #ifdef GSM_ENABLE_BACKUP
-	GSM_SMS_Backup smsbackup;
+	GSM_SMS_Backup *smsbackup;
 	GSM_Error error;
 #endif
 #ifdef WIN32
@@ -253,21 +259,28 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConf
 
 	if (backup) {
 #ifdef GSM_ENABLE_BACKUP
+		smsbackup = malloc(sizeof(GSM_SMS_Backup));
+		if (smsbackup == NULL) {
+			return ERR_MOREMEMORY;
+		}
+
 		/* Remember ID */
 		strcpy(ID, FileName);
 		/* Load backup */
-		GSM_ClearSMSBackup(&smsbackup);
-		error = GSM_ReadSMSBackupFile(FullName, &smsbackup);
+		GSM_ClearSMSBackup(smsbackup);
+		error = GSM_ReadSMSBackupFile(FullName, smsbackup);
 		if (error != ERR_NONE) {
+			free(smsbackup);
 			return error;
 		}
 		/* Copy it to our message */
 		sms->Number = 0;
-		for (i = 0; smsbackup.SMS[i] != NULL; i++) {
-			sms->SMS[sms->Number++] = *smsbackup.SMS[i];
+		for (i = 0; smsbackup->SMS[i] != NULL; i++) {
+			sms->SMS[sms->Number++] = *(smsbackup->SMS[i]);
 		}
 		/* Free memory */
-		GSM_FreeSMSBackup(&smsbackup);
+		GSM_FreeSMSBackup(smsbackup);
+		free(smsbackup);
 
 		/* Set delivery report flag */
 		if (sms->SMS[0].PDU == SMS_Status_Report) {
@@ -275,7 +288,6 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConf
 		} else {
 			Config->currdeliveryreport = -1;
 		}
-
 #else
 		SMSD_Log(DEBUG_ERROR, Config, "SMS backup loading disabled at compile time!");
 		return ERR_DISABLED;
@@ -520,7 +532,7 @@ static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDCo
 
 #ifdef GSM_ENABLE_BACKUP
 	GSM_Error error;
-	GSM_SMS_Backup backup;
+	GSM_SMS_Backup *backup;
 #endif
 
 	j = 0;
@@ -562,11 +574,18 @@ static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDCo
 			SMSD_Log(DEBUG_ERROR, Config, "Saving in detail format not compiled in!");
 
 #else
-			for (j = 0; j < sms->Number; j++) {
-				backup.SMS[j] = &sms->SMS[j];
+			backup = malloc(sizeof(GSM_SMS_Backup));
+			if (backup == NULL) {
+				return ERR_MOREMEMORY;
 			}
-			backup.SMS[sms->Number] = NULL;
-			error = GSM_AddSMSBackupFile(FullName, &backup);
+
+			for (j = 0; j < sms->Number; j++) {
+				backup->SMS[j] = &sms->SMS[j];
+			}
+			backup->SMS[sms->Number] = NULL;
+			error = GSM_AddSMSBackupFile(FullName, backup);
+
+			free(backup);
 
 			if (error != ERR_NONE) {
 				return error;

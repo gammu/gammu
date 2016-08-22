@@ -14,7 +14,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 {
 	GSM_Debug_Info *debug_info;
 	GSM_Error error;
-	GSM_SMS_Backup Backup;
+	GSM_SMS_Backup *Backup;
 	GSM_MultiSMSMessage **SortedSMS, **InputSMS;
 	int i, count;
 
@@ -28,13 +28,18 @@ int main(int argc UNUSED, char **argv UNUSED)
 	GSM_SetDebugFileDescriptor(stderr, FALSE, debug_info);
 	GSM_SetDebugLevel("textall", debug_info);
 
+	Backup = malloc(sizeof(GSM_SMS_Backup));
+	if (Backup == NULL) {
+		return 99;
+	}
+
 	/* Read the backup */
-	error = GSM_ReadSMSBackupFile(argv[1], &Backup);
+	error = GSM_ReadSMSBackupFile(argv[1], Backup);
 	gammu_test_result(error, "GSM_ReadSMSBackupFile");
 
 	/* Calculate number of messages */
 	count = 0;
-	while (Backup.SMS[count] != NULL) {
+	while (Backup->SMS[count] != NULL) {
 		count++;
 	}
 
@@ -46,7 +51,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	for (i = 0; i < count; i++) {
 		InputSMS[i] = (GSM_MultiSMSMessage *) malloc(sizeof(GSM_MultiSMSMessage));
 		InputSMS[i]->Number = 1;
-		InputSMS[i]->SMS[0] = *Backup.SMS[i];
+		InputSMS[i]->SMS[0] = *(Backup->SMS[i]);
 	}
 	InputSMS[i] = NULL;
 
@@ -66,7 +71,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	}
 
 	/* We don't need this anymore */
-	GSM_FreeSMSBackup(&Backup);
+	GSM_FreeSMSBackup(Backup);
 	free(InputSMS);
 	free(SortedSMS);
 
