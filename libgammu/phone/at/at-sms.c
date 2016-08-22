@@ -2457,6 +2457,9 @@ int *GetRange(GSM_StateMachine *s, const char *buffer)
 			break;
 		} else if (*chr != ',') {
 			smprintf(s, "Bad character in range: %c\n", *chr);
+			if (result != NULL) {
+				free(result);
+			}
 			return NULL;
 		}
 	}
