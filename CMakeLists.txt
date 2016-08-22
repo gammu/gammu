@@ -353,10 +353,16 @@ endif (IRDA_FOUND)
 
 if (MYSQL_FOUND)
     set (HAVE_MYSQL_MYSQL_H TRUE)
+    if (WIN32)
+        set(WIN_LIB_MYSQL libmysql.dll)
+    endif ()
 endif (MYSQL_FOUND)
 
 if (POSTGRES_FOUND)
     set (HAVE_POSTGRESQL_LIBPQ_FE_H TRUE)
+    if (WIN32)
+        set(WIN_LIB_PGSQL libpq.dll)
+    endif ()
 endif (POSTGRES_FOUND)
 
 set (GAMMU_LIBS "")
