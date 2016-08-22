@@ -33,9 +33,14 @@ after_build:
 
 test_script:
   - ps: >-
+        $ret = 0
         Try 
         {
             ctest --output-on-failure --no-compress-output --dashboard ExperimentalTest --build-config Release
+        }
+        Catch 
+        {
+            $ret = 1
         }
         Finally
         {
@@ -45,6 +50,7 @@ test_script:
             $wc = New-Object 'System.Net.WebClient'
             $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\junit.xml))
         }
+        return $ret
 
 services:
   - mysql
