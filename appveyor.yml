@@ -36,14 +36,14 @@ after_build:
 test_script:
   - "SET PATH=%MYSQL_PATH%\\bin;%POSTGRESQL_PATH%\\bin;c:\\projects\\gammu;%PATH%"
   - ps: >-
-        $ret = 0;
+        $failure = 0;
         try 
         {
             ctest --output-on-failure --no-compress-output --dashboard ExperimentalTest --build-config Release;
         }
         catch 
         {
-            $ret = 1;
+            $failure = 1;
         }
         finally
         {
@@ -53,8 +53,8 @@ test_script:
             $wc = New-Object 'System.Net.WebClient';
             $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\junit.xml));
         }
-        if ($ret == 1) {
-            exit $ret;
+        if ($failure -eq 1) {
+            exit $failure;
         }
 
 services:
