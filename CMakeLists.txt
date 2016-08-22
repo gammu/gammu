@@ -479,12 +479,6 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_MINGW OR
         MACRO_TUNE_COMPILER("-Wno-format-security")
     endif (WIN32 AND NOT CYGWIN)
 
-    # Enable coverage if requested
-    if (COVERAGE)
-        ENABLE_GCOVERALLS()
-        MACRO_TUNE_COMPILER_LINKER("--coverage")
-    endif (COVERAGE)
-
     # This is extremely noisy, use only in debug builds
     if (DEBUG)
         MACRO_TUNE_COMPILER("-Wextra")
