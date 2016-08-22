@@ -41,6 +41,8 @@ addons:
     - unixodbc-dev
     - libdbi-dev
     - libdbd-sqlite3
+    - libdbd-mysql
+    - libdbd-pgsql
     - cmake
     - cmake-data
   coverity_scan:
