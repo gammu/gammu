@@ -47,6 +47,7 @@ loglevel = textall
 [smsd]
 commtimeout = 5
 multiparttimeout = 5
+ReceiveFrequency = 5
 debuglevel = 255
 logfile = stderr
 runonreceive = @SH_BIN@ @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/received.sh
@@ -198,7 +199,7 @@ $SMSD_INJECT_CMD -c "$CONFIG_PATH" TEXT 123465 -text "Lorem ipsum."
 $SMSD_CMD -c "$CONFIG_PATH" $SMSD_EXTRA_PARAMS &
 SMSD_PID=$!
 
-sleep 10
+sleep 5
 
 # Incoming messages
 for sms in 10 16 26 ; do

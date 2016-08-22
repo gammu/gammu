@@ -42,6 +42,8 @@ loglevel = textall
 
 [smsd]
 commtimeout = 5
+multiparttimeout = 5
+ReceiveFrequency = 5
 debuglevel = 255
 logfile = stderr
 runonreceive = @SH_BIN@ @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/received.sh
