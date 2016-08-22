@@ -15,14 +15,16 @@ find_path(ODBC_INCLUDE_DIR NAMES sql.h
 )
 
 find_library(ODBC_LIBRARY NAMES iodbc odbc odbc32
-	HINTS
-	/usr/lib
-	/usr/lib/odbc
-	/usr/local/lib
-	/usr/local/lib/odbc
-	/usr/local/odbc/lib
-	"C:/Program Files/ODBC/lib"
-	"C:/ODBC/lib/debug"
+    HINTS
+    /usr/lib
+    /usr/lib/odbc
+    /usr/local/lib
+    /usr/local/lib/odbc
+    /usr/local/odbc/lib
+    "C:/Program Files/ODBC/lib"
+    "C:/ODBC/lib/debug"
+    "$ENV{ProgramFiles}/Microsoft SDKs/Windows/*/Lib/${CMAKE_VS_PLATFORM_NAME}"
+    "C:/Program Files/Microsoft SDKs/Windows/*/Lib/${CMAKE_VS_PLATFORM_NAME}"
     "$ENV{ProgramFiles}/Microsoft SDKs/Windows/*/Lib"
     "C:/Program Files/Microsoft SDKs/Windows/*/Lib"
     DOC "The ODBC library"
