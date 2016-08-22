@@ -1448,7 +1448,6 @@ GSM_Error ATOBEX_ReplyGetBatteryCharge(GSM_Protocol_Message *msg, GSM_StateMachi
 		bat->ChargeVoltage *= 10;
 		switch (method) {
 			case 0:
-				bat->BatteryType = GSM_BatteryLiPol;
 				bat->BatteryType = GSM_BatteryNiMH;
 				break;
 			case 1:
