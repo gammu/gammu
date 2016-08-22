@@ -42,6 +42,7 @@ endif(DEBUG)
 
 # Gammu program
 add_executable (gammu ${BINARY_SRC})
+add_coverage (gammu)
 
 target_link_libraries (gammu libGammu)
 target_link_libraries (gammu messagedisplay)

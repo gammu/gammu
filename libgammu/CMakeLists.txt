@@ -113,6 +113,7 @@ if(MSVC)
 else(MSVC)
     add_library (libGammu ${LIBRARY_SRC})
 endif(MSVC)
+add_coverage (libGammu)
 set_target_properties (libGammu PROPERTIES
     VERSION ${GAMMU_SOVERSION}.${GAMMU_VERSION}
     SOVERSION ${GAMMU_SOVERSION}

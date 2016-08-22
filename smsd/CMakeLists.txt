@@ -109,6 +109,7 @@ if(MSVC)
 else(MSVC)
     add_library (gsmsd ${LIBRARY_SRC} ${EXTRA_SOURCES})
 endif(MSVC)
+add_coverage (gsmsd)
 set_target_properties (gsmsd PROPERTIES
     VERSION ${GAMMU_SOVERSION}.${GAMMU_VERSION}
     SOVERSION ${GAMMU_SOVERSION})
@@ -132,12 +133,14 @@ target_link_libraries (gsmsd array)
 
 # Gammu-smsd program
 add_executable (gammu-smsd ${DAEMON_SRC} ${SMSD_RESOURCES})
+add_coverage (gammu-smsd)
 
 target_link_libraries (gammu-smsd libGammu)
 target_link_libraries (gammu-smsd gsmsd)
 
 # Gammu-smsd-inject program
 add_executable (gammu-smsd-inject ${INJECT_SRC})
+add_coverage (gammu-smsd-inject)
 
 target_link_libraries (gammu-smsd-inject libGammu)
 target_link_libraries (gammu-smsd-inject gsmsd)
@@ -146,6 +149,7 @@ target_link_libraries (gammu-smsd-inject messagecmdline)
 if (HAVE_SHM OR WIN32)
 # Gammu-smsd-monitor program
     add_executable (gammu-smsd-monitor ${MONITOR_SRC})
+    add_coverage (gammu-smsd-monitor)
 
     target_link_libraries (gammu-smsd-monitor libGammu)
     target_link_libraries (gammu-smsd-monitor gsmsd)
