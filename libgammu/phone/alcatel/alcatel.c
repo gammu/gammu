@@ -847,7 +847,7 @@ static void ALCATEL_DecodeString(GSM_StateMachine *s, unsigned const char *buffe
 	len = buffer[0];
 	if (Priv->ProtocolVersion == V_1_1 && (buffer[1] == ALCATEL_UNICODE_FLAG)) {
 		/* UCS-2-BE string */
-		if (GSM_PHONEBOOK_TEXT_LENGTH < len/2) {
+		if (GSM_PHONEBOOK_TEXT_LENGTH <= len / 2) {
 			smprintf(s, "WARNING: Text truncated, to %d from %d\n", maxlen, len/2 + 1);
 			len = GSM_PHONEBOOK_TEXT_LENGTH * 2;
 		}
@@ -856,7 +856,7 @@ static void ALCATEL_DecodeString(GSM_StateMachine *s, unsigned const char *buffe
 		Priv->ReturnString[len + 2] = 0;
 	} else {
 		/* Alcatel alphabet string */
-		if (GSM_PHONEBOOK_TEXT_LENGTH < len) {
+		if (GSM_PHONEBOOK_TEXT_LENGTH <= len) {
 			smprintf(s, "WARNING: Text truncated, to %d from %d\n", maxlen, len + 1);
 			len = GSM_PHONEBOOK_TEXT_LENGTH;
 		}
