@@ -2076,8 +2076,10 @@ loadpicture:
 			if (readvalue != NULL) {
 				/* We allocate here more memory than is actually required */
 				Pbk->Entries[Pbk->EntriesNum].Picture.Buffer = (char *)malloc(strlen(readvalue));
-				if (Pbk->Entries[Pbk->EntriesNum].Picture.Buffer == NULL)
+				if (Pbk->Entries[Pbk->EntriesNum].Picture.Buffer == NULL) {
+					free(readvalue);
 					break;
+				}
 
 				Pbk->Entries[Pbk->EntriesNum].Picture.Length =
 					DecodeBASE64(readvalue, Pbk->Entries[Pbk->EntriesNum].Picture.Buffer, strlen(readvalue));
@@ -2102,8 +2104,12 @@ loadtext:
 				Pbk->Entries[Pbk->EntriesNum].SMSList[i] = 0;
 				sprintf(buffer,"Entry%02iSMSList%02i",num,i);
 				readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
-				if (readvalue==NULL) break;
+				if (readvalue==NULL) {
+					free(readvalue);
+					break;
+				}
 				Pbk->Entries[Pbk->EntriesNum].SMSList[i] = atoi(readvalue);
+				free(readvalue);
 				i++;
 			}
 loaddone:
