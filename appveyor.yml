@@ -70,3 +70,6 @@ artifacts:
     name: CMake log
   - path: CMakeFiles/CMakeError.log
     name: CMake errors
+
+on_finish:
+  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
