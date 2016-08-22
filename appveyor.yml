@@ -35,7 +35,25 @@ after_build:
 
 test_script:
   - "SET PATH=%MYSQL_PATH%\\bin;%POSTGRESQL_PATH%\\bin;c:\\projects\\gammu;%PATH%"
-  - ctest --output-on-failure --no-compress-output --dashboard ExperimentalTest --build-config Release
+  - ps: >-
+        try 
+        {
+            $ret = 0
+            ctest --output-on-failure --no-compress-output --dashboard ExperimentalTest --build-config Release
+        }
+        catch 
+        {
+            $ret = 1
+        }
+        finally
+        {
+            Copy-Item Testing\$(Get-Content Testing\TAG -TotalCount 1)\Test.xml test.xml
+            msxsl test.xml admin/ctest-to-junit.xsl -o junit.xml
+            # upload results to AppVeyor
+            $wc = New-Object 'System.Net.WebClient'
+            $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\junit.xml))
+        }
+        return $ret
 
 services:
   - mysql
@@ -51,11 +69,5 @@ artifacts:
   - path: CMakeFiles/CMakeCache.txt
     name: CMake cache
 
-on_finish:
-  - ps: >-
-        Copy-Item Testing\$(Get-Content Testing\TAG -TotalCount 1)\Test.xml test.xml
-        msxsl test.xml admin/ctest-to-junit.xsl -o junit.xml
-        # upload results to AppVeyor
-        $wc = New-Object 'System.Net.WebClient'
-        $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\junit.xml))
+#on_finish:
 #  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
