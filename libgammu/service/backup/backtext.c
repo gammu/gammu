@@ -4018,10 +4018,16 @@ GSM_Error SaveTextComment(FILE *file, unsigned char *comment)
 static GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
 {
 	int 		i=0;
-	unsigned char 	buffer[10000]={0};
+	unsigned char 	*buffer;
 	const char *s;
 	GSM_DateTime	DT;
 	GSM_Error error;
+
+	buffer = malloc(10000);
+	if (buffer == NULL) {
+		return ERR_MOREMEMORY;
+	}
+	buffer[0] = 0;
 
 	fprintf(file, BACKUP_MAIN_HEADER "\n");
 	fprintf(file, BACKUP_INFO_HEADER "\n");
@@ -4039,14 +4045,20 @@ static GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
 			case SMS_Coding_Unicode_No_Compression:
 			case SMS_Coding_Default_No_Compression:
 				error = SaveTextComment(file, backup->SMS[i]->Text);
-				if (error != ERR_NONE) return error;
+				if (error != ERR_NONE) {
+					free(buffer);
+					return error;
+				}
 				break;
 			default:
 				break;
 		}
 		if (backup->SMS[i]->PDU == SMS_Deliver) {
 			error = SaveBackupText(file, "SMSC", backup->SMS[i]->SMSC.Number, FALSE);
-			if (error != ERR_NONE) return error;
+			if (error != ERR_NONE) {
+				free(buffer);
+				return error;
+			}
 			if (backup->SMS[i]->ReplyViaSameSMSC) {
 				fprintf(file,"SMSCReply = TRUE\n");
 			}
@@ -4059,7 +4071,10 @@ static GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
 		if (backup->SMS[i]->DateTime.Year != 0) {
 			fprintf(file,"DateTime");
 			error = SaveVCalDateTime(file,&backup->SMS[i]->DateTime, FALSE);
-			if (error != ERR_NONE) return error;
+			if (error != ERR_NONE) {
+				free(buffer);
+				return error;
+			}
 		}
 		fprintf(file,"State = ");
 		switch (backup->SMS[i]->State) {
@@ -4069,9 +4084,15 @@ static GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
 			case SMS_UnSent	: fprintf(file,"UnSent\n");	break;
 		}
 		error = SaveBackupText(file, "Number", backup->SMS[i]->Number, FALSE);
-		if (error != ERR_NONE) return error;
+		if (error != ERR_NONE) {
+			free(buffer);
+			return error;
+		}
 		error = SaveBackupText(file, "Name", backup->SMS[i]->Name, FALSE);
-		if (error != ERR_NONE) return error;
+		if (error != ERR_NONE) {
+			free(buffer);
+			return error;
+		}
 		if (backup->SMS[i]->UDH.Type != UDH_NoUDH) {
 			EncodeHexBin(buffer,backup->SMS[i]->UDH.Text,backup->SMS[i]->UDH.Length);
 			fprintf(file,"UDH = %s\n",buffer);
@@ -4100,6 +4121,7 @@ static GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
 		fprintf(file,"\n");
 		i++;
 	}
+	free(buffer);
 	return ERR_NONE;
 }
 
