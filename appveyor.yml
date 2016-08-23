@@ -37,7 +37,7 @@ before_build:
 build:
   project: ALL_BUILD.vcxproj
   parallel: true
-  verbosity: minimal
+  verbosity: quiet
 
 after_build:
   - cmake --build .  --config %CONFIGURATION% --target package
