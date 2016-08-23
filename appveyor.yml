@@ -2,7 +2,9 @@ version: "{build}"
 
 image: Visual Studio 2015
 
-configuration: Release
+configuration:
+  - Release
+  - Debug
 
 clone_depth: 100
 
@@ -37,7 +39,7 @@ build:
   verbosity: minimal
 
 after_build:
-  - cmake --build .  --config Release --target package
+  - cmake --build .  --config %CONFIGURATION% --target package
 
 test_script:
   - "SET PATH=%MYSQL_PATH%\\bin;%POSTGRESQL_PATH%\\bin;c:\\projects\\gammu;%PATH%"
@@ -45,7 +47,7 @@ test_script:
         $failure = 0;
         try 
         {
-            OpenCppCoverage.exe --quiet --export_type cobertura:coverage.xml --modules c:\\projects\\gammu --sources c:\\projects\\gammu -- (Get-Command ctest.exe | Select-Object -ExpandProperty Definition) --output-on-failure --no-compress-output --dashboard ExperimentalTest --build-config Release;
+            OpenCppCoverage.exe --quiet --export_type cobertura:coverage.xml --modules c:\\projects\\gammu --sources c:\\projects\\gammu -- (Get-Command ctest.exe | Select-Object -ExpandProperty Definition) --output-on-failure --no-compress-output --dashboard ExperimentalTest --build-config ($env:CONFIGURATION);
         }
         catch 
         {
