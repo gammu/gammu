@@ -22,6 +22,7 @@ clone_folder: c:\projects\gammu
 install:
   - ps: .\tests\install_opencppcoverage.ps1
   - appveyor DownloadFile https://download.microsoft.com/download/f/2/6/f263ac46-1fe9-4ae9-8fd3-21102100ebf5/msxsl.exe
+  - pip install codecov
 
 before_build:
   - cmd: >-
@@ -63,8 +64,6 @@ test_script:
         }
 
 after_test:
-  - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
-  - pip install codecov
   - codecov -X gcov -F "%CODECOV_FLAG%" -f "coverage.xml"
 
 services:
