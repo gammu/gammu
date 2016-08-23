@@ -1241,7 +1241,7 @@ int main(int argc, char *argv[])
 	}
 
 	/* Check used version vs. compiled */
-	if (!strcasecmp(GetGammuVersion(), GAMMU_VERSION) == 0) {
+	if (strcasecmp(GetGammuVersion(), GAMMU_VERSION) != 0) {
 		printf_err(_("Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"),
 			   GetGammuVersion(), GAMMU_VERSION);
 		Terminate(98);
