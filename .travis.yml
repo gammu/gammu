@@ -51,6 +51,7 @@ addons:
     - cmake
     - cmake-data
     - clang-3.8
+    - llvm-3.8
     - gcc-6
     - g++-6
   coverity_scan:
