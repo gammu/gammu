@@ -111,13 +111,6 @@ extern void GSM_InitLocales(const char *path);
 #define NORETURN
 #endif
 
-/* Clang has bug in handling inline functions */
-#if defined(__GNUC__) && !defined(__clang__)
-#define INLINE inline
-#else
-#define INLINE
-#endif
-
 /* Working snprintf on MSVC */
 #ifdef _MSC_VER
 #define snprintf _snprintf

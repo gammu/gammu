@@ -1245,12 +1245,12 @@ void ReadUnicodeFile(unsigned char *Dest, const unsigned char *Source)
 	Dest[current]	= 0;
 }
 
-INLINE int GetBit(unsigned char *Buffer, size_t BitNum)
+int GetBit(unsigned char *Buffer, size_t BitNum)
 {
 	return Buffer[BitNum / 8] & (1 << (7 - (BitNum % 8)));
 }
 
-INLINE int SetBit(unsigned char *Buffer, size_t BitNum)
+int SetBit(unsigned char *Buffer, size_t BitNum)
 {
 	return Buffer[BitNum / 8] |= 1 << (7 - (BitNum % 8));
 }

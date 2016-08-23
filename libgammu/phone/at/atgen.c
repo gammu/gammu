@@ -437,7 +437,7 @@ GSM_Error ATGEN_WaitFor(GSM_StateMachine *s, const char * cmd, size_t len,
  *
  * \return True when text does not contain non hex chars.
  */
-INLINE gboolean ATGEN_HasOnlyHexChars(const char *text, const size_t length)
+gboolean ATGEN_HasOnlyHexChars(const char *text, const size_t length)
 {
 	size_t i = 0;
 
@@ -456,7 +456,7 @@ INLINE gboolean ATGEN_HasOnlyHexChars(const char *text, const size_t length)
  *
  * \return True when text does not contain non digits chars.
  */
-INLINE gboolean ATGEN_HasOnlyDigits(const char *text, const size_t length)
+gboolean ATGEN_HasOnlyDigits(const char *text, const size_t length)
 {
 	size_t i = 0;
 
@@ -476,7 +476,7 @@ INLINE gboolean ATGEN_HasOnlyDigits(const char *text, const size_t length)
  * \param text Text.
  * \return True when text can be UCS2.
  */
-INLINE gboolean ATGEN_IsUCS2(const char *text, const size_t length)
+gboolean ATGEN_IsUCS2(const char *text, const size_t length)
 {
 	return (length > 3) &&
 		(length % 4 == 0) &&
@@ -491,7 +491,7 @@ INLINE gboolean ATGEN_IsUCS2(const char *text, const size_t length)
  * \param text Text.
  * \return True when text can be HEX.
  */
-INLINE gboolean ATGEN_IsHex(const char *text, const size_t length)
+gboolean ATGEN_IsHex(const char *text, const size_t length)
 {
 	return (length > 4) &&
 		(length % 2 == 0) &&
@@ -506,7 +506,7 @@ INLINE gboolean ATGEN_IsHex(const char *text, const size_t length)
  * \param text Text.
  * \return True when text can be HEX.
  */
-INLINE gboolean ATGEN_IsNumber(const char *text, const size_t length)
+gboolean ATGEN_IsNumber(const char *text, const size_t length)
 {
 	return ATGEN_HasOnlyDigits(text, length);
 }
