@@ -4,7 +4,7 @@ image: Visual Studio 2015
 
 configuration: Release
 
-shallow_clone: true
+clone_depth: 100
 
 environment:
   MYSQL_PATH: C:\Program Files\MySql\MySQL Server 5.7
