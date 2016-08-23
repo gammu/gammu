@@ -13,7 +13,9 @@ environment:
   PGPASSWORD: Password12!
   matrix:
     - GENERATOR: "Visual Studio 14 2015"
+      CODECOV_FLAG: vs2015_x86
     - GENERATOR: "Visual Studio 14 2015 Win64"
+      CODECOV_FLAG: vs2015_x64
 
 clone_folder: c:\projects\gammu
 
@@ -61,7 +63,7 @@ test_script:
 after_test:
   - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
   - pip install codecov
-  - codecov -f "coverage.xml"
+  - codecov -X gcov -F "%CODECOV_FLAG%" -f "coverage.xml"
 
 services:
   - mysql
