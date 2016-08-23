@@ -5,4 +5,4 @@ coverage:
     patch: false
     project:
       default:
-        target: '40'
+        target: '36'
