@@ -18,7 +18,6 @@ set (BINARY_SRC
     depend/nokia/dct4.c
     depend/siemens/dsiemens.c
     depend/siemens/chiffre.c
-    sniff.c
     common.c
     memory.c
     message.c
@@ -33,6 +32,10 @@ set (BINARY_SRC
 if (WITH_BACKUP)
     list(APPEND BINARY_SRC backup.c backupsms.c)
 endif (WITH_BACKUP)
+
+if (DEBUG)
+    list(APPEND BINARY_SRC sniff.c)
+endif()
 
 
 # Hides default case in switch, to allow checking whether all cases are handled.
