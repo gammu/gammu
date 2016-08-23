@@ -1039,7 +1039,7 @@ static GSM_Error SMSDSQL_CreateOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConf
 {
 	char creator[200];
 	int i;
-	unsigned int ID = 0;
+	unsigned long long ID = 0;
 	SQL_result res;
 	SQL_Var vars[6];
 	struct GSM_SMSDdbobj *db = Config->db;
@@ -1083,9 +1083,9 @@ static GSM_Error SMSDSQL_CreateOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConf
 		}
 		db->FreeResult(Config, &res);
 	}
-	SMSD_Log(DEBUG_INFO, Config, "Written message with ID %u", ID);
+	SMSD_Log(DEBUG_INFO, Config, "Written message with ID %llu", ID);
 	if (NewID != NULL)
-		sprintf(NewID, "%d", ID);
+		sprintf(NewID, "%llu", ID);
 	return ERR_NONE;
 }
 
