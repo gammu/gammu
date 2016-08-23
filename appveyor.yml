@@ -40,7 +40,7 @@ test_script:
         $failure = 0;
         try 
         {
-            OpenCover.Console.exe -register:user -target:ctest -targetargs:"--output-on-failure --no-compress-output --dashboard ExperimentalTest --build-config Release" -returntargetcode  -output:.\coverage.xml;
+            OpenCover.Console.exe -register:user -target:ctest.exe -targetargs:"--output-on-failure --no-compress-output --dashboard ExperimentalTest --build-config Release" -returntargetcode  -output:.\coverage.xml;
         }
         catch 
         {
