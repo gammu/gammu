@@ -20,20 +20,20 @@
 | (only if you wan't running daemon)
 | I recommended you to use Gammu
 | Please visit Official Gammu Website for more information about Gammu
-| http://wammu.eu/gammu
+| https://wammu.eu/gammu/
 |
 |
 | Change log:
 |
 | v3.0
-|	**!!!! Warning... if you use class version 2.x or below 
+|	**!!!! Warning... if you use class version 2.x or below
 |   **!!!! it is not compatible with this version (3.x)
 |	**!!!! Please check.. this class only work on PHP 5.2+
 | - New method for new gammu technology,
 | - Fully support for Windows or Linux OS
 |
 | v2.1
-| - Add function enable_sudo([int]) 
+| - Add function enable_sudo([int])
 |   set 1 if using sudo for gammu command exe
 ------------------------------------------*/
 
@@ -41,7 +41,7 @@ class gammu {
 	/* Initializing gammu bin/EXE */
 	var $gammu = "/usr/local/bin/gammu";
 	var $datetime_format = 'Y-m-d H:i:s';
-	
+
 	function __construct($gammu_bin_location='',$gammu_config_file='',$gammu_config_section='')
 	{
 		$this->gammu = $gammu_bin_location ? $gammu_bin_location : '/usr/local/bin/gammu';
@@ -52,21 +52,21 @@ class gammu {
 			$this->gammu = $gammu_config_section != '' ? $this->gammu." -s ". (int) $gammu_config_section ."" : $this->gammu;
 		}
 	}
-	
+
 	function gammu_exec($options='--identify',$break=0) {
 		$exec=$this->gammu." ".$options;
 		exec($exec,$r);
 		if ($break == 1) { return $r; }
 		else { return $this->unbreak($r); }
 	}
-	
+
 	function unbreak($r) {
 		for($i=0;$i<count($r);$i++) {
 			$response.=$r[$i]."\r\n";
 		}
 		return $response;
 	}
-	
+
 	function Identify(&$response)
 	{
 		$r = $this->gammu_exec('--identify',1);
@@ -89,7 +89,7 @@ class gammu {
 			return 1;
 		}
 	}
-	
+
 	function Get()
 	{
 		$r = $this->gammu_exec('--getallsms 1',1);
@@ -117,7 +117,7 @@ class gammu {
             }
 			else if (preg_match("#(.+): (.+)#si",$r[$i],$s)) {
 				if (trim($s[1]) == 'Sent') { $s[2]=date($this->datetime_format,strtotime(trim(trim($s[2]),'"'))); }
-				if (trim($s[1]) and trim($s[2])) { 
+				if (trim($s[1]) and trim($s[2])) {
 					$data[$folder][$fid][strtolower(str_replace(" ","_",trim($s[1])))]=trim(trim($s[2]),'"');
 				}
 			}
@@ -129,15 +129,15 @@ class gammu {
 			}
 			$data[$folder][$fid]['ID']=md5(serialize($data[$folder][$fid]));
 		}
-		
+
 		return $data;
 	}
-	
+
 	function Send($number,$text,&$respon) {
 		$respon = $this->gammu_exec("--sendsms TEXT {$number} -len ". strlen($text)." -text \"{$text}\"");
 		if (eregi("OK",$respon)) { return 1; } else { return 0; }
 	}
-	
+
 	function phoneBook($mem = 'ME')
 	{
 		$r = $this->gammu_exec('--getallmemory '.$mem,1);
@@ -160,7 +160,7 @@ class gammu {
 		}
 		return $data;
 	}
-	
+
 	function error($e,$exit=0) {
 		echo $e."\n";
 		if ($exit == 1) { exit; }
@@ -182,21 +182,21 @@ $sms = new gammu($gammu_bin,$gammu_config,$gammu_config_section);
 /* Identify Device information * /
 $sms->Identify($response);
 echo '<pre>';
-print_r($response); 
-echo '</pre>'; 
+print_r($response);
+echo '</pre>';
 
 /* Get SMS from Device* /
 $response = $sms->Get();
-echo '<pre>';print_r($response); echo '</pre>'; 
+echo '<pre>';print_r($response); echo '</pre>';
 
 /* Sending SMS * /
 $sms->Send('+6281380830000','Test!',$response);
 echo '<pre>';
-print_r($response); echo '</pre>'; 
+print_r($response); echo '</pre>';
 
 /* Get Phone -> ME = Phone Memory; SM = Sim Card;  options list => DC|MC|RC|ON|VM|SM|ME|MT|FD|SL * /
 $response = $sms->phoneBook('ME');
-echo '<pre>';print_r($response); echo '</pre>'; 
+echo '<pre>';print_r($response); echo '</pre>';
 /**/
 
 ?>

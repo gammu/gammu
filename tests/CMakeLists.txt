@@ -840,12 +840,12 @@ set_tests_properties(sms-cmdline-RINGTONE PROPERTIES
     PASS_REGULAR_EXPRESSION "Ringtone \"AxelF\"")
 
 add_test(sms-cmdline-MMS "${GAMMU_TEST_PATH}/sms-cmdline${CMAKE_EXECUTABLE_SUFFIX}"
-    MMSINDICATOR 800123456 http://wammu.eu/ Wammu Gammu)
+    MMSINDICATOR 800123456 https://wammu.eu/ Wammu Gammu)
 set_tests_properties(sms-cmdline-MMS PROPERTIES
     PASS_REGULAR_EXPRESSION "User Data Header     : MMS indicator, ID \\(8 bit\\) [0-9]*, part 1 of 1")
 
 add_test(sms-cmdline-WAP "${GAMMU_TEST_PATH}/sms-cmdline${CMAKE_EXECUTABLE_SUFFIX}"
-    WAPINDICATOR 800123456 http://wammu.eu/ Wammu)
+    WAPINDICATOR 800123456 https://wammu.eu/ Wammu)
 set_tests_properties(sms-cmdline-WAP PROPERTIES
     PASS_REGULAR_EXPRESSION "User Data Header     : MMS indicator, ID \\(8 bit\\) [0-9]*, part 1 of 1")
 

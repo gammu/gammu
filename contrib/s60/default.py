@@ -1170,7 +1170,7 @@ class Mobile(object):
             self.startService()
 
     def aboutHandler(self):
-        query(u'Gammu S60 Remote\nVersion %s\nhttp://wammu.eu/' % (VERSION) , 'query')
+        query(u'Gammu S60 Remote\nVersion %s\nhttps://wammu.eu/' % (VERSION) , 'query')
 
     def toggleHandler(self):
         e32.start_exe(u'BtToggleApp.exe','')

@@ -1,4 +1,4 @@
-ChangeLog for Gammu project <http://www.gammu.org/>
+ChangeLog for Gammu project <https://wammu.eu/gammu/>
 ===================================================
 
 Description
@@ -351,7 +351,7 @@ ChangeLog
 [+] * SMSD can now be configured just for sending/receiving.
 [-] * Fixed battery status for S40 phones (bug #1301).
 [-] * Improved compatibility with Motorola phonebook (bug #1128).
-[+] * Lot of documentation improvements, check <http://wammu.eu/docs/devel/docs/>.
+[+] * Lot of documentation improvements, check <https://wammu.eu/docs/devel/docs/>.
     
 20100827 - 1.28.90
 
@@ -1838,9 +1838,9 @@ use mailing list.
   * fixed bug in msvc2005 for getting online files
 
 NOTES: it was annouced on mailing list, but I will remind:
-       1. http://www.gammu.net/support/texts/road06.php contains a lot of info
+       1. https://wammu.eu/docs/manual/project/ contains a lot of info
        about Nokia & Gammu history, Gammu possible future and many others
-       2. http://www.gammu.net/support/phones/phonedb.php will be "our"
+       2. https://wammu.eu/phones/ will be "our"
        phone database. It's in beta state, but even now give a lot of info
 
 20051202 - 1.03.20

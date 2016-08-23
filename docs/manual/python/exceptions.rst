@@ -162,7 +162,7 @@
 .. exception:: gammu.ERR_FRAMENOTREQUESTED
 
     Exception corresponding to gammu error ERR_FRAMENOTREQUESTED.
-    Verbose error description: Frame not requested right now. See <http://wammu.eu/support/bugs/> for information how to report it.
+    Verbose error description: Frame not requested right now. See <https://wammu.eu/support/bugs/> for information how to report it.
 
 .. exception:: gammu.ERR_FULL
 
@@ -337,7 +337,7 @@
 .. exception:: gammu.ERR_UNKNOWNFRAME
 
     Exception corresponding to gammu error ERR_UNKNOWNFRAME.
-    Verbose error description: Unknown frame. See <http://wammu.eu/support/bugs/> for information how to report it.
+    Verbose error description: Unknown frame. See <https://wammu.eu/support/bugs/> for information how to report it.
 
 .. exception:: gammu.ERR_UNKNOWNMODELSTRING
 
@@ -347,7 +347,7 @@
 .. exception:: gammu.ERR_UNKNOWNRESPONSE
 
     Exception corresponding to gammu error ERR_UNKNOWNRESPONSE.
-    Verbose error description: Unknown response from phone. See <http://wammu.eu/support/bugs/> for information how to report it.
+    Verbose error description: Unknown response from phone. See <https://wammu.eu/support/bugs/> for information how to report it.
 
 .. exception:: gammu.ERR_USING_DEFAULTS
 

@@ -20,7 +20,7 @@ Description
 +++++++++++
 
 This program is a tool for mobile phones. Many vendors and phones
-are supported, for actual listing see `Gammu Phones Database <http://wammu.eu/phones/>`_.
+are supported, for actual listing see `Gammu Phones Database <https://wammu.eu/phones/>`_.
 
 
 Options
@@ -1723,11 +1723,11 @@ values increased by 100:
 114
     No response in specified timeout. Probably phone not connected.
 115
-    Frame not requested right now. See <http://wammu.eu/support/bugs/> for information how to report it.
+    Frame not requested right now. See <https://wammu.eu/support/bugs/> for information how to report it.
 116
-    Unknown response from phone. See <http://wammu.eu/support/bugs/> for information how to report it.
+    Unknown response from phone. See <https://wammu.eu/support/bugs/> for information how to report it.
 117
-    Unknown frame. See <http://wammu.eu/support/bugs/> for information how to report it.
+    Unknown frame. See <https://wammu.eu/support/bugs/> for information how to report it.
 118
     Unknown connection type string. Check config file.
 119
@@ -1985,6 +1985,6 @@ With this settings, Gammu generates /tmp/gammu.log on each connection to
 phone and stores dump of communication there. You can also find some
 hints for improving support for your phone in this log.
 
-See <http://wammu.eu/support/bugs/> for more information on reporting bugs.
+See <https://wammu.eu/support/bugs/> for more information on reporting bugs.
 
 Please report bugs to `Gammu bug tracker <https://github.com/gammu/gammu/issues>`_.

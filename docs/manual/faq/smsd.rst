@@ -86,4 +86,4 @@ This can occasionally happen and can have several reasons.
 .. _MySQL: http://www.mysql.com/
 .. _PostgreSQL: http://www.postgresql.org/
 .. _libdbi: http://libdbi.sourceforge.net/
-.. _Gammu Phones Database: http://wammu.eu/phones/
+.. _Gammu Phones Database: https://wammu.eu/phones/

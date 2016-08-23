@@ -9,7 +9,7 @@ Prebuilt Binaries for Linux
 Many distributions come with prebuilt Gammu binaries, if you can use
 them, it is definitely the easiest thing. There are also binary packages
 of latest release built for many distributions available on Gammu home
-page <http://wammu.eu/gammu/>.
+page <https://wammu.eu/gammu/>.
 
 You can usually also find Gammu in your distribution, so unless you need a
 newer version, just install package from your distribution.
@@ -38,7 +38,7 @@ Gammu packages are included in Gentoo. Additionally source tarball contains
 Prebuilt Binaries for Windows
 -----------------------------
 
-You can download Windows binaries from <http://wammu.eu/gammu/>. For
+You can download Windows binaries from <https://wammu.eu/gammu/>. For
 Windows 95, 98 and NT 4.0 you will also need ShFolder DLL, which can be
 downloaded from Microsoft:
 

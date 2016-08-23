@@ -53,7 +53,7 @@
 
 #define ALL_MEMORY_TYPES "DC|MC|RC|ON|VM|SM|ME|MT|FD|SL"
 
-#define RSS_URL "http://wammu.eu/news/rss/"
+#define RSS_URL "https://wammu.eu/news/rss/"
 #define RSS_STABLE_STRING "Gammu stable version "
 #define RSS_TESTING_STRING "Gammu test version "
 
@@ -329,7 +329,7 @@ static void Version(int argc UNUSED, char *argv[]UNUSED)
 {
 	PrintVersion();
 
-	printf("%s\n", _("Copyright (C) 2003 - 2015 Michal Cihar <michal@cihar.com> and other authors."));
+	printf("%s\n", _("Copyright (C) 2003 - 2016 Michal Cihar <michal@cihar.com> and other authors."));
 
 	printf("\n");
 
@@ -341,7 +341,7 @@ static void Version(int argc UNUSED, char *argv[]UNUSED)
 
 	printf("\n");
 
-	printf("%s\n", _("Check <http://wammu.eu/gammu/> for updates."));
+	printf("%s\n", _("Check <https://wammu.eu/gammu/> for updates."));
 
 	printf("\n");
 }

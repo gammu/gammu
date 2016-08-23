@@ -78,7 +78,7 @@ not distributed with Gammu due to licensing reasons.
     On some phones, the Python for S60 2.0 will not start, in this case you
     need to install some additional support libraries coming with Python for S60 2.0 - 
     :file:`pips.sis`, :file:`ssl.sis` and :file:`stdioserver.sis`. You can get
-    all of them at http://wammu.eu/s60/ as well.
+    all of them at https://wammu.eu/s60/ as well.
 
 Installing Python for S60 and Series60 remote applet can be done in several
 ways:
@@ -112,10 +112,10 @@ Downloading from phone
 ++++++++++++++++++++++
 
 Downloading files from the phone and installing them directly. You can
-download all required files from http://wammu.eu/s60/.
+download all required files from https://wammu.eu/s60/.
 
 .. figure:: s60-download-qr.png
-   :target: http://wammu.eu/s60/
+   :target: https://wammu.eu/s60/
    :alt: QR code for download of applet.
    
    QR code for download of applet.

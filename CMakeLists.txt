@@ -1,5 +1,5 @@
-# cmake <http://www.cmake.org> build file for Gammu
-# Copyright (c) 2007 - 2015 Michal Cihar
+# cmake <https://cmake.org/> build file for Gammu
+# Copyright (c) 2007 - 2016 Michal Cihar
 # vim: expandtab sw=4 ts=4 sts=4:
 
 cmake_minimum_required (VERSION 2.8)
@@ -899,8 +899,8 @@ set (CPACK_COMPONENT_MEDIA_INSTALL_TYPES Full)
 if (WIN32 AND NOT CYGWIN)
   set (CPACK_PACKAGE_INSTALL_DIRECTORY "Gammu ${GAMMU_VERSION}")
   set (CPACK_NSIS_DISPLAY_NAME "Gammu ${GAMMU_VERSION}")
-  set (CPACK_NSIS_HELP_LINK "http://wammu.eu/support/")
-  set (CPACK_NSIS_URL_INFO_ABOUT "http://wammu.eu/gammu/")
+  set (CPACK_NSIS_HELP_LINK "https://wammu.eu/support/")
+  set (CPACK_NSIS_URL_INFO_ABOUT "https://wammu.eu/gammu/")
   set (CPACK_NSIS_CONTACT "michal@cihar.com")
   set (CPACK_NSIS_MODIFY_PATH ON)
   SET(CPACK_NSIS_EXTRA_INSTALL_COMMANDS "

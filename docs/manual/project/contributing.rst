@@ -5,7 +5,7 @@ We welcome contribution in any area, if you don't have developer skills, you
 can always contribute to :doc:`localization` or just `donate us money`_. In case you are
 interested in fixing some code, please read :doc:`../internal/index` to
 understand structure of Gammu code. We also maintain list of
-`wanted skills <http://wammu.eu/contribute/wanted/>`_ where you can find in
+`wanted skills <https://wammu.eu/contribute/wanted/>`_ where you can find in
 which areas we currently mostly lack manpower.
 
 Sending patches
@@ -49,4 +49,4 @@ To manually create patch you can use following steps:
 5. Call ``diff -rup -X .git gammu work > patchfile``.
 6. Send ``patchfile`` to us (you can use bug tracker or mailing list).
 
-.. _donate us money: http://wammu.eu/donate/
+.. _donate us money: https://wammu.eu/donate/

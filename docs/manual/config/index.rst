@@ -30,7 +30,7 @@ You can use :ref:`gammu-config` or :ref:`gammu-detect` to generate
 configuration file or start from :ref:`Fully documented example`.
 
 For hints about configuring your phone, you can check Gammu Phone
-Database <http://wammu.eu/phones/> to see what user users
+Database <https://wammu.eu/phones/> to see what user users
 experienced.
 
 This file use ini file syntax, see :ref:`ini`.

@@ -67,4 +67,4 @@ Are iPhone phones supported?
 
 Unfortunately no at the moment. Any help in this area is welcome.
 
-.. _Gammu Phones Database: http://wammu.eu/phones/
+.. _Gammu Phones Database: https://wammu.eu/phones/

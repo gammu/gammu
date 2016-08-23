@@ -11,7 +11,7 @@ Gammu family consists of several programs and libraries:
 :ref:`gammu`
     Command line utility to talk to the phone. It performs one time operations
     only.
-`Wammu <http://wammu.eu/wammu>`_
+`Wammu <https://wammu.eu/wammu>`_
     Graphical interface for Gammu, providing basic functions.
 :ref:`gammu-smsd`
     Daemon to receive and send messages using your phone.
@@ -30,7 +30,7 @@ Installing Gammu
 
 On most platforms you can install Gammu from binaries - most Linux
 distributions ship Gammu and for Windows you can download binaries from 
-`Gammu website <http://wammu.eu/download/>`_. You can find more detailed
+`Gammu website <https://wammu.eu/download/>`_. You can find more detailed
 instructions (including instructions for compiling from source) in
 :ref:`installing`.
 

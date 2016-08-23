@@ -16,4 +16,4 @@ the :file:`examples` subdirectory.
 
 .. seealso:: :ref:`python`, :ref:`python-gammu-examples`
 
-.. _Gammu: http://wammu.eu/gammu/
+.. _Gammu: https://wammu.eu/gammu/

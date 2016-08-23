@@ -18,8 +18,8 @@ Group:          Hardware/Mobile
 %else
 Group:          Applications/Communications
 %endif
-Url:            http://wammu.eu/gammu/
-Source0:        http://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.%{extension}
+Url:            https://wammu.eu/gammu/
+Source0:        https://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.%{extension}
 
 # Set to 0 to disable PostgreSQL support
 %define pqsql     1

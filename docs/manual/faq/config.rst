@@ -127,4 +127,4 @@ You can also find additional user experiences in `Gammu Phones Database`_.
 
 .. seealso:: :ref:`faq-phones`, :ref:`gammurc`
 
-.. _Gammu Phones Database: http://wammu.eu/phones/
+.. _Gammu Phones Database: https://wammu.eu/phones/

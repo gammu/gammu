@@ -1069,11 +1069,11 @@ GSM_Error DUMMY_GetWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *bookmark)
 {
 	switch (bookmark->Location) {
 		case 1:
-			EncodeUnicode(bookmark->Address, "http://blog.cihar.com/", 22);
+			EncodeUnicode(bookmark->Address, "https://blog.cihar.com/", 23);
 			EncodeUnicode(bookmark->Title, "Michals weblog", 14);
 			return ERR_NONE;
 		case 2:
-			EncodeUnicode(bookmark->Address, "http://wammu.eu/", 16);
+			EncodeUnicode(bookmark->Address, "https://wammu.eu/", 17);
 			EncodeUnicode(bookmark->Title, "Wammu website", 13);
 			return ERR_NONE;
 		default:

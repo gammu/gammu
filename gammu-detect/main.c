@@ -82,13 +82,13 @@ void print_version(void)
 	printf("  - %s\n", _("Windows serial port probing"));
 #endif
 	printf("\n");
-	printf("%s\n", _("Copyright (C) 2010 - 2011 Michal Cihar <michal@cihar.com> and other authors."));
+	printf("%s\n", _("Copyright (C) 2010 - 2016 Michal Cihar <michal@cihar.com> and other authors."));
 	printf("\n");
 	printf("%s\n", _("License GPLv2: GNU GPL version 2 <https://spdx.org/licenses/GPL-2.0>."));
 	printf("%s\n", _("This is free software: you are free to change and redistribute it."));
 	printf("%s\n", _("There is NO WARRANTY, to the extent permitted by law."));
 	printf("\n");
-	printf("%s\n", _("Check <http://wammu.eu/gammu/> for updates."));
+	printf("%s\n", _("Check <https://wammu.eu/gammu/> for updates."));
 	printf("\n");
 }
 
