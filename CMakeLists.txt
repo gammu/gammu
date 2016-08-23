@@ -423,6 +423,10 @@ if(MSVC)
     add_definitions(-D_WINSOCK_DEPRECATED_NO_WARNINGS=1)
     # The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name
     add_definitions(-D_CRT_NONSTDC_NO_WARNINGS=1)
+
+    # Generate PDB data even for release build
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /Zi")
+    set(CMAKE_SHARED_LINKER_FLAGS_RELEASE "${CMAKE_SHARED_LINKER_FLAGS_RELEASE} /DEBUG /OPT:REF /OPT:ICF")
 endif(MSVC)
 
 if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_MINGW OR
@@ -545,7 +549,6 @@ if(BORLAND)
     # Warn about unused vars
     MACRO_TUNE_COMPILER("-wuse")
 endif(BORLAND)
-
 
 # Define required libraries for gammu library if it is static
 if (BUILD_SHARED_LIBS)
