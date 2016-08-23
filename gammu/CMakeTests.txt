@@ -344,9 +344,6 @@ gammu_test_fail(getwapbookmark "Entry is empty" 3)
 
 if (ONLINE_TESTING AND CURL_FOUND)
     gammu_test(checkversion "")
-
-# Seems to be broken now
-#    gammu_test(getlocation "Number of samples;Could not connect to the server;Could not resolve the host name")
 endif (ONLINE_TESTING AND CURL_FOUND)
 
 # MMS decoding

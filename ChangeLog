@@ -26,6 +26,7 @@ ChangeLog
 [-] * Fixed various Windows compilation issues.
 [-] * Fixed several resource leaks.
 [-] * Create outbox SMS atomically in FILES backend.
+[!] * Removed getlocation command as we no longer fit into their usage policy.
 
 20160816 - 1.37.4
     

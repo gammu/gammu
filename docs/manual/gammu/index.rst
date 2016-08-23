@@ -1466,12 +1466,6 @@ Phone information commands
 
 .. option:: getdisplaystatus
 
-.. option:: getlocation
-
-    Gets network information from phone (same as networkinfo)
-    and prints location (latitude and longitude) based on information from
-    `OpenCellID <http://opencellid.org>`_.
-
 .. option:: getsecuritystatus
 
     Show, if phone wait for security code (like PIN, PUK, etc.) or not
