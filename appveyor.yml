@@ -20,7 +20,7 @@ environment:
 clone_folder: c:\projects\gammu
 
 before_build:
-  - ps: '.\test\install_opencppcoverage.ps1'
+  - .\test\install_opencppcoverage.ps1
   - appveyor DownloadFile https://download.microsoft.com/download/f/2/6/f263ac46-1fe9-4ae9-8fd3-21102100ebf5/msxsl.exe
   - cmd: >-
          "%MYSQL_PATH%\\bin\\mysql.exe" "--password=Password12!" "--user=root" "-e" "create database smsd;"
