@@ -44,7 +44,7 @@ test_script:
         $failure = 0;
         try 
         {
-            OpenCppCoverage.exe --quiet --export_type cobertura:coverage.xml --modules c:\\projects\\gammu --sources c:\\projects\\gammu -- ctest.exe --output-on-failure --no-compress-output --dashboard ExperimentalTest --build-config Release;
+            OpenCppCoverage.exe --quiet --export_type cobertura:coverage.xml --modules c:\\projects\\gammu --sources c:\\projects\\gammu -- (Get-Command ctest.exe) --output-on-failure --no-compress-output --dashboard ExperimentalTest --build-config Release;
         }
         catch 
         {
