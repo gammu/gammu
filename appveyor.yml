@@ -22,6 +22,7 @@ environment:
 clone_folder: c:\projects\gammu
 
 install:
+  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
   - "SET PATH=C:\\Python27;C:\\Python27\\Scripts;%PATH%"
   - ps: .\tests\install_opencppcoverage.ps1
   - appveyor DownloadFile https://download.microsoft.com/download/f/2/6/f263ac46-1fe9-4ae9-8fd3-21102100ebf5/msxsl.exe
