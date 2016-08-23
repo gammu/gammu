@@ -18,7 +18,7 @@ environment:
 clone_folder: c:\projects\gammu
 
 before_build:
-  - appveyor-retry nuget install OpenCover
+  - ps: '.\test\install_opencppcoverage.ps1'
   - appveyor DownloadFile https://download.microsoft.com/download/f/2/6/f263ac46-1fe9-4ae9-8fd3-21102100ebf5/msxsl.exe
   - cmd: >-
          "%MYSQL_PATH%\\bin\\mysql.exe" "--password=Password12!" "--user=root" "-e" "create database smsd;"
@@ -35,12 +35,12 @@ after_build:
   - cmake --build .  --config Release --target package
 
 test_script:
-  - "SET PATH=%MYSQL_PATH%\\bin;%POSTGRESQL_PATH%\\bin;c:\\projects\\gammu;c:\\projects\\gammu\\packages\\OpenCover\\tools\\%PATH%"
+  - "SET PATH=%MYSQL_PATH%\\bin;%POSTGRESQL_PATH%\\bin;c:\\projects\\gammu;%PATH%"
   - ps: >-
         $failure = 0;
         try 
         {
-            OpenCover.Console.exe -register:user -target:ctest.exe -targetargs:"--output-on-failure --no-compress-output --dashboard ExperimentalTest --build-config Release" -returntargetcode  -output:.\coverage.xml;
+            OpenCppCoverage.exe --quiet --export_type cobertura:coverage.xml --modules c:\\projects\\gammu --sources c:\\projects\\gammu -- ctest.exe --output-on-failure --no-compress-output --dashboard ExperimentalTest --build-config Release;
         }
         catch 
         {
