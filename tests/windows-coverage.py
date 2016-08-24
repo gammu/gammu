@@ -207,6 +207,12 @@ COVERAGE_CMD =  ['OpenCppCoverage.exe', '--quiet', '--export_type', 'cobertura:c
 
 
 def main():
+    for arg in sys.argv:
+        if arg.startswith('--log-file='):
+            filename = arg.split('=', 1)[1]
+            # Create empty file
+            open(filename, 'w')
+            break
     command = sys.argv[sys.argv.index('--separator') + 1:]
     result = subprocess.call(COVERAGE_CMD + command)
     merger = CoverageMerge(COVERAGE_XML, [COVERAGE_XML, 'coverage-tmp.xml'])
