@@ -32,9 +32,9 @@ class CoverageMerge (object):
     def __init__ (self, filename, xmlfiles):
         self.xmlfiles = xmlfiles
         self.finalxml = filename
-        self.filteronly = options.filteronly
-        self.filtersuffix = options.suffix
-        self.packagefilters = options.packagefilters
+        self.filteronly = False
+        self.filtersuffix = ''
+        self.packagefilters = None
 
     def execute_merge (self):
         # prepare filters
@@ -199,11 +199,6 @@ class CoverageMerge (object):
                 line1.__setitem__ (0, line2.__getitem__ (0))
 
         return line1
-
-
-def merge (options, args):
-    """Simple iface method for c api"""
-    return CoverageMerge (options, args).execute_merge ()
 
 
 ROOT_DIR = 'c:/projects/gammu'
