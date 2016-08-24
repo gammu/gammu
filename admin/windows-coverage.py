@@ -35,17 +35,18 @@ def main():
     # Create empty file
     open(logfile, 'w')
 
-    # Create output directory
-    if not os.path.exists(COVERAGE_DIR):
-        os.makedirs(COVERAGE_DIR)
-
     # Figure out test number
     test_num = os.path.basename(logfile).split('.')[1]
 
+    # Create output directory
+    test_dir = os.path.join(COVERAGE_DIR, test_num)
+    if not os.path.exists(test_dir):
+        os.makedirs(test_dir)
+
     # Coverage output
     coverage_file = os.path.join(
-        COVERAGE_DIR,
-        'coverage-{0}.xml'.format(test_num)
+        test_dir,
+        'cobertura.xml'
     )
     cmd = [
         'OpenCppCoverage.exe',

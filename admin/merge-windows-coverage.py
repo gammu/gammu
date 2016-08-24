@@ -160,7 +160,7 @@ class CoverageMerge(object):
 
 
 COVERAGE_XML = 'c:\\projects\\gammu\\coverage.xml'
-COVERAGE_MASK = 'c:\\projects\\gammu\\coverage\\*.*'
+COVERAGE_MASK = 'c:\\projects\\gammu\\coverage\\*\\cobertura.xml'
 
 
 def main():
