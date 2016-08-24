@@ -21,7 +21,6 @@ LINES_ROOT = 'lines'
 class CoverageMerge(object):
     def __init__(self, filename):
         self.finalxml = filename
-        self.filtersuffix = ''
 
     def execute_merge(self, xmlfiles):
         # parse first one
