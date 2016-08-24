@@ -19,20 +19,19 @@ LINES_ROOT = 'lines'
 
 
 class CoverageMerge(object):
-    def __init__(self, filename, xmlfiles):
-        self.xmlfiles = xmlfiles
+    def __init__(self, filename):
         self.finalxml = filename
         self.filtersuffix = ''
 
-    def execute_merge(self):
+    def execute_merge(self, xmlfiles):
         # parse first one
-        print 'Read:', self.xmlfiles[0]
-        basexml = ET.parse(self.xmlfiles[0])
+        print 'Read:', xmlfiles[0]
+        basexml = ET.parse(xmlfiles[0])
 
         # merge others
-        total = len(self.xmlfiles)
+        total = len(xmlfiles)
         for i in range(1, total):
-            filename = self.xmlfiles[i]
+            filename = xmlfiles[i]
             print 'Merge ({0}/{1}): {2}'.format(i, total, filename)
             addxml = ET.parse(filename)
             self.merge_xml(basexml, addxml)
@@ -168,7 +167,7 @@ COVERAGE_MASK = 'c:\\projects\\gammu\\coverage\\*.*'
 def main():
     matches = glob.glob(COVERAGE_MASK)
     if matches:
-        CoverageMerge(COVERAGE_XML, matches).execute_merge()
+        CoverageMerge(COVERAGE_XML).execute_merge(matches)
     else:
         print 'No files matched: {0}'.format(COVERAGE_MASK)
 
