@@ -244,6 +244,8 @@ COVERAGE_CMD =  ['OpenCppCoverage.exe', '--quiet', '--export_type', 'cobertura:c
 def main():
     command = sys.argv[sys.argv.index('--separator') + 1:]
     subprocess.call(COVERAGE_CMD + command)
+    subprocess.call(['codecov', '-X', 'gcov', '-F', '-'.join((os.environ['CODECOV_FLAG'], os.environ['CONFIGURATION'])), '-f', 'coverage-tmp.xml'])
+    os.remove('coverage-tmp.xml')
 
 
 if __name__ == '__main__':
