@@ -61,7 +61,7 @@ test_script:
         }
         finally
         {
-            Copy-Item Testing\$(Get-Content Testing\TAG -TotalCount 1)\Test.xml test.xml;
+            Copy-Item Testing\$(Get-Content Testing\TAG -TotalCount 1)\DynamicAnalysis.xml test.xml;
             msxsl test.xml admin/ctest-to-junit.xsl -o junit.xml;
             # upload results to AppVeyor
             $wc = New-Object 'System.Net.WebClient';
