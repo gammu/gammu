@@ -53,7 +53,12 @@ test_script:
         $failure = 0;
         try 
         {
-            ctest --output-on-failure --no-compress-output --dashboard ExperimentalMemCheck --build-config ($env:CONFIGURATION);
+            if (($env:CONFIGURATION) -eq "Release" ) {
+                $mode = "ExperimentalTest";
+            } else {
+                $mode = "ExperimentalMemCheck";
+            }
+            ctest --output-on-failure --no-compress-output --dashboard $mode --build-config ($env:CONFIGURATION);
         }
         catch 
         {
