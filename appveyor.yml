@@ -39,10 +39,8 @@ before_build:
          -DPSQL_TESTING=ON -DPSQL_USER=postgres "-DPSQL_PASSWORD=Password12!" 
          -DMEMORYCHECK_COMMAND="c:/projects/gammu/admin/windows-coverage.bat" -DMEMORYCHECK_COMMAND_OPTIONS="--separator" -DMEMORYCHECK_TYPE=Valgrind
 
-build:
-  project: ALL_BUILD.vcxproj
-  parallel: true
-  verbosity: quiet
+build_script:
+  - cmake --build .  --config %CONFIGURATION%
 
 after_build:
   - cmake --build .  --config %CONFIGURATION% --target package
