@@ -202,13 +202,14 @@ class CoverageMerge (object):
 
 
 ROOT_DIR = 'c:/projects/gammu'
+COVERAGE_XML = 'c:/projects/gammu/coverage.xml'
 COVERAGE_CMD =  ['OpenCppCoverage.exe', '--quiet', '--export_type', 'cobertura:coverage-tmp.xml', '--modules', ROOT_DIR, '--sources', ROOT_DIR, '--']
 
 
 def main():
     command = sys.argv[sys.argv.index('--separator') + 1:]
     result = subprocess.call(COVERAGE_CMD + command)
-    subprocess.call(['codecov', '-X', 'gcov', '-F', '_'.join((os.environ['CODECOV_FLAG'], os.environ['CONFIGURATION'])), '-f', 'coverage-tmp.xml'])
+    merger = CoverageMerge(COVERAGE_XML, [COVERAGE_XML, 'coverage-tmp.xml'])
     os.remove('coverage-tmp.xml')
     sys.exit(result)
 
