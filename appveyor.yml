@@ -78,6 +78,7 @@ test_script:
 
 after_test:
   - codecov -X gcov -F "%CODECOV_FLAG%_%CONFIGURATION%" -f "coverage.xml"
+  - codecov -X gcov -F "%CODECOV_FLAG%_%CONFIGURATION%" -f "coverage-2.xml"
 
 services:
   - mysql
@@ -97,5 +98,5 @@ artifacts:
   - path: junit.xml
     name: Transformed test results
 
-on_finish:
-  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+#on_finish:
+#  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
