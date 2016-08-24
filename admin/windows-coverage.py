@@ -18,6 +18,10 @@ import re
 import subprocess
 import shutil
 
+
+# The coverage merge code is based on
+# https://github.com/x3mSpeedy/Flow123d-python-utils/blob/master/src/coverage/coverage_merge_module.py
+
 # constants
 PACKAGES_LIST = 'packages/package'
 PACKAGES_ROOT = 'packages'
