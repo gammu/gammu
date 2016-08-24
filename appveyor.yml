@@ -72,7 +72,7 @@ test_script:
         }
 
 after_test:
-#  - codecov -X gcov -F "%CODECOV_FLAG%-%CONFIGURATION%" -f "coverage.xml"
+  - codecov -X gcov -F "%CODECOV_FLAG%_%CONFIGURATION%" -f "coverage.xml"
 
 services:
   - mysql
