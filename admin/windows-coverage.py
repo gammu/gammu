@@ -206,7 +206,7 @@ class CoverageMerge (object):
         return line1
 
 
-ROOT_DIR = 'c:/projects/gammu'
+ROOT_DIR = 'c:\\projects\\gammu'
 COVERAGE_XML = 'c:/projects/gammu/coverage.xml'
 COVERAGE_TMP = 'coverage-tmp.xml'
 COVERAGE_TMP_FULL = 'coverage-full.xml'
