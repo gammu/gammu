@@ -26,12 +26,8 @@ class CoverageMerge(object):
         self.finalxml = filename
         self.filteronly = False
         self.filtersuffix = ''
-        self.packagefilters = None
 
     def execute_merge(self):
-        # prepare filters
-        self.prepare_packagefilters()
-
         if self.filteronly:
             # filter all given files
             currfile = 1
@@ -97,35 +93,7 @@ class CoverageMerge(object):
 
     def filter_xml(self, xmlfile):
         xmlroot = xmlfile.getroot()
-        packageroot = xmlfile.find(PACKAGES_ROOT)
-        packages = xmlroot.findall(PACKAGES_LIST)
-
-        # delete nodes from tree AND from list
-        included = []
-        for pckg in packages:
-            name = pckg.get('name')
-            if not self.include_package(name):
-                packageroot.remove(pckg)
-            else:
-                included.append(pckg)
-        return included
-
-    def prepare_packagefilters(self):
-        if not self.packagefilters:
-            return None
-
-        # create simple regexp from given filter
-        for i in range(len(self.packagefilters)):
-            self.packagefilters[i] = '^' + self.packagefilters[i].replace('.', '\.').replace('*', '.*') + '$'
-
-    def include_package(self, name):
-        if not self.packagefilters:
-            return True
-
-        for packagefilter in self.packagefilters:
-            if re.search(packagefilter, name):
-                return True
-        return False
+        return xmlroot.findall(PACKAGES_LIST)
 
     def get_attributes_chain(self, obj, attrs):
         """Return a joined arguments of object based on given arguments"""
