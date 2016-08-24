@@ -16,6 +16,7 @@ import os
 import xml.etree.ElementTree as ET
 import re
 import subprocess
+import shutil
 
 # constants
 PACKAGES_LIST = 'packages/package'
