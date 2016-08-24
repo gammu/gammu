@@ -30,14 +30,11 @@ class CoverageMerge(object):
         # merge all given files
         totalfiles = len(self.xmlfiles)
 
-        currfile = 1
         self.merge_xml(self.xmlfiles[0], self.xmlfiles[1], self.finalxml)
 
-        currfile = 2
         for i in range(totalfiles - 2):
             xmlfile = self.xmlfiles[i + 2]
             self.merge_xml(self.finalxml, xmlfile, self.finalxml)
-            currfile += 1
 
     def merge_xml(self, xmlfile1, xmlfile2, outputfile):
         # parse
