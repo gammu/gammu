@@ -4,9 +4,7 @@
 # https://github.com/x3mSpeedy/Flow123d-python-utils/blob/master/src/coverage/coverage_merge_module.py
 
 
-import sys
 import xml.etree.cElementTree as ET
-import re
 import glob
 
 # constants
@@ -27,20 +25,18 @@ class CoverageMerge(object):
         self.filtersuffix = ''
 
     def execute_merge(self):
-        # merge all given files
-        totalfiles = len(self.xmlfiles)
+        # parse first one
+        basexml = ET.parse(self.xmlfiles[0])
 
-        self.merge_xml(self.xmlfiles[0], self.xmlfiles[1], self.finalxml)
+        # merge others
+        for i in range(len(self.xmlfiles) - 1):
+            addxml = ET.parse(self.xmlfiles[i + 1])
+            self.merge_xml(basexml, addxml)
 
-        for i in range(totalfiles - 2):
-            xmlfile = self.xmlfiles[i + 2]
-            self.merge_xml(self.finalxml, xmlfile, self.finalxml)
+        # write result to output file
+        basexml.write(self.finalxml, encoding="UTF-8", xml_declaration=True)
 
-    def merge_xml(self, xmlfile1, xmlfile2, outputfile):
-        # parse
-        xml1 = ET.parse(xmlfile1)
-        xml2 = ET.parse(xmlfile2)
-
+    def merge_xml(self, xml1, xml2):
         # get packages
         packages1 = self.filter_xml(xml1)
         packages2 = self.filter_xml(xml2)
@@ -56,9 +52,6 @@ class CoverageMerge(object):
             'name',
             self.merge_packages
         )
-
-        # write result to output file
-        xml1.write(outputfile, encoding="UTF-8", xml_declaration=True)
 
     def filter_xml(self, xmlfile):
         xmlroot = xmlfile.getroot()
