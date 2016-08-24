@@ -14,7 +14,6 @@
 import sys
 import os
 import xml.etree.ElementTree as ET
-import logging
 import re
 import subprocess
 
@@ -33,7 +32,6 @@ class CoverageMerge (object):
     def __init__ (self, path, args):
         self.path = options.path
         self.xmlfiles = args
-        self.loglevel = getattr (logging, options.loglevel.upper ())
         self.finalxml = os.path.join (self.path, options.filename)
         self.filteronly = options.filteronly
         self.filtersuffix = options.suffix
@@ -41,7 +39,6 @@ class CoverageMerge (object):
 
     def execute_merge (self):
         # get arguments
-        logging.basicConfig (level=self.loglevel, format='%(levelname)s %(asctime)s: %(message)s', datefmt='%x %X')
 
         if not self.xmlfiles:
             for filename in os.listdir (self.path):
@@ -69,7 +66,6 @@ class CoverageMerge (object):
             for xmlfile in self.xmlfiles:
                 xml = ET.parse (xmlfile)
                 self.filter_xml (xml)
-                logging.debug ('{1}/{2} filtering: {0}'.format (xmlfile, currfile, totalfiles))
                 xml.write (xmlfile + self.filtersuffix, encoding="UTF-8", xml_declaration=True)
                 currfile += 1
         else:
@@ -79,7 +75,6 @@ class CoverageMerge (object):
             # special case if only one file was given
             # filter given file and save it
             if (totalfiles == 1):
-                logging.warning ('Only one file given!')
                 xmlfile = self.xmlfiles.pop (0)
                 xml = ET.parse (xmlfile)
                 self.filter_xml (xml)
@@ -87,14 +82,11 @@ class CoverageMerge (object):
                 sys.exit (0)
 
             currfile = 1
-            logging.debug (
-                '{2}/{3} merging: {0} & {1}'.format (self.xmlfiles[0], self.xmlfiles[1], currfile, totalfiles - 1))
             self.merge_xml (self.xmlfiles[0], self.xmlfiles[1], self.finalxml)
 
             currfile = 2
             for i in range (totalfiles - 2):
                 xmlfile = self.xmlfiles[i + 2]
-                logging.debug ('{2}/{3} merging: {0} & {1}'.format (self.finalxml, xmlfile, currfile, totalfiles - 1))
                 self.merge_xml (self.finalxml, xmlfile, self.finalxml)
                 currfile += 1
 
@@ -125,15 +117,11 @@ class CoverageMerge (object):
 
         # delete nodes from tree AND from list
         included = []
-        if self.packagefilters:
-            logging.debug ('excluding packages:')
         for pckg in packages:
             name = pckg.get ('name')
             if not self.include_package (name):
-                logging.debug ('excluding package "{0}"'.format (name))
                 packageroot.remove (pckg)
             else:
-                logging.debug ('preserving package "{0}"'.format (name))
                 included.append (pckg)
         return included
 
