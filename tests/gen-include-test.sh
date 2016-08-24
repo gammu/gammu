@@ -38,7 +38,7 @@ for x in `ls ../include/ | grep -v gammu.h | grep -v CMake` ; do
 		echo "#endif"
 		echo
 		echo "int main(int argc UNUSED, char **argv UNUSED)"
-        echo "{"
+		echo "{"
 		echo "	return 0;"
 		echo "}"
 	) >  $filename
@@ -47,6 +47,7 @@ for x in `ls ../include/ | grep -v gammu.h | grep -v CMake` ; do
 	cecho
 	cecho "# Test for header $x"
 	cecho "add_executable($executable $filename)"
+	cecho "add_coverage($executable)"
 	cecho "target_link_libraries($executable libGammu \${LIBINTL_LIBRARIES})"
 	cecho "add_test($executable \"\${GAMMU_TEST_PATH}/$executable\${CMAKE_EXECUTABLE_SUFFIX}\")"
 
