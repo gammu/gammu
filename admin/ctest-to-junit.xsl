@@ -10,7 +10,7 @@
 				tests="{$numberOfTests}" time="0"
 				failures="{$numberOfFailures}"  errors="0"
 				skipped="0">
-			<xsl:for-each select="//Site/Testing/Test">
+			<xsl:for-each select="//Site/Testing/Test | //Site/DynamicAnalysis/Test">
 					<xsl:variable name="testName" select="translate(Name, '-', '_')"/>
 					<xsl:variable name="duration" select="Results/NamedMeasurement[@name='Execution Time']/Value"/>
 					<xsl:variable name="status" select="@Status"/>

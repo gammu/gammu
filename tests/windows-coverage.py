@@ -203,7 +203,7 @@ class CoverageMerge (object):
 
 ROOT_DIR = 'c:/projects/gammu'
 COVERAGE_XML = 'c:/projects/gammu/coverage.xml'
-COVERAGE_CMD =  ['OpenCppCoverage.exe', '--quiet', '--export_type', 'cobertura:coverage-tmp.xml', '--modules', ROOT_DIR, '--sources', ROOT_DIR, '--']
+COVERAGE_CMD = ['OpenCppCoverage.exe', '--quiet', '--export_type', 'cobertura:coverage-tmp.xml', '--modules', ROOT_DIR, '--sources', ROOT_DIR, '--']
 
 
 def main():
