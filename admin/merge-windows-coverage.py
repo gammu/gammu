@@ -30,19 +30,6 @@ class CoverageMerge(object):
         # merge all given files
         totalfiles = len(self.xmlfiles)
 
-        # special case if only one file was given
-        # filter given file and save it
-        if totalfiles == 1:
-            xmlfile = self.xmlfiles.pop(0)
-            xml = ET.parse(xmlfile)
-            self.filter_xml(xml)
-            xml.write(
-                self.finalxml,
-                encoding="UTF-8",
-                xml_declaration=True
-            )
-            sys.exit(0)
-
         currfile = 1
         self.merge_xml(self.xmlfiles[0], self.xmlfiles[1], self.finalxml)
 
