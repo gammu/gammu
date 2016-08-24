@@ -204,6 +204,8 @@ class CoverageMerge (object):
 
 ROOT_DIR = 'c:/projects/gammu'
 COVERAGE_XML = 'c:/projects/gammu/coverage.xml'
+COVERAGE_TMP = 'coverage-tmp.xml'
+COVERAGE_TMP_FULL = 'coverage-full.xml'
 COVERAGE_CMD = ['OpenCppCoverage.exe', '--quiet', '--export_type', 'cobertura:coverage-tmp.xml', '--modules', ROOT_DIR, '--sources', ROOT_DIR, '--']
 
 
@@ -218,13 +220,13 @@ def main():
     result = subprocess.call(COVERAGE_CMD + command)
     if os.path.exists(COVERAGE_XML):
         # Merge coverage
-        shutil.copy(COVERAGE_XML, 'coverage-full.xml')
-        merger = CoverageMerge(COVERAGE_XML, ['coverage-full.xml', 'coverage-tmp.xml']).execute_merge()
-        os.remove('coverage-tmp.xml')
-        os.remove('coverage-full.xml')
+        shutil.copy(COVERAGE_XML, COVERAGE_TMP_FULL)
+        merger = CoverageMerge(COVERAGE_XML, [COVERAGE_TMP_FULL, COVERAGE_TMP]).execute_merge()
+        os.remove(COVERAGE_TMP)
+        os.remove(COVERAGE_TMP_FULL)
     else:
         # Initial coverage report
-        shutil.move('coverage-tmp.xml', COVERAGE_XML)
+        shutil.move(COVERAGE_TMP, COVERAGE_XML)
     sys.exit(result)
 
 
