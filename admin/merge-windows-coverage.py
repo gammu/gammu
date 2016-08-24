@@ -236,7 +236,11 @@ COVERAGE_MASK = 'c:\\projects\\gammu\\coverage\\*.*'
 
 
 def main():
-    CoverageMerge(COVERAGE_XML, glob.glob(COVERAGE_MASK)).execute_merge()
+    matches = glob.glob(COVERAGE_MASK)
+    if matches:
+        CoverageMerge(COVERAGE_XML, matches).execute_merge()
+    else:
+        print 'No files matched: {0}'.format(COVERAGE_MASK)
 
 
 if __name__ == '__main__':
