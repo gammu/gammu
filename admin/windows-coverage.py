@@ -35,6 +35,10 @@ def main():
     # Create empty file
     open(logfile, 'w')
 
+    # Create output directory
+    if not os.path.exists(COVERAGE_DIR):
+        os.makedirs(COVERAGE_DIR)
+
     # Figure out test number
     test_num = os.path.basename(logfile).split('.')[1]
 
