@@ -222,7 +222,6 @@ def main():
             break
     command = sys.argv[sys.argv.index('--separator') + 1:]
     result = subprocess.call(COVERAGE_CMD + command)
-    shutil.copy(COVERAGE_TMP, 'c:/projects/gammu/coverage-2.xml')
     if os.path.exists(COVERAGE_XML):
         # Merge coverage
         shutil.copy(COVERAGE_XML, COVERAGE_TMP_FULL)
