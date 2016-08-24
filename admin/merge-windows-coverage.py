@@ -29,8 +29,8 @@ class CoverageMerge(object):
         basexml = ET.parse(self.xmlfiles[0])
 
         # merge others
-        for i in range(len(self.xmlfiles) - 1):
-            addxml = ET.parse(self.xmlfiles[i + 1])
+        for i in range(1, len(self.xmlfiles)):
+            addxml = ET.parse(self.xmlfiles[i])
             self.merge_xml(basexml, addxml)
 
         # write result to output file
