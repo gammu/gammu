@@ -1,1 +1,1 @@
-python c:\projects\gammu\tests\windows-coverage.py %*
+@python c:\projects\gammu\tests\windows-coverage.py %*
