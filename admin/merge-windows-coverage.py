@@ -26,11 +26,15 @@ class CoverageMerge(object):
 
     def execute_merge(self):
         # parse first one
+        print 'Read:', self.xmlfiles[0]
         basexml = ET.parse(self.xmlfiles[0])
 
         # merge others
-        for i in range(1, len(self.xmlfiles)):
-            addxml = ET.parse(self.xmlfiles[i])
+        total = len(self.xmlfiles)
+        for i in range(1, total):
+            filename = self.xmlfiles[i]
+            print 'Merge ({0}/{1}): {2}'.format(i, total, filename)
+            addxml = ET.parse(filename)
             self.merge_xml(basexml, addxml)
 
         # write result to output file
