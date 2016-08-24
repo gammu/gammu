@@ -78,7 +78,7 @@ test_script:
 
 after_test:
   - curl -o codecov.sh -s https://codecov.io/bash
-  - bash codecov.sh -X gcov -F "%CODECOV_FLAG%,%CONFIGURATION%"
+  - bash -x codecov.sh -X gcov -F "%CODECOV_FLAG%,%CONFIGURATION%"
 #  - admin\merge-windows-coverage.py
 #  - codecov -X gcov -F "%CODECOV_FLAG%_%CONFIGURATION%" -f "coverage.xml"
 
