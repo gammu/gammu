@@ -24,48 +24,33 @@ class CoverageMerge(object):
     def __init__(self, filename, xmlfiles):
         self.xmlfiles = xmlfiles
         self.finalxml = filename
-        self.filteronly = False
         self.filtersuffix = ''
 
     def execute_merge(self):
-        if self.filteronly:
-            # filter all given files
-            currfile = 1
-            totalfiles = len(self.xmlfiles)
-            for xmlfile in self.xmlfiles:
-                xml = ET.parse(xmlfile)
-                self.filter_xml(xml)
-                xml.write(
-                    xmlfile + self.filtersuffix,
-                    encoding="UTF-8",
-                    xml_declaration=True
-                )
-                currfile += 1
-        else:
-            # merge all given files
-            totalfiles = len(self.xmlfiles)
+        # merge all given files
+        totalfiles = len(self.xmlfiles)
 
-            # special case if only one file was given
-            # filter given file and save it
-            if totalfiles == 1:
-                xmlfile = self.xmlfiles.pop(0)
-                xml = ET.parse(xmlfile)
-                self.filter_xml(xml)
-                xml.write(
-                    self.finalxml,
-                    encoding="UTF-8",
-                    xml_declaration=True
-                )
-                sys.exit(0)
+        # special case if only one file was given
+        # filter given file and save it
+        if totalfiles == 1:
+            xmlfile = self.xmlfiles.pop(0)
+            xml = ET.parse(xmlfile)
+            self.filter_xml(xml)
+            xml.write(
+                self.finalxml,
+                encoding="UTF-8",
+                xml_declaration=True
+            )
+            sys.exit(0)
 
-            currfile = 1
-            self.merge_xml(self.xmlfiles[0], self.xmlfiles[1], self.finalxml)
+        currfile = 1
+        self.merge_xml(self.xmlfiles[0], self.xmlfiles[1], self.finalxml)
 
-            currfile = 2
-            for i in range(totalfiles - 2):
-                xmlfile = self.xmlfiles[i + 2]
-                self.merge_xml(self.finalxml, xmlfile, self.finalxml)
-                currfile += 1
+        currfile = 2
+        for i in range(totalfiles - 2):
+            xmlfile = self.xmlfiles[i + 2]
+            self.merge_xml(self.finalxml, xmlfile, self.finalxml)
+            currfile += 1
 
     def merge_xml(self, xmlfile1, xmlfile2, outputfile):
         # parse
