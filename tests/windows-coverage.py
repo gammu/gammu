@@ -215,8 +215,10 @@ def main():
             break
     command = sys.argv[sys.argv.index('--separator') + 1:]
     result = subprocess.call(COVERAGE_CMD + command)
-    merger = CoverageMerge(COVERAGE_XML, [COVERAGE_XML, 'coverage-tmp.xml'])
+    shutil.copy(COVERAGE_XML, 'coverage-full.xml')
+    merger = CoverageMerge(COVERAGE_XML, ['coverage-full.xml', 'coverage-tmp.xml']).execute_merge()
     os.remove('coverage-tmp.xml')
+    os.remove('coverage-full.xml')
     sys.exit(result)
 
 
