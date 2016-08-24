@@ -92,6 +92,10 @@ artifacts:
     name: CMake errors
   - path: CMakeCache.txt
     name: CMake cache
+  - path: test.xml
+    name: Test results
+  - path: junit.xml
+    name: Transformed test results
 
 #on_finish:
 #  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
