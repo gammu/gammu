@@ -4,8 +4,8 @@
 	<xsl:template match="/">
 		<testsuites>
 			<xsl:variable name="buildName" select="//Site/@BuildName"/>
-			<xsl:variable name="numberOfTests" select="count(//Site/Testing/Test)"/>
-			<xsl:variable name="numberOfFailures" select="count(//Site/Testing/Test[@Status!='passed'])" />
+			<xsl:variable name="numberOfTests" select="count(//Site/Testing/Test | //Site/DynamicAnalysis/Test)"/>
+			<xsl:variable name="numberOfFailures" select="count(//Site/Testing/Test[@Status!='passed'] | //Site/DynamicAnalysis/Test[@Status!='passed'])" />
 			<testsuite name="CTest"
 				tests="{$numberOfTests}" time="0"
 				failures="{$numberOfFailures}"  errors="0"
