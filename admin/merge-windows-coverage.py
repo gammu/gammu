@@ -38,8 +38,8 @@ class CoverageMerge(object):
 
     def merge_xml(self, xml1, xml2):
         # get packages
-        packages1 = self.filter_xml(xml1)
-        packages2 = self.filter_xml(xml2)
+        packages1 = xml1.findall(PACKAGES_LIST)
+        packages2 = xml2.findall(PACKAGES_LIST)
 
         # find root
         packages1root = xml1.find(PACKAGES_ROOT)
@@ -52,10 +52,6 @@ class CoverageMerge(object):
             'name',
             self.merge_packages
         )
-
-    def filter_xml(self, xmlfile):
-        xmlroot = xmlfile.getroot()
-        return xmlroot.findall(PACKAGES_LIST)
 
     def get_attributes_chain(self, obj, attrs):
         """Return a joined arguments of object based on given arguments"""
