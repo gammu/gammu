@@ -29,33 +29,14 @@ LINES_ROOT = 'lines'
 
 
 class CoverageMerge (object):
-    def __init__ (self, path, args):
-        self.path = options.path
-        self.xmlfiles = args
-        self.finalxml = os.path.join (self.path, options.filename)
+    def __init__ (self, filename, xmlfiles):
+        self.xmlfiles = xmlfiles
+        self.finalxml = filename
         self.filteronly = options.filteronly
         self.filtersuffix = options.suffix
         self.packagefilters = options.packagefilters
 
     def execute_merge (self):
-        # get arguments
-
-        if not self.xmlfiles:
-            for filename in os.listdir (self.path):
-                if not filename.endswith ('.xml'):
-                    continue
-                fullname = os.path.join (self.path, filename)
-                if fullname == self.finalxml:
-                    continue
-                self.xmlfiles.append (fullname)
-
-            if not self.xmlfiles:
-                print 'No xml files found!'
-                sys.exit (1)
-
-        else:
-            self.xmlfiles = [self.path + filename for filename in self.xmlfiles]
-
         # prepare filters
         self.prepare_packagefilters ()
 
