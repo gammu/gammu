@@ -53,7 +53,7 @@ test_script:
         $failure = 0;
         if (($env:CONFIGURATION) -eq "Debug" ) {
             # Create initial coverage
-            OpenCppCoverage.exe --quiet --export_type:binary=coverage.cov --modules c:\projects\gammu --sources c:\projects\gammu -- gammu\Debug\gammu.exe version;
+            OpenCppCoverage.exe --quiet --export_type=binary:coverage.cov --modules c:\projects\gammu --sources c:\projects\gammu -- gammu\Debug\gammu.exe version;
         }
         try 
         {
@@ -81,7 +81,7 @@ test_script:
         }
         if (($env:CONFIGURATION) -eq "Debug" ) {
             # Final coverage merge
-            OpenCppCoverage.exe --quiet --input_coverage=coverage.cov --export_type:cobertura=cobertura.xml --modules c:\projects\gammu --sources c:\projects\gammu -- gammu\Debug\gammu.exe version;
+            OpenCppCoverage.exe --quiet --input_coverage=coverage.cov --export_type=cobertura:cobertura.xml --modules c:\projects\gammu --sources c:\projects\gammu -- gammu\Debug\gammu.exe version;
         }
 
 after_test:
