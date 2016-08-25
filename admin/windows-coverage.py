@@ -43,17 +43,17 @@ def main():
     test_block = int(test_num) / 100
     coverage_tmp = COVERAGE_TMP % test_block
     coverage_bin = COVERAGE_BIN % test_block
+    coverage_bin = COVERAGE_BIN % test_num
 
     # Create temporary file for coverage merge
-    if os.path.exists(coverage_tmp):
-        os.remove(coverage_tmp)
-    os.rename(coverage_bin, coverage_tmp)
+#    if os.path.exists(coverage_tmp):
+#        os.remove(coverage_tmp)
+#    os.rename(coverage_bin, coverage_tmp)
 
     # Coverage output
     cmd = [
         'OpenCppCoverage.exe',
         '--quiet',
-        '--input_coverage', coverage_tmp,
         '--export_type', 'binary:{0}'.format(coverage_bin),
         '--modules', ROOT_DIR,
         '--sources', ROOT_DIR,

@@ -26,6 +26,7 @@ install:
   - ps: .\admin\install_opencppcoverage.ps1
   - appveyor DownloadFile https://download.microsoft.com/download/f/2/6/f263ac46-1fe9-4ae9-8fd3-21102100ebf5/msxsl.exe
   - pip install codecov
+  - curl -s -o codecov.sh https://codecov.io/bash
 
 before_build:
   - cmd: >-
@@ -93,6 +94,7 @@ test_script:
 after_test:
 #  - bash admin/codecov.sh
   - codecov -X gcov -f cobertura0.xml -f cobertura1.xml -f cobertura2.xml -f cobertura3.xml -f cobertura4.xml -f cobertura5.xml -f cobertura6.xml -f cobertura7.xml -f cobertura8.xml -f cobertura9.xml
+  - bash codecov.sh -X gcov -f cobertura0.xml -f cobertura1.xml -f cobertura2.xml -f cobertura3.xml -f cobertura4.xml -f cobertura5.xml -f cobertura6.xml -f cobertura7.xml -f cobertura8.xml -f cobertura9.xml
 
 services:
   - mysql
