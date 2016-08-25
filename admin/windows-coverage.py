@@ -14,7 +14,7 @@
 # ctest -D NightlyMemCheck
 
 
-import shutil
+import os
 import subprocess
 import sys
 
@@ -36,7 +36,7 @@ def main():
     # Create empty file
     open(logfile, 'w')
 
-    shutil.copy(COVERAGE_BIN, COVERAGE_TMP)
+    os.rename(COVERAGE_BIN, COVERAGE_TMP)
 
     # Coverage output
     cmd = [
