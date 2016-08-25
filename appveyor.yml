@@ -86,7 +86,7 @@ test_script:
 
 after_test:
 #  - bash admin/codecov.sh
-  - codecov -X gcov -f cobertura1.xml -f cobertura2.xml -f cobertura3.xml -f cobertura4.xml -f cobertura5.xml -f cobertura6.xml -f cobertura7.xml -f cobertura8.xml -f cobertura9.xml
+#  - codecov -X gcov -f cobertura1.xml -f cobertura2.xml -f cobertura3.xml -f cobertura4.xml -f cobertura5.xml -f cobertura6.xml -f cobertura7.xml -f cobertura8.xml -f cobertura9.xml
   - codecov -X gcov -f coverage1.cov
   - bash codecov.sh -X gcov -f cobertura1.xml -f cobertura2.xml -f cobertura3.xml -f cobertura4.xml -f cobertura5.xml -f cobertura6.xml -f cobertura7.xml -f cobertura8.xml -f cobertura9.xml
   - ps: >-
