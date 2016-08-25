@@ -43,7 +43,7 @@ def main():
     test_block = int(test_num) / 100
     coverage_tmp = COVERAGE_TMP % test_block
     coverage_bin = COVERAGE_BIN % test_block
-    coverage_bin = COVERAGE_BIN % test_num
+    coverage_bin = COVERAGE_BIN % int(test_num)
 
     # Create temporary file for coverage merge
 #    if os.path.exists(coverage_tmp):
