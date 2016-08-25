@@ -3,8 +3,8 @@ version: "{build}"
 image: Visual Studio 2015
 
 configuration:
-  - Release
   - Debug
+  - Release
 
 clone_depth: 100
 
