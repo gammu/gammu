@@ -20,7 +20,7 @@ import sys
 
 
 ROOT_DIR = 'c:\\projects\\gammu'
-COVERAGE_BIN = 'c:\\projects\\gammu\\coverage.cov'
+COVERAGE_BIN = 'c:\\projects\\gammu\\coverage%d.cov'
 COVERAGE_TMP = '{0}.tmp'.format(COVERAGE_BIN)
 
 
@@ -36,17 +36,25 @@ def main():
     # Create empty file
     open(logfile, 'w')
 
+    # Figure out test number
+    test_num = os.path.basename(logfile).split('.')[1]
+
+    # Test block
+    test_block = int(test_num) / 100
+    coverage_tmp = COVERAGE_TMP % test_block
+    coverage_bin = COVERAGE_BIN % test_block
+
     # Create temporary file for coverage merge
-    if os.path.exists(COVERAGE_TMP):
-        os.remove(COVERAGE_TMP)
-    os.rename(COVERAGE_BIN, COVERAGE_TMP)
+    if os.path.exists(coverage_tmp):
+        os.remove(coverage_tmp)
+    os.rename(coverage_bin, coverage_tmp)
 
     # Coverage output
     cmd = [
         'OpenCppCoverage.exe',
         '--quiet',
-        '--input_coverage', COVERAGE_TMP,
-        '--export_type', 'binary:{0}'.format(COVERAGE_BIN),
+        '--input_coverage', coverage_tmp,
+        '--export_type', 'binary:{0}'.format(coverage_bin),
         '--modules', ROOT_DIR,
         '--sources', ROOT_DIR,
         '--'
