@@ -57,6 +57,7 @@ test_script:
                 $mode = "ExperimentalMemCheck";
             }
             ctest --output-on-failure --no-compress-output --dashboard $mode --build-config ($env:CONFIGURATION);
+            $failure = $lastExitCode;
         }
         catch 
         {
