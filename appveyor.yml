@@ -79,7 +79,7 @@ test_script:
 after_test:
   - ps: >-
         Get-ChildItem "C:\\projects\\gammu" -Filter cobertura*.xml | Foreach-Object {
-            codecov -f $_.FullName ;
+            codecov -X gcov -f $_.FullName ;
         }
 
 services:
