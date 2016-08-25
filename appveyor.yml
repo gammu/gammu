@@ -26,7 +26,6 @@ install:
   - ps: .\admin\install_opencppcoverage.ps1
   - appveyor DownloadFile https://download.microsoft.com/download/f/2/6/f263ac46-1fe9-4ae9-8fd3-21102100ebf5/msxsl.exe
   - pip install codecov
-  - curl -s -o codecov.sh https://codecov.io/bash
 
 before_build:
   - cmd: >-
@@ -76,21 +75,10 @@ test_script:
         if ($failure -eq 1) {
             exit $failure;
         }
-        if (($env:CONFIGURATION) -eq "Debug" ) {
-            # Final coverage merge
-            for ($i=1; $i -le 9; $i++)
-            {
-                OpenCppCoverage.exe --quiet --input_coverage=coverage$i.cov --export_type=cobertura:cobertura$i.xml --modules c:\projects\gammu --sources c:\projects\gammu -- gammu\Debug\gammu.exe version;
-            }
-        }
 
 after_test:
-#  - bash admin/codecov.sh
-#  - codecov -X gcov -f cobertura1.xml -f cobertura2.xml -f cobertura3.xml -f cobertura4.xml -f cobertura5.xml -f cobertura6.xml -f cobertura7.xml -f cobertura8.xml -f cobertura9.xml
-  - codecov -X gcov -f coverage1.cov
-  - bash codecov.sh -X gcov -f cobertura1.xml -f cobertura2.xml -f cobertura3.xml -f cobertura4.xml -f cobertura5.xml -f cobertura6.xml -f cobertura7.xml -f cobertura8.xml -f cobertura9.xml
   - ps: >-
-        Get-ChildItem "C:\\projects\\gammu" -Filter *.cov | Foreach-Object {
+        Get-ChildItem "C:\\projects\\gammu" -Filter cobertura*.xml | Foreach-Object {
             codecov -f $_.FullName ;
         }
 
