@@ -36,6 +36,9 @@ def main():
     # Create empty file
     open(logfile, 'w')
 
+    # Create temporary file for coverage merge
+    if os.path.exists(COVERAGE_TMP):
+        os.remove(COVERAGE_TMP)
     os.rename(COVERAGE_BIN, COVERAGE_TMP)
 
     # Coverage output
