@@ -58,7 +58,7 @@ test_script:
             } else {
                 $mode = "ExperimentalMemCheck";
             }
-            ctest --output-on-failure --no-compress-output --dashboard $mode --build-config ($env:CONFIGURATION);
+            ctest --output-on-failure --no-compress-output --dashboard $mode --build-config ($env:CONFIGURATION) -R sms-at-encode;
         }
         catch 
         {
@@ -97,5 +97,5 @@ artifacts:
   - path: junit.xml
     name: Transformed test results
 
-#on_finish:
-#  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+on_finish:
+  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
