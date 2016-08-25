@@ -62,7 +62,7 @@ test_script:
             } else {
                 $mode = "ExperimentalMemCheck";
             }
-            ctest --output-on-failure --no-compress-output --dashboard $mode --build-config ($env:CONFIGURATION) -R sms-at-encode;
+            ctest --output-on-failure --no-compress-output --dashboard $mode --build-config ($env:CONFIGURATION);
         }
         catch 
         {
