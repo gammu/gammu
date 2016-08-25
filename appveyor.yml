@@ -56,6 +56,7 @@ test_script:
             for ($i=0; $i -le 9; $i++)
             {
                 OpenCppCoverage.exe --quiet --export_type=binary:coverage$i.cov --modules c:\projects\gammu --sources c:\projects\gammu -- gammu\Debug\gammu.exe version;
+            }
         }
         try 
         {
