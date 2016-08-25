@@ -23,7 +23,7 @@ clone_folder: c:\projects\gammu
 
 install:
   - "SET PATH=C:\\Python27;C:\\Python27\\Scripts;%PATH%"
-  - ps: .\admin\install_opencppcoverage.ps1
+  - ps: if (($env:CONFIGURATION) -eq "Debug" ) { .\admin\install_opencppcoverage.ps1 }
   - appveyor DownloadFile https://download.microsoft.com/download/f/2/6/f263ac46-1fe9-4ae9-8fd3-21102100ebf5/msxsl.exe
 
 before_build:
