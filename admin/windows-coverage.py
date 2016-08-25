@@ -14,13 +14,14 @@
 # ctest -D NightlyMemCheck
 
 
-import sys
-import os
+import shutil
 import subprocess
+import sys
 
 
 ROOT_DIR = 'c:\\projects\\gammu'
-COVERAGE_DIR = 'c:\\projects\\gammu\\coverage'
+COVERAGE_BIN = 'c:\\projects\\gammu\\coverage.cov'
+COVERAGE_TMP = '{0}.tmp'.format(COVERAGE_BIN)
 
 
 def main():
@@ -35,23 +36,14 @@ def main():
     # Create empty file
     open(logfile, 'w')
 
-    # Figure out test number
-    test_num = os.path.basename(logfile).split('.')[1]
-
-    # Create output directory
-    test_dir = os.path.join(COVERAGE_DIR, test_num)
-    if not os.path.exists(test_dir):
-        os.makedirs(test_dir)
+    shutil.copy(COVERAGE_BIN, COVERAGE_TMP)
 
     # Coverage output
-    coverage_file = os.path.join(
-        test_dir,
-        'cobertura.xml'
-    )
     cmd = [
         'OpenCppCoverage.exe',
         '--quiet',
-        '--export_type', 'cobertura:{0}'.format(coverage_file),
+        '--input_coverage', COVERAGE_TMP,
+        '--export_type', 'binary:{0}'.format(COVERAGE_BIN),
         '--modules', ROOT_DIR,
         '--sources', ROOT_DIR,
         '--'
