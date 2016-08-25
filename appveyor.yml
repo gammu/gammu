@@ -52,13 +52,6 @@ test_script:
   - "SET PATH=%MYSQL_PATH%\\bin;%POSTGRESQL_PATH%\\bin;c:\\projects\\gammu;%PATH%"
   - ps: >-
         $failure = 0;
-        if (($env:CONFIGURATION) -eq "Debug" ) {
-            # Create initial coverage
-            for ($i=0; $i -le 9; $i++)
-            {
-                OpenCppCoverage.exe --quiet --export_type=binary:coverage$i.cov --modules c:\projects\gammu --sources c:\projects\gammu -- gammu\Debug\gammu.exe version;
-            }
-        }
         try 
         {
             if (($env:CONFIGURATION) -eq "Release" ) {
