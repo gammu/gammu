@@ -64,13 +64,16 @@ test_script:
         }
         finally
         {
+            # Copy test results to fixed name
             Copy-Item Testing\$(Get-Content Testing\TAG -TotalCount 1)\*.xml test.xml;
+            # XLST CTest XML into Junit XML
             msxsl test.xml admin/ctest-to-junit.xsl -o junit.xml;
-            # upload results to AppVeyor
+            # Upload results to AppVeyor
             $wc = New-Object 'System.Net.WebClient';
             $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\junit.xml));
         }
         if ($failure -eq 1) {
+            # Propagate error code from testsuite
             exit $failure;
         }
 
@@ -94,6 +97,3 @@ artifacts:
     name: Test results
   - path: junit.xml
     name: Transformed test results
-
-#on_finish:
-#  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
