@@ -28,7 +28,8 @@ script:
   - if [ ${COVERITY_SCAN_BRANCH} != 1 ] ; then make test ; fi
   - make gcov
 after_success:
-  - bash <(curl -s https://codecov.io/bash) -X gcov
+  - bash ./admin/codecov-uploader.sh -X gcov
+#  - bash <(curl -s https://codecov.io/bash) -X gcov
 # trigger Buildtime Trend Service to parse Travis CI log
 notifications:
   webhooks:
