@@ -42,11 +42,11 @@ if (WITH_BACKUP)
         if (HAVE_ALARM AND HAVE_KILL)
             add_test(NAME "smsd-daemon-${_driver}-pid" COMMAND gammu-smsd -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/.smsdrc" -X 3 -p ${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/smsd.pid)
         endif()
-        if (HAVE_ALARM AND HAVE_SETGID)
-            exec_program(id
-                ARGS -g
-                OUTPUT_VARIABLE MY_GROUP)
+        if (HAVE_ALARM AND HAVE_SETGID AND HAVE_GETPWNAM AND HAVE_GETGRNAM AND HAVE_SETUID AND HAVE_INITGROUPS)
+            exec_program(id ARGS -g OUTPUT_VARIABLE MY_GROUP)
             add_test(NAME "smsd-daemon-${_driver}-gid" COMMAND gammu-smsd -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/.smsdrc" -X 3 -G ${MY_GROUP})
+            exec_program(id ARGS -gn OUTPUT_VARIABLE MY_GROUP_NAME)
+            add_test(NAME "smsd-daemon-${_driver}-gid-name" COMMAND gammu-smsd -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/.smsdrc" -X 3 -G ${MY_GROUP_NAME})
         endif()
     endmacro(smsd_testsuite _driver)
 
