@@ -73,7 +73,7 @@ test_script:
             $wc = New-Object 'System.Net.WebClient';
             $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\junit.xml));
         }
-        if ($failure -eq 1) {
+        if ($failure -ne 0) {
             # Propagate error code from testsuite
             exit $failure;
         }
