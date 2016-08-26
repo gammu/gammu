@@ -33,18 +33,21 @@ if (WITH_BACKUP)
         set_tests_properties("smsd-inject-long-${_driver}" PROPERTIES
             FAIL_REGULAR_EXPRESSION "DBI error;SQL failed;ODBC diagnostics"
             )
-        if (HAVE_ALARM)
-            add_test(NAME "smsd-daemon-${_driver}" COMMAND gammu-smsd -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/.smsdrc" -X 10 -p ${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/smsd.pid)
+        if (WIN32 OR HAVE_ALARM)
+            add_test(NAME "smsd-daemon-${_driver}" COMMAND gammu-smsd -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/.smsdrc" -X 3)
             set_tests_properties("smsd-daemon-${_driver}" PROPERTIES
                 FAIL_REGULAR_EXPRESSION "DBI error;SQL failed;ODBC diagnostics"
                 )
-        endif (HAVE_ALARM)
-        if (WIN32)
-            add_test(NAME "smsd-daemon-${_driver}" COMMAND gammu-smsd -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/.smsdrc" -X 10)
-            set_tests_properties("smsd-daemon-${_driver}" PROPERTIES
-                FAIL_REGULAR_EXPRESSION "DBI error;SQL failed;ODBC diagnostics"
-                )
-        endif (WIN32)
+        endif (WIN32 OR HAVE_ALARM)
+        if (HAVE_ALARM AND HAVE_KILL)
+            add_test(NAME "smsd-daemon-${_driver}-pid" COMMAND gammu-smsd -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/.smsdrc" -X 3 -p ${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/smsd.pid)
+        endif()
+        if (HAVE_ALARM AND HAVE_SETGID)
+            exec_program(id
+                ARGS -g
+                OUTPUT_VARIABLE MY_GROUP)
+            add_test(NAME "smsd-daemon-${_driver}-gid" COMMAND gammu-smsd -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/.smsdrc" -X 3 -G ${MY_GROUP})
+        endif()
     endmacro(smsd_testsuite _driver)
 
     if (LIBDBI_FOUND AND SH_BIN AND SQLITE_BIN AND SED_BIN)
