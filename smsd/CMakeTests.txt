@@ -103,7 +103,11 @@ if (WITH_BACKUP)
         set_tests_properties(${PROGRAM}-version PROPERTIES
             PASS_REGULAR_EXPRESSION "${GAMMU_VERSION}"
             )
-        add_test(NAME ${PROGRAM}-fail COMMAND ${PROGRAM} --nonsense)
+        add_test(NAME ${PROGRAM}-fail-long COMMAND ${PROGRAM} --nonsense)
+        set_tests_properties(
+            ${PROGRAM}-fail-long
+            PROPERTIES WILL_FAIL TRUE)
+        add_test(NAME ${PROGRAM}-fail COMMAND ${PROGRAM} -W)
         set_tests_properties(
             ${PROGRAM}-fail
             PROPERTIES WILL_FAIL TRUE)
