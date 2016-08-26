@@ -119,7 +119,7 @@ if (WITH_BACKUP)
 
         # Install without config
         add_test(NAME gammu-smsd-install-service-fail COMMAND gammu-smsd -i)
-        set_tests_properties(gammu-smsd-uninstall-service-fail PROPERTIES WILL_FAIL TRUE)
+        set_tests_properties(gammu-smsd-install-service-fail PROPERTIES WILL_FAIL TRUE)
 
         # Install + Uninstall
         add_test(NAME gammu-smsd-install-service COMMAND gammu-smsd -i -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-null/.smsdrc")
