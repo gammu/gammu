@@ -148,6 +148,7 @@ int process_commandline(int argc, char **argv, SMSD_Parameters * params)
 				help();
 				exit(0);
 			default:
+				fprintf(stderr, "Parameter -%c not known!\n", opt);
 				wrong_params();
 				break;
 		}

@@ -191,7 +191,9 @@ NORETURN void wrong_params(void)
 void process_commandline(int argc, char **argv, SMSD_Parameters * params)
 {
 	int opt;
+#ifdef WIN32
 	HANDLE hTimer = NULL;
+#endif
 
 #ifdef HAVE_GETOPT_LONG
 	struct option long_options[] = {
@@ -316,6 +318,7 @@ void process_commandline(int argc, char **argv, SMSD_Parameters * params)
 				help();
 				exit(0);
 			default:
+				fprintf(stderr, "Parameter -%c not known!\n", opt);
 				wrong_params();
 				break;
 		}
