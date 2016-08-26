@@ -33,12 +33,18 @@ if (WITH_BACKUP)
         set_tests_properties("smsd-inject-long-${_driver}" PROPERTIES
             FAIL_REGULAR_EXPRESSION "DBI error;SQL failed;ODBC diagnostics"
             )
-        if (HAVE_ALARM OR WIN32)
+        if (HAVE_ALARM)
             add_test(NAME "smsd-daemon-${_driver}" COMMAND gammu-smsd -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/.smsdrc" -X 10 -p ${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/smsd.pid)
             set_tests_properties("smsd-daemon-${_driver}" PROPERTIES
                 FAIL_REGULAR_EXPRESSION "DBI error;SQL failed;ODBC diagnostics"
                 )
-        endif (HAVE_ALARM OR WIN32)
+        endif (HAVE_ALARM)
+        if (WIN32)
+            add_test(NAME "smsd-daemon-${_driver}" COMMAND gammu-smsd -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/.smsdrc" -X 10)
+            set_tests_properties("smsd-daemon-${_driver}" PROPERTIES
+                FAIL_REGULAR_EXPRESSION "DBI error;SQL failed;ODBC diagnostics"
+                )
+        endif (WIN32)
     endmacro(smsd_testsuite _driver)
 
     if (LIBDBI_FOUND AND SH_BIN AND SQLITE_BIN AND SED_BIN)
