@@ -104,9 +104,24 @@ if (WITH_BACKUP)
     endforeach (PROGRAM gammu-smsd gammu-smsd-monitor gammu-smsd-inject)
 
     if (WIN32)
+        # Uninstall without install
+        add_test(NAME gammu-smsd-uninstall-eventlog-fail COMMAND gammu-smsd -E)
+        set_tests_properties(gammu-smsd-uninstall-eventlog-fail PROPERTIES WILL_FAIL TRUE)
+
+        # Install + Uninstall
         add_test(NAME gammu-smsd-install-eventlog COMMAND gammu-smsd -e)
         add_test(NAME gammu-smsd-uninstall-eventlog COMMAND gammu-smsd -E)
         set_tests_properties(gammu-smsd-uninstall-eventlog PROPERTIES DEPENDS gammu-smsd-install-eventlog)
+
+        # Uninstall without install
+        add_test(NAME gammu-smsd-uninstall-service-fail COMMAND gammu-smsd -u)
+        set_tests_properties(gammu-smsd-uninstall-service-fail PROPERTIES WILL_FAIL TRUE)
+
+        # Install without config
+        add_test(NAME gammu-smsd-install-service-fail COMMAND gammu-smsd -i)
+        set_tests_properties(gammu-smsd-uninstall-service-fail PROPERTIES WILL_FAIL TRUE)
+
+        # Install + Uninstall
         add_test(NAME gammu-smsd-install-service COMMAND gammu-smsd -i -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-null/.smsdrc")
         add_test(NAME gammu-smsd-uninstall-service COMMAND gammu-smsd -u)
         set_tests_properties(gammu-smsd-uninstall-service PROPERTIES DEPENDS gammu-smsd-install-service)
