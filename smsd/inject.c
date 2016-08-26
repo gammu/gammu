@@ -144,7 +144,6 @@ int process_commandline(int argc, char **argv, SMSD_Parameters * params)
 				params->use_log = FALSE;
 				break;
 			case '?':
-				wrong_params();
 			case 'h':
 				help();
 				exit(0);
