@@ -912,6 +912,8 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 	sms->Number = 0;
 	for (i = 0; i < GSM_MAX_MULTI_SMS; i++) {
 		GSM_SetDefaultSMSData(&sms->SMS[i]);
+		/* Force using default SMSC */
+		sms->SMS[i].SMSC.Location = 0;
 	}
 
 	for (i = 1; i < GSM_MAX_MULTI_SMS + 1; i++) {
