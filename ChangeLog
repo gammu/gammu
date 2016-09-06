@@ -28,6 +28,7 @@ ChangeLog
 [-] * Create outbox SMS atomically in FILES backend.
 [!] * Removed getlocation command as we no longer fit into their usage policy.
 [-] * Fixed call diverts on TP-LINK MA260.
+[+] * Initial support for Oracle database.
 
 20160816 - 1.37.4
     

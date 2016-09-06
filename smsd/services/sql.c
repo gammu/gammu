@@ -49,6 +49,7 @@ const char now_plus_pgsql[] = "now() + interval '%d seconds'";
 const char now_plus_sqlite[] = "datetime('now', '+%d seconds', 'localtime')";
 const char now_plus_freetds[] = "DATEADD('second', %d, CURRENT_TIMESTAMP)";
 const char now_plus_access[] = "now()+#00:00:%d#";
+const char now_plus_oracle[] = "CURRENT_TIMESTAMP + INTERVAL '%d' SECOND'";
 const char now_plus_fallback[] = "NOW() + INTERVAL %d SECOND";
 
 
@@ -69,6 +70,8 @@ static const char *SMSDSQL_NowPlus(GSM_SMSDConfig * Config, int seconds)
 		sprintf(result, now_plus_freetds, seconds);
 	} else if (strcasecmp(driver_name, "access") == 0) {
 		sprintf(result, now_plus_access, seconds);
+	} else if (strcasecmp(driver_name, "oracle") == 0) {
+		sprintf(result, now_plus_oracle, seconds);
 	} else if (strcasecmp(driver_name, "odbc") == 0) {
 		sprintf(result, now_plus_odbc, seconds);
 	} else {
@@ -96,7 +99,7 @@ static const char *SMSDSQL_EscapeChar(GSM_SMSDConfig * Config)
 		return escape_char_pgsql;
 	} else if (strncasecmp(driver_name, "sqlite", 6) == 0) {
 		return escape_char_sqlite;
-	} else if (strcasecmp(driver_name, "freetds") == 0 || strcasecmp(driver_name, "mssql") == 0 || strcasecmp(driver_name, "sybase") == 0) {
+	} else if (strcasecmp(driver_name, "oracle") == 0 || strcasecmp(driver_name, "freetds") == 0 || strcasecmp(driver_name, "mssql") == 0 || strcasecmp(driver_name, "sybase") == 0) {
 		return escape_char_freetds;
 	} else if (strcasecmp(Config->driver, "odbc") == 0) {
 		return escape_char_odbc;
@@ -104,6 +107,32 @@ static const char *SMSDSQL_EscapeChar(GSM_SMSDConfig * Config)
 		return escape_char_fallback;
 	}
 }
+
+const char rownum_clause_fallback[] = "";
+
+
+static const char *SMSDSQL_RownumClause(GSM_SMSDConfig * Config, const char *count, gboolean in_where)
+{
+	const char *driver_name;
+	static char result[100];
+
+	driver_name = SMSDSQL_SQLName(Config);
+
+	if (strcasecmp(driver_name, "oracle") == 0 || strcasecmp(driver_name, "freetds") == 0) {
+		if (in_where) {
+			strcpy(result, " AND ");
+		} else {
+			strcpy(result, " WHERE ");
+		}
+		strcat(result, "ROWNUM <= ");
+		strcat(result, count);
+		strcat(result, " ");
+		return result;
+	} else {
+		return rownum_clause_fallback;
+	}
+}
+
 
 const char top_clause_access[] = "TOP";
 const char top_clause_fallback[] = "";
@@ -136,7 +165,7 @@ static const char *SMSDSQL_LimitClause(GSM_SMSDConfig * Config, const char *coun
 
 	driver_name = SMSDSQL_SQLName(Config);
 
-	if (strcasecmp(driver_name, "access") == 0) {
+	if (strcasecmp(driver_name, "access") == 0 || strcasecmp(driver_name, "freetds") == 0 || strcasecmp(driver_name, "oracle") == 0) {
 		return limit_clause_access;
 	} else {
 		strcpy(result, limit_clause_fallback);
@@ -173,7 +202,7 @@ static const char *SMSDSQL_CurrentTime(GSM_SMSDConfig * Config)
 		return currtime_pgsql;
 	} else if (strncasecmp(driver_name, "sqlite", 6) == 0) {
 		return currtime_sqlite;
-	} else if (strcasecmp(driver_name, "freetds") == 0 || strcasecmp(driver_name, "mssql") == 0 || strcasecmp(driver_name, "sybase") == 0) {
+	} else if (strcasecmp(Config->driver, "oracle") == 0 || strcasecmp(driver_name, "freetds") == 0 || strcasecmp(driver_name, "mssql") == 0 || strcasecmp(driver_name, "sybase") == 0) {
 		return currtime_freetds;
 	} else if (strcasecmp(Config->driver, "odbc") == 0) {
 		return currtime_odbc;
@@ -193,7 +222,7 @@ static const char *SMSDSQL_Now(GSM_SMSDConfig * Config)
 		return now_pgsql;
 	} else if (strncasecmp(driver_name, "sqlite", 6) == 0) {
 		return now_sqlite;
-	} else if (strcasecmp(driver_name, "freetds") == 0 || strcasecmp(driver_name, "mssql") == 0 || strcasecmp(driver_name, "sybase") == 0) {
+	} else if (strcasecmp(Config->driver, "oracle") == 0 || strcasecmp(driver_name, "freetds") == 0 || strcasecmp(driver_name, "mssql") == 0 || strcasecmp(driver_name, "sybase") == 0) {
 		return now_freetds;
 	} else if (strcasecmp(Config->driver, "access") == 0) {
 		return now_access;
@@ -478,7 +507,14 @@ static GSM_Error SMSDSQL_CheckTable(GSM_SMSDConfig * Config, const char *table)
 	GSM_Error error;
 	struct GSM_SMSDdbobj *db = Config->db;
 
-	sprintf(buffer, "SELECT %s * FROM %s %s", SMSDSQL_TopClause(Config, "1"), table, SMSDSQL_LimitClause(Config, "1"));
+	sprintf(
+		buffer,
+		"SELECT %s * FROM %s %s %s",
+		SMSDSQL_TopClause(Config, "1"),
+		table,
+		SMSDSQL_RownumClause(Config, "%1", FALSE),
+		SMSDSQL_LimitClause(Config, "1")
+	);
 	error = SMSDSQL_Query(Config, buffer, &res);
 	if (error != ERR_NONE) {
 		SMSD_Log(DEBUG_ERROR, Config, "Table %s not found, disconnecting!", table);
@@ -1444,7 +1480,8 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 			" AND ", ESCAPE_FIELD("SendingTimeOut"), " < ", SMSDSQL_Now(Config),
 			" AND ", ESCAPE_FIELD("SendBefore"), " >= ", SMSDSQL_CurrentTime(Config),
 			" AND ", ESCAPE_FIELD("SendAfter"), " <= ", SMSDSQL_CurrentTime(Config),
-			" AND ( ", ESCAPE_FIELD("SenderID"), " is NULL OR ", ESCAPE_FIELD("SenderID"), " = '' OR ", ESCAPE_FIELD("SenderID"), " = %P )"
+			" AND ( ", ESCAPE_FIELD("SenderID"), " is NULL OR ", ESCAPE_FIELD("SenderID"), " = '' OR ", ESCAPE_FIELD("SenderID"), " = %P )",
+			SMSDSQL_RownumClause(Config, "%1", TRUE),
 			" ORDER BY ", ESCAPE_FIELD("InsertIntoDB"), " ASC ", SMSDSQL_LimitClause(Config, "%1"), NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}

@@ -511,6 +511,7 @@ database:
     * ``mssql`` - Microsoft SQL Server
     * ``sybase`` - Sybase
     * ``access`` - Microsoft Access
+    * ``oracle`` - Oracle
     * ``odbc`` - Generic ODBC
 
     .. versionadded:: 1.28.93
