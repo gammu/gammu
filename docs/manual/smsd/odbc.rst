@@ -49,6 +49,17 @@ http://support.microsoft.com/kb/305599
 For unixODBC this is documented in the user manual:
 http://www.unixodbc.org/doc/UserManual/
 
+Creating tables
+---------------
+
+Prior to starting SMSD you have to create tables it will use. Gammu ships SQL
+scripts for several databases to do that:
+
+* :ref:`mysql-create`
+* :ref:`pgsql-create`
+* :ref:`sqlite-create`
+
+
 Example
 -------
 

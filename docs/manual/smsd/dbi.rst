@@ -52,8 +52,10 @@ drivers for example include:
 .. _libdbi: http://libdbi.sourceforge.net/
 .. _libdbi-drivers: http://libdbi-drivers.sourceforge.net/
 
-Creating tables
----------------
+.. _sqlite-create:
+
+Creating tables for SQLite
+--------------------------
 
 SQL script for creating tables in SQLite database:
 

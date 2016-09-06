@@ -54,8 +54,8 @@ privileges should be enough:
 
 .. _mysql-create:
 
-Creating tables
----------------
+Creating tables for MySQL
+-------------------------
 
 SQL script for creating tables in MySQL database:
 

@@ -33,8 +33,10 @@ The configuration file then can look like:
 
 .. seealso:: :ref:`gammu-smsdrc`
 
-Creating tables
----------------
+.. _pgsql-create:
+
+Creating tables for PostgreSQL
+------------------------------
 
 SQL script for creating tables in PostgreSQL database:
 
