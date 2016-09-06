@@ -1654,31 +1654,35 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config)
 	}
 
 	for (i = 0; i < sms.Number; i++) {
+		/* No SMSC set in message */
 		if (sms.SMS[i].SMSC.Location == 0 && UnicodeLength(sms.SMS[i].SMSC.Number) == 0 && Config->SMSC.Location == 0) {
 			SMSD_Log(DEBUG_INFO, Config, "Message without SMSC, using configured one");
-			memcpy(&sms.SMS[i].SMSC,&Config->SMSC,sizeof(GSM_SMSC));
-			sms.SMS[i].SMSC.Location = 0;
+			sms.SMS[i].SMSC = Config->SMSC;
 			if (Config->relativevalidity != -1) {
 				sms.SMS[i].SMSC.Validity.Format	  = SMS_Validity_RelativeFormat;
 				sms.SMS[i].SMSC.Validity.Relative = Config->relativevalidity;
 			}
 
 		}
+		/* Still nothing set after using configured one */
 		if (sms.SMS[i].SMSC.Location == 0 && UnicodeLength(sms.SMS[i].SMSC.Number) == 0) {
 			SMSD_Log(DEBUG_INFO, Config, "Message without SMSC, assuming you want to use the one from phone");
 			sms.SMS[i].SMSC.Location = 1;
 		}
+		/* Should use SMSC from phone */
 		if (sms.SMS[i].SMSC.Location != 0) {
+			/* Do we have cached entry? */
 			if (Config->SMSCCache.Location != sms.SMS[i].SMSC.Location) {
 				Config->SMSCCache.Location = sms.SMS[i].SMSC.Location;
-				error = GSM_GetSMSC(Config->gsm,&Config->SMSCCache);
+				error = GSM_GetSMSC(Config->gsm, &Config->SMSCCache);
 				if (error!=ERR_NONE) {
 					SMSD_Log(DEBUG_ERROR, Config, "Error getting SMSC from phone");
 					return ERR_UNKNOWN;
 				}
 
 			}
-			memcpy(&sms.SMS[i].SMSC,&Config->SMSCCache,sizeof(GSM_SMSC));
+			sms.SMS[i].SMSC = Config->SMSCCache;
+			/* Reset location to avoid reading from phone */
 			sms.SMS[i].SMSC.Location = 0;
 			if (Config->relativevalidity != -1) {
 				sms.SMS[i].SMSC.Validity.Format	  = SMS_Validity_RelativeFormat;
