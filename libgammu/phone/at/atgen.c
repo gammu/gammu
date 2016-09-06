@@ -4769,7 +4769,7 @@ GSM_Error ATGEN_ReplyGetDivert(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 
 		if (error != ERR_NONE) {
 			error = ATGEN_ParseReply(s, str,
-				"+CCFC: @i, @i, @p, @I, @s, @i, @i",
+				"+CCFC: @i, @i, @p, @I, @s, @I, @I",
 				&status,
 				&class,
 				response->Entries[response->EntriesNum].Number,
