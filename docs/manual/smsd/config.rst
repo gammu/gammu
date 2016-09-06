@@ -302,6 +302,9 @@ General parameters of SMS daemon
     When you set PhoneID, all messages (including injected ones) will be marked
     by this string (stored as SenderID in the database) and it allows more SMS
     daemons to share a single database. 
+
+    SMSD daemon will in such case send :ref:`outbox` messages only with
+    matching or empty SenderID.
     
     This option has actually no effect with :ref:`gammu-smsd-files`.
 

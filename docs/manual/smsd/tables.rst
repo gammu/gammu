@@ -153,7 +153,7 @@ Fields description:
 ``SenderID`` (text)
     which SMSD instance should send this one sequence, see
     :config:option:`PhoneID` and :ref:`smsd-multi`. If blank, first SMSD who
-    sees this message will process it.
+    sees this message first will process it.
 
 ``SendingTimeOut`` (timestamp)
     used by SMSD instance for own targets
