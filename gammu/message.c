@@ -135,15 +135,15 @@ void GetUSSD(int argc UNUSED, char *argv[])
 
 	GSM_SetIncomingUSSDCallback(gsm, IncomingUSSD2, NULL);
 
-	error=GSM_SetIncomingUSSD(gsm,TRUE);
+	error = GSM_SetIncomingUSSD(gsm, TRUE);
 	Print_Error(error);
 
 	num_replies = 0;
 
-	error=GSM_DialService(gsm, argv[2]);
+	error = GSM_DialService(gsm, argv[2]);
 	/* Fallback to voice call, it can work with some phones */
 	if (error == ERR_NOTIMPLEMENTED || error == ERR_NOTSUPPORTED) {
-		error=GSM_DialVoice(gsm, argv[2], GSM_CALL_DefaultNumberPresence);
+		error = GSM_DialVoice(gsm, argv[2], GSM_CALL_DefaultNumberPresence);
 	}
 	Print_Error(error);
 
@@ -164,7 +164,7 @@ void GetUSSD(int argc UNUSED, char *argv[])
 		GSM_ReadDevice(gsm, FALSE);
 	}
 
-	error=GSM_SetIncomingUSSD(gsm, FALSE);
+	error = GSM_SetIncomingUSSD(gsm, FALSE);
 	Print_Error(error);
 
 	GSM_Terminate();
