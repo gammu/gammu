@@ -329,16 +329,6 @@ Fields description:
     copied from CreatorID from outbox table
 
 
-pbk
-+++
-
-Not used by SMSD currently, included only for application usage.
-
-pbk_groups
-++++++++++
-
-Not used by SMSD currently, included only for application usage.
-
 .. _smsd-tables-history:
 
 History of database structure
@@ -355,7 +345,7 @@ History of schema versions:
 
 16
 
-    * Removed unused ``daemons`` table.
+    * Removed unused ``daemons``, ``pbk`` and ``pbk_groups`` tables.
     * Added primary key to the ``gammu`` table.
     * Added ``Priority`` field to the :ref:`outbox`.
     * Added ``IMSI`` field to the :ref:`phones`.

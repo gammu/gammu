@@ -31,8 +31,6 @@ $update_timestamp$ LANGUAGE plpgsql;
 
 --CREATE SEQUENCE outbox_multipart_ID_seq;
 
---CREATE SEQUENCE pbk_groups_ID_seq;
-
 --CREATE SEQUENCE sentitems_ID_seq;
 
 -- --------------------------------------------------------
@@ -46,8 +44,6 @@ $update_timestamp$ LANGUAGE plpgsql;
 --CREATE UNIQUE INDEX outbox_pkey ON outbox USING btree ("ID");
 
 --CREATE UNIQUE INDEX outbox_multipart_pkey ON outbox_multipart USING btree ("ID");
-
---CREATE UNIQUE INDEX pbk_groups_pkey ON pbk_groups USING btree ("ID");
 
 --CREATE UNIQUE INDEX sentitems_pkey ON sentitems USING btree ("ID");
 
@@ -170,40 +166,6 @@ CREATE TABLE outbox_multipart (
 
 -- 
 -- Dumping data for table "outbox_multipart"
--- 
-
-
--- --------------------------------------------------------
-
--- 
--- Table structure for table "pbk"
--- 
-
-CREATE TABLE pbk (
-  "ID" serial PRIMARY KEY,
-  "GroupID" integer NOT NULL DEFAULT '-1',
-  "Name" text NOT NULL,
-  "Number" text NOT NULL
-);
-
--- 
--- Dumping data for table "pbk"
--- 
-
-
--- --------------------------------------------------------
-
--- 
--- Table structure for table "pbk_groups"
--- 
-
-CREATE TABLE pbk_groups (
-  "Name" text NOT NULL,
-  "ID" serial PRIMARY KEY
-);
-
--- 
--- Dumping data for table "pbk_groups"
 -- 
 
 

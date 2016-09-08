@@ -29,7 +29,7 @@ ChangeLog
 [!] * Removed getlocation command as we no longer fit into their usage policy.
 [-] * Fixed call diverts on TP-LINK MA260.
 [+] * Initial support for Oracle database.
-[!] * Removed unused daemons table from the SMSD schema.
+[!] * Removed unused daemons, pbk and pbk_groups tables from the SMSD schema.
 [+] * SMSD outbox entries now can have priority set in the database.
 [+] * Added SIM IMSI to the SMSD status table.
 
