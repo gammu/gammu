@@ -363,7 +363,7 @@ endif (MYSQL_FOUND)
 if (POSTGRES_FOUND)
     set (HAVE_POSTGRESQL_LIBPQ_FE_H TRUE)
     if (WIN32)
-        set(WIN_LIB_PGSQL libpq.dll)
+        set(WIN_LIB_PGSQL libpq.dll SSLEAY32.DLL LIBEAY32.DLL LIBINTL-8.DLL)
     endif ()
 endif (POSTGRES_FOUND)
 
