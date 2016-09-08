@@ -142,8 +142,8 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 
 		{NULL		,1, ID_None}};
 
-    	/* Ignore leading CR, LF and ESC */
-    	if (d->Msg.Length == 0) {
+	/* Ignore leading CR, LF and ESC */
+	if (d->Msg.Length == 0) {
 		if (rx_char == 10 || rx_char == 13 || rx_char == 27) return ERR_NONE;
 		d->LineStart = d->Msg.Length;
 	}
@@ -167,7 +167,7 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 			d->LineEnd = d->Msg.Length - 1;
 		}
 		d->wascrlf = TRUE;
-		if (d->Msg.Length > 0 && rx_char == 10 && d->Msg.Buffer[d->Msg.Length-2]==13) {
+		if (d->Msg.Length > 0 && rx_char == 10 && d->Msg.Buffer[d->Msg.Length - 2] == 13) {
 			i = 0;
 			while (StartStrings[i] != NULL) {
 				if (strncmp(StartStrings[i],
@@ -218,7 +218,7 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 			if (d->SpecialAnswerLines == 1) {
 				/* This is end of special answer. We copy it and send to phone module */
 				Msg2.Buffer = (unsigned char *)malloc(d->LineEnd - d->SpecialAnswerStart + 3);
-				memcpy(Msg2.Buffer,d->Msg.Buffer+d->SpecialAnswerStart,d->LineEnd - d->SpecialAnswerStart + 2);
+				memcpy(Msg2. Buffer, d->Msg.Buffer + d->SpecialAnswerStart, d->LineEnd - d->SpecialAnswerStart + 2);
 				Msg2.Length = d->LineEnd - d->SpecialAnswerStart + 2;
 				Msg2.Buffer[Msg2.Length] = '\0';
 				Msg2.Type = 0;
@@ -226,7 +226,7 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 				s->Phone.Data.RequestMsg	= &Msg2;
 				s->Phone.Data.DispatchError	= s->Phone.Functions->DispatchMessage(s);
 				free(Msg2.Buffer);
-				Msg2.Buffer=NULL;
+				Msg2.Buffer = NULL;
 
 				/* We cut special answer from main buffer */
 				d->Msg.Length			= d->SpecialAnswerStart;
@@ -237,8 +237,8 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 				/* We need to find earlier values of all variables */
 				d->wascrlf 			= FALSE;
 				d->LineStart			= 0;
-				for (i=0;i<d->Msg.Length;i++) {
-					switch(d->Msg.Buffer[i]) {
+				for (i = 0;i < d->Msg.Length; i++) {
+					switch (d->Msg.Buffer[i]) {
 					case 0:
 						break;
 					case 10:
@@ -257,24 +257,26 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 				}
 				d->Msg.Buffer[d->Msg.Length] = 0;
 			}
-			if (d->SpecialAnswerLines > 0) d->SpecialAnswerLines--;
+			if (d->SpecialAnswerLines > 0) {
+				d->SpecialAnswerLines--;
+			}
 		}
 		break;
 	case 'T':
 		/* When CONNECT string received, we know there will not follow
 		 * anything AT related, after CONNECT can follow ppp data, alcabus
-         	 * data and also other things.
-         	 */
-        	if (strncmp(d->Msg.Buffer+d->LineStart, "CONNECT", 7) == 0) {
-            		s->Phone.Data.RequestMsg   	= &d->Msg;
-           		s->Phone.Data.DispatchError	= s->Phone.Functions->DispatchMessage(s);
-            		d->LineStart              	= -1;
+		 * data and also other things.
+		 */
+		if (strncmp(d->Msg.Buffer + d->LineStart, "CONNECT", 7) == 0) {
+			s->Phone.Data.RequestMsg   	= &d->Msg;
+			s->Phone.Data.DispatchError	= s->Phone.Functions->DispatchMessage(s);
+			d->LineStart              	= -1;
 			d->Msg.Length			= 0;
-            		break;
-       		}
+			break;
+		}
 	default:
 		if (d->wascrlf) {
-			d->LineStart	= d->Msg.Length-1;
+			d->LineStart	= d->Msg.Length - 1;
 			d->wascrlf 	= FALSE;
 		}
 		if (d->EditMode) {
