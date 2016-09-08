@@ -114,7 +114,7 @@ sql = mysql
 EOT
         ;;
     null)
-        TEST_MATCH=";999999999999999;0;9;0;100;42"
+        TEST_MATCH=";999999999999999;994299429942994;0;9;0;100;42"
         cat >> .smsdrc <<EOT
 service = null
 EOT
