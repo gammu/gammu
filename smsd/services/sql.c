@@ -353,7 +353,7 @@ static GSM_Error SMSDSQL_NamedQuery(GSM_SMSDConfig * Config, const char *sql_que
 			if (n < argc && n >= 0) {
 				switch(params[n].type){
 					case SQL_TYPE_INT:
-						ptr += sprintf(ptr, "%i", params[n].v.i);
+						ptr += sprintf(ptr, "%lli", params[n].v.i);
 						break;
 					case SQL_TYPE_STRING:
 						buffer2 = db->QuoteString(Config, params[n].v.s);

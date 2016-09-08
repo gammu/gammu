@@ -90,7 +90,7 @@ typedef enum {
 /* NamedQuery SQL parameter value as part of SQL_Var */
 typedef union {
 	const char *s;
-	int i;
+	long long int i;
 } SQL_Val;
 
 /* NamedQuery SQL parameter passed by caller function */
