@@ -100,7 +100,7 @@ for sms in 10 16 26 ; do
 done
 
 TIMEOUT=0
-while ! $SMSD_MONITOR_CMD -C -c "$CONFIG_PATH" -n 1 -d 0 | grep -q ";999999999999999;4;3;0;100;42" ; do
+while ! $SMSD_MONITOR_CMD -C -c "$CONFIG_PATH" -n 1 -d 0 | grep -q ";999999999999999;994299429942994;4;3;0;100;42" ; do
     $SMSD_MONITOR_CMD -C -c "$CONFIG_PATH" -n 1 -d 0
     sleep 1
     TIMEOUT=$(($TIMEOUT + 1))
