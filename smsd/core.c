@@ -1851,6 +1851,7 @@ GSM_Error SMSD_InitSharedMemory(GSM_SMSDConfig *Config, gboolean writable)
 		Config->Status->Failed = 0;
 		Config->Status->Sent = 0;
 		Config->Status->IMEI[0] = 0;
+		Config->Status->IMSI[0] = 0;
 	}
 	return ERR_NONE;
 }
@@ -1993,7 +1994,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 				GSM_SetSendSMSStatusCallback(Config->gsm, SMSD_SendSMSStatusCallback, Config);
 				/* On first start we need to initialize some variables */
 				if (first_start) {
-					if (GSM_GetIMEI(Config->gsm, Config->Status->IMEI) != ERR_NONE) {
+					if (GSM_GetIMEI(Config->gsm, Config->Status->IMEI) != ERR_NONE || GSM_GetSIMIMSI(Config->gsm, Config->Status->IMSI) != ERR_NONE) {
 						errors++;
 					} else {
 						errors = 0;

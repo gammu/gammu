@@ -379,6 +379,9 @@ static GSM_Error SMSDSQL_NamedQuery(GSM_SMSDConfig * Config, const char *sql_que
 			case 'I':
 				to_print = Config->Status->IMEI;
 				break;
+			case 'S':
+				to_print = Config->Status->IMSI;
+				break;
 			case 'P':
 				to_print = Config->PhoneID;
 				break;
@@ -1370,6 +1373,7 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 	if (SMSDSQL_option(Config, SQL_QUERY_INSERT_PHONE, "insert_phone",
 		"INSERT INTO ", Config->table_phones, " (",
 			ESCAPE_FIELD("IMEI"),
+			", ", ESCAPE_FIELD("IMSI"),
 			", ", ESCAPE_FIELD("ID"),
 			", ", ESCAPE_FIELD("NetCode"),
 			", ", ESCAPE_FIELD("NetName"),
@@ -1380,7 +1384,7 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 			", ", ESCAPE_FIELD("Client"),
 			", ", ESCAPE_FIELD("Battery"),
 			", ", ESCAPE_FIELD("Signal"),
-			") VALUES (%I, %P, %O, %M, %1, %2, ",
+			") VALUES (%I, %S, %P, %O, %M, %1, %2, ",
 			SMSDSQL_Now(Config),
 			", ",
 			SMSDSQL_NowPlus(Config, 10),

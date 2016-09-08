@@ -256,10 +256,11 @@ int main(int argc, char **argv)
 			return 3;
 		}
 		if (compact) {
-			printf("%s;%s;%s;%d;%d;%d;%d;%d\n",
+			printf("%s;%s;%s;%s;%d;%d;%d;%d;%d\n",
 				 status.Client,
 				 status.PhoneID,
 				 status.IMEI,
+				 status.IMSI,
 				 status.Sent,
 				 status.Received,
 				 status.Failed,
@@ -269,6 +270,7 @@ int main(int argc, char **argv)
 			printf("Client: %s\n", status.Client);
 			printf("PhoneID: %s\n", status.PhoneID);
 			printf("IMEI: %s\n", status.IMEI);
+			printf("IMSI: %s\n", status.IMSI);
 			printf("Sent: %d\n", status.Sent);
 			printf("Received: %d\n", status.Received);
 			printf("Failed: %d\n", status.Failed);

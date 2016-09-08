@@ -222,6 +222,9 @@ Fields description:
 ``IMEI`` (text)
     IMEI of phone
 
+``IMSI`` (text)
+    SIM IMSI
+
 ``Client`` (text)
     client name, usually string Gammu with version
 
@@ -355,6 +358,7 @@ History of schema versions:
     * Removed unused ``daemons`` table.
     * Added primary key to the ``gammu`` table.
     * Added ``Priority`` field to the :ref:`outbox`.
+    * Added ``IMSI`` field to the :ref:`phones`.
 
     .. versionchanged:: 1.37.90
 

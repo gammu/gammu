@@ -41,7 +41,7 @@ typedef struct _GSM_SMSDConfig GSM_SMSDConfig;
  */
 typedef struct {
 	/**
-	 * Version of this structure (1 for now).
+	 * Version of this structure (2 for now).
 	 */
 	int Version;
 	/**
@@ -76,6 +76,10 @@ typedef struct {
 	 * Phone IMEI.
 	 */
 	char IMEI[GSM_MAX_IMEI_LENGTH + 1];
+	/**
+	 * SIM IMSI.
+	 */
+	char IMSI[GSM_MAX_INFO_LENGTH + 1];
 } GSM_SMSDStatus;
 
 /**

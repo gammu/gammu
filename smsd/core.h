@@ -16,7 +16,7 @@
 #endif
 
 #define SMSD_SHM_KEY (0xface)
-#define SMSD_SHM_VERSION (1)
+#define SMSD_SHM_VERSION (2)
 #define SMSD_DB_VERSION (16)
 
 #include "log.h"

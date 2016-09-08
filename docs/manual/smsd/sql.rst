@@ -98,6 +98,8 @@ Phone Specific Parameters
 
 ``%I``
     IMEI of phone
+``%S``
+    SIM IMSI
 ``%P``
     PHONE ID (hostname)
 ``%N``

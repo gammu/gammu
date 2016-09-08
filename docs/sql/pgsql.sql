@@ -221,6 +221,7 @@ CREATE TABLE phones (
   "Send" boolean NOT NULL DEFAULT 'no',
   "Receive" boolean NOT NULL DEFAULT 'no',
   "IMEI" varchar(35) PRIMARY KEY NOT NULL,
+  "IMSI" varchar(35) NOT NULL,
   "NetCode" varchar(10) DEFAULT 'ERROR',
   "NetName" varchar(35) DEFAULT 'ERROR',
   "Client" text NOT NULL,

@@ -31,6 +31,7 @@ ChangeLog
 [+] * Initial support for Oracle database.
 [!] * Removed unused daemons table from the SMSD schema.
 [+] * SMSD outbox entries now can have priority set in the database.
+[+] * Added SIM IMSI to the SMSD status table.
 
 20160816 - 1.37.4
     
