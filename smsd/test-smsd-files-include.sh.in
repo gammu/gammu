@@ -114,7 +114,7 @@ sleep 5
 
 $SMSD_MONITOR_CMD -C -c "$CONFIG_PATH" -n 1 -d 0
 
-if [ `wc -l @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/received.log` -ne 3 ] ; then
+if [ `wc -l < @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/received.log` -ne 3 ] ; then
     echo "ERROR: Wrong number of messages received!"
     exit 1
 fi
