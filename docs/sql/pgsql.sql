@@ -58,7 +58,7 @@ $update_timestamp$ LANGUAGE plpgsql;
 -- 
 
 CREATE TABLE gammu (
-  "Version" smallint NOT NULL DEFAULT '0'
+  "Version" smallint NOT NULL DEFAULT '0' PRIMARY KEY
 );
 
 -- 

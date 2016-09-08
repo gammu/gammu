@@ -11,7 +11,7 @@
 -- 
 
 CREATE TABLE `gammu` (
-  `Version` integer NOT NULL default '0'
+  `Version` integer NOT NULL default '0' PRIMARY KEY
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 -- 
