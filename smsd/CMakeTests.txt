@@ -97,7 +97,7 @@ if (WITH_BACKUP)
     if (SH_BIN)
         add_test(NAME "smsd-files-include-unicode" COMMAND "${SH_BIN}" "${CMAKE_CURRENT_BINARY_DIR}/test-smsd-files-include.sh" unicode "$<TARGET_FILE:gammu-smsd>" "$<TARGET_FILE:gammu-smsd-inject>" "$<TARGET_FILE:gammu-smsd-monitor>")
         set_tests_properties("smsd-files-include-unicode" PROPERTIES
-            PASS_REGULAR_EXPRESSION ".999999999999999.4.3.0.100.42"
+            PASS_REGULAR_EXPRESSION ".999999999999999.994299429942994.4.3.0.100.42"
             FAIL_REGULAR_EXPRESSION "ERROR: ;Wrong;Process failed with exit status"
             )
     endif (SH_BIN)
