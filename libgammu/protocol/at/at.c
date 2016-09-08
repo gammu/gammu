@@ -51,7 +51,7 @@ typedef struct {
 	GSM_Phone_RequestID requestid;
 } SpecialAnswersStruct;
 
-static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
+GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 {
 	GSM_Protocol_Message 	Msg2;
 	GSM_Protocol_ATData 	*d = &s->Protocol.Data.AT;
@@ -142,10 +142,12 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 
 		{NULL		,1, ID_None}};
 
-	/* Ignore leading CR, LF and ESC */
 	if (d->Msg.Length == 0) {
-		if (rx_char == 10 || rx_char == 13 || rx_char == 27) return ERR_NONE;
-		d->LineStart = d->Msg.Length;
+		/* Ignore leading CR, LF and ESC */
+		if (rx_char == 10 || rx_char == 13 || rx_char == 27) {
+			return ERR_NONE;
+		}
+		d->LineStart = 0;
 	}
 
 	if (d->Msg.BufferUsed < d->Msg.Length + 2) {
