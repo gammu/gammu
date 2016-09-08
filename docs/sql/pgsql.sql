@@ -52,21 +52,6 @@ $update_timestamp$ LANGUAGE plpgsql;
 --CREATE UNIQUE INDEX sentitems_pkey ON sentitems USING btree ("ID");
 
 -- --------------------------------------------------------
--- 
--- Table structure for table "daemons"
--- 
-
-CREATE TABLE daemons (
-  "Start" text NOT NULL,
-  "Info" text NOT NULL
-);
-
--- 
--- Dumping data for table "daemons"
--- 
-
-
--- --------------------------------------------------------
 
 -- 
 -- Table structure for table "gammu"

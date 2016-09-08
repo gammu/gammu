@@ -1,8 +1,3 @@
-CREATE TABLE daemons (
-  Start TEXT NOT NULL,
-  Info TEXT NOT NULL
-);
-
 CREATE TABLE gammu (
   Version INTEGER NOT NULL DEFAULT '0'
 );

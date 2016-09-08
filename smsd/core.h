@@ -151,7 +151,6 @@ struct _GSM_SMSDConfig {
 	/* configurable SQL queries */
 	char * SMSDSQL_queries[SQL_QUERY_LAST_NO];
 
-	const char *table_daemons;
 	const char *table_gammu;
 	const char *table_inbox;
 	const char *table_sentitems;

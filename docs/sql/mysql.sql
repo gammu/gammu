@@ -7,22 +7,6 @@
 -- --------------------------------------------------------
 
 -- 
--- Table structure for table `daemons`
--- 
-
-CREATE TABLE `daemons` (
-  `Start` text NOT NULL,
-  `Info` text NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
-
--- 
--- Dumping data for table `daemons`
--- 
-
-
--- --------------------------------------------------------
-
--- 
 -- Table structure for table `gammu`
 -- 
 

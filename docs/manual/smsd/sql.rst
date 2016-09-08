@@ -47,10 +47,6 @@ Tables
 You can customize name of all tables in the :config:section:`[tables]`. The SQL
 queries will reflect this, so it's enough to change table name in this section.
 
-.. config:option:: daemons
-
-    Name of the :ref:`daemons` table.
-
 .. config:option:: gammu
 
     Name of the :ref:`gammu-table` table.

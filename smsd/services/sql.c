@@ -561,12 +561,6 @@ static GSM_Error SMSDSQL_Init(GSM_SMSDConfig * Config)
 	if (error != ERR_NONE)
 		return error;
 
-	error = SMSDSQL_CheckTable(Config, Config->table_daemons);
-	if (error != ERR_NONE) {
-		SMSD_Log(DEBUG_ERROR, Config, "Failed to open table %s", Config->table_daemons);
-		return error;
-	}
-
 	error = SMSDSQL_CheckTable(Config, Config->table_gammu);
 	if (error != ERR_NONE) {
 		SMSD_Log(DEBUG_ERROR, Config, "Failed to open table %s", Config->table_gammu);
@@ -1298,10 +1292,6 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 		Config->database="sms";
 	}
 
-	Config->table_daemons = INI_GetValue(Config->smsdcfgfile, "tables", "daemons", FALSE);
-	if (Config->table_daemons == NULL){
-		Config->table_daemons = "daemons";
-	}
 	Config->table_gammu = INI_GetValue(Config->smsdcfgfile, "tables", "gammu", FALSE);
 	if (Config->table_gammu == NULL){
 		Config->table_gammu = "gammu";

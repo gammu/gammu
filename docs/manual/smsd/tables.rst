@@ -26,13 +26,6 @@ of the same message from :ref:`outbox_multipart`.
 Description of tables
 ---------------------
 
-.. _daemons:
-
-daemons
-+++++++
-
-Information about running daemons.
-
 .. _gammu-table: 
 
 gammu

@@ -29,6 +29,7 @@ ChangeLog
 [!] * Removed getlocation command as we no longer fit into their usage policy.
 [-] * Fixed call diverts on TP-LINK MA260.
 [+] * Initial support for Oracle database.
+[!] * Removed unused daemons table from the SMSD schema.
 
 20160816 - 1.37.4
     
