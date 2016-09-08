@@ -73,6 +73,7 @@ CREATE TABLE `outbox` (
   `DeliveryReport` enum('default','yes','no') default 'default',
   `CreatorID` text NOT NULL,
   `Retries` int(3) default 0,
+  `Priority` integer default 0,
   PRIMARY KEY `ID` (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 

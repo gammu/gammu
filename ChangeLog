@@ -30,6 +30,7 @@ ChangeLog
 [-] * Fixed call diverts on TP-LINK MA260.
 [+] * Initial support for Oracle database.
 [!] * Removed unused daemons table from the SMSD schema.
+[+] * SMSD outbox entries now can have priority set in the database.
 
 20160816 - 1.37.4
     

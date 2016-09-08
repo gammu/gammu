@@ -128,6 +128,7 @@ CREATE TABLE outbox (
   "DeliveryReport" varchar(10) DEFAULT 'default',
   "CreatorID" text NOT NULL,
   "Retries" integer DEFAULT '0',
+  "Priority" integer DEFAULT '0',
   CHECK ("Coding" IN 
   ('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression')),
   CHECK ("DeliveryReport" IN ('default','yes','no'))

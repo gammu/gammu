@@ -160,6 +160,9 @@ Fields description:
 ``Retries`` (integer)
     number of attempted retries when sending this message
 
+``Priority`` (integer)
+    priority of message, messages with higher priority are processed first
+
 .. _outbox_multipart:
 
 outbox_multipart
@@ -351,12 +354,13 @@ History of schema versions:
 
     * Removed unused ``daemons`` table.
     * Added primary key to the ``gammu`` table.
+    * Added ``Priority`` field to the :ref:`outbox`.
 
     .. versionchanged:: 1.37.90
 
 15
 
-    Added ``Retries`` field.
+    Added ``Retries`` field to the :ref:`outbox`.
 
     .. versionchanged:: 1.36.7
 
