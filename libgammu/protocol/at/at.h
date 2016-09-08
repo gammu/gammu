@@ -6,6 +6,7 @@
 #include "../protocol.h"
 
 GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char);
+GSM_Error AT_Initialise(GSM_StateMachine *s);
 
 typedef struct {
 	GSM_Protocol_Message 	Msg;

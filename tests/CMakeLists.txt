@@ -952,6 +952,12 @@ if (WITH_ATGEN)
     add_coverage(at-charset)
     target_link_libraries(at-charset libGammu ${LIBINTL_LIBRARIES})
     add_test(at-charset "${GAMMU_TEST_PATH}/at-charset${CMAKE_EXECUTABLE_SUFFIX}")
+
+    # AT statemachine
+    add_executable(at-statemachine at-statemachine.c)
+    add_coverage(at-statemachine)
+    target_link_libraries(at-statemachine libGammu ${LIBINTL_LIBRARIES})
+    add_test(at-statemachine "${GAMMU_TEST_PATH}/at-statemachine${CMAKE_EXECUTABLE_SUFFIX}")
 endif (WITH_ATGEN)
 
 # Line parser tests

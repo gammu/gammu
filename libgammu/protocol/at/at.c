@@ -292,7 +292,7 @@ GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 	return ERR_NONE;
 }
 
-static GSM_Error AT_Initialise(GSM_StateMachine *s)
+GSM_Error AT_Initialise(GSM_StateMachine *s)
 {
 	GSM_Protocol_ATData *d = &s->Protocol.Data.AT;
 	GSM_Error		error;
