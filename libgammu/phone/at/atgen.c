@@ -1722,7 +1722,7 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 				coding = GSM_GetMessageCoding(&(s->di), dcs);
 			}
 
-			smprintf(s, "coding %d -> %d\n", dcs, coding);
+			smprintf(s, "USSD coding DCS = %d -> Coding = %d\n", dcs, coding);
 
 			if (coding == SMS_Coding_Default_No_Compression) {
 				DecodeHexBin(packed, hex_encoded, strlen(hex_encoded));
