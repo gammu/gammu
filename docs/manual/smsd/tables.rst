@@ -347,6 +347,13 @@ History of database structure
 
 History of schema versions:
 
+16
+
+    * Removed unused ``daemons`` table.
+    * Added primary key to the ``gammu`` table.
+
+    .. versionchanged:: 1.37.90
+
 15
 
     Added ``Retries`` field.
