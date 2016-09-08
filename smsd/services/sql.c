@@ -614,7 +614,7 @@ static GSM_Error SMSDSQL_Init(GSM_SMSDConfig * Config)
 		db->Free(Config);
 		return ERR_UNKNOWN;
 	}
-	version = db->GetNumber(Config, &res, 0);
+	version = (int)db->GetNumber(Config, &res, 0);
 	db->FreeResult(Config, &res);
 	error = SMSD_CheckDBVersion(Config, version);
 	if (error != ERR_NONE) {
@@ -1014,16 +1014,16 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 			}
 		}
 
-		sms->SMS[sms->Number].Class = db->GetNumber(Config, &res, 3);
+		sms->SMS[sms->Number].Class = (int)db->GetNumber(Config, &res, 3);
 		sms->SMS[sms->Number].PDU = SMS_Submit;
 		sms->Number++;
 
 		if (i == 1) {
 			strcpy(Config->CreatorID, db->GetString(Config, &res, 10));
-			Config->relativevalidity = db->GetNumber(Config, &res, 8);
+			Config->relativevalidity = (int)db->GetNumber(Config, &res, 8);
 
 			Config->currdeliveryreport = db->GetBool(Config, &res, 9);
-			Config->retries = db->GetNumber(Config, &res, 11);
+			Config->retries = (int)db->GetNumber(Config, &res, 11);
 
 			/* Is this a multipart message? */
 			if (!db->GetBool(Config, &res, 7)) {
