@@ -84,7 +84,7 @@ const char escape_char_odbc[] = "";
 const char escape_char_mysql[] = "`";
 const char escape_char_pgsql[] = "\"";
 const char escape_char_sqlite[] = "";
-const char escape_char_freetds[] = "";
+const char escape_char_freetds[] = "\"";
 const char escape_char_fallback[] = "";
 
 static const char *SMSDSQL_EscapeChar(GSM_SMSDConfig * Config)
