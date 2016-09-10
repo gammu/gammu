@@ -13,6 +13,7 @@
 #define _BSD_SOURCE
 #define _DEFAULT_SOURCE
 #include <time.h>
+#include <gammu.h>
 #include "../../helper/strptime.h"
 
 #include <stdarg.h>
