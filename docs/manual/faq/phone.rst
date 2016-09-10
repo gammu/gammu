@@ -48,7 +48,7 @@ This option is supported since Gammu 1.29.90.
 
 .. _faq-android:
 
-Are Andriod phones supported?
+Are Android phones supported?
 -----------------------------
 
 Unfortunately no at the moment. Any help in this area is welcome.
