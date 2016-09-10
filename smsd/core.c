@@ -805,6 +805,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 	Config->checksecurity = INI_GetBool(Config->smsdcfgfile, "smsd", "checksecurity", TRUE);
 	Config->hangupcalls = INI_GetBool(Config->smsdcfgfile, "smsd", "hangupcalls", FALSE);
 	Config->checksignal = INI_GetBool(Config->smsdcfgfile, "smsd", "checksignal", TRUE);
+	Config->checknetwork = INI_GetBool(Config->smsdcfgfile, "smsd", "checknetwork", TRUE);
 	Config->checkbattery = INI_GetBool(Config->smsdcfgfile, "smsd", "checkbattery", TRUE);
 	Config->enable_send = INI_GetBool(Config->smsdcfgfile, "smsd", "send", TRUE);
 	Config->enable_receive = INI_GetBool(Config->smsdcfgfile, "smsd", "receive", TRUE);
@@ -820,8 +821,8 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 
 	SMSD_Log(DEBUG_NOTICE, Config, "CommTimeout=%i, SendTimeout=%i, ReceiveFrequency=%i, ResetFrequency=%i, HardResetFrequency=%i",
 			Config->commtimeout, Config->sendtimeout, Config->receivefrequency, Config->resetfrequency, Config->hardresetfrequency);
-	SMSD_Log(DEBUG_NOTICE, Config, "checks: CheckSecurity=%d, CheckBattery=%d, CheckSignal=%d",
-			Config->checksecurity, Config->checkbattery, Config->checksignal);
+	SMSD_Log(DEBUG_NOTICE, Config, "checks: CheckSecurity=%d, CheckBattery=%d, CheckSignal=%d, CheckNetwork=%d",
+			Config->checksecurity, Config->checkbattery, Config->checksignal, Config->checknetwork);
 	SMSD_Log(DEBUG_NOTICE, Config, "mode: Send=%d, Receive=%d",
 			Config->enable_send, Config->enable_receive);
 
@@ -1601,6 +1602,18 @@ void SMSD_PhoneStatus(GSM_SMSDConfig *Config) {
 	if (error != ERR_NONE) {
 		memset(&(Config->Status->Network), 0, sizeof(Config->Status->Network));
 	}
+	if (Config->checknetwork) {
+		error = GSM_GetNetworkInfo(Config->gsm, &Config->Status->NetInfo);
+	} else {
+		error = ERR_UNKNOWN;
+	}
+	if (error != ERR_NONE) {
+		memset(&(Config->Status->NetInfo), 0, sizeof(Config->Status->NetInfo));
+	} else if (error == ERR_NONE) {
+		if (Config->Status->NetInfo.State == GSM_NoNetwork) {
+			GSM_SetPower(Config->gsm, TRUE);
+		}
+	}
 }
 
 /**
@@ -1847,6 +1860,7 @@ GSM_Error SMSD_InitSharedMemory(GSM_SMSDConfig *Config, gboolean writable)
 			GetCompiler());
 		memset(&Config->Status->Charge, 0, sizeof(GSM_BatteryCharge));
 		memset(&Config->Status->Network, 0, sizeof(GSM_SignalQuality));
+		memset(&Config->Status->NetInfo, 0, sizeof(GSM_NetworkInfo));
 		Config->Status->Received = 0;
 		Config->Status->Failed = 0;
 		Config->Status->Sent = 0;

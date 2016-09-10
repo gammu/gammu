@@ -248,6 +248,17 @@ General parameters of SMS daemon
 
     Default is 1 (enabled).
 
+.. config:option:: CheckNetwork
+
+    .. versionadded:: 1.37.90
+
+    Whether to check network status periodically.
+
+    If phone is reported to be not on the network, SMSD
+    tries to power it on.
+
+    Default is 1 (enabled).
+
 .. config:option:: ResetFrequency
 
     The number of seconds between performing a preventive soft reset in order to

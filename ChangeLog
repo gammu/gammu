@@ -32,6 +32,8 @@ ChangeLog
 [!] * Removed unused daemons, pbk and pbk_groups tables from the SMSD schema.
 [+] * SMSD outbox entries now can have priority set in the database.
 [+] * Added SIM IMSI to the SMSD status table.
+[+] * Added CheckNetwork directive.
+[+] * SMSD attempts to power on radio if disabled.
 
 20160816 - 1.37.4
     

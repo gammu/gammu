@@ -13,7 +13,6 @@
 #define _BSD_SOURCE
 #define _DEFAULT_SOURCE
 #include <time.h>
-#include <gammu.h>
 #include "../../helper/strptime.h"
 
 #include <stdarg.h>
@@ -318,24 +317,6 @@ static GSM_Error SMSDSQL_NamedQuery(GSM_SMSDConfig * Config, const char *sql_que
 	int n, argc = 0;
 	struct GSM_SMSDdbobj *db = Config->db;
 
-	GSM_NetworkInfo NetInfo;
-	char empty[1] = "";
-	char *NetCode, *NetName;
-
-	NetCode = empty;
-	NetName = empty;
-
-	/* Query network status only if we need it */
-	if (
-		(strstr(sql_query, "%O") != NULL || strstr(sql_query, "%M") != NULL)
-		&& GSM_GetNetworkInfo(Config->gsm, &NetInfo) == ERR_NONE
-	) {
-		NetCode = NetInfo.NetworkCode;
-		if (NetInfo.NetworkName[0] != 0x00 || NetInfo.NetworkName[1] != 0x00) {
-			NetName = DecodeUnicodeConsole(NetInfo.NetworkName);
-		}
-	}
-
 	if (params != NULL) {
 		while (params[argc].type != SQL_TYPE_NONE) argc++;
 	}
@@ -386,10 +367,10 @@ static GSM_Error SMSDSQL_NamedQuery(GSM_SMSDConfig * Config, const char *sql_que
 				to_print = Config->PhoneID;
 				break;
 			case 'O':
-				to_print = NetCode;
+				to_print = Config->Status->NetInfo.NetworkCode;
 				break;
 			case 'M':
-				to_print = NetName;
+				to_print = DecodeUnicodeConsole(Config->Status->NetInfo.NetworkName);
 				break;
 			case 'N':
 				snprintf(static_buff, sizeof(static_buff), "Gammu %s, %s, %s", GAMMU_VERSION, GetOS(), GetCompiler());

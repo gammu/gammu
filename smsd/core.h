@@ -91,6 +91,7 @@ struct _GSM_SMSDConfig {
 	gboolean hangupcalls;
 	gboolean checkbattery;
 	gboolean checksignal;
+	gboolean checknetwork;
 	gboolean enable_send;
 	gboolean enable_receive;
 	unsigned int maxretries;

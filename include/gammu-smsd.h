@@ -80,6 +80,10 @@ typedef struct {
 	 * SIM IMSI.
 	 */
 	char IMSI[GSM_MAX_INFO_LENGTH + 1];
+	/**
+	 * Network information.
+	 */
+	GSM_NetworkInfo NetInfo;
 } GSM_SMSDStatus;
 
 /**
