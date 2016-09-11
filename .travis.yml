@@ -26,7 +26,7 @@ script:
   - if [ ${COVERITY_SCAN_BRANCH} != 1 ] ; then cmake .. -DCMAKE_C_COMPILER=$CC -DENABLE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Continuous -DONLINE_TESTING=ON $TESTARGS $ARGS ; fi
   - if [ ${COVERITY_SCAN_BRANCH} != 1 ] ; then make ; fi
   - if [ ${COVERITY_SCAN_BRANCH} != 1 ] ; then make test ; fi
-  - make gcov
+  - if [ ${COVERITY_SCAN_BRANCH} != 1 ] ; then make gcov ; fi
 after_success:
   - bash ../admin/codecov-uploader.sh -X gcov
 #  - bash <(curl -s https://codecov.io/bash) -X gcov
