@@ -497,7 +497,7 @@ static GSM_Error SMSDSQL_CheckTable(GSM_SMSDConfig * Config, const char *table)
 		"SELECT %s * FROM %s %s %s",
 		SMSDSQL_TopClause(Config, "1"),
 		table,
-		SMSDSQL_RownumClause(Config, "%1", FALSE),
+		SMSDSQL_RownumClause(Config, "1", FALSE),
 		SMSDSQL_LimitClause(Config, "1")
 	);
 	error = SMSDSQL_Query(Config, buffer, &res);
