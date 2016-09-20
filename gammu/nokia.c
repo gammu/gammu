@@ -263,7 +263,7 @@ void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned char *IDF
 			break;
 		}
 		if (error == ERR_FILENOTEXIST) {
-			return;
+			goto out;
 		}
 	    	Print_Error(error);
 
@@ -412,6 +412,8 @@ void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned char *IDF
 			j+=UnicodeLength(Names2+j)*2+2;
 		}
 	}
+
+out:
 	free(Names);
 	free(Names2);
 }
