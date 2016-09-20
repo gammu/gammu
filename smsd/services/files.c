@@ -25,6 +25,14 @@
 
 #include "../../helper/string.h"
 
+#ifndef PATH_MAX
+#ifdef MAX_PATH
+#define PATH_MAX (MAX_PATH)
+#else
+#define PATH_MAX (4069)
+#endif
+#endif
+
 /**
  * Helper define to check error code from fwrite.
  */
@@ -36,7 +44,7 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfi
 {
 	GSM_Error error = ERR_NONE;
 	int i, j;
-	unsigned char FileName[100], FullName[400], ext[4], buffer[64], buffer2[400];
+	unsigned char FileName[100], FullName[PATH_MAX], ext[4], buffer[64], buffer2[400];
 	gboolean done;
 	FILE *file;
 	size_t locations_size = 0, locations_pos = 0;
@@ -172,7 +180,7 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConf
 {
 	GSM_MultiPartSMSInfo SMSInfo;
 	GSM_WAPBookmark Bookmark;
-	char FileName[100], FullName[400];
+	char FileName[100], FullName[PATH_MAX];
 	unsigned char Buffer[(GSM_MAX_SMS_LENGTH * GSM_MAX_MULTI_SMS + 1) * 2];
 	unsigned char Buffer2[(GSM_MAX_SMS_LENGTH * GSM_MAX_MULTI_SMS + 1) * 2];
 	FILE *File;
@@ -449,7 +457,7 @@ static GSM_Error SMSDFiles_MoveSMS(GSM_MultiSMSMessage * sms UNUSED, GSM_SMSDCon
 {
 	FILE *oFile, *iFile;
 	size_t ilen = 0, olen = 0;
-	char Buffer[(GSM_MAX_SMS_LENGTH * GSM_MAX_MULTI_SMS + 1) * 2], ifilename[400], ofilename[400];
+	char Buffer[(GSM_MAX_SMS_LENGTH * GSM_MAX_MULTI_SMS + 1) * 2], ifilename[PATH_MAX], ofilename[PATH_MAX];
 	const char *sourcepath, *destpath;
 	GSM_Error error;
 
@@ -528,7 +536,7 @@ static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDCo
 {
 	int i, j;
 	int fd;
-	unsigned char FileName[100], FullName[400], ext[17], buffer[64], buffer2[400];
+	unsigned char FileName[100], FullName[PATH_MAX], ext[17], buffer[64], buffer2[400];
 	FILE *file = NULL;
 	time_t rawtime;
 	struct tm *timeinfo;
@@ -642,7 +650,7 @@ static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage * sms UNUSED, GSM_
 	FILE *file;
 	GSM_File GSMFile;
 	GSM_Error error;
-	unsigned char FullPath[400];
+	unsigned char FullPath[PATH_MAX];
 	unsigned char *lineStart, *lineEnd;
 	/* MessageReference TPMR maximum is "255" */
 	char MessageReferenceBuffer[sizeof("MessageReference = \n") + 4];
