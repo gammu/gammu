@@ -2422,6 +2422,7 @@ int *GetRange(GSM_StateMachine *s, const char *buffer)
 		/* Did we parse anything? */
 		if (endptr == chr) {
 			smprintf(s, "Failed to find number in range!\n");
+			free(result);
 			return NULL;
 		}
 		/* Allocate more memory if needed */
