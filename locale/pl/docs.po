@@ -120,7 +120,7 @@ msgid ""
 "wammu.eu/docs/manual/>."
 msgstr ""
 "Istnieje również podręcznik Gammu dostępny w docs/manual. Możesz budować "
-"wersję HTML za pomocą zrobić manual-html, który jest na: <http://wammu.eu/"
+"wersję HTML za pomocą make manual-html, który jest na: <http://wammu.eu/"
 "docs/manual/>."
 
 #. type: Title =

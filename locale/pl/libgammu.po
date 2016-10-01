@@ -226,7 +226,7 @@ msgid ""
 "Nobody is perfect, some bug appeared in protocol implementation. Please "
 "contact authors."
 msgstr ""
-"Nikt nie jest perfekcyjny, pojawił się błąd w implementacji protokołu. "
+"Nikt nie jest doskonały, pojawił się błąd w implementacji protokołu. "
 "Proszę skontaktować się z autorami."
 
 #: libgammu/gsmcomon.c:121
@@ -346,7 +346,7 @@ msgstr "Żądana funkcjonalność została wyłączona podczas kompilacji."
 #: libgammu/gsmcomon.c:146
 #, fuzzy
 msgid "Bluetooth configuration requires channel option."
-msgstr "Konfiguracja bluetootha wymaga podania kanału."
+msgstr "Konfiguracja Bluetooth wymaga podania kanału."
 
 #: libgammu/gsmcomon.c:147
 #, fuzzy

@@ -168,7 +168,7 @@ msgstr "Sprawdzenie loga dzwoniących telefonów"
 #: gammu/backup.c:527
 msgid "Backup phone caller groups and logos?"
 msgstr ""
-"Czy utworzyć kopię bezpieczeństwa dzwoniących grup i dzienników zdarzeń?"
+"Czy utworzyć kopię bezpieczeństwa dzwoniących grup i loga?"
 
 #: gammu/backup.c:560
 msgid "Checking SIM SMS profiles"
@@ -305,7 +305,7 @@ msgstr ""
 
 #: gammu/backup.c:1034
 msgid "Restore phone caller groups and logos?"
-msgstr "Przywrócić grupy dzwoniących i dziennik zdarzeń?"
+msgstr "Przywrócić grupy dzwoniących i loga?"
 
 #: gammu/backup.c:1044 gammu/backup.c:1119 gammu/backup.c:1172
 #: gammu/backup.c:1230 gammu/backup.c:1279 gammu/backup.c:1307
