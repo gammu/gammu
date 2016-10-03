@@ -344,7 +344,6 @@ msgid "Desired functionality has been disabled on compile time."
 msgstr "Żądana funkcjonalność została wyłączona podczas kompilacji."
 
 #: libgammu/gsmcomon.c:146
-#, fuzzy
 msgid "Bluetooth configuration requires channel option."
 msgstr "Konfiguracja Bluetooth wymaga podania kanału."
 
