@@ -976,6 +976,9 @@ GSM_PhoneModel allmodels[] = {
 	/* Ubinetics */
 	{"GDC201",	"GDC201",	"",		{F_SMS_NO_ME, 0}},
 
+	/* Dell */
+	{"DW5560",	"DW5560",	"",		{0}},
+
 	/* Other */
 	{"SIMCOM_SIM300D","SIMCOM_SIM300D","",		{F_ENCODED_USSD, 0}},
 
