@@ -178,8 +178,8 @@ GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 
 		/* Process line after \r\n */
 		if (d->Msg.Length > 0 && rx_char == 10 && d->Msg.Buffer[d->Msg.Length - 2] == 13) {
-			i = 0;
-			while (StatusStrings[i] != NULL) {
+			/* Process standard responses */
+			for (i = 0; StatusStrings[i] != NULL; i++) {
 				if (strncmp(StatusStrings[i],
 							d->Msg.Buffer + d->LineStart,
 							strlen(StatusStrings[i])) == 0) {
@@ -188,7 +188,6 @@ GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 					d->Msg.Length			= 0;
 					break;
 				}
-				i++;
 			}
 			/* Generally hack for A2D */
 			if (d->CPINNoOK) {
