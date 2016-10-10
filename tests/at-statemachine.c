@@ -12,6 +12,8 @@
 
 static const char *test_data = "+CUSD: 2,\"Maaf, permintaan Anda tidak dapat kami proses. Silakan coba beberapa saat lagi.\",0\r\nAT+CSCS=\"HEX\"\r\nOK\r\n";
 
+static const char *second_test = "+CMTI: \"SM\",1\r\nAT+CPMS=\"SM\",\"SM\"\r\r\n+CPMS: 1,20,1,20,1,20\r\n\r\nOK\r\n";
+
 int main(int argc UNUSED, char **argv UNUSED)
 {
 	GSM_Debug_Info *debug_info;
@@ -59,6 +61,14 @@ int main(int argc UNUSED, char **argv UNUSED)
 	/* Feed data */
 	for (i = 0; i < strlen(test_data); i++) {
 		error = AT_StateMachine(s, test_data[i]);
+		gammu_test_result(error, "AT_StateMachine");
+	}
+
+	Data->RequestID = ID_SetMemoryType;
+
+	/* Feed data */
+	for (i = 0; i < strlen(second_test); i++) {
+		error = AT_StateMachine(s, second_test[i]);
 		gammu_test_result(error, "AT_StateMachine");
 	}
 
