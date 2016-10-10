@@ -151,7 +151,7 @@ GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 	}
 
 	if (d->Msg.BufferUsed < d->Msg.Length + 2) {
-		d->Msg.BufferUsed	= d->Msg.Length + 2;
+		d->Msg.BufferUsed	= d->Msg.Length + 200;
 		d->Msg.Buffer 		= (unsigned char *)realloc(d->Msg.Buffer,d->Msg.BufferUsed);
 		if (d->Msg.Buffer == NULL) {
 			return ERR_MOREMEMORY;
