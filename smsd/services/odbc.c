@@ -270,6 +270,8 @@ char * SMSDODBC_QuoteString(GSM_SMSDConfig * Config, const char *string)
 			strcasecmp(driver_name, "pgsql") == 0 ||
 			strcasecmp(driver_name, "native_pgsql") == 0 ||
 			strncasecmp(driver_name, "sqlite", 6) == 0 ||
+			strncasecmp(driver_name, "oracle", 6) == 0 ||
+			strncasecmp(driver_name, "freetds", 6) == 0 ||
 			strcasecmp(Config->driver, "access") == 0) {
 		quote = '\'';
 	}
