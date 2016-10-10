@@ -659,6 +659,8 @@ if (WITH_ATGEN)
         add_test("at-ussd-reply-${TESTNAME}"
             "${GAMMU_TEST_PATH}/at-ussd-reply${CMAKE_EXECUTABLE_SUFFIX}"
             "${Gammu_SOURCE_DIR}/tests/at-ussd/${TESTMESSAGE}" "${PHONE_MODEL}")
+        set_tests_properties("at-ussd-reply-${TESTNAME}"
+            PROPERTIES FAIL_REGULAR_EXPRESSION "Response: \n")
     endforeach(TESTMESSAGE $MESSAGES)
 
     # AT SMSC parsing
