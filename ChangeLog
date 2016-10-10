@@ -35,6 +35,7 @@ ChangeLog
 [+] * Added CheckNetwork directive.
 [+] * SMSD attempts to power on radio if disabled.
 [-] * Fixed processing of AT unsolicited responses in some cases.
+[-] * Fixed parsing USSD responses from some devices.
 
 20160816 - 1.37.4
     

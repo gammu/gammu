@@ -1616,6 +1616,7 @@ GSM_Error ATGEN_SQWEReply(GSM_Protocol_Message *msg UNUSED, GSM_StateMachine *s)
 
 GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
+	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_USSDMessage ussd;
 	GSM_Error error;
 	unsigned char *pos = NULL;
@@ -1725,10 +1726,13 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 			smprintf(s, "USSD coding DCS = %d -> Coding = %d\n", dcs, coding);
 
 			if (coding == SMS_Coding_Default_No_Compression) {
-				DecodeHexBin(packed, hex_encoded, strlen(hex_encoded));
-				GSM_UnpackEightBitsToSeven(0, strlen(hex_encoded), sizeof(decoded), packed, decoded);
-				DecodeDefault(ussd.Text, decoded, strlen(decoded), TRUE, NULL);
-
+				if (Priv->Charset == AT_CHARSET_HEX || GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_ENCODED_USSD)) {
+					DecodeHexBin(packed, hex_encoded, strlen(hex_encoded));
+					GSM_UnpackEightBitsToSeven(0, strlen(hex_encoded), sizeof(decoded), packed, decoded);
+					DecodeDefault(ussd.Text, decoded, strlen(decoded), TRUE, NULL);
+				} else {
+					DecodeDefault(ussd.Text, hex_encoded, strlen(hex_encoded), TRUE, NULL);
+				}
 			} else if (coding == SMS_Coding_Unicode_No_Compression) {
 				DecodeHexUnicode(ussd.Text, hex_encoded + offset, strlen(hex_encoded));
 			} else if (coding == SMS_Coding_8bit) {
