@@ -408,7 +408,7 @@ GSM_Error ATGEN_GetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigne
 		(*location)--;
 	}
 	smprintf(s, "SMS folder %i & location %i -> ATGEN folder %i & location %i\n",
-			sms->Folder,sms->Location,*folderid,*location);
+			sms->Folder, sms->Location, *folderid, *location);
 
 	/* Set the needed memory type */
 	if (Priv->SIMSMSMemory == AT_AVAILABLE &&
