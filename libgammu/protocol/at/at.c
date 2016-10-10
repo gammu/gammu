@@ -197,10 +197,9 @@ GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 					s->Phone.Data.RequestMsg	= &d->Msg;
 					s->Phone.Data.DispatchError	= s->Phone.Functions->DispatchMessage(s);
 					d->Msg.Length			= 0;
+					break;
 				}
 			}
-			if (d->Msg.Length == 0)
-				break;
 
 			i = 0;
 			while (SpecialAnswers[i].text != NULL) {
