@@ -201,8 +201,8 @@ GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 				}
 			}
 
-			i = 0;
-			while (SpecialAnswers[i].text != NULL) {
+			/* Check for incoming frames */
+			for (i = 0; SpecialAnswers[i].text != NULL; i++) {
 				if (strncmp(SpecialAnswers[i].text,
 							d->Msg.Buffer + d->LineStart,
 							strlen(SpecialAnswers[i].text)) == 0) {
@@ -219,7 +219,6 @@ GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 					d->SpecialAnswerStart 	= d->LineStart;
 					d->SpecialAnswerLines	= SpecialAnswers[i].lines;
 				}
-				i++;
 			}
 
 
