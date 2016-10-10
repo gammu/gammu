@@ -34,6 +34,7 @@ ChangeLog
 [+] * Added SIM IMSI to the SMSD status table.
 [+] * Added CheckNetwork directive.
 [+] * SMSD attempts to power on radio if disabled.
+[-] * Fixed processing of AT unsolicited responses in some cases.
 
 20160816 - 1.37.4
     

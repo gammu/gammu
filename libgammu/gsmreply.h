@@ -210,6 +210,7 @@ typedef enum {
 	ID_User9,
 	ID_User10,
 
+	ID_All,
 	ID_EachFrame
 } GSM_Phone_RequestID;
 

@@ -76,6 +76,16 @@ int main(int argc UNUSED, char **argv UNUSED)
 
 	test_result(s->MessagesCount == 4);
 
+	Data->RequestID = ID_None;
+
+	/* Feed data */
+	for (i = 0; i < strlen(second_test); i++) {
+		error = AT_StateMachine(s, second_test[i]);
+		gammu_test_result(error, "AT_StateMachine");
+	}
+
+	test_result(s->MessagesCount == 6);
+
 	/* Free state machine */
 	GSM_FreeStateMachine(s);
 
