@@ -58,7 +58,7 @@ GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 	size_t			i;
 
 	/* These are lines with end of "normal" answers */
-	static const char 		*StartStrings[] = {
+	static const char 		*StatusStrings[] = {
 		/* Standard AT */
 		"OK\r",
 		"ERROR\r",
@@ -179,10 +179,10 @@ GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		/* Process line after \r\n */
 		if (d->Msg.Length > 0 && rx_char == 10 && d->Msg.Buffer[d->Msg.Length - 2] == 13) {
 			i = 0;
-			while (StartStrings[i] != NULL) {
-				if (strncmp(StartStrings[i],
+			while (StatusStrings[i] != NULL) {
+				if (strncmp(StatusStrings[i],
 							d->Msg.Buffer + d->LineStart,
-							strlen(StartStrings[i])) == 0) {
+							strlen(StatusStrings[i])) == 0) {
 					s->Phone.Data.RequestMsg	= &d->Msg;
 					s->Phone.Data.DispatchError	= s->Phone.Functions->DispatchMessage(s);
 					d->Msg.Length			= 0;
