@@ -64,6 +64,8 @@ int main(int argc UNUSED, char **argv UNUSED)
 		gammu_test_result(error, "AT_StateMachine");
 	}
 
+	test_result(s->MessagesCount == 2);
+
 	Data->RequestID = ID_SetMemoryType;
 
 	/* Feed data */
@@ -71,6 +73,8 @@ int main(int argc UNUSED, char **argv UNUSED)
 		error = AT_StateMachine(s, second_test[i]);
 		gammu_test_result(error, "AT_StateMachine");
 	}
+
+	test_result(s->MessagesCount == 4);
 
 	/* Free state machine */
 	GSM_FreeStateMachine(s);

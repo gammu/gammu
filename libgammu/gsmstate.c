@@ -1137,6 +1137,8 @@ GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 	GSM_Reply_Function	*Reply;
 	int			reply;
 
+	s->MessagesCount++;
+
 	GSM_DumpMessageTextRecv(s, msg->Buffer, msg->Length, msg->Type);
 	GSM_DumpMessageBinaryRecv(s, msg->Buffer, msg->Length, msg->Type);
 

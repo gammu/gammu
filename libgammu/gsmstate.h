@@ -1417,6 +1417,10 @@ struct _GSM_StateMachine {
 	 * Flag for interrupting communication.
 	 */
 	volatile gboolean Abort;
+	/**
+	 * Counter for dispatched messages.
+	 */
+	volatile size_t MessagesCount;
 
 	GSM_Device		Device; /**< Device driver data and functions */
 	GSM_Protocol		Protocol; /**< Protocol driver data and functions */
