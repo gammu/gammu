@@ -142,6 +142,7 @@ GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 
 		{NULL		,1, ID_None}};
 
+	/* We're starting new message */
 	if (d->Msg.Length == 0) {
 		/* Ignore leading CR, LF and ESC */
 		if (rx_char == 10 || rx_char == 13 || rx_char == 27) {
@@ -150,6 +151,7 @@ GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		d->LineStart = 0;
 	}
 
+	/* Allocate more memory if needed */
 	if (d->Msg.BufferUsed < d->Msg.Length + 2) {
 		d->Msg.BufferUsed	= d->Msg.Length + 200;
 		d->Msg.Buffer 		= (unsigned char *)realloc(d->Msg.Buffer,d->Msg.BufferUsed);
@@ -157,18 +159,24 @@ GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 			return ERR_MOREMEMORY;
 		}
 	}
+
+	/* Store current char in the buffer */
 	d->Msg.Buffer[d->Msg.Length++] = rx_char;
 	d->Msg.Buffer[d->Msg.Length  ] = 0;
 
+	/* Parse char */
 	switch (rx_char) {
 	case 0:
 		break;
 	case 10:
 	case 13:
-		if (!d->wascrlf) {
+		/* Store line end (if we did not do it in last char */
+		if (! d->wascrlf) {
 			d->LineEnd = d->Msg.Length - 1;
 		}
 		d->wascrlf = TRUE;
+
+		/* Process line after \r\n */
 		if (d->Msg.Length > 0 && rx_char == 10 && d->Msg.Buffer[d->Msg.Length - 2] == 13) {
 			i = 0;
 			while (StartStrings[i] != NULL) {
