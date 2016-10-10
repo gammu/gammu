@@ -221,7 +221,7 @@ GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 				}
 			}
 
-
+			/* Last line of incoming frame */
 			if (d->SpecialAnswerLines == 1) {
 				/* This is end of special answer. We copy it and send to phone module */
 				Msg2.Buffer = (unsigned char *)malloc(d->LineEnd - d->SpecialAnswerStart + 3);
