@@ -1534,7 +1534,6 @@ GSM_Error ATGEN_ReplyAddSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 	GSM_Error error;
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 	size_t i = 0;
-	int folder = 0;
 
 	switch (Priv->ReplyState) {
 	case AT_Reply_SMSEdit:
@@ -1564,11 +1563,13 @@ GSM_Error ATGEN_ReplyAddSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 		smprintf(s, "Saved at AT location %i\n",
 				s->Phone.Data.SaveSMSMessage->Location);
 		/* Adjust location */
-		folder = s->Phone.Data.SaveSMSMessage->Folder;
-		ATGEN_SetSMSLocation(s, s->Phone.Data.SaveSMSMessage,
-				(folder / 2), /* We care only about SIM/Phone */
-				s->Phone.Data.SaveSMSMessage->Location);
-		s->Phone.Data.SaveSMSMessage->Folder = folder;
+		ATGEN_SetSMSLocation(
+			s,
+			s->Phone.Data.SaveSMSMessage,
+			/* We care only about SIM/Phone */
+			s->Phone.Data.SaveSMSMessage->Folder <= 2 ? 1 : 2,
+			s->Phone.Data.SaveSMSMessage->Location
+		);
 		return ERR_NONE;
 	case AT_Reply_Error:
 		smprintf(s, "Error\n");
