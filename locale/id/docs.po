@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.37.90\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2014-12-29 11:51+0100\n"
+"POT-Creation-Date: 2016-10-11 08:41+0200\n"
 "PO-Revision-Date: 2011-12-13 21:56+0200\n"
 "Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
 "Language-Team: none\n"
@@ -35,10 +35,16 @@ msgstr ""
 
 #. type: Plain text
 #: README.rst:11
+#, fuzzy
+#| msgid ""
+#| "It has been initiated by Marcin Wiacek and other people. Originally the "
+#| "code was based on Gnokii <http://www.gnokii.org> and later MyGnokii "
+#| "<http://www.mwiacek.com> projects. Gammu was former (up to version 0.58) "
+#| "called MyGnokii2."
 msgid ""
 "It has been initiated by Marcin Wiacek and other people. Originally the code "
-"was based on Gnokii <http://www.gnokii.org> and later MyGnokii <http://www."
-"mwiacek.com> projects. Gammu was former (up to version 0.58) called "
+"was based on Gnokii <https://www.gnokii.org/> and later MyGnokii <http://www."
+"mwiacek.com/> projects. Gammu was former (up to version 0.58) called "
 "MyGnokii2."
 msgstr ""
 "Produk ini telah diinisiasi oleh Marcin Wiacek dan beberapa orang lainnya. "
@@ -56,7 +62,8 @@ msgstr ""
 "dari banyak kontributor."
 
 #. type: Labeled list
-#: README.rst:15 README.rst:19 README.rst:23
+#: README.rst:15 README.rst:19 README.rst:23 README.rst:27 README.rst:31
+#: README.rst:34 README.rst:38
 #, no-wrap
 msgid ".. image"
 msgstr ".. image"
@@ -77,11 +84,29 @@ msgstr ":target: https://travis-ci.org/gammu/gammu"
 
 #. type: Plain text
 #: README.rst:20
-msgid "https://hosted.weblate.org/widgets/gammu-status-badge.png"
-msgstr "https://hosted.weblate.org/widgets/gammu-status-badge.png"
+msgid ""
+"https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/master?"
+"svg=true"
+msgstr ""
 
 #. type: Plain text
 #: README.rst:22
+#, fuzzy
+#| msgid ":target: https://travis-ci.org/gammu/gammu"
+msgid ""
+":alt: Windows Build status :target: https://ci.appveyor.com/project/nijel/"
+"gammu/branch/master"
+msgstr ":target: https://travis-ci.org/gammu/gammu"
+
+#. type: Plain text
+#: README.rst:24
+#, fuzzy
+#| msgid "https://hosted.weblate.org/widgets/gammu-status-badge.png"
+msgid "https://hosted.weblate.org/widgets/gammu/-/svg-badge.svg"
+msgstr "https://hosted.weblate.org/widgets/gammu-status-badge.png"
+
+#. type: Plain text
+#: README.rst:26
 msgid ""
 ":alt: Translation status :target: https://hosted.weblate.org/engage/gammu/?"
 "utm_source=widget"
@@ -90,33 +115,79 @@ msgstr ""
 "utm_source=widget"
 
 #. type: Plain text
-#: README.rst:24
+#: README.rst:28
 msgid "https://scan.coverity.com/projects/2890/badge.svg?flat=1"
 msgstr ""
 
 #. type: Plain text
-#: README.rst:26
+#: README.rst:30
 #, fuzzy
 #| msgid ":alt: Bitdeli badge :target: https://bitdeli.com/free"
 msgid ":alt: Coverity scan :target: https://scan.coverity.com/projects/2890"
 msgstr ":alt: Bitdeli badge :target: https://bitdeli.com/free"
 
+#. type: Plain text
+#: README.rst:32
+#, fuzzy
+#| msgid "https://travis-ci.org/gammu/gammu.png?branch=master"
+msgid "https://todofy.org/b/gammu/gammu"
+msgstr "https://travis-ci.org/gammu/gammu.png?branch=master"
+
+#. type: Plain text
+#: README.rst:33
+#, fuzzy
+#| msgid ":target: https://travis-ci.org/gammu/gammu"
+msgid ":target: https://todofy.org/r/gammu/gammu"
+msgstr ":target: https://travis-ci.org/gammu/gammu"
+
+#. type: Plain text
+#: README.rst:35
+msgid "https://img.shields.io/gratipay/Gammu.svg"
+msgstr ""
+
+#. type: Plain text
+#: README.rst:37
+#, fuzzy
+#| msgid ":target: https://travis-ci.org/gammu/gammu"
+msgid ":alt: Gratipay :target: https://gratipay.com/Gammu/"
+msgstr ":target: https://travis-ci.org/gammu/gammu"
+
+#. type: Plain text
+#: README.rst:39
+msgid ""
+"https://www.bountysource.com/badge/team?team_id=23177&style=bounties_received"
+msgstr ""
+
+#. type: Plain text
+#: README.rst:41
+msgid ""
+":alt: Bountysource :target: https://www.bountysource.com/teams/gammu/issues?"
+"utm_source=Gammu&utm_medium=shield&utm_campaign=bounties_received"
+msgstr ""
+
 #. type: Title =
-#: README.rst:28
+#: README.rst:43
 #, no-wrap
 msgid "More information"
 msgstr "Informasi lanjut"
 
 #. type: Plain text
-#: README.rst:31
-msgid "You can find more information on <http://wammu.eu/gammu/>."
+#: README.rst:46
+#, fuzzy
+#| msgid "You can find more information on <http://wammu.eu/gammu/>."
+msgid "You can find more information on <https://wammu.eu/gammu/>."
 msgstr "Anda dapat mencari lebih banyak informasi di <http://wammu.eu/gammu/>."
 
 #. type: Plain text
-#: README.rst:35
+#: README.rst:50
+#, fuzzy
+#| msgid ""
+#| "There is also Gammu manual available in docs/manual. You can build HTML "
+#| "version of it using make manual-html which is viewable online at <http://"
+#| "wammu.eu/docs/manual/>."
 msgid ""
 "There is also Gammu manual available in docs/manual. You can build HTML "
-"version of it using make manual-html which is viewable online at <http://"
+"version of it using make manual-html which is viewable online at <https://"
 "wammu.eu/docs/manual/>."
 msgstr ""
 "Disana juga dapat ditemukan Manual Gammu di Docs/manual. Kamu bisa membangun "
@@ -124,29 +195,35 @@ msgstr ""
 "<http://wammu.eu/docs/manual/>."
 
 #. type: Title =
-#: README.rst:38
+#: README.rst:53
 #, no-wrap
 msgid "Feedback and bug reports"
 msgstr "Laporan umpanbalik dan bug"
 
 #. type: Plain text
-#: README.rst:42
+#: README.rst:57
+#, fuzzy
+#| msgid ""
+#| "Any feedback is welcome, see <http://wammu.eu/support/> for information "
+#| "how to contact developers."
 msgid ""
-"Any feedback is welcome, see <http://wammu.eu/support/> for information how "
+"Any feedback is welcome, see <https://wammu.eu/support/> for information how "
 "to contact developers."
 msgstr ""
 "Setiap umpanbalik kami tunggu, lihat <http://wammu.eu/support/> untuk "
 "informasi bagaimana menghubungi pengembang."
 
 #. type: Title =
-#: README.rst:45
+#: README.rst:60
 #, no-wrap
 msgid "Support developers"
 msgstr "Dukungan pengembang"
 
 #. type: Plain text
-#: README.rst:47
-msgid "You can appreciate developers work at <http://wammu.eu/donate/>."
+#: README.rst:62
+#, fuzzy
+#| msgid "You can appreciate developers work at <http://wammu.eu/donate/>."
+msgid "You can appreciate developers work at <https://wammu.eu/donate/>."
 msgstr ""
 "Kamu dapat menghargai pengembang yang sudah bekerja di <http://wammu.eu/"
 "donate/>."
