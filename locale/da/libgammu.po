@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-02-04 10:40+0100\n"
+"POT-Creation-Date: 2016-10-11 08:16+0200\n"
 "PO-Revision-Date: 2012-07-01 10:58+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: none\n"
@@ -80,24 +80,36 @@ msgstr ""
 "Intet svar efter angivet timeoutværdi. Telefonen er nok ikke forbundet."
 
 #: libgammu/gsmcomon.c:98
+#, fuzzy
+#| msgid ""
+#| "Frame not requested right now. See <http://wammu.eu/support/bugs/> for "
+#| "information how to report it."
 msgid ""
-"Frame not requested right now. See <http://wammu.eu/support/bugs/> for "
+"Frame not requested right now. See <https://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
 "Rammen er ikke anmodet om lige nu. Se <http://wammu.eu/support/bugs/> for "
 "information om fejlrapportering."
 
 #: libgammu/gsmcomon.c:99
+#, fuzzy
+#| msgid ""
+#| "Unknown response from phone. See <http://wammu.eu/support/bugs/> for "
+#| "information how to report it."
 msgid ""
-"Unknown response from phone. See <http://wammu.eu/support/bugs/> for "
+"Unknown response from phone. See <https://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
 "Ukendt svar fra telefon. Se <http://wammu.eu/support/bugs/> for information "
 "om fejlrapportering."
 
 #: libgammu/gsmcomon.c:100
+#, fuzzy
+#| msgid ""
+#| "Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
+#| "report it."
 msgid ""
-"Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
+"Unknown frame. See <https://wammu.eu/support/bugs/> for information how to "
 "report it."
 msgstr ""
 "Ukendt ramme. Se <http://wammu.eu/support/bugs/> for information om "
@@ -385,7 +397,7 @@ msgstr ""
 msgid "Unknown error description."
 msgstr "Ukendt fejlbeskrivelse."
 
-#: libgammu/phone/dummy/dummy.c:609
+#: libgammu/phone/dummy/dummy.c:610
 msgid "Templates"
 msgstr "Skabeloner"
 

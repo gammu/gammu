@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-02-04 10:40+0100\n"
+"POT-Creation-Date: 2016-10-11 08:16+0200\n"
 "PO-Revision-Date: 2012-03-28 10:05+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: none\n"
@@ -84,19 +84,19 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:98
 msgid ""
-"Frame not requested right now. See <http://wammu.eu/support/bugs/> for "
+"Frame not requested right now. See <https://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
 
 #: libgammu/gsmcomon.c:99
 msgid ""
-"Unknown response from phone. See <http://wammu.eu/support/bugs/> for "
+"Unknown response from phone. See <https://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
 
 #: libgammu/gsmcomon.c:100
 msgid ""
-"Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
+"Unknown frame. See <https://wammu.eu/support/bugs/> for information how to "
 "report it."
 msgstr ""
 
@@ -381,7 +381,7 @@ msgstr ""
 msgid "Unknown error description."
 msgstr ""
 
-#: libgammu/phone/dummy/dummy.c:609
+#: libgammu/phone/dummy/dummy.c:610
 msgid "Templates"
 msgstr ""
 

@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libGammu 1.37.1\n"
+"Project-Id-Version: libGammu 1.37.90\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-02-04 10:40+0100\n"
+"POT-Creation-Date: 2016-10-11 08:16+0200\n"
 "PO-Revision-Date: 2013-02-23 23:11+0200\n"
 "Last-Translator: Marcin Kozioł <lord_dark@wp.pl>\n"
 "Language-Team: Polish <http://hosted.weblate.org/projects/gammu/libgammu/pl/"
@@ -96,7 +96,7 @@ msgstr ""
 #: libgammu/gsmcomon.c:98
 #, fuzzy
 msgid ""
-"Frame not requested right now. See <http://wammu.eu/support/bugs/> for "
+"Frame not requested right now. See <https://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
 "Telefon wysłał nieznany sygnał. Zobacz <http://cihar.com/gammu/report> w "
@@ -105,7 +105,7 @@ msgstr ""
 #: libgammu/gsmcomon.c:99
 #, fuzzy
 msgid ""
-"Unknown response from phone. See <http://wammu.eu/support/bugs/> for "
+"Unknown response from phone. See <https://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
 "Telefon wysłał nieznany sygnał. Zobacz <http://cihar.com/gammu/report> w "
@@ -114,7 +114,7 @@ msgstr ""
 #: libgammu/gsmcomon.c:100
 #, fuzzy
 msgid ""
-"Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
+"Unknown frame. See <https://wammu.eu/support/bugs/> for information how to "
 "report it."
 msgstr ""
 "Telefon wysłał nieznany sygnał. Zobacz <http://cihar.com/gammu/report> w "
@@ -226,8 +226,8 @@ msgid ""
 "Nobody is perfect, some bug appeared in protocol implementation. Please "
 "contact authors."
 msgstr ""
-"Nikt nie jest doskonały, pojawił się błąd w implementacji protokołu. "
-"Proszę skontaktować się z autorami."
+"Nikt nie jest doskonały, pojawił się błąd w implementacji protokołu. Proszę "
+"skontaktować się z autorami."
 
 #: libgammu/gsmcomon.c:121
 msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
@@ -436,7 +436,7 @@ msgstr ""
 msgid "Unknown error description."
 msgstr "Nieznany opis błędu."
 
-#: libgammu/phone/dummy/dummy.c:609
+#: libgammu/phone/dummy/dummy.c:610
 #, fuzzy
 msgid "Templates"
 msgstr "Szablony"

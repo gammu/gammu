@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-02-04 10:40+0100\n"
+"POT-Creation-Date: 2016-10-11 08:16+0200\n"
 "PO-Revision-Date: 2016-07-20 20:52+0000\n"
 "Last-Translator: Nabil BENDAFI <nabil@bendafi.fr>\n"
-"Language-Team: French "
-"<https://hosted.weblate.org/projects/gammu/libgammu/fr/>\n"
+"Language-Team: French <https://hosted.weblate.org/projects/gammu/libgammu/fr/"
+">\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -88,24 +88,36 @@ msgstr ""
 "être pas connecté."
 
 #: libgammu/gsmcomon.c:98
+#, fuzzy
+#| msgid ""
+#| "Frame not requested right now. See <http://wammu.eu/support/bugs/> for "
+#| "information how to report it."
 msgid ""
-"Frame not requested right now. See <http://wammu.eu/support/bugs/> for "
+"Frame not requested right now. See <https://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
 "Trame non demandée pour le moment. Consulter <http://cihar.com/gammu/report> "
 "pour savoir comment rapporter cette information."
 
 #: libgammu/gsmcomon.c:99
+#, fuzzy
+#| msgid ""
+#| "Unknown response from phone. See <http://wammu.eu/support/bugs/> for "
+#| "information how to report it."
 msgid ""
-"Unknown response from phone. See <http://wammu.eu/support/bugs/> for "
+"Unknown response from phone. See <https://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
 "Réponse inconnu du téléphone. Consulter <http://cihar.com/gammu/report> pour "
 "savoir comment rapporter cette information."
 
 #: libgammu/gsmcomon.c:100
+#, fuzzy
+#| msgid ""
+#| "Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
+#| "report it."
 msgid ""
-"Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
+"Unknown frame. See <https://wammu.eu/support/bugs/> for information how to "
 "report it."
 msgstr ""
 "Frame inconnue. Consulter <http://cihar.com/gammu/report> pour savoir "
@@ -368,7 +380,6 @@ msgid "Network error."
 msgstr "Erreur réseau."
 
 #: libgammu/gsmcomon.c:157
-#| msgid "Invalid data given to phone."
 msgid "Invalid database version."
 msgstr "Version de base de données non valide."
 
@@ -377,17 +388,14 @@ msgid "Failed to initialize DB driver."
 msgstr "Impossible d’initialiser le pilote de la DB."
 
 #: libgammu/gsmcomon.c:159
-#| msgid "Failed to connect to phone"
 msgid "Failed to configure DB driver."
 msgstr "Impossible de configurer le pilote de la DB."
 
 #: libgammu/gsmcomon.c:160
-#| msgid "Failed to connect to phone"
 msgid "Failed to connect to database."
 msgstr "Impossible de se connecter à la base de données."
 
 #: libgammu/gsmcomon.c:161
-#| msgid "Connection test"
 msgid "Database connection timeout."
 msgstr "Délai de connexion de base de données."
 
@@ -399,7 +407,7 @@ msgstr "Erreur dans l’exécution de requête SQL."
 msgid "Unknown error description."
 msgstr "La description de l'erreur est inconnue."
 
-#: libgammu/phone/dummy/dummy.c:609
+#: libgammu/phone/dummy/dummy.c:610
 msgid "Templates"
 msgstr "Modèles"
 

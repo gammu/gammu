@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-02-04 10:40+0100\n"
+"POT-Creation-Date: 2016-10-11 08:16+0200\n"
 "PO-Revision-Date: 2015-06-30 15:43+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/gammu/libgammu/he/"
@@ -76,24 +76,36 @@ msgid "No response in specified timeout. Probably phone not connected."
 msgstr "לא הייתה תגובה בפרק הזמן שהוגדר. יתכן שהטלפון אינו מחובר."
 
 #: libgammu/gsmcomon.c:98
+#, fuzzy
+#| msgid ""
+#| "Frame not requested right now. See <http://wammu.eu/support/bugs/> for "
+#| "information how to report it."
 msgid ""
-"Frame not requested right now. See <http://wammu.eu/support/bugs/> for "
+"Frame not requested right now. See <https://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
 "לא התקבלה בקשה למסגרת. יש לעיין ב־<http://wammu.eu/support/bugs/> לקבלת מידע "
 "אודות דיווח על תקלה זו."
 
 #: libgammu/gsmcomon.c:99
+#, fuzzy
+#| msgid ""
+#| "Unknown response from phone. See <http://wammu.eu/support/bugs/> for "
+#| "information how to report it."
 msgid ""
-"Unknown response from phone. See <http://wammu.eu/support/bugs/> for "
+"Unknown response from phone. See <https://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
 "התגובה מהטלפון אינה ידועה. יש לעיין ב־<http://wammu.eu/support/bugs/> לקבלת "
 "מידע אודות דיווח על תקלה זו."
 
 #: libgammu/gsmcomon.c:100
+#, fuzzy
+#| msgid ""
+#| "Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
+#| "report it."
 msgid ""
-"Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
+"Unknown frame. See <https://wammu.eu/support/bugs/> for information how to "
 "report it."
 msgstr ""
 "המסגרת אינה ידועה. יש לעיין ב־<http://wammu.eu/support/bugs/> לקבלת מידע "
@@ -373,7 +385,7 @@ msgstr ""
 msgid "Unknown error description."
 msgstr "תיאור השגיאה אינו ידוע."
 
-#: libgammu/phone/dummy/dummy.c:609
+#: libgammu/phone/dummy/dummy.c:610
 msgid "Templates"
 msgstr "תבניות"
 

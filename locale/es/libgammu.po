@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-02-04 10:40+0100\n"
+"POT-Creation-Date: 2016-10-11 08:16+0200\n"
 "PO-Revision-Date: 2015-09-16 23:30+0200\n"
 "Last-Translator: Ronnie Simon <ronniesimonf@gmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/gammu/libgammu/"
@@ -85,24 +85,36 @@ msgstr ""
 "no está conectado."
 
 #: libgammu/gsmcomon.c:98
+#, fuzzy
+#| msgid ""
+#| "Frame not requested right now. See <http://wammu.eu/support/bugs/> for "
+#| "information how to report it."
 msgid ""
-"Frame not requested right now. See <http://wammu.eu/support/bugs/> for "
+"Frame not requested right now. See <https://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
 "Trama no solicitada en este momento. Visite <http://wammu.eu/support/bugs/> "
 "para información sobre cómo reportarlo."
 
 #: libgammu/gsmcomon.c:99
+#, fuzzy
+#| msgid ""
+#| "Unknown response from phone. See <http://wammu.eu/support/bugs/> for "
+#| "information how to report it."
 msgid ""
-"Unknown response from phone. See <http://wammu.eu/support/bugs/> for "
+"Unknown response from phone. See <https://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
 "Respuesta desconocida del teléfono. Visite <http://wammu.eu/support/bugs/> "
 "para información sobre cómo reportarlo."
 
 #: libgammu/gsmcomon.c:100
+#, fuzzy
+#| msgid ""
+#| "Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
+#| "report it."
 msgid ""
-"Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
+"Unknown frame. See <https://wammu.eu/support/bugs/> for information how to "
 "report it."
 msgstr ""
 "Trama desconocida. Visite <http://wammu.eu/support/bugs/> para información "
@@ -399,7 +411,7 @@ msgstr ""
 msgid "Unknown error description."
 msgstr "Descripción del error desconocida."
 
-#: libgammu/phone/dummy/dummy.c:609
+#: libgammu/phone/dummy/dummy.c:610
 msgid "Templates"
 msgstr "Plantillas"
 

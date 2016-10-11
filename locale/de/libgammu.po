@@ -6,13 +6,13 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libGammu 1.37.1\n"
+"Project-Id-Version: libGammu 1.37.90\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-02-04 10:40+0100\n"
+"POT-Creation-Date: 2016-10-11 08:16+0200\n"
 "PO-Revision-Date: 2016-07-10 18:02+0000\n"
 "Last-Translator: armagetron <armagetron@live.de>\n"
-"Language-Team: German "
-"<https://hosted.weblate.org/projects/gammu/libgammu/de/>\n"
+"Language-Team: German <https://hosted.weblate.org/projects/gammu/libgammu/de/"
+">\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -88,24 +88,36 @@ msgstr ""
 "angeschlossen."
 
 #: libgammu/gsmcomon.c:98
+#, fuzzy
+#| msgid ""
+#| "Frame not requested right now. See <http://wammu.eu/support/bugs/> for "
+#| "information how to report it."
 msgid ""
-"Frame not requested right now. See <http://wammu.eu/support/bugs/> for "
+"Frame not requested right now. See <https://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
 "Rückantwort vom Telefon im Moment nicht angefordert. Lesen Sie bitte unter "
 "<http://wammu.eu/support/bugs/> wo dieser Fehler zu melden ist."
 
 #: libgammu/gsmcomon.c:99
+#, fuzzy
+#| msgid ""
+#| "Unknown response from phone. See <http://wammu.eu/support/bugs/> for "
+#| "information how to report it."
 msgid ""
-"Unknown response from phone. See <http://wammu.eu/support/bugs/> for "
+"Unknown response from phone. See <https://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
 "Unbekannte Rückantwort vom Telefon. Lesen Sie bitte unter <http://wammu.eu/"
 "support/bugs/> wo dieser Fehler zu melden ist."
 
 #: libgammu/gsmcomon.c:100
+#, fuzzy
+#| msgid ""
+#| "Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
+#| "report it."
 msgid ""
-"Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
+"Unknown frame. See <https://wammu.eu/support/bugs/> for information how to "
 "report it."
 msgstr ""
 "Unbekannter Rückantwort-Frame vom Telefon. Lesen Sie bitte unter <http://"
@@ -368,7 +380,6 @@ msgid "Network error."
 msgstr "Netzwerkfehler."
 
 #: libgammu/gsmcomon.c:157
-#| msgid "Invalid data given to phone."
 msgid "Invalid database version."
 msgstr "Ungültige Datenbankversion."
 
@@ -377,17 +388,14 @@ msgid "Failed to initialize DB driver."
 msgstr "Fehler beim Initialisieren des Datenbanktreibers."
 
 #: libgammu/gsmcomon.c:159
-#| msgid "Failed to connect to phone"
 msgid "Failed to configure DB driver."
 msgstr "Fehler bei der Konfiguration des Datenbanktreibers."
 
 #: libgammu/gsmcomon.c:160
-#| msgid "Failed to connect to phone"
 msgid "Failed to connect to database."
 msgstr "Verbindung zur Datenbank fehlgeschlagen."
 
 #: libgammu/gsmcomon.c:161
-#| msgid "Initiates connection."
 msgid "Database connection timeout."
 msgstr "Timeout der Datenbankverbindung."
 
@@ -399,7 +407,7 @@ msgstr "Fehler beim Ausführen der SQL Anfrage."
 msgid "Unknown error description."
 msgstr "Unbekannte Fehlerbeschreibung."
 
-#: libgammu/phone/dummy/dummy.c:609
+#: libgammu/phone/dummy/dummy.c:610
 msgid "Templates"
 msgstr "Vorlagen"
 

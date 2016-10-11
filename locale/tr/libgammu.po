@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.28.91\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-02-04 10:40+0100\n"
+"POT-Creation-Date: 2016-10-11 08:16+0200\n"
 "PO-Revision-Date: 2016-02-04 11:21+0000\n"
 "Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
-"Language-Team: Turkish "
-"<https://hosted.weblate.org/projects/gammu/libgammu/tr/>\n"
+"Language-Team: Turkish <https://hosted.weblate.org/projects/gammu/libgammu/"
+"tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -79,24 +79,36 @@ msgstr ""
 "değil."
 
 #: libgammu/gsmcomon.c:98
+#, fuzzy
+#| msgid ""
+#| "Frame not requested right now. See <http://wammu.eu/support/bugs/> for "
+#| "information how to report it."
 msgid ""
-"Frame not requested right now. See <http://wammu.eu/support/bugs/> for "
+"Frame not requested right now. See <https://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
 "Çerçeve şu anda istenmedi. Nasıl raporlandığı bilgisi için <http://wammu.eu/"
 "support/bugs/> adresine bakın."
 
 #: libgammu/gsmcomon.c:99
+#, fuzzy
+#| msgid ""
+#| "Unknown response from phone. See <http://wammu.eu/support/bugs/> for "
+#| "information how to report it."
 msgid ""
-"Unknown response from phone. See <http://wammu.eu/support/bugs/> for "
+"Unknown response from phone. See <https://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
 "Telefondan bilinmeyen yanıt. Nasıl raporlandığı bilgisi için <http://wammu."
 "eu/support/bugs/> adresine bakın."
 
 #: libgammu/gsmcomon.c:100
+#, fuzzy
+#| msgid ""
+#| "Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
+#| "report it."
 msgid ""
-"Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
+"Unknown frame. See <https://wammu.eu/support/bugs/> for information how to "
 "report it."
 msgstr ""
 "Bilinmeyen çerçeve. Bilgiyi nasıl bildireceğiniz için <http://wammu.eu/"
@@ -353,7 +365,6 @@ msgid "Network error."
 msgstr "Ağ hatası."
 
 #: libgammu/gsmcomon.c:157
-#| msgid "Invalid data given to phone."
 msgid "Invalid database version."
 msgstr "Geçersiz veritabanı sürümü."
 
@@ -362,17 +373,14 @@ msgid "Failed to initialize DB driver."
 msgstr "DB sürücüsünü başlatma başarısız."
 
 #: libgammu/gsmcomon.c:159
-#| msgid "Failed to connect to phone"
 msgid "Failed to configure DB driver."
 msgstr "DB sürücüsünü yapılandırma başarısız."
 
 #: libgammu/gsmcomon.c:160
-#| msgid "Failed to connect to phone"
 msgid "Failed to connect to database."
 msgstr "Veritabanına bağlanma başarısız."
 
 #: libgammu/gsmcomon.c:161
-#| msgid "Connection test"
 msgid "Database connection timeout."
 msgstr "Veritabanı bağlantısı zaman aşımı."
 
@@ -384,7 +392,7 @@ msgstr "SQL sorgusu yürütmede hata oldu."
 msgid "Unknown error description."
 msgstr "Bilinmeyen hata açıklaması."
 
-#: libgammu/phone/dummy/dummy.c:609
+#: libgammu/phone/dummy/dummy.c:610
 msgid "Templates"
 msgstr "Şablonlar"
 

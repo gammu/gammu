@@ -5,13 +5,13 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libGammu 1.37.1\n"
+"Project-Id-Version: libGammu 1.37.90\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-02-04 10:40+0100\n"
+"POT-Creation-Date: 2016-10-11 08:16+0200\n"
 "PO-Revision-Date: 2016-03-19 11:31+0000\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
-"Language-Team: Czech <https://hosted.weblate.org/projects/gammu/libgammu/cs/>"
-"\n"
+"Language-Team: Czech <https://hosted.weblate.org/projects/gammu/libgammu/cs/"
+">\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -78,24 +78,36 @@ msgid "No response in specified timeout. Probably phone not connected."
 msgstr "Žadná odpověď v očekaváné době. Telefon pravděpodobně není připojen."
 
 #: libgammu/gsmcomon.c:98
+#, fuzzy
+#| msgid ""
+#| "Frame not requested right now. See <http://wammu.eu/support/bugs/> for "
+#| "information how to report it."
 msgid ""
-"Frame not requested right now. See <http://wammu.eu/support/bugs/> for "
+"Frame not requested right now. See <https://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
 "Tato odpověď od telefonu nebyla očekávána. Podívejte se na stránku <http://"
 "cs.wammu.eu/support/bugs/> pro informace jak tuto událost nahlásit."
 
 #: libgammu/gsmcomon.c:99
+#, fuzzy
+#| msgid ""
+#| "Unknown response from phone. See <http://wammu.eu/support/bugs/> for "
+#| "information how to report it."
 msgid ""
-"Unknown response from phone. See <http://wammu.eu/support/bugs/> for "
+"Unknown response from phone. See <https://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
 "Neznámá odpověď od telefonu. Podívejte se na stránku <http://cs.wammu.eu/"
 "support/bugs/> pro informace jak tuto událost nahlásit."
 
 #: libgammu/gsmcomon.c:100
+#, fuzzy
+#| msgid ""
+#| "Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
+#| "report it."
 msgid ""
-"Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
+"Unknown frame. See <https://wammu.eu/support/bugs/> for information how to "
 "report it."
 msgstr ""
 "Neznámý rámec. Podívejte se na stránku <http://cs.wammu.eu/support/bugs/> "
@@ -348,7 +360,6 @@ msgid "Network error."
 msgstr "Chyba sítě."
 
 #: libgammu/gsmcomon.c:157
-#| msgid "Invalid data given to phone."
 msgid "Invalid database version."
 msgstr "Chybná verze databáze."
 
@@ -357,17 +368,14 @@ msgid "Failed to initialize DB driver."
 msgstr "Nepodařilo se nahrát ovladač databáze."
 
 #: libgammu/gsmcomon.c:159
-#| msgid "Failed to connect to phone"
 msgid "Failed to configure DB driver."
 msgstr "Nepodařilo se nastavit ovladač databáze."
 
 #: libgammu/gsmcomon.c:160
-#| msgid "Failed to connect to phone"
 msgid "Failed to connect to database."
 msgstr "Nepodařilo se připojit k databázi."
 
 #: libgammu/gsmcomon.c:161
-#| msgid "Device connection parameters"
 msgid "Database connection timeout."
 msgstr "Vypršelo připojení k databázi."
 
@@ -379,7 +387,7 @@ msgstr "Chyba při provádění SQL dotazu."
 msgid "Unknown error description."
 msgstr "Neznámý popis chyby."
 
-#: libgammu/phone/dummy/dummy.c:609
+#: libgammu/phone/dummy/dummy.c:610
 msgid "Templates"
 msgstr "Šablony"
 
