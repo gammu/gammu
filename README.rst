@@ -28,9 +28,6 @@ help of many contributors.
     :alt: Coverity scan
     :target: https://scan.coverity.com/projects/2890
 
-.. image:: https://todofy.org/b/gammu/gammu
-    :target: https://todofy.org/r/gammu/gammu
-
 .. image:: https://img.shields.io/gratipay/Gammu.svg
     :alt: Gratipay
     :target: https://gratipay.com/Gammu/
