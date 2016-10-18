@@ -113,15 +113,6 @@ foreach(LIB ${MYSQL_ADD_LIBRARIES})
             $ENV{SystemDrive}/MySQL/*/lib/opt
             "C:/Program Files/MySQL/*/lib/opt"
         )
-    else()
-        find_library("MYSQL_LIBRARIES_${LIB}" NAMES ${LIB}
-            PATHS
-            ${MYSQL_ADD_LIBRARY_PATH}
-            /usr/lib/mysql
-            /usr/local/lib
-            /usr/local/lib/mysql
-            /usr/local/mysql/lib
-        )
     endif()
     list(APPEND TMP_MYSQL_LIBRARIES "${MYSQL_LIBRARIES_${LIB}}")
 endforeach(LIB ${MYSQL_ADD_LIBRARIES})
