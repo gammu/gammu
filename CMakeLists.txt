@@ -35,7 +35,7 @@ string (REGEX REPLACE "^([0-9]*)\\.([0-9]*)\\.([0-9]*)$" "\\3" "GAMMU_VERSION_PA
 math(EXPR GAMMU_VERSION_NUM "${GAMMU_VERSION_MAJOR} * 10000 + ${GAMMU_VERSION_MINOR} * 100 + ${GAMMU_VERSION_PATCH}")
 message (STATUS "Configuring ${CMAKE_PROJECT_NAME} ${GAMMU_VERSION}")
 
-set (GAMMU_SOVERSION "7" CACHE INTERNAL "")
+set (GAMMU_SOVERSION "8" CACHE INTERNAL "")
 
 if ("${CMAKE_CURRENT_BINARY_DIR}" STREQUAL "${CMAKE_CURRENT_SOURCE_DIR}")
     message ("Warning: In tree build is not recommended way to build Gammu.")

@@ -3,7 +3,7 @@
 #
 
 
-%define so_ver 7
+%define so_ver 8
 
 # Change if using tar.gz sources
 %define extension   bz2
