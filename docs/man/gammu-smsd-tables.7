@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSD-TABLES" "7" "Aug 19, 2016" "1.37.90" "Gammu"
+.TH "GAMMU-SMSD-TABLES" "7" "Oct 18, 2016" "1.37.90" "Gammu"
 .SH NAME
 gammu-smsd-tables \- description of tables for database backends of gammu-smsd(1)
 .
@@ -47,9 +47,6 @@ Received messages are stored in \fI\%inbox\fP table.
 Transmitted messages are read from table \fI\%outbox\fP and possible subsequent parts
 of the same message from \fI\%outbox_multipart\fP\&.
 .SH DESCRIPTION OF TABLES
-.SS daemons
-.sp
-Information about running daemons.
 .SS gammu
 .sp
 Table holding single field \fBVersion\fP \- version of a database schema. See
@@ -163,7 +160,7 @@ SMS relative validity like encoded using GSM specs
 .B \fBSenderID\fP (text)
 which SMSD instance should send this one sequence, see
 \fBPhoneID\fP and smsd\-multi\&. If blank, first SMSD who
-sees this message will process it.
+sees this message first will process it.
 .TP
 .B \fBSendingTimeOut\fP (timestamp)
 used by SMSD instance for own targets
@@ -176,6 +173,9 @@ identification of program created the message
 .TP
 .B \fBRetries\fP (integer)
 number of attempted retries when sending this message
+.TP
+.B \fBPriority\fP (integer)
+priority of message, messages with higher priority are processed first
 .UNINDENT
 .SS outbox_multipart
 .sp
@@ -237,6 +237,9 @@ indicates whether SMSD is receiving messages, depends on configuration directive
 .TP
 .B \fBIMEI\fP (text)
 IMEI of phone
+.TP
+.B \fBIMSI\fP (text)
+SIM IMSI
 .TP
 .B \fBClient\fP (text)
 client name, usually string Gammu with version
@@ -348,12 +351,6 @@ SMS relative validity like encoded using GSM specs
 .B \fBCreatorID\fP (text)
 copied from CreatorID from outbox table
 .UNINDENT
-.SS pbk
-.sp
-Not used by SMSD currently, included only for application usage.
-.SS pbk_groups
-.sp
-Not used by SMSD currently, included only for application usage.
 .SH HISTORY OF DATABASE STRUCTURE
 .sp
 \fBNOTE:\fP
@@ -368,10 +365,29 @@ production environment.
 .sp
 History of schema versions:
 .sp
+16
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+Removed unused \fBdaemons\fP, \fBpbk\fP and \fBpbk_groups\fP tables.
+.IP \(bu 2
+Added primary key to the \fBgammu\fP table.
+.IP \(bu 2
+Added \fBPriority\fP field to the \fI\%outbox\fP\&.
+.IP \(bu 2
+Added \fBIMSI\fP field to the \fI\%phones\fP\&.
+.UNINDENT
+.sp
+Changed in version 1.37.90.
+
+.UNINDENT
+.UNINDENT
+.sp
 15
 .INDENT 0.0
 .INDENT 3.5
-Added \fBRetries\fP field.
+Added \fBRetries\fP field to the \fI\%outbox\fP\&.
 .sp
 Changed in version 1.36.7.
 

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSD-PGSQL" "7" "Aug 19, 2016" "1.37.90" "Gammu"
+.TH "GAMMU-SMSD-PGSQL" "7" "Oct 18, 2016" "1.37.90" "Gammu"
 .SH NAME
 gammu-smsd-pgsql \- gammu-smsd(1) backend using PostgreSQL database server as a message storage
 .
@@ -65,7 +65,7 @@ host = localhost
 gammu\-smsdrc
 .UNINDENT
 .UNINDENT
-.SH CREATING TABLES
+.SH CREATING TABLES FOR POSTGRESQL
 .sp
 SQL script for creating tables in PostgreSQL database:
 .INDENT 0.0
@@ -106,8 +106,6 @@ $update_timestamp$ LANGUAGE plpgsql;
 
 \-\-CREATE SEQUENCE outbox_multipart_ID_seq;
 
-\-\-CREATE SEQUENCE pbk_groups_ID_seq;
-
 \-\-CREATE SEQUENCE sentitems_ID_seq;
 
 \-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
@@ -122,24 +120,7 @@ $update_timestamp$ LANGUAGE plpgsql;
 
 \-\-CREATE UNIQUE INDEX outbox_multipart_pkey ON outbox_multipart USING btree ("ID");
 
-\-\-CREATE UNIQUE INDEX pbk_groups_pkey ON pbk_groups USING btree ("ID");
-
 \-\-CREATE UNIQUE INDEX sentitems_pkey ON sentitems USING btree ("ID");
-
-\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
-\-\- 
-\-\- Table structure for table "daemons"
-\-\- 
-
-CREATE TABLE daemons (
-  "Start" text NOT NULL,
-  "Info" text NOT NULL
-);
-
-\-\- 
-\-\- Dumping data for table "daemons"
-\-\- 
-
 
 \-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 
@@ -148,14 +129,14 @@ CREATE TABLE daemons (
 \-\- 
 
 CREATE TABLE gammu (
-  "Version" smallint NOT NULL DEFAULT \(aq0\(aq
+  "Version" smallint NOT NULL DEFAULT \(aq0\(aq PRIMARY KEY
 );
 
 \-\- 
 \-\- Dumping data for table "gammu"
 \-\- 
 
-INSERT INTO gammu ("Version") VALUES (15);
+INSERT INTO gammu ("Version") VALUES (16);
 
 \-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 
@@ -217,7 +198,8 @@ CREATE TABLE outbox (
   "SendingTimeOut" timestamp(0) WITHOUT time zone NOT NULL DEFAULT LOCALTIMESTAMP(0),
   "DeliveryReport" varchar(10) DEFAULT \(aqdefault\(aq,
   "CreatorID" text NOT NULL,
-  "Retries" integer DEFAULT "0",
+  "Retries" integer DEFAULT \(aq0\(aq,
+  "Priority" integer DEFAULT \(aq0\(aq,
   CHECK ("Coding" IN 
   (\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq)),
   CHECK ("DeliveryReport" IN (\(aqdefault\(aq,\(aqyes\(aq,\(aqno\(aq))
@@ -265,40 +247,6 @@ CREATE TABLE outbox_multipart (
 \-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 
 \-\- 
-\-\- Table structure for table "pbk"
-\-\- 
-
-CREATE TABLE pbk (
-  "ID" serial PRIMARY KEY,
-  "GroupID" integer NOT NULL DEFAULT \(aq\-1\(aq,
-  "Name" text NOT NULL,
-  "Number" text NOT NULL
-);
-
-\-\- 
-\-\- Dumping data for table "pbk"
-\-\- 
-
-
-\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
-
-\-\- 
-\-\- Table structure for table "pbk_groups"
-\-\- 
-
-CREATE TABLE pbk_groups (
-  "Name" text NOT NULL,
-  "ID" serial PRIMARY KEY
-);
-
-\-\- 
-\-\- Dumping data for table "pbk_groups"
-\-\- 
-
-
-\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
-
-\-\- 
 \-\- Table structure for table "phones"
 \-\- 
 
@@ -310,6 +258,7 @@ CREATE TABLE phones (
   "Send" boolean NOT NULL DEFAULT \(aqno\(aq,
   "Receive" boolean NOT NULL DEFAULT \(aqno\(aq,
   "IMEI" varchar(35) PRIMARY KEY NOT NULL,
+  "IMSI" varchar(35) NOT NULL,
   "NetCode" varchar(10) DEFAULT \(aqERROR\(aq,
   "NetName" varchar(35) DEFAULT \(aqERROR\(aq,
   "Client" text NOT NULL,

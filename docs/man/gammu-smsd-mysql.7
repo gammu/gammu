@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSD-MYSQL" "7" "Aug 19, 2016" "1.37.90" "Gammu"
+.TH "GAMMU-SMSD-MYSQL" "7" "Oct 18, 2016" "1.37.90" "Gammu"
 .SH NAME
 gammu-smsd-mysql \- gammu-smsd(1) backend using MySQL database server as a message storage
 .
@@ -91,7 +91,7 @@ For creating the SQL tables you need more privileges, especially for
 creating triggers, which are used for some functionality.
 .UNINDENT
 .UNINDENT
-.SH CREATING TABLES
+.SH CREATING TABLES FOR MYSQL
 .sp
 SQL script for creating tables in MySQL database:
 .INDENT 0.0
@@ -108,34 +108,18 @@ SQL script for creating tables in MySQL database:
 \-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 
 \-\- 
-\-\- Table structure for table \(gadaemons\(ga
-\-\- 
-
-CREATE TABLE \(gadaemons\(ga (
-  \(gaStart\(ga text NOT NULL,
-  \(gaInfo\(ga text NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
-
-\-\- 
-\-\- Dumping data for table \(gadaemons\(ga
-\-\- 
-
-
-\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
-
-\-\- 
 \-\- Table structure for table \(gagammu\(ga
 \-\- 
 
 CREATE TABLE \(gagammu\(ga (
-  \(gaVersion\(ga integer NOT NULL default \(aq0\(aq
+  \(gaVersion\(ga integer NOT NULL default \(aq0\(aq PRIMARY KEY
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 \-\- 
 \-\- Dumping data for table \(gagammu\(ga
 \-\- 
 
-INSERT INTO \(gagammu\(ga (\(gaVersion\(ga) VALUES (15);
+INSERT INTO \(gagammu\(ga (\(gaVersion\(ga) VALUES (16);
 
 \-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 
@@ -152,7 +136,7 @@ CREATE TABLE \(gainbox\(ga (
   \(gaUDH\(ga text NOT NULL,
   \(gaSMSCNumber\(ga varchar(20) NOT NULL default \(aq\(aq,
   \(gaClass\(ga integer NOT NULL default \(aq\-1\(aq,
-  \(gaTextDecoded\(ga text NOT NULL default \(aq\(aq,
+  \(gaTextDecoded\(ga text NOT NULL,
   \(gaID\(ga integer unsigned NOT NULL auto_increment,
   \(gaRecipientID\(ga text NOT NULL,
   \(gaProcessed\(ga enum(\(aqfalse\(aq,\(aqtrue\(aq) NOT NULL default \(aqfalse\(aq,
@@ -181,7 +165,7 @@ CREATE TABLE \(gaoutbox\(ga (
   \(gaCoding\(ga enum(\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq) NOT NULL default \(aqDefault_No_Compression\(aq,
   \(gaUDH\(ga text,
   \(gaClass\(ga integer default \(aq\-1\(aq,
-  \(gaTextDecoded\(ga text NOT NULL default \(aq\(aq,
+  \(gaTextDecoded\(ga text NOT NULL,
   \(gaID\(ga integer unsigned NOT NULL auto_increment,
   \(gaMultiPart\(ga enum(\(aqfalse\(aq,\(aqtrue\(aq) default \(aqfalse\(aq,
   \(gaRelativeValidity\(ga integer default \(aq\-1\(aq,
@@ -190,6 +174,7 @@ CREATE TABLE \(gaoutbox\(ga (
   \(gaDeliveryReport\(ga enum(\(aqdefault\(aq,\(aqyes\(aq,\(aqno\(aq) default \(aqdefault\(aq,
   \(gaCreatorID\(ga text NOT NULL,
   \(gaRetries\(ga int(3) default 0,
+  \(gaPriority\(ga integer default 0,
   PRIMARY KEY \(gaID\(ga (\(gaID\(ga)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
@@ -212,7 +197,7 @@ CREATE TABLE \(gaoutbox_multipart\(ga (
   \(gaCoding\(ga enum(\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq) NOT NULL default \(aqDefault_No_Compression\(aq,
   \(gaUDH\(ga text,
   \(gaClass\(ga integer default \(aq\-1\(aq,
-  \(gaTextDecoded\(ga text default NULL,
+  \(gaTextDecoded\(ga text,
   \(gaID\(ga integer unsigned NOT NULL default \(aq0\(aq,
   \(gaSequencePosition\(ga integer NOT NULL default \(aq1\(aq,
   PRIMARY KEY (\(gaID\(ga, \(gaSequencePosition\(ga)
@@ -221,43 +206,6 @@ CREATE TABLE \(gaoutbox_multipart\(ga (
 \-\- 
 \-\- Dumping data for table \(gaoutbox_multipart\(ga
 \-\- 
-
-
-\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
-
-\-\- 
-\-\- Table structure for table \(gapbk\(ga
-\-\- 
-
-CREATE TABLE \(gapbk\(ga (
-  \(gaID\(ga integer NOT NULL auto_increment,
-  \(gaGroupID\(ga integer NOT NULL default \(aq\-1\(aq,
-  \(gaName\(ga text NOT NULL,
-  \(gaNumber\(ga text NOT NULL,
-  PRIMARY KEY (\(gaID\(ga)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
-
-\-\- 
-\-\- Dumping data for table \(gapbk\(ga
-\-\- 
-
-
-\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
-
-\-\- 
-\-\- Table structure for table \(gapbk_groups\(ga
-\-\- 
-
-CREATE TABLE \(gapbk_groups\(ga (
-  \(gaName\(ga text NOT NULL,
-  \(gaID\(ga integer NOT NULL auto_increment,
-  PRIMARY KEY \(gaID\(ga (\(gaID\(ga)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;
-
-\-\- 
-\-\- Dumping data for table \(gapbk_groups\(ga
-\-\- 
-
 
 \-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 
@@ -273,6 +221,7 @@ CREATE TABLE \(gaphones\(ga (
   \(gaSend\(ga enum(\(aqyes\(aq,\(aqno\(aq) NOT NULL default \(aqno\(aq,
   \(gaReceive\(ga enum(\(aqyes\(aq,\(aqno\(aq) NOT NULL default \(aqno\(aq,
   \(gaIMEI\(ga varchar(35) NOT NULL,
+  \(gaIMSI\(ga varchar(35) NOT NULL,
   \(gaNetCode\(ga varchar(10) default \(aqERROR\(aq,
   \(gaNetName\(ga varchar(35) default \(aqERROR\(aq,
   \(gaClient\(ga text NOT NULL,
@@ -304,7 +253,7 @@ CREATE TABLE \(gasentitems\(ga (
   \(gaUDH\(ga text NOT NULL,
   \(gaSMSCNumber\(ga varchar(20) NOT NULL default \(aq\(aq,
   \(gaClass\(ga integer NOT NULL default \(aq\-1\(aq,
-  \(gaTextDecoded\(ga text NOT NULL default \(aq\(aq,
+  \(gaTextDecoded\(ga text NOT NULL,
   \(gaID\(ga integer unsigned NOT NULL default \(aq0\(aq,
   \(gaSenderID\(ga varchar(255) NOT NULL,
   \(gaSequencePosition\(ga integer NOT NULL default \(aq1\(aq,

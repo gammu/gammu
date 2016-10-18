@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSDRC" "5" "Aug 19, 2016" "1.37.90" "Gammu"
+.TH "GAMMU-SMSDRC" "5" "Oct 18, 2016" "1.37.90" "Gammu"
 .SH NAME
 gammu-smsdrc \- gammu-smsd(1) configuration file
 .
@@ -334,6 +334,19 @@ Default is 1 (enabled).
 .UNINDENT
 .INDENT 0.0
 .TP
+.B CheckNetwork
+New in version 1.37.90.
+
+.sp
+Whether to check network status periodically.
+.sp
+If phone is reported to be not on the network, SMSD
+tries to power it on.
+.sp
+Default is 1 (enabled).
+.UNINDENT
+.INDENT 0.0
+.TP
 .B ResetFrequency
 The number of seconds between performing a preventive soft reset in order to
 minimize the cases of hanging phones e.g. Nokia 5110 will sometimes freeze to
@@ -399,6 +412,9 @@ you want to run several SMS daemons (see \fI\%Multiple modems\fP).
 When you set PhoneID, all messages (including injected ones) will be marked
 by this string (stored as SenderID in the database) and it allows more SMS
 daemons to share a single database.
+.sp
+SMSD daemon will in such case send outbox messages only with
+matching or empty SenderID.
 .sp
 This option has actually no effect with gammu\-smsd\-files\&.
 .UNINDENT
@@ -652,6 +668,8 @@ Possible values:
 \fBsybase\fP \- Sybase
 .IP \(bu 2
 \fBaccess\fP \- Microsoft Access
+.IP \(bu 2
+\fBoracle\fP \- Oracle
 .IP \(bu 2
 \fBodbc\fP \- Generic ODBC
 .UNINDENT

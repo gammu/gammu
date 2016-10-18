@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSD-DBI" "7" "Aug 19, 2016" "1.37.90" "Gammu"
+.TH "GAMMU-SMSD-DBI" "7" "Oct 18, 2016" "1.37.90" "Gammu"
 .SH NAME
 gammu-smsd-dbi \- gammu-smsd(1) backend using DBI abstraction layer to use any supported database as a message storage
 .
@@ -88,7 +88,7 @@ drivers for example include:
 .IP \(bu 2
 \fBfreetds\fP \- for MS SQL Server or Sybase
 .UNINDENT
-.SH CREATING TABLES
+.SH CREATING TABLES FOR SQLITE
 .sp
 SQL script for creating tables in SQLite database:
 .INDENT 0.0
@@ -96,16 +96,11 @@ SQL script for creating tables in SQLite database:
 .sp
 .nf
 .ft C
-CREATE TABLE daemons (
-  Start TEXT NOT NULL,
-  Info TEXT NOT NULL
-);
-
 CREATE TABLE gammu (
-  Version INTEGER NOT NULL DEFAULT \(aq0\(aq
+  Version INTEGER NOT NULL DEFAULT \(aq0\(aq PRIMARY KEY
 );
 
-INSERT INTO gammu (Version) VALUES (15);
+INSERT INTO gammu (Version) VALUES (16);
 
 CREATE TABLE inbox (
   UpdatedInDB NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq)),
@@ -149,6 +144,7 @@ CREATE TABLE outbox (
   DeliveryReport TEXT DEFAULT \(aqdefault\(aq,
   CreatorID TEXT NOT NULL,
   Retries INTEGER DEFAULT \(aq0\(aq,
+  Priority INTEGER DEFAULT \(aq0\(aq,
   CHECK (Coding IN 
   (\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq)),
   CHECK (DeliveryReport IN (\(aqdefault\(aq,\(aqyes\(aq,\(aqno\(aq))
@@ -175,18 +171,6 @@ CREATE TABLE outbox_multipart (
  PRIMARY KEY (ID, SequencePosition)
 );
 
-CREATE TABLE pbk (
-  ID INTEGER PRIMARY KEY AUTOINCREMENT,
-  GroupID INTEGER NOT NULL DEFAULT \(aq\-1\(aq,
-  Name TEXT NOT NULL,
-  Number TEXT NOT NULL
-);
-
-CREATE TABLE pbk_groups (
-  Name TEXT NOT NULL,
-  ID INTEGER PRIMARY KEY AUTOINCREMENT
-);
-
 CREATE TABLE phones (
   ID TEXT NOT NULL,
   UpdatedInDB NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq)),
@@ -195,6 +179,7 @@ CREATE TABLE phones (
   Send TEXT NOT NULL DEFAULT \(aqno\(aq,
   Receive TEXT NOT NULL DEFAULT \(aqno\(aq,
   IMEI TEXT PRIMARY KEY NOT NULL,
+  IMSI TEXT NOT NULL,
   NetCode TEXT DEFAULT \(aqERROR\(aq,
   NetName TEXT DEFAULT \(aqERROR\(aq,
   Client TEXT NOT NULL,

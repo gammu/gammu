@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSD-SQL" "7" "Aug 19, 2016" "1.37.90" "Gammu"
+.TH "GAMMU-SMSD-SQL" "7" "Oct 18, 2016" "1.37.90" "Gammu"
 .SH NAME
 gammu-smsd-sql \- gammu-smsd(1) backend using SQL abstraction layer to use any supported database as a message storage
 .
@@ -98,11 +98,6 @@ You can customize name of all tables in the \fB[tables]\fP\&. The SQL
 queries will reflect this, so it\(aqs enough to change table name in this section.
 .INDENT 0.0
 .TP
-.B daemons
-Name of the daemons table.
-.UNINDENT
-.INDENT 0.0
-.TP
 .B gammu
 Name of the gammu\-table table.
 .UNINDENT
@@ -162,6 +157,9 @@ query specific, which are numeric and are specific only for given query (or set 
 .TP
 .B \fB%I\fP
 IMEI of phone
+.TP
+.B \fB%S\fP
+SIM IMSI
 .TP
 .B \fB%P\fP
 PHONE ID (hostname)
