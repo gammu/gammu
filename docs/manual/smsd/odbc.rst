@@ -43,6 +43,13 @@ this manual to do that.
 You specify data source name (DSN) as :config:option:`Host` in
 :ref:`gammu-smsdrc`. The data source is configured depending on your platform.
 
+.. note::
+
+    Please remember that SMSD might be running in different context than your
+    user (separate account on Linux or as as service on Windows), so the ODBC
+    DSN needs to be configured as system wide in this case (system DSN on
+    Windows or in global configuration on Linux).
+
 On Microsoft Windows, you can find instructions on Microsoft website:
 http://support.microsoft.com/kb/305599
 
