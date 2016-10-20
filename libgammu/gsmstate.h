@@ -1311,6 +1311,10 @@ typedef struct {
 	 * Post connect hook
 	 */
 	GSM_Error (*PostConnect)	(GSM_StateMachine *s);
+	/**
+	 * API action hook, executed before API call
+	 */
+	GSM_Error (*PreAPICall)(GSM_StateMachine *s);
 } GSM_Phone_Functions;
 
 	extern GSM_Phone_Functions NAUTOPhone;

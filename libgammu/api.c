@@ -2,6 +2,7 @@
 
 #include <gammu.h>
 #include "gsmstate.h"
+#include "gsmcomon.h"
 #include "debug.h"
 
 #ifdef __FUNCTION__WORKING
@@ -39,6 +40,12 @@
 	PRINT_FUNCTION_START \
 	if (!GSM_IsConnected(s)) { \
 		return ERR_NOTCONNECTED; \
+	} \
+	if (s->Phone.Functions->PreAPICall != NONEFUNCTION) { \
+		err = s->Phone.Functions->PreAPICall(s); \
+		if (err != ERR_NONE) { \
+			return err; \
+		} \
 	} \
 }
 

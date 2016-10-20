@@ -408,7 +408,8 @@ GSM_Phone_Functions N9210Phone = {
 	NOTSUPPORTED,			/* 	SetGPRSAccessPoint	*/
 	NOTSUPPORTED,			/* 	GetScreenshot		*/
 	NOTSUPPORTED,			/* 	SetPower		*/
-	NOTSUPPORTED			/* 	PostConnect	*/
+	NOTSUPPORTED,			/* 	PostConnect	*/
+	NONEFUNCTION			/*	PreAPICall		*/
 };
 
 #endif

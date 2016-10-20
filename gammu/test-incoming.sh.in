@@ -1,0 +1,27 @@
+#!@SH_BIN@
+
+set -x
+set -e
+GAMMU_PID=0
+
+EXE="@CMAKE_CURRENT_BINARY_DIR@/gammu@CMAKE_EXECUTABLE_SUFFIX@" 
+CONFIG="@CMAKE_CURRENT_BINARY_DIR@/.gammurc" 
+DUMMY="@CMAKE_CURRENT_BINARY_DIR@/.gammu-dummy"
+
+cleanup() {
+    if [ $GAMMU_PID -ne 0 ] ; then
+        kill $GAMMU_PID
+        sleep 1
+    fi
+}
+
+trap cleanup INT QUIT EXIT
+
+$EXE -c "$CONFIG" monitor 10 &
+SMSD_PID=$!
+
+sleep 1
+
+touch $DUMMY/incoming-call
+
+sleep 1

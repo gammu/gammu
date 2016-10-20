@@ -3924,7 +3924,8 @@ GSM_Phone_Functions OBEXGENPhone = {
 	NOTSUPPORTED,			/* 	SetGPRSAccessPoint	*/
 	NOTSUPPORTED,			/* 	GetScreenshot		*/
 	NOTSUPPORTED,			/* 	SetPower		*/
-	NOTSUPPORTED			/* 	PostConnect	*/
+	NOTSUPPORTED,			/* 	PostConnect	*/
+	NONEFUNCTION			/*	PreAPICall		*/
 };
 
 #endif

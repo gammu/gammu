@@ -417,7 +417,8 @@ GSM_Phone_Functions N3650Phone = {
 	NOTSUPPORTED,			/* 	SetGPRSAccessPoint	*/
 	NOTSUPPORTED,			/* 	GetScreenshot		*/
 	NOTSUPPORTED,			/* 	SetPower		*/
-	NOTSUPPORTED			/* 	PostConnect	*/
+	NOTSUPPORTED,			/* 	PostConnect	*/
+	NONEFUNCTION			/*	PreAPICall		*/
 };
 
 #endif

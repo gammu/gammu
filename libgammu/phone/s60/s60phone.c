@@ -2191,7 +2191,8 @@ GSM_Phone_Functions S60Phone = {
 	NOTSUPPORTED,			/* 	SetGPRSAccessPoint	*/
 	S60_GetScreenshot,
 	NOTSUPPORTED,			/* 	SetPower		*/
-	NOTSUPPORTED			/* 	PostConnect	*/
+	NOTSUPPORTED,			/* 	PostConnect		*/
+	NONEFUNCTION			/*	PreAPICall		*/
 };
 #endif
 

@@ -4616,7 +4616,8 @@ GSM_Phone_Functions N6510Phone = {
 	N6510_SetGPRSAccessPoint,
 	DCT4_Screenshot,
 	NOTSUPPORTED,			/* 	SetPower		*/
-	NOTSUPPORTED			/* 	PostConnect	*/
+	NOTSUPPORTED,			/* 	PostConnect	*/
+	NONEFUNCTION			/*	PreAPICall		*/
 };
 
 #endif

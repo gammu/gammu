@@ -1921,6 +1921,40 @@ GSM_Error DUMMY_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *bat)
 	return ERR_NONE;
 }
 
+GSM_Error DUMMY_PreAPICall(GSM_StateMachine *s)
+{
+	char *path;
+	struct stat sb;
+	GSM_Error error = ERR_NONE;
+	GSM_Call 		call;
+
+	/* Check for incoming call trigger */
+	if (s->Phone.Data.EnableIncomingCall && s->User.IncomingCall != NULL) {
+		path = DUMMY_GetFilePath(s, "incoming-call");
+		if (path == NULL) {
+			return ERR_MOREMEMORY;
+		}
+		if (stat(path, &sb) == 0) {
+			smprintf(s, "Incoming call!\n");
+
+			memset(&call, 0, sizeof(call));
+
+			call.Status 		= 0;
+			call.StatusCode		= 0;
+			call.CallIDAvailable 	= FALSE;
+			call.Status = GSM_CALL_IncomingCall;
+			call.CallIDAvailable 	= TRUE;
+			EncodeUnicode(call.PhoneNumber, "+800123456", 11);
+
+			s->User.IncomingCall(s, &call, s->User.IncomingCallUserData);
+
+			unlink(path);
+		}
+		free(path);
+	}
+	return error;
+}
+
 /*@}*/
 
 GSM_Reply_Function DUMMYReplyFunctions[] = {
@@ -2068,7 +2102,8 @@ GSM_Phone_Functions DUMMYPhone = {
 	NOTSUPPORTED,			/* 	SetGPRSAccessPoint	*/
 	NOTSUPPORTED,			/* 	GetScreenshot		*/
 	NOTSUPPORTED,			/* 	SetPower		*/
-	NOTSUPPORTED			/* 	PostConnect	*/
+	NOTSUPPORTED,			/* 	PostConnect	*/
+	DUMMY_PreAPICall
 };
 
 /*@}*/

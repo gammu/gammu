@@ -221,6 +221,11 @@ if (WITH_BACKUP)
         )
 endif (WITH_BACKUP)
 
+
+configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/test-incoming.sh.in" "${CMAKE_CURRENT_BINARY_DIR}/test-incoming.sh" ESCAPE_QUOTES)
+add_test(NAME "gammu-incoming" COMMAND "${SH_BIN}" "${CMAKE_CURRENT_BINARY_DIR}/test-incoming.sh")
+set_tests_properties("gammu-incoming" PROPERTIES PASS_REGULAR_EXPRESSION "incoming call from \"\\+800123456\"")
+
 gammu_test(monitor GammuTel 1)
 gammu_test(battery "Lithium Polymer")
 gammu_test(networkinfo "B00B.*FACE")
