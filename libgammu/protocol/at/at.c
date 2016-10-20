@@ -96,6 +96,7 @@ GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		{"+CLIP"	,1, ID_All},
 		{"+CRING"	,1, ID_All},
 		{"+CCWA"	,1, ID_All},
+		{"+CLCC"	,1, ID_ALL},
 
 		/* Standard AT */
 		{"RING"		,1, ID_All},

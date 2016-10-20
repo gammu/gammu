@@ -23,7 +23,8 @@ ChangeLog
 
 [!] * Changed version of the shared library.
 [-] * Improved support for ZTE MF100.
-    
+[-] * Ignore unsolicited +CLCC: reply.
+
 20161018 - 1.37.90
     
 [-] * Improved support Huawei K3770.
