@@ -239,7 +239,8 @@ Known Limitations
 You can not use same phone by more programs in same time. However in case you
 did not enable locking in :config:section:`[gammu]` section, it might be able
 to start the communication with phone from more programs. In this case neither
-of the programs will probably work.
+of the programs will probably work, see :ref:`gammu-smsd-suspend` for
+workaround.
 
 There is no way to detect that SMS message is reply to another by looking at
 message headers. The only way to achieve this is to add some token to the
