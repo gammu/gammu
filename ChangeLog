@@ -24,6 +24,7 @@ ChangeLog
 [!] * Changed version of the shared library.
 [-] * Improved support for ZTE MF100.
 [-] * Ignore unsolicited +CLCC: reply.
+[-] * Correctly report when some SMSD SQL backend is not compiled in.
 
 20161018 - 1.37.90
     
