@@ -2,30 +2,15 @@
 
 set -x
 set -e
-GAMMU_PID=0
 
 CMAKE_CURRENT_BINARY_DIR="$1"
 
-cd $CMAKE_CURRENT_BINARY_DIR
+cd "$CMAKE_CURRENT_BINARY_DIR"
 
 EXE="$CMAKE_CURRENT_BINARY_DIR/gammu@CMAKE_EXECUTABLE_SUFFIX@"
 CONFIG="$CMAKE_CURRENT_BINARY_DIR/.gammurc"
 DUMMY="$CMAKE_CURRENT_BINARY_DIR/.gammu-dummy"
 
-cleanup() {
-    if [ $GAMMU_PID -ne 0 ] ; then
-        kill $GAMMU_PID
-        sleep 1
-    fi
-}
-
-trap cleanup INT QUIT EXIT
-
-$EXE -c "$CONFIG" monitor 10 &
-GAMMU_PID=$!
-
-sleep 1
-
 touch $DUMMY/incoming-call
 
-sleep 1
+exec "$EXE" -c "$CONFIG" monitor 1
