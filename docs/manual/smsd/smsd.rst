@@ -212,16 +212,14 @@ For example the command line can look like:
 You now should be able to get errors from SMSD even if it fails to start as a
 service.
 
-Known Limitations
------------------
+.. _gammu-smsd-suspend:
 
-You can not use same phone by more programs in same time. However in case you
-did not enable locking in :config:section:`[gammu]` section, it might be able
-to start the communication with phone from more programs. In this case neither
-of the programs will probably work.
+Invoking Gammu and suspending SMSD
+++++++++++++++++++++++++++++++++++
 
-You can workaround this limitation by suspending SMSD temporarily using
-`SIGUSR1` and `SIGUSR2` signals (see also :ref:`gammu-smsd-signals`):
+As you can not run Gammu and Gammu SMSD at same time on signle device, you can
+workaround this limitation by suspending SMSD temporarily using `SIGUSR1` and
+`SIGUSR2` signals (see also :ref:`gammu-smsd-signals`):
 
 .. code-block:: sh
 
@@ -233,6 +231,15 @@ You can workaround this limitation by suspending SMSD temporarily using
         gammu identify
         kill -SIGUSR2 $SMSD_PID
     fi
+
+
+Known Limitations
+-----------------
+
+You can not use same phone by more programs in same time. However in case you
+did not enable locking in :config:section:`[gammu]` section, it might be able
+to start the communication with phone from more programs. In this case neither
+of the programs will probably work.
 
 There is no way to detect that SMS message is reply to another by looking at
 message headers. The only way to achieve this is to add some token to the
