@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSD-ODBC" "7" "Oct 20, 2016" "1.37.91" "Gammu"
+.TH "GAMMU-SMSD-ODBC" "7" "Oct 23, 2016" "1.37.91" "Gammu"
 .SH NAME
 gammu-smsd-odbc \- gammu-smsd(1) backend using ODBC abstraction layer to use any supported database as a message storage
 .
@@ -60,6 +60,16 @@ this manual to do that.
 .sp
 You specify data source name (DSN) as \fBHost\fP in
 gammu\-smsdrc\&. The data source is configured depending on your platform.
+.sp
+\fBNOTE:\fP
+.INDENT 0.0
+.INDENT 3.5
+Please remember that SMSD might be running in different context than your
+user (separate account on Linux or as as service on Windows), so the ODBC
+DSN needs to be configured as system wide in this case (system DSN on
+Windows or in global configuration on Linux).
+.UNINDENT
+.UNINDENT
 .sp
 On Microsoft Windows, you can find instructions on Microsoft website:
 \fI\%http://support.microsoft.com/kb/305599\fP
