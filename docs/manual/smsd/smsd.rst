@@ -118,6 +118,8 @@ accepted on some platforms):
 
     .. versionadded:: 1.31.90
 
+.. _gammu-smsd-signals:
+
 Signals
 -------
 
@@ -217,6 +219,20 @@ You can not use same phone by more programs in same time. However in case you
 did not enable locking in :config:section:`[gammu]` section, it might be able
 to start the communication with phone from more programs. In this case neither
 of the programs will probably work.
+
+You can workaround this limitation by suspending SMSD temporarily using
+`SIGUSR1` and `SIGUSR2` signals (see also :ref:`gammu-smsd-signals`):
+
+.. code-block:: sh
+
+    SMSD_PID=`pidof gammu-smsd`
+    if [ -z "$SMSD_PID" ] ; then
+        echo "Failed to figure out SMSD PID!"
+    else
+        kill -SIGUSR1 $SMSD_PID
+        gammu identify
+        kill -SIGUSR2 $SMSD_PID
+    fi
 
 There is no way to detect that SMS message is reply to another by looking at
 message headers. The only way to achieve this is to add some token to the
