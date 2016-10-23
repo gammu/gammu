@@ -96,8 +96,8 @@ endif()
 
 set(TMP_MYSQL_LIBRARIES "")
 
-foreach(LIB ${MYSQL_ADD_LIBRARIES})
-    if (WIN32)
+if (WIN32)
+    foreach(LIB ${MYSQL_ADD_LIBRARIES})
         find_library("MYSQL_LIBRARIES_${LIB}" NAMES ${LIB}
             PATHS
             ${MYSQL_ADD_LIBRARY_PATH}
@@ -113,9 +113,20 @@ foreach(LIB ${MYSQL_ADD_LIBRARIES})
             $ENV{SystemDrive}/MySQL/*/lib/opt
             "C:/Program Files/MySQL/*/lib/opt"
         )
-    endif()
-    list(APPEND TMP_MYSQL_LIBRARIES "${MYSQL_LIBRARIES_${LIB}}")
-endforeach(LIB ${MYSQL_ADD_LIBRARIES})
+        list(APPEND TMP_MYSQL_LIBRARIES "${MYSQL_LIBRARIES_${LIB}}")
+    endforeach(LIB ${MYSQL_ADD_LIBRARIES})
+else()
+    find_library("MYSQL_LIBRARIES_mysqlclient" NAMES mysqlclient
+        PATHS
+        ${MYSQL_ADD_LIBRARY_PATH}
+        /usr/lib/mysql
+        /usr/local/lib
+        /usr/local/lib/mysql
+        /usr/local/mysql/lib
+    )
+
+    list(APPEND TMP_MYSQL_LIBRARIES "${MYSQL_LIBRARIES_mysqlclient}")
+endif()
 
 if (TMP_MYSQL_LIBRARIES)
     set(MYSQL_LIBRARIES ${TMP_MYSQL_LIBRARIES} CACHE FILEPATH "MySQL Libraries" FORCE)

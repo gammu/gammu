@@ -25,6 +25,7 @@ ChangeLog
 [-] * Improved support for ZTE MF100.
 [-] * Ignore unsolicited +CLCC: reply.
 [-] * Correctly report when some SMSD SQL backend is not compiled in.
+[-] * Fix build of MySQL backend on Linux.
 
 20161018 - 1.37.90
     
