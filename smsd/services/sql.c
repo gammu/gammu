@@ -1314,24 +1314,33 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 	}
 
 	Config->db = NULL;
-#ifdef HAVE_MYSQL_MYSQL_H
 	if (!strcasecmp(Config->driver, "native_mysql")) {
+#ifdef HAVE_MYSQL_MYSQL_H
 		Config->db = &SMSDMySQL;
-	}
+#else
+		SMSD_Log(DEBUG_ERROR, Config, "The %s driver was not compiled in!", Config->driver);
+		return ERR_DISABLED;
 #endif
-#ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
+	}
 	if (!strcasecmp(Config->driver, "native_pgsql")) {
+#ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
 		Config->db = &SMSDPgSQL;
-	}
+#else
+		SMSD_Log(DEBUG_ERROR, Config, "The %s driver was not compiled in!", Config->driver);
+		return ERR_DISABLED;
 #endif
-#ifdef ODBC_FOUND
+	}
 	if (!strcasecmp(Config->driver, "odbc")) {
+#ifdef ODBC_FOUND
 		Config->db = &SMSDODBC;
 		if (Config->sql == NULL) {
 			SMSD_Log(DEBUG_INFO, Config, "Using generic SQL for ODBC, this might fail. In such case please set SQL configuration option.");
 		}
-	}
+#else
+		SMSD_Log(DEBUG_ERROR, Config, "The %s driver was not compiled in!", Config->driver);
+		return ERR_DISABLED;
 #endif
+	}
 	if (Config->db == NULL) {
 #ifdef LIBDBI_FOUND
 		Config->db = &SMSDDBI;
