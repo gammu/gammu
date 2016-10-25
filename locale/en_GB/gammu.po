@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: gammu 1.27.96\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2016-10-11 08:16+0200\n"
-"PO-Revision-Date: 2013-09-16 08:36+0200\n"
-"Last-Translator: Robert Readman <robert_readman@hotmail.com>\n"
-"Language-Team: English (United Kingdom) <http://hosted.weblate.org/projects/"
-"gammu/gammu/en_GB/>\n"
+"PO-Revision-Date: 2016-10-25 08:35+0000\n"
+"Last-Translator: Arrizal Amin <arrizalamin@gmail.com>\n"
+"Language-Team: English (United Kingdom) "
+"<https://hosted.weblate.org/projects/gammu/gammu/en_GB/>\n"
 "Language: en_GB\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 1.7-dev\n"
+"X-Generator: Weblate 2.9-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -1549,14 +1549,10 @@ msgstr ""
 "Copyright (C) 2010 - 2011 Michal Cihar <michal@cihar.com> and other authors."
 
 #: gammu-detect/main.c:87 gammu/gammu.c:336
-#, fuzzy
-#| msgid ""
-#| "License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
-#| "GPL/2.0/>."
 msgid "License GPLv2: GNU GPL version 2 <https://spdx.org/licenses/GPL-2.0>."
 msgstr ""
-"License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
-"GPL/2.0/>."
+"Licence GPLv2: GNU GPL version 2 "
+"<http://creativecommons.org/licenses/GPL/2.0/>."
 
 #: gammu-detect/main.c:88 gammu/gammu.c:338
 msgid "This is free software: you are free to change and redistribute it."
