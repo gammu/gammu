@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.27.96\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2016-10-11 08:16+0200\n"
-"PO-Revision-Date: 2016-10-25 08:35+0000\n"
+"PO-Revision-Date: 2016-10-25 10:00+0000\n"
 "Last-Translator: Arrizal Amin <arrizalamin@gmail.com>\n"
 "Language-Team: English (United Kingdom) "
 "<https://hosted.weblate.org/projects/gammu/gammu/en_GB/>\n"
@@ -4027,7 +4027,7 @@ msgstr "Congestion"
 
 #: helper/message-display.c:200 helper/message-display.c:216
 msgid "SME busy"
-msgstr "SME busy"
+msgstr "SME engaged"
 
 #: helper/message-display.c:201 helper/message-display.c:217
 msgid "No response from SME"
