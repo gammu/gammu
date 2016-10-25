@@ -452,7 +452,7 @@ msgstr "Unknown parameter (\"%s\")\n"
 #: gammu/backup.c:1667 gammu/backup.c:1695
 #, c-format
 msgid "Memory has only %i free locations.Exiting\n"
-msgstr "Memory has only %i free locations.Exiting\n"
+msgstr "Memory has only %i free locations. Exiting\n"
 
 #: gammu/backup.c:1668
 msgid "Add phone phonebook entries?"
