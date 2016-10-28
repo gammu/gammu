@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.27.96\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2016-10-11 08:16+0200\n"
-"PO-Revision-Date: 2016-10-25 10:02+0000\n"
+"PO-Revision-Date: 2016-10-28 03:29+0000\n"
 "Last-Translator: Arrizal Amin <arrizalamin@gmail.com>\n"
 "Language-Team: English (United Kingdom) "
 "<https://hosted.weblate.org/projects/gammu/gammu/en_GB/>\n"
@@ -1137,16 +1137,12 @@ msgid "Setting done"
 msgstr "Setting done"
 
 #: gammu/depend/nokia/dct4.c:303
-#, fuzzy
-#| msgid ""
-#| "Sorry, but configuration matrix for this model has not yet been added. "
-#| "See <http://wammu.eu/support/bugs/> for information how to report it."
 msgid ""
 "Sorry, but configuration matrix for this model has not yet been added. See "
 "<https://wammu.eu/support/bugs/> for information how to report it."
 msgstr ""
 "Sorry, but configuration matrix for this model has not yet been added. See "
-"<http://wammu.eu/support/bugs/> for information how to report it."
+"<https://wammu.eu/support/bugs/> for information how to report it."
 
 #: gammu/depend/nokia/dct4.c:369
 msgid "Passed"
@@ -1539,14 +1535,10 @@ msgid "Windows serial port probing"
 msgstr "Windows serial port probing"
 
 #: gammu-detect/main.c:85
-#, fuzzy
-#| msgid ""
-#| "Copyright (C) 2010 - 2011 Michal Cihar <michal@cihar.com> and other "
-#| "authors."
 msgid ""
 "Copyright (C) 2010 - 2016 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
-"Copyright (C) 2010 - 2011 Michal Cihar <michal@cihar.com> and other authors."
+"Copyright (C) 2010 - 2016 Michal Cihar <michal@cihar.com> and other authors."
 
 #: gammu-detect/main.c:87 gammu/gammu.c:336
 msgid "License GPLv2: GNU GPL version 2 <https://spdx.org/licenses/GPL-2.0>."
@@ -1781,9 +1773,9 @@ msgid "Name"
 msgstr "Name"
 
 #: gammu/gammu.c:91
-#, fuzzy, c-format
+#, c-format
 msgid "[Gammu version %s]"
-msgstr "Gammu version"
+msgstr "[Gammu version %s]"
 
 #: gammu/gammu.c:101
 msgid "Protocols"
@@ -1808,14 +1800,10 @@ msgid "There is newer testing Gammu version available! (%s instead of %s)\n"
 msgstr "There is newer testing Gammu version available! (%s instead of %s)\n"
 
 #: gammu/gammu.c:332
-#, fuzzy
-#| msgid ""
-#| "Copyright (C) 2003 - 2012 Michal Cihar <michal@cihar.com> and other "
-#| "authors."
 msgid ""
 "Copyright (C) 2003 - 2016 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
-"Copyright (C) 2003 - 2012 Michal Cihar <michal@cihar.com> and other authors."
+"Copyright (C) 2003 - 2016 Michal Cihar <michal@cihar.com> and other authors."
 
 #: gammu/gammu.c:370
 msgid "standard input"
