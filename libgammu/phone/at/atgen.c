@@ -2909,7 +2909,7 @@ GSM_Error ATGEN_ReplyGetPacketNetworkLAC_CID(GSM_Protocol_Message *msg, GSM_Stat
 	if (error == ERR_UNKNOWNRESPONSE) {
 	        error = ATGEN_ParseReply(s,
 			GetLineString(msg->Buffer, &Priv->Lines, 2),
-			"+CGREG: @i, @i, @r, @r",
+			"+CGREG: @i, @i, @r, @r, @i",
 			&i, /* Mode, ignored for now */
 			&state,
 			NetworkInfo->PacketLAC, sizeof(NetworkInfo->PacketLAC),
