@@ -416,7 +416,13 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConf
 		} else if (i == 4) {
 			/* OUT<priority>_<phone number>_<serialno>.txt */
 			pos1 = strchr(FileName, '_');
+			if (pos1 == NULL) {
+				return ERR_BUG;
+			}
 			pos2 = strchr(++pos1, '_');
+			if (pos2 == NULL) {
+				return ERR_BUG;
+			}
 			phlen = strlen(pos1) - strlen(pos2);
 		} else {
 			/* something wrong */
