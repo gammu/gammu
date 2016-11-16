@@ -2905,6 +2905,19 @@ GSM_Error ATGEN_ReplyGetPacketNetworkLAC_CID(GSM_Protocol_Message *msg, GSM_Stat
 			&rac, sizeof(rac) /* Routing Area Code, ignored for now */
 			);
 
+	/* Reply without RAC */
+	if (error == ERR_UNKNOWNRESPONSE) {
+	        error = ATGEN_ParseReply(s,
+			GetLineString(msg->Buffer, &Priv->Lines, 2),
+			"+CGREG: @i, @i, @r, @r, @i",
+			&i, /* Mode, ignored for now */
+			&state,
+			NetworkInfo->PacketLAC, sizeof(NetworkInfo->PacketLAC),
+			NetworkInfo->PacketCID, sizeof(NetworkInfo->PacketCID),
+			&act /* Access Technology, ignored for now */
+			);
+	}
+
 	/* Reply without ACT/RAC */
 	if (error == ERR_UNKNOWNRESPONSE) {
 	        error = ATGEN_ParseReply(s,
