@@ -6153,6 +6153,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReply, 		"AT+CLIP"		,0x00,0x00,ID_SetIncomingCall	 },
 {ATGEN_GenericReply, 		"AT+CCWA"		,0x00,0x00,ID_SetIncomingCall	 },
 {ATGEN_GenericReply, 		"AT+CUSD"		,0x00,0x00,ID_SetUSSD		 },
+{ATGEN_GenericReply, 		"AT+CUSD"		,0x00,0x00,ID_GetUSSD		 },
 {ATGEN_ReplyGetUSSD, 		"+CUSD"			,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReply,            "AT+CLIP=1"      	,0x00,0x00,ID_IncomingFrame      },
 {ATGEN_ReplyIncomingCallInfo,	"+CLIP"			,0x00,0x00,ID_IncomingFrame	 },

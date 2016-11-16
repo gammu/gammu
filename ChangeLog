@@ -22,6 +22,7 @@ ChangeLog
 2016???? - 1.38.0
 
 [-] * MySQL script for SMSD is compatible with strict mode.
+[-] * Fixed USSD responses for some AT modems.
 
 20161023 - 1.37.91
 
