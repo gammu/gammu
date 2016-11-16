@@ -1168,7 +1168,9 @@ gboolean SMSD_RunOn(const char *command, GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 
 		/* Close write end of pipe */
 		close(pipefd[1]);
-		fcntl(pipefd[0], F_SETFL, O_NONBLOCK);
+		if (fcntl(pipefd[0], F_SETFL, O_NONBLOCK) != 0) {
+			SMSD_Log(DEBUG_ERROR, Config, "Failed to set nonblocking pipe to child!");
+		}
 
 		i = 0;
 		do {
