@@ -564,7 +564,7 @@ static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDCo
 				1900 + timeinfo->tm_year, timeinfo->tm_mon + 1, timeinfo->tm_mday, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, buffer2, j, ext);
 			strcpy(FullName, Config->outboxpath);
 			strcat(FullName, FileName);
-			fd = open(FileName, O_CREAT | O_EXCL, 0644);
+			fd = open(FullName, O_CREAT | O_EXCL, 0644);
 			if (fd >= 0) {
 				close(fd);
 				break;
