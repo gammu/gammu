@@ -707,6 +707,10 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 		fullpath[PATH_MAX] = 0;
 	}
 	Config->shm_key = ftok(fullpath, SMSD_SHM_KEY);
+	if (Config->shm_key < 0) {
+		fprintf(stderr, "Failed to generate SHM key!\n");
+		return FALSE;
+	}
 #endif
 #ifdef WIN32
 	if (filename == NULL) {
