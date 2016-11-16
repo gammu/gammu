@@ -29,8 +29,6 @@ script:
 after_success:
   - make gcov
   - bash <(curl -s https://codecov.io/bash) -X gcov -F $TRAVIS_OS_NAME
-after_failure:
-  - if [ -f cov-int/build-log.txt ] ; then cat cov-int/build-log.txt ; fi
 # trigger Buildtime Trend Service to parse Travis CI log
 notifications:
   webhooks:
