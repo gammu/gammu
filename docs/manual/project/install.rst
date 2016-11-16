@@ -183,6 +183,9 @@ For openSUSE, the installation all optional packages could look like:
         mysql-devel python-devel libcurl-devel cmake pkgconfig unixODBC-devel \
         glib2-devel libgudev-1_0-devel
 
+Configure like wrapper
+++++++++++++++++++++++
+
 For compatibility reasons, configure like wrapper is provided, if you
 don't need much specific tuning, you can use usual set of commands:
 
@@ -195,6 +198,9 @@ don't need much specific tuning, you can use usual set of commands:
 The configure wrapper will create directory build-configure and build all
 binaries there (nothing is changed in source tree), for example gammu binary is
 in build-configure/gammu directory.
+
+Using CMake
++++++++++++
 
 If you need/want to tweak build a bit more than configure wrapper
 provides, you have to use `CMake`_ directly. For now, only out of source
