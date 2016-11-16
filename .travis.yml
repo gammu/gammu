@@ -23,11 +23,11 @@ before_script:
   - cd _build
   - ln -s ../codecov.yml .
 script:
-  - if [ ${COVERITY_SCAN_BRANCH} != 1 ] ; then cmake .. -DCMAKE_C_COMPILER=$CC -DENABLE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Continuous -DONLINE_TESTING=ON $TESTARGS $ARGS ; fi
-  - if [ ${COVERITY_SCAN_BRANCH} != 1 ] ; then make ; fi
-  - if [ ${COVERITY_SCAN_BRANCH} != 1 ] ; then make test ; fi
-  - if [ ${COVERITY_SCAN_BRANCH} != 1 ] ; then make gcov ; fi
+  - cmake .. -DCMAKE_C_COMPILER=$CC -DENABLE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Continuous -DONLINE_TESTING=ON $TESTARGS $ARGS
+  - make
+  - make test
 after_success:
+  - make gcov
   - bash <(curl -s https://codecov.io/bash) -X gcov -F $TRAVIS_OS_NAME
 after_failure:
   - if [ -f cov-int/build-log.txt ] ; then cat cov-int/build-log.txt ; fi
@@ -60,14 +60,6 @@ addons:
     - gcc-6
     - g++-6
     - libmyodbc
-  coverity_scan:
-    project:
-      name: "gammu/gammu"
-      description: "Build submitted via Travis CI"
-    notification_email: michal@cihar.com
-    build_command_prepend: cmake ..
-    build_command: make
-    branch_pattern: coverity_scan
 matrix:
   exclude:
     - os: osx
