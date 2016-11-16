@@ -20,8 +20,8 @@ Debian
 Gammu packages are included in Debian (testing versions go to
 experimental and stable to unstable). If you want to build Debian
 package on your own, you can find packaging in Git repository at
-``git://git.debian.org/git/collab-maint/gammu.git`` (you can browse it on
-<http://git.debian.org/?p=collab-maint/gammu.git>).
+``https://anonscm.debian.org/git/collab-maint/gammu.git`` (you can browse it on
+<https://anonscm.debian.org/git/collab-maint/gammu.git>).
 
 RPM
 +++
