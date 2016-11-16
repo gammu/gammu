@@ -37,7 +37,7 @@ Specific for DBI:
 
 .. seealso:: The variables are fully described in :ref:`gammurc` documentation.
 
-.. _Custom tables:
+.. _Configurable tables:
 
 Tables
 ------
