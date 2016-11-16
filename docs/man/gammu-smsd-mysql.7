@@ -129,7 +129,7 @@ INSERT INTO \(gagammu\(ga (\(gaVersion\(ga) VALUES (16);
 
 CREATE TABLE \(gainbox\(ga (
   \(gaUpdatedInDB\(ga timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  \(gaReceivingDateTime\(ga timestamp NOT NULL default \(aq0000\-00\-00 00:00:00\(aq,
+  \(gaReceivingDateTime\(ga timestamp NOT NULL default CURRENT_TIMESTAMP,
   \(gaText\(ga text NOT NULL,
   \(gaSenderNumber\(ga varchar(20) NOT NULL default \(aq\(aq,
   \(gaCoding\(ga enum(\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq) NOT NULL default \(aqDefault_No_Compression\(aq,
@@ -156,8 +156,8 @@ CREATE TABLE \(gainbox\(ga (
 
 CREATE TABLE \(gaoutbox\(ga (
   \(gaUpdatedInDB\(ga timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  \(gaInsertIntoDB\(ga timestamp NOT NULL default \(aq0000\-00\-00 00:00:00\(aq,
-  \(gaSendingDateTime\(ga timestamp NOT NULL default \(aq0000\-00\-00 00:00:00\(aq,
+  \(gaInsertIntoDB\(ga timestamp NOT NULL default CURRENT_TIMESTAMP,
+  \(gaSendingDateTime\(ga timestamp NOT NULL default CURRENT_TIMESTAMP,
   \(gaSendBefore\(ga time NOT NULL DEFAULT \(aq23:59:59\(aq,
   \(gaSendAfter\(ga time NOT NULL DEFAULT \(aq00:00:00\(aq,
   \(gaText\(ga text,
@@ -170,7 +170,7 @@ CREATE TABLE \(gaoutbox\(ga (
   \(gaMultiPart\(ga enum(\(aqfalse\(aq,\(aqtrue\(aq) default \(aqfalse\(aq,
   \(gaRelativeValidity\(ga integer default \(aq\-1\(aq,
   \(gaSenderID\(ga varchar(255),
-  \(gaSendingTimeOut\(ga timestamp NULL default \(aq0000\-00\-00 00:00:00\(aq,
+  \(gaSendingTimeOut\(ga timestamp NULL default CURRENT_TIMESTAMP,
   \(gaDeliveryReport\(ga enum(\(aqdefault\(aq,\(aqyes\(aq,\(aqno\(aq) default \(aqdefault\(aq,
   \(gaCreatorID\(ga text NOT NULL,
   \(gaRetries\(ga int(3) default 0,
@@ -179,7 +179,7 @@ CREATE TABLE \(gaoutbox\(ga (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 CREATE INDEX outbox_date ON outbox(SendingDateTime, SendingTimeOut);
-CREATE INDEX outbox_sender ON outbox(SenderID);
+CREATE INDEX outbox_sender ON outbox(SenderID(250));
 
 \-\- 
 \-\- Dumping data for table \(gaoutbox\(ga
@@ -216,8 +216,8 @@ CREATE TABLE \(gaoutbox_multipart\(ga (
 CREATE TABLE \(gaphones\(ga (
   \(gaID\(ga text NOT NULL,
   \(gaUpdatedInDB\(ga timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  \(gaInsertIntoDB\(ga timestamp NOT NULL default \(aq0000\-00\-00 00:00:00\(aq,
-  \(gaTimeOut\(ga timestamp NOT NULL default \(aq0000\-00\-00 00:00:00\(aq,
+  \(gaInsertIntoDB\(ga timestamp NOT NULL default CURRENT_TIMESTAMP,
+  \(gaTimeOut\(ga timestamp NOT NULL default CURRENT_TIMESTAMP,
   \(gaSend\(ga enum(\(aqyes\(aq,\(aqno\(aq) NOT NULL default \(aqno\(aq,
   \(gaReceive\(ga enum(\(aqyes\(aq,\(aqno\(aq) NOT NULL default \(aqno\(aq,
   \(gaIMEI\(ga varchar(35) NOT NULL,
@@ -244,8 +244,8 @@ CREATE TABLE \(gaphones\(ga (
 
 CREATE TABLE \(gasentitems\(ga (
   \(gaUpdatedInDB\(ga timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  \(gaInsertIntoDB\(ga timestamp NOT NULL default \(aq0000\-00\-00 00:00:00\(aq,
-  \(gaSendingDateTime\(ga timestamp NOT NULL default \(aq0000\-00\-00 00:00:00\(aq,
+  \(gaInsertIntoDB\(ga timestamp NOT NULL default CURRENT_TIMESTAMP,
+  \(gaSendingDateTime\(ga timestamp NOT NULL default CURRENT_TIMESTAMP,
   \(gaDeliveryDateTime\(ga timestamp NULL,
   \(gaText\(ga text NOT NULL,
   \(gaDestinationNumber\(ga varchar(20) NOT NULL default \(aq\(aq,
@@ -268,65 +268,11 @@ CREATE TABLE \(gasentitems\(ga (
 CREATE INDEX sentitems_date ON sentitems(DeliveryDateTime);
 CREATE INDEX sentitems_tpmr ON sentitems(TPMR);
 CREATE INDEX sentitems_dest ON sentitems(DestinationNumber);
-CREATE INDEX sentitems_sender ON sentitems(SenderID);
+CREATE INDEX sentitems_sender ON sentitems(SenderID(250));
 
 \-\- 
 \-\- Dumping data for table \(gasentitems\(ga
 \-\- 
-
-
-\-\- 
-\-\- Triggers for setting default timestamps
-\-\- 
-
-DELIMITER //
-
-CREATE TRIGGER inbox_timestamp BEFORE INSERT ON inbox
-FOR EACH ROW
-BEGIN
-    IF NEW.ReceivingDateTime = \(aq0000\-00\-00 00:00:00\(aq THEN
-        SET NEW.ReceivingDateTime = CURRENT_TIMESTAMP();
-    END IF;
-END;//
-
-CREATE TRIGGER outbox_timestamp BEFORE INSERT ON outbox
-FOR EACH ROW
-BEGIN
-    IF NEW.InsertIntoDB = \(aq0000\-00\-00 00:00:00\(aq THEN
-        SET NEW.InsertIntoDB = CURRENT_TIMESTAMP();
-    END IF;
-    IF NEW.SendingDateTime = \(aq0000\-00\-00 00:00:00\(aq THEN
-        SET NEW.SendingDateTime = CURRENT_TIMESTAMP();
-    END IF;
-    IF NEW.SendingTimeOut = \(aq0000\-00\-00 00:00:00\(aq THEN
-        SET NEW.SendingTimeOut = CURRENT_TIMESTAMP();
-    END IF;
-END;//
-
-CREATE TRIGGER phones_timestamp BEFORE INSERT ON phones
-FOR EACH ROW
-BEGIN
-    IF NEW.InsertIntoDB = \(aq0000\-00\-00 00:00:00\(aq THEN
-        SET NEW.InsertIntoDB = CURRENT_TIMESTAMP();
-    END IF;
-    IF NEW.TimeOut = \(aq0000\-00\-00 00:00:00\(aq THEN
-        SET NEW.TimeOut = CURRENT_TIMESTAMP();
-    END IF;
-END;//
-
-CREATE TRIGGER sentitems_timestamp BEFORE INSERT ON sentitems
-FOR EACH ROW
-BEGIN
-    IF NEW.InsertIntoDB = \(aq0000\-00\-00 00:00:00\(aq THEN
-        SET NEW.InsertIntoDB = CURRENT_TIMESTAMP();
-    END IF;
-    IF NEW.SendingDateTime = \(aq0000\-00\-00 00:00:00\(aq THEN
-        SET NEW.SendingDateTime = CURRENT_TIMESTAMP();
-    END IF;
-END;//
-
-DELIMITER ;
-
 
 .ft P
 .fi

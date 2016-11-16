@@ -20,7 +20,9 @@ ChangeLog
 =========
     
 2016???? - 1.38.0
-    
+
+[-] * MySQL script for SMSD is compatible with strict mode.
+
 20161023 - 1.37.91
 
 [!] * Changed version of the shared library.
