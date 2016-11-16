@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2016-10-11 08:16+0200\n"
-"PO-Revision-Date: 2016-05-28 14:16+0000\n"
-"Last-Translator: Renan Souza do Nascimento <renan.sn@icloud.com>\n"
-"Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
-"gammu/libgammu/pt_BR/>\n"
+"PO-Revision-Date: 2016-11-16 17:40+0000\n"
+"Last-Translator: Helder Santana <helder.santana@systemsbr.com.br>\n"
+"Language-Team: Portuguese (Brazil) "
+"<https://hosted.weblate.org/projects/gammu/libgammu/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 2.7-dev\n"
+"X-Generator: Weblate 2.10-dev\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
@@ -82,40 +82,28 @@ msgstr ""
 "Sem resposta no tempo especificado. Provávelmente celular desconectado."
 
 #: libgammu/gsmcomon.c:98
-#, fuzzy
-#| msgid ""
-#| "Frame not requested right now. See <http://wammu.eu/support/bugs/> for "
-#| "information how to report it."
 msgid ""
 "Frame not requested right now. See <https://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
-"Frame não requerido agora. Veja <http://wammu.eu/support/bugs/> para "
-"informações de que maneira reportar isto."
+"Frame não requerido agora. Veja <https://wammu.eu/support/bugs/> para "
+"informações sobre como reportar isto."
 
 #: libgammu/gsmcomon.c:99
-#, fuzzy
-#| msgid ""
-#| "Unknown response from phone. See <http://wammu.eu/support/bugs/> for "
-#| "information how to report it."
 msgid ""
 "Unknown response from phone. See <https://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
-"Desconhecida a resposta do telefone. Veja <http://wammu.eu/support/bugs/> "
-"para reportá-lo."
+"Resposta desconhecida do telefone. Veja <https://wammu.eu/support/bugs/> "
+"para informações sobre como reportar."
 
 #: libgammu/gsmcomon.c:100
-#, fuzzy
-#| msgid ""
-#| "Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
-#| "report it."
 msgid ""
 "Unknown frame. See <https://wammu.eu/support/bugs/> for information how to "
 "report it."
 msgstr ""
-"Frame Desconhecido. Veja <http://wammu.eu/support/bugs/> para como reportar "
-"isto."
+"Frame Desconhecido. Veja <https://wammu.eu/support/bugs/> para informações "
+"sobre como reportar."
 
 #: libgammu/gsmcomon.c:101
 msgid "Unknown connection type string. Check config file."
