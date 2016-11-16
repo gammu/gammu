@@ -5,7 +5,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu-docs 1.37.90\n"
+"Project-Id-Version: Gammu-docs 1.38.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2016-10-11 13:13+0200\n"
 "PO-Revision-Date: 2011-06-02 23:02+0200\n"
@@ -129,7 +129,7 @@ msgstr ":alt: Bitdeli badge :target: https://bitdeli.com/free"
 #. type: Plain text
 #: README.rst:32
 msgid "https://img.shields.io/gratipay/Gammu.svg"
-msgstr ""
+msgstr "https://img.shields.io/gratipay/Gammu.svg"
 
 #. type: Plain text
 #: README.rst:34

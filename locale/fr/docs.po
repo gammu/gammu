@@ -5,7 +5,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu-docs 1.37.90\n"
+"Project-Id-Version: Gammu-docs 1.38.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2016-10-11 13:13+0200\n"
 "PO-Revision-Date: 2009-06-01 13:48+0200\n"
@@ -115,7 +115,7 @@ msgstr ":alt: Bitdeli badge :target: https://bitdeli.com/free"
 #. type: Plain text
 #: README.rst:32
 msgid "https://img.shields.io/gratipay/Gammu.svg"
-msgstr ""
+msgstr "https://img.shields.io/gratipay/Gammu.svg"
 
 #. type: Plain text
 #: README.rst:34
@@ -129,6 +129,7 @@ msgstr ":target: https://travis-ci.org/gammu/gammu"
 msgid ""
 "https://www.bountysource.com/badge/team?team_id=23177&style=bounties_received"
 msgstr ""
+"https://www.bountysource.com/badge/team?team_id=23177&style=bounties_received"
 
 #. type: Plain text
 #: README.rst:38
@@ -136,6 +137,8 @@ msgid ""
 ":alt: Bountysource :target: https://www.bountysource.com/teams/gammu/issues?"
 "utm_source=Gammu&utm_medium=shield&utm_campaign=bounties_received"
 msgstr ""
+":alt: Bountysource :target: https://www.bountysource.com/teams/gammu/issues?"
+"utm_source=Gammu&utm_medium=shield&utm_campaign=bounties_received"
 
 #. type: Title =
 #: README.rst:40
