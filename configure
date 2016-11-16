@@ -14,10 +14,12 @@ is available at <http://www.cmake.org>.
 
 EOT
 
-if ! type cmake > /dev/null 2>&1 ; then
-    echo 'ERROR: CMake not found, please install it, it is required for build.'
-    exit 1
-fi
+for cmd in cmake readlink dirname ; do
+    if ! type $cmd > /dev/null 2>&1 ; then
+        echo "ERROR: $cmd not found, please install it, it is required for build."
+        exit 1
+    fi
+done
 
 help() {
     cat <<EOT
@@ -45,7 +47,7 @@ EOT
 BUILD_DIR=build-configure
 
 # directory where sources are located
-SOURCE_DIR=`pwd`
+SOURCE_DIR="$(dirname $(readlink -f $0))"
 
 # cmake parameters
 CMAKE_PREFIX=
