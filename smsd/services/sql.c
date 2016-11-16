@@ -1001,7 +1001,8 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 		sms->Number++;
 
 		if (i == 1) {
-			strcpy(Config->CreatorID, db->GetString(Config, &res, 10));
+			strncpy(Config->CreatorID, db->GetString(Config, &res, 10), sizeof(Config->CreatorID));
+			Config->CreatorID[sizeof(Config->CreatorID) - 1] = 0;
 			Config->relativevalidity = (int)db->GetNumber(Config, &res, 8);
 
 			Config->currdeliveryreport = db->GetBool(Config, &res, 9);
