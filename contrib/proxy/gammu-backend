@@ -46,7 +46,6 @@ while IFS= read -r line; do
   line=$prevline$line
   case $line in
     $'\r') prevline=$prevline$line$'\n' ;;
-    $'\r\n''^LTERSRP:'*|$'\r\n''^RSSI:'*) prevline= ;; # workaround 4g signal strength messages
     $'\033\rAT\r\r') : ;; # workaround initial echo on
     *) prevline=; printf "$fmt" "$line" ;;
   esac
