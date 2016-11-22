@@ -1,0 +1,8 @@
+Example script for using proxy connection
+=========================================
+
+Usage:
+
+[gammu]
+device = ssh root@my.router /usr/local/bin/gammu-backend /dev/ttyUSB0
+connection = proxyat

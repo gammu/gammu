@@ -406,6 +406,9 @@ bi-directional communication with the phone.
     device = ssh root@my.router /usr/local/bin/myscript /dev/ttyUSB0
     connection = proxyat
 
+You can find sample script which can be used on the remote side in
+:file:`contrib/proxy/gammu-backend`.
+
 .. _Fully documented example:
 
 Fully documented example
