@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMURC" "5" "Nov 16, 2016" "1.38.0" "Gammu"
+.TH "GAMMURC" "5" "Dec 01, 2016" "1.38.0" "Gammu"
 .SH NAME
 gammurc \- gammu(1) configuration file
 .
@@ -405,7 +405,7 @@ each execution.
 .INDENT 0.0
 .TP
 .B LogFormat
-Determines what all will be logged to \fBLogFile\fP\&. Possible values are:
+Determines what all will be logged to \fI\%LogFile\fP\&. Possible values are:
 .INDENT 7.0
 .TP
 .B \fBnothing\fP
@@ -574,6 +574,9 @@ connection = proxyat
 .fi
 .UNINDENT
 .UNINDENT
+.sp
+You can find sample script which can be used on the remote side in
+\fBcontrib/proxy/gammu\-backend\fP\&.
 .SS Fully documented example
 .sp
 You can find this sample file as \fBdocs/config/gammurc\fP in Gammu sources.
