@@ -297,6 +297,34 @@ void DecodeISO88591 (unsigned char *dest, const char *src, size_t len)
 	dest[(2 * i) + 1] = 0;
 }
 
+/**
+ * Stores UTF16 char in output
+ *
+ * Returns 1 if additional output was used
+ */
+size_t StoreUTF16 (unsigned char *dest, wchar_t wc)
+{
+	wchar_t tmp;
+
+	if (wc > 0xffff) {
+		wc = wc - 0x10000;
+		tmp = 0xD800 | (wc >> 10);
+		dest[0]	= (tmp >> 8) & 0xff;
+		dest[1]	= tmp & 0xff;
+
+		tmp = 0xDC00 | (wc & 0x3ff);
+
+		dest[2]	= (tmp >> 8) & 0xff;
+		dest[3]	= tmp & 0xff;
+
+		return 1;
+	}
+
+	dest[0]	= (wc >> 8) & 0xff;
+	dest[1]	= wc & 0xff;
+	return 0;
+}
+
 /* Encode string to Unicode. Len is number of input chars */
 void EncodeUnicode (unsigned char *dest, const char *src, size_t len)
 {
@@ -305,8 +333,9 @@ void EncodeUnicode (unsigned char *dest, const char *src, size_t len)
 
 	for (o_len = 0; i_len < len; o_len++) {
 		i_len += EncodeWithUnicodeAlphabet(&src[i_len], &wc);
-		dest[o_len*2]		= (wc >> 8) & 0xff;
-		dest[(o_len*2)+1]	= wc & 0xff;
+		if (StoreUTF16(dest + o_len * 2, wc)) {
+			o_len++;
+		}
  	}
 	dest[o_len*2]		= 0;
 	dest[(o_len*2)+1]	= 0;
@@ -1961,8 +1990,11 @@ void DecodeUTF8QuotedPrintable(unsigned char *dest, const char *src, size_t len)
 		} else {
 			i += EncodeWithUnicodeAlphabet(&src[i], &ret);
 		}
-		dest[j++] = (ret >> 8) & 0xff;
-		dest[j++] = ret & 0xff;
+		if (StoreUTF16(dest + j, ret)) {
+			j += 4;
+		} else {
+			j += 2;
+		}
 	}
 	dest[j++] = 0;
 	dest[j] = 0;
@@ -1980,8 +2012,11 @@ void DecodeUTF8(unsigned char *dest, const char *src, size_t len)
 		} else {
 			i+=z;
 		}
-		dest[j++] = (ret >> 8) & 0xff;
-		dest[j++] = ret & 0xff;
+		if (StoreUTF16(dest + j, ret)) {
+			j += 4;
+		} else {
+			j += 2;
+		}
 	}
 	dest[j++] = 0;
 	dest[j] = 0;
@@ -2088,13 +2123,19 @@ void DecodeUTF7(unsigned char *dest, const unsigned char *src, size_t len)
 				i+=z+2;
 			} else {
 				i+=EncodeWithUnicodeAlphabet(&src[i], &ret);
-				dest[j++] = (ret >> 8) & 0xff;
-				dest[j++] = ret & 0xff;
+				if (StoreUTF16(dest + j, ret)) {
+					j += 4;
+				} else {
+					j += 2;
+				}
 			}
 		} else {
 			i+=EncodeWithUnicodeAlphabet(&src[i], &ret);
-			dest[j++] = (ret >> 8) & 0xff;
-			dest[j++] = ret & 0xff;
+			if (StoreUTF16(dest + j, ret)) {
+				j += 4;
+			} else {
+				j += 2;
+			}
 		}
 	}
 	dest[j++] = 0;

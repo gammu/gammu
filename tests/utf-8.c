@@ -5,6 +5,7 @@
 #include "common.h"
 #include <gammu.h>
 #include <gammu-unicode.h>
+#include <string.h>
 
 int main(int argc UNUSED, char **argv UNUSED)
 {
@@ -35,11 +36,16 @@ int main(int argc UNUSED, char **argv UNUSED)
     test_result(out[3] == 0x8d);
 
     test_result(EncodeUTF8(out, "\xD8\x3d\xDC\x4d\x00\x00"));
+
     test_result(out[0] == 0xf0);
     test_result(out[1] == 0x9f);
     test_result(out[2] == 0x91);
     test_result(out[3] == 0x8d);
     test_result(out[4] == 0x00);
+
+    DecodeUTF8(out, "\xf0\x9f\x91\x8d\x00", 4);
+
+    test_result(strcmp(out, "\xD8\x3d\xDC\x4d\x00") == 0);
 
 	return 0;
 }

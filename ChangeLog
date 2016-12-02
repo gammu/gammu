@@ -24,6 +24,7 @@ ChangeLog
 [-] * MySQL script for SMSD is compatible with strict mode.
 [-] * Fixed USSD responses for some AT modems.
 [-] * Fixed parsing network status for some modems (eg. Quectel UC15).
+[-] * Fixed handling of emojis and other Unicode chars from supplementary plan.
 
 20161023 - 1.37.91
 
