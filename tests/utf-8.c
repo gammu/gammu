@@ -10,6 +10,7 @@
 int main(int argc UNUSED, char **argv UNUSED)
 {
     unsigned char out[20];
+    wchar_t dest;
 
     test_result(EncodeWithUTF8Alphabet(0x24, out) == 1);
     test_result(out[0] == 0x24);
@@ -42,6 +43,9 @@ int main(int argc UNUSED, char **argv UNUSED)
     test_result(out[2] == 0x91);
     test_result(out[3] == 0x8d);
     test_result(out[4] == 0x00);
+
+    test_result(DecodeWithUTF8Alphabet("\xf0\x9f\x91\x8d\x00", &dest, 4) == 4);
+    test_result(dest == 0x1f44d);
 
     DecodeUTF8(out, "\xf0\x9f\x91\x8d\x00", 4);
 
