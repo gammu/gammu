@@ -1865,22 +1865,46 @@ gboolean EncodeUTF8(char *dest, const unsigned char *src)
 /* Decode UTF8 char to Unicode char */
 int DecodeWithUTF8Alphabet(const unsigned char *src, wchar_t *dest, size_t len)
 {
-	if (len < 1) return 0;
-	if (src[0] < 128) {
+	if (len < 1) {
+		return 0;
+	}
+
+	// 1-byte sequence (no continuation bytes)
+	if ((src[0] & 0x80) == 0) {
 		(*dest) = src[0];
 		return 1;
 	}
-	if (src[0] < 194) return 0;
-	if (src[0] < 224) {
-		if (len < 2) return 0;
-		(*dest) = (src[0]-192)*64 + (src[1]-128);
-		return 2;
+
+	// 2-byte sequence
+	if ((src[0] & 0xE0) == 0xC0) {
+		(*dest) = ((src[0] & 0x1F) << 6) | (src[1] & 0x3f);
+		if (*dest >= 0x80) {
+			return 2;
+		} else {
+			return 0;
+		}
 	}
-	if (src[0] < 240) {
-		if (len < 3) return 0;
-		(*dest) = (src[0]-224)*4096 + (src[1]-128)*64 + (src[2]-128);
-		return 3;
+
+	// 3-byte sequence (may include unpaired surrogates)
+	if ((src[0] & 0xF0) == 0xE0) {
+		(*dest) = ((src[0] & 0x0F) << 12) | ((src[1] & 0x3f) << 6) | (src[2] & 0x3f);
+		if ((*dest) >= 0x0800) {
+			if ((*dest) >= 0xD800 && (*dest) <= 0xDFFF) {
+				return 0;
+			}
+			return 3;
+		}
 	}
+
+	// 4-byte sequence
+	if ((src[0] & 0xF8) == 0xF0) {
+		(*dest) = ((src[0] & 0x07) << 0x12) | ((src[1] & 0x3f) << 0x0C) |
+			((src[2] & 0x3f) << 0x06) | (src[3] & 0x3f);
+		if ((*dest) >= 0x010000 && (*dest) <= 0x10FFFF) {
+			return 4;
+		}
+	}
+
 	return 0;
 }
 
