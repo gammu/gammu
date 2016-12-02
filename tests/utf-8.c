@@ -45,7 +45,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 
     DecodeUTF8(out, "\xf0\x9f\x91\x8d\x00", 4);
 
-    test_result(strcmp(out, "\xD8\x3d\xDC\x4d\x00") == 0);
+    test_string("\xD8\x3d\xDC\x4d\x00", out);
 
 	return 0;
 }
