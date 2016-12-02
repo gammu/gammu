@@ -1933,9 +1933,9 @@ void DecodeUTF8QuotedPrintable(unsigned char *dest, const char *src, size_t len)
 		if (z>0) {
 			i += z * 3;
 			/*  we ignore wrong sequence */
-			if (DecodeWithUTF8Alphabet(mychar,&ret,z)==0) continue;
+			if (DecodeWithUTF8Alphabet(mychar, &ret, z)==0) continue;
 		} else {
-			i+=EncodeWithUnicodeAlphabet(&src[i], &ret);
+			i += EncodeWithUnicodeAlphabet(&src[i], &ret);
 		}
 		dest[j++] = (ret >> 8) & 0xff;
 		dest[j++] = ret & 0xff;
@@ -1950,9 +1950,9 @@ void DecodeUTF8(unsigned char *dest, const char *src, size_t len)
 	wchar_t		ret;
 
 	while (i < len) {
-		z = DecodeWithUTF8Alphabet(src+i,&ret,len-i);
+		z = DecodeWithUTF8Alphabet(src+i, &ret, len - i);
 		if (z<2) {
-			i+=EncodeWithUnicodeAlphabet(&src[i], &ret);
+			i += EncodeWithUnicodeAlphabet(&src[i], &ret);
 		} else {
 			i+=z;
 		}
