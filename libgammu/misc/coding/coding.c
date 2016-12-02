@@ -1154,7 +1154,7 @@ out:
 int GSM_PackSemiOctetNumber(const unsigned char *Number, unsigned char *Output, gboolean semioctet)
 {
 	unsigned char	format;
-	int		length, i, skip = 0;
+	size_t		length, i, skip = 0;
 	unsigned char    *buffer;
 
 	length = UnicodeLength(Number);
