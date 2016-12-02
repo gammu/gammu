@@ -49,7 +49,11 @@ int main(int argc UNUSED, char **argv UNUSED)
 
     DecodeUTF8(out, "\xf0\x9f\x91\x8d\x00", 4);
 
-    test_string("\xD8\x3d\xDC\x4d\x00", out);
+    test_string("\xD8\x3d\xDC\x4d\x00", out, 5);
+
+    DecodeUTF8(out, "ahoj", 4);
+
+    test_string("\x00\x61\x00h\x00o\x00j\x00\x00\x00", out, 10);
 
 	return 0;
 }

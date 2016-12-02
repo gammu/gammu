@@ -15,14 +15,14 @@
     } \
 }
 
-#define test_string(expected, actual) \
+#define test_string(expected, actual, length) \
 { \
-    if (strcmp(expected, actual) != 0) { \
-        fprintf(stderr, "Test \"%s\" == \"%s\" failed!\n", ""#expected, ""#actual); \
-        for (size_t i = 0; i <= strlen(expected); i++) { \
-            fprintf(stderr, "\\x%02X, \\x%02X\n", (unsigned char)expected[i], actual[i]); \
+    for (size_t i = 0; i < length; i++) { \
+        if ((unsigned char)expected[i] != actual[i]) { \
+            fprintf(stderr, "Test \"%s\" == \"%s\" failed!\n", ""#expected, ""#actual); \
+            fprintf(stderr, "[%d] \\x%02X != \\x%02X\n", (int)i, (unsigned char)expected[i], actual[i]); \
+            exit(2); \
         } \
-        exit(2); \
     } \
 }
 
