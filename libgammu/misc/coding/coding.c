@@ -2010,11 +2010,10 @@ void DecodeUTF8(unsigned char *dest, const char *src, size_t len)
 
 	while (i < len) {
 		z = DecodeWithUTF8Alphabet(src+i, &ret, len - i);
-		if (z < 2) {
-			i += EncodeWithUnicodeAlphabet(&src[i], &ret);
-		} else {
-			i += z;
+		if (z < 1) {
+			break;
 		}
+		i += z;
 		if (StoreUTF16(dest + j, ret)) {
 			j += 4;
 		} else {
