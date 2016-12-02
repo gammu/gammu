@@ -1906,6 +1906,7 @@ int DecodeWithUTF8Alphabet(const unsigned char *src, wchar_t *dest, size_t len)
 
 	// 2-byte sequence
 	if ((src[0] & 0xE0) == 0xC0) {
+		if (len < 2) return 0;
 		(*dest) = ((src[0] & 0x1F) << 6) | (src[1] & 0x3f);
 		if (*dest >= 0x80) {
 			return 2;
@@ -1916,6 +1917,7 @@ int DecodeWithUTF8Alphabet(const unsigned char *src, wchar_t *dest, size_t len)
 
 	// 3-byte sequence (may include unpaired surrogates)
 	if ((src[0] & 0xF0) == 0xE0) {
+		if (len < 3) return 0;
 		(*dest) = ((src[0] & 0x0F) << 12) | ((src[1] & 0x3f) << 6) | (src[2] & 0x3f);
 		if ((*dest) >= 0x0800) {
 			if ((*dest) >= 0xD800 && (*dest) <= 0xDFFF) {
@@ -1927,6 +1929,7 @@ int DecodeWithUTF8Alphabet(const unsigned char *src, wchar_t *dest, size_t len)
 
 	// 4-byte sequence
 	if ((src[0] & 0xF8) == 0xF0) {
+		if (len < 4) return 0;
 		(*dest) = ((src[0] & 0x07) << 0x12) | ((src[1] & 0x3f) << 0x0C) |
 			((src[2] & 0x3f) << 0x06) | (src[3] & 0x3f);
 		if ((*dest) >= 0x010000 && (*dest) <= 0x10FFFF) {
