@@ -195,7 +195,7 @@ size_t UnicodeLength(const unsigned char *str)
 }
 
 /* Convert Unicode char saved in src to dest */
-int EncodeWithUnicodeAlphabet(const unsigned char *src, wchar_t *dest)
+int EncodeWithUnicodeAlphabet(const unsigned char *src, unsigned int *dest)
 {
 	int retval;
 
@@ -207,7 +207,7 @@ int EncodeWithUnicodeAlphabet(const unsigned char *src, wchar_t *dest)
 }
 
 /* Convert Unicode char saved in src to dest */
-int DecodeWithUnicodeAlphabet(wchar_t src, unsigned char *dest)
+int DecodeWithUnicodeAlphabet(unsigned int src, unsigned char *dest)
 {
         int retval;
 
@@ -223,7 +223,7 @@ int DecodeWithUnicodeAlphabet(wchar_t src, unsigned char *dest)
 void DecodeUnicode (const unsigned char *src, char *dest)
 {
 	int		i=0,o=0;
-	wchar_t		value, second;
+	unsigned int 	value, second;
 
 	while (src[(2*i)+1]!=0x00 || src[2*i]!=0x00) {
 		value = src[i * 2] * 256 + src[i * 2 + 1];
@@ -302,9 +302,9 @@ void DecodeISO88591 (unsigned char *dest, const char *src, size_t len)
  *
  * Returns 1 if additional output was used
  */
-size_t StoreUTF16 (unsigned char *dest, wchar_t wc)
+size_t StoreUTF16 (unsigned char *dest, unsigned int wc)
 {
-	wchar_t tmp;
+	unsigned int tmp;
 
 	if (wc > 0xffffu) {
 		wc = wc - 0x10000u;
@@ -329,7 +329,7 @@ size_t StoreUTF16 (unsigned char *dest, wchar_t wc)
 void EncodeUnicode (unsigned char *dest, const char *src, size_t len)
 {
 	size_t 		i_len = 0, o_len;
- 	wchar_t 	wc;
+ 	unsigned int 	wc;
 
 	for (o_len = 0; i_len < len; o_len++) {
 		i_len += EncodeWithUnicodeAlphabet(&src[i_len], &wc);
@@ -1466,7 +1466,7 @@ void DecodeUnicodeSpecialNOKIAChars(unsigned char *dest, const unsigned char *sr
 gboolean mywstrncasecmp(unsigned const  char *a, unsigned const  char *b, int num)
 {
  	int 		i;
-  	wchar_t 	wc,wc2;
+  	unsigned int  	wc,wc2;
 
         if (a == NULL || b == NULL) return FALSE;
 
@@ -1502,7 +1502,7 @@ gboolean myiswspace(unsigned const char *src)
  	int 		o;
 	unsigned char	dest[10];
 #endif
- 	wchar_t 	wc;
+ 	unsigned int 	wc;
 
 	wc = src[1] | (src[0] << 8);
 
@@ -2112,7 +2112,7 @@ void DecodeXMLUTF8(unsigned char *dest, const char *src, size_t len)
 void DecodeUTF7(unsigned char *dest, const unsigned char *src, size_t len)
 {
 	size_t 		i=0,j=0,z,p;
-	wchar_t		ret;
+	unsigned int		ret;
 
 	while (i<=len) {
 		if (len-5>=i) {
