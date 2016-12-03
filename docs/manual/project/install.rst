@@ -52,7 +52,7 @@ Dependencies
 
 You need CMake from <https://cmake.org/> for compiling Gammu.
 
-Additionally pkg-config <http://pkg-config.freedesktop.org/> is used for
+Additionally pkg-config <https://www.freedesktop.org/wiki/Software/pkg-config/> is used for
 detecting available libraries.
 
 .. _opt-deps:
@@ -82,35 +82,35 @@ libCURL
 
 Required for new versions notification (see :option:`gammu checkversion`).
 
-.. seealso:: http://curl.haxx.se/libcurl/
+.. seealso:: https://curl.haxx.se/libcurl/
 
 libiconv
 ++++++++
 
 Used to support more character sets in AT engine.
 
-.. seealso:: http://www.gnu.org/software/libiconv/
+.. seealso:: https://www.gnu.org/software/libiconv/
 
 Gettext
 +++++++
 
 Localization of strings.
 
-.. seealso:: http://www.gnu.org/software/gettext/
+.. seealso:: https://www.gnu.org/software/gettext/
 
 MySQL
 +++++
 
 Required for :ref:`gammu-smsd-mysql` in :ref:`smsd`.
 
-.. seealso:: http://mysql.com/
+.. seealso:: https://www.mysql.com/
 
 PostgreSQL
 ++++++++++
 
 Required for :ref:`gammu-smsd-pgsql` in :ref:`smsd`.
 
-.. seealso:: http://www.postgresql.org/
+.. seealso:: https://www.postgresql.org/
 
 unixODBC
 ++++++++
@@ -135,21 +135,21 @@ Python
 
 Gammu has a Python bindings, see :ref:`python`.
 
-.. seealso:: http://www.python.org/
+.. seealso:: https://www.python.org/
 
 SQLite + libdbi-drivers with SQLite
 +++++++++++++++++++++++++++++++++++
 
 Needed for testing of SMSD using libdbi driver (libdbd-sqlite3), see :ref:`testing`.
 
-.. seealso:: http://www.sqlite.org/
+.. seealso:: https://www.sqlite.org/
 
 glib
 ++++
 
 Currently needed only for :ref:`gammu-detect`.
 
-.. seealso:: http://www.gtk.org/
+.. seealso:: https://www.gtk.org/
 
 gudev
 +++++
@@ -314,7 +314,7 @@ You will probably need additional SDKs:
 * For gettext (internationalization) support, you will need gettext
   packages from GnuWin32 project.
 * As build is now based on CMake, you will need to get it from
-  http://cmake.org/.
+  https://cmake.org/.
 
 After downloading and installing them into your system:
 

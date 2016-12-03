@@ -14,7 +14,7 @@ For tables description see :ref:`gammu-smsd-tables`.
 
 This backend is based on :ref:`gammu-smsd-sql`.
 
-.. _PostgreSQL: http://www.postgresql.org/
+.. _PostgreSQL: https://www.postgresql.org/
 
 Configuration
 -------------

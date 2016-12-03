@@ -83,7 +83,7 @@ This can occasionally happen and can have several reasons.
     see hint to adjust the configuration in the log.
 
 .. _Kalkun: http://kalkun.sourceforge.net/
-.. _MySQL: http://www.mysql.com/
-.. _PostgreSQL: http://www.postgresql.org/
+.. _MySQL: https://www.mysql.com/
+.. _PostgreSQL: https://www.postgresql.org/
 .. _libdbi: http://libdbi.sourceforge.net/
 .. _Gammu Phones Database: https://wammu.eu/phones/

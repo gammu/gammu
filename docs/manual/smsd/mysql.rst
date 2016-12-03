@@ -50,7 +50,7 @@ privileges should be enough:
    For creating the SQL tables you need more privileges, especially for
    creating triggers, which are used for some functionality.
 
-.. _MySQL: http://www.mysql.com/
+.. _MySQL: https://www.mysql.com/
 
 .. _mysql-create:
 
