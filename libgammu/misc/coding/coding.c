@@ -302,9 +302,9 @@ void DecodeISO88591 (unsigned char *dest, const char *src, size_t len)
  *
  * Returns 1 if additional output was used
  */
-size_t StoreUTF16 (unsigned char *dest, unsigned int wc)
+size_t StoreUTF16 (unsigned char *dest, wchar_t wc)
 {
-	unsigned int tmp;
+	wchar_t tmp;
 
 	if (wc > 0xffffu) {
 		wc = wc - 0x10000u;
