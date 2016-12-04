@@ -1892,7 +1892,7 @@ gboolean EncodeUTF8(char *dest, const unsigned char *src)
 }
 
 /* Decode UTF8 char to Unicode char */
-int DecodeWithUTF8Alphabet(const unsigned char *src, unsigned int *dest, size_t len)
+int DecodeWithUTF8Alphabet(const unsigned char *src, wchar_t *dest, size_t len)
 {
 	if (len < 1) {
 		return 0;
@@ -1969,7 +1969,7 @@ void DecodeUTF8QuotedPrintable(unsigned char *dest, const char *src, size_t len)
 	size_t 		i,j=0;
 	int		z;
 	unsigned char	mychar[10];
-	unsigned int	ret;
+	wchar_t		ret;
 
 	for (i = 0; i<=len; ) {
 		z=0;
@@ -2006,7 +2006,7 @@ void DecodeUTF8QuotedPrintable(unsigned char *dest, const char *src, size_t len)
 void DecodeUTF8(unsigned char *dest, const char *src, size_t len)
 {
 	size_t 		i=0,j=0,z;
-	unsigned int	ret;
+	wchar_t		ret;
 
 	while (i < len) {
 		z = DecodeWithUTF8Alphabet(src+i, &ret, len - i);
