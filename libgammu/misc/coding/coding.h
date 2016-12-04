@@ -19,6 +19,10 @@
 #include <gammu-error.h>
 #include <gammu-debug.h>
 
+#ifndef HAVE_WCHAR_T
+typedef		int wchar_t;
+#endif
+
 #ifndef HAVE_WINT_T
 typedef		int wint_t;
 #endif

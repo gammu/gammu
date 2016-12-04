@@ -55,6 +55,6 @@ extern int strcasecmp (const char *s1, const char *s2);
 #endif
 
 #ifndef HAVE_TOWLOWER
-wint_t		towlower			(wint_t c);
+wchar_t		towlower			(wchar_t c);
 #endif
 #endif

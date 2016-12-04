@@ -104,7 +104,7 @@ int strcasecmp (const char *s1, const char *s2)
 
 #ifndef HAVE_TOWLOWER
 /* FreeBSD boxes 4.7-STABLE does't have it, although it's ANSI standard */
-wint_t towlower(wint_t c)
+wchar_t towlower(wchar_t c)
 {
 	unsigned char dest[10];
 
