@@ -1918,7 +1918,8 @@ int DecodeWithUTF8Alphabet(const unsigned char *src, wint_t *dest, size_t len)
 	// 3-byte sequence (may include unpaired surrogates)
 	if ((src[0] & 0xF0) == 0xE0) {
 		if (len < 3) return 0;
-		(*dest) = ((src[0] & 0x0F) << 12) | ((src[1] & 0x3f) << 6) | (src[2] & 0x3f);
+		(*dest) = 0;
+		(*dest) += ((src[0] & 0x0F) << 12) | ((src[1] & 0x3f) << 6) | (src[2] & 0x3f);
 		if ((*dest) >= 0x0800) {
 			if ((*dest) >= 0xD800 && (*dest) <= 0xDFFF) {
 				fprintf(stderr, "Invalid surrogate (3): 0x%x\n", *dest);
@@ -1931,7 +1932,8 @@ int DecodeWithUTF8Alphabet(const unsigned char *src, wint_t *dest, size_t len)
 	// 4-byte sequence
 	if ((src[0] & 0xF8) == 0xF0) {
 		if (len < 4) return 0;
-		(*dest) = ((src[0] & 0x07) << 0x12) | ((src[1] & 0x3f) << 0x0C) |
+		(*dest) = 0;
+		(*dest) += ((src[0] & 0x07) << 0x12) | ((src[1] & 0x3f) << 0x0C) |
 			((src[2] & 0x3f) << 0x06) | (src[3] & 0x3f);
 		if ((*dest) >= 0x010000 && (*dest) <= 0x10FFFF) {
 			return 4;
