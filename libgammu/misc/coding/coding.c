@@ -198,12 +198,16 @@ size_t UnicodeLength(const unsigned char *str)
 int EncodeWithUnicodeAlphabet(const unsigned char *src, gammu_char_t *dest)
 {
 	int retval;
+	wchar_t out;
 
-        switch (retval = mbtowc(dest, src, MB_CUR_MAX)) {
-                case -1 :
+	retval = mbtowc(&out, src, MB_CUR_MAX);
+	*dest = out;
+
+	switch (retval) {
+		case -1 :
 		case  0 : return 1;
-                default : return retval;
-        }
+		default : return retval;
+	}
 }
 
 /* Convert Unicode char saved in src to dest */
