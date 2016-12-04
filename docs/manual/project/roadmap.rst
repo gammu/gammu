@@ -17,7 +17,9 @@ Unicode strings
 
 The another major obstacle which is all around Gammu code is own
 implementation of unicode (UCS-2-BE) strings. This code should be dropped and
-wchar_t used instead.
+use some standard library for that. Note that wchar_t is probably not a good
+choice here as it's 16-bit on Windows and thus can not store emojis and other
+supplemental plan unicode chars.
 
 Hardcoded length for strings
 ----------------------------
