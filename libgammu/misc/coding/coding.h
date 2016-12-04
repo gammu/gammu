@@ -7,6 +7,8 @@
     extern "C" {
 #endif
 
+#include <gammu-config.h>
+
 #include <stdlib.h>
 #ifdef HAVE_WCHAR_H
 #  include <wchar.h>
@@ -19,12 +21,12 @@
 #include <gammu-error.h>
 #include <gammu-debug.h>
 
-#ifndef HAVE_WCHAR_T
-typedef		int wchar_t;
-#endif
-
-#ifndef HAVE_WINT_T
-typedef		int wint_t;
+#ifdef USE_WCHAR_T
+typedef wchar_t gammu_char_t;
+typedef wint_t gammu_int_t;
+#else
+typedef unsigned long gammu_char_t;
+typedef unsigned long gammu_int_t;
 #endif
 
 /* ---------------------------- Unicode ------------------------------------ */
@@ -156,17 +158,17 @@ char *DecodeSpecialChars(char *dest, const char *buffer);
  *
  * \ingroup Unicode
  */
-int DecodeWithUTF8Alphabet(const unsigned char *src, wchar_t * dest, size_t len);
+int DecodeWithUTF8Alphabet(const unsigned char *src, gammu_char_t * dest, size_t len);
 
 /**
- * Converts single character from unicode to wchar_t.
+ * Converts single character from unicode to gammu_char_t.
  */
-int EncodeWithUnicodeAlphabet(const unsigned char *value, wchar_t *dest);
+int EncodeWithUnicodeAlphabet(const unsigned char *value, gammu_char_t *dest);
 
 /**
- * Converts single character from wchar_t to unicode.
+ * Converts single character from gammu_char_t to unicode.
  */
-int DecodeWithUnicodeAlphabet(wchar_t value, unsigned char *dest);
+int DecodeWithUnicodeAlphabet(gammu_char_t value, unsigned char *dest);
 
 #ifdef ICONV_FOUND
 

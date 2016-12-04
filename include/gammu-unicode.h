@@ -19,9 +19,9 @@ extern "C" {
  * \ref GSM_InitLocales.
  */
 
+#include <gammu-config.h>
 #include <stdlib.h>
 #include <gammu-types.h>
-#include <gammu-config.h>
 
 /**
  * Returns length of unicode string.

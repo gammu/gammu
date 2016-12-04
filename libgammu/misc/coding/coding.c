@@ -195,7 +195,7 @@ size_t UnicodeLength(const unsigned char *str)
 }
 
 /* Convert Unicode char saved in src to dest */
-int EncodeWithUnicodeAlphabet(const unsigned char *src, wchar_t *dest)
+int EncodeWithUnicodeAlphabet(const unsigned char *src, gammu_char_t *dest)
 {
 	int retval;
 
@@ -207,7 +207,7 @@ int EncodeWithUnicodeAlphabet(const unsigned char *src, wchar_t *dest)
 }
 
 /* Convert Unicode char saved in src to dest */
-int DecodeWithUnicodeAlphabet(wchar_t src, unsigned char *dest)
+int DecodeWithUnicodeAlphabet(gammu_char_t src, unsigned char *dest)
 {
         int retval;
 
@@ -223,7 +223,7 @@ int DecodeWithUnicodeAlphabet(wchar_t src, unsigned char *dest)
 void DecodeUnicode (const unsigned char *src, char *dest)
 {
 	int		i=0,o=0;
-	wchar_t		value, second;
+	gammu_char_t		value, second;
 
 	while (src[(2*i)+1]!=0x00 || src[2*i]!=0x00) {
 		value = src[i * 2] * 256 + src[i * 2 + 1];
@@ -302,9 +302,9 @@ void DecodeISO88591 (unsigned char *dest, const char *src, size_t len)
  *
  * Returns 1 if additional output was used
  */
-size_t StoreUTF16 (unsigned char *dest, wchar_t wc)
+size_t StoreUTF16 (unsigned char *dest, gammu_char_t wc)
 {
-	wchar_t tmp;
+	gammu_char_t tmp;
 
 	if (wc > 0xffff) {
 		wc = wc - 0x10000;
@@ -329,7 +329,7 @@ size_t StoreUTF16 (unsigned char *dest, wchar_t wc)
 void EncodeUnicode (unsigned char *dest, const char *src, size_t len)
 {
 	size_t 		i_len = 0, o_len;
- 	wchar_t 	wc;
+ 	gammu_char_t 	wc;
 
 	for (o_len = 0; i_len < len; o_len++) {
 		i_len += EncodeWithUnicodeAlphabet(&src[i_len], &wc);
@@ -1466,7 +1466,7 @@ void DecodeUnicodeSpecialNOKIAChars(unsigned char *dest, const unsigned char *sr
 gboolean mywstrncasecmp(unsigned const  char *a, unsigned const  char *b, int num)
 {
  	int 		i;
-  	wchar_t 	wc,wc2;
+  	gammu_char_t 	wc,wc2;
 
         if (a == NULL || b == NULL) return FALSE;
 
@@ -1502,7 +1502,7 @@ gboolean myiswspace(unsigned const char *src)
  	int 		o;
 	unsigned char	dest[10];
 #endif
- 	wchar_t 	wc;
+ 	gammu_char_t 	wc;
 
 	wc = src[1] | (src[0] << 8);
 
@@ -1536,9 +1536,9 @@ gboolean myiswspace(unsigned const char *src)
 
 unsigned char *mywstrstr (const unsigned char *haystack, const unsigned char *needle)
 {
-/* One crazy define to convert unicode used in Gammu to standard wchar_t */
-#define tolowerwchar(x) (towlower((wchar_t)( (((&(x))[0] & 0xff) << 8) | (((&(x))[1] & 0xff)) )))
-	register wint_t a, b, c;
+/* One crazy define to convert unicode used in Gammu to standard gammu_char_t */
+#define tolowerwchar(x) (towlower((gammu_char_t)( (((&(x))[0] & 0xff) << 8) | (((&(x))[1] & 0xff)) )))
+	register gammu_int_t a, b, c;
 	register const unsigned char *rhaystack, *rneedle;
 
 
@@ -1892,7 +1892,7 @@ gboolean EncodeUTF8(char *dest, const unsigned char *src)
 }
 
 /* Decode UTF8 char to Unicode char */
-int DecodeWithUTF8Alphabet(const unsigned char *src, wchar_t *dest, size_t len)
+int DecodeWithUTF8Alphabet(const unsigned char *src, gammu_char_t *dest, size_t len)
 {
 	if (len < 1) {
 		return 0;
@@ -1969,7 +1969,7 @@ void DecodeUTF8QuotedPrintable(unsigned char *dest, const char *src, size_t len)
 	size_t 		i,j=0;
 	int		z;
 	unsigned char	mychar[10];
-	wchar_t		ret;
+	gammu_char_t		ret;
 
 	for (i = 0; i<=len; ) {
 		z=0;
@@ -2006,7 +2006,7 @@ void DecodeUTF8QuotedPrintable(unsigned char *dest, const char *src, size_t len)
 void DecodeUTF8(unsigned char *dest, const char *src, size_t len)
 {
 	size_t 		i=0,j=0,z;
-	wchar_t		ret;
+	gammu_char_t		ret;
 
 	while (i < len) {
 		z = DecodeWithUTF8Alphabet(src+i, &ret, len - i);
@@ -2112,7 +2112,7 @@ void DecodeXMLUTF8(unsigned char *dest, const char *src, size_t len)
 void DecodeUTF7(unsigned char *dest, const unsigned char *src, size_t len)
 {
 	size_t 		i=0,j=0,z,p;
-	wchar_t		ret;
+	gammu_char_t		ret;
 
 	while (i<=len) {
 		if (len-5>=i) {
