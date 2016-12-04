@@ -110,7 +110,7 @@ static struct N6110_Lang_Char N6110_Lang_Table[] = {
 static void N6110_EncodeUnicode(GSM_StateMachine *s, unsigned char *dest, const unsigned char *src, int len)
 {
         int                     i_len = 0, o_len, i;
-        wchar_t                 wc;
+        gammu_char_t                 wc;
         GSM_Phone_N6110Data     *Priv = &s->Phone.Data.Priv.N6110;
         gboolean                    found;
 
@@ -2222,7 +2222,7 @@ static GSM_Error N6110_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *N
                                                         req[22]+=j-1;  /* few additional chars */
 							current+=j;
 						} else {
-                                                        current+=DecodeWithUnicodeAlphabet(((wchar_t)(Note->Entries[Text].Text[i*2]*256+Note->Entries[Text].Text[i*2+1])),req+current);
+                                                        current+=DecodeWithUnicodeAlphabet(((gammu_char_t)(Note->Entries[Text].Text[i*2]*256+Note->Entries[Text].Text[i*2+1])),req+current);
 						}
                                         }
                                 }
@@ -2283,7 +2283,7 @@ static GSM_Error N6110_DeleteCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry
 /* for example: "Euro_char" text */
 static void Decode3310Subset3(int j, GSM_Protocol_Message *msg, GSM_Phone_Data *Data)
 {
-        wchar_t                 wc;
+        gammu_char_t                 wc;
         int                     len = 0,i,w;
         GSM_CalendarEntry       *Entry = Data->Cal;
 
