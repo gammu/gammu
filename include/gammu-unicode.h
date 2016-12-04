@@ -164,12 +164,12 @@ gboolean DecodeHexBin(unsigned char *dest, const unsigned char *src, size_t len)
 /**
  * Converts single character from unicode to wchar_t.
  */
-int EncodeWithUnicodeAlphabet(const unsigned char *value, unsigned int *dest);
+int EncodeWithUnicodeAlphabet(const unsigned char *value, wchar_t *dest);
 
 /**
  * Converts single character from wchar_t to unicode.
  */
-int DecodeWithUnicodeAlphabet(unsigned int value, unsigned char *dest);
+int DecodeWithUnicodeAlphabet(wchar_t value, unsigned char *dest);
 #ifdef	__cplusplus
 }
 #endif
