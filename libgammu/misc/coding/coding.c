@@ -306,22 +306,22 @@ size_t StoreUTF16 (unsigned char *dest, wchar_t wc)
 {
 	wchar_t tmp;
 
-	if (wc > 0xffffu) {
-		wc = wc - 0x10000u;
-		tmp = 0xD800u | (wc >> 10);
-		dest[0]	= (tmp >> 8) & 0xffu;
-		dest[1]	= tmp & 0xffu;
+	if (wc > 0xffff) {
+		wc = wc - 0x10000;
+		tmp = 0xD800 | (wc >> 10);
+		dest[0]	= (tmp >> 8) & 0xff;
+		dest[1]	= tmp & 0xff;
 
-		tmp = 0xDC00u | (wc & 0x3ffu);
+		tmp = 0xDC00 | (wc & 0x3ff);
 
-		dest[2]	= (tmp >> 8) & 0xffu;
-		dest[3]	= tmp & 0xffu;
+		dest[2]	= (tmp >> 8) & 0xff;
+		dest[3]	= tmp & 0xff;
 
 		return 1;
 	}
 
-	dest[0]	= (wc >> 8) & 0xffu;
-	dest[1]	= wc & 0xffu;
+	dest[0]	= (wc >> 8) & 0xff;
+	dest[1]	= wc & 0xff;
 	return 0;
 }
 
