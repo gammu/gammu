@@ -198,7 +198,7 @@ size_t UnicodeLength(const unsigned char *str)
 int EncodeWithUnicodeAlphabet(const unsigned char *src, gammu_char_t *dest)
 {
 	int retval;
-	wchar_t out;
+	wchar_t out = 0;
 
 	retval = mbtowc(&out, src, MB_CUR_MAX);
 	*dest = out;
