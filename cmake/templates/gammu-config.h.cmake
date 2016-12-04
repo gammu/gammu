@@ -282,7 +282,7 @@
 #endif
 /* Size of wchar_t needs to be 4 bytes to store supplementary plan unicode */
 #if @WCHAR_T@ >= 4
-#define USE_WCHAR_T
+#cmakedefine USE_WCHAR_T
 #endif
 #ifndef HAVE_WCHAR_T
 #cmakedefine HAVE_WCHAR_T

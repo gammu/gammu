@@ -107,6 +107,7 @@ check_function_exists (scandir HAVE_SCANDIR)
 check_function_exists (alphasort HAVE_ALPHASORT)
 
 set (ENABLE_GETOPT ON CACHE BOOL "Enable getopt usage")
+set (USE_WCHAR_T ON CACHE BOOL "Use native wchar_t type")
 if (ENABLE_GETOPT)
 check_symbol_exists (getopt "unistd.h" HAVE_GETOPT)
 check_symbol_exists (getopt_long "getopt.h" HAVE_GETOPT_LONG)

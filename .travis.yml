@@ -66,6 +66,9 @@ matrix:
     - os: linux
       compiler: gcc
       env: ARGS="-DENABLE_GETOPT=OFF"
+    - os: linux
+      compiler: gcc
+      env: ARGS="-DUSE_WCHAR_T=OFF"
 services:
   - mysql
   - postgresql
