@@ -7,6 +7,8 @@
 #include <gammu-unicode.h>
 #include <string.h>
 
+#include "../libgammu/misc/coding/coding.h"
+
 int main(int argc UNUSED, char **argv UNUSED)
 {
     unsigned char out[20];

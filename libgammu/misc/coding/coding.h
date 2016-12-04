@@ -151,6 +151,23 @@ GSM_Error MyGetLine(char *Buffer, size_t *Pos, char *OutBuffer, size_t MaxLen, s
 char *EncodeSpecialChars(char *dest, const char *buffer);
 char *DecodeSpecialChars(char *dest, const char *buffer);
 
+/**
+ * Decodes string from UTF-8.
+ *
+ * \ingroup Unicode
+ */
+int DecodeWithUTF8Alphabet(const unsigned char *src, wchar_t * dest, size_t len);
+
+/**
+ * Converts single character from unicode to wchar_t.
+ */
+int EncodeWithUnicodeAlphabet(const unsigned char *value, wchar_t *dest);
+
+/**
+ * Converts single character from wchar_t to unicode.
+ */
+int DecodeWithUnicodeAlphabet(wchar_t value, unsigned char *dest);
+
 #ifdef ICONV_FOUND
 
 gboolean IconvDecode(const char *charset, const char *input, const size_t inlen, unsigned char *output, size_t outlen);

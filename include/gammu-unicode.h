@@ -19,8 +19,7 @@ extern "C" {
  * \ref GSM_InitLocales.
  */
 
-#include <wchar.h>
-
+#include <stdlib.h>
 #include <gammu-types.h>
 #include <gammu-config.h>
 
@@ -97,12 +96,6 @@ void DecodeUTF8QuotedPrintable(unsigned char *dest, const char *src,
  * \ingroup Unicode
  */
 int EncodeWithUTF8Alphabet(unsigned long src, unsigned char *ret);
-/**
- * Decodes string from UTF-8.
- *
- * \ingroup Unicode
- */
-int DecodeWithUTF8Alphabet(const unsigned char *src, wchar_t * dest, size_t len);
 
 /**
  * Decodes string from hex quoted unicode.
@@ -160,16 +153,6 @@ void DecodeUTF8(unsigned char *dest, const char *src, size_t len);
  * \ingroup Unicode
  */
 gboolean DecodeHexBin(unsigned char *dest, const unsigned char *src, size_t len);
-
-/**
- * Converts single character from unicode to wchar_t.
- */
-int EncodeWithUnicodeAlphabet(const unsigned char *value, wchar_t *dest);
-
-/**
- * Converts single character from wchar_t to unicode.
- */
-int DecodeWithUnicodeAlphabet(wchar_t value, unsigned char *dest);
 #ifdef	__cplusplus
 }
 #endif
