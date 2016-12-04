@@ -102,7 +102,7 @@ int EncodeWithUTF8Alphabet(unsigned long src, unsigned char *ret);
  *
  * \ingroup Unicode
  */
-int DecodeWithUTF8Alphabet(const unsigned char *src, wchar_t * dest, size_t len);
+int DecodeWithUTF8Alphabet(const unsigned char *src, wint_t * dest, size_t len);
 
 /**
  * Decodes string from hex quoted unicode.
@@ -162,14 +162,14 @@ void DecodeUTF8(unsigned char *dest, const char *src, size_t len);
 gboolean DecodeHexBin(unsigned char *dest, const unsigned char *src, size_t len);
 
 /**
- * Converts single character from unicode to wchar_t.
+ * Converts single character from unicode to wint_t.
  */
-int EncodeWithUnicodeAlphabet(const unsigned char *value, wchar_t *dest);
+int EncodeWithUnicodeAlphabet(const unsigned char *value, wint_t *dest);
 
 /**
- * Converts single character from wchar_t to unicode.
+ * Converts single character from wint_t to unicode.
  */
-int DecodeWithUnicodeAlphabet(wchar_t value, unsigned char *dest);
+int DecodeWithUnicodeAlphabet(wint_t value, unsigned char *dest);
 #ifdef	__cplusplus
 }
 #endif

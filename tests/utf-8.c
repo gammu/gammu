@@ -10,7 +10,7 @@
 int main(int argc UNUSED, char **argv UNUSED)
 {
     unsigned char out[20];
-    wchar_t dest;
+    wint_t dest;
 
     test_result(EncodeWithUTF8Alphabet(0x24, out) == 1);
     test_result(out[0] == 0x24);

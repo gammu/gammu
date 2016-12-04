@@ -202,7 +202,6 @@ else (CMAKE_CROSSCOMPILING AND MINGW)
     # Search for needed includes and functions
     if (HAVE_WCHAR_H)
         set (CMAKE_EXTRA_INCLUDE_FILES wchar.h)
-        check_type_size (wchar_t WCHAR_T)
         check_type_size (wint_t  WINT_T)
     endif (HAVE_WCHAR_H)
     set (CMAKE_EXTRA_INCLUDE_FILES)
