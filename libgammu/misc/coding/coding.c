@@ -1921,6 +1921,7 @@ int DecodeWithUTF8Alphabet(const unsigned char *src, wint_t *dest, size_t len)
 		(*dest) = ((src[0] & 0x0F) << 12) | ((src[1] & 0x3f) << 6) | (src[2] & 0x3f);
 		if ((*dest) >= 0x0800) {
 			if ((*dest) >= 0xD800 && (*dest) <= 0xDFFF) {
+				fprintf(stderr, "Invalid surrogate (3): 0x%x\n", *dest);
 				return 0;
 			}
 			return 3;
@@ -1935,6 +1936,7 @@ int DecodeWithUTF8Alphabet(const unsigned char *src, wint_t *dest, size_t len)
 		if ((*dest) >= 0x010000 && (*dest) <= 0x10FFFF) {
 			return 4;
 		}
+		fprintf(stderr, "Invalid surrogate (4): 0x%x\n", *dest);
 	}
 
 	return 0;
