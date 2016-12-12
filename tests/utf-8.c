@@ -13,6 +13,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 {
     unsigned char out[20];
     gammu_char_t dest;
+    size_t i;
 
     test_result(EncodeWithUTF8Alphabet(0x24, out) == 1);
     test_result(out[0] == 0x24);

@@ -25,6 +25,7 @@ ChangeLog
 [-] * Fixed USSD responses for some AT modems.
 [-] * Fixed parsing network status for some modems (eg. Quectel UC15).
 [-] * Fixed handling of emojis and other Unicode chars from supplementary plan.
+[-] * Fixed compilation with C90 compiler.
 
 20161023 - 1.37.91
 
