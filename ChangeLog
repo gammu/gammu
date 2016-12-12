@@ -19,7 +19,7 @@ the issue.
 ChangeLog
 =========
     
-2016???? - 1.38.0
+20161212 - 1.38.0
 
 [-] * MySQL script for SMSD is compatible with strict mode.
 [-] * Fixed USSD responses for some AT modems.
