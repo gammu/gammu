@@ -1,0 +1,7 @@
+[SMSBackup000]
+SMSC = "+79272909090"
+State = Sent
+Number = "0100"
+Coding = Default
+Folder = 1
+Text00 = 00620061006c
