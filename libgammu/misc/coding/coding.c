@@ -1174,6 +1174,9 @@ int GSM_PackSemiOctetNumber(const unsigned char *Number, unsigned char *Output, 
 	if (buffer[0] == '+') {
 		format = NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN;
 		skip = 1;
+	} else if (buffer[0] == '0' && buffer[1] == '0' && buffer[2] == '0') {
+		/* Most likely local provider number */
+		format = NUMBER_UNKNOWN_NUMBERING_PLAN_ISDN;
 	} else if (buffer[0] == '0' && buffer[1] == '0') {
 		format = NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN;
 		skip = 2;

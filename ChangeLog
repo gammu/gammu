@@ -20,7 +20,9 @@ ChangeLog
 =========
     
 2016???? - 1.38.1
-    
+
+[-] * Fixed sending SMS to numbers starting with 000.
+
 20161212 - 1.38.0
 
 [-] * MySQL script for SMSD is compatible with strict mode.
