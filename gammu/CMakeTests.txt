@@ -107,11 +107,11 @@ if (WITH_BACKUP)
                 PROPERTIES WILL_FAIL TRUE)
         endif (TESTNAME MATCHES "01|02")
         add_test(gammu-savefile-vcs-todo-${TESTNAME} "${CMAKE_CURRENT_BINARY_DIR}/gammu${CMAKE_EXECUTABLE_SUFFIX}" savefile TODO ${TESTNAME}-todo.vcs ${VCS} 1)
-        if (TESTNAME MATCHES "dtstart|rrule|UK32Holidays|badline|rrule-1|p990|k770|outlook")
+        if (TESTNAME MATCHES "dtstart|rrule|UK32Holidays|badline|rrule-1|p990|k770|outlook|date-time")
             set_tests_properties(
                 gammu-savefile-vcs-todo-${TESTNAME}
                 PROPERTIES WILL_FAIL TRUE)
-        endif (TESTNAME MATCHES "dtstart|rrule|UK32Holidays|badline|rrule-1|p990|k770|outlook")
+        endif (TESTNAME MATCHES "dtstart|rrule|UK32Holidays|badline|rrule-1|p990|k770|outlook|date-time")
         add_test(gammu-convertbackup-${TESTNAME} "${CMAKE_CURRENT_BINARY_DIR}/gammu${CMAKE_EXECUTABLE_SUFFIX}" convertbackup ${VCS} ${TESTNAME}.3.vcs)
     endforeach(VCS)
 endif (WITH_BACKUP)

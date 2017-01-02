@@ -22,6 +22,7 @@ ChangeLog
 2016???? - 1.38.1
 
 [-] * Fixed sending SMS to numbers starting with 000.
+[-] * Fixed parsing of vcalendar files with VALUE=DATE-TIME.
 
 20161212 - 1.38.0
 

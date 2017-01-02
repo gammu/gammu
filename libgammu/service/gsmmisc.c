@@ -341,10 +341,16 @@ gboolean ReadVCALDate(char *Buffer, const char *Start, GSM_DateTime *Date, gbool
 		fullstart[0] = 0;
 		strcat(fullstart, Start);
 		strcat(fullstart, ";VALUE=DATE");
-		if (!ReadVCALText(Buffer, fullstart, datestring, FALSE, NULL)) {
-			return FALSE;
+		if (ReadVCALText(Buffer, fullstart, datestring, FALSE, NULL)) {
+			*is_date_only = TRUE;
+		} else {
+			fullstart[0] = 0;
+			strcat(fullstart, Start);
+			strcat(fullstart, ";VALUE=DATE-TIME");
+			if (! ReadVCALText(Buffer, fullstart, datestring, FALSE, NULL)) {
+				return FALSE;
+			}
 		}
-		*is_date_only = TRUE;
 	}
 
 	if (ReadVCALDateTime(DecodeUnicodeString(datestring), Date)) {
