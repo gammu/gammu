@@ -138,6 +138,9 @@ GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		{"^SIMST:"	,1, ID_All}, /* ^SIMST:1 */
 		{"^STIN:"	,1, ID_All}, /* ^STIN: 7, 0, 0 */
 
+		/* D-Link */
+		{"+SPNWNAME:"	,1, ID_All}, /* +SPNWNAME: "432", "11", "Mci", "Mci" */
+
 		/* ONDA */
 		{"+ZUSIMR:"	,1, ID_All}, /* +ZUSIMR:2 */
 
