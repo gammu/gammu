@@ -1536,7 +1536,7 @@ msgstr "Порт на телефона"
 
 #: gammu-detect/main.c:85
 msgid ""
-"Copyright (C) 2010 - 2016 Michal Cihar <michal@cihar.com> and other authors."
+"Copyright (C) 2010 - 2017 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
 
 #: gammu-detect/main.c:87 gammu/gammu.c:336
@@ -1797,7 +1797,7 @@ msgstr ""
 
 #: gammu/gammu.c:332
 msgid ""
-"Copyright (C) 2003 - 2016 Michal Cihar <michal@cihar.com> and other authors."
+"Copyright (C) 2003 - 2017 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
 
 #: gammu/gammu.c:370

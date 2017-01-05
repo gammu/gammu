@@ -1538,7 +1538,7 @@ msgstr "Telefon port"
 #: gammu-detect/main.c:85
 #, fuzzy
 msgid ""
-"Copyright (C) 2010 - 2016 Michal Cihar <michal@cihar.com> and other authors."
+"Copyright (C) 2010 - 2017 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
 "Copyright \\(co Michal Cihar E<lt>I<michal@cihar.com>E<gt>, 2003 - 2008."
 
@@ -1801,7 +1801,7 @@ msgstr ""
 #: gammu/gammu.c:332
 #, fuzzy
 msgid ""
-"Copyright (C) 2003 - 2016 Michal Cihar <michal@cihar.com> and other authors."
+"Copyright (C) 2003 - 2017 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
 "Copyright \\(co Michal Cihar E<lt>I<michal@cihar.com>E<gt>, 2003 - 2008."
 

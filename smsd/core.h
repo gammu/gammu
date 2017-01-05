@@ -1,5 +1,5 @@
 /* (c) 2002-2004 by Marcin Wiacek and Joergen Thomsen */
-/* Copyright (c) 2009 - 2015 Michal Cihar <michal@cihar.com> */
+/* Copyright (c) 2009 - 2017 Michal Cihar <michal@cihar.com> */
 
 #ifndef __core_h_
 #define __core_h_

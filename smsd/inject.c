@@ -1,7 +1,7 @@
 /**
  * SMSD message inject program
  */
-/* Copyright (c) 2009 - 2015 Michal Cihar <michal@cihar.com> */
+/* Copyright (c) 2009 - 2017 Michal Cihar <michal@cihar.com> */
 /* Licensend under GNU GPL 2 */
 
 #include <gammu-smsd.h>
@@ -55,7 +55,7 @@ NORETURN void version(void)
 	printf("  - %s\n", "ODBC");
 #endif
 	printf("\n");
-	printf("Copyright (C) 2003 - 2016 Michal Cihar <michal@cihar.com> and other authors.\n");
+	printf("Copyright (C) 2003 - 2017 Michal Cihar <michal@cihar.com> and other authors.\n");
 	printf("\n");
 	printf("License GPLv2: GNU GPL version 2 <https://spdx.org/licenses/GPL-2.0>.\n");
 	printf("This is free software: you are free to change and redistribute it.\n");

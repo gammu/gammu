@@ -1548,7 +1548,7 @@ msgstr ""
 #| msgid ""
 #| "Copyright \\(co 2003 - 2008 Michal Cihar E<lt>I<michal@cihar.com>E<gt>"
 msgid ""
-"Copyright (C) 2010 - 2016 Michal Cihar <michal@cihar.com> and other authors."
+"Copyright (C) 2010 - 2017 Michal Cihar <michal@cihar.com> and other authors."
 msgstr "Copyright \\(co 2003 - 2008 Michal Cihar E<lt>I<michal@cihar.com>E<gt>"
 
 #: gammu-detect/main.c:87 gammu/gammu.c:336
@@ -1809,7 +1809,7 @@ msgstr ""
 #| msgid ""
 #| "Copyright \\(co 2003 - 2008 Michal Cihar E<lt>I<michal@cihar.com>E<gt>"
 msgid ""
-"Copyright (C) 2003 - 2016 Michal Cihar <michal@cihar.com> and other authors."
+"Copyright (C) 2003 - 2017 Michal Cihar <michal@cihar.com> and other authors."
 msgstr "Copyright \\(co 2003 - 2008 Michal Cihar E<lt>I<michal@cihar.com>E<gt>"
 
 #: gammu/gammu.c:370

@@ -7,7 +7,7 @@ Gammu SMS backup generator.
 __author__ = 'Michal Čihař'
 __email__ = 'michal@cihar.com'
 __license__ = '''
-Copyright © 2003 - 2015 Michal Čihař
+Copyright © 2003 - 2017 Michal Čihař
 
 This program is free software; you can redistribute it and/or modify it
 under the terms of the GNU General Public License version 2 as published by

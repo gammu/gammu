@@ -3,7 +3,7 @@
  *
  * Part of Gammu project
  *
- * Copyright (C) 2011 - 2015 Michal Čihař
+ * Copyright (C) 2011 - 2017 Michal Čihař
  *
  * Licensed under GNU GPL version 2 or later
  */

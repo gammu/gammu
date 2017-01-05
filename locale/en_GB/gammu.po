@@ -1536,9 +1536,9 @@ msgstr "Windows serial port probing"
 
 #: gammu-detect/main.c:85
 msgid ""
-"Copyright (C) 2010 - 2016 Michal Cihar <michal@cihar.com> and other authors."
+"Copyright (C) 2010 - 2017 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
-"Copyright (C) 2010 - 2016 Michal Cihar <michal@cihar.com> and other authors."
+"Copyright (C) 2010 - 2017 Michal Cihar <michal@cihar.com> and other authors."
 
 #: gammu-detect/main.c:87 gammu/gammu.c:336
 msgid "License GPLv2: GNU GPL version 2 <https://spdx.org/licenses/GPL-2.0>."
@@ -1801,9 +1801,9 @@ msgstr "There is newer testing Gammu version available! (%s instead of %s)\n"
 
 #: gammu/gammu.c:332
 msgid ""
-"Copyright (C) 2003 - 2016 Michal Cihar <michal@cihar.com> and other authors."
+"Copyright (C) 2003 - 2017 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
-"Copyright (C) 2003 - 2016 Michal Cihar <michal@cihar.com> and other authors."
+"Copyright (C) 2003 - 2017 Michal Cihar <michal@cihar.com> and other authors."
 
 #: gammu/gammu.c:370
 msgid "standard input"

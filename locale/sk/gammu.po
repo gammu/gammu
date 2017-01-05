@@ -1547,7 +1547,7 @@ msgstr "Prehľadávanie sériových portov vo Windows"
 #| "Copyright (C) 2010 - 2011 Michal Cihar <michal@cihar.com> and other "
 #| "authors."
 msgid ""
-"Copyright (C) 2010 - 2016 Michal Cihar <michal@cihar.com> and other authors."
+"Copyright (C) 2010 - 2017 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
 "Copyright (C) 2010 - 2011 Michal Čihař <michal@cihar.com> a ďalší autori."
 
@@ -1817,7 +1817,7 @@ msgstr "Nová testovacia verzia Gammu je dostupná! (%s namiesto of %s)\n"
 #: gammu/gammu.c:332
 #, fuzzy
 msgid ""
-"Copyright (C) 2003 - 2016 Michal Cihar <michal@cihar.com> and other authors."
+"Copyright (C) 2003 - 2017 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
 "Copyright (C) 2003 - 2010 Michal Čihař <michal@cihar.com> a ďalší autori."
 

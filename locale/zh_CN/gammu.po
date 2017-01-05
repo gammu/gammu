@@ -1543,7 +1543,7 @@ msgstr "手机端口"
 #| "Copyright (C) 2010 - 2011 Michal Cihar <michal@cihar.com> and other "
 #| "authors."
 msgid ""
-"Copyright (C) 2010 - 2016 Michal Cihar <michal@cihar.com> and other authors."
+"Copyright (C) 2010 - 2017 Michal Cihar <michal@cihar.com> and other authors."
 msgstr "版权所有 (C) 2010 - 2011 Michal Cihar <michal@cihar.com> 及其它作者。"
 
 #: gammu-detect/main.c:87 gammu/gammu.c:336
@@ -1811,7 +1811,7 @@ msgstr ""
 #| "Copyright (C) 2003 - 2012 Michal Cihar <michal@cihar.com> and other "
 #| "authors."
 msgid ""
-"Copyright (C) 2003 - 2016 Michal Cihar <michal@cihar.com> and other authors."
+"Copyright (C) 2003 - 2017 Michal Cihar <michal@cihar.com> and other authors."
 msgstr "版权所有 (C) 2003 - 2012 Michal Cihar <michal@cihar.com> 及其它作者。"
 
 #: gammu/gammu.c:370

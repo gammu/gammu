@@ -3,7 +3,7 @@
  *
  * This service does not store anything anywhere.
  */
-/* Copyright (c) 2010 - 2015 Michal Cihar <michal@cihar.com>. */
+/* Copyright (c) 2010 - 2017 Michal Cihar <michal@cihar.com>. */
 
 extern GSM_SMSDService SMSDNull;
 

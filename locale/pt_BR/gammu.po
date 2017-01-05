@@ -1541,9 +1541,9 @@ msgstr "Provando porta serial do Windows"
 
 #: gammu-detect/main.c:85
 msgid ""
-"Copyright (C) 2010 - 2016 Michal Cihar <michal@cihar.com> and other authors."
+"Copyright (C) 2010 - 2017 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
-"Copyright (C) 2010 - 2016 Michal Cihar <michal@cihar.com> e outros autores."
+"Copyright (C) 2010 - 2017 Michal Cihar <michal@cihar.com> e outros autores."
 
 #: gammu-detect/main.c:87 gammu/gammu.c:336
 msgid "License GPLv2: GNU GPL version 2 <https://spdx.org/licenses/GPL-2.0>."
@@ -1806,9 +1806,9 @@ msgstr ""
 
 #: gammu/gammu.c:332
 msgid ""
-"Copyright (C) 2003 - 2016 Michal Cihar <michal@cihar.com> and other authors."
+"Copyright (C) 2003 - 2017 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
-"Copyright (C) 2003 - 2016 Michal Cihar <michal@cihar.com> e outros autores."
+"Copyright (C) 2003 - 2017 Michal Cihar <michal@cihar.com> e outros autores."
 
 #: gammu/gammu.c:370
 msgid "standard input"

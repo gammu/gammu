@@ -1,5 +1,5 @@
 /* (c) 2004 by Marcin Wiacek */
-/* Copyright (c) 2009 - 2015 Michal Cihar <michal@cihar.com> */
+/* Copyright (c) 2009 - 2017 Michal Cihar <michal@cihar.com> */
 
 #include <gammu.h>
 

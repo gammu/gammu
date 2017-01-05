@@ -1551,7 +1551,7 @@ msgstr "Проверка последовательного порта Windows"
 #| "Copyright (C) 2010 - 2011 Michal Cihar <michal@cihar.com> and other "
 #| "authors."
 msgid ""
-"Copyright (C) 2010 - 2016 Michal Cihar <michal@cihar.com> and other authors."
+"Copyright (C) 2010 - 2017 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
 "Copyright (C) 2010 - 2011 Michal Cihar <michal@cihar.com> и другие авторы."
 
@@ -1818,7 +1818,7 @@ msgstr "ИНФО: Есть более новая тестовая версия G
 #| "Copyright (C) 2003 - 2012 Michal Cihar <michal@cihar.com> and other "
 #| "authors."
 msgid ""
-"Copyright (C) 2003 - 2016 Michal Cihar <michal@cihar.com> and other authors."
+"Copyright (C) 2003 - 2017 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
 "Copyright (C) 2003 - 2012 Michal Cihar <michal@cihar.com> и другие авторы."
 

@@ -1,5 +1,5 @@
 # Gammu documentation translation
-# Copyright (C) 2003 - 2016 Michal Čihař <michal@cihar.com>
+# Copyright (C) 2003 - 2017 Michal Čihař <michal@cihar.com>
 # This file is distributed under the same license as the Gammu-docs package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
