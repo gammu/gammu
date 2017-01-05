@@ -14,7 +14,7 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
-# Copyright (c) 2015 Michal Cihar <michal@cihar.com>
+# Copyright (c) 2015 - 2017 Michal Cihar <michal@cihar.com>
 #
 """Generates gsmnet databse from wikipedia"""
 import urllib
@@ -52,8 +52,8 @@ def print_countries(data):
     country = None
     result = []
     for line in data.splitlines():
-        if line.startswith('==== [['):
-            country = line[7:].split(']')[0].split('|')[-1]
+        if line.startswith('=== [['):
+            country = line[6:].split(']')[0].split('|')[-1]
             current = set()
             continue
         elif 'International operators' in line:
