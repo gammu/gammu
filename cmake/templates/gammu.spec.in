@@ -92,7 +92,7 @@ Source0:        https://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.%{ext
 %endif
 %endif
 %endif
-BuildRequires:  cmake >= 2.8
+BuildRequires:  cmake >= 3.0
 BuildRequires:  gcc
 BuildRequires:  gettext
 BuildRequires:  pkgconfig
