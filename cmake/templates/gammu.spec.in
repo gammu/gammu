@@ -332,7 +332,7 @@ fi
 %if 0%{?fedora_version} || 0%{?centos_version} || 0%{?rhel_version} || 0%{?fedora} || 0%{?rhel}
 if [ $1 = 0 ] ; then
     /sbin/service gammu-smsd stop >/dev/null 2>&1
-    /sbin/chkconfig --del <script>
+    /sbin/chkconfig --del gammu-smsd
 fi
 %endif
 
