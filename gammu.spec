@@ -5,8 +5,8 @@
 
 %define so_ver 8
 
-# Change if using tar.gz sources
-%define extension   bz2
+# Change if using tar.gz or tar.bz2 sources
+%define extension   xz
 
 Name:           gammu
 Version:        1.38.2
