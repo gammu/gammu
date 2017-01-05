@@ -19,7 +19,7 @@ the issue.
 ChangeLog
 =========
     
-2016???? - 1.38.1
+20170105 - 1.38.1
 
 [-] * Fixed sending SMS to numbers starting with 000.
 [-] * Fixed parsing of vcalendar files with VALUE=DATE-TIME.
