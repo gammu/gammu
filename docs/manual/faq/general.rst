@@ -66,6 +66,35 @@ You can match by various attributes, you can figure them using udevadm command:
     available online, for example on the `Debian wiki`_ or in
     `Writing udev rules`_ document.
 
+.. _echo:
+
+Mutliple programs using same device cause various errors, how to fix that?
+--------------------------------------------------------------------------
+
+Gammu needs to be the only program using the device, otherwise you will get
+strange errors from both programs as they will read answer to command sent by
+something else.
+
+In gammu, it can happen quite early with error message "Phone does not support
+enabled echo, it can not work with Gammu!", but it can be spotted later as
+well, depending on various conditions.
+
+In case you see such behavior, check what other programs are using given device.
+This can be done using :program:`fuser` tool:
+
+.. code-block:: sh
+
+    fuser -va /dev/ttyACM0
+
+The usual programs involve:
+
+* NetworkManager with ModemManager, you need to disable mobile networking to
+  stop it using the device, disabling the modem connection does not seem to be
+  enough.
+* Other Gammu instance, in case you want to interact with modem while SMSD is 
+  running see :ref:`gammu-smsd-suspend`.
+
+
 What are free alternatives to Gammu?
 ------------------------------------
 

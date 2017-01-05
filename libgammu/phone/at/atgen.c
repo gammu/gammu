@@ -2225,6 +2225,8 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 	}
 	if (error != ERR_NONE) {
 		smprintf(s, "Phone does not support enabled echo, it can not work with Gammu!\n");
+		smprintf(s, "It might be caused by other program using the modem.\n");
+		smprintf(s, "See <https://wammu.eu/docs/manual/faq/general.html#echo> for help.\n");
 		return error;
 	}
 
