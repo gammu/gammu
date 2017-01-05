@@ -24,6 +24,7 @@ ChangeLog
 [-] * Fixed sending SMS to numbers starting with 000.
 [-] * Fixed parsing of vcalendar files with VALUE=DATE-TIME.
 [-] * Fixed compatibility with D-Link dwm-157.
+[-] * Updated list of GSM countries and networks.
 
 20161212 - 1.38.0
 
