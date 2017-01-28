@@ -279,8 +279,7 @@ cmake ../ \
     -DINSTALL_LSB_INIT=ON \
     -DINSTALL_UDEV_RULES=ON \
     -DSYSTEMD_FOUND=ON \
-    -DWITH_SYSTEMD=ON \
-    -DSYSTEMD_SERVICES_INSTALL_DIR=%{_libexecdir}/systemd/system
+    -DWITH_SYSTEMD=ON
 make %{?_smp_mflags} VERBOSE=1
 
 %check
