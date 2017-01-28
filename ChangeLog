@@ -20,7 +20,9 @@ ChangeLog
 =========
     
 2017???? - 1.38.2
-    
+
+[-] * Improve support for Huawei K3765.
+
 20170105 - 1.38.1
 
 [-] * Fixed sending SMS to numbers starting with 000.
