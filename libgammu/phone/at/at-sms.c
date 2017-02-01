@@ -2626,13 +2626,12 @@ GSM_Error ATGEN_GetCNMIMode(GSM_StateMachine *s)
 	return error;
 }
 
-GSM_Error ATGEN_SetIncomingCB(GSM_StateMachine *s, gboolean enable)
+GSM_Error ATGEN_SetCNMI(GSM_StateMachine *s)
 {
-#ifdef GSM_ENABLE_CELLBROADCAST
-	GSM_Error error = ERR_NONE;
-	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 	char buffer[100];
 	int length = 0;
+	GSM_Error error;
+	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
 	if (Priv->CNMIMode == -1) {
 		error = ATGEN_GetCNMIMode(s);
@@ -2648,18 +2647,30 @@ GSM_Error ATGEN_SetIncomingCB(GSM_StateMachine *s, gboolean enable)
 	if (Priv->CNMIBroadcastProcedure == 0) {
 		return ERR_NOTSUPPORTED;
 	}
+
+	length = sprintf(
+		buffer,
+		"AT+CNMI=%d,%d,%d,%d\r",
+		Priv->CNMIMode,
+		s->Phone.Data.EnableIncomingSMS ? Priv->CNMIProcedure : 0,
+#ifdef GSM_ENABLE_CELLBROADCAST
+		s->Phone.Data.EnableIncomingCB ?  Priv->CNMIBroadcastProcedure : 0,
+#else
+		0,
+#endif
+		Priv->CNMIDeliverProcedure
+	);
+
+	return ATGEN_WaitFor(s, buffer, length, 0x00, 80, ID_SetIncomingSMS);
+}
+
+
+GSM_Error ATGEN_SetIncomingCB(GSM_StateMachine *s, gboolean enable)
+{
+#ifdef GSM_ENABLE_CELLBROADCAST
 	if (s->Phone.Data.EnableIncomingCB != enable) {
 		s->Phone.Data.EnableIncomingCB 	= enable;
-		if (enable) {
-			smprintf(s, "Enabling incoming CB\n");
-			length = sprintf(buffer, "AT+CNMI=%d,,%d\r", Priv->CNMIMode, Priv->CNMIBroadcastProcedure);
-			error = ATGEN_WaitFor(s, buffer, length, 0x00, 80, ID_SetIncomingCB);
-		} else {
-			smprintf(s, "Disabling incoming CB\n");
-			length = sprintf(buffer, "AT+CNMI=%d,,%d\r", Priv->CNMIMode, 0);
-			error = ATGEN_WaitFor(s, buffer, length, 0x00, 80, ID_SetIncomingCB);
-		}
-		return error;
+		return ATGEN_SetCNMI(s);
 	}
 	return ERR_NONE;
 #else
@@ -2672,8 +2683,6 @@ GSM_Error ATGEN_SetIncomingSMS(GSM_StateMachine *s, gboolean enable)
 {
 	GSM_Error error = ERR_NONE;
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
-	char buffer[100] = {'\0'};
-	int length = 0;
 
 	/* We will need this when incoming message, but we can not invoke AT commands there: */
 	if (Priv->PhoneSMSMemory == 0) {
@@ -2689,63 +2698,9 @@ GSM_Error ATGEN_SetIncomingSMS(GSM_StateMachine *s, gboolean enable)
 			return error;
 		}
 	}
-	if (Priv->CNMIMode == -1) {
-		error = ATGEN_GetCNMIMode(s);
-
-		if (error != ERR_NONE) {
-			return error;
-		}
-	}
-	if (Priv->CNMIMode == 0) {
-		return ERR_NOTSUPPORTED;
-	}
-	if (Priv->CNMIProcedure == 0 && Priv->CNMIDeliverProcedure == 0) {
-		return ERR_NOTSUPPORTED;
-	}
 	if (s->Phone.Data.EnableIncomingSMS != enable) {
 		s->Phone.Data.EnableIncomingSMS = enable;
-
-		if (enable) {
-			smprintf(s, "Enabling incoming SMS\n");
-
-			/* Delivery reports */
-			if (Priv->CNMIDeliverProcedure != 0) {
-				length = sprintf(buffer, "AT+CNMI=%d,,,%d\r", Priv->CNMIMode, Priv->CNMIDeliverProcedure);
-				error = ATGEN_WaitFor(s, buffer, length, 0x00, 80, ID_SetIncomingSMS);
-
-				if (error != ERR_NONE) {
-					return error;
-				}
-			}
-
-			/* Normal messages */
-			if (Priv->CNMIProcedure != 0) {
-				length = sprintf(buffer, "AT+CNMI=%d,%d\r", Priv->CNMIMode, Priv->CNMIProcedure);
-				error = ATGEN_WaitFor(s, buffer, length, 0x00, 80, ID_SetIncomingSMS);
-
-				if (error != ERR_NONE) {
-					return error;
-				}
-			}
-		} else {
-			smprintf(s, "Disabling incoming SMS\n");
-
-			/* Delivery reports */
-			length = sprintf(buffer,"AT+CNMI=%d,,,%d\r", Priv->CNMIMode, 0);
-			error = ATGEN_WaitFor(s, buffer, length, 0x00, 80, ID_SetIncomingSMS);
-
-			if (error != ERR_NONE) {
-				return error;
-			}
-
-			/* Normal messages */
-			length = sprintf(buffer, "AT+CNMI=%d,%d\r", Priv->CNMIMode, 0);
-			error = ATGEN_WaitFor(s, buffer, length, 0x00, 80, ID_SetIncomingSMS);
-
-			if (error != ERR_NONE) {
-				return error;
-			}
-		}
+		return ATGEN_SetCNMI(s);
 	}
 	return ERR_NONE;
 }
