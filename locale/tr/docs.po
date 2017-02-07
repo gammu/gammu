@@ -8,14 +8,16 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.38.2\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2016-10-11 13:13+0200\n"
-"PO-Revision-Date: 2010-09-03 14:46+0300\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2017-02-07 16:03+0000\n"
+"Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
+"Language-Team: Turkish <https://hosted.weblate.org/projects/gammu/gammu-"
+"docs/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 2.12-dev\n"
 
 #. type: Title =
 #: README.rst:2
@@ -55,17 +57,13 @@ msgstr ".. image"
 
 #. type: Plain text
 #: README.rst:16
-#, fuzzy
-#| msgid "https://travis-ci.org/gammu/gammu.png?branch=master"
 msgid "https://travis-ci.org/gammu/gammu.svg?branch=master"
-msgstr "https://travis-ci.org/gammu/gammu.png?branch=master"
+msgstr "https://travis-ci.org/gammu/gammu.svg?branch=master"
 
 #. type: Plain text
 #: README.rst:18
-#, fuzzy
-#| msgid ":target: https://travis-ci.org/gammu/gammu"
 msgid ":alt: Build status :target: https://travis-ci.org/gammu/gammu"
-msgstr ":target: https://travis-ci.org/gammu/gammu"
+msgstr ":alt: Yapım durumu :target: https://travis-ci.org/gammu/gammu"
 
 #. type: Plain text
 #: README.rst:20
@@ -76,19 +74,17 @@ msgstr ""
 
 #. type: Plain text
 #: README.rst:22
-#, fuzzy
-#| msgid ":target: https://travis-ci.org/gammu/gammu"
 msgid ""
 ":alt: Windows Build status :target: https://ci.appveyor.com/project/nijel/"
 "gammu/branch/master"
-msgstr ":target: https://travis-ci.org/gammu/gammu"
+msgstr ""
+":alt: Windows Yapım durumu :target: "
+"https://ci.appveyor.com/project/nijel/gammu/branch/master"
 
 #. type: Plain text
 #: README.rst:24
-#, fuzzy
-#| msgid "https://hosted.weblate.org/widgets/gammu-status-badge.png"
 msgid "https://hosted.weblate.org/widgets/gammu/-/svg-badge.svg"
-msgstr "https://hosted.weblate.org/widgets/gammu-status-badge.png"
+msgstr "https://hosted.weblate.org/widgets/gammu/-/svg-badge.svg"
 
 #. type: Plain text
 #: README.rst:26
@@ -96,8 +92,8 @@ msgid ""
 ":alt: Translation status :target: https://hosted.weblate.org/engage/gammu/?"
 "utm_source=widget"
 msgstr ""
-":alt: Translation status :target: https://hosted.weblate.org/engage/gammu/?"
-"utm_source=widget"
+":alt: Çeviri durumu :target: "
+"https://hosted.weblate.org/engage/gammu/?utm_source=widget"
 
 #. type: Plain text
 #: README.rst:28
@@ -106,10 +102,8 @@ msgstr ""
 
 #. type: Plain text
 #: README.rst:30
-#, fuzzy
-#| msgid ":alt: Bitdeli badge :target: https://bitdeli.com/free"
 msgid ":alt: Coverity scan :target: https://scan.coverity.com/projects/2890"
-msgstr ":alt: Bitdeli badge :target: https://bitdeli.com/free"
+msgstr ":alt: Kapak taraması :target: https://scan.coverity.com/projects/2890"
 
 #. type: Plain text
 #: README.rst:32
@@ -118,10 +112,8 @@ msgstr "https://img.shields.io/gratipay/Gammu.svg"
 
 #. type: Plain text
 #: README.rst:34
-#, fuzzy
-#| msgid ":target: https://travis-ci.org/gammu/gammu"
 msgid ":alt: Gratipay :target: https://gratipay.com/Gammu/"
-msgstr ":target: https://travis-ci.org/gammu/gammu"
+msgstr ":alt: Gratipay :target: https://gratipay.com/Gammu/"
 
 #. type: Plain text
 #: README.rst:36
