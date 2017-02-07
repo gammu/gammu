@@ -187,14 +187,14 @@ msgstr ""
 #: INSTALL:2
 #, no-wrap
 msgid "Gammu All Mobile Management Utilities - Installation"
-msgstr ""
+msgstr "Gammu All Mobile Management Utilities - Installation"
 
 #. type: Plain text
 #: INSTALL:5
 msgid ""
 "See docs/manual/project/install.rst for installation guide or see chapter "
 "\"Compiling Gammu\" in The Gammu Manual."
-msgstr ""
+msgstr "Voir docs/manual/project/install.rst pour le guide d'installation ou le chapitre \"Compiling Gammu\" dans le manuel de Gammu."
 
 #, fuzzy
 #~| msgid "https://travis-ci.org/gammu/gammu.png?branch=master"
