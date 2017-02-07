@@ -34,7 +34,7 @@ xgettext \
     --package-version $ver \
     `find libgammu -name '*.c' -o -name '*.h' | sort`
 
-if [ "x$1" = "x--po4a" ] ; then
+if [ "x$1" != "x--no-po4a" ] ; then
     ./admin/po4a-docs
 fi
 
