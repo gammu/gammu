@@ -8,21 +8,23 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.38.2\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2016-10-11 13:13+0200\n"
-"PO-Revision-Date: 2009-06-01 13:48+0200\n"
-"Last-Translator: Cédric Corazza <cedric.corazza@wanadoo.fr>\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2017-02-07 12:46+0000\n"
+"Last-Translator: nvallas <nordine.vallas@gmail.com>\n"
+"Language-Team: French <https://hosted.weblate.org/projects/gammu/gammu-"
+"docs/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Pootle 1.2.1\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 2.11\n"
 
 #. type: Title =
 #: README.rst:2
 #, no-wrap
 msgid "Gammu All Mobile Management Utilities"
 msgstr ""
+"Gammu All Mobile Management Utilities (Utilitaire de gestion pour mobiles)"
 
 #. type: Plain text
 #: README.rst:6
@@ -30,6 +32,8 @@ msgid ""
 "Gammu is library and command line utility for mobile phones. It is released "
 "under GNU GPL version 2."
 msgstr ""
+"Gammu est une librairie et un utilitaire en ligne de commande pour les "
+"téléphones mobiles. Il est distribué sous licence GNU GPL version 2."
 
 #. type: Plain text
 #: README.rst:11
@@ -39,6 +43,10 @@ msgid ""
 "mwiacek.com/> projects. Gammu was former (up to version 0.58) called "
 "MyGnokii2."
 msgstr ""
+"Il a été initié par Marcin Wiacek et d'autres personnes. A l'origine, le "
+"code était basé sur les projets Gnokii <https://www.gnokii.org/> et plus "
+"tard MyGnokii <http://www.mwiacek.com/>. Jusqu'à la version 0.58, Gammu "
+"était appelé MyGnokii2."
 
 #. type: Plain text
 #: README.rst:14
@@ -46,6 +54,8 @@ msgid ""
 "Currently the project is lead by Michal Cihar <michal@cihar.com> with help "
 "of many contributors."
 msgstr ""
+"Actuellement, le projet est dirigé par Michal Cihar <michal@cihar.com> avec "
+"l'aide de nombreux contributeurs."
 
 #. type: Labeled list
 #: README.rst:15 README.rst:19 README.rst:23 README.rst:27 README.rst:31
@@ -63,17 +73,18 @@ msgstr "https://travis-ci.org/gammu/gammu.png?branch=master"
 
 #. type: Plain text
 #: README.rst:18
-#, fuzzy
-#| msgid ":target: https://travis-ci.org/gammu/gammu"
 msgid ":alt: Build status :target: https://travis-ci.org/gammu/gammu"
-msgstr ":target: https://travis-ci.org/gammu/gammu"
+msgstr ":alt: Build status :target: https://travis-ci.org/gammu/gammu"
 
 #. type: Plain text
 #: README.rst:20
+#, fuzzy
 msgid ""
 "https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/master?"
 "svg=true"
 msgstr ""
+"https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/master?sv"
+"g=true"
 
 #. type: Plain text
 #: README.rst:22
