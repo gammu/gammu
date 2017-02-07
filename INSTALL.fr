@@ -1,5 +1,5 @@
-Gammu Utilitaire de gestion pour mobiless - Installation
-========================================================
+Gammu All Mobile Management Utilities - Installation
+====================================================
 
 Voir docs/manual/project/install.rst pour le guide d'installation ou le chapitre
 "Compiling Gammu" dans le manuel de Gammu.
