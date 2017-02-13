@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: Gammu 1.38.2\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2016-10-11 08:16+0200\n"
-"PO-Revision-Date: 2016-11-18 15:50+0000\n"
-"Last-Translator: Prasasto Adi <prasastoadi@gmail.com>\n"
+"PO-Revision-Date: 2017-02-13 04:00+0000\n"
+"Last-Translator: Ahmad Zafrullah <23Pstars@gmail.com>\n"
 "Language-Team: Indonesian "
 "<https://hosted.weblate.org/projects/gammu/gammu/id/>\n"
 "Language: id\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 2.10-dev\n"
+"X-Generator: Weblate 2.12-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:373 helper/message-cmdline.c:397
@@ -1543,14 +1543,10 @@ msgstr "Penyelidikan port serial Windows"
 msgid ""
 "Copyright (C) 2010 - 2017 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
-"Copyright (C) 2010 - 2017 Michal Cihar <michal@cihar.com> dan penulis "
+"Hak cipta (C) 2010 - 2017 Michal Cihar <michal@cihar.com> dan penulis "
 "lainnya."
 
 #: gammu-detect/main.c:87 gammu/gammu.c:336
-#, fuzzy
-#| msgid ""
-#| "License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
-#| "GPL/2.0/>."
 msgid "License GPLv2: GNU GPL version 2 <https://spdx.org/licenses/GPL-2.0>."
 msgstr "Lisensi GPLv2: GNU GPL versi 2 <https://spdx.org/licenses/GPL-2.0>."
 
