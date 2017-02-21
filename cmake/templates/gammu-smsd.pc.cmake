@@ -7,5 +7,5 @@ Name: gammu-smsd
 Description: Gammu SMSD library
 Requires: gammu
 Version: @GAMMU_VERSION@
-Libs: -L${libdir} -lgsmsd -lm @SMSD_PRIVATE_LIBS@
+Libs: -L${libdir} -lgsmsd @MATH_LIBS@ @SMSD_PRIVATE_LIBS@
 Cflags: -I${includedir}
