@@ -1925,6 +1925,7 @@ GSM_Error ATGEN_ReplyGetManufacturer(GSM_Protocol_Message *msg, GSM_StateMachine
 		{"Option", AT_Option},
 		{"Wavecom", AT_Wavecom},
 		{"Qualcomm", AT_Qualcomm},
+		{"Telit", AT_Telit},
 		{"ZTE", AT_ZTE},
 		{"\0", 0}
 	};

@@ -80,6 +80,7 @@ typedef enum {
 	AT_Philips,
 	AT_Huawei,
 	AT_Qualcomm,
+	AT_Telit,
 	AT_ZTE,
 	AT_Unknown
 } GSM_AT_Manufacturer;
