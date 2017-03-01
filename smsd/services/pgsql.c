@@ -52,6 +52,15 @@ const char *SMSDPgSQL_GetString(GSM_SMSDConfig * Config, SQL_result *res, unsign
 	return PQgetvalue(res->pg.res, res->pg.iter, field);
 }
 
+static void SMSDPgSQL_LogError(GSM_SMSDConfig * Config, PGresult * Res)
+{
+	if (Res == NULL) {
+		SMSD_Log(DEBUG_INFO, Config, "Error: %s", PQerrorMessage(Config->conn.pg));
+	} else {
+		SMSD_Log(DEBUG_INFO, Config, "Error: %s", PQresultErrorMessage(Res));
+	}
+}
+
 /* Disconnects from a database */
 void SMSDPgSQL_Free(GSM_SMSDConfig * Config)
 {
@@ -65,7 +74,8 @@ void SMSDPgSQL_Free(GSM_SMSDConfig * Config)
 static GSM_Error SMSDPgSQL_Connect(GSM_SMSDConfig * Config)
 {
 	unsigned char buf[400];
-	PGresult *Res;
+	PGresult *rc;
+	int Status;
 
 	unsigned int port = 5432;
 	char *pport;
@@ -86,8 +96,12 @@ static GSM_Error SMSDPgSQL_Connect(GSM_SMSDConfig * Config)
 		return ERR_DB_CONNECT;
 	}
 
-	Res = PQexec(Config->conn.pg, "SET NAMES UTF8");
-	PQclear(Res);
+	rc = PQexec(Config->conn.pg, "SET NAMES 'UTF8'");
+	if ((rc == NULL) || ((Status = PQresultStatus(rc)) != PGRES_COMMAND_OK && (Status != PGRES_TUPLES_OK))) {
+		SMSDPgSQL_LogError(Config, rc);
+		return ERR_DB_CONNECT;
+	}
+	PQclear(rc);
 	SMSD_Log(DEBUG_INFO, Config, "Connected to database: %s on %s. Server version: %d Protocol: %d",
 		 PQdb(Config->conn.pg), PQhost(Config->conn.pg), PQserverVersion(Config->conn.pg), PQprotocolVersion(Config->conn.pg));
 
@@ -106,15 +120,6 @@ int SMSDPgSQL_NextRow(GSM_SMSDConfig * Config, SQL_result *res)
 		return 1;
 	else
 		return 0;
-}
-
-static void SMSDPgSQL_LogError(GSM_SMSDConfig * Config, PGresult * Res)
-{
-	if (Res == NULL) {
-		SMSD_Log(DEBUG_INFO, Config, "Error: %s", PQerrorMessage(Config->conn.pg));
-	} else {
-		SMSD_Log(DEBUG_INFO, Config, "Error: %s", PQresultErrorMessage(Res));
-	}
 }
 
 static GSM_Error SMSDPgSQL_Query(GSM_SMSDConfig * Config, const char *query, SQL_result * Res)
