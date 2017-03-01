@@ -22,6 +22,7 @@ ChangeLog
 2017???? - 1.38.2
 
 [-] * Improve support for Huawei K3765.
+[-] * Fixed decoding of unicode surrogates at message boundary.
 
 20170105 - 1.38.1
 

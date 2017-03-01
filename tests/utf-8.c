@@ -11,9 +11,11 @@
 
 int main(int argc UNUSED, char **argv UNUSED)
 {
-    unsigned char out[20];
+    unsigned char out[200], out2[200];
     gammu_char_t dest;
     size_t i;
+    const char input[] = "005400680061006E006B00200079006F0075002E002000570065002000770069006C006C00200063006F006E007400610063007400200079006F007500200073006F006F006E00200078006F0078006F00200078006F0078006F00200061006E0064002000490020D83DDE18D83DDE18D83DDE18D83DDE18D83DDE18D83DDE18D83DDE18D83D";
+    const char expected[] = "Thank you. We will contact you soon xoxo xoxo and I 😘😘😘😘😘😘😘�";
 
     test_result(EncodeWithUTF8Alphabet(0x24, out) == 1);
     test_result(out[0] == 0x24);
@@ -58,6 +60,14 @@ int main(int argc UNUSED, char **argv UNUSED)
 
     test_string("\x00\x61\x00h\x00o\x00j\x00\x00\x00", out, 10);
 
-	return 0;
+    /* Decode hex encoded unicode */
+    test_result(DecodeHexUnicode(out, input, strlen(input)));
+    test_string("\x00T\x00h\x00\x61\x00n\x00k\x00", out, 10);
+
+    /* Convert it to UTF-8 */
+    test_result(EncodeUTF8(out2, out));
+    test_string(expected, out2, strlen(expected));
+
+    return 0;
 }
 

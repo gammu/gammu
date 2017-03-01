@@ -235,8 +235,11 @@ void DecodeUnicode (const unsigned char *src, char *dest)
 		if (value >= 0xD800 && value <= 0xDBFF) {
 			second = src[(i + 1) * 2] * 256 + src[(i + 1) * 2 + 1];
 			if (second >= 0xDC00 && second <= 0xDFFF) {
-				i++;
 				value = ((value - 0xD800) << 10) + (second - 0xDC00) + 0x010000;
+				i++;
+			} else if (second == 0) {
+				/* Surrogate at the end of string */
+				value = 0xFFFD; /* REPLACEMENT CHARACTER */
 			}
 		}
 		o += DecodeWithUnicodeAlphabet(value, dest + o);
@@ -1839,10 +1842,15 @@ gboolean EncodeUTF8QuotedPrintable(char *dest, const unsigned char *src)
 	for (i = 0; i < len; i++) {
 		value = src[i * 2] * 256 + src[i * 2 + 1];
 		/* Decode UTF-16 */
-		if (value >= 0xD800 && value <= 0xDBFF && (i + 1) < len) {
-			second = src[(i + 1) * 2] * 256 + src[(i + 1) * 2 + 1];
-			if (second >= 0xDC00 && second <= 0xDFFF) {
-				value = ((value - 0xD800) << 10) + (second - 0xDC00) + 0x010000;
+		if (value >= 0xD800 && value <= 0xDBFF) {
+			if ((i + 1) < len) {
+				second = src[(i + 1) * 2] * 256 + src[(i + 1) * 2 + 1];
+				if (second >= 0xDC00 && second <= 0xDFFF) {
+					value = ((value - 0xD800) << 10) + (second - 0xDC00) + 0x010000;
+				}
+			} else {
+				/* Surrogate at the end of string */
+				value = 0xFFFD; /* REPLACEMENT CHARACTER */
 			}
 		}
 		z = EncodeWithUTF8Alphabet(value, mychar);
@@ -1880,11 +1888,16 @@ gboolean EncodeUTF8(char *dest, const unsigned char *src)
 	for (i = 0; i < len; i++) {
 		value = src[i * 2] * 256 + src[i * 2 + 1];
 		/* Decode UTF-16 */
-		if (value >= 0xD800 && value <= 0xDBFF && (i + 1) < len) {
-			second = src[(i + 1) * 2] * 256 + src[(i + 1) * 2 + 1];
-			if (second >= 0xDC00 && second <= 0xDFFF) {
-				i++;
-				value = ((value - 0xD800) << 10) + (second - 0xDC00) + 0x010000;
+		if (value >= 0xD800 && value <= 0xDBFF ) {
+			if ((i + 1) < len) {
+				second = src[(i + 1) * 2] * 256 + src[(i + 1) * 2 + 1];
+				if (second >= 0xDC00 && second <= 0xDFFF) {
+					i++;
+					value = ((value - 0xD800) << 10) + (second - 0xDC00) + 0x010000;
+				}
+			} else {
+				/* Surrogate at the end of string */
+				value = 0xFFFD; /* REPLACEMENT CHARACTER */
 			}
 		}
 		z = EncodeWithUTF8Alphabet(value, mychar);
