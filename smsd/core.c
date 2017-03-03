@@ -1941,7 +1941,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 {
 	GSM_Error		error;
 	int                     errors = -1, initerrors=0;
-	unsigned int		lastsleep;
+	double			lastsleep;
  	time_t			lastreceive = 0, lastreset = time(NULL), lasthardreset = time(NULL), lastnothingsent = 0, laststatus = 0;
 	time_t			lastloop = 0, current_time;
 	int i;
@@ -2125,7 +2125,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 
 		/* Sleep some time before another loop */
 		current_time = time(NULL);
-		lastsleep = (int)round(difftime(current_time, lastloop));
+		lastsleep = difftime(current_time, lastloop);
 		if (Config->loopsleep == 1) {
 			sleep(1);
 		} else if (lastsleep < Config->loopsleep) {
