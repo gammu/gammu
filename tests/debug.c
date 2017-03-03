@@ -26,21 +26,22 @@ void check_log(FILE * f, gboolean match, const char *test_name)
 	char buff[100];
 	char test_message[] = "T3ST M3S5AG3";
 	char cleaner[] = "XXXXXXXXXXXXXXXXX";
-	int result;
+	size_t result;
+	int cmp;
 
 	rewind(f);
 	GSM_LogError(s, test_message, ERR_MOREMEMORY);
 	rewind(f);
 	result = fread(buff, 1, sizeof(test_message), f);
 	if (match && result != sizeof(test_message)) {
-		printf("%s: Read failed (%d)!\n", test_name, result);
+		printf("%s: Read failed (%ld)!\n", test_name, (long)result);
 		fail(10);
 	}
 	if (!match && result != sizeof(test_message)) {
 		goto done;
 	}
-	result = strncmp(test_message, buff, sizeof(test_message) - 1);
-	if (match && result != 0) {
+	cmp = strncmp(test_message, buff, sizeof(test_message) - 1);
+	if (match && cmp != 0) {
 		printf("%s: Match failed!\n", test_name);
 		fail(11);
 	}
