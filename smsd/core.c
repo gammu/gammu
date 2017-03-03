@@ -1036,6 +1036,11 @@ void SMSD_RunOnReceiveEnvironment(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Conf
 	/* Raw message data */
 	sprintf(buffer, "%d", sms->Number);
 	setenv("SMS_MESSAGES", buffer, 1);
+
+	if (Config->PhoneID) {
+		setenv("PHONE_ID", Config->PhoneID, 1);
+	}
+
 	for (i = 0; i < sms->Number; i++) {
 		sprintf(buffer, "%d", sms->SMS[i].Class);
 		sprintf(name, "SMS_%d_CLASS", i + 1);

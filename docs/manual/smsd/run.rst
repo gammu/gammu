@@ -48,6 +48,13 @@ Global variables
 
     Number of decoded message parts.
 
+.. envvar:: PHONE_ID
+
+    .. versionadded:: 1.38.2
+
+    Value of :config:option:`PhoneID`. Useful when running multiple instances
+    (see :ref:`smsd-multi`).
+
 Per message variables
 +++++++++++++++++++++
 
