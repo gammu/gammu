@@ -12,9 +12,10 @@
 #include "at.h"
 
 static GSM_Error AT_WriteMessage (GSM_StateMachine *s, unsigned const char *buffer,
-				     int length, int type)
+				     size_t length, int type)
 {
-	int sent=0, write_data=0, i=0;
+	size_t sent=0, i=0;
+	ssize_t write_data=0;
 
 	GSM_DumpMessageText(s, buffer, length, type);
 	GSM_DumpMessageBinary(s, buffer, length, type);

@@ -249,11 +249,11 @@ typedef struct {
 	/**
 	 * Attempts to read nbytes from device.
 	 */
-	int       (*ReadDevice)        (GSM_StateMachine *s, void *buf, size_t nbytes);
+	ssize_t (*ReadDevice)        (GSM_StateMachine *s, void *buf, size_t nbytes);
 	/**
 	 * Attempts to read nbytes from device.
 	 */
-	int       (*WriteDevice)       (GSM_StateMachine *s, const void *buf, size_t nbytes);
+	ssize_t (*WriteDevice)       (GSM_StateMachine *s, const void *buf, size_t nbytes);
 } GSM_Device_Functions;
 
 #ifdef GSM_ENABLE_SERIALDEVICE
@@ -345,7 +345,7 @@ typedef struct {
 	 * Writes message to device.
 	 */
 	GSM_Error (*WriteMessage) (GSM_StateMachine *s, unsigned const char *buffer,
-				   int length, int type);
+				   size_t length, int type);
 	/**
 	 * This one is called when character is received from device.
 	 */

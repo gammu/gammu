@@ -401,7 +401,7 @@ static GSM_Error serial_setspeed(GSM_StateMachine *s, int speed)
 	return ERR_NONE;
 }
 
-static int serial_read(GSM_StateMachine *s, char *buf, size_t nbytes)
+static ssize_t serial_read(GSM_StateMachine *s, char *buf, size_t nbytes)
 {
 	if(RecTail == RecHead) return 0;
 
@@ -413,7 +413,7 @@ static int serial_read(GSM_StateMachine *s, char *buf, size_t nbytes)
 	return 1;
 }
 
-static int serial_write(GSM_StateMachine *s, char *buf, size_t nbytes)
+static ssize_t serial_write(GSM_StateMachine *s, char *buf, size_t nbytes)
 {
 	int i;
 

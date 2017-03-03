@@ -14,7 +14,7 @@
 #include "obex.h"
 
 static GSM_Error OBEX_WriteMessage (GSM_StateMachine *s, unsigned const char *MsgBuffer,
-				    int MsgLength, int type)
+				    size_t MsgLength, int type)
 {
 	unsigned char	*buffer=NULL;
 	int 		length=0,sent=0;

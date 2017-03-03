@@ -14,7 +14,7 @@
 
 static GSM_Error MBUS2_WriteMessage (GSM_StateMachine 	*s,
 				     unsigned const char 	*MsgBuffer,
-				     int 		MsgLength,
+				     size_t	MsgLength,
 				     int 	MsgType)
 {
 	unsigned char 			*buffer=NULL, checksum = 0;

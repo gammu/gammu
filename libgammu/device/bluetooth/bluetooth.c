@@ -129,12 +129,12 @@ done:
 }
 
 #ifndef OSX_BLUE_FOUND
-int bluetooth_read(GSM_StateMachine *s, void *buf, size_t nbytes)
+ssize_t bluetooth_read(GSM_StateMachine *s, void *buf, size_t nbytes)
 {
 	return socket_read(s, buf, nbytes, s->Device.Data.BlueTooth.hPhone);
 }
 
-int bluetooth_write(GSM_StateMachine *s, const void *buf, size_t nbytes)
+ssize_t bluetooth_write(GSM_StateMachine *s, const void *buf, size_t nbytes)
 {
 	return socket_write(s, buf, nbytes, s->Device.Data.BlueTooth.hPhone);
 }

@@ -465,7 +465,7 @@ GSM_Error GSM_USB_Terminate(GSM_StateMachine *s)
 	return ERR_NONE;
 }
 
-int GSM_USB_Read(GSM_StateMachine *s, void *buf, size_t nbytes)
+ssize_t GSM_USB_Read(GSM_StateMachine *s, void *buf, size_t nbytes)
 {
 	GSM_Device_USBData *d = &s->Device.Data.USB;
 	int rc = LIBUSB_ERROR_TIMEOUT, ret = 0, repeat = 0;
@@ -496,7 +496,7 @@ int GSM_USB_Read(GSM_StateMachine *s, void *buf, size_t nbytes)
 	return ret;
 }
 
-int GSM_USB_Write(GSM_StateMachine *s, const void *buf, size_t nbytes)
+ssize_t GSM_USB_Write(GSM_StateMachine *s, const void *buf, size_t nbytes)
 {
 	GSM_Device_USBData *d = &s->Device.Data.USB;
 	int rc = LIBUSB_ERROR_TIMEOUT, ret = 0, repeat = 0;

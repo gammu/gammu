@@ -377,7 +377,7 @@ static GSM_Error serial_setspeed(GSM_StateMachine *s, int speed)
 	return ERR_NONE;
 }
 
-static int serial_read(GSM_StateMachine *s, void *buf, size_t nbytes)
+static ssize_t serial_read(GSM_StateMachine *s, void *buf, size_t nbytes)
 {
 	GSM_Device_SerialData 		*d = &s->Device.Data.Serial;
 	struct timeval  		timeout2;
@@ -399,7 +399,7 @@ static int serial_read(GSM_StateMachine *s, void *buf, size_t nbytes)
 	return actual;
 }
 
-static int serial_write(GSM_StateMachine *s, const void *buf, size_t nbytes)
+static ssize_t serial_write(GSM_StateMachine *s, const void *buf, size_t nbytes)
 {
 	GSM_Device_SerialData   *d = &s->Device.Data.Serial;
 	int		     	ret;

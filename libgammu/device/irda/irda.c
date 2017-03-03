@@ -215,12 +215,12 @@ static GSM_Error irda_open (GSM_StateMachine *s)
     	return ERR_NONE;
 }
 
-static int irda_read(GSM_StateMachine *s, void *buf, size_t nbytes)
+static ssize_t irda_read(GSM_StateMachine *s, void *buf, size_t nbytes)
 {
 	return socket_read(s, buf, nbytes, s->Device.Data.Irda.hPhone);
 }
 
-static int irda_write(GSM_StateMachine *s, const void *buf, size_t nbytes)
+static ssize_t irda_write(GSM_StateMachine *s, const void *buf, size_t nbytes)
 {
 	return socket_write(s, buf, nbytes, s->Device.Data.Irda.hPhone);
 }

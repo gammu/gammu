@@ -372,7 +372,7 @@ static GSM_Error serial_setspeed(GSM_StateMachine *s, int speed)
 	return ERR_NONE;
 }
 
-static int serial_read(GSM_StateMachine *s, void *buf, size_t nbytes)
+static ssize_t serial_read(GSM_StateMachine *s, void *buf, size_t nbytes)
 {
 	COMSTAT			ComStat;
 	DWORD			ErrorFlags, Length, Error;
@@ -428,7 +428,7 @@ end:
 	return Length;
 }
 
-static int serial_write(GSM_StateMachine *s, const void *buf, size_t nbytes)
+static ssize_t serial_write(GSM_StateMachine *s, const void *buf, size_t nbytes)
 {
 	DWORD			BytesWritten,ErrorFlags,BytesSent=0;
 	COMSTAT			ComStat;

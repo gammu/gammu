@@ -175,7 +175,7 @@ GSM_Error bluetooth_close(GSM_StateMachine *s)
 	return ERR_NONE;
 }
 
-int bluetooth_write(GSM_StateMachine *s, const void *buf, size_t nbytes)
+ssize_t bluetooth_write(GSM_StateMachine *s, const void *buf, size_t nbytes)
 {
 	GSM_Device_BlueToothData 	*d = &s->Device.Data.BlueTooth;
 	threadContext *pContext = (threadContext *)d->Data;
@@ -191,7 +191,7 @@ int bluetooth_write(GSM_StateMachine *s, const void *buf, size_t nbytes)
 	return nbytes;
 }
 
-int bluetooth_read(GSM_StateMachine *s, void *buffer, size_t size)
+ssize_t bluetooth_read(GSM_StateMachine *s, void *buffer, size_t size)
 {
 	GSM_Device_BlueToothData 	*d = &s->Device.Data.BlueTooth;
 	threadContext *pContext = (threadContext *)d->Data;

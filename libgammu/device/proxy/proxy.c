@@ -132,7 +132,7 @@ GSM_Error proxy_open(GSM_StateMachine *s)
 	return proxy_connect(s, &s->Device.Data.Proxy, s->CurrentConfig->Device);
 }
 
-int proxy_read(GSM_StateMachine *s, void *buf, size_t nbytes)
+ssize_t proxy_read(GSM_StateMachine *s, void *buf, size_t nbytes)
 {
 	GSM_Device_ProxyData 		*d = &s->Device.Data.Proxy;
 	struct timeval  		timeout2;
@@ -172,7 +172,7 @@ ssize_t write_nosigpipe(int fd, const void *buf, size_t len)
     return result;
 }
 
-int proxy_write(GSM_StateMachine *s, const void *buf, size_t nbytes)
+ssize_t proxy_write(GSM_StateMachine *s, const void *buf, size_t nbytes)
 {
 	GSM_Device_ProxyData   *d = &s->Device.Data.Proxy;
 	int		     	ret;
