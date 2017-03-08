@@ -45,6 +45,7 @@ if (Glib_FOUND AND GObject_FOUND)
             )
 
     add_test(gammu-detect-help "${CMAKE_CURRENT_BINARY_DIR}/gammu-detect${CMAKE_EXECUTABLE_SUFFIX}" --help)
+    add_test(gammu-detect-version "${CMAKE_CURRENT_BINARY_DIR}/gammu-detect${CMAKE_EXECUTABLE_SUFFIX}" --version)
 
 endif (Glib_FOUND AND GObject_FOUND)
 
