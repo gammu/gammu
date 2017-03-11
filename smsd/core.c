@@ -2104,6 +2104,9 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 			force_hard_reset = TRUE;
 			continue;
 		}
+		if (Config->shutdown) {
+			break;
+		}
 
 		/* Send any queued messages */
 		current_time = time(NULL);
@@ -2114,6 +2117,9 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 			}
 			/* We don't care about other errors here, they are handled in SMSD_SendSMS */
 		}
+		if (Config->shutdown) {
+			break;
+		}
 
 		/* Refresh phone status in shared memory and in service */
 		current_time = time(NULL);
@@ -2123,6 +2129,9 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 			Config->Service->RefreshPhoneStatus(Config);
 		}
 
+		if (Config->shutdown) {
+			break;
+		}
 		/* Sleep some time before another loop */
 		current_time = time(NULL);
 		lastsleep = difftime(current_time, lastloop);
