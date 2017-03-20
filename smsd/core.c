@@ -644,7 +644,7 @@ GSM_Error SMSD_ConfigureLogging(GSM_SMSDConfig *Config, gboolean uselog)
 			fprintf(stderr, "Can't open log file \"%s\"\n", Config->logfilename);
 			return ERR_CANTOPENFILE;
 		}
-		fprintf(stderr, "Log filename is \"%s\"\n",Config->logfilename);
+		fprintf(stdout, "Log filename is \"%s\"\n",Config->logfilename);
 	}
 	return ERR_NONE;
 }
