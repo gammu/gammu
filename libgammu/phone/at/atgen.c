@@ -4391,13 +4391,15 @@ GSM_Error ATGEN_DialService(GSM_StateMachine *s, char *number)
 	char *req = NULL,*encoded = NULL;
 	unsigned char *tmp = NULL;
 	const char format[] = "AT+CUSD=%d,\"%s\",15\r";
-	size_t len = 0;
+	size_t len = 0, allocsize;
 
+	len = strlen(number);
 	/*
 	 * We need to allocate twice more memory for number here, because it
 	 * might be encoded later.
 	 */
-	req = (char *)malloc(strlen(format) + (strlen(number) * 2) + 1);
+	allocsize = 2 * (len + 1);
+	req = (char *)malloc(strlen(format) + allocsize + 1);
 
 	if (req == NULL) {
 		return ERR_MOREMEMORY;
@@ -4409,9 +4411,8 @@ GSM_Error ATGEN_DialService(GSM_StateMachine *s, char *number)
 		req = NULL;
 		return error;
 	}
-	len = strlen(number);
-	encoded = (char *)malloc(2 * (len + 1));
-	tmp = (unsigned char *)malloc(2 * (len + 1));
+	encoded = (char *)malloc(allocsize);
+	tmp = (unsigned char *)malloc(allocsize);
 	if (tmp == NULL || encoded == NULL) {
 		free(req);
 		free(tmp);
@@ -4419,7 +4420,7 @@ GSM_Error ATGEN_DialService(GSM_StateMachine *s, char *number)
 		return ERR_MOREMEMORY;
 	}
 	EncodeUnicode(tmp, number, strlen(number));
-	error = ATGEN_EncodeText(s, tmp, len, encoded, 2 * (len + 1), &len);
+	error = ATGEN_EncodeText(s, tmp, len, encoded, allocsize, &len);
 	free(tmp);
 	if (error != ERR_NONE) {
 		free(req);
