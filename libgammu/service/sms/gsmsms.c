@@ -1007,11 +1007,9 @@ static int GSM_EncodeSMSFrameText(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsig
 
 GSM_Error GSM_EncodeSMSFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout Layout, int *length, gboolean clear)
 {
-	int i;
-
 	if (clear) {
 		/* Cleaning up to the SMS text */
-		for (i=0;i<Layout.Text;i++) buffer[i] = 0;
+		memset(buffer, 0, Layout.Text);
 	}
 
 	/* GSM 03.40 section 9.2.3.1 (TP-Message-Type-Indicator) */
@@ -1036,17 +1034,19 @@ GSM_Error GSM_EncodeSMSFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsigned c
 
 	if (Layout.Number!=255) {
 		buffer[Layout.Number] = GSM_PackSemiOctetNumber(SMS->Number,buffer+(Layout.Number+1),TRUE);
-		smfprintf(di, "Recipient number \"%s\"\n",DecodeUnicodeString(SMS->Number));
+		smfprintf(di, "Recipient number \"%s\"\n", DecodeUnicodeString(SMS->Number));
 	}
 	if (Layout.SMSCNumber!=255) {
-		buffer[Layout.SMSCNumber]=GSM_PackSemiOctetNumber(SMS->SMSC.Number,buffer+(Layout.SMSCNumber+1), FALSE);
-		smfprintf(di, "SMSC number \"%s\"\n",DecodeUnicodeString(SMS->SMSC.Number));
+		buffer[Layout.SMSCNumber] = GSM_PackSemiOctetNumber(SMS->SMSC.Number,buffer+(Layout.SMSCNumber+1), FALSE);
+		smfprintf(di, "SMSC number \"%s\"\n", DecodeUnicodeString(SMS->SMSC.Number));
 	}
 
 	/* Message Class*/
 	/* GSM 03.40 section 9.2.3.10 (TP-Data-Coding-Scheme) and GSM 03.38 section 4 */
 	if (Layout.TPDCS != 255) {
-		if (SMS->Class >= 0 && SMS->Class <= 3) buffer[Layout.TPDCS] |= SMS->Class | (1 << 4);
+		if (SMS->Class >= 0 && SMS->Class <= 3) {
+			buffer[Layout.TPDCS] |= SMS->Class | (1 << 4);
+		}
 		smfprintf(di, "SMS class %i\n",SMS->Class);
 	}
 
@@ -1055,7 +1055,7 @@ GSM_Error GSM_EncodeSMSFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsigned c
 		/* Bits 4 and 3: 10. TP-VP field present and integer represent (relative) */
 		buffer[Layout.firstbyte] |= 0x10;
 		buffer[Layout.TPVP]=((unsigned char)SMS->SMSC.Validity.Relative);
-		smfprintf(di, "SMS validity %02x\n",SMS->SMSC.Validity.Relative);
+		smfprintf(di, "SMS validity %02x\n", SMS->SMSC.Validity.Relative);
 	}
 
 	if (Layout.DateTime != 255) {
@@ -1063,7 +1063,7 @@ GSM_Error GSM_EncodeSMSFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsigned c
 	}
 
 	if (Layout.TPMR != 255) {
-		smfprintf(di, "TPMR: %02x %i\n",SMS->MessageReference,SMS->MessageReference);
+		smfprintf(di, "TPMR: %02x %i\n", SMS->MessageReference,SMS->MessageReference);
 		buffer[Layout.TPMR] = SMS->MessageReference;
 	}
 
