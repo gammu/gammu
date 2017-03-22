@@ -1046,19 +1046,19 @@ GSM_Error GSM_EncodeSMSFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsigned c
 	if (Layout.TPDCS != 255) {
 		if (SMS->Class >= 0 && SMS->Class <= 3) {
 			buffer[Layout.TPDCS] |= SMS->Class;
-		}
-		if (SMS->Coding == SMS_Coding_Unicode_No_Compression) {
-			/*
-			 * Use GSM 03.38 5.3.0 as it is necessary for
-			 * Unicode
-			 */
-			buffer[Layout.TPDCS] |= 0x10;
-		} else {
-			/*
-			 * Use TP-DCS as specified in GSM 03.38 5.0.0
-			 * to be compatible with older devices
-			 */
-			buffer[Layout.TPDCS] |= 0xf0;
+			if (SMS->Coding == SMS_Coding_Unicode_No_Compression) {
+				/*
+				 * Use GSM 03.38 5.3.0 as it is necessary for
+				 * Unicode
+				 */
+				buffer[Layout.TPDCS] |= 0x10;
+			} else {
+				/*
+				 * Use TP-DCS as specified in GSM 03.38 5.0.0
+				 * to be compatible with older devices
+				 */
+				buffer[Layout.TPDCS] |= 0xf0;
+			}
 		}
 		smfprintf(di, "SMS class %i\n",SMS->Class);
 	}
