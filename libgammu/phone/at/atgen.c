@@ -4404,7 +4404,8 @@ GSM_Error ATGEN_DialService(GSM_StateMachine *s, char *number)
 	if (req == NULL) {
 		return ERR_MOREMEMORY;
 	}
-	error = ATGEN_SetCharset(s, AT_PREF_CHARSET_GSM);
+	/* Prefer unicode to be able to deal with unicode response */
+	error = ATGEN_SetCharset(s, AT_PREF_CHARSET_UNICODE);
 
 	if (error != ERR_NONE) {
 		free(req);
