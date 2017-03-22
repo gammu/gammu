@@ -24,6 +24,7 @@ ChangeLog
 [-] * Improved support for Huawei K3765, E150 and E372.
 [-] * Fixed decoding of unicode surrogates at message boundary.
 [+] * Environment variable PHONE_ID for external program.
+[-] * SMS compatibility with devices following old version of GSM 03.38.
 
 20170105 - 1.38.1
 
