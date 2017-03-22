@@ -4391,7 +4391,7 @@ GSM_Error ATGEN_DialService(GSM_StateMachine *s, char *number)
 	char *req = NULL,*encoded = NULL;
 	unsigned char *tmp = NULL;
 	const char format[] = "AT+CUSD=%d,\"%s\",15\r";
-	size_t len = 0, sevenlen = 0;
+	size_t len = 0;
 
 	/*
 	 * We need to allocate twice more memory for number here, because it
@@ -4409,35 +4409,28 @@ GSM_Error ATGEN_DialService(GSM_StateMachine *s, char *number)
 		req = NULL;
 		return error;
 	}
-	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_ENCODED_USSD)) {
-		len = strlen(number);
-		encoded = (char *)malloc(2 * (len + 1));
-
-		if (encoded == NULL) {
-			free(req);
-			req = NULL;
-			return ERR_MOREMEMORY;
-		}
-		tmp = (unsigned char *)malloc(len + 1);
-
-		if (tmp == NULL) {
-			free(req);
-			free(encoded);
-			return ERR_MOREMEMORY;
-		}
-		sevenlen = GSM_PackSevenBitsToEight(0, number, tmp, len);
-		EncodeHexBin(encoded, tmp, sevenlen);
+	len = strlen(number);
+	encoded = (char *)malloc(2 * (len + 1));
+	tmp = (unsigned char *)malloc(2 * (len + 1));
+	if (tmp == NULL || encoded == NULL) {
+		free(req);
 		free(tmp);
-		tmp = NULL;
-	} else {
-		encoded = number;
+		free(encoded);
+		return ERR_MOREMEMORY;
 	}
+	EncodeUnicode(tmp, number, strlen(number));
+	error = ATGEN_EncodeText(s, tmp, len, encoded, 2 * (len + 1), &len);
+	free(tmp);
+	if (error != ERR_NONE) {
+		free(req);
+		free(encoded);
+		return error;
+	}
+
 	len = sprintf(req, format, s->Phone.Data.EnableIncomingUSSD ? 1 : 0, encoded);
 
-	if (encoded != number) {
-		free(encoded);
-		encoded = NULL;
-	}
+	free(encoded);
+
 	error = ATGEN_WaitFor(s, req, len, 0x00, 30, ID_GetUSSD);
 	free(req);
 	req = NULL;
