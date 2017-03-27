@@ -98,7 +98,7 @@ void help(void)
 	print_option_param("d", "delay", "DELAY",
 			   "delay in seconds between loops");
 	print_option_param("n", "loops", "NUMBER",
-			   "delay in seconds between loops");
+			   "number of loops");
 	print_option("l", "use-log", "use logging configuration from config file");
 	print_option("L", "no-use-log", "do not use logging configuration from config file (default)");
 }
