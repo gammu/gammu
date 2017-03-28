@@ -19,7 +19,7 @@ the issue.
 ChangeLog
 =========
     
-2017???? - 1.38.2
+20170328 - 1.38.2
 
 [-] * Improved support for Huawei K3765, E150 and E372.
 [-] * Fixed decoding of unicode surrogates at message boundary.
