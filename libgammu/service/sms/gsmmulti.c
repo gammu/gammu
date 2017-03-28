@@ -1110,8 +1110,9 @@ gboolean GSM_DecodeMMSIndication(GSM_Debug_Info *di,
 				i++;
 				i += Buffer[i];
 				break;
-			case 0x81:
-				/* Bcc */
+			case 0x81: /* Bcc */
+			case 0x82: /* Cc */
+			case 0x84: /* Content-Type */
 				i++;
 				i += Buffer[i];
 				break;
