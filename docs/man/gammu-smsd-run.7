@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSD-RUN" "7" "Jan 05, 2017" "1.38.2" "Gammu"
+.TH "GAMMU-SMSD-RUN" "7" "Mar 28, 2017" "1.38.2" "Gammu"
 .SH NAME
 gammu-smsd-run \- documentation for RunOnReceive directive
 .
@@ -74,6 +74,15 @@ Number of physical messages received.
 .TP
 .B DECODED_PARTS
 Number of decoded message parts.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B PHONE_ID
+New in version 1.38.2.
+
+.sp
+Value of \fBPhoneID\fP\&. Useful when running multiple instances
+(see smsd\-multi).
 .UNINDENT
 .SS Per message variables
 .sp
@@ -249,17 +258,16 @@ import sys
 
 numparts = int(os.environ[\(aqDECODED_PARTS\(aq])
 
+text = \(aq\(aq
 # Are there any decoded parts?
 if numparts == 0:
-    print(\(aqNo decoded parts!\(aq)
-    sys.exit(1)
-
+    text = os.environ[\(aqSMS_1_TEXT\(aq]
 # Get all text parts
-text = \(aq\(aq
-for i in range(1, numparts + 1):
-    varname = \(aqDECODED_%d_TEXT\(aq % i
-    if varname in os.environ:
-        text = text + os.environ[varname]
+else:
+    for i in range(0, numparts):
+        varname = \(aqDECODED_%d_TEXT\(aq % i
+        if varname in os.environ:
+            text = text + os.environ[varname]
 
 # Do something with the text
 print(\(aqNumber %s have sent text: %s\(aq % (os.environ[\(aqSMS_1_NUMBER\(aq], text))
