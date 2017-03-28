@@ -1013,17 +1013,25 @@ gboolean GSM_DecodeMMSIndication(GSM_Debug_Info *di,
 	Info->Entries[0].MMSIndicator->Sender[0] = 0;
 	Info->Entries[0].MMSIndicator->Address[0] = 0;
 
-	/* First byte is transaction ID */
-	/* PUSH */
+	/* First byte is the WSP transaction ID */
+	/* Second byte is PUSH */
 	if (Buffer[1] != 0x06) {
-		dbgprintf(di, "Unsupported transaction id: 0x%02x\n", Buffer[1]);
+		dbgprintf(di, "Unsupported WSP PDU type: 0x%02x\n", Buffer[1]);
 		return FALSE;
 	}
-	/* Process payload */
+	/*
+	 * WSP Push PDU follows:
+	 *
+	 * Buffer[2] is length of content type and headers
+	 * Buffer[3] is start of content type
+	 *
+	 * Process payload after headers per
+	 * Multimedia Messaging Service Encapsulation Protocol
+	 */
 	for (i = 3 + Buffer[2]; i < Length; i++) {
 		switch(Buffer[i]) {
 			case 0x8c:
-				/* Transaction type */
+				/* X-Mms-Message-Type (Transaction type) */
 				i++;
 				if (Buffer[i] != 0x82) {
 					dbgprintf(di, "Unsupported transaction type: 0x%02x\n", Buffer[i]);
@@ -1031,11 +1039,12 @@ gboolean GSM_DecodeMMSIndication(GSM_Debug_Info *di,
 				}
 				break;
 			case 0x98:
-				/* Message ID */
+				/* X-Mms-Transaction-Id (Message ID) */
+				dbgprintf(di, "Transaction ID: %s\n", Buffer + i + 1);
 				while (Buffer[i] != 0 && i < Length) i++;
 				break;
 			case 0x8d:
-				/* MMS version */
+				/*  X-Mms-MMS-Version (MMS version) */
 				i++;
 				if (Buffer[i] < 0x90 || Buffer[i] > 0x92) {
 					dbgprintf(di, "Unsupported MMS version: 0x%02x\n", Buffer[i]);
@@ -1057,7 +1066,7 @@ gboolean GSM_DecodeMMSIndication(GSM_Debug_Info *di,
 				i += Buffer[i];
 				break;
 			case 0x96:
-				/* Title */
+				/* Subject (Title) */
 				if (Buffer[i + 1] == 0x0a && Buffer[i + 2] == 0xea) {
 					/* UTF-8 */
 					strcpy(Info->Entries[0].MMSIndicator->Title, Buffer + i + 3);
@@ -1068,7 +1077,7 @@ gboolean GSM_DecodeMMSIndication(GSM_Debug_Info *di,
 				}
 				break;
 			case 0x8a:
-				/* Class */
+				/* X-Mms-Message-Class (Class) */
 				i++;
 				switch (Buffer[i]) {
 					case 0x80:
@@ -1089,7 +1098,7 @@ gboolean GSM_DecodeMMSIndication(GSM_Debug_Info *di,
 				}
 				break;
 			case 0x8e:
-				/* Message size */
+				/* X-Mms-Message-Size (Message size) */
 				i++;
 				for (j = i + 1; j < i + 1 + Buffer[i]; j++) {
 					Info->Entries[0].MMSIndicator->MessageSize = (Info->Entries[0].MMSIndicator->MessageSize << 8) + Buffer[j];
@@ -1097,20 +1106,22 @@ gboolean GSM_DecodeMMSIndication(GSM_Debug_Info *di,
 				i += Buffer[i];
 				break;
 			case 0x88:
-				/* Don't know */
+				/* X-Mms-Expiry */
 				i++;
+				i += Buffer[i];
 				break;
 			case 0x81:
-				/* Don't know */
+				/* Bcc */
 				i++;
 				i += Buffer[i];
 				break;
 			case 0x83:
-				/* URL */
+				/* X-Mms-Content-Location (URL) */
 				strcpy(Info->Entries[0].MMSIndicator->Address, Buffer + i + 1);
 				i += strlen(Info->Entries[0].MMSIndicator->Address) + 1;
 				break;
 			case 0x87:
+			case 0x8f:
 			default:
 				dbgprintf(di, "Unknown MMS tag: 0x%02x\n", Buffer[i]);
 				break;
