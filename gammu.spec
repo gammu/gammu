@@ -9,7 +9,7 @@
 %define extension   xz
 
 Name:           gammu
-Version:        1.38.2
+Version:        1.38.3
 Release:        0
 Summary:        Mobile phone management utility
 License:        GPL-2.0
