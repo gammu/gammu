@@ -26,6 +26,7 @@ ChangeLog
 [+] * Environment variable PHONE_ID for external program.
 [-] * SMS compatibility with devices following old version of GSM 03.38.
 [-] * Unicode is now preferred when handling USSD.
+[+] * Improved decoding of MMS indication SMS.
 
 20170105 - 1.38.1
 

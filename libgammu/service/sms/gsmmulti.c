@@ -1033,6 +1033,7 @@ gboolean GSM_DecodeMMSIndication(GSM_Debug_Info *di,
 			case 0x8c:
 				/* X-Mms-Message-Type (Transaction type) */
 				i++;
+				/* We support only m-notification-ind (130) */
 				if (Buffer[i] != 0x82) {
 					dbgprintf(di, "Unsupported transaction type: 0x%02x\n", Buffer[i]);
 					return FALSE;
@@ -1052,9 +1053,11 @@ gboolean GSM_DecodeMMSIndication(GSM_Debug_Info *di,
 				}
 				break;
 			case 0x89:
-				/* Sender */
+				/* From (Sender) */
 				i++;
+				/* Length */
 				if (Buffer[i] == 0) continue;
+				/* Address-present-token */
 				if (Buffer[i + 1] == 0x80) {
 					if (Buffer[i + 2] < 32) {
 						/* String with length + encoding, we just ignore it for now */
@@ -1105,24 +1108,93 @@ gboolean GSM_DecodeMMSIndication(GSM_Debug_Info *di,
 				}
 				i += Buffer[i];
 				break;
-			case 0x88:
-				/* X-Mms-Expiry */
-				i++;
-				i += Buffer[i];
-				break;
-			case 0x81: /* Bcc */
-			case 0x82: /* Cc */
-			case 0x84: /* Content-Type */
-				i++;
-				i += Buffer[i];
-				break;
 			case 0x83:
 				/* X-Mms-Content-Location (URL) */
 				strcpy(Info->Entries[0].MMSIndicator->Address, Buffer + i + 1);
 				i += strlen(Info->Entries[0].MMSIndicator->Address) + 1;
 				break;
-			case 0x87:
-			case 0x8f:
+
+			/* Ignored variable length fields */
+			case 0x87: /* X-Mms-Delivery-Time */
+			case 0x88: /* X-Mms-Expiry */
+			case 0x9d: /* X-Mms-Reply-Charging-Deadline */
+			case 0xa0: /* X-Mms-Previously-Sent-By */
+			case 0xa1: /* X-Mms-Previously-Sent-Date */
+			case 0xa4: /* X-Mms-MM-Flags */
+			case 0xaa: /* X-Mms-Mbox-Totals */
+			case 0xac: /* X-Mms-Mbox-Quotas */
+			case 0xb2: /* X-Mms-Element-Descriptor */
+				i++;
+				i += Buffer[i];
+				break;
+
+			/* Ignored long integer types */
+			case 0x85: /* Date */
+			case 0x9f: /* X-Mms-Reply-Charging-Size */
+				i++;
+				i += Buffer[i];
+				break;
+
+			/* Ignored integer types */
+			case 0xad: /* X-Mms-Message-Count */
+			case 0xaf: /* X-Mms-Start */
+			case 0xb3: /* X-Mms-Limit */
+				i++;
+				break;
+
+			/* Ignored octet types */
+			case 0x86: /* X-Mms-Delivery-Report */
+			case 0x8f: /* X-Mms-Priority */
+			case 0x90: /* X-Mms-Read-Report */
+			case 0x91: /* X-Mms-Report-Allowed */
+			case 0x92: /* X-Mms-Response-Status */
+			case 0x94: /* X-Mms-Sender-Visibility */
+			case 0x95: /* X-Mms-Status */
+			case 0x99: /* X-Mms-Retrieve-Status */
+			case 0x9b: /* X-Mms-Read-Status */
+			case 0x9c: /* X-Mms-Reply-Charging */
+			case 0xa2: /* X-Mms-Store */
+			case 0xa3: /* X-Mms-MM-State */
+			case 0xa5: /* X-Mms-Store-Status */
+			case 0xa7: /* X-Mms-Stored */
+			case 0xa8: /* X-Mms-Attributes */
+			case 0xa9: /* X-Mms-Totals */
+			case 0xab: /* X-Mms-Quotas */
+			case 0xb1: /* X-Mms-Distribution-Indicator */
+			case 0xb4: /* X-Mms-Recommended-Retrieval-Mode */
+			case 0xba: /* X-Mms-Content-Class */
+			case 0xbb: /* X-Mms-DRM-Content */
+			case 0xbc: /* X-Mms-Adaptation-Allowed */
+			case 0xbf: /* X-Mms-Cancel-Status */
+				i++;
+				break;
+
+			/* Ignored encoded string types */
+			case 0x81: /* Bcc */
+			case 0x82: /* Cc */
+			case 0x84: /* Content-Type */
+			case 0x97: /* To */
+			case 0x93: /* X-Mms-Response-Text */
+			case 0x9a: /* X-Mms-Retrieve-Text */
+			case 0xa6: /* X-Mms-Store-Status-Text */
+			case 0xb5: /* X-Mms-Recommended-Retrieval-Mode-Text */
+			case 0xb6: /* X-Mms-Status-Text */
+				while (Buffer[i] != 0 && i < Length) {
+					i++;
+				}
+				break;
+
+			/* Ignored string types */
+			case 0x8b: /* Message-ID */
+			case 0x9e: /* X-Mms-Reply-Charging-ID */
+			case 0xb7: /* X-Mms-Applic-ID */
+			case 0xb8: /* X-Mms-Reply-Applic-ID */
+			case 0xb9: /* X-Mms-Aux-Applic-Info */
+			case 0xbd: /* X-Mms-Replace-ID */
+			case 0xbe: /* X-Mms-Cancel-ID */
+				i++;
+				i += Buffer[i];
+				break;
 			default:
 				dbgprintf(di, "Unknown MMS tag: 0x%02x\n", Buffer[i]);
 				break;
