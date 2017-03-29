@@ -398,12 +398,14 @@ void Screenshot(int argc UNUSED, char *argv[])
 	f = fopen(fname, "w");
 	if (f == NULL) {
 		printf_err("Failed to open file: %s\n", fname);
+		free(fname);
 		return;
 	}
 	written = fwrite(pic.Buffer, 1, pic.Length, f);
 	ret = fclose(f);
 	if (ret != 0 || written != pic.Length) {
 		printf_err("Failed to write file: %s\n", fname);
+		free(fname);
 		return;
 	}
 
