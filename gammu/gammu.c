@@ -361,9 +361,8 @@ static void RunBatch(int argc, char *argv[])
 	 * @todo Allocate memory dynamically.
 	 */
 	char ln[2000], token;
-	size_t i, len;
-	ssize_t pos;
-	int j, c = 0, argsc, n;
+	ssize_t pos, i, len, j;
+	int c = 0, argsc, n;
 	char *argsv[20];
 	gboolean origbatch;
 	char *name;
@@ -808,9 +807,10 @@ void HelpGeneral(void)
 	printf("\n");
 }
 
-void HelpSplit(int cols, int len, const char *buff)
+void HelpSplit(int cols, ssize_t len, const char *buff)
 {
-	int l, len2, pos, split;
+	int l, pos, split;
+	ssize_t len2;
 	gboolean in_opt, first = TRUE;
 	const char *remain;
 	char spaces[50], buffer[500];
