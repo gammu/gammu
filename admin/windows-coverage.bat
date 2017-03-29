@@ -1,1 +1,1 @@
-@python c:\projects\gammu\admin\windows-coverage.py %*
+@powershell c:\projects\gammu\admin\windows-coverage.ps1 %*
