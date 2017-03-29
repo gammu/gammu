@@ -119,11 +119,11 @@ int main(int argc, char *argv[])
 			NULL,           /* Use parent's starting directory */
 			&si,            /* Pointer to STARTUPINFO structure*/
 			&pi );           /* Pointer to PROCESS_INFORMATION structure*/
-	free(command);
 	if (! result) {
-        printf("FAILED TO EXECUTE!: 0x%x\n", (int)GetLastError());
+        printf("FAILED TO EXECUTE: \"%s\" error=0x%x\n", command, (int)GetLastError());
         return 1;
     }
+	free(command);
     // Wait for process
     WaitForSingleObject( pi.hProcess, INFINITE );
 
