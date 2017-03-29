@@ -20,6 +20,9 @@ $logFile = ""
 
 # Parse params passed by CTest
 for ( $i = 0; $i -lt $args.count; $i++ ) {
+    if ($args[$i] -is [int]) {
+        continue
+    }
     if ($args[$i] -eq "--separator") { 
         $afterSeparator = $true
         continue
