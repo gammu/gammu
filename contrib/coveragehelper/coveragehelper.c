@@ -15,6 +15,10 @@
 
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
+#ifdef WIN32
+#include <windows.h>
+#endif
 
 #define ROOT_DIR "c:\\projects\\gammu"
 #define COVERAGE_TEMPLATE "c:\\projects\\gammu\\coberture%s.xml"
