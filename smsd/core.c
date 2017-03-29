@@ -391,6 +391,7 @@ GSM_SMSDConfig *SMSD_NewConfig(const char *name)
 	Config->ServiceName = NULL;
 	Config->Service = NULL;
 	Config->IgnoredMessages = 0;
+	Config->PhoneID = NULL;
 
 #if defined(HAVE_MYSQL_MYSQL_H)
 	Config->conn.my = NULL;
