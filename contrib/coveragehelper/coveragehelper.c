@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
     char logname[1000];
     FILE *handle;
 #ifdef WIN32
-	BOOL ret;
+	BOOL result;
 	STARTUPINFO si;
 	PROCESS_INFORMATION pi;
     DWORD exitcode;
@@ -105,7 +105,7 @@ int main(int argc, char *argv[])
         strcat(command, " ");
     }
     #ifdef WIN32
-	ret = CreateProcess(NULL,     /* No module name (use command line) */
+	result = CreateProcess(NULL,     /* No module name (use command line) */
 			command,    	/* Command line */
 			NULL,           /* Process handle not inheritable*/
 			NULL,           /* Thread handle not inheritable*/
@@ -116,7 +116,7 @@ int main(int argc, char *argv[])
 			&si,            /* Pointer to STARTUPINFO structure*/
 			&pi );           /* Pointer to PROCESS_INFORMATION structure*/
 	free(command);
-	if (! ret) {
+	if (! result) {
         printf("FAILED TO EXECUTE!\n");
         return 1;
     }
