@@ -121,7 +121,7 @@ int main(int argc, char *argv[])
 			&pi );           /* Pointer to PROCESS_INFORMATION structure*/
 	free(command);
 	if (! result) {
-        printf("FAILED TO EXECUTE!\n");
+        printf("FAILED TO EXECUTE!: 0x%x\n", (int)GetLastError());
         return 1;
     }
     // Wait for process
