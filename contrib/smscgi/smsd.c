@@ -23,11 +23,20 @@
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
+#include <signal.h>
 
 #include "sms_cgi.h"
 
 static GSM_StateMachine *s;
 static INI_Section *cfg;
+volatile int signalled;
+
+void interrupt(int sign)
+{
+	signal(sign, SIG_IGN);
+	GSM_AbortOperation(s);
+	signalled = 1;
+}
 
 /* Function to handle errors */
 void error_handler(void)
@@ -45,6 +54,8 @@ int main(int argc UNUSED, char **argv UNUSED)
 {
 	GSM_Debug_Info *debug_info;
 	const char*tmp;
+
+	signal(SIGINT, interrupt);
 
 	/* Enable global debugging to stderr */
 	debug_info = GSM_GetGlobalDebug();
@@ -117,6 +128,10 @@ int main(int argc UNUSED, char **argv UNUSED)
 		/* ---------------------------------------- set the SMS callback function */
 		GSM_SetIncomingSMSCallback(s, cgi_enqueue, NULL);
 		smprintf(s, "registered sms callback\n");
+
+		if (signalled) {
+			break;
+		}
 	}
 
 	/* Terminate connection */
