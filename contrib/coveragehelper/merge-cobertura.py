@@ -76,6 +76,10 @@ def write_data(data, handle):
             obj.set('number', line)
             obj.set('hits', str(data[item][line]))
 
+    sources = SubElement(root, 'sources')
+    source = SubElement(sources, 'source')
+    source.text = 'c:'
+
     tree = ElementTree(root)
 
     tree.write(handle, xml_declaration=True)
