@@ -11,5 +11,8 @@ export PATH="C:/MinGW/bin:$PATH"
 # Download codecov script
 curl -s -o codecov.sh https://codecov.io/bash
 
+# Merge files
+python ./contrib/coveragehelper/merge-cobertura.py --output merged-cobertura.xml --match 'cobertura*.xml'
+
 # Upload in chunks of 5 files
-ls cobertura*.xml | sed -e 's/^/-f /' | xargs -n 20 bash ./codecov.sh -X nocolor -X gcov -F windows
+bash ./codecov.sh -X nocolor -X gcov -F windows merged-cobertura.xml
