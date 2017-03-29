@@ -109,6 +109,10 @@ int main(int argc, char *argv[])
         strcat(command, " ");
     }
     #ifdef WIN32
+	ZeroMemory(&si, sizeof(si));
+	si.cb = sizeof(si);
+	ZeroMemory(&pi, sizeof(pi));
+
 	result = CreateProcess(NULL,     /* No module name (use command line) */
 			command,    	/* Command line */
 			NULL,           /* Process handle not inheritable*/
