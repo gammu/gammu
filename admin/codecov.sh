@@ -15,4 +15,4 @@ curl -s -o codecov.sh https://codecov.io/bash
 python ./contrib/coveragehelper/merge-cobertura.py --output merged-cobertura.xml --match 'cobertura*.xml'
 
 # Upload in chunks of 5 files
-bash ./codecov.sh -X nocolor -X gcov -F windows merged-cobertura.xml
+bash ./codecov.sh -X nocolor -X gcov -F windows -f merged-cobertura.xml
