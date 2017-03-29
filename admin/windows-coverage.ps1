@@ -61,6 +61,4 @@ $args = @(
 Start-Process 'OpenCppCoverage.exe' -ArgumentList $args -Wait
 
 # Propagate error code
-if ($LASTEXITCODE -ne 1) {
-    throw [System.String]::Format("Failed to run OpenCppCoverage, ExitCode: {0}.", $LASTEXITCODE)
-}
+exit $LASTEXITCODE
