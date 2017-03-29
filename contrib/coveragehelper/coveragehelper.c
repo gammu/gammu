@@ -21,7 +21,7 @@
 #endif
 
 #define ROOT_DIR "c:\\projects\\gammu"
-#define COVERAGE_TEMPLATE "c:\\projects\\gammu\\coberture%s.xml"
+#define COVERAGE_TEMPLATE "c:\\projects\\gammu\\cobertura%s.xml"
 #define ARG_SEPARATOR "--separator"
 #define ARG_LOG "--log-file="
 #define ARG_LOG_LEN 11
