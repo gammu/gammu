@@ -42,7 +42,7 @@ build:
   verbosity: quiet
 
 after_build:
-  - cmake --build .  --config %CONFIGURATION% --target package
+  - cmake --build .  --config %CONFIGURATION% --target package -- /verbosity:quiet
 
 test_script:
   - "SET PATH=%MYSQL_PATH%\\bin;%POSTGRESQL_PATH%\\bin;c:\\projects\\gammu;%PATH%"
