@@ -20,7 +20,6 @@ $logFile = ""
 
 # Parse params passed by CTest
 for ( $i = 0; $i -lt $args.count; $i++ ) {
-    "ARG: " + $args[$i];
     if ($args[$i] -eq "--separator") { 
         $afterSeparator = $true
         continue
@@ -38,7 +37,7 @@ if ($logFile -eq "") {
 }
 
 # Create empty file (CTest expects to find it)
-New-Item $logFile -type file
+$logFileObj = New-Item $logFile -type file
 
 # Figure out test number (it's included in log name)
 $testNum = [io.path]::GetFileNameWithoutExtension($logFile).split('.')[1]
@@ -55,12 +54,10 @@ $args = @(
     '--'
 ) + $outArgs
 
-"Execute:" + $args -join ' ';
-
 # Execute with code coverage
-$coverageProcess = (Start-Process 'OpenCppCoverage.exe' -ArgumentList $args -PassThru -Wait)
+Start-Process 'OpenCppCoverage.exe' -ArgumentList $args -Wait
 
 # Propagate error code
-if ($coverageProcess.ExitCode -ne 0) {
-    throw [System.String]::Format("Failed to run OpenCppCoverage, ExitCode: {0}.", $coverageProcess.ExitCode)
+if ($LASTEXITCODE -ne 1) {
+    throw [System.String]::Format("Failed to run OpenCppCoverage, ExitCode: {0}.", $LASTEXITCODE)
 }
