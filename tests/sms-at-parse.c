@@ -1,6 +1,7 @@
 /* Test for decoding SMS on AT driver */
 
 #include <gammu.h>
+#include <gammu-smsd.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -13,6 +14,7 @@
 #include "common.h"
 
 extern GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine * s);
+extern void SMSD_RunOnReceiveEnvironment(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, const char *locations);
 
 #define BUFFER_SIZE 16384
 
@@ -28,6 +30,7 @@ int main(int argc, char **argv)
 	GSM_Protocol_Message msg;
 	GSM_Error error;
 	GSM_MultiSMSMessage sms;
+	GSM_SMSDConfig *smsd;
 #if 0
 	GSM_SMS_Backup bkp;
 #endif
@@ -52,6 +55,8 @@ int main(int argc, char **argv)
 		fclose(f);
 		return 1;
 	}
+
+	smsd = SMSD_NewConfig("test");
 	/* Zero terminate data */
 	buffer[len] = 0;
 
@@ -111,6 +116,8 @@ int main(int argc, char **argv)
 		DisplayMultiSMSInfo(&sms, FALSE, TRUE, NULL, NULL);
 		DisplayMultiSMSInfo(&sms, TRUE, TRUE, NULL, NULL);
 		printf("Parts: %d, count: %d, ID16: %d, ID8: %d\n", sms.SMS[0].UDH.AllParts, sms.Number, sms.SMS[0].UDH.ID16bit, sms.SMS[0].UDH.ID8bit);
+
+		SMSD_RunOnReceiveEnvironment(&sms, smsd, "1");
 	}
 
 	/* This is normally done by ATGEN_Terminate */

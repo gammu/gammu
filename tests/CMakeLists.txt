@@ -421,7 +421,7 @@ if (WITH_ATGEN)
     # AT SMS parsing
     add_executable(sms-at-parse sms-at-parse.c)
     add_coverage(sms-at-parse)
-    target_link_libraries(sms-at-parse libGammu ${LIBINTL_LIBRARIES})
+    target_link_libraries(sms-at-parse libGammu ${LIBINTL_LIBRARIES} gsmsd)
     target_link_libraries(sms-at-parse messagedisplay)
 
     # List test cases for success
