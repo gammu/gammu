@@ -29,8 +29,7 @@
 int main(int argc, char *argv[])
 {
     int i;
-    int separator = 0;
-    char *logfile = NULL, *testnum, *tmp, *command;
+    char *logfile = NULL, *separator=NULL, *testnum, *tmp, *command, *commandline;
     char logname[1000];
     FILE *handle;
 #ifdef WIN32
@@ -38,16 +37,24 @@ int main(int argc, char *argv[])
 	STARTUPINFO si;
 	PROCESS_INFORMATION pi;
     DWORD exitcode;
+
+    commandline = GetCommandLine();
+#else
+    commandline = malloc(32768);
+    *commandline = '\0';
 #endif
 
     // Parse params passed by CTest
     for (i = 1; i < argc; i++) {
         if (strncmp(argv[i], ARG_LOG, ARG_LOG_LEN) == 0) {
             logfile = argv[i] + ARG_LOG_LEN;
-        } else if (strcmp(argv[i], ARG_SEPARATOR) == 0) {
-            separator = i + 1;
-            break;
         }
+#ifndef WIN32
+        // This does not do proper escaping, but the code
+        // does not execute on non WIN32, it's for testing only
+        strcat(commandline, argv[i]);
+        strcat(commandline, " ");
+#endif
     }
 
     if (logfile == NULL) {
@@ -55,10 +62,13 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    if (separator == 0) {
+    separator = strstr(commandline, ARG_SEPARATOR);
+
+    if (separator == NULL) {
         printf("MISSING PARAMETER: " ARG_SEPARATOR "\n");
         return 1;
     }
+    separator += strlen(ARG_SEPARATOR);
 
     // Create empty file (CTest expects to find it)
     handle = fopen(logfile, "w");
@@ -98,16 +108,13 @@ int main(int argc, char *argv[])
     }
     sprintf(
         command,
-        "OpenCppCoverage.exe --quiet --export_type cobertura:%s --modules %s --sources %s -- ",
+        "OpenCppCoverage.exe --quiet --export_type cobertura:%s --modules %s --sources %s -- %s",
         logname,
         ROOT_DIR,
-        ROOT_DIR
+        ROOT_DIR,
+        separator
     );
 
-    for (i = separator; i < argc; i++) {
-        strcat(command, argv[i]);
-        strcat(command, " ");
-    }
     #ifdef WIN32
 	ZeroMemory(&si, sizeof(si));
 	si.cb = sizeof(si);
