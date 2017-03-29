@@ -39,10 +39,10 @@ before_build:
 build:
   project: ALL_BUILD.vcxproj
   parallel: true
-  verbosity: quiet
+  verbosity: minimal
 
 after_build:
-  - cmake --build .  --config %CONFIGURATION% --target package -- /verbosity:quiet
+  - cmake --build .  --config %CONFIGURATION% --target package -- /verbosity:minimal
 
 test_script:
   - "SET PATH=%MYSQL_PATH%\\bin;%POSTGRESQL_PATH%\\bin;c:\\projects\\gammu;%PATH%"
