@@ -115,7 +115,7 @@ int main(int argc, char *argv[])
         separator
     );
 
-    #ifdef WIN32
+#ifdef WIN32
 	ZeroMemory(&si, sizeof(si));
 	si.cb = sizeof(si);
 	ZeroMemory(&pi, sizeof(pi));
@@ -150,10 +150,10 @@ int main(int argc, char *argv[])
         return 1;
     }
     return exitcode;
-    #else
+#else
     printf("CMD: %s\n", command);
     return 0;
-    #endif
+#endif
 
 fail_number:
     printf("FAILED TO PARSE TEST NUMBER: %s\n", logfile);
