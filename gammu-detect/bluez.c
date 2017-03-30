@@ -478,8 +478,8 @@ void bluez_detect(void)
 	dev_id = hci_get_route(NULL);
 	sock = hci_open_dev(dev_id);
 	if (dev_id < 0 || sock < 0) {
-		perror("opening socket");
-		exit(1);
+		perror("Error opening Bluetooth socket");
+		return;
 	}
 
 	len = 8;
