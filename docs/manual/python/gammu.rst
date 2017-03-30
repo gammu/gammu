@@ -107,7 +107,7 @@ This module wraps all python-gammu functionality.
 
       :param ID: ID of call
       :type ID: int
-      :param All: Answer all calls?
+      :param All: Answer all calls? Defaults to True
       :type All: bool
       :return: None
       :rtype: None
@@ -128,7 +128,7 @@ This module wraps all python-gammu functionality.
 
       :param ID: ID of call
       :type ID: int
-      :param All: Cancel all calls?
+      :param All: Cancel all calls? Defaults to True
       :type All: bool
       :return: None
       :rtype: None
