@@ -476,8 +476,12 @@ void bluez_detect(void)
 	char name[248] = { 0 };
 
 	dev_id = hci_get_route(NULL);
+	if (dev_id < 0) {
+		perror("Error finding Bluetooth adapter");
+		return;
+	}
 	sock = hci_open_dev(dev_id);
-	if (dev_id < 0 || sock < 0) {
+	if (sock < 0) {
 		perror("Error opening Bluetooth socket");
 		return;
 	}
