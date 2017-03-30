@@ -1,6 +1,6 @@
 #todo: convert this into a chocolatey package...
 
-$downloadUrl = "https://dl.cihar.com/ci/OpenCppCoverageSetup-x64-0.9.5.3.exe"
+$downloadUrl = "https://dl.cihar.com/ci/OpenCppCoverageSetup-x64-0.9.6.exe"
 
 $installerPath = [System.IO.Path]::Combine($Env:USERPROFILE, "Downloads", "OpenCppCoverageSetup.exe")
 $installPath = [System.IO.Path]::Combine(${Env:ProgramFiles}, "OpenCppCoverage")
