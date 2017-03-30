@@ -1,5 +1,11 @@
 #!/usr/bin/env python
-from __future__ import print_function
+"""
+Cobertura XML report merger
+
+Written for merging OpenCppCoverage reports, thus not completely supporting all
+Cobertura XML attributes, only line coverage which OpenCppCoverage generates.
+Anything else is simply discarded in the process.
+"""
 import argparse
 import glob
 import sys
@@ -113,25 +119,28 @@ def write_data(data, handle):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Process some integers.')
+    parser = argparse.ArgumentParser(
+        description=sys.modules[__name__].__doc__,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
     parser.add_argument(
         '-m', '--match',
-        help='wildcard to match'
+        help='wildcard to match files to process'
     )
     parser.add_argument(
         '-o', '--output',
-        help='output file'
+        help='output file, stdout used if omitted'
     )
     parser.add_argument(
-        'files',
+        'file',
         nargs='*',
-        help='files'
+        help='files to process'
     )
     args = parser.parse_args()
     if args.match:
         files = glob.glob(args.match)
     else:
-        files = args.files
+        files = args.file
 
     result = read_files(files)
 
