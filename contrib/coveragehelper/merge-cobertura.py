@@ -4,9 +4,17 @@ import argparse
 import glob
 import sys
 try:
-    from xml.etree.cElementTree import iterparse, Element, SubElement, ElementTree
+    from xml.etree.cElementTree import (
+        iterparse, Element, SubElement, ElementTree,
+    )
 except ImportError:
-    from xml.etree.ElementTree import iterparse, Element, SubElement, ElementTree
+    from xml.etree.ElementTree import (
+        iterparse, Element, SubElement, ElementTree,
+    )
+
+HEADER = '''<?xml version="1.0"?>
+<!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
+'''
 
 
 def log(message=''):
@@ -59,6 +67,7 @@ def get_line_rates(data):
 def write_data(data, handle):
     line_rates = get_line_rates(data)
 
+    log('Generating output...')
     root = Element('coverage')
     root.set('line-rate', str(line_rates['_']))
     root.set('branch-rate', '0')
@@ -98,7 +107,9 @@ def write_data(data, handle):
 
     tree = ElementTree(root)
 
-    tree.write(handle, xml_declaration=True)
+    handle.write(HEADER)
+
+    tree.write(handle, xml_declaration=False)
 
 
 def main():
