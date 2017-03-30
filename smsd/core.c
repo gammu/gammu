@@ -1066,7 +1066,7 @@ void SMSD_RunOnReceiveEnvironment(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Conf
 				case SMS_ConcatenatedAutoTextLong16bit:
 				case SMS_NokiaVCARD21Long:
 				case SMS_NokiaVCALENDAR10Long:
-					sprintf(name, "DECODED_%d_TEXT", i);
+					sprintf(name, "DECODED_%d_TEXT", i + 1);
 					setenv(name, DecodeUnicodeConsole(SMSInfo.Entries[i].Buffer), 1);
 					break;
 				case SMS_MMSIndicatorLong:
