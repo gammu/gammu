@@ -2135,10 +2135,12 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 		}
 		/* Sleep some time before another loop */
 		current_time = time(NULL);
+		/* Duration of last loop cycle */
 		lastsleep = difftime(current_time, lastloop);
 		if (Config->loopsleep == 1) {
 			sleep(1);
 		} else if (lastsleep < Config->loopsleep) {
+			/* Sleep LoopSleep - time of the loop */
 			sleep(Config->loopsleep - lastsleep);
 		}
 	}
