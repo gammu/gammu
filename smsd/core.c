@@ -1960,7 +1960,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 	int                     errors = -1, initerrors=0;
 	double			lastsleep;
  	time_t			lastreceive = 0, lastreset = time(NULL), lasthardreset = time(NULL), lastnothingsent = 0, laststatus = 0;
-	time_t			lastloop = 0, current_time;
+	time_t			lastloop = 0;
 	gboolean first_start = TRUE, force_reset = FALSE, force_hard_reset = FALSE;
 
 	Config->failure = ERR_NONE;
@@ -2079,7 +2079,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 		}
 
 		/* Should we receive? */
-		if (Config->enable_receive && ((difftime(time(NULL), lastreceive) >= Config->receivefrequency) || (Config->SendingSMSStatus != ERR_NONE))) {
+		if (Config->enable_receive && ((difftime(lastloop, lastreceive) >= Config->receivefrequency) || (Config->SendingSMSStatus != ERR_NONE))) {
 	 		lastreceive = time(NULL);
 
 			/* Do we need to check security? */
@@ -2107,12 +2107,11 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 
 
 		/* time for preventive reset */
-		current_time = time(NULL);
-		if (Config->resetfrequency > 0 && difftime(current_time, lastreset) >= Config->resetfrequency) {
+		if (Config->resetfrequency > 0 && difftime(lastloop, lastreset) >= Config->resetfrequency) {
 			force_reset = TRUE;
 			continue;
 		}
-		if (Config->hardresetfrequency > 0 && difftime(current_time, lasthardreset) >= Config->hardresetfrequency) {
+		if (Config->hardresetfrequency > 0 && difftime(lastloop, lasthardreset) >= Config->hardresetfrequency) {
 			force_hard_reset = TRUE;
 			continue;
 		}
@@ -2121,11 +2120,10 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 		}
 
 		/* Send any queued messages */
-		current_time = time(NULL);
-		if (Config->enable_send && (difftime(current_time, lastnothingsent) >= Config->commtimeout)) {
+		if (Config->enable_send && (difftime(lastloop, lastnothingsent) >= Config->commtimeout)) {
 			error = SMSD_SendSMS(Config);
 			if (error == ERR_EMPTY) {
-				lastnothingsent = current_time;
+				lastnothingsent = lastloop;
 			}
 			/* We don't care about other errors here, they are handled in SMSD_SendSMS */
 		}
@@ -2134,20 +2132,19 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 		}
 
 		/* Refresh phone status in shared memory and in service */
-		current_time = time(NULL);
-		if ((Config->statusfrequency > 0) && (difftime(current_time, laststatus) >= Config->statusfrequency)) {
+		if ((Config->statusfrequency > 0) && (difftime(lastloop, laststatus) >= Config->statusfrequency)) {
 			SMSD_PhoneStatus(Config);
-			laststatus = current_time;
+			laststatus = lastloop;
 			Config->Service->RefreshPhoneStatus(Config);
 		}
 
 		if (Config->shutdown) {
 			break;
 		}
+
 		/* Sleep some time before another loop */
-		current_time = time(NULL);
 		/* Duration of last loop cycle */
-		lastsleep = difftime(current_time, lastloop);
+		lastsleep = difftime(time(NULL), lastloop);
 		if (Config->loopsleep > 0 && lastsleep < Config->loopsleep) {
 			/* Sleep LoopSleep - time of the loop */
 			SMSD_InterruptibleSleep(Config, Config->loopsleep - lastsleep);
