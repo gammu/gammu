@@ -169,7 +169,8 @@ General parameters of SMS daemon
 
 .. config:option:: CommTimeout
 
-    How many seconds should SMSD wait after there is no message in outbox.
+    How many seconds should SMSD wait after there is no message in outbox
+    before scanning it again.
 
     Default is 30.
 
