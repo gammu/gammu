@@ -201,7 +201,9 @@ General parameters of SMS daemon
     The number of seconds between refreshing phone status (battery, signal) stored
     in shared memory and possibly in service backends. Use 0 to disable.
 
-    Default is 15.
+    You might want to increase this for higher throughput.
+
+    Default is 60.
 
 .. config:option:: LoopSleep
 
