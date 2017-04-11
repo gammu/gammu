@@ -2148,9 +2148,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 		current_time = time(NULL);
 		/* Duration of last loop cycle */
 		lastsleep = difftime(current_time, lastloop);
-		if (Config->loopsleep == 1) {
-			SMSD_InterruptibleSleep(Config, 1);
-		} else if (lastsleep < Config->loopsleep) {
+		if (Config->loopsleep > 0 && lastsleep < Config->loopsleep) {
 			/* Sleep LoopSleep - time of the loop */
 			SMSD_InterruptibleSleep(Config, Config->loopsleep - lastsleep);
 		}

@@ -213,7 +213,13 @@ General parameters of SMS daemon
     rounded to multiply of this value.
 
     Setting this to 0 disables sleeping. Please note this might cause Gammu to
-    consume quite a lot of CPU power.
+    consume quite a lot of CPU power as it will effectively do busy loop.
+
+    This sleep is utilized only if the main loop (sending and receiving
+    messages) takes less than defined time. For example if you set LoopSleep to
+    5 seconds and sending messages take 10 seconds, no sleep will be done in
+    the iteration which is sending messages. Also the sleep time is lowered by
+    the already processed time.
 
     Default is 1.
 
