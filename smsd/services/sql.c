@@ -1122,9 +1122,7 @@ static GSM_Error SMSDSQL_AddSentSMSInfo(GSM_MultiSMSMessage * sms, GSM_SMSDConfi
 	if (err == SMSD_SEND_OK) {
 		SMSD_Log(DEBUG_NOTICE, Config, "Transmitted %s (%s: %i) to %s", Config->SMSID,
 			 (Part == sms->Number ? "total" : "part"), Part, DecodeUnicodeString(sms->SMS[0].Number));
-	}
 
-	if (err == SMSD_SEND_OK) {
 		if (sms->SMS[Part - 1].PDU == SMS_Status_Report) {
 			message_state = "SendingOK";
 		} else {
