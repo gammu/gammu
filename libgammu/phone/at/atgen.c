@@ -4395,10 +4395,10 @@ GSM_Error ATGEN_DialService(GSM_StateMachine *s, char *number)
 
 	len = strlen(number);
 	/*
-	 * We need to allocate twice more memory for number here, because it
-	 * might be encoded later.
+	 * We need to allocate four times more memory for number here, because it
+	 * might be encoded later to UCS2.
 	 */
-	allocsize = 2 * (len + 1);
+	allocsize = 4 * (len + 1);
 	req = (char *)malloc(strlen(format) + allocsize + 1);
 
 	if (req == NULL) {
