@@ -22,7 +22,7 @@ ChangeLog
 2017???? - 1.38.3
 
 [-] * Improved support for ZTE MF626.
-    
+[-] * Fixed USSD handling with longer codes.
 
 20170328 - 1.38.2
 
