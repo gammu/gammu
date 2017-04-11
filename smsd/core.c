@@ -106,6 +106,21 @@ GSM_Error SMSD_Shutdown(GSM_SMSDConfig *Config)
 }
 
 /**
+ * Interruptuptible sleep allowing to terminate SMSD.
+ */
+void SMSD_InterruptibleSleep(GSM_SMSDConfig *Config, int seconds)
+{
+	int i, loops;
+	loops = seconds * 2;
+	for (i = 0; i < loops; i++) {
+		if (Config->shutdown) {
+			break;
+		}
+		usleep(500000);
+	}
+}
+
+/**
  * Callback from libGammu on sending message.
  */
 void SMSD_SendSMSStatusCallback (GSM_StateMachine *sm, int status, int mr, void *user_data)
@@ -1784,7 +1799,7 @@ failure_unsent:
 
 	Config->Service->UpdateRetries(Config, Config->SMSID);
 
-	sleep(60);
+	SMSD_InterruptibleSleep(Config, 60);
 	return ERR_UNKNOWN;
 failure_sent:
 
@@ -1934,6 +1949,7 @@ void SMSD_IncomingCallCallback(GSM_StateMachine *s, GSM_Call *call, void *user_d
 		SMSD_Log(DEBUG_INFO, Config, "Call callback: Unknown status %d\n", call->Status);
 	}
 }
+
 /**
  * Main loop which takes care of connection to phone and processing of
  * messages.
@@ -1945,7 +1961,6 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 	double			lastsleep;
  	time_t			lastreceive = 0, lastreset = time(NULL), lasthardreset = time(NULL), lastnothingsent = 0, laststatus = 0;
 	time_t			lastloop = 0, current_time;
-	int i;
 	gboolean first_start = TRUE, force_reset = FALSE, force_hard_reset = FALSE;
 
 	Config->failure = ERR_NONE;
@@ -1989,11 +2004,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 			if (initerrors++ > 3) {
 				SMSD_Log(DEBUG_INFO, Config, "Going to 30 seconds sleep because of too many connection errors");
 
-				for (i = 0; i < 60; i++) {
-					if (Config->shutdown)
-						break;
-					usleep(500000);
-				}
+				SMSD_InterruptibleSleep(Config, 30);
 			}
 			SMSD_Log(DEBUG_INFO, Config, "Starting phone communication...");
 			error = GSM_InitConnection_Log(Config->gsm, 2, SMSD_Log_Function, Config);
@@ -2044,14 +2055,14 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 					error = GSM_Reset(Config->gsm, FALSE); /* soft reset */
 					SMSD_LogError(DEBUG_INFO, Config, "Soft reset return code", error);
 					lastreset = time(NULL);
-					sleep(5);
+					SMSD_InterruptibleSleep(Config, 5);
 					force_reset = FALSE;
 				}
 				if (force_hard_reset) {
 					error = GSM_Reset(Config->gsm, TRUE); /* hard reset */
 					SMSD_LogError(DEBUG_INFO, Config, "Hard reset return code", error);
 					lasthardreset = time(NULL);
-					sleep(5);
+					SMSD_InterruptibleSleep(Config, 5);
 					force_hard_reset = FALSE;
 				}
 				break;
@@ -2138,10 +2149,10 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 		/* Duration of last loop cycle */
 		lastsleep = difftime(current_time, lastloop);
 		if (Config->loopsleep == 1) {
-			sleep(1);
+			SMSD_InterruptibleSleep(Config, 1);
 		} else if (lastsleep < Config->loopsleep) {
 			/* Sleep LoopSleep - time of the loop */
-			sleep(Config->loopsleep - lastsleep);
+			SMSD_InterruptibleSleep(Config, Config->loopsleep - lastsleep);
 		}
 	}
 	Config->Service->Free(Config);

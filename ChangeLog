@@ -24,6 +24,7 @@ ChangeLog
 [-] * Improved support for ZTE MF626.
 [-] * Fixed USSD handling with longer codes.
 [-] * Increased default value for StatusFrequency.
+[-] * Improved SMSD response on signals.
 
 20170328 - 1.38.2
 
