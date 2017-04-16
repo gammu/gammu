@@ -28,10 +28,15 @@ can be used.
 Limitations
 -----------
 
-Due to limits of the ODBC interface, you might have to tweak SQL queries to
-work in used SQL server, see :ref:`SQL Queries` for more details.
+Due to limits of the ODBC interface, Gammu can not reliably detect which SQL
+engine it is connected to.
 
-Partially this can be configured using :config:option:`SQL`.
+In most cases this can be solved by setting :config:option:`SQL` setting to
+correct dialect.
+
+If that fails, you can also tweak the SQL queries to work in used SQL server,
+see :ref:`SQL Queries` for more details. Still you should set 
+:config:option:`SQL` to closest matching SQL dialect.
 
 Configuration
 -------------
