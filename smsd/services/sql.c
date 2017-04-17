@@ -144,7 +144,7 @@ static const char *SMSDSQL_TopClause(GSM_SMSDConfig * Config, const char *count)
 
 	driver_name = SMSDSQL_SQLName(Config);
 
-	if (strcasecmp(driver_name, "access") == 0) {
+	if (strcasecmp(driver_name, "access") == 0 || strcasecmp(driver_name, "mssql") == 0) {
 		strcpy(result, top_clause_access);
 		strcat(result, " ");
 		strcat(result, count);
@@ -165,7 +165,7 @@ static const char *SMSDSQL_LimitClause(GSM_SMSDConfig * Config, const char *coun
 
 	driver_name = SMSDSQL_SQLName(Config);
 
-	if (strcasecmp(driver_name, "access") == 0 || strcasecmp(driver_name, "freetds") == 0 || strcasecmp(driver_name, "oracle") == 0) {
+	if (strcasecmp(driver_name, "mssql") == 0 || strcasecmp(driver_name, "access") == 0 || strcasecmp(driver_name, "freetds") == 0 || strcasecmp(driver_name, "oracle") == 0) {
 		return limit_clause_access;
 	} else {
 		strcpy(result, limit_clause_fallback);
