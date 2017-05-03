@@ -101,7 +101,7 @@ static const char *SMSDSQL_EscapeChar(GSM_SMSDConfig * Config)
 		return escape_char_sqlite;
 	} else if (strcasecmp(driver_name, "oracle") == 0 || strcasecmp(driver_name, "freetds") == 0 || strcasecmp(driver_name, "mssql") == 0 || strcasecmp(driver_name, "sybase") == 0) {
 		return escape_char_freetds;
-	} else if (strcasecmp(Config->driver, "odbc") == 0) {
+	} else if (strcasecmp(Config->driver, "odbc") == 0 || strcasecmp(Config->driver, "mssql") == 0) {
 		return escape_char_odbc;
 	} else {
 		return escape_char_fallback;
