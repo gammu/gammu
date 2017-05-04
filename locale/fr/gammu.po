@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2016-10-11 08:16+0200\n"
-"PO-Revision-Date: 2017-05-02 22:17+0000\n"
+"PO-Revision-Date: 2017-05-04 08:36+0000\n"
 "Last-Translator: Kyodev <kyodev@yandex.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gammu/gammu/fr/>\n"
 "Language: fr\n"
@@ -146,7 +146,7 @@ msgstr "Sauvegarder les notes du calendrier du téléphone ?"
 #: gammu/backup.c:905 gammu/backup.c:942
 #, c-format
 msgid "Only part of data saved, please increase %s."
-msgstr "Les données n'ont pas pu être toutes sauvées, veuillez augmenter %s."
+msgstr "Seulement une partie des données sauvegardées, veuillez augmenter %s."
 
 #: gammu/backup.c:450
 msgid "Checking phone todos"
@@ -1216,7 +1216,7 @@ msgstr "simlock ancien"
 
 #: gammu/depend/nokia/dct4.c:845
 msgid "Simlock data"
-msgstr "données Simlock"
+msgstr "données de  Simlock"
 
 #: gammu/depend/nokia/dct4.c:872
 msgid "Bluetooth"
@@ -3172,7 +3172,7 @@ msgstr " vitesse de composition non assignée"
 #: gammu/misc.c:2122
 #, c-format
 msgid "What type of reset phone settings (\"%s\") ?\n"
-msgstr ""
+msgstr "Quel type de paramètres de réinitialisation téléphone (\"%s\") ?\n"
 
 #: gammu/misc.c:2156
 msgid "Currently shown on the display"
@@ -3364,6 +3364,7 @@ msgstr "  ID du système de fichiers du fichier"
 #: gammu/nokia.c:43
 msgid "It can be RTTL ringtone only used with this option"
 msgstr ""
+"Il ne peut être utilisé seulement qu'une sonnerie RTTL avec cette option"
 
 #: gammu/nokia.c:54
 #, c-format
@@ -3577,6 +3578,8 @@ msgstr "Groupe d’appel"
 #: helper/memory-display.c:71
 msgid "Caller group number too high, please increase buffer in sources!"
 msgstr ""
+"Groupe d'appel, nombre trop élevé, veuillez augmenter le tampon dans les "
+"sources !"
 
 #: helper/memory-display.c:113
 msgid "User ID"
@@ -3596,19 +3599,19 @@ msgstr "Photo"
 
 #: helper/memory-display.c:122
 msgid "Displaying not supported"
-msgstr ""
+msgstr "Affichage non pris en charge"
 
 #: helper/memory-display.c:124
 msgid "Favorite messaging number"
-msgstr ""
+msgstr "Numéro de messagerie préféré"
 
 #: helper/memory-display.c:132
 msgid "Work number"
-msgstr ""
+msgstr "Numéro professionnel"
 
 #: helper/memory-display.c:135
 msgid "General number"
-msgstr ""
+msgstr "Numéro général"
 
 #: helper/memory-display.c:139
 msgid "Video number"
@@ -3616,7 +3619,7 @@ msgstr "Numéro de la vidéo"
 
 #: helper/memory-display.c:144
 msgid "Home mobile number"
-msgstr ""
+msgstr "Numéro de téléphone portable"
 
 #: helper/memory-display.c:147
 msgid "Work mobile number"
@@ -3624,19 +3627,19 @@ msgstr "Numéro de téléphone du portable au travail"
 
 #: helper/memory-display.c:158
 msgid "Home fax number"
-msgstr ""
+msgstr "Numéro de fax domicile"
 
 #: helper/memory-display.c:161
 msgid "Work fax number"
-msgstr ""
+msgstr "Numéro de fax professionnel"
 
 #: helper/memory-display.c:168
 msgid "Pager number"
-msgstr ""
+msgstr "Numéro de pager"
 
 #: helper/memory-display.c:169
 msgid "Other number"
-msgstr ""
+msgstr "Autre numéro"
 
 #: helper/memory-display.c:175
 msgid "Home address"
@@ -3656,7 +3659,7 @@ msgstr "Courriel au travail"
 
 #: helper/memory-display.c:199
 msgid "Email address 2"
-msgstr ""
+msgstr "Adresse email 2"
 
 #: helper/memory-display.c:204
 msgid "Home website"
@@ -3672,15 +3675,15 @@ msgstr "Site Internet"
 
 #: helper/memory-display.c:215
 msgid "VOIP"
-msgstr ""
+msgstr "VOIP"
 
 #: helper/memory-display.c:216
 msgid "SWIS"
-msgstr ""
+msgstr "SWIS"
 
 #: helper/memory-display.c:217
 msgid "WVID"
-msgstr ""
+msgstr "WVID"
 
 #: helper/memory-display.c:218
 msgid "SIP"
@@ -3688,15 +3691,15 @@ msgstr "SIP"
 
 #: helper/memory-display.c:219
 msgid "DTMF"
-msgstr ""
+msgstr "DTMF"
 
 #: helper/memory-display.c:221
 msgid "Last name"
-msgstr ""
+msgstr "Nom de famille"
 
 #: helper/memory-display.c:222
 msgid "First name"
-msgstr ""
+msgstr "Prénom"
 
 #: helper/memory-display.c:223
 msgid "Second name"
@@ -3704,7 +3707,7 @@ msgstr "Deuxième nom"
 
 #: helper/memory-display.c:224
 msgid "Formal name"
-msgstr ""
+msgstr "Nom officiel"
 
 #: helper/memory-display.c:225
 msgid "Name prefix"
@@ -3712,27 +3715,27 @@ msgstr "Préfixe de nom"
 
 #: helper/memory-display.c:226
 msgid "Name suffix"
-msgstr ""
+msgstr "Suffixe de nom"
 
 #: helper/memory-display.c:227
 msgid "Nick name"
-msgstr ""
+msgstr "Pseudo"
 
 #: helper/memory-display.c:228
 msgid "Company"
-msgstr ""
+msgstr "Société"
 
 #: helper/memory-display.c:229
 msgid "Job title"
-msgstr ""
+msgstr "Intitulé de poste"
 
 #: helper/memory-display.c:230
 msgid "Street address"
-msgstr ""
+msgstr "Nom de rue"
 
 #: helper/memory-display.c:231
 msgid "City"
-msgstr ""
+msgstr "Ville"
 
 #: helper/memory-display.c:232
 msgid "State"
@@ -3740,106 +3743,108 @@ msgstr "État"
 
 #: helper/memory-display.c:233
 msgid "Zip code"
-msgstr ""
+msgstr "Code postal"
 
 #: helper/memory-display.c:234
 msgid "Country"
-msgstr ""
+msgstr "Pays"
 
 #: helper/memory-display.c:235
 msgid "Custom text 1"
-msgstr ""
+msgstr "Texte personnalisé 1"
 
 #: helper/memory-display.c:236
 msgid "Custom text 2"
-msgstr ""
+msgstr "Texte personnalisé 2"
 
 #: helper/memory-display.c:237
 msgid "Custom text 3"
-msgstr ""
+msgstr "Texte personnalisé 3"
 
 #: helper/memory-display.c:238
 msgid "Custom text 4"
-msgstr ""
+msgstr "Texte personnalisé 4"
 
 #: helper/memory-display.c:239
 msgid "Push to talk ID"
-msgstr ""
+msgstr "ID Push to Talk"
 
 #: helper/memory-display.c:242
 msgid "unknown field type"
-msgstr ""
+msgstr "Type de champ inconnu"
 
 #: helper/memory-display.c:249 helper/message-display.c:128
 msgid "home"
-msgstr ""
+msgstr "domicile"
 
 #: helper/memory-display.c:252 helper/message-display.c:131
 msgid "work"
-msgstr ""
+msgstr "travail"
 
 #: helper/message-cmdline.c:184
 msgid "Not enough parameters!"
-msgstr ""
+msgstr "Pas assez de paramètres !"
 
 #: helper/message-cmdline.c:208
 #, c-format
 msgid "What format of sms (\"%s\") ?\n"
-msgstr ""
+msgstr "Quel format de sms (\"%s\") ?\n"
 
 #: helper/message-cmdline.c:233 helper/message-cmdline.c:250
 msgid "Where are parameters?"
-msgstr ""
+msgstr "Où sont les paramètres ?"
 
 #: helper/message-cmdline.c:264
 msgid "Where is ringtone filename?"
-msgstr ""
+msgstr "Où est le nom de fichier de la sonnerie ?"
 
 #: helper/message-cmdline.c:282 helper/message-cmdline.c:300
 #: helper/message-cmdline.c:351
 msgid "Where is logo filename?"
-msgstr ""
+msgstr "Où est le nom de fichier du logo ?"
 
 #: helper/message-cmdline.c:318
 msgid "Where is number of frames?"
-msgstr ""
+msgstr "Où est le nombre de trames ?"
 
 #: helper/message-cmdline.c:326
 msgid "Too many animation frames!"
-msgstr ""
+msgstr "Trop de trames d’animation !"
 
 #: helper/message-cmdline.c:357
 #, c-format
 msgid "File \"%s\"\n"
-msgstr ""
+msgstr "Le fichier \"%s\"\n"
 
 #: helper/message-cmdline.c:384
 msgid "Bookmark not found in file"
-msgstr ""
+msgstr "Favoris non trouvés dans le fichier"
 
 #: helper/message-cmdline.c:408
 msgid "WAP settings not found in file"
-msgstr ""
+msgstr "Paramètres WAP introuvables dans le fichier"
 
 #: helper/message-cmdline.c:429
 msgid "Sorry. For now there is only support for GPRS or DATA bearers end"
 msgstr ""
+"Désolé. Pour l’instant, seul les porteuses de fin GPRS et données sont "
+"prises en charges"
 
 #: helper/message-cmdline.c:452
 msgid "MMS settings not found in file"
-msgstr ""
+msgstr "Paramètres MMS non trouvés dans le fichier"
 
 #: helper/message-cmdline.c:466
 msgid "Sorry. No GPRS bearer found in MMS settings"
-msgstr ""
+msgstr "Désolé. Aucune porteuse GPRS trouvée dans les  paramètres MMS"
 
 #: helper/message-cmdline.c:512
 msgid "ToDo note not found in file"
-msgstr ""
+msgstr "ToDo note non trouvée dans le fichier"
 
 #: helper/message-cmdline.c:574
 msgid "Backup functionality not compiled in!"
-msgstr ""
+msgstr "Fonctionnalités de sauvegarde non compilées !"
 
 #: helper/message-cmdline.c:1055
 #, c-format
@@ -3849,109 +3854,109 @@ msgstr "Longueur du message erronée (\"%s\")\n"
 #: helper/message-cmdline.c:1078
 #, c-format
 msgid "Unknown GSM network code (\"%s\")\n"
-msgstr ""
+msgstr "Code de réseau GSM inconnu (\"%s\")\n"
 
 #: helper/message-cmdline.c:1097
 #, c-format
 msgid "You have to give number between 1 and 7 (\"%s\")\n"
-msgstr ""
+msgstr "Vous devez donner un nombre entre 1 et 7 (\"%s\")\n"
 
 #: helper/message-cmdline.c:1136
 #, c-format
 msgid "Unknown validity string (\"%s\")\n"
-msgstr ""
+msgstr "Chaîne de validité inconnue (\"%s\")\n"
 
 #: helper/message-cmdline.c:1174
 #, c-format
 msgid "You have to give number of EMS frames between 1 and 4 (\"%s\")\n"
-msgstr ""
+msgstr "Vous devez donner un nombre de trames EMS entre 1 et 4 (\"%s\")\n"
 
 #: helper/message-cmdline.c:1186 helper/message-cmdline.c:1203
 #, c-format
 msgid "Can't open file \"%s\"\n"
-msgstr ""
+msgstr "Impossible d’ouvrir le fichier \"%s\"\n"
 
 #: helper/message-cmdline.c:1252
 #, c-format
 msgid "Unknown parameter (\"%c\")\n"
-msgstr ""
+msgstr "Paramètre inconnu (\"%c\")\n"
 
 #: helper/message-cmdline.c:1257
 msgid "Last parameter wasn't text"
-msgstr ""
+msgstr "Le dernier paramètre n'était pas du texte"
 
 #: helper/message-cmdline.c:1291
 #, c-format
 msgid "Too long SMS name (\"%s\"), ignored\n"
-msgstr ""
+msgstr "Nom SMS trop long (\"%s\"), ignoré\n"
 
 #: helper/message-cmdline.c:1331
 #, c-format
 msgid "Enter the message text and press %s:\n"
-msgstr ""
+msgstr "Saisissez le texte du message et appuyez sur %s :\n"
 
 #: helper/message-cmdline.c:1333
 msgid "Ctrl+Z"
-msgstr ""
+msgstr "Ctrl+Z"
 
 #: helper/message-cmdline.c:1335
 msgid "Ctrl+D"
-msgstr ""
+msgstr "Ctrl+D"
 
 #: helper/message-cmdline.c:1349
 msgid "No chars read, assuming it is okay!"
-msgstr ""
+msgstr "Pas de caractères lus, en supposant que cela est correct !"
 
 #: helper/message-cmdline.c:1369
 msgid "No network code"
-msgstr ""
+msgstr "Pas de code réseau"
 
 #: helper/message-cmdline.c:1375
 msgid "You have to set network code!"
-msgstr ""
+msgstr "Vous devez définir le code de réseau !"
 
 #: helper/message-cmdline.c:1414
 #, c-format
 msgid "Ringtone too long. %i percent part cut\n"
-msgstr ""
+msgstr "Sonnerie trop longue. %i pourcents  coupé\n"
 
 #: helper/message-cmdline.c:1425
 #, c-format
 msgid "There are %i SMS messages packed and the limit is %i. Exiting\n"
-msgstr ""
+msgstr "Il y a %i  messages SMS conditionnés et la limite est de  %i. Sortie\n"
 
 #: helper/message-cmdline.c:1435
 msgid "Use -smscnumber option to give SMSC number"
-msgstr ""
+msgstr "Utilisez l'option -smscnumber pour définir le numéro SMSC"
 
 #: helper/message-display.c:26
 #, c-format
 msgid "Location %i, folder \"%s\""
-msgstr ""
+msgstr "Emplacement %i, dossier \"%s\""
 
 #: helper/message-display.c:33
 msgid "SIM memory"
-msgstr ""
+msgstr "Mémoire SIM"
 
 #: helper/message-display.c:36
 msgid "phone memory"
-msgstr ""
+msgstr "mémoire téléphone"
 
 #: helper/message-display.c:39
 msgid "phone or SIM memory"
-msgstr ""
+msgstr "mémoire téléphone ou SIM"
 
 #: helper/message-display.c:46
 msgid "Inbox folder"
-msgstr ""
+msgstr "Dossier boîte de réception"
 
 #: helper/message-display.c:112
 msgid "mobile"
-msgstr ""
+msgstr "mobile"
 
 #: helper/message-display.c:118
 msgid "pager"
-msgstr ""
+msgstr "pager"
 
 #: helper/message-display.c:121
 msgid "general"
@@ -3959,11 +3964,11 @@ msgstr "Généralités"
 
 #: helper/message-display.c:145
 msgid "8 bit SMS, cannot be displayed here"
-msgstr ""
+msgstr "SMS 8 bit, impossible d’afficher ici"
 
 #: helper/message-display.c:165
 msgid "SMS status report"
-msgstr ""
+msgstr "Rapport d'état SMS"
 
 #: helper/message-display.c:169 helper/message-display.c:181
 #: helper/message-display.c:233 helper/message-display.c:248
@@ -3977,217 +3982,219 @@ msgstr "Lu"
 
 #: helper/message-display.c:171 helper/message-display.c:291
 msgid "UnRead"
-msgstr ""
+msgstr "Non lu"
 
 #: helper/message-display.c:172 helper/message-display.c:292
 msgid "UnSent"
-msgstr ""
+msgstr "Non envoyé"
 
 #: helper/message-display.c:176 helper/message-display.c:279
 msgid "Remote number"
 msgid_plural "Remote numbers"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Numéro distant"
+msgstr[1] "Numéros distants"
 
 #: helper/message-display.c:180 helper/message-display.c:245
 msgid "Reference number"
-msgstr ""
+msgstr "Numéro de référence"
 
 #: helper/message-display.c:182 helper/message-display.c:230
 msgid "SMSC number"
-msgstr ""
+msgstr "Numéro SMSC"
 
 #: helper/message-display.c:183
 msgid "SMSC response"
-msgstr ""
+msgstr "réponse SMSC"
 
 #: helper/message-display.c:184
 msgid "Delivery status"
-msgstr ""
+msgstr "État de délivrance"
 
 #: helper/message-display.c:185
 msgid "Details"
-msgstr ""
+msgstr "Détails"
 
 #: helper/message-display.c:188 helper/message-display.c:193
 msgid "Temporary error, "
-msgstr ""
+msgstr "Erreur temporaire, "
 
 #: helper/message-display.c:190
 msgid "Permanent error, "
-msgstr ""
+msgstr "Erreur permanente, "
 
 #: helper/message-display.c:196
 msgid "SM received by the SME"
-msgstr ""
+msgstr "SM reçu par le SME"
 
 #: helper/message-display.c:197
 msgid ""
 "SM forwarded by the SC to the SME but the SC is unable to confirm delivery"
 msgstr ""
+"SM transféré par le SC au SME, mais le SC est pas en mesure de confirmer la "
+"délivrance"
 
 #: helper/message-display.c:198
 msgid "SM replaced by the SC"
-msgstr ""
+msgstr "SM remplacé par la SC"
 
 #: helper/message-display.c:199 helper/message-display.c:215
 msgid "Congestion"
-msgstr ""
+msgstr "Congestion"
 
 #: helper/message-display.c:200 helper/message-display.c:216
 msgid "SME busy"
-msgstr ""
+msgstr "SME occupé"
 
 #: helper/message-display.c:201 helper/message-display.c:217
 msgid "No response from SME"
-msgstr ""
+msgstr "Pas de réponse du SME"
 
 #: helper/message-display.c:202 helper/message-display.c:218
 msgid "Service rejected"
-msgstr ""
+msgstr "Service rejeté"
 
 #: helper/message-display.c:203 helper/message-display.c:209
 #: helper/message-display.c:219
 msgid "Quality of service not available"
-msgstr ""
+msgstr "Qualité du service non disponible"
 
 #: helper/message-display.c:204 helper/message-display.c:220
 msgid "Error in SME"
-msgstr ""
+msgstr "Erreur dans le SME"
 
 #: helper/message-display.c:205
 msgid "Remote procedure error"
-msgstr ""
+msgstr "Erreur de procédure distante"
 
 #: helper/message-display.c:206
 msgid "Incompatible destination"
-msgstr ""
+msgstr "Destination incompatible"
 
 #: helper/message-display.c:207
 msgid "Connection rejected by SME"
-msgstr ""
+msgstr "Connexion rejetée par le SME"
 
 #: helper/message-display.c:208
 msgid "Not obtainable"
-msgstr ""
+msgstr "Non disponible"
 
 #: helper/message-display.c:210
 msgid "No internetworking available"
-msgstr ""
+msgstr "Aucune interconnexion disponible"
 
 #: helper/message-display.c:211
 msgid "SM Validity Period Expired"
-msgstr ""
+msgstr "Période de validité SM expirée"
 
 #: helper/message-display.c:212
 msgid "SM deleted by originating SME"
-msgstr ""
+msgstr "SM supprimé par SME originaire"
 
 #: helper/message-display.c:213
 msgid "SM Deleted by SC Administration"
-msgstr ""
+msgstr "SM supprimé par l'administration SC"
 
 #: helper/message-display.c:214
 msgid "SM does not exist"
-msgstr ""
+msgstr "SM n'existe pas"
 
 #: helper/message-display.c:221
 #, c-format
 msgid "Reserved/Specific to SC: %x"
-msgstr ""
+msgstr "Réservés/spécifique à SC : %x"
 
 #: helper/message-display.c:226 helper/message-display.c:243
 msgid "SMS message"
-msgstr ""
+msgstr "Message SMS"
 
 #: helper/message-display.c:228
 msgid "Saved"
-msgstr ""
+msgstr "Enregistré"
 
 #: helper/message-display.c:231
 msgid " (set for reply)"
-msgstr ""
+msgstr " (défini pour répondre)"
 
 #: helper/message-display.c:240
 msgid "SMS replacing ID"
-msgstr ""
+msgstr "ID de remplacement SMS"
 
 #: helper/message-display.c:255
 msgid "Class"
-msgstr ""
+msgstr "Classe"
 
 #: helper/message-display.c:257
 msgid "Coding"
-msgstr ""
+msgstr "Codage"
 
 #: helper/message-display.c:260
 msgid "Unicode (no compression)"
-msgstr ""
+msgstr "Unicode (sans compression)"
 
 #: helper/message-display.c:263
 msgid "Unicode (compression)"
-msgstr ""
+msgstr "Unicode (compression)"
 
 #: helper/message-display.c:266
 msgid "Default GSM alphabet (no compression)"
-msgstr ""
+msgstr "Alphabet GSM par défaut (sans compression)"
 
 #: helper/message-display.c:269
 msgid "Default GSM alphabet (compression)"
-msgstr ""
+msgstr "Alphabet GSM par défaut (compression)"
 
 #. l10n: 8-bit message coding
 #: helper/message-display.c:273
 msgid "8-bit"
-msgstr ""
+msgstr "8-bit"
 
 #: helper/message-display.c:296
 msgid "User Data Header"
-msgstr ""
+msgstr "En-tête des données utilisateur"
 
 #: helper/message-display.c:298 helper/message-display.c:299
 msgid "Concatenated (linked) message"
-msgstr ""
+msgstr "Message concaténé (lié)"
 
 #: helper/message-display.c:300
 msgid "Disables voice indicator"
-msgstr ""
+msgstr "Désactive l'indicateur vocal"
 
 #: helper/message-display.c:301
 msgid "Enables voice indicator"
-msgstr ""
+msgstr "Permet l'indicateur vocal"
 
 #: helper/message-display.c:302
 msgid "Disables fax indicator"
-msgstr ""
+msgstr "Désactive l'indicateur de télécopie"
 
 #: helper/message-display.c:303
 msgid "Enables fax indicator"
-msgstr ""
+msgstr "Active l'indicateur de télécopie"
 
 #: helper/message-display.c:304
 msgid "Disables email indicator"
-msgstr ""
+msgstr "Désactive l'indicateur d'email"
 
 #: helper/message-display.c:305
 msgid "Enables email indicator"
-msgstr ""
+msgstr "Active l'indicateur d'email"
 
 #: helper/message-display.c:306
 msgid "Void SMS"
-msgstr ""
+msgstr "SMS vide"
 
 #: helper/message-display.c:307
 msgid "Nokia WAP bookmark"
-msgstr ""
+msgstr "favoris WAp Nokia"
 
 #: helper/message-display.c:308
 msgid "Nokia operator logo"
-msgstr ""
+msgstr "Logo opérateur Nokia"
 
 #: helper/message-display.c:309
 msgid "Nokia WAP bookmark or WAP/MMS settings"
-msgstr ""
+msgstr "favoris WAp Nokia ou paramètres WAP/MMS"
 
 #: helper/message-display.c:310 helper/message-display.c:311
 msgid "Nokia ringtone"
@@ -4195,78 +4202,80 @@ msgstr "Sonnerie Nokia"
 
 #: helper/message-display.c:312
 msgid "Nokia GSM operator logo"
-msgstr ""
+msgstr "Logo opérateur Nokia GSM"
 
 #: helper/message-display.c:313
 msgid "Nokia caller logo"
-msgstr ""
+msgstr "Logo de l'appelant Nokia"
 
 #: helper/message-display.c:314
 msgid "Nokia profile"
-msgstr ""
+msgstr "Profil Nokia"
 
 #: helper/message-display.c:315
 msgid "Nokia calendar note"
-msgstr ""
+msgstr "Note du calendrier Nokia"
 
 #: helper/message-display.c:316
 msgid "Nokia phonebook entry"
-msgstr ""
+msgstr "Entrée du répertoire Nokia"
 
 #: helper/message-display.c:317
 msgid "User UDH"
-msgstr ""
+msgstr "Utilisateur UDH"
 
 #: helper/message-display.c:318
 msgid "MMS indicator"
-msgstr ""
+msgstr "Indicateur MMS"
 
 #: helper/message-display.c:322
 #, c-format
 msgid ", ID (8 bit) %i"
-msgstr ""
+msgstr ", ID (8 bit) %i"
 
 #: helper/message-display.c:323
 #, c-format
 msgid ", ID (16 bit) %i"
-msgstr ""
+msgstr ", ID (16 bit) %i"
 
 #: helper/message-display.c:326
 #, c-format
 msgid ", part %i of %i"
-msgstr ""
+msgstr ", partie %i de %i"
 
 #: helper/message-display.c:328
 #, c-format
 msgid ", %i parts"
-msgstr ""
+msgstr ", %i parties"
 
 #: helper/message-display.c:339
 msgid "Siemens file"
-msgstr ""
+msgstr "Fichier Siemens"
 
 #: helper/message-display.c:347
 #, c-format
 msgid "Unknown PDU type: 0x%x\n"
-msgstr ""
+msgstr "Type PDU inconnu : 0x%x\n"
 
 #: helper/message-display.c:394
 msgid ""
 "Some details were ignored (unknown or not implemented in decoding functions)"
 msgstr ""
+"Certains détails ont été ignorés (inconnu ou non implémenté dans les "
+"fonctions de décodage)"
 
 #: helper/message-display.c:399
 msgid "Siemens OTA file"
-msgstr ""
+msgstr "Fichier Siemens OTA"
 
 #: helper/message-display.c:401
 msgid " - VCARD"
-msgstr ""
+msgstr " - VCARD"
 
 #: helper/message-display.c:415
 #, c-format
 msgid "Ringtone \"%s\"\n"
-msgstr ""
+msgstr "Sonnerie \"%s\"\n"
 
 #: helper/message-display.c:420
 msgid "Do you want to play it?"
@@ -4279,7 +4288,7 @@ msgstr "Logo de l'appelant"
 #: helper/message-display.c:429
 #, c-format
 msgid "Operator logo for %s network"
-msgstr ""
+msgstr "Logo de l'opérateur pour le réseau %s"
 
 #: helper/message-display.c:449
 msgid "Profile"
@@ -4291,7 +4300,7 @@ msgstr "EMS son ID"
 
 #: helper/message-display.c:473
 msgid "EMS animation ID"
-msgstr ""
+msgstr "ID d’animation EMS"
 
 #: helper/message-display.c:479
 msgid "Message size"
@@ -4304,7 +4313,7 @@ msgstr "Erreur"
 
 #: helper/message-display.c:545
 msgid "Data PDU"
-msgstr ""
+msgstr "Données PDU"
 
 #: helper/message-display.c:546
 msgid "Number of bits"
@@ -4312,7 +4321,7 @@ msgstr "Nombre de bit"
 
 #: helper/message-display.c:548
 msgid "UDH"
-msgstr ""
+msgstr "UDH"
 
 #: helper/message-display.c:564
 msgid "Whole PDU"
