@@ -1655,6 +1655,10 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 
 		if (error != ERR_NONE) return error;
 
+		/* Try to parse text here, we ignore error code intentionally */
+		ussd.Text[0] = 0;
+		ussd.Text[1] = 0;
+
 		/* Decode status */
 		smprintf(s, "Status: %d\n", code);
 		switch(code) {
@@ -1672,17 +1676,13 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 				break;
 			case 4:
 				ussd.Status = USSD_NotSupported;
-				break;
+				return ERR_NETWORK_ERROR;
 			case 5:
 				ussd.Status = USSD_Timeout;
-				break;
+				return ERR_TIMEOUT;
 			default:
 				ussd.Status = USSD_Unknown;
 		}
-
-		/* Try to parse text here, we ignore error code intentionally */
-		ussd.Text[0] = 0;
-		ussd.Text[1] = 0;
 
 		error = ATGEN_ParseReply(s, pos,
 					"+CUSD: @i, @r, @i @0",
