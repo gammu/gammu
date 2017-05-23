@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSDRC" "5" "Mar 28, 2017" "1.38.3" "Gammu"
+.TH "GAMMU-SMSDRC" "5" "May 23, 2017" "1.38.3" "Gammu"
 .SH NAME
 gammu-smsdrc \- gammu-smsd(1) configuration file
 .
@@ -242,7 +242,8 @@ Default is 0, what should mean no extra information.
 .INDENT 0.0
 .TP
 .B CommTimeout
-How many seconds should SMSD wait after there is no message in outbox.
+How many seconds should SMSD wait after there is no message in outbox
+before scanning it again.
 .sp
 Default is 30.
 .UNINDENT
@@ -277,7 +278,9 @@ Default is 15.
 The number of seconds between refreshing phone status (battery, signal) stored
 in shared memory and possibly in service backends. Use 0 to disable.
 .sp
-Default is 15.
+You might want to increase this for higher throughput.
+.sp
+Default is 60.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -288,7 +291,13 @@ effects to other time based configurations, because they will be effectively
 rounded to multiply of this value.
 .sp
 Setting this to 0 disables sleeping. Please note this might cause Gammu to
-consume quite a lot of CPU power.
+consume quite a lot of CPU power as it will effectively do busy loop.
+.sp
+This sleep is utilized only if the main loop (sending and receiving
+messages) takes less than defined time. For example if you set LoopSleep to
+5 seconds and sending messages take 10 seconds, no sleep will be done in
+the iteration which is sending messages. Also the sleep time is lowered by
+the already processed time.
 .sp
 Default is 1.
 .UNINDENT

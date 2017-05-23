@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSD-ODBC" "7" "Mar 28, 2017" "1.38.3" "Gammu"
+.TH "GAMMU-SMSD-ODBC" "7" "May 23, 2017" "1.38.3" "Gammu"
 .SH NAME
 gammu-smsd-odbc \- gammu-smsd(1) backend using ODBC abstraction layer to use any supported database as a message storage
 .
@@ -48,10 +48,15 @@ On Microsoft Windows, Gammu uses native ODBC, on other platforms, \fI\%unixODBC\
 can be used.
 .SH LIMITATIONS
 .sp
-Due to limits of the ODBC interface, you might have to tweak SQL queries to
-work in used SQL server, see SQL Queries for more details.
+Due to limits of the ODBC interface, Gammu can not reliably detect which SQL
+engine it is connected to.
 .sp
-Partially this can be configured using \fBSQL\fP\&.
+In most cases this can be solved by setting \fBSQL\fP setting to
+correct dialect.
+.sp
+If that fails, you can also tweak the SQL queries to work in used SQL server,
+see SQL Queries for more details. Still you should set
+\fBSQL\fP to closest matching SQL dialect.
 .SH CONFIGURATION
 .sp
 Before running gammu\-smsd you need to create necessary tables in the
