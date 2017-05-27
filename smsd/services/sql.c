@@ -677,13 +677,14 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 				smsc = db->GetString(Config, &res, 4);
 				state = db->GetString(Config, &res, 1);
 				SMSD_Log(DEBUG_NOTICE, Config, "Checking for delivery report, SMSC=%s, state=%s", smsc, state);
-
-				if (strcmp(smsc, smsc_message) != 0) {
+			//turn off smsc checking
+			/*	if (strcmp(smsc, smsc_message) != 0) {
 					if (Config->skipsmscnumber[0] == 0 || strcmp(Config->skipsmscnumber, smsc)) {
 						SMSD_Log(DEBUG_ERROR, Config, "Failed to match SMSC, you might want to use SkipSMSCNumber (sent: %s, received: %s)", smsc_message, smsc);
 						continue;
 					}
 				}
+            */
 
 				if (strcmp(state, "SendingOK") == 0 || strcmp(state, "DeliveryPending") == 0) {
 					t_time1 = db->GetDate(Config, &res, 2);
@@ -1392,8 +1393,9 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 			"FROM ", Config->table_sentitems, " WHERE ",
 			ESCAPE_FIELD("DeliveryDateTime"), " IS NULL AND ",
 			ESCAPE_FIELD("SenderID"), " = %P AND ",
-			ESCAPE_FIELD("TPMR"), " = %t AND ",
-			ESCAPE_FIELD("DestinationNumber"), " = %R", NULL) != ERR_NONE) {
+			ESCAPE_FIELD("TPMR"), " = %t AND (",
+			ESCAPE_FIELD("DestinationNumber"), " = %R OR ",
+			ESCAPE_FIELD("DestinationNumber"), " = replace(%R,'+48',''))", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
 
