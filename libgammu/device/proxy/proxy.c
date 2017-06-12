@@ -158,7 +158,7 @@ ssize_t write_nosigpipe(int fd, const void *buf, size_t len)
     sigset_t oldset, newset;
     ssize_t result;
     siginfo_t si;
-    struct timespec ts = {0};
+    struct timespec ts = {0, 0};
 
     sigemptyset(&newset);
     sigaddset(&newset, SIGPIPE);
