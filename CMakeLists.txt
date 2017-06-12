@@ -430,7 +430,7 @@ if(MSVC)
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /Zi")
     set(CMAKE_SHARED_LINKER_FLAGS_RELEASE "${CMAKE_SHARED_LINKER_FLAGS_RELEASE} /DEBUG /OPT:REF /OPT:ICF")
     set(MATH_LIBS "")
-    
+
    # Call cmake with "-DMSVC_RUNTIME=static" to link with static runtime libraries
    configure_msvc_runtime()
 else(MSVC)
@@ -490,16 +490,13 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_MINGW OR
         MACRO_TUNE_COMPILER("-Wno-format-security")
     endif (WIN32 AND NOT CYGWIN)
 
-    # This is extremely noisy, use only in debug builds
-    if (DEBUG)
-        MACRO_TUNE_COMPILER("-Wextra")
-        if (NOT CLANG_COMPILER)
-            MACRO_TUNE_COMPILER("-Wunused-but-set-variable")
-        endif (NOT CLANG_COMPILER)
-        # Just silent this for now, too much code to fix here
-        MACRO_TUNE_COMPILER("-Wno-unused-parameter")
-        # Not sure if this is safe for all architectures
-    endif (DEBUG)
+    # Enable extra warnings
+    MACRO_TUNE_COMPILER("-Wextra")
+    if (NOT CLANG_COMPILER)
+        MACRO_TUNE_COMPILER("-Wunused-but-set-variable")
+    endif (NOT CLANG_COMPILER)
+    # Just silent this for now, too much code to fix here
+    MACRO_TUNE_COMPILER("-Wno-unused-parameter")
 
     #
     # Security related flags
