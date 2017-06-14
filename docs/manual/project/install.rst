@@ -580,4 +580,8 @@ You can install it using pip installer:
 
     pip install python-gammu
 
+You need to have Gammu installed for compiling python-gammu. It's location is
+discovered using pkg-config or by GAMMU_PATH environment variable. The latter
+is recommended when building on Windows.
+
 .. _CMake: http://www.cmake.org/
