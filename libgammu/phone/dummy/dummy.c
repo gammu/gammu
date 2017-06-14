@@ -51,7 +51,7 @@
 #ifndef S_ISDIR
 #define S_ISDIR(mode) ((mode & _S_IFDIR) == _S_IFDIR)
 #endif
-#include "../../../helper/win32-dirent.h"
+#include "../../../libgammu/misc/win32-dirent.h"
 #else
 #define MKDIR(dir) mkdir(dir, 0755)
 #include <dirent.h>

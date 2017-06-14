@@ -18,7 +18,7 @@
 #include <stdio.h>
 #include <limits.h>
 #ifdef WIN32
-#include "../../../helper/win32-dirent.h"
+#include "../../../libgammu/misc/win32-dirent.h"
 #else
 #include <dirent.h>
 #endif
