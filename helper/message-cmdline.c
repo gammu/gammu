@@ -17,7 +17,7 @@
 
 #include "formats.h"
 #include "printing.h"
-#include "string.h"
+#include "../libgammu/misc/string.h"
 #include "message-cmdline.h"
 #include "cmdline.h"
 
