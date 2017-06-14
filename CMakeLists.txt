@@ -890,7 +890,7 @@ set (CPACK_COMPONENT_EXAMPLES_GROUP "Documentation")
 set (CPACK_COMPONENT_MANUAL_GROUP "Documentation")
 set (CPACK_COMPONENT_MEDIA_GROUP "Documentation")
 
-set (CPACK_ALL_INSTALL_TYPES Standard Developer Full)
+set (CPACK_ALL_INSTALL_TYPES Full Standard Developer)
 
 set (CPACK_COMPONENT_GAMMU_INSTALL_TYPES Standard Developer Full)
 set (CPACK_COMPONENT_SMSD_INSTALL_TYPES Standard Developer Full)
