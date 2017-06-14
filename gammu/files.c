@@ -26,7 +26,7 @@
 
 #include "../helper/formats.h"
 #include "../helper/printing.h"
-#include "../helper/string.h"
+#include "../libgammu/misc/string.h"
 
 /**
  * Displays status of filesystem (if available).

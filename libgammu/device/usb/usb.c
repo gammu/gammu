@@ -23,7 +23,7 @@
 
 #include "../../gsmcomon.h"
 
-#include "../../../helper/string.h"
+#include "../../../libgammu/misc/string.h"
 
 /**
  * Nokia USB vendor ID.

@@ -125,11 +125,6 @@ if(CMAKE_COMPILER_IS_MINGW AND BUILD_SHARED_LIBS)
 endif(CMAKE_COMPILER_IS_MINGW AND BUILD_SHARED_LIBS)
 
 target_link_libraries (gsmsd libGammu)
-if (NOT HAVE_STRPTIME)
-    target_link_libraries (gsmsd strptime)
-endif (NOT HAVE_STRPTIME)
-target_link_libraries (gsmsd string)
-target_link_libraries (gsmsd array)
 
 # Gammu-smsd program
 add_executable (gammu-smsd ${DAEMON_SRC} ${SMSD_RESOURCES})

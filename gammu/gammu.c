@@ -26,7 +26,7 @@
 
 #include "../helper/locales.h"
 #include "../helper/printing.h"
-#include "../helper/string.h"
+#include "../libgammu/misc/string.h"
 #include "../helper/cmdline.h"
 
 #ifdef DEBUG

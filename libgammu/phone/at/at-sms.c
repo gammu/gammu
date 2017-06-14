@@ -33,7 +33,7 @@
 #include "atgen.h"
 #include "atfunc.h"
 
-#include "../../../helper/string.h"
+#include "../../../libgammu/misc/string.h"
 
 GSM_Error ATGEN_SetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 {

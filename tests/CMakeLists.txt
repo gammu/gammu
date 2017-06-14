@@ -44,7 +44,7 @@ add_test(base64 "${GAMMU_TEST_PATH}/base64${CMAKE_EXECUTABLE_SUFFIX}")
 # Array manipulation tests
 add_executable(array-test array-test.c)
 add_coverage(array-test)
-target_link_libraries (array-test array)
+target_link_libraries (array-test libGammu)
 add_test(array "${GAMMU_TEST_PATH}/array-test${CMAKE_EXECUTABLE_SUFFIX}")
 
 # UTF-8 manipulation tests

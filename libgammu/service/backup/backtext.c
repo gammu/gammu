@@ -18,7 +18,7 @@
 #include "../../debug.h"
 #include "backtext.h"
 
-#include "../../../helper/string.h"
+#include "../../../libgammu/misc/string.h"
 
 #ifdef GSM_ENABLE_BACKUP
 

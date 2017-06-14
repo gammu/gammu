@@ -15,7 +15,7 @@
 #include "../../../helper/locales.h"
 
 #include "../../../helper/formats.h"
-#include "../../../helper/string.h"
+#include "../../../libgammu/misc/string.h"
 #include "../../../helper/cmdline.h"
 
 extern GSM_Reply_Function UserReplyFunctions4[];

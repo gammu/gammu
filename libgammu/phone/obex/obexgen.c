@@ -34,7 +34,7 @@
 #include "../../protocol/obex/obex.h"
 #include "obexfunc.h"
 #include "mobex.h"
-#include "../../../helper/string.h"
+#include "../../../libgammu/misc/string.h"
 
 #ifdef GSM_ENABLE_OBEXGEN
 

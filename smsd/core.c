@@ -59,7 +59,7 @@
 #include "log-event.h"
 #endif
 
-#include "../helper/string.h"
+#include "../libgammu/misc/string.h"
 
 #ifndef PATH_MAX
 #ifdef MAX_PATH

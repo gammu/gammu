@@ -13,7 +13,7 @@
 #include "../devfunc.h"
 #include "proxy.h"
 
-#include "../../../helper/string.h"
+#include "../../../libgammu/misc/string.h"
 
 /* Expand a proxy command */
 static char *

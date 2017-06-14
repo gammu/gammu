@@ -2,7 +2,7 @@
  * Simple test case for array manipulations.
  */
 
-#include "../helper/array.h"
+#include "../libgammu/misc/array.h"
 #include "common.h"
 #include <gammu-smsd.h>
 #include "../smsd/services/sql.h" /* For SMSDSQL_ParseDate */

@@ -14,7 +14,7 @@
 #define _DEFAULT_SOURCE
 #include <time.h>
 #include <gammu.h>
-#include "../../helper/strptime.h"
+#include "../../libgammu/misc/strptime.h"
 
 #include <stdarg.h>
 #include <stdlib.h>
@@ -28,7 +28,7 @@
 #endif
 
 #include "../core.h"
-#include "../../helper/string.h"
+#include "../../libgammu/misc/string.h"
 
 /**
  * Returns name of the SQL dialect to use.

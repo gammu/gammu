@@ -12,8 +12,10 @@ set (LIBRARY_SRC
     gsmstate.c
     api.c
     debug.c
+    misc/array.c
     misc/misc.c
     misc/cfg.c
+    misc/string.c
     misc/coding/coding.c
     service/sms/gsmsms.c
     service/sms/gsmems.c
@@ -73,6 +75,10 @@ set (LIBRARY_SRC
     phone/symbian/gnapgen.c
     phone/s60/s60phone.c)
 
+if (NOT HAVE_STRPTIME)
+    list (APPEND LIBRARY_SRC misc/strptime.c)
+endif (NOT HAVE_STRPTIME)
+
 # Own or glib based MD5 implementation
 if (Glib_FOUND)
     list (APPEND LIBRARY_SRC misc/coding/md5-glib.c)
@@ -129,8 +135,6 @@ if(CMAKE_COMPILER_IS_MINGW AND BUILD_SHARED_LIBS)
             COMPONENT library)
 endif(CMAKE_COMPILER_IS_MINGW AND BUILD_SHARED_LIBS)
 
-
-target_link_libraries (libGammu string)
 
 if (Glib_FOUND)
     target_link_libraries (libGammu ${Glib_LIBRARIES} ${GObject_LIBRARIES})

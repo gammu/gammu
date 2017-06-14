@@ -21,7 +21,7 @@
 #include <sql.h>
 #include <sqlext.h>
 
-#include "../../helper/string.h"
+#include "../../libgammu/misc/string.h"
 #include "../core.h"
 #include "sql.h"
 #include "sql-core.h"

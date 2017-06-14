@@ -41,7 +41,7 @@
 
 #include "../../gsmcomon.h"
 #include "ser_w32.h"
-#include "../helper/string.h"
+#include "../libgammu/misc/string.h"
 
 static GSM_Error serial_close(GSM_StateMachine *s)
 {

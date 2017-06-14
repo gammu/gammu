@@ -22,7 +22,7 @@
 #include "../../service/gsmpbk.h"
 #include "atgen.h"
 #include <string.h>
-#include "../../../helper/string.h"
+#include "../../../libgammu/misc/string.h"
 
 typedef struct {
 	char Command[20];

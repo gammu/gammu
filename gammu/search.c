@@ -23,7 +23,7 @@
 #include "common.h"
 
 #include "../helper/formats.h"
-#include "../helper/string.h"
+#include "../libgammu/misc/string.h"
 
 #if defined(HAVE_WIN32_THREADS) || defined(HAVE_PTHREAD)
 /**

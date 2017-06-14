@@ -26,7 +26,7 @@
 #include "gsmcal.h"
 #include "../misc/coding/coding.h"
 
-#include "../../helper/string.h"
+#include "../../libgammu/misc/string.h"
 
 void GSM_SetCalendarRecurranceRepeat(GSM_Debug_Info *di, unsigned char *rec, unsigned char *endday, GSM_CalendarEntry *entry)
 {

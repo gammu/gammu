@@ -24,7 +24,7 @@
 #include "../helper/memory-display.h"
 #include "../helper/message-cmdline.h"
 #include "../helper/printing.h"
-#include "../helper/string.h"
+#include "../libgammu/misc/string.h"
 #include "../helper/cmdline.h"
 
 volatile gboolean 			wasincomingsms 		= FALSE;

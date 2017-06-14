@@ -21,7 +21,7 @@
 #include "misc/misc.h"
 #include "device/devfunc.h"
 
-#include "../helper/string.h"
+#include "../libgammu/misc/string.h"
 
 #if defined(HAVE_GETPWUID) && defined(HAVE_GETUID)
 #include <sys/types.h>

@@ -19,7 +19,7 @@
 #include "backics.h"
 #include "backvnt.h"
 
-#include "../../../helper/string.h"
+#include "../../../libgammu/misc/string.h"
 
 #ifdef GSM_ENABLE_BACKUP
 

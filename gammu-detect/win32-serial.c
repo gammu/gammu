@@ -26,7 +26,7 @@
 
 #include "win32-serial.h"
 #include "main.h"
-#include "../helper/string.c"
+#include "../libgammu/misc/string.c"
 #include "../helper/locales.h"	/* For gettext */
 
 void win32_serial_detect(void)

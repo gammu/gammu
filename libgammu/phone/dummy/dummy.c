@@ -44,7 +44,7 @@
 #include "../../misc/misc.h"
 #include "../pfunc.h"
 #include "dummy.h"
-#include "../../../helper/string.h"
+#include "../../../libgammu/misc/string.h"
 
 #ifdef WIN32
 #define MKDIR(dir) _mkdir(dir)

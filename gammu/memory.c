@@ -12,7 +12,7 @@
 #include "../helper/formats.h"
 #include "../helper/memory-display.h"
 #include "../helper/printing.h"
-#include "../helper/string.h"
+#include "../libgammu/misc/string.h"
 #include "../helper/cmdline.h"
 
 void GetAllMemory(int argc UNUSED, char *argv[])

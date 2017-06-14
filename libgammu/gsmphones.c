@@ -19,7 +19,7 @@
 
 #include <ctype.h>
 
-#include "../helper/string.h"
+#include "../libgammu/misc/string.h"
 
 #define MAX_FEATURE_NAME_LEN 20
 

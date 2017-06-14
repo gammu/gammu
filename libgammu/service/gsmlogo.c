@@ -12,7 +12,7 @@
 #include "gsmlogo.h"
 #include "gsmnet.h"
 
-#include "../../helper/string.h"
+#include "../../libgammu/misc/string.h"
 
 /**
  * Helper define to check error code from fwrite.

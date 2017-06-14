@@ -19,7 +19,7 @@
 
 #include "../helper/formats.h"
 #include "../helper/printing.h"
-#include "../helper/string.h"
+#include "../libgammu/misc/string.h"
 #include "../helper/cmdline.h"
 
 #ifdef GSM_ENABLE_NOKIA_DCT3

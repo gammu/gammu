@@ -21,7 +21,7 @@
 
 #include "log.h"
 
-#include "../helper/array.h"
+#include "../libgammu/misc/array.h"
 
 typedef enum {
 	DEBUG_ERROR = -1,
