@@ -19,7 +19,7 @@ the issue.
 ChangeLog
 =========
     
-2017???? - 1.38.4
+20170618 - 1.38.4
 
 [-] * Improved support for Huawei E3531 and E1756.
 [-] * Fixed several issues with using library on Windows.
