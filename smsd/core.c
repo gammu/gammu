@@ -60,7 +60,7 @@
 #endif
 
 #include "../libgammu/misc/string.h"
-
+#include "../include/gammu-message.h"
 #ifndef PATH_MAX
 #ifdef MAX_PATH
 #define PATH_MAX (MAX_PATH)
@@ -1060,6 +1060,9 @@ void SMSD_RunOnReceiveEnvironment(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Conf
 	for (i = 0; i < sms->Number; i++) {
 		sprintf(buffer, "%d", sms->SMS[i].Class);
 		sprintf(name, "SMS_%d_CLASS", i + 1);
+		setenv(name, buffer, 1);
+		sprintf(buffer, "%d", sms->SMS[i].MessageReference);
+		sprintf(name, "SMS_%d_REFERENCE", i + 1);
 		setenv(name, buffer, 1);
 		sprintf(name, "SMS_%d_NUMBER", i + 1);
 		setenv(name, DecodeUnicodeConsole(sms->SMS[i].Number), 1);
