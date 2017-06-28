@@ -60,7 +60,7 @@
 #endif
 
 #include "../libgammu/misc/string.h"
-#include "../include/gammu-message.h"
+
 #ifndef PATH_MAX
 #ifdef MAX_PATH
 #define PATH_MAX (MAX_PATH)
