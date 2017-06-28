@@ -73,6 +73,12 @@ message, where 1 is replaced by current number of message.
 
     Message text. Text is not available for 8-bit binary messages.
 
+.. envvar:: SMS_1_REFERENCE
+
+    .. versionadded:: 1.38.5
+
+    Message Reference. If delivery status received, this variable contains TPMR of original message
+
 Per part variables
 ++++++++++++++++++
 

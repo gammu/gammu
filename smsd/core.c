@@ -1061,6 +1061,9 @@ void SMSD_RunOnReceiveEnvironment(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Conf
 		sprintf(buffer, "%d", sms->SMS[i].Class);
 		sprintf(name, "SMS_%d_CLASS", i + 1);
 		setenv(name, buffer, 1);
+		sprintf(buffer, "%d", sms->SMS[i].MessageReference);
+		sprintf(name, "SMS_%d_REFERENCE", i + 1);
+		setenv(name, buffer, 1);
 		sprintf(name, "SMS_%d_NUMBER", i + 1);
 		setenv(name, DecodeUnicodeConsole(sms->SMS[i].Number), 1);
 		if (sms->SMS[i].Coding != SMS_Coding_8bit && sms->SMS[i].UDH.Type != UDH_UserUDH) {
