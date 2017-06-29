@@ -1393,7 +1393,12 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 			ESCAPE_FIELD("DeliveryDateTime"), " IS NULL AND ",
 			ESCAPE_FIELD("SenderID"), " = %P AND ",
 			ESCAPE_FIELD("TPMR"), " = %t AND ",
-			ESCAPE_FIELD("DestinationNumber"), " = %R", NULL) != ERR_NONE) {
+			"("
+			"if(substr(", ESCAPE_FIELD("DestinationNumber"),",1,2) = '00',concat('+',substr(", ESCAPE_FIELD("DestinationNumber"), " FROM 3)),", ESCAPE_FIELD("DestinationNumber"),") = %R",
+				" OR ",
+			"if(substr(", ESCAPE_FIELD("DestinationNumber"), ",1,1) = '+',concat('+',substr(", ESCAPE_FIELD("DestinationNumber"), " FROM 2)),", ESCAPE_FIELD("DestinationNumber"), ") = %R",
+			")",
+		NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
 
