@@ -1116,7 +1116,7 @@ void SMSD_RunOnReceiveEnvironment(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Conf
  *
  * This is Windows variant.
  */
-gboolean SMSD_RunOn(const char *command, GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, const char *locations)
+gboolean SMSD_RunOn(const char *command, GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, const char *locations, const char *event)
 {
 	BOOL ret;
 	STARTUPINFO si;
@@ -1134,7 +1134,7 @@ gboolean SMSD_RunOn(const char *command, GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 	si.cb = sizeof(si);
 	ZeroMemory(&pi, sizeof(pi));
 
-	SMSD_Log(DEBUG_INFO, Config, "Starting run on command: %s", cmdline);
+	SMSD_Log(DEBUG_INFO, Config, "Starting run on %s: %s", event, cmdline);
 
 	ret = CreateProcess(NULL,     /* No module name (use command line) */
 			cmdline,	/* Command line */
@@ -1163,7 +1163,7 @@ gboolean SMSD_RunOn(const char *command, GSM_MultiSMSMessage *sms, GSM_SMSDConfi
  *
  * This is POSIX variant.
  */
-gboolean SMSD_RunOn(const char *command, GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, const char *locations)
+gboolean SMSD_RunOn(const char *command, GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, const char *locations, const char *event)
 {
 	int pid;
 	int pipefd[2];
@@ -1256,7 +1256,7 @@ out:
 
 	/* Calculate command line */
 	cmdline = SMSD_RunOnCommand(locations, command);
-	SMSD_Log(DEBUG_INFO, Config, "Starting run on receive: %s", cmdline);
+	SMSD_Log(DEBUG_INFO, Config, "Starting run on %s: %s", event, cmdline);
 
 	/* Close all file descriptors */
 	for (i = 0; i < 255; i++) {
@@ -1366,7 +1366,7 @@ GSM_Error SMSD_ProcessSMS(GSM_SMSDConfig *Config, GSM_MultiSMSMessage *sms)
 	error = Config->Service->SaveInboxSMS(sms, Config, &locations);
 	/* RunOnReceive handling */
 	if (Config->RunOnReceive != NULL && error == ERR_NONE) {
-		SMSD_RunOn(Config->RunOnReceive, sms, Config, locations);
+		SMSD_RunOn(Config->RunOnReceive, sms, Config, locations, "receive");
 	}
 	/* Free memory allocated by SaveInboxSMS */
 	free(locations);
@@ -1790,13 +1790,13 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config)
 	}
 
 	if (Config->RunOnSent != NULL && error == ERR_NONE) {
-		SMSD_RunOn(Config->RunOnSent, &sms, Config, Config->SMSID);
+		SMSD_RunOn(Config->RunOnSent, &sms, Config, Config->SMSID, "sent");
 	}
 
 	return ERR_NONE;
 failure_unsent:
 	if (Config->RunOnFailure != NULL) {
-		SMSD_RunOn(Config->RunOnFailure, NULL, Config, Config->SMSID);
+		SMSD_RunOn(Config->RunOnFailure, NULL, Config, Config->SMSID, "failure");
 	}
 	Config->Status->Failed++;
 
@@ -2013,7 +2013,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 			error = GSM_InitConnection_Log(Config->gsm, 2, SMSD_Log_Function, Config);
 			/* run on error */
 			if (error != ERR_NONE && Config->RunOnFailure != NULL) {
-				SMSD_RunOn(Config->RunOnFailure, NULL, Config, "INIT");
+				SMSD_RunOn(Config->RunOnFailure, NULL, Config, "INIT", "failure");
 			}
 			switch (error) {
 			case ERR_NONE:
@@ -2042,7 +2042,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 						error = Config->Service->InitAfterConnect(Config);
 						if (error!=ERR_NONE) {
 							if (Config->RunOnFailure != NULL) {
-								SMSD_RunOn(Config->RunOnFailure, NULL, Config, "INIT");
+								SMSD_RunOn(Config->RunOnFailure, NULL, Config, "INIT", "failure");
 							}
 							SMSD_Terminate(Config, "Post initialisation failed, stopping Gammu smsd", error, TRUE, -1);
 							goto done_connected;
