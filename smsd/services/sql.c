@@ -384,7 +384,16 @@ static GSM_Error SMSDSQL_NamedQuery(GSM_SMSDConfig * Config, const char *sql_que
 				if (sms != NULL) {
 					switch (c) {
 						case 'R':
-							EncodeUTF8(static_buff, sms->Number);
+							/*
+							 * Always store international numnbers with + prefix
+							 * to allow easy matching later.
+							 */
+							if (sms->Number[0] == '0' && sms->Number[1] == '0') {
+								static_buff[0] = '+';
+								EncodeUTF8(static_buff + 1, sms->Number + 2);
+							} else {
+								EncodeUTF8(static_buff, sms->Number);
+							}
 							to_print = static_buff;
 							break;
 						case 'F':
