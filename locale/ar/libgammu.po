@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: libgammu 1.28.91\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2016-10-11 08:16+0200\n"
-"PO-Revision-Date: 2013-03-20 22:29+0200\n"
-"Last-Translator: mohamed amin boubaker <mohamed.amin.02@gmail.com>\n"
-"Language-Team: Arabic <http://hosted.weblate.org/projects/gammu/libgammu/ar/"
-">\n"
+"PO-Revision-Date: 2017-07-01 00:07+0000\n"
+"Last-Translator: yagoub fadel <yagoub76@gmail.com>\n"
+"Language-Team: Arabic "
+"<https://hosted.weblate.org/projects/gammu/libgammu/ar/>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Weblate 1.5-dev\n"
+"X-Generator: Weblate 2.16-dev\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
@@ -77,10 +77,6 @@ msgid "No response in specified timeout. Probably phone not connected."
 msgstr "لا جواب في المهلة المحددة. من المحتمل أن الجهاز غير موصول."
 
 #: libgammu/gsmcomon.c:98
-#, fuzzy
-#| msgid ""
-#| "Frame not requested right now. See <http://wammu.eu/support/bugs/> for "
-#| "information how to report it."
 msgid ""
 "Frame not requested right now. See <https://wammu.eu/support/bugs/> for "
 "information how to report it."
@@ -128,7 +124,7 @@ msgstr "ثمة وظائف غير متوفرة لنظامك ) معطلة في ا�
 
 #: libgammu/gsmcomon.c:104
 msgid "Function not supported by phone."
-msgstr "وظيفة غير معتمدة من قبل الهاتف."
+msgstr "وظيفة غير مدعومة من قبل الهاتف."
 
 #: libgammu/gsmcomon.c:105
 msgid "Entry is empty."
@@ -310,7 +306,7 @@ msgstr "لقد تم تعطيل الوظيفة المجوة عند وقت الت�
 
 #: libgammu/gsmcomon.c:146
 msgid "Bluetooth configuration requires channel option."
-msgstr ""
+msgstr "يتطلب تكوين بلوتوث قناة كخيار."
 
 #: libgammu/gsmcomon.c:147
 msgid "Service is not running."
@@ -365,11 +361,11 @@ msgstr "بيانات غير صالحة أعطيت إلى الهاتف."
 
 #: libgammu/gsmcomon.c:158
 msgid "Failed to initialize DB driver."
-msgstr ""
+msgstr "فشل تهيئة برنامج تشغيل قاعدة البيانات ."
 
 #: libgammu/gsmcomon.c:159
 msgid "Failed to configure DB driver."
-msgstr ""
+msgstr "فشل تكوين برنامج تشغيل قاعدة البيانات."
 
 #: libgammu/gsmcomon.c:160
 #, fuzzy
@@ -379,11 +375,11 @@ msgstr "تعذر الإتصال بالخادم."
 
 #: libgammu/gsmcomon.c:161
 msgid "Database connection timeout."
-msgstr ""
+msgstr "انتهت مهلة اتصال قاعدة البيانات."
 
 #: libgammu/gsmcomon.c:162
 msgid "Error in executing SQL query."
-msgstr ""
+msgstr "خطأ في تنفيذ استعلام SQL."
 
 #: libgammu/gsmcomon.c:195
 msgid "Unknown error description."
