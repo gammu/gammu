@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.28.91\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2016-10-11 08:16+0200\n"
-"PO-Revision-Date: 2017-07-01 00:07+0000\n"
+"PO-Revision-Date: 2017-07-06 23:14+0000\n"
 "Last-Translator: yagoub fadel <yagoub76@gmail.com>\n"
 "Language-Team: Arabic "
 "<https://hosted.weblate.org/projects/gammu/libgammu/ar/>\n"
@@ -85,10 +85,6 @@ msgstr ""
 "المعلومات عن كيفية التبليغ عنه."
 
 #: libgammu/gsmcomon.c:99
-#, fuzzy
-#| msgid ""
-#| "Unknown response from phone. See <http://wammu.eu/support/bugs/> for "
-#| "information how to report it."
 msgid ""
 "Unknown response from phone. See <https://wammu.eu/support/bugs/> for "
 "information how to report it."
@@ -97,10 +93,6 @@ msgstr ""
 "المعلومات عن كيفية التبليغ عنه."
 
 #: libgammu/gsmcomon.c:100
-#, fuzzy
-#| msgid ""
-#| "Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
-#| "report it."
 msgid ""
 "Unknown frame. See <https://wammu.eu/support/bugs/> for information how to "
 "report it."
@@ -349,15 +341,12 @@ msgid "Entry is read only."
 msgstr "المدخلة هي للقراءة فقط."
 
 #: libgammu/gsmcomon.c:156
-#, fuzzy
 msgid "Network error."
-msgstr "لا يوجد خطأ."
+msgstr "خطأ في الشبكة."
 
 #: libgammu/gsmcomon.c:157
-#, fuzzy
-#| msgid "Invalid data given to phone."
 msgid "Invalid database version."
-msgstr "بيانات غير صالحة أعطيت إلى الهاتف."
+msgstr "إصدار قاعدة بيانات غير صالح."
 
 #: libgammu/gsmcomon.c:158
 msgid "Failed to initialize DB driver."
@@ -368,10 +357,8 @@ msgid "Failed to configure DB driver."
 msgstr "فشل تكوين برنامج تشغيل قاعدة البيانات."
 
 #: libgammu/gsmcomon.c:160
-#, fuzzy
-#| msgid "Could not connect to the server."
 msgid "Failed to connect to database."
-msgstr "تعذر الإتصال بالخادم."
+msgstr "فشل الاتصال بقاعدة البيانات."
 
 #: libgammu/gsmcomon.c:161
 msgid "Database connection timeout."
