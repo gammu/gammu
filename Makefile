@@ -55,7 +55,7 @@ install: $(BUILD_DIR)
 	$(MAKE) -C $(BUILD_DIR) install
 
 test: $(BUILD_DIR)
-	$(MAKE) -C $(BUILD_DIR) test
+	$(MAKE) -C $(BUILD_DIR) test ARGS=--output-on-failure
 
 Nightly: $(BUILD_DIR)
 	$(MAKE) -C $(BUILD_DIR) Nightly
