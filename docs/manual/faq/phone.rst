@@ -53,6 +53,8 @@ Are Android phones supported?
 
 Unfortunately no at the moment. Any help in this area is welcome.
 
+.. seealso:: See our `issue tracker <https://github.com/gammu/gammu/issues/81>`_ for more details.
+
 .. _faq-blackberry:
 
 Are Blackberry phones supported?
