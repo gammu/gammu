@@ -247,13 +247,13 @@ void process_commandline(int argc, char **argv, SMSD_Parameters * params)
 #ifdef HAVE_UID
 			case 'U':
 				if (!fill_uid(params, optarg)) {
-					fprintf(stderr, "Wrong user name/ID!\n");
+					fprintf(stderr, "Wrong user name or ID: %s\n", optarg);
 					exit(1);
 				}
 				break;
 			case 'G':
 				if (!fill_gid(params, optarg)) {
-					fprintf(stderr, "Wrong group name/ID!\n");
+					fprintf(stderr, "Wrong group name or ID: %s\n", optarg);
 					exit(1);
 				}
 				break;
