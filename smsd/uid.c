@@ -54,7 +54,7 @@ gboolean fill_uid(SMSD_Parameters *params, const char *name)
     if (pwd == NULL) {
         /* Try to handle it as a number */
         uid = strtol(name, &endptr, 10);
-        if (*endptr == 0 && uid > 0) {
+        if (*endptr == 0 && uid >= 0) {
             pwd = getpwuid(uid);
         }
     }
@@ -85,7 +85,7 @@ gboolean fill_gid(SMSD_Parameters *params, const char *name)
     /* Try to handle it as a number */
     if (grp == NULL) {
         gid = strtol(name, &endptr, 10);
-        if (*endptr == 0 && gid > 0) {
+        if (*endptr == 0 && gid >= 0) {
             grp = getgrgid(gid);
         }
     }
