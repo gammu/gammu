@@ -23,7 +23,8 @@ ChangeLog
 
 [+] * Added SMS_1_REFERENCE to SMSD run on receive environment
 [-] * Improved logging of run scripts in SMSD
-    
+[-] * Improved support for Huawei E1780.
+
 20170618 - 1.38.4
 
 [-] * Improved support for Huawei E3531 and E1756.
