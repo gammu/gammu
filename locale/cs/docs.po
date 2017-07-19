@@ -12,15 +12,16 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.38.2\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2016-10-11 13:13+0200\n"
-"PO-Revision-Date: 2011-02-23 16:59+0100\n"
+"PO-Revision-Date: 2017-07-19 11:14+0000\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
-"Language-Team: Czech <cs@li.org>\n"
+"Language-Team: Czech <https://hosted.weblate.org/projects/gammu/gammu-"
+"docs/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Pootle 2.0.5\n"
+"X-Generator: Weblate 2.16-dev\n"
 
 #. type: Title =
 #: README.rst:2
@@ -114,8 +115,8 @@ msgid ""
 ":alt: Translation status :target: https://hosted.weblate.org/engage/gammu/?"
 "utm_source=widget"
 msgstr ""
-":alt: Translation status :target: https://hosted.weblate.org/engage/gammu/?"
-"utm_source=widget"
+":alt: Překlady status :target: "
+"https://hosted.weblate.org/engage/gammu/?utm_source=widget"
 
 #. type: Plain text
 #: README.rst:28
