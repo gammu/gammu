@@ -25,6 +25,7 @@ ChangeLog
 [-] * Improved logging of run scripts in SMSD
 [-] * Improved support for Huawei E1780.
 [-] * Allow 0 for setuid/setgid in SMSD.
+[+] * Added RunOnIncomingCall to SMSD.
 
 20170618 - 1.38.4
 

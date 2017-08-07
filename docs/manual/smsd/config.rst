@@ -381,6 +381,15 @@ General parameters of SMS daemon
     The program will receive optional parameter a message ID and environment
     with message details as described in :ref:`gammu-smsd-run`.
 
+.. config:option:: RunOnIncomingCall
+
+    .. versionadded:: 1.38.5
+
+    Executes a program after cancelling incoming call.
+
+    The program will receive a parameter with a phone number of the call.
+    This requires :config:option:`HangupCalls` to be enabled.
+
 .. config:option:: IncludeNumbersFile
 
     File with list of numbers which are accepted by SMSD. The file contains one
