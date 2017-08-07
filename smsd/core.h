@@ -87,6 +87,7 @@ struct _GSM_SMSDConfig {
 	const char   *RunOnReceive;
 	const char   *RunOnFailure; /* run this command on phone communication failure */
 	const char   *RunOnSent; /* run this command when an SMS has been sent successfully */
+	const char   *RunOnIncomingCall; /* run this command when a phone call has been canceled */
 	gboolean checksecurity;
 	gboolean hangupcalls;
 	gboolean checkbattery;

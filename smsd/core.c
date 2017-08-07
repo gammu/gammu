@@ -862,6 +862,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 	Config->RunOnReceive = INI_GetValue(Config->smsdcfgfile, "smsd", "runonreceive", FALSE);
 	Config->RunOnFailure = INI_GetValue(Config->smsdcfgfile, "smsd", "runonfailure", FALSE);
 	Config->RunOnSent = INI_GetValue(Config->smsdcfgfile, "smsd", "runonsent", FALSE);
+	Config->RunOnIncomingCall = INI_GetValue(Config->smsdcfgfile, "smsd", "runonincomingcall", FALSE);
 
 	str = INI_GetValue(Config->smsdcfgfile, "smsd", "smsc", FALSE);
 	if (str) {
@@ -1939,6 +1940,19 @@ void SMSD_IncomingCallCallback(GSM_StateMachine *s, GSM_Call *call, void *user_d
 				GSM_CancelCall(s, call->CallID, TRUE);
 			} else {
 				GSM_CancelCall(s, 0, TRUE);
+			}
+
+			if (Config->RunOnIncomingCall != NULL) {
+#define BUFS 1024
+				char buf[BUFS];
+				int ret=0;
+				snprintf(buf, BUFS,"%s '%s'",
+					 Config->RunOnIncomingCall,
+					 DecodeUnicodeString(call->PhoneNumber));
+				ret = system(buf);
+				if (ret<0) {
+					SMSD_Log(DEBUG_ERROR, Config, "Incoming call -  could not run script: %s\n", strerror(errno) );
+				}
 			}
 		}
 		break;
