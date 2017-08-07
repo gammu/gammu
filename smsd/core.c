@@ -1943,7 +1943,7 @@ void SMSD_IncomingCallCallback(GSM_StateMachine *s, GSM_Call *call, void *user_d
 			}
 
 			if (Config->RunOnIncomingCall != NULL) {
-				const size_t BUFS=1024;
+				const unsigned int BUFS=1024;
 				char buf[BUFS];
 				int ret=0;
 				snprintf(buf, BUFS,"%s '%s'",
