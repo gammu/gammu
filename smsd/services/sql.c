@@ -674,8 +674,8 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 
 			found = FALSE;
 			while (db->NextRow(Config, &res)) {
-				smsc = db->GetString(Config, &res, 4);
 				state = db->GetString(Config, &res, 1);
+				smsc = db->GetString(Config, &res, 4);
 				SMSD_Log(DEBUG_NOTICE, Config, "Checking for delivery report, SMSC=%s, state=%s", smsc, state);
 
 				if (strcmp(smsc, smsc_message) != 0) {
@@ -844,6 +844,7 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 	SQL_result res;
 	struct GSM_SMSDdbobj *db = Config->db;
 	int i;
+	gboolean last;
 	time_t timestamp;
 	const char *coding;
 	const char *text;
@@ -917,20 +918,24 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 			return ERR_NONE;
 		}
 
-		coding = db->GetString(Config, &res, 1);
 		text = db->GetString(Config, &res, 0);
+		coding = db->GetString(Config, &res, 1);
 		if (text == NULL) {
 			text_len = 0;
 		} else {
 			text_len = strlen(text);
 		}
-		text_decoded = db->GetString(Config, &res, 4);
 		udh = db->GetString(Config, &res, 2);
+		sms->SMS[sms->Number].Class = (int)db->GetNumber(Config, &res, 3);
+		text_decoded = db->GetString(Config, &res, 4);
 		if (udh == NULL) {
 			udh_len = 0;
 		} else {
 			udh_len = strlen(udh);
 		}
+
+		/* ID, we don't need it, but some ODBC backend need to fetch all values */
+		db->GetNumber(Config, &res, 5);
 
 		sms->SMS[sms->Number].Coding = GSM_StringToSMSCoding(coding);
 		if (sms->SMS[sms->Number].Coding == 0) {
@@ -996,26 +1001,24 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 			}
 		}
 
-		sms->SMS[sms->Number].Class = (int)db->GetNumber(Config, &res, 3);
 		sms->SMS[sms->Number].PDU = SMS_Submit;
 		sms->Number++;
 
 		if (i == 1) {
-			strncpy(Config->CreatorID, db->GetString(Config, &res, 10), sizeof(Config->CreatorID));
-			Config->CreatorID[sizeof(Config->CreatorID) - 1] = 0;
+			/* Is this a multipart message? */
+			last = !db->GetBool(Config, &res, 7);
 			Config->relativevalidity = (int)db->GetNumber(Config, &res, 8);
 
 			Config->currdeliveryreport = db->GetBool(Config, &res, 9);
+			strncpy(Config->CreatorID, db->GetString(Config, &res, 10), sizeof(Config->CreatorID));
+			Config->CreatorID[sizeof(Config->CreatorID) - 1] = 0;
 			Config->retries = (int)db->GetNumber(Config, &res, 11);
-
-			/* Is this a multipart message? */
-			if (!db->GetBool(Config, &res, 7)) {
-				db->FreeResult(Config, &res);
-				break;
-			}
-
 		}
 		db->FreeResult(Config, &res);
+		if (last) {
+			last = FALSE;
+			break;
+		}
 	}
 
 	return ERR_NONE;
