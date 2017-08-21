@@ -125,8 +125,13 @@ const char *SMSDODBC_GetString(GSM_SMSDConfig * Config, SQL_result *res, unsigne
 
 gboolean SMSDODBC_GetBool(GSM_SMSDConfig * Config, SQL_result *res, unsigned int field)
 {
-	long long intval;
+	long long intval = 0;
 	const char * charval;
+
+	/* Try bit field */
+	if (SQL_SUCCEEDED(SQLGetData(res->odbc, field + 1, SQL_C_BIT, &intval, 0, NULL))) {
+		return intval ? TRUE : FALSE;
+	}
 
 	/* Try to get numeric value first */
 	intval = SMSDODBC_GetNumber(Config, res, field);
