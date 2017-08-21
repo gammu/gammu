@@ -47,9 +47,13 @@ CREATE TABLE outbox (
   CreatorID TEXT NOT NULL,
   Retries INTEGER DEFAULT '0',
   Priority INTEGER DEFAULT '0',
+  Status TEXT NOT NULL DEFAULT 'Reserved',
   CHECK (Coding IN 
   ('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression')),
-  CHECK (DeliveryReport IN ('default','yes','no'))
+  CHECK (DeliveryReport IN ('default','yes','no')),
+  CHECK (Status IN 
+  ('SendingOK','SendingOKNoReport','SendingError','DeliveryOK','DeliveryFailed','DeliveryPending',
+  'DeliveryUnknown','Error','Reserved'))
 );
 
 CREATE INDEX outbox_date ON outbox(SendingDateTime, SendingTimeOut);
@@ -68,8 +72,12 @@ CREATE TABLE outbox_multipart (
   TextDecoded TEXT DEFAULT NULL,
   ID INTEGER,
   SequencePosition INTEGER NOT NULL DEFAULT '1',
+  Status TEXT NOT NULL DEFAULT 'Reserved',
   CHECK (Coding IN 
   ('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression')),
+  CHECK (Status IN 
+  ('SendingOK','SendingOKNoReport','SendingError','DeliveryOK','DeliveryFailed','DeliveryPending',
+  'DeliveryUnknown','Error','Reserved')),
  PRIMARY KEY (ID, SequencePosition)
 );
 

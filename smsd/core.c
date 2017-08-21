@@ -1698,6 +1698,11 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config)
 	}
 
 	for (i = 0; i < sms.Number; i++) {
+		if (sms.SMS[i].SkipMessage == TRUE) {
+			SMSD_Log(DEBUG_NOTICE, Config, "Skipping %s:%d message", Config->SMSID, i);
+			continue;
+		}
+
 		/* No SMSC set in message */
 		if (sms.SMS[i].SMSC.Location == 0 && UnicodeLength(sms.SMS[i].SMSC.Number) == 0 && Config->SMSC.Location == 0) {
 			SMSD_Log(DEBUG_INFO, Config, "Message without SMSC, using configured one");
