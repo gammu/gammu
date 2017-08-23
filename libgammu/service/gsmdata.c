@@ -306,7 +306,7 @@ GSM_Error GSM_EncodeURLFile(unsigned char *Buffer, size_t *Length, GSM_WAPBookma
 /* SNIFFS, specs somewhere in http://www.wapforum.org */
 void GSM_EncodeMMSIndicatorSMSText(unsigned char *Buffer, size_t *Length, GSM_MMSIndicator *Indicator)
 {
-	unsigned char 	buffer[200];
+	unsigned char 	buffer[1000];
 	int		i;
 
 

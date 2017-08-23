@@ -47,7 +47,8 @@ static GSM_Error N3650_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Han
 {
 	unsigned int 		len=10,i;
 	GSM_Error		error;
-	unsigned char 		StartReq[500] = {
+	unsigned char 		*req;
+	unsigned const char 	StartReq[11] = {
 		N7110_FRAME_HEADER, 0x0D, 0x10, 0x01, 0x07,
 		0x24,		/* len1 */
 		0x12,		/* len2 */
@@ -58,31 +59,36 @@ static GSM_Error N3650_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Han
 		0x08, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00};
 
 	if (File->Used == 0) {
+		req = malloc(strlen(File->ID_FullName) + 30);
+		if (req == NULL) {
+			return ERR_MOREMEMORY;
+		}
+		memcpy(req, StartReq, sizeof(StartReq));
 		(*Size) = 0;
 
-		sprintf(StartReq+10,"%s",File->ID_FullName);
+		sprintf(req+10,"%s",File->ID_FullName);
 		len+=strlen(File->ID_FullName)-1;
-		StartReq[7] = strlen(File->ID_FullName) + 3;
+		req[7] = strlen(File->ID_FullName) + 3;
 
-		StartReq[8] = strlen(File->ID_FullName);
-		StartReq[9] = 0;
-		while (File->ID_FullName[StartReq[8]] != '\\') {
-			StartReq[8]--;
-			StartReq[9]++;
+		req[8] = strlen(File->ID_FullName);
+		req[9] = 0;
+		while (File->ID_FullName[req[8]] != '\\') {
+			req[8]--;
+			req[9]++;
 		}
-		for (i=StartReq[8];i<strlen(File->ID_FullName);i++) {
-			StartReq[i+10] = StartReq[i+1+10];
+		for (i=req[8];i<strlen(File->ID_FullName);i++) {
+			req[i+10] = req[i+1+10];
 		}
-		StartReq[9]--;
+		req[9]--;
 
-		EncodeUnicode(File->Name,File->ID_FullName+StartReq[8]+1,StartReq[9]);
+		EncodeUnicode(File->Name,File->ID_FullName+req[8]+1,req[9]);
 		File->Folder = FALSE;
 
 		error = DCT4_SetPhoneMode(s, DCT4_MODE_TEST);
 		if (error != ERR_NONE) return error;
 
 		s->Phone.Data.File = File;
-		return GSM_WaitFor (s, StartReq, len, 0x58, 4, ID_GetFile);
+		return GSM_WaitFor (s, req, len, 0x58, 4, ID_GetFile);
 	}
 
 	s->Phone.Data.File = File;
@@ -125,8 +131,20 @@ static GSM_Error N3650_ReplyGetFolderInfo(GSM_Protocol_Message *msg, GSM_StateMa
 		EncodeUnicode(Priv->Files[Priv->FilesLocationsCurrent+i]->Name,msg->Buffer+pos+9,msg->Buffer[pos+8]);
 		smprintf(s,"%s\n",DecodeUnicodeString(Priv->Files[Priv->FilesLocationsCurrent+i]->Name));
 		Priv->Files[Priv->FilesLocationsCurrent+i]->Level  = File->Level+1;
-		sprintf(Priv->Files[Priv->FilesLocationsCurrent+i]->ID_FullName,"%s\\%s",File->ID_FullName,msg->Buffer+pos+9);
-		pos+=msg->Buffer[pos+1];
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wformat-overflow"
+		/* Here we check limits before doing sprintf */
+		if (strlen(File->ID_FullName) + strlen(msg->Buffer+pos+9) + 20 >= sizeof(File->ID_FullName)) {
+			return ERR_MOREMEMORY;
+		}
+		sprintf(
+			Priv->Files[Priv->FilesLocationsCurrent+i]->ID_FullName,
+			"%s\\%s",
+			File->ID_FullName,
+			msg->Buffer + pos + 9
+		);
+#pragma GCC diagnostic pop
+		pos += msg->Buffer[pos+1];
 	}
 	smprintf(s, "\n");
 	return ERR_NONE;
@@ -135,12 +153,19 @@ static GSM_Error N3650_ReplyGetFolderInfo(GSM_Protocol_Message *msg, GSM_StateMa
 static GSM_Error N3650_GetFolderInfo(GSM_StateMachine *s, GSM_File *File)
 {
 	int 			len=10;
-	unsigned char 		req[500] = {
+	unsigned char		*req;
+	unsigned const char 	template[11] = {
 		N7110_FRAME_HEADER, 0x0B, 0x00, 0x01, 0x07,
 		0x18,		/* folder name length + 6 	*/
 		0x12,		/* folder name length 		*/
 		0x00,
 		0x00};		/* folder name 			*/
+
+	req = malloc(strlen(File->ID_FullName) + 30);
+	if (req == NULL) {
+		return ERR_MOREMEMORY;
+	}
+	memcpy(req, template, sizeof(template));
 
 	/* FIXME: I doubt this works */
 	sprintf(req+10,"%s", File->ID_FullName);

@@ -544,7 +544,7 @@ const char *GetOS(void)
 	struct utsname	Ver;
 #  endif
 #endif
-	static char 	Buffer[100] = {0x00};
+	static char 	Buffer[240] = {0x00};
 
 	/* Value was already calculated */
 	if (Buffer[0] != 0) return Buffer;

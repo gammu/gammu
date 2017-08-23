@@ -4496,7 +4496,7 @@ GSM_Error ATGEN_EnterSecurityCode(GSM_StateMachine *s, GSM_SecurityCode *Code)
 {
 	GSM_Error error;
 	GSM_SecurityCodeType Status;
-	unsigned char req[GSM_SECURITY_CODE_LEN + 12] = {'\0'};
+	unsigned char req[GSM_SECURITY_CODE_LEN + 30] = {'\0'};
 	size_t len;
 
 	if (Code->Type == SEC_Pin2 &&
