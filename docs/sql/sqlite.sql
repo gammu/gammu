@@ -2,7 +2,7 @@ CREATE TABLE gammu (
   Version INTEGER NOT NULL DEFAULT '0' PRIMARY KEY
 );
 
-INSERT INTO gammu (Version) VALUES (16);
+INSERT INTO gammu (Version) VALUES (17);
 
 CREATE TABLE inbox (
   UpdatedInDB NUMERIC NOT NULL DEFAULT (datetime('now')),

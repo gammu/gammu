@@ -18,7 +18,7 @@ CREATE TABLE `gammu` (
 -- Dumping data for table `gammu`
 -- 
 
-INSERT INTO `gammu` (`Version`) VALUES (16);
+INSERT INTO `gammu` (`Version`) VALUES (17);
 
 -- --------------------------------------------------------
 
