@@ -132,8 +132,10 @@ static GSM_Error N3650_ReplyGetFolderInfo(GSM_Protocol_Message *msg, GSM_StateMa
 		smprintf(s,"%s\n",DecodeUnicodeString(Priv->Files[Priv->FilesLocationsCurrent+i]->Name));
 		Priv->Files[Priv->FilesLocationsCurrent+i]->Level  = File->Level+1;
 #ifdef __GNUC__
+#ifndef __clang__
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wformat-overflow"
+#endif
 #endif
 		/* Here we check limits before doing sprintf */
 		if (strlen(File->ID_FullName) + strlen(msg->Buffer+pos+9) + 20 >= sizeof(File->ID_FullName)) {
@@ -146,7 +148,9 @@ static GSM_Error N3650_ReplyGetFolderInfo(GSM_Protocol_Message *msg, GSM_StateMa
 			msg->Buffer + pos + 9
 		);
 #ifdef __GNUC__
+#ifndef __clang__
 #pragma GCC diagnostic pop
+#endif
 #endif
 		pos += msg->Buffer[pos+1];
 	}
