@@ -414,13 +414,13 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			case WAPSETTINGS_BEARER_GPRS:
 				if (strcasecmp(argv[2 + startarg],"GPRS") == 0) {
 					SMSInfo.Entries[0].Settings = &Backup.WAPSettings[i]->Settings[j];
-					break;
 				}
+				break;
 			case WAPSETTINGS_BEARER_DATA:
 				if (strcasecmp(argv[2 + startarg],"DATA") == 0) {
 					SMSInfo.Entries[0].Settings = &Backup.WAPSettings[i]->Settings[j];
-					break;
 				}
+				break;
 			default:
 				break;
 			}

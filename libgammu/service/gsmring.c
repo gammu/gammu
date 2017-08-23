@@ -1297,6 +1297,7 @@ static void RTTL2Binary(GSM_Ringtone *dest, GSM_Ringtone *src)
 				duration--;
 			}
 			note = 0x40; /* The rest is pause */
+			FALLTHROUGH;
 		case NaturalStyle:
 			if (note != 0x40 && duration) {
 				dest->NokiaBinary.Frame[current++] = 0x40;
@@ -1304,6 +1305,7 @@ static void RTTL2Binary(GSM_Ringtone *dest, GSM_Ringtone *src)
 				dest->NokiaBinary.Frame[current++] = 1;
 				duration--;
 			}
+			FALLTHROUGH;
 		default:
 			if (note != 0x40 && note == lastnote && duration) {
 				dest->NokiaBinary.Frame[current++] = 0x40;

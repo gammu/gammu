@@ -268,6 +268,7 @@ static GSM_Error N7110_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMa
 				DCT3_DecodeSMSFrame(s, &Data->GetSMSMessage->SMS[0],msg->Buffer+9);
 				return ERR_NONE;
 			}
+			FALLTHROUGH;
 		case 0x02:
 			smprintf(s, "SMS template\n");
 			if (Data->RequestID == ID_GetSMSMessage) {
@@ -277,6 +278,7 @@ static GSM_Error N7110_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMa
 				GSM_DecodeSMSFrame(&(s->di), &Data->GetSMSMessage->SMS[0],msg->Buffer+9,N7110_SMSTemplate);
 				return ERR_NONE;
 			}
+			FALLTHROUGH;
 		case 0x07:
 			smprintf(s, "Picture Image\n");
 			switch (Data->RequestID) {
@@ -352,6 +354,7 @@ static GSM_Error N7110_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMa
 			return ERR_EMPTY;
 		default:
 			smprintf(s, "ERROR: unknown %i\n",msg->Buffer[4]);
+			return ERR_UNKNOWNRESPONSE;
 		}
 	case 0x6F:
 		smprintf(s, "SMS message info received\n");

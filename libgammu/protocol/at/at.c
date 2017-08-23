@@ -286,6 +286,7 @@ GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 			d->Msg.Length			= 0;
 			break;
 		}
+		FALLTHROUGH;
 	default:
 		if (d->wascrlf) {
 			d->LineStart	= d->Msg.Length - 1;

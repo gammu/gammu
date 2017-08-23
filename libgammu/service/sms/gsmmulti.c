@@ -710,6 +710,7 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 			NOKIA_CopyBitmap(GSM_Nokia7110OperatorLogo, &Info->Entries[0].Bitmap->Bitmap[0], Buffer, &Length);
 			break;
 		}
+		FALLTHROUGH;
 	case SMS_NokiaOperatorLogo:
 		UDH	= UDH_NokiaOperatorLogo;
 		Class 	= 1;
@@ -872,6 +873,7 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 			}
 		}
 		/* No break here - we go to the SMS_ConcatenatedTextLong */
+		FALLTHROUGH;
 	case SMS_ConcatenatedTextLong:
 	case SMS_ConcatenatedTextLong16bit:
 		Class = Info->Class;
@@ -1338,6 +1340,7 @@ gboolean GSM_DecodeLinkedText(GSM_Debug_Info *di,
 			if (Info->Entries[0].ID == SMS_ConcatenatedTextLong16bit) {
 				Info->Entries[0].ID = SMS_ConcatenatedAutoTextLong16bit;
 			}
+			FALLTHROUGH;
 		case SMS_Coding_Default_No_Compression:
 			Info->Entries[0].Buffer = (unsigned char *)realloc(Info->Entries[0].Buffer, Length + UnicodeLength(SMS->SMS[i].Text)*2 + 2);
 			if (Info->Entries[0].Buffer == NULL) return FALSE;

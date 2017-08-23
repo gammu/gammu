@@ -733,6 +733,7 @@ static GSM_Error OBEXGEN_ReplyAddFilePart(GSM_Protocol_Message *msg, GSM_StateMa
 				/* ID of newly created m-obex entry */
 				Priv->m_obex_newid = msg->Buffer[Pos+3]*256 + msg->Buffer[Pos+4];
 				Pos += 5;
+				break;
 			case 0xcb:
 				/* Skip Connection ID (we ignore this for now) */
 				Pos += 5;

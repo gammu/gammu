@@ -1450,6 +1450,7 @@ GSM_Error N71_92_ReplyPhoneSetting(GSM_Protocol_Message *msg, GSM_StateMachine *
 			smprintf(s, "Startup text set\n");
 			return ERR_NONE;
 		}
+		return ERR_UNKNOWNRESPONSE;
 	case 0x15:
 		if (Data->RequestID == ID_GetBitmap || Data->RequestID == ID_EachFrame) {
 			smprintf(s, "Startup logo received\n");
@@ -1463,6 +1464,7 @@ GSM_Error N71_92_ReplyPhoneSetting(GSM_Protocol_Message *msg, GSM_StateMachine *
 			smprintf(s, "Startup logo set\n");
 			return ERR_NONE;
 		}
+		return ERR_UNKNOWNRESPONSE;
 	case 0x17:
 		if (Data->RequestID == ID_GetBitmap || Data->RequestID == ID_EachFrame) {
 			smprintf(s, "Dealer note text received\n");
@@ -1474,6 +1476,7 @@ GSM_Error N71_92_ReplyPhoneSetting(GSM_Protocol_Message *msg, GSM_StateMachine *
 			smprintf(s, "Dealer text set\n");
 			return ERR_NONE;
 		}
+		return ERR_UNKNOWNRESPONSE;
 	}
 	return ERR_UNKNOWNRESPONSE;
 }
