@@ -105,10 +105,10 @@ extern void GSM_InitLocales(const char *path);
 #define UNUSED
 #endif
 
-#if GSM_GNUC_PREREQ (3,1)
-#define FALLTHROUGH __attribute__ ((fallthrough))
-#elif defined(__clang__)
+#if defined(__clang__)
 #define FALLTHROUGH [[clang::fallthrough]]
+#elif GSM_GNUC_PREREQ (3,1)
+#define FALLTHROUGH __attribute__ ((fallthrough))
 #else
 #define FALLTHROUGH
 #endif
