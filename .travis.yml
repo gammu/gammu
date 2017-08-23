@@ -16,7 +16,7 @@ env:
 before_script:
   - if [ -f /usr/share/libmyodbc/odbcinst.ini ] ; then cp /usr/share/libmyodbc/odbcinst.ini ~/.odbcinst.ini ; fi
   - cp tests/odbc.ini ~/.odbc.ini
-  - if [ $TRAVIS_OS_NAME = linux ] ; then if [ $CC = clang ] ; then export CXX=clang++-3.8 ; export CC=clang-3.8 ; else export CXX=g++-6 ; export CC=gcc-6 ; fi ; fi
+  - if [ $TRAVIS_OS_NAME = linux ] ; then if [ $CC = clang ] ; then export CXX=clang++-5.0 ; export CC=clang-5.0 ; else export CXX=g++-7 ; export CC=gcc-7 ; fi ; fi
   - if [ $TRAVIS_OS_NAME = linux ] ; then psql -c 'create database smsd;' -U postgres ; fi
   - if [ $TRAVIS_OS_NAME = linux ] ; then mysql -uroot -e "create database smsd;" ; fi
   - if [ $TRAVIS_OS_NAME = linux ] ; then mysql -uroot -e "SET PASSWORD = PASSWORD('smsd')" ; fi
