@@ -23,7 +23,7 @@ ChangeLog
 
 [+] * Added SMS_1_REFERENCE to SMSD run on receive environment
 [-] * Improved logging of run scripts in SMSD
-[-] * Improved support for Huawei E1780.
+[-] * Improved support for Huawei E1780 and E1552.
 [-] * Allow 0 for setuid/setgid in SMSD.
 [+] * Added RunOnIncomingCall to SMSD.
 
