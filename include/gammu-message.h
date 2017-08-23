@@ -450,10 +450,6 @@ typedef struct {
 	 */
 	gboolean RejectDuplicates;
 	/**
-	 * Whether to skip message.
-	 */
-	gboolean SkipMessage;
-	/**
 	 * UDH (User Data Header)
 	 */
 	GSM_UDHHeader UDH;

@@ -1698,7 +1698,7 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config)
 	}
 
 	for (i = 0; i < sms.Number; i++) {
-		if (sms.SMS[i].SkipMessage == TRUE) {
+		if (Config->SkipMessage[i] == TRUE) {
 			SMSD_Log(DEBUG_NOTICE, Config, "Skipping %s:%d message", Config->SMSID, i);
 			continue;
 		}

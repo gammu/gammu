@@ -110,6 +110,7 @@ struct _GSM_SMSDConfig {
 	GSM_SMSC	SMSC, SMSCCache;
 	const char	*skipsmscnumber;
 	int		IgnoredMessages;
+	gboolean 	SkipMessage[GSM_MAX_MULTI_SMS];
 
 #if defined(HAVE_MYSQL_MYSQL_H) || defined(HAVE_POSTGRESQL_LIBPQ_FE_H) || defined(LIBDBI_FOUND) || defined(ODBC_FOUND)
 	/* options for SQL database */

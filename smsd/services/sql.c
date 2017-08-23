@@ -922,7 +922,9 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 		status = db->GetString(Config, &res, i == 1 ? 12 : 7);
 		if (status != NULL && strncmp(status, "SendingOK", 9) == 0) {
 			SMSD_Log(DEBUG_NOTICE, Config, "Marking %s:%d message for skip", ID, i);
-			sms->SMS[sms->Number].SkipMessage = TRUE;
+			Config->SkipMessage[sms->Number] = TRUE;
+		} else {
+			Config->SkipMessage[sms->Number] = FALSE;
 		}
 
 		text = db->GetString(Config, &res, 0);
