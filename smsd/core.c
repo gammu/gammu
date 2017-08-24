@@ -385,6 +385,7 @@ void SMSD_Log_Function(const char *text, void *data)
 GSM_SMSDConfig *SMSD_NewConfig(const char *name)
 {
 	GSM_SMSDConfig *Config;
+	int i;
 	Config = (GSM_SMSDConfig *)malloc(sizeof(GSM_SMSDConfig));
 	if (Config == NULL) return Config;
 
@@ -417,6 +418,10 @@ GSM_SMSDConfig *SMSD_NewConfig(const char *name)
 #if defined(HAVE_POSTGRESQL_LIBPQ_FE_H)
 	Config->conn.pg = NULL;
 #endif
+
+	for (i = 0; i < GSM_MAX_MULTI_SMS; i++) {
+		Config->SkipMessage[i] = FALSE;
+	}
 
 	/* Prepare lists */
 	GSM_StringArray_New(&(Config->IncludeNumbersList));
@@ -1698,6 +1703,11 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config)
 	}
 
 	for (i = 0; i < sms.Number; i++) {
+		if (Config->SkipMessage[i] == TRUE) {
+			SMSD_Log(DEBUG_NOTICE, Config, "Skipping %s:%d message", Config->SMSID, i);
+			continue;
+		}
+
 		/* No SMSC set in message */
 		if (sms.SMS[i].SMSC.Location == 0 && UnicodeLength(sms.SMS[i].SMSC.Number) == 0 && Config->SMSC.Location == 0) {
 			SMSD_Log(DEBUG_INFO, Config, "Message without SMSC, using configured one");

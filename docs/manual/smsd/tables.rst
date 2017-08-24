@@ -163,6 +163,31 @@ Fields description:
 ``Priority`` (integer)
     priority of message, messages with higher priority are processed first
 
+``Status`` (enum('SendingOK', 'SendingOKNoReport', 'SendingError', 'DeliveryOK', 'DeliveryFailed', 'DeliveryPending', 'DeliveryUnknown', 'Error', 'Reserved'))
+    Status of message sending. SendingError means that phone failed to send the
+    message, Error indicates some other error while processing message.
+
+    ``SendingOK``
+        Message has been sent, waiting for delivery report.
+    ``SendingOKNoReport``
+        Message has been sent without asking for delivery report.
+    ``SendingError``
+        Sending has failed.
+    ``DeliveryOK``
+        Delivery report arrived and reported success.
+    ``DeliveryFailed``
+        Delivery report arrived and reports failure.
+    ``DeliveryPending``
+        Delivery report announced pending deliver.
+    ``DeliveryUnknown``
+        Delivery report reported unknown status.
+    ``Error``
+        Some other error happened during sending (usually bug in SMSD).
+    ``Reserved``
+        Initial value, meaning the status has not been set.
+
+    .. versionadded:: 1.38.5
+
 .. _outbox_multipart:
 
 outbox_multipart
@@ -190,6 +215,31 @@ Fields description:
 ``SequencePosition`` (integer)
     info, what is SMS number in SMS sequence (start at 2, first part is in :ref:`outbox`
     table).
+
+``Status`` (enum('SendingOK', 'SendingOKNoReport', 'SendingError', 'DeliveryOK', 'DeliveryFailed', 'DeliveryPending', 'DeliveryUnknown', 'Error', 'Reserved'))
+    Status of message sending. SendingError means that phone failed to send the
+    message, Error indicates some other error while processing message.
+
+    ``SendingOK``
+        Message has been sent, waiting for delivery report.
+    ``SendingOKNoReport``
+        Message has been sent without asking for delivery report.
+    ``SendingError``
+        Sending has failed.
+    ``DeliveryOK``
+        Delivery report arrived and reported success.
+    ``DeliveryFailed``
+        Delivery report arrived and reports failure.
+    ``DeliveryPending``
+        Delivery report announced pending deliver.
+    ``DeliveryUnknown``
+        Delivery report reported unknown status.
+    ``Error``
+        Some other error happened during sending (usually bug in SMSD).
+    ``Reserved``
+        Initial value, meaning the status has not been set.
+
+    .. versionadded:: 1.38.5
 
 .. _phones:
 
@@ -342,6 +392,12 @@ History of database structure
     production environment.
 
 History of schema versions:
+
+17
+
+    Added ``Status`` field to :ref:`outbox` and :ref:`outbox_multipart`
+
+   .. versionchanged:: 1.38.5
 
 16
 

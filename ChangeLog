@@ -26,6 +26,7 @@ ChangeLog
 [-] * Improved support for Huawei E1780 and E1552.
 [-] * Allow 0 for setuid/setgid in SMSD.
 [+] * Added RunOnIncomingCall to SMSD.
+[-] * Fixed SQL error when retry of multipart message
 
 20170618 - 1.38.4
 
