@@ -1692,6 +1692,10 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config)
 	if (Config->SMSID[0] != 0 && (Config->retries > Config->maxretries)) {
 		SMSD_Log(DEBUG_NOTICE, Config, "Moved to errorbox, reached MaxRetries: %s", Config->SMSID);
 		for (i=0;i<sms.Number;i++) {
+			if (Config->SkipMessage[i] == TRUE) {
+				SMSD_Log(DEBUG_NOTICE, Config, "Skipping %s:%d message for errorbox", Config->SMSID, i+1);
+				continue;
+			}
 			Config->Status->Failed++;
 			Config->Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i + 1, SMSD_SEND_SENDING_ERROR, Config->TPMR);
 		}
@@ -1704,7 +1708,7 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config)
 
 	for (i = 0; i < sms.Number; i++) {
 		if (Config->SkipMessage[i] == TRUE) {
-			SMSD_Log(DEBUG_NOTICE, Config, "Skipping %s:%d message", Config->SMSID, i);
+			SMSD_Log(DEBUG_NOTICE, Config, "Skipping %s:%d message for delivery", Config->SMSID, i+1);
 			continue;
 		}
 
