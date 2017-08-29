@@ -188,6 +188,11 @@ Fields description:
 
     .. versionadded:: 1.38.5
 
+``StatusCode`` (integer)
+    GSM status code
+
+    .. versionadded:: 1.38.5
+
 .. _outbox_multipart:
 
 outbox_multipart
@@ -238,6 +243,11 @@ Fields description:
         Some other error happened during sending (usually bug in SMSD).
     ``Reserved``
         Initial value, meaning the status has not been set.
+
+    .. versionadded:: 1.38.5
+
+``StatusCode`` (integer)
+    GSM status code
 
     .. versionadded:: 1.38.5
 
@@ -378,6 +388,11 @@ Fields description:
 ``CreatorID`` (text)
     copied from CreatorID from outbox table
 
+``StatusCode`` (integer)
+    GSM status code
+
+    .. versionadded:: 1.38.5
+
 
 .. _smsd-tables-history:
 
@@ -395,7 +410,8 @@ History of schema versions:
 
 17
 
-    Added ``Status`` field to :ref:`outbox` and :ref:`outbox_multipart`
+    * Added ``Status`` field to :ref:`outbox` and :ref:`outbox_multipart`.
+    * Added ``StatusCode`` field to :ref:`sentitems`, :ref:`outbox` and :ref:`outbox_multipart`.
 
    .. versionchanged:: 1.38.5
 

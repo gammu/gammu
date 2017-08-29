@@ -27,6 +27,7 @@ ChangeLog
 [-] * Allow 0 for setuid/setgid in SMSD.
 [+] * Added RunOnIncomingCall to SMSD.
 [-] * Fixed SQL error when retry of multipart message
+[*] * Added status code column
 
 20170618 - 1.38.4
 
