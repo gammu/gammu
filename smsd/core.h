@@ -197,6 +197,8 @@ struct _GSM_SMSDConfig {
 	 * Message reference set by callback from libGammu.
 	 */
 	volatile int TPMR;
+	volatile int StatusCode;
+	volatile int Part;
 
 	/**
 	 * Multipart messages processing.

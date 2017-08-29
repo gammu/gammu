@@ -814,12 +814,18 @@ static GSM_Error SMSDSQL_UpdateRetries(GSM_SMSDConfig * Config, char *ID)
 {
 	SQL_result res;
 	GSM_Error error;
+	size_t query_type;
 	struct GSM_SMSDdbobj *db = Config->db;
-	SQL_Var vars[3] = {
+	/* 1 = ID, 2 = Retries, 3 = StatusCode, 4 = SequencePosition */
+	SQL_Var vars[5] = {
 		{SQL_TYPE_STRING, {ID}},
+		{SQL_TYPE_INT, {NULL}},
+		{SQL_TYPE_INT, {NULL}},
 		{SQL_TYPE_INT, {NULL}},
 		{SQL_TYPE_NONE, {NULL}}};
 	vars[1].v.i = Config->retries;
+	vars[2].v.i = Config->StatusCode;
+	vars[3].v.i = Config->Part;
 
 	error = SMSDSQL_NamedQuery(Config, Config->SMSDSQL_queries[SQL_QUERY_UPDATE_RETRIES], NULL, vars, &res);
 	if (error != ERR_NONE) {
@@ -833,6 +839,17 @@ static GSM_Error SMSDSQL_UpdateRetries(GSM_SMSDConfig * Config, char *ID)
 	}
 
 	db->FreeResult(Config, &res);
+
+	if (Config->StatusCode != -1) {
+		query_type = (Config->Part == 1) ? SQL_QUERY_UPDATE_OUTBOX_STATUSCODE : SQL_QUERY_UPDATE_OUTBOX_MULTIPART_STATUSCODE;
+		error = SMSDSQL_NamedQuery(Config, Config->SMSDSQL_queries[query_type], NULL, vars, &res);
+		if (error != ERR_NONE) {
+			SMSD_Log(DEBUG_INFO, Config, "Error updating StatusCode (%s)", __FUNCTION__);
+			return error;
+		}
+		db->FreeResult(Config, &res);
+	}
+
 	return ERR_NONE;
 }
 
@@ -1125,7 +1142,7 @@ static GSM_Error SMSDSQL_AddSentSMSInfo(GSM_MultiSMSMessage * sms, GSM_SMSDConfi
 	size_t query_type;
 
 	const char *message_state;
-	SQL_Var vars[6];
+	SQL_Var vars[7];
 	char smsc[GSM_MAX_NUMBER_LENGTH + 1];
 	char destination[GSM_MAX_NUMBER_LENGTH + 1];
 
@@ -1162,6 +1179,22 @@ static GSM_Error SMSDSQL_AddSentSMSInfo(GSM_MultiSMSMessage * sms, GSM_SMSDConfi
 	vars[4].type = SQL_TYPE_STRING;
 	vars[4].v.s = Config->DT;
 	vars[5].type = SQL_TYPE_NONE;
+
+	query_type = (Part == 1) ? SQL_QUERY_FIND_OUTBOX_BODY : SQL_QUERY_FIND_OUTBOX_MULTIPART;
+	error = SMSDSQL_NamedQuery(Config, Config->SMSDSQL_queries[query_type], NULL, vars, &res);
+	if (error != ERR_NONE) {
+		SMSD_Log(DEBUG_ERROR, Config, "Error reading from database (%s)", __FUNCTION__);
+		return error;
+	}
+	if (db->NextRow(Config, &res) != 1) {
+		db->FreeResult(Config, &res);
+		return ERR_NONE;
+	}
+	/* 6 = StatusCode */
+	vars[5].type = SQL_TYPE_INT;
+	vars[5].v.i = (int)db->GetNumber(Config, &res, Part == 1 ? 13 : 8);
+	vars[6].type = SQL_TYPE_NONE;
+	db->FreeResult(Config, &res);
 
 	error = SMSDSQL_NamedQuery(Config, Config->SMSDSQL_queries[SQL_QUERY_ADD_SENT_INFO], &sms->SMS[Part - 1], vars, &res);
 	if (error != ERR_NONE) {
@@ -1510,6 +1543,7 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 			", ", ESCAPE_FIELD("CreatorID"),
 			", ", ESCAPE_FIELD("Retries"),
 			", ", ESCAPE_FIELD("Status"),
+			", ", ESCAPE_FIELD("StatusCode"),
 			" FROM ", Config->table_outbox, " WHERE ",
 			ESCAPE_FIELD("ID"), "=%1", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
@@ -1525,6 +1559,7 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 			", ", ESCAPE_FIELD("ID"),
 			", ", ESCAPE_FIELD("SequencePosition"),
 			", ", ESCAPE_FIELD("Status"),
+			", ", ESCAPE_FIELD("StatusCode"),
 			" FROM ", Config->table_outbox_multipart, " WHERE ",
 			ESCAPE_FIELD("ID"), "=%1 AND ",
 			ESCAPE_FIELD("SequencePosition"), "=%2", NULL) != ERR_NONE) {
@@ -1587,6 +1622,21 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 		return ERR_UNKNOWN;
 	}
 
+	if (SMSDSQL_option(Config, SQL_QUERY_UPDATE_OUTBOX_STATUSCODE, "update_outbox_statuscode",
+		"UPDATE ", Config->table_outbox, " SET ",
+			ESCAPE_FIELD("StatusCode"), "=%3 WHERE ",
+			ESCAPE_FIELD("ID"), "=%1", NULL) != ERR_NONE) {
+		return ERR_UNKNOWN;
+	}
+
+	if (SMSDSQL_option(Config, SQL_QUERY_UPDATE_OUTBOX_MULTIPART_STATUSCODE, "update_outbox_multipart_statuscode",
+		"UPDATE ", Config->table_outbox_multipart, " SET ",
+			ESCAPE_FIELD("StatusCode"), "=%3 WHERE ",
+			ESCAPE_FIELD("ID"), "=%1 AND ",
+			ESCAPE_FIELD("SequencePosition"), "=%4", NULL) != ERR_NONE) {
+		return ERR_UNKNOWN;
+	}
+
 	if (SMSDSQL_option(Config, SQL_QUERY_ADD_SENT_INFO, "add_sent_info",
 		"INSERT INTO ", Config->table_sentitems, " "
 			"(", ESCAPE_FIELD("CreatorID"),
@@ -1605,10 +1655,11 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 			", ", ESCAPE_FIELD("TextDecoded"),
 			", ", ESCAPE_FIELD("InsertIntoDB"),
 			", ", ESCAPE_FIELD("RelativeValidity"),
+			", ", ESCAPE_FIELD("StatusCode"),
 			") "
 			" VALUES (%A, %1, %2, %3, ",
 			SMSDSQL_Now(Config),
-			", %F, %4, %P, %E, %R, %c, %u, %x, %T, %5, %V)", NULL) != ERR_NONE) {
+			", %F, %4, %P, %E, %R, %c, %u, %x, %T, %5, %V, %6)", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
 

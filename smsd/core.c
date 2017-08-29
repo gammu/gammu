@@ -139,6 +139,7 @@ void SMSD_SendSMSStatusCallback (GSM_StateMachine *sm, int status, int mr, void 
 	} else {
 		Config->SendingSMSStatus = ERR_UNKNOWN;
 	}
+	Config->StatusCode = status;
 }
 
 /**
@@ -1757,6 +1758,8 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config)
 		SMSD_PhoneStatus(Config);
 		Config->TPMR = -1;
 		Config->SendingSMSStatus = ERR_TIMEOUT;
+		Config->StatusCode = -1;
+		Config->Part = i + 1;
 		error = GSM_SendSMS(Config->gsm, &sms.SMS[i]);
 		if (error != ERR_NONE) {
 			SMSD_LogError(DEBUG_INFO, Config, "Error sending SMS", error);

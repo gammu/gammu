@@ -126,6 +126,7 @@ CREATE TABLE outbox (
   "Retries" integer DEFAULT '0',
   "Priority" integer DEFAULT '0',
   "Status" varchar(255) NOT NULL DEFAULT 'Reserved',
+  "StatusCode" integer NOT NULL DEFAULT '-1',
   CHECK ("Coding" IN 
   ('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression')),
   CHECK ("DeliveryReport" IN ('default','yes','no')),
@@ -164,6 +165,7 @@ CREATE TABLE outbox_multipart (
   "ID" serial,
   "SequencePosition" integer NOT NULL DEFAULT '1',
   "Status" varchar(255) NOT NULL DEFAULT 'Reserved',
+  "StatusCode" integer NOT NULL DEFAULT '-1',
   PRIMARY KEY ("ID", "SequencePosition"),
   CHECK ("Coding" IN 
   ('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression')),
@@ -239,6 +241,7 @@ CREATE TABLE sentitems (
   "TPMR" integer NOT NULL DEFAULT '-1',
   "RelativeValidity" integer NOT NULL DEFAULT '-1',
   "CreatorID" text NOT NULL,
+  "StatusCode" integer NOT NULL DEFAULT '-1',
   CHECK ("Status" IN 
   ('SendingOK','SendingOKNoReport','SendingError','DeliveryOK','DeliveryFailed','DeliveryPending',
   'DeliveryUnknown','Error')),
