@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.38.2\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2016-10-11 13:13+0200\n"
-"PO-Revision-Date: 2011-12-13 21:56+0200\n"
-"Last-Translator: Sukma Budi <kanjengdemank@yahoo.com>\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2017-09-02 10:48+0000\n"
+"Last-Translator: fidella <fidellawi@gmail.com>\n"
+"Language-Team: Indonesian <https://hosted.weblate.org/projects/gammu/gammu-"
+"docs/id/>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Pootle 2.1.6\n"
+"X-Generator: Weblate 2.17-dev\n"
 
 #. type: Title =
 #: README.rst:2
@@ -35,12 +36,6 @@ msgstr ""
 
 #. type: Plain text
 #: README.rst:11
-#, fuzzy
-#| msgid ""
-#| "It has been initiated by Marcin Wiacek and other people. Originally the "
-#| "code was based on Gnokii <http://www.gnokii.org> and later MyGnokii "
-#| "<http://www.mwiacek.com> projects. Gammu was former (up to version 0.58) "
-#| "called MyGnokii2."
 msgid ""
 "It has been initiated by Marcin Wiacek and other people. Originally the code "
 "was based on Gnokii <https://www.gnokii.org/> and later MyGnokii <http://www."
@@ -48,8 +43,8 @@ msgid ""
 "MyGnokii2."
 msgstr ""
 "Produk ini telah diinisiasi oleh Marcin Wiacek dan beberapa orang lainnya. "
-"Kode asli berbasis Gnokii <http://www.gnokii.org> dan proyek terbaru "
-"MyGnokii <http://www.mwiacek.com>. Gammu sebelumnya (mulai dari versi 0.58) "
+"Kode asli berbasis Gnokii <https://www.gnokii.org/> dan proyek terbaru "
+"MyGnokii <http://www.mwiacek.com/>. Gammu sebelumnya (mulai dari versi 0.58) "
 "disebut MyGnokii2."
 
 #. type: Plain text
@@ -70,17 +65,13 @@ msgstr ".. image"
 
 #. type: Plain text
 #: README.rst:16
-#, fuzzy
-#| msgid "https://travis-ci.org/gammu/gammu.png?branch=master"
 msgid "https://travis-ci.org/gammu/gammu.svg?branch=master"
-msgstr "https://travis-ci.org/gammu/gammu.png?branch=master"
+msgstr "https://travis-ci.org/gammu/gammu.svg?branch=master"
 
 #. type: Plain text
 #: README.rst:18
-#, fuzzy
-#| msgid ":target: https://travis-ci.org/gammu/gammu"
 msgid ":alt: Build status :target: https://travis-ci.org/gammu/gammu"
-msgstr ":target: https://travis-ci.org/gammu/gammu"
+msgstr ":alt: Build status :target: https://travis-ci.org/gammu/gammu"
 
 #. type: Plain text
 #: README.rst:20
