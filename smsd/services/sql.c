@@ -222,9 +222,9 @@ static const char *SMSDSQL_Now(GSM_SMSDConfig * Config)
 		return now_pgsql;
 	} else if (strncasecmp(driver_name, "sqlite", 6) == 0) {
 		return now_sqlite;
-	} else if (strcasecmp(Config->driver, "oracle") == 0 || strcasecmp(driver_name, "freetds") == 0 || strcasecmp(driver_name, "mssql") == 0 || strcasecmp(driver_name, "sybase") == 0) {
+	} else if (strcasecmp(driver_name, "oracle") == 0 || strcasecmp(driver_name, "freetds") == 0 || strcasecmp(driver_name, "mssql") == 0 || strcasecmp(driver_name, "sybase") == 0) {
 		return now_freetds;
-	} else if (strcasecmp(Config->driver, "access") == 0) {
+	} else if (strcasecmp(driver_name, "access") == 0) {
 		return now_access;
 	} else if (strcasecmp(Config->driver, "odbc") == 0) {
 		return now_odbc;

@@ -28,6 +28,7 @@ ChangeLog
 [+] * Added RunOnIncomingCall to SMSD.
 [-] * Fixed SQL error when retry of multipart message
 [*] * Added status code column
+[-] * Fixed some SQL queries for Access and Oracle databases.
 
 20170618 - 1.38.4
 
