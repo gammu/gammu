@@ -86,7 +86,8 @@ GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 	static const SpecialAnswersStruct SpecialAnswers[] = {
 		/* Standard GSM */
 		{"+CGREG:"	,1, ID_GetNetworkInfo},
-		{"+CBM:"	,1, ID_All},
+		/* Following has 2 lines in PDU mode, 1 line in TEXT ... */
+		{"+CBM:"	,2, ID_All},
 		{"+CMT:"	,2, ID_All},
 		{"+CMTI:"	,1, ID_All},
 		{"+CDS:"	,2, ID_All},
