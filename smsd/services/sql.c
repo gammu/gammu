@@ -1491,8 +1491,9 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 			", ", ESCAPE_FIELD("UDH"),
 			", ", ESCAPE_FIELD("Class"),
 			", ", ESCAPE_FIELD("TextDecoded"),
-			", ", ESCAPE_FIELD("RecipientID"), ")"
-			" VALUES (%d, %E, %R, %c, %F, %u, %x, %T, %P)", NULL) != ERR_NONE) {
+			", ", ESCAPE_FIELD("RecipientID"),
+			", ", ESCAPE_FIELD("Status"), ")",
+			" VALUES (%d, %E, %R, %c, %F, %u, %x, %T, %P, %e)", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
 

@@ -850,6 +850,9 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 			FindDefaultAlphabetLen(Info->Entries[0].Buffer,&Length,&smslen,(GSM_MAX_8BIT_SMS_LENGTH-UDHHeader.Length)*8/7);
 		}
 		break;
+	case SMS_USSD:
+		Class = Info->Class;
+		break;
 	case SMS_ConcatenatedAutoTextLong:
 	case SMS_ConcatenatedAutoTextLong16bit:
 		smslen = UnicodeLength(Info->Entries[0].Buffer);

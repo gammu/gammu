@@ -39,7 +39,8 @@ typedef enum {
 	COMPOSE_VCARD10,
 	COMPOSE_VCARD21,
 	COMPOSE_WAPINDICATOR,
-	COMPOSE_WAPSETTINGS
+	COMPOSE_WAPSETTINGS,
+	COMPOSE_USSD
 } ComposeType;
 
 typedef struct {
@@ -66,6 +67,7 @@ ComposeMapEntry ComposeMap[] = {
 	{"VCARD21", COMPOSE_VCARD21},
 	{"WAPINDICATOR", COMPOSE_WAPINDICATOR},
 	{"WAPSETTINGS", COMPOSE_WAPSETTINGS},
+	{"USSD", COMPOSE_USSD},
 	{NULL, 0}
 };
 
@@ -227,6 +229,10 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 	case COMPOSE_EMS:
 		SMSInfo.UnicodeCoding   		= FALSE;
 		SMSInfo.EntriesNum 			= 0;
+		break;
+	case COMPOSE_USSD:
+		SMSInfo.Entries[0].ID = SMS_USSD;
+		SMSInfo.Class = GSM_SMS_USSD;
 		break;
 	case COMPOSE_MMSINDICATOR:
 		if (argc < 3 + startarg) {

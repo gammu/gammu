@@ -105,3 +105,9 @@ Inject protected message with ringtone:
 .. code-block:: sh
 
     gammu-smsd-inject EMS 123456 -protected 2 -variablebitmaplong ala.bmp -toneSElong axelf.txt -toneSE ring.txt
+
+Inject USSD query:
+
+.. code-block:: sh
+
+    gammu-smsd-inject USSD '*101#'
