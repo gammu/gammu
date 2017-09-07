@@ -65,7 +65,7 @@ Fields description:
     decoded SMSC number
 
 ``Class`` (integer)
-    SMS class or \-1 (0 is flash SMS, 1 is normal one, 2 is USSD)
+    SMS class or \-1 (0 is flash SMS, 1 is normal one, 127 is USSD)
 
 ``TextDecoded`` (varchar(160))
     decoded SMS text (for Default Alphabet/Unicode SMS)
@@ -81,7 +81,7 @@ Fields description:
 
 ``Status`` (integer)
     Status of incoming message. Currently only used for
-    ``Class`` 2 (USSD) messages with following meaning:
+    ``Class`` 127 (USSD) messages with following meaning:
 
     ``1``
         Unknown status.
@@ -146,7 +146,7 @@ Fields description:
     the message. Without this, message will be sent as plain text.
 
 ``Class`` (integer)
-    SMS class or \-1 (0 is normal SMS, 1 is flash one, 2 is USSD)
+    SMS class or \-1 (0 is normal SMS, 1 is flash one, 127 is USSD)
 
 ``TextDecoded`` (varchar(160))
     SMS text in "human readable" form
@@ -385,7 +385,7 @@ Fields description:
     decoded number of SMSC, which sent SMS
 
 ``Class`` (integer)
-    SMS class or \-1 (0 is normal SMS, 1 is flash one, 2 is USSD)
+    SMS class or \-1 (0 is normal SMS, 1 is flash one, 127 is USSD)
 
 ``TextDecoded`` (varchar(160))
     SMS text in "human readable" form
