@@ -981,6 +981,7 @@ GSM_PhoneModel allmodels[] = {
 	{"K4511",	"K4511",	"",		{F_SMS_LOCATION_0, F_ENCODED_USSD, F_FOUR_DIGIT_YEAR, F_RESET_AFTER_TIMEOUT, F_HUAWEI_INIT, 0}},
 	/* Telit */
 	{"HE910-D",	"HE910-D",	"",		{F_USSD_GSM_CHARSET, 0}},
+	{"HE910",	"HE910",	"",		{F_USSD_GSM_CHARSET, 0}},
 
 	/* ZTE */
 	{"MF100",	"MF100",	"",		{F_ZTE_INIT, 0}},
