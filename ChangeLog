@@ -29,6 +29,7 @@ ChangeLog
 [-] * Fixed SQL error when retry of multipart message
 [*] * Added status code column
 [-] * Fixed some SQL queries for Access and Oracle databases.
+[-] * Add option to prefer GSM charset for USSD.
 
 20170618 - 1.38.4
 

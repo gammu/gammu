@@ -722,6 +722,10 @@ typedef enum {
 	 * ZTE style init.
 	 */
 	F_ZTE_INIT,
+	/**
+	 * Prefer GSM charset for USSD (default is unicode).
+	 */
+	F_USSD_GSM_CHARSET,
 
 	/**
 	 * Just marker of highest feature code, should not be used.

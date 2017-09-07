@@ -4405,7 +4405,11 @@ GSM_Error ATGEN_DialService(GSM_StateMachine *s, char *number)
 		return ERR_MOREMEMORY;
 	}
 	/* Prefer unicode to be able to deal with unicode response */
-	error = ATGEN_SetCharset(s, AT_PREF_CHARSET_UNICODE);
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_USSD_GSM_CHARSET)) {
+		error = ATGEN_SetCharset(s, AT_PREF_CHARSET_GSM);
+	} else {
+		error = ATGEN_SetCharset(s, AT_PREF_CHARSET_UNICODE);
+	}
 
 	if (error != ERR_NONE) {
 		free(req);
