@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.38.2\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2016-10-11 13:13+0200\n"
-"PO-Revision-Date: 2017-09-17 23:04+0000\n"
+"PO-Revision-Date: 2017-09-19 18:54+0000\n"
 "Last-Translator: Kristjan Räts <kristjanrats@gmail.com>\n"
 "Language-Team: Estonian <https://hosted.weblate.org/projects/gammu/gammu-"
 "docs/et/>\n"
@@ -159,6 +159,9 @@ msgid ""
 "version of it using make manual-html which is viewable online at <https://"
 "wammu.eu/docs/manual/>."
 msgstr ""
+"Gammu manuaal asub kataloogis docs/manual. Manuaali HTML versiooni, mis on "
+"vaadav ka veebis aadressil <https://wammu.eu/docs/manual/>, saad ehitada "
+"käsuga make manual-html."
 
 #. type: Title =
 #: README.rst:50
@@ -199,6 +202,8 @@ msgid ""
 "See docs/manual/project/install.rst for installation guide or see chapter "
 "\"Compiling Gammu\" in The Gammu Manual."
 msgstr ""
+"Vaata paigaldusjuhendit failis docs/manual/project/install.rst või vaata "
+"Gammu manuaalis peatükki \"Gammu kompileerimine\"."
 
 #, fuzzy
 #~| msgid "https://travis-ci.org/gammu/gammu.png?branch=master"
