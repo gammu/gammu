@@ -146,6 +146,9 @@ GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		/* ONDA */
 		{"+ZUSIMR:"	,1, ID_All}, /* +ZUSIMR:2 */
 
+		/* Telit */
+		{"#STN:"	,1, ID_All}, /* #STN: 150,1,"" */
+
 		{NULL		,1, ID_All}};
 
 	/* We're starting new message */
