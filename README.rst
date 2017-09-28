@@ -9,6 +9,10 @@ code was based on Gnokii <https://www.gnokii.org/> and later MyGnokii
 <http://www.mwiacek.com/> projects. Gammu  was former (up to version
 0.58) called MyGnokii2.
 
+<a target='_blank' rel='nofollow' href='https://app.codesponsor.io/link/e9cresCoq9fvHq4ya92dgNSj/gammu/gammu'>
+  <img alt='Sponsor' width='888' height='68' src='https://app.codesponsor.io/embed/e9cresCoq9fvHq4ya92dgNSj/gammu/gammu.svg' />
+</a>
+
 Currently the project is lead by Michal Cihar <michal@cihar.com> with
 help of many contributors.
 
