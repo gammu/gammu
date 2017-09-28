@@ -1618,7 +1618,7 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_USSDMessage ussd;
-	GSM_Error error;
+	GSM_Error error = ERR_NONE;
 	unsigned char *pos = NULL;
 	int code = 0;
 	int dcs = 0;
@@ -1676,10 +1676,12 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 				break;
 			case 4:
 				ussd.Status = USSD_NotSupported;
-				return ERR_NETWORK_ERROR;
+				error = ERR_NETWORK_ERROR;
+				goto done;
 			case 5:
 				ussd.Status = USSD_Timeout;
-				return ERR_TIMEOUT;
+				error = ERR_TIMEOUT;
+				goto done;
 			default:
 				ussd.Status = USSD_Unknown;
 		}
@@ -1699,7 +1701,7 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 						hex_encoded, sizeof(hex_encoded));
 			}
 			if (error != ERR_NONE) {
-				return error;
+				goto done;
 			}
 
 			if ((dcs & 0xc0) == 0) {
@@ -1749,17 +1751,18 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 					&code,
 					ussd.Text, sizeof(ussd.Text));
 			if (error != ERR_NONE) {
-				return error;
+				goto done;
 			}
 		}
 
+done:
 		/* Notify application */
 		if (s->User.IncomingUSSD != NULL) {
 			s->User.IncomingUSSD(s, &ussd, s->User.IncomingUSSDUserData);
 		}
 	}
 
-	return ERR_NONE;
+	return error;
 }
 
 GSM_Error ATGEN_SetIncomingUSSD(GSM_StateMachine *s, gboolean enable)

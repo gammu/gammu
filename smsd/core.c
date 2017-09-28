@@ -1663,6 +1663,7 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config)
 	GSM_Error            	error;
 	unsigned int         	j;
 	int			i, z;
+	char destinationnumber[3 * GSM_MAX_NUMBER_LENGTH + 1];
 
 	/* Clean structure before use */
 	for (i = 0; i < GSM_MAX_MULTI_SMS; i++) {
@@ -1760,7 +1761,20 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config)
 		Config->SendingSMSStatus = ERR_TIMEOUT;
 		Config->StatusCode = -1;
 		Config->Part = i + 1;
-		error = GSM_SendSMS(Config->gsm, &sms.SMS[i]);
+		if (sms.SMS[i].Class == GSM_SMS_USSD) {
+			EncodeUTF8(destinationnumber, sms.SMS[i].Number);
+			SMSD_Log(DEBUG_NOTICE, Config, "Sending USSD request to %s", destinationnumber);
+			error = GSM_DialService(Config->gsm, destinationnumber);
+			/* Fallback to voice call, it can work with some phones */
+			if (error == ERR_NOTIMPLEMENTED || error == ERR_NOTSUPPORTED) {
+				error = GSM_DialVoice(Config->gsm, destinationnumber, GSM_CALL_DefaultNumberPresence);
+			}
+			if (error == ERR_NONE) {
+				Config->SendingSMSStatus = ERR_NONE;
+			}
+		} else {
+			error = GSM_SendSMS(Config->gsm, &sms.SMS[i]);
+		}
 		if (error != ERR_NONE) {
 			SMSD_LogError(DEBUG_INFO, Config, "Error sending SMS", error);
 			Config->TPMR = -1;
@@ -1984,6 +1998,29 @@ void SMSD_IncomingCallCallback(GSM_StateMachine *s, GSM_Call *call, void *user_d
 	}
 }
 
+void SMSD_IncomingUSSDCallback(GSM_StateMachine *sm UNUSED, GSM_USSDMessage *ussd, void *user_data)
+{
+	GSM_MultiSMSMessage sms;
+	GSM_Error error;
+	GSM_SMSDConfig *Config = user_data;
+
+	SMSD_Log(DEBUG_NOTICE, Config, "%s", __FUNCTION__);
+
+	memset(&sms, 0, sizeof(GSM_MultiSMSMessage));
+	sms.Number = 1;
+	sms.SMS[0].Class = GSM_SMS_USSD;
+	memcpy(&sms.SMS[0].Text, ussd->Text, UnicodeLength(ussd->Text)*2);
+	sms.SMS[0].PDU = SMS_Deliver;
+	sms.SMS[0].Coding = SMS_Coding_Unicode_No_Compression;
+	GSM_GetCurrentDateTime(&sms.SMS[0].DateTime);
+	sms.SMS[0].DeliveryStatus = ussd->Status;
+
+	error = SMSD_ProcessSMS(Config, &sms);
+	if (error != ERR_NONE) {
+		SMSD_LogError(DEBUG_INFO, Config, "Error processing USSD", error);
+	}
+}
+
 /**
  * Main loop which takes care of connection to phone and processing of
  * messages.
@@ -2062,6 +2099,9 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 
 				/* We use polling so store messages to SIM */
 				GSM_SetIncomingSMS(Config->gsm, TRUE);
+
+				GSM_SetIncomingUSSDCallback(Config->gsm, SMSD_IncomingUSSDCallback, Config);
+				GSM_SetIncomingUSSD(Config->gsm, TRUE);
 
 				GSM_SetSendSMSStatusCallback(Config->gsm, SMSD_SendSMSStatusCallback, Config);
 				/* On first start we need to initialize some variables */
@@ -2184,6 +2224,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 			SMSD_InterruptibleSleep(Config, Config->loopsleep - lastsleep);
 		}
 	}
+	GSM_SetIncomingUSSD(Config->gsm, FALSE);
 	Config->Service->Free(Config);
 
 done_connected:

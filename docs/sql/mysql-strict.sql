@@ -39,6 +39,7 @@ CREATE TABLE `inbox` (
   `ID` integer unsigned NOT NULL auto_increment,
   `RecipientID` text NOT NULL,
   `Processed` enum('false','true') NOT NULL default 'false',
+  `Status` integer NOT NULL default '-1',
   PRIMARY KEY `ID` (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;
 

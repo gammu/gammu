@@ -17,6 +17,7 @@ CREATE TABLE inbox (
   ID INTEGER PRIMARY KEY AUTOINCREMENT,
   RecipientID TEXT NOT NULL,
   Processed TEXT NOT NULL DEFAULT 'false',
+  Status INTEGER NOT NULL DEFAULT '-1',
   CHECK (Coding IN 
   ('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression')) 
 );

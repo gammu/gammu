@@ -65,7 +65,7 @@ Fields description:
     decoded SMSC number
 
 ``Class`` (integer)
-    SMS class or \-1 (0 is flash SMS, 1 is normal one)
+    SMS class or \-1 (0 is flash SMS, 1 is normal one, 127 is USSD)
 
 ``TextDecoded`` (varchar(160))
     decoded SMS text (for Default Alphabet/Unicode SMS)
@@ -79,6 +79,26 @@ Fields description:
 ``Processed`` (enum('false', 'true'))
     you can use for marking, whether SMS was processed or not
 
+``Status`` (integer)
+    Status of incoming message. Currently only used for
+    ``Class`` 127 (USSD) messages with following meaning:
+
+    ``1``
+        Unknown status.
+    ``2``
+        No action is needed, maybe network initiated USSD.
+    ``3``
+        Reply is expected.
+    ``4``
+        USSD dialog terminated.
+    ``5``
+        Another client replied.
+    ``6``
+        Operation not supported.
+    ``7``
+        Network timeout.
+
+    .. versionadded:: 1.38.5
 
 .. _outbox:
 
@@ -126,7 +146,7 @@ Fields description:
     the message. Without this, message will be sent as plain text.
 
 ``Class`` (integer)
-    SMS class or \-1 (0 is normal SMS, 1 is flash one)
+    SMS class or \-1 (0 is normal SMS, 1 is flash one, 127 is USSD)
 
 ``TextDecoded`` (varchar(160))
     SMS text in "human readable" form
@@ -365,7 +385,7 @@ Fields description:
     decoded number of SMSC, which sent SMS
 
 ``Class`` (integer)
-    SMS class or \-1 (0 is normal SMS, 1 is flash one)
+    SMS class or \-1 (0 is normal SMS, 1 is flash one, 127 is USSD)
 
 ``TextDecoded`` (varchar(160))
     SMS text in "human readable" form
@@ -412,6 +432,7 @@ History of schema versions:
 
     * Added ``Status`` field to :ref:`outbox` and :ref:`outbox_multipart`.
     * Added ``StatusCode`` field to :ref:`sentitems`, :ref:`outbox` and :ref:`outbox_multipart`.
+    * Added ``Status`` field to :ref:`inbox`.
 
    .. versionchanged:: 1.38.5
 

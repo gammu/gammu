@@ -436,6 +436,18 @@ typedef enum {
 } GSM_SMSMessageType;
 
 /**
+ * SMS message class.
+ *
+ * \ingroup SMS
+ */
+typedef enum {
+	GSM_SMS_None = -1,
+	GSM_SMS_Flash,
+	GSM_SMS_Normal,
+	GSM_SMS_USSD = 127
+} GSM_SMS_Class;
+
+/**
  * SMS message data.
  *
  * \ingroup SMS
@@ -968,7 +980,8 @@ typedef enum {
 	/**
 	 * Siemens OTA
 	 */
-	SMS_SiemensFile
+	SMS_SiemensFile,
+	SMS_USSD
 } EncodeMultiPartSMSID;
 
 /**

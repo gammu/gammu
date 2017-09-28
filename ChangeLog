@@ -32,6 +32,7 @@ ChangeLog
 [-] * Add option to prefer GSM charset for USSD.
 [-] * Sanitize international numbers stored in the database to always start with +.
 [-] * Improved support for Telit devices.
+[+] * Added USSD support to SMSD.
 
 20170618 - 1.38.4
 

@@ -82,6 +82,7 @@ CREATE TABLE inbox (
   "ID" serial PRIMARY KEY,
   "RecipientID" text NOT NULL,
   "Processed" boolean NOT NULL DEFAULT 'false',
+  "Status" integer NOT NULL DEFAULT '-1',
   CHECK ("Coding" IN 
   ('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression')) 
 );

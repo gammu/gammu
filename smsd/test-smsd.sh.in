@@ -9,7 +9,8 @@ SMSD_CMD="$2"
 SMSD_INJECT_CMD="$3"
 SMSD_MONITOR_CMD="$4"
 
-TEST_MATCH=";999999999999999;994299429942994;3;9;0;100;42"
+TEST_MATCH=";999999999999999;994299429942994;4;10;0;100;42"
+INCOMING_USSD=1
 
 if [ "x@HAVE_KILL@" = x1 ] ; then
     SMSD_EXTRA_PARAMS="-p @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/smsd.pid"
@@ -115,6 +116,7 @@ EOT
         ;;
     null)
         TEST_MATCH=";999999999999999;994299429942994;0;9;0;100;42"
+        INCOMING_USSD=0
         cat >> .smsdrc <<EOT
 service = null
 EOT
@@ -194,7 +196,8 @@ case $SERVICE in
 esac
 
 $SMSD_INJECT_CMD -c "$CONFIG_PATH" TEXT 123465 -text "Lorem ipsum." &
-$SMSD_INJECT_CMD -c "$CONFIG_PATH" TEXT 123465 -text "Lorem ipsum."
+$SMSD_INJECT_CMD -c "$CONFIG_PATH" TEXT 123465 -text "Lorem ipsum." &
+$SMSD_INJECT_CMD -c "$CONFIG_PATH" USSD 123465
 
 $SMSD_CMD -c "$CONFIG_PATH" $SMSD_EXTRA_PARAMS &
 SMSD_PID=$!
@@ -222,12 +225,17 @@ sleep 5
 
 $SMSD_MONITOR_CMD -C -c "$CONFIG_PATH" -n 1 -d 0
 
-if [ `wc -l < @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/received.log` -ne 8 ] ; then
+if [ `wc -l < @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/received.log` -ne $((8 + $INCOMING_USSD)) ] ; then
     echo "ERROR: Wrong number of messages received!"
     exit 1
 fi
 
 if ! grep -q -F 'MMS_ADDRESS=http://mmscz/?m=m5da5a9jn210ma56q20' @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/env.log ; then
     echo "ERROR: Wrong MMS message received!"
+    exit 1
+fi
+
+if [ $INCOMING_USSD -gt 0 ] && ! grep -q -F 'Reply for 123465' @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/env.log ; then
+    echo "ERROR: Got no correct USSD reply!"
     exit 1
 fi
