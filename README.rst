@@ -4,15 +4,15 @@ Gammu All Mobile Management Utilities
 Gammu is library and command line utility for mobile phones. It is
 released under GNU GPL version 2.
 
-It has been initiated by Marcin Wiacek and other people. Originally the
-code was based on Gnokii <https://www.gnokii.org/> and later MyGnokii
-<http://www.mwiacek.com/> projects. Gammu  was former (up to version
-0.58) called MyGnokii2.
-
 .. image:: https://app.codesponsor.io/embed/e9cresCoq9fvHq4ya92dgNSj/gammu/gammu.svg
    :width: 888
    :height: 68
    :target: https://app.codesponsor.io/link/e9cresCoq9fvHq4ya92dgNSj/gammu/gammu
+
+It has been initiated by Marcin Wiacek and other people. Originally the
+code was based on Gnokii <https://www.gnokii.org/> and later MyGnokii
+<http://www.mwiacek.com/> projects. Gammu  was former (up to version
+0.58) called MyGnokii2.
 
 Currently the project is lead by Michal Cihar <michal@cihar.com> with
 help of many contributors.
