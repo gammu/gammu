@@ -49,7 +49,7 @@ const char now_plus_pgsql[] = "now() + interval '%d seconds'";
 const char now_plus_sqlite[] = "datetime('now', '+%d seconds', 'localtime')";
 const char now_plus_freetds[] = "DATEADD('second', %d, CURRENT_TIMESTAMP)";
 const char now_plus_access[] = "now()+#00:00:%d#";
-const char now_plus_oracle[] = "CURRENT_TIMESTAMP + INTERVAL '%d' SECOND'";
+const char now_plus_oracle[] = "CURRENT_TIMESTAMP + INTERVAL '%d' SECOND";
 const char now_plus_fallback[] = "NOW() + INTERVAL %d SECOND";
 
 
