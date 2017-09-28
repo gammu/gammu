@@ -6236,6 +6236,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReplyIgnore, 	"+ZEND"			,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore, 	"+CDSI:"		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore,	"+CLCC:"		,0x00,0x00,ID_IncomingFrame	 },
+{ATGEN_GenericReplyIgnore,	"#STN:"			,0x00,0x00,ID_IncomingFrame	 },
 
 /* Sony Ericsson screenshot */
 {SONYERICSSON_Reply_Screenshot,	"AT*ZISI=?\r",		0x00,0x00,ID_Screenshot		},
