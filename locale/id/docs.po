@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.38.2\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2016-10-11 13:13+0200\n"
-"PO-Revision-Date: 2017-09-13 10:49+0000\n"
+"PO-Revision-Date: 2017-10-04 10:46+0000\n"
 "Last-Translator: developerchan1 <developerchan1@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/gammu/gammu-"
 "docs/id/>\n"
@@ -71,7 +71,7 @@ msgstr "https://travis-ci.org/gammu/gammu.svg?branch=master"
 #. type: Plain text
 #: README.rst:18
 msgid ":alt: Build status :target: https://travis-ci.org/gammu/gammu"
-msgstr ":alt: Build status :target: https://travis-ci.org/gammu/gammu"
+msgstr ":alt: Status permbuatan:target: https://travis-ci.org/gammu/gammu"
 
 #. type: Plain text
 #: README.rst:20
@@ -84,12 +84,12 @@ msgstr ""
 
 #. type: Plain text
 #: README.rst:22
-#, fuzzy
-#| msgid ":target: https://travis-ci.org/gammu/gammu"
 msgid ""
 ":alt: Windows Build status :target: https://ci.appveyor.com/project/nijel/"
 "gammu/branch/master"
-msgstr ":target: https://travis-ci.org/gammu/gammu"
+msgstr ""
+":alt: Windows Build status :target: "
+"https://ci.appveyor.com/project/nijel/gammu/branch/master"
 
 #. type: Plain text
 #: README.rst:24
@@ -102,13 +102,13 @@ msgid ""
 ":alt: Translation status :target: https://hosted.weblate.org/engage/gammu/?"
 "utm_source=widget"
 msgstr ""
-":alt: Translation status :target: https://hosted.weblate.org/engage/gammu/?"
-"utm_source=widget"
+":alt: Translasi status :target: "
+"https://hosted.weblate.org/engage/gammu/?utm_source=widget"
 
 #. type: Plain text
 #: README.rst:28
 msgid "https://scan.coverity.com/projects/2890/badge.svg?flat=1"
-msgstr ""
+msgstr "https://scan.coverity.com/projects/2890/badge.svg?flat=1"
 
 #. type: Plain text
 #: README.rst:30
@@ -120,7 +120,7 @@ msgstr ":alt: Bitdeli badge :target: https://bitdeli.com/free"
 #. type: Plain text
 #: README.rst:32
 msgid "https://img.shields.io/gratipay/Gammu.svg"
-msgstr ""
+msgstr "https://img.shields.io/gratipay/Gammu.svg"
 
 #. type: Plain text
 #: README.rst:34
@@ -134,6 +134,7 @@ msgstr ":target: https://travis-ci.org/gammu/gammu"
 msgid ""
 "https://www.bountysource.com/badge/team?team_id=23177&style=bounties_received"
 msgstr ""
+"https://www.bountysource.com/badge/team?team_id=23177&style=bounties_received"
 
 #. type: Plain text
 #: README.rst:38
@@ -146,14 +147,13 @@ msgstr ""
 #: README.rst:40
 #, no-wrap
 msgid "More information"
-msgstr "Informasi lanjut"
+msgstr "Informasi lebih lanjut"
 
 #. type: Plain text
 #: README.rst:43
-#, fuzzy
-#| msgid "You can find more information on <http://wammu.eu/gammu/>."
 msgid "You can find more information on <https://wammu.eu/gammu/>."
-msgstr "Anda dapat mencari lebih banyak informasi di <http://wammu.eu/gammu/>."
+msgstr ""
+"Anda dapat menemukan informasi lebih banyak di <http://wammu.eu/gammu/>."
 
 #. type: Plain text
 #: README.rst:47
@@ -198,12 +198,9 @@ msgstr "Dukungan pengembang"
 
 #. type: Plain text
 #: README.rst:59
-#, fuzzy
-#| msgid "You can appreciate developers work at <http://wammu.eu/donate/>."
 msgid "You can appreciate developers work at <https://wammu.eu/donate/>."
 msgstr ""
-"Kamu dapat menghargai pengembang yang sudah bekerja di <http://wammu.eu/"
-"donate/>."
+"Kamu dapat mengapresiasi pekerjaan pengembang di <http://wammu.eu/donate/>."
 
 #. type: Title =
 #: INSTALL:2
