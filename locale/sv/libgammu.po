@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2016-10-11 08:16+0200\n"
-"PO-Revision-Date: 2016-07-28 10:13+0000\n"
+"PO-Revision-Date: 2017-10-09 21:43+0000\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
-"Language-Team: Swedish <https://hosted.weblate.org/projects/gammu/libgammu/"
-"sv/>\n"
+"Language-Team: Swedish "
+"<https://hosted.weblate.org/projects/gammu/libgammu/sv/>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.8-dev\n"
+"X-Generator: Weblate 2.17-dev\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
@@ -79,39 +79,27 @@ msgstr ""
 "Inget svar inom angiven tidsgräns. Antagligen är inte telefonen ansluten."
 
 #: libgammu/gsmcomon.c:98
-#, fuzzy
-#| msgid ""
-#| "Frame not requested right now. See <http://wammu.eu/support/bugs/> for "
-#| "information how to report it."
 msgid ""
 "Frame not requested right now. See <https://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
-"Ramen ej efterfrågad just nu. Se <http://wammu.eu/support/bugs/> för "
+"Ramen ej efterfrågad just nu. Se <https://wammu.eu/support/bugs/> för "
 "information om hur man rapporterar det."
 
 #: libgammu/gsmcomon.c:99
-#, fuzzy
-#| msgid ""
-#| "Unknown response from phone. See <http://wammu.eu/support/bugs/> for "
-#| "information how to report it."
 msgid ""
 "Unknown response from phone. See <https://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
-"Okänt svar från telefonen. Se <http://wammu.eu/support/bugs/> för "
+"Okänt svar från telefonen. Se <https://wammu.eu/support/bugs/> för "
 "information om hur man rapporterar det."
 
 #: libgammu/gsmcomon.c:100
-#, fuzzy
-#| msgid ""
-#| "Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
-#| "report it."
 msgid ""
 "Unknown frame. See <https://wammu.eu/support/bugs/> for information how to "
 "report it."
 msgstr ""
-"Okänd ram. Se <http://wammu.eu/support/bugs/> för information om hur man "
+"Okänd ram. Se <https://wammu.eu/support/bugs/> för information om hur man "
 "rapporterar det."
 
 #: libgammu/gsmcomon.c:101
