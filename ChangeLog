@@ -33,6 +33,7 @@ ChangeLog
 [-] * Sanitize international numbers stored in the database to always start with +.
 [-] * Improved support for Telit devices.
 [+] * Added USSD support to SMSD.
+[-] * Fixed call hangup in SMSD with some modems.
 
 20170618 - 1.38.4
 

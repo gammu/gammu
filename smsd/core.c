@@ -1959,6 +1959,7 @@ GSM_Error SMSD_FreeSharedMemory(GSM_SMSDConfig *Config, gboolean writable)
  */
 void SMSD_IncomingCallCallback(GSM_StateMachine *s, GSM_Call *call, void *user_data) {
 	GSM_SMSDConfig *Config = user_data;
+	GSM_Error error;
 	switch (call->Status) {
 	case GSM_CALL_IncomingCall: {
 		time_t now = time(NULL);
@@ -1968,9 +1969,13 @@ void SMSD_IncomingCallCallback(GSM_StateMachine *s, GSM_Call *call, void *user_d
 			SMSD_Log(DEBUG_INFO, Config, "Incoming call! # hanging up @%ld %ld.\n", now, lastRing);
 			lastRing = now;
 			if (call->CallIDAvailable) {
-				GSM_CancelCall(s, call->CallID, TRUE);
-			} else {
-				GSM_CancelCall(s, 0, TRUE);
+				error = GSM_CancelCall(s, call->CallID, TRUE);
+			}
+			if (!call->CallIDAvailable || error == ERR_NOTSUPPORTED) {
+				error = GSM_CancelCall(s, 0, TRUE);
+			}
+			if (error != ERR_NONE) {
+				SMSD_LogError(DEBUG_ERROR, Config, "Failed call hangup!", error);
 			}
 
 			if (Config->RunOnIncomingCall != NULL) {
