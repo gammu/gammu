@@ -34,6 +34,7 @@ ChangeLog
 [-] * Improved support for Telit devices.
 [+] * Added USSD support to SMSD.
 [-] * Fixed call hangup in SMSD with some modems.
+[-] * Fixed decoding USSD response with some modems.
 
 20170618 - 1.38.4
 
