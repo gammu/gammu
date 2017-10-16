@@ -656,11 +656,16 @@ if (WITH_ATGEN)
     foreach(TESTMESSAGE ${MESSAGES})
         string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
         string(REGEX REPLACE ".*-(.*)\\.dump" "\\1" PHONE_MODEL ${TESTMESSAGE})
+        if (${TESTMESSAGE} MATCHES "^U")
+            set(TEST_UNICODE_FLAG "U")
+        else (${TESTMESSAGE} MATCHES "^U")
+            set(TEST_UNICODE_FLAG "G")
+        endif (${TESTMESSAGE} MATCHES "^U")
         add_test("at-ussd-reply-${TESTNAME}"
             "${GAMMU_TEST_PATH}/at-ussd-reply${CMAKE_EXECUTABLE_SUFFIX}"
-            "${Gammu_SOURCE_DIR}/tests/at-ussd/${TESTMESSAGE}" "${PHONE_MODEL}")
+            "${Gammu_SOURCE_DIR}/tests/at-ussd/${TESTMESSAGE}" "${PHONE_MODEL}" "${TEST_UNICODE_FLAG}")
         set_tests_properties("at-ussd-reply-${TESTNAME}"
-            PROPERTIES FAIL_REGULAR_EXPRESSION "Response: \n")
+            PROPERTIES FAIL_REGULAR_EXPRESSION "Response: (00[A-Fa-f0-0]*)?\n")
     endforeach(TESTMESSAGE $MESSAGES)
 
     # AT SMSC parsing

@@ -1733,7 +1733,10 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 					GSM_UnpackEightBitsToSeven(0, strlen(hex_encoded), sizeof(decoded), packed, decoded);
 					DecodeDefault(ussd.Text, decoded, strlen(decoded), TRUE, NULL);
 				} else {
-					ATGEN_DecodeText(s, hex_encoded, strlen(hex_encoded), ussd.Text, GSM_MAX_USSD_LENGTH, FALSE, FALSE);
+					error = ATGEN_DecodeText(s, hex_encoded, strlen(hex_encoded), ussd.Text, sizeof(ussd.Text) - 1, FALSE, FALSE);
+					if (error != ERR_NONE) {
+						return error;
+					}
 				}
 			} else if (coding == SMS_Coding_Unicode_No_Compression) {
 				DecodeHexUnicode(ussd.Text, hex_encoded + offset, strlen(hex_encoded));
