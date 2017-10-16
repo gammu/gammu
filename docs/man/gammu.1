@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU" "1" "Jun 18, 2017" "1.38.5" "Gammu"
+.TH "GAMMU" "1" "Oct 16, 2017" "1.38.5" "Gammu"
 .SH NAME
 gammu \- Does some neat things with your cellular phone or modem.
 .
@@ -200,8 +200,8 @@ Text in SMS can be coded using two ways:
 .SS GSM Default Alphabet
 .sp
 With \fIGSM Default Alphabet\fP you can fit at most 160 chars into single SMS
-(Gammu doesn\(aqt support compressing such texts according to GSM standards, but
-it isn\(aqt big limit, because there are no phones supporting them), but they\(aqre
+(Gammu doesn’t support compressing such texts according to GSM standards, but
+it isn’t big limit, because there are no phones supporting them), but they’re
 from limited set:
 .INDENT 0.0
 .IP \(bu 2
@@ -213,7 +213,7 @@ some Greek
 .IP \(bu 2
 some other national
 .IP \(bu 2
-some symbols like  @\ ! " # & / ( )\ % * + = \- , .\ :\ ; < >\ ?
+some symbols like  @\ ! ” # & / ( )\ % * + = \- , .\ :\ ; < >\ ?
 .IP \(bu 2
 few others
 .UNINDENT
@@ -287,13 +287,13 @@ Get SMS.
 .sp
 Locations are numerated from 1.
 .sp
-Folder 0 means that sms is being read from "flat" memory (all sms from all
-folders have unique numbers). It\(aqs sometimes emulated by Gammu. You
+Folder 0 means that sms is being read from “flat” memory (all sms from all
+folders have unique numbers). It’s sometimes emulated by Gammu. You
 can use it with all phones.
 .sp
 Other folders like 1, 2, etc. match folders in phone such as Inbox, Outbox, etc.
 and each sms has unique number in his folder. Name of folders can
-depend on your phone (the most often 1="Inbox", 2="Outbox", etc.).
+depend on your phone (the most often 1=”Inbox”, 2=”Outbox”, etc.).
 This method is not supported by all phones (for example, not supported
 by Nokia 3310, 5110, 6110). If work with your phone, use
 \fBgammu getsmsfolders\fP to get folders list.
@@ -340,12 +340,12 @@ save to specified folder.
 .sp
 Folders are numerated from 1.
 .sp
-The most often folder 1 = "Inbox", 2 = "Outbox",etc. Use \fBgammu getsmsfolders\fP to get folder list.
+The most often folder 1 = “Inbox”, 2 = “Outbox”,etc. Use \fBgammu getsmsfolders\fP to get folder list.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-unread
-makes message unread. In some phones (like 6210) you won\(aqt see
+makes message unread. In some phones (like 6210) you won’t see
 unread sms envelope after saving such sms. In some phones with internal
 SMS memory (like 6210) after using it with folder 1 SIM SMS memory will be used
 .UNINDENT
@@ -388,7 +388,7 @@ Types of messages:
 .B ANIMATION frames file1 file2...
 Save an animation as a SMS. You need to give
 number of frames and picture for each frame. Each picture can be in any
-picture format which Gammu supports (B/W bmp, gif, wbmp, nol, nlm...).
+picture format which Gammu supports (B/W bmp, gif, wbmp, nol, nlm…).
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -413,11 +413,16 @@ format \- size 72x14, two colors.
 \fBWARNING:\fP
 .INDENT 7.0
 .INDENT 3.5
-Please note, that it isn\(aqt designed for colour logos available for
+Please note, that it isn’t designed for colour logos available for
 example in DCT4/TIKU \- you need to put bitmap file there inside
 phone using filesystem commands.
 .UNINDENT
 .UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B USSD
+Send USSD query instead of SMS.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -441,7 +446,7 @@ adds default animation with ID specified by user. ID for different phones are di
 .INDENT 7.0
 .TP
 .B \-animation
-adds "frames" frames read from file1, file2, etc.
+adds “frames” frames read from file1, file2, etc.
 .UNINDENT
 .INDENT 7.0
 .TP
@@ -475,7 +480,7 @@ ringtone as one
 .INDENT 7.0
 .TP
 .B \-toneSE
-adds IMelody in "short" form supported by Sony\-Ericsson phones
+adds IMelody in “short” form supported by Sony\-Ericsson phones
 .UNINDENT
 .INDENT 7.0
 .TP
@@ -501,8 +506,8 @@ bitmap 16x16 or 32x32
 .TP
 .B \-protected
 all ringtones and bitmaps after this parameter (excluding default
-ringtones and logos) will be "protected" (in phones compatible with
-ODI like SonyEricsson products it won\(aqt be possible to forward them
+ringtones and logos) will be “protected” (in phones compatible with
+ODI like SonyEricsson products it won’t be possible to forward them
 from phone menu)
 .UNINDENT
 .INDENT 7.0
@@ -611,7 +616,7 @@ Use 78x21 formatted logo instead of standard 72x14.
 \fBNOTE:\fP
 .INDENT 7.0
 .INDENT 3.5
-This isn\(aqt designed for colour logos available for example in newer
+This isn’t designed for colour logos available for example in newer
 phones \- you need to put bitmap file there inside phone using
 filesystem commands.
 .UNINDENT
@@ -669,7 +674,7 @@ specified) and save as text SMS into SIM/phone memory.
 .INDENT 7.0
 .TP
 .B \-flash
-Class 0 SMS (should be displayed after receiving on recipients\(aq phone display after receiving without entering Inbox)
+Class 0 SMS (should be displayed after receiving on recipients’ phone display after receiving without entering Inbox)
 .UNINDENT
 .INDENT 7.0
 .TP
@@ -718,7 +723,7 @@ sms will not set email indicator. Text will be cut to 1 sms.
 .INDENT 7.0
 .TP
 .B \-voidsms
-many phones after receiving it won\(aqt display anything, only beep,
+many phones after receiving it won’t display anything, only beep,
 vibrate or turn on light. Text will be cut to 1 sms.
 .UNINDENT
 .INDENT 7.0
@@ -744,7 +749,7 @@ input text is in Unicode.
 .INDENT 7.0
 .INDENT 3.5
 You can create Unicode file using WordPad in Windows (during
-saving select "Unicode Text Document" format). In Unix can use
+saving select “Unicode Text Document” format). In Unix can use
 for example YUdit or vim.
 .UNINDENT
 .UNINDENT
@@ -953,7 +958,7 @@ Add file with specified name to folder with specified folder ID.
 .INDENT 7.0
 .TP
 .B \-type
-File type was required for filesystem 1 in Nokia phones (current filesystem 2 doesn\(aqt need this).
+File type was required for filesystem 1 in Nokia phones (current filesystem 2 doesn’t need this).
 .UNINDENT
 .INDENT 7.0
 .TP
@@ -963,7 +968,7 @@ Sets the read only attribute.
 .INDENT 7.0
 .TP
 .B \-protected
-Sets the protected attribute (file can\(aqt be for example forwarded
+Sets the protected attribute (file can’t be for example forwarded
 from phone menu).
 .UNINDENT
 .INDENT 7.0
@@ -1038,7 +1043,7 @@ bytes available, used or used by some specific content.
 .INDENT 0.0
 .TP
 .B getfolderlisting folderID
-Display files and folders available in folder with given folder ID. You can get ID\(aqs using getfilesystem \-flatall.
+Display files and folders available in folder with given folder ID. You can get ID’s using getfilesystem \-flatall.
 .sp
 \fBWARNING:\fP
 .INDENT 7.0
@@ -1058,7 +1063,7 @@ Display info about drives available in phone/memory card.
 .INDENT 0.0
 .TP
 .B sendfile name
-Sends file to a phone. It\(aqs up to phone to decide where
+Sends file to a phone. It’s up to phone to decide where
 to store this file and how to handle it (for example when you send vCard or
 vCalendar, most of phones will offer you to import it.
 .UNINDENT
@@ -1093,8 +1098,8 @@ Get caller group logo from phone. Locations 1\-5.
 .INDENT 7.0
 .TP
 .B DEALER
-In some models it\(aqs possible to save dealer welcome note \- text displayed
-during enabling phone, which can\(aqt be edited from phone menu.  Here you can
+In some models it’s possible to save dealer welcome note \- text displayed
+during enabling phone, which can’t be edited from phone menu.  Here you can
 get it.
 .UNINDENT
 .INDENT 7.0
@@ -1144,7 +1149,7 @@ Sets welcome message configured by dealer, which usually can not be changed in p
 .INDENT 7.0
 .TP
 .B OPERATOR [file [netcode]]
-Set operator logo in phone. When won\(aqt give file and netcode, operator logo
+Set operator logo in phone. When won’t give file and netcode, operator logo
 will be removed from phone. When will give only filename, operator logo will
 be displayed for your current GSM operator. When you give additionally network
 code, it will be displayed for this operator.
@@ -1189,7 +1194,7 @@ Copy source ringtone to destination.
 .INDENT 0.0
 .TP
 .B getphoneringtone location [file]
-Get one of "default" ringtones and saves into file
+Get one of “default” ringtones and saves into file
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1216,8 +1221,8 @@ For getting ringtones list use \fBgammu getringtoneslist\fP\&.
 .INDENT 0.0
 .TP
 .B setringtone file [\-location location] [\-scale] [\-name name]
-Set ringtone in phone. When don\(aqt give location, it will be written
-"with preview" (in phones supporting this feature like 61xx or 6210).
+Set ringtone in phone. When don’t give location, it will be written
+“with preview” (in phones supporting this feature like 61xx or 6210).
 .INDENT 7.0
 .TP
 .B \-scale
@@ -1236,7 +1241,7 @@ will blink later in phone menus.
 .UNINDENT
 .SS Calendar notes commands
 .sp
-In Nokia 3310, 3315 and 3330 these are named "Reminders" and have some limitations (depending on phone firmware version).
+In Nokia 3310, 3315 and 3330 these are named “Reminders” and have some limitations (depending on phone firmware version).
 .INDENT 0.0
 .TP
 .B deletecalendar start [stop]
@@ -1303,7 +1308,7 @@ Sets repeating alarm in phone on selected time.
 .TP
 .B setdatetime [HH:MM[:SS]] [YYYY/MM/DD]
 Set date and time in phone to date and time set in computer. Please
-note, that this option doesn\(aqt show clock on phone screen. It only set
+note, that this option doesn’t show clock on phone screen. It only set
 date and time.
 .sp
 \fBNOTE:\fP
@@ -1369,7 +1374,7 @@ selected folder in phone.
 .INDENT 0.0
 .TP
 .B backup file [\-yes]
-Backup your phone to file. It\(aqs possible to backup (depends on phone and backup format):
+Backup your phone to file. It’s possible to backup (depends on phone and backup format):
 .INDENT 7.0
 .IP \(bu 2
 phonebook from SIM and phone memory
@@ -1438,8 +1443,8 @@ want only to add entries to phone, use \fBgammu addnew\fP\&.
 .sp
 Restore settings written in file created using \fBgammu backup\fP command.
 .sp
-In some phones restoring calendar notes will not show error, but won\(aqt
-be done, when phone doesn\(aqt have set clock inside.
+In some phones restoring calendar notes will not show error, but won’t
+be done, when phone doesn’t have set clock inside.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1529,13 +1534,13 @@ suffix, both will be added automatically.
 .INDENT 7.0
 .TP
 .B \-overwrite
-Delete the application\(aqs .jad and .jar files before installing, but
-doesn\(aqt delete the application data.
+Delete the application’s .jad and .jar files before installing, but
+doesn’t delete the application data.
 .UNINDENT
 .INDENT 7.0
 .TP
 .B \-overwriteall
-Delete the application (same as \fB\-overwrite\fP) and all it\(aqs
+Delete the application (same as \fB\-overwrite\fP) and all it’s
 data.
 .UNINDENT
 .sp
@@ -1620,7 +1625,7 @@ Show, how to enter RTTL ringtone in composer existing in many Nokia phones
 .INDENT 0.0
 .TP
 .B nokiagetoperatorname
-6110.c phones have place for name for one GSM network (of course, with flashing it\(aqs
+6110.c phones have place for name for one GSM network (of course, with flashing it’s
 possible to change all names, but Gammu is not flasher ;\-)). You can get this
 name using this option.
 .UNINDENT
@@ -1641,7 +1646,7 @@ Get voice record from location and save to WAV file. File is
 coded using GSM 6.10 codec (available for example in win32). Name
 of file is like name of voice record in phone.
 .sp
-Created WAV files require GSM 6.10 codec to be played. In Win XP it\(aqs included
+Created WAV files require GSM 6.10 codec to be played. In Win XP it’s included
 by Microsoft. If you deleted it by accident in this operating system, make such
 steps:
 .INDENT 7.0
@@ -1652,17 +1657,17 @@ Add hardware
 .IP 3. 4
 click Next
 .IP 4. 4
-select "Yes. I have already connected the hardware
+select “Yes. I have already connected the hardware
 .IP 5. 4
-select "Add a new hardware device
+select “Add a new hardware device
 .IP 6. 4
-select "Install the hardware that I manually select from a list
+select “Install the hardware that I manually select from a list
 .IP 7. 4
-select "Sound, video and game controllers
+select “Sound, video and game controllers
 .IP 8. 4
-select "Audio codecs
+select “Audio codecs
 .IP 9. 4
-select "windows\esystem32" directory and file "mmdriver.inf
+select “windows\esystem32” directory and file “mmdriver.inf
 .IP 10. 4
 if You will be asked for file msgsm32.acm, it should unpacked from Windows CD
 .IP 11. 4
@@ -1682,7 +1687,7 @@ Takes output or set netmonitor for Nokia DCT3 phones.
 .INDENT 7.0
 .INDENT 3.5
 For more info about this option, please visit
-\fI\%Marcin\(aqs page\fP and read netmonitor manual
+\fI\%Marcin’s page\fP and read netmonitor manual
 there.
 .UNINDENT
 .UNINDENT
@@ -1705,7 +1710,7 @@ Reset counters from netmonitor test 36 in Nokia DCT3 phones.
 .INDENT 7.0
 .INDENT 3.5
 For more info about this option, please visit
-\fI\%Marcin\(aqs page\fP and read netmonitor manual
+\fI\%Marcin’s page\fP and read netmonitor manual
 there.
 .UNINDENT
 .UNINDENT
@@ -1713,7 +1718,7 @@ there.
 .INDENT 0.0
 .TP
 .B nokiasecuritycode
-Get/reset to "12345" security code
+Get/reset to “12345” security code
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1725,7 +1730,7 @@ Perform tests for Nokia DCT3 phones.
 .INDENT 3.5
 EEPROM test can show an error when your phone has an EEPROM in flash
 (like 82xx/7110/62xx/33xx). The clock test will show an error when the
-phone doesn\(aqt have an internal battery for the clock (like 3xxx).
+phone doesn’t have an internal battery for the clock (like 3xxx).
 .UNINDENT
 .UNINDENT
 .UNINDENT
@@ -1761,17 +1766,17 @@ and for DCT4:
 .IP 1. 3
 ALS (Alternative Line Service) option menu
 .IP 2. 3
-Bluetooth, WAP bookmarks and settings menu, ... (6310i)
+Bluetooth, WAP bookmarks and settings menu, … (6310i)
 .IP 3. 3
 GPRS Always Online
 .IP 4. 3
-and others...
+and others…
 .UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
 .B nokiasetvibralevel level
-Set vibra power to "level" (given in percent)
+Set vibra power to “level” (given in percent)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1969,7 +1974,7 @@ Clear user settings and disables hidden menus.
 .IP \(bu 2
 changes like after \fBALL\fP
 .IP \(bu 2
-disables netmon and PPS (all "hidden" menus)
+disables netmon and PPS (all “hidden” menus)
 .UNINDENT
 .TP
 .B \fBFACTORY\fP
@@ -2192,13 +2197,13 @@ Error opening device. Unknown, busy or no permissions.
 Error opening device, it is locked.
 .TP
 .B 104
-Error opening device, it doesn\(aqt exist.
+Error opening device, it doesn’t exist.
 .TP
 .B 105
 Error opening device, it is already opened by other application.
 .TP
 .B 106
-Error opening device, you don\(aqt have permissions.
+Error opening device, you don’t have permissions.
 .TP
 .B 107
 Error opening device. No required driver in operating system.
@@ -2219,7 +2224,7 @@ Error writing to the device.
 Error during reading from the device.
 .TP
 .B 113
-Can\(aqt set parity on the device.
+Can’t set parity on the device.
 .TP
 .B 114
 No response in specified timeout. Probably phone not connected.
@@ -2267,7 +2272,7 @@ Unknown error.
 Can not open specified file.
 .TP
 .B 129
-More memory required...
+More memory required…
 .TP
 .B 130
 Operation not allowed by phone.
@@ -2276,7 +2281,7 @@ Operation not allowed by phone.
 No SMSC number given. Provide it manually or use the one configured in phone.
 .TP
 .B 132
-You\(aqre inside phone menu (maybe editing?). Leave it and try again.
+You’re inside phone menu (maybe editing?). Leave it and try again.
 .TP
 .B 133
 Phone is not connected.
@@ -2300,7 +2305,7 @@ Transfer was canceled by phone, maybe you pressed cancel on phone.
 Phone module need to send another answer frame.
 .TP
 .B 140
-Current connection type doesn\(aqt support called function.
+Current connection type doesn’t support called function.
 .TP
 .B 141
 CRC error.
@@ -2318,7 +2323,7 @@ Invalid data given to phone.
 File with specified name already exists.
 .TP
 .B 146
-File with specified name doesn\(aqt exist.
+File with specified name doesn’t exist.
 .TP
 .B 147
 You have to give folder name and not file name.
@@ -2590,7 +2595,7 @@ gammu convertbackup phone.backup output.vcf
 .sp
 There are definitely many bugs, reporting to author is welcome. Please include
 some useful information when sending bug reports (especially debug logs,
-operating system, it\(aqs version and phone information are needed).
+operating system, it’s version and phone information are needed).
 .sp
 To generate debug log, enable it in gammurc:
 .INDENT 0.0

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMURC" "5" "Jun 18, 2017" "1.38.5" "Gammu"
+.TH "GAMMURC" "5" "Oct 16, 2017" "1.38.5" "Gammu"
 .SH NAME
 gammurc \- gammu(1) configuration file
 .
@@ -48,14 +48,14 @@ searched in following order:
 On Microsoft Windows:
 .INDENT 0.0
 .IP 1. 3
-\fB$PROFILE\eApplication Data\egammurc\fP
+\fB%PROFILE%\eApplication Data\egammurc\fP
 .IP 2. 3
 \fB\&.\egammurc\fP
 .UNINDENT
 .SH DESCRIPTION
 .sp
 Gammu requires configuration to be able to properly talk to your phone.
-gammu reads configuration from a config file. It\(aqs location is determined
+gammu reads configuration from a config file. It’s location is determined
 on runtime, see above for search paths.
 .sp
 You can use gammu\-config or gammu\-detect to generate
@@ -68,9 +68,9 @@ experienced.
 This file use ini file syntax, see ini\&.
 .sp
 Configuration file for gammu can contain several sections \- \fB[gammu]\fP, \fB[gammu1]\fP,
-\fB[gammuN]\fP, ... Each section configures one connection setup and in default mode
+\fB[gammuN]\fP, … Each section configures one connection setup and in default mode
 gammu tries all of them in numerical order. You can also specify which
-configuration section to use by giving it\(aqs number (\fI\%[gammu]\fP has number 0) as a
+configuration section to use by giving it’s number (\fI\%[gammu]\fP has number 0) as a
 parameter to gammu and it will then use only this section.
 .INDENT 0.0
 .TP
@@ -209,7 +209,7 @@ from driver information and this parameters is ignored.
 .INDENT 7.0
 .INDENT 3.5
 Some USB modems expose several interfaces, in such cases Gammu works best
-with "User" one, you can find more information on
+with “User” one, you can find more information on
 <\fI\%http://www.dd\-wrt.com/wiki/index.php/Mobile_Broadband\fP>.
 .UNINDENT
 .UNINDENT
@@ -343,7 +343,7 @@ Alias for \fI\%Device\fP, kept for backward compatibility.
 .TP
 .B Model
 Do not use this parameter unless really needed! The only use case for this is
-when Gammu does not know your phone and misdetects it\(aqs features.
+when Gammu does not know your phone and misdetects it’s features.
 .sp
 The only special case for using model is to force special type of OBEX
 connection instead of letting Gammu try the best suited for selected
@@ -531,7 +531,7 @@ connection = blueat
 .SS Working with multiple phones
 .sp
 Gammu can be configured for multiple phones (however only one connection
-is used at one time, you can choose which one to use with \fBgammu \-s\fP
+is used at one time, you can choose which one to use with \fI\%gammu \-s\fP
 parameter). Configuration for phones on three serial ports would look
 like following:
 .INDENT 0.0

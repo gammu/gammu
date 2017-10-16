@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSD-INJECT" "1" "Jun 18, 2017" "1.38.5" "Gammu"
+.TH "GAMMU-SMSD-INJECT" "1" "Oct 16, 2017" "1.38.5" "Gammu"
 .SH NAME
 gammu-smsd-inject \- Inject messages into queue of SMS daemon for Gammu
 .
@@ -178,6 +178,18 @@ Inject protected message with ringtone:
 .nf
 .ft C
 gammu\-smsd\-inject EMS 123456 \-protected 2 \-variablebitmaplong ala.bmp \-toneSElong axelf.txt \-toneSE ring.txt
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Inject USSD query:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+gammu\-smsd\-inject USSD \(aq*101#\(aq
 .ft P
 .fi
 .UNINDENT

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSD" "1" "Jun 18, 2017" "1.38.5" "Gammu"
+.TH "GAMMU-SMSD" "1" "Oct 16, 2017" "1.38.5" "Gammu"
 .SH NAME
 gammu-smsd \- SMS daemon for Gammu
 .
@@ -137,7 +137,7 @@ only Windows Service manager should use this command.
 .B \-n, \-\-service\-name=name
 Defines name of a Windows service. Each service requires an unique name,
 so if you want to run several SMSD instances, you have to name each
-service differently. Default is "GammuSMSD".
+service differently. Default is “GammuSMSD”.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -177,7 +177,7 @@ Reload configuration and reconnect to phone.
 Gracefully shutdown the daemon.
 .TP
 .B SIGALRM
-Used internally for \fBgammu\-smsd \-X\fP
+Used internally for \fI\%gammu\-smsd \-X\fP
 .TP
 .B SIGUSR1
 Suspends SMSD operation, closing connection to phone and database.
@@ -269,9 +269,9 @@ gammu\-smsd.exe \-u
 .UNINDENT
 .SS Troubleshooting Windows Service
 .sp
-If Gammu fails to start as a Windows service (you will usually get "Error
+If Gammu fails to start as a Windows service (you will usually get “Error
 1053: The service did not respond to the start or control request in a timely
-fashion"), first check your SMSD logs. If they do not contain any useful hint,
+fashion”), first check your SMSD logs. If they do not contain any useful hint,
 try starting SMSD manually with exactly same parameters as you installed the
 service (without \-i).
 .sp

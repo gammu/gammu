@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSD-TABLES" "7" "Jun 18, 2017" "1.38.5" "Gammu"
+.TH "GAMMU-SMSD-TABLES" "7" "Oct 16, 2017" "1.38.5" "Gammu"
 .SH NAME
 gammu-smsd-tables \- description of tables for database backends of gammu-smsd(1)
 .
@@ -70,7 +70,7 @@ encoded SMS text (for all SMS)
 .B \fBSenderNumber\fP (varchar(20))
 decoded SMS sender number
 .TP
-.B \fBCoding\fP (enum(\(aqDefault_No_Compression\(aq, \(aqUnicode_No_Compression\(aq, \(aq8bit\(aq, \(aqDefault_Compression\(aq, \(aqUnicode_Compression\(aq))
+.B \fBCoding\fP (enum(‘Default_No_Compression’, ‘Unicode_No_Compression’, ‘8bit’, ‘Default_Compression’, ‘Unicode_Compression’))
 SMS text coding
 .TP
 .B \fBUDH\fP (text)
@@ -80,7 +80,7 @@ encoded User Data Header text
 decoded SMSC number
 .TP
 .B \fBClass\fP (integer)
-SMS class or \-1 (0 is flash SMS, 1 is normal one)
+SMS class or \-1 (0 is flash SMS, 1 is normal one, 127 is USSD)
 .TP
 .B \fBTextDecoded\fP (varchar(160))
 decoded SMS text (for Default Alphabet/Unicode SMS)
@@ -91,8 +91,38 @@ SMS identificator (for using with external applications)
 .B \fBRecipientID\fP (text)
 which Gammu daemon has added it
 .TP
-.B \fBProcessed\fP (enum(\(aqfalse\(aq, \(aqtrue\(aq))
+.B \fBProcessed\fP (enum(‘false’, ‘true’))
 you can use for marking, whether SMS was processed or not
+.TP
+.B \fBStatus\fP (integer)
+Status of incoming message. Currently only used for
+\fBClass\fP 127 (USSD) messages with following meaning:
+.INDENT 7.0
+.TP
+.B \fB1\fP
+Unknown status.
+.TP
+.B \fB2\fP
+No action is needed, maybe network initiated USSD.
+.TP
+.B \fB3\fP
+Reply is expected.
+.TP
+.B \fB4\fP
+USSD dialog terminated.
+.TP
+.B \fB5\fP
+Another client replied.
+.TP
+.B \fB6\fP
+Operation not supported.
+.TP
+.B \fB7\fP
+Network timeout.
+.UNINDENT
+.sp
+New in version 1.38.5.
+
 .UNINDENT
 .SS outbox
 .sp
@@ -132,7 +162,7 @@ TextDecoded field, keep this NULL (or empty).
 .B \fBDestinationNumber\fP (varchar(20))
 recipient number
 .TP
-.B \fBCoding\fP (enum(\(aqDefault_No_Compression\(aq, \(aqUnicode_No_Compression\(aq, \(aq8bit\(aq, \(aqDefault_Compression\(aq, \(aqUnicode_Compression\(aq))
+.B \fBCoding\fP (enum(‘Default_No_Compression’, ‘Unicode_No_Compression’, ‘8bit’, ‘Default_Compression’, ‘Unicode_Compression’))
 SMS text coding
 .TP
 .B \fBUDH\fP (text)
@@ -140,10 +170,10 @@ User Data Header encoded using hex values which will be used for constructing
 the message. Without this, message will be sent as plain text.
 .TP
 .B \fBClass\fP (integer)
-SMS class or \-1 (0 is normal SMS, 1 is flash one)
+SMS class or \-1 (0 is normal SMS, 1 is flash one, 127 is USSD)
 .TP
 .B \fBTextDecoded\fP (varchar(160))
-SMS text in "human readable" form
+SMS text in “human readable” form
 .TP
 .B \fBID\fP (integer unsigned)
 SMS/SMS sequence ID
@@ -151,7 +181,7 @@ SMS/SMS sequence ID
 Please note that this number has to be unique also for sentitems table, so
 reusing message IDs might not be a good idea.
 .TP
-.B \fBMultiPart\fP (enum(\(aqfalse\(aq,\(aqtrue\(aq))
+.B \fBMultiPart\fP (enum(‘false’,’true’))
 info, whether there are more SMS from this sequence in outbox_multipart
 .TP
 .B \fBRelativeValidity\fP (integer)
@@ -165,7 +195,7 @@ sees this message first will process it.
 .B \fBSendingTimeOut\fP (timestamp)
 used by SMSD instance for own targets
 .TP
-.B \fBDeliveryReport\fP (enum(\(aqdefault\(aq,\(aqyes\(aq,\(aqno\(aq))
+.B \fBDeliveryReport\fP (enum(‘default’,’yes’,’no’))
 when default is used, Delivery Report is used or not according to SMSD instance settings; yes forces Delivery Report.
 .TP
 .B \fBCreatorID\fP (text)
@@ -176,6 +206,48 @@ number of attempted retries when sending this message
 .TP
 .B \fBPriority\fP (integer)
 priority of message, messages with higher priority are processed first
+.TP
+.B \fBStatus\fP (enum(‘SendingOK’, ‘SendingOKNoReport’, ‘SendingError’, ‘DeliveryOK’, ‘DeliveryFailed’, ‘DeliveryPending’, ‘DeliveryUnknown’, ‘Error’, ‘Reserved’))
+Status of message sending. SendingError means that phone failed to send the
+message, Error indicates some other error while processing message.
+.INDENT 7.0
+.TP
+.B \fBSendingOK\fP
+Message has been sent, waiting for delivery report.
+.TP
+.B \fBSendingOKNoReport\fP
+Message has been sent without asking for delivery report.
+.TP
+.B \fBSendingError\fP
+Sending has failed.
+.TP
+.B \fBDeliveryOK\fP
+Delivery report arrived and reported success.
+.TP
+.B \fBDeliveryFailed\fP
+Delivery report arrived and reports failure.
+.TP
+.B \fBDeliveryPending\fP
+Delivery report announced pending deliver.
+.TP
+.B \fBDeliveryUnknown\fP
+Delivery report reported unknown status.
+.TP
+.B \fBError\fP
+Some other error happened during sending (usually bug in SMSD).
+.TP
+.B \fBReserved\fP
+Initial value, meaning the status has not been set.
+.UNINDENT
+.sp
+New in version 1.38.5.
+
+.TP
+.B \fBStatusCode\fP (integer)
+GSM status code
+.sp
+New in version 1.38.5.
+
 .UNINDENT
 .SS outbox_multipart
 .sp
@@ -190,7 +262,7 @@ the same meaning as values in outbox table
 .B \fBText\fP (text)
 the same meaning as values in outbox table
 .TP
-.B \fBCoding\fP (enum(\(aqDefault_No_Compression\(aq, \(aqUnicode_No_Compression\(aq, \(aq8bit\(aq, \(aqDefault_Compression\(aq, \(aqUnicode_Compression\(aq))
+.B \fBCoding\fP (enum(‘Default_No_Compression’, ‘Unicode_No_Compression’, ‘8bit’, ‘Default_Compression’, ‘Unicode_Compression’))
 the same meaning as values in outbox table
 .TP
 .B \fBUDH\fP (text)
@@ -208,6 +280,48 @@ the same meaning as values in outbox table
 .B \fBSequencePosition\fP (integer)
 info, what is SMS number in SMS sequence (start at 2, first part is in \fI\%outbox\fP
 table).
+.TP
+.B \fBStatus\fP (enum(‘SendingOK’, ‘SendingOKNoReport’, ‘SendingError’, ‘DeliveryOK’, ‘DeliveryFailed’, ‘DeliveryPending’, ‘DeliveryUnknown’, ‘Error’, ‘Reserved’))
+Status of message sending. SendingError means that phone failed to send the
+message, Error indicates some other error while processing message.
+.INDENT 7.0
+.TP
+.B \fBSendingOK\fP
+Message has been sent, waiting for delivery report.
+.TP
+.B \fBSendingOKNoReport\fP
+Message has been sent without asking for delivery report.
+.TP
+.B \fBSendingError\fP
+Sending has failed.
+.TP
+.B \fBDeliveryOK\fP
+Delivery report arrived and reported success.
+.TP
+.B \fBDeliveryFailed\fP
+Delivery report arrived and reports failure.
+.TP
+.B \fBDeliveryPending\fP
+Delivery report announced pending deliver.
+.TP
+.B \fBDeliveryUnknown\fP
+Delivery report reported unknown status.
+.TP
+.B \fBError\fP
+Some other error happened during sending (usually bug in SMSD).
+.TP
+.B \fBReserved\fP
+Initial value, meaning the status has not been set.
+.UNINDENT
+.sp
+New in version 1.38.5.
+
+.TP
+.B \fBStatusCode\fP (integer)
+GSM status code
+.sp
+New in version 1.38.5.
+
 .UNINDENT
 .SS phones
 .sp
@@ -278,7 +392,7 @@ when message has been sent
 .B \fBDeliveryDateTime\fP (timestamp)
 Time of receiving delivery report (if it has been enabled).
 .TP
-.B \fBStatus\fP (enum(\(aqSendingOK\(aq, \(aqSendingOKNoReport\(aq, \(aqSendingError\(aq, \(aqDeliveryOK\(aq, \(aqDeliveryFailed\(aq, \(aqDeliveryPending\(aq, \(aqDeliveryUnknown\(aq, \(aqError\(aq))
+.B \fBStatus\fP (enum(‘SendingOK’, ‘SendingOKNoReport’, ‘SendingError’, ‘DeliveryOK’, ‘DeliveryFailed’, ‘DeliveryPending’, ‘DeliveryUnknown’, ‘Error’))
 Status of message sending. SendingError means that phone failed to send the
 message, Error indicates some other error while processing message.
 .INDENT 7.0
@@ -318,7 +432,7 @@ SMS text encoded using hex values
 .B \fBDestinationNumber\fP (varchar(20))
 decoded destination number for SMS
 .TP
-.B \fBCoding\fP (enum(\(aqDefault_No_Compression\(aq, \(aqUnicode_No_Compression\(aq, \(aq8bit\(aq, \(aqDefault_Compression\(aq, \(aqUnicode_Compression\(aq))
+.B \fBCoding\fP (enum(‘Default_No_Compression’, ‘Unicode_No_Compression’, ‘8bit’, ‘Default_Compression’, ‘Unicode_Compression’))
 SMS text coding
 .TP
 .B \fBUDH\fP (text)
@@ -328,10 +442,10 @@ User Data Header encoded using hex values
 decoded number of SMSC, which sent SMS
 .TP
 .B \fBClass\fP (integer)
-SMS class or \-1 (0 is normal SMS, 1 is flash one)
+SMS class or \-1 (0 is normal SMS, 1 is flash one, 127 is USSD)
 .TP
 .B \fBTextDecoded\fP (varchar(160))
-SMS text in "human readable" form
+SMS text in “human readable” form
 .TP
 .B \fBID\fP (integer unsigned)
 SMS ID
@@ -350,6 +464,12 @@ SMS relative validity like encoded using GSM specs
 .TP
 .B \fBCreatorID\fP (text)
 copied from CreatorID from outbox table
+.TP
+.B \fBStatusCode\fP (integer)
+GSM status code
+.sp
+New in version 1.38.5.
+
 .UNINDENT
 .SH HISTORY OF DATABASE STRUCTURE
 .sp
@@ -364,6 +484,27 @@ production environment.
 .UNINDENT
 .sp
 History of schema versions:
+.sp
+17
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+Added \fBStatus\fP field to \fI\%outbox\fP and \fI\%outbox_multipart\fP\&.
+.IP \(bu 2
+Added \fBStatusCode\fP field to \fI\%sentitems\fP, \fI\%outbox\fP and \fI\%outbox_multipart\fP\&.
+.IP \(bu 2
+Added \fBStatus\fP field to \fI\%inbox\fP\&.
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.sp
+Changed in version 1.38.5.
+
+.UNINDENT
+.UNINDENT
 .sp
 16
 .INDENT 0.0

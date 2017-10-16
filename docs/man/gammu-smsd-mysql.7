@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSD-MYSQL" "7" "Jun 18, 2017" "1.38.5" "Gammu"
+.TH "GAMMU-SMSD-MYSQL" "7" "Oct 16, 2017" "1.38.5" "Gammu"
 .SH NAME
 gammu-smsd-mysql \- gammu-smsd(1) backend using MySQL database server as a message storage
 .
@@ -130,7 +130,7 @@ CREATE TABLE \(gagammu\(ga (
 \-\- Dumping data for table \(gagammu\(ga
 \-\- 
 
-INSERT INTO \(gagammu\(ga (\(gaVersion\(ga) VALUES (16);
+INSERT INTO \(gagammu\(ga (\(gaVersion\(ga) VALUES (17);
 
 \-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 
@@ -151,6 +151,7 @@ CREATE TABLE \(gainbox\(ga (
   \(gaID\(ga integer unsigned NOT NULL auto_increment,
   \(gaRecipientID\(ga text NOT NULL,
   \(gaProcessed\(ga enum(\(aqfalse\(aq,\(aqtrue\(aq) NOT NULL default \(aqfalse\(aq,
+  \(gaStatus\(ga integer NOT NULL default \(aq\-1\(aq,
   PRIMARY KEY \(gaID\(ga (\(gaID\(ga)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;
 
@@ -186,6 +187,8 @@ CREATE TABLE \(gaoutbox\(ga (
   \(gaCreatorID\(ga text NOT NULL,
   \(gaRetries\(ga int(3) default 0,
   \(gaPriority\(ga integer default 0,
+  \(gaStatus\(ga enum(\(aqSendingOK\(aq,\(aqSendingOKNoReport\(aq,\(aqSendingError\(aq,\(aqDeliveryOK\(aq,\(aqDeliveryFailed\(aq,\(aqDeliveryPending\(aq,\(aqDeliveryUnknown\(aq,\(aqError\(aq,\(aqReserved\(aq) NOT NULL default \(aqReserved\(aq,
+  \(gaStatusCode\(ga integer NOT NULL default \(aq\-1\(aq,
   PRIMARY KEY \(gaID\(ga (\(gaID\(ga)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
@@ -211,6 +214,8 @@ CREATE TABLE \(gaoutbox_multipart\(ga (
   \(gaTextDecoded\(ga text,
   \(gaID\(ga integer unsigned NOT NULL default \(aq0\(aq,
   \(gaSequencePosition\(ga integer NOT NULL default \(aq1\(aq,
+  \(gaStatus\(ga enum(\(aqSendingOK\(aq,\(aqSendingOKNoReport\(aq,\(aqSendingError\(aq,\(aqDeliveryOK\(aq,\(aqDeliveryFailed\(aq,\(aqDeliveryPending\(aq,\(aqDeliveryUnknown\(aq,\(aqError\(aq,\(aqReserved\(aq) NOT NULL default \(aqReserved\(aq,
+  \(gaStatusCode\(ga integer NOT NULL default \(aq\-1\(aq,
   PRIMARY KEY (\(gaID\(ga, \(gaSequencePosition\(ga)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
@@ -273,6 +278,7 @@ CREATE TABLE \(gasentitems\(ga (
   \(gaTPMR\(ga integer NOT NULL default \(aq\-1\(aq,
   \(gaRelativeValidity\(ga integer NOT NULL default \(aq\-1\(aq,
   \(gaCreatorID\(ga text NOT NULL,
+  \(gaStatusCode\(ga integer NOT NULL default \(aq\-1\(aq,
   PRIMARY KEY (\(gaID\(ga, \(gaSequencePosition\(ga)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
@@ -377,7 +383,7 @@ CREATE TABLE \(gagammu\(ga (
 \-\- Dumping data for table \(gagammu\(ga
 \-\- 
 
-INSERT INTO \(gagammu\(ga (\(gaVersion\(ga) VALUES (16);
+INSERT INTO \(gagammu\(ga (\(gaVersion\(ga) VALUES (17);
 
 \-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 
@@ -398,6 +404,7 @@ CREATE TABLE \(gainbox\(ga (
   \(gaID\(ga integer unsigned NOT NULL auto_increment,
   \(gaRecipientID\(ga text NOT NULL,
   \(gaProcessed\(ga enum(\(aqfalse\(aq,\(aqtrue\(aq) NOT NULL default \(aqfalse\(aq,
+  \(gaStatus\(ga integer NOT NULL default \(aq\-1\(aq,
   PRIMARY KEY \(gaID\(ga (\(gaID\(ga)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;
 
@@ -433,6 +440,8 @@ CREATE TABLE \(gaoutbox\(ga (
   \(gaCreatorID\(ga text NOT NULL,
   \(gaRetries\(ga int(3) default 0,
   \(gaPriority\(ga integer default 0,
+  \(gaStatus\(ga enum(\(aqSendingOK\(aq,\(aqSendingOKNoReport\(aq,\(aqSendingError\(aq,\(aqDeliveryOK\(aq,\(aqDeliveryFailed\(aq,\(aqDeliveryPending\(aq,\(aqDeliveryUnknown\(aq,\(aqError\(aq,\(aqReserved\(aq) NOT NULL default \(aqReserved\(aq,
+  \(gaStatusCode\(ga integer NOT NULL default \(aq\-1\(aq,
   PRIMARY KEY \(gaID\(ga (\(gaID\(ga)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
@@ -458,6 +467,8 @@ CREATE TABLE \(gaoutbox_multipart\(ga (
   \(gaTextDecoded\(ga text,
   \(gaID\(ga integer unsigned NOT NULL default \(aq0\(aq,
   \(gaSequencePosition\(ga integer NOT NULL default \(aq1\(aq,
+  \(gaStatus\(ga enum(\(aqSendingOK\(aq,\(aqSendingOKNoReport\(aq,\(aqSendingError\(aq,\(aqDeliveryOK\(aq,\(aqDeliveryFailed\(aq,\(aqDeliveryPending\(aq,\(aqDeliveryUnknown\(aq,\(aqError\(aq,\(aqReserved\(aq) NOT NULL default \(aqReserved\(aq,
+  \(gaStatusCode\(ga integer NOT NULL default \(aq\-1\(aq,
   PRIMARY KEY (\(gaID\(ga, \(gaSequencePosition\(ga)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
@@ -520,6 +531,7 @@ CREATE TABLE \(gasentitems\(ga (
   \(gaTPMR\(ga integer NOT NULL default \(aq\-1\(aq,
   \(gaRelativeValidity\(ga integer NOT NULL default \(aq\-1\(aq,
   \(gaCreatorID\(ga text NOT NULL,
+  \(gaStatusCode\(ga integer NOT NULL default \(aq\-1\(aq,
   PRIMARY KEY (\(gaID\(ga, \(gaSequencePosition\(ga)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 

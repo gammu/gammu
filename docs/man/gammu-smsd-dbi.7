@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSD-DBI" "7" "Jun 18, 2017" "1.38.5" "Gammu"
+.TH "GAMMU-SMSD-DBI" "7" "Oct 16, 2017" "1.38.5" "Gammu"
 .SH NAME
 gammu-smsd-dbi \- gammu-smsd(1) backend using DBI abstraction layer to use any supported database as a message storage
 .
@@ -100,7 +100,7 @@ CREATE TABLE gammu (
   Version INTEGER NOT NULL DEFAULT \(aq0\(aq PRIMARY KEY
 );
 
-INSERT INTO gammu (Version) VALUES (16);
+INSERT INTO gammu (Version) VALUES (17);
 
 CREATE TABLE inbox (
   UpdatedInDB NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq)),
@@ -115,6 +115,7 @@ CREATE TABLE inbox (
   ID INTEGER PRIMARY KEY AUTOINCREMENT,
   RecipientID TEXT NOT NULL,
   Processed TEXT NOT NULL DEFAULT \(aqfalse\(aq,
+  Status INTEGER NOT NULL DEFAULT \(aq\-1\(aq,
   CHECK (Coding IN 
   (\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq)) 
 );
@@ -145,9 +146,14 @@ CREATE TABLE outbox (
   CreatorID TEXT NOT NULL,
   Retries INTEGER DEFAULT \(aq0\(aq,
   Priority INTEGER DEFAULT \(aq0\(aq,
+  Status TEXT NOT NULL DEFAULT \(aqReserved\(aq,
+  StatusCode INTEGER NOT NULL DEFAULT \(aq\-1\(aq,
   CHECK (Coding IN 
   (\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq)),
-  CHECK (DeliveryReport IN (\(aqdefault\(aq,\(aqyes\(aq,\(aqno\(aq))
+  CHECK (DeliveryReport IN (\(aqdefault\(aq,\(aqyes\(aq,\(aqno\(aq)),
+  CHECK (Status IN 
+  (\(aqSendingOK\(aq,\(aqSendingOKNoReport\(aq,\(aqSendingError\(aq,\(aqDeliveryOK\(aq,\(aqDeliveryFailed\(aq,\(aqDeliveryPending\(aq,
+  \(aqDeliveryUnknown\(aq,\(aqError\(aq,\(aqReserved\(aq))
 );
 
 CREATE INDEX outbox_date ON outbox(SendingDateTime, SendingTimeOut);
@@ -166,8 +172,13 @@ CREATE TABLE outbox_multipart (
   TextDecoded TEXT DEFAULT NULL,
   ID INTEGER,
   SequencePosition INTEGER NOT NULL DEFAULT \(aq1\(aq,
+  Status TEXT NOT NULL DEFAULT \(aqReserved\(aq,
+  StatusCode INTEGER NOT NULL DEFAULT \(aq\-1\(aq,
   CHECK (Coding IN 
   (\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq)),
+  CHECK (Status IN 
+  (\(aqSendingOK\(aq,\(aqSendingOKNoReport\(aq,\(aqSendingError\(aq,\(aqDeliveryOK\(aq,\(aqDeliveryFailed\(aq,\(aqDeliveryPending\(aq,
+  \(aqDeliveryUnknown\(aq,\(aqError\(aq,\(aqReserved\(aq)),
  PRIMARY KEY (ID, SequencePosition)
 );
 
@@ -214,6 +225,7 @@ CREATE TABLE sentitems (
   TPMR INTEGER NOT NULL DEFAULT \(aq\-1\(aq,
   RelativeValidity INTEGER NOT NULL DEFAULT \(aq\-1\(aq,
   CreatorID TEXT NOT NULL,
+  StatusCode INTEGER NOT NULL DEFAULT \(aq\-1\(aq,
   CHECK (Status IN 
   (\(aqSendingOK\(aq,\(aqSendingOKNoReport\(aq,\(aqSendingError\(aq,\(aqDeliveryOK\(aq,\(aqDeliveryFailed\(aq,\(aqDeliveryPending\(aq,
   \(aqDeliveryUnknown\(aq,\(aqError\(aq)),
