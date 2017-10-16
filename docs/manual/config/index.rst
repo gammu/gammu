@@ -16,7 +16,7 @@ searched in following order:
 
 On Microsoft Windows:
 
-1. ``$PROFILE\Application Data\gammurc``
+1. ``%PROFILE%\Application Data\gammurc``
 2. ``.\gammurc``
 
 Description
