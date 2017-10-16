@@ -999,6 +999,7 @@ GSM_PhoneModel allmodels[] = {
 	/* Other */
 	{"SIMCOM_SIM300D","SIMCOM_SIM300D","",		{F_ENCODED_USSD, 0}},
 	{"SIMCOM_SIM900","SIMCOM_SIM900","",		{0}},
+	{"Quectel_M35",	"Quectel_M35","",		{F_ENCODED_USSD, 0}},
 
 	/* Qualcomm */
 	{"HP un2420 Mobile Broadband Module", "un2420", "", {F_NO_STOP_CUSD, 0}},
