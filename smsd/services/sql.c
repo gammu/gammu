@@ -292,7 +292,7 @@ void SMSDSQL_Time2String(GSM_SMSDConfig * Config, time_t timestamp, char *static
 	if (timestamp == -2) {
 		strcpy(static_buff, "0000-00-00 00:00:00");
 	} else if (strcasecmp(driver_name, "pgsql") == 0 || strcasecmp(driver_name, "native_pgsql") == 0) {
-		timestruct = gmtime(&timestamp);
+		timestruct = localtime(&timestamp);
 		strftime(static_buff, size, "%Y-%m-%d %H:%M:%S GMT", timestruct);
 	} else if (strcasecmp(driver_name, "access") == 0) {
 		timestruct = gmtime(&timestamp);
