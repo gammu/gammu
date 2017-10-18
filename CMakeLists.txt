@@ -179,9 +179,6 @@ endif()
 
 find_package (Threads)
 
-# Check for Python
-find_package(PythonInterp 2)
-
 # Packages in sources
 macro_optional_find_package (MySQL)
 macro_optional_find_package (ODBC)
