@@ -1980,16 +1980,7 @@ void SMSD_IncomingCallCallback(GSM_StateMachine *s, GSM_Call *call, void *user_d
 			}
 
 			if (Config->RunOnIncomingCall != NULL) {
-#define BUFS 1024
-				char buf[BUFS];
-				int ret=0;
-				snprintf(buf, BUFS,"%s '%s'",
-					 Config->RunOnIncomingCall,
-					 DecodeUnicodeString(call->PhoneNumber));
-				ret = system(buf);
-				if (ret<0) {
-					SMSD_Log(DEBUG_ERROR, Config, "Incoming call -  could not run script: %s\n", strerror(errno) );
-				}
+				SMSD_RunOn(Config->RunOnIncomingCall, NULL, Config, DecodeUnicodeString(call->PhoneNumber), "incoming call");
 			}
 		}
 		break;
