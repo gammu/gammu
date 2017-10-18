@@ -401,6 +401,7 @@ GSM_SMSDConfig *SMSD_NewConfig(const char *name)
 	Config->RunOnFailure = NULL;
 	Config->RunOnSent = NULL;
 	Config->RunOnReceive = NULL;
+	Config->RunOnIncomingCall = NULL;
 	Config->smsdcfgfile = NULL;
 	Config->log_handle = NULL;
 	Config->log_type = SMSD_LOG_NONE;
