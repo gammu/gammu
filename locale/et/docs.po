@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.38.2\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2017-10-16 14:46+0200\n"
-"PO-Revision-Date: 2017-09-19 18:54+0000\n"
+"PO-Revision-Date: 2017-10-18 07:27+0000\n"
 "Last-Translator: Kristjan Räts <kristjanrats@gmail.com>\n"
 "Language-Team: Estonian <https://hosted.weblate.org/projects/gammu/gammu-"
 "docs/et/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.17-dev\n"
+"X-Generator: Weblate 2.17\n"
 
 #. type: Title =
 #: README.rst:2
@@ -46,6 +46,7 @@ msgstr ".. image"
 msgid ""
 "https://app.codesponsor.io/embed/e9cresCoq9fvHq4ya92dgNSj/gammu/gammu.svg"
 msgstr ""
+"https://app.codesponsor.io/embed/e9cresCoq9fvHq4ya92dgNSj/gammu/gammu.svg"
 
 #. type: Plain text
 #: README.rst:11
@@ -53,6 +54,8 @@ msgid ""
 ":width: 888 :height: 68 :target: https://app.codesponsor.io/link/"
 "e9cresCoq9fvHq4ya92dgNSj/gammu/gammu"
 msgstr ""
+":width: 888 :height: 68 :target: "
+"https://app.codesponsor.io/link/e9cresCoq9fvHq4ya92dgNSj/gammu/gammu"
 
 #. type: Plain text
 #: README.rst:16
