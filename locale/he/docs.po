@@ -8,21 +8,22 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.38.2\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2017-10-16 14:46+0200\n"
-"PO-Revision-Date: 2010-02-20 13:09+0200\n"
+"PO-Revision-Date: 2017-10-17 17:24+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
-"Language-Team: none\n"
+"Language-Team: Hebrew <https://hosted.weblate.org/projects/gammu/gammu-"
+"docs/he/>\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Pootle 2.0.1\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.17\n"
 
 #. type: Title =
 #: README.rst:2
 #, no-wrap
 msgid "Gammu All Mobile Management Utilities"
-msgstr ""
+msgstr "Gammu כלי ניהול לטלפונים ניידים"
 
 #. type: Plain text
 #: README.rst:6
@@ -30,6 +31,8 @@ msgid ""
 "Gammu is library and command line utility for mobile phones. It is released "
 "under GNU GPL version 2."
 msgstr ""
+"Gammu היא ספרייה וכלי שורת פקודה לטלפונים ניידים. החבילה מופצת תחת תנאי "
+"הרשיון GNU GPL בגרסה 2."
 
 #. type: Labeled list
 #: README.rst:7 README.rst:20 README.rst:24 README.rst:28 README.rst:32
@@ -43,6 +46,7 @@ msgstr ".. image"
 msgid ""
 "https://app.codesponsor.io/embed/e9cresCoq9fvHq4ya92dgNSj/gammu/gammu.svg"
 msgstr ""
+"https://app.codesponsor.io/embed/e9cresCoq9fvHq4ya92dgNSj/gammu/gammu.svg"
 
 #. type: Plain text
 #: README.rst:11
@@ -50,6 +54,8 @@ msgid ""
 ":width: 888 :height: 68 :target: https://app.codesponsor.io/link/"
 "e9cresCoq9fvHq4ya92dgNSj/gammu/gammu"
 msgstr ""
+":width: 888 :height: 68 :target: "
+"https://app.codesponsor.io/link/e9cresCoq9fvHq4ya92dgNSj/gammu/gammu"
 
 #. type: Plain text
 #: README.rst:16
@@ -66,20 +72,18 @@ msgid ""
 "Currently the project is lead by Michal Cihar <michal@cihar.com> with help "
 "of many contributors."
 msgstr ""
+"נכון להיום הובלת המיזם מוטלת על Michal Cihar ‏<michal@cihar.com> בעזרתם של "
+"תורמים רבים."
 
 #. type: Plain text
 #: README.rst:21
-#, fuzzy
-#| msgid "https://travis-ci.org/gammu/gammu.png?branch=master"
 msgid "https://travis-ci.org/gammu/gammu.svg?branch=master"
-msgstr "https://travis-ci.org/gammu/gammu.png?branch=master"
+msgstr "https://travis-ci.org/gammu/gammu.svg?branch=master"
 
 #. type: Plain text
 #: README.rst:23
-#, fuzzy
-#| msgid ":target: https://travis-ci.org/gammu/gammu"
 msgid ":alt: Build status :target: https://travis-ci.org/gammu/gammu"
-msgstr ":target: https://travis-ci.org/gammu/gammu"
+msgstr ":alt: מצב בנייה :target: https://travis-ci.org/gammu/gammu"
 
 #. type: Plain text
 #: README.rst:25
@@ -87,22 +91,22 @@ msgid ""
 "https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/master?"
 "svg=true"
 msgstr ""
+"https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/master?sv"
+"g=true"
 
 #. type: Plain text
 #: README.rst:27
-#, fuzzy
-#| msgid ":target: https://travis-ci.org/gammu/gammu"
 msgid ""
 ":alt: Windows Build status :target: https://ci.appveyor.com/project/nijel/"
 "gammu/branch/master"
-msgstr ":target: https://travis-ci.org/gammu/gammu"
+msgstr ""
+":alt: מצב הבנייה ל־Windows :target: "
+"https://ci.appveyor.com/project/nijel/gammu/branch/master"
 
 #. type: Plain text
 #: README.rst:29
-#, fuzzy
-#| msgid "https://hosted.weblate.org/widgets/gammu-status-badge.png"
 msgid "https://hosted.weblate.org/widgets/gammu/-/svg-badge.svg"
-msgstr "https://hosted.weblate.org/widgets/gammu-status-badge.png"
+msgstr "https://hosted.weblate.org/widgets/gammu/-/svg-badge.svg"
 
 #. type: Plain text
 #: README.rst:31
@@ -110,38 +114,35 @@ msgid ""
 ":alt: Translation status :target: https://hosted.weblate.org/engage/gammu/?"
 "utm_source=widget"
 msgstr ""
-":alt: Translation status :target: https://hosted.weblate.org/engage/gammu/?"
-"utm_source=widget"
+":alt: מצב התרגום :target: "
+"https://hosted.weblate.org/engage/gammu/?utm_source=widget"
 
 #. type: Plain text
 #: README.rst:33
 msgid "https://scan.coverity.com/projects/2890/badge.svg?flat=1"
-msgstr ""
+msgstr "https://scan.coverity.com/projects/2890/badge.svg?flat=1"
 
 #. type: Plain text
 #: README.rst:35
-#, fuzzy
-#| msgid ":alt: Bitdeli badge :target: https://bitdeli.com/free"
 msgid ":alt: Coverity scan :target: https://scan.coverity.com/projects/2890"
-msgstr ":alt: Bitdeli badge :target: https://bitdeli.com/free"
+msgstr ":alt: בדיקת כיסוי :target: https://scan.coverity.com/projects/2890"
 
 #. type: Plain text
 #: README.rst:37
 msgid "https://img.shields.io/gratipay/Gammu.svg"
-msgstr ""
+msgstr "https://img.shields.io/gratipay/Gammu.svg"
 
 #. type: Plain text
 #: README.rst:39
-#, fuzzy
-#| msgid ":target: https://travis-ci.org/gammu/gammu"
 msgid ":alt: Gratipay :target: https://gratipay.com/Gammu/"
-msgstr ":target: https://travis-ci.org/gammu/gammu"
+msgstr ":alt: תרומה למיזם :target: https://gratipay.com/Gammu/"
 
 #. type: Plain text
 #: README.rst:41
 msgid ""
 "https://www.bountysource.com/badge/team?team_id=23177&style=bounties_received"
 msgstr ""
+"https://www.bountysource.com/badge/team?team_id=23177&style=bounties_received"
 
 #. type: Plain text
 #: README.rst:43
@@ -154,12 +155,12 @@ msgstr ""
 #: README.rst:45
 #, no-wrap
 msgid "More information"
-msgstr ""
+msgstr "פרטים נוספים"
 
 #. type: Plain text
 #: README.rst:48
 msgid "You can find more information on <https://wammu.eu/gammu/>."
-msgstr ""
+msgstr "ניתן למצוא מידע נוסף בכתובת <https://wammu.eu/gammu/>."
 
 #. type: Plain text
 #: README.rst:52
@@ -173,7 +174,7 @@ msgstr ""
 #: README.rst:55
 #, no-wrap
 msgid "Feedback and bug reports"
-msgstr ""
+msgstr "משוב ודיווחי באגים"
 
 #. type: Plain text
 #: README.rst:59
@@ -181,17 +182,19 @@ msgid ""
 "Any feedback is welcome, see <https://wammu.eu/support/> for information how "
 "to contact developers."
 msgstr ""
+"כל משוב שהוא מבורך, ניתן לעיין בכתובת <https://wammu.eu/support/> לפרטים "
+"נוספים בנוגע ליצירת קשר עם המפתחים."
 
 #. type: Title =
 #: README.rst:62
 #, no-wrap
 msgid "Support developers"
-msgstr ""
+msgstr "תמיכה במפתחים"
 
 #. type: Plain text
 #: README.rst:64
 msgid "You can appreciate developers work at <https://wammu.eu/donate/>."
-msgstr ""
+msgstr "ניתן להביע הערכה לעבודתם של המפתחים בכתובת <https://wammu.eu/donate/>."
 
 #. type: Title =
 #: INSTALL:2
@@ -205,6 +208,8 @@ msgid ""
 "See docs/manual/project/install.rst for installation guide or see chapter "
 "\"Compiling Gammu\" in The Gammu Manual."
 msgstr ""
+"יש לעיין במסמך docs/manual/project/install.rst כדי לצפות במדריך ההתקנה או "
+"לעיין בפרק להידור Gammu במדריך של Gammu."
 
 #, fuzzy
 #~| msgid "https://travis-ci.org/gammu/gammu.png?branch=master"
