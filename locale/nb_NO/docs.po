@@ -1,7 +1,6 @@
 # Gammu documentation translation
 # Copyright (C) 2003 - 2017 Michal Čihař <michal@cihar.com>
 # This file is distributed under the same license as the Gammu-docs package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 msgid ""
 msgstr ""
@@ -30,30 +29,32 @@ msgid ""
 msgstr ""
 
 #. type: Labeled list
-#: README.rst:7 README.rst:20 README.rst:24 README.rst:28 README.rst:32 README.rst:36 README.rst:40
+#: README.rst:7 README.rst:20 README.rst:24 README.rst:28 README.rst:32
+#: README.rst:36 README.rst:40
 #, no-wrap
 msgid ".. image"
 msgstr ""
 
 #. type: Plain text
 #: README.rst:8
-msgid "https://app.codesponsor.io/embed/e9cresCoq9fvHq4ya92dgNSj/gammu/gammu.svg"
+msgid ""
+"https://app.codesponsor.io/embed/e9cresCoq9fvHq4ya92dgNSj/gammu/gammu.svg"
 msgstr ""
 
 #. type: Plain text
 #: README.rst:11
 msgid ""
-":width: 888 :height: 68 :target: "
-"https://app.codesponsor.io/link/e9cresCoq9fvHq4ya92dgNSj/gammu/gammu"
+":width: 888 :height: 68 :target: https://app.codesponsor.io/link/"
+"e9cresCoq9fvHq4ya92dgNSj/gammu/gammu"
 msgstr ""
 
 #. type: Plain text
 #: README.rst:16
 msgid ""
 "It has been initiated by Marcin Wiacek and other people. Originally the code "
-"was based on Gnokii <https://www.gnokii.org/> and later MyGnokii "
-"<http://www.mwiacek.com/> projects. Gammu was former (up to version 0.58) "
-"called MyGnokii2."
+"was based on Gnokii <https://www.gnokii.org/> and later MyGnokii <http://www."
+"mwiacek.com/> projects. Gammu was former (up to version 0.58) called "
+"MyGnokii2."
 msgstr ""
 
 #. type: Plain text
@@ -75,14 +76,16 @@ msgstr ""
 
 #. type: Plain text
 #: README.rst:25
-msgid "https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/master?svg=true"
+msgid ""
+"https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/master?"
+"svg=true"
 msgstr ""
 
 #. type: Plain text
 #: README.rst:27
 msgid ""
-":alt: Windows Build status :target: "
-"https://ci.appveyor.com/project/nijel/gammu/branch/master"
+":alt: Windows Build status :target: https://ci.appveyor.com/project/nijel/"
+"gammu/branch/master"
 msgstr ""
 
 #. type: Plain text
@@ -93,8 +96,8 @@ msgstr ""
 #. type: Plain text
 #: README.rst:31
 msgid ""
-":alt: Translation status :target: "
-"https://hosted.weblate.org/engage/gammu/?utm_source=widget"
+":alt: Translation status :target: https://hosted.weblate.org/engage/gammu/?"
+"utm_source=widget"
 msgstr ""
 
 #. type: Plain text
@@ -125,8 +128,8 @@ msgstr ""
 #. type: Plain text
 #: README.rst:43
 msgid ""
-":alt: Bountysource :target: "
-"https://www.bountysource.com/teams/gammu/issues?utm_source=Gammu&utm_medium=shield&utm_campaign=bounties_received"
+":alt: Bountysource :target: https://www.bountysource.com/teams/gammu/issues?"
+"utm_source=Gammu&utm_medium=shield&utm_campaign=bounties_received"
 msgstr ""
 
 #. type: Title =
