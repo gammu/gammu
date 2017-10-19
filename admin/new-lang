@@ -10,7 +10,7 @@ fi
 
 mkdir locale/$1
 
-for loc in docs gammu libgammu manual ; do
+for loc in docs gammu libgammu ; do
     msginit -i locale/$loc.pot -o locale/$1/$loc.po -l $1 --no-translator
 done
 
