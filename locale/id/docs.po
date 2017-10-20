@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.38.6\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2017-10-16 14:46+0200\n"
-"PO-Revision-Date: 2017-10-04 10:46+0000\n"
-"Last-Translator: developerchan1 <developerchan1@gmail.com>\n"
+"PO-Revision-Date: 2017-10-21 08:46+0000\n"
+"Last-Translator: eisenhaus335 <greenzone332@outlook.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/gammu/gammu-"
 "docs/id/>\n"
 "Language: id\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 2.17-dev\n"
+"X-Generator: Weblate 2.17\n"
 
 #. type: Title =
 #: README.rst:2
@@ -125,10 +125,9 @@ msgstr "https://scan.coverity.com/projects/2890/badge.svg?flat=1"
 
 #. type: Plain text
 #: README.rst:35
-#, fuzzy
-#| msgid ":alt: Bitdeli badge :target: https://bitdeli.com/free"
 msgid ":alt: Coverity scan :target: https://scan.coverity.com/projects/2890"
-msgstr ":alt: Bitdeli badge :target: https://bitdeli.com/free"
+msgstr ""
+":alt: Pemindaian berlipat :target: https://scan.coverity.com/projects/2890"
 
 #. type: Plain text
 #: README.rst:37
@@ -137,10 +136,8 @@ msgstr "https://img.shields.io/gratipay/Gammu.svg"
 
 #. type: Plain text
 #: README.rst:39
-#, fuzzy
-#| msgid ":target: https://travis-ci.org/gammu/gammu"
 msgid ":alt: Gratipay :target: https://gratipay.com/Gammu/"
-msgstr ":target: https://travis-ci.org/gammu/gammu"
+msgstr ":alt: Gratipay :target: https://gratipay.com/Gammu/"
 
 #. type: Plain text
 #: README.rst:41
@@ -170,11 +167,6 @@ msgstr ""
 
 #. type: Plain text
 #: README.rst:52
-#, fuzzy
-#| msgid ""
-#| "There is also Gammu manual available in docs/manual. You can build HTML "
-#| "version of it using make manual-html which is viewable online at <http://"
-#| "wammu.eu/docs/manual/>."
 msgid ""
 "There is also Gammu manual available in docs/manual. You can build HTML "
 "version of it using make manual-html which is viewable online at <https://"
@@ -182,7 +174,7 @@ msgid ""
 msgstr ""
 "Disana juga dapat ditemukan Manual Gammu di Docs/manual. Kamu bisa membangun "
 "versi HTML dengan cara membuat manual-html yang dapat diambil online di "
-"<http://wammu.eu/docs/manual/>."
+"<https://wammu.eu/docs/manual/>."
 
 #. type: Title =
 #: README.rst:55
@@ -192,15 +184,11 @@ msgstr "Laporan umpanbalik dan bug"
 
 #. type: Plain text
 #: README.rst:59
-#, fuzzy
-#| msgid ""
-#| "Any feedback is welcome, see <http://wammu.eu/support/> for information "
-#| "how to contact developers."
 msgid ""
 "Any feedback is welcome, see <https://wammu.eu/support/> for information how "
 "to contact developers."
 msgstr ""
-"Setiap umpanbalik kami tunggu, lihat <http://wammu.eu/support/> untuk "
+"Setiap umpan balik kami terima, lihat <http://wammu.eu/support/> untuk "
 "informasi bagaimana menghubungi pengembang."
 
 #. type: Title =
