@@ -146,7 +146,7 @@ struct _GSM_SMSDConfig {
 	 * Address of the database (eg. hostname).
 	 */
 	const char	*host;
-        char 		DT[40];
+        char 		DT[200];
 	char		CreatorID[200];
 	/* database data structure */
 	struct GSM_SMSDdbobj *db;

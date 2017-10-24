@@ -300,6 +300,9 @@ void SMSDSQL_Time2String(GSM_SMSDConfig * Config, time_t timestamp, char *static
 	} else if (strcasecmp(driver_name, "mysql") == 0 || strcasecmp(driver_name, "native_mysql") == 0) {
 		timestruct = localtime(&timestamp);
 		strftime(static_buff, size, "%Y-%m-%d %H:%M:%S", timestruct);
+	} else if (strcasecmp(driver_name, "oracle") == 0) {
+		timestruct = gmtime(&timestamp);
+		strftime(static_buff, size, "TIMESTAMP '%Y-%m-%d %H:%M:%S +00:00'", timestruct);
 	} else if (strcasecmp(Config->driver, "odbc") == 0) {
 		timestruct = gmtime(&timestamp);
 		strftime(static_buff, size, "{ ts '%Y-%m-%d %H:%M:%S' }", timestruct);
