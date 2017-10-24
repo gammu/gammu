@@ -4634,6 +4634,21 @@ GSM_Error ATGEN_GetSecurityStatus(GSM_StateMachine *s, GSM_SecurityCodeType *Sta
 	return error;
 }
 
+GSM_Error ATGEN_ReplyAnswerCall(GSM_Protocol_Message *msg UNUSED, GSM_StateMachine *s)
+{
+	switch(s->Phone.Data.Priv.ATGEN.ReplyState) {
+        case AT_Reply_OK:
+		smprintf(s, "Call(s) answered\n");
+		return ERR_NONE;
+    	case AT_Reply_CMSError:
+		return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+		return ATGEN_HandleCMEError(s);
+        default:
+		return ERR_UNKNOWN;
+	}
+}
+
 GSM_Error ATGEN_AnswerCall(GSM_StateMachine *s, int ID UNUSED, gboolean all)
 {
 	GSM_Error error;
@@ -6167,6 +6182,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {MOTOROLA_Banner,		"+MBAN:"		,0x00,0x00,ID_IncomingFrame	 },
 
 {ATGEN_GenericReply, 		"AT+VTS"		,0x00,0x00,ID_SendDTMF		 },
+{ATGEN_ReplyAnswerCall,		"ATA\r"			,0x00,0x00,ID_AnswerCall	 },
 {ATGEN_ReplyCancelCall,		"AT+CHUP"		,0x00,0x00,ID_CancelCall	 },
 {ATGEN_ReplyDialVoice,		"ATD"			,0x00,0x00,ID_DialVoice		 },
 {ATGEN_ReplyCancelCall,		"ATH"			,0x00,0x00,ID_CancelCall	 },
