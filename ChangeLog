@@ -22,6 +22,7 @@ ChangeLog
 2017???? - 1.38.6
     
 [-] * Fixed answering call in AT module.
+[-] * Improved support for Huawei E392.
 
 20171018 - 1.38.5
 
