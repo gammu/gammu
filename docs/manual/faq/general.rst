@@ -33,6 +33,19 @@ where you just need to put URL of the data (use :option:`gammu sendsms`
 MMSINDICATOR for that). However you need to encode MMS data yourself or use
 other program to do that.
 
+.. _faq-mms-download:
+
+Can I use Gammu to receive MMS?
+-------------------------------
+
+MMS contains of two parts - the actual MMS data in SMIL format and the SMS
+containing notification about the data. Gammu (or SMSD) will receive the
+notification SMS, where URL to download the MMS content is included.
+
+However in most situations the URL is accessible only from the network and APN
+specific for the MMS messages, so downloading it is a bit tricky and needs to
+connect using GSM modem to the network using this APN.
+
 .. _faq-devname:
 
 Device name always changes on Linux, how to solve that?

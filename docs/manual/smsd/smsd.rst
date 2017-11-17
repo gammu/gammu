@@ -235,6 +235,7 @@ workaround this limitation by suspending SMSD temporarily using `SIGUSR1` and
 Or even create a `gammu-safe` script:
 
 .. code-block:: sh
+
     #!/bin/bash
     SMSD_PID=`pidof gammu-smsd`
     if [ -z "$SMSD_PID" ] ; then
