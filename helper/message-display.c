@@ -232,7 +232,7 @@ void DisplaySingleSMSInfo(GSM_SMSMessage *sms, gboolean displaytext, gboolean di
 			printf("\n");
 			printf(LISTFORMAT "%s\n", _("Sent"), OSDateTime(sms->DateTime,TRUE));
 		}
-		FALLTHROUGH;
+		FALLTHROUGH
 		/* No break. The only difference for SMS_Deliver and SMS_Submit is,
 		 * that SMS_Deliver contains additional data. We wrote them and then go
 		 * for data shared with SMS_Submit
