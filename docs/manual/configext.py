@@ -133,9 +133,12 @@ class ConfigFileDomain(Domain):
     }
 
     def clear_doc(self, docname):
+        remove = []
         for key, (fn, _) in self.data['objects'].items():
             if fn == docname:
-                del self.data['objects'][key]
+                remove.append(key)
+        for key in remove:
+            del self.data['objects'][key]
 
     def resolve_xref(self, env, fromdocname, builder,
                      typ, target, node, contnode):
