@@ -102,6 +102,8 @@ variables whose content is present in the message.
 
     Address (URL) of MMS from MMS indication message.
 
+    .. seealso:: :ref:`faq-mms-download`
+
 .. envvar:: DECODED_1_MMS_SIZE
 
     Size of MMS as specified in MMS indication message.
