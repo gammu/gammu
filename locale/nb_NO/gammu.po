@@ -8,14 +8,16 @@ msgstr ""
 "Project-Id-Version: gammu 1.38.2\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2017-10-19 13:14+0200\n"
-"PO-Revision-Date: 2017-02-07 11:19+0100\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"Language: nb\n"
+"PO-Revision-Date: 2017-11-17 13:26+0000\n"
+"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"Language-Team: Norwegian Bokmål "
+"<https://hosted.weblate.org/projects/gammu/gammu/nb_NO/>\n"
+"Language: nb_NO\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.18-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:379 helper/message-cmdline.c:403
@@ -269,7 +271,7 @@ msgstr ""
 
 #: gammu/backup.c:974 gammu/calendar.c:237 gammu/calendar.c:823
 msgid "Phone"
-msgstr ""
+msgstr "Telefon"
 
 #: gammu/backup.c:977 gammu/misc.c:283
 msgid "IMEI"
@@ -544,7 +546,7 @@ msgstr ""
 
 #: gammu/calendar.c:43 gammu/calendar.c:759
 msgid "Alarm"
-msgstr ""
+msgstr "Alarm"
 
 #: gammu/calendar.c:46
 msgid "Shopping"
@@ -636,7 +638,7 @@ msgstr ""
 
 #: gammu/calendar.c:156
 msgid "Start"
-msgstr ""
+msgstr "Start"
 
 #: gammu/calendar.c:163
 msgid "Stop"
@@ -663,7 +665,7 @@ msgstr ""
 #: gammu/calendar.c:996 gammu/message.c:227 gammu/misc.c:1015
 #: helper/memory-display.c:170 helper/message-display.c:446
 msgid "Text"
-msgstr ""
+msgstr "Tekst"
 
 #: gammu/calendar.c:222 gammu/calendar.c:828
 msgid "Description"
@@ -678,7 +680,7 @@ msgstr ""
 #: gammu/memory.c:141 gammu/message.c:217 gammu/misc.c:1766 gammu/misc.c:1799
 #: gammu/misc.c:2089 gammu/misc.c:2213
 msgid "Location"
-msgstr ""
+msgstr "Plassering"
 
 #: gammu/calendar.c:242 gammu/calendar.c:779 helper/memory-display.c:62
 msgid "Private"
@@ -851,7 +853,7 @@ msgstr ""
 
 #: gammu/calendar.c:542 gammu/calendar.c:545 gammu/mms.c:95
 msgid "Date"
-msgstr ""
+msgstr "Dato"
 
 #: gammu/calendar.c:543
 msgid "Every day"
@@ -886,7 +888,7 @@ msgstr ""
 
 #: gammu/calendar.c:713
 msgid "Priority"
-msgstr ""
+msgstr "Prioritet"
 
 #: gammu/calendar.c:716
 msgid "Invalid"
@@ -906,11 +908,11 @@ msgstr ""
 
 #: gammu/calendar.c:728
 msgid "None"
-msgstr ""
+msgstr "Ingen"
 
 #: gammu/calendar.c:732 gammu/message.c:111 gammu/misc.c:2020 gammu/misc.c:2063
 msgid "Unknown"
-msgstr ""
+msgstr "Ukjent"
 
 #: gammu/calendar.c:739
 msgid "Due time"
@@ -926,7 +928,7 @@ msgstr ""
 
 #: gammu/calendar.c:754
 msgid "Completed"
-msgstr ""
+msgstr "Fullført"
 
 #: gammu/calendar.c:789 gammu/calendar.c:794 helper/memory-display.c:45
 #: helper/memory-display.c:55 helper/memory-display.c:57
@@ -1200,7 +1202,7 @@ msgstr ""
 
 #: gammu/depend/nokia/dct4.c:872
 msgid "Bluetooth"
-msgstr ""
+msgstr "Blåtann"
 
 #: gammu/depend/nokia/dct4.c:888
 msgid "UEM"
@@ -1647,7 +1649,7 @@ msgstr ""
 
 #: gammu/files.c:160 gammu/files.c:173 gammu/files.c:199 gammu/files.c:324
 msgid "Folder"
-msgstr ""
+msgstr "MAppe"
 
 #: gammu/files.c:184 gammu/files.c:315
 msgid "File;"
@@ -1750,7 +1752,7 @@ msgstr ""
 #: gammu/misc.c:1770 gammu/misc.c:1809 gammu/misc.c:2104 gammu/mms.c:112
 #: helper/memory-display.c:220 helper/message-display.c:253
 msgid "Name"
-msgstr ""
+msgstr "Navn"
 
 #: gammu/gammu.c:91
 #, c-format
@@ -1820,7 +1822,7 @@ msgstr ""
 
 #: gammu/gammu.c:743
 msgid "Calls"
-msgstr ""
+msgstr "Samtaler"
 
 #: gammu/gammu.c:744
 msgid "SMS and EMS"
@@ -2075,7 +2077,7 @@ msgstr ""
 
 #: gammu/message.c:86 helper/message-display.c:167 helper/message-display.c:288
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: gammu/message.c:90
 msgid "No action needed"
@@ -2108,7 +2110,7 @@ msgstr ""
 
 #: gammu/message.c:222 gammu/misc.c:2105 gammu/misc.c:2384
 msgid "Number"
-msgstr ""
+msgstr "Nummer"
 
 #: gammu/message.c:223
 msgid "Default number"
@@ -2209,11 +2211,11 @@ msgstr ""
 
 #: gammu/message.c:618
 msgid "SIM"
-msgstr ""
+msgstr "SIM"
 
 #: gammu/message.c:620
 msgid "phone"
-msgstr ""
+msgstr "telefon"
 
 #: gammu/message.c:624
 #, c-format
@@ -2395,27 +2397,27 @@ msgstr ""
 
 #: gammu/misc.c:252
 msgid "Device"
-msgstr ""
+msgstr "Enhet"
 
 #: gammu/misc.c:256 gammu/search.c:89
 msgid "Manufacturer"
-msgstr ""
+msgstr "Produsent"
 
 #: gammu/misc.c:259 gammu/search.c:101
 msgid "Model"
-msgstr ""
+msgstr "Modell"
 
 #: gammu/misc.c:265
 msgid "Firmware"
-msgstr ""
+msgstr "Fastvare"
 
 #: gammu/misc.c:277
 msgid "Hardware"
-msgstr ""
+msgstr "Maskinvare"
 
 #: gammu/misc.c:288
 msgid "Original IMEI"
-msgstr ""
+msgstr "Original IMEI"
 
 #: gammu/misc.c:295
 msgid "Manufactured"
@@ -2423,11 +2425,11 @@ msgstr ""
 
 #: gammu/misc.c:301
 msgid "Product code"
-msgstr ""
+msgstr "Produktkode"
 
 #: gammu/misc.c:311
 msgid "SIM IMSI"
-msgstr ""
+msgstr "SIM-IMSI"
 
 #: gammu/misc.c:422
 msgid "Call info"
@@ -2513,11 +2515,11 @@ msgstr ""
 
 #: gammu/misc.c:515
 msgid "Todos"
-msgstr ""
+msgstr "Gjøremålslister"
 
 #: gammu/misc.c:519
 msgid "Calendar"
-msgstr ""
+msgstr "Kalender"
 
 #: gammu/misc.c:528
 msgid "Signal strength"
@@ -2734,7 +2736,7 @@ msgstr ""
 
 #: gammu/misc.c:1395 gammu/misc.c:1397
 msgid "Connection type"
-msgstr ""
+msgstr "Tilkoblingstype"
 
 #: gammu/misc.c:1395
 msgid "Continuous"
@@ -2807,7 +2809,7 @@ msgstr ""
 
 #: gammu/misc.c:1427 gammu/misc.c:1473
 msgid "Automatic"
-msgstr ""
+msgstr "Automatisk"
 
 #: gammu/misc.c:1430 gammu/misc.c:1432 gammu/misc.c:1476 gammu/misc.c:1478
 msgid "Authentication type"
@@ -2815,7 +2817,7 @@ msgstr ""
 
 #: gammu/misc.c:1430 gammu/misc.c:1476
 msgid "Normal"
-msgstr ""
+msgstr "Normal"
 
 #: gammu/misc.c:1432 gammu/misc.c:1478
 msgid "Secure"
@@ -3278,7 +3280,7 @@ msgstr ""
 
 #: gammu/mms.c:100
 msgid "Delivery report"
-msgstr ""
+msgstr "Leveringsrapport"
 
 #: gammu/mms.c:107 gammu/mms.c:110
 msgid "Content type"
@@ -3905,11 +3907,11 @@ msgstr ""
 #: helper/message-display.c:233 helper/message-display.c:249
 #: helper/message-display.c:290
 msgid "Sent"
-msgstr ""
+msgstr "Sendt"
 
 #: helper/message-display.c:170 helper/message-display.c:291
 msgid "Read"
-msgstr ""
+msgstr "Leste"
 
 #: helper/message-display.c:171 helper/message-display.c:292
 msgid "UnRead"
