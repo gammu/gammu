@@ -2196,6 +2196,11 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 			if (error == ERR_EMPTY) {
 				lastnothingsent = lastloop;
 			}
+			if (error == ERR_UNKNOWN) {
+				/* Huawei devices may return UNKNOWN errors. A soft reset may help to recover */
+				SMSD_LogError(DEBUG_INFO, Config, "Resetting the device because of error", error);
+				force_reset = TRUE;
+			}
 			/* We don't care about other errors here, they are handled in SMSD_SendSMS */
 		}
 		if (Config->shutdown) {

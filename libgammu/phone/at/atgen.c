@@ -4725,8 +4725,11 @@ GSM_Error ATGEN_Reset(GSM_StateMachine *s, gboolean hard)
 	}
 	smprintf(s, "Resetting device\n");
 
-	/* Siemens 35 */
-	error = ATGEN_WaitForAutoLen(s, "AT+CFUN=1,1\r", 0x00, 20, ID_Reset);
+	/* Regular phones */
+	error = ATGEN_WaitForAutoLen(s, "AT+CFUN=0\r", 0x00, 20, ID_Reset);
+	if (error == ERR_NONE) {
+		error = ATGEN_WaitForAutoLen(s, "AT+CFUN=1,1\r", 0x00, 20, ID_Reset);
+	}
 
 	if (error != ERR_NONE) {
 		/* Siemens M20 */
