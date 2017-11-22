@@ -4397,7 +4397,7 @@ GSM_Error ATGEN_DialService(GSM_StateMachine *s, char *number)
 	char *req = NULL,*encoded = NULL;
 	unsigned char *tmp = NULL;
 	const char format[] = "AT+CUSD=%d,\"%s\",15\r";
-	size_t len = 0, allocsize;
+	size_t len = 0, allocsize, sevenlen = 0;
 
 	len = strlen(number);
 	/*
@@ -4430,8 +4430,14 @@ GSM_Error ATGEN_DialService(GSM_StateMachine *s, char *number)
 		free(encoded);
 		return ERR_MOREMEMORY;
 	}
-	EncodeUnicode(tmp, number, strlen(number));
-	error = ATGEN_EncodeText(s, tmp, len, encoded, allocsize, &len);
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_ENCODED_USSD)) {
+		/* This is against GSM specs, but Huawei seems to use this */
+		sevenlen = GSM_PackSevenBitsToEight(0, number, tmp, len);
+		EncodeHexBin(encoded, tmp, sevenlen);
+	} else {
+		EncodeUnicode(tmp, number, strlen(number));
+		error = ATGEN_EncodeText(s, tmp, len, encoded, allocsize, &len);
+	}
 	free(tmp);
 	if (error != ERR_NONE) {
 		free(req);
