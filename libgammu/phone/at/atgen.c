@@ -4468,12 +4468,12 @@ GSM_Error ATGEN_DialVoice(GSM_StateMachine *s, char *number, GSM_CallShowNumber 
 	s->ReplyNum = 1;
 	smprintf(s, "Making voice call\n");
 	length = sprintf(buffer, "ATDT%s;\r", number);
-	error = ATGEN_WaitFor(s, buffer, length, 0x00, 100, ID_DialVoice);
+	error = ATGEN_WaitFor(s, buffer, length, 0x00, 200, ID_DialVoice);
 
 	if (error == ERR_INVALIDLOCATION || error == ERR_UNKNOWN) {
 		smprintf(s, "Making voice call without forcing to tone dial\n");
 		length = sprintf(buffer, "ATD%s;\r", number);
-		error = ATGEN_WaitFor(s, buffer, length, 0x00, 100, ID_DialVoice);
+		error = ATGEN_WaitFor(s, buffer, length, 0x00, 200, ID_DialVoice);
 	}
 	if (error == ERR_TIMEOUT && Priv->Manufacturer == AT_Samsung) {
 		smprintf(s, "Assuming voice call succeeded even without reply from phone\n");
