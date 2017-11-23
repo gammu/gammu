@@ -901,33 +901,54 @@ static GSM_Error loadnlm (FILE *file, GSM_MultiBitmap *bitmap)
 	for (i=0;i<number;i++) {
 		bitmap->Bitmap[i].Type = bitmap->Bitmap[0].Type;
 		GSM_GetMaxBitmapWidthHeight(bitmap->Bitmap[i].Type, &bitmap->Bitmap[i].BitmapWidth, &bitmap->Bitmap[i].BitmapHeight);
-		if (h < bitmap->Bitmap[i].BitmapHeight)	bitmap->Bitmap[i].BitmapHeight	= h;
-		if (w < bitmap->Bitmap[i].BitmapWidth)	bitmap->Bitmap[i].BitmapWidth		= w;
+		if (h < bitmap->Bitmap[i].BitmapHeight)	{
+			bitmap->Bitmap[i].BitmapHeight = h;
+		}
+		if (w < bitmap->Bitmap[i].BitmapWidth) {
+			bitmap->Bitmap[i].BitmapWidth = w;
+		}
 
-		division=div(w,8);
+		division = div(w, 8);
 		/* For startup logos */
-		if (division.rem!=0) division.quot++;
-	  	if (fread(buffer,1,(division.quot*h),file)!=(unsigned int)(division.quot*h)) return ERR_UNKNOWN;
+		if (division.rem != 0) {
+			division.quot++;
+		}
+		readbytes = division.quot * h;
+		if (readbytes > sizeof(buffer)) {
+			return ERR_MOREMEMORY;
+		}
+		if (fread(buffer, 1, readbytes, file) != readbytes) {
+			dbgprintf(NULL, "Failed to read NLM content!\n");
+			return ERR_FILENOTSUPPORTED;
+		}
 
 		GSM_ClearBitmap(&bitmap->Bitmap[i]);
 
 		pos=0;pos2=7;
 		for (y=0;y<h;y++) {
 			for (x=0;x<w;x++) {
-				if ((buffer[pos]&(1<<pos2))>0) {
-					if (y<bitmap->Bitmap[i].BitmapHeight && x<bitmap->Bitmap[i].BitmapWidth) GSM_SetPointBitmap(&bitmap->Bitmap[i],x,y);
+				if ((buffer[pos]&(1<<pos2)) > 0) {
+					if (y<bitmap->Bitmap[i].BitmapHeight && x<bitmap->Bitmap[i].BitmapWidth) {
+						GSM_SetPointBitmap(&bitmap->Bitmap[i], x, y);
+					}
 				}
 				pos2--;
 				/* going to new byte */
-				if (pos2<0) {pos2=7;pos++;}
+				if (pos2 < 0) {
+					pos2 = 7;
+					pos++;
+				}
 			}
 			/* for startup logos-new line means new byte */
-			if (pos2!=7) {pos2=7;pos++;}
+			if (pos2 != 7) {
+				pos2 = 7;
+				pos++;
+			}
 		}
 		bitmap->Number++;
 		if (bitmap->Number == GSM_MAX_MULTI_BITMAP) break;
 	}
-	return (ERR_NONE);
+	return ERR_NONE;
 }
 
 static GSM_Error loadnolngg(FILE *file, GSM_MultiBitmap *bitmap, gboolean nolformat)
@@ -981,7 +1002,7 @@ static GSM_Error loadnolngg(FILE *file, GSM_MultiBitmap *bitmap, gboolean nolfor
 	}
 #endif
 	bitmap->Number = 1;
-	return(ERR_NONE);
+	return ERR_NONE;
 }
 
 static GSM_Error loadnsl(FILE *file, GSM_MultiBitmap *bitmap)
