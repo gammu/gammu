@@ -14,12 +14,12 @@ environment:
   PGUSER: postgres
   PGPASSWORD: Password12!
   matrix:
-    - GENERATOR: "Visual Studio 14 2015 Win64"
-      TARGET: v140
     - GENERATOR: "Visual Studio 14 2015"
       TARGET: v140_xp
     - GENERATOR: "Visual Studio 14 2015"
       TARGET: v90
+    - GENERATOR: "Visual Studio 14 2015 Win64"
+      TARGET: v140
 matrix:
   exclude:
     - configuration: Debug
