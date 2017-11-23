@@ -23,6 +23,7 @@ ChangeLog
     
 [-] * Fixed answering call in AT module.
 [-] * Improved support for Huawei E392 and E3131.
+[-] * Fixed compatibility of binaries with Windows XP and 2003.
 
 20171018 - 1.38.5
 
