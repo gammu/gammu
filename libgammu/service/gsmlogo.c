@@ -864,7 +864,6 @@ static GSM_Error loadnlm (FILE *file, GSM_MultiBitmap *bitmap)
 	unsigned char 	buffer[1000];
 	size_t 		pos,x,y,h,w,i,number;
 	ssize_t		pos2;
-	div_t		division;
 	size_t		readbytes;
 
 	readbytes = fread(buffer,1,5,file);
@@ -910,14 +909,13 @@ static GSM_Error loadnlm (FILE *file, GSM_MultiBitmap *bitmap)
 			bitmap->Bitmap[i].BitmapWidth = w;
 		}
 
-		division = div(w, 8);
-		/* For startup logos */
-		if (division.rem != 0) {
-			division.quot++;
+		readbytes = w / 8;
+		if ((w % 8) != 0) {
+			readbytes++;
 		}
-		readbytes = division.quot * h;
-		dbgprintf(NULL, "Parsing %ld (%d * %ld) bytes of bitmap %ld\n", (long)readbytes, division.quot,  (long)h, (long)i);
-		printf("Parsing %ld (%d * %ld) bytes of bitmap %ld\n", (long)readbytes, division.quot,  (long)h, (long)i);
+		readbytes *= h;
+		dbgprintf(NULL, "Parsing %ld bytes of bitmap %ld\n", (long)readbytes, (long)i);
+		printf("Parsing %ld bytes of bitmap %ld\n", (long)readbytes, (long)i);
 		if (readbytes > sizeof(buffer)) {
 			return ERR_MOREMEMORY;
 		}
