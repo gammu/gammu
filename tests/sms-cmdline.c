@@ -16,9 +16,9 @@ int main(int argc, char **argv)
 
 	/* Configure debugging */
 	debug_info = GSM_GetGlobalDebug();
-	GSM_SetDebugFileDescriptor(stderr, FALSE, debug_info);
-	/* No debugging as it messes up checking results */
-	GSM_SetDebugLevel("none", debug_info);
+	GSM_SetDebugFileDescriptor(stdout, FALSE, debug_info);
+	/* Include debugging to help diagnose test failures */
+	GSM_SetDebugLevel("textall", debug_info);
 
 	error = CreateMessage(&type, &sms, argc, 1, argv, NULL);
 	gammu_test_result(error, "CreateMessage");
