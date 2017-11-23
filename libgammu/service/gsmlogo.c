@@ -1073,7 +1073,7 @@ static GSM_Error loadgif(FILE *file, GSM_MultiBitmap *bitmap)
 GSM_Error GSM_ReadBitmapFile(char *FileName, GSM_MultiBitmap *bitmap)
 {
 	FILE		*file;
-	unsigned char	buffer[300];
+	unsigned char	buffer[30];
 	GSM_Error	error = ERR_FILENOTSUPPORTED;
 	char	*file_only_name;
 	size_t len;
