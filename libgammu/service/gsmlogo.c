@@ -898,7 +898,6 @@ static GSM_Error loadnlm (FILE *file, GSM_MultiBitmap *bitmap)
 	w 	= buffer[1];
 	h 	= buffer[2];
 	dbgprintf(NULL, "NLM: %ld bitmaps, %ld x %ld\n", (long)number, (long)w, (long)h);
-	printf("NLM: %ld bitmaps, %ld x %ld\n", (long)number, (long)w, (long)h);
 	for (i = 0; i < number; i++) {
 		bitmap->Bitmap[i].Type = bitmap->Bitmap[0].Type;
 		GSM_GetMaxBitmapWidthHeight(bitmap->Bitmap[i].Type, &bitmap->Bitmap[i].BitmapWidth, &bitmap->Bitmap[i].BitmapHeight);
@@ -915,7 +914,6 @@ static GSM_Error loadnlm (FILE *file, GSM_MultiBitmap *bitmap)
 		}
 		readbytes *= h;
 		dbgprintf(NULL, "Parsing %ld bytes of bitmap %ld\n", (long)readbytes, (long)i);
-		printf("Parsing %ld bytes of bitmap %ld\n", (long)readbytes, (long)i);
 		if (readbytes > sizeof(buffer)) {
 			return ERR_MOREMEMORY;
 		}
