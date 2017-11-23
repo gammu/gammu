@@ -115,11 +115,9 @@ int dbg_vprintf(GSM_Debug_Info *d, const char *format, va_list argp)
 	}
 
 	/* Flush buffers, this might be configurable, but it could cause drop of last log messages */
-#ifndef WIN32
 	if (d->df != NULL) {
 		fflush(d->df);
 	}
-#endif
 
 	return result;
 }
