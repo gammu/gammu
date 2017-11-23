@@ -915,6 +915,7 @@ static GSM_Error loadnlm (FILE *file, GSM_MultiBitmap *bitmap)
 			division.quot++;
 		}
 		readbytes = division.quot * h;
+		dbgprintf(NULL, "Parsing %ld bytes of bitmap %ld\n", (long)readbytes, (long)i);
 		if (readbytes > sizeof(buffer)) {
 			return ERR_MOREMEMORY;
 		}
