@@ -991,6 +991,7 @@ GSM_PhoneModel allmodels[] = {
 	{"MF112",	"MF112",	"",		{F_ZTE_INIT, 0}},
 	{"MF190",	"MF190",	"",		{F_ZTE_INIT, 0}},
 	{"MF626",	"MF626",	"",		{F_ZTE_INIT, 0}},
+	{"MF667",	"MF667",	"",		{F_ZTE_INIT, F_USSD_GSM_CHARSET, 0}},
 
 	/* Ubinetics */
 	{"GDC201",	"GDC201",	"",		{F_SMS_NO_ME, 0}},
