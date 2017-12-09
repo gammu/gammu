@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.38.2\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2017-10-19 13:14+0200\n"
-"PO-Revision-Date: 2017-11-17 13:26+0000\n"
+"PO-Revision-Date: 2017-12-10 04:49+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål "
 "<https://hosted.weblate.org/projects/gammu/gammu/nb_NO/>\n"
@@ -24,23 +24,26 @@ msgstr ""
 #: helper/message-cmdline.c:447 helper/message-cmdline.c:484
 #: helper/message-cmdline.c:507
 msgid "Where is backup filename and location?"
-msgstr ""
+msgstr "Hva heter sikkerhetskopifila, og hvor er den plassert?"
 
 #: gammu/backup.c:63 helper/message-cmdline.c:495
+#, fuzzy
 msgid "Calendar note not found in file"
-msgstr ""
+msgstr "Kalendernotisen ble ikke funnet i fila"
 
 #: gammu/backup.c:86
 msgid "WAP bookmark not found in file"
-msgstr ""
+msgstr "WAP-bokmerke ble ikke funnet i fil"
 
 #: gammu/backup.c:107
+#, fuzzy
 msgid "Note not found in file"
-msgstr ""
+msgstr "Notis ikke funnet i fil"
 
 #: gammu/backup.c:128
+#, fuzzy
 msgid "Todo note not found in file"
-msgstr ""
+msgstr "Gjøremålsliste ikke funnet i fil"
 
 #: gammu/backup.c:137 helper/message-cmdline.c:531
 msgid "Where is backup filename and location and memory type?"
@@ -49,44 +52,47 @@ msgstr ""
 #: gammu/backup.c:150 gammu/backup.c:161 helper/message-cmdline.c:543
 #: helper/message-cmdline.c:553
 msgid "Phonebook entry not found in file"
-msgstr ""
+msgstr "Telefonbokoppføring ikke funnet i fil"
 
 #: gammu/backup.c:167 helper/message-cmdline.c:558
 #, c-format
 msgid "Unknown memory type: \"%s\"\n"
-msgstr ""
+msgstr "Ukjent minnetype \"%s\"\n"
 
 #: gammu/backup.c:181
 #, c-format
 msgid "Unknown backup format: \"%s\"\n"
-msgstr ""
+msgstr "Ukjent sikkerhetskopiformat: \"%s\"\n"
 
 #: gammu/backup.c:187
 msgid "Error while opening file for writing!\n"
-msgstr ""
+msgstr "Feil under åpning av fil for skriving!\n"
 
 #: gammu/backup.c:191 gammu/files.c:455 helper/message-cmdline.c:1117
 msgid "Error while writing file!\n"
-msgstr ""
+msgstr "Feil under skriving av fil!\n"
 
 #: gammu/backup.c:194
 msgid "Error while closing file!\n"
-msgstr ""
+msgstr "Feil under lukking av fil!\n"
 
 #: gammu/backup.c:241 gammu/backup.c:424 gammu/backup.c:496 gammu/backup.c:531
 #: gammu/backup.c:565 gammu/backup.c:633 gammu/backup.c:670 gammu/backup.c:707
 #: gammu/backup.c:744 gammu/backup.c:781 gammu/backup.c:819 gammu/backup.c:860
 #: gammu/backup.c:894 gammu/backup.c:931 gammu/message.c:430
+#, fuzzy
 msgid "Reading"
-msgstr ""
+msgstr "Leser"
 
 #: gammu/backup.c:247 gammu/backup.c:292
+#, fuzzy
 msgid "Only part of data saved, please increase the limit."
-msgstr ""
+msgstr "Data ble kun delvis lagret, øk grensen."
 
 #: gammu/backup.c:268 gammu/backup.c:310 gammu/backup.c:475 gammu/mms.c:183
+#, fuzzy
 msgid "Reading:"
-msgstr ""
+msgstr "Leser:"
 
 #: gammu/backup.c:269 gammu/backup.c:311 gammu/backup.c:476 gammu/backup.c:1045
 #: gammu/backup.c:1120 gammu/backup.c:1173 gammu/backup.c:1231
@@ -100,66 +106,68 @@ msgstr ""
 #: gammu/misc.c:539 gammu/misc.c:1252 gammu/mms.c:184
 #, c-format
 msgid "%i percent"
-msgstr ""
+msgstr "%i prosent"
 
 #: gammu/backup.c:367 gammu/backup.c:1026 gammu/backup.c:1645
 #: gammu/calendar.c:632 gammu/calendar.c:885 gammu/calendar.c:960
 #: gammu/calendar.c:985 gammu/memory.c:24 gammu/memory.c:312 gammu/memory.c:376
 #: gammu/message.c:133 gammu/misc.c:205 gammu/misc.c:481
+#, fuzzy
 msgid "Press Ctrl+C to break..."
-msgstr ""
+msgstr "Trykk Ctrl+C for å avbryte…"
 
 #: gammu/backup.c:372
 msgid "Use Unicode subformat of backup file?"
 msgstr ""
 
 #: gammu/backup.c:404
+#, fuzzy
 msgid "Checking phone phonebook"
-msgstr ""
+msgstr "Sjekker telefon-telefonbok"
 
 #: gammu/backup.c:405
 msgid "Backup phone phonebook?"
-msgstr ""
+msgstr "Sikkerhetkopier telefon-telefonbok?"
 
 #: gammu/backup.c:409
 msgid "Checking SIM phonebook"
-msgstr ""
+msgstr "Sjekker SIM-telefonbok"
 
 #: gammu/backup.c:410
 msgid "Backup SIM phonebook?"
-msgstr ""
+msgstr "Sikkerhetskopier SIM-telefonbok"
 
 #: gammu/backup.c:415
 msgid "Checking phone calendar"
-msgstr ""
+msgstr "Sjekker telefon-kalender"
 
 #: gammu/backup.c:419
 msgid "Backup phone calendar notes?"
-msgstr ""
+msgstr "Sikkerhetskopier telefonens kalendernotater?"
 
 #: gammu/backup.c:432 gammu/backup.c:467 gammu/backup.c:504 gammu/backup.c:541
 #: gammu/backup.c:576 gammu/backup.c:642 gammu/backup.c:679 gammu/backup.c:716
 #: gammu/backup.c:753 gammu/backup.c:789 gammu/backup.c:829 gammu/backup.c:871
 #: gammu/backup.c:905 gammu/backup.c:942
-#, c-format
+#, c-format, fuzzy
 msgid "Only part of data saved, please increase %s."
-msgstr ""
+msgstr "Data ble kun delvis lagret, øk %s."
 
 #: gammu/backup.c:450
 msgid "Checking phone todos"
-msgstr ""
+msgstr "Sjekker telefon-gjøremålslister"
 
 #: gammu/backup.c:453
 msgid "Backup phone todos?"
-msgstr ""
+msgstr "Sikkerhetskopier telefon-gjøremålslister?"
 
 #: gammu/backup.c:487
 msgid "Checking phone notes"
-msgstr ""
+msgstr "Sjekker telefon-notater"
 
 #: gammu/backup.c:491
 msgid "Backup phone notes?"
-msgstr ""
+msgstr "Sikkerhetskopier telefon-notater?"
 
 #: gammu/backup.c:522
 msgid "Checking phone caller logos"
@@ -187,43 +195,45 @@ msgstr ""
 
 #: gammu/backup.c:608
 msgid "Checking phone operator logo"
-msgstr ""
+msgstr "Sjekker telefonoperatørlogo"
 
 #: gammu/backup.c:613
 msgid "Backup phone operator logo?"
-msgstr ""
+msgstr "Sikkerhetskopier telefonoperatørlogo?"
 
 #: gammu/backup.c:624
 msgid "Checking phone WAP bookmarks"
-msgstr ""
+msgstr "Sjekker teleefonens WAP-bokmerker"
 
 #: gammu/backup.c:628
 msgid "Backup phone WAP bookmarks?"
-msgstr ""
+msgstr "Sikkerhetskopier telefonens WAP-bokmerker?"
 
 #: gammu/backup.c:661
 msgid "Checking phone WAP settings"
-msgstr ""
+msgstr "Sjekker telefonens WAP-innstillinger"
 
 #: gammu/backup.c:665
 msgid "Backup phone WAP settings?"
-msgstr ""
+msgstr "SIkkerhetskopier telefonens WAP-innstillinger?"
 
 #: gammu/backup.c:698
 msgid "Checking phone MMS settings"
-msgstr ""
+msgstr "Sjekker telefonens MMS-innstillinger"
 
 #: gammu/backup.c:702
 msgid "Backup phone MMS settings?"
-msgstr ""
+msgstr "SIkkerhetskopier telefonens MMS-innstillinger?"
 
 #: gammu/backup.c:735
+#, fuzzy
 msgid "Checking phone Chat settings"
-msgstr ""
+msgstr "Sjekker telefonens sludreinnstillinger"
 
 #: gammu/backup.c:739
+#, fuzzy
 msgid "Backup phone Chat settings?"
-msgstr ""
+msgstr "Sikkerhetskopier telefonens sludreinnstillinger?"
 
 #: gammu/backup.c:772
 msgid "Checking phone SyncML settings"
@@ -235,39 +245,41 @@ msgstr ""
 
 #: gammu/backup.c:808
 msgid "Checking phone user ringtones"
-msgstr ""
+msgstr "Sjekker telefonens brukerringetoner"
 
 #: gammu/backup.c:813
 msgid "Backup phone user ringtones?"
-msgstr ""
+msgstr "Sikkerhetskopier telefonens brukerringetoner?"
 
 #: gammu/backup.c:851
 msgid "Checking phone profiles"
-msgstr ""
+msgstr "Sjekker telefonprofiler"
 
 #: gammu/backup.c:855
 msgid "Backup phone profiles?"
-msgstr ""
+msgstr "SIkkerhetskopier telefonprofiler?"
 
 #: gammu/backup.c:884
 msgid "Checking phone FM radio stations"
-msgstr ""
+msgstr "Sjekker telefonens FM-radiostasjoner"
 
 #: gammu/backup.c:888
 msgid "Backup phone FM radio stations?"
-msgstr ""
+msgstr "SIkkerhetskopier telefonens FM-radiostasjoner?"
 
 #: gammu/backup.c:921
+#, fuzzy
 msgid "Checking phone GPRS access points"
-msgstr ""
+msgstr "Sjekker telefonens GPRS-tilgangspunkter"
 
 #: gammu/backup.c:925
+#, fuzzy
 msgid "Backup phone GPRS access points?"
-msgstr ""
+msgstr "Sikkerhetskopier telefonens GPRS-tilgangspunkter?"
 
 #: gammu/backup.c:971
 msgid "Time of backup"
-msgstr ""
+msgstr "Tid for sikkerhetskopi"
 
 #: gammu/backup.c:974 gammu/calendar.c:237 gammu/calendar.c:823
 msgid "Phone"
@@ -275,16 +287,18 @@ msgstr "Telefon"
 
 #: gammu/backup.c:977 gammu/misc.c:283
 msgid "IMEI"
-msgstr ""
+msgstr "IMEI"
 
 #: gammu/backup.c:980
 msgid "File created by"
-msgstr ""
+msgstr "Fil opprettet av"
 
 #: gammu/backup.c:984
 #, c-format
 msgid "Checksum in backup file do not match (original: %s, new: %s). Continue?"
 msgstr ""
+"Sjekksum i sikkerhetskopifil samsvarer ikke (opprinnelig: %s, ny: %s) "
+"Fortsett?"
 
 #: gammu/backup.c:1022
 msgid ""
@@ -309,18 +323,18 @@ msgstr ""
 #: gammu/backup.c:1760 gammu/backup.c:1782 gammu/backup.c:1806
 #: gammu/files.c:755
 msgid "Writing:"
-msgstr ""
+msgstr "Skriver:"
 
 #: gammu/backup.c:1070 gammu/backup.c:1138 gammu/backup.c:1199
 #: gammu/backup.c:1247 gammu/backup.c:1340 gammu/backup.c:1665
 #: gammu/backup.c:1693
 #, c-format
 msgid "%i entries in backup file\n"
-msgstr ""
+msgstr "%i oppføringer i sikkerhetskopifil\n"
 
 #: gammu/backup.c:1071
 msgid "Restore phone phonebook?"
-msgstr ""
+msgstr "Gjenopprett telefonens telefonbok?"
 
 #: gammu/backup.c:1090
 msgid ""
@@ -331,11 +345,11 @@ msgstr ""
 #: gammu/backup.c:1100 gammu/backup.c:1159
 #, c-format
 msgid "Location %d"
-msgstr ""
+msgstr "Plassering %d"
 
 #: gammu/backup.c:1139
 msgid "Restore SIM phonebook?"
-msgstr ""
+msgstr "Gjenopprett SIM-telefonbok?"
 
 #: gammu/backup.c:1184 gammu/backup.c:1717
 msgid ""
@@ -359,7 +373,7 @@ msgstr ""
 #: gammu/backup.c:1560 gammu/misc.c:1261 gammu/misc.c:1306 gammu/misc.c:1330
 #: gammu/misc.c:1378
 msgid "Done"
-msgstr ""
+msgstr "Ferdig"
 
 #: gammu/backup.c:1249
 msgid "Restore phone todo?"
@@ -391,15 +405,16 @@ msgstr ""
 
 #: gammu/backup.c:1407
 msgid "Deleting old bookmarks:"
-msgstr ""
+msgstr "Sletter gamle bokmerker:"
 
 #: gammu/backup.c:1444
+#, fuzzy
 msgid "Restore phone WAP settings?"
-msgstr ""
+msgstr "Gjenopprett telefonens WAP-innstilinger?"
 
 #: gammu/backup.c:1469
 msgid "Restore phone MMS settings?"
-msgstr ""
+msgstr "Gjenopprett telefonens MMS-innstillinger?"
 
 #: gammu/backup.c:1495 gammu/misc.c:1374
 msgid "Delete all phone user ringtones?"
@@ -408,7 +423,7 @@ msgstr ""
 #: gammu/backup.c:1499 gammu/misc.c:1293 gammu/misc.c:1317 gammu/misc.c:1341
 #: gammu/misc.c:1357 gammu/misc.c:1375
 msgid "Deleting"
-msgstr ""
+msgstr "Sletter"
 
 #: gammu/backup.c:1504
 msgid "Restore user ringtones?"
@@ -416,7 +431,7 @@ msgstr ""
 
 #: gammu/backup.c:1530
 msgid "Restore phone profiles?"
-msgstr ""
+msgstr "Gjenopprett telefonprofiler?"
 
 #: gammu/backup.c:1553
 msgid "Restore phone FM radio stations?"
@@ -424,23 +439,23 @@ msgstr ""
 
 #: gammu/backup.c:1557
 msgid "Deleting old FM stations:"
-msgstr ""
+msgstr "Sletter gamle FM-stasjoner:"
 
 #: gammu/backup.c:1583
 msgid "Restore phone GPRS Points?"
-msgstr ""
+msgstr "Gjenopprett telefonens GPRS-punkter?"
 
 #: gammu/backup.c:1631 gammu/memory.c:29 gammu/memory.c:60 gammu/memory.c:132
 #: gammu/memory.c:168
 #, c-format
 msgid "Unknown memory type (\"%s\")\n"
-msgstr ""
+msgstr "Ukjent minnetype (\"%s\")\n"
 
 #: gammu/backup.c:1635 gammu/memory.c:70 gammu/misc.c:648 gammu/misc.c:681
 #: helper/message-cmdline.c:1038
 #, c-format
 msgid "Unknown parameter (\"%s\")\n"
-msgstr ""
+msgstr "Ukjent parameter (\"%s\")\n"
 
 #: gammu/backup.c:1667 gammu/backup.c:1695
 #, c-format
@@ -460,8 +475,9 @@ msgid "Add phone calendar notes?"
 msgstr ""
 
 #: gammu/backup.c:1752
+#, fuzzy
 msgid "Add phone ToDo?"
-msgstr ""
+msgstr "Legg til telefonens gjøremålsliste?"
 
 #: gammu/backup.c:1774
 msgid "Add notes to phone?"
@@ -469,20 +485,22 @@ msgstr ""
 
 #: gammu/backup.c:1797
 msgid "Add phone WAP bookmarks?"
-msgstr ""
+msgstr "Legg til WAP-bokmerker?"
 
 #: gammu/backupsms.c:61
+#, fuzzy
 msgid "Delete each sms after backup?"
-msgstr ""
+msgstr "Slett hver SMS etter sikkerhetskopiering?"
 
 #: gammu/backupsms.c:66
-#, c-format
+#, c-format, fuzzy
 msgid "Backup sms from folder \"%s\"%s?"
-msgstr ""
+msgstr "Sikkerhetskopier SMS fra mappen \"%s\"%s?"
 
 #: gammu/backupsms.c:68 gammu/backupsms.c:220
+#, fuzzy
 msgid " (SIM)"
-msgstr ""
+msgstr " (SIM)"
 
 #: gammu/backupsms.c:94
 #, c-format
@@ -491,25 +509,25 @@ msgstr ""
 
 #: gammu/backupsms.c:117 gammu/misc.c:1251
 msgid "Deleting:"
-msgstr ""
+msgstr "Sletter:"
 
 #: gammu/backupsms.c:165
 msgid "Restore message?"
-msgstr ""
+msgstr "Gjenopprett melding?"
 
 #: gammu/backupsms.c:205
 msgid "Do you want to restore binary SMS?"
 msgstr ""
 
 #: gammu/backupsms.c:217
-#, c-format
+#, c-format, fuzzy
 msgid "Restore %03i sms to folder \"%s\"%s?"
-msgstr ""
+msgstr "Gjenopprett %03i SMS til mappen \"%s\"%s?"
 
 #: gammu/backupsms.c:221
 #, c-format
 msgid "saving %i SMS\n"
-msgstr ""
+msgstr "lagrer %i SMS\n"
 
 #: gammu/calendar.c:19
 msgid "Note type"
@@ -517,20 +535,20 @@ msgstr ""
 
 #: gammu/calendar.c:22
 msgid "Reminder (Date)"
-msgstr ""
+msgstr "Påminnelse (dato)"
 
 #: gammu/calendar.c:25
 msgctxt "Calendar note type"
 msgid "Call"
-msgstr ""
+msgstr "Ring"
 
 #: gammu/calendar.c:28
 msgid "Meeting"
-msgstr ""
+msgstr "Møte"
 
 #: gammu/calendar.c:31
 msgid "Birthday (Anniversary)"
-msgstr ""
+msgstr "Geburtsdag (jubileum)"
 
 #: gammu/calendar.c:34
 msgid "Memo (Miscellaneous)"
@@ -538,11 +556,11 @@ msgstr ""
 
 #: gammu/calendar.c:37
 msgid "Travel"
-msgstr ""
+msgstr "Reise"
 
 #: gammu/calendar.c:40
 msgid "Vacation"
-msgstr ""
+msgstr "Ferie"
 
 #: gammu/calendar.c:43 gammu/calendar.c:759
 msgid "Alarm"
@@ -550,11 +568,11 @@ msgstr "Alarm"
 
 #: gammu/calendar.c:46
 msgid "Shopping"
-msgstr ""
+msgstr "Handling"
 
 #: gammu/calendar.c:49
 msgid "Daily alarm"
-msgstr ""
+msgstr "Daglig alarm"
 
 #: gammu/calendar.c:52
 msgid "Training/Athletism"
@@ -578,23 +596,23 @@ msgstr ""
 
 #: gammu/calendar.c:67
 msgid "Training/Extreme Sports"
-msgstr ""
+msgstr "Trening/ekstremsport"
 
 #: gammu/calendar.c:70
 msgid "Training/Football"
-msgstr ""
+msgstr "Trening/fotball"
 
 #: gammu/calendar.c:73
 msgid "Training/Golf"
-msgstr ""
+msgstr "Trening/golf"
 
 #: gammu/calendar.c:76
 msgid "Training/Gym"
-msgstr ""
+msgstr "Trening/helsestudio"
 
 #: gammu/calendar.c:79
 msgid "Training/Horse Races"
-msgstr ""
+msgstr "Trening/hesteløp"
 
 #: gammu/calendar.c:82
 msgid "Training/Hockey"
@@ -610,7 +628,7 @@ msgstr ""
 
 #: gammu/calendar.c:91
 msgid "Training/Sailing"
-msgstr ""
+msgstr "Trening/seiling"
 
 #: gammu/calendar.c:94
 msgid "Training/Street Games"
@@ -618,11 +636,11 @@ msgstr ""
 
 #: gammu/calendar.c:97
 msgid "Training/Swimming"
-msgstr ""
+msgstr "Trening/svømming"
 
 #: gammu/calendar.c:100
 msgid "Training/Tennis"
-msgstr ""
+msgstr "Trening/tennis"
 
 #: gammu/calendar.c:103
 msgid "Training/Travels"
@@ -634,7 +652,7 @@ msgstr ""
 
 #: gammu/calendar.c:110
 msgid "unknown type!"
-msgstr ""
+msgstr "ukjent type!"
 
 #: gammu/calendar.c:156
 msgid "Start"
@@ -642,11 +660,11 @@ msgstr "Start"
 
 #: gammu/calendar.c:163
 msgid "Stop"
-msgstr ""
+msgstr "Stopp"
 
 #: gammu/calendar.c:170 gammu/calendar.c:769 helper/memory-display.c:41
 msgid "Last modified"
-msgstr ""
+msgstr "Sist endret"
 
 #: gammu/calendar.c:176 gammu/calendar.c:188
 msgid "Tone alarm"
@@ -659,7 +677,7 @@ msgstr ""
 
 #: gammu/calendar.c:197 gammu/calendar.c:209 gammu/calendar.c:764
 msgid "Silent alarm"
-msgstr ""
+msgstr "Stille alarm"
 
 #: gammu/calendar.c:217 gammu/calendar.c:551 gammu/calendar.c:774
 #: gammu/calendar.c:996 gammu/message.c:227 gammu/misc.c:1015
@@ -669,7 +687,7 @@ msgstr "Tekst"
 
 #: gammu/calendar.c:222 gammu/calendar.c:828
 msgid "Description"
-msgstr ""
+msgstr "Beskrivelse"
 
 #: gammu/calendar.c:227 gammu/calendar.c:838 helper/memory-display.c:214
 msgid "LUID"
@@ -684,24 +702,24 @@ msgstr "Plassering"
 
 #: gammu/calendar.c:242 gammu/calendar.c:779 helper/memory-display.c:62
 msgid "Private"
-msgstr ""
+msgstr "Privat"
 
 #: gammu/calendar.c:244
 msgid "Yes"
-msgstr ""
+msgstr "Ja"
 
 #: gammu/calendar.c:244
 msgid "No"
-msgstr ""
+msgstr "Nei"
 
 #: gammu/calendar.c:256 gammu/calendar.c:262 gammu/calendar.c:267
 #: gammu/calendar.c:808 gammu/calendar.c:814
 msgid "Contact ID"
-msgstr ""
+msgstr "Kontakt-ID"
 
 #: gammu/calendar.c:310
 msgid "Repeating"
-msgstr ""
+msgstr "Gjentakelse"
 
 #: gammu/calendar.c:313
 #, c-format
@@ -712,75 +730,75 @@ msgstr[1] ""
 
 #: gammu/calendar.c:317
 msgid "forever"
-msgstr ""
+msgstr "for alltid"
 
 #: gammu/calendar.c:319
 #, c-format
 msgid "till %s"
-msgstr ""
+msgstr "til %s"
 
 #: gammu/calendar.c:321
 #, c-format
 msgid "since %s"
-msgstr ""
+msgstr "siden %s"
 
 #: gammu/calendar.c:323
 #, c-format
 msgid "since %s till %s"
-msgstr ""
+msgstr "siden %s til %s"
 
 #: gammu/calendar.c:328
 msgid " on each "
-msgstr ""
+msgstr " for hver "
 
 #: gammu/calendar.c:330
 #, c-format
 msgid " on each %d. "
-msgstr ""
+msgstr " for hver %d. "
 
 #: gammu/calendar.c:335
 #, c-format
 msgid " in %d. week of "
-msgstr ""
+msgstr " i %d. uke av "
 
 #: gammu/calendar.c:338
 msgid " in "
-msgstr ""
+msgstr " i "
 
 #: gammu/calendar.c:344 gammu/calendar.c:352
 msgid "each month"
-msgstr ""
+msgstr "hver måned"
 
 #: gammu/calendar.c:347
 #, c-format
 msgid "%d. day of "
-msgstr ""
+msgstr "%d. dag av "
 
 #: gammu/calendar.c:355
 #, c-format
 msgid "%d. day of year"
-msgstr ""
+msgstr "%d. dag av året"
 
 #: gammu/calendar.c:357
 msgid "day"
-msgstr ""
+msgstr "dag"
 
 #: gammu/calendar.c:373
 msgid "Age"
-msgstr ""
+msgstr "Alder"
 
 #: gammu/calendar.c:392
 msgid "Date and time not set in phone"
-msgstr ""
+msgstr "Dato og tid ikke satt i telefonen"
 
 #: gammu/calendar.c:395
 #, c-format
 msgid "Phone time is %s\n"
-msgstr ""
+msgstr "Telefonens tid er %s\n"
 
 #: gammu/calendar.c:409
 msgid "Time format is "
-msgstr ""
+msgstr "Tidsformatet er "
 
 #. l10n: AM/PM time
 #: gammu/calendar.c:412
@@ -794,39 +812,39 @@ msgstr ""
 
 #: gammu/calendar.c:417
 msgid "Date format is "
-msgstr ""
+msgstr "Datoformatet er "
 
 #: gammu/calendar.c:420
 msgid "DD MM YYYY"
-msgstr ""
+msgstr "DD MM ÅÅÅÅ"
 
 #: gammu/calendar.c:423
 msgid "MM DD YYYY"
-msgstr ""
+msgstr "MM DD ÅÅÅÅ"
 
 #: gammu/calendar.c:426
 msgid "YYYY MM DD"
-msgstr ""
+msgstr "ÅÅÅÅ MM DD"
 
 #: gammu/calendar.c:429
 msgid "DD MMM YY"
-msgstr ""
+msgstr "DD MMM ÅÅ"
 
 #: gammu/calendar.c:432
 msgid "MM DD YY"
-msgstr ""
+msgstr "MM DD ÅÅ"
 
 #: gammu/calendar.c:435
 msgid "DD MM YY"
-msgstr ""
+msgstr "DD MM ÅÅ"
 
 #: gammu/calendar.c:438
 msgid "YY MM DD"
-msgstr ""
+msgstr "ÅÅ MM DD"
 
 #: gammu/calendar.c:441
 msgid "OFF"
-msgstr ""
+msgstr "AV"
 
 #: gammu/calendar.c:446
 #, c-format
@@ -876,15 +894,15 @@ msgstr ""
 #: gammu/calendar.c:668
 #, c-format
 msgid "Week starts on %s"
-msgstr ""
+msgstr "Uken starter på %s"
 
 #: gammu/calendar.c:693 gammu/memory.c:150
 msgid "Entry was empty"
-msgstr ""
+msgstr "Oppføringen var tom"
 
 #: gammu/calendar.c:695 gammu/memory.c:152
 msgid "Entry was deleted"
-msgstr ""
+msgstr "Oppføringen ble slettet"
 
 #: gammu/calendar.c:713
 msgid "Priority"
@@ -892,19 +910,19 @@ msgstr "Prioritet"
 
 #: gammu/calendar.c:716
 msgid "Invalid"
-msgstr ""
+msgstr "Ugyldig"
 
 #: gammu/calendar.c:719
 msgid "Low"
-msgstr ""
+msgstr "Lav"
 
 #: gammu/calendar.c:722
 msgid "Medium"
-msgstr ""
+msgstr "Middels"
 
 #: gammu/calendar.c:725
 msgid "High"
-msgstr ""
+msgstr "Høy"
 
 #: gammu/calendar.c:728
 msgid "None"
@@ -916,15 +934,15 @@ msgstr "Ukjent"
 
 #: gammu/calendar.c:739
 msgid "Due time"
-msgstr ""
+msgstr "Frist"
 
 #: gammu/calendar.c:744
 msgid "Start time"
-msgstr ""
+msgstr "Starttid"
 
 #: gammu/calendar.c:749
 msgid "Completed time"
-msgstr ""
+msgstr "Fullført tid"
 
 #: gammu/calendar.c:754
 msgid "Completed"
@@ -933,11 +951,11 @@ msgstr "Fullført"
 #: gammu/calendar.c:789 gammu/calendar.c:794 helper/memory-display.c:45
 #: helper/memory-display.c:55 helper/memory-display.c:57
 msgid "Category"
-msgstr ""
+msgstr "Kategori"
 
 #: gammu/calendar.c:818
 msgid "Contact"
-msgstr ""
+msgstr "Kontakt"
 
 #: gammu/calendar.c:903 gammu/memory.c:316 gammu/memory.c:393
 #, c-format
@@ -945,32 +963,33 @@ msgid "Search text too long, truncating to %d chars!\n"
 msgstr ""
 
 #: gammu/common.c:42
+#, fuzzy
 msgid "Waiting for Security Code."
-msgstr ""
+msgstr "Venter på sikkerhetskode."
 
 #: gammu/common.c:45
 msgid "Waiting for PIN."
-msgstr ""
+msgstr "Venter på PIN."
 
 #: gammu/common.c:48
 msgid "Waiting for PIN2."
-msgstr ""
+msgstr "Venter på PIN2-kode."
 
 #: gammu/common.c:51
 msgid "Waiting for PUK."
-msgstr ""
+msgstr "Venter på PUK."
 
 #: gammu/common.c:54
 msgid "Waiting for PUK2."
-msgstr ""
+msgstr "Venter på PUK2."
 
 #: gammu/common.c:57
 msgid "Waiting for phone code."
-msgstr ""
+msgstr "Venter på telefonkode."
 
 #: gammu/common.c:60
 msgid "Waiting for network code."
-msgstr ""
+msgstr "Venter på nettverkskode."
 
 #: gammu/common.c:63
 msgid "Nothing to enter."
@@ -978,55 +997,55 @@ msgstr ""
 
 #: gammu/common.c:67
 msgid "Unknown security status."
-msgstr ""
+msgstr "Ukjent sikkerhetsstatus."
 
 #: gammu/common.c:78
 msgid "January"
-msgstr ""
+msgstr "Januar"
 
 #: gammu/common.c:81
 msgid "February"
-msgstr ""
+msgstr "Februar"
 
 #: gammu/common.c:84
 msgid "March"
-msgstr ""
+msgstr "Mars"
 
 #: gammu/common.c:87
 msgid "April"
-msgstr ""
+msgstr "April"
 
 #: gammu/common.c:90
 msgid "May"
-msgstr ""
+msgstr "Mai"
 
 #: gammu/common.c:93
 msgid "June"
-msgstr ""
+msgstr "Juni"
 
 #: gammu/common.c:96
 msgid "July"
-msgstr ""
+msgstr "Juli"
 
 #: gammu/common.c:99
 msgid "August"
-msgstr ""
+msgstr "August"
 
 #: gammu/common.c:102
 msgid "September"
-msgstr ""
+msgstr "September"
 
 #: gammu/common.c:105
 msgid "October"
-msgstr ""
+msgstr "Oktober"
 
 #: gammu/common.c:108
 msgid "November"
-msgstr ""
+msgstr "November"
 
 #: gammu/common.c:111
 msgid "December"
-msgstr ""
+msgstr "Desember"
 
 #: gammu/common.c:114
 msgid "Bad month!"
@@ -1034,31 +1053,31 @@ msgstr ""
 
 #: gammu/common.c:126
 msgid "Monday"
-msgstr ""
+msgstr "Mandag"
 
 #: gammu/common.c:129
 msgid "Tuesday"
-msgstr ""
+msgstr "Tirsdag"
 
 #: gammu/common.c:132
 msgid "Wednesday"
-msgstr ""
+msgstr "Onsdag"
 
 #: gammu/common.c:135
 msgid "Thursday"
-msgstr ""
+msgstr "Torsdag"
 
 #: gammu/common.c:138
 msgid "Friday"
-msgstr ""
+msgstr "Fredag"
 
 #: gammu/common.c:141
 msgid "Saturday"
-msgstr ""
+msgstr "Lørdag"
 
 #: gammu/common.c:144
 msgid "Sunday"
-msgstr ""
+msgstr "Søndag"
 
 #: gammu/common.c:147
 msgid "Bad day!"
@@ -1066,12 +1085,12 @@ msgstr ""
 
 #: gammu/common.c:194
 msgid "Security status"
-msgstr ""
+msgstr "Sikkerhetssatus"
 
 #: gammu/common.c:312 gammu/misc.c:1046 gammu/misc.c:1061 gammu/misc.c:1068
 #: gammu/misc.c:1075 gammu/misc.c:1105
 msgid "More parameters required!"
-msgstr ""
+msgstr "Flere parameter kreves"
 
 #: gammu/common.c:318 gammu/common.c:328 gammu/depend/nokia/dct4.c:687
 #: gammu/misc.c:1217
@@ -1153,12 +1172,12 @@ msgstr ""
 
 #: gammu/depend/nokia/dct4.c:373 gammu/message.c:105 gammu/misc.c:2380
 msgid "Timeout"
-msgstr ""
+msgstr "Tidsavbrudd"
 
 #: gammu/depend/nokia/dct4.c:374
 #, c-format
 msgid "Unknown (%x)"
-msgstr ""
+msgstr "Ukjent (%x)"
 
 #: gammu/depend/nokia/dct4.c:376
 msgid " (startup)"
@@ -1166,12 +1185,12 @@ msgstr ""
 
 #: gammu/depend/nokia/dct4.c:497 gammu/depend/nokia/dct4.c:1006
 msgid "Press any key to continue..."
-msgstr ""
+msgstr "Trykk en tast for å fortsette…"
 
 #: gammu/depend/nokia/dct4.c:509
 #, c-format
 msgid "Security code set to \"12345\"\n"
-msgstr ""
+msgstr "Sikkerhetskode satt til \"12345\"\n"
 
 #: gammu/depend/nokia/dct4.c:512
 msgid "Unknown reason. Can't reset your security code"
@@ -1180,17 +1199,17 @@ msgstr ""
 #: gammu/depend/nokia/dct4.c:536
 #, c-format
 msgid "Trying %i\n"
-msgstr ""
+msgstr "Prøver %i\n"
 
 #: gammu/depend/nokia/dct4.c:555
 #, c-format
 msgid "Security code is %s\n"
-msgstr ""
+msgstr "Sikkerhetskoden er %s\n"
 
 #: gammu/depend/nokia/dct4.c:800
 #, c-format
 msgid "device address %02x%02x%02x%02x%02x%02x\n"
-msgstr ""
+msgstr "enhetsadresse %02x%02x%02x%02x%02x%02x\n"
 
 #: gammu/depend/nokia/dct4.c:824
 msgid "Old simlock"
@@ -1240,7 +1259,7 @@ msgstr ""
 #: gammu/depend/nokia/dct4.c:1048 gammu/depend/nokia/dct4.c:1049
 #: gammu/depend/nokia/dct4.c:1050
 msgid "mV"
-msgstr ""
+msgstr "mV"
 
 #: gammu/depend/nokia/dct4.c:1038
 msgid "Battery voltage, scaled:"
@@ -1264,12 +1283,13 @@ msgid "Battery size indicator:"
 msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1041
+#, fuzzy
 msgid "Ohms"
-msgstr ""
+msgstr "Ohm"
 
 #: gammu/depend/nokia/dct4.c:1042
 msgid "Battery temperature:"
-msgstr ""
+msgstr "Batteritemperatur"
 
 #: gammu/depend/nokia/dct4.c:1042 gammu/depend/nokia/dct4.c:1046
 #: gammu/depend/nokia/dct4.c:1047
@@ -1286,7 +1306,7 @@ msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1045
 msgid "Light sensor:"
-msgstr ""
+msgstr "Lyssensor:"
 
 #: gammu/depend/nokia/dct4.c:1046
 msgid "Power amplifier temperature:"
@@ -2130,7 +2150,7 @@ msgstr ""
 
 #: gammu/message.c:230
 msgid "Pager"
-msgstr ""
+msgstr "Personsøker"
 
 #: gammu/message.c:234
 msgid "Validity"
@@ -3105,7 +3125,7 @@ msgstr ""
 
 #: gammu/misc.c:2050
 msgid "Personal"
-msgstr ""
+msgstr "Personlig"
 
 #: gammu/misc.c:2055
 msgid "Vibrate first"
