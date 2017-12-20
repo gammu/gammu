@@ -1622,7 +1622,6 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 	unsigned char *pos = NULL;
 	int code = 0;
 	int dcs = 0;
-	int offset = 0;
 	GSM_Coding_Type coding;
 	char hex_encoded[2 * (GSM_MAX_USSD_LENGTH + 1)] = {0};
 	char packed[GSM_MAX_USSD_LENGTH + 1] = {0};
@@ -1713,7 +1712,6 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 						/* GSM-7 */
 						coding = SMS_Coding_Default_No_Compression;
 					} else if ((dcs & 0xf) == 1) {
-						offset = 2;
 						coding = SMS_Coding_Unicode_No_Compression;
 					} else {
 						smprintf(s, "WARNING: unknown DCS: 0x%02x\n", dcs);
@@ -1739,7 +1737,7 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 					}
 				}
 			} else if (coding == SMS_Coding_Unicode_No_Compression) {
-				DecodeHexUnicode(ussd.Text, hex_encoded + offset, strlen(hex_encoded));
+				DecodeHexUnicode(ussd.Text, hex_encoded, strlen(hex_encoded));
 			} else if (coding == SMS_Coding_8bit) {
 				DecodeHexBin(decoded, hex_encoded, strlen(hex_encoded));
 				GSM_UnpackEightBitsToSeven(0, strlen(hex_encoded), sizeof(decoded), packed, decoded);
