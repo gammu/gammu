@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: Wammu 0.37\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2017-10-19 13:14+0200\n"
-"PO-Revision-Date: 2016-03-05 14:31+0000\n"
-"Last-Translator: Olexandr Nesterenko <olexn@ukr.net>\n"
-"Language-Team: Ukrainian <https://hosted.weblate.org/projects/gammu/gammu/uk/"
-">\n"
+"PO-Revision-Date: 2018-01-03 16:22+0000\n"
+"Last-Translator: Yura <skayt55@gmail.com>\n"
+"Language-Team: Ukrainian "
+"<https://hosted.weblate.org/projects/gammu/gammu/uk/>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 2.5-dev\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
+"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 2.19-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:379 helper/message-cmdline.c:403
@@ -861,7 +861,7 @@ msgstr "Будильник (%i) в телефоні не встановлено\
 #: gammu/calendar.c:540
 #, c-format
 msgid "Alarm in location %i:\n"
-msgstr ""
+msgstr "Сигналізація в місці %i:\n"
 
 #: gammu/calendar.c:542 gammu/calendar.c:545 gammu/mms.c:95
 msgid "Date"
@@ -904,7 +904,7 @@ msgstr "Пріоритет"
 
 #: gammu/calendar.c:716
 msgid "Invalid"
-msgstr ""
+msgstr "Невірний"
 
 #: gammu/calendar.c:719
 msgid "Low"
@@ -986,7 +986,7 @@ msgstr "Очікування введення коду мережі."
 
 #: gammu/common.c:63
 msgid "Nothing to enter."
-msgstr ""
+msgstr "Нічого не введено."
 
 #: gammu/common.c:67
 msgid "Unknown security status."
@@ -1088,7 +1088,7 @@ msgstr "Необхідно більше параметрів!"
 #: gammu/common.c:318 gammu/common.c:328 gammu/depend/nokia/dct4.c:687
 #: gammu/misc.c:1217
 msgid "Please enumerate locations from 1"
-msgstr ""
+msgstr "Будь ласка, перерахуйте місця від 1"
 
 #: gammu/common.c:333
 msgid "Swapping start and end location"
@@ -1118,7 +1118,7 @@ msgstr "ЛИШЕ"
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
 #: gammu/common.c:356 gammu/common.c:369
 msgid "NONE"
-msgstr ""
+msgstr "ПОРОЖНЬО"
 
 #: gammu/common.c:358
 msgid "YES (always)"
@@ -1142,16 +1142,12 @@ msgid "Setting done"
 msgstr "Налаштування виконано"
 
 #: gammu/depend/nokia/dct4.c:303
-#, fuzzy
-#| msgid ""
-#| "Sorry, but configuration matrix for this model has not yet been added. "
-#| "See <http://wammu.eu/support/bugs/> for information how to report it."
 msgid ""
 "Sorry, but configuration matrix for this model has not yet been added. See "
 "<https://wammu.eu/support/bugs/> for information how to report it."
 msgstr ""
 "Вибачте, але для вказаної моделі телефону відсутні варіанти конфігурації. "
-"Дивіться деталі на <http://wammu.eu/support/bugs/> як повідомити про це."
+"Дивіться деталі на <https://wammu.eu/support/bugs/> як повідомити про це."
 
 #: gammu/depend/nokia/dct4.c:369
 msgid "Passed"
@@ -1163,7 +1159,7 @@ msgstr "Помилка"
 
 #: gammu/depend/nokia/dct4.c:371
 msgid "Not executed"
-msgstr ""
+msgstr "Не виконано"
 
 #: gammu/depend/nokia/dct4.c:372
 msgid "No signal"
@@ -1180,7 +1176,7 @@ msgstr "Невідомий (%x)"
 
 #: gammu/depend/nokia/dct4.c:376
 msgid " (startup)"
-msgstr ""
+msgstr " (стартап)"
 
 #: gammu/depend/nokia/dct4.c:497 gammu/depend/nokia/dct4.c:1006
 msgid "Press any key to continue..."
@@ -1229,28 +1225,28 @@ msgstr "UEM"
 #: gammu/depend/nokia/dct4.c:961
 #, c-format
 msgid "What lights should I enable (\"%s\") ?\n"
-msgstr ""
+msgstr "Які вогні повинно включити (\"%s\") ?\n"
 
 #: gammu/depend/nokia/dct4.c:968
 #, c-format
 msgid "What should I do (\"%s\") ?\n"
-msgstr ""
+msgstr "Що слід зробити (\"%s\") ?\n"
 
 #. l10n: Raw data for A/D convertor
 #: gammu/depend/nokia/dct4.c:1020
 #, c-format
 msgid "raw result %10i "
-msgstr ""
+msgstr "необроблений результат %10i "
 
 #. l10n: Processed data for A/D convertor
 #: gammu/depend/nokia/dct4.c:1024
 #, c-format
 msgid "unit result %10i "
-msgstr ""
+msgstr "одиничний результат %10i "
 
 #: gammu/depend/nokia/dct4.c:1037
 msgid "Battery voltage, divided:"
-msgstr ""
+msgstr "Напруга акумулятора розділена:"
 
 #: gammu/depend/nokia/dct4.c:1037 gammu/depend/nokia/dct4.c:1038
 #: gammu/depend/nokia/dct4.c:1039 gammu/depend/nokia/dct4.c:1043
@@ -1262,15 +1258,15 @@ msgstr "мВ"
 
 #: gammu/depend/nokia/dct4.c:1038
 msgid "Battery voltage, scaled:"
-msgstr ""
+msgstr "Напруга акумулятора, масштабована:"
 
 #: gammu/depend/nokia/dct4.c:1039
 msgid "Charger voltage:"
-msgstr ""
+msgstr "Напруга зарядного пристрою:"
 
 #: gammu/depend/nokia/dct4.c:1040
 msgid "Charger current:"
-msgstr ""
+msgstr "Струм зарядного пристрою:"
 
 #: gammu/depend/nokia/dct4.c:1040 gammu/depend/nokia/dct4.c:1051
 #: gammu/depend/nokia/dct4.c:1052
@@ -1300,7 +1296,7 @@ msgstr "З'єднання із гарнітурою:"
 
 #: gammu/depend/nokia/dct4.c:1044
 msgid "Hook interconnection:"
-msgstr ""
+msgstr "З'єднання з телефоном:"
 
 #: gammu/depend/nokia/dct4.c:1045
 msgid "Light sensor:"
@@ -1308,7 +1304,7 @@ msgstr "Датчик світла:"
 
 #: gammu/depend/nokia/dct4.c:1046
 msgid "Power amplifier temperature:"
-msgstr ""
+msgstr "Температура підсилювача потужності:"
 
 #: gammu/depend/nokia/dct4.c:1047
 msgid "VCXO temperature:"
@@ -1316,15 +1312,15 @@ msgstr "Температура VCXO:"
 
 #: gammu/depend/nokia/dct4.c:1048
 msgid "Resistive keyboard 1/headint2:"
-msgstr ""
+msgstr "Резистивна клавіатура 1 /заголовок2:"
 
 #: gammu/depend/nokia/dct4.c:1049
 msgid "Resistive keyboard 1/auxdet:"
-msgstr ""
+msgstr "Резистивна клавіатура 1 /auxdet:"
 
 #: gammu/depend/nokia/dct4.c:1050
 msgid "Initial battery voltage:"
-msgstr ""
+msgstr "Початкова напруга акумулятора:"
 
 #: gammu/depend/nokia/dct4.c:1051
 msgid "Battery Current:"
@@ -1332,20 +1328,20 @@ msgstr "Струм батареї:"
 
 #: gammu/depend/nokia/dct4.c:1052
 msgid "Battery Current Fast:"
-msgstr ""
+msgstr "Потужність акумулятора:"
 
 #: gammu/depend/nokia/dct4.c:1158
 msgid "Phone seems not to support radio"
-msgstr ""
+msgstr "Телефон, схоже, не підтримує радіо"
 
 #: gammu/depend/nokia/dct4.c:1165
 msgid "Please connect headset. Required as antenna"
-msgstr ""
+msgstr "Будь ласка, підключіть гарнітуру. Обов'язково, як антена"
 
 #: gammu/depend/nokia/dct4.c:1331
 #, c-format
 msgid "%i entries types\n"
-msgstr ""
+msgstr "%i типи записів\n"
 
 #: gammu/depend/nokia/dct4.c:1334
 #, c-format
@@ -1382,11 +1378,11 @@ msgstr " (ID мелодії дзвінка)"
 
 #: gammu/depend/nokia/dct4.c:1343
 msgid " (Call register: date and time)"
-msgstr ""
+msgstr " (Реєстр викликів: дата і час)"
 
 #: gammu/depend/nokia/dct4.c:1344
 msgid " (Call register: with missed calls)"
-msgstr ""
+msgstr " (Реєстр викликів: з пропущеними викликами)"
 
 #: gammu/depend/nokia/dct4.c:1345
 msgid " (Speed dial)"
@@ -1394,15 +1390,15 @@ msgstr " (Швидкий набір)"
 
 #: gammu/depend/nokia/dct4.c:1346
 msgid " (Caller group: logo)"
-msgstr ""
+msgstr " (Група викликів: логотип)"
 
 #: gammu/depend/nokia/dct4.c:1347
 msgid " (Caller group: is logo on ?)"
-msgstr ""
+msgstr " (Група абонентів: відображати логотип?)"
 
 #: gammu/depend/nokia/dct4.c:1348
 msgid " (Caller group number in pbk entry)"
-msgstr ""
+msgstr " (Номер групи абонентів у номері pbk)"
 
 #: gammu/depend/nokia/dct4.c:1351
 msgid " (Text: URL address)"
@@ -1410,43 +1406,43 @@ msgstr " (Текст: URL адреса)"
 
 #: gammu/depend/nokia/dct4.c:1352
 msgid " (SMS list assignment)"
-msgstr ""
+msgstr " (Розташування списку SMS)"
 
 #: gammu/depend/nokia/dct4.c:1353
 msgid " (Voice tag assignment)"
-msgstr ""
+msgstr " (Призначення голосового тегу)"
 
 #: gammu/depend/nokia/dct4.c:1354
 msgid " (Picture ID assignment)"
-msgstr ""
+msgstr " (Присвоєння ID зображення)"
 
 #: gammu/depend/nokia/dct4.c:1355
 msgid " (Ringtone ID from filesystem/internal)"
-msgstr ""
+msgstr " (Ідентифікатор рингтону з filesystem/internal)"
 
 #: gammu/depend/nokia/dct4.c:1356
 msgid " (Text: user ID)"
-msgstr ""
+msgstr " (Текст: ID користувача)"
 
 #: gammu/depend/nokia/dct4.c:1357
 msgid " (conversation list ID)"
-msgstr ""
+msgstr " (ID списку розмов)"
 
 #: gammu/depend/nokia/dct4.c:1358
 msgid " (Instant Messaging service list ID ?)"
-msgstr ""
+msgstr " (ID списку служб миттєвих повідомлень?)"
 
 #: gammu/depend/nokia/dct4.c:1359
 msgid " (presence list ID ?)"
-msgstr ""
+msgstr " (ID списку присутності?)"
 
 #: gammu/depend/nokia/dct4.c:1360
 msgid " (SIP Address (Push to Talk address))"
-msgstr ""
+msgstr " (Адреса SIP (адрес \"Натисніть щоб говорити\"))"
 
 #: gammu/depend/nokia/dct4.c:1361
 msgid " (Group ID (6230i or later))"
-msgstr ""
+msgstr " (ID групи (6230i або пізніше))"
 
 #: gammu/depend/nokia/dct4.c:1363
 msgid ", type "
@@ -1500,87 +1496,85 @@ msgstr "Невідомий номер"
 #: gammu/depend/nokia/dct4.c:1407
 #, c-format
 msgid "ERROR: unknown memory type (\"%s\")\n"
-msgstr ""
+msgstr "ПОМИЛКА: невідомий тип пам'яті (\"%s\")\n"
 
 #: gammu-detect/main.c:55
 msgid "Show debugging output for detecting devices."
-msgstr ""
+msgstr "Показувати виправлення помилок для виявлення пристроїв."
 
 #: gammu-detect/main.c:56
 msgid "Show version information and compiled in features."
-msgstr ""
+msgstr "Показати версію програми і вбудованих додатках."
 
 #: gammu-detect/main.c:58
 msgid "Disables scanning of udev."
-msgstr ""
+msgstr "Вимикає сканування udev."
 
 #: gammu-detect/main.c:61
 msgid "Disables scanning using Bluez."
-msgstr ""
+msgstr "Вимикає сканування за допомогою Bluez."
 
 #: gammu-detect/main.c:64
 msgid "Disables scanning of Windows serial ports."
-msgstr ""
+msgstr "Вимикає сканування послідовних портів Windows."
 
 #: gammu-detect/main.c:71
 #, c-format
 msgid "Gammu-detect version %s"
-msgstr ""
+msgstr "Версія Gammu-detect %s"
 
 #: gammu-detect/main.c:74 gammu/gammu.c:99
 msgid "Compiled in features:"
-msgstr ""
+msgstr "Скомпільовані в функціях:"
 
 #: gammu-detect/main.c:76
 msgid "udev probing"
-msgstr ""
+msgstr "udev зондування"
 
 #: gammu-detect/main.c:79
 msgid "Bluez probing"
-msgstr ""
+msgstr "Bluez зондування"
 
 #: gammu-detect/main.c:82
 msgid "Windows serial port probing"
-msgstr ""
+msgstr "Перевірка послідовного порту Windows"
 
 #: gammu-detect/main.c:85
-#, fuzzy
-#| msgid ""
-#| "Copyright \\(co 2003 - 2008 Michal Cihar E<lt>I<michal@cihar.com>E<gt>"
 msgid ""
 "Copyright (C) 2010 - 2017 Michal Cihar <michal@cihar.com> and other authors."
-msgstr "Copyright \\(co 2003 - 2008 Michal Cihar E<lt>I<michal@cihar.com>E<gt>"
+msgstr ""
+"Авторське право (C) 2010 - 2017 Michal Cihar <michal@cihar.com> та інші "
+"автори."
 
 #: gammu-detect/main.c:87 gammu/gammu.c:336
 msgid "License GPLv2: GNU GPL version 2 <https://spdx.org/licenses/GPL-2.0>."
-msgstr ""
+msgstr "Ліцензія GPLv2: GNU GPL версія 2 <https://spdx.org/licenses/GPL-2.0>."
 
 #: gammu-detect/main.c:88 gammu/gammu.c:338
 msgid "This is free software: you are free to change and redistribute it."
-msgstr ""
+msgstr "Це вільне ПЗ: ви можете вільно змінювати та поширювати його."
 
 #: gammu-detect/main.c:89 gammu/gammu.c:340
 msgid "There is NO WARRANTY, to the extent permitted by law."
-msgstr ""
+msgstr "Немає гарантії, наскільки це дозволено законом."
 
 #: gammu-detect/main.c:91 gammu/gammu.c:344
-#, fuzzy
-#| msgid "Check <http://wammu.eu/gammu/> for updates."
 msgid "Check <https://wammu.eu/gammu/> for updates."
-msgstr "Використовуйте адресу <http://wammu.eu/gammu/> для оновлення."
+msgstr "Використовуйте адресу <https://wammu.eu/gammu/> для оновлення."
 
 #: gammu-detect/main.c:100
 msgid "Configuration file generated by gammu-detect."
-msgstr ""
+msgstr "Конфігураційний файл, створений gammu-detect."
 
 #: gammu-detect/main.c:101
 msgid "Please check The Gammu Manual for more information."
 msgstr ""
+"Для отримання додаткової інформації, будь ласка, перегляньте посібник Gammu."
 
 #: gammu-detect/main.c:158
 #, c-format
 msgid "option parsing failed: %s\n"
-msgstr ""
+msgstr "не вдається прочитати опцію: %s\n"
 
 #: gammu-detect/udev.c:67
 msgid "Name:"
@@ -1608,7 +1602,7 @@ msgstr "Драйвер:"
 
 #: gammu-detect/udev.c:73
 msgid "Sequential Number:"
-msgstr ""
+msgstr "Послідовний номер:"
 
 #: gammu-detect/udev.c:74
 msgid "Device File:"
@@ -1621,16 +1615,16 @@ msgstr "Властивості:"
 #: gammu-detect/udev.c:170 gammu-detect/win32-serial.c:44
 #, c-format
 msgid "Phone on serial port %s"
-msgstr ""
+msgstr "Телефон підключений до порту %s"
 
 #: gammu-detect/udev.c:172
 #, c-format
 msgid "Phone on USB serial port %s %s"
-msgstr ""
+msgstr "Телефон підключений до USB порту %s %s"
 
 #: gammu/files.c:48
 msgid "Phone memory"
-msgstr ""
+msgstr "Пам'ять телефону"
 
 #: gammu/files.c:49
 #, c-format
