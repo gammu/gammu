@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.38.6\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2017-10-16 14:46+0200\n"
-"PO-Revision-Date: 2018-01-01 23:50+0000\n"
+"PO-Revision-Date: 2018-01-03 16:22+0000\n"
 "Last-Translator: Sebastian Rasmussen <sebras@gmail.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/gammu/gammu-"
 "docs/sv/>\n"
@@ -40,7 +40,7 @@ msgstr ""
 #: README.rst:36 README.rst:40
 #, no-wrap
 msgid ".. image"
-msgstr ".. image"
+msgstr ".. bild"
 
 #. type: Plain text
 #: README.rst:8
