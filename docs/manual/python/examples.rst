@@ -22,7 +22,7 @@ Sending a message
     state_machine = gammu.StateMachine()
 
     # Optionally load config file as defined by first parameter
-    if len(sys.argv) >= 2:
+    if len(sys.argv) > 2:
         # Read the configuration from given file
         state_machine.ReadConfig(Filename=sys.argv[1])
         # Remove file name from args list
@@ -67,7 +67,7 @@ Sending a long message
     state_machine = gammu.StateMachine()
 
     # Optionally load config file as defined by first parameter
-    if len(sys.argv) >= 2:
+    if len(sys.argv) > 2:
         # Read the configuration from given file
         state_machine.ReadConfig(Filename=sys.argv[1])
         # Remove file name from args list
@@ -129,7 +129,7 @@ Initiating a voice call
     state_machine = gammu.StateMachine()
 
     # Read the configuration (~/.gammurc or from command line)
-    if len(sys.argv) >= 2:
+    if len(sys.argv) > 2:
         state_machine.ReadConfig(Filename=sys.argv[1])
         del sys.argv[1]
     else:
