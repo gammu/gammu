@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Swedish (Gammu)\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2018-01-04 04:34+0200\n"
-"PO-Revision-Date: 2018-01-04 14:49+0000\n"
+"POT-Creation-Date: 2018-01-04 16:37+0200\n"
+"PO-Revision-Date: 2018-01-04 16:15+0000\n"
 "Last-Translator: Sebastian Rasmussen <sebras@gmail.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/gammu/gammu/sv/>"
 "\n"
@@ -1545,11 +1545,11 @@ msgstr "Licens GPLv2: GNU GPL version 2 <https://spdx.org/licenses/GPL-2.0>."
 
 #: gammu-detect/main.c:88 gammu/gammu.c:338
 msgid "This is free software: you are free to change and redistribute it."
-msgstr ""
+msgstr "Detta är fri programvara: du kan fritt ändra och återdistribuera den."
 
 #: gammu-detect/main.c:89 gammu/gammu.c:340
 msgid "There is NO WARRANTY, to the extent permitted by law."
-msgstr ""
+msgstr "Den kommer UTAN GARANTI, så långt lagen tillåter."
 
 #: gammu-detect/main.c:91 gammu/gammu.c:344
 msgid "Check <https://wammu.eu/gammu/> for updates."
@@ -2511,15 +2511,15 @@ msgstr "samtal etablerat. Väntar på svar"
 
 #: gammu/misc.c:435
 msgid "call held"
-msgstr ""
+msgstr "håll samtal"
 
 #: gammu/misc.c:436
 msgid "call resumed"
-msgstr ""
+msgstr "samtal återkopplat"
 
 #: gammu/misc.c:437
 msgid "call switched"
-msgstr ""
+msgstr "samtal växlat"
 
 #: gammu/misc.c:444
 #, c-format
@@ -2734,43 +2734,43 @@ msgstr "Okänd parameter (\"%s\")"
 
 #: gammu/misc.c:1281
 msgid "Delete phone phonebook?"
-msgstr ""
+msgstr "Ta bort telefonens telefonbok?"
 
 #: gammu/misc.c:1282
 msgid "Delete SIM phonebook?"
-msgstr ""
+msgstr "Ta bort SIM-telefonbok?"
 
 #: gammu/misc.c:1283
 msgid "Delete missed calls?"
-msgstr ""
+msgstr "Ta bort missade samtal?"
 
 #: gammu/misc.c:1284
 msgid "Delete dialled calls?"
-msgstr ""
+msgstr "Ta bort uppringda samtal?"
 
 #: gammu/misc.c:1285
 msgid "Delete received calls?"
-msgstr ""
+msgstr "Ta bort mottagna samtal?"
 
 #: gammu/misc.c:1290
 msgid "Delete phone calendar notes?"
-msgstr ""
+msgstr "Ta bort telefonens kalendernoteringar?"
 
 #: gammu/misc.c:1314
 msgid "Delete phone todos?"
-msgstr ""
+msgstr "Ta bort telefonens att-göra?"
 
 #: gammu/misc.c:1338
 msgid "Delete phone notes?"
-msgstr ""
+msgstr "Ta bort telefonens noteringar?"
 
 #: gammu/misc.c:1356
 msgid "Delete phone WAP bookmarks?"
-msgstr ""
+msgstr "Ta bort telefonens WAP-bokmärken?"
 
 #: gammu/misc.c:1383
 msgid "Delete all phone FM radio stations?"
-msgstr ""
+msgstr "Ta bort alla telefonens FM-radiostationer?"
 
 #: gammu/misc.c:1395 gammu/misc.c:1397
 msgid "Connection type"
@@ -2807,7 +2807,7 @@ msgstr "adress \"%s\", port %i"
 
 #: gammu/misc.c:1407
 msgid "Second proxy"
-msgstr ""
+msgstr "Andra proxy"
 
 #: gammu/misc.c:1412 gammu/misc.c:1419 gammu/misc.c:1454 gammu/misc.c:1467
 msgid "Bearer"
@@ -2819,19 +2819,19 @@ msgstr "SMS"
 
 #: gammu/misc.c:1415
 msgid "Server number"
-msgstr ""
+msgstr "Servernummer"
 
 #: gammu/misc.c:1416 gammu/misc.c:1462 gammu/misc.c:1463
 msgid "Service number"
-msgstr ""
+msgstr "Servicenummer"
 
 #: gammu/misc.c:1419
 msgid "Data (CSD)"
-msgstr ""
+msgstr "Data (CSD)"
 
 #: gammu/misc.c:1422
 msgid "Dial-up number"
-msgstr ""
+msgstr "Uppringningsnummer"
 
 #: gammu/misc.c:1423 gammu/misc.c:1459 gammu/misc.c:1460 gammu/misc.c:1481
 msgid "IP address"
@@ -2863,7 +2863,7 @@ msgstr "Säker"
 
 #: gammu/misc.c:1435 gammu/misc.c:1437
 msgid "Data call type"
-msgstr ""
+msgstr "Datasamtalstyp"
 
 #: gammu/misc.c:1435
 msgid "ISDN"
@@ -2875,11 +2875,11 @@ msgstr "Analog"
 
 #: gammu/misc.c:1441 gammu/misc.c:1444 gammu/misc.c:1447
 msgid "Data call speed"
-msgstr ""
+msgstr "Datasamtalshastighet"
 
 #: gammu/misc.c:1447 gammu/misc.c:2056
 msgid "Auto"
-msgstr ""
+msgstr "Auto"
 
 #: gammu/misc.c:1450 gammu/misc.c:1482
 msgid "User name"
@@ -2891,11 +2891,11 @@ msgstr "Lösenord"
 
 #: gammu/misc.c:1454
 msgid "USSD"
-msgstr ""
+msgstr "USSD"
 
 #: gammu/misc.c:1457
 msgid "Service code"
-msgstr ""
+msgstr "Servicekod"
 
 #: gammu/misc.c:1459 gammu/misc.c:1462
 msgid "Address type"
@@ -2903,13 +2903,13 @@ msgstr "Adresstyp"
 
 #: gammu/misc.c:1480
 msgid "Access point"
-msgstr ""
+msgstr "Accesspunkt"
 
 #: gammu/misc.c:1503 gammu/misc.c:1524 gammu/misc.c:1552 gammu/misc.c:1565
 #: gammu/misc.c:1597
 #, c-format
 msgid "Set %i"
-msgstr ""
+msgstr "Uppsättning %i"
 
 #: gammu/misc.c:1509 gammu/misc.c:1559
 msgid "User"
@@ -2917,11 +2917,11 @@ msgstr "Användare"
 
 #: gammu/misc.c:1511
 msgid "Phonebook database"
-msgstr ""
+msgstr "Telefonboksdatabas"
 
 #: gammu/misc.c:1512
 msgid "Calendar database"
-msgstr ""
+msgstr "Kalenderdatabas"
 
 #: gammu/misc.c:1513
 msgid "Server"
@@ -2929,15 +2929,15 @@ msgstr "Server"
 
 #: gammu/misc.c:1514
 msgid "Sync. phonebook"
-msgstr ""
+msgstr "Synka telefonbok"
 
 #: gammu/misc.c:1517
 msgid "Sync. calendar"
-msgstr ""
+msgstr "Synka kalender"
 
 #: gammu/misc.c:1522 gammu/misc.c:1563
 msgid "Connection set name"
-msgstr ""
+msgstr "Namn på anslutningsuppsättning"
 
 #: gammu/misc.c:1558 gammu/misc.c:1608
 msgid "Homepage"
@@ -2949,15 +2949,15 @@ msgstr "aktiv"
 
 #: gammu/misc.c:1606
 msgid "Read only"
-msgstr ""
+msgstr "Skrivskyddad"
 
 #: gammu/misc.c:1631
 msgid "Startup logo"
-msgstr ""
+msgstr "Uppstartslogotyp"
 
 #: gammu/misc.c:1632
 msgid "Operator logo"
-msgstr ""
+msgstr "Operatörslogotyp"
 
 #: gammu/misc.c:1633 helper/message-display.c:444
 msgid "Picture"
@@ -2965,56 +2965,56 @@ msgstr "Bild"
 
 #: gammu/misc.c:1634
 msgid "Caller group logo"
-msgstr ""
+msgstr "Uppringargruppslogotyp"
 
 #: gammu/misc.c:1637
 #, c-format
 msgid ", width %i, height %i\n"
-msgstr ""
+msgstr ", bredd %i, höjd %i\n"
 
 #: gammu/misc.c:1654
 #, c-format
 msgid "What format of output file logo (\"%s\") ?\n"
-msgstr ""
+msgstr "Vilket format för logotyp i utmatningsfil (”%s”)?\n"
 
 #: gammu/misc.c:1679
 #, c-format
 msgid "What format of output ringtone file (\"%s\") ?\n"
-msgstr ""
+msgstr "Vilket format för ringsignal i utmatningsfil (”%s”)?\n"
 
 #: gammu/misc.c:1701
 #, c-format
 msgid "What type of power do you want (\"%s\") ?\n"
-msgstr ""
+msgstr "Vilken typ av ström vill du ha (”%s”)?\n"
 
 #: gammu/misc.c:1721
 #, c-format
 msgid "Unknown key/function name: \"%c\"\n"
-msgstr ""
+msgstr "Okänd nyckel/funktionsnamn: \"%c”\n"
 
 #: gammu/misc.c:1751 gammu/misc.c:1789
 #, c-format
 msgid "What type of categories do you want to get (\"%s\") ?\n"
-msgstr ""
+msgstr "Vilken typ av kategorier vill du hämta (”%s”)?\n"
 
 #: gammu/misc.c:1827
 #, c-format
 msgid "What type of category do you want to add (\"%s\") ?\n"
-msgstr ""
+msgstr "Vilken typ av kategori vill du lägga till (”%s”)?\n"
 
 #: gammu/misc.c:1835
 #, c-format
 msgid "Text too long, truncating to %d chars!\n"
-msgstr ""
+msgstr "Text för lång, kapar av till %d tecken!\n"
 
 #: gammu/misc.c:1874
 msgid "Invalid security code type"
-msgstr ""
+msgstr "Ogiltig typ av säkerhetskod"
 
 #: gammu/misc.c:1879
 #, c-format
 msgid "Enter %s code: "
-msgstr ""
+msgstr "Ange in %s-kod: "
 
 #: gammu/misc.c:1891 gammu/misc.c:1913
 msgid "No PIN code entered!"
@@ -3023,75 +3023,75 @@ msgstr "Ingen PIN-kod inmatad!"
 #: gammu/misc.c:1901
 #, c-format
 msgid "Enter new PIN code: "
-msgstr ""
+msgstr "Ange in ny PIN-kod: "
 
 #: gammu/misc.c:1959
 msgid " (default name)"
-msgstr ""
+msgstr " (standardnamn)"
 
 #: gammu/misc.c:1960
 msgid " (Head set profile)"
-msgstr ""
+msgstr " (Headset-profil)"
 
 #: gammu/misc.c:1961
 msgid " (Car kit profile)"
-msgstr ""
+msgstr " (Carkit-profil)"
 
 #: gammu/misc.c:1970 helper/memory-display.c:109
 msgid "Ringtone ID"
-msgstr ""
+msgstr "Ringsignals-ID"
 
 #: gammu/misc.c:1972
 msgid "Message alert tone ID"
-msgstr ""
+msgstr "Larmsignals-ID för meddelande"
 
 #: gammu/misc.c:1985
 msgid "Call alert for"
-msgstr ""
+msgstr "Samtalslarm för"
 
 #: gammu/misc.c:2006
 msgid "Screen saver number"
-msgstr ""
+msgstr "Skärmsläckarnummer"
 
 #: gammu/misc.c:2009
 msgid "Incoming call alert"
-msgstr ""
+msgstr "Larm för inkommande samtal"
 
 #: gammu/misc.c:2010
 msgid "Ringtone volume"
-msgstr ""
+msgstr "Ringsignalsvolym"
 
 #: gammu/misc.c:2011
 msgid "Vibrating alert"
-msgstr ""
+msgstr "Vibrationslarm"
 
 #: gammu/misc.c:2012
 msgid "Message alert tone"
-msgstr ""
+msgstr "Larmsignal för meddelande"
 
 #: gammu/misc.c:2013
 msgid "Keypad tones"
-msgstr ""
+msgstr "Tangentbordsljud"
 
 #: gammu/misc.c:2014
 msgid "Warning (games) tones"
-msgstr ""
+msgstr "Larmljud (spel)"
 
 #: gammu/misc.c:2015 helper/message-display.c:440
 msgid "Screen saver"
-msgstr ""
+msgstr "Skärmsläckare"
 
 #: gammu/misc.c:2016
 msgid "Screen saver timeout"
-msgstr ""
+msgstr "Tidsgräns för skärmsläckare"
 
 #: gammu/misc.c:2017
 msgid "Automatic answer"
-msgstr ""
+msgstr "Automatsvar"
 
 #: gammu/misc.c:2018
 msgid "Lights"
-msgstr ""
+msgstr "Ljus"
 
 #: gammu/misc.c:2026
 msgid "Level 1"
@@ -3115,15 +3115,15 @@ msgstr "Nivå 5"
 
 #: gammu/misc.c:2041
 msgid "Ringing"
-msgstr ""
+msgstr "Ringsignal"
 
 #: gammu/misc.c:2043
 msgid "Beep once"
-msgstr ""
+msgstr "Pip en gång"
 
 #: gammu/misc.c:2044
 msgid "Ring once"
-msgstr ""
+msgstr "Ring en gång"
 
 #: gammu/misc.c:2045 gammu/misc.c:2049
 msgid "Ascending"
@@ -3139,7 +3139,7 @@ msgstr "Standard"
 
 #: gammu/misc.c:2048
 msgid "Special"
-msgstr ""
+msgstr "Special"
 
 #: gammu/misc.c:2050
 msgid "Personal"
@@ -3151,24 +3151,24 @@ msgstr "Vibrera först"
 
 #: gammu/misc.c:2092
 msgid " speed dial not assigned"
-msgstr ""
+msgstr " kortnummer inte tilldelat"
 
 #: gammu/misc.c:2124
 #, c-format
 msgid "What type of reset phone settings (\"%s\") ?\n"
-msgstr ""
+msgstr "Vilken typ av återställning av telefoninställningar (”%s”)?\n"
 
 #: gammu/misc.c:2158
 msgid "Currently shown on the display"
-msgstr ""
+msgstr "Visas för närvarande på skärmen"
 
 #: gammu/misc.c:2163
 msgid "Call active"
-msgstr ""
+msgstr "Samtal aktivt"
 
 #: gammu/misc.c:2166
 msgid "Unread SMS"
-msgstr ""
+msgstr "Oläst SMS"
 
 #: gammu/misc.c:2169
 msgid "Voice call"
@@ -3201,58 +3201,58 @@ msgstr "Frekvens"
 #: gammu/misc.c:2242
 #, c-format
 msgid "Unknown divert action (\"%s\")\n"
-msgstr ""
+msgstr "Okänd vidarekopplingsåtgärd (”%s”)\n"
 
 #: gammu/misc.c:2255
 #, c-format
 msgid "Unknown divert type (\"%s\")\n"
-msgstr ""
+msgstr "Okänd vidarekopplingstyp (”%s”)\n"
 
 #: gammu/misc.c:2268
 #, c-format
 msgid "Unknown call type (\"%s\")\n"
-msgstr ""
+msgstr "Okänd samtalstyp (”%s”)\n"
 
 #: gammu/misc.c:2277
 msgid "Query:"
-msgstr ""
+msgstr "Fråga:"
 
 #: gammu/misc.c:2293
 msgid "Changed:"
-msgstr ""
+msgstr "Ändrat:"
 
 #: gammu/misc.c:2296 gammu/misc.c:2343
 msgid "Divert type"
-msgstr ""
+msgstr "Vidarekopplingstyp"
 
 #: gammu/misc.c:2300 gammu/misc.c:2347
 msgid "when busy"
-msgstr ""
+msgstr "vid upptaget"
 
 #: gammu/misc.c:2303 gammu/misc.c:2350
 msgid "when not answered"
-msgstr ""
+msgstr "vid inget svar"
 
 #: gammu/misc.c:2306 gammu/misc.c:2353
 msgid "when phone off or no coverage"
-msgstr ""
+msgstr "när telefonen är av eller utan täckning"
 
 #: gammu/misc.c:2309 gammu/misc.c:2356
 msgid "all types of diverts"
-msgstr ""
+msgstr "alla typer av vidarekopplingar"
 
 #: gammu/misc.c:2312 gammu/misc.c:2332 gammu/misc.c:2359 gammu/misc.c:2375
 #, c-format
 msgid "unknown %i"
-msgstr ""
+msgstr "okänd %i"
 
 #: gammu/misc.c:2317 gammu/misc.c:2363
 msgid "Call type"
-msgstr ""
+msgstr "Samtalstyp"
 
 #: gammu/misc.c:2320 gammu/misc.c:2366
 msgid "voice"
-msgstr ""
+msgstr "röst"
 
 #: gammu/misc.c:2323 gammu/misc.c:2369 helper/message-display.c:115
 msgid "fax"
@@ -3260,41 +3260,41 @@ msgstr "fax"
 
 #: gammu/misc.c:2326 gammu/misc.c:2372
 msgid "data"
-msgstr ""
+msgstr "data"
 
 #: gammu/misc.c:2329
 msgid "data & fax & voice"
-msgstr ""
+msgstr "data & fax & röst"
 
 #: gammu/misc.c:2338
 msgid "Response:"
-msgstr ""
+msgstr "Svar:"
 
 #: gammu/misc.c:2418
 msgid "The application has been successfully sent to the phone."
-msgstr ""
+msgstr "Programmet har framgångsrikt skickats till telefonen."
 
 #: gammu/misc.c:2419
 msgid "Please find received files in Inbox and install them."
-msgstr ""
+msgstr "Leta upp de emottagna filerna i Inkorgen och installera dem."
 
 #: gammu/mms.c:49
 msgid "Do you want to save this MMS file?"
-msgstr ""
+msgstr "Vill du spara denna MMS-fil?"
 
 #: gammu/mms.c:53 gammu/mms.c:134
 #, c-format
 msgid "Error while saving to file %s!\n"
-msgstr ""
+msgstr "Sparande till fil %s misslyckades!\n"
 
 #: gammu/mms.c:55 gammu/mms.c:136
 #, c-format
 msgid "Saved to file %s\n"
-msgstr ""
+msgstr "Sparad till fil %s\n"
 
 #: gammu/mms.c:65
 msgid "Some MMS file features unknown for Gammu decoder"
-msgstr ""
+msgstr "Vissa MMS-filfunktioner okända för Gammu-avkodaren"
 
 #: gammu/mms.c:73 gammu/mms.c:81 gammu/mms.c:89
 msgid "phone "
@@ -3302,19 +3302,19 @@ msgstr ""
 
 #: gammu/mms.c:79
 msgid "Recipient"
-msgstr ""
+msgstr "Mottagare"
 
 #: gammu/mms.c:87
 msgid "CC"
-msgstr ""
+msgstr "CC"
 
 #: gammu/mms.c:94
 msgid "Message type"
-msgstr ""
+msgstr "Meddelandetyp"
 
 #: gammu/mms.c:97 helper/message-display.c:478
 msgid "Subject"
-msgstr ""
+msgstr "Ämne"
 
 #: gammu/mms.c:100
 msgid "Delivery report"
@@ -3322,84 +3322,86 @@ msgstr "Leveransrapport"
 
 #: gammu/mms.c:107 gammu/mms.c:110
 msgid "Content type"
-msgstr ""
+msgstr "Innehållstyp"
 
 #: gammu/mms.c:114
 #, c-format
 msgid " (%s in SMIL)"
-msgstr ""
+msgstr " (%s i SMIL)"
 
 #: gammu/mms.c:130
 msgid "Do you want to save this attachment?"
-msgstr ""
+msgstr "Vill du spara denna bilaga?"
 
 #: gammu/mms.c:171
 #, c-format
 msgid "Folder %s\n"
-msgstr ""
+msgstr "Mapp %s\n"
 
 #: gammu/mms.c:172
 msgid "  File filesystem ID"
-msgstr ""
+msgstr "  Fil-ID i filsystem"
 
 #: gammu/nokia.c:43
 msgid "It can be RTTL ringtone only used with this option"
-msgstr ""
+msgstr "Det kan vara RTTL-ringsignal som endast används med detta alternativ"
 
 #: gammu/nokia.c:54
 #, c-format
 msgid "Ringtone \"%s\" (tempo = %i Beats Per Minute)"
-msgstr ""
+msgstr "Ringsignal ”%s” (tempo = %i slag per minut)"
 
 #: gammu/nokia.c:63
 #, c-format
 msgid "length=%i notes, but you will enter only first 50 tones."
-msgstr ""
+msgstr "längd=%i noter, men du kommer endast att ange de först 50 tonerna."
 
 #: gammu/nokia.c:66
 msgid "This ringtone in Nokia Composer in phone should look:"
-msgstr ""
+msgstr "Denna ringsignal i Nokia Composer i telefonen bör se ut som:"
 
 #: gammu/nokia.c:107
 msgid "To enter it please press:"
-msgstr ""
+msgstr "För att ange den tryck:"
 
 #: gammu/nokia.c:126
 msgid "(longer)"
-msgstr ""
+msgstr "(längre)"
 
 #: gammu/nokia.c:254
 #, c-format
 msgid "Checking %s\n"
-msgstr ""
+msgstr "Kontrollerar %s\n"
 
 #: gammu/nokia.c:259
 msgid "  Only part handled!"
-msgstr ""
+msgstr "  Endast delvis hanterad!"
 
 #: gammu/nokia.c:342
 msgid "  Problem with adding playlist"
-msgstr ""
+msgstr "  Problem med att lägga till spellista"
 
 #: gammu/nokia.c:389
 #, c-format
 msgid "Writing file %s:"
-msgstr ""
+msgstr "Skriver fil %s:"
 
 #: gammu/nokia.c:442
 msgid ""
 "Your phone model is not supported. Please report it to authors (see <https://"
 "wammu.eu/support/bugs/>). Thank you."
 msgstr ""
+"Din telefonmodell stöds inte. Rapportera det till upphovsmännen (se "
+"<https://wammu.eu/support/bugs/>). Tack."
 
 #: gammu/nokia.c:458
 msgid "Problem with deleting playlist"
-msgstr ""
+msgstr "Problem med att ta bort spellista"
 
 #: gammu/nokia.c:554
 #, c-format
 msgid "What folder type (\"%s\") ?\n"
-msgstr ""
+msgstr "Vilken mapptyp (”%s”)?\n"
 
 #: gammu/nokia.c:562 gammu/nokia.c:569 gammu/nokia.c:576
 #, c-format
@@ -3408,31 +3410,32 @@ msgstr "Kan inte öppna filen %s\n"
 
 #: gammu/nokia.c:597 gammu/nokia.c:671
 msgid "Folder not found. Probably function not supported!"
-msgstr ""
+msgstr "Mapp hittades ej. Funktionen stöds antagligen inte!"
 
 #: gammu/nokia.c:620
 msgid "Searching for phone folder: "
-msgstr ""
+msgstr "Sökning efter telefonmapp: "
 
 #: gammu/nokia.c:697
 msgid "No vendor info in JAD file!"
-msgstr ""
+msgstr "Ingen leverantörsinfo i JAD-fil!"
 
 #: gammu/nokia.c:702
 msgid "No name info in JAD file!"
-msgstr ""
+msgstr "Ingen namninfo i JAD-fil!"
 
 #: gammu/nokia.c:707
 msgid "No JAR URL info in JAD file!"
-msgstr ""
+msgstr "Ingen JAR-URL-info i JAD-fil!"
 
 #: gammu/nokia.c:713
 msgid "Declared JAR file size is different than real. Fixed by Gammu."
 msgstr ""
+"Deklarerad JAR-filstorlek är annorlunda än den faktiska. Åtgärdat av Gammu."
 
 #: gammu/nokia.c:737
 msgid "No JAR size info in JAD file. Added by Gammu."
-msgstr ""
+msgstr "Ingen JAR-storleksinfo i JAD-fil. Tillagd av Gammu."
 
 #: gammu/nokia.c:746
 #, c-format
@@ -3447,11 +3450,11 @@ msgstr " version %s"
 #: gammu/nokia.c:748
 #, c-format
 msgid " created by %s\n"
-msgstr ""
+msgstr " skapad av %s\n"
 
 #: gammu/nokia.c:799 gammu/nokia.c:851
 msgid "Application already exists. Deleting by Gammu."
-msgstr ""
+msgstr "Programmet existerar redan. Borttaget av Gammu."
 
 #: gammu/nokia.c:832 gammu/nokia.c:865
 #, c-format
@@ -3460,11 +3463,11 @@ msgstr "  Tar bort %s\n"
 
 #: gammu/nokia.c:888
 msgid "Writing JAD file:"
-msgstr ""
+msgstr "Skriver JAD-fil:"
 
 #: gammu/nokia.c:907
 msgid "Writing JAR file:"
-msgstr ""
+msgstr "Skriver JAR-fil:"
 
 #: gammu/nokia.c:982
 msgid "Writing file:"
@@ -3473,11 +3476,11 @@ msgstr "Skriver fil:"
 #: gammu/search.c:145
 #, c-format
 msgid "Connection \"%s\" on device \"%s\"\n"
-msgstr ""
+msgstr "Anslutning ”%s” på enhet ”%s”\n"
 
 #: gammu/search.c:182 gammu/search.c:189
 msgid "Error creating thread\n"
-msgstr ""
+msgstr "Fel vid skapande av tråd\n"
 
 #: helper/cmdline.c:26
 #, c-format
@@ -3487,7 +3490,7 @@ msgstr "Antal utanför intervall: %s\n"
 #: helper/cmdline.c:31
 #, c-format
 msgid "Parameter is not a number: %s\n"
-msgstr ""
+msgstr "Parameter är inte ett nummer: %s\n"
 
 #: helper/formats.h:2
 #, c-format
@@ -3552,19 +3555,19 @@ msgstr "Samtalsgrupp"
 
 #: helper/memory-display.c:71
 msgid "Caller group number too high, please increase buffer in sources!"
-msgstr ""
+msgstr "Nummer för uppringargrupp för högt, öka buffert i källkoden!"
 
 #: helper/memory-display.c:113
 msgid "User ID"
-msgstr ""
+msgstr "Användar-ID"
 
 #: helper/memory-display.c:116
 msgid "Picture name"
-msgstr ""
+msgstr "Bildnamn"
 
 #: helper/memory-display.c:119
 msgid "Picture ID"
-msgstr ""
+msgstr "Bild-ID"
 
 #: helper/memory-display.c:122
 msgid "Photo"
@@ -3572,19 +3575,19 @@ msgstr "Foto"
 
 #: helper/memory-display.c:122
 msgid "Displaying not supported"
-msgstr ""
+msgstr "Uppvisning stöds inte"
 
 #: helper/memory-display.c:124
 msgid "Favorite messaging number"
-msgstr ""
+msgstr "Favoritmeddelandenummer"
 
 #: helper/memory-display.c:132
 msgid "Work number"
-msgstr ""
+msgstr "Arbetsnummer"
 
 #: helper/memory-display.c:135
 msgid "General number"
-msgstr ""
+msgstr "Allmänt nummer"
 
 #: helper/memory-display.c:139
 msgid "Video number"
@@ -3648,15 +3651,15 @@ msgstr "Webbplats"
 
 #: helper/memory-display.c:215
 msgid "VOIP"
-msgstr ""
+msgstr "VOIP"
 
 #: helper/memory-display.c:216
 msgid "SWIS"
-msgstr ""
+msgstr "SWIS"
 
 #: helper/memory-display.c:217
 msgid "WVID"
-msgstr ""
+msgstr "WVID"
 
 #: helper/memory-display.c:218
 msgid "SIP"
@@ -3664,7 +3667,7 @@ msgstr "SIP"
 
 #: helper/memory-display.c:219
 msgid "DTMF"
-msgstr ""
+msgstr "DTMF"
 
 #: helper/memory-display.c:221
 msgid "Last name"
@@ -3724,23 +3727,23 @@ msgstr "Land"
 
 #: helper/memory-display.c:235
 msgid "Custom text 1"
-msgstr ""
+msgstr "Anpassad text 1"
 
 #: helper/memory-display.c:236
 msgid "Custom text 2"
-msgstr ""
+msgstr "Anpassad text 2"
 
 #: helper/memory-display.c:237
 msgid "Custom text 3"
-msgstr ""
+msgstr "Anpassad text 3"
 
 #: helper/memory-display.c:238
 msgid "Custom text 4"
-msgstr ""
+msgstr "Anpassad text 4"
 
 #: helper/memory-display.c:239
 msgid "Push to talk ID"
-msgstr ""
+msgstr "Push-to-talk-ID"
 
 #: helper/memory-display.c:242
 msgid "unknown field type"
@@ -3748,11 +3751,11 @@ msgstr "okänd fälttyp"
 
 #: helper/memory-display.c:249 helper/message-display.c:128
 msgid "home"
-msgstr ""
+msgstr "hemma"
 
 #: helper/memory-display.c:252 helper/message-display.c:131
 msgid "work"
-msgstr ""
+msgstr "arbete"
 
 #: helper/message-cmdline.c:186
 msgid "Not enough parameters!"
@@ -3761,53 +3764,53 @@ msgstr "För få parametrar!"
 #: helper/message-cmdline.c:210
 #, c-format
 msgid "What format of sms (\"%s\") ?\n"
-msgstr ""
+msgstr "Vilket format för sms (”%s”)?\n"
 
 #: helper/message-cmdline.c:239 helper/message-cmdline.c:256
 msgid "Where are parameters?"
-msgstr ""
+msgstr "Var finns parametrarna?"
 
 #: helper/message-cmdline.c:270
 msgid "Where is ringtone filename?"
-msgstr ""
+msgstr "Var finns filnamn för ringsignal?"
 
 #: helper/message-cmdline.c:288 helper/message-cmdline.c:306
 #: helper/message-cmdline.c:357
 msgid "Where is logo filename?"
-msgstr ""
+msgstr "Var finns filnamn för logotyp?"
 
 #: helper/message-cmdline.c:324
 msgid "Where is number of frames?"
-msgstr ""
+msgstr "Var finns antal bildrutor?"
 
 #: helper/message-cmdline.c:332
 msgid "Too many animation frames!"
-msgstr ""
+msgstr "För många bildrutor i animation!"
 
 #: helper/message-cmdline.c:363
 #, c-format
 msgid "File \"%s\"\n"
-msgstr ""
+msgstr "Fil ”%s”\n"
 
 #: helper/message-cmdline.c:390
 msgid "Bookmark not found in file"
-msgstr ""
+msgstr "Bokmärke hittades inte i fil"
 
 #: helper/message-cmdline.c:414
 msgid "WAP settings not found in file"
-msgstr ""
+msgstr "WAP-inställningar hittades inte i fil"
 
 #: helper/message-cmdline.c:435
 msgid "Sorry. For now there is only support for GPRS or DATA bearers end"
-msgstr ""
+msgstr "För närvarande finns det enbart stöd för GPRS- eller DATA-bärarände"
 
 #: helper/message-cmdline.c:458
 msgid "MMS settings not found in file"
-msgstr ""
+msgstr "MMS-inställningar hittades inte i fil"
 
 #: helper/message-cmdline.c:472
 msgid "Sorry. No GPRS bearer found in MMS settings"
-msgstr ""
+msgstr "Ingen GPRS-bärare hittades i MMS-inställningar"
 
 #: helper/message-cmdline.c:518
 msgid "ToDo note not found in file"
@@ -3815,7 +3818,7 @@ msgstr ""
 
 #: helper/message-cmdline.c:580
 msgid "Backup functionality not compiled in!"
-msgstr ""
+msgstr "Funktionalitet för säkerhetskopiering inte inkompilerat!"
 
 #: helper/message-cmdline.c:1061
 #, c-format
@@ -3825,22 +3828,22 @@ msgstr "Fel meddelandelängd (\"%s\")\n"
 #: helper/message-cmdline.c:1084
 #, c-format
 msgid "Unknown GSM network code (\"%s\")\n"
-msgstr ""
+msgstr "Okänd GSM-nätverkskod (”%s”)\n"
 
 #: helper/message-cmdline.c:1103
 #, c-format
 msgid "You have to give number between 1 and 7 (\"%s\")\n"
-msgstr ""
+msgstr "Du måste ange ett nummer mellan 1 och 7 (”%s”)\n"
 
 #: helper/message-cmdline.c:1142
 #, c-format
 msgid "Unknown validity string (\"%s\")\n"
-msgstr ""
+msgstr "Okänd giltighetssträng (”%s”)\n"
 
 #: helper/message-cmdline.c:1180
 #, c-format
 msgid "You have to give number of EMS frames between 1 and 4 (\"%s\")\n"
-msgstr ""
+msgstr "Du måste ange antal EMS-ramar mellan 1 och 4 (”%s”)\n"
 
 #: helper/message-cmdline.c:1192 helper/message-cmdline.c:1209
 #, c-format
@@ -3854,60 +3857,60 @@ msgstr "Okänd parameter (\"%c\")\n"
 
 #: helper/message-cmdline.c:1263
 msgid "Last parameter wasn't text"
-msgstr ""
+msgstr "Senaste parameter var inte text"
 
 #: helper/message-cmdline.c:1297
 #, c-format
 msgid "Too long SMS name (\"%s\"), ignored\n"
-msgstr ""
+msgstr "För långt SMS-namn (”%s”), hoppades över\n"
 
 #: helper/message-cmdline.c:1337
 #, c-format
 msgid "Enter the message text and press %s:\n"
-msgstr ""
+msgstr "Ange meddelande text och tryck %s\n"
 
 #: helper/message-cmdline.c:1339
 msgid "Ctrl+Z"
-msgstr ""
+msgstr "Ctrl+Z"
 
 #: helper/message-cmdline.c:1341
 msgid "Ctrl+D"
-msgstr ""
+msgstr "Ctrl+D"
 
 #: helper/message-cmdline.c:1355
 msgid "No chars read, assuming it is okay!"
-msgstr ""
+msgstr "Inga tecken lästa, antar att det är OK!"
 
 #: helper/message-cmdline.c:1375
 msgid "No network code"
-msgstr ""
+msgstr "Ingen nätverkskod"
 
 #: helper/message-cmdline.c:1381
 msgid "You have to set network code!"
-msgstr ""
+msgstr "Du måste ställa in en nätverkskod!"
 
 #: helper/message-cmdline.c:1420
 #, c-format
 msgid "Ringtone too long. %i percent part cut\n"
-msgstr ""
+msgstr "Ringsignal för lång. %i procent kapad\n"
 
 #: helper/message-cmdline.c:1431
 #, c-format
 msgid "There are %i SMS messages packed and the limit is %i. Exiting\n"
-msgstr ""
+msgstr "Det finns %i SMS-meddelanden packade och gränsen är %i. Avslutar\n"
 
 #: helper/message-cmdline.c:1441
 msgid "Use -smscnumber option to give SMSC number"
-msgstr ""
+msgstr "Använd -smscnumber-flaggan för att ange SMSC-nummer"
 
 #: helper/message-display.c:26
 #, c-format
 msgid "Location %i, folder \"%s\""
-msgstr ""
+msgstr "Plats %i, mapp ”%s”"
 
 #: helper/message-display.c:33
 msgid "SIM memory"
-msgstr ""
+msgstr "SIM-minne"
 
 #: helper/message-display.c:36
 msgid "phone memory"
@@ -3915,11 +3918,11 @@ msgstr ""
 
 #: helper/message-display.c:39
 msgid "phone or SIM memory"
-msgstr ""
+msgstr "telefon- eller SIM-minne"
 
 #: helper/message-display.c:46
 msgid "Inbox folder"
-msgstr ""
+msgstr "Inkorgsmapp"
 
 #: helper/message-display.c:112
 msgid "mobile"
@@ -3935,11 +3938,11 @@ msgstr "allmän"
 
 #: helper/message-display.c:145
 msgid "8 bit SMS, cannot be displayed here"
-msgstr ""
+msgstr "8-bitar SMS, kan inte visas här"
 
 #: helper/message-display.c:165
 msgid "SMS status report"
-msgstr ""
+msgstr "SMS-statusrapport"
 
 #: helper/message-display.c:169 helper/message-display.c:181
 #: helper/message-display.c:233 helper/message-display.c:249
@@ -3995,45 +3998,45 @@ msgstr "Permanent fel, "
 
 #: helper/message-display.c:196
 msgid "SM received by the SME"
-msgstr ""
+msgstr "SM mottagen av SME"
 
 #: helper/message-display.c:197
 msgid ""
 "SM forwarded by the SC to the SME but the SC is unable to confirm delivery"
-msgstr ""
+msgstr "SM vidarebefordrat av SC till SME men SC kan inte bekräfta mottagande"
 
 #: helper/message-display.c:198
 msgid "SM replaced by the SC"
-msgstr ""
+msgstr "SM ersatt av SC"
 
 #: helper/message-display.c:199 helper/message-display.c:215
 msgid "Congestion"
-msgstr ""
+msgstr "Trängsel"
 
 #: helper/message-display.c:200 helper/message-display.c:216
 msgid "SME busy"
-msgstr ""
+msgstr "SME upptagen"
 
 #: helper/message-display.c:201 helper/message-display.c:217
 msgid "No response from SME"
-msgstr ""
+msgstr "Inget svar från SME"
 
 #: helper/message-display.c:202 helper/message-display.c:218
 msgid "Service rejected"
-msgstr ""
+msgstr "Service nekad"
 
 #: helper/message-display.c:203 helper/message-display.c:209
 #: helper/message-display.c:219
 msgid "Quality of service not available"
-msgstr ""
+msgstr "Kvalitet på service inte tillgänglig"
 
 #: helper/message-display.c:204 helper/message-display.c:220
 msgid "Error in SME"
-msgstr ""
+msgstr "Fel i SME"
 
 #: helper/message-display.c:205
 msgid "Remote procedure error"
-msgstr ""
+msgstr "Fel i fjärrprocedur"
 
 #: helper/message-display.c:206
 msgid "Incompatible destination"
@@ -4041,36 +4044,36 @@ msgstr "Inkompatibelt mål"
 
 #: helper/message-display.c:207
 msgid "Connection rejected by SME"
-msgstr ""
+msgstr "Anslutning nekad av SME"
 
 #: helper/message-display.c:208
 msgid "Not obtainable"
-msgstr ""
+msgstr "Går ej att uppnå"
 
 #: helper/message-display.c:210
 msgid "No internetworking available"
-msgstr ""
+msgstr "Inget nätverkande tillgängligt"
 
 #: helper/message-display.c:211
 msgid "SM Validity Period Expired"
-msgstr ""
+msgstr "SM-giltighetsperiod utgången"
 
 #: helper/message-display.c:212
 msgid "SM deleted by originating SME"
-msgstr ""
+msgstr "SM borttaget av ursprunglig SME"
 
 #: helper/message-display.c:213
 msgid "SM Deleted by SC Administration"
-msgstr ""
+msgstr "SM-borttaget av SC-administration"
 
 #: helper/message-display.c:214
 msgid "SM does not exist"
-msgstr ""
+msgstr "SM existerar inte"
 
 #: helper/message-display.c:221
 #, c-format
 msgid "Reserved/Specific to SC: %x"
-msgstr ""
+msgstr "Reserverad/specifik för SC: %x"
 
 #: helper/message-display.c:226 helper/message-display.c:244
 msgid "SMS message"
@@ -4078,171 +4081,173 @@ msgstr "SMS-meddelande"
 
 #: helper/message-display.c:228
 msgid "Saved"
-msgstr ""
+msgstr "Sparad"
 
 #: helper/message-display.c:231
 msgid " (set for reply)"
-msgstr ""
+msgstr " (inställd på svar)"
 
 #: helper/message-display.c:241
 msgid "SMS replacing ID"
-msgstr ""
+msgstr "SMS-ersättnings-ID"
 
 #: helper/message-display.c:256
 msgid "Class"
-msgstr ""
+msgstr "Klass"
 
 #: helper/message-display.c:258
 msgid "Coding"
-msgstr ""
+msgstr "Kodning"
 
 #: helper/message-display.c:261
 msgid "Unicode (no compression)"
-msgstr ""
+msgstr "Unicode (ingen kompression)"
 
 #: helper/message-display.c:264
 msgid "Unicode (compression)"
-msgstr ""
+msgstr "Unicode (kompression)"
 
 #: helper/message-display.c:267
 msgid "Default GSM alphabet (no compression)"
-msgstr ""
+msgstr "Standard GSM-alfabet (ingen kompression)"
 
 #: helper/message-display.c:270
 msgid "Default GSM alphabet (compression)"
-msgstr ""
+msgstr "Standard GSM-alfabet (kompression)"
 
 #. l10n: 8-bit message coding
 #: helper/message-display.c:274
 msgid "8-bit"
-msgstr ""
+msgstr "8-bitar"
 
 #: helper/message-display.c:297
 msgid "User Data Header"
-msgstr ""
+msgstr "Huvud för användardata"
 
 #: helper/message-display.c:299 helper/message-display.c:300
 msgid "Concatenated (linked) message"
-msgstr ""
+msgstr "Sammanlänkat meddelande"
 
 #: helper/message-display.c:301
 msgid "Disables voice indicator"
-msgstr ""
+msgstr "Inaktiverar röstindikator"
 
 #: helper/message-display.c:302
 msgid "Enables voice indicator"
-msgstr ""
+msgstr "Aktiverar röstindikator"
 
 #: helper/message-display.c:303
 msgid "Disables fax indicator"
-msgstr ""
+msgstr "Inaktiverar faxindikator"
 
 #: helper/message-display.c:304
 msgid "Enables fax indicator"
-msgstr ""
+msgstr "Aktiverar faxindikator"
 
 #: helper/message-display.c:305
 msgid "Disables email indicator"
-msgstr ""
+msgstr "Inaktiverar e-postindikator"
 
 #: helper/message-display.c:306
 msgid "Enables email indicator"
-msgstr ""
+msgstr "Aktiverar e-postindikator"
 
 #: helper/message-display.c:307
 msgid "Void SMS"
-msgstr ""
+msgstr "Röst-SMS"
 
 #: helper/message-display.c:308
 msgid "Nokia WAP bookmark"
-msgstr ""
+msgstr "Nokia WAP-bokmärke"
 
 #: helper/message-display.c:309
 msgid "Nokia operator logo"
-msgstr ""
+msgstr "Nokia operatörslogotyp"
 
 #: helper/message-display.c:310
 msgid "Nokia WAP bookmark or WAP/MMS settings"
-msgstr ""
+msgstr "Nokia WAP-bokmärke eller WAP/MMS-inställningar"
 
 #: helper/message-display.c:311 helper/message-display.c:312
 msgid "Nokia ringtone"
-msgstr ""
+msgstr "Nokia ringsignal"
 
 #: helper/message-display.c:313
 msgid "Nokia GSM operator logo"
-msgstr ""
+msgstr "Nokia GSM operatörslogotyp"
 
 #: helper/message-display.c:314
 msgid "Nokia caller logo"
-msgstr ""
+msgstr "Nokia uppringarlogotyp"
 
 #: helper/message-display.c:315
 msgid "Nokia profile"
-msgstr ""
+msgstr "Nokia-profil"
 
 #: helper/message-display.c:316
 msgid "Nokia calendar note"
-msgstr ""
+msgstr "Nokia kalendernotering"
 
 #: helper/message-display.c:317
 msgid "Nokia phonebook entry"
-msgstr ""
+msgstr "Nokia telefonbokspost"
 
 #: helper/message-display.c:318
 msgid "User UDH"
-msgstr ""
+msgstr "Användar-UDH"
 
 #: helper/message-display.c:319
 msgid "MMS indicator"
-msgstr ""
+msgstr "MMS-indikator"
 
 #: helper/message-display.c:323
 #, c-format
 msgid ", ID (8 bit) %i"
-msgstr ""
+msgstr ", ID (8 bitar) %i"
 
 #: helper/message-display.c:324
 #, c-format
 msgid ", ID (16 bit) %i"
-msgstr ""
+msgstr ", ID (16 bitar) %i"
 
 #: helper/message-display.c:327
 #, c-format
 msgid ", part %i of %i"
-msgstr ""
+msgstr ", del %i av %i"
 
 #: helper/message-display.c:329
 #, c-format
 msgid ", %i parts"
-msgstr ""
+msgstr ", %i delar"
 
 #: helper/message-display.c:340
 msgid "Siemens file"
-msgstr ""
+msgstr "Siemens-fil"
 
 #: helper/message-display.c:348
 #, c-format
 msgid "Unknown PDU type: 0x%x\n"
-msgstr ""
+msgstr "Okänd PDU-typ: 0x%x\n"
 
 #: helper/message-display.c:395
 msgid ""
 "Some details were ignored (unknown or not implemented in decoding functions)"
 msgstr ""
+"Vissa detaljer hoppades över (okända eller icke implementerade i "
+"avkodningsfunktioner)"
 
 #: helper/message-display.c:400
 msgid "Siemens OTA file"
-msgstr ""
+msgstr "Siemens OTA-fil"
 
 #: helper/message-display.c:402
 msgid " - VCARD"
-msgstr ""
+msgstr " - VCARD"
 
 #: helper/message-display.c:416
 #, c-format
 msgid "Ringtone \"%s\"\n"
-msgstr ""
+msgstr "Ringsignal ”%s”\n"
 
 #: helper/message-display.c:421
 msgid "Do you want to play it?"
@@ -4250,12 +4255,12 @@ msgstr "Vill du spela upp det?"
 
 #: helper/message-display.c:426
 msgid "Caller logo"
-msgstr ""
+msgstr "Uppringarlogotyp"
 
 #: helper/message-display.c:430
 #, c-format
 msgid "Operator logo for %s network"
-msgstr ""
+msgstr "Operatörslogotyp för %s-nätverk"
 
 #: helper/message-display.c:450
 msgid "Profile"
@@ -4263,11 +4268,11 @@ msgstr "Profil"
 
 #: helper/message-display.c:471
 msgid "EMS sound ID"
-msgstr ""
+msgstr "EMS ljud-ID"
 
 #: helper/message-display.c:474
 msgid "EMS animation ID"
-msgstr ""
+msgstr "EMS animations-ID"
 
 #: helper/message-display.c:480
 msgid "Message size"
@@ -4280,7 +4285,7 @@ msgstr "Fel"
 
 #: helper/message-display.c:546
 msgid "Data PDU"
-msgstr ""
+msgstr "Data-PDU"
 
 #: helper/message-display.c:547
 msgid "Number of bits"
