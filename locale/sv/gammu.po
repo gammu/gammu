@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Swedish (Gammu)\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2018-01-04 16:37+0200\n"
-"PO-Revision-Date: 2018-01-04 16:15+0000\n"
+"PO-Revision-Date: 2018-01-04 16:16+0000\n"
 "Last-Translator: Sebastian Rasmussen <sebras@gmail.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/gammu/gammu/sv/>"
 "\n"
@@ -3298,7 +3298,7 @@ msgstr "Vissa MMS-filfunktioner okända för Gammu-avkodaren"
 
 #: gammu/mms.c:73 gammu/mms.c:81 gammu/mms.c:89
 msgid "phone "
-msgstr ""
+msgstr "telefon "
 
 #: gammu/mms.c:79
 msgid "Recipient"
@@ -3814,7 +3814,7 @@ msgstr "Ingen GPRS-bärare hittades i MMS-inställningar"
 
 #: helper/message-cmdline.c:518
 msgid "ToDo note not found in file"
-msgstr ""
+msgstr "Att-göra-anteckning hittades inte i filen"
 
 #: helper/message-cmdline.c:580
 msgid "Backup functionality not compiled in!"
@@ -3914,7 +3914,7 @@ msgstr "SIM-minne"
 
 #: helper/message-display.c:36
 msgid "phone memory"
-msgstr ""
+msgstr "telefonminne"
 
 #: helper/message-display.c:39
 msgid "phone or SIM memory"
