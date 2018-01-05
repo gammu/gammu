@@ -1,5 +1,5 @@
 ChangeLog for Gammu project <https://wammu.eu/gammu/>
-===================================================
+=====================================================
 
 Description
 ===========
@@ -19,7 +19,7 @@ the issue.
 ChangeLog
 =========
     
-2017???? - 1.38.6
+20180105 - 1.39.0
     
 [-] * Fixed answering call in AT module.
 [-] * Improved support for Huawei E392 and E3131.
