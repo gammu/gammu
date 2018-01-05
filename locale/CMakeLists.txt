@@ -1,5 +1,5 @@
 # cmake <http://www.cmake.org> build file for Gammu
-# Copyright © 2007 - 2017 Michal Čihař
+# Copyright © 2007 - 2018 Michal Čihař
 # vim: expandtab sw=4 ts=4 sts=4:
 
 project(Gammu-Locales C)

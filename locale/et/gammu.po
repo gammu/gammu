@@ -1535,9 +1535,9 @@ msgstr "Windows'i jadavärati sondeerimine"
 
 #: gammu-detect/main.c:85
 msgid ""
-"Copyright (C) 2010 - 2017 Michal Cihar <michal@cihar.com> and other authors."
+"Copyright (C) 2010 - 2018 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
-"Autoriõigus (C) 2010-2017 Michal Cihar <michal@cihar.com> ja teised autorid."
+"Autoriõigus (C) 2010-2018 Michal Cihar <michal@cihar.com> ja teised autorid."
 
 #: gammu-detect/main.c:87 gammu/gammu.c:336
 msgid "License GPLv2: GNU GPL version 2 <https://spdx.org/licenses/GPL-2.0>."
@@ -1795,9 +1795,9 @@ msgstr "Gammu uus testversioon on saadaval! (%s %s asemel)\n"
 
 #: gammu/gammu.c:332
 msgid ""
-"Copyright (C) 2003 - 2017 Michal Cihar <michal@cihar.com> and other authors."
+"Copyright (C) 2003 - 2018 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
-"Autoriõigus (C) 2003 - 2017 Michal Čihař <michal@cihar.com> ja teised "
+"Autoriõigus (C) 2003 - 2018 Michal Čihař <michal@cihar.com> ja teised "
 "autorid."
 
 #: gammu/gammu.c:369

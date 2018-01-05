@@ -1541,9 +1541,9 @@ msgstr "Перевірка послідовного порту Windows"
 
 #: gammu-detect/main.c:85
 msgid ""
-"Copyright (C) 2010 - 2017 Michal Cihar <michal@cihar.com> and other authors."
+"Copyright (C) 2010 - 2018 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
-"Авторське право (C) 2010 - 2017 Michal Cihar <michal@cihar.com> та інші "
+"Авторське право (C) 2010 - 2018 Michal Cihar <michal@cihar.com> та інші "
 "автори."
 
 #: gammu-detect/main.c:87 gammu/gammu.c:336
@@ -1803,7 +1803,7 @@ msgstr ""
 #| msgid ""
 #| "Copyright \\(co 2003 - 2008 Michal Cihar E<lt>I<michal@cihar.com>E<gt>"
 msgid ""
-"Copyright (C) 2003 - 2017 Michal Cihar <michal@cihar.com> and other authors."
+"Copyright (C) 2003 - 2018 Michal Cihar <michal@cihar.com> and other authors."
 msgstr "Copyright \\(co 2003 - 2008 Michal Cihar E<lt>I<michal@cihar.com>E<gt>"
 
 #: gammu/gammu.c:369

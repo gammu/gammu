@@ -1,5 +1,5 @@
 # Gammu translation.
-# Copyright (C) 2003 - 2017 Michal Čihař <michal@cihar.com>
+# Copyright (C) 2003 - 2018 Michal Čihař <michal@cihar.com>
 # This file is distributed under the same license as the gammu package.
 # Automatically generated, 2017.
 #
@@ -1547,7 +1547,7 @@ msgstr ""
 
 #: gammu-detect/main.c:85
 msgid ""
-"Copyright (C) 2010 - 2017 Michal Cihar <michal@cihar.com> and other authors."
+"Copyright (C) 2010 - 2018 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
 
 #: gammu-detect/main.c:87 gammu/gammu.c:336
@@ -1803,7 +1803,7 @@ msgstr ""
 
 #: gammu/gammu.c:332
 msgid ""
-"Copyright (C) 2003 - 2017 Michal Cihar <michal@cihar.com> and other authors."
+"Copyright (C) 2003 - 2018 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
 
 #: gammu/gammu.c:369

@@ -1545,9 +1545,9 @@ msgstr "Interrogation du port série Windows"
 
 #: gammu-detect/main.c:85
 msgid ""
-"Copyright (C) 2010 - 2017 Michal Cihar <michal@cihar.com> and other authors."
+"Copyright (C) 2010 - 2018 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
-"Tous Droits reservés (C) 2010 - 2017 à Michal Cihar <michal@cihar.com> et "
+"Tous Droits reservés (C) 2010 - 2018 à Michal Cihar <michal@cihar.com> et "
 "d'autres auteurs."
 
 #: gammu-detect/main.c:87 gammu/gammu.c:336
@@ -1811,9 +1811,9 @@ msgstr "Il une nouvelle version de test est disponible ! (%s au lieu de %s)\n"
 
 #: gammu/gammu.c:332
 msgid ""
-"Copyright (C) 2003 - 2017 Michal Cihar <michal@cihar.com> and other authors."
+"Copyright (C) 2003 - 2018 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
-"Copyright (C) 2003-2017 Michal Cihar < michal@cihar.com > et autres auteurs."
+"Copyright (C) 2003-2018 Michal Cihar < michal@cihar.com > et autres auteurs."
 
 #: gammu/gammu.c:369
 msgid "standard input"

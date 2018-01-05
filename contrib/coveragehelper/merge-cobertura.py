@@ -6,7 +6,7 @@ Written for merging OpenCppCoverage reports, thus not completely supporting all
 Cobertura XML attributes, only line coverage which OpenCppCoverage generates.
 Anything else is simply discarded in the process.
 
-Copyright (C) 2017 Michal Cihar <michal@cihar.com>
+Copyright (C) 2018 Michal Cihar <michal@cihar.com>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
