@@ -1637,7 +1637,7 @@ msgstr "Mémoire du téléphone"
 #: gammu/files.c:49
 #, c-format
 msgid "%ld bytes (free %ld bytes, used %ld bytes)"
-msgstr "%l octets (%l octets libres, %l octets utilisés)"
+msgstr "%ld octets (%ld octets libres, %ld octets utilisés)"
 
 #: gammu/files.c:55
 msgid "Usage details"
