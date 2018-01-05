@@ -4,10 +4,6 @@ Gammu All Mobile Management Utilities
 Gammu on kirjasto ja kometorivityökalu kännyköille. Se on julkaistu GNU GPL
 versio 2 -lisenssin alla.
 
-.. image:: https://app.codesponsor.io/embed/e9cresCoq9fvHq4ya92dgNSj/gammu/gammu.svg
-   :width: 888 :height: 68 :target:
-   https://app.codesponsor.io/link/e9cresCoq9fvHq4ya92dgNSj/gammu/gammu
-
 Sen on alunperin luonut Marcin Wiacek ja kumppanit. Alkuperäinen koodi
 perustui Gnokii <https://www.gnokii.org/> ja myöhemmin MyGnokii
 <http://www.mwiacek.com/> projekteihin. Gammua on aiemmin (versioon 0.58

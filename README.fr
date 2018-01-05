@@ -4,10 +4,6 @@ Gammu All Mobile Management Utilities (Utilitaire de gestion pour mobiles)
 Gammu est une librairie et un utilitaire en ligne de commande pour les
 téléphones mobiles. Il est distribué sous licence GNU GPL version 2.
 
-.. image:: https://app.codesponsor.io/embed/e9cresCoq9fvHq4ya92dgNSj/gammu/gammu.svg
-   :width: 888 :height: 68 :target:
-   https://app.codesponsor.io/link/e9cresCoq9fvHq4ya92dgNSj/gammu/gammu
-
 Il a été initié par Marcin Wiacek et d'autres personnes. A l'origine, le
 code était basé sur les projets Gnokii <https://www.gnokii.org/> et plus
 tard MyGnokii <http://www.mwiacek.com/>. Jusqu'à la version 0.58, Gammu

@@ -4,10 +4,6 @@ Utilitas Manajemen Gammu Semua Perangkat Ponsel
 Gammu adalah utiliti library dan command line untuk telepon selular. Gammu
 dirilis di bawah GNU GPL versi 2.
 
-.. image:: https://app.codesponsor.io/embed/e9cresCoq9fvHq4ya92dgNSj/gammu/gammu.svg
-   :width: 888 :height: 68 :target:
-   https://app.codesponsor.io/link/e9cresCoq9fvHq4ya92dgNSj/gammu/gammu
-
 Produk ini telah diinisiasi oleh Marcin Wiacek dan beberapa orang
 lainnya. Kode asli berbasis Gnokii <https://www.gnokii.org/> dan proyek
 terbaru MyGnokii <http://www.mwiacek.com/>. Gammu sebelumnya (mulai dari

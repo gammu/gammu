@@ -4,10 +4,6 @@ Gammu mobiilihalduse tööriistad
 Gammu on teek ja käsurea utiliit mobiiltelefonidele. Ta on välja antud GNU
 GPL versioon 2 litsensiga.
 
-.. image:: https://app.codesponsor.io/embed/e9cresCoq9fvHq4ya92dgNSj/gammu/gammu.svg
-   :width: 888 :height: 68 :target:
-   https://app.codesponsor.io/link/e9cresCoq9fvHq4ya92dgNSj/gammu/gammu
-
 Ta loojateks on Marcin Wiacek ja teised. Algne kood põhineb esmalt Gnokiil
 <https://www.gnokii.org/> ja hiljem MyGnokiil <http://www.mwiacek.com/>
 projektidel. Gammut nimetati varem (versioonini 0.58) MyGnokii2.
