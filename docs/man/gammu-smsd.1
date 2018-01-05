@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSD" "1" "Oct 18, 2017" "1.38.6" "Gammu"
+.TH "GAMMU-SMSD" "1" "Jan 05, 2018" "1.38.6" "Gammu"
 .SH NAME
 gammu-smsd \- SMS daemon for Gammu
 .
@@ -313,6 +313,35 @@ fi
 .UNINDENT
 .sp
 Or even create a \fIgammu\-safe\fP script:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+#!/bin/bash
+SMSD_PID=\(gapidof gammu\-smsd\(ga
+if [ \-z "$SMSD_PID" ] ; then
+  gammu $@
+else
+  tty=$(lsof |grep \-E "gammu\-sms\es+$SMSD_PID\es+.*/dev/tty*"|awk {\(aqprint $NF\(aq})
+  kill \-SIGUSR1 $SMSD_PID
+  while test "$(fuser $ttyfuser $tty 2> /dev/null|xargs)" = $SMSD_PID
+  do
+    sleep 1
+  done
+  sleep 1
+  gammu $@
+  kill \-SIGUSR2 $SMSD_PID
+  while test "$(fuser $ttyfuser $tty 2> /dev/null|xargs)" != $SMSD_PID
+  do
+    sleep 1
+  done
+  sleep 1
+fi
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
 .SH KNOWN LIMITATIONS
 .sp
 You can not use same phone by more programs in same time. However in case you
