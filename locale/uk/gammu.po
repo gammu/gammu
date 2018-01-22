@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Wammu 0.37\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2017-10-19 13:14+0200\n"
-"PO-Revision-Date: 2018-01-03 16:22+0000\n"
-"Last-Translator: Yura <skayt55@gmail.com>\n"
+"PO-Revision-Date: 2018-01-24 12:33+0000\n"
+"Last-Translator: Марс Ямбар <mjambarmeta@gmail.com>\n"
 "Language-Team: Ukrainian "
 "<https://hosted.weblate.org/projects/gammu/gammu/uk/>\n"
 "Language: uk\n"
@@ -4248,7 +4248,7 @@ msgstr ""
 
 #: helper/message-display.c:450
 msgid "Profile"
-msgstr ""
+msgstr "Профіль"
 
 #: helper/message-display.c:471
 msgid "EMS sound ID"
@@ -4260,12 +4260,12 @@ msgstr ""
 
 #: helper/message-display.c:480
 msgid "Message size"
-msgstr ""
+msgstr "Розмір повідомлення"
 
 #. l10n: Generic prefix for error messages
 #: helper/message-display.c:513 helper/printing.c:18
 msgid "Error"
-msgstr ""
+msgstr "Помилка"
 
 #: helper/message-display.c:546
 msgid "Data PDU"
@@ -4286,7 +4286,7 @@ msgstr ""
 #. l10n: Generic prefix for warning messages
 #: helper/printing.c:34
 msgid "Warning"
-msgstr ""
+msgstr "Попередження"
 
 #. l10n: Generic prefix for informational messages
 #: helper/printing.c:50
