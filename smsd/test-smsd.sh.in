@@ -235,7 +235,7 @@ if ! grep -q -F 'MMS_ADDRESS=http://mmscz/?m=m5da5a9jn210ma56q20' @CMAKE_CURRENT
     exit 1
 fi
 
-if [ $INCOMING_USSD -gt 0 ] && ! grep -q -F 'Reply for 123465' @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/env.log ; then
+if [ $INCOMING_USSD -gt 0 ] && ! grep -q -F 'Reply for *127*1#' @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/env.log ; then
     echo "ERROR: Got no correct USSD reply!"
     exit 1
 fi
