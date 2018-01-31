@@ -840,6 +840,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 	Config->hardresetfrequency = INI_GetInt(Config->smsdcfgfile, "smsd", "hardresetfrequency", 0);
 	Config->multiparttimeout = INI_GetInt(Config->smsdcfgfile, "smsd", "multiparttimeout", 600);
 	Config->maxretries = INI_GetInt(Config->smsdcfgfile, "smsd", "maxretries", 1);
+	Config->retrytimeout = INI_GetInt(Config->smsdcfgfile, "smsd", "retrytimeout", 600);
 	Config->backend_retries = INI_GetInt(Config->smsdcfgfile, "smsd", "backendretries", 10);
 	if (Config->backend_retries < 1) {
 		SMSD_Log(DEBUG_NOTICE, Config, "BackendRetries too low, forcing to 1");

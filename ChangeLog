@@ -20,6 +20,8 @@ ChangeLog
 =========
     
 2018???? - 1.39.1
+
+[+] * Added SMSD configuration option RetryTimeout.
     
 20180105 - 1.39.0
     

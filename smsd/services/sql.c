@@ -1520,7 +1520,7 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 
 	if (SMSDSQL_option(Config, SQL_QUERY_UPDATE_RETRIES, "update_retries",
 		"UPDATE ", Config->table_outbox, " SET ",
-			ESCAPE_FIELD("SendingTimeOut"), " = ", SMSDSQL_NowPlus(Config, 600),
+			ESCAPE_FIELD("SendingTimeOut"), " = ", SMSDSQL_NowPlus(Config, Config->retrytimeout),
 			", ",ESCAPE_FIELD("Retries"), " = %2"
 			" WHERE ", ESCAPE_FIELD("ID"), " = %1", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;

@@ -188,6 +188,15 @@ General parameters of SMS daemon
 
     Default is 1.
 
+.. config:option:: RetryTimeout
+
+    How long to wait before resending failed message (needs to be enabled by 
+    :config:option:`MaxRetries`).
+
+    Is used in :config:option:`update_retries`.
+
+    Default is 600.
+
 .. config:option:: ReceiveFrequency
 
     The number of seconds between testing for received SMSes, when the phone is

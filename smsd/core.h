@@ -96,6 +96,7 @@ struct _GSM_SMSDConfig {
 	gboolean enable_send;
 	gboolean enable_receive;
 	unsigned int maxretries;
+	unsigned int retrytimeout;
 	int backend_retries;
 
 	/* options for FILES */
