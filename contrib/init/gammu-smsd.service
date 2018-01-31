@@ -1,7 +1,7 @@
 [Unit]
 Description=SMS daemon for Gammu
 Documentation=man:gammu-smsd(1)
-After=mysql.service postgresql.service
+After=mysql.service postgresql.service network-online.target
 
 [Service]
 EnvironmentFile=-/etc/sysconfig/gammu-smsd
