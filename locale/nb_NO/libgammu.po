@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.38.2\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2017-02-07 11:19+0100\n"
-"PO-Revision-Date: 2017-12-10 01:48+0000\n"
+"PO-Revision-Date: 2018-02-07 21:06+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål "
 "<https://hosted.weblate.org/projects/gammu/libgammu/nb_NO/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.18-dev\n"
+"X-Generator: Weblate 2.19-dev\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
@@ -40,7 +40,6 @@ msgid "Error opening device, it is already opened by other application."
 msgstr "Feil ved åpning av enhet, den er allerede åpnet av et annet program."
 
 #: libgammu/gsmcomon.c:89
-#, fuzzy
 msgid "Error opening device, you don't have permissions."
 msgstr "Feil ved åpning av enhet, du har ikke påkrevde tilganger."
 
@@ -58,10 +57,9 @@ msgid "Error setting device DTR or RTS."
 msgstr "Feil ved oppsett av DTR eller RTS."
 
 #: libgammu/gsmcomon.c:93
-#, fuzzy
 msgid "Error setting device speed. Maybe speed not supported."
 msgstr ""
-"Feil ved innstilling av enhetshastighet. Kanskje hastighet ikke støttes."
+"Feil ved innstilling av enhetshastighet. Kanskje hastigheten ikke støttes."
 
 #: libgammu/gsmcomon.c:94
 msgid "Error writing to the device."
@@ -203,7 +201,6 @@ msgstr ""
 "utviklerne."
 
 #: libgammu/gsmcomon.c:121
-#, fuzzy
 msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
 msgstr ""
 "Overføringen ble avbrutt av telefonen, kanskje du trykket \"Avbryt\" på den."
@@ -213,7 +210,6 @@ msgid "Phone module need to send another answer frame."
 msgstr "Telefonmodulen må sende enda ei svarramme."
 
 #: libgammu/gsmcomon.c:123
-#, fuzzy
 msgid "Current connection type doesn't support called function."
 msgstr "Nåværende tilkoblingstype støtter ikke oppringt-funksjon."
 
@@ -254,7 +250,6 @@ msgid "Can not access SIM card."
 msgstr "Får ikke tilgang til SIM-kort."
 
 #: libgammu/gsmcomon.c:133
-#, fuzzy
 msgid "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
 msgstr ""
 "Feil GNAPPLET-versjon på telefonen. Bruk versjon fra aktuell versjon av "
