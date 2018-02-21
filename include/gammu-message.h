@@ -789,6 +789,10 @@ typedef struct {
 	 * Array of SMSes.
 	 */
 	GSM_SMSMessage SMS[GSM_MAX_MULTI_SMS];
+	/**
+	 * Boolean flag for processing
+	 */
+	gboolean Processed;
 } GSM_MultiSMSMessage;
 
 /**
@@ -1031,6 +1035,7 @@ typedef struct {
 	unsigned char ReplaceMessage;
 	gboolean Unknown;
 	GSM_MultiPartSMSEntry Entries[GSM_MAX_MULTI_SMS];
+	gboolean Processed;
 } GSM_MultiPartSMSInfo;
 
 /**

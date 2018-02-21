@@ -23,6 +23,8 @@ ChangeLog
 
 [+] * Added SMSD configuration option RetryTimeout.
 [-] * Removed non configurable sleep after failed message send.
+[+] * SMSD now tries to store whole decoded text for concatenated
+      messages in the first entry in database.
 
 20180105 - 1.39.0
     
