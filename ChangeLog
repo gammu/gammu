@@ -22,7 +22,8 @@ ChangeLog
 2018???? - 1.39.1
 
 [+] * Added SMSD configuration option RetryTimeout.
-    
+[-] * Removed non configurable sleep after failed message send.
+
 20180105 - 1.39.0
     
 [-] * Fixed answering call in AT module.

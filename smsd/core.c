@@ -1834,12 +1834,7 @@ failure_unsent:
 	}
 	Config->Status->Failed++;
 
-	Config->Service->UpdateRetries(Config, Config->SMSID);
-
-	SMSD_InterruptibleSleep(Config, 60);
-	return ERR_UNKNOWN;
 failure_sent:
-
 	Config->Service->UpdateRetries(Config, Config->SMSID);
 
 	return ERR_UNKNOWN;
