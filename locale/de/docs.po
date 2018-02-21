@@ -1349,7 +1349,7 @@ msgstr ""
 #~ msgid "Function not supported by phone."
 #~ msgstr "Funktion wird nicht vom Telefon unterstützt."
 
-#~ msgid "Entry empty."
+#~ msgid "Empty entry."
 #~ msgstr "Eintrag ist leer."
 
 #~ msgid "Security error. Maybe no PIN?"

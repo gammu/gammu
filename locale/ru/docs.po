@@ -747,7 +747,7 @@ msgstr ""
 #~ msgid "Function not supported by phone."
 #~ msgstr "Функция не поддерживается телефоном."
 
-#~ msgid "Entry empty."
+#~ msgid "Empty entry."
 #~ msgstr "Запись пуста."
 
 #~ msgid "Security error. Maybe no PIN?"

@@ -119,7 +119,7 @@ msgid "Function not supported by phone."
 msgstr "وظيفة غير مدعومة من قبل الهاتف."
 
 #: libgammu/gsmcomon.c:105
-msgid "Entry empty."
+msgid "Empty entry."
 msgstr "المعطى فارغ."
 
 #: libgammu/gsmcomon.c:106

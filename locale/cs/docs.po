@@ -8302,7 +8302,7 @@ msgstr ""
 #~ msgid "122"
 #~ msgstr "122"
 
-#~ msgid "Entry empty."
+#~ msgid "Empty entry."
 #~ msgstr "Záznam je prázdný."
 
 #~ msgid "123"

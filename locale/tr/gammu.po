@@ -2075,7 +2075,7 @@ msgid "Memory %s, Location %i\n"
 msgstr "Hafıza %s, Yer %i\n"
 
 #: gammu/memory.c:104 gammu/misc.c:1807 gammu/misc.c:2216
-msgid "Entry empty"
+msgid "Empty entry"
 msgstr "Giriş boş"
 
 #: gammu/memory.c:116

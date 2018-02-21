@@ -140,7 +140,7 @@ msgid "Function not supported by phone."
 msgstr "Функция не поддерживается телефоном."
 
 #: libgammu/gsmcomon.c:105
-msgid "Entry empty."
+msgid "Empty entry."
 msgstr "Запись пуста."
 
 #: libgammu/gsmcomon.c:106
@@ -3164,7 +3164,7 @@ msgstr "Исходящие"
 #~ msgid "Error\n"
 #~ msgstr "Ошибка\n"
 
-#~ msgid "Entry empty\n"
+#~ msgid "Empty entry\n"
 #~ msgstr "Запись пуста\n"
 
 #~ msgid "Reminder (Date)\n"
@@ -3628,7 +3628,7 @@ msgstr "Исходящие"
 #~ msgstr "ОШИБКА: пронумеруйте размещения с 1\n"
 
 #~ msgid ""
-#~ "Entry empty\n"
+#~ "Empty entry\n"
 #~ "\n"
 #~ msgstr ""
 #~ "Запись пуста\n"

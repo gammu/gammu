@@ -1003,7 +1003,7 @@ msgstr ""
 #~ msgid "Function not supported by phone."
 #~ msgstr "Funkcia nie je telefónom podporovaná."
 
-#~ msgid "Entry empty."
+#~ msgid "Empty entry."
 #~ msgstr "Položka je prázdna."
 
 #~ msgid "Security error. Maybe no PIN?"

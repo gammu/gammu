@@ -123,7 +123,7 @@ msgid "Function not supported by phone."
 msgstr "İşlev telefon tarafından desteklenmiyor."
 
 #: libgammu/gsmcomon.c:105
-msgid "Entry empty."
+msgid "Empty entry."
 msgstr "Giriş boş."
 
 #: libgammu/gsmcomon.c:106

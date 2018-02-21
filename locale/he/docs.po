@@ -415,7 +415,7 @@ msgstr ""
 #~ msgid "Function not supported by phone."
 #~ msgstr "התכונה אינה נתמכת על ידי הטלפון."
 
-#~ msgid "Entry empty."
+#~ msgid "Empty entry."
 #~ msgstr "הרשומה ריקה."
 
 #~ msgid "Security error. Maybe no PIN?"

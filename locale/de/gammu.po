@@ -2081,7 +2081,7 @@ msgid "Memory %s, Location %i\n"
 msgstr "Speicher %s, Speicherplatz %i\n"
 
 #: gammu/memory.c:104 gammu/misc.c:1807 gammu/misc.c:2216
-msgid "Entry empty"
+msgid "Empty entry"
 msgstr "Eintrag ist leer"
 
 #: gammu/memory.c:116
@@ -5391,7 +5391,7 @@ msgstr "Information"
 #~ msgid "Error\n"
 #~ msgstr "Fehler\n"
 
-#~ msgid "Entry empty\n"
+#~ msgid "Empty entry\n"
 #~ msgstr "Der Eintrag ist leer\n"
 
 #~ msgid "Reminder (Date)\n"
@@ -5842,7 +5842,7 @@ msgstr "Information"
 #~ msgstr "FEHLER: Nummeriere Speicherplätze von 1 an\n"
 
 #~ msgid ""
-#~ "Entry empty\n"
+#~ "Empty entry\n"
 #~ "\n"
 #~ msgstr ""
 #~ "Eintrag ist leer\n"

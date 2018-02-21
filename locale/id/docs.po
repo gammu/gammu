@@ -761,7 +761,7 @@ msgstr ""
 #~ msgid "Function not supported by phone."
 #~ msgstr "Fungsi tidak didukung oleh telepon."
 
-#~ msgid "Entry empty."
+#~ msgid "Empty entry."
 #~ msgstr "Masukan kosong."
 
 #~ msgid "Security error. Maybe no PIN?"

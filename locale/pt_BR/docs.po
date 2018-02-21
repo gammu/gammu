@@ -7378,7 +7378,7 @@ msgstr ""
 #~ msgid "122"
 #~ msgstr "122"
 
-#~ msgid "Entry empty."
+#~ msgid "Empty entry."
 #~ msgstr "Entrada está vazia."
 
 #~ msgid "123"

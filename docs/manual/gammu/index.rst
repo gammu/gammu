@@ -1736,7 +1736,7 @@ values increased by 100:
 121
     Function not supported by phone.
 122
-    Entry empty.
+    Empty entry.
 123
     Security error. Maybe no PIN?
 124

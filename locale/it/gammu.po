@@ -2217,7 +2217,7 @@ msgid "Memory %s, Location %i\n"
 msgstr "Memoria %s, locazione %i\n"
 
 #: gammu/memory.c:104 gammu/misc.c:1807 gammu/misc.c:2216
-msgid "Entry empty"
+msgid "Empty entry"
 msgstr "Locazione vuota"
 
 #: gammu/memory.c:116
@@ -5506,7 +5506,7 @@ msgstr "Locazione %i\n"
 #~ msgid "Error\n"
 #~ msgstr "Errore\n"
 
-#~ msgid "Entry empty\n"
+#~ msgid "Empty entry\n"
 #~ msgstr "Locazione vuota\n"
 
 #~ msgid "Reminder (Date)\n"
@@ -5941,7 +5941,7 @@ msgstr "Locazione %i\n"
 #~ msgstr "ERRORE: numerare le locazioni da 1\n"
 
 #~ msgid ""
-#~ "Entry empty\n"
+#~ "Empty entry\n"
 #~ "\n"
 #~ msgstr ""
 #~ "Elemento vuoto\n"

@@ -145,7 +145,7 @@ msgid "Function not supported by phone."
 msgstr "Funktion wird nicht vom Telefon unterstützt."
 
 #: libgammu/gsmcomon.c:105
-msgid "Entry empty."
+msgid "Empty entry."
 msgstr "Eintrag ist leer."
 
 #: libgammu/gsmcomon.c:106
@@ -3799,7 +3799,7 @@ msgstr "Ausgang"
 #~ msgid "Error\n"
 #~ msgstr "Fehler\n"
 
-#~ msgid "Entry empty\n"
+#~ msgid "Empty entry\n"
 #~ msgstr "Der Eintrag ist leer\n"
 
 #~ msgid "Reminder (Date)\n"
@@ -4262,7 +4262,7 @@ msgstr "Ausgang"
 #~ msgstr "FEHLER: Nummeriere Speicherplätze von 1 an\n"
 
 #~ msgid ""
-#~ "Entry empty\n"
+#~ "Empty entry\n"
 #~ "\n"
 #~ msgstr ""
 #~ "Eintrag ist leer\n"
