@@ -101,7 +101,7 @@ void GetMemory(int argc, char *argv[])
 		if (error == ERR_EMPTY) {
 			emptynum++;
 			if (empty) {
-				printf("%s\n", _("Entry is empty"));
+				printf("%s\n", _("Entry empty"));
 				printf("\n");
 			}
 		} else {

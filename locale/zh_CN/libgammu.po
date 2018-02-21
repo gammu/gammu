@@ -130,7 +130,7 @@ msgid "Function not supported by phone."
 msgstr "手机不支持该功能。"
 
 #: libgammu/gsmcomon.c:105
-msgid "Entry is empty."
+msgid "Entry empty."
 msgstr "记录为空。"
 
 #: libgammu/gsmcomon.c:106

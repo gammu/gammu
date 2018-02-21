@@ -122,7 +122,7 @@ msgid "Function not supported by phone."
 msgstr "Telefon ei toeta funktsiooni."
 
 #: libgammu/gsmcomon.c:105
-msgid "Entry is empty."
+msgid "Entry empty."
 msgstr "Kirje on tühi."
 
 #: libgammu/gsmcomon.c:106

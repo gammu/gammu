@@ -136,7 +136,7 @@ msgid "Function not supported by phone."
 msgstr "Funktionen understøttes ikke af telefonen."
 
 #: libgammu/gsmcomon.c:105
-msgid "Entry is empty."
+msgid "Entry empty."
 msgstr "Indgangen er tom."
 
 #: libgammu/gsmcomon.c:106

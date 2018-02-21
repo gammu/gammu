@@ -815,7 +815,7 @@ set_tests_properties(sms-cmdline-EMS PROPERTIES
 add_test(sms-cmdline-EMS-empty "${GAMMU_TEST_PATH}/sms-cmdline${CMAKE_EXECUTABLE_SUFFIX}"
     EMS 213)
 set_tests_properties(sms-cmdline-EMS-empty PROPERTIES
-    FAIL_REGULAR_EXPRESSION "Entry is empty"
+    FAIL_REGULAR_EXPRESSION "Entry empty"
     WILL_FAIL TRUE)
 
 add_test(sms-cmdline-EMS-misc "${GAMMU_TEST_PATH}/sms-cmdline${CMAKE_EXECUTABLE_SUFFIX}"

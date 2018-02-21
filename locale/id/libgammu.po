@@ -139,7 +139,7 @@ msgid "Function not supported by phone."
 msgstr "Fungsi tidak didukung oleh telepon."
 
 #: libgammu/gsmcomon.c:105
-msgid "Entry is empty."
+msgid "Entry empty."
 msgstr "Masukan kosong."
 
 #: libgammu/gsmcomon.c:106

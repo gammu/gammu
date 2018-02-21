@@ -655,7 +655,7 @@ msgstr ""
 #~ msgid "Function not supported by phone."
 #~ msgstr "Funkcja nie obsługiwana przez telefon."
 
-#~ msgid "Entry is empty."
+#~ msgid "Entry empty."
 #~ msgstr "Pozycja jest pusta"
 
 #~ msgid "Security error. Maybe no PIN?"

@@ -709,7 +709,7 @@ msgstr ""
 #~ msgid "Function not supported by phone."
 #~ msgstr "Funktionen stöds inte av telefonen."
 
-#~ msgid "Entry is empty."
+#~ msgid "Entry empty."
 #~ msgstr "Posten är tom"
 
 #~ msgid "Security error. Maybe no PIN?"

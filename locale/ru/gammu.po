@@ -2084,7 +2084,7 @@ msgid "Memory %s, Location %i\n"
 msgstr "Память %s, адрес %i\n"
 
 #: gammu/memory.c:104 gammu/misc.c:1807 gammu/misc.c:2216
-msgid "Entry is empty"
+msgid "Entry empty"
 msgstr "Запись пуста"
 
 #: gammu/memory.c:116
@@ -5376,7 +5376,7 @@ msgstr "Местонахождение %i\n"
 #~ msgid "Error\n"
 #~ msgstr "Ошибка\n"
 
-#~ msgid "Entry is empty\n"
+#~ msgid "Entry empty\n"
 #~ msgstr "Запись пуста\n"
 
 #~ msgid "Reminder (Date)\n"
@@ -5844,7 +5844,7 @@ msgstr "Местонахождение %i\n"
 #~ msgstr "ОШИБКА: пронумеруйте размещения с 1\n"
 
 #~ msgid ""
-#~ "Entry is empty\n"
+#~ "Entry empty\n"
 #~ "\n"
 #~ msgstr ""
 #~ "Запись пуста\n"

@@ -143,7 +143,7 @@ msgstr "Funkcja nie obsługiwana przez telefon."
 
 #: libgammu/gsmcomon.c:105
 #, fuzzy
-msgid "Entry is empty."
+msgid "Entry empty."
 msgstr "Pozycja jest pusta"
 
 #: libgammu/gsmcomon.c:106
@@ -1618,7 +1618,7 @@ msgstr "Skrzynka nadawcza"
 #~ msgstr "   Numer      : %s\n"
 
 #, fuzzy
-#~ msgid "Entry is empty\n"
+#~ msgid "Entry empty\n"
 #~ msgstr "Pozycja jest pusta."
 
 #, fuzzy
@@ -1785,7 +1785,7 @@ msgstr "Skrzynka nadawcza"
 
 #, fuzzy
 #~ msgid ""
-#~ "Entry is empty\n"
+#~ "Entry empty\n"
 #~ "\n"
 #~ msgstr "Pozycja jest pusta."
 

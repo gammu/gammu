@@ -143,7 +143,7 @@ msgstr "Funzione non supportata dal telefono."
 
 #: libgammu/gsmcomon.c:105
 #, fuzzy
-msgid "Entry is empty."
+msgid "Entry empty."
 msgstr "Locazione vuota"
 
 #: libgammu/gsmcomon.c:106
@@ -2782,7 +2782,7 @@ msgstr "Messaggi inviati"
 #~ msgid "Error\n"
 #~ msgstr "Errore\n"
 
-#~ msgid "Entry is empty\n"
+#~ msgid "Entry empty\n"
 #~ msgstr "Locazione vuota\n"
 
 #~ msgid "Reminder (Date)\n"
@@ -3189,7 +3189,7 @@ msgstr "Messaggi inviati"
 #~ msgstr "ERRORE: numerare le locazioni da 1\n"
 
 #~ msgid ""
-#~ "Entry is empty\n"
+#~ "Entry empty\n"
 #~ "\n"
 #~ msgstr ""
 #~ "Elemento vuoto\n"

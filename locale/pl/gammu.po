@@ -2073,7 +2073,7 @@ msgid "Memory %s, Location %i\n"
 msgstr ""
 
 #: gammu/memory.c:104 gammu/misc.c:1807 gammu/misc.c:2216
-msgid "Entry is empty"
+msgid "Entry empty"
 msgstr "Pozycja jest pusta"
 
 #: gammu/memory.c:116
@@ -4764,7 +4764,7 @@ msgstr "Informacja"
 #~ msgstr "   Numer      : %s\n"
 
 #, fuzzy
-#~ msgid "Entry is empty\n"
+#~ msgid "Entry empty\n"
 #~ msgstr "Pozycja jest pusta."
 
 #, fuzzy
@@ -4919,7 +4919,7 @@ msgstr "Informacja"
 
 #, fuzzy
 #~ msgid ""
-#~ "Entry is empty\n"
+#~ "Entry empty\n"
 #~ "\n"
 #~ msgstr "Pozycja jest pusta."
 

@@ -119,7 +119,7 @@ msgid "Function not supported by phone."
 msgstr ""
 
 #: libgammu/gsmcomon.c:105
-msgid "Entry is empty."
+msgid "Entry empty."
 msgstr ""
 
 #: libgammu/gsmcomon.c:106

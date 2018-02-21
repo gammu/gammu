@@ -131,8 +131,8 @@ msgid "Function not supported by phone."
 msgstr "Function not supported by phone."
 
 #: libgammu/gsmcomon.c:105
-msgid "Entry is empty."
-msgstr "Entry is empty."
+msgid "Entry empty."
+msgstr "Entry empty."
 
 #: libgammu/gsmcomon.c:106
 msgid "Security error. Maybe no PIN?"

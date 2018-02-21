@@ -702,7 +702,7 @@ msgstr ""
 #~ msgid "Function not supported by phone."
 #~ msgstr "Funzione non supportata dal telefono."
 
-#~ msgid "Entry is empty."
+#~ msgid "Entry empty."
 #~ msgstr "Locazione vuota"
 
 #~ msgid "Security error. Maybe no PIN?"

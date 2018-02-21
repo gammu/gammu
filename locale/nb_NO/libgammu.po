@@ -123,7 +123,7 @@ msgid "Function not supported by phone."
 msgstr "Funksjonen støttes ikke av telefonen."
 
 #: libgammu/gsmcomon.c:105
-msgid "Entry is empty."
+msgid "Entry empty."
 msgstr "Oppføringen er tom."
 
 #: libgammu/gsmcomon.c:106

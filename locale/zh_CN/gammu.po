@@ -2066,7 +2066,7 @@ msgid "Memory %s, Location %i\n"
 msgstr ""
 
 #: gammu/memory.c:104 gammu/misc.c:1807 gammu/misc.c:2216
-msgid "Entry is empty"
+msgid "Entry empty"
 msgstr ""
 
 #: gammu/memory.c:116

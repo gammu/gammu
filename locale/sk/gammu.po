@@ -2087,7 +2087,7 @@ msgid "Memory %s, Location %i\n"
 msgstr "Pamäť %s, pozícia %i\n"
 
 #: gammu/memory.c:104 gammu/misc.c:1807 gammu/misc.c:2216
-msgid "Entry is empty"
+msgid "Entry empty"
 msgstr "Záznam je prázdny"
 
 #: gammu/memory.c:116

@@ -1804,7 +1804,7 @@ void GetCategory(int argc, char *argv[])
 		if (error != ERR_EMPTY) Print_Error(error);
 
 		if (error == ERR_EMPTY) {
-			printf("%s\n", _("Entry is empty"));
+			printf("%s\n", _("Entry empty"));
 		} else {
 			printf(LISTFORMAT "\"%s\"\n\n", _("Name"),DecodeUnicodeConsole(Category.Name));
 		}
@@ -2213,7 +2213,7 @@ void GetFMStation(int argc, char *argv[])
 		printf(LISTFORMAT "%i\n", _("Location"), i);
 		switch (error) {
 		case ERR_EMPTY:
-			printf("%s\n", _("Entry is empty"));
+			printf("%s\n", _("Entry empty"));
 			break;
 		case ERR_NONE:
 			printf(LISTFORMAT "\"%s\"\n", _("Station name"), DecodeUnicodeConsole(Station.StationName));

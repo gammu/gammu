@@ -2077,7 +2077,7 @@ msgid "Memory %s, Location %i\n"
 msgstr "Paměť %s, pozice %i\n"
 
 #: gammu/memory.c:104 gammu/misc.c:1807 gammu/misc.c:2216
-msgid "Entry is empty"
+msgid "Entry empty"
 msgstr "Záznam je prázdný"
 
 #: gammu/memory.c:116
@@ -4950,7 +4950,7 @@ msgstr "Informace"
 #~ msgid "enumerate locations from 1\n"
 #~ msgstr "Prosím číslujte pozice od 1\n"
 
-#~ msgid "Entry is empty\n"
+#~ msgid "Entry empty\n"
 #~ msgstr "Záznam je prázdný\n"
 
 #~ msgid "Meeting\n"
@@ -5307,7 +5307,7 @@ msgstr "Informace"
 #~ msgstr "CHYBA: číslujte pozice od 1\n"
 
 #~ msgid ""
-#~ "Entry is empty\n"
+#~ "Entry empty\n"
 #~ "\n"
 #~ msgstr ""
 #~ "Záznam je prázdný\n"

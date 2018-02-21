@@ -127,7 +127,7 @@ msgid "Function not supported by phone."
 msgstr "Функція не підтримується телефоном."
 
 #: libgammu/gsmcomon.c:105
-msgid "Entry is empty."
+msgid "Entry empty."
 msgstr "Запис - порожній."
 
 #: libgammu/gsmcomon.c:106

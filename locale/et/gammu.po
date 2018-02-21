@@ -2069,7 +2069,7 @@ msgid "Memory %s, Location %i\n"
 msgstr "Mälu %s, asukoht %i\n"
 
 #: gammu/memory.c:104 gammu/misc.c:1807 gammu/misc.c:2216
-msgid "Entry is empty"
+msgid "Entry empty"
 msgstr "Kirje on tühi"
 
 #: gammu/memory.c:116

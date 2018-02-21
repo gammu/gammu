@@ -122,7 +122,7 @@ msgid "Function not supported by phone."
 msgstr "Funkce není podporována telefonem."
 
 #: libgammu/gsmcomon.c:105
-msgid "Entry is empty."
+msgid "Entry empty."
 msgstr "Záznam je prázdný."
 
 #: libgammu/gsmcomon.c:106
@@ -2135,7 +2135,7 @@ msgstr "Odchozí"
 #~ msgid "enumerate locations from 1\n"
 #~ msgstr "Prosím číslujte pozice od 1\n"
 
-#~ msgid "Entry is empty\n"
+#~ msgid "Entry empty\n"
 #~ msgstr "Záznam je prázdný\n"
 
 #~ msgid "Meeting\n"
@@ -2434,7 +2434,7 @@ msgstr "Odchozí"
 #~ msgstr "CHYBA: číslujte pozice od 1\n"
 
 #~ msgid ""
-#~ "Entry is empty\n"
+#~ "Entry empty\n"
 #~ "\n"
 #~ msgstr ""
 #~ "Záznam je prázdný\n"
