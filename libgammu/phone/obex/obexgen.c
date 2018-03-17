@@ -2958,7 +2958,7 @@ GSM_Error OBEXGEN_SetTodoLUID(GSM_StateMachine *s, GSM_ToDoEntry *Entry, const c
 
 	/* Check bounds */
 	if (Entry->Location > Priv->TodoLUIDCount ||
-			Priv->TodoLUID[Entry->Location] == NULL) {
+			NULL == Priv->TodoLUID || Priv->TodoLUID[Entry->Location] == NULL) {
 		/**
 		 * \todo We should keep location here!
 		 */

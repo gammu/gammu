@@ -1306,7 +1306,7 @@ void Restore(int argc, char *argv[])
 			fprintf(stderr, "\r");
 			fprintf(stderr, "%s ", _("Writing:"));
 			fprintf(stderr, _("%i percent"),
-				used * 100 / ToDoStatus.Used);
+				(0 == ToDoStatus.Used) ? 0 : used * 100 / ToDoStatus.Used);
 			if (gshutdown) {
 				GSM_Terminate();
 				Terminate(4);
