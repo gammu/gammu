@@ -8,44 +8,46 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2016-10-11 08:16+0200\n"
-"PO-Revision-Date: 2012-09-27 11:47+0200\n"
-"Last-Translator: Panagiotis Papazoglou <papaz_p@yahoo.com>\n"
-"Language-Team: Greek <http://hosted.weblate.org/projects/gammu/libgammu/el/"
-">\n"
+"PO-Revision-Date: 2018-06-22 12:38+0000\n"
+"Last-Translator: Andreas Lydakis <andlydakis@gmail.com>\n"
+"Language-Team: Greek <https://hosted.weblate.org/projects/gammu/libgammu/el/>"
+"\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Weblate 1.2\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.1-dev\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
-msgstr ""
+msgstr "Κανένα σφάλμα."
 
 #: libgammu/gsmcomon.c:85
 msgid "Error opening device. Unknown, busy or no permissions."
-msgstr ""
+msgstr "Σφάλμα στο άνοιγμα της συσκευής. Άγνωστη, απασχολημένη ή χωρίς άδεια."
 
 #: libgammu/gsmcomon.c:86
 msgid "Error opening device, it is locked."
-msgstr ""
+msgstr "Σφάλμα στο άνοιγμα συσκευής, είναι κλειδωμένη."
 
 #: libgammu/gsmcomon.c:87
 msgid "Error opening device, it doesn't exist."
-msgstr ""
+msgstr "Σφάλμα στο άνοιγμα συσκευής, δεν υπάρχει."
 
 #: libgammu/gsmcomon.c:88
 msgid "Error opening device, it is already opened by other application."
-msgstr ""
+msgstr "Σφάλμα στο άνοιγμα συσκευής, είναι ανοιχτή από άλλη εφαρμογή."
 
 #: libgammu/gsmcomon.c:89
 msgid "Error opening device, you don't have permissions."
-msgstr ""
+msgstr "Σφάλμα στο άνοιγμα συσκευής, δεν έχετε άδεια."
 
 #: libgammu/gsmcomon.c:90
 msgid "Error opening device. No required driver in operating system."
 msgstr ""
+"Σφάλμα στο άνοιγμα συσκευής. Δεν υπάρχουν οι απαραίτητοι drivers στο "
+"λειτουργικό σύστημα."
 
 #: libgammu/gsmcomon.c:91
 msgid "Error opening device. Some hardware not connected/wrongly configured."
@@ -61,7 +63,7 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:94
 msgid "Error writing to the device."
-msgstr "Σφάλμα εγγραφής στη συσκεύη."
+msgstr "Σφάλμα εγγραφής στη συσκευή."
 
 #: libgammu/gsmcomon.c:95
 msgid "Error during reading from the device."
