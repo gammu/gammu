@@ -246,9 +246,6 @@ GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 
 				/* We cut special answer from main buffer */
 				d->Msg.Length			= d->SpecialAnswerStart;
-				if (d->Msg.Length != 0) {
-					d->Msg.Length = d->Msg.Length - 2;
-				}
 
 				/* We need to find earlier values of all variables */
 				d->wascrlf 			= FALSE;
@@ -260,13 +257,13 @@ GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 					case 10:
 					case 13:
 						if (!d->wascrlf) {
-							d->LineEnd = d->Msg.Length - 1;
+							d->LineEnd = d->Msg.Length;
 						}
 						d->wascrlf = TRUE;
 						break;
 					default:
 						if (d->wascrlf) {
-							d->LineStart	= d->Msg.Length - 1;
+							d->LineStart	= d->Msg.Length;
 							d->wascrlf 	= FALSE;
 						}
 					}
