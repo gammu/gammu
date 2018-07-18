@@ -1922,8 +1922,12 @@ GSM_Error ATGEN_ReplySendSMS(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 		if (error != ERR_NONE) {
 			reference = -1;
 		}
-		s->User.SendSMSStatus(s, 0, reference, s->User.SendSMSStatusUserData);
+
+		if(s->User.SendSMSStatus != NULL) {
+			s->User.SendSMSStatus(s, 0, reference, s->User.SendSMSStatusUserData);
+		}
 		return ERR_NONE;
+
 	case AT_Reply_CMSError:
  		smprintf(s, "Error %i\n",Priv->ErrorCode);
 
