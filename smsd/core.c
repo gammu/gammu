@@ -240,6 +240,7 @@ void SMSD_Terminate(GSM_SMSDConfig *Config, const char *msg, GSM_Error error, gb
 	if (exitprogram) {
 		if (rc == 0) {
 			Config->running = FALSE;
+			Config->shutdown = TRUE;
 			SMSD_CloseLog(Config);
 		}
 		if (Config->exit_on_failure) {
