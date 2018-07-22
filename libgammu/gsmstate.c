@@ -1064,7 +1064,7 @@ GSM_Error GSM_WaitFor (GSM_StateMachine *s, unsigned const char *buffer,
 		if (error != ERR_TIMEOUT) {
 			return error;
 		}
-        }
+  }
 
 	if (request != ID_Reset && GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_RESET_AFTER_TIMEOUT)) {
 		smprintf_level(s, D_ERROR, "Performing device reset after timeout!\n");

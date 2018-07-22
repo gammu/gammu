@@ -589,7 +589,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 	GSM_SMSMessage *sms = &s->Phone.Data.GetSMSMessage->SMS[0];
 	unsigned char buffer[3000] = {'\0'}, firstbyte = 0, TPDCS = 0, TPUDL = 0, TPStatus = 0, TPPID = 0;
 	int current = 0, i = 0;
-	int state;
+	int state = 0;
 	unsigned char *ptr;
 	char *comma;
 	char *expected_comma;
@@ -607,6 +607,9 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 
 			/* Parse reply */
 			error = ATGEN_ParseReply(s, buffer, "+CMGR: @i, @0", &state);
+      if (error == ERR_UNKNOWNRESPONSE) {
+        error = ATGEN_ParseReply(s, buffer, "+CMGR: ,@0");
+      }
 			if (error == ERR_UNKNOWNRESPONSE) {
 				/* Some phones like ES75 lack state information, which we ignore anywa */
 				error = ATGEN_ParseReply(s, buffer, "+CMGR: @i", &state);
@@ -1922,8 +1925,12 @@ GSM_Error ATGEN_ReplySendSMS(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 		if (error != ERR_NONE) {
 			reference = -1;
 		}
-		s->User.SendSMSStatus(s, 0, reference, s->User.SendSMSStatusUserData);
+
+		if(s->User.SendSMSStatus != NULL) {
+			s->User.SendSMSStatus(s, 0, reference, s->User.SendSMSStatusUserData);
+		}
 		return ERR_NONE;
+
 	case AT_Reply_CMSError:
  		smprintf(s, "Error %i\n",Priv->ErrorCode);
 
