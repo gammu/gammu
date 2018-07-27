@@ -28,7 +28,7 @@ help of many contributors.
     :alt: Coverity scan
     :target: https://scan.coverity.com/projects/2890
 
-.. image:: https://img.shields.io/gratipay/Gammu.svg
+.. image:: https://img.shields.io/liberapay/receives/Gammu.svg
     :alt: Liberapay
     :target: https://liberapay.com/Gammu/donate
 
