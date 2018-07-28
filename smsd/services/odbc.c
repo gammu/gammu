@@ -130,6 +130,7 @@ gboolean SMSDODBC_GetBool(GSM_SMSDConfig * Config, SQL_result *res, unsigned int
 
 	/* Try bit field */
 	if (SQL_SUCCEEDED(SQLGetData(res->odbc, field + 1, SQL_C_BIT, &intval, 0, NULL))) {
+		SMSD_Log(DEBUG_SQL, Config, "Field %d returning bit \"%d\"", field, intval);
 		return intval ? TRUE : FALSE;
 	}
 
@@ -138,8 +139,10 @@ gboolean SMSDODBC_GetBool(GSM_SMSDConfig * Config, SQL_result *res, unsigned int
 	if (intval == -1) {
 		/* If that fails, fall back to string and parse it */
 		charval = SMSDODBC_GetString(Config, res, field);
+		SMSD_Log(DEBUG_SQL, Config, "Field %d returning string \"%s\"", field, charval);
 		return GSM_StringToBool(charval);
 	}
+	SMSD_Log(DEBUG_SQL, Config, "Field %d returning integer \"%d\"", field, intval);
 	return intval ? TRUE : FALSE;
 }
 
