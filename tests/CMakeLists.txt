@@ -16,6 +16,9 @@ endif (EXECUTABLE_OUTPUT_PATH)
 # We use Gammu
 include_directories("${CMAKE_CURRENT_BINARY_DIR}/../include")
 
+# ATGEN function tests
+add_subdirectory(atgen)
+
 # Basic check for statemachine allocation
 add_executable(statemachine-alloc statemachine-alloc.c)
 add_coverage(statemachine-alloc)
@@ -545,7 +548,7 @@ if (WITH_ATGEN)
             "${GAMMU_TEST_PATH}/at-get-smsmemories${CMAKE_EXECUTABLE_SUFFIX}"
             "${Gammu_SOURCE_DIR}/tests/at-cpms/${TESTMESSAGE}")
         set_tests_properties("at-get-smsmemories-${TESTNAME}" PROPERTIES
-            PASS_REGULAR_EXPRESSION "read: ME : ok, SM : ok, save: ME : ok, SM = ok")
+            PASS_REGULAR_EXPRESSION "read: ME : ok, SM : ok, SR : N/A save: ME : ok, SM : ok, SR : N/A")
     endforeach(TESTMESSAGE $MESSAGES)
 
     # List test cases for just SM
@@ -560,7 +563,22 @@ if (WITH_ATGEN)
             "${GAMMU_TEST_PATH}/at-get-smsmemories${CMAKE_EXECUTABLE_SUFFIX}"
             "${Gammu_SOURCE_DIR}/tests/at-cpms-sm/${TESTMESSAGE}")
         set_tests_properties("at-get-smsmemories-sm-${TESTNAME}" PROPERTIES
-            PASS_REGULAR_EXPRESSION "read: ME : N/A, SM : ok, save: ME : N/A, SM = ok")
+            PASS_REGULAR_EXPRESSION "read: ME : N/A, SM : ok, SR : N/A save: ME : N/A, SM : ok, SR : N/A")
+    endforeach(TESTMESSAGE $MESSAGES)
+
+    # List test cases for just SR
+    file(GLOB MESSAGES
+            RELATIVE "${Gammu_SOURCE_DIR}/tests/at-cpms-sr"
+            "${Gammu_SOURCE_DIR}/tests/at-cpms-sr/*.dump")
+    list(SORT MESSAGES)
+
+    foreach(TESTMESSAGE ${MESSAGES})
+        string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
+        add_test("at-get-smsmemories-sr-${TESTNAME}"
+                "${GAMMU_TEST_PATH}/at-get-smsmemories${CMAKE_EXECUTABLE_SUFFIX}"
+                "${Gammu_SOURCE_DIR}/tests/at-cpms-sr/${TESTMESSAGE}")
+        set_tests_properties("at-get-smsmemories-sr-${TESTNAME}" PROPERTIES
+                PASS_REGULAR_EXPRESSION "read: ME : ok, SM : N/A, SR : ok save: ME : ok, SM : N/A, SR : ok")
     endforeach(TESTMESSAGE $MESSAGES)
 
     # AT CNMI parsing

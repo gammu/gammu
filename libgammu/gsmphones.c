@@ -130,6 +130,8 @@ GSM_FeatureName AllFeatureNames[] = {
 	{"HUAWEI_INIT", F_HUAWEI_INIT},
 	{"ZTE_INIT", F_ZTE_INIT},
 	{"USSD_GSM_CHARSET", F_USSD_GSM_CHARSET},
+	{"SMS_SR", F_SMS_SR},
+	{"SMS_NO_SR", F_SMS_NO_SR},
 	{"", 0},
 };
 

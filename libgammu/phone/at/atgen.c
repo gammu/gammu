@@ -282,6 +282,24 @@ static ATErrorCode CMEErrorCodes[] = {
 
 static char samsung_location_error[] = "[Samsung] Empty location";
 
+gboolean ATGEN_IsMemoryAvailable(const GSM_Phone_ATGENData *data, GSM_MemoryType type)
+{
+	return
+			(type == MEM_ME && data->PhoneSMSMemory == AT_AVAILABLE) ||
+			(type == MEM_SM && data->SIMSMSMemory == AT_AVAILABLE) ||
+			(type == MEM_MT && (data->PhoneSMSMemory == AT_AVAILABLE || data->SIMSMSMemory == AT_AVAILABLE)) ||
+			(type == MEM_SR && data->SRSMSMemory == AT_AVAILABLE);
+}
+
+gboolean ATGEN_IsMemoryWriteable(const GSM_Phone_ATGENData *data, GSM_MemoryType type)
+{
+	// we assume that if memory is writeable, then it's also enabled
+	return
+			(type == MEM_ME && data->PhoneSaveSMS == AT_AVAILABLE) ||
+			(type == MEM_SM && data->SIMSaveSMS == AT_AVAILABLE) ||
+			(type == MEM_MT && (data->PhoneSaveSMS == AT_AVAILABLE || data->SIMSaveSMS == AT_AVAILABLE)) ||
+			(type == MEM_SR && data->SRSaveSMS == AT_AVAILABLE);
+}
 
 GSM_Error ATGEN_HandleCMEError(GSM_StateMachine *s)
 {
@@ -6265,7 +6283,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReplyIgnore, 	"+ZUSIMR:"		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore, 	"+SPNWNAME:"		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore, 	"+ZEND"			,0x00,0x00,ID_IncomingFrame	 },
-{ATGEN_GenericReplyIgnore, 	"+CDSI:"		,0x00,0x00,ID_IncomingFrame	 },
+{ATGEN_IncomingSMSInfo,		  "+CDSI:" 	 	,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore,	"+CLCC:"		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore,	"#STN:"			,0x00,0x00,ID_IncomingFrame	 },
 
