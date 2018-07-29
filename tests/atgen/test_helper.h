@@ -5,6 +5,8 @@
 #include "../../libgammu/phone/at/atgen.h"
 #include "../common.h"
 
+#define UNNEEDED(x) (void)(x)
+
 #define SET_RESPONSES(responses) \
   set_responses(responses, sizeof(responses) / sizeof(*(responses)))
 

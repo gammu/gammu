@@ -26,6 +26,8 @@ void get_sms_default_memory(void)
 
   puts(__func__);
 
+  UNNEEDED(Priv);
+
   sms->Location = 0;
   sms->Folder = 1;
 
@@ -58,6 +60,8 @@ void get_sms_requested_memory(void)
   bind_response_handling(s);
 
   puts(__func__);
+
+  UNNEEDED(Priv);
 
   sms->Memory = MEM_SR;
   sms->Location = 0;
