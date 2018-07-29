@@ -160,6 +160,8 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{ERR_DB_CONNECT, "DB_CONNECT", N_("Failed to connect to database.")},
 	{ERR_DB_TIMEOUT, "DB_TIMEOUT", N_("Database connection timeout.")},
 	{ERR_SQL, "SQL", N_("Error in executing SQL query.")},
+	{ERR_MEMORY_NOT_AVAILABLE, "MEMORY_NOT_AVAILABLE", N_("The type of memory is not available or has been disabled.")},
+	{ERR_INVALID_OPERATION, "INVALID_OPERATION", N_("The operation cannot be performed.")},
 
 	{0,	"",				""}
 };

@@ -726,6 +726,15 @@ typedef enum {
 	 * Prefer GSM charset for USSD (default is unicode).
 	 */
 	F_USSD_GSM_CHARSET,
+	/**
+	 * Phone supports SR storage even if it does not report
+	 * so.
+	 */
+	F_SMS_SR,
+	/**
+	 * Phone does not have a SR memory even if it reports so.
+	 */
+	F_SMS_NO_SR,
 
 	/**
 	 * Just marker of highest feature code, should not be used.

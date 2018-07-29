@@ -397,12 +397,51 @@ typedef struct {
 	 * Mode of SQWE (Siemens phones and switching to OBEX).
 	 */
 	int			SQWEMode;
-	/**
-	 * Screen width and heigth for screenshot.
-	 */
+  /**
+   * Screen width and height for screenshot.
+   */
 	int			ScreenWidth;
 	int			ScreenHeigth;
+  /**
+   * Is phone SR memory available ?
+   */
+  GSM_AT_Feature		SRSMSMemory;
+  /**
+   * Can we write to phone SR memory?
+   */
+  GSM_AT_Feature		SRSaveSMS;
 } GSM_Phone_ATGENData;
+
+/**
+ * Determine if the memory type is available.
+ *
+ * \param data AT generic phone data.
+ * \param type GSM memory type to check.
+ *
+ * \return TRUE if the memory is available.
+ */
+gboolean ATGEN_IsMemoryAvailable (const GSM_Phone_ATGENData *data, GSM_MemoryType type);
+
+/**
+ * Determine if the memory is configured for writing.
+ *
+ * \param data AT generic phone data.
+ * \param type GSM memory type to check.
+ *
+ * \return TRUE if the memory can be written to.
+ */
+gboolean ATGEN_IsMemoryWriteable(const GSM_Phone_ATGENData *data, GSM_MemoryType type);
+
+/**
+ * Sets the requested memory type on the MT
+ *
+ * @param s State machine (SM) structure
+ * @param memoryType The memory type to set
+ * @param writeable Request memory set to writeable
+ * @param requestId The request ID for SM routing, usually ID_SetMemoryType
+ */
+GSM_Error ATGEN_SetRequestedSMSMemory(GSM_StateMachine *s, GSM_MemoryType memoryType, gboolean writeable,
+                                      GSM_Phone_RequestID requestId);
 
 /**
  * Generates error code from current CMS error according to

@@ -16,6 +16,7 @@
 GSM_MemoryType GSM_StringToMemoryType(const char *s) {
     if (strcmp(s, "ME") == 0)      return MEM_ME;
     else if (strcmp(s, "SM") == 0) return MEM_SM;
+		else if (strcmp(s, "SR") == 0) return MEM_SR;
     else if (strcmp(s, "ON") == 0) return MEM_ON;
     else if (strcmp(s, "DC") == 0) return MEM_DC;
     else if (strcmp(s, "RC") == 0) return MEM_RC;
