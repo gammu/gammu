@@ -2,6 +2,7 @@
 #define H_ATGEN_TEST_HELPER_INCLUDED
 
 #include <stdlib.h>
+#include <string.h>
 #include "../../libgammu/phone/at/atgen.h"
 #include "../common.h"
 

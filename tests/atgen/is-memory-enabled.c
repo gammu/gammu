@@ -3,6 +3,7 @@
 int main(void)
 {
   GSM_Phone_ATGENData data;
+  memset(&data, 0, sizeof(GSM_Phone_ATGENData));
 
   test_result(ATGEN_IsMemoryAvailable(&data, MEM_ME) == FALSE);
   test_result(ATGEN_IsMemoryAvailable(&data, MEM_SR) == FALSE);
