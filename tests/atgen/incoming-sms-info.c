@@ -29,15 +29,16 @@ void ignore_if_incoming_sms_disabled(void)
   GSM_SMSMessage sms;
   GSM_StateMachine *s = setup_state_machine();
   GSM_Phone_ATGENData *Priv = setup_at_engine(s);
-  GSM_Protocol_ATData *d = &s->Protocol.Data.AT;
   GSM_Protocol_Message msg;
 
-  char *event = "+CDSI: \"SR\",0\r";
+  const char *event = "+CDSI: \"SR\",0\r";
   const char *responses[] = { "ERROR\r\n" };
   SET_RESPONSES(responses);
   bind_response_handling(s);
 
   puts(__func__);
+
+  UNNEEDED(Priv);
 
   memset(&sms, 0, sizeof(sms));
   s->Phone.Data.EnableIncomingSMS = FALSE;
@@ -46,7 +47,7 @@ void ignore_if_incoming_sms_disabled(void)
   s->User.IncomingSMSUserData = &sms;
 
   msg.Length = strlen(event);
-  msg.Buffer = event;
+  msg.Buffer = (char*)event;
   msg.Type = 0;
 
   s->Phone.Data.RequestMsg = &msg;
@@ -62,21 +63,22 @@ void ignore_if_no_handler(void)
   GSM_Error error;
   GSM_StateMachine *s = setup_state_machine();
   GSM_Phone_ATGENData *Priv = setup_at_engine(s);
-  GSM_Protocol_ATData *d = &s->Protocol.Data.AT;
   GSM_Protocol_Message msg;
 
-  char *event = "+CDSI: \"SR\",0\r";
+  const char *event = "+CDSI: \"SR\",0\r";
   const char *responses[] = { "ERROR\r\n" };
   SET_RESPONSES(responses);
   bind_response_handling(s);
 
   puts(__func__);
 
+  UNNEEDED(Priv);
+
   s->Phone.Data.EnableIncomingSMS = TRUE;
   s->Phone.Data.RequestID = ID_None;
 
   msg.Length = strlen(event);
-  msg.Buffer = event;
+  msg.Buffer = (char*)event;
   msg.Type = 0;
 
   s->Phone.Data.RequestMsg = &msg;
@@ -92,10 +94,9 @@ void skip_if_memory_disabled(void)
   GSM_SMSMessage sms;
   GSM_StateMachine *s = setup_state_machine();
   GSM_Phone_ATGENData *Priv = setup_at_engine(s);
-  GSM_Protocol_ATData *d = &s->Protocol.Data.AT;
   GSM_Protocol_Message msg;
 
-  char *event = "+CDSI: \"SR\",0\r";
+  const char *event = "+CDSI: \"SR\",0\r";
   const char *responses[] = { "ERROR\r\n" };
   SET_RESPONSES(responses);
   bind_response_handling(s);
@@ -109,7 +110,7 @@ void skip_if_memory_disabled(void)
   s->User.IncomingSMSUserData = &sms;
 
   msg.Length = strlen(event);
-  msg.Buffer = event;
+  msg.Buffer = (char*)event;
   msg.Type = 0;
 
   s->Phone.Data.RequestMsg = &msg;
@@ -127,10 +128,9 @@ void cdsi_sr_0(void)
   GSM_SMSMessage sms;
   GSM_StateMachine *s = setup_state_machine();
   GSM_Phone_ATGENData *Priv = setup_at_engine(s);
-  GSM_Protocol_ATData *d = &s->Protocol.Data.AT;
   GSM_Protocol_Message msg;
 
-  char *event = "+CDSI: \"SR\",0\r";
+  const char *event = "+CDSI: \"SR\",0\r";
 
   const char *responses[] = {
       "+CPMS: (\"ME\",\"MT\",\"SM\",\"SR\"),(\"ME\",\"MT\",\"SM\"),(\"ME\",\"SM\")\r",
@@ -153,7 +153,7 @@ void cdsi_sr_0(void)
   s->User.IncomingSMSUserData = &sms;
 
   msg.Length = strlen(event);
-  msg.Buffer = event;
+  msg.Buffer = (char*)event;
   msg.Type = 0;
 
   s->Phone.Data.RequestMsg = &msg;
@@ -173,10 +173,9 @@ void cmti_sm_1(void)
   GSM_SMSMessage sms;
   GSM_StateMachine *s = setup_state_machine();
   GSM_Phone_ATGENData *Priv = setup_at_engine(s);
-  GSM_Protocol_ATData *d = &s->Protocol.Data.AT;
   GSM_Protocol_Message msg;
 
-  char *event = "+CDSI: \"SM\",1\r\n";
+  const char *event = "+CDSI: \"SM\",1\r\n";
 
   const char *responses[] = {
       "+CPMS: (\"ME\",\"MT\",\"SM\",\"SR\"),(\"ME\",\"MT\",\"SM\",\"SR\"),(\"ME\",\"SM\")\r",
@@ -199,7 +198,7 @@ void cmti_sm_1(void)
   s->User.IncomingSMSUserData = &sms;
 
   msg.Length = strlen(event);
-  msg.Buffer = event;
+  msg.Buffer = (char*)event;
   msg.Type = 0;
 
   s->Phone.Data.RequestMsg = &msg;

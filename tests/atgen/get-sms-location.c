@@ -8,7 +8,7 @@ GSM_Error ATGEN_GetSMSMemories(GSM_StateMachine *s);
 GSM_Error ATGEN_GetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms,
     unsigned char *folderid, int *location, gboolean for_write);
 
-void requested_memory()
+void requested_memory(void)
 {
   GSM_Error error;
   GSM_SMSMessage sms;
@@ -30,6 +30,8 @@ void requested_memory()
 
   puts(__func__);
 
+  UNNEEDED(Priv);
+
   memset(&sms, 0, sizeof(sms));
   sms.Memory = MEM_SR;
   sms.Folder = 0;
@@ -44,7 +46,7 @@ void requested_memory()
   test_result(location == 3);
 }
 
-void computed_memory()
+void computed_memory(void)
 {
   GSM_Error error;
   GSM_SMSMessage sms;
@@ -65,6 +67,8 @@ void computed_memory()
   bind_response_handling(s);
 
   puts(__func__);
+
+  UNNEEDED(Priv);
 
   memset(&sms, 0, sizeof(sms));
   sms.Folder = 0;
