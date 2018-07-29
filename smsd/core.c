@@ -60,6 +60,8 @@
 #endif
 
 #include "../libgammu/misc/string.h"
+#include "../libgammu/protocol/protocol.h"
+#include "../libgammu/gsmstate.h"
 
 #ifndef PATH_MAX
 #ifdef MAX_PATH
@@ -2015,6 +2017,102 @@ void SMSD_IncomingUSSDCallback(GSM_StateMachine *sm UNUSED, GSM_USSDMessage *uss
 	}
 }
 
+#define INIT_SMSINFO_CACHE_SIZE 10
+/**
+ * Called when a +CDSI or +CMTI event is received.
+ *
+ * SMSD uses polling to read messages from MT memory, to avoid potential
+ * conflicts only information on status reports stored in SR memory is cached.
+ *
+ * The amount of SR memory on a device is generally very small so it's unlikely
+ * there would be an issue creating/reallocating the cache, if such an issue
+ * occurs some or all status report information records will be lost.
+ */
+void SMSD_IncomingSMSCallback(GSM_StateMachine *s,  GSM_SMSMessage *sms, void *user_data)
+{
+  GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
+  GSM_AT_SMSInfo_Cache *Cache = &Priv->SMSInfoCache;
+  GSM_SMSDConfig *Config = user_data;
+  void *reallocated = NULL;
+
+  if (sms->PDU != SMS_Status_Report || sms->Memory != MEM_SR)
+    return;
+
+  SMSD_Log(DEBUG_INFO, Config, "caching incoming status report information.");
+
+  if (Cache->cache_size <= Cache->cache_used) {
+    if (Cache->smsInfo_records == NULL) {
+      Cache->smsInfo_records = malloc(INIT_SMSINFO_CACHE_SIZE * sizeof(*Cache->smsInfo_records));
+      if (Cache->smsInfo_records == NULL) {
+        SMSD_Log(DEBUG_ERROR, Config, "failed to allocate SMS information cache, records will not be processed.");
+        return;
+      }
+      Cache->cache_size = INIT_SMSINFO_CACHE_SIZE;
+    } else {
+      reallocated = realloc(Cache->smsInfo_records, (Cache->cache_size * 2) * sizeof(*Cache->smsInfo_records));
+      if (reallocated == NULL) {
+        SMSD_Log(DEBUG_ERROR, Config, "failed to reallocate SMS information cache, some records will be lost.");
+        return;
+      }
+      Cache->cache_size *= 2;
+    }
+  }
+
+  memcpy(Cache->smsInfo_records + Cache->cache_used, sms, sizeof(*Cache->smsInfo_records));
+  Cache->cache_used += 1;
+}
+
+GSM_Error SMSD_ProcessSMSInfoCache(GSM_SMSDConfig *Config)
+{
+	GSM_StateMachine *s = Config->gsm;
+	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
+	GSM_AT_SMSInfo_Cache *Cache = &Priv->SMSInfoCache;
+	GSM_MultiSMSMessage msms;
+	GSM_SMSMessage *sms;
+	GSM_Error error = ERR_NONE;
+	unsigned int i;
+
+	memset(&msms, 0, sizeof(GSM_MultiSMSMessage));
+	msms.Number = 1;
+
+	for(i = 0; i < Cache->cache_used; ++i) {
+		sms = Cache->smsInfo_records + i;
+		if(sms->Memory == MEM_INVALID) continue;
+
+		msms.SMS[0] = *sms;
+
+		error = GSM_GetSMS(s, &msms);
+		if(error != ERR_NONE) {
+			SMSD_Log(DEBUG_ERROR, Config, "Error reading SMS from memory %s:%d",
+					GSM_MemoryTypeToString(sms->Memory),
+					sms->Location);
+			break;
+		}
+
+		error = SMSD_ProcessSMS(Config, &msms);
+		if(error != ERR_NONE) {
+			SMSD_LogError(DEBUG_ERROR, Config, "Error processing SMS", error);
+			break;
+		}
+
+		error = GSM_DeleteSMS(s, sms);
+		if (error != ERR_NONE) {
+			SMSD_LogError(DEBUG_ERROR, Config, "Error deleting SMS", error);
+			break;
+		}
+
+		/* successfully processed cache entry, mark invalid to avoid reprocessing
+		 * in case of retry loop */
+		sms->Memory = MEM_INVALID;
+	}
+
+	/* cache processed successfully, clear it for reuse */
+	if(error == ERR_NONE)
+		Cache->cache_used = 0;
+
+	return error;
+}
+
 /**
  * Main loop which takes care of connection to phone and processing of
  * messages.
@@ -2091,9 +2189,10 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 					GSM_SetIncomingCall(Config->gsm, TRUE);
 				}
 
+				GSM_SetIncomingSMSCallback(Config->gsm, SMSD_IncomingSMSCallback, Config);
+
 				/* We use polling so store messages to SIM */
 				GSM_SetIncomingSMS(Config->gsm, TRUE);
-
 				GSM_SetIncomingUSSDCallback(Config->gsm, SMSD_IncomingUSSDCallback, Config);
 				GSM_SetIncomingUSSD(Config->gsm, TRUE);
 
@@ -2162,6 +2261,14 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 
 			initerrors = 0;
 
+			/* process SMS info cache */
+			if(!SMSD_ProcessSMSInfoCache(Config)) {
+				errors++;
+				continue;
+			} else {
+				errors = 0;
+			}
+
 			/* read all incoming SMS */
 			if (!SMSD_CheckSMSStatus(Config)) {
 				errors++;
@@ -2171,7 +2278,6 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 			}
 
 		}
-
 
 		/* time for preventive reset */
 		if (Config->resetfrequency > 0 && difftime(lastloop, lastreset) >= Config->resetfrequency) {

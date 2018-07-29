@@ -229,6 +229,15 @@ typedef struct {
 } GSM_AT_SMS_Cache;
 
 /**
+ * Structure for SMS Info cache.
+ */
+typedef struct {
+	size_t cache_size;
+	unsigned int cache_used;
+	GSM_SMSMessage *smsInfo_records;
+} GSM_AT_SMSInfo_Cache;
+
+/**
  * Maximal length of phonebook memories list.
  */
 #define AT_PBK_MAX_MEMORIES	200
@@ -410,6 +419,10 @@ typedef struct {
    * Can we write to phone SR memory?
    */
   GSM_AT_Feature		SRSaveSMS;
+	/**
+	 * Cache for incoming SMS info.
+	 */
+	GSM_AT_SMSInfo_Cache SMSInfoCache;
 } GSM_Phone_ATGENData;
 
 /**
