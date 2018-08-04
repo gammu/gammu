@@ -2054,6 +2054,7 @@ void SMSD_IncomingSMSCallback(GSM_StateMachine *s,  GSM_SMSMessage *sms, void *u
         SMSD_Log(DEBUG_ERROR, Config, "failed to reallocate SMS information cache, some records will be lost.");
         return;
       }
+      Cache->smsInfo_records = reallocated;
       Cache->cache_size *= 2;
     }
   }
@@ -2106,7 +2107,7 @@ GSM_Error SMSD_ProcessSMSInfoCache(GSM_SMSDConfig *Config)
 		sms->Memory = MEM_INVALID;
 	}
 
-	/* cache processed successfully, clear it for reuse */
+	/* cache processed successfully, reset used count to reuse cache memory */
 	if(error == ERR_NONE)
 		Cache->cache_used = 0;
 
