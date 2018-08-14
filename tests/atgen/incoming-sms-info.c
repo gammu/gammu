@@ -5,8 +5,10 @@
 
 int is_empty(const char *buffer, size_t length)
 {
+  size_t i;
+
   if(buffer != NULL && length > 0)
-    for(size_t i = 0; i < length; ++i)
+    for(i = 0; i < length; ++i)
       if(buffer[i] != '\0') return FALSE;
 
   return TRUE;
