@@ -6,6 +6,10 @@
 #include "../../libgammu/phone/at/atgen.h"
 #include "../common.h"
 
+#if _MSC_VER < 1910
+#define __func__ __FUNCTION__
+#endif
+
 #define UNNEEDED(x) (void)(x)
 
 #define SET_RESPONSES(responses) \
