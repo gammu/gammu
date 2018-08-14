@@ -1,4 +1,4 @@
-add_library(atgen-tests test_helper.c)
+add_library(atgen-tests STATIC test_helper.c)
 target_link_libraries(atgen-tests libGammu)
 
 if(MYSQL_INCLUDE_DIR)
