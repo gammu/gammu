@@ -26,6 +26,7 @@ ChangeLog
 [+] * SMSD now tries to store whole decoded text for concatenated
       messages in the first entry in database.
 [-] * Improved compatibility with Sierra SL8084TR.
+[+] * Added support for delivery reports stored in SR memory.
 
 20180105 - 1.39.0
     
