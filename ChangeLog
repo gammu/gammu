@@ -25,6 +25,7 @@ ChangeLog
 [-] * Removed non configurable sleep after failed message send.
 [+] * SMSD now tries to store whole decoded text for concatenated
       messages in the first entry in database.
+[-] * Improved compatibility with Sierra SL8084TR.
 
 20180105 - 1.39.0
     
