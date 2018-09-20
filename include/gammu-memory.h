@@ -76,6 +76,10 @@ typedef enum {
 	 * Quick dialing choices.
 	 */
 	MEM_QD,
+	/**
+	 * Status report memory
+	 */
+	MEM_SR,
 
 	/**
 	 * Invalid memory type.
@@ -103,7 +107,8 @@ typedef enum {
 	((x) == MEM_FD ? "FD" :	\
 	((x) == MEM_VM ? "VM" :	\
 	((x) == MEM_QD ? "QD" :	\
-	((x) == MEM_SL ? "SL" : "XX")))))))))))
+	((x) == MEM_SL ? "SL" : \
+	((x) == MEM_SR ? "SR" :	"XX"))))))))))))
 
 /**
  * Converts memory type from string.

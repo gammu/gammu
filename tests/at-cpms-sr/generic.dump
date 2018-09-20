@@ -1,0 +1,4 @@
+AT+CPMS=?
++CPMS: (ME", "SR"), ("ME", "SR"), ("ME")
+OK
+
