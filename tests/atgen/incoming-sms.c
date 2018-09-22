@@ -101,6 +101,8 @@ void process_cds(void)
 
   puts(__func__);
 
+  UNNEEDED(Priv);
+
   memset(&sms, 0, sizeof(sms));
   s->Phone.Data.EnableIncomingSMS = TRUE;
   s->Phone.Data.RequestID = ID_None;
