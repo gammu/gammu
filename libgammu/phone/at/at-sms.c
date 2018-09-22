@@ -2461,11 +2461,40 @@ GSM_Error ATGEN_IncomingSMSDeliver(GSM_Protocol_Message *msg, GSM_StateMachine *
 	return ERR_NONE;
 }
 
-/* I don't have phone able to do it and can't fill it */
-GSM_Error ATGEN_IncomingSMSReport(GSM_Protocol_Message *msg UNUSED, GSM_StateMachine *s)
+GSM_Error ATGEN_IncomingSMSReport(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
+  GSM_Error error;
+  GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
+  GSM_SMSMessage sms;
+  char buffer[300] = {'\0'};
+  int pduSize = 0;
+  size_t parseSize = 0;
+
+  assert(strncasecmp("+CDS:", msg->Buffer, 5) == 0);
+
+  if (!s->Phone.Data.EnableIncomingSMS || s->User.IncomingSMS == NULL)
+    return ERR_NONE;
+
 	smprintf(s, "Incoming SMS received (Report)\n");
-	return ERR_NONE;
+
+  memset(&sms, 0, sizeof(sms));
+  sms.State = SMS_UnRead;
+  sms.InboxFolder = TRUE;
+  sms.Folder = 1;
+  pduSize = GetLineLength(msg->Buffer, &Priv->Lines, 2);
+  assert(pduSize >= 0);
+
+  if(!DecodeHexBin(buffer, GetLineString(msg->Buffer, &Priv->Lines, 2), (size_t)pduSize)) {
+    smprintf(s, "Failed to decode hex string!\n");
+    return ERR_CORRUPTED;
+  }
+
+  error = GSM_DecodePDUFrame(&(s->di), &sms, buffer, (size_t)pduSize, &parseSize, TRUE);
+
+  if(error == ERR_NONE)
+    s->User.IncomingSMS(s, &sms, s->User.IncomingSMSUserData);
+
+  return error;
 }
 
 gboolean InRange(int *range, int i) {
@@ -2565,6 +2594,7 @@ GSM_Error ATGEN_ReplyGetCNMIMode(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 	const char *buffer;
 	int *range = NULL;
+	int param = -1;
 
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
@@ -2642,7 +2672,12 @@ GSM_Error ATGEN_ReplyGetCNMIMode(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 	if (range == NULL) {
 		return  ERR_UNKNOWNRESPONSE;
 	}
-	if (InRange(range, 1)) {
+
+	param = s->CurrentConfig->CNMIParams[1];
+	if (param && InRange(range, param)) {
+		Priv->CNMIProcedure = param;
+	}
+	else if (InRange(range, 1)) {
 		Priv->CNMIProcedure = 1; 	/* 1 = store message and send where it is stored */
 	}
 	else if (InRange(range, 2)) {
@@ -2666,7 +2701,12 @@ GSM_Error ATGEN_ReplyGetCNMIMode(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 	if (range == NULL) {
 		return  ERR_UNKNOWNRESPONSE;
 	}
-	if (InRange(range, 2)) {
+
+	param = s->CurrentConfig->CNMIParams[2];
+	if (param && InRange(range, param)) {
+		Priv->CNMIBroadcastProcedure = param;
+	}
+	else if (InRange(range, 2)) {
 		Priv->CNMIBroadcastProcedure = 2; /* 2 = route message to TE */
 	}
 	else if (InRange(range, 1)) {
@@ -2691,7 +2731,12 @@ GSM_Error ATGEN_ReplyGetCNMIMode(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 	if (range == NULL) {
 		return  ERR_UNKNOWNRESPONSE;
 	}
-	if (InRange(range, 2)) {
+
+	param = s->CurrentConfig->CNMIParams[3];
+	if (param && InRange(range, param)) {
+		Priv->CNMIDeliverProcedure = param;
+	}
+	else if (InRange(range, 2)) {
 		Priv->CNMIDeliverProcedure = 2; /* 2 = store message and send where it is stored */
 	}
 	else if (InRange(range, 1)) {

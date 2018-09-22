@@ -90,6 +90,36 @@ void ignore_if_no_handler(void)
   cleanup_state_machine(s);
 }
 
+void ignore_if_no_cmti_handler(void)
+{
+  GSM_Error error;
+  GSM_StateMachine *s = setup_state_machine();
+  GSM_Phone_ATGENData *Priv = setup_at_engine(s);
+  GSM_Protocol_Message msg;
+
+  const char *event = "+CMTI: \"SR\",0\r";
+  const char *responses[] = { "ERROR\r\n" };
+  SET_RESPONSES(responses);
+  bind_response_handling(s);
+
+  puts(__func__);
+
+  UNNEEDED(Priv);
+
+  s->Phone.Data.EnableIncomingSMS = TRUE;
+  s->Phone.Data.RequestID = ID_None;
+
+  msg.Length = strlen(event);
+  msg.Buffer = (char*)event;
+  msg.Type = 0;
+
+  s->Phone.Data.RequestMsg = &msg;
+  error = ATGEN_DispatchMessage(s);
+  test_result(error == ERR_NONE);
+
+  cleanup_state_machine(s);
+}
+
 void skip_if_memory_disabled(void)
 {
   GSM_Error error;
@@ -177,7 +207,7 @@ void cmti_sm_1(void)
   GSM_Phone_ATGENData *Priv = setup_at_engine(s);
   GSM_Protocol_Message msg;
 
-  const char *event = "+CDSI: \"SM\",1\r\n";
+  const char *event = "+CMTI: \"SM\",1\r\n";
 
   const char *responses[] = {
       "+CPMS: (\"ME\",\"MT\",\"SM\",\"SR\"),(\"ME\",\"MT\",\"SM\",\"SR\"),(\"ME\",\"SM\")\r",
@@ -218,6 +248,7 @@ int main(void)
 {
   ignore_if_incoming_sms_disabled();
   ignore_if_no_handler();
+  ignore_if_no_cmti_handler();
   skip_if_memory_disabled();
   cdsi_sr_0();
   cmti_sm_1();

@@ -27,6 +27,8 @@
 #include <sys/types.h>
 #include <pwd.h>
 #include <unistd.h>
+#include <ctype.h>
+
 #endif
 
 #if defined(WIN32) || defined(DJGPP)
@@ -1347,16 +1349,79 @@ void GSM_ExpandUserPath(char **string)
 	*string = tmp;
 }
 
+/**
+ * Parses an ASCII string of comma delimited single digits into a set of integer
+ * parameters, any whitespace is ignored.
+ *
+ * @param out_params array to receive the parsed parameters
+ * @param num_params number of parameters out_params can hold
+ * @param args string containing list of parameters to parse
+ * @return ERR_NONE on success, otherwise ERR_INVALIDDATA
+ */
+GSM_Error GSM_ReadParams(int *out_params, const int num_params, const char *args)
+{
+  int *params_ptr = out_params;
+  const int *params_end = out_params + num_params * sizeof(int);
+  const char *args_ptr = args;
+  int whitespace_count = 0;
+  gboolean expect_comma = 0;
+
+  if (!args)
+    return ERR_NONE;
+
+  while (params_ptr < params_end) {
+    while (isspace((unsigned char)*args_ptr)) {
+      ++whitespace_count;
+      ++args_ptr;
+    }
+
+    if(!*args_ptr)
+      return ERR_NONE;
+
+    switch (*args_ptr) {
+      case '0': case '1': case '2': case '3': case '4':
+      case '5': case '6': case '7': case '8': case '9':
+        if (expect_comma) {
+          printf("expected comma but got %c for parameter %lu\n", *args_ptr, ++params_ptr - out_params);
+          return ERR_INVALIDDATA;
+        }
+        *params_ptr = *args_ptr - '0';
+        expect_comma = TRUE;
+        break;
+
+      case ',':
+        ++params_ptr;
+        expect_comma = FALSE;
+        break;
+
+      default: {
+        printf("error parsing parameters, unrecognized token '%c' in position %lu\n",
+               *args_ptr, ++params_ptr - --out_params + ++whitespace_count);
+        return ERR_INVALIDDATA; }
+    }
+
+    ++args_ptr;
+  }
+
+  return ERR_NONE;
+}
+
+GSM_Error GSM_ReadCNMIParams(int out_params[4], const char *args)
+{
+  return GSM_ReadParams(out_params, 4, args);
+}
+
 GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 {
 	INI_Section 	*h;
 	unsigned char 	section[50]={0};
 	gboolean	found = FALSE;
 	char		*Temp = NULL;
+	const int cnmi_default[4] = {-1,-1,-1,-1};
 
 	GSM_Error error = ERR_UNKNOWN;
-
 	cfg->UseGlobalDebugFile	 = TRUE;
+	memcpy(cfg->CNMIParams, &cnmi_default, sizeof(cfg->CNMIParams));
 
 	/* If we don't have valid config, bail out */
 	if (cfg_info == NULL) {
@@ -1510,7 +1575,15 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 			goto fail;
 		}
 	}
-	return ERR_NONE;
+
+	Temp = INI_GetValue(cfg_info, section, "atgen_setcnmi", FALSE);
+	if (Temp) {
+    error = GSM_ReadCNMIParams(cfg->CNMIParams, Temp);
+    if (error != ERR_NONE)
+      goto fail;
+  }
+
+  return ERR_NONE;
 
 fail:
 	/* Special case, this config needs to be somehow valid */
