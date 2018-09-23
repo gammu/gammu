@@ -3,11 +3,14 @@
 #include "../../libgammu/phone/at/atgen.h"
 #include "../../libgammu/gsmstate.h"
 
-int is_empty(const char *buffer, size_t length)
+int is_empty(const char *buffer, const int length)
 {
+  int i;
+
   if(buffer != NULL && length > 0)
-    for(size_t i = 0; i < length; ++i)
-      if(buffer[i] != '\0') return FALSE;
+    for(i = 0; i < length; ++i)
+      if(buffer[i] != '\0')
+        return FALSE;
 
   return TRUE;
 }
