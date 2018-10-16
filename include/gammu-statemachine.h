@@ -107,6 +107,11 @@ typedef struct {
 	 * Phone features override.
 	 */
 	GSM_Feature PhoneFeatures[GSM_MAX_PHONE_FEATURES + 1];
+	/**
+	 * Used to override default CNMI arguments for generic
+	 * AT protocol.
+	 */
+	 int CNMIParams[4];
 } GSM_Config;
 
 /**

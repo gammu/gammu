@@ -317,6 +317,28 @@ Locales and character set options
     ``LANG/LC_MESSAGES/gammu.mo``). If gammu is properly installed it should find
     these files automatically.
 
+Advanced options
+++++++++++++++++
+
+Advanced options are used to alter default logic, when using these options the
+user is responsible for ensuring any settings are correct for the target device
+and that they produce the desired behaviour.
+
+.. config:option:: atgen_setCNMI
+
+    For configurations using the generic AT command protocol it is possible to
+    override the default indicators used when a new SMS message is received.
+
+    The value for the setting is a comma delimited list of single digits
+    corresponding to the values for the ``AT+CNMI`` modem command. If a digit
+    is not provided, or if the provided digit is outside of the acceptable
+    range for the device the default value is used.
+
+    For example setting ``atgen_setcnmi = ,,2`` would set the third parameter of
+    the CNMI command to the value 2, leaving the rest of the parameters at
+    default, and ``atgen_setcnmi = 1,,,1`` would set the first and fourth parameters
+    respectively.
+
 Other options
 +++++++++++++
 

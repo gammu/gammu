@@ -2029,24 +2029,26 @@ void SMSD_IncomingUSSDCallback(GSM_StateMachine *sm UNUSED, GSM_USSDMessage *uss
 
 #define INIT_SMSINFO_CACHE_SIZE 10
 /**
- * Called when a +CDSI or +CMTI event is received.
+ * Handles SMS information messages (+CDSI/+CMTI)
  *
  * SMSD uses polling to read messages from MT memory, to avoid potential
- * conflicts only information on status reports stored in SR memory is cached.
+ * conflicts only information on status reports stored in SR memory are handled.
  *
  * The amount of SR memory on a device is generally very small so it's unlikely
  * there would be an issue creating/reallocating the cache, if such an issue
  * occurs some or all status report information records will be lost.
  */
-void SMSD_IncomingSMSCallback(GSM_StateMachine *s,  GSM_SMSMessage *sms, void *user_data)
+void SMSD_IncomingSMSInfoCallback(GSM_StateMachine *s,  GSM_SMSMessage *sms, void *user_data)
 {
   GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
   GSM_AT_SMSInfo_Cache *Cache = &Priv->SMSInfoCache;
   GSM_SMSDConfig *Config = user_data;
   void *reallocated = NULL;
 
-  if (sms->PDU != SMS_Status_Report || sms->Memory != MEM_SR)
-    return;
+  if (sms->PDU != SMS_Status_Report || sms->Memory != MEM_SR) {
+  	SMSD_Log(DEBUG_INFO, Config, "Ignoring incoming SMS info as not a Status Report in SR memory.");
+		return;
+	}
 
   SMSD_Log(DEBUG_INFO, Config, "caching incoming status report information.");
 
@@ -2071,6 +2073,33 @@ void SMSD_IncomingSMSCallback(GSM_StateMachine *s,  GSM_SMSMessage *sms, void *u
 
   memcpy(Cache->smsInfo_records + Cache->cache_used, sms, sizeof(*Cache->smsInfo_records));
   Cache->cache_used += 1;
+}
+
+/**
+ * Handles incoming SMS messages.
+ *
+ */
+void SMSD_IncomingSMSCallback(GSM_StateMachine *s,  GSM_SMSMessage *sms, void *user_data)
+{
+	GSM_MultiSMSMessage msms;
+	GSM_SMSDConfig *Config = user_data;
+	GSM_Error error;
+
+	if(sms->PDU == 0) {
+		// assume we only have message information, not a full message, handoff to appropriate handler
+		SMSD_IncomingSMSInfoCallback(s, sms, user_data);
+		return;
+	}
+
+	SMSD_Log(DEBUG_INFO, Config, "processing incoming SMS.");
+
+	memset(&msms, 0, sizeof(GSM_MultiSMSMessage));
+	msms.Number = 1;
+	msms.SMS[0] = *sms;
+
+	error = SMSD_ProcessSMS(Config, &msms);
+	if(error != ERR_NONE)
+		SMSD_LogError(DEBUG_ERROR, Config, "Error processing SMS", error);
 }
 
 GSM_Error SMSD_ProcessSMSInfoCache(GSM_SMSDConfig *Config)
@@ -2117,7 +2146,7 @@ GSM_Error SMSD_ProcessSMSInfoCache(GSM_SMSDConfig *Config)
 		sms->Memory = MEM_INVALID;
 	}
 
-	/* cache processed successfully, reset used count to reuse cache memory */
+	/* cache processed successfully, reset used count */
 	if(error == ERR_NONE)
 		Cache->cache_used = 0;
 

@@ -11,7 +11,7 @@
 int main(int argc, char **argv)
 {
 	GSM_Error error;
-	GSM_Config cfg = { "", "", NULL, NULL, FALSE, FALSE, NULL, FALSE, FALSE, "", "", "", "", "", {0} };
+	GSM_Config cfg = { "", "", NULL, NULL, FALSE, FALSE, NULL, FALSE, FALSE, "", "", "", "", "", {0}, {0} };
 	INI_Section *ini = NULL;
 
 	/* Check parameters */
