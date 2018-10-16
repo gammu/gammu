@@ -71,6 +71,8 @@
 #endif
 #endif
 
+GSM_Error SMSD_ProcessSMSInfoCache(GSM_SMSDConfig *Config);
+
 const char smsd_name[] = "gammu-smsd";
 
 time_t lastRing=0;
@@ -1523,7 +1525,11 @@ gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config)
 				return FALSE;
 		}
 		start = FALSE;
-	}
+
+    /* process any incoming SMS information records to help prevent memory exhaustion, ignore any
+     * errors so as not to interfere with this function, they'll be handle in main-loop processing */
+    SMSD_ProcessSMSInfoCache(Config);
+  }
 
 	/* Log how many messages were read */
 	SMSD_Log(DEBUG_INFO, Config, "Read %d messages", GetSMSNumber);
@@ -1818,6 +1824,10 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config)
 			SMSD_LogError(DEBUG_INFO, Config, "Error setting sent status", error);
 			goto failure_sent;
 		}
+
+		/* process any incoming SMS information records to help prevent memory exhaustion, ignore any
+		 * errors so as not to interfere with this function, they'll be handle in main-loop processing */
+		SMSD_ProcessSMSInfoCache(Config);
 	}
 	strcpy(Config->prevSMSID, "");
 	error = Config->Service->MoveSMS(&sms,Config, Config->SMSID, FALSE, TRUE);
