@@ -590,6 +590,7 @@ static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDCo
 			strcpy(ext, "txt");
 		}
 		DecodeUnicode(sms->SMS[i].Number, buffer2);
+		SMSDFiles_EscapeNumber(buffer2);
 
 		for (j = 0; j < 100; j++) {
 			sprintf(FileName,
