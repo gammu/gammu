@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2017-10-19 13:14+0200\n"
-"PO-Revision-Date: 2017-10-24 07:53+0000\n"
+"PO-Revision-Date: 2018-11-07 15:07+0000\n"
 "Last-Translator: Tuomas Harju <tuomas@rtj-group.com>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/gammu/gammu/fi/>"
 "\n"
@@ -17,39 +17,39 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.17\n"
+"X-Generator: Weblate 3.3-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:379 helper/message-cmdline.c:403
 #: helper/message-cmdline.c:447 helper/message-cmdline.c:484
 #: helper/message-cmdline.c:507
 msgid "Where is backup filename and location?"
-msgstr ""
+msgstr "Varmuuskopion tiedostonimi ja sijainti?"
 
 #: gammu/backup.c:63 helper/message-cmdline.c:495
 msgid "Calendar note not found in file"
-msgstr ""
+msgstr "Kalenterimerkintää ei löydy tiedostosta"
 
 #: gammu/backup.c:86
 msgid "WAP bookmark not found in file"
-msgstr ""
+msgstr "WAP -kirjanmerkkiä ei löydy tiedostosta"
 
 #: gammu/backup.c:107
 msgid "Note not found in file"
-msgstr ""
+msgstr "Muistiinpanoa ei löyy tiedostosta"
 
 #: gammu/backup.c:128
 msgid "Todo note not found in file"
-msgstr ""
+msgstr "Tehtävämerkintää ei löydy tiedostosta"
 
 #: gammu/backup.c:137 helper/message-cmdline.c:531
 msgid "Where is backup filename and location and memory type?"
-msgstr ""
+msgstr "Varmuuskopion tiedostonimi, sijainti ja muistin tyyppi?"
 
 #: gammu/backup.c:150 gammu/backup.c:161 helper/message-cmdline.c:543
 #: helper/message-cmdline.c:553
 msgid "Phonebook entry not found in file"
-msgstr ""
+msgstr "Yhteystietoa ei löydy tiedostosta"
 
 #: gammu/backup.c:167 helper/message-cmdline.c:558
 #, c-format
@@ -59,11 +59,11 @@ msgstr "Tuntematon muistityyppi: \"%s\"\n"
 #: gammu/backup.c:181
 #, c-format
 msgid "Unknown backup format: \"%s\"\n"
-msgstr ""
+msgstr "Tuntematon varmuuskopion muoto: \"%s\"\n"
 
 #: gammu/backup.c:187
 msgid "Error while opening file for writing!\n"
-msgstr ""
+msgstr "Virhe avattaessa tiedostoa kirjoittamista varten!\n"
 
 #: gammu/backup.c:191 gammu/files.c:455 helper/message-cmdline.c:1117
 msgid "Error while writing file!\n"
@@ -82,7 +82,7 @@ msgstr "Luetaan"
 
 #: gammu/backup.c:247 gammu/backup.c:292
 msgid "Only part of data saved, please increase the limit."
-msgstr ""
+msgstr "Vain osa tiedoista voitiin tallentaa, ole hyvä ja nosta rajaa."
 
 #: gammu/backup.c:268 gammu/backup.c:310 gammu/backup.c:475 gammu/mms.c:183
 msgid "Reading:"
@@ -111,7 +111,7 @@ msgstr "Paina Ctrl+C keskeyttääksesi..."
 
 #: gammu/backup.c:372
 msgid "Use Unicode subformat of backup file?"
-msgstr ""
+msgstr "Käytä varmuuskopiotiedostossa Unicode -formaattia?"
 
 #: gammu/backup.c:404
 msgid "Checking phone phonebook"
@@ -123,19 +123,19 @@ msgstr "Varmuuskopioi osoitekirja?"
 
 #: gammu/backup.c:409
 msgid "Checking SIM phonebook"
-msgstr ""
+msgstr "Tarkistetaan SIM -kortin yhteystietoja"
 
 #: gammu/backup.c:410
 msgid "Backup SIM phonebook?"
-msgstr ""
+msgstr "Varmuuskopioidaanko SIM -kortin yhteystiedot?"
 
 #: gammu/backup.c:415
 msgid "Checking phone calendar"
-msgstr ""
+msgstr "Tarkistetaan puhelimen kalenteria"
 
 #: gammu/backup.c:419
 msgid "Backup phone calendar notes?"
-msgstr ""
+msgstr "Varmuuskopioidaanko puhelimen kelenterimerkinnät?"
 
 #: gammu/backup.c:432 gammu/backup.c:467 gammu/backup.c:504 gammu/backup.c:541
 #: gammu/backup.c:576 gammu/backup.c:642 gammu/backup.c:679 gammu/backup.c:716
@@ -143,55 +143,55 @@ msgstr ""
 #: gammu/backup.c:905 gammu/backup.c:942
 #, c-format
 msgid "Only part of data saved, please increase %s."
-msgstr ""
+msgstr "Vain osa tiedoista voitiin tallentaa, ole hyvä ja nosta %s."
 
 #: gammu/backup.c:450
 msgid "Checking phone todos"
-msgstr ""
+msgstr "Tarkistetaan puhelimen tehtävälistaa"
 
 #: gammu/backup.c:453
 msgid "Backup phone todos?"
-msgstr ""
+msgstr "Varmuuskopiodaanko puhelimen tehtävälista?"
 
 #: gammu/backup.c:487
 msgid "Checking phone notes"
-msgstr ""
+msgstr "Tarkistetaan puhelimen muistiinpanoja"
 
 #: gammu/backup.c:491
 msgid "Backup phone notes?"
-msgstr ""
+msgstr "Varmuuskopiodaanko puhelimen muistiinpanot?"
 
 #: gammu/backup.c:522
 msgid "Checking phone caller logos"
-msgstr ""
+msgstr "Tarkistetaan puhelimesta soittajien logoja"
 
 #: gammu/backup.c:527
 msgid "Backup phone caller groups and logos?"
-msgstr ""
+msgstr "Varmuuskopioidaanko puhelimen soittoryhmät ja -logot?"
 
 #: gammu/backup.c:560
 msgid "Checking SIM SMS profiles"
-msgstr ""
+msgstr "Tarkistetaan SIM -kortin SMS -asetuksia"
 
 #: gammu/backup.c:561
 msgid "Backup SIM SMS profiles?"
-msgstr ""
+msgstr "Varmuuskopioidaanko SIM -kortin SMS -asetukset?"
 
 #: gammu/backup.c:589
 msgid "Checking phone startup text"
-msgstr ""
+msgstr "Tarkistetaan puhelimen käynnistystekstiä"
 
 #: gammu/backup.c:593
 msgid "Backup phone startup logo/text?"
-msgstr ""
+msgstr "Varmuuskopioidaanko puhelimen käynnistysteksti ja -logo?"
 
 #: gammu/backup.c:608
 msgid "Checking phone operator logo"
-msgstr ""
+msgstr "Tarkistetaan puhelimen operaattorin logo"
 
 #: gammu/backup.c:613
 msgid "Backup phone operator logo?"
-msgstr ""
+msgstr "Varmuuskopioidaanko puhelimen operaattorin logo?"
 
 #: gammu/backup.c:624
 msgid "Checking phone WAP bookmarks"
