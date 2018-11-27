@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: libGammu 1.39.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2016-10-11 08:16+0200\n"
-"PO-Revision-Date: 2016-07-10 18:02+0000\n"
-"Last-Translator: armagetron <armagetron@live.de>\n"
+"PO-Revision-Date: 2018-11-28 19:08+0000\n"
+"Last-Translator: ssantos <ssantos@web.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/gammu/libgammu/de/"
 ">\n"
 "Language: de\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.8-dev\n"
+"X-Generator: Weblate 3.3-dev\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
@@ -88,40 +88,28 @@ msgstr ""
 "angeschlossen."
 
 #: libgammu/gsmcomon.c:98
-#, fuzzy
-#| msgid ""
-#| "Frame not requested right now. See <http://wammu.eu/support/bugs/> for "
-#| "information how to report it."
 msgid ""
 "Frame not requested right now. See <https://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
 "Rückantwort vom Telefon im Moment nicht angefordert. Lesen Sie bitte unter "
-"<http://wammu.eu/support/bugs/> wo dieser Fehler zu melden ist."
+"<https://wammu.eu/support/bugs/> wo dieser Fehler zu melden ist."
 
 #: libgammu/gsmcomon.c:99
-#, fuzzy
-#| msgid ""
-#| "Unknown response from phone. See <http://wammu.eu/support/bugs/> for "
-#| "information how to report it."
 msgid ""
 "Unknown response from phone. See <https://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
-"Unbekannte Rückantwort vom Telefon. Lesen Sie bitte unter <http://wammu.eu/"
+"Unbekannte Rückantwort vom Telefon. Lesen Sie bitte unter <https://wammu.eu/"
 "support/bugs/> wo dieser Fehler zu melden ist."
 
 #: libgammu/gsmcomon.c:100
-#, fuzzy
-#| msgid ""
-#| "Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
-#| "report it."
 msgid ""
 "Unknown frame. See <https://wammu.eu/support/bugs/> for information how to "
 "report it."
 msgstr ""
-"Unbekannter Rückantwort-Frame vom Telefon. Lesen Sie bitte unter <http://"
-"wammu.eu/support/bugs/> wo dieser Fehler zu melden ist."
+"Unbekannter Rückantwort-Frame vom Telefon. Lesen Sie bitte unter "
+"<https://wammu.eu/support/bugs/> wo dieser Fehler zu melden ist."
 
 #: libgammu/gsmcomon.c:101
 msgid "Unknown connection type string. Check config file."
