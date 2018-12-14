@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: libGammu 1.39.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2016-10-11 08:16+0200\n"
-"PO-Revision-Date: 2013-04-25 15:45+0200\n"
-"Last-Translator: Michal Čihař <michal@cihar.com>\n"
-"Language-Team: Russian <http://hosted.weblate.org/projects/gammu/libgammu/ru/"
-">\n"
+"PO-Revision-Date: 2018-12-15 08:08+0000\n"
+"Last-Translator: Victor K <ktrace@yandex.ru>\n"
+"Language-Team: Russian <https://hosted.weblate.org/projects/gammu/libgammu/"
+"ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 1.6-dev\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
+"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 3.4-dev\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
@@ -84,40 +84,28 @@ msgid "No response in specified timeout. Probably phone not connected."
 msgstr "Превышен тайм-аут ожидания ответа. Возможно, телефон не подключён."
 
 #: libgammu/gsmcomon.c:98
-#, fuzzy
-#| msgid ""
-#| "Frame not requested right now. See <http://wammu.eu/support/bugs/> for "
-#| "information how to report it."
 msgid ""
 "Frame not requested right now. See <https://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
-"Неизвестный отклик от телефона. На странице <http://wammu.eu/support/bugs/> "
-"рассказано как сообщить об этом."
+"Неизвестный отклик от телефона. На странице <https://wammu.eu/support/bugs/> "
+"рассказано как об этом сообщить."
 
 #: libgammu/gsmcomon.c:99
-#, fuzzy
-#| msgid ""
-#| "Unknown response from phone. See <http://wammu.eu/support/bugs/> for "
-#| "information how to report it."
 msgid ""
 "Unknown response from phone. See <https://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
-"Неизвестный отклик от телефона. На странице <http://wammu.eu/support/bugs/> "
-"рассказано как сообщить об этом."
+"Неизвестный отклик от телефона. На странице <https://wammu.eu/support/bugs/> "
+"рассказано как об этом сообщить."
 
 #: libgammu/gsmcomon.c:100
-#, fuzzy
-#| msgid ""
-#| "Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
-#| "report it."
 msgid ""
 "Unknown frame. See <https://wammu.eu/support/bugs/> for information how to "
 "report it."
 msgstr ""
-"Неизвестный отклик от телефона. На странице <http://wammu.eu/support/bugs/> "
-"рассказано как сообщить об этом."
+"Неизвестный отклик от телефона. На странице <https://wammu.eu/support/bugs/> "
+"рассказано как об этом сообщить."
 
 #: libgammu/gsmcomon.c:101
 msgid "Unknown connection type string. Check config file."
@@ -305,7 +293,7 @@ msgstr "Используются значения по умолчанию."
 
 #: libgammu/gsmcomon.c:143
 msgid "Corrupted data returned by phone."
-msgstr ""
+msgstr "Телефон вернул повреждённые данные."
 
 #: libgammu/gsmcomon.c:144
 msgid "Bad feature string in configuration."
@@ -313,15 +301,15 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:145
 msgid "Desired functionality has been disabled on compile time."
-msgstr ""
+msgstr "Нужный функционал не был включён при сборке библиотеки."
 
 #: libgammu/gsmcomon.c:146
 msgid "Bluetooth configuration requires channel option."
-msgstr ""
+msgstr "В конфигурации Bluetooth нужно указать опции канала."
 
 #: libgammu/gsmcomon.c:147
 msgid "Service is not running."
-msgstr ""
+msgstr "Сервис не запущен."
 
 #: libgammu/gsmcomon.c:148
 #, fuzzy
@@ -330,7 +318,7 @@ msgstr "Пошаговая настройка"
 
 #: libgammu/gsmcomon.c:149
 msgid "Command rejected because device was busy. Wait and restart."
-msgstr ""
+msgstr "Устройство занято и команда отклонена. Повторите после паузы."
 
 #: libgammu/gsmcomon.c:150
 #, fuzzy
@@ -347,9 +335,8 @@ msgid "Failed to get SMSC number from phone."
 msgstr ""
 
 #: libgammu/gsmcomon.c:153
-#, fuzzy
 msgid "Operation aborted."
-msgstr "Выполняется операция"
+msgstr "Операция отменена."
 
 #: libgammu/gsmcomon.c:154
 msgid ""
@@ -363,9 +350,8 @@ msgid "Entry is read only."
 msgstr "Запись пуста."
 
 #: libgammu/gsmcomon.c:156
-#, fuzzy
 msgid "Network error."
-msgstr "Нет ошибки."
+msgstr "Ошибка сети."
 
 #: libgammu/gsmcomon.c:157
 #, fuzzy
