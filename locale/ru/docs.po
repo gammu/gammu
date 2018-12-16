@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.39.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2018-01-05 10:00+0100\n"
-"PO-Revision-Date: 2018-12-15 08:08+0000\n"
+"PO-Revision-Date: 2018-12-17 19:08+0000\n"
 "Last-Translator: Victor K <ktrace@yandex.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gammu/gammu-docs/"
 "ru/>\n"
@@ -32,6 +32,8 @@ msgid ""
 "Gammu is library and command line utility for mobile phones. It is released "
 "under GNU GPL version 2."
 msgstr ""
+"Gammu это библиотека и утилита командной строки для мобильных телефонов. "
+"Распространяется под лицензией GNU GPL версия 2."
 
 #. type: Plain text
 #: README.rst:11
@@ -41,6 +43,10 @@ msgid ""
 "mwiacek.com/> projects. Gammu was former (up to version 0.58) called "
 "MyGnokii2."
 msgstr ""
+"Разработка начата Marcin Wiacek и другими. Первоначально код базируется на "
+"проектах Gnokii <https://www.gnokii.org/> и более позднем MyGnokii "
+"<http://www.mwiacek.com/>. До версии 0.58 Gammu был известен под названием "
+"MyGnokii2."
 
 #. type: Plain text
 #: README.rst:14
