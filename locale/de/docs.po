@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.39.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2018-01-05 10:00+0100\n"
-"PO-Revision-Date: 2018-11-28 19:08+0000\n"
+"PO-Revision-Date: 2018-12-17 19:08+0000\n"
 "Last-Translator: ssantos <ssantos@web.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/gammu/gammu-docs/"
 "de/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.3-dev\n"
+"X-Generator: Weblate 3.4-dev\n"
 
 #. type: Title =
 #: README.rst:2
@@ -102,8 +102,8 @@ msgid ""
 ":alt: Translation status :target: https://hosted.weblate.org/engage/gammu/?"
 "utm_source=widget"
 msgstr ""
-":alt: Translation status :target: https://hosted.weblate.org/engage/gammu/?"
-"utm_source=widget"
+":alt: Übersetzungsstatus :target: https://hosted.weblate.org/engage/gammu/"
+"?utm_source=widget"
 
 #. type: Plain text
 #: README.rst:28
