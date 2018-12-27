@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libGammu 1.39.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2016-10-11 08:16+0200\n"
-"PO-Revision-Date: 2018-12-15 08:08+0000\n"
+"PO-Revision-Date: 2018-12-28 20:08+0000\n"
 "Last-Translator: Victor K <ktrace@yandex.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gammu/libgammu/"
 "ru/>\n"
@@ -297,7 +297,7 @@ msgstr "Телефон вернул повреждённые данные."
 
 #: libgammu/gsmcomon.c:144
 msgid "Bad feature string in configuration."
-msgstr ""
+msgstr "Конфигурация содержит строку с ошибкой."
 
 #: libgammu/gsmcomon.c:145
 msgid "Desired functionality has been disabled on compile time."
@@ -321,28 +321,30 @@ msgid "Command rejected because device was busy. Wait and restart."
 msgstr "Устройство занято и команда отклонена. Повторите после паузы."
 
 #: libgammu/gsmcomon.c:150
-#, fuzzy
 msgid "Could not connect to the server."
-msgstr "Соединение с сервером IMAP..."
+msgstr "Соединение с сервером не удалось."
 
 #: libgammu/gsmcomon.c:151
-#, fuzzy
 msgid "Could not resolve the host name."
-msgstr "Невозможно прочитать сохраненное сообщение!"
+msgstr "Не удалось получить адрес хоста по имени."
 
 #: libgammu/gsmcomon.c:152
+#, fuzzy
 msgid "Failed to get SMSC number from phone."
-msgstr ""
+msgstr "Не удалось получить номер SMSC от телефона."
 
 #: libgammu/gsmcomon.c:153
 msgid "Operation aborted."
 msgstr "Операция отменена."
 
 #: libgammu/gsmcomon.c:154
+#, fuzzy
 msgid ""
 "Installation data not found, please consult debug log and/or documentation "
 "for more details."
 msgstr ""
+"Не найдены данные после установки, ознакомьтесь с журналом отладки и/или "
+"документацией."
 
 #: libgammu/gsmcomon.c:155
 #, fuzzy
@@ -354,26 +356,20 @@ msgid "Network error."
 msgstr "Ошибка сети."
 
 #: libgammu/gsmcomon.c:157
-#, fuzzy
-#| msgid "Invalid data given to phone."
 msgid "Invalid database version."
-msgstr "Телефону переданы неверные данные."
+msgstr "Неверная версия базы данных."
 
 #: libgammu/gsmcomon.c:158
 msgid "Failed to initialize DB driver."
-msgstr ""
+msgstr "Не удалось инициализировать драйвер БД."
 
 #: libgammu/gsmcomon.c:159
-#, fuzzy
-#| msgid "Failed to connect to phone"
 msgid "Failed to configure DB driver."
-msgstr "Не удалось соединиться с телефоном"
+msgstr "Не удалось сконфигурировать драйвер БД."
 
 #: libgammu/gsmcomon.c:160
-#, fuzzy
-#| msgid "Failed to connect to phone"
 msgid "Failed to connect to database."
-msgstr "Не удалось соединиться с телефоном"
+msgstr "Не удалось подключиться к БД."
 
 #: libgammu/gsmcomon.c:161
 #, fuzzy
