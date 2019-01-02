@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libGammu 1.39.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2016-10-11 08:16+0200\n"
-"PO-Revision-Date: 2018-12-28 20:08+0000\n"
+"PO-Revision-Date: 2019-01-03 16:06+0000\n"
 "Last-Translator: Victor K <ktrace@yandex.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gammu/libgammu/"
 "ru/>\n"
@@ -379,7 +379,7 @@ msgstr "Тест подключения"
 
 #: libgammu/gsmcomon.c:162
 msgid "Error in executing SQL query."
-msgstr ""
+msgstr "Ошибка при выполнении SQL-запроса."
 
 #: libgammu/gsmcomon.c:195
 #, fuzzy
