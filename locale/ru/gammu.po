@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.39.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2017-10-19 13:14+0200\n"
-"PO-Revision-Date: 2019-01-03 16:06+0000\n"
+"PO-Revision-Date: 2019-01-05 20:06+0000\n"
 "Last-Translator: Victor K <ktrace@yandex.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gammu/gammu/ru/>"
 "\n"
@@ -1420,16 +1420,18 @@ msgid " (Picture ID assignment)"
 msgstr " (Присвоение ID изображения)"
 
 #: gammu/depend/nokia/dct4.c:1355
+#, fuzzy
 msgid " (Ringtone ID from filesystem/internal)"
-msgstr ""
+msgstr " (ID рингтона внутреннего/из файла)"
 
 #: gammu/depend/nokia/dct4.c:1356
 msgid " (Text: user ID)"
 msgstr " (Текст: ID пользователя)"
 
 #: gammu/depend/nokia/dct4.c:1357
+#, fuzzy
 msgid " (conversation list ID)"
-msgstr ""
+msgstr " (ID чата из списка)"
 
 #: gammu/depend/nokia/dct4.c:1358
 msgid " (Instant Messaging service list ID ?)"
@@ -1441,7 +1443,7 @@ msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1360
 msgid " (SIP Address (Push to Talk address))"
-msgstr ""
+msgstr " (Адрес SIP-сервера (адрес Push to Talk))"
 
 #: gammu/depend/nokia/dct4.c:1361
 msgid " (Group ID (6230i or later))"
