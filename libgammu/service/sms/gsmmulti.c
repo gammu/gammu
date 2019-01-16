@@ -1562,6 +1562,14 @@ GSM_Error GSM_LinkSMS(GSM_Debug_Info *di, GSM_MultiSMSMessage **InputMessages, G
 			j		= 1;
 			/* We're searching for other parts in sequence */
 			while (j!=(int)SiemensOTA.PacketsNum) {
+
+        if(j >= GSM_MAX_MULTI_SMS) {
+          smfprintf(di,
+            "WARNING: Hard coded message parts limit of %d has been reached,"
+						"skipping remaining parts.\n", GSM_MAX_MULTI_SMS);
+          break;
+        }
+
 				z=0;
 				while(InputMessages[z]!=NULL) {
 					/* This was sorted earlier or is not single */
@@ -1742,6 +1750,14 @@ GSM_Error GSM_LinkSMS(GSM_Debug_Info *di, GSM_MultiSMSMessage **InputMessages, G
 			j		= 1;
 			/* We're searching for other parts in sequence */
 			while (j != InputMessages[i]->SMS[0].UDH.AllParts) {
+
+				if(j >= GSM_MAX_MULTI_SMS) {
+					smfprintf(di,
+						"WARNING: Hard coded message parts limit of %d has been reached,"
+			      "skipping remaining parts.\n", GSM_MAX_MULTI_SMS);
+					break;
+				}
+
 				z=0;
 				while(InputMessages[z]!=NULL) {
 					/* This was sorted earlier or is not single */
