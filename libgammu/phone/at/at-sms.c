@@ -384,9 +384,9 @@ GSM_Error ATGEN_SetRequestedSMSMemory(GSM_StateMachine *s, GSM_MemoryType memory
 	if (!ATGEN_IsMemoryAvailable(Priv, memoryType) ||
 			(writeable && !ATGEN_IsMemoryWriteable(Priv, memoryType)))
 	{
-		smprintf_level(s, D_ERROR, "Requested memory not available for %s: %s\n",
+		smprintf_level(s, D_ERROR, "Requested memory not available for %s: %s (%d)\n",
 									 writeable ? "writing" : "reading",
-									 GSM_MemoryTypeToString(memoryType));
+									 GSM_MemoryTypeToString(memoryType), memoryType);
 		return ERR_MEMORY_NOT_AVAILABLE;
 	}
 
