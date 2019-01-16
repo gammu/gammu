@@ -545,7 +545,7 @@ static GSM_Error N6510_SearchForFileName1(GSM_StateMachine *s, GSM_File *File)
 
 GSM_Error N6510_ReplyAddFileHeader1(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
-	unsigned char buffer[5];
+	unsigned char buffer[8];
 
 	switch (msg->Buffer[3]) {
 	case 0x03:
@@ -784,7 +784,7 @@ static GSM_Error N6510_DeleteFolder1(GSM_StateMachine *s, unsigned char *ID)
 
 GSM_Error N6510_ReplyAddFolder1(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
-	unsigned char buffer[5];
+	unsigned char buffer[8];
 
 	sprintf(buffer,"%i",msg->Buffer[8]*256+msg->Buffer[9]);
 	EncodeUnicode(s->Phone.Data.File->ID_FullName,buffer,strlen(buffer));
