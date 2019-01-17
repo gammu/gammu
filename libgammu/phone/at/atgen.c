@@ -3209,6 +3209,7 @@ GSM_Error ATGEN_ReplyGetNetworkName(GSM_Protocol_Message *msg, GSM_StateMachine 
 
 		/* Cleanup if something went wrong */
 		if (error != ERR_NONE) {
+		  smprintf(s, "WARNING: Failed to store network name - ERROR(%s)", GSM_ErrorName(error));
 			NetworkInfo->NetworkName[0] = 0;
 			NetworkInfo->NetworkName[1] = 0;
 		}

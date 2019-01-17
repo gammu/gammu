@@ -130,9 +130,11 @@ typedef struct {
 	 */
 	char LAC[10];
 	/**
-	 * Name of current network like returned from phone (or empty).
+	 * Name of current network returned from phone (or empty).
+	 * The buffer needs to have twice the capacity of the longest supported
+	 * network name to account for decoding.
 	 */
-	unsigned char NetworkName[15 * 2];
+	unsigned char NetworkName[20 * 2];
 	/**
 	 * GPRS state.
 	 */
