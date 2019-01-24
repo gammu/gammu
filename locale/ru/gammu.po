@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.39.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2017-10-19 13:14+0200\n"
-"PO-Revision-Date: 2019-01-05 20:06+0000\n"
+"PO-Revision-Date: 2019-01-25 20:04+0000\n"
 "Last-Translator: Victor K <ktrace@yandex.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gammu/gammu/ru/>"
 "\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
 "4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 3.4-dev\n"
+"X-Generator: Weblate 3.5-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:379 helper/message-cmdline.c:403
@@ -1420,7 +1420,6 @@ msgid " (Picture ID assignment)"
 msgstr " (Присвоение ID изображения)"
 
 #: gammu/depend/nokia/dct4.c:1355
-#, fuzzy
 msgid " (Ringtone ID from filesystem/internal)"
 msgstr " (ID рингтона внутреннего/из файла)"
 
@@ -1429,17 +1428,16 @@ msgid " (Text: user ID)"
 msgstr " (Текст: ID пользователя)"
 
 #: gammu/depend/nokia/dct4.c:1357
-#, fuzzy
 msgid " (conversation list ID)"
 msgstr " (ID чата из списка)"
 
 #: gammu/depend/nokia/dct4.c:1358
 msgid " (Instant Messaging service list ID ?)"
-msgstr ""
+msgstr " (ID списка служб мгновенных сообщений?)"
 
 #: gammu/depend/nokia/dct4.c:1359
 msgid " (presence list ID ?)"
-msgstr ""
+msgstr " (идентификатор списка присутствия?)"
 
 #: gammu/depend/nokia/dct4.c:1360
 msgid " (SIP Address (Push to Talk address))"
@@ -1447,7 +1445,7 @@ msgstr " (Адрес SIP-сервера (адрес Push to Talk))"
 
 #: gammu/depend/nokia/dct4.c:1361
 msgid " (Group ID (6230i or later))"
-msgstr ""
+msgstr " (ID группы (6230i или более новые))"
 
 #: gammu/depend/nokia/dct4.c:1363
 msgid ", type "
@@ -1829,12 +1827,12 @@ msgstr "Ошибка чтения пакетника! Прерываемся.\n"
 
 #: gammu/gammu.c:393
 msgid "Batch processed, terminating.\n"
-msgstr ""
+msgstr "Пакетная обработка, завершение.\n"
 
 #: gammu/gammu.c:467
 #, c-format
 msgid "Executing batch \"%s\" - command %i: %s\n"
-msgstr ""
+msgstr "Выполнение пакета \"%s\" - команда %i: %s\n"
 
 #: gammu/gammu.c:490
 msgid ""
@@ -1935,11 +1933,12 @@ msgstr "Настройки телефона"
 
 #: gammu/gammu.c:771
 msgid "Dumps decoding"
-msgstr ""
+msgstr "Декодирование дампов"
 
 #: gammu/gammu.c:773
+#, fuzzy
 msgid "Functions that don't fit elsewhere"
-msgstr ""
+msgstr "Функции, которые не вписываются в другом месте"
 
 #: gammu/gammu.c:774
 msgid "Gammu information"
@@ -2142,7 +2141,7 @@ msgstr "Завершено"
 
 #: gammu/message.c:99
 msgid "Another client replied"
-msgstr ""
+msgstr "Ответил другой клиент"
 
 #: gammu/message.c:102
 msgid "Not supported"
@@ -2155,7 +2154,7 @@ msgstr "Сервисный ответ"
 #: gammu/message.c:180
 #, c-format
 msgid "Invalid SMSC location: %s\n"
-msgstr ""
+msgstr "Неверное расположение SMSC: %s\n"
 
 #: gammu/message.c:222 gammu/misc.c:2105 gammu/misc.c:2384
 msgid "Number"
@@ -2337,7 +2336,7 @@ msgstr "Пакетная сеть"
 
 #: gammu/misc.c:90 gammu/misc.c:1467
 msgid "GPRS"
-msgstr ""
+msgstr "GPRS"
 
 #: gammu/misc.c:93
 msgid "attached"
@@ -2356,7 +2355,7 @@ msgid "Battery capacity"
 msgstr "Ёмкость аккумулятора"
 
 #: gammu/misc.c:112
-#, c-format, fuzzy
+#, c-format
 msgid "%i mAh"
 msgstr "%i мА*ч"
 
@@ -2442,7 +2441,7 @@ msgstr "Литий-полимерный"
 
 #: gammu/misc.c:185
 msgid "NiMH"
-msgstr ""
+msgstr "NiMH"
 
 #: gammu/misc.c:252
 msgid "Device"
@@ -2488,7 +2487,7 @@ msgstr "Информация о вызове"
 #: gammu/misc.c:425
 #, c-format
 msgid "ID %i, "
-msgstr ""
+msgstr "ID %i, "
 
 #: gammu/misc.c:428
 #, c-format
@@ -2600,7 +2599,7 @@ msgstr "%i использовано"
 #: gammu/misc.c:549 gammu/misc.c:559
 #, c-format
 msgid "%i unread"
-msgstr ""
+msgstr "%i непрочитанных"
 
 #: gammu/misc.c:551 gammu/misc.c:561
 #, c-format
@@ -3022,10 +3021,10 @@ msgstr "Текст слишком длинный. Обрезается до %d �
 
 #: gammu/misc.c:1874
 msgid "Invalid security code type"
-msgstr ""
+msgstr "Неверный тип кода безопасности"
 
 #: gammu/misc.c:1879
-#, c-format, fuzzy
+#, c-format
 msgid "Enter %s code: "
 msgstr "Введите %s код: "
 
@@ -3145,9 +3144,8 @@ msgid "Ascending"
 msgstr "Нарастающий"
 
 #: gammu/misc.c:2046
-#, fuzzy
 msgid "Caller groups"
-msgstr "Группы абонентов\n"
+msgstr "Группы абонентов"
 
 #: gammu/misc.c:2047
 msgid "Standard"
@@ -3189,14 +3187,12 @@ msgid "Unread SMS"
 msgstr "Непрочитанное SMS\n"
 
 #: gammu/misc.c:2169
-#, fuzzy
 msgid "Voice call"
-msgstr "Голосовой вызов\n"
+msgstr "Голосовой вызов"
 
 #: gammu/misc.c:2172
-#, fuzzy
 msgid "Fax call"
-msgstr "Вызов факса\n"
+msgstr "Факсовый вызов"
 
 #: gammu/misc.c:2175
 #, fuzzy
@@ -3204,14 +3200,12 @@ msgid "Data call"
 msgstr "Вызов данных\n"
 
 #: gammu/misc.c:2178
-#, fuzzy
 msgid "Keypad locked"
-msgstr "Клавиатура заблокирована\n"
+msgstr "Клавиатура заблокирована"
 
 #: gammu/misc.c:2181
-#, fuzzy
 msgid "SMS memory full"
-msgstr "Память SMS заполнена\n"
+msgstr "Память SMS заполнена"
 
 #: gammu/misc.c:2219
 msgid "Station name"
@@ -3272,7 +3266,7 @@ msgstr "неизвестный %i"
 #: gammu/misc.c:2317 gammu/misc.c:2363
 #, fuzzy
 msgid "Call type"
-msgstr "Вызов активен\n"
+msgstr "Тип вызова"
 
 #: gammu/misc.c:2320 gammu/misc.c:2366
 msgid "voice"
@@ -3352,7 +3346,7 @@ msgstr "Тип содержимого"
 #: gammu/mms.c:114
 #, c-format
 msgid " (%s in SMIL)"
-msgstr ""
+msgstr " (%s в SMIL)"
 
 #: gammu/mms.c:130
 msgid "Do you want to save this attachment?"
@@ -3364,7 +3358,6 @@ msgid "Folder %s\n"
 msgstr "Каталог \"%s\"\n"
 
 #: gammu/mms.c:172
-#, fuzzy
 msgid "  File filesystem ID"
 msgstr "  ID файловой системы"
 
@@ -3374,16 +3367,14 @@ msgid "It can be RTTL ringtone only used with this option"
 msgstr "С этим параметром можно использовать только рингтон RTTL"
 
 #: gammu/nokia.c:54
-#, fuzzy, c-format
+#, c-format
 msgid "Ringtone \"%s\" (tempo = %i Beats Per Minute)"
-msgstr ""
-"Рингтон \"%s\" (темп = %i ударов в минуту)\n"
-"\n"
+msgstr "Рингтон \"%s\" (темп = %i ударов в минуту)"
 
 #: gammu/nokia.c:63
 #, c-format, fuzzy
 msgid "length=%i notes, but you will enter only first 50 tones."
-msgstr "length=%i нот, но вы ввели только первые 50 тонов."
+msgstr "длительность=%i нот, но вы ввели только первые 50 тонов."
 
 #: gammu/nokia.c:66
 #, fuzzy
@@ -3394,12 +3385,8 @@ msgstr ""
 "Этот рингтон в Nokia Composer телефона должен выглядеть: "
 
 #: gammu/nokia.c:107
-#, fuzzy
 msgid "To enter it please press:"
-msgstr ""
-"\n"
-"\n"
-"Для ввода нажмите: "
+msgstr "Для ввода нажмите:"
 
 #: gammu/nokia.c:126
 msgid "(longer)"
@@ -3463,9 +3450,8 @@ msgid "No name info in JAD file!"
 msgstr "В JAD-файле нет информации о названии!"
 
 #: gammu/nokia.c:707
-#, fuzzy
 msgid "No JAR URL info in JAD file!"
-msgstr "В JAD-файле нет информации об URL для JAR\n"
+msgstr "В JAD-файле отсутствует информация об URL-адресе JAR !"
 
 #: gammu/nokia.c:713
 msgid "Declared JAR file size is different than real. Fixed by Gammu."
@@ -3523,7 +3509,7 @@ msgid "Error creating thread\n"
 msgstr "Ошибка создания потока\n"
 
 #: helper/cmdline.c:26
-#, fuzzy, c-format
+#, c-format
 msgid "Number out of range: %s\n"
 msgstr "Число вне диапазона: %s\n"
 
