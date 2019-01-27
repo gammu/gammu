@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.39.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2017-10-19 13:14+0200\n"
-"PO-Revision-Date: 2019-01-25 20:04+0000\n"
+"PO-Revision-Date: 2019-01-28 15:15+0000\n"
 "Last-Translator: Victor K <ktrace@yandex.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gammu/gammu/ru/>"
 "\n"
@@ -1648,22 +1648,22 @@ msgstr "изображений: %ld, звуков: %ld, тем: %ld"
 #. l10n: One char to indicate protected file
 #: gammu/files.c:119 gammu/files.c:208 gammu/files.c:329
 msgid "P"
-msgstr ""
+msgstr "P"
 
 #. l10n: One char to indicate read only file
 #: gammu/files.c:125 gammu/files.c:210 gammu/files.c:331
 msgid "R"
-msgstr ""
+msgstr "R"
 
 #. l10n: One char to indicate hidden file
 #: gammu/files.c:131 gammu/files.c:212 gammu/files.c:333
 msgid "H"
-msgstr ""
+msgstr "H"
 
 #. l10n: One char to indicate system file
 #: gammu/files.c:137 gammu/files.c:214 gammu/files.c:335
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #: gammu/files.c:158 gammu/files.c:171 gammu/files.c:197
 msgid "Part of folder"
@@ -1936,9 +1936,8 @@ msgid "Dumps decoding"
 msgstr "Декодирование дампов"
 
 #: gammu/gammu.c:773
-#, fuzzy
 msgid "Functions that don't fit elsewhere"
-msgstr "Функции, которые не вписываются в другом месте"
+msgstr "Функции, для которых не нашлось другого места"
 
 #: gammu/gammu.c:774
 msgid "Gammu information"
@@ -2367,7 +2366,7 @@ msgstr "Температура аккумулятора"
 #: gammu/misc.c:118 gammu/misc.c:123
 #, c-format
 msgid "%i C"
-msgstr ""
+msgstr "%i C"
 
 #: gammu/misc.c:122
 msgid "Phone temperature"
@@ -2629,7 +2628,7 @@ msgstr "Nokia двоичный"
 
 #: gammu/misc.c:607
 msgid "MIDI"
-msgstr ""
+msgstr "MIDI"
 
 #: gammu/misc.c:608
 msgid "SMAF (MMF)"
@@ -2691,7 +2690,7 @@ msgstr "(файл, имеющий ID %i)↵\n"
 #: gammu/misc.c:983 gammu/misc.c:1977
 #, c-format
 msgid "\"%s\" (ID %i)\n"
-msgstr ""
+msgstr "\"%s\" (ID %i)\n"
 
 #. l10n: Ringtone ID format
 #: gammu/misc.c:986 gammu/misc.c:1980
@@ -2826,7 +2825,7 @@ msgstr ""
 
 #: gammu/misc.c:1412
 msgid "SMS"
-msgstr ""
+msgstr "SMS"
 
 #: gammu/misc.c:1415
 msgid "Server number"
@@ -3519,46 +3518,52 @@ msgid "Parameter is not a number: %s\n"
 msgstr "Нечисловой параметр: %s\n"
 
 #: helper/formats.h:2
-#, fuzzy, c-format
+#, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
-msgstr[0] "5 секунд\n"
-msgstr[1] "5 секунд\n"
+msgstr[0] "%d секунда"
+msgstr[1] "%d секунды"
+msgstr[2] "%d секунд"
 
 #: helper/formats.h:3
-#, fuzzy, c-format
+#, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
-msgstr[0] "%i минут"
-msgstr[1] "%i минут"
+msgstr[0] "%d минута"
+msgstr[1] "%d минуты"
+msgstr[2] "%d минут"
 
 #: helper/formats.h:4
-#, fuzzy, c-format
+#, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
-msgstr[0] "1 час"
-msgstr[1] "1 час"
+msgstr[0] "%d час"
+msgstr[1] "%d часа"
+msgstr[2] "%d часов"
 
 #: helper/formats.h:5
-#, fuzzy, c-format
+#, c-format
 msgid "%d day"
 msgid_plural "%d days"
-msgstr[0] "%i дней"
-msgstr[1] "%i дней"
+msgstr[0] "%d день"
+msgstr[1] "%d дня"
+msgstr[2] "%d дней"
 
 #: helper/formats.h:6
-#, fuzzy, c-format
+#, c-format
 msgid "%d week"
 msgid_plural "%d weeks"
-msgstr[0] "%i недель"
-msgstr[1] "%i недель"
+msgstr[0] "%d неделя"
+msgstr[1] "%d недели"
+msgstr[2] "%d недель"
 
 #: helper/formats.h:7
-#, fuzzy, c-format
+#, c-format
 msgid "%d year"
 msgid_plural "%d years"
-msgstr[0] "%d. день "
-msgstr[1] "%d. день "
+msgstr[0] "%d год"
+msgstr[1] "%d года"
+msgstr[2] "%d лет"
 
 #: helper/memory-display.c:30
 msgid "Call length"
@@ -3581,14 +3586,12 @@ msgid "Caller group"
 msgstr "Группы абонентов\n"
 
 #: helper/memory-display.c:71
-#, fuzzy
 msgid "Caller group number too high, please increase buffer in sources!"
 msgstr ""
 "Слишком большое значение номера группы абонентов. Увеличьте в исходном коде "
-"размер буфера.\n"
+"размер буфера!"
 
 #: helper/memory-display.c:113
-#, fuzzy
 msgid "User ID"
 msgstr "ID пользователя"
 
@@ -3636,17 +3639,14 @@ msgid "Work mobile number"
 msgstr "Рабочий мобильный номер"
 
 #: helper/memory-display.c:158
-#, fuzzy
 msgid "Home fax number"
 msgstr "Номер домашнего факса"
 
 #: helper/memory-display.c:161
-#, fuzzy
 msgid "Work fax number"
 msgstr "Номер рабочего факса"
 
 #: helper/memory-display.c:168
-#, fuzzy
 msgid "Pager number"
 msgstr "Номер пейджера"
 
@@ -3657,7 +3657,6 @@ msgstr "Другой          "
 
 # проверить
 #: helper/memory-display.c:175
-#, fuzzy
 msgid "Home address"
 msgstr "Домашний адрес"
 
@@ -3717,14 +3716,12 @@ msgid "DTMF"
 msgstr ""
 
 #: helper/memory-display.c:221
-#, fuzzy
 msgid "Last name"
-msgstr "Фамилия         "
+msgstr "Фамилия"
 
 #: helper/memory-display.c:222
-#, fuzzy
 msgid "First name"
-msgstr "Имя             "
+msgstr "Имя"
 
 #: helper/memory-display.c:223
 msgid "Second name"
@@ -3866,9 +3863,8 @@ msgstr ""
 "каналы передачи данных\n"
 
 #: helper/message-cmdline.c:458
-#, fuzzy
 msgid "MMS settings not found in file"
-msgstr "Настройки MMS не найдены в файле\n"
+msgstr "Настройки MMS не найдены в файле"
 
 #: helper/message-cmdline.c:472
 #, fuzzy
@@ -3914,14 +3910,13 @@ msgid "Can't open file \"%s\"\n"
 msgstr "Не удаётся открыть файл \"%s\"\n"
 
 #: helper/message-cmdline.c:1258
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown parameter (\"%c\")\n"
-msgstr "Неизвестный параметр (\"%s\")\n"
+msgstr "Неизвестный параметр (\"%c\")\n"
 
 #: helper/message-cmdline.c:1263
-#, fuzzy
 msgid "Last parameter wasn't text"
-msgstr "Последний параметр не является текстом\n"
+msgstr "Последний параметр не является текстом"
 
 #: helper/message-cmdline.c:1297
 #, c-format
@@ -3935,11 +3930,11 @@ msgstr "Введите текст сообщения и нажмите %s:\n"
 
 #: helper/message-cmdline.c:1339
 msgid "Ctrl+Z"
-msgstr ""
+msgstr "Ctrl+Z"
 
 #: helper/message-cmdline.c:1341
 msgid "Ctrl+D"
-msgstr ""
+msgstr "Ctrl+D"
 
 #: helper/message-cmdline.c:1355
 msgid "No chars read, assuming it is okay!"
@@ -3964,9 +3959,8 @@ msgid "There are %i SMS messages packed and the limit is %i. Exiting\n"
 msgstr "Упаковано %i SMS, а предел - %i. Выходим\n"
 
 #: helper/message-cmdline.c:1441
-#, fuzzy
 msgid "Use -smscnumber option to give SMSC number"
-msgstr "Чтобы указать число SMSC, используйте параметр -smscnumber\n"
+msgstr "Чтобы указать число SMSC, используйте параметр -smscnumber"
 
 #: helper/message-display.c:26
 #, c-format
@@ -3974,22 +3968,18 @@ msgid "Location %i, folder \"%s\""
 msgstr "Размещение %i, каталог \"%s\""
 
 #: helper/message-display.c:33
-#, fuzzy
 msgid "SIM memory"
 msgstr "память SIM-карты"
 
 #: helper/message-display.c:36
-#, fuzzy
 msgid "phone memory"
 msgstr "память телефона"
 
 #: helper/message-display.c:39
-#, fuzzy
 msgid "phone or SIM memory"
 msgstr "память телефона или SIM-карты"
 
 #: helper/message-display.c:46
-#, fuzzy
 msgid "Inbox folder"
 msgstr "Папка \"Входящие\""
 
@@ -3999,7 +3989,6 @@ msgid "mobile"
 msgstr "мобильный"
 
 #: helper/message-display.c:118
-#, fuzzy
 msgid "pager"
 msgstr "пейджер"
 
@@ -4012,9 +4001,8 @@ msgid "8 bit SMS, cannot be displayed here"
 msgstr "8-битные SMS не могут быть отображены"
 
 #: helper/message-display.c:165
-#, fuzzy
 msgid "SMS status report"
-msgstr "Отчёт о состоянии SMS\n"
+msgstr "Отчёт о состоянии SMS"
 
 #: helper/message-display.c:169 helper/message-display.c:181
 #: helper/message-display.c:233 helper/message-display.c:249
@@ -4038,15 +4026,11 @@ msgstr "Неотправленные"
 #, fuzzy
 msgid "Remote number"
 msgid_plural "Remote numbers"
-msgstr[0] ""
-"\n"
-"Удалённый номер : \"%s\"\n"
-msgstr[1] ""
-"\n"
-"Удалённый номер : \"%s\"\n"
+msgstr[0] "Удалённый номер"
+msgstr[1] "Удалённых номера"
+msgstr[2] "Удалённых номеров"
 
 #: helper/message-display.c:180 helper/message-display.c:246
-#, fuzzy
 msgid "Reference number"
 msgstr "Номер ссылки"
 
@@ -4168,7 +4152,6 @@ msgid " (set for reply)"
 msgstr " (установлен для ответа)"
 
 #: helper/message-display.c:241
-#, fuzzy
 msgid "SMS replacing ID"
 msgstr "SMS с заменой ID"
 
@@ -4200,9 +4183,8 @@ msgstr "Стандартный алфавит GSM (со сжатием)"
 
 #. l10n: 8-bit message coding
 #: helper/message-display.c:274
-#, fuzzy
 msgid "8-bit"
-msgstr "8 бит\n"
+msgstr "8 бит"
 
 #: helper/message-display.c:297
 msgid "User Data Header"
@@ -4305,23 +4287,20 @@ msgid ", %i parts"
 msgstr ", %i частей"
 
 #: helper/message-display.c:340
-#, fuzzy
 msgid "Siemens file"
-msgstr "Файл Siemens\n"
+msgstr "Файл Siemens"
 
 #: helper/message-display.c:348
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown PDU type: 0x%x\n"
-msgstr "Неизвестный тип PDU: 0x%xx\n"
+msgstr "Неизвестный тип PDU: 0x%x\n"
 
 #: helper/message-display.c:395
-#, fuzzy
 msgid ""
 "Some details were ignored (unknown or not implemented in decoding functions)"
 msgstr ""
 "Некоторые подробности опущены (неизвестны или не реализованы в функциях "
-"декодирования)\n"
-"\n"
+"декодирования)"
 
 #: helper/message-display.c:400
 msgid "Siemens OTA file"
@@ -4338,16 +4317,13 @@ msgid "Ringtone \"%s\"\n"
 msgstr "Рингтон \"%s\"\n"
 
 #: helper/message-display.c:421
-#, fuzzy
 msgid "Do you want to play it?"
 msgstr "Хотите его прослушать?"
 
 #: helper/message-display.c:426
 #, fuzzy
 msgid "Caller logo"
-msgstr ""
-"Логотип абонента\n"
-"\n"
+msgstr "Логотип звонящего"
 
 #: helper/message-display.c:430
 #, c-format
@@ -4376,7 +4352,6 @@ msgid "Error"
 msgstr "Ошибка"
 
 #: helper/message-display.c:546
-#, fuzzy
 msgid "Data PDU"
 msgstr "Данные PDU"
 
@@ -4394,13 +4369,11 @@ msgstr "Весь PDU"
 
 #. l10n: Generic prefix for warning messages
 #: helper/printing.c:34
-#, fuzzy
 msgid "Warning"
 msgstr "Предупреждение"
 
 #. l10n: Generic prefix for informational messages
 #: helper/printing.c:50
-#, fuzzy
 msgid "Information"
 msgstr "Информация"
 
