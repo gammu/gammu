@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSD" "1" "Jan 31, 2018" "1.39.1" "Gammu"
+.TH "GAMMU-SMSD" "1" "Jan 28, 2019" "1.40.0" "Gammu"
 .SH NAME
 gammu-smsd \- SMS daemon for Gammu
 .
@@ -137,7 +137,7 @@ only Windows Service manager should use this command.
 .B \-n, \-\-service\-name=name
 Defines name of a Windows service. Each service requires an unique name,
 so if you want to run several SMSD instances, you have to name each
-service differently. Default is “GammuSMSD”.
+service differently. Default is "GammuSMSD".
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -269,9 +269,9 @@ gammu\-smsd.exe \-u
 .UNINDENT
 .SS Troubleshooting Windows Service
 .sp
-If Gammu fails to start as a Windows service (you will usually get “Error
+If Gammu fails to start as a Windows service (you will usually get "Error
 1053: The service did not respond to the start or control request in a timely
-fashion”), first check your SMSD logs. If they do not contain any useful hint,
+fashion"), first check your SMSD logs. If they do not contain any useful hint,
 try starting SMSD manually with exactly same parameters as you installed the
 service (without \-i).
 .sp

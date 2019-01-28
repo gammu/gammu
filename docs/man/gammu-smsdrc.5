@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSDRC" "5" "Jan 31, 2018" "1.39.1" "Gammu"
+.TH "GAMMU-SMSDRC" "5" "Jan 28, 2019" "1.40.0" "Gammu"
 .SH NAME
 gammu-smsdrc \- gammu-smsd(1) configuration file
 .
@@ -32,7 +32,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 ..
 .SH DESCRIPTION
 .sp
-gammu\-smsd reads configuration from a config file. It’s location can be
+gammu\-smsd reads configuration from a config file. It\(aqs location can be
 specified on command line, otherwise default path \fB/etc/gammu\-smsdrc\fP
 is used.
 .sp
@@ -77,7 +77,7 @@ List of SMSC numbers from which reject messages, see \fI\%Message filtering\fP\&
 .INDENT 0.0
 .TP
 .B [sql]
-Configure SQL queries used by gammu\-smsd\-sql, you usually don’t have to modify them.
+Configure SQL queries used by gammu\-smsd\-sql, you usually don\(aqt have to modify them.
 .sp
 \fBSEE ALSO:\fP
 .INDENT 7.0
@@ -89,7 +89,7 @@ Configurable queries
 .INDENT 0.0
 .TP
 .B [tables]
-Configure SQL table names used by gammu\-smsd\-sql, you usually don’t have to modify them.
+Configure SQL table names used by gammu\-smsd\-sql, you usually don\(aqt have to modify them.
 .sp
 \fBSEE ALSO:\fP
 .INDENT 7.0
@@ -265,6 +265,16 @@ Default is 1.
 .UNINDENT
 .INDENT 0.0
 .TP
+.B RetryTimeout
+How long to wait before resending failed message (needs to be enabled by
+\fI\%MaxRetries\fP).
+.sp
+Is used in \fBupdate_retries\fP\&.
+.sp
+Default is 600.
+.UNINDENT
+.INDENT 0.0
+.TP
 .B ReceiveFrequency
 The number of seconds between testing for received SMSes, when the phone is
 busy sending SMSes. Normally a test for received SMSes is done every
@@ -305,7 +315,7 @@ Default is 1.
 .TP
 .B MultipartTimeout
 The number of seconds how long will SMSD wait for all parts of multipart
-message. If all parts won’t arrive in time, parts will be processed as separate
+message. If all parts won\(aqt arrive in time, parts will be processed as separate
 messages.
 .sp
 Default is 600 (10 minutes).
@@ -436,7 +446,7 @@ New in version 1.36.2.
 SMSC number to use for sending messages if not specified in the message
 (see options of gammu\-smsd\-inject).
 .sp
-In most cases you don’t need this settings as Gammu tries to read correct
+In most cases you don\(aqt need this settings as Gammu tries to read correct
 SMSC from phone, but sometimes this fails (try \fBgammu getsmsc\fP).
 .UNINDENT
 .INDENT 0.0
@@ -613,7 +623,7 @@ Synonym for \fI\%Host\fP, kept for backwards compatibility.
 .INDENT 0.0
 .TP
 .B Database
-Name of database (or schema) to use and where SMSD can find it’s tables.
+Name of database (or schema) to use and where SMSD can find it\(aqs tables.
 .sp
 Please note that you should create tables in this database before using
 gammu\-smsd. SQL files for creating needed tables are included in
@@ -625,7 +635,7 @@ gammu\-smsd\-odbc, gammu\-smsd\-pgsql, gammu\-smsd\-dbi
 .B SkipSMSCNumber
 When you send sms from some SMS centers you can have delivery reports from
 other SMSC number. You can set here number of this SMSC used by you and Gammu
-will not check it’s number during assigning reports to sent SMS.
+will not check it\(aqs number during assigning reports to sent SMS.
 .UNINDENT
 .INDENT 0.0
 .TP

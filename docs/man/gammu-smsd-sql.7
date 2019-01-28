@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSD-SQL" "7" "Jan 31, 2018" "1.39.1" "Gammu"
+.TH "GAMMU-SMSD-SQL" "7" "Jan 28, 2019" "1.40.0" "Gammu"
 .SH NAME
 gammu-smsd-sql \- gammu-smsd(1) backend using SQL abstraction layer to use any supported database as a message storage
 .
@@ -95,7 +95,7 @@ New in version 1.37.1.
 
 .sp
 You can customize name of all tables in the \fB[tables]\fP\&. The SQL
-queries will reflect this, so it’s enough to change table name in this section.
+queries will reflect this, so it\(aqs enough to change table name in this section.
 .INDENT 0.0
 .TP
 .B gammu
@@ -693,7 +693,8 @@ signal percent
 .INDENT 0.0
 .TP
 .B update_retries
-Update number of retries for outbox message.
+Update number of retries for outbox message. The interval can be configured
+by \fBRetryTimeout\fP\&.
 .INDENT 7.0
 .INDENT 3.5
 .sp

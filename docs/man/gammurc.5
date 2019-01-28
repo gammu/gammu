@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMURC" "5" "Jan 31, 2018" "1.39.1" "Gammu"
+.TH "GAMMURC" "5" "Jan 28, 2019" "1.40.0" "Gammu"
 .SH NAME
 gammurc \- gammu(1) configuration file
 .
@@ -55,7 +55,7 @@ On Microsoft Windows:
 .SH DESCRIPTION
 .sp
 Gammu requires configuration to be able to properly talk to your phone.
-gammu reads configuration from a config file. It’s location is determined
+gammu reads configuration from a config file. It\(aqs location is determined
 on runtime, see above for search paths.
 .sp
 You can use gammu\-config or gammu\-detect to generate
@@ -68,9 +68,9 @@ experienced.
 This file use ini file syntax, see ini\&.
 .sp
 Configuration file for gammu can contain several sections \- \fB[gammu]\fP, \fB[gammu1]\fP,
-\fB[gammuN]\fP, … Each section configures one connection setup and in default mode
+\fB[gammuN]\fP, ... Each section configures one connection setup and in default mode
 gammu tries all of them in numerical order. You can also specify which
-configuration section to use by giving it’s number (\fI\%[gammu]\fP has number 0) as a
+configuration section to use by giving it\(aqs number (\fI\%[gammu]\fP has number 0) as a
 parameter to gammu and it will then use only this section.
 .INDENT 0.0
 .TP
@@ -209,7 +209,7 @@ from driver information and this parameters is ignored.
 .INDENT 7.0
 .INDENT 3.5
 Some USB modems expose several interfaces, in such cases Gammu works best
-with “User” one, you can find more information on
+with "User" one, you can find more information on
 <\fI\%http://www.dd\-wrt.com/wiki/index.php/Mobile_Broadband\fP>.
 .UNINDENT
 .UNINDENT
@@ -343,7 +343,7 @@ Alias for \fI\%Device\fP, kept for backward compatibility.
 .TP
 .B Model
 Do not use this parameter unless really needed! The only use case for this is
-when Gammu does not know your phone and misdetects it’s features.
+when Gammu does not know your phone and misdetects it\(aqs features.
 .sp
 The only special case for using model is to force special type of OBEX
 connection instead of letting Gammu try the best suited for selected
@@ -456,6 +456,27 @@ to your locales.
 Path to directory with localisation files (the directory should contain
 \fBLANG/LC_MESSAGES/gammu.mo\fP). If gammu is properly installed it should find
 these files automatically.
+.UNINDENT
+.SS Advanced options
+.sp
+Advanced options are used to alter default logic, when using these options the
+user is responsible for ensuring any settings are correct for the target device
+and that they produce the desired behaviour.
+.INDENT 0.0
+.TP
+.B atgen_setCNMI
+For configurations using the generic AT command protocol it is possible to
+override the default indicators used when a new SMS message is received.
+.sp
+The value for the setting is a comma delimited list of single digits
+corresponding to the values for the \fBAT+CNMI\fP modem command. If a digit
+is not provided, or if the provided digit is outside of the acceptable
+range for the device the default value is used.
+.sp
+For example setting \fBatgen_setcnmi = ,,2\fP would set the third parameter of
+the CNMI command to the value 2, leaving the rest of the parameters at
+default, and \fBatgen_setcnmi = 1,,,1\fP would set the first and fourth parameters
+respectively.
 .UNINDENT
 .SS Other options
 .INDENT 0.0
