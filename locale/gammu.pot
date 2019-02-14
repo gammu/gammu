@@ -1,14 +1,14 @@
 # Gammu translation.
-# Copyright (C) 2003 - 2018 Michal Čihař <michal@cihar.com>
+# Copyright (C) 2003 - 2019 Michal Čihař <michal@cihar.com>
 # This file is distributed under the same license as the gammu package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: gammu 1.39.0\n"
+"Project-Id-Version: gammu 1.40.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2018-01-05 11:13+0100\n"
+"POT-Creation-Date: 2019-02-14 14:57+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"

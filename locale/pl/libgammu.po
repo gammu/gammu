@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libGammu 1.39.0\n"
+"Project-Id-Version: libGammu 1.40.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-10-11 08:16+0200\n"
+"POT-Creation-Date: 2019-02-14 14:57+0100\n"
 "PO-Revision-Date: 2013-02-23 23:11+0200\n"
 "Last-Translator: Marcin Kozioł <lord_dark@wp.pl>\n"
 "Language-Team: Polish <http://hosted.weblate.org/projects/gammu/libgammu/pl/"
@@ -42,13 +42,13 @@ msgstr "Błąd podczas otwierania urządzenia. Urządzenie nie istnieje."
 
 #: libgammu/gsmcomon.c:88
 #, fuzzy
-msgid "Error opening device, it is already opened by other application."
+msgid "Error opening device, it is already opened by another app."
 msgstr ""
 "Błąd podczas otwierania urządzenia. Urządzenie otwarte przez inną aplikację."
 
 #: libgammu/gsmcomon.c:89
 #, fuzzy
-msgid "Error opening device, you don't have permissions."
+msgid "Error opening device, you don't have the required permission."
 msgstr "Błąd podczas otwierania urządzenia. Brak uprawnień."
 
 #: libgammu/gsmcomon.c:90
@@ -68,7 +68,9 @@ msgid "Error setting device DTR or RTS."
 msgstr "Błąd podczas ustawiania linii DTR lub RTS."
 
 #: libgammu/gsmcomon.c:93
-msgid "Error setting device speed. Maybe speed not supported."
+#, fuzzy
+#| msgid "Error setting device speed. Maybe speed not supported."
+msgid "Error setting device speed. Maybe the speed is not supported?"
 msgstr ""
 "Błąd ustawienia szybkości urządzenia. Prawdopodobnie prędkość nieobsługiwana."
 
@@ -88,7 +90,9 @@ msgid "Can't set parity on the device."
 msgstr "Nie można ustawić parzystości w urządzeniu."
 
 #: libgammu/gsmcomon.c:97
-msgid "No response in specified timeout. Probably phone not connected."
+#, fuzzy
+#| msgid "No response in specified timeout. Probably phone not connected."
+msgid "No response in specified timeout. Probably the phone is not connected."
 msgstr ""
 "Brak odpowiedzi w wyznaczonym czasie. Prawdopodobnie telefon nie jest "
 "podłączony."
@@ -97,7 +101,7 @@ msgstr ""
 #, fuzzy
 msgid ""
 "Frame not requested right now. See <https://wammu.eu/support/bugs/> for "
-"information how to report it."
+"information on how to report it."
 msgstr ""
 "Telefon wysłał nieznany sygnał. Zobacz <http://cihar.com/gammu/report> w "
 "poszukiwaniu informacji o tym jak to zgłosić."
@@ -106,7 +110,7 @@ msgstr ""
 #, fuzzy
 msgid ""
 "Unknown response from phone. See <https://wammu.eu/support/bugs/> for "
-"information how to report it."
+"information on how to report it."
 msgstr ""
 "Telefon wysłał nieznany sygnał. Zobacz <http://cihar.com/gammu/report> w "
 "poszukiwaniu informacji o tym jak to zgłosić."
@@ -114,8 +118,8 @@ msgstr ""
 #: libgammu/gsmcomon.c:100
 #, fuzzy
 msgid ""
-"Unknown frame. See <https://wammu.eu/support/bugs/> for information how to "
-"report it."
+"Unknown frame. See <https://wammu.eu/support/bugs/> for information on how "
+"to report it."
 msgstr ""
 "Telefon wysłał nieznany sygnał. Zobacz <http://cihar.com/gammu/report> w "
 "poszukiwaniu informacji o tym jak to zgłosić."
@@ -131,7 +135,7 @@ msgstr "Podano nieznany model telefonu. Sprawdź konfigurację."
 #: libgammu/gsmcomon.c:103
 #, fuzzy
 msgid ""
-"Some functions not available for your system (disabled in config or not "
+"Some functions are not available for your system (disabled in config or not "
 "implemented)."
 msgstr ""
 "Niektóre funkcje nie są dostępne dla Twojego systemu (zablokowane w "
@@ -156,7 +160,7 @@ msgstr "Nieznana lokalizacja. Może zbyt wysoko?"
 
 #: libgammu/gsmcomon.c:108
 #, fuzzy
-msgid "Functionality not implemented. You are welcome to help authors with it."
+msgid "Functionality not implemented. You are welcome to help."
 msgstr ""
 "Funkcja jest w trakcie implementowania. Jeżeli chcesz pomóc, proszę "
 "skontaktuj się z autorami."
@@ -176,7 +180,9 @@ msgstr ""
 "Nie można otworzyć podanego pliku. Prawdopodobnie jest tylko do odczytu."
 
 #: libgammu/gsmcomon.c:112
-msgid "More memory required..."
+#, fuzzy
+#| msgid "More memory required..."
+msgid "More memory required…"
 msgstr "Potrzeba więcej pamięci..."
 
 #: libgammu/gsmcomon.c:113
@@ -188,19 +194,22 @@ msgstr "Funkcja nie obsługiwana przez telefon."
 #: libgammu/gsmcomon.c:114
 #, fuzzy
 msgid ""
-"No SMSC number given. Provide it manually or use the one configured in phone."
+"No SMSC number given. Provide it manually or use the one configured on the "
+"phone."
 msgstr ""
 "Nie podano numeru SMSC. Wpisz go ręcznie lub skorzystaj z tego w telefonie."
 
 #: libgammu/gsmcomon.c:115
-msgid "You're inside phone menu (maybe editing?). Leave it and try again."
+#, fuzzy
+#| msgid "You're inside phone menu (maybe editing?). Leave it and try again."
+msgid "You're inside the phone menu (maybe editing?). Exit it and try again."
 msgstr ""
 "Jesteś wewnątrz menu telefonu (może edytujesz?). Zostaw je i spróbuj "
 "ponownie."
 
 #: libgammu/gsmcomon.c:116
 #, fuzzy
-msgid "Phone is not connected."
+msgid "Phone not connected."
 msgstr "Telefon jest zablokowany i podłączony do ładowarki."
 
 #: libgammu/gsmcomon.c:117
@@ -213,7 +222,9 @@ msgstr ""
 "skontaktuj się z autorami."
 
 #: libgammu/gsmcomon.c:118
-msgid "Phone is disabled and connected to charger."
+#, fuzzy
+#| msgid "Phone is disabled and connected to charger."
+msgid "Phone disabled and connected to charger."
 msgstr "Telefon jest zablokowany i podłączony do ładowarki."
 
 #: libgammu/gsmcomon.c:119
@@ -230,7 +241,9 @@ msgstr ""
 "skontaktować się z autorami."
 
 #: libgammu/gsmcomon.c:121
-msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
+#, fuzzy
+#| msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
+msgid "Transfer canceled by phone, maybe you pressed \"Cancel\" on the phone."
 msgstr ""
 "Transfer został anulowany przez telefon, możliwe że nacisnąłeś przycisk "
 "anuluj na swoim telefonie."
@@ -252,7 +265,9 @@ msgid "Invalid date or time specified."
 msgstr "Podana data lub czas jest niepoprawny."
 
 #: libgammu/gsmcomon.c:126
-msgid "Phone memory error, maybe it is read only."
+#, fuzzy
+#| msgid "Phone memory error, maybe it is read only."
+msgid "Phone memory error, maybe it is read only?"
 msgstr "Błąd pamięci telefonu, możliwe że jest tylko do odczytu."
 
 #: libgammu/gsmcomon.c:127
@@ -269,11 +284,15 @@ msgid "File with specified name doesn't exist."
 msgstr "Plik o określonej nazwie nie istnieje."
 
 #: libgammu/gsmcomon.c:130
-msgid "You have to give folder name and not file name."
+#, fuzzy
+#| msgid "You have to give folder name and not file name."
+msgid "You have to supply folder name and not filename."
 msgstr "Musisz podać nazwę katalogu, a nie pliku."
 
 #: libgammu/gsmcomon.c:131
-msgid "You have to give file name and not folder name."
+#, fuzzy
+#| msgid "You have to give file name and not folder name."
+msgid "You have to supply filename and not folder name."
 msgstr "Musisz podać nazwę pliku, a nie katalogu."
 
 #: libgammu/gsmcomon.c:132
@@ -281,7 +300,12 @@ msgid "Can not access SIM card."
 msgstr "Brak dostępu do karty SIM."
 
 #: libgammu/gsmcomon.c:133
-msgid "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
+#, fuzzy
+#| msgid ""
+#| "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
+msgid ""
+"Wrong GNAPPLET version in use on phone. Use version from currently used "
+"Gammu."
 msgstr ""
 "Niepoprawna wersja GNAPPLET w telefonie. Użyj wersji z obecnie używanego "
 "Gammu."
@@ -296,7 +320,9 @@ msgid "Folder must be empty."
 msgstr "Katalog musi być pusty."
 
 #: libgammu/gsmcomon.c:136
-msgid "Data were converted."
+#, fuzzy
+#| msgid "Data were converted."
+msgid "Data converted."
 msgstr "Dane zostały przekonwertowane."
 
 #: libgammu/gsmcomon.c:137
@@ -431,7 +457,16 @@ msgstr "Test połączenia"
 msgid "Error in executing SQL query."
 msgstr ""
 
-#: libgammu/gsmcomon.c:195
+#: libgammu/gsmcomon.c:163
+msgid "The type of memory is not available or has been disabled."
+msgstr ""
+
+#: libgammu/gsmcomon.c:164
+#, fuzzy
+msgid "The operation cannot be performed."
+msgstr "Operacja w toku"
+
+#: libgammu/gsmcomon.c:197
 #, fuzzy
 msgid "Unknown error description."
 msgstr "Nieznany opis błędu."

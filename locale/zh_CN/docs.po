@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.40.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2019-02-14 14:51+0100\n"
+"POT-Creation-Date: 2018-01-05 10:00+0100\n"
 "PO-Revision-Date: 2009-01-27 14:06+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -27,7 +27,8 @@ msgstr "Gammu 移动电话管理工具大全"
 msgid ""
 "Gammu is library and command line utility for mobile phones. It is released "
 "under GNU GPL version 2."
-msgstr "Gammu是一个为移动电话开发的库以及命令行工具。它是基于GNU GPL 2.0版本发布的。"
+msgstr ""
+"Gammu是一个为移动电话开发的库以及命令行工具。它是基于GNU GPL 2.0版本发布的。"
 
 #. type: Plain text
 #: README.rst:11
@@ -36,14 +37,19 @@ msgid ""
 "was based on Gnokii <https://www.gnokii.org/> and later MyGnokii <http://www."
 "mwiacek.com/> projects. Gammu was former (up to version 0.58) called "
 "MyGnokii2."
-msgstr "它最开始是由Marcin Wiacek以及其他人发起的。原始代码是基于Gnokii <https://www.gnokii.org/> 以及后来的MyGnokii <http://www.mwiacek.com/> 项目。 Gammu之前（直到版本号0.58)被叫作MyGnokii2。"
+msgstr ""
+"它最开始是由Marcin Wiacek以及其他人发起的。原始代码是基于Gnokii <https://www."
+"gnokii.org/> 以及后来的MyGnokii <http://www.mwiacek.com/> 项目。 Gammu之前"
+"（直到版本号0.58)被叫作MyGnokii2。"
 
 #. type: Plain text
 #: README.rst:14
 msgid ""
 "Currently the project is lead by Michal Cihar <michal@cihar.com> with help "
 "of many contributors."
-msgstr "现在这个项目是在很多贡献者的帮助下，由Michal Cihar <michal@cihar.com>负责领导。"
+msgstr ""
+"现在这个项目是在很多贡献者的帮助下，由Michal Cihar <michal@cihar.com>负责领"
+"导。"
 
 #. type: Labeled list
 #: README.rst:15 README.rst:19 README.rst:23 README.rst:27 README.rst:31
@@ -106,12 +112,14 @@ msgstr ":alt: Coverity scan :target: https://scan.coverity.com/projects/2890"
 
 #. type: Plain text
 #: README.rst:32
-msgid "https://img.shields.io/liberapay/receives/Gammu.svg"
+msgid "https://img.shields.io/gratipay/Gammu.svg"
 msgstr ""
 
 #. type: Plain text
 #: README.rst:34
-msgid ":alt: Liberapay :target: https://liberapay.com/Gammu/donate"
+#, fuzzy
+#| msgid ":alt: Liberapay :target: https://liberapay.com/Gammu/donate"
+msgid ":alt: Gratipay :target: https://gratipay.com/Gammu/"
 msgstr ":alt: Liberapay :target: https://liberapay.com/Gammu/donate"
 
 #. type: Plain text
@@ -136,8 +144,7 @@ msgstr "更多信息"
 #. type: Plain text
 #: README.rst:43
 msgid "You can find more information on <https://wammu.eu/gammu/>."
-msgstr ""
-"你可以从这里 <https://wammu.eu/gammu/>找到更多信息。"
+msgstr "你可以从这里 <https://wammu.eu/gammu/>找到更多信息。"
 
 #. type: Plain text
 #: README.rst:47
@@ -146,14 +153,14 @@ msgid ""
 "version of it using make manual-html which is viewable online at <https://"
 "wammu.eu/docs/manual/>."
 msgstr ""
-"除此之外还有Gammu的手册可供查阅。你可以通过在线可见的make manual-html来构造一个HTML版本的手册。"
+"除此之外还有Gammu的手册可供查阅。你可以通过在线可见的make manual-html来构造一"
+"个HTML版本的手册。"
 
 #. type: Title =
 #: README.rst:50
 #, no-wrap
 msgid "Feedback and bug reports"
-msgstr ""
-"反馈以及报告问题"
+msgstr "反馈以及报告问题"
 
 #. type: Plain text
 #: README.rst:54
@@ -161,20 +168,19 @@ msgid ""
 "Any feedback is welcome, see <https://wammu.eu/support/> for information how "
 "to contact developers."
 msgstr ""
-"我们欢迎任何形式的反馈， 你可以通过<https://wammu.eu/support/>获取联系开发者的方式。"
+"我们欢迎任何形式的反馈， 你可以通过<https://wammu.eu/support/>获取联系开发者"
+"的方式。"
 
 #. type: Title =
 #: README.rst:57
 #, no-wrap
 msgid "Support developers"
-msgstr ""
-"支持开发者"
+msgstr "支持开发者"
 
 #. type: Plain text
 #: README.rst:59
 msgid "You can appreciate developers work at <https://wammu.eu/donate/>."
-msgstr ""
-"你可以通过这里<https://wammu.eu/donate/>来表示对开发者的感谢"
+msgstr "你可以通过这里<https://wammu.eu/donate/>来表示对开发者的感谢"
 
 #. type: Title =
 #: INSTALL:2
