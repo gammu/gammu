@@ -1,8 +1,6 @@
 os:
   - linux
   - osx
-dist:
-  - trusty
 language: cpp
 compiler:
   - gcc
@@ -31,8 +29,6 @@ script:
 after_success:
   - make gcov
   - bash <(curl -s https://codecov.io/bash) -X gcov -F $TRAVIS_OS_NAME
-# use docker based faster build
-sudo: false
 # install build dependencies and enable Coverity scan
 addons:
   apt:
