@@ -416,6 +416,9 @@ void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned char *IDF
 out:
 	free(Names);
 	free(Names2);
+	if (First != NULL) {
+		free(First);
+	}
 }
 
 void NokiaAddPlayLists(int argc UNUSED, char *argv[] UNUSED)
