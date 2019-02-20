@@ -4,8 +4,6 @@
 
 project (libGammu C)
 
-include(GammuTuneFlags)
-
 set (LIBRARY_SRC
     gsmcomon.c
     gsmphones.c
@@ -131,7 +129,6 @@ set_target_properties (libGammu PROPERTIES
     VERSION ${GAMMU_SOVERSION}.${GAMMU_VERSION}
     SOVERSION ${GAMMU_SOVERSION}
     OUTPUT_NAME Gammu)
-GAMMU_TUNE_SHARED(libGammu)
 if(CMAKE_COMPILER_IS_MINGW AND BUILD_SHARED_LIBS)
     SET_TARGET_PROPERTIES(libGammu PROPERTIES LINK_FLAGS
         "-Wl,--output-def,${CMAKE_CURRENT_BINARY_DIR}/libGammu.def")

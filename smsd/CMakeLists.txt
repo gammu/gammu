@@ -4,8 +4,6 @@
 
 project (gammu-smsd C)
 
-include(GammuTuneFlags)
-
 set (LIBRARY_SRC
     core.c
     services/files.c
@@ -115,7 +113,6 @@ add_coverage (gsmsd)
 set_target_properties (gsmsd PROPERTIES
     VERSION ${GAMMU_SOVERSION}.${GAMMU_VERSION}
     SOVERSION ${GAMMU_SOVERSION})
-GAMMU_TUNE_SHARED(gsmsd)
 if(CMAKE_COMPILER_IS_MINGW AND BUILD_SHARED_LIBS)
     SET_TARGET_PROPERTIES(gsmsd PROPERTIES LINK_FLAGS
         "-Wl,--output-def,${CMAKE_CURRENT_BINARY_DIR}/libgsmsd.def")
