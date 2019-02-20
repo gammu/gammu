@@ -56,10 +56,10 @@ const unsigned char* last_command(void)
   return _echo_buffer.echo;
 }
 
-void set_echo(const void *buf, const size_t len)
+void set_echo(unsigned const char *buf, const size_t len)
 {
   if(buf && len > 0) {
-    memccpy(_echo_buffer.echo, buf, sizeof(buf), len);
+    memccpy(_echo_buffer.echo, buf, sizeof(*buf), len);
     _echo_buffer.echo[len] = '\0';
     _echo_buffer.echo_len = len;
     _echo_buffer.echoed = FALSE;
