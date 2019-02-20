@@ -2776,7 +2776,7 @@ GSM_Error ATGEN_GetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 
 GSM_Error ATGEN_PrivSetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time, gboolean set_timezone)
 {
-	char			tz[4] = "";
+	char			tz[8] = "";
 	char			req[128];
 	GSM_Error		error;
 	size_t len;
