@@ -46,7 +46,7 @@ before_build:
          -DMYSQL_TESTING=ON -DMYSQL_USER=root "-DMYSQL_PASSWORD=Password12!"
          -DPSQL_TESTING=ON -DPSQL_USER=postgres "-DPSQL_PASSWORD=Password12!" 
          -DMEMORYCHECK_COMMAND="c:/projects/gammu/contrib/coveragehelper/Debug/coveragehelper.exe" -DMEMORYCHECK_COMMAND_OPTIONS="--separator" -DMEMORYCHECK_TYPE=Valgrind
-         -DPOSTGRES_FOUND=OFF -DMYSQL_FOUND=OFF
+         -DPOSTGRES_FOUND=OFF -DMYSQL_FOUND=OFF .
 
 build:
   project: ALL_BUILD.vcxproj
