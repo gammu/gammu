@@ -1862,10 +1862,11 @@ GSM_Error SMSD_InitSharedMemory(GSM_SMSDConfig *Config, gboolean writable)
 	/* Allocate world redable SHM segment */
 	Config->shm_handle = shmget(Config->shm_key, sizeof(GSM_SMSDStatus), writable ? (IPC_CREAT | S_IRWXU | S_IRGRP | S_IROTH) : 0);
 	if (Config->shm_handle == -1) {
-		SMSD_Terminate(Config, "Failed to allocate shared memory segment!", ERR_NONE, TRUE, -1);
 		if (writable) {
+			SMSD_Terminate(Config, "Failed to allocate shared memory segment!", ERR_NONE, TRUE, -1);
 			return ERR_UNKNOWN;
 		} else {
+			SMSD_Terminate(Config, "Failed to map shared memory segment!", ERR_NONE, TRUE, -1);
 			return ERR_NOTRUNNING;
 		}
 	}
