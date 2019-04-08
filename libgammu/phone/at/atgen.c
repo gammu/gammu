@@ -282,6 +282,15 @@ static ATErrorCode CMEErrorCodes[] = {
 
 static char samsung_location_error[] = "[Samsung] Empty location";
 
+GSM_Error ATGEN_BeforeDeferredEventHook(GSM_StateMachine *s)
+{
+  /* we can do this because deferred events must only be run when no other
+   * request is executing */
+  s->Protocol.Data.AT.Msg.Length = 0;
+
+  return ERR_NONE;
+}
+
 gboolean ATGEN_IsMemoryAvailable(const GSM_Phone_ATGENData *data, GSM_MemoryType type)
 {
 	return
@@ -2367,6 +2376,9 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 		error = ERR_NONE;
 	}
 #endif
+
+  /* can we use CHUP to hangup calls (otherwise use ATH) */
+  ATGEN_WaitForAutoLen(s, "AT+CHUP=?\r", 0x00, 40, ID_CheckCHUP);
 
 	s->Protocol.Data.AT.FastWrite = !GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SLOWWRITE);
 	s->Protocol.Data.AT.CPINNoOK = GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CPIN_NO_OK);
@@ -4694,16 +4706,18 @@ GSM_Error ATGEN_AnswerCall(GSM_StateMachine *s, int ID UNUSED, gboolean all)
 
 GSM_Error ATGEN_ReplyCancelCall(GSM_Protocol_Message *msg UNUSED, GSM_StateMachine *s)
 {
+  GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Call call;
 
-	switch(s->Phone.Data.Priv.ATGEN.ReplyState) {
+	switch(Priv->ReplyState) {
         case AT_Reply_OK:
 		smprintf(s, "Calls canceled\n");
+    Priv->CancellingCall = FALSE;
 		call.CallIDAvailable = FALSE;
 		call.Status = GSM_CALL_CallLocalEnd;
 
 		if (s->User.IncomingCall) {
-			s->User.IncomingCall(s, &call, s->User.IncomingCallUserData);
+      GSM_DeferIncomingCallEvent(s, &call, ATGEN_BeforeDeferredEventHook);
 		}
 		return ERR_NONE;
     	case AT_Reply_CMSError:
@@ -4717,20 +4731,25 @@ GSM_Error ATGEN_ReplyCancelCall(GSM_Protocol_Message *msg UNUSED, GSM_StateMachi
 
 GSM_Error ATGEN_CancelCall(GSM_StateMachine *s, int ID UNUSED, gboolean all)
 {
-	GSM_Error error, error_ath;
+  GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
+  GSM_Error error;
 
-	if (all) {
-		smprintf(s, "Dropping all calls\n");
-		error = ATGEN_WaitForAutoLen(s, "ATH\r", 0x00, 40, ID_CancelCall);
-		error_ath = error;
-		error = ATGEN_WaitForAutoLen(s, "AT+CHUP\r", 0x00, 40, ID_CancelCall);
+  if(!all)
+    return ERR_NOTSUPPORTED;
 
-		if (error_ath == ERR_NONE || error == ERR_NONE) {
-			return ERR_NONE;
-		}
-		return error;
-	}
-	return ERR_NOTSUPPORTED;
+  if(Priv->CancellingCall)
+    return ERR_NONE;
+
+  smprintf(s, "Dropping all calls\n");
+  Priv->CancellingCall = TRUE;
+
+  if(Priv->HasCHUP) {
+    error = ATGEN_WaitForAutoLen(s, "AT+CHUP\r", 0x00, 40, ID_CancelCall);
+  } else {
+    error = ATGEN_WaitForAutoLen(s, "ATH\r", 0x00, 40, ID_CancelCall);
+  }
+
+  return error;
 }
 
 GSM_Error ATGEN_ReplyReset(GSM_Protocol_Message *msg UNUSED, GSM_StateMachine *s)
@@ -5288,7 +5307,7 @@ GSM_Error ATGEN_SetIncomingCall(GSM_StateMachine *s, gboolean enable)
 		smprintf(s, "Enabling incoming call notification\n");
 
 		if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NO_CLIP)) {
-			/* Some (especially SE) phones are fucked up when we want to
+			/* Some (especially SE) phones are messed up when we want to
 			 * see CLIP information */
 			error = ATGEN_WaitForAutoLen(s, "AT+CLIP=1\r", 0x00, 10, ID_SetIncomingCall);
 
@@ -5353,9 +5372,14 @@ GSM_Error ATGEN_ReplyIncomingCallInfo(GSM_Protocol_Message *msg, GSM_StateMachin
 		if (strstr(msg->Buffer, "RING")) {
 			smprintf(s, "Ring detected - ");
 
+			if(s->Phone.Data.Priv.ATGEN.CancellingCall) {
+			  smprintf(s, "call is being dropped.\n");
+        return ERR_NONE;
+			}
+
 			/* We ignore RING for most phones, see ATGEN_SetIncomingCall */
 			if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NO_CLIP)) {
-				smprintf(s, "ignoring\n");
+				smprintf(s, "waiting for caller ID.\n");
 				return ERR_NONE;
 			}
 			smprintf(s, "generating event\n");
@@ -5366,7 +5390,7 @@ GSM_Error ATGEN_ReplyIncomingCallInfo(GSM_Protocol_Message *msg, GSM_StateMachin
 				return error;
 			}
 		} else if (strstr(msg->Buffer, "CLIP:")) {
-			smprintf(s, "CLIP detected\n");
+			smprintf(s, "CLIP detected (caller ID)\n");
 			call.Status = GSM_CALL_IncomingCall;
 			call.CallIDAvailable 	= TRUE;
 			error = ATGEN_Extract_CLIP_number(s, call.PhoneNumber, sizeof(call.PhoneNumber), msg->Buffer);
@@ -5374,7 +5398,7 @@ GSM_Error ATGEN_ReplyIncomingCallInfo(GSM_Protocol_Message *msg, GSM_StateMachin
 				return error;
 			}
 		} else if (strstr(msg->Buffer, "CCWA:")) {
-			smprintf(s, "CCWA detected\n");
+			smprintf(s, "CCWA detected (caller ID)\n");
 			call.Status = GSM_CALL_IncomingCall;
 			error = ATGEN_Extract_CCWA_number(s, call.PhoneNumber, sizeof(call.PhoneNumber), msg->Buffer);
 			if (error != ERR_NONE) {
@@ -5383,10 +5407,12 @@ GSM_Error ATGEN_ReplyIncomingCallInfo(GSM_Protocol_Message *msg, GSM_StateMachin
 			call.CallIDAvailable 	= TRUE;
 		} else if (strstr(msg->Buffer, "NO CARRIER")) {
 			smprintf(s, "Call end detected\n");
-			call.Status = GSM_CALL_CallEnd;
+      GSM_CancelEventsOfType(s, GSM_EV_CALL);
+      s->Phone.Data.Priv.ATGEN.CancellingCall = FALSE;
+			call.Status = GSM_CALL_CallRemoteEnd;
 			call.CallIDAvailable 	= TRUE;
 		} else if (strstr(msg->Buffer, "COLP:")) {
-			smprintf(s, "CLIP detected\n");
+			smprintf(s, "CLIP detected (caller ID)\n");
 			call.Status = GSM_CALL_CallStart;
 			call.CallIDAvailable 	= TRUE;
 			error = ATGEN_Extract_CLIP_number(s, call.PhoneNumber, sizeof(call.PhoneNumber), msg->Buffer);
@@ -5398,7 +5424,7 @@ GSM_Error ATGEN_ReplyIncomingCallInfo(GSM_Protocol_Message *msg, GSM_StateMachin
 			return ERR_NONE;
 		}
 
-		s->User.IncomingCall(s, &call, s->User.IncomingCallUserData);
+    GSM_DeferIncomingCallEvent(s, &call, ATGEN_BeforeDeferredEventHook);
 	}
 
 	return ERR_NONE;
@@ -6101,6 +6127,19 @@ GSM_Error ATGEN_ReplyCheckProt(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 	}
 }
 
+GSM_Error ATGEN_ReplyCheckCHUP(GSM_Protocol_Message *msg, GSM_StateMachine *s)
+{
+	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
+	Priv->HasCHUP = FALSE;
+
+	if(Priv->ReplyState == AT_Reply_OK) {
+			Priv->HasCHUP = TRUE;
+			return ERR_NONE;
+	}
+
+	return ATGEN_GenericReply(msg, s);
+}
+
 GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReply,		"ATE1" 	 		,0x00,0x00,ID_EnableEcho	 },
 {ATGEN_GenericReply,		"ERROR" 	 	,0x00,0x00,ID_EnableEcho	 },
@@ -6214,6 +6253,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 
 {ATGEN_GenericReply, 		"AT+VTS"		,0x00,0x00,ID_SendDTMF		 },
 {ATGEN_ReplyCancelCall,		"AT+CHUP"		,0x00,0x00,ID_CancelCall	 },
+{ATGEN_ReplyCheckCHUP,		"AT+CHUP=?" ,0x00,0x00,ID_CheckCHUP	 },
 {ATGEN_ReplyDialVoice,		"ATD"			,0x00,0x00,ID_DialVoice		 },
 {ATGEN_ReplyCancelCall,		"ATH"			,0x00,0x00,ID_CancelCall	 },
 {ATGEN_ReplyAnswerCall,		"ATA"			,0x00,0x00,ID_AnswerCall	 },

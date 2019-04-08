@@ -1,4 +1,4 @@
-/* (c) 2002-2005 by Marcin Wiacek and Michal Cihar */
+  /* (c) 2002-2005 by Marcin Wiacek and Michal Cihar */
 /* Phones ID (c) partially by Walek */
 
 #include <stdarg.h>
@@ -6,6 +6,7 @@
 #include <string.h>
 #include <errno.h>
 #include <limits.h>
+#include <assert.h>
 
 #include <gammu-call.h>
 #include <gammu-settings.h>
@@ -1130,6 +1131,109 @@ static GSM_Error CheckReplyFunctions(GSM_StateMachine *s, GSM_Reply_Function *Re
 	}
 }
 
+GSM_Error EventQueue_Push(GSM_StateMachine *s, const EventBinding *binding)
+{
+  DeferredEventQueue *Queue = &s->Phone.Data.DeferredEvents;
+
+  assert(binding != NULL);
+  assert(Queue->head < MAX_DEFERRED_EVENTS);
+
+  if(Queue->entries == MAX_DEFERRED_EVENTS)
+    return ERR_FULL;
+
+  Queue->event_bindings[Queue->head] = *binding;
+  Queue->head = (Queue->head + 1) % MAX_DEFERRED_EVENTS;
+  ++Queue->entries;
+
+  assert(Queue->entries <= MAX_DEFERRED_EVENTS);
+
+  return ERR_NONE;
+}
+
+GSM_Error EventQueue_Pop(GSM_StateMachine *s, EventBinding *binding)
+{
+  DeferredEventQueue *Queue = &s->Phone.Data.DeferredEvents;
+
+  assert(binding != NULL);
+
+  if(Queue->entries == 0)
+    return ERR_EMPTY;
+
+  *binding = Queue->event_bindings[Queue->tail];
+  Queue->tail = (Queue->tail + 1) % MAX_DEFERRED_EVENTS;
+  --Queue->entries;
+
+  assert(Queue->entries >= 0);
+
+  return ERR_NONE;
+}
+
+void GSM_CancelEventsOfType(GSM_StateMachine *s, unsigned event_types)
+{
+  DeferredEventQueue *q = &s->Phone.Data.DeferredEvents;
+  int i = q->tail;
+
+  while(i != q->head) {
+    if(q->event_bindings[i].type & event_types)
+      q->event_bindings[i].event_cancelled = TRUE;
+
+    i = (i + 1) % MAX_DEFERRED_EVENTS;
+  }
+}
+
+GSM_Error GSM_DeferIncomingCallEvent(GSM_StateMachine *s, GSM_Call *call, BeforeDeferredEvent before_event)
+{
+  GSM_Error error;
+  EventBinding binding;
+
+  if(s->Phone.Data.RequestID == ID_None) {
+    s->User.IncomingCall(s, call, s->User.IncomingCallUserData);
+    return ERR_NONE;
+  }
+
+  binding.type = GSM_EV_CALL;
+  binding.handler = (EventHandler)s->User.IncomingCall;
+  binding.before_event = before_event;
+  binding.after_event = NULL;
+  binding.event_cancelled = FALSE;
+  binding.event_data.call = *call;
+  binding.user_data = s->User.IncomingCallUserData;
+
+  error = EventQueue_Push(s, &binding);
+
+  if(error != ERR_NONE)
+    smprintf_level(s, D_ERROR,
+      "the incoming call handler could not be deferred.\n");
+
+  return error;
+}
+
+GSM_Error ProcessDeferredEvent(GSM_StateMachine *s)
+{
+  EventBinding binding;
+  GSM_Error error = EventQueue_Pop(s, &binding);
+
+  if(error != ERR_NONE)
+    return error;
+
+  assert(s->Phone.Data.RequestID == ID_None);
+  assert(binding.handler != NULL);
+  assert(binding.type != GSM_EV_UNSET);
+
+  if(binding.event_cancelled == FALSE) {
+    if (binding.before_event)
+      error = binding.before_event(s);
+
+    if(error == ERR_NONE)
+      binding.handler(s, &binding.event_data, binding.user_data);
+  }
+
+  if(binding.after_event)
+    binding.after_event(s, &binding);
+
+  return error;
+}
+
 GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 {
 	GSM_Error		error	= ERR_UNKNOWNFRAME;
@@ -1161,6 +1265,7 @@ GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 				error = ERR_NONE;
 			} else {
 				Phone->RequestID = ID_None;
+        while(ProcessDeferredEvent(s) == ERR_NONE);
 			}
 		}
 	}

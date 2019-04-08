@@ -423,6 +423,14 @@ typedef struct {
 	 * Cache for incoming SMS info.
 	 */
 	GSM_AT_SMSInfo_Cache SMSInfoCache;
+  /**
+   * Whether device supports CHUP for hanging up calls.
+   */
+  gboolean HasCHUP;
+  /**
+   * TRUE if an incoming call is in the process of being dropped.
+   */
+  gboolean CancellingCall;
 } GSM_Phone_ATGENData;
 
 /**

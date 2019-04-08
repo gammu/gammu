@@ -219,6 +219,70 @@ typedef struct _GSM_User	 	GSM_User;
 #include "debug.h"
 #include "gsmreply.h"
 
+typedef struct EventBinding_ EventBinding;
+
+/**
+ * Generic event handler.
+ */
+typedef void (*EventHandler)(GSM_StateMachine * s, void *event_data,
+                              void *user_data);
+
+/**
+ * Customization point for any needed setup before an event handler is called,
+ * if anything other than ERR_NONE is returned the event handler won't be called.
+ */
+typedef GSM_Error (*BeforeDeferredEvent)(GSM_StateMachine *s);
+/**
+ * Customization point for any needed cleanup after an event handler is called
+ * or cancelled.
+ */
+typedef void (*AfterDeferredEvent)(GSM_StateMachine *s, EventBinding *binding);
+
+/**
+ * Identifies the event types.
+ */
+typedef enum {
+  GSM_EV_UNSET  = 0,
+  GSM_EV_CALL   = 0x00000001,
+  GSM_EV_ALL    = 0xFFFFFFFF
+} EventType;
+
+/**
+ * An event binding associates event data with a handler.
+ */
+typedef struct EventBinding_ {
+  EventType type;
+  EventHandler handler;
+  BeforeDeferredEvent before_event;
+  AfterDeferredEvent after_event;
+  gboolean event_cancelled;
+  union {
+    GSM_Call call;
+  } event_data;
+  void *user_data;
+} EventBinding;
+
+/**
+ * Queue of events awaiting processing.
+ */
+typedef struct {
+  int head;
+  int tail;
+  int entries;
+  EventBinding event_bindings[MAX_DEFERRED_EVENTS];
+} DeferredEventQueue;
+
+/**
+ * Defers running an incoming call handler if an existing command is already
+ * executing, otherwise the handler is run immediately.
+ */
+GSM_Error GSM_DeferIncomingCallEvent(GSM_StateMachine *s, GSM_Call *call,
+                                     BeforeDeferredEvent before_event);
+
+/**
+ * Cancels running any deferred event handlers matching the given event_types mask.
+ */
+void GSM_CancelEventsOfType(GSM_StateMachine *s, unsigned event_types);
 
 /* ------------------------- Device layer ---------------------------------- */
 
@@ -687,6 +751,10 @@ typedef struct {
 	 * Error returned by function in phone module.
 	 */
 	GSM_Error		DispatchError;
+  /**
+   * Queue of events awaiting processing.
+   */
+  DeferredEventQueue DeferredEvents;
 
 	/**
 	 * Structure with private phone modules data.
