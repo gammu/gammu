@@ -34,6 +34,7 @@ void cancel_when_idle(void)
   GSM_SMSDStatus status;
   GSM_SMSDConfig *config = SMSD_NewConfig("test");
   GSM_Protocol_Message msg;
+  int i;
 
   const char *events[] = {
     "RING\r",
@@ -67,7 +68,7 @@ void cancel_when_idle(void)
 
   s->Phone.Data.RequestID = ID_None;
 
-  for(int i = 0; i < num_events; ++i) {
+  for(i = 0; i < num_events; ++i) {
     msg.Length = strlen(events[i]);
     msg.Buffer = (char*)events[i];
     msg.Type = 0;
