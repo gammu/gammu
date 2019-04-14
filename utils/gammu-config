@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # Gammu configuration generator
 # Copyright (C) 2003 - 2009 Michal Cihar <michal@cihar.com>
 # vim: expandtab sw=4 ts=4 sts=4:
@@ -24,13 +24,13 @@ D_LOGFORMAT=nothing
 D_LOCKING=
 D_GAMMULOC=
 
-TEMPFILE=`mktemp /tmp/gammu-config.XXXXXXXXXX`
+TEMPFILE=$(mktemp /tmp/gammu-config.XXXXXXXXXX)
 
 showhelp() {
     echo "$NAME $VERSION"
     echo "$COPYRIGHT"
     echo
-    echo "Usage: `basename $0` [-f|--force] [-c|--config config]"
+    echo "Usage: $(basename $0) [-f|--force] [-c|--config config]"
     echo
     exit 100
 }
@@ -86,14 +86,14 @@ if [ -f "$CONFIG" ] ; then
     $DIALOG --yesno "Configuration file \"$CONFIG\" exists.\nDo you wish to read defaults from it?" $DIALOG_SIZE
     if [ $? -eq 0 ] ; then
         echo "Parsing current Gammu configuration form \"$CONFIG\""
-        PORT=`cfgread port`
-        MODEL=`cfgread model`
-        CONNECTION=`cfgread connection`
-        SYNCHRONIZETIME=`cfgread synchronizetime`
-        LOGFILE=`cfgread logfile`
-        LOGFORMAT=`cfgread logformat`
-        LOCKING=`cfgread use_locking`
-        GAMMULOC=`cfgread gammuloc`
+        PORT=$(cfgread port)
+        MODEL=$(cfgread model)
+        CONNECTION=$(cfgread connection)
+        SYNCHRONIZETIME=$(cfgread synchronizetime)
+        LOGFILE=$(cfgread logfile)
+        LOGFORMAT=$(cfgread logformat)
+        LOCKING=$(cfgread use_locking)
+        GAMMULOC=$(cfgread gammuloc)
     fi
 fi
 
@@ -117,8 +117,8 @@ mainmenu() {
         $EXTRA_MENU \
         2>"$TEMPFILE"
     BUTTON=$?
-    ITEM=`cat "$TEMPFILE"`
-    if [ "$DIALOG" = whiptail -a "$BUTTON" = 0 ] ; then
+    ITEM=$(cat "$TEMPFILE")
+    if [ "$DIALOG" = whiptail ] && [ "$BUTTON" = 0 ] ; then
         if [ "$ITEM" = H ] ; then
             BUTTON=2
         elif [ "$ITEM" = S ] ; then
@@ -136,10 +136,10 @@ editP() {
     fi
     if [ $err -eq 255 ] ; then
         if $DIALOG --inputbox "Enter phone port" $INPUT_SIZE "${PORT:-$D_PORT}" 2>"$TEMPFILE" ; then
-            PORT=`cat "$TEMPFILE"`
+            PORT=$(cat "$TEMPFILE")
         fi
     elif [ $err -eq 0 ] ; then
-        PORT=`cat "$TEMPFILE"`
+        PORT=$(cat "$TEMPFILE")
     fi
 }
 
@@ -182,7 +182,7 @@ editgeneral() {
     shift
 
     if ( $DIALOG --menu "$TITLE" $MENU_SIZE "$@" 2>"$TEMPFILE" ) ; then
-        VALUE=`cat "$TEMPFILE"`
+        VALUE=$(cat "$TEMPFILE")
         eval "$VAR='$VALUE'"
     fi
 }
@@ -242,10 +242,10 @@ editF() {
     fi
     if [ $err = 255 ] ; then
         if ( $DIALOG --inputbox "Enter log file" $INPUT_SIZE "${LOGFILE:-$D_LOG_FILE}" 2>"$TEMPFILE" ) ; then
-            LOGFILE=`cat "$TEMPFILE"`
+            LOGFILE=$(cat "$TEMPFILE")
         fi
-    elif [ $err = 0] ; then
-        LOGFILE=`cat "$TEMPFILE"`
+    elif [ $err = 0 ] ; then
+        LOGFILE=$(cat "$TEMPFILE")
     fi
 }
 
@@ -276,28 +276,28 @@ editG() {
     fi
     if [ $err = 255 ] ; then
         if ( $DIALOG --inputbox "Enter localisation file" $INPUT_SIZE "${GAMMULOC:-${D_GAMMULOC:-/}}" 2>"$TEMPFILE" ) ; then
-            LOGFILE=`cat "$TEMPFILE"`
+            LOGFILE=$(cat "$TEMPFILE")
         fi
-    elif [ $err = 0] ; then
-        LOGFILE=`cat "$TEMPFILE"`
+    elif [ $err = 0 ] ; then
+        LOGFILE=$(cat "$TEMPFILE")
     fi
 }
 
 
 mainmenu
 
-while [ $BUTTON -eq 0 -o $BUTTON -eq 2 ] ; do
+while [ $BUTTON -eq 0 ] || [ $BUTTON -eq 2 ] ; do
     if [ $BUTTON -eq 2 ] ; then
         helpwin
     else
         edit$ITEM
     fi
-    
+
     mainmenu
 done
 
 if [ $BUTTON -eq 3 ] ; then
-    if [ -f "$CONFIG" -a $FORCE -ne 1 ] ; then
+    if [ -f "$CONFIG" ] && [ $FORCE -ne 1 ] ; then
         $DIALOG --yesno "Do you really wish to overwrite file \"$CONFIG\", with selected Gammu configuration?" $DIALOG_SIZE
         if [ $? -eq 1 ] ; then
             exit 0
