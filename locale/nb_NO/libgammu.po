@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.38.2\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2019-02-14 14:57+0100\n"
-"PO-Revision-Date: 2018-02-07 21:06+0000\n"
+"PO-Revision-Date: 2019-03-12 03:03+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/gammu/"
 "libgammu/nb_NO/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.19-dev\n"
+"X-Generator: Weblate 3.5.1\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
@@ -433,7 +433,7 @@ msgstr "Feil ved kjøring av SQL-spørring."
 
 #: libgammu/gsmcomon.c:163
 msgid "The type of memory is not available or has been disabled."
-msgstr ""
+msgstr "Denne typen minne er ikke tilgjengelig eller har blitt skrudd av."
 
 #: libgammu/gsmcomon.c:164
 #, fuzzy
