@@ -28,6 +28,7 @@ void get_sms_default_memory(void)
 
   UNNEEDED(Priv);
 
+  memset(&msms, 0, sizeof(msms));
   sms->Location = 0;
   sms->Folder = 1;
 
@@ -63,6 +64,7 @@ void get_sms_requested_memory(void)
 
   UNNEEDED(Priv);
 
+  memset(&msms, 0, sizeof(msms));
   sms->Memory = MEM_SR;
   sms->Location = 0;
   sms->Folder = 1;
