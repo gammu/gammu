@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.40.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2017-10-19 13:14+0200\n"
-"PO-Revision-Date: 2019-04-18 05:04+0000\n"
+"PO-Revision-Date: 2019-04-23 15:48+0000\n"
 "Last-Translator: CurlingTongs <o11577482@nwytg.net>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/gammu/gammu/de/>\n"
 "Language: de\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.6-dev\n"
+"X-Generator: Weblate 3.7-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:379 helper/message-cmdline.c:403
@@ -3701,9 +3701,8 @@ msgid "Name prefix"
 msgstr "Titel"
 
 #: helper/memory-display.c:226
-#, fuzzy
 msgid "Name suffix"
-msgstr "Namensnachsatz"
+msgstr "Namenssuffix"
 
 #: helper/memory-display.c:227
 msgid "Nick name"
