@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: libGammu 1.40.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2019-02-14 14:57+0100\n"
-"PO-Revision-Date: 2019-04-18 05:04+0000\n"
+"PO-Revision-Date: 2019-04-23 15:48+0000\n"
 "Last-Translator: CurlingTongs <o11577482@nwytg.net>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/gammu/libgammu/de/"
 ">\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.6-dev\n"
+"X-Generator: Weblate 3.7-dev\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
@@ -81,7 +81,7 @@ msgstr "Fehler beim Lesen vom Gerät."
 
 #: libgammu/gsmcomon.c:96
 msgid "Can't set parity on the device."
-msgstr "Kann die Parität auf dem Gerät nicht setzen."
+msgstr "Die Parität kann auf dem Gerät nicht eingestellt werden."
 
 #: libgammu/gsmcomon.c:97
 msgid "No response in specified timeout. Probably the phone is not connected."
@@ -95,7 +95,7 @@ msgid ""
 "information on how to report it."
 msgstr ""
 "Rückantwort vom Telefon momentan nicht angefordert. Lesen Sie bitte unter "
-"<https://wammu.eu/support/bugs/> wo dieser Fehler zu melden ist."
+"<https://wammu.eu/support/bugs/> wie dieser Fehler zu melden ist."
 
 #: libgammu/gsmcomon.c:99
 msgid ""
