@@ -42,6 +42,6 @@ atgen_test(gsm-set-cnmi-params)
 atgen_test(get-sms-location)
 atgen_test(get-sms)
 
+smsd_test(test_sql_time)
 smsd_test(smsd-incoming-cds)
 smsd_test(smsd-incoming-ussd)
-
