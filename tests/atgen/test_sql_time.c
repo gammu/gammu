@@ -11,7 +11,7 @@ int get_local_timezone_offset(time_t posix_time);
 
 void print_time(const struct tm *tm)
 {
-  char buffer[128];
+	char buffer[128] = {0};
   strftime(buffer, 128, "'%Y-%m-%d %H:%M:%S'", tm);
   puts(buffer);
 }
@@ -184,7 +184,7 @@ void test_sql_parse_date_no_dst(void)
   time = SMSDSQL_ParseDate(NULL, expected);
   tm = *localtime(&time);
 
-  strftime(actual, 128, "%Y-%m-%d %T", &tm);
+  strftime(actual, 128, "%Y-%m-%d %H:%M:%S", &tm);
   test_result(strcmp(expected, actual) == 0);
 }
 
@@ -206,7 +206,7 @@ void test_sql_parse_date_with_dst(void)
   time = SMSDSQL_ParseDate(NULL, expected);
   tm = *localtime(&time);
 
-  strftime(actual, 128, "%Y-%m-%d %T", &tm);
+  strftime(actual, 128, "%Y-%m-%d %H:%M:%S", &tm);
   test_result(strcmp(expected, actual) == 0);
 }
 

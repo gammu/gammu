@@ -1781,7 +1781,7 @@ time_t SMSDSQL_ParseDate(GSM_SMSDConfig * Config, const char *date)
 		return -2;
 	}
 
-	parse_res = strptime(date, "%Y-%m-%d %T", &tm);
+	parse_res = strptime(date, "%Y-%m-%d %H:%M:%S", &tm);
 	if (parse_res != NULL && *parse_res == 0) {
 	  tm.tm_isdst = -1;
 	  time = mktime(&tm);
