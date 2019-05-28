@@ -8,19 +8,22 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.40.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2018-01-05 10:00+0100\n"
-"PO-Revision-Date: 2009-01-27 14:27+0100\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"Language: \n"
+"PO-Revision-Date: 2019-06-18 19:00+0000\n"
+"Last-Translator: Filip Obretenov <filip.obretenovbg@gmail.com>\n"
+"Language-Team: Bulgarian <https://hosted.weblate.org/projects/gammu/"
+"gammu-docs/bg/>\n"
+"Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.7\n"
 
 #. type: Title =
 #: README.rst:2
 #, no-wrap
 msgid "Gammu All Mobile Management Utilities"
-msgstr ""
+msgstr "Gammu Всички Мобилни Инструменти за Мениджмънт"
 
 #. type: Plain text
 #: README.rst:6
@@ -28,6 +31,8 @@ msgid ""
 "Gammu is library and command line utility for mobile phones. It is released "
 "under GNU GPL version 2."
 msgstr ""
+"Gammu е библиотека и помощна програма за команден ред за мобилни телефони. "
+"Издадена е под GNU GPL версия 2."
 
 #. type: Plain text
 #: README.rst:11
@@ -37,6 +42,10 @@ msgid ""
 "mwiacek.com/> projects. Gammu was former (up to version 0.58) called "
 "MyGnokii2."
 msgstr ""
+"Тя е инициирана от Marcin Wiacek и други хора. Първоначално кодът се е "
+"основавал на Gnokii <https://www.gnokii.org/> и по късно на MyGnokii "
+"<http://www.mwiacek.com/> проекти. Gammu е бил бивш (до версия 0.58) "
+"наречена MyGnokii2."
 
 #. type: Plain text
 #: README.rst:14
@@ -44,6 +53,8 @@ msgid ""
 "Currently the project is lead by Michal Cihar <michal@cihar.com> with help "
 "of many contributors."
 msgstr ""
+"В момента проектът се ръководи от Michal Cihar <michal@cihar.com> с помощта "
+"на много участници."
 
 #. type: Labeled list
 #: README.rst:15 README.rst:19 README.rst:23 README.rst:27 README.rst:31
@@ -54,17 +65,13 @@ msgstr ".. image"
 
 #. type: Plain text
 #: README.rst:16
-#, fuzzy
-#| msgid "https://travis-ci.org/gammu/gammu.png?branch=master"
 msgid "https://travis-ci.org/gammu/gammu.svg?branch=master"
-msgstr "https://travis-ci.org/gammu/gammu.png?branch=master"
+msgstr "https://travis-ci.org/gammu/gammu.svg?branch=master"
 
 #. type: Plain text
 #: README.rst:18
-#, fuzzy
-#| msgid ":target: https://travis-ci.org/gammu/gammu"
 msgid ":alt: Build status :target: https://travis-ci.org/gammu/gammu"
-msgstr ":target: https://travis-ci.org/gammu/gammu"
+msgstr ":alt: Статус на разработката :target: https://travis-ci.org/gammu/gammu"
 
 #. type: Plain text
 #: README.rst:20
@@ -72,22 +79,22 @@ msgid ""
 "https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/master?"
 "svg=true"
 msgstr ""
+"https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/"
+"master?svg=true"
 
 #. type: Plain text
 #: README.rst:22
-#, fuzzy
-#| msgid ":target: https://travis-ci.org/gammu/gammu"
 msgid ""
 ":alt: Windows Build status :target: https://ci.appveyor.com/project/nijel/"
 "gammu/branch/master"
-msgstr ":target: https://travis-ci.org/gammu/gammu"
+msgstr ""
+":alt: Windows Разработка статус :target: https://ci.appveyor.com/project/"
+"nijel/gammu/branch/master"
 
 #. type: Plain text
 #: README.rst:24
-#, fuzzy
-#| msgid "https://hosted.weblate.org/widgets/gammu-status-badge.png"
 msgid "https://hosted.weblate.org/widgets/gammu/-/svg-badge.svg"
-msgstr "https://hosted.weblate.org/widgets/gammu-status-badge.png"
+msgstr "https://hosted.weblate.org/widgets/gammu/-/svg-badge.svg"
 
 #. type: Plain text
 #: README.rst:26
@@ -101,26 +108,23 @@ msgstr ""
 #. type: Plain text
 #: README.rst:28
 msgid "https://scan.coverity.com/projects/2890/badge.svg?flat=1"
-msgstr ""
+msgstr "https://scan.coverity.com/projects/2890/badge.svg?flat=1"
 
 #. type: Plain text
 #: README.rst:30
-#, fuzzy
-#| msgid ":alt: Bitdeli badge :target: https://bitdeli.com/free"
 msgid ":alt: Coverity scan :target: https://scan.coverity.com/projects/2890"
-msgstr ":alt: Bitdeli badge :target: https://bitdeli.com/free"
+msgstr ""
+":alt: Coverity сканиране :target: https://scan.coverity.com/projects/2890"
 
 #. type: Plain text
 #: README.rst:32
 msgid "https://img.shields.io/gratipay/Gammu.svg"
-msgstr ""
+msgstr "https://img.shields.io/gratipay/Gammu.svg"
 
 #. type: Plain text
 #: README.rst:34
-#, fuzzy
-#| msgid ":target: https://travis-ci.org/gammu/gammu"
 msgid ":alt: Gratipay :target: https://gratipay.com/Gammu/"
-msgstr ":target: https://travis-ci.org/gammu/gammu"
+msgstr ":alt: Gratipay :target: https://gratipay.com/Gammu/"
 
 #. type: Plain text
 #: README.rst:36
