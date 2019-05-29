@@ -1712,6 +1712,10 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 				ussd.Status = USSD_Unknown;
 		}
 
+		// if it looks like we only received a USSD code we're done.
+	  if(strchr(msg->Buffer + 8, ',') == NULL)
+	    goto done;
+
 		error = ATGEN_ParseReply(s, pos,
 					"+CUSD: @i, @r, @i @0",
 					&code,

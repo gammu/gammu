@@ -1,3 +1,5 @@
+project(atgen-tests C)
+
 add_library(atgen-tests STATIC test_helper.c)
 target_link_libraries(atgen-tests libGammu)
 
@@ -23,6 +25,13 @@ MACRO(smsd_test TEST_NAME)
     add_test(${TEST_NAME} "${GAMMU_TEST_PATH}/atgen/${TEST_NAME}${CMAKE_EXECUTABLE_SUFFIX}")
 ENDMACRO(smsd_test)
 
+configure_file(smsd.cfg.in ${PROJECT_BINARY_DIR}/smsd.cfg)
+
+add_custom_command(TARGET atgen-tests POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E make_directory ${PROJECT_BINARY_DIR}/inbox
+        COMMAND ${CMAKE_COMMAND} -E make_directory ${PROJECT_BINARY_DIR}/outbox
+        )
+
 atgen_test(is-memory-enabled)
 atgen_test(is-memory-writeable)
 atgen_test(set-requested-sms-memory)
@@ -35,5 +44,7 @@ atgen_test(gsm-set-cnmi-params)
 atgen_test(get-sms-location)
 atgen_test(get-sms)
 
+smsd_test(test_sql_time)
 smsd_test(smsd-incoming-cds)
 smsd_test(smsd-cancel-call)
+smsd_test(smsd-incoming-ussd)

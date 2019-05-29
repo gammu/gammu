@@ -28,6 +28,24 @@
 #include <cygwin/version.h>
 #endif
 
+#ifdef WIN32
+int setenv(const char *name, const char *value, int overwrite)
+{
+  char env_var[_MAX_ENV];
+  char* has_value = getenv(name);
+  if(!has_value || overwrite) {
+    snprintf(env_var, _MAX_ENV, "%s=%s", name, value);
+    return _putenv(env_var);
+  }
+  return -1;
+}
+
+void unsetenv(const char *name)
+{
+  _putenv(name);
+}
+#endif // WIN32
+
 /**
  * Recalculates struct tm content. We can not use mktime directly, as it
  * works only for dates > 1970. Day of week calculation is nased on article
@@ -143,13 +161,16 @@ char *DayOfWeek (unsigned int year, unsigned int month, unsigned int day)
 	return DayOfWeekChar;
 }
 
-int GSM_GetLocalTimezoneOffset() {
-	struct tm tg, tl;
-	time_t now = time(NULL);
-	gmtime_r(&now, &tg);
-	localtime_r(&now, &tl);
-	// Returns offset including daylight saving (found as boolean in tl.tm_isdst).
-	return (int)(mktime(&tl) - mktime(&tg));
+int get_local_timezone_offset(time_t posix_time)
+{
+  struct tm *tm = gmtime(&posix_time);
+  tm->tm_isdst = -1;
+  return posix_time - mktime(tm);
+}
+
+int GSM_GetLocalTimezoneOffset()
+{
+  return get_local_timezone_offset(time(NULL));
 }
 
 void GSM_DateTimeToTimestamp(GSM_DateTime *Date, char *str)
@@ -186,38 +207,55 @@ void GSM_GetCurrentDateTime (GSM_DateTime *Date)
 	Fill_GSM_DateTime(Date, time(NULL));
 }
 
+/*
+ * Convert GSM_DateTime to POSIX time.
+ *
+ * A GSM timestamp consists of a date and time given in UTC and
+ * an originating local time offset. If the time and date part
+ * of the GSM_DateTime argument is not in UTC the returned
+ * calculated POSIX calendar time will not be valid.
+ */
 time_t Fill_Time_T(GSM_DateTime DT)
 {
-	struct tm timestruct;
-	struct tm *now;
-	time_t t;
-
+  char *tz;
+	struct tm tm;
+	time_t posix_time;
 
 	dbgprintf(NULL, "StartTime: %s\n", OSDate(DT));
 
-	memset(&timestruct, 0, sizeof(timestruct));
-	timestruct.tm_year 	= DT.Year - 1900;
-	timestruct.tm_mon  	= DT.Month - 1;
-	timestruct.tm_mday 	= DT.Day;
-	timestruct.tm_hour 	= DT.Hour;
-	timestruct.tm_min  	= DT.Minute;
-	timestruct.tm_sec  	= DT.Second;
+	memset(&tm, 0, sizeof(tm));
+	tm.tm_year 	= DT.Year - 1900;
+	tm.tm_mon  	= DT.Month - 1;
+	tm.tm_mday 	= DT.Day;
+	tm.tm_hour 	= DT.Hour;
+	tm.tm_min  	= DT.Minute;
+	tm.tm_sec  	= DT.Second;
+	tm.tm_isdst = 0;
 
-	time(&t);
-	now = localtime(&t);
+	tz = getenv("TZ");
+	if(tz) {
+    tz = strdup(tz);
+    if(!tz)
+      return -1;
+  }
 
-#ifdef HAVE_DAYLIGHT
-	timestruct.tm_isdst = now->tm_isdst;
-#else
-	timestruct.tm_isdst	= -1;
-#endif
-#ifdef HAVE_STRUCT_TM_TM_ZONE
-	/* No time zone information */
-	timestruct.tm_gmtoff = now->tm_gmtoff;
-	timestruct.tm_zone = now->tm_zone;
-#endif
+	putenv((char*)"TZ=GMT+00");
+	tzset();
 
-	return mktime(&timestruct);
+	posix_time = mktime(&tm);
+	if(posix_time != -1)
+    posix_time += DT.Timezone > 0 ? -DT.Timezone : abs(DT.Timezone);
+
+	if(tz) {
+    setenv("TZ", tz, 1);
+    free(tz);
+  }
+	else {
+	  unsetenv("TZ");
+	}
+	tzset();
+
+	return posix_time;
 }
 
 GSM_DateTime GSM_AddTime (GSM_DateTime DT , GSM_DeltaTime delta)
