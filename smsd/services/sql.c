@@ -282,34 +282,54 @@ static GSM_Error SMSDSQL_Query(GSM_SMSDConfig * Config, const char *query, SQL_r
 	return error;
 }
 
+/*
+ * generates a timestamp string suitable for inserting into a database, the timestamp
+ * argument must be a valid POSIX calendar time.
+ *
+ * pgsql: https://www.postgresql.org/docs/9.1/datatype-datetime.html
+ *   - "For timestamp with time zone, the internally stored value is always in UTC
+ *      (Universal Coordinated Time, traditionally known as Greenwich Mean Time, GMT).
+ *      An input value that has an explicit time zone specified is converted to UTC
+ *      using the appropriate offset for that time zone.
+ *
+ *      If no time zone is stated in the input string, then it is assumed to be in the
+ *      time zone indicated by the system's timezone parameter, and is converted to
+ *      UTC using the offset for the timezone zone. When a timestamp with time zone
+ *      value is output, it is always converted from UTC to the current timezone zone,
+ *      and displayed as local time in that zone. To see the time in another time zone,
+ *      either change timezone or use the AT TIME ZONE construct (see Section 9.9.3).
+ *
+ *      Conversions between timestamp without time zone and timestamp with time zone
+ *      normally assume that the timestamp without time zone value should be taken or
+ *      given as timezone local time."
+ *
+ * mysql: https://dev.mysql.com/doc/refman/8.0/en/datetime.html
+ *  - "MySQL converts TIMESTAMP values from the current time zone to UTC for
+ *     storage, and back from UTC to the current time zone for retrieval."
+ *
+ * oracle: https://docs.oracle.com/cd/B19306_01/server.102/b14225/ch4datetime.htm#i1006050
+ *  - a TIMESTAMP literal without tz info is interpreted as local time zone.
+ */
 void SMSDSQL_Time2String(GSM_SMSDConfig * Config, time_t timestamp, char *static_buff, size_t size)
 {
-	struct tm *timestruct;
-	const char *driver_name;
+	const char *driver_name = SMSDSQL_SQLName(Config);
+	struct tm *tm = localtime(&timestamp);
 
-	driver_name = SMSDSQL_SQLName(Config);
-
-	if (timestamp == -2) {
-		strcpy(static_buff, "0000-00-00 00:00:00");
-	} else if (strcasecmp(driver_name, "pgsql") == 0 || strcasecmp(driver_name, "native_pgsql") == 0) {
-		timestruct = localtime(&timestamp);
-		strftime(static_buff, size, "%Y-%m-%d %H:%M:%S GMT", timestruct);
-	} else if (strcasecmp(driver_name, "access") == 0) {
-		timestruct = gmtime(&timestamp);
-		strftime(static_buff, size, "'%Y-%m-%d %H:%M:%S'", timestruct);
-	} else if (strcasecmp(driver_name, "mysql") == 0 || strcasecmp(driver_name, "native_mysql") == 0) {
-		timestruct = localtime(&timestamp);
-		strftime(static_buff, size, "%Y-%m-%d %H:%M:%S", timestruct);
-	} else if (strcasecmp(driver_name, "oracle") == 0) {
-		timestruct = gmtime(&timestamp);
-		strftime(static_buff, size, "TIMESTAMP '%Y-%m-%d %H:%M:%S +00:00'", timestruct);
-	} else if (strcasecmp(Config->driver, "odbc") == 0) {
-		timestruct = gmtime(&timestamp);
-		strftime(static_buff, size, "{ ts '%Y-%m-%d %H:%M:%S' }", timestruct);
-	} else {
-		timestruct = localtime(&timestamp);
-		strftime(static_buff, size, "%Y-%m-%d %H:%M:%S", timestruct);
-	}
+  if(timestamp == -2) {
+    strcpy(static_buff, "0000-00-00 00:00:00");
+  }
+  else if (strcasecmp(driver_name, "oracle") == 0) {
+    strftime(static_buff, size, "TIMESTAMP '%Y-%m-%d %H:%M:%S'", tm);
+  }
+  else if (strcasecmp(Config->driver, "odbc") == 0) {
+    strftime(static_buff, size, "{ ts '%Y-%m-%d %H:%M:%S' }", tm);
+  }
+  else if (strcasecmp(driver_name, "access") == 0) {
+    strftime(static_buff, size, "'%Y-%m-%d %H:%M:%S'", tm);
+  }
+  else {
+    strftime(static_buff, size, "%Y-%m-%d %H:%M:%S", tm);
+  }
 }
 
 static GSM_Error SMSDSQL_NamedQuery(GSM_SMSDConfig * Config, const char *sql_query, GSM_SMSMessage *sms,
@@ -1743,33 +1763,35 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 	return ERR_NONE;
 }
 
+/* Converts the given local date and time into POSIX calendar time
+ *
+ * The date string argument must be a system local point in time
+ * formatted as "YYYY-MM-DD HH:MM:SS"
+ *
+ * returns the POSIX (UTC) calendar time for the given date/time, or
+ * a negative time_t on error.
+ */
 time_t SMSDSQL_ParseDate(GSM_SMSDConfig * Config, const char *date)
 {
 	char *parse_res;
-	struct tm timestruct;
-	GSM_DateTime DT;
+	struct tm tm;
+	time_t time = -1;
 
 	if (strcmp(date, "0000-00-00 00:00:00") == 0) {
 		return -2;
 	}
 
-	parse_res = strptime(date, "%Y-%m-%d %H:%M:%S", &timestruct);
-
+	parse_res = strptime(date, "%Y-%m-%d %H:%M:%S", &tm);
 	if (parse_res != NULL && *parse_res == 0) {
-		DT.Year = timestruct.tm_year + 1900;
-		DT.Month = timestruct.tm_mon + 1;
-		DT.Day = timestruct.tm_mday;
-		DT.Hour = timestruct.tm_hour;
-		DT.Minute = timestruct.tm_min;
-		DT.Second = timestruct.tm_sec;
-
-		return Fill_Time_T(DT);
+	  tm.tm_isdst = -1;
+	  time = mktime(&tm);
 	}
-	/* Used during testing */
-	if (Config != NULL) {
+	else if (Config != NULL) {
+    /* Used during testing */
 		SMSD_Log(DEBUG_ERROR, Config, "Failed to parse date: %s", date);
 	}
-	return -1;
+
+	return time;
 }
 
 GSM_SMSDService SMSDSQL = {
