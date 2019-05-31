@@ -35,6 +35,8 @@ add_custom_command(TARGET atgen-tests POST_BUILD
 atgen_test(is-memory-enabled)
 atgen_test(is-memory-writeable)
 atgen_test(set-requested-sms-memory)
+
+atgen_test(deferred-event)
 atgen_test(incoming-sms-info)
 atgen_test(incoming-sms)
 
@@ -44,4 +46,5 @@ atgen_test(get-sms)
 
 smsd_test(test_sql_time)
 smsd_test(smsd-incoming-cds)
+smsd_test(smsd-cancel-call)
 smsd_test(smsd-incoming-ussd)

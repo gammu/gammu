@@ -198,6 +198,7 @@ typedef enum {
 	ID_SetPower,
 
 	ID_IncomingFrame,
+  ID_CheckCHUP,
 
 	ID_User1,
 	ID_User2,
