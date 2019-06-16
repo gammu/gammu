@@ -60,6 +60,7 @@ ELSE(WIN32)
             /usr/local/postgresql/include/postgresql
             /usr/include 
             /usr/include/postgresql
+            /usr/include/pgsql
             ${PG_TMP}
             $ENV{POSTGRESQL_HOME}/include/server
             $ENV{POSTGRESQL_HOME}/include
