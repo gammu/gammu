@@ -317,6 +317,7 @@ typedef struct {
 	int			MemorySize;
 	int			MotorolaMemorySize;
 	int			MemoryUsed;
+  int			NumFolders;
 
 	GSM_SMSMemoryStatus	LastSMSStatus;
 	int			LastSMSRead;

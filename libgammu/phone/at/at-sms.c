@@ -217,6 +217,15 @@ GSM_Error ATGEN_GetSMSMemories(GSM_StateMachine *s)
 		Priv->SIMSMSMemory = AT_NOTAVAILABLE;
 		Priv->SIMSaveSMS = AT_NOTAVAILABLE;
 	}
+
+	// count standard folders
+	Priv->NumFolders = 0;
+	if(ATGEN_IsMemoryAvailable(Priv, MEM_SM))
+	  Priv->NumFolders++;
+
+  if(ATGEN_IsMemoryAvailable(Priv, MEM_ME))
+    Priv->NumFolders++;
+
 	return ERR_NONE;
 }
 
@@ -1370,8 +1379,8 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, gboole
 		smprintf(s, "Cache status: Found: %d, count: %d\n", found, Priv->SMSCount);
 
 		if (found >= Priv->SMSCount) {
-			/* Did we already read second folder? */
-			if (Priv->SMSReadFolder == 2) {
+			/* Have we read all folders? */
+			if (Priv->SMSReadFolder == Priv->NumFolders) {
 				return ERR_EMPTY;
 			}
 
