@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.40.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2017-10-19 13:14+0200\n"
-"PO-Revision-Date: 2019-01-28 15:15+0000\n"
+"PO-Revision-Date: 2019-06-25 12:00+0000\n"
 "Last-Translator: Victor K <ktrace@yandex.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gammu/gammu/ru/>"
 "\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
 "4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 3.5-dev\n"
+"X-Generator: Weblate 3.7.1-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:379 helper/message-cmdline.c:403
@@ -1895,9 +1895,8 @@ msgid "Categories"
 msgstr "Категории"
 
 #: gammu/gammu.c:755
-#, fuzzy
 msgid "Backing up and restoring"
-msgstr "Резервная копия и восстановление"
+msgstr "Резервное копирование и восстановление"
 
 #: gammu/gammu.c:758
 msgid "Nokia specific"
@@ -2836,8 +2835,9 @@ msgid "Service number"
 msgstr "Номер службы"
 
 #: gammu/misc.c:1419
+#, fuzzy
 msgid "Data (CSD)"
-msgstr ""
+msgstr "Данные (CSD)"
 
 #: gammu/misc.c:1422
 msgid "Dial-up number"
