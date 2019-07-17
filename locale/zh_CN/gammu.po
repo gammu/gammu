@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: Wammu 0.37\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2017-10-19 13:14+0200\n"
-"PO-Revision-Date: 2014-02-16 01:42+0200\n"
-"Last-Translator: Huang Zhiyi <hzy980512@126.com>\n"
-"Language-Team: Simplified Chinese <http://hosted.weblate.org/projects/gammu/"
-"gammu/zh_CN/>\n"
+"PO-Revision-Date: 2019-07-18 16:04+0000\n"
+"Last-Translator: Elizabeth Sherrock <lizzyd710@gmail.com>\n"
+"Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
+"gammu/gammu/zh_Hans/>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 1.9-dev\n"
+"X-Generator: Weblate 3.8-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:379 helper/message-cmdline.c:403
@@ -586,8 +586,9 @@ msgid "Training/Football"
 msgstr ""
 
 #: gammu/calendar.c:73
+#, fuzzy
 msgid "Training/Golf"
-msgstr ""
+msgstr "Training／高尔夫球"
 
 #: gammu/calendar.c:76
 msgid "Training/Gym"
@@ -598,8 +599,9 @@ msgid "Training/Horse Races"
 msgstr ""
 
 #: gammu/calendar.c:82
+#, fuzzy
 msgid "Training/Hockey"
-msgstr ""
+msgstr "Training／冰球"
 
 #: gammu/calendar.c:85
 msgid "Training/Races"
@@ -618,12 +620,13 @@ msgid "Training/Street Games"
 msgstr ""
 
 #: gammu/calendar.c:97
+#, fuzzy
 msgid "Training/Swimming"
-msgstr ""
+msgstr "Training／游泳"
 
 #: gammu/calendar.c:100
 msgid "Training/Tennis"
-msgstr ""
+msgstr "Training／网球"
 
 #: gammu/calendar.c:103
 msgid "Training/Travels"
@@ -1632,20 +1635,18 @@ msgid "Phone memory"
 msgstr "手机内存"
 
 #: gammu/files.c:49
-#, fuzzy, c-format
-#| msgid "%i bytes (free %i bytes, used %i bytes)"
+#, c-format
 msgid "%ld bytes (free %ld bytes, used %ld bytes)"
-msgstr "%i 字节 (剩余 %i 字节，已用 %i 字节)"
+msgstr "%ld字节 (剩余%ld字节，已用%ld字节)"
 
 #: gammu/files.c:55
 msgid "Usage details"
 msgstr ""
 
 #: gammu/files.c:56
-#, fuzzy, c-format
-#| msgid "images: %i, sounds: %i, themes: %i"
+#, c-format
 msgid "images: %ld, sounds: %ld, themes: %ld"
-msgstr "图片: %i, 声音: %i, 主题: %i"
+msgstr "图片：%ld、声音：%ld、主题：%ld"
 
 #. l10n: One char to indicate protected file
 #: gammu/files.c:119 gammu/files.c:208 gammu/files.c:329
@@ -1806,13 +1807,9 @@ msgid "There is newer testing Gammu version available! (%s instead of %s)\n"
 msgstr ""
 
 #: gammu/gammu.c:332
-#, fuzzy
-#| msgid ""
-#| "Copyright (C) 2003 - 2012 Michal Cihar <michal@cihar.com> and other "
-#| "authors."
 msgid ""
 "Copyright (C) 2003 - 2018 Michal Cihar <michal@cihar.com> and other authors."
-msgstr "版权所有 (C) 2003 - 2012 Michal Cihar <michal@cihar.com> 及其它作者。"
+msgstr "版权所有 (C) 2003 - 2018 Michal Cihar <michal@cihar.com> 及其它作者。"
 
 #: gammu/gammu.c:369
 msgid "standard input"
@@ -2030,7 +2027,7 @@ msgstr ""
 
 #: gammu/gammu.c:1179
 msgid "Too few parameters!"
-msgstr ""
+msgstr "太少参数！"
 
 #: gammu/gammu.c:1192
 #, c-format
@@ -2085,7 +2082,7 @@ msgstr ""
 #: gammu/message.c:63 gammu/message.c:297
 #, c-format
 msgid "Location %i\n"
-msgstr ""
+msgstr "地点%i\n"
 
 #: gammu/message.c:64 gammu/message.c:298
 msgid "Empty"
