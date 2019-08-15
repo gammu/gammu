@@ -8,13 +8,16 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.38.6\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2018-01-05 10:00+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2019-08-16 16:22+0000\n"
+"Last-Translator: Manuela Silva <mmsrs@sky.com>\n"
+"Language-Team: Portuguese (Portugal) <https://hosted.weblate.org/projects/"
+"gammu/gammu-docs/pt_PT/>\n"
 "Language: pt_PT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.8\n"
 
 #. type: Title =
 #: README.rst:2
@@ -49,12 +52,12 @@ msgstr ""
 #: README.rst:15 README.rst:19 README.rst:23 README.rst:27 README.rst:31 README.rst:35
 #, no-wrap
 msgid ".. image"
-msgstr ""
+msgstr ".. imagem"
 
 #. type: Plain text
 #: README.rst:16
 msgid "https://travis-ci.org/gammu/gammu.svg?branch=master"
-msgstr ""
+msgstr "https://travis-ci.org/gammu/gammu.svg?branch=master"
 
 #. type: Plain text
 #: README.rst:18
@@ -65,6 +68,8 @@ msgstr ""
 #: README.rst:20
 msgid "https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/master?svg=true"
 msgstr ""
+"https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/"
+"master?svg=true"
 
 #. type: Plain text
 #: README.rst:22
@@ -88,7 +93,7 @@ msgstr ""
 #. type: Plain text
 #: README.rst:28
 msgid "https://scan.coverity.com/projects/2890/badge.svg?flat=1"
-msgstr ""
+msgstr "https://scan.coverity.com/projects/2890/badge.svg?flat=1"
 
 #. type: Plain text
 #: README.rst:30
@@ -98,7 +103,7 @@ msgstr ""
 #. type: Plain text
 #: README.rst:32
 msgid "https://img.shields.io/gratipay/Gammu.svg"
-msgstr ""
+msgstr "https://img.shields.io/gratipay/Gammu.svg"
 
 #. type: Plain text
 #: README.rst:34
@@ -109,6 +114,7 @@ msgstr ""
 #: README.rst:36
 msgid "https://www.bountysource.com/badge/team?team_id=23177&style=bounties_received"
 msgstr ""
+"https://www.bountysource.com/badge/team?team_id=23177&style=bounties_received"
 
 #. type: Plain text
 #: README.rst:38
@@ -121,7 +127,7 @@ msgstr ""
 #: README.rst:40
 #, no-wrap
 msgid "More information"
-msgstr ""
+msgstr "Mais informação"
 
 #. type: Plain text
 #: README.rst:43
@@ -140,7 +146,7 @@ msgstr ""
 #: README.rst:50
 #, no-wrap
 msgid "Feedback and bug reports"
-msgstr ""
+msgstr "Feedback e relatórios de erros"
 
 #. type: Plain text
 #: README.rst:54
@@ -153,7 +159,7 @@ msgstr ""
 #: README.rst:57
 #, no-wrap
 msgid "Support developers"
-msgstr ""
+msgstr "Apoie os programadores"
 
 #. type: Plain text
 #: README.rst:59
@@ -172,3 +178,5 @@ msgid ""
 "See docs/manual/project/install.rst for installation guide or see chapter "
 "\"Compiling Gammu\" in The Gammu Manual."
 msgstr ""
+"Consulte docs/manual/project/install.rst para guia de instalação ou veja o "
+"capítulo \"Compilar Gammu\" em 'O Manual do Gammu'."
