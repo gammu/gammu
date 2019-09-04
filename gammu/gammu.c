@@ -789,10 +789,10 @@ void HelpGeneral(void)
 
 	printf("%s\n\n", _("Usage: gammu [parameters] <command> [options]"));
 	printf("%s\n", _("Parameters before command configure gammu behaviour:"));
-	printf("%s\n", _("-c / --config <filename> ... name of configuration file"));
-	printf("%s\n", _("-s / --section <confign> ... section of config file to use, eg. 42"));
-	printf("%s\n", _("-d / --debug <level> ... debug level (nothing|text|textall|textalldate|binary|errors)"));
-	printf("%s\n\n", _("-f / --debug-file <filename> ... file for logging debug messages"));
+	printf("%s\n", _("-c / --config <filename> … name of configuration file"));
+	printf("%s\n", _("-s / --section <confign> … section of config file to use, eg. 42"));
+	printf("%s\n", _("-d / --debug <level> … debug level (nothing|text|textall|textalldate|binary|errors)"));
+	printf("%s\n\n", _("-f / --debug-file <filename> … file for logging debug messages"));
 
 	printf("%s\n\n", _("Commands can be specified with or without leading --."));
 
