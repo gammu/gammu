@@ -21,7 +21,7 @@ void GetAllMemory(int argc UNUSED, char *argv[])
 	GSM_MemoryType MemoryType;
 
 	signal(SIGINT, interrupt);
-	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
+	fprintf(stderr, "%s\n", _("Press Ctrl+C to break…"));
 
 	MemoryType = GSM_StringToMemoryType(argv[2]);
 
@@ -309,7 +309,7 @@ void SearchMemory(int argc UNUSED, char *argv[])
 	int			Length;
 
 	signal(SIGINT, interrupt);
-	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
+	fprintf(stderr, "%s\n", _("Press Ctrl+C to break…"));
 
 	Length = strlen(argv[2]);
 	if (Length > GSM_PHONEBOOK_TEXT_LENGTH) {
@@ -373,7 +373,7 @@ void ListMemoryCategory(int argc UNUSED, char *argv[])
 	GSM_Init(TRUE);
 
 	signal(SIGINT, interrupt);
-	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
+	fprintf(stderr, "%s\n", _("Press Ctrl+C to break…"));
 
 	Length = strlen(argv[2]);
 	for (j = 0; j < Length; j++) {
