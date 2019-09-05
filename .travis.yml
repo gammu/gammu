@@ -48,6 +48,7 @@ addons:
     - llvm-5.0
     - gcc-7
     - g++-7
+  postgresql: "11"
 matrix:
   exclude:
     - os: osx
