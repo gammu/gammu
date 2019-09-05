@@ -12,7 +12,6 @@ env:
     - CTEST_OUTPUT_ON_FAILURE=1
     - TESTARGS="-DMYSQL_TESTING=on -DPSQL_TESTING=ON -DMYSQL_USER=root -DPSQL_USER=postgres -DPSQL_PASSWORD="
 before_script:
-  - if [ $TRAVIS_OS_NAME = linux ] ; then if [ $CC = clang ] ; then export CXX=clang++-5.0 ; export CC=clang-5.0 ; else export CXX=g++-7 ; export CC=gcc-7 ; fi ; fi
   - if [ $TRAVIS_OS_NAME = linux ] ; then psql -c 'create database smsd;' -U postgres ; fi
   - if [ $TRAVIS_OS_NAME = linux ] ; then mysql -uroot -e "create database smsd;" ; fi
   - if [ $TRAVIS_OS_NAME = linux ] ; then mysql -uroot -e "SET PASSWORD = PASSWORD('smsd')" ; fi
