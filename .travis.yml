@@ -11,10 +11,8 @@ env:
     - ARGS=""
   global:
     - CTEST_OUTPUT_ON_FAILURE=1
-    - TESTARGS="-DMYSQL_TESTING=on -DPSQL_TESTING=ON -DMYSQL_USER=root -DPSQL_USER=postgres -DPSQL_PASSWORD= -DODBC_TESTING=ON -DODBC_DSN=ODBCTest" 
+    - TESTARGS="-DMYSQL_TESTING=on -DPSQL_TESTING=ON -DMYSQL_USER=root -DPSQL_USER=postgres -DPSQL_PASSWORD=
 before_script:
-  - if [ -f /usr/share/libmyodbc/odbcinst.ini ] ; then cp /usr/share/libmyodbc/odbcinst.ini ~/.odbcinst.ini ; fi
-  - cp tests/odbc.ini ~/.odbc.ini
   - if [ $TRAVIS_OS_NAME = linux ] ; then if [ $CC = clang ] ; then export CXX=clang++-5.0 ; export CC=clang-5.0 ; else export CXX=g++-7 ; export CC=gcc-7 ; fi ; fi
   - if [ $TRAVIS_OS_NAME = linux ] ; then psql -c 'create database smsd;' -U postgres ; fi
   - if [ $TRAVIS_OS_NAME = linux ] ; then mysql -uroot -e "create database smsd;" ; fi
@@ -51,7 +49,6 @@ addons:
     - llvm-5.0
     - gcc-7
     - g++-7
-    - libmyodbc
 matrix:
   exclude:
     - os: osx
