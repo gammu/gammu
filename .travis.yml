@@ -41,7 +41,6 @@ addons:
     - libdbd-pgsql
     - cmake
     - cmake-data
-  postgresql: "11"
 matrix:
   exclude:
     - os: osx
