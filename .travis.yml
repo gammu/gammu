@@ -30,9 +30,6 @@ after_success:
 # install build dependencies and enable Coverity scan
 addons:
   apt:
-    sources:
-      - llvm-toolchain-trusty-5.0 # llvm 5.0
-      - ubuntu-toolchain-r-test # gcc backports
     packages:
     - libbluetooth-dev
     - libusb-1.0-0-dev
@@ -44,10 +41,6 @@ addons:
     - libdbd-pgsql
     - cmake
     - cmake-data
-    - clang-5.0
-    - llvm-5.0
-    - gcc-7
-    - g++-7
   postgresql: "11"
 matrix:
   exclude:
