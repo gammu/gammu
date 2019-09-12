@@ -11,7 +11,7 @@ if numparts == 0:
     text = os.environ['SMS_1_TEXT']
 # Get all text parts
 else:
-    for i in range(0, numparts):
+    for i in range(1, numparts + 1):
         varname = 'DECODED_%d_TEXT' % i
         if varname in os.environ:
             text = text + os.environ[varname]
