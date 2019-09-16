@@ -202,7 +202,7 @@ GSM_Error GSM_PlayRingtone(GSM_Ringtone *ringtone)
 	GSM_Error 	error;
 
 	signal(SIGINT, interrupt);
-	printf("%s\n", _("Press Ctrl+C to break..."));
+	printf("%s\n", _("Press Ctrl+C to break…"));
 
 	for (i = 0; i < ringtone->NoteTone.NrCommands; i++) {
 		if (gshutdown) break;
@@ -478,8 +478,8 @@ void Monitor(int argc, char *argv[])
 	}
 
 	signal(SIGINT, interrupt);
-	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
-	printf("%s\n\n", _("Entering monitor mode..."));
+	fprintf(stderr, "%s\n", _("Press Ctrl+C to break…"));
+	printf("%s\n\n", _("Entering monitor mode…"));
 
 	GSM_Init(TRUE);
 
@@ -574,7 +574,7 @@ void Monitor(int argc, char *argv[])
 		printf("\n");
 	}
 
-	printf("%s\n", _("Leaving monitor mode..."));
+	printf("%s\n", _("Leaving monitor mode…"));
 
 	/* Report if we failed because of an error */
 	Print_Error(error);

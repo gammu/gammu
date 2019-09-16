@@ -364,7 +364,7 @@ void DoBackup(int argc, char *argv[])
 	}
 
 	signal(SIGINT, interrupt);
-	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
+	fprintf(stderr, "%s\n", _("Press Ctrl+C to break…"));
 
 	GSM_Init(TRUE);
 
@@ -1023,7 +1023,7 @@ void Restore(int argc, char *argv[])
 	printf("%s\n", _("Use addnew command if you just want to add some entries to your phone."));
 
 	signal(SIGINT, interrupt);
-	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
+	fprintf(stderr, "%s\n", _("Press Ctrl+C to break…"));
 
 	DoRestore = FALSE;
 	if (Backup.CallerLogos[0] != NULL) {
@@ -1642,7 +1642,7 @@ void AddNew(int argc, char *argv[])
 	}
 
 	signal(SIGINT, interrupt);
-	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
+	fprintf(stderr, "%s\n", _("Press Ctrl+C to break…"));
 
 
 	GSM_Init(TRUE);

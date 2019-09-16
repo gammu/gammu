@@ -494,7 +494,7 @@ void DCT4VibraTest(int argc, char *argv[])
 	error=DCT4EnableVibra(gsm, TRUE);
 	Print_Error(error);
 
-	printf("%s\n", _("Press any key to continue..."));
+	printf("%s\n", _("Press any key to continue…"));
 	GetLine(stdin, ans, 99);
 
 	error=DCT4EnableVibra(gsm, FALSE);
@@ -1003,7 +1003,7 @@ void DCT4DisplayTest(int argc, char *argv[])
 	req[8] = GetInt(argv[2]);
 	gsm->Protocol.Functions->WriteMessage(gsm, req, 10, 0x40);
 
-	printf("%s\n", _("Press any key to continue..."));
+	printf("%s\n", _("Press any key to continue…"));
 	GetLine(stdin, ans, 99);
 
 	DCT4_SetPhoneMode(gsm, DCT4_MODE_NORMAL);
