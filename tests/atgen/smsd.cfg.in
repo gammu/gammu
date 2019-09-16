@@ -6,6 +6,10 @@ logformat=textall
 #logfile=${PROJECT_BINARY_DIR}/smsd.log
 logfile=stderr
 
+checkbattery=0
+checksignal=0
+checknetwork=0
+
 smsc=012345678
 
 debuglevel=255
