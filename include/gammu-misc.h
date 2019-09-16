@@ -113,7 +113,7 @@ extern void GSM_InitLocales(const char *path);
 #      define FALLTHROUGH [[clang::fallthrough]];
 #    endif
 #  endif
-#elif GSM_GNUC_PREREQ (3,1)
+#elif GSM_GNUC_PREREQ (7,0)
 #undef FALLTHROUGH
 #define FALLTHROUGH __attribute__ ((fallthrough));
 #endif
