@@ -60,9 +60,8 @@ Creating tables for MySQL
 Depending on MySQL version and settings please choose best fitting
 script to create tables:
 
-* :file:`mysql-strict.sql` can be used in strict mode, but requires MySQL 5.6.5
-  or newer
-* :file:`mysql.sql` supports all MySQL versions, but requires neither of
+* :file:`mysql.sql`, requires MySQL 5.6.5 or newer
+* :file:`mysql-legacy.sql` supports legacy MySQL versions, but requires neither of
   `NO_ZERO_DATE`, `ANSI` or `STRICT` modes to be set in the server
 
 SQL script :file:`mysql.sql` for creating tables in MySQL database:
@@ -74,14 +73,14 @@ SQL script :file:`mysql.sql` for creating tables in MySQL database:
 
     You can find the script in :file:`docs/sql/mysql.sql` as well.
 
-SQL script :file:`mysql-strict.sql` for creating tables in MySQL database:
+SQL script :file:`mysql-legacy.sql` for creating tables in MySQL database:
 
-.. literalinclude:: ../../sql/mysql-strict.sql
+.. literalinclude:: ../../sql/mysql-legacy.sql
    :language: mysql
 
 .. note::
 
-    You can find the script in :file:`docs/sql/mysql-strict.sql` as well.
+    You can find the script in :file:`docs/sql/mysql-legacy.sql` as well.
 
 Upgrading tables
 ----------------

@@ -28,7 +28,7 @@ INSERT INTO `gammu` (`Version`) VALUES (17);
 
 CREATE TABLE `inbox` (
   `UpdatedInDB` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  `ReceivingDateTime` timestamp NOT NULL default CURRENT_TIMESTAMP,
+  `ReceivingDateTime` timestamp NOT NULL default '0000-00-00 00:00:00',
   `Text` text NOT NULL,
   `SenderNumber` varchar(20) NOT NULL default '',
   `Coding` enum('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression') NOT NULL default 'Default_No_Compression',
@@ -56,8 +56,8 @@ CREATE TABLE `inbox` (
 
 CREATE TABLE `outbox` (
   `UpdatedInDB` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  `InsertIntoDB` timestamp NOT NULL default CURRENT_TIMESTAMP,
-  `SendingDateTime` timestamp NOT NULL default CURRENT_TIMESTAMP,
+  `InsertIntoDB` timestamp NOT NULL default '0000-00-00 00:00:00',
+  `SendingDateTime` timestamp NOT NULL default '0000-00-00 00:00:00',
   `SendBefore` time NOT NULL DEFAULT '23:59:59',
   `SendAfter` time NOT NULL DEFAULT '00:00:00',
   `Text` text,
@@ -70,7 +70,7 @@ CREATE TABLE `outbox` (
   `MultiPart` enum('false','true') default 'false',
   `RelativeValidity` integer default '-1',
   `SenderID` varchar(255),
-  `SendingTimeOut` timestamp NULL default CURRENT_TIMESTAMP,
+  `SendingTimeOut` timestamp NULL default '0000-00-00 00:00:00',
   `DeliveryReport` enum('default','yes','no') default 'default',
   `CreatorID` text NOT NULL,
   `Retries` int(3) default 0,
@@ -120,8 +120,8 @@ CREATE TABLE `outbox_multipart` (
 CREATE TABLE `phones` (
   `ID` text NOT NULL,
   `UpdatedInDB` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  `InsertIntoDB` timestamp NOT NULL default CURRENT_TIMESTAMP,
-  `TimeOut` timestamp NOT NULL default CURRENT_TIMESTAMP,
+  `InsertIntoDB` timestamp NOT NULL default '0000-00-00 00:00:00',
+  `TimeOut` timestamp NOT NULL default '0000-00-00 00:00:00',
   `Send` enum('yes','no') NOT NULL default 'no',
   `Receive` enum('yes','no') NOT NULL default 'no',
   `IMEI` varchar(35) NOT NULL,
@@ -148,8 +148,8 @@ CREATE TABLE `phones` (
 
 CREATE TABLE `sentitems` (
   `UpdatedInDB` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  `InsertIntoDB` timestamp NOT NULL default CURRENT_TIMESTAMP,
-  `SendingDateTime` timestamp NOT NULL default CURRENT_TIMESTAMP,
+  `InsertIntoDB` timestamp NOT NULL default '0000-00-00 00:00:00',
+  `SendingDateTime` timestamp NOT NULL default '0000-00-00 00:00:00',
   `DeliveryDateTime` timestamp NULL,
   `Text` text NOT NULL,
   `DestinationNumber` varchar(20) NOT NULL default '',
@@ -178,3 +178,57 @@ CREATE INDEX sentitems_sender ON sentitems(SenderID(250));
 -- 
 -- Dumping data for table `sentitems`
 -- 
+
+
+-- 
+-- Triggers for setting default timestamps
+-- 
+
+DELIMITER //
+
+CREATE TRIGGER inbox_timestamp BEFORE INSERT ON inbox
+FOR EACH ROW
+BEGIN
+    IF NEW.ReceivingDateTime = '0000-00-00 00:00:00' THEN
+        SET NEW.ReceivingDateTime = CURRENT_TIMESTAMP();
+    END IF;
+END;//
+
+CREATE TRIGGER outbox_timestamp BEFORE INSERT ON outbox
+FOR EACH ROW
+BEGIN
+    IF NEW.InsertIntoDB = '0000-00-00 00:00:00' THEN
+        SET NEW.InsertIntoDB = CURRENT_TIMESTAMP();
+    END IF;
+    IF NEW.SendingDateTime = '0000-00-00 00:00:00' THEN
+        SET NEW.SendingDateTime = CURRENT_TIMESTAMP();
+    END IF;
+    IF NEW.SendingTimeOut = '0000-00-00 00:00:00' THEN
+        SET NEW.SendingTimeOut = CURRENT_TIMESTAMP();
+    END IF;
+END;//
+
+CREATE TRIGGER phones_timestamp BEFORE INSERT ON phones
+FOR EACH ROW
+BEGIN
+    IF NEW.InsertIntoDB = '0000-00-00 00:00:00' THEN
+        SET NEW.InsertIntoDB = CURRENT_TIMESTAMP();
+    END IF;
+    IF NEW.TimeOut = '0000-00-00 00:00:00' THEN
+        SET NEW.TimeOut = CURRENT_TIMESTAMP();
+    END IF;
+END;//
+
+CREATE TRIGGER sentitems_timestamp BEFORE INSERT ON sentitems
+FOR EACH ROW
+BEGIN
+    IF NEW.InsertIntoDB = '0000-00-00 00:00:00' THEN
+        SET NEW.InsertIntoDB = CURRENT_TIMESTAMP();
+    END IF;
+    IF NEW.SendingDateTime = '0000-00-00 00:00:00' THEN
+        SET NEW.SendingDateTime = CURRENT_TIMESTAMP();
+    END IF;
+END;//
+
+DELIMITER ;
+
