@@ -103,8 +103,8 @@ class ConfigOptionXRefRole(XRefRole):
         tgtid = 'index-%s' % env.new_serialno('index')
         indexnode = addnodes.index()
         indexnode['entries'] = [
-            ('single', varname, tgtid, varname),
-            ('single', _('configuration option; %s') % varname, tgtid, varname)
+            ('single', varname, tgtid, varname, None),
+            ('single', _('configuration option; %s') % varname, tgtid, varname, None)
         ]
         targetnode = nodes.target('', '', ids=[tgtid])
         document.note_explicit_target(targetnode)
