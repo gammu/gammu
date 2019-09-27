@@ -19,6 +19,17 @@ the issue.
 ChangeLog
 =========
     
+20190927 - 1.41.0
+
+[-] * Documentation improvements.
+[-] * Updated MySQL script to be compatible with current server versions.
+[-] * Fixed SMSD operation on phones with more SMS folders.
+[-] * Fixed off by one in Python example script.
+[-] * Fixed PostgreSQL compilation on openSUSE.
+[-] * Several compatibility fixes with recent compilers.
+[-] * Improved USSD support.
+[-] * Localization updates.
+    
 20190128 - 1.40.0
     
 [+] * Added SMSD configuration option RetryTimeout.

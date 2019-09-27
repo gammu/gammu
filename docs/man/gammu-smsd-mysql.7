@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSD-MYSQL" "7" "Jan 28, 2019" "1.40.0" "Gammu"
+.TH "GAMMU-SMSD-MYSQL" "7" "Sep 27, 2019" "1.41.0" "Gammu"
 .SH NAME
 gammu-smsd-mysql \- gammu-smsd(1) backend using MySQL database server as a message storage
 .
@@ -97,14 +97,212 @@ Depending on MySQL version and settings please choose best fitting
 script to create tables:
 .INDENT 0.0
 .IP \(bu 2
-\fBmysql\-strict.sql\fP can be used in strict mode, but requires MySQL 5.6.5
-or newer
+\fBmysql.sql\fP, requires MySQL 5.6.5 or newer
 .IP \(bu 2
-\fBmysql.sql\fP supports all MySQL versions, but requires neither of
+\fBmysql\-legacy.sql\fP supports legacy MySQL versions, but requires neither of
 \fINO_ZERO_DATE\fP, \fIANSI\fP or \fISTRICT\fP modes to be set in the server
 .UNINDENT
 .sp
 SQL script \fBmysql.sql\fP for creating tables in MySQL database:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+\-\- 
+\-\- Database for Gammu SMSD
+\-\- 
+\-\- In case you get errors about not supported charset, please
+\-\- replace utf8mb4 with utf8.
+
+\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+
+\-\- 
+\-\- Table structure for table \(gagammu\(ga
+\-\- 
+
+CREATE TABLE \(gagammu\(ga (
+  \(gaVersion\(ga integer NOT NULL default \(aq0\(aq PRIMARY KEY
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+
+\-\- 
+\-\- Dumping data for table \(gagammu\(ga
+\-\- 
+
+INSERT INTO \(gagammu\(ga (\(gaVersion\(ga) VALUES (17);
+
+\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+
+\-\- 
+\-\- Table structure for table \(gainbox\(ga
+\-\- 
+
+CREATE TABLE \(gainbox\(ga (
+  \(gaUpdatedInDB\(ga timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  \(gaReceivingDateTime\(ga timestamp NOT NULL default CURRENT_TIMESTAMP,
+  \(gaText\(ga text NOT NULL,
+  \(gaSenderNumber\(ga varchar(20) NOT NULL default \(aq\(aq,
+  \(gaCoding\(ga enum(\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq) NOT NULL default \(aqDefault_No_Compression\(aq,
+  \(gaUDH\(ga text NOT NULL,
+  \(gaSMSCNumber\(ga varchar(20) NOT NULL default \(aq\(aq,
+  \(gaClass\(ga integer NOT NULL default \(aq\-1\(aq,
+  \(gaTextDecoded\(ga text NOT NULL,
+  \(gaID\(ga integer unsigned NOT NULL auto_increment,
+  \(gaRecipientID\(ga text NOT NULL,
+  \(gaProcessed\(ga enum(\(aqfalse\(aq,\(aqtrue\(aq) NOT NULL default \(aqfalse\(aq,
+  \(gaStatus\(ga integer NOT NULL default \(aq\-1\(aq,
+  PRIMARY KEY \(gaID\(ga (\(gaID\(ga)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;
+
+\-\- 
+\-\- Dumping data for table \(gainbox\(ga
+\-\- 
+
+
+\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+
+\-\- 
+\-\- Table structure for table \(gaoutbox\(ga
+\-\- 
+
+CREATE TABLE \(gaoutbox\(ga (
+  \(gaUpdatedInDB\(ga timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  \(gaInsertIntoDB\(ga timestamp NOT NULL default CURRENT_TIMESTAMP,
+  \(gaSendingDateTime\(ga timestamp NOT NULL default CURRENT_TIMESTAMP,
+  \(gaSendBefore\(ga time NOT NULL DEFAULT \(aq23:59:59\(aq,
+  \(gaSendAfter\(ga time NOT NULL DEFAULT \(aq00:00:00\(aq,
+  \(gaText\(ga text,
+  \(gaDestinationNumber\(ga varchar(20) NOT NULL default \(aq\(aq,
+  \(gaCoding\(ga enum(\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq) NOT NULL default \(aqDefault_No_Compression\(aq,
+  \(gaUDH\(ga text,
+  \(gaClass\(ga integer default \(aq\-1\(aq,
+  \(gaTextDecoded\(ga text NOT NULL,
+  \(gaID\(ga integer unsigned NOT NULL auto_increment,
+  \(gaMultiPart\(ga enum(\(aqfalse\(aq,\(aqtrue\(aq) default \(aqfalse\(aq,
+  \(gaRelativeValidity\(ga integer default \(aq\-1\(aq,
+  \(gaSenderID\(ga varchar(255),
+  \(gaSendingTimeOut\(ga timestamp NULL default CURRENT_TIMESTAMP,
+  \(gaDeliveryReport\(ga enum(\(aqdefault\(aq,\(aqyes\(aq,\(aqno\(aq) default \(aqdefault\(aq,
+  \(gaCreatorID\(ga text NOT NULL,
+  \(gaRetries\(ga int(3) default 0,
+  \(gaPriority\(ga integer default 0,
+  \(gaStatus\(ga enum(\(aqSendingOK\(aq,\(aqSendingOKNoReport\(aq,\(aqSendingError\(aq,\(aqDeliveryOK\(aq,\(aqDeliveryFailed\(aq,\(aqDeliveryPending\(aq,\(aqDeliveryUnknown\(aq,\(aqError\(aq,\(aqReserved\(aq) NOT NULL default \(aqReserved\(aq,
+  \(gaStatusCode\(ga integer NOT NULL default \(aq\-1\(aq,
+  PRIMARY KEY \(gaID\(ga (\(gaID\(ga)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+
+CREATE INDEX outbox_date ON outbox(SendingDateTime, SendingTimeOut);
+CREATE INDEX outbox_sender ON outbox(SenderID(250));
+
+\-\- 
+\-\- Dumping data for table \(gaoutbox\(ga
+\-\- 
+
+
+\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+
+\-\- 
+\-\- Table structure for table \(gaoutbox_multipart\(ga
+\-\- 
+
+CREATE TABLE \(gaoutbox_multipart\(ga (
+  \(gaText\(ga text,
+  \(gaCoding\(ga enum(\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq) NOT NULL default \(aqDefault_No_Compression\(aq,
+  \(gaUDH\(ga text,
+  \(gaClass\(ga integer default \(aq\-1\(aq,
+  \(gaTextDecoded\(ga text,
+  \(gaID\(ga integer unsigned NOT NULL default \(aq0\(aq,
+  \(gaSequencePosition\(ga integer NOT NULL default \(aq1\(aq,
+  \(gaStatus\(ga enum(\(aqSendingOK\(aq,\(aqSendingOKNoReport\(aq,\(aqSendingError\(aq,\(aqDeliveryOK\(aq,\(aqDeliveryFailed\(aq,\(aqDeliveryPending\(aq,\(aqDeliveryUnknown\(aq,\(aqError\(aq,\(aqReserved\(aq) NOT NULL default \(aqReserved\(aq,
+  \(gaStatusCode\(ga integer NOT NULL default \(aq\-1\(aq,
+  PRIMARY KEY (\(gaID\(ga, \(gaSequencePosition\(ga)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+
+\-\- 
+\-\- Dumping data for table \(gaoutbox_multipart\(ga
+\-\- 
+
+\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+
+\-\- 
+\-\- Table structure for table \(gaphones\(ga
+\-\- 
+
+CREATE TABLE \(gaphones\(ga (
+  \(gaID\(ga text NOT NULL,
+  \(gaUpdatedInDB\(ga timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  \(gaInsertIntoDB\(ga timestamp NOT NULL default CURRENT_TIMESTAMP,
+  \(gaTimeOut\(ga timestamp NOT NULL default CURRENT_TIMESTAMP,
+  \(gaSend\(ga enum(\(aqyes\(aq,\(aqno\(aq) NOT NULL default \(aqno\(aq,
+  \(gaReceive\(ga enum(\(aqyes\(aq,\(aqno\(aq) NOT NULL default \(aqno\(aq,
+  \(gaIMEI\(ga varchar(35) NOT NULL,
+  \(gaIMSI\(ga varchar(35) NOT NULL,
+  \(gaNetCode\(ga varchar(10) default \(aqERROR\(aq,
+  \(gaNetName\(ga varchar(35) default \(aqERROR\(aq,
+  \(gaClient\(ga text NOT NULL,
+  \(gaBattery\(ga integer NOT NULL DEFAULT \-1,
+  \(gaSignal\(ga integer NOT NULL DEFAULT \-1,
+  \(gaSent\(ga int NOT NULL DEFAULT 0,
+  \(gaReceived\(ga int NOT NULL DEFAULT 0,
+  PRIMARY KEY (\(gaIMEI\(ga)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+
+\-\- 
+\-\- Dumping data for table \(gaphones\(ga
+\-\- 
+
+\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+
+\-\- 
+\-\- Table structure for table \(gasentitems\(ga
+\-\- 
+
+CREATE TABLE \(gasentitems\(ga (
+  \(gaUpdatedInDB\(ga timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  \(gaInsertIntoDB\(ga timestamp NOT NULL default CURRENT_TIMESTAMP,
+  \(gaSendingDateTime\(ga timestamp NOT NULL default CURRENT_TIMESTAMP,
+  \(gaDeliveryDateTime\(ga timestamp NULL,
+  \(gaText\(ga text NOT NULL,
+  \(gaDestinationNumber\(ga varchar(20) NOT NULL default \(aq\(aq,
+  \(gaCoding\(ga enum(\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq) NOT NULL default \(aqDefault_No_Compression\(aq,
+  \(gaUDH\(ga text NOT NULL,
+  \(gaSMSCNumber\(ga varchar(20) NOT NULL default \(aq\(aq,
+  \(gaClass\(ga integer NOT NULL default \(aq\-1\(aq,
+  \(gaTextDecoded\(ga text NOT NULL,
+  \(gaID\(ga integer unsigned NOT NULL default \(aq0\(aq,
+  \(gaSenderID\(ga varchar(255) NOT NULL,
+  \(gaSequencePosition\(ga integer NOT NULL default \(aq1\(aq,
+  \(gaStatus\(ga enum(\(aqSendingOK\(aq,\(aqSendingOKNoReport\(aq,\(aqSendingError\(aq,\(aqDeliveryOK\(aq,\(aqDeliveryFailed\(aq,\(aqDeliveryPending\(aq,\(aqDeliveryUnknown\(aq,\(aqError\(aq) NOT NULL default \(aqSendingOK\(aq,
+  \(gaStatusError\(ga integer NOT NULL default \(aq\-1\(aq,
+  \(gaTPMR\(ga integer NOT NULL default \(aq\-1\(aq,
+  \(gaRelativeValidity\(ga integer NOT NULL default \(aq\-1\(aq,
+  \(gaCreatorID\(ga text NOT NULL,
+  \(gaStatusCode\(ga integer NOT NULL default \(aq\-1\(aq,
+  PRIMARY KEY (\(gaID\(ga, \(gaSequencePosition\(ga)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+
+CREATE INDEX sentitems_date ON sentitems(DeliveryDateTime);
+CREATE INDEX sentitems_tpmr ON sentitems(TPMR);
+CREATE INDEX sentitems_dest ON sentitems(DestinationNumber);
+CREATE INDEX sentitems_sender ON sentitems(SenderID(250));
+
+\-\- 
+\-\- Dumping data for table \(gasentitems\(ga
+\-\- 
+
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+\fBNOTE:\fP
+.INDENT 0.0
+.INDENT 3.5
+You can find the script in \fBdocs/sql/mysql.sql\fP as well.
+.UNINDENT
+.UNINDENT
+.sp
+SQL script \fBmysql\-legacy.sql\fP for creating tables in MySQL database:
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -353,206 +551,7 @@ DELIMITER ;
 \fBNOTE:\fP
 .INDENT 0.0
 .INDENT 3.5
-You can find the script in \fBdocs/sql/mysql.sql\fP as well.
-.UNINDENT
-.UNINDENT
-.sp
-SQL script \fBmysql\-strict.sql\fP for creating tables in MySQL database:
-.INDENT 0.0
-.INDENT 3.5
-.sp
-.nf
-.ft C
-\-\- 
-\-\- Database for Gammu SMSD
-\-\- 
-\-\- In case you get errors about not supported charset, please
-\-\- replace utf8mb4 with utf8.
-
-\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
-
-\-\- 
-\-\- Table structure for table \(gagammu\(ga
-\-\- 
-
-CREATE TABLE \(gagammu\(ga (
-  \(gaVersion\(ga integer NOT NULL default \(aq0\(aq PRIMARY KEY
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
-
-\-\- 
-\-\- Dumping data for table \(gagammu\(ga
-\-\- 
-
-INSERT INTO \(gagammu\(ga (\(gaVersion\(ga) VALUES (17);
-
-\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
-
-\-\- 
-\-\- Table structure for table \(gainbox\(ga
-\-\- 
-
-CREATE TABLE \(gainbox\(ga (
-  \(gaUpdatedInDB\(ga timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  \(gaReceivingDateTime\(ga timestamp NOT NULL default CURRENT_TIMESTAMP,
-  \(gaText\(ga text NOT NULL,
-  \(gaSenderNumber\(ga varchar(20) NOT NULL default \(aq\(aq,
-  \(gaCoding\(ga enum(\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq) NOT NULL default \(aqDefault_No_Compression\(aq,
-  \(gaUDH\(ga text NOT NULL,
-  \(gaSMSCNumber\(ga varchar(20) NOT NULL default \(aq\(aq,
-  \(gaClass\(ga integer NOT NULL default \(aq\-1\(aq,
-  \(gaTextDecoded\(ga text NOT NULL,
-  \(gaID\(ga integer unsigned NOT NULL auto_increment,
-  \(gaRecipientID\(ga text NOT NULL,
-  \(gaProcessed\(ga enum(\(aqfalse\(aq,\(aqtrue\(aq) NOT NULL default \(aqfalse\(aq,
-  \(gaStatus\(ga integer NOT NULL default \(aq\-1\(aq,
-  PRIMARY KEY \(gaID\(ga (\(gaID\(ga)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;
-
-\-\- 
-\-\- Dumping data for table \(gainbox\(ga
-\-\- 
-
-
-\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
-
-\-\- 
-\-\- Table structure for table \(gaoutbox\(ga
-\-\- 
-
-CREATE TABLE \(gaoutbox\(ga (
-  \(gaUpdatedInDB\(ga timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  \(gaInsertIntoDB\(ga timestamp NOT NULL default CURRENT_TIMESTAMP,
-  \(gaSendingDateTime\(ga timestamp NOT NULL default CURRENT_TIMESTAMP,
-  \(gaSendBefore\(ga time NOT NULL DEFAULT \(aq23:59:59\(aq,
-  \(gaSendAfter\(ga time NOT NULL DEFAULT \(aq00:00:00\(aq,
-  \(gaText\(ga text,
-  \(gaDestinationNumber\(ga varchar(20) NOT NULL default \(aq\(aq,
-  \(gaCoding\(ga enum(\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq) NOT NULL default \(aqDefault_No_Compression\(aq,
-  \(gaUDH\(ga text,
-  \(gaClass\(ga integer default \(aq\-1\(aq,
-  \(gaTextDecoded\(ga text NOT NULL,
-  \(gaID\(ga integer unsigned NOT NULL auto_increment,
-  \(gaMultiPart\(ga enum(\(aqfalse\(aq,\(aqtrue\(aq) default \(aqfalse\(aq,
-  \(gaRelativeValidity\(ga integer default \(aq\-1\(aq,
-  \(gaSenderID\(ga varchar(255),
-  \(gaSendingTimeOut\(ga timestamp NULL default CURRENT_TIMESTAMP,
-  \(gaDeliveryReport\(ga enum(\(aqdefault\(aq,\(aqyes\(aq,\(aqno\(aq) default \(aqdefault\(aq,
-  \(gaCreatorID\(ga text NOT NULL,
-  \(gaRetries\(ga int(3) default 0,
-  \(gaPriority\(ga integer default 0,
-  \(gaStatus\(ga enum(\(aqSendingOK\(aq,\(aqSendingOKNoReport\(aq,\(aqSendingError\(aq,\(aqDeliveryOK\(aq,\(aqDeliveryFailed\(aq,\(aqDeliveryPending\(aq,\(aqDeliveryUnknown\(aq,\(aqError\(aq,\(aqReserved\(aq) NOT NULL default \(aqReserved\(aq,
-  \(gaStatusCode\(ga integer NOT NULL default \(aq\-1\(aq,
-  PRIMARY KEY \(gaID\(ga (\(gaID\(ga)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
-
-CREATE INDEX outbox_date ON outbox(SendingDateTime, SendingTimeOut);
-CREATE INDEX outbox_sender ON outbox(SenderID(250));
-
-\-\- 
-\-\- Dumping data for table \(gaoutbox\(ga
-\-\- 
-
-
-\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
-
-\-\- 
-\-\- Table structure for table \(gaoutbox_multipart\(ga
-\-\- 
-
-CREATE TABLE \(gaoutbox_multipart\(ga (
-  \(gaText\(ga text,
-  \(gaCoding\(ga enum(\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq) NOT NULL default \(aqDefault_No_Compression\(aq,
-  \(gaUDH\(ga text,
-  \(gaClass\(ga integer default \(aq\-1\(aq,
-  \(gaTextDecoded\(ga text,
-  \(gaID\(ga integer unsigned NOT NULL default \(aq0\(aq,
-  \(gaSequencePosition\(ga integer NOT NULL default \(aq1\(aq,
-  \(gaStatus\(ga enum(\(aqSendingOK\(aq,\(aqSendingOKNoReport\(aq,\(aqSendingError\(aq,\(aqDeliveryOK\(aq,\(aqDeliveryFailed\(aq,\(aqDeliveryPending\(aq,\(aqDeliveryUnknown\(aq,\(aqError\(aq,\(aqReserved\(aq) NOT NULL default \(aqReserved\(aq,
-  \(gaStatusCode\(ga integer NOT NULL default \(aq\-1\(aq,
-  PRIMARY KEY (\(gaID\(ga, \(gaSequencePosition\(ga)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
-
-\-\- 
-\-\- Dumping data for table \(gaoutbox_multipart\(ga
-\-\- 
-
-\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
-
-\-\- 
-\-\- Table structure for table \(gaphones\(ga
-\-\- 
-
-CREATE TABLE \(gaphones\(ga (
-  \(gaID\(ga text NOT NULL,
-  \(gaUpdatedInDB\(ga timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  \(gaInsertIntoDB\(ga timestamp NOT NULL default CURRENT_TIMESTAMP,
-  \(gaTimeOut\(ga timestamp NOT NULL default CURRENT_TIMESTAMP,
-  \(gaSend\(ga enum(\(aqyes\(aq,\(aqno\(aq) NOT NULL default \(aqno\(aq,
-  \(gaReceive\(ga enum(\(aqyes\(aq,\(aqno\(aq) NOT NULL default \(aqno\(aq,
-  \(gaIMEI\(ga varchar(35) NOT NULL,
-  \(gaIMSI\(ga varchar(35) NOT NULL,
-  \(gaNetCode\(ga varchar(10) default \(aqERROR\(aq,
-  \(gaNetName\(ga varchar(35) default \(aqERROR\(aq,
-  \(gaClient\(ga text NOT NULL,
-  \(gaBattery\(ga integer NOT NULL DEFAULT \-1,
-  \(gaSignal\(ga integer NOT NULL DEFAULT \-1,
-  \(gaSent\(ga int NOT NULL DEFAULT 0,
-  \(gaReceived\(ga int NOT NULL DEFAULT 0,
-  PRIMARY KEY (\(gaIMEI\(ga)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
-
-\-\- 
-\-\- Dumping data for table \(gaphones\(ga
-\-\- 
-
-\-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
-
-\-\- 
-\-\- Table structure for table \(gasentitems\(ga
-\-\- 
-
-CREATE TABLE \(gasentitems\(ga (
-  \(gaUpdatedInDB\(ga timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  \(gaInsertIntoDB\(ga timestamp NOT NULL default CURRENT_TIMESTAMP,
-  \(gaSendingDateTime\(ga timestamp NOT NULL default CURRENT_TIMESTAMP,
-  \(gaDeliveryDateTime\(ga timestamp NULL,
-  \(gaText\(ga text NOT NULL,
-  \(gaDestinationNumber\(ga varchar(20) NOT NULL default \(aq\(aq,
-  \(gaCoding\(ga enum(\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq) NOT NULL default \(aqDefault_No_Compression\(aq,
-  \(gaUDH\(ga text NOT NULL,
-  \(gaSMSCNumber\(ga varchar(20) NOT NULL default \(aq\(aq,
-  \(gaClass\(ga integer NOT NULL default \(aq\-1\(aq,
-  \(gaTextDecoded\(ga text NOT NULL,
-  \(gaID\(ga integer unsigned NOT NULL default \(aq0\(aq,
-  \(gaSenderID\(ga varchar(255) NOT NULL,
-  \(gaSequencePosition\(ga integer NOT NULL default \(aq1\(aq,
-  \(gaStatus\(ga enum(\(aqSendingOK\(aq,\(aqSendingOKNoReport\(aq,\(aqSendingError\(aq,\(aqDeliveryOK\(aq,\(aqDeliveryFailed\(aq,\(aqDeliveryPending\(aq,\(aqDeliveryUnknown\(aq,\(aqError\(aq) NOT NULL default \(aqSendingOK\(aq,
-  \(gaStatusError\(ga integer NOT NULL default \(aq\-1\(aq,
-  \(gaTPMR\(ga integer NOT NULL default \(aq\-1\(aq,
-  \(gaRelativeValidity\(ga integer NOT NULL default \(aq\-1\(aq,
-  \(gaCreatorID\(ga text NOT NULL,
-  \(gaStatusCode\(ga integer NOT NULL default \(aq\-1\(aq,
-  PRIMARY KEY (\(gaID\(ga, \(gaSequencePosition\(ga)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
-
-CREATE INDEX sentitems_date ON sentitems(DeliveryDateTime);
-CREATE INDEX sentitems_tpmr ON sentitems(TPMR);
-CREATE INDEX sentitems_dest ON sentitems(DestinationNumber);
-CREATE INDEX sentitems_sender ON sentitems(SenderID(250));
-
-\-\- 
-\-\- Dumping data for table \(gasentitems\(ga
-\-\- 
-
-.ft P
-.fi
-.UNINDENT
-.UNINDENT
-.sp
-\fBNOTE:\fP
-.INDENT 0.0
-.INDENT 3.5
-You can find the script in \fBdocs/sql/mysql\-strict.sql\fP as well.
+You can find the script in \fBdocs/sql/mysql\-legacy.sql\fP as well.
 .UNINDENT
 .UNINDENT
 .SH UPGRADING TABLES

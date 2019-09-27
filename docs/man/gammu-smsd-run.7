@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSD-RUN" "7" "Jan 28, 2019" "1.40.0" "Gammu"
+.TH "GAMMU-SMSD-RUN" "7" "Sep 27, 2019" "1.41.0" "Gammu"
 .SH NAME
 gammu-smsd-run \- documentation for RunOnReceive directive
 .
@@ -279,7 +279,7 @@ if numparts == 0:
     text = os.environ[\(aqSMS_1_TEXT\(aq]
 # Get all text parts
 else:
-    for i in range(0, numparts):
+    for i in range(1, numparts + 1):
         varname = \(aqDECODED_%d_TEXT\(aq % i
         if varname in os.environ:
             text = text + os.environ[varname]
