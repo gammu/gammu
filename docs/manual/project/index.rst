@@ -12,6 +12,7 @@ Gammu project
     contributing
     localization
     testing
+    releasing
     coding-style
     versioning
     documentation
