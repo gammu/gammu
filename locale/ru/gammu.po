@@ -5,19 +5,19 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu 1.40.0\n"
+"Project-Id-Version: Gammu 1.41.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2017-10-19 13:14+0200\n"
+"POT-Creation-Date: 2019-09-27 09:19+0200\n"
 "PO-Revision-Date: 2019-06-25 12:00+0000\n"
 "Last-Translator: Victor K <ktrace@yandex.ru>\n"
-"Language-Team: Russian <https://hosted.weblate.org/projects/gammu/gammu/ru/>"
-"\n"
+"Language-Team: Russian <https://hosted.weblate.org/projects/gammu/gammu/ru/"
+">\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 3.7.1-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
@@ -108,8 +108,10 @@ msgstr "%i процента(ов)"
 #: gammu/calendar.c:632 gammu/calendar.c:885 gammu/calendar.c:960
 #: gammu/calendar.c:985 gammu/memory.c:24 gammu/memory.c:312 gammu/memory.c:376
 #: gammu/message.c:133 gammu/misc.c:205 gammu/misc.c:481
-msgid "Press Ctrl+C to break..."
-msgstr "Чтобы прервать, нажмите Ctrl+C..."
+#, fuzzy
+#| msgid "Press Ctrl+C to break…"
+msgid "Press Ctrl+C to break…"
+msgstr "Чтобы прервать, нажмите Ctrl+C…"
 
 #: gammu/backup.c:372
 msgid "Use Unicode subformat of backup file?"
@@ -1182,8 +1184,10 @@ msgid " (startup)"
 msgstr " (начальные действия)"
 
 #: gammu/depend/nokia/dct4.c:497 gammu/depend/nokia/dct4.c:1006
-msgid "Press any key to continue..."
-msgstr "Нажмите любую клавишу для продолжения..."
+#, fuzzy
+#| msgid "Press any key to continue…"
+msgid "Press any key to continue…"
+msgstr "Нажмите любую клавишу для продолжения…"
 
 #: gammu/depend/nokia/dct4.c:509
 #, c-format
@@ -1733,7 +1737,7 @@ msgstr "%lu ,байт за %li секунд, %lu байт/с"
 msgid "  Saving to %s\n"
 msgstr "  Сохранение в %s\n"
 
-#: gammu/files.c:704 gammu/nokia.c:952
+#: gammu/files.c:704 gammu/nokia.c:955
 #, c-format
 msgid "Parameter \"%s\" unknown\n"
 msgstr "Параметр \"%s\" неизвестен\n"
@@ -1743,7 +1747,7 @@ msgstr "Параметр \"%s\" неизвестен\n"
 msgid "What file type (\"%s\") ?\n"
 msgstr "Тип файла (\"%s\")?\n"
 
-#: gammu/files.c:748 gammu/misc.c:1213 gammu/nokia.c:961
+#: gammu/files.c:748 gammu/misc.c:1213 gammu/nokia.c:964
 #: helper/message-cmdline.c:1318
 msgid "Parameter missing!"
 msgstr "Отсутствует параметр!"
@@ -1952,26 +1956,36 @@ msgid "Parameters before command configure gammu behaviour:"
 msgstr "Параметры перед командой определяют поведение gammu:"
 
 #: gammu/gammu.c:792
-msgid "-c / --config <filename> ... name of configuration file"
-msgstr "-c / --config <имяфайла> ... имя файла конфигурации"
+#, fuzzy
+#| msgid "-c / --config <filename> … name of configuration file"
+msgid "-c / --config <filename> … name of configuration file"
+msgstr "-c / --config <имяфайла> … имя файла конфигурации"
 
 #: gammu/gammu.c:793
-msgid "-s / --section <confign> ... section of config file to use, eg. 42"
+#, fuzzy
+#| msgid "-s / --section <confign> … section of config file to use, eg. 42"
+msgid "-s / --section <confign> … section of config file to use, eg. 42"
 msgstr ""
-"-s / --section <confign> ... номер используемой секции конфигурационного "
+"-s / --section <confign> … номер используемой секции конфигурационного "
 "файла, напр. 42"
 
 #: gammu/gammu.c:794
+#, fuzzy
+#| msgid ""
+#| "-d / --debug <level> … debug level (nothing|text|textall|textalldate|"
+#| "binary|errors)"
 msgid ""
-"-d / --debug <level> ... debug level (nothing|text|textall|textalldate|"
-"binary|errors)"
+"-d / --debug <level> … debug level (nothing|text|textall|textalldate|binary|"
+"errors)"
 msgstr ""
-"-d / --debug <level> ... степень детализации отладочных сообщений "
-"(nothing|text|textall|textalldate|binary|errors)"
+"-d / --debug <level> … степень детализации отладочных сообщений (nothing|"
+"text|textall|textalldate|binary|errors)"
 
 #: gammu/gammu.c:795
-msgid "-f / --debug-file <filename> ... file for logging debug messages"
-msgstr "-f / --debug-file <имяфайла> ... файл для записи отладочных сообщений"
+#, fuzzy
+#| msgid "-f / --debug-file <filename> … file for logging debug messages"
+msgid "-f / --debug-file <filename> … file for logging debug messages"
+msgstr "-f / --debug-file <имяфайла> … файл для записи отладочных сообщений"
 
 #: gammu/gammu.c:797
 msgid "Commands can be specified with or without leading --."
@@ -2242,8 +2256,10 @@ msgid "Number of messages"
 msgstr "Количество сообщений"
 
 #: gammu/message.c:605 gammu/message.c:645
-msgid "If you want break, press Ctrl+C..."
-msgstr "Чтобы прервать, нажмите Ctrl+C..."
+#, fuzzy
+#| msgid "If you want break, press Ctrl+C…"
+msgid "If you want break, press Ctrl+C…"
+msgstr "Чтобы прервать, нажмите Ctrl+C…"
 
 #: gammu/message.c:610
 #, c-format
@@ -2269,8 +2285,10 @@ msgid "Sending sms from folder \"%s\", location %i\n"
 msgstr "Отправляется SMS из папки \"%s\", размещение %i\n"
 
 #: gammu/message.c:630 gammu/message.c:656
-msgid "....waiting for network answer"
-msgstr "...ожидается ответ сети"
+#, fuzzy
+#| msgid "….waiting for network answer"
+msgid "…waiting for network answer"
+msgstr "…ожидается ответ сети"
 
 #: gammu/message.c:651
 #, c-format
@@ -2541,8 +2559,10 @@ msgid "%3d free"
 msgstr "%3d свободно"
 
 #: gammu/misc.c:482
-msgid "Entering monitor mode..."
-msgstr "Включается режим наблюдения..."
+#, fuzzy
+#| msgid "Entering monitor mode…"
+msgid "Entering monitor mode…"
+msgstr "Включается режим наблюдения…"
 
 #: gammu/misc.c:492
 msgid "Enabling info about incoming SMS"
@@ -2614,8 +2634,10 @@ msgid "%i templates"
 msgstr "%i шаблонов"
 
 #: gammu/misc.c:577
-msgid "Leaving monitor mode..."
-msgstr "Выход из режима наблюдения..."
+#, fuzzy
+#| msgid "Leaving monitor mode…"
+msgid "Leaving monitor mode…"
+msgstr "Выход из режима наблюдения…"
 
 #: gammu/misc.c:605
 msgid "Smart Messaging"
@@ -3215,7 +3237,7 @@ msgid "Frequency"
 msgstr "Частота"
 
 #: gammu/misc.c:2242
-#, c-format, fuzzy
+#, fuzzy, c-format
 msgid "Unknown divert action (\"%s\")\n"
 msgstr "Неизвестное отклонение действия (\"%s\")\n"
 
@@ -3371,7 +3393,7 @@ msgid "Ringtone \"%s\" (tempo = %i Beats Per Minute)"
 msgstr "Рингтон \"%s\" (темп = %i ударов в минуту)"
 
 #: gammu/nokia.c:63
-#, c-format, fuzzy
+#, fuzzy, c-format
 msgid "length=%i notes, but you will enter only first 50 tones."
 msgstr "длительность=%i нот, но вы ввели только первые 50 тонов."
 
@@ -3409,7 +3431,7 @@ msgstr "  Проблемы с добавлением в плейлист"
 msgid "Writing file %s:"
 msgstr "Запись файла %s:"
 
-#: gammu/nokia.c:442
+#: gammu/nokia.c:445
 msgid ""
 "Your phone model is not supported. Please report it to authors (see <https://"
 "wammu.eu/support/bugs/>). Thank you."
@@ -3417,83 +3439,83 @@ msgstr ""
 "Ваша модель телефона не поддерживается. Пожалуйста, сообщите об этом авторам "
 "(см. <https://wammu.eu/support/bugs/>). Спасибо."
 
-#: gammu/nokia.c:458
+#: gammu/nokia.c:461
 msgid "Problem with deleting playlist"
 msgstr "Проблема при удалении плейлиста"
 
-#: gammu/nokia.c:554
+#: gammu/nokia.c:557
 #, c-format
 msgid "What folder type (\"%s\") ?\n"
 msgstr "Тип папки (\"%s\")?\n"
 
-#: gammu/nokia.c:562 gammu/nokia.c:569 gammu/nokia.c:576
+#: gammu/nokia.c:565 gammu/nokia.c:572 gammu/nokia.c:579
 #, c-format
 msgid "Can not open file %s\n"
 msgstr "Не удаётся открыть файл %s\n"
 
-#: gammu/nokia.c:597 gammu/nokia.c:671
+#: gammu/nokia.c:600 gammu/nokia.c:674
 #, fuzzy
 msgid "Folder not found. Probably function not supported!"
 msgstr "Папка не найдена. Возможно, функция не поддерживается.\n"
 
-#: gammu/nokia.c:620
+#: gammu/nokia.c:623
 msgid "Searching for phone folder: "
 msgstr "Поиск папки телефона: "
 
-#: gammu/nokia.c:697
+#: gammu/nokia.c:700
 msgid "No vendor info in JAD file!"
 msgstr "В JAD-файле нет информации о производителе!"
 
-#: gammu/nokia.c:702
+#: gammu/nokia.c:705
 msgid "No name info in JAD file!"
 msgstr "В JAD-файле нет информации о названии!"
 
-#: gammu/nokia.c:707
+#: gammu/nokia.c:710
 msgid "No JAR URL info in JAD file!"
 msgstr "В JAD-файле отсутствует информация об URL-адресе JAR !"
 
-#: gammu/nokia.c:713
+#: gammu/nokia.c:716
 msgid "Declared JAR file size is different than real. Fixed by Gammu."
 msgstr ""
 "Объявленный размер JAR-файла отличается от реального. Подкорректирован Gammu."
 
-#: gammu/nokia.c:737
+#: gammu/nokia.c:740
 msgid "No JAR size info in JAD file. Added by Gammu."
 msgstr "В JAD-файле отсутствует информация о размере JAR. Добавлена Gammu."
 
-#: gammu/nokia.c:746
+#: gammu/nokia.c:749
 #, c-format
 msgid "Adding \"%s\""
 msgstr "Добавляется \"%s\""
 
-#: gammu/nokia.c:747
+#: gammu/nokia.c:750
 #, c-format
 msgid " version %s"
 msgstr " версия %s"
 
-#: gammu/nokia.c:748
+#: gammu/nokia.c:751
 #, c-format
 msgid " created by %s\n"
 msgstr " автор: %s\n"
 
-#: gammu/nokia.c:799 gammu/nokia.c:851
+#: gammu/nokia.c:802 gammu/nokia.c:854
 msgid "Application already exists. Deleting by Gammu."
 msgstr "Приложение уже существует. Удаляется Gammu."
 
-#: gammu/nokia.c:832 gammu/nokia.c:865
+#: gammu/nokia.c:835 gammu/nokia.c:868
 #, c-format
 msgid "  Deleting %s\n"
 msgstr "  Удаляется %s\n"
 
-#: gammu/nokia.c:888
+#: gammu/nokia.c:891
 msgid "Writing JAD file:"
 msgstr "Запись JAD-файла:"
 
-#: gammu/nokia.c:907
+#: gammu/nokia.c:910
 msgid "Writing JAR file:"
 msgstr "Запись JAR-файла:"
 
-#: gammu/nokia.c:982
+#: gammu/nokia.c:985
 msgid "Writing file:"
 msgstr "Запись файла:"
 
@@ -4744,11 +4766,11 @@ msgstr "Информация"
 #~ msgid "Can't open specified file. Read only?"
 #~ msgstr "Невозможно открыть указанный файл. Доступен только для чтения?"
 
-#~ msgid "More memory required..."
-#~ msgstr "Нехватка памяти..."
+#~ msgid "More memory required…"
+#~ msgstr "Нехватка памяти…"
 
-#~ msgid "Permission to file/device required..."
-#~ msgstr "Необходимы права доступа к файлу или устройству..."
+#~ msgid "Permission to file/device required…"
+#~ msgstr "Необходимы права доступа к файлу или устройству…"
 
 #~ msgid "Empty SMSC number. Set in phone or use -smscnumber."
 #~ msgstr ""
@@ -5756,8 +5778,8 @@ msgstr "Информация"
 #~ msgid "Network  Name\n"
 #~ msgstr "Название сети\n"
 
-#~ msgid "Press Ctrl+C to break...\n"
-#~ msgstr "Чтобы прервать, нажмите Ctrl+C...\n"
+#~ msgid "Press Ctrl+C to break…\n"
+#~ msgstr "Чтобы прервать, нажмите Ctrl+C…\n"
 
 #, fuzzy
 #~ msgid "%s\n"

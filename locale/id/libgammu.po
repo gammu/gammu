@@ -4,7 +4,7 @@
 # Automatically generated, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: libGammu 1.40.0\n"
+"Project-Id-Version: libGammu 1.41.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2019-02-14 14:57+0100\n"
 "PO-Revision-Date: 2016-10-22 17:05+0000\n"

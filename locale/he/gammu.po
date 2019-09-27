@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2017-10-19 13:14+0200\n"
+"POT-Creation-Date: 2019-09-27 09:19+0200\n"
 "PO-Revision-Date: 2018-11-14 14:07+0000\n"
 "Last-Translator: Moriel <emoriel17@yahoo.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/gammu/gammu/he/>\n"
@@ -105,8 +105,10 @@ msgstr "%i אחוז"
 #: gammu/calendar.c:632 gammu/calendar.c:885 gammu/calendar.c:960
 #: gammu/calendar.c:985 gammu/memory.c:24 gammu/memory.c:312 gammu/memory.c:376
 #: gammu/message.c:133 gammu/misc.c:205 gammu/misc.c:481
-msgid "Press Ctrl+C to break..."
-msgstr "יש ללחוץ על Ctrl+C כדי להפסיק..."
+#, fuzzy
+#| msgid "Press Ctrl+C to break…"
+msgid "Press Ctrl+C to break…"
+msgstr "יש ללחוץ על Ctrl+C כדי להפסיק…"
 
 #: gammu/backup.c:372
 msgid "Use Unicode subformat of backup file?"
@@ -1171,7 +1173,7 @@ msgid " (startup)"
 msgstr ""
 
 #: gammu/depend/nokia/dct4.c:497 gammu/depend/nokia/dct4.c:1006
-msgid "Press any key to continue..."
+msgid "Press any key to continue…"
 msgstr ""
 
 #: gammu/depend/nokia/dct4.c:509
@@ -1715,7 +1717,7 @@ msgstr ""
 msgid "  Saving to %s\n"
 msgstr ""
 
-#: gammu/files.c:704 gammu/nokia.c:952
+#: gammu/files.c:704 gammu/nokia.c:955
 #, c-format
 msgid "Parameter \"%s\" unknown\n"
 msgstr ""
@@ -1725,7 +1727,7 @@ msgstr ""
 msgid "What file type (\"%s\") ?\n"
 msgstr ""
 
-#: gammu/files.c:748 gammu/misc.c:1213 gammu/nokia.c:961
+#: gammu/files.c:748 gammu/misc.c:1213 gammu/nokia.c:964
 #: helper/message-cmdline.c:1318
 msgid "Parameter missing!"
 msgstr ""
@@ -1928,21 +1930,21 @@ msgid "Parameters before command configure gammu behaviour:"
 msgstr ""
 
 #: gammu/gammu.c:792
-msgid "-c / --config <filename> ... name of configuration file"
+msgid "-c / --config <filename> … name of configuration file"
 msgstr ""
 
 #: gammu/gammu.c:793
-msgid "-s / --section <confign> ... section of config file to use, eg. 42"
+msgid "-s / --section <confign> … section of config file to use, eg. 42"
 msgstr ""
 
 #: gammu/gammu.c:794
 msgid ""
-"-d / --debug <level> ... debug level (nothing|text|textall|textalldate|"
-"binary|errors)"
+"-d / --debug <level> … debug level (nothing|text|textall|textalldate|binary|"
+"errors)"
 msgstr ""
 
 #: gammu/gammu.c:795
-msgid "-f / --debug-file <filename> ... file for logging debug messages"
+msgid "-f / --debug-file <filename> … file for logging debug messages"
 msgstr ""
 
 #: gammu/gammu.c:797
@@ -2203,7 +2205,7 @@ msgid "Number of messages"
 msgstr ""
 
 #: gammu/message.c:605 gammu/message.c:645
-msgid "If you want break, press Ctrl+C..."
+msgid "If you want break, press Ctrl+C…"
 msgstr ""
 
 #: gammu/message.c:610
@@ -2230,7 +2232,7 @@ msgid "Sending sms from folder \"%s\", location %i\n"
 msgstr ""
 
 #: gammu/message.c:630 gammu/message.c:656
-msgid "....waiting for network answer"
+msgid "…waiting for network answer"
 msgstr ""
 
 #: gammu/message.c:651
@@ -2501,7 +2503,7 @@ msgid "%3d free"
 msgstr ""
 
 #: gammu/misc.c:482
-msgid "Entering monitor mode..."
+msgid "Entering monitor mode…"
 msgstr ""
 
 #: gammu/misc.c:492
@@ -2574,7 +2576,7 @@ msgid "%i templates"
 msgstr ""
 
 #: gammu/misc.c:577
-msgid "Leaving monitor mode..."
+msgid "Leaving monitor mode…"
 msgstr ""
 
 #: gammu/misc.c:605
@@ -3355,89 +3357,89 @@ msgstr ""
 msgid "Writing file %s:"
 msgstr ""
 
-#: gammu/nokia.c:442
+#: gammu/nokia.c:445
 msgid ""
 "Your phone model is not supported. Please report it to authors (see <https://"
 "wammu.eu/support/bugs/>). Thank you."
 msgstr ""
 
-#: gammu/nokia.c:458
+#: gammu/nokia.c:461
 msgid "Problem with deleting playlist"
 msgstr ""
 
-#: gammu/nokia.c:554
+#: gammu/nokia.c:557
 #, c-format
 msgid "What folder type (\"%s\") ?\n"
 msgstr ""
 
-#: gammu/nokia.c:562 gammu/nokia.c:569 gammu/nokia.c:576
+#: gammu/nokia.c:565 gammu/nokia.c:572 gammu/nokia.c:579
 #, c-format
 msgid "Can not open file %s\n"
 msgstr ""
 
-#: gammu/nokia.c:597 gammu/nokia.c:671
+#: gammu/nokia.c:600 gammu/nokia.c:674
 msgid "Folder not found. Probably function not supported!"
 msgstr ""
 
-#: gammu/nokia.c:620
+#: gammu/nokia.c:623
 msgid "Searching for phone folder: "
 msgstr ""
 
-#: gammu/nokia.c:697
+#: gammu/nokia.c:700
 #, fuzzy
 msgid "No vendor info in JAD file!"
 msgstr "לא נמצאה הערה בקובץ"
 
-#: gammu/nokia.c:702
+#: gammu/nokia.c:705
 #, fuzzy
 msgid "No name info in JAD file!"
 msgstr "לא נמצאה הערה בקובץ"
 
-#: gammu/nokia.c:707
+#: gammu/nokia.c:710
 msgid "No JAR URL info in JAD file!"
 msgstr ""
 
-#: gammu/nokia.c:713
+#: gammu/nokia.c:716
 msgid "Declared JAR file size is different than real. Fixed by Gammu."
 msgstr ""
 
-#: gammu/nokia.c:737
+#: gammu/nokia.c:740
 msgid "No JAR size info in JAD file. Added by Gammu."
 msgstr ""
 
-#: gammu/nokia.c:746
+#: gammu/nokia.c:749
 #, c-format
 msgid "Adding \"%s\""
 msgstr ""
 
-#: gammu/nokia.c:747
+#: gammu/nokia.c:750
 #, c-format
 msgid " version %s"
 msgstr ""
 
-#: gammu/nokia.c:748
+#: gammu/nokia.c:751
 #, c-format
 msgid " created by %s\n"
 msgstr ""
 
-#: gammu/nokia.c:799 gammu/nokia.c:851
+#: gammu/nokia.c:802 gammu/nokia.c:854
 msgid "Application already exists. Deleting by Gammu."
 msgstr ""
 
-#: gammu/nokia.c:832 gammu/nokia.c:865
+#: gammu/nokia.c:835 gammu/nokia.c:868
 #, c-format
 msgid "  Deleting %s\n"
 msgstr ""
 
-#: gammu/nokia.c:888
+#: gammu/nokia.c:891
 msgid "Writing JAD file:"
 msgstr ""
 
-#: gammu/nokia.c:907
+#: gammu/nokia.c:910
 msgid "Writing JAR file:"
 msgstr ""
 
-#: gammu/nokia.c:982
+#: gammu/nokia.c:985
 msgid "Writing file:"
 msgstr ""
 
