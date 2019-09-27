@@ -39,7 +39,7 @@ DESC="Gammu SMS Daemon"
 NAME=gammu-smsd
 # user which will run this daemon
 USER=gammu
-DAEMON=/usr/bin/$NAME
+DAEMON=${CMAKE_INSTALL_FULL_BINDIR}/$NAME
 PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME
 DAEMON_ARGS="--daemon --user $USER --pid $PIDFILE"

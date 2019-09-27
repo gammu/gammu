@@ -4,6 +4,8 @@
 
 project (Gammu-contrib C)
 
+include("GNUInstallDirs")
+
 option(INSTALL_GNAPPLET "Install Gnapplet binaries" ON)
 option(INSTALL_S60 "Install Series 60 applet binaries" ON)
 option(INSTALL_MEDIA "Install sample media files" ON)
@@ -95,16 +97,18 @@ if (INSTALL_BASH_COMPLETION)
 endif (INSTALL_BASH_COMPLETION)
 
 if (WITH_SYSTEMD)
+    configure_file( init/gammu-smsd.service init/gammu-smsd.service )
     install (
-        FILES init/gammu-smsd.service
+        FILES ${CMAKE_CURRENT_BINARY_DIR}/init/gammu-smsd.service
         DESTINATION "${SYSTEMD_SERVICES_INSTALL_DIR}"
         COMPONENT "systemd"
     )
 endif (WITH_SYSTEMD)
 
 if (INSTALL_LSB_INIT)
+    configure_file( init/gammu-smsd.lsb init/gammu-smsd.lsb )
     install (
-        FILES init/gammu-smsd.lsb
+        FILES ${CMAKE_CURRENT_BINARY_DIR}/init/gammu-smsd.lsb
         DESTINATION "/etc/init.d"
         RENAME "gammu-smsd"
         COMPONENT "initscript"
