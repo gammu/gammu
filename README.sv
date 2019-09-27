@@ -26,8 +26,8 @@ hjälp från många bidragsgivare.
 .. bild:: https://scan.coverity.com/projects/2890/badge.svg?flat=1
     :alt: Coverity-genomsökning :target: https://scan.coverity.com/projects/2890
 
-.. bild:: https://img.shields.io/gratipay/Gammu.svg
-    :alt: Gratipay :target: https://gratipay.com/Gammu/
+.. bild:: https://img.shields.io/liberapay/receives/Gammu.svg
+    :alt: Liberapay :target: https://liberapay.com/Gammu/donate
 
 .. bild:: https://www.bountysource.com/badge/team?team_id=23177&style=bounties_received
     :alt: Bountysource :target:

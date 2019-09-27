@@ -13,10 +13,10 @@ Gammu - бібліотека та утиліта командного рядка
 за допомогою багатьох авторів.
 
 .. image:: https://travis-ci.org/gammu/gammu.svg?branch=master
-    :alt: Build status :target: https://travis-ci.org/gammu/gammu
+    :alt: Статус збірки :target: https://travis-ci.org/gammu/gammu
 
 .. image:: https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/master?svg=true
-    :alt: Windows Build status :target:
+    :alt: Статус збірки для Windows :target:
     https://ci.appveyor.com/project/nijel/gammu/branch/master
 
 .. image:: https://hosted.weblate.org/widgets/gammu/-/svg-badge.svg
@@ -26,8 +26,8 @@ Gammu - бібліотека та утиліта командного рядка
 .. image:: https://scan.coverity.com/projects/2890/badge.svg?flat=1
     :alt: Coverity scan :target: https://scan.coverity.com/projects/2890
 
-.. image:: https://img.shields.io/gratipay/Gammu.svg
-    :alt: Gratipay :target: https://gratipay.com/Gammu/
+.. image:: https://img.shields.io/liberapay/receives/Gammu.svg
+    :alt: Liberapay :target: https://liberapay.com/Gammu/donate
 
 .. image:: https://www.bountysource.com/badge/team?team_id=23177&style=bounties_received
     :alt: Bountysource :target:

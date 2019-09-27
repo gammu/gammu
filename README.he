@@ -4,10 +4,10 @@ Gammu כלי ניהול לטלפונים ניידים
 Gammu היא ספרייה וכלי שורת פקודה לטלפונים ניידים. החבילה מופצת תחת תנאי
 הרשיון GNU GPL בגרסה 2.
 
-It has been initiated by Marcin Wiacek and other people. Originally the code
-was based on Gnokii <https://www.gnokii.org/> and later MyGnokii
-<http://www.mwiacek.com/> projects. Gammu was former (up to version 0.58)
-called MyGnokii2.
+הכול התחיל אצל Marcin Wiacek ואנשים נוספים. הקוד היה מבוסס במקור על המיזמים
+Gnokii <https://www.gnokii.org/> ולאחר מכן על MyGnokii
+<http://www.mwiacek.com/>.‏ Gammu הייתה הגרסה הקודמת (עד 0.58) שנקראה
+MyGnokii2.
 
 נכון להיום הובלת המיזם מוטלת על Michal Cihar ‏<michal@cihar.com> בעזרתם של
 תורמים רבים.
@@ -26,8 +26,8 @@ called MyGnokii2.
 .. image:: https://scan.coverity.com/projects/2890/badge.svg?flat=1
     :alt: בדיקת כיסוי :target: https://scan.coverity.com/projects/2890
 
-.. image:: https://img.shields.io/gratipay/Gammu.svg
-    :alt: תרומה למיזם :target: https://gratipay.com/Gammu/
+.. image:: https://img.shields.io/liberapay/receives/Gammu.svg
+    :alt: Liberapay :target: https://liberapay.com/Gammu/donate
 
 .. image:: https://www.bountysource.com/badge/team?team_id=23177&style=bounties_received
     :alt: Bountysource :target:
@@ -38,8 +38,8 @@ called MyGnokii2.
 
 ניתן למצוא מידע נוסף בכתובת <https://wammu.eu/gammu/>.
 
-There is also Gammu manual available in docs/manual. You can build HTML
-version of it using make manual-html which is viewable online at
+יש מדריך ל־Gammu זמין תחת docs/manual. ניתן לבנות גרסת HTML שלו באמצעות make
+manual-html כדי לאפשר לצפות בו דרך האינטרנט בכתובת
 <https://wammu.eu/docs/manual/>.
 
 

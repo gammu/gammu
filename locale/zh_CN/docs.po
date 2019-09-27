@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.40.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2018-01-05 10:00+0100\n"
+"POT-Creation-Date: 2019-09-27 09:19+0200\n"
 "PO-Revision-Date: 2009-01-27 14:06+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -112,14 +112,14 @@ msgstr ":alt: Coverity scan :target: https://scan.coverity.com/projects/2890"
 
 #. type: Plain text
 #: README.rst:32
-msgid "https://img.shields.io/gratipay/Gammu.svg"
+msgid "https://img.shields.io/liberapay/receives/Gammu.svg"
 msgstr ""
 
 #. type: Plain text
 #: README.rst:34
 #, fuzzy
 #| msgid ":alt: Liberapay :target: https://liberapay.com/Gammu/donate"
-msgid ":alt: Gratipay :target: https://gratipay.com/Gammu/"
+msgid ":alt: Liberapay :target: https://liberapay.com/Gammu/donate"
 msgstr ":alt: Liberapay :target: https://liberapay.com/Gammu/donate"
 
 #. type: Plain text

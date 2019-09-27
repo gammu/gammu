@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.40.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2018-01-05 10:00+0100\n"
+"POT-Creation-Date: 2019-09-27 09:19+0200\n"
 "PO-Revision-Date: 2019-06-18 19:00+0000\n"
 "Last-Translator: Filip Obretenov <filip.obretenovbg@gmail.com>\n"
-"Language-Team: Bulgarian <https://hosted.weblate.org/projects/gammu/"
-"gammu-docs/bg/>\n"
+"Language-Team: Bulgarian <https://hosted.weblate.org/projects/gammu/gammu-"
+"docs/bg/>\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -43,9 +43,9 @@ msgid ""
 "MyGnokii2."
 msgstr ""
 "Тя е инициирана от Marcin Wiacek и други хора. Първоначално кодът се е "
-"основавал на Gnokii <https://www.gnokii.org/> и по късно на MyGnokii "
-"<http://www.mwiacek.com/> проекти. Gammu е бил бивш (до версия 0.58) "
-"наречена MyGnokii2."
+"основавал на Gnokii <https://www.gnokii.org/> и по късно на MyGnokii <http://"
+"www.mwiacek.com/> проекти. Gammu е бил бивш (до версия 0.58) наречена "
+"MyGnokii2."
 
 #. type: Plain text
 #: README.rst:14
@@ -71,7 +71,8 @@ msgstr "https://travis-ci.org/gammu/gammu.svg?branch=master"
 #. type: Plain text
 #: README.rst:18
 msgid ":alt: Build status :target: https://travis-ci.org/gammu/gammu"
-msgstr ":alt: Статус на разработката :target: https://travis-ci.org/gammu/gammu"
+msgstr ""
+":alt: Статус на разработката :target: https://travis-ci.org/gammu/gammu"
 
 #. type: Plain text
 #: README.rst:20
@@ -79,8 +80,8 @@ msgid ""
 "https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/master?"
 "svg=true"
 msgstr ""
-"https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/"
-"master?svg=true"
+"https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/master?"
+"svg=true"
 
 #. type: Plain text
 #: README.rst:22
@@ -118,12 +119,16 @@ msgstr ""
 
 #. type: Plain text
 #: README.rst:32
-msgid "https://img.shields.io/gratipay/Gammu.svg"
+#, fuzzy
+#| msgid "https://img.shields.io/gratipay/Gammu.svg"
+msgid "https://img.shields.io/liberapay/receives/Gammu.svg"
 msgstr "https://img.shields.io/gratipay/Gammu.svg"
 
 #. type: Plain text
 #: README.rst:34
-msgid ":alt: Gratipay :target: https://gratipay.com/Gammu/"
+#, fuzzy
+#| msgid ":alt: Gratipay :target: https://gratipay.com/Gammu/"
+msgid ":alt: Liberapay :target: https://liberapay.com/Gammu/donate"
 msgstr ":alt: Gratipay :target: https://gratipay.com/Gammu/"
 
 #. type: Plain text

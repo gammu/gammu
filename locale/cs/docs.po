@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.40.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2018-01-05 10:00+0100\n"
+"POT-Creation-Date: 2019-09-27 09:19+0200\n"
 "PO-Revision-Date: 2018-09-28 07:23+0000\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/gammu/gammu-docs/"
@@ -47,8 +47,8 @@ msgid ""
 "MyGnokii2."
 msgstr ""
 "Projekt byl původně veden Marcinem Wiackem. Byl založen na zdrojových kódech "
-"projektů Gnokii <https://www.gnokii.org/> a pozdějí MyGnokii "
-"<http://www.mwiacek.com/>. Gammu bylo (až do verze 0.58) nazýváno MyGnokii2."
+"projektů Gnokii <https://www.gnokii.org/> a pozdějí MyGnokii <http://www."
+"mwiacek.com/>. Gammu bylo (až do verze 0.58) nazýváno MyGnokii2."
 
 #. type: Plain text
 #: README.rst:14
@@ -122,12 +122,16 @@ msgstr ":alt: Bitdeli badge :target: https://bitdeli.com/free"
 
 #. type: Plain text
 #: README.rst:32
-msgid "https://img.shields.io/gratipay/Gammu.svg"
+#, fuzzy
+#| msgid "https://img.shields.io/gratipay/Gammu.svg"
+msgid "https://img.shields.io/liberapay/receives/Gammu.svg"
 msgstr "https://img.shields.io/gratipay/Gammu.svg"
 
 #. type: Plain text
 #: README.rst:34
-msgid ":alt: Gratipay :target: https://gratipay.com/Gammu/"
+#, fuzzy
+#| msgid ":alt: Gratipay :target: https://gratipay.com/Gammu/"
+msgid ":alt: Liberapay :target: https://liberapay.com/Gammu/donate"
 msgstr ":alt: Gratipay :target: https://gratipay.com/Gammu/"
 
 #. type: Plain text

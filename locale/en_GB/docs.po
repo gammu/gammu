@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.40.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2018-01-05 10:00+0100\n"
+"POT-Creation-Date: 2019-09-27 09:19+0200\n"
 "PO-Revision-Date: 2019-09-04 04:23+0000\n"
 "Last-Translator: Swann Martinet <swann.ranskassa@laposte.net>\n"
 "Language-Team: English (United Kingdom) <https://hosted.weblate.org/projects/"
@@ -43,9 +43,9 @@ msgid ""
 "MyGnokii2."
 msgstr ""
 "It has been initiated by Marcin Wiacek and other people. Originally the code "
-"was based on Gnokii <https://www.gnokii.org/> and later MyGnokii "
-"<http://www.mwiacek.com/> projects. Gammu was former (up to version 0.58) "
-"called MyGnokii2."
+"was based on Gnokii <https://www.gnokii.org/> and later MyGnokii <http://www."
+"mwiacek.com/> projects. Gammu was former (up to version 0.58) called "
+"MyGnokii2."
 
 #. type: Plain text
 #: README.rst:14
@@ -79,8 +79,8 @@ msgid ""
 "https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/master?"
 "svg=true"
 msgstr ""
-"https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/"
-"master?svg=true"
+"https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/master?"
+"svg=true"
 
 #. type: Plain text
 #: README.rst:22
@@ -117,12 +117,16 @@ msgstr ":alt: Coverity scan :target: https://scan.coverity.com/projects/2890"
 
 #. type: Plain text
 #: README.rst:32
-msgid "https://img.shields.io/gratipay/Gammu.svg"
+#, fuzzy
+#| msgid "https://img.shields.io/gratipay/Gammu.svg"
+msgid "https://img.shields.io/liberapay/receives/Gammu.svg"
 msgstr "https://img.shields.io/gratipay/Gammu.svg"
 
 #. type: Plain text
 #: README.rst:34
-msgid ":alt: Gratipay :target: https://gratipay.com/Gammu/"
+#, fuzzy
+#| msgid ":alt: Gratipay :target: https://gratipay.com/Gammu/"
+msgid ":alt: Liberapay :target: https://liberapay.com/Gammu/donate"
 msgstr ":alt: Gratipay :target: https://gratipay.com/Gammu/"
 
 #. type: Plain text
@@ -138,8 +142,8 @@ msgid ""
 ":alt: Bountysource :target: https://www.bountysource.com/teams/gammu/issues?"
 "utm_source=Gammu&utm_medium=shield&utm_campaign=bounties_received"
 msgstr ""
-":alt: Bountysource :target: https://www.bountysource.com/teams/gammu/"
-"issues?utm_source=Gammu&utm_medium=shield&utm_campaign=bounties_received"
+":alt: Bountysource :target: https://www.bountysource.com/teams/gammu/issues?"
+"utm_source=Gammu&utm_medium=shield&utm_campaign=bounties_received"
 
 #. type: Title =
 #: README.rst:40
@@ -160,8 +164,8 @@ msgid ""
 "wammu.eu/docs/manual/>."
 msgstr ""
 "There is also Gammu manual available in docs/manual. You can build HTML "
-"version of it using make manual-html which is viewable online at "
-"<https://wammu.eu/docs/manual/>."
+"version of it using make manual-html which is viewable online at <https://"
+"wammu.eu/docs/manual/>."
 
 #. type: Title =
 #: README.rst:50

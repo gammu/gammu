@@ -1,14 +1,14 @@
 # Gammu documentation translation
-# Copyright (C) 2003 - 2018 Michal Čihař <michal@cihar.com>
+# Copyright (C) 2003 - 2019 Michal Čihař <michal@cihar.com>
 # This file is distributed under the same license as the Gammu-docs package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu-docs 1.38.6\n"
+"Project-Id-Version: Gammu-docs 1.41.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2018-01-05 10:00+0100\n"
+"POT-Creation-Date: 2019-09-27 09:19+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -98,12 +98,12 @@ msgstr ""
 
 #. type: Plain text
 #: README.rst:32
-msgid "https://img.shields.io/gratipay/Gammu.svg"
+msgid "https://img.shields.io/liberapay/receives/Gammu.svg"
 msgstr ""
 
 #. type: Plain text
 #: README.rst:34
-msgid ":alt: Gratipay :target: https://gratipay.com/Gammu/"
+msgid ":alt: Liberapay :target: https://liberapay.com/Gammu/donate"
 msgstr ""
 
 #. type: Plain text

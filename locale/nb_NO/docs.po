@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.40.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2018-01-05 10:00+0100\n"
+"POT-Creation-Date: 2019-09-27 09:19+0200\n"
 "PO-Revision-Date: 2019-08-01 05:10+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/gammu/"
@@ -42,8 +42,8 @@ msgid ""
 "MyGnokii2."
 msgstr ""
 "Det ble igangsatt av Marcin Wiacek og andre. Originalt var koden basert på "
-"Gnokii <https://www.gnokii.org/> og senere MyGnokii <http://www.mwiacek.com/>"
-" -prosjektene. Gammu var tidligere (opp til versjon 0.58) kalt MyGnokii2."
+"Gnokii <https://www.gnokii.org/> og senere MyGnokii <http://www.mwiacek.com/"
+"> -prosjektene. Gammu var tidligere (opp til versjon 0.58) kalt MyGnokii2."
 
 #. type: Plain text
 #: README.rst:14
@@ -77,8 +77,8 @@ msgid ""
 "https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/master?"
 "svg=true"
 msgstr ""
-"https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/master?sv"
-"g=true"
+"https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/master?"
+"svg=true"
 
 #. type: Plain text
 #: README.rst:22
@@ -86,8 +86,8 @@ msgid ""
 ":alt: Windows Build status :target: https://ci.appveyor.com/project/nijel/"
 "gammu/branch/master"
 msgstr ""
-":alt: Byggestatus for Windowsversjon :target: "
-"https://ci.appveyor.com/project/nijel/gammu/branch/master"
+":alt: Byggestatus for Windowsversjon :target: https://ci.appveyor.com/"
+"project/nijel/gammu/branch/master"
 
 #. type: Plain text
 #: README.rst:24
@@ -100,8 +100,8 @@ msgid ""
 ":alt: Translation status :target: https://hosted.weblate.org/engage/gammu/?"
 "utm_source=widget"
 msgstr ""
-":alt: Oversettelsesstatus :target: "
-"https://hosted.weblate.org/engage/gammu/?utm_source=widget"
+":alt: Oversettelsesstatus :target: https://hosted.weblate.org/engage/gammu/?"
+"utm_source=widget"
 
 #. type: Plain text
 #: README.rst:28
@@ -116,12 +116,16 @@ msgstr ""
 
 #. type: Plain text
 #: README.rst:32
-msgid "https://img.shields.io/gratipay/Gammu.svg"
+#, fuzzy
+#| msgid "https://img.shields.io/gratipay/Gammu.svg"
+msgid "https://img.shields.io/liberapay/receives/Gammu.svg"
 msgstr "https://img.shields.io/gratipay/Gammu.svg"
 
 #. type: Plain text
 #: README.rst:34
-msgid ":alt: Gratipay :target: https://gratipay.com/Gammu/"
+#, fuzzy
+#| msgid ":alt: Gratipay :target: https://gratipay.com/Gammu/"
+msgid ":alt: Liberapay :target: https://liberapay.com/Gammu/donate"
 msgstr ":alt: Liberapay :target: https://liberapay.com/Gammu/"
 
 #. type: Plain text
@@ -137,8 +141,8 @@ msgid ""
 ":alt: Bountysource :target: https://www.bountysource.com/teams/gammu/issues?"
 "utm_source=Gammu&utm_medium=shield&utm_campaign=bounties_received"
 msgstr ""
-":alt: Bountysource :target: https://www.bountysource.com/teams/gammu/issues?u"
-"tm_source=Gammu&utm_medium=shield&utm_campaign=bounties_received"
+":alt: Bountysource :target: https://www.bountysource.com/teams/gammu/issues?"
+"utm_source=Gammu&utm_medium=shield&utm_campaign=bounties_received"
 
 #. type: Title =
 #: README.rst:40
@@ -187,8 +191,8 @@ msgstr "Støtt utviklere"
 #: README.rst:59
 msgid "You can appreciate developers work at <https://wammu.eu/donate/>."
 msgstr ""
-"Du kan vise at du setter pris på utvikleres arbeid på "
-"<https://wammu.eu/donate/>."
+"Du kan vise at du setter pris på utvikleres arbeid på <https://wammu.eu/"
+"donate/>."
 
 #. type: Title =
 #: INSTALL:2
