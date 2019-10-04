@@ -30,8 +30,8 @@
 #  include <unistd.h>
 #  include <fcntl.h>
 #  include <errno.h>
+#  include <poll.h>
 #  include <sys/time.h>
-#  include <sys/poll.h>
 #  include <sys/socket.h>
 #  include <sys/ioctl.h>
 typedef int SOCKET;
