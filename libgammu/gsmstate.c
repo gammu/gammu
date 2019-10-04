@@ -1487,7 +1487,7 @@ GSM_Error GSM_ReadParams(int *out_params, const int num_params, const char *args
       case '0': case '1': case '2': case '3': case '4':
       case '5': case '6': case '7': case '8': case '9':
         if (expect_comma) {
-          printf("expected comma but got %c for parameter %lu\n", *args_ptr, ++params_ptr - out_params);
+          printf("expected comma but got %c for parameter %u\n", *args_ptr, ++params_ptr - out_params);
           return ERR_INVALIDDATA;
         }
         *params_ptr = *args_ptr - '0';
@@ -1500,7 +1500,7 @@ GSM_Error GSM_ReadParams(int *out_params, const int num_params, const char *args
         break;
 
       default: {
-        printf("error parsing parameters, unrecognized token '%c' in position %lu\n",
+        printf("error parsing parameters, unrecognized token '%c' in position %u\n",
                *args_ptr, ++params_ptr - --out_params + ++whitespace_count);
         return ERR_INVALIDDATA; }
     }
