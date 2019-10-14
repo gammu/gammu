@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2019-09-27 09:19+0200\n"
-"PO-Revision-Date: 2015-12-08 03:09+0000\n"
+"PO-Revision-Date: 2019-10-15 12:52+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gammu/gammu/nl/>\n"
 "Language: nl\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.5-dev\n"
+"X-Generator: Weblate 3.9\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:379 helper/message-cmdline.c:403
@@ -519,7 +519,6 @@ msgid "Reminder (Date)"
 msgstr ""
 
 #: gammu/calendar.c:25
-#, fuzzy
 msgctxt "Calendar note type"
 msgid "Call"
 msgstr "Bellen"
