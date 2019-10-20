@@ -41,6 +41,7 @@ atgen_test(incoming-sms-info)
 atgen_test(incoming-sms)
 
 atgen_test(gsm-set-cnmi-params)
+atgen_test(at-set-cnmi-reply)
 atgen_test(get-sms-location)
 atgen_test(get-sms)
 

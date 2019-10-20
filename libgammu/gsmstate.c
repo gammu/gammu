@@ -1487,7 +1487,7 @@ GSM_Error GSM_ReadParams(int *out_params, const int num_params, const char *args
       case '0': case '1': case '2': case '3': case '4':
       case '5': case '6': case '7': case '8': case '9':
         if (expect_comma) {
-          printf("expected comma but got %c for parameter %lu\n", *args_ptr, ++params_ptr - out_params);
+          printf("expected comma but got %c for parameter %d\n", *args_ptr, (int)(++params_ptr - out_params));
           return ERR_INVALIDDATA;
         }
         *params_ptr = *args_ptr - '0';
@@ -1500,8 +1500,8 @@ GSM_Error GSM_ReadParams(int *out_params, const int num_params, const char *args
         break;
 
       default: {
-        printf("error parsing parameters, unrecognized token '%c' in position %lu\n",
-               *args_ptr, ++params_ptr - --out_params + ++whitespace_count);
+        printf("error parsing parameters, unrecognized token '%c' in position %d\n",
+               *args_ptr, (int)(++params_ptr - --out_params + ++whitespace_count));
         return ERR_INVALIDDATA; }
     }
 
@@ -1511,9 +1511,9 @@ GSM_Error GSM_ReadParams(int *out_params, const int num_params, const char *args
   return ERR_NONE;
 }
 
-GSM_Error GSM_ReadCNMIParams(int out_params[4], const char *args)
+GSM_Error GSM_ReadCNMIParams(int out_params[5], const char *args)
 {
-  return GSM_ReadParams(out_params, 4, args);
+  return GSM_ReadParams(out_params, 5, args);
 }
 
 GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
@@ -1522,7 +1522,7 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 	unsigned char 	section[50]={0};
 	gboolean	found = FALSE;
 	char		*Temp = NULL;
-	const int cnmi_default[4] = {-1,-1,-1,-1};
+	const int cnmi_default[5] = {-1,-1,-1,-1,-1};
 
 	GSM_Error error = ERR_UNKNOWN;
 	cfg->UseGlobalDebugFile	 = TRUE;

@@ -111,7 +111,7 @@ typedef struct {
 	 * Used to override default CNMI arguments for generic
 	 * AT protocol.
 	 */
-	 int CNMIParams[4];
+	 int CNMIParams[5];
 } GSM_Config;
 
 /**
