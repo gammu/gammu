@@ -14,6 +14,7 @@
  * @{
  */
 
+#include "gammu-error.h"
 #define _GNU_SOURCE
 #include <gammu-config.h>
 
@@ -2634,6 +2635,7 @@ GSM_Error ATGEN_ReplyGetCNMIMode(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 #ifdef GSM_ENABLE_CELLBROADCAST
 	Priv->CNMIBroadcastProcedure	= 0;
 #endif
+	Priv->CNMIClearUnsolicitedResultCodes = 0;
 
 	buffer = GetLineString(msg->Buffer, &Priv->Lines, 2);
 
@@ -2657,7 +2659,11 @@ GSM_Error ATGEN_ReplyGetCNMIMode(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 	if (range == NULL) {
 		return  ERR_UNKNOWNRESPONSE;
 	}
-	if (InRange(range, 2)) {
+	param = s->CurrentConfig->CNMIParams[0];
+	if (param && InRange(range, param)) {
+		Priv->CNMIMode = param;
+	}
+	else if (InRange(range, 2)) {
 		Priv->CNMIMode = 2; 	/* 2 = buffer messages and send them when link is free */
 	}
 	else if (InRange(range, 3)) {
@@ -2754,7 +2760,33 @@ GSM_Error ATGEN_ReplyGetCNMIMode(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 	/* we don't want: 0 = no routing */
 	free(range);
 	range = NULL;
-	return ERR_NONE;
+
+	buffer++;
+	buffer = strchr(buffer, '(');
+
+	if (buffer == NULL) {
+		return  ERR_NONE;
+	}
+	range = GetRange(s, buffer);
+
+	if (range == NULL) {
+		return  ERR_UNKNOWNRESPONSE;
+	}
+
+	param = s->CurrentConfig->CNMIParams[4];
+	if (param && InRange(range, param)) {
+		Priv->CNMIClearUnsolicitedResultCodes = param;
+	}
+	else if (InRange(range, 1)) {
+		Priv->CNMIClearUnsolicitedResultCodes = 1; /* 1 = clear unsolicited result codes */
+	}
+	else if (InRange(range, 0)) {
+		Priv->CNMIClearUnsolicitedResultCodes = 0; /* 0 = flush codes to TE */
+	}
+	free(range);
+	range = NULL;
+
+        return ERR_NONE;
 }
 
 GSM_Error ATGEN_GetCNMIMode(GSM_StateMachine *s)

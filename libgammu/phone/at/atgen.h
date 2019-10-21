@@ -381,7 +381,10 @@ typedef struct {
 	 */
 	int			CNMIBroadcastProcedure;
 #endif
-
+	/**
+	 * Mode used to indicate unsolicited result code handling.
+	 */
+        int CNMIClearUnsolicitedResultCodes;
 	/**
 	 * Whether phone support Motorola like mode switching.
 	 */
