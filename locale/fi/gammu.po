@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2019-09-27 09:19+0200\n"
-"PO-Revision-Date: 2018-11-07 15:07+0000\n"
-"Last-Translator: Tuomas Harju <tuomas@rtj-group.com>\n"
-"Language-Team: Finnish <https://hosted.weblate.org/projects/gammu/gammu/fi/"
-">\n"
+"PO-Revision-Date: 2019-11-08 07:04+0000\n"
+"Last-Translator: Tuomas Lähteenmäki <lahtis@gmail.com>\n"
+"Language-Team: Finnish <https://hosted.weblate.org/projects/gammu/gammu/fi/>"
+"\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.3-dev\n"
+"X-Generator: Weblate 3.10-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:379 helper/message-cmdline.c:403
@@ -197,7 +197,7 @@ msgstr "Varmuuskopioidaanko puhelimen operaattorin logo?"
 
 #: gammu/backup.c:624
 msgid "Checking phone WAP bookmarks"
-msgstr ""
+msgstr "Tarkistetaan puhelimen WAP-kirjanmerkit"
 
 #: gammu/backup.c:628
 msgid "Backup phone WAP bookmarks?"
@@ -205,7 +205,7 @@ msgstr "Varmuuskopioi puhelimen WAP kirjanmerkit?"
 
 #: gammu/backup.c:661
 msgid "Checking phone WAP settings"
-msgstr ""
+msgstr "Tarkistetaan puhelimen WAP-asetukset"
 
 #: gammu/backup.c:665
 msgid "Backup phone WAP settings?"
@@ -213,7 +213,7 @@ msgstr "Varmuuskopioi puhelimen WAP asetukset?"
 
 #: gammu/backup.c:698
 msgid "Checking phone MMS settings"
-msgstr ""
+msgstr "Tarkistetaan puhelimen MMS-asetukset"
 
 #: gammu/backup.c:702
 msgid "Backup phone MMS settings?"
@@ -221,7 +221,7 @@ msgstr "Varmuuskopioi puhelimen MMS asetukset?"
 
 #: gammu/backup.c:735
 msgid "Checking phone Chat settings"
-msgstr ""
+msgstr "Tarkistetaan puhelimen Chat asetukset"
 
 #: gammu/backup.c:739
 msgid "Backup phone Chat settings?"
@@ -229,23 +229,23 @@ msgstr "Varmuuskopioi puhelimen Chat asetukset?"
 
 #: gammu/backup.c:772
 msgid "Checking phone SyncML settings"
-msgstr ""
+msgstr "Tarkistetaan puhelimen SyncML-asetukset"
 
 #: gammu/backup.c:776
 msgid "Backup phone SyncML settings?"
-msgstr ""
+msgstr "Varmuuskopioi puhelimen SyncML-asetukset?"
 
 #: gammu/backup.c:808
 msgid "Checking phone user ringtones"
-msgstr ""
+msgstr "Tarkistetaan puhelimen käyttäjän soittoääniä"
 
 #: gammu/backup.c:813
 msgid "Backup phone user ringtones?"
-msgstr ""
+msgstr "Varmuuskopioi puhelimen käyttäjän soittoäänet?"
 
 #: gammu/backup.c:851
 msgid "Checking phone profiles"
-msgstr ""
+msgstr "Tarkistetaan puhelimen profiilit"
 
 #: gammu/backup.c:855
 msgid "Backup phone profiles?"
@@ -253,7 +253,7 @@ msgstr "Varmuuskopioi puhelimen profiilit?"
 
 #: gammu/backup.c:884
 msgid "Checking phone FM radio stations"
-msgstr ""
+msgstr "Tarkista puhelimen FM-radioasemat"
 
 #: gammu/backup.c:888
 msgid "Backup phone FM radio stations?"
@@ -261,15 +261,15 @@ msgstr "Varmuuskopioi puhelimen FM radioasemat?"
 
 #: gammu/backup.c:921
 msgid "Checking phone GPRS access points"
-msgstr ""
+msgstr "Tarkistetaan puhelimen GPRS-tukiasemat"
 
 #: gammu/backup.c:925
 msgid "Backup phone GPRS access points?"
-msgstr ""
+msgstr "Varmuuskopioi puhelimen GPRS-tukiasemat?"
 
 #: gammu/backup.c:971
 msgid "Time of backup"
-msgstr ""
+msgstr "Varmuuskopion aika"
 
 #: gammu/backup.c:974 gammu/calendar.c:237 gammu/calendar.c:823
 msgid "Phone"
