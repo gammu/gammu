@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2019-09-27 09:19+0200\n"
-"PO-Revision-Date: 2019-11-08 07:04+0000\n"
+"PO-Revision-Date: 2019-11-13 13:04+0000\n"
 "Last-Translator: Tuomas Lähteenmäki <lahtis@gmail.com>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/gammu/gammu/fi/>"
 "\n"
@@ -106,8 +106,6 @@ msgstr "%i prosenttia"
 #: gammu/calendar.c:632 gammu/calendar.c:885 gammu/calendar.c:960
 #: gammu/calendar.c:985 gammu/memory.c:24 gammu/memory.c:312 gammu/memory.c:376
 #: gammu/message.c:133 gammu/misc.c:205 gammu/misc.c:481
-#, fuzzy
-#| msgid "Press Ctrl+C to break…"
 msgid "Press Ctrl+C to break…"
 msgstr "Paina Ctrl+C keskeyttääksesi…"
 
@@ -281,7 +279,7 @@ msgstr "IMEI"
 
 #: gammu/backup.c:980
 msgid "File created by"
-msgstr ""
+msgstr "Tiedoston luonut"
 
 #: gammu/backup.c:984
 #, c-format
@@ -295,14 +293,16 @@ msgid ""
 "Please note that restoring data will cause existing data in phone to be "
 "deleted."
 msgstr ""
+"Huomaa, että tietojen palauttaminen aiheuttaa sen, että puhelimessa olevat "
+"tiedot poistetaan."
 
 #: gammu/backup.c:1023
 msgid "Use addnew command if you just want to add some entries to your phone."
-msgstr ""
+msgstr "Käytä addnew-komentoa, jos haluat lisätä joitain merkintöjä puhelimeen."
 
 #: gammu/backup.c:1034
 msgid "Restore phone caller groups and logos?"
-msgstr ""
+msgstr "Palauta puhelimen soittajaryhmät ja logot?"
 
 #: gammu/backup.c:1044 gammu/backup.c:1119 gammu/backup.c:1172
 #: gammu/backup.c:1230 gammu/backup.c:1279 gammu/backup.c:1307
@@ -313,14 +313,14 @@ msgstr ""
 #: gammu/backup.c:1760 gammu/backup.c:1782 gammu/backup.c:1806
 #: gammu/files.c:755
 msgid "Writing:"
-msgstr ""
+msgstr "Kirjoitetaan:"
 
 #: gammu/backup.c:1070 gammu/backup.c:1138 gammu/backup.c:1199
 #: gammu/backup.c:1247 gammu/backup.c:1340 gammu/backup.c:1665
 #: gammu/backup.c:1693
 #, c-format
 msgid "%i entries in backup file\n"
-msgstr ""
+msgstr "%i merkintää varmuuskopiotiedostossa\n"
 
 #: gammu/backup.c:1071
 msgid "Restore phone phonebook?"
@@ -331,6 +331,8 @@ msgid ""
 "Probably caller group is missing from your backup, add it and use --restore "
 "again."
 msgstr ""
+"Luultavasti soittajaryhmä puuttuu varmuuskopiosta, lisää se ja käytä "
+"palautusta uudelleen."
 
 #: gammu/backup.c:1100 gammu/backup.c:1159
 #, c-format
@@ -346,18 +348,20 @@ msgid ""
 "Do you want to set phone date/time? (NOTE: in some phones it's required to "
 "correctly restore calendar notes and other items)"
 msgstr ""
+"Haluatko asettaa puhelimen päivämäärän ja kelloajan? (Huom: Joissakin "
+"puhelimissa kalenterimerkinnät ja muut kohteet on palautettava oikein)"
 
 #: gammu/backup.c:1200
 msgid "Restore phone calendar notes?"
-msgstr ""
+msgstr "Palauta puhelimen kalenterin muistiinpanot?"
 
 #: gammu/backup.c:1201
 msgid "Restore notes from the past?"
-msgstr ""
+msgstr "Palauta muistiinpanot menneisyydestä?"
 
 #: gammu/backup.c:1207 gammu/backup.c:1346
 msgid "Deleting old notes:"
-msgstr ""
+msgstr "Poista vanhat muistiinpanot:"
 
 #: gammu/backup.c:1219 gammu/backup.c:1269 gammu/backup.c:1502
 #: gammu/backup.c:1560 gammu/misc.c:1261 gammu/misc.c:1306 gammu/misc.c:1330
@@ -367,105 +371,106 @@ msgstr "Valmis"
 
 #: gammu/backup.c:1249
 msgid "Restore phone todo?"
-msgstr ""
+msgstr "Palauta puhelimen tehtävälista?"
 
 #: gammu/backup.c:1257
 msgid "Deleting old todos:"
-msgstr ""
+msgstr "Poistetaan vanhat tehtävälistat:"
 
 #: gammu/backup.c:1342
 msgid "Restore phone notes?"
-msgstr ""
+msgstr "Palauta puhelimen muistiinpanot?"
 
 #: gammu/backup.c:1373
 msgid "Restore SIM SMSC profiles?"
-msgstr ""
+msgstr "Palauta SIM-kortin SMSC-profiilit?"
 
 #: gammu/backup.c:1390
 msgid "Restore phone startup logo/text?"
-msgstr ""
+msgstr "Palauta puhelimen käynnistyksen logo/teksti?"
 
 #: gammu/backup.c:1394
 msgid "Restore phone operator logo?"
-msgstr ""
+msgstr "Palauta puhelin operaattorin logo?"
 
 #: gammu/backup.c:1403
 msgid "Restore phone WAP bookmarks?"
-msgstr ""
+msgstr "Palauta puhelimen WAP kirjanmerkit?"
 
 #: gammu/backup.c:1407
 msgid "Deleting old bookmarks:"
-msgstr ""
+msgstr "Vanhojen kirjanmerkkien poistaminen:"
 
 #: gammu/backup.c:1444
 msgid "Restore phone WAP settings?"
-msgstr ""
+msgstr "Palauta puhelimen WAP asetukset?"
 
 #: gammu/backup.c:1469
 msgid "Restore phone MMS settings?"
-msgstr ""
+msgstr "Palauta puhelimen MMS-asetukset?"
 
 #: gammu/backup.c:1495 gammu/misc.c:1374
 msgid "Delete all phone user ringtones?"
-msgstr ""
+msgstr "Poistetaanko kaikki puhelimen käyttäjän soittoäänet?"
 
 #: gammu/backup.c:1499 gammu/misc.c:1293 gammu/misc.c:1317 gammu/misc.c:1341
 #: gammu/misc.c:1357 gammu/misc.c:1375
 msgid "Deleting"
-msgstr ""
+msgstr "Poistetaan"
 
 #: gammu/backup.c:1504
 msgid "Restore user ringtones?"
-msgstr ""
+msgstr "Palautetaanko käyttäjän soittoäänet?"
 
 #: gammu/backup.c:1530
 msgid "Restore phone profiles?"
-msgstr ""
+msgstr "Palautetaanko puhelinprofiilit?"
 
 #: gammu/backup.c:1553
 msgid "Restore phone FM radio stations?"
-msgstr ""
+msgstr "Palautetaanko puhelimen FM-radioasemat?"
 
 #: gammu/backup.c:1557
 msgid "Deleting old FM stations:"
-msgstr ""
+msgstr "Poistetaan vanhat FM-asemat:"
 
 #: gammu/backup.c:1583
 msgid "Restore phone GPRS Points?"
-msgstr ""
+msgstr "Palautetaanko puhelimen GPRS-pisteet?"
 
 #: gammu/backup.c:1631 gammu/memory.c:29 gammu/memory.c:60 gammu/memory.c:132
 #: gammu/memory.c:168
 #, c-format
 msgid "Unknown memory type (\"%s\")\n"
-msgstr ""
+msgstr "Tuntematon muisti tyyppi (\"%s\")\n"
 
 #: gammu/backup.c:1635 gammu/memory.c:70 gammu/misc.c:648 gammu/misc.c:681
 #: helper/message-cmdline.c:1038
 #, c-format
 msgid "Unknown parameter (\"%s\")\n"
-msgstr ""
+msgstr "Tuntematon parametri (\"%s\")\n"
 
 #: gammu/backup.c:1667 gammu/backup.c:1695
 #, c-format
 msgid "Memory has only %i free locations.Exiting\n"
-msgstr ""
+msgstr "Muistissa on vain %i vapaa sijainti. Poistutaan\n"
 
 #: gammu/backup.c:1668
 msgid "Add phone phonebook entries?"
-msgstr ""
+msgstr "Lisää puhelinluettelon merkinnät?"
 
 #: gammu/backup.c:1696
+#, fuzzy
 msgid "Add SIM phonebook entries?"
-msgstr ""
+msgstr "Lisää SIM-puhelinluettelomerkinnät?"
 
 #: gammu/backup.c:1728
 msgid "Add phone calendar notes?"
-msgstr ""
+msgstr "Lisää puhelimen kalenterimerkinnät?"
 
 #: gammu/backup.c:1752
 msgid "Add phone ToDo?"
-msgstr ""
+msgstr "Lisää puhelimen tehtävä?"
 
 #: gammu/backup.c:1774
 msgid "Add notes to phone?"
@@ -473,55 +478,55 @@ msgstr "Lisätäänkö muistutus puhelimeen?"
 
 #: gammu/backup.c:1797
 msgid "Add phone WAP bookmarks?"
-msgstr ""
+msgstr "Lisää puhelimen WAP-kirjanmerkit?"
 
 #: gammu/backupsms.c:61
 msgid "Delete each sms after backup?"
-msgstr ""
+msgstr "Poistetaanko jokainen sms-tekstiviesti varmuuskopioinnin jälkeen?"
 
 #: gammu/backupsms.c:66
 #, c-format
 msgid "Backup sms from folder \"%s\"%s?"
-msgstr ""
+msgstr "Varmuuskopio sms kansiosta \"%s\"%s?"
 
 #: gammu/backupsms.c:68 gammu/backupsms.c:220
 msgid " (SIM)"
-msgstr ""
+msgstr " (SIM)"
 
 #: gammu/backupsms.c:94
 #, c-format
 msgid "   Increase %s\n"
-msgstr ""
+msgstr "   Lisää %s\n"
 
 #: gammu/backupsms.c:117 gammu/misc.c:1251
 msgid "Deleting:"
-msgstr ""
+msgstr "Poistetaan:"
 
 #: gammu/backupsms.c:165
 msgid "Restore message?"
-msgstr ""
+msgstr "Palautetaanko viesti?"
 
 #: gammu/backupsms.c:205
 msgid "Do you want to restore binary SMS?"
-msgstr ""
+msgstr "Haluatko palauttaa binary SMS:n?"
 
 #: gammu/backupsms.c:217
 #, c-format
 msgid "Restore %03i sms to folder \"%s\"%s?"
-msgstr ""
+msgstr "Palautetaanko %03i sms kansioon \"%s\"%s?"
 
 #: gammu/backupsms.c:221
-#, c-format
+#, c-format, fuzzy
 msgid "saving %i SMS\n"
-msgstr ""
+msgstr "tallennetaan %i SMS\n"
 
 #: gammu/calendar.c:19
 msgid "Note type"
-msgstr ""
+msgstr "Merkinnän tyyppi"
 
 #: gammu/calendar.c:22
 msgid "Reminder (Date)"
-msgstr ""
+msgstr "Muistutus (päivämäärä)"
 
 #: gammu/calendar.c:25
 msgctxt "Calendar note type"
@@ -530,7 +535,7 @@ msgstr "Puhelu"
 
 #: gammu/calendar.c:28
 msgid "Meeting"
-msgstr ""
+msgstr "Tapaaminen"
 
 #: gammu/calendar.c:31
 msgid "Birthday (Anniversary)"
