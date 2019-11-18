@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2019-09-27 09:19+0200\n"
-"PO-Revision-Date: 2019-11-13 13:04+0000\n"
+"PO-Revision-Date: 2019-11-19 07:04+0000\n"
 "Last-Translator: Tuomas Lähteenmäki <lahtis@gmail.com>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/gammu/gammu/fi/>"
 "\n"
@@ -460,7 +460,6 @@ msgid "Add phone phonebook entries?"
 msgstr "Lisää puhelinluettelon merkinnät?"
 
 #: gammu/backup.c:1696
-#, fuzzy
 msgid "Add SIM phonebook entries?"
 msgstr "Lisää SIM-puhelinluettelomerkinnät?"
 
@@ -516,7 +515,7 @@ msgid "Restore %03i sms to folder \"%s\"%s?"
 msgstr "Palautetaanko %03i sms kansioon \"%s\"%s?"
 
 #: gammu/backupsms.c:221
-#, c-format, fuzzy
+#, c-format
 msgid "saving %i SMS\n"
 msgstr "tallennetaan %i SMS\n"
 
@@ -539,19 +538,19 @@ msgstr "Tapaaminen"
 
 #: gammu/calendar.c:31
 msgid "Birthday (Anniversary)"
-msgstr ""
+msgstr "Syntymäpäivä (vuosipäivä)"
 
 #: gammu/calendar.c:34
 msgid "Memo (Miscellaneous)"
-msgstr ""
+msgstr "Muistio (Sekalaiset)"
 
 #: gammu/calendar.c:37
 msgid "Travel"
-msgstr ""
+msgstr "Matka"
 
 #: gammu/calendar.c:40
 msgid "Vacation"
-msgstr ""
+msgstr "Loma"
 
 #: gammu/calendar.c:43 gammu/calendar.c:759
 msgid "Alarm"
@@ -559,91 +558,91 @@ msgstr "Varoitus"
 
 #: gammu/calendar.c:46
 msgid "Shopping"
-msgstr ""
+msgstr "Ostokset"
 
 #: gammu/calendar.c:49
 msgid "Daily alarm"
-msgstr ""
+msgstr "Päivittäinen hälytys"
 
 #: gammu/calendar.c:52
 msgid "Training/Athletism"
-msgstr ""
+msgstr "Harjoittelu/Urheilu"
 
 #: gammu/calendar.c:55
 msgid "Training/Ball Games"
-msgstr ""
+msgstr "Harjoittelu/Pallopelit"
 
 #: gammu/calendar.c:58
 msgid "Training/Cycling"
-msgstr ""
+msgstr "Harjoitus/Pyöräily"
 
 #: gammu/calendar.c:61
 msgid "Training/Budo"
-msgstr ""
+msgstr "Harjoitus/Budo"
 
 #: gammu/calendar.c:64
 msgid "Training/Dance"
-msgstr ""
+msgstr "Harjoitus/Tanssi"
 
 #: gammu/calendar.c:67
 msgid "Training/Extreme Sports"
-msgstr ""
+msgstr "Harjoitus//Extreme urheilu"
 
 #: gammu/calendar.c:70
 msgid "Training/Football"
-msgstr ""
+msgstr "Harjoitus//Jalkapallo"
 
 #: gammu/calendar.c:73
 msgid "Training/Golf"
-msgstr ""
+msgstr "Harjoitus/Golf"
 
 #: gammu/calendar.c:76
 msgid "Training/Gym"
-msgstr ""
+msgstr "Harjoitus/Kuntosali"
 
 #: gammu/calendar.c:79
 msgid "Training/Horse Races"
-msgstr ""
+msgstr "Harjoitus/Hevosurheilu"
 
 #: gammu/calendar.c:82
 msgid "Training/Hockey"
-msgstr ""
+msgstr "Harjoitus/Jääkiekko"
 
 #: gammu/calendar.c:85
 msgid "Training/Races"
-msgstr ""
+msgstr "Harjoitus/Kilpailut"
 
 #: gammu/calendar.c:88
 msgid "Training/Rugby"
-msgstr ""
+msgstr "Harjoitus/Rugby"
 
 #: gammu/calendar.c:91
 msgid "Training/Sailing"
-msgstr ""
+msgstr "Harjoitus/Purjehdus"
 
 #: gammu/calendar.c:94
 msgid "Training/Street Games"
-msgstr ""
+msgstr "Harjoitus/Katupelit"
 
 #: gammu/calendar.c:97
 msgid "Training/Swimming"
-msgstr ""
+msgstr "Harjoitus/Uinti"
 
 #: gammu/calendar.c:100
 msgid "Training/Tennis"
-msgstr ""
+msgstr "Harjoitus/Tennis"
 
 #: gammu/calendar.c:103
 msgid "Training/Travels"
-msgstr ""
+msgstr "Harjoitus/Matkat"
 
 #: gammu/calendar.c:106
 msgid "Training/Winter Games"
-msgstr ""
+msgstr "Harjoitus/Talvipelit"
 
 #: gammu/calendar.c:110
 msgid "unknown type!"
-msgstr ""
+msgstr "tuntematon tyyppi!"
 
 #: gammu/calendar.c:156
 msgid "Start"
@@ -651,24 +650,24 @@ msgstr "Aloita"
 
 #: gammu/calendar.c:163
 msgid "Stop"
-msgstr ""
+msgstr "Pysäytä"
 
 #: gammu/calendar.c:170 gammu/calendar.c:769 helper/memory-display.c:41
 msgid "Last modified"
-msgstr ""
+msgstr "Viimeksi muokattu"
 
 #: gammu/calendar.c:176 gammu/calendar.c:188
 msgid "Tone alarm"
-msgstr ""
+msgstr "Äänimerkki"
 
 #: gammu/calendar.c:178 gammu/calendar.c:199
 #, c-format
 msgid "forever on each %i. day of %s"
-msgstr ""
+msgstr "ikuisesti jokaisena %i. päivänä %s"
 
 #: gammu/calendar.c:197 gammu/calendar.c:209 gammu/calendar.c:764
 msgid "Silent alarm"
-msgstr ""
+msgstr "Hiljainen hälytys"
 
 #: gammu/calendar.c:217 gammu/calendar.c:551 gammu/calendar.c:774
 #: gammu/calendar.c:996 gammu/message.c:227 gammu/misc.c:1015
@@ -678,11 +677,11 @@ msgstr "Teksti"
 
 #: gammu/calendar.c:222 gammu/calendar.c:828
 msgid "Description"
-msgstr ""
+msgstr "Kuvaus"
 
 #: gammu/calendar.c:227 gammu/calendar.c:838 helper/memory-display.c:214
 msgid "LUID"
-msgstr ""
+msgstr "LUID"
 
 #: gammu/calendar.c:232 gammu/calendar.c:599 gammu/calendar.c:643
 #: gammu/calendar.c:687 gammu/calendar.c:711 gammu/calendar.c:833
@@ -693,7 +692,7 @@ msgstr "Sijainti"
 
 #: gammu/calendar.c:242 gammu/calendar.c:779 helper/memory-display.c:62
 msgid "Private"
-msgstr ""
+msgstr "Yksityinen"
 
 #: gammu/calendar.c:244
 msgid "Yes"
@@ -706,159 +705,160 @@ msgstr "Ei"
 #: gammu/calendar.c:256 gammu/calendar.c:262 gammu/calendar.c:267
 #: gammu/calendar.c:808 gammu/calendar.c:814
 msgid "Contact ID"
-msgstr ""
+msgstr "Yhteyshenkilön tunniste"
 
 #: gammu/calendar.c:310
 msgid "Repeating"
-msgstr ""
+msgstr "Toistuva"
 
 #: gammu/calendar.c:313
 #, c-format
 msgid "for %d time "
 msgid_plural "for %d times "
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d aika "
+msgstr[1] "%d ajan "
 
 #: gammu/calendar.c:317
 msgid "forever"
-msgstr ""
+msgstr "ikuisesti"
 
 #: gammu/calendar.c:319
 #, c-format
 msgid "till %s"
-msgstr ""
+msgstr "kunnes %s"
 
 #: gammu/calendar.c:321
 #, c-format
 msgid "since %s"
-msgstr ""
+msgstr "alkaen %s"
 
 #: gammu/calendar.c:323
 #, c-format
 msgid "since %s till %s"
-msgstr ""
+msgstr "alkaen %s kunnes %s"
 
 #: gammu/calendar.c:328
 msgid " on each "
-msgstr ""
+msgstr " kullakin "
 
 #: gammu/calendar.c:330
 #, c-format
 msgid " on each %d. "
-msgstr ""
+msgstr " jokaisella %d. "
 
 #: gammu/calendar.c:335
 #, c-format
 msgid " in %d. week of "
-msgstr ""
+msgstr " %d. viikolla "
 
 #: gammu/calendar.c:338
 msgid " in "
-msgstr ""
+msgstr " sisään "
 
 #: gammu/calendar.c:344 gammu/calendar.c:352
 msgid "each month"
-msgstr ""
+msgstr "kuukausittain"
 
 #: gammu/calendar.c:347
 #, c-format
 msgid "%d. day of "
-msgstr ""
+msgstr "%d. päivä "
 
 #: gammu/calendar.c:355
 #, c-format
 msgid "%d. day of year"
-msgstr ""
+msgstr "%d. vuoden päivä"
 
 #: gammu/calendar.c:357
 msgid "day"
-msgstr ""
+msgstr "päivä"
 
 #: gammu/calendar.c:373
 msgid "Age"
-msgstr ""
+msgstr "Ikä"
 
 #: gammu/calendar.c:392
 msgid "Date and time not set in phone"
-msgstr ""
+msgstr "Päivämäärää ja aikaa ei asetettu puhelimeen"
 
 #: gammu/calendar.c:395
 #, c-format
 msgid "Phone time is %s\n"
-msgstr ""
+msgstr "Puhelinaika on %s\n"
 
 #: gammu/calendar.c:409
 msgid "Time format is "
-msgstr ""
+msgstr "Aikamuoto on "
 
 #. l10n: AM/PM time
 #: gammu/calendar.c:412
 msgid "12 hours"
-msgstr ""
+msgstr "12 tuntia"
 
 #. l10n: 24 hours time
 #: gammu/calendar.c:415
 msgid "24 hours"
-msgstr ""
+msgstr "24 tuntia"
 
 #: gammu/calendar.c:417
 msgid "Date format is "
-msgstr ""
+msgstr "Päivämäärän muoto on "
 
 #: gammu/calendar.c:420
 msgid "DD MM YYYY"
-msgstr ""
+msgstr "DD MM YYYY"
 
 #: gammu/calendar.c:423
 msgid "MM DD YYYY"
-msgstr ""
+msgstr "MM DD YYYY"
 
 #: gammu/calendar.c:426
 msgid "YYYY MM DD"
-msgstr ""
+msgstr "YYYY MM DD"
 
 #: gammu/calendar.c:429
 msgid "DD MMM YY"
-msgstr ""
+msgstr "DD MMM YY"
 
 #: gammu/calendar.c:432
 msgid "MM DD YY"
-msgstr ""
+msgstr "MM DD YY"
 
 #: gammu/calendar.c:435
 msgid "DD MM YY"
-msgstr ""
+msgstr "DD MM YY"
 
 #: gammu/calendar.c:438
 msgid "YY MM DD"
-msgstr ""
+msgstr "YY MM DD"
 
 #: gammu/calendar.c:441
 msgid "OFF"
-msgstr ""
+msgstr "POIS"
 
 #: gammu/calendar.c:446
 #, c-format
 msgid ", date separator is %c\n"
-msgstr ""
+msgstr ", päivämäärän erotin on %c\n"
 
 #: gammu/calendar.c:463
 msgid "Setting time in phone to the same time as is set in computer."
 msgstr ""
+"Kellonajan asettaminen puhelimeen samaan aikaan kun tietokone on asetettu."
 
 #: gammu/calendar.c:513
 msgid "Updating specified parts of date and time in phone."
-msgstr ""
+msgstr "Päivitetään määritetyt päivämäärä- ja kellonajat puhelimessa."
 
 #: gammu/calendar.c:536
 #, c-format
 msgid "Alarm (%i) not set in phone\n"
-msgstr ""
+msgstr "Hälytystä (%i) ei ole asetettu puhelimeen\n"
 
 #: gammu/calendar.c:540
 #, c-format
 msgid "Alarm in location %i:\n"
-msgstr ""
+msgstr "Hälytys sijainnissa %i:\n"
 
 #: gammu/calendar.c:542 gammu/calendar.c:545 gammu/mms.c:95
 msgid "Date"
@@ -866,34 +866,34 @@ msgstr "Päiväys"
 
 #: gammu/calendar.c:543
 msgid "Every day"
-msgstr ""
+msgstr "Joka päivä"
 
 #: gammu/calendar.c:548
 #, c-format
 msgid "Time: %02d:%02d\n"
-msgstr ""
+msgstr "Aika: %02d:%02d\n"
 
 #: gammu/calendar.c:662
 msgid "Auto deleting disabled"
-msgstr ""
+msgstr "Automaattinen poistaminen poistettu käytöstä"
 
 #: gammu/calendar.c:664
 #, c-format
 msgid "Auto deleting notes after %i day(s)"
-msgstr ""
+msgstr "Muistiinpanojen automaattinen poistaminen %i päivän jälkeen"
 
 #: gammu/calendar.c:668
 #, c-format
 msgid "Week starts on %s"
-msgstr ""
+msgstr "Viikko alkaa %s"
 
 #: gammu/calendar.c:693 gammu/memory.c:150
 msgid "Entry was empty"
-msgstr ""
+msgstr "Merkintä oli tyhjä"
 
 #: gammu/calendar.c:695 gammu/memory.c:152
 msgid "Entry was deleted"
-msgstr ""
+msgstr "Tapahtuma poistettiin"
 
 #: gammu/calendar.c:713
 msgid "Priority"
@@ -901,19 +901,19 @@ msgstr "Tärkeys"
 
 #: gammu/calendar.c:716
 msgid "Invalid"
-msgstr ""
+msgstr "Virheellinen"
 
 #: gammu/calendar.c:719
 msgid "Low"
-msgstr ""
+msgstr "Matala"
 
 #: gammu/calendar.c:722
 msgid "Medium"
-msgstr ""
+msgstr "Keskitaso"
 
 #: gammu/calendar.c:725
 msgid "High"
-msgstr ""
+msgstr "Korkea"
 
 #: gammu/calendar.c:728
 msgid "None"
@@ -925,11 +925,11 @@ msgstr "Tuntematon"
 
 #: gammu/calendar.c:739
 msgid "Due time"
-msgstr ""
+msgstr "Määräaika"
 
 #: gammu/calendar.c:744
 msgid "Start time"
-msgstr ""
+msgstr "Aloitusaika"
 
 #: gammu/calendar.c:749
 msgid "Completed time"
@@ -942,272 +942,274 @@ msgstr "Valmis"
 #: gammu/calendar.c:789 gammu/calendar.c:794 helper/memory-display.c:45
 #: helper/memory-display.c:55 helper/memory-display.c:57
 msgid "Category"
-msgstr ""
+msgstr "Luokka"
 
 #: gammu/calendar.c:818
 msgid "Contact"
-msgstr ""
+msgstr "Yhteystieto"
 
 #: gammu/calendar.c:903 gammu/memory.c:316 gammu/memory.c:393
 #, c-format
 msgid "Search text too long, truncating to %d chars!\n"
-msgstr ""
+msgstr "Hakuteksti on liian pitkä, lyhennä %d merkkiin\n"
 
 #: gammu/common.c:42
 msgid "Waiting for Security Code."
-msgstr ""
+msgstr "Odotetaan suojakoodia."
 
 #: gammu/common.c:45
 msgid "Waiting for PIN."
-msgstr ""
+msgstr "Odotetaan PIN-koodia."
 
 #: gammu/common.c:48
 msgid "Waiting for PIN2."
-msgstr ""
+msgstr "Odotetaan PIN2-koodia."
 
 #: gammu/common.c:51
 msgid "Waiting for PUK."
-msgstr ""
+msgstr "Odotetaan PUK-koodia."
 
 #: gammu/common.c:54
 msgid "Waiting for PUK2."
-msgstr ""
+msgstr "Odotetaan PUK2-koodia."
 
 #: gammu/common.c:57
 msgid "Waiting for phone code."
-msgstr ""
+msgstr "Odotetaan puhelimen koodia."
 
 #: gammu/common.c:60
 msgid "Waiting for network code."
-msgstr ""
+msgstr "Odotetaan verkon koodia."
 
 #: gammu/common.c:63
 msgid "Nothing to enter."
-msgstr ""
+msgstr "Mitään ei tule."
 
 #: gammu/common.c:67
 msgid "Unknown security status."
-msgstr ""
+msgstr "Tuntematon suojaustila."
 
 #: gammu/common.c:78
 msgid "January"
-msgstr ""
+msgstr "Tammikuu"
 
 #: gammu/common.c:81
 msgid "February"
-msgstr ""
+msgstr "Helmikuu"
 
 #: gammu/common.c:84
 msgid "March"
-msgstr ""
+msgstr "Maaliskuu"
 
 #: gammu/common.c:87
 msgid "April"
-msgstr ""
+msgstr "Huhtikuu"
 
 #: gammu/common.c:90
 msgid "May"
-msgstr ""
+msgstr "Toukokuu"
 
 #: gammu/common.c:93
 msgid "June"
-msgstr ""
+msgstr "Kesäkuu"
 
 #: gammu/common.c:96
 msgid "July"
-msgstr ""
+msgstr "Heinäkuu"
 
 #: gammu/common.c:99
 msgid "August"
-msgstr ""
+msgstr "Elokuu"
 
 #: gammu/common.c:102
 msgid "September"
-msgstr ""
+msgstr "Syyskuu"
 
 #: gammu/common.c:105
 msgid "October"
-msgstr ""
+msgstr "Lokakuu"
 
 #: gammu/common.c:108
 msgid "November"
-msgstr ""
+msgstr "Marraskuu"
 
 #: gammu/common.c:111
 msgid "December"
-msgstr ""
+msgstr "Joulukuu"
 
 #: gammu/common.c:114
 msgid "Bad month!"
-msgstr ""
+msgstr "Huono kuukausi!"
 
 #: gammu/common.c:126
 msgid "Monday"
-msgstr ""
+msgstr "maanantai"
 
 #: gammu/common.c:129
 msgid "Tuesday"
-msgstr ""
+msgstr "tiistai"
 
 #: gammu/common.c:132
 msgid "Wednesday"
-msgstr ""
+msgstr "keskiviikko"
 
 #: gammu/common.c:135
 msgid "Thursday"
-msgstr ""
+msgstr "torstai"
 
 #: gammu/common.c:138
 msgid "Friday"
-msgstr ""
+msgstr "perjantai"
 
 #: gammu/common.c:141
 msgid "Saturday"
-msgstr ""
+msgstr "lauantai"
 
 #: gammu/common.c:144
 msgid "Sunday"
-msgstr ""
+msgstr "sunnuntai"
 
 #: gammu/common.c:147
 msgid "Bad day!"
-msgstr ""
+msgstr "Huono päivä!"
 
 #: gammu/common.c:194
 msgid "Security status"
-msgstr ""
+msgstr "Turvallisuustila"
 
 #: gammu/common.c:312 gammu/misc.c:1046 gammu/misc.c:1061 gammu/misc.c:1068
 #: gammu/misc.c:1075 gammu/misc.c:1105
 msgid "More parameters required!"
-msgstr ""
+msgstr "Lisää parametreja tarvitaan!"
 
 #: gammu/common.c:318 gammu/common.c:328 gammu/depend/nokia/dct4.c:687
 #: gammu/misc.c:1217
 msgid "Please enumerate locations from 1"
-msgstr ""
+msgstr "Luettele sijainnit luvusta 1"
 
 #: gammu/common.c:333
 msgid "Swapping start and end location"
-msgstr ""
+msgstr "Vaihdetaan aloitus- ja lopetuspaikat"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
 #: gammu/common.c:355 gammu/common.c:384 gammu/depend/nokia/dct4.c:85
 #: gammu/misc.c:1606
 msgid "yes"
-msgstr ""
+msgstr "kyllä"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
 #: gammu/common.c:355 gammu/common.c:387 gammu/depend/nokia/dct4.c:86
 msgid "no"
-msgstr ""
+msgstr "ei"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
 #: gammu/common.c:356 gammu/common.c:379
 msgid "ALL"
-msgstr ""
+msgstr "KAIKKI"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
 #: gammu/common.c:356 gammu/common.c:374
 msgid "ONLY"
-msgstr ""
+msgstr "VAIN"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
 #: gammu/common.c:356 gammu/common.c:369
 msgid "NONE"
-msgstr ""
+msgstr "EI MITÄÄN"
 
 #: gammu/common.c:358
 msgid "YES (always)"
-msgstr ""
+msgstr "KYLLÄ (aina)"
 
 #: gammu/common.c:362
 msgid "NO (always)"
-msgstr ""
+msgstr "EI (aina)"
 
 #: gammu/depend/nokia/dct4.c:66
 msgid "Can't do it with current phone protocol"
-msgstr ""
+msgstr "En voi tehdä sitä nykyisen puhelinprotokollan kanssa"
 
 #: gammu/depend/nokia/dct4.c:80
 #, c-format
 msgid "%s (yes/no) ? "
-msgstr ""
+msgstr "%s (kyllä/ei) "
 
 #: gammu/depend/nokia/dct4.c:265
 msgid "Setting done"
-msgstr ""
+msgstr "Asetus valmis"
 
 #: gammu/depend/nokia/dct4.c:303
 msgid ""
 "Sorry, but configuration matrix for this model has not yet been added. See "
 "<https://wammu.eu/support/bugs/> for information how to report it."
 msgstr ""
+"Anteeksi, mutta tämän mallin konfigurointi matriisia ei ole vielä lisätty. "
+"Katso <https://wammu.eu/support/bugs/> tietoja kuinka raportoida siitä."
 
 #: gammu/depend/nokia/dct4.c:369
 msgid "Passed"
-msgstr ""
+msgstr "Läpäisty"
 
 #: gammu/depend/nokia/dct4.c:370
 msgid "Fail"
-msgstr ""
+msgstr "Epäonnistua"
 
 #: gammu/depend/nokia/dct4.c:371
 msgid "Not executed"
-msgstr ""
+msgstr "Ei suoritettu"
 
 #: gammu/depend/nokia/dct4.c:372
 msgid "No signal"
-msgstr ""
+msgstr "Ei signaalia"
 
 #: gammu/depend/nokia/dct4.c:373 gammu/message.c:105 gammu/misc.c:2380
 msgid "Timeout"
-msgstr ""
+msgstr "Aikakatkaisu"
 
 #: gammu/depend/nokia/dct4.c:374
 #, c-format
 msgid "Unknown (%x)"
-msgstr ""
+msgstr "Tuntematon (%x)"
 
 #: gammu/depend/nokia/dct4.c:376
 msgid " (startup)"
-msgstr ""
+msgstr " (käynnistetty)"
 
 #: gammu/depend/nokia/dct4.c:497 gammu/depend/nokia/dct4.c:1006
 msgid "Press any key to continue…"
-msgstr ""
+msgstr "Paina mitä tahansa näppäintä jatkaaksesi…"
 
 #: gammu/depend/nokia/dct4.c:509
 #, c-format
 msgid "Security code set to \"12345\"\n"
-msgstr ""
+msgstr "Suojauskoodi asetettu arvoon \"12345\"\n"
 
 #: gammu/depend/nokia/dct4.c:512
 msgid "Unknown reason. Can't reset your security code"
-msgstr ""
+msgstr "Tuntematon syy. Suojauskoodin nollaaminen ei onnistu"
 
 #: gammu/depend/nokia/dct4.c:536
 #, c-format
 msgid "Trying %i\n"
-msgstr ""
+msgstr "Yritetään %i\n"
 
 #: gammu/depend/nokia/dct4.c:555
 #, c-format
 msgid "Security code is %s\n"
-msgstr ""
+msgstr "Suojakoodi on %s\n"
 
 #: gammu/depend/nokia/dct4.c:800
 #, c-format
 msgid "device address %02x%02x%02x%02x%02x%02x\n"
-msgstr ""
+msgstr "laiteosoite %02x%02x%02x%02x%02x%02x\n"
 
 #: gammu/depend/nokia/dct4.c:824
 msgid "Old simlock"
-msgstr ""
+msgstr "Vanha simlock"
 
 #: gammu/depend/nokia/dct4.c:845
 msgid "Simlock data"
-msgstr ""
+msgstr "Simlockin tiedot"
 
 #: gammu/depend/nokia/dct4.c:872
 msgid "Bluetooth"
@@ -1215,33 +1217,33 @@ msgstr "Bluetooth"
 
 #: gammu/depend/nokia/dct4.c:888
 msgid "UEM"
-msgstr ""
+msgstr "UEM"
 
 #: gammu/depend/nokia/dct4.c:961
 #, c-format
 msgid "What lights should I enable (\"%s\") ?\n"
-msgstr ""
+msgstr "Mitä valoja minun pitäisi ottaa käyttöön (\"%s\") ?\n"
 
 #: gammu/depend/nokia/dct4.c:968
 #, c-format
 msgid "What should I do (\"%s\") ?\n"
-msgstr ""
+msgstr "Mitä minun pitäisi tehdä (\"%s\") ?\n"
 
 #. l10n: Raw data for A/D convertor
 #: gammu/depend/nokia/dct4.c:1020
 #, c-format
 msgid "raw result %10i "
-msgstr ""
+msgstr "raakatulos %10i "
 
 #. l10n: Processed data for A/D convertor
 #: gammu/depend/nokia/dct4.c:1024
 #, c-format
 msgid "unit result %10i "
-msgstr ""
+msgstr "yksikön tulos %10i "
 
 #: gammu/depend/nokia/dct4.c:1037
 msgid "Battery voltage, divided:"
-msgstr ""
+msgstr "Akun jännite jaettuna:"
 
 #: gammu/depend/nokia/dct4.c:1037 gammu/depend/nokia/dct4.c:1038
 #: gammu/depend/nokia/dct4.c:1039 gammu/depend/nokia/dct4.c:1043
@@ -1249,15 +1251,15 @@ msgstr ""
 #: gammu/depend/nokia/dct4.c:1048 gammu/depend/nokia/dct4.c:1049
 #: gammu/depend/nokia/dct4.c:1050
 msgid "mV"
-msgstr ""
+msgstr "mV"
 
 #: gammu/depend/nokia/dct4.c:1038
 msgid "Battery voltage, scaled:"
-msgstr ""
+msgstr "Akun jännite, skaalattu:"
 
 #: gammu/depend/nokia/dct4.c:1039
 msgid "Charger voltage:"
-msgstr ""
+msgstr "Laturi jännite:"
 
 #: gammu/depend/nokia/dct4.c:1040
 msgid "Charger current:"
@@ -1266,19 +1268,19 @@ msgstr "Latausvirta:"
 #: gammu/depend/nokia/dct4.c:1040 gammu/depend/nokia/dct4.c:1051
 #: gammu/depend/nokia/dct4.c:1052
 msgid "mA"
-msgstr ""
+msgstr "mA"
 
 #: gammu/depend/nokia/dct4.c:1041
 msgid "Battery size indicator:"
-msgstr ""
+msgstr "Akun koon osoitin:"
 
 #: gammu/depend/nokia/dct4.c:1041
 msgid "Ohms"
-msgstr ""
+msgstr "ohmia"
 
 #: gammu/depend/nokia/dct4.c:1042
 msgid "Battery temperature:"
-msgstr ""
+msgstr "Akun lämpötila:"
 
 #: gammu/depend/nokia/dct4.c:1042 gammu/depend/nokia/dct4.c:1046
 #: gammu/depend/nokia/dct4.c:1047
@@ -1295,27 +1297,27 @@ msgstr "Kuulokeyhteys:"
 
 #: gammu/depend/nokia/dct4.c:1045
 msgid "Light sensor:"
-msgstr ""
+msgstr "Valoanturi:"
 
 #: gammu/depend/nokia/dct4.c:1046
 msgid "Power amplifier temperature:"
-msgstr ""
+msgstr "Tehovahvistimen lämpötila:"
 
 #: gammu/depend/nokia/dct4.c:1047
 msgid "VCXO temperature:"
-msgstr ""
+msgstr "VCXO-lämpötila:"
 
 #: gammu/depend/nokia/dct4.c:1048
 msgid "Resistive keyboard 1/headint2:"
-msgstr ""
+msgstr "Resistiivinen näppäimistö 1 / headint2:"
 
 #: gammu/depend/nokia/dct4.c:1049
 msgid "Resistive keyboard 1/auxdet:"
-msgstr ""
+msgstr "Resistiivinen näppäimistö 1/auxdet:"
 
 #: gammu/depend/nokia/dct4.c:1050
 msgid "Initial battery voltage:"
-msgstr ""
+msgstr "Akun alkuperäinen jännite:"
 
 #: gammu/depend/nokia/dct4.c:1051
 msgid "Battery Current:"
@@ -1323,179 +1325,180 @@ msgstr "Akun jännite:"
 
 #: gammu/depend/nokia/dct4.c:1052
 msgid "Battery Current Fast:"
-msgstr ""
+msgstr "Akku virtaa nopeasti:"
 
 #: gammu/depend/nokia/dct4.c:1158
 msgid "Phone seems not to support radio"
-msgstr ""
+msgstr "Puhelin ei näytä tukevan radiota"
 
 #: gammu/depend/nokia/dct4.c:1165
 msgid "Please connect headset. Required as antenna"
-msgstr ""
+msgstr "Kytke kuuloke mikrofoni. Tarvitaan antenni"
 
 #: gammu/depend/nokia/dct4.c:1331
 #, c-format
 msgid "%i entries types\n"
-msgstr ""
+msgstr "%i-merkintöjen tyypit\n"
 
 #: gammu/depend/nokia/dct4.c:1334
 #, c-format
 msgid "  entry ID %02X"
-msgstr ""
+msgstr "  merkinnän tunnus %02X"
 
 #: gammu/depend/nokia/dct4.c:1336
 msgid " (Speed dial on SIM)"
-msgstr ""
+msgstr " (Pikavalinta SIM-kortilla)"
 
 #: gammu/depend/nokia/dct4.c:1337
 msgid " (Text: name (always the only one))"
-msgstr ""
+msgstr " (Teksti: nimi (aina ainoa))"
 
 #: gammu/depend/nokia/dct4.c:1338
 msgid " (Text: email address)"
-msgstr ""
+msgstr " (Teksti: sähköpostiosoite"
 
 #: gammu/depend/nokia/dct4.c:1339
 msgid " (Text: postal address)"
-msgstr ""
+msgstr " (Teksti: postiosoite)"
 
 #: gammu/depend/nokia/dct4.c:1340
 msgid " (Text: note)"
-msgstr ""
+msgstr " (Teksti: huomautus)"
 
 #: gammu/depend/nokia/dct4.c:1341
 msgid " (Phone number)"
-msgstr ""
+msgstr " (Puhelinnumero)"
 
 #: gammu/depend/nokia/dct4.c:1342
 msgid " (Ringtone ID)"
-msgstr ""
+msgstr " (Soittoäänen tunnus)"
 
 #: gammu/depend/nokia/dct4.c:1343
 msgid " (Call register: date and time)"
-msgstr ""
+msgstr " (Puhelurekisteri: päivämäärä ja aika)"
 
 #: gammu/depend/nokia/dct4.c:1344
 msgid " (Call register: with missed calls)"
-msgstr ""
+msgstr " (Puhelurekisteri: vastaamattomat puhelut)"
 
 #: gammu/depend/nokia/dct4.c:1345
 msgid " (Speed dial)"
-msgstr ""
+msgstr " (Pikavalinta)"
 
 #: gammu/depend/nokia/dct4.c:1346
 msgid " (Caller group: logo)"
-msgstr ""
+msgstr " (Soittajaryhmä: logo)"
 
 #: gammu/depend/nokia/dct4.c:1347
 msgid " (Caller group: is logo on ?)"
-msgstr ""
+msgstr " (Soittajaryhmä: onko logo päällä?)"
 
 #: gammu/depend/nokia/dct4.c:1348
 msgid " (Caller group number in pbk entry)"
-msgstr ""
+msgstr " (Soittajaryhmän numero on pbk-merkinnässä)"
 
 #: gammu/depend/nokia/dct4.c:1351
 msgid " (Text: URL address)"
-msgstr ""
+msgstr " (Teksti: URL-osoite)"
 
 #: gammu/depend/nokia/dct4.c:1352
 msgid " (SMS list assignment)"
-msgstr ""
+msgstr " (SMS-luettelon määritys)"
 
 #: gammu/depend/nokia/dct4.c:1353
 msgid " (Voice tag assignment)"
-msgstr ""
+msgstr " (Ääni tunnisteen määritys)"
 
 #: gammu/depend/nokia/dct4.c:1354
+#, fuzzy
 msgid " (Picture ID assignment)"
-msgstr ""
+msgstr " (Kuvallinen henkilöllisyystodistus)"
 
 #: gammu/depend/nokia/dct4.c:1355
 msgid " (Ringtone ID from filesystem/internal)"
-msgstr ""
+msgstr " (Soittoäänen tunnus tiedostojärjestelmästä/sisäinen)"
 
 #: gammu/depend/nokia/dct4.c:1356
 msgid " (Text: user ID)"
-msgstr ""
+msgstr " (Teksti: käyttäjän tunnus)"
 
 #: gammu/depend/nokia/dct4.c:1357
 msgid " (conversation list ID)"
-msgstr ""
+msgstr " (keskusteluluettelon tunnus)"
 
 #: gammu/depend/nokia/dct4.c:1358
 msgid " (Instant Messaging service list ID ?)"
-msgstr ""
+msgstr " (Pikaviestit-palvelulistan tunnus?)"
 
 #: gammu/depend/nokia/dct4.c:1359
 msgid " (presence list ID ?)"
-msgstr ""
+msgstr " (läsnäololuettelotunnus?)"
 
 #: gammu/depend/nokia/dct4.c:1360
 msgid " (SIP Address (Push to Talk address))"
-msgstr ""
+msgstr " (SIP-osoite (Paina to Puhu -osoite))"
 
 #: gammu/depend/nokia/dct4.c:1361
 msgid " (Group ID (6230i or later))"
-msgstr ""
+msgstr " (Ryhmän tunnus (6230i tai uudempi))"
 
 #: gammu/depend/nokia/dct4.c:1363
 msgid ", type "
-msgstr ""
+msgstr ", tyyppi "
 
 #: gammu/depend/nokia/dct4.c:1365
 msgid "string"
-msgstr ""
+msgstr "merkkijono"
 
 #: gammu/depend/nokia/dct4.c:1366
 msgid "byte"
-msgstr ""
+msgstr "tavu"
 
 #: gammu/depend/nokia/dct4.c:1367
 msgid "2 bytes"
-msgstr ""
+msgstr "2 tavua"
 
 #: gammu/depend/nokia/dct4.c:1368
 msgid "4 bytes"
-msgstr ""
+msgstr "4 tavua"
 
 #: gammu/depend/nokia/dct4.c:1375
 #, c-format
 msgid "%i phone number types\n"
-msgstr ""
+msgstr "%i puhelinnumerotyypit\n"
 
 #: gammu/depend/nokia/dct4.c:1378 helper/memory-display.c:129
 msgid "Home number"
-msgstr ""
+msgstr "Kotinumero"
 
 #: gammu/depend/nokia/dct4.c:1379 helper/memory-display.c:150
 msgid "Mobile number"
-msgstr ""
+msgstr "Matkapuhelinnumero"
 
 #: gammu/depend/nokia/dct4.c:1380 helper/memory-display.c:164
 msgid "Fax number"
-msgstr ""
+msgstr "Faksinumero"
 
 #: gammu/depend/nokia/dct4.c:1381
 msgid "Office number"
-msgstr ""
+msgstr "Toimiston numero"
 
 #: gammu/depend/nokia/dct4.c:1382
 msgid "Standard number"
-msgstr ""
+msgstr "Vakionumero"
 
 #: gammu/depend/nokia/dct4.c:1383
 msgid "Unknown number"
-msgstr ""
+msgstr "Tuntematon numero"
 
 #: gammu/depend/nokia/dct4.c:1407
 #, c-format
 msgid "ERROR: unknown memory type (\"%s\")\n"
-msgstr ""
+msgstr "VIRHE: tuntematon muistityyppi (\"%s\")\n"
 
 #: gammu-detect/main.c:55
 msgid "Show debugging output for detecting devices."
-msgstr ""
+msgstr "Näytä vianetsintulostus laitteiden havaitsemiseksi."
 
 #: gammu-detect/main.c:56
 msgid "Show version information and compiled in features."
@@ -1503,15 +1506,15 @@ msgstr "Näytä versio tiedot ja ominaisuudet."
 
 #: gammu-detect/main.c:58
 msgid "Disables scanning of udev."
-msgstr ""
+msgstr "Poistaa udev-tarkistuksen käytöstä."
 
 #: gammu-detect/main.c:61
 msgid "Disables scanning using Bluez."
-msgstr ""
+msgstr "Poistaa skannauksen käytöstä Bluezin avulla."
 
 #: gammu-detect/main.c:64
 msgid "Disables scanning of Windows serial ports."
-msgstr ""
+msgstr "Poistaa käytöstä Windows-sarjaporttien skannauksen."
 
 #: gammu-detect/main.c:71
 #, c-format
@@ -1520,15 +1523,15 @@ msgstr "Gammu-tunnistus versio %s"
 
 #: gammu-detect/main.c:74 gammu/gammu.c:99
 msgid "Compiled in features:"
-msgstr ""
+msgstr "Käännetyt ominaisuudet:"
 
 #: gammu-detect/main.c:76
 msgid "udev probing"
-msgstr ""
+msgstr "udev luotaus"
 
 #: gammu-detect/main.c:79
 msgid "Bluez probing"
-msgstr ""
+msgstr "Bluez luotaus"
 
 #: gammu-detect/main.c:82
 msgid "Windows serial port probing"
@@ -1538,35 +1541,39 @@ msgstr "Windowsin sarjaportin etsintä"
 msgid ""
 "Copyright (C) 2010 - 2018 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
+"Tekijänoikeudet (C) 2010 - 2018 Michal Cihar <michal@cihar.com> ja muut "
+"tekijät."
 
 #: gammu-detect/main.c:87 gammu/gammu.c:336
 msgid "License GPLv2: GNU GPL version 2 <https://spdx.org/licenses/GPL-2.0>."
-msgstr ""
+msgstr "Lisenssi GPLv2: GNU GPL version 2 <https://spdx.org/licenses/GPL-2.0>."
 
 #: gammu-detect/main.c:88 gammu/gammu.c:338
 msgid "This is free software: you are free to change and redistribute it."
 msgstr ""
+"Tämä on ilmainen ohjelmisto: voit vapaasti muuttaa sitä ja jakaa sitä "
+"edelleen."
 
 #: gammu-detect/main.c:89 gammu/gammu.c:340
 msgid "There is NO WARRANTY, to the extent permitted by law."
-msgstr ""
+msgstr "TAKUUTA ei ole, siinä määrin kuin laki sallii."
 
 #: gammu-detect/main.c:91 gammu/gammu.c:344
 msgid "Check <https://wammu.eu/gammu/> for updates."
-msgstr ""
+msgstr "Tarkista <https://wammu.eu/gammu/> päivitykset."
 
 #: gammu-detect/main.c:100
 msgid "Configuration file generated by gammu-detect."
-msgstr ""
+msgstr "gammu-detectin generoima asetustiedosto."
 
 #: gammu-detect/main.c:101
 msgid "Please check The Gammu Manual for more information."
-msgstr ""
+msgstr "Katso lisätietoja Gammun-käsikirjasta."
 
 #: gammu-detect/main.c:158
 #, c-format
 msgid "option parsing failed: %s\n"
-msgstr ""
+msgstr "vaihtoehdon jäsentäminen epäonnistui %s\n"
 
 #: gammu-detect/udev.c:67
 msgid "Name:"
@@ -1578,7 +1585,7 @@ msgstr "Tyyppi:"
 
 #: gammu-detect/udev.c:69
 msgid "Subsystem:"
-msgstr ""
+msgstr "Osajärjestelmä:"
 
 #: gammu-detect/udev.c:70
 msgid "Number:"
@@ -1586,7 +1593,7 @@ msgstr "Numero:"
 
 #: gammu-detect/udev.c:71
 msgid "Path:"
-msgstr ""
+msgstr "Polku:"
 
 #: gammu-detect/udev.c:72
 msgid "Driver:"
@@ -1594,7 +1601,7 @@ msgstr "Ajuri:"
 
 #: gammu-detect/udev.c:73
 msgid "Sequential Number:"
-msgstr ""
+msgstr "Järjestysnumero:"
 
 #: gammu-detect/udev.c:74
 msgid "Device File:"
@@ -1602,7 +1609,7 @@ msgstr "Laitetiedosto:"
 
 #: gammu-detect/udev.c:77
 msgid "Properties:"
-msgstr ""
+msgstr "Ominaisuudet:"
 
 #: gammu-detect/udev.c:170 gammu-detect/win32-serial.c:44
 #, c-format
@@ -1616,45 +1623,45 @@ msgstr "Puhelin USB sarjaportissa %s %s"
 
 #: gammu/files.c:48
 msgid "Phone memory"
-msgstr ""
+msgstr "Puhelimen muisti"
 
 #: gammu/files.c:49
 #, c-format
 msgid "%ld bytes (free %ld bytes, used %ld bytes)"
-msgstr ""
+msgstr "%ld tavua (vapaana %ld tavua, käytetty %ld tavua)"
 
 #: gammu/files.c:55
 msgid "Usage details"
-msgstr ""
+msgstr "Käyttötiedot"
 
 #: gammu/files.c:56
 #, c-format
 msgid "images: %ld, sounds: %ld, themes: %ld"
-msgstr ""
+msgstr "kuvat: %ld, äänet: %ld, teemat: %ld"
 
 #. l10n: One char to indicate protected file
 #: gammu/files.c:119 gammu/files.c:208 gammu/files.c:329
 msgid "P"
-msgstr ""
+msgstr "P"
 
 #. l10n: One char to indicate read only file
 #: gammu/files.c:125 gammu/files.c:210 gammu/files.c:331
 msgid "R"
-msgstr ""
+msgstr "R"
 
 #. l10n: One char to indicate hidden file
 #: gammu/files.c:131 gammu/files.c:212 gammu/files.c:333
 msgid "H"
-msgstr ""
+msgstr "H"
 
 #. l10n: One char to indicate system file
 #: gammu/files.c:137 gammu/files.c:214 gammu/files.c:335
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #: gammu/files.c:158 gammu/files.c:171 gammu/files.c:197
 msgid "Part of folder"
-msgstr ""
+msgstr "Kansion osa"
 
 #: gammu/files.c:160 gammu/files.c:173 gammu/files.c:199 gammu/files.c:324
 msgid "Folder"
@@ -1662,100 +1669,102 @@ msgstr "Hakemisto"
 
 #: gammu/files.c:184 gammu/files.c:315
 msgid "File;"
-msgstr ""
+msgstr "Tiedosto;"
 
 #: gammu/files.c:224
 #, c-format
 msgid "Used in phone: %li bytes"
-msgstr ""
+msgstr "Käytetään puhelimessa: %li tavua"
 
 #: gammu/files.c:226
 #, c-format
 msgid ", used in card: %li bytes"
-msgstr ""
+msgstr ", jota käytetään kortissa: %li tavua"
 
 #: gammu/files.c:256
 #, c-format
 msgid "Unknown attribute (%s)\n"
-msgstr ""
+msgstr "Tuntematon attribuutti (%s)\n"
 
 #: gammu/files.c:307
 msgid "Part of folder only"
-msgstr ""
+msgstr "Vain osa kansiota"
 
 #: gammu/files.c:372
 #, c-format
 msgid "Getting \"%s\"\n"
-msgstr ""
+msgstr "Saatu \"%s\"\n"
 
 #: gammu/files.c:380
 msgid "Is a folder. Please give only file names."
-msgstr ""
+msgstr "On kansio. Anna vain tiedostonimet."
 
 #: gammu/files.c:400 gammu/files.c:618
 #, c-format
 msgid " (%02i:%02i minutes left)"
-msgstr ""
+msgstr " (%02i:%02i minuuttia jäljellä)"
 
 #: gammu/files.c:411 gammu/files.c:629
 msgid ""
 "File checksum calculated by phone doesn't match with value calculated by "
 "Gammu. File is damaged or there is a error in Gammu."
 msgstr ""
+"Tiedoston tarkistussumma, joka lasketaan puhelimesta, ei vastaa Gammun "
+"laskemaa arvoa. Tiedosto on vaurioitunut tai Gammussa on virhe."
 
 #: gammu/files.c:422
 #, c-format
 msgid "%i percent done."
-msgstr ""
+msgstr "%i prosenttia tehty."
 
 #: gammu/files.c:424
 #, c-format
 msgid "%lu Bytes in %li seconds, %lu Bytes/sec"
-msgstr ""
+msgstr "%lu tavua %li sekunneissa, %lu tavua/sekunnissa"
 
 #: gammu/files.c:453
 #, c-format
 msgid "  Saving to %s\n"
-msgstr ""
+msgstr "  Tallennetaan kohteeseen %s\n"
 
 #: gammu/files.c:704 gammu/nokia.c:955
 #, c-format
 msgid "Parameter \"%s\" unknown\n"
-msgstr ""
+msgstr "Parametri \"%s\" tuntematon\n"
 
 #: gammu/files.c:739
 #, c-format
 msgid "What file type (\"%s\") ?\n"
-msgstr ""
+msgstr "Mikä tiedostotyyppi (\"%s\") ?\n"
 
 #: gammu/files.c:748 gammu/misc.c:1213 gammu/nokia.c:964
 #: helper/message-cmdline.c:1318
 msgid "Parameter missing!"
-msgstr ""
+msgstr "Parametri puuttuu!"
 
 #: gammu/files.c:757
 #, c-format
 msgid "ID of new file is \"%s\"\n"
-msgstr ""
+msgstr "Uuden tiedoston tunnus on \"%s\"\n"
 
 #: gammu/files.c:778
 #, c-format
 msgid "ID of new folder is \"%s\"\n"
-msgstr ""
+msgstr "Uuden kansion tunnus on \"%s\"\n"
 
 #: gammu/gammu.c:69
 #, c-format
 msgid "Networks for %s:"
-msgstr ""
+msgstr "Verkot %s:"
 
 #: gammu/gammu.c:75
 #, c-format
 msgid "Unknown country name: %s."
-msgstr ""
+msgstr "Tuntematon maan nimi: %s."
 
 #: gammu/gammu.c:80 gammu/gammu.c:763 gammu/misc.c:48
 msgid "Network"
-msgstr ""
+msgstr "Verkko"
 
 #: gammu/gammu.c:80 gammu/message.c:220 gammu/misc.c:850 gammu/misc.c:1018
 #: gammu/misc.c:1770 gammu/misc.c:1809 gammu/misc.c:2104 gammu/mms.c:112
@@ -1770,64 +1779,72 @@ msgstr "[Gammun versio %s]"
 
 #: gammu/gammu.c:101
 msgid "Protocols"
-msgstr ""
+msgstr "Protokollat"
 
 #: gammu/gammu.c:172
 msgid "Phones"
-msgstr ""
+msgstr "Puhelimet"
 
 #: gammu/gammu.c:217
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Sekalaiset"
 
 #: gammu/gammu.c:301
 #, c-format
 msgid "There is newer stable Gammu version available! (%s instead of %s)\n"
 msgstr ""
+"On olemassa uudempi vakaa Gammu versio saatavilla! (%s kohteen %s sijasta)\n"
 
 #: gammu/gammu.c:319
 #, c-format
 msgid "There is newer testing Gammu version available! (%s instead of %s)\n"
 msgstr ""
+"On olemassa uudempi Gammu testausversio saatavilla! (%s kohteen %s sijasta)\n"
 
 #: gammu/gammu.c:332
 msgid ""
 "Copyright (C) 2003 - 2018 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
+"Tekijänoikeudet (C) 2003 - 2018 Michal Cihar <michal@cihar.com> ja muut "
+"tekijät."
 
 #: gammu/gammu.c:369
 msgid "standard input"
-msgstr ""
+msgstr "vakiosyöte"
 
 #: gammu/gammu.c:380
 #, c-format
 msgid "Batch file could not be opened: %s\n"
-msgstr ""
+msgstr "Batch-tiedostoa ei voitu avata: %s\n"
 
 #: gammu/gammu.c:391
 msgid "Error reading batch! Terminating.\n"
-msgstr ""
+msgstr "Virhe batch-tiedoston käsittelyssä! Lopetetaan.\n"
 
 #: gammu/gammu.c:393
 msgid "Batch processed, terminating.\n"
-msgstr ""
+msgstr "Batch-tiedostoa käsitellään, lopetetaan.\n"
 
 #: gammu/gammu.c:467
 #, c-format
 msgid "Executing batch \"%s\" - command %i: %s\n"
-msgstr ""
+msgstr "Suoritetaan erää \"%s\" - komento %i: %s\n"
 
 #: gammu/gammu.c:490
 msgid ""
 "SMS daemon is now in separate binary, please use gammu-smsd-inject instead "
 "of gammu sendsmsdsms!"
 msgstr ""
+"SMS-daemon on nyt erillisessä binäärissä, käytä gammu-smsd-inject Gammun "
+"sendmsdsms -sovelluksen sijasta!"
 
 #: gammu/gammu.c:497
 msgid ""
 "SMS daemon is now in separate binary, please use gammu-smsd instead of gammu "
 "smsd!"
 msgstr ""
+"SMS-daemon on nyt erillisessä binaarissa, käytä gammu-smsd:tä gammu smsd:n "
+"sijasta!"
 
 #: gammu/gammu.c:743
 msgid "Calls"
@@ -1835,19 +1852,19 @@ msgstr "Puhelut"
 
 #: gammu/gammu.c:744
 msgid "SMS and EMS"
-msgstr ""
+msgstr "SMS ja EMS"
 
 #: gammu/gammu.c:745
 msgid "Memory (phonebooks and calls)"
-msgstr ""
+msgstr "Muisti (puhelinluettelot ja puhelut)"
 
 #: gammu/gammu.c:746
 msgid "Filesystem"
-msgstr ""
+msgstr "Tiedostojärjestelmä"
 
 #: gammu/gammu.c:747
 msgid "Logo and pictures"
-msgstr ""
+msgstr "Logo ja kuvat"
 
 #: gammu/gammu.c:748
 msgid "Ringtones"
@@ -1855,51 +1872,51 @@ msgstr "Soittoäänet"
 
 #: gammu/gammu.c:749
 msgid "Calendar notes"
-msgstr ""
+msgstr "Kalenterimerkinnät"
 
 #: gammu/gammu.c:750
 msgid "To do lists"
-msgstr ""
+msgstr "Tehtävälistat"
 
 #: gammu/gammu.c:751
 msgid "Notes"
-msgstr ""
+msgstr "Muistiinpanot"
 
 #: gammu/gammu.c:752
 msgid "Date, time and alarms"
-msgstr ""
+msgstr "Päivämäärä, aika ja hälytykset"
 
 #: gammu/gammu.c:753
 msgid "Categories"
-msgstr ""
+msgstr "Luokat"
 
 #: gammu/gammu.c:755
 msgid "Backing up and restoring"
-msgstr ""
+msgstr "Varmuuskopiointi ja palauttaminen"
 
 #: gammu/gammu.c:758
 msgid "Nokia specific"
-msgstr ""
+msgstr "Nokia spesifinen"
 
 #: gammu/gammu.c:761
 msgid "Siemens specific"
-msgstr ""
+msgstr "Siemens spesifinen"
 
 #: gammu/gammu.c:764
 msgid "WAP settings and bookmarks"
-msgstr ""
+msgstr "WAP- asetukset ja kirjanmerkit"
 
 #: gammu/gammu.c:765
 msgid "MMS and MMS settings"
-msgstr ""
+msgstr "MMS- ja MMS-asetukset"
 
 #: gammu/gammu.c:766
 msgid "Phone tests"
-msgstr ""
+msgstr "Puhelintestit"
 
 #: gammu/gammu.c:767
 msgid "FM radio"
-msgstr ""
+msgstr "FM-radio"
 
 #: gammu/gammu.c:768
 msgid "Phone information"
@@ -1907,62 +1924,67 @@ msgstr "Puhelimen tiedot"
 
 #: gammu/gammu.c:769
 msgid "Phone settings"
-msgstr ""
+msgstr "Puhelinasetukset"
 
 #: gammu/gammu.c:771
 msgid "Dumps decoding"
-msgstr ""
+msgstr "Dumps-dekoodaus"
 
 #: gammu/gammu.c:773
 msgid "Functions that don't fit elsewhere"
-msgstr ""
+msgstr "Toiminnot, jotka eivät sovi muualle"
 
 #: gammu/gammu.c:774
 msgid "Gammu information"
-msgstr ""
+msgstr "Gammun tiedot"
 
 #: gammu/gammu.c:790
 msgid "Usage: gammu [parameters] <command> [options]"
-msgstr ""
+msgstr "Käyttö: gammu [parametrit] <komento> [valinnat]"
 
 # type: Plain text
 #: gammu/gammu.c:791
 msgid "Parameters before command configure gammu behaviour:"
-msgstr ""
+msgstr "Parametrit ennen komentoa määrittävät gammun käyttäytymisen:"
 
 #: gammu/gammu.c:792
-#, fuzzy
-#| msgid "name of configuration file"
 msgid "-c / --config <filename> … name of configuration file"
-msgstr "Puhelimen tiedot"
+msgstr "-c / --config <tiedostonimi>… asetustiedoston nimi"
 
 #: gammu/gammu.c:793
 msgid "-s / --section <confign> … section of config file to use, eg. 42"
 msgstr ""
+"-s / --section <confign> … osa konfigurointitiedostoa käytettäväksi, esim. 42"
 
 #: gammu/gammu.c:794
 msgid ""
 "-d / --debug <level> … debug level (nothing|text|textall|textalldate|binary|"
 "errors)"
 msgstr ""
+"-d / --debug <level> … virheenkorjaustaso "
+"(nothing|text|textall|textalldate|binary|errors)"
 
 #: gammu/gammu.c:795
 msgid "-f / --debug-file <filename> … file for logging debug messages"
 msgstr ""
+"-f / --debug-file <tiedostonimi> … tiedosto vianetsintäviestien kirjaamiseksi"
 
 #: gammu/gammu.c:797
 msgid "Commands can be specified with or without leading --."
-msgstr ""
+msgstr "Komennot voidaan määrittää tai ilman johtavaa -- merkkiä."
 
 #: gammu/gammu.c:800
 msgid ""
 "For more details, call help on specific topic (gammu --help topic). Topics "
 "are:"
 msgstr ""
+"Jos haluat lisätietoja, soita ohjeen aiheeseen (gammu --help topic). Aiheet "
+"ovat:"
 
 #: gammu/gammu.c:899
+#, fuzzy
 msgid "Unknown help topic specified!"
-msgstr ""
+msgstr "Tuntematon ohje aihe määritetty!"
 
 #: gammu/gammu.c:903
 #, c-format
@@ -1970,122 +1992,129 @@ msgid ""
 "Gammu commands, topic: %s\n"
 "\n"
 msgstr ""
+"Gammu-komennot, aihe: %s\n"
+"\n"
 
 #: gammu/gammu.c:994
 #, c-format
 msgid "More parameters required (function requires %d)\n"
-msgstr ""
+msgstr "Lisää parametreja tarvitaan (toiminto vaatii %d)\n"
 
 #: gammu/gammu.c:997
 #, c-format
 msgid "More parameters required (function requires %d to %d)\n"
-msgstr ""
+msgstr "Lisää tarvittavat parametrit (toiminto edellyttää %d - %d)\n"
 
 #: gammu/gammu.c:1003 gammu/gammu.c:1024
 msgid "Parameters help"
-msgstr ""
+msgstr "Parametrien ohje"
 
 #: gammu/gammu.c:1015
 #, c-format
 msgid "Too many parameters (function accepts %d)\n"
-msgstr ""
+msgstr "Liian monta parametria (toiminto hyväksyy %d)\n"
 
 #: gammu/gammu.c:1018
 #, c-format
 msgid "Too many parameters (function accepts %d to %d)\n"
-msgstr ""
+msgstr "Liian monta parametria (toiminto hyväksyy %d - %d)\n"
 
 #: gammu/gammu.c:1045
 msgid "Bad option!"
-msgstr ""
+msgstr "Huono vaihtoehto!"
 
 #: gammu/gammu.c:1126
 msgid "Configuration could not be parsed!"
-msgstr ""
+msgstr "Kokoonpanoa ei voitu jäsentää!"
 
 #: gammu/gammu.c:1128
 msgid "No configuration file found!"
-msgstr ""
+msgstr "Asetustiedostoa ei löytynyt!"
 
 #: gammu/gammu.c:1148
 msgid "Failed to allocate memory, aborting!\n"
-msgstr ""
+msgstr "Muistia ei voitu varata, keskeytetään!\n"
 
 #: gammu/gammu.c:1179
 msgid "Too few parameters!"
-msgstr ""
+msgstr "Liian vähän parametreja!"
 
 #: gammu/gammu.c:1192
 #, c-format
 msgid "Failed to read [gammu%d] section from configuration file (gammurc)!\n"
-msgstr ""
+msgstr "Lukeminen epäonnistui [gammu%d] osasta asetustiedostoa (gammurc)!\n"
 
 #: gammu/gammu.c:1194 gammu/gammu.c:1205
 msgid "No configuration read, using builtin defaults!"
-msgstr ""
+msgstr "Asetustiedostoa ei luettu, käytetään sisäänrakennettua oletusarvoa!"
 
 #: gammu/gammu.c:1244
 #, c-format
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
 msgstr ""
+"Asennetun libGammu.so (%s) versio on erilainen kuin Gammun (%s) versio\n"
 
 #: gammu/memory.c:80
 msgid ""
 "You will have null names in entries. Upgrade firmware in phone to higher "
 "than 4.06"
 msgstr ""
+"Merkinnöissä on null-arvoinen nimi. Päivitä puhelimen laiteohjelmisto "
+"korkeampaan kuin 4.06"
 
 #: gammu/memory.c:86
 msgid ""
 "You will have null names in entries. Upgrade firmware in phone to higher "
 "than 6.00"
 msgstr ""
+"Merkinnöissä on null-arvoinen nimi. Päivitä puhelimen laiteohjelmisto "
+"korkeampaan kuin 6.00"
 
 #: gammu/memory.c:91 gammu/memory.c:109 gammu/memory.c:235 gammu/memory.c:352
 #: helper/memory-display.c:277
 #, c-format
 msgid "Memory %s, Location %i\n"
-msgstr ""
+msgstr "Muisti %s, Sijainti %i\n"
 
 #: gammu/memory.c:104 gammu/misc.c:1807 gammu/misc.c:2216
 msgid "Empty entry"
-msgstr ""
+msgstr "Tyhjä merkintä"
 
 #: gammu/memory.c:116
 #, c-format
 msgid "%i entries empty, %i entries filled\n"
-msgstr ""
+msgstr "%i merkinnät tyhjät, %i merkinnät täytetty\n"
 
 #: gammu/message.c:37
 msgid "SMS message received"
-msgstr ""
+msgstr "SMS-viesti vastaanotettu"
 
 #: gammu/message.c:41
 msgid "We already have one pending, ignoring this one!"
-msgstr ""
+msgstr "Meillä on jo yksi odottamassa, sivuutetaan tämä!"
 
 #: gammu/message.c:63 gammu/message.c:297
 #, c-format
 msgid "Location %i\n"
-msgstr ""
+msgstr "Sijainti %i\n"
 
 #: gammu/message.c:64 gammu/message.c:298
 msgid "Empty"
-msgstr ""
+msgstr "Tyhjä"
 
 #: gammu/message.c:78
 msgid "CB message received"
-msgstr ""
+msgstr "CB-sanoma vastaanotettu"
 
 #: gammu/message.c:79
 #, c-format
 msgid "Channel %i, text \"%s\"\n"
-msgstr ""
+msgstr "Kanava %i, teksti \"%s\"\n"
 
 #: gammu/message.c:85
 msgid "USSD received"
-msgstr ""
+msgstr "USSD vastaanotettu"
 
 #: gammu/message.c:86 helper/message-display.c:167 helper/message-display.c:288
 msgid "Status"
@@ -2093,19 +2122,19 @@ msgstr "Tila"
 
 #: gammu/message.c:90
 msgid "No action needed"
-msgstr ""
+msgstr "Mitään toimia ei tarvita"
 
 #: gammu/message.c:93
 msgid "Action needed"
-msgstr ""
+msgstr "Toimia tarvitaan"
 
 #: gammu/message.c:96
 msgid "Terminated"
-msgstr ""
+msgstr "Lopetettu"
 
 #: gammu/message.c:99
 msgid "Another client replied"
-msgstr ""
+msgstr "Toinen asiakas vastasi"
 
 #: gammu/message.c:102
 msgid "Not supported"
@@ -2113,12 +2142,12 @@ msgstr "Ei tuettu"
 
 #: gammu/message.c:114
 msgid "Service reply"
-msgstr ""
+msgstr "Palvelun vastaus"
 
 #: gammu/message.c:180
 #, c-format
 msgid "Invalid SMSC location: %s\n"
-msgstr ""
+msgstr "Virheellinen SMSC-sijainti: %s\n"
 
 #: gammu/message.c:222 gammu/misc.c:2105 gammu/misc.c:2384
 msgid "Number"
@@ -2126,64 +2155,64 @@ msgstr "Numero"
 
 #: gammu/message.c:223
 msgid "Default number"
-msgstr ""
+msgstr "Oletusnumero"
 
 #: gammu/message.c:225
 msgid "Format"
-msgstr ""
+msgstr "Muoto"
 
 #: gammu/message.c:228
 msgid "Fax"
-msgstr ""
+msgstr "Faksi"
 
 #: gammu/message.c:229 helper/memory-display.c:195
 msgid "Email"
-msgstr ""
+msgstr "Sähköposti"
 
 #: gammu/message.c:230
 msgid "Pager"
-msgstr ""
+msgstr "Hakulaite"
 
 #: gammu/message.c:234
 msgid "Validity"
-msgstr ""
+msgstr "Voimassaolo"
 
 #: gammu/message.c:253
 msgid "Maximum time"
-msgstr ""
+msgstr "Enimmäisaika"
 
 #: gammu/message.c:370 gammu/message.c:444 gammu/message.c:724
 msgid "Corrupted message, skipping"
-msgstr ""
+msgstr "Vioittunut viesti, ohitetaan"
 
 #: gammu/message.c:384 gammu/message.c:500
 #, c-format
 msgid "%i SMS parts in %i SMS sequences"
-msgstr ""
+msgstr "%i SMS-osat %i SMS-sekvensseissä"
 
 #: gammu/message.c:434
 msgid "SMS counter overflow"
-msgstr ""
+msgstr "SMS-laskurin ylivuoto"
 
 #: gammu/message.c:521
 msgid ", SIM memory"
-msgstr ""
+msgstr ", SIM-muisti"
 
 #: gammu/message.c:522
 msgid ", phone memory"
-msgstr ""
+msgstr ", puhelimen muisti"
 
 #: gammu/message.c:523
 msgid ", phone or SIM memory"
-msgstr ""
+msgstr ", puhelimen tai SIM-kortin muisti"
 
 #: gammu/message.c:526 gammu/mms.c:30
 msgid ", Inbox folder"
-msgstr ""
+msgstr ", Saapuneet-kansio"
 
 #: gammu/message.c:527
 msgid ", Outbox folder"
-msgstr ""
+msgstr ", Lähtevät-kansio"
 
 #: gammu/message.c:544
 msgid "OK"
@@ -2192,16 +2221,16 @@ msgstr "OK"
 #: gammu/message.c:547
 #, c-format
 msgid "error %i"
-msgstr ""
+msgstr "virhe %i"
 
 #: gammu/message.c:550
 #, c-format
 msgid ", message reference=%d"
-msgstr ""
+msgstr ", viestin viite=%d"
 
 #: gammu/message.c:589
 msgid "Message number"
-msgstr ""
+msgstr "Viestin numero"
 
 #: gammu/message.c:594
 msgid "Number of messages"
@@ -2915,7 +2944,7 @@ msgstr ""
 
 #: gammu/misc.c:1558 gammu/misc.c:1608
 msgid "Homepage"
-msgstr ""
+msgstr "Kotisivu"
 
 #: gammu/misc.c:1602
 msgid "active"
