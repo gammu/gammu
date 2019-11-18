@@ -2213,6 +2213,7 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 #ifdef GSM_ENABLE_CELLBROADCAST
 	Priv->CNMIBroadcastProcedure	= -1;
 #endif
+	Priv->CNMIClearUnsolicitedResultCodes = -1;
 
 	Priv->ErrorText			= NULL;
 

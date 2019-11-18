@@ -2821,7 +2821,7 @@ GSM_Error ATGEN_SetCNMI(GSM_StateMachine *s)
 
 	length = sprintf(
 		buffer,
-		"AT+CNMI=%d,%d,%d,%d\r",
+		"AT+CNMI=%d,%d,%d,%d,%d\r",
 		Priv->CNMIMode,
 		s->Phone.Data.EnableIncomingSMS ? Priv->CNMIProcedure : 0,
 #ifdef GSM_ENABLE_CELLBROADCAST
@@ -2829,7 +2829,8 @@ GSM_Error ATGEN_SetCNMI(GSM_StateMachine *s)
 #else
 		0,
 #endif
-		Priv->CNMIDeliverProcedure
+		Priv->CNMIDeliverProcedure,
+		Priv->CNMIClearUnsolicitedResultCodes
 	);
 
 	return ATGEN_WaitFor(s, buffer, length, 0x00, 80, ID_SetIncomingSMS);
