@@ -3328,7 +3328,11 @@ GSM_Error ATGEN_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo)
 	if (error != ERR_NONE) {
 		return error;
 	}
-	if (netinfo->State == GSM_HomeNetwork || netinfo->State == GSM_RoamingNetwork) {
+	if (netinfo->State == GSM_HomeNetwork          ||
+	    netinfo->State == GSM_RoamingNetwork       ||
+	    netinfo->PacketState == GSM_HomeNetwork    ||
+	    netinfo->PacketState == GSM_RoamingNetwork
+	    ) {
 		/* Set numeric format for AT+COPS? */
 		smprintf(s, "Setting short network name format\n");
 		error = ATGEN_WaitForAutoLen(s, "AT+COPS=3,2\r", 0x00, 40, ID_ConfigureNetworkInfo);
