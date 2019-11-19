@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2019-02-14 14:57+0100\n"
-"PO-Revision-Date: 2019-11-13 13:04+0000\n"
+"PO-Revision-Date: 2019-11-19 07:04+0000\n"
 "Last-Translator: Tuomas Lähteenmäki <lahtis@gmail.com>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/gammu/libgammu/"
 "fi/>\n"
@@ -496,7 +496,7 @@ msgstr ""
 
 #: libgammu/phone/nokia/nfunc.c:1154
 msgid "Pager"
-msgstr ""
+msgstr "Hakulaite"
 
 #: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1780
 msgid "Outbox"
