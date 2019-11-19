@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2019-09-27 09:19+0200\n"
-"PO-Revision-Date: 2019-11-19 07:04+0000\n"
+"PO-Revision-Date: 2019-11-20 09:04+0000\n"
 "Last-Translator: Tuomas Lähteenmäki <lahtis@gmail.com>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/gammu/gammu/fi/>"
 "\n"
@@ -917,7 +917,7 @@ msgstr "Korkea"
 
 #: gammu/calendar.c:728
 msgid "None"
-msgstr "Ei mikään"
+msgstr "Ei mitään"
 
 #: gammu/calendar.c:732 gammu/message.c:111 gammu/misc.c:2020 gammu/misc.c:2063
 msgid "Unknown"
@@ -2243,12 +2243,12 @@ msgstr "Jos haluat tauon, paina Ctrl+C…"
 #: gammu/message.c:610
 #, c-format
 msgid "Saving SMS %i/%i\n"
-msgstr ""
+msgstr "Tallennetaan SMS-tekstiviestejä %i/%i\n"
 
 #: gammu/message.c:613
 #, c-format
 msgid "Saved in folder number %d \"%s\", location %i"
-msgstr ""
+msgstr "Tallennettu kansion nro %d \"%s\", sijainti %i"
 
 #: gammu/message.c:618
 msgid "SIM"
@@ -2261,180 +2261,182 @@ msgstr "puhelin"
 #: gammu/message.c:624
 #, c-format
 msgid "Sending sms from folder \"%s\", location %i\n"
-msgstr ""
+msgstr "Lähetetään SMS-tekstiviestejä kansiosta \"%s\", sijaintiin %i\n"
 
 #: gammu/message.c:630 gammu/message.c:656
 msgid "…waiting for network answer"
-msgstr ""
+msgstr "... odotetaan verkon vastausta"
 
 #: gammu/message.c:651
 #, c-format
 msgid "Sending SMS %i/%i"
-msgstr ""
+msgstr "Lähetetään SMS %i/%i"
 
 #: gammu/message.c:670
 msgid "Something went wrong, unknown message operation!\n"
-msgstr ""
+msgstr "Jokin meni pieleen, tuntematon viestioperaatio!\n"
 
 #: gammu/message.c:707
 #, c-format
 msgid "Too high folder number (max. %i)\n"
-msgstr ""
+msgstr "Liian suuri kansion numero (enintään %i)\n"
 
 #: gammu/message.c:713
 #, c-format
 msgid "Deleting SMS from \"%s\" folder: "
-msgstr ""
+msgstr "Poistetaan SMS-tekstiviestejä kansiosta \"%s\": "
 
 #: gammu/misc.c:35
 msgid "Network state"
-msgstr ""
+msgstr "Verkon tila"
 
 #: gammu/misc.c:37 gammu/misc.c:64
 msgid "home network"
-msgstr ""
+msgstr "kotiverkko"
 
 #: gammu/misc.c:38 gammu/misc.c:65
 msgid "roaming network"
-msgstr ""
+msgstr "Roaming-verkko"
 
 #: gammu/misc.c:39 gammu/misc.c:66
 msgid "requesting network"
-msgstr ""
+msgstr "pyytää verkkoa"
 
 #: gammu/misc.c:40 gammu/misc.c:67
 msgid "not logged into network"
-msgstr ""
+msgstr "ei kirjautunut verkkoon"
 
 #: gammu/misc.c:41 gammu/misc.c:68
 msgid "registration to network denied"
-msgstr ""
+msgstr "rekisteröinti verkkoon evätty"
 
 #: gammu/misc.c:42 gammu/misc.c:44 gammu/misc.c:69 gammu/misc.c:71
 #: gammu/misc.c:169 gammu/misc.c:191
 msgid "unknown"
-msgstr ""
+msgstr "tuntematon"
 
 #: gammu/misc.c:58 gammu/misc.c:85
 msgid "Name in phone"
-msgstr ""
+msgstr "Nimi puhelimella"
 
 #: gammu/misc.c:62
 msgid "Packet network state"
-msgstr ""
+msgstr "Pakettiverkon tila"
 
 #: gammu/misc.c:75
 msgid "Packet network"
-msgstr ""
+msgstr "Pakettiverkko"
 
 #: gammu/misc.c:90 gammu/misc.c:1467
 msgid "GPRS"
-msgstr ""
+msgstr "GPRS"
 
 #: gammu/misc.c:93
 msgid "attached"
-msgstr ""
+msgstr "liitetty"
 
 #: gammu/misc.c:96
 msgid "detached"
-msgstr ""
+msgstr "irrotettu"
 
 #: gammu/misc.c:106
 msgid "Battery level"
-msgstr ""
+msgstr "Akun varaustaso"
 
 #: gammu/misc.c:111
 msgid "Battery capacity"
-msgstr ""
+msgstr "Akun kapasiteetti"
 
 #: gammu/misc.c:112
 #, c-format
 msgid "%i mAh"
-msgstr ""
+msgstr "%i mAh"
 
 #: gammu/misc.c:116
 msgid "Battery temperature"
-msgstr ""
+msgstr "Akun lämpötila"
 
 #. l10n: This means degrees Celsius
 #: gammu/misc.c:118 gammu/misc.c:123
 #, c-format
 msgid "%i C"
-msgstr ""
+msgstr "%i C"
 
 #: gammu/misc.c:122
 msgid "Phone temperature"
-msgstr ""
+msgstr "Puhelimen lämpötila"
 
 #: gammu/misc.c:127
 msgid "Battery voltage"
-msgstr ""
+msgstr "Akun jännite"
 
 #: gammu/misc.c:128 gammu/misc.c:133
 #, c-format
 msgid "%i mV"
-msgstr ""
+msgstr "%i mV"
 
 #: gammu/misc.c:132
 msgid "Charge voltage"
-msgstr ""
+msgstr "Latausjännite"
 
 #: gammu/misc.c:137
+#, fuzzy
 msgid "Charge current"
-msgstr ""
+msgstr "Lataa virta"
 
 #: gammu/misc.c:138 gammu/misc.c:143
 #, c-format
 msgid "%i mA"
-msgstr ""
+msgstr "%i mA"
 
 #: gammu/misc.c:142
+#, fuzzy
 msgid "Phone current"
-msgstr ""
+msgstr "Puhelimen virta"
 
 #: gammu/misc.c:147
 msgid "Charge state"
-msgstr ""
+msgstr "Latauksen tila"
 
 #: gammu/misc.c:150
 msgid "powered from battery"
-msgstr ""
+msgstr "virtaa akusta"
 
 #: gammu/misc.c:153
 msgid "battery connected, but not powered from battery"
-msgstr ""
+msgstr "Akku kytketty, mutta akussa ei ole virtaa"
 
 #: gammu/misc.c:156
 msgid "battery connected and is being charged"
-msgstr ""
+msgstr "akku kytketty ja akku latautuu"
 
 #: gammu/misc.c:159
 msgid "battery connected and is fully charged"
-msgstr ""
+msgstr "akku on kytketty ja ladattu täyteen"
 
 #: gammu/misc.c:162
 msgid "battery not connected"
-msgstr ""
+msgstr "akkua ei ole kytketty"
 
 #: gammu/misc.c:165
 msgid "detected power failure"
-msgstr ""
+msgstr "havaittu sähkökatkos"
 
 #: gammu/misc.c:176
 msgid "Battery type"
-msgstr ""
+msgstr "Akkutyyppi"
 
 #: gammu/misc.c:179
 msgid "Lithium Ion"
-msgstr ""
+msgstr "Litiumioni"
 
 #: gammu/misc.c:182
 msgid "Lithium Polymer"
-msgstr ""
+msgstr "Litiumpolymeeri"
 
 #: gammu/misc.c:185
 msgid "NiMH"
-msgstr ""
+msgstr "NiMH"
 
 #: gammu/misc.c:252
 msgid "Device"
@@ -2462,7 +2464,7 @@ msgstr "Alkuperäinen IMEI"
 
 #: gammu/misc.c:295
 msgid "Manufactured"
-msgstr ""
+msgstr "Valmistettu"
 
 #: gammu/misc.c:301
 msgid "Product code"
@@ -2474,85 +2476,85 @@ msgstr "SIM IMSI"
 
 #: gammu/misc.c:422
 msgid "Call info"
-msgstr ""
+msgstr "Puhelutiedot"
 
 #: gammu/misc.c:425
 #, c-format
 msgid "ID %i, "
-msgstr ""
+msgstr "TUNNUS %i, "
 
 #: gammu/misc.c:428
 #, c-format
 msgid "incoming call from \"%s\"\n"
-msgstr ""
+msgstr "saapuva puhelu kohteesta \"%s\"\n"
 
 #: gammu/misc.c:429
 #, c-format
 msgid "outgoing call to \"%s\"\n"
-msgstr ""
+msgstr "lähtevä puhelu \"%s\"\n"
 
 #: gammu/misc.c:430
 msgid "call started"
-msgstr ""
+msgstr "puhelu aloitettu"
 
 #: gammu/misc.c:431
 msgid "end of call (unknown side)"
-msgstr ""
+msgstr "puhelu lopetettu (tuntematon sivu)"
 
 #: gammu/misc.c:432
 msgid "call end from our side"
-msgstr ""
+msgstr "puhelu lopetettu meidän puolelta"
 
 #: gammu/misc.c:433
 #, c-format
 msgid "call end from remote side (code %i)\n"
-msgstr ""
+msgstr "puhelu lopetettu toiselta puolelta ((koodi %i)\n"
 
 #: gammu/misc.c:434
 msgid "call established. Waiting for answer"
-msgstr ""
+msgstr "puhelu perustettu. Vastausta odottaen"
 
 #: gammu/misc.c:435
 msgid "call held"
-msgstr ""
+msgstr "puhelu pidossa"
 
 #: gammu/misc.c:436
 msgid "call resumed"
-msgstr ""
+msgstr "puhelua jatketaan"
 
 #: gammu/misc.c:437
 msgid "call switched"
-msgstr ""
+msgstr "puhelu kytketty"
 
 #: gammu/misc.c:444
 #, c-format
 msgid "%3d used"
-msgstr ""
+msgstr "%3d käytetty"
 
 #: gammu/misc.c:446
 #, c-format
 msgid "%3d free"
-msgstr ""
+msgstr "%3d vapaa"
 
 #: gammu/misc.c:482
 msgid "Entering monitor mode…"
-msgstr ""
+msgstr "Siirretään valvontatilaan…"
 
 #: gammu/misc.c:492
 msgid "Enabling info about incoming SMS"
-msgstr ""
+msgstr "Ota käyttöön saapuvat SMS-tekstiviestin tiedot"
 
 #: gammu/misc.c:494
 msgid "Enabling info about incoming CB"
-msgstr ""
+msgstr "Ota käyttöön saapuvat CB-tiedot"
 
 #: gammu/misc.c:496
 msgid "Enabling info about calls"
-msgstr ""
+msgstr "Ota puhelutiedot käyttöön"
 
 #: gammu/misc.c:498
 msgid "Enabling info about USSD"
-msgstr ""
+msgstr "Ota käyttöön USSD-tiedot"
 
 #: gammu/misc.c:515
 msgid "Todos"
@@ -2564,93 +2566,93 @@ msgstr "Kalenteri"
 
 #: gammu/misc.c:528
 msgid "Signal strength"
-msgstr ""
+msgstr "Signaalin voimakkuus"
 
 #: gammu/misc.c:529
 #, c-format
 msgid "%i dBm"
-msgstr ""
+msgstr "%i dBm"
 
 #: gammu/misc.c:533
 msgid "Network level"
-msgstr ""
+msgstr "Verkkotaso"
 
 #: gammu/misc.c:538
 msgid "Bit error rate"
-msgstr ""
+msgstr "Bittien virhetaso"
 
 #: gammu/misc.c:546
 msgid "SIM SMS status"
-msgstr ""
+msgstr "SIM-tekstiviestitila"
 
 #: gammu/misc.c:547 gammu/misc.c:557
 #, c-format
 msgid "%i used"
-msgstr ""
+msgstr "%i käytetty"
 
 #: gammu/misc.c:549 gammu/misc.c:559
 #, c-format
 msgid "%i unread"
-msgstr ""
+msgstr "%i lukematon"
 
 #: gammu/misc.c:551 gammu/misc.c:561
 #, c-format
 msgid "%i locations"
-msgstr ""
+msgstr "%i sijainnit"
 
 #: gammu/misc.c:556
 msgid "Phone SMS status"
-msgstr ""
+msgstr "Puhelimen SMS-tila"
 
 #: gammu/misc.c:564
 #, c-format
 msgid "%i templates"
-msgstr ""
+msgstr "%i mallia"
 
 #: gammu/misc.c:577
 msgid "Leaving monitor mode…"
-msgstr ""
+msgstr "Poistutaan valvontatilasta…"
 
 #: gammu/misc.c:605
 msgid "Smart Messaging"
-msgstr ""
+msgstr "Älykäs viestintä"
 
 #: gammu/misc.c:606
 msgid "Nokia binary"
-msgstr ""
+msgstr "Nokia binääri"
 
 #: gammu/misc.c:607
 msgid "MIDI"
-msgstr ""
+msgstr "Midi"
 
 #: gammu/misc.c:608
 msgid "SMAF (MMF)"
-msgstr ""
+msgstr "SMAF (MMF)"
 
 #: gammu/misc.c:610
 #, c-format
 msgid " format, ringtone \"%s\"\n"
-msgstr ""
+msgstr " muoto, soittoääni \"%s\"\n"
 
 #: gammu/misc.c:824
 #, c-format
 msgid "What type of reset do you want (\"%s\") ?\n"
-msgstr ""
+msgstr "Minkä tyyppistä nollausta haluat (\"%s)?\n"
 
 #: gammu/misc.c:851 gammu/misc.c:898 helper/memory-display.c:181
 #: helper/message-display.c:479
 msgid "Address"
-msgstr ""
+msgstr "Osoite"
 
 #: gammu/misc.c:893
 #, c-format
 msgid "%i. Access point %i"
-msgstr ""
+msgstr "%i. Tukiasema %i"
 
 #: gammu/misc.c:895 gammu/misc.c:1413 gammu/misc.c:1420 gammu/misc.c:1455
 #: gammu/misc.c:1468 gammu/misc.c:1507 gammu/misc.c:1556 gammu/misc.c:1958
 msgid " (active)"
-msgstr ""
+msgstr " (aktiivinen)"
 
 #: gammu/misc.c:924 gammu/misc.c:1080
 msgid "Maximal location for caller logo can be 5"
@@ -2777,7 +2779,7 @@ msgstr ""
 
 #: gammu/misc.c:1395 gammu/misc.c:1397
 msgid "Connection type"
-msgstr "Yhteys"
+msgstr "Yhteystyyppi"
 
 #: gammu/misc.c:1395
 msgid "Continuous"
@@ -3321,7 +3323,7 @@ msgstr ""
 
 #: gammu/mms.c:100
 msgid "Delivery report"
-msgstr "Välitystieto"
+msgstr "Välitysraportti"
 
 #: gammu/mms.c:107 gammu/mms.c:110
 msgid "Content type"
