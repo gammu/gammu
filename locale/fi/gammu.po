@@ -2234,11 +2234,11 @@ msgstr "Viestin numero"
 
 #: gammu/message.c:594
 msgid "Number of messages"
-msgstr ""
+msgstr "Viestien lukumäärä"
 
 #: gammu/message.c:605 gammu/message.c:645
 msgid "If you want break, press Ctrl+C…"
-msgstr ""
+msgstr "Jos haluat tauon, paina Ctrl+C…"
 
 #: gammu/message.c:610
 #, c-format
