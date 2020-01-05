@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2019-09-27 09:19+0200\n"
-"PO-Revision-Date: 2016-11-16 17:35+0000\n"
+"PO-Revision-Date: 2020-01-06 21:21+0000\n"
 "Last-Translator: Helder Santana <helder.santana@systemsbr.com.br>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "gammu/gammu/pt_BR/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 2.10-dev\n"
+"X-Generator: Weblate 3.10\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:379 helper/message-cmdline.c:403
@@ -107,10 +107,8 @@ msgstr "%i porcentual"
 #: gammu/calendar.c:632 gammu/calendar.c:885 gammu/calendar.c:960
 #: gammu/calendar.c:985 gammu/memory.c:24 gammu/memory.c:312 gammu/memory.c:376
 #: gammu/message.c:133 gammu/misc.c:205 gammu/misc.c:481
-#, fuzzy
-#| msgid "Press Ctrl+C to break…"
 msgid "Press Ctrl+C to break…"
-msgstr "Pressionar Ctrl+C para interromper…"
+msgstr "Pressione Ctrl+C para interromper…"
 
 #: gammu/backup.c:372
 msgid "Use Unicode subformat of backup file?"
@@ -1180,8 +1178,6 @@ msgid " (startup)"
 msgstr " (iniciado)"
 
 #: gammu/depend/nokia/dct4.c:497 gammu/depend/nokia/dct4.c:1006
-#, fuzzy
-#| msgid "Press any key to continue…"
 msgid "Press any key to continue…"
 msgstr "Pressione qualquer tecla para continuar…"
 
@@ -1954,37 +1950,24 @@ msgid "Parameters before command configure gammu behaviour:"
 msgstr "Os parâmetros antes do comando definem o funcionamento do gammu:"
 
 #: gammu/gammu.c:792
-#, fuzzy
-#| msgid "-c / --config <filename> … name of configuration file"
 msgid "-c / --config <filename> … name of configuration file"
-msgstr "-c / --config <arquivo-config> … nome do arquivo de configuração"
+msgstr "-c / --config <arquivo> … nome do arquivo de configuração"
 
 #: gammu/gammu.c:793
-#, fuzzy
-#| msgid "-s / --section <confign> … section of config file to use, eg. 42"
 msgid "-s / --section <confign> … section of config file to use, eg. 42"
-msgstr ""
-"-s / --section <seção-número> …seção do arquivo de configuração, Ex. 42"
+msgstr "-s / --section <confign> …seção do arquivo de configuração, Ex. 42"
 
 #: gammu/gammu.c:794
-#, fuzzy
-#| msgid ""
-#| "-d / --debug <level> … debug level (nothing|text|textall|textalldate|"
-#| "binary|errors)"
 msgid ""
 "-d / --debug <level> … debug level (nothing|text|textall|textalldate|binary|"
 "errors)"
 msgstr ""
-"-d / --debug <nível> … nível depuração (nothing|text|textall|textalldate|"
-"binary|errors)"
+"-d / --debug <level> … nível de depuração "
+"(nothing|text|textall|textalldate|binary|errors)"
 
 #: gammu/gammu.c:795
-#, fuzzy
-#| msgid "-f / --debug-file <filename> … file for logging debug messages"
 msgid "-f / --debug-file <filename> … file for logging debug messages"
-msgstr ""
-"-f / --debug-file <nome-do-arquivo-debug> … arquivo onde serão gravadas as "
-"mensagens  da depuração"
+msgstr "-f / --debug-file <filename> … arquivo para mensagens de depuração"
 
 # type: Plain text
 #: gammu/gammu.c:797
@@ -2254,10 +2237,8 @@ msgid "Number of messages"
 msgstr "Número de mensagens"
 
 #: gammu/message.c:605 gammu/message.c:645
-#, fuzzy
-#| msgid "If you want break, press Ctrl+C…"
 msgid "If you want break, press Ctrl+C…"
-msgstr "Se deseja parar, pressione CTRL+C…"
+msgstr "Se deseja interromper, pressione CTRL+C…"
 
 #: gammu/message.c:610
 #, c-format
@@ -2283,10 +2264,8 @@ msgid "Sending sms from folder \"%s\", location %i\n"
 msgstr "Enviando SMS da pasta \"%s\", localização %i\n"
 
 #: gammu/message.c:630 gammu/message.c:656
-#, fuzzy
-#| msgid "….waiting for network answer"
 msgid "…waiting for network answer"
-msgstr "…aguardando pela resposta da rede"
+msgstr "…aguardando resposta da rede"
 
 #: gammu/message.c:651
 #, c-format
@@ -2556,10 +2535,8 @@ msgid "%3d free"
 msgstr "%3d livre"
 
 #: gammu/misc.c:482
-#, fuzzy
-#| msgid "Entering monitor mode…"
 msgid "Entering monitor mode…"
-msgstr "Entrando em modo monitor…"
+msgstr "Entrando no modo monitor…"
 
 #: gammu/misc.c:492
 msgid "Enabling info about incoming SMS"
@@ -2631,10 +2608,8 @@ msgid "%i templates"
 msgstr "%i modelos"
 
 #: gammu/misc.c:577
-#, fuzzy
-#| msgid "Leaving monitor mode…"
 msgid "Leaving monitor mode…"
-msgstr "Saindo modo monitor…"
+msgstr "Saindo do modo monitor…"
 
 #: gammu/misc.c:605
 msgid "Smart Messaging"
