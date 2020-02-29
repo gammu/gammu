@@ -934,7 +934,7 @@ GSM_PhoneModel allmodels[] = {
 	/* Other */
 	{"iPAQ" ,	  "iPAQ"  ,	  "" ,				   {0}},
 	{"A2D"  ,	  "A2D"  ,	  "" ,				   {F_CPIN_NO_OK, 0}},
-	{"MULTIBAND  900E  1800", "MULTIBAND  900E  1800", "",		   {F_CPIN_NO_OK, 0}},
+	{"MULTIBAND  900E  1800", "MULTIBAND  900E  1800", "",		   {F_CPIN_NO_OK,F_USSD_GSM_CHARSET, 0}},
 	{"9210" ,	  "RAE-3",	  "Nokia Communicator GSM900/1800",{0}},
 	{"MTK1" ,	  "MTK1",	  "",				   {0}},
 	{"MTK2" ,	  "MTK2",	  "",				   {0}},
