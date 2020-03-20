@@ -902,6 +902,12 @@ autodetect:
 			return error;
 		}
 
+		error=s->Phone.Functions->SetPower(s, 1);
+		if (error != ERR_NONE && error != ERR_NOTSUPPORTED) {
+			GSM_LogError(s, "Init:Phone->SetPower" , error);
+			return error;
+		}
+
 		error=s->Phone.Functions->PostConnect(s);
 		if (error != ERR_NONE && error != ERR_NOTSUPPORTED) {
 			GSM_LogError(s, "Init:Phone->PostConnect" , error);
