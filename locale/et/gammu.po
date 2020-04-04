@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2019-09-27 09:19+0200\n"
-"PO-Revision-Date: 2016-12-24 12:11+0000\n"
+"PO-Revision-Date: 2020-04-04 16:56+0000\n"
 "Last-Translator: Kristjan Räts <kristjanrats@gmail.com>\n"
-"Language-Team: Estonian <https://hosted.weblate.org/projects/gammu/gammu/et/"
-">\n"
+"Language-Team: Estonian <https://hosted.weblate.org/projects/gammu/gammu/et/>"
+"\n"
 "Language: et\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.11-dev\n"
+"X-Generator: Weblate 4.0-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:379 helper/message-cmdline.c:403
@@ -106,8 +106,6 @@ msgstr "%i protsenti"
 #: gammu/calendar.c:632 gammu/calendar.c:885 gammu/calendar.c:960
 #: gammu/calendar.c:985 gammu/memory.c:24 gammu/memory.c:312 gammu/memory.c:376
 #: gammu/message.c:133 gammu/misc.c:205 gammu/misc.c:481
-#, fuzzy
-#| msgid "Press Ctrl+C to break…"
 msgid "Press Ctrl+C to break…"
 msgstr "Katkestamiseks vajuta Ctrl+C…"
 
@@ -1175,8 +1173,6 @@ msgid " (startup)"
 msgstr " (käivitumine)"
 
 #: gammu/depend/nokia/dct4.c:497 gammu/depend/nokia/dct4.c:1006
-#, fuzzy
-#| msgid "Press any key to continue…"
 msgid "Press any key to continue…"
 msgstr "Jätkamiseks vajuta mõnda klahvi…"
 
@@ -1944,34 +1940,24 @@ msgid "Parameters before command configure gammu behaviour:"
 msgstr "Parameetrid enne käsku seadistavad gammu käitumist:"
 
 #: gammu/gammu.c:792
-#, fuzzy
-#| msgid "-c / --config <filename> … name of configuration file"
 msgid "-c / --config <filename> … name of configuration file"
-msgstr "-c / --config <failinimi> … konfiguratsiooni faili nimi"
+msgstr "-c / --config <failinimi> … konfiguratsioonifaili nimi"
 
 #: gammu/gammu.c:793
-#, fuzzy
-#| msgid "-s / --section <confign> … section of config file to use, eg. 42"
 msgid "-s / --section <confign> … section of config file to use, eg. 42"
 msgstr ""
-"-s / --sektsioon <konfi nr> … konfiguratsiooni faili sektsioon "
-"kasutamiseks, nt. 42"
+"-s / --sektsioon <konfi nr> … konfiguratsioonifaili sektsioon kasutamiseks, "
+"nt. 42"
 
 #: gammu/gammu.c:794
-#, fuzzy
-#| msgid ""
-#| "-d / --debug <level> … debug level (nothing|text|textall|textalldate|"
-#| "binary|errors)"
 msgid ""
 "-d / --debug <level> … debug level (nothing|text|textall|textalldate|binary|"
 "errors)"
 msgstr ""
-"-d / --debug <tase> … silumisinfo tase (nothing|text|textall|textalldate|"
-"binary|errors)"
+"-d / --debug <tase> … silumisinfo tase "
+"(nothing|text|textall|textalldate|binary|errors)"
 
 #: gammu/gammu.c:795
-#, fuzzy
-#| msgid "-f / --debug-file <filename> … file for logging debug messages"
 msgid "-f / --debug-file <filename> … file for logging debug messages"
 msgstr "-f / --debug-file <failinimi> … fail, kuhu salvestada silumisinfo"
 
@@ -2242,8 +2228,6 @@ msgid "Number of messages"
 msgstr "Sõnumite arv"
 
 #: gammu/message.c:605 gammu/message.c:645
-#, fuzzy
-#| msgid "If you want break, press Ctrl+C…"
 msgid "If you want break, press Ctrl+C…"
 msgstr "Katkestamiseks vajuta Ctrl+C…"
 
@@ -2271,8 +2255,6 @@ msgid "Sending sms from folder \"%s\", location %i\n"
 msgstr "Saadetakse SMS sõnumeid kaustast \"%s\", asukoht %i\n"
 
 #: gammu/message.c:630 gammu/message.c:656
-#, fuzzy
-#| msgid "….waiting for network answer"
 msgid "…waiting for network answer"
 msgstr "… oodatakse võrgu vastust"
 
@@ -2544,8 +2526,6 @@ msgid "%3d free"
 msgstr "%3d vaba"
 
 #: gammu/misc.c:482
-#, fuzzy
-#| msgid "Entering monitor mode…"
 msgid "Entering monitor mode…"
 msgstr "Sisenetakse jälgimisrežiimi…"
 
@@ -2619,8 +2599,6 @@ msgid "%i templates"
 msgstr "%i malli"
 
 #: gammu/misc.c:577
-#, fuzzy
-#| msgid "Leaving monitor mode…"
 msgid "Leaving monitor mode…"
 msgstr "Väljutakse jälgimisrežiimist…"
 
