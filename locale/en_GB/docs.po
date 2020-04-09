@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.41.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2019-09-27 09:19+0200\n"
-"PO-Revision-Date: 2019-09-04 04:23+0000\n"
-"Last-Translator: Swann Martinet <swann.ranskassa@laposte.net>\n"
+"PO-Revision-Date: 2020-04-10 11:09+0000\n"
+"Last-Translator: Ciarán Ainsworth <ciaranainsworth@posteo.net>\n"
 "Language-Team: English (United Kingdom) <https://hosted.weblate.org/projects/"
 "gammu/gammu-docs/en_GB/>\n"
 "Language: en_GB\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.9-dev\n"
+"X-Generator: Weblate 4.0-dev\n"
 
 #. type: Title =
 #: README.rst:2
@@ -117,17 +117,13 @@ msgstr ":alt: Coverity scan :target: https://scan.coverity.com/projects/2890"
 
 #. type: Plain text
 #: README.rst:32
-#, fuzzy
-#| msgid "https://img.shields.io/gratipay/Gammu.svg"
 msgid "https://img.shields.io/liberapay/receives/Gammu.svg"
-msgstr "https://img.shields.io/gratipay/Gammu.svg"
+msgstr "https://img.shields.io/liberapay/receives/Gammu.svg"
 
 #. type: Plain text
 #: README.rst:34
-#, fuzzy
-#| msgid ":alt: Gratipay :target: https://gratipay.com/Gammu/"
 msgid ":alt: Liberapay :target: https://liberapay.com/Gammu/donate"
-msgstr ":alt: Gratipay :target: https://gratipay.com/Gammu/"
+msgstr ":alt: Liberapay :target: https://liberapay.com/Gammu/donate"
 
 #. type: Plain text
 #: README.rst:36
