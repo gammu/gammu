@@ -14,7 +14,7 @@ This module wraps all python-gammu functionality.
    StateMachine object, that is used for communication with phone.
 
    :param Locale: What locales to use for gammu error messages, default is ``auto`` which does autodetection according to user locales
-   :type Locale: string
+   :type Locale: str
 
 
    .. method:: AddCalendar(Value)
@@ -32,9 +32,9 @@ This module wraps all python-gammu functionality.
       Adds category to phone.
 
       :param Type: Type of category to read, one of ``ToDo``, ``Phonebook``
-      :type Type: string
+      :type Type: str
       :param Name: Category name
-      :type Name: string
+      :type Name: str
       :return: Location of created category
       :rtype: int
 
@@ -54,11 +54,11 @@ This module wraps all python-gammu functionality.
       Adds folder to filesystem.
 
       :param ParentFolderID: Folder where to create subfolder
-      :type ParentFolderID: string
+      :type ParentFolderID: str
       :param Name: New folder name
-      :type Name: string
+      :type Name: str
       :return: New folder ID.
-      :rtype: string
+      :rtype: str
 
 
    .. method:: AddMemory(Value)
@@ -86,7 +86,7 @@ This module wraps all python-gammu functionality.
       Creates SMS folder.
 
       :param Name: Name of new folder
-      :type Name: string
+      :type Name: str
       :return: None
       :rtype: None
 
@@ -157,7 +157,7 @@ This module wraps all python-gammu functionality.
       Deletes all memory (phonebooks or calls) entries of specified type.
 
       :param Type: Memory type, one of ``ME``, ``SM``, ``ON``, ``DC``, ``RC``, ``MC``, ``MT``, ``FD``, ``VM``
-      :type Type: string
+      :type Type: str
       :return: None
       :rtype: None
 
@@ -185,7 +185,7 @@ This module wraps all python-gammu functionality.
       Deletes file from filesystem.
 
       :param FileID: File to delete
-      :type FileID: string
+      :type FileID: str
       :return: None
       :rtype: None
 
@@ -195,7 +195,7 @@ This module wraps all python-gammu functionality.
       Deletes folder on filesystem.
 
       :param FolderID: Folder to delete
-      :type FolderID: string
+      :type FolderID: str
       :return: None
       :rtype: None
 
@@ -205,7 +205,7 @@ This module wraps all python-gammu functionality.
       Deletes memory (phonebooks or calls) entry.
 
       :param Type: Memory type, one of ``ME``, ``SM``, ``ON``, ``DC``, ``RC``, ``MC``, ``MT``, ``FD``, ``VM``
-      :type Type: string
+      :type Type: str
       :param Location: Location of entry to delete
       :type Location: int
       :return: None
@@ -254,7 +254,7 @@ This module wraps all python-gammu functionality.
       Dials number and starts voice call.
 
       :param Number: Number to dial
-      :type Number: string
+      :type Number: str
       :return: None
       :rtype: None
 
@@ -264,7 +264,7 @@ This module wraps all python-gammu functionality.
       Dials number and starts voice call.
 
       :param Number: Number to dial
-      :type Number: string
+      :type Number: str
       :param ShowNumber: Identifies whether to enable CLIR (None = keep default phone settings). Default is None
       :type ShowNumber: bool or None
       :return: None
@@ -276,11 +276,11 @@ This module wraps all python-gammu functionality.
       Enters security code.
 
       :param Type: What code to enter, one of ``PIN``, ``PUK``, ``PIN2``, ``PUK2``, ``Phone``.
-      :type Type: string
+      :type Type: str
       :param Code: Code value
-      :type Code: string
+      :type Code: str
       :param NewPIN: New PIN value in case entering PUK
-      :type NewPIN: string
+      :type NewPIN: str
       :return: None
       :rtype: None
 
@@ -339,11 +339,11 @@ This module wraps all python-gammu functionality.
       Reads category from phone.
 
       :param Type: Type of category to read, one of ``ToDo``, ``Phonebook``
-      :type Type: string
+      :type Type: str
       :param Location: Location of category to read
       :type Location: int
-      :return: Category name as string
-      :rtype: string
+      :return: Category name as str
+      :rtype: str
 
 
    .. method:: GetCategoryStatus(Type)
@@ -351,7 +351,7 @@ This module wraps all python-gammu functionality.
       Reads category status (number of used entries) from phone.
 
       :param Type: Type of category to read, one of ``ToDo``, ``Phonebook``
-      :type Type: string
+      :type Type: str
       :return: Dictionary containing information about category status (Used)
       :rtype: dict
 
@@ -421,7 +421,7 @@ This module wraps all python-gammu functionality.
       Gets next filename from filesystem folder.
 
       :param Folder: Folder to list
-      :type Folder: string
+      :type Folder: str
       :param Start: Whether we're starting listing. Defaults to False.
       :type Start: bool
       :return: File data as dict, see :ref:`file_obj`
@@ -432,16 +432,16 @@ This module wraps all python-gammu functionality.
 
       Gets hardware information about device.
 
-      :return: Hardware information as string.
-      :rtype: string
+      :return: Hardware information as str.
+      :rtype: str
 
 
    .. method:: GetIMEI()
 
       Reads IMEI/serial number from phone.
 
-      :return: IMEI of phone as string.
-      :rtype: string
+      :return: IMEI of phone as str.
+      :rtype: str
 
 
    .. method:: GetLocale()
@@ -456,8 +456,8 @@ This module wraps all python-gammu functionality.
 
       Gets month when device was manufactured.
 
-      :return: Month of manufacture as string.
-      :rtype: string
+      :return: Month of manufacture as str.
+      :rtype: str
 
 
    .. method:: GetManufacturer()
@@ -465,7 +465,7 @@ This module wraps all python-gammu functionality.
       Reads manufacturer from phone.
 
       :return: String with manufacturer name
-      :rtype: string
+      :rtype: str
 
 
    .. method:: GetMemory(Type, Location)
@@ -473,7 +473,7 @@ This module wraps all python-gammu functionality.
       Reads entry from memory (phonebooks or calls). Which entry should be read is defined in entry.
 
       :param Type: Memory type, one of ``ME``, ``SM``, ``ON``, ``DC``, ``RC``, ``MC``, ``MT``, ``FD``, ``VM``
-      :type Type: string
+      :type Type: str
       :return: Memory entry as dict, see :ref:`pbk_obj`
       :rtype: dict
 
@@ -483,7 +483,7 @@ This module wraps all python-gammu functionality.
       Gets memory (phonebooks or calls) status (eg. number of used and free entries).
 
       :param Type: Memory type, one of ``ME``, ``SM``, ``ON``, ``DC``, ``RC``, ``MC``, ``MT``, ``FD``, ``VM``
-      :type Type: string
+      :type Type: str
       :return: Dictionary with information about memory (Used and Free)
       :rtype: dict
 
@@ -531,7 +531,7 @@ This module wraps all python-gammu functionality.
       Reads entry from memory (phonebooks or calls). Which entry should be read is defined in entry. This can be easily used for reading all entries.
 
       :param Type: Memory type, one of ``ME``, ``SM``, ``ON``, ``DC``, ``RC``, ``MC``, ``MT``, ``FD``, ``VM``
-      :type Type: string
+      :type Type: str
       :param Start: Whether to start. This can not be used together with Location
       :type Start: bool
       :param Location: Last read location. This can not be used together with Start
@@ -545,7 +545,7 @@ This module wraps all python-gammu functionality.
       Gets next root folder from filesystem. Start with empty folder name.
 
       :param Folder: Previous read folder. Start with empty folder name.
-      :type Folder: string
+      :type Folder: str
       :return: Structure with folder information
 
 
@@ -580,7 +580,7 @@ This module wraps all python-gammu functionality.
       Gets original IMEI from phone.
 
       :return: Original IMEI of phone as string.
-      :rtype: string
+      :rtype: str
 
 
    .. method:: GetPPM()
@@ -588,14 +588,14 @@ This module wraps all python-gammu functionality.
       Gets PPM (Post Programmable Memory) from phone.
 
       :return: PPM as string
-      :rtype: string
+      :rtype: str
 
 
    .. method:: GetProductCode()
 
       Gets product code of device.
       :return: Product code as string.
-      :rtype: string
+      :rtype: str
 
 
    .. method:: GetSIMIMSI()
@@ -603,7 +603,7 @@ This module wraps all python-gammu functionality.
       Gets SIM IMSI from phone.
 
       :return: SIM IMSI as string
-      :rtype: string
+      :rtype: str
 
 
    .. method:: GetSMS(Folder, Location)
@@ -649,7 +649,7 @@ This module wraps all python-gammu functionality.
       Queries whether some security code needs to be entered.
 
       :return: String indicating which code needs to be entered or None if none is needed
-      :rtype: string
+      :rtype: str
 
 
    .. method:: GetSignalQuality()
@@ -713,7 +713,7 @@ This module wraps all python-gammu functionality.
       Emulates key press.
 
       :param Key: What key to press
-      :type Key: string
+      :type Key: str
       :param Press: Whether to emulate press or release.
       :type Press: bool
       :return: None
@@ -729,7 +729,7 @@ This module wraps all python-gammu functionality.
       :param Configuration: Index where config section will be stored. Defaults to Section.
       :type Configuration: int
       :param Filename: Path to configuration file (otherwise it is autodetected).
-      :type Filename: string
+      :type Filename: str
       :return: None
       :rtype: None
 
@@ -760,7 +760,7 @@ This module wraps all python-gammu functionality.
       Resets phone settings.
 
       :param Type: What to reset, one of ``PHONE``, ``UIF``, ``ALL``, ``DEV``, ``FACTORY``
-      :type Type: string
+      :type Type: str
       :return: None
       :rtype: None
 
@@ -770,7 +770,7 @@ This module wraps all python-gammu functionality.
       Sends DTMF (Dual Tone Multi Frequency) tone.
 
       :param Number: Number to dial
-      :type Number: string
+      :type Number: str
       :return: None
       :rtype: None
 
@@ -818,7 +818,7 @@ This module wraps all python-gammu functionality.
       :param Repeating: Whether alarm should be repeating. Defaults to True.
       :type Repeating: bool
       :param Text: Text to be displayed on alarm. Defaults to empty.
-      :type Text: string
+      :type Text: str
       :return: None
       :rtype: None
 
@@ -863,7 +863,7 @@ This module wraps all python-gammu functionality.
       :param Type: What call types to divert.
       :type Type: :ref:`divert-call`
       :param Number: Phone number where to divert.
-      :type Number: string
+      :type Number: str
       :param Timeout: Optional timeout when divert happens.
       :type Timeout: int
       :return: None
@@ -895,7 +895,7 @@ This module wraps all python-gammu functionality.
 
       Sets state machine debug level accorting to passed string. You need to configure output file using :meth:`SetDebugFile` to activate it.
 
-      :type Level: string
+      :type Level: str
       :param Level: name of debug level to use, currently one of:
          - nothing
          - text
@@ -914,7 +914,7 @@ This module wraps all python-gammu functionality.
       Sets file attributes.
 
       :param Filename: File to modify
-      :type Filename: string
+      :type Filename: str
       :param ReadOnly: Whether file is read only. Default to False.
       :type ReadOnly: bool
       :param Protected: Whether file is protected. Default to False.
@@ -984,9 +984,9 @@ This module wraps all python-gammu functionality.
       Sets locale of phone.
 
       :param DateSeparator: Date separator.
-      :type DateSeparator: string
+      :type DateSeparator: str
       :param DateFormat: Date format, one of ``DDMMYYYY``, ``MMDDYYYY``, ``YYYYMMDD``
-      :type DateFormat: string
+      :type DateFormat: str
       :param AMPMTime: Whether to use AM/PM time.
       :type AMPMTime: bool
       :return: None
@@ -1124,7 +1124,7 @@ Debugging configuration
 
     Sets global debug level accorting to passed string. You need to configure output file using :meth:`SetDebugFile` to activate it.
 
-    :type Level: string
+    :type Level: str
     :param Level: name of debug level to use, currently one of:
 
        * nothing
@@ -1156,11 +1156,11 @@ Message processing
 
     Calculates number of SMS and free chars in SMS.
 
-    :type Text: string
+    :type Text: str
     :param Text: Message text
-    :type UDH: string
+    :type UDH: str
     :param UDH: Message UDH
-    :type Coding: string
+    :type Coding: str
     :param Coding: Message coding (eg. Unicode or Default)
     :return: Number of messages and number of free chars
     :rtype: tuple
@@ -1192,7 +1192,7 @@ Message processing
     Parses PDU packet.
 
     :param Data: PDU data, need to be binary not hex encoded
-    :type Data: string
+    :type Data: str
     :param SMSC: Whether PDU includes SMSC.
     :type SMSC: bool
     :return: Message data, see :ref:`sms_obj`
@@ -1213,9 +1213,9 @@ Message processing
     :param SMS: SMS dictionary, see :ref:`sms_obj`
     :type SMS: dict
     :param Layout: Layout (one of Submit, Deliver, StatusReport), Submit is default
-    :type Layout: string
+    :type Layout: str
     :return: Message data
-    :rtype: string
+    :rtype: str
 
     .. versionadded:: 1.27.93
 
@@ -1227,7 +1227,7 @@ Encoding and decoding entries
     Decodes memory entry v from a string.
 
     :param Text: String to decode
-    :type Text: string
+    :type Text: str
     :return: Memory entry, see :ref:`pbk_obj`
     :rtype: dict
 
@@ -1238,14 +1238,14 @@ Encoding and decoding entries
     :param Entry: Memory entry, see :ref:`pbk_obj`
     :type Entry: dict
     :return: String with vCard
-    :rtype: string
+    :rtype: str
 
 .. function:: DecodeVCS(Text)
 
     Decodes todo/calendar entry v from a string.
 
     :param Text: String to decode
-    :type Text: string
+    :type Text: str
     :return: Calendar or todo entry (whatever one was included in string), see :ref:`cal_obj`, :ref:`todo_obj`
     :rtype: dict
 
@@ -1254,7 +1254,7 @@ Encoding and decoding entries
     Decodes todo/calendar entry v from a string.
 
     :param Text: String to decode
-    :type Text: string
+    :type Text: str
     :return: Calendar or todo entry (whatever one was included in string), see :ref:`cal_obj`, :ref:`todo_obj`
     :rtype: dict
 
@@ -1265,7 +1265,7 @@ Encoding and decoding entries
     :param Entry: Calendar entry, see :ref:`cal_obj`
     :type Entry: dict
     :return: String with vCalendar
-    :rtype: string
+    :rtype: str
 
 .. function:: EncodeICALENDAR(Entry)
 
@@ -1274,7 +1274,7 @@ Encoding and decoding entries
     :param Entry: Calendar entry, see :ref:`cal_obj`
     :type Entry: dict
     :return: String with iCalendar
-    :rtype: string
+    :rtype: str
 
 .. function:: EncodeVTODO(Entry)
 
@@ -1283,7 +1283,7 @@ Encoding and decoding entries
     :param Entry: Todo entry, see :ref:`todo_obj`
     :type Entry: dict
     :return: String with vTodo
-    :rtype: string
+    :rtype: str
 
 .. function:: EncodeITODO(Entry)
 
@@ -1292,7 +1292,7 @@ Encoding and decoding entries
     :param Entry: Todo entry, see :ref:`todo_obj`
     :type Entry: dict
     :return: String with vCard
-    :rtype: string
+    :rtype: str
 
 Backup reading and writing
 --------------------------
@@ -1302,11 +1302,11 @@ Backup reading and writing
     Saves ringtone into file.
 
     :param Filename: Name of file where ringote will be saved
-    :type Filename: string
+    :type Filename: str
     :param Ringtone: Ringtone to save
     :type Ringtone: dict
     :param Format: One of ``ott``, ``mid``, ``rng``, ``imy``, ``wav``, ``rttl``
-    :type Format: string
+    :type Format: str
     :return: None
     :rtype: None
 
@@ -1315,11 +1315,11 @@ Backup reading and writing
     Saves backup into file.
 
     :param Filename: Name of file to read backup from
-    :type Filename: string
+    :type Filename: str
     :param Backup: Backup data, see :func:`ReadBackup` for description
     :type Backup: dict
     :param Format: File format to use (``Auto``, ``AutoUnicode``, ``LMB``, ``VCalendar``, ``VCard``, ``LDIF``, ``ICS``, ``Gammu``, ``GammuUnicode``, the default is ``AutoUnicode``)
-    :type Format: string
+    :type Format: str
     :return: None
     :rtype: None
 
@@ -1328,9 +1328,9 @@ Backup reading and writing
     Reads backup into file.
 
     :param Filename: Name of file where backup is stored
-    :type Filename: string
+    :type Filename: str
     :param Format: File format to use (``Auto``, ``AutoUnicode``, ``LMB``, ``VCalendar``, ``VCard``, ``LDIF``, ``ICS``, ``Gammu``, ``GammuUnicode``, the default is ``AutoUnicode``)
-    :type Format: string
+    :type Format: str
     :return: Dictionary of read entries, it contains following keys, each might be empty:
 
          * IMEI
@@ -1348,7 +1348,7 @@ Backup reading and writing
     Saves SMS backup into file.
 
     :param Filename: Name of file where to save SMS backup
-    :type Filename: string
+    :type Filename: str
     :param Backup: List of messages to store
     :type Backup: list
     :return: None
@@ -1359,7 +1359,7 @@ Backup reading and writing
     Reads SMS backup into file.
 
     :param Filename: Name of file where SMS backup is stored
-    :type Filename: string
+    :type Filename: str
     :return: List of messages read from file
     :rtype: list
 
