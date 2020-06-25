@@ -1,4 +1,3 @@
-from sphinx.locale import l_, _
 from sphinx.domains import Domain, ObjType
 from sphinx.roles import XRefRole
 from sphinx.domains.std import GenericObject, StandardDomain
@@ -9,7 +8,7 @@ from sphinx import addnodes
 from docutils import nodes
 
 class ConfigOption(ObjectDescription):
-    indextemplate = l_('configuration option; %s')
+    indextemplate = 'configuration option; %s'
     parse_node = None
 
     def handle_signature(self, sig, signode):
@@ -53,14 +52,14 @@ class ConfigSectionXRefRole(XRefRole):
         indexnode = addnodes.index()
         indexnode['entries'] = [
             ('single', varname, tgtid, varname),
-            ('single', _('configuration section; %s') % varname, tgtid, varname)
+            ('single', 'configuration section; %s' % varname, tgtid, varname)
         ]
         targetnode = nodes.target('', '', ids=[tgtid])
         document.note_explicit_target(targetnode)
         return [indexnode, targetnode, node], []
 
 class ConfigSection(ObjectDescription):
-    indextemplate = l_('configuration section; %s')
+    indextemplate = 'configuration section; %s'
     parse_node = None
 
     def handle_signature(self, sig, signode):
@@ -104,7 +103,7 @@ class ConfigOptionXRefRole(XRefRole):
         indexnode = addnodes.index()
         indexnode['entries'] = [
             ('single', varname, tgtid, varname, None),
-            ('single', _('configuration option; %s') % varname, tgtid, varname, None)
+            ('single', 'configuration option; %s' % varname, tgtid, varname, None)
         ]
         targetnode = nodes.target('', '', ids=[tgtid])
         document.note_explicit_target(targetnode)
@@ -116,8 +115,8 @@ class ConfigFileDomain(Domain):
     label = 'Config'
 
     object_types = {
-            'option':  ObjType(l_('config option'), 'option'),
-            'section':  ObjType(l_('config section'), 'section'),
+            'option':  ObjType('config option', 'option'),
+            'section':  ObjType('config section', 'section'),
             }
     directives = {
             'option': ConfigOption,
