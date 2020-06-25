@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 # python-gammu documentation build configuration file, created by
 # sphinx-quickstart on Tue Mar 10 18:14:17 2009.
 #
@@ -79,9 +77,9 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Gammu'
-copyright = u'2009-2015, Michal Čihař <michal@cihar.com>'
-author = u'Michal Čihař <michal@cihar.com>'
+project = 'Gammu'
+copyright = '2009-2015, Michal Čihař <michal@cihar.com>'
+author = 'Michal Čihař <michal@cihar.com>'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -258,10 +256,10 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('contents', 'gammu.tex', ur'Gammu Manual',
-   ur'Michal Čihař <michal@cihar.com>', 'manual', True),
-  ('smsd/index', 'smsd.tex', ur'Gammu SMSD Daemon Manual',
-   ur'Michal Čihař <michal@cihar.com>', 'manual', True),
+  ('contents', 'gammu.tex', r'Gammu Manual',
+   r'Michal Čihař <michal@cihar.com>', 'manual', True),
+  ('smsd/index', 'smsd.tex', r'Gammu SMSD Daemon Manual',
+   r'Michal Čihař <michal@cihar.com>', 'manual', True),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -302,26 +300,26 @@ breathe_domain_by_extension = {
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('smsd/files', 'gammu-smsd-files', 'gammu-smsd(1) backend using filesystem as a message storage', u'Michal Čihař <michal@cihar.com>', 7),
-    ('smsd/tables', 'gammu-smsd-tables', 'description of tables for database backends of gammu-smsd(1)', u'Michal Čihař <michal@cihar.com>', 7),
-    ('smsd/mysql', 'gammu-smsd-mysql', 'gammu-smsd(1) backend using MySQL database server as a message storage', u'Michal Čihař <michal@cihar.com>', 7),
-    ('smsd/pgsql', 'gammu-smsd-pgsql', 'gammu-smsd(1) backend using PostgreSQL database server as a message storage', u'Michal Čihař <michal@cihar.com>', 7),
-    ('smsd/dbi', 'gammu-smsd-dbi', 'gammu-smsd(1) backend using DBI abstraction layer to use any supported database as a message storage', u'Michal Čihař <michal@cihar.com>', 7),
-    ('smsd/odbc', 'gammu-smsd-odbc', 'gammu-smsd(1) backend using ODBC abstraction layer to use any supported database as a message storage', u'Michal Čihař <michal@cihar.com>', 7),
-    ('smsd/sql', 'gammu-smsd-sql', 'gammu-smsd(1) backend using SQL abstraction layer to use any supported database as a message storage', u'Michal Čihař <michal@cihar.com>', 7),
-    ('smsd/run', 'gammu-smsd-run', 'documentation for RunOnReceive directive', u'Michal Čihař <michal@cihar.com>', 7),
-    ('smsd/null', 'gammu-smsd-null', 'gammu-smsd(1) backend not storing messages', u'Michal Čihař <michal@cihar.com>', 7),
-    ('smsd/config', 'gammu-smsdrc', 'gammu-smsd(1) configuration file', u'Michal Čihař <michal@cihar.com>', 5),
-    ('smsd/inject', 'gammu-smsd-inject', 'Inject messages into queue of SMS daemon for Gammu', u'Michal Čihař <michal@cihar.com>', 1),
-    ('smsd/monitor', 'gammu-smsd-monitor', 'Monitor state of SMS daemon for Gammu', u'Michal Čihař <michal@cihar.com>', 1),
-    ('smsd/smsd', 'gammu-smsd', 'SMS daemon for Gammu', u'Michal Čihař <michal@cihar.com>', 1),
-    ('config/index', 'gammurc', 'gammu(1) configuration file', u'Michal Čihař <michal@cihar.com>', 5),
-    ('gammu/index', 'gammu', 'Does some neat things with your cellular phone or modem.', u'Michal Čihař <michal@cihar.com>', 1),
-    ('formats/backup', 'gammu-backup', 'gammu(1) backup file format.', u'Michal Čihař <michal@cihar.com>', 5),
-    ('formats/smsbackup', 'gammu-smsbackup', 'gammu(1) SMS backup file format.', u'Michal Čihař <michal@cihar.com>', 5),
-    ('utils/jadmaker', 'jadmaker', 'JAD File Generator', u'Michal Čihař <michal@cihar.com>', 1),
-    ('utils/gammu-config', 'gammu-config', 'Gammu configurator', u'Michal Čihař <michal@cihar.com>', 1),
-    ('utils/gammu-detect', 'gammu-detect', 'Gammu device detection', u'Michal Čihař <michal@cihar.com>', 1),
+    ('smsd/files', 'gammu-smsd-files', 'gammu-smsd(1) backend using filesystem as a message storage', 'Michal Čihař <michal@cihar.com>', 7),
+    ('smsd/tables', 'gammu-smsd-tables', 'description of tables for database backends of gammu-smsd(1)', 'Michal Čihař <michal@cihar.com>', 7),
+    ('smsd/mysql', 'gammu-smsd-mysql', 'gammu-smsd(1) backend using MySQL database server as a message storage', 'Michal Čihař <michal@cihar.com>', 7),
+    ('smsd/pgsql', 'gammu-smsd-pgsql', 'gammu-smsd(1) backend using PostgreSQL database server as a message storage', 'Michal Čihař <michal@cihar.com>', 7),
+    ('smsd/dbi', 'gammu-smsd-dbi', 'gammu-smsd(1) backend using DBI abstraction layer to use any supported database as a message storage', 'Michal Čihař <michal@cihar.com>', 7),
+    ('smsd/odbc', 'gammu-smsd-odbc', 'gammu-smsd(1) backend using ODBC abstraction layer to use any supported database as a message storage', 'Michal Čihař <michal@cihar.com>', 7),
+    ('smsd/sql', 'gammu-smsd-sql', 'gammu-smsd(1) backend using SQL abstraction layer to use any supported database as a message storage', 'Michal Čihař <michal@cihar.com>', 7),
+    ('smsd/run', 'gammu-smsd-run', 'documentation for RunOnReceive directive', 'Michal Čihař <michal@cihar.com>', 7),
+    ('smsd/null', 'gammu-smsd-null', 'gammu-smsd(1) backend not storing messages', 'Michal Čihař <michal@cihar.com>', 7),
+    ('smsd/config', 'gammu-smsdrc', 'gammu-smsd(1) configuration file', 'Michal Čihař <michal@cihar.com>', 5),
+    ('smsd/inject', 'gammu-smsd-inject', 'Inject messages into queue of SMS daemon for Gammu', 'Michal Čihař <michal@cihar.com>', 1),
+    ('smsd/monitor', 'gammu-smsd-monitor', 'Monitor state of SMS daemon for Gammu', 'Michal Čihař <michal@cihar.com>', 1),
+    ('smsd/smsd', 'gammu-smsd', 'SMS daemon for Gammu', 'Michal Čihař <michal@cihar.com>', 1),
+    ('config/index', 'gammurc', 'gammu(1) configuration file', 'Michal Čihař <michal@cihar.com>', 5),
+    ('gammu/index', 'gammu', 'Does some neat things with your cellular phone or modem.', 'Michal Čihař <michal@cihar.com>', 1),
+    ('formats/backup', 'gammu-backup', 'gammu(1) backup file format.', 'Michal Čihař <michal@cihar.com>', 5),
+    ('formats/smsbackup', 'gammu-smsbackup', 'gammu(1) SMS backup file format.', 'Michal Čihař <michal@cihar.com>', 5),
+    ('utils/jadmaker', 'jadmaker', 'JAD File Generator', 'Michal Čihař <michal@cihar.com>', 1),
+    ('utils/gammu-config', 'gammu-config', 'Gammu configurator', 'Michal Čihař <michal@cihar.com>', 1),
+    ('utils/gammu-detect', 'gammu-detect', 'Gammu device detection', 'Michal Čihař <michal@cihar.com>', 1),
 ]
 
 # If true, show URL addresses after external links.
@@ -334,7 +332,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  (master_doc, 'testproject', u'testproject Documentation',
+  (master_doc, 'testproject', 'testproject Documentation',
    author, 'testproject', 'One line description of project.',
    'Miscellaneous'),
 ]
