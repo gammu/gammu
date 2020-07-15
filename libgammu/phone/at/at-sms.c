@@ -2619,7 +2619,7 @@ GSM_Error ATGEN_ReplyGetCNMIMode(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 		return ERR_UNKNOWNRESPONSE;
 	}
 
-	/* Sample resposne we get here:
+	/* Sample responses we get here:
 	AT+CNMI=?
 	+CNMI: (0-2),(0,1,3),(0),(0,1),(0,1)
 
@@ -2660,7 +2660,7 @@ GSM_Error ATGEN_ReplyGetCNMIMode(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 		return  ERR_UNKNOWNRESPONSE;
 	}
 	param = s->CurrentConfig->CNMIParams[0];
-	if (param && InRange(range, param)) {
+	if (param >= 0 && InRange(range, param)) {
 		Priv->CNMIMode = param;
 	}
 	else if (InRange(range, 2)) {
@@ -2689,7 +2689,7 @@ GSM_Error ATGEN_ReplyGetCNMIMode(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 	}
 
 	param = s->CurrentConfig->CNMIParams[1];
-	if (param && InRange(range, param)) {
+	if (param >= 0 && InRange(range, param)) {
 		Priv->CNMIProcedure = param;
 	}
 	else if (InRange(range, 1)) {
@@ -2718,7 +2718,7 @@ GSM_Error ATGEN_ReplyGetCNMIMode(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 	}
 
 	param = s->CurrentConfig->CNMIParams[2];
-	if (param && InRange(range, param)) {
+	if (param >= 0 && InRange(range, param)) {
 		Priv->CNMIBroadcastProcedure = param;
 	}
 	else if (InRange(range, 2)) {
@@ -2748,7 +2748,7 @@ GSM_Error ATGEN_ReplyGetCNMIMode(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 	}
 
 	param = s->CurrentConfig->CNMIParams[3];
-	if (param && InRange(range, param)) {
+	if (param >= 0 && InRange(range, param)) {
 		Priv->CNMIDeliverProcedure = param;
 	}
 	else if (InRange(range, 2)) {
@@ -2774,19 +2774,13 @@ GSM_Error ATGEN_ReplyGetCNMIMode(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 	}
 
 	param = s->CurrentConfig->CNMIParams[4];
-	if (param && InRange(range, param)) {
+	if (param >= 0 && InRange(range, param)) {
 		Priv->CNMIClearUnsolicitedResultCodes = param;
-	}
-	else if (InRange(range, 1)) {
-		Priv->CNMIClearUnsolicitedResultCodes = 1; /* 1 = clear unsolicited result codes */
-	}
-	else if (InRange(range, 0)) {
-		Priv->CNMIClearUnsolicitedResultCodes = 0; /* 0 = flush codes to TE */
 	}
 	free(range);
 	range = NULL;
 
-        return ERR_NONE;
+	return ERR_NONE;
 }
 
 GSM_Error ATGEN_GetCNMIMode(GSM_StateMachine *s)
