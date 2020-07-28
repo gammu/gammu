@@ -13,7 +13,7 @@ Examples
 If you will backup settings to Gammu text file, it will be possible to edit
 it. It's easy: many things in this file will be written double - once in Unicode,
 once in ASCII. When you will remove Unicode version Gammu will use ASCII
-on \fBrestore\fR (and you can easy edit ASCII text) and will convert it
+on **restore** (and you can easy edit ASCII text) and will convert it
 according to your OS locale. When will be available Unicode version of text,
 it will be used instead of ASCII (useful with Unicode phones - it isn't important,
 what locale is set in computer and no conversion Unicode -> ASCII and ASCII ->
