@@ -12,6 +12,7 @@
 
 #include "../helper/locales.h"
 
+#include "gammu-message.h"
 #include "common.h"
 #include "message.h"
 #include "memory.h"
@@ -313,6 +314,7 @@ void DeleteSMS(int argc, char *argv[])
 	GSM_SMSMessage sms;
 	int start=0, stop=0, i=0;
 
+	memset(&sms, 0, sizeof(GSM_SMSMessage));
 	sms.Folder = GetInt(argv[2]);
 
 	GetStartStop(&start, &stop, 3, argc, argv);
