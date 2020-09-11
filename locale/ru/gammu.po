@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: Gammu 1.41.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2019-09-27 09:19+0200\n"
-"PO-Revision-Date: 2019-06-25 12:00+0000\n"
-"Last-Translator: Victor K <ktrace@yandex.ru>\n"
-"Language-Team: Russian <https://hosted.weblate.org/projects/gammu/gammu/ru/"
-">\n"
+"PO-Revision-Date: 2020-09-12 17:36+0000\n"
+"Last-Translator: Irina <irinaabissinian@gmail.com>\n"
+"Language-Team: Russian <https://hosted.weblate.org/projects/gammu/gammu/ru/>"
+"\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 3.7.1-dev\n"
+"X-Generator: Weblate 4.3-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:379 helper/message-cmdline.c:403
@@ -40,7 +40,6 @@ msgid "Note not found in file"
 msgstr "Заметка не найдена в файле"
 
 #: gammu/backup.c:128
-#, fuzzy
 msgid "Todo note not found in file"
 msgstr "Заметка списка дел не найдена в файле"
 
@@ -2653,7 +2652,7 @@ msgstr "MIDI"
 
 #: gammu/misc.c:608
 msgid "SMAF (MMF)"
-msgstr ""
+msgstr "SMAF (MMF)"
 
 #: gammu/misc.c:610
 #, c-format
@@ -2899,7 +2898,7 @@ msgstr "Тип вызова данных"
 
 #: gammu/misc.c:1435
 msgid "ISDN"
-msgstr ""
+msgstr "ISDN"
 
 #: gammu/misc.c:1437
 msgid "Analogue"
@@ -2924,7 +2923,7 @@ msgstr "Пароль"
 
 #: gammu/misc.c:1454
 msgid "USSD"
-msgstr ""
+msgstr "USSD"
 
 #: gammu/misc.c:1457
 msgid "Service code"
@@ -3150,7 +3149,7 @@ msgstr "Уровень 5"
 #: gammu/misc.c:2041
 #, fuzzy
 msgid "Ringing"
-msgstr "Звонит\n"
+msgstr "Звонит"
 
 #: gammu/misc.c:2043
 msgid "Beep once"
@@ -3194,9 +3193,8 @@ msgid "What type of reset phone settings (\"%s\") ?\n"
 msgstr "Какой тип сброса установок телефона (\"%s\")?\n"
 
 #: gammu/misc.c:2158
-#, fuzzy
 msgid "Currently shown on the display"
-msgstr "Текущие параметры дисплея :\n"
+msgstr "Текущие параметры дисплея"
 
 #: gammu/misc.c:2163
 msgid "Call active"
@@ -3205,7 +3203,7 @@ msgstr "Вызов активен"
 #: gammu/misc.c:2166
 #, fuzzy
 msgid "Unread SMS"
-msgstr "Непрочитанное SMS\n"
+msgstr "Непрочитанное SMS"
 
 #: gammu/misc.c:2169
 msgid "Voice call"
@@ -3218,7 +3216,7 @@ msgstr "Факсовый вызов"
 #: gammu/misc.c:2175
 #, fuzzy
 msgid "Data call"
-msgstr "Вызов данных\n"
+msgstr "Вызов данных"
 
 #: gammu/misc.c:2178
 msgid "Keypad locked"
@@ -3346,7 +3344,7 @@ msgstr "Получатель"
 
 #: gammu/mms.c:87
 msgid "CC"
-msgstr ""
+msgstr "CC"
 
 #: gammu/mms.c:94
 msgid "Message type"
@@ -3393,17 +3391,14 @@ msgid "Ringtone \"%s\" (tempo = %i Beats Per Minute)"
 msgstr "Рингтон \"%s\" (темп = %i ударов в минуту)"
 
 #: gammu/nokia.c:63
-#, fuzzy, c-format
+#, c-format
 msgid "length=%i notes, but you will enter only first 50 tones."
-msgstr "длительность=%i нот, но вы ввели только первые 50 тонов."
+msgstr "длительность=%i нот, но вы введете только первые 50 тонов."
 
 #: gammu/nokia.c:66
 #, fuzzy
 msgid "This ringtone in Nokia Composer in phone should look:"
-msgstr ""
-"\n"
-"\n"
-"Этот рингтон в Nokia Composer телефона должен выглядеть: "
+msgstr "Этот рингтон в Nokia Composer телефона должен выглядеть:"
 
 #: gammu/nokia.c:107
 msgid "To enter it please press:"
@@ -3454,9 +3449,8 @@ msgid "Can not open file %s\n"
 msgstr "Не удаётся открыть файл %s\n"
 
 #: gammu/nokia.c:600 gammu/nokia.c:674
-#, fuzzy
 msgid "Folder not found. Probably function not supported!"
-msgstr "Папка не найдена. Возможно, функция не поддерживается.\n"
+msgstr "Папка не найдена. Возможно, функция не поддерживается!"
 
 #: gammu/nokia.c:623
 msgid "Searching for phone folder: "
@@ -3605,7 +3599,7 @@ msgstr "Дата и время"
 #: helper/memory-display.c:79 helper/memory-display.c:90
 #, fuzzy
 msgid "Caller group"
-msgstr "Группы абонентов\n"
+msgstr "Группы абонентов"
 
 #: helper/memory-display.c:71
 msgid "Caller group number too high, please increase buffer in sources!"
@@ -3675,7 +3669,7 @@ msgstr "Номер пейджера"
 #: helper/memory-display.c:169
 #, fuzzy
 msgid "Other number"
-msgstr "Другой          "
+msgstr "Другой"
 
 # проверить
 #: helper/memory-display.c:175
@@ -3700,7 +3694,7 @@ msgstr "Рабочая электронная почта"
 #: helper/memory-display.c:199
 #, fuzzy
 msgid "Email address 2"
-msgstr "Адрес E-mail  2 "
+msgstr "Адрес E-mail  2"
 
 #: helper/memory-display.c:204
 #, fuzzy
@@ -3718,24 +3712,23 @@ msgstr "Веб-сайт"
 
 #: helper/memory-display.c:215
 msgid "VOIP"
-msgstr ""
+msgstr "VOIP"
 
 #: helper/memory-display.c:216
 msgid "SWIS"
-msgstr ""
+msgstr "SWIS"
 
 #: helper/memory-display.c:217
 msgid "WVID"
-msgstr ""
+msgstr "WVID"
 
 #: helper/memory-display.c:218
-#, fuzzy
 msgid "SIP"
 msgstr "SIP"
 
 #: helper/memory-display.c:219
 msgid "DTMF"
-msgstr ""
+msgstr "DTMF"
 
 #: helper/memory-display.c:221
 msgid "Last name"
@@ -3750,9 +3743,8 @@ msgid "Second name"
 msgstr "Отчество"
 
 #: helper/memory-display.c:224
-#, fuzzy
 msgid "Formal name"
-msgstr "Имя             "
+msgstr "Имя"
 
 #: helper/memory-display.c:225
 #, fuzzy
@@ -3799,22 +3791,22 @@ msgstr "Страна"
 #: helper/memory-display.c:235
 #, fuzzy
 msgid "Custom text 1"
-msgstr "Свой текст 1    "
+msgstr "Свой текст 1"
 
 #: helper/memory-display.c:236
 #, fuzzy
 msgid "Custom text 2"
-msgstr "Свой текст 2    "
+msgstr "Свой текст 2"
 
 #: helper/memory-display.c:237
 #, fuzzy
 msgid "Custom text 3"
-msgstr "Свой текст 3    "
+msgstr "Свой текст 3"
 
 #: helper/memory-display.c:238
 #, fuzzy
 msgid "Custom text 4"
-msgstr "Свой текст 4    "
+msgstr "Свой текст 4"
 
 #: helper/memory-display.c:239
 msgid "Push to talk ID"
@@ -3878,20 +3870,18 @@ msgid "WAP settings not found in file"
 msgstr "Настройки WAP не найдены в файле"
 
 #: helper/message-cmdline.c:435
-#, fuzzy
 msgid "Sorry. For now there is only support for GPRS or DATA bearers end"
 msgstr ""
-"К сожалению на данный момент поддерживается только GPRS или закончились "
-"каналы передачи данных\n"
+"Сожалеем. На данный момент поддерживается только GPRS или закончились каналы "
+"передачи данных"
 
 #: helper/message-cmdline.c:458
 msgid "MMS settings not found in file"
 msgstr "Настройки MMS не найдены в файле"
 
 #: helper/message-cmdline.c:472
-#, fuzzy
 msgid "Sorry. No GPRS bearer found in MMS settings"
-msgstr "К сожалению канал передачи данных GPRS в настройках MMS не найден\n"
+msgstr "Сожалеем. Канал передачи данных GPRS в настройках MMS не найден"
 
 #: helper/message-cmdline.c:518
 msgid "ToDo note not found in file"
@@ -4331,7 +4321,7 @@ msgstr "OTA-файл Siemens"
 #: helper/message-display.c:402
 #, fuzzy
 msgid " - VCARD"
-msgstr " - визитка\n"
+msgstr " - визитка"
 
 #: helper/message-display.c:416
 #, c-format
@@ -4383,7 +4373,7 @@ msgstr "Количество бит"
 
 #: helper/message-display.c:549
 msgid "UDH"
-msgstr ""
+msgstr "UDH"
 
 #: helper/message-display.c:565
 msgid "Whole PDU"
