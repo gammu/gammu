@@ -142,6 +142,7 @@ GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 
 		/* D-Link */
 		{"+SPNWNAME:"	,1, ID_All}, /* +SPNWNAME: "432", "11", "Mci", "Mci" */
+		{"+PSBEARER:"	,1, ID_All}, /* +PSBEARER: 24, 0 */
 
 		/* ONDA */
 		{"+ZUSIMR:"	,1, ID_All}, /* +ZUSIMR:2 */
