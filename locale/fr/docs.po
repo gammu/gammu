@@ -123,7 +123,7 @@ msgstr "https://img.shields.io/liberapay/receives/Gammu.svg"
 #. type: Plain text
 #: README.rst:34
 msgid ":alt: Liberapay :target: https://liberapay.com/Gammu/donate"
-msgstr ":alt: Liberapay :target: https ://liberapay.com/Gammu/donate"
+msgstr ":alt: Liberapay :target: https://liberapay.com/Gammu/donate"
 
 #. type: Plain text
 #: README.rst:36
