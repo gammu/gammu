@@ -19,6 +19,16 @@ the issue.
 ChangeLog
 =========
     
+20201003 - 1.42.0
+
+[-] * Fixed compilation on some non GNU systems.
+[-] * Localization updates.
+[-] * Improved CNMI command compatibility for AT module.
+[-] * Improved getting of network and manufacturer information in AT module.
+[-] * Improved compatibility with D-Link modems that need to power on.
+[-] * Dropped Python 3 compatibility from utility scripts.
+[-] * Fixed bug in deleting SMS messages.
+
 20190927 - 1.41.0
 
 [-] * Documentation improvements.
