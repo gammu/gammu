@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: Gammu 1.41.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2019-09-27 09:19+0200\n"
-"PO-Revision-Date: 2013-11-19 11:01+0200\n"
-"Last-Translator: Joe Mauri <asbruff@gmail.com>\n"
-"Language-Team: Italian <http://hosted.weblate.org/projects/gammu/gammu/it/>\n"
+"PO-Revision-Date: 2020-10-05 12:12+0000\n"
+"Last-Translator: Michal Čihař <michal@cihar.com>\n"
+"Language-Team: Italian <https://hosted.weblate.org/projects/gammu/gammu/it/>"
+"\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 1.9-dev\n"
+"X-Generator: Weblate 4.3-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:379 helper/message-cmdline.c:403
@@ -352,9 +353,9 @@ msgid ""
 msgstr ""
 
 #: gammu/backup.c:1100 gammu/backup.c:1159
-#, fuzzy, c-format
+#, c-format
 msgid "Location %d"
-msgstr "Locazione %i\n"
+msgstr "Locazione %d"
 
 #: gammu/backup.c:1139
 #, fuzzy
