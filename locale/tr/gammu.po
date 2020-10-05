@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: gammu 1.28.91\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2019-09-27 09:19+0200\n"
-"PO-Revision-Date: 2016-10-11 07:26+0000\n"
-"Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
-"Language-Team: Turkish <https://hosted.weblate.org/projects/gammu/gammu/tr/"
-">\n"
+"PO-Revision-Date: 2020-10-06 18:31+0000\n"
+"Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
+"Language-Team: Turkish <https://hosted.weblate.org/projects/gammu/gammu/tr/>"
+"\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 2.9-dev\n"
+"X-Generator: Weblate 4.3-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:379 helper/message-cmdline.c:403
@@ -106,10 +106,8 @@ msgstr "yüzde %i"
 #: gammu/calendar.c:632 gammu/calendar.c:885 gammu/calendar.c:960
 #: gammu/calendar.c:985 gammu/memory.c:24 gammu/memory.c:312 gammu/memory.c:376
 #: gammu/message.c:133 gammu/misc.c:205 gammu/misc.c:481
-#, fuzzy
-#| msgid "Press Ctrl+C to break…"
 msgid "Press Ctrl+C to break…"
-msgstr "Kesmek için Ctrl+C tuşuna basın…"
+msgstr "Yarıda kesmek için Ctrl+C tuşlarına basın…"
 
 #: gammu/backup.c:372
 msgid "Use Unicode subformat of backup file?"
@@ -1179,8 +1177,6 @@ msgid " (startup)"
 msgstr " (başlangıç)"
 
 #: gammu/depend/nokia/dct4.c:497 gammu/depend/nokia/dct4.c:1006
-#, fuzzy
-#| msgid "Press any key to continue…"
 msgid "Press any key to continue…"
 msgstr "Devam etmek için herhangi bir tuşa basın…"
 
@@ -1571,7 +1567,7 @@ msgstr "Yapılandırma dosyası gammu-algılama tarafından oluşturuldu."
 
 #: gammu-detect/main.c:101
 msgid "Please check The Gammu Manual for more information."
-msgstr "Daha fazla bilgi için lütfen Gammu Kullanım Kılavuzunu kontrol edin."
+msgstr "Daha fazla bilgi için lütfen Gammu Kullanım Kılavuzuna bakın."
 
 #: gammu-detect/main.c:158
 #, c-format
@@ -1948,37 +1944,26 @@ msgid "Parameters before command configure gammu behaviour:"
 msgstr "Komuttan önceki parametreler gammu davranışını yapılandırır:"
 
 #: gammu/gammu.c:792
-#, fuzzy
-#| msgid "-c / --config <filename> … name of configuration file"
 msgid "-c / --config <filename> … name of configuration file"
-msgstr "-c / --config <dosyaadı> … yapılandırma dosyasının adı"
+msgstr "-c / --config <dosya_adı> … yapılandırma dosyasının adı"
 
 #: gammu/gammu.c:793
-#, fuzzy
-#| msgid "-s / --section <confign> … section of config file to use, eg. 42"
 msgid "-s / --section <confign> … section of config file to use, eg. 42"
 msgstr ""
-"-s / --section <confign> … kullanmak için yapılandırma dosyasının bölümü, "
-"örn. 42"
+"-s / --section <bölüm_no> … kullanılacak yapılandırma dosyası bölümü, örn. 42"
 
 #: gammu/gammu.c:794
-#, fuzzy
-#| msgid ""
-#| "-d / --debug <level> … debug level (nothing|text|textall|textalldate|"
-#| "binary|errors)"
 msgid ""
 "-d / --debug <level> … debug level (nothing|text|textall|textalldate|binary|"
 "errors)"
 msgstr ""
-"-d / --debug <seviye> … hata ayıklama seviyesi (nothing|text|textall|"
-"textalldate|binary|errors)"
+"-d / --debug <seviye> … hata ayıklama seviyesi "
+"(nothing|text|textall|textalldate|binary|errors)"
 
 #: gammu/gammu.c:795
-#, fuzzy
-#| msgid "-f / --debug-file <filename> … file for logging debug messages"
 msgid "-f / --debug-file <filename> … file for logging debug messages"
 msgstr ""
-"-f / --debug-file <dosyaadı> … hata ayıklama mesajlarını günlüklemek için "
+"-f / --debug-file <dosya_adı> … hata ayıklama mesajlarını günlüklemek için "
 "dosya"
 
 #: gammu/gammu.c:797
@@ -2248,8 +2233,6 @@ msgid "Number of messages"
 msgstr "İleti sayısı"
 
 #: gammu/message.c:605 gammu/message.c:645
-#, fuzzy
-#| msgid "If you want break, press Ctrl+C…"
 msgid "If you want break, press Ctrl+C…"
 msgstr "Yarıda kesmek istiyorsanız, Ctrl+C tuşlarına basın…"
 
@@ -2277,10 +2260,8 @@ msgid "Sending sms from folder \"%s\", location %i\n"
 msgstr "\"%s\" klasöründen sms gönderiliyor, yeri %i\n"
 
 #: gammu/message.c:630 gammu/message.c:656
-#, fuzzy
-#| msgid "….waiting for network answer"
 msgid "…waiting for network answer"
-msgstr "…şebeke yanıtı için bekleniyor"
+msgstr "…şebeke yanıtı bekleniyor"
 
 #: gammu/message.c:651
 #, c-format
@@ -2550,10 +2531,8 @@ msgid "%3d free"
 msgstr "%3d boş"
 
 #: gammu/misc.c:482
-#, fuzzy
-#| msgid "Entering monitor mode…"
 msgid "Entering monitor mode…"
-msgstr "Monitör kipine giriliyor…"
+msgstr "İzleme moduna giriliyor…"
 
 #: gammu/misc.c:492
 msgid "Enabling info about incoming SMS"
@@ -2625,10 +2604,8 @@ msgid "%i templates"
 msgstr "%i şablon"
 
 #: gammu/misc.c:577
-#, fuzzy
-#| msgid "Leaving monitor mode…"
 msgid "Leaving monitor mode…"
-msgstr "Monitör kipinden çıkılıyor…"
+msgstr "İzleme modundan çıkılıyor…"
 
 #: gammu/misc.c:605
 msgid "Smart Messaging"
@@ -3990,7 +3967,7 @@ msgstr "Gönderilmedi"
 msgid "Remote number"
 msgid_plural "Remote numbers"
 msgstr[0] "Uzak numarası"
-msgstr[1] "Uzak numarası"
+msgstr[1] "Uzak numaraları"
 
 #: helper/message-display.c:180 helper/message-display.c:246
 msgid "Reference number"
