@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.41.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2019-09-27 09:19+0200\n"
-"PO-Revision-Date: 2017-02-07 16:03+0000\n"
-"Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
+"PO-Revision-Date: 2020-10-06 18:31+0000\n"
+"Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/gammu/gammu-docs/"
 "tr/>\n"
 "Language: tr\n"
@@ -17,13 +17,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 2.12-dev\n"
+"X-Generator: Weblate 4.3-dev\n"
 
 #. type: Title =
 #: README.rst:2
 #, no-wrap
 msgid "Gammu All Mobile Management Utilities"
-msgstr ""
+msgstr "Gammu All Mobile Management Utilities (Tüm Mobil Yönetim Araçları)"
 
 #. type: Plain text
 #: README.rst:6
@@ -31,6 +31,8 @@ msgid ""
 "Gammu is library and command line utility for mobile phones. It is released "
 "under GNU GPL version 2."
 msgstr ""
+"Gammu, cep telefonları için bir kütüphane ve komut satırı aracıdır. GNU GPL "
+"sürüm 2 altında yayınlanmıştır."
 
 #. type: Plain text
 #: README.rst:11
@@ -40,6 +42,10 @@ msgid ""
 "mwiacek.com/> projects. Gammu was former (up to version 0.58) called "
 "MyGnokii2."
 msgstr ""
+"Marcin Wiacek ve diğer kişiler tarafından başlatılmıştır. Başlangıçta kod "
+"Gnokii <https://www.gnokii.org/> ve daha sonra MyGnokii <http://www.mwiacek."
+"com/> projelerine dayanıyordu. Gammu eskiden (0.58 sürümüne kadar) MyGnokii2 "
+"olarak adlandırılıyordu."
 
 #. type: Plain text
 #: README.rst:14
@@ -47,6 +53,8 @@ msgid ""
 "Currently the project is lead by Michal Cihar <michal@cihar.com> with help "
 "of many contributors."
 msgstr ""
+"Proje şu anda katkıda bulunan birçok kişinin yardımıyla Michal Cihar <michal@"
+"cihar.com> tarafından yönetilmektedir."
 
 #. type: Labeled list
 #: README.rst:15 README.rst:19 README.rst:23 README.rst:27 README.rst:31
@@ -71,6 +79,8 @@ msgid ""
 "https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/master?"
 "svg=true"
 msgstr ""
+"https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/"
+"master?svg=true"
 
 #. type: Plain text
 #: README.rst:22
@@ -98,26 +108,22 @@ msgstr ""
 #. type: Plain text
 #: README.rst:28
 msgid "https://scan.coverity.com/projects/2890/badge.svg?flat=1"
-msgstr ""
+msgstr "https://scan.coverity.com/projects/2890/badge.svg?flat=1"
 
 #. type: Plain text
 #: README.rst:30
 msgid ":alt: Coverity scan :target: https://scan.coverity.com/projects/2890"
-msgstr ":alt: Kapak taraması :target: https://scan.coverity.com/projects/2890"
+msgstr ":alt: Kapsam taraması :target: https://scan.coverity.com/projects/2890"
 
 #. type: Plain text
 #: README.rst:32
-#, fuzzy
-#| msgid "https://img.shields.io/gratipay/Gammu.svg"
 msgid "https://img.shields.io/liberapay/receives/Gammu.svg"
-msgstr "https://img.shields.io/gratipay/Gammu.svg"
+msgstr "https://img.shields.io/liberapay/receives/Gammu.svg"
 
 #. type: Plain text
 #: README.rst:34
-#, fuzzy
-#| msgid ":alt: Gratipay :target: https://gratipay.com/Gammu/"
 msgid ":alt: Liberapay :target: https://liberapay.com/Gammu/donate"
-msgstr ":alt: Gratipay :target: https://gratipay.com/Gammu/"
+msgstr ":alt: Liberapay :target: https://liberapay.com/Gammu/donate"
 
 #. type: Plain text
 #: README.rst:36
@@ -144,7 +150,7 @@ msgstr "Daha fazla bilgi"
 #. type: Plain text
 #: README.rst:43
 msgid "You can find more information on <https://wammu.eu/gammu/>."
-msgstr ""
+msgstr "Daha fazla bilgiyi <https://wammu.eu/gammu/> adresinde bulabilirsiniz."
 
 #. type: Plain text
 #: README.rst:47
@@ -153,12 +159,15 @@ msgid ""
 "version of it using make manual-html which is viewable online at <https://"
 "wammu.eu/docs/manual/>."
 msgstr ""
+"Ayrıca docs/manual dizininde Gammu kullanım kılavuzu bulunmaktadır. "
+"<https://wammu.eu/docs/manual/> adresinde çevrim içi olarak görüntülenebilen "
+"HTML biçimini \"make manual-html\" komutunu kullanarak oluşturabilirsiniz."
 
 #. type: Title =
 #: README.rst:50
 #, no-wrap
 msgid "Feedback and bug reports"
-msgstr ""
+msgstr "Geri bildirim ve hata raporları"
 
 #. type: Plain text
 #: README.rst:54
@@ -166,23 +175,27 @@ msgid ""
 "Any feedback is welcome, see <https://wammu.eu/support/> for information how "
 "to contact developers."
 msgstr ""
+"Her türlü geri bildirime açığız, geliştiricilerle nasıl iletişim kurulacağı "
+"hakkında bilgi için <https://wammu.eu/support/> adresine bakın."
 
 #. type: Title =
 #: README.rst:57
 #, no-wrap
 msgid "Support developers"
-msgstr ""
+msgstr "Geliştiricileri destekleyin"
 
 #. type: Plain text
 #: README.rst:59
 msgid "You can appreciate developers work at <https://wammu.eu/donate/>."
 msgstr ""
+"Geliştiricilerin çalışmalarını <https://wammu.eu/donate/> adresinde "
+"destekleyebilirsiniz."
 
 #. type: Title =
 #: INSTALL:2
 #, no-wrap
 msgid "Gammu All Mobile Management Utilities - Installation"
-msgstr ""
+msgstr "Gammu All Mobile Management Utilities - Kurulum"
 
 #. type: Plain text
 #: INSTALL:5
@@ -190,6 +203,8 @@ msgid ""
 "See docs/manual/project/install.rst for installation guide or see chapter "
 "\"Compiling Gammu\" in The Gammu Manual."
 msgstr ""
+"Kurulum rehberi için docs/manual/project/install.rst dosyasına veya Gammu "
+"Kullanım Kılavuzundaki \"Gammu'yu Derleme\" bölümüne bakın."
 
 #, fuzzy
 #~| msgid "https://travis-ci.org/gammu/gammu.png?branch=master"
