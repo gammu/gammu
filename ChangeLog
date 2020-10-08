@@ -26,7 +26,7 @@ ChangeLog
 [-] * Improved CNMI command compatibility for AT module.
 [-] * Improved getting of network and manufacturer information in AT module.
 [-] * Improved compatibility with D-Link modems that need to power on.
-[-] * Dropped Python 3 compatibility from utility scripts.
+[-] * Dropped Python 2 compatibility from utility scripts.
 [-] * Fixed bug in deleting SMS messages.
 
 20190927 - 1.41.0
