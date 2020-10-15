@@ -24,6 +24,7 @@
 #  include <signal.h>
 #  include <sys/socket.h>
 #  include <sys/stat.h>
+#  include <sys/select.h>
 #endif
 
 #include "devfunc.h"
