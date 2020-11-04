@@ -8,19 +8,22 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.41.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2019-09-27 09:19+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2020-11-05 18:26+0000\n"
+"Last-Translator: Prachi Joshi <josprachi@yahoo.com>\n"
+"Language-Team: Marathi <https://hosted.weblate.org/projects/gammu/gammu-docs/"
+"mr/>\n"
 "Language: mr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.3.2-dev\n"
 
 #. type: Title =
 #: README.rst:2
 #, no-wrap
 msgid "Gammu All Mobile Management Utilities"
-msgstr ""
+msgstr "गम्मू सर्व मोबाइल व्यवस्थापन उपयुक्तता"
 
 #. type: Plain text
 #: README.rst:6
@@ -28,6 +31,8 @@ msgid ""
 "Gammu is library and command line utility for mobile phones. It is released "
 "under GNU GPL version 2."
 msgstr ""
+"मोबाईल फोनसाठी गॅमु लायब्ररी आणि कमांड लाइन युटिलिटी आहे हे जीएनयू जीपीएल "
+"आवृत्ती 2 अंतर्गत प्रसिद्ध केले गेले आहे."
 
 #. type: Plain text
 #: README.rst:11
@@ -44,12 +49,14 @@ msgid ""
 "Currently the project is lead by Michal Cihar <michal@cihar.com> with help "
 "of many contributors."
 msgstr ""
+"सध्या या प्रकल्पात अनेक योगदानकर्त्यांच्या मदतीने मीकल सिहार <michal@"
+"cihar.com> हे नेतृत्व करीत आहेत."
 
 #. type: Labeled list
 #: README.rst:15 README.rst:19 README.rst:23 README.rst:27 README.rst:31 README.rst:35
 #, no-wrap
 msgid ".. image"
-msgstr ""
+msgstr ".. प्रतिमा"
 
 #. type: Plain text
 #: README.rst:16
