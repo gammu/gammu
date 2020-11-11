@@ -37,7 +37,7 @@ jobs:
           # The above command will fail if no changes were present, so we ignore
           # the return code.
       - name: Push changes
-        if: github.event_name == 'push' && github.event.ref == 'master'
+        if: github.event_name == 'push' && github.event.ref == 'refs/heads/master'
         uses: ad-m/github-push-action@master
         with:
           branch: gh-pages
