@@ -23,23 +23,14 @@ jobs:
         run: make manual-html
       - name: Build PDF docs
         run: make manual-pdf
-      - name: Commit documentation changes
-        if: github.event_name == 'push' && github.event.ref == 'refs/heads/master'
+      - name: Collect
         run: |
-          git clone https://github.com/ammaraskar/sphinx-action-test.git --branch gh-pages --single-branch gh-pages
+          mkdir gh-pages
           cp -r build-configure/docs/manual/html/* gh-pages/
           cp build-configure/docs/manual/latex/*.pdf gh-pages/
-          cd gh-pages
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add .
-          git commit -m "Update documentation" -a || true
-          # The above command will fail if no changes were present, so we ignore
-          # the return code.
-      - name: Push changes
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
         if: github.event_name == 'push' && github.event.ref == 'refs/heads/master'
-        uses: ad-m/github-push-action@master
         with:
-          branch: gh-pages
-          directory: gh-pages
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./gh-pages
