@@ -10,7 +10,7 @@ jobs:
       - name: Update apt
         run: sudo apt-get update
       - name: Install apt deps
-        run: sudo apt-get install -y libbluetooth-dev libusb-1.0-0-dev libgudev-1.0-dev unixodbc-dev libdbi-dev libdbd-sqlite3 libdbd-mysql libdbd-pgsql cmake cmake-data doxygen latexmk
+        run: sudo apt-get install -y libbluetooth-dev libusb-1.0-0-dev libgudev-1.0-dev unixodbc-dev libdbi-dev libdbd-sqlite3 libdbd-mysql libdbd-pgsql cmake cmake-data doxygen latexmk texlive-fonts-recommended texlive-latex-recommended texlive-latex-extra
       - name: Setup Python
         uses: actions/setup-python@v2.1.4
         with:
