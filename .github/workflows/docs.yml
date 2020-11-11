@@ -17,6 +17,8 @@ jobs:
           python-version: 3.8
       - name: Install Python deps
         run: pip install -r docs/manual/requirements.txt
+      - name: Configure build
+        run: ./configure
       - name: Build HTML docs
         run: make manual-html
       - name: Build PDF docs
