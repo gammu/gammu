@@ -18,14 +18,6 @@ import shlex
 import sphinx.domains.std
 import re
 
-try:
-    import alabaster
-    has_alabaster = True
-except ImportError:
-    has_alabaster = False
-
-on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
-
 def gammu_process_link(self, env, refnode, has_explicit_title, title, target):
     program = env.temp_data.get('std:program')
     if not has_explicit_title:
@@ -60,7 +52,7 @@ sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 # ones.
 extensions = ['breathe', 'configext', 'sphinx.ext.graphviz', 'sphinx.ext.intersphinx']
 
-intersphinx_mapping = {'python': ('https://docs.python.org/3.4', None)}
+intersphinx_mapping = {'python': ('https://docs.python.org/3.9', None)}
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['@CMAKE_CURRENT_SOURCE_DIR@/.templates']
@@ -135,14 +127,11 @@ pygments_style = 'sphinx'
 todo_include_todos = False
 
 
-# -- Options for HTML output ----------------------------------------------
+# -- Options for HTML output -------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-if on_rtd or not has_alabaster:
-    html_theme = 'default'
-else:
-    html_theme = 'alabaster'
+html_theme = "sphinx_rtd_theme"
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
