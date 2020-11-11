@@ -24,7 +24,7 @@ jobs:
       - name: Build PDF docs
         run: make manual-pdf
       - name: Commit documentation changes
-        if: github.event_name == 'push' && github.event.ref == 'master'
+        if: github.event_name == 'push' && github.event.ref == 'refs/heads/master'
         run: |
           git clone https://github.com/ammaraskar/sphinx-action-test.git --branch gh-pages --single-branch gh-pages
           cp -r build-configure/docs/manual/html/* gh-pages/
