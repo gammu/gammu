@@ -16,8 +16,6 @@ python:
   version: 3.7
   install:
     - requirements: docs/manual/requirements.txt
-    - method: pip
-      path: .
   system_packages: true
 
 # Avoid cloning submodules
