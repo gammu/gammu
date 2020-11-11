@@ -9,6 +9,8 @@ This manual describes all parts of Gammu, starting with information about
 :ref:`project`, going through API documentation for both :ref:`python` and
 :ref:`libgammu` and covering :ref:`smsd` as well.
 
+.. include: ../../README.rst
+
 
 Continue reading
 ----------------
