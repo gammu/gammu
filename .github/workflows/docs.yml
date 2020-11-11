@@ -19,7 +19,8 @@ jobs:
         if: github.event_name == 'push' && github.event.ref == 'master'
         run: |
           git clone https://github.com/ammaraskar/sphinx-action-test.git --branch gh-pages --single-branch gh-pages
-          cp -r docs/_build/html/* gh-pages/
+          cp -r build-configure/docs/manual/html/* gh-pages/
+          cp build-configure/docs/manual/latex/*.pdf gh-pages/
           cd gh-pages
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
