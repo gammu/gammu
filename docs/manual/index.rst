@@ -9,8 +9,6 @@ This manual describes all parts of Gammu, starting with information about
 :ref:`project`, going through API documentation for both :ref:`python` and
 :ref:`libgammu` and covering :ref:`smsd` as well.
 
-.. include: ../../README.rst
-
 
 Continue reading
 ----------------
@@ -30,10 +28,9 @@ Continue reading
     * :ref:`protocols` -- learn about phone protocols
     * :ref:`formats` -- file formats supported by Gammu
 
+.. include:: ../../README.rst
+
 Full contents
 -------------
 
-.. toctree::
-    :maxdepth: 2
-
-    contents
+.. include:: contents.rst
