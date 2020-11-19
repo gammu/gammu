@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.41.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2019-09-27 09:19+0200\n"
-"PO-Revision-Date: 2020-11-05 18:26+0000\n"
+"PO-Revision-Date: 2020-11-20 19:28+0000\n"
 "Last-Translator: Prachi Joshi <josprachi@yahoo.com>\n"
 "Language-Team: Marathi <https://hosted.weblate.org/projects/gammu/gammu-docs/"
 "mr/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3.2-dev\n"
+"X-Generator: Weblate 4.4-dev\n"
 
 #. type: Title =
 #: README.rst:2
@@ -61,17 +61,19 @@ msgstr ".. प्रतिमा"
 #. type: Plain text
 #: README.rst:16
 msgid "https://travis-ci.org/gammu/gammu.svg?branch=master"
-msgstr ""
+msgstr "https://travis-ci.org/gammu/gammu.svg?branch=master"
 
 #. type: Plain text
 #: README.rst:18
 msgid ":alt: Build status :target: https://travis-ci.org/gammu/gammu"
-msgstr ""
+msgstr ":alt: Build status :target: https://travis-ci.org/gammu/gammu"
 
 #. type: Plain text
 #: README.rst:20
 msgid "https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/master?svg=true"
 msgstr ""
+"https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/"
+"master?svg=true"
 
 #. type: Plain text
 #: README.rst:22
@@ -79,11 +81,13 @@ msgid ""
 ":alt: Windows Build status :target: "
 "https://ci.appveyor.com/project/nijel/gammu/branch/master"
 msgstr ""
+":alt: Windows Build status :target: https://ci.appveyor.com/project/nijel/"
+"gammu/branch/master"
 
 #. type: Plain text
 #: README.rst:24
 msgid "https://hosted.weblate.org/widgets/gammu/-/svg-badge.svg"
-msgstr ""
+msgstr "https://hosted.weblate.org/widgets/gammu/-/svg-badge.svg"
 
 #. type: Plain text
 #: README.rst:26
@@ -91,31 +95,34 @@ msgid ""
 ":alt: Translation status :target: "
 "https://hosted.weblate.org/engage/gammu/?utm_source=widget"
 msgstr ""
+":alt: Translation status :target: https://hosted.weblate.org/engage/gammu/"
+"?utm_source=widget"
 
 #. type: Plain text
 #: README.rst:28
 msgid "https://scan.coverity.com/projects/2890/badge.svg?flat=1"
-msgstr ""
+msgstr "https://scan.coverity.com/projects/2890/badge.svg?flat=1"
 
 #. type: Plain text
 #: README.rst:30
 msgid ":alt: Coverity scan :target: https://scan.coverity.com/projects/2890"
-msgstr ""
+msgstr ":alt: Coverity scan :target: https://scan.coverity.com/projects/2890"
 
 #. type: Plain text
 #: README.rst:32
 msgid "https://img.shields.io/liberapay/receives/Gammu.svg"
-msgstr ""
+msgstr "https://img.shields.io/liberapay/receives/Gammu.svg"
 
 #. type: Plain text
 #: README.rst:34
 msgid ":alt: Liberapay :target: https://liberapay.com/Gammu/donate"
-msgstr ""
+msgstr ":alt: Liberapay :target: https://liberapay.com/Gammu/donate"
 
 #. type: Plain text
 #: README.rst:36
 msgid "https://www.bountysource.com/badge/team?team_id=23177&style=bounties_received"
 msgstr ""
+"https://www.bountysource.com/badge/team?team_id=23177&style=bounties_received"
 
 #. type: Plain text
 #: README.rst:38
@@ -123,17 +130,19 @@ msgid ""
 ":alt: Bountysource :target: "
 "https://www.bountysource.com/teams/gammu/issues?utm_source=Gammu&utm_medium=shield&utm_campaign=bounties_received"
 msgstr ""
+":alt: Bountysource :target: https://www.bountysource.com/teams/gammu/"
+"issues?utm_source=Gammu&utm_medium=shield&utm_campaign=bounties_received"
 
 #. type: Title =
 #: README.rst:40
 #, no-wrap
 msgid "More information"
-msgstr ""
+msgstr "अधिक माहिती"
 
 #. type: Plain text
 #: README.rst:43
 msgid "You can find more information on <https://wammu.eu/gammu/>."
-msgstr ""
+msgstr "आपल्याला <https://wammu.eu/gammu/> वर अधिक माहिती मिळू शकेल."
 
 #. type: Plain text
 #: README.rst:47
@@ -147,7 +156,7 @@ msgstr ""
 #: README.rst:50
 #, no-wrap
 msgid "Feedback and bug reports"
-msgstr ""
+msgstr "अभिप्राय आणि दोष अहवाल"
 
 #. type: Plain text
 #: README.rst:54
@@ -155,17 +164,19 @@ msgid ""
 "Any feedback is welcome, see <https://wammu.eu/support/> for information how "
 "to contact developers."
 msgstr ""
+"कोणत्याही अभिप्रायाचे स्वागत आहे, विकसकांशी संपर्क कसा साधावा याबद्दल "
+"माहितीसाठी <https://wammu.eu/support/> पहा."
 
 #. type: Title =
 #: README.rst:57
 #, no-wrap
 msgid "Support developers"
-msgstr ""
+msgstr "विकासकांना साहाय्य्य करा"
 
 #. type: Plain text
 #: README.rst:59
 msgid "You can appreciate developers work at <https://wammu.eu/donate/>."
-msgstr ""
+msgstr "आपण <https://wammu.eu/donate/> वर विकासकांच्या कार्याचे कौतुक करू शकता."
 
 #. type: Title =
 #: INSTALL:2
