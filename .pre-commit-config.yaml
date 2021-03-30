@@ -7,7 +7,6 @@ repos:
       - id: trailing-whitespace
       - id: end-of-file-fixer
       - id: check-yaml
-      - id: check-toml
       - id: requirements-txt-fixer
       - id: check-merge-conflict
       - id: debug-statements
