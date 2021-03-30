@@ -43,4 +43,3 @@ void cgi_process(GSM_StateMachine *s);
 void cgi_reset(void);
 
 #endif        //  #ifndef SMS_CGI_H
-

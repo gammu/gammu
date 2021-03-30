@@ -33,7 +33,7 @@ Sending a message
 
     # Check parameters
     if len(sys.argv) != 2:
-        print('Usage: sendsms.py [configfile] RECIPIENT_NUMBER')
+        print("Usage: sendsms.py [configfile] RECIPIENT_NUMBER")
         sys.exit(1)
 
     # Connect to the phone
@@ -42,9 +42,9 @@ Sending a message
     # Prepare message data
     # We tell that we want to use first SMSC number stored in phone
     message = {
-        'Text': 'python-gammu testing message',
-        'SMSC': {'Location': 1},
-        'Number': sys.argv[1],
+        "Text": "python-gammu testing message",
+        "SMSC": {"Location": 1},
+        "Number": sys.argv[1],
     }
 
     # Actually send the message
@@ -78,7 +78,7 @@ Sending a long message
 
     # Check parameters
     if len(sys.argv) != 2:
-        print('Usage: sendlongsms.py [configfile] RECIPIENT_NUMBER')
+        print("Usage: sendlongsms.py [configfile] RECIPIENT_NUMBER")
         sys.exit(1)
 
     # Connect to the phone
@@ -87,20 +87,20 @@ Sending a long message
 
     # Create SMS info structure
     smsinfo = {
-        'Class': -1,
-        'Unicode': False,
-        'Entries':  [
+        "Class": -1,
+        "Unicode": False,
+        "Entries": [
             {
-                'ID': 'ConcatenatedTextLong',
-                'Buffer':
-                    'Very long python-gammu testing message '
-                    'sent from example python script. '
-                    'Very long python-gammu testing message '
-                    'sent from example python script. '
-                    'Very long python-gammu testing message '
-                    'sent from example python script. '
+                "ID": "ConcatenatedTextLong",
+                "Buffer": "Very long python-gammu testing message "
+                "sent from example python script. "
+                "Very long python-gammu testing message "
+                "sent from example python script. "
+                "Very long python-gammu testing message "
+                "sent from example python script. ",
             }
-        ]}
+        ],
+    }
 
     # Encode messages
     encoded = gammu.EncodeSMS(smsinfo)
@@ -108,8 +108,8 @@ Sending a long message
     # Send messages
     for message in encoded:
         # Fill in numbers
-        message['SMSC'] = {'Location': 1}
-        message['Number'] = sys.argv[1]
+        message["SMSC"] = {"Location": 1}
+        message["Number"] = sys.argv[1]
 
         # Actually send the message
         state_machine.SendSMS(message)
@@ -140,7 +140,7 @@ Initiating a voice call
 
     # Check whether we have a number to dial
     if len(sys.argv) != 2:
-        print('Usage: dialvoice.py NUMBER')
+        print("Usage: dialvoice.py NUMBER")
         sys.exit(1)
 
     # Dial a number
@@ -169,7 +169,7 @@ Reading calendar from phone
     # Get number of calendar entries
     status = state_machine.GetCalendarStatus()
 
-    remain = status['Used']
+    remain = status["Used"]
 
     start = True
 
@@ -179,12 +179,12 @@ Reading calendar from phone
             entry = state_machine.GetNextCalendar(Start=True)
             start = False
         else:
-            entry = state_machine.GetNextCalendar(Location=entry['Location'])
+            entry = state_machine.GetNextCalendar(Location=entry["Location"])
         remain = remain - 1
 
         # Display it
         print()
-        print('%-20s: %d' % ('Location', entry['Location']))
-        print('%-20s: %s' % ('Type', entry['Type']))
-        for v in entry['Entries']:
-            print('%-20s: %s' % (v['Type'], str(v['Value'])))
+        print("%-20s: %d" % ("Location", entry["Location"]))
+        print("%-20s: %s" % ("Type", entry["Type"]))
+        for v in entry["Entries"]:
+            print("%-20s: %s" % (v["Type"], str(v["Value"])))

@@ -19,4 +19,3 @@ deliveryreport=sms
 Service=FILES
 inboxpath=${PROJECT_BINARY_DIR}/inbox/
 outboxpath=${PROJECT_BINARY_DIR}/outbox/
-

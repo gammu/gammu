@@ -12,7 +12,7 @@ INCLUDE=-I/home/matlec/symbian_sdk_series60/include -I/home/matlec/symbian_sdk_s
 LIBDIR=$(EPOCROOT)/Release/armi/urel
 STATLIBS=$(LIBDIR)/eexe.lib $(LIBDIR)/egcc.lib $(LIBDIR)/esock.lib $(LIBDIR)/bluetooth.lib
 
-OBJS=gnapplet.o pkt.o device.o ircomm.o rfcomm.o tcpip.o proto_info.o proto_phonebook.o proto_netinfo.o proto_power.o proto_debug.o proto_sms.o proto_calendar.o proto_clock.o proto_profile.o 
+OBJS=gnapplet.o pkt.o device.o ircomm.o rfcomm.o tcpip.o proto_info.o proto_phonebook.o proto_netinfo.o proto_power.o proto_debug.o proto_sms.o proto_calendar.o proto_clock.o proto_profile.o
 UID1=0x1000007a
 UID2=0x1000007a
 UID3=0x107d4df2

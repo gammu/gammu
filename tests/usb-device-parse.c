@@ -63,4 +63,3 @@ int main(int argc UNUSED, char **argv UNUSED)
 /* Editor configuration
  * vim: noexpandtab sw=8 ts=8 sts=8 tw=72:
  */
-

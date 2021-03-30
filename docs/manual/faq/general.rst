@@ -104,7 +104,7 @@ The usual programs involve:
 * NetworkManager with ModemManager, you need to disable mobile networking to
   stop it using the device, disabling the modem connection does not seem to be
   enough.
-* Other Gammu instance, in case you want to interact with modem while SMSD is 
+* Other Gammu instance, in case you want to interact with modem while SMSD is
   running see :ref:`gammu-smsd-suspend`.
 
 
@@ -113,7 +113,7 @@ What are free alternatives to Gammu?
 
 It depends on your phone. For Nokia or AT based phones, you can try `Gnokii`_,
 but Gammu should be superior in most cases. For Symbian phone you can try using
-`Series60-Remote`_, which works pretty well with S60 phones, though Gammu 
+`Series60-Remote`_, which works pretty well with S60 phones, though Gammu
 brings various fixes to their applet.
 
 If you are looking for synchronisation, try using something what supports

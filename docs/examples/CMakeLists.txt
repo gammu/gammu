@@ -18,4 +18,3 @@ foreach (DOC ${EXAMPLES})
         COMPONENT "manual"
         )
 endforeach (DOC)
-

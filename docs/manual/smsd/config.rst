@@ -74,7 +74,7 @@ General parameters of SMS daemon
         .. versionadded:: 1.28.93
     ``MYSQL``
         .. deprecated:: 1.28.93
-            
+
             Use :config:option:`Service` = ``SQL`` and :config:option:`Driver` = ``native_mysql`` instead.
 
         Compatibility option for older configuration files, stores messages in
@@ -82,7 +82,7 @@ General parameters of SMS daemon
 
     ``PGSQL``
         .. deprecated:: 1.28.93
-        
+
             Use :config:option:`Service` = ``SQL`` and :config:option:`Driver` = ``native_pgsql`` instead.
 
         Compatibility option for older configuration files, stores messages in
@@ -90,7 +90,7 @@ General parameters of SMS daemon
 
     ``DBI``
         .. deprecated:: 1.28.93
-        
+
             Use :config:option:`Service` = ``SQL`` and :config:option:`Driver` = DBI driver instead.
 
         Compatibility option for older configuration files, stores messages in
@@ -127,10 +127,10 @@ General parameters of SMS daemon
 
     Default is to provide no logging.
 
-    .. note:: 
+    .. note::
 
         For logging to Windows Event Log, it is recommended to install Event Log
-        source by invoking :option:`gammu-smsd -e` (this is automatically done during 
+        source by invoking :option:`gammu-smsd -e` (this is automatically done during
         installation of Gammu).
 
 .. config:option:: LogFacility
@@ -183,14 +183,14 @@ General parameters of SMS daemon
 
 .. config:option:: MaxRetries
 
-    How many times will SMSD try to resend message if sending fails. This 
+    How many times will SMSD try to resend message if sending fails. This
     is tracked per message and currently supported only with SQL backends.
 
     Default is 1.
 
 .. config:option:: RetryTimeout
 
-    How long to wait before resending failed message (needs to be enabled by 
+    How long to wait before resending failed message (needs to be enabled by
     :config:option:`MaxRetries`).
 
     Is used in :config:option:`update_retries`.
@@ -330,11 +330,11 @@ General parameters of SMS daemon
 
     When you set PhoneID, all messages (including injected ones) will be marked
     by this string (stored as SenderID in the database) and it allows more SMS
-    daemons to share a single database. 
+    daemons to share a single database.
 
     SMSD daemon will in such case send :ref:`outbox` messages only with
     matching or empty SenderID.
-    
+
     This option has actually no effect with :ref:`gammu-smsd-files`.
 
 .. config:option:: SMSC
@@ -478,7 +478,7 @@ database:
     For ODBC this is used as Data source name.
 
     .. note::
-        
+
         Some database servers differentiate usage of ``localhost`` (to use
         local socket) and ``127.0.0.1`` (to use locat TCP/IP connection).
         Please make sure your SMSD settings match the database server ones.
@@ -519,14 +519,14 @@ database:
     ``odbc``
 
         Connects to the database using ODBC, see :ref:`gammu-smsd-odbc`.
-        
+
     ``native_mysql``
-        
+
         Stores messages in MySQL database, see :ref:`gammu-smsd-mysql` for
         details.
 
     ``native_pgsql``
-        
+
         Stores messages in PostgreSQL database, see :ref:`gammu-smsd-pgsql` for
         details.
 
@@ -738,10 +738,10 @@ The DSN definition (in :file:`~/.odbc.ini` on UNIX) for using MySQL server would
     Driver		= MySQL
     Server		= 127.0.0.1
     Database		= smsd
-    Port		= 
-    Socket		= 
-    Option		= 
-    Stmt		= 
+    Port		=
+    Socket		=
+    Option		=
+    Stmt		=
 
     [smsdsuse]
     Driver		= MySQL ODBC 3.51.27r695 Driver

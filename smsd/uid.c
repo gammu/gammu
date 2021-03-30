@@ -98,4 +98,3 @@ gboolean fill_gid(SMSD_Parameters *params, const char *name)
 
     return FALSE;
 }
-

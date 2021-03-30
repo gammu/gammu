@@ -109,33 +109,33 @@ SQL script \fBmysql.sql\fP for creating tables in MySQL database:
 .sp
 .nf
 .ft C
-\-\- 
+\-\-
 \-\- Database for Gammu SMSD
-\-\- 
+\-\-
 \-\- In case you get errors about not supported charset, please
 \-\- replace utf8mb4 with utf8.
 
 \-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 
-\-\- 
+\-\-
 \-\- Table structure for table \(gagammu\(ga
-\-\- 
+\-\-
 
 CREATE TABLE \(gagammu\(ga (
   \(gaVersion\(ga integer NOT NULL default \(aq0\(aq PRIMARY KEY
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
-\-\- 
+\-\-
 \-\- Dumping data for table \(gagammu\(ga
-\-\- 
+\-\-
 
 INSERT INTO \(gagammu\(ga (\(gaVersion\(ga) VALUES (17);
 
 \-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 
-\-\- 
+\-\-
 \-\- Table structure for table \(gainbox\(ga
-\-\- 
+\-\-
 
 CREATE TABLE \(gainbox\(ga (
   \(gaUpdatedInDB\(ga timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
@@ -154,16 +154,16 @@ CREATE TABLE \(gainbox\(ga (
   PRIMARY KEY \(gaID\(ga (\(gaID\(ga)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;
 
-\-\- 
+\-\-
 \-\- Dumping data for table \(gainbox\(ga
-\-\- 
+\-\-
 
 
 \-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 
-\-\- 
+\-\-
 \-\- Table structure for table \(gaoutbox\(ga
-\-\- 
+\-\-
 
 CREATE TABLE \(gaoutbox\(ga (
   \(gaUpdatedInDB\(ga timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
@@ -194,16 +194,16 @@ CREATE TABLE \(gaoutbox\(ga (
 CREATE INDEX outbox_date ON outbox(SendingDateTime, SendingTimeOut);
 CREATE INDEX outbox_sender ON outbox(SenderID(250));
 
-\-\- 
+\-\-
 \-\- Dumping data for table \(gaoutbox\(ga
-\-\- 
+\-\-
 
 
 \-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 
-\-\- 
+\-\-
 \-\- Table structure for table \(gaoutbox_multipart\(ga
-\-\- 
+\-\-
 
 CREATE TABLE \(gaoutbox_multipart\(ga (
   \(gaText\(ga text,
@@ -218,15 +218,15 @@ CREATE TABLE \(gaoutbox_multipart\(ga (
   PRIMARY KEY (\(gaID\(ga, \(gaSequencePosition\(ga)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
-\-\- 
+\-\-
 \-\- Dumping data for table \(gaoutbox_multipart\(ga
-\-\- 
+\-\-
 
 \-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 
-\-\- 
+\-\-
 \-\- Table structure for table \(gaphones\(ga
-\-\- 
+\-\-
 
 CREATE TABLE \(gaphones\(ga (
   \(gaID\(ga text NOT NULL,
@@ -247,15 +247,15 @@ CREATE TABLE \(gaphones\(ga (
   PRIMARY KEY (\(gaIMEI\(ga)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
-\-\- 
+\-\-
 \-\- Dumping data for table \(gaphones\(ga
-\-\- 
+\-\-
 
 \-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 
-\-\- 
+\-\-
 \-\- Table structure for table \(gasentitems\(ga
-\-\- 
+\-\-
 
 CREATE TABLE \(gasentitems\(ga (
   \(gaUpdatedInDB\(ga timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
@@ -286,9 +286,9 @@ CREATE INDEX sentitems_tpmr ON sentitems(TPMR);
 CREATE INDEX sentitems_dest ON sentitems(DestinationNumber);
 CREATE INDEX sentitems_sender ON sentitems(SenderID(250));
 
-\-\- 
+\-\-
 \-\- Dumping data for table \(gasentitems\(ga
-\-\- 
+\-\-
 
 .ft P
 .fi
@@ -308,33 +308,33 @@ SQL script \fBmysql\-legacy.sql\fP for creating tables in MySQL database:
 .sp
 .nf
 .ft C
-\-\- 
+\-\-
 \-\- Database for Gammu SMSD
-\-\- 
+\-\-
 \-\- In case you get errors about not supported charset, please
 \-\- replace utf8mb4 with utf8.
 
 \-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 
-\-\- 
+\-\-
 \-\- Table structure for table \(gagammu\(ga
-\-\- 
+\-\-
 
 CREATE TABLE \(gagammu\(ga (
   \(gaVersion\(ga integer NOT NULL default \(aq0\(aq PRIMARY KEY
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
-\-\- 
+\-\-
 \-\- Dumping data for table \(gagammu\(ga
-\-\- 
+\-\-
 
 INSERT INTO \(gagammu\(ga (\(gaVersion\(ga) VALUES (17);
 
 \-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 
-\-\- 
+\-\-
 \-\- Table structure for table \(gainbox\(ga
-\-\- 
+\-\-
 
 CREATE TABLE \(gainbox\(ga (
   \(gaUpdatedInDB\(ga timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
@@ -353,16 +353,16 @@ CREATE TABLE \(gainbox\(ga (
   PRIMARY KEY \(gaID\(ga (\(gaID\(ga)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;
 
-\-\- 
+\-\-
 \-\- Dumping data for table \(gainbox\(ga
-\-\- 
+\-\-
 
 
 \-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 
-\-\- 
+\-\-
 \-\- Table structure for table \(gaoutbox\(ga
-\-\- 
+\-\-
 
 CREATE TABLE \(gaoutbox\(ga (
   \(gaUpdatedInDB\(ga timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
@@ -393,16 +393,16 @@ CREATE TABLE \(gaoutbox\(ga (
 CREATE INDEX outbox_date ON outbox(SendingDateTime, SendingTimeOut);
 CREATE INDEX outbox_sender ON outbox(SenderID(250));
 
-\-\- 
+\-\-
 \-\- Dumping data for table \(gaoutbox\(ga
-\-\- 
+\-\-
 
 
 \-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 
-\-\- 
+\-\-
 \-\- Table structure for table \(gaoutbox_multipart\(ga
-\-\- 
+\-\-
 
 CREATE TABLE \(gaoutbox_multipart\(ga (
   \(gaText\(ga text,
@@ -417,15 +417,15 @@ CREATE TABLE \(gaoutbox_multipart\(ga (
   PRIMARY KEY (\(gaID\(ga, \(gaSequencePosition\(ga)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
-\-\- 
+\-\-
 \-\- Dumping data for table \(gaoutbox_multipart\(ga
-\-\- 
+\-\-
 
 \-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 
-\-\- 
+\-\-
 \-\- Table structure for table \(gaphones\(ga
-\-\- 
+\-\-
 
 CREATE TABLE \(gaphones\(ga (
   \(gaID\(ga text NOT NULL,
@@ -446,15 +446,15 @@ CREATE TABLE \(gaphones\(ga (
   PRIMARY KEY (\(gaIMEI\(ga)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
-\-\- 
+\-\-
 \-\- Dumping data for table \(gaphones\(ga
-\-\- 
+\-\-
 
 \-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 
-\-\- 
+\-\-
 \-\- Table structure for table \(gasentitems\(ga
-\-\- 
+\-\-
 
 CREATE TABLE \(gasentitems\(ga (
   \(gaUpdatedInDB\(ga timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
@@ -485,14 +485,14 @@ CREATE INDEX sentitems_tpmr ON sentitems(TPMR);
 CREATE INDEX sentitems_dest ON sentitems(DestinationNumber);
 CREATE INDEX sentitems_sender ON sentitems(SenderID(250));
 
-\-\- 
+\-\-
 \-\- Dumping data for table \(gasentitems\(ga
-\-\- 
+\-\-
 
 
-\-\- 
+\-\-
 \-\- Triggers for setting default timestamps
-\-\- 
+\-\-
 
 DELIMITER //
 

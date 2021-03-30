@@ -11,4 +11,3 @@ michal: michal.o
 
 clean:
 	@rm michal michal.o
-	

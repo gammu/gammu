@@ -1,14 +1,15 @@
-from sphinx.domains import Domain, ObjType
-from sphinx.roles import XRefRole
-from sphinx.domains.std import GenericObject, StandardDomain
-from sphinx.directives import ObjectDescription
-from sphinx.util.nodes import clean_astext, make_refnode
-from sphinx.util import ws_re
-from sphinx import addnodes
 from docutils import nodes
+from sphinx import addnodes
+from sphinx.directives import ObjectDescription
+from sphinx.domains import Domain, ObjType
+from sphinx.domains.std import GenericObject, StandardDomain
+from sphinx.roles import XRefRole
+from sphinx.util import ws_re
+from sphinx.util.nodes import clean_astext, make_refnode
+
 
 class ConfigOption(ObjectDescription):
-    indextemplate = 'configuration option; %s'
+    indextemplate = "configuration option; %s"
     parse_node = None
 
     def handle_signature(self, sig, signode):
@@ -18,25 +19,28 @@ class ConfigOption(ObjectDescription):
             signode.clear()
             signode += addnodes.desc_name(sig, sig)
             # normalize whitespace like XRefRole does
-            name = ws_re.sub('', sig)
+            name = ws_re.sub("", sig)
         return name
 
     def add_target_and_index(self, name, sig, signode):
-        targetname = '%s-%s' % (self.objtype, name)
-        signode['ids'].append(targetname)
+        targetname = f"{self.objtype}-{name}"
+        signode["ids"].append(targetname)
         self.state.document.note_explicit_target(signode)
         if self.indextemplate:
-            colon = self.indextemplate.find(':')
+            colon = self.indextemplate.find(":")
             if colon != -1:
                 indextype = self.indextemplate[:colon].strip()
-                indexentry = self.indextemplate[colon+1:].strip() % (name,)
+                indexentry = self.indextemplate[colon + 1 :].strip() % (name,)
             else:
-                indextype = 'single'
+                indextype = "single"
                 indexentry = self.indextemplate % (name,)
-            self.indexnode['entries'].append((indextype, indexentry,
-                                              targetname, targetname))
-        self.env.domaindata['config']['objects'][self.objtype, name] = \
-            self.env.docname, targetname
+            self.indexnode["entries"].append(
+                (indextype, indexentry, targetname, targetname)
+            )
+        self.env.domaindata["config"]["objects"][self.objtype, name] = (
+            self.env.docname,
+            targetname,
+        )
 
 
 class ConfigSectionXRefRole(XRefRole):
@@ -47,19 +51,20 @@ class ConfigSectionXRefRole(XRefRole):
     def result_nodes(self, document, env, node, is_ref):
         if not is_ref:
             return [node], []
-        varname = node['reftarget']
-        tgtid = 'index-%s' % env.new_serialno('index')
+        varname = node["reftarget"]
+        tgtid = "index-%s" % env.new_serialno("index")
         indexnode = addnodes.index()
-        indexnode['entries'] = [
-            ('single', varname, tgtid, varname),
-            ('single', 'configuration section; %s' % varname, tgtid, varname)
+        indexnode["entries"] = [
+            ("single", varname, tgtid, varname),
+            ("single", "configuration section; %s" % varname, tgtid, varname),
         ]
-        targetnode = nodes.target('', '', ids=[tgtid])
+        targetnode = nodes.target("", "", ids=[tgtid])
         document.note_explicit_target(targetnode)
         return [indexnode, targetnode, node], []
 
+
 class ConfigSection(ObjectDescription):
-    indextemplate = 'configuration section; %s'
+    indextemplate = "configuration section; %s"
     parse_node = None
 
     def handle_signature(self, sig, signode):
@@ -69,25 +74,28 @@ class ConfigSection(ObjectDescription):
             signode.clear()
             signode += addnodes.desc_name(sig, sig)
             # normalize whitespace like XRefRole does
-            name = ws_re.sub('', sig)
+            name = ws_re.sub("", sig)
         return name
 
     def add_target_and_index(self, name, sig, signode):
-        targetname = '%s-%s' % (self.objtype, name)
-        signode['ids'].append(targetname)
+        targetname = f"{self.objtype}-{name}"
+        signode["ids"].append(targetname)
         self.state.document.note_explicit_target(signode)
         if self.indextemplate:
-            colon = self.indextemplate.find(':')
+            colon = self.indextemplate.find(":")
             if colon != -1:
                 indextype = self.indextemplate[:colon].strip()
-                indexentry = self.indextemplate[colon+1:].strip() % (name,)
+                indexentry = self.indextemplate[colon + 1 :].strip() % (name,)
             else:
-                indextype = 'single'
+                indextype = "single"
                 indexentry = self.indextemplate % (name,)
-            self.indexnode['entries'].append((indextype, indexentry,
-                                              targetname, targetname))
-        self.env.domaindata['config']['objects'][self.objtype, name] = \
-            self.env.docname, targetname
+            self.indexnode["entries"].append(
+                (indextype, indexentry, targetname, targetname)
+            )
+        self.env.domaindata["config"]["objects"][self.objtype, name] = (
+            self.env.docname,
+            targetname,
+        )
 
 
 class ConfigOptionXRefRole(XRefRole):
@@ -98,61 +106,65 @@ class ConfigOptionXRefRole(XRefRole):
     def result_nodes(self, document, env, node, is_ref):
         if not is_ref:
             return [node], []
-        varname = node['reftarget']
-        tgtid = 'index-%s' % env.new_serialno('index')
+        varname = node["reftarget"]
+        tgtid = "index-%s" % env.new_serialno("index")
         indexnode = addnodes.index()
-        indexnode['entries'] = [
-            ('single', varname, tgtid, varname, None),
-            ('single', 'configuration option; %s' % varname, tgtid, varname, None)
+        indexnode["entries"] = [
+            ("single", varname, tgtid, varname, None),
+            ("single", "configuration option; %s" % varname, tgtid, varname, None),
         ]
-        targetnode = nodes.target('', '', ids=[tgtid])
+        targetnode = nodes.target("", "", ids=[tgtid])
         document.note_explicit_target(targetnode)
         return [indexnode, targetnode, node], []
 
 
 class ConfigFileDomain(Domain):
-    name = 'config'
-    label = 'Config'
+    name = "config"
+    label = "Config"
 
     object_types = {
-            'option':  ObjType('config option', 'option'),
-            'section':  ObjType('config section', 'section'),
-            }
+        "option": ObjType("config option", "option"),
+        "section": ObjType("config section", "section"),
+    }
     directives = {
-            'option': ConfigOption,
-            'section': ConfigSection,
-            }
+        "option": ConfigOption,
+        "section": ConfigSection,
+    }
     roles = {
-            'option': ConfigOptionXRefRole(),
-            'section': ConfigSectionXRefRole(),
-            }
+        "option": ConfigOptionXRefRole(),
+        "section": ConfigSectionXRefRole(),
+    }
 
     initial_data = {
-        'objects': {},      # (type, name) -> docname, labelid
+        "objects": {},  # (type, name) -> docname, labelid
     }
 
     def clear_doc(self, docname):
         remove = []
-        for key, (fn, _) in self.data['objects'].items():
+        for key, (fn, _) in self.data["objects"].items():
             if fn == docname:
                 remove.append(key)
         for key in remove:
-            del self.data['objects'][key]
+            del self.data["objects"][key]
 
-    def resolve_xref(self, env, fromdocname, builder,
-                     typ, target, node, contnode):
-        docname, labelid = self.data['objects'].get((typ, target), ('', ''))
+    def resolve_xref(self, env, fromdocname, builder, typ, target, node, contnode):
+        docname, labelid = self.data["objects"].get((typ, target), ("", ""))
         if not docname:
             return None
         else:
-            return make_refnode(builder, fromdocname, docname,
-                                labelid, contnode)
+            return make_refnode(builder, fromdocname, docname, labelid, contnode)
 
     def get_objects(self):
-        for (type, name), info in self.data['objects'].items():
-            yield (name, name, type, info[0], info[1],
-                   self.object_types[type].attrs['searchprio'])
+        for (type, name), info in self.data["objects"].items():
+            yield (
+                name,
+                name,
+                type,
+                info[0],
+                info[1],
+                self.object_types[type].attrs["searchprio"],
+            )
+
 
 def setup(app):
     app.add_domain(ConfigFileDomain)
-

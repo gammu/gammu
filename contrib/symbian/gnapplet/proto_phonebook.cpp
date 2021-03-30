@@ -74,7 +74,7 @@ static void PhonebookReadNextReqL(TUint16 memtype, PktBuf &in, PktBuf &out)
 	in.FinishL();
 
 	if( start == 1 )
-		g->contactIter->Reset();	
+		g->contactIter->Reset();
 
 	location = g->contactIter->NextL();
 	if( location == KNullContactId ) {
@@ -555,7 +555,7 @@ static void DialNumberL(PktBuf &in, PktBuf &out) {
 
 	//Load in the phone device driver
 	User::LeaveIfError(server.LoadPhoneModule(KTsyName));
-	
+
 	//Find the number of phones available from the tel server
 	TInt numberPhones;
 	User::LeaveIfError(server.EnumeratePhones(numberPhones));

@@ -1008,10 +1008,10 @@ GSM_PhoneModel allmodels[] = {
 
 	/* Qualcomm */
 	{"HP un2420 Mobile Broadband Module", "un2420", "", {F_NO_STOP_CUSD, 0}},
-	
+
 	/* Sierra */
 	{"SL8084TR Product", "SL8084TR Product", "", {F_CPIN_NO_OK, 0}},
-	
+
 
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_ALCATEL)

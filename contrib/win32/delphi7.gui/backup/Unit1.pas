@@ -1022,7 +1022,7 @@ procedure TBackupForm.TabSheet3Show(Sender: TObject);
 begin
   if FileNameEdit.Text<>'' then
   begin
-    StatusBar1.Panels.Items[0].Text:='Select features and click "Next"'; 
+    StatusBar1.Panels.Items[0].Text:='Select features and click "Next"';
   end else
   begin
     StatusBar1.Panels.Items[0].Text:='Select file for backup/restore';

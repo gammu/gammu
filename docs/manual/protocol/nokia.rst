@@ -187,7 +187,7 @@ Please note that M2BUS has only one checksum: XOR on frame[FrameID..SeqNo]
 Ack::
 
     { FrameID, DestDEV, SrcDEV, 0x7f, Id_SeqNo, ChkSum }
-	
+
 	 where Id_SeqNo:        Is the sequence number that you are
 	                        acknowleging (from the other part).
 

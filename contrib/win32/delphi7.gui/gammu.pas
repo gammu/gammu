@@ -44,22 +44,22 @@ type	GSM_Error = (
 		ERR_DEVICENOTWORK,
         	ERR_DEVICEDTRRTSERROR,		// Error during setting DTR/RTS in device
         	ERR_DEVICECHANGESPEEDERROR,	// Error during changing speed in device
-       		ERR_DEVICEWRITEERROR,		// Error during writing device 
+       		ERR_DEVICEWRITEERROR,		// Error during writing device
 		ERR_DEVICEREADERROR,		// Error during reading device
 		ERR_DEVICEPARITYERROR,		// Can't set parity on device
-        	ERR_TIMEOUT,			// Command timed out 
+        	ERR_TIMEOUT,			// Command timed out
         	ERR_FRAMENOTREQUESTED,		// Frame handled, but not requested in this moment //10
         	ERR_UNKNOWNRESPONSE,		// Response not handled by gammu
 		ERR_UNKNOWNFRAME,		// Frame not handled by gammu
-		ERR_UNKNOWNCONNECTIONTYPESTRING,	// Unknown connection type given by user 
-		ERR_UNKNOWNMODELSTRING,		// Unknown model given by user 
+		ERR_UNKNOWNCONNECTIONTYPESTRING,	// Unknown connection type given by user
+		ERR_UNKNOWNMODELSTRING,		// Unknown model given by user
 		ERR_SOURCENOTAVAILABLE,		// Some functions not compiled in your OS
 		ERR_NOTSUPPORTED,		// Not supported by phone
 		ERR_EMPTY,			// Empty phonebook entry, ...
 		ERR_SECURITYERROR,		// Not allowed
 		ERR_INVALIDLOCATION,		// Too high or too low location...
 		ERR_NOTIMPLEMENTED,		// Function not implemented //20
-		ERR_FULL,			// Memory is full 
+		ERR_FULL,			// Memory is full
 		ERR_UNKNOWN,
 		ERR_CANTOPENFILE, 		// Error during opening file
 		ERR_MOREMEMORY,			// More memory required

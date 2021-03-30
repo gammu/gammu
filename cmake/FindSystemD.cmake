@@ -1,6 +1,6 @@
 if (NOT SYSTEMD_FOUND)
     pkg_check_modules(SYSTEMD "systemd")
-    
+
     if (SYSTEMD_FOUND AND "${SYSTEMD_SERVICES_INSTALL_DIR}" STREQUAL "")
         execute_process(COMMAND ${PKG_CONFIG_EXECUTABLE}
             --variable=systemdsystemunitdir systemd

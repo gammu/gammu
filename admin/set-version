@@ -25,8 +25,8 @@ do_replace cmake/templates/description-pak.in description-pak
 
 # CMakeLists.txt
 sed -i "
-    s/set (GAMMU_VERSION \"[^\"]*\"\\(.*\\))/set (GAMMU_VERSION \"$version\"\1)/; 
-    s/set (GAMMU_SOVERSION \"[^\"]*\"\\(.*\\))/set (GAMMU_SOVERSION \"$soversion\"\1)/; 
+    s/set (GAMMU_VERSION \"[^\"]*\"\\(.*\\))/set (GAMMU_VERSION \"$version\"\1)/;
+    s/set (GAMMU_SOVERSION \"[^\"]*\"\\(.*\\))/set (GAMMU_SOVERSION \"$soversion\"\1)/;
     " CMakeLists.txt
 
 # Update ChangeLog

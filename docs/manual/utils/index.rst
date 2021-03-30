@@ -9,4 +9,3 @@ Miscellaneous utilities
     gammu-detect
     gammu-config
     jadmaker
-

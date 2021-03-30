@@ -168,4 +168,3 @@ struct tzhead {
 #define isleap_sum(a, b)        isleap((a) % 400 + (b) % 400)
 
 #endif /* !defined TZFILE_H */
-

@@ -11,4 +11,3 @@ install (
     DESTINATION "${INSTALL_DOC_DIR}/examples/sql"
     COMPONENT "examples"
     )
-

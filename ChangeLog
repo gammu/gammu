@@ -18,7 +18,7 @@ the issue.
 
 ChangeLog
 =========
-    
+
 20201003 - 1.42.0
 
 [-] * Fixed compilation on some non GNU systems.
@@ -39,9 +39,9 @@ ChangeLog
 [-] * Several compatibility fixes with recent compilers.
 [-] * Improved USSD support.
 [-] * Localization updates.
-    
+
 20190128 - 1.40.0
-    
+
 [+] * Added SMSD configuration option RetryTimeout.
 [-] * Removed non configurable sleep after failed message send.
 [+] * SMSD now tries to store whole decoded text for concatenated
@@ -51,7 +51,7 @@ ChangeLog
 [+] * Configure CNMI parameters for AT driver.
 
 20180105 - 1.39.0
-    
+
 [-] * Fixed answering call in AT module.
 [-] * Improved support for Huawei E392 and E3131.
 [-] * Fixed compatibility of binaries with Windows XP and 2003.
@@ -122,7 +122,7 @@ ChangeLog
 [-] * Fix build of MySQL backend on Linux.
 
 20161018 - 1.37.90
-    
+
 [-] * Improved support Huawei K3770.
 [!] * API changes in some parameter types.
 [-] * Fixed various Windows compilation issues.
@@ -140,7 +140,7 @@ ChangeLog
 [-] * Fixed parsing USSD responses from some devices.
 
 20160816 - 1.37.4
-    
+
 [-] * Improved support for Huawei E3131.
 [-] * Fixed SMS support for MULTIBAND 900E.
 [-] * Fixed SMS created in text mode.
@@ -153,7 +153,7 @@ ChangeLog
 [-] * Improved support for Huawei E180.
 
 20160413 - 1.37.2
-    
+
 [-] * Fixed compilation of SMSD.
 
 20160413 - 1.37.1
@@ -178,7 +178,7 @@ ChangeLog
 [-] * Fixed build failure with all disabled SMSD backends.
 [-] * Documentation improvements.
 [-] * Fixed mixing C++ code with SMSD.
-    
+
 20151129 - 1.36.7
 
 [-] * Support devices which do not report full network status.
@@ -199,7 +199,7 @@ ChangeLog
 [-] * Fixed licensing of helper/win32-dirent.*.
 [*] * Increased default speed for AT connection to 115200.
 [*] * Improve AT module initialization.
-    
+
 20150826 - 1.36.5
 
 [-] * Properly use timezones with SQLite in SMSD.
@@ -280,7 +280,7 @@ ChangeLog
 [-] * Updated version of sms-gammu2android, thanks to Shadow Walker.
 [-] * Fixed compilation on Mac OS X, thanks to Soren Jorvang.
 [-] * Fixed SMSD with CheckSecurity = 0 (bug #1672).
-    
+
 
 20120627 - 1.32.0
 
@@ -289,7 +289,7 @@ ChangeLog
 [-] * Fixed communication with Cross PD1101wi (bug #1617).
 [-] * Ignore another unknown block in Nokia phonebook (bug #1614).
 [-] * Do not encode number when setting up diverts.
-    
+
 20120224 - 1.31.90
 
 [-] * Improved compatibility with ES75 (bug #1586).
@@ -300,21 +300,21 @@ ChangeLog
 [!] * Changed protocol for S60 applet.
 [+] * S60 applet now handles SMS with new lines.
 [+] * Improved support for Windows Event Log.
-    
+
 20111221 - 1.31.0
 
 [-] * Fixed compilation with latest libusb.
 [-] * Improved error handling in SQL backend of SMSD.
 [-] * SMSD documentation improvements.
 [-] * Indonesian translation updates.
-    
+
 20111213 - 1.30.92
 
 [-] * Improved vCard parser to better handle location for various fields, thanks to Vladimir Serbinenko for initial patch.
 [-] * Fixed reading calls from some Nokia phones (bug #1553).
 [-] * Improved text mode SMS parsing in AT driver, thanks to Vladimir Serbinenko.
 [-] * Use glib's MD5 implementation if available.
-    
+
 20111129 - 1.30.91
 
 [+] * Improved documentation for configuring Gammu.
@@ -326,7 +326,7 @@ ChangeLog
 [-] * Increase maximal number of caller groups (bug #1541).
 [-] * Cancel all calls on maketerminated call if we don't get call ID.
 [-] * Fixed SMSC handling in some cases in SMSD (bug #1547).
-    
+
 20111107 - 1.30.90
 
 [-] * Various documentation improvements.
@@ -342,14 +342,14 @@ ChangeLog
 [-] * Fixed CPIN reply handling (bug #1532).
 [+] * SMSD checks for PIN status just after connect (bug #1532).
 [-] * Fixed various MSVC compilation issues.
-    
+
 20110719 - 1.30.0
 
 [*] * Improved SMSD logging of configuration settings.
 [-] * Fix possible crash in fbus2 driver.
 [-] * Fix possible crash of ODBC driver on Windows (bug #1482).
 [-] * Fixed usage of dbi plugins from Python module.
-    
+
 20110607 - 1.29.93
 
 [-] * Properly initialize atobex driver with Sony-Ericsson phones.
@@ -365,14 +365,14 @@ ChangeLog
 [-] * Reverted change to SignalStrength because of SQL escaping we have now (bug #1380).
 [-] * Improved vCard parser to handle vCards from Gmail.
 [-] * Fixed LDIF parser to cope with multiple LDIF in single file.
-    
+
 20110315 - 1.29.92
 
 [-] * Documentation improvements and fixes.
 [-] * Saner error handling in Windows serial driver.
 [-] * Cleanup in SMSD internals.
 [+] * Added ODBC driver to SMSD.
-    
+
 20110225 - 1.29.91
 
 [+] * Added screenshot function for Sony-Ericssonn phones (Márton Németh).
@@ -380,7 +380,7 @@ ChangeLog
 [-] * Properly report error on deleting non deletable entries (bug #1396).
 [-] * Slower switch from m-obex to AT (bug #1382).
 [-] * Faster initialization for AT phones without enabled echo.
-    
+
 20110210 - 1.29.90
 
 [-] * Fix detection of MySQL libraries (bug #1370).
@@ -395,13 +395,13 @@ ChangeLog
 [!] * Disabled two stage probing for most protocols.
 [-] * Fixed saving of SMS backups (bug #1392).
 [+] * Screenshot functionality for DCT4 phones (bug #1390).
-    
+
 20110119 - 1.29.0
 
 [+] * Added option to enter new PIN when entering PUK, thanks to Peter
       Stuge for pointing out this requirement.
 [-] * Improved documentation of SMSD backend services.
-    
+
 20110107 - 1.28.95
 
 [-] * Fix decoding of SMS without date on DCT4 phones (bug #1368).
@@ -415,7 +415,7 @@ ChangeLog
 [-] * Fixed m-obex protocol implementation, thanks to Matthieu Patou (bug #1375).
 [-] * Fixed build on Mac OS X, thanks to Matthieu Patou (bug #1374).
 [-] * Fixed decoding of some SMS messages on S40 phones (bug #1243).
-    
+
 20101227 - 1.28.94
 
 [+] * New convertbackup command to convert between backup formats.
@@ -426,7 +426,7 @@ ChangeLog
 [-] * Various minor fixes in SMSD SQL backend.
 [-] * Improved test suite coverage.
 [-] * Improved dummy driver to allow more testing.
-    
+
 20101202 - 1.28.93
 
 [+] * New SMSD configuration RunOnFailure.
@@ -442,7 +442,7 @@ ChangeLog
 [-] * Wait for more USSD replies on getussd command (bug #1346).
 [!] * New unified SQL SMSD backend handling all SQL databases.
 [+] * SQL queries in SQL SMSD backend can be configured.
-    
+
 20101004 - 1.28.92
 
 [+] * New SMSD config option HardResetFrequency.
@@ -452,7 +452,7 @@ ChangeLog
 [+] * Added support for optional delivery report parts as defined by
       ETSI 123 040, section 9.2.2.3 (bug #1304).
 [+] * SMSD database host configuration is now named "host" not "PC".
-    
+
 20100916 - 1.28.91
 
 [-] * Fixed locales compilation/support.
@@ -464,7 +464,7 @@ ChangeLog
 [-] * Fixed battery status for S40 phones (bug #1301).
 [-] * Improved compatibility with Motorola phonebook (bug #1128).
 [+] * Lot of documentation improvements, check <https://wammu.eu/docs/devel/docs/>.
-    
+
 20100827 - 1.28.90
 
 [-] * Fixed handling of empty reply on CREG/CGREG (bug #1245).
@@ -480,7 +480,7 @@ ChangeLog
 [-] * Fixed crash on too long GPRS access point names in backup (bug #1267).
 [-] * Fallback to using SMSC from phone in SMSD if none provided.
 [-] * Improved guessing of HEX/GSM charsets for phone number in AT engine.
-    
+
 20100712 - 1.28.0
 
 [+] * Support for adding notes using addnew command.
@@ -491,7 +491,7 @@ ChangeLog
 [+] * Support for selecting USB device to use on Linux.
 [-] * Fix storing text in SMS backup comment for multiline SMS.
 [-] * Fixed crash when passing invalid parameters to SMS encoder.
-    
+
 20100629 - 1.27.95
 
 [+] * Support for getting packet network state (bug #1220).
@@ -502,7 +502,7 @@ ChangeLog
 [-] * Actually enable -f processing in SMSD.
 [+] * Configurable number of backend retries.
 [-] * Prefer GSM charset for USSD requests (bug #1228).
-    
+
 20100603 - 1.27.94
 
 [-] * Fixed folder detection for Nokia S40 phones (bug #1191).
@@ -513,7 +513,7 @@ ChangeLog
 [-] * Properly detect birthday on Nokia 2700 (bug #1213).
 [-] * Provide fallback value for note type (bug #1213).
 [-] * Rewritten parsing of CREG: reply to properly parse all replies (bug #1220).
-    
+
 20100413 - 1.27.93
 
 [-] * Fix crash when SMS in Nokia has too many recipients (bug #1136).
@@ -526,14 +526,14 @@ ChangeLog
 [+] * Added function EncodePDU to python-gammu.
 [-] * Fix storing message status on multiple delivery reports (bug #1167).
 [-] * Force AT^SBNR support on Siemens AX75.
-    
+
 20100217 - 1.27.92
 
 [+] * Write support for Siemens phonebook (bug #1129).
 [-] * Properly decode UTF-8 version 3.0 vCards (bug #1132).
 [-] * Fixed wrong counting of favorite messaging numbers (bug #1010).
 [+] * Implement SendDTMF in Python bindings.
-    
+
 20100204 - 1.27.91
 
 [-] * Add ID for Nokia 6275i (bug #1096).
@@ -555,7 +555,7 @@ ChangeLog
 [-] * Fix finding of empty location for some AT phones (bug #1119).
 [-] * Restore phone phonebook also to phones not supporting status (bug #1122).
 [-] * Avoid reading phone memory on reading SIM (bug #1123).
-    
+
 20100106 - 1.27.90
 
 [-] * Simplify code in FILES smsd service.
@@ -567,14 +567,14 @@ ChangeLog
 [-] * Fixed connecting to Onda devices (LP #501025).
 [+] * SMSD can terminate itself after defined number of failures.
 [-] * Improved decoding of SM30 Nokia messages (bug #1091).
-    
+
 20091222 - 1.27.0
-    
+
 [+] * Initial support for reading Motorola calendar (bug#338).
 [-] * Avoid parsing boolean config values all around the code.
 [+] * FILES backend of SMSD now support message injecting.
 [-] * Ignore duplicate lines in AT reply (bug#1069).
-    
+
 20091212 - 1.26.93
 
 [-] * Add ID for MTK1/MTK2 phones (bug#1051).
@@ -586,7 +586,7 @@ ChangeLog
 [-] * Fixed compilation with Clang compiler.
 [-] * Fixed handling of SMS memories with Samsung (bug#1063).
 [+] * Reporting location based on OpenCellID database (bug#1039).
-    
+
 20091203 - 1.26.92
 
 [-] * Compare full name of config section.
@@ -598,7 +598,7 @@ ChangeLog
 [+] * Make gammu error codes map to GSM_Error.
 [-] * Various code cleanups.
 [-] * Add ID for Huawei E169.
-    
+
 20091119 - 1.26.91
 
 [-] * Fixed parsing of vCards with lowercase types (bug #1006).
@@ -623,7 +623,7 @@ ChangeLog
 [-] * Fixed parsing of different Samsung reply (bug#1038).
 [-] * Proper error code when SMSC is empty (bug#1032).
 [-] * Fixed compilation of python-gammu in MSVC.
-    
+
 20091012 - 1.26.90
 
 [-] * Fixed parsing of SMS with empty recipient (bug #998).
@@ -641,14 +641,14 @@ ChangeLog
 [-] * Fix decoding of SMS with extended characters.
 [-] * Fixed handling of DCT4 specific functions.
 [-] * Add workaround for especially broken Ubinetics GDC201.
-    
+
 20090908 - 1.26.1
 
 [-] * CPIN reply is handled like regular one except in A2D case (bug #994).
 [-] * Fix finding first empty position when memory is empty (bug #996).
 [-] * Fixed parsing of SMS status reports.
 [-] * Fixed parsing of text messages with new lines (bug #995).
-    
+
 20090904 - 1.26.0
 
 [-] * Fixed handling of RunOnReceive error code.
@@ -664,7 +664,7 @@ ChangeLog
 [-] * Add ID for Nokia 3390b (bug #982).
 [-] * DCT3 dependent code reports error when phone is not DCT3 (bug #982).
 [-] * Fixed reading of DCT4 file folders (bug #986).
-    
+
 20090821 - 1.25.92
 
 [+] * Reworked RPM packages (separate libraries and SMSD).
@@ -677,7 +677,7 @@ ChangeLog
       this.
 [!] * Changed SMSD tables to be able to handle longer messages from
       Motorola phones.
-    
+
 20090813 - 1.25.91
 
 [+] * Documented most commands in man page.
@@ -686,7 +686,7 @@ ChangeLog
 [+] * Added support for Bluetooth on more BSD systems, thanks to Iain Hibbert.
 [+] * Added new command setsmsc.
 [+] * Added option to disable checking for battery and signal in SMSD.
-    
+
 20090730 - 1.25.90
 
 [-] * Fixed getting firmware revision on AT phones (bug #951).
@@ -701,7 +701,7 @@ ChangeLog
 [+] * Added reconnect support in PostgreSQL driver in SMSD.
 [!] * Gammu debug level no longer can be controlled separately in SMSD.
 [-] * Fix loop when Nokia phone does not allow to access files (bug #954).
-    
+
 20090709 - 1.25.0
 
 [-] * Retry on timeout of usb transfer (bug #940).
@@ -709,7 +709,7 @@ ChangeLog
 [-] * Disable AT OBEX for Samsung J700 (bug #948).
 [-] * Empty memory entry has length 0 (bug #947).
 [-] * Handle some more fields from Nokia phonebook (bug #946), thanks to Will Sowerbutts.
-    
+
 20090624 - 1.24.92
 
 [-] * Fix distutils build (bug #916).
@@ -721,7 +721,7 @@ ChangeLog
 [-] * Do not disable CLIP for all SE phones.
 [-] * Add ID for Nokia 1209.
 [-] * Catch busy error from Nokia phones (bug #932, thanks to Walter Doekes).
-    
+
 20090527 - 1.24.91
 
 [-] * Fix code problems caught by GCC 4.5.
@@ -742,7 +742,7 @@ ChangeLog
 [!] * AT driver uses new PDU decoder.
 [!] * 6510 driver uses new PDU decoder and understands most formats of
       filesystem Nokia SMS messages (bug #911).
-    
+
 20090512 - 1.24.90
 
 [-] * Fix checking for MPBR (bug #873).
@@ -757,12 +757,12 @@ ChangeLog
 [-] * Fix detection of SMS message memories in AT (bug #875).
 [-] * Improve documentation for savefile (bug #893).
 [-] * Add stricter check for DBI version (bug #894).
-    
+
 20090415 - 1.24.0
 
 [-] * Better detect Bluetooth ports on Samsung (bug #862).
 [-] * Ignore security errors on AT init (needed for Huawei).
-    
+
 20090330 - 1.23.92
 
 [-] * LUID reading requires IrMC profile.
@@ -770,7 +770,7 @@ ChangeLog
 [-] * More verbose logging of delivery reports (bug #824).
 [-] * Increase default DeliveryReportDelay (bug #824).
 [-] * Fixed handling of SMS locations (bug #853).
-    
+
 20090318 - 1.23.91
 
 [+] * PostgreSQL backend now supports IDs for RunOnReceive.
@@ -784,7 +784,7 @@ ChangeLog
 [-] * Ignore charset errors on AT init as some phones might need PIN.
 [-] * Optionally use MT for phone phonebook for AT phones.
 [+] * Added support for quick dial numbers on AT phones.
-    
+
 20090311 - 1.23.90
 
 [-] * Fixed decoding of Samsung memory entries.
@@ -806,7 +806,7 @@ ChangeLog
 [-] * Make dku2 connection types work on Linux (alias to fbususb).
 [-] * Better calculation of signal percent.
 [-] * Fixed getting of memory status for some Nokias (bug #836).
-    
+
 20090302 - 1.23.1
 
 [-] * Documentation clarification.
@@ -815,12 +815,12 @@ ChangeLog
 [-] * Fix recording received messages count for MySQL.
 [-] * Fix SMS location handling for Huawei E160 (bug #825).
 [-] * Do not probe for MPBR support all the time.
-    
+
 20090223 - 1.23.0
 
 [-] * Fix sending of DTMF tones over AT.
 [-] * Skip some unhandled replies on Huawei (bug #823).
-    
+
 20090217 - 1.22.95
 
 [!] * Reorganize directory structure to match current state of things.
@@ -830,7 +830,7 @@ ChangeLog
 [-] * Handle properly requests for network code (bug #819).
 [-] * Allow to enter more security codes through SMSD (bug #819).
 [-] * Fixed restoring to specific folder on AT (bug #815).
-    
+
 20090209 - 1.22.94
 
 [-] * Fix some memory leaks found by cppcheck.
@@ -874,7 +874,7 @@ ChangeLog
 [+] * Initial implementation of dummy phone driver for testing.
 [+] * Allow to configure path to config from command line.
 [+] * SMSD monitor allows output in CSV.
-    
+
 20090126 - 1.22.92
 
 [-] * Fixed getting of network name from saved message.
@@ -891,7 +891,7 @@ ChangeLog
 [-] * Fixed processing of SMSD outbox with PostgreSQL (bug #803).
 [-] * Automatic detection of lib64 directory for installation.
 [+] * Allow separate installation of some components on Windows.
-    
+
 20090116 - 1.22.91
 
 [-] * Fixed setting remote number for SMS in some cases.
@@ -909,7 +909,7 @@ ChangeLog
 [+] * Better support for Samsung phones (bug #790).
 [-] * Fixed Windows Service Startup (bug #451).
 [+] * New possibility to run more instances of Windows Service (bug #451).
-    
+
 20090109 - 1.22.90
 
 [-] * Fix some memory leaks found by cppcheck.
@@ -956,7 +956,7 @@ ChangeLog
 [-] * Reduce stack usage on message composing (fixes crash on Windows).
 [-] * Fixed returned saved location on AT engine.
 [+] * Added support for dropping privileges in SMSD.
-    
+
 20081219 - 1.22.1
 
 [-] * Fix model name parsing.
@@ -964,14 +964,14 @@ ChangeLog
 [-] * Fix visibility of HAVE_STRUCT_TM_TM_ZONE in header files.
 [-] * Increase some timeouts in OBEX driver.
 [-] * Fix compilation on s390.
-    
+
 20081218 - 1.22.0
 
 [-] * Disable ATOBEX for Motorola V180.
 [-] * vCard can now store caller group and private flag (bug #269).
 [-] * vCard now stores location and memory type.
 [-] * Add ID for Nokia 6131 NFC (bug #775).
-    
+
 20081210 - 1.21.94
 
 [-] * Better skipping of corrupted messages in AT (bug #768).
@@ -986,7 +986,7 @@ ChangeLog
 [-] * Fixed encoding of WAP indicator messages.
 [+] * Support for photos in vCard (bug #227).
 [!] * vC* saving now protects against buffer overflows.
-    
+
 20081202 - 1.21.93
 
 [!] * Drop own crosscompilation support, rely on CMake one.
@@ -1012,7 +1012,7 @@ ChangeLog
 [!] * Soname change due to API breakage (see above).
 [-] * Fixed compilation on Mac OS X, thanks to Juan A. Bertolin for
       testing.
-    
+
 20081111 - 1.21.91
 
 [+] * Script gammu-config can now also work with whiptail.
@@ -1026,7 +1026,7 @@ ChangeLog
 [-] * Fix flags for 2630 and 3109c (bug #752).
 [-] * Fix handling of caller groups and picture IDs (bug #752).
 [-] * Properly set calendar location while adding (bug #747).
-    
+
 20081020 - 1.21.90
 
 [-] * Sign Windows binaries during build.
@@ -1045,12 +1045,12 @@ ChangeLog
 [-] * Add test case for debug logging.
 [-] * Fix decoding of some SMS messages from Nokia phones (bug #735).
 [-] * Hack for (still) unknown error code (bug #733).
-    
+
 20081003 - 1.21.0
-    
+
 [-] * Handle properly empty SMSC (bug #722).
 [-] * Disable AT/OBEX for Motorola K1v (bug #721).
-    
+
 20080926 - 1.20.94
 
 [-] * Automatically switch to nodtr connection if DTR/RTS setting fails.
@@ -1066,7 +1066,7 @@ ChangeLog
 [-] * SMSD for MySQL no longer fails when sending message (bug #715).
 [+] * SMSD stores signal and battery state in PostgreSQL.
 [-] * Properly handle multiline firmware information.
-    
+
 20080923 - 1.20.93
 
 [-] * Fix crash when decoding EMS pictures (bug #549).
@@ -1078,7 +1078,7 @@ ChangeLog
 [-] * Fix possible crash while reading of messages using AT.
 [-] * Increase timeout when writing SMS message (bug #596).
 [-] * Cleaned up issues with reading from Bluez (bug #670).
-    
+
 20080915 - 1.20.92
 
 [-] * Fixed Windows binary (define properly MSVCRT to use) (bug #683).
@@ -1101,7 +1101,7 @@ ChangeLog
 [+] * Initial support for reading messages in simple text mode.
 [-] * Report if monitor failed because of an error.
 [-] * Handle not found errors on OBEX connect (bug #705).
-    
+
 20080910 - 1.20.91
 
 [+] * Report more verbosely that some feature has been disabled on
@@ -1135,7 +1135,7 @@ ChangeLog
 [+] * Allow to enter PIN code from stdin (bug #633).
 [-] * Handle HEX reply instead of UCS-2 from Motorola (bug #697).
 [-] * Avoid decoding of @ in email address (bug #697).
-    
+
 20080805 - 1.20.90
 
 [!] * ABI change, because of increasing some limits.
@@ -1155,16 +1155,16 @@ ChangeLog
 [-] * Recognize general number on Nokia 6230i (bug #655).
 [-] * Fix writing of phone number using HEX charset (bug #512).
 [-] * Recognize more CME errors, thanks to Paolo <oopla@users.sf.net>.
-    
+
 20080510 - 1.20.0
 
 [-] * Do not crash on EMS messages with no text (bug #612).
 [-] * Fixed reading of OBEX files (bug #614).
-    
+
 20080505 - 1.19.91
 
 [-] * Fixed decoding of Nokia messages (bug #527).
-    
+
 20080423 - 1.19.90
 
 [-] * Fix handling of UTF8 charset with some Motorola phones.
@@ -1176,15 +1176,15 @@ ChangeLog
 [-] * Fix SMS listing when phone was in text mode (bug #584).
 [-] * Fix compilation when WCONTINUED/WIFCONTINUED is not defined.
 [-] * Fixed listing SMS messages from AT phones in text mode (bug #584).
-[+] * Added smscgi daemon by "Kamanashis Roy Shuva" 
+[+] * Added smscgi daemon by "Kamanashis Roy Shuva"
       <kamanashisroy@gmail.com>.
 [+] * Cache once read messages to avoid reading them again (bug #481).
-    
+
 20080305 - 1.19.0
 
 [+] * Add option to disable compiled in protection.
 [-] * Fixed detection of PostgreSQL.
-    
+
 20080225 - 1.18.91
 
 [-] * Improve debug messages when connecting to phone (bug #508).
@@ -1192,7 +1192,7 @@ ChangeLog
 [-] * Identify more Nokia phones (thanks to Iván Gabriel).
 [-] * Fixed regression with DKU2 cables on Windows (bug #533).
 [-] * Better compatibility with iCalendar files (bug #538).
-    
+
 20080206 - 1.18.90
 
 [-] * Do not link with irprops.lib on Windows.
@@ -1203,7 +1203,7 @@ ChangeLog
 [-] * Added identification of several phones.
 [-] * Fixed reading of messages from AT phones without ME memory.
 [-] * Improve charset detection on Motorola phones (bug #522).
-    
+
 20080130 - 1.18.0
 
 [-] * Fixed decoding of an empty SMS.
@@ -1248,7 +1248,7 @@ ChangeLog
 
 20071204 - 1.15.90
 
-[-] * Fixed detection of first free memory location if memory is empty 
+[-] * Fixed detection of first free memory location if memory is empty
       (bug #434).
 [-] * Fixed mysql.h include path (bug #441).
 [-] * Fixed decoding of one char SMS (bug #442).
@@ -1622,9 +1622,9 @@ channel). See www.gammu.org for more details.
 [+] * changes for Mitsubishi                                     (Michal Cihar)
 [+] * added support for date in calls information for Sony-Ericsson
 [+] * documentation update
-[-] * fixed usage of length in utf-8 decoding (it currently decoded one 
-      more char, which lead to keeping quote in AT phonebook, 
-      rest was probably not affected as the extra converted char 
+[-] * fixed usage of length in utf-8 decoding (it currently decoded one
+      more char, which lead to keeping quote in AT phonebook,
+      rest was probably not affected as the extra converted char
       is usually \0)
 
 20061120 - 1.08.25
@@ -1636,7 +1636,7 @@ channel). See www.gammu.org for more details.
       * Fix folder browsing
       * Added IrMC support to OBEX driver, so it can now access many phones
         which provide IrMC
-      * Added new phone module sonyericsson which uses OBEX IrMC services, 
+      * Added new phone module sonyericsson which uses OBEX IrMC services,
         generic AT code and few SE specific commands
       * IrDA can connect to OBEX service under more names
       * fix OBEX path transversal to be more compatible with different
@@ -1650,7 +1650,7 @@ channel). See www.gammu.org for more details.
       * sonyericsson module now also supports other phones (for now only one
         Mitsubishi)
       * F_SONYERICSSON renamed because of it to F_OBEX
-    * Limited (decode only) support for ISO-8859-1 charset 
+    * Limited (decode only) support for ISO-8859-1 charset
       (it is default in vCard/vCalendar/vTodo)
     * MyGetLine can optionally handle quoted printable split lines
     * DecodeUTF8QuotedPrintable correctly handles several QP chars in a row
@@ -1715,7 +1715,7 @@ channel). See www.gammu.org for more details.
 [+] --nokiaaddplaylists sort songs in playlists                   (Igor Testen)
 [+] Gammu partially inform user, which phonebook subentries weren't restored
     with --restore
-[+] some series 40 3.0 phones save names double in pbk - once like 
+[+] some series 40 3.0 phones save names double in pbk - once like
     last name, once like name. This version use last name only
     (name is added, when last name wasn't found)
 [+] WAP/MMS settings, WAP bookmarks are disabled for Series 40 3.0
@@ -1749,7 +1749,7 @@ channel). See www.gammu.org for more details.
 [+] * fixed getting phonebook entries for BB5 Series 40 3.0 phones
 [+] better recognizing categories for Alcatel                    (Michal Cihar)
 [+] command line accept/display ID for files/folder in UTF8         (Test/Mark)
-    quoted printable    
+    quoted printable
 [*] dct4tiku dir renamed to dct4s40 (there are also s40 in bb5 phones)
 [*] I started to make readme.htm and gammu.htm from wiki. Now it isn't the
     best, but it will be soon...
@@ -1959,7 +1959,7 @@ NOTES: it was annouced on mailing list, but I will remind:
 * new functionality:
   * * --setdatetime allows to set date/time part only       (Ace, Michal Cihar)
     * timezone support for atgen.c
-  * if there was simlock in DCT4 and somebody used keypad code to remove it, 
+  * if there was simlock in DCT4 and somebody used keypad code to remove it,
     Gammu will display info about it in --identify
   * MS Visual C++ (Express) 2005 makefiles. You can use FREE (until 11.2006)
     MS compiler to make Gammu now. Limits:
@@ -1991,11 +1991,11 @@ NOTES: it was annouced on mailing list, but I will remind:
       ID unknown for now)
     * saved info about them in pbk entries in --backup
     * restored info about them in pbk entries with --restore
-      * when you make restoring pbk entries with caller groups into phone 
-        without any caller groups created, there is returned correct error 
+      * when you make restoring pbk entries with caller groups into phone
+        without any caller groups created, there is returned correct error
         info
-      * when you try to overwrite pbk entry with caller group assigment, 
-        phone returns error. Now it's handled and (when it happens) Gammu 
+      * when you try to overwrite pbk entry with caller group assigment,
+        phone returns error. Now it's handled and (when it happens) Gammu
         first remove entry and try to save it again. It should be done this
         way in Wammu too !!!
 
@@ -2052,9 +2052,9 @@ NOTES: it was annouced on mailing list, but I will remind:
 20051002 - 1.02.20
 * new functionality:
   * --geteachmms/--getallmms/--getmmsfolders should work fine for majority
-    of Nokia phones/MMS files combinations. It will be improved, but if you 
-    want to have support for some feature(s) faster, please use for example 
-    -save with --geteachmms, send me MMS file (which makes problems now) and 
+    of Nokia phones/MMS files combinations. It will be improved, but if you
+    want to have support for some feature(s) faster, please use for example
+    -save with --geteachmms, send me MMS file (which makes problems now) and
     I will change MMS decoder.
   * started removing old & obsolete MMS code parts (some in --nokiaaddfile
     and other)
@@ -2068,13 +2068,13 @@ NOTES: there should be checked pbk for AT models, there is still OBEX
 
 20050927 - 1.02.16
 * new functionality:
-  * geteachmms and getmmsfolders work for 6230i and phones with filesystem1 
+  * geteachmms and getmmsfolders work for 6230i and phones with filesystem1
     only (still doesn't decode files)
 
 * fixes and improvements:
   * improved php and docs for sql reply daemon (other/sqlreply)
   * filesystem
-    * fixed AddFolder & AddFilePart & GetFileFolder for some models 
+    * fixed AddFolder & AddFilePart & GetFileFolder for some models
       (available in 1.02.12)
     * ID_FullName is written in GSM_File in Unicode (SNOFS and other
       projects have to be modified to handle it)
@@ -2104,7 +2104,7 @@ NOTE2: work in progress:
     * better info about birthday alarm with --getallcalendar
     * better recurrance info for DCT4 method 1
     * Fill_Time_T doesn't need TZ (FOR CHECKING)
-  * getting short files from filesystem1 in phones with filesystem1&2 doesn't 
+  * getting short files from filesystem1 in phones with filesystem1&2 doesn't
     mix some structure values
   * better screen output with --getfiles
   * Gammu is much more intelligent with Bluez
@@ -2119,13 +2119,13 @@ NOTE2: work in progress:
     * proper sleeping for Borland compiler
     * fixed compilation when Nokia stuff is disabled
     * improved speed support for some non Linux systems
-    * man page had some wrongly formatted strings, improved one regexp 
+    * man page had some wrongly formatted strings, improved one regexp
       shown there
     * backup functions didn't free earlier INI structures
     * SMS backup reads returned earlier some fields undefined
 
 NOTES: * I can't confirm in this moment some issues connected with wrong
-         downloading files & getting calendar notes over BT in Linux 
+         downloading files & getting calendar notes over BT in Linux
 	 (it both works OK for me)
        * BT should be checked with SE, Siemens (phones other than Nokia),
          because Gammu searches differently for RF channels and services now
@@ -2143,7 +2143,7 @@ NOTES: * I can't confirm in this moment some issues connected with wrong
 
 20050711 - 1.01.25
 * new functionality:
-  * simple daemon (other/sqlreply) for making SQL actions and running programs 
+  * simple daemon (other/sqlreply) for making SQL actions and running programs
     on server side, when some SQL rules will happen. Can be used for
     autoreplies, sending mails, etc., when you send SMS to MYSQL daemon
   * translations:
@@ -2245,7 +2245,7 @@ NOTE2: I had to change detecting folders for filesystem1 again. Please compare
 
 20050214 - 1.00.04
 * new functionality:
-  * filesystem2 support is complete (setting attributes, setting dates & 
+  * filesystem2 support is complete (setting attributes, setting dates &
     times, using checksums, deleting files)
   * added new dku2 connection. It should handle correctly dku2 with linux
     kernel modules, but...it's for testing, if I'm right or not
@@ -2262,7 +2262,7 @@ NOTE2: I had to change detecting folders for filesystem1 again. Please compare
 
 20050208 - 1.00.00
 * new functionality:
-  * dct4: 
+  * dct4:
     * support for 3220 features                                    (Joe Neeman)
     * filesystems return info, when you try to get non existing file
   * blueat works for some SE                                     (Michal Cihar)
@@ -2282,23 +2282,23 @@ NOTE2: I had to change detecting folders for filesystem1 again. Please compare
       * tones, tones2 - music, tones, etc. folders
       * gallery, gallery2 - pictures, images etc.
       Earlier getting folder ID in filesystem1 (older dct4) was based for
-      some models on concrete ID. It was done, because folder name was 
+      some models on concrete ID. It was done, because folder name was
       different for each language version. It was wrong - Nokia for example
-      in 6220 changed ID's from 5.15 to 6.29. Now it will be handled 
+      in 6220 changed ID's from 5.15 to 6.29. Now it will be handled
       differently.
-      BIG REQUEST: if you have national name for folder in your 
-                   phone and --nokiaaddfile doesn't find folder, please 
+      BIG REQUEST: if you have national name for folder in your
+                   phone and --nokiaaddfile doesn't find folder, please
                    report "textall --getfilesystem" output
     * when you get file, it's saved to local folder under original name
       without path
   * * better handling Siemens                                    (Michal Cihar)
     * calling nested functions which work on static buffer can lead to crash
     * fix for restoring Unicode files
-    * AT: enabling incoming SMS info now works with most phones, 
+    * AT: enabling incoming SMS info now works with most phones,
       we don't have any hardcoded parameters
-    * AT: improved charset handling in AT module. It now reads 
-      available and set values in phone and uses the best one instead of 
-      hardcoding charset for some phones and trying all known charsets 
+    * AT: improved charset handling in AT module. It now reads
+      available and set values in phone and uses the best one instead of
+      hardcoding charset for some phones and trying all known charsets
       for the others.
     * user function can now get ONLY location instead of complete message
       (incoming sms)
@@ -2306,7 +2306,7 @@ NOTE2: I had to change detecting folders for filesystem1 again. Please compare
 20050116 - 0.99.22
 * new functionality:
   * partial support for 6230 filesystem. You can:                 (Intra Darma)
-    1. see files using --getfilesystem (MMC is b:/, phone memory is a:/ 
+    1. see files using --getfilesystem (MMC is b:/, phone memory is a:/
        and app memory is c:/)
     2. get files (warning: checksums not available)
     3. upload files
@@ -2335,7 +2335,7 @@ NOTE2: I had to change detecting folders for filesystem1 again. Please compare
       * Siemens:
         * handling for CMS errors for getting pbk
         * support for CME error 100
-        * use current VCARD parser to read pbk entries (instead of old Timo 
+        * use current VCARD parser to read pbk entries (instead of old Timo
 	  Teras source). It allows to parse all entries
 
 * fixes and improvements:
@@ -2344,7 +2344,7 @@ NOTE2: I had to change detecting folders for filesystem1 again. Please compare
   * fixed bug with disabling Chat menu for 6220
   * fixed recognizing folders with Nokia filesystem
   * * fixed bug with shared compilation if Gammu was previously  (Michal Cihar)
-      installed. Earlier it added -L/usr/lib before -L./common 
+      installed. Earlier it added -L/usr/lib before -L./common
       and older gammu library was found
     * added -fPIC which is needed on many platform (ppc, ppc64, x86_64,...)
     * fix for displaying end time in recurrency
@@ -2362,7 +2362,7 @@ NOTE: * it's confirmed, that 6230 RH-12 4.44, 3100 doesn't give caller id info
       * I saw, that new Nokias don't have support for pbk in AT mode...
       * this is last test release before 1.00. I made it test release,
         because contains many parts written not by me, changes many things
-        in AT module and VCARD support and support for Nokia filesystems. 
+        in AT module and VCARD support and support for Nokia filesystems.
         I think few days will be enough for making tests
       * waiting in queue:
         * few patches from Michal Cihar (I will speak with him soon)
@@ -2382,12 +2382,12 @@ NOTE: * it's confirmed, that 6230 RH-12 4.44, 3100 doesn't give caller id info
 
 20041107 - 0.99.6
 * new functionality:
-  * support for recurrances includes number of retries (and end day) 
+  * support for recurrances includes number of retries (and end day)
     available in 6230 (and other Series 40 2.0)
   * full support for 30 days recurrances in Nokia DCT4
   * new other/php/linked.php PHP script. It's example,       (Michele Rossetti)
-    how to take SMS from Inbox in MySQL DB created by SMSD, link them, process 
-    and save to new table. There are processed non-linked sms & linked sms 
+    how to take SMS from Inbox in MySQL DB created by SMSD, link them, process
+    and save to new table. There are processed non-linked sms & linked sms
     with short and long UDH
   * Inbox in MySQL DB contains new entry "Processed"         (Michele Rossetti)
 
@@ -2402,13 +2402,13 @@ NOTE: * it's confirmed, that 6230 RH-12 4.44, 3100 doesn't give caller id info
   * fixed bug in activating wap/mms/chat/... settings
   * fixed bug in --restore for restoring notes with no todo
   * all recurrances for Nokia phones are handled using Alcatel style
-    (it's more generic). All old backup files are automatically converted 
-    during restore and "old" recurrance style is recognized. All new created 
+    (it's more generic). All old backup files are automatically converted
+    during restore and "old" recurrance style is recognized. All new created
     backup files uses new style. Because recurrance info is lost during
     restoring these files by older Gammu, version of backup files is changed
     to higher
 
-NOTE: Recurrance support doesn't resolve all recurrance problems. 
+NOTE: Recurrance support doesn't resolve all recurrance problems.
       Example 1:
       1. set note to 20-11-2004 and recurrance to each day up to 27-11-2004
       2. delete note from 23-11-2004
@@ -2417,7 +2417,7 @@ NOTE: Recurrance support doesn't resolve all recurrance problems.
       Example 2:
       1. create note 20-11-2004
       2. set monthly repeat up to 10-10-2005
-      3. Gammu will back up it (end date) as 20-09-2005 although in phone you 
+      3. Gammu will back up it (end date) as 20-09-2005 although in phone you
          have end repeat date 10-10-2005. Note of course will have last repeat
          20-09-2005, but...
 
@@ -2430,7 +2430,7 @@ NOTE: Recurrance support doesn't resolve all recurrance problems.
     * for compiling under DJGPP set some variables in cfg/makefile.cfg
       and use new "make djgpp"
   * partial solution for making prerequisites files for GCC. By default
-    commented. If you want to work with it (and have correct results), please 
+    commented. If you want to work with it (and have correct results), please
     uncomment lines with "-include" in cfg/makefile.glo & make buliding from
     one directory only
   * 3105 features                                                (Vincent Chau)
@@ -2452,21 +2452,21 @@ NOTE: Recurrance support doesn't resolve all recurrance problems.
   * 6820 doesn't have FM Radio                              (Tomasz Motylewski)
   * added RNG to list of supported ringtones                            (Zibri)
 
-Note: if you restore sms to DCT4 using --restoresms: some Gammu versions 
-      contained bug: numbers for sms folders were mixed. If you have this 
+Note: if you restore sms to DCT4 using --restoresms: some Gammu versions
+      contained bug: numbers for sms folders were mixed. If you have this
       problem, make such replacements: "Folder = 3" with "Folder = 4",
       "Folder = 1" with "Folder = 3", etc.
 
 Note2: waiting in queue for such things:
        * Ace's patch
-       * tones of smsd patches: support for incoming sms handler, 
+       * tones of smsd patches: support for incoming sms handler,
          RejectDuplicates, Inbox sms and others
        * checking some 6110 calendar & 6310i sms related reports
        * .....
 
 20041003 - 0.98.9
 * new functionality:
-  * support for USSD codes in AT module. You can get USSD codes now using 
+  * support for USSD codes in AT module. You can get USSD codes now using
     --getussd:
     * in AT mode (tested with success with Siemens MC35, fails with Nokia)
     * with latest DCT3 (6210) and Nokia protocols after enabling Incoming Info
@@ -2483,7 +2483,7 @@ Note2: waiting in queue for such things:
       smsc numbers for incoming sms
     * support for AT+CMMS                                      (Jorgen Thomsen)
   * started work on n650 support
-  * -nonempty & displaying stats for --getmemory 
+  * -nonempty & displaying stats for --getmemory
   * --searchdevice can find irdaat on win32
   * backup for chat/syncml settings
   * --getallnotes
@@ -2531,7 +2531,7 @@ NOTES: * I plan to have 0.99 somewhere near 10-10-2004
          NCDS for N3110 or MBUS for N2110 ?
        * Please check Bluez deeply on your OS. For me works 100% OK now
        * there is RSS channel now - www.mwiacek.com/gsm/soft/gammu.rss
-         It will be another way for informing people about new test/stable 
+         It will be another way for informing people about new test/stable
          releases. I wait for comments about it on Gammu mailing list
 
 20040909 - 0.98.0
@@ -2589,11 +2589,11 @@ Note: Some time outside home and a lot of phisical work inside home made, that
       * serial driver for djgpp
       * affix
       ... (and many others)
-Note: * BT checked with final version of Win XP SP2 (both with virtual COM 
+Note: * BT checked with final version of Win XP SP2 (both with virtual COM
         ports and native support). Works fine
       * excluding privileges MySQL support is complete
-      * like promised I started to look into known bugs. I'm testing 6210 
-        with release version in win32 and still can't find any problems with 
+      * like promised I started to look into known bugs. I'm testing 6210
+        with release version in win32 and still can't find any problems with
         --getallsms
 
 20040801 - 0.97.7
@@ -2648,7 +2648,7 @@ NOTE: please check very deeply AT phonebook stuff. I will ask to check
     It works like blue + something in older Gammu versions (with connecting
     to hardcoded RF channels)
   * switch -yes for --backup                                 (martin f krafft)
-  * MySQL and SMSD: 
+  * MySQL and SMSD:
     * * full support for TextDecoded in outgoing sms
       * full support for adding outgoing SMS from various PC
       * source compilable for win32 and MSVC
@@ -2675,10 +2675,10 @@ NOTE: waiting in queue:
       and some others
 
       Current MySQL SMSD is really powerfull:
-      * you can set MySQL database on win32 or Linux and connect to it 
-        from Gammu working in win32 or Linux or own software (in the same time 
-        even from many PC connected with PC with MySQL over network), 
-        additionaly you can easy manage MySQL database from free 
+      * you can set MySQL database on win32 or Linux and connect to it
+        from Gammu working in win32 or Linux or own software (in the same time
+        even from many PC connected with PC with MySQL over network),
+        additionaly you can easy manage MySQL database from free
         Apache + PHPMyAdmin
       * sms can be sent and received
       * all formats of sms are supported in database
@@ -2688,7 +2688,7 @@ NOTE: waiting in queue:
       * phone can enter PIN after rebotting (with some models)
       * there are black and white phone number lists for incoming sms
       There are planned notifications over email (when something works wrong),
-      own PHP www pages for adding outgoing sms to database and assigning 
+      own PHP www pages for adding outgoing sms to database and assigning
       Delivery Reports to sent SMS
 
 20040714 - 0.96.9
@@ -2699,8 +2699,8 @@ NOTE: waiting in queue:
     in some DCT4 phones after using Gammu. Please note, that Gammu is slower
     because of it, but it allows to avoid some problems
   * new --nokiamakecamerashoot
-  * New two command line options, which get syncml/chat settings for DCT4 
-    series 40 now. Name of syncml settings can't probably get from phone 
+  * New two command line options, which get syncml/chat settings for DCT4
+    series 40 now. Name of syncml settings can't probably get from phone
     (at least in 6220 5.15)
 
 * fixes and improvements:
@@ -2785,7 +2785,7 @@ NOTE: * www moved to new server. if there are any problems with access,
       to give only connection type and nothing more. Please note, that
       searching for all devices will need more time than connecting to
       specified one
-    Similiar functionality is planned for BlueZ stack (for now RF channel for 
+    Similiar functionality is planned for BlueZ stack (for now RF channel for
     PHONET and Nokia is by default 15, which is good and not; in the future
     it will be detected)
   * win32 builds are created by default with bt support
@@ -2810,7 +2810,7 @@ INFO: Many planned things still stay in queue. But you know: exams (I'm still
     and SENDING SMS saved in MySQL database (this feature supports all Gammu
     formats like logos, ringtones and other). New --sendsmsdsms
   * DCT4:
-    * full support for phonebook features: user ID & sms list ID (both 
+    * full support for phonebook features: user ID & sms list ID (both
       reading and saving to phone)
     * it's possible to get/set readonly WAP/MMS settings from/to phone
     * full support for NRT format
@@ -2829,18 +2829,18 @@ NOTES: well, good developing need some funds for research. Because of it I have
        to work on other projects too and have less time for Gammu. Happily some
        of them need somehow Gammu and this development will be continued. In
        this moment I will concentrate especially on some TDMA phones (like
-       3320) and more win9x support. 
+       3320) and more win9x support.
 
-       What will be next ? I quess, that it will depend mainly on people, who 
-       donate project. This is not excellent solution, but after quarrels with 
+       What will be next ? I quess, that it will depend mainly on people, who
+       donate project. This is not excellent solution, but after quarrels with
        people, who had rights/though, that have rights to some things in source
        only possible.
 
-       Generally it's not bad, but it's not very good too. If you like Gammu 
+       Generally it's not bad, but it's not very good too. If you like Gammu
        and want to help in development, please contact - project needs help
-       a lot (testing, coding, donating, sponsoring, hosting, etc.). I quess, 
-       that Michal Cihar will return soon, but even with his effort without 
-       other help it will be difficult to make many required things. There are 
+       a lot (testing, coding, donating, sponsoring, hosting, etc.). I quess,
+       that Michal Cihar will return soon, but even with his effort without
+       other help it will be difficult to make many required things. There are
        lacks with SonyEricsson, Siemens and other...
 
 TODO: update MSVC6 and borland makefiles
@@ -2859,7 +2859,7 @@ TODO: update MSVC6 and borland makefiles
     * activator for netmonitor for Siemens using solutions from Ivan
       Gorinov
   * --getalltodo and --getallcalendar can be interrupted by      (Michal Cihar)
-    Ctrl+C 
+    Ctrl+C
 
 * fixes and improvements:
   * DCT4:
@@ -2872,7 +2872,7 @@ TODO: update MSVC6 and borland makefiles
     * updated Czech translation
     * optimalised and improved readibility of many while (1) loops
     * fix GetMsg, to handle correcly messages, that start with same text
-    * fix GetSMS not to use global variable i which is also used in 
+    * fix GetSMS not to use global variable i which is also used in
       displaymultismsinfo
     * ATGEN:
       * handle correctly error when sending message
@@ -2907,7 +2907,7 @@ ToDo: 1.ending support for all features in new Series 40 models
   * * Debian:                                                    (Michal Cihar)
       * added devel docs into devel package
     * Alcatel:
-      * automatic detection, when model not specified in config    
+      * automatic detection, when model not specified in config
       * adding categories
   * backup file contains full info about creator
   * first version of backup/restore application for win32
@@ -2975,7 +2975,7 @@ NOTE: Many exams (happily passed), a lot of work and no time for anything.
       by phone isn't the lowest
     * a bit cleaned up building system
     * GetGammuVersion has smaller buffer
-    * drop PreferUnicode, phone modules that have choice whether to save 
+    * drop PreferUnicode, phone modules that have choice whether to save
       in unicode or not (currently only AT) should decide this automatically
     * better handling of use_global (it is now not needed to be copied)
     * smfprintf and DumpMessage now requires debug level,
@@ -3010,7 +3010,7 @@ NOTE: Many exams (happily passed), a lot of work and no time for anything.
         is needed, this speeds up things in many cases (like finding
         next empty location)
       * ATGEN_ReplyGetSecurityStatus - first check for PIN2/PUK2 and then for
-        normal PIN/PUK, otherwise PIN2/PUK2 are never found 
+        normal PIN/PUK, otherwise PIN2/PUK2 are never found
       * ATGEN_PrivSetMemory:
         * REQUEST_SIZE is large enough to fit any possible text
         * detects whether saving in unicode is possible and needed and saves
@@ -3182,7 +3182,7 @@ NOTE: CFG reader doesn't work 100% correctly for Unicode now. Please use
   * * added lots of API documentation                            (Michal Cihar)
     * support for GetProductCode in Alcatel
   * * support for AT^MI for Siemens                                     (Walek)
-    * --siemensnetmonitor renamed to --Siemenssatnetmon and extended 
+    * --siemensnetmonitor renamed to --Siemenssatnetmon and extended
       with decoding in Mensure result info in 128, 256, 512 and 1024 format
       ranges
   * ADDED PART OF BLACKSPHERE PROJECT (THE MAIN FOR TASK IS UNDERSTANDING (W.J)
@@ -3228,7 +3228,7 @@ NOTE: CFG reader doesn't work 100% correctly for Unicode now. Please use
     * added ldconfig to post/postun
     * use a bit more rpm macros
     * spec file moved to root of sources, this allows direct build of rpm
-      from tarball: `rpmbuild -ta tarball' 
+      from tarball: `rpmbuild -ta tarball'
   * fix for n7110.c and 0xf8 sms folder during saving sms
   * fix for incorrect folder name for --addnokiafile
   * fix in decoding BASE64 and SE T68i calendar encoding                (Walek)
@@ -3281,7 +3281,7 @@ NOTE: Changed license of project. Before saying something see copying file for
   * improved timezones support for sms                             (Vita Samel)
   * versions in win32 are again with ",", not with "."
   * improved handling calendar locations for some concrete    (Darko Obradovic)
-    phones 
+    phones
 
 20031102 - 0.88.0.0
 * new functionality:
@@ -3296,7 +3296,7 @@ NOTE: Changed license of project. Before saying something see copying file for
       * added -sent to sms (this was default, but it should be there)
       * new --getfilesystemstatus
       * --searchphone searches for at devices on IrDA on linux
-      * complete rewrite of help system - now help always mathes what program 
+      * complete rewrite of help system - now help always mathes what program
         really handles, help splitted to smaller pages, help is wrapped to
         real terminal size, gammu --help doesn't overwrite logfile
       * can specify user config from gammurc
@@ -3329,7 +3329,7 @@ NOTE: because of many internal changes (in this and 0.87.4 release) please
   * * Changes in internal API for phone modules:                 (Michal Cihar)
       * GSM_CalendarStatus
       * addes some API docs (only for touched functions)
-    * Alcatel:                                                   
+    * Alcatel:
       * support for writing calendar
       * added some Alcatel phone ids
       * added support for some new functions supported by AT
@@ -3351,7 +3351,7 @@ NOTE: because of many internal changes (in this and 0.87.4 release) please
       * do not explicitely fail if speed is other than 19200
       * GetNextXXXX functions now return entries as ordered in phone and
         not as ordered by locations
-    * backup files had "Location" name for location of calendar note and 
+    * backup files had "Location" name for location of calendar note and
       location of meeting inside calendar note. FIXED
     * better flags in pkgconfig
   * SMS:
@@ -3410,7 +3410,7 @@ NOTE: because of many internal changes (in this and 0.87.4 release) please
       with T300/T310 (R1, R3) and T68i (up to R8) and other (phones limit)
   * my official info about GPRS Online in Nokia phones in readme.txt
   * source modified to have support for notes (they're in Nokia and
-    SE): new --getnote and other    
+    SE): new --getnote and other
 
 20031005 - 0.85.5.0
 * new functionality:
@@ -3536,7 +3536,7 @@ NEWS: CVS available, Michal Cihar added md5 checksums and bzip2 files
   * OBEX module (both irda and bluetooth):
     * compatible with Inbox in Series60 (3650)
     * doesn't display file attributes with --getfilesystem
-    * uses original filename with --getfiles 
+    * uses original filename with --getfiles
   * debug is much more usable for unknown/incorrect frames. They're displayed
     too, when GSM_ReadDevice is used only
   * removed some overflow possibility with dll
@@ -3926,7 +3926,7 @@ NOTE: created archive of mailing list:
   * irda compilation fix                                       (Roar Pettersen)
   * * write support for Alcatel (currently phonebook)            (Michal Cihar)
     * added Email2 phonebook field
-    * added getting of category name to --getmemory  
+    * added getting of category name to --getmemory
   * 6210/7110 identify in some situations improved               (Bharat Varma)
 
 NOTE: for 5100, 6100, 6610, 7210, 7250 I need testing FM & ToDo (and probably
@@ -4071,7 +4071,7 @@ NOTE: for 5100, 6100, 6610, 7210, 7250 I need testing FM & ToDo (and probably
     to Windows and vice verse
 
 * fixes and improvements:
-  * few releases ago during changing SMS API to EMS needs I forgotten   (Nicke, 
+  * few releases ago during changing SMS API to EMS needs I forgotten   (Nicke,
     to change one thing in SMSD. It didn't sent any SMS. Fixed.   yit-chun lai,
                                                                   Ari Ryynanen)
   * rewritten support for caller logos. Easier and better.
@@ -4314,7 +4314,7 @@ NOTE: Summary for 2002
         * giving support for more formats (like Ericsson WAP settings over SMS)
 
           Note: I have in my library specs for many models (example: Morotola,
-                Sagen, Siemens xx45) and it's only required to code few 
+                Sagen, Siemens xx45) and it's only required to code few
                 functions into current source to have support for them...
 
         * AT modem emulator
@@ -4361,7 +4361,7 @@ NOTE: Summary for 2002
         are changed. Because of it it's always possible, that some
         small problems can happen. Please report such situations.
         Real changes in functionality (new functions, etc.) will be
-        visible soon (fast, when my flu will end). 
+        visible soon (fast, when my flu will end).
 
 20021202 - 0.64
 * new functionality:
@@ -4388,7 +4388,7 @@ NOTE: Summary for 2002
 20021124 - 0.63
 * new functionality:
   * Delphi project updated to version 7
-  * when start connection with win32dll function, have to give pointers with 
+  * when start connection with win32dll function, have to give pointers with
     addresses to callback functions, not addresses to functions. Later can
     change value of pointers and DLL will use new values.
   * added very easy example, which show, how to use win32 dll in classes
@@ -4477,7 +4477,7 @@ NOTE: These days were very hard for me:
     for editing - for example, when delete one pbk entry,
     all after it are interpreted
   * added possibility of using standard Unix configure
-    script for automatic configuring all options    
+    script for automatic configuring all options
 
     NOTE: this is first version of Autoconf build system.
           Probably many things inside will be changed to better.
@@ -4705,7 +4705,7 @@ Summary: in progress restoring WAP settings for DCT3, ending restoring
        * deleting sms
        * SMS memory in phone (phone Inbox/Outbox in 6210, 63xx, etc.)
        * SMS status reports in Siemens style
-       etc. 
+       etc.
   * backup to phone profiles, restore for DCT4 (EXPERIMENTAL)
   * sms_serv working with AT devices
   * --nokiasetphonemenus enables netmon for DCT3

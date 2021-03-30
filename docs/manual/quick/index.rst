@@ -29,7 +29,7 @@ Installing Gammu
 ----------------
 
 On most platforms you can install Gammu from binaries - most Linux
-distributions ship Gammu and for Windows you can download binaries from 
+distributions ship Gammu and for Windows you can download binaries from
 `Gammu website <https://wammu.eu/download/>`_. You can find more detailed
 instructions (including instructions for compiling from source) in
 :ref:`installing`.
@@ -68,13 +68,13 @@ Starting with Gammu on Windows
 ------------------------------
 
 First you need to find out device name where your phone/modem is connected. The
-easiest way is to look into :guilabel:`Device manager` under 
+easiest way is to look into :guilabel:`Device manager` under
 :guilabel:`Ports (COM & LPT)` and lookup correct COM port there.
 
 Generally for most current modems you will end up with something like
 ``COM12``.
 
-The next step is to create configuration file in 
+The next step is to create configuration file in
 :file:`$PROFILE\\Application Data\\gammurc` (see :ref:`gammurc`):
 
 .. code-block:: ini
@@ -143,7 +143,7 @@ information).
 You have to put both modem and storage service configuration into this file:
 
 .. code-block:: ini
-    
+
     [gammu]
     device = /dev/ttyUSB0
     connection = at

@@ -1,7 +1,7 @@
 Here is the work-flow to install and use,
 
  1. Attach an appropriate phone to your system where you want to execute the server application.
- 2. Install gammu-1.17 or upper(Not sure if lower version will work too, I did not tried with lower versions). 
+ 2. Install gammu-1.17 or upper(Not sure if lower version will work too, I did not tried with lower versions).
  3. Get the smscgi from the link above, uncompress and make.
 This will create "smscgi" executable file.
 
@@ -16,7 +16,7 @@ cgi-bin = /your/script/path
 <?php
 # filename echo
 #
-# 
+#
 
 $_HEADER = array();
 while($data = fgets(STDIN, 4096)) {
@@ -36,7 +36,7 @@ while($data = fgets(STDIN, 4096)) {
 }
 
 /**
- * SO, 
+ * SO,
  * $_REQUEST      is the sms data.
  * $_HEADER       is the header array. For example $_HEADER["SMS_FROM"] is the sender number.
  */
@@ -72,7 +72,7 @@ SMS_FROM: +1234567
 (note blank line here)
 I am fine
 </code>
- 
+
  The above input will output "I am fine" and exit.
 
 
@@ -93,5 +93,3 @@ script.
 
 You can get more information on mobile setup for gammu at http://www.gammu.org/ .
 Finally all we are using is opensource .. it is under GPL-3 :)
-
-

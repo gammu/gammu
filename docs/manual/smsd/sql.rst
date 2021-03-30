@@ -108,7 +108,7 @@ Phone Specific Parameters
     network code
 ``%M``
     network name
-    
+
 
 .. _SMS Specific Parameters:
 

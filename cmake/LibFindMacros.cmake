@@ -96,4 +96,3 @@ macro(libfind_library PREFIX basename)
     PATHS ${${PREFIX}_PKGCONF_LIBRARY_DIRS}
   )
 endmacro(libfind_library)
-

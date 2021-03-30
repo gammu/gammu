@@ -158,5 +158,3 @@ which are used by this class.
 
    :param command: Name of command.
    :type command: string
-
-

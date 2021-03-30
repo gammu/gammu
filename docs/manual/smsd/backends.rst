@@ -17,4 +17,3 @@ outgoing ones).
     odbc
     null
     tables
-

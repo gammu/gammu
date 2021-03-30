@@ -34,14 +34,14 @@ connection = fbusblue
 ;startinfo = yes
 ;gammucoding = utf8
 
-; Step 1. Please find required Connection parameter and look into assigned 
+; Step 1. Please find required Connection parameter and look into assigned
 ; with it device type. With some Connection you must set concrete model
 
 ; ================================================================ cables =====
 ; New Nokia protocol for FBUS/DAU9P
 ;    Connection "fbus", device type serial
 ; New Nokia protocol for DLR3/DLR3P
-;    Connection "fbusdlr3"/"dlr3", device type serial 
+;    Connection "fbusdlr3"/"dlr3", device type serial
 ; New Nokia protocol for DKU2 (and phone with USB converter on phone mainboard
 ;                              like 6230)
 ;    Connection "dku2phonet"/"dku2", device type dku2 on Windows
@@ -54,12 +54,12 @@ connection = fbusblue
 ;    Connection "fbuspl2303", device type usb
 ; Old Nokia protocol for MBUS/DAU9P
 ;    Connection "mbus", device type serial
-; Variants: 
+; Variants:
 ; You can modify a bit behaviour of connection using additional flags
 ; specified just after connection name like connection-variant.
-; If you're using ARK3116 cable (or any other which does not like dtr 
+; If you're using ARK3116 cable (or any other which does not like dtr
 ; handling), you might need -nodtr variant of connection, eg. dlr3-nodtr.
-; If cable you use is not powered over DTR/RTS, try using -nopower variant of 
+; If cable you use is not powered over DTR/RTS, try using -nopower variant of
 ; connection, eg. fbus-nopower.
 ; -----------------------------------------------------------------------------
 ; AT commands for DLR3, DKU5 or other AT compatible cable (8 bits, None
@@ -95,7 +95,7 @@ connection = fbusblue
 ;    Connection "bluephonet", device type BT
 ; -----------------------------------------------------------------------------
 ; AT commands for Bluetooth stack and 6210 / DCT4 Nokia models, which don't
-; inform about BT services correctly (6310, 6310i with firmware lower 
+; inform about BT services correctly (6310, 6310i with firmware lower
 ; than 5.50, 8910,..)
 ;    Connection "bluerfat", device type BT
 ; AT commands for Bluetooth stack with other phones (Siemens, other Nokia,etc.)
@@ -139,7 +139,7 @@ connection = fbusblue
 ; Parameter name  | Description
 ; ----------------|------------------------------------------------------------
 ; Model           | Should not be used unless you have a good reason to do so.
-;                 | If Gammu doesn't recognize your phone model, put it here. 
+;                 | If Gammu doesn't recognize your phone model, put it here.
 ;                 | Example values: "6110", "6150", "6210", "8210"
 ; SynchronizeTime | if you want to set time from computer to phone during
 ;                 | starting connection. Do not rather use this option when

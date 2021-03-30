@@ -72,7 +72,7 @@ if (!isset($_POST['op'])) {
 		echo "<input type=hidden name=id value=$rekord[0]>\n";
 		echo "<input type=submit value='DEL'>";
 		echo "</form>\n";
-	
+
 		$count = 0;
 		$result2 = mysql_db_query("autoreply","select ID,RuleID,DB,SQL,User,Pass,PC from rules where ID=$rekord[0]");
 		while($rekord2 = mysql_fetch_row($result2)) {
@@ -100,7 +100,7 @@ if (!isset($_POST['op'])) {
 			echo "</td></tr></table>\n";
 			$count++;
 		}
-	
+
 		echo "<table width=100% class=body2><tr><td colspan=2><b>New rule</b></td></tr><tr><td valign=top>";
 		echo "<form method=\"POST\" action=autoreply.php  onSubmit=\"return confirm('Do you want to add this rule ?');\">\n";
 		echo "<input type=hidden name=op value=addrule>\n";
@@ -111,7 +111,7 @@ if (!isset($_POST['op'])) {
 		echo "MySQL DB name<br><input name=db></td><td>";
 		echo "MySQL SQL text<br><textarea name=sql rows=7 cols=96></textarea></td>";
 		echo "<td valign=top>Actions<br><input type=submit value=ADD></form></td></tr></table>";
-	
+
 		$count = 0;
 		$result2 = mysql_db_query("autoreply","select ActionID, User,User2,Pass,Pass2,DB,DB2,PC,PC2,SQL,User3,Pass3,DB3,PC3 from actions where ID=$rekord[0]");
 		while($rekord2 = mysql_fetch_row($result2)) {

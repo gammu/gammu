@@ -14,7 +14,7 @@ awk 'BEGIN { p = 0; }
 /<\/table>/ { p = 0;}' < "$tmp" | \
 	sed 's@</td></tr><tr><th>@\n@; s@<tr><th>@@; s@</th><td>@;@g; s@</td></tr>@@; s@</td>@@; s@<!-- @@; s@ -->@@;' | \
 	grep -Ev '&nbsp;|Cancelled' | \
-	gawk -F \; '{ 
+	gawk -F \; '{
 		delete models;
 		delete ids;
 		models[0] = $1;
@@ -42,8 +42,8 @@ awk 'BEGIN { p = 0; }
             sms = sms", F_SMS_LOCATION_0";
         }
 		if (length(models) == 2 && length(ids) == 2) {
-				print "\t{\""ids[0]"\",\t\""models[0]"\" ,\"\",\t\t\t\t   {F_OBEX"sms", 0}},"; 
-				print "\t{\""ids[1]"\",\t\""models[1]"\" ,\"\",\t\t\t\t   {F_OBEX"sms", 0}},"; 
+				print "\t{\""ids[0]"\",\t\""models[0]"\" ,\"\",\t\t\t\t   {F_OBEX"sms", 0}},";
+				print "\t{\""ids[1]"\",\t\""models[1]"\" ,\"\",\t\t\t\t   {F_OBEX"sms", 0}},";
 		} else {
 			/* Restore IDs, we need to have unique model */
 			if (length(models) == 1) {
@@ -52,7 +52,7 @@ awk 'BEGIN { p = 0; }
 			}
 			for (model in models) {
 				for (id in ids) {
-					print "\t{\""ids[id]"\",\t\""models[model]"\" ,\"\",\t\t\t\t   {F_OBEX"sms", 0}},"; 
+					print "\t{\""ids[id]"\",\t\""models[model]"\" ,\"\",\t\t\t\t   {F_OBEX"sms", 0}},";
 				}
 			}
 		}

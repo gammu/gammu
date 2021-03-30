@@ -14,4 +14,3 @@ install (
     DESTINATION "${INSTALL_BIN_DIR}"
     COMPONENT "utils"
     )
-

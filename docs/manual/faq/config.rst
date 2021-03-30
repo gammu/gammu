@@ -49,7 +49,7 @@ How to configure Symbian based phone?
 
 The only support for Symbian phones is using applet installed to phone and
 Bluetooth connection. You should use ``blues60`` :config:option:`Connection`
-and Bluetooth address of phone as :config:option:`Device`. On older Symbian 
+and Bluetooth address of phone as :config:option:`Device`. On older Symbian
 phones you will have to use gnapplet and ``bluerfgnapbus`` connection.
 
 .. seealso:: :ref:`s60`, :ref:`gammurc`

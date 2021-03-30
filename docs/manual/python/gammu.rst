@@ -1203,7 +1203,7 @@ Message processing
     .. code-block:: python
 
         gammu.DecodePDU(
-            '0681678968986811000a8152564557550010ff0d3bf67aed5ebbddeb1d7bed06'.decode('hex')
+            "0681678968986811000a8152564557550010ff0d3bf67aed5ebbddeb1d7bed06".decode("hex")
         )
 
 .. function:: EncodePDU(SMS, Layout = Submit)

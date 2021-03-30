@@ -18,4 +18,3 @@ sed -i '
     s/(C) YEAR/(C) 2003 - '`date +%Y`'/;
     s/VERSION/'$ver'/;
     ' locale/docs.pot
-    

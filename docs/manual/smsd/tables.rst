@@ -26,7 +26,7 @@ of the same message from :ref:`outbox_multipart`.
 Description of tables
 ---------------------
 
-.. _gammu-table: 
+.. _gammu-table:
 
 gammu
 +++++
@@ -475,7 +475,7 @@ History of schema versions:
 11
     all fields for storing message text are no longer limited to 160 chars,
     but are arbitrary length text fields.
-    
+
     .. versionchanged:: 1.25.92
 10
     ``DeliveryDateTime`` is now NULL when message is not delivered, added several

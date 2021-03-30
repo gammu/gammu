@@ -17,4 +17,3 @@ find_library(GObject_LIBRARY
 
 set(GObject_PROCESS_LIBS GObject_LIBRARY Glib_LIBRARIES)
 libfind_process(GObject)
-

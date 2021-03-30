@@ -1,30 +1,30 @@
--- 
+--
 -- Database for Gammu SMSD
--- 
+--
 -- In case you get errors about not supported charset, please
 -- replace utf8mb4 with utf8.
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `gammu`
--- 
+--
 
 CREATE TABLE `gammu` (
   `Version` integer NOT NULL default '0' PRIMARY KEY
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
--- 
+--
 -- Dumping data for table `gammu`
--- 
+--
 
 INSERT INTO `gammu` (`Version`) VALUES (17);
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `inbox`
--- 
+--
 
 CREATE TABLE `inbox` (
   `UpdatedInDB` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
@@ -43,16 +43,16 @@ CREATE TABLE `inbox` (
   PRIMARY KEY `ID` (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Dumping data for table `inbox`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `outbox`
--- 
+--
 
 CREATE TABLE `outbox` (
   `UpdatedInDB` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
@@ -83,16 +83,16 @@ CREATE TABLE `outbox` (
 CREATE INDEX outbox_date ON outbox(SendingDateTime, SendingTimeOut);
 CREATE INDEX outbox_sender ON outbox(SenderID(250));
 
--- 
+--
 -- Dumping data for table `outbox`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `outbox_multipart`
--- 
+--
 
 CREATE TABLE `outbox_multipart` (
   `Text` text,
@@ -107,15 +107,15 @@ CREATE TABLE `outbox_multipart` (
   PRIMARY KEY (`ID`, `SequencePosition`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
--- 
+--
 -- Dumping data for table `outbox_multipart`
--- 
+--
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `phones`
--- 
+--
 
 CREATE TABLE `phones` (
   `ID` text NOT NULL,
@@ -136,15 +136,15 @@ CREATE TABLE `phones` (
   PRIMARY KEY (`IMEI`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
--- 
+--
 -- Dumping data for table `phones`
--- 
+--
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `sentitems`
--- 
+--
 
 CREATE TABLE `sentitems` (
   `UpdatedInDB` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
@@ -175,14 +175,14 @@ CREATE INDEX sentitems_tpmr ON sentitems(TPMR);
 CREATE INDEX sentitems_dest ON sentitems(DestinationNumber);
 CREATE INDEX sentitems_sender ON sentitems(SenderID(250));
 
--- 
+--
 -- Dumping data for table `sentitems`
--- 
+--
 
 
--- 
+--
 -- Triggers for setting default timestamps
--- 
+--
 
 DELIMITER //
 
@@ -231,4 +231,3 @@ BEGIN
 END;//
 
 DELIMITER ;
-

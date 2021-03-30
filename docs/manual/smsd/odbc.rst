@@ -20,7 +20,7 @@ Supported drivers
 -----------------
 
 On Microsoft Windows, Gammu uses native ODBC, on other platforms, `unixODBC`_
-can be used. 
+can be used.
 
 .. _ODBC: https://en.wikipedia.org/wiki/Open_Database_Connectivity
 .. _unixODBC: http://www.unixodbc.org/
@@ -35,7 +35,7 @@ In most cases this can be solved by setting :config:option:`SQL` setting to
 correct dialect.
 
 If that fails, you can also tweak the SQL queries to work in used SQL server,
-see :ref:`SQL Queries` for more details. Still you should set 
+see :ref:`SQL Queries` for more details. Still you should set
 :config:option:`SQL` to closest matching SQL dialect.
 
 Configuration

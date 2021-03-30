@@ -48,4 +48,3 @@ API documentation
     worker
     exceptions
     objects
-

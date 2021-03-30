@@ -962,4 +962,3 @@ if(INSTALL_DOC)
 endif(INSTALL_DOC)
 
 add_subdirectory(contrib)
-

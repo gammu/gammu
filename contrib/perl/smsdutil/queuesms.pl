@@ -26,7 +26,7 @@
 require Getopt::Long;
 
 ## Program and File locations
-# 
+#
 $SMSSPOOLDIR = "/var/spool/sms/outbox/";
 
 
@@ -111,12 +111,12 @@ sub main {
 	        exit(SUCCESS);
 	}
 
-	if ($opt_x) { 
-		print "DEBUG: Debug mode is enabled.\n"; 
+	if ($opt_x) {
+		print "DEBUG: Debug mode is enabled.\n";
 		$verbose = 2;
 	} elsif ($quiet) { $verbose -= $quiet; }
 
-	if ($opt_m) { 
+	if ($opt_m) {
 		$message = $opt_m;
 	} else {
 		print "ERROR: Please specify a message\n";

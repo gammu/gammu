@@ -16,4 +16,3 @@ MACRO (MACRO_GAMMU_OPTION _name _description _default _cond1 _cond2)
         set(WITH_${_name} FALSE CACHE INTERNAL "Whether to enable ${_description}" FORCE)
     endif (${_cond1} AND ${_cond2})
 ENDMACRO (MACRO_GAMMU_OPTION)
-

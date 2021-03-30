@@ -55,4 +55,3 @@ int printf_info(const char *format, ...)
 
 	return ret;
 }
-

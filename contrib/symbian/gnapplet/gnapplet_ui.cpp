@@ -50,7 +50,7 @@ CApaDocument *CGNAppletApplication::CreateDocumentL(void)
 TUid CGNAppletApplication::AppDllUid(void) const
 {
 	TUid id = { 0x107d4df2 };	/* UID3 */
-	
+
 	return id;
 }
 

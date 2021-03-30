@@ -4,4 +4,3 @@ PROGRAM=/bin/cat
 for ID in "$@" ; do
     $PROGRAM < $INBOX/$ID
 done
-

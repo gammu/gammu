@@ -71,7 +71,7 @@ static void NetinfoGetRFLevelReqL(PktBuf &in, PktBuf &out)
 		percent = 0;
 		break;
 	}
-	
+
 	out << (TUint16)GNAPPLET_MSG_NETINFO_GETRFLEVEL_RESP;
 	out << (TUint16)GN_ERR_NONE;
 	out << (TUint8)percent;

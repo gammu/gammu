@@ -35,7 +35,7 @@
 |
 | Change log
 | v2.1
-| - Add function enable_sudo([int]) 
+| - Add function enable_sudo([int])
 |   set 1 if using sudo for gammu command exe
 ------------------------------------------*/
 

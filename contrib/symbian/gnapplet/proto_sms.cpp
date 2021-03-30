@@ -388,7 +388,7 @@ static void WriteMessageL(PktBuf &in, PktBuf &out)
 
 		entry = CMsvEntry::NewL(*g->msv_session, sms_observer.folders[memtype], TMsvSelectionOrdering());
 		CleanupStack::PushL(entry);
-		
+
 		wait = CMsvOperationWait::NewLC();
 		wait->Start();
 		operation = entry->CreateL(f, wait->iStatus);
@@ -438,7 +438,7 @@ static void WriteMessageL(PktBuf &in, PktBuf &out)
 #endif
 
 	CleanupStack::PopAndDestroy(sms_array);
-	
+
 	entry->ChangeL(f);
 
 	g->smsmtm->SaveMessageL();
@@ -695,7 +695,7 @@ static void WriteSmscL(PktBuf &in, PktBuf &out)
 	RAdvGsmSmsMessaging messaging;
 	messaging.Open(*g->phone);
 	CleanupClosePushL(messaging);
-	
+
 	//messaging.NotifySmsParameterListChanged(status);
 	Debug(_L("OK: %02x %S/%S"), e.iValidParams, &e.iText, &e.iServiceCentre.iTelNumber);
 	//sc = messaging.RetrieveSmsParameterListLC();

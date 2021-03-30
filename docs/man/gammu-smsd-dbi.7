@@ -116,11 +116,11 @@ CREATE TABLE inbox (
   RecipientID TEXT NOT NULL,
   Processed TEXT NOT NULL DEFAULT \(aqfalse\(aq,
   Status INTEGER NOT NULL DEFAULT \(aq\-1\(aq,
-  CHECK (Coding IN 
-  (\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq)) 
+  CHECK (Coding IN
+  (\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq))
 );
 
-CREATE TRIGGER update_inbox_time UPDATE ON inbox 
+CREATE TRIGGER update_inbox_time UPDATE ON inbox
   BEGIN
     UPDATE inbox SET UpdatedInDB = datetime(\(aqnow\(aq) WHERE ID = old.ID;
   END;
@@ -148,10 +148,10 @@ CREATE TABLE outbox (
   Priority INTEGER DEFAULT \(aq0\(aq,
   Status TEXT NOT NULL DEFAULT \(aqReserved\(aq,
   StatusCode INTEGER NOT NULL DEFAULT \(aq\-1\(aq,
-  CHECK (Coding IN 
+  CHECK (Coding IN
   (\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq)),
   CHECK (DeliveryReport IN (\(aqdefault\(aq,\(aqyes\(aq,\(aqno\(aq)),
-  CHECK (Status IN 
+  CHECK (Status IN
   (\(aqSendingOK\(aq,\(aqSendingOKNoReport\(aq,\(aqSendingError\(aq,\(aqDeliveryOK\(aq,\(aqDeliveryFailed\(aq,\(aqDeliveryPending\(aq,
   \(aqDeliveryUnknown\(aq,\(aqError\(aq,\(aqReserved\(aq))
 );
@@ -159,7 +159,7 @@ CREATE TABLE outbox (
 CREATE INDEX outbox_date ON outbox(SendingDateTime, SendingTimeOut);
 CREATE INDEX outbox_sender ON outbox(SenderID);
 
-CREATE TRIGGER update_outbox_time UPDATE ON outbox 
+CREATE TRIGGER update_outbox_time UPDATE ON outbox
   BEGIN
     UPDATE outbox SET UpdatedInDB = datetime(\(aqnow\(aq) WHERE ID = old.ID;
   END;
@@ -174,9 +174,9 @@ CREATE TABLE outbox_multipart (
   SequencePosition INTEGER NOT NULL DEFAULT \(aq1\(aq,
   Status TEXT NOT NULL DEFAULT \(aqReserved\(aq,
   StatusCode INTEGER NOT NULL DEFAULT \(aq\-1\(aq,
-  CHECK (Coding IN 
+  CHECK (Coding IN
   (\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq)),
-  CHECK (Status IN 
+  CHECK (Status IN
   (\(aqSendingOK\(aq,\(aqSendingOKNoReport\(aq,\(aqSendingError\(aq,\(aqDeliveryOK\(aq,\(aqDeliveryFailed\(aq,\(aqDeliveryPending\(aq,
   \(aqDeliveryUnknown\(aq,\(aqError\(aq,\(aqReserved\(aq)),
  PRIMARY KEY (ID, SequencePosition)
@@ -200,7 +200,7 @@ CREATE TABLE phones (
   Received INTEGER NOT NULL DEFAULT 0
 );
 
-CREATE TRIGGER update_phones_time UPDATE ON phones 
+CREATE TRIGGER update_phones_time UPDATE ON phones
   BEGIN
     UPDATE phones SET UpdatedInDB = datetime(\(aqnow\(aq) WHERE IMEI = old.IMEI;
   END;
@@ -226,10 +226,10 @@ CREATE TABLE sentitems (
   RelativeValidity INTEGER NOT NULL DEFAULT \(aq\-1\(aq,
   CreatorID TEXT NOT NULL,
   StatusCode INTEGER NOT NULL DEFAULT \(aq\-1\(aq,
-  CHECK (Status IN 
+  CHECK (Status IN
   (\(aqSendingOK\(aq,\(aqSendingOKNoReport\(aq,\(aqSendingError\(aq,\(aqDeliveryOK\(aq,\(aqDeliveryFailed\(aq,\(aqDeliveryPending\(aq,
   \(aqDeliveryUnknown\(aq,\(aqError\(aq)),
-  CHECK (Coding IN 
+  CHECK (Coding IN
   (\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq)) ,
   PRIMARY KEY (ID, SequencePosition)
 );
@@ -239,7 +239,7 @@ CREATE INDEX sentitems_tpmr ON sentitems(TPMR);
 CREATE INDEX sentitems_dest ON sentitems(DestinationNumber);
 CREATE INDEX sentitems_sender ON sentitems(SenderID);
 
-CREATE TRIGGER update_sentitems_time UPDATE ON sentitems 
+CREATE TRIGGER update_sentitems_time UPDATE ON sentitems
   BEGIN
     UPDATE sentitems SET UpdatedInDB = datetime(\(aqnow\(aq) WHERE ID = old.ID;
   END;

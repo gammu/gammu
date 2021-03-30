@@ -8,4 +8,3 @@ Testing Gammu
 
     testsuite
     dummy-driver
-

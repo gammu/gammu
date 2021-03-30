@@ -30,7 +30,7 @@ find_library(ODBC_LIBRARY NAMES iodbc odbc odbc32
     DOC "The ODBC library"
 )
 
-# handle the QUIETLY and REQUIRED arguments and set ODBC_FOUND to TRUE if 
+# handle the QUIETLY and REQUIRED arguments and set ODBC_FOUND to TRUE if
 # all listed variables are TRUE
 include(FindPackageHandleStandardArgs)
 FIND_PACKAGE_HANDLE_STANDARD_ARGS(ODBC DEFAULT_MSG ODBC_LIBRARY ODBC_INCLUDE_DIR)

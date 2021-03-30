@@ -194,7 +194,7 @@ don't need much specific tuning, you can use usual set of commands:
     ./configure
     make
     sudo make install
-    
+
 The configure wrapper will create directory build-configure and build all
 binaries there (nothing is changed in source tree), for example gammu binary is
 in build-configure/gammu directory.
@@ -551,7 +551,7 @@ To find out what is going on during compilation, add
 :program:`make` with ``VERBOSE=1``:
 
 .. code-block:: sh
-    
+
     make VERBOSE=1
 
 Debugging crashes

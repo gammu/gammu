@@ -19,7 +19,7 @@ Which phone is best supported?
 
 It really depends on what you expect. If you want to use SMSD, this topic is covered
 in separate FAQ (see :ref:`faq-smsd-phone`). For backing up your contacts or calendar,
-most of Nokia (S40 or S60) phones should work as well as any other capable of AT 
+most of Nokia (S40 or S60) phones should work as well as any other capable of AT
 commands. Gammu also supports wide range of extensions for Samsung, Motorola, Siemens
 or Sony-Ericsson phones.
 
@@ -30,8 +30,8 @@ or Sony-Ericsson phones.
 Are Nokia phones supported?
 ---------------------------
 
-It depends on used operating systems Series40 and older phones should work 
-(see :ref:`faq-config-nokia` for information how to configure them), Symbian 
+It depends on used operating systems Series40 and older phones should work
+(see :ref:`faq-config-nokia` for information how to configure them), Symbian
 based phones are covered in separate topic, check :ref:`faq-symbian`.
 
 .. _faq-symbian:

@@ -121,4 +121,3 @@ Example
     device = 5C:57:C8:BB:BB:BB
     name = Nokia E52
     connection = bluephonet
-

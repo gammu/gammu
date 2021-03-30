@@ -6,7 +6,7 @@ VCard access
 
 Read vcard, first 1 is READ command, second 1 is memory position::
 
-    AT+EVCARD=1,1 
+    AT+EVCARD=1,1
     +EVCARD: "0043003a005c00520065006300650069007600650064005c007e00760063006100720064005f0072002e007600630066"
     OK
 
@@ -38,4 +38,3 @@ Change operation mode to compatible::
 
     AT+ESUO=4
     OK
-

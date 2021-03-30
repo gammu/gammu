@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 # GetRecentPhoneFiles v2.0
-# 
+#
 # This Perl script downloads recent files from a phone using GAMMU.
 # USAGE: GetRecentPhoneFiles FOLDERNAME DAYS_OLD_AS_NUMBER
 # USAGE: GetRecentPhoneFiles Photo 14 # from folder Photos up to two weeks old
@@ -40,7 +40,7 @@ use Date::Parse;
 use POSIX qw(strftime);
 
 $ok = (open DUMPFILE, "<$dumpfile");
-if (! $ok) { 
+if (! $ok) {
 	system (@dumpfilecreator);
 	open DUMPFILE, "<$dumpfile" or die "could not open $dumpfile, could not call @dumpfilecreator, exiting!";
 }
@@ -57,10 +57,10 @@ while(<DUMPFILE>) {
 #      print $_,"\n";
 #      print "will fetch file ",@record[$r_File]," with id=",@record[$r_ID]," from folder ",@record[$r_Folder];
 #      print " dated as ",@record[$r_Date],"\n";
-#----------------------------------      
+#----------------------------------
 		}
 	}
-} 
+}
 @gammucmd = ( "gammu", "--getfiles");
 push @gammucmd, join(", ", @files);
 $gammustmt = join(" ", @gammucmd);
