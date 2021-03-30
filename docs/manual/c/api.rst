@@ -4,7 +4,6 @@ libGammu C API
 .. toctree::
     :maxdepth: 3
 
-    types
     backup
     bitmap
     calendar
@@ -28,5 +27,6 @@ libGammu C API
     settings
     smsd
     statemachine
+    types
     unicode
     wap
