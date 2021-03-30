@@ -5,9 +5,9 @@ objectclass: inetOrgPerson
 objectclass: mozillaAbPersonObsolete
 cn: Al
 mobile: 01111111111
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 000200000001
 
 objectclass: top
@@ -17,9 +17,9 @@ objectclass: inetOrgPerson
 objectclass: mozillaAbPersonObsolete
 cn: Ali
 mobile: 02222222222
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 000200000002
 
 objectclass: top
@@ -29,9 +29,9 @@ objectclass: inetOrgPerson
 objectclass: mozillaAbPersonObsolete
 cn: Amanda
 mobile: 03333333333
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 000200000003
 
 objectclass: top
@@ -42,9 +42,9 @@ objectclass: mozillaAbPersonObsolete
 sn: D
 cn: Anna
 mobile: 04444444444
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 000200000015
 
 objectclass: top
@@ -55,9 +55,9 @@ objectclass: mozillaAbPersonObsolete
 sn: K
 cn: Anna
 mobile: 05555555555
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 000200000004
 
 objectclass: top
@@ -68,9 +68,9 @@ objectclass: mozillaAbPersonObsolete
 sn: Medical Centre
 cn: B
 workPhone: 06666666666
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 000200000023
 
 objectclass: top
@@ -80,9 +80,9 @@ objectclass: inetOrgPerson
 objectclass: mozillaAbPersonObsolete
 cn: Bill
 mobile: 07777777777
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 000200000027
 
 objectclass: top
@@ -93,9 +93,9 @@ objectclass: mozillaAbPersonObsolete
 sn: Break Down
 cn: Boiler
 workPhone: 0888888888
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 00020000001D
 
 objectclass: top
@@ -105,9 +105,9 @@ objectclass: inetOrgPerson
 objectclass: mozillaAbPersonObsolete
 cn: Clint
 mobile: 09999999999
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 000200000016
 
 objectclass: top
@@ -117,9 +117,9 @@ objectclass: inetOrgPerson
 objectclass: mozillaAbPersonObsolete
 cn: Clo
 homePhone: 01010101010
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 00020000001E
 
 objectclass: top
@@ -130,9 +130,9 @@ objectclass: mozillaAbPersonObsolete
 cn: Dad
 mobile: 01001001
 telephoneNumber: 01001002
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 000200000005
 
 objectclass: top
@@ -143,9 +143,9 @@ objectclass: mozillaAbPersonObsolete
 sn: Work
 cn: Dad
 workPhone: 01001003
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 000200000033
 
 objectclass: top
@@ -155,9 +155,9 @@ objectclass: inetOrgPerson
 objectclass: mozillaAbPersonObsolete
 cn: Dan
 mobile: 01001004
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 000200000006
 
 objectclass: top
@@ -167,9 +167,9 @@ objectclass: inetOrgPerson
 objectclass: mozillaAbPersonObsolete
 cn: Dean
 mobile: 01001005
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 000200000007
 
 objectclass: top
@@ -179,9 +179,9 @@ objectclass: inetOrgPerson
 objectclass: mozillaAbPersonObsolete
 cn: Dennis
 mobile: 01001006
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 000200000024
 
 objectclass: top
@@ -192,9 +192,9 @@ objectclass: mozillaAbPersonObsolete
 sn: Lloyds Pharmacy
 cn: Did
 workPhone: 01001007
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 00020000002F
 
 objectclass: top
@@ -205,9 +205,9 @@ objectclass: mozillaAbPersonObsolete
 cn: Edwin
 homePhone: 01001008
 mobile: 01001009
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 000200000035
 
 objectclass: top
@@ -217,9 +217,9 @@ objectclass: inetOrgPerson
 objectclass: mozillaAbPersonObsolete
 cn: Emma
 homePhone: 01001010
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 000200000034
 
 objectclass: top
@@ -230,9 +230,9 @@ objectclass: mozillaAbPersonObsolete
 cn: Ferg
 mobile: 01001011
 telephoneNumber: 01001012
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 000200000008
 
 objectclass: top
@@ -242,9 +242,9 @@ objectclass: inetOrgPerson
 objectclass: mozillaAbPersonObsolete
 cn: Franc
 mobile: 01001013
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 00020000000B
 
 objectclass: top
@@ -254,9 +254,9 @@ objectclass: inetOrgPerson
 objectclass: mozillaAbPersonObsolete
 cn: Gary
 mobile: +441001014
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 000200000030
 
 objectclass: top
@@ -266,9 +266,9 @@ objectclass: inetOrgPerson
 objectclass: mozillaAbPersonObsolete
 cn: Gordon
 mobile: 01001015
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 000200000026
 
 objectclass: top
@@ -278,9 +278,9 @@ objectclass: inetOrgPerson
 objectclass: mozillaAbPersonObsolete
 cn: Home
 homePhone: 01001016
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 000200000013
 
 objectclass: top
@@ -291,9 +291,9 @@ objectclass: mozillaAbPersonObsolete
 sn: W
 cn: Iain
 workPhone: 01001017
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 000200000019
 
 objectclass: top
@@ -304,9 +304,9 @@ objectclass: mozillaAbPersonObsolete
 sn: D
 cn: John
 mobile: +441001018
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 000200000032
 
 objectclass: top
@@ -317,9 +317,9 @@ objectclass: mozillaAbPersonObsolete
 sn: E
 cn: John
 mobile: 01001019
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 000200000029
 
 objectclass: top
@@ -329,9 +329,9 @@ objectclass: inetOrgPerson
 objectclass: mozillaAbPersonObsolete
 cn: Karen
 workPhone: 01001020
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 00020000001C
 
 objectclass: top
@@ -341,9 +341,9 @@ objectclass: inetOrgPerson
 objectclass: mozillaAbPersonObsolete
 cn: Ki
 mobile: 01001021
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 000200000009
 
 objectclass: top
@@ -353,9 +353,9 @@ objectclass: inetOrgPerson
 objectclass: mozillaAbPersonObsolete
 cn: Laura
 mobile: 01001022
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 00020000000A
 
 objectclass: top
@@ -366,9 +366,9 @@ objectclass: mozillaAbPersonObsolete
 cn: Liam
 mobile: +441001022
 telephoneNumber: 01001023
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 000200000022
 
 objectclass: top
@@ -379,9 +379,9 @@ objectclass: mozillaAbPersonObsolete
 cn: Mal
 homePhone: 01001024
 mobile: 01001025
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 000200000014
 
 objectclass: top
@@ -392,9 +392,9 @@ objectclass: mozillaAbPersonObsolete
 sn: f
 cn: Mark
 mobile: 01001025
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 000200000025
 
 objectclass: top
@@ -404,9 +404,9 @@ objectclass: inetOrgPerson
 objectclass: mozillaAbPersonObsolete
 cn: Mike
 mobile: +441001026
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 00020000000D
 
 objectclass: top
@@ -417,9 +417,9 @@ objectclass: mozillaAbPersonObsolete
 sn: R
 cn: Mike
 mobile: 01001027
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 000200000031
 
 objectclass: top
@@ -430,9 +430,9 @@ objectclass: mozillaAbPersonObsolete
 cn: Mum
 mobile: 01001028
 telephoneNumber: 01101762
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 000200000017
 
 objectclass: top
@@ -445,9 +445,9 @@ cn: Nick
 homePhone: 01001029
 workPhone: 01001030
 mobile: 01001031
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 00020000000E
 
 objectclass: top
@@ -458,9 +458,9 @@ objectclass: mozillaAbPersonObsolete
 sn: M
 cn: Nick
 mobile: +441001031
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 000200000021
 
 objectclass: top
@@ -470,9 +470,9 @@ objectclass: inetOrgPerson
 objectclass: mozillaAbPersonObsolete
 cn: Rebecca
 mobile: 01001032
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 000200000010
 
 objectclass: top
@@ -482,9 +482,9 @@ objectclass: inetOrgPerson
 objectclass: mozillaAbPersonObsolete
 cn: Rob
 mobile: 01001033
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 000200000011
 
 objectclass: top
@@ -494,9 +494,9 @@ objectclass: inetOrgPerson
 objectclass: mozillaAbPersonObsolete
 cn: Roy
 mobile: 01001034
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 000200000012
 
 objectclass: top
@@ -507,9 +507,9 @@ objectclass: mozillaAbPersonObsolete
 sn: lane
 cn: S
 homePhone: 01001035
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 000200000028
 
 objectclass: top
@@ -522,9 +522,9 @@ cn: Steve
 homePhone: 01001036
 mobile: +441001037
 telephoneNumber: +441001038
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 000200000018
 
 objectclass: top
@@ -535,9 +535,9 @@ objectclass: mozillaAbPersonObsolete
 sn: My Office
 cn: 5.0
 workPhone: 01001039
-mail:
-mail:
-mail:
+mail: 
+mail: 
+mail: 
 luid: 00020000001B
 
 dn: Al/M
@@ -891,3 +891,4 @@ objectclass: organizationalPerson
 objectclass: inetOrgPerson
 objectclass: mozillaAbPersonObsolete
 telephoneNumber: 01001019
+

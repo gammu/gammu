@@ -31,4 +31,4 @@ repos:
     hooks:
       - id: check-hooks-apply
       - id: check-useless-excludes
-exclude: "^.*\\.(dump|smsbackup)$"
+exclude: "^.*\\.(dump|smsbackup|ldif)$"
