@@ -17,7 +17,7 @@ jobs:
         # TODO: Compiler gcc / clang
     env:
       CTEST_OUTPUT_ON_FAILURE: 1
-      ARGS: ${{ matrig.args }}
+      ARGS: ${{ matrix.args }}
       TESTARGS: -DMYSQL_TESTING=on -DPSQL_TESTING=ON
     services:
       postgres:
