@@ -48,7 +48,7 @@ static GSM_Error N3650_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Han
 	unsigned int 		len=10,i;
 	GSM_Error		error;
 	unsigned char 		*req;
-	unsigned const char 	StartReq[11] = {
+	const unsigned char 	StartReq[11] = {
 		N7110_FRAME_HEADER, 0x0D, 0x10, 0x01, 0x07,
 		0x24,		/* len1 */
 		0x12,		/* len2 */
@@ -158,7 +158,7 @@ static GSM_Error N3650_GetFolderInfo(GSM_StateMachine *s, GSM_File *File)
 {
 	int 			len=10;
 	unsigned char		*req;
-	unsigned const char 	template[11] = {
+	const unsigned char 	template[11] = {
 		N7110_FRAME_HEADER, 0x0B, 0x00, 0x01, 0x07,
 		0x18,		/* folder name length + 6 	*/
 		0x12,		/* folder name length 		*/

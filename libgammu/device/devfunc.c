@@ -165,7 +165,7 @@ int socket_read(GSM_StateMachine *s UNUSED, void *buf, size_t nbytes, socket_typ
 	return result;
 }
 
-int socket_write(GSM_StateMachine *s, unsigned const char *buf, size_t nbytes, socket_type hPhone)
+int socket_write(GSM_StateMachine *s, const unsigned char *buf, size_t nbytes, socket_type hPhone)
 {
 	int		ret;
 	size_t		actual = 0;

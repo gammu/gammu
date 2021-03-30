@@ -839,7 +839,7 @@ static GSM_Error ALCATEL_GetFields(GSM_StateMachine *s, int id) {
 	return ERR_NONE;
 }
 
-static void ALCATEL_DecodeString(GSM_StateMachine *s, unsigned const char *buffer, unsigned char *target, int maxlen)
+static void ALCATEL_DecodeString(GSM_StateMachine *s, const unsigned char *buffer, unsigned char *target, int maxlen)
 {
 	GSM_Phone_ALCATELData 	*Priv = &s->Phone.Data.Priv.ALCATEL;
 	int			len;
@@ -864,7 +864,7 @@ static void ALCATEL_DecodeString(GSM_StateMachine *s, unsigned const char *buffe
 	}
 }
 
-static GSM_Error ALCATEL_EncodeString(GSM_StateMachine *s, unsigned const char *buffer, unsigned char *target, GSM_Alcatel_FieldType type)
+static GSM_Error ALCATEL_EncodeString(GSM_StateMachine *s, const unsigned char *buffer, unsigned char *target, GSM_Alcatel_FieldType type)
 {
 	GSM_Phone_ALCATELData 	*Priv = &s->Phone.Data.Priv.ALCATEL;
 	size_t			len;

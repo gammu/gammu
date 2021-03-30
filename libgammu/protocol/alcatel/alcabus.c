@@ -15,7 +15,7 @@
 #include "../../gsmcomon.h"
 #include "alcabus.h"
 
-static GSM_Error ALCABUS_WriteMessage (GSM_StateMachine *s, unsigned const char *data, size_t len, int type)
+static GSM_Error ALCABUS_WriteMessage (GSM_StateMachine *s, const unsigned char *data, size_t len, int type)
 {
 	GSM_Protocol_ALCABUSData 	*d = &s->Protocol.Data.ALCABUS;
 	unsigned char	 		buffer[1024];

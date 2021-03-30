@@ -28,7 +28,7 @@
 #include "s60.h"
 #include "s60-ids.h"
 
-static GSM_Error S60_WriteMessage (GSM_StateMachine *s, unsigned const char *MsgBuffer,
+static GSM_Error S60_WriteMessage (GSM_StateMachine *s, const unsigned char *MsgBuffer,
 				    size_t MsgLength, int MsgType)
 {
 	unsigned char	*buffer=NULL;

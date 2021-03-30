@@ -8,7 +8,7 @@
 #include "test_helper.h"
 
 ssize_t _ResponseReadDevice(GSM_StateMachine *s, void *buf, size_t nbytes);
-GSM_Error _ResponseWriteMessage(GSM_StateMachine *s, unsigned const char *buffer, size_t length, int type);
+GSM_Error _ResponseWriteMessage(GSM_StateMachine *s, const unsigned char *buffer, size_t length, int type);
 
 #define  _BUFFER_SIZE 512
 
@@ -56,7 +56,7 @@ const unsigned char* last_command(void)
   return _echo_buffer.echo;
 }
 
-void set_echo(unsigned const char *buf, const size_t len)
+void set_echo(const unsigned char *buf, const size_t len)
 {
   if(buf && len > 0) {
     memccpy(_echo_buffer.echo, buf, sizeof(*buf), len);
@@ -96,7 +96,7 @@ ssize_t _ResponseReadDevice(GSM_StateMachine *s UNUSED, void *buf, size_t nbytes
   return read_len;
 }
 
-GSM_Error _ResponseWriteMessage(GSM_StateMachine *s UNUSED, unsigned const char *buffer, size_t length, int type UNUSED)
+GSM_Error _ResponseWriteMessage(GSM_StateMachine *s UNUSED, const unsigned char *buffer, size_t length, int type UNUSED)
 {
   if(length) {
     GSM_DumpMessageText(s, buffer, length, type);

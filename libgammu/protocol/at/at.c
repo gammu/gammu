@@ -11,7 +11,7 @@
 #include "../../gsmcomon.h"
 #include "at.h"
 
-static GSM_Error AT_WriteMessage (GSM_StateMachine *s, unsigned const char *buffer,
+static GSM_Error AT_WriteMessage (GSM_StateMachine *s, const unsigned char *buffer,
 				     size_t length, int type)
 {
 	size_t sent=0, i=0;

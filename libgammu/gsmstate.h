@@ -408,7 +408,7 @@ typedef struct {
 	/**
 	 * Writes message to device.
 	 */
-	GSM_Error (*WriteMessage) (GSM_StateMachine *s, unsigned const char *buffer,
+	GSM_Error (*WriteMessage) (GSM_StateMachine *s, const unsigned char *buffer,
 				   size_t length, int type);
 	/**
 	 * This one is called when character is received from device.
@@ -1511,7 +1511,7 @@ struct _GSM_StateMachine {
  */
 GSM_Error GSM_RegisterAllPhoneModules	(GSM_StateMachine *s);
 
-GSM_Error GSM_WaitForOnce		(GSM_StateMachine *s, unsigned const char *buffer,
+GSM_Error GSM_WaitForOnce		(GSM_StateMachine *s, const unsigned char *buffer,
 			  		 size_t length, int type, int timeout);
 
 /**
@@ -1526,7 +1526,7 @@ GSM_Error GSM_WaitForOnce		(GSM_StateMachine *s, unsigned const char *buffer,
  *
  * \return Error code, ERR_NONE on sucecss.
  */
-GSM_Error GSM_WaitFor			(GSM_StateMachine *s, unsigned const char *buffer,
+GSM_Error GSM_WaitFor			(GSM_StateMachine *s, const unsigned char *buffer,
 		       			 size_t length, int type, int timeout,
 					 GSM_Phone_RequestID request) WARNUNUSED;
 
@@ -1548,10 +1548,10 @@ GSM_Error GSM_WaitFor			(GSM_StateMachine *s, unsigned const char *buffer,
 
 GSM_Error GSM_DispatchMessage		(GSM_StateMachine *s);
 
-void 	  GSM_DumpMessageText		(GSM_StateMachine *s, unsigned const char *message, size_t messagesize, int type);
-void 	  GSM_DumpMessageTextRecv	(GSM_StateMachine *s, unsigned const char *message, size_t messagesize, int type);
-void 	  GSM_DumpMessageBinary		(GSM_StateMachine *s, unsigned const char *message, size_t messagesize, int type);
-void GSM_DumpMessageBinaryRecv(GSM_StateMachine *s, unsigned const char *message, size_t messagesize, int type);
+void 	  GSM_DumpMessageText		(GSM_StateMachine *s, const unsigned char *message, size_t messagesize, int type);
+void 	  GSM_DumpMessageTextRecv	(GSM_StateMachine *s, const unsigned char *message, size_t messagesize, int type);
+void 	  GSM_DumpMessageBinary		(GSM_StateMachine *s, const unsigned char *message, size_t messagesize, int type);
+void GSM_DumpMessageBinaryRecv(GSM_StateMachine *s, const unsigned char *message, size_t messagesize, int type);
 
 
 void GSM_OSErrorInfo(GSM_StateMachine *s, const char *description);

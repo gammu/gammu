@@ -30,7 +30,7 @@ typedef unsigned long gammu_int_t;
 #endif
 
 /* ---------------------------- Unicode ------------------------------------ */
-gboolean 		myiswspace	  		(unsigned const char *src);
+gboolean 		myiswspace	  		(const unsigned char *src);
 
 
 void 		ReverseUnicodeString		(unsigned char *String);

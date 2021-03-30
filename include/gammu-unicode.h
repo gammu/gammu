@@ -116,22 +116,22 @@ void EncodeHexUnicode(char *dest, const unsigned char *src, size_t len);
  *
  * \ingroup Unicode
  */
-gboolean mywstrncmp(unsigned const char *a, unsigned const char *b, int num);
+gboolean mywstrncmp(const unsigned char *a, const unsigned char *b, int num);
 
 /**
  * Locates unicode substring.
  *
  * \ingroup Unicode
  */
-unsigned char *mywstrstr(unsigned const char *haystack,
-			 unsigned const char *needle);
+unsigned char *mywstrstr(const unsigned char *haystack,
+			 const unsigned char *needle);
 
 /**
  * Compares two unicode strings case insensitive.
  *
  * \ingroup Unicode
  */
-gboolean mywstrncasecmp(unsigned const char *a, unsigned const char *b, int num);
+gboolean mywstrncasecmp(const unsigned char *a, const unsigned char *b, int num);
 
 /**
  * Encode text to UTF-8.
