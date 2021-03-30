@@ -53,8 +53,14 @@ jobs:
           mkdir _build
           cd _build
           ln -s ../codecov.yml .
-      - run: cmake .. -DCMAKE_C_COMPILER=$CC -DENABLE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Continuous -DONLINE_TESTING=ON $TESTARGS $ARGS
-      - run: make
-      - run: make test
-      - run: make gcov
+      - name: cmake
+        run: |
+          cd _build
+          cmake .. -DCMAKE_C_COMPILER=$CC -DENABLE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Continuous -DONLINE_TESTING=ON $TESTARGS $ARGS
+      - name: build
+        run: make -C _build
+      - name: test
+        run: make -C _build test
+      - name: coverage
+        run: make -C _build gcov
       - uses: codecov/codecov-action@v1
