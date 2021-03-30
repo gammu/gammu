@@ -17,7 +17,7 @@
 # Copyright (c) 2015 - 2018 Michal Cihar <michal@cihar.com>
 #
 """Generates gsmnet databse from wikipedia"""
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import re
 from unidecode import unidecode
 
@@ -42,10 +42,10 @@ def parse_line(line):
 
 def print_out(result):
     for code, name in sorted(result):
-        print '\t{{"{0}", "{1}"}},'.format(
+        print('\t{{"{0}", "{1}"}},'.format(
             code, 
             unidecode(name.decode('utf-8')).replace('&amp;', '&')
-        )
+        ))
     
 
 def print_countries(data):
@@ -102,12 +102,12 @@ def print_networks(data):
 
 
 def main():
-    handle = urllib.urlopen(URL)
+    handle = urllib.request.urlopen(URL)
     data = handle.read()
     print_countries(data)
-    print
-    print '-' * 80
-    print
+    print()
+    print('-' * 80)
+    print()
     print_networks(data)
 
 

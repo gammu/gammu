@@ -35,7 +35,7 @@ else:
     import socket
 import socket as pysocket
 
-import cPickle
+import pickle
 
 
 VERSION = '0.6.0'
@@ -98,13 +98,13 @@ class Mobile(object):
     def loadConfig(self):
         try:
             f = file(self.getConfigFilename(), 'rb')
-            conf = cPickle.load(f)
+            conf = pickle.load(f)
             f.close()
             if 'port' in conf:
                 self.port = conf['port']
             if 'useCanvas' in conf:
                 self.useCanvas = conf['useCanvas']
-        except IOError, r:
+        except IOError as r:
             pass
 
     def saveConfig(self):
@@ -114,13 +114,13 @@ class Mobile(object):
                 'port': self.port,
                 'useCanvas': self.useCanvas,
                 }
-            cPickle.dump(conf, f)
+            pickle.dump(conf, f)
             f.close()
-        except IOError, r:
+        except IOError as r:
             pass
 
     def initUi(self):
-        app.title = u"Gammu S60 Remote"
+        app.title = "Gammu S60 Remote"
 
         if self.useCanvas:
             self.canvas = Canvas(redraw_callback=self.statusUpdate)
@@ -130,10 +130,10 @@ class Mobile(object):
         app.exit_key_handler = self.exitHandler
         app.screen = 'normal'
         app.menu = [
-            (u'About', self.aboutHandler),
-            (u'Change port', self.portHandler),
-            (u'Toggle Bluetooth', self.toggleHandler),
-            (u'Exit', self.exitHandler),
+            ('About', self.aboutHandler),
+            ('Change port', self.portHandler),
+            ('Toggle Bluetooth', self.toggleHandler),
+            ('Exit', self.exitHandler),
             ]
 
     def statusUpdate(self, rect=None):
@@ -142,14 +142,14 @@ class Mobile(object):
 
         self.canvas.clear((255,255,255))
         if self.service:
-            self.canvas.text((1,14),u"Service started at port %s" % self.port,0xff0000)
+            self.canvas.text((1,14),"Service started at port %s" % self.port,0xff0000)
         else:
-            self.canvas.text((1,14),u"Service stopped",0xff0000)
+            self.canvas.text((1,14),"Service stopped",0xff0000)
 
         if self.connected:
-            self.canvas.text((1,34), u"Connected to: " + self.client[1], 0x0000ff)
+            self.canvas.text((1,34), "Connected to: " + self.client[1], 0x0000ff)
         else:
-            self.canvas.text((1,34), u"No active connection", 0x0000ff)
+            self.canvas.text((1,34), "No active connection", 0x0000ff)
 
     def startService(self):
         self.service = True
@@ -160,8 +160,8 @@ class Mobile(object):
         self.sock.listen(1)
 
         socket.set_security(self.sock,  socket.AUTH | socket.AUTHOR)
-        socket.bt_advertise_service(u"pys60_remote", self.sock, True, socket.RFCOMM)
-        note(u'Listenning on port %d' % self.port)
+        socket.bt_advertise_service("pys60_remote", self.sock, True, socket.RFCOMM)
+        note('Listenning on port %d' % self.port)
 
         self.listen()
 
@@ -170,7 +170,7 @@ class Mobile(object):
             self.service = False
             self.statusUpdate()
 
-            socket.bt_advertise_service(u"pys60_remote", self.sock, False, socket.RFCOMM)
+            socket.bt_advertise_service("pys60_remote", self.sock, False, socket.RFCOMM)
             self.sock.close()
             self.sock = None
 
@@ -209,7 +209,7 @@ class Mobile(object):
             self.connected = True
             self.statusUpdate()
             address = str(self.client[1])
-            note(u'Connected client %s' % address)
+            note('Connected client %s' % address)
 
             self.fos = self.client[0].makefile("w")
             self.fis = self.client[0].makefile("r")
@@ -223,16 +223,16 @@ class Mobile(object):
                 pass
 
             self.disconnect()
-            note(u'Disconnected client %s' % address)
+            note('Disconnected client %s' % address)
 
     def send(self, header,  *message):
         new_message = ""
 
         if len(message) == 1:
-            new_message = unicode(message[0])
+            new_message = str(message[0])
         else:
             for part in message:
-                new_message += unicode(part) + str(NUM_SEPERATOR)
+                new_message += str(part) + str(NUM_SEPERATOR)
 
         length = 1000
         if len(new_message) > length:
@@ -247,7 +247,7 @@ class Mobile(object):
                 sentParts += 1
             return
 
-        self.fos.write(unicode(str(header) + str(NUM_END_HEADER) + new_message + str(NUM_END_TEXT)).encode("utf8") )
+        self.fos.write(str(str(header) + str(NUM_END_HEADER) + new_message + str(NUM_END_TEXT)).encode("utf8") )
         self.fos.flush()
 
     def wait(self):
@@ -256,7 +256,7 @@ class Mobile(object):
             parts = data.split(NUM_END_HEADER)
 
             header = int(parts[0])
-            message = unicode(parts[1], "utf8")
+            message = str(parts[1], "utf8")
             message_parts = message.split(NUM_SEPERATOR)
 
             if (header != NUM_PARTIAL_MESSAGE and self.__partialMessage):
@@ -315,21 +315,21 @@ class Mobile(object):
 
             elif (header == NUM_CONTACTS_DELETE):
                 id = int(message)
-                if id in self.contactDb.keys():
+                if id in list(self.contactDb.keys()):
                     del self.contactDb[id]
 
             elif (header == NUM_CONTACTS_CHANGE_ADDFIELD):
                 id = int(message_parts[0])
-                type = unicode(message_parts[1])
-                location = unicode(message_parts[2])
-                value = unicode(message_parts[3])
+                type = str(message_parts[1])
+                location = str(message_parts[2])
+                value = str(message_parts[3])
                 self.modifyContact("add",  id,  type,  location,  value)
 
             elif (header == NUM_CONTACTS_CHANGE_REMOVEFIELD):
                 id = int(message_parts[0])
-                type = unicode(message_parts[1])
-                location = unicode(message_parts[2])
-                value = unicode(message_parts[3])
+                type = str(message_parts[1])
+                location = str(message_parts[2])
+                value = str(message_parts[3])
                 self.modifyContact("remove",  id,  type,  location,  value)
 
             elif (header == NUM_CALENDAR_REQUEST_COUNT):
@@ -366,8 +366,8 @@ class Mobile(object):
                 elif (header == NUM_CALENDAR_ENTRY_ADD):
                     type = str(message_parts[0])
 
-                content = unicode(message_parts[1])
-                location = unicode(message_parts[2])
+                content = str(message_parts[1])
+                location = str(message_parts[2])
                 #start = float(message_parts[3]) if message_parts[3] else 0
                 if message_parts[3]:
                     start = float(message_parts[3])
@@ -429,10 +429,10 @@ class Mobile(object):
                 self.sendMessagesCount()
 
             elif (header == NUM_MESSAGE_SEND_REQUEST):
-                name = unicode(message_parts[0])
-                phone = unicode(message_parts[1])
+                name = str(message_parts[0])
+                phone = str(message_parts[1])
                 enc = str(message_parts[2])
-                msg = unicode(message_parts[3]).decode('string_escape')
+                msg = str(message_parts[3]).decode('string_escape')
                 self.sendMessage(name, phone, enc,  msg)
 
             elif (header == NUM_SET_READ):
@@ -459,7 +459,7 @@ class Mobile(object):
         self.send(NUM_SYSINFO_REPLY_LINE, "free_ram", sysinfo.free_ram())
         self.send(NUM_SYSINFO_REPLY_LINE, "pys60_version", e32.pys60_version)
 
-        if sysinfo.active_profile() == u"offline":
+        if sysinfo.active_profile() == "offline":
             # Return an error code if the phone is in offline mode
             self.send(NUM_SYSINFO_REPLY_LINE, "signal_dbm", -1)
             self.send(NUM_SYSINFO_REPLY_LINE, "signal_bars", -1)
@@ -467,7 +467,7 @@ class Mobile(object):
             self.send(NUM_SYSINFO_REPLY_LINE, "signal_dbm", sysinfo.signal_dbm())
             self.send(NUM_SYSINFO_REPLY_LINE, "signal_bars", sysinfo.signal_bars())
 
-        for drive,  free in sysinfo.free_drivespace().iteritems():
+        for drive,  free in sysinfo.free_drivespace().items():
             self.send(NUM_SYSINFO_REPLY_LINE, "free_drivespace", str(drive) + str(free))
 
         if full:
@@ -484,7 +484,7 @@ class Mobile(object):
         fn = self.getScreenshotFilename()
         shot = graphics.screenshot()
         shot.save(fn)
-        note(u'Saved screenshot as %s' % fn)
+        note('Saved screenshot as %s' % fn)
         f = file(fn, 'rb')
         self.send(NUM_SCREENSHOT_REPLY, f.read().encode('base64'))
         f.close()
@@ -498,7 +498,7 @@ class Mobile(object):
             self.send(NUM_LOCATION_REPLY, '%03d' % mcc, '%02d' % mnc, '%X' % lac, '%X' % cellid)
 
     def contactDict(self):
-        keys = self.contactDb.keys()
+        keys = list(self.contactDb.keys())
 
         contactDict = dict()
         for key in keys:
@@ -514,8 +514,8 @@ class Mobile(object):
             for field in contact:
                 _type = field.type
                 value = field.value
-                value = unicode(value)
-                value = value.replace(u'\u2029',  u'\n') # PARAGRAPH SEPARATOR (\u2029) replaced by LINE FEED (\u000a)
+                value = str(value)
+                value = value.replace('\u2029',  '\n') # PARAGRAPH SEPARATOR (\u2029) replaced by LINE FEED (\u000a)
                 location = field.location
 
                 if _type == "unknown":
@@ -538,10 +538,10 @@ class Mobile(object):
 
     def sendContactHash(self):
         contacts = self.contactDict()
-        keys = contacts.keys()
+        keys = list(contacts.keys())
         keys.sort()
 
-        hash = unicode()
+        hash = str()
 
         for key in keys:
             hash += str(key)
@@ -559,11 +559,11 @@ class Mobile(object):
         self.send(NUM_CONTACTS_REPLY_HASH_SINGLE_START)
 
         contacts = self.contactDict()
-        keys = contacts.keys()
+        keys = list(contacts.keys())
         keys.sort()
 
         for key in keys:
-            hash = unicode()
+            hash = str()
             for _type,  location, value in contacts[key]:
                 hash += _type + INFO_SEP + location + INFO_SEP + value
                 hash += FIELD_SEP
@@ -575,7 +575,7 @@ class Mobile(object):
         self.send(NUM_CONTACTS_REPLY_HASH_SINGLE_END)
 
     def sendAllContacts(self):
-        keys = self.contactDb.keys()
+        keys = list(self.contactDb.keys())
 
         for key in keys:
             contact = self.contactDb[key]
@@ -598,8 +598,8 @@ class Mobile(object):
         for field in contact:
             _type = field.type
             value = field.value
-            value = unicode(value)
-            value = value.replace(u'\u2029',  u'\n') # PARAGRAPH SEPARATOR (\u2029) replaced by LINE FEED (\u000a)
+            value = str(value)
+            value = value.replace('\u2029',  '\n') # PARAGRAPH SEPARATOR (\u2029) replaced by LINE FEED (\u000a)
             location = field.location
 
             if _type == "unknown":
@@ -623,13 +623,13 @@ class Mobile(object):
         except:
             return
 
-        if type == u"thumbnail_image":
+        if type == "thumbnail_image":
             if modification == "remove":
                 self.setContactThumbnail(contact)
             else:
                 self.setContactThumbnail(contact,  value)
             return
-        elif type == u"date":
+        elif type == "date":
             if modification == "remove":
                 self.setContactBirthday(contact)
             else:
@@ -655,7 +655,7 @@ class Mobile(object):
     def getDetailFromVcard(self,  contact,  detail,  delimiter='\r\n'):
         # This is an ugly hack, needed for some fields that cannot be handled using the contact object
         try:
-            value = unicode(contact.as_vcard(), 'utf8')
+            value = str(contact.as_vcard(), 'utf8')
             value  = value.split(detail + ":")[1].split(delimiter)[0]
             return value
         except:
@@ -665,7 +665,7 @@ class Mobile(object):
         # This is an ugly hack, needed for some fields that cannot be handled using the contact object
         card = contact.as_vcard()
 
-        new = u""
+        new = ""
         for line in card.split("\r\n"):
             if line.startswith("BEGIN:") or line.startswith("VERSION:") or line.startswith("REV:") or line.startswith("UID:"):
                 new += line + "\r\n"
@@ -728,18 +728,18 @@ class Mobile(object):
         line = entryType + sep + entry.content + sep + entry.location + sep
         if entry.start_time:
             # None if the start datetime of the entry is not set
-            line += str(long(entry.start_time)) # entry.start_time is of type float
+            line += str(int(entry.start_time)) # entry.start_time is of type float
         line += sep
 
         if entry.end_time:
-            line += str(long(entry.end_time))
+            line += str(int(entry.end_time))
         line += sep
 
-        line += str(long(entry.last_modified)) + sep
+        line += str(int(entry.last_modified)) + sep
         line += entry.replication + sep  # open, private or restricted
 
         if entry.alarm:
-            line += str(long(entry.alarm)) # The alarm datetime value (float) for the entry
+            line += str(int(entry.alarm)) # The alarm datetime value (float) for the entry
         line += sep
 
         line += str(entry.priority) + sep
@@ -768,11 +768,11 @@ class Mobile(object):
                     # example: on second Tuesday and last Monday of the month
                     # days is: [{'week': 1, 'day': 1}, {'week': 4, 'day': 0}]
                     # results in: 'week:1,day:1;week:4,day:0'
-                    line += ";".join([",".join([key + ":" + str(value) for key, value in entry.items()]) for entry in days])
+                    line += ";".join([",".join([key + ":" + str(value) for key, value in list(entry.items())]) for entry in days])
             elif isinstance(days,  dict):
                 # for example: {'week': 1, 'day': 1, 'month': 1}
                 # results in: 'week:1,day:1,month:1'
-                line += ",".join([key + ":" + str(value) for key, value in days.iteritems()])
+                line += ",".join([key + ":" + str(value) for key, value in days.items()])
         line += sep
 
         if repeated and "exceptions" in repeat:
@@ -780,13 +780,13 @@ class Mobile(object):
         line += sep
 
         if repeated and "start" in repeat:
-            line += str(long(repeat["start"]))
+            line += str(int(repeat["start"]))
         line += sep
 
         if repeated and "end" in repeat:
-            end = long(repeat["end"])
+            end = int(repeat["end"])
             end -= time.timezone
-            if end == 4102441200L:
+            if end == 4102441200:
                 # 4102441200L = 2100-01-01T00:00:00
                 # There is a bug in PyS60, which causes that None as end date throws as error
                 # As workarond, we use 2100-01-01 as end date for eternal repeats
@@ -805,7 +805,7 @@ class Mobile(object):
             line += str(int(bool(entry.crossed_out))) + sep
 
             if entry.cross_out_time:
-                line += str(long(entry.cross_out_time))
+                line += str(int(entry.cross_out_time))
             line += sep
 
             # TODO lists no more supported!
@@ -840,10 +840,10 @@ class Mobile(object):
     def sendCalendarHash(self):
         calendarDict = self.calendarDict()
 
-        keys = calendarDict.keys()
+        keys = list(calendarDict.keys())
         keys.sort()
 
-        hash = unicode()
+        hash = str()
         for key in keys:
             hash += str(key)
             hash += FIELD_SEP
@@ -901,7 +901,7 @@ class Mobile(object):
 
         entry.commit()
 
-        self.send(NUM_CALENDAR_ENTRY_CHANGE_REPLY_TIME,  id,  str(long(entry.last_modified)))
+        self.send(NUM_CALENDAR_ENTRY_CHANGE_REPLY_TIME,  id,  str(int(entry.last_modified)))
 
     def addCalendarEntry(self,  type,  content,  location,  start,  end,  replication,  alarm,  priority, repeat_type,
                             repeat_days,  repeat_exceptions,  repeat_start,  repeat_end,  repeat_interval):
@@ -922,7 +922,7 @@ class Mobile(object):
 
         entry.commit()
 
-        self.send(NUM_CALENDAR_ENTRY_ADD_REPLY,  entry.id,  str(long(entry.last_modified)))
+        self.send(NUM_CALENDAR_ENTRY_ADD_REPLY,  entry.id,  str(int(entry.last_modified)))
 
     def modifyCalendarEntryFields(self,  entry,  content,  location,  start,  end,  replication,  alarm,  priority, repeat_type,
                             repeat_days,  repeat_exceptions,  repeat_start,  repeat_end,  repeat_interval):
@@ -1012,7 +1012,7 @@ class Mobile(object):
             return
         address = self.inbox.address(sms)
         content = self.inbox.content(sms)
-        content = content.replace(u'\u2029',  u'\n') # PARAGRAPH SEPARATOR (\u2029) replaced by LINE FEED (\u000a)
+        content = content.replace('\u2029',  '\n') # PARAGRAPH SEPARATOR (\u2029) replaced by LINE FEED (\u000a)
 
         if self.inbox.unread(sms):
             unread = '1'
@@ -1072,7 +1072,7 @@ class Mobile(object):
     def sendMessage(self, name, phone, encoding,  msg):
         try:
             messaging.sms_send(phone, msg,  encoding,  self.sentMessage,  name)
-        except RuntimeError,  detail:
+        except RuntimeError as  detail:
             if str(detail) == "Already sending":
                 # Workaround for the "Already sending" bug:
                 # http://discussion.forum.nokia.com/forum/showthread.php?t=141083
@@ -1162,7 +1162,7 @@ class Mobile(object):
            app.set_exit()
 
     def portHandler(self):
-        ret = query(u'Enter bluetooth port to use', 'number', self.port)
+        ret = query('Enter bluetooth port to use', 'number', self.port)
         if ret is not None:
             self.port = ret
             self.quit()
@@ -1170,42 +1170,42 @@ class Mobile(object):
             self.startService()
 
     def aboutHandler(self):
-        query(u'Gammu S60 Remote\nVersion %s\nhttps://wammu.eu/' % (VERSION) , 'query')
+        query('Gammu S60 Remote\nVersion %s\nhttps://wammu.eu/' % (VERSION) , 'query')
 
     def toggleHandler(self):
-        e32.start_exe(u'BtToggleApp.exe','')
+        e32.start_exe('BtToggleApp.exe','')
 
 # Debug of SIS applications
 try:
     mobile = Mobile()
-except Exception, e:
+except Exception as e:
     # Oops, something wrong. Report problems to user
     # and ask him/her to send them to you.
     import traceback
 
-    new_line = u"\u2029"
+    new_line = "\u2029"
 
     # Collecting call stack info
     info = sys.exc_info()
 
     # Show the last 4 lines of the call stack
-    call_stack = u""
+    call_stack = ""
     for filename, lineno, function, text in traceback.extract_tb(info[2]):
-        call_stack += filename + u": " + str(lineno) + u" - " + function + new_line
-        call_stack += u" " + repr(text) + new_line
-    call_stack +=  u"%s: %s" % info[:2]
+        call_stack += filename + ": " + str(lineno) + " - " + function + new_line
+        call_stack += " " + repr(text) + new_line
+    call_stack +=  "%s: %s" % info[:2]
 
     # Creating a friendly user message with exception details
-    err_msg = u"This programs was unexpectedly closed due to the following error: "
-    err_msg += unicode(repr(e)) + new_line
-    err_msg += u"Please, copy and paste the text presented here and "
-    err_msg += u"send it to gammu-users@lists.sourceforge.net. "
-    err_msg += u"Thanks in advance and sorry for this inconvenience." + new_line*2
-    err_msg += u"Call stack:" + new_line + call_stack
+    err_msg = "This programs was unexpectedly closed due to the following error: "
+    err_msg += str(repr(e)) + new_line
+    err_msg += "Please, copy and paste the text presented here and "
+    err_msg += "send it to gammu-users@lists.sourceforge.net. "
+    err_msg += "Thanks in advance and sorry for this inconvenience." + new_line*2
+    err_msg += "Call stack:" + new_line + call_stack
 
     # Small PyS60 application
     lock = e32.Ao_lock()
     app.body = Text(err_msg)
     app.body.set_pos(0)
-    app.menu = [(u"Exit", lambda: lock.signal())]
+    app.menu = [("Exit", lambda: lock.signal())]
     lock.wait()

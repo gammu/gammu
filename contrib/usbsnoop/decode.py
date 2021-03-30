@@ -10,7 +10,7 @@ This is probably only useful for AT commands.
 import sys
 
 if len(sys.argv) < 2:
-    print 'Usage: decode.py LOGFILE'
+    print('Usage: decode.py LOGFILE')
     sys.exit(1)
 
 f = open(sys.argv[1])
@@ -21,7 +21,7 @@ for line in f:
         pos, data = line.split(':')
         if pos == '00000000':
             if output != '':
-                print output.decode('hex')
+                print(output.decode('hex'))
                 output = ''
         data = ''.join(data.strip().split(' '))
         output += data
