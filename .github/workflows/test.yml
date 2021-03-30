@@ -1,0 +1,50 @@
+name: Tests
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-20.04, windows-latest, macos-latest]
+        args: [""]
+        include:
+          - os: ubuntu-20.04
+            args: -DENABLE_GETOPT=OFF
+          - os: ubuntu-20.04
+            args: -DUSE_WCHAR_T=OFF
+        # TODO: Compiler gcc / clang
+    env:
+      CTEST_OUTPUT_ON_FAILURE: 1
+      ARGS: ${{ matrig.args }}
+      TESTARGS: -DMYSQL_TESTING=on -DPSQL_TESTING=ON
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: smsd
+          POSTGRES_USER: smsd
+          POSTGRES_DB: smsd
+      mysql:
+        image: mysql
+        env:
+          MYSQL_DATABASE: smsd
+          MYSQL_USER: smsd
+          MYSQL_PASSWORD: smsd
+    steps:
+      - uses: actions/checkout@v2
+      - name: apt
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libbluetooth-dev libusb-1.0-0-dev libgudev-1.0-dev unixodbc-dev libdbi-dev libdbd-sqlite3 libdbd-mysql libdbd-pgsql cmake cmake-data
+      - name: Prepare
+        run: |
+          mkdir _build
+          cd _build
+          ln -s ../codecov.yml .
+      - run: cmake .. -DCMAKE_C_COMPILER=$CC -DENABLE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Continuous -DONLINE_TESTING=ON $TESTARGS $ARGS
+      - run: make
+      - run: make test
+      - run: make gcov
+      - uses: codecov/codecov-action@v1
