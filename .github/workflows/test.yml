@@ -56,7 +56,8 @@ jobs:
       - name: cmake
         run: |
           cd _build
-          cmake .. -DCMAKE_C_COMPILER=$CC -DENABLE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Continuous -DONLINE_TESTING=ON $TESTARGS $ARGS
+          #  -DCMAKE_C_COMPILER=$CC
+          cmake .. -DENABLE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Continuous -DONLINE_TESTING=ON $TESTARGS $ARGS
       - name: build
         run: make -C _build
       - name: test
