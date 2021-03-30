@@ -33,7 +33,7 @@ clone_folder: c:\projects\gammu
 
 install:
   - ps: if (($env:CONFIGURATION) -eq "Debug" ) { .\admin\install_opencppcoverage.ps1 }
-  - appveyor DownloadFile https://download.microsoft.com/download/f/2/6/f263ac46-1fe9-4ae9-8fd3-21102100ebf5/msxsl.exe
+  - choco install xsltproc
 
 before_build:
   - cmd: >-
@@ -79,7 +79,7 @@ test_script:
             # Copy test results to fixed name
             Copy-Item Testing\$(Get-Content Testing\TAG -TotalCount 1)\*.xml test.xml;
             # XLST CTest XML into Junit XML
-            msxsl test.xml admin/ctest-to-junit.xsl -o junit.xml;
+            xsltproc -o junit.xml admin/ctest-to-junit.xsl test.xml;
             # Upload results to AppVeyor
             $wc = New-Object 'System.Net.WebClient';
             $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\junit.xml));
