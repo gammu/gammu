@@ -26,12 +26,21 @@ jobs:
           POSTGRES_PASSWORD: smsd
           POSTGRES_USER: smsd
           POSTGRES_DB: smsd
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
       mysql:
         image: mysql
         env:
           MYSQL_DATABASE: smsd
           MYSQL_USER: smsd
           MYSQL_PASSWORD: smsd
+        ports:
+          - 3306:3306
     steps:
       - uses: actions/checkout@v2
       - name: apt
