@@ -40,8 +40,9 @@ jobs:
           MYSQL_DATABASE: smsd
           MYSQL_USER: smsd
           MYSQL_PASSWORD: smsd
+          MYSQL_ROOT_PASSWORD: smsd
         options: >-
-            --health-cmd="mysqladmin --user=smsd --password=smsd ping"
+            --health-cmd="mysqladmin --password=smsd ping"
             --health-interval=10s
             --health-timeout=5s
             --health-retries=5
