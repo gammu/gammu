@@ -75,7 +75,7 @@ def get_line_rates(data):
         lines = len(data[item])
         hits = sum([1 for x in data[item].values() if x])
         result[item] = 1.0 * hits / lines
-        log(" * {} = {} ({} / {})".format(item, result[item], hits, lines))
+        log(f" * {item} = {result[item]} ({hits} / {lines})")
         total_lines += lines
         total_hits += hits
 
