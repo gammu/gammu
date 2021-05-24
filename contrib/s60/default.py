@@ -833,32 +833,25 @@ class Mobile:
                 elif isinstance(days[0], int):
                     # Which days in week? (0=Monday,...)
                     # for example: [0,1,2]
-                    line += ",".join([str(day) for day in days])
+                    line += ",".join(str(day) for day in days)
                 elif isinstance(days[0], dict):
                     # example: on second Tuesday and last Monday of the month
                     # days is: [{'week': 1, 'day': 1}, {'week': 4, 'day': 0}]
                     # results in: 'week:1,day:1;week:4,day:0'
                     line += ";".join(
-                        [
-                            ",".join(
-                                [
-                                    key + ":" + str(value)
-                                    for key, value in list(entry.items())
-                                ]
-                            )
-                            for entry in days
-                        ]
+                        ",".join(
+                            key + ":" + str(value) for key, value in list(entry.items())
+                        )
+                        for entry in days
                     )
             elif isinstance(days, dict):
                 # for example: {'week': 1, 'day': 1, 'month': 1}
                 # results in: 'week:1,day:1,month:1'
-                line += ",".join(
-                    [key + ":" + str(value) for key, value in days.items()]
-                )
+                line += ",".join(key + ":" + str(value) for key, value in days.items())
         line += sep
 
         if repeated and "exceptions" in repeat:
-            line += ",".join([str(int(day)) for day in repeat["exceptions"]])
+            line += ",".join(str(int(day)) for day in repeat["exceptions"])
         line += sep
 
         if repeated and "start" in repeat:
