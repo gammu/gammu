@@ -1089,7 +1089,6 @@ GSM_Error ATGEN_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 	if (error == ERR_NONE || error == ERR_CORRUPTED) {
 		getfolder = sms->SMS[0].Folder;
 		ATGEN_SetSMSLocation(s, &sms->SMS[0], folderid, location);
-		sms->SMS[0].Folder = getfolder;
 		if(sms->SMS[0].Memory != MEM_SR) {
 			sms->SMS[0].Memory = MEM_SM;
 			if (getfolder > 2) sms->SMS[0].Memory = MEM_ME;
