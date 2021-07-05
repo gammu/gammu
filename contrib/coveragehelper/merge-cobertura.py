@@ -27,7 +27,7 @@ import glob
 import sys
 
 try:
-    from xml.etree.cElementTree import Element, ElementTree, SubElement, iterparse
+    from xml.etree.ElementTree import Element, ElementTree, SubElement, iterparse
 except ImportError:
     from xml.etree.ElementTree import Element, ElementTree, SubElement, iterparse
 
