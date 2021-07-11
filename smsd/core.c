@@ -620,25 +620,25 @@ GSM_Error SMSD_ConfigureLogging(GSM_SMSDConfig *Config, gboolean uselog)
 	} else if (strcmp(Config->logfilename, "syslog") == 0) {
 		if (Config->logfacility == NULL) {
 			facility = LOG_DAEMON;
-		} else if (strcasecmp(Config->logfacility, "DAEMON")) {
+		} else if (!strcasecmp(Config->logfacility, "DAEMON")) {
 			facility = LOG_DAEMON;
-		} else if (strcasecmp(Config->logfacility, "USER")) {
+		} else if (!strcasecmp(Config->logfacility, "USER")) {
 			facility = LOG_USER;
-		} else if (strcasecmp(Config->logfacility, "LOCAL0")) {
+		} else if (!strcasecmp(Config->logfacility, "LOCAL0")) {
 			facility = LOG_LOCAL0;
-		} else if (strcasecmp(Config->logfacility, "LOCAL1")) {
+		} else if (!strcasecmp(Config->logfacility, "LOCAL1")) {
 			facility = LOG_LOCAL1;
-		} else if (strcasecmp(Config->logfacility, "LOCAL2")) {
+		} else if (!strcasecmp(Config->logfacility, "LOCAL2")) {
 			facility = LOG_LOCAL2;
-		} else if (strcasecmp(Config->logfacility, "LOCAL3")) {
+		} else if (!strcasecmp(Config->logfacility, "LOCAL3")) {
 			facility = LOG_LOCAL3;
-		} else if (strcasecmp(Config->logfacility, "LOCAL4")) {
+		} else if (!strcasecmp(Config->logfacility, "LOCAL4")) {
 			facility = LOG_LOCAL4;
-		} else if (strcasecmp(Config->logfacility, "LOCAL5")) {
+		} else if (!strcasecmp(Config->logfacility, "LOCAL5")) {
 			facility = LOG_LOCAL5;
-		} else if (strcasecmp(Config->logfacility, "LOCAL6")) {
+		} else if (!strcasecmp(Config->logfacility, "LOCAL6")) {
 			facility = LOG_LOCAL6;
-		} else if (strcasecmp(Config->logfacility, "LOCAL7")) {
+		} else if (!strcasecmp(Config->logfacility, "LOCAL7")) {
 			facility = LOG_LOCAL7;
 		} else {
 			fprintf(stderr, "Invalid facility \"%s\"\n", Config->logfacility);
