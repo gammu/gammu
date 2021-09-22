@@ -99,7 +99,7 @@ static DCT4_Feature DCT4Features[] = {
 	{DCT4_JAVA_TCK,	                 "Java TCK support",             {{1,"on"},{0,"off"},{0,""}}},
 
 	{DCT4_ALS,		 	 "Alternate Line Service (ALS)", {{1,"on"},{0,"off"},{0,""}}},
-	{DCT4_A52,		 	 "Ciphering alghoritm A52", 	 {{1,"on"},{0,"off"},{0,""}}},
+	{DCT4_A52,		 	 "Ciphering algorithm A52", 	 {{1,"on"},{0,"off"},{0,""}}},
 	{DCT4_CSP,		 	 "Customer Service Profile",	 {{0,"off"},{1,"on"},{0,""}}},
 	{DCT4_EONS,			 "EONS support",		 {{1,"on"},{0,"off"},{0,""}}},
 	{DCT4_3GINDICATOR,		 "3G indicator",		 {{1,"on"},{0,"off"},{0,""}}},

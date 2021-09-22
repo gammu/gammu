@@ -144,7 +144,7 @@ void GSM_GetCalendarRecurranceRepeat(GSM_Debug_Info *di, unsigned char *rec, uns
 	if (Recurrance == 0xffff) Recurrance=24*365;
 	/* dct3: unavailable, dct4: 65534 (0xffff-1) is 30 days */
 	if (Recurrance == 0xffff-1) Recurrance=24*30;
-	smfprintf(di, "Recurrance   : %i hours\n",Recurrance);
+	smfprintf(di, "Recurrence   : %i hours\n",Recurrance);
 
 	for (i=0;i<entry->EntriesNum;i++) {
 		if (entry->Entries[i].EntryType == CAL_START_DATETIME) {
