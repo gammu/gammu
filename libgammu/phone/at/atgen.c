@@ -315,7 +315,7 @@ GSM_Error ATGEN_HandleCMEError(GSM_StateMachine *s)
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
 	if (Priv->ErrorCode == 0) {
-		smprintf(s, "CME Error occured, but it's type not detected\n");
+		smprintf(s, "CME Error occurred, but it's type not detected\n");
 	} else if (Priv->ErrorText == NULL) {
 		smprintf(s, "CME Error %i, no description available\n", Priv->ErrorCode);
 	} else {
@@ -378,7 +378,7 @@ GSM_Error ATGEN_HandleCMSError(GSM_StateMachine *s)
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
 	if (Priv->ErrorCode == 0) {
-		smprintf(s, "CMS Error occured, but it's type not detected\n");
+		smprintf(s, "CMS Error occurred, but it's type not detected\n");
 	} else if (Priv->ErrorText == NULL) {
 		smprintf(s, "CMS Error %i, no description available\n", Priv->ErrorCode);
 	} else {

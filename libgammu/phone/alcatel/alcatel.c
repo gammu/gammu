@@ -976,7 +976,7 @@ static GSM_Error ALCATEL_ReplyGetFieldValue(GSM_Protocol_Message *msg, GSM_State
 		Priv->ReturnType 	= Alcatel_byte;
 		Priv->ReturnInt 	= buffer[3];
 	} else {
-		smprintf(s, "WARNING: Uknown data type received (%02X,%02X)\n", buffer[1], buffer[2]);
+		smprintf(s, "WARNING: Unknown data type received (%02X,%02X)\n", buffer[1], buffer[2]);
 		return ERR_UNKNOWNRESPONSE;
 	}
 	return ERR_NONE;
