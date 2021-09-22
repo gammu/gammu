@@ -6,13 +6,13 @@ After=mysql.service postgresql.service network-online.target
 [Service]
 EnvironmentFile=-/etc/sysconfig/gammu-smsd
 # Run daemon as root user
-ExecStart=${CMAKE_INSTALL_FULL_BINDIR}/gammu-smsd --pid=/var/run/gammu-smsd.pid --daemon
+ExecStart=${CMAKE_INSTALL_FULL_BINDIR}/gammu-smsd --pid=/run/gammu-smsd.pid --daemon
 # Run daemon as non-root user (set user/group in /etc/sysconfig/gammu-smsd)
-#ExecStart=${CMAKE_INSTALL_FULL_BINDIR}/gammu-smsd --user=${GAMMU_USER} --group=${GAMMU_GROUP} --pid=/var/run/gammu-smsd.pid --daemon
+#ExecStart=${CMAKE_INSTALL_FULL_BINDIR}/gammu-smsd --user=${GAMMU_USER} --group=${GAMMU_GROUP} --pid=/run/gammu-smsd.pid --daemon
 ExecReload=/bin/kill -HUP $MAINPID
-ExecStopPost=/bin/rm -f /var/run/gammu-smsd.pid
+ExecStopPost=/bin/rm -f /run/gammu-smsd.pid
 Type=forking
-PIDFile=/var/run/gammu-smsd.pid
+PIDFile=/run/gammu-smsd.pid
 
 [Install]
 WantedBy=multi-user.target
