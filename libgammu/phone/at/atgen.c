@@ -2559,7 +2559,7 @@ GSM_Error ATGEN_SetCharset(GSM_StateMachine *s, GSM_AT_Charset_Preference Prefer
 {
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error		error;
-	char			buffer[100];
+	char			buffer[120];
 	char			buffer2[100];
 	char			buffer3[100];
 	int			i = 0;
@@ -3783,7 +3783,7 @@ GSM_Error ATGEN_ReplyGetCPBRMemoryStatus(GSM_Protocol_Message *msg, GSM_StateMac
 GSM_Error ATGEN_GetMemoryInfo(GSM_StateMachine *s, GSM_MemoryStatus *Status, GSM_AT_NeededMemoryInfo NeededInfo)
 {
 	GSM_Error		error;
-	char			req[20]={'\0'};
+	char			req[30]={'\0'};
 	int			start = 0,end = 0,memory_end = 0;
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	gboolean		free_read = FALSE;
@@ -4252,7 +4252,7 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 GSM_Error ATGEN_PrivGetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, int endlocation)
 {
 	GSM_Error 		error;
-	char		req[20];
+	char		req[40];
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	size_t len;
 

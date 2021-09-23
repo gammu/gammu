@@ -69,7 +69,7 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfi
 {
 	GSM_Error error = ERR_NONE;
 	int i, j;
-	unsigned char FileName[100], FullName[PATH_MAX], ext[4], buffer[64], buffer2[400];
+	unsigned char FileName[PATH_MAX], FullName[PATH_MAX], ext[4], buffer[64], buffer2[400];
 	gboolean done;
 	FILE *file;
 	size_t locations_size = 0, locations_pos = 0;
@@ -569,7 +569,7 @@ static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDCo
 {
 	int i, j;
 	int fd;
-	unsigned char FileName[100], FullName[PATH_MAX], ext[17], buffer[64], buffer2[400];
+	unsigned char FileName[PATH_MAX], FullName[PATH_MAX], ext[17], buffer[64], buffer2[400];
 	FILE *file = NULL;
 	time_t rawtime;
 	struct tm *timeinfo;
