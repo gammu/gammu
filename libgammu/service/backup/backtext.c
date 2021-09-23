@@ -102,7 +102,7 @@ static unsigned char *ReadCFGText(INI_Section *cfg, const unsigned char *section
 static GSM_Error SaveLinkedBackupText(FILE *file, const char *myname, const char *myvalue, const gboolean UseUnicode)
 {
 	int 		w,current;
-	unsigned char 	buffer2[1000],buffer3[1000];
+	unsigned char 	buffer2[1000],buffer3[1020];
 
 	current = strlen(myvalue); w = 0;
 	while (TRUE) {

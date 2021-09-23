@@ -1926,7 +1926,7 @@ GSM_Error SMSD_InitSharedMemory(GSM_SMSDConfig *Config, gboolean writable)
 	/* Initial shared memory content */
 	if (writable) {
 		Config->Status->Version = SMSD_SHM_VERSION;
-		strncpy(Config->Status->PhoneID, Config->PhoneID, sizeof(Config->Status->PhoneID));
+		strncpy(Config->Status->PhoneID, Config->PhoneID, sizeof(Config->Status->PhoneID) - 1);
 		Config->Status->PhoneID[sizeof(Config->Status->PhoneID) - 1] = 0;
 		sprintf(Config->Status->Client, "Gammu %s on %s compiler %s",
 			GAMMU_VERSION,
