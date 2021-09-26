@@ -81,7 +81,7 @@ You can match by various attributes, you can figure them using udevadm command:
 
 .. _echo:
 
-Mutliple programs using same device cause various errors, how to fix that?
+Multiple programs using same device cause various errors, how to fix that?
 --------------------------------------------------------------------------
 
 Gammu needs to be the only program using the device, otherwise you will get

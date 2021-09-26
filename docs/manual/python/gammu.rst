@@ -893,7 +893,7 @@ This module wraps all python-gammu functionality.
 
    .. method:: SetDebugLevel(Level)
 
-      Sets state machine debug level accorting to passed string. You need to configure output file using :meth:`SetDebugFile` to activate it.
+      Sets state machine debug level according to passed string. You need to configure output file using :meth:`SetDebugFile` to activate it.
 
       :type Level: str
       :param Level: name of debug level to use, currently one of:
@@ -1122,7 +1122,7 @@ Debugging configuration
 
 .. function:: SetDebugLevel(Level)
 
-    Sets global debug level accorting to passed string. You need to configure output file using :meth:`SetDebugFile` to activate it.
+    Sets global debug level according to passed string. You need to configure output file using :meth:`SetDebugFile` to activate it.
 
     :type Level: str
     :param Level: name of debug level to use, currently one of:
@@ -1148,7 +1148,7 @@ Message processing
     :type Messages: list
     :type EMS: bool
     :param Messages: List of messages to link, see :ref:`sms_obj`
-    :param EMS: Whether to detect ems, defauls to True
+    :param EMS: Whether to detect ems, defaults to True
     :return: List of linked messages, see :ref:`sms_obj`
     :rtype: list
 
@@ -1173,7 +1173,7 @@ Message processing
 
     :param Messages: Nessages to decode, see :ref:`sms_obj`
     :type Messages: list
-    :param EMS: Whether to use EMS, defalt to True
+    :param EMS: Whether to use EMS, defaults to True
     :type EMS: bool
     :return: Multi part message information, see :ref:`sms_info_obj`
     :rtype: dict
