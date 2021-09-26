@@ -616,7 +616,7 @@ that all path should contain trailing path separator (/ on Unix systems):
 
     .. note::
 
-        In ``detail`` format, all message parts are stored into signle file,
+        In ``detail`` format, all message parts are stored into single file,
         for all others each message part is saved separately.
 
 .. config:option:: OutboxFormat

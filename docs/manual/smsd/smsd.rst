@@ -217,7 +217,7 @@ service.
 Invoking Gammu and suspending SMSD
 ++++++++++++++++++++++++++++++++++
 
-As you can not run Gammu and Gammu SMSD at same time on signle device, you can
+As you can not run Gammu and Gammu SMSD at same time on single device, you can
 workaround this limitation by suspending SMSD temporarily using `SIGUSR1` and
 `SIGUSR2` signals (see also :ref:`gammu-smsd-signals`):
 
