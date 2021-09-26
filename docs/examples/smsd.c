@@ -14,7 +14,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	 */
 	GSM_InitLocales(NULL);
 
-    /* Initalize configuration with program name */
+    /* Initialize configuration with program name */
 	config = SMSD_NewConfig("smsd-example");
 	assert(config != NULL);
 
