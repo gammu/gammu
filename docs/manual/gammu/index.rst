@@ -227,7 +227,7 @@ ____________
 
 .. option:: geteachsms -pbk
 
-    Similiary to :option:`gammu getallsms`. Difference is, that
+    Similarly to :option:`gammu getallsms`. Difference is, that
     links all concatenated sms
 
 .. option:: getsms folder start [stop]
@@ -436,7 +436,7 @@ ____________
             last text will be formatted. You can use combinations of chars:
 
             =========  ==================
-            Character  Formating
+            Character  Formatting
             =========  ==================
             ``l``      left aligned
             ``c``      centered
@@ -799,11 +799,11 @@ level and Gammu does not use that.
 
 .. option:: getfilefolder fileID, fileID, ...
 
-    Retrieve files or all files from folder with given IDs from a phone filesytem.
+    Retrieve files or all files from folder with given IDs from a phone filesystem.
 
 .. option:: getfiles fileID, fileID, ...
 
-    Retrieve files with given IDs from a phone filesytem.
+    Retrieve files with given IDs from a phone filesystem.
 
 .. option:: getfilesystem [-flatall|-flat]
 

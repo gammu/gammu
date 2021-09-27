@@ -49,7 +49,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	GSM_MultiPartSMSInfo SMSInfo;
 	GSM_SMSC PhoneSMSC;
 	char recipient_number[] = "+1234567890";
-	char message_text[] = "Very long example Gammu message to show how to construct contatenated messages using libGammu. Very long example Gammu message to show how to construct contatenated messages using libGammu.";
+	char message_text[] = "Very long example Gammu message to show how to construct concatenated messages using libGammu. Very long example Gammu message to show how to construct concatenated messages using libGammu.";
 	unsigned char message_unicode[(sizeof(message_text) + 1) * 2];
 	GSM_Debug_Info *debug_info;
 	int return_value = 0;

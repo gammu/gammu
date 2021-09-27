@@ -72,7 +72,7 @@ that last answers with::
 88 88 88 88 88
     own #
 09 63 c2 09 03 00 0b
-    unknow
+    unknown
 0a
     group id
 01
@@ -84,13 +84,13 @@ that last answers with::
 20 41 43 41 45 00 00 00 00 00 00 00 00 00 00 00
     alpha tag
 b3 4d
-    unknow
+    unknown
 01
     NAM status
 11 11 11 11 11 00 00 00 00 00 00 00 00
-    unknow
+    unknown
 00 00 00 00 00 00 01 00 00 00 01 36
-    unknow
+    unknown
 01 4d
     dedicate ch
 01 4e
@@ -106,11 +106,11 @@ b3 4d
 00 00 00 00 00 00 00 00 00 00 00 00 00 00
     msg center #
 08 01 80 70 8f dd 00 ef 00 00 00 00 00 00 00 00
-    unknow
+    unknown
 00 00 00 00 00
     gate way #
 00 00 00
-    unknow
+    unknown
 
 More interesting ( and dangerous ) is than the 07 10 sequence  in place
 of 07 11 in the request change the command from read to write.be care

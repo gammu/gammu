@@ -231,7 +231,7 @@ void simAnswer_Process(unsigned char type, unsigned char *buffer, size_t length)
 		*/
 		break;
 	default:
-		printf("Uknown subtype! dumping data: ");
+		printf("Unknown subtype! dumping data: ");
 		for(x=0;x<length;x++) printf("%02x ", buffer[x]&0xFF);
 		//printf("\n");
 		break;

@@ -799,7 +799,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 				}
 				sms->InboxFolder = FALSE;
 			} else {
-				smprintf(s, "Uknown message state: %s\n", buffer);
+				smprintf(s, "Unknown message state: %s\n", buffer);
 				return ERR_UNKNOWN;
 			}
 

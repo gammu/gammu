@@ -54,7 +54,7 @@ listed after ``AT+SSHR=0``). e.g.::
 
 
 Please note, that the format for writing is somehow different, than
-for reading - hour and minuts must be in two-digit form!
+for reading - hour and minutes must be in two-digit form!
 The text fields (as shown above) are formatted in the following way:
 "number_of_characters_in_string,string"
 In all items above the first string is the name of event, the second
