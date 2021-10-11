@@ -13,6 +13,7 @@ ExecReload=/bin/kill -HUP $MAINPID
 ExecStopPost=/bin/rm -f /run/gammu-smsd.pid
 Type=forking
 PIDFile=/run/gammu-smsd.pid
+PrivateTmp=yes
 
 [Install]
 WantedBy=multi-user.target
