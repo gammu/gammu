@@ -1089,6 +1089,7 @@ GSM_Error ATGEN_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 	if (error == ERR_NONE || error == ERR_CORRUPTED) {
 		getfolder = sms->SMS[0].Folder;
 		ATGEN_SetSMSLocation(s, &sms->SMS[0], folderid, location);
+		sms->SMS[0].Folder = getfolder;
 		if(sms->SMS[0].Memory != MEM_SR) {
 			sms->SMS[0].Memory = MEM_SM;
 			if (getfolder > 2) sms->SMS[0].Memory = MEM_ME;
@@ -2263,6 +2264,7 @@ GSM_Error ATGEN_ReplyDeleteSMSMessage(GSM_Protocol_Message *msg UNUSED, GSM_Stat
 
 GSM_Error ATGEN_DeleteSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 {
+	sms->Folder = 0;
 	GSM_Error error;
 	GSM_MultiSMSMessage msms;
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;

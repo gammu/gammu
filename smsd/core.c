@@ -1574,7 +1574,6 @@ gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config)
 
 		/* Delete processed messages */
 		for (j = 0; j < SortedSMS[i]->Number; j++) {
-			SortedSMS[i]->SMS[j].Folder = 0;
 			error = GSM_DeleteSMS(Config->gsm, &SortedSMS[i]->SMS[j]);
 			// Empty error can happen if deleting message several times
 			if (error != ERR_NONE && error != ERR_EMPTY) {
