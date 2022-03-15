@@ -574,7 +574,7 @@ You need to have ``gammu`` and ``libgammu-dev`` installed for using python-gammu
     pip3 install python-gammu
 
 
-The location of the libraries is discovered using :program:`pkg-config`, ``GAMMU_PATH`` environment variable and falls back to generic locations. In case it does not work, either install :program:`pkg-config` or set ``GAMMU_PATH``. ``GAMMU_PATH`` is recommended when building on Windows.
+The location of the libraries is discovered using ``pkg-config``, ``GAMMU_PATH`` environment variable and falls back to generic locations. In case it does not work, either install ``pkg-config`` or set ``GAMMU_PATH``. ``GAMMU_PATH`` is recommended when building on Windows.
 
 Compiling python-gammu
 ++++++++++++++++++++++
@@ -599,6 +599,7 @@ On Linux something like this should work:
 On Windows:
 
 .. code-block:: sh
+
     SET GAMMU_PATH="C:\Gammu"
     python setup.py build
 
