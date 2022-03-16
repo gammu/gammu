@@ -16,9 +16,6 @@ Creating Pull Requests
 The Gammu project is hosted on `Github <https://github.com/gammu>`_ which uses
 `Git <http://git-scm.com/>`_ as version control system in the Background.
 
-You should fork / clone the repository and then create a `Pull Request <https://github.com/gammu/gammu/pulls>`_::
-
-
 So start with forking & cloning our Git repository::
 
     git clone https://github.com/gammu/gammu.git gammu
