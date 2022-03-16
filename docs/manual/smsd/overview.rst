@@ -1,3 +1,5 @@
+.. _gammu-smsd-overview:
+
 Overview
 ========
 
