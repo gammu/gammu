@@ -28,6 +28,10 @@ jobs:
           mkdir gh-pages
           cp -r build-configure/docs/manual/html/* gh-pages/
           cp build-configure/docs/manual/latex/*.pdf gh-pages/
+      - uses: actions/upload-artifact@v3.0.0
+        with:
+          name: Documentation
+          path: gh-pages
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3.8.0
         if: github.event_name == 'push' && github.event.ref == 'refs/heads/master'
