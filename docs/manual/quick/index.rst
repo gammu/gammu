@@ -17,6 +17,9 @@ Gammu family consists of several programs and libraries:
     Daemon to receive and send messages using your phone.
 :ref:`gammu-smsd-inject`
     Injects outgoing messages into :ref:`gammu-smsd` queue.
+:ref:`gammu-smsd-monitor`
+    Monitors state of Gammu SMS Daemon. It periodically displays information about
+    phone and number of processed messages.
 :ref:`gammu-detect`
     Simple utility to detect phones or modems connected to computer.
 :ref:`python`
