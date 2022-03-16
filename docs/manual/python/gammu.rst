@@ -386,6 +386,7 @@ This module wraps all python-gammu functionality.
    .. method:: GetDisplayStatus()
 
       Acquired display status.
+
       :return: List of indicators displayed on display
       :rtype: list
 
@@ -594,6 +595,7 @@ This module wraps all python-gammu functionality.
    .. method:: GetProductCode()
 
       Gets product code of device.
+
       :return: Product code as string.
       :rtype: str
 
