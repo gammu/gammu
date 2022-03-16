@@ -50,12 +50,11 @@ API documentation
 python-gammu Examples
 ---------------------
 
-.. seealso:: Many examples are available in :ref:`https://github.com/gammu/python-gammu/tree/master/examples<examples>`
-    directory in the python-gammu Git repository.
+.. seealso:: Many examples are available in :ref:`/examples`_ directory in the python-gammu Git repository.
 
 
 Sending a message
------------------
+~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -99,7 +98,7 @@ Sending a message
     state_machine.SendSMS(message)
 
 Sending a long message
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -163,7 +162,7 @@ Sending a long message
         state_machine.SendSMS(message)
 
 Initiating a voice call
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -195,7 +194,7 @@ Initiating a voice call
     state_machine.DialVoice(sys.argv[1])
 
 Reading calendar from phone
----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -237,3 +236,5 @@ Reading calendar from phone
         for v in entry["Entries"]:
             print("%-20s: %s" % (v["Type"], str(v["Value"])))
 
+
+.. _/examples: https://github.com/gammu/python-gammu/tree/master/examples
