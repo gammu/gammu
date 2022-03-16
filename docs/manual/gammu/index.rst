@@ -45,6 +45,39 @@ Parameters before command configure gammu behaviour:
    file for logging debug messages
 
 
+Phone information commands
+--------------------------
+
+.. option:: battery
+
+    Displays information about battery and power source.
+
+.. option:: getdisplaystatus
+
+.. option:: getsecuritystatus
+
+    Show, if phone wait for security code (like PIN, PUK, etc.) or not
+
+.. option:: identify
+
+    Show the most important phone data.
+
+.. option:: monitor [times]
+
+    Retrieves phone status and writes it continuously to standard output. Press
+    :kbd:`Ctrl+C` to interrupt this command.
+
+    If no parameter is given, the program runs until interrupted, otherwise
+    only given number of iterations is performed.
+
+    This command outputs almost all information Gammu supports:
+
+    * Number of contacts, calendar and todo entries, messages, calls, etc.
+    * Signal strength.
+    * Battery state.
+    * Currently used network.
+    * Notifications of incoming messages and calls.
+
 Call commands
 -------------
 
@@ -1461,40 +1494,6 @@ FM radio commands
 .. option:: getfmstation start [stop]
 
     Show info about FM stations in phone
-
-Phone information commands
---------------------------
-
-.. option:: battery
-
-    Displays information about battery and power source.
-
-.. option:: getdisplaystatus
-
-.. option:: getsecuritystatus
-
-    Show, if phone wait for security code (like PIN, PUK, etc.) or not
-
-.. option:: identify
-
-    Show the most important phone data.
-
-.. option:: monitor [times]
-
-    Retrieves phone status and writes it continuously to standard output. Press
-    :kbd:`Ctrl+C` to interrupt this command.
-
-    If no parameter is given, the program runs until interrupted, otherwise
-    only given number of iterations is performed.
-
-    This command outputs almost all information Gammu supports:
-
-    * Number of contacts, calendar and todo entries, messages, calls, etc.
-    * Signal strength.
-    * Battery state.
-    * Currently used network.
-    * Notifications of incoming messages and calls.
-
 
 Phone settings commands
 -----------------------
