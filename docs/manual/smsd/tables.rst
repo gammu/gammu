@@ -12,6 +12,11 @@ one sends outgoing message. If you configure PhoneID and use it when inserting
 message to the ``outbox`` table (:ref:`gammu-smsd-inject` does this), each SMS
 daemon will have separate outbox queue. See also :ref:`smsd-multi`.
 
+.. note::
+
+    SQL scripts to create all needed tables for most databases are included in
+    Gammu documentation `docs/sql <https://github.com/gammu/gammu/tree/master/docs/sql>`_.
+
 Receiving of messages
 ---------------------
 
@@ -515,8 +520,7 @@ Creating tables
 +++++++++++++++
 
 SQL scripts to create all needed tables for most databases are included in
-Gammu documentation (docs/sql). As well as some PHP scripts interacting with
-the database.
+Gammu documentation `docs/sql <https://github.com/gammu/gammu/tree/master/docs/sql>`_.
 
 For example to create SQLite tables, issue following command:
 
