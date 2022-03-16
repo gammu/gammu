@@ -562,8 +562,22 @@ To debug program crashes, you might want to build Gammu with
 with protections GCC makes and produce bogus back traces.
 
 
+
+Installing python-gammu
+-----------------------
+
+You need to have ``gammu`` and ``libgammu-dev`` installed for using python-gammu.
+
+.. code-block:: sh
+
+    apt-get install gammu libgammu-dev
+    pip3 install python-gammu
+
+
+The location of the libraries is discovered using ``pkg-config``, ``GAMMU_PATH`` environment variable and falls back to generic locations. In case it does not work, either install ``pkg-config`` or set ``GAMMU_PATH``. ``GAMMU_PATH`` is recommended when building on Windows.
+
 Compiling python-gammu
-----------------------
+++++++++++++++++++++++
 
 Currently python-gammu is distributed as a separate package, which follows
 Python usual method for building modules - distutils, so use :file:`setup.py`
@@ -574,14 +588,24 @@ is placed in the top level directory:
     ./setup.py build
     sudo ./setup.py install
 
-You can install it using pip installer:
+Running with ``GAMMU_PATH``:
+
+On Linux something like this should work:
 
 .. code-block:: sh
 
-    pip install python-gammu
+    GAMMU_PATH=/opt/gammu python setup.py build
 
-You need to have Gammu installed for compiling python-gammu. It's location is
-discovered using pkg-config or by GAMMU_PATH environment variable. The latter
-is recommended when building on Windows.
+On Windows:
+
+.. code-block:: sh
+
+    SET GAMMU_PATH="C:\Gammu"
+    python setup.py build
+
+
+
+
+
 
 .. _CMake: http://www.cmake.org/
