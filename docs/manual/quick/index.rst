@@ -114,8 +114,8 @@ quite similar for any storage service.
 .. note::
 
     You can not run Gammu and Gammu SMSD at same time on single device, you can
-workaround this limitation by suspending SMSD temporarily using `SIGUSR1` and
-`SIGUSR2` signals (see also :ref:`gammu-smsd-signals` and :ref:`gammu-smsd-suspend`):
+    workaround this limitation by suspending SMSD temporarily using `SIGUSR1` and
+    `SIGUSR2` signals (see also :ref:`gammu-smsd-signals` and :ref:`gammu-smsd-suspend`):
 
 Configuring the storage
 +++++++++++++++++++++++

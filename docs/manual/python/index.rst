@@ -50,7 +50,7 @@ API documentation
 python-gammu Examples
 ---------------------
 
-.. seealso:: Many examples are available in :ref:`/examples`_ directory in the python-gammu Git repository.
+.. seealso:: Many examples are available in `/examples`_ directory in the python-gammu git repository.
 
 
 Sending a message

@@ -15,7 +15,7 @@
     status, this can be also done on separately running instances (``gammu-smsd``). All you
     need to do for this is to give same configuration file as that instance is
     using.
-    For more infos look into :ref:`Gammu SMSD Overview <gammu-smsd-overview_>`_.
+    For more infos look into :ref:`Gammu SMSD Overview <gammu-smsd-overview>`.
 
     :param Config: Path to SMSD configuration file.
     :type Config: string
