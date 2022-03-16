@@ -564,7 +564,7 @@ with protections GCC makes and produce bogus back traces.
 
 
 Installing python-gammu
-----------------------
+-----------------------
 
 You need to have ``gammu`` and ``libgammu-dev`` installed for using python-gammu.
 
