@@ -13,6 +13,7 @@ set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 # Silent some warnings from CMake 2.6
 cmake_policy(SET CMP0003 NEW)
 cmake_policy(SET CMP0009 NEW)
+cmake_policy(SET CMP0110 NEW)
 
 option (COVERAGE "Add flags for Coverage analysis" OFF)
 
