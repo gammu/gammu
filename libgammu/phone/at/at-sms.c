@@ -2809,9 +2809,6 @@ GSM_Error ATGEN_SetCNMI(GSM_StateMachine *s)
 	if (Priv->CNMIMode == 0) {
 		return ERR_NOTSUPPORTED;
 	}
-	if (Priv->CNMIBroadcastProcedure == 0) {
-		return ERR_NOTSUPPORTED;
-	}
 
 	length = sprintf(
 		buffer,
