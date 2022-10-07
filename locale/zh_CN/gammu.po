@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Wammu 0.37\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2019-09-27 09:19+0200\n"
-"PO-Revision-Date: 2022-01-25 09:52+0000\n"
-"Last-Translator: Eric <alchemillatruth@purelymail.com>\n"
+"PO-Revision-Date: 2022-10-10 17:58+0000\n"
+"Last-Translator: Eric <hamburger1024@mailbox.org>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "gammu/gammu/zh_Hans/>\n"
 "Language: zh_CN\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.11-dev\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:379 helper/message-cmdline.c:403
@@ -1289,9 +1289,8 @@ msgid "Headset interconnection:"
 msgstr "耳机连接："
 
 #: gammu/depend/nokia/dct4.c:1044
-#, fuzzy
 msgid "Hook interconnection:"
-msgstr "Hook 连接："
+msgstr "Hook 互联："
 
 #: gammu/depend/nokia/dct4.c:1045
 msgid "Light sensor:"
