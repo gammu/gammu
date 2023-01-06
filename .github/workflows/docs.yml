@@ -33,7 +33,7 @@ jobs:
           name: Documentation
           path: gh-pages
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3.9.0
+        uses: peaceiris/actions-gh-pages@v3.9.1
         if: github.event_name == 'push' && github.event.ref == 'refs/heads/master'
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
