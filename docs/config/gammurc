@@ -13,6 +13,7 @@ connection = irdaphonet
 ; Do not use model configuration unless you really need it
 ;model = 6110
 ;synchronizetime = yes
+;brokencfun = no
 ;logfile = gammulog
 ;logformat = textall
 ;use_locking = yes
@@ -27,6 +28,7 @@ device = com8:
 ;model = 6110
 connection = fbusblue
 ;synchronizetime = yes
+;brokencfun = no
 ;logfile = gammulog
 ;logformat = textall
 ;use_locking = yes
@@ -145,6 +147,7 @@ connection = fbusblue
 ;                 | starting connection. Do not rather use this option when
 ;                 | when to reset phone during connection (in some phones need
 ;                 | to set time again after restart)
+; Brokencfun      | Broken AT+CFUN=1 response (reset device)
 ; GammuLoc        | name of localisation file
 ; StartInfo       | this option allows one to set, that you want (setting "yes")
 ;                 | to see message on the phone screen or phone should enable

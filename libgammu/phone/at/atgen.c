@@ -2135,9 +2135,11 @@ GSM_Error ATGEN_PostConnect(GSM_StateMachine *s)
 		}
 
 		/* Power on the modem */
-		error = GSM_WaitForAutoLen(s, "AT+CFUN=1\r", 0, 40, ID_SetPower);
-		if (error != ERR_NONE) {
+		if (s->CurrentConfig->BrokenCFUN == 0) {
+		   error = GSM_WaitForAutoLen(s, "AT+CFUN=1\r", 0, 40, ID_SetPower);
+		   if (error != ERR_NONE) {
 			return error;
+		   }
 		}
 
 		/* Tell device that this is modem port */

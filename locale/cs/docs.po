@@ -619,6 +619,13 @@ msgstr ""
 #~ "If you want to set time from computer to phone during starting connection."
 #~ msgstr "Určí, zda chcete nastavit čas v telefonu při připojení."
 
+#~ msgid "Brokencfun"
+#~ msgstr "Brokencfun"
+
+#~ msgid ""
+#~ "Disable using AT+CFUN=1 during standard communication (reset device and no response)"
+#~ msgstr "Vypne používání příkazu AT+CFUN=1 během běžné komunikace"
+
 #~ msgid "StartInfo"
 #~ msgstr "StartInfo"
 

@@ -8,6 +8,7 @@
 #model = 6110
 #connection = dlr3
 #synchronizetime = yes
+#brokencfun = no
 #logfile = gammulog # this is not used at all in SMSD mode
 #logformat = textall
 #use_locking = yes

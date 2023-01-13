@@ -19,6 +19,7 @@ D_PORT=/dev/mobile
 D_MODEL=
 D_CONNECTION=at19200
 D_SYNCHRONIZETIME=yes
+D_BROKENCFUN=no
 D_LOGFILE=
 D_LOGFORMAT=nothing
 D_LOCKING=
@@ -90,6 +91,7 @@ if [ -f "$CONFIG" ] ; then
         MODEL=$(cfgread model)
         CONNECTION=$(cfgread connection)
         SYNCHRONIZETIME=$(cfgread synchronizetime)
+        BROKENCFUN=$(cfgread brokencfun)
         LOGFILE=$(cfgread logfile)
         LOGFORMAT=$(cfgread logformat)
         LOCKING=$(cfgread use_locking)
@@ -110,6 +112,7 @@ mainmenu() {
         C "Connection           (${CONNECTION:-$D_CONNECTION})" \
         M "Model                (${MODEL:-$D_MODEL})" \
         D "Synchronize time     (${SYNCHRONIZETIME:-$D_SYNCHRONIZETIME})" \
+        D "Broken CFUN response (${BROKENCFUN:-$D_BROKENCFUN})" \
         F "Log file             (${LOGFILE:-$D_LOGFILE})" \
         O "Log format           (${LOGFORMAT:-$D_LOGFORMAT})" \
         L "Use locking          (${LOCKING:-$D_LOCKING})" \
@@ -233,6 +236,12 @@ editD() {
         no ""
 }
 
+editB() {
+    editgeneral "Broken CFUN response?" BROKENCFUN \
+        yes "" \
+        no ""
+}
+
 editF() {
     if [ $DIALOG = dialog ] ; then
         $DIALOG --fselect "${LOGFILE:-$D_LOGFILE}" $FILE_SIZE 2>"$TEMPFILE"
@@ -330,6 +339,7 @@ if [ $BUTTON -eq 3 ] ; then
 #                  starting connection. Do not rather use this option when want
 #                  to reset phone during connection (in some phones need to
 #                  set time again after restart)
+# Brokencfun     : Broken AT+CFUN=1 response (reset device) [yes/no]
 # Logfile        : Use, when want to have logfile from communication.
 # Logformat      : What debug info and format should be used:
 #                  "nothing" - no debug level, "text" - transmission dump in
@@ -346,6 +356,7 @@ port = ${PORT:-$D_PORT}
 model = ${MODEL:-$D_MODEL}
 connection = ${CONNECTION:-$D_CONNECTION}
 synchronizetime = ${SYNCHRONIZETIME:-$D_SYNCHRONIZETIME}
+brokencfun = ${BROKENCFUN:-$D_BROKENCFUN}
 logfile = ${LOGFILE:-$D_LOGFILE}
 logformat = ${LOGFORMAT:-$D_LOGFORMAT}
 use_locking = ${LOCKING:-$D_LOCKING}

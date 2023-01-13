@@ -505,6 +505,14 @@ msgstr ""
 #~ msgstr ""
 #~ "If you want to set time from computer to phone during starting connection."
 
+#~ msgid "Brokencfun"
+#~ msgstr "Brokencfun"
+
+#~ msgid ""
+#~ "Disable using AT+CFUN=1 during standard communication (reset device and no response)"
+#~ msgstr "Disable using AT+CFUN=1 during standard communication (reset device and no response)"
+
+
 #~ msgid "StartInfo"
 #~ msgstr "B<StartInfo>"
 
