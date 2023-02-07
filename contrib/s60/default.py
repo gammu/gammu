@@ -982,7 +982,6 @@ class Mobile:
         repeat_end,
         repeat_interval,
     ):
-
         try:
             entry = self.calendarDb[id]
         except:
@@ -1030,7 +1029,6 @@ class Mobile:
         repeat_end,
         repeat_interval,
     ):
-
         if type == "appointment":
             entry = self.calendarDb.add_appointment()
         elif type == "event":
@@ -1143,7 +1141,6 @@ class Mobile:
         }
 
     def calendarEntryParsedDays(self, type, days):
-
         ### PLEASE COPY CHANGES IN THIS FUNCTION ALSO TO
         ### pc/lib/classes.py, class CalendarEntry function recurrenceParsedDays
 
