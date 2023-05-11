@@ -369,7 +369,7 @@ Compiling on Mac OS X
 First install all :ref:`deps` and :ref:`opt-deps`.
 
 Gammu should be compilable on Mac OS X, you need to have installed
-Developer Tols (version 2.4.1 was tested) and `CMake`_ (there is a Mac OS X
+Developer Tools (version 2.4.1 was tested) and `CMake`_ (there is a Mac OS X
 "Darwin" DMG download). For database support in SMSD, install wanted
 database, eg. MySQL.
 
