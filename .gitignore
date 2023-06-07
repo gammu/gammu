@@ -1,3 +1,7 @@
 build*
 tags
 *.pyc
+cmake-build-debug
+
+# jetbrains ide
+.idea
