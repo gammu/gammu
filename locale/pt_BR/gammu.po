@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2019-09-27 09:19+0200\n"
-"PO-Revision-Date: 2020-03-02 16:32+0000\n"
+"PO-Revision-Date: 2023-06-23 20:34+0000\n"
 "Last-Translator: Wellington Terumi Uemura <wellingtonuemura@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "gammu/gammu/pt_BR/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.0-dev\n"
+"X-Generator: Weblate 4.18.1\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:379 helper/message-cmdline.c:403
@@ -1486,7 +1486,7 @@ msgstr "Número Escritório"
 
 #: gammu/depend/nokia/dct4.c:1382
 msgid "Standard number"
-msgstr "Número Padrão"
+msgstr "Número padrão"
 
 #: gammu/depend/nokia/dct4.c:1383
 msgid "Unknown number"
@@ -2118,7 +2118,7 @@ msgstr "Recebido USSD"
 
 #: gammu/message.c:86 helper/message-display.c:167 helper/message-display.c:288
 msgid "Status"
-msgstr "Estado"
+msgstr "Condição geral"
 
 #: gammu/message.c:90
 msgid "No action needed"
@@ -2155,7 +2155,7 @@ msgstr "Número"
 
 #: gammu/message.c:223
 msgid "Default number"
-msgstr "Número Padrão"
+msgstr "Número padrão"
 
 #: gammu/message.c:225
 msgid "Format"
@@ -3967,7 +3967,7 @@ msgstr "Relatório estado SMS"
 #: helper/message-display.c:233 helper/message-display.c:249
 #: helper/message-display.c:290
 msgid "Sent"
-msgstr "Enviadas"
+msgstr "Enviado"
 
 #: helper/message-display.c:170 helper/message-display.c:291
 msgid "Read"
@@ -3979,7 +3979,7 @@ msgstr "Não Lidas"
 
 #: helper/message-display.c:172 helper/message-display.c:293
 msgid "UnSent"
-msgstr "Não Enviadas"
+msgstr "Não enviado"
 
 #: helper/message-display.c:176 helper/message-display.c:280
 msgid "Remote number"
