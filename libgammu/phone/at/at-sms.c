@@ -1146,12 +1146,7 @@ GSM_Error ATGEN_ReplyGetMessageList(GSM_Protocol_Message *msg, GSM_StateMachine 
 			/*
 			 * Sometimes an SMS message will contain a line break. In SMS text
                          * mode we skip to the next line and try again to find +CMGL.
-			 * FIXME: Can we do the same for SMS PDU mode?
 			 */
-			if (Priv->SMSMode == SMS_AT_PDU) {
-				smprintf(s, "Can not find +CMGL:!\n");
-				return ERR_UNKNOWN;
-			}
 			continue;
 		}
 
