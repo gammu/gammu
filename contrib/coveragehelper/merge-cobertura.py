@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Cobertura XML report merger
+Cobertura XML report merger.
 
 Written for merging OpenCppCoverage reports, thus not completely supporting all
 Cobertura XML attributes, only line coverage which OpenCppCoverage generates.
@@ -37,13 +37,13 @@ HEADER = """<?xml version="1.0"?>
 
 
 def log(message=""):
-    """Log message to strderr"""
+    """Log message to strderr."""
     sys.stderr.write(message)
     sys.stderr.write("\n")
 
 
 def read_files(names):
-    """Read coverage data from input files"""
+    """Read coverage data from input files."""
     result = {}
     lines = {}
     outfile = None
@@ -66,7 +66,7 @@ def read_files(names):
 
 
 def get_line_rates(data):
-    """Calculate line hit rates from raw coverage data"""
+    """Calculate line hit rates from raw coverage data."""
     result = {}
     total_lines = 0
     total_hits = 0
@@ -87,7 +87,7 @@ def get_line_rates(data):
 
 
 def write_data(data, handle):
-    """Write Cobertura XML for coverage data"""
+    """Write Cobertura XML for coverage data."""
     line_rates = get_line_rates(data)
 
     log("Generating output...")
@@ -136,7 +136,7 @@ def write_data(data, handle):
 
 
 def main():
-    """Command line interface"""
+    """Command line interface."""
     parser = argparse.ArgumentParser(
         description=sys.modules[__name__].__doc__,
         formatter_class=argparse.RawDescriptionHelpFormatter,

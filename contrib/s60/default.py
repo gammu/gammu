@@ -33,7 +33,6 @@ else:
     import socket
 
 import pickle
-import socket as pysocket
 
 VERSION = "0.6.0"
 PORT = 18
@@ -102,7 +101,7 @@ class Mobile:
                 self.port = conf["port"]
             if "useCanvas" in conf:
                 self.useCanvas = conf["useCanvas"]
-        except OSError as r:
+        except OSError:
             pass
 
     def saveConfig(self):
@@ -114,7 +113,7 @@ class Mobile:
             }
             pickle.dump(conf, f)
             f.close()
-        except OSError as r:
+        except OSError:
             pass
 
     def initUi(self):
@@ -141,7 +140,9 @@ class Mobile:
         self.canvas.clear((255, 255, 255))
         if self.service:
             self.canvas.text(
-                (1, 14), "Service started at port %s" % self.port, 0xFF0000
+                (1, 14),
+                "Service started at port %s" % self.port,
+                0xFF0000,
             )
         else:
             self.canvas.text((1, 14), "Service stopped", 0xFF0000)
@@ -182,21 +183,21 @@ class Mobile:
                 self.fos.close()
             except OSError:
                 pass
-            except pysocket.error:
+            except OSError:
                 pass
 
             try:
                 self.fis.close()
             except OSError:
                 pass
-            except pysocket.error:
+            except OSError:
                 pass
 
             try:
                 self.client[0].close()
             except OSError:
                 pass
-            except pysocket.error:
+            except OSError:
                 pass
             self.client = None
 
@@ -219,7 +220,7 @@ class Mobile:
                 self.wait()
             except OSError:
                 pass
-            except pysocket.error:
+            except OSError:
                 pass
 
             self.disconnect()
@@ -249,8 +250,8 @@ class Mobile:
 
         self.fos.write(
             str(
-                str(header) + str(NUM_END_HEADER) + new_message + str(NUM_END_TEXT)
-            ).encode("utf8")
+                str(header) + str(NUM_END_HEADER) + new_message + str(NUM_END_TEXT),
+            ).encode("utf8"),
         )
         self.fos.flush()
 
@@ -567,7 +568,8 @@ class Mobile:
                 value = field.value
                 value = str(value)
                 value = value.replace(
-                    "\u2029", "\n"
+                    "\u2029",
+                    "\n",
                 )  # PARAGRAPH SEPARATOR (\u2029) replaced by LINE FEED (\u000a)
                 location = field.location
 
@@ -653,7 +655,8 @@ class Mobile:
             value = field.value
             value = str(value)
             value = value.replace(
-                "\u2029", "\n"
+                "\u2029",
+                "\n",
             )  # PARAGRAPH SEPARATOR (\u2029) replaced by LINE FEED (\u000a)
             location = field.location
 
@@ -670,7 +673,11 @@ class Mobile:
                 continue
 
             self.send(
-                NUM_CONTACTS_REPLY_CONTACT_LINE, contact.id, _type, location, value
+                NUM_CONTACTS_REPLY_CONTACT_LINE,
+                contact.id,
+                _type,
+                location,
+                value,
             )
         self.send(NUM_CONTACTS_REPLY_CONTACT_END, contact.id)
 
@@ -716,7 +723,7 @@ class Mobile:
             value = value.split(detail + ":")[1].split(delimiter)[0]
             return value
         except:
-            return
+            return None
 
     def setDetailFromVcard(self, contact, detail, value, delimiter="\r\n"):
         # This is an ugly hack, needed for some fields that cannot be handled using the contact object
@@ -750,19 +757,24 @@ class Mobile:
         # Ugly workaround!
         # HACK: The value of type "thumbnail_image" is empty, it is only shown when we export the contact to a vCard
         image = self.getDetailFromVcard(
-            contact, "PHOTO;TYPE=JPEG;ENCODING=BASE64", "\r\n\r\n"
+            contact,
+            "PHOTO;TYPE=JPEG;ENCODING=BASE64",
+            "\r\n\r\n",
         )
         if image:
             image = image.split("\r\n\r\n")[0]
             image = image.replace("\r", "").replace("\n", "").replace(" ", "")
             return image
-        return
+        return None
 
     def setContactThumbnail(self, contact, image=""):
         # Ugly workaround!
         # HACK: There seems to be new other way to update/add the contact picture
         self.setDetailFromVcard(
-            contact, "PHOTO;TYPE=JPEG;ENCODING=BASE64", image, "\r\n\r\n"
+            contact,
+            "PHOTO;TYPE=JPEG;ENCODING=BASE64",
+            image,
+            "\r\n\r\n",
         )
 
     def getContactBirthday(self, contact):
@@ -806,7 +818,7 @@ class Mobile:
 
         if entry.alarm:
             line += str(
-                int(entry.alarm)
+                int(entry.alarm),
             )  # The alarm datetime value (float) for the entry
         line += sep
 
@@ -1009,7 +1021,9 @@ class Mobile:
         entry.commit()
 
         self.send(
-            NUM_CALENDAR_ENTRY_CHANGE_REPLY_TIME, id, str(int(entry.last_modified))
+            NUM_CALENDAR_ENTRY_CHANGE_REPLY_TIME,
+            id,
+            str(int(entry.last_modified)),
         )
 
     def addCalendarEntry(
@@ -1096,7 +1110,7 @@ class Mobile:
                 repeat_start,
                 repeat_end,
                 repeat_interval,
-            )
+            ),
         )
 
     def buildCalendarEntryRepeat(self, type, days, exceptions, start, end, interval):
@@ -1181,7 +1195,8 @@ class Mobile:
         address = self.inbox.address(sms)
         content = self.inbox.content(sms)
         content = content.replace(
-            "\u2029", "\n"
+            "\u2029",
+            "\n",
         )  # PARAGRAPH SEPARATOR (\u2029) replaced by LINE FEED (\u000a)
 
         if self.inbox.unread(sms):
@@ -1248,7 +1263,8 @@ class Mobile:
                 # http://discussion.forum.nokia.com/forum/showthread.php?t=141083
                 messaging._sending = False
                 self.send(
-                    NUM_MESSAGE_SEND_REPLY_RETRY, str(detail) + "; tried workaround"
+                    NUM_MESSAGE_SEND_REPLY_RETRY,
+                    str(detail) + "; tried workaround",
                 )
             else:
                 self.send(NUM_MESSAGE_SEND_REPLY_RETRY, detail)

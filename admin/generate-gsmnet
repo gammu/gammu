@@ -16,7 +16,7 @@
 #
 # Copyright (c) 2015 - 2018 Michal Cihar <michal@cihar.com>
 #
-"""Generates gsmnet databse from wikipedia"""
+"""Generates gsmnet databse from wikipedia."""
 import re
 import urllib.error
 import urllib.parse
@@ -26,7 +26,7 @@ from unidecode import unidecode
 
 URL = "https://en.wikipedia.org/w/index.php?title=Mobile_country_code&action=raw"
 TABLE_RE = re.compile(
-    r"^\|[ \t]*(?P<mcc>[0-9]+)[ \t]*\|\|[ \t]*(?P<mnc>[0-9]+)?[ \t]*\|\|"
+    r"^\|[ \t]*(?P<mcc>[0-9]+)[ \t]*\|\|[ \t]*(?P<mnc>[0-9]+)?[ \t]*\|\|",
 )
 WIKILINK = re.compile(r"\[\[([^|\]]+\|)?(?P<text>[^\]]+)\]\]")
 URLLINK = re.compile(r"\[([^ \]]+ )(?P<text>[^\]]+)\]")
@@ -47,8 +47,9 @@ def print_out(result):
     for code, name in sorted(result):
         print(
             '\t{{"{0}", "{1}"}},'.format(
-                code, unidecode(name.decode("utf-8")).replace("&amp;", "&")
-            )
+                code,
+                unidecode(name.decode("utf-8")).replace("&amp;", "&"),
+            ),
         )
 
 

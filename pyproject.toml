@@ -1,0 +1,76 @@
+[tool.ruff]
+extend-safe-fixes = [
+  "D",
+  "TCH"
+]
+ignore = [
+  "ANN",
+  "ARG002",
+  "S105",
+  "PT",
+  "PTH",
+  "T201",
+  "SIM115",
+  "PLW2901",
+  "INP001",
+  "B034",
+  "B018",
+  "PLR2004",
+  "N80",
+  "F405",
+  "F402",
+  "E722",
+  "SIM105",
+  "S110",
+  "B025",
+  "B007",
+  "C901",
+  "PLR0912",
+  "PLR0915",
+  "E402",
+  "F403",
+  "TRY301",
+  "TRY002",
+  "S301",
+  "UP030",
+  "S310",
+  "S314",
+  "FBT003",
+  "SIM109",
+  "PLR1714",
+  "TRY300",
+  "PIE810",  # TODO
+  "S101",
+  "FIX004",
+  "FIX002",
+  "RET503",
+  "FIX001",
+  "UP031",  # TODO
+  "ARG001",
+  "TD",
+  "F821",
+  "SLF001",
+  "PERF401",  # TODO
+  "SIM102",  # TODO
+  "E501",
+  "PLR0913",
+  "RET504",  # TODO
+  "RET505",  # TODO
+  "RET507",  # TODO
+  "A001",
+  "A002",
+  "N803",
+  "BLE001",
+  "C408",  # TODO
+  "SIM108",  # TODO
+  "TRY003",
+  "EM101",
+  "RUF012",
+  "ERA001",
+  "D211",
+  "D212",
+  "D401",
+  "D10"
+]
+output-format = "github"
+select = ["ALL"]

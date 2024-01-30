@@ -2,10 +2,9 @@ from docutils import nodes
 from sphinx import addnodes
 from sphinx.directives import ObjectDescription
 from sphinx.domains import Domain, ObjType
-from sphinx.domains.std import GenericObject, StandardDomain
 from sphinx.roles import XRefRole
 from sphinx.util import ws_re
-from sphinx.util.nodes import clean_astext, make_refnode
+from sphinx.util.nodes import make_refnode
 
 
 class ConfigOption(ObjectDescription):
@@ -35,7 +34,7 @@ class ConfigOption(ObjectDescription):
                 indextype = "single"
                 indexentry = self.indextemplate % (name,)
             self.indexnode["entries"].append(
-                (indextype, indexentry, targetname, targetname)
+                (indextype, indexentry, targetname, targetname),
             )
         self.env.domaindata["config"]["objects"][self.objtype, name] = (
             self.env.docname,
@@ -44,9 +43,8 @@ class ConfigOption(ObjectDescription):
 
 
 class ConfigSectionXRefRole(XRefRole):
-    """
-    Cross-referencing role for configuration sections (adds an index entry).
-    """
+
+    """Cross-referencing role for configuration sections (adds an index entry)."""
 
     def result_nodes(self, document, env, node, is_ref):
         if not is_ref:
@@ -90,7 +88,7 @@ class ConfigSection(ObjectDescription):
                 indextype = "single"
                 indexentry = self.indextemplate % (name,)
             self.indexnode["entries"].append(
-                (indextype, indexentry, targetname, targetname)
+                (indextype, indexentry, targetname, targetname),
             )
         self.env.domaindata["config"]["objects"][self.objtype, name] = (
             self.env.docname,
@@ -99,9 +97,8 @@ class ConfigSection(ObjectDescription):
 
 
 class ConfigOptionXRefRole(XRefRole):
-    """
-    Cross-referencing role for configuration options (adds an index entry).
-    """
+
+    """Cross-referencing role for configuration options (adds an index entry)."""
 
     def result_nodes(self, document, env, node, is_ref):
         if not is_ref:
