@@ -1388,7 +1388,7 @@ except Exception as e:
     for filename, lineno, function, text in traceback.extract_tb(info[2]):
         call_stack += filename + ": " + str(lineno) + " - " + function + new_line
         call_stack += " " + repr(text) + new_line
-    call_stack += "%s: %s" % info[:2]
+    call_stack += "{}: {}".format(*info[:2])
 
     # Creating a friendly user message with exception details
     err_msg = "This programs was unexpectedly closed due to the following error: "
