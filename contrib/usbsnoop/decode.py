@@ -12,15 +12,14 @@ if len(sys.argv) < 2:
     print("Usage: decode.py LOGFILE")
     sys.exit(1)
 
-f = open(sys.argv[1])
-output = ""
-for line in f:
-    if line[:7] == "    000":
-        line = line.strip()
-        pos, data = line.split(":")
-        if pos == "00000000":
-            if output != "":
+with open(sys.argv[1]) as f:
+    output = ""
+    for line in f:
+        if line[:7] == "    000":
+            line = line.strip()
+            pos, data = line.split(":")
+            if pos == "00000000" and output != "":
                 print(output.decode("hex"))
                 output = ""
-        data = "".join(data.strip().split(" "))
-        output += data
+            data = "".join(data.strip().split(" "))
+            output += data

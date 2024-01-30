@@ -3,6 +3,7 @@ extend-safe-fixes = [
   "D",
   "PIE",
   "UP",
+  "SIM",
   "TCH"
 ]
 ignore = [
@@ -12,7 +13,6 @@ ignore = [
   "PT",
   "PTH",
   "T201",
-  "SIM115",
   "PLW2901",
   "INP001",
   "B034",
@@ -22,7 +22,6 @@ ignore = [
   "F405",
   "F402",
   "E722",
-  "SIM105",
   "S110",
   "B025",
   "B007",
@@ -38,7 +37,6 @@ ignore = [
   "S310",
   "S314",
   "FBT003",
-  "SIM109",
   "PLR1714",
   "TRY300",
   "S101",
@@ -51,7 +49,6 @@ ignore = [
   "F821",
   "SLF001",
   "PERF401",  # TODO
-  "SIM102",  # TODO
   "E501",
   "PLR0913",
   "RET504",  # TODO
@@ -62,7 +59,6 @@ ignore = [
   "N803",
   "BLE001",
   "C408",  # TODO
-  "SIM108",  # TODO
   "TRY003",
   "EM101",
   "RUF012",

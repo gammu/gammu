@@ -12,7 +12,7 @@ def main():
                 print(f"Creating {name}")
                 if output:
                     output.close()
-                output = open(name, "w")
+                output = open(name, "w")  # noqa: SIM115
             elif line.startswith("<<<<<< EOF"):
                 output.close()
             elif output:

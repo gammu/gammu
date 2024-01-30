@@ -12,10 +12,10 @@ if len(sys.argv) < 2:
     print("Usage: decode.py LOGFILE")
     sys.exit(1)
 
-f = open(sys.argv[1])
-output = ""
-for line in f:
-    if line[:14] == "<payloadbytes>":
-        line = line[14:-17]
-        print(line)
-        print(line.decode("hex"))
+with open(sys.argv[1]) as f:
+    output = ""
+    for line in f:
+        if line[:14] == "<payloadbytes>":
+            line = line[14:-17]
+            print(line)
+            print(line.decode("hex"))

@@ -6,8 +6,10 @@ import sys
 sys.path.append(r"e:\python\libs")
 sys.path.append(r"c:\python\libs")
 
+import contextlib
 import math
 import os.path
+import pickle
 import time
 
 import contacts
@@ -32,7 +34,6 @@ if float(e32.pys60_version[:3]) >= 1.9:
 else:
     import socket
 
-import pickle
 
 VERSION = "0.6.0"
 PORT = 18
@@ -282,16 +283,12 @@ class Mobile:
                 self.sendLocation()
 
             elif header == NUM_DIAL:
-                try:
+                with contextlib.suppress(Exception):
                     telephone.dial(message_parts[0])
-                except:
-                    pass
 
             elif header == NUM_HANGUP:
-                try:
+                with contextlib.suppress(Exception):
                     telephone.hang_up()
-                except:
-                    pass
 
             elif header == NUM_CONTACTS_REQUEST_HASH_ALL:
                 self.sendContactHash()
@@ -359,15 +356,11 @@ class Mobile:
 
             elif header == NUM_CALENDAR_ENTRY_DELETE:
                 id = int(message)
-                try:
+                # suppress no such entry
+                with contextlib.suppress(RuntimeError):
                     del self.calendarDb[id]
-                except RuntimeError:
-                    # no such entry
-                    pass
 
-            elif (
-                header == NUM_CALENDAR_ENTRY_CHANGE or header == NUM_CALENDAR_ENTRY_ADD
-            ):
+            elif header in (NUM_CALENDAR_ENTRY_CHANGE, NUM_CALENDAR_ENTRY_ADD):
                 if header == NUM_CALENDAR_ENTRY_CHANGE:
                     id = int(message_parts[0])
                 elif header == NUM_CALENDAR_ENTRY_ADD:
@@ -376,40 +369,22 @@ class Mobile:
                 content = str(message_parts[1])
                 location = str(message_parts[2])
                 # start = float(message_parts[3]) if message_parts[3] else 0
-                if message_parts[3]:
-                    start = float(message_parts[3])
-                else:
-                    start = 0.0
+                start = float(message_parts[3]) if message_parts[3] else 0.0
                 # end = float(message_parts[4]) if message_parts[4] else None
-                if message_parts[4]:
-                    end = float(message_parts[4])
-                else:
-                    end = None
+                end = float(message_parts[4]) if message_parts[4] else None
                 replication = str(message_parts[5])
                 # alarm = float(message_parts[6]) if message_parts[6] else None
-                if message_parts[6]:
-                    alarm = float(message_parts[6])
-                else:
-                    alarm = None
+                alarm = float(message_parts[6]) if message_parts[6] else None
                 priority = int(message_parts[7])
                 repeat_type = str(message_parts[8])
                 repeat_days = str(message_parts[9])
                 repeat_exceptions = str(message_parts[10])
                 # repeat_start = float(message_parts[11]) if message_parts[11] else 0
-                if message_parts[11]:
-                    repeat_start = float(message_parts[11])
-                else:
-                    repeat_start = 0.0
+                repeat_start = float(message_parts[11]) if message_parts[11] else 0.0
                 # repeat_end = float(message_parts[12]) if message_parts[12] else None
-                if message_parts[12]:
-                    repeat_end = float(message_parts[12])
-                else:
-                    repeat_end = None
+                repeat_end = float(message_parts[12]) if message_parts[12] else None
                 # repeat_interval = int(message_parts[13]) if message_parts[13] else 1
-                if message_parts[13]:
-                    repeat_interval = int(message_parts[13])
-                else:
-                    repeat_interval = 1
+                repeat_interval = int(message_parts[13]) if message_parts[13] else 1
 
                 if header == NUM_CALENDAR_ENTRY_CHANGE:
                     self.modifyCalendarEntry(
@@ -1194,10 +1169,7 @@ class Mobile:
             "\n",
         )  # PARAGRAPH SEPARATOR (\u2029) replaced by LINE FEED (\u000a)
 
-        if self.inbox.unread(sms):
-            unread = "1"
-        else:
-            unread = "0"
+        unread = "1" if self.inbox.unread(sms) else "0"
 
         self.send(code, box, id, time, address, content, unread)
 
@@ -1218,10 +1190,7 @@ class Mobile:
         messages.sort()
         for sms in messages:
             if int(sms) > int(lastId):
-                if sms in inbox:
-                    box = "inbox"
-                else:
-                    box = "sent"
+                box = "inbox" if sms in inbox else "sent"
 
                 self.__sendOneMessage(sms, box, NUM_MESSAGE_REPLY_LINE)
 

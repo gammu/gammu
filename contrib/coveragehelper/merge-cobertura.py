@@ -145,10 +145,7 @@ def main():
     parser.add_argument("-o", "--output", help="output file, stdout used if omitted")
     parser.add_argument("file", nargs="*", help="files to process")
     args = parser.parse_args()
-    if args.match:
-        files = glob.glob(args.match)
-    else:
-        files = args.file
+    files = glob.glob(args.match) if args.match else args.file
 
     result = read_files(files)
 
