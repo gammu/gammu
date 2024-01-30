@@ -1,6 +1,7 @@
 [tool.ruff]
 extend-safe-fixes = [
   "D",
+  "PIE",
   "TCH"
 ]
 ignore = [
@@ -39,7 +40,6 @@ ignore = [
   "SIM109",
   "PLR1714",
   "TRY300",
-  "PIE810",  # TODO
   "S101",
   "FIX004",
   "FIX002",

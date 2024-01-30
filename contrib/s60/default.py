@@ -731,12 +731,7 @@ class Mobile:
 
         new = ""
         for line in card.split("\r\n"):
-            if (
-                line.startswith("BEGIN:")
-                or line.startswith("VERSION:")
-                or line.startswith("REV:")
-                or line.startswith("UID:")
-            ):
+            if line.startswith(("BEGIN:", "VERSION:", "REV:", "UID:")):
                 new += line + "\r\n"
 
         # Format value: New line (\r\n) after 64 chars, followed by 4 spaces

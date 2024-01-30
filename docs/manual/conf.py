@@ -21,7 +21,7 @@ import sphinx.domains.std
 def gammu_process_link(self, env, refnode, has_explicit_title, title, target):
     program = env.temp_data.get("std:program")
     if not has_explicit_title:
-        if " " in title and not (title.startswith("/") or title.startswith("-")):
+        if " " in title and not (title.startswith(("/", "-"))):
             program, target = re.split(" (?=-|--|/)?", title, 1)
             program = sphinx.domains.std.ws_re.sub("-", program)
             target = target.strip()
