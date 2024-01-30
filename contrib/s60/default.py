@@ -527,7 +527,7 @@ class Mobile:
     def contactDict(self):
         keys = list(self.contactDb.keys())
 
-        contactDict = dict()
+        contactDict = {}
         for key in keys:
             contact = self.contactDb[key]
 
@@ -537,7 +537,7 @@ class Mobile:
             except TypeError:
                 continue
 
-            contactDict[contact.id] = list()
+            contactDict[contact.id] = []
             for field in contact:
                 _type = field.type
                 value = field.value
@@ -869,7 +869,7 @@ class Mobile:
         return line
 
     def calendarDict(self):
-        calendarDict = dict()
+        calendarDict = {}
         for key in self.calendarDb:
             entry = self.calendarDb[key]
             line = self.__calendarFormatEntry(entry, FIELD_SEP)
@@ -1133,7 +1133,7 @@ class Mobile:
             # week:1,day:1;week:4,day:0 -> [{'week': 1, 'day': 1}, {'week': 4, 'day': 0}]
             dates = []
             for date in days.split(";"):
-                tmp = dict()
+                tmp = {}
                 for sub in date.split(","):
                     key, value = sub.split(":")
                     tmp[key] = int(value)
@@ -1172,9 +1172,9 @@ class Mobile:
         self.send(code, box, id, time, address, content, unread)
 
     def sendAllMessages(self, lastId):
-        messages = list()
-        inbox = list()
-        sent = list()
+        messages = []
+        inbox = []
+        sent = []
         for box in ("inbox", "sent"):
             # FIXME: I shouldn't need this
             e32.ao_sleep(1)
