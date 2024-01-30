@@ -1197,11 +1197,8 @@ class Mobile:
         self.send(NUM_MESSAGE_REPLY_END)
 
     def sendUnreadMessages(self):
-        messages = list()
         inbox = self.inbox.sms_messages()
-        for sms in inbox:
-            if self.inbox.unread(sms):
-                messages.append(sms)
+        messages = [sms for sms in inbox if self.inbox.unread(sms)]
         self.send(NUM_MESSAGE_REPLY_UNREAD, *messages)
 
     def sendMessagesList(self):
@@ -1211,11 +1208,8 @@ class Mobile:
         self.send(NUM_MESSAGE_REPLY_END)
 
     def sendMessagesCount(self):
-        messages = list()
         inbox = self.inbox.sms_messages() + self.sent.sms_messages()
-        for sms in inbox:
-            if self.inbox.unread(sms):
-                messages.append(sms)
+        messages = [sms for sms in inbox if self.inbox.unread(sms)]
         self.send(NUM_MESSAGE_REPLY_COUNT, len(inbox), len(messages))
 
     def sendMessage(self, name, phone, encoding, msg):

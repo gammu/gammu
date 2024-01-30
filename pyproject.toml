@@ -4,6 +4,7 @@ extend-safe-fixes = [
   "PIE",
   "UP",
   "SIM",
+  "PERF",
   "TCH"
 ]
 ignore = [
@@ -48,7 +49,6 @@ ignore = [
   "TD",
   "F821",
   "SLF001",
-  "PERF401",  # TODO
   "E501",
   "PLR0913",
   "RET504",  # TODO
