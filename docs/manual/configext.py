@@ -148,8 +148,7 @@ class ConfigFileDomain(Domain):
         docname, labelid = self.data["objects"].get((typ, target), ("", ""))
         if not docname:
             return None
-        else:
-            return make_refnode(builder, fromdocname, docname, labelid, contnode)
+        return make_refnode(builder, fromdocname, docname, labelid, contnode)
 
     def get_objects(self):
         for (type, name), info in self.data["objects"].items():

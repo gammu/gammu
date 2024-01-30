@@ -550,7 +550,7 @@ class Mobile:
 
                 if _type == "unknown":
                     continue
-                elif _type == "thumbnail_image":
+                if _type == "thumbnail_image":
                     value = self.getContactThumbnail(contact)
                     if not value:
                         continue
@@ -637,7 +637,7 @@ class Mobile:
 
             if _type == "unknown":
                 continue
-            elif _type == "thumbnail_image":
+            if _type == "thumbnail_image":
                 value = self.getContactThumbnail(contact)
                 if not value:
                     continue
@@ -668,7 +668,7 @@ class Mobile:
             else:
                 self.setContactThumbnail(contact, value)
             return
-        elif type == "date":
+        if type == "date":
             if modification == "remove":
                 self.setContactBirthday(contact)
             else:
@@ -695,8 +695,7 @@ class Mobile:
         # This is an ugly hack, needed for some fields that cannot be handled using the contact object
         try:
             value = str(contact.as_vcard(), "utf8")
-            value = value.split(detail + ":")[1].split(delimiter)[0]
-            return value
+            return value.split(detail + ":")[1].split(delimiter)[0]
         except:
             return None
 
@@ -733,8 +732,7 @@ class Mobile:
         )
         if image:
             image = image.split("\r\n\r\n")[0]
-            image = image.replace("\r", "").replace("\n", "").replace(" ", "")
-            return image
+            return image.replace("\r", "").replace("\n", "").replace(" ", "")
         return None
 
     def setContactThumbnail(self, contact, image=""):
@@ -757,13 +755,13 @@ class Mobile:
     def __calendarGetType(self, entry):
         if isinstance(entry, calendar.CalendarDb.AnniversaryEntry):
             return "anniversary"
-        elif isinstance(entry, calendar.CalendarDb.AppointmentEntry):
+        if isinstance(entry, calendar.CalendarDb.AppointmentEntry):
             return "appointment"
-        elif isinstance(entry, calendar.CalendarDb.EventEntry):
+        if isinstance(entry, calendar.CalendarDb.EventEntry):
             return "event"
-        elif isinstance(entry, calendar.CalendarDb.ReminderEntry):
+        if isinstance(entry, calendar.CalendarDb.ReminderEntry):
             return "reminder"
-        elif isinstance(entry, calendar.CalendarDb.TodoEntry):
+        if isinstance(entry, calendar.CalendarDb.TodoEntry):
             return "todo"
         return ""
 

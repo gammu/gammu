@@ -61,7 +61,7 @@ def print_countries(data):
             country = line[7:].split("]")[0].split("|")[-1]
             current = set()
             continue
-        elif "International operators" in line:
+        if "International operators" in line:
             country = "International operators"
             current = set()
             continue
