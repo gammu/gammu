@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # vim: expandtab sw=4 ts=4 sts=4:
 """Gammu SMS backup generator."""
+
 __author__ = "Michal Čihař"
 __email__ = "michal@cihar.com"
 __license__ = """

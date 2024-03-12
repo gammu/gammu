@@ -43,7 +43,6 @@ class ConfigOption(ObjectDescription):
 
 
 class ConfigSectionXRefRole(XRefRole):
-
     """Cross-referencing role for configuration sections (adds an index entry)."""
 
     def result_nodes(self, document, env, node, is_ref):
@@ -97,7 +96,6 @@ class ConfigSection(ObjectDescription):
 
 
 class ConfigOptionXRefRole(XRefRole):
-
     """Cross-referencing role for configuration options (adds an index entry)."""
 
     def result_nodes(self, document, env, node, is_ref):
