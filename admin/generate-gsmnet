@@ -17,6 +17,7 @@
 # Copyright (c) 2015 - 2018 Michal Cihar <michal@cihar.com>
 #
 """Generates gsmnet databse from wikipedia."""
+
 import re
 import urllib.error
 import urllib.parse
