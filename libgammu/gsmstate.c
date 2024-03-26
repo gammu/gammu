@@ -61,6 +61,7 @@
 #define DEFAULT_MODEL ""
 #define DEFAULT_CONNECTION "at"
 #define DEFAULT_SYNCHRONIZE_TIME FALSE
+#define DEFAULT_BROKEN_CFUN FALSE
 #define DEFAULT_DEBUG_FILE ""
 #define DEFAULT_DEBUG_LEVEL ""
 #define DEFAULT_LOCK_DEVICE FALSE
@@ -902,10 +903,12 @@ autodetect:
 			return error;
 		}
 
-		error=s->Phone.Functions->SetPower(s, 1);
-		if (error != ERR_NONE && error != ERR_NOTSUPPORTED) {
+		if (s->CurrentConfig->BrokenCFUN == 0) {
+		   error=s->Phone.Functions->SetPower(s, 1);
+		   if (error != ERR_NONE && error != ERR_NOTSUPPORTED) {
 			GSM_LogError(s, "Init:Phone->SetPower" , error);
 			return error;
+		   }
 		}
 
 		error=s->Phone.Functions->PostConnect(s);
@@ -1585,6 +1588,9 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 	/* Set time sync */
 	cfg->SyncTime = INI_GetBool(cfg_info, section, "synchronizetime", DEFAULT_SYNCHRONIZE_TIME);
 
+	/* If needed stop using AT+CFUN=1 during default communication */
+	cfg->BrokenCFUN = INI_GetBool(cfg_info, section, "brokencfun", DEFAULT_BROKEN_CFUN);
+
 	/* Set debug file */
 	free(cfg->DebugFile);
 	cfg->DebugFile   = INI_GetValue(cfg_info, section, "logfile", 		FALSE);
@@ -1702,6 +1708,7 @@ fail:
 		cfg->Device		 	 = strdup(DEFAULT_DEVICE);
 		cfg->Connection	 		 = strdup(DEFAULT_CONNECTION);
 		cfg->SyncTime		 	 = DEFAULT_SYNCHRONIZE_TIME;
+		cfg->BrokenCFUN			 = DEFAULT_BROKEN_CFUN;
 		cfg->DebugFile		 	 = strdup(DEFAULT_DEBUG_FILE);
 		cfg->LockDevice	 		 = DEFAULT_LOCK_DEVICE;
 		strcpy(cfg->Model,DEFAULT_MODEL);
