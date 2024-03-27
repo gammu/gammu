@@ -569,7 +569,7 @@ ____________
 
             specify, how many chars will be read. When use this option and text
             will be longer than 1 SMS, will be split into more linked
-            SMS.Coding type (SMS default alphabet/Unicode) is set according to
+            SMS. Coding type (SMS default alphabet/Unicode) is set according to
             input text
 
         .. option:: -enablevoice
