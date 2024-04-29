@@ -142,7 +142,7 @@ class Mobile:
         if self.service:
             self.canvas.text(
                 (1, 14),
-                "Service started at port %s" % self.port,
+                f"Service started at port {self.port}",
                 0xFF0000,
             )
         else:
@@ -211,7 +211,7 @@ class Mobile:
             self.connected = True
             self.statusUpdate()
             address = str(self.client[1])
-            note("Connected client %s" % address)
+            note(f"Connected client {address}")
 
             self.fos = self.client[0].makefile("w")
             self.fis = self.client[0].makefile("r")
@@ -225,7 +225,7 @@ class Mobile:
                 pass
 
             self.disconnect()
-            note("Disconnected client %s" % address)
+            note(f"Disconnected client {address}")
 
     def send(self, header, *message):
         new_message = ""
@@ -505,7 +505,7 @@ class Mobile:
         fn = self.getScreenshotFilename()
         shot = graphics.screenshot()
         shot.save(fn)
-        note("Saved screenshot as %s" % fn)
+        note(f"Saved screenshot as {fn}")
         f = file(fn, "rb")
         self.send(NUM_SCREENSHOT_REPLY, f.read().encode("base64"))
         f.close()
@@ -520,8 +520,8 @@ class Mobile:
                 NUM_LOCATION_REPLY,
                 "%03d" % mcc,
                 "%02d" % mnc,
-                "%X" % lac,
-                "%X" % cellid,
+                f"{lac:X}",
+                f"{cellid:X}",
             )
 
     def contactDict(self):
@@ -1254,7 +1254,7 @@ class Mobile:
                 "SMS send failed! If the device is in offline-mode or with no network connection the message is added to the device's outgoing message queue.",
             )
         else:
-            self.send(NUM_MESSAGE_SEND_REPLY_STATUS, "Unknown status: %s" % status)
+            self.send(NUM_MESSAGE_SEND_REPLY_STATUS, f"Unknown status: {status}")
 
     def newMessage(self, sms):
         if not self.connected:
@@ -1325,7 +1325,7 @@ class Mobile:
             self.startService()
 
     def aboutHandler(self):
-        query("Gammu S60 Remote\nVersion %s\nhttps://wammu.eu/" % (VERSION), "query")
+        query(f"Gammu S60 Remote\nVersion {VERSION}\nhttps://wammu.eu/", "query")
 
     def toggleHandler(self):
         e32.start_exe("BtToggleApp.exe", "")

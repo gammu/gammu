@@ -49,11 +49,11 @@ class ConfigSectionXRefRole(XRefRole):
         if not is_ref:
             return [node], []
         varname = node["reftarget"]
-        tgtid = "index-%s" % env.new_serialno("index")
+        tgtid = "index-{}".format(env.new_serialno("index"))
         indexnode = addnodes.index()
         indexnode["entries"] = [
             ("single", varname, tgtid, varname),
-            ("single", "configuration section; %s" % varname, tgtid, varname),
+            ("single", f"configuration section; {varname}", tgtid, varname),
         ]
         targetnode = nodes.target("", "", ids=[tgtid])
         document.note_explicit_target(targetnode)
@@ -102,11 +102,11 @@ class ConfigOptionXRefRole(XRefRole):
         if not is_ref:
             return [node], []
         varname = node["reftarget"]
-        tgtid = "index-%s" % env.new_serialno("index")
+        tgtid = "index-{}".format(env.new_serialno("index"))
         indexnode = addnodes.index()
         indexnode["entries"] = [
             ("single", varname, tgtid, varname, None),
-            ("single", "configuration option; %s" % varname, tgtid, varname, None),
+            ("single", f"configuration option; {varname}", tgtid, varname, None),
         ]
         targetnode = nodes.target("", "", ids=[tgtid])
         document.note_explicit_target(targetnode)
