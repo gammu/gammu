@@ -1,4 +1,7 @@
 [tool.ruff]
+output-format = "github"
+
+[tool.ruff.lint]
 extend-safe-fixes = [
   "D",
   "PIE",
@@ -66,5 +69,4 @@ ignore = [
   "D401",
   "D10"
 ]
-output-format = "github"
 select = ["ALL"]

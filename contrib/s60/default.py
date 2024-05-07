@@ -246,7 +246,7 @@ class Mobile:
                     self.send(header, part)
                 else:
                     self.send(NUM_PARTIAL_MESSAGE, part)
-                sentParts += 1
+                sentParts += 1  # noqa: SIM113
             return
 
         self.fos.write(
