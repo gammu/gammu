@@ -32,6 +32,8 @@ ignore = [
   "B025",
   "B007",
   "C901",
+  'ISC001',  # CONFIG: formatter
+  "COM812",
   "PLR0912",
   "PLR0915",
   "E402",
