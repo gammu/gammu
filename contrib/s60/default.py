@@ -557,7 +557,7 @@ class Mobile:
                 elif _type == "date":
                     value = self.getContactBirthday(contact)
 
-                if isinstance(value, type(None)):
+                if value is None:
                     # Ignore this field
                     continue
 
@@ -644,7 +644,7 @@ class Mobile:
             elif _type == "date":
                 value = self.getContactBirthday(contact)
 
-            if isinstance(value, type(None)):
+            if value is None:
                 continue
 
             self.send(
