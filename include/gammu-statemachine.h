@@ -68,6 +68,10 @@ typedef struct {
 	 */
 	gboolean SyncTime;
 	/**
+	 * Broken AT+CFUN=1 response (reset device)
+	 */
+	gboolean BrokenCFUN;
+	/**
 	 * Lock device ? (Unix)
 	 */
 	gboolean LockDevice;
