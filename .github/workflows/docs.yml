@@ -28,7 +28,7 @@ jobs:
         mkdir gh-pages
         cp -r build-configure/docs/manual/html/* gh-pages/
         cp build-configure/docs/manual/latex/*.pdf gh-pages/
-    - uses: actions/upload-artifact@v4.3.3
+    - uses: actions/upload-artifact@v4.3.4
       with:
         name: Documentation
         path: gh-pages
