@@ -6,7 +6,7 @@ import sys
 def main():
     with open(sys.argv[1]) as handle:
         output = None
-        for line in handle.readlines():
+        for line in handle.readlines():  # noqa: FURB129
             if line.startswith("# path="):
                 name = line.split("=", 1)[1].strip()
                 print(f"Creating {name}")
