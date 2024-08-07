@@ -364,6 +364,7 @@ This module wraps all python-gammu functionality.
        - Device
        - Connection
        - SyncTime
+       - Brokencfun
        - LockDevice
        - DebugFile
        - StartInfo
