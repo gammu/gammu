@@ -132,6 +132,7 @@ THREAD_RETURN SearchPhoneThread(void * arg)
 		smcfg->Device = strdup(Info->Device);
 		smcfg->Connection = strdup(Info->Connections[j].Connection);
 		smcfg->SyncTime = FALSE;
+		smcfg->BrokenCFUN = FALSE;
 		smcfg->Model[0] = 0;
 		smcfg->LockDevice = FALSE;
 		smcfg->StartInfo = FALSE;
