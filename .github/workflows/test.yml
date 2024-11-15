@@ -66,7 +66,7 @@ jobs:
       run: make -C _build test
     - name: coverage
       run: make -C _build gcov
-    - uses: codecov/codecov-action@v4
+    - uses: codecov/codecov-action@v5
   windows:
     runs-on: windows-2022
     env:
@@ -99,7 +99,7 @@ jobs:
       run: |
         cd _build
         ctest --output-on-failure --no-compress-output --dashboard ExperimentalTest --build-config Release
-    - uses: codecov/codecov-action@v4
+    - uses: codecov/codecov-action@v5
   macos:
     runs-on: macos-latest
     env:
@@ -146,4 +146,4 @@ jobs:
       run: make -C _build test
     - name: coverage
       run: make -C _build gcov
-    - uses: codecov/codecov-action@v4
+    - uses: codecov/codecov-action@v5
