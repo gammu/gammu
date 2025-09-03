@@ -127,88 +127,22 @@
              
   <section id="ini-files">
 <h1>INI files<a class="headerlink" href="#ini-files" title="Permalink to this heading"></a></h1>
-<dl class="c function">
-<dt class="sig sig-object c" id="c.INI_Free">
-<span class="target" id="group__INI_1ga25f7c03b7adb0e870f42ffa5d19982a4"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">INI_Free</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.INI_Section" title="INI_Section"><span class="n"><span class="pre">INI_Section</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">head</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.INI_Free" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Free INI data.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>head</strong> – INI section data. </p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.INI_ReadFile">
-<span class="target" id="group__INI_1gaea2a382fc5fc51f9ac6f4474e9c44a9c"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">INI_ReadFile</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">FileName</span></span>, <a class="reference internal" href="types.html#c.gboolean" title="gboolean"><span class="n"><span class="pre">gboolean</span></span></a><span class="w"> </span><span class="n"><span class="pre">Unicode</span></span>, <a class="reference internal" href="#c.INI_Section" title="INI_Section"><span class="n"><span class="pre">INI_Section</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">result</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.INI_ReadFile" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Reads INI data.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>FileName</strong> – File to read. </p></li>
-<li><p><strong>Unicode</strong> – Whether file shoul be treated like unicode. </p></li>
-<li><p><strong>result</strong> – Pointer where file will be read.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.INI_FindLastSectionEntry">
-<span class="target" id="group__INI_1gabf51f1af400da755e68ea3f4866c9883"></span><a class="reference internal" href="#c.INI_Entry" title="INI_Entry"><span class="n"><span class="pre">INI_Entry</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">INI_FindLastSectionEntry</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.INI_Section" title="INI_Section"><span class="n"><span class="pre">INI_Section</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">file_info</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">section</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="types.html#c.gboolean" title="gboolean"><span class="n"><span class="pre">gboolean</span></span></a><span class="w"> </span><span class="n"><span class="pre">Unicode</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.INI_FindLastSectionEntry" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Returns pointer to last INI entry of given section.</p>
-<p><dl>
-<dt class="sig sig-object cpp">
-<em><span class="pre">Bug:</span></em></dt>
-<dd><p>Unicode should be part of file_info. </p>
-</dd></dl>
-
-</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>file_info</strong> – File data as returned by <a class="reference internal" href="#group__INI_1gaea2a382fc5fc51f9ac6f4474e9c44a9c"><span class="std std-ref">INI_ReadFile</span></a>. </p></li>
-<li><p><strong>section</strong> – Section to scan. </p></li>
-<li><p><strong>Unicode</strong> – Whether file is unicode.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Last entry in section.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.INI_GetValue">
-<span class="target" id="group__INI_1gac04bff40287015773b7d30903d18725e"></span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">INI_GetValue</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.INI_Section" title="INI_Section"><span class="n"><span class="pre">INI_Section</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">file_info</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">section</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">key</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="types.html#c.gboolean" title="gboolean"><span class="n"><span class="pre">gboolean</span></span></a><span class="w"> </span><span class="n"><span class="pre">Unicode</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.INI_GetValue" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Returns value of INI file entry.</p>
-<p><dl>
-<dt class="sig sig-object cpp">
-<em><span class="pre">Bug:</span></em></dt>
-<dd><p>Unicode should be part of file_info. </p>
-</dd></dl>
-
-</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>file_info</strong> – File data as returned by <a class="reference internal" href="#group__INI_1gaea2a382fc5fc51f9ac6f4474e9c44a9c"><span class="std std-ref">INI_ReadFile</span></a>. </p></li>
-<li><p><strong>section</strong> – Section to scan. </p></li>
-<li><p><strong>key</strong> – Name of key to read. </p></li>
-<li><p><strong>Unicode</strong> – Whether file is unicode.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Entry value.</p>
-</dd>
-</dl>
-</dd></dl>
-
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “INI_Free” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “INI_ReadFile” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “INI_FindLastSectionEntry” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “INI_GetValue” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
 <dl class="c function">
 <dt class="sig sig-object c" id="c.INI_GetInt">
 <span class="target" id="gammu-inifile_8h_1a57f62642357c8954b1fc7d729934f384"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">INI_GetInt</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.INI_Section" title="INI_Section"><span class="n"><span class="pre">INI_Section</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">cfg</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">section</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">key</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">fallback</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.INI_GetInt" title="Permalink to this definition"></a><br /></dt>
@@ -216,7 +150,7 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cfg</strong> – File data as returned by <a class="reference internal" href="#group__INI_1gaea2a382fc5fc51f9ac6f4474e9c44a9c"><span class="std std-ref">INI_ReadFile</span></a>. </p></li>
+<li><p><strong>cfg</strong> – File data as returned by INI_ReadFile. </p></li>
 <li><p><strong>section</strong> – Section to scan. </p></li>
 <li><p><strong>key</strong> – Name of key to read. </p></li>
 <li><p><strong>fallback</strong> – Fallback value.</p></li>
@@ -235,7 +169,7 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cfg</strong> – File data as returned by <a class="reference internal" href="#group__INI_1gaea2a382fc5fc51f9ac6f4474e9c44a9c"><span class="std std-ref">INI_ReadFile</span></a>. </p></li>
+<li><p><strong>cfg</strong> – File data as returned by INI_ReadFile. </p></li>
 <li><p><strong>section</strong> – Section to scan. </p></li>
 <li><p><strong>key</strong> – Name of key to read. </p></li>
 <li><p><strong>fallback</strong> – Fallback value.</p></li>
@@ -247,23 +181,10 @@
 </dl>
 </dd></dl>
 
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_StringToBool">
-<span class="target" id="group__INI_1ga7d44a441ec1ac8ec486887a19e8dc00d"></span><a class="reference internal" href="types.html#c.gboolean" title="gboolean"><span class="n"><span class="pre">gboolean</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_StringToBool</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_StringToBool" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Converts value to boolean.</p>
-<p>It just takes the string and checks whether there is true/yes/t/y/1 or false/no/f/n/0.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>value</strong> – String to parse.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Boolean value, -1 on failure. </p>
-</dd>
-</dl>
-</dd></dl>
-
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_StringToBool” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
 <dl class="c type">
 <dt class="sig sig-object c" id="c.INI_Entry">
 <span class="target" id="group__INI_1ga0872ee89704849deaa4ab3bf7808af4a"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c._INI_Entry" title="_INI_Entry"><span class="n"><span class="pre">_INI_Entry</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">INI_Entry</span></span></span><a class="headerlink" href="#c.INI_Entry" title="Permalink to this definition"></a><br /></dt>

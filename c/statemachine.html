@@ -127,102 +127,30 @@
              
   <section id="state-machine">
 <h1>State machine<a class="headerlink" href="#state-machine" title="Permalink to this heading"></a></h1>
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_InitConnection_Log">
-<span class="target" id="group__StateMachine_1ga60c62f86427a4dea92c00963612905d0"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_InitConnection_Log</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">ReplyNum</span></span>, <a class="reference internal" href="#c.GSM_Log_Function" title="GSM_Log_Function"><span class="n"><span class="pre">GSM_Log_Function</span></span></a><span class="w"> </span><span class="n"><span class="pre">log_function</span></span>, <span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">user_data</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_InitConnection_Log" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Initiates connection with custom logging callback.</p>
-<p><div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<p><a class="reference internal" href="debug.html#group__Debug_1ga1e9350fd48083b62de97a23115d35236"><span class="std std-ref">GSM_SetDebugFunction</span></a></p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_InitConnection_Log” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
 </div>
-</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine data </p></li>
-<li><p><strong>ReplyNum</strong> – Number of replies to await (usually 3). </p></li>
-<li><p><strong>log_function</strong> – Logging function, see GSM_SetDebugFunction. </p></li>
-<li><p><strong>user_data</strong> – User data for logging function, see GSM_SetDebugFunction. </p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_InitConnection">
-<span class="target" id="group__StateMachine_1ga1db0c335f75ad0054ccfe46968d8e09b"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_InitConnection</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">ReplyNum</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_InitConnection" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Initiates connection.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine data </p></li>
-<li><p><strong>ReplyNum</strong> – Number of replies to await (usually 3). </p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_TerminateConnection">
-<span class="target" id="group__StateMachine_1ga51f29b7bed376c47fe965bad181e3092"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_TerminateConnection</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_TerminateConnection" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Terminates connection.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine data </p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_AbortOperation">
-<span class="target" id="group__StateMachine_1ga1d02b95c5bc9bf00a17e3581a11c7754"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_AbortOperation</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_AbortOperation" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Aborts current operation.</p>
-<p>This is thread safe call to abort any existing operations with the phone.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine data </p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_Install">
-<span class="target" id="group__StateMachine_1ga9c3146aa23fa0aa9692aae73d15c56d9"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_Install</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">ExtraPath</span></span>, <a class="reference internal" href="types.html#c.gboolean" title="gboolean"><span class="n"><span class="pre">gboolean</span></span></a><span class="w"> </span><span class="n"><span class="pre">Minimal</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_Install" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Installs applet required for configured connection to the phone.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine data. </p></li>
-<li><p><strong>ExtraPath</strong> – Extra path where to search for installation data. </p></li>
-<li><p><strong>Minimal</strong> – Whether to do minimal installation (eg. without support libraries), useful for applet updates </p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Result of operation. </p>
-</dd>
-</dl>
-</dd></dl>
-
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_InitConnection” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_TerminateConnection” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_AbortOperation” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_Install” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
 <dl class="c type">
 <dt class="sig sig-object c" id="c.GSM_StateMachine">
 <span class="target" id="group__StateMachine_1ga2dc354e3856ac69fc2636d2a17d73ee9"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">_GSM_StateMachine</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_StateMachine</span></span></span><a class="headerlink" href="#c.GSM_StateMachine" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Private structure holding information about phone connection. Should be allocated by <a class="reference internal" href="#group__StateMachine_1ga39da55d5846bed5cb8ecfcd99104ba24"><span class="std std-ref">GSM_AllocStateMachine</span></a> and freed by <a class="reference internal" href="#group__StateMachine_1ga7942e4b728d025b297c621152e4e02e2"><span class="std std-ref">GSM_FreeStateMachine</span></a>. </p>
+<dd><p>Private structure holding information about phone connection. Should be allocated by GSM_AllocStateMachine and freed by GSM_FreeStateMachine. </p>
 </dd></dl>
 
 <dl class="c enum">
@@ -498,171 +426,51 @@
 </p>
 </dd>
 <dt class="field-even">Param data<span class="colon">:</span></dt>
-<dd class="field-even"><p>Arbitrary logger data, as passed to <a class="reference internal" href="#group__StateMachine_1ga60c62f86427a4dea92c00963612905d0"><span class="std std-ref">GSM_InitConnection_Log</span></a>. </p>
+<dd class="field-even"><p>Arbitrary logger data, as passed to GSM_InitConnection_Log. </p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_ReadDevice">
-<span class="target" id="group__StateMachine_1ga42c98e76df9ba04a9795745a6be1d26a"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_ReadDevice</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <a class="reference internal" href="types.html#c.gboolean" title="gboolean"><span class="n"><span class="pre">gboolean</span></span></a><span class="w"> </span><span class="n"><span class="pre">waitforreply</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_ReadDevice" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Attempts to read data from phone. This can be used for getting status of incoming events, which would not be found out without polling device.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine data </p></li>
-<li><p><strong>waitforreply</strong> – Whether to wait for some event </p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Number of read bytes </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_IsConnected">
-<span class="target" id="group__StateMachine_1gac7c00ee4f52c39d0518c1e4fe6e7acb0"></span><a class="reference internal" href="types.html#c.gboolean" title="gboolean"><span class="n"><span class="pre">gboolean</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_IsConnected</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_IsConnected" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Detects whether state machine is connected.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine data </p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Whether phone is connected. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_FindGammuRC">
-<span class="target" id="group__StateMachine_1gab5df4708caa30c9d4d7f38272bd8286d"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_FindGammuRC</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="inifile.html#c.INI_Section" title="INI_Section"><span class="n"><span class="pre">INI_Section</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">result</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">force_config</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_FindGammuRC" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Finds and reads gammu configuration file. The search order depends on platform. On POSIX systems it looks for ~/.gammurc and then for /etc/gammurc, on Windows for gammurc in Application data folder, then in home and last fallback is in current driectory.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>result</strong> – Ini file representation </p></li>
-<li><p><strong>force_config</strong> – Forcing of custom path instead of autodetected one (if NULL, autodetection is performed).</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_ReadConfig">
-<span class="target" id="group__StateMachine_1ga8c5c66b4cf6d0521ef904bb5dd65966d"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_ReadConfig</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="inifile.html#c.INI_Section" title="INI_Section"><span class="n"><span class="pre">INI_Section</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">cfg_info</span></span>, <a class="reference internal" href="#c.GSM_Config" title="GSM_Config"><span class="n"><span class="pre">GSM_Config</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">cfg</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">num</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_ReadConfig" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Processes gammu configuration.</p>
-<p><div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<p>GSM_FallbackConfig </p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_ReadDevice” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
 </div>
-</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>cfg_info</strong> – Ini file representation. </p></li>
-<li><p><strong>cfg</strong> – Where to store configuration. </p></li>
-<li><p><strong>num</strong> – Number of section to read. </p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Whether we got valid configuration. Especially check for ERR_USING_DEFAULTS.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_GetConfig">
-<span class="target" id="group__StateMachine_1ga7569f1f811f20a4370d5d3169d85f6f7"></span><a class="reference internal" href="#c.GSM_Config" title="GSM_Config"><span class="n"><span class="pre">GSM_Config</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">GSM_GetConfig</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">num</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_GetConfig" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Gets gammu configuration from state machine. This actually returns pointer to internal configuration storage, so you can use it also for updating existing settings.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine data </p></li>
-<li><p><strong>num</strong> – Number of section to read, -1 for currently used. </p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Pointer to configuration. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_GetConfigNum">
-<span class="target" id="group__StateMachine_1gad9758afd7b21bb76c0adc215c34555ce"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_GetConfigNum</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_GetConfigNum" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Gets number of active gammu configurations.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine data </p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Number of sections. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_SetConfigNum">
-<span class="target" id="group__StateMachine_1ga0047f3c41c87e7030cbefbf460601d9e"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_SetConfigNum</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">sections</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_SetConfigNum" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Gets number of active gammu configurations.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine data </p></li>
-<li><p><strong>sections</strong> – Number of sections. </p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_AllocStateMachine">
-<span class="target" id="group__StateMachine_1ga39da55d5846bed5cb8ecfcd99104ba24"></span><a class="reference internal" href="#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">GSM_AllocStateMachine</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">void</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_AllocStateMachine" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Allocates new clean state machine structure. You should free it then by <a class="reference internal" href="#group__StateMachine_1ga7942e4b728d025b297c621152e4e02e2"><span class="std std-ref">GSM_FreeStateMachine</span></a>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Pointer to state machine structure. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_FreeStateMachine">
-<span class="target" id="group__StateMachine_1ga7942e4b728d025b297c621152e4e02e2"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_FreeStateMachine</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_FreeStateMachine" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Frees state machine structure allocated by <a class="reference internal" href="#group__StateMachine_1ga39da55d5846bed5cb8ecfcd99104ba24"><span class="std std-ref">GSM_AllocStateMachine</span></a>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – Pointer to state machine structure. </p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_GetUsedConnection">
-<span class="target" id="group__StateMachine_1gab58dbde78ea8a072c528e9b1e80e97b5"></span><a class="reference internal" href="#c.GSM_ConnectionType" title="GSM_ConnectionType"><span class="n"><span class="pre">GSM_ConnectionType</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_GetUsedConnection</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_GetUsedConnection" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Gets number of active gammu configurations.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine data </p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Connection type. </p>
-</dd>
-</dl>
-</dd></dl>
-
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_IsConnected” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_FindGammuRC” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_ReadConfig” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_GetConfig” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_GetConfigNum” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_SetConfigNum” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_AllocStateMachine” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_FreeStateMachine” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_GetUsedConnection” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
 </section>
 
 

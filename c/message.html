@@ -127,507 +127,164 @@
              
   <section id="messages">
 <h1>Messages<a class="headerlink" href="#messages" title="Permalink to this heading"></a></h1>
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_DecodePDUFrame">
-<span class="target" id="group__SMS_1gaa77552e956995cc9ab8bc36981bb9b13"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_DecodePDUFrame</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="debug.html#c.GSM_Debug_Info" title="GSM_Debug_Info"><span class="n"><span class="pre">GSM_Debug_Info</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">di</span></span>, <a class="reference internal" href="#c.GSM_SMSMessage" title="GSM_SMSMessage"><span class="n"><span class="pre">GSM_SMSMessage</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">SMS</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">buffer</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">length</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">final_pos</span></span>, <a class="reference internal" href="types.html#c.gboolean" title="gboolean"><span class="n"><span class="pre">gboolean</span></span></a><span class="w"> </span><span class="n"><span class="pre">SMSC</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_DecodePDUFrame" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Decodes PDU data.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>di</strong> – Debug information structure. </p></li>
-<li><p><strong>SMS</strong> – Pointer where to store parsed message. </p></li>
-<li><p><strong>buffer</strong> – PDU data. </p></li>
-<li><p><strong>length</strong> – Length of PDU data. </p></li>
-<li><p><strong>final_pos</strong> – Optional pointer where end position will be stored. </p></li>
-<li><p><strong>SMSC</strong> – Whether PDU includes SMSC data. </p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_DecodeSMSFrame">
-<span class="target" id="group__SMS_1ga643582214e5e6a05a50b3ab1021e09ee"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_DecodeSMSFrame</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="debug.html#c.GSM_Debug_Info" title="GSM_Debug_Info"><span class="n"><span class="pre">GSM_Debug_Info</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">di</span></span>, <a class="reference internal" href="#c.GSM_SMSMessage" title="GSM_SMSMessage"><span class="n"><span class="pre">GSM_SMSMessage</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">SMS</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">buffer</span></span>, <a class="reference internal" href="#c.GSM_SMSMessageLayout" title="GSM_SMSMessageLayout"><span class="n"><span class="pre">GSM_SMSMessageLayout</span></span></a><span class="w"> </span><span class="n"><span class="pre">Layout</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_DecodeSMSFrame" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Decodes SMS frame. </p>
-</dd></dl>
-
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_DecodePDUFrame” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_DecodeSMSFrame” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
 <dl class="c function">
 <dt class="sig sig-object c" id="c.GSM_GetMessageCoding">
 <span class="target" id="gammu-message_8h_1a8194dbe14b042f449d0b33dc3c7217f5"></span><a class="reference internal" href="#c.GSM_Coding_Type" title="GSM_Coding_Type"><span class="n"><span class="pre">GSM_Coding_Type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_GetMessageCoding</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="debug.html#c.GSM_Debug_Info" title="GSM_Debug_Info"><span class="n"><span class="pre">GSM_Debug_Info</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">di</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="n"><span class="pre">TPDCS</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_GetMessageCoding" title="Permalink to this definition"></a><br /></dt>
 <dd><p>Finds out coding type based on TPDCS header byte as defined by GSM 03.38. </p>
 </dd></dl>
 
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_EncodeSMSFrame">
-<span class="target" id="group__SMS_1gaf30770067ad8d1fe5f73c695d99aedbb"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_EncodeSMSFrame</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="debug.html#c.GSM_Debug_Info" title="GSM_Debug_Info"><span class="n"><span class="pre">GSM_Debug_Info</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">di</span></span>, <a class="reference internal" href="#c.GSM_SMSMessage" title="GSM_SMSMessage"><span class="n"><span class="pre">GSM_SMSMessage</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">SMS</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">buffer</span></span>, <a class="reference internal" href="#c.GSM_SMSMessageLayout" title="GSM_SMSMessageLayout"><span class="n"><span class="pre">GSM_SMSMessageLayout</span></span></a><span class="w"> </span><span class="n"><span class="pre">Layout</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">length</span></span>, <a class="reference internal" href="types.html#c.gboolean" title="gboolean"><span class="n"><span class="pre">gboolean</span></span></a><span class="w"> </span><span class="n"><span class="pre">clear</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_EncodeSMSFrame" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Encodes SMS frame. </p>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_DecodeSMSFrameStatusReportData">
-<span class="target" id="group__SMS_1ga0faa9476a1f0b03ec6826687bb196ad8"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_DecodeSMSFrameStatusReportData</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="debug.html#c.GSM_Debug_Info" title="GSM_Debug_Info"><span class="n"><span class="pre">GSM_Debug_Info</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">di</span></span>, <a class="reference internal" href="#c.GSM_SMSMessage" title="GSM_SMSMessage"><span class="n"><span class="pre">GSM_SMSMessage</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">SMS</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">buffer</span></span>, <a class="reference internal" href="#c.GSM_SMSMessageLayout" title="GSM_SMSMessageLayout"><span class="n"><span class="pre">GSM_SMSMessageLayout</span></span></a><span class="w"> </span><span class="n"><span class="pre">Layout</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_DecodeSMSFrameStatusReportData" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Decodes SMS frame for status report. </p>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_DecodeSMSFrameText">
-<span class="target" id="group__SMS_1ga4f1e6b36b74f74e598b5a5adafecd9dc"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_DecodeSMSFrameText</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="debug.html#c.GSM_Debug_Info" title="GSM_Debug_Info"><span class="n"><span class="pre">GSM_Debug_Info</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">di</span></span>, <a class="reference internal" href="#c.GSM_SMSMessage" title="GSM_SMSMessage"><span class="n"><span class="pre">GSM_SMSMessage</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">SMS</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">buffer</span></span>, <a class="reference internal" href="#c.GSM_SMSMessageLayout" title="GSM_SMSMessageLayout"><span class="n"><span class="pre">GSM_SMSMessageLayout</span></span></a><span class="w"> </span><span class="n"><span class="pre">Layout</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_DecodeSMSFrameText" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Decodes SMS frame in textual representation. </p>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_DecodeUDHHeader">
-<span class="target" id="group__SMS_1ga2611bd8db3bd5e2faba9d91d03159477"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_DecodeUDHHeader</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="debug.html#c.GSM_Debug_Info" title="GSM_Debug_Info"><span class="n"><span class="pre">GSM_Debug_Info</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">di</span></span>, <a class="reference internal" href="#c.GSM_UDHHeader" title="GSM_UDHHeader"><span class="n"><span class="pre">GSM_UDHHeader</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">UDH</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_DecodeUDHHeader" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Decodes UDH header. </p>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_EncodeUDHHeader">
-<span class="target" id="group__SMS_1gace018c83bfbdae600c66b0d1ec237db8"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_EncodeUDHHeader</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="debug.html#c.GSM_Debug_Info" title="GSM_Debug_Info"><span class="n"><span class="pre">GSM_Debug_Info</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">di</span></span>, <a class="reference internal" href="#c.GSM_UDHHeader" title="GSM_UDHHeader"><span class="n"><span class="pre">GSM_UDHHeader</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">UDH</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_EncodeUDHHeader" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Encodes UDH header. </p>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_SetDefaultReceivedSMSData">
-<span class="target" id="group__SMS_1ga47867b5827933eb4dbc56f096a02c8c9"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_SetDefaultReceivedSMSData</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.GSM_SMSMessage" title="GSM_SMSMessage"><span class="n"><span class="pre">GSM_SMSMessage</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">SMS</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_SetDefaultReceivedSMSData" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Sets default content for SMS except for changing locations. Use this for clearing structure while keeping location of message.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>SMS</strong> – Pointer to structure which should be cleaned up. </p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_SetDefaultSMSData">
-<span class="target" id="group__SMS_1gabdb93b2b33b5ad7835d7c6310a596254"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_SetDefaultSMSData</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.GSM_SMSMessage" title="GSM_SMSMessage"><span class="n"><span class="pre">GSM_SMSMessage</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">SMS</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_SetDefaultSMSData" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Sets default content for SMS. Use this for clearing structure.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>SMS</strong> – Pointer to structure which should be cleaned up. </p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_DecodeSiemensOTASMS">
-<span class="target" id="group__SMS_1ga0d198bfa0836b1ae0c7008e380d679e8"></span><a class="reference internal" href="types.html#c.gboolean" title="gboolean"><span class="n"><span class="pre">gboolean</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_DecodeSiemensOTASMS</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="debug.html#c.GSM_Debug_Info" title="GSM_Debug_Info"><span class="n"><span class="pre">GSM_Debug_Info</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">di</span></span>, <a class="reference internal" href="#c.GSM_SiemensOTASMSInfo" title="GSM_SiemensOTASMSInfo"><span class="n"><span class="pre">GSM_SiemensOTASMSInfo</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">Info</span></span>, <a class="reference internal" href="#c.GSM_SMSMessage" title="GSM_SMSMessage"><span class="n"><span class="pre">GSM_SMSMessage</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">SMS</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_DecodeSiemensOTASMS" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Decodes Siemens OTA data. </p>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.PHONE_EncodeSMSFrame">
-<span class="target" id="group__SMS_1ga1609909b406be0eea3dce0189f574339"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PHONE_EncodeSMSFrame</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <a class="reference internal" href="#c.GSM_SMSMessage" title="GSM_SMSMessage"><span class="n"><span class="pre">GSM_SMSMessage</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">SMS</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">buffer</span></span>, <a class="reference internal" href="#c.GSM_SMSMessageLayout" title="GSM_SMSMessageLayout"><span class="n"><span class="pre">GSM_SMSMessageLayout</span></span></a><span class="w"> </span><span class="n"><span class="pre">Layout</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">length</span></span>, <a class="reference internal" href="types.html#c.gboolean" title="gboolean"><span class="n"><span class="pre">gboolean</span></span></a><span class="w"> </span><span class="n"><span class="pre">clear</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PHONE_EncodeSMSFrame" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Encodes SMS frame according to layout.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Error code. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_EncodeMultiPartSMS">
-<span class="target" id="group__SMS_1ga6f4a0203c2b4896668f7ad5ee20c37c7"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_EncodeMultiPartSMS</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="debug.html#c.GSM_Debug_Info" title="GSM_Debug_Info"><span class="n"><span class="pre">GSM_Debug_Info</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">di</span></span>, <a class="reference internal" href="#c.GSM_MultiPartSMSInfo" title="GSM_MultiPartSMSInfo"><span class="n"><span class="pre">GSM_MultiPartSMSInfo</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">Info</span></span>, <a class="reference internal" href="#c.GSM_MultiSMSMessage" title="GSM_MultiSMSMessage"><span class="n"><span class="pre">GSM_MultiSMSMessage</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">SMS</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_EncodeMultiPartSMS" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Encodes multi part SMS from “readable” format.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Error code. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_DecodeMultiPartSMS">
-<span class="target" id="group__SMS_1ga85d2f8f70b19e5eea217a4f78b36b5e2"></span><a class="reference internal" href="types.html#c.gboolean" title="gboolean"><span class="n"><span class="pre">gboolean</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_DecodeMultiPartSMS</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="debug.html#c.GSM_Debug_Info" title="GSM_Debug_Info"><span class="n"><span class="pre">GSM_Debug_Info</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">di</span></span>, <a class="reference internal" href="#c.GSM_MultiPartSMSInfo" title="GSM_MultiPartSMSInfo"><span class="n"><span class="pre">GSM_MultiPartSMSInfo</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">Info</span></span>, <a class="reference internal" href="#c.GSM_MultiSMSMessage" title="GSM_MultiSMSMessage"><span class="n"><span class="pre">GSM_MultiSMSMessage</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">SMS</span></span>, <a class="reference internal" href="types.html#c.gboolean" title="gboolean"><span class="n"><span class="pre">gboolean</span></span></a><span class="w"> </span><span class="n"><span class="pre">ems</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_DecodeMultiPartSMS" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Decodes multi part SMS to “readable” format. </p>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_ClearMultiPartSMSInfo">
-<span class="target" id="group__SMS_1ga6b17b07a4f68af913af21a51988aee66"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_ClearMultiPartSMSInfo</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.GSM_MultiPartSMSInfo" title="GSM_MultiPartSMSInfo"><span class="n"><span class="pre">GSM_MultiPartSMSInfo</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">Info</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_ClearMultiPartSMSInfo" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Clears <a class="reference internal" href="#structGSM__MultiPartSMSInfo"><span class="std std-ref">GSM_MultiPartSMSInfo</span></a> to default values. </p>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_FreeMultiPartSMSInfo">
-<span class="target" id="group__SMS_1ga1c16fa6bb034920339ca521195652acd"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_FreeMultiPartSMSInfo</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.GSM_MultiPartSMSInfo" title="GSM_MultiPartSMSInfo"><span class="n"><span class="pre">GSM_MultiPartSMSInfo</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">Info</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_FreeMultiPartSMSInfo" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Frees any allocated structures inside <a class="reference internal" href="#structGSM__MultiPartSMSInfo"><span class="std std-ref">GSM_MultiPartSMSInfo</span></a>. </p>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_LinkSMS">
-<span class="target" id="group__SMS_1ga12af61572b6cb1415321c63d577bebc8"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_LinkSMS</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="debug.html#c.GSM_Debug_Info" title="GSM_Debug_Info"><span class="n"><span class="pre">GSM_Debug_Info</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">di</span></span>, <a class="reference internal" href="#c.GSM_MultiSMSMessage" title="GSM_MultiSMSMessage"><span class="n"><span class="pre">GSM_MultiSMSMessage</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">INPUT</span></span>, <a class="reference internal" href="#c.GSM_MultiSMSMessage" title="GSM_MultiSMSMessage"><span class="n"><span class="pre">GSM_MultiSMSMessage</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">OUTPUT</span></span>, <a class="reference internal" href="types.html#c.gboolean" title="gboolean"><span class="n"><span class="pre">gboolean</span></span></a><span class="w"> </span><span class="n"><span class="pre">ems</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_LinkSMS" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Links SMS messages according to IDs.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Error code. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_DecodeMMSFileToMultiPart">
-<span class="target" id="group__MMS_1ga2d80436b5e7a0322254a5194afc8ebb5"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_DecodeMMSFileToMultiPart</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="debug.html#c.GSM_Debug_Info" title="GSM_Debug_Info"><span class="n"><span class="pre">GSM_Debug_Info</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">di</span></span>, <a class="reference internal" href="file.html#c.GSM_File" title="GSM_File"><span class="n"><span class="pre">GSM_File</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">file</span></span>, <a class="reference internal" href="#c.GSM_EncodedMultiPartMMSInfo" title="GSM_EncodedMultiPartMMSInfo"><span class="n"><span class="pre">GSM_EncodedMultiPartMMSInfo</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">info</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_DecodeMMSFileToMultiPart" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Decodes MMS data. </p>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_ClearMMSMultiPart">
-<span class="target" id="group__MMS_1ga4065299dc2ee2183cd40fd2fa8bc6fd4"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_ClearMMSMultiPart</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.GSM_EncodedMultiPartMMSInfo" title="GSM_EncodedMultiPartMMSInfo"><span class="n"><span class="pre">GSM_EncodedMultiPartMMSInfo</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">info</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_ClearMMSMultiPart" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Clears MMS data, used to initialize structure. </p>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_GetSMSC">
-<span class="target" id="group__SMS_1gae613f2fb5a30f2db31b452c9e5a5ca20"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_GetSMSC</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <a class="reference internal" href="#c.GSM_SMSC" title="GSM_SMSC"><span class="n"><span class="pre">GSM_SMSC</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">smsc</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_GetSMSC" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Gets SMS Service Center number and SMS settings.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine pointer. </p></li>
-<li><p><strong>smsc</strong> – <strong>[inout]</strong> SMSC structure, should contain location.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_SetSMSC">
-<span class="target" id="group__SMS_1ga71d5e7630ae972a676a951c90a4a400e"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_SetSMSC</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <a class="reference internal" href="#c.GSM_SMSC" title="GSM_SMSC"><span class="n"><span class="pre">GSM_SMSC</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">smsc</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_SetSMSC" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Sets SMS Service Center number and SMS settings.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine pointer. </p></li>
-<li><p><strong>smsc</strong> – <strong>[in]</strong> SMSC structure.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_GetSMSStatus">
-<span class="target" id="group__SMS_1ga287b0d2adfe0ed208a28e08b2d7e069a"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_GetSMSStatus</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <a class="reference internal" href="#c.GSM_SMSMemoryStatus" title="GSM_SMSMemoryStatus"><span class="n"><span class="pre">GSM_SMSMemoryStatus</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">status</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_GetSMSStatus" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Gets information about SMS memory (read/unread/size of memory for both SIM and phone).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine pointer. </p></li>
-<li><p><strong>status</strong> – <strong>[out]</strong> Pointer to SMS status structure.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_GetSMS">
-<span class="target" id="group__SMS_1gac8fd8daac30c29e166976e04112af0a8"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_GetSMS</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <a class="reference internal" href="#c.GSM_MultiSMSMessage" title="GSM_MultiSMSMessage"><span class="n"><span class="pre">GSM_MultiSMSMessage</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sms</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_GetSMS" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Reads SMS message.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine pointer. </p></li>
-<li><p><strong>sms</strong> – <strong>[inout]</strong> SMS message data read from phone, location and folder should be set.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_GetNextSMS">
-<span class="target" id="group__SMS_1ga6dcfbacdd802256548a452b2b9565594"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_GetNextSMS</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <a class="reference internal" href="#c.GSM_MultiSMSMessage" title="GSM_MultiSMSMessage"><span class="n"><span class="pre">GSM_MultiSMSMessage</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sms</span></span>, <a class="reference internal" href="types.html#c.gboolean" title="gboolean"><span class="n"><span class="pre">gboolean</span></span></a><span class="w"> </span><span class="n"><span class="pre">start</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_GetNextSMS" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Reads next (or first if start set) SMS message. This might be faster for some phones than using <a class="reference internal" href="#group__SMS_1gac8fd8daac30c29e166976e04112af0a8"><span class="std std-ref">GSM_GetSMS</span></a> for each message.</p>
-<p>Please note that this commend does not have to mark message as read in phone. To do so, you have to call <a class="reference internal" href="#group__SMS_1gac8fd8daac30c29e166976e04112af0a8"><span class="std std-ref">GSM_GetSMS</span></a>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine pointer. </p></li>
-<li><p><strong>sms</strong> – <strong>[inout]</strong> SMS message data read from phone, for subsequent reads, location and folder might be used by phone driver to determine reading state. </p></li>
-<li><p><strong>start</strong> – <strong>[in]</strong> Whether we start reading from beginning.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_SetSMS">
-<span class="target" id="group__SMS_1ga14e72ef388412e3e978948823c4aefad"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_SetSMS</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <a class="reference internal" href="#c.GSM_SMSMessage" title="GSM_SMSMessage"><span class="n"><span class="pre">GSM_SMSMessage</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sms</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_SetSMS" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Sets SMS.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine pointer. </p></li>
-<li><p><strong>sms</strong> – <strong>[in]</strong> SMS message data.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_AddSMS">
-<span class="target" id="group__SMS_1ga04ba7169d282b69fc04cffff25d0cbe4"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_AddSMS</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <a class="reference internal" href="#c.GSM_SMSMessage" title="GSM_SMSMessage"><span class="n"><span class="pre">GSM_SMSMessage</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sms</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_AddSMS" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Adds SMS to specified folder.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine pointer. </p></li>
-<li><p><strong>sms</strong> – <strong>[inout]</strong> SMS message data, location will be updated.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_DeleteSMS">
-<span class="target" id="group__SMS_1ga330936776e8545d64140fbc2fe55b207"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_DeleteSMS</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <a class="reference internal" href="#c.GSM_SMSMessage" title="GSM_SMSMessage"><span class="n"><span class="pre">GSM_SMSMessage</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sms</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_DeleteSMS" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Deletes SMS.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine pointer. </p></li>
-<li><p><strong>sms</strong> – <strong>[in]</strong> SMS structure with SMS location and folder.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_SendSMS">
-<span class="target" id="group__SMS_1ga924e26d875a6d39f133c8fc228f7e1d4"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_SendSMS</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <a class="reference internal" href="#c.GSM_SMSMessage" title="GSM_SMSMessage"><span class="n"><span class="pre">GSM_SMSMessage</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sms</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_SendSMS" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Sends SMS.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine pointer. </p></li>
-<li><p><strong>sms</strong> – <strong>[in]</strong> SMS structure with SMS data to send.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_SendSavedSMS">
-<span class="target" id="group__SMS_1ga22fa10562e4cac8b506a9f0a1eb30b06"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_SendSavedSMS</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">Folder</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">Location</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_SendSavedSMS" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Sends SMS already saved in phone.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine pointer. </p></li>
-<li><p><strong>Folder</strong> – <strong>[in]</strong> Folder, where message is stored. </p></li>
-<li><p><strong>Location</strong> – <strong>[in]</strong> Location, where message is stored.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_SetFastSMSSending">
-<span class="target" id="group__SMS_1gae0dfc7aa7d97453f2541fa244d6452b9"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_SetFastSMSSending</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <a class="reference internal" href="types.html#c.gboolean" title="gboolean"><span class="n"><span class="pre">gboolean</span></span></a><span class="w"> </span><span class="n"><span class="pre">enable</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_SetFastSMSSending" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Configures fast SMS sending.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine pointer. </p></li>
-<li><p><strong>enable</strong> – <strong>[in]</strong> Whether to enable notifications.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_SetIncomingSMS">
-<span class="target" id="group__SMS_1gac92b7f980e8df209bd6002f3d5ab64dd"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_SetIncomingSMS</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <a class="reference internal" href="types.html#c.gboolean" title="gboolean"><span class="n"><span class="pre">gboolean</span></span></a><span class="w"> </span><span class="n"><span class="pre">enable</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_SetIncomingSMS" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Enable/disable notification on incoming SMS.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine pointer. </p></li>
-<li><p><strong>enable</strong> – <strong>[in]</strong> Whether to enable notifications.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_SetIncomingCB">
-<span class="target" id="group__CB_1ga8cd1e262977cb6b6c770b659a342e967"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_SetIncomingCB</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <a class="reference internal" href="types.html#c.gboolean" title="gboolean"><span class="n"><span class="pre">gboolean</span></span></a><span class="w"> </span><span class="n"><span class="pre">enable</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_SetIncomingCB" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Gets network information from phone.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine pointer. </p></li>
-<li><p><strong>enable</strong> – <strong>[in]</strong> Whether to enable notifications.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_GetSMSFolders">
-<span class="target" id="group__SMS_1ga715c9771f22f6a9f545021109aee1f14"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_GetSMSFolders</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <a class="reference internal" href="#c.GSM_SMSFolders" title="GSM_SMSFolders"><span class="n"><span class="pre">GSM_SMSFolders</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">folders</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_GetSMSFolders" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Returns SMS folders information.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine pointer. </p></li>
-<li><p><strong>folders</strong> – <strong>[out]</strong> folders Pointer to folders structure, which will be filled in.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_AddSMSFolder">
-<span class="target" id="group__SMS_1ga61667e4d1daffb87aed3a53ca7e45824"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_AddSMSFolder</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">name</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_AddSMSFolder" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Creates SMS folder.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine pointer. </p></li>
-<li><p><strong>name</strong> – <strong>[in]</strong> Name of SMS folder which should be created.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_DeleteSMSFolder">
-<span class="target" id="group__SMS_1ga18b64eecf19070928038ca2900d5d2cd"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_DeleteSMSFolder</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">ID</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_DeleteSMSFolder" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Deletes SMS folder.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine pointer. </p></li>
-<li><p><strong>ID</strong> – <strong>[in]</strong> ID of SMS folder to delete.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_GetMMSFolders">
-<span class="target" id="group__MMS_1ga668d9995eb06e67c9ac41176651ffeb2"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_GetMMSFolders</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <a class="reference internal" href="#c.GSM_MMSFolders" title="GSM_MMSFolders"><span class="n"><span class="pre">GSM_MMSFolders</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">folders</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_GetMMSFolders" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Lists MMS folders.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine pointer. </p></li>
-<li><p><strong>folders</strong> – Pointer to structure, whehe folder information will be stored.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_GetNextMMSFileInfo">
-<span class="target" id="group__MMS_1gac547efe04337c74483e035aad15ee8bc"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_GetNextMMSFileInfo</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">FileID</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">MMSFolder</span></span>, <a class="reference internal" href="types.html#c.gboolean" title="gboolean"><span class="n"><span class="pre">gboolean</span></span></a><span class="w"> </span><span class="n"><span class="pre">start</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_GetNextMMSFileInfo" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Retrieves next part of MMS file information.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine pointer. </p></li>
-<li><p><strong>FileID</strong> – <strong>[inout]</strong> File ID will be stored here, might be used for consequent reads. </p></li>
-<li><p><strong>MMSFolder</strong> – <strong>[inout]</strong> MMS folder ID will be stored here, might be used for consequent reads. </p></li>
-<li><p><strong>start</strong> – <strong>[in]</strong> Whether to start reading.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_SetIncomingUSSD">
-<span class="target" id="group__USSD_1ga8c2b93c96bf87959b39ffbda2ccb2872"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_SetIncomingUSSD</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <a class="reference internal" href="types.html#c.gboolean" title="gboolean"><span class="n"><span class="pre">gboolean</span></span></a><span class="w"> </span><span class="n"><span class="pre">enable</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_SetIncomingUSSD" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Activates/deactivates noticing about incoming USSDs (UnStructured Supplementary Services).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine pointer. </p></li>
-<li><p><strong>enable</strong> – <strong>[in]</strong> Whether to enable notifications.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_SMSCounter">
-<span class="target" id="group__SMS_1ga78c8b5c1d12517d2a2a2404cfbda8b24"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_SMSCounter</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="debug.html#c.GSM_Debug_Info" title="GSM_Debug_Info"><span class="n"><span class="pre">GSM_Debug_Info</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">di</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">MessageBuffer</span></span>, <a class="reference internal" href="#c.GSM_UDH" title="GSM_UDH"><span class="n"><span class="pre">GSM_UDH</span></span></a><span class="w"> </span><span class="n"><span class="pre">UDHType</span></span>, <a class="reference internal" href="#c.GSM_Coding_Type" title="GSM_Coding_Type"><span class="n"><span class="pre">GSM_Coding_Type</span></span></a><span class="w"> </span><span class="n"><span class="pre">Coding</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">SMSNum</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">CharsLeft</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_SMSCounter" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Calculates number of messages and free chars needed for text.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>di</strong> – Debug settings. </p></li>
-<li><p><strong>MessageBuffer</strong> – <strong>[in]</strong> Actual message text in unicode. </p></li>
-<li><p><strong>UDHType</strong> – <strong>[in]</strong> UDH type. </p></li>
-<li><p><strong>Coding</strong> – <strong>[in]</strong> GSM Encoding type. </p></li>
-<li><p><strong>SMSNum</strong> – <strong>[out]</strong> Number of messages needed to store the text. </p></li>
-<li><p><strong>CharsLeft</strong> – <strong>[out]</strong> Number of free chars in the message. </p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_EncodeSMSFrame” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_DecodeSMSFrameStatusReportData” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_DecodeSMSFrameText” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_DecodeUDHHeader” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_EncodeUDHHeader” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_SetDefaultReceivedSMSData” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_SetDefaultSMSData” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_DecodeSiemensOTASMS” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “PHONE_EncodeSMSFrame” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_EncodeMultiPartSMS” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_DecodeMultiPartSMS” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_ClearMultiPartSMSInfo” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_FreeMultiPartSMSInfo” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_LinkSMS” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_DecodeMMSFileToMultiPart” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_ClearMMSMultiPart” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_GetSMSC” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_SetSMSC” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_GetSMSStatus” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_GetSMS” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_GetNextSMS” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_SetSMS” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_AddSMS” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_DeleteSMS” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_SendSMS” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_SendSavedSMS” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_SetFastSMSSending” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_SetIncomingSMS” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_SetIncomingCB” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_GetSMSFolders” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_AddSMSFolder” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_DeleteSMSFolder” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_GetMMSFolders” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_GetNextMMSFileInfo” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_SetIncomingUSSD” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_SMSCounter” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
 <dl class="c enum">
 <dt class="sig sig-object c" id="c.GSM_MMS_Class">
 <span class="target" id="gammu-message_8h_1a78992fa0989ae1d9443d408ef291b40e"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_MMS_Class</span></span></span><a class="headerlink" href="#c.GSM_MMS_Class" title="Permalink to this definition"></a><br /></dt>

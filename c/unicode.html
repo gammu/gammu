@@ -127,128 +127,82 @@
              
   <section id="unicode">
 <h1>Unicode<a class="headerlink" href="#unicode" title="Permalink to this heading"></a></h1>
-<dl class="c function">
-<dt class="sig sig-object c" id="c.UnicodeLength">
-<span class="target" id="group__Unicode_1ga68d3663b500cc642510e00b952b2a8cf"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">UnicodeLength</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">str</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.UnicodeLength" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Returns length of unicode string. </p>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.DecodeUnicodeString">
-<span class="target" id="group__Unicode_1gaa0716381d9c06ad47f6d3aa1ed9130c7"></span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">DecodeUnicodeString</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">src</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.DecodeUnicodeString" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Converts string to locale charset.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Pointer to static string. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.DecodeUnicodeConsole">
-<span class="target" id="group__Unicode_1ga6c16a54d0fe480c75a151fc1fce0322a"></span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">DecodeUnicodeConsole</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">src</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.DecodeUnicodeConsole" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Converts string to console charset.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Pointer to static string. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.DecodeUnicode">
-<span class="target" id="group__Unicode_1ga67cc141aea4e4995fc9a02e000e762e0"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DecodeUnicode</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">src</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">dest</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.DecodeUnicode" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Converts string from unicode to local charset. </p>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.EncodeUnicode">
-<span class="target" id="group__Unicode_1gae0967b63a986316f6741034927e43406"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">EncodeUnicode</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">dest</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">src</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">len</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.EncodeUnicode" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Encodes string from local charset to unicode. </p>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.ReadUnicodeFile">
-<span class="target" id="group__Unicode_1ga8e53f8fe8bd0b3d56aa48bdbc91af0d5"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ReadUnicodeFile</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">Dest</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">Source</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.ReadUnicodeFile" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Decodes unicode file data with byte order mark (BOM). </p>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.CopyUnicodeString">
-<span class="target" id="group__Unicode_1ga983d4eecc607900035e79f31fa975ac5"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">CopyUnicodeString</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">Dest</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">Source</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.CopyUnicodeString" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Copies unicode string. </p>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.EncodeUTF8QuotedPrintable">
-<span class="target" id="group__Unicode_1gaf6fd6a0f80365fa204cafc9ee397e8b0"></span><a class="reference internal" href="types.html#c.gboolean" title="gboolean"><span class="n"><span class="pre">gboolean</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">EncodeUTF8QuotedPrintable</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">dest</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">src</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.EncodeUTF8QuotedPrintable" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Encodes string to UTF-8 quoted printable. </p>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.DecodeUTF8QuotedPrintable">
-<span class="target" id="group__Unicode_1ga0d5ee2ec9f452bd105f8f47a8a7cfb1c"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DecodeUTF8QuotedPrintable</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">dest</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">src</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">len</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.DecodeUTF8QuotedPrintable" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Decodes UTF-8 quoted printable string. </p>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.EncodeWithUTF8Alphabet">
-<span class="target" id="group__Unicode_1ga91c0c4baea737fa21b61557a63ffdee4"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">EncodeWithUTF8Alphabet</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">long</span></span><span class="w"> </span><span class="n"><span class="pre">src</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">ret</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.EncodeWithUTF8Alphabet" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Encodes string to UTF-8. </p>
-</dd></dl>
-
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “UnicodeLength” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “DecodeUnicodeString” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “DecodeUnicodeConsole” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “DecodeUnicode” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “EncodeUnicode” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “ReadUnicodeFile” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “CopyUnicodeString” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “EncodeUTF8QuotedPrintable” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “DecodeUTF8QuotedPrintable” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “EncodeWithUTF8Alphabet” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>doxygenfunction: Cannot find function “DecodeWithUTF8Alphabet” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
 </div>
-<dl class="c function">
-<dt class="sig sig-object c" id="c.DecodeHexUnicode">
-<span class="target" id="group__Unicode_1ga772ff27dc27783001321f63e3cea1611"></span><a class="reference internal" href="types.html#c.gboolean" title="gboolean"><span class="n"><span class="pre">gboolean</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DecodeHexUnicode</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">dest</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">src</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">len</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.DecodeHexUnicode" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Decodes string from hex quoted unicode. </p>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.EncodeHexUnicode">
-<span class="target" id="group__Unicode_1ga184692aa3818051a108cfeb722d1e2b2"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">EncodeHexUnicode</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">dest</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">src</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">len</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.EncodeHexUnicode" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Encodes string to hex quoted unicode. </p>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.mywstrncmp">
-<span class="target" id="group__Unicode_1ga24864aec5d2178305426fba37d9fd7b8"></span><a class="reference internal" href="types.html#c.gboolean" title="gboolean"><span class="n"><span class="pre">gboolean</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">mywstrncmp</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">a</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">b</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">num</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.mywstrncmp" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Compares two unicode strings. </p>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.mywstrstr">
-<span class="target" id="group__Unicode_1ga6ad81c9c3f74c27d4d26f463dcb01e37"></span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">mywstrstr</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">haystack</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">needle</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.mywstrstr" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Locates unicode substring. </p>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.mywstrncasecmp">
-<span class="target" id="group__Unicode_1gaa96597155b3f138995f3b4dd277468d9"></span><a class="reference internal" href="types.html#c.gboolean" title="gboolean"><span class="n"><span class="pre">gboolean</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">mywstrncasecmp</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">a</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">b</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">num</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.mywstrncasecmp" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Compares two unicode strings case insensitive. </p>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.EncodeUTF8">
-<span class="target" id="group__Unicode_1gaec365a5ee5f1aca3972425c47b865331"></span><a class="reference internal" href="types.html#c.gboolean" title="gboolean"><span class="n"><span class="pre">gboolean</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">EncodeUTF8</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">dest</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">src</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.EncodeUTF8" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Encode text to UTF-8. </p>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.DecodeUTF8">
-<span class="target" id="group__Unicode_1gaddcea22abf1fdaab39c08c2da38840dd"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DecodeUTF8</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">dest</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">src</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">len</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.DecodeUTF8" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Decode text from UTF-8. </p>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.DecodeHexBin">
-<span class="target" id="group__Unicode_1ga54e998767f2953f9ebeba1aa5f58b86c"></span><a class="reference internal" href="types.html#c.gboolean" title="gboolean"><span class="n"><span class="pre">gboolean</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DecodeHexBin</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">dest</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">src</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">len</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.DecodeHexBin" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Decode hex encoded binary text. </p>
-</dd></dl>
-
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “DecodeHexUnicode” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “EncodeHexUnicode” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “mywstrncmp” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “mywstrstr” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “mywstrncasecmp” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “EncodeUTF8” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “DecodeUTF8” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “DecodeHexBin” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>doxygenfunction: Cannot find function “EncodeWithUnicodeAlphabet” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>

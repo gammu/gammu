@@ -617,7 +617,7 @@ to hex encode the unicode text:</p>
 <p>Inserting multipart messages is a bit more tricky, you need to construct also
 UDH header and store it hexadecimally written into UDH field. Unless you have a
 good reason to do this manually, use <a class="reference internal" href="inject.html#gammu-smsd-inject"><span class="std std-ref">gammu-smsd-inject</span></a>, C library
-(<a class="reference internal" href="../c/smsd.html#c.SMSD_InjectSMS" title="SMSD_InjectSMS"><code class="xref c c-func docutils literal notranslate"><span class="pre">SMSD_InjectSMS()</span></code></a>) or Python library
+(<code class="xref c c-func docutils literal notranslate"><span class="pre">SMSD_InjectSMS()</span></code>) or Python library
 (<a class="reference internal" href="../python/smsd.html#gammu.smsd.SMSD.InjectSMS" title="gammu.smsd.SMSD.InjectSMS"><code class="xref py py-meth docutils literal notranslate"><span class="pre">gammu.smsd.SMSD.InjectSMS()</span></code></a>).</p>
 <p>For long text message, the UDH starts with <code class="docutils literal notranslate"><span class="pre">050003</span></code> followed by byte as a
 message reference (you can put any hex value there, but it should be <strong>different

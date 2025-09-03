@@ -127,230 +127,90 @@
              
   <section id="info">
 <h1>Info<a class="headerlink" href="#info" title="Permalink to this heading"></a></h1>
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_GetNetworkName">
-<span class="target" id="group__Info_1gaa158250a8f19b16796faec415dbeeca0"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">GSM_GetNetworkName</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">NetworkCode</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_GetNetworkName" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Find network name from given network code. </p>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_GetCountryName">
-<span class="target" id="group__Info_1ga8d08a856b83fb41b3370037652c44800"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">GSM_GetCountryName</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">CountryCode</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_GetCountryName" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Find country name from given country code. </p>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_FeatureToString">
-<span class="target" id="group__Info_1gac7006b65578cb37decb648bb0b142c1b"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">GSM_FeatureToString</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.GSM_Feature" title="GSM_Feature"><span class="n"><span class="pre">GSM_Feature</span></span></a><span class="w"> </span><span class="n"><span class="pre">feature</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_FeatureToString" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Converts feature value to string.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>feature</strong> – GSM_Feature to convert.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Pointer to static string with string for specified feature, NULL on failure. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_FeatureFromString">
-<span class="target" id="group__Info_1ga1836ae030afe98b81f1ebddd106b89d5"></span><a class="reference internal" href="#c.GSM_Feature" title="GSM_Feature"><span class="n"><span class="pre">GSM_Feature</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_FeatureFromString</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">feature</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_FeatureFromString" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Converts feature string to value.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>feature</strong> – GSM_Feature string to convert.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>GSM_Feature value, 0 on failure. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_IsPhoneFeatureAvailable">
-<span class="target" id="group__Info_1ga4782f3a1f914bc2ccb0bbe97f185cae6"></span><a class="reference internal" href="types.html#c.gboolean" title="gboolean"><span class="n"><span class="pre">gboolean</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_IsPhoneFeatureAvailable</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.GSM_PhoneModel" title="GSM_PhoneModel"><span class="n"><span class="pre">GSM_PhoneModel</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">model</span></span>, <a class="reference internal" href="#c.GSM_Feature" title="GSM_Feature"><span class="n"><span class="pre">GSM_Feature</span></span></a><span class="w"> </span><span class="n"><span class="pre">feature</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_IsPhoneFeatureAvailable" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Checks whether phone supports features.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>model</strong> – Model information (you can get it using <a class="reference internal" href="#group__Info_1gadc32e8fcd4386331a0434bba52acb390"><span class="std std-ref">GSM_GetModelInfo</span></a>). </p></li>
-<li><p><strong>feature</strong> – GSM_Feature to check for.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>True if phone has defined this feature. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_AddPhoneFeature">
-<span class="target" id="group__Info_1gae90ab1b976c29f17db0c4492c4b521f6"></span><a class="reference internal" href="types.html#c.gboolean" title="gboolean"><span class="n"><span class="pre">gboolean</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_AddPhoneFeature</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.GSM_PhoneModel" title="GSM_PhoneModel"><span class="n"><span class="pre">GSM_PhoneModel</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">model</span></span>, <a class="reference internal" href="#c.GSM_Feature" title="GSM_Feature"><span class="n"><span class="pre">GSM_Feature</span></span></a><span class="w"> </span><span class="n"><span class="pre">feature</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_AddPhoneFeature" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Adds feature to phone configuration.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>model</strong> – Model information (you can get it using <a class="reference internal" href="#group__Info_1gadc32e8fcd4386331a0434bba52acb390"><span class="std std-ref">GSM_GetModelInfo</span></a>). </p></li>
-<li><p><strong>feature</strong> – GSM_Feature to check for.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>True if phone has defined this feature. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_GetManufacturer">
-<span class="target" id="group__Info_1ga80bfce0fe93ee05533e5b15d33512bf7"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_GetManufacturer</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_GetManufacturer" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Reads manufacturer from phone.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine pointer. </p></li>
-<li><p><strong>value</strong> – Pointer where to store manufacturer name</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_GetModel">
-<span class="target" id="group__Info_1ga4aac959d9baf0ef2ff5a1f7de34df71c"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_GetModel</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_GetModel" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Reads model from phone.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine pointer. </p></li>
-<li><p><strong>value</strong> – Pointer where to store model name</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_GetModelInfo">
-<span class="target" id="group__Info_1gadc32e8fcd4386331a0434bba52acb390"></span><a class="reference internal" href="#c.GSM_PhoneModel" title="GSM_PhoneModel"><span class="n"><span class="pre">GSM_PhoneModel</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">GSM_GetModelInfo</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_GetModelInfo" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Reads model info from state machine.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine pointer.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Pointer to phone information structure. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_GetFirmware">
-<span class="target" id="group__Info_1ga10ecdd81b151d0c682c6b361ca315ca9"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_GetFirmware</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">value</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">date</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">num</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_GetFirmware" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Reads firmware information from phone.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine pointer. </p></li>
-<li><p><strong>value</strong> – Pointer where to store revision text </p></li>
-<li><p><strong>date</strong> – Pointer where to store revision date </p></li>
-<li><p><strong>num</strong> – Pointer where to store revision number</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_GetIMEI">
-<span class="target" id="group__Info_1ga02f4772bf770b4af786f8a72a36cd9a2"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_GetIMEI</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_GetIMEI" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Reads IMEI/serial number from phone.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine pointer. </p></li>
-<li><p><strong>value</strong> – Pointer where to store IMEI, NULL to ignore.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_GetOriginalIMEI">
-<span class="target" id="group__Info_1ga28c2256936203e83e32dd7a92397f3c6"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_GetOriginalIMEI</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_GetOriginalIMEI" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Gets date and time from phone. </p>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_GetManufactureMonth">
-<span class="target" id="group__Info_1ga558b30a2970ac05ceb97160d50804ca8"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_GetManufactureMonth</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_GetManufactureMonth" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Gets month when device was manufactured. </p>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_GetProductCode">
-<span class="target" id="group__Info_1gafc21db8ffe606732c11035d1a0712e9f"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_GetProductCode</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_GetProductCode" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Gets product code of device. </p>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_GetHardware">
-<span class="target" id="group__Info_1ga0618bda84dedc8a8cda307faa23c9c41"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_GetHardware</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_GetHardware" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Gets hardware information about device. </p>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_GetPPM">
-<span class="target" id="group__Info_1ga0705e744afad29ca65425fc0c8aad583"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_GetPPM</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_GetPPM" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Gets PPM (Post Programmable Memory) info from phone (in other words for Nokia get, which language pack is in phone) </p>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_GetSIMIMSI">
-<span class="target" id="group__Info_1gaa8786740fa1f6969cf5ec6c163d1def7"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_GetSIMIMSI</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">IMSI</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_GetSIMIMSI" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Gets SIM IMSI from phone. </p>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_GetBatteryCharge">
-<span class="target" id="group__Info_1gaefbabd939720aaf519063f41c11f5f9e"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_GetBatteryCharge</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <a class="reference internal" href="#c.GSM_BatteryCharge" title="GSM_BatteryCharge"><span class="n"><span class="pre">GSM_BatteryCharge</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">bat</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_GetBatteryCharge" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Gets information about batery charge and phone charging state. </p>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_GetSignalQuality">
-<span class="target" id="group__Info_1gab5b2499f9311982938e537dda8bb77e4"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_GetSignalQuality</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <a class="reference internal" href="#c.GSM_SignalQuality" title="GSM_SignalQuality"><span class="n"><span class="pre">GSM_SignalQuality</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sig</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_GetSignalQuality" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Reads signal quality (strength and error rate). </p>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_GetNetworkInfo">
-<span class="target" id="group__Info_1gaeadd430d213d87e2fd1c3fd158aafe0b"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_GetNetworkInfo</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <a class="reference internal" href="#c.GSM_NetworkInfo" title="GSM_NetworkInfo"><span class="n"><span class="pre">GSM_NetworkInfo</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">netinfo</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_GetNetworkInfo" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Gets network information. </p>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_GetDisplayStatus">
-<span class="target" id="group__Info_1gaa18882d51cd3fc3b3ff5303d4bea0260"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_GetDisplayStatus</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <a class="reference internal" href="#c.GSM_DisplayFeatures" title="GSM_DisplayFeatures"><span class="n"><span class="pre">GSM_DisplayFeatures</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">features</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_GetDisplayStatus" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Acquired display status. </p>
-</dd></dl>
-
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_GetNetworkName” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_GetCountryName” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_FeatureToString” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_FeatureFromString” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_IsPhoneFeatureAvailable” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_AddPhoneFeature” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_GetManufacturer” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_GetModel” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_GetModelInfo” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_GetFirmware” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_GetIMEI” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_GetOriginalIMEI” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_GetManufactureMonth” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_GetProductCode” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_GetHardware” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_GetPPM” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_GetSIMIMSI” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_GetBatteryCharge” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_GetSignalQuality” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_GetNetworkInfo” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_GetDisplayStatus” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
 <dl class="c enum">
 <dt class="sig sig-object c" id="c.GSM_NetworkInfo_State">
 <span class="target" id="group__Info_1ga0acd672b5acb224c87653b5f118220c4"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_NetworkInfo_State</span></span></span><a class="headerlink" href="#c.GSM_NetworkInfo_State" title="Permalink to this definition"></a><br /></dt>

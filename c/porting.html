@@ -127,8 +127,8 @@ code, change it to appropriate variable name if it differs.</p>
 <ol class="arabic simple">
 <li><p>Use pointer to <a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><code class="xref c c-type docutils literal notranslate"><span class="pre">GSM_StateMachine</span></code></a> instead of it. API now do not expose
 this structure, so you will get compiler error. You should allocate
-this pointer by <a class="reference internal" href="statemachine.html#c.GSM_AllocStateMachine" title="GSM_AllocStateMachine"><code class="xref c c-func docutils literal notranslate"><span class="pre">GSM_AllocStateMachine()</span></code></a> and free by
-<a class="reference internal" href="statemachine.html#c.GSM_FreeStateMachine" title="GSM_FreeStateMachine"><code class="xref c c-func docutils literal notranslate"><span class="pre">GSM_FreeStateMachine()</span></code></a>.</p></li>
+this pointer by <code class="xref c c-func docutils literal notranslate"><span class="pre">GSM_AllocStateMachine()</span></code> and free by
+<code class="xref c c-func docutils literal notranslate"><span class="pre">GSM_FreeStateMachine()</span></code>.</p></li>
 <li><p>Change all phone functions from <code class="docutils literal notranslate"><span class="pre">sm.Phone.Functions-&gt;SomeFunction</span></code> to
 <code class="docutils literal notranslate"><span class="pre">GSM_SomeFunction</span></code>. Only functions which results were stored inside
 state machine structure have changed signature to include results of

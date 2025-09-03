@@ -127,7 +127,7 @@ public, so all you can define is a pointer to it:</p>
 </pre></div>
 </div>
 <p>You’ll want to check for errors from time to time.  Do it using a
-function something like this with help of <a class="reference internal" href="error.html#c.GSM_ErrorString" title="GSM_ErrorString"><code class="xref c c-func docutils literal notranslate"><span class="pre">GSM_ErrorString()</span></code></a>:</p>
+function something like this with help of <code class="xref c c-func docutils literal notranslate"><span class="pre">GSM_ErrorString()</span></code>:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">check_error</span><span class="p">(</span><span class="n">GSM_Error</span><span class="w"> </span><span class="n">err</span><span class="p">)</span>
 <span class="p">{</span>
 <span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">err</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">ERR_NONE</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
@@ -145,7 +145,7 @@ ASCII characters) by calling <a class="reference internal" href="misc.html#c.GSM
 </pre></div>
 </div>
 <p>You first need to allocate a state machine structure
-using <a class="reference internal" href="statemachine.html#c.GSM_AllocStateMachine" title="GSM_AllocStateMachine"><code class="xref c c-func docutils literal notranslate"><span class="pre">GSM_AllocStateMachine()</span></code></a>:</p>
+using <code class="xref c c-func docutils literal notranslate"><span class="pre">GSM_AllocStateMachine()</span></code>:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">state_machine</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GSM_AllocStateMachine</span><span class="p">();</span>
 </pre></div>
 </div>
@@ -169,19 +169,19 @@ using <a class="reference internal" href="statemachine.html#c.GSM_AllocStateMach
 </pre></div>
 </div>
 <p>OK, now initialise the connection (1 means number of replies you want to wait
-for in case of failure) by <a class="reference internal" href="statemachine.html#c.GSM_InitConnection" title="GSM_InitConnection"><code class="xref c c-func docutils literal notranslate"><span class="pre">GSM_InitConnection()</span></code></a>:</p>
+for in case of failure) by <code class="xref c c-func docutils literal notranslate"><span class="pre">GSM_InitConnection()</span></code>:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">error</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GSM_InitConnection</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
 <span class="n">check_error</span><span class="p">(</span><span class="n">error</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Now you are ready to communicate with the phone, for example you can read
-manufacturer name by <a class="reference internal" href="info.html#c.GSM_GetManufacturer" title="GSM_GetManufacturer"><code class="xref c c-func docutils literal notranslate"><span class="pre">GSM_GetManufacturer()</span></code></a>:</p>
+manufacturer name by <code class="xref c c-func docutils literal notranslate"><span class="pre">GSM_GetManufacturer()</span></code>:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">error</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GSM_GetManufacturer</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">buffer</span><span class="p">);</span>
 <span class="n">check_error</span><span class="p">(</span><span class="n">error</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>When you’re finished, you need to disconnect and free allocated memory
-using <a class="reference internal" href="statemachine.html#c.GSM_FreeStateMachine" title="GSM_FreeStateMachine"><code class="xref c c-func docutils literal notranslate"><span class="pre">GSM_FreeStateMachine()</span></code></a>:</p>
+using <code class="xref c c-func docutils literal notranslate"><span class="pre">GSM_FreeStateMachine()</span></code>:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">error</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GSM_TerminateConnection</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
 <span class="n">check_error</span><span class="p">(</span><span class="n">error</span><span class="p">);</span>
 
@@ -222,8 +222,8 @@ example:</p>
 <p>Gammu stores all strings internally in UCS-2-BE encoding (terminated by two
 zero bytes). This is used mostly for historical reasons and today the obvious
 choice would be <code class="docutils literal notranslate"><span class="pre">wchar_t</span></code>.  To work with these strings, various functions
-are provided (<a class="reference internal" href="unicode.html#c.UnicodeLength" title="UnicodeLength"><code class="xref c c-func docutils literal notranslate"><span class="pre">UnicodeLength()</span></code></a>, <a class="reference internal" href="unicode.html#c.DecodeUnicode" title="DecodeUnicode"><code class="xref c c-func docutils literal notranslate"><span class="pre">DecodeUnicode()</span></code></a>,
-<a class="reference internal" href="unicode.html#c.EncodeUnicode" title="EncodeUnicode"><code class="xref c c-func docutils literal notranslate"><span class="pre">EncodeUnicode()</span></code></a>, <a class="reference internal" href="unicode.html#c.CopyUnicodeString" title="CopyUnicodeString"><code class="xref c c-func docutils literal notranslate"><span class="pre">CopyUnicodeString()</span></code></a>, etc.).</p>
+are provided (<code class="xref c c-func docutils literal notranslate"><span class="pre">UnicodeLength()</span></code>, <code class="xref c c-func docutils literal notranslate"><span class="pre">DecodeUnicode()</span></code>,
+<code class="xref c c-func docutils literal notranslate"><span class="pre">EncodeUnicode()</span></code>, <code class="xref c c-func docutils literal notranslate"><span class="pre">CopyUnicodeString()</span></code>, etc.).</p>
 <p>For printing on console you should use:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">DecodeUnicodeConsole</span><span class="p">(</span><span class="n">unicode_string</span><span class="p">));</span>
 </pre></div>
@@ -259,7 +259,7 @@ Windows.</p>
 <section id="waiting-for-incoming-events">
 <h2>Waiting for incoming events<a class="headerlink" href="#waiting-for-incoming-events" title="Permalink to this heading"></a></h2>
 <p>If you expect some incoming events, you need to maintain communication with the
-phone. The best way it can be <a class="reference internal" href="statemachine.html#c.GSM_ReadDevice" title="GSM_ReadDevice"><code class="xref c c-func docutils literal notranslate"><span class="pre">GSM_ReadDevice()</span></code></a>. For example you can use
+phone. The best way it can be <code class="xref c c-func docutils literal notranslate"><span class="pre">GSM_ReadDevice()</span></code>. For example you can use
 following busy loop:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">gshutdown</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="n">GSM_ReadDevice</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">TRUE</span><span class="p">);</span>

@@ -121,7 +121,7 @@ storage will be sent.</p>
 <p>Creating of messages to send heavily depends on service backend you use. Most
 of them support <a class="reference internal" href="inject.html#gammu-smsd-inject"><span class="std std-ref">gammu-smsd-inject</span></a>, which can be used to construct
 the message, or you can just insert message manually to the backend storage.</p>
-<p>Alternatively you can use <a class="reference internal" href="../c/smsd.html#c.SMSD_InjectSMS" title="SMSD_InjectSMS"><code class="xref c c-func docutils literal notranslate"><span class="pre">SMSD_InjectSMS()</span></code></a> (from C) or using
+<p>Alternatively you can use <code class="xref c c-func docutils literal notranslate"><span class="pre">SMSD_InjectSMS()</span></code> (from C) or using
 <a class="reference internal" href="../python/smsd.html#gammu.smsd.SMSD.InjectSMS" title="gammu.smsd.SMSD.InjectSMS"><code class="xref py py-meth docutils literal notranslate"><span class="pre">gammu.smsd.SMSD.InjectSMS()</span></code></a> (from Python).</p>
 </section>
 <section id="notification-about-received-messages">
@@ -134,7 +134,7 @@ your own program to do any message processing, see <a class="reference internal"
 <p>You can use <a class="reference internal" href="monitor.html#gammu-smsd-monitor"><span class="std std-ref">gammu-smsd-monitor</span></a> to monitor status of SMSD. It uses
 shared memory segment to get current status of running SMSD.</p>
 <p>Alternatively you can get the same functionality from libGammu using
-<a class="reference internal" href="../c/smsd.html#c.SMSD_GetStatus" title="SMSD_GetStatus"><code class="xref c c-func docutils literal notranslate"><span class="pre">SMSD_GetStatus()</span></code></a> or python-gammu using
+<code class="xref c c-func docutils literal notranslate"><span class="pre">SMSD_GetStatus()</span></code> or python-gammu using
 <a class="reference internal" href="../python/smsd.html#gammu.smsd.SMSD.GetStatus" title="gammu.smsd.SMSD.GetStatus"><code class="xref py py-meth docutils literal notranslate"><span class="pre">gammu.smsd.SMSD.GetStatus()</span></code></a>.</p>
 </section>
 <section id="reporting-bugs">

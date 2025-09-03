@@ -127,191 +127,54 @@
              
   <section id="date-and-time">
 <h1>Date and time<a class="headerlink" href="#date-and-time" title="Permalink to this heading"></a></h1>
-<dl class="c function">
-<dt class="sig sig-object c" id="c.DayOfWeek">
-<span class="target" id="group__DateTime_1gae9ab2ace56f49ea42df31595d8573b37"></span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">DayOfWeek</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">year</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">month</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">day</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.DayOfWeek" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Returns string for current day of week.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>year</strong> – Year. </p></li>
-<li><p><strong>month</strong> – Month. </p></li>
-<li><p><strong>day</strong> – Day.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Pointer to static buffer containing day of week string. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_GetCurrentDateTime">
-<span class="target" id="group__DateTime_1ga5b7cdeb34e60ecf56f393d5fdbfcaa49"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_GetCurrentDateTime</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.GSM_DateTime" title="GSM_DateTime"><span class="n"><span class="pre">GSM_DateTime</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">Date</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_GetCurrentDateTime" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Returns current timestamp.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>Date</strong> – Storage for date time structure. </p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.Fill_Time_T">
-<span class="target" id="group__DateTime_1ga7481f05c39e3d5c7d9c0363e8a9c2579"></span><span class="n"><span class="pre">time_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Fill_Time_T</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.GSM_DateTime" title="GSM_DateTime"><span class="n"><span class="pre">GSM_DateTime</span></span></a><span class="w"> </span><span class="n"><span class="pre">DT</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.Fill_Time_T" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Converts <a class="reference internal" href="#structGSM__DateTime"><span class="std std-ref">GSM_DateTime</span></a> to time_t.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>DT</strong> – Input timestamp.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>time_t value. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_GetLocalTimezoneOffset">
-<span class="target" id="group__DateTime_1ga8f86cb1a4f49397a8676f5ebb0dd5107"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_GetLocalTimezoneOffset</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">void</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_GetLocalTimezoneOffset" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Returns the local timezone offset in seconds. For example 7200 for CEST.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Timezone offset seconds. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.Fill_GSM_DateTime">
-<span class="target" id="group__DateTime_1gaf33a905e392068b5ecb9a1791e11bc44"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Fill_GSM_DateTime</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.GSM_DateTime" title="GSM_DateTime"><span class="n"><span class="pre">GSM_DateTime</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">Date</span></span>, <span class="n"><span class="pre">time_t</span></span><span class="w"> </span><span class="n"><span class="pre">timet</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.Fill_GSM_DateTime" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Converts time_t to gammu <a class="reference internal" href="#structGSM__DateTime"><span class="std std-ref">GSM_DateTime</span></a> structure.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>Date</strong> – Storage for date. </p></li>
-<li><p><strong>timet</strong> – Input date. </p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_DateTimeFromTimestamp">
-<span class="target" id="group__DateTime_1ga2d6ad1f29e7e974ecee0f32f9e88253c"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_DateTimeFromTimestamp</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.GSM_DateTime" title="GSM_DateTime"><span class="n"><span class="pre">GSM_DateTime</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">Date</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">str</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_DateTimeFromTimestamp" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Converts string (seconds since epoch) to gammu <a class="reference internal" href="#structGSM__DateTime"><span class="std std-ref">GSM_DateTime</span></a> structure.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>Date</strong> – Storage for date. </p></li>
-<li><p><strong>str</strong> – Input date. </p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.OSDateTime">
-<span class="target" id="group__DateTime_1ga543305e499b850d9c99b3173e8ee0da0"></span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">OSDateTime</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.GSM_DateTime" title="GSM_DateTime"><span class="n"><span class="pre">GSM_DateTime</span></span></a><span class="w"> </span><span class="n"><span class="pre">dt</span></span>, <a class="reference internal" href="types.html#c.gboolean" title="gboolean"><span class="n"><span class="pre">gboolean</span></span></a><span class="w"> </span><span class="n"><span class="pre">TimeZone</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.OSDateTime" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Converts timestamp to string according to OS settings.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>dt</strong> – Input timestamp. </p></li>
-<li><p><strong>TimeZone</strong> – Whether to include time zone.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Pointer to static buffer containing string. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.OSDate">
-<span class="target" id="group__DateTime_1ga3e00bce8f943bb0c800956db69622ce3"></span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">OSDate</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.GSM_DateTime" title="GSM_DateTime"><span class="n"><span class="pre">GSM_DateTime</span></span></a><span class="w"> </span><span class="n"><span class="pre">dt</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.OSDate" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Converts date from timestamp to string according to OS settings.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>dt</strong> – Input timestamp.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Pointer to static buffer containing string. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.CheckDate">
-<span class="target" id="group__DateTime_1ga584f1825e657f3f3797b43355ac9d9b3"></span><a class="reference internal" href="types.html#c.gboolean" title="gboolean"><span class="n"><span class="pre">gboolean</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">CheckDate</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.GSM_DateTime" title="GSM_DateTime"><span class="n"><span class="pre">GSM_DateTime</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">date</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.CheckDate" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Checks whether date is valid. This does not check time, see <a class="reference internal" href="#group__DateTime_1ga3e576808ca9767d2b464bc86805960b5"><span class="std std-ref">CheckTime</span></a> for this.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>date</strong> – Structure where to check date.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>True if date is correct. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.CheckTime">
-<span class="target" id="group__DateTime_1ga3e576808ca9767d2b464bc86805960b5"></span><a class="reference internal" href="types.html#c.gboolean" title="gboolean"><span class="n"><span class="pre">gboolean</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">CheckTime</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.GSM_DateTime" title="GSM_DateTime"><span class="n"><span class="pre">GSM_DateTime</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">date</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.CheckTime" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Checks whether time is valid. This does not check date, see <a class="reference internal" href="#group__DateTime_1ga584f1825e657f3f3797b43355ac9d9b3"><span class="std std-ref">CheckDate</span></a> for this.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>date</strong> – Structure where to check time.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>True if time is correct. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_GetDateTime">
-<span class="target" id="group__Category_1gaa7570b1688ae60c5df3a629d07de3944"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_GetDateTime</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <a class="reference internal" href="#c.GSM_DateTime" title="GSM_DateTime"><span class="n"><span class="pre">GSM_DateTime</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">date_time</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_GetDateTime" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Reads date and time from phone.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine pointer. </p></li>
-<li><p><strong>date_time</strong> – Storage for date.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_SetDateTime">
-<span class="target" id="group__Category_1gaa9f62dcfb9ff579dca4489cc6ff6f856"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_SetDateTime</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <a class="reference internal" href="#c.GSM_DateTime" title="GSM_DateTime"><span class="n"><span class="pre">GSM_DateTime</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">date_time</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_SetDateTime" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Sets date and time in phone.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine pointer. </p></li>
-<li><p><strong>date_time</strong> – Date to set.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code </p>
-</dd>
-</dl>
-</dd></dl>
-
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “DayOfWeek” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_GetCurrentDateTime” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “Fill_Time_T” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_GetLocalTimezoneOffset” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “Fill_GSM_DateTime” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_DateTimeFromTimestamp” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “OSDateTime” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “OSDate” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “CheckDate” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “CheckTime” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_GetDateTime” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_SetDateTime” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
 <dl class="c struct">
 <dt class="sig sig-object c" id="c.GSM_DateTime">
 <span class="target" id="structGSM__DateTime"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_DateTime</span></span></span><a class="headerlink" href="#c.GSM_DateTime" title="Permalink to this definition"></a><br /></dt>

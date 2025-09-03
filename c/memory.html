@@ -143,234 +143,58 @@
 </dl>
 </dd></dl>
 
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_GetMemoryStatus">
-<span class="target" id="group__Memory_1ga145a1156190ea04a1f56e5c73a54a3d5"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_GetMemoryStatus</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <a class="reference internal" href="#c.GSM_MemoryStatus" title="GSM_MemoryStatus"><span class="n"><span class="pre">GSM_MemoryStatus</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">status</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_GetMemoryStatus" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Gets memory (phonebooks or calls) status (eg. number of used and free entries).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine pointer. </p></li>
-<li><p><strong>status</strong> – Storage for status information, MemoryType has to be set.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_GetMemory">
-<span class="target" id="group__Memory_1ga31a30715b54f37896bdca2223df7d3ce"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_GetMemory</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <a class="reference internal" href="#c.GSM_MemoryEntry" title="GSM_MemoryEntry"><span class="n"><span class="pre">GSM_MemoryEntry</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">entry</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_GetMemory" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Reads entry from memory (phonebooks or calls). Which entry should be read is defined in entry.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine pointer. </p></li>
-<li><p><strong>entry</strong> – Storage for retrieved entry, MemoryType and Location has to be set.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_GetNextMemory">
-<span class="target" id="group__Memory_1ga517e66d31e7ad9e0058da6df823d0703"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_GetNextMemory</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <a class="reference internal" href="#c.GSM_MemoryEntry" title="GSM_MemoryEntry"><span class="n"><span class="pre">GSM_MemoryEntry</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">entry</span></span>, <a class="reference internal" href="types.html#c.gboolean" title="gboolean"><span class="n"><span class="pre">gboolean</span></span></a><span class="w"> </span><span class="n"><span class="pre">start</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_GetNextMemory" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Reads entry from memory (phonebooks or calls). Which entry should be read is defined in entry. This can be easily used for reading all entries.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine pointer. </p></li>
-<li><p><strong>entry</strong> – Storage for retrieved entry. MemoryType has to be set for first call (with start set to TRUE), for subsequent calls Location has to stay intact from previous reading. </p></li>
-<li><p><strong>start</strong> – Whether we should start from beginning.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_SetMemory">
-<span class="target" id="group__Memory_1gaeb08d144ac1b695b00f46102df6dda96"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_SetMemory</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <a class="reference internal" href="#c.GSM_MemoryEntry" title="GSM_MemoryEntry"><span class="n"><span class="pre">GSM_MemoryEntry</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">entry</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_SetMemory" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Sets memory (phonebooks or calls) entry.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine pointer. </p></li>
-<li><p><strong>entry</strong> – Entry to set, Location and MemoryType has to be set.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_AddMemory">
-<span class="target" id="group__Memory_1ga81c4c549acd5879206f04c5e15ae279a"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_AddMemory</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <a class="reference internal" href="#c.GSM_MemoryEntry" title="GSM_MemoryEntry"><span class="n"><span class="pre">GSM_MemoryEntry</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">entry</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_AddMemory" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Adds memory (phonebooks or calls) entry.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine pointer. </p></li>
-<li><p><strong>entry</strong> – Entry to add, Location is ignored, MemoryType has to be set.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_DeleteMemory">
-<span class="target" id="group__Memory_1gae1a656293f043e897fa130b7efe1bff3"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_DeleteMemory</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <a class="reference internal" href="#c.GSM_MemoryEntry" title="GSM_MemoryEntry"><span class="n"><span class="pre">GSM_MemoryEntry</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">entry</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_DeleteMemory" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Deletes memory (phonebooks or calls) entry.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine pointer. </p></li>
-<li><p><strong>entry</strong> – Entry to delete, Location and MemoryType has to be set.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_DeleteAllMemory">
-<span class="target" id="group__Memory_1gaa9bbae079304374cf0182a70e0931f8f"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_DeleteAllMemory</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <a class="reference internal" href="#c.GSM_MemoryType" title="GSM_MemoryType"><span class="n"><span class="pre">GSM_MemoryType</span></span></a><span class="w"> </span><span class="n"><span class="pre">MemoryType</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_DeleteAllMemory" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Deletes all memory (phonebooks or calls) entries of specified type.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine pointer. </p></li>
-<li><p><strong>MemoryType</strong> – Where to delete all entries.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_GetSpeedDial">
-<span class="target" id="group__Memory_1gab60bb85031c604889182e9f92e596dc3"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_GetSpeedDial</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <a class="reference internal" href="#c.GSM_SpeedDial" title="GSM_SpeedDial"><span class="n"><span class="pre">GSM_SpeedDial</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">Speed</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_GetSpeedDial" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Gets speed dial.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine pointer. </p></li>
-<li><p><strong>Speed</strong> – Storage for speed dial, Location has to be set.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_SetSpeedDial">
-<span class="target" id="group__Memory_1gaddb5f9b58e9f414d2c1174968cbc1044"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_SetSpeedDial</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="statemachine.html#c.GSM_StateMachine" title="GSM_StateMachine"><span class="n"><span class="pre">GSM_StateMachine</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">s</span></span>, <a class="reference internal" href="#c.GSM_SpeedDial" title="GSM_SpeedDial"><span class="n"><span class="pre">GSM_SpeedDial</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">Speed</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_SetSpeedDial" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Sets speed dial.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – State machine pointer. </p></li>
-<li><p><strong>Speed</strong> – Sspeed dial to set.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_PhonebookGetEntryName">
-<span class="target" id="group__Memory_1ga4a0fc699fb94cd155f0c5d00cf46d182"></span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">GSM_PhonebookGetEntryName</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.GSM_MemoryEntry" title="GSM_MemoryEntry"><span class="n"><span class="pre">GSM_MemoryEntry</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">entry</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_PhonebookGetEntryName" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Returns name of entry. It might be possibly concatenated from first and last names.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>entry</strong> – Entry to process.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Static unicode string containing name. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_PhonebookFindDefaultNameNumberGroup">
-<span class="target" id="group__Memory_1gaf9be792548d0a5626fbb2a6f5ab188cc"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_PhonebookFindDefaultNameNumberGroup</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.GSM_MemoryEntry" title="GSM_MemoryEntry"><span class="n"><span class="pre">GSM_MemoryEntry</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">entry</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">Name</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">Number</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">Group</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_PhonebookFindDefaultNameNumberGroup" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Finds default name, number and group for entry.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>entry</strong> – Entry to process. </p></li>
-<li><p><strong>Name</strong> – Output index of name. </p></li>
-<li><p><strong>Number</strong> – Output index of number. </p></li>
-<li><p><strong>Group</strong> – Output index of group. </p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_EncodeVCARD">
-<span class="target" id="group__Memory_1ga4622f269a8c0c6be7fd6a1874582bf61"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_EncodeVCARD</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="debug.html#c.GSM_Debug_Info" title="GSM_Debug_Info"><span class="n"><span class="pre">GSM_Debug_Info</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">di</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">Buffer</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">buff_len</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">Pos</span></span>, <a class="reference internal" href="#c.GSM_MemoryEntry" title="GSM_MemoryEntry"><span class="n"><span class="pre">GSM_MemoryEntry</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">pbk</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="types.html#c.gboolean" title="gboolean"><span class="n"><span class="pre">gboolean</span></span></a><span class="w"> </span><span class="n"><span class="pre">header</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.GSM_VCardVersion" title="GSM_VCardVersion"><span class="n"><span class="pre">GSM_VCardVersion</span></span></a><span class="w"> </span><span class="n"><span class="pre">Version</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_EncodeVCARD" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Encodes memory entry to vCard.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>di</strong> – Pointer to debugging description. </p></li>
-<li><p><strong>Buffer</strong> – <strong>[out]</strong> Buffer to store vCard text. </p></li>
-<li><p><strong>buff_len</strong> – <strong>[in]</strong> Size of output buffer. </p></li>
-<li><p><strong>Pos</strong> – <strong>[inout]</strong> Position in output buffer. </p></li>
-<li><p><strong>pbk</strong> – <strong>[inout]</strong> Phonebook data, AddError will be set on non converted entries. </p></li>
-<li><p><strong>header</strong> – <strong>[in]</strong> Whether to include vCard header in output. </p></li>
-<li><p><strong>Version</strong> – <strong>[in]</strong> What vCard version to create.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.GSM_DecodeVCARD">
-<span class="target" id="group__Memory_1gada934dd19e3c8562b675ec4ff188943e"></span><a class="reference internal" href="error.html#c.GSM_Error" title="GSM_Error"><span class="n"><span class="pre">GSM_Error</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_DecodeVCARD</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="debug.html#c.GSM_Debug_Info" title="GSM_Debug_Info"><span class="n"><span class="pre">GSM_Debug_Info</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">di</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">Buffer</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">Pos</span></span>, <a class="reference internal" href="#c.GSM_MemoryEntry" title="GSM_MemoryEntry"><span class="n"><span class="pre">GSM_MemoryEntry</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">Pbk</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.GSM_VCardVersion" title="GSM_VCardVersion"><span class="n"><span class="pre">GSM_VCardVersion</span></span></a><span class="w"> </span><span class="n"><span class="pre">Version</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_DecodeVCARD" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Decodes memory entry from vCard.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>di</strong> – Pointer to debugging description. </p></li>
-<li><p><strong>Buffer</strong> – <strong>[in]</strong> Buffer to readCard text. </p></li>
-<li><p><strong>Pos</strong> – <strong>[inout]</strong> Position in output buffer. </p></li>
-<li><p><strong>Pbk</strong> – <strong>[out]</strong> Phonebook data read from vCard. </p></li>
-<li><p><strong>Version</strong> – <strong>[in]</strong> What vCard version to parse.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error code. </p>
-</dd>
-</dl>
-</dd></dl>
-
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_GetMemoryStatus” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_GetMemory” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_GetNextMemory” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_SetMemory” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_AddMemory” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_DeleteMemory” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_DeleteAllMemory” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_GetSpeedDial” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_SetSpeedDial” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_PhonebookGetEntryName” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_PhonebookFindDefaultNameNumberGroup” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_EncodeVCARD” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “GSM_DecodeVCARD” in doxygen xml output for project “api” from directory: /home/runner/work/gammu/gammu/build-configure/gammu-doc/xml</p>
+</div>
 <dl class="c function">
 <dt class="sig sig-object c" id="c.GSM_FreeMemoryEntry">
 <span class="target" id="gammu-memory_8h_1a9d544e416a543f71b2bcff66278a5cb2"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GSM_FreeMemoryEntry</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.GSM_MemoryEntry" title="GSM_MemoryEntry"><span class="n"><span class="pre">GSM_MemoryEntry</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">Entry</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.GSM_FreeMemoryEntry" title="Permalink to this definition"></a><br /></dt>
