@@ -57,7 +57,10 @@
 #define RSS_STABLE_STRING "Gammu stable version "
 #define RSS_TESTING_STRING "Gammu test version "
 
+gboolean GlobalConfig_JSON = FALSE;
+
 static void ListNetworks(int argc, char *argv[])
+
 {
 	int i = 0;
 	const char *country_code = NULL;
@@ -1074,6 +1077,9 @@ int main(int argc, char *argv[])
 		    strcasecmp(argv[i], "-h") == 0 ||
 		    strcasecmp(argv[i], "help") == 0) {
 			help = TRUE;
+			start++;
+		} else if (strcasecmp(argv[i], "--json") == 0) {
+			GlobalConfig_JSON = TRUE;
 			start++;
 		} else if ((strcasecmp(argv[i], "--config") == 0 ||
 		    strcasecmp(argv[i], "-c") == 0) &&
