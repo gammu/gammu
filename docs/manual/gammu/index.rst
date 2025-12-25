@@ -44,6 +44,10 @@ Parameters before command configure gammu behaviour:
 
    file for logging debug messages
 
+.. option:: --json
+
+   switches output to JSON format (currently supported by :option:`identify` command)
+
 
 Call commands
 -------------
@@ -1473,6 +1477,8 @@ Phone information commands
 .. option:: identify
 
     Show the most important phone data.
+
+    You can switch output to JSON using :option:`--json`.
 
 .. option:: monitor [times]
 
