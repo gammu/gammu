@@ -1,7 +1,7 @@
 <?php
 /**
  * Configuration file for autoreply.php
- * 
+ *
  * Copy this file to config.php and fill in your database credentials.
  * The config.php file should be added to .gitignore to prevent accidental commits.
  */
