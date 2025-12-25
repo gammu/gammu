@@ -1,5 +1,5 @@
 # cmake <http://www.cmake.org> test file for SMSD
-# Copyright (c) 2007 - 2017 Michal Cihar
+# Copyright (c) 2007 - 2018 Michal Cihar
 # vim: expandtab sw=4 ts=4 sts=4 ft=cmake:
 
 if (WITH_BACKUP)
@@ -27,6 +27,10 @@ if (WITH_BACKUP)
 
         add_test(NAME "smsd-inject-${_driver}" COMMAND gammu-smsd-inject -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/.smsdrc" TEXT 123465 -text "Lorem ipsum.")
         set_tests_properties("smsd-inject-${_driver}" PROPERTIES
+            FAIL_REGULAR_EXPRESSION "DBI error;SQL failed;ODBC diagnostics"
+            )
+        add_test(NAME "smsd-inject-ussd-${_driver}" COMMAND gammu-smsd-inject -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/.smsdrc" USSD "*127*1#")
+        set_tests_properties("smsd-inject-ussd-${_driver}" PROPERTIES
             FAIL_REGULAR_EXPRESSION "DBI error;SQL failed;ODBC diagnostics"
             )
         add_test(NAME "smsd-inject-long-${_driver}" COMMAND gammu-smsd-inject -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/.smsdrc" EMS 123465 -text "Mqukqirip ya konej eqniu rejropocejor hugiygydewl tfej nrupxujob xuemymiyliralj. Te tvyjuh qaxumur ibewfoiws zuucoz tdygu gelum L ejqigqesykl kya jdytbezy ucixh mqudemiywty nzihriduwlo yxylyujvghpv. Tiekoohunl dloijoda qelejocewu bfe bxuahadempivog. Ev mfegijox vleinley ewig qihopqu fafozmuvipc ernogtipeq acuoclzyv m poujhyerbjpipc vyq. Xty ljietenea ypep ti dik ela jozmyihipup xopujoqyjaw jojyuhietry mexykpih ysec yum zyhniet dezjiyup nuyryfsohnir Zeyoekemdoj tayqgh. Xvujuxy gysun dahyfecpetk uziyecz jogovxi fbypexsotn exymnomeatd ayiostiyvoxfy iqilo redvejf gfeypavlvaqu vfyjonytbug rgyxn siuybmulijub bxu xewz qisubevumxyzk ufuylehyzc. Nse xobq dfolizygqysj t bvowsyhyhyemim ovutpapeaempye giuuwbib.")

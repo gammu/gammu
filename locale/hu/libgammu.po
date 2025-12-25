@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-10-11 08:16+0200\n"
+"POT-Creation-Date: 2019-02-14 14:57+0100\n"
 "PO-Revision-Date: 2012-03-28 10:05+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: none\n"
@@ -35,11 +35,15 @@ msgid "Error opening device, it doesn't exist."
 msgstr "Az eszköz nem nyitható meg, mert nem létezik."
 
 #: libgammu/gsmcomon.c:88
-msgid "Error opening device, it is already opened by other application."
+#, fuzzy
+#| msgid "Error opening device, it is already opened by other application."
+msgid "Error opening device, it is already opened by another app."
 msgstr "Az eszköz nem nyitható meg, mert egy másik alkalmazás használja."
 
 #: libgammu/gsmcomon.c:89
-msgid "Error opening device, you don't have permissions."
+#, fuzzy
+#| msgid "Error opening device, you don't have permissions."
+msgid "Error opening device, you don't have the required permission."
 msgstr "Az eszköz nem nyitható meg, mert engedély szükséges hozzá."
 
 #: libgammu/gsmcomon.c:90
@@ -58,7 +62,9 @@ msgid "Error setting device DTR or RTS."
 msgstr ""
 
 #: libgammu/gsmcomon.c:93
-msgid "Error setting device speed. Maybe speed not supported."
+#, fuzzy
+#| msgid "Error setting device speed. Maybe speed not supported."
+msgid "Error setting device speed. Maybe the speed is not supported?"
 msgstr ""
 "Hiba az eszköz sebességének megadásakor. Lehet, hogy ez a sebesség nem "
 "támogatott."
@@ -77,7 +83,9 @@ msgid "Can't set parity on the device."
 msgstr "Nem sikerült beállítani az eszköz paritását."
 
 #: libgammu/gsmcomon.c:97
-msgid "No response in specified timeout. Probably phone not connected."
+#, fuzzy
+#| msgid "No response in specified timeout. Probably phone not connected."
+msgid "No response in specified timeout. Probably the phone is not connected."
 msgstr ""
 "Nincs válasz a megadott időn belül. Lehet, hogy a telefon nincs "
 "csatlakoztatva."
@@ -85,19 +93,19 @@ msgstr ""
 #: libgammu/gsmcomon.c:98
 msgid ""
 "Frame not requested right now. See <https://wammu.eu/support/bugs/> for "
-"information how to report it."
+"information on how to report it."
 msgstr ""
 
 #: libgammu/gsmcomon.c:99
 msgid ""
 "Unknown response from phone. See <https://wammu.eu/support/bugs/> for "
-"information how to report it."
+"information on how to report it."
 msgstr ""
 
 #: libgammu/gsmcomon.c:100
 msgid ""
-"Unknown frame. See <https://wammu.eu/support/bugs/> for information how to "
-"report it."
+"Unknown frame. See <https://wammu.eu/support/bugs/> for information on how "
+"to report it."
 msgstr ""
 
 #: libgammu/gsmcomon.c:101
@@ -110,7 +118,7 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:103
 msgid ""
-"Some functions not available for your system (disabled in config or not "
+"Some functions are not available for your system (disabled in config or not "
 "implemented)."
 msgstr ""
 
@@ -119,7 +127,7 @@ msgid "Function not supported by phone."
 msgstr ""
 
 #: libgammu/gsmcomon.c:105
-msgid "Entry is empty."
+msgid "Empty entry."
 msgstr ""
 
 #: libgammu/gsmcomon.c:106
@@ -132,7 +140,7 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:108
 #, fuzzy
-msgid "Functionality not implemented. You are welcome to help authors with it."
+msgid "Functionality not implemented. You are welcome to help."
 msgstr ""
 "Ez a funkció az Ön telefonjához még nem készült el. Ha segíteni kíván a "
 "funkció elkészítésében, kérjük vegye fel a kapcsolatot a program készítőivel."
@@ -151,7 +159,7 @@ msgid "Can not open specified file."
 msgstr "A fájl nem hozható létre."
 
 #: libgammu/gsmcomon.c:112
-msgid "More memory required..."
+msgid "More memory required…"
 msgstr ""
 
 #: libgammu/gsmcomon.c:113
@@ -160,16 +168,17 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:114
 msgid ""
-"No SMSC number given. Provide it manually or use the one configured in phone."
+"No SMSC number given. Provide it manually or use the one configured on the "
+"phone."
 msgstr ""
 
 #: libgammu/gsmcomon.c:115
-msgid "You're inside phone menu (maybe editing?). Leave it and try again."
+msgid "You're inside the phone menu (maybe editing?). Exit it and try again."
 msgstr ""
 
 #: libgammu/gsmcomon.c:116
 #, fuzzy
-msgid "Phone is not connected."
+msgid "Phone not connected."
 msgstr "Telefoninformáció"
 
 #: libgammu/gsmcomon.c:117
@@ -182,8 +191,9 @@ msgstr ""
 "funkció elkészítésében, kérjük vegye fel a kapcsolatot a program készítőivel."
 
 #: libgammu/gsmcomon.c:118
-msgid "Phone is disabled and connected to charger."
-msgstr ""
+#, fuzzy
+msgid "Phone disabled and connected to charger."
+msgstr "Telefoninformáció"
 
 #: libgammu/gsmcomon.c:119
 msgid "File format not supported by Gammu."
@@ -196,8 +206,11 @@ msgid ""
 msgstr ""
 
 #: libgammu/gsmcomon.c:121
-msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
+#, fuzzy
+#| msgid "Communication canceled by phone, did you press cancel on phone?"
+msgid "Transfer canceled by phone, maybe you pressed \"Cancel\" on the phone."
 msgstr ""
+"A kapcsolatot a telefon megszakította, megnyomta a mégse gombot a telefonon?"
 
 #: libgammu/gsmcomon.c:122
 msgid "Phone module need to send another answer frame."
@@ -216,7 +229,7 @@ msgid "Invalid date or time specified."
 msgstr ""
 
 #: libgammu/gsmcomon.c:126
-msgid "Phone memory error, maybe it is read only."
+msgid "Phone memory error, maybe it is read only?"
 msgstr ""
 
 #: libgammu/gsmcomon.c:127
@@ -232,11 +245,11 @@ msgid "File with specified name doesn't exist."
 msgstr ""
 
 #: libgammu/gsmcomon.c:130
-msgid "You have to give folder name and not file name."
+msgid "You have to supply folder name and not filename."
 msgstr ""
 
 #: libgammu/gsmcomon.c:131
-msgid "You have to give file name and not folder name."
+msgid "You have to supply filename and not folder name."
 msgstr ""
 
 #: libgammu/gsmcomon.c:132
@@ -244,7 +257,9 @@ msgid "Can not access SIM card."
 msgstr ""
 
 #: libgammu/gsmcomon.c:133
-msgid "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
+msgid ""
+"Wrong GNAPPLET version in use on phone. Use version from currently used "
+"Gammu."
 msgstr ""
 
 #: libgammu/gsmcomon.c:134
@@ -256,7 +271,7 @@ msgid "Folder must be empty."
 msgstr ""
 
 #: libgammu/gsmcomon.c:136
-msgid "Data were converted."
+msgid "Data converted."
 msgstr ""
 
 #: libgammu/gsmcomon.c:137
@@ -377,7 +392,16 @@ msgstr "Kapcsolat tesztelése"
 msgid "Error in executing SQL query."
 msgstr ""
 
-#: libgammu/gsmcomon.c:195
+#: libgammu/gsmcomon.c:163
+msgid "The type of memory is not available or has been disabled."
+msgstr ""
+
+#: libgammu/gsmcomon.c:164
+#, fuzzy
+msgid "The operation cannot be performed."
+msgstr "Művelet végrehajtása folyamatban"
+
+#: libgammu/gsmcomon.c:197
 msgid "Unknown error description."
 msgstr ""
 

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSD-SQL" "7" "Jun 02, 2017" "1.38.4" "Gammu"
+.TH "GAMMU-SMSD-SQL" "7" "Oct 03, 2020" "1.42.0" "Gammu"
 .SH NAME
 gammu-smsd-sql \- gammu-smsd(1) backend using SQL abstraction layer to use any supported database as a message storage
 .
@@ -693,7 +693,8 @@ signal percent
 .INDENT 0.0
 .TP
 .B update_retries
-Update number of retries for outbox message.
+Update number of retries for outbox message. The interval can be configured
+by \fBRetryTimeout\fP\&.
 .INDENT 7.0
 .INDENT 3.5
 .sp

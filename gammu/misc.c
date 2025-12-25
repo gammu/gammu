@@ -20,7 +20,7 @@
 
 #include "../helper/formats.h"
 #include "../helper/printing.h"
-#include "../helper/string.h"
+#include "../libgammu/misc/string.h"
 #include "../helper/cmdline.h"
 
 #ifdef GSM_ENABLE_NOKIA_DCT3
@@ -203,7 +203,7 @@ GSM_Error GSM_PlayRingtone(GSM_Ringtone *ringtone)
 	GSM_Error 	error;
 
 	signal(SIGINT, interrupt);
-	printf("%s\n", _("Press Ctrl+C to break..."));
+	printf("%s\n", _("Press Ctrl+C to break…"));
 
 	for (i = 0; i < ringtone->NoteTone.NrCommands; i++) {
 		if (gshutdown) break;
@@ -523,8 +523,8 @@ void Monitor(int argc, char *argv[])
 	}
 
 	signal(SIGINT, interrupt);
-	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
-	printf("%s\n\n", _("Entering monitor mode..."));
+	fprintf(stderr, "%s\n", _("Press Ctrl+C to break…"));
+	printf("%s\n\n", _("Entering monitor mode…"));
 
 	GSM_Init(TRUE);
 
@@ -619,7 +619,7 @@ void Monitor(int argc, char *argv[])
 		printf("\n");
 	}
 
-	printf("%s\n", _("Leaving monitor mode..."));
+	printf("%s\n", _("Leaving monitor mode…"));
 
 	/* Report if we failed because of an error */
 	Print_Error(error);
@@ -1849,7 +1849,7 @@ void GetCategory(int argc, char *argv[])
 		if (error != ERR_EMPTY) Print_Error(error);
 
 		if (error == ERR_EMPTY) {
-			printf("%s\n", _("Entry is empty"));
+			printf("%s\n", _("Empty entry"));
 		} else {
 			printf(LISTFORMAT "\"%s\"\n\n", _("Name"),DecodeUnicodeConsole(Category.Name));
 		}
@@ -2258,7 +2258,7 @@ void GetFMStation(int argc, char *argv[])
 		printf(LISTFORMAT "%i\n", _("Location"), i);
 		switch (error) {
 		case ERR_EMPTY:
-			printf("%s\n", _("Entry is empty"));
+			printf("%s\n", _("Empty entry"));
 			break;
 		case ERR_NONE:
 			printf(LISTFORMAT "\"%s\"\n", _("Station name"), DecodeUnicodeConsole(Station.StationName));
@@ -2469,4 +2469,3 @@ void Install(int argc, char *argv[])
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:
  */
-

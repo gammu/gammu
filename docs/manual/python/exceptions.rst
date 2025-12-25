@@ -127,7 +127,7 @@
 .. exception:: gammu.ERR_EMPTY
 
     Exception corresponding to gammu error ERR_EMPTY.
-    Verbose error description: Entry is empty.
+    Verbose error description: Empty entry.
 
 .. exception:: gammu.ERR_EMPTYSMSC
 

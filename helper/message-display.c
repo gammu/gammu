@@ -232,6 +232,7 @@ void DisplaySingleSMSInfo(GSM_SMSMessage *sms, gboolean displaytext, gboolean di
 			printf("\n");
 			printf(LISTFORMAT "%s\n", _("Sent"), OSDateTime(sms->DateTime,TRUE));
 		}
+		FALLTHROUGH
 		/* No break. The only difference for SMS_Deliver and SMS_Submit is,
 		 * that SMS_Deliver contains additional data. We wrote them and then go
 		 * for data shared with SMS_Submit
@@ -570,4 +571,3 @@ GSM_Error DisplaySMSFrame(GSM_SMSMessage *SMS, GSM_StateMachine *sm)
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:
  */
-

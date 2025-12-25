@@ -306,7 +306,7 @@ GSM_Error GSM_EncodeURLFile(unsigned char *Buffer, size_t *Length, GSM_WAPBookma
 /* SNIFFS, specs somewhere in http://www.wapforum.org */
 void GSM_EncodeMMSIndicatorSMSText(unsigned char *Buffer, size_t *Length, GSM_MMSIndicator *Indicator)
 {
-	unsigned char 	buffer[200];
+	unsigned char 	buffer[1000];
 	int		i;
 
 
@@ -656,7 +656,7 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_Debug_Info *di, GSM_File *file, GSM_E
 			smfprintf(di, "  Message class     : ");
 			switch (file->Buffer[pos++]) {
 				case 0x80: smfprintf(di, "personal\n");	 break;
-				case 0x81: smfprintf(di, "advertisment\n");	 break;
+				case 0x81: smfprintf(di, "advertisement\n");	 break;
 				case 0x82: smfprintf(di, "informational\n"); break;
 				case 0x83: smfprintf(di, "auto\n");		 break;
 				default  : smfprintf(di, "unknown\n");	 break;

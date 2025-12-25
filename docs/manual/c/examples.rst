@@ -39,4 +39,3 @@ Custom configuration
 
 .. literalinclude:: ../../examples/custom-config.c
    :language: c
-

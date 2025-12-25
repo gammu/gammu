@@ -12,6 +12,7 @@
 
 #include "../helper/locales.h"
 
+#include "gammu-message.h"
 #include "common.h"
 #include "message.h"
 #include "memory.h"
@@ -24,7 +25,7 @@
 #include "../helper/memory-display.h"
 #include "../helper/message-cmdline.h"
 #include "../helper/printing.h"
-#include "../helper/string.h"
+#include "../libgammu/misc/string.h"
 #include "../helper/cmdline.h"
 
 volatile gboolean 			wasincomingsms 		= FALSE;
@@ -130,7 +131,7 @@ void GetUSSD(int argc UNUSED, char *argv[])
 	GSM_Init(TRUE);
 
 	signal(SIGINT, interrupt);
-	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
+	fprintf(stderr, "%s\n", _("Press Ctrl+C to break…"));
 	fflush(stderr);
 
 	GSM_SetIncomingUSSDCallback(gsm, IncomingUSSD2, NULL);
@@ -313,6 +314,7 @@ void DeleteSMS(int argc, char *argv[])
 	GSM_SMSMessage sms;
 	int start=0, stop=0, i=0;
 
+	memset(&sms, 0, sizeof(GSM_SMSMessage));
 	sms.Folder = GetInt(argv[2]);
 
 	GetStartStop(&start, &stop, 3, argc, argv);
@@ -602,7 +604,7 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 				GSM_SetSendSMSStatusCallback(gsm, SendSMSStatus, NULL);
 
 				signal(SIGINT, interrupt);
-				fprintf(stderr, "%s\n", _("If you want break, press Ctrl+C..."));
+				fprintf(stderr, "%s\n", _("If you want break, press Ctrl+C…"));
 				fflush(stderr);
 			}
 
@@ -627,7 +629,7 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 					SMSStatus = ERR_TIMEOUT;
 					error = GSM_SendSavedSMS(gsm, 0, sms->SMS[i].Location);
 					Print_Error(error);
-					printf("%s", _("....waiting for network answer"));
+					printf("%s", _("…waiting for network answer"));
 					fflush(stdout);
 
 					while (!gshutdown) {
@@ -642,7 +644,7 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 			break;
 		case SMS_Send:
 			signal(SIGINT, interrupt);
-			fprintf(stderr, "%s\n", _("If you want break, press Ctrl+C..."));
+			fprintf(stderr, "%s\n", _("If you want break, press Ctrl+C…"));
 			fflush(stderr);
 
 			GSM_SetSendSMSStatusCallback(gsm, SendSMSStatus, NULL);
@@ -653,7 +655,7 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 				SMSStatus = ERR_TIMEOUT;
 				error=GSM_SendSMS(gsm, &(sms->SMS[i]));
 				Print_Error(error);
-				printf("%s", _("....waiting for network answer"));
+				printf("%s", _("…waiting for network answer"));
 				fflush(stdout);
 
 				while (!gshutdown) {

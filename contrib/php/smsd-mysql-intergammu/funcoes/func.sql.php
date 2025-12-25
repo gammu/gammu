@@ -7,7 +7,7 @@
 class mysql {
 
  var $conn;
- 
+
 
  function mysql() {
 
@@ -25,7 +25,7 @@ class mysql {
  function fechar() {
 	mysql_close($this->conn);
  }
- 
+
  function count($query) {
 	$result = mysql_num_rows(mysql_query($query, $this->conn));
 	//$this->fechar();

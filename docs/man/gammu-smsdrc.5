@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU-SMSDRC" "5" "Jun 02, 2017" "1.38.4" "Gammu"
+.TH "GAMMU-SMSDRC" "5" "Oct 03, 2020" "1.42.0" "Gammu"
 .SH NAME
 gammu-smsdrc \- gammu-smsd(1) configuration file
 .
@@ -182,7 +182,7 @@ Default is to provide no logging.
 .INDENT 7.0
 .INDENT 3.5
 For logging to Windows Event Log, it is recommended to install Event Log
-source by invoking \fBgammu\-smsd \-e\fP (this is automatically done during
+source by invoking \fI\%gammu\-smsd \-e\fP (this is automatically done during
 installation of Gammu).
 .UNINDENT
 .UNINDENT
@@ -262,6 +262,16 @@ How many times will SMSD try to resend message if sending fails. This
 is tracked per message and currently supported only with SQL backends.
 .sp
 Default is 1.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B RetryTimeout
+How long to wait before resending failed message (needs to be enabled by
+\fI\%MaxRetries\fP).
+.sp
+Is used in \fBupdate_retries\fP\&.
+.sp
+Default is 600.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -491,6 +501,17 @@ Executes a program after sending message.
 .sp
 The program will receive optional parameter a message ID and environment
 with message details as described in gammu\-smsd\-run\&.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B RunOnIncomingCall
+New in version 1.38.5.
+
+.sp
+Executes a program after cancelling incoming call.
+.sp
+The program will receive a parameter with a phone number of the call.
+This requires \fI\%HangupCalls\fP to be enabled.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -763,7 +784,7 @@ Default is \fBunicode\fP\&.
 \fBNOTE:\fP
 .INDENT 7.0
 .INDENT 3.5
-In \fBdetail\fP format, all message parts are stored into signle file,
+In \fBdetail\fP format, all message parts are stored into single file,
 for all others each message part is saved separately.
 .UNINDENT
 .UNINDENT

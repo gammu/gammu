@@ -22,4 +22,3 @@ The configuration file then can look like:
     RunOnReceive = /usr/local/bin/process-sms
 
 .. seealso:: :ref:`gammu-smsdrc`
-

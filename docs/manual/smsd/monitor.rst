@@ -60,4 +60,3 @@ accepted on some platforms):
 .. option:: -L, --no-use-log
 
     Do not use logging as configured in config file (default).
-

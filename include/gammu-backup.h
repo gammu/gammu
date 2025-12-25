@@ -218,7 +218,7 @@ typedef struct {
 	/**
 	 * Name of program which created backup
 	 */
-	char Creator[80];
+	char Creator[512];
 	/**
 	 * Timestamp of backup
 	 */

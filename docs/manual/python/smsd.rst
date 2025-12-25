@@ -11,10 +11,11 @@
 
     SMSD main class, that is used for communication with phone.
 
-    You don't need to run the SMS daemon itself to control or ask it for
-    status, this can be also done on separately running instances. All you
+    You don't need to run the SMS daemon in the python script to control or ask it for
+    status, this can be also done on separately running instances (``gammu-smsd``). All you
     need to do for this is to give same configuration file as that instance is
     using.
+    For more infos look into :ref:`Gammu SMSD Overview <gammu-smsd-overview>`.
 
     :param Config: Path to SMSD configuration file.
     :type Config: string

@@ -28,9 +28,9 @@ help of many contributors.
     :alt: Coverity scan
     :target: https://scan.coverity.com/projects/2890
 
-.. image:: https://img.shields.io/gratipay/Gammu.svg
-    :alt: Gratipay
-    :target: https://gratipay.com/Gammu/
+.. image:: https://img.shields.io/liberapay/receives/Gammu.svg
+    :alt: Liberapay
+    :target: https://liberapay.com/Gammu/donate
 
 .. image:: https://www.bountysource.com/badge/team?team_id=23177&style=bounties_received
     :alt: Bountysource

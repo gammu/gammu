@@ -14,7 +14,7 @@
 #include "../../../libgammu/phone/pfunc.h"
 #include "../../../libgammu/service/gsmnet.h"
 #include "../../gammu.h"
-#include "../../../helper/string.h"
+#include "../../../libgammu/misc/string.h"
 #include "../../../helper/cmdline.h"
 
 extern GSM_Reply_Function UserReplyFunctions3[];

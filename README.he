@@ -1,0 +1,56 @@
+Gammu כלי ניהול לטלפונים ניידים
+===============================
+
+Gammu היא ספרייה וכלי שורת פקודה לטלפונים ניידים. החבילה מופצת תחת תנאי
+הרשיון GNU GPL בגרסה 2.
+
+הכול התחיל אצל Marcin Wiacek ואנשים נוספים. הקוד היה מבוסס במקור על המיזמים
+Gnokii <https://www.gnokii.org/> ולאחר מכן על MyGnokii
+<http://www.mwiacek.com/>.‏ Gammu הייתה הגרסה הקודמת (עד 0.58) שנקראה
+MyGnokii2.
+
+נכון להיום הובלת המיזם מוטלת על Michal Cihar ‏<michal@cihar.com> בעזרתם של
+תורמים רבים.
+
+.. image:: https://travis-ci.org/gammu/gammu.svg?branch=master
+    :alt: מצב בנייה :target: https://travis-ci.org/gammu/gammu
+
+.. image:: https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/master?svg=true
+    :alt: מצב הבנייה ל־Windows :target:
+    https://ci.appveyor.com/project/nijel/gammu/branch/master
+
+.. image:: https://hosted.weblate.org/widgets/gammu/-/svg-badge.svg
+    :alt: מצב התרגום :target:
+    https://hosted.weblate.org/engage/gammu/?utm_source=widget
+
+.. image:: https://scan.coverity.com/projects/2890/badge.svg?flat=1
+    :alt: בדיקת כיסוי :target: https://scan.coverity.com/projects/2890
+
+.. image:: https://img.shields.io/liberapay/receives/Gammu.svg
+    :alt: Liberapay :target: https://liberapay.com/Gammu/donate
+
+.. image:: https://www.bountysource.com/badge/team?team_id=23177&style=bounties_received
+    :alt: Bountysource :target:
+    https://www.bountysource.com/teams/gammu/issues?utm_source=Gammu&utm_medium=shield&utm_campaign=bounties_received
+
+פרטים נוספים
+============
+
+ניתן למצוא מידע נוסף בכתובת <https://wammu.eu/gammu/>.
+
+יש מדריך ל־Gammu זמין תחת docs/manual. ניתן לבנות גרסת HTML שלו באמצעות make
+manual-html כדי לאפשר לצפות בו דרך האינטרנט בכתובת
+<https://wammu.eu/docs/manual/>.
+
+
+משוב ודיווחי באגים
+==================
+
+כל משוב שהוא מבורך, ניתן לעיין בכתובת <https://wammu.eu/support/> לפרטים
+נוספים בנוגע ליצירת קשר עם המפתחים.
+
+
+תמיכה במפתחים
+=============
+
+ניתן להביע הערכה לעבודתם של המפתחים בכתובת <https://wammu.eu/donate/>.

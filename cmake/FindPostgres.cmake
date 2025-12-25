@@ -33,28 +33,39 @@ IF(WIN32)
      "C:/Program Files/PostgreSQL/*/lib/ms"
     )
 ELSE(WIN32)
-  IF(UNIX) 
+  IF(UNIX)
 
     SET(POSTGRES_CONFIG_PREFER_PATH "$ENV{POSTGRES_HOME}/bin" CACHE FILEPATH "preferred path to PG (pg_config)")
     FIND_PROGRAM(POSTGRES_CONFIG pg_config
       ${POSTGRES_CONFIG_PREFER_PATH}
       /usr/bin/
+      "$ENV{POSTGRES_HOME}/bin"
+      "$ENV{POSTGRES_PATH}/bin"
       )
     # MESSAGE("DBG POSTGRES_CONFIG ${POSTGRES_CONFIG}")
-    
-    IF (POSTGRES_CONFIG) 
+
+    IF (POSTGRES_CONFIG)
       # set INCLUDE_DIR
       EXEC_PROGRAM(${POSTGRES_CONFIG}
         ARGS --includedir
         OUTPUT_VARIABLE PG_TMP)
+    ELSE(POSTGRES_CONFIG)
+      SET(PG_TMP /opt/postgresql)
+    ENDIF(POSTGRES_CONFIG)
+
       find_path(POSTGRES_INCLUDE_DIR libpq-fe.h
             /usr/local/include
-            /usr/local/include/postgresql 
+            /usr/local/include/postgresql
             /usr/local/postgresql/include
             /usr/local/postgresql/include/postgresql
-            /usr/include 
+            /usr/include
             /usr/include/postgresql
+            /usr/include/pgsql
             ${PG_TMP}
+            $ENV{POSTGRESQL_HOME}/include/server
+            $ENV{POSTGRESQL_HOME}/include
+            $ENV{POSTGRESQL_PATH}/include/server
+            $ENV{POSTGRESQL_PATH}/include
       )
 
       # set LIBRARY_DIR
@@ -68,8 +79,9 @@ ELSE(WIN32)
         /usr/local/lib
         /usr/local/lib/postgresql
         /usr/local/postgresql/lib
+        $ENV{POSTGRESQL_HOME}/lib
+        $ENV{POSTGRESQL_PATH}/lib
       )
-    ENDIF(POSTGRES_CONFIG)
 
   ENDIF(UNIX)
 ENDIF(WIN32)

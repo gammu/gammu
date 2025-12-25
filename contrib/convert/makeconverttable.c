@@ -39,4 +39,3 @@ int main(int argc, char *argv[])
 	printf("\\x00\\x00");
     return 0;
 }
-

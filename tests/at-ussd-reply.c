@@ -35,8 +35,8 @@ int main(int argc, char **argv)
 	GSM_Error error;
 
 	/* Check parameters */
-	if (argc != 3) {
-		printf("Not enough parameters!\nUsage: at-ussd-reply comm.dump MODEL\n");
+	if (argc != 3 && argc != 4) {
+		printf("Not enough parameters!\nUsage: at-ussd-reply comm.dump MODEL [unicode]\n");
 		return 1;
 	}
 
@@ -78,7 +78,11 @@ int main(int argc, char **argv)
 	Priv = &s->Phone.Data.Priv.ATGEN;
 	Priv->ReplyState = AT_Reply_OK;
 	Priv->SMSMode = SMS_AT_PDU;
-	Priv->Charset = AT_CHARSET_GSM;
+	if (argv[3][0] == 'U') {
+		Priv->Charset = AT_CHARSET_UCS2;
+	} else {
+		Priv->Charset = AT_CHARSET_GSM;
+	}
 	s->User.IncomingUSSD = IncomingUSSD;
 	s->User.IncomingUSSDUserData = NULL;
 	s->Phone.Data.EnableIncomingUSSD = TRUE;

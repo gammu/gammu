@@ -12,7 +12,7 @@
 #include "gsmlogo.h"
 #include "gsmnet.h"
 
-#include "../../helper/string.h"
+#include "../../libgammu/misc/string.h"
 
 /**
  * Helper define to check error code from fwrite.
@@ -864,7 +864,6 @@ static GSM_Error loadnlm (FILE *file, GSM_MultiBitmap *bitmap)
 	unsigned char 	buffer[1000];
 	size_t 		pos,x,y,h,w,i,number;
 	ssize_t		pos2;
-	div_t		division;
 	size_t		readbytes;
 
 	readbytes = fread(buffer,1,5,file);
@@ -898,36 +897,58 @@ static GSM_Error loadnlm (FILE *file, GSM_MultiBitmap *bitmap)
 	number 	= buffer[0] + 1;
 	w 	= buffer[1];
 	h 	= buffer[2];
-	for (i=0;i<number;i++) {
+	dbgprintf(NULL, "NLM: %ld bitmaps, %ld x %ld\n", (long)number, (long)w, (long)h);
+	for (i = 0; i < number; i++) {
 		bitmap->Bitmap[i].Type = bitmap->Bitmap[0].Type;
 		GSM_GetMaxBitmapWidthHeight(bitmap->Bitmap[i].Type, &bitmap->Bitmap[i].BitmapWidth, &bitmap->Bitmap[i].BitmapHeight);
-		if (h < bitmap->Bitmap[i].BitmapHeight)	bitmap->Bitmap[i].BitmapHeight	= h;
-		if (w < bitmap->Bitmap[i].BitmapWidth)	bitmap->Bitmap[i].BitmapWidth		= w;
+		if (h < bitmap->Bitmap[i].BitmapHeight)	{
+			bitmap->Bitmap[i].BitmapHeight = h;
+		}
+		if (w < bitmap->Bitmap[i].BitmapWidth) {
+			bitmap->Bitmap[i].BitmapWidth = w;
+		}
 
-		division=div(w,8);
-		/* For startup logos */
-		if (division.rem!=0) division.quot++;
-	  	if (fread(buffer,1,(division.quot*h),file)!=(unsigned int)(division.quot*h)) return ERR_UNKNOWN;
+		readbytes = w / 8;
+		if ((w % 8) != 0) {
+			readbytes++;
+		}
+		readbytes *= h;
+		dbgprintf(NULL, "Parsing %ld bytes of bitmap %ld\n", (long)readbytes, (long)i);
+		if (readbytes > sizeof(buffer)) {
+			return ERR_MOREMEMORY;
+		}
+		if (fread(buffer, 1, readbytes, file) != readbytes) {
+			dbgprintf(NULL, "Failed to read NLM content!\n");
+			return ERR_FILENOTSUPPORTED;
+		}
 
 		GSM_ClearBitmap(&bitmap->Bitmap[i]);
 
 		pos=0;pos2=7;
 		for (y=0;y<h;y++) {
 			for (x=0;x<w;x++) {
-				if ((buffer[pos]&(1<<pos2))>0) {
-					if (y<bitmap->Bitmap[i].BitmapHeight && x<bitmap->Bitmap[i].BitmapWidth) GSM_SetPointBitmap(&bitmap->Bitmap[i],x,y);
+				if ((buffer[pos]&(1<<pos2)) > 0) {
+					if (y<bitmap->Bitmap[i].BitmapHeight && x<bitmap->Bitmap[i].BitmapWidth) {
+						GSM_SetPointBitmap(&bitmap->Bitmap[i], x, y);
+					}
 				}
 				pos2--;
 				/* going to new byte */
-				if (pos2<0) {pos2=7;pos++;}
+				if (pos2 < 0) {
+					pos2 = 7;
+					pos++;
+				}
 			}
 			/* for startup logos-new line means new byte */
-			if (pos2!=7) {pos2=7;pos++;}
+			if (pos2 != 7) {
+				pos2 = 7;
+				pos++;
+			}
 		}
 		bitmap->Number++;
 		if (bitmap->Number == GSM_MAX_MULTI_BITMAP) break;
 	}
-	return (ERR_NONE);
+	return ERR_NONE;
 }
 
 static GSM_Error loadnolngg(FILE *file, GSM_MultiBitmap *bitmap, gboolean nolformat)
@@ -981,7 +1002,7 @@ static GSM_Error loadnolngg(FILE *file, GSM_MultiBitmap *bitmap, gboolean nolfor
 	}
 #endif
 	bitmap->Number = 1;
-	return(ERR_NONE);
+	return ERR_NONE;
 }
 
 static GSM_Error loadnsl(FILE *file, GSM_MultiBitmap *bitmap)
@@ -1073,7 +1094,7 @@ static GSM_Error loadgif(FILE *file, GSM_MultiBitmap *bitmap)
 GSM_Error GSM_ReadBitmapFile(char *FileName, GSM_MultiBitmap *bitmap)
 {
 	FILE		*file;
-	unsigned char	buffer[300];
+	unsigned char	buffer[30];
 	GSM_Error	error = ERR_FILENOTSUPPORTED;
 	char	*file_only_name;
 	size_t len;

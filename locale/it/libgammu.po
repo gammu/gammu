@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libGammu 1.38.2\n"
+"Project-Id-Version: libGammu 1.41.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-10-11 08:16+0200\n"
+"POT-Creation-Date: 2019-02-14 14:57+0100\n"
 "PO-Revision-Date: 2012-08-27 11:45+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Italian <http://hosted.weblate.org/projects/gammu/libgammu/it/"
@@ -39,13 +39,17 @@ msgid "Error opening device, it doesn't exist."
 msgstr "Errore durante l'apertura del dispositivo, non esiste."
 
 #: libgammu/gsmcomon.c:88
-msgid "Error opening device, it is already opened by other application."
+#, fuzzy
+#| msgid "Error opening device, it is already opened by other application."
+msgid "Error opening device, it is already opened by another app."
 msgstr ""
 "Errore durante l'apertura del dispositivo, è stato già aperto da un'altra "
 "applicazione."
 
 #: libgammu/gsmcomon.c:89
-msgid "Error opening device, you don't have permissions."
+#, fuzzy
+#| msgid "Error opening device, you don't have permissions."
+msgid "Error opening device, you don't have the required permission."
 msgstr "Errore durante l'apertura del dispositivo, non hai i permessi."
 
 #: libgammu/gsmcomon.c:90
@@ -66,7 +70,9 @@ msgid "Error setting device DTR or RTS."
 msgstr "Errore impostando DTS o RTS sulla periferica."
 
 #: libgammu/gsmcomon.c:93
-msgid "Error setting device speed. Maybe speed not supported."
+#, fuzzy
+#| msgid "Error setting device speed. Maybe speed not supported."
+msgid "Error setting device speed. Maybe the speed is not supported?"
 msgstr ""
 "Errore nel cambiare la velocità del dispositivo. Forse la velocità non è "
 "supportata."
@@ -87,7 +93,9 @@ msgid "Can't set parity on the device."
 msgstr "Impossibile impostare la parità sul dispositivo."
 
 #: libgammu/gsmcomon.c:97
-msgid "No response in specified timeout. Probably phone not connected."
+#, fuzzy
+#| msgid "No response in specified timeout. Probably phone not connected."
+msgid "No response in specified timeout. Probably the phone is not connected."
 msgstr ""
 "Nessuna risposta nel tempo specificato. Probabilmente il telefono non è "
 "connesso."
@@ -96,7 +104,7 @@ msgstr ""
 #, fuzzy
 msgid ""
 "Frame not requested right now. See <https://wammu.eu/support/bugs/> for "
-"information how to report it."
+"information on how to report it."
 msgstr ""
 "Risposta sconosciuta dal telefono. Vedere <http://cihar.com/gammu/report> "
 "per informazioni su come notificarlo."
@@ -105,7 +113,7 @@ msgstr ""
 #, fuzzy
 msgid ""
 "Unknown response from phone. See <https://wammu.eu/support/bugs/> for "
-"information how to report it."
+"information on how to report it."
 msgstr ""
 "Risposta sconosciuta dal telefono. Vedere <http://cihar.com/gammu/report> "
 "per informazioni su come notificarlo."
@@ -113,8 +121,8 @@ msgstr ""
 #: libgammu/gsmcomon.c:100
 #, fuzzy
 msgid ""
-"Unknown frame. See <https://wammu.eu/support/bugs/> for information how to "
-"report it."
+"Unknown frame. See <https://wammu.eu/support/bugs/> for information on how "
+"to report it."
 msgstr ""
 "Risposta sconosciuta dal telefono. Vedere <http://cihar.com/gammu/report> "
 "per informazioni su come notificarlo."
@@ -131,7 +139,7 @@ msgstr "Modello sconosciuto. Controllare il file di configurazione."
 #: libgammu/gsmcomon.c:103
 #, fuzzy
 msgid ""
-"Some functions not available for your system (disabled in config or not "
+"Some functions are not available for your system (disabled in config or not "
 "implemented)."
 msgstr ""
 "Alcune funzioni non sono disponibili per il tuo sistema (disabilitate nel "
@@ -143,7 +151,7 @@ msgstr "Funzione non supportata dal telefono."
 
 #: libgammu/gsmcomon.c:105
 #, fuzzy
-msgid "Entry is empty."
+msgid "Empty entry."
 msgstr "Locazione vuota"
 
 #: libgammu/gsmcomon.c:106
@@ -156,7 +164,7 @@ msgstr "Locazione non valida. Forse fuori range?"
 
 #: libgammu/gsmcomon.c:108
 #, fuzzy
-msgid "Functionality not implemented. You are welcome to help authors with it."
+msgid "Functionality not implemented. You are welcome to help."
 msgstr ""
 "La funzione sta ancora elaborando. Se si necessita aiuto si prega di "
 "contattare gli autori"
@@ -175,7 +183,9 @@ msgid "Can not open specified file."
 msgstr "Impossibile aprire il file specificato. E' a sola lettura?"
 
 #: libgammu/gsmcomon.c:112
-msgid "More memory required..."
+#, fuzzy
+#| msgid "More memory required..."
+msgid "More memory required…"
 msgstr "Serve più memoria..."
 
 #: libgammu/gsmcomon.c:113
@@ -185,17 +195,18 @@ msgstr "Funzione non supportata dal telefono."
 
 #: libgammu/gsmcomon.c:114
 msgid ""
-"No SMSC number given. Provide it manually or use the one configured in phone."
+"No SMSC number given. Provide it manually or use the one configured on the "
+"phone."
 msgstr ""
 
 #: libgammu/gsmcomon.c:115
 #, fuzzy
-msgid "You're inside phone menu (maybe editing?). Leave it and try again."
+msgid "You're inside the phone menu (maybe editing?). Exit it and try again."
 msgstr "Siete dentro il menu del telefono. Uscite e riprovate."
 
 #: libgammu/gsmcomon.c:116
 #, fuzzy
-msgid "Phone is not connected."
+msgid "Phone not connected."
 msgstr "Telefono non connesso"
 
 #: libgammu/gsmcomon.c:117
@@ -208,7 +219,9 @@ msgstr ""
 "contattare gli autori"
 
 #: libgammu/gsmcomon.c:118
-msgid "Phone is disabled and connected to charger."
+#, fuzzy
+#| msgid "Phone is disabled and connected to charger."
+msgid "Phone disabled and connected to charger."
 msgstr "Il telefono è disabilitato e connesso al caricabatterie."
 
 #: libgammu/gsmcomon.c:119
@@ -224,7 +237,9 @@ msgstr ""
 "comunicazione. Contattare gli sviluppatori."
 
 #: libgammu/gsmcomon.c:121
-msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
+#, fuzzy
+#| msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
+msgid "Transfer canceled by phone, maybe you pressed \"Cancel\" on the phone."
 msgstr ""
 "Trasferimento annullato dal telefono. Potrebbe essere stato premuto il tasto "
 "Annulla del telefono."
@@ -246,7 +261,9 @@ msgid "Invalid date or time specified."
 msgstr "Data o ora specificati non validi."
 
 #: libgammu/gsmcomon.c:126
-msgid "Phone memory error, maybe it is read only."
+#, fuzzy
+#| msgid "Phone memory error, maybe it is read only."
+msgid "Phone memory error, maybe it is read only?"
 msgstr "Errore nella memoria del telefono, forse è a sola lettura."
 
 #: libgammu/gsmcomon.c:127
@@ -263,11 +280,15 @@ msgid "File with specified name doesn't exist."
 msgstr "Non esiste un file col nome specificato."
 
 #: libgammu/gsmcomon.c:130
-msgid "You have to give folder name and not file name."
+#, fuzzy
+#| msgid "You have to give folder name and not file name."
+msgid "You have to supply folder name and not filename."
 msgstr "Occorre inserire il nome di una cartella, non di un file."
 
 #: libgammu/gsmcomon.c:131
-msgid "You have to give file name and not folder name."
+#, fuzzy
+#| msgid "You have to give file name and not folder name."
+msgid "You have to supply filename and not folder name."
 msgstr "Occorre inserire il nome di un file, non di una cartella."
 
 #: libgammu/gsmcomon.c:132
@@ -275,7 +296,12 @@ msgid "Can not access SIM card."
 msgstr "Impossibile accedere alla carta SIM."
 
 #: libgammu/gsmcomon.c:133
-msgid "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
+#, fuzzy
+#| msgid ""
+#| "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
+msgid ""
+"Wrong GNAPPLET version in use on phone. Use version from currently used "
+"Gammu."
 msgstr ""
 "versione GNAPPLET nel telefono errata. Usare la versione corrente di Gammu."
 
@@ -288,7 +314,9 @@ msgid "Folder must be empty."
 msgstr "La cartella deve essere vuota."
 
 #: libgammu/gsmcomon.c:136
-msgid "Data were converted."
+#, fuzzy
+#| msgid "Data were converted."
+msgid "Data converted."
 msgstr "I dati sono stati convertiti."
 
 #: libgammu/gsmcomon.c:137
@@ -411,7 +439,16 @@ msgstr "Test connessione"
 msgid "Error in executing SQL query."
 msgstr ""
 
-#: libgammu/gsmcomon.c:195
+#: libgammu/gsmcomon.c:163
+msgid "The type of memory is not available or has been disabled."
+msgstr ""
+
+#: libgammu/gsmcomon.c:164
+#, fuzzy
+msgid "The operation cannot be performed."
+msgstr "Operazione in corso"
+
+#: libgammu/gsmcomon.c:197
 msgid "Unknown error description."
 msgstr "Errore sconosciuto."
 
@@ -2782,7 +2819,7 @@ msgstr "Messaggi inviati"
 #~ msgid "Error\n"
 #~ msgstr "Errore\n"
 
-#~ msgid "Entry is empty\n"
+#~ msgid "Empty entry\n"
 #~ msgstr "Locazione vuota\n"
 
 #~ msgid "Reminder (Date)\n"
@@ -3189,7 +3226,7 @@ msgstr "Messaggi inviati"
 #~ msgstr "ERRORE: numerare le locazioni da 1\n"
 
 #~ msgid ""
-#~ "Entry is empty\n"
+#~ "Empty entry\n"
 #~ "\n"
 #~ msgstr ""
 #~ "Elemento vuoto\n"

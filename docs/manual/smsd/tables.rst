@@ -12,6 +12,11 @@ one sends outgoing message. If you configure PhoneID and use it when inserting
 message to the ``outbox`` table (:ref:`gammu-smsd-inject` does this), each SMS
 daemon will have separate outbox queue. See also :ref:`smsd-multi`.
 
+.. note::
+
+    SQL scripts to create all needed tables for most databases are included in
+    Gammu documentation `docs/sql <https://github.com/gammu/gammu/tree/master/docs/sql>`_.
+
 Receiving of messages
 ---------------------
 
@@ -26,7 +31,7 @@ of the same message from :ref:`outbox_multipart`.
 Description of tables
 ---------------------
 
-.. _gammu-table: 
+.. _gammu-table:
 
 gammu
 +++++
@@ -65,7 +70,7 @@ Fields description:
     decoded SMSC number
 
 ``Class`` (integer)
-    SMS class or \-1 (0 is flash SMS, 1 is normal one)
+    SMS class or \-1 (0 is flash SMS, 1 is normal one, 127 is USSD)
 
 ``TextDecoded`` (varchar(160))
     decoded SMS text (for Default Alphabet/Unicode SMS)
@@ -79,6 +84,26 @@ Fields description:
 ``Processed`` (enum('false', 'true'))
     you can use for marking, whether SMS was processed or not
 
+``Status`` (integer)
+    Status of incoming message. Currently only used for
+    ``Class`` 127 (USSD) messages with following meaning:
+
+    ``1``
+        Unknown status.
+    ``2``
+        No action is needed, maybe network initiated USSD.
+    ``3``
+        Reply is expected.
+    ``4``
+        USSD dialog terminated.
+    ``5``
+        Another client replied.
+    ``6``
+        Operation not supported.
+    ``7``
+        Network timeout.
+
+    .. versionadded:: 1.38.5
 
 .. _outbox:
 
@@ -126,7 +151,7 @@ Fields description:
     the message. Without this, message will be sent as plain text.
 
 ``Class`` (integer)
-    SMS class or \-1 (0 is normal SMS, 1 is flash one)
+    SMS class or \-1 (0 is normal SMS, 1 is flash one, 127 is USSD)
 
 ``TextDecoded`` (varchar(160))
     SMS text in "human readable" form
@@ -163,6 +188,36 @@ Fields description:
 ``Priority`` (integer)
     priority of message, messages with higher priority are processed first
 
+``Status`` (enum('SendingOK', 'SendingOKNoReport', 'SendingError', 'DeliveryOK', 'DeliveryFailed', 'DeliveryPending', 'DeliveryUnknown', 'Error', 'Reserved'))
+    Status of message sending. SendingError means that phone failed to send the
+    message, Error indicates some other error while processing message.
+
+    ``SendingOK``
+        Message has been sent, waiting for delivery report.
+    ``SendingOKNoReport``
+        Message has been sent without asking for delivery report.
+    ``SendingError``
+        Sending has failed.
+    ``DeliveryOK``
+        Delivery report arrived and reported success.
+    ``DeliveryFailed``
+        Delivery report arrived and reports failure.
+    ``DeliveryPending``
+        Delivery report announced pending deliver.
+    ``DeliveryUnknown``
+        Delivery report reported unknown status.
+    ``Error``
+        Some other error happened during sending (usually bug in SMSD).
+    ``Reserved``
+        Initial value, meaning the status has not been set.
+
+    .. versionadded:: 1.38.5
+
+``StatusCode`` (integer)
+    GSM status code
+
+    .. versionadded:: 1.38.5
+
 .. _outbox_multipart:
 
 outbox_multipart
@@ -190,6 +245,36 @@ Fields description:
 ``SequencePosition`` (integer)
     info, what is SMS number in SMS sequence (start at 2, first part is in :ref:`outbox`
     table).
+
+``Status`` (enum('SendingOK', 'SendingOKNoReport', 'SendingError', 'DeliveryOK', 'DeliveryFailed', 'DeliveryPending', 'DeliveryUnknown', 'Error', 'Reserved'))
+    Status of message sending. SendingError means that phone failed to send the
+    message, Error indicates some other error while processing message.
+
+    ``SendingOK``
+        Message has been sent, waiting for delivery report.
+    ``SendingOKNoReport``
+        Message has been sent without asking for delivery report.
+    ``SendingError``
+        Sending has failed.
+    ``DeliveryOK``
+        Delivery report arrived and reported success.
+    ``DeliveryFailed``
+        Delivery report arrived and reports failure.
+    ``DeliveryPending``
+        Delivery report announced pending deliver.
+    ``DeliveryUnknown``
+        Delivery report reported unknown status.
+    ``Error``
+        Some other error happened during sending (usually bug in SMSD).
+    ``Reserved``
+        Initial value, meaning the status has not been set.
+
+    .. versionadded:: 1.38.5
+
+``StatusCode`` (integer)
+    GSM status code
+
+    .. versionadded:: 1.38.5
 
 .. _phones:
 
@@ -305,7 +390,7 @@ Fields description:
     decoded number of SMSC, which sent SMS
 
 ``Class`` (integer)
-    SMS class or \-1 (0 is normal SMS, 1 is flash one)
+    SMS class or \-1 (0 is normal SMS, 1 is flash one, 127 is USSD)
 
 ``TextDecoded`` (varchar(160))
     SMS text in "human readable" form
@@ -328,6 +413,11 @@ Fields description:
 ``CreatorID`` (text)
     copied from CreatorID from outbox table
 
+``StatusCode`` (integer)
+    GSM status code
+
+    .. versionadded:: 1.38.5
+
 
 .. _smsd-tables-history:
 
@@ -342,6 +432,14 @@ History of database structure
     production environment.
 
 History of schema versions:
+
+17
+
+    * Added ``Status`` field to :ref:`outbox` and :ref:`outbox_multipart`.
+    * Added ``StatusCode`` field to :ref:`sentitems`, :ref:`outbox` and :ref:`outbox_multipart`.
+    * Added ``Status`` field to :ref:`inbox`.
+
+   .. versionchanged:: 1.38.5
 
 16
 
@@ -382,7 +480,7 @@ History of schema versions:
 11
     all fields for storing message text are no longer limited to 160 chars,
     but are arbitrary length text fields.
-    
+
     .. versionchanged:: 1.25.92
 10
     ``DeliveryDateTime`` is now NULL when message is not delivered, added several
@@ -422,8 +520,7 @@ Creating tables
 +++++++++++++++
 
 SQL scripts to create all needed tables for most databases are included in
-Gammu documentation (docs/sql). As well as some PHP scripts interacting with
-the database.
+Gammu documentation `docs/sql <https://github.com/gammu/gammu/tree/master/docs/sql>`_.
 
 For example to create SQLite tables, issue following command:
 
@@ -485,7 +582,7 @@ for each message**, ``D3`` in following example), byte for number of messages
 number) and byte for number of current message (``01`` for first message,
 ``02`` for second, etc.).
 
-I most cases, the mutlipart message has to be class 1.
+In most cases, the mutltipart message has to be class 1.
 
 For example long text message of two parts could look like following:
 

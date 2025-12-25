@@ -13,7 +13,7 @@
 #include "../debug.h"
 #include "gsmmisc.h"
 
-#include "../../helper/string.h"
+#include "../../libgammu/misc/string.h"
 
 struct keys_table_position {
 	char 	whatchar;

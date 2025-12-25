@@ -61,7 +61,7 @@ Collecting results
 The tests are ran daily on several platforms and you can find the
 results on `Travis <https://travis-ci.org/gammu/gammu>`_.
 
-The coverage reports are at 
+The coverage reports are at
 `Coveralls <https://coveralls.io/r/gammu/gammu>`_.
 
 
@@ -161,5 +161,5 @@ Database backends configuration
 ``MYSQL_PASSWORD``
     Password to use for MySQL tests (default: ``smsd``)
 ``ODBC_DSN```
-    ODBC DSN to use for ODBC tests (default: ``smsd``). 
+    ODBC DSN to use for ODBC tests (default: ``smsd``).
     Currently needs to point to MySQL database.

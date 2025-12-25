@@ -16,7 +16,7 @@
 #include <gammu-inifile.h>
 #include "coding/coding.h"
 
-#include "../../helper/string.h"
+#include "../../libgammu/misc/string.h"
 
 /**
  * Read information from file in Windows INI format style

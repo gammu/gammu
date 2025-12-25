@@ -29,7 +29,7 @@ if [ "x$1" = "xbranch" ] ; then
     shift
 elif [ "x$1" = "x" ] ; then
     checkout=HEAD
-else 
+else
     checkout=$1
     version=$1
     shift

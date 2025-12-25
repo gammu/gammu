@@ -18,7 +18,7 @@ while($data = fgets(STDIN, 4096)) {
 }
 
 /**
- * SO, 
+ * SO,
  * $_REQUEST      is the sms data.
  * $_HEADER       is the header array. For example $_HEADER["SMS_FROM"] is the sender number.
  */
@@ -46,11 +46,10 @@ while($data = fgets(STDIN, 4096)) {
 }
 
 /**
- * SO, 
+ * SO,
  * $_REQUEST      is the sms data.
  * $_HEADER       is the header array. For example $_HEADER["SMS_FROM"] is the sender number.
  */
 
 unset($data);
 unset($matches);
-

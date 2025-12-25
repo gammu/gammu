@@ -8,12 +8,15 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <string.h>
+#include <sys/time.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 #include "../../gsmcomon.h"
 #include "../devfunc.h"
 #include "proxy.h"
 
-#include "../../../helper/string.h"
+#include "../../../libgammu/misc/string.h"
 
 /* Expand a proxy command */
 static char *
@@ -158,7 +161,7 @@ ssize_t write_nosigpipe(int fd, const void *buf, size_t len)
     sigset_t oldset, newset;
     ssize_t result;
     siginfo_t si;
-    struct timespec ts = {0};
+    struct timespec ts = {0, 0};
 
     sigemptyset(&newset);
     sigaddset(&newset, SIGPIPE);

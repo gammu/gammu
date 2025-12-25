@@ -1,9 +1,9 @@
 <?
 class gammu {
 
-	
-	
-	
+
+
+
 	function checknew(){
 		global $mysql;
 		$new = $mysql->count("SELECT ID FROM inbox, proclast WHERE ID>proclast.lastinbox");
@@ -13,21 +13,21 @@ class gammu {
 			return false;
 		}
 	}
-	
-	
-	
+
+
+
 	function enviarsms($sms, $destinatario="", $validade="255", $flash="-1", $deferidodata ="", $phone=""){
 		global $mysql, $adminsphone;
 		if ($destinatario == ""){
 			$destinatario = $adminsphone;
 		}
-		
+
 		require_once('config.php');
 		//$sms = limpar($sms, "soft");
 		if(strlen($sms) > 160){
 			return false;
 		}elseif($deferidodata == ""){
-			$datoom = date("YmdHis");	
+			$datoom = date("YmdHis");
 		}else{
 			$datoom = $deferidodata;
 		}
@@ -37,10 +37,10 @@ class gammu {
 			return false;
 		}
 	}
-	
-	
-	
-	
+
+
+
+
 	function processnew(){
 		global $mysql, $triggers, $smsc, $adminsphone;
 		if($this->checknew()){
@@ -59,7 +59,7 @@ class gammu {
 			$this->processnew();
 		}
 	}
-	
+
 }
 $gammu = new gammu;
 ##/usr/local/gammu/bin/gammu --dialvoice 1799

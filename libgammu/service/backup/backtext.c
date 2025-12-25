@@ -18,7 +18,7 @@
 #include "../../debug.h"
 #include "backtext.h"
 
-#include "../../../helper/string.h"
+#include "../../../libgammu/misc/string.h"
 
 #ifdef GSM_ENABLE_BACKUP
 
@@ -102,7 +102,7 @@ static unsigned char *ReadCFGText(INI_Section *cfg, const unsigned char *section
 static GSM_Error SaveLinkedBackupText(FILE *file, const char *myname, const char *myvalue, const gboolean UseUnicode)
 {
 	int 		w,current;
-	unsigned char 	buffer2[1000],buffer3[1000];
+	unsigned char 	buffer2[1000],buffer3[1020];
 
 	current = strlen(myvalue); w = 0;
 	while (TRUE) {
@@ -936,6 +936,7 @@ static GSM_Error SaveWAPSettingsEntry(FILE *file, GSM_MultiWAPSettings *settings
 				sprintf(buffer,"IP%02i",i);
 				error = SaveBackupText(file, buffer, settings->Settings[i].IPAddress, UseUnicode);
 				if (error != ERR_NONE) return error;
+				FALLTHROUGH
 			case WAPSETTINGS_BEARER_DATA:
 				if (settings->Settings[i].Bearer == WAPSETTINGS_BEARER_DATA) {
 					sprintf(buffer,"Bearer%02i = Data%c%c",i,13,10);

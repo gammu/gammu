@@ -195,10 +195,10 @@ Example:
 .. code-block:: python
 
     UDH = {
-        'ID8bit': 0xcd,
-        'PartNumber': 1,
-        'AllParts': 2,
-        'Type': 'ConcatenatedMessages',
+        "ID8bit": 0xCD,
+        "PartNumber": 1,
+        "AllParts": 2,
+        "Type": "ConcatenatedMessages",
     }
 
 .. _smsc_obj:
@@ -247,10 +247,10 @@ Example:
 .. code-block:: python
 
     SMSC = {
-        'Location': 1,
-        'Number': '+420987654321',
-        'Format': 'Text',
-        'Validity': 'Max',
+        "Location": 1,
+        "Number": "+420987654321",
+        "Format": "Text",
+        "Validity": "Max",
     }
 
 .. _sms_info_obj:
@@ -285,13 +285,13 @@ Example:
 .. code-block:: python
 
     SMSINFO = {
-        'Class': 1,
-        'Entries': [
-            {'ID': 'Text', 'Buffer': 'This is a '},
-            {'ID': 'Text', 'Buffer': 'message', 'Italic': True},
-            {'ID': 'Text', 'Buffer': ' from '},
-            {'ID': 'Text', 'Buffer': 'Gammu', 'Bold': True},
-            ],
+        "Class": 1,
+        "Entries": [
+            {"ID": "Text", "Buffer": "This is a "},
+            {"ID": "Text", "Buffer": "message", "Italic": True},
+            {"ID": "Text", "Buffer": " from "},
+            {"ID": "Text", "Buffer": "Gammu", "Bold": True},
+        ],
     }
 
 .. _sms_info_part_obj:
@@ -499,11 +499,14 @@ Example:
 .. code-block:: python
 
     TODO = {
-        'Type': 'MEMO',
-        'Entries': [
-            {'Type': 'END_DATETIME', 'Value': datetime.datetime.now() + datetime.timedelta(days = 1)},
-            {'Type': 'TEXT', 'Value': 'Buy some milk'},
-            ],
+        "Type": "MEMO",
+        "Entries": [
+            {
+                "Type": "END_DATETIME",
+                "Value": datetime.datetime.now() + datetime.timedelta(days=1),
+            },
+            {"Type": "TEXT", "Value": "Buy some milk"},
+        ],
     }
 
 .. _todo_entry_obj:
@@ -587,13 +590,16 @@ Example:
 .. code-block:: python
 
     CAL = {
-        'Type': 'MEMO',
-        'Entries': [
-            {'Type': 'START_DATETIME', 'Value': datetime.datetime.now()},
-            {'Type': 'END_DATETIME', 'Value': datetime.datetime.now() + datetime.timedelta(days = 1)},
-            {'Type': 'LOCATION', 'Value': 'Home'},
-            {'Type': 'TEXT', 'Value': 'Relax for one day'},
-            ],
+        "Type": "MEMO",
+        "Entries": [
+            {"Type": "START_DATETIME", "Value": datetime.datetime.now()},
+            {
+                "Type": "END_DATETIME",
+                "Value": datetime.datetime.now() + datetime.timedelta(days=1),
+            },
+            {"Type": "LOCATION", "Value": "Home"},
+            {"Type": "TEXT", "Value": "Relax for one day"},
+        ],
     }
 
 .. _cal_entry_obj:
@@ -655,12 +661,12 @@ Example:
 .. code-block:: python
 
     PBK = {
-        'Location': 1000,
-        'MemoryType': 'ME',
-        'Entries': [
-            {'Type': 'Number_General', 'Value': '+420123456789'},
-            {'Type': 'Text_Name', 'Value': 'Stojan Jakotyc'},
-            ],
+        "Location": 1000,
+        "MemoryType": "ME",
+        "Entries": [
+            {"Type": "Number_General", "Value": "+420123456789"},
+            {"Type": "Text_Name", "Value": "Stojan Jakotyc"},
+        ],
     }
 
 .. _pbk_entry_obj:
@@ -819,18 +825,18 @@ Example:
 .. code-block:: python
 
     FILE = {
-        'ID_FullName': PATH,
-        'Name': os.path.basename(PATH),
-        'Buffer': data,
-        'Protected': 0,
-        'ReadOnly': 0,
-        'Hidden': 0,
-        'System': 0,
-        'Folder': 0,
-        'Level': 0,
-        'Type': 'Other',
-        'Finished': 0,
-        'Pos': 0,
+        "ID_FullName": PATH,
+        "Name": os.path.basename(PATH),
+        "Buffer": data,
+        "Protected": 0,
+        "ReadOnly": 0,
+        "Hidden": 0,
+        "System": 0,
+        "Folder": 0,
+        "Level": 0,
+        "Type": "Other",
+        "Finished": 0,
+        "Pos": 0,
     }
 
 .. _divert-type:
@@ -873,7 +879,7 @@ Call Divert Objects
 .. attribute:: Number
 
     Phone number where to divert.
-    
+
 .. attribute:: Timeout
 
     Timeout after which the divert will happen.

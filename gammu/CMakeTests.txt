@@ -1,5 +1,5 @@
 # cmake <http://www.cmake.org> test file for Gammu
-# Copyright (c) 2007 - 2017 Michal Cihar
+# Copyright (c) 2007 - 2018 Michal Cihar
 # vim: expandtab sw=4 ts=4 sts=4 ft=cmake:
 
 include(SetupDummyPhone)
@@ -267,7 +267,7 @@ gammu_test_next(getallsms "6 SMS parts in 6 SMS sequences")
 gammu_test_next(getallsms "6 SMS parts in 6 SMS sequences" "-pbk")
 gammu_test(geteachsms "6 SMS parts in 5 SMS sequences")
 gammu_test(geteachsms "6 SMS parts in 5 SMS sequences" "-pbk")
-gammu_test_fail(deletesms "Entry is empty" 1 99)
+gammu_test_fail(deletesms "Empty entry" 1 99)
 gammu_test(addsms "" 1 "${Gammu_SOURCE_DIR}/tests/at-sms-encode/66.backup" "-yes")
 gammu_test(backupsms "" "${CMAKE_CURRENT_BINARY_DIR}/test.smsbackup" "-all")
 gammu_test(deletesms "" 1 2)
@@ -285,7 +285,7 @@ gammu_test(searchmemory "3899-5174" "3899-1411")
 gammu_test_next(getallcalendar "C/S/007")
 gammu_test(getcalendar "Coffee with Jason" 22)
 gammu_test(getcalendar "" 42)
-gammu_test(deletecalendar "Entry is empty" 42)
+gammu_test(deletecalendar "Empty entry" 42)
 gammu_test(getcalendarsettings "Week starts on Monday")
 
 gammu_test_fail(getalarm "Alarm .* not set in phone" 42)
@@ -347,7 +347,7 @@ gammu_test_named(divert-set-all-voice divert "" set all voice 54321 10)
 gammu_test_named(divert-set-all-fax divert "" set all fax 12345 0)
 gammu_test_named(divert-set-all-data divert "" set all data 54321 10)
 gammu_test(getwapbookmark "wammu.eu" 1 2)
-gammu_test_fail(getwapbookmark "Entry is empty" 3)
+gammu_test_fail(getwapbookmark "Empty entry" 3)
 
 if (ONLINE_TESTING AND CURL_FOUND)
     gammu_test(checkversion "")

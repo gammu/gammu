@@ -59,4 +59,3 @@ gboolean GSM_StringArray_Find(GSM_StringArray *array, const char *string)
 /* Editor configuration
  * vim: noexpandtab sw=8 ts=8 sts=8 tw=72:
  */
-

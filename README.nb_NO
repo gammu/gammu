@@ -1,0 +1,58 @@
+Gammu alle mobilbehandlingsverktøy
+==================================
+
+Gammu er et bibliotek og kommandolinjeverktøy for mobiltelefoner. Det er
+lisensiert GNU GPL versjon 2.
+
+Det ble igangsatt av Marcin Wiacek og andre. Originalt var koden basert på
+Gnokii <https://www.gnokii.org/> og senere MyGnokii
+<http://www.mwiacek.com/> -prosjektene. Gammu var tidligere (opp til versjon
+0.58) kalt MyGnokii2.
+
+For tiden ledes prosjektet av Michal Cihar <michal@cihar.com> med hjelp fra
+mange bidragsytere.
+
+.. bilde:: https://travis-ci.org/gammu/gammu.svg?branch=master
+    :alt: Byggestatus :target: https://travis-ci.org/gammu/gammu
+
+.. bilde:: https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/master?svg=true
+    :alt: Byggestatus for Windowsversjon :target:
+    https://ci.appveyor.com/project/nijel/gammu/branch/master
+
+.. bilde:: https://hosted.weblate.org/widgets/gammu/-/svg-badge.svg
+    :alt: Oversettelsesstatus :target:
+    https://hosted.weblate.org/engage/gammu/?utm_source=widget
+
+.. bilde:: https://scan.coverity.com/projects/2890/badge.svg?flat=1
+    :alt: Coverity-gjennomsøking :target:
+    https://scan.coverity.com/projects/2890
+
+.. bilde:: https://img.shields.io/liberapay/receives/Gammu.svg
+    :alt: Liberapay :target: https://liberapay.com/Gammu/donate
+
+.. bilde:: https://www.bountysource.com/badge/team?team_id=23177&style=bounties_received
+    :alt: Bountysource :target:
+    https://www.bountysource.com/teams/gammu/issues?utm_source=Gammu&utm_medium=shield&utm_campaign=bounties_received
+
+Mer informasjon
+===============
+
+Du kan finne mer informasjon på <https://wammu.eu/gammu/>.
+
+Det finnes også en Gammu-manual tilgjengelig i docs/manual. Du kan bygge
+HTML-versjonen av den ved hjelp av make manual-html, som er tilgjengelig på
+nett <https://wammu.eu/docs/manual/>.
+
+
+Tilbakemeldinger og feilrapporter
+=================================
+
+All tilbakemelding er kjærkommen, se <https://wammu.eu/support/> for
+informasjon om hvordan du kontakter utviklerne.
+
+
+Støtt utviklere
+===============
+
+Du kan vise at du setter pris på utvikleres arbeid på
+<https://wammu.eu/donate/>.

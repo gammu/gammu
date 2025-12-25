@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMURC" "5" "Jun 02, 2017" "1.38.4" "Gammu"
+.TH "GAMMURC" "5" "Oct 03, 2020" "1.42.0" "Gammu"
 .SH NAME
 gammurc \- gammu(1) configuration file
 .
@@ -48,7 +48,7 @@ searched in following order:
 On Microsoft Windows:
 .INDENT 0.0
 .IP 1. 3
-\fB$PROFILE\eApplication Data\egammurc\fP
+\fB%PROFILE%\eApplication Data\egammurc\fP
 .IP 2. 3
 \fB\&.\egammurc\fP
 .UNINDENT
@@ -457,6 +457,27 @@ Path to directory with localisation files (the directory should contain
 \fBLANG/LC_MESSAGES/gammu.mo\fP). If gammu is properly installed it should find
 these files automatically.
 .UNINDENT
+.SS Advanced options
+.sp
+Advanced options are used to alter default logic, when using these options the
+user is responsible for ensuring any settings are correct for the target device
+and that they produce the desired behaviour.
+.INDENT 0.0
+.TP
+.B atgen_setCNMI
+For configurations using the generic AT command protocol it is possible to
+override the default indicators used when a new SMS message is received.
+.sp
+The value for the setting is a comma delimited list of single digits
+corresponding to the values for the \fBAT+CNMI\fP modem command. If a digit
+is not provided, or if the provided digit is outside of the acceptable
+range for the device the default value is used.
+.sp
+For example setting \fBatgen_setcnmi = ,,2\fP would set the third parameter of
+the CNMI command to the value 2, leaving the rest of the parameters at
+default, and \fBatgen_setcnmi = 1,,,1\fP would set the first and fourth parameters
+respectively.
+.UNINDENT
 .SS Other options
 .INDENT 0.0
 .TP
@@ -531,7 +552,7 @@ connection = blueat
 .SS Working with multiple phones
 .sp
 Gammu can be configured for multiple phones (however only one connection
-is used at one time, you can choose which one to use with \fBgammu \-s\fP
+is used at one time, you can choose which one to use with \fI\%gammu \-s\fP
 parameter). Configuration for phones on three serial ports would look
 like following:
 .INDENT 0.0
@@ -621,14 +642,14 @@ connection = fbusblue
 ;startinfo = yes
 ;gammucoding = utf8
 
-; Step 1. Please find required Connection parameter and look into assigned 
+; Step 1. Please find required Connection parameter and look into assigned
 ; with it device type. With some Connection you must set concrete model
 
 ; ================================================================ cables =====
 ; New Nokia protocol for FBUS/DAU9P
 ;    Connection "fbus", device type serial
 ; New Nokia protocol for DLR3/DLR3P
-;    Connection "fbusdlr3"/"dlr3", device type serial 
+;    Connection "fbusdlr3"/"dlr3", device type serial
 ; New Nokia protocol for DKU2 (and phone with USB converter on phone mainboard
 ;                              like 6230)
 ;    Connection "dku2phonet"/"dku2", device type dku2 on Windows
@@ -641,12 +662,12 @@ connection = fbusblue
 ;    Connection "fbuspl2303", device type usb
 ; Old Nokia protocol for MBUS/DAU9P
 ;    Connection "mbus", device type serial
-; Variants: 
+; Variants:
 ; You can modify a bit behaviour of connection using additional flags
 ; specified just after connection name like connection\-variant.
-; If you\(aqre using ARK3116 cable (or any other which does not like dtr 
+; If you\(aqre using ARK3116 cable (or any other which does not like dtr
 ; handling), you might need \-nodtr variant of connection, eg. dlr3\-nodtr.
-; If cable you use is not powered over DTR/RTS, try using \-nopower variant of 
+; If cable you use is not powered over DTR/RTS, try using \-nopower variant of
 ; connection, eg. fbus\-nopower.
 ; \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 ; AT commands for DLR3, DKU5 or other AT compatible cable (8 bits, None
@@ -682,7 +703,7 @@ connection = fbusblue
 ;    Connection "bluephonet", device type BT
 ; \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 ; AT commands for Bluetooth stack and 6210 / DCT4 Nokia models, which don\(aqt
-; inform about BT services correctly (6310, 6310i with firmware lower 
+; inform about BT services correctly (6310, 6310i with firmware lower
 ; than 5.50, 8910,..)
 ;    Connection "bluerfat", device type BT
 ; AT commands for Bluetooth stack with other phones (Siemens, other Nokia,etc.)
@@ -726,7 +747,7 @@ connection = fbusblue
 ; Parameter name  | Description
 ; \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-|\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 ; Model           | Should not be used unless you have a good reason to do so.
-;                 | If Gammu doesn\(aqt recognize your phone model, put it here. 
+;                 | If Gammu doesn\(aqt recognize your phone model, put it here.
 ;                 | Example values: "6110", "6150", "6210", "8210"
 ; SynchronizeTime | if you want to set time from computer to phone during
 ;                 | starting connection. Do not rather use this option when

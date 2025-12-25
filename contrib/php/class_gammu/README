@@ -1,14 +1,14 @@
-Class : class.gammu.php 
+Class : class.gammu.php
 
-This class is really very helpful if we want to interact with Gammu using PHP 5.2+ It lets users can send SMS, 
-Download SMS from Mobile Device, 
-Read SMS Inbox 
+This class is really very helpful if we want to interact with Gammu using PHP 5.2+ It lets users can send SMS,
+Download SMS from Mobile Device,
+Read SMS Inbox
 
 For Installaton ..
 
 
 1. Unzip files under www or public_html folder.
-2. See example in PHP file how to use 
+2. See example in PHP file how to use
 3. Run PHP file from localhost or remote server.
 
 Gammu Configuration and HOW TO please read gammu_files Documentation

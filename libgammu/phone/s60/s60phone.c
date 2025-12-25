@@ -28,7 +28,7 @@
 #include "../pfunc.h"
 #include <string.h>
 
-#include "../../../helper/string.h"
+#include "../../../libgammu/misc/string.h"
 
 #if defined(GSM_ENABLE_S60)
 

@@ -2,7 +2,7 @@
 # in that case you can try the following to set the PKG_CONFIG_PATH.
 #
 # shell > export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
-# 
+#
 # Or something equivalient. You have to install gammu anyway .. :) .
 #
 
@@ -16,7 +16,7 @@ OBJS=$(foreach FILE, $(wildcard *.c), $(basename $(FILE)).o)
 
 all: $(ALL)
 
-clean: 
+clean:
 	rm -f $(ALL) $(OBJS)
 
 smscgid:$(OBJS)

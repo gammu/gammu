@@ -1,0 +1,55 @@
+Gammu mobiilihalduse tööriistad
+===============================
+
+Gammu on teek ja käsurea utiliit mobiiltelefonidele. Ta on välja antud GNU
+GPL versioon 2 litsensiga.
+
+Ta loojateks on Marcin Wiacek ja teised. Algne kood põhineb esmalt Gnokiil
+<https://www.gnokii.org/> ja hiljem MyGnokiil <http://www.mwiacek.com/>
+projektidel. Gammut nimetati varem (versioonini 0.58) MyGnokii2.
+
+Projekti juhib hetkel Michal Cihar <michal@cihar.com> paljude kaastöötajate
+toel.
+
+.. image:: https://travis-ci.org/gammu/gammu.svg?branch=master
+    :alt: Ehituse olek :target: https://travis-ci.org/gammu/gammu
+
+.. image:: https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/master?svg=true
+    :alt: Windowsi ehituse olek :target:
+    https://ci.appveyor.com/project/nijel/gammu/branch/master
+
+.. image:: https://hosted.weblate.org/widgets/gammu/-/svg-badge.svg
+    :alt: Tõlke olek :target:
+    https://hosted.weblate.org/engage/gammu/?utm_source=widget
+
+.. image:: https://scan.coverity.com/projects/2890/badge.svg?flat=1
+    :alt: Coverity skanneering :target: https://scan.coverity.com/projects/2890
+
+.. image:: https://img.shields.io/liberapay/receives/Gammu.svg
+    :alt: Liberapay :target: https://liberapay.com/Gammu/donate
+
+.. image:: https://www.bountysource.com/badge/team?team_id=23177&style=bounties_received
+    :alt: Bountysource :target:
+    https://www.bountysource.com/teams/gammu/issues?utm_source=Gammu&utm_medium=shield&utm_campaign=bounties_received
+
+Lisa informatsioon
+==================
+
+Täiendavat informatsiooni leiad aadressil <https://wammu.eu/gammu/>.
+
+Gammu manuaal asub kataloogis docs/manual. Manuaali HTML versiooni, mis on
+vaadav ka veebis aadressil <https://wammu.eu/docs/manual/>, saad ehitada
+käsuga make manual-html.
+
+
+Tagasiside ja veateated
+=======================
+
+Oodatud on igasugune tagasiside, arendajatega ühenduse võtmiseks vaata
+<https://wammu.eu/support/>.
+
+
+Toeta arendajaid
+================
+
+Sa saad väärtustada arendajate tööd aadressil <https://wammu.eu/donate/>.

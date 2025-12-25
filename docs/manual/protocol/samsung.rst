@@ -301,4 +301,3 @@ Write command uses index and direct memory reference with special 65535 value to
 Delete command use direct memory reference, index are automatically reorganized.
 
 Hint: After create or delete an organizer entry, reread full information to update index table.
-

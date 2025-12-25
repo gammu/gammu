@@ -1,8 +1,10 @@
 # cmake <http://www.cmake.org> build file for Gammu contrib files
-# Copyright (c) 2007 - 2017 Michal Cihar
+# Copyright (c) 2007 - 2018 Michal Cihar
 # vim: expandtab sw=4 ts=4 sts=4:
 
 project (Gammu-contrib C)
+
+include("GNUInstallDirs")
 
 option(INSTALL_GNAPPLET "Install Gnapplet binaries" ON)
 option(INSTALL_S60 "Install Series 60 applet binaries" ON)
@@ -95,16 +97,18 @@ if (INSTALL_BASH_COMPLETION)
 endif (INSTALL_BASH_COMPLETION)
 
 if (WITH_SYSTEMD)
+    configure_file( init/gammu-smsd.service init/gammu-smsd.service )
     install (
-        FILES init/gammu-smsd.service
+        FILES ${CMAKE_CURRENT_BINARY_DIR}/init/gammu-smsd.service
         DESTINATION "${SYSTEMD_SERVICES_INSTALL_DIR}"
         COMPONENT "systemd"
     )
 endif (WITH_SYSTEMD)
 
 if (INSTALL_LSB_INIT)
+    configure_file( init/gammu-smsd.lsb init/gammu-smsd.lsb )
     install (
-        FILES init/gammu-smsd.lsb
+        FILES ${CMAKE_CURRENT_BINARY_DIR}/init/gammu-smsd.lsb
         DESTINATION "/etc/init.d"
         RENAME "gammu-smsd"
         COMPONENT "initscript"
@@ -117,7 +121,7 @@ endif (INSTALL_LSB_INIT)
 if (INSTALL_UDEV_RULES)
     install (
         FILES udev/69-gammu-acl.rules
-        DESTINATION "/etc/udev/rules.d"
+        DESTINATION "/usr/lib/udev/rules.d"
         COMPONENT "udev"
         )
 else (INSTALL_UDEV_RULES)

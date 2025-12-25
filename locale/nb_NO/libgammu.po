@@ -1,0 +1,535 @@
+# libGammu translation.
+# Copyright (C) 2003 - 2017 Michal Čihař <michal@cihar.com>
+# This file is distributed under the same license as the libgammu package.
+# Automatically generated, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: libgammu 1.38.2\n"
+"Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
+"POT-Creation-Date: 2019-02-14 14:57+0100\n"
+"PO-Revision-Date: 2019-03-12 03:03+0000\n"
+"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/gammu/"
+"libgammu/nb_NO/>\n"
+"Language: nb_NO\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.5.1\n"
+
+#: libgammu/gsmcomon.c:84
+msgid "No error."
+msgstr "Ingen feil."
+
+#: libgammu/gsmcomon.c:85
+msgid "Error opening device. Unknown, busy or no permissions."
+msgstr "Feil ved åpning av enhet. Ukjent, opptatt eller ingen tilganger."
+
+#: libgammu/gsmcomon.c:86
+msgid "Error opening device, it is locked."
+msgstr "Feil ved åpning av enhet, den er låst."
+
+#: libgammu/gsmcomon.c:87
+msgid "Error opening device, it doesn't exist."
+msgstr "Feil ved åpning av enhet, den finnes ikke."
+
+#: libgammu/gsmcomon.c:88
+#, fuzzy
+#| msgid "Error opening device, it is already opened by other application."
+msgid "Error opening device, it is already opened by another app."
+msgstr "Feil ved åpning av enhet, den er allerede åpnet av et annet program."
+
+#: libgammu/gsmcomon.c:89
+#, fuzzy
+#| msgid "Error opening device, you don't have permissions."
+msgid "Error opening device, you don't have the required permission."
+msgstr "Feil ved åpning av enhet, du har ikke påkrevde tilganger."
+
+#: libgammu/gsmcomon.c:90
+msgid "Error opening device. No required driver in operating system."
+msgstr "Feil ved åpning av enhet. Ingen påkrevd driver i operativsystem."
+
+#: libgammu/gsmcomon.c:91
+msgid "Error opening device. Some hardware not connected/wrongly configured."
+msgstr ""
+"Feil ved åpning av enhet. Noen maskinvare er ikke tilkoblet/galt oppsatt."
+
+#: libgammu/gsmcomon.c:92
+msgid "Error setting device DTR or RTS."
+msgstr "Feil ved oppsett av DTR eller RTS."
+
+#: libgammu/gsmcomon.c:93
+#, fuzzy
+#| msgid "Error setting device speed. Maybe speed not supported."
+msgid "Error setting device speed. Maybe the speed is not supported?"
+msgstr ""
+"Feil ved innstilling av enhetshastighet. Kanskje hastigheten ikke støttes."
+
+#: libgammu/gsmcomon.c:94
+msgid "Error writing to the device."
+msgstr "Feil under skriving til enheten."
+
+#: libgammu/gsmcomon.c:95
+msgid "Error during reading from the device."
+msgstr "Feil under lesing fra enheten."
+
+#: libgammu/gsmcomon.c:96
+msgid "Can't set parity on the device."
+msgstr "Kan ikke sette paritet på enheten."
+
+#: libgammu/gsmcomon.c:97
+#, fuzzy
+#| msgid "No response in specified timeout. Probably phone not connected."
+msgid "No response in specified timeout. Probably the phone is not connected."
+msgstr ""
+"Ingen respons i tilmålt tidsramme. Antagelig er ikke telefonen tilkoblet."
+
+#: libgammu/gsmcomon.c:98
+#, fuzzy
+#| msgid ""
+#| "Frame not requested right now. See <https://wammu.eu/support/bugs/> for "
+#| "information how to report it."
+msgid ""
+"Frame not requested right now. See <https://wammu.eu/support/bugs/> for "
+"information on how to report it."
+msgstr ""
+"Ramme ikke forespurt akkurat nå. Se <https://wammu.eu/support/bugs/> for "
+"informasjon om hvordan du rapporterer dette."
+
+#: libgammu/gsmcomon.c:99
+#, fuzzy
+#| msgid ""
+#| "Unknown response from phone. See <https://wammu.eu/support/bugs/> for "
+#| "information how to report it."
+msgid ""
+"Unknown response from phone. See <https://wammu.eu/support/bugs/> for "
+"information on how to report it."
+msgstr ""
+"Ukjent svar fra telefon. Se <https://wammu.eu/support/bugs/> for informasjon "
+"om hvordan du rapporterer det."
+
+#: libgammu/gsmcomon.c:100
+#, fuzzy
+#| msgid ""
+#| "Unknown frame. See <https://wammu.eu/support/bugs/> for information how "
+#| "to report it."
+msgid ""
+"Unknown frame. See <https://wammu.eu/support/bugs/> for information on how "
+"to report it."
+msgstr ""
+"Ukjent ramme. Se <https://wammu.eu/support/bugs/> for informasjon om hvordan "
+"du rapporterer det."
+
+#: libgammu/gsmcomon.c:101
+msgid "Unknown connection type string. Check config file."
+msgstr "UKjent tilkoblingstype-streng. Sjekk oppsettsfil."
+
+#: libgammu/gsmcomon.c:102
+msgid "Unknown model type string. Check config file."
+msgstr "Ukjent modelltype-streng. Sjekk oppsettsfil."
+
+#: libgammu/gsmcomon.c:103
+#, fuzzy
+#| msgid ""
+#| "Some functions not available for your system (disabled in config or not "
+#| "implemented)."
+msgid ""
+"Some functions are not available for your system (disabled in config or not "
+"implemented)."
+msgstr ""
+"Noen funksjoner er ikke tilgjengelige på ditt system (avskrudd i oppsett "
+"eller ikke implementert)."
+
+#: libgammu/gsmcomon.c:104
+msgid "Function not supported by phone."
+msgstr "Funksjonen støttes ikke av telefonen."
+
+#: libgammu/gsmcomon.c:105
+msgid "Empty entry."
+msgstr "Oppføringen er tom."
+
+#: libgammu/gsmcomon.c:106
+msgid "Security error. Maybe no PIN?"
+msgstr "Sikkerhetsfeil. Kanskje ingen PIN-kode?"
+
+#: libgammu/gsmcomon.c:107
+msgid "Invalid location. Maybe too high?"
+msgstr "Ugyldig plassering. Kanskje for høy?"
+
+#: libgammu/gsmcomon.c:108
+#, fuzzy
+#| msgid ""
+#| "Functionality not implemented. You are welcome to help authors with it."
+msgid "Functionality not implemented. You are welcome to help."
+msgstr ""
+"Funksjonen er ikke implementert. Du er velkommen til å hjelpe utviklerne med "
+"det."
+
+#: libgammu/gsmcomon.c:109
+msgid "Memory full."
+msgstr "Minne fullt."
+
+#: libgammu/gsmcomon.c:110
+msgid "Unknown error."
+msgstr "Ukjent feil."
+
+#: libgammu/gsmcomon.c:111
+msgid "Can not open specified file."
+msgstr "Kan ikke åpne angitt fil."
+
+#: libgammu/gsmcomon.c:112
+#, fuzzy
+#| msgid "More memory required..."
+msgid "More memory required…"
+msgstr "Mer minne kreves…"
+
+#: libgammu/gsmcomon.c:113
+msgid "Operation not allowed by phone."
+msgstr "Operasjonen tillates ikke av telefonen."
+
+#: libgammu/gsmcomon.c:114
+#, fuzzy
+#| msgid ""
+#| "No SMSC number given. Provide it manually or use the one configured in "
+#| "phone."
+msgid ""
+"No SMSC number given. Provide it manually or use the one configured on the "
+"phone."
+msgstr ""
+"Inget SMSC-nummer gitt. Angi det manuelt, eller bruk det som er oppgitt på "
+"telefonen."
+
+#: libgammu/gsmcomon.c:115
+#, fuzzy
+#| msgid "You're inside phone menu (maybe editing?). Leave it and try again."
+msgid "You're inside the phone menu (maybe editing?). Exit it and try again."
+msgstr ""
+"Du er i en telefonment (kanskje endrer du noe?). Forlat den og prøv igjen."
+
+#: libgammu/gsmcomon.c:116
+#, fuzzy
+#| msgid "Phone is not connected."
+msgid "Phone not connected."
+msgstr "Telefonen er ikke tilkoblet."
+
+#: libgammu/gsmcomon.c:117
+msgid ""
+"Function is currently being implemented. If you want to help, please contact "
+"authors."
+msgstr ""
+"Funksjonen implementeres for tiden. Hvis du ønsker å hjelpe, kontakt "
+"utviklerne."
+
+#: libgammu/gsmcomon.c:118
+#, fuzzy
+#| msgid "Phone is disabled and connected to charger."
+msgid "Phone disabled and connected to charger."
+msgstr "Telefonen er avskrudd og tilkoblet lader."
+
+#: libgammu/gsmcomon.c:119
+msgid "File format not supported by Gammu."
+msgstr "Filformatet søttes ikke av Gammu."
+
+#: libgammu/gsmcomon.c:120
+msgid ""
+"Nobody is perfect, some bug appeared in protocol implementation. Please "
+"contact authors."
+msgstr ""
+"Ingen er perfekt, en feil oppstod i protokollimplementasjonen. Kontakt "
+"utviklerne."
+
+#: libgammu/gsmcomon.c:121
+#, fuzzy
+#| msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
+msgid "Transfer canceled by phone, maybe you pressed \"Cancel\" on the phone."
+msgstr ""
+"Overføringen ble avbrutt av telefonen, kanskje du trykket \"Avbryt\" på den."
+
+#: libgammu/gsmcomon.c:122
+msgid "Phone module need to send another answer frame."
+msgstr "Telefonmodulen må sende enda ei svarramme."
+
+#: libgammu/gsmcomon.c:123
+msgid "Current connection type doesn't support called function."
+msgstr "Nåværende tilkoblingstype støtter ikke oppringt-funksjon."
+
+#: libgammu/gsmcomon.c:124
+msgid "CRC error."
+msgstr "CRC-feil."
+
+#: libgammu/gsmcomon.c:125
+msgid "Invalid date or time specified."
+msgstr "Ugyldig dato eller tid oppgitt."
+
+#: libgammu/gsmcomon.c:126
+#, fuzzy
+#| msgid "Phone memory error, maybe it is read only."
+msgid "Phone memory error, maybe it is read only?"
+msgstr "Telefonminnefeil, kanskje det er skrivebeskyttet?"
+
+#: libgammu/gsmcomon.c:127
+msgid "Invalid data given to phone."
+msgstr "Ugyldig data sendt til telefonen."
+
+#: libgammu/gsmcomon.c:128
+msgid "File with specified name already exists."
+msgstr "Fil med angitt navn finnes allerede."
+
+#: libgammu/gsmcomon.c:129
+msgid "File with specified name doesn't exist."
+msgstr "Fil med angitt navn finnes ikke."
+
+#: libgammu/gsmcomon.c:130
+#, fuzzy
+#| msgid "You have to give folder name and not file name."
+msgid "You have to supply folder name and not filename."
+msgstr "Du må angi mappenavn og ikke filnavn."
+
+#: libgammu/gsmcomon.c:131
+#, fuzzy
+#| msgid "You have to give file name and not folder name."
+msgid "You have to supply filename and not folder name."
+msgstr "Du må angi filnavn og ikke mappenavn."
+
+#: libgammu/gsmcomon.c:132
+msgid "Can not access SIM card."
+msgstr "Får ikke tilgang til SIM-kort."
+
+#: libgammu/gsmcomon.c:133
+#, fuzzy
+#| msgid ""
+#| "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
+msgid ""
+"Wrong GNAPPLET version in use on phone. Use version from currently used "
+"Gammu."
+msgstr ""
+"Feil GNAPPLET-versjon på telefonen. Bruk versjon fra aktuell versjon av "
+"Gammu."
+
+#: libgammu/gsmcomon.c:134
+msgid "Only part of folder has been listed."
+msgstr "Kun deler av mappa har blitt opplistet."
+
+#: libgammu/gsmcomon.c:135
+msgid "Folder must be empty."
+msgstr "Mappa må være tom."
+
+#: libgammu/gsmcomon.c:136
+#, fuzzy
+#| msgid "Data were converted."
+msgid "Data converted."
+msgstr "Data ble konvertert."
+
+#: libgammu/gsmcomon.c:137
+msgid "Gammu is not configured."
+msgstr "Gammu er ikke oppsatt."
+
+#: libgammu/gsmcomon.c:138
+msgid "Wrong folder used."
+msgstr "Feil mappe brukt."
+
+#: libgammu/gsmcomon.c:139
+msgid "Internal phone error."
+msgstr "Intern telefonfeil."
+
+#: libgammu/gsmcomon.c:140
+msgid "Error writing file to disk."
+msgstr "Feil under skriving til disk."
+
+#: libgammu/gsmcomon.c:141
+msgid "No such section exists."
+msgstr "Ingen slik del finnes."
+
+#: libgammu/gsmcomon.c:142
+msgid "Using default values."
+msgstr "Bruker forvalgte verdier."
+
+#: libgammu/gsmcomon.c:143
+msgid "Corrupted data returned by phone."
+msgstr "Skadet data returnert fra telefonen."
+
+#: libgammu/gsmcomon.c:144
+msgid "Bad feature string in configuration."
+msgstr "Feil funksjonsstreng i oppsett."
+
+#: libgammu/gsmcomon.c:145
+msgid "Desired functionality has been disabled on compile time."
+msgstr "Ønsket funksjonalitet har blitt avskrudd ved kompilering."
+
+#: libgammu/gsmcomon.c:146
+msgid "Bluetooth configuration requires channel option."
+msgstr "Blåtannsoppsett krever kanalvalg."
+
+#: libgammu/gsmcomon.c:147
+msgid "Service is not running."
+msgstr "Tjenesten kjører ikke."
+
+#: libgammu/gsmcomon.c:148
+msgid "Service configuration is missing."
+msgstr "Tjenesteoppsettet mangler."
+
+#: libgammu/gsmcomon.c:149
+msgid "Command rejected because device was busy. Wait and restart."
+msgstr ""
+"Kommandoen ble avslått, siden enheten er opptatt. Vent og start på nytt."
+
+#: libgammu/gsmcomon.c:150
+msgid "Could not connect to the server."
+msgstr "Kunne ikke koblet til tjeneren."
+
+#: libgammu/gsmcomon.c:151
+msgid "Could not resolve the host name."
+msgstr "Kunne ikke fortolke vertsnavnet."
+
+#: libgammu/gsmcomon.c:152
+msgid "Failed to get SMSC number from phone."
+msgstr "Klarte ikke å hente SMSC-nummer fra telefonen."
+
+#: libgammu/gsmcomon.c:153
+msgid "Operation aborted."
+msgstr "Operasjon avbrutt."
+
+#: libgammu/gsmcomon.c:154
+msgid ""
+"Installation data not found, please consult debug log and/or documentation "
+"for more details."
+msgstr ""
+"Installasjonsdata ble ikke funnet, se i feilrettingsloggen, og/eller "
+"dokumentasjonen for flere detaljer."
+
+#: libgammu/gsmcomon.c:155
+msgid "Entry is read only."
+msgstr "Oppføringen er skrivebeskyttet."
+
+#: libgammu/gsmcomon.c:156
+msgid "Network error."
+msgstr "Nettverksfeil."
+
+#: libgammu/gsmcomon.c:157
+msgid "Invalid database version."
+msgstr "Ugyldig databaseversjon."
+
+#: libgammu/gsmcomon.c:158
+msgid "Failed to initialize DB driver."
+msgstr "Klarte ikke å igangsette DB-driver."
+
+#: libgammu/gsmcomon.c:159
+msgid "Failed to configure DB driver."
+msgstr "Klarte ikke å sette opp DB-driver."
+
+#: libgammu/gsmcomon.c:160
+msgid "Failed to connect to database."
+msgstr "Klarte ikke å koble til database."
+
+#: libgammu/gsmcomon.c:161
+msgid "Database connection timeout."
+msgstr "Tidsavbrudd for databasetilkobling."
+
+#: libgammu/gsmcomon.c:162
+msgid "Error in executing SQL query."
+msgstr "Feil ved kjøring av SQL-spørring."
+
+#: libgammu/gsmcomon.c:163
+msgid "The type of memory is not available or has been disabled."
+msgstr "Denne typen minne er ikke tilgjengelig eller har blitt skrudd av."
+
+#: libgammu/gsmcomon.c:164
+#, fuzzy
+#| msgid "Operation aborted."
+msgid "The operation cannot be performed."
+msgstr "Operasjon avbrutt."
+
+#: libgammu/gsmcomon.c:197
+msgid "Unknown error description."
+msgstr "Ukjent feilbeskrivelse."
+
+#: libgammu/phone/dummy/dummy.c:610
+msgid "Templates"
+msgstr "Maler"
+
+#: libgammu/phone/nokia/dct3/n6110.c:1969
+msgid "Personal"
+msgstr "Personlig"
+
+#: libgammu/phone/nokia/dct3/n6110.c:1971 libgammu/phone/nokia/nfunc.c:1156
+msgid "Car"
+msgstr "Bil"
+
+#: libgammu/phone/nokia/dct3/n6110.c:1973 libgammu/phone/nokia/nfunc.c:1158
+msgid "Headset"
+msgstr "Hodesett"
+
+#: libgammu/phone/nokia/dct3/n6110.c:1979 libgammu/phone/nokia/nfunc.c:1146
+msgid "General"
+msgstr "Hovedinnstillinger"
+
+#: libgammu/phone/nokia/dct3/n6110.c:1981 libgammu/phone/nokia/nfunc.c:1148
+msgid "Silent"
+msgstr "Stille"
+
+#: libgammu/phone/nokia/dct3/n6110.c:1983
+msgid "Discreet"
+msgstr "Diskret"
+
+#: libgammu/phone/nokia/dct3/n6110.c:1985
+msgid "Loud"
+msgstr "Høy"
+
+#: libgammu/phone/nokia/dct3/n6110.c:1987
+msgid "My style"
+msgstr "Min stil"
+
+#: libgammu/phone/nokia/dct4s40/6510/n6510.c:578
+msgid "SIM"
+msgstr "SIM"
+
+#: libgammu/phone/nokia/dct4s40/6510/n6510.c:579 libgammu/phone/pfunc.c:41
+#: libgammu/phone/s60/s60phone.c:1779
+msgid "Inbox"
+msgstr "Innboks"
+
+#: libgammu/phone/nokia/dct4s40/6510/n6510.c:580
+msgid "Sent items"
+msgstr "Sendte meldinger"
+
+#: libgammu/phone/nokia/dct4s40/6510/n6510.c:581
+msgid "Saved items"
+msgstr "Lagrede meldinger"
+
+#: libgammu/phone/nokia/nfunc.c:962
+msgid "Family"
+msgstr "Familie"
+
+#: libgammu/phone/nokia/nfunc.c:964
+msgid "VIP"
+msgstr "VIP"
+
+#: libgammu/phone/nokia/nfunc.c:966
+msgid "Friends"
+msgstr "Venner"
+
+#: libgammu/phone/nokia/nfunc.c:968
+msgid "Colleagues"
+msgstr "Kollegaer"
+
+#: libgammu/phone/nokia/nfunc.c:970
+msgid "Other"
+msgstr "Andre"
+
+#: libgammu/phone/nokia/nfunc.c:1150
+msgid "Meeting"
+msgstr "Møte"
+
+#: libgammu/phone/nokia/nfunc.c:1152
+msgid "Outdoor"
+msgstr "Utendørs"
+
+#: libgammu/phone/nokia/nfunc.c:1154
+msgid "Pager"
+msgstr "Personsøker"
+
+#: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1780
+msgid "Outbox"
+msgstr "Utboks"

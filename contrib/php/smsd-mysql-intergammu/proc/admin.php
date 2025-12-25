@@ -19,14 +19,14 @@ if(!is_array($res)){
 					}
 					$this->enviarsms($sms);
 					break;
-					
+
 				case "uptime":
 					unset($linha);
 					exec("uptime", $linha);
 					$sms = "Uptime: ".$linha[0];
 					$this->enviarsms($sms);
 					break;
-					
+
 				##feel free to add some new commands here
 			}
 		}else{

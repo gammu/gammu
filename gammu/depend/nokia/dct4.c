@@ -15,7 +15,7 @@
 #include "../../../helper/locales.h"
 
 #include "../../../helper/formats.h"
-#include "../../../helper/string.h"
+#include "../../../libgammu/misc/string.h"
 #include "../../../helper/cmdline.h"
 
 extern GSM_Reply_Function UserReplyFunctions4[];
@@ -99,7 +99,7 @@ static DCT4_Feature DCT4Features[] = {
 	{DCT4_JAVA_TCK,	                 "Java TCK support",             {{1,"on"},{0,"off"},{0,""}}},
 
 	{DCT4_ALS,		 	 "Alternate Line Service (ALS)", {{1,"on"},{0,"off"},{0,""}}},
-	{DCT4_A52,		 	 "Ciphering alghoritm A52", 	 {{1,"on"},{0,"off"},{0,""}}},
+	{DCT4_A52,		 	 "Ciphering algorithm A52", 	 {{1,"on"},{0,"off"},{0,""}}},
 	{DCT4_CSP,		 	 "Customer Service Profile",	 {{0,"off"},{1,"on"},{0,""}}},
 	{DCT4_EONS,			 "EONS support",		 {{1,"on"},{0,"off"},{0,""}}},
 	{DCT4_3GINDICATOR,		 "3G indicator",		 {{1,"on"},{0,"off"},{0,""}}},
@@ -494,7 +494,7 @@ void DCT4VibraTest(int argc, char *argv[])
 	error=DCT4EnableVibra(gsm, TRUE);
 	Print_Error(error);
 
-	printf("%s\n", _("Press any key to continue..."));
+	printf("%s\n", _("Press any key to continue…"));
 	GetLine(stdin, ans, 99);
 
 	error=DCT4EnableVibra(gsm, FALSE);
@@ -1003,7 +1003,7 @@ void DCT4DisplayTest(int argc, char *argv[])
 	req[8] = GetInt(argv[2]);
 	gsm->Protocol.Functions->WriteMessage(gsm, req, 10, 0x40);
 
-	printf("%s\n", _("Press any key to continue..."));
+	printf("%s\n", _("Press any key to continue…"));
 	GetLine(stdin, ans, 99);
 
 	DCT4_SetPhoneMode(gsm, DCT4_MODE_NORMAL);

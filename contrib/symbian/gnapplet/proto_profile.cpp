@@ -57,7 +57,7 @@ static void ReadProfileL(PktBuf &in, PktBuf &out)
 			    *g->profilefs,
 			    _L("c:\\system\\Apps\\profileApp\\dbProfile.db"),
 			    EFileRead | EFileWrite);
-	RDbStoreDatabase database;    
+	RDbStoreDatabase database;
 	database.OpenL(fstore, fstore->Root());
 	RDbTable table;
 	// tableId, profileName, profileUID, remove, modify, active, visible, rename
@@ -125,7 +125,7 @@ static void GetActiveProfileL(PktBuf &in, PktBuf &out)
 			    *g->profilefs,
 			    _L("c:\\system\\Apps\\profileApp\\dbProfile.db"),
 			    EFileRead | EFileWrite);
-	RDbStoreDatabase database;    
+	RDbStoreDatabase database;
 	database.OpenL(fstore, fstore->Root());
 	RDbTable table;
 	// tableId, profileName, profileUID, remove, modify, active, visible, rename

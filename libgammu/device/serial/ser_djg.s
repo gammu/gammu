@@ -11,7 +11,7 @@ _SVAsyncProtISR:
 	pushl %edx
 	pushw %ds
 	movw %cs:___djgpp_ds_alias, %ds
-top:        
+top:
 	movw _LSR,%dx
 	inb %dx, %al
 	testb $1,%al
@@ -28,12 +28,12 @@ top:
 inrange:
 	jmp top
 
-byebye:        
+byebye:
 	popw %ds
 	popl %edx
-	
+
 	movb $32,%al
 	outb %al, $32
-	
+
 	popl %eax
 	iret

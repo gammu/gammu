@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "GAMMU" "1" "Jun 02, 2017" "1.38.4" "Gammu"
+.TH "GAMMU" "1" "Oct 03, 2020" "1.42.0" "Gammu"
 .SH NAME
 gammu \- Does some neat things with your cellular phone or modem.
 .
@@ -277,7 +277,7 @@ will see location. If you want to get such sms from phone alone, use
 .INDENT 0.0
 .TP
 .B geteachsms \-pbk
-Similiary to \fBgammu getallsms\fP\&. Difference is, that
+Similarly to \fBgammu getallsms\fP\&. Difference is, that
 links all concatenated sms
 .UNINDENT
 .INDENT 0.0
@@ -421,6 +421,14 @@ phone using filesystem commands.
 .UNINDENT
 .INDENT 0.0
 .TP
+.B USSD
+Send USSD query instead of SMS.
+.sp
+New in version 1.38.5.
+
+.UNINDENT
+.INDENT 0.0
+.TP
 .B EMS [\-unicode] [\-16bit] [\-format lcrasbiut] [\-text text] [\-unicodefiletext file] [\-defsound ID] [\-defanimation ID] [\-tone10 file] [\-tone10long file] [\-tone12 file] [\-tone12long file] [\-toneSE file] [\-toneSElong file] [\-fixedbitmap file] [\-variablebitmap file] [\-variablebitmaplong file] [\-animation frames file1 ...] [\-protected number]
 Saves EMS sequence. All format specific parameters (like \fB\-defsound\fP) can be used few times.
 .INDENT 7.0
@@ -522,7 +530,7 @@ _
 T{
 Character
 T}	T{
-Formating
+Formatting
 T}
 _
 T{
@@ -1001,12 +1009,12 @@ Delete folder with given ID.
 .INDENT 0.0
 .TP
 .B getfilefolder fileID, fileID
-Retrieve files or all files from folder with given IDs from a phone filesytem.
+Retrieve files or all files from folder with given IDs from a phone filesystem.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B getfiles fileID, fileID
-Retrieve files with given IDs from a phone filesytem.
+Retrieve files with given IDs from a phone filesystem.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -2246,7 +2254,7 @@ Some functions not available for your system (disabled in config or not implemen
 Function not supported by phone.
 .TP
 .B 122
-Entry is empty.
+Empty entry.
 .TP
 .B 123
 Security error. Maybe no PIN?

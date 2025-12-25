@@ -1,0 +1,57 @@
+Gammu Utilitários para Gerenciamento Telefones Celulares
+========================================================
+
+Gammu é uma biblioteca e utilitários de comandos de linha para telefones
+móveis. É distribuído sob GNU GPL versão 2.
+
+Foi iniciado por Marcin Wiacek e outras pessoas. Originalmente o código foi
+baseado nos projetos: Gnokii <https://www.gnokii.org/> e mais tarde no
+MyGnokii <http://www.mwiacek.com/>. Gammu até a versão 0.58 era chamado
+MyGnokii2.
+
+Atualmente o projeto é liderado por Michal Cihar <michal@cihar.com> com
+ajuda de vários contribuidores.
+
+.. image:: https://travis-ci.org/gammu/gammu.svg?branch=master
+    :alt: Build status :target: https://travis-ci.org/gammu/gammu
+
+.. image:: https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/master?svg=true
+    :alt: Condição Geral da Versão para Windows :target:
+    https://ci.appveyor.com/project/nijel/gammu/branch/master
+
+.. image:: https://hosted.weblate.org/widgets/gammu/-/svg-badge.svg
+    :alt: Translation status :target:
+    https://hosted.weblate.org/engage/gammu/?utm_source=widget
+
+.. image:: https://scan.coverity.com/projects/2890/badge.svg?flat=1
+    :alt: Coverity scan :target: https://scan.coverity.com/projects/2890
+
+.. image:: https://img.shields.io/liberapay/receives/Gammu.svg
+    :alt: Liberapay :target: https://liberapay.com/Gammu/donate
+
+.. image:: https://www.bountysource.com/badge/team?team_id=23177&style=bounties_received
+    :alt: Bountysource :target:
+    https://www.bountysource.com/teams/gammu/issues?utm_source=Gammu&utm_medium=shield&utm_campaign=bounties_received
+
+Mais informações
+================
+
+Você pode encontrar mais informações em <https://wammu.eu/gammu/>.
+
+Também há um manual Gammu disponível em docs/manual. Você pode construir o
+HTML da versão usando: make manual-html. Também pode acessá-lo em
+<https://wammu.eu/docs/manual/>.
+
+
+Reporte erros e de sua opinião
+==============================
+
+Toda opinião é bem vinda! veja <https://wammu.eu/support/> para saber como
+contactar os desenvolvedores.
+
+
+Suporte desenvolvedores
+=======================
+
+Você pode encontrar mais informações sobre o(s) desenvolvedor(es) em
+<https://wammu.eu/gammu/>.

@@ -41,6 +41,7 @@
 
 #include "../../gsmcomon.h"
 #include "ser_w32.h"
+#include "../libgammu/misc/string.h"
 
 static GSM_Error serial_close(GSM_StateMachine *s)
 {
@@ -189,7 +190,7 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 #endif
 
 	if ((s->ConnectionType == GCT_DKU5FBUS2) ||
-	    (!strncmp(DeviceName2,"com",3) && strlen(DeviceName2)>3)) {
+	    (strncasecmp(DeviceName2,"com",3) == 0 && strlen(DeviceName2)>3)) {
 		sprintf(DeviceName,"\\\\.\\COM%i",atoi(DeviceName2+3));
 	} else {
 		strcpy(DeviceName,DeviceName2);

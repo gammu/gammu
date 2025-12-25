@@ -33,6 +33,19 @@ where you just need to put URL of the data (use :option:`gammu sendsms`
 MMSINDICATOR for that). However you need to encode MMS data yourself or use
 other program to do that.
 
+.. _faq-mms-download:
+
+Can I use Gammu to receive MMS?
+-------------------------------
+
+MMS contains of two parts - the actual MMS data in SMIL format and the SMS
+containing notification about the data. Gammu (or SMSD) will receive the
+notification SMS, where URL to download the MMS content is included.
+
+However in most situations the URL is accessible only from the network and APN
+specific for the MMS messages, so downloading it is a bit tricky and needs to
+connect using GSM modem to the network using this APN.
+
 .. _faq-devname:
 
 Device name always changes on Linux, how to solve that?
@@ -68,7 +81,7 @@ You can match by various attributes, you can figure them using udevadm command:
 
 .. _echo:
 
-Mutliple programs using same device cause various errors, how to fix that?
+Multiple programs using same device cause various errors, how to fix that?
 --------------------------------------------------------------------------
 
 Gammu needs to be the only program using the device, otherwise you will get
@@ -91,7 +104,7 @@ The usual programs involve:
 * NetworkManager with ModemManager, you need to disable mobile networking to
   stop it using the device, disabling the modem connection does not seem to be
   enough.
-* Other Gammu instance, in case you want to interact with modem while SMSD is 
+* Other Gammu instance, in case you want to interact with modem while SMSD is
   running see :ref:`gammu-smsd-suspend`.
 
 
@@ -100,7 +113,7 @@ What are free alternatives to Gammu?
 
 It depends on your phone. For Nokia or AT based phones, you can try `Gnokii`_,
 but Gammu should be superior in most cases. For Symbian phone you can try using
-`Series60-Remote`_, which works pretty well with S60 phones, though Gammu 
+`Series60-Remote`_, which works pretty well with S60 phones, though Gammu
 brings various fixes to their applet.
 
 If you are looking for synchronisation, try using something what supports

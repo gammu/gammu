@@ -3,7 +3,7 @@
 Gnapplet Protocol
 =================
 
-.. note:: 
+.. note::
 
     The original applet has been created for
     <http://www.gnokii.org/>. Gammu currently uses slightly

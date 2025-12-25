@@ -130,9 +130,11 @@ typedef struct {
 	 */
 	char LAC[10];
 	/**
-	 * Name of current network like returned from phone (or empty).
+	 * Name of current network returned from phone (or empty).
+	 * The buffer needs to have twice the capacity of the longest supported
+	 * network name to account for decoding.
 	 */
-	unsigned char NetworkName[15 * 2];
+	unsigned char NetworkName[20 * 2];
 	/**
 	 * GPRS state.
 	 */
@@ -722,6 +724,19 @@ typedef enum {
 	 * ZTE style init.
 	 */
 	F_ZTE_INIT,
+	/**
+	 * Prefer GSM charset for USSD (default is unicode).
+	 */
+	F_USSD_GSM_CHARSET,
+	/**
+	 * Phone supports SR storage even if it does not report
+	 * so.
+	 */
+	F_SMS_SR,
+	/**
+	 * Phone does not have a SR memory even if it reports so.
+	 */
+	F_SMS_NO_SR,
 
 	/**
 	 * Just marker of highest feature code, should not be used.

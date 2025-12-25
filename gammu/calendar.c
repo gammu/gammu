@@ -629,7 +629,7 @@ void GetAllCalendar(int argc UNUSED, char *argv[]UNUSED)
 	gboolean refresh = TRUE;
 
 	signal(SIGINT, interrupt);
-	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
+	fprintf(stderr, "%s\n", _("Press Ctrl+C to break…"));
 
 	GSM_Init(TRUE);
 
@@ -882,7 +882,7 @@ void ListToDoCategory(int argc UNUSED, char *argv[])
 	GSM_Init(TRUE);
 
 	signal(SIGINT, interrupt);
-	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
+	fprintf(stderr, "%s\n", _("Press Ctrl+C to break…"));
 
 	Length = strlen(argv[2]);
 	for (j = 0; j < Length; j++) {
@@ -957,7 +957,7 @@ void GetAllToDo(int argc UNUSED, char *argv[]UNUSED)
 	gboolean start = TRUE;
 
 	signal(SIGINT, interrupt);
-	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
+	fprintf(stderr, "%s\n", _("Press Ctrl+C to break…"));
 
 	GSM_Init(TRUE);
 
@@ -982,7 +982,7 @@ void GetAllNotes(int argc UNUSED, char *argv[]UNUSED)
 	gboolean start = TRUE;
 
 	signal(SIGINT, interrupt);
-	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
+	fprintf(stderr, "%s\n", _("Press Ctrl+C to break…"));
 
 	GSM_Init(TRUE);
 

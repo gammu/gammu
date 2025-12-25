@@ -1,5 +1,5 @@
 /* (c) 2002-2004 by Marcin Wiacek and Joergen Thomsen */
-/* Copyright (c) 2009 - 2017 Michal Cihar <michal@cihar.com> */
+/* Copyright (c) 2009 - 2018 Michal Cihar <michal@cihar.com> */
 
 #ifndef __core_h_
 #define __core_h_
@@ -17,11 +17,11 @@
 
 #define SMSD_SHM_VERSION (2)
 #define SMSD_SHM_KEY (0xfa << 16 || SMSD_SHM_VERSION)
-#define SMSD_DB_VERSION (16)
+#define SMSD_DB_VERSION (17)
 
 #include "log.h"
 
-#include "../helper/array.h"
+#include "../libgammu/misc/array.h"
 
 typedef enum {
 	DEBUG_ERROR = -1,
@@ -87,6 +87,7 @@ struct _GSM_SMSDConfig {
 	const char   *RunOnReceive;
 	const char   *RunOnFailure; /* run this command on phone communication failure */
 	const char   *RunOnSent; /* run this command when an SMS has been sent successfully */
+	const char   *RunOnIncomingCall; /* run this command when a phone call has been canceled */
 	gboolean checksecurity;
 	gboolean hangupcalls;
 	gboolean checkbattery;
@@ -95,6 +96,7 @@ struct _GSM_SMSDConfig {
 	gboolean enable_send;
 	gboolean enable_receive;
 	unsigned int maxretries;
+	unsigned int retrytimeout;
 	int backend_retries;
 
 	/* options for FILES */
@@ -109,6 +111,7 @@ struct _GSM_SMSDConfig {
 	GSM_SMSC	SMSC, SMSCCache;
 	const char	*skipsmscnumber;
 	int		IgnoredMessages;
+	gboolean 	SkipMessage[GSM_MAX_MULTI_SMS];
 
 #if defined(HAVE_MYSQL_MYSQL_H) || defined(HAVE_POSTGRESQL_LIBPQ_FE_H) || defined(LIBDBI_FOUND) || defined(ODBC_FOUND)
 	/* options for SQL database */
@@ -144,7 +147,7 @@ struct _GSM_SMSDConfig {
 	 * Address of the database (eg. hostname).
 	 */
 	const char	*host;
-        char 		DT[40];
+        char 		DT[200];
 	char		CreatorID[200];
 	/* database data structure */
 	struct GSM_SMSDdbobj *db;
@@ -195,6 +198,8 @@ struct _GSM_SMSDConfig {
 	 * Message reference set by callback from libGammu.
 	 */
 	volatile int TPMR;
+	volatile int StatusCode;
+	volatile int Part;
 
 	/**
 	 * Multipart messages processing.

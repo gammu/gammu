@@ -294,7 +294,7 @@ List::
                                  0x32:    Reboots ME (3330)
                                  0x1f:    ???: Read only? (3330)
                                  0x20:    Reply via same centre:         0x00=No, 0x01=Yes
-                                 0x21:    Delivery reports:              0x00=No, 0x01=Yes	
+                                 0x21:    Delivery reports:              0x00=No, 0x01=Yes
                                  0x22:    Show/Hide clock:               0x00=Show, 0x01=Hide
                                  0x23:    Time format:                   0x00=24-hour, 0x01=12-hour
                                  0x24:    Select profile:                0x00=General, 0x01 ... 0x05=rest of them

@@ -11,7 +11,7 @@
 #include "../../gsmcomon.h"
 #include "at.h"
 
-static GSM_Error AT_WriteMessage (GSM_StateMachine *s, unsigned const char *buffer,
+static GSM_Error AT_WriteMessage (GSM_StateMachine *s, const unsigned char *buffer,
 				     size_t length, int type)
 {
 	size_t sent=0, i=0;
@@ -86,7 +86,8 @@ GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 	static const SpecialAnswersStruct SpecialAnswers[] = {
 		/* Standard GSM */
 		{"+CGREG:"	,1, ID_GetNetworkInfo},
-		{"+CBM:"	,1, ID_All},
+		/* Following has 2 lines in PDU mode, 1 line in TEXT ... */
+		{"+CBM:"	,2, ID_All},
 		{"+CMT:"	,2, ID_All},
 		{"+CMTI:"	,1, ID_All},
 		{"+CDS:"	,2, ID_All},
@@ -141,9 +142,13 @@ GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 
 		/* D-Link */
 		{"+SPNWNAME:"	,1, ID_All}, /* +SPNWNAME: "432", "11", "Mci", "Mci" */
+		{"+PSBEARER:"	,1, ID_All}, /* +PSBEARER: 24, 0 */
 
 		/* ONDA */
 		{"+ZUSIMR:"	,1, ID_All}, /* +ZUSIMR:2 */
+
+		/* Telit */
+		{"#STN:"	,1, ID_All}, /* #STN: 150,1,"" */
 
 		{NULL		,1, ID_All}};
 
@@ -242,9 +247,6 @@ GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 
 				/* We cut special answer from main buffer */
 				d->Msg.Length			= d->SpecialAnswerStart;
-				if (d->Msg.Length != 0) {
-					d->Msg.Length = d->Msg.Length - 2;
-				}
 
 				/* We need to find earlier values of all variables */
 				d->wascrlf 			= FALSE;
@@ -256,13 +258,13 @@ GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 					case 10:
 					case 13:
 						if (!d->wascrlf) {
-							d->LineEnd = d->Msg.Length - 1;
+							d->LineEnd = d->Msg.Length;
 						}
 						d->wascrlf = TRUE;
 						break;
 					default:
 						if (d->wascrlf) {
-							d->LineStart	= d->Msg.Length - 1;
+							d->LineStart	= d->Msg.Length;
 							d->wascrlf 	= FALSE;
 						}
 					}
@@ -286,6 +288,7 @@ GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 			d->Msg.Length			= 0;
 			break;
 		}
+		FALLTHROUGH
 	default:
 		if (d->wascrlf) {
 			d->LineStart	= d->Msg.Length - 1;

@@ -1506,7 +1506,7 @@ gboolean mywstrncmp(unsigned const  char *a, unsigned const  char *b, int num)
 }
 
 /* FreeBSD boxes 4.7-STABLE does't have it, although it's ANSI standard */
-gboolean myiswspace(unsigned const char *src)
+gboolean myiswspace(const unsigned char *src)
 {
 #ifndef HAVE_ISWSPACE
  	int 		o;

@@ -21,7 +21,7 @@
 
 #include "../helper/formats.h"
 #include "../helper/printing.h"
-#include "../helper/string.h"
+#include "../libgammu/misc/string.h"
 
 #if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
 void NokiaComposer(int argc UNUSED, char *argv[])
@@ -416,6 +416,9 @@ void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned char *IDF
 out:
 	free(Names);
 	free(Names2);
+	if (First != NULL) {
+		free(First);
+	}
 }
 
 void NokiaAddPlayLists(int argc UNUSED, char *argv[] UNUSED)
@@ -1060,4 +1063,3 @@ void NokiaVibraTest(int argc, char *argv[])
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:
  */
-

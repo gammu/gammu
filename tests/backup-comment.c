@@ -18,4 +18,3 @@ int main(int argc UNUSED, char **argv UNUSED)
     gammu_test_result(err, "SaveTextComment");
 	return 0;
 }
-

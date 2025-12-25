@@ -41,11 +41,6 @@ Sources of SMS Daemon as well as all it's service backends.
 
 The ``services`` subdirectory contains source code for :ref:`smsd_services`.
 
-python directory
-----------------
-
-Sources of python-gammu module and some examples.
-
 helper directory
 ----------------
 

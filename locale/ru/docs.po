@@ -5,24 +5,26 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu-docs 1.38.2\n"
+"Project-Id-Version: Gammu-docs 1.41.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-10-11 13:13+0200\n"
-"PO-Revision-Date: 2009-01-07 18:00+0100\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"Language: \n"
+"POT-Creation-Date: 2019-09-27 09:19+0200\n"
+"PO-Revision-Date: 2020-09-12 17:36+0000\n"
+"Last-Translator: Irina <irinaabissinian@gmail.com>\n"
+"Language-Team: Russian <https://hosted.weblate.org/projects/gammu/gammu-docs/"
+"ru/>\n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.3-dev\n"
 
 #. type: Title =
 #: README.rst:2
 #, no-wrap
 msgid "Gammu All Mobile Management Utilities"
-msgstr ""
+msgstr "Gammu: Все утилиты управления мобильным"
 
 #. type: Plain text
 #: README.rst:6
@@ -30,6 +32,8 @@ msgid ""
 "Gammu is library and command line utility for mobile phones. It is released "
 "under GNU GPL version 2."
 msgstr ""
+"Gammu это библиотека и утилита командной строки для мобильных телефонов. "
+"Распространяется под лицензией GNU GPL версия 2."
 
 #. type: Plain text
 #: README.rst:11
@@ -39,6 +43,9 @@ msgid ""
 "mwiacek.com/> projects. Gammu was former (up to version 0.58) called "
 "MyGnokii2."
 msgstr ""
+"Разработка начата Marcin Wiacek и другими. Первоначально код базируется на "
+"проектах Gnokii <https://www.gnokii.org/> и более позднем MyGnokii <http://"
+"www.mwiacek.com/>. До версии 0.58 Gammu был известен под названием MyGnokii2."
 
 #. type: Plain text
 #: README.rst:14
@@ -46,6 +53,8 @@ msgid ""
 "Currently the project is lead by Michal Cihar <michal@cihar.com> with help "
 "of many contributors."
 msgstr ""
+"В настоящее время проект ведёт Michal Cihar <michal@cihar.com> с помощью "
+"многих участников."
 
 #. type: Labeled list
 #: README.rst:15 README.rst:19 README.rst:23 README.rst:27 README.rst:31
@@ -56,17 +65,13 @@ msgstr ".. image"
 
 #. type: Plain text
 #: README.rst:16
-#, fuzzy
-#| msgid "https://travis-ci.org/gammu/gammu.png?branch=master"
 msgid "https://travis-ci.org/gammu/gammu.svg?branch=master"
-msgstr "https://travis-ci.org/gammu/gammu.png?branch=master"
+msgstr "https://travis-ci.org/gammu/gammu.svg?branch=master"
 
 #. type: Plain text
 #: README.rst:18
-#, fuzzy
-#| msgid ":target: https://travis-ci.org/gammu/gammu"
 msgid ":alt: Build status :target: https://travis-ci.org/gammu/gammu"
-msgstr ":target: https://travis-ci.org/gammu/gammu"
+msgstr ":alt: Статус сборки :target: https://travis-ci.org/gammu/gammu"
 
 #. type: Plain text
 #: README.rst:20
@@ -74,22 +79,22 @@ msgid ""
 "https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/master?"
 "svg=true"
 msgstr ""
+"https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/master?"
+"svg=true"
 
 #. type: Plain text
 #: README.rst:22
-#, fuzzy
-#| msgid ":target: https://travis-ci.org/gammu/gammu"
 msgid ""
 ":alt: Windows Build status :target: https://ci.appveyor.com/project/nijel/"
 "gammu/branch/master"
-msgstr ":target: https://travis-ci.org/gammu/gammu"
+msgstr ""
+":alt: Статус сборки под Windows :target: https://ci.appveyor.com/project/"
+"nijel/gammu/branch/master"
 
 #. type: Plain text
 #: README.rst:24
-#, fuzzy
-#| msgid "https://hosted.weblate.org/widgets/gammu-status-badge.png"
 msgid "https://hosted.weblate.org/widgets/gammu/-/svg-badge.svg"
-msgstr "https://hosted.weblate.org/widgets/gammu-status-badge.png"
+msgstr "https://hosted.weblate.org/widgets/gammu/-/svg-badge.svg"
 
 #. type: Plain text
 #: README.rst:26
@@ -97,38 +102,39 @@ msgid ""
 ":alt: Translation status :target: https://hosted.weblate.org/engage/gammu/?"
 "utm_source=widget"
 msgstr ""
-":alt: Translation status :target: https://hosted.weblate.org/engage/gammu/?"
+":alt: Состояние перевода :target: https://hosted.weblate.org/engage/gammu/?"
 "utm_source=widget"
 
 #. type: Plain text
 #: README.rst:28
 msgid "https://scan.coverity.com/projects/2890/badge.svg?flat=1"
-msgstr ""
+msgstr "https://scan.coverity.com/projects/2890/badge.svg?flat=1"
 
 #. type: Plain text
 #: README.rst:30
-#, fuzzy
-#| msgid ":alt: Bitdeli badge :target: https://bitdeli.com/free"
 msgid ":alt: Coverity scan :target: https://scan.coverity.com/projects/2890"
-msgstr ":alt: Bitdeli badge :target: https://bitdeli.com/free"
+msgstr ""
 
 #. type: Plain text
 #: README.rst:32
-msgid "https://img.shields.io/gratipay/Gammu.svg"
-msgstr ""
+#, fuzzy
+#| msgid "https://img.shields.io/gratipay/Gammu.svg"
+msgid "https://img.shields.io/liberapay/receives/Gammu.svg"
+msgstr "https://img.shields.io/gratipay/Gammu.svg"
 
 #. type: Plain text
 #: README.rst:34
 #, fuzzy
-#| msgid ":target: https://travis-ci.org/gammu/gammu"
-msgid ":alt: Gratipay :target: https://gratipay.com/Gammu/"
-msgstr ":target: https://travis-ci.org/gammu/gammu"
+#| msgid ":alt: Gratipay :target: https://gratipay.com/Gammu/"
+msgid ":alt: Liberapay :target: https://liberapay.com/Gammu/donate"
+msgstr ":alt: Gratipay :target: https://gratipay.com/Gammu/"
 
 #. type: Plain text
 #: README.rst:36
 msgid ""
 "https://www.bountysource.com/badge/team?team_id=23177&style=bounties_received"
 msgstr ""
+"https://www.bountysource.com/badge/team?team_id=23177&style=bounties_received"
 
 #. type: Plain text
 #: README.rst:38
@@ -136,17 +142,19 @@ msgid ""
 ":alt: Bountysource :target: https://www.bountysource.com/teams/gammu/issues?"
 "utm_source=Gammu&utm_medium=shield&utm_campaign=bounties_received"
 msgstr ""
+":alt: Bountysource :target: https://www.bountysource.com/teams/gammu/"
+"issues?utm_source=Gammu&utm_medium=shield&utm_campaign=bounties_received"
 
 #. type: Title =
 #: README.rst:40
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "More information"
-msgstr "Информация о телефоне"
+msgstr "Дополнительная информация"
 
 #. type: Plain text
 #: README.rst:43
 msgid "You can find more information on <https://wammu.eu/gammu/>."
-msgstr ""
+msgstr "Более подробную информацию можно найти на <https://wammu.eu/gammu/>."
 
 #. type: Plain text
 #: README.rst:47
@@ -155,12 +163,16 @@ msgid ""
 "version of it using make manual-html which is viewable online at <https://"
 "wammu.eu/docs/manual/>."
 msgstr ""
+"Существует также руководство по эксплуатации Gammu, доступное в документации/"
+"руководстве. Вы можете собрать HTML версию, используя make manual-html, "
+"которую можно посмотреть в Интернете по адресу <https://wammu.eu/docs/manual/"
+">."
 
 #. type: Title =
 #: README.rst:50
 #, no-wrap
 msgid "Feedback and bug reports"
-msgstr ""
+msgstr "Обратная связь и сообщения об ошибках"
 
 #. type: Plain text
 #: README.rst:54
@@ -168,23 +180,26 @@ msgid ""
 "Any feedback is welcome, see <https://wammu.eu/support/> for information how "
 "to contact developers."
 msgstr ""
+"Любая обратная связь приветствуется, см. <https://wammu.eu/support/> для "
+"получения информации том, как связаться с разработчиками."
 
 #. type: Title =
 #: README.rst:57
 #, no-wrap
 msgid "Support developers"
-msgstr ""
+msgstr "Поддержка разработчиков"
 
 #. type: Plain text
 #: README.rst:59
 msgid "You can appreciate developers work at <https://wammu.eu/donate/>."
 msgstr ""
+"Вы можете оценить работу разработчиков на сайте <https://wammu.eu/donate/>."
 
 #. type: Title =
 #: INSTALL:2
 #, no-wrap
 msgid "Gammu All Mobile Management Utilities - Installation"
-msgstr ""
+msgstr "Все утилиты управления мобильником Gammu - Установка"
 
 #. type: Plain text
 #: INSTALL:5
@@ -192,6 +207,8 @@ msgid ""
 "See docs/manual/project/install.rst for installation guide or see chapter "
 "\"Compiling Gammu\" in The Gammu Manual."
 msgstr ""
+"Руководство по установке см.docs/manual/project/install.rst или в главе "
+"\"Сборка Gammu\" руководства по эксплуатации Gammu."
 
 #, fuzzy
 #~| msgid "https://travis-ci.org/gammu/gammu.png?branch=master"
@@ -747,7 +764,7 @@ msgstr ""
 #~ msgid "Function not supported by phone."
 #~ msgstr "Функция не поддерживается телефоном."
 
-#~ msgid "Entry is empty."
+#~ msgid "Empty entry."
 #~ msgstr "Запись пуста."
 
 #~ msgid "Security error. Maybe no PIN?"

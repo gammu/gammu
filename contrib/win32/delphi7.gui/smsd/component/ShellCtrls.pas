@@ -851,10 +851,10 @@ begin
       if Assigned(StrRet.pOleStr) then
         Result := StrRet.pOleStr
       else
-        Result := '';  
+        Result := '';
   end;
   { This is a hack bug fix to get around Windows Shell Controls returning
-    spurious "?"s in date/time detail fields } 
+    spurious "?"s in date/time detail fields }
   if (Length(Result) > 1) and (Result[1] = '?') and (Result[2] in ['0'..'9']) then
     Result := StringReplace(Result,'?','',[rfReplaceAll]);
 end;
@@ -1115,7 +1115,7 @@ destructor TShellFolder.Destroy;
 begin
   if Assigned(FDetails) then
     FDetails.Free;
-  FDetails := nil;  
+  FDetails := nil;
   if Assigned(FPIDL) then
     DisposePIDL(FPIDL);
   if Assigned(FFullPIDL) then
@@ -1228,7 +1228,7 @@ procedure TShellFolder.LoadColumnDetails(RootFolder: TShellFolder;
     else
       FDetails.Add('');
   end;
-  
+
 var
   SF2: IShellFolder2;
   ISD: IShellDetails;
@@ -1836,7 +1836,7 @@ begin
   if (Button = mbRight) and FAutoContext and (Selected <> nil) and (Selected.Data <> nil) then
     InvokeContextMenu(Self, SelectedFolder, X, Y)
   else
-  (**)  
+  (**)
     inherited MouseUp(Button, Shift, X, Y);
 end;
 
@@ -2312,7 +2312,7 @@ begin
     ItemsEx.Clear;
   finally
     ItemsEx.EndUpdate;
-  end;    
+  end;
 end;
 
 procedure TCustomShellComboBox.CreateRoot;
@@ -2343,7 +2343,7 @@ begin
     end;
   finally
     ItemsEx.EndUpdate;
-  end;    
+  end;
 end;
 
 procedure TCustomShellComboBox.CreateWnd;
@@ -2424,7 +2424,7 @@ begin
       FListView := nil
     else if (AComponent = FImageList) then
       FImageList := nil;
-  end;    
+  end;
 end;
 
 function TCustomShellComboBox.GetFolder(Index: Integer): TShellFolder;
@@ -2537,7 +2537,7 @@ begin
     end;
   finally
     ItemsEx.EndUpdate;
-  end;    
+  end;
 end;
 
 function TCustomShellComboBox.IndexFromID(AbsoluteID: PItemIDList): Integer;
@@ -2589,7 +2589,7 @@ begin
     if Assigned(Folder) then
       Result := Folder.PathName
     else
-      Result := '';  
+      Result := '';
   end;
 end;
 
@@ -2704,7 +2704,7 @@ begin
   else
     ImageListHandle := Images.Handle;
   SendMessage(Handle, CBEM_SETIMAGELIST, 0, ImageListHandle);
-  
+
   if FUseShellImages and not Assigned(FImageList) then
     ImageList_GetIconSize(FImages, FImageWidth, FImageHeight)
   else
@@ -2776,7 +2776,7 @@ begin
     end;
   finally
     FUpdating := False;
-  end;    
+  end;
 end;
 
 { TCustomShellListView }
@@ -2978,7 +2978,7 @@ begin
         SetPathFromID(AbsoluteID)
       else
         ShellExecute(Handle, nil, PChar(PathName), nil,
-          PChar(ExtractFilePath(PathName)), 0);  
+          PChar(ExtractFilePath(PathName)), 0);
   inherited DblClick;
 end;
 
@@ -3058,7 +3058,7 @@ begin
     Item.Caption := AFolder.DisplayName;
   if irImage in Request then
     Item.ImageIndex := AFolder.ImageIndex(ViewStyle = vsIcon);
-    
+
   if ViewStyle <> vsReport then Exit;
 
   //PIDL := AFolder.FPIDL;
@@ -3478,7 +3478,7 @@ initialization
   CreateDesktopFolder;
   InitializeCriticalSection(CS);
   OleInitialize(nil);
-  
+
 finalization
 
   if Assigned(DesktopFolder) then

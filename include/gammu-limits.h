@@ -16,6 +16,14 @@ extern "C" {
  * Limits definitions.
  */
 
+
+/**
+ * Maximum number of deferred events in queue.
+ *
+ * \ingroup Limits
+ */
+#define MAX_DEFERRED_EVENTS 5
+
 /**
  * Maximal length of manufacturer name.
  *

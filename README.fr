@@ -1,0 +1,57 @@
+Gammu All Mobile Management Utilities (Utilitaire de gestion pour mobiles)
+==========================================================================
+
+Gammu est une librairie et un utilitaire en ligne de commande pour les
+téléphones mobiles. Il est distribué sous licence GNU GPL version 2.
+
+Il a été initié par Marcin Wiacek et d'autres personnes. A l'origine, le
+code était basé sur les projets Gnokii <https://www.gnokii.org/> et plus
+tard MyGnokii <http://www.mwiacek.com/>. Jusqu'à la version 0.58, Gammu
+était appelé MyGnokii2.
+
+Actuellement, le projet est dirigé par Michal Cihar <michal@cihar.com> avec
+l'aide de nombreux contributeurs.
+
+.. image:: https://travis-ci.org/gammu/gammu.svg?branch=master
+    :alt: Build status :target: https://travis-ci.org/gammu/gammu
+
+.. image:: https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/master?svg=true
+    :alt: Windows Build status :target:
+    https://ci.appveyor.com/project/nijel/gammu/branch/master
+
+.. image:: https://hosted.weblate.org/widgets/gammu/-/svg-badge.svg
+    :alt: État de la traduction:target:
+    https://hosted.weblate.org/engage/gammu/?utm_source=widget
+
+.. image:: https://scan.coverity.com/projects/2890/badge.svg?flat=1
+    :alt: Coverity scan :target: https://scan.coverity.com/projects/2890
+
+.. image:: https://img.shields.io/liberapay/receives/Gammu.svg
+    :alt: Liberapay :target: https://liberapay.com/Gammu/donate
+
+.. image:: https://www.bountysource.com/badge/team?team_id=23177&style=bounties_received
+    :alt: Bounty source :target:
+    https://www.bountysource.com/teams/gammu/issues?utm_source=Gammu&utm_medium=shield&utm_campaign=bounties_received
+
+Plus d'informations
+===================
+
+Vous pouvez trouver plus d'informations sur <https://wammu.eu/gammu/>.
+
+Il y a aussi un manuel Gammu disponible dans docs/manual. Vous pouvez en
+construire une version HTML en utilisant make manual-html, qui est
+consultable en ligne à <https://wammu.eu/docs/manual/>.
+
+
+Commentaires et rapports de bugs
+================================
+
+Tout commentaire est bienvenu, voir <https://wammu.eu/support/> pour savoir
+comment contacter les développeurs.
+
+
+Support des développeurs
+========================
+
+Vous pouvez apprécier le travail des développeurs à
+<https://wammu.eu/donate/>.

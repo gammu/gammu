@@ -16,6 +16,9 @@ endif (EXECUTABLE_OUTPUT_PATH)
 # We use Gammu
 include_directories("${CMAKE_CURRENT_BINARY_DIR}/../include")
 
+# ATGEN function tests
+add_subdirectory(atgen)
+
 # Basic check for statemachine allocation
 add_executable(statemachine-alloc statemachine-alloc.c)
 add_coverage(statemachine-alloc)
@@ -44,7 +47,7 @@ add_test(base64 "${GAMMU_TEST_PATH}/base64${CMAKE_EXECUTABLE_SUFFIX}")
 # Array manipulation tests
 add_executable(array-test array-test.c)
 add_coverage(array-test)
-target_link_libraries (array-test array)
+target_link_libraries (array-test libGammu)
 add_test(array "${GAMMU_TEST_PATH}/array-test${CMAKE_EXECUTABLE_SUFFIX}")
 
 # UTF-8 manipulation tests
@@ -545,7 +548,7 @@ if (WITH_ATGEN)
             "${GAMMU_TEST_PATH}/at-get-smsmemories${CMAKE_EXECUTABLE_SUFFIX}"
             "${Gammu_SOURCE_DIR}/tests/at-cpms/${TESTMESSAGE}")
         set_tests_properties("at-get-smsmemories-${TESTNAME}" PROPERTIES
-            PASS_REGULAR_EXPRESSION "read: ME : ok, SM : ok, save: ME : ok, SM = ok")
+            PASS_REGULAR_EXPRESSION "read: ME : ok, SM : ok, SR : N/A save: ME : ok, SM : ok, SR : N/A")
     endforeach(TESTMESSAGE $MESSAGES)
 
     # List test cases for just SM
@@ -560,7 +563,22 @@ if (WITH_ATGEN)
             "${GAMMU_TEST_PATH}/at-get-smsmemories${CMAKE_EXECUTABLE_SUFFIX}"
             "${Gammu_SOURCE_DIR}/tests/at-cpms-sm/${TESTMESSAGE}")
         set_tests_properties("at-get-smsmemories-sm-${TESTNAME}" PROPERTIES
-            PASS_REGULAR_EXPRESSION "read: ME : N/A, SM : ok, save: ME : N/A, SM = ok")
+            PASS_REGULAR_EXPRESSION "read: ME : N/A, SM : ok, SR : N/A save: ME : N/A, SM : ok, SR : N/A")
+    endforeach(TESTMESSAGE $MESSAGES)
+
+    # List test cases for just SR
+    file(GLOB MESSAGES
+            RELATIVE "${Gammu_SOURCE_DIR}/tests/at-cpms-sr"
+            "${Gammu_SOURCE_DIR}/tests/at-cpms-sr/*.dump")
+    list(SORT MESSAGES)
+
+    foreach(TESTMESSAGE ${MESSAGES})
+        string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
+        add_test("at-get-smsmemories-sr-${TESTNAME}"
+                "${GAMMU_TEST_PATH}/at-get-smsmemories${CMAKE_EXECUTABLE_SUFFIX}"
+                "${Gammu_SOURCE_DIR}/tests/at-cpms-sr/${TESTMESSAGE}")
+        set_tests_properties("at-get-smsmemories-sr-${TESTNAME}" PROPERTIES
+                PASS_REGULAR_EXPRESSION "read: ME : ok, SM : N/A, SR : ok save: ME : ok, SM : N/A, SR : ok")
     endforeach(TESTMESSAGE $MESSAGES)
 
     # AT CNMI parsing
@@ -656,11 +674,16 @@ if (WITH_ATGEN)
     foreach(TESTMESSAGE ${MESSAGES})
         string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
         string(REGEX REPLACE ".*-(.*)\\.dump" "\\1" PHONE_MODEL ${TESTMESSAGE})
+        if (${TESTMESSAGE} MATCHES "^U")
+            set(TEST_UNICODE_FLAG "U")
+        else (${TESTMESSAGE} MATCHES "^U")
+            set(TEST_UNICODE_FLAG "G")
+        endif (${TESTMESSAGE} MATCHES "^U")
         add_test("at-ussd-reply-${TESTNAME}"
             "${GAMMU_TEST_PATH}/at-ussd-reply${CMAKE_EXECUTABLE_SUFFIX}"
-            "${Gammu_SOURCE_DIR}/tests/at-ussd/${TESTMESSAGE}" "${PHONE_MODEL}")
+            "${Gammu_SOURCE_DIR}/tests/at-ussd/${TESTMESSAGE}" "${PHONE_MODEL}" "${TEST_UNICODE_FLAG}")
         set_tests_properties("at-ussd-reply-${TESTNAME}"
-            PROPERTIES FAIL_REGULAR_EXPRESSION "Response: \n")
+            PROPERTIES FAIL_REGULAR_EXPRESSION "Response: (00[A-Fa-f0-0]*)?\n")
     endforeach(TESTMESSAGE $MESSAGES)
 
     # AT SMSC parsing
@@ -810,7 +833,7 @@ set_tests_properties(sms-cmdline-EMS PROPERTIES
 add_test(sms-cmdline-EMS-empty "${GAMMU_TEST_PATH}/sms-cmdline${CMAKE_EXECUTABLE_SUFFIX}"
     EMS 213)
 set_tests_properties(sms-cmdline-EMS-empty PROPERTIES
-    FAIL_REGULAR_EXPRESSION "Entry is empty"
+    FAIL_REGULAR_EXPRESSION "Empty entry"
     WILL_FAIL TRUE)
 
 add_test(sms-cmdline-EMS-misc "${GAMMU_TEST_PATH}/sms-cmdline${CMAKE_EXECUTABLE_SUFFIX}"

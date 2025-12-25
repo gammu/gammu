@@ -26,7 +26,7 @@
 
 #include "../helper/locales.h"
 #include "../helper/printing.h"
-#include "../helper/string.h"
+#include "../libgammu/misc/string.h"
 #include "../helper/cmdline.h"
 
 #ifdef DEBUG
@@ -332,7 +332,7 @@ static void Version(int argc UNUSED, char *argv[]UNUSED)
 {
 	PrintVersion();
 
-	printf("%s\n", _("Copyright (C) 2003 - 2017 Michal Cihar <michal@cihar.com> and other authors."));
+	printf("%s\n", _("Copyright (C) 2003 - 2018 Michal Cihar <michal@cihar.com> and other authors."));
 
 	printf("\n");
 
@@ -792,10 +792,10 @@ void HelpGeneral(void)
 
 	printf("%s\n\n", _("Usage: gammu [parameters] <command> [options]"));
 	printf("%s\n", _("Parameters before command configure gammu behaviour:"));
-	printf("%s\n", _("-c / --config <filename> ... name of configuration file"));
-	printf("%s\n", _("-s / --section <confign> ... section of config file to use, eg. 42"));
-	printf("%s\n", _("-d / --debug <level> ... debug level (nothing|text|textall|textalldate|binary|errors)"));
-	printf("%s\n\n", _("-f / --debug-file <filename> ... file for logging debug messages"));
+	printf("%s\n", _("-c / --config <filename> … name of configuration file"));
+	printf("%s\n", _("-s / --section <confign> … section of config file to use, eg. 42"));
+	printf("%s\n", _("-d / --debug <level> … debug level (nothing|text|textall|textalldate|binary|errors)"));
+	printf("%s\n\n", _("-f / --debug-file <filename> … file for logging debug messages"));
 
 	printf("%s\n\n", _("Commands can be specified with or without leading --."));
 

@@ -15,7 +15,7 @@
 #include "../devfunc.h"
 #include "bluetooth.h"
 
-#include "../../../helper/string.h"
+#include "../../../libgammu/misc/string.h"
 
 #ifdef BLUEZ_FOUND
 #  include "bluez.h"

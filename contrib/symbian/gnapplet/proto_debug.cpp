@@ -43,7 +43,7 @@ void Debug(TRefByValue<const TDesC> fmt, ...)
 
 	buf.Zero();
 	pkt.Set(buf.Ptr(), 1100);
-	
+
 	pkt << (TUint16)GNAPPLET_MSG_DEBUG_NOTIFICATION;
 	pkt << (TUint16)GN_ERR_NONE;
 	pkt << msg;

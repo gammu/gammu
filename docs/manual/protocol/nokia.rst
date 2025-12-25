@@ -109,9 +109,9 @@ You have to implement collision protocol. IE. you should listen for
 what you are transmitting, and if it does not come back, you have
 collision.
 
-You should wait for bus to be free for 3 miliseconds before normal
-message, and for 2.5 miliseconds before acknowledge. You should wait
-for acknowledge for 200 miliseconds, then retransmit.
+You should wait for bus to be free for 3 milliseconds before normal
+message, and for 2.5 milliseconds before acknowledge. You should wait
+for acknowledge for 200 milliseconds, then retransmit.
 
 Frame format for FBUS version 1
 -------------------------------
@@ -187,9 +187,9 @@ Please note that M2BUS has only one checksum: XOR on frame[FrameID..SeqNo]
 Ack::
 
     { FrameID, DestDEV, SrcDEV, 0x7f, Id_SeqNo, ChkSum }
-	
+
 	 where Id_SeqNo:        Is the sequence number that you are
-	                        acknowleging (from the other part).
+	                        acknowledging (from the other part).
 
 Frame format for Infrared::
 
@@ -274,7 +274,7 @@ enable ???:
   1F 04 00 78 00 04 01 02 08 01 SQ CS
       status indication = enable ???  sent to HFU-2 on power on
       byte 9 (07,08,0E) seems to be a pointer to a memory location,
-      byte 10 is the data at this memeory location.
+      byte 10 is the data at this memory location.
 response from HFU:
   1F 00 04 78 00 03 02 01 03 SQ CS
      response message from HFU-2 (use unknown)

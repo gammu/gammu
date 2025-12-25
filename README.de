@@ -1,0 +1,60 @@
+Gammu Handy Verwaltungszubehör
+==============================
+
+Gammu ist eine Programmbibliothek und ein Kommandozeilenwerkzeug für
+Mobiltelefone. Es wird unter der GNU GPL v2 veröffentlicht.
+
+Es wurde von Marcin Wiacek und anderen Personen gegründet.Der ursprüngliche
+Quellcode basierte auf den Gnokii<https://www.gnokii.org/> und später
+MyGnokii<http://www.mwiacek.com/> Projekten. Gammu hieß früher(vor Version
+0.58) MyGnokii2.
+
+Das Projekt wird derzeit von Michal Cihar <michal@cihar.com> mit der Hilfe
+von vielen Unterstützern geleitet.
+
+.. image:: https://travis-ci.org/gammu/gammu.svg?branch=master
+    :alt: Build-Status :target: https://travis-ci.org/gammu/gammu
+
+.. image:: https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/master?svg=true
+    :alt: Windows Build-Status :target:
+    https://ci.appveyor.com/project/nijel/gammu/branch/master
+
+.. image:: https://hosted.weblate.org/widgets/gammu/-/svg-badge.svg
+    :alt: Übersetzungsstatus :target:
+    https://hosted.weblate.org/engage/gammu/?utm_source=widget
+
+.. image:: https://scan.coverity.com/projects/2890/badge.svg?flat=1
+    :alt: Coverity-Scan :target: https://scan.coverity.com/projects/2890
+
+.. image:: https://img.shields.io/liberapay/receives/Gammu.svg
+    :alt: Liberapay :target: https://liberapay.com/Gammu/donate
+
+.. image:: https://www.bountysource.com/badge/team?team_id=23177&style=bounties_received
+    :alt: Bountysource :target:
+    https://www.bountysource.com/teams/gammu/issues?utm_source=Gammu&utm_medium=shield&utm_campaign=bounties_received
+
+Zusätzliche Informationen
+=========================
+
+Sie unter <https://wammu.eu/gammu/> können sie weitere Informationen
+erhalten.
+
+Es gibt auch ein Benutzerhandbuch für Gammu es ist unter docs/manual
+verfügbar. Sie können daraus eine HTML-Version erstellen indem sie make
+manual-html benutzen. Diese Version ist auch online unter
+<https://wammu.eu/docs/manual/> verfügbar.
+
+
+Feedback und Fehlerberichte
+===========================
+
+Jegliches Feedback ist willkommen, Sie können sich auf
+<https://wammu.eu/support/> informieren, wie Sie mit den Entwicklern in
+Kontakt treten können.
+
+
+Entwickler unterstützen
+=======================
+
+Sie können unter <https://wammu.eu/donate/> Anerkennung für die Arbeit der
+Entwicker zeigen.

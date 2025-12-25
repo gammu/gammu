@@ -351,6 +351,14 @@ typedef enum {
 	 * Error in executing SQL query.
 	 */
 	ERR_SQL,
+	/**
+	 * The operation cannot be performed.
+	 */
+	ERR_INVALID_OPERATION,
+	/**
+	 * The type of memory is not available or has been disabled.
+	 */
+	ERR_MEMORY_NOT_AVAILABLE,
 
 	/**
 	 * Just marker of highest error code, should not be used.

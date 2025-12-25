@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wammu 0.37\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-10-11 08:16+0200\n"
+"POT-Creation-Date: 2019-02-14 14:57+0100\n"
 "PO-Revision-Date: 2016-03-19 15:57+0000\n"
 "Last-Translator: YFdyh000 <yfdyh000@gmail.com>\n"
 "Language-Team: Chinese (China) <https://hosted.weblate.org/projects/gammu/"
@@ -36,11 +36,15 @@ msgid "Error opening device, it doesn't exist."
 msgstr "打开设备出错，设备不存在。"
 
 #: libgammu/gsmcomon.c:88
-msgid "Error opening device, it is already opened by other application."
+#, fuzzy
+#| msgid "Error opening device, it is already opened by other application."
+msgid "Error opening device, it is already opened by another app."
 msgstr "打开设备出错，设备已被其它应用程序打开。"
 
 #: libgammu/gsmcomon.c:89
-msgid "Error opening device, you don't have permissions."
+#, fuzzy
+#| msgid "Error opening device, you don't have permissions."
+msgid "Error opening device, you don't have the required permission."
 msgstr "打开设备出错，没有权限。"
 
 #: libgammu/gsmcomon.c:90
@@ -56,7 +60,9 @@ msgid "Error setting device DTR or RTS."
 msgstr "设置设备 DTR 或 RTS 时出错。"
 
 #: libgammu/gsmcomon.c:93
-msgid "Error setting device speed. Maybe speed not supported."
+#, fuzzy
+#| msgid "Error setting device speed. Maybe speed not supported."
+msgid "Error setting device speed. Maybe the speed is not supported?"
 msgstr "设置设备速度出错，可能不支持速度设置。"
 
 # &lt;span class="translation-space"&gt; &lt;/span&gt;<br />
@@ -76,7 +82,9 @@ msgid "Can't set parity on the device."
 msgstr "无法设置奇偶校验。"
 
 #: libgammu/gsmcomon.c:97
-msgid "No response in specified timeout. Probably phone not connected."
+#, fuzzy
+#| msgid "No response in specified timeout. Probably phone not connected."
+msgid "No response in specified timeout. Probably the phone is not connected."
 msgstr "连接超时，可能电话尚未连接。"
 
 #: libgammu/gsmcomon.c:98
@@ -86,7 +94,7 @@ msgstr "连接超时，可能电话尚未连接。"
 #| "information how to report it."
 msgid ""
 "Frame not requested right now. See <https://wammu.eu/support/bugs/> for "
-"information how to report it."
+"information on how to report it."
 msgstr "现在不能提交帧。请参考<http://wammu.eu/support/bugs/>上的信息来报告。"
 
 #: libgammu/gsmcomon.c:99
@@ -96,7 +104,7 @@ msgstr "现在不能提交帧。请参考<http://wammu.eu/support/bugs/>上的�
 #| "information how to report it."
 msgid ""
 "Unknown response from phone. See <https://wammu.eu/support/bugs/> for "
-"information how to report it."
+"information on how to report it."
 msgstr ""
 "来自电话的未知回复。请参考<http://wammu.eu/support/bugs/>上的信息来报告这个问"
 "题。"
@@ -107,8 +115,8 @@ msgstr ""
 #| "Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
 #| "report it."
 msgid ""
-"Unknown frame. See <https://wammu.eu/support/bugs/> for information how to "
-"report it."
+"Unknown frame. See <https://wammu.eu/support/bugs/> for information on how "
+"to report it."
 msgstr "未知帧。请参考<http://wammu.eu/support/bugs/>上的信息来报告这个问题。"
 
 #: libgammu/gsmcomon.c:101
@@ -120,8 +128,12 @@ msgid "Unknown model type string. Check config file."
 msgstr "未知的型号字符。请检查配置文件。"
 
 #: libgammu/gsmcomon.c:103
+#, fuzzy
+#| msgid ""
+#| "Some functions not available for your system (disabled in config or not "
+#| "implemented)."
 msgid ""
-"Some functions not available for your system (disabled in config or not "
+"Some functions are not available for your system (disabled in config or not "
 "implemented)."
 msgstr "系统的部分功能不可用（被禁用或不支持）。"
 
@@ -130,7 +142,7 @@ msgid "Function not supported by phone."
 msgstr "手机不支持该功能。"
 
 #: libgammu/gsmcomon.c:105
-msgid "Entry is empty."
+msgid "Empty entry."
 msgstr "记录为空。"
 
 #: libgammu/gsmcomon.c:106
@@ -142,7 +154,10 @@ msgid "Invalid location. Maybe too high?"
 msgstr "无效的位置，可能超出范围了？"
 
 #: libgammu/gsmcomon.c:108
-msgid "Functionality not implemented. You are welcome to help authors with it."
+#, fuzzy
+#| msgid ""
+#| "Functionality not implemented. You are welcome to help authors with it."
+msgid "Functionality not implemented. You are welcome to help."
 msgstr "你的手机不支持此功能，如果您想帮助我们，欢迎联系作者。"
 
 #: libgammu/gsmcomon.c:109
@@ -158,7 +173,9 @@ msgid "Can not open specified file."
 msgstr "无法打开文件。"
 
 #: libgammu/gsmcomon.c:112
-msgid "More memory required..."
+#, fuzzy
+#| msgid "More memory required..."
+msgid "More memory required…"
 msgstr "需要更多内存。。。"
 
 #: libgammu/gsmcomon.c:113
@@ -166,16 +183,25 @@ msgid "Operation not allowed by phone."
 msgstr "手机不允许该操作。"
 
 #: libgammu/gsmcomon.c:114
+#, fuzzy
+#| msgid ""
+#| "No SMSC number given. Provide it manually or use the one configured in "
+#| "phone."
 msgid ""
-"No SMSC number given. Provide it manually or use the one configured in phone."
+"No SMSC number given. Provide it manually or use the one configured on the "
+"phone."
 msgstr "没有提供SMSC号码。请手动提供或使用手机中的一个配置。"
 
 #: libgammu/gsmcomon.c:115
-msgid "You're inside phone menu (maybe editing?). Leave it and try again."
+#, fuzzy
+#| msgid "You're inside phone menu (maybe editing?). Leave it and try again."
+msgid "You're inside the phone menu (maybe editing?). Exit it and try again."
 msgstr "你已经进入了手机菜单（正在编辑？）。Google之后再试一下。"
 
 #: libgammu/gsmcomon.c:116
-msgid "Phone is not connected."
+#, fuzzy
+#| msgid "Phone is not connected."
+msgid "Phone not connected."
 msgstr "手机未连接。"
 
 #: libgammu/gsmcomon.c:117
@@ -185,7 +211,9 @@ msgid ""
 msgstr "你的手机目前不支持此功能，请联系作者寻求帮助。"
 
 #: libgammu/gsmcomon.c:118
-msgid "Phone is disabled and connected to charger."
+#, fuzzy
+#| msgid "Phone is disabled and connected to charger."
+msgid "Phone disabled and connected to charger."
 msgstr "手机已禁用并连接到充电器。"
 
 #: libgammu/gsmcomon.c:119
@@ -199,7 +227,9 @@ msgid ""
 msgstr "人无完人，协议也未尝存在bug。请联系作者。"
 
 #: libgammu/gsmcomon.c:121
-msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
+#, fuzzy
+#| msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
+msgid "Transfer canceled by phone, maybe you pressed \"Cancel\" on the phone."
 msgstr "传输已被手机取消，你可能在手机上按了取消。"
 
 #: libgammu/gsmcomon.c:122
@@ -219,7 +249,9 @@ msgid "Invalid date or time specified."
 msgstr "无效的日期或时间。"
 
 #: libgammu/gsmcomon.c:126
-msgid "Phone memory error, maybe it is read only."
+#, fuzzy
+#| msgid "Phone memory error, maybe it is read only."
+msgid "Phone memory error, maybe it is read only?"
 msgstr "手机内存错误，可能是只读的。"
 
 #: libgammu/gsmcomon.c:127
@@ -235,11 +267,15 @@ msgid "File with specified name doesn't exist."
 msgstr "文件不存在。"
 
 #: libgammu/gsmcomon.c:130
-msgid "You have to give folder name and not file name."
+#, fuzzy
+#| msgid "You have to give folder name and not file name."
+msgid "You have to supply folder name and not filename."
 msgstr "这是一个目录不是文件。"
 
 #: libgammu/gsmcomon.c:131
-msgid "You have to give file name and not folder name."
+#, fuzzy
+#| msgid "You have to give file name and not folder name."
+msgid "You have to supply filename and not folder name."
 msgstr "这是一个文件不是目录。"
 
 #: libgammu/gsmcomon.c:132
@@ -247,7 +283,12 @@ msgid "Can not access SIM card."
 msgstr "无法访问 SIM 卡。"
 
 #: libgammu/gsmcomon.c:133
-msgid "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
+#, fuzzy
+#| msgid ""
+#| "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
+msgid ""
+"Wrong GNAPPLET version in use on phone. Use version from currently used "
+"Gammu."
 msgstr "手机上的 GNAPPLET 版本错误。使用 Gammu 当前所用版本。"
 
 #: libgammu/gsmcomon.c:134
@@ -259,7 +300,9 @@ msgid "Folder must be empty."
 msgstr "目录必须是空的。"
 
 #: libgammu/gsmcomon.c:136
-msgid "Data were converted."
+#, fuzzy
+#| msgid "Data were converted."
+msgid "Data converted."
 msgstr "数据已转换。"
 
 #: libgammu/gsmcomon.c:137
@@ -368,7 +411,17 @@ msgstr "数据库连接超时。"
 msgid "Error in executing SQL query."
 msgstr "执行 SQL 查询出错。"
 
-#: libgammu/gsmcomon.c:195
+#: libgammu/gsmcomon.c:163
+msgid "The type of memory is not available or has been disabled."
+msgstr ""
+
+#: libgammu/gsmcomon.c:164
+#, fuzzy
+#| msgid "Operation aborted."
+msgid "The operation cannot be performed."
+msgstr "操作已中止。"
+
+#: libgammu/gsmcomon.c:197
 msgid "Unknown error description."
 msgstr "未知的错误描述。"
 

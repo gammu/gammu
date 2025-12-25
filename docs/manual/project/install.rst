@@ -194,7 +194,7 @@ don't need much specific tuning, you can use usual set of commands:
     ./configure
     make
     sudo make install
-    
+
 The configure wrapper will create directory build-configure and build all
 binaries there (nothing is changed in source tree), for example gammu binary is
 in build-configure/gammu directory.
@@ -369,7 +369,7 @@ Compiling on Mac OS X
 First install all :ref:`deps` and :ref:`opt-deps`.
 
 Gammu should be compilable on Mac OS X, you need to have installed
-Developer Tols (version 2.4.1 was tested) and `CMake`_ (there is a Mac OS X
+Developer Tools (version 2.4.1 was tested) and `CMake`_ (there is a Mac OS X
 "Darwin" DMG download). For database support in SMSD, install wanted
 database, eg. MySQL.
 
@@ -551,7 +551,7 @@ To find out what is going on during compilation, add
 :program:`make` with ``VERBOSE=1``:
 
 .. code-block:: sh
-    
+
     make VERBOSE=1
 
 Debugging crashes
@@ -562,8 +562,22 @@ To debug program crashes, you might want to build Gammu with
 with protections GCC makes and produce bogus back traces.
 
 
+
+Installing python-gammu
+-----------------------
+
+You need to have ``gammu`` and ``libgammu-dev`` installed for using python-gammu.
+
+.. code-block:: sh
+
+    apt-get install gammu libgammu-dev
+    pip3 install python-gammu
+
+
+The location of the libraries is discovered using ``pkg-config``, ``GAMMU_PATH`` environment variable and falls back to generic locations. In case it does not work, either install ``pkg-config`` or set ``GAMMU_PATH``. ``GAMMU_PATH`` is recommended when building on Windows.
+
 Compiling python-gammu
-----------------------
+++++++++++++++++++++++
 
 Currently python-gammu is distributed as a separate package, which follows
 Python usual method for building modules - distutils, so use :file:`setup.py`
@@ -574,10 +588,24 @@ is placed in the top level directory:
     ./setup.py build
     sudo ./setup.py install
 
-You can install it using pip installer:
+Running with ``GAMMU_PATH``:
+
+On Linux something like this should work:
 
 .. code-block:: sh
 
-    pip install python-gammu
+    GAMMU_PATH=/opt/gammu python setup.py build
+
+On Windows:
+
+.. code-block:: sh
+
+    SET GAMMU_PATH="C:\Gammu"
+    python setup.py build
+
+
+
+
+
 
 .. _CMake: http://www.cmake.org/

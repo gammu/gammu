@@ -49,6 +49,39 @@ Parameters before command configure gammu behaviour:
    switches output to JSON format (currently supported by :option:`identify` command)
 
 
+Phone information commands
+--------------------------
+
+.. option:: battery
+
+    Displays information about battery and power source.
+
+.. option:: getdisplaystatus
+
+.. option:: getsecuritystatus
+
+    Show, if phone wait for security code (like PIN, PUK, etc.) or not
+
+.. option:: identify
+
+    Show the most important phone data.
+
+.. option:: monitor [times]
+
+    Retrieves phone status and writes it continuously to standard output. Press
+    :kbd:`Ctrl+C` to interrupt this command.
+
+    If no parameter is given, the program runs until interrupted, otherwise
+    only given number of iterations is performed.
+
+    This command outputs almost all information Gammu supports:
+
+    * Number of contacts, calendar and todo entries, messages, calls, etc.
+    * Signal strength.
+    * Battery state.
+    * Currently used network.
+    * Notifications of incoming messages and calls.
+
 Call commands
 -------------
 
@@ -231,7 +264,7 @@ ____________
 
 .. option:: geteachsms -pbk
 
-    Similiary to :option:`gammu getallsms`. Difference is, that
+    Similarly to :option:`gammu getallsms`. Difference is, that
     links all concatenated sms
 
 .. option:: getsms folder start [stop]
@@ -353,6 +386,11 @@ ____________
            phone using filesystem commands.
 
 
+    .. option:: USSD
+
+        Send USSD query instead of SMS.
+
+        .. versionadded:: 1.38.5
 
     .. option:: EMS [-unicode] [-16bit] [-format lcrasbiut] [-text text] [-unicodefiletext file] [-defsound ID] [-defanimation ID] [-tone10 file] [-tone10long file] [-tone12 file] [-tone12long file] [-toneSE file] [-toneSElong file] [-fixedbitmap file] [-variablebitmap file] [-variablebitmaplong file] [-animation frames file1 ...] [-protected number]
 
@@ -435,7 +473,7 @@ ____________
             last text will be formatted. You can use combinations of chars:
 
             =========  ==================
-            Character  Formating
+            Character  Formatting
             =========  ==================
             ``l``      left aligned
             ``c``      centered
@@ -535,7 +573,7 @@ ____________
 
             specify, how many chars will be read. When use this option and text
             will be longer than 1 SMS, will be split into more linked
-            SMS.Coding type (SMS default alphabet/Unicode) is set according to
+            SMS. Coding type (SMS default alphabet/Unicode) is set according to
             input text
 
         .. option:: -enablevoice
@@ -798,11 +836,11 @@ level and Gammu does not use that.
 
 .. option:: getfilefolder fileID, fileID, ...
 
-    Retrieve files or all files from folder with given IDs from a phone filesytem.
+    Retrieve files or all files from folder with given IDs from a phone filesystem.
 
 .. option:: getfiles fileID, fileID, ...
 
-    Retrieve files with given IDs from a phone filesytem.
+    Retrieve files with given IDs from a phone filesystem.
 
 .. option:: getfilesystem [-flatall|-flat]
 
@@ -1737,7 +1775,7 @@ values increased by 100:
 121
     Function not supported by phone.
 122
-    Entry is empty.
+    Empty entry.
 123
     Security error. Maybe no PIN?
 124

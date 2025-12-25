@@ -108,7 +108,7 @@ Phone Specific Parameters
     network code
 ``%M``
     network name
-    
+
 
 .. _SMS Specific Parameters:
 
@@ -454,7 +454,8 @@ are selected for default queries during initialization.
 
 .. config:option:: update_retries
 
-    Update number of retries for outbox message.
+    Update number of retries for outbox message. The interval can be configured
+    by :config:option:`RetryTimeout`.
 
     .. code-block:: sql
 

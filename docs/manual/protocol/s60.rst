@@ -6,7 +6,7 @@ Series60 Remote Protocol
 .. versionchanged:: 1.31.90
     There were some changes in the protocol and applet has been renamed.
 
-.. note:: 
+.. note::
 
     The original applet has been created for
     <http://series60-remote.sourceforge.net/>. Gammu uses
@@ -25,10 +25,10 @@ variants of the applets:
 
 ``gammu-s60-remote.sis``
     Not signed applet, which can be installed to the phone if it has enabled
-    installation of unsigned applications (see :ref:`s60-unsigned`). 
+    installation of unsigned applications (see :ref:`s60-unsigned`).
 
     .. note::
-       
+
         This applet also lacks some capabilities, so for example you will not
         be able to get network information.
 
@@ -37,8 +37,8 @@ variants of the applets:
     to install applet to your phone only (it is bound to IMEI), but you don't
     need to allow installation of unsigned applications.
 
-.. note:: 
-   
+.. note::
+
    The best way of course would be to have properly signed applet. However
    access to signing tools costs 200 USD per year, what is something we can
    not afford right now.
@@ -76,7 +76,7 @@ not distributed with Gammu due to licensing reasons.
 .. note::
 
     On some phones, the Python for S60 2.0 will not start, in this case you
-    need to install some additional support libraries coming with Python for S60 2.0 - 
+    need to install some additional support libraries coming with Python for S60 2.0 -
     :file:`pips.sis`, :file:`ssl.sis` and :file:`stdioserver.sis`. You can get
     all of them at https://wammu.eu/s60/ as well.
 
@@ -117,7 +117,7 @@ download all required files from https://wammu.eu/s60/.
 .. figure:: s60-download-qr.png
    :target: https://wammu.eu/s60/
    :alt: QR code for download of applet.
-   
+
    QR code for download of applet.
 
 Manual Installation using Gammu

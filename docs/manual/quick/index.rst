@@ -17,6 +17,9 @@ Gammu family consists of several programs and libraries:
     Daemon to receive and send messages using your phone.
 :ref:`gammu-smsd-inject`
     Injects outgoing messages into :ref:`gammu-smsd` queue.
+:ref:`gammu-smsd-monitor`
+    Monitors state of Gammu SMS Daemon. It periodically displays information about
+    phone and number of processed messages.
 :ref:`gammu-detect`
     Simple utility to detect phones or modems connected to computer.
 :ref:`python`
@@ -29,7 +32,7 @@ Installing Gammu
 ----------------
 
 On most platforms you can install Gammu from binaries - most Linux
-distributions ship Gammu and for Windows you can download binaries from 
+distributions ship Gammu and for Windows you can download binaries from
 `Gammu website <https://wammu.eu/download/>`_. You can find more detailed
 instructions (including instructions for compiling from source) in
 :ref:`installing`.
@@ -68,13 +71,13 @@ Starting with Gammu on Windows
 ------------------------------
 
 First you need to find out device name where your phone/modem is connected. The
-easiest way is to look into :guilabel:`Device manager` under 
+easiest way is to look into :guilabel:`Device manager` under
 :guilabel:`Ports (COM & LPT)` and lookup correct COM port there.
 
 Generally for most current modems you will end up with something like
 ``COM12``.
 
-The next step is to create configuration file in 
+The next step is to create configuration file in
 :file:`$PROFILE\\Application Data\\gammurc` (see :ref:`gammurc`):
 
 .. code-block:: ini
@@ -107,6 +110,12 @@ Once you have configured Gammu, running :ref:`gammu-smsd` is pretty easy. You
 need to decide where you want to store messages (see :config:option:`Service`).
 For this example we will stick with MySQL database, but the instructions are
 quite similar for any storage service.
+
+.. note::
+
+    You can not run Gammu and Gammu SMSD at same time on single device, you can
+    workaround this limitation by suspending SMSD temporarily using `SIGUSR1` and
+    `SIGUSR2` signals (see also :ref:`gammu-smsd-signals` and :ref:`gammu-smsd-suspend`):
 
 Configuring the storage
 +++++++++++++++++++++++
@@ -143,7 +152,7 @@ information).
 You have to put both modem and storage service configuration into this file:
 
 .. code-block:: ini
-    
+
     [gammu]
     device = /dev/ttyUSB0
     connection = at

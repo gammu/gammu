@@ -2,8 +2,8 @@
 # Copyright (c) 2005 Frederick Emmott - released under the GNU General Public License version 2
 # Should be ran from directory containing one vcard per contact, expects a Familiar Name (FN) line.
 # -------------
-# KAddressBook seems to have a slightly different idea of the vcard 
-# format. You might want to include this in contrib/ or similar - 
+# KAddressBook seems to have a slightly different idea of the vcard
+# format. You might want to include this in contrib/ or similar -
 # instructions:
 # - export as vcard 2.1 from kaddressbook, one file per contact into directory
 # - run this script from that directory

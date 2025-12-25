@@ -35,5 +35,3 @@ find_library(Glib_LIBRARY
 set(Glib_PROCESS_INCLUDES Glib_INCLUDE_DIR GlibConfig_INCLUDE_DIR)
 set(Glib_PROCESS_LIBS Glib_LIBRARY)
 libfind_process(Glib)
-
-

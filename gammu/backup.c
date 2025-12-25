@@ -14,7 +14,7 @@
 #include "../helper/message-display.h"
 #include "../helper/memory-display.h"
 #include "../helper/printing.h"
-#include "../helper/string.h"
+#include "../libgammu/misc/string.h"
 #include "../helper/cmdline.h"
 
 /**
@@ -364,7 +364,7 @@ void DoBackup(int argc, char *argv[])
 	}
 
 	signal(SIGINT, interrupt);
-	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
+	fprintf(stderr, "%s\n", _("Press Ctrl+C to break…"));
 
 	GSM_Init(TRUE);
 
@@ -1023,7 +1023,7 @@ void Restore(int argc, char *argv[])
 	printf("%s\n", _("Use addnew command if you just want to add some entries to your phone."));
 
 	signal(SIGINT, interrupt);
-	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
+	fprintf(stderr, "%s\n", _("Press Ctrl+C to break…"));
 
 	DoRestore = FALSE;
 	if (Backup.CallerLogos[0] != NULL) {
@@ -1306,7 +1306,7 @@ void Restore(int argc, char *argv[])
 			fprintf(stderr, "\r");
 			fprintf(stderr, "%s ", _("Writing:"));
 			fprintf(stderr, _("%i percent"),
-				used * 100 / ToDoStatus.Used);
+				(0 == ToDoStatus.Used) ? 0 : used * 100 / ToDoStatus.Used);
 			if (gshutdown) {
 				GSM_Terminate();
 				Terminate(4);
@@ -1642,7 +1642,7 @@ void AddNew(int argc, char *argv[])
 	}
 
 	signal(SIGINT, interrupt);
-	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
+	fprintf(stderr, "%s\n", _("Press Ctrl+C to break…"));
 
 
 	GSM_Init(TRUE);
@@ -1823,4 +1823,3 @@ void AddNew(int argc, char *argv[])
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:
  */
-

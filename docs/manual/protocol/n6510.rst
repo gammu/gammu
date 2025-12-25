@@ -43,7 +43,7 @@ Correct format is FBUS version 2/Infrared/MBUS version 2
             dummy = malloc(message[6] + 1);
             DecodeUnicode(dummy, message + 7, message[6]);
             dprintf("Number: %s\n", dummy);
-            break;		
+            break;
         case 0x04:
             dprintf("Hangup!\n");
             dprintf("Call ID: %i\n", message[4]);

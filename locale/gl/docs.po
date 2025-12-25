@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu-docs 1.38.2\n"
+"Project-Id-Version: Gammu-docs 1.41.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-10-11 13:13+0200\n"
+"POT-Creation-Date: 2019-09-27 09:19+0200\n"
 "PO-Revision-Date: 2009-02-14 23:34+0100\n"
 "Last-Translator: Alejandro Casas <acasasv@yahoo.es>\n"
 "Language-Team: none\n"
@@ -113,14 +113,14 @@ msgstr ":alt: Bitdeli badge :target: https://bitdeli.com/free"
 
 #. type: Plain text
 #: README.rst:32
-msgid "https://img.shields.io/gratipay/Gammu.svg"
+msgid "https://img.shields.io/liberapay/receives/Gammu.svg"
 msgstr ""
 
 #. type: Plain text
 #: README.rst:34
 #, fuzzy
 #| msgid ":target: https://travis-ci.org/gammu/gammu"
-msgid ":alt: Gratipay :target: https://gratipay.com/Gammu/"
+msgid ":alt: Liberapay :target: https://liberapay.com/Gammu/donate"
 msgstr ":target: https://travis-ci.org/gammu/gammu"
 
 #. type: Plain text

@@ -9,7 +9,7 @@ ALL=phone-info sms-send smsd
 
 all: $(ALL)
 
-clean: 
+clean:
 	rm -f $(ALL)
 
 %:%.c

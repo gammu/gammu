@@ -28,7 +28,7 @@
 static GSM_Error FBUS2_Initialise(GSM_StateMachine *s);
 
 static GSM_Error FBUS2_WriteFrame(GSM_StateMachine 	*s,
-				  unsigned const char 	*MsgBuffer,
+				  const unsigned char 	*MsgBuffer,
 				  int 			MsgLength,
 				  unsigned char 	MsgType)
 {
@@ -76,7 +76,7 @@ static GSM_Error FBUS2_WriteFrame(GSM_StateMachine 	*s,
 }
 
 static GSM_Error FBUS2_WriteMessage (GSM_StateMachine 	*s,
-				     unsigned const char *MsgBuffer,
+				     const unsigned char *MsgBuffer,
 				     size_t 		MsgLength,
 				     int 	MsgType)
 {

@@ -1,5 +1,5 @@
 # cmake <http://www.cmake.org> build file for Gammu docs
-# Copyright (c) 2007 - 2017 Michal Cihar
+# Copyright (c) 2007 - 2018 Michal Cihar
 # vim: expandtab sw=4 ts=4 sts=4:
 
 project (Gammu-doc-devel C)
@@ -26,7 +26,7 @@ if (SPHINX_BUILD_EXECUTABLE)
     set (SPHINX_PAPER_SIZE "a4" CACHE STRING "Paper size for Sphinx LaTeX/PDF/PS output")
     configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/conf.py" "${CMAKE_CURRENT_BINARY_DIR}/conf.py" @ONLY)
     macro(sphinxdoc _format)
-        add_custom_target (manual-${_format} ${PYTHON_EXECUTABLE} ${SPHINX_BUILD_EXECUTABLE}
+        add_custom_target (manual-${_format} ${SPHINX_BUILD_EXECUTABLE}
                 -c ${CMAKE_CURRENT_BINARY_DIR}/
                 -n
                 -b ${_format}

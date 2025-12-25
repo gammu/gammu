@@ -34,4 +34,3 @@ Filesystem access::
     ---
     Phone has at least two directories from root, /app and /app3 .
     at*list=/ gives error.
-

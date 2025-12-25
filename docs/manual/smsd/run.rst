@@ -73,6 +73,12 @@ message, where 1 is replaced by current number of message.
 
     Message text. Text is not available for 8-bit binary messages.
 
+.. envvar:: SMS_1_REFERENCE
+
+    .. versionadded:: 1.38.5
+
+    Message Reference. If delivery status received, this variable contains TPMR of original message
+
 Per part variables
 ++++++++++++++++++
 
@@ -95,6 +101,8 @@ variables whose content is present in the message.
 .. envvar:: DECODED_1_MMS_ADDRESS
 
     Address (URL) of MMS from MMS indication message.
+
+    .. seealso:: :ref:`faq-mms-download`
 
 .. envvar:: DECODED_1_MMS_SIZE
 

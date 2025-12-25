@@ -26,4 +26,3 @@ To see how it operates, following figure shows example of what happens when
         "Phone.Functions.ReplyFunctions[]()" -> "Phone.Functions.GetModel";
         "Phone.Functions.GetModel" -> "GSM_GetModel";
    }
-

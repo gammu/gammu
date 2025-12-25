@@ -118,4 +118,3 @@ if [ `wc -l < @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/received.log` -ne 3 
     echo "ERROR: Wrong number of messages received!"
     exit 1
 fi
-

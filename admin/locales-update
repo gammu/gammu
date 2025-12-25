@@ -18,6 +18,7 @@ xgettext \
     --copyright-holder "Michal Čihař <michal@cihar.com>" \
     --package-name gammu \
     --package-version $ver \
+    --from-code utf-8 \
     `find gammu helper gammu-detect -name '*.c' -o -name '*.h' -not -name 'locales.h' | sort`
 
 xgettext \
@@ -32,6 +33,7 @@ xgettext \
     --copyright-holder "Michal Čihař <michal@cihar.com>" \
     --package-name libgammu \
     --package-version $ver \
+    --from-code utf-8 \
     `find libgammu -name '*.c' -o -name '*.h' | sort`
 
 if [ "x$1" != "x--no-po4a" ] ; then

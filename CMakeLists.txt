@@ -1,5 +1,5 @@
 # cmake <https://cmake.org/> build file for Gammu
-# Copyright (c) 2007 - 2017 Michal Cihar
+# Copyright (c) 2007 - 2018 Michal Cihar
 # vim: expandtab sw=4 ts=4 sts=4:
 
 cmake_minimum_required (VERSION 3.0)
@@ -13,6 +13,7 @@ set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 # Silent some warnings from CMake 2.6
 cmake_policy(SET CMP0003 NEW)
 cmake_policy(SET CMP0009 NEW)
+cmake_policy(SET CMP0110 NEW)
 
 option (COVERAGE "Add flags for Coverage analysis" OFF)
 
@@ -28,12 +29,14 @@ if (LARGE_FILES)
 endif (LARGE_FILES)
 
 # Set version
-set (GAMMU_VERSION "1.38.4" CACHE INTERNAL "")
+set (GAMMU_VERSION "1.42.0" CACHE INTERNAL "")
 string (REGEX REPLACE "^([0-9]*)\\.([0-9]*)\\.([0-9]*)$" "\\1" "GAMMU_VERSION_MAJOR" "${GAMMU_VERSION}")
 string (REGEX REPLACE "^([0-9]*)\\.([0-9]*)\\.([0-9]*)$" "\\2" "GAMMU_VERSION_MINOR" "${GAMMU_VERSION}")
 string (REGEX REPLACE "^([0-9]*)\\.([0-9]*)\\.([0-9]*)$" "\\3" "GAMMU_VERSION_PATCH" "${GAMMU_VERSION}")
 math(EXPR GAMMU_VERSION_NUM "${GAMMU_VERSION_MAJOR} * 10000 + ${GAMMU_VERSION_MINOR} * 100 + ${GAMMU_VERSION_PATCH}")
 message (STATUS "Configuring ${CMAKE_PROJECT_NAME} ${GAMMU_VERSION}")
+
+set(CMAKE_C_STANDARD 11)
 
 set (GAMMU_SOVERSION "8" CACHE INTERNAL "")
 
@@ -178,9 +181,6 @@ find_program(PSQL_BIN psql)
 endif()
 
 find_package (Threads)
-
-# Check for Python
-find_package(PythonInterp 2)
 
 # Packages in sources
 macro_optional_find_package (MySQL)
@@ -430,7 +430,7 @@ if(MSVC)
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /Zi")
     set(CMAKE_SHARED_LINKER_FLAGS_RELEASE "${CMAKE_SHARED_LINKER_FLAGS_RELEASE} /DEBUG /OPT:REF /OPT:ICF")
     set(MATH_LIBS "")
-    
+
    # Call cmake with "-DMSVC_RUNTIME=static" to link with static runtime libraries
    configure_msvc_runtime()
 else(MSVC)
@@ -490,16 +490,13 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_MINGW OR
         MACRO_TUNE_COMPILER("-Wno-format-security")
     endif (WIN32 AND NOT CYGWIN)
 
-    # This is extremely noisy, use only in debug builds
-    if (DEBUG)
-        MACRO_TUNE_COMPILER("-Wextra")
-        if (NOT CLANG_COMPILER)
-            MACRO_TUNE_COMPILER("-Wunused-but-set-variable")
-        endif (NOT CLANG_COMPILER)
-        # Just silent this for now, too much code to fix here
-        MACRO_TUNE_COMPILER("-Wno-unused-parameter")
-        # Not sure if this is safe for all architectures
-    endif (DEBUG)
+    # Enable extra warnings
+    MACRO_TUNE_COMPILER("-Wextra")
+    if (NOT CLANG_COMPILER)
+        MACRO_TUNE_COMPILER("-Wunused-but-set-variable")
+    endif (NOT CLANG_COMPILER)
+    # Just silent this for now, too much code to fix here
+    MACRO_TUNE_COMPILER("-Wno-unused-parameter")
 
     #
     # Security related flags
@@ -816,7 +813,6 @@ set (CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/installer/license.
 set (CPACK_PACKAGE_VERSION_MAJOR "${GAMMU_VERSION_MAJOR}")
 set (CPACK_PACKAGE_VERSION_MINOR "${GAMMU_VERSION_MINOR}")
 set (CPACK_PACKAGE_VERSION_PATCH "${GAMMU_VERSION_PATCH}")
-set (CPACK_INSTALLER_PROGRAM_DISK_IMAGE "${CMAKE_CURRENT_SOURCE_DIR}/installer/addpostflight")
 
 if (WIN32 AND NOT CYGWIN)
     set (CPACK_SYSTEM_NAME "Windows" CACHE STRING "Windows package name")
@@ -893,7 +889,7 @@ set (CPACK_COMPONENT_EXAMPLES_GROUP "Documentation")
 set (CPACK_COMPONENT_MANUAL_GROUP "Documentation")
 set (CPACK_COMPONENT_MEDIA_GROUP "Documentation")
 
-set (CPACK_ALL_INSTALL_TYPES Standard Developer Full)
+set (CPACK_ALL_INSTALL_TYPES Full Standard Developer)
 
 set (CPACK_COMPONENT_GAMMU_INSTALL_TYPES Standard Developer Full)
 set (CPACK_COMPONENT_SMSD_INSTALL_TYPES Standard Developer Full)
@@ -967,4 +963,3 @@ if(INSTALL_DOC)
 endif(INSTALL_DOC)
 
 add_subdirectory(contrib)
-

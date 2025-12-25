@@ -33,7 +33,6 @@ Usage: ./configure [options]
 --enable-backup     enable backup support
 --enable-win32      enable mingw crosscomilation
 --enable-protection enable compile time protections
---with-python=<path> path to Python interpreter
 --without-gnapplet  disable installation of gnapplet
 --without-completion disable installation of bash completion script
 
@@ -56,7 +55,6 @@ CMAKE_DEBUG=
 CMAKE_BACKUP=
 CMAKE_CROSS=
 CMAKE_PROTECTION=
-CMAKE_PYTHON=
 CMAKE_GNAP=
 CMAKE_COMPLETE=
 
@@ -68,9 +66,6 @@ while [ "$#" -gt 0 ] ; do
             ;;
         --prefix=*)
             CMAKE_PREFIX="-DCMAKE_INSTALL_PREFIX=${1##--prefix=}"
-            ;;
-        --with-python=*)
-            CMAKE_PYTHON="-DBUILD_PYTHON=${1##--with-python=}"
             ;;
         --enable-backup)
             CMAKE_BACKUP="-DWITH_BACKUP=ON"
@@ -144,4 +139,4 @@ fi
 cd "$BUILD_DIR"
 
 # invoke cmake to do configuration
-cmake $SOURCE_DIR $CMAKE_PREFIX $CMAKE_SHARED $CMAKE_DEBUG $CMAKE_BACKUP $CMAKE_CROSS $CMAKE_PROTECTION $CMAKE_PYTHON $CMAKE_GNAP $CMAKE_COMPLETE
+cmake $SOURCE_DIR $CMAKE_PREFIX $CMAKE_SHARED $CMAKE_DEBUG $CMAKE_BACKUP $CMAKE_CROSS $CMAKE_PROTECTION $CMAKE_GNAP $CMAKE_COMPLETE

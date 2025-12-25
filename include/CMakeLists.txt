@@ -1,5 +1,5 @@
 # cmake <http://www.cmake.org> build file for Gammu headers
-# Copyright (c) 2007 - 2017 Michal Cihar
+# Copyright (c) 2007 - 2018 Michal Cihar
 # vim: expandtab sw=4 ts=4 sts=4:
 
 project (Gammu-headers C)
@@ -21,4 +21,3 @@ install (
     DESTINATION "${INSTALL_INC_DIR}"
     COMPONENT "headers"
     )
-

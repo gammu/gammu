@@ -67,7 +67,7 @@ char *DecodeDateTime(char *DT)
 			DT[11],DT[12],
 			DT[13],DT[14]);
 	}
-	
+
 	return buffer;
 }
 
@@ -108,7 +108,7 @@ public:
  		if (pport) {
  			*pport ++ = _T('\0');
  			port = atoi( pport );
- 		} 
+ 		}
  		DB = mysql_real_connect(&MainDB,server,user,password,NULL,port,NULL,0);
 		if (DB == NULL) {
 			MessageBox(MainHWND,mysql_error(&MainDB),"Connection error",0);
@@ -123,11 +123,11 @@ IMPLEMENT_DYNCREATE(CMultiDoc, CDocument)
 //--- left side of child windows
 
 class CSplitTreeView : public CTreeView
-{ 
+{
 protected:
 	CSplitTreeView();
 	~CSplitTreeView();
-	afx_msg void OnSelchanged(NMHDR* pNMHDR, LRESULT* pResult);	
+	afx_msg void OnSelchanged(NMHDR* pNMHDR, LRESULT* pResult);
 	DECLARE_DYNCREATE(CSplitTreeView)
 public:
 	virtual void OnInitialUpdate();
@@ -142,7 +142,7 @@ BEGIN_MESSAGE_MAP(CSplitTreeView, CTreeView)
 END_MESSAGE_MAP()
 
 inline CMultiDoc* CSplitTreeView::GetDocument() const
-{ 
+{
 	return reinterpret_cast<CMultiDoc*>(m_pDocument);
 }
 
@@ -200,7 +200,7 @@ void CSplitTreeView::OnInitialUpdate()
 	mysql_free_result(Res);
 }
 
-void CSplitTreeView::OnSelchanged(NMHDR* pNMHDR, LRESULT* pResult) 
+void CSplitTreeView::OnSelchanged(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NM_TREEVIEW* 	pNMTreeView = (NM_TREEVIEW*)pNMHDR;
 	CTreeCtrl 	&ctrl = GetTreeCtrl();
@@ -248,7 +248,7 @@ CSplitEditView::CSplitEditView()
 {
 }
 
-void CSplitEditView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) 
+void CSplitEditView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 {
 	CString 		txt;
 	CRichEditCtrl& 		theEdit = GetRichEditCtrl();
@@ -265,7 +265,7 @@ void CSplitEditView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 	txt = "";
 	theEdit.SetWindowText(txt);
 	something[0] = 0;
-	
+
 	if (GetDocument()->FID == "") return;
 
 	if (GetDocument()->FFolder=="Inbox") {
@@ -329,7 +329,7 @@ void CSplitEditView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 			Row = mysql_fetch_row(Res);
 
 			DispSMSInfo(&txt, Row[3], Row[2], Row[0], Row[4], Row[1]);
-	
+
 			mysql_free_result(Res);
 		}
 	}
@@ -342,7 +342,7 @@ void CSplitEditView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 				MessageBox(mysql_error(GetDocument()->DB),"Query error");
 				return;
 			}
-	
+
 			if (!(Res = mysql_store_result(GetDocument()->DB))) {
 				MessageBox(mysql_error(GetDocument()->DB),"Store error");
 				return;
@@ -367,7 +367,7 @@ void CSplitEditView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 			MessageBox(mysql_error(GetDocument()->DB),"Query error");
 			return;
 		}
-	
+
 		if (!(Res = mysql_store_result(GetDocument()->DB))) {
 			MessageBox(mysql_error(GetDocument()->DB),"Store error");
 			return;
@@ -404,19 +404,19 @@ void CSplitEditView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 void CSplitEditView::OnInitialUpdate()
 {
 	CRichEditCtrl& 	theEdit = GetRichEditCtrl();
-	
+
 	theEdit.SetReadOnly(TRUE);
 }
 
 inline CMultiDoc* CSplitEditView::GetDocument() const
-{ 
+{
 	return reinterpret_cast<CMultiDoc*>(m_pDocument);
 }
 
 //--- right up side of child windows
 
 class CSplitListView : public CListView
-{ 
+{
 protected:
 	CSplitListView();
 	DECLARE_DYNCREATE(CSplitListView)
@@ -434,12 +434,12 @@ BEGIN_MESSAGE_MAP(CSplitListView, CListView)
 	ON_NOTIFY_REFLECT(NM_CLICK, OnClick)
 END_MESSAGE_MAP()
 
-void CSplitListView::OnClick(NMHDR* pNMHDR, LRESULT* pResult) 
+void CSplitListView::OnClick(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	CListCtrl& 	pmyListCtrl = GetListCtrl();
 	CString		Item;
 	CString 	pStr = GetDocument()->FFolder;
-	
+
 	GetDocument()->FID = "";
 
 	POSITION Pos = pmyListCtrl.GetFirstSelectedItemPosition();
@@ -454,11 +454,11 @@ void CSplitListView::OnClick(NMHDR* pNMHDR, LRESULT* pResult)
 }
 
 inline CMultiDoc* CSplitListView::GetDocument() const
-{ 
+{
 	return reinterpret_cast<CMultiDoc*>(m_pDocument);
 }
 
-void CSplitListView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) 
+void CSplitListView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 {
 	LV_COLUMN 	lvc;
 	CString 	pStr = GetDocument()->FFolder;
@@ -484,7 +484,7 @@ void CSplitListView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 //	_tcscpy(lpsz, pStr);
 
 	lvc.mask = LVCF_TEXT | LVCF_SUBITEM | LVCF_WIDTH;
-		
+
 	if (pStr=="Phones") {
 		pmyListCtrl.SetExtendedStyle(LVS_EX_FULLROWSELECT|LVS_EX_GRIDLINES);
 
@@ -669,7 +669,7 @@ void CSplitListView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 			pmyListCtrl.SetItemText(index,7,Row[14]);//report
 		}
 		mysql_free_result(Res);
-	}	
+	}
 	if (pStr=="Sent items") {
 		pmyListCtrl.SetExtendedStyle(LVS_EX_FULLROWSELECT|LVS_EX_GRIDLINES);
 
@@ -757,9 +757,9 @@ BOOL CChildFrame::OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext)
 	return TRUE;
 }
 
-void CChildFrame::ActivateFrame(int nCmdShow) 
+void CChildFrame::ActivateFrame(int nCmdShow)
 {
-	nCmdShow = SW_MAXIMIZE;   
+	nCmdShow = SW_MAXIMIZE;
 	CMDIChildWnd::ActivateFrame(nCmdShow);
 }
 
@@ -815,7 +815,7 @@ protected:
 	}
 	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus) {
 		CMDIFrameWnd::OnShowWindow(bShow, nStatus);
-	
+
 		ShowWindow(SW_MAXIMIZE);
 	}
 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam) {
@@ -857,7 +857,7 @@ public:
 		AddDocTemplate(pDocTemplate);
 
 		pMainFrame = new CMainFrame;
-		if (pMainFrame==NULL) return FALSE;		
+		if (pMainFrame==NULL) return FALSE;
 		if (!pMainFrame->LoadFrame(IDR_EMPTY)) return FALSE;
 		pMainFrame->ShowWindow(m_nCmdShow);
 		pMainFrame->UpdateWindow();
@@ -879,7 +879,7 @@ public:
 		_tcscpy(server, dlg.IP);
 		_tcscpy(user, dlg.User);
 		_tcscpy(password, dlg.Pass);
-		
+
 		CWinApp::OnFileNew();
 	}
 	void OnClickSendSMS() {

@@ -112,4 +112,3 @@ wchar_t towlower(wchar_t c)
 	return tolower(dest[0]);
 }
 #endif
-

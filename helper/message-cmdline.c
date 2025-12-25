@@ -17,7 +17,7 @@
 
 #include "formats.h"
 #include "printing.h"
-#include "string.h"
+#include "../libgammu/misc/string.h"
 #include "message-cmdline.h"
 #include "cmdline.h"
 
@@ -39,7 +39,8 @@ typedef enum {
 	COMPOSE_VCARD10,
 	COMPOSE_VCARD21,
 	COMPOSE_WAPINDICATOR,
-	COMPOSE_WAPSETTINGS
+	COMPOSE_WAPSETTINGS,
+	COMPOSE_USSD
 } ComposeType;
 
 typedef struct {
@@ -66,6 +67,7 @@ ComposeMapEntry ComposeMap[] = {
 	{"VCARD21", COMPOSE_VCARD21},
 	{"WAPINDICATOR", COMPOSE_WAPINDICATOR},
 	{"WAPSETTINGS", COMPOSE_WAPSETTINGS},
+	{"USSD", COMPOSE_USSD},
 	{NULL, 0}
 };
 
@@ -227,6 +229,10 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 	case COMPOSE_EMS:
 		SMSInfo.UnicodeCoding   		= FALSE;
 		SMSInfo.EntriesNum 			= 0;
+		break;
+	case COMPOSE_USSD:
+		SMSInfo.Entries[0].ID = SMS_USSD;
+		SMSInfo.Class = GSM_SMS_USSD;
 		break;
 	case COMPOSE_MMSINDICATOR:
 		if (argc < 3 + startarg) {
@@ -414,13 +420,13 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			case WAPSETTINGS_BEARER_GPRS:
 				if (strcasecmp(argv[2 + startarg],"GPRS") == 0) {
 					SMSInfo.Entries[0].Settings = &Backup.WAPSettings[i]->Settings[j];
-					break;
 				}
+				break;
 			case WAPSETTINGS_BEARER_DATA:
 				if (strcasecmp(argv[2 + startarg],"DATA") == 0) {
 					SMSInfo.Entries[0].Settings = &Backup.WAPSettings[i]->Settings[j];
-					break;
 				}
+				break;
 			default:
 				break;
 			}
@@ -1492,4 +1498,3 @@ end_compose:
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:
  */
-

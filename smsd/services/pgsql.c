@@ -1,5 +1,5 @@
 /* (c) 2006 by Andrea Riciputi */
-/* Copyright (c) 2009 - 2017 Michal Cihar <michal@cihar.com> */
+/* Copyright (c) 2009 - 2018 Michal Cihar <michal@cihar.com> */
 
 #define _XOPEN_SOURCE
 #define _BSD_SOURCE

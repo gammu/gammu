@@ -1,5 +1,5 @@
 # - Find GNU gettext tools
-# This module looks for the GNU gettext tools. This module defines the 
+# This module looks for the GNU gettext tools. This module defines the
 # following values:
 #  GETTEXT_MSGMERGE_EXECUTABLE: the full path to the msgmerge tool.
 #  GETTEXT_MSGFMT_EXECUTABLE: the full path to the msgfmt tool.
@@ -7,8 +7,8 @@
 #
 # Additionally it provides the following macros:
 # GETTEXT_CREATE_TRANSLATIONS ( outputFile [ALL] file1 ... fileN )
-#    This will create a target "translations" which will convert the 
-#    given input po files into the binary output mo file. If the 
+#    This will create a target "translations" which will convert the
+#    given input po files into the binary output mo file. If the
 #    ALL option is used, the translations will also be created when
 #    building the default target.
 
@@ -37,13 +37,13 @@ MACRO(GETTEXT_CREATE_TRANSLATIONS _potFile _firstPoFile)
       SET(_gmoFile "${_gmoFilePath}/${_potBasename}.mo")
 
       file(MAKE_DIRECTORY "${_gmoFilePath}")
-      ADD_CUSTOM_COMMAND( 
-         OUTPUT ${_gmoFile} 
+      ADD_CUSTOM_COMMAND(
+         OUTPUT ${_gmoFile}
          COMMAND ${GETTEXT_MSGFMT_EXECUTABLE} -o ${_gmoFile} ${_absFile}
-         DEPENDS ${_absFile} 
+         DEPENDS ${_absFile}
       )
 
-      INSTALL(FILES ${_gmoFile} DESTINATION ${INSTALL_LOC_DIR}/${_lang}/LC_MESSAGES RENAME ${_potBasename}.mo COMPONENT "locales") 
+      INSTALL(FILES ${_gmoFile} DESTINATION ${INSTALL_LOC_DIR}/${_lang}/LC_MESSAGES RENAME ${_potBasename}.mo COMPONENT "locales")
       SET(_gmoFiles ${_gmoFiles} ${_gmoFile})
 
    ENDFOREACH (_currentPoFile )
@@ -60,6 +60,3 @@ ELSE (GETTEXT_MSGMERGE_EXECUTABLE AND GETTEXT_MSGFMT_EXECUTABLE )
       MESSAGE(FATAL_ERROR "GetText not found")
    ENDIF (GetText_REQUIRED)
 ENDIF (GETTEXT_MSGMERGE_EXECUTABLE AND GETTEXT_MSGFMT_EXECUTABLE )
-
-
-

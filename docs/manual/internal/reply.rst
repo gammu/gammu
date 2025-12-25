@@ -6,7 +6,7 @@ Reply functions
 When phone gives answers, we check if we requested received info and we
 redirect it to concrete reply function, which will decode it. Different
 phone answers can go to one reply function let's say responsible for
-getting sms status. 
+getting sms status.
 
 .. c:type:: GSM_Reply_Function
 
@@ -113,5 +113,3 @@ called ReplyFunction or showed debug info, that frame is unknown. If
 there is ReplyFunction, it has access to s->Phone.Data and decodes answer.
 Returns error or not (and this is value for GSM_WaitFor). If there is
 no requested answer during time, GSM_WaitFor returns GE_TIMEOUT.
-
-

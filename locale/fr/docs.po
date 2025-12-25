@@ -5,26 +5,25 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu-docs 1.38.2\n"
+"Project-Id-Version: Gammu-docs 1.41.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-10-11 13:13+0200\n"
-"PO-Revision-Date: 2017-05-02 17:33+0000\n"
-"Last-Translator: Kyodev <kyodev@yandex.com>\n"
-"Language-Team: French <https://hosted.weblate.org/projects/gammu/gammu-"
-"docs/fr/>\n"
+"POT-Creation-Date: 2019-09-27 09:19+0200\n"
+"PO-Revision-Date: 2020-04-14 16:11+0000\n"
+"Last-Translator: Mattherix <mattherix@protonmail.com>\n"
+"Language-Team: French <https://hosted.weblate.org/projects/gammu/gammu-docs/"
+"fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 2.14-dev\n"
+"X-Generator: Weblate 4.0-dev\n"
 
 #. type: Title =
 #: README.rst:2
 #, no-wrap
 msgid "Gammu All Mobile Management Utilities"
-msgstr ""
-"Gammu All Mobile Management Utilities (Utilitaire de gestion pour mobiles)"
+msgstr "Gammu All Mobile Management Utilities (Utilitaire de gestion pour mobiles)"
 
 #. type: Plain text
 #: README.rst:6
@@ -80,8 +79,8 @@ msgid ""
 "https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/master?"
 "svg=true"
 msgstr ""
-"https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/master?sv"
-"g=true"
+"https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/master?"
+"svg=true"
 
 #. type: Plain text
 #: README.rst:22
@@ -89,8 +88,8 @@ msgid ""
 ":alt: Windows Build status :target: https://ci.appveyor.com/project/nijel/"
 "gammu/branch/master"
 msgstr ""
-":alt: Windows Build status :target: "
-"https://ci.appveyor.com/project/nijel/gammu/branch/master"
+":alt: Windows Build status :target: https://ci.appveyor.com/project/nijel/"
+"gammu/branch/master"
 
 #. type: Plain text
 #: README.rst:24
@@ -103,8 +102,8 @@ msgid ""
 ":alt: Translation status :target: https://hosted.weblate.org/engage/gammu/?"
 "utm_source=widget"
 msgstr ""
-":alt: État de la traduction:target: "
-"https://hosted.weblate.org/engage/gammu/?utm_source=widget"
+":alt: État de la traduction:target: https://hosted.weblate.org/engage/gammu/?"
+"utm_source=widget"
 
 #. type: Plain text
 #: README.rst:28
@@ -118,13 +117,13 @@ msgstr ":alt: Coverity scan :target: https://scan.coverity.com/projects/2890"
 
 #. type: Plain text
 #: README.rst:32
-msgid "https://img.shields.io/gratipay/Gammu.svg"
-msgstr "https://img.shields.io/gratipay/Gammu.svg"
+msgid "https://img.shields.io/liberapay/receives/Gammu.svg"
+msgstr "https://img.shields.io/liberapay/receives/Gammu.svg"
 
 #. type: Plain text
 #: README.rst:34
-msgid ":alt: Gratipay :target: https://gratipay.com/Gammu/"
-msgstr ":alt: Gratipay :target: https://gratipay.com/Gammu/"
+msgid ":alt: Liberapay :target: https://liberapay.com/Gammu/donate"
+msgstr ":alt: Liberapay :target: https://liberapay.com/Gammu/donate"
 
 #. type: Plain text
 #: README.rst:36
@@ -189,8 +188,8 @@ msgstr "Support des développeurs"
 #: README.rst:59
 msgid "You can appreciate developers work at <https://wammu.eu/donate/>."
 msgstr ""
-"Vous pouvez apprécier le travail des développeurs à "
-"<https://wammu.eu/donate/>."
+"Vous pouvez apprécier le travail des développeurs à <https://wammu.eu/donate/"
+">."
 
 #. type: Title =
 #: INSTALL:2
@@ -203,7 +202,9 @@ msgstr "Gammu All Mobile Management Utilitaires - Installation"
 msgid ""
 "See docs/manual/project/install.rst for installation guide or see chapter "
 "\"Compiling Gammu\" in The Gammu Manual."
-msgstr "Voir docs/manual/project/install.rst pour le guide d'installation ou le chapitre \"Compiling Gammu\" dans le manuel de Gammu."
+msgstr ""
+"Voir docs/manual/project/install.rst pour le guide d'installation ou le "
+"chapitre \"Compiling Gammu\" dans le manuel de Gammu."
 
 #, fuzzy
 #~| msgid "https://travis-ci.org/gammu/gammu.png?branch=master"
@@ -1150,7 +1151,7 @@ msgstr "Voir docs/manual/project/install.rst pour le guide d'installation ou le 
 #~ msgid "Function not supported by phone."
 #~ msgstr "Fonctionnalités non supportées par votre téléphone."
 
-#~ msgid "Entry is empty."
+#~ msgid "Empty entry."
 #~ msgstr "L'entrée est vide."
 
 #~ msgid "Security error. Maybe no PIN?"

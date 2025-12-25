@@ -39,4 +39,4 @@ There are several po files to translate:
 .. _translation server: http://hosted.weblate.org/projects/gammu/
 .. _Michal Čihař: mailto:michal@cihar.com
 .. _Gettext: http://en.wikipedia.org/wiki/GNU_gettext\
-.. _po4a: http://po4a.alioth.debian.org/
+.. _po4a: https://po4a.org/

@@ -13,7 +13,7 @@
 #include "../../misc/coding/coding.h"
 #include "obex.h"
 
-static GSM_Error OBEX_WriteMessage (GSM_StateMachine *s, unsigned const char *MsgBuffer,
+static GSM_Error OBEX_WriteMessage (GSM_StateMachine *s, const unsigned char *MsgBuffer,
 				    size_t MsgLength, int type)
 {
 	unsigned char	*buffer=NULL;

@@ -2,7 +2,7 @@ CREATE TABLE gammu (
   Version INTEGER NOT NULL DEFAULT '0' PRIMARY KEY
 );
 
-INSERT INTO gammu (Version) VALUES (16);
+INSERT INTO gammu (Version) VALUES (17);
 
 CREATE TABLE inbox (
   UpdatedInDB NUMERIC NOT NULL DEFAULT (datetime('now')),
@@ -17,11 +17,12 @@ CREATE TABLE inbox (
   ID INTEGER PRIMARY KEY AUTOINCREMENT,
   RecipientID TEXT NOT NULL,
   Processed TEXT NOT NULL DEFAULT 'false',
-  CHECK (Coding IN 
-  ('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression')) 
+  Status INTEGER NOT NULL DEFAULT '-1',
+  CHECK (Coding IN
+  ('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression'))
 );
 
-CREATE TRIGGER update_inbox_time UPDATE ON inbox 
+CREATE TRIGGER update_inbox_time UPDATE ON inbox
   BEGIN
     UPDATE inbox SET UpdatedInDB = datetime('now') WHERE ID = old.ID;
   END;
@@ -47,15 +48,20 @@ CREATE TABLE outbox (
   CreatorID TEXT NOT NULL,
   Retries INTEGER DEFAULT '0',
   Priority INTEGER DEFAULT '0',
-  CHECK (Coding IN 
+  Status TEXT NOT NULL DEFAULT 'Reserved',
+  StatusCode INTEGER NOT NULL DEFAULT '-1',
+  CHECK (Coding IN
   ('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression')),
-  CHECK (DeliveryReport IN ('default','yes','no'))
+  CHECK (DeliveryReport IN ('default','yes','no')),
+  CHECK (Status IN
+  ('SendingOK','SendingOKNoReport','SendingError','DeliveryOK','DeliveryFailed','DeliveryPending',
+  'DeliveryUnknown','Error','Reserved'))
 );
 
 CREATE INDEX outbox_date ON outbox(SendingDateTime, SendingTimeOut);
 CREATE INDEX outbox_sender ON outbox(SenderID);
 
-CREATE TRIGGER update_outbox_time UPDATE ON outbox 
+CREATE TRIGGER update_outbox_time UPDATE ON outbox
   BEGIN
     UPDATE outbox SET UpdatedInDB = datetime('now') WHERE ID = old.ID;
   END;
@@ -68,8 +74,13 @@ CREATE TABLE outbox_multipart (
   TextDecoded TEXT DEFAULT NULL,
   ID INTEGER,
   SequencePosition INTEGER NOT NULL DEFAULT '1',
-  CHECK (Coding IN 
+  Status TEXT NOT NULL DEFAULT 'Reserved',
+  StatusCode INTEGER NOT NULL DEFAULT '-1',
+  CHECK (Coding IN
   ('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression')),
+  CHECK (Status IN
+  ('SendingOK','SendingOKNoReport','SendingError','DeliveryOK','DeliveryFailed','DeliveryPending',
+  'DeliveryUnknown','Error','Reserved')),
  PRIMARY KEY (ID, SequencePosition)
 );
 
@@ -91,7 +102,7 @@ CREATE TABLE phones (
   Received INTEGER NOT NULL DEFAULT 0
 );
 
-CREATE TRIGGER update_phones_time UPDATE ON phones 
+CREATE TRIGGER update_phones_time UPDATE ON phones
   BEGIN
     UPDATE phones SET UpdatedInDB = datetime('now') WHERE IMEI = old.IMEI;
   END;
@@ -116,10 +127,11 @@ CREATE TABLE sentitems (
   TPMR INTEGER NOT NULL DEFAULT '-1',
   RelativeValidity INTEGER NOT NULL DEFAULT '-1',
   CreatorID TEXT NOT NULL,
-  CHECK (Status IN 
+  StatusCode INTEGER NOT NULL DEFAULT '-1',
+  CHECK (Status IN
   ('SendingOK','SendingOKNoReport','SendingError','DeliveryOK','DeliveryFailed','DeliveryPending',
   'DeliveryUnknown','Error')),
-  CHECK (Coding IN 
+  CHECK (Coding IN
   ('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression')) ,
   PRIMARY KEY (ID, SequencePosition)
 );
@@ -129,7 +141,7 @@ CREATE INDEX sentitems_tpmr ON sentitems(TPMR);
 CREATE INDEX sentitems_dest ON sentitems(DestinationNumber);
 CREATE INDEX sentitems_sender ON sentitems(SenderID);
 
-CREATE TRIGGER update_sentitems_time UPDATE ON sentitems 
+CREATE TRIGGER update_sentitems_time UPDATE ON sentitems
   BEGIN
     UPDATE sentitems SET UpdatedInDB = datetime('now') WHERE ID = old.ID;
   END;

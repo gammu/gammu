@@ -101,4 +101,3 @@
 #define NUM_END_TEXT 0x03   /* End of Text */
 
 #define PROTOCOL_VERSION 1.5
-

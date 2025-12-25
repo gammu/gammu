@@ -39,7 +39,7 @@ void CLogUserDlg::OnShowWindow(BOOL bShow, UINT nStatus)
 void CLogUserDlg::CheckIDOK()
 {
 	GetDlgItem(IDOK)->EnableWindow(FALSE);
-	
+
 	if (User != "" && IP != "") GetDlgItem(IDOK)->EnableWindow(TRUE);
 }
 

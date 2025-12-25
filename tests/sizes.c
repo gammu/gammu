@@ -70,5 +70,6 @@ int main(int argc UNUSED, char **argv UNUSED)
 	SIZE(GSM_Phone_DUMMYData);
 	SIZE(GSM_File);
 	SIZE(GSM_SMSFolders);
+	SIZE(GSM_SMSMessage);
 	return 0;
 }

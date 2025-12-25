@@ -55,7 +55,7 @@ install: $(BUILD_DIR)
 	$(MAKE) -C $(BUILD_DIR) install
 
 test: $(BUILD_DIR)
-	$(MAKE) -C $(BUILD_DIR) test
+	$(MAKE) -C $(BUILD_DIR) test ARGS=--output-on-failure
 
 Nightly: $(BUILD_DIR)
 	$(MAKE) -C $(BUILD_DIR) Nightly
@@ -81,7 +81,7 @@ $(BUILD_DIR):
 
 update-man: $(BUILD_DIR)
 	@make -C $(BUILD_DIR) manual-man
-	@cp $(BUILD_DIR)/docs/manual/man/* docs/man/
+	@cp $(BUILD_DIR)/docs/manual/man/*.* docs/man/
 
 check-man:
 	@for f in docs/man/*.[0-9] ; do echo $$f: ; LANG=en_US.UTF-8 MANWIDTH=80 man --warnings -E UTF-8 -l $$f >/dev/null ; done

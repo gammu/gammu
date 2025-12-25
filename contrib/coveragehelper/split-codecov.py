@@ -1,19 +1,19 @@
 #!/usr/bin/env python
-from __future__ import print_function
+
 import sys
 
 
 def main():
     with open(sys.argv[1]) as handle:
         output = None
-        for line in handle.readlines():
-            if line.startswith('# path='):
-                name = line.split('=', 1)[1].strip()
-                print('Creating {0}'.format(name))
+        for line in handle.readlines():  # noqa: FURB129
+            if line.startswith("# path="):
+                name = line.split("=", 1)[1].strip()
+                print(f"Creating {name}")
                 if output:
                     output.close()
-                output = open(name, 'w')
-            elif line.startswith('<<<<<< EOF'):
+                output = open(name, "w")  # noqa: SIM115
+            elif line.startswith("<<<<<< EOF"):
                 output.close()
             elif output:
                 output.write(line)
@@ -21,5 +21,5 @@ def main():
             output.close()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

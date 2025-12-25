@@ -25,4 +25,3 @@ MACRO (MACRO_OPTIONAL_FIND_PACKAGE _name )
       set(${_name}_LIBRARIES)
    endif (WITH_${_name})
 ENDMACRO (MACRO_OPTIONAL_FIND_PACKAGE)
-

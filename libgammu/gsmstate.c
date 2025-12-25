@@ -1,4 +1,4 @@
-/* (c) 2002-2005 by Marcin Wiacek and Michal Cihar */
+  /* (c) 2002-2005 by Marcin Wiacek and Michal Cihar */
 /* Phones ID (c) partially by Walek */
 
 #include <stdarg.h>
@@ -6,6 +6,7 @@
 #include <string.h>
 #include <errno.h>
 #include <limits.h>
+#include <assert.h>
 
 #include <gammu-call.h>
 #include <gammu-settings.h>
@@ -21,12 +22,14 @@
 #include "misc/misc.h"
 #include "device/devfunc.h"
 
-#include "../helper/string.h"
+#include "../libgammu/misc/string.h"
 
 #if defined(HAVE_GETPWUID) && defined(HAVE_GETUID)
 #include <sys/types.h>
 #include <pwd.h>
 #include <unistd.h>
+#include <ctype.h>
+
 #endif
 
 #if defined(WIN32) || defined(DJGPP)
@@ -899,6 +902,12 @@ autodetect:
 			return error;
 		}
 
+		error=s->Phone.Functions->SetPower(s, 1);
+		if (error != ERR_NONE && error != ERR_NOTSUPPORTED) {
+			GSM_LogError(s, "Init:Phone->SetPower" , error);
+			return error;
+		}
+
 		error=s->Phone.Functions->PostConnect(s);
 		if (error != ERR_NONE && error != ERR_NOTSUPPORTED) {
 			GSM_LogError(s, "Init:Phone->PostConnect" , error);
@@ -983,7 +992,7 @@ GSM_Error GSM_AbortOperation(GSM_StateMachine * s)
 	return ERR_NONE;
 }
 
-GSM_Error GSM_WaitForOnce(GSM_StateMachine *s, unsigned const char *buffer,
+GSM_Error GSM_WaitForOnce(GSM_StateMachine *s, const unsigned char *buffer,
 			  size_t length, int type, int timeout)
 {
 	GSM_Phone_Data *Phone = &s->Phone.Data;
@@ -1026,7 +1035,7 @@ GSM_Error GSM_WaitForOnce(GSM_StateMachine *s, unsigned const char *buffer,
 	return ERR_TIMEOUT;
 }
 
-GSM_Error GSM_WaitFor (GSM_StateMachine *s, unsigned const char *buffer,
+GSM_Error GSM_WaitFor (GSM_StateMachine *s, const unsigned char *buffer,
 		       size_t length, int type, int timeout,
 		       GSM_Phone_RequestID request)
 {
@@ -1064,7 +1073,7 @@ GSM_Error GSM_WaitFor (GSM_StateMachine *s, unsigned const char *buffer,
 		if (error != ERR_TIMEOUT) {
 			return error;
 		}
-        }
+  }
 
 	if (request != ID_Reset && GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_RESET_AFTER_TIMEOUT)) {
 		smprintf_level(s, D_ERROR, "Performing device reset after timeout!\n");
@@ -1128,6 +1137,109 @@ static GSM_Error CheckReplyFunctions(GSM_StateMachine *s, GSM_Reply_Function *Re
 	}
 }
 
+GSM_Error EventQueue_Push(GSM_StateMachine *s, const EventBinding *binding)
+{
+  DeferredEventQueue *Queue = &s->Phone.Data.DeferredEvents;
+
+  assert(binding != NULL);
+  assert(Queue->head < MAX_DEFERRED_EVENTS);
+
+  if(Queue->entries == MAX_DEFERRED_EVENTS)
+    return ERR_FULL;
+
+  Queue->event_bindings[Queue->head] = *binding;
+  Queue->head = (Queue->head + 1) % MAX_DEFERRED_EVENTS;
+  ++Queue->entries;
+
+  assert(Queue->entries <= MAX_DEFERRED_EVENTS);
+
+  return ERR_NONE;
+}
+
+GSM_Error EventQueue_Pop(GSM_StateMachine *s, EventBinding *binding)
+{
+  DeferredEventQueue *Queue = &s->Phone.Data.DeferredEvents;
+
+  assert(binding != NULL);
+
+  if(Queue->entries == 0)
+    return ERR_EMPTY;
+
+  *binding = Queue->event_bindings[Queue->tail];
+  Queue->tail = (Queue->tail + 1) % MAX_DEFERRED_EVENTS;
+  --Queue->entries;
+
+  assert(Queue->entries >= 0);
+
+  return ERR_NONE;
+}
+
+void GSM_CancelEventsOfType(GSM_StateMachine *s, unsigned event_types)
+{
+  DeferredEventQueue *q = &s->Phone.Data.DeferredEvents;
+  int i = q->tail;
+
+  while(i != q->head) {
+    if(q->event_bindings[i].type & event_types)
+      q->event_bindings[i].event_cancelled = TRUE;
+
+    i = (i + 1) % MAX_DEFERRED_EVENTS;
+  }
+}
+
+GSM_Error GSM_DeferIncomingCallEvent(GSM_StateMachine *s, GSM_Call *call, BeforeDeferredEvent before_event)
+{
+  GSM_Error error;
+  EventBinding binding;
+
+  if(s->Phone.Data.RequestID == ID_None) {
+    s->User.IncomingCall(s, call, s->User.IncomingCallUserData);
+    return ERR_NONE;
+  }
+
+  binding.type = GSM_EV_CALL;
+  binding.handler = (EventHandler)s->User.IncomingCall;
+  binding.before_event = before_event;
+  binding.after_event = NULL;
+  binding.event_cancelled = FALSE;
+  binding.event_data.call = *call;
+  binding.user_data = s->User.IncomingCallUserData;
+
+  error = EventQueue_Push(s, &binding);
+
+  if(error != ERR_NONE)
+    smprintf_level(s, D_ERROR,
+      "the incoming call handler could not be deferred.\n");
+
+  return error;
+}
+
+GSM_Error ProcessDeferredEvent(GSM_StateMachine *s)
+{
+  EventBinding binding;
+  GSM_Error error = EventQueue_Pop(s, &binding);
+
+  if(error != ERR_NONE)
+    return error;
+
+  assert(s->Phone.Data.RequestID == ID_None);
+  assert(binding.handler != NULL);
+  assert(binding.type != GSM_EV_UNSET);
+
+  if(binding.event_cancelled == FALSE) {
+    if (binding.before_event)
+      error = binding.before_event(s);
+
+    if(error == ERR_NONE)
+      binding.handler(s, &binding.event_data, binding.user_data);
+  }
+
+  if(binding.after_event)
+    binding.after_event(s, &binding);
+
+  return error;
+}
+
 GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 {
 	GSM_Error		error	= ERR_UNKNOWNFRAME;
@@ -1159,6 +1271,7 @@ GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 				error = ERR_NONE;
 			} else {
 				Phone->RequestID = ID_None;
+        while(ProcessDeferredEvent(s) == ERR_NONE);
 			}
 		}
 	}
@@ -1347,16 +1460,79 @@ void GSM_ExpandUserPath(char **string)
 	*string = tmp;
 }
 
+/**
+ * Parses an ASCII string of comma delimited single digits into a set of integer
+ * parameters, any whitespace is ignored.
+ *
+ * @param out_params array to receive the parsed parameters
+ * @param num_params number of parameters out_params can hold
+ * @param args string containing list of parameters to parse
+ * @return ERR_NONE on success, otherwise ERR_INVALIDDATA
+ */
+GSM_Error GSM_ReadParams(int *out_params, const int num_params, const char *args)
+{
+  int *params_ptr = out_params;
+  const int *params_end = out_params + num_params * sizeof(int);
+  const char *args_ptr = args;
+  int whitespace_count = 0;
+  gboolean expect_comma = 0;
+
+  if (!args)
+    return ERR_NONE;
+
+  while (params_ptr < params_end) {
+    while (isspace((unsigned char)*args_ptr)) {
+      ++whitespace_count;
+      ++args_ptr;
+    }
+
+    if(!*args_ptr)
+      return ERR_NONE;
+
+    switch (*args_ptr) {
+      case '0': case '1': case '2': case '3': case '4':
+      case '5': case '6': case '7': case '8': case '9':
+        if (expect_comma) {
+          printf("expected comma but got %c for parameter %d\n", *args_ptr, (int)(++params_ptr - out_params));
+          return ERR_INVALIDDATA;
+        }
+        *params_ptr = *args_ptr - '0';
+        expect_comma = TRUE;
+        break;
+
+      case ',':
+        ++params_ptr;
+        expect_comma = FALSE;
+        break;
+
+      default: {
+        printf("error parsing parameters, unrecognized token '%c' in position %d\n",
+               *args_ptr, (int)(++params_ptr - --out_params + ++whitespace_count));
+        return ERR_INVALIDDATA; }
+    }
+
+    ++args_ptr;
+  }
+
+  return ERR_NONE;
+}
+
+GSM_Error GSM_ReadCNMIParams(int out_params[5], const char *args)
+{
+  return GSM_ReadParams(out_params, 5, args);
+}
+
 GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 {
 	INI_Section 	*h;
 	unsigned char 	section[50]={0};
 	gboolean	found = FALSE;
 	char		*Temp = NULL;
+	const int cnmi_default[5] = {-1,-1,-1,-1,-1};
 
 	GSM_Error error = ERR_UNKNOWN;
-
 	cfg->UseGlobalDebugFile	 = TRUE;
+	memcpy(cfg->CNMIParams, &cnmi_default, sizeof(cfg->CNMIParams));
 
 	/* If we don't have valid config, bail out */
 	if (cfg_info == NULL) {
@@ -1510,7 +1686,15 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 			goto fail;
 		}
 	}
-	return ERR_NONE;
+
+	Temp = INI_GetValue(cfg_info, section, "atgen_setcnmi", FALSE);
+	if (Temp) {
+    error = GSM_ReadCNMIParams(cfg->CNMIParams, Temp);
+    if (error != ERR_NONE)
+      goto fail;
+  }
+
+  return ERR_NONE;
 
 fail:
 	/* Special case, this config needs to be somehow valid */
@@ -1535,7 +1719,7 @@ fail:
 	return error;
 }
 
-void GSM_DumpMessageText_Custom(GSM_StateMachine *s, unsigned const char *message, size_t messagesize, int type, const char *text)
+void GSM_DumpMessageText_Custom(GSM_StateMachine *s, const unsigned char *message, size_t messagesize, int type, const char *text)
 {
 	GSM_Debug_Info *curdi;
 
@@ -1552,17 +1736,17 @@ void GSM_DumpMessageText_Custom(GSM_StateMachine *s, unsigned const char *messag
 	}
 }
 
-void GSM_DumpMessageText(GSM_StateMachine *s, unsigned const char *message, size_t messagesize, int type)
+void GSM_DumpMessageText(GSM_StateMachine *s, const unsigned char *message, size_t messagesize, int type)
 {
 	GSM_DumpMessageText_Custom(s, message, messagesize, type, "SENDING frame");
 }
 
-void GSM_DumpMessageTextRecv(GSM_StateMachine *s, unsigned const char *message, size_t messagesize, int type)
+void GSM_DumpMessageTextRecv(GSM_StateMachine *s, const unsigned char *message, size_t messagesize, int type)
 {
 	GSM_DumpMessageText_Custom(s, message, messagesize, type, "RECEIVED frame");
 }
 
-void GSM_DumpMessageBinary_Custom(GSM_StateMachine *s, unsigned const char *message, size_t messagesize, int type, int direction)
+void GSM_DumpMessageBinary_Custom(GSM_StateMachine *s, const unsigned char *message, size_t messagesize, int type, int direction)
 {
 	size_t i=0;
 	GSM_Debug_Info *curdi;
@@ -1580,12 +1764,12 @@ void GSM_DumpMessageBinary_Custom(GSM_StateMachine *s, unsigned const char *mess
 		}
 	}
 }
-void GSM_DumpMessageBinary(GSM_StateMachine *s, unsigned const char *message, size_t messagesize, int type)
+void GSM_DumpMessageBinary(GSM_StateMachine *s, const unsigned char *message, size_t messagesize, int type)
 {
 	GSM_DumpMessageBinary_Custom(s, message, messagesize, type, 0x01);
 }
 
-void GSM_DumpMessageBinaryRecv(GSM_StateMachine *s, unsigned const char *message, size_t messagesize, int type)
+void GSM_DumpMessageBinaryRecv(GSM_StateMachine *s, const unsigned char *message, size_t messagesize, int type)
 {
 	GSM_DumpMessageBinary_Custom(s, message, messagesize, type, 0x02);
 }

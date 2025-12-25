@@ -1,0 +1,56 @@
+Utilitas Manajemen Gammu Semua Perangkat Ponsel
+===============================================
+
+Gammu adalah utiliti library dan command line untuk telepon selular. Gammu
+dirilis di bawah GNU GPL versi 2.
+
+Produk ini telah diinisiasi oleh Marcin Wiacek dan beberapa orang
+lainnya. Kode asli berbasis Gnokii <https://www.gnokii.org/> dan proyek
+terbaru MyGnokii <http://www.mwiacek.com/>. Gammu sebelumnya (mulai dari
+versi 0.58) disebut MyGnokii2.
+
+Proyek saat ini dipimpin oleh Michal Cihar <michal@cihar.com> dengan bantuan
+dari banyak kontributor.
+
+.. image:: https://travis-ci.org/gammu/gammu.svg?branch=master
+    :alt: Status permbuatan:target: https://travis-ci.org/gammu/gammu
+
+.. image:: https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/master?svg=true
+    :alt: Windows Build status :target:
+    https://ci.appveyor.com/project/nijel/gammu/branch/master
+
+.. image:: https://hosted.weblate.org/widgets/gammu/-/svg-badge.svg
+    :alt: Translasi status :target:
+    https://hosted.weblate.org/engage/gammu/?utm_source=widget
+
+.. image:: https://scan.coverity.com/projects/2890/badge.svg?flat=1
+    :alt: Pemindaian berlipat :target: https://scan.coverity.com/projects/2890
+
+.. image:: https://img.shields.io/liberapay/receives/Gammu.svg
+    :alt: Liberapay :target: https://liberapay.com/Gammu/donate
+
+.. image:: https://www.bountysource.com/badge/team?team_id=23177&style=bounties_received
+    :alt: Bountysource :target:
+    https://www.bountysource.com/teams/gammu/issues?utm_source=Gammu&utm_medium=shield&utm_campaign=bounties_received
+
+Informasi lebih lanjut
+======================
+
+Anda dapat menemukan informasi lebih banyak di <http://wammu.eu/gammu/>.
+
+Disana juga dapat ditemukan Manual Gammu di Docs/manual. Kamu bisa membangun
+versi HTML dengan cara membuat manual-html yang dapat diambil online di
+<https://wammu.eu/docs/manual/>.
+
+
+Laporan umpanbalik dan bug
+==========================
+
+Setiap umpan balik kami terima, lihat <http://wammu.eu/support/> untuk
+informasi bagaimana menghubungi pengembang.
+
+
+Dukungan pengembang
+===================
+
+Kamu dapat mengapresiasi pekerjaan pengembang di <http://wammu.eu/donate/>.

@@ -7,17 +7,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-10-11 08:16+0200\n"
-"PO-Revision-Date: 2017-04-27 19:31+0000\n"
-"Last-Translator: Tuomas Harju <tuomas@rtj-group.com>\n"
-"Language-Team: Finnish "
-"<https://hosted.weblate.org/projects/gammu/libgammu/fi/>\n"
+"POT-Creation-Date: 2019-02-14 14:57+0100\n"
+"PO-Revision-Date: 2019-11-22 09:06+0000\n"
+"Last-Translator: Tuomas Lähteenmäki <lahtis@gmail.com>\n"
+"Language-Team: Finnish <https://hosted.weblate.org/projects/gammu/libgammu/"
+"fi/>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.14-dev\n"
+"X-Generator: Weblate 3.10-dev\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
@@ -36,13 +36,12 @@ msgid "Error opening device, it doesn't exist."
 msgstr "Virhe laitetta avattaessa, laitetta ei ole."
 
 #: libgammu/gsmcomon.c:88
-msgid "Error opening device, it is already opened by other application."
-msgstr ""
-"Virhe laitetta avattaessa, laite on jo käytössä toisessa sovelluksessa."
+msgid "Error opening device, it is already opened by another app."
+msgstr "Virhe laitetta avattaessa, laite on jo käytössä toisessa sovelluksessa."
 
 #: libgammu/gsmcomon.c:89
-msgid "Error opening device, you don't have permissions."
-msgstr "Virhe laitetta avattaessa, sinulla ei ole oikeuksia."
+msgid "Error opening device, you don't have the required permission."
+msgstr "Virhe laitetta avattaessa, sinulla ei ole tarvittavia oikeuksia."
 
 #: libgammu/gsmcomon.c:90
 msgid "Error opening device. No required driver in operating system."
@@ -59,8 +58,8 @@ msgid "Error setting device DTR or RTS."
 msgstr "Virhe asettaessa laiteen vuonohjausta DTR tai RTS."
 
 #: libgammu/gsmcomon.c:93
-msgid "Error setting device speed. Maybe speed not supported."
-msgstr "Virhe asetettaessa nopeutta. Valittu nopeus ei ehkä ole tuettu."
+msgid "Error setting device speed. Maybe the speed is not supported?"
+msgstr "Virhe asetettaessa nopeutta. Valittu nopeus ei ehkä ole tuettu?"
 
 #: libgammu/gsmcomon.c:94
 msgid "Error writing to the device."
@@ -75,62 +74,68 @@ msgid "Can't set parity on the device."
 msgstr "Pariteetin asettaminen ei onnistu."
 
 #: libgammu/gsmcomon.c:97
-msgid "No response in specified timeout. Probably phone not connected."
+msgid "No response in specified timeout. Probably the phone is not connected."
 msgstr "Ei vastausta määritellyssä ajassa. Puhelin ei ehkä ole kytketty."
 
 #: libgammu/gsmcomon.c:98
 msgid ""
 "Frame not requested right now. See <https://wammu.eu/support/bugs/> for "
-"information how to report it."
+"information on how to report it."
 msgstr ""
+"Kehystä ei pystytä juuri nyt näyttämään. Katso <https://wammu.eu/support/"
+"bugs/> lisätietoja siitä, kuinka ilmoittaa siitä."
 
 #: libgammu/gsmcomon.c:99
 msgid ""
 "Unknown response from phone. See <https://wammu.eu/support/bugs/> for "
-"information how to report it."
+"information on how to report it."
 msgstr ""
+"Tuntematon vastaus puhelimesta. Katso <https://wammu.eu/support/bugs/> "
+"lisätietoja siitä, kuinka ilmoittaa siitä."
 
 #: libgammu/gsmcomon.c:100
 msgid ""
-"Unknown frame. See <https://wammu.eu/support/bugs/> for information how to "
-"report it."
+"Unknown frame. See <https://wammu.eu/support/bugs/> for information on how "
+"to report it."
 msgstr ""
+"Tuntematon kehys. Katso <https://wammu.eu/support/bugs/> lisätietoja siitä, "
+"kuinka ilmoittaa siitä."
 
 #: libgammu/gsmcomon.c:101
 msgid "Unknown connection type string. Check config file."
-msgstr ""
+msgstr "Tuntematon yhteystyyppi merkkijono. Tarkista asetustiedosto."
 
 #: libgammu/gsmcomon.c:102
 msgid "Unknown model type string. Check config file."
-msgstr ""
+msgstr "Tuntematon mallin merkkijono. Tarkista asetustiedosto."
 
 #: libgammu/gsmcomon.c:103
 msgid ""
-"Some functions not available for your system (disabled in config or not "
+"Some functions are not available for your system (disabled in config or not "
 "implemented)."
 msgstr ""
+"Jotkut toiminnot eivät ole käytettävissä järjestelmässäsi (poistettu "
+"käytöstä asetustiedostosta tai niitä ei ole toteutettu)."
 
 #: libgammu/gsmcomon.c:104
 msgid "Function not supported by phone."
-msgstr ""
+msgstr "Puhelin ei tue toimintoa."
 
 #: libgammu/gsmcomon.c:105
-msgid "Entry is empty."
-msgstr ""
+msgid "Empty entry."
+msgstr "Tyhjä merkintä."
 
 #: libgammu/gsmcomon.c:106
 msgid "Security error. Maybe no PIN?"
-msgstr ""
+msgstr "Suojausvirhe. Ehkä ei oikea PIN?"
 
 #: libgammu/gsmcomon.c:107
 msgid "Invalid location. Maybe too high?"
-msgstr ""
+msgstr "Virheellinen sijainti. Ehkä liian korkea?"
 
 #: libgammu/gsmcomon.c:108
-msgid "Functionality not implemented. You are welcome to help authors with it."
-msgstr ""
-"Tämä toimintoa ei ole toteutettu. Olet tervetullut auttamaan tekijöitä tämän "
-"kanssa."
+msgid "Functionality not implemented. You are welcome to help."
+msgstr "Toimintoa ei ole toteutettu. Olet tervetullut auttamaan."
 
 #: libgammu/gsmcomon.c:109
 msgid "Memory full."
@@ -145,25 +150,29 @@ msgid "Can not open specified file."
 msgstr "Tiedostoa ei voi avata."
 
 #: libgammu/gsmcomon.c:112
-msgid "More memory required..."
-msgstr ""
+msgid "More memory required…"
+msgstr "Lisää muistia tarvitaan…"
 
 #: libgammu/gsmcomon.c:113
 msgid "Operation not allowed by phone."
-msgstr ""
+msgstr "Toiminto ei ole sallittu puhelimessa."
 
 #: libgammu/gsmcomon.c:114
 msgid ""
-"No SMSC number given. Provide it manually or use the one configured in phone."
+"No SMSC number given. Provide it manually or use the one configured on the "
+"phone."
 msgstr ""
+"SMSC-numeroa ei ole annettu. Anna se manuaalisesti tai käytä puhelimessa "
+"määritettyä."
 
 #: libgammu/gsmcomon.c:115
-msgid "You're inside phone menu (maybe editing?). Leave it and try again."
+msgid "You're inside the phone menu (maybe editing?). Exit it and try again."
 msgstr ""
+"Olet puhelimen valikossa (ehkäpä muokkaat?). Sulje se ja yritä uudelleen."
 
 #: libgammu/gsmcomon.c:116
-msgid "Phone is not connected."
-msgstr "Puhelin ei ole kytketty."
+msgid "Phone not connected."
+msgstr "Puhelinta ei ole kytketty."
 
 #: libgammu/gsmcomon.c:117
 msgid ""
@@ -174,8 +183,8 @@ msgstr ""
 "ohjelman tekijöihin."
 
 #: libgammu/gsmcomon.c:118
-msgid "Phone is disabled and connected to charger."
-msgstr ""
+msgid "Phone disabled and connected to charger."
+msgstr "Puhelin on poistettu käytöstä ja se on kytketty laturiin."
 
 #: libgammu/gsmcomon.c:119
 msgid "File format not supported by Gammu."
@@ -190,114 +199,118 @@ msgstr ""
 "käytettäessä. Ole hyv ja ota yhteyttä ohjelman tekijöihin."
 
 #: libgammu/gsmcomon.c:121
-msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
+msgid "Transfer canceled by phone, maybe you pressed \"Cancel\" on the phone."
 msgstr ""
 "Lähetys keskeytettiin puhelimen toimesta, ehkä painoit puhelimen "
 "keskeytyspainiketta."
 
 #: libgammu/gsmcomon.c:122
 msgid "Phone module need to send another answer frame."
-msgstr ""
+msgstr "Puhelinmoduulin on lähetettävä uusi vastauskehys."
 
 #: libgammu/gsmcomon.c:123
 msgid "Current connection type doesn't support called function."
-msgstr ""
+msgstr "Nykyinen yhteystyyppi ei tue kutsuttua toimintoa."
 
 #: libgammu/gsmcomon.c:124
 msgid "CRC error."
-msgstr ""
+msgstr "CRC-virhe."
 
 #: libgammu/gsmcomon.c:125
 msgid "Invalid date or time specified."
-msgstr ""
+msgstr "Virheellinen päivämäärä tai kellonaika."
 
 #: libgammu/gsmcomon.c:126
-msgid "Phone memory error, maybe it is read only."
-msgstr ""
+msgid "Phone memory error, maybe it is read only?"
+msgstr "Puhelinmuistivirhe, ehkä se on vain luettavissa?"
 
 #: libgammu/gsmcomon.c:127
 msgid "Invalid data given to phone."
-msgstr ""
+msgstr "Puhelimeen annetut virheelliset tiedot."
 
 #: libgammu/gsmcomon.c:128
 msgid "File with specified name already exists."
-msgstr ""
+msgstr "Samanniminen tiedosto on jo olemassa."
 
 #: libgammu/gsmcomon.c:129
 msgid "File with specified name doesn't exist."
-msgstr ""
+msgstr "Tiedosto, jossa on määritelty nimi ei ole olemassa."
 
 #: libgammu/gsmcomon.c:130
-msgid "You have to give folder name and not file name."
-msgstr ""
+msgid "You have to supply folder name and not filename."
+msgstr "Sinun on annettava kansion nimi eikä tiedosto nimi."
 
 #: libgammu/gsmcomon.c:131
-msgid "You have to give file name and not folder name."
-msgstr ""
+msgid "You have to supply filename and not folder name."
+msgstr "Sinun on annettava tiedostonnimi eikä kansion nimeä."
 
 #: libgammu/gsmcomon.c:132
 msgid "Can not access SIM card."
-msgstr ""
+msgstr "SIM-korttia ei voi käyttää."
 
 #: libgammu/gsmcomon.c:133
-msgid "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
+msgid ""
+"Wrong GNAPPLET version in use on phone. Use version from currently used "
+"Gammu."
 msgstr ""
+"Väärä GNAPPLET-versio käytössä puhelimessa. Käytä tällä hetkellä käytössä "
+"olevaa gammu-versiota."
 
 #: libgammu/gsmcomon.c:134
 msgid "Only part of folder has been listed."
-msgstr ""
+msgstr "Vain osa kansiosta on listattu."
 
 #: libgammu/gsmcomon.c:135
 msgid "Folder must be empty."
-msgstr ""
+msgstr "Kansion on oltava tyhjä."
 
 #: libgammu/gsmcomon.c:136
-msgid "Data were converted."
-msgstr ""
+msgid "Data converted."
+msgstr "Tiedot muunnettu."
 
 #: libgammu/gsmcomon.c:137
 msgid "Gammu is not configured."
-msgstr ""
+msgstr "Gammua ei ole määritetty."
 
 #: libgammu/gsmcomon.c:138
 msgid "Wrong folder used."
-msgstr ""
+msgstr "Käytetty väärää kansiota."
 
 #: libgammu/gsmcomon.c:139
 msgid "Internal phone error."
-msgstr ""
+msgstr "Puhelimen sisäinen virhe."
 
 #: libgammu/gsmcomon.c:140
 msgid "Error writing file to disk."
-msgstr ""
+msgstr "Virhe tiedoston kirjoittamisessa levylle."
 
 #: libgammu/gsmcomon.c:141
 msgid "No such section exists."
-msgstr ""
+msgstr "Tällaista osaa ei ole."
 
 #: libgammu/gsmcomon.c:142
 msgid "Using default values."
-msgstr ""
+msgstr "Käytä oletusarvoja."
 
 #: libgammu/gsmcomon.c:143
 msgid "Corrupted data returned by phone."
-msgstr ""
+msgstr "Puhelin palautti viottuneita tietoja."
 
 #: libgammu/gsmcomon.c:144
 msgid "Bad feature string in configuration."
-msgstr ""
+msgstr "Huono ominaisuusjono kokoonpanossa."
 
 #: libgammu/gsmcomon.c:145
 msgid "Desired functionality has been disabled on compile time."
-msgstr ""
+msgstr "Haluttu toiminto on poistettu käytöstä kääntämisaikana."
 
 #: libgammu/gsmcomon.c:146
 msgid "Bluetooth configuration requires channel option."
-msgstr ""
+msgstr "Bluetooth-määritykset vaativat kanavavaihtoehdon."
 
 #: libgammu/gsmcomon.c:147
 msgid "Service is not running."
-msgstr ""
+msgstr "Palvelu ei ole käynnissä."
 
 #: libgammu/gsmcomon.c:148
 msgid "Service configuration is missing."
@@ -306,6 +319,7 @@ msgstr "Huoltoasetuksia ei löytynyt."
 #: libgammu/gsmcomon.c:149
 msgid "Command rejected because device was busy. Wait and restart."
 msgstr ""
+"Komento hylättiin, koska laite oli varattu. Odota ja Käynnistä uudelleen."
 
 #: libgammu/gsmcomon.c:150
 msgid "Could not connect to the server."
@@ -317,7 +331,7 @@ msgstr "Palvelimen nimeä ei voi selvittää."
 
 #: libgammu/gsmcomon.c:152
 msgid "Failed to get SMSC number from phone."
-msgstr ""
+msgstr "SMSC-numeron nouto puhelimelta epäonnistui."
 
 #: libgammu/gsmcomon.c:153
 msgid "Operation aborted."
@@ -328,6 +342,7 @@ msgid ""
 "Installation data not found, please consult debug log and/or documentation "
 "for more details."
 msgstr ""
+"Asennustietoja ei löydy, katso lisätietoja virheilokista ja/tai ohjeista."
 
 #: libgammu/gsmcomon.c:155
 msgid "Entry is read only."
@@ -339,11 +354,11 @@ msgstr "Yhteysvirhe."
 
 #: libgammu/gsmcomon.c:157
 msgid "Invalid database version."
-msgstr ""
+msgstr "Virheellinen tietokantaversio."
 
 #: libgammu/gsmcomon.c:158
 msgid "Failed to initialize DB driver."
-msgstr ""
+msgstr "DB- ajurin alustus epäonnistui."
 
 #: libgammu/gsmcomon.c:159
 msgid "Failed to configure DB driver."
@@ -359,47 +374,55 @@ msgstr "Tietokanta yhteys aikakatkaistiin."
 
 #: libgammu/gsmcomon.c:162
 msgid "Error in executing SQL query."
-msgstr ""
+msgstr "Virhe SQL-kyselyn suorittamisessa."
 
-#: libgammu/gsmcomon.c:195
+#: libgammu/gsmcomon.c:163
+msgid "The type of memory is not available or has been disabled."
+msgstr "Muistityyppiä ei ole saatavilla tai se on poistettu käytöstä."
+
+#: libgammu/gsmcomon.c:164
+msgid "The operation cannot be performed."
+msgstr "Toimintoa ei voi suorittaa."
+
+#: libgammu/gsmcomon.c:197
 msgid "Unknown error description."
-msgstr ""
+msgstr "Tuntematon virhekuvaus."
 
 #: libgammu/phone/dummy/dummy.c:610
 msgid "Templates"
-msgstr ""
+msgstr "Mallit"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1969
 msgid "Personal"
-msgstr ""
+msgstr "Henkilökohtainen"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1971 libgammu/phone/nokia/nfunc.c:1156
 msgid "Car"
-msgstr ""
+msgstr "Auto"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1973 libgammu/phone/nokia/nfunc.c:1158
 msgid "Headset"
-msgstr ""
+msgstr "Kuulokemikrofoni"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1979 libgammu/phone/nokia/nfunc.c:1146
 msgid "General"
-msgstr ""
+msgstr "Yleinen"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1981 libgammu/phone/nokia/nfunc.c:1148
 msgid "Silent"
-msgstr ""
+msgstr "Hiljainen"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1983
 msgid "Discreet"
-msgstr ""
+msgstr "Hienotunteinen"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1985
 msgid "Loud"
-msgstr ""
+msgstr "Kova"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1987
 msgid "My style"
-msgstr ""
+msgstr "Minun tyylinen"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:578
 msgid "SIM"
@@ -408,31 +431,31 @@ msgstr "SIM"
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:579 libgammu/phone/pfunc.c:41
 #: libgammu/phone/s60/s60phone.c:1779
 msgid "Inbox"
-msgstr ""
+msgstr "Saapuneet"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:580
 msgid "Sent items"
-msgstr ""
+msgstr "Lähetetyt kohteet"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:581
 msgid "Saved items"
-msgstr ""
+msgstr "Tallennetut kohteet"
 
 #: libgammu/phone/nokia/nfunc.c:962
 msgid "Family"
-msgstr ""
+msgstr "Perhe"
 
 #: libgammu/phone/nokia/nfunc.c:964
 msgid "VIP"
-msgstr ""
+msgstr "VIP"
 
 #: libgammu/phone/nokia/nfunc.c:966
 msgid "Friends"
-msgstr ""
+msgstr "Ystävät"
 
 #: libgammu/phone/nokia/nfunc.c:968
 msgid "Colleagues"
-msgstr ""
+msgstr "Kollegat"
 
 #: libgammu/phone/nokia/nfunc.c:970
 msgid "Other"
@@ -440,16 +463,16 @@ msgstr "Muu"
 
 #: libgammu/phone/nokia/nfunc.c:1150
 msgid "Meeting"
-msgstr ""
+msgstr "Tapaaminen"
 
 #: libgammu/phone/nokia/nfunc.c:1152
 msgid "Outdoor"
-msgstr ""
+msgstr "Ulkona"
 
 #: libgammu/phone/nokia/nfunc.c:1154
 msgid "Pager"
-msgstr ""
+msgstr "Hakulaite"
 
 #: libgammu/phone/pfunc.c:42 libgammu/phone/s60/s60phone.c:1780
 msgid "Outbox"
-msgstr ""
+msgstr "Lähtevät"

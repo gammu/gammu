@@ -16,7 +16,7 @@ int bluetooth_checkservicename(GSM_StateMachine *s, const char *name);
 
 int socket_read(GSM_StateMachine *s, void *buf, size_t nbytes, socket_type hPhone);
 
-int socket_write(GSM_StateMachine *s, unsigned const char *buf, size_t nbytes, socket_type hPhone);
+int socket_write(GSM_StateMachine *s, const unsigned char *buf, size_t nbytes, socket_type hPhone);
 
 GSM_Error socket_close(GSM_StateMachine *s, socket_type hPhone);
 

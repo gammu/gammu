@@ -116,7 +116,7 @@ if (WIN32)
         list(APPEND TMP_MYSQL_LIBRARIES "${MYSQL_LIBRARIES_${LIB}}")
     endforeach(LIB ${MYSQL_ADD_LIBRARIES})
 else()
-    find_library("MYSQL_LIBRARIES_mysqlclient" NAMES mysqlclient
+    find_library("MYSQL_LIBRARIES_mysqlclient" NAMES mysqlclient mariadbclient
         PATHS
         ${MYSQL_ADD_LIBRARY_PATH}
         /usr/lib/mysql

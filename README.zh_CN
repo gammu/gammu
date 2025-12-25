@@ -1,0 +1,49 @@
+Gammu 移动电话管理工具大全
+================
+
+Gammu是一个为移动电话开发的库以及命令行工具。它是基于GNU GPL 2.0版本发布的。
+
+它最开始是由Marcin Wiacek以及其他人发起的。原始代码是基于Gnokii <https://www.gnokii.org/>
+以及后来的MyGnokii <http://www.mwiacek.com/> 项目。 Gammu之前（直到版本号0.58)被叫作MyGnokii2。
+
+现在这个项目是在很多贡献者的帮助下，由Michal Cihar <michal@cihar.com>负责领导。
+
+.. image:: https://travis-ci.org/gammu/gammu.svg?branch=master
+    :alt: Build status :target: https://travis-ci.org/gammu/gammu
+
+.. image:: https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/master?svg=true
+    :alt: Windows Build status :target:
+    https://ci.appveyor.com/project/nijel/gammu/branch/master
+
+.. image:: https://hosted.weblate.org/widgets/gammu/-/svg-badge.svg
+    :alt: Translation status :target:
+    https://hosted.weblate.org/engage/gammu/?utm_source=widget
+
+.. image:: https://scan.coverity.com/projects/2890/badge.svg?flat=1
+    :alt: Coverity scan :target: https://scan.coverity.com/projects/2890
+
+.. image:: https://img.shields.io/liberapay/receives/Gammu.svg
+    :alt: Liberapay :target: https://liberapay.com/Gammu/donate
+
+.. image:: https://www.bountysource.com/badge/team?team_id=23177&style=bounties_received
+    :alt: Bountysource :target:
+    https://www.bountysource.com/teams/gammu/issues?utm_source=Gammu&utm_medium=shield&utm_campaign=bounties_received
+
+更多信息
+====
+
+你可以从这里 <https://wammu.eu/gammu/>找到更多信息。
+
+除此之外还有Gammu的手册可供查阅。你可以通过在线可见的make manual-html来构造一个HTML版本的手册。
+
+
+反馈以及报告问题
+========
+
+我们欢迎任何形式的反馈， 你可以通过<https://wammu.eu/support/>获取联系开发者的方式。
+
+
+支持开发者
+=====
+
+你可以通过这里<https://wammu.eu/donate/>来表示对开发者的感谢

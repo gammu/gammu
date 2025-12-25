@@ -12,7 +12,7 @@
 #include "../helper/formats.h"
 #include "../helper/memory-display.h"
 #include "../helper/printing.h"
-#include "../helper/string.h"
+#include "../libgammu/misc/string.h"
 #include "../helper/cmdline.h"
 
 void GetAllMemory(int argc UNUSED, char *argv[])
@@ -21,7 +21,7 @@ void GetAllMemory(int argc UNUSED, char *argv[])
 	GSM_MemoryType MemoryType;
 
 	signal(SIGINT, interrupt);
-	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
+	fprintf(stderr, "%s\n", _("Press Ctrl+C to break…"));
 
 	MemoryType = GSM_StringToMemoryType(argv[2]);
 
@@ -101,7 +101,7 @@ void GetMemory(int argc, char *argv[])
 		if (error == ERR_EMPTY) {
 			emptynum++;
 			if (empty) {
-				printf("%s\n", _("Entry is empty"));
+				printf("%s\n", _("Empty entry"));
 				printf("\n");
 			}
 		} else {
@@ -309,7 +309,7 @@ void SearchMemory(int argc UNUSED, char *argv[])
 	int			Length;
 
 	signal(SIGINT, interrupt);
-	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
+	fprintf(stderr, "%s\n", _("Press Ctrl+C to break…"));
 
 	Length = strlen(argv[2]);
 	if (Length > GSM_PHONEBOOK_TEXT_LENGTH) {
@@ -373,7 +373,7 @@ void ListMemoryCategory(int argc UNUSED, char *argv[])
 	GSM_Init(TRUE);
 
 	signal(SIGINT, interrupt);
-	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
+	fprintf(stderr, "%s\n", _("Press Ctrl+C to break…"));
 
 	Length = strlen(argv[2]);
 	for (j = 0; j < Length; j++) {
@@ -418,4 +418,3 @@ void ListMemoryCategory(int argc UNUSED, char *argv[])
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:
  */
-
