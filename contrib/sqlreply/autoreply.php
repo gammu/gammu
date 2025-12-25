@@ -1,7 +1,15 @@
 <?
 
-$dbpass = @mysql_connect("localhost","root","root");
-if ($dbpass) $dbconnect = mysql_select_db("autoreply");
+// Load database configuration from external file
+// Copy config.dist.php to config.php and configure your credentials
+if (!file_exists(__DIR__ . '/config.php')) {
+    die('Configuration file not found. Please copy config.dist.php to config.php and configure your database credentials.');
+}
+require_once __DIR__ . '/config.php';
+
+$dbpass = @mysql_connect($db_serv, $db_user, $db_pass);
+if ($dbpass) $dbconnect = mysql_select_db($db_name);
+
 
 echo "<html><head>\n";
 echo "<link rel=\"stylesheet\" href=\"styl.css\" type=\"text/css\">\n";
