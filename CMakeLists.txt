@@ -2,18 +2,13 @@
 # Copyright (c) 2007 - 2018 Michal Cihar
 # vim: expandtab sw=4 ts=4 sts=4:
 
-cmake_minimum_required (VERSION 3.0)
+cmake_minimum_required (VERSION 4.0)
 INCLUDE (CMakeForceCompiler)
 
 project (Gammu C)
 
 # Where to lookup modules
 set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
-
-# Silent some warnings from CMake 2.6
-cmake_policy(SET CMP0003 NEW)
-cmake_policy(SET CMP0009 NEW)
-cmake_policy(SET CMP0110 NEW)
 
 option (COVERAGE "Add flags for Coverage analysis" OFF)
 
@@ -792,7 +787,6 @@ install (
 # Testing and dashboard
 include(CTest)
 enable_testing()
-include(Dart)
 
 # Packaging support
 set (CPACK_PACKAGE_NAME "Gammu")
