@@ -6,13 +6,13 @@ jobs:
   docs:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
     - name: Update apt
       run: sudo apt-get update
     - name: Install apt deps
       run: sudo apt-get install -y libbluetooth-dev libusb-1.0-0-dev libgudev-1.0-dev unixodbc-dev libdbi-dev libdbd-sqlite3 libdbd-mysql libdbd-pgsql cmake cmake-data doxygen latexmk texlive-fonts-recommended texlive-latex-recommended texlive-latex-extra graphviz
     - name: Setup Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
       with:
         python-version: 3.8
     - name: Install Python deps
@@ -33,7 +33,7 @@ jobs:
         name: Documentation
         path: gh-pages
     - name: Deploy
-      uses: peaceiris/actions-gh-pages@v4.0.0
+      uses: peaceiris/actions-gh-pages@4f9cc6602d3f66b9c108549d475ec49e8ef4d45e # v4.0.0
       if: github.event_name == 'push' && github.event.ref == 'refs/heads/master'
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}

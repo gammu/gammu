@@ -18,7 +18,7 @@ jobs:
       TESTARGS: -DMYSQL_TESTING=on -DPSQL_TESTING=ON
     services:
       postgres:
-        image: postgres
+        image: postgres@sha256:3bb77a07b9ce8b8de0fe6d9b063adf20b9cca1068a1bcdc054cac71a69ce0ca6
         env:
           POSTGRES_PASSWORD: smsd
           POSTGRES_USER: smsd
@@ -31,7 +31,7 @@ jobs:
         ports:
         - 5432:5432
       mysql:
-        image: mysql
+        image: mysql@sha256:932fe8fbc04c1488a38f8cab0f30cdac8d7753bded3df1762475a8001a323bc4
         env:
           MYSQL_DATABASE: smsd
           MYSQL_USER: smsd
@@ -45,7 +45,7 @@ jobs:
         ports:
         - 3306:3306
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
     - name: apt
       run: |
         sudo apt-get update
@@ -66,16 +66,16 @@ jobs:
       run: make -C _build test
     - name: coverage
       run: make -C _build gcov
-    - uses: codecov/codecov-action@v4
+    - uses: codecov/codecov-action@b9fd7d16f6d7d1b5d2bec1a2887e65ceed900238 # v4
   windows:
     runs-on: windows-2022
     env:
       CTEST_OUTPUT_ON_FAILURE: 1
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
     - name: Install nsis
       run: choco install nsis
-    - uses: ilammy/msvc-dev-cmd@v1
+    - uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756 # v1
       with:
         arch: x64
     - name: Start PostgreSQL on Windows
@@ -99,13 +99,13 @@ jobs:
       run: |
         cd _build
         ctest --output-on-failure --no-compress-output --dashboard ExperimentalTest --build-config Release
-    - uses: codecov/codecov-action@v4
+    - uses: codecov/codecov-action@b9fd7d16f6d7d1b5d2bec1a2887e65ceed900238 # v4
   macos:
     runs-on: macos-latest
     env:
       CTEST_OUTPUT_ON_FAILURE: 1
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
     - name: Start PostgreSQL on MacOS
       run: |
         brew services start postgresql
@@ -146,4 +146,4 @@ jobs:
       run: make -C _build test
     - name: coverage
       run: make -C _build gcov
-    - uses: codecov/codecov-action@v4
+    - uses: codecov/codecov-action@b9fd7d16f6d7d1b5d2bec1a2887e65ceed900238 # v4
