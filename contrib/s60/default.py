@@ -348,7 +348,7 @@ class Mobile:
                 try:
                     entry = self.calendarDb[key]
                     self.sendCalendarEntry(entry)
-                except:
+                except KeyError:
                     self.send(NUM_CALENDAR_REPLY_ENTRY_NOT_FOUND)
 
             elif header == NUM_CALENDAR_REQUEST_ENTRIES_ALL:
