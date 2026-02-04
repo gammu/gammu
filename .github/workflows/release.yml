@@ -93,7 +93,7 @@ jobs:
         ls -R artifacts/
 
     - name: Create Release
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2.5.0
       with:
         files: |
           artifacts/source-tarball/*
