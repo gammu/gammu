@@ -116,7 +116,7 @@ msgstr "Gunakan Unicode subformat dari file cadangan?"
 
 #: gammu/backup.c:404
 msgid "Checking phone phonebook"
-msgstr "Memeriksa bukutelepon telepon"
+msgstr "Memeriksa buku telepon telepon"
 
 #: gammu/backup.c:405
 msgid "Backup phone phonebook?"
