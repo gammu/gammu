@@ -95,7 +95,7 @@ class Mobile:
 
     def loadConfig(self):
         try:
-            f = file(self.getConfigFilename(), "rb")
+            f = open(self.getConfigFilename(), "rb")
             conf = pickle.load(f)
             f.close()
             if "port" in conf:
@@ -107,7 +107,7 @@ class Mobile:
 
     def saveConfig(self):
         try:
-            f = file(self.getConfigFilename(), "wb")
+            f = open(self.getConfigFilename(), "wb")
             conf = {
                 "port": self.port,
                 "useCanvas": self.useCanvas,
