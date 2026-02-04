@@ -136,15 +136,15 @@ void GSM_SetCalendarRecurranceRepeat(GSM_Debug_Info *di, unsigned char *rec, uns
 
 void GSM_GetCalendarRecurranceRepeat(GSM_Debug_Info *di, unsigned char *rec, unsigned char *endday, GSM_CalendarEntry *entry)
 {
-	int 	Recurrance,num=-1,i;
+	int 	Recurrence,num=-1,i;
 
-	Recurrance = rec[0]*256 + rec[1];
-	if (Recurrance == 0) return;
+	Recurrence = rec[0]*256 + rec[1];
+	if (Recurrence == 0) return;
 	/* dct3 and dct4: 65535 (0xffff) is 1 year */
-	if (Recurrance == 0xffff) Recurrance=24*365;
+	if (Recurrence == 0xffff) Recurrence=24*365;
 	/* dct3: unavailable, dct4: 65534 (0xffff-1) is 30 days */
-	if (Recurrance == 0xffff-1) Recurrance=24*30;
-	smfprintf(di, "Recurrence   : %i hours\n",Recurrance);
+	if (Recurrence == 0xffff-1) Recurrence=24*30;
+	smfprintf(di, "Recurrence   : %i hours\n",Recurrence);
 
 	for (i=0;i<entry->EntriesNum;i++) {
 		if (entry->Entries[i].EntryType == CAL_START_DATETIME) {
@@ -154,18 +154,18 @@ void GSM_GetCalendarRecurranceRepeat(GSM_Debug_Info *di, unsigned char *rec, uns
 	}
 	if (num == -1) return;
 
-	if (Recurrance == 24    || Recurrance == 24*7 ||
-	    Recurrance == 24*30 || Recurrance == 24*365) {
+	if (Recurrence == 24    || Recurrence == 24*7 ||
+	    Recurrence == 24*30 || Recurrence == 24*365) {
 		entry->Entries[entry->EntriesNum].EntryType	= CAL_REPEAT_FREQUENCY;
 		entry->Entries[entry->EntriesNum].Number	= 1;
 		entry->EntriesNum++;
 	}
-	if (Recurrance == 24*14) {
+	if (Recurrence == 24*14) {
 		entry->Entries[entry->EntriesNum].EntryType	= CAL_REPEAT_FREQUENCY;
 		entry->Entries[entry->EntriesNum].Number	= 2;
 		entry->EntriesNum++;
 	}
-	if (Recurrance == 24*7 || Recurrance == 24*14) {
+	if (Recurrence == 24*7 || Recurrence == 24*14) {
 		entry->Entries[entry->EntriesNum].EntryType	 = CAL_REPEAT_DAYOFWEEK;
 		entry->Entries[entry->EntriesNum].Number = GetDayOfWeek(entry->Entries[num].Date.Year,
 			entry->Entries[num].Date.Month,
