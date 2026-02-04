@@ -178,20 +178,14 @@ class Mobile:
         if self.connected:
             self.connected = False
 
-            try:
+            with contextlib.suppress(OSError):
                 self.fos.close()
-            except OSError:
-                pass
 
-            try:
+            with contextlib.suppress(OSError):
                 self.fis.close()
-            except OSError:
-                pass
 
-            try:
+            with contextlib.suppress(OSError):
                 self.client[0].close()
-            except OSError:
-                pass
             self.client = None
 
             self.statusUpdate()
