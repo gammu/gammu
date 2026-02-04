@@ -12,29 +12,13 @@ code was based on Gnokii <https://www.gnokii.org/> and later MyGnokii
 Currently the project is lead by Michal Cihar <michal@cihar.com> with
 help of many contributors.
 
-.. image:: https://travis-ci.org/gammu/gammu.svg?branch=master
-    :alt: Build status
-    :target: https://travis-ci.org/gammu/gammu
-
-.. image:: https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/master?svg=true
-    :alt: Windows Build status
-    :target: https://ci.appveyor.com/project/nijel/gammu/branch/master
-
 .. image:: https://hosted.weblate.org/widgets/gammu/-/svg-badge.svg
     :alt: Translation status
     :target: https://hosted.weblate.org/engage/gammu/?utm_source=widget
 
-.. image:: https://scan.coverity.com/projects/2890/badge.svg?flat=1
-    :alt: Coverity scan
-    :target: https://scan.coverity.com/projects/2890
-
 .. image:: https://img.shields.io/liberapay/receives/Gammu.svg
     :alt: Liberapay
     :target: https://liberapay.com/Gammu/donate
-
-.. image:: https://www.bountysource.com/badge/team?team_id=23177&style=bounties_received
-    :alt: Bountysource
-    :target: https://www.bountysource.com/teams/gammu/issues?utm_source=Gammu&utm_medium=shield&utm_campaign=bounties_received
 
 More information
 ================
