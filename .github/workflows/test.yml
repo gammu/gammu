@@ -108,6 +108,7 @@ jobs:
     - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
     - name: Start PostgreSQL on MacOS
       run: |
+        brew install postgresql
         brew services start postgresql
         echo "Check PostgreSQL service is running"
         i=10
