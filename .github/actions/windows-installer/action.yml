@@ -1,0 +1,34 @@
+name: 'Build Windows Installer'
+description: 'Builds Windows installer using CMake and NSIS'
+inputs:
+  build-type:
+    description: 'CMake build type'
+    required: false
+    default: 'Release'
+  enable-testing:
+    description: 'Enable testing flags'
+    required: false
+    default: 'false'
+runs:
+  using: 'composite'
+  steps:
+    - name: Install nsis
+      shell: pwsh
+      run: choco install nsis
+    
+    - uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756 # v1
+      with:
+        arch: x64
+    
+    - name: cmake
+      shell: pwsh
+      run: |
+        $cmakeArgs = "-S . -B _build -DCMAKE_BUILD_TYPE=${{ inputs.build-type }}"
+        if ("${{ inputs.enable-testing }}" -eq "true") {
+          $cmakeArgs += " -DENABLE_COVERAGE=ON -DONLINE_TESTING=ON -DPSQL_TESTING=ON"
+        }
+        Invoke-Expression "cmake $cmakeArgs"
+    
+    - name: build
+      shell: pwsh
+      run: cmake --build _build --config ${{ inputs.build-type }} --target package -- /verbosity:minimal

@@ -1,0 +1,103 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - '**'
+    tags:
+      - '*'
+  pull_request:
+
+permissions:
+  contents: write
+
+jobs:
+  source:
+    name: Build source packages
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake
+      
+      - name: Create build directory
+        run: mkdir _build
+      
+      - name: Configure CMake
+        run: |
+          cd _build
+          cmake .. -DCMAKE_BUILD_TYPE=Release
+      
+      - name: Build source tarball
+        run: |
+          cd _build
+          make package_source
+      
+      - name: List generated files
+        run: |
+          cd _build
+          ls -lh Gammu-*.tar.*
+      
+      - name: Upload source tarball
+        uses: actions/upload-artifact@v4
+        with:
+          name: source-tarball
+          path: _build/Gammu-*.tar.bz2
+      
+      - name: Upload source zip
+        uses: actions/upload-artifact@v4
+        with:
+          name: source-zip
+          path: _build/Gammu-*.zip
+  
+  windows-installer:
+    name: Build Windows installer
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      
+      - name: Build Windows installer
+        uses: ./.github/actions/windows-installer
+        with:
+          build-type: Release
+          enable-testing: 'false'
+      
+      - name: List generated files
+        shell: pwsh
+        run: |
+          cd _build
+          Get-ChildItem -Filter "Gammu-*.exe"
+      
+      - name: Upload Windows installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-installer
+          path: _build/Gammu-*.exe
+  
+  release:
+    name: Create GitHub Release
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: [source, windows-installer]
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      
+      - name: List downloaded artifacts
+        run: |
+          ls -R artifacts/
+      
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            artifacts/source-tarball/*
+            artifacts/source-zip/*
+            artifacts/windows-installer/*
+          draft: false
+          prerelease: false
