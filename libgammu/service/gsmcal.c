@@ -85,7 +85,7 @@ void GSM_SetCalendarRecurranceRepeat(GSM_Debug_Info *di, unsigned char *rec, uns
 		    entry->Entries[day].Number == entry->Entries[start].Date.Day &&
 		    entry->Entries[month].Number == entry->Entries[start].Date.Month) {
 			/* year */
-			Recurrance = 0xffff;
+			Recurrence = 0xffff;
 		}
 	}
 
@@ -172,12 +172,12 @@ void GSM_GetCalendarRecurranceRepeat(GSM_Debug_Info *di, unsigned char *rec, uns
 			entry->Entries[num].Date.Day);
 		entry->EntriesNum++;
 	}
-	if (Recurrance == 24*30) {
+	if (Recurrence == 24*30) {
 		entry->Entries[entry->EntriesNum].EntryType	= CAL_REPEAT_DAY;
 		entry->Entries[entry->EntriesNum].Number	= entry->Entries[num].Date.Day;
 		entry->EntriesNum++;
 	}
-	if (Recurrance == 24*365) {
+	if (Recurrence == 24*365) {
 		entry->Entries[entry->EntriesNum].EntryType	= CAL_REPEAT_DAY;
 		entry->Entries[entry->EntriesNum].Number	= entry->Entries[num].Date.Day;
 		entry->EntriesNum++;
@@ -189,11 +189,11 @@ void GSM_GetCalendarRecurranceRepeat(GSM_Debug_Info *di, unsigned char *rec, uns
 	smfprintf(di, "Repeat   : %i times\n",endday[0]*256+endday[1]);
 	memcpy(&entry->Entries[entry->EntriesNum].Date,&entry->Entries[num].Date,sizeof(GSM_DateTime));
 	entry->Entries[entry->EntriesNum].EntryType = CAL_REPEAT_STOPDATE;
-	switch (Recurrance) {
+	switch (Recurrence) {
 		case 24:
 		case 24*7:
 		case 24*14:
-			GetTimeDifference((unsigned long)60 * 60 * Recurrance * (endday[0] * 256 + endday[1] - 1),
+			GetTimeDifference((unsigned long)60 * 60 * Recurrence * (endday[0] * 256 + endday[1] - 1),
 			                  &entry->Entries[entry->EntriesNum].Date, TRUE, 1);
 			entry->EntriesNum++;
 			break;
