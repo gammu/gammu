@@ -252,11 +252,11 @@ msgstr "Buat cadangan profil telepon?"
 
 #: gammu/backup.c:884
 msgid "Checking phone FM radio stations"
-msgstr "Memeriksa statiun radio FM telepon"
+msgstr "Memeriksa stasiun radio FM telepon"
 
 #: gammu/backup.c:888
 msgid "Backup phone FM radio stations?"
-msgstr "Buat cadangan statiun radio FM telepon?"
+msgstr "Buat cadangan stasiun radio FM telepon?"
 
 #: gammu/backup.c:921
 msgid "Checking phone GPRS access points"
