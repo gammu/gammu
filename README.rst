@@ -6,10 +6,10 @@ released under GNU GPL version 2.
 
 It has been initiated by Marcin Wiacek and other people. Originally the
 code was based on Gnokii <https://www.gnokii.org/> and later MyGnokii
-<http://www.mwiacek.com/> projects. Gammu  was former (up to version
+<http://www.mwiacek.com/> projects. Gammu was formerly (up to version
 0.58) called MyGnokii2.
 
-Currently the project is lead by Michal Cihar <michal@cihar.com> with
+Currently the project is led by Michal Cihar <michal@cihar.com> with
 help of many contributors.
 
 .. image:: https://hosted.weblate.org/widgets/gammu/-/svg-badge.svg
