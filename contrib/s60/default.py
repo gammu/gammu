@@ -95,9 +95,8 @@ class Mobile:
 
     def loadConfig(self):
         try:
-            f = open(self.getConfigFilename(), "rb")
-            conf = pickle.load(f)
-            f.close()
+            with open(self.getConfigFilename(), "rb") as f:
+                conf = pickle.load(f)
             if "port" in conf:
                 self.port = conf["port"]
             if "useCanvas" in conf:
@@ -107,13 +106,12 @@ class Mobile:
 
     def saveConfig(self):
         try:
-            f = open(self.getConfigFilename(), "wb")
-            conf = {
-                "port": self.port,
-                "useCanvas": self.useCanvas,
-            }
-            pickle.dump(conf, f)
-            f.close()
+            with open(self.getConfigFilename(), "wb") as f:
+                conf = {
+                    "port": self.port,
+                    "useCanvas": self.useCanvas,
+                }
+                pickle.dump(conf, f)
         except OSError:
             pass
 
