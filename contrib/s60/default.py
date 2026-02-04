@@ -182,20 +182,14 @@ class Mobile:
                 self.fos.close()
             except OSError:
                 pass
-            except OSError:
-                pass
 
             try:
                 self.fis.close()
             except OSError:
                 pass
-            except OSError:
-                pass
 
             try:
                 self.client[0].close()
-            except OSError:
-                pass
             except OSError:
                 pass
             self.client = None
