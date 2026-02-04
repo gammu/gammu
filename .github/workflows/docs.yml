@@ -12,7 +12,7 @@ jobs:
     - name: Install apt deps
       run: sudo apt-get install -y libbluetooth-dev libusb-1.0-0-dev libgudev-1.0-dev unixodbc-dev libdbi-dev libdbd-sqlite3 libdbd-mysql libdbd-pgsql cmake cmake-data doxygen latexmk texlive-fonts-recommended texlive-latex-recommended texlive-latex-extra graphviz
     - name: Setup Python
-      uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+      uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
       with:
         python-version: 3.14
     - name: Install Python deps
