@@ -121,14 +121,10 @@ static const char *SMSDSQL_RownumClause(GSM_SMSDConfig * Config, const char *cou
 	driver_name = SMSDSQL_SQLName(Config);
 
 	if (strcasecmp(driver_name, "oracle") == 0 || strcasecmp(driver_name, "freetds") == 0) {
-		if (in_where) {
-			strcpy(result, " AND ");
-		} else {
-			strcpy(result, " WHERE ");
-		}
-		strcat(result, "ROWNUM <= ");
-		strcat(result, count);
-		strcat(result, " ");
+		const char *prefix = in_where ? " AND " : " WHERE ";
+
+		snprintf(result, sizeof(result), "%sROWNUM <= %s ", prefix, count);
+
 		return result;
 	} else {
 		return rownum_clause_fallback;
