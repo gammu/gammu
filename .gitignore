@@ -2,6 +2,7 @@ build*
 tags
 *.pyc
 cmake-build-debug
+_codeql_*
 
 # jetbrains ide
 .idea
