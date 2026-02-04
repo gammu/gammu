@@ -918,6 +918,24 @@ else (WIN32 AND NOT CYGWIN)
   set (CPACK_STRIP_FILES "gammu")
   set (CPACK_SOURCE_STRIP_FILES "")
 endif (WIN32 AND NOT CYGWIN)
+
+# Source package configuration
+set (CPACK_SOURCE_GENERATOR "TBZ2;ZIP")
+set (CPACK_SOURCE_PACKAGE_FILE_NAME "Gammu-${GAMMU_VERSION}")
+set (CPACK_SOURCE_IGNORE_FILES
+    "/\\\\.git/"
+    "/\\\\.github/"
+    "/\\\\.weblate/"
+    "/build/"
+    "/_build/"
+    "/\\\\..*\\\\.swp$"
+    "~$"
+    "\\\\.pyc$"
+    "__pycache__"
+    "/\\\\.coverage"
+    "/htmlcov/"
+)
+
 include (CPack)
 
 # Test files for Gammu
