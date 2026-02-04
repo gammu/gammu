@@ -193,7 +193,8 @@ void GSM_GetCalendarRecurranceRepeat(GSM_Debug_Info *di, unsigned char *rec, uns
 		case 24:
 		case 24*7:
 		case 24*14:
-			GetTimeDifference(60*60*Recurrance*(endday[0]*256+endday[1]-1), &entry->Entries[entry->EntriesNum].Date, TRUE, 1);
+			GetTimeDifference((unsigned long)60 * 60 * Recurrance * (endday[0] * 256 + endday[1] - 1),
+			                  &entry->Entries[entry->EntriesNum].Date, TRUE, 1);
 			entry->EntriesNum++;
 			break;
 		case 24*30:
