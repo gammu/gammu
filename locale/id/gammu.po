@@ -208,7 +208,7 @@ msgstr "Memeriksa setting WAP telepon"
 
 #: gammu/backup.c:665
 msgid "Backup phone WAP settings?"
-msgstr "Buat cadangan setiing WAP telepon?"
+msgstr "Buat cadangan setting WAP telepon?"
 
 #: gammu/backup.c:698
 msgid "Checking phone MMS settings"
