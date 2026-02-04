@@ -39,7 +39,7 @@ jobs:
       - name: List generated files
         run: |
           cd _build
-          ls -lh Gammu-*.tar.*
+          ls -lh Gammu-*.tar.bz2 Gammu-*.zip
       
       - name: Upload source tarball
         uses: actions/upload-artifact@v4
