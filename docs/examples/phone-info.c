@@ -21,6 +21,7 @@ void error_handler(void)
 int main(int argc UNUSED, char **argv UNUSED)
 {
 	GSM_Debug_Info *debug_info;
+	GSM_NetworkInfo netinfo;
 
 	/*
 	 * We don't need gettext, but need to set locales so that
@@ -84,6 +85,16 @@ int main(int argc UNUSED, char **argv UNUSED)
 	printf("Model         : %s (%s)\n",
 		GSM_GetModelInfo(s)->model,
 		buffer);
+
+	/* Network info */
+	error = GSM_GetNetworkInfo(s, &netinfo);
+	if (error == ERR_NONE) {
+		printf("Network code  : %s\n", netinfo.NetworkCode);
+		printf("Network name  : %s\n", DecodeUnicodeConsole(netinfo.NetworkName));
+	} else if (error != ERR_NOTSUPPORTED) {
+		/* Some phones don't support network info, that's okay */
+		error_handler();
+	}
 
 	/* Terminate connection */
 	error = GSM_TerminateConnection(s);
