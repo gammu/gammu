@@ -42,13 +42,13 @@ jobs:
         ls -lh Gammu-*.tar.bz2 Gammu-*.zip
 
     - name: Upload source tarball
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
       with:
         name: source-tarball
         path: _build/Gammu-*.tar.bz2
 
     - name: Upload source zip
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
       with:
         name: source-zip
         path: _build/Gammu-*.zip
@@ -72,7 +72,7 @@ jobs:
         Get-ChildItem -Filter "Gammu-*.exe"
 
     - name: Upload Windows installer
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
       with:
         name: windows-installer
         path: _build/Gammu-*.exe
@@ -84,7 +84,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
     - name: Download all artifacts
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
       with:
         path: artifacts
 
@@ -93,7 +93,7 @@ jobs:
         ls -R artifacts/
 
     - name: Create Release
-      uses: softprops/action-gh-release@v2.5.0
+      uses: softprops/action-gh-release@a06a81a03ee405af7f2048a818ed3f03bbf83c7b # v2.5.0
       with:
         files: |
           artifacts/source-tarball/*
