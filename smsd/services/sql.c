@@ -61,21 +61,21 @@ static const char *SMSDSQL_NowPlus(GSM_SMSDConfig * Config, int seconds)
 	driver_name = SMSDSQL_SQLName(Config);
 
 	if (strcasecmp(driver_name, "mysql") == 0 || strcasecmp(driver_name, "native_mysql") == 0) {
-		sprintf(result, now_plus_mysql, seconds);
+		snprintf(result, sizeof(result), now_plus_mysql, seconds);
 	} else if (strcasecmp(driver_name, "pgsql") == 0 || strcasecmp(driver_name, "native_pgsql") == 0) {
-		sprintf(result, now_plus_pgsql, seconds);
+		snprintf(result, sizeof(result), now_plus_pgsql, seconds);
 	} else if (strncasecmp(driver_name, "sqlite", 6) == 0) {
-		sprintf(result, now_plus_sqlite, seconds);
+		snprintf(result, sizeof(result), now_plus_sqlite, seconds);
 	} else if (strcasecmp(driver_name, "freetds") == 0) {
-		sprintf(result, now_plus_freetds, seconds);
+		snprintf(result, sizeof(result), now_plus_freetds, seconds);
 	} else if (strcasecmp(driver_name, "access") == 0) {
-		sprintf(result, now_plus_access, seconds);
+		snprintf(result, sizeof(result), now_plus_access, seconds);
 	} else if (strcasecmp(driver_name, "oracle") == 0) {
-		sprintf(result, now_plus_oracle, seconds);
+		snprintf(result, sizeof(result), now_plus_oracle, seconds);
 	} else if (strcasecmp(driver_name, "odbc") == 0) {
-		sprintf(result, now_plus_odbc, seconds);
+		snprintf(result, sizeof(result), now_plus_odbc, seconds);
 	} else {
-		sprintf(result, now_plus_fallback, seconds);
+		snprintf(result, sizeof(result), now_plus_fallback, seconds);
 	}
 	return result;
 }
