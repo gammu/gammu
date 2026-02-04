@@ -886,7 +886,7 @@ class Mobile:
         for key in self.calendarDb:
             entry = self.calendarDb[key]
             entryType = self.__calendarGetType(entry)
-            if entryType in ["todo"]:
+            if entryType == "todo":
                 todos = todos + 1
             elif entryType != "":
                 calendars = calendars + 1
@@ -1363,5 +1363,5 @@ except Exception as e:
     lock = e32.Ao_lock()
     app.body = Text(err_msg)
     app.body.set_pos(0)
-    app.menu = [("Exit", lambda: lock.signal())]
+    app.menu = [("Exit", lock.signal)]
     lock.wait()

@@ -124,7 +124,7 @@ def write_data(data, handle):
         obj.set("complexity", "0")
         SubElement(obj, "methods")
         lines = SubElement(obj, "lines")
-        for line in sorted(data[item], key=lambda x: int(x)):
+        for line in sorted(data[item], key=int):
             obj = SubElement(lines, "line")
             obj.set("number", line)
             obj.set("hits", str(data[item][line]))
