@@ -68,7 +68,7 @@ jobs:
       run: make -C _build gcov
     - uses: codecov/codecov-action@b9fd7d16f6d7d1b5d2bec1a2887e65ceed900238 # v4
   windows:
-    runs-on: windows-2022
+    runs-on: windows-2025
     env:
       CTEST_OUTPUT_ON_FAILURE: 1
     steps:
