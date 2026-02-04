@@ -71,7 +71,7 @@ class Mobile:
     def getCurrentDir(self):
         try:
             return self._current_dir
-        except:
+        except AttributeError:
             pass
 
         try:
