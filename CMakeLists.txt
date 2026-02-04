@@ -239,7 +239,7 @@ check_c_source_compiles ("
 
 int main(void) {
     struct tm tm;
-	tm.tm_isdst	= daylight;
+    tm.tm_isdst = daylight;
     return 0;
 }
 "  HAVE_DAYLIGHT)
@@ -275,11 +275,11 @@ if (WITH_BLUETOOTH)
         if (BSD_BLUE_FOUND)
             set(BLUETOOTH_FOUND ON)
             message(STATUS "Using BSD Bluetooth stack")
-	    check_library_exists(bluetooth sdp_service_search_attribute "" HAVE_SDP_SERVICE_SEARCH_ATTRIBUTE)
-	    check_library_exists(bluetooth bt_devinquiry "" HAVE_BT_DEVINQUIRY)
-	    if (HAVE_SDP_SERVICE_SEARCH_ATTRIBUTE AND HAVE_BT_DEVINQUIRY)
-		set(BLUETOOTH_SEARCH TRUE)
-	    endif (HAVE_SDP_SERVICE_SEARCH_ATTRIBUTE AND HAVE_BT_DEVINQUIRY)
+            check_library_exists(bluetooth sdp_service_search_attribute "" HAVE_SDP_SERVICE_SEARCH_ATTRIBUTE)
+            check_library_exists(bluetooth bt_devinquiry "" HAVE_BT_DEVINQUIRY)
+            if (HAVE_SDP_SERVICE_SEARCH_ATTRIBUTE AND HAVE_BT_DEVINQUIRY)
+                set(BLUETOOTH_SEARCH TRUE)
+            endif (HAVE_SDP_SERVICE_SEARCH_ATTRIBUTE AND HAVE_BT_DEVINQUIRY)
         endif (BSD_BLUE_FOUND)
         if (APPLE)
             find_package (OSXBluetooth)
