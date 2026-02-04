@@ -304,7 +304,7 @@ class Mobile:
                 try:
                     contact = self.contactDb[key]
                     self.sendContact(contact)
-                except:
+                except KeyError:
                     self.send(NUM_CONTACTS_REPLY_CONTACT_NOT_FOUND)
 
             elif header == NUM_CONTACTS_REQUEST_CONTACTS_ALL:
