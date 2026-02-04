@@ -6,3 +6,4 @@ cmake-build-debug
 # jetbrains ide
 .idea
 _build/
+_codeql_*
