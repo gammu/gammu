@@ -220,6 +220,7 @@ GSM_Error GSM_USB_Probe(GSM_StateMachine *s, GSM_USB_Match_Function matcher)
 	char *serial = NULL;
 	char buffer[300];
 	gboolean do_match;
+	libusb_device_handle *temp_handle;
 
 	/* Device selection */
 	GSM_USB_ParseDevice(s, &vendor, &product, &bus, &deviceid, &serial);
@@ -263,13 +264,13 @@ GSM_Error GSM_USB_Probe(GSM_StateMachine *s, GSM_USB_Match_Function matcher)
 				continue;
 			}
 			if (serial != NULL && desc.iSerialNumber) {
-				rc = libusb_open(dev, &d->handle);
+				rc = libusb_open(dev, &temp_handle);
 				if (rc != 0) {
 					smprintf(s, "Failed to read serial!\n");
 				} else {
-					libusb_get_string_descriptor_ascii(d->handle, desc.iSerialNumber, buffer, sizeof(buffer) - 1);
+					libusb_get_string_descriptor_ascii(temp_handle, desc.iSerialNumber, buffer, sizeof(buffer) - 1);
 					smprintf(s, "Device serial: %s\n", buffer);
-					libusb_close(d->handle);
+					libusb_close(temp_handle);
 					if (strcasecmp(buffer, serial) != 0) {
 						smprintf(s, "Device serial does not match requested %s, ignoring\n", serial);
 						continue;
@@ -412,6 +413,7 @@ GSM_Error GSM_USB_Probe(GSM_StateMachine *s, GSM_USB_Match_Function matcher)
 	error = ERR_NONE;
 
 done:
+	libusb_free_device_list(devs, 1);
 
 	return error;
 }
