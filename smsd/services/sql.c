@@ -147,10 +147,7 @@ static const char *SMSDSQL_TopClause(GSM_SMSDConfig * Config, const char *count)
 	driver_name = SMSDSQL_SQLName(Config);
 
 	if (strcasecmp(driver_name, "access") == 0 || strcasecmp(driver_name, "mssql") == 0) {
-		strcpy(result, top_clause_access);
-		strcat(result, " ");
-		strcat(result, count);
-		strcat(result, " ");
+		snprintf(result, sizeof(result), "%s %s ", top_clause_access, count);
 		return result;
 	} else {
 		return top_clause_fallback;
