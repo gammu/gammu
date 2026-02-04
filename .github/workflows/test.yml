@@ -2,9 +2,12 @@ name: Tests
 
 on: [push, pull_request]
 
+permissions:
+  contents: read
+
 jobs:
   linux:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     strategy:
       matrix:
         args: ['']
@@ -18,7 +21,7 @@ jobs:
       TESTARGS: -DMYSQL_TESTING=on -DPSQL_TESTING=ON
     services:
       postgres:
-        image: postgres
+        image: postgres@sha256:3bb77a07b9ce8b8de0fe6d9b063adf20b9cca1068a1bcdc054cac71a69ce0ca6
         env:
           POSTGRES_PASSWORD: smsd
           POSTGRES_USER: smsd
@@ -31,7 +34,7 @@ jobs:
         ports:
         - 5432:5432
       mysql:
-        image: mysql
+        image: mysql@sha256:932fe8fbc04c1488a38f8cab0f30cdac8d7753bded3df1762475a8001a323bc4
         env:
           MYSQL_DATABASE: smsd
           MYSQL_USER: smsd
@@ -45,7 +48,7 @@ jobs:
         ports:
         - 3306:3306
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
     - name: apt
       run: |
         sudo apt-get update
@@ -66,16 +69,16 @@ jobs:
       run: make -C _build test
     - name: coverage
       run: make -C _build gcov
-    - uses: codecov/codecov-action@v4
+    - uses: codecov/codecov-action@671740ac38dd9b0130fbe1cec585b89eea48d3de # v5
   windows:
-    runs-on: windows-2022
+    runs-on: windows-latest
     env:
       CTEST_OUTPUT_ON_FAILURE: 1
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
     - name: Install nsis
       run: choco install nsis
-    - uses: ilammy/msvc-dev-cmd@v1
+    - uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756 # v1
       with:
         arch: x64
     - name: Start PostgreSQL on Windows
@@ -99,15 +102,16 @@ jobs:
       run: |
         cd _build
         ctest --output-on-failure --no-compress-output --dashboard ExperimentalTest --build-config Release
-    - uses: codecov/codecov-action@v4
+    - uses: codecov/codecov-action@671740ac38dd9b0130fbe1cec585b89eea48d3de # v5
   macos:
     runs-on: macos-latest
     env:
       CTEST_OUTPUT_ON_FAILURE: 1
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
     - name: Start PostgreSQL on MacOS
       run: |
+        brew install postgresql
         brew services start postgresql
         echo "Check PostgreSQL service is running"
         i=10
@@ -146,4 +150,4 @@ jobs:
       run: make -C _build test
     - name: coverage
       run: make -C _build gcov
-    - uses: codecov/codecov-action@v4
+    - uses: codecov/codecov-action@671740ac38dd9b0130fbe1cec585b89eea48d3de # v5

@@ -2,19 +2,22 @@ name: Documentation
 
 on: [push, pull_request]
 
+permissions:
+  contents: write
+
 jobs:
   docs:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
     - name: Update apt
       run: sudo apt-get update
     - name: Install apt deps
       run: sudo apt-get install -y libbluetooth-dev libusb-1.0-0-dev libgudev-1.0-dev unixodbc-dev libdbi-dev libdbd-sqlite3 libdbd-mysql libdbd-pgsql cmake cmake-data doxygen latexmk texlive-fonts-recommended texlive-latex-recommended texlive-latex-extra graphviz
     - name: Setup Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
       with:
-        python-version: 3.8
+        python-version: 3.14
     - name: Install Python deps
       run: pip install -r docs/manual/requirements.txt
     - name: Configure build
@@ -28,12 +31,12 @@ jobs:
         mkdir gh-pages
         cp -r build-configure/docs/manual/html/* gh-pages/
         cp build-configure/docs/manual/latex/*.pdf gh-pages/
-    - uses: actions/upload-artifact@v4.3.6
+    - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
       with:
         name: Documentation
         path: gh-pages
     - name: Deploy
-      uses: peaceiris/actions-gh-pages@v4.0.0
+      uses: peaceiris/actions-gh-pages@4f9cc6602d3f66b9c108549d475ec49e8ef4d45e # v4.0.0
       if: github.event_name == 'push' && github.event.ref == 'refs/heads/master'
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}

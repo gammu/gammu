@@ -71,7 +71,7 @@ class Mobile:
     def getCurrentDir(self):
         try:
             return self._current_dir
-        except:
+        except AttributeError:
             pass
 
         try:
@@ -95,9 +95,8 @@ class Mobile:
 
     def loadConfig(self):
         try:
-            f = file(self.getConfigFilename(), "rb")
-            conf = pickle.load(f)
-            f.close()
+            with open(self.getConfigFilename(), "rb") as f:
+                conf = pickle.load(f)
             if "port" in conf:
                 self.port = conf["port"]
             if "useCanvas" in conf:
@@ -107,13 +106,12 @@ class Mobile:
 
     def saveConfig(self):
         try:
-            f = file(self.getConfigFilename(), "wb")
-            conf = {
-                "port": self.port,
-                "useCanvas": self.useCanvas,
-            }
-            pickle.dump(conf, f)
-            f.close()
+            with open(self.getConfigFilename(), "wb") as f:
+                conf = {
+                    "port": self.port,
+                    "useCanvas": self.useCanvas,
+                }
+                pickle.dump(conf, f)
         except OSError:
             pass
 
@@ -304,7 +302,7 @@ class Mobile:
                 try:
                     contact = self.contactDb[key]
                     self.sendContact(contact)
-                except:
+                except KeyError:
                     self.send(NUM_CONTACTS_REPLY_CONTACT_NOT_FOUND)
 
             elif header == NUM_CONTACTS_REQUEST_CONTACTS_ALL:
@@ -348,7 +346,7 @@ class Mobile:
                 try:
                     entry = self.calendarDb[key]
                     self.sendCalendarEntry(entry)
-                except:
+                except KeyError:
                     self.send(NUM_CALENDAR_REPLY_ENTRY_NOT_FOUND)
 
             elif header == NUM_CALENDAR_REQUEST_ENTRIES_ALL:
@@ -886,7 +884,7 @@ class Mobile:
         for key in self.calendarDb:
             entry = self.calendarDb[key]
             entryType = self.__calendarGetType(entry)
-            if entryType in ["todo"]:
+            if entryType == "todo":
                 todos = todos + 1
             elif entryType != "":
                 calendars = calendars + 1
@@ -1363,5 +1361,5 @@ except Exception as e:
     lock = e32.Ao_lock()
     app.body = Text(err_msg)
     app.body.set_pos(0)
-    app.menu = [("Exit", lambda: lock.signal())]
+    app.menu = [("Exit", lock.signal)]
     lock.wait()

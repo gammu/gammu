@@ -2,18 +2,12 @@
 # Copyright (c) 2007 - 2018 Michal Cihar
 # vim: expandtab sw=4 ts=4 sts=4:
 
-cmake_minimum_required (VERSION 3.0)
-INCLUDE (CMakeForceCompiler)
+cmake_minimum_required (VERSION 3.10)
 
 project (Gammu C)
 
 # Where to lookup modules
 set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
-
-# Silent some warnings from CMake 2.6
-cmake_policy(SET CMP0003 NEW)
-cmake_policy(SET CMP0009 NEW)
-cmake_policy(SET CMP0110 NEW)
 
 option (COVERAGE "Add flags for Coverage analysis" OFF)
 
@@ -70,7 +64,7 @@ include (MacroGammuOption)
 include (MacroTuneCompiler)
 include (MSVCRuntime)
 
-# WE use pkgconfig later
+# We use pkgconfig later
 find_package (PkgConfig)
 
 # enable code coverage
@@ -287,12 +281,14 @@ if (WITH_BLUETOOTH)
 		set(BLUETOOTH_SEARCH TRUE)
 	    endif (HAVE_SDP_SERVICE_SEARCH_ATTRIBUTE AND HAVE_BT_DEVINQUIRY)
         endif (BSD_BLUE_FOUND)
-        find_package (OSXBluetooth)
-        if (OSX_BLUE_FOUND)
-            set(BLUETOOTH_FOUND ON)
-            set(BLUETOOTH_SEARCH FALSE)
-            message(STATUS "Using OSX Bluetooth stack")
-        endif (OSX_BLUE_FOUND)
+        if (APPLE)
+            find_package (OSXBluetooth)
+            if (OSX_BLUE_FOUND)
+                set(BLUETOOTH_FOUND ON)
+                set(BLUETOOTH_SEARCH FALSE)
+                message(STATUS "Using OSX Bluetooth stack")
+            endif (OSX_BLUE_FOUND)
+        endif (APPLE)
     endif (WIN32 AND NOT CYGWIN)
 else (WITH_BLUETOOTH)
     set(BLUETOOTH_FOUND FALSE)
@@ -365,7 +361,9 @@ endif (MYSQL_FOUND)
 if (POSTGRES_FOUND)
     set (HAVE_POSTGRESQL_LIBPQ_FE_H TRUE)
     if (WIN32)
-        set(WIN_LIB_PGSQL libpq.dll SSLEAY32.DLL LIBEAY32.DLL LIBINTL-8.DLL)
+        # Modern PostgreSQL on Windows handles its own SSL dependencies
+        # Only libpq.dll needs to be distributed, SSL libraries are resolved at runtime
+        set(WIN_LIB_PGSQL libpq.dll)
     endif ()
 endif (POSTGRES_FOUND)
 
@@ -644,9 +642,9 @@ endif (WITH_DCT4_CALENDAR_6210)
 macro_gammu_option (NOKIA7110 "Nokia 7110 and compatible phones support" ON WITH_NOKIA_SUPPORT ON)
 macro_gammu_option (NOKIA9210 "Nokia 9210 and compatible phones support" ON WITH_NOKIA_SUPPORT ON)
 if (WITH_NOKIA7110 OR WITH_NOKIA9210)
-    set (wITH_71_92 ON)
+    set (WITH_71_92 ON)
 else (WITH_NOKIA7110 OR WITH_NOKIA9210)
-    set (wITH_71_92)
+    set (WITH_71_92)
 endif (WITH_NOKIA7110 OR WITH_NOKIA9210)
 macro_gammu_option (N71_92INCOMINGINFO "Nokia 62xx/71xx/9xxx incoming call/SMS info" OFF WITH_NOKIA_SUPPORT WITH_71_92)
 macro_gammu_option (NOKIA3650 "Nokia 3650 and compatible phones support" ON WITH_NOKIA_SUPPORT ON)
@@ -792,7 +790,6 @@ install (
 # Testing and dashboard
 include(CTest)
 enable_testing()
-include(Dart)
 
 # Packaging support
 set (CPACK_PACKAGE_NAME "Gammu")
