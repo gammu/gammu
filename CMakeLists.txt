@@ -239,7 +239,7 @@ check_c_source_compiles ("
 
 int main(void) {
     struct tm tm;
-	tm.tm_isdst	= daylight;
+    tm.tm_isdst = daylight;
     return 0;
 }
 "  HAVE_DAYLIGHT)
