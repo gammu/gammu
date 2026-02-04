@@ -10,11 +10,6 @@ project (Gammu C)
 # Where to lookup modules
 set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
-# Silent some warnings from CMake 2.6
-cmake_policy(SET CMP0003 NEW)
-cmake_policy(SET CMP0009 NEW)
-cmake_policy(SET CMP0110 NEW)
-
 option (COVERAGE "Add flags for Coverage analysis" OFF)
 
 option (ONLINE_TESTING "Enable testing of parts which use remote servers" OFF)
@@ -287,12 +282,14 @@ if (WITH_BLUETOOTH)
 		set(BLUETOOTH_SEARCH TRUE)
 	    endif (HAVE_SDP_SERVICE_SEARCH_ATTRIBUTE AND HAVE_BT_DEVINQUIRY)
         endif (BSD_BLUE_FOUND)
-        find_package (OSXBluetooth)
-        if (OSX_BLUE_FOUND)
-            set(BLUETOOTH_FOUND ON)
-            set(BLUETOOTH_SEARCH FALSE)
-            message(STATUS "Using OSX Bluetooth stack")
-        endif (OSX_BLUE_FOUND)
+        if (APPLE)
+            find_package (OSXBluetooth)
+            if (OSX_BLUE_FOUND)
+                set(BLUETOOTH_FOUND ON)
+                set(BLUETOOTH_SEARCH FALSE)
+                message(STATUS "Using OSX Bluetooth stack")
+            endif (OSX_BLUE_FOUND)
+        endif (APPLE)
     endif (WIN32 AND NOT CYGWIN)
 else (WITH_BLUETOOTH)
     set(BLUETOOTH_FOUND FALSE)
@@ -792,7 +789,6 @@ install (
 # Testing and dashboard
 include(CTest)
 enable_testing()
-include(Dart)
 
 # Packaging support
 set (CPACK_PACKAGE_NAME "Gammu")

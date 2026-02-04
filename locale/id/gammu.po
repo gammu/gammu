@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: Gammu 1.41.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2019-09-27 09:19+0200\n"
-"PO-Revision-Date: 2017-02-13 04:00+0000\n"
-"Last-Translator: Ahmad Zafrullah <23Pstars@gmail.com>\n"
+"PO-Revision-Date: 2026-01-30 13:01+0000\n"
+"Last-Translator: Arif Budiman <arifpedia@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/gammu/gammu/"
 "id/>\n"
 "Language: id\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 2.12-dev\n"
+"X-Generator: Weblate 5.16-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:379 helper/message-cmdline.c:403
@@ -1932,7 +1932,7 @@ msgstr "Radio FM"
 
 #: gammu/gammu.c:768
 msgid "Phone information"
-msgstr "Informasi telepon"
+msgstr "Informasi ponsel"
 
 #: gammu/gammu.c:769
 msgid "Phone settings"
@@ -2197,7 +2197,7 @@ msgstr "Pager"
 
 #: gammu/message.c:234
 msgid "Validity"
-msgstr "Keabsahan"
+msgstr "Masa berlaku"
 
 #: gammu/message.c:253
 msgid "Maximum time"
@@ -2584,7 +2584,7 @@ msgstr "Mengaktifkan info USSD"
 
 #: gammu/misc.c:515
 msgid "Todos"
-msgstr "Todos"
+msgstr "Tugas"
 
 #: gammu/misc.c:519
 msgid "Calendar"
@@ -3680,7 +3680,7 @@ msgstr "Situs kantor"
 
 #: helper/memory-display.c:210
 msgid "Website"
-msgstr "Situs"
+msgstr "Situs web"
 
 #: helper/memory-display.c:215
 msgid "VOIP"
@@ -4126,7 +4126,7 @@ msgstr "ID SMS pengganti"
 
 #: helper/message-display.c:256
 msgid "Class"
-msgstr "Class"
+msgstr "Kelas"
 
 #: helper/message-display.c:258
 msgid "Coding"
