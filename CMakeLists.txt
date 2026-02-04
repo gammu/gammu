@@ -65,7 +65,7 @@ include (MacroGammuOption)
 include (MacroTuneCompiler)
 include (MSVCRuntime)
 
-# WE use pkgconfig later
+# We use pkgconfig later
 find_package (PkgConfig)
 
 # enable code coverage
