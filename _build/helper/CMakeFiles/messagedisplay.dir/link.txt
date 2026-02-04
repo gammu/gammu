@@ -1,0 +1,2 @@
+/usr/bin/ar qc libmessagedisplay.a "CMakeFiles/messagedisplay.dir/message-display.c.o"
+/usr/bin/ranlib libmessagedisplay.a

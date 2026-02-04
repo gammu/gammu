@@ -1,0 +1,16 @@
+#!/usr/bin/sh
+
+set -x
+set -e
+
+EXE="$1"
+CMAKE_CURRENT_BINARY_DIR="$2"
+
+cd "$CMAKE_CURRENT_BINARY_DIR"
+
+CONFIG="$CMAKE_CURRENT_BINARY_DIR/.gammurc"
+DUMMY="$CMAKE_CURRENT_BINARY_DIR/.gammu-dummy"
+
+touch $DUMMY/incoming-call
+
+exec "$EXE" -c "$CONFIG" monitor 1

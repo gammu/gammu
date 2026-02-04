@@ -1,0 +1,2 @@
+/usr/bin/ar qc libmessagecmdline.a "CMakeFiles/messagecmdline.dir/message-cmdline.c.o"
+/usr/bin/ranlib libmessagecmdline.a
