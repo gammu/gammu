@@ -1,2 +1,0 @@
-/usr/bin/ar qc libatgen-tests.a "CMakeFiles/atgen-tests.dir/test_helper.c.o"
-/usr/bin/ranlib libatgen-tests.a
