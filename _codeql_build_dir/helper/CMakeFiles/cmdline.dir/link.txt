@@ -1,0 +1,2 @@
+/usr/bin/ar qc libcmdline.a CMakeFiles/cmdline.dir/cmdline.c.o
+/usr/bin/ranlib libcmdline.a

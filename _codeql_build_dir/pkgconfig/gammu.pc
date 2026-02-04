@@ -1,0 +1,8 @@
+libdir=
+includedir=
+
+Name: gammu
+Description: Gammu library
+Version: 1.42.0
+Libs: -L${libdir} -lGammu -lm 
+Cflags: -I${includedir}

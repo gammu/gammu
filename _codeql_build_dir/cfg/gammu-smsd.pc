@@ -1,0 +1,11 @@
+prefix=/usr/local
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include/gammu
+
+Name: gammu-smsd
+Description: Gammu SMSD library
+Requires: gammu
+Version: 1.42.0
+Libs: -L${libdir} -lgsmsd -lm 
+Cflags: -I${includedir}

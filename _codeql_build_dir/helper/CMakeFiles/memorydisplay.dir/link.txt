@@ -1,0 +1,2 @@
+/usr/bin/ar qc libmemorydisplay.a "CMakeFiles/memorydisplay.dir/memory-display.c.o"
+/usr/bin/ranlib libmemorydisplay.a
