@@ -31,7 +31,7 @@
 void GSM_SetCalendarRecurranceRepeat(GSM_Debug_Info *di, unsigned char *rec, unsigned char *endday, GSM_CalendarEntry *entry)
 {
 	int i;
-	int start=-1,frequency=-1,dow=-1,day=-1,month=-1,end=-1,Recurrance = 0, Repeat=0, j;
+	int start=-1,frequency=-1,dow=-1,day=-1,month=-1,end=-1,Recurrence = 0, Repeat=0, j;
 	GSM_DateTime	DT;
 	time_t		t_time1,t_time2;
 
@@ -51,7 +51,7 @@ void GSM_SetCalendarRecurranceRepeat(GSM_Debug_Info *di, unsigned char *rec, uns
 	if (frequency != -1 && dow == -1 && day == -1 && month == -1) {
 		if (entry->Entries[frequency].Number == 1) {
 			/* each day */
-			Recurrance = 24;
+			Recurrence = 24;
 		}
 	}
 
@@ -63,21 +63,21 @@ void GSM_SetCalendarRecurranceRepeat(GSM_Debug_Info *di, unsigned char *rec, uns
 		if (entry->Entries[frequency].Number == 1 &&
 		    entry->Entries[dow].Number == i) {
 			/* one week */
-			Recurrance = 24*7;
+			Recurrence = 24*7;
 		}
 	}
 	if (frequency != -1 && dow != -1 && day == -1 && month == -1) {
 		if (entry->Entries[frequency].Number == 2 &&
 		    entry->Entries[dow].Number == i) {
 			/* two weeks */
-			Recurrance = 24*14;
+			Recurrence = 24*14;
 		}
 	}
 	if (frequency != -1 && dow == -1 && day != -1 && month == -1) {
 		if (entry->Entries[frequency].Number == 1 &&
 		    entry->Entries[day].Number == entry->Entries[start].Date.Day) {
 			/* month */
-			Recurrance = 0xffff-1;
+			Recurrence = 0xffff-1;
 		}
 	}
 	if (frequency != -1 && dow == -1 && day != -1 && month != -1) {
@@ -89,8 +89,8 @@ void GSM_SetCalendarRecurranceRepeat(GSM_Debug_Info *di, unsigned char *rec, uns
 		}
 	}
 
-	rec[0] = Recurrance / 256;
-	rec[1] = Recurrance % 256;
+	rec[0] = Recurrence / 256;
+	rec[1] = Recurrence % 256;
 
 	if (endday == NULL) return;
 
@@ -103,11 +103,11 @@ void GSM_SetCalendarRecurranceRepeat(GSM_Debug_Info *di, unsigned char *rec, uns
 	t_time2 = Fill_Time_T(entry->Entries[end].Date);
 	if (t_time2 - t_time1 <= 0) return;
 
-	switch (Recurrance) {
+	switch (Recurrence) {
 		case 24:
 		case 24*7:
 		case 24*14:
-			Repeat = (t_time2 - t_time1) / (60*60*Recurrance) + 1;
+			Repeat = (t_time2 - t_time1) / (60*60*Recurrence) + 1;
 			break;
 		case 0xffff-1:
 			memcpy(&DT,&entry->Entries[start].Date,sizeof(GSM_DateTime));
