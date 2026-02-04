@@ -62,7 +62,7 @@ msgstr "Format cadangan tidak dikenal: \"%s\"\n"
 
 #: gammu/backup.c:187
 msgid "Error while opening file for writing!\n"
-msgstr "Kesalahan saatmembuka file untuk menulis!\n"
+msgstr "Kesalahan saat membuka file untuk menulis!\n"
 
 #: gammu/backup.c:191 gammu/files.c:455 helper/message-cmdline.c:1117
 msgid "Error while writing file!\n"
@@ -116,7 +116,7 @@ msgstr "Gunakan Unicode subformat dari file cadangan?"
 
 #: gammu/backup.c:404
 msgid "Checking phone phonebook"
-msgstr "Memeriksa bukutelepon telepon"
+msgstr "Memeriksa buku telepon telepon"
 
 #: gammu/backup.c:405
 msgid "Backup phone phonebook?"
@@ -128,7 +128,7 @@ msgstr "Memeriksa buku telepon SIM"
 
 #: gammu/backup.c:410
 msgid "Backup SIM phonebook?"
-msgstr "Buat cadangan bukutelepon SIM?"
+msgstr "Buat cadangan buku telepon SIM?"
 
 #: gammu/backup.c:415
 msgid "Checking phone calendar"
@@ -208,7 +208,7 @@ msgstr "Memeriksa setting WAP telepon"
 
 #: gammu/backup.c:665
 msgid "Backup phone WAP settings?"
-msgstr "Buat cadangan setiing WAP telepon?"
+msgstr "Buat cadangan setting WAP telepon?"
 
 #: gammu/backup.c:698
 msgid "Checking phone MMS settings"
@@ -252,11 +252,11 @@ msgstr "Buat cadangan profil telepon?"
 
 #: gammu/backup.c:884
 msgid "Checking phone FM radio stations"
-msgstr "Memeriksa statiun radio FM telepon"
+msgstr "Memeriksa stasiun radio FM telepon"
 
 #: gammu/backup.c:888
 msgid "Backup phone FM radio stations?"
-msgstr "Buat cadangan statiun radio FM telepon?"
+msgstr "Buat cadangan stasiun radio FM telepon?"
 
 #: gammu/backup.c:921
 msgid "Checking phone GPRS access points"
