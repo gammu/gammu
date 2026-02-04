@@ -1,0 +1,25 @@
+; This file format was designed for Gammu and is compatible with Gammu+
+; See <http://www.gammu.org> for more info
+; Saved 20100114T220009 (Čt 14. leden 2010, 22:00:09 )
+
+[SMSBackup000]
+SMSC = "+420603052000"
+SMSCUnicode = 002B003400320030003600300033003000350032003000300030
+PDU = Deliver
+DateTime = 20100114T204216
+State = Read
+Number = "5574"
+NumberUnicode = 0035003500370034
+Name = ""
+NameUnicode = 
+UDH = 0B05040B8423F00003AA0202
+Text00 = 64613561396A6E3231306D61353671323000
+Coding = 8bit
+Folder = 3
+Length = 18
+Class = 1
+ReplySMSC = False
+RejectDuplicates = False
+ReplaceMessage = 0
+MessageReference = 0
+
