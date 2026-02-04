@@ -128,7 +128,7 @@ msgstr "Memeriksa buku telepon SIM"
 
 #: gammu/backup.c:410
 msgid "Backup SIM phonebook?"
-msgstr "Buat cadangan bukutelepon SIM?"
+msgstr "Buat cadangan buku telepon SIM?"
 
 #: gammu/backup.c:415
 msgid "Checking phone calendar"
