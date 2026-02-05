@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 GSM_StateMachine *s;
-INI_Section *cfg;
+INI_Section *config_section;
 GSM_Error error;
 char buffer[100];
 
@@ -52,15 +52,15 @@ int main(int argc UNUSED, char **argv UNUSED)
 	 * Find configuration file (first command line parameter or
 	 * defaults)
 	 */
-	error = GSM_FindGammuRC(&cfg, argc == 2 ? argv[1] : NULL);
+	error = GSM_FindGammuRC(&config_section, argc == 2 ? argv[1] : NULL);
 	error_handler();
 
 	/* Read it */
-	error = GSM_ReadConfig(cfg, GSM_GetConfig(s, 0), 0);
+	error = GSM_ReadConfig(config_section, GSM_GetConfig(s, 0), 0);
 	error_handler();
 
 	/* Free config file structures */
-	INI_Free(cfg);
+	INI_Free(config_section);
 
 	/* We have one valid configuration */
 	GSM_SetConfigNum(s, 1);
