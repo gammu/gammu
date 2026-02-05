@@ -572,7 +572,7 @@ static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDCo
 	unsigned char FileName[PATH_MAX], FullName[PATH_MAX], ext[17], buffer[64], buffer2[400];
 	FILE *file = NULL;
 	time_t rawtime;
-	struct tm *timeinfo;
+	struct tm timeinfo;
 
 #ifdef GSM_ENABLE_BACKUP
 	GSM_Error error;
@@ -581,7 +581,7 @@ static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDCo
 
 	j = 0;
 	time(&rawtime);
-	timeinfo = localtime(&rawtime);
+	localtime_r(&rawtime, &timeinfo);
 
 	for (i = 0; i < sms->Number; i++) {
 		if (strcasecmp(Config->outboxformat, "detail") == 0) {
@@ -595,7 +595,7 @@ static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDCo
 		for (j = 0; j < 100; j++) {
 			sprintf(FileName,
 				"OUTC%04d%02d%02d_%02d%02d%02d_00_%s_sms%d.%s",
-				1900 + timeinfo->tm_year, timeinfo->tm_mon + 1, timeinfo->tm_mday, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, buffer2, j, ext);
+				1900 + timeinfo.tm_year, timeinfo.tm_mon + 1, timeinfo.tm_mday, timeinfo.tm_hour, timeinfo.tm_min, timeinfo.tm_sec, buffer2, j, ext);
 			strcpy(FullName, Config->outboxpath);
 			strcat(FullName, FileName);
 			fd = open(FullName, O_CREAT | O_EXCL, 0644);
