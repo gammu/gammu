@@ -188,6 +188,52 @@ GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 
 		/* Process line after \r\n */
 		if (d->Msg.Length > 0 && rx_char == 10 && d->Msg.Buffer[d->Msg.Length - 2] == 13) {
+			/* Check if this line is an echo of a previously sent AT command.
+			 * Some modems (e.g., ZTE MF710M) echo commands even when echo is supposed
+			 * to be disabled, causing "UNKNOWN frame" errors.
+			 *
+			 * We specifically target malformed echo patterns where multiple commands
+			 * appear to be concatenated, such as "ATE0+CPMS?" which is not a valid
+			 * AT command format.
+			 *
+			 * We strip when:
+			 * 1. The line is at the beginning of the buffer (LineStart == 0)
+			 * 2. The line starts with "AT" but doesn't match standard AT command format
+			 * 3. There is more data following (not just the echo)
+			 */
+			if (d->LineStart == 0 && d->LineEnd >= 2) {
+				gboolean is_malformed_echo = FALSE;
+				
+				/* Check for malformed echo: ATE followed immediately by + or other command
+				 * Example: "ATE0+CPMS?" - this is ATE0 and +CPMS? smooshed together
+				 * Valid formats would be "ATE0" or "AT+CPMS?" but not both combined
+				 */
+				if (d->LineEnd > 4 && 
+				    d->Msg.Buffer[0] == 'A' && d->Msg.Buffer[1] == 'T' &&
+				    d->Msg.Buffer[2] == 'E' && 
+				    (d->Msg.Buffer[3] == '0' || d->Msg.Buffer[3] == '1')) {
+					/* After ATE0 or ATE1, check if there's immediately a + or other command char
+					 * without a space, which indicates concatenated commands (echo issue)
+					 */
+					if (d->LineEnd > 4 && (d->Msg.Buffer[4] == '+' || d->Msg.Buffer[4] == '^')) {
+						is_malformed_echo = TRUE;
+					}
+				}
+				
+				if (is_malformed_echo && d->LineEnd + 1 < d->Msg.Length) {
+					/* Remove this malformed echo line by shifting the buffer */
+					size_t echo_end = d->LineEnd + 1; /* Include the \n */
+					memmove(d->Msg.Buffer, d->Msg.Buffer + echo_end, d->Msg.Length - echo_end);
+					d->Msg.Length -= echo_end;
+					d->Msg.Buffer[d->Msg.Length] = 0;
+					/* Reset line tracking since we removed the echo */
+					d->LineStart = 0;
+					d->wascrlf = FALSE;
+					/* Continue processing without dispatching yet */
+					break;
+				}
+			}
+
 			/* Process standard responses */
 			for (i = 0; StatusStrings[i] != NULL; i++) {
 				if (strncmp(StatusStrings[i],
