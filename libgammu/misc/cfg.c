@@ -269,11 +269,11 @@ GSM_Error INI_ReadFile(const char *FileName, gboolean Unicode, INI_Section **res
 		}
 		if (level == 5) {
 			if (Unicode) {
-				while (myiswspace(buffer2 + buffer2used - 2) && buffer2used > 0) {
+				while (buffer2used > 0 && myiswspace(buffer2 + buffer2used - 2)) {
 					buffer2used -= 2;
 				}
 			} else {
-				while (isspace(buffer2[buffer2used - 1]) && buffer2used > 0) {
+				while (buffer2used > 0 && isspace(buffer2[buffer2used - 1])) {
 					buffer2used -= 1;
 				}
 			}
@@ -287,19 +287,39 @@ GSM_Error INI_ReadFile(const char *FileName, gboolean Unicode, INI_Section **res
 				goto done;
                         }
 			if (Unicode) {
-				buffer1 		= (unsigned char *)realloc(buffer1,buffer1used+2);
+				unsigned char *new_buffer1 = (unsigned char *)realloc(buffer1, buffer1used + 2);
+				if (new_buffer1 == NULL) {
+					error = ERR_MOREMEMORY;
+					goto done;
+				}
+				buffer1 = new_buffer1;
 				buffer1[buffer1used] 	= 0;
 				buffer1[buffer1used+1] 	= 0;
 				buffer1used		= buffer1used + 2;
-				buffer2 		= (unsigned char *)realloc(buffer2,buffer2used+2);
+				unsigned char *new_buffer2 = (unsigned char *)realloc(buffer2, buffer2used + 2);
+				if (new_buffer2 == NULL) {
+					error = ERR_MOREMEMORY;
+					goto done;
+				}
+				buffer2 = new_buffer2;
 				buffer2[buffer2used] 	= 0;
 				buffer2[buffer2used+1] 	= 0;
 				buffer2used		= buffer2used + 2;
 			} else {
-				buffer1 		= (unsigned char *)realloc(buffer1,buffer1used+1);
+				unsigned char *new_buffer1 = (unsigned char *)realloc(buffer1, buffer1used + 1);
+				if (new_buffer1 == NULL) {
+					error = ERR_MOREMEMORY;
+					goto done;
+				}
+				buffer1 = new_buffer1;
 				buffer1[buffer1used] 	= 0x00;
 				buffer1used		= buffer1used + 1;
-				buffer2 		= (unsigned char *)realloc(buffer2,buffer2used+1);
+				unsigned char *new_buffer2 = (unsigned char *)realloc(buffer2, buffer2used + 1);
+				if (new_buffer2 == NULL) {
+					error = ERR_MOREMEMORY;
+					goto done;
+				}
+				buffer2 = new_buffer2;
 				buffer2[buffer2used] 	= 0x00;
 				buffer2used		= buffer2used + 1;
 			}
