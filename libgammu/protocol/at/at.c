@@ -161,6 +161,15 @@ GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		d->LineStart = 0;
 	}
 
+	/* Filter out non-ASCII characters that can corrupt AT responses.
+	 * Some modems send garbage bytes (0xFF, 0xE5, etc.) in command echoes.
+	 * We skip these unless we're in EditMode (which handles binary SMS data).
+	 * This fixes parsing issues where echoed commands contain corruption.
+	 */
+	if (!d->EditMode && rx_char >= 0x80) {
+		return ERR_NONE;
+	}
+
 	/* Allocate more memory if needed */
 	if (d->Msg.BufferUsed < d->Msg.Length + 2) {
 		d->Msg.BufferUsed	= d->Msg.Length + 200;

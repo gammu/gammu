@@ -1006,6 +1006,12 @@ if (WITH_ATGEN)
     add_coverage(at-statemachine)
     target_link_libraries(at-statemachine libGammu ${LIBINTL_LIBRARIES})
     add_test(at-statemachine "${GAMMU_TEST_PATH}/at-statemachine${CMAKE_EXECUTABLE_SUFFIX}")
+
+    # AT CFUN corrupted response test
+    add_executable(at-cfun-corrupted at-cfun-corrupted.c)
+    add_coverage(at-cfun-corrupted)
+    target_link_libraries(at-cfun-corrupted libGammu ${LIBINTL_LIBRARIES})
+    add_test(at-cfun-corrupted "${GAMMU_TEST_PATH}/at-cfun-corrupted${CMAKE_EXECUTABLE_SUFFIX}")
 endif (WITH_ATGEN)
 
 # Line parser tests
