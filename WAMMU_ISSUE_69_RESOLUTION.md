@@ -14,10 +14,10 @@ When a modem is reconnected or when gammu-smsd restarts, there may be buffered d
 When this buffered data is read during initialization or command processing, the AT parser fails to match it against expected response handlers, resulting in "UNKNOWN frame" errors.
 
 ## Solution Implemented
-The issue has been resolved in PR #957 (commit `3b2bcf3fc6f7b9089e6338cef95f36a740e8948d`).
+The issue has been resolved in [PR #957](https://github.com/gammu/gammu/pull/957) (commit `3b2bcf3fc6f7b9089e6338cef95f36a740e8948d`).
 
 ### Implementation Details
-Location: `libgammu/phone/at/atgen.c`, lines 2253-2276
+Location: `libgammu/phone/at/atgen.c`, lines 2237-2276 (two-stage buffer clearing)
 
 The fix implements a two-stage buffer clearing strategy during device initialization:
 
