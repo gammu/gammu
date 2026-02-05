@@ -51,7 +51,7 @@ static void SMSDFiles_EscapeNumber(char *string)
 		 */
 		if (*pos == '<' || *pos == '>' || *pos == ':' || *pos == '"' ||
 		    *pos == '/' || *pos == '\\' || *pos == '|' || *pos == '?' ||
-		    *pos == '*' || (*pos >= 0x00 && *pos <= 0x1F) || *pos == 0x7F) {
+		    *pos == '*' || ((unsigned char)*pos <= 0x1F) || *pos == 0x7F) {
 			*pos = '_';
 		}
 		pos++;
@@ -63,8 +63,8 @@ static void SMSDFiles_DecodeNumber(char *string)
 	/* Note: SMSDFiles_EscapeNumber replaces invalid filename characters with underscore.
 	 * We cannot reliably reverse this mapping, so this function is now a no-op.
 	 * The phone number will have underscores where invalid characters were present.
+	 * Parameter is intentionally unused.
 	 */
-	(void)string;
 }
 
 /* Save SMS from phone (called Inbox sms - it's in phone Inbox) somewhere */
