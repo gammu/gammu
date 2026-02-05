@@ -166,7 +166,7 @@ GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 	 * We skip these unless we're in EditMode (which handles binary SMS data).
 	 * This fixes parsing issues where echoed commands contain corruption.
 	 */
-	if (!d->EditMode && rx_char >= 0x80) {
+	if (!d->EditMode && (unsigned char)rx_char >= 0x80) {
 		return ERR_NONE;
 	}
 

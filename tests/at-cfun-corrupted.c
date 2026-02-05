@@ -75,7 +75,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	if (d->Msg.Buffer != NULL) {
 		size_t j;
 		for (j = 0; j < d->Msg.Length; j++) {
-			test_result(d->Msg.Buffer[j] < 0x80);
+			test_result((unsigned char)d->Msg.Buffer[j] < 0x80);
 		}
 	}
 
