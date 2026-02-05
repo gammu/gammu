@@ -2168,7 +2168,7 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 {
 	GSM_Phone_ATGENData     *Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error               error;
-    	char                    buff[2]={0};
+    	unsigned char           buff[512];
 
 	InitLines(&Priv->Lines);
 
@@ -2243,9 +2243,26 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
      	 * time to react, sending just AT wakes up the phone and it then can react
      	 * to ATE1. We don't need to check whether this fails as it is just to
      	 * wake up the phone and does nothing.
+	 *
+	 * Instead of using GSM_WaitForAutoLen which would try to parse the response
+	 * (and fail if there's garbage), we just send the command and then discard
+	 * any response data. This handles cases like ZTE MF710M where buffered data
+	 * from previous sessions can cause "UNKNOWN frame" errors.
      	 */
     	smprintf(s, "Sending simple AT command to wake up some devices\n");
-	error = GSM_WaitForAutoLen(s, "AT\r", 0x00, 20, ID_Initialise);
+	error = s->Protocol.Functions->WriteMessage(s, "AT\r", 3, 0x00);
+	if (error != ERR_NONE) {
+		return error;
+	}
+
+	/* Give device time to respond */
+	usleep(100000);
+
+	/* Discard any response (including garbage from previous sessions) */
+	smprintf(s, "Discarding response from wake-up command\n");
+	while (s->Device.Functions->ReadDevice(s, buff, sizeof(buff)) > 0) {
+		usleep(10000);
+	}
 
 	/* We want to see our commands to allow easy detection of reply functions */
 	smprintf(s, "Enabling echo\n");
