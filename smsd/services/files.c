@@ -44,14 +44,15 @@ static void SMSDFiles_EscapeNumber(char *string)
 {
 	char *pos = string;
 	while (*pos) {
-		/* Replace invalid filename characters with underscore
-		 * Windows: < > : " / \ | ? * and control chars (0x00-0x1F, 0x7F)
-		 * Unix: / and null
-		 * We use underscore for better readability than 'X'
+		/* Replace invalid filename characters
+		 * * is replaced with X (for network service numbers, reversible)
+		 * Other invalid chars (Windows: < > : " / \ | ?, control chars) replaced with _
 		 */
-		if (*pos == '<' || *pos == '>' || *pos == ':' || *pos == '"' ||
-		    *pos == '/' || *pos == '\\' || *pos == '|' || *pos == '?' ||
-		    *pos == '*' || ((unsigned char)*pos <= 0x1F) || *pos == 0x7F) {
+		if (*pos == '*') {
+			*pos = 'X';
+		} else if (*pos == '<' || *pos == '>' || *pos == ':' || *pos == '"' ||
+		           *pos == '/' || *pos == '\\' || *pos == '|' || *pos == '?' ||
+		           ((unsigned char)*pos <= 0x1F) || *pos == 0x7F) {
 			*pos = '_';
 		}
 		pos++;
@@ -60,11 +61,13 @@ static void SMSDFiles_EscapeNumber(char *string)
 
 static void SMSDFiles_DecodeNumber(char *string)
 {
-	/* Note: SMSDFiles_EscapeNumber replaces invalid filename characters with underscore.
-	 * We cannot reliably reverse this mapping, so this function is now a no-op.
-	 * The phone number will have underscores where invalid characters were present.
-	 * Parameter is intentionally unused.
-	 */
+	char *pos = string;
+	while (*pos) {
+		if (*pos == 'X') {
+			*pos = '*';
+		}
+		pos++;
+	}
 }
 
 /* Save SMS from phone (called Inbox sms - it's in phone Inbox) somewhere */
