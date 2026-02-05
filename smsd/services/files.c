@@ -379,11 +379,13 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConf
 		}
 
 		if (strchr(options, 'b')) {	// WAP bookmark as title,URL
+			/* Null-terminated comma character in UCS2 format */
+			static const unsigned char unicode_comma[] = {0x00, 0x2C, 0x00, 0x00};
 			SMSInfo.Entries[0].Buffer = NULL;
 			SMSInfo.Entries[0].Bookmark = &Bookmark;
 			SMSInfo.Entries[0].ID = SMS_NokiaWAPBookmarkLong;
 			SMSInfo.Entries[0].Bookmark->Location = 0;
-			pos2 = mywstrstr(Buffer2, "\0,");
+			pos2 = (char *)mywstrstr(Buffer2, unicode_comma);
 			if (pos2 == NULL) {
 				pos2 = Buffer2;
 			} else {
