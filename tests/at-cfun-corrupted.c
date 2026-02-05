@@ -41,7 +41,8 @@ int main(int argc UNUSED, char **argv UNUSED)
 	/* Initialize AT engine */
 	Data = &s->Phone.Data;
 	Data->ModelInfo = GetModelData(NULL, NULL, "unknown", NULL);
-	Data->RequestID = ID_Reset;  /* Simulating CFUN command */
+	/* Using ID_Reset which matches AT+CFUN=1,1 (reset with functionality ON) */
+	Data->RequestID = ID_Reset;
 	Priv = &s->Phone.Data.Priv.ATGEN;
 	Priv->ReplyState = AT_Reply_OK;
 	Priv->SMSMode = SMS_AT_PDU;
@@ -67,8 +68,9 @@ int main(int argc UNUSED, char **argv UNUSED)
 		gammu_test_result(error, "AT_StateMachine");
 	}
 
-	/* Should have received one message (OK response) */
-	/* The corrupted echo "AT\xFF\xE5" should be filtered to just "AT" */
+	/* The corrupted response should parse as "AT\r\nOK\r\n" 
+	 * which generates 2 messages: echo line and OK response.
+	 * We check >= 1 to ensure at least the OK was processed. */
 	test_result(s->MessagesCount >= 1);
 
 	/* Verify the buffer doesn't contain ANY high-bit bytes (>= 0x80) */
