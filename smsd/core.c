@@ -2295,8 +2295,6 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 					errors++;
 					initerrors++;
 					continue;
-				} else {
-					errors = 0;
 				}
 			}
 
@@ -2306,16 +2304,12 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 			if(!SMSD_ProcessSMSInfoCache(Config)) {
 				errors++;
 				continue;
-			} else {
-				errors = 0;
 			}
 
 			/* read all incoming SMS */
 			if (!SMSD_CheckSMSStatus(Config)) {
 				errors++;
 				continue;
-			} else {
-				errors = 0;
 			}
 
 		}
