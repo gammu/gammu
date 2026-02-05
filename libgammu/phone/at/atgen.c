@@ -2168,7 +2168,7 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 {
 	GSM_Phone_ATGENData     *Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error               error;
-    	char                    buff[2]={0};
+    	unsigned char           buff[512];
 
 	InitLines(&Priv->Lines);
 
