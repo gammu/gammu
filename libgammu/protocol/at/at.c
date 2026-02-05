@@ -215,7 +215,7 @@ GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 					/* After ATE0 or ATE1, check if there's immediately a + or other command char
 					 * without a space, which indicates concatenated commands (echo issue)
 					 */
-					if (d->LineEnd > 4 && (d->Msg.Buffer[4] == '+' || d->Msg.Buffer[4] == '^')) {
+					if (d->Msg.Buffer[4] == '+' || d->Msg.Buffer[4] == '^') {
 						is_malformed_echo = TRUE;
 					}
 				}
