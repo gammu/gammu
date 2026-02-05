@@ -1909,7 +1909,7 @@ GSM_Error ATGEN_ReplyGetModel(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 	}
 
 	strncpy(Data->Model, pos, MIN(1 + pos2 - pos, GSM_MAX_MODEL_LENGTH));
-	Data->Model[1 + pos2 - pos] = 0;
+	Data->Model[MIN(1 + pos2 - pos, GSM_MAX_MODEL_LENGTH)] = 0;
 
 	Data->ModelInfo = GetModelData(s, NULL, Data->Model, NULL);
 
@@ -2005,6 +2005,34 @@ GSM_Error ATGEN_ReplyGetManufacturer(GSM_Protocol_Message *msg, GSM_StateMachine
 		}
 		if (strncmp("I: ", s->Phone.Data.Manufacturer, 3) == 0) {
 			memmove(s->Phone.Data.Manufacturer, s->Phone.Data.Manufacturer + 3, strlen(s->Phone.Data.Manufacturer + 3) + 1);
+		}
+
+		/* Strip leading and trailing whitespace */
+		{
+			char *src = s->Phone.Data.Manufacturer;
+			char *end;
+			size_t len;
+
+			/* Skip leading whitespace */
+			while (isspace((unsigned char)*src)) {
+				src++;
+			}
+
+			/* Move string if we skipped any leading whitespace */
+			if (src != s->Phone.Data.Manufacturer) {
+				len = strlen(src);
+				memmove(s->Phone.Data.Manufacturer, src, len + 1);
+				end = s->Phone.Data.Manufacturer + len;
+			} else {
+				len = strlen(s->Phone.Data.Manufacturer);
+				end = s->Phone.Data.Manufacturer + len;
+			}
+
+			/* Trim trailing whitespace */
+			while (end > s->Phone.Data.Manufacturer && isspace((unsigned char)*(end - 1))) {
+				end--;
+			}
+			*end = '\0';
 		}
 
 		/* Lookup in vendor table */
