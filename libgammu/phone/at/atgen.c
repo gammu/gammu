@@ -916,7 +916,11 @@ int ATGEN_ExtractOneParameter(unsigned char *input, unsigned char *output)
 	int	position = 0;
 	gboolean	inside_quotes = FALSE;
 
-	while ((*input!=',' || inside_quotes) && *input != 0x0d && *input != 0x00) {
+	while ((*input!=',' || inside_quotes) && *input != 0x0d && *input != 0x0a && *input != 0x00) {
+		/* Prevent reading past line boundaries even with mismatched quotes */
+		if (*input == 0x0d || *input == 0x0a || *input == 0x00) {
+			break;
+		}
 		if (*input == '"') inside_quotes = ! inside_quotes;
 		*output = *input;
 		input	++;
@@ -955,6 +959,13 @@ size_t ATGEN_GrabString(GSM_StateMachine *s, const unsigned char *input, unsigne
 			&& *input != 0x0d
 			&& *input != 0x0a
 			&& *input != 0x00)) {
+		/* Prevent reading past line boundaries even with mismatched quotes */
+		if (*input == 0x0d || *input == 0x0a || *input == 0x00) {
+			if (inside_quotes) {
+				smprintf(s, "Mismatched quotes in string, stopping at line boundary\n");
+			}
+			break;
+		}
 		/* Check for quotes */
 		if (*input == '"') {
 			inside_quotes = ! inside_quotes;
@@ -979,7 +990,7 @@ size_t ATGEN_GrabString(GSM_StateMachine *s, const unsigned char *input, unsigne
 	(*output)[position] = 0;
 
 	/* Strip quotes */
-	if ((*output)[0] == '"' && (*output)[position - 1]) {
+	if (position >= 2 && (*output)[0] == '"' && (*output)[position - 1] == '"') {
 		memmove(*output, (*output) + 1, position - 2);
 		(*output)[position - 2] = 0;
 	}
