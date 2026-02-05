@@ -2002,6 +2002,26 @@ GSM_Error ATGEN_ReplyGetManufacturer(GSM_Protocol_Message *msg, GSM_StateMachine
 			memmove(s->Phone.Data.Manufacturer, s->Phone.Data.Manufacturer + 3, strlen(s->Phone.Data.Manufacturer + 3) + 1);
 		}
 
+		/* Strip leading whitespace */
+		{
+			char *src = s->Phone.Data.Manufacturer;
+			while (isspace((unsigned char)*src)) {
+				src++;
+			}
+			if (src != s->Phone.Data.Manufacturer) {
+				memmove(s->Phone.Data.Manufacturer, src, strlen(src) + 1);
+			}
+		}
+
+		/* Strip trailing whitespace */
+		{
+			char *end = s->Phone.Data.Manufacturer + strlen(s->Phone.Data.Manufacturer);
+			while (end > s->Phone.Data.Manufacturer && isspace((unsigned char)*(end - 1))) {
+				end--;
+			}
+			*end = '\0';
+		}
+
 		/* Lookup in vendor table */
 		for (vendor = vendors; vendor->id != 0; vendor++) {
 			if (strcasestr(msg->Buffer, vendor->name)) {
