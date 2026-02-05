@@ -635,6 +635,29 @@ if (WITH_ATGEN)
             "${Gammu_SOURCE_DIR}/tests/at-creg/${TESTMESSAGE}")
     endforeach(TESTMESSAGE $MESSAGES)
 
+    # AT CREG corner case tests (malformed responses should not crash)
+    add_executable(at-creg-corner-case at-creg-corner-case.c)
+    add_coverage(at-creg-corner-case)
+    target_link_libraries(at-creg-corner-case libGammu ${LIBINTL_LIBRARIES})
+
+    # Test mismatched quotes - should return ERR_MOREMEMORY (29)
+    add_test("at-creg-corner-case-mismatched-quotes"
+        "${GAMMU_TEST_PATH}/at-creg-corner-case${CMAKE_EXECUTABLE_SUFFIX}"
+        "${Gammu_SOURCE_DIR}/tests/at-creg-corner/mismatched-quotes.dump"
+        "29")
+
+    # Test empty LAC - should succeed
+    add_test("at-creg-corner-case-empty-lac"
+        "${GAMMU_TEST_PATH}/at-creg-corner-case${CMAKE_EXECUTABLE_SUFFIX}"
+        "${Gammu_SOURCE_DIR}/tests/at-creg-corner/empty-lac.dump"
+        "1")
+
+    # Test single quote - should succeed with fallback pattern
+    add_test("at-creg-corner-case-single-quote"
+        "${GAMMU_TEST_PATH}/at-creg-corner-case${CMAKE_EXECUTABLE_SUFFIX}"
+        "${Gammu_SOURCE_DIR}/tests/at-creg-corner/single-quote.dump"
+        "1")
+
     # AT memory parsing
     add_executable(at-getmemory-reply at-getmemory-reply.c)
     add_coverage(at-getmemory-reply)
