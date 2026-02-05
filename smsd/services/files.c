@@ -44,9 +44,16 @@ static void SMSDFiles_EscapeNumber(char *string)
 {
 	char *pos = string;
 	while (*pos) {
+		/* Replace invalid filename characters
+		 * * is replaced with X (for network service numbers, reversible)
+		 * Other invalid chars (Windows: < > : " / \ | ?, control chars) replaced with _
+		 */
 		if (*pos == '*') {
 			*pos = 'X';
-
+		} else if (*pos == '<' || *pos == '>' || *pos == ':' || *pos == '"' ||
+		           *pos == '/' || *pos == '\\' || *pos == '|' || *pos == '?' ||
+		           ((unsigned char)*pos <= 0x1F) || *pos == 0x7F) {
+			*pos = '_';
 		}
 		pos++;
 	}
@@ -58,7 +65,6 @@ static void SMSDFiles_DecodeNumber(char *string)
 	while (*pos) {
 		if (*pos == 'X') {
 			*pos = '*';
-
 		}
 		pos++;
 	}
