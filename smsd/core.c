@@ -2312,6 +2312,8 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 				continue;
 			}
 
+			/* All operations succeeded, reset error counter */
+			errors = 0;
 		}
 
 		/* time for preventive reset */
