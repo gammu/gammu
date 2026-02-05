@@ -338,6 +338,15 @@ GSM_Error GSM_DecodeSMSFrameText(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsign
 		GSM_DecodeUDHHeader(di, &SMS->UDH);
 	}
 
+	/* Validate that TPUDL doesn't point beyond reasonable buffer size */
+	/* Maximum SMS PDU is ~175 bytes, we use 256 as a safe upper bound */
+	if (Layout.Text != 255 && Layout.TPUDL != 255) {
+		if (Layout.Text + buffer[Layout.TPUDL] > 256) {
+			smfprintf(di, "TPUDL value too large (would read beyond buffer)\n");
+			return ERR_CORRUPTED;
+		}
+	}
+
 	switch (SMS->Coding) {
 		case SMS_Coding_Default_No_Compression:
 			i = 0;
