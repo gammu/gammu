@@ -71,10 +71,13 @@ int main(int argc UNUSED, char **argv UNUSED)
 	/* The corrupted echo "AT\xFF\xE5" should be filtered to just "AT" */
 	test_result(s->MessagesCount >= 1);
 
-	/* Verify the buffer doesn't contain the garbage bytes */
-	test_result(d->Msg.Buffer == NULL || 
-	            (memchr(d->Msg.Buffer, 0xFF, d->Msg.Length) == NULL &&
-	             memchr(d->Msg.Buffer, 0xE5, d->Msg.Length) == NULL));
+	/* Verify the buffer doesn't contain ANY high-bit bytes (>= 0x80) */
+	if (d->Msg.Buffer != NULL) {
+		size_t j;
+		for (j = 0; j < d->Msg.Length; j++) {
+			test_result(d->Msg.Buffer[j] < 0x80);
+		}
+	}
 
 	/* Free state machine */
 	GSM_FreeStateMachine(s);
