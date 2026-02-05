@@ -5,7 +5,7 @@
 GSM_StateMachine *s;
 INI_Section *config_section;
 GSM_Error error;
-char buffer[100];
+char buffer[GSM_MAX_INFO_LENGTH];
 
 /* Function to handle errors */
 void error_handler(void)
