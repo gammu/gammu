@@ -2239,6 +2239,15 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 		}
 	}
 
+	/* Clear any residual data from the device before initialization.
+	 * Some modems (e.g., ZTE MF710M) may have buffered data from previous
+	 * sessions, which can cause "UNKNOWN frame" errors during startup.
+	 */
+	smprintf(s, "Clearing device buffer before initialization\n");
+	while (s->Device.Functions->ReadDevice(s, buff, sizeof(buff)) > 0) {
+		usleep(10000);
+	}
+
     	/* When some phones (Alcatel BE5) is first time connected, it needs extra
      	 * time to react, sending just AT wakes up the phone and it then can react
      	 * to ATE1. We don't need to check whether this fails as it is just to
@@ -2246,16 +2255,6 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
      	 */
     	smprintf(s, "Sending simple AT command to wake up some devices\n");
 	error = GSM_WaitForAutoLen(s, "AT\r", 0x00, 20, ID_Initialise);
-
-	/* Discard any response from the wake-up command.
-	 * Some modems (e.g., ZTE MF710M) may echo malformed data from previous
-	 * commands, which can cause "UNKNOWN frame" errors. Since the wake-up
-	 * command is only meant to wake the device, we don't need its response.
-	 */
-	smprintf(s, "Discarding response from wake-up command\n");
-	while (s->Device.Functions->ReadDevice(s, buff, sizeof(buff)) > 0) {
-		usleep(10000);
-	}
 
 	/* We want to see our commands to allow easy detection of reply functions */
 	smprintf(s, "Enabling echo\n");
