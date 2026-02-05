@@ -1904,7 +1904,7 @@ GSM_Error ATGEN_ReplyGetModel(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 	}
 
 	strncpy(Data->Model, pos, MIN(1 + pos2 - pos, GSM_MAX_MODEL_LENGTH));
-	Data->Model[1 + pos2 - pos] = 0;
+	Data->Model[MIN(1 + pos2 - pos, GSM_MAX_MODEL_LENGTH)] = 0;
 
 	Data->ModelInfo = GetModelData(s, NULL, Data->Model, NULL);
 
