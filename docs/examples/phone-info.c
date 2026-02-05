@@ -14,7 +14,7 @@ void error_handler(void)
 		printf("ERROR: %s\n", GSM_ErrorString(error));
 		if (GSM_IsConnected(s))
 			GSM_TerminateConnection(s);
-		exit(error);
+		exit(EXIT_FAILURE);
 	}
 }
 
