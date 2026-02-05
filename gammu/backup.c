@@ -347,6 +347,7 @@ void DoBackup(int argc, char *argv[])
  	GSM_GPRSAccessPoint	GPRSPoint;
 	gboolean			DoBackupPart;
 	char buffer[GSM_MAX_INFO_LENGTH];
+	size_t			len;
 
 	if (argc == 4 && strcasecmp(argv[3],"-yes") == 0) always_answer_yes = TRUE;
 
@@ -354,13 +355,18 @@ void DoBackup(int argc, char *argv[])
 	GSM_GetBackupFormatFeatures(GSM_GuessBackupFormat(argv[2], FALSE),&Info);
 
 	sprintf(Backup.Creator, "Gammu %s", GAMMU_VERSION);
-	if (strlen(GetOS()) != 0) {
-		strcat(Backup.Creator+strlen(Backup.Creator),", ");
-		strcat(Backup.Creator+strlen(Backup.Creator),GetOS());
+	len = sizeof(Backup.Creator) - strlen(Backup.Creator) - 1;
+	if (strlen(GetOS()) != 0 && len > strlen(GetOS()) + 3) {
+		strncat(Backup.Creator+strlen(Backup.Creator),", ", len);
+		len -= 2;
+		strncat(Backup.Creator+strlen(Backup.Creator),GetOS(), len);
+		len -= strlen(GetOS());
 	}
-	if (strlen(GetCompiler()) != 0) {
-		strcat(Backup.Creator+strlen(Backup.Creator),", ");
-		strcat(Backup.Creator+strlen(Backup.Creator),GetCompiler());
+	if (strlen(GetCompiler()) != 0 && len > strlen(GetCompiler()) + 3) {
+		strncat(Backup.Creator+strlen(Backup.Creator),", ", len);
+		len -= 2;
+		strncat(Backup.Creator+strlen(Backup.Creator),GetCompiler(),
+		        len);
 	}
 
 	signal(SIGINT, interrupt);
