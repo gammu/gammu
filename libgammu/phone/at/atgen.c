@@ -366,6 +366,11 @@ GSM_Error ATGEN_HandleCMEError(GSM_StateMachine *s)
 		case 31:
 		case 32:
 			return ERR_NETWORK_ERROR;
+		case 132:
+		case 133:
+		case 134:
+			/* Service option errors - GPRS related */
+			return ERR_NOTSUPPORTED;
 		case 515:
 			return ERR_BUSY;
 		default:

@@ -74,6 +74,9 @@ int main(int argc UNUSED, char **argv UNUSED)
 	s->Phone.Data.SignalQuality = &Signal;
 	do_test("AT+CSQ\r\nAT+CSQ\r\n+CME ERROR: 515", AT_Reply_CMEError, ERR_BUSY);
 
+	s->Phone.Data.RequestID = ID_GetUSSD;
+	do_test("AT+CUSD=1,\"002A003900390023\",15\r\n+CME ERROR: 132", AT_Reply_CMEError, ERR_NOTSUPPORTED);
+
 	s->Phone.Data.RequestID = ID_SetMemoryType;
 	do_test("AT+CPMS=\"ME\"\rAT+CPMS=\"ME\"\r\r\n+CPMS: 2,300,2,300,2,300\r\n\r\n+CPMS: 2,300,2,300,2,300\r\n\r\nOK\r\n", AT_Reply_OK, ERR_NONE);
 
