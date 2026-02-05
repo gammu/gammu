@@ -221,16 +221,38 @@ GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 				}
 				
 				if (is_malformed_echo && d->LineEnd + 1 < d->Msg.Length) {
-					/* Remove this malformed echo line by shifting the buffer */
-					size_t echo_end = d->LineEnd + 1; /* Include the \n */
-					memmove(d->Msg.Buffer, d->Msg.Buffer + echo_end, d->Msg.Length - echo_end);
-					d->Msg.Length -= echo_end;
-					d->Msg.Buffer[d->Msg.Length] = 0;
-					/* Reset line tracking since we removed the echo */
-					d->LineStart = 0;
-					d->wascrlf = FALSE;
-					/* Continue processing without dispatching yet */
-					break;
+					/* Remove this malformed echo line by shifting the buffer.
+					 * We need to skip past the full \r\n sequence.
+					 * LineEnd points to \r, so we need to skip to after \n.
+					 */
+					size_t echo_end;
+					
+					/* Skip past \r */
+					if (d->Msg.Buffer[d->LineEnd] == 13) {
+						echo_end = d->LineEnd + 1;
+						/* Skip past \n if present */
+						if (echo_end < d->Msg.Length && d->Msg.Buffer[echo_end] == 10) {
+							echo_end++;
+						}
+					} else {
+						/* Shouldn't happen, but handle gracefully */
+						echo_end = d->LineEnd + 1;
+					}
+					
+					if (echo_end < d->Msg.Length) {
+						memmove(d->Msg.Buffer, d->Msg.Buffer + echo_end, d->Msg.Length - echo_end);
+						d->Msg.Length -= echo_end;
+						d->Msg.Buffer[d->Msg.Length] = 0;
+						/* Reset line tracking since we removed the echo */
+						d->LineStart = 0;
+						d->wascrlf = FALSE;
+						/* Continue processing without dispatching yet */
+						break;
+					} else {
+						/* Echo was the only content, reset buffer */
+						d->Msg.Length = 0;
+						break;
+					}
 				}
 			}
 

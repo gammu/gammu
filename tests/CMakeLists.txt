@@ -983,6 +983,12 @@ if (WITH_ATGEN)
     add_coverage(at-statemachine)
     target_link_libraries(at-statemachine libGammu ${LIBINTL_LIBRARIES})
     add_test(at-statemachine "${GAMMU_TEST_PATH}/at-statemachine${CMAKE_EXECUTABLE_SUFFIX}")
+
+    # AT ZTE MF710M echo test
+    add_executable(at-zte-mf710m-echo at-zte-mf710m-echo.c)
+    add_coverage(at-zte-mf710m-echo)
+    target_link_libraries(at-zte-mf710m-echo libGammu ${LIBINTL_LIBRARIES})
+    add_test(at-zte-mf710m-echo "${GAMMU_TEST_PATH}/at-zte-mf710m-echo${CMAKE_EXECUTABLE_SUFFIX}")
 endif (WITH_ATGEN)
 
 # Line parser tests
