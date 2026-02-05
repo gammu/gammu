@@ -2002,20 +2002,28 @@ GSM_Error ATGEN_ReplyGetManufacturer(GSM_Protocol_Message *msg, GSM_StateMachine
 			memmove(s->Phone.Data.Manufacturer, s->Phone.Data.Manufacturer + 3, strlen(s->Phone.Data.Manufacturer + 3) + 1);
 		}
 
-		/* Strip leading whitespace */
+		/* Strip leading and trailing whitespace */
 		{
 			char *src = s->Phone.Data.Manufacturer;
+			char *end;
+			size_t len;
+
+			/* Skip leading whitespace */
 			while (isspace((unsigned char)*src)) {
 				src++;
 			}
-			if (src != s->Phone.Data.Manufacturer) {
-				memmove(s->Phone.Data.Manufacturer, src, strlen(src) + 1);
-			}
-		}
 
-		/* Strip trailing whitespace */
-		{
-			char *end = s->Phone.Data.Manufacturer + strlen(s->Phone.Data.Manufacturer);
+			/* Move string if we skipped any leading whitespace */
+			if (src != s->Phone.Data.Manufacturer) {
+				len = strlen(src);
+				memmove(s->Phone.Data.Manufacturer, src, len + 1);
+				end = s->Phone.Data.Manufacturer + len;
+			} else {
+				len = strlen(s->Phone.Data.Manufacturer);
+				end = s->Phone.Data.Manufacturer + len;
+			}
+
+			/* Trim trailing whitespace */
 			while (end > s->Phone.Data.Manufacturer && isspace((unsigned char)*(end - 1))) {
 				end--;
 			}
