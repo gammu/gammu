@@ -2243,7 +2243,7 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
      	 * time to react, sending just AT wakes up the phone and it then can react
      	 * to ATE1. We don't need to check whether this fails as it is just to
      	 * wake up the phone and does nothing.
-	 * 
+	 *
 	 * Instead of using GSM_WaitForAutoLen which would try to parse the response
 	 * (and fail if there's garbage), we just send the command and then discard
 	 * any response data. This handles cases like ZTE MF710M where buffered data
@@ -2254,10 +2254,10 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 	if (error != ERR_NONE) {
 		return error;
 	}
-	
+
 	/* Give device time to respond */
 	usleep(100000);
-	
+
 	/* Discard any response (including garbage from previous sessions) */
 	smprintf(s, "Discarding response from wake-up command\n");
 	while (s->Device.Functions->ReadDevice(s, buff, sizeof(buff)) > 0) {
