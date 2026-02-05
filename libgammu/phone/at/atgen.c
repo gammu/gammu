@@ -5511,6 +5511,27 @@ GSM_Error ATGEN_IncomingNetworkLevel(GSM_Protocol_Message *msg, GSM_StateMachine
 	return ERR_NONE;
 }
 
+GSM_Error ATGEN_IncomingIndicator(GSM_Protocol_Message *msg UNUSED, GSM_StateMachine *s)
+{
+	/* Handle unsolicited +CIND: messages */
+	smprintf(s, "Unsolicited indicator status update\n");
+	return ERR_NONE;
+}
+
+GSM_Error ATGEN_IncomingSignalLevel(GSM_Protocol_Message *msg UNUSED, GSM_StateMachine *s)
+{
+	/* Handle unsolicited +CSQ: messages */
+	smprintf(s, "Unsolicited signal quality update\n");
+	return ERR_NONE;
+}
+
+GSM_Error ATGEN_IncomingZTENetworkStatus(GSM_Protocol_Message *msg UNUSED, GSM_StateMachine *s)
+{
+	/* Handle unsolicited +ZPAS: messages from ZTE modems */
+	smprintf(s, "ZTE network status update\n");
+	return ERR_NONE;
+}
+
 GSM_Error ATGEN_ReplyGetSIMIMSI(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
@@ -6370,9 +6391,9 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReplyIgnore, 	"+SPNWNAME:"		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore, 	"+PSBEARER:"	,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore, 	"+ZEND"			,0x00,0x00,ID_IncomingFrame	 },
-{ATGEN_GenericReplyIgnore, 	"+ZPAS:"		,0x00,0x00,ID_IncomingFrame	 },
-{ATGEN_GenericReplyIgnore, 	"+CIND:"		,0x00,0x00,ID_IncomingFrame	 },
-{ATGEN_GenericReplyIgnore, 	"+CSQ:"			,0x00,0x00,ID_IncomingFrame	 },
+{ATGEN_IncomingZTENetworkStatus, "+ZPAS:"		,0x00,0x00,ID_IncomingFrame	 },
+{ATGEN_IncomingIndicator, 	"+CIND:"		,0x00,0x00,ID_IncomingFrame	 },
+{ATGEN_IncomingSignalLevel, 	"+CSQ:"			,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_IncomingSMSInfo,		  "+CDSI:" 	 	,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore,	"+CLCC:"		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore,	"#STN:"			,0x00,0x00,ID_IncomingFrame	 },
