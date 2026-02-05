@@ -2247,6 +2247,16 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
     	smprintf(s, "Sending simple AT command to wake up some devices\n");
 	error = GSM_WaitForAutoLen(s, "AT\r", 0x00, 20, ID_Initialise);
 
+	/* Discard any response from the wake-up command.
+	 * Some modems (e.g., ZTE MF710M) may echo malformed data from previous
+	 * commands, which can cause "UNKNOWN frame" errors. Since the wake-up
+	 * command is only meant to wake the device, we don't need its response.
+	 */
+	smprintf(s, "Discarding response from wake-up command\n");
+	while (s->Device.Functions->ReadDevice(s, buff, sizeof(buff)) > 0) {
+		usleep(10000);
+	}
+
 	/* We want to see our commands to allow easy detection of reply functions */
 	smprintf(s, "Enabling echo\n");
 	error = GSM_WaitForAutoLen(s, "ATE1\r", 0x00, 10, ID_EnableEcho);
