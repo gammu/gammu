@@ -5,7 +5,7 @@
 GSM_StateMachine *s;
 INI_Section *config_section;
 GSM_Error error;
-char buffer[100];
+char buffer[GSM_MAX_INFO_LENGTH];
 
 /* Function to handle errors */
 void error_handler(void)
@@ -14,7 +14,7 @@ void error_handler(void)
 		printf("ERROR: %s\n", GSM_ErrorString(error));
 		if (GSM_IsConnected(s))
 			GSM_TerminateConnection(s);
-		exit(error);
+		exit(EXIT_FAILURE);
 	}
 }
 
