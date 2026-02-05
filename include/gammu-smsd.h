@@ -145,6 +145,21 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig * Config,
 void SMSD_EnableGlobalDebug(GSM_SMSDConfig *Config);
 
 /**
+ * Sets whether failure should lead to termination of program.
+ *
+ * By default, SMSD is configured to exit on failure. This is suitable for
+ * standalone daemon operation. However, when SMSD is used as a library
+ * (e.g., in language bindings), you may want to disable this behavior to
+ * handle errors programmatically instead of terminating the process.
+ *
+ * \param Config Pointer to SMSD configuration data.
+ * \param enable TRUE to exit on failure (default), FALSE to set error code instead.
+ *
+ * \ingroup SMSD
+ */
+void SMSD_SetExitOnFailure(GSM_SMSDConfig *Config, gboolean enable);
+
+/**
  * Main SMS daemon loop. It connects to phone, scans for messages and
  * sends messages from inbox. Can be interrupted by SMSD_Shutdown.
  *

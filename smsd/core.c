@@ -686,6 +686,11 @@ void SMSD_EnableGlobalDebug(GSM_SMSDConfig *Config)
 	GSM_SetDebugFunction(SMSD_Log_Function, Config, GSM_GetGlobalDebug());
 }
 
+void SMSD_SetExitOnFailure(GSM_SMSDConfig *Config, gboolean enable)
+{
+	Config->exit_on_failure = enable;
+}
+
 /**
  * Reads configuration file and feeds it's content into SMSD configuration structure.
  */
