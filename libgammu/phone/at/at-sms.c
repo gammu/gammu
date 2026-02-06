@@ -2406,8 +2406,7 @@ GSM_Error ATGEN_IncomingSMSInfo(GSM_Protocol_Message *msg, GSM_StateMachine *s)
   }
   else if(strncmp(buffer, "+CDSI:", cmd_len) == 0) {
     smprintf(s, "Incoming SMS status report information\n");
-    /* Do not set PDU type here - let the actual SMS fetch set it.
-     * Setting it here causes smsd to process incomplete SMS data. */
+    sms.PDU = SMS_Status_Report;
   }
   else {
     smprintf(s, "Unrecognised response\n");
