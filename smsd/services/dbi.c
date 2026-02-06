@@ -65,6 +65,10 @@ long long SMSDDBI_GetNumber(GSM_SMSDConfig * Config, SQL_result *res, unsigned i
 #endif
 		case DBI_TYPE_STRING:
 			value = dbi_result_get_string_idx(res->dbi, field);
+			if (value == NULL) {
+				SMSD_Log(DEBUG_ERROR, Config, "NULL string value for number field from DBI");
+				return -1;
+			}
 			return atoll(value);
 		default:
 			SMSD_Log(DEBUG_ERROR, Config, "Wrong field type for number (not INTEGER nor DECIMAL) from DBI: %d", type);
