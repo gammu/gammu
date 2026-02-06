@@ -423,6 +423,10 @@ typedef struct {
    * Can we write to phone SR memory?
    */
   GSM_AT_Feature		SRSaveSMS;
+  /**
+   * Does the phone require third parameter in AT+CPMS for receive memory?
+   */
+  gboolean			CPMSReceiveMemory;
 	/**
 	 * Cache for incoming SMS info.
 	 */
