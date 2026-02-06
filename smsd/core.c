@@ -97,6 +97,90 @@ GSM_Error SMSD_CheckDBVersion(GSM_SMSDConfig *Config, int version)
 	return ERR_NONE;
 }
 
+#define SMSD_PROCESSED_MESSAGES_CACHE_SIZE 100
+
+/**
+ * Computes a simple hash of an SMS message to uniquely identify it.
+ * Uses sender number, timestamp, and message text to create hash.
+ */
+static unsigned int SMSD_ComputeSMSHash(const GSM_SMSMessage *sms)
+{
+	unsigned int hash = 5381;
+	int i;
+	const unsigned char *str;
+
+	/* Hash the sender number */
+	str = sms->Number;
+	while (*str) {
+		hash = ((hash << 5) + hash) + *str++;
+	}
+
+	/* Hash the timestamp */
+	hash = ((hash << 5) + hash) + sms->DateTime.Year;
+	hash = ((hash << 5) + hash) + sms->DateTime.Month;
+	hash = ((hash << 5) + hash) + sms->DateTime.Day;
+	hash = ((hash << 5) + hash) + sms->DateTime.Hour;
+	hash = ((hash << 5) + hash) + sms->DateTime.Minute;
+	hash = ((hash << 5) + hash) + sms->DateTime.Second;
+
+	/* Hash first part of message text (for efficiency) */
+	str = sms->Text;
+	for (i = 0; i < 50 && *str; i++) {
+		hash = ((hash << 5) + hash) + *str++;
+	}
+
+	return hash;
+}
+
+/**
+ * Checks if a message hash is already in the processed cache.
+ */
+static gboolean SMSD_IsMessageProcessed(GSM_SMSDConfig *Config, unsigned int hash)
+{
+	unsigned int i;
+
+	if (Config->ProcessedMessagesHash == NULL) {
+		return FALSE;
+	}
+
+	for (i = 0; i < Config->ProcessedMessagesHashUsed; i++) {
+		if (Config->ProcessedMessagesHash[i] == hash) {
+			return TRUE;
+		}
+	}
+
+	return FALSE;
+}
+
+/**
+ * Adds a message hash to the processed cache.
+ */
+static void SMSD_MarkMessageProcessed(GSM_SMSDConfig *Config, unsigned int hash)
+{
+	/* Initialize cache if needed */
+	if (Config->ProcessedMessagesHash == NULL) {
+		Config->ProcessedMessagesHash = (unsigned int *)malloc(SMSD_PROCESSED_MESSAGES_CACHE_SIZE * sizeof(unsigned int));
+		if (Config->ProcessedMessagesHash == NULL) {
+			SMSD_Log(DEBUG_ERROR, Config, "Failed to allocate processed messages cache");
+			return;
+		}
+		Config->ProcessedMessagesHashSize = SMSD_PROCESSED_MESSAGES_CACHE_SIZE;
+		Config->ProcessedMessagesHashUsed = 0;
+	}
+
+	/* If cache is full, remove oldest entry (simple FIFO) */
+	if (Config->ProcessedMessagesHashUsed >= Config->ProcessedMessagesHashSize) {
+		/* Shift all entries by one */
+		memmove(Config->ProcessedMessagesHash,
+		        Config->ProcessedMessagesHash + 1,
+		        (Config->ProcessedMessagesHashSize - 1) * sizeof(unsigned int));
+		Config->ProcessedMessagesHashUsed = Config->ProcessedMessagesHashSize - 1;
+	}
+
+	/* Add the new hash */
+	Config->ProcessedMessagesHash[Config->ProcessedMessagesHashUsed++] = hash;
+}
+
 /**
  * Signals SMSD to shutdown.
  */
@@ -440,6 +524,11 @@ GSM_SMSDConfig *SMSD_NewConfig(const char *name)
 		Config->SkipMessage[i] = FALSE;
 	}
 
+	/* Initialize processed messages cache */
+	Config->ProcessedMessagesHash = NULL;
+	Config->ProcessedMessagesHashSize = 0;
+	Config->ProcessedMessagesHashUsed = 0;
+
 	/* Prepare lists */
 	GSM_StringArray_New(&(Config->IncludeNumbersList));
 	GSM_StringArray_New(&(Config->ExcludeNumbersList));
@@ -532,6 +621,9 @@ void SMSD_FreeConfig(GSM_SMSDConfig *Config)
 	GSM_StringArray_Free(&(Config->ExcludeSMSCList));
 
 	free(Config->gammu_log_buffer);
+
+	/* Free processed messages cache */
+	free(Config->ProcessedMessagesHash);
 
 	INI_Free(Config->smsdcfgfile);
 
@@ -1501,6 +1593,20 @@ gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config)
 				break;
 			case ERR_NONE:
 				if (SMSD_ValidMessage(Config, &sms)) {
+					unsigned int hash;
+					
+					/* Check if this message was already processed via callback */
+					hash = SMSD_ComputeSMSHash(&sms.SMS[0]);
+					if (SMSD_IsMessageProcessed(Config, hash)) {
+						SMSD_Log(DEBUG_INFO, Config, "Message already processed via callback, skipping from polling.");
+						/* Delete the message from phone since it was already processed */
+						for (j = 0; j < sms.Number; j++) {
+							sms.SMS[j].Folder = 0;
+							GSM_DeleteSMS(Config->gsm, &sms.SMS[j]);
+						}
+						break;
+					}
+					
 					if (allocated <= GetSMSNumber + 2) {
 						GetSMSData = (GSM_MultiSMSMessage **)realloc(GetSMSData, (allocated + 20) * sizeof(GSM_MultiSMSMessage *));
 						if (GetSMSData == NULL) {
@@ -2115,6 +2221,9 @@ void SMSD_IncomingSMSInfoCallback(GSM_StateMachine *s,  GSM_SMSMessage *sms, voi
 void SMSD_IncomingSMSCallback(GSM_StateMachine *s,  GSM_SMSMessage *sms, void *user_data)
 {
 	GSM_SMSDConfig *Config = user_data;
+	GSM_MultiSMSMessage msms;
+	GSM_Error error;
+	unsigned int hash;
 
 	/* Handle message information notifications (CMTI, CDSI) */
 	if(sms->State == 0) {
@@ -2123,36 +2232,33 @@ void SMSD_IncomingSMSCallback(GSM_StateMachine *s,  GSM_SMSMessage *sms, void *u
 		return;
 	}
 
-	/* Handle full messages delivered via callback */
-	if (sms->PDU == SMS_Status_Report) {
-		/* Delivery reports (+CDS) are never stored in phone memory.
-		 * Process them immediately. */
-		GSM_MultiSMSMessage msms;
-		GSM_Error error;
+	/* For full messages delivered via callback, process them immediately
+	 * and mark them as processed to prevent double counting when polling. */
+	
+	SMSD_Log(DEBUG_INFO, Config, "Processing incoming message received via callback.");
 
-		SMSD_Log(DEBUG_INFO, Config, "Processing delivery report received via callback.");
+	memset(&msms, 0, sizeof(GSM_MultiSMSMessage));
+	msms.Number = 1;
+	msms.SMS[0] = *sms;
 
-		memset(&msms, 0, sizeof(GSM_MultiSMSMessage));
-		msms.Number = 1;
-		msms.SMS[0] = *sms;
+	/* Compute hash to track this message */
+	hash = SMSD_ComputeSMSHash(sms);
 
-		error = SMSD_ProcessSMS(Config, &msms);
-		if(error != ERR_NONE)
-			SMSD_LogError(DEBUG_ERROR, Config, "Error processing delivery report", error);
-	} else {
-		/* SMS messages (+CMT, PDU type SMS_Deliver) may be stored in phone memory
-		 * depending on modem CNMI configuration:
-		 * - CNMI mode 1: Message delivered only, not stored
-		 * - CNMI mode 2: Message delivered AND stored (configured by gammu-smsd)
-		 * 
-		 * To prevent double counting with CNMI mode 2, skip processing here.
-		 * The message will be picked up by polling in SMSD_ReadDeleteSMS.
-		 * 
-		 * Trade-off: Messages with CNMI mode 1 will be missed, but gammu-smsd
-		 * explicitly uses mode 2 ("store messages to SIM") so this is acceptable.
-		 * This sacrifices immediate processing for correctness. */
-		SMSD_Log(DEBUG_INFO, Config, "Ignoring SMS delivered via callback; it will be processed by polling.");
+	/* Check if already processed (shouldn't happen, but be safe) */
+	if (SMSD_IsMessageProcessed(Config, hash)) {
+		SMSD_Log(DEBUG_INFO, Config, "Message already processed, skipping.");
+		return;
 	}
+
+	/* Process the message */
+	error = SMSD_ProcessSMS(Config, &msms);
+	if(error != ERR_NONE) {
+		SMSD_LogError(DEBUG_ERROR, Config, "Error processing SMS", error);
+		return;
+	}
+
+	/* Mark as processed to prevent reprocessing during polling */
+	SMSD_MarkMessageProcessed(Config, hash);
 }
 
 GSM_Error SMSD_ProcessSMSInfoCache(GSM_SMSDConfig *Config)
