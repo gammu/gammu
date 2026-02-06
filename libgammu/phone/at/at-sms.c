@@ -1792,20 +1792,21 @@ GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *message, unsig
 		case SMS_Coding_Default_No_Compression:
 			/* If not SMS with UDH, it's as normal text */
 			if (message->UDH.Type == UDH_NoUDH) {
-				/* For SMS text mode, encode directly to GSM default alphabet
-				 * Don't use ATGEN_EncodeText as it may hex-encode when charset is HEX,
-				 * but SMS text mode expects plain GSM text */
-				len = UnicodeLength(message->Text);
-				/* Check buffer size - GSM text can be up to 160 chars,
-				 * with extensions each char could need 2 bytes, plus null terminator */
-				if (len * 2 + 1 > hexlength) {
-					return ERR_MOREMEMORY;
+				/* For SMS text mode body, temporarily use GSM charset if HEX is set.
+				 * HEX charset hex-encodes output (meant for AT command parameters),
+				 * but SMS text mode expects plain GSM alphabet text. */
+				GSM_AT_Charset orig_charset = Priv->Charset;
+				if (Priv->Charset == AT_CHARSET_HEX) {
+					Priv->Charset = AT_CHARSET_GSM;
 				}
-				/* EncodeDefault(dest, src, len, UseExtensions, ExtraAlphabet)
-				 * TRUE = use GSM extension characters, NULL = no extra alphabet */
-				EncodeDefault(hexreq, message->Text, &len, TRUE, NULL);
-				hexreq[len] = 0;
-				*length2 = len;
+				error = ATGEN_EncodeText(
+					s, message->Text, UnicodeLength(message->Text), hexreq, hexlength, length2
+				);
+				/* Restore original charset */
+				Priv->Charset = orig_charset;
+				if (error != ERR_NONE) {
+					return error;
+				}
 				break;
 			}
 			FALLTHROUGH
