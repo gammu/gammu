@@ -95,7 +95,16 @@ static GSM_Error SMSDMySQL_Connect(GSM_SMSDConfig * Config)
 	}
 	if (Config->conn.my == NULL) {
 		Config->conn.my = malloc(sizeof(MYSQL));
-		mysql_init(Config->conn.my);
+		if (Config->conn.my == NULL) {
+			SMSD_Log(DEBUG_ERROR, Config, "MySQL allocation failed!");
+			return ERR_DB_DRIVER;
+		}
+		if (mysql_init(Config->conn.my) == NULL) {
+			SMSD_Log(DEBUG_ERROR, Config, "MySQL initialization failed!");
+			free(Config->conn.my);
+			Config->conn.my = NULL;
+			return ERR_DB_DRIVER;
+		}
 	}
 	if (Config->conn.my == NULL) {
 		SMSD_Log(DEBUG_ERROR, Config, "MySQL allocation failed!");
@@ -122,6 +131,22 @@ static GSM_Error SMSDMySQL_Connect(GSM_SMSDConfig * Config)
 static GSM_Error SMSDMySQL_Query(GSM_SMSDConfig * Config, const char *query, SQL_result *res)
 {
 	int error;
+
+	/* 
+	 * Check connection health before executing query.
+	 * mysql_ping() returns 0 if connection is alive, non-zero if not.
+	 * This helps detect stale connections early (e.g., after MySQL wait_timeout).
+	 * Note: We don't use MYSQL_OPT_RECONNECT as it's deprecated and can cause 
+	 * issues with session state. Instead, we rely on the retry logic in 
+	 * SMSDSQL_Query() to handle reconnection properly.
+	 */
+	if (mysql_ping(Config->conn.my) != 0) {
+		error = mysql_errno(Config->conn.my);
+		SMSD_Log(DEBUG_INFO, Config, "Connection ping failed: %s", mysql_error(Config->conn.my));
+		if (error == 2006 || error == 2013 || error == 2012) { /* connection lost */
+			return ERR_DB_TIMEOUT;
+		}
+	}
 
 	if (mysql_query(Config->conn.my, query) != 0) {
 		SMSDMySQL_LogError(Config);
