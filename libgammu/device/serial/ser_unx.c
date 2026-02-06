@@ -225,7 +225,10 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 	}
 
 	if (tcgetattr(d->hPhone, &d->old_settings) == -1) {
-		serial_close(s);
+		/* Can't use serial_close here as old_settings is not initialized */
+		flock(d->hPhone, LOCK_UN);
+		close(d->hPhone);
+		d->hPhone = -1;
 		GSM_OSErrorInfo(s,"tcgetattr in serial_open");
 		return ERR_DEVICEOPENERROR;
 	}
