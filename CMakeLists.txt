@@ -912,6 +912,8 @@ if (WIN32 AND NOT CYGWIN)
 		    ExecWait  \\\"$INSTDIR\\\\bin\\\\gammu-smsd.exe -e \\\"
             ")
   SET(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS "
+		    ExecWait  \\\"$INSTDIR\\\\bin\\\\gammu-smsd.exe -k \\\"
+		    ExecWait  \\\"$INSTDIR\\\\bin\\\\gammu-smsd.exe -u \\\"
 		    ExecWait  \\\"$INSTDIR\\\\bin\\\\gammu-smsd.exe -E \\\"
             ")
 else (WIN32 AND NOT CYGWIN)
