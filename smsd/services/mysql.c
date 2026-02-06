@@ -95,17 +95,22 @@ static GSM_Error SMSDMySQL_Connect(GSM_SMSDConfig * Config)
 	}
 	if (Config->conn.my == NULL) {
 		Config->conn.my = malloc(sizeof(MYSQL));
-		mysql_init(Config->conn.my);
-	}
-	if (Config->conn.my == NULL) {
-		SMSD_Log(DEBUG_ERROR, Config, "MySQL allocation failed!");
-		return ERR_DB_DRIVER;
+		if (Config->conn.my == NULL) {
+			SMSD_Log(DEBUG_ERROR, Config, "MySQL allocation failed!");
+			return ERR_DB_DRIVER;
+		}
+		if (mysql_init(Config->conn.my) == NULL) {
+			SMSD_Log(DEBUG_ERROR, Config, "MySQL initialization failed!");
+			free(Config->conn.my);
+			Config->conn.my = NULL;
+			return ERR_DB_DRIVER;
+		}
 	}
 	if (!mysql_real_connect(Config->conn.my, Config->host, Config->user, Config->password, Config->database, port, socketname, 0)) {
 		SMSD_Log(DEBUG_ERROR, Config, "Error connecting to database!");
 		SMSDMySQL_LogError(Config);
 		error = mysql_errno(Config->conn.my);
-		if (error == 2006 || error == 2003 || error == 2002) { /* cant connect through socket */
+		if (error == CR_SERVER_GONE_ERROR || error == CR_CONN_HOST_ERROR || error == CR_CONNECTION_ERROR) { /* cant connect through socket */
 			return ERR_DB_TIMEOUT;
 		}
 		return ERR_DB_CONNECT;
@@ -123,10 +128,28 @@ static GSM_Error SMSDMySQL_Query(GSM_SMSDConfig * Config, const char *query, SQL
 {
 	int error;
 
+	/*
+	 * Check connection health before executing query.
+	 * mysql_ping() returns 0 if connection is alive, non-zero if not.
+	 * This helps detect stale connections early (e.g., after MySQL wait_timeout).
+	 * Note: We don't use MYSQL_OPT_RECONNECT as it's deprecated and can cause
+	 * issues with session state. Instead, we rely on the retry logic in
+	 * SMSDSQL_Query() to handle reconnection properly.
+	 */
+	if (mysql_ping(Config->conn.my) != 0) {
+		error = mysql_errno(Config->conn.my);
+		SMSD_Log(DEBUG_INFO, Config, "Connection ping failed: %s", mysql_error(Config->conn.my));
+		if (error == CR_SERVER_GONE_ERROR || error == CR_SERVER_LOST || error == CR_SERVER_HANDSHAKE_ERR) {
+			return ERR_DB_TIMEOUT;
+		}
+		/* Other ping failures should also prevent query execution */
+		return ERR_SQL;
+	}
+
 	if (mysql_query(Config->conn.my, query) != 0) {
 		SMSDMySQL_LogError(Config);
 		error = mysql_errno(Config->conn.my);
-		if (error == 2006 || error == 2013 || error == 2012) { /* connection lost */
+		if (error == CR_SERVER_GONE_ERROR || error == CR_SERVER_LOST || error == CR_SERVER_HANDSHAKE_ERR) { /* connection lost */
 			return ERR_DB_TIMEOUT;
 		}
 		return ERR_SQL;
