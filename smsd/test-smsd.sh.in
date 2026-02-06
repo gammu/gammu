@@ -138,7 +138,7 @@ esac
 # Create database structures
 case $SERVICE in
     *sqlite3)
-        "@SQLITE_BIN@" smsd.db < @CMAKE_CURRENT_SOURCE_DIR@/../docs/sql/sqlite.sql
+        "@SQLITE_BIN@" smsd.db '.read @CMAKE_CURRENT_SOURCE_DIR@/../docs/sql/sqlite.sql'
         ;;
     *pgsql)
         echo "DROP TABLE IF EXISTS gammu, inbox, outbox, outbox_multipart, phones, sentitems;" | PGPASSWORD="@PSQL_PASSWORD@" "@PSQL_BIN@" -h "@PSQL_HOST@" -U "@PSQL_USER@" "@PSQL_DATABASE@"
