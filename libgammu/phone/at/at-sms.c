@@ -703,6 +703,18 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 				error = ATGEN_ParseReply(s, buffer, "+CMGR: ,,@i", &state);
 			}
 			if (error != ERR_NONE) {
+				/* Check if this might be a text mode response */
+				const char *text_mode_check = strstr(buffer, "+CMGR:");
+				if (text_mode_check != NULL) {
+					text_mode_check += 6; /* Skip "+CMGR:" */
+					while (*text_mode_check == ' ') text_mode_check++;
+					/* If response starts with a quote, it's likely text mode */
+					if (*text_mode_check == '"') {
+						smprintf(s, "PDU mode parsing failed, response appears to be text mode, falling back\n");
+						/* Fall through to text mode parsing */
+						goto text_mode_fallback;
+					}
+				}
 				return error;
 			}
 
@@ -713,6 +725,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 
 			error = ATGEN_DecodePDUMessage(s, GetLineString(msg->Buffer,&Priv->Lines,3), state);
 			return error;
+text_mode_fallback:
 		case SMS_AT_TXT:
 			GSM_SetDefaultReceivedSMSData(sms);
 
