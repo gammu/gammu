@@ -1526,20 +1526,20 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 	Priv->ErrorCode     	= 0;
 
 	/* Skip empty lines from the end (Huawei E1752 sends extra blank lines) */
+	line = NULL;
 	while (i > 0) {
 		line = GetLineString(msg->Buffer,&Priv->Lines,i);
 		if (line != NULL && line[0] != '\0') {
+			/* Found non-empty line */
 			break;
 		}
 		smprintf(s, "Skipping empty line at position %d\n", i);
 		i--;
+		line = NULL;
 	}
 
-	/* If we have at least one line, check it for status codes */
-	if (i > 0) {
-		line = GetLineString(msg->Buffer,&Priv->Lines,i);
-	} else {
-		/* No non-empty lines found */
+	/* If we didn't find any non-empty lines, use empty string */
+	if (line == NULL) {
 		line = "";
 	}
 
