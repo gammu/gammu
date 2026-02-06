@@ -2116,34 +2116,21 @@ void SMSD_IncomingSMSCallback(GSM_StateMachine *s,  GSM_SMSMessage *sms, void *u
 {
 	GSM_SMSDConfig *Config = user_data;
 
-	/* For all incoming messages (both info-only and full messages),
-	 * cache them for processing later to avoid double counting.
-	 * This ensures all messages go through the same processing pipeline
-	 * in SMSD_ProcessSMSInfoCache or SMSD_ReadDeleteSMS. */
+	/* Handle message information notifications (CMTI, CDSI) */
 	if(sms->State == 0) {
-		// Message information only, cache it
+		/* Message information only (e.g., +CMTI), cache it for later processing */
 		SMSD_IncomingSMSInfoCallback(s, sms, user_data);
 		return;
 	}
 
-	/* Full message received via callback (e.g., +CMT for SMS, +CDS for delivery reports).
-	 * Depending on modem CNMI configuration:
-	 * - CNMI mode 1: Message delivered to TE only, not stored (Location == 0)
-	 * - CNMI mode 2: Message delivered to TE AND stored in memory (Location > 0)
-	 * To avoid double counting with mode 2, cache messages with locations for later processing. */
-	if (sms->Location > 0 && sms->Memory != MEM_INVALID) {
-		/* Message has a location, cache it for later processing */
-		SMSD_Log(DEBUG_INFO, Config, "Caching incoming SMS with location %d in %s memory.",
-				 sms->Location, GSM_MemoryTypeToString(sms->Memory));
-		SMSD_IncomingSMSInfoCallback(s, sms, user_data);
-	} else {
+	/* Handle full messages delivered via callback */
+	if (sms->PDU == SMS_Status_Report) {
+		/* Delivery reports (+CDS) are never stored in phone memory.
+		 * Process them immediately. */
 		GSM_MultiSMSMessage msms;
 		GSM_Error error;
 
-		/* Message delivered in full without a storage location.
-		 * Typically +CDS delivery reports, or +CMT with CNMI mode 1.
-		 * Process it immediately since it won't be found by polling. */
-		SMSD_Log(DEBUG_INFO, Config, "Processing incoming SMS delivered in full without storage location.");
+		SMSD_Log(DEBUG_INFO, Config, "Processing delivery report received via callback.");
 
 		memset(&msms, 0, sizeof(GSM_MultiSMSMessage));
 		msms.Number = 1;
@@ -2151,7 +2138,13 @@ void SMSD_IncomingSMSCallback(GSM_StateMachine *s,  GSM_SMSMessage *sms, void *u
 
 		error = SMSD_ProcessSMS(Config, &msms);
 		if(error != ERR_NONE)
-			SMSD_LogError(DEBUG_ERROR, Config, "Error processing SMS", error);
+			SMSD_LogError(DEBUG_ERROR, Config, "Error processing delivery report", error);
+	} else {
+		/* SMS messages (+CMT) may be stored in phone memory depending on CNMI mode.
+		 * To avoid double counting with CNMI mode 2 (deliver AND store),
+		 * don't process them here. They will be picked up by polling in SMSD_ReadDeleteSMS.
+		 * This sacrifices immediate processing for correctness. */
+		SMSD_Log(DEBUG_INFO, Config, "Ignoring SMS delivered via callback; it will be processed by polling.");
 	}
 }
 
