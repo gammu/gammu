@@ -737,9 +737,37 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, const unsi
 			return ERR_NOTSUPPORTED;
 		}
 
-		if (pos + datalength >= length) {
-			smfprintf(di, "Ran out of buffer when parsing PDU!\n");
-			return ERR_CORRUPTED;
+		if (pos + datalength + 1 > length) {
+			int available_data = length - pos - 1;
+			if (available_data < 0) {
+				smfprintf(di, "Ran out of buffer when parsing PDU!\n");
+				return ERR_CORRUPTED;
+			}
+			smfprintf(di, "WARNING: PDU claims %d bytes of data but only %d bytes available, truncating\n", 
+				  datalength, available_data);
+			/* Adjust UDL to match available data */
+			if (SMS->Coding == SMS_Coding_Default_No_Compression) {
+				/* For 7-bit encoding, calculate the original UDL from available bytes */
+				int adjusted_udl = (available_data * 8) / 7;
+				if ((available_data * 8) % 7 != 0) {
+					adjusted_udl++;
+				}
+				/* Don't exceed the original UDL */
+				if (adjusted_udl > buffer[pos]) {
+					adjusted_udl = buffer[pos];
+				}
+				/* Recalculate datalength with adjusted UDL */
+				datalength = (adjusted_udl * 7) / 8;
+				if ((adjusted_udl * 7) % 8 != 0) {
+					datalength++;
+				}
+				/* Update the UDL in buffer to match */
+				((unsigned char*)buffer)[pos] = adjusted_udl;
+			} else {
+				/* For 8-bit and Unicode encoding, UDL is the byte count */
+				datalength = available_data;
+				((unsigned char*)buffer)[pos] = available_data;
+			}
 		}
 		if (final_pos != NULL) {
 			*final_pos = pos + datalength + 1;
