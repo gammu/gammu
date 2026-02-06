@@ -1796,6 +1796,11 @@ GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *message, unsig
 				 * Don't use ATGEN_EncodeText as it may hex-encode when charset is HEX,
 				 * but SMS text mode expects plain GSM text */
 				len = UnicodeLength(message->Text);
+				/* Check buffer size - GSM text can be up to 160 chars,
+				 * but with extensions it could be longer */
+				if (len * 2 > hexlength) {
+					return ERR_MOREMEMORY;
+				}
 				EncodeDefault(hexreq, message->Text, &len, TRUE, NULL);
 				hexreq[len] = 0;
 				*length2 = len;
