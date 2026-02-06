@@ -296,6 +296,7 @@ void cdsi_sr_text_mode(void)
   test_result(error == ERR_NONE);
   test_result(sms.Location == 1);
   test_result(sms.Memory == MEM_SR);
+  /* After fetching the full SMS, it should be a status report */
   test_result(sms.PDU == SMS_Status_Report);
   
   /* Verify the phone number was parsed correctly */
