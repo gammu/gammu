@@ -62,6 +62,7 @@
 #include "../libgammu/misc/string.h"
 #include "../libgammu/protocol/protocol.h"
 #include "../libgammu/gsmstate.h"
+#include "../libgammu/misc/coding/md5.h"
 
 #ifndef PATH_MAX
 #ifdef MAX_PATH
@@ -100,34 +101,36 @@ GSM_Error SMSD_CheckDBVersion(GSM_SMSDConfig *Config, int version)
 #define SMSD_PROCESSED_MESSAGES_CACHE_SIZE 100
 
 /**
- * Computes a simple hash of an SMS message to uniquely identify it.
+ * Computes an MD5-based hash of an SMS message to uniquely identify it.
  * Uses sender number, timestamp, and message text to create hash.
  */
 static unsigned int SMSD_ComputeSMSHash(const GSM_SMSMessage *sms)
 {
-	unsigned int hash = 5381;
-	int i;
-	const unsigned char *str;
+	char checksum[33]; /* MD5 hex string is 32 chars + null terminator */
+	unsigned char buffer[1024];
+	int len = 0;
+	unsigned int hash;
 
-	/* Hash the sender number */
-	str = sms->Number;
-	while (*str) {
-		hash = ((hash << 5) + hash) + *str++;
-	}
+	/* Build a buffer with message components */
+	/* Add sender number */
+	len += snprintf((char *)buffer + len, sizeof(buffer) - len, "%s|",
+	                (char *)sms->Number);
 
-	/* Hash the timestamp */
-	hash = ((hash << 5) + hash) + sms->DateTime.Year;
-	hash = ((hash << 5) + hash) + sms->DateTime.Month;
-	hash = ((hash << 5) + hash) + sms->DateTime.Day;
-	hash = ((hash << 5) + hash) + sms->DateTime.Hour;
-	hash = ((hash << 5) + hash) + sms->DateTime.Minute;
-	hash = ((hash << 5) + hash) + sms->DateTime.Second;
+	/* Add timestamp */
+	len += snprintf((char *)buffer + len, sizeof(buffer) - len, 
+	                "%04d%02d%02d%02d%02d%02d|",
+	                sms->DateTime.Year, sms->DateTime.Month, sms->DateTime.Day,
+	                sms->DateTime.Hour, sms->DateTime.Minute, sms->DateTime.Second);
 
-	/* Hash first part of message text (for efficiency) */
-	str = sms->Text;
-	for (i = 0; i < 50 && *str; i++) {
-		hash = ((hash << 5) + hash) + *str++;
-	}
+	/* Add message text */
+	len += snprintf((char *)buffer + len, sizeof(buffer) - len, "%s",
+	                (char *)sms->Text);
+
+	/* Compute MD5 hash */
+	CalculateMD5(buffer, len, checksum);
+
+	/* Convert first 8 hex characters of MD5 to unsigned int */
+	sscanf(checksum, "%08X", &hash);
 
 	return hash;
 }
