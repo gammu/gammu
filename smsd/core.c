@@ -110,7 +110,7 @@ GSM_Error SMSD_Shutdown(GSM_SMSDConfig *Config)
 }
 
 /**
- * Interruptuptible sleep allowing to terminate SMSD.
+ * Interruptible sleep allowing to terminate SMSD.
  */
 void SMSD_InterruptibleSleep(GSM_SMSDConfig *Config, int seconds)
 {
@@ -241,7 +241,7 @@ void SMSD_Terminate(GSM_SMSDConfig *Config, const char *msg, GSM_Error error, gb
 		SMSD_Log(DEBUG_INFO, Config, "Terminating communication...");
 		ret = GSM_TerminateConnection(Config->gsm);
 		if (ret != ERR_NONE) {
-			printf("%s\n", GSM_ErrorString(error));
+			SMSD_LogError(DEBUG_ERROR, Config, "Terminate failed", ret);
 			/* Try again without checking errors */
 			if (GSM_IsConnected(Config->gsm)) {
 				SMSD_Log(DEBUG_INFO, Config, "Terminating communication for second time...");
