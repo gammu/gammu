@@ -4518,10 +4518,9 @@ GSM_Error ATGEN_DialService(GSM_StateMachine *s, char *number)
 		error = ATGEN_SetCharset(s, AT_PREF_CHARSET_UNICODE);
 	}
 
+	/* Ignore charset setting errors, we can still try sending USSD */
 	if (error != ERR_NONE) {
-		free(req);
-		req = NULL;
-		return error;
+		smprintf(s, "WARNING: Failed to set charset for USSD, continuing anyway\n");
 	}
 	encoded = (char *)malloc(allocsize);
 	tmp = (unsigned char *)malloc(allocsize);
