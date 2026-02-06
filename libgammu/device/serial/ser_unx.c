@@ -214,12 +214,15 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 	if (flock(d->hPhone, LOCK_EX | LOCK_NB) != 0) {
 		int orig_errno = errno;
 		if (orig_errno == EWOULDBLOCK) {
+			/* Device is locked by another process - fail */
 			close(d->hPhone);
 			d->hPhone = -1;
 			GSM_OSErrorInfo(s, "failed to lock device, probably opened by other process");
 			return ERR_DEVICEOPENERROR;
 		} else {
-			/* Log other flock errors but continue - they're not fatal */
+			/* Log other flock errors but continue - advisory locks are not mandatory
+			 * Some systems may not support flock or may run out of locks
+			 * Device is already open and can be used even without the lock */
 			GSM_OSErrorInfo(s, "warning: flock failed but continuing");
 		}
 	}
