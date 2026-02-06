@@ -726,7 +726,7 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, const unsi
 	if (SMS->PDU == SMS_Submit || SMS->PDU == SMS_Deliver || have_data) {
 		/* Read User Data Length from PDU */
 		udl = buffer[pos];
-		
+
 		/* Calculate how many bytes of data this represents based on encoding */
 		datalength = udl;
 		if (SMS->Coding == SMS_Coding_Default_No_Compression) {
