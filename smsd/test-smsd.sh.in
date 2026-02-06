@@ -195,8 +195,8 @@ case $SERVICE in
         ;;
 esac
 
-$SMSD_INJECT_CMD -c "$CONFIG_PATH" TEXT 123465 -text "Lorem ipsum." &
-$SMSD_INJECT_CMD -c "$CONFIG_PATH" TEXT 123465 -text "Lorem ipsum." &
+$SMSD_INJECT_CMD -c "$CONFIG_PATH" TEXT 123465 -text "Lorem ipsum."
+$SMSD_INJECT_CMD -c "$CONFIG_PATH" TEXT 123465 -text "Lorem ipsum."
 $SMSD_INJECT_CMD -c "$CONFIG_PATH" USSD "*127*1#"
 
 $SMSD_CMD -c "$CONFIG_PATH" $SMSD_EXTRA_PARAMS &
