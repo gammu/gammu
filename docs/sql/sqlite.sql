@@ -1,5 +1,5 @@
 CREATE TABLE gammu (
-  Version INTEGER NOT NULL DEFAULT '0' PRIMARY KEY
+  Version INTEGER NOT NULL DEFAULT 0 PRIMARY KEY
 );
 
 INSERT INTO gammu (Version) VALUES (17);
@@ -12,12 +12,12 @@ CREATE TABLE inbox (
   Coding TEXT NOT NULL DEFAULT 'Default_No_Compression',
   UDH TEXT NOT NULL,
   SMSCNumber TEXT NOT NULL DEFAULT '',
-  Class INTEGER NOT NULL DEFAULT '-1',
+  Class INTEGER NOT NULL DEFAULT -1,
   TextDecoded TEXT NOT NULL DEFAULT '',
   ID INTEGER PRIMARY KEY AUTOINCREMENT,
   RecipientID TEXT NOT NULL,
   Processed TEXT NOT NULL DEFAULT 'false',
-  Status INTEGER NOT NULL DEFAULT '-1',
+  Status INTEGER NOT NULL DEFAULT -1,
   CHECK (Coding IN
   ('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression'))
 );
@@ -37,19 +37,19 @@ CREATE TABLE outbox (
   DestinationNumber TEXT NOT NULL DEFAULT '',
   Coding TEXT NOT NULL DEFAULT 'Default_No_Compression',
   UDH TEXT,
-  Class INTEGER DEFAULT '-1',
+  Class INTEGER DEFAULT -1,
   TextDecoded TEXT NOT NULL DEFAULT '',
   ID INTEGER PRIMARY KEY AUTOINCREMENT,
   MultiPart TEXT NOT NULL DEFAULT 'false',
-  RelativeValidity INTEGER DEFAULT '-1',
+  RelativeValidity INTEGER DEFAULT -1,
   SenderID TEXT,
   SendingTimeOut NUMERIC NOT NULL DEFAULT (datetime('now')),
   DeliveryReport TEXT DEFAULT 'default',
   CreatorID TEXT NOT NULL,
-  Retries INTEGER DEFAULT '0',
-  Priority INTEGER DEFAULT '0',
+  Retries INTEGER DEFAULT 0,
+  Priority INTEGER DEFAULT 0,
   Status TEXT NOT NULL DEFAULT 'Reserved',
-  StatusCode INTEGER NOT NULL DEFAULT '-1',
+  StatusCode INTEGER NOT NULL DEFAULT -1,
   CHECK (Coding IN
   ('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression')),
   CHECK (DeliveryReport IN ('default','yes','no')),
@@ -70,12 +70,12 @@ CREATE TABLE outbox_multipart (
   Text TEXT,
   Coding TEXT NOT NULL DEFAULT 'Default_No_Compression',
   UDH TEXT,
-  Class INTEGER DEFAULT '-1',
+  Class INTEGER DEFAULT -1,
   TextDecoded TEXT DEFAULT NULL,
   ID INTEGER,
-  SequencePosition INTEGER NOT NULL DEFAULT '1',
+  SequencePosition INTEGER NOT NULL DEFAULT 1,
   Status TEXT NOT NULL DEFAULT 'Reserved',
-  StatusCode INTEGER NOT NULL DEFAULT '-1',
+  StatusCode INTEGER NOT NULL DEFAULT -1,
   CHECK (Coding IN
   ('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression')),
   CHECK (Status IN
@@ -117,17 +117,17 @@ CREATE TABLE sentitems (
   Coding TEXT NOT NULL DEFAULT 'Default_No_Compression',
   UDH TEXT NOT NULL,
   SMSCNumber TEXT NOT NULL DEFAULT '',
-  Class INTEGER NOT NULL DEFAULT '-1',
+  Class INTEGER NOT NULL DEFAULT -1,
   TextDecoded TEXT NOT NULL DEFAULT '',
   ID INTEGER,
   SenderID TEXT NOT NULL,
-  SequencePosition INTEGER NOT NULL DEFAULT '1',
+  SequencePosition INTEGER NOT NULL DEFAULT 1,
   Status TEXT NOT NULL DEFAULT 'SendingOK',
-  StatusError INTEGER NOT NULL DEFAULT '-1',
-  TPMR INTEGER NOT NULL DEFAULT '-1',
-  RelativeValidity INTEGER NOT NULL DEFAULT '-1',
+  StatusError INTEGER NOT NULL DEFAULT -1,
+  TPMR INTEGER NOT NULL DEFAULT -1,
+  RelativeValidity INTEGER NOT NULL DEFAULT -1,
   CreatorID TEXT NOT NULL,
-  StatusCode INTEGER NOT NULL DEFAULT '-1',
+  StatusCode INTEGER NOT NULL DEFAULT -1,
   CHECK (Status IN
   ('SendingOK','SendingOKNoReport','SendingError','DeliveryOK','DeliveryFailed','DeliveryPending',
   'DeliveryUnknown','Error')),

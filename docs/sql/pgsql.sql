@@ -54,7 +54,7 @@ $update_timestamp$ LANGUAGE plpgsql;
 --
 
 CREATE TABLE gammu (
-  "Version" smallint NOT NULL DEFAULT '0' PRIMARY KEY
+  "Version" smallint NOT NULL DEFAULT 0 PRIMARY KEY
 );
 
 --
@@ -77,12 +77,12 @@ CREATE TABLE inbox (
   "Coding" varchar(255) NOT NULL DEFAULT 'Default_No_Compression',
   "UDH" text NOT NULL,
   "SMSCNumber" varchar(20) NOT NULL DEFAULT '',
-  "Class" integer NOT NULL DEFAULT '-1',
+  "Class" integer NOT NULL DEFAULT -1,
   "TextDecoded" text NOT NULL DEFAULT '',
   "ID" serial PRIMARY KEY,
   "RecipientID" text NOT NULL,
-  "Processed" boolean NOT NULL DEFAULT 'false',
-  "Status" integer NOT NULL DEFAULT '-1',
+  "Processed" boolean NOT NULL DEFAULT FALSE,
+  "Status" integer NOT NULL DEFAULT -1,
   CHECK ("Coding" IN
   ('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression'))
 );
@@ -115,19 +115,19 @@ CREATE TABLE outbox (
   "DestinationNumber" varchar(20) NOT NULL DEFAULT '',
   "Coding" varchar(255) NOT NULL DEFAULT 'Default_No_Compression',
   "UDH" text,
-  "Class" integer DEFAULT '-1',
+  "Class" integer DEFAULT -1,
   "TextDecoded" text NOT NULL DEFAULT '',
   "ID" serial PRIMARY KEY,
-  "MultiPart" boolean NOT NULL DEFAULT 'false',
-  "RelativeValidity" integer DEFAULT '-1',
+  "MultiPart" boolean NOT NULL DEFAULT FALSE,
+  "RelativeValidity" integer DEFAULT -1,
   "SenderID" varchar(255),
   "SendingTimeOut" timestamp(0) WITHOUT time zone NOT NULL DEFAULT LOCALTIMESTAMP(0),
   "DeliveryReport" varchar(10) DEFAULT 'default',
   "CreatorID" text NOT NULL,
-  "Retries" integer DEFAULT '0',
-  "Priority" integer DEFAULT '0',
+  "Retries" integer DEFAULT 0,
+  "Priority" integer DEFAULT 0,
   "Status" varchar(255) NOT NULL DEFAULT 'Reserved',
-  "StatusCode" integer NOT NULL DEFAULT '-1',
+  "StatusCode" integer NOT NULL DEFAULT -1,
   CHECK ("Coding" IN
   ('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression')),
   CHECK ("DeliveryReport" IN ('default','yes','no')),
@@ -161,12 +161,12 @@ CREATE TABLE outbox_multipart (
   "Text" text,
   "Coding" varchar(255) NOT NULL DEFAULT 'Default_No_Compression',
   "UDH" text,
-  "Class" integer DEFAULT '-1',
+  "Class" integer DEFAULT -1,
   "TextDecoded" text DEFAULT NULL,
   "ID" serial,
-  "SequencePosition" integer NOT NULL DEFAULT '1',
+  "SequencePosition" integer NOT NULL DEFAULT 1,
   "Status" varchar(255) NOT NULL DEFAULT 'Reserved',
-  "StatusCode" integer NOT NULL DEFAULT '-1',
+  "StatusCode" integer NOT NULL DEFAULT -1,
   PRIMARY KEY ("ID", "SequencePosition"),
   CHECK ("Coding" IN
   ('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression')),
@@ -232,17 +232,17 @@ CREATE TABLE sentitems (
   "Coding" varchar(255) NOT NULL DEFAULT 'Default_No_Compression',
   "UDH" text NOT NULL,
   "SMSCNumber" varchar(20) NOT NULL DEFAULT '',
-  "Class" integer NOT NULL DEFAULT '-1',
+  "Class" integer NOT NULL DEFAULT -1,
   "TextDecoded" text NOT NULL DEFAULT '',
   "ID" serial,
   "SenderID" varchar(255) NOT NULL,
-  "SequencePosition" integer NOT NULL DEFAULT '1',
+  "SequencePosition" integer NOT NULL DEFAULT 1,
   "Status" varchar(255) NOT NULL DEFAULT 'SendingOK',
-  "StatusError" integer NOT NULL DEFAULT '-1',
-  "TPMR" integer NOT NULL DEFAULT '-1',
-  "RelativeValidity" integer NOT NULL DEFAULT '-1',
+  "StatusError" integer NOT NULL DEFAULT -1,
+  "TPMR" integer NOT NULL DEFAULT -1,
+  "RelativeValidity" integer NOT NULL DEFAULT -1,
   "CreatorID" text NOT NULL,
-  "StatusCode" integer NOT NULL DEFAULT '-1',
+  "StatusCode" integer NOT NULL DEFAULT -1,
   CHECK ("Status" IN
   ('SendingOK','SendingOKNoReport','SendingError','DeliveryOK','DeliveryFailed','DeliveryPending',
   'DeliveryUnknown','Error')),
