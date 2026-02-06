@@ -1535,7 +1535,13 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 		i--;
 	}
 
-	line = GetLineString(msg->Buffer,&Priv->Lines,i);
+	/* If we have at least one line, check it for status codes */
+	if (i > 0) {
+		line = GetLineString(msg->Buffer,&Priv->Lines,i);
+	} else {
+		/* No non-empty lines found */
+		line = "";
+	}
 
 	smprintf(s, "Checking line: %s\n", line);
 
