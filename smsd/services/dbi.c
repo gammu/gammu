@@ -29,6 +29,7 @@
 long long SMSDDBI_GetNumber(GSM_SMSDConfig * Config, SQL_result *res, unsigned int field)
 {
 	unsigned int type;
+	const char *value;
 
 	field++;
 	type = dbi_result_get_field_type_idx(res->dbi, field);
@@ -62,6 +63,9 @@ long long SMSDDBI_GetNumber(GSM_SMSDConfig * Config, SQL_result *res, unsigned i
 		case DBI_TYPE_XDECIMAL:
 			return dbi_result_get_as_longlong_idx(res->dbi, field);
 #endif
+		case DBI_TYPE_STRING:
+			value = dbi_result_get_string_idx(res->dbi, field);
+			return atoll(value);
 		default:
 			SMSD_Log(DEBUG_ERROR, Config, "Wrong field type for number (not INTEGER nor DECIMAL) from DBI: %d", type);
 			return -1;
