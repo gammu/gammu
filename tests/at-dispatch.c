@@ -83,6 +83,10 @@ int main(int argc UNUSED, char **argv UNUSED)
 	s->Phone.Data.RequestID = ID_GetFirmware;
 	do_test("AT+CGMR\r\nNokia N950 (RM-680 rev 1124)\r\nDFL61 HARMATTAN 2.2011.39-5 PR RM680\r\nLinux version 2.6.32.39-dfl61-20113701 #1 PREEMPT Mon Sep 12 11:29:43 EEST 2011 (armv7l)\r\nmatd version 0.4.5\r\nMCU Vp 92_11w21_v6 26-05-11 RM-680 (c) Nokia\r\nOK", AT_Reply_OK, ERR_NONE);
 
+	/* Test Huawei E1752 modem with extra blank line before OK (bug report) */
+	s->Phone.Data.RequestID = ID_GetMemoryCharset;
+	do_test("AT+CSCS?\r\n+CSCS: \"GSM\"\r\n\r\nOK\r\n", AT_Reply_OK, ERR_NONE);
+
 	/* Free state machine */
 	GSM_FreeStateMachine(s);
 
