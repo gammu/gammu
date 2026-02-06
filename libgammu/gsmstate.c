@@ -7,6 +7,7 @@
 #include <errno.h>
 #include <limits.h>
 #include <assert.h>
+#include <stdio.h>
 
 #include <gammu-call.h>
 #include <gammu-settings.h>
@@ -392,7 +393,7 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 		model = GetModelData(s, NULL, s->Phone.Data.Model, NULL);
 #ifdef GSM_ENABLE_ATGEN
 		/* With ATgen and auto model we can work with unknown models too */
-		if (s->ConnectionType==GCT_AT || s->ConnectionType==GCT_PROXYAT || s->ConnectionType==GCT_IRDAAT || s->ConnectionType==GCT_DKU2AT) {
+		if (s->ConnectionType==GCT_AT || s->ConnectionType==GCT_PROXYAT || s->ConnectionType==GCT_BLUEAT || s->ConnectionType==GCT_IRDAAT || s->ConnectionType==GCT_DKU2AT) {
 #ifdef GSM_ENABLE_ALCATEL
 			/* If phone provides Alcatel specific functions, enable them */
 			if (model->model[0] != 0 && GSM_IsPhoneFeatureAvailable(model, F_ALCATEL)) {
@@ -903,9 +904,12 @@ autodetect:
 		}
 
 		error=s->Phone.Functions->SetPower(s, 1);
-		if (error != ERR_NONE && error != ERR_NOTSUPPORTED) {
+		if (error != ERR_NONE && error != ERR_NOTSUPPORTED && error != ERR_UNKNOWN) {
 			GSM_LogError(s, "Init:Phone->SetPower" , error);
 			return error;
+		}
+		if (error == ERR_UNKNOWN) {
+			smprintf(s,"[Ignoring unknown error from SetPower, continuing...]\n");
 		}
 
 		error=s->Phone.Functions->PostConnect(s);
@@ -1337,52 +1341,52 @@ GSM_Error GSM_FindGammuRC (INI_Section **result, const char *force_config)
 #ifdef WIN32
 	/* Get Windows application data path */
 	if (SUCCEEDED(SHGetFolderPath(NULL, CSIDL_APPDATA, NULL, SHGFP_TYPE_CURRENT, configfile))) {
-		strcat(configfile, GAMMURC_NAME);
-
-		error = GSM_TryReadGammuRC(configfile, result);
-		if (error == ERR_NONE) return ERR_NONE;
+		int n = snprintf(configfile, sizeof(configfile), "%s%s", configfile, GAMMURC_NAME);
+		if (n > 0 && (size_t)n < sizeof(configfile)) {
+			error = GSM_TryReadGammuRC(configfile, result);
+			if (error == ERR_NONE) return ERR_NONE;
+		}
 	}
 #endif
 
 	/* XDG paths */
 	envpath = getenv("XDG_CONFIG_HOME");
 	if (envpath) {
-		strcpy(configfile, envpath);
-		strcat(configfile, XDG_GAMMURC_NAME);
-
-		error = GSM_TryReadGammuRC(configfile, result);
-		if (error == ERR_NONE) return ERR_NONE;
+		int n = snprintf(configfile, sizeof(configfile), "%s%s", envpath, XDG_GAMMURC_NAME);
+		if (n > 0 && (size_t)n < sizeof(configfile)) {
+			error = GSM_TryReadGammuRC(configfile, result);
+			if (error == ERR_NONE) return ERR_NONE;
+		}
 	} else {
 		envpath  = getenv("HOME");
 		if (envpath) {
-			strcpy(configfile, envpath);
-			strcat(configfile, "/.config");
-			strcat(configfile, XDG_GAMMURC_NAME);
-
-			error = GSM_TryReadGammuRC(configfile, result);
-			if (error == ERR_NONE) return ERR_NONE;
+			int n = snprintf(configfile, sizeof(configfile), "%s/.config%s", envpath, XDG_GAMMURC_NAME);
+			if (n > 0 && (size_t)n < sizeof(configfile)) {
+				error = GSM_TryReadGammuRC(configfile, result);
+				if (error == ERR_NONE) return ERR_NONE;
+			}
 		}
 	}
 
 	/* Try home from environment */
 	envpath  = getenv("HOME");
 	if (envpath) {
-		strcpy(configfile, envpath);
-		strcat(configfile, GAMMURC_NAME);
-
-		error = GSM_TryReadGammuRC(configfile, result);
-		if (error == ERR_NONE) return ERR_NONE;
+		int n = snprintf(configfile, sizeof(configfile), "%s%s", envpath, GAMMURC_NAME);
+		if (n > 0 && (size_t)n < sizeof(configfile)) {
+			error = GSM_TryReadGammuRC(configfile, result);
+			if (error == ERR_NONE) return ERR_NONE;
+		}
 	}
 
 #if defined(HAVE_GETPWUID) && defined(HAVE_GETUID)
 	/* Tru home from passwd */
 	pwent = getpwuid(getuid());
 	if (pwent != NULL) {
-		strcpy(configfile, pwent->pw_dir);
-		strcat(configfile, GAMMURC_NAME);
-
-		error = GSM_TryReadGammuRC(configfile, result);
-		if (error == ERR_NONE) return ERR_NONE;
+		int n = snprintf(configfile, sizeof(configfile), "%s%s", pwent->pw_dir, GAMMURC_NAME);
+		if (n > 0 && (size_t)n < sizeof(configfile)) {
+			error = GSM_TryReadGammuRC(configfile, result);
+			if (error == ERR_NONE) return ERR_NONE;
+		}
 	}
 
 #endif

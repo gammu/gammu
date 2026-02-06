@@ -251,17 +251,25 @@ ____________
     Displays PDU data of encoded SMS messages. It accepts same parameters and
     behaves same like sendsms.
 
-.. option:: getallsms -pbk
+.. option:: getallsms [-pbk]
 
     Get all SMS from phone. In some phones you will have also SMS templates
     and info about locations used to save Picture Images. With each sms you
     will see location. If you want to get such sms from phone alone, use
     :option:`gammu getsms`.
 
-.. option:: geteachsms -pbk
+    The optional ``-pbk`` parameter enables phonebook lookup. When specified,
+    Gammu will read phonebook entries from both phone memory and SIM card,
+    then display contact names alongside phone numbers in the SMS output
+    instead of showing only the phone numbers.
+
+.. option:: geteachsms [-pbk]
 
     Similarly to :option:`gammu getallsms`. Difference is, that
-    links all concatenated sms
+    links all concatenated sms.
+
+    The optional ``-pbk`` parameter works the same as in :option:`gammu getallsms`,
+    enabling phonebook lookup to display contact names with phone numbers.
 
 .. option:: getsms folder start [stop]
 
@@ -569,7 +577,7 @@ ____________
 
             specify, how many chars will be read. When use this option and text
             will be longer than 1 SMS, will be split into more linked
-            SMS.Coding type (SMS default alphabet/Unicode) is set according to
+            SMS. Coding type (SMS default alphabet/Unicode) is set according to
             input text
 
         .. option:: -enablevoice

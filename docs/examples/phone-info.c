@@ -3,9 +3,9 @@
 #include <stdio.h>
 
 GSM_StateMachine *s;
-INI_Section *cfg;
+INI_Section *config_section;
 GSM_Error error;
-char buffer[100];
+char buffer[GSM_MAX_INFO_LENGTH];
 
 /* Function to handle errors */
 void error_handler(void)
@@ -14,13 +14,14 @@ void error_handler(void)
 		printf("ERROR: %s\n", GSM_ErrorString(error));
 		if (GSM_IsConnected(s))
 			GSM_TerminateConnection(s);
-		exit(error);
+		exit(EXIT_FAILURE);
 	}
 }
 
 int main(int argc UNUSED, char **argv UNUSED)
 {
 	GSM_Debug_Info *debug_info;
+	GSM_NetworkInfo netinfo;
 
 	/*
 	 * We don't need gettext, but need to set locales so that
@@ -51,15 +52,15 @@ int main(int argc UNUSED, char **argv UNUSED)
 	 * Find configuration file (first command line parameter or
 	 * defaults)
 	 */
-	error = GSM_FindGammuRC(&cfg, argc == 2 ? argv[1] : NULL);
+	error = GSM_FindGammuRC(&config_section, argc == 2 ? argv[1] : NULL);
 	error_handler();
 
 	/* Read it */
-	error = GSM_ReadConfig(cfg, GSM_GetConfig(s, 0), 0);
+	error = GSM_ReadConfig(config_section, GSM_GetConfig(s, 0), 0);
 	error_handler();
 
 	/* Free config file structures */
-	INI_Free(cfg);
+	INI_Free(config_section);
 
 	/* We have one valid configuration */
 	GSM_SetConfigNum(s, 1);
@@ -84,6 +85,16 @@ int main(int argc UNUSED, char **argv UNUSED)
 	printf("Model         : %s (%s)\n",
 		GSM_GetModelInfo(s)->model,
 		buffer);
+
+	/* Network info */
+	error = GSM_GetNetworkInfo(s, &netinfo);
+	if (error == ERR_NONE) {
+		printf("Network code  : %s\n", netinfo.NetworkCode);
+		printf("Network name  : %s\n", DecodeUnicodeConsole(netinfo.NetworkName));
+	} else if (error != ERR_NOTSUPPORTED) {
+		/* Some phones don't support network info, that's okay */
+		error_handler();
+	}
 
 	/* Terminate connection */
 	error = GSM_TerminateConnection(s);

@@ -35,6 +35,7 @@ add_custom_command(TARGET atgen-tests POST_BUILD
 atgen_test(is-memory-enabled)
 atgen_test(is-memory-writeable)
 atgen_test(set-requested-sms-memory)
+atgen_test(test-cpms-three-param)
 
 atgen_test(deferred-event)
 atgen_test(incoming-sms-info)
@@ -44,12 +45,14 @@ atgen_test(gsm-set-cnmi-params)
 atgen_test(test-reply-get-cnmi)
 atgen_test(get-sms-location)
 atgen_test(get-sms)
+atgen_test(get-sms-text-fallback)
 
 if (HAVE_MYSQL_MYSQL_H OR LIBDBI_FOUND OR HAVE_POSTGRESQL_LIBPQ_FE_H OR ODBC_FOUND)
 smsd_test(test_sql_time)
 endif (HAVE_MYSQL_MYSQL_H OR LIBDBI_FOUND OR HAVE_POSTGRESQL_LIBPQ_FE_H OR ODBC_FOUND)
 
 smsd_test(smsd-incoming-cds)
+smsd_test(smsd-incoming-cmti)
 smsd_test(smsd-cancel-call)
 smsd_test(smsd-incoming-ussd)
 smsd_test(smsd-1-folder-getnextsms)

@@ -61,21 +61,21 @@ static const char *SMSDSQL_NowPlus(GSM_SMSDConfig * Config, int seconds)
 	driver_name = SMSDSQL_SQLName(Config);
 
 	if (strcasecmp(driver_name, "mysql") == 0 || strcasecmp(driver_name, "native_mysql") == 0) {
-		sprintf(result, now_plus_mysql, seconds);
+		snprintf(result, sizeof(result), now_plus_mysql, seconds);
 	} else if (strcasecmp(driver_name, "pgsql") == 0 || strcasecmp(driver_name, "native_pgsql") == 0) {
-		sprintf(result, now_plus_pgsql, seconds);
+		snprintf(result, sizeof(result), now_plus_pgsql, seconds);
 	} else if (strncasecmp(driver_name, "sqlite", 6) == 0) {
-		sprintf(result, now_plus_sqlite, seconds);
+		snprintf(result, sizeof(result), now_plus_sqlite, seconds);
 	} else if (strcasecmp(driver_name, "freetds") == 0) {
-		sprintf(result, now_plus_freetds, seconds);
+		snprintf(result, sizeof(result), now_plus_freetds, seconds);
 	} else if (strcasecmp(driver_name, "access") == 0) {
-		sprintf(result, now_plus_access, seconds);
+		snprintf(result, sizeof(result), now_plus_access, seconds);
 	} else if (strcasecmp(driver_name, "oracle") == 0) {
-		sprintf(result, now_plus_oracle, seconds);
+		snprintf(result, sizeof(result), now_plus_oracle, seconds);
 	} else if (strcasecmp(driver_name, "odbc") == 0) {
-		sprintf(result, now_plus_odbc, seconds);
+		snprintf(result, sizeof(result), now_plus_odbc, seconds);
 	} else {
-		sprintf(result, now_plus_fallback, seconds);
+		snprintf(result, sizeof(result), now_plus_fallback, seconds);
 	}
 	return result;
 }
@@ -121,14 +121,10 @@ static const char *SMSDSQL_RownumClause(GSM_SMSDConfig * Config, const char *cou
 	driver_name = SMSDSQL_SQLName(Config);
 
 	if (strcasecmp(driver_name, "oracle") == 0 || strcasecmp(driver_name, "freetds") == 0) {
-		if (in_where) {
-			strcpy(result, " AND ");
-		} else {
-			strcpy(result, " WHERE ");
-		}
-		strcat(result, "ROWNUM <= ");
-		strcat(result, count);
-		strcat(result, " ");
+		const char *prefix = in_where ? " AND " : " WHERE ";
+
+		snprintf(result, sizeof(result), "%sROWNUM <= %s ", prefix, count);
+
 		return result;
 	} else {
 		return rownum_clause_fallback;
@@ -147,10 +143,7 @@ static const char *SMSDSQL_TopClause(GSM_SMSDConfig * Config, const char *count)
 	driver_name = SMSDSQL_SQLName(Config);
 
 	if (strcasecmp(driver_name, "access") == 0 || strcasecmp(driver_name, "mssql") == 0) {
-		strcpy(result, top_clause_access);
-		strcat(result, " ");
-		strcat(result, count);
-		strcat(result, " ");
+		snprintf(result, sizeof(result), "%s %s ", top_clause_access, count);
 		return result;
 	} else {
 		return top_clause_fallback;
@@ -808,7 +801,7 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 				}
 				db->FreeResult(Config, &res2);
 			} else {
-				SMSD_Log(DEBUG_ERROR, Config, "Failed to find SMS for TPMR=%i, Number=%s", sms->SMS[i].MessageReference, sms->SMS[i].Number);
+				SMSD_Log(DEBUG_ERROR, Config, "Failed to find SMS for TPMR=%i, Number=%s", sms->SMS[i].MessageReference, destinationnumber);
 			}
 			db->FreeResult(Config, &res);
 			continue;

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Cobertura XML report merger
+Cobertura XML report merger.
 
 Written for merging OpenCppCoverage reports, thus not completely supporting all
 Cobertura XML attributes, only line coverage which OpenCppCoverage generates.
@@ -22,6 +22,7 @@ You should have received a copy of the GNU General Public License along
 with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 """
+
 import argparse
 import glob
 import sys
@@ -37,13 +38,13 @@ HEADER = """<?xml version="1.0"?>
 
 
 def log(message=""):
-    """Log message to strderr"""
+    """Log message to strderr."""
     sys.stderr.write(message)
     sys.stderr.write("\n")
 
 
 def read_files(names):
-    """Read coverage data from input files"""
+    """Read coverage data from input files."""
     result = {}
     lines = {}
     outfile = None
@@ -66,7 +67,7 @@ def read_files(names):
 
 
 def get_line_rates(data):
-    """Calculate line hit rates from raw coverage data"""
+    """Calculate line hit rates from raw coverage data."""
     result = {}
     total_lines = 0
     total_hits = 0
@@ -87,7 +88,7 @@ def get_line_rates(data):
 
 
 def write_data(data, handle):
-    """Write Cobertura XML for coverage data"""
+    """Write Cobertura XML for coverage data."""
     line_rates = get_line_rates(data)
 
     log("Generating output...")
@@ -123,7 +124,7 @@ def write_data(data, handle):
         obj.set("complexity", "0")
         SubElement(obj, "methods")
         lines = SubElement(obj, "lines")
-        for line in sorted(data[item], key=lambda x: int(x)):
+        for line in sorted(data[item], key=int):
             obj = SubElement(lines, "line")
             obj.set("number", line)
             obj.set("hits", str(data[item][line]))
@@ -136,7 +137,7 @@ def write_data(data, handle):
 
 
 def main():
-    """Command line interface"""
+    """Command line interface."""
     parser = argparse.ArgumentParser(
         description=sys.modules[__name__].__doc__,
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -145,10 +146,7 @@ def main():
     parser.add_argument("-o", "--output", help="output file, stdout used if omitted")
     parser.add_argument("file", nargs="*", help="files to process")
     args = parser.parse_args()
-    if args.match:
-        files = glob.glob(args.match)
-    else:
-        files = args.file
+    files = glob.glob(args.match) if args.match else args.file
 
     result = read_files(files)
 

@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Wammu 0.37\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2019-09-27 09:19+0200\n"
-"PO-Revision-Date: 2019-07-18 16:04+0000\n"
-"Last-Translator: Elizabeth Sherrock <lizzyd710@gmail.com>\n"
+"PO-Revision-Date: 2022-10-10 17:58+0000\n"
+"Last-Translator: Eric <hamburger1024@mailbox.org>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "gammu/gammu/zh_Hans/>\n"
 "Language: zh_CN\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 3.8-dev\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:379 helper/message-cmdline.c:403
@@ -588,9 +588,8 @@ msgid "Training/Football"
 msgstr ""
 
 #: gammu/calendar.c:73
-#, fuzzy
 msgid "Training/Golf"
-msgstr "Training／高尔夫球"
+msgstr "训练/高尔夫球"
 
 #: gammu/calendar.c:76
 msgid "Training/Gym"
@@ -601,9 +600,8 @@ msgid "Training/Horse Races"
 msgstr ""
 
 #: gammu/calendar.c:82
-#, fuzzy
 msgid "Training/Hockey"
-msgstr "Training／冰球"
+msgstr "训练/冰球"
 
 #: gammu/calendar.c:85
 msgid "Training/Races"
@@ -622,9 +620,8 @@ msgid "Training/Street Games"
 msgstr ""
 
 #: gammu/calendar.c:97
-#, fuzzy
 msgid "Training/Swimming"
-msgstr "Training／游泳"
+msgstr "训练/游泳"
 
 #: gammu/calendar.c:100
 msgid "Training/Tennis"
@@ -1176,10 +1173,8 @@ msgid " (startup)"
 msgstr " (启动)"
 
 #: gammu/depend/nokia/dct4.c:497 gammu/depend/nokia/dct4.c:1006
-#, fuzzy
-#| msgid "Press any key to continue…"
 msgid "Press any key to continue…"
-msgstr "按任意键继续。。。"
+msgstr "按任意键继续…"
 
 #: gammu/depend/nokia/dct4.c:509
 #, c-format
@@ -1264,9 +1259,8 @@ msgid "Charger voltage:"
 msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1040
-#, fuzzy
 msgid "Charger current:"
-msgstr "删除当前"
+msgstr "删除当前："
 
 #: gammu/depend/nokia/dct4.c:1040 gammu/depend/nokia/dct4.c:1051
 #: gammu/depend/nokia/dct4.c:1052
@@ -1291,14 +1285,12 @@ msgid "K"
 msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1043
-#, fuzzy
 msgid "Headset interconnection:"
-msgstr "请选择连接类型"
+msgstr "耳机连接："
 
 #: gammu/depend/nokia/dct4.c:1044
-#, fuzzy
 msgid "Hook interconnection:"
-msgstr "手机连接"
+msgstr "Hook 互联："
 
 #: gammu/depend/nokia/dct4.c:1045
 msgid "Light sensor:"
@@ -1325,9 +1317,8 @@ msgid "Initial battery voltage:"
 msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1051
-#, fuzzy
 msgid "Battery Current:"
-msgstr "删除当前"
+msgstr "当前电量："
 
 #: gammu/depend/nokia/dct4.c:1052
 msgid "Battery Current Fast:"
@@ -1506,9 +1497,8 @@ msgid "Show debugging output for detecting devices."
 msgstr ""
 
 #: gammu-detect/main.c:56
-#, fuzzy
 msgid "Show version information and compiled in features."
-msgstr "手机信息"
+msgstr "显示版本信息和编译功能。"
 
 #: gammu-detect/main.c:58
 msgid "Disables scanning of udev."
@@ -1523,9 +1513,9 @@ msgid "Disables scanning of Windows serial ports."
 msgstr ""
 
 #: gammu-detect/main.c:71
-#, fuzzy, c-format
+#, c-format
 msgid "Gammu-detect version %s"
-msgstr "Gammu版本"
+msgstr "Gammu-detect 版本 %s"
 
 #: gammu-detect/main.c:74 gammu/gammu.c:99
 msgid "Compiled in features:"
@@ -1784,9 +1774,9 @@ msgid "Name"
 msgstr "名称"
 
 #: gammu/gammu.c:91
-#, fuzzy, c-format
+#, c-format
 msgid "[Gammu version %s]"
-msgstr "Gammu 版本"
+msgstr "[Gammu 版本 %s]"
 
 #: gammu/gammu.c:101
 msgid "Protocols"
@@ -2254,10 +2244,8 @@ msgid "Sending sms from folder \"%s\", location %i\n"
 msgstr ""
 
 #: gammu/message.c:630 gammu/message.c:656
-#, fuzzy
-#| msgid "Waiting for network code."
 msgid "…waiting for network answer"
-msgstr "等待网络码。"
+msgstr "…等待网络应答"
 
 #: gammu/message.c:651
 #, c-format
@@ -2527,10 +2515,8 @@ msgid "%3d free"
 msgstr "%3d 空闲"
 
 #: gammu/misc.c:482
-#, fuzzy
-#| msgid "Entering monitor mode…"
 msgid "Entering monitor mode…"
-msgstr "正在进入监控模式。。。"
+msgstr "进入监控模式…"
 
 #: gammu/misc.c:492
 msgid "Enabling info about incoming SMS"
@@ -2602,10 +2588,8 @@ msgid "%i templates"
 msgstr ""
 
 #: gammu/misc.c:577
-#, fuzzy
-#| msgid "Entering monitor mode…"
 msgid "Leaving monitor mode…"
-msgstr "正在进入监控模式。。。"
+msgstr "离开监控模式…"
 
 #: gammu/misc.c:605
 msgid "Smart Messaging"
@@ -3670,9 +3654,8 @@ msgid "First name"
 msgstr "名字"
 
 #: helper/memory-display.c:223
-#, fuzzy
 msgid "Second name"
-msgstr "姓名："
+msgstr "姓名"
 
 #: helper/memory-display.c:224
 msgid "Formal name"
@@ -3814,9 +3797,9 @@ msgid "Backup functionality not compiled in!"
 msgstr ""
 
 #: helper/message-cmdline.c:1061
-#, fuzzy, c-format
+#, c-format
 msgid "Wrong message length (\"%s\")\n"
-msgstr "正在保存短消息…"
+msgstr "短消息长度错误 (\"%s\")\n"
 
 #: helper/message-cmdline.c:1084
 #, c-format

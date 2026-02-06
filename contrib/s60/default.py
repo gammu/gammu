@@ -6,8 +6,10 @@ import sys
 sys.path.append(r"e:\python\libs")
 sys.path.append(r"c:\python\libs")
 
+import contextlib
 import math
 import os.path
+import pickle
 import time
 
 import contacts
@@ -32,8 +34,6 @@ if float(e32.pys60_version[:3]) >= 1.9:
 else:
     import socket
 
-import pickle
-import socket as pysocket
 
 VERSION = "0.6.0"
 PORT = 18
@@ -71,7 +71,7 @@ class Mobile:
     def getCurrentDir(self):
         try:
             return self._current_dir
-        except:
+        except AttributeError:
             pass
 
         try:
@@ -95,26 +95,24 @@ class Mobile:
 
     def loadConfig(self):
         try:
-            f = file(self.getConfigFilename(), "rb")
-            conf = pickle.load(f)
-            f.close()
+            with open(self.getConfigFilename(), "rb") as f:
+                conf = pickle.load(f)
             if "port" in conf:
                 self.port = conf["port"]
             if "useCanvas" in conf:
                 self.useCanvas = conf["useCanvas"]
-        except OSError as r:
+        except OSError:
             pass
 
     def saveConfig(self):
         try:
-            f = file(self.getConfigFilename(), "wb")
-            conf = {
-                "port": self.port,
-                "useCanvas": self.useCanvas,
-            }
-            pickle.dump(conf, f)
-            f.close()
-        except OSError as r:
+            with open(self.getConfigFilename(), "wb") as f:
+                conf = {
+                    "port": self.port,
+                    "useCanvas": self.useCanvas,
+                }
+                pickle.dump(conf, f)
+        except OSError:
             pass
 
     def initUi(self):
@@ -141,7 +139,9 @@ class Mobile:
         self.canvas.clear((255, 255, 255))
         if self.service:
             self.canvas.text(
-                (1, 14), "Service started at port %s" % self.port, 0xFF0000
+                (1, 14),
+                f"Service started at port {self.port}",
+                0xFF0000,
             )
         else:
             self.canvas.text((1, 14), "Service stopped", 0xFF0000)
@@ -178,26 +178,14 @@ class Mobile:
         if self.connected:
             self.connected = False
 
-            try:
+            with contextlib.suppress(OSError):
                 self.fos.close()
-            except OSError:
-                pass
-            except pysocket.error:
-                pass
 
-            try:
+            with contextlib.suppress(OSError):
                 self.fis.close()
-            except OSError:
-                pass
-            except pysocket.error:
-                pass
 
-            try:
+            with contextlib.suppress(OSError):
                 self.client[0].close()
-            except OSError:
-                pass
-            except pysocket.error:
-                pass
             self.client = None
 
             self.statusUpdate()
@@ -209,7 +197,7 @@ class Mobile:
             self.connected = True
             self.statusUpdate()
             address = str(self.client[1])
-            note("Connected client %s" % address)
+            note(f"Connected client {address}")
 
             self.fos = self.client[0].makefile("w")
             self.fis = self.client[0].makefile("r")
@@ -219,11 +207,11 @@ class Mobile:
                 self.wait()
             except OSError:
                 pass
-            except pysocket.error:
+            except OSError:
                 pass
 
             self.disconnect()
-            note("Disconnected client %s" % address)
+            note(f"Disconnected client {address}")
 
     def send(self, header, *message):
         new_message = ""
@@ -244,13 +232,13 @@ class Mobile:
                     self.send(header, part)
                 else:
                     self.send(NUM_PARTIAL_MESSAGE, part)
-                sentParts += 1
+                sentParts += 1  # noqa: SIM113
             return
 
         self.fos.write(
             str(
-                str(header) + str(NUM_END_HEADER) + new_message + str(NUM_END_TEXT)
-            ).encode("utf8")
+                str(header) + str(NUM_END_HEADER) + new_message + str(NUM_END_TEXT),
+            ).encode("utf8"),
         )
         self.fos.flush()
 
@@ -281,16 +269,12 @@ class Mobile:
                 self.sendLocation()
 
             elif header == NUM_DIAL:
-                try:
+                with contextlib.suppress(Exception):
                     telephone.dial(message_parts[0])
-                except:
-                    pass
 
             elif header == NUM_HANGUP:
-                try:
+                with contextlib.suppress(Exception):
                     telephone.hang_up()
-                except:
-                    pass
 
             elif header == NUM_CONTACTS_REQUEST_HASH_ALL:
                 self.sendContactHash()
@@ -306,7 +290,7 @@ class Mobile:
                 try:
                     contact = self.contactDb[key]
                     self.sendContact(contact)
-                except:
+                except KeyError:
                     self.send(NUM_CONTACTS_REPLY_CONTACT_NOT_FOUND)
 
             elif header == NUM_CONTACTS_REQUEST_CONTACTS_ALL:
@@ -350,7 +334,7 @@ class Mobile:
                 try:
                     entry = self.calendarDb[key]
                     self.sendCalendarEntry(entry)
-                except:
+                except KeyError:
                     self.send(NUM_CALENDAR_REPLY_ENTRY_NOT_FOUND)
 
             elif header == NUM_CALENDAR_REQUEST_ENTRIES_ALL:
@@ -358,15 +342,11 @@ class Mobile:
 
             elif header == NUM_CALENDAR_ENTRY_DELETE:
                 id = int(message)
-                try:
+                # suppress no such entry
+                with contextlib.suppress(RuntimeError):
                     del self.calendarDb[id]
-                except RuntimeError:
-                    # no such entry
-                    pass
 
-            elif (
-                header == NUM_CALENDAR_ENTRY_CHANGE or header == NUM_CALENDAR_ENTRY_ADD
-            ):
+            elif header in (NUM_CALENDAR_ENTRY_CHANGE, NUM_CALENDAR_ENTRY_ADD):
                 if header == NUM_CALENDAR_ENTRY_CHANGE:
                     id = int(message_parts[0])
                 elif header == NUM_CALENDAR_ENTRY_ADD:
@@ -375,40 +355,22 @@ class Mobile:
                 content = str(message_parts[1])
                 location = str(message_parts[2])
                 # start = float(message_parts[3]) if message_parts[3] else 0
-                if message_parts[3]:
-                    start = float(message_parts[3])
-                else:
-                    start = 0.0
+                start = float(message_parts[3]) if message_parts[3] else 0.0
                 # end = float(message_parts[4]) if message_parts[4] else None
-                if message_parts[4]:
-                    end = float(message_parts[4])
-                else:
-                    end = None
+                end = float(message_parts[4]) if message_parts[4] else None
                 replication = str(message_parts[5])
                 # alarm = float(message_parts[6]) if message_parts[6] else None
-                if message_parts[6]:
-                    alarm = float(message_parts[6])
-                else:
-                    alarm = None
+                alarm = float(message_parts[6]) if message_parts[6] else None
                 priority = int(message_parts[7])
                 repeat_type = str(message_parts[8])
                 repeat_days = str(message_parts[9])
                 repeat_exceptions = str(message_parts[10])
                 # repeat_start = float(message_parts[11]) if message_parts[11] else 0
-                if message_parts[11]:
-                    repeat_start = float(message_parts[11])
-                else:
-                    repeat_start = 0.0
+                repeat_start = float(message_parts[11]) if message_parts[11] else 0.0
                 # repeat_end = float(message_parts[12]) if message_parts[12] else None
-                if message_parts[12]:
-                    repeat_end = float(message_parts[12])
-                else:
-                    repeat_end = None
+                repeat_end = float(message_parts[12]) if message_parts[12] else None
                 # repeat_interval = int(message_parts[13]) if message_parts[13] else 1
-                if message_parts[13]:
-                    repeat_interval = int(message_parts[13])
-                else:
-                    repeat_interval = 1
+                repeat_interval = int(message_parts[13]) if message_parts[13] else 1
 
                 if header == NUM_CALENDAR_ENTRY_CHANGE:
                     self.modifyCalendarEntry(
@@ -529,7 +491,7 @@ class Mobile:
         fn = self.getScreenshotFilename()
         shot = graphics.screenshot()
         shot.save(fn)
-        note("Saved screenshot as %s" % fn)
+        note(f"Saved screenshot as {fn}")
         f = file(fn, "rb")
         self.send(NUM_SCREENSHOT_REPLY, f.read().encode("base64"))
         f.close()
@@ -544,14 +506,14 @@ class Mobile:
                 NUM_LOCATION_REPLY,
                 "%03d" % mcc,
                 "%02d" % mnc,
-                "%X" % lac,
-                "%X" % cellid,
+                f"{lac:X}",
+                f"{cellid:X}",
             )
 
     def contactDict(self):
         keys = list(self.contactDb.keys())
 
-        contactDict = dict()
+        contactDict = {}
         for key in keys:
             contact = self.contactDb[key]
 
@@ -561,26 +523,27 @@ class Mobile:
             except TypeError:
                 continue
 
-            contactDict[contact.id] = list()
+            contactDict[contact.id] = []
             for field in contact:
                 _type = field.type
                 value = field.value
                 value = str(value)
                 value = value.replace(
-                    "\u2029", "\n"
+                    "\u2029",
+                    "\n",
                 )  # PARAGRAPH SEPARATOR (\u2029) replaced by LINE FEED (\u000a)
                 location = field.location
 
                 if _type == "unknown":
                     continue
-                elif _type == "thumbnail_image":
+                if _type == "thumbnail_image":
                     value = self.getContactThumbnail(contact)
                     if not value:
                         continue
                 elif _type == "date":
                     value = self.getContactBirthday(contact)
 
-                if isinstance(value, type(None)):
+                if value is None:
                     # Ignore this field
                     continue
 
@@ -653,24 +616,29 @@ class Mobile:
             value = field.value
             value = str(value)
             value = value.replace(
-                "\u2029", "\n"
+                "\u2029",
+                "\n",
             )  # PARAGRAPH SEPARATOR (\u2029) replaced by LINE FEED (\u000a)
             location = field.location
 
             if _type == "unknown":
                 continue
-            elif _type == "thumbnail_image":
+            if _type == "thumbnail_image":
                 value = self.getContactThumbnail(contact)
                 if not value:
                     continue
             elif _type == "date":
                 value = self.getContactBirthday(contact)
 
-            if isinstance(value, type(None)):
+            if value is None:
                 continue
 
             self.send(
-                NUM_CONTACTS_REPLY_CONTACT_LINE, contact.id, _type, location, value
+                NUM_CONTACTS_REPLY_CONTACT_LINE,
+                contact.id,
+                _type,
+                location,
+                value,
             )
         self.send(NUM_CONTACTS_REPLY_CONTACT_END, contact.id)
 
@@ -686,7 +654,7 @@ class Mobile:
             else:
                 self.setContactThumbnail(contact, value)
             return
-        elif type == "date":
+        if type == "date":
             if modification == "remove":
                 self.setContactBirthday(contact)
             else:
@@ -713,10 +681,9 @@ class Mobile:
         # This is an ugly hack, needed for some fields that cannot be handled using the contact object
         try:
             value = str(contact.as_vcard(), "utf8")
-            value = value.split(detail + ":")[1].split(delimiter)[0]
-            return value
+            return value.split(detail + ":")[1].split(delimiter)[0]
         except:
-            return
+            return None
 
     def setDetailFromVcard(self, contact, detail, value, delimiter="\r\n"):
         # This is an ugly hack, needed for some fields that cannot be handled using the contact object
@@ -724,12 +691,7 @@ class Mobile:
 
         new = ""
         for line in card.split("\r\n"):
-            if (
-                line.startswith("BEGIN:")
-                or line.startswith("VERSION:")
-                or line.startswith("REV:")
-                or line.startswith("UID:")
-            ):
+            if line.startswith(("BEGIN:", "VERSION:", "REV:", "UID:")):
                 new += line + "\r\n"
 
         # Format value: New line (\r\n) after 64 chars, followed by 4 spaces
@@ -750,19 +712,23 @@ class Mobile:
         # Ugly workaround!
         # HACK: The value of type "thumbnail_image" is empty, it is only shown when we export the contact to a vCard
         image = self.getDetailFromVcard(
-            contact, "PHOTO;TYPE=JPEG;ENCODING=BASE64", "\r\n\r\n"
+            contact,
+            "PHOTO;TYPE=JPEG;ENCODING=BASE64",
+            "\r\n\r\n",
         )
         if image:
             image = image.split("\r\n\r\n")[0]
-            image = image.replace("\r", "").replace("\n", "").replace(" ", "")
-            return image
-        return
+            return image.replace("\r", "").replace("\n", "").replace(" ", "")
+        return None
 
     def setContactThumbnail(self, contact, image=""):
         # Ugly workaround!
         # HACK: There seems to be new other way to update/add the contact picture
         self.setDetailFromVcard(
-            contact, "PHOTO;TYPE=JPEG;ENCODING=BASE64", image, "\r\n\r\n"
+            contact,
+            "PHOTO;TYPE=JPEG;ENCODING=BASE64",
+            image,
+            "\r\n\r\n",
         )
 
     def getContactBirthday(self, contact):
@@ -775,13 +741,13 @@ class Mobile:
     def __calendarGetType(self, entry):
         if isinstance(entry, calendar.CalendarDb.AnniversaryEntry):
             return "anniversary"
-        elif isinstance(entry, calendar.CalendarDb.AppointmentEntry):
+        if isinstance(entry, calendar.CalendarDb.AppointmentEntry):
             return "appointment"
-        elif isinstance(entry, calendar.CalendarDb.EventEntry):
+        if isinstance(entry, calendar.CalendarDb.EventEntry):
             return "event"
-        elif isinstance(entry, calendar.CalendarDb.ReminderEntry):
+        if isinstance(entry, calendar.CalendarDb.ReminderEntry):
             return "reminder"
-        elif isinstance(entry, calendar.CalendarDb.TodoEntry):
+        if isinstance(entry, calendar.CalendarDb.TodoEntry):
             return "todo"
         return ""
 
@@ -806,7 +772,7 @@ class Mobile:
 
         if entry.alarm:
             line += str(
-                int(entry.alarm)
+                int(entry.alarm),
             )  # The alarm datetime value (float) for the entry
         line += sep
 
@@ -889,7 +855,7 @@ class Mobile:
         return line
 
     def calendarDict(self):
-        calendarDict = dict()
+        calendarDict = {}
         for key in self.calendarDb:
             entry = self.calendarDb[key]
             line = self.__calendarFormatEntry(entry, FIELD_SEP)
@@ -906,7 +872,7 @@ class Mobile:
         for key in self.calendarDb:
             entry = self.calendarDb[key]
             entryType = self.__calendarGetType(entry)
-            if entryType in ["todo"]:
+            if entryType == "todo":
                 todos = todos + 1
             elif entryType != "":
                 calendars = calendars + 1
@@ -982,7 +948,6 @@ class Mobile:
         repeat_end,
         repeat_interval,
     ):
-
         try:
             entry = self.calendarDb[id]
         except:
@@ -1010,7 +975,9 @@ class Mobile:
         entry.commit()
 
         self.send(
-            NUM_CALENDAR_ENTRY_CHANGE_REPLY_TIME, id, str(int(entry.last_modified))
+            NUM_CALENDAR_ENTRY_CHANGE_REPLY_TIME,
+            id,
+            str(int(entry.last_modified)),
         )
 
     def addCalendarEntry(
@@ -1030,7 +997,6 @@ class Mobile:
         repeat_end,
         repeat_interval,
     ):
-
         if type == "appointment":
             entry = self.calendarDb.add_appointment()
         elif type == "event":
@@ -1098,7 +1064,7 @@ class Mobile:
                 repeat_start,
                 repeat_end,
                 repeat_interval,
-            )
+            ),
         )
 
     def buildCalendarEntryRepeat(self, type, days, exceptions, start, end, interval):
@@ -1143,7 +1109,6 @@ class Mobile:
         }
 
     def calendarEntryParsedDays(self, type, days):
-
         ### PLEASE COPY CHANGES IN THIS FUNCTION ALSO TO
         ### pc/lib/classes.py, class CalendarEntry function recurrenceParsedDays
 
@@ -1154,7 +1119,7 @@ class Mobile:
             # week:1,day:1;week:4,day:0 -> [{'week': 1, 'day': 1}, {'week': 4, 'day': 0}]
             dates = []
             for date in days.split(";"):
-                tmp = dict()
+                tmp = {}
                 for sub in date.split(","):
                     key, value = sub.split(":")
                     tmp[key] = int(value)
@@ -1184,20 +1149,18 @@ class Mobile:
         address = self.inbox.address(sms)
         content = self.inbox.content(sms)
         content = content.replace(
-            "\u2029", "\n"
+            "\u2029",
+            "\n",
         )  # PARAGRAPH SEPARATOR (\u2029) replaced by LINE FEED (\u000a)
 
-        if self.inbox.unread(sms):
-            unread = "1"
-        else:
-            unread = "0"
+        unread = "1" if self.inbox.unread(sms) else "0"
 
         self.send(code, box, id, time, address, content, unread)
 
     def sendAllMessages(self, lastId):
-        messages = list()
-        inbox = list()
-        sent = list()
+        messages = []
+        inbox = []
+        sent = []
         for box in ("inbox", "sent"):
             # FIXME: I shouldn't need this
             e32.ao_sleep(1)
@@ -1211,21 +1174,15 @@ class Mobile:
         messages.sort()
         for sms in messages:
             if int(sms) > int(lastId):
-                if sms in inbox:
-                    box = "inbox"
-                else:
-                    box = "sent"
+                box = "inbox" if sms in inbox else "sent"
 
                 self.__sendOneMessage(sms, box, NUM_MESSAGE_REPLY_LINE)
 
         self.send(NUM_MESSAGE_REPLY_END)
 
     def sendUnreadMessages(self):
-        messages = list()
         inbox = self.inbox.sms_messages()
-        for sms in inbox:
-            if self.inbox.unread(sms):
-                messages.append(sms)
+        messages = [sms for sms in inbox if self.inbox.unread(sms)]
         self.send(NUM_MESSAGE_REPLY_UNREAD, *messages)
 
     def sendMessagesList(self):
@@ -1235,11 +1192,8 @@ class Mobile:
         self.send(NUM_MESSAGE_REPLY_END)
 
     def sendMessagesCount(self):
-        messages = list()
         inbox = self.inbox.sms_messages() + self.sent.sms_messages()
-        for sms in inbox:
-            if self.inbox.unread(sms):
-                messages.append(sms)
+        messages = [sms for sms in inbox if self.inbox.unread(sms)]
         self.send(NUM_MESSAGE_REPLY_COUNT, len(inbox), len(messages))
 
     def sendMessage(self, name, phone, encoding, msg):
@@ -1251,7 +1205,8 @@ class Mobile:
                 # http://discussion.forum.nokia.com/forum/showthread.php?t=141083
                 messaging._sending = False
                 self.send(
-                    NUM_MESSAGE_SEND_REPLY_RETRY, str(detail) + "; tried workaround"
+                    NUM_MESSAGE_SEND_REPLY_RETRY,
+                    str(detail) + "; tried workaround",
                 )
             else:
                 self.send(NUM_MESSAGE_SEND_REPLY_RETRY, detail)
@@ -1285,7 +1240,7 @@ class Mobile:
                 "SMS send failed! If the device is in offline-mode or with no network connection the message is added to the device's outgoing message queue.",
             )
         else:
-            self.send(NUM_MESSAGE_SEND_REPLY_STATUS, "Unknown status: %s" % status)
+            self.send(NUM_MESSAGE_SEND_REPLY_STATUS, f"Unknown status: {status}")
 
     def newMessage(self, sms):
         if not self.connected:
@@ -1356,7 +1311,7 @@ class Mobile:
             self.startService()
 
     def aboutHandler(self):
-        query("Gammu S60 Remote\nVersion %s\nhttps://wammu.eu/" % (VERSION), "query")
+        query(f"Gammu S60 Remote\nVersion {VERSION}\nhttps://wammu.eu/", "query")
 
     def toggleHandler(self):
         e32.start_exe("BtToggleApp.exe", "")
@@ -1380,7 +1335,7 @@ except Exception as e:
     for filename, lineno, function, text in traceback.extract_tb(info[2]):
         call_stack += filename + ": " + str(lineno) + " - " + function + new_line
         call_stack += " " + repr(text) + new_line
-    call_stack += "%s: %s" % info[:2]
+    call_stack += "{}: {}".format(*info[:2])
 
     # Creating a friendly user message with exception details
     err_msg = "This programs was unexpectedly closed due to the following error: "
@@ -1394,5 +1349,5 @@ except Exception as e:
     lock = e32.Ao_lock()
     app.body = Text(err_msg)
     app.body.set_pos(0)
-    app.menu = [("Exit", lambda: lock.signal())]
+    app.menu = [("Exit", lock.signal)]
     lock.wait()

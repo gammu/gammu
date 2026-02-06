@@ -2,10 +2,9 @@ from docutils import nodes
 from sphinx import addnodes
 from sphinx.directives import ObjectDescription
 from sphinx.domains import Domain, ObjType
-from sphinx.domains.std import GenericObject, StandardDomain
 from sphinx.roles import XRefRole
 from sphinx.util import ws_re
-from sphinx.util.nodes import clean_astext, make_refnode
+from sphinx.util.nodes import make_refnode
 
 
 class ConfigOption(ObjectDescription):
@@ -35,7 +34,7 @@ class ConfigOption(ObjectDescription):
                 indextype = "single"
                 indexentry = self.indextemplate % (name,)
             self.indexnode["entries"].append(
-                (indextype, indexentry, targetname, targetname)
+                (indextype, indexentry, targetname, targetname),
             )
         self.env.domaindata["config"]["objects"][self.objtype, name] = (
             self.env.docname,
@@ -44,19 +43,17 @@ class ConfigOption(ObjectDescription):
 
 
 class ConfigSectionXRefRole(XRefRole):
-    """
-    Cross-referencing role for configuration sections (adds an index entry).
-    """
+    """Cross-referencing role for configuration sections (adds an index entry)."""
 
     def result_nodes(self, document, env, node, is_ref):
         if not is_ref:
             return [node], []
         varname = node["reftarget"]
-        tgtid = "index-%s" % env.new_serialno("index")
+        tgtid = "index-{}".format(env.new_serialno("index"))
         indexnode = addnodes.index()
         indexnode["entries"] = [
             ("single", varname, tgtid, varname),
-            ("single", "configuration section; %s" % varname, tgtid, varname),
+            ("single", f"configuration section; {varname}", tgtid, varname),
         ]
         targetnode = nodes.target("", "", ids=[tgtid])
         document.note_explicit_target(targetnode)
@@ -90,7 +87,7 @@ class ConfigSection(ObjectDescription):
                 indextype = "single"
                 indexentry = self.indextemplate % (name,)
             self.indexnode["entries"].append(
-                (indextype, indexentry, targetname, targetname)
+                (indextype, indexentry, targetname, targetname),
             )
         self.env.domaindata["config"]["objects"][self.objtype, name] = (
             self.env.docname,
@@ -99,19 +96,17 @@ class ConfigSection(ObjectDescription):
 
 
 class ConfigOptionXRefRole(XRefRole):
-    """
-    Cross-referencing role for configuration options (adds an index entry).
-    """
+    """Cross-referencing role for configuration options (adds an index entry)."""
 
     def result_nodes(self, document, env, node, is_ref):
         if not is_ref:
             return [node], []
         varname = node["reftarget"]
-        tgtid = "index-%s" % env.new_serialno("index")
+        tgtid = "index-{}".format(env.new_serialno("index"))
         indexnode = addnodes.index()
         indexnode["entries"] = [
             ("single", varname, tgtid, varname, None),
-            ("single", "configuration option; %s" % varname, tgtid, varname, None),
+            ("single", f"configuration option; {varname}", tgtid, varname, None),
         ]
         targetnode = nodes.target("", "", ids=[tgtid])
         document.note_explicit_target(targetnode)
@@ -151,8 +146,7 @@ class ConfigFileDomain(Domain):
         docname, labelid = self.data["objects"].get((typ, target), ("", ""))
         if not docname:
             return None
-        else:
-            return make_refnode(builder, fromdocname, docname, labelid, contnode)
+        return make_refnode(builder, fromdocname, docname, labelid, contnode)
 
     def get_objects(self):
         for (type, name), info in self.data["objects"].items():

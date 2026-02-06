@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 # vim: expandtab sw=4 ts=4 sts=4:
-"""
-Gammu SMS backup generator.
-"""
+"""Gammu SMS backup generator."""
+
 __author__ = "Michal Čihař"
 __email__ = "michal@cihar.com"
 __license__ = """
@@ -66,9 +65,7 @@ CODINGS = [
 
 
 def write_text(f, text):
-    """
-    Writes text splitted and encoded in same way as Gammu does it for SMS backups.
-    """
+    """Writes text splitted and encoded in same way as Gammu does it for SMS backups."""
     encoded = text.encode("UTF-16-BE").encode("HEX")
     line = 0
     while len(encoded) > 0:
@@ -78,13 +75,11 @@ def write_text(f, text):
 
 
 def generate_message(index, folder, coding, smscnum, num, text):
-    """
-    Generates single message file.
-    """
+    """Generates single message file."""
     f = file("%02d.backup" % index, "w")
     f.write(
         TEMPLATE
-        % (NUMBERS[smscnum], STATES[folder], NUMBERS[num], CODINGS[coding], folder)
+        % (NUMBERS[smscnum], STATES[folder], NUMBERS[num], CODINGS[coding], folder),
     )
     if folder > 1:
         f.write("Sent = 20070605T135630\n")
@@ -93,9 +88,7 @@ def generate_message(index, folder, coding, smscnum, num, text):
 
 
 def generate():
-    """
-    Generates test data based on NUMBERS and TEXTS variables.
-    """
+    """Generates test data based on NUMBERS and TEXTS variables."""
     index = 1
 
     for smscnum in range(len(NUMBERS)):

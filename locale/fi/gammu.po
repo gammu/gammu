@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2019-09-27 09:19+0200\n"
-"PO-Revision-Date: 2019-11-22 09:06+0000\n"
-"Last-Translator: Tuomas Lähteenmäki <lahtis@gmail.com>\n"
+"PO-Revision-Date: 2025-02-01 13:02+0000\n"
+"Last-Translator: Ricky Tigg <ricky.tigg@gmail.com>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/gammu/gammu/fi/>"
 "\n"
 "Language: fi\n"
@@ -17,14 +17,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.10-dev\n"
+"X-Generator: Weblate 5.10-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:379 helper/message-cmdline.c:403
 #: helper/message-cmdline.c:447 helper/message-cmdline.c:484
 #: helper/message-cmdline.c:507
 msgid "Where is backup filename and location?"
-msgstr "Varmuuskopion tiedostonimi ja sijainti?"
+msgstr "Missä on varmuuskopiotiedoston nimi ja sijainti?"
 
 #: gammu/backup.c:63 helper/message-cmdline.c:495
 msgid "Calendar note not found in file"
@@ -44,7 +44,7 @@ msgstr "Tehtävämerkintää ei löydy tiedostosta"
 
 #: gammu/backup.c:137 helper/message-cmdline.c:531
 msgid "Where is backup filename and location and memory type?"
-msgstr "Varmuuskopion tiedostonimi, sijainti ja muistin tyyppi?"
+msgstr "Missä on varmuuskopiotiedoston nimi, sijainti ja muistityyppi?"
 
 #: gammu/backup.c:150 gammu/backup.c:161 helper/message-cmdline.c:543
 #: helper/message-cmdline.c:553
@@ -1948,7 +1948,7 @@ msgstr "Parametrit ennen komentoa määrittävät gammun käyttäytymisen:"
 
 #: gammu/gammu.c:792
 msgid "-c / --config <filename> … name of configuration file"
-msgstr "-c / --config <tiedostonimi>… asetustiedoston nimi"
+msgstr "-c / --config <tiedoston nimi>… asetustiedoston nimi"
 
 #: gammu/gammu.c:793
 msgid "-s / --section <confign> … section of config file to use, eg. 42"
@@ -1966,7 +1966,8 @@ msgstr ""
 #: gammu/gammu.c:795
 msgid "-f / --debug-file <filename> … file for logging debug messages"
 msgstr ""
-"-f / --debug-file <tiedostonimi> … tiedosto vianetsintäviestien kirjaamiseksi"
+"-f / --debug-file <tiedoston nimi> … tiedosto vianetsintäviestien "
+"kirjaamiseksi"
 
 #: gammu/gammu.c:797
 msgid "Commands can be specified with or without leading --."
@@ -3775,12 +3776,12 @@ msgstr "Missä parametrit ovat?"
 
 #: helper/message-cmdline.c:270
 msgid "Where is ringtone filename?"
-msgstr "Missä on soittoäänen tiedostonimi?"
+msgstr "Missä on soittoäänen tiedoston nimi?"
 
 #: helper/message-cmdline.c:288 helper/message-cmdline.c:306
 #: helper/message-cmdline.c:357
 msgid "Where is logo filename?"
-msgstr "Missä on logon tiedostonimi?"
+msgstr "Missä on logon tiedoston nimi?"
 
 #: helper/message-cmdline.c:324
 msgid "Where is number of frames?"

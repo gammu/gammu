@@ -63,13 +63,13 @@ typedef struct {
  * defines their preferences, so if first is found it is used.
  */
 static GSM_AT_Charset_Info AT_Charsets[] = {
-	{AT_CHARSET_HEX,	"HEX",		FALSE,	FALSE,	FALSE},
 	{AT_CHARSET_GSM,	"GSM",		FALSE,	FALSE,	TRUE},
 	{AT_CHARSET_PCCP437,	"PCCP437",	FALSE,	FALSE,	FALSE},
 	{AT_CHARSET_UTF_8,	"UTF-8",	TRUE,	FALSE,	FALSE},
 	{AT_CHARSET_UTF8,	"UTF8",		TRUE,	FALSE,	FALSE},
 	{AT_CHARSET_UCS_2,	"UCS-2",	TRUE,	FALSE,	FALSE},
 	{AT_CHARSET_UCS2,	"UCS2",		TRUE,	FALSE,	FALSE},
+	{AT_CHARSET_HEX,	"HEX",		FALSE,	FALSE,	FALSE},
 	{AT_CHARSET_IRA,	"IRA",		FALSE,	TRUE,	TRUE},
 	{AT_CHARSET_ASCII,	"ASCII",	FALSE,	TRUE,	TRUE},
 #ifdef ICONV_FOUND
@@ -366,6 +366,11 @@ GSM_Error ATGEN_HandleCMEError(GSM_StateMachine *s)
 		case 31:
 		case 32:
 			return ERR_NETWORK_ERROR;
+		case 132:
+		case 133:
+		case 134:
+			/* Service option errors - GPRS related */
+			return ERR_NOTSUPPORTED;
 		case 515:
 			return ERR_BUSY;
 		default:
@@ -916,7 +921,11 @@ int ATGEN_ExtractOneParameter(unsigned char *input, unsigned char *output)
 	int	position = 0;
 	gboolean	inside_quotes = FALSE;
 
-	while ((*input!=',' || inside_quotes) && *input != 0x0d && *input != 0x00) {
+	while ((*input!=',' || inside_quotes) && *input != 0x0d && *input != 0x0a && *input != 0x00) {
+		/* Prevent reading past line boundaries even with mismatched quotes */
+		if (*input == 0x0d || *input == 0x0a || *input == 0x00) {
+			break;
+		}
 		if (*input == '"') inside_quotes = ! inside_quotes;
 		*output = *input;
 		input	++;
@@ -955,6 +964,13 @@ size_t ATGEN_GrabString(GSM_StateMachine *s, const unsigned char *input, unsigne
 			&& *input != 0x0d
 			&& *input != 0x0a
 			&& *input != 0x00)) {
+		/* Prevent reading past line boundaries even with mismatched quotes */
+		if (*input == 0x0d || *input == 0x0a || *input == 0x00) {
+			if (inside_quotes) {
+				smprintf(s, "Mismatched quotes in string, stopping at line boundary\n");
+			}
+			break;
+		}
 		/* Check for quotes */
 		if (*input == '"') {
 			inside_quotes = ! inside_quotes;
@@ -979,7 +995,7 @@ size_t ATGEN_GrabString(GSM_StateMachine *s, const unsigned char *input, unsigne
 	(*output)[position] = 0;
 
 	/* Strip quotes */
-	if ((*output)[0] == '"' && (*output)[position - 1]) {
+	if (position >= 2 && (*output)[0] == '"' && (*output)[position - 1] == '"') {
 		memmove(*output, (*output) + 1, position - 2);
 		(*output)[position - 2] = 0;
 	}
@@ -1893,7 +1909,7 @@ GSM_Error ATGEN_ReplyGetModel(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 	}
 
 	strncpy(Data->Model, pos, MIN(1 + pos2 - pos, GSM_MAX_MODEL_LENGTH));
-	Data->Model[1 + pos2 - pos] = 0;
+	Data->Model[MIN(1 + pos2 - pos, GSM_MAX_MODEL_LENGTH)] = 0;
 
 	Data->ModelInfo = GetModelData(s, NULL, Data->Model, NULL);
 
@@ -1989,6 +2005,34 @@ GSM_Error ATGEN_ReplyGetManufacturer(GSM_Protocol_Message *msg, GSM_StateMachine
 		}
 		if (strncmp("I: ", s->Phone.Data.Manufacturer, 3) == 0) {
 			memmove(s->Phone.Data.Manufacturer, s->Phone.Data.Manufacturer + 3, strlen(s->Phone.Data.Manufacturer + 3) + 1);
+		}
+
+		/* Strip leading and trailing whitespace */
+		{
+			char *src = s->Phone.Data.Manufacturer;
+			char *end;
+			size_t len;
+
+			/* Skip leading whitespace */
+			while (isspace((unsigned char)*src)) {
+				src++;
+			}
+
+			/* Move string if we skipped any leading whitespace */
+			if (src != s->Phone.Data.Manufacturer) {
+				len = strlen(src);
+				memmove(s->Phone.Data.Manufacturer, src, len + 1);
+				end = s->Phone.Data.Manufacturer + len;
+			} else {
+				len = strlen(s->Phone.Data.Manufacturer);
+				end = s->Phone.Data.Manufacturer + len;
+			}
+
+			/* Trim trailing whitespace */
+			while (end > s->Phone.Data.Manufacturer && isspace((unsigned char)*(end - 1))) {
+				end--;
+			}
+			*end = '\0';
 		}
 
 		/* Lookup in vendor table */
@@ -2168,7 +2212,7 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 {
 	GSM_Phone_ATGENData     *Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error               error;
-    	char                    buff[2]={0};
+    	unsigned char           buff[512];
 
 	InitLines(&Priv->Lines);
 
@@ -2243,9 +2287,26 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
      	 * time to react, sending just AT wakes up the phone and it then can react
      	 * to ATE1. We don't need to check whether this fails as it is just to
      	 * wake up the phone and does nothing.
+	 *
+	 * Instead of using GSM_WaitForAutoLen which would try to parse the response
+	 * (and fail if there's garbage), we just send the command and then discard
+	 * any response data. This handles cases like ZTE MF710M where buffered data
+	 * from previous sessions can cause "UNKNOWN frame" errors.
      	 */
     	smprintf(s, "Sending simple AT command to wake up some devices\n");
-	error = GSM_WaitForAutoLen(s, "AT\r", 0x00, 20, ID_Initialise);
+	error = s->Protocol.Functions->WriteMessage(s, "AT\r", 3, 0x00);
+	if (error != ERR_NONE) {
+		return error;
+	}
+
+	/* Give device time to respond */
+	usleep(100000);
+
+	/* Discard any response (including garbage from previous sessions) */
+	smprintf(s, "Discarding response from wake-up command\n");
+	while (s->Device.Functions->ReadDevice(s, buff, sizeof(buff)) > 0) {
+		usleep(10000);
+	}
 
 	/* We want to see our commands to allow easy detection of reply functions */
 	smprintf(s, "Enabling echo\n");
@@ -6326,6 +6387,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReplyIgnore, 	"^HCSQ:"		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore, 	"^BOOT:"		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore, 	"^MODE:"		,0x00,0x00,ID_IncomingFrame	 },
+{ATGEN_GenericReplyIgnore, 	"*RADIOPOWER:"		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore, 	"^DSFLOWRPT:"		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore, 	"^CSNR:"		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore, 	"^HCSQ:"		,0x00,0x00,ID_IncomingFrame	 },
@@ -6336,6 +6398,9 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReplyIgnore, 	"+SPNWNAME:"		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore, 	"+PSBEARER:"	,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore, 	"+ZEND"			,0x00,0x00,ID_IncomingFrame	 },
+{ATGEN_GenericReplyIgnore, 	"+ZPAS:"		,0x00,0x00,ID_IncomingFrame	 },
+{ATGEN_GenericReplyIgnore, 	"+CIND:"		,0x00,0x00,ID_IncomingFrame	 },
+{ATGEN_GenericReplyIgnore, 	"+CSQ:"			,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_IncomingSMSInfo,		  "+CDSI:" 	 	,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore,	"+CLCC:"		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore,	"#STN:"			,0x00,0x00,ID_IncomingFrame	 },
@@ -6391,7 +6456,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 };
 
 GSM_Phone_Functions ATGENPhone = {
-	"A2D|iPAQ|at|M20|S25|MC35|TC35|C35i|S65|S300|5110|5130|5190|5210|6110|6130|6150|6190|6210|6250|6310|6310i|6510|7110|8210|8250|8290|8310|8390|8850|8855|8890|8910|9110|9210",
+	"A2D|iPAQ|at|M20|S25|MC35|MC35i|MC55|MC55i|TC35|C35i|S65|S300|5110|5130|5190|5210|6110|6130|6150|6190|6210|6250|6310|6310i|6510|7110|8210|8250|8290|8310|8390|8850|8855|8890|8910|9110|9210",
 	ATGENReplyFunctions,
 	NOTSUPPORTED,			/* 	Install			*/
 	ATGEN_Initialise,

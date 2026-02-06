@@ -59,11 +59,11 @@ while [ "$#" -ge 1 ] ; do
     shift
 done
 
-if type dialog > /dev/null 2>&1 ; then
+if command -v dialog > /dev/null 2>&1 ; then
     DIALOG=dialog
-elif type cdialog > /dev/null 2>&1 ; then
+elif command -v cdialog > /dev/null 2>&1 ; then
     DIALOG=cdialog
-elif type whiptail > /dev/null 2>&1 ; then
+elif command -v whiptail > /dev/null 2>&1 ; then
     DIALOG=whiptail
 else
     echo "You need dialog, cdialog or whiptail installed to make this work"

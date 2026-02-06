@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Wammu 0.37\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2019-09-27 09:19+0200\n"
-"PO-Revision-Date: 2018-01-24 12:33+0000\n"
-"Last-Translator: Марс Ямбар <mjambarmeta@gmail.com>\n"
+"PO-Revision-Date: 2022-06-16 07:14+0000\n"
+"Last-Translator: Artem <artem@molotov.work>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/gammu/gammu/uk/"
 ">\n"
 "Language: uk\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 2.19-dev\n"
+"X-Generator: Weblate 4.13-dev\n"
 
 #: gammu/backup.c:49 gammu/backup.c:72 gammu/backup.c:95 gammu/backup.c:116
 #: helper/message-cmdline.c:379 helper/message-cmdline.c:403
@@ -107,8 +107,6 @@ msgstr "%i відсоток(ків)"
 #: gammu/calendar.c:632 gammu/calendar.c:885 gammu/calendar.c:960
 #: gammu/calendar.c:985 gammu/memory.c:24 gammu/memory.c:312 gammu/memory.c:376
 #: gammu/message.c:133 gammu/misc.c:205 gammu/misc.c:481
-#, fuzzy
-#| msgid "Press Ctrl+C to break…"
 msgid "Press Ctrl+C to break…"
 msgstr "Щоб зупинити, натисніть Ctrl + C…"
 
@@ -491,7 +489,7 @@ msgstr "Видалити всі смс після резервування?"
 #: gammu/backupsms.c:66
 #, c-format
 msgid "Backup sms from folder \"%s\"%s?"
-msgstr "Зарезервувати SMS із теки  \"%s\"%s?"
+msgstr "Резервувати SMS із теки \"%s\"%s?"
 
 #: gammu/backupsms.c:68 gammu/backupsms.c:220
 msgid " (SIM)"
@@ -1181,10 +1179,8 @@ msgid " (startup)"
 msgstr " (стартап)"
 
 #: gammu/depend/nokia/dct4.c:497 gammu/depend/nokia/dct4.c:1006
-#, fuzzy
-#| msgid "Press any key to continue…"
 msgid "Press any key to continue…"
-msgstr "Натисніть будь-яку клавішу для продовження…"
+msgstr "Для продовження натисніть будь-яку клавішу…"
 
 #: gammu/depend/nokia/dct4.c:509
 #, c-format
@@ -1304,7 +1300,7 @@ msgstr "З'єднання з телефоном:"
 
 #: gammu/depend/nokia/dct4.c:1045
 msgid "Light sensor:"
-msgstr "Датчик світла:"
+msgstr "Датник світла:"
 
 #: gammu/depend/nokia/dct4.c:1046
 msgid "Power amplifier temperature:"
@@ -1803,12 +1799,10 @@ msgid "There is newer testing Gammu version available! (%s instead of %s)\n"
 msgstr ""
 
 #: gammu/gammu.c:332
-#, fuzzy
-#| msgid ""
-#| "Copyright \\(co 2003 - 2008 Michal Cihar E<lt>I<michal@cihar.com>E<gt>"
 msgid ""
 "Copyright (C) 2003 - 2018 Michal Cihar <michal@cihar.com> and other authors."
-msgstr "Copyright \\(co 2003 - 2008 Michal Cihar E<lt>I<michal@cihar.com>E<gt>"
+msgstr ""
+"Copyright (C) 2003 - 2018 Michal Cihar <michal@cihar.com> та інші автори."
 
 #: gammu/gammu.c:369
 msgid "standard input"
@@ -2247,10 +2241,8 @@ msgid "Sending sms from folder \"%s\", location %i\n"
 msgstr ""
 
 #: gammu/message.c:630 gammu/message.c:656
-#, fuzzy
-#| msgid "Waiting for network code."
 msgid "…waiting for network answer"
-msgstr "Очікування введення коду мережі."
+msgstr "...в очікуванні відповіді мережі"
 
 #: gammu/message.c:651
 #, c-format

@@ -2,15 +2,18 @@ name: Tests
 
 on: [push, pull_request]
 
+permissions:
+  contents: read
+
 jobs:
   linux:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     strategy:
       matrix:
-        args: [""]
+        args: ['']
         include:
-          - args: -DENABLE_GETOPT=OFF
-          - args: -DUSE_WCHAR_T=OFF
+        - args: -DENABLE_GETOPT=OFF
+        - args: -DUSE_WCHAR_T=OFF
         # TODO: Compiler gcc / clang
     env:
       CTEST_OUTPUT_ON_FAILURE: 1
@@ -18,7 +21,7 @@ jobs:
       TESTARGS: -DMYSQL_TESTING=on -DPSQL_TESTING=ON
     services:
       postgres:
-        image: postgres
+        image: postgres@sha256:1090bc3a8ccfb0b55f78a494d76f8d603434f7e4553543d6e807bc7bd6bbd17f
         env:
           POSTGRES_PASSWORD: smsd
           POSTGRES_USER: smsd
@@ -29,121 +32,122 @@ jobs:
           --health-timeout 5s
           --health-retries 5
         ports:
-          - 5432:5432
+        - 5432:5432
       mysql:
-        image: mysql
+        image: mysql@sha256:db32c8ec843c042a728efb0ac7aa814d6f010eaac8923e20ae0a849d09c5baf8
         env:
           MYSQL_DATABASE: smsd
           MYSQL_USER: smsd
           MYSQL_PASSWORD: smsd
           MYSQL_ROOT_PASSWORD: smsd
         options: >-
-            --health-cmd="mysqladmin --password=smsd ping"
-            --health-interval=10s
-            --health-timeout=5s
-            --health-retries=5
+          --health-cmd="mysqladmin --password=smsd ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
         ports:
-          - 3306:3306
+        - 3306:3306
     steps:
-      - uses: actions/checkout@v3
-      - name: apt
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libbluetooth-dev libusb-1.0-0-dev libgudev-1.0-dev unixodbc-dev libdbi-dev libdbd-sqlite3 libdbd-mysql libdbd-pgsql cmake cmake-data
-      - name: Prepare
-        run: |
-          mkdir _build
-          cd _build
-          ln -s ../codecov.yml .
-      - name: cmake
-        run: |
-          cd _build
-          #  -DCMAKE_C_COMPILER=$CC
-          cmake .. -DENABLE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Continuous -DONLINE_TESTING=ON $TESTARGS $ARGS
-      - name: build
-        run: make -C _build
-      - name: test
-        run: make -C _build test
-      - name: coverage
-        run: make -C _build gcov
-      - uses: codecov/codecov-action@v3
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+    - name: apt
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libbluetooth-dev libusb-1.0-0-dev libgudev-1.0-dev unixodbc-dev libdbi-dev libdbd-sqlite3 libdbd-mysql libdbd-pgsql cmake cmake-data
+    - name: Prepare
+      run: |
+        mkdir _build
+        cd _build
+        ln -s ../codecov.yml .
+    - name: cmake
+      run: |
+        cd _build
+        #  -DCMAKE_C_COMPILER=$CC
+        cmake .. -DENABLE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Continuous -DONLINE_TESTING=ON $TESTARGS $ARGS
+    - name: build
+      run: make -C _build
+    - name: test
+      run: make -C _build test
+    - name: coverage
+      run: make -C _build gcov
+    - uses: codecov/codecov-action@671740ac38dd9b0130fbe1cec585b89eea48d3de # v5
   windows:
-    runs-on: windows-2022
+    runs-on: windows-latest
     env:
       CTEST_OUTPUT_ON_FAILURE: 1
     steps:
-      - uses: actions/checkout@v3
-      - name: Install nsis
-        run: choco install nsis
-      - uses: ilammy/msvc-dev-cmd@v1
-        with:
-          arch: x64
-      - name: Start PostgreSQL on Windows
-        run: |
-          $pgService = Get-Service -Name postgresql*
-          Set-Service -InputObject $pgService -Status running -StartupType automatic
-          Start-Process -FilePath "$env:PGBIN\pg_isready" -Wait -PassThru
-      - name: Create PostgreSQL user on Windows
-        run: |
-          & $env:PGBIN\psql --command="CREATE USER smsd PASSWORD 'smsd'" --command="\du"
-      - name: Create PostgreSQL database
-        run: |
-          & $env:PGBIN\createdb --owner=smsd smsd
-          $env:PGPASSWORD = 'smsd'
-          & $env:PGBIN\psql --username=smsd --host=localhost --list smsd
-      - name: cmake
-        run: cmake -S . -B _build -DENABLE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Continuous -DONLINE_TESTING=ON -DPSQL_TESTING=ON
-      - name: build
-        run: cmake --build _build  --config Release --target package -- /verbosity:minimal
-      - name: test
-        run: |
-          cd _build
-          ctest --output-on-failure --no-compress-output --dashboard ExperimentalTest --build-config Release
-      - uses: codecov/codecov-action@v3
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+    - name: Install nsis
+      run: choco install nsis
+    - uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756 # v1
+      with:
+        arch: x64
+    - name: Start PostgreSQL on Windows
+      run: |
+        $pgService = Get-Service -Name postgresql*
+        Set-Service -InputObject $pgService -Status running -StartupType automatic
+        Start-Process -FilePath "$env:PGBIN\pg_isready" -Wait -PassThru
+    - name: Create PostgreSQL user on Windows
+      run: |
+        & $env:PGBIN\psql --command="CREATE USER smsd PASSWORD 'smsd'" --command="\du"
+    - name: Create PostgreSQL database
+      run: |
+        & $env:PGBIN\createdb --owner=smsd smsd
+        $env:PGPASSWORD = 'smsd'
+        & $env:PGBIN\psql --username=smsd --host=localhost --list smsd
+    - name: cmake
+      run: cmake -S . -B _build -DENABLE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Continuous -DONLINE_TESTING=ON -DPSQL_TESTING=ON
+    - name: build
+      run: cmake --build _build  --config Release --target package -- /verbosity:minimal
+    - name: test
+      run: |
+        cd _build
+        ctest --output-on-failure --no-compress-output --dashboard ExperimentalTest --build-config Release
+    - uses: codecov/codecov-action@671740ac38dd9b0130fbe1cec585b89eea48d3de # v5
   macos:
     runs-on: macos-latest
     env:
       CTEST_OUTPUT_ON_FAILURE: 1
     steps:
-      - uses: actions/checkout@v3
-      - name: Start PostgreSQL on MacOS
-        run: |
-          brew services start postgresql
-          echo "Check PostgreSQL service is running"
-          i=10
-          COMMAND='pg_isready'
-          while [ $i -gt 0 ]; do
-              echo "Check PostgreSQL service status"
-              eval $COMMAND && break
-              ((i--))
-              if [ $i == 0 ]; then
-                  echo "PostgreSQL service not ready, all attempts exhausted"
-                  exit 1
-              fi
-              echo "PostgreSQL service not ready, wait 10 more sec, attempts left: $i"
-              sleep 10
-          done
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+    - name: Start PostgreSQL on MacOS
+      run: |
+        brew install postgresql
+        brew services start postgresql
+        echo "Check PostgreSQL service is running"
+        i=10
+        COMMAND='pg_isready'
+        while [ $i -gt 0 ]; do
+            echo "Check PostgreSQL service status"
+            eval $COMMAND && break
+            ((i--))
+            if [ $i == 0 ]; then
+                echo "PostgreSQL service not ready, all attempts exhausted"
+                exit 1
+            fi
+            echo "PostgreSQL service not ready, wait 10 more sec, attempts left: $i"
+            sleep 10
+        done
       # Homebrew creates an account with the same name as the installing user, but no password
-      - name: Create PostgreSQL user
-        run: |
-          psql --command="CREATE USER smsd PASSWORD 'smsd'" --command="\du" postgres
-      - name: Create PostgreSQL database
-        run: |
-          createdb --owner=smsd smsd
-          PGPASSWORD=smsd psql --username=smsd --host=localhost --list smsd
-      - name: Prepare
-        run: |
-          mkdir _build
-          cd _build
-          ln -s ../codecov.yml .
-      - name: cmake
-        run: |
-          cd _build
-          cmake .. -DENABLE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Continuous -DONLINE_TESTING=ON -DPSQL_TESTING=ON
-      - name: build
-        run: make -C _build
-      - name: test
-        run: make -C _build test
-      - name: coverage
-        run: make -C _build gcov
-      - uses: codecov/codecov-action@v3
+    - name: Create PostgreSQL user
+      run: |
+        psql --command="CREATE USER smsd PASSWORD 'smsd'" --command="\du" postgres
+    - name: Create PostgreSQL database
+      run: |
+        createdb --owner=smsd smsd
+        PGPASSWORD=smsd psql --username=smsd --host=localhost --list smsd
+    - name: Prepare
+      run: |
+        mkdir _build
+        cd _build
+        ln -s ../codecov.yml .
+    - name: cmake
+      run: |
+        cd _build
+        cmake .. -DENABLE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Continuous -DONLINE_TESTING=ON -DPSQL_TESTING=ON
+    - name: build
+      run: make -C _build
+    - name: test
+      run: make -C _build test
+    - name: coverage
+      run: make -C _build gcov
+    - uses: codecov/codecov-action@671740ac38dd9b0130fbe1cec585b89eea48d3de # v5

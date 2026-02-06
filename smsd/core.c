@@ -141,7 +141,17 @@ void SMSD_SendSMSStatusCallback (GSM_StateMachine *sm, int status, int mr, void 
 	if (status == 0) {
 		Config->SendingSMSStatus = ERR_NONE;
 	} else {
+		/* Non-zero status indicates an error from the modem/phone.
+		 * Common cases:
+		 * - status=-1: Generic error from modem (but message might still be sent)
+		 * - status=CMS/CME error codes: Specific modem errors
+		 * Note: Some modems return errors even when message is successfully queued.
+		 */
 		Config->SendingSMSStatus = ERR_UNKNOWN;
+		if (status == -1 && mr == -1) {
+			SMSD_Log(DEBUG_INFO, Config, "Modem returned generic error (status=-1, reference=-1). "
+				"Check delivery reports or modem logs to verify if message was actually sent successfully");
+		}
 	}
 	Config->StatusCode = status;
 }
@@ -684,6 +694,11 @@ void SMSD_EnableGlobalDebug(GSM_SMSDConfig *Config)
 {
 	/* Gammu library wide logging to our log */
 	GSM_SetDebugFunction(SMSD_Log_Function, Config, GSM_GetGlobalDebug());
+}
+
+void SMSD_SetExitOnFailure(GSM_SMSDConfig *Config, gboolean enable)
+{
+	Config->exit_on_failure = enable;
 }
 
 /**
@@ -1816,6 +1831,12 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config)
 		}
 		if (Config->SendingSMSStatus != ERR_NONE) {
 			SMSD_LogError(DEBUG_INFO, Config, "Error getting send status of message", Config->SendingSMSStatus);
+			/* Log additional diagnostic information about the modem status code.
+			 * This helps diagnose issues where modems return errors but messages
+			 * are still successfully sent.
+			 */
+			SMSD_Log(DEBUG_INFO, Config, "Modem status code was %d, TPMR (TP-Message-Reference) was %d",
+				Config->StatusCode, Config->TPMR);
 			goto failure_unsent;
 		}
 		Config->Status->Sent++;
@@ -1842,6 +1863,13 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config)
 
 	return ERR_NONE;
 failure_unsent:
+	/* Note: We're marking this message as failed, but in some cases the message
+	 * may have actually been sent successfully by the modem/phone. This can happen
+	 * when the modem returns a generic error (status=-1) even though the message
+	 * was queued for sending. If you see duplicate messages being sent, check the
+	 * logs for "Modem status code" to determine if this is happening.
+	 * Consider checking with your modem manufacturer for proper error code handling.
+	 */
 	if (Config->RunOnFailure != NULL) {
 		SMSD_RunOn(Config->RunOnFailure, NULL, Config, Config->SMSID, "failure");
 	}
@@ -2032,12 +2060,12 @@ void SMSD_IncomingUSSDCallback(GSM_StateMachine *sm UNUSED, GSM_USSDMessage *uss
 /**
  * Handles SMS information messages (+CDSI/+CMTI)
  *
- * SMSD uses polling to read messages from MT memory, to avoid potential
- * conflicts only information on status reports stored in SR memory are handled.
+ * SMSD caches incoming SMS notifications from all memory types (SM, ME, SR)
+ * to ensure they are fetched and processed immediately when the notification
+ * arrives, rather than waiting for the next polling cycle.
  *
- * The amount of SR memory on a device is generally very small so it's unlikely
- * there would be an issue creating/reallocating the cache, if such an issue
- * occurs some or all status report information records will be lost.
+ * If memory allocation fails, some SMS notification records may be lost,
+ * but they should still be picked up by the regular polling mechanism.
  */
 void SMSD_IncomingSMSInfoCallback(GSM_StateMachine *s,  GSM_SMSMessage *sms, void *user_data)
 {
@@ -2045,13 +2073,17 @@ void SMSD_IncomingSMSInfoCallback(GSM_StateMachine *s,  GSM_SMSMessage *sms, voi
   GSM_AT_SMSInfo_Cache *Cache = &Priv->SMSInfoCache;
   GSM_SMSDConfig *Config = user_data;
   void *reallocated = NULL;
+  const char *message_type;
 
-  if (sms->PDU != SMS_Status_Report || sms->Memory != MEM_SR) {
-  	SMSD_Log(DEBUG_INFO, Config, "Ignoring incoming SMS info as not a Status Report in SR memory.");
-		return;
-	}
+  /* Determine the type of SMS for logging */
+  if (sms->PDU == SMS_Status_Report) {
+    message_type = "status report";
+  } else {
+    message_type = "SMS";
+  }
 
-  SMSD_Log(DEBUG_INFO, Config, "caching incoming status report information.");
+  SMSD_Log(DEBUG_INFO, Config, "Caching incoming %s information from %s memory.",
+           message_type, GSM_MemoryTypeToString(sms->Memory));
 
   if (Cache->cache_size <= Cache->cache_used) {
     if (Cache->smsInfo_records == NULL) {
@@ -2086,7 +2118,7 @@ void SMSD_IncomingSMSCallback(GSM_StateMachine *s,  GSM_SMSMessage *sms, void *u
 	GSM_SMSDConfig *Config = user_data;
 	GSM_Error error;
 
-	if(sms->PDU == 0) {
+	if(sms->State == 0) {
 		// assume we only have message information, not a full message, handoff to appropriate handler
 		SMSD_IncomingSMSInfoCallback(s, sms, user_data);
 		return;
@@ -2295,8 +2327,6 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 					errors++;
 					initerrors++;
 					continue;
-				} else {
-					errors = 0;
 				}
 			}
 
@@ -2306,18 +2336,16 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 			if(!SMSD_ProcessSMSInfoCache(Config)) {
 				errors++;
 				continue;
-			} else {
-				errors = 0;
 			}
 
 			/* read all incoming SMS */
 			if (!SMSD_CheckSMSStatus(Config)) {
 				errors++;
 				continue;
-			} else {
-				errors = 0;
 			}
 
+			/* All operations succeeded, reset error counter */
+			errors = 0;
 		}
 
 		/* time for preventive reset */
