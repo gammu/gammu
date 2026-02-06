@@ -2114,25 +2114,43 @@ void SMSD_IncomingSMSInfoCallback(GSM_StateMachine *s,  GSM_SMSMessage *sms, voi
  */
 void SMSD_IncomingSMSCallback(GSM_StateMachine *s,  GSM_SMSMessage *sms, void *user_data)
 {
-	GSM_MultiSMSMessage msms;
 	GSM_SMSDConfig *Config = user_data;
-	GSM_Error error;
 
+	/* For all incoming messages (both info-only and full messages),
+	 * cache them for processing later to avoid double counting.
+	 * This ensures all messages go through the same processing pipeline
+	 * in SMSD_ProcessSMSInfoCache or SMSD_ReadDeleteSMS. */
 	if(sms->State == 0) {
-		// assume we only have message information, not a full message, handoff to appropriate handler
+		// Message information only, cache it
 		SMSD_IncomingSMSInfoCallback(s, sms, user_data);
 		return;
 	}
 
-	SMSD_Log(DEBUG_INFO, Config, "processing incoming SMS.");
+	/* Full message received via callback (e.g., +CMT, +CDS).
+	 * These are typically NOT stored in phone memory, but for modems
+	 * configured with CNMI mode 2, they may be stored AND delivered.
+	 * To avoid double counting, we cache them instead of processing directly. */
+	if (sms->Location > 0 && sms->Memory != MEM_INVALID) {
+		/* Message has a location, cache it for later processing */
+		SMSD_Log(DEBUG_INFO, Config, "Caching incoming SMS with location %d in %s memory.",
+				 sms->Location, GSM_MemoryTypeToString(sms->Memory));
+		SMSD_IncomingSMSInfoCallback(s, sms, user_data);
+	} else {
+		GSM_MultiSMSMessage msms;
+		GSM_Error error;
 
-	memset(&msms, 0, sizeof(GSM_MultiSMSMessage));
-	msms.Number = 1;
-	msms.SMS[0] = *sms;
+		/* Message delivered in full without a storage location (e.g., +CMT, +CDS).
+		 * Process it immediately since it won't be found by polling. */
+		SMSD_Log(DEBUG_INFO, Config, "Processing incoming SMS delivered in full without storage location.");
 
-	error = SMSD_ProcessSMS(Config, &msms);
-	if(error != ERR_NONE)
-		SMSD_LogError(DEBUG_ERROR, Config, "Error processing SMS", error);
+		memset(&msms, 0, sizeof(GSM_MultiSMSMessage));
+		msms.Number = 1;
+		msms.SMS[0] = *sms;
+
+		error = SMSD_ProcessSMS(Config, &msms);
+		if(error != ERR_NONE)
+			SMSD_LogError(DEBUG_ERROR, Config, "Error processing SMS", error);
+	}
 }
 
 GSM_Error SMSD_ProcessSMSInfoCache(GSM_SMSDConfig *Config)
