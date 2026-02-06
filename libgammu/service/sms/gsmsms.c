@@ -754,9 +754,9 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, const unsi
 				smfprintf(di, "Ran out of buffer when parsing PDU!\n");
 				return ERR_CORRUPTED;
 			}
-			smfprintf(di, "WARNING: PDU claims %d bytes of data but only %d bytes available, truncating\n", 
+			smfprintf(di, "WARNING: PDU claims %d bytes of data but only %d bytes available, truncating\n",
 				  datalength, available_data);
-			
+
 			/* Adjust UDL to match available data */
 			if (SMS->Coding == SMS_Coding_Default_No_Compression) {
 				/* For 7-bit encoding, UDL is in septets (characters)
@@ -765,7 +765,7 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, const unsi
 				 * Note: We don't round up because partial septets can't hold data
 				 */
 				udl = (available_data * 8) / 7;
-				
+
 				/* Recalculate datalength (bytes needed) with adjusted UDL
 				 * udl septets = (udl * 7) bits
 				 * Bytes needed = (udl * 7) / 8, rounded up for partial bytes
