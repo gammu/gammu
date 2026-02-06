@@ -1312,6 +1312,7 @@ GSM_Error ATGEN_GetSMSList(GSM_StateMachine *s, gboolean first)
 	GSM_Error error;
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 	int used = 0;
+	int totalUsed = 0;
 
 	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_DISABLE_CMGL)) {
 		return ERR_NOTSUPPORTED;
@@ -1338,8 +1339,8 @@ GSM_Error ATGEN_GetSMSList(GSM_StateMachine *s, gboolean first)
 	 * similar models where CPMS reports 0 messages right after SMS reception.
 	 */
 	if (Priv->Manufacturer == AT_Huawei && first) {
-		int total_used = Priv->LastSMSStatus.SIMUsed + Priv->LastSMSStatus.PhoneUsed;
-		if (total_used == 0) {
+		totalUsed = Priv->LastSMSStatus.SIMUsed + Priv->LastSMSStatus.PhoneUsed;
+		if (totalUsed == 0) {
 			smprintf(s, "Huawei modem reports 0 messages, waiting and retrying...\n");
 			usleep(500000); /* Wait 500ms for modem to update memory status */
 			error = ATGEN_GetSMSStatus(s, &Priv->LastSMSStatus);
