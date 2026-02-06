@@ -83,7 +83,7 @@ static GSM_Error SMSDMySQL_Connect(GSM_SMSDConfig * Config)
 	char *pport;
 	char *socketname = NULL;
 #ifdef MYSQL_OPT_RECONNECT
-	my_bool reconnect = 1;
+	unsigned int reconnect = 1;
 #endif
 
 	pport = strstr(Config->host, ":");
