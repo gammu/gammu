@@ -82,6 +82,9 @@ static GSM_Error SMSDMySQL_Connect(GSM_SMSDConfig * Config)
 	int error;
 	char *pport;
 	char *socketname = NULL;
+#ifdef MYSQL_OPT_RECONNECT
+	my_bool reconnect = 1;
+#endif
 
 	pport = strstr(Config->host, ":");
 	if (pport) {
@@ -101,6 +104,10 @@ static GSM_Error SMSDMySQL_Connect(GSM_SMSDConfig * Config)
 		SMSD_Log(DEBUG_ERROR, Config, "MySQL allocation failed!");
 		return ERR_DB_DRIVER;
 	}
+#ifdef MYSQL_OPT_RECONNECT
+	/* Enable automatic reconnection for MySQL < 8.0 */
+	mysql_options(Config->conn.my, MYSQL_OPT_RECONNECT, &reconnect);
+#endif
 	if (!mysql_real_connect(Config->conn.my, Config->host, Config->user, Config->password, Config->database, port, socketname, 0)) {
 		SMSD_Log(DEBUG_ERROR, Config, "Error connecting to database!");
 		SMSDMySQL_LogError(Config);
