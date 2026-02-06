@@ -1795,8 +1795,6 @@ GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *message, unsig
 				error = ATGEN_EncodeText(
 					s, message->Text, UnicodeLength(message->Text), hexreq, hexlength, length2
 				);
-				/* Restore original charset */
-				Priv->Charset = orig_charset;
 				if (error != ERR_NONE) {
 					return error;
 				}
