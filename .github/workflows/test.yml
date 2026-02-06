@@ -76,11 +76,6 @@ jobs:
       CTEST_OUTPUT_ON_FAILURE: 1
     steps:
     - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
-    - name: Install nsis
-      run: choco install nsis
-    - uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756 # v1
-      with:
-        arch: x64
     - name: Start PostgreSQL on Windows
       run: |
         $pgService = Get-Service -Name postgresql*
@@ -94,10 +89,11 @@ jobs:
         & $env:PGBIN\createdb --owner=smsd smsd
         $env:PGPASSWORD = 'smsd'
         & $env:PGBIN\psql --username=smsd --host=localhost --list smsd
-    - name: cmake
-      run: cmake -S . -B _build -DENABLE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Continuous -DONLINE_TESTING=ON -DPSQL_TESTING=ON
-    - name: build
-      run: cmake --build _build  --config Release --target package -- /verbosity:minimal
+    - name: Build Windows installer
+      uses: ./.github/actions/windows-installer
+      with:
+        build-type: Release
+        enable-testing: 'true'
     - name: test
       run: |
         cd _build
