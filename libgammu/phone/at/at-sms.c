@@ -1792,13 +1792,6 @@ GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *message, unsig
 		case SMS_Coding_Default_No_Compression:
 			/* If not SMS with UDH, it's as normal text */
 			if (message->UDH.Type == UDH_NoUDH) {
-				/* For SMS text mode body, temporarily use GSM charset if HEX is set.
-				 * HEX charset hex-encodes output (meant for AT command parameters),
-				 * but SMS text mode expects plain GSM alphabet text. */
-				GSM_AT_Charset orig_charset = Priv->Charset;
-				if (Priv->Charset == AT_CHARSET_HEX) {
-					Priv->Charset = AT_CHARSET_GSM;
-				}
 				error = ATGEN_EncodeText(
 					s, message->Text, UnicodeLength(message->Text), hexreq, hexlength, length2
 				);
