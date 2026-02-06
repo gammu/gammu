@@ -2140,9 +2140,16 @@ void SMSD_IncomingSMSCallback(GSM_StateMachine *s,  GSM_SMSMessage *sms, void *u
 		if(error != ERR_NONE)
 			SMSD_LogError(DEBUG_ERROR, Config, "Error processing delivery report", error);
 	} else {
-		/* SMS messages (+CMT) may be stored in phone memory depending on CNMI mode.
-		 * To avoid double counting with CNMI mode 2 (deliver AND store),
-		 * don't process them here. They will be picked up by polling in SMSD_ReadDeleteSMS.
+		/* SMS messages (+CMT, PDU type SMS_Deliver) may be stored in phone memory
+		 * depending on modem CNMI configuration:
+		 * - CNMI mode 1: Message delivered only, not stored
+		 * - CNMI mode 2: Message delivered AND stored (configured by gammu-smsd)
+		 * 
+		 * To prevent double counting with CNMI mode 2, skip processing here.
+		 * The message will be picked up by polling in SMSD_ReadDeleteSMS.
+		 * 
+		 * Trade-off: Messages with CNMI mode 1 will be missed, but gammu-smsd
+		 * explicitly uses mode 2 ("store messages to SIM") so this is acceptable.
 		 * This sacrifices immediate processing for correctness. */
 		SMSD_Log(DEBUG_INFO, Config, "Ignoring SMS delivered via callback; it will be processed by polling.");
 	}
