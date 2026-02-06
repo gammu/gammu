@@ -523,6 +523,7 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, const unsi
 	int i,w;
 	unsigned char	output[161];
 	int			datalength;
+	int			udl;  /* User Data Length - may be adjusted if buffer is truncated */
 	gboolean have_data = FALSE;
 	GSM_Error error;
 
@@ -723,10 +724,15 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, const unsi
 
 	/* Data */
 	if (SMS->PDU == SMS_Submit || SMS->PDU == SMS_Deliver || have_data) {
-		datalength = buffer[pos];
+		/* Read User Data Length from PDU */
+		udl = buffer[pos];
+		
+		/* Calculate how many bytes of data this represents based on encoding */
+		datalength = udl;
 		if (SMS->Coding == SMS_Coding_Default_No_Compression) {
-			datalength = (datalength * 7) / 8;
-			if ((buffer[pos] * 7) % 8 != 0) {
+			/* For 7-bit encoding, UDL is in septets, convert to bytes */
+			datalength = (udl * 7) / 8;
+			if ((udl * 7) % 8 != 0) {
 				datalength++;
 			}
 		} else if (SMS->Coding == SMS_Coding_Unicode_Compression) {
@@ -737,7 +743,12 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, const unsi
 			return ERR_NOTSUPPORTED;
 		}
 
+		/* Check if we have enough data in the buffer
+		 * Data starts at pos+1 (after UDL byte) and extends for datalength bytes
+		 * So we need pos+1+datalength <= length, or pos+datalength+1 <= length
+		 */
 		if (pos + datalength + 1 > length) {
+			/* Calculate actual available data (subtracting 1 for the UDL byte itself) */
 			int available_data = length - pos - 1;
 			if (available_data < 0) {
 				smfprintf(di, "Ran out of buffer when parsing PDU!\n");
@@ -745,28 +756,29 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, const unsi
 			}
 			smfprintf(di, "WARNING: PDU claims %d bytes of data but only %d bytes available, truncating\n", 
 				  datalength, available_data);
+			
 			/* Adjust UDL to match available data */
 			if (SMS->Coding == SMS_Coding_Default_No_Compression) {
-				/* For 7-bit encoding, calculate the original UDL from available bytes */
-				int adjusted_udl = (available_data * 8) / 7;
+				/* For 7-bit encoding, calculate the UDL from available bytes
+				 * available_data bytes can hold (available_data * 8) / 7 septets
+				 */
+				udl = (available_data * 8) / 7;
 				if ((available_data * 8) % 7 != 0) {
-					adjusted_udl++;
+					udl++;
 				}
 				/* Don't exceed the original UDL */
-				if (adjusted_udl > buffer[pos]) {
-					adjusted_udl = buffer[pos];
+				if (udl > buffer[pos]) {
+					udl = buffer[pos];
 				}
 				/* Recalculate datalength with adjusted UDL */
-				datalength = (adjusted_udl * 7) / 8;
-				if ((adjusted_udl * 7) % 8 != 0) {
+				datalength = (udl * 7) / 8;
+				if ((udl * 7) % 8 != 0) {
 					datalength++;
 				}
-				/* Update the UDL in buffer to match */
-				((unsigned char*)buffer)[pos] = adjusted_udl;
 			} else {
 				/* For 8-bit and Unicode encoding, UDL is the byte count */
+				udl = available_data;
 				datalength = available_data;
-				((unsigned char*)buffer)[pos] = available_data;
 			}
 		}
 		if (final_pos != NULL) {
@@ -792,19 +804,19 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, const unsi
 					i+=7;
 					w=(i-SMS->UDH.Length)%i;
 				} while (w<0);
-				SMS->Length=buffer[pos] - (SMS->UDH.Length*8 + w) / 7;
+				SMS->Length=udl - (SMS->UDH.Length*8 + w) / 7;
 				if (SMS->Length < 0) {
 					smfprintf(di, "No SMS text!\n");
 					SMS->Length = 0;
 					break;
 				}
-				GSM_UnpackEightBitsToSeven(w, buffer[pos]-SMS->UDH.Length, SMS->Length, buffer+(pos + 1+SMS->UDH.Length), output);
+				GSM_UnpackEightBitsToSeven(w, udl-SMS->UDH.Length, SMS->Length, buffer+(pos + 1+SMS->UDH.Length), output);
 				smfprintf(di, "7 bit SMS, length %i\n",SMS->Length);
 				DecodeDefault (SMS->Text, output, SMS->Length, TRUE, NULL);
 				smfprintf(di, "%s\n",DecodeUnicodeString(SMS->Text));
 				break;
 			case SMS_Coding_8bit:
-				SMS->Length=buffer[pos] - SMS->UDH.Length;
+				SMS->Length=udl - SMS->UDH.Length;
 				if (SMS->Length < 0) {
 					smfprintf(di, "Invalid message length!\n");
 					return ERR_CORRUPTED;
@@ -816,7 +828,7 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, const unsi
 #endif
 				break;
 			case SMS_Coding_Unicode_No_Compression:
-				SMS->Length=(buffer[pos] - SMS->UDH.Length) / 2;
+				SMS->Length=(udl - SMS->UDH.Length) / 2;
 				if (SMS->Length < 0) {
 					smfprintf(di, "Invalid message length!\n");
 					return ERR_CORRUPTED;
