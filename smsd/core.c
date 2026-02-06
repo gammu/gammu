@@ -1834,7 +1834,7 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config)
 			 * This helps diagnose issues where modems return errors but messages
 			 * are still successfully sent.
 			 */
-			SMSD_Log(DEBUG_INFO, Config, "Modem status code was %d, TPMR (message reference) was %d",
+			SMSD_Log(DEBUG_INFO, Config, "Modem status code was %d, TPMR (TP-Message-Reference) was %d",
 				Config->StatusCode, Config->TPMR);
 			goto failure_unsent;
 		}
