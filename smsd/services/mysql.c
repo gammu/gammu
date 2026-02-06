@@ -139,9 +139,11 @@ static GSM_Error SMSDMySQL_Query(GSM_SMSDConfig * Config, const char *query, SQL
 	if (mysql_ping(Config->conn.my) != 0) {
 		error = mysql_errno(Config->conn.my);
 		SMSD_Log(DEBUG_INFO, Config, "Connection ping failed: %s", mysql_error(Config->conn.my));
-		if (error == CR_SERVER_GONE_ERROR || error == CR_SERVER_LOST || error == CR_SERVER_HANDSHAKE_ERR) { /* connection lost */
+		if (error == CR_SERVER_GONE_ERROR || error == CR_SERVER_LOST || error == CR_SERVER_HANDSHAKE_ERR) {
 			return ERR_DB_TIMEOUT;
 		}
+		/* Other ping failures should also prevent query execution */
+		return ERR_SQL;
 	}
 
 	if (mysql_query(Config->conn.my, query) != 0) {
