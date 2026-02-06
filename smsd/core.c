@@ -2303,22 +2303,23 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 				}
 			}
 
-			initerrors = 0;
-
 			/* process SMS info cache */
 			if(!SMSD_ProcessSMSInfoCache(Config)) {
 				errors++;
+				initerrors++;
 				continue;
 			}
 
 			/* read all incoming SMS */
 			if (!SMSD_CheckSMSStatus(Config)) {
 				errors++;
+				initerrors++;
 				continue;
 			}
 
-			/* All operations succeeded, reset error counter */
+			/* All operations succeeded, reset error counters */
 			errors = 0;
+			initerrors = 0;
 		}
 
 		/* time for preventive reset */
