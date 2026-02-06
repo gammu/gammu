@@ -2500,6 +2500,8 @@ GSM_Error ATGEN_IncomingSMSInfo(GSM_Protocol_Message *msg, GSM_StateMachine *s)
   char *buffer = msg->Buffer;
   GSM_SMSMessage sms;
   GSM_Error error;
+  int modem_location;
+  unsigned char folderid;
 
   char mem_tag[3]; // eg: "SM\0"
   const size_t cmd_len = 6;
@@ -2526,7 +2528,7 @@ GSM_Error ATGEN_IncomingSMSInfo(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 
   error = ATGEN_ParseReply(s, buffer + cmd_len, " @r, @i",
                            &mem_tag, sizeof(mem_tag),
-                           &sms.Location);
+                           &modem_location);
   if (error != ERR_NONE)
     return error;
 
@@ -2539,16 +2541,19 @@ GSM_Error ATGEN_IncomingSMSInfo(GSM_Protocol_Message *msg, GSM_StateMachine *s)
   switch(sms.Memory) {
     case MEM_ME:
     case MEM_MT:
-      sms.Folder = Priv->SIMSMSMemory == AT_AVAILABLE ? 3 : 1;
+      folderid = Priv->SIMSMSMemory == AT_AVAILABLE ? 3 : 1;
       break;
     case MEM_SM:
     case MEM_SR:
-      sms.Folder = 1;
+      folderid = 1;
       break;
     default:
       smprintf(s, "Unsupported memory type\n");
       return ERR_NOTSUPPORTED;
   }
+
+  /* Convert modem location to Gammu API location, handling F_SMS_LOCATION_0 */
+  ATGEN_SetSMSLocation(s, &sms, folderid, modem_location);
 
   s->User.IncomingSMS(s, &sms, s->User.IncomingSMSUserData);
 
