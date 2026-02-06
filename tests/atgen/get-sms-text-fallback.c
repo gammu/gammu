@@ -10,8 +10,8 @@ GSM_Error ATGEN_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms);
  * but gammu initially tries to parse it as PDU mode. The fix should detect
  * this and fall back to text mode parsing automatically.
  * 
- * Reproduces: https://github.com/gammu/gammu/issues/XXX
- * Response format from FT4232H modem: +CMGR: "REC READ","+3933******",,"16/05/10,10:33:31+08"
+ * Reproduces issue with FT4232H and similar modems that send text mode
+ * responses even when PDU mode is requested.
  */
 void get_sms_text_mode_fallback(void)
 {
