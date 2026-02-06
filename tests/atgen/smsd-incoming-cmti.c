@@ -18,7 +18,7 @@ int main(void)
   GSM_SMSDStatus status;
   GSM_SMSDConfig *config = SMSD_NewConfig("test");
   GSM_Protocol_Message msg;
-  
+
   /* This simulates a +CMTI notification for an incoming SMS in SM memory,
    * which is the case for Huawei E303/E3531 modems */
   const char *event = "+CMTI: \"SM\",1\r\n";
@@ -73,7 +73,7 @@ int main(void)
   s->Phone.Data.RequestMsg = &msg;
   error = ATGEN_DispatchMessage(s);
   test_result(error == ERR_NONE);
-  
+
   /* Verify that the SMS info was cached (not ignored) */
   test_result(Priv->SMSInfoCache.cache_used == 1);
   test_result(Priv->SMSInfoCache.smsInfo_records[0].Memory == MEM_SM);
