@@ -1991,6 +1991,8 @@ GSM_Error ATGEN_ReplySendSMS(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 		return ERR_UNKNOWN;
 	case AT_Reply_OK:
  		smprintf(s, "SMS sent OK\n");
+		/* Clear edit mode after successful send */
+		s->Protocol.Data.AT.EditMode = FALSE;
 
 		/* Number of lines */
 		i = 0;
@@ -2013,6 +2015,8 @@ GSM_Error ATGEN_ReplySendSMS(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 
 	case AT_Reply_CMSError:
  		smprintf(s, "Error %i\n",Priv->ErrorCode);
+		/* Clear edit mode on error to avoid "UNKNOWN frame" errors */
+		s->Protocol.Data.AT.EditMode = FALSE;
 
  		if (s->User.SendSMSStatus != NULL) {
 			s->User.SendSMSStatus(s, Priv->ErrorCode, -1, s->User.SendSMSStatusUserData);
@@ -2020,12 +2024,17 @@ GSM_Error ATGEN_ReplySendSMS(GSM_Protocol_Message *msg, GSM_StateMachine *s)
  		return ATGEN_HandleCMSError(s);
 	case AT_Reply_CMEError:
  		smprintf(s, "Error %i\n",Priv->ErrorCode);
+		/* Clear edit mode on error to avoid "UNKNOWN frame" errors */
+		s->Protocol.Data.AT.EditMode = FALSE;
 
  		if (s->User.SendSMSStatus != NULL) {
 			s->User.SendSMSStatus(s, Priv->ErrorCode, -1, s->User.SendSMSStatusUserData);
 		}
 		return ATGEN_HandleCMEError(s);
 	case AT_Reply_Error:
+		/* Clear edit mode on error to avoid "UNKNOWN frame" errors */
+		s->Protocol.Data.AT.EditMode = FALSE;
+
  		if (s->User.SendSMSStatus != NULL) {
 			s->User.SendSMSStatus(s, -1, -1, s->User.SendSMSStatusUserData);
 		}
