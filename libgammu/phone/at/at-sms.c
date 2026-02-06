@@ -1312,6 +1312,7 @@ GSM_Error ATGEN_GetSMSList(GSM_StateMachine *s, gboolean first)
 	GSM_Error error;
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 	int used = 0;
+	int totalUsed = 0;
 
 	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_DISABLE_CMGL)) {
 		return ERR_NOTSUPPORTED;
@@ -1329,6 +1330,24 @@ GSM_Error ATGEN_GetSMSList(GSM_StateMachine *s, gboolean first)
 
 	if (error != ERR_NONE) {
 		return error;
+	}
+
+	/*
+	 * Huawei modems have a timing issue where incoming SMS are not immediately
+	 * reflected in CPMS status. We retry with a delay to allow the modem to
+	 * update its internal message counters. This fixes issue with E3531 and
+	 * similar models where CPMS reports 0 messages right after SMS reception.
+	 */
+	if (Priv->Manufacturer == AT_Huawei && first) {
+		totalUsed = Priv->LastSMSStatus.SIMUsed + Priv->LastSMSStatus.PhoneUsed;
+		if (totalUsed == 0) {
+			smprintf(s, "Huawei modem reports 0 messages, waiting and retrying...\n");
+			usleep(500000); /* Wait 500ms for modem to update memory status */
+			error = ATGEN_GetSMSStatus(s, &Priv->LastSMSStatus);
+			if (error != ERR_NONE) {
+				return error;
+			}
+		}
 	}
 	if (first) {
 		Priv->SMSReadFolder = 1;
