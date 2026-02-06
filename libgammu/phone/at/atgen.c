@@ -1780,14 +1780,18 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 					int printable_count = 0;
 					int total_chars = 0;
 					int unpacked_len;
+					/* Threshold for determining if data is plain 8-bit text */
+					const int USSD_PLAIN_TEXT_THRESHOLD_PERCENT = 80;
 					
 					DecodeHexBin(packed, hex_encoded, hex_len);
 					
 					/* Check if decoded data looks like plain 8-bit text (ASCII/Latin-1)
-					 * rather than 7-bit packed GSM data */
+					 * rather than 7-bit packed GSM data. Some modems send USSD responses
+					 * as hex-encoded 8-bit text even when DCS=0 (which normally indicates
+					 * GSM default alphabet). */
 					for (i = 0; i < bin_len && i < sizeof(packed) - 1; i++) {
 						unsigned char c = packed[i];
-						if (c == 0) break; /* null terminator */
+						/* Don't break on null - 7-bit GSM data can contain nulls */
 						total_chars++;
 						/* Count printable ASCII chars and whitespace */
 						if ((c >= 0x20 && c <= 0x7E) || c == 0x0A || c == 0x0D) {
@@ -1795,10 +1799,12 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 						}
 					}
 					
-					/* If most characters (>80%) are printable, treat as plain 8-bit text */
-					if (total_chars > 0 && (printable_count * 100 / total_chars) > 80) {
+					/* If most characters are printable, treat as plain 8-bit text */
+					if (total_chars > 0 && (printable_count * 100 / total_chars) > USSD_PLAIN_TEXT_THRESHOLD_PERCENT) {
 						smprintf(s, "USSD appears to be plain 8-bit text (%d/%d printable)\n", 
 						         printable_count, total_chars);
+						/* Convert 8-bit text (Latin-1/ASCII) directly to Unicode.
+						 * This handles modems that send plain text USSD responses. */
 						EncodeUnicode(ussd.Text, packed, bin_len);
 					} else {
 						/* Traditional 7-bit GSM packed encoding */
