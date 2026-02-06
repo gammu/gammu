@@ -393,7 +393,7 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 		model = GetModelData(s, NULL, s->Phone.Data.Model, NULL);
 #ifdef GSM_ENABLE_ATGEN
 		/* With ATgen and auto model we can work with unknown models too */
-		if (s->ConnectionType==GCT_AT || s->ConnectionType==GCT_PROXYAT || s->ConnectionType==GCT_IRDAAT || s->ConnectionType==GCT_DKU2AT) {
+		if (s->ConnectionType==GCT_AT || s->ConnectionType==GCT_PROXYAT || s->ConnectionType==GCT_BLUEAT || s->ConnectionType==GCT_IRDAAT || s->ConnectionType==GCT_DKU2AT) {
 #ifdef GSM_ENABLE_ALCATEL
 			/* If phone provides Alcatel specific functions, enable them */
 			if (model->model[0] != 0 && GSM_IsPhoneFeatureAvailable(model, F_ALCATEL)) {
@@ -904,9 +904,12 @@ autodetect:
 		}
 
 		error=s->Phone.Functions->SetPower(s, 1);
-		if (error != ERR_NONE && error != ERR_NOTSUPPORTED) {
+		if (error != ERR_NONE && error != ERR_NOTSUPPORTED && error != ERR_UNKNOWN) {
 			GSM_LogError(s, "Init:Phone->SetPower" , error);
 			return error;
+		}
+		if (error == ERR_UNKNOWN) {
+			smprintf(s,"[Ignoring unknown error from SetPower, continuing...]\n");
 		}
 
 		error=s->Phone.Functions->PostConnect(s);
