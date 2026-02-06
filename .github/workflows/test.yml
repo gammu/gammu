@@ -89,7 +89,7 @@ jobs:
         & $env:PGBIN\createdb --owner=smsd smsd
         $env:PGPASSWORD = 'smsd'
         & $env:PGBIN\psql --username=smsd --host=localhost --list smsd
-    - name: Build Windows installer
+    - name: Configure and build
       uses: ./.github/actions/windows-installer
       with:
         build-type: Release
