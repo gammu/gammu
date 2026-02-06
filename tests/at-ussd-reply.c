@@ -80,6 +80,8 @@ int main(int argc, char **argv)
 	Priv->SMSMode = SMS_AT_PDU;
 	if (argv[3][0] == 'U') {
 		Priv->Charset = AT_CHARSET_UCS2;
+	} else if (argv[3][0] == 'H') {
+		Priv->Charset = AT_CHARSET_HEX;
 	} else {
 		Priv->Charset = AT_CHARSET_GSM;
 	}

@@ -699,9 +699,11 @@ if (WITH_ATGEN)
         string(REGEX REPLACE ".*-(.*)\\.dump" "\\1" PHONE_MODEL ${TESTMESSAGE})
         if (${TESTMESSAGE} MATCHES "^U")
             set(TEST_UNICODE_FLAG "U")
-        else (${TESTMESSAGE} MATCHES "^U")
+        elseif (${TESTMESSAGE} MATCHES "^H")
+            set(TEST_UNICODE_FLAG "H")
+        else ()
             set(TEST_UNICODE_FLAG "G")
-        endif (${TESTMESSAGE} MATCHES "^U")
+        endif ()
         add_test("at-ussd-reply-${TESTNAME}"
             "${GAMMU_TEST_PATH}/at-ussd-reply${CMAKE_EXECUTABLE_SUFFIX}"
             "${Gammu_SOURCE_DIR}/tests/at-ussd/${TESTMESSAGE}" "${PHONE_MODEL}" "${TEST_UNICODE_FLAG}")

@@ -1774,9 +1774,37 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 
 			if (coding == SMS_Coding_Default_No_Compression) {
 				if (Priv->Charset == AT_CHARSET_HEX || GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_ENCODED_USSD)) {
-					DecodeHexBin(packed, hex_encoded, strlen(hex_encoded));
-					GSM_UnpackEightBitsToSeven(0, strlen(hex_encoded), sizeof(decoded), packed, decoded);
-					DecodeDefault(ussd.Text, decoded, strlen(decoded), TRUE, NULL);
+					size_t hex_len = strlen(hex_encoded);
+					size_t bin_len = hex_len / 2;
+					size_t i;
+					int printable_count = 0;
+					int total_chars = 0;
+					int unpacked_len;
+					
+					DecodeHexBin(packed, hex_encoded, hex_len);
+					
+					/* Check if decoded data looks like plain 8-bit text (ASCII/Latin-1)
+					 * rather than 7-bit packed GSM data */
+					for (i = 0; i < bin_len && i < sizeof(packed) - 1; i++) {
+						unsigned char c = packed[i];
+						if (c == 0) break; /* null terminator */
+						total_chars++;
+						/* Count printable ASCII chars and whitespace */
+						if ((c >= 0x20 && c <= 0x7E) || c == 0x0A || c == 0x0D) {
+							printable_count++;
+						}
+					}
+					
+					/* If most characters (>80%) are printable, treat as plain 8-bit text */
+					if (total_chars > 0 && (printable_count * 100 / total_chars) > 80) {
+						smprintf(s, "USSD appears to be plain 8-bit text (%d/%d printable)\n", 
+						         printable_count, total_chars);
+						EncodeUnicode(ussd.Text, packed, bin_len);
+					} else {
+						/* Traditional 7-bit GSM packed encoding */
+						unpacked_len = GSM_UnpackEightBitsToSeven(0, hex_len, sizeof(decoded), packed, decoded);
+						DecodeDefault(ussd.Text, decoded, unpacked_len, TRUE, NULL);
+					}
 				} else {
 					error = ATGEN_DecodeText(s, hex_encoded, strlen(hex_encoded), ussd.Text, sizeof(ussd.Text) - 1, FALSE, FALSE);
 					if (error != ERR_NONE) {
