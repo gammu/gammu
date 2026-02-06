@@ -11,7 +11,7 @@
 --
 
 CREATE TABLE `gammu` (
-  `Version` integer NOT NULL default '0' PRIMARY KEY
+  `Version` integer NOT NULL default 0 PRIMARY KEY
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 --
@@ -34,12 +34,12 @@ CREATE TABLE `inbox` (
   `Coding` enum('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression') NOT NULL default 'Default_No_Compression',
   `UDH` text NOT NULL,
   `SMSCNumber` varchar(20) NOT NULL default '',
-  `Class` integer NOT NULL default '-1',
+  `Class` integer NOT NULL default -1,
   `TextDecoded` text NOT NULL,
   `ID` integer unsigned NOT NULL auto_increment,
   `RecipientID` text NOT NULL,
   `Processed` enum('false','true') NOT NULL default 'false',
-  `Status` integer NOT NULL default '-1',
+  `Status` integer NOT NULL default -1,
   PRIMARY KEY `ID` (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;
 
@@ -64,11 +64,11 @@ CREATE TABLE `outbox` (
   `DestinationNumber` varchar(20) NOT NULL default '',
   `Coding` enum('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression') NOT NULL default 'Default_No_Compression',
   `UDH` text,
-  `Class` integer default '-1',
+  `Class` integer default -1,
   `TextDecoded` text NOT NULL,
   `ID` integer unsigned NOT NULL auto_increment,
   `MultiPart` enum('false','true') default 'false',
-  `RelativeValidity` integer default '-1',
+  `RelativeValidity` integer default -1,
   `SenderID` varchar(255),
   `SendingTimeOut` timestamp NULL default CURRENT_TIMESTAMP,
   `DeliveryReport` enum('default','yes','no') default 'default',
@@ -76,7 +76,7 @@ CREATE TABLE `outbox` (
   `Retries` int(3) default 0,
   `Priority` integer default 0,
   `Status` enum('SendingOK','SendingOKNoReport','SendingError','DeliveryOK','DeliveryFailed','DeliveryPending','DeliveryUnknown','Error','Reserved') NOT NULL default 'Reserved',
-  `StatusCode` integer NOT NULL default '-1',
+  `StatusCode` integer NOT NULL default -1,
   PRIMARY KEY `ID` (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
@@ -98,12 +98,12 @@ CREATE TABLE `outbox_multipart` (
   `Text` text,
   `Coding` enum('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression') NOT NULL default 'Default_No_Compression',
   `UDH` text,
-  `Class` integer default '-1',
+  `Class` integer default -1,
   `TextDecoded` text,
-  `ID` integer unsigned NOT NULL default '0',
-  `SequencePosition` integer NOT NULL default '1',
+  `ID` integer unsigned NOT NULL default 0,
+  `SequencePosition` integer NOT NULL default 1,
   `Status` enum('SendingOK','SendingOKNoReport','SendingError','DeliveryOK','DeliveryFailed','DeliveryPending','DeliveryUnknown','Error','Reserved') NOT NULL default 'Reserved',
-  `StatusCode` integer NOT NULL default '-1',
+  `StatusCode` integer NOT NULL default -1,
   PRIMARY KEY (`ID`, `SequencePosition`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
@@ -156,17 +156,17 @@ CREATE TABLE `sentitems` (
   `Coding` enum('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression') NOT NULL default 'Default_No_Compression',
   `UDH` text NOT NULL,
   `SMSCNumber` varchar(20) NOT NULL default '',
-  `Class` integer NOT NULL default '-1',
+  `Class` integer NOT NULL default -1,
   `TextDecoded` text NOT NULL,
-  `ID` integer unsigned NOT NULL default '0',
+  `ID` integer unsigned NOT NULL default 0,
   `SenderID` varchar(255) NOT NULL,
-  `SequencePosition` integer NOT NULL default '1',
+  `SequencePosition` integer NOT NULL default 1,
   `Status` enum('SendingOK','SendingOKNoReport','SendingError','DeliveryOK','DeliveryFailed','DeliveryPending','DeliveryUnknown','Error') NOT NULL default 'SendingOK',
-  `StatusError` integer NOT NULL default '-1',
-  `TPMR` integer NOT NULL default '-1',
-  `RelativeValidity` integer NOT NULL default '-1',
+  `StatusError` integer NOT NULL default -1,
+  `TPMR` integer NOT NULL default -1,
+  `RelativeValidity` integer NOT NULL default -1,
   `CreatorID` text NOT NULL,
-  `StatusCode` integer NOT NULL default '-1',
+  `StatusCode` integer NOT NULL default -1,
   PRIMARY KEY (`ID`, `SequencePosition`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
