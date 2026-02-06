@@ -759,18 +759,17 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, const unsi
 			
 			/* Adjust UDL to match available data */
 			if (SMS->Coding == SMS_Coding_Default_No_Compression) {
-				/* For 7-bit encoding, calculate the UDL from available bytes
-				 * available_data bytes can hold (available_data * 8) / 7 septets
+				/* For 7-bit encoding, UDL is in septets (characters)
+				 * available_data bytes = (available_data * 8) bits
+				 * Number of complete septets = (available_data * 8) / 7
+				 * Note: We don't round up because partial septets can't hold data
 				 */
 				udl = (available_data * 8) / 7;
-				if ((available_data * 8) % 7 != 0) {
-					udl++;
-				}
-				/* Don't exceed the original UDL */
-				if (udl > buffer[pos]) {
-					udl = buffer[pos];
-				}
-				/* Recalculate datalength with adjusted UDL */
+				
+				/* Recalculate datalength (bytes needed) with adjusted UDL
+				 * udl septets = (udl * 7) bits
+				 * Bytes needed = (udl * 7) / 8, rounded up for partial bytes
+				 */
 				datalength = (udl * 7) / 8;
 				if ((udl * 7) % 8 != 0) {
 					datalength++;
