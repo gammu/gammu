@@ -141,7 +141,17 @@ void SMSD_SendSMSStatusCallback (GSM_StateMachine *sm, int status, int mr, void 
 	if (status == 0) {
 		Config->SendingSMSStatus = ERR_NONE;
 	} else {
+		/* 
+		 * Non-zero status indicates an error from the modem/phone.
+		 * Common cases:
+		 * - status=-1: Generic error from modem (but message might still be sent)
+		 * - status=CMS/CME error codes: Specific modem errors
+		 * Note: Some modems return errors even when message is successfully queued.
+		 */
 		Config->SendingSMSStatus = ERR_UNKNOWN;
+		if (status == -1 && mr == -1) {
+			SMSD_Log(DEBUG_INFO, Config, "Modem returned generic error (status=-1), but this may not indicate actual failure");
+		}
 	}
 	Config->StatusCode = status;
 }
@@ -1821,6 +1831,13 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config)
 		}
 		if (Config->SendingSMSStatus != ERR_NONE) {
 			SMSD_LogError(DEBUG_INFO, Config, "Error getting send status of message", Config->SendingSMSStatus);
+			/* 
+			 * Log additional diagnostic information about the modem status code.
+			 * This helps diagnose issues where modems return errors but messages
+			 * are still successfully sent.
+			 */
+			SMSD_Log(DEBUG_INFO, Config, "Modem status code was %d, TPMR (message reference) was %d",
+				Config->StatusCode, Config->TPMR);
 			goto failure_unsent;
 		}
 		Config->Status->Sent++;
@@ -1847,6 +1864,14 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config)
 
 	return ERR_NONE;
 failure_unsent:
+	/* 
+	 * Note: We're marking this message as failed, but in some cases the message
+	 * may have actually been sent successfully by the modem/phone. This can happen
+	 * when the modem returns a generic error (status=-1) even though the message
+	 * was queued for sending. If you see duplicate messages being sent, check the
+	 * logs for "Modem status code" to determine if this is happening.
+	 * Consider checking with your modem manufacturer for proper error code handling.
+	 */
 	if (Config->RunOnFailure != NULL) {
 		SMSD_RunOn(Config->RunOnFailure, NULL, Config, Config->SMSID, "failure");
 	}
