@@ -158,13 +158,22 @@ static GSM_Error serial_close(GSM_StateMachine *s)
 	if (d->hPhone < 0) return ERR_NONE;
 
 	/* Restores old settings */
-	tcsetattr(d->hPhone, TCSANOW, &d->old_settings);
+	if (tcsetattr(d->hPhone, TCSANOW, &d->old_settings) == -1) {
+		/* Log error but continue with cleanup */
+		GSM_OSErrorInfo(s, "tcsetattr failed in serial_close");
+	}
 
 	/* Remove advisory lock */
-	flock(d->hPhone, LOCK_UN);
+	if (flock(d->hPhone, LOCK_UN) != 0) {
+		/* Log error but continue with cleanup */
+		GSM_OSErrorInfo(s, "flock unlock failed in serial_close");
+	}
 
 	/* Closes device */
-	close(d->hPhone);
+	if (close(d->hPhone) != 0) {
+		/* Log error but continue with cleanup */
+		GSM_OSErrorInfo(s, "close failed in serial_close");
+	}
 
 	d->hPhone = -1;
 
@@ -203,14 +212,20 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 
 	/* Try advisory locks */
 	if (flock(d->hPhone, LOCK_EX | LOCK_NB) != 0) {
-		if (errno == EWOULDBLOCK) {
+		int orig_errno = errno;
+		if (orig_errno == EWOULDBLOCK) {
+			close(d->hPhone);
+			d->hPhone = -1;
 			GSM_OSErrorInfo(s, "failed to lock device, probably opened by other process");
 			return ERR_DEVICEOPENERROR;
+		} else {
+			/* Log other flock errors but continue - they're not fatal */
+			GSM_OSErrorInfo(s, "warning: flock failed but continuing");
 		}
 	}
 
 	if (tcgetattr(d->hPhone, &d->old_settings) == -1) {
-		close(d->hPhone);
+		serial_close(s);
 		GSM_OSErrorInfo(s,"tcgetattr in serial_open");
 		return ERR_DEVICEOPENERROR;
 	}
