@@ -424,6 +424,10 @@ typedef struct {
    */
   GSM_AT_Feature		SRSaveSMS;
 	/**
+	 * Does the phone require third parameter in AT+CPMS for receive memory?
+	 */
+	gboolean			CPMSReceiveMemory;
+	/**
 	 * Cache for incoming SMS info.
 	 */
 	GSM_AT_SMSInfo_Cache SMSInfoCache;
