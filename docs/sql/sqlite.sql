@@ -5,8 +5,8 @@ CREATE TABLE gammu (
 INSERT INTO gammu (Version) VALUES (17);
 
 CREATE TABLE inbox (
-  UpdatedInDB NUMERIC NOT NULL DEFAULT (datetime('now')),
-  ReceivingDateTime NUMERIC NOT NULL DEFAULT (datetime('now')),
+  UpdatedInDB NUMERIC NOT NULL DEFAULT (datetime('now', 'localtime')),
+  ReceivingDateTime NUMERIC NOT NULL DEFAULT (datetime('now', 'localtime')),
   Text TEXT NOT NULL,
   SenderNumber TEXT NOT NULL DEFAULT '',
   Coding TEXT NOT NULL DEFAULT 'Default_No_Compression',
@@ -24,13 +24,13 @@ CREATE TABLE inbox (
 
 CREATE TRIGGER update_inbox_time UPDATE ON inbox
   BEGIN
-    UPDATE inbox SET UpdatedInDB = datetime('now') WHERE ID = old.ID;
+    UPDATE inbox SET UpdatedInDB = datetime('now', 'localtime') WHERE ID = old.ID;
   END;
 
 CREATE TABLE outbox (
-  UpdatedInDB NUMERIC NOT NULL DEFAULT (datetime('now')),
-  InsertIntoDB NUMERIC NOT NULL DEFAULT (datetime('now')),
-  SendingDateTime NUMERIC NOT NULL DEFAULT (datetime('now')),
+  UpdatedInDB NUMERIC NOT NULL DEFAULT (datetime('now', 'localtime')),
+  InsertIntoDB NUMERIC NOT NULL DEFAULT (datetime('now', 'localtime')),
+  SendingDateTime NUMERIC NOT NULL DEFAULT (datetime('now', 'localtime')),
   SendBefore time NOT NULL DEFAULT '23:59:59',
   SendAfter time NOT NULL DEFAULT '00:00:00',
   Text TEXT,
@@ -63,7 +63,7 @@ CREATE INDEX outbox_sender ON outbox(SenderID);
 
 CREATE TRIGGER update_outbox_time UPDATE ON outbox
   BEGIN
-    UPDATE outbox SET UpdatedInDB = datetime('now') WHERE ID = old.ID;
+    UPDATE outbox SET UpdatedInDB = datetime('now', 'localtime') WHERE ID = old.ID;
   END;
 
 CREATE TABLE outbox_multipart (
@@ -86,9 +86,9 @@ CREATE TABLE outbox_multipart (
 
 CREATE TABLE phones (
   ID TEXT NOT NULL,
-  UpdatedInDB NUMERIC NOT NULL DEFAULT (datetime('now')),
-  InsertIntoDB NUMERIC NOT NULL DEFAULT (datetime('now')),
-  TimeOut NUMERIC NOT NULL DEFAULT (datetime('now')),
+  UpdatedInDB NUMERIC NOT NULL DEFAULT (datetime('now', 'localtime')),
+  InsertIntoDB NUMERIC NOT NULL DEFAULT (datetime('now', 'localtime')),
+  TimeOut NUMERIC NOT NULL DEFAULT (datetime('now', 'localtime')),
   Send TEXT NOT NULL DEFAULT 'no',
   Receive TEXT NOT NULL DEFAULT 'no',
   IMEI TEXT PRIMARY KEY NOT NULL,
@@ -104,13 +104,13 @@ CREATE TABLE phones (
 
 CREATE TRIGGER update_phones_time UPDATE ON phones
   BEGIN
-    UPDATE phones SET UpdatedInDB = datetime('now') WHERE IMEI = old.IMEI;
+    UPDATE phones SET UpdatedInDB = datetime('now', 'localtime') WHERE IMEI = old.IMEI;
   END;
 
 CREATE TABLE sentitems (
-  UpdatedInDB NUMERIC NOT NULL DEFAULT (datetime('now')),
-  InsertIntoDB NUMERIC NOT NULL DEFAULT (datetime('now')),
-  SendingDateTime NUMERIC NOT NULL DEFAULT (datetime('now')),
+  UpdatedInDB NUMERIC NOT NULL DEFAULT (datetime('now', 'localtime')),
+  InsertIntoDB NUMERIC NOT NULL DEFAULT (datetime('now', 'localtime')),
+  SendingDateTime NUMERIC NOT NULL DEFAULT (datetime('now', 'localtime')),
   DeliveryDateTime NUMERIC NULL,
   Text TEXT NOT NULL,
   DestinationNumber TEXT NOT NULL DEFAULT '',
@@ -143,5 +143,5 @@ CREATE INDEX sentitems_sender ON sentitems(SenderID);
 
 CREATE TRIGGER update_sentitems_time UPDATE ON sentitems
   BEGIN
-    UPDATE sentitems SET UpdatedInDB = datetime('now') WHERE ID = old.ID;
+    UPDATE sentitems SET UpdatedInDB = datetime('now', 'localtime') WHERE ID = old.ID;
   END;
