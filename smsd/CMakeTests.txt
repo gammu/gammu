@@ -56,9 +56,11 @@ if (WITH_BACKUP)
         endif()
     endmacro(smsd_testsuite _driver)
 
-    if (LIBDBI_FOUND AND SH_BIN AND SQLITE_BIN AND SED_BIN)
+    if (LIBDBI_FOUND AND LIBDBI_SQLITE3_DRIVER_FOUND AND SH_BIN AND SQLITE_BIN AND SED_BIN)
         smsd_testsuite("dbi-sqlite3")
-    endif (LIBDBI_FOUND AND SH_BIN AND SQLITE_BIN AND SED_BIN)
+    elseif (LIBDBI_FOUND AND SH_BIN AND SQLITE_BIN AND SED_BIN)
+        message("DBI-SQLite3 tests disabled, SQLite3 driver for libdbi not found (install libdbd-sqlite3 or similar package)")
+    endif (LIBDBI_FOUND AND LIBDBI_SQLITE3_DRIVER_FOUND AND SH_BIN AND SQLITE_BIN AND SED_BIN)
 
     if (SH_BIN)
         smsd_testsuite("files-unicode")
