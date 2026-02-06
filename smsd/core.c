@@ -2037,12 +2037,12 @@ void SMSD_IncomingUSSDCallback(GSM_StateMachine *sm UNUSED, GSM_USSDMessage *uss
 /**
  * Handles SMS information messages (+CDSI/+CMTI)
  *
- * SMSD uses polling to read messages from MT memory, to avoid potential
- * conflicts only information on status reports stored in SR memory are handled.
+ * SMSD caches incoming SMS notifications from all memory types (SM, ME, SR)
+ * to ensure they are fetched and processed immediately when the notification
+ * arrives, rather than waiting for the next polling cycle.
  *
- * The amount of SR memory on a device is generally very small so it's unlikely
- * there would be an issue creating/reallocating the cache, if such an issue
- * occurs some or all status report information records will be lost.
+ * If memory allocation fails, some SMS notification records may be lost,
+ * but they should still be picked up by the regular polling mechanism.
  */
 void SMSD_IncomingSMSInfoCallback(GSM_StateMachine *s,  GSM_SMSMessage *sms, void *user_data)
 {
@@ -2050,13 +2050,17 @@ void SMSD_IncomingSMSInfoCallback(GSM_StateMachine *s,  GSM_SMSMessage *sms, voi
   GSM_AT_SMSInfo_Cache *Cache = &Priv->SMSInfoCache;
   GSM_SMSDConfig *Config = user_data;
   void *reallocated = NULL;
+  const char *message_type;
 
-  if (sms->PDU != SMS_Status_Report || sms->Memory != MEM_SR) {
-  	SMSD_Log(DEBUG_INFO, Config, "Ignoring incoming SMS info as not a Status Report in SR memory.");
-		return;
-	}
+  /* Determine the type of SMS for logging */
+  if (sms->PDU == SMS_Status_Report) {
+    message_type = "status report";
+  } else {
+    message_type = "SMS";
+  }
 
-  SMSD_Log(DEBUG_INFO, Config, "caching incoming status report information.");
+  SMSD_Log(DEBUG_INFO, Config, "Caching incoming %s information from %s memory.",
+           message_type, GSM_MemoryTypeToString(sms->Memory));
 
   if (Cache->cache_size <= Cache->cache_used) {
     if (Cache->smsInfo_records == NULL) {
