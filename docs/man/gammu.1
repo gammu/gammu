@@ -268,17 +268,25 @@ behaves same like sendsms.
 .UNINDENT
 .INDENT 0.0
 .TP
-.B getallsms \-pbk
+.B getallsms [\-pbk]
 Get all SMS from phone. In some phones you will have also SMS templates
 and info about locations used to save Picture Images. With each sms you
 will see location. If you want to get such sms from phone alone, use
 \fBgammu getsms\fP\&.
+.sp
+The optional \fB\-pbk\fP parameter enables phonebook lookup. When specified,
+Gammu will read phonebook entries from both phone memory and SIM card,
+then display contact names alongside phone numbers in the SMS output
+instead of showing only the phone numbers.
 .UNINDENT
 .INDENT 0.0
 .TP
-.B geteachsms \-pbk
+.B geteachsms [\-pbk]
 Similarly to \fBgammu getallsms\fP\&. Difference is, that
-links all concatenated sms
+links all concatenated sms.
+.sp
+The optional \fB\-pbk\fP parameter works the same as in \fBgammu getallsms\fP,
+enabling phonebook lookup to display contact names with phone numbers.
 .UNINDENT
 .INDENT 0.0
 .TP
