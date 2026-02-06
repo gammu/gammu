@@ -59,7 +59,7 @@ if (WITH_BACKUP)
     if (LIBDBI_FOUND AND LIBDBI_SQLITE3_DRIVER_FOUND AND SH_BIN AND SQLITE_BIN AND SED_BIN)
         smsd_testsuite("dbi-sqlite3")
     elseif (LIBDBI_FOUND AND SH_BIN AND SQLITE_BIN AND SED_BIN)
-        message("DBI-SQLite3 tests disabled, SQLite3 driver for libdbi not found")
+        message("DBI-SQLite3 tests disabled, SQLite3 driver for libdbi not found (install libdbd-sqlite3 or similar package)")
     endif (LIBDBI_FOUND AND LIBDBI_SQLITE3_DRIVER_FOUND AND SH_BIN AND SQLITE_BIN AND SED_BIN)
 
     if (SH_BIN)
