@@ -109,28 +109,58 @@ static unsigned int SMSD_ComputeSMSHash(const GSM_SMSMessage *sms)
 	char checksum[33]; /* MD5 hex string is 32 chars + null terminator */
 	unsigned char buffer[1024];
 	int len = 0;
-	unsigned int hash;
+	int ret;
+	unsigned int hash = 0;
 
 	/* Build a buffer with message components */
 	/* Add sender number */
-	len += snprintf((char *)buffer + len, sizeof(buffer) - len, "%s|",
-	                (char *)sms->Number);
+	ret = snprintf((char *)buffer + len, sizeof(buffer) - len, "%s|",
+	               (char *)sms->Number);
+	if (ret < 0 || ret >= (int)(sizeof(buffer) - len)) {
+		/* Truncation occurred, use what we have */
+		len = sizeof(buffer) - 1;
+		buffer[len] = '\0';
+	} else {
+		len += ret;
+	}
 
 	/* Add timestamp */
-	len += snprintf((char *)buffer + len, sizeof(buffer) - len, 
-	                "%04d%02d%02d%02d%02d%02d|",
-	                sms->DateTime.Year, sms->DateTime.Month, sms->DateTime.Day,
-	                sms->DateTime.Hour, sms->DateTime.Minute, sms->DateTime.Second);
+	if (len < (int)sizeof(buffer) - 1) {
+		ret = snprintf((char *)buffer + len, sizeof(buffer) - len, 
+		               "%04d%02d%02d%02d%02d%02d|",
+		               sms->DateTime.Year, sms->DateTime.Month, sms->DateTime.Day,
+		               sms->DateTime.Hour, sms->DateTime.Minute, sms->DateTime.Second);
+		if (ret < 0 || ret >= (int)(sizeof(buffer) - len)) {
+			len = sizeof(buffer) - 1;
+			buffer[len] = '\0';
+		} else {
+			len += ret;
+		}
+	}
 
 	/* Add message text */
-	len += snprintf((char *)buffer + len, sizeof(buffer) - len, "%s",
-	                (char *)sms->Text);
+	if (len < (int)sizeof(buffer) - 1) {
+		ret = snprintf((char *)buffer + len, sizeof(buffer) - len, "%s",
+		               (char *)sms->Text);
+		if (ret < 0 || ret >= (int)(sizeof(buffer) - len)) {
+			len = sizeof(buffer) - 1;
+			buffer[len] = '\0';
+		} else {
+			len += ret;
+		}
+	}
 
 	/* Compute MD5 hash */
 	CalculateMD5(buffer, len, checksum);
 
 	/* Convert first 8 hex characters of MD5 to unsigned int */
-	sscanf(checksum, "%08X", &hash);
+	if (sscanf(checksum, "%08X", &hash) != 1) {
+		/* If parsing fails, use a simple fallback based on buffer content */
+		hash = (unsigned int)buffer[0] << 24 | 
+		       (unsigned int)buffer[1] << 16 |
+		       (unsigned int)buffer[2] << 8 |
+		       (unsigned int)buffer[3];
+	}
 
 	return hash;
 }
