@@ -244,6 +244,68 @@ void cmti_sm_1(void)
   cleanup_state_machine(s);
 }
 
+void cdsi_sr_text_mode(void)
+{
+  GSM_Error error;
+  GSM_SMSMessage sms;
+  GSM_StateMachine *s = setup_state_machine();
+  GSM_Phone_ATGENData *Priv = setup_at_engine(s);
+  GSM_Protocol_Message msg;
+  char number[100];
+
+  const char *event = "+CDSI: \"SR\",1\r";
+
+  /* This simulates the text mode response from the issue:
+   * AT+CMGR=1
+   * +CMGR: "REC UNREAD",6,21,"123456789",129,"22/12/01,07:33:58+04","22/12/01,07:33:59+04",0
+   */
+  const char *responses[] = {
+      /* AT+CPMS=? */
+      "+CPMS: (\"ME\",\"MT\",\"SM\",\"SR\"),(\"ME\",\"MT\",\"SM\"),(\"ME\",\"SM\")\r",
+      "OK\r\n",
+      /* AT+CMGR=1 - text mode status report */
+      "+CMGR: \"REC UNREAD\",6,21,\"123456789\",129,\"22/12/01,07:33:58+04\",\"22/12/01,07:33:59+04\",0\r",
+      "OK\r\n",
+  };
+  SET_RESPONSES(responses);
+  bind_response_handling(s);
+
+  puts(__func__);
+
+  memset(&sms, 0, sizeof(sms));
+  s->Phone.Data.EnableIncomingSMS = TRUE;
+  s->Phone.Data.RequestID = ID_None;
+  s->User.IncomingSMS = &IncomingSMS;
+  s->User.IncomingSMSUserData = &sms;
+
+  msg.Length = strlen(event);
+  msg.Buffer = (char*)event;
+  msg.Type = 0;
+
+  s->Phone.Data.RequestMsg = &msg;
+  Priv->SRSMSMemory = AT_AVAILABLE;
+  /* Force text mode with details like some modems */
+  Priv->SMSMode = SMS_AT_TXT;
+  Priv->SMSTextDetails = TRUE;
+  Priv->SMSMemory = MEM_SR;
+  /* Pre-setup charset to avoid extra commands */
+  Priv->Charset = AT_CHARSET_GSM;
+  Priv->NormalCharset = AT_CHARSET_GSM;
+  Priv->UnicodeCharset = AT_CHARSET_UCS2;
+  error = ATGEN_DispatchMessage(s);
+  test_result(error == ERR_NONE);
+  test_result(sms.Location == 1);
+  test_result(sms.Memory == MEM_SR);
+  test_result(sms.PDU == SMS_Status_Report);
+  
+  /* Verify the phone number was parsed correctly */
+  DecodeUnicode(sms.Number, number);
+  printf("Parsed number: '%s'\n", number);
+  test_result(strcmp(number, "123456789") == 0);
+
+  cleanup_state_machine(s);
+}
+
 int main(void)
 {
   ignore_if_incoming_sms_disabled();
@@ -252,4 +314,5 @@ int main(void)
   skip_if_memory_disabled();
   cdsi_sr_0();
   cmti_sm_1();
+  cdsi_sr_text_mode();
 }
