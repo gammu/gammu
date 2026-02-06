@@ -5,11 +5,11 @@ GSM_Error ATGEN_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms);
 
 /**
  * Test for text mode fallback when PDU mode parsing fails.
- * 
+ *
  * This test reproduces the issue where a modem sends text mode SMS response
  * but gammu initially tries to parse it as PDU mode. The fix should detect
  * this and fall back to text mode parsing automatically.
- * 
+ *
  * Reproduces issue with FT4232H and similar modems that send text mode
  * responses even when PDU mode is requested.
  */
@@ -20,8 +20,8 @@ void get_sms_text_mode_fallback(void)
   GSM_SMSMessage *sms = &msms.SMS[0];
   GSM_StateMachine *s = setup_state_machine();
   GSM_Phone_ATGENData *Priv = setup_at_engine(s);
-  
-  /* 
+
+  /*
    * Simulate responses from a modem that uses text mode even though
    * gammu set it to PDU mode. This happens with some USB serial adapters
    * like FT4232H.
@@ -69,7 +69,7 @@ void get_sms_text_mode_fallback_unread(void)
   GSM_SMSMessage *sms = &msms.SMS[0];
   GSM_StateMachine *s = setup_state_machine();
   GSM_Phone_ATGENData *Priv = setup_at_engine(s);
-  
+
   const char *responses[] = {
       "+CPMS: (\"ME\",\"SM\",\"SR\"),(\"ME\",\"SM\")\r",
       "OK\r\n",

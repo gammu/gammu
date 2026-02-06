@@ -706,7 +706,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 				/* Check if this might be a text mode response */
 				const char *text_mode_check = strstr(buffer, "+CMGR:");
 				gboolean use_text_mode = FALSE;
-				
+
 				if (text_mode_check != NULL) {
 					text_mode_check += 6; /* Skip "+CMGR:" */
 					while (*text_mode_check == ' ') text_mode_check++;
@@ -716,11 +716,11 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 						use_text_mode = TRUE;
 					}
 				}
-				
+
 				if (!use_text_mode) {
 					return error;
 				}
-				
+
 				/* Fall through to text mode parsing by not returning */
 			} else {
 				/* Siemens MC35 (only ?) */
@@ -731,7 +731,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 				error = ATGEN_DecodePDUMessage(s, GetLineString(msg->Buffer,&Priv->Lines,3), state);
 				return error;
 			}
-			
+
 			/* If we reach here, we're falling through to text mode parsing */
 			FALLTHROUGH
 		case SMS_AT_TXT:
