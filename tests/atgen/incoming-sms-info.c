@@ -298,7 +298,7 @@ void cdsi_sr_text_mode(void)
   test_result(sms.Memory == MEM_SR);
   /* After fetching the full SMS, it should be a status report */
   test_result(sms.PDU == SMS_Status_Report);
-  
+
   /* Verify the phone number was parsed correctly */
   DecodeUnicode(sms.Number, number);
   printf("Parsed number: '%s'\n", number);
