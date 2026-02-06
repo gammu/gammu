@@ -149,7 +149,7 @@ void SMSD_SendSMSStatusCallback (GSM_StateMachine *sm, int status, int mr, void 
 		 */
 		Config->SendingSMSStatus = ERR_UNKNOWN;
 		if (status == -1 && mr == -1) {
-			SMSD_Log(DEBUG_INFO, Config, "Modem returned generic error (status=-1), but this may not indicate actual failure");
+			SMSD_Log(DEBUG_INFO, Config, "Modem returned generic error (status=-1, reference=-1), but this may not indicate actual failure");
 		}
 	}
 	Config->StatusCode = status;
