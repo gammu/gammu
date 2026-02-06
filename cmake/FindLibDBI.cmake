@@ -3,6 +3,7 @@
 #  LIBDBI_INCLUDE_DIR, where to find bluetooth.h
 #  LIBDBI_LIBRARIES, the libraries needed to use libdbi.
 #  LIBDBI_FOUND, If false, do not try to use libdbi.
+#  LIBDBI_SQLITE3_DRIVER_FOUND, If true, SQLite3 driver for DBI is available.
 #
 # Copyright (c) 2009, Michal Cihar, <michal@cihar.com>
 #
@@ -27,6 +28,29 @@ if (NOT LIBDBI_FOUND)
         if (HAVE_DBI_INTEGER_SIZEMASK)
             message(STATUS "Found libdbi: ${LIBDBI_INCLUDE_DIR}, ${LIBDBI_LIBRARIES}")
             set(LIBDBI_FOUND TRUE CACHE INTERNAL "libdbi found")
+            
+            # Check for SQLite3 driver availability
+            # Look for the driver library in common locations
+            find_library(LIBDBI_SQLITE3_DRIVER
+                NAMES dbdsqlite3 libdbdsqlite3
+                PATHS
+                    /usr/lib/dbd
+                    /usr/local/lib/dbd
+                    /usr/lib/x86_64-linux-gnu/dbd
+                    /usr/lib/i386-linux-gnu/dbd
+                    /usr/lib64/dbd
+                    /usr/lib32/dbd
+                    /opt/local/lib/dbd
+                PATH_SUFFIXES dbd
+                NO_DEFAULT_PATH
+            )
+            if (LIBDBI_SQLITE3_DRIVER)
+                set(LIBDBI_SQLITE3_DRIVER_FOUND TRUE CACHE INTERNAL "libdbi SQLite3 driver found")
+                message(STATUS "Found libdbi SQLite3 driver: ${LIBDBI_SQLITE3_DRIVER}")
+            else()
+                set(LIBDBI_SQLITE3_DRIVER_FOUND FALSE CACHE INTERNAL "libdbi SQLite3 driver found")
+                message(STATUS "libdbi SQLite3 driver not found")
+            endif()
         else (HAVE_DBI_INTEGER_SIZEMASK)
             message(STATUS "Found libdbi, but it is too old!")
             set(LIBDBI_FOUND FALSE CACHE INTERNAL "libdbi found")
@@ -40,5 +64,5 @@ if (NOT LIBDBI_FOUND)
         message(STATUS "libdbi not found.")
     endif(LIBDBI_INCLUDE_DIR AND LIBDBI_LIBRARIES)
 
-    mark_as_advanced(LIBDBI_INCLUDE_DIR LIBDBI_LIBRARIES)
+    mark_as_advanced(LIBDBI_INCLUDE_DIR LIBDBI_LIBRARIES LIBDBI_SQLITE3_DRIVER LIBDBI_SQLITE3_DRIVER_FOUND)
 endif (NOT LIBDBI_FOUND)
