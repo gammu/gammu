@@ -159,7 +159,7 @@ static void SMSD_MarkMessageProcessed(GSM_SMSDConfig *Config, unsigned int hash)
 {
 	/* Initialize cache if needed */
 	if (Config->ProcessedMessagesHash == NULL) {
-		Config->ProcessedMessagesHash = (unsigned int *)malloc(SMSD_PROCESSED_MESSAGES_CACHE_SIZE * sizeof(unsigned int));
+		Config->ProcessedMessagesHash = (unsigned int *)calloc(SMSD_PROCESSED_MESSAGES_CACHE_SIZE, sizeof(unsigned int));
 		if (Config->ProcessedMessagesHash == NULL) {
 			SMSD_Log(DEBUG_ERROR, Config, "Failed to allocate processed messages cache");
 			return;
