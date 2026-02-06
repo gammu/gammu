@@ -1526,7 +1526,6 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 	Priv->ErrorCode     	= 0;
 
 	/* Skip empty lines from the end (Huawei E1752 sends extra blank lines) */
-	line = NULL;
 	while (i > 0) {
 		line = GetLineString(msg->Buffer,&Priv->Lines,i);
 		if (line != NULL && line[0] != '\0') {
@@ -1535,11 +1534,10 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 		}
 		smprintf(s, "Skipping empty line at position %d\n", i);
 		i--;
-		line = NULL;
 	}
 
-	/* If we didn't find any non-empty lines, use empty string */
-	if (line == NULL) {
+	/* If we skipped all lines, use empty string to avoid checking invalid line 0 */
+	if (i == 0) {
 		line = "";
 	}
 
