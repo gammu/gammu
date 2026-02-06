@@ -2091,7 +2091,7 @@ void SMSD_IncomingSMSCallback(GSM_StateMachine *s,  GSM_SMSMessage *sms, void *u
 	GSM_SMSDConfig *Config = user_data;
 	GSM_Error error;
 
-	if(sms->PDU == 0 || (sms->PDU == SMS_Status_Report && sms->Memory == MEM_SR)) {
+	if(sms->State == 0) {
 		// assume we only have message information, not a full message, handoff to appropriate handler
 		SMSD_IncomingSMSInfoCallback(s, sms, user_data);
 		return;
