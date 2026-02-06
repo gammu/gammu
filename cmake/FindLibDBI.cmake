@@ -28,7 +28,7 @@ if (NOT LIBDBI_FOUND)
         if (HAVE_DBI_INTEGER_SIZEMASK)
             message(STATUS "Found libdbi: ${LIBDBI_INCLUDE_DIR}, ${LIBDBI_LIBRARIES}")
             set(LIBDBI_FOUND TRUE CACHE INTERNAL "libdbi found")
-            
+
             # Check for SQLite3 driver availability
             # Look for the driver library in common locations
             find_library(LIBDBI_SQLITE3_DRIVER
