@@ -18,7 +18,6 @@ jobs:
     env:
       CTEST_OUTPUT_ON_FAILURE: 1
       ARGS: ${{ matrix.args }}
-      TESTARGS: -DMYSQL_TESTING=on -DPSQL_TESTING=ON
     services:
       postgres:
         image: postgres@sha256:1090bc3a8ccfb0b55f78a494d76f8d603434f7e4553543d6e807bc7bd6bbd17f
@@ -62,7 +61,7 @@ jobs:
       run: |
         cd _build
         #  -DCMAKE_C_COMPILER=$CC
-        cmake .. -DENABLE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Continuous -DONLINE_TESTING=ON $TESTARGS $ARGS
+        cmake .. -DENABLE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Continuous -DONLINE_TESTING=ON -DMYSQL_TESTING=on -DPSQL_TESTING=ON $ARGS
     - name: build
       run: make -C _build
     - name: test
