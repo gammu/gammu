@@ -137,12 +137,12 @@ GSM_Error ATGEN_ReplyGetSMSMemories(GSM_Protocol_Message *msg, GSM_StateMachine 
 			/* Count parameter sets by counting opening parentheses in the response */
 			char *search_pos = msg->Buffer;
 			int param_count = 0;
-			
+
 			while ((search_pos = strchr(search_pos, '(')) != NULL) {
 				param_count++;
 				search_pos++;
 			}
-			
+
 			if (param_count >= 3) {
 				smprintf(s, "Phone requires third parameter in AT+CPMS (receive memory)\n");
 				Priv->CPMSReceiveMemory = TRUE;
@@ -249,41 +249,41 @@ GSM_Error ATGEN_GetSMSMemories(GSM_StateMachine *s)
 
 /**
  * Builds AT+CPMS command with correct number of parameters based on phone capabilities.
- * 
+ *
  * \param s State machine structure.
  * \param memory_str Memory type string (e.g., "SM", "ME").
  * \param writeable Whether to set write memory (second parameter).
  * \param command Buffer to store the command.
  * \param command_size Size of the command buffer.
- * 
+ *
  * \return Number of characters written to command buffer, or 0 on error.
  *         If return value >= command_size, the output was truncated.
  */
-static size_t ATGEN_BuildCPMSCommand(GSM_StateMachine *s, const char *memory_str, 
+static size_t ATGEN_BuildCPMSCommand(GSM_StateMachine *s, const char *memory_str,
                                       gboolean writeable, unsigned char *command, size_t command_size)
 {
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 	int len;
-	
+
 	if (writeable && Priv->CPMSReceiveMemory) {
 		/* Need three parameters: read, write, receive */
-		len = snprintf(command, command_size, "AT+CPMS=\"%s\",\"%s\",\"%s\"\r", 
+		len = snprintf(command, command_size, "AT+CPMS=\"%s\",\"%s\",\"%s\"\r",
 		               memory_str, memory_str, memory_str);
 	} else if (writeable) {
 		/* Need two parameters: read, write */
-		len = snprintf(command, command_size, "AT+CPMS=\"%s\",\"%s\"\r", 
+		len = snprintf(command, command_size, "AT+CPMS=\"%s\",\"%s\"\r",
 		               memory_str, memory_str);
 	} else {
 		/* Need one parameter: read only */
 		len = snprintf(command, command_size, "AT+CPMS=\"%s\"\r", memory_str);
 	}
-	
+
 	/* Check for truncation */
 	if (len < 0 || (size_t)len >= command_size) {
 		smprintf(s, "Warning: CPMS command buffer too small\n");
 		return 0;
 	}
-	
+
 	return (size_t)len;
 }
 
@@ -319,7 +319,7 @@ GSM_Error ATGEN_SetSMSMemory(GSM_StateMachine *s, gboolean SIM, gboolean for_wri
 			return ERR_NOTSUPPORTED;
 		}
 	}
-	
+
 	if (SIM) {
 		if (Priv->SMSMemory == MEM_SM && (Priv->SMSMemoryWrite || !for_write)) {
 			return ERR_NONE;
@@ -327,7 +327,7 @@ GSM_Error ATGEN_SetSMSMemory(GSM_StateMachine *s, gboolean SIM, gboolean for_wri
 		if (Priv->SIMSMSMemory == AT_NOTAVAILABLE) {
 			return ERR_NOTSUPPORTED;
 		}
-		
+
 		memory_str = "SM";
 		smprintf(s, "Setting SMS memory type to SM\n");
 		cpmsCmdReqLength = ATGEN_BuildCPMSCommand(s, memory_str, for_write, cpmsCmdReq, sizeof(cpmsCmdReq));
@@ -355,7 +355,7 @@ GSM_Error ATGEN_SetSMSMemory(GSM_StateMachine *s, gboolean SIM, gboolean for_wri
 		if (Priv->PhoneSMSMemory == AT_NOTAVAILABLE) {
 			return ERR_NOTSUPPORTED;
 		}
-		
+
 		if (Priv->MotorolaSMS) {
 			/* Motorola uses different memory names */
 			if (for_write) {
@@ -379,7 +379,7 @@ GSM_Error ATGEN_SetSMSMemory(GSM_StateMachine *s, gboolean SIM, gboolean for_wri
 				return ERR_UNKNOWN;
 			}
 		}
-		
+
 		smprintf(s, "Setting SMS memory type to ME\n");
 		error = ATGEN_WaitFor(s, cpmsCmdReq, cpmsCmdReqLength, 0x00, 200, ID_SetMemoryType);
 
@@ -475,7 +475,7 @@ GSM_Error ATGEN_SetRequestedSMSMemory(GSM_StateMachine *s, GSM_MemoryType memory
 	}
 
 	/* Build CPMS command with correct number of parameters */
-	command_len = ATGEN_BuildCPMSCommand(s, GSM_MemoryTypeToString(memoryType), 
+	command_len = ATGEN_BuildCPMSCommand(s, GSM_MemoryTypeToString(memoryType),
 	                                      writeable, command, sizeof(command));
 	if (command_len == 0) {
 		return ERR_UNKNOWN;
@@ -1665,7 +1665,7 @@ GSM_Error ATGEN_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status)
 		unsigned char command[50];
 		size_t command_len;
 		gboolean writeable;
-		
+
 		smprintf(s, "Getting SIM SMS status\n");
 
 		writeable = (Priv->SIMSaveSMS == AT_AVAILABLE);
@@ -1675,7 +1675,7 @@ GSM_Error ATGEN_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status)
 		}
 		error = ATGEN_WaitFor(s, command, command_len, 0x00, 200, ID_GetSMSStatus);
 		Priv->SMSMemoryWrite = writeable;
-		
+
 		if (error != ERR_NONE) {
 			return error;
 		}
@@ -1689,7 +1689,7 @@ GSM_Error ATGEN_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status)
 		unsigned char command[50];
 		size_t command_len;
 		gboolean writeable;
-		
+
 		smprintf(s, "Getting phone SMS status\n");
 
 		if (Priv->PhoneSaveSMS == AT_AVAILABLE) {
@@ -1716,7 +1716,7 @@ GSM_Error ATGEN_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status)
 			}
 			Priv->SMSMemoryWrite = FALSE;
 		}
-		
+
 		error = ATGEN_WaitFor(s, command, command_len, 0x00, 200, ID_GetSMSStatus);
 		if (error != ERR_NONE) {
 			return error;
