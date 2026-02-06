@@ -2126,10 +2126,11 @@ void SMSD_IncomingSMSCallback(GSM_StateMachine *s,  GSM_SMSMessage *sms, void *u
 		return;
 	}
 
-	/* Full message received via callback (e.g., +CMT, +CDS).
-	 * These are typically NOT stored in phone memory, but for modems
-	 * configured with CNMI mode 2, they may be stored AND delivered.
-	 * To avoid double counting, we cache them instead of processing directly. */
+	/* Full message received via callback (e.g., +CMT for SMS, +CDS for delivery reports).
+	 * Depending on modem CNMI configuration:
+	 * - CNMI mode 1: Message delivered to TE only, not stored (Location == 0)
+	 * - CNMI mode 2: Message delivered to TE AND stored in memory (Location > 0)
+	 * To avoid double counting with mode 2, cache messages with locations for later processing. */
 	if (sms->Location > 0 && sms->Memory != MEM_INVALID) {
 		/* Message has a location, cache it for later processing */
 		SMSD_Log(DEBUG_INFO, Config, "Caching incoming SMS with location %d in %s memory.",
@@ -2139,7 +2140,8 @@ void SMSD_IncomingSMSCallback(GSM_StateMachine *s,  GSM_SMSMessage *sms, void *u
 		GSM_MultiSMSMessage msms;
 		GSM_Error error;
 
-		/* Message delivered in full without a storage location (e.g., +CMT, +CDS).
+		/* Message delivered in full without a storage location.
+		 * Typically +CDS delivery reports, or +CMT with CNMI mode 1.
 		 * Process it immediately since it won't be found by polling. */
 		SMSD_Log(DEBUG_INFO, Config, "Processing incoming SMS delivered in full without storage location.");
 
