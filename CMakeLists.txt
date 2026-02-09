@@ -778,6 +778,23 @@ if (WIN32 AND NOT CYGWIN)
             DESTINATION "${INSTALL_BIN_DIR}"
             COMPONENT dlls
             )
+    
+    # Install import libraries for dependencies so python-gammu can link against them
+    if (MYSQL_FOUND AND MYSQL_LIBRARIES)
+        install (FILES ${MYSQL_LIBRARIES}
+                DESTINATION "${INSTALL_LIB_DIR}"
+                COMPONENT libraries
+                OPTIONAL
+                )
+    endif (MYSQL_FOUND AND MYSQL_LIBRARIES)
+    
+    if (POSTGRES_FOUND AND POSTGRES_LIBRARY)
+        install (FILES ${POSTGRES_LIBRARY}
+                DESTINATION "${INSTALL_LIB_DIR}"
+                COMPONENT libraries
+                OPTIONAL
+                )
+    endif (POSTGRES_FOUND AND POSTGRES_LIBRARY)
 endif (WIN32 AND NOT CYGWIN)
 
 install (

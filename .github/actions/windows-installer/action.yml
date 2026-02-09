@@ -23,7 +23,7 @@ runs:
   - name: cmake
     shell: pwsh
     run: |
-      $cmakeArgs = "-S . -B _build -DCMAKE_BUILD_TYPE=${{ inputs.build-type }} -DPOSTGRES_STATIC=ON -DMYSQL_STATIC=ON"
+      $cmakeArgs = "-S . -B _build -DCMAKE_BUILD_TYPE=${{ inputs.build-type }}"
       if ('${{ inputs.enable-testing }}' -eq 'true') {
         $cmakeArgs += " -DENABLE_COVERAGE=ON -DONLINE_TESTING=ON -DPSQL_TESTING=ON"
       }
