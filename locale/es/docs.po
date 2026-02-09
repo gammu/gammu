@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu-docs 1.41.0\n"
+"Project-Id-Version: Gammu-docs 1.43.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2019-09-27 09:19+0200\n"
+"POT-Creation-Date: 2026-02-09 11:33+0100\n"
 "PO-Revision-Date: 2011-03-10 19:26+0200\n"
 "Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
 "Language-Team: none\n"
@@ -43,128 +43,70 @@ msgstr ""
 #| "called MyGnokii2."
 msgid ""
 "It has been initiated by Marcin Wiacek and other people. Originally the code "
-"was based on Gnokii <https://www.gnokii.org/> and later MyGnokii <http://www."
-"mwiacek.com/> projects. Gammu was former (up to version 0.58) called "
+"was based on Gnokii <https://www.gnokii.org/> and later MyGnokii <http://"
+"www.mwiacek.com/> projects. Gammu was formerly (up to version 0.58) called "
 "MyGnokii2."
 msgstr ""
 "Ha sido iniciado por Marcin Wiacek y otras personas. Originalmente el código "
-"se basó en Gnokii <http://www.gnokii.org>  y después MyGnokii <http://www."
-"mwiacek.com>. Gammu antes se llamó (hasta la versión 0.58) MyGnokii2."
+"se basó en Gnokii <http://www.gnokii.org>  y después MyGnokii <http://"
+"www.mwiacek.com>. Gammu antes se llamó (hasta la versión 0.58) MyGnokii2."
 
 #. type: Plain text
 #: README.rst:14
+#, fuzzy
+#| msgid ""
+#| "Currently the project is lead by Michal Cihar <michal@cihar.com> with "
+#| "help of many contributors."
 msgid ""
-"Currently the project is lead by Michal Cihar <michal@cihar.com> with help "
-"of many contributors."
+"Currently the project is led by Michal Cihar <michal@cihar.com> with help of "
+"many contributors."
 msgstr ""
 "Actualmente el proyecto es liderado por Michal Cihar <michal@cihar.com> con "
 "la ayuda de muchos contribuyentes."
 
 #. type: Labeled list
-#: README.rst:15 README.rst:19 README.rst:23 README.rst:27 README.rst:31
-#: README.rst:35
+#: README.rst:15 README.rst:19
 #, no-wrap
 msgid ".. image"
 msgstr ".. image"
 
 #. type: Plain text
-#: README.rst:16
-#, fuzzy
-#| msgid "https://travis-ci.org/gammu/gammu.png?branch=master"
-msgid "https://travis-ci.org/gammu/gammu.svg?branch=master"
-msgstr "https://travis-ci.org/gammu/gammu.png?branch=master"
-
-#. type: Plain text
 #: README.rst:18
 #, fuzzy
-#| msgid ":target: https://travis-ci.org/gammu/gammu"
-msgid ":alt: Build status :target: https://travis-ci.org/gammu/gammu"
-msgstr ":target: https://travis-ci.org/gammu/gammu"
-
-#. type: Plain text
-#: README.rst:20
+#| msgid ""
+#| ":alt: Translation status :target: https://hosted.weblate.org/engage/"
+#| "gammu/?utm_source=widget"
 msgid ""
-"https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/master?"
-"svg=true"
+"https://hosted.weblate.org/widgets/gammu/-/svg-badge.svg :alt: Translation "
+"status :target: https://hosted.weblate.org/engage/gammu/?utm_source=widget"
 msgstr ""
+":alt: Translation status :target: https://hosted.weblate.org/engage/gammu/?"
+"utm_source=widget"
 
 #. type: Plain text
 #: README.rst:22
 #, fuzzy
 #| msgid ":target: https://travis-ci.org/gammu/gammu"
 msgid ""
-":alt: Windows Build status :target: https://ci.appveyor.com/project/nijel/"
-"gammu/branch/master"
+"https://img.shields.io/liberapay/receives/Gammu.svg :alt: Liberapay :target: "
+"https://liberapay.com/Gammu/donate"
 msgstr ":target: https://travis-ci.org/gammu/gammu"
-
-#. type: Plain text
-#: README.rst:24
-#, fuzzy
-#| msgid "https://hosted.weblate.org/widgets/gammu-status-badge.png"
-msgid "https://hosted.weblate.org/widgets/gammu/-/svg-badge.svg"
-msgstr "https://hosted.weblate.org/widgets/gammu-status-badge.png"
-
-#. type: Plain text
-#: README.rst:26
-msgid ""
-":alt: Translation status :target: https://hosted.weblate.org/engage/gammu/?"
-"utm_source=widget"
-msgstr ""
-":alt: Translation status :target: https://hosted.weblate.org/engage/gammu/?"
-"utm_source=widget"
-
-#. type: Plain text
-#: README.rst:28
-msgid "https://scan.coverity.com/projects/2890/badge.svg?flat=1"
-msgstr ""
-
-#. type: Plain text
-#: README.rst:30
-#, fuzzy
-#| msgid ":alt: Bitdeli badge :target: https://bitdeli.com/free"
-msgid ":alt: Coverity scan :target: https://scan.coverity.com/projects/2890"
-msgstr ":alt: Bitdeli badge :target: https://bitdeli.com/free"
-
-#. type: Plain text
-#: README.rst:32
-msgid "https://img.shields.io/liberapay/receives/Gammu.svg"
-msgstr ""
-
-#. type: Plain text
-#: README.rst:34
-#, fuzzy
-#| msgid ":target: https://travis-ci.org/gammu/gammu"
-msgid ":alt: Liberapay :target: https://liberapay.com/Gammu/donate"
-msgstr ":target: https://travis-ci.org/gammu/gammu"
-
-#. type: Plain text
-#: README.rst:36
-msgid ""
-"https://www.bountysource.com/badge/team?team_id=23177&style=bounties_received"
-msgstr ""
-
-#. type: Plain text
-#: README.rst:38
-msgid ""
-":alt: Bountysource :target: https://www.bountysource.com/teams/gammu/issues?"
-"utm_source=Gammu&utm_medium=shield&utm_campaign=bounties_received"
-msgstr ""
 
 #. type: Title =
-#: README.rst:40
+#: README.rst:24
 #, no-wrap
 msgid "More information"
 msgstr "Más información"
 
 #. type: Plain text
-#: README.rst:43
+#: README.rst:27
 #, fuzzy
 #| msgid "You can find more information on <http://wammu.eu/gammu/>."
 msgid "You can find more information on <https://wammu.eu/gammu/>."
 msgstr "Puede encontrar más información en <http://wammu.eu/gammu/>."
 
 #. type: Plain text
-#: README.rst:47
+#: README.rst:31
 #, fuzzy
 #| msgid ""
 #| "There is also Gammu manual available in docs/manual. You can build HTML "
@@ -180,13 +122,13 @@ msgstr ""
 "utilizando make manual-html."
 
 #. type: Title =
-#: README.rst:50
+#: README.rst:34
 #, no-wrap
 msgid "Feedback and bug reports"
 msgstr "Retroalimentación e informes de errores"
 
 #. type: Plain text
-#: README.rst:54
+#: README.rst:38
 #, fuzzy
 #| msgid ""
 #| "Any feedback is welcome, see <http://wammu.eu/support/> for information "
@@ -199,13 +141,13 @@ msgstr ""
 "información sobre cómo contactar a los desarrolladores."
 
 #. type: Title =
-#: README.rst:57
+#: README.rst:41
 #, no-wrap
 msgid "Support developers"
 msgstr "Ayudar a los desarrolladores"
 
 #. type: Plain text
-#: README.rst:59
+#: README.rst:43
 #, fuzzy
 #| msgid "You can appreciate developers work at <http://wammu.eu/donate/>."
 msgid "You can appreciate developers work at <https://wammu.eu/donate/>."
@@ -227,6 +169,33 @@ msgid ""
 msgstr ""
 "Ver docs/manual/project/install.rst para la guía de instalación o el "
 "capítulo \"Compilando Gammu\" en el Manual de Gammu"
+
+#, fuzzy
+#~| msgid "https://travis-ci.org/gammu/gammu.png?branch=master"
+#~ msgid "https://travis-ci.org/gammu/gammu.svg?branch=master"
+#~ msgstr "https://travis-ci.org/gammu/gammu.png?branch=master"
+
+#, fuzzy
+#~| msgid ":target: https://travis-ci.org/gammu/gammu"
+#~ msgid ":alt: Build status :target: https://travis-ci.org/gammu/gammu"
+#~ msgstr ":target: https://travis-ci.org/gammu/gammu"
+
+#, fuzzy
+#~| msgid ":target: https://travis-ci.org/gammu/gammu"
+#~ msgid ""
+#~ ":alt: Windows Build status :target: https://ci.appveyor.com/project/nijel/"
+#~ "gammu/branch/master"
+#~ msgstr ":target: https://travis-ci.org/gammu/gammu"
+
+#, fuzzy
+#~| msgid "https://hosted.weblate.org/widgets/gammu-status-badge.png"
+#~ msgid "https://hosted.weblate.org/widgets/gammu/-/svg-badge.svg"
+#~ msgstr "https://hosted.weblate.org/widgets/gammu-status-badge.png"
+
+#, fuzzy
+#~| msgid ":alt: Bitdeli badge :target: https://bitdeli.com/free"
+#~ msgid ":alt: Coverity scan :target: https://scan.coverity.com/projects/2890"
+#~ msgstr ":alt: Bitdeli badge :target: https://bitdeli.com/free"
 
 #, fuzzy
 #~| msgid "https://travis-ci.org/gammu/gammu.png?branch=master"
@@ -569,8 +538,8 @@ msgstr ""
 #~ msgid ""
 #~ "Get all SMS from phone. In some phones you will have also SMS templates "
 #~ "and info about locations used to save Picture Images. With each sms you "
-#~ "will see location. If you want to get such sms from phone alone, use :"
-#~ "option:`gammu getsms`."
+#~ "will see location. If you want to get such sms from phone alone, "
+#~ "use :option:`gammu getsms`."
 #~ msgstr ""
 #~ "Obtiene todos los SMS del teléfono. En algunos teléfonos habrá tambien "
 #~ "plantillas de SMS e información acerca de las localidades usadas para "
@@ -812,8 +781,8 @@ msgstr ""
 #~ msgstr "B<monitor>I< [veces]>"
 
 #~ msgid ""
-#~ "Get phone status and writes continuously to standard output. Press :kbd:"
-#~ "`Ctrl+C` to break this state."
+#~ "Get phone status and writes continuously to standard output. "
+#~ "Press :kbd:`Ctrl+C` to break this state."
 #~ msgstr ""
 #~ "Obtiene el estado del teléfono y lo escribe continuamente en la salida "
 #~ "estandar. Presiones Ctrl+C para terminar este estado."

@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu-docs 1.41.0\n"
+"Project-Id-Version: Gammu-docs 1.43.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
-"POT-Creation-Date: 2019-09-27 09:19+0200\n"
+"POT-Creation-Date: 2026-02-09 11:33+0100\n"
 "PO-Revision-Date: 2019-08-01 05:10+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/gammu/"
@@ -35,10 +35,16 @@ msgstr ""
 
 #. type: Plain text
 #: README.rst:11
+#, fuzzy
+#| msgid ""
+#| "It has been initiated by Marcin Wiacek and other people. Originally the "
+#| "code was based on Gnokii <https://www.gnokii.org/> and later MyGnokii "
+#| "<http://www.mwiacek.com/> projects. Gammu was former (up to version 0.58) "
+#| "called MyGnokii2."
 msgid ""
 "It has been initiated by Marcin Wiacek and other people. Originally the code "
-"was based on Gnokii <https://www.gnokii.org/> and later MyGnokii <http://www."
-"mwiacek.com/> projects. Gammu was former (up to version 0.58) called "
+"was based on Gnokii <https://www.gnokii.org/> and later MyGnokii <http://"
+"www.mwiacek.com/> projects. Gammu was formerly (up to version 0.58) called "
 "MyGnokii2."
 msgstr ""
 "Det ble igangsatt av Marcin Wiacek og andre. Originalt var koden basert på "
@@ -47,116 +53,58 @@ msgstr ""
 
 #. type: Plain text
 #: README.rst:14
+#, fuzzy
+#| msgid ""
+#| "Currently the project is lead by Michal Cihar <michal@cihar.com> with "
+#| "help of many contributors."
 msgid ""
-"Currently the project is lead by Michal Cihar <michal@cihar.com> with help "
-"of many contributors."
+"Currently the project is led by Michal Cihar <michal@cihar.com> with help of "
+"many contributors."
 msgstr ""
 "For tiden ledes prosjektet av Michal Cihar <michal@cihar.com> med hjelp fra "
 "mange bidragsytere."
 
 #. type: Labeled list
-#: README.rst:15 README.rst:19 README.rst:23 README.rst:27 README.rst:31
-#: README.rst:35
+#: README.rst:15 README.rst:19
 #, no-wrap
 msgid ".. image"
 msgstr ".. bilde"
 
 #. type: Plain text
-#: README.rst:16
-msgid "https://travis-ci.org/gammu/gammu.svg?branch=master"
-msgstr "https://travis-ci.org/gammu/gammu.svg?branch=master"
-
-#. type: Plain text
 #: README.rst:18
-msgid ":alt: Build status :target: https://travis-ci.org/gammu/gammu"
-msgstr ":alt: Byggestatus :target: https://travis-ci.org/gammu/gammu"
-
-#. type: Plain text
-#: README.rst:20
+#, fuzzy
+#| msgid ""
+#| ":alt: Translation status :target: https://hosted.weblate.org/engage/"
+#| "gammu/?utm_source=widget"
 msgid ""
-"https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/master?"
-"svg=true"
-msgstr ""
-"https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/master?"
-"svg=true"
-
-#. type: Plain text
-#: README.rst:22
-msgid ""
-":alt: Windows Build status :target: https://ci.appveyor.com/project/nijel/"
-"gammu/branch/master"
-msgstr ""
-":alt: Byggestatus for Windowsversjon :target: https://ci.appveyor.com/"
-"project/nijel/gammu/branch/master"
-
-#. type: Plain text
-#: README.rst:24
-msgid "https://hosted.weblate.org/widgets/gammu/-/svg-badge.svg"
-msgstr "https://hosted.weblate.org/widgets/gammu/-/svg-badge.svg"
-
-#. type: Plain text
-#: README.rst:26
-msgid ""
-":alt: Translation status :target: https://hosted.weblate.org/engage/gammu/?"
-"utm_source=widget"
+"https://hosted.weblate.org/widgets/gammu/-/svg-badge.svg :alt: Translation "
+"status :target: https://hosted.weblate.org/engage/gammu/?utm_source=widget"
 msgstr ""
 ":alt: Oversettelsesstatus :target: https://hosted.weblate.org/engage/gammu/?"
 "utm_source=widget"
 
 #. type: Plain text
-#: README.rst:28
-msgid "https://scan.coverity.com/projects/2890/badge.svg?flat=1"
-msgstr "https://scan.coverity.com/projects/2890/badge.svg?flat=1"
-
-#. type: Plain text
-#: README.rst:30
-msgid ":alt: Coverity scan :target: https://scan.coverity.com/projects/2890"
-msgstr ""
-":alt: Coverity-gjennomsøking :target: https://scan.coverity.com/projects/2890"
-
-#. type: Plain text
-#: README.rst:32
-#, fuzzy
-#| msgid "https://img.shields.io/gratipay/Gammu.svg"
-msgid "https://img.shields.io/liberapay/receives/Gammu.svg"
-msgstr "https://img.shields.io/gratipay/Gammu.svg"
-
-#. type: Plain text
-#: README.rst:34
+#: README.rst:22
 #, fuzzy
 #| msgid ":alt: Gratipay :target: https://gratipay.com/Gammu/"
-msgid ":alt: Liberapay :target: https://liberapay.com/Gammu/donate"
+msgid ""
+"https://img.shields.io/liberapay/receives/Gammu.svg :alt: Liberapay :target: "
+"https://liberapay.com/Gammu/donate"
 msgstr ":alt: Liberapay :target: https://liberapay.com/Gammu/"
 
-#. type: Plain text
-#: README.rst:36
-msgid ""
-"https://www.bountysource.com/badge/team?team_id=23177&style=bounties_received"
-msgstr ""
-"https://www.bountysource.com/badge/team?team_id=23177&style=bounties_received"
-
-#. type: Plain text
-#: README.rst:38
-msgid ""
-":alt: Bountysource :target: https://www.bountysource.com/teams/gammu/issues?"
-"utm_source=Gammu&utm_medium=shield&utm_campaign=bounties_received"
-msgstr ""
-":alt: Bountysource :target: https://www.bountysource.com/teams/gammu/issues?"
-"utm_source=Gammu&utm_medium=shield&utm_campaign=bounties_received"
-
 #. type: Title =
-#: README.rst:40
+#: README.rst:24
 #, no-wrap
 msgid "More information"
 msgstr "Mer informasjon"
 
 #. type: Plain text
-#: README.rst:43
+#: README.rst:27
 msgid "You can find more information on <https://wammu.eu/gammu/>."
 msgstr "Du kan finne mer informasjon på <https://wammu.eu/gammu/>."
 
 #. type: Plain text
-#: README.rst:47
+#: README.rst:31
 msgid ""
 "There is also Gammu manual available in docs/manual. You can build HTML "
 "version of it using make manual-html which is viewable online at <https://"
@@ -167,13 +115,13 @@ msgstr ""
 "nett <https://wammu.eu/docs/manual/>."
 
 #. type: Title =
-#: README.rst:50
+#: README.rst:34
 #, no-wrap
 msgid "Feedback and bug reports"
 msgstr "Tilbakemeldinger og feilrapporter"
 
 #. type: Plain text
-#: README.rst:54
+#: README.rst:38
 msgid ""
 "Any feedback is welcome, see <https://wammu.eu/support/> for information how "
 "to contact developers."
@@ -182,13 +130,13 @@ msgstr ""
 "informasjon om hvordan du kontakter utviklerne."
 
 #. type: Title =
-#: README.rst:57
+#: README.rst:41
 #, no-wrap
 msgid "Support developers"
 msgstr "Støtt utviklere"
 
 #. type: Plain text
-#: README.rst:59
+#: README.rst:43
 msgid "You can appreciate developers work at <https://wammu.eu/donate/>."
 msgstr ""
 "Du kan vise at du setter pris på utvikleres arbeid på <https://wammu.eu/"
@@ -208,3 +156,53 @@ msgid ""
 msgstr ""
 "Se docs/manual/project/install.rst for installasjonsveildening, eller "
 "kapittelet \"Compiling Gammu\" i Gammu-manualen."
+
+#~ msgid "https://travis-ci.org/gammu/gammu.svg?branch=master"
+#~ msgstr "https://travis-ci.org/gammu/gammu.svg?branch=master"
+
+#~ msgid ":alt: Build status :target: https://travis-ci.org/gammu/gammu"
+#~ msgstr ":alt: Byggestatus :target: https://travis-ci.org/gammu/gammu"
+
+#~ msgid ""
+#~ "https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/"
+#~ "master?svg=true"
+#~ msgstr ""
+#~ "https://ci.appveyor.com/api/projects/status/dkm2eam66rbhhuwn/branch/"
+#~ "master?svg=true"
+
+#~ msgid ""
+#~ ":alt: Windows Build status :target: https://ci.appveyor.com/project/nijel/"
+#~ "gammu/branch/master"
+#~ msgstr ""
+#~ ":alt: Byggestatus for Windowsversjon :target: https://ci.appveyor.com/"
+#~ "project/nijel/gammu/branch/master"
+
+#~ msgid "https://hosted.weblate.org/widgets/gammu/-/svg-badge.svg"
+#~ msgstr "https://hosted.weblate.org/widgets/gammu/-/svg-badge.svg"
+
+#~ msgid "https://scan.coverity.com/projects/2890/badge.svg?flat=1"
+#~ msgstr "https://scan.coverity.com/projects/2890/badge.svg?flat=1"
+
+#~ msgid ":alt: Coverity scan :target: https://scan.coverity.com/projects/2890"
+#~ msgstr ""
+#~ ":alt: Coverity-gjennomsøking :target: https://scan.coverity.com/projects/"
+#~ "2890"
+
+#, fuzzy
+#~| msgid "https://img.shields.io/gratipay/Gammu.svg"
+#~ msgid "https://img.shields.io/liberapay/receives/Gammu.svg"
+#~ msgstr "https://img.shields.io/gratipay/Gammu.svg"
+
+#~ msgid ""
+#~ "https://www.bountysource.com/badge/team?"
+#~ "team_id=23177&style=bounties_received"
+#~ msgstr ""
+#~ "https://www.bountysource.com/badge/team?"
+#~ "team_id=23177&style=bounties_received"
+
+#~ msgid ""
+#~ ":alt: Bountysource :target: https://www.bountysource.com/teams/gammu/"
+#~ "issues?utm_source=Gammu&utm_medium=shield&utm_campaign=bounties_received"
+#~ msgstr ""
+#~ ":alt: Bountysource :target: https://www.bountysource.com/teams/gammu/"
+#~ "issues?utm_source=Gammu&utm_medium=shield&utm_campaign=bounties_received"

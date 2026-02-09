@@ -1,5 +1,4 @@
 Gammu All Mobile Management Utilitaires - Installation
 ======================================================
 
-Voir docs/manual/project/install.rst pour le guide d'installation ou le
-chapitre "Compiling Gammu" dans le manuel de Gammu.
+Voir docs/manual/project/install.rst pour le guide d'installation ou le chapitre "Compiling Gammu" dans le manuel de Gammu.
