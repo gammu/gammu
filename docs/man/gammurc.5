@@ -1,8 +1,6 @@
-.\" Man page generated from reStructuredText.
+.\" Man page generated from reStructuredText
+.\" by the Docutils 0.22.4 manpage writer.
 .
-.TH "GAMMURC" "5" "Oct 03, 2020" "1.42.0" "Gammu"
-.SH NAME
-gammurc \- gammu(1) configuration file
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +28,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "GAMMURC" "5" "Feb 09, 2026" "1.43.0" "Gammu"
+.SH NAME
+gammurc \- gammu(1) configuration file
 .SH SYNOPSIS
 .sp
 On Linux, MacOS X, BSD and other Unix\-like systems, the config file is
@@ -55,23 +56,23 @@ On Microsoft Windows:
 .SH DESCRIPTION
 .sp
 Gammu requires configuration to be able to properly talk to your phone.
-gammu reads configuration from a config file. It\(aqs location is determined
+Gammu Utility \%<#\:gammu> reads configuration from a config file. It\(aqs location is determined
 on runtime, see above for search paths.
 .sp
-You can use gammu\-config or gammu\-detect to generate
-configuration file or start from \fI\%Fully documented example\fP\&.
+You can use gammu\-config \%<#\:gammu-config> or gammu\-detect \%<#\:gammu-detect> to generate
+configuration file or start from Fully documented example\&.
 .sp
 For hints about configuring your phone, you can check Gammu Phone
-Database <\fI\%https://wammu.eu/phones/\fP> to see what user users
+Database <\%<https://\:wammu\:.eu/\:phones/>> to see what user users
 experienced.
 .sp
-This file use ini file syntax, see ini\&.
+This file use ini file syntax, see INI file format \%<#\:ini>\&.
 .sp
 Configuration file for gammu can contain several sections \- \fB[gammu]\fP, \fB[gammu1]\fP,
 \fB[gammuN]\fP, ... Each section configures one connection setup and in default mode
 gammu tries all of them in numerical order. You can also specify which
-configuration section to use by giving it\(aqs number (\fI\%[gammu]\fP has number 0) as a
-parameter to gammu and it will then use only this section.
+configuration section to use by giving it\(aqs number (\fB[gammu]\fP has number 0) as a
+parameter to Gammu Utility \%<#\:gammu> and it will then use only this section.
 .INDENT 0.0
 .TP
 .B [gammu]
@@ -130,7 +131,7 @@ AT commands connection for most of phones (this is not supported on Linux).
 OBEX (IrMC or file transfer) connection for most of phones.
 .TP
 .B \fBirdagnapbus\fP
-GNapplet based connection for Symbian phones, see gnapplet\&.
+GNapplet based connection for Symbian phones, see Gnapplet Protocol \%<#\:gnapplet>\&.
 .UNINDENT
 .sp
 For Bluetooth connection use one of following:
@@ -149,16 +150,16 @@ AT commands connection for most of phones.
 OBEX (IrMC or file transfer) connection for most of phones.
 .TP
 .B \fBbluerfgnapbus\fP
-GNapplet based connection for Symbian phones, see gnapplet\&.
+GNapplet based connection for Symbian phones, see Gnapplet Protocol \%<#\:gnapplet>\&.
 .TP
 .B \fBblues60\fP
-Connection to Series60 applet in S60 phones, see s60\&.
+Connection to Series60 applet in S60 phones, see Series60 Remote Protocol \%<#\:s60>\&.
 .sp
-New in version 1.29.90.
+Added in version 1.29.90.
 
 .UNINDENT
 .sp
-New in version 1.36.7: Gammu now supports connecting using proxy command.
+Added in version 1.36.7: Gammu now supports connecting using proxy command.
 
 .sp
 You can also proxy the connection using shell command, for example to
@@ -178,23 +179,23 @@ AT commands connection for most of phones.
 OBEX (IrMC or file transfer) connection for most of phones.
 .TP
 .B \fBproxygnapbus\fP
-GNapplet based connection for Symbian phones, see gnapplet\&.
+GNapplet based connection for Symbian phones, see Gnapplet Protocol \%<#\:gnapplet>\&.
 .TP
 .B \fBproxys60\fP
-Connection to Series60 applet in S60 phones, see s60\&.
+Connection to Series60 applet in S60 phones, see Series60 Remote Protocol \%<#\:s60>\&.
 .UNINDENT
 .sp
-\fBSEE ALSO:\fP
+\fBSee also:\fP
 .INDENT 7.0
 .INDENT 3.5
-faq\-config
+Configuring Gammu FAQ \%<#\:faq-config>
 .UNINDENT
 .UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
 .B Device
-New in version 1.27.95.
+Added in version 1.27.95.
 
 .sp
 Device node or address of phone. It depends on used connection.
@@ -205,12 +206,12 @@ For \fBcables\fP or emulated serial ports, you enter device name (for example
 DKU\-2 and DKU\-5 cables on Windows, where the device is automatically detected
 from driver information and this parameters is ignored.
 .sp
-\fBNOTE:\fP
+\fBNote:\fP
 .INDENT 7.0
 .INDENT 3.5
 Some USB modems expose several interfaces, in such cases Gammu works best
-with "User" one, you can find more information on
-<\fI\%http://www.dd\-wrt.com/wiki/index.php/Mobile_Broadband\fP>.
+with \(dqUser\(dq one, you can find more information on
+<\%<http://\:www\:.dd-wrt\:.com/\:wiki/\:index\:.php/\:Mobile_Broadband>>.
 .UNINDENT
 .UNINDENT
 .sp
@@ -220,19 +221,17 @@ vendor/product IDs or device address on USB:
 .INDENT 7.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 Device = 0x1234:0x5678  # Match device by vendor and product id
 Device = 0x1234:\-1      # Match device by vendor id
 Device = 1.10           # Match device by usb bus and device address
 Device = 10             # Match device by usb device address
 Device = serial:123456  # Match device by serial string
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
-\fBNOTE:\fP
+\fBNote:\fP
 .INDENT 7.0
 .INDENT 3.5
 On Linux systems, you might lack permissions for some device nodes.
@@ -246,27 +245,25 @@ as \fBcontrib/udev/69\-gammu\-acl.rules\fP) as
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 #
 # udev rule to give users access to USB device to be used by Gammu
 #
 
-ACTION!="add|change", GOTO="gammu_acl_rules_end"
+ACTION!=\(dqadd|change\(dq, GOTO=\(dqgammu_acl_rules_end\(dq
 
-KERNEL!="ttyACM[0\-9]*", GOTO="gammu_acl_rules_end"
-SUBSYSTEM!="tty", GOTO="gammu_acl_rules_end"
+KERNEL!=\(dqttyACM[0\-9]*\(dq, GOTO=\(dqgammu_acl_rules_end\(dq
+SUBSYSTEM!=\(dqtty\(dq, GOTO=\(dqgammu_acl_rules_end\(dq
 
 # Nokia devices
-ATTRS{manufacturer}=="Nokia", TAG+="uaccess"
+ATTRS{manufacturer}==\(dqNokia\(dq, TAG+=\(dquaccess\(dq
 
 # Example for Sony Ericsson J108i Cedar
-# ATTRS{idVendor}=="0fce", ATTRS{idProduct}=="d14e", TAG+="uaccess"
+# ATTRS{idVendor}==\(dq0fce\(dq, ATTRS{idProduct}==\(dqd14e\(dq, TAG+=\(dquaccess\(dq
 
-LABEL="gammu_acl_rules_end"
+LABEL=\(dqgammu_acl_rules_end\(dq
 
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .UNINDENT
@@ -295,16 +292,14 @@ enable discovery (you need to run these commands as root):
 .INDENT 7.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 ip l s dev irda0 up          # Enables irda0 device
 sysctl net.irda.discovery=1  # Enables device discovery on IrDA
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
-\fBNOTE:\fP
+\fBNote:\fP
 .INDENT 7.0
 .INDENT 3.5
 Native IrDA is not supported on Linux, you need to setup virtual
@@ -313,31 +308,29 @@ This can be usually achieved by loading modules \fBircomm\-tty\fP and \fBirtty\-
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 modprobe ircomm\-tty
 modprobe irtty\-sir
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .UNINDENT
 .UNINDENT
 .sp
-\fBSEE ALSO:\fP
+\fBSee also:\fP
 .INDENT 7.0
 .INDENT 3.5
-faq\-config
+Configuring Gammu FAQ \%<#\:faq-config>
 .UNINDENT
 .UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
 .B Port
-Deprecated since version 1.27.95: Please use \fI\%Device\fP instead.
+Deprecated since version 1.27.95: Please use \fBDevice\fP instead.
 
 .sp
-Alias for \fI\%Device\fP, kept for backward compatibility.
+Alias for \fBDevice\fP, kept for backward compatibility.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -394,7 +387,7 @@ with this option. This works only with some Nokia phones.
 .B LogFile
 Path to file where information about communication will be stored.
 .sp
-\fBNOTE:\fP
+\fBNote:\fP
 .INDENT 7.0
 .INDENT 3.5
 For most debug levels (excluding \fBerrors\fP) the log file is overwritten on
@@ -405,7 +398,7 @@ each execution.
 .INDENT 0.0
 .TP
 .B LogFormat
-Determines what all will be logged to \fBLogFile\fP\&. Possible values are:
+Determines what all will be logged to \fBLogFile\fP \%<#\:option-LogFile>\&. Possible values are:
 .INDENT 7.0
 .TP
 .B \fBnothing\fP
@@ -438,7 +431,7 @@ needed information to diagnose problems.
 .B Features
 Custom features for phone. This can be used as override when values coded
 in \fBcommon/gsmphones.c\fP are bad or missing. Consult
-\fBinclude/gammu\-info.h\fP for possible values (all \fBGSM_Feature\fP values
+\fBinclude/gammu\-info.h\fP for possible values (all \fBGSM_Feature\fP \%<#\:c\:.GSM_Feature> values
 without leading \fBF_\fP prefix). Please report correct values to Gammu
 authors.
 .UNINDENT
@@ -489,20 +482,18 @@ using \fBgammu install\fP\&.
 .UNINDENT
 .SH EXAMPLES
 .sp
-There is more complete example available in Gammu documentation, see gammu\&.
+There is more complete example available in Gammu documentation, see Gammu Utility \%<#\:gammu>\&.
 .SS Connection examples
 .sp
 Gammu configuration for Nokia phone using DLR\-3 cable:
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 [gammu]
 device = /dev/ttyACM0
 connection = dlr3
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -511,13 +502,11 @@ phone) connected using USB cable:
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 [gammu]
 device = /dev/ttyACM0
 connection = at
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -526,13 +515,11 @@ phone) connected using bluetooth:
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 [gammu]
 device = B0:0B:00:00:FA:CE
 connection = blueat
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -540,26 +527,23 @@ Gammu configuration for phone which needs to manually adjust Bluetooth channel t
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 [gammu]
 device = B0:0B:00:00:FA:CE/42
 connection = blueat
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .SS Working with multiple phones
 .sp
 Gammu can be configured for multiple phones (however only one connection
-is used at one time, you can choose which one to use with \fI\%gammu \-s\fP
+is used at one time, you can choose which one to use with \fBgammu \-s\fP \%<https://\:docs\:.python\:.org/\:3\:.9/\:using/\:cmdline\:.html#\:cmdoption-s>
 parameter). Configuration for phones on three serial ports would look
 like following:
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 [gammu]
 device = /dev/ttyS0
 connection = at
@@ -571,13 +555,12 @@ connection = at
 [gammmu2]
 device = /dev/ttyS2
 connection = at
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .SS Connecting to remote phone
 .sp
-New in version 1.36.7.
+Added in version 1.36.7.
 
 .sp
 You can connect using Gammu to phone running on different host. This can be
@@ -586,13 +569,11 @@ bi\-directional communication with the phone.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 [gammu]
 device = ssh root@my.router /usr/local/bin/myscript /dev/ttyUSB0
 connection = proxyat
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -604,8 +585,7 @@ You can find this sample file as \fBdocs/config/gammurc\fP in Gammu sources.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 ; This is a sample ~/.gammurc file.
 ; In Unix/Linux  copy it into your home directory and name it .gammurc
 ;                or into /etc and name it gammurc
@@ -647,21 +627,21 @@ connection = fbusblue
 
 ; ================================================================ cables =====
 ; New Nokia protocol for FBUS/DAU9P
-;    Connection "fbus", device type serial
+;    Connection \(dqfbus\(dq, device type serial
 ; New Nokia protocol for DLR3/DLR3P
-;    Connection "fbusdlr3"/"dlr3", device type serial
+;    Connection \(dqfbusdlr3\(dq/\(dqdlr3\(dq, device type serial
 ; New Nokia protocol for DKU2 (and phone with USB converter on phone mainboard
 ;                              like 6230)
-;    Connection "dku2phonet"/"dku2", device type dku2 on Windows
-;    Connection "fbususb" on Linux
+;    Connection \(dqdku2phonet\(dq/\(dqdku2\(dq, device type dku2 on Windows
+;    Connection \(dqfbususb\(dq on Linux
 ; New Nokia protocol for DKU5 (and phone without USB converter on phone
 ;                              mainboard like 5100)
-;    Connection "dku5fbus"/"dku5", device type dku5
+;    Connection \(dqdku5fbus\(dq/\(dqdku5\(dq, device type dku5
 ; New Nokia protocol for PL2303 USB cable (and phone without USB converter
 ;                                          on phone mainboard like 5100)
-;    Connection "fbuspl2303", device type usb
+;    Connection \(dqfbuspl2303\(dq, device type usb
 ; Old Nokia protocol for MBUS/DAU9P
-;    Connection "mbus", device type serial
+;    Connection \(dqmbus\(dq, device type serial
 ; Variants:
 ; You can modify a bit behaviour of connection using additional flags
 ; specified just after connection name like connection\-variant.
@@ -672,74 +652,74 @@ connection = fbusblue
 ; \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 ; AT commands for DLR3, DKU5 or other AT compatible cable (8 bits, None
 ; parity, no flow control, 1 stop bit). Used with Nokia, Alcatel, Siemens, etc.
-;    Connection "at19200"/"at115200"/.., device type serial
+;    Connection \(dqat19200\(dq/\(dqat115200\(dq/.., device type serial
 ; AT commands for DKU2 cable
-;    Connection "dku2at", device type dku2
+;    Connection \(dqdku2at\(dq, device type dku2
 ; ============================================================== infrared =====
 ; Nokia protocol for infrared with Nokia 6110/6130/6150
-;    Connection "fbusirda"/"infrared", device type serial
+;    Connection \(dqfbusirda\(dq/\(dqinfrared\(dq, device type serial
 ; Nokia protocol for infrared with other Nokia models
-;    Connection "irdaphonet"/"irda", device type irda
+;    Connection \(dqirdaphonet\(dq/\(dqirda\(dq, device type irda
 ; \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 ; AT commands for infrared. Used with Nokia, Alcatel, Siemens, etc.
-;    Connection "irdaat", device type irda
+;    Connection \(dqirdaat\(dq, device type irda
 ; \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 ; OBEX for infrared
-;    Connection "irdaobex", device type irda.
+;    Connection \(dqirdaobex\(dq, device type irda.
 ; ============================================================= Bluetooth =====
 ; Nokia protocol with serial device set in BT stack (WidComm, other) from
 ; adequate service and Nokia 6210
-;    Connection "fbusblue", device type serial
+;    Connection \(dqfbusblue\(dq, device type serial
 ; Nokia protocol with serial device set in BT stack (WidComm, other) from
 ; adequate service and other Nokia models
-;    Connection "phonetblue", device type serial
+;    Connection \(dqphonetblue\(dq, device type serial
 ; \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 ; Nokia protocol for Bluetooth stack with Nokia 6210
-;    Connection "bluerffbus", device type BT
+;    Connection \(dqbluerffbus\(dq, device type BT
 ; Nokia protocol for Bluetooth stack with DCT4 Nokia models, which don\(aqt inform
 ; about services correctly (6310, 6310i with firmware lower than 5.50, 8910,..)
-;    Connection "bluerfphonet", device type BT
+;    Connection \(dqbluerfphonet\(dq, device type BT
 ; Nokia protocol for Bluetooth stack with other DCT4 Nokia models
-;    Connection "bluephonet", device type BT
+;    Connection \(dqbluephonet\(dq, device type BT
 ; \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 ; AT commands for Bluetooth stack and 6210 / DCT4 Nokia models, which don\(aqt
 ; inform about BT services correctly (6310, 6310i with firmware lower
 ; than 5.50, 8910,..)
-;    Connection "bluerfat", device type BT
+;    Connection \(dqbluerfat\(dq, device type BT
 ; AT commands for Bluetooth stack with other phones (Siemens, other Nokia,etc.)
-;    Connection "blueat", device type BT
+;    Connection \(dqblueat\(dq, device type BT
 ; \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 ; OBEX for Bluetooth stack with DCT4 Nokia models, which don\(aqt inform about
 ; BT services correctly (6310, 6310i with firmware lower than 5.50, 8910,...)
-;    Connection "bluerfobex", device type BT
+;    Connection \(dqbluerfobex\(dq, device type BT
 ; OBEX for Bluetooth stack with other phones (Siemens, other Nokia, etc.)
-;    Connection "blueobex", device type BT.
+;    Connection \(dqblueobex\(dq, device type BT.
 ; \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
-;    Connection "bluerfgnapbus", device type BT, model "gnap"
-;    Connection "irdagnapbus", device type irda, model "gnap"
+;    Connection \(dqbluerfgnapbus\(dq, device type BT, model \(dqgnap\(dq
+;    Connection \(dqirdagnapbus\(dq, device type irda, model \(dqgnap\(dq
 
 ; Step2. According to device type from Step1 and used OS set Port parameter
 
 ; \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
-; Port type | "Port" parameter in Windows/DOS | "Port" parameter in Linux/Unix
+; Port type | \(dqPort\(dq parameter in Windows/DOS | \(dqPort\(dq parameter in Linux/Unix
 ; \-\-\-\-\-\-\-\-\-\-|\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-|\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
-; serial    | "com*:"                         | "/dev/ttyS*"
-;           | (example "com1:")               | (example "/dev/ttyS1")
-;           |                                 | or "/dev/tts/**" (with DevFS)
+; serial    | \(dqcom*:\(dq                         | \(dq/dev/ttyS*\(dq
+;           | (example \(dqcom1:\(dq)               | (example \(dq/dev/ttyS1\(dq)
+;           |                                 | or \(dq/dev/tts/**\(dq (with DevFS)
 ;           |                                 | virtual serial ports like
-;           |                                 | "/dev/ircomm*" or "/dev/rfcomm*"
+;           |                                 | \(dq/dev/ircomm*\(dq or \(dq/dev/rfcomm*\(dq
 ; \-\-\-\-\-\-\-\-\-\-|\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-|\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 ; irda      | ignored (can be empty)          | ignored (can be empty)
 ; \-\-\-\-\-\-\-\-\-\-|\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-|\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
-; BT        | Bluetooth device address (example "00:11:22:33:44:55").
+; BT        | Bluetooth device address (example \(dq00:11:22:33:44:55\(dq).
 ;           | Optionally you can also include channel after slash
-;           | (example "00:11:22:33:44:55/12"). Can be also empty.
+;           | (example \(dq00:11:22:33:44:55/12\(dq). Can be also empty.
 ; \-\-\-\-\-\-\-\-\-\-|\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-|\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 ; dku2      | ignored (can be empty)          | /dev/ttyUSB* or /dev/ttyACM*
 ; \-\-\-\-\-\-\-\-\-\-|\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-|\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 ; dku5      | ignored (can be empty)          | connection with it not possible
 ; \-\-\-\-\-\-\-\-\-\-|\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-|\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
-; usb       | connection with it not possible | "/dev/ttyUSB*"
+; usb       | connection with it not possible | \(dq/dev/ttyUSB*\(dq
 
 ; Step3. Set other config parameters
 
@@ -748,26 +728,26 @@ connection = fbusblue
 ; \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-|\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 ; Model           | Should not be used unless you have a good reason to do so.
 ;                 | If Gammu doesn\(aqt recognize your phone model, put it here.
-;                 | Example values: "6110", "6150", "6210", "8210"
+;                 | Example values: \(dq6110\(dq, \(dq6150\(dq, \(dq6210\(dq, \(dq8210\(dq
 ; SynchronizeTime | if you want to set time from computer to phone during
 ;                 | starting connection. Do not rather use this option when
 ;                 | when to reset phone during connection (in some phones need
 ;                 | to set time again after restart)
 ; GammuLoc        | name of localisation file
-; StartInfo       | this option allows one to set, that you want (setting "yes")
+; StartInfo       | this option allows one to set, that you want (setting \(dqyes\(dq)
 ;                 | to see message on the phone screen or phone should enable
 ;                 | light for a moment during starting connection. Phone
 ;                 | WON\(aqT beep during starting connection with this option.
 ; GammuCoding     | forces using specified codepage (in win32 \- for example
-;                 | "1250" will force CP1250) or UTF8 (in Linux \- "utf8")
+;                 | \(dq1250\(dq will force CP1250) or UTF8 (in Linux \- \(dqutf8\(dq)
 ; \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-|\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 ; Logfile         | Use, when want to have logfile from communication.
 ; Logformat       | What debug info and format should be used:
-;                 |   "nothing" \- no debug level (default)
-;                 |   "text"    \- transmission dump in text format
-;                 |   "textall" \- all possible info in text format
-;                 |   "errors"  \- errors in text format
-;                 |   "binary"  \- transmission dump in binary format
+;                 |   \(dqnothing\(dq \- no debug level (default)
+;                 |   \(dqtext\(dq    \- transmission dump in text format
+;                 |   \(dqtextall\(dq \- all possible info in text format
+;                 |   \(dqerrors\(dq  \- errors in text format
+;                 |   \(dqbinary\(dq  \- transmission dump in binary format
 ; \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-|\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 ; Features        | Custom features for phone. This can be used as override
 ;                 | when values coded in common/gsmphones.c are bad or
@@ -775,18 +755,16 @@ connection = fbusblue
 ;                 | (all Feature values without leading F_ prefix).
 ;                 | Please report correct values to Gammu authors.
 ; \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-|\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
-; Use_Locking     | under Unix/Linux use "yes", if want to lock used device
+; Use_Locking     | under Unix/Linux use \(dqyes\(dq, if want to lock used device
 ;                 | to prevent using it by other applications. In win32 ignored
 
 ; vim: et ts=4 sw=4 sts=4 tw=78 spell spelllang=en_us
 
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
-.SH AUTHOR
+.SH Author
 Michal Čihař <michal@cihar.com>
-.SH COPYRIGHT
+.SH Copyright
 2009-2015, Michal Čihař <michal@cihar.com>
-.\" Generated by docutils manpage writer.
-.
+.\" End of generated man page.

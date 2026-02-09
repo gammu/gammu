@@ -1,8 +1,6 @@
-.\" Man page generated from reStructuredText.
+.\" Man page generated from reStructuredText
+.\" by the Docutils 0.22.4 manpage writer.
 .
-.TH "GAMMU-SMSD-DBI" "7" "Oct 03, 2020" "1.42.0" "Gammu"
-.SH NAME
-gammu-smsd-dbi \- gammu-smsd(1) backend using DBI abstraction layer to use any supported database as a message storage
 .
 .nr rst2man-indent-level 0
 .
@@ -30,17 +28,20 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "GAMMU-SMSD-DBI" "7" "Feb 09, 2026" "1.43.0" "Gammu"
+.SH NAME
+gammu-smsd-dbi \- gammu-smsd(1) backend using DBI abstraction layer to use any supported database as a message storage
 .SH DESCRIPTION
 .sp
-DBI backend stores all data in any database supported by \fI\%libdbi\fP, which
-parameters are defined by configuration (see gammu\-smsdrc for description of
+DBI backend stores all data in any database supported by libdbi \%<http://\:libdbi\:.sourceforge\:.net/>, which
+parameters are defined by configuration (see SMSD Configuration File \%<#\:gammu-smsdrc> for description of
 configuration options).
 .sp
-For tables description see gammu\-smsd\-tables\&.
+For tables description see SMSD Database Structure \%<#\:gammu-smsd-tables>\&.
 .sp
-This backend is based on gammu\-smsd\-sql\&.
+This backend is based on SQL Service \%<#\:gammu-smsd-sql>\&.
 .sp
-\fBNOTE:\fP
+\fBNote:\fP
 .INDENT 0.0
 .INDENT 3.5
 The DBI driver is currently not supported on Windows because libdbi
@@ -49,7 +50,7 @@ library does not support this platform.
 .UNINDENT
 .SH CONFIGURATION
 .sp
-Before running gammu\-smsd you need to create necessary tables in the
+Before running gammu\-smsd \%<#\:gammu-smsd> you need to create necessary tables in the
 database. You can use examples given in database specific backends parts of
 this manual to do that.
 .sp
@@ -57,26 +58,24 @@ The configuration file then can look like:
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 [smsd]
 service = sql
 driver = DBI_DRIVER
 host = localhost
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
-\fBSEE ALSO:\fP
+\fBSee also:\fP
 .INDENT 0.0
 .INDENT 3.5
-gammu\-smsdrc
+SMSD Configuration File \%<#\:gammu-smsdrc>
 .UNINDENT
 .UNINDENT
 .SH SUPPORTED DRIVERS
 .sp
-For complete list of drivers for \fI\%libdbi\fP see \fI\%libdbi\-drivers\fP project. The
+For complete list of drivers for libdbi \%<http://\:libdbi\:.sourceforge\:.net/> see libdbi\-drivers \%<http://\:libdbi-drivers\:.sourceforge\:.net/> project. The
 drivers for example include:
 .INDENT 0.0
 .IP \(bu 2
@@ -94,60 +93,59 @@ SQL script for creating tables in SQLite database:
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 CREATE TABLE gammu (
-  Version INTEGER NOT NULL DEFAULT \(aq0\(aq PRIMARY KEY
+  Version INTEGER NOT NULL DEFAULT 0 PRIMARY KEY
 );
 
 INSERT INTO gammu (Version) VALUES (17);
 
 CREATE TABLE inbox (
-  UpdatedInDB NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq)),
-  ReceivingDateTime NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq)),
+  UpdatedInDB NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq, \(aqlocaltime\(aq)),
+  ReceivingDateTime NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq, \(aqlocaltime\(aq)),
   Text TEXT NOT NULL,
   SenderNumber TEXT NOT NULL DEFAULT \(aq\(aq,
   Coding TEXT NOT NULL DEFAULT \(aqDefault_No_Compression\(aq,
   UDH TEXT NOT NULL,
   SMSCNumber TEXT NOT NULL DEFAULT \(aq\(aq,
-  Class INTEGER NOT NULL DEFAULT \(aq\-1\(aq,
+  Class INTEGER NOT NULL DEFAULT \-1,
   TextDecoded TEXT NOT NULL DEFAULT \(aq\(aq,
   ID INTEGER PRIMARY KEY AUTOINCREMENT,
   RecipientID TEXT NOT NULL,
   Processed TEXT NOT NULL DEFAULT \(aqfalse\(aq,
-  Status INTEGER NOT NULL DEFAULT \(aq\-1\(aq,
+  Status INTEGER NOT NULL DEFAULT \-1,
   CHECK (Coding IN
   (\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq))
 );
 
 CREATE TRIGGER update_inbox_time UPDATE ON inbox
   BEGIN
-    UPDATE inbox SET UpdatedInDB = datetime(\(aqnow\(aq) WHERE ID = old.ID;
+    UPDATE inbox SET UpdatedInDB = datetime(\(aqnow\(aq, \(aqlocaltime\(aq) WHERE ID = old.ID;
   END;
 
 CREATE TABLE outbox (
-  UpdatedInDB NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq)),
-  InsertIntoDB NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq)),
-  SendingDateTime NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq)),
+  UpdatedInDB NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq, \(aqlocaltime\(aq)),
+  InsertIntoDB NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq, \(aqlocaltime\(aq)),
+  SendingDateTime NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq, \(aqlocaltime\(aq)),
   SendBefore time NOT NULL DEFAULT \(aq23:59:59\(aq,
   SendAfter time NOT NULL DEFAULT \(aq00:00:00\(aq,
   Text TEXT,
   DestinationNumber TEXT NOT NULL DEFAULT \(aq\(aq,
   Coding TEXT NOT NULL DEFAULT \(aqDefault_No_Compression\(aq,
   UDH TEXT,
-  Class INTEGER DEFAULT \(aq\-1\(aq,
+  Class INTEGER DEFAULT \-1,
   TextDecoded TEXT NOT NULL DEFAULT \(aq\(aq,
   ID INTEGER PRIMARY KEY AUTOINCREMENT,
   MultiPart TEXT NOT NULL DEFAULT \(aqfalse\(aq,
-  RelativeValidity INTEGER DEFAULT \(aq\-1\(aq,
+  RelativeValidity INTEGER DEFAULT \-1,
   SenderID TEXT,
   SendingTimeOut NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq)),
   DeliveryReport TEXT DEFAULT \(aqdefault\(aq,
   CreatorID TEXT NOT NULL,
-  Retries INTEGER DEFAULT \(aq0\(aq,
-  Priority INTEGER DEFAULT \(aq0\(aq,
+  Retries INTEGER DEFAULT 0,
+  Priority INTEGER DEFAULT 0,
   Status TEXT NOT NULL DEFAULT \(aqReserved\(aq,
-  StatusCode INTEGER NOT NULL DEFAULT \(aq\-1\(aq,
+  StatusCode INTEGER NOT NULL DEFAULT \-1,
   CHECK (Coding IN
   (\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq)),
   CHECK (DeliveryReport IN (\(aqdefault\(aq,\(aqyes\(aq,\(aqno\(aq)),
@@ -161,19 +159,19 @@ CREATE INDEX outbox_sender ON outbox(SenderID);
 
 CREATE TRIGGER update_outbox_time UPDATE ON outbox
   BEGIN
-    UPDATE outbox SET UpdatedInDB = datetime(\(aqnow\(aq) WHERE ID = old.ID;
+    UPDATE outbox SET UpdatedInDB = datetime(\(aqnow\(aq, \(aqlocaltime\(aq) WHERE ID = old.ID;
   END;
 
 CREATE TABLE outbox_multipart (
   Text TEXT,
   Coding TEXT NOT NULL DEFAULT \(aqDefault_No_Compression\(aq,
   UDH TEXT,
-  Class INTEGER DEFAULT \(aq\-1\(aq,
+  Class INTEGER DEFAULT \-1,
   TextDecoded TEXT DEFAULT NULL,
   ID INTEGER,
-  SequencePosition INTEGER NOT NULL DEFAULT \(aq1\(aq,
+  SequencePosition INTEGER NOT NULL DEFAULT 1,
   Status TEXT NOT NULL DEFAULT \(aqReserved\(aq,
-  StatusCode INTEGER NOT NULL DEFAULT \(aq\-1\(aq,
+  StatusCode INTEGER NOT NULL DEFAULT \-1,
   CHECK (Coding IN
   (\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq)),
   CHECK (Status IN
@@ -184,9 +182,9 @@ CREATE TABLE outbox_multipart (
 
 CREATE TABLE phones (
   ID TEXT NOT NULL,
-  UpdatedInDB NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq)),
-  InsertIntoDB NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq)),
-  TimeOut NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq)),
+  UpdatedInDB NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq, \(aqlocaltime\(aq)),
+  InsertIntoDB NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq, \(aqlocaltime\(aq)),
+  TimeOut NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq, \(aqlocaltime\(aq)),
   Send TEXT NOT NULL DEFAULT \(aqno\(aq,
   Receive TEXT NOT NULL DEFAULT \(aqno\(aq,
   IMEI TEXT PRIMARY KEY NOT NULL,
@@ -202,30 +200,30 @@ CREATE TABLE phones (
 
 CREATE TRIGGER update_phones_time UPDATE ON phones
   BEGIN
-    UPDATE phones SET UpdatedInDB = datetime(\(aqnow\(aq) WHERE IMEI = old.IMEI;
+    UPDATE phones SET UpdatedInDB = datetime(\(aqnow\(aq, \(aqlocaltime\(aq) WHERE IMEI = old.IMEI;
   END;
 
 CREATE TABLE sentitems (
-  UpdatedInDB NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq)),
-  InsertIntoDB NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq)),
-  SendingDateTime NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq)),
+  UpdatedInDB NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq, \(aqlocaltime\(aq)),
+  InsertIntoDB NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq, \(aqlocaltime\(aq)),
+  SendingDateTime NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq, \(aqlocaltime\(aq)),
   DeliveryDateTime NUMERIC NULL,
   Text TEXT NOT NULL,
   DestinationNumber TEXT NOT NULL DEFAULT \(aq\(aq,
   Coding TEXT NOT NULL DEFAULT \(aqDefault_No_Compression\(aq,
   UDH TEXT NOT NULL,
   SMSCNumber TEXT NOT NULL DEFAULT \(aq\(aq,
-  Class INTEGER NOT NULL DEFAULT \(aq\-1\(aq,
+  Class INTEGER NOT NULL DEFAULT \-1,
   TextDecoded TEXT NOT NULL DEFAULT \(aq\(aq,
   ID INTEGER,
   SenderID TEXT NOT NULL,
-  SequencePosition INTEGER NOT NULL DEFAULT \(aq1\(aq,
+  SequencePosition INTEGER NOT NULL DEFAULT 1,
   Status TEXT NOT NULL DEFAULT \(aqSendingOK\(aq,
-  StatusError INTEGER NOT NULL DEFAULT \(aq\-1\(aq,
-  TPMR INTEGER NOT NULL DEFAULT \(aq\-1\(aq,
-  RelativeValidity INTEGER NOT NULL DEFAULT \(aq\-1\(aq,
+  StatusError INTEGER NOT NULL DEFAULT \-1,
+  TPMR INTEGER NOT NULL DEFAULT \-1,
+  RelativeValidity INTEGER NOT NULL DEFAULT \-1,
   CreatorID TEXT NOT NULL,
-  StatusCode INTEGER NOT NULL DEFAULT \(aq\-1\(aq,
+  StatusCode INTEGER NOT NULL DEFAULT \-1,
   CHECK (Status IN
   (\(aqSendingOK\(aq,\(aqSendingOKNoReport\(aq,\(aqSendingError\(aq,\(aqDeliveryOK\(aq,\(aqDeliveryFailed\(aq,\(aqDeliveryPending\(aq,
   \(aqDeliveryUnknown\(aq,\(aqError\(aq)),
@@ -241,15 +239,14 @@ CREATE INDEX sentitems_sender ON sentitems(SenderID);
 
 CREATE TRIGGER update_sentitems_time UPDATE ON sentitems
   BEGIN
-    UPDATE sentitems SET UpdatedInDB = datetime(\(aqnow\(aq) WHERE ID = old.ID;
+    UPDATE sentitems SET UpdatedInDB = datetime(\(aqnow\(aq, \(aqlocaltime\(aq) WHERE ID = old.ID;
   END;
 
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
-\fBNOTE:\fP
+\fBNote:\fP
 .INDENT 0.0
 .INDENT 3.5
 You can find the script in \fBdocs/sql/sqlite.sql\fP as well. There are
@@ -262,11 +259,10 @@ The easiest way to upgrade database structure is to backup old one and start
 with creating new one based on example above.
 .sp
 For upgrading existing database, you can use changes described in
-smsd\-tables\-history and then manually update \fBVersion\fP field in
+History of database structure \%<#\:smsd-tables-history> and then manually update \fBVersion\fP field in
 \fBgammu\fP table.
-.SH AUTHOR
+.SH Author
 Michal Čihař <michal@cihar.com>
-.SH COPYRIGHT
+.SH Copyright
 2009-2015, Michal Čihař <michal@cihar.com>
-.\" Generated by docutils manpage writer.
-.
+.\" End of generated man page.

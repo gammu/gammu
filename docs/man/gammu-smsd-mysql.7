@@ -1,8 +1,6 @@
-.\" Man page generated from reStructuredText.
+.\" Man page generated from reStructuredText
+.\" by the Docutils 0.22.4 manpage writer.
 .
-.TH "GAMMU-SMSD-MYSQL" "7" "Oct 03, 2020" "1.42.0" "Gammu"
-.SH NAME
-gammu-smsd-mysql \- gammu-smsd(1) backend using MySQL database server as a message storage
 .
 .nr rst2man-indent-level 0
 .
@@ -30,39 +28,40 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "GAMMU-SMSD-MYSQL" "7" "Feb 09, 2026" "1.43.0" "Gammu"
+.SH NAME
+gammu-smsd-mysql \- gammu-smsd(1) backend using MySQL database server as a message storage
 .SH DESCRIPTION
 .sp
-MYSQL backend stores all data in a \fI\%MySQL\fP database server, which parameters are
-defined by configuration (see gammu\-smsdrc for description of configuration
+MYSQL backend stores all data in a MySQL \%<https://\:www\:.mysql\:.com/> database server, which parameters are
+defined by configuration (see SMSD Configuration File \%<#\:gammu-smsdrc> for description of configuration
 options).
 .sp
-For tables description see gammu\-smsd\-tables\&.
+For tables description see SMSD Database Structure \%<#\:gammu-smsd-tables>\&.
 .sp
-This backend is based on gammu\-smsd\-sql\&.
+This backend is based on SQL Service \%<#\:gammu-smsd-sql>\&.
 .SH CONFIGURATION
 .sp
-Before running gammu\-smsd you need to create necessary tables in the
+Before running gammu\-smsd \%<#\:gammu-smsd> you need to create necessary tables in the
 database, which is described below.
 .sp
 The configuration file then can look like:
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 [smsd]
 service = sql
 driver = native_mysql
 host = localhost
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
-\fBSEE ALSO:\fP
+\fBSee also:\fP
 .INDENT 0.0
 .INDENT 3.5
-gammu\-smsdrc
+SMSD Configuration File \%<#\:gammu-smsdrc>
 .UNINDENT
 .UNINDENT
 .SH PRIVILEGES
@@ -72,19 +71,17 @@ privileges should be enough:
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 GRANT USAGE ON *.* TO \(aqsmsd\(aq@\(aqlocalhost\(aq IDENTIFIED BY \(aqpassword\(aq;
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON \(gasmsd\(ga.* TO \(aqsmsd\(aq@\(aqlocalhost\(aq;
 
 CREATE DATABASE smsd;
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
-\fBNOTE:\fP
+\fBNote:\fP
 .INDENT 0.0
 .INDENT 3.5
 For creating the SQL tables you need more privileges, especially for
@@ -107,8 +104,7 @@ SQL script \fBmysql.sql\fP for creating tables in MySQL database:
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 \-\-
 \-\- Database for Gammu SMSD
 \-\-
@@ -122,7 +118,7 @@ SQL script \fBmysql.sql\fP for creating tables in MySQL database:
 \-\-
 
 CREATE TABLE \(gagammu\(ga (
-  \(gaVersion\(ga integer NOT NULL default \(aq0\(aq PRIMARY KEY
+  \(gaVersion\(ga integer NOT NULL default 0 PRIMARY KEY
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 \-\-
@@ -145,12 +141,12 @@ CREATE TABLE \(gainbox\(ga (
   \(gaCoding\(ga enum(\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq) NOT NULL default \(aqDefault_No_Compression\(aq,
   \(gaUDH\(ga text NOT NULL,
   \(gaSMSCNumber\(ga varchar(20) NOT NULL default \(aq\(aq,
-  \(gaClass\(ga integer NOT NULL default \(aq\-1\(aq,
+  \(gaClass\(ga integer NOT NULL default \-1,
   \(gaTextDecoded\(ga text NOT NULL,
   \(gaID\(ga integer unsigned NOT NULL auto_increment,
   \(gaRecipientID\(ga text NOT NULL,
   \(gaProcessed\(ga enum(\(aqfalse\(aq,\(aqtrue\(aq) NOT NULL default \(aqfalse\(aq,
-  \(gaStatus\(ga integer NOT NULL default \(aq\-1\(aq,
+  \(gaStatus\(ga integer NOT NULL default \-1,
   PRIMARY KEY \(gaID\(ga (\(gaID\(ga)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;
 
@@ -175,11 +171,11 @@ CREATE TABLE \(gaoutbox\(ga (
   \(gaDestinationNumber\(ga varchar(20) NOT NULL default \(aq\(aq,
   \(gaCoding\(ga enum(\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq) NOT NULL default \(aqDefault_No_Compression\(aq,
   \(gaUDH\(ga text,
-  \(gaClass\(ga integer default \(aq\-1\(aq,
+  \(gaClass\(ga integer default \-1,
   \(gaTextDecoded\(ga text NOT NULL,
   \(gaID\(ga integer unsigned NOT NULL auto_increment,
   \(gaMultiPart\(ga enum(\(aqfalse\(aq,\(aqtrue\(aq) default \(aqfalse\(aq,
-  \(gaRelativeValidity\(ga integer default \(aq\-1\(aq,
+  \(gaRelativeValidity\(ga integer default \-1,
   \(gaSenderID\(ga varchar(255),
   \(gaSendingTimeOut\(ga timestamp NULL default CURRENT_TIMESTAMP,
   \(gaDeliveryReport\(ga enum(\(aqdefault\(aq,\(aqyes\(aq,\(aqno\(aq) default \(aqdefault\(aq,
@@ -187,7 +183,7 @@ CREATE TABLE \(gaoutbox\(ga (
   \(gaRetries\(ga int(3) default 0,
   \(gaPriority\(ga integer default 0,
   \(gaStatus\(ga enum(\(aqSendingOK\(aq,\(aqSendingOKNoReport\(aq,\(aqSendingError\(aq,\(aqDeliveryOK\(aq,\(aqDeliveryFailed\(aq,\(aqDeliveryPending\(aq,\(aqDeliveryUnknown\(aq,\(aqError\(aq,\(aqReserved\(aq) NOT NULL default \(aqReserved\(aq,
-  \(gaStatusCode\(ga integer NOT NULL default \(aq\-1\(aq,
+  \(gaStatusCode\(ga integer NOT NULL default \-1,
   PRIMARY KEY \(gaID\(ga (\(gaID\(ga)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
@@ -209,12 +205,12 @@ CREATE TABLE \(gaoutbox_multipart\(ga (
   \(gaText\(ga text,
   \(gaCoding\(ga enum(\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq) NOT NULL default \(aqDefault_No_Compression\(aq,
   \(gaUDH\(ga text,
-  \(gaClass\(ga integer default \(aq\-1\(aq,
+  \(gaClass\(ga integer default \-1,
   \(gaTextDecoded\(ga text,
-  \(gaID\(ga integer unsigned NOT NULL default \(aq0\(aq,
-  \(gaSequencePosition\(ga integer NOT NULL default \(aq1\(aq,
+  \(gaID\(ga integer unsigned NOT NULL default 0,
+  \(gaSequencePosition\(ga integer NOT NULL default 1,
   \(gaStatus\(ga enum(\(aqSendingOK\(aq,\(aqSendingOKNoReport\(aq,\(aqSendingError\(aq,\(aqDeliveryOK\(aq,\(aqDeliveryFailed\(aq,\(aqDeliveryPending\(aq,\(aqDeliveryUnknown\(aq,\(aqError\(aq,\(aqReserved\(aq) NOT NULL default \(aqReserved\(aq,
-  \(gaStatusCode\(ga integer NOT NULL default \(aq\-1\(aq,
+  \(gaStatusCode\(ga integer NOT NULL default \-1,
   PRIMARY KEY (\(gaID\(ga, \(gaSequencePosition\(ga)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
@@ -267,17 +263,17 @@ CREATE TABLE \(gasentitems\(ga (
   \(gaCoding\(ga enum(\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq) NOT NULL default \(aqDefault_No_Compression\(aq,
   \(gaUDH\(ga text NOT NULL,
   \(gaSMSCNumber\(ga varchar(20) NOT NULL default \(aq\(aq,
-  \(gaClass\(ga integer NOT NULL default \(aq\-1\(aq,
+  \(gaClass\(ga integer NOT NULL default \-1,
   \(gaTextDecoded\(ga text NOT NULL,
-  \(gaID\(ga integer unsigned NOT NULL default \(aq0\(aq,
+  \(gaID\(ga integer unsigned NOT NULL default 0,
   \(gaSenderID\(ga varchar(255) NOT NULL,
-  \(gaSequencePosition\(ga integer NOT NULL default \(aq1\(aq,
+  \(gaSequencePosition\(ga integer NOT NULL default 1,
   \(gaStatus\(ga enum(\(aqSendingOK\(aq,\(aqSendingOKNoReport\(aq,\(aqSendingError\(aq,\(aqDeliveryOK\(aq,\(aqDeliveryFailed\(aq,\(aqDeliveryPending\(aq,\(aqDeliveryUnknown\(aq,\(aqError\(aq) NOT NULL default \(aqSendingOK\(aq,
-  \(gaStatusError\(ga integer NOT NULL default \(aq\-1\(aq,
-  \(gaTPMR\(ga integer NOT NULL default \(aq\-1\(aq,
-  \(gaRelativeValidity\(ga integer NOT NULL default \(aq\-1\(aq,
+  \(gaStatusError\(ga integer NOT NULL default \-1,
+  \(gaTPMR\(ga integer NOT NULL default \-1,
+  \(gaRelativeValidity\(ga integer NOT NULL default \-1,
   \(gaCreatorID\(ga text NOT NULL,
-  \(gaStatusCode\(ga integer NOT NULL default \(aq\-1\(aq,
+  \(gaStatusCode\(ga integer NOT NULL default \-1,
   PRIMARY KEY (\(gaID\(ga, \(gaSequencePosition\(ga)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
@@ -290,12 +286,11 @@ CREATE INDEX sentitems_sender ON sentitems(SenderID(250));
 \-\- Dumping data for table \(gasentitems\(ga
 \-\-
 
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
-\fBNOTE:\fP
+\fBNote:\fP
 .INDENT 0.0
 .INDENT 3.5
 You can find the script in \fBdocs/sql/mysql.sql\fP as well.
@@ -306,8 +301,7 @@ SQL script \fBmysql\-legacy.sql\fP for creating tables in MySQL database:
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 \-\-
 \-\- Database for Gammu SMSD
 \-\-
@@ -542,13 +536,11 @@ END;//
 
 DELIMITER ;
 
-
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
-\fBNOTE:\fP
+\fBNote:\fP
 .INDENT 0.0
 .INDENT 3.5
 You can find the script in \fBdocs/sql/mysql\-legacy.sql\fP as well.
@@ -560,11 +552,10 @@ The easiest way to upgrade database structure is to backup old one and start
 with creating new one based on example above.
 .sp
 For upgrading existing database, you can use changes described in
-smsd\-tables\-history and then manually update \fBVersion\fP field in
+History of database structure \%<#\:smsd-tables-history> and then manually update \fBVersion\fP field in
 \fBgammu\fP table.
-.SH AUTHOR
+.SH Author
 Michal Čihař <michal@cihar.com>
-.SH COPYRIGHT
+.SH Copyright
 2009-2015, Michal Čihař <michal@cihar.com>
-.\" Generated by docutils manpage writer.
-.
+.\" End of generated man page.

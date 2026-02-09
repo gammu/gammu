@@ -1,8 +1,6 @@
-.\" Man page generated from reStructuredText.
+.\" Man page generated from reStructuredText
+.\" by the Docutils 0.22.4 manpage writer.
 .
-.TH "GAMMU-SMSD" "1" "Oct 03, 2020" "1.42.0" "Gammu"
-.SH NAME
-gammu-smsd \- SMS daemon for Gammu
 .
 .nr rst2man-indent-level 0
 .
@@ -30,15 +28,16 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "GAMMU-SMSD" "1" "Feb 09, 2026" "1.43.0" "Gammu"
+.SH NAME
+gammu-smsd \- SMS daemon for Gammu
 .SH SYNOPSIS
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 gammu\-smsd [OPTION]...
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .SH DESCRIPTION
@@ -74,7 +73,7 @@ If you run SMSD as a system daemon (or service), it is recommended to use
 absolute path to configuration file as startup directory might be
 different than you expect.
 .sp
-See gammu\-smsdrc for configuration file documentation.
+See SMSD Configuration File \%<#\:gammu-smsdrc> for configuration file documentation.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -137,7 +136,7 @@ only Windows Service manager should use this command.
 .B \-n, \-\-service\-name=name
 Defines name of a Windows service. Each service requires an unique name,
 so if you want to run several SMSD instances, you have to name each
-service differently. Default is "GammuSMSD".
+service differently. Default is \(dqGammuSMSD\(dq.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -154,7 +153,7 @@ Do not use logging as configured in config file.
 .B \-e, \-\-install\-event\-log
 Installs Windows EventLog description to registry.
 .sp
-New in version 1.31.90.
+Added in version 1.31.90.
 
 .UNINDENT
 .INDENT 0.0
@@ -162,7 +161,7 @@ New in version 1.31.90.
 .B \-E, \-\-uninstall\-event\-log
 Uninstalls Windows EventLog description to registry.
 .sp
-New in version 1.31.90.
+Added in version 1.31.90.
 
 .UNINDENT
 .SH SIGNALS
@@ -177,7 +176,7 @@ Reload configuration and reconnect to phone.
 Gracefully shutdown the daemon.
 .TP
 .B SIGALRM
-Used internally for \fI\%gammu\-smsd \-X\fP
+Used internally for \fBgammu\-smsd \-X\fP \%<https://\:docs\:.python\:.org/\:3\:.9/\:using/\:cmdline\:.html#\:id5>
 .TP
 .B SIGUSR1
 Suspends SMSD operation, closing connection to phone and database.
@@ -201,11 +200,9 @@ Start SMSD as a daemon on Linux:
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 gammu\-smsd \-\-config /etc/gammu\-smsdrc \-\-pid /var/run/gammu\-smsd.pid \-\-daemon
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -213,11 +210,9 @@ Start SMSD as a daemon on Linux with reduced privileges:
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 gammu\-smsd \-\-config /etc/gammu\-smsdrc \-\-pid /var/run/gammu\-smsd.pid \-\-daemon \-\-user gammu \-\-group gammu
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .SS SMSD as a system wide daemon
@@ -234,11 +229,9 @@ Install Gammu SMSD Windows service:
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 gammu\-smsd.exe \-c c:\eGammu\esmsdrc \-i
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -246,13 +239,11 @@ Install two instances of SMSD Windows service:
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 gammu\-smsd.exe \-c c:\eGammu\esmsdrc\-1 \-n Gammu\-first\-phone \-i
 
 gammu\-smsd.exe \-c c:\eGammu\esmsdrc\-2 \-n Gammu\-second\-phone \-i
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -260,18 +251,16 @@ To uninstall a Windows service:
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 gammu\-smsd.exe \-u
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .SS Troubleshooting Windows Service
 .sp
-If Gammu fails to start as a Windows service (you will usually get "Error
+If Gammu fails to start as a Windows service (you will usually get \(dqError
 1053: The service did not respond to the start or control request in a timely
-fashion"), first check your SMSD logs. If they do not contain any useful hint,
+fashion\(dq), first check your SMSD logs. If they do not contain any useful hint,
 try starting SMSD manually with exactly same parameters as you installed the
 service (without \-i).
 .sp
@@ -279,11 +268,9 @@ For example the command line can look like:
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 gammu\-smsd.exe \-c smsdrc
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -293,22 +280,20 @@ service.
 .sp
 As you can not run Gammu and Gammu SMSD at same time on single device, you can
 workaround this limitation by suspending SMSD temporarily using \fISIGUSR1\fP and
-\fISIGUSR2\fP signals (see also \fI\%Signals\fP):
+\fISIGUSR2\fP signals (see also Signals):
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 SMSD_PID=\(gapidof gammu\-smsd\(ga
-if [ \-z "$SMSD_PID" ] ; then
-    echo "Failed to figure out SMSD PID!"
+if [ \-z \(dq$SMSD_PID\(dq ] ; then
+    echo \(dqFailed to figure out SMSD PID!\(dq
 else
     kill \-SIGUSR1 $SMSD_PID
     gammu identify
     kill \-SIGUSR2 $SMSD_PID
 fi
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -316,46 +301,43 @@ Or even create a \fIgammu\-safe\fP script:
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 #!/bin/bash
 SMSD_PID=\(gapidof gammu\-smsd\(ga
-if [ \-z "$SMSD_PID" ] ; then
+if [ \-z \(dq$SMSD_PID\(dq ] ; then
   gammu $@
 else
-  tty=$(lsof |grep \-E "gammu\-sms\es+$SMSD_PID\es+.*/dev/tty*"|awk {\(aqprint $NF\(aq})
+  tty=$(lsof |grep \-E \(dqgammu\-sms\es+$SMSD_PID\es+.*/dev/tty*\(dq|awk {\(aqprint $NF\(aq})
   kill \-SIGUSR1 $SMSD_PID
-  while test "$(fuser $ttyfuser $tty 2> /dev/null|xargs)" = $SMSD_PID
+  while test \(dq$(fuser $ttyfuser $tty 2> /dev/null|xargs)\(dq = $SMSD_PID
   do
     sleep 1
   done
   sleep 1
   gammu $@
   kill \-SIGUSR2 $SMSD_PID
-  while test "$(fuser $ttyfuser $tty 2> /dev/null|xargs)" != $SMSD_PID
+  while test \(dq$(fuser $ttyfuser $tty 2> /dev/null|xargs)\(dq != $SMSD_PID
   do
     sleep 1
   done
   sleep 1
 fi
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .SH KNOWN LIMITATIONS
 .sp
 You can not use same phone by more programs in same time. However in case you
-did not enable locking in \fB[gammu]\fP section, it might be able
+did not enable locking in \fB[gammu]\fP \%<#\:section-[gammu]> section, it might be able
 to start the communication with phone from more programs. In this case neither
-of the programs will probably work, see \fI\%Invoking Gammu and suspending SMSD\fP for
+of the programs will probably work, see Invoking Gammu and suspending SMSD for
 workaround.
 .sp
 There is no way to detect that SMS message is reply to another by looking at
 message headers. The only way to achieve this is to add some token to the
 message and let the user include it in the message on reply.
-.SH AUTHOR
+.SH Author
 Michal Čihař <michal@cihar.com>
-.SH COPYRIGHT
+.SH Copyright
 2009-2015, Michal Čihař <michal@cihar.com>
-.\" Generated by docutils manpage writer.
-.
+.\" End of generated man page.

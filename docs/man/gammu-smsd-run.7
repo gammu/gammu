@@ -1,8 +1,6 @@
-.\" Man page generated from reStructuredText.
+.\" Man page generated from reStructuredText
+.\" by the Docutils 0.22.4 manpage writer.
 .
-.TH "GAMMU-SMSD-RUN" "7" "Oct 03, 2020" "1.42.0" "Gammu"
-.SH NAME
-gammu-smsd-run \- documentation for RunOnReceive directive
 .
 .nr rst2man-indent-level 0
 .
@@ -30,10 +28,13 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "GAMMU-SMSD-RUN" "7" "Feb 09, 2026" "1.43.0" "Gammu"
+.SH NAME
+gammu-smsd-run \- documentation for RunOnReceive directive
 .SH DESCRIPTION
 .sp
-Gammu SMSD can be configured by \fBRunOnReceive\fP directive (see
-gammu\-smsdrc for details) to run defined program after receiving
+Gammu SMSD can be configured by \fBRunOnReceive\fP \%<#\:option-RunOnReceive> directive (see
+SMSD Configuration File \%<#\:gammu-smsdrc> for details) to run defined program after receiving
 every message. It can receive single message or more messages, which are parts
 of one multipart message.
 .sp
@@ -49,7 +50,7 @@ from this situation, the waiting time is limited to two minutes. After this
 time SMSD will continue in normal operation and might execute your script
 again.
 .sp
-\fBNOTE:\fP
+\fBNote:\fP
 .INDENT 0.0
 .INDENT 3.5
 All input and output file descriptors are closed when this program is
@@ -58,12 +59,12 @@ invoked, so you have to ensure to open files on your own.
 .UNINDENT
 .SH ENVIRONMENT
 .sp
-New in version 1.28.0.
+Added in version 1.28.0.
 
 .sp
 Program is executed with environment which contains lot of information about
 the message. You can use it together with NULL service (see
-gammu\-smsd\-null) to implement completely own processing of messages.
+Null Backend \%<#\:gammu-smsd-null>) to implement completely own processing of messages.
 .SS Global variables
 .INDENT 0.0
 .TP
@@ -78,11 +79,11 @@ Number of decoded message parts.
 .INDENT 0.0
 .TP
 .B PHONE_ID
-New in version 1.38.2.
+Added in version 1.38.2.
 
 .sp
-Value of \fBPhoneID\fP\&. Useful when running multiple instances
-(see smsd\-multi).
+Value of \fBPhoneID\fP \%<#\:option-PhoneID>\&. Useful when running multiple instances
+(see Multiple modems \%<#\:smsd-multi>).
 .UNINDENT
 .SS Per message variables
 .sp
@@ -106,7 +107,7 @@ Message text. Text is not available for 8\-bit binary messages.
 .INDENT 0.0
 .TP
 .B SMS_1_REFERENCE
-New in version 1.38.5.
+Added in version 1.38.5.
 
 .sp
 Message Reference. If delivery status received, this variable contains TPMR of original message
@@ -136,10 +137,10 @@ title of MMS indication message.
 .B DECODED_1_MMS_ADDRESS
 Address (URL) of MMS from MMS indication message.
 .sp
-\fBSEE ALSO:\fP
+\fBSee also:\fP
 .INDENT 7.0
 .INDENT 3.5
-faq\-mms\-download
+Can I use Gammu to receive MMS? \%<#\:faq-mms-download>
 .UNINDENT
 .UNINDENT
 .UNINDENT
@@ -151,149 +152,134 @@ Size of MMS as specified in MMS indication message.
 .SH EXAMPLES
 .SS Activating RunOnReceive
 .sp
-To activate this feature you need to set \fBRunOnReceive\fP in
-the gammu\-smsdrc\&.
+To activate this feature you need to set \fBRunOnReceive\fP \%<#\:option-RunOnReceive> in
+the SMSD Configuration File \%<#\:gammu-smsdrc>\&.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 [smsd]
 RunOnReceive = /path/to/script.sh
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .SS Processing messages from the files backend
 .sp
-Following script (if used as \fBRunOnReceive\fP handler) passes
-message data to other program. This works only with the gammu\-smsd\-files\&.
+Following script (if used as \fBRunOnReceive\fP \%<#\:option-RunOnReceive> handler) passes
+message data to other program. This works only with the Files backend \%<#\:gammu-smsd-files>\&.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 #!/bin/sh
 INBOX=/path/to/smsd/inbox
 PROGRAM=/bin/cat
-for ID in "$@" ; do
+for ID in \(dq$@\(dq ; do
     $PROGRAM < $INBOX/$ID
 done
 
-
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .SS Invoking commands based on message text
 .sp
-Following script (if used as \fBRunOnReceive\fP handler) executes
+Following script (if used as \fBRunOnReceive\fP \%<#\:option-RunOnReceive> handler) executes
 given programs based on message text.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 #!/bin/sh
 
 # Check for sender number
-if [ "$SMS_1_NUMBER" != "+420123456789" ] ; then
+if [ \(dq$SMS_1_NUMBER\(dq != \(dq+420123456789\(dq ] ; then
     exit
 fi
 
 # Handle commands
-case "$SMS_1_TEXT" in
-    "DMS A")
+case \(dq$SMS_1_TEXT\(dq in
+    \(dqDMS A\(dq)
         /usr/bin/dms\-a
         ;;
-    "DMS B")
+    \(dqDMS B\(dq)
         /usr/bin/dms\-b
         ;;
 esac
 
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .SS Passing message text to program
 .sp
-Following script (if used as \fBRunOnReceive\fP handler) passes
+Following script (if used as \fBRunOnReceive\fP \%<#\:option-RunOnReceive> handler) passes
 message text and sender to external program.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 #!/bin/sh
 PROGRAM=/bin/echo
 for i in \(gaseq $SMS_MESSAGES\(ga ; do
-    eval "$PROGRAM \e"\e${SMS_${i}_NUMBER}\e" \e"\e${SMS_${i}_TEXT}\e""
+    eval \(dq$PROGRAM \e\(dq\e${SMS_${i}_NUMBER}\e\(dq \e\(dq\e${SMS_${i}_TEXT}\e\(dq\(dq
 done
 
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .SS Passing MMS indication parameters to external program
 .sp
-Following script (if used as \fBRunOnReceive\fP handler) will write
+Following script (if used as \fBRunOnReceive\fP \%<#\:option-RunOnReceive> handler) will write
 information about each received MMS indication to the log file. Just replace
 echo command with your own program to do custom processing.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 #!/bin/sh
 if [ $DECODED_PARTS \-eq 0 ] ; then
     # No decoded parts, nothing to process
     exit
 fi
-if [ "$DECODED_1_MMS_ADDRESS" ] ; then
-    echo "$DECODED_1_MMS_ADDRESS" "$DECODED_1_MMS_SENDER" "$DECODED_1_MMS_TITLE" >> /tmp/smsd\-mms.log
+if [ \(dq$DECODED_1_MMS_ADDRESS\(dq ] ; then
+    echo \(dq$DECODED_1_MMS_ADDRESS\(dq \(dq$DECODED_1_MMS_SENDER\(dq \(dq$DECODED_1_MMS_TITLE\(dq >> /tmp/smsd\-mms.log
 fi
 
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .SS Processing message text in Python
 .sp
-Following script (if used as \fBRunOnReceive\fP handler) written
+Following script (if used as \fBRunOnReceive\fP \%<#\:option-RunOnReceive> handler) written
 in Python will concatenate all text from received message:
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 #!/usr/bin/env python
-from __future__ import print_function
+
 import os
-import sys
 
-numparts = int(os.environ[\(aqDECODED_PARTS\(aq])
+numparts = int(os.environ[\(dqDECODED_PARTS\(dq])
 
-text = \(aq\(aq
+text = \(dq\(dq
 # Are there any decoded parts?
 if numparts == 0:
-    text = os.environ[\(aqSMS_1_TEXT\(aq]
+    text = os.environ[\(dqSMS_1_TEXT\(dq]
 # Get all text parts
 else:
     for i in range(1, numparts + 1):
-        varname = \(aqDECODED_%d_TEXT\(aq % i
+        varname = \(dqDECODED_%d_TEXT\(dq % i
         if varname in os.environ:
             text = text + os.environ[varname]
 
 # Do something with the text
-print(\(aqNumber %s have sent text: %s\(aq % (os.environ[\(aqSMS_1_NUMBER\(aq], text))
+print(\(dqNumber {} have sent text: {}\(dq.format(os.environ[\(dqSMS_1_NUMBER\(dq], text))
 
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
-.SH AUTHOR
+.SH Author
 Michal Čihař <michal@cihar.com>
-.SH COPYRIGHT
+.SH Copyright
 2009-2015, Michal Čihař <michal@cihar.com>
-.\" Generated by docutils manpage writer.
-.
+.\" End of generated man page.

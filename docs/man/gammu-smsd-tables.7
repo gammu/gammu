@@ -1,8 +1,6 @@
-.\" Man page generated from reStructuredText.
+.\" Man page generated from reStructuredText
+.\" by the Docutils 0.22.4 manpage writer.
 .
-.TH "GAMMU-SMSD-TABLES" "7" "Oct 03, 2020" "1.42.0" "Gammu"
-.SH NAME
-gammu-smsd-tables \- description of tables for database backends of gammu-smsd(1)
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +28,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "GAMMU-SMSD-TABLES" "7" "Feb 09, 2026" "1.43.0" "Gammu"
+.SH NAME
+gammu-smsd-tables \- description of tables for database backends of gammu-smsd(1)
 .sp
 The backends themselves are described in their sections, this document
 describes general database structure and required tables.
@@ -37,20 +38,28 @@ describes general database structure and required tables.
 More SMS daemons can share single database. If you do not specify PhoneID in
 their configuration, all are treated equally and you have no guarantee which
 one sends outgoing message. If you configure PhoneID and use it when inserting
-message to the \fBoutbox\fP table (gammu\-smsd\-inject does this), each SMS
-daemon will have separate outbox queue. See also smsd\-multi\&.
+message to the \fBoutbox\fP table (gammu\-smsd\-inject \%<#\:gammu-smsd-inject> does this), each SMS
+daemon will have separate outbox queue. See also Multiple modems \%<#\:smsd-multi>\&.
+.sp
+\fBNote:\fP
+.INDENT 0.0
+.INDENT 3.5
+SQL scripts to create all needed tables for most databases are included in
+Gammu documentation docs/sql \%<https://\:github\:.com/\:gammu/\:gammu/\:tree/\:master/\:docs/\:sql>\&.
+.UNINDENT
+.UNINDENT
 .SH RECEIVING OF MESSAGES
 .sp
-Received messages are stored in \fI\%inbox\fP table.
+Received messages are stored in inbox table.
 .SH TRANSMITTING OF MESSAGES
 .sp
-Transmitted messages are read from table \fI\%outbox\fP and possible subsequent parts
-of the same message from \fI\%outbox_multipart\fP\&.
+Transmitted messages are read from table outbox and possible subsequent parts
+of the same message from outbox_multipart\&.
 .SH DESCRIPTION OF TABLES
 .SS gammu
 .sp
 Table holding single field \fBVersion\fP \- version of a database schema. See
-\fI\%History of database structure\fP for details what has changed.
+History of database structure for details what has changed.
 .SS inbox
 .sp
 Table where received messages will be stored.
@@ -121,13 +130,13 @@ Operation not supported.
 Network timeout.
 .UNINDENT
 .sp
-New in version 1.38.5.
+Added in version 1.38.5.
 
 .UNINDENT
 .SS outbox
 .sp
 Messages enqueued for sending should be placed in this table. If message
-is multipart, subsequent parts are stored in table \fI\%outbox_multipart\fP\&.
+is multipart, subsequent parts are stored in table outbox_multipart\&.
 .sp
 Fields description:
 .INDENT 0.0
@@ -145,14 +154,14 @@ set it to some value, when want to force sending after some planned time
 Send message before specified time, can be used to limit messages from
 being sent in night. Default value is 23:59:59
 .sp
-New in version 1.29.90.
+Added in version 1.29.90.
 
 .TP
 .B \fBSendAfter\fP (time)
 Send message after specified time, can be used to limit messages from
 being sent in night. Default value is 00:00:00
 .sp
-New in version 1.29.90.
+Added in version 1.29.90.
 
 .TP
 .B \fBText\fP (text)
@@ -173,7 +182,7 @@ the message. Without this, message will be sent as plain text.
 SMS class or \-1 (0 is normal SMS, 1 is flash one, 127 is USSD)
 .TP
 .B \fBTextDecoded\fP (varchar(160))
-SMS text in "human readable" form
+SMS text in \(dqhuman readable\(dq form
 .TP
 .B \fBID\fP (integer unsigned)
 SMS/SMS sequence ID
@@ -189,7 +198,7 @@ SMS relative validity like encoded using GSM specs
 .TP
 .B \fBSenderID\fP (text)
 which SMSD instance should send this one sequence, see
-\fBPhoneID\fP and smsd\-multi\&. If blank, first SMSD who
+\fBPhoneID\fP \%<#\:option-PhoneID> and Multiple modems \%<#\:smsd-multi>\&. If blank, first SMSD who
 sees this message first will process it.
 .TP
 .B \fBSendingTimeOut\fP (timestamp)
@@ -240,13 +249,13 @@ Some other error happened during sending (usually bug in SMSD).
 Initial value, meaning the status has not been set.
 .UNINDENT
 .sp
-New in version 1.38.5.
+Added in version 1.38.5.
 
 .TP
 .B \fBStatusCode\fP (integer)
 GSM status code
 .sp
-New in version 1.38.5.
+Added in version 1.38.5.
 
 .UNINDENT
 .SS outbox_multipart
@@ -278,7 +287,7 @@ the same meaning as values in outbox table
 the same meaning as values in outbox table
 .TP
 .B \fBSequencePosition\fP (integer)
-info, what is SMS number in SMS sequence (start at 2, first part is in \fI\%outbox\fP
+info, what is SMS number in SMS sequence (start at 2, first part is in outbox
 table).
 .TP
 .B \fBStatus\fP (enum(\(aqSendingOK\(aq, \(aqSendingOKNoReport\(aq, \(aqSendingError\(aq, \(aqDeliveryOK\(aq, \(aqDeliveryFailed\(aq, \(aqDeliveryPending\(aq, \(aqDeliveryUnknown\(aq, \(aqError\(aq, \(aqReserved\(aq))
@@ -314,13 +323,13 @@ Some other error happened during sending (usually bug in SMSD).
 Initial value, meaning the status has not been set.
 .UNINDENT
 .sp
-New in version 1.38.5.
+Added in version 1.38.5.
 
 .TP
 .B \fBStatusCode\fP (integer)
 GSM status code
 .sp
-New in version 1.38.5.
+Added in version 1.38.5.
 
 .UNINDENT
 .SS phones
@@ -344,10 +353,10 @@ when this record has been created (when phone has been connected)
 when this record expires
 .TP
 .B \fBSend\fP (boolean)
-indicates whether SMSD is sending messages, depends on configuration directive \fBSend\fP
+indicates whether SMSD is sending messages, depends on configuration directive \fBSend\fP \%<#\:option-Send>
 .TP
 .B \fBReceive\fP (boolean)
-indicates whether SMSD is receiving messages, depends on configuration directive \fBReceive\fP
+indicates whether SMSD is receiving messages, depends on configuration directive \fBReceive\fP \%<#\:option-Receive>
 .TP
 .B \fBIMEI\fP (text)
 IMEI of phone
@@ -445,13 +454,13 @@ decoded number of SMSC, which sent SMS
 SMS class or \-1 (0 is normal SMS, 1 is flash one, 127 is USSD)
 .TP
 .B \fBTextDecoded\fP (varchar(160))
-SMS text in "human readable" form
+SMS text in \(dqhuman readable\(dq form
 .TP
 .B \fBID\fP (integer unsigned)
 SMS ID
 .TP
 .B \fBSenderID\fP (text)
-which SMSD instance sent this one sequence, see \fBPhoneID\fP
+which SMSD instance sent this one sequence, see \fBPhoneID\fP \%<#\:option-PhoneID>
 .TP
 .B \fBSequencePosition\fP (integer)
 SMS number in SMS sequence
@@ -468,15 +477,15 @@ copied from CreatorID from outbox table
 .B \fBStatusCode\fP (integer)
 GSM status code
 .sp
-New in version 1.38.5.
+Added in version 1.38.5.
 
 .UNINDENT
 .SH HISTORY OF DATABASE STRUCTURE
 .sp
-\fBNOTE:\fP
+\fBNote:\fP
 .INDENT 0.0
 .INDENT 3.5
-Testing versions (see versioning) do not have to keep same table
+Testing versions (see Versioning \%<#\:versioning>) do not have to keep same table
 structure as final releases. Below mentioned versions are for
 informational purposes only, you should always use stable versions in
 production environment.
@@ -492,11 +501,11 @@ History of schema versions:
 .INDENT 3.5
 .INDENT 0.0
 .IP \(bu 2
-Added \fBStatus\fP field to \fI\%outbox\fP and \fI\%outbox_multipart\fP\&.
+Added \fBStatus\fP field to outbox and outbox_multipart\&.
 .IP \(bu 2
-Added \fBStatusCode\fP field to \fI\%sentitems\fP, \fI\%outbox\fP and \fI\%outbox_multipart\fP\&.
+Added \fBStatusCode\fP field to sentitems, outbox and outbox_multipart\&.
 .IP \(bu 2
-Added \fBStatus\fP field to \fI\%inbox\fP\&.
+Added \fBStatus\fP field to inbox\&.
 .UNINDENT
 .UNINDENT
 .UNINDENT
@@ -515,9 +524,9 @@ Removed unused \fBdaemons\fP, \fBpbk\fP and \fBpbk_groups\fP tables.
 .IP \(bu 2
 Added primary key to the \fBgammu\fP table.
 .IP \(bu 2
-Added \fBPriority\fP field to the \fI\%outbox\fP\&.
+Added \fBPriority\fP field to the outbox\&.
 .IP \(bu 2
-Added \fBIMSI\fP field to the \fI\%phones\fP\&.
+Added \fBIMSI\fP field to the phones\&.
 .UNINDENT
 .sp
 Changed in version 1.37.90.
@@ -528,7 +537,7 @@ Changed in version 1.37.90.
 15
 .INDENT 0.0
 .INDENT 3.5
-Added \fBRetries\fP field to the \fI\%outbox\fP\&.
+Added \fBRetries\fP field to the outbox\&.
 .sp
 Changed in version 1.36.7.
 
@@ -620,30 +629,26 @@ Changed in version 0.98.0.
 .SS Creating tables
 .sp
 SQL scripts to create all needed tables for most databases are included in
-Gammu documentation (docs/sql). As well as some PHP scripts interacting with
-the database.
+Gammu documentation docs/sql \%<https://\:github\:.com/\:gammu/\:gammu/\:tree/\:master/\:docs/\:sql>\&.
 .sp
 For example to create SQLite tables, issue following command:
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 sqlite3 smsd.db < docs/sql/sqlite.sql
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .SS Injecting a message using SQL
 .sp
-To send a message, you can either use gammu\-smsd\-inject, which does all the
+To send a message, you can either use gammu\-smsd\-inject \%<#\:gammu-smsd-inject>, which does all the
 magic for you, or you can insert the message manually. The simplest example is
 short text message:
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 INSERT INTO outbox (
     DestinationNumber,
     TextDecoded,
@@ -655,8 +660,7 @@ INSERT INTO outbox (
     \(aqProgram\(aq,
     \(aqDefault_No_Compression\(aq
 );
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -665,8 +669,7 @@ to hex encode the unicode text:
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 INSERT INTO outbox (
     DestinationNumber,
     Text,
@@ -678,17 +681,16 @@ INSERT INTO outbox (
     \(aqProgram\(aq,
     \(aqDefault_No_Compression\(aq
 );
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .SS Injecting long message using SQL
 .sp
 Inserting multipart messages is a bit more tricky, you need to construct also
 UDH header and store it hexadecimally written into UDH field. Unless you have a
-good reason to do this manually, use gammu\-smsd\-inject, C library
+good reason to do this manually, use gammu\-smsd\-inject \%<#\:gammu-smsd-inject>, C library
 (\fBSMSD_InjectSMS()\fP) or Python library
-(\fBgammu.smsd.SMSD.InjectSMS()\fP).
+(\fBgammu.smsd.SMSD.InjectSMS()\fP \%<#\:gammu\:.smsd\:.SMSD\:.InjectSMS>).
 .sp
 For long text message, the UDH starts with \fB050003\fP followed by byte as a
 message reference (you can put any hex value there, but it should be \fBdifferent
@@ -697,14 +699,13 @@ for each message\fP, \fBD3\fP in following example), byte for number of messages
 number) and byte for number of current message (\fB01\fP for first message,
 \fB02\fP for second, etc.).
 .sp
-In most cases, the multipart message has to be class 1.
+In most cases, the mutltipart message has to be class 1.
 .sp
 For example long text message of two parts could look like following:
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 INSERT INTO outbox (
     CreatorID,
     MultiPart,
@@ -739,21 +740,19 @@ INSERT INTO outbox_multipart (
     \(aqDefault_No_Compression\(aq,
     1
 )
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
-\fBNOTE:\fP
+\fBNote:\fP
 .INDENT 0.0
 .INDENT 3.5
 Adding UDH means that you have less space for text, in above example you
 can use only 153 characters in single message.
 .UNINDENT
 .UNINDENT
-.SH AUTHOR
+.SH Author
 Michal Čihař <michal@cihar.com>
-.SH COPYRIGHT
+.SH Copyright
 2009-2015, Michal Čihař <michal@cihar.com>
-.\" Generated by docutils manpage writer.
-.
+.\" End of generated man page.

@@ -19,6 +19,24 @@ the issue.
 ChangeLog
 =========
 
+20260209 - 1.43.0
+
+[-] * Documentation modernization.
+[-] * Localization updates.
+[-] * Dependencies updates.
+[-] * Improved CNMI response processing.
+[-] * Improved error handling in SMSD.
+[-] * Handle truncated SMS PDUs gracefully instead of rejecting.
+[-] * Improved Huawei devices compatibility.
+[-] * Support 3-parameter AT+CPMS.
+[-] * Handle unsolicited AT messages from ZTE modems.
+[-] * Fix serial device error handling.
+[-] * Prefer GSM over HEX charset for AT.
+[-] * Improved error handling in SMS mode for AT.
+[-] * Fix filename sanitization in SMSD.
+[+] * Add SMSD_SetExitOnFailure() to enable library usage.
+[-] * Fixed several potential buffer overruns.
+
 20201003 - 1.42.0
 
 [-] * Fixed compilation on some non GNU systems.

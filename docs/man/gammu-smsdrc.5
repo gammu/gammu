@@ -1,8 +1,6 @@
-.\" Man page generated from reStructuredText.
+.\" Man page generated from reStructuredText
+.\" by the Docutils 0.22.4 manpage writer.
 .
-.TH "GAMMU-SMSDRC" "5" "Oct 03, 2020" "1.42.0" "Gammu"
-.SH NAME
-gammu-smsdrc \- gammu-smsd(1) configuration file
 .
 .nr rst2man-indent-level 0
 .
@@ -30,71 +28,74 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "GAMMU-SMSDRC" "5" "Feb 09, 2026" "1.43.0" "Gammu"
+.SH NAME
+gammu-smsdrc \- gammu-smsd(1) configuration file
 .SH DESCRIPTION
 .sp
 gammu\-smsd reads configuration from a config file. It\(aqs location can be
 specified on command line, otherwise default path \fB/etc/gammu\-smsdrc\fP
 is used.
 .sp
-This file use ini file syntax, see ini\&.
+This file use ini file syntax, see INI file format \%<#\:ini>\&.
 .sp
 Configuration file of gammu\-smsd consists of at least two sections \-
-\fB[gammu]\fP and \fI\%[smsd]\fP\&. For gammu\-smsd\-sql
-you can also use \fI\%[sql]\fP and \fI\%[tables]\fP\&.
+\fB[gammu]\fP \%<#\:section-[gammu]> and \fB[smsd]\fP\&. For SQL Service \%<#\:gammu-smsd-sql>
+you can also use \fB[sql]\fP and \fB[tables]\fP\&.
 .sp
-The \fB[gammu]\fP section is configuration of a phone connection
-and is same as described in gammurc with the only exception that
-\fI\%LogFile\fP is ignored and common logging for gammu library and
-SMS daemon is used. However the \fBLogFormat\fP directive still
+The \fB[gammu]\fP \%<#\:section-[gammu]> section is configuration of a phone connection
+and is same as described in Gammu Configuration File \%<#\:gammurc> with the only exception that
+\fBLogFile\fP is ignored and common logging for gammu library and
+SMS daemon is used. However the \fBLogFormat\fP \%<#\:option-LogFormat> directive still
 configures how much messages gammu emits.
 .INDENT 0.0
 .TP
 .B [smsd]
-The \fI\%[smsd]\fP section configures SMS daemon itself, which are described in
+The \fB[smsd]\fP section configures SMS daemon itself, which are described in
 following subsections. First general parameters of SMS daemon are listed and
 then specific parameters for storage backends.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B [include_numbers]
-List of numbers from which accept messages, see \fI\%Message filtering\fP\&.
+List of numbers from which accept messages, see Message filtering\&.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B [exclude_numbers]
-List of numbers from which reject messages, see \fI\%Message filtering\fP\&.
+List of numbers from which reject messages, see Message filtering\&.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B [include_smsc]
-List of SMSC numbers from which accept messages, see \fI\%Message filtering\fP\&.
+List of SMSC numbers from which accept messages, see Message filtering\&.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B [exclude_smsc]
-List of SMSC numbers from which reject messages, see \fI\%Message filtering\fP\&.
+List of SMSC numbers from which reject messages, see Message filtering\&.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B [sql]
-Configure SQL queries used by gammu\-smsd\-sql, you usually don\(aqt have to modify them.
+Configure SQL queries used by SQL Service \%<#\:gammu-smsd-sql>, you usually don\(aqt have to modify them.
 .sp
-\fBSEE ALSO:\fP
+\fBSee also:\fP
 .INDENT 7.0
 .INDENT 3.5
-Configurable queries
+Configurable queries \%<#\:configurable-queries>
 .UNINDENT
 .UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
 .B [tables]
-Configure SQL table names used by gammu\-smsd\-sql, you usually don\(aqt have to modify them.
+Configure SQL table names used by SQL Service \%<#\:gammu-smsd-sql>, you usually don\(aqt have to modify them.
 .sp
-\fBSEE ALSO:\fP
+\fBSee also:\fP
 .INDENT 7.0
 .INDENT 3.5
-Configurable tables
+Tables \%<#\:configurable-tables>
 .UNINDENT
 .UNINDENT
 .UNINDENT
@@ -106,41 +107,41 @@ SMSD service to use, one of following choices:
 .INDENT 7.0
 .TP
 .B \fBFILES\fP
-Stores messages in files, see gammu\-smsd\-files for details.
+Stores messages in files, see Files backend \%<#\:gammu-smsd-files> for details.
 .TP
 .B \fBNULL\fP
-Does not store messages at all, see gammu\-smsd\-null for details.
+Does not store messages at all, see Null Backend \%<#\:gammu-smsd-null> for details.
 .TP
 .B \fBSQL\fP
-Stores messages in SQL database, see gammu\-smsd\-sql for details,
-choose database type to use by \fI\%Driver\fP\&.
+Stores messages in SQL database, see SQL Service \%<#\:gammu-smsd-sql> for details,
+choose database type to use by \fBDriver\fP\&.
 .sp
-New in version 1.28.93.
+Added in version 1.28.93.
 
 .TP
 .B \fBMYSQL\fP
-Deprecated since version 1.28.93: Use \fI\%Service\fP = \fBSQL\fP and \fI\%Driver\fP = \fBnative_mysql\fP instead.
+Deprecated since version 1.28.93: Use \fBService\fP = \fBSQL\fP and \fBDriver\fP = \fBnative_mysql\fP instead.
 
 .sp
 Compatibility option for older configuration files, stores messages in
-MySQL database, see gammu\-smsd\-mysql for details.
+MySQL database, see MySQL Backend \%<#\:gammu-smsd-mysql> for details.
 .TP
 .B \fBPGSQL\fP
-Deprecated since version 1.28.93: Use \fI\%Service\fP = \fBSQL\fP and \fI\%Driver\fP = \fBnative_pgsql\fP instead.
+Deprecated since version 1.28.93: Use \fBService\fP = \fBSQL\fP and \fBDriver\fP = \fBnative_pgsql\fP instead.
 
 .sp
 Compatibility option for older configuration files, stores messages in
-PostgreSQL database, see gammu\-smsd\-pgsql for details.
+PostgreSQL database, see PostgreSQL Backend \%<#\:gammu-smsd-pgsql> for details.
 .TP
 .B \fBDBI\fP
-Deprecated since version 1.28.93: Use \fI\%Service\fP = \fBSQL\fP and \fI\%Driver\fP = DBI driver instead.
+Deprecated since version 1.28.93: Use \fBService\fP = \fBSQL\fP and \fBDriver\fP = DBI driver instead.
 
 .sp
 Compatibility option for older configuration files, stores messages in
-any database supported by libdbi, see gammu\-smsd\-dbi for details.
+any database supported by libdbi, see DBI Backend \%<#\:gammu-smsd-dbi> for details.
 .UNINDENT
 .sp
-\fBNOTE:\fP
+\fBNote:\fP
 .INDENT 7.0
 .INDENT 3.5
 Availability of backends depends on platform and compile time configuration.
@@ -178,11 +179,11 @@ expect.
 .sp
 Default is to provide no logging.
 .sp
-\fBNOTE:\fP
+\fBNote:\fP
 .INDENT 7.0
 .INDENT 3.5
 For logging to Windows Event Log, it is recommended to install Event Log
-source by invoking \fI\%gammu\-smsd \-e\fP (this is automatically done during
+source by invoking \fBgammu\-smsd \-e\fP (this is automatically done during
 installation of Gammu).
 .UNINDENT
 .UNINDENT
@@ -215,7 +216,7 @@ syslog). One of following chouces:
 \fBLOCAL7\fP
 .UNINDENT
 .sp
-New in version 1.30.91.
+Added in version 1.30.91.
 
 .UNINDENT
 .INDENT 0.0
@@ -267,9 +268,9 @@ Default is 1.
 .TP
 .B RetryTimeout
 How long to wait before resending failed message (needs to be enabled by
-\fI\%MaxRetries\fP).
+\fBMaxRetries\fP).
 .sp
-Is used in \fBupdate_retries\fP\&.
+Is used in \fBupdate_retries\fP \%<#\:option-update_retries>\&.
 .sp
 Default is 600.
 .UNINDENT
@@ -278,7 +279,7 @@ Default is 600.
 .B ReceiveFrequency
 The number of seconds between testing for received SMSes, when the phone is
 busy sending SMSes. Normally a test for received SMSes is done every
-\fI\%CommTimeout\fP seconds and after each sent SMS.
+\fBCommTimeout\fP seconds and after each sent SMS.
 .sp
 Default is 15.
 .UNINDENT
@@ -330,7 +331,7 @@ Default is 1 (enabled).
 .INDENT 0.0
 .TP
 .B HangupCalls
-New in version 1.34.0.
+Added in version 1.34.0.
 
 .sp
 Whether to automatically hangup any incoming calls.
@@ -354,7 +355,7 @@ Default is 1 (enabled).
 .INDENT 0.0
 .TP
 .B CheckNetwork
-New in version 1.37.90.
+Added in version 1.37.90.
 
 .sp
 Whether to check network status periodically.
@@ -377,14 +378,14 @@ Default is 0 (not used).
 .INDENT 0.0
 .TP
 .B HardResetFrequency
-New in version 1.28.92.
+Added in version 1.28.92.
 
 .sp
-\fBWARNING:\fP
+\fBWarning:\fP
 .INDENT 7.0
 .INDENT 3.5
 For some phones hard reset means deleting all data in it. Use
-\fI\%ResetFrequency\fP instead, unless you know what you are
+\fBResetFrequency\fP instead, unless you know what you are
 doing.
 .UNINDENT
 .UNINDENT
@@ -426,25 +427,25 @@ Default is 600 (10 minutes).
 .TP
 .B PhoneID
 String with info about phone used for sending/receiving. This can be useful if
-you want to run several SMS daemons (see \fI\%Multiple modems\fP).
+you want to run several SMS daemons (see Multiple modems).
 .sp
 When you set PhoneID, all messages (including injected ones) will be marked
 by this string (stored as SenderID in the database) and it allows more SMS
 daemons to share a single database.
 .sp
-SMSD daemon will in such case send outbox messages only with
+SMSD daemon will in such case send outbox \%<#\:outbox> messages only with
 matching or empty SenderID.
 .sp
-This option has actually no effect with gammu\-smsd\-files\&.
+This option has actually no effect with Files backend \%<#\:gammu-smsd-files>\&.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B SMSC
-New in version 1.36.2.
+Added in version 1.36.2.
 
 .sp
 SMSC number to use for sending messages if not specified in the message
-(see options of gammu\-smsd\-inject).
+(see options of gammu\-smsd\-inject \%<#\:gammu-smsd-inject>).
 .sp
 In most cases you don\(aqt need this settings as Gammu tries to read correct
 SMSC from phone, but sometimes this fails (try \fBgammu getsmsc\fP).
@@ -467,12 +468,12 @@ time SMSD will continue in normal operation and might execute your script
 again.
 .sp
 The process has available lot of information about received message in
-environment, check gammu\-smsd\-run for more details.
+environment, check RunOnReceive Directive \%<#\:gammu-smsd-run> for more details.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B RunOnFailure
-New in version 1.28.93.
+Added in version 1.28.93.
 
 .sp
 Executes a program on failure.
@@ -484,34 +485,34 @@ The program will receive optional parameter, which can currently be either
 \fBINIT\fP (meaning failure during phone initialization) or message ID,
 which would indicate error while sending the message.
 .sp
-\fBNOTE:\fP
+\fBNote:\fP
 .INDENT 7.0
 .INDENT 3.5
-The environment with message (as is in \fI\%RunOnReceive\fP) is not passed to the command.
+The environment with message (as is in \fBRunOnReceive\fP) is not passed to the command.
 .UNINDENT
 .UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
 .B RunOnSent
-New in version 1.36.4.
+Added in version 1.36.4.
 
 .sp
 Executes a program after sending message.
 .sp
 The program will receive optional parameter a message ID and environment
-with message details as described in gammu\-smsd\-run\&.
+with message details as described in RunOnReceive Directive \%<#\:gammu-smsd-run>\&.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B RunOnIncomingCall
-New in version 1.38.5.
+Added in version 1.38.5.
 
 .sp
 Executes a program after cancelling incoming call.
 .sp
 The program will receive a parameter with a phone number of the call.
-This requires \fI\%HangupCalls\fP to be enabled.
+This requires \fBHangupCalls\fP to be enabled.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -558,7 +559,7 @@ Default is 10.
 .INDENT 0.0
 .TP
 .B Send
-New in version 1.28.91.
+Added in version 1.28.91.
 
 .sp
 Whether to enable sending of messages.
@@ -568,7 +569,7 @@ Default is True.
 .INDENT 0.0
 .TP
 .B Receive
-New in version 1.28.91.
+Added in version 1.28.91.
 
 .sp
 Whether to enable receiving of messages.
@@ -577,8 +578,8 @@ Default is True.
 .UNINDENT
 .SH DATABASE BACKENDS OPTIONS
 .sp
-All DBI, ODBC, MYSQL and PGSQL backends (see gammu\-smsd\-mysql,
-gammu\-smsd\-odbc, gammu\-smsd\-pgsql, gammu\-smsd\-dbi for
+All DBI, ODBC, MYSQL and PGSQL backends (see MySQL Backend \%<#\:gammu-smsd-mysql>,
+ODBC Backend \%<#\:gammu-smsd-odbc>, PostgreSQL Backend \%<#\:gammu-smsd-pgsql>, DBI Backend \%<#\:gammu-smsd-dbi> for
 their documentation) supports same options for configuring connection to a
 database:
 .INDENT 0.0
@@ -600,7 +601,7 @@ semicolon, for example \fBlocalhost:/path/to/socket\fP or
 .sp
 For ODBC this is used as Data source name.
 .sp
-\fBNOTE:\fP
+\fBNote:\fP
 .INDENT 7.0
 .INDENT 3.5
 Some database servers differentiate usage of \fBlocalhost\fP (to use
@@ -609,16 +610,16 @@ Please make sure your SMSD settings match the database server ones.
 .UNINDENT
 .UNINDENT
 .sp
-New in version 1.28.92.
+Added in version 1.28.92.
 
 .UNINDENT
 .INDENT 0.0
 .TP
 .B PC
-Deprecated since version 1.28.92: Please use \fI\%Host\fP instead.
+Deprecated since version 1.28.92: Please use \fBHost\fP instead.
 
 .sp
-Synonym for \fI\%Host\fP, kept for backwards compatibility.
+Synonym for \fBHost\fP, kept for backwards compatibility.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -627,8 +628,8 @@ Name of database (or schema) to use and where SMSD can find it\(aqs tables.
 .sp
 Please note that you should create tables in this database before using
 gammu\-smsd. SQL files for creating needed tables are included in
-documentation for individual database backends: gammu\-smsd\-mysql,
-gammu\-smsd\-odbc, gammu\-smsd\-pgsql, gammu\-smsd\-dbi
+documentation for individual database backends: MySQL Backend \%<#\:gammu-smsd-mysql>,
+ODBC Backend \%<#\:gammu-smsd-odbc>, PostgreSQL Backend \%<#\:gammu-smsd-pgsql>, DBI Backend \%<#\:gammu-smsd-dbi>
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -649,14 +650,14 @@ Available drivers:
 \fBodbc\fP
 .INDENT 7.0
 .INDENT 3.5
-Connects to the database using ODBC, see gammu\-smsd\-odbc\&.
+Connects to the database using ODBC, see ODBC Backend \%<#\:gammu-smsd-odbc>\&.
 .UNINDENT
 .UNINDENT
 .sp
 \fBnative_mysql\fP
 .INDENT 7.0
 .INDENT 3.5
-Stores messages in MySQL database, see gammu\-smsd\-mysql for
+Stores messages in MySQL database, see MySQL Backend \%<#\:gammu-smsd-mysql> for
 details.
 .UNINDENT
 .UNINDENT
@@ -664,7 +665,7 @@ details.
 \fBnative_pgsql\fP
 .INDENT 7.0
 .INDENT 3.5
-Stores messages in PostgreSQL database, see gammu\-smsd\-pgsql for
+Stores messages in PostgreSQL database, see PostgreSQL Backend \%<#\:gammu-smsd-pgsql> for
 details.
 .UNINDENT
 .UNINDENT
@@ -674,14 +675,14 @@ details.
 .INDENT 3.5
 Stores messages using DBI library in given backend. You need to have
 installed appropriate DBI driver to make it work. See
-gammu\-smsd\-dbi for details.
+DBI Backend \%<#\:gammu-smsd-dbi> for details.
 .UNINDENT
 .UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
 .B SQL
-SQL dialect to use. This is specially useful with gammu\-smsd\-odbc where SMSD
+SQL dialect to use. This is specially useful with ODBC Backend \%<#\:gammu-smsd-odbc> where SMSD
 does not know which server it is actually talking to.
 .sp
 Possible values:
@@ -704,13 +705,13 @@ Possible values:
 \fBodbc\fP \- Generic ODBC
 .UNINDENT
 .sp
-New in version 1.28.93.
+Added in version 1.28.93.
 
 .sp
-\fBSEE ALSO:\fP
+\fBSee also:\fP
 .INDENT 7.0
 .INDENT 3.5
-You can also completely customize SQL queries used as described in SQL Queries\&.
+You can also completely customize SQL queries used as described in SQL Queries \%<#\:sql-queries>\&.
 .UNINDENT
 .UNINDENT
 .UNINDENT
@@ -729,7 +730,7 @@ where sqlite database files are stored.
 .SS Files backend options
 .sp
 The FILES backend accepts following configuration options. See
-gammu\-smsd\-files for more detailed service backend description. Please note
+Files backend \%<#\:gammu-smsd-files> for more detailed service backend description. Please note
 that all path should contain trailing path separator (/ on Unix systems):
 .INDENT 0.0
 .TP
@@ -748,7 +749,7 @@ Default is current directory.
 .INDENT 0.0
 .TP
 .B SentSMSPath
-Where the transmitted SMSes are placed, if same as \fI\%OutboxPath\fP transmitted
+Where the transmitted SMSes are placed, if same as \fBOutboxPath\fP transmitted
 messages are deleted.
 .sp
 Default is to delete transmitted messages.
@@ -758,7 +759,7 @@ Default is to delete transmitted messages.
 .B ErrorSMSPath
 Where SMSes with error in transmission is placed.
 .sp
-Default is same as \fI\%SentSMSPath\fP\&.
+Default is same as \fBSentSMSPath\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -767,7 +768,7 @@ The format in which the SMS will be stored: \fBdetail\fP, \fBunicode\fP, \fBstan
 .INDENT 7.0
 .TP
 .B \fBdetail\fP
-format used for message backup by gammu, see gammu\-smsbackup\&.
+format used for message backup by Gammu Utility \%<#\:gammu>, see SMS Backup Format \%<#\:gammu-smsbackup>\&.
 .TP
 .B \fBunicode\fP
 message text stored in unicode (UTF\-16)
@@ -781,7 +782,7 @@ are always written raw as they are received with extension .bin.
 .sp
 Default is \fBunicode\fP\&.
 .sp
-\fBNOTE:\fP
+\fBNote:\fP
 .INDENT 7.0
 .INDENT 3.5
 In \fBdetail\fP format, all message parts are stored into single file,
@@ -792,7 +793,7 @@ for all others each message part is saved separately.
 .INDENT 0.0
 .TP
 .B OutboxFormat
-The format in which messages created by gammu\-smsd\-inject will be stored,
+The format in which messages created by gammu\-smsd\-inject \%<#\:gammu-smsd-inject> will be stored,
 it accepts same values as InboxFormat.
 .sp
 Default is \fBdetail\fP if Gammu is compiled in with backup functions, \fBunicode\fP
@@ -803,23 +804,23 @@ otherwise.
 .B TransmitFormat
 The format for transmitting the SMS: \fBauto\fP, \fBunicode\fP, \fB7bit\fP\&.
 .sp
-This option is used only if \fI\%OutboxFormat\fP is not set to
+This option is used only if \fBOutboxFormat\fP is not set to
 \fBdetail\fP\&. In such case encoding specified in the message is used (you can
-specify it to gammu\-smsd\-inject).
+specify it to gammu\-smsd\-inject \%<#\:gammu-smsd-inject>).
 .sp
 Default is \fBauto\fP\&.
 .UNINDENT
 .SH MESSAGE FILTERING
 .sp
 SMSD allows one to process only limited subset of incoming messages. You can define
-filters for sender number in \fI\%[include_numbers]\fP and
-\fI\%[exclude_numbers]\fP sections or using
-\fI\%IncludeNumbersFile\fP and \fI\%ExcludeNumbersFile\fP
+filters for sender number in \fB[include_numbers]\fP and
+\fB[exclude_numbers]\fP sections or using
+\fBIncludeNumbersFile\fP and \fBExcludeNumbersFile\fP
 directives.
 .sp
-If \fI\%[include_numbers]\fP section exists, all values (keys are
+If \fB[include_numbers]\fP section exists, all values (keys are
 ignored) from it are used as allowed phone numbers and no other message is
-processed. On the other side, in \fI\%[exclude_numbers]\fP you can
+processed. On the other side, in \fB[exclude_numbers]\fP you can
 specify numbers which you want to skip.
 .sp
 Lists from both sources are merged together. If there is any number in include
@@ -829,22 +830,21 @@ messages from some numbers. If both lists are empty, all messages are
 accepted.
 .sp
 Similar filtering rules can be used for SMSC number filtering, they just use
-different set of configuration options \- \fI\%[include_smsc]\fP and
-\fI\%[exclude_smsc]\fP sections or \fI\%IncludeSMSCFile\fP
-and \fI\%ExcludeSMSCFile\fP directives.
+different set of configuration options \- \fB[include_smsc]\fP and
+\fB[exclude_smsc]\fP sections or \fBIncludeSMSCFile\fP
+and \fBExcludeSMSCFile\fP directives.
 .SH EXAMPLES
 .sp
 There is more complete example available in Gammu documentation. Please note
-that for simplicity following examples do not include \fB[gammu]\fP
-section, you can look into gammurc for some examples how it can look like.
+that for simplicity following examples do not include \fB[gammu]\fP \%<#\:section-[gammu]>
+section, you can look into Gammu Configuration File \%<#\:gammurc> for some examples how it can look like.
 .SS Files service
 .sp
 SMSD configuration file for FILES backend could look like:
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 [smsd]
 Service = files
 PIN = 1234
@@ -853,8 +853,7 @@ InboxPath = /var/spool/sms/inbox/
 OutboxPath = /var/spool/sms/outbox/
 SentSMSPath = /var/spool/sms/sent/
 ErrorSMSPath = /var/spool/sms/error/
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .SS MySQL service
@@ -863,8 +862,7 @@ If you want to use MYSQL backend, you will need something like this:
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 [smsd]
 Service = sql
 Driver = native_mysql
@@ -874,41 +872,36 @@ User = smsd
 Password = smsd
 PC = localhost
 Database = smsd
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .SS DBI service using SQLite
 .sp
-For gammu\-smsd\-dbi backend, in this particular case SQLite:
+For DBI Backend \%<#\:gammu-smsd-dbi> backend, in this particular case SQLite:
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 [smsd]
 Service = sql
 Driver = sqlite3
 DBDir = /var/lib/sqlite3
 Database = smsd.db
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .SS ODBC service using MySQL
 .sp
-For gammu\-smsd\-odbc backend, in this particular case using DSN \fBsmsd\fP server:
+For ODBC Backend \%<#\:gammu-smsd-odbc> backend, in this particular case using DSN \fBsmsd\fP server:
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 [smsd]
 Service = sql
 Driver = odbc
 Host = smsd
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -916,8 +909,7 @@ The DSN definition (in \fB~/.odbc.ini\fP on UNIX) for using MySQL server would l
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 [smsd]
 Description         = MySQL
 Driver              = MySQL
@@ -932,8 +924,7 @@ Stmt                =
 Driver              = MySQL ODBC 3.51.27r695 Driver
 DATABASE            = smsd
 SERVER              = 127.0.0.1
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .SS Numbers filtering
@@ -942,12 +933,10 @@ Process only messages from 123456 number:
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 [include_numbers]
 number1 = 123456
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -955,12 +944,10 @@ Do not process messages from evil number 666:
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 [exclude_numbers]
 number1 = 666
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .SS Debugging
@@ -969,21 +956,19 @@ Enabling debugging:
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 [smsd]
 debuglevel = 255
 logfile = smsd.log
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .SS Multiple modems
 .sp
 You can run any number of SMSD instances and they can even share same backend
 database. For routing the messages, you need to set different
-\fI\%PhoneID\fP for each instance and set \fBSenderID\fP column in
-outbox table.
+\fBPhoneID\fP for each instance and set \fBSenderID\fP column in
+outbox \%<#\:outbox> table.
 .sp
 Following example shows configuration for two modems, but you can have any
 number of SMSD instances. The only limitation is performance of your hardware,
@@ -993,8 +978,7 @@ Configuration for first SMSD:
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 [gammu]
 device = /dev/ttyACM0
 connection = at
@@ -1009,8 +993,7 @@ Password = smsd
 PC = localhost
 Database = smsd
 PhoneID = first
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -1018,8 +1001,7 @@ Configuration for second SMSD:
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 [gammu]
 device = /dev/ttyACM1
 connection = at
@@ -1034,8 +1016,7 @@ Password = smsd
 PC = localhost
 Database = smsd
 PhoneID = second
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -1043,17 +1024,14 @@ You can then start two separate instances of SMSD:
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 gammu\-smsd \-c /path/to/first\-smsdrc
 gammu\-smsd \-c /path/to/second\-smsdrc
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
-.SH AUTHOR
+.SH Author
 Michal Čihař <michal@cihar.com>
-.SH COPYRIGHT
+.SH Copyright
 2009-2015, Michal Čihař <michal@cihar.com>
-.\" Generated by docutils manpage writer.
-.
+.\" End of generated man page.
