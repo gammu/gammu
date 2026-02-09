@@ -32,7 +32,7 @@ GSM_Error INI_ReadFile(const char *FileName, gboolean Unicode, INI_Section **res
         INI_Section 	*INI_info = NULL, *INI_head = NULL, *heading;
         INI_Entry 	*entry;
 	GSM_Error	error = ERR_NONE;
-	unsigned char	*new_buffer1;
+	unsigned char	*new_buffer1, *new_buffer2;
 
 	*result = NULL;
 
@@ -287,7 +287,7 @@ GSM_Error INI_ReadFile(const char *FileName, gboolean Unicode, INI_Section **res
 				goto done;
                         }
 			if (Unicode) {
-				unsigned char *new_buffer1 = (unsigned char *)realloc(buffer1, buffer1used + 2);
+				new_buffer1 = (unsigned char *)realloc(buffer1, buffer1used + 2);
 				if (new_buffer1 == NULL) {
 					error = ERR_MOREMEMORY;
 					goto done;
@@ -296,7 +296,7 @@ GSM_Error INI_ReadFile(const char *FileName, gboolean Unicode, INI_Section **res
 				buffer1[buffer1used] 	= 0;
 				buffer1[buffer1used+1] 	= 0;
 				buffer1used		= buffer1used + 2;
-				unsigned char *new_buffer2 = (unsigned char *)realloc(buffer2, buffer2used + 2);
+				new_buffer2 = (unsigned char *)realloc(buffer2, buffer2used + 2);
 				if (new_buffer2 == NULL) {
 					error = ERR_MOREMEMORY;
 					goto done;
@@ -306,7 +306,7 @@ GSM_Error INI_ReadFile(const char *FileName, gboolean Unicode, INI_Section **res
 				buffer2[buffer2used+1] 	= 0;
 				buffer2used		= buffer2used + 2;
 			} else {
-				unsigned char *new_buffer1 = (unsigned char *)realloc(buffer1, buffer1used + 1);
+				new_buffer1 = (unsigned char *)realloc(buffer1, buffer1used + 1);
 				if (new_buffer1 == NULL) {
 					error = ERR_MOREMEMORY;
 					goto done;
@@ -314,7 +314,7 @@ GSM_Error INI_ReadFile(const char *FileName, gboolean Unicode, INI_Section **res
 				buffer1 = new_buffer1;
 				buffer1[buffer1used] 	= 0x00;
 				buffer1used		= buffer1used + 1;
-				unsigned char *new_buffer2 = (unsigned char *)realloc(buffer2, buffer2used + 1);
+				new_buffer2 = (unsigned char *)realloc(buffer2, buffer2used + 1);
 				if (new_buffer2 == NULL) {
 					error = ERR_MOREMEMORY;
 					goto done;
