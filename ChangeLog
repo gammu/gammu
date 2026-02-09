@@ -19,6 +19,11 @@ the issue.
 ChangeLog
 =========
 
+20260209 - 1.43.1
+
+[-] * Include static libraries in Windows installer.
+[-] * Fixed some compile-time warnings.
+
 20260209 - 1.43.0
 
 [-] * Documentation modernization.
