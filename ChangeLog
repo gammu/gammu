@@ -19,6 +19,10 @@ the issue.
 ChangeLog
 =========
 
+20260209 - 1.43.2
+
+[-] * Add Minimal binary build for Windows without third-party dependencies.
+
 20260209 - 1.43.1
 
 [-] * Include static libraries in Windows installer.
