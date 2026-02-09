@@ -734,6 +734,13 @@ if (WIN32 AND NOT CYGWIN)
         foreach(lib ${WIN_LIB_MYSQL})
             ADD_DLL("${lib}" "${MYSQL_LIBRARIES}")
         endforeach(lib ${WIN_LIB_MYSQL})
+
+        if (MYSQL_LIBRARIES)
+            install (FILES ${MYSQL_LIBRARIES}
+                    DESTINATION "${INSTALL_LIB_DIR}"
+                    COMPONENT library
+                    )
+        endif (MYSQL_LIBRARIES)
     endif (MYSQL_FOUND)
 
     # PostgreSQL and dependencies
@@ -741,6 +748,13 @@ if (WIN32 AND NOT CYGWIN)
         foreach(lib ${WIN_LIB_PGSQL})
             ADD_DLL("${lib}" "${POSTGRES_LIBRARY}")
         endforeach(lib ${WIN_LIB_PGSQL})
+
+        if (POSTGRES_LIBRARY)
+            install (FILES ${POSTGRES_LIBRARY}
+                    DESTINATION "${INSTALL_LIB_DIR}"
+                    COMPONENT library
+                    )
+        endif (POSTGRES_LIBRARY)
     endif (POSTGRES_FOUND)
 
     # iconv and dependencies
