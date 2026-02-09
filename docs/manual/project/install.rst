@@ -245,6 +245,8 @@ Useful cmake parameters:
 * ``-DCMAKE_INSTALL_PREFIX="/usr"`` change installation prefix
 * ``-DENABLE_PROTECTION=OFF`` disables various compile time protections
   against buffer overflows and similar attacks
+* ``-DPOSTGRES_STATIC=ON`` prefers static PostgreSQL library over dynamic library
+* ``-DMYSQL_STATIC=ON`` prefers static MySQL library over dynamic library
 
 You can also disable support for whole set of phones, e.g.:
 
@@ -476,6 +478,22 @@ PostgreSQL
 
 You can download PostgreSQL binaries from <http://www.postgresql.org/>,
 but then you need to add wldap32.dll library to bin.
+
+
+Static Linking MySQL and PostgreSQL
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When building on Windows with MSVC or MinGW, you may want to link MySQL and 
+PostgreSQL statically to avoid distributing DLL files. To enable static linking,
+use the following CMake options:
+
+.. code-block:: sh
+
+    cmake .. -DPOSTGRES_STATIC=ON -DMYSQL_STATIC=ON
+
+This will make the build system prefer static libraries (.lib or .a files) over
+dynamic libraries (.dll files) when both are available. Note that you need to have
+the static library files installed for this to work.
 
 
 Gettext
