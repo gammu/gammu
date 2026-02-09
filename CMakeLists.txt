@@ -17,6 +17,9 @@ option (MYSQL_TESTING "Enable testing of MySQL SMSD backend" OFF)
 option (ODBC_TESTING "Enable testing of ODBC MySQL SMSD backend" OFF)
 option (BUILD_SHARED_LIBS "Build shared libraries" ON)
 
+option (POSTGRES_STATIC "Prefer static PostgreSQL library" OFF)
+option (MYSQL_STATIC "Prefer static MySQL library" OFF)
+
 option (LARGE_FILES "Support for large files" ON)
 if (LARGE_FILES)
     add_definitions(-D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64)

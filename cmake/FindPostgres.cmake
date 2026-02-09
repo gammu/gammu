@@ -21,7 +21,16 @@ IF(WIN32)
         $ENV{SystemDrive}/PostgreSQL/*/include
     )
 
-    FIND_LIBRARY(POSTGRES_LIBRARY NAMES libpq pq PATHS
+    # Determine library names to search for based on static/dynamic preference
+    IF(POSTGRES_STATIC)
+        # Prefer static library names for PostgreSQL
+        SET(POSTGRES_LIB_NAMES libpqport.lib libpgcommon.lib libpgport.lib libpq.lib pq.lib libpq pq)
+    ELSE(POSTGRES_STATIC)
+        # Prefer dynamic library names
+        SET(POSTGRES_LIB_NAMES libpq pq libpq.lib pq.lib libpqport.lib libpgcommon.lib libpgport.lib)
+    ENDIF(POSTGRES_STATIC)
+
+    FIND_LIBRARY(POSTGRES_LIBRARY NAMES ${POSTGRES_LIB_NAMES} PATHS
      /usr/local/lib /usr/lib c:/msys/local/lib
      $ENV{POSTGRESQL_PATH}/lib
      $ENV{ProgramFiles}/PostgreSQL/*/lib
@@ -72,16 +81,33 @@ ELSE(WIN32)
       EXEC_PROGRAM(${POSTGRES_CONFIG}
         ARGS --libdir
         OUTPUT_VARIABLE PG_TMP)
-      find_library(POSTGRES_LIBRARY pq
-        PATHS
-        ${PG_TMP}
-        /usr/lib/postgresql
-        /usr/local/lib
-        /usr/local/lib/postgresql
-        /usr/local/postgresql/lib
-        $ENV{POSTGRESQL_HOME}/lib
-        $ENV{POSTGRESQL_PATH}/lib
-      )
+      
+      # Determine library names to search for based on static/dynamic preference
+      IF(POSTGRES_STATIC)
+          # Prefer static library for PostgreSQL on Unix
+          find_library(POSTGRES_LIBRARY libpq.a pq
+            PATHS
+            ${PG_TMP}
+            /usr/lib/postgresql
+            /usr/local/lib
+            /usr/local/lib/postgresql
+            /usr/local/postgresql/lib
+            $ENV{POSTGRESQL_HOME}/lib
+            $ENV{POSTGRESQL_PATH}/lib
+          )
+      ELSE(POSTGRES_STATIC)
+          # Prefer dynamic library
+          find_library(POSTGRES_LIBRARY pq
+            PATHS
+            ${PG_TMP}
+            /usr/lib/postgresql
+            /usr/local/lib
+            /usr/local/lib/postgresql
+            /usr/local/postgresql/lib
+            $ENV{POSTGRESQL_HOME}/lib
+            $ENV{POSTGRESQL_PATH}/lib
+          )
+      ENDIF(POSTGRES_STATIC)
 
   ENDIF(UNIX)
 ENDIF(WIN32)

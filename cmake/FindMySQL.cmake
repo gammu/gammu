@@ -97,33 +97,72 @@ endif()
 set(TMP_MYSQL_LIBRARIES "")
 
 if (WIN32)
+    # Determine library names to search for based on static/dynamic preference
+    IF(MYSQL_STATIC)
+        # Prefer static library names for MySQL on Windows
+        SET(MYSQL_STATIC_LIB_NAMES mysqlclient.lib libmysqlclient.lib libmariadbclient.lib)
+    ENDIF(MYSQL_STATIC)
+    
     foreach(LIB ${MYSQL_ADD_LIBRARIES})
-        find_library("MYSQL_LIBRARIES_${LIB}" NAMES ${LIB}
+        IF(MYSQL_STATIC)
+            # Search for static library first
+            find_library("MYSQL_LIBRARIES_${LIB}" NAMES ${MYSQL_STATIC_LIB_NAMES} ${LIB}
+                PATHS
+                ${MYSQL_ADD_LIBRARY_PATH}
+                /usr/lib/mysql
+                /usr/local/lib
+                /usr/local/lib/mysql
+                /usr/local/mysql/lib
+                $ENV{MYSQL_DIR}/lib/opt
+                $ENV{ProgramFiles}/MySQL/*/lib
+                $ENV{SystemDrive}/MySQL/*/lib
+                "C:/Program Files/MySQL/*/lib"
+                $ENV{ProgramFiles}/MySQL/*/lib/opt
+                $ENV{SystemDrive}/MySQL/*/lib/opt
+                "C:/Program Files/MySQL/*/lib/opt"
+            )
+        ELSE(MYSQL_STATIC)
+            find_library("MYSQL_LIBRARIES_${LIB}" NAMES ${LIB}
+                PATHS
+                ${MYSQL_ADD_LIBRARY_PATH}
+                /usr/lib/mysql
+                /usr/local/lib
+                /usr/local/lib/mysql
+                /usr/local/mysql/lib
+                $ENV{MYSQL_DIR}/lib/opt
+                $ENV{ProgramFiles}/MySQL/*/lib
+                $ENV{SystemDrive}/MySQL/*/lib
+                "C:/Program Files/MySQL/*/lib"
+                $ENV{ProgramFiles}/MySQL/*/lib/opt
+                $ENV{SystemDrive}/MySQL/*/lib/opt
+                "C:/Program Files/MySQL/*/lib/opt"
+            )
+        ENDIF(MYSQL_STATIC)
+        list(APPEND TMP_MYSQL_LIBRARIES "${MYSQL_LIBRARIES_${LIB}}")
+    endforeach(LIB ${MYSQL_ADD_LIBRARIES})
+else()
+    # Determine library names to search for based on static/dynamic preference
+    IF(MYSQL_STATIC)
+        # Prefer static library for MySQL on Unix
+        find_library("MYSQL_LIBRARIES_mysqlclient" NAMES libmysqlclient.a libmariadbclient.a mysqlclient mariadbclient
             PATHS
             ${MYSQL_ADD_LIBRARY_PATH}
             /usr/lib/mysql
             /usr/local/lib
             /usr/local/lib/mysql
             /usr/local/mysql/lib
-            $ENV{MYSQL_DIR}/lib/opt
-            $ENV{ProgramFiles}/MySQL/*/lib
-            $ENV{SystemDrive}/MySQL/*/lib
-            "C:/Program Files/MySQL/*/lib"
-            $ENV{ProgramFiles}/MySQL/*/lib/opt
-            $ENV{SystemDrive}/MySQL/*/lib/opt
-            "C:/Program Files/MySQL/*/lib/opt"
         )
-        list(APPEND TMP_MYSQL_LIBRARIES "${MYSQL_LIBRARIES_${LIB}}")
-    endforeach(LIB ${MYSQL_ADD_LIBRARIES})
-else()
-    find_library("MYSQL_LIBRARIES_mysqlclient" NAMES mysqlclient mariadbclient
-        PATHS
-        ${MYSQL_ADD_LIBRARY_PATH}
-        /usr/lib/mysql
-        /usr/local/lib
-        /usr/local/lib/mysql
-        /usr/local/mysql/lib
-    )
+    ELSE(MYSQL_STATIC)
+        # Prefer dynamic library
+        find_library("MYSQL_LIBRARIES_mysqlclient" NAMES mysqlclient mariadbclient
+            PATHS
+            ${MYSQL_ADD_LIBRARY_PATH}
+            /usr/lib/mysql
+            /usr/local/lib
+            /usr/local/lib/mysql
+            /usr/local/mysql/lib
+        )
+    ENDIF(MYSQL_STATIC)
 
     list(APPEND TMP_MYSQL_LIBRARIES "${MYSQL_LIBRARIES_mysqlclient}")
 endif()
