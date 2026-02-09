@@ -3,7 +3,7 @@ name: Documentation
 on: [push, pull_request]
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   docs:
@@ -31,14 +31,22 @@ jobs:
         mkdir gh-pages
         cp -r build-configure/docs/manual/html/* gh-pages/
         cp build-configure/docs/manual/latex/*.pdf gh-pages/
-    - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+    - uses: actions/upload-pages-artifact@v4.0.0
       with:
-        name: Documentation
         path: gh-pages
-    - name: Deploy
-      uses: peaceiris/actions-gh-pages@4f9cc6602d3f66b9c108549d475ec49e8ef4d45e # v4.0.0
-      if: github.event_name == 'push' && github.event.ref == 'refs/heads/master'
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./gh-pages
-        cname: docs.gammu.org
+
+
+  # Deployment job
+  deploy:
+    if: github.event_name == 'push' && github.event.ref == 'refs/heads/master'
+    permissions:
+      contents: write
+    environment:
+      name: github-pages
+      url: ${{steps.deployment.outputs.page_url}}
+    runs-on: ubuntu-latest
+    needs: docs
+    steps:
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4.0.5
