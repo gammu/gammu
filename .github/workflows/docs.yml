@@ -40,7 +40,8 @@ jobs:
   deploy:
     if: github.event_name == 'push' && github.event.ref == 'refs/heads/master'
     permissions:
-      contents: write
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{steps.deployment.outputs.page_url}}
