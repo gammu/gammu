@@ -144,7 +144,7 @@ else()
     # Determine library names to search for based on static/dynamic preference
     IF(MYSQL_STATIC)
         # Prefer static library for MySQL on Unix
-        find_library("MYSQL_LIBRARIES_mysqlclient" NAMES libmysqlclient.a libmariadbclient.a mysqlclient mariadbclient
+        find_library("MYSQL_LIBRARIES_mysqlclient" NAMES libmysqlclient.a libmariadbclient.a
             PATHS
             ${MYSQL_ADD_LIBRARY_PATH}
             /usr/lib/mysql

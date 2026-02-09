@@ -85,7 +85,7 @@ ELSE(WIN32)
       # Determine library names to search for based on static/dynamic preference
       IF(POSTGRES_STATIC)
           # Prefer static library for PostgreSQL on Unix
-          find_library(POSTGRES_LIBRARY libpq.a pq
+          find_library(POSTGRES_LIBRARY NAMES libpq.a pq
             PATHS
             ${PG_TMP}
             /usr/lib/postgresql
@@ -97,7 +97,7 @@ ELSE(WIN32)
           )
       ELSE(POSTGRES_STATIC)
           # Prefer dynamic library
-          find_library(POSTGRES_LIBRARY pq
+          find_library(POSTGRES_LIBRARY NAMES pq
             PATHS
             ${PG_TMP}
             /usr/lib/postgresql
