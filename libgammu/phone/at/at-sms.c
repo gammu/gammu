@@ -294,7 +294,7 @@ GSM_Error ATGEN_SetSMSMemory(GSM_StateMachine *s, gboolean SIM, gboolean for_wri
 	GSM_Error error;
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 	unsigned char cpmsCmdReq[50];
-	size_t cpmsCmdReqLength;
+	ssize_t cpmsCmdReqLength;
 	const char *memory_str;
 
 	/* If phone encodes also values in command, we need normal charset */
