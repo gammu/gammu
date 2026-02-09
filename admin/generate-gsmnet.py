@@ -1,4 +1,11 @@
 #!/usr/bin/env python
+# /// script
+# requires-python = ">=3.11"
+# dependencies = [
+#     "unidecode==1.4.0",
+#     "requests==2.32.5",
+# ]
+# ///
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,13 +26,23 @@
 """Generates gsmnet databse from wikipedia."""
 
 import re
-import urllib.error
-import urllib.parse
-import urllib.request
 
+import requests
 from unidecode import unidecode
 
-URL = "https://en.wikipedia.org/w/index.php?title=Mobile_country_code&action=raw"
+URL = "https://en.wikipedia.org/w/index.php?title={}&action=raw"
+
+COUNTRY = "Mobile_country_code"
+
+PAGES = [
+    "Mobile_network_codes_in_ITU_region_2xx_(Europe)",
+    "Mobile_network_codes_in_ITU_region_3xx_(North_America)",
+    "Mobile_network_codes_in_ITU_region_4xx_(Asia)",
+    "Mobile_network_codes_in_ITU_region_5xx_(Oceania)",
+    "Mobile_network_codes_in_ITU_region_6xx_(Africa)",
+    "Mobile_network_codes_in_ITU_region_7xx_(South_America)",
+]
+
 TABLE_RE = re.compile(
     r"^\|[ \t]*(?P<mcc>[0-9]+)[ \t]*\|\|[ \t]*(?P<mnc>[0-9]+)?[ \t]*\|\|",
 )
@@ -49,7 +66,7 @@ def print_out(result):
         print(
             '\t{{"{0}", "{1}"}},'.format(
                 code,
-                unidecode(name.decode("utf-8")).replace("&amp;", "&"),
+                unidecode(name).replace("&amp;", "&"),
             ),
         )
 
@@ -57,7 +74,38 @@ def print_out(result):
 def print_countries(data):
     country = None
     result = []
+    code = ""
+    current = set()
     for line in data.splitlines():
+        if not code and re.match(r"^\|\s*[0-9]{3}$", line):
+            code = line[1:].strip()
+            continue
+        if not code and re.match(r"^\|\s*rowspan=[0-9]+\s*\|\s*[0-9]{3}$", line):
+            code = line.rsplit("|", maxsplit=1)[-1].strip()
+            continue
+        if code:
+            if (
+                re.match(r"^\|(\s*rowspan=[0-9]+\s*\|)?\s*\[\[", line)
+                and "authority" not in line
+            ):
+                country = (
+                    line.split("[[", maxsplit=1)[1]
+                    .split("]]", maxsplit=1)[0]
+                    .split("|", maxsplit=1)[-1]
+                )
+                country = (
+                    country.replace("List of mobile network codes in ", "")
+                    .replace("List of mobile networks in ", "")
+                    .removeprefix("the ")
+                )
+                if ", " in country:
+                    country = " ".join(reversed(country.split(", ")))
+                result.append((code, country))
+                code = ""
+            elif line == "|-":
+                code = ""
+            continue
+
         if line.startswith("==== [["):
             country = line[7:].split("]")[0].split("|")[-1]
             current = set()
@@ -105,13 +153,24 @@ def print_networks(data):
 
 
 def main():
-    handle = urllib.request.urlopen(URL)
-    data = handle.read()
-    print_countries(data)
+    for name in PAGES:
+        response = requests.get(
+            URL.format(name),
+            headers={"User-Agent": "Gammu-Generate-GSM-Net/1"},
+            timeout=10,
+        )
+        print_networks(response.text)
+
+    response = requests.get(
+        URL.format(COUNTRY),
+        headers={"User-Agent": "Gammu-Generate-GSM-Net/1"},
+        timeout=10,
+    )
+    print_networks(response.text)
     print()
     print("-" * 80)
     print()
-    print_networks(data)
+    print_countries(response.text)
 
 
 if __name__ == "__main__":
