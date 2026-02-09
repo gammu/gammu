@@ -1708,7 +1708,7 @@ GSM_Error ATGEN_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status)
 
 	if (Priv->PhoneSMSMemory == AT_AVAILABLE) {
 		unsigned char command[50];
-		size_t command_len;
+		ssize_t command_len;
 		gboolean writeable;
 
 		smprintf(s, "Getting phone SMS status\n");
