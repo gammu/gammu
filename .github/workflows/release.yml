@@ -71,9 +71,34 @@ jobs:
         name: windows-installer
         path: _build/Gammu-*.exe
 
+  windows-installer-minimal:
+    name: Build Windows minimal installer
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd   # v6
+
+    - name: Build Windows minimal installer
+      uses: ./.github/actions/windows-installer
+      with:
+        build-type: Release
+        enable-testing: 'false'
+        minimal-build: 'true'
+
+    - name: List generated files
+      shell: pwsh
+      run: |
+        cd _build
+        Get-ChildItem -Filter "Gammu-*.exe"
+
+    - name: Upload Windows minimal installer
+      uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+      with:
+        name: windows-installer-minimal
+        path: _build/Gammu-*.exe
+
   release:
     name: Create GitHub Release
-    needs: [source, windows-installer]
+    needs: [source, windows-installer, windows-installer-minimal]
     runs-on: ubuntu-24.04
     permissions:
       contents: write
@@ -85,7 +110,7 @@ jobs:
 
     - name: List downloaded artifacts
       run: |
-        ls artifacts/source/* artifacts/windows-installer/*
+        ls artifacts/source/* artifacts/windows-installer/* artifacts/windows-installer-minimal/*
 
     - name: Create Release
       if: startsWith(github.ref, 'refs/tags/')
@@ -94,6 +119,7 @@ jobs:
         files: |
           artifacts/source/*
           artifacts/windows-installer/*
+          artifacts/windows-installer-minimal/*
         draft: false
         prerelease: false
         generate_release_notes: true

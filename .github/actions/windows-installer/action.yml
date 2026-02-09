@@ -9,6 +9,10 @@ inputs:
     description: Enable testing flags
     required: false
     default: 'false'
+  minimal-build:
+    description: Build minimal version without third-party dependencies
+    required: false
+    default: 'false'
 runs:
   using: composite
   steps:
@@ -26,6 +30,12 @@ runs:
       $cmakeArgs = "-S . -B _build -DCMAKE_BUILD_TYPE=${{ inputs.build-type }}"
       if ('${{ inputs.enable-testing }}' -eq 'true') {
         $cmakeArgs += " -DENABLE_COVERAGE=ON -DONLINE_TESTING=ON -DPSQL_TESTING=ON"
+      }
+      if ('${{ inputs.minimal-build }}' -eq 'true') {
+        $cmakeArgs += " -DWITH_MySQL=OFF -DWITH_Postgres=OFF -DWITH_ODBC=OFF -DWITH_LibDBI=OFF"
+        $cmakeArgs += " -DWITH_CURL=OFF -DWITH_Glib=OFF -DWITH_GObject=OFF"
+        $cmakeArgs += " -DWITH_Libintl=OFF -DWITH_Iconv=OFF -DWITH_USB=OFF"
+        $cmakeArgs += " -DCPACK_SYSTEM_NAME=Windows-Minimal"
       }
       Invoke-Expression "cmake $cmakeArgs"
 
