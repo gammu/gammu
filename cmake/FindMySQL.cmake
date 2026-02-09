@@ -100,6 +100,8 @@ if (WIN32)
     foreach(LIB ${MYSQL_ADD_LIBRARIES})
         IF(MYSQL_STATIC)
             # Search for static library first, with various naming patterns
+            # LIB is expected to be the library name without extension (e.g., "mysqlclient")
+            # CMake's find_library handles platform-specific extensions automatically
             find_library("MYSQL_LIBRARIES_${LIB}" NAMES ${LIB}.lib lib${LIB}.lib ${LIB}
                 PATHS
                 ${MYSQL_ADD_LIBRARY_PATH}

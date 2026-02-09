@@ -25,6 +25,8 @@ IF(WIN32)
     # Note: For full static linking of PostgreSQL on Windows, additional libraries
     # (libpgport, libpgcommon) may be needed. Users should ensure all dependencies
     # are available in their build environment.
+    # CMake's find_library handles platform-specific extensions and naming automatically,
+    # so we include both Windows (.lib) and Unix naming patterns.
     IF(POSTGRES_STATIC)
         # Prefer static library names for PostgreSQL
         SET(POSTGRES_LIB_NAMES libpq.lib pq.lib libpq pq)
