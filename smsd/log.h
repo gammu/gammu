@@ -5,6 +5,14 @@
 
 #include <gammu-smsd.h>
 
+typedef enum {
+	DEBUG_ERROR = -1,
+	DEBUG_INFO = 0,
+	DEBUG_NOTICE = 1,
+	DEBUG_SQL = 2,
+	DEBUG_GAMMU = 4,
+} SMSD_DebugLevel;
+
 /**
  * Logs a message to SMSD log.
  *
@@ -14,7 +22,7 @@
  * \param format printf like format string.
  */
 PRINTF_STYLE(3, 4)
-void SMSD_Log(int level, GSM_SMSDConfig *Config, const char *format, ...);
+void SMSD_Log(SMSD_DebugLevel level, GSM_SMSDConfig *Config, const char *format, ...);
 
 /**
  * Logs a message to SMSD log with description of OS specific error code.
