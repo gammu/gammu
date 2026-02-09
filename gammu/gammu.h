@@ -5,6 +5,9 @@
 
 #include "common.h"
 
+extern gboolean GlobalConfig_JSON;
+
+
 typedef enum {
 	H_Call = 1,
 	H_SMS,

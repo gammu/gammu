@@ -59,7 +59,7 @@ sendtimeout = 30
 
 # Database backends congfiguration
 user = gammu
-password = gammupassword
+password = your_password_here
 pc = localhost
 # pc can also contain port or socket path after colon (eg. localhost:/path/to/socket)
 database = sms

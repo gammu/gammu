@@ -14,6 +14,7 @@
 #include <locale.h>
 
 #include "common.h"
+#include "gammu.h"
 #include "misc.h"
 #include "message.h"
 
@@ -247,79 +248,123 @@ void Identify(int argc, char *argv[])
 
 	GSM_Init(TRUE);
 
-	/* Read current configuration */
-	curcfg = GSM_GetConfig(gsm, -1);
-	printf(LISTFORMAT "%s\n", _("Device"), curcfg->Device);
+	if (GlobalConfig_JSON) {
+		printf("{\n");
 
-	error=GSM_GetManufacturer(gsm, buffer);
-	Print_Error(error);
-	printf(LISTFORMAT "%s\n", _("Manufacturer"), buffer);
-	error=GSM_GetModel(gsm, buffer);
-	Print_Error(error);
-	printf(LISTFORMAT "%s (%s)\n", _("Model"),
-			GSM_GetModelInfo(gsm)->model,
-			buffer);
+		/* Device matches "Device" in old output */
+		curcfg = GSM_GetConfig(gsm, -1);
+		printf("\t\"device\": \"%s\"", curcfg->Device);
 
-	error=GSM_GetFirmware(gsm, buffer, date, &num);
-	Print_Error(error);
-	printf(LISTFORMAT "%s", _("Firmware"), buffer);
-	error=GSM_GetPPM(gsm, buffer);
-	if (error != ERR_NOTSUPPORTED) {
-		if (error != ERR_NOTIMPLEMENTED) Print_Error(error);
-		if (error == ERR_NONE) printf(" %s", buffer);
-	}
-	if (date[0] != 0) printf(" (%s)", date);
-	printf("\n");
+		error=GSM_GetManufacturer(gsm, buffer);
+		if (error == ERR_NONE) printf(",\n\t\"manufacturer\": \"%s\"", buffer);
 
-	error=GSM_GetHardware(gsm, buffer);
-	if (error != ERR_NOTSUPPORTED) {
-		if (error != ERR_NOTIMPLEMENTED) Print_Error(error);
-		if (error == ERR_NONE) printf(LISTFORMAT "%s\n", _("Hardware"),buffer);
-	}
+		error=GSM_GetModel(gsm, buffer);
+		if (error == ERR_NONE) printf(",\n\t\"model\": \"%s (%s)\"", GSM_GetModelInfo(gsm)->model, buffer);
 
-	error=GSM_GetIMEI(gsm, buffer);
-	if (error != ERR_NOTSUPPORTED) {
-		if (error != ERR_NOTIMPLEMENTED) Print_Error(error);
-		if (error == ERR_NONE) printf(LISTFORMAT "%s\n", _("IMEI"), buffer);
+		error=GSM_GetFirmware(gsm, buffer, date, &num);
+		if (error == ERR_NONE) {
+			printf(",\n\t\"firmware\": \"%s\"", buffer);
+			if (date[0] != 0) printf(",\n\t\"firmware_date\": \"%s\"", date);
+		}
 
-		error=GSM_GetOriginalIMEI(gsm, buffer);
+		error=GSM_GetPPM(gsm, buffer);
+		if (error == ERR_NONE) printf(",\n\t\"ppm\": \"%s\"", buffer);
+
+		error=GSM_GetHardware(gsm, buffer);
+		if (error == ERR_NONE) printf(",\n\t\"hardware\": \"%s\"", buffer);
+
+		error=GSM_GetIMEI(gsm, buffer);
+		if (error == ERR_NONE) {
+			printf(",\n\t\"imei\": \"%s\"", buffer);
+			error=GSM_GetOriginalIMEI(gsm, buffer);
+			if (error == ERR_NONE) printf(",\n\t\"original_imei\": \"%s\"", buffer);
+		}
+
+		error=GSM_GetManufactureMonth(gsm, buffer);
+		if (error == ERR_NONE) printf(",\n\t\"manufactured\": \"%s\"", buffer);
+
+		error=GSM_GetProductCode(gsm, buffer);
+		if (error == ERR_NONE) printf(",\n\t\"product_code\": \"%s\"", buffer);
+
+		error=GSM_GetSIMIMSI(gsm, buffer);
+		if (error == ERR_NONE) printf(",\n\t\"sim_imsi\": \"%s\"", buffer);
+
+		printf("\n}\n");
+	} else {
+		/* Read current configuration */
+		curcfg = GSM_GetConfig(gsm, -1);
+		printf(LISTFORMAT "%s\n", _("Device"), curcfg->Device);
+
+		error=GSM_GetManufacturer(gsm, buffer);
+		Print_Error(error);
+		printf(LISTFORMAT "%s\n", _("Manufacturer"), buffer);
+		error=GSM_GetModel(gsm, buffer);
+		Print_Error(error);
+		printf(LISTFORMAT "%s (%s)\n", _("Model"),
+				GSM_GetModelInfo(gsm)->model,
+				buffer);
+
+		error=GSM_GetFirmware(gsm, buffer, date, &num);
+		Print_Error(error);
+		printf(LISTFORMAT "%s", _("Firmware"), buffer);
+		error=GSM_GetPPM(gsm, buffer);
+		if (error != ERR_NOTSUPPORTED) {
+			if (error != ERR_NOTIMPLEMENTED) Print_Error(error);
+			if (error == ERR_NONE) printf(" %s", buffer);
+		}
+		if (date[0] != 0) printf(" (%s)", date);
+		printf("\n");
+
+		error=GSM_GetHardware(gsm, buffer);
+		if (error != ERR_NOTSUPPORTED) {
+			if (error != ERR_NOTIMPLEMENTED) Print_Error(error);
+			if (error == ERR_NONE) printf(LISTFORMAT "%s\n", _("Hardware"),buffer);
+		}
+
+		error=GSM_GetIMEI(gsm, buffer);
+		if (error != ERR_NOTSUPPORTED) {
+			if (error != ERR_NOTIMPLEMENTED) Print_Error(error);
+			if (error == ERR_NONE) printf(LISTFORMAT "%s\n", _("IMEI"), buffer);
+
+			error=GSM_GetOriginalIMEI(gsm, buffer);
+			if (error != ERR_NOTSUPPORTED && error != ERR_SECURITYERROR) {
+				if (error != ERR_NOTIMPLEMENTED) Print_Error(error);
+				if (error == ERR_NONE) printf(LISTFORMAT "%s\n", _("Original IMEI"), buffer);
+			}
+		}
+
+		error=GSM_GetManufactureMonth(gsm, buffer);
 		if (error != ERR_NOTSUPPORTED && error != ERR_SECURITYERROR) {
 			if (error != ERR_NOTIMPLEMENTED) Print_Error(error);
-			if (error == ERR_NONE) printf(LISTFORMAT "%s\n", _("Original IMEI"), buffer);
+			if (error == ERR_NONE) printf(LISTFORMAT "%s\n", _("Manufactured"),buffer);
 		}
-	}
 
-	error=GSM_GetManufactureMonth(gsm, buffer);
-	if (error != ERR_NOTSUPPORTED && error != ERR_SECURITYERROR) {
-		if (error != ERR_NOTIMPLEMENTED) Print_Error(error);
-		if (error == ERR_NONE) printf(LISTFORMAT "%s\n", _("Manufactured"),buffer);
-	}
+		error=GSM_GetProductCode(gsm, buffer);
+		if (error != ERR_NOTSUPPORTED) {
+			if (error != ERR_NOTIMPLEMENTED) Print_Error(error);
+			if (error == ERR_NONE) printf(LISTFORMAT "%s\n", _("Product code"),buffer);
+		}
 
-	error=GSM_GetProductCode(gsm, buffer);
-	if (error != ERR_NOTSUPPORTED) {
-		if (error != ERR_NOTIMPLEMENTED) Print_Error(error);
-		if (error == ERR_NONE) printf(LISTFORMAT "%s\n", _("Product code"),buffer);
-	}
-
-	error=GSM_GetSIMIMSI(gsm, buffer);
-	switch (error) {
-		case ERR_SECURITYERROR:
-		case ERR_NOTSUPPORTED:
-		case ERR_NOTIMPLEMENTED:
-			break;
-		case ERR_NONE:
-			printf(LISTFORMAT "%s\n", _("SIM IMSI"),buffer);
-			break;
-		default:
-			Print_Error(error);
-	}
+		error=GSM_GetSIMIMSI(gsm, buffer);
+		switch (error) {
+			case ERR_SECURITYERROR:
+			case ERR_NOTSUPPORTED:
+			case ERR_NOTIMPLEMENTED:
+				break;
+			case ERR_NONE:
+				printf(LISTFORMAT "%s\n", _("SIM IMSI"),buffer);
+				break;
+			default:
+				Print_Error(error);
+		}
 
 #ifdef GSM_ENABLE_NOKIA_DCT3
-	DCT3Info();
+		DCT3Info();
 #endif
 #ifdef GSM_ENABLE_NOKIA_DCT4
-	DCT4Info();
+		DCT4Info();
 #endif
+	}
 
 	GSM_Terminate();
 }
