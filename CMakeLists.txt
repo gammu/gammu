@@ -783,7 +783,7 @@ if (WIN32 AND NOT CYGWIN)
     if (MYSQL_FOUND AND MYSQL_LIBRARIES)
         install (FILES ${MYSQL_LIBRARIES}
                 DESTINATION "${INSTALL_LIB_DIR}"
-                COMPONENT libraries
+                COMPONENT library
                 OPTIONAL
                 )
     endif (MYSQL_FOUND AND MYSQL_LIBRARIES)
@@ -791,7 +791,7 @@ if (WIN32 AND NOT CYGWIN)
     if (POSTGRES_FOUND AND POSTGRES_LIBRARY)
         install (FILES ${POSTGRES_LIBRARY}
                 DESTINATION "${INSTALL_LIB_DIR}"
-                COMPONENT libraries
+                COMPONENT library
                 OPTIONAL
                 )
     endif (POSTGRES_FOUND AND POSTGRES_LIBRARY)
