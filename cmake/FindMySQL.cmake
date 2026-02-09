@@ -97,16 +97,10 @@ endif()
 set(TMP_MYSQL_LIBRARIES "")
 
 if (WIN32)
-    # Determine library names to search for based on static/dynamic preference
-    IF(MYSQL_STATIC)
-        # Prefer static library names for MySQL on Windows
-        SET(MYSQL_STATIC_LIB_NAMES mysqlclient.lib libmysqlclient.lib libmariadbclient.lib)
-    ENDIF(MYSQL_STATIC)
-    
     foreach(LIB ${MYSQL_ADD_LIBRARIES})
         IF(MYSQL_STATIC)
-            # Search for static library first
-            find_library("MYSQL_LIBRARIES_${LIB}" NAMES ${MYSQL_STATIC_LIB_NAMES} ${LIB}
+            # Search for static library first, with various naming patterns
+            find_library("MYSQL_LIBRARIES_${LIB}" NAMES ${LIB}.lib lib${LIB}.lib ${LIB}
                 PATHS
                 ${MYSQL_ADD_LIBRARY_PATH}
                 /usr/lib/mysql

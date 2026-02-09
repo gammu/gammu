@@ -22,12 +22,15 @@ IF(WIN32)
     )
 
     # Determine library names to search for based on static/dynamic preference
+    # Note: For full static linking of PostgreSQL on Windows, additional libraries
+    # (libpgport, libpgcommon) may be needed. Users should ensure all dependencies
+    # are available in their build environment.
     IF(POSTGRES_STATIC)
         # Prefer static library names for PostgreSQL
-        SET(POSTGRES_LIB_NAMES libpqport.lib libpgcommon.lib libpgport.lib libpq.lib pq.lib libpq pq)
+        SET(POSTGRES_LIB_NAMES libpq.lib pq.lib libpq pq)
     ELSE(POSTGRES_STATIC)
         # Prefer dynamic library names
-        SET(POSTGRES_LIB_NAMES libpq pq libpq.lib pq.lib libpqport.lib libpgcommon.lib libpgport.lib)
+        SET(POSTGRES_LIB_NAMES libpq pq libpq.lib pq.lib)
     ENDIF(POSTGRES_STATIC)
 
     FIND_LIBRARY(POSTGRES_LIBRARY NAMES ${POSTGRES_LIB_NAMES} PATHS
