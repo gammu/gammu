@@ -39,19 +39,13 @@ jobs:
     - name: List generated files
       run: |
         cd _build
-        ls -lh Gammu-*.tar.bz2 Gammu-*.zip
+        ls -lh Gammu-*
 
     - name: Upload source tarball
       uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
       with:
-        name: source-tarball
-        path: _build/Gammu-*.tar.bz2
-
-    - name: Upload source zip
-      uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
-      with:
-        name: source-zip
-        path: _build/Gammu-*.zip
+        name: source
+        path: _build/Gammu-*
 
   windows-installer:
     name: Build Windows installer
@@ -96,8 +90,7 @@ jobs:
       uses: softprops/action-gh-release@a06a81a03ee405af7f2048a818ed3f03bbf83c7b # v2.5.0
       with:
         files: |
-          artifacts/source-tarball/*
-          artifacts/source-zip/*
+          artifacts/source/*
           artifacts/windows-installer/*
         draft: false
         prerelease: false
