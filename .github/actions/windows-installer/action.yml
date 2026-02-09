@@ -32,7 +32,10 @@ runs:
         $cmakeArgs += " -DENABLE_COVERAGE=ON -DONLINE_TESTING=ON -DPSQL_TESTING=ON"
       }
       if ('${{ inputs.minimal-build }}' -eq 'true') {
-        $cmakeArgs += " -DWITH_MySQL=OFF -DWITH_Postgres=OFF -DWITH_ODBC=OFF -DWITH_LibDBI=OFF -DWITH_CURL=OFF -DWITH_Glib=OFF -DWITH_GObject=OFF -DWITH_Libintl=OFF -DWITH_Iconv=OFF -DWITH_USB=OFF -DCPACK_SYSTEM_NAME=Windows-Minimal"
+        $cmakeArgs += " -DWITH_MySQL=OFF -DWITH_Postgres=OFF -DWITH_ODBC=OFF -DWITH_LibDBI=OFF"
+        $cmakeArgs += " -DWITH_CURL=OFF -DWITH_Glib=OFF -DWITH_GObject=OFF"
+        $cmakeArgs += " -DWITH_Libintl=OFF -DWITH_Iconv=OFF -DWITH_USB=OFF"
+        $cmakeArgs += " -DCPACK_SYSTEM_NAME=Windows-Minimal"
       }
       Invoke-Expression "cmake $cmakeArgs"
 
