@@ -23,17 +23,17 @@ help of many contributors.
 More information
 ================
 
-You can find more information on <https://wammu.eu/gammu/>.
+You can find more information on <https://github.com/gammu/gammu/>.
 
 There is also Gammu manual available in docs/manual. You can build HTML
 version of it using make manual-html which is viewable online at
-<https://wammu.eu/docs/manual/>.
+<https://docs.gammu.org/>.
 
 
 Feedback and bug reports
 ========================
 
-Any feedback is welcome, see <https://wammu.eu/support/> for information
+Any feedback is welcome, see <https://github.com/gammu/gammu/> for information
 how to contact developers.
 
 
