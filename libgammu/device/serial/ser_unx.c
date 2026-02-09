@@ -212,7 +212,7 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 
 	/* Try advisory locks */
 	if (flock(d->hPhone, LOCK_EX | LOCK_NB) != 0) {
-		int orig_errno = errno;
+		orig_errno = errno;
 		if (orig_errno == EWOULDBLOCK) {
 			/* Device is locked by another process - fail */
 			close(d->hPhone);
