@@ -62,6 +62,8 @@ GSM_Error ATGEN_ReplyGetSMSMemories(GSM_Protocol_Message *msg, GSM_StateMachine 
 	char *pos_start = NULL, *pos_end = NULL, *pos_tmp = NULL;
 	const char *Line;
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
+	char *search_pos;
+	int param_count;
 
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
@@ -135,8 +137,8 @@ GSM_Error ATGEN_ReplyGetSMSMemories(GSM_Protocol_Message *msg, GSM_StateMachine 
 
 			/* Check if there is a third parameter for receive memory */
 			/* Count parameter sets by counting opening parentheses in the response */
-			char *search_pos = msg->Buffer;
-			int param_count = 0;
+			search_pos = msg->Buffer;
+			param_count = 0;
 
 			while ((search_pos = strchr(search_pos, '(')) != NULL) {
 				param_count++;
