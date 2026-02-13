@@ -62,6 +62,7 @@
 #include "../libgammu/misc/string.h"
 #include "../libgammu/protocol/protocol.h"
 #include "../libgammu/gsmstate.h"
+#include "../libgammu/misc/coding/md5.h"
 
 #ifndef PATH_MAX
 #ifdef MAX_PATH
@@ -95,6 +96,122 @@ GSM_Error SMSD_CheckDBVersion(GSM_SMSDConfig *Config, int version)
 		return ERR_DB_VERSION;
 	}
 	return ERR_NONE;
+}
+
+#define SMSD_PROCESSED_MESSAGES_CACHE_SIZE 100
+
+/**
+ * Computes an MD5-based hash of an SMS message to uniquely identify it.
+ * Uses sender number, timestamp, and message text to create hash.
+ */
+static unsigned int SMSD_ComputeSMSHash(const GSM_SMSMessage *sms)
+{
+	char checksum[33]; /* MD5 hex string is 32 chars + null terminator */
+	unsigned char buffer[1024];
+	int len = 0;
+	int ret;
+	unsigned int hash = 0;
+
+	/* Build a buffer with message components */
+	/* Add sender number */
+	ret = snprintf((char *)buffer + len, sizeof(buffer) - len, "%s|",
+	               (char *)sms->Number);
+	if (ret < 0 || ret >= (int)(sizeof(buffer) - len)) {
+		/* Truncation occurred, use what we have */
+		len = sizeof(buffer) - 1;
+		buffer[len] = '\0';
+	} else {
+		len += ret;
+	}
+
+	/* Add timestamp */
+	if (len < (int)sizeof(buffer) - 1) {
+		ret = snprintf((char *)buffer + len, sizeof(buffer) - len, 
+		               "%04d%02d%02d%02d%02d%02d|",
+		               sms->DateTime.Year, sms->DateTime.Month, sms->DateTime.Day,
+		               sms->DateTime.Hour, sms->DateTime.Minute, sms->DateTime.Second);
+		if (ret < 0 || ret >= (int)(sizeof(buffer) - len)) {
+			len = sizeof(buffer) - 1;
+			buffer[len] = '\0';
+		} else {
+			len += ret;
+		}
+	}
+
+	/* Add message text */
+	if (len < (int)sizeof(buffer) - 1) {
+		ret = snprintf((char *)buffer + len, sizeof(buffer) - len, "%s",
+		               (char *)sms->Text);
+		if (ret < 0 || ret >= (int)(sizeof(buffer) - len)) {
+			len = sizeof(buffer) - 1;
+			buffer[len] = '\0';
+		} else {
+			len += ret;
+		}
+	}
+
+	/* Compute MD5 hash */
+	CalculateMD5(buffer, len, checksum);
+
+	/* Convert first 8 hex characters of MD5 to unsigned int */
+	if (sscanf(checksum, "%08X", &hash) != 1) {
+		/* If parsing fails, use a simple fallback based on buffer content */
+		hash = (unsigned int)buffer[0] << 24 | 
+		       (unsigned int)buffer[1] << 16 |
+		       (unsigned int)buffer[2] << 8 |
+		       (unsigned int)buffer[3];
+	}
+
+	return hash;
+}
+
+/**
+ * Checks if a message hash is already in the processed cache.
+ */
+static gboolean SMSD_IsMessageProcessed(GSM_SMSDConfig *Config, unsigned int hash)
+{
+	unsigned int i;
+
+	if (Config->ProcessedMessagesHash == NULL) {
+		return FALSE;
+	}
+
+	for (i = 0; i < Config->ProcessedMessagesHashUsed; i++) {
+		if (Config->ProcessedMessagesHash[i] == hash) {
+			return TRUE;
+		}
+	}
+
+	return FALSE;
+}
+
+/**
+ * Adds a message hash to the processed cache.
+ */
+static void SMSD_MarkMessageProcessed(GSM_SMSDConfig *Config, unsigned int hash)
+{
+	/* Initialize cache if needed */
+	if (Config->ProcessedMessagesHash == NULL) {
+		Config->ProcessedMessagesHash = (unsigned int *)calloc(SMSD_PROCESSED_MESSAGES_CACHE_SIZE, sizeof(unsigned int));
+		if (Config->ProcessedMessagesHash == NULL) {
+			SMSD_Log(DEBUG_ERROR, Config, "Failed to allocate processed messages cache");
+			return;
+		}
+		Config->ProcessedMessagesHashSize = SMSD_PROCESSED_MESSAGES_CACHE_SIZE;
+		Config->ProcessedMessagesHashUsed = 0;
+	}
+
+	/* If cache is full, remove oldest entry (simple FIFO) */
+	if (Config->ProcessedMessagesHashUsed >= Config->ProcessedMessagesHashSize) {
+		/* Shift all entries by one */
+		memmove(Config->ProcessedMessagesHash,
+		        Config->ProcessedMessagesHash + 1,
+		        (Config->ProcessedMessagesHashSize - 1) * sizeof(unsigned int));
+		Config->ProcessedMessagesHashUsed = Config->ProcessedMessagesHashSize - 1;
+	}
+
+	/* Add the new hash */
+	Config->ProcessedMessagesHash[Config->ProcessedMessagesHashUsed++] = hash;
 }
 
 /**
@@ -440,6 +557,11 @@ GSM_SMSDConfig *SMSD_NewConfig(const char *name)
 		Config->SkipMessage[i] = FALSE;
 	}
 
+	/* Initialize processed messages cache */
+	Config->ProcessedMessagesHash = NULL;
+	Config->ProcessedMessagesHashSize = 0;
+	Config->ProcessedMessagesHashUsed = 0;
+
 	/* Prepare lists */
 	GSM_StringArray_New(&(Config->IncludeNumbersList));
 	GSM_StringArray_New(&(Config->ExcludeNumbersList));
@@ -532,6 +654,9 @@ void SMSD_FreeConfig(GSM_SMSDConfig *Config)
 	GSM_StringArray_Free(&(Config->ExcludeSMSCList));
 
 	free(Config->gammu_log_buffer);
+
+	/* Free processed messages cache */
+	free(Config->ProcessedMessagesHash);
 
 	INI_Free(Config->smsdcfgfile);
 
@@ -1501,6 +1626,20 @@ gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config)
 				break;
 			case ERR_NONE:
 				if (SMSD_ValidMessage(Config, &sms)) {
+					unsigned int hash;
+					
+					/* Check if this message was already processed via callback */
+					hash = SMSD_ComputeSMSHash(&sms.SMS[0]);
+					if (SMSD_IsMessageProcessed(Config, hash)) {
+						SMSD_Log(DEBUG_INFO, Config, "Message already processed via callback, skipping from polling.");
+						/* Delete the message from phone since it was already processed */
+						for (j = 0; j < sms.Number; j++) {
+							sms.SMS[j].Folder = 0;
+							GSM_DeleteSMS(Config->gsm, &sms.SMS[j]);
+						}
+						break;
+					}
+					
 					if (allocated <= GetSMSNumber + 2) {
 						GetSMSData = (GSM_MultiSMSMessage **)realloc(GetSMSData, (allocated + 20) * sizeof(GSM_MultiSMSMessage *));
 						if (GetSMSData == NULL) {
@@ -2114,25 +2253,45 @@ void SMSD_IncomingSMSInfoCallback(GSM_StateMachine *s,  GSM_SMSMessage *sms, voi
  */
 void SMSD_IncomingSMSCallback(GSM_StateMachine *s,  GSM_SMSMessage *sms, void *user_data)
 {
-	GSM_MultiSMSMessage msms;
 	GSM_SMSDConfig *Config = user_data;
+	GSM_MultiSMSMessage msms;
 	GSM_Error error;
+	unsigned int hash;
 
+	/* Handle message information notifications (CMTI, CDSI) */
 	if(sms->State == 0) {
-		// assume we only have message information, not a full message, handoff to appropriate handler
+		/* Message information only (e.g., +CMTI), cache it for later processing */
 		SMSD_IncomingSMSInfoCallback(s, sms, user_data);
 		return;
 	}
 
-	SMSD_Log(DEBUG_INFO, Config, "processing incoming SMS.");
+	/* For full messages delivered via callback, process them immediately
+	 * and mark them as processed to prevent double counting when polling. */
+	
+	SMSD_Log(DEBUG_INFO, Config, "Processing incoming message received via callback.");
 
 	memset(&msms, 0, sizeof(GSM_MultiSMSMessage));
 	msms.Number = 1;
 	msms.SMS[0] = *sms;
 
+	/* Compute hash to track this message */
+	hash = SMSD_ComputeSMSHash(sms);
+
+	/* Check if already processed (shouldn't happen, but be safe) */
+	if (SMSD_IsMessageProcessed(Config, hash)) {
+		SMSD_Log(DEBUG_INFO, Config, "Message already processed, skipping.");
+		return;
+	}
+
+	/* Process the message */
 	error = SMSD_ProcessSMS(Config, &msms);
-	if(error != ERR_NONE)
+	if(error != ERR_NONE) {
 		SMSD_LogError(DEBUG_ERROR, Config, "Error processing SMS", error);
+		return;
+	}
+
+	/* Mark as processed to prevent reprocessing during polling */
+	SMSD_MarkMessageProcessed(Config, hash);
 }
 
 GSM_Error SMSD_ProcessSMSInfoCache(GSM_SMSDConfig *Config)
