@@ -681,7 +681,7 @@ class Mobile:
         # This is an ugly hack, needed for some fields that cannot be handled using the contact object
         try:
             value = str(contact.as_vcard(), "utf8")
-            return value.split(detail + ":")[1].split(delimiter)[0]
+            return value.split(detail + ":")[1].split(delimiter, maxsplit=1)[0]
         except:
             return None
 
