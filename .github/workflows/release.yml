@@ -42,7 +42,7 @@ jobs:
         ls -lh Gammu-*
 
     - name: Upload source tarball
-      uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+      uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
       with:
         name: source
         path: _build/Gammu-*
@@ -66,7 +66,7 @@ jobs:
         Get-ChildItem -Filter "Gammu-*.exe"
 
     - name: Upload Windows installer
-      uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+      uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
       with:
         name: windows-installer
         path: _build/Gammu-*.exe
@@ -91,7 +91,7 @@ jobs:
         Get-ChildItem -Filter "Gammu-*.exe"
 
     - name: Upload Windows minimal installer
-      uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+      uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
       with:
         name: windows-installer-minimal
         path: _build/Gammu-*.exe
@@ -104,7 +104,7 @@ jobs:
       contents: write
     steps:
     - name: Download all artifacts
-      uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
+      uses: actions/download-artifact@70fc10c6e5e1ce46ad2ea6f2b72d43f7d47b13c3 # v8.0.0
       with:
         path: artifacts
 
