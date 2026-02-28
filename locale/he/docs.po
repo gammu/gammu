@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.43.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2026-02-09 11:33+0100\n"
-"PO-Revision-Date: 2019-12-18 08:21+0000\n"
+"PO-Revision-Date: 2026-02-10 19:09+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/gammu/gammu-docs/"
 "he/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Weblate 3.10-dev\n"
+"X-Generator: Weblate 5.16-dev\n"
 
 #. type: Title =
 #: README.rst:2
@@ -36,12 +36,6 @@ msgstr ""
 
 #. type: Plain text
 #: README.rst:11
-#, fuzzy
-#| msgid ""
-#| "It has been initiated by Marcin Wiacek and other people. Originally the "
-#| "code was based on Gnokii <https://www.gnokii.org/> and later MyGnokii "
-#| "<http://www.mwiacek.com/> projects. Gammu was former (up to version 0.58) "
-#| "called MyGnokii2."
 msgid ""
 "It has been initiated by Marcin Wiacek and other people. Originally the code "
 "was based on Gnokii <https://www.gnokii.org/> and later MyGnokii <http://"
@@ -50,20 +44,16 @@ msgid ""
 msgstr ""
 "הכול התחיל אצל Marcin Wiacek ואנשים נוספים. הקוד היה מבוסס במקור על המיזמים "
 "Gnokii <https://www.gnokii.org/> ולאחר מכן על MyGnokii <http://"
-"www.mwiacek.com/>.‏ Gammu הייתה הגרסה הקודמת (עד 0.58) שנקראה MyGnokii2."
+"www.mwiacek.com/>.‏ Gammu נקראה MyGnokii2 בעבר (עד גרסה 0.58)."
 
 #. type: Plain text
 #: README.rst:14
-#, fuzzy
-#| msgid ""
-#| "Currently the project is lead by Michal Cihar <michal@cihar.com> with "
-#| "help of many contributors."
 msgid ""
 "Currently the project is led by Michal Cihar <michal@cihar.com> with help of "
 "many contributors."
 msgstr ""
-"נכון להיום הובלת המיזם מוטלת על Michal Cihar ‏<michal@cihar.com> בעזרתם של "
-"תורמים רבים."
+"נכון להיום Michal Cihar ‏<michal@cihar.com> מוביל את המיזם בעזרתם של תורמים "
+"רבים."
 
 #. type: Labeled list
 #: README.rst:15 README.rst:19
@@ -73,25 +63,21 @@ msgstr ".. image"
 
 #. type: Plain text
 #: README.rst:18
-#, fuzzy
-#| msgid ""
-#| ":alt: Translation status :target: https://hosted.weblate.org/engage/"
-#| "gammu/?utm_source=widget"
 msgid ""
 "https://hosted.weblate.org/widgets/gammu/-/svg-badge.svg :alt: Translation "
 "status :target: https://hosted.weblate.org/engage/gammu/?utm_source=widget"
 msgstr ""
-":alt: מצב התרגום :target: https://hosted.weblate.org/engage/gammu/?"
-"utm_source=widget"
+"https://hosted.weblate.org/widgets/gammu/-/svg-badge.svg :alt: מצב התרגום "
+":target: https://hosted.weblate.org/engage/gammu/?utm_source=widget"
 
 #. type: Plain text
 #: README.rst:22
-#, fuzzy
-#| msgid ":alt: Liberapay :target: https://liberapay.com/Gammu/donate"
 msgid ""
 "https://img.shields.io/liberapay/receives/Gammu.svg :alt: Liberapay :target: "
 "https://liberapay.com/Gammu/donate"
-msgstr ":alt: תרומה למיזם :target: https://liberapay.com/Gammu/donate"
+msgstr ""
+"https://img.shields.io/liberapay/receives/Gammu.svg :alt: תרומה דרך "
+"Liberapay :target: https://liberapay.com/Gammu/donate"
 
 #. type: Title =
 #: README.rst:24
