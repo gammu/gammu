@@ -68,7 +68,7 @@ jobs:
       run: make -C _build test
     - name: coverage
       run: make -C _build gcov
-    - uses: codecov/codecov-action@75cd11691c0faa626561e295848008c8a7dddffe # v5
+    - uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6
   windows:
     runs-on: windows-latest
     env:
@@ -97,7 +97,7 @@ jobs:
       run: |
         cd _build
         ctest --output-on-failure --no-compress-output --dashboard ExperimentalTest --build-config Release
-    - uses: codecov/codecov-action@75cd11691c0faa626561e295848008c8a7dddffe # v5
+    - uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6
   macos:
     runs-on: macos-latest
     env:
@@ -145,4 +145,4 @@ jobs:
       run: make -C _build test
     - name: coverage
       run: make -C _build gcov
-    - uses: codecov/codecov-action@75cd11691c0faa626561e295848008c8a7dddffe # v5
+    - uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6
