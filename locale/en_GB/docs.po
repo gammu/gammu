@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.43.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2026-02-09 11:33+0100\n"
-"PO-Revision-Date: 2020-04-10 11:09+0000\n"
-"Last-Translator: Ciarán Ainsworth <ciaranainsworth@posteo.net>\n"
+"PO-Revision-Date: 2026-04-02 17:09+0000\n"
+"Last-Translator: Andi Chandler <andi@gowling.com>\n"
 "Language-Team: English (United Kingdom) <https://hosted.weblate.org/projects/"
 "gammu/gammu-docs/en_GB/>\n"
 "Language: en_GB\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.0-dev\n"
+"X-Generator: Weblate 5.17-dev\n"
 
 #. type: Title =
 #: README.rst:2
@@ -36,12 +36,6 @@ msgstr ""
 
 #. type: Plain text
 #: README.rst:11
-#, fuzzy
-#| msgid ""
-#| "It has been initiated by Marcin Wiacek and other people. Originally the "
-#| "code was based on Gnokii <https://www.gnokii.org/> and later MyGnokii "
-#| "<http://www.mwiacek.com/> projects. Gammu was former (up to version 0.58) "
-#| "called MyGnokii2."
 msgid ""
 "It has been initiated by Marcin Wiacek and other people. Originally the code "
 "was based on Gnokii <https://www.gnokii.org/> and later MyGnokii <http://"
@@ -50,21 +44,17 @@ msgid ""
 msgstr ""
 "It has been initiated by Marcin Wiacek and other people. Originally the code "
 "was based on Gnokii <https://www.gnokii.org/> and later MyGnokii <http://"
-"www.mwiacek.com/> projects. Gammu was former (up to version 0.58) called "
+"www.mwiacek.com/> projects. Gammu was formerly (up to version 0.58) called "
 "MyGnokii2."
 
 #. type: Plain text
 #: README.rst:14
-#, fuzzy
-#| msgid ""
-#| "Currently the project is lead by Michal Cihar <michal@cihar.com> with "
-#| "help of many contributors."
 msgid ""
 "Currently the project is led by Michal Cihar <michal@cihar.com> with help of "
 "many contributors."
 msgstr ""
-"Currently the project is lead by Michal Cihar <michal@cihar.com> with help "
-"of many contributors."
+"Currently the project is led by Michal Cihar <michal@cihar.com> with help of "
+"many contributors."
 
 #. type: Labeled list
 #: README.rst:15 README.rst:19
@@ -74,25 +64,21 @@ msgstr ".. image"
 
 #. type: Plain text
 #: README.rst:18
-#, fuzzy
-#| msgid ""
-#| ":alt: Translation status :target: https://hosted.weblate.org/engage/"
-#| "gammu/?utm_source=widget"
 msgid ""
 "https://hosted.weblate.org/widgets/gammu/-/svg-badge.svg :alt: Translation "
 "status :target: https://hosted.weblate.org/engage/gammu/?utm_source=widget"
 msgstr ""
-":alt: Translation status :target: https://hosted.weblate.org/engage/gammu/?"
-"utm_source=widget"
+"https://hosted.weblate.org/widgets/gammu/-/svg-badge.svg :alt: Translation "
+"status :target: https://hosted.weblate.org/engage/gammu/?utm_source=widget"
 
 #. type: Plain text
 #: README.rst:22
-#, fuzzy
-#| msgid ":alt: Liberapay :target: https://liberapay.com/Gammu/donate"
 msgid ""
 "https://img.shields.io/liberapay/receives/Gammu.svg :alt: Liberapay :target: "
 "https://liberapay.com/Gammu/donate"
-msgstr ":alt: Liberapay :target: https://liberapay.com/Gammu/donate"
+msgstr ""
+"https://img.shields.io/liberapay/receives/Gammu.svg :alt: Liberapay :target: "
+"https://liberapay.com/Gammu/donate"
 
 #. type: Title =
 #: README.rst:24
