@@ -33,7 +33,7 @@ jobs:
         ports:
         - 5432:5432
       mysql:
-        image: mysql@sha256:c5df04bee1a42b74a5841c6409e669cf62126cd0416f00c1cea8ab933b9361b9
+        image: mysql@sha256:c9e48b0c008f1936d4139d1c0dcd5950a9dbe57d4d40f383013cde432fa6d6aa
         env:
           MYSQL_DATABASE: smsd
           MYSQL_USER: smsd
