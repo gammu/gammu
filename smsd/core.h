@@ -105,6 +105,11 @@ struct _GSM_SMSDConfig {
 	int		IgnoredMessages;
 	gboolean 	SkipMessage[GSM_MAX_MULTI_SMS];
 
+	/* Cache of recently processed messages to prevent duplicates */
+	unsigned int	*ProcessedMessagesHash;
+	unsigned int	ProcessedMessagesHashSize;
+	unsigned int	ProcessedMessagesHashUsed;
+
 #if defined(HAVE_MYSQL_MYSQL_H) || defined(HAVE_POSTGRESQL_LIBPQ_FE_H) || defined(LIBDBI_FOUND) || defined(ODBC_FOUND)
 	/* options for SQL database */
 	/**
