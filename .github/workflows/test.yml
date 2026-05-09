@@ -20,7 +20,7 @@ jobs:
       ARGS: ${{ matrix.args }}
     services:
       postgres:
-        image: postgres@sha256:16f150f9630783d60de2eccece4f830df02babcbb8654656adeb2fdca17c6e72
+        image: postgres@sha256:c5bd032fb659503bf121faf5cea5894dcfece30286a3db59e3c060f3e9f60cb0
         env:
           POSTGRES_PASSWORD: smsd
           POSTGRES_USER: smsd
