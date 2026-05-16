@@ -43,7 +43,7 @@ CREATE TABLE outbox (
   MultiPart TEXT NOT NULL DEFAULT 'false',
   RelativeValidity INTEGER DEFAULT -1,
   SenderID TEXT,
-  SendingTimeOut NUMERIC NOT NULL DEFAULT (datetime('now')),
+  SendingTimeOut NUMERIC NOT NULL DEFAULT (datetime('now', 'localtime')),
   DeliveryReport TEXT DEFAULT 'default',
   CreatorID TEXT NOT NULL,
   Retries INTEGER DEFAULT 0,
