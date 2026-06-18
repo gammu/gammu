@@ -47,7 +47,7 @@ jobs:
         ports:
         - 3306:3306
     steps:
-    - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+    - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
     - name: apt
       run: |
         sudo apt-get update
@@ -74,7 +74,7 @@ jobs:
     env:
       CTEST_OUTPUT_ON_FAILURE: 1
     steps:
-    - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+    - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
     - name: Start PostgreSQL on Windows
       run: |
         $pgService = Get-Service -Name postgresql*
@@ -103,7 +103,7 @@ jobs:
     env:
       CTEST_OUTPUT_ON_FAILURE: 1
     steps:
-    - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+    - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
     - name: Start PostgreSQL on MacOS
       run: |
         brew install postgresql
