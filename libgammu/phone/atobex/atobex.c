@@ -282,7 +282,7 @@ GSM_Error ATOBEX_DispatchMessage(GSM_StateMachine *s)
  */
 GSM_Error ATOBEX_GetProductCode(GSM_StateMachine *s, char *value)
 {
-       strcpy(value, s->Phone.Data.Model);
+       snprintf(value, GSM_MAX_MODEL_LENGTH, "%s", s->Phone.Data.Model);
        return ERR_NONE;
 }
 
@@ -1278,13 +1278,13 @@ GSM_Error ATOBEX_SetLocale(GSM_StateMachine *s, GSM_Locale *locale)
 	if ((locale->DateFormat==GSM_Date_YYMMDD)&&(locale->DateSeparator=='-')) { format=7; }
 	else { return ERR_NOTSUPPORTED; } /* ERR_WRONGINPUT */
 
-	sprintf(req,"AT*ESDF=%i\r",format);
+	snprintf(req, sizeof(req), "AT*ESDF=%i\r", format);
 	smprintf(s, "Setting date format\n");
 	error = GSM_WaitFor (s, req, strlen(req), 0x00, 3, ID_SetLocale);
 	if (error!=ERR_NONE) return error;
 
 	if (locale->AMPMTime) { format=2; } else { format=1; }
-	sprintf(req,"AT*ESTF=%i\r",format);
+	snprintf(req, sizeof(req), "AT*ESTF=%i\r", format);
 	smprintf(s, "Setting time format\n");
 	return GSM_WaitFor (s, req, strlen(req), 0x00, 3, ID_SetLocale);
 }
