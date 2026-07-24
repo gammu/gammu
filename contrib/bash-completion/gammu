@@ -22,8 +22,8 @@ _gammu_commands()
 
 _gammu()
 {
-    cur=${COMP_WORDS[COMP_CWORD]}
-    COMPREPLY=( $( compgen -W "$(_gammu_commands)" $cur ) )
+    local cur=${COMP_WORDS[COMP_CWORD]}
+    COMPREPLY=( $( compgen -W "$(_gammu_commands)" -- "$cur" ) )
 }
 
 complete -F _gammu -o default gammu
