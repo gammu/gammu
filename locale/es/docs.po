@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.43.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2026-02-09 11:33+0100\n"
-"PO-Revision-Date: 2011-03-10 19:26+0200\n"
-"Last-Translator: Matías Bellone <matiasbellone@gmail.com>\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2026-06-25 19:01+0000\n"
+"Last-Translator: Libre <6n0n1m0s@proton.me>\n"
+"Language-Team: Spanish <https://hosted.weblate.org/projects/gammu/gammu-docs/"
+"es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Pootle 2.0.5\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2026.7.dev0\n"
 
 #. type: Title =
 #: README.rst:2
@@ -35,12 +36,6 @@ msgstr ""
 
 #. type: Plain text
 #: README.rst:11
-#, fuzzy
-#| msgid ""
-#| "It has been initiated by Marcin Wiacek and other people. Originally the "
-#| "code was based on Gnokii <http://www.gnokii.org> and later MyGnokii "
-#| "<http://www.mwiacek.com> projects. Gammu was former (up to version 0.58) "
-#| "called MyGnokii2."
 msgid ""
 "It has been initiated by Marcin Wiacek and other people. Originally the code "
 "was based on Gnokii <https://www.gnokii.org/> and later MyGnokii <http://"
@@ -48,15 +43,12 @@ msgid ""
 "MyGnokii2."
 msgstr ""
 "Ha sido iniciado por Marcin Wiacek y otras personas. Originalmente el código "
-"se basó en Gnokii <http://www.gnokii.org>  y después MyGnokii <http://"
-"www.mwiacek.com>. Gammu antes se llamó (hasta la versión 0.58) MyGnokii2."
+"se basó en Gnokii <https://www.gnokii.org> y después MyGnokii <https://"
+"www.mwiacek.com>. Gammu antes se llamó formalmente (hasta la versión 0.58) "
+"MyGnokii2."
 
 #. type: Plain text
 #: README.rst:14
-#, fuzzy
-#| msgid ""
-#| "Currently the project is lead by Michal Cihar <michal@cihar.com> with "
-#| "help of many contributors."
 msgid ""
 "Currently the project is led by Michal Cihar <michal@cihar.com> with help of "
 "many contributors."
@@ -72,25 +64,22 @@ msgstr ".. image"
 
 #. type: Plain text
 #: README.rst:18
-#, fuzzy
-#| msgid ""
-#| ":alt: Translation status :target: https://hosted.weblate.org/engage/"
-#| "gammu/?utm_source=widget"
 msgid ""
 "https://hosted.weblate.org/widgets/gammu/-/svg-badge.svg :alt: Translation "
 "status :target: https://hosted.weblate.org/engage/gammu/?utm_source=widget"
 msgstr ""
-":alt: Translation status :target: https://hosted.weblate.org/engage/gammu/?"
-"utm_source=widget"
+"https://hosted.weblate.org/widgets/gammu/-/svg-badge.svg :alt: Estado de "
+"traducción :target: https://hosted.weblate.org/engage/gammu/"
+"?utm_source=widget"
 
 #. type: Plain text
 #: README.rst:22
-#, fuzzy
-#| msgid ":target: https://travis-ci.org/gammu/gammu"
 msgid ""
 "https://img.shields.io/liberapay/receives/Gammu.svg :alt: Liberapay :target: "
 "https://liberapay.com/Gammu/donate"
-msgstr ":target: https://travis-ci.org/gammu/gammu"
+msgstr ""
+"https://img.shields.io/liberapay/receives/Gammu.svg :alt: Liberapay :target: "
+"https://liberapay.com/Gammu/donate"
 
 #. type: Title =
 #: README.rst:24
@@ -100,25 +89,18 @@ msgstr "Más información"
 
 #. type: Plain text
 #: README.rst:27
-#, fuzzy
-#| msgid "You can find more information on <http://wammu.eu/gammu/>."
 msgid "You can find more information on <https://wammu.eu/gammu/>."
-msgstr "Puede encontrar más información en <http://wammu.eu/gammu/>."
+msgstr "Puede encontrar más información en <https://wammu.eu/gammu/>."
 
 #. type: Plain text
 #: README.rst:31
-#, fuzzy
-#| msgid ""
-#| "There is also Gammu manual available in docs/manual. You can build HTML "
-#| "version of it using make manual-html which is viewable online at <http://"
-#| "wammu.eu/docs/manual/>."
 msgid ""
 "There is also Gammu manual available in docs/manual. You can build HTML "
 "version of it using make manual-html which is viewable online at <https://"
 "wammu.eu/docs/manual/>."
 msgstr ""
-"También hay un manual de Gammu disponible en docs/manual. Puedes crear la "
-"versión HTML del mismo, disponible en <http://wammu.eu/docs/manual/>, "
+"También hay disponible un manual de Gammu en docs/manual. Puedes crear la "
+"versión HTML del mismo, disponible en <https://wammu.eu/docs/manual/>, "
 "utilizando make manual-html."
 
 #. type: Title =
@@ -129,16 +111,12 @@ msgstr "Retroalimentación e informes de errores"
 
 #. type: Plain text
 #: README.rst:38
-#, fuzzy
-#| msgid ""
-#| "Any feedback is welcome, see <http://wammu.eu/support/> for information "
-#| "how to contact developers."
 msgid ""
 "Any feedback is welcome, see <https://wammu.eu/support/> for information how "
 "to contact developers."
 msgstr ""
-"Toda retroalimentación es bienvenida, vea <http://wammu.eu/support/> para "
-"información sobre cómo contactar a los desarrolladores."
+"Toda retroalimentación es bienvenida, consulte <https://wammu.eu/support/> "
+"para información sobre cómo contactar a los desarrolladores."
 
 #. type: Title =
 #: README.rst:41
@@ -148,11 +126,9 @@ msgstr "Ayudar a los desarrolladores"
 
 #. type: Plain text
 #: README.rst:43
-#, fuzzy
-#| msgid "You can appreciate developers work at <http://wammu.eu/donate/>."
 msgid "You can appreciate developers work at <https://wammu.eu/donate/>."
 msgstr ""
-"Puedes mostrar tu aprecio por el trabajo de los desarrolladores en <http://"
+"Puedes mostrar tu aprecio por el trabajo de los desarrolladores en <https://"
 "wammu.eu/donate/>."
 
 #. type: Title =
