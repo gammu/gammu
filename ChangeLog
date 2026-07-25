@@ -19,10 +19,16 @@ the issue.
 ChangeLog
 =========
 
-Unreleased
+20260725 - 1.43.3
 
 [-] * Prevent command injection through SMSD RunOn hook arguments on POSIX
       and Windows.
+[-] * Fix SMS memory status queries for modems returning only OK when
+      selecting the memory.
+[-] * Fix SQLite outbox timestamps to use local time.
+[-] * Fix bash completion for options and words containing spaces.
+[-] * Fix signed size handling in AT SMS code.
+[-] * Localization updates.
 
 20260209 - 1.43.2
 
