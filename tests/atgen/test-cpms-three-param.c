@@ -80,9 +80,50 @@ void test_three_param_cpms_disabled(void)
   cleanup_state_machine(s);
 }
 
+void test_three_param_cpms_status_with_ok_only_selection(void)
+{
+  GSM_Error error;
+  GSM_SMSMemoryStatus status;
+  GSM_StateMachine *s = setup_state_machine();
+  GSM_Phone_ATGENData *Priv = setup_at_engine(s);
+  const char *responses[] = {
+    "OK\r\n",
+    "+CPMS: \"SM\",3,30,\"SM\",3,30,\"SM\",3,30\r\n",
+    "OK\r\n",
+    "OK\r\n",
+    "+CPMS: \"ME\",4,40,\"ME\",4,40,\"ME\",4,40\r\n",
+    "OK\r\n"
+  };
+  bind_response_handling(s);
+
+  puts(__func__);
+
+  Priv->PhoneSMSMemory = AT_AVAILABLE;
+  Priv->PhoneSaveSMS = AT_AVAILABLE;
+  Priv->SIMSMSMemory = AT_AVAILABLE;
+  Priv->SIMSaveSMS = AT_AVAILABLE;
+  Priv->CPMSReceiveMemory = TRUE;
+  Priv->SMSMemory = (GSM_MemoryType)0;
+  Priv->SMSMemoryWrite = FALSE;
+
+  memset(&status, 0, sizeof(status));
+  SET_RESPONSES(responses);
+  error = GSM_GetSMSStatus(s, &status);
+
+  test_result(error == ERR_NONE);
+  test_result(status.SIMUsed == 3);
+  test_result(status.SIMSize == 30);
+  test_result(status.PhoneUsed == 4);
+  test_result(status.PhoneSize == 40);
+  test_result(strcmp((const char *)last_command(), "AT+CPMS?\r") == 0);
+
+  cleanup_state_machine(s);
+}
+
 int main(void)
 {
   test_three_param_cpms_enabled();
   test_three_param_cpms_disabled();
+  test_three_param_cpms_status_with_ok_only_selection();
   return 0;
 }
