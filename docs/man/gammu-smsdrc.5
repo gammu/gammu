@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "GAMMU-SMSDRC" "5" "Feb 09, 2026" "1.43.2" "Gammu"
+.TH "GAMMU-SMSDRC" "5" "Jul 25, 2026" "1.43.2" "Gammu"
 .SH NAME
 gammu-smsdrc \- gammu-smsd(1) configuration file
 .SH DESCRIPTION
@@ -455,11 +455,18 @@ SMSC from phone, but sometimes this fails (try \fBgammu getsmsc\fP).
 .B RunOnReceive
 Executes a program after receiving message.
 .sp
-This parameter is executed through shell, so you might need to escape some
-special characters and you can include any number of parameters. Additionally
-parameters with identifiers of received messages are appended to the command
-line. The identifiers depend on used service backend, typically it is ID of
-inserted row for database backends or file name for file based backends.
+The configured command can include any number of parameters. On POSIX systems
+it is executed through the shell, so special characters in the configured
+command need to be escaped accordingly. Identifiers of received messages are
+passed as separate literal arguments and are not interpreted as shell syntax.
+The identifiers depend on the service backend; typically they are IDs of
+inserted rows for database backends or file names for file based backends.
+.sp
+On Windows, arguments containing command processor metacharacters, variable
+expansion characters, or control characters are rejected and the hook is not
+started. This prevents caller\-controlled values from being interpreted when a
+configured command invokes \fBcmd.exe\fP or a batch file. This restriction
+applies to all \fBRunOn\fP directives.
 .sp
 Gammu SMSD waits for the script to terminate. If you make some time consuming
 there, it will make SMSD not receive new messages. However to limit breakage
@@ -481,9 +488,9 @@ Executes a program on failure.
 This can be used to proactively react on some failures or to interactively
 detect failure of sending message.
 .sp
-The program will receive optional parameter, which can currently be either
-\fBINIT\fP (meaning failure during phone initialization) or message ID,
-which would indicate error while sending the message.
+The program will receive an optional literal argument, which can currently
+be either \fBINIT\fP (meaning failure during phone initialization) or a
+message ID, which indicates an error while sending the message.
 .sp
 \fBNote:\fP
 .INDENT 7.0
@@ -500,8 +507,9 @@ Added in version 1.36.4.
 .sp
 Executes a program after sending message.
 .sp
-The program will receive optional parameter a message ID and environment
-with message details as described in RunOnReceive Directive \%<#\:gammu-smsd-run>\&.
+The program will receive an optional literal argument containing a message
+ID and an environment with message details as described in
+RunOnReceive Directive \%<#\:gammu-smsd-run>\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -511,8 +519,8 @@ Added in version 1.38.5.
 .sp
 Executes a program after cancelling incoming call.
 .sp
-The program will receive a parameter with a phone number of the call.
-This requires \fBHangupCalls\fP to be enabled.
+The program will receive a literal argument containing the phone number of
+the call. This requires \fBHangupCalls\fP to be enabled.
 .UNINDENT
 .INDENT 0.0
 .TP

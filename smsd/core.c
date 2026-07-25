@@ -1044,24 +1044,102 @@ gboolean SMSD_CheckSecurity(GSM_SMSDConfig *Config)
 /**
  * Prepares a command line for RunOn() function to execute user command.
  */
-char *SMSD_RunOnCommand(const char *locations, const char *command)
+char *SMSD_RunOnCommand(const char *command, const GSM_StringArray *arguments)
 {
 	char *result;
 	size_t len;
 
 	assert(command != NULL);
 
-	if (locations == NULL) {
-		result =  strdup(command);
+	if (arguments == NULL || arguments->used == 0) {
+		result = strdup(command);
 		assert(result != NULL);
 		return result;
 	}
 
-	len = strlen(locations) + strlen(command) + 4;
+#ifdef WIN32
+	{
+		size_t i, j, backslashes, pos;
+
+		/*
+		 * CreateProcess does not separate the executable command line from
+		 * its arguments. Reject characters which can escape quoting or be
+		 * expanded when the configured command invokes cmd.exe.
+		 */
+		for (i = 0; i < arguments->used; i++) {
+			for (j = 0; arguments->data[i][j] != 0; j++) {
+				unsigned char character = arguments->data[i][j];
+				if (character <= 0x1f || character == 0x7f ||
+				    strchr("\"%!^&|<>()", character) != NULL) {
+					return NULL;
+				}
+			}
+		}
+
+		/* Quote arguments according to the Windows C runtime parsing rules. */
+		len = strlen(command) + 1;
+		for (i = 0; i < arguments->used; i++) {
+			len += 3;
+			backslashes = 0;
+			for (j = 0; arguments->data[i][j] != 0; j++) {
+				if (arguments->data[i][j] == '\\') {
+					backslashes++;
+				} else if (arguments->data[i][j] == '"') {
+					len += 2 * backslashes + 2;
+					backslashes = 0;
+				} else {
+					len += backslashes + 1;
+					backslashes = 0;
+				}
+			}
+			len += 2 * backslashes;
+		}
+
+		result = (char *)malloc(len);
+		assert(result != NULL);
+		strcpy(result, command);
+		pos = strlen(result);
+
+		for (i = 0; i < arguments->used; i++) {
+			result[pos++] = ' ';
+			result[pos++] = '"';
+			backslashes = 0;
+			for (j = 0; arguments->data[i][j] != 0; j++) {
+				if (arguments->data[i][j] == '\\') {
+					backslashes++;
+				} else if (arguments->data[i][j] == '"') {
+					while (backslashes > 0) {
+						result[pos++] = '\\';
+						result[pos++] = '\\';
+						backslashes--;
+					}
+					result[pos++] = '\\';
+					result[pos++] = '"';
+				} else {
+					while (backslashes > 0) {
+						result[pos++] = '\\';
+						backslashes--;
+					}
+					result[pos++] = arguments->data[i][j];
+				}
+			}
+			while (backslashes > 0) {
+				result[pos++] = '\\';
+				result[pos++] = '\\';
+				backslashes--;
+			}
+			result[pos++] = '"';
+		}
+		result[pos] = 0;
+	}
+#else
+	/* Runtime arguments are supplied as shell positional parameters. */
+	len = strlen(command) + strlen(" \"$@\"") + 1;
 	result = (char *)malloc(len);
 	assert(result != NULL);
 
-	snprintf(result, len, "%s %s", command, locations);
+	snprintf(result, len, "%s \"$@\"", command);
+#endif
 	return result;
 }
 
@@ -1072,7 +1150,7 @@ char *SMSD_RunOnCommand(const char *locations, const char *command)
 /**
  * Fills in environment with information about messages.
  */
-void SMSD_RunOnReceiveEnvironment(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, const char *locations)
+void SMSD_RunOnReceiveEnvironment(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config)
 {
 	GSM_MultiPartSMSInfo SMSInfo;
 	char buffer[100], name[100];
@@ -1145,18 +1223,22 @@ void SMSD_RunOnReceiveEnvironment(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Conf
  *
  * This is Windows variant.
  */
-gboolean SMSD_RunOn(const char *command, GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, const char *locations, const char *event)
+gboolean SMSD_RunOn(const char *command, GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, const GSM_StringArray *arguments, const char *event)
 {
 	BOOL ret;
 	STARTUPINFO si;
 	PROCESS_INFORMATION pi;
 	char *cmdline;
 
-	cmdline = SMSD_RunOnCommand(locations, command);
+	cmdline = SMSD_RunOnCommand(command, arguments);
+	if (cmdline == NULL) {
+		SMSD_Log(DEBUG_ERROR, Config, "Refusing run on %s with arguments unsafe for the Windows command processor", event);
+		return FALSE;
+	}
 
 	/* Prepare environment */
 	if (sms != NULL) {
-		SMSD_RunOnReceiveEnvironment(sms, Config, locations);
+		SMSD_RunOnReceiveEnvironment(sms, Config);
 	}
 
 	ZeroMemory(&si, sizeof(si));
@@ -1192,7 +1274,7 @@ gboolean SMSD_RunOn(const char *command, GSM_MultiSMSMessage *sms, GSM_SMSDConfi
  *
  * This is POSIX variant.
  */
-gboolean SMSD_RunOn(const char *command, GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, const char *locations, const char *event)
+gboolean SMSD_RunOn(const char *command, GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, const GSM_StringArray *arguments, const char *event)
 {
 	int pid;
 	int pipefd[2];
@@ -1200,6 +1282,8 @@ gboolean SMSD_RunOn(const char *command, GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 	pid_t w;
 	int status;
 	char *cmdline;
+	char **argv;
+	size_t argument_index;
 	ssize_t bytes;
 	char buffer[4097];
 	gboolean result = FALSE;
@@ -1280,12 +1364,23 @@ out:
 
 	/* Prepare environment */
 	if (sms != NULL) {
-		SMSD_RunOnReceiveEnvironment(sms, Config, locations);
+		SMSD_RunOnReceiveEnvironment(sms, Config);
 	}
 
 	/* Calculate command line */
-	cmdline = SMSD_RunOnCommand(locations, command);
+	cmdline = SMSD_RunOnCommand(command, arguments);
 	SMSD_Log(DEBUG_INFO, Config, "Starting run on %s: %s", event, cmdline);
+
+	argv = (char **)malloc((4 + (arguments == NULL ? 0 : arguments->used) + 1) * sizeof(char *));
+	assert(argv != NULL);
+	argv[0] = (char *)"sh";
+	argv[1] = (char *)"-c";
+	argv[2] = cmdline;
+	argv[3] = (char *)"sh";
+	for (argument_index = 0; arguments != NULL && argument_index < arguments->used; argument_index++) {
+		argv[argument_index + 4] = arguments->data[argument_index];
+	}
+	argv[argument_index + 4] = NULL;
 
 	/* Close all file descriptors */
 	for (i = 0; i < 255; i++) {
@@ -1299,13 +1394,35 @@ out:
 	dup2(pipefd[1], 2);
 
 	/* Run the program */
-	execl("/bin/sh", "sh", "-c", cmdline, NULL);
+	execv("/bin/sh", argv);
 
 	/* Happens only in case of error */
+	free(argv);
+	free(cmdline);
 	SMSD_LogErrno(Config, "Error executing new process");
 	exit(127);
 }
 #endif
+
+/**
+ * Executes an external command with one optional argument.
+ */
+static gboolean SMSD_RunOnSingle(const char *command, GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, const char *argument, const char *event)
+{
+	GSM_StringArray arguments;
+	gboolean result;
+
+	GSM_StringArray_New(&arguments);
+	if (argument != NULL && !GSM_StringArray_Add(&arguments, argument)) {
+		SMSD_Log(DEBUG_ERROR, Config, "Failed to allocate run on %s argument", event);
+		GSM_StringArray_Free(&arguments);
+		return FALSE;
+	}
+
+	result = SMSD_RunOn(command, sms, Config, &arguments, event);
+	GSM_StringArray_Free(&arguments);
+	return result;
+}
 
 /**
  * Checks whether we are allowed to accept a message from number.
@@ -1387,18 +1504,19 @@ gboolean SMSD_ValidMessage(GSM_SMSDConfig *Config, GSM_MultiSMSMessage *sms)
 GSM_Error SMSD_ProcessSMS(GSM_SMSDConfig *Config, GSM_MultiSMSMessage *sms)
 {
 	GSM_Error error = ERR_NONE;
-	char *locations = NULL;
+	GSM_StringArray locations;
 
+	GSM_StringArray_New(&locations);
 	/* Increase message counter */
 	Config->Status->Received += sms->Number;
 	/* Send message to the backend */
 	error = Config->Service->SaveInboxSMS(sms, Config, &locations);
 	/* RunOnReceive handling */
 	if (Config->RunOnReceive != NULL && error == ERR_NONE) {
-		SMSD_RunOn(Config->RunOnReceive, sms, Config, locations, "receive");
+		SMSD_RunOn(Config->RunOnReceive, sms, Config, &locations, "receive");
 	}
 	/* Free memory allocated by SaveInboxSMS */
-	free(locations);
+	GSM_StringArray_Free(&locations);
 	return error;
 }
 
@@ -1858,7 +1976,7 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config)
 	}
 
 	if (Config->RunOnSent != NULL && error == ERR_NONE) {
-		SMSD_RunOn(Config->RunOnSent, &sms, Config, Config->SMSID, "sent");
+		SMSD_RunOnSingle(Config->RunOnSent, &sms, Config, Config->SMSID, "sent");
 	}
 
 	return ERR_NONE;
@@ -1871,7 +1989,7 @@ failure_unsent:
 	 * Consider checking with your modem manufacturer for proper error code handling.
 	 */
 	if (Config->RunOnFailure != NULL) {
-		SMSD_RunOn(Config->RunOnFailure, NULL, Config, Config->SMSID, "failure");
+		SMSD_RunOnSingle(Config->RunOnFailure, NULL, Config, Config->SMSID, "failure");
 	}
 	Config->Status->Failed++;
 
@@ -2018,7 +2136,7 @@ void SMSD_IncomingCallCallback(GSM_StateMachine *s, GSM_Call *call, void *user_d
 			}
 
 			if (Config->RunOnIncomingCall != NULL) {
-				SMSD_RunOn(Config->RunOnIncomingCall, NULL, Config, DecodeUnicodeString(call->PhoneNumber), "incoming call");
+				SMSD_RunOnSingle(Config->RunOnIncomingCall, NULL, Config, DecodeUnicodeString(call->PhoneNumber), "incoming call");
 			}
 		}
 		break;
@@ -2246,7 +2364,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 			error = GSM_InitConnection_Log(Config->gsm, 2, SMSD_Log_Function, Config);
 			/* run on error */
 			if (error != ERR_NONE && Config->RunOnFailure != NULL) {
-				SMSD_RunOn(Config->RunOnFailure, NULL, Config, "INIT", "failure");
+				SMSD_RunOnSingle(Config->RunOnFailure, NULL, Config, "INIT", "failure");
 			}
 			switch (error) {
 			case ERR_NONE:
@@ -2279,7 +2397,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 						error = Config->Service->InitAfterConnect(Config);
 						if (error!=ERR_NONE) {
 							if (Config->RunOnFailure != NULL) {
-								SMSD_RunOn(Config->RunOnFailure, NULL, Config, "INIT", "failure");
+								SMSD_RunOnSingle(Config->RunOnFailure, NULL, Config, "INIT", "failure");
 							}
 							SMSD_Terminate(Config, "Post initialisation failed, stopping Gammu smsd", error, TRUE, -1);
 							goto done_connected;

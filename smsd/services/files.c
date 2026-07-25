@@ -8,7 +8,6 @@
 #include <errno.h>
 #include <time.h>
 #include <stdlib.h>
-#include <assert.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <fcntl.h>
@@ -71,18 +70,17 @@ static void SMSDFiles_DecodeNumber(char *string)
 }
 
 /* Save SMS from phone (called Inbox sms - it's in phone Inbox) somewhere */
-static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig * Config, char **Locations)
+static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig * Config, GSM_StringArray *Locations)
 {
 	GSM_Error error = ERR_NONE;
 	int i, j;
-	unsigned char FileName[PATH_MAX], FullName[PATH_MAX], ext[4], buffer[64], buffer2[400];
+	char FileName[PATH_MAX];
+	unsigned char FullName[PATH_MAX], ext[4], buffer[64], buffer2[400];
 	gboolean done;
 	FILE *file;
-	size_t locations_size = 0, locations_pos = 0;
 #ifdef GSM_ENABLE_BACKUP
 	GSM_SMS_Backup *backup;
 #endif
-	*Locations = NULL;
 
 	j = 0;
 	done = FALSE;
@@ -123,17 +121,9 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfi
 			SMSD_Log(DEBUG_NOTICE, Config, "Delivery report: %s to %s, message reference 0x%02x",
 				 DecodeUnicodeString(sms->SMS[i].Text), buffer, sms->SMS[i].MessageReference);
 		} else {
-			if (locations_pos + strlen(FileName) + 2 >= locations_size) {
-				locations_size += strlen(FileName) + 30;
-				*Locations = (char *)realloc(*Locations, locations_size);
-				assert(*Locations != NULL);
-				if (locations_pos == 0) {
-					*Locations[0] = 0;
-				}
+			if (!GSM_StringArray_Add(Locations, FileName)) {
+				return ERR_MOREMEMORY;
 			}
-			strcat(*Locations, FileName);
-			strcat(*Locations, " ");
-			locations_pos += strlen(FileName) + 1;
 
 			if (strcasecmp(Config->inboxformat, "detail") == 0) {
 #ifndef GSM_ENABLE_BACKUP

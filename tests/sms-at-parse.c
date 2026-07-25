@@ -14,7 +14,7 @@
 #include "common.h"
 
 extern GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine * s);
-extern void SMSD_RunOnReceiveEnvironment(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, const char *locations);
+extern void SMSD_RunOnReceiveEnvironment(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config);
 
 #define BUFFER_SIZE 16384
 
@@ -117,7 +117,7 @@ int main(int argc, char **argv)
 		DisplayMultiSMSInfo(&sms, TRUE, TRUE, NULL, NULL);
 		printf("Parts: %d, count: %d, ID16: %d, ID8: %d\n", sms.SMS[0].UDH.AllParts, sms.Number, sms.SMS[0].UDH.ID16bit, sms.SMS[0].UDH.ID8bit);
 
-		SMSD_RunOnReceiveEnvironment(&sms, smsd, "1");
+		SMSD_RunOnReceiveEnvironment(&sms, smsd);
 	}
 
 	/* This is normally done by ATGEN_Terminate */

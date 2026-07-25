@@ -1214,6 +1214,23 @@ add_coverage(smsd-exit-on-failure)
 target_link_libraries(smsd-exit-on-failure libGammu ${LIBINTL_LIBRARIES} gsmsd)
 add_test(smsd-exit-on-failure "${GAMMU_TEST_PATH}/smsd-exit-on-failure${CMAKE_EXECUTABLE_SUFFIX}")
 
+add_executable(smsd-run-command smsd-run-command.c)
+add_coverage(smsd-run-command)
+target_link_libraries(smsd-run-command libGammu ${LIBINTL_LIBRARIES} gsmsd)
+add_test(smsd-run-command "${GAMMU_TEST_PATH}/smsd-run-command${CMAKE_EXECUTABLE_SUFFIX}")
+
+if (NOT WIN32)
+    add_executable(smsd-run-helper smsd-run-helper.c)
+    add_coverage(smsd-run-helper)
+    add_executable(smsd-run smsd-run.c)
+    add_coverage(smsd-run)
+    target_link_libraries(smsd-run libGammu ${LIBINTL_LIBRARIES} gsmsd)
+    add_test(smsd-run
+        "${GAMMU_TEST_PATH}/smsd-run${CMAKE_EXECUTABLE_SUFFIX}"
+        "${GAMMU_TEST_PATH}/smsd-run-helper${CMAKE_EXECUTABLE_SUFFIX}"
+        "${CMAKE_CURRENT_BINARY_DIR}/smsd-run-injected")
+endif (NOT WIN32)
+
 # Test for header gammu-statemachine.h
 add_executable(include-statemachine include-statemachine.c)
 add_coverage(include-statemachine)
