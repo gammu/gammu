@@ -1626,7 +1626,10 @@ GSM_Error ATGEN_ReplyGetSMSStatus(GSM_Protocol_Message *msg, GSM_StateMachine *s
 		if (error == ERR_NONE) {
 			smprintf(s, "Used : %i\n", used);
 			smprintf(s, "Size : %i\n", size);
-			if ((strstr(msg->Buffer, "CPMS=\"ME") != NULL) ||
+			if ((strcmp((char *)buffer, "ME") == 0) ||
+				(strcmp((char *)buffer, "MT") == 0) ||
+				(strstr(msg->Buffer, "CPMS=\"ME") != NULL) ||
+				((strstr(msg->Buffer, "CPMS?") != NULL) && Priv->SMSMemory == MEM_ME) ||
 				(Priv->MotorolaSMS && strstr(msg->Buffer, "CPMS=\"MT") != NULL)) {
 				SMSStatus->PhoneUsed = used;
 				SMSStatus->PhoneSize = size;
@@ -1650,6 +1653,23 @@ GSM_Error ATGEN_ReplyGetSMSStatus(GSM_Protocol_Message *msg, GSM_StateMachine *s
 		break;
 	}
 	return ERR_UNKNOWNRESPONSE;
+}
+
+/*
+ * Some phones accept a CPMS memory selection but return only OK instead of
+ * including the memory counters. Select the requested memory first and query
+ * the counters separately.
+ */
+static GSM_Error ATGEN_QuerySMSMemoryStatus(GSM_StateMachine *s, GSM_MemoryType memory, gboolean writeable)
+{
+	GSM_Error error;
+
+	error = ATGEN_SetRequestedSMSMemory(s, memory, writeable, ID_SetMemoryType);
+	if (error != ERR_NONE) {
+		return error;
+	}
+
+	return ATGEN_WaitForAutoLen(s, "AT+CPMS?\r", 0x00, 200, ID_GetSMSStatus);
 }
 
 GSM_Error ATGEN_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status)
@@ -1690,12 +1710,16 @@ GSM_Error ATGEN_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status)
 		smprintf(s, "Getting SIM SMS status\n");
 
 		writeable = (Priv->SIMSaveSMS == AT_AVAILABLE);
-		command_len = ATGEN_BuildCPMSCommand(s, "SM", writeable, command, sizeof(command));
-		if (command_len == 0) {
-			return ERR_UNKNOWN;
+		if (Priv->CPMSReceiveMemory) {
+			error = ATGEN_QuerySMSMemoryStatus(s, MEM_SM, writeable);
+		} else {
+			command_len = ATGEN_BuildCPMSCommand(s, "SM", writeable, command, sizeof(command));
+			if (command_len == 0) {
+				return ERR_UNKNOWN;
+			}
+			error = ATGEN_WaitFor(s, command, command_len, 0x00, 200, ID_GetSMSStatus);
+			Priv->SMSMemoryWrite = writeable;
 		}
-		error = ATGEN_WaitFor(s, command, command_len, 0x00, 200, ID_GetSMSStatus);
-		Priv->SMSMemoryWrite = writeable;
 
 		if (error != ERR_NONE) {
 			return error;
@@ -1713,7 +1737,10 @@ GSM_Error ATGEN_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status)
 
 		smprintf(s, "Getting phone SMS status\n");
 
-		if (Priv->PhoneSaveSMS == AT_AVAILABLE) {
+		writeable = (Priv->PhoneSaveSMS == AT_AVAILABLE);
+		if (!Priv->MotorolaSMS && Priv->CPMSReceiveMemory) {
+			error = ATGEN_QuerySMSMemoryStatus(s, MEM_ME, writeable);
+		} else if (writeable) {
 			if (Priv->MotorolaSMS) {
 				/* Motorola SMS does not support write parameter */
 				command_len = snprintf(command, sizeof(command), "AT+CPMS=\"MT\"\r");
@@ -1723,22 +1750,21 @@ GSM_Error ATGEN_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status)
 				}
 				Priv->SMSMemoryWrite = FALSE;
 			} else {
-				writeable = TRUE;
 				command_len = ATGEN_BuildCPMSCommand(s, "ME", writeable, command, sizeof(command));
 				if (command_len == 0) {
 					return ERR_UNKNOWN;
 				}
 				Priv->SMSMemoryWrite = TRUE;
 			}
+			error = ATGEN_WaitFor(s, command, command_len, 0x00, 200, ID_GetSMSStatus);
 		} else {
 			command_len = ATGEN_BuildCPMSCommand(s, "ME", FALSE, command, sizeof(command));
 			if (command_len == 0) {
 				return ERR_UNKNOWN;
 			}
 			Priv->SMSMemoryWrite = FALSE;
+			error = ATGEN_WaitFor(s, command, command_len, 0x00, 200, ID_GetSMSStatus);
 		}
-
-		error = ATGEN_WaitFor(s, command, command_len, 0x00, 200, ID_GetSMSStatus);
 		if (error != ERR_NONE) {
 			return error;
 		}
