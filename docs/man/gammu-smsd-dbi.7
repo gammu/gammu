@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "GAMMU-SMSD-DBI" "7" "Jul 25, 2026" "1.43.2" "Gammu"
+.TH "GAMMU-SMSD-DBI" "7" "Jul 25, 2026" "1.43.3" "Gammu"
 .SH NAME
 gammu-smsd-dbi \- gammu-smsd(1) backend using DBI abstraction layer to use any supported database as a message storage
 .SH DESCRIPTION
@@ -139,7 +139,7 @@ CREATE TABLE outbox (
   MultiPart TEXT NOT NULL DEFAULT \(aqfalse\(aq,
   RelativeValidity INTEGER DEFAULT \-1,
   SenderID TEXT,
-  SendingTimeOut NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq)),
+  SendingTimeOut NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq, \(aqlocaltime\(aq)),
   DeliveryReport TEXT DEFAULT \(aqdefault\(aq,
   CreatorID TEXT NOT NULL,
   Retries INTEGER DEFAULT 0,
