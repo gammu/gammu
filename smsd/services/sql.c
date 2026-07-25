@@ -22,7 +22,6 @@
 #include <stdio.h>
 #include <errno.h>
 #include <time.h>
-#include <assert.h>
 #ifdef WIN32
 #include <windows.h>
 #endif
@@ -702,7 +701,7 @@ static GSM_Error SMSDSQL_InitAfterConnect(GSM_SMSDConfig * Config)
 }
 
 /* Save SMS from phone (called Inbox sms - it's in phone Inbox) somewhere */
-static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig * Config, char **Locations)
+static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig * Config, GSM_StringArray *Locations)
 {
 	SQL_result res, res2;
 	SQL_Var vars[3];
@@ -718,10 +717,9 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 	gboolean found;
 	long diff;
 	unsigned long long new_id;
-	size_t locations_size = 0, locations_pos = 0;
 	const char *state, *smsc;
+	char location[50];
 
-	*Locations = NULL;
 	sms->Processed = FALSE;
 
 	for (i = 0; i < sms->Number; i++) {
@@ -826,20 +824,15 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 			SMSD_Log(DEBUG_INFO, Config, "Failed to get inserted row ID (%s)", __FUNCTION__);
 			return ERR_UNKNOWN;
 		}
-		SMSD_Log(DEBUG_NOTICE, Config, "Inserted message id %lu", (long)new_id);
+		SMSD_Log(DEBUG_NOTICE, Config, "Inserted message id %llu", new_id);
 
 		db->FreeResult(Config, &res);
 
 		if (new_id != 0) {
-			if (locations_pos + 10 >= locations_size) {
-				locations_size += 40;
-				*Locations = (char *)realloc(*Locations, locations_size);
-				assert(*Locations != NULL);
-				if (locations_pos == 0) {
-					*Locations[0] = 0;
-				}
+			snprintf(location, sizeof(location), "%llu", new_id);
+			if (!GSM_StringArray_Add(Locations, location)) {
+				return ERR_MOREMEMORY;
 			}
-			locations_pos += sprintf((*Locations) + locations_pos, "%lu ", (long)new_id);
 		}
 
 		error = SMSDSQL_NamedQuery(Config, Config->SMSDSQL_queries[SQL_QUERY_UPDATE_RECEIVED], &sms->SMS[i], sms, NULL, &res2, FALSE);

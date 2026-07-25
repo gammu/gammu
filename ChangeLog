@@ -19,6 +19,11 @@ the issue.
 ChangeLog
 =========
 
+Unreleased
+
+[-] * Prevent command injection through SMSD RunOn hook arguments on POSIX
+      and Windows.
+
 20260209 - 1.43.2
 
 [-] * Add Minimal binary build for Windows without third-party dependencies.

@@ -351,11 +351,18 @@ General parameters of SMS daemon
 
     Executes a program after receiving message.
 
-    This parameter is executed through shell, so you might need to escape some
-    special characters and you can include any number of parameters. Additionally
-    parameters with identifiers of received messages are appended to the command
-    line. The identifiers depend on used service backend, typically it is ID of
-    inserted row for database backends or file name for file based backends.
+    The configured command can include any number of parameters. On POSIX systems
+    it is executed through the shell, so special characters in the configured
+    command need to be escaped accordingly. Identifiers of received messages are
+    passed as separate literal arguments and are not interpreted as shell syntax.
+    The identifiers depend on the service backend; typically they are IDs of
+    inserted rows for database backends or file names for file based backends.
+
+    On Windows, arguments containing command processor metacharacters, variable
+    expansion characters, or control characters are rejected and the hook is not
+    started. This prevents caller-controlled values from being interpreted when a
+    configured command invokes ``cmd.exe`` or a batch file. This restriction
+    applies to all ``RunOn`` directives.
 
     Gammu SMSD waits for the script to terminate. If you make some time consuming
     there, it will make SMSD not receive new messages. However to limit breakage
@@ -375,9 +382,9 @@ General parameters of SMS daemon
     This can be used to proactively react on some failures or to interactively
     detect failure of sending message.
 
-    The program will receive optional parameter, which can currently be either
-    ``INIT`` (meaning failure during phone initialization) or message ID,
-    which would indicate error while sending the message.
+    The program will receive an optional literal argument, which can currently
+    be either ``INIT`` (meaning failure during phone initialization) or a
+    message ID, which indicates an error while sending the message.
 
     .. note:: The environment with message (as is in :config:option:`RunOnReceive`) is not passed to the command.
 
@@ -387,8 +394,9 @@ General parameters of SMS daemon
 
     Executes a program after sending message.
 
-    The program will receive optional parameter a message ID and environment
-    with message details as described in :ref:`gammu-smsd-run`.
+    The program will receive an optional literal argument containing a message
+    ID and an environment with message details as described in
+    :ref:`gammu-smsd-run`.
 
 .. config:option:: RunOnIncomingCall
 
@@ -396,8 +404,8 @@ General parameters of SMS daemon
 
     Executes a program after cancelling incoming call.
 
-    The program will receive a parameter with a phone number of the call.
-    This requires :config:option:`HangupCalls` to be enabled.
+    The program will receive a literal argument containing the phone number of
+    the call. This requires :config:option:`HangupCalls` to be enabled.
 
 .. config:option:: IncludeNumbersFile
 
