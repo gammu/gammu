@@ -1219,6 +1219,15 @@ add_coverage(smsd-run-command)
 target_link_libraries(smsd-run-command libGammu ${LIBINTL_LIBRARIES} gsmsd)
 add_test(smsd-run-command "${GAMMU_TEST_PATH}/smsd-run-command${CMAKE_EXECUTABLE_SUFFIX}")
 
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/smsd-files-inbox")
+add_executable(smsd-files-backend smsd-files-backend.c)
+add_coverage(smsd-files-backend)
+target_link_libraries(smsd-files-backend libGammu ${LIBINTL_LIBRARIES} gsmsd)
+add_test(smsd-files-unicode-write
+    "${GAMMU_TEST_PATH}/smsd-files-backend${CMAKE_EXECUTABLE_SUFFIX}"
+    "${CMAKE_CURRENT_BINARY_DIR}/smsd-files-inbox/")
+set_tests_properties(smsd-files-unicode-write PROPERTIES SKIP_RETURN_CODE 77)
+
 if (NOT WIN32)
     add_executable(smsd-run-helper smsd-run-helper.c)
     add_coverage(smsd-run-helper)
