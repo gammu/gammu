@@ -316,6 +316,9 @@ void SMSDSQL_Time2String(GSM_SMSDConfig * Config, time_t timestamp, char *static
   else if (strcasecmp(driver_name, "oracle") == 0) {
     strftime(static_buff, size, "TIMESTAMP '%Y-%m-%d %H:%M:%S'", tm);
   }
+  else if (strcasecmp(driver_name, "mssql") == 0) {
+    strftime(static_buff, size, "%Y-%m-%dT%H:%M:%S", tm);
+  }
   else if (strcasecmp(Config->driver, "odbc") == 0) {
     strftime(static_buff, size, "{ ts '%Y-%m-%d %H:%M:%S' }", tm);
   }

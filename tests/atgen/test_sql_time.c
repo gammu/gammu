@@ -34,12 +34,22 @@ GSM_DateTime *mk_dt(
   return &dt;
 }
 
-void get_sql_string(char *dest, const char* driver_name, time_t posix_time)
+void get_sql_string_for_dialect(
+  char *dest,
+  const char *driver_name,
+  const char *sql_name,
+  time_t posix_time)
 {
   GSM_SMSDConfig config;
   memset(&config, 0, sizeof(GSM_SMSDConfig));
   config.driver = driver_name;
+  config.sql = sql_name;
   SMSDSQL_Time2String(&config, posix_time, dest, 128);
+}
+
+void get_sql_string(char *dest, const char *driver_name, time_t posix_time)
+{
+  get_sql_string_for_dialect(dest, driver_name, NULL, posix_time);
 }
 
 /**************************************************/
@@ -293,6 +303,24 @@ void odbc_timestamp(void)
   test_result(strcmp("{ ts '2019-12-08 11:48:44' }", actual) == 0);
 }
 
+void mssql_timestamp(void)
+{
+  GSM_DateTime dt = *mk_dt(2019, 12, 8, 11, 48, 44, 0);
+  char actual[128];
+
+  puts(__func__);
+
+#ifndef WIN32
+  putenv((char*)"TZ=:Europe/London");
+#else
+  putenv("TZ=GMT0");
+  tzset();
+#endif
+  get_sql_string_for_dialect(actual, "odbc", "mssql", Fill_Time_T(dt));
+
+  test_result(strcmp("2019-12-08T11:48:44", actual) == 0);
+}
+
 void access_timestamp(void)
 {
   GSM_DateTime dt = *mk_dt(2019, 5, 8, 11, 48, 44, 0);
@@ -332,5 +360,6 @@ int main(void)
   oracle_timestamp();
 
   odbc_timestamp();
+  mssql_timestamp();
   access_timestamp();
 }
