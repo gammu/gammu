@@ -72,6 +72,11 @@ if (HAVE_MYSQL_MYSQL_H OR LIBDBI_FOUND OR HAVE_POSTGRESQL_LIBPQ_FE_H OR ODBC_FOU
 
     if (ODBC_FOUND)
         include_directories (${ODBC_INCLUDE_DIR})
+
+        add_executable(odbc-quote-string odbc-quote-string.c)
+        add_coverage(odbc-quote-string)
+        target_link_libraries (odbc-quote-string gsmsd)
+        add_test(odbc-quote-string "${GAMMU_TEST_PATH}/odbc-quote-string${CMAKE_EXECUTABLE_SUFFIX}")
     endif (ODBC_FOUND)
 
     add_executable(sql-parse-date sql-parse-date.c)
