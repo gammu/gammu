@@ -25,7 +25,7 @@ More information
 
 You can find more information on <https://github.com/gammu/gammu/>.
 
-There is also Gammu manual available in docs/manual. You can build HTML
+There is also a Gammu manual available in docs/manual. You can build HTML
 version of it using make manual-html which is viewable online at
 <https://docs.gammu.org/>.
 
@@ -40,4 +40,4 @@ how to contact developers.
 Support developers
 ==================
 
-You can appreciate developers work at <https://wammu.eu/donate/>.
+You can appreciate developers' work at <https://wammu.eu/donate/>.
