@@ -125,25 +125,19 @@ const char *SMSDODBC_GetString(GSM_SMSDConfig * Config, SQL_result *res, unsigne
 
 gboolean SMSDODBC_GetBool(GSM_SMSDConfig * Config, SQL_result *res, unsigned int field)
 {
-	long long intval = 0;
-	const char * charval;
+	const char *value;
 
-	/* Try bit field */
-	if (SQL_SUCCEEDED(SQLGetData(res->odbc, field + 1, SQL_C_BIT, &intval, 0, NULL))) {
-		SMSD_Log(DEBUG_SQL, Config, "Field %d returning bit \"%lld\"", field, intval);
-		return intval ? TRUE : FALSE;
+	/*
+	 * Fetch booleans as text so both native bit columns ("0"/"1") and
+	 * textual SQL enums ("false"/"true", "no"/"yes") are interpreted
+	 * consistently. Some ODBC drivers successfully convert textual values
+	 * to SQL_C_BIT as zero, making a type-conversion fallback unreliable.
+	 */
+	value = SMSDODBC_GetString(Config, res, field);
+	if (value == NULL) {
+		return FALSE;
 	}
-
-	/* Try to get numeric value first */
-	intval = SMSDODBC_GetNumber(Config, res, field);
-	if (intval == -1) {
-		/* If that fails, fall back to string and parse it */
-		charval = SMSDODBC_GetString(Config, res, field);
-		SMSD_Log(DEBUG_SQL, Config, "Field %d returning string \"%s\"", field, charval);
-		return GSM_StringToBool(charval);
-	}
-	SMSD_Log(DEBUG_SQL, Config, "Field %d returning integer \"%lld\"", field, intval);
-	return intval ? TRUE : FALSE;
+	return GSM_StringToBool(value);
 }
 
 /* Disconnects from a database */

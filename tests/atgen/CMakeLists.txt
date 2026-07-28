@@ -11,6 +11,10 @@ if(POSTGRES_INCLUDE_DIR)
     include_directories(${POSTGRES_INCLUDE_DIR})
 endif()
 
+if(ODBC_INCLUDE_DIR)
+    include_directories(${ODBC_INCLUDE_DIR})
+endif()
+
 MACRO(atgen_test TEST_NAME)
     add_executable(${TEST_NAME} ${TEST_NAME}.c)
     add_coverage(${TEST_NAME})
