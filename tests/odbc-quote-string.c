@@ -7,6 +7,7 @@
 
 #include <gammu-smsd.h>
 
+#include "../smsd/core.h"
 #include "common.h"
 
 extern char *SMSDODBC_QuoteString(GSM_SMSDConfig *Config, const char *string);
