@@ -56,8 +56,8 @@ add_coverage(utf-8)
 target_link_libraries (utf-8 libGammu)
 add_test(utf-8 "${GAMMU_TEST_PATH}/utf-8${CMAKE_EXECUTABLE_SUFFIX}")
 
-# SQL backend date parsing
-if (HAVE_MYSQL_MYSQL_H OR LIBDBI_FOUND OR HAVE_POSTGRESQL_LIBPQ_FE_H)
+# SQL backend tests
+if (HAVE_MYSQL_MYSQL_H OR LIBDBI_FOUND OR HAVE_POSTGRESQL_LIBPQ_FE_H OR ODBC_FOUND)
     if (LIBDBI_FOUND)
         include_directories (${LIBDBI_INCLUDE_DIR})
     endif (LIBDBI_FOUND)
@@ -70,11 +70,20 @@ if (HAVE_MYSQL_MYSQL_H OR LIBDBI_FOUND OR HAVE_POSTGRESQL_LIBPQ_FE_H)
         include_directories (${POSTGRES_INCLUDE_DIR})
     endif (POSTGRES_FOUND)
 
+    if (ODBC_FOUND)
+        include_directories (${ODBC_INCLUDE_DIR})
+    endif (ODBC_FOUND)
+
     add_executable(sql-parse-date sql-parse-date.c)
     add_coverage(sql-parse-date)
     target_link_libraries (sql-parse-date gsmsd)
     add_test(sql-parse-date "${GAMMU_TEST_PATH}/sql-parse-date${CMAKE_EXECUTABLE_SUFFIX}")
-endif (HAVE_MYSQL_MYSQL_H OR LIBDBI_FOUND OR HAVE_POSTGRESQL_LIBPQ_FE_H)
+
+    add_executable(sql-read-order sql-read-order.c)
+    add_coverage(sql-read-order)
+    target_link_libraries (sql-read-order gsmsd)
+    add_test(sql-read-order "${GAMMU_TEST_PATH}/sql-read-order${CMAKE_EXECUTABLE_SUFFIX}")
+endif (HAVE_MYSQL_MYSQL_H OR LIBDBI_FOUND OR HAVE_POSTGRESQL_LIBPQ_FE_H OR ODBC_FOUND)
 
 # Backup comments
 if (WITH_BACKUP)

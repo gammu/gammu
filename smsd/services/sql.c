@@ -716,7 +716,7 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 	time_t t_time1, t_time2;
 	gboolean found;
 	long diff;
-	unsigned long long new_id;
+	unsigned long long new_id, sent_id;
 	const char *state, *smsc;
 	char location[50];
 
@@ -737,7 +737,9 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 
 			found = FALSE;
 			while (db->NextRow(Config, &res)) {
+				sent_id = db->GetNumber(Config, &res, 0);
 				state = db->GetString(Config, &res, 1);
+				t_time1 = db->GetDate(Config, &res, 2);
 				smsc = db->GetString(Config, &res, 4);
 				SMSD_Log(DEBUG_NOTICE, Config, "Checking for delivery report, SMSC=%s, state=%s", smsc, state);
 
@@ -749,7 +751,6 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 				}
 
 				if (strcmp(state, "SendingOK") == 0 || strcmp(state, "DeliveryPending") == 0) {
-					t_time1 = db->GetDate(Config, &res, 2);
 					if (t_time1 < 0) {
 						SMSD_Log(DEBUG_ERROR, Config, "Invalid SendingDateTime -1 for SMS TPMR=%i", sms->SMS[i].MessageReference);
 						return ERR_UNKNOWN;
@@ -789,7 +790,7 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 				vars[0].type = SQL_TYPE_STRING;
 				vars[0].v.s = status;			/* Status */
 				vars[1].type = SQL_TYPE_INT;
-				vars[1].v.i = (long)db->GetNumber(Config, &res, 0); /* ID */
+				vars[1].v.i = (long)sent_id; /* ID */
 				vars[2].type = SQL_TYPE_NONE;
 
 				error = SMSDSQL_NamedQuery(Config, q, &sms->SMS[i], sms, vars, &res2, FALSE);
@@ -999,14 +1000,6 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 			return ERR_NONE;
 		}
 
-		status = db->GetString(Config, &res, i == 1 ? 12 : 7);
-		if (status != NULL && strncmp(status, "SendingOK", 9) == 0) {
-			SMSD_Log(DEBUG_NOTICE, Config, "Marking %s:%d message for skip", ID, i);
-			Config->SkipMessage[sms->Number] = TRUE;
-		} else {
-			Config->SkipMessage[sms->Number] = FALSE;
-		}
-
 		text = db->GetString(Config, &res, 0);
 		coding = db->GetString(Config, &res, 1);
 		if (text == NULL) {
@@ -1091,7 +1084,6 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 		}
 
 		sms->SMS[sms->Number].PDU = SMS_Submit;
-		sms->Number++;
 
 		if (i == 1) {
 			/* Is this a multipart message? */
@@ -1103,6 +1095,16 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 			Config->CreatorID[sizeof(Config->CreatorID) - 1] = 0;
 			Config->retries = (int)db->GetNumber(Config, &res, 11);
 		}
+
+		status = db->GetString(Config, &res, i == 1 ? 12 : 7);
+		if (status != NULL && strncmp(status, "SendingOK", 9) == 0) {
+			SMSD_Log(DEBUG_NOTICE, Config, "Marking %s:%d message for skip", ID, i);
+			Config->SkipMessage[sms->Number] = TRUE;
+		} else {
+			Config->SkipMessage[sms->Number] = FALSE;
+		}
+
+		sms->Number++;
 		db->FreeResult(Config, &res);
 		if (last) {
 			last = FALSE;
