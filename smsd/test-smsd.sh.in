@@ -201,7 +201,7 @@ case $SERVICE in
         echo "INSERT INTO outbox(\"DestinationNumber\",\"TextDecoded\",\"CreatorID\",\"Coding\") VALUES('800123465', 'This is a SQL test message', 'T3st', 'Default_No_Compression');" | PGPASSWORD="@PSQL_PASSWORD@" "@PSQL_BIN@" -h "@PSQL_HOST@" -U "@PSQL_USER@" "@PSQL_DATABASE@"
         ;;
     odbc-mssql)
-        "@SQLCMD_BIN@" -C -b -S "@MSSQL_HOST@" -U "@MSSQL_USER@" -P "@MSSQL_PASSWORD@" -d "@MSSQL_DATABASE@" -Q "INSERT INTO outbox(\"DestinationNumber\",\"TextDecoded\",\"CreatorID\",\"Coding\") VALUES('800123465', 'This is a SQL test message', 'T3st', 'Default_No_Compression');"
+        "@SQLCMD_BIN@" -C -b -S "@MSSQL_HOST@" -U "@MSSQL_USER@" -P "@MSSQL_PASSWORD@" -d "@MSSQL_DATABASE@" -Q "INSERT INTO outbox(DestinationNumber,TextDecoded,CreatorID,Coding) VALUES('800123465', 'This is a SQL test message', 'T3st', 'Default_No_Compression');"
         ;;
     *mysql|odbc)
         echo "INSERT INTO outbox(DestinationNumber,TextDecoded,CreatorID,Coding) VALUES('800123465', 'This is a SQL test message', 'T3st', 'Default_No_Compression');" | "@MYSQL_BIN@" "-u@MYSQL_USER@" "-h@MYSQL_HOST@" "-p@MYSQL_PASSWORD@" "@MYSQL_DATABASE@"
