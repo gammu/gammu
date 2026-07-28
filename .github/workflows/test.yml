@@ -69,6 +69,59 @@ jobs:
     - name: coverage
       run: make -C _build gcov
     - uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7
+  mssql-odbc:
+    runs-on: ubuntu-24.04
+    env:
+      CTEST_OUTPUT_ON_FAILURE: 1
+      MSSQL_SA_PASSWORD: GammuODBC2026
+    services:
+      mssql:
+        image: mcr.microsoft.com/mssql/server:2022-CU26-ubuntu-22.04@sha256:ba4c8329f48fb8f02e1416be6a930ebfd71268caee78aa985f3af4315e457c89
+        env:
+          ACCEPT_EULA: Y
+          MSSQL_PID: Developer
+          MSSQL_SA_PASSWORD: GammuODBC2026
+        options: >-
+          --health-cmd="/opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P GammuODBC2026 -Q 'SELECT 1'"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-start-period=20s
+          --health-retries=12
+        ports:
+        - 1433:1433
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+    - name: Install Microsoft ODBC tools
+      run: |
+        curl -sSL -o /tmp/packages-microsoft-prod.deb https://packages.microsoft.com/config/ubuntu/24.04/packages-microsoft-prod.deb
+        sudo dpkg -i /tmp/packages-microsoft-prod.deb
+        sudo apt-get update
+        sudo ACCEPT_EULA=Y apt-get install -y cmake cmake-data msodbcsql18 mssql-tools18 unixodbc-dev
+    - name: Configure ODBC
+      run: |
+        sudo tee /etc/odbc.ini >/dev/null <<'EOF'
+        [smsd-mssql]
+        Driver = ODBC Driver 18 for SQL Server
+        Server = tcp:127.0.0.1,1433
+        Database = smsd
+        Encrypt = yes
+        TrustServerCertificate = yes
+        EOF
+    - name: Create database
+      run: |
+        /opt/mssql-tools18/bin/sqlcmd -C -b -S 127.0.0.1,1433 -U sa -P "$MSSQL_SA_PASSWORD" -Q "CREATE DATABASE smsd COLLATE Latin1_General_100_CI_AS_SC_UTF8"
+    - name: Configure and build
+      run: |
+        cmake -S . -B _build-mssql \
+          -DMSSQL_TESTING=ON \
+          -DMSSQL_HOST=127.0.0.1,1433 \
+          -DMSSQL_DATABASE=smsd \
+          -DMSSQL_USER=sa \
+          -DMSSQL_PASSWORD="$MSSQL_SA_PASSWORD" \
+          -DMSSQL_ODBC_DSN=smsd-mssql
+        cmake --build _build-mssql --parallel 2 --target gammu-smsd gammu-smsd-inject gammu-smsd-monitor
+    - name: Test ODBC with Microsoft SQL Server
+      run: ctest --test-dir _build-mssql --output-on-failure -R '^smsd-odbc-mssql$'
   windows:
     runs-on: windows-latest
     env:
