@@ -40,4 +40,4 @@ how to contact developers.
 Support developers
 ==================
 
-You can appreciate developers work at <https://wammu.eu/donate/>.
+You can appreciate developers' work at <https://wammu.eu/donate/>.
