@@ -211,9 +211,13 @@ case $SERVICE in
         ;;
 esac
 
+$SMSD_INJECT_CMD -c "$CONFIG_PATH" TEXT 123465 -text "Don't panic." &
+INJECT_PID_1=$!
 $SMSD_INJECT_CMD -c "$CONFIG_PATH" TEXT 123465 -text "Lorem ipsum." &
-$SMSD_INJECT_CMD -c "$CONFIG_PATH" TEXT 123465 -text "Lorem ipsum." &
+INJECT_PID_2=$!
 $SMSD_INJECT_CMD -c "$CONFIG_PATH" USSD "*127*1#"
+wait "$INJECT_PID_1"
+wait "$INJECT_PID_2"
 
 $SMSD_CMD -c "$CONFIG_PATH" $SMSD_EXTRA_PARAMS &
 SMSD_PID=$!

@@ -258,6 +258,7 @@ char * SMSDODBC_QuoteString(GSM_SMSDConfig * Config, const char *string)
 	char *encoded_text = NULL;
 	size_t i, len, pos = 0;
 	char quote = '"';
+	gboolean sql_standard_escaping = FALSE;
 
 	const char *driver_name;
 
@@ -267,14 +268,16 @@ char * SMSDODBC_QuoteString(GSM_SMSDConfig * Config, const char *string)
 		driver_name = Config->driver;
 	}
 
-	if (strcasecmp(driver_name, "mysql") == 0 ||
+	if (strcasecmp(driver_name, "mssql") == 0) {
+		quote = '\'';
+		sql_standard_escaping = TRUE;
+	} else if (strcasecmp(driver_name, "mysql") == 0 ||
 			strcasecmp(driver_name, "native_mysql") == 0 ||
 			strcasecmp(driver_name, "pgsql") == 0 ||
 			strcasecmp(driver_name, "native_pgsql") == 0 ||
 			strncasecmp(driver_name, "sqlite", 6) == 0 ||
 			strncasecmp(driver_name, "oracle", 6) == 0 ||
 			strncasecmp(driver_name, "freetds", 6) == 0 ||
-			strncasecmp(driver_name, "mssql", 6) == 0 ||
 			strcasecmp(Config->driver, "access") == 0) {
 		quote = '\'';
 	}
@@ -284,7 +287,9 @@ char * SMSDODBC_QuoteString(GSM_SMSDConfig * Config, const char *string)
 	encoded_text = (char *)malloc((len * 2) + 3);
 	encoded_text[pos++] = quote;
 	for (i = 0; i < len; i++) {
-		if (string[i] == quote || string[i] == '\\') {
+		if (string[i] == quote && sql_standard_escaping) {
+			encoded_text[pos++] = quote;
+		} else if (!sql_standard_escaping && (string[i] == quote || string[i] == '\\')) {
 			encoded_text[pos++] = '\\';
 		}
 		encoded_text[pos++] = string[i];
