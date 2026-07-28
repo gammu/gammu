@@ -620,7 +620,7 @@ that all path should contain trailing path separator (/ on Unix systems):
     The ``standard`` and ``unicode`` settings do not apply for 8-bit messages, which
     are always written raw as they are received with extension .bin.
 
-    Default is ``unicode``.
+    Default is ``standard``.
 
     .. note::
 
