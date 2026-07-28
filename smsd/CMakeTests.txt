@@ -15,6 +15,12 @@ if (WITH_BACKUP)
 
     set(ODBC_DSN smsd CACHE STRING "ODBC data source name to use for MySQL tests")
 
+    set(MSSQL_HOST 127.0.0.1,1433 CACHE STRING "Host to use for Microsoft SQL Server tests")
+    set(MSSQL_DATABASE smsd CACHE STRING "Database to use for Microsoft SQL Server tests")
+    set(MSSQL_USER sa CACHE STRING "User to use for Microsoft SQL Server tests")
+    set(MSSQL_PASSWORD "" CACHE STRING "Password to use for Microsoft SQL Server tests")
+    set(MSSQL_ODBC_DSN smsd-mssql CACHE STRING "ODBC data source name to use for Microsoft SQL Server tests")
+
     configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/test-smsd.sh.in" "${CMAKE_CURRENT_BINARY_DIR}/test-smsd.sh" ESCAPE_QUOTES)
     configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/test-smsd-files-include.sh.in" "${CMAKE_CURRENT_BINARY_DIR}/test-smsd-files-include.sh" ESCAPE_QUOTES)
 
@@ -86,6 +92,18 @@ if (WITH_BACKUP)
             message("MySQL tests disabled, mysql program not found")
         endif()
     endif (MYSQL_TESTING)
+
+    if (MSSQL_TESTING)
+        if (SQLCMD_BIN AND ODBC_FOUND AND SH_BIN)
+            smsd_testsuite("odbc-mssql")
+        elseif (NOT SQLCMD_BIN)
+            message("Microsoft SQL Server tests disabled, sqlcmd program not found")
+        elseif (NOT ODBC_FOUND)
+            message("Microsoft SQL Server tests disabled, ODBC library not found")
+        else()
+            message("Microsoft SQL Server tests disabled, sh program not found")
+        endif()
+    endif (MSSQL_TESTING)
 
     if (PSQL_TESTING)
         if (PSQL_BIN)

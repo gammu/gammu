@@ -46,7 +46,7 @@ const char now_plus_odbc[] = "{fn CURRENT_TIMESTAMP()} + INTERVAL %d SECOND";
 const char now_plus_mysql[] = "(NOW() + INTERVAL %d SECOND) + 0";
 const char now_plus_pgsql[] = "now() + interval '%d seconds'";
 const char now_plus_sqlite[] = "datetime('now', '+%d seconds', 'localtime')";
-const char now_plus_freetds[] = "DATEADD('second', %d, CURRENT_TIMESTAMP)";
+const char now_plus_freetds[] = "DATEADD(second, %d, CURRENT_TIMESTAMP)";
 const char now_plus_access[] = "now()+#00:00:%d#";
 const char now_plus_oracle[] = "CURRENT_TIMESTAMP + INTERVAL '%d' SECOND";
 const char now_plus_fallback[] = "NOW() + INTERVAL %d SECOND";
@@ -65,7 +65,7 @@ static const char *SMSDSQL_NowPlus(GSM_SMSDConfig * Config, int seconds)
 		snprintf(result, sizeof(result), now_plus_pgsql, seconds);
 	} else if (strncasecmp(driver_name, "sqlite", 6) == 0) {
 		snprintf(result, sizeof(result), now_plus_sqlite, seconds);
-	} else if (strcasecmp(driver_name, "freetds") == 0) {
+	} else if (strcasecmp(driver_name, "freetds") == 0 || strcasecmp(driver_name, "mssql") == 0) {
 		snprintf(result, sizeof(result), now_plus_freetds, seconds);
 	} else if (strcasecmp(driver_name, "access") == 0) {
 		snprintf(result, sizeof(result), now_plus_access, seconds);
@@ -182,6 +182,7 @@ const char currtime_mysql[] = "CURTIME()";
 const char currtime_pgsql[] = "localtime";
 const char currtime_sqlite[] = "time('now', 'localtime')";
 const char currtime_freetds[] = "CURRENT_TIME";
+const char currtime_mssql[] = "CAST(CURRENT_TIMESTAMP AS time)";
 const char currtime_fallback[] = "CURTIME()";
 
 static const char *SMSDSQL_CurrentTime(GSM_SMSDConfig * Config)
@@ -196,7 +197,9 @@ static const char *SMSDSQL_CurrentTime(GSM_SMSDConfig * Config)
 		return currtime_pgsql;
 	} else if (strncasecmp(driver_name, "sqlite", 6) == 0) {
 		return currtime_sqlite;
-	} else if (strcasecmp(Config->driver, "oracle") == 0 || strcasecmp(driver_name, "freetds") == 0 || strcasecmp(driver_name, "mssql") == 0 || strcasecmp(driver_name, "sybase") == 0) {
+	} else if (strcasecmp(driver_name, "mssql") == 0) {
+		return currtime_mssql;
+	} else if (strcasecmp(Config->driver, "oracle") == 0 || strcasecmp(driver_name, "freetds") == 0 || strcasecmp(driver_name, "sybase") == 0) {
 		return currtime_freetds;
 	} else if (strcasecmp(Config->driver, "odbc") == 0) {
 		return currtime_odbc;
