@@ -455,9 +455,22 @@ if (WITH_ATGEN)
 
     foreach(TESTMESSAGE ${MESSAGES})
         string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
-        add_test("sms-at-parse-${TESTNAME}"
-            "${GAMMU_TEST_PATH}/sms-at-parse${CMAKE_EXECUTABLE_SUFFIX}"
-            "${Gammu_SOURCE_DIR}/tests/at-sms/${TESTMESSAGE}")
+        if (TESTNAME STREQUAL "40")
+            add_test("sms-at-parse-${TESTNAME}"
+                "${GAMMU_TEST_PATH}/sms-at-parse${CMAKE_EXECUTABLE_SUFFIX}"
+                "${Gammu_SOURCE_DIR}/tests/at-sms/${TESTMESSAGE}"
+                "PDU"
+                "SMS_MESSAGES=1"
+                "DECODED_PARTS=1"
+                "DECODED_1_MMS_SENDER=+33333493211/TYPE=PLMN"
+                "DECODED_1_MMS_TITLE="
+                "DECODED_1_MMS_ADDRESS=http://mts/?id=81460494"
+                "DECODED_1_MMS_SIZE=96857")
+        else ()
+            add_test("sms-at-parse-${TESTNAME}"
+                "${GAMMU_TEST_PATH}/sms-at-parse${CMAKE_EXECUTABLE_SUFFIX}"
+                "${Gammu_SOURCE_DIR}/tests/at-sms/${TESTMESSAGE}")
+        endif ()
     endforeach(TESTMESSAGE $MESSAGES)
 
     # List test cases for TXT mode
