@@ -48,6 +48,7 @@ typedef enum {
 	ID_GetSMSFolders,
 	ID_GetSMSFolderStatus,
 	ID_GetSMSStatus,
+	ID_GetSMSLocationRange,
 	ID_AddSMSFolder,
 	ID_ConfigureNetworkInfo,
 	ID_GetNetworkInfo,

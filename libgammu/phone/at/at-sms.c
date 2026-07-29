@@ -1414,9 +1414,288 @@ GSM_Error ATGEN_GetSMSList(GSM_StateMachine *s, gboolean first)
 		if (! GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_USE_SMSTEXTMODE)) {
 			smprintf(s, "HINT: Your might want to use F_USE_SMSTEXTMODE flag\n");
 		}
+		if (Priv->SMSCount < used) {
+			return ERR_UNKNOWNRESPONSE;
+		}
 		return ERR_NONE;
 	}
 	return error;
+}
+
+static void ATGEN_ResetSMSLocationRange(GSM_Phone_ATGENData *Priv)
+{
+	Priv->SMSLocationFirst = 0;
+	Priv->SMSLocationLast = -1;
+	Priv->SMSLocationPos = 0;
+	Priv->SMSLocationTarget = 0;
+	Priv->SMSLocationMemory = MEM_INVALID;
+	Priv->SMSLocationLegacy = FALSE;
+}
+
+static GSM_Error ATGEN_ParseSMSLocationRange(GSM_StateMachine *s, const char *buffer)
+{
+	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
+	const char *current;
+	char *endptr;
+	gboolean found = FALSE;
+	size_t max_location;
+	long first, last;
+
+	current = strstr(buffer, "+CMGD:");
+	if (current == NULL) {
+		return ERR_UNKNOWNRESPONSE;
+	}
+	current = strchr(current, '(');
+	if (current == NULL) {
+		return ERR_UNKNOWNRESPONSE;
+	}
+	current++;
+
+	max_location = GSM_PHONE_MAXSMSINFOLDER;
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMS_LOCATION_0)) {
+		max_location--;
+	}
+
+	while (isspace((unsigned char)*current)) {
+		current++;
+	}
+	while (*current != ')') {
+		first = strtol(current, &endptr, 10);
+		if (endptr == current) {
+			smprintf(s, "Failed to parse SMS location in: %s\n", buffer);
+			return ERR_UNKNOWNRESPONSE;
+		}
+		current = endptr;
+		while (isspace((unsigned char)*current)) {
+			current++;
+		}
+
+		last = first;
+		if (*current == '-') {
+			current++;
+			while (isspace((unsigned char)*current)) {
+				current++;
+			}
+			last = strtol(current, &endptr, 10);
+			if (endptr == current) {
+				smprintf(s, "Failed to parse SMS location range in: %s\n", buffer);
+				return ERR_UNKNOWNRESPONSE;
+			}
+			current = endptr;
+			while (isspace((unsigned char)*current)) {
+				current++;
+			}
+		}
+
+		if (first < 0 || last < first || (size_t)last >= max_location) {
+			smprintf(s, "Invalid SMS location range %ld-%ld\n", first, last);
+			return ERR_UNKNOWNRESPONSE;
+		}
+		if (!found || first < Priv->SMSLocationFirst) {
+			Priv->SMSLocationFirst = (int)first;
+		}
+		if (!found || last > Priv->SMSLocationLast) {
+			Priv->SMSLocationLast = (int)last;
+		}
+		found = TRUE;
+
+		if (*current == ',') {
+			current++;
+			while (isspace((unsigned char)*current)) {
+				current++;
+			}
+		} else if (*current != ')') {
+			smprintf(s, "Unexpected character in SMS location range: %c\n", *current);
+			return ERR_UNKNOWNRESPONSE;
+		}
+	}
+
+	if (!found) {
+		smprintf(s, "No supported physical SMS locations were reported\n");
+		return ERR_UNKNOWNRESPONSE;
+	}
+	Priv->SMSLocationPos = Priv->SMSLocationFirst;
+	smprintf(s, "Supported physical SMS location range is %d-%d\n",
+			Priv->SMSLocationFirst, Priv->SMSLocationLast);
+	return ERR_NONE;
+}
+
+GSM_Error ATGEN_ReplyGetSMSLocationRange(GSM_Protocol_Message *msg, GSM_StateMachine *s)
+{
+	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
+	const char *line;
+	int i;
+
+	switch (Priv->ReplyState) {
+	case AT_Reply_OK:
+		for (i = 2; strcmp("OK", line = GetLineString(msg->Buffer, &Priv->Lines, i)) != 0; i++) {
+			if (strstr(line, "+CMGD:") != NULL) {
+				return ATGEN_ParseSMSLocationRange(s, line);
+			}
+		}
+		return ERR_UNKNOWNRESPONSE;
+	case AT_Reply_Error:
+		return ERR_NOTSUPPORTED;
+	case AT_Reply_CMSError:
+		if (Priv->ErrorCode == 302) {
+			return ERR_NOTSUPPORTED;
+		}
+		return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+		if (Priv->ErrorCode == 3) {
+			return ERR_NOTSUPPORTED;
+		}
+		return ATGEN_HandleCMEError(s);
+	default:
+		return ERR_UNKNOWNRESPONSE;
+	}
+}
+
+static gboolean ATGEN_CanUseLegacySMSLocationScan(GSM_Error error)
+{
+	return error == ERR_NOTSUPPORTED ||
+		error == ERR_UNKNOWNRESPONSE ||
+		error == ERR_INVALIDLOCATION ||
+		error == ERR_UNKNOWN;
+}
+
+static GSM_Error ATGEN_GetSMSLocationRange(GSM_StateMachine *s, GSM_MemoryType memory)
+{
+	GSM_Error error;
+	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
+
+	Priv->SMSLocationFirst = 0;
+	Priv->SMSLocationLast = -1;
+	Priv->SMSLocationPos = 0;
+	Priv->SMSLocationTarget = memory == MEM_SM
+		? Priv->LastSMSStatus.SIMUsed
+		: Priv->LastSMSStatus.PhoneUsed;
+	Priv->SMSLocationMemory = MEM_INVALID;
+
+	error = ATGEN_SetSMSMemory(s, memory == MEM_SM, FALSE, FALSE);
+	if (error != ERR_NONE) {
+		return error;
+	}
+
+	smprintf(s, "Getting physical SMS locations from %s\n", GSM_MemoryTypeToString(memory));
+	error = ATGEN_WaitForAutoLen(s, "AT+CMGD=?\r", 0x00, 40, ID_GetSMSLocationRange);
+	if (error == ERR_NONE) {
+		if (memory == MEM_ME &&
+				GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMSME900) &&
+				Priv->SMSLocationFirst >= 900) {
+			Priv->SMSLocationFirst -= 899;
+			Priv->SMSLocationLast -= 899;
+			Priv->SMSLocationPos = Priv->SMSLocationFirst;
+			smprintf(s, "Normalized 900-based ME location range to %d-%d\n",
+					Priv->SMSLocationFirst, Priv->SMSLocationLast);
+		}
+		Priv->SMSLocationMemory = memory;
+	}
+	return error;
+}
+
+static unsigned char ATGEN_GetSMSLocationFolder(GSM_Phone_ATGENData *Priv, GSM_MemoryType memory)
+{
+	if (memory == MEM_ME && Priv->SIMSMSMemory == AT_AVAILABLE) {
+		return 2;
+	}
+	return 1;
+}
+
+static GSM_MemoryType ATGEN_GetFirstSMSLocationMemory(GSM_Phone_ATGENData *Priv, int location)
+{
+	if (Priv->SIMSMSMemory == AT_AVAILABLE &&
+			(Priv->PhoneSMSMemory != AT_AVAILABLE || location < GSM_PHONE_MAXSMSINFOLDER)) {
+		return MEM_SM;
+	}
+	return MEM_ME;
+}
+
+static void ATGEN_LogSMSLocationCount(GSM_StateMachine *s, GSM_MemoryType memory)
+{
+	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
+	if (Priv->LastSMSRead != Priv->SMSLocationTarget) {
+		smprintf(s, "WARNING: CPMS reported %d used messages in %s, but %d were readable within the supported range\n",
+				Priv->SMSLocationTarget, GSM_MemoryTypeToString(memory), Priv->LastSMSRead);
+	}
+}
+
+static GSM_Error ATGEN_GetNextSMSFromLocationRange(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
+{
+	GSM_Error error;
+	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
+	GSM_MemoryType memory;
+	unsigned char folder;
+	int location;
+
+	while (TRUE) {
+		if (Priv->SMSLocationMemory == MEM_INVALID) {
+			memory = ATGEN_GetFirstSMSLocationMemory(Priv, sms->SMS[0].Location);
+			if ((memory == MEM_SM && Priv->LastSMSStatus.SIMUsed == 0) &&
+					Priv->PhoneSMSMemory == AT_AVAILABLE) {
+				Priv->LastSMSRead = 0;
+				sms->SMS[0].Location = GSM_PHONE_MAXSMSINFOLDER;
+				memory = MEM_ME;
+			}
+			if ((memory == MEM_SM && Priv->LastSMSStatus.SIMUsed == 0) ||
+					(memory == MEM_ME && Priv->LastSMSStatus.PhoneUsed == 0)) {
+				return ERR_EMPTY;
+			}
+			error = ATGEN_GetSMSLocationRange(s, memory);
+			if (ATGEN_CanUseLegacySMSLocationScan(error)) {
+				smprintf(s, "Physical SMS location bounds are not available, using legacy scan\n");
+				Priv->SMSLocationLegacy = TRUE;
+				return ERR_NOTSUPPORTED;
+			}
+			if (error != ERR_NONE) {
+				return error;
+			}
+		}
+
+		memory = Priv->SMSLocationMemory;
+		folder = ATGEN_GetSMSLocationFolder(Priv, memory);
+		while (Priv->SMSLocationPos <= Priv->SMSLocationLast) {
+			if (Priv->LastSMSRead >= Priv->SMSLocationTarget) {
+				break;
+			}
+			location = Priv->SMSLocationPos++;
+			sms->Number = 1;
+			sms->SMS[0].Memory = memory;
+			ATGEN_SetSMSLocation(s, &sms->SMS[0], folder, location);
+			smprintf(s, "Reading SMS location %d within the supported range for %s\n",
+					location, GSM_MemoryTypeToString(memory));
+			error = ATGEN_GetSMS(s, sms);
+			if (error == ERR_NONE) {
+				Priv->LastSMSRead++;
+				return ERR_NONE;
+			}
+			if (error != ERR_EMPTY && error != ERR_INVALIDLOCATION) {
+				return error;
+			}
+		}
+
+		ATGEN_LogSMSLocationCount(s, memory);
+		if (memory == MEM_SM && Priv->PhoneSMSMemory == AT_AVAILABLE) {
+			Priv->LastSMSRead = 0;
+			sms->SMS[0].Location = GSM_PHONE_MAXSMSINFOLDER;
+			if (Priv->LastSMSStatus.PhoneUsed == 0) {
+				return ERR_EMPTY;
+			}
+			error = ATGEN_GetSMSLocationRange(s, MEM_ME);
+			if (ATGEN_CanUseLegacySMSLocationScan(error)) {
+				smprintf(s, "Physical SMS location bounds are not available for ME, using legacy scan\n");
+				Priv->SMSLocationLegacy = TRUE;
+				return ERR_NOTSUPPORTED;
+			}
+			if (error != ERR_NONE) {
+				return error;
+			}
+			continue;
+		}
+
+		smprintf(s, "No more SMS locations within the supported range\n");
+		return ERR_EMPTY;
+	}
 }
 
 GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, gboolean start)
@@ -1446,6 +1725,7 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, gboole
 		/* Start from beginning */
 		sms->SMS[0].Location = 0;
 		Priv->LastSMSRead = 0;
+		ATGEN_ResetSMSLocationRange(Priv);
 
 		/* Get list of messages */
 		error = ATGEN_GetSMSList(s, TRUE);
@@ -1494,9 +1774,11 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, gboole
 			/* Get list of messages */
 			error = ATGEN_GetSMSList(s, FALSE);
 
-			/* Not supported folder? We're done then. */
-			if (error == ERR_NOTSUPPORTED) {
-				return ERR_EMPTY;
+			/* Fall back when this folder can not be listed reliably. */
+			if (error == ERR_NOTSUPPORTED || error == ERR_UNKNOWNRESPONSE) {
+				ATGEN_ResetSMSLocationRange(Priv);
+				sms->SMS[0].Location = GSM_PHONE_MAXSMSINFOLDER;
+				goto get_locations;
 			}
 			if (error != ERR_NONE) {
 				return error;
@@ -1550,6 +1832,19 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, gboole
 		return error;
 	}
 
+get_locations:
+	if (Priv->SMSCache != NULL) {
+		free(Priv->SMSCache);
+		Priv->SMSCache = NULL;
+		Priv->SMSCount = 0;
+	}
+	if (!Priv->SMSLocationLegacy) {
+		error = ATGEN_GetNextSMSFromLocationRange(s, sms);
+		if (error != ERR_NOTSUPPORTED || !Priv->SMSLocationLegacy) {
+			return error;
+		}
+	}
+
 	/* Use brute force if listing does not work */
 	while (TRUE) {
 		sms->SMS[0].Location++;
@@ -1576,6 +1871,7 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, gboole
 			if (Priv->LastSMSRead >= Priv->LastSMSStatus.PhoneUsed) return ERR_EMPTY;
 		}
 		sms->SMS[0].Folder = 0;
+		sms->SMS[0].Memory = MEM_INVALID;
 		error = ATGEN_GetSMS(s, sms);
 
 		if (error == ERR_NONE) {
