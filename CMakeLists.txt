@@ -4,6 +4,13 @@
 
 cmake_minimum_required (VERSION 3.10)
 
+# Let modern linkers discard duplicate static libraries from transitive
+# dependencies.  Among other things, this avoids duplicate-library warnings
+# from recent Apple linkers.
+if (POLICY CMP0156)
+    cmake_policy (SET CMP0156 NEW)
+endif ()
+
 project (Gammu C)
 
 # Where to lookup modules
@@ -417,6 +424,11 @@ endif (POSTGRES_FOUND)
 if(MSVC)
     # MSVC needs different flags at all
     MACRO_TUNE_COMPILER("/W3")
+    # GCC and Clang do not include implicit conversion diagnostics in the
+    # warning levels used below.  Keep the MSVC warning set consistent rather
+    # than producing hundreds of warnings for bounded protocol values.
+    MACRO_TUNE_COMPILER("/wd4244")
+    MACRO_TUNE_COMPILER("/wd4267")
     # we use old runtime
     add_definitions(-D_CRT_SECURE_NO_WARNINGS=1)
     # we use strcpy instead of strcpy_s
@@ -448,6 +460,8 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_MINGW OR
     # Warnings related flags
     #
     MACRO_TUNE_COMPILER("-O2")
+    # Tentative definitions should live in BSS, not oversized common sections.
+    MACRO_TUNE_COMPILER("-fno-common")
     MACRO_TUNE_COMPILER("-Wall")
     MACRO_TUNE_COMPILER("-Werror-implicit-function-declaration")
     MACRO_TUNE_COMPILER("-Wno-deprecated-declarations")

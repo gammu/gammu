@@ -3494,11 +3494,11 @@ static GSM_Error N6510_ReplySetProfile(GSM_Protocol_Message *msg, GSM_StateMachi
 
 static GSM_Error N6510_SetProfile(GSM_StateMachine *s, GSM_Profile *Profile)
 {
-	int 		i, length = 7, blocks = 0;
+	int 		i, length = 7;
 	gboolean		found;
-	unsigned char	ID,Value;
+	unsigned char	ID,Value,blocks = 0;
 	unsigned char 	req[150] = {N6110_FRAME_HEADER, 0x03, 0x01,
-				    0x06,		/* Number of blocks */
+				    0x00,		/* Number of blocks, filled below */
 				    0x03};
 
 	if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PROFILES)) return ERR_NOTSUPPORTED;
@@ -3531,6 +3531,7 @@ static GSM_Error N6510_SetProfile(GSM_StateMachine *s, GSM_Profile *Profile)
 			length += 9;
 		}
 	}
+	req[5] = blocks;
 
 	smprintf(s, "Setting profile\n");
 	return GSM_WaitFor (s, req, length, 0x39, s->Phone.Data.Priv.N6510.Timeout, ID_SetProfile);

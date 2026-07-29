@@ -1486,7 +1486,7 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 	GSM_Phone_ATGENData 	*Priv 	= &s->Phone.Data.Priv.ATGEN;
 	GSM_Protocol_Message	*msg	= s->Phone.Data.RequestMsg;
 	int 			i = 0,j = 0,k = 0;
-	const char		*err, *line;
+	const char		*err, *line = "";
 	ATErrorCode		*ErrorCodes = NULL;
 	char *line1, *line2;
 

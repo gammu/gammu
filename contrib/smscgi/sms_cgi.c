@@ -339,7 +339,7 @@ static void cgi_signal_handler(int signum) {
 	}
 }
 
-void cgi_reset() {
+void cgi_reset(void) {
 	int i = 0;
 	for(i = 0; i<GSM_MAX_MULTI_SMS ; i++) {
 		smsQ.SMS[i].Location = -1;

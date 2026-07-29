@@ -1156,7 +1156,7 @@ static void SMSD_RunOnDateTimeEnvironment(int index, const char *prefix, GSM_Dat
 	char datetime_buffer[100], name[100], timestamp_buffer[100];
 	char timezone_sign;
 	int written;
-	long long timezone;
+	long long timezone_offset;
 	time_t timestamp;
 
 	snprintf(name, sizeof(name), "SMS_%d_%sTIMESTAMP", index, prefix);
@@ -1176,10 +1176,10 @@ static void SMSD_RunOnDateTimeEnvironment(int index, const char *prefix, GSM_Dat
 		setenv(name, timestamp_buffer, 1);
 	}
 
-	timezone = datetime.Timezone;
-	if (timezone < 0) {
+	timezone_offset = datetime.Timezone;
+	if (timezone_offset < 0) {
 		timezone_sign = '-';
-		timezone = -timezone;
+		timezone_offset = -timezone_offset;
 	} else {
 		timezone_sign = '+';
 	}
@@ -1187,7 +1187,8 @@ static void SMSD_RunOnDateTimeEnvironment(int index, const char *prefix, GSM_Dat
 		"%04d-%02d-%02dT%02d:%02d:%02d%c%02lld:%02lld",
 		datetime.Year, datetime.Month, datetime.Day,
 		datetime.Hour, datetime.Minute, datetime.Second,
-		timezone_sign, timezone / 3600, (timezone % 3600) / 60);
+		timezone_sign, timezone_offset / 3600,
+		(timezone_offset % 3600) / 60);
 	if (written < 0 || (size_t)written >= sizeof(datetime_buffer)) {
 		return;
 	}

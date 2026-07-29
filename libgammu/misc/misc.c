@@ -168,7 +168,7 @@ int get_local_timezone_offset(time_t posix_time)
   return posix_time - mktime(tm);
 }
 
-int GSM_GetLocalTimezoneOffset()
+int GSM_GetLocalTimezoneOffset(void)
 {
   return get_local_timezone_offset(time(NULL));
 }
@@ -575,8 +575,11 @@ void CopyLineString(char *dest, const char *src, const GSM_CutLines *lines, int 
 const char *GetOS(void)
 {
 #ifdef WIN32
-	OSVERSIONINFOEX Ver;
-	gboolean		Extended = TRUE;
+	typedef LONG (WINAPI *RtlGetVersionFunction)(OSVERSIONINFOW *);
+	OSVERSIONINFOEXW Ver;
+	HMODULE ntdll;
+	FARPROC procedure;
+	RtlGetVersionFunction get_version;
 #else
 #  ifdef HAVE_SYS_UTSNAME_H
 	struct utsname	Ver;
@@ -588,16 +591,17 @@ const char *GetOS(void)
 	if (Buffer[0] != 0) return Buffer;
 
 #ifdef WIN32
-	memset(&Ver,0,sizeof(OSVERSIONINFOEX));
-	Ver.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
-
-   	if (!GetVersionEx((OSVERSIONINFO *)&Ver)) {
-		Extended 		= FALSE;
-	      	Ver.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
-	        if (!GetVersionEx((OSVERSIONINFO *)&Ver)) {
-			snprintf(Buffer, sizeof(Buffer) - 1, "Windows");
-			return Buffer;
-		}
+	memset(&Ver, 0, sizeof(Ver));
+	Ver.dwOSVersionInfoSize = sizeof(Ver);
+	ntdll = GetModuleHandleA("ntdll.dll");
+	procedure = ntdll == NULL
+		? NULL
+		: GetProcAddress(ntdll, "RtlGetVersion");
+	memcpy(&get_version, &procedure, sizeof(get_version));
+	if (get_version == NULL ||
+	    get_version((OSVERSIONINFOW *)&Ver) != 0) {
+		snprintf(Buffer, sizeof(Buffer) - 1, "Windows");
+		return Buffer;
 	}
 
 	/* ----------------- 9x family ------------------ */
@@ -628,12 +632,10 @@ const char *GetOS(void)
 	} else if (Ver.dwMajorVersion == 5 && Ver.dwMinorVersion == 1 && Ver.dwBuildNumber == 2600) {
 		snprintf(Buffer, sizeof(Buffer) - 1, "Windows XP");
 #if _MSC_VER > 1200 /* 6.0 has it undeclared */
-		if (Extended) {
-			if (Ver.wSuiteMask & VER_SUITE_PERSONAL) {
-				snprintf(Buffer+strlen(Buffer), sizeof(Buffer) - 1 - strlen(Buffer)," Home");
-			} else {
-				snprintf(Buffer+strlen(Buffer), sizeof(Buffer) - 1 - strlen(Buffer)," Pro");
-			}
+		if (Ver.wSuiteMask & VER_SUITE_PERSONAL) {
+			snprintf(Buffer+strlen(Buffer), sizeof(Buffer) - 1 - strlen(Buffer)," Home");
+		} else {
+			snprintf(Buffer+strlen(Buffer), sizeof(Buffer) - 1 - strlen(Buffer)," Pro");
 		}
 #endif
 
@@ -650,7 +652,7 @@ const char *GetOS(void)
 		snprintf(Buffer, sizeof(Buffer) - 1, "Windows %i.%i.%i",(int)Ver.dwMajorVersion,(int)Ver.dwMinorVersion,(int)Ver.dwBuildNumber);
 	}
 
-	if (Extended && Ver.wServicePackMajor != 0) {
+	if (Ver.wServicePackMajor != 0) {
 		snprintf(Buffer+strlen(Buffer), sizeof(Buffer) - 1 - strlen(Buffer)," SP%i",Ver.wServicePackMajor);
 	}
 #elif defined(HAVE_SYS_UTSNAME_H)
