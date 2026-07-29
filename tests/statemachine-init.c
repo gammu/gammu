@@ -13,6 +13,20 @@
 
 GSM_StateMachine *s;
 
+void config_count_check(void)
+{
+	s = GSM_AllocStateMachine();
+	test_result(s != NULL);
+
+	test_result(GSM_GetConfig(s, 5) != NULL);
+	test_result(GSM_GetConfig(s, 6) == NULL);
+
+	GSM_SetConfigNum(s, 6);
+	test_result(GSM_GetConfigNum(s) == 6);
+
+	GSM_FreeStateMachine(s);
+}
+
 void single_check(const char *device, const char *connection, const char *model, GSM_Error expected)
 {
 	GSM_Config *smcfg;
@@ -50,6 +64,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	GSM_SetDebugFileDescriptor(stderr, FALSE, debug_info);
 	GSM_SetDebugLevel("textall", debug_info);
 
+	config_count_check();
 	single_check("/NONEXISTING/DEVICE/NODE", "NONSENSE", "", ERR_UNKNOWNCONNECTIONTYPESTRING);
 #ifdef GSM_ENABLE_AT
 	single_check("/NONEXISTING/DEVICE/NODE", "at", "", ERR_DEVICENOTEXIST);

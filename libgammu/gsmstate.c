@@ -1441,7 +1441,7 @@ GSM_Config *GSM_GetConfig(GSM_StateMachine *s, int num)
 	if (num == -1) {
 		return s->CurrentConfig;
 	} else {
-		if (num > MAX_CONFIG_NUM) return NULL;
+		if (num >= MAX_CONFIG_NUM) return NULL;
 		return &(s->Config[num]);
 	}
 }
@@ -1902,7 +1902,7 @@ void GSM_FreeStateMachine(GSM_StateMachine *s)
 	if (s == NULL) return;
 
 	/* Free allocated memory */
-	for (i = 0; i <= MAX_CONFIG_NUM; i++) {
+	for (i = 0; i < MAX_CONFIG_NUM; i++) {
 		free(s->Config[i].Device);
 		s->Config[i].Device = NULL;
 		free(s->Config[i].Connection);
