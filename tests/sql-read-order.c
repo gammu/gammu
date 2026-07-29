@@ -16,12 +16,15 @@
 #include "../smsd/services/sql.h"
 #include "common.h"
 
+GSM_Error SMSD_SendSMS(GSM_SMSDConfig *config);
+
 typedef enum {
 	RESULT_NONE,
 	RESULT_FIND_ID,
 	RESULT_REFRESH,
 	RESULT_OUTBOX_BODY,
 	RESULT_OUTBOX_MULTIPART,
+	RESULT_SENT_ITEM,
 	RESULT_DELIVERY_SELECT,
 	RESULT_DELIVERY_UPDATE
 } ResultKind;
@@ -38,14 +41,25 @@ static ResultState states[4];
 static unsigned long long find_id_fields;
 static unsigned long long outbox_body_fields;
 static unsigned long long outbox_multipart_fields;
+static unsigned long long sent_item_fields;
 static unsigned long long delivery_fields;
 static int multipart_queries;
 static time_t delivery_time;
+static time_t outbox_insert_time;
 static gboolean delivery_update_seen;
+static gboolean outbox_is_multipart;
+static gboolean sent_item_present;
+static gboolean sent_item_mismatch;
+static GSM_Error sent_item_query_error;
+static int outbox_relative_validity;
+static int sent_item_relative_validity;
+static const char *outbox_status;
+static const char *sent_item_status;
 static char query_find_id[] = "find-id";
 static char query_refresh[] = "refresh";
 static char query_outbox_body[] = "outbox-body";
 static char query_outbox_multipart[] = "outbox-multipart";
+static char query_sent_item[] = "sent-item";
 static char query_delivery_select[] = "delivery-select";
 static char query_delivery_update[] = "delivery-update";
 static char query_delivery_update_other[] = "delivery-update-other";
@@ -115,6 +129,11 @@ static GSM_Error mock_query(GSM_SMSDConfig *config UNUSED, const char *query, SQ
 	} else if (strcmp(query, "outbox-multipart") == 0) {
 		kind = RESULT_OUTBOX_MULTIPART;
 		multipart_queries++;
+	} else if (strcmp(query, "sent-item") == 0) {
+		if (sent_item_query_error != ERR_NONE) {
+			return sent_item_query_error;
+		}
+		kind = RESULT_SENT_ITEM;
 	} else if (strcmp(query, "delivery-select") == 0) {
 		kind = RESULT_DELIVERY_SELECT;
 	} else if (strcmp(query, "delivery-update") == 0 || strcmp(query, "delivery-update-other") == 0) {
@@ -148,6 +167,9 @@ static void mock_free_result(GSM_SMSDConfig *config UNUSED, SQL_result *result)
 		case RESULT_OUTBOX_MULTIPART:
 			outbox_multipart_fields |= state->fields;
 			break;
+		case RESULT_SENT_ITEM:
+			sent_item_fields = state->fields;
+			break;
 		case RESULT_DELIVERY_SELECT:
 			delivery_fields = state->fields;
 			break;
@@ -169,6 +191,8 @@ static int mock_next_row(GSM_SMSDConfig *config UNUSED, SQL_result *result)
 			return state->row++ == 0;
 		case RESULT_OUTBOX_MULTIPART:
 			return multipart_queries == 1 && state->row++ == 0;
+		case RESULT_SENT_ITEM:
+			return sent_item_present && state->row++ == 0;
 		default:
 			return 0;
 	}
@@ -205,7 +229,7 @@ static const char *mock_get_string(GSM_SMSDConfig *config UNUSED, SQL_result *re
 			case 10:
 				return "sql-read-order";
 			case 12:
-				return "SendingOK";
+				return outbox_status;
 			default:
 				break;
 		}
@@ -220,6 +244,25 @@ static const char *mock_get_string(GSM_SMSDConfig *config UNUSED, SQL_result *re
 				return "multipart message";
 			case 7:
 				return "SendingOK";
+			default:
+				break;
+		}
+	} else if (state->kind == RESULT_SENT_ITEM) {
+		switch (field) {
+			case 0:
+				return "00740065007300740020006D006500730073006100670065";
+			case 1:
+				return "Default_No_Compression";
+			case 2:
+				return "";
+			case 4:
+				return "test message";
+			case 5:
+				return sent_item_mismatch ? "+420999999" : "+420123456";
+			case 8:
+				return "sql-read-order";
+			case 9:
+				return sent_item_status;
 			default:
 				break;
 		}
@@ -250,7 +293,7 @@ static long long mock_get_number(GSM_SMSDConfig *config UNUSED, SQL_result *resu
 			case 5:
 				return 42;
 			case 8:
-				return SMS_VALID_Max_Time;
+				return outbox_relative_validity;
 			case 11:
 				return 0;
 			default:
@@ -263,6 +306,16 @@ static long long mock_get_number(GSM_SMSDConfig *config UNUSED, SQL_result *resu
 				return -1;
 			case 5:
 				return 42;
+			default:
+				break;
+		}
+	}
+	if (state->kind == RESULT_SENT_ITEM) {
+		switch (field) {
+			case 3:
+				return -1;
+			case 7:
+				return sent_item_relative_validity;
 			default:
 				break;
 		}
@@ -280,7 +333,10 @@ static time_t mock_get_date(GSM_SMSDConfig *config UNUSED, SQL_result *result, u
 	ResultState *state = record_field(result, field);
 
 	if (state->kind == RESULT_FIND_ID && field == 1) {
-		return time(NULL);
+		return outbox_insert_time;
+	}
+	if (state->kind == RESULT_SENT_ITEM && field == 6) {
+		return outbox_insert_time;
 	}
 	if (state->kind == RESULT_DELIVERY_SELECT && field == 2) {
 		return delivery_time;
@@ -295,7 +351,7 @@ static gboolean mock_get_bool(GSM_SMSDConfig *config UNUSED, SQL_result *result,
 	ResultState *state = record_field(result, field);
 
 	if (state->kind == RESULT_OUTBOX_BODY && field == 7) {
-		return TRUE;
+		return outbox_is_multipart;
 	}
 	if (state->kind == RESULT_OUTBOX_BODY && field == 9) {
 		return TRUE;
@@ -335,9 +391,19 @@ static void reset_mock(void)
 	find_id_fields = 0;
 	outbox_body_fields = 0;
 	outbox_multipart_fields = 0;
+	sent_item_fields = 0;
 	delivery_fields = 0;
 	multipart_queries = 0;
 	delivery_update_seen = FALSE;
+	outbox_insert_time = 1700000000;
+	outbox_is_multipart = TRUE;
+	sent_item_present = FALSE;
+	sent_item_mismatch = FALSE;
+	sent_item_query_error = ERR_NONE;
+	outbox_relative_validity = SMS_VALID_Max_Time;
+	sent_item_relative_validity = SMS_VALID_Max_Time;
+	outbox_status = "SendingOK";
+	sent_item_status = "SendingOKNoReport";
 }
 
 static void setup_config(GSM_SMSDConfig *config)
@@ -354,6 +420,7 @@ static void setup_config(GSM_SMSDConfig *config)
 	config->SMSDSQL_queries[SQL_QUERY_REFRESH_SEND_STATUS] = query_refresh;
 	config->SMSDSQL_queries[SQL_QUERY_FIND_OUTBOX_BODY] = query_outbox_body;
 	config->SMSDSQL_queries[SQL_QUERY_FIND_OUTBOX_MULTIPART] = query_outbox_multipart;
+	config->SMSDSQL_queries[SQL_QUERY_FIND_SENT_ITEM] = query_sent_item;
 	config->SMSDSQL_queries[SQL_QUERY_SAVE_INBOX_SMS_SELECT] = query_delivery_select;
 	config->SMSDSQL_queries[SQL_QUERY_SAVE_INBOX_SMS_UPDATE_DELIVERED] = query_delivery_update;
 	config->SMSDSQL_queries[SQL_QUERY_SAVE_INBOX_SMS_UPDATE] = query_delivery_update_other;
@@ -382,6 +449,117 @@ static void test_find_outbox_order(void)
 	test_result(outbox_multipart_fields == (((1ULL << 6) - 1) | (1ULL << 7)));
 }
 
+static void test_find_outbox_without_sent_item(void)
+{
+	GSM_SMSDConfig config;
+	GSM_MultiSMSMessage sms;
+	GSM_Error error;
+	char id[32];
+
+	reset_mock();
+	setup_config(&config);
+	memset(&sms, 0, sizeof(sms));
+	outbox_is_multipart = FALSE;
+	outbox_status = "Reserved";
+
+	error = SMSDSQL.FindOutboxSMS(&sms, &config, id);
+
+	test_result(error == ERR_NONE);
+	test_result(sms.Number == 1);
+	test_result(config.SkipMessage[0] == FALSE);
+	test_result(sent_item_fields == 0);
+}
+
+static void test_matching_sent_item_is_skipped(void)
+{
+	GSM_SMSDConfig config;
+	GSM_MultiSMSMessage sms;
+	GSM_Error error;
+	char id[32];
+
+	reset_mock();
+	setup_config(&config);
+	memset(&sms, 0, sizeof(sms));
+	outbox_is_multipart = FALSE;
+	outbox_status = "Reserved";
+	sent_item_present = TRUE;
+
+	error = SMSDSQL.FindOutboxSMS(&sms, &config, id);
+
+	test_result(error == ERR_NONE);
+	test_result(sms.Number == 1);
+	test_result(config.SkipMessage[0] == TRUE);
+	test_result(sent_item_fields == ((1ULL << 10) - 1));
+}
+
+static void test_inherited_sent_item_validity_is_skipped(void)
+{
+	GSM_SMSDConfig config;
+	GSM_MultiSMSMessage sms;
+	GSM_Error error;
+	char id[32];
+
+	reset_mock();
+	setup_config(&config);
+	memset(&sms, 0, sizeof(sms));
+	outbox_is_multipart = FALSE;
+	outbox_status = "Reserved";
+	outbox_relative_validity = -1;
+	sent_item_present = TRUE;
+
+	error = SMSDSQL.FindOutboxSMS(&sms, &config, id);
+
+	test_result(error == ERR_NONE);
+	test_result(sms.Number == 1);
+	test_result(config.SkipMessage[0] == TRUE);
+	test_result(sent_item_fields == ((1ULL << 10) - 1));
+}
+
+static void test_reused_sent_item_id_is_rejected(void)
+{
+	GSM_SMSDConfig config;
+	GSM_MultiSMSMessage sms;
+	GSM_Error error;
+	char id[32];
+
+	reset_mock();
+	setup_config(&config);
+	memset(&sms, 0, sizeof(sms));
+	outbox_is_multipart = FALSE;
+	outbox_status = "Reserved";
+	sent_item_present = TRUE;
+	sent_item_mismatch = TRUE;
+
+	error = SMSDSQL.FindOutboxSMS(&sms, &config, id);
+
+	test_result(error == ERR_FILEALREADYEXIST);
+	test_result(sms.Number == 0);
+	test_result(config.SkipMessage[0] == FALSE);
+	test_result(sent_item_fields == ((1ULL << 10) - 1));
+}
+
+static void test_reconciliation_query_error_is_retryable(void)
+{
+	GSM_SMSDConfig config;
+	GSM_MultiSMSMessage sms;
+	GSM_Error error;
+	char id[32];
+
+	reset_mock();
+	setup_config(&config);
+	memset(&sms, 0, sizeof(sms));
+	outbox_is_multipart = FALSE;
+	outbox_status = "Reserved";
+	sent_item_query_error = ERR_SQL;
+
+	error = SMSDSQL.FindOutboxSMS(&sms, &config, id);
+
+	test_result(error == ERR_BUSY);
+	test_result(sms.Number == 0);
+	test_result(config.SkipMessage[0] == FALSE);
+	test_result(sent_item_fields == 0);
+}
+
 static void test_delivery_report_order(void)
 {
 	GSM_SMSDConfig config;
@@ -406,9 +584,116 @@ static void test_delivery_report_order(void)
 	test_result(delivery_fields == ((1ULL << 0) | (1ULL << 1) | (1ULL << 2) | (1ULL << 4)));
 }
 
+static int collision_add_calls;
+static int collision_move_calls;
+static int collision_update_calls;
+static int collision_update_status_code;
+static int collision_update_part;
+static GSM_Error collision_find_error;
+
+static GSM_Error collision_find_outbox(
+	GSM_MultiSMSMessage *sms UNUSED,
+	GSM_SMSDConfig *config UNUSED,
+	char *id)
+{
+	strcpy(id, "42");
+	return collision_find_error;
+}
+
+static GSM_Error collision_move(
+	GSM_MultiSMSMessage *sms UNUSED,
+	GSM_SMSDConfig *config UNUSED,
+	char *id UNUSED,
+	gboolean always_delete UNUSED,
+	gboolean sent UNUSED)
+{
+	collision_move_calls++;
+	return ERR_NONE;
+}
+
+static GSM_Error collision_add_sent(
+	GSM_MultiSMSMessage *sms UNUSED,
+	GSM_SMSDConfig *config UNUSED,
+	char *id UNUSED,
+	int part UNUSED,
+	GSM_SMSDSendingError error UNUSED,
+	int tpmr UNUSED)
+{
+	collision_add_calls++;
+	return ERR_NONE;
+}
+
+static GSM_Error collision_update_retries(
+	GSM_SMSDConfig *config,
+	char *id UNUSED)
+{
+	collision_update_calls++;
+	collision_update_status_code = config->StatusCode;
+	collision_update_part = config->Part;
+	return ERR_NONE;
+}
+
+static GSM_SMSDService collision_service = {
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	collision_find_outbox,
+	collision_move,
+	NULL,
+	collision_add_sent,
+	NULL,
+	collision_update_retries,
+	NULL,
+	NULL
+};
+
+static void check_send_error_is_left_queued(GSM_Error find_error)
+{
+	GSM_SMSDConfig config;
+	GSM_Error error;
+
+	memset(&config, 0, sizeof(config));
+	config.Service = &collision_service;
+	config.StatusCode = 535;
+	config.Part = 2;
+	collision_add_calls = 0;
+	collision_move_calls = 0;
+	collision_update_calls = 0;
+	collision_update_status_code = 0;
+	collision_update_part = 0;
+	collision_find_error = find_error;
+
+	error = SMSD_SendSMS(&config);
+
+	test_result(error == find_error);
+	test_result(collision_add_calls == 0);
+	test_result(collision_move_calls == 0);
+	test_result(collision_update_calls == 1);
+	test_result(collision_update_status_code == -1);
+	test_result(collision_update_part == -1);
+}
+
+static void test_send_collision_is_left_queued(void)
+{
+	check_send_error_is_left_queued(ERR_FILEALREADYEXIST);
+}
+
+static void test_send_reconciliation_error_is_left_queued(void)
+{
+	check_send_error_is_left_queued(ERR_BUSY);
+}
+
 int main(void)
 {
 	test_find_outbox_order();
+	test_find_outbox_without_sent_item();
+	test_matching_sent_item_is_skipped();
+	test_inherited_sent_item_validity_is_skipped();
+	test_reused_sent_item_id_is_rejected();
+	test_reconciliation_query_error_is_retryable();
 	test_delivery_report_order();
+	test_send_collision_is_left_queued();
+	test_send_reconciliation_error_is_left_queued();
 	return 0;
 }
