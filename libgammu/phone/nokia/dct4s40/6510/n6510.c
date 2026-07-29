@@ -4293,6 +4293,12 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{NoneReply,			  "\x0A",0x03,0x16,ID_IncomingFrame	  },
 	{N6510_ReplyGetIncSignalQuality,  "\x0A",0x03,0x1E,ID_IncomingFrame	  },
 	{NoneReply,			  "\x0A",0x03,0x20,ID_IncomingFrame	  },
+	/* Undocumented network status notifications seen on newer S40 phones. */
+	{NoneReply,			  "\x0A",0x03,0x2C,ID_IncomingFrame	  },
+	{NoneReply,			  "\x0A",0x03,0x3F,ID_IncomingFrame	  },
+	{NoneReply,			  "\x0A",0x03,0x42,ID_IncomingFrame	  },
+	{NoneReply,			  "\x0A",0x03,0xB6,ID_IncomingFrame	  },
+	{NoneReply,			  "\x0A",0x03,0xE2,ID_IncomingFrame	  },
 	{N6510_ReplyGetNetworkInfo,	  "\x0A",0x03,0xf0,ID_IncomingFrame	  },
 
 	{NoneReply,			  "\x0B",0x03,0x01,ID_PlayTone		  },
