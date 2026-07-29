@@ -139,6 +139,7 @@ GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		{"^SRVST:"	,1, ID_All}, /* ^SRVST:0 */
 		{"^SIMST:"	,1, ID_All}, /* ^SIMST:1 */
 		{"^STIN:"	,1, ID_All}, /* ^STIN: 7, 0, 0 */
+		{"^NWTIME:"	,1, ID_All}, /* ^NWTIME: 18/03/09,12:36:21+4,00 */
 
 		/* D-Link */
 		{"+SPNWNAME:"	,1, ID_All}, /* +SPNWNAME: "432", "11", "Mci", "Mci" */

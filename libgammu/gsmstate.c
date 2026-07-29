@@ -8,6 +8,11 @@
 #include <limits.h>
 #include <assert.h>
 #include <stdio.h>
+#include <time.h>
+
+#ifndef WIN32
+#include <sys/time.h>
+#endif
 
 #include <gammu-call.h>
 #include <gammu-settings.h>
@@ -990,6 +995,22 @@ gboolean GSM_IsConnected(GSM_StateMachine *s) {
 	return (s != NULL) && s->Phone.Functions != NULL && s->opened;
 }
 
+static unsigned long GSM_GetWaitTime(void)
+{
+#ifdef WIN32
+	return GetTickCount();
+#else
+	struct timeval now;
+
+	if (gettimeofday(&now, NULL) != 0) {
+		return (unsigned long)time(NULL) * 1000UL;
+	}
+
+	return (unsigned long)now.tv_sec * 1000UL +
+	       (unsigned long)now.tv_usec / 1000UL;
+#endif
+}
+
 GSM_Error GSM_AbortOperation(GSM_StateMachine * s)
 {
 	s->Abort = TRUE;
@@ -1001,7 +1022,11 @@ GSM_Error GSM_WaitForOnce(GSM_StateMachine *s, const unsigned char *buffer,
 {
 	GSM_Phone_Data *Phone = &s->Phone.Data;
 	GSM_Protocol_Message sentmsg;
-	int i = 0;
+	unsigned long start;
+	unsigned long timeout_ms;
+
+	start = GSM_GetWaitTime();
+	timeout_ms = timeout > 0 ? (unsigned long)timeout * 1000UL : 0;
 
 	do {
 		if (length != 0) {
@@ -1012,10 +1037,7 @@ GSM_Error GSM_WaitForOnce(GSM_StateMachine *s, const unsigned char *buffer,
 			Phone->SentMsg  = &sentmsg;
 		}
 
-		/* Some data received. Reset timer */
-		if (GSM_ReadDevice(s, TRUE) > 0) {
-			i = 0;
-		} else {
+		if (GSM_ReadDevice(s, TRUE) <= 0) {
 			usleep(10000);
 		}
 
@@ -1033,8 +1055,7 @@ GSM_Error GSM_WaitForOnce(GSM_StateMachine *s, const unsigned char *buffer,
 		if (Phone->RequestID == ID_None) {
 			return Phone->DispatchError;
 		}
-		i++;
-	} while (i < timeout);
+	} while (GSM_GetWaitTime() - start < timeout_ms);
 
 	return ERR_TIMEOUT;
 }
