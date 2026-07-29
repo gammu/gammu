@@ -1073,9 +1073,18 @@ static GSM_Error SaveSyncMLSettingsEntry(FILE *file, GSM_SyncMLSettings *setting
 
 static GSM_Error SaveBitmapEntry(FILE *file, GSM_Bitmap *bitmap, gboolean UseUnicode)
 {
-	unsigned char 	buffer[10000]={0},buffer2[10000]={0};
+	char buffer[GSM_BITMAP_SIZE * 8 + 1] = {0};
+	char buffer2[sizeof(buffer) + 32] = {0};
 	size_t		x,y;
+	int written;
 	GSM_Error error;
+
+	if (bitmap->BitmapWidth > GSM_BITMAP_SIZE * 8 ||
+	    bitmap->BitmapHeight > GSM_BITMAP_SIZE * 8 ||
+	    (bitmap->BitmapWidth != 0 &&
+	     bitmap->BitmapHeight > GSM_BITMAP_SIZE * 8 / bitmap->BitmapWidth)) {
+		return ERR_INVALIDDATA;
+	}
 
 	sprintf(buffer,"Width = %ld%c%c", (long)bitmap->BitmapWidth,13,10);
 	error = SaveBackupText(file, "", buffer, UseUnicode);
@@ -1086,10 +1095,15 @@ static GSM_Error SaveBitmapEntry(FILE *file, GSM_Bitmap *bitmap, gboolean UseUni
 	for (y=0;y<bitmap->BitmapHeight;y++) {
 		for (x=0;x<bitmap->BitmapWidth;x++) {
 			buffer[x] = ' ';
-			if (GSM_IsPointBitmap(bitmap,x,y)) buffer[x]='#';
+			if (GSM_IsPointBitmap(bitmap,(int)x,(int)y)) buffer[x]='#';
 		}
 		buffer[bitmap->BitmapWidth] = 0;
-		sprintf(buffer2,"Bitmap%02i = \"%s\"%c%c",(int)y,buffer,13,10);
+		written = snprintf(buffer2, sizeof(buffer2),
+				   "Bitmap%02i = \"%s\"%c%c",
+				   (int)y, buffer, 13, 10);
+		if (written < 0 || (size_t)written >= sizeof(buffer2)) {
+			return ERR_INVALIDDATA;
+		}
 		error = SaveBackupText(file, "", buffer2, UseUnicode);
 		if (error != ERR_NONE) return error;
 	}

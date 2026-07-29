@@ -205,7 +205,7 @@ static int SONYERICSSON_Screenshot_createBMPHeader(unsigned int w, unsigned int 
 	u32_store(p+18, data);
 
 	// height in pixels (-320)
-	data = (u32)(-h);
+	data = 0U - h;
 	u32_store(p+22, data);
 
 	// color planes (1)

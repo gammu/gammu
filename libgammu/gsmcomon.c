@@ -215,7 +215,7 @@ const char *GetGammuVersion(void)
 	return Buffer;
 }
 
-GSM_Debug_Info *GSM_GetGlobalDebug()
+GSM_Debug_Info *GSM_GetGlobalDebug(void)
 {
 	return &GSM_global_debug;
 }

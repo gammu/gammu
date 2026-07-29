@@ -1388,7 +1388,7 @@ void GetBufferI(unsigned char 	*Source,
 {
 	size_t l=0,z,i=0;
 
-	z = 1 << (BitsToProcess - 1);
+	z = (size_t)1 << (BitsToProcess - 1);
 
 	while (i!=BitsToProcess) {
 		if (GetBit(Source, (*CurrentBit)+i)) l=l+z;
