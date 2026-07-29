@@ -267,6 +267,24 @@ void mysql_timestamp(void)
   test_result(strcmp("2019-05-08 13:48:44", actual) == 0);
 }
 
+void mysql_odbc_timestamp(void)
+{
+  GSM_DateTime dt = *mk_dt(2019, 5, 8, 11, 48, 44, 0);
+  char actual[128];
+
+  puts(__func__);
+
+#ifndef WIN32
+  putenv((char*)"TZ=:Europe/Warsaw");
+#else
+  putenv("TZ=CET-2");
+  tzset();
+#endif
+  get_sql_string_for_dialect(actual, "odbc", "mysql", Fill_Time_T(dt));
+
+  test_result(strcmp("2019-05-08 13:48:44", actual) == 0);
+}
+
 void oracle_timestamp(void)
 {
   GSM_DateTime dt = *mk_dt(2019, 5, 8, 11, 48, 44, -3);
@@ -357,6 +375,7 @@ int main(void)
 
   pgsql_timestamp();
   mysql_timestamp();
+  mysql_odbc_timestamp();
   oracle_timestamp();
 
   odbc_timestamp();
