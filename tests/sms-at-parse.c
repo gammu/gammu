@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "../libgammu/misc/array.h"
 #include "../libgammu/protocol/protocol.h"	/* Needed for GSM_Protocol_Message */
 #include "../libgammu/gsmstate.h"	/* Needed for state machine internals */
 #include "../libgammu/gsmphones.h"	/* Phone data */
@@ -14,8 +15,7 @@
 #include "common.h"
 
 extern GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine * s);
-extern void SMSD_RunOnReceiveEnvironment(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config);
-
+extern void SMSD_RunOnEnvironment(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, const GSM_StringArray *SentIDs, gboolean is_receive);
 #define BUFFER_SIZE 16384
 
 int main(int argc, char **argv)
@@ -117,7 +117,7 @@ int main(int argc, char **argv)
 		DisplayMultiSMSInfo(&sms, TRUE, TRUE, NULL, NULL);
 		printf("Parts: %d, count: %d, ID16: %d, ID8: %d\n", sms.SMS[0].UDH.AllParts, sms.Number, sms.SMS[0].UDH.ID16bit, sms.SMS[0].UDH.ID8bit);
 
-		SMSD_RunOnReceiveEnvironment(&sms, smsd);
+		SMSD_RunOnEnvironment(&sms, smsd, NULL, TRUE);
 	}
 
 	/* This is normally done by ATGEN_Terminate */

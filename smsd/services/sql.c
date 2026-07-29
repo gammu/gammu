@@ -707,7 +707,7 @@ static GSM_Error SMSDSQL_InitAfterConnect(GSM_SMSDConfig * Config)
 }
 
 /* Save SMS from phone (called Inbox sms - it's in phone Inbox) somewhere */
-static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig * Config, GSM_StringArray *Locations)
+static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig * Config, GSM_StringArray *Locations, GSM_StringArray *SentIDs)
 {
 	SQL_result res, res2;
 	SQL_Var vars[3];
@@ -725,10 +725,12 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 	unsigned long long new_id, sent_id;
 	const char *state, *smsc;
 	char location[50];
+	char sent_id_string[50];
 
 	sms->Processed = FALSE;
 
 	for (i = 0; i < sms->Number; i++) {
+		sent_id_string[0] = 0;
 		EncodeUTF8(destinationnumber, sms->SMS[i].Number);
 		EncodeUTF8(smsc_message, sms->SMS[i].SMSC.Number);
 		if (sms->SMS[i].PDU == SMS_Status_Report) {
@@ -805,15 +807,23 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 					return error;
 				}
 				db->FreeResult(Config, &res2);
+				snprintf(sent_id_string, sizeof(sent_id_string), "%llu", sent_id);
 			} else {
 				SMSD_Log(DEBUG_ERROR, Config, "Failed to find SMS for TPMR=%i, Number=%s", sms->SMS[i].MessageReference, destinationnumber);
 			}
 			db->FreeResult(Config, &res);
+			if (SentIDs != NULL && !GSM_StringArray_Add(SentIDs, sent_id_string)) {
+				return ERR_MOREMEMORY;
+			}
 			continue;
 		}
 
-		if (sms->SMS[i].PDU != SMS_Deliver)
+		if (sms->SMS[i].PDU != SMS_Deliver) {
+			if (SentIDs != NULL && !GSM_StringArray_Add(SentIDs, "")) {
+				return ERR_MOREMEMORY;
+			}
 			continue;
+		}
 
 		error = SMSDSQL_NamedQuery(Config, Config->SMSDSQL_queries[SQL_QUERY_SAVE_INBOX_SMS_INSERT], &sms->SMS[i], sms, NULL, &res, FALSE);
 		if (error != ERR_NONE) {
@@ -849,6 +859,9 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 		}
 		db->FreeResult(Config, &res2);
 
+		if (SentIDs != NULL && !GSM_StringArray_Add(SentIDs, "")) {
+			return ERR_MOREMEMORY;
+		}
 	}
 
 	return ERR_NONE;

@@ -1245,6 +1245,11 @@ add_coverage(smsd-run-command)
 target_link_libraries(smsd-run-command libGammu ${LIBINTL_LIBRARIES} gsmsd)
 add_test(smsd-run-command "${GAMMU_TEST_PATH}/smsd-run-command${CMAKE_EXECUTABLE_SUFFIX}")
 
+add_executable(smsd-run-environment smsd-run-environment.c)
+add_coverage(smsd-run-environment)
+target_link_libraries(smsd-run-environment libGammu ${LIBINTL_LIBRARIES} gsmsd)
+add_test(smsd-run-environment "${GAMMU_TEST_PATH}/smsd-run-environment${CMAKE_EXECUTABLE_SUFFIX}")
+
 file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/smsd-files-inbox")
 add_executable(smsd-files-backend smsd-files-backend.c)
 add_coverage(smsd-files-backend)
