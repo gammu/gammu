@@ -403,6 +403,24 @@ typedef struct {
 	 */
 	GSM_AT_SMS_Cache	*SMSCache;
 	/**
+	 * Bounds of physical SMS locations reported as supported by AT+CMGD=?.
+	 */
+	int			SMSLocationFirst;
+	int			SMSLocationLast;
+	int			SMSLocationPos;
+	/**
+	 * Number of messages expected when scanning the current memory started.
+	 */
+	int			SMSLocationTarget;
+	/**
+	 * Memory represented by the location bounds, or MEM_INVALID when not queried.
+	 */
+	GSM_MemoryType		SMSLocationMemory;
+	/**
+	 * Whether the location range query failed and legacy scanning should be used.
+	 */
+	gboolean			SMSLocationLegacy;
+	/**
 	 * Which folder do we read SMS from.
 	 */
 	int			SMSReadFolder;

@@ -50,6 +50,7 @@ atgen_test(test-reply-get-cnmi)
 atgen_test(get-sms-location)
 atgen_test(get-sms)
 atgen_test(get-sms-text-fallback)
+atgen_test(get-next-sms-locations)
 
 if (HAVE_MYSQL_MYSQL_H OR LIBDBI_FOUND OR HAVE_POSTGRESQL_LIBPQ_FE_H OR ODBC_FOUND)
 smsd_test(test_sql_time)

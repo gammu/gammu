@@ -2279,6 +2279,12 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 
 	Priv->SMSCount			= 0;
 	Priv->SMSCache			= NULL;
+	Priv->SMSLocationFirst		= 0;
+	Priv->SMSLocationLast		= -1;
+	Priv->SMSLocationPos		= 0;
+	Priv->SMSLocationTarget		= 0;
+	Priv->SMSLocationMemory		= MEM_INVALID;
+	Priv->SMSLocationLegacy		= FALSE;
 	Priv->ReplyState		= 0;
 
 	if (s->ConnectionType != GCT_IRDAAT && s->ConnectionType != GCT_BLUEAT) {
@@ -6265,6 +6271,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReply,		"AT+CPMS"		,0x00,0x00,ID_SetMemoryType	 },
 {ATGEN_ReplyGetSMSStatus,	"AT+CPMS"		,0x00,0x00,ID_GetSMSStatus	 },
 {ATGEN_ReplyGetSMSMemories,	"AT+CPMS=?"		,0x00,0x00,ID_GetSMSMemories	 },
+{ATGEN_ReplyGetSMSLocationRange,	"AT+CMGD=?"		,0x00,0x00,ID_GetSMSLocationRange },
 {ATGEN_ReplyAddSMSMessage,	"AT+CMGW"		,0x00,0x00,ID_SaveSMSMessage	 },
 {ATGEN_GenericReply,		"AT+CSMP"		,0x00,0x00,ID_SetSMSParameters	 },
 {ATGEN_GenericReply,		"AT+CSCA"		,0x00,0x00,ID_SetSMSC		 },

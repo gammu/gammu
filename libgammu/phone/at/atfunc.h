@@ -68,6 +68,7 @@ GSM_Error ATGEN_ReplySendSMS(GSM_Protocol_Message *msg, GSM_StateMachine *s);
 GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *s);
 GSM_Error ATGEN_ReplyGetMessageList(GSM_Protocol_Message *msg, GSM_StateMachine *s);
 GSM_Error ATGEN_ReplyGetSMSStatus(GSM_Protocol_Message *msg, GSM_StateMachine *s);
+GSM_Error ATGEN_ReplyGetSMSLocationRange(GSM_Protocol_Message *msg, GSM_StateMachine *s);
 GSM_Error ATGEN_ReplyGetSMSMemories(GSM_Protocol_Message *msg, GSM_StateMachine *s);
 GSM_Error ATGEN_ReplyAddSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *s);
 GSM_Error ATGEN_ReplyGetSMSC(GSM_Protocol_Message *msg, GSM_StateMachine *s);
