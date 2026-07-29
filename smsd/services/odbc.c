@@ -125,18 +125,30 @@ const char *SMSDODBC_GetString(GSM_SMSDConfig * Config, SQL_result *res, unsigne
 
 gboolean SMSDODBC_GetBool(GSM_SMSDConfig * Config, SQL_result *res, unsigned int field)
 {
-	const char *value;
+	SQLLEN size;
+	SQLRETURN ret;
+	char value[6];
 
 	/*
 	 * Fetch booleans as text so both native bit columns ("0"/"1") and
 	 * textual SQL enums ("false"/"true", "no"/"yes") are interpreted
 	 * consistently. Some ODBC drivers successfully convert textual values
 	 * to SQL_C_BIT as zero, making a type-conversion fallback unreliable.
+	 *
+	 * Do not use SMSDODBC_GetString here. Its zero-length size probe can
+	 * fail with 22003 when a numeric or bit value is converted to text.
 	 */
-	value = SMSDODBC_GetString(Config, res, field);
-	if (value == NULL) {
+	ret = SQLGetData(res->odbc, field + 1, SQL_C_CHAR, value, sizeof(value), &size);
+	if (!SQL_SUCCEEDED(ret)) {
+		SMSDODBC_LogError(Config, ret, SQL_HANDLE_STMT, res->odbc, "SQLGetData(boolean) failed");
 		return FALSE;
 	}
+	if (size == SQL_NULL_DATA) {
+		SMSD_Log(DEBUG_SQL, Config, "Field %d returning NULL", field);
+		return FALSE;
+	}
+
+	SMSD_Log(DEBUG_SQL, Config, "Field %d returning boolean \"%s\"", field, value);
 	return GSM_StringToBool(value);
 }
 
