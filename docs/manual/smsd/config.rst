@@ -386,7 +386,8 @@ General parameters of SMS daemon
     be either ``INIT`` (meaning failure during phone initialization) or a
     message ID, which indicates an error while sending the message.
 
-    .. note:: The environment with message (as is in :config:option:`RunOnReceive`) is not passed to the command.
+    .. note:: Message details from :config:option:`RunOnReceive` are not passed
+        to the command. The :envvar:`PHONE_ID` variable is still available.
 
 .. config:option:: RunOnSent
 
@@ -405,7 +406,8 @@ General parameters of SMS daemon
     Executes a program after cancelling incoming call.
 
     The program will receive a literal argument containing the phone number of
-    the call. This requires :config:option:`HangupCalls` to be enabled.
+    the call. The :envvar:`PHONE_ID` variable identifies the receiving SMSD
+    instance. This requires :config:option:`HangupCalls` to be enabled.
 
 .. config:option:: IncludeNumbersFile
 

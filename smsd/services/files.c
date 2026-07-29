@@ -99,7 +99,7 @@ static GSM_Error SMSDFiles_BuildPath(char *result, size_t result_size,
 }
 
 /* Save SMS from phone (called Inbox sms - it's in phone Inbox) somewhere */
-static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig * Config, GSM_StringArray *Locations)
+static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig * Config, GSM_StringArray *Locations, GSM_StringArray *SentIDs)
 {
 	GSM_Error error = ERR_NONE;
 	int i, j;
@@ -110,6 +110,14 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfi
 #ifdef GSM_ENABLE_BACKUP
 	GSM_SMS_Backup *backup;
 #endif
+
+	if (SentIDs != NULL) {
+		for (i = 0; i < sms->Number; i++) {
+			if (!GSM_StringArray_Add(SentIDs, "")) {
+				return ERR_MOREMEMORY;
+			}
+		}
+	}
 
 	j = 0;
 	done = FALSE;

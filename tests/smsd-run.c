@@ -6,7 +6,7 @@
 
 #include "../libgammu/misc/array.h"
 
-extern gboolean SMSD_RunOn(const char *command, GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, const GSM_StringArray *arguments, const char *event);
+extern gboolean SMSD_RunOn(const char *command, GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, const GSM_StringArray *arguments, const GSM_StringArray *SentIDs, const char *event);
 
 static gboolean add_argument(GSM_StringArray *arguments, const char *value)
 {
@@ -67,7 +67,7 @@ int main(int argc, char **argv)
 		return 1;
 	}
 
-	result = SMSD_RunOn("exec \"$SMSD_RUN_HELPER\"", NULL, config, &arguments, "test");
+	result = SMSD_RunOn("exec \"$SMSD_RUN_HELPER\"", NULL, config, &arguments, NULL, "test");
 	GSM_StringArray_Free(&arguments);
 	if (!result) {
 		fprintf(stderr, "RunOn command failed\n");
@@ -86,7 +86,7 @@ int main(int argc, char **argv)
 
 	GSM_StringArray_New(&arguments);
 	setenv("SMSD_TEST_EMPTY", "1", 1);
-	result = SMSD_RunOn("exec \"$SMSD_RUN_HELPER\"", NULL, config, &arguments, "test");
+	result = SMSD_RunOn("exec \"$SMSD_RUN_HELPER\"", NULL, config, &arguments, NULL, "test");
 	GSM_StringArray_Free(&arguments);
 	unsetenv("SMSD_TEST_EMPTY");
 	if (!result) {
@@ -102,7 +102,7 @@ int main(int argc, char **argv)
 		SMSD_FreeConfig(config);
 		return 1;
 	}
-	result = SMSD_RunOn("exec \"$SMSD_RUN_HELPER\"", NULL, config, &arguments, "test");
+	result = SMSD_RunOn("exec \"$SMSD_RUN_HELPER\"", NULL, config, &arguments, NULL, "test");
 	GSM_StringArray_Free(&arguments);
 	unsetenv("SMSD_TEST_SINGLE");
 	SMSD_FreeConfig(config);

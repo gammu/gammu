@@ -47,6 +47,7 @@ static int multipart_queries;
 static time_t delivery_time;
 static time_t outbox_insert_time;
 static gboolean delivery_update_seen;
+static gboolean delivery_select_present;
 static gboolean outbox_is_multipart;
 static gboolean sent_item_present;
 static gboolean sent_item_mismatch;
@@ -188,8 +189,9 @@ static int mock_next_row(GSM_SMSDConfig *config UNUSED, SQL_result *result)
 	switch (state->kind) {
 		case RESULT_FIND_ID:
 		case RESULT_OUTBOX_BODY:
-		case RESULT_DELIVERY_SELECT:
 			return state->row++ == 0;
+		case RESULT_DELIVERY_SELECT:
+			return delivery_select_present && state->row++ == 0;
 		case RESULT_OUTBOX_MULTIPART:
 			return multipart_queries == 1 && state->row++ == 0;
 		case RESULT_SENT_ITEM:
@@ -396,6 +398,7 @@ static void reset_mock(void)
 	delivery_fields = 0;
 	multipart_queries = 0;
 	delivery_update_seen = FALSE;
+	delivery_select_present = TRUE;
 	outbox_insert_time = 1700000000;
 	outbox_is_multipart = TRUE;
 	sent_item_present = FALSE;
@@ -591,11 +594,13 @@ static void test_delivery_report_order(void)
 {
 	GSM_SMSDConfig config;
 	GSM_MultiSMSMessage sms;
+	GSM_StringArray sent_ids;
 	GSM_Error error;
 
 	reset_mock();
 	setup_config(&config);
 	memset(&sms, 0, sizeof(sms));
+	GSM_StringArray_New(&sent_ids);
 	sms.Number = 1;
 	GSM_SetDefaultSMSData(&sms.SMS[0]);
 	sms.SMS[0].PDU = SMS_Status_Report;
@@ -604,11 +609,42 @@ static void test_delivery_report_order(void)
 	EncodeUnicode(sms.SMS[0].Text, "Delivered", strlen("Delivered"));
 	delivery_time = Fill_Time_T(sms.SMS[0].DateTime);
 
-	error = SMSDSQL.SaveInboxSMS(&sms, &config, NULL);
+	error = SMSDSQL.SaveInboxSMS(&sms, &config, NULL, &sent_ids);
 
 	test_result(error == ERR_NONE);
 	test_result(delivery_update_seen == TRUE);
 	test_result(delivery_fields == ((1ULL << 0) | (1ULL << 1) | (1ULL << 2) | (1ULL << 4)));
+	test_result(sent_ids.used == 1);
+	test_result(strcmp(sent_ids.data[0], "123") == 0);
+	GSM_StringArray_Free(&sent_ids);
+}
+
+static void test_unmatched_delivery_report_id(void)
+{
+	GSM_SMSDConfig config;
+	GSM_MultiSMSMessage sms;
+	GSM_StringArray sent_ids;
+	GSM_Error error;
+
+	reset_mock();
+	setup_config(&config);
+	memset(&sms, 0, sizeof(sms));
+	GSM_StringArray_New(&sent_ids);
+	delivery_select_present = FALSE;
+	sms.Number = 1;
+	GSM_SetDefaultSMSData(&sms.SMS[0]);
+	sms.SMS[0].PDU = SMS_Status_Report;
+	EncodeUnicode(sms.SMS[0].Number, "+420123456", strlen("+420123456"));
+	EncodeUnicode(sms.SMS[0].SMSC.Number, "+420987654", strlen("+420987654"));
+	EncodeUnicode(sms.SMS[0].Text, "Delivered", strlen("Delivered"));
+
+	error = SMSDSQL.SaveInboxSMS(&sms, &config, NULL, &sent_ids);
+
+	test_result(error == ERR_NONE);
+	test_result(delivery_update_seen == FALSE);
+	test_result(sent_ids.used == 1);
+	test_result(strcmp(sent_ids.data[0], "") == 0);
+	GSM_StringArray_Free(&sent_ids);
 }
 
 static int collision_add_calls;
@@ -761,6 +797,7 @@ int main(void)
 	test_reused_sent_item_id_is_rejected();
 	test_reconciliation_query_error_is_retryable();
 	test_delivery_report_order();
+	test_unmatched_delivery_report_id();
 	test_send_finalized_failure_is_removed();
 	test_send_collision_is_left_queued();
 	test_send_reconciliation_error_is_left_queued();

@@ -495,7 +495,8 @@ message ID, which indicates an error while sending the message.
 \fBNote:\fP
 .INDENT 7.0
 .INDENT 3.5
-The environment with message (as is in \fBRunOnReceive\fP) is not passed to the command.
+Message details from \fBRunOnReceive\fP are not passed
+to the command. The \fBPHONE_ID\fP \%<#\:envvar-PHONE_ID> variable is still available.
 .UNINDENT
 .UNINDENT
 .UNINDENT
@@ -520,7 +521,8 @@ Added in version 1.38.5.
 Executes a program after cancelling incoming call.
 .sp
 The program will receive a literal argument containing the phone number of
-the call. This requires \fBHangupCalls\fP to be enabled.
+the call. The \fBPHONE_ID\fP \%<#\:envvar-PHONE_ID> variable identifies the receiving SMSD
+instance. This requires \fBHangupCalls\fP to be enabled.
 .UNINDENT
 .INDENT 0.0
 .TP

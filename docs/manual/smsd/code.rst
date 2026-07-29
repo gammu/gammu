@@ -39,13 +39,15 @@ in ``GSM_SMSDService`` structure:
     :param Config: Pointer to SMSD configuration data
     :return: Error code.
 
-.. c:function:: GSM_Error	GSM_SMSDService::SaveInboxSMS       (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char **Locations)
+.. c:function:: GSM_Error	GSM_SMSDService::SaveInboxSMS       (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, GSM_StringArray *Locations, GSM_StringArray *SentIDs)
 
     Saves message into inbox.
 
     :param sms: Message data to save
     :param Config: Pointer to SMSD configuration data
-    :param Locations: Newly allocation pointer to string with IDs identifying saved messages.
+    :param Locations: Array with IDs identifying saved messages.
+    :param SentIDs: Per-message array with IDs of sent messages matched to
+        delivery reports.
     :return: Error code.
 
 .. c:function:: GSM_Error	GSM_SMSDService::FindOutboxSMS      (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *ID)

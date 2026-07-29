@@ -44,7 +44,7 @@ typedef struct {
 	GSM_Error	(*Init) 	      (GSM_SMSDConfig *Config);
 	GSM_Error	(*Free) 	      (GSM_SMSDConfig *Config);
 	GSM_Error	(*InitAfterConnect)   (GSM_SMSDConfig *Config);
-	GSM_Error	(*SaveInboxSMS)       (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, GSM_StringArray *Locations);
+	GSM_Error	(*SaveInboxSMS)       (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, GSM_StringArray *Locations, GSM_StringArray *SentIDs);
 	GSM_Error	(*FindOutboxSMS)      (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *ID);
 	GSM_Error	(*MoveSMS)  	      (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *ID, gboolean alwaysDelete, gboolean sent);
 	GSM_Error	(*CreateOutboxSMS)    (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *NewID);
@@ -61,6 +61,8 @@ typedef struct {
 	 */
 	GSM_Error	(*ReadConfiguration) (GSM_SMSDConfig *Config);
 } GSM_SMSDService;
+
+void SMSD_RunOnEnvironment(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, const GSM_StringArray *SentIDs, gboolean is_receive);
 
 struct _GSM_SMSDConfig {
 	const char	*ServiceName;

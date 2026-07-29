@@ -1145,25 +1145,143 @@ char *SMSD_RunOnCommand(const char *command, const GSM_StringArray *arguments)
 }
 
 #ifdef WIN32
-#define setenv(var, value, force) SetEnvironmentVariable(var, value)
+#define setenv(var, value, force) SetEnvironmentVariableA(var, value)
 #endif
 
 /**
- * Fills in environment with information about messages.
+ * Fills in environment with date and time information about a message.
  */
-void SMSD_RunOnReceiveEnvironment(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config)
+static void SMSD_RunOnDateTimeEnvironment(int index, const char *prefix, GSM_DateTime datetime)
+{
+	char datetime_buffer[100], name[100], timestamp_buffer[100];
+	char timezone_sign;
+	int written;
+	long long timezone;
+	time_t timestamp;
+
+	snprintf(name, sizeof(name), "SMS_%d_%sTIMESTAMP", index, prefix);
+	setenv(name, "", 1);
+	snprintf(name, sizeof(name), "SMS_%d_%sDATETIME", index, prefix);
+	setenv(name, "", 1);
+
+	if (datetime.Year < 1 || datetime.Hour < 0 || datetime.Minute < 0 ||
+	    datetime.Second < 0 || !CheckDate(&datetime) || !CheckTime(&datetime)) {
+		return;
+	}
+
+	timestamp = Fill_Time_T(datetime);
+	if (timestamp != (time_t)-1) {
+		snprintf(timestamp_buffer, sizeof(timestamp_buffer), "%lld", (long long)timestamp);
+		snprintf(name, sizeof(name), "SMS_%d_%sTIMESTAMP", index, prefix);
+		setenv(name, timestamp_buffer, 1);
+	}
+
+	timezone = datetime.Timezone;
+	if (timezone < 0) {
+		timezone_sign = '-';
+		timezone = -timezone;
+	} else {
+		timezone_sign = '+';
+	}
+	written = snprintf(datetime_buffer, sizeof(datetime_buffer),
+		"%04d-%02d-%02dT%02d:%02d:%02d%c%02lld:%02lld",
+		datetime.Year, datetime.Month, datetime.Day,
+		datetime.Hour, datetime.Minute, datetime.Second,
+		timezone_sign, timezone / 3600, (timezone % 3600) / 60);
+	if (written < 0 || (size_t)written >= sizeof(datetime_buffer)) {
+		return;
+	}
+	snprintf(name, sizeof(name), "SMS_%d_%sDATETIME", index, prefix);
+	setenv(name, datetime_buffer, 1);
+}
+
+/**
+ * Reads a previous RunOn item count from the inherited environment.
+ */
+static int SMSD_RunOnEnvironmentCount(const char *name)
+{
+	const char *value;
+	char *end;
+	long count;
+#ifdef WIN32
+	char value_buffer[100];
+	DWORD length;
+
+	length = GetEnvironmentVariableA(name, value_buffer, sizeof(value_buffer));
+	if (length == 0 || length >= sizeof(value_buffer)) {
+		return 0;
+	}
+	value = value_buffer;
+#else
+	value = getenv(name);
+#endif
+	if (value == NULL || *value == 0) {
+		return 0;
+	}
+
+	count = strtol(value, &end, 10);
+	if (*end != 0 || count < 1) {
+		return 0;
+	}
+	if (count > GSM_MAX_MULTI_SMS) {
+		return GSM_MAX_MULTI_SMS;
+	}
+	return (int)count;
+}
+
+/**
+ * Clears message data left by an earlier RunOn hook.
+ */
+static void SMSD_ClearRunOnEnvironment(void)
+{
+	static const char *message_names[] = {
+		"CLASS", "REFERENCE", "NUMBER", "TEXT", "SENT_ID",
+		"TIMESTAMP", "DATETIME", "SMSC_TIMESTAMP", "SMSC_DATETIME"
+	};
+	static const char *decoded_names[] = {
+		"TEXT", "MMS_SENDER", "MMS_TITLE", "MMS_ADDRESS", "MMS_SIZE"
+	};
+	char name[100];
+	int i;
+	size_t j;
+
+	for (i = 1; i <= SMSD_RunOnEnvironmentCount("SMS_MESSAGES"); i++) {
+		for (j = 0; j < sizeof(message_names) / sizeof(message_names[0]); j++) {
+			snprintf(name, sizeof(name), "SMS_%d_%s", i, message_names[j]);
+			setenv(name, "", 1);
+		}
+	}
+	for (i = 1; i <= SMSD_RunOnEnvironmentCount("DECODED_PARTS"); i++) {
+		for (j = 0; j < sizeof(decoded_names) / sizeof(decoded_names[0]); j++) {
+			snprintf(name, sizeof(name), "DECODED_%d_%s", i, decoded_names[j]);
+			setenv(name, "", 1);
+		}
+	}
+}
+
+/**
+ * Fills in environment with information for RunOn hooks.
+ */
+void SMSD_RunOnEnvironment(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, const GSM_StringArray *SentIDs, gboolean is_receive)
 {
 	GSM_MultiPartSMSInfo SMSInfo;
+	GSM_DateTime empty_datetime;
 	char buffer[100], name[100];
 	int i;
+
+	memset(&empty_datetime, 0, sizeof(empty_datetime));
+	SMSD_ClearRunOnEnvironment();
+	setenv("PHONE_ID", Config->PhoneID == NULL ? "" : Config->PhoneID, 1);
+
+	if (sms == NULL) {
+		setenv("SMS_MESSAGES", "0", 1);
+		setenv("DECODED_PARTS", "0", 1);
+		return;
+	}
 
 	/* Raw message data */
 	sprintf(buffer, "%d", sms->Number);
 	setenv("SMS_MESSAGES", buffer, 1);
-
-	if (Config->PhoneID) {
-		setenv("PHONE_ID", Config->PhoneID, 1);
-	}
 
 	for (i = 0; i < sms->Number; i++) {
 		sprintf(buffer, "%d", sms->SMS[i].Class);
@@ -1174,9 +1292,24 @@ void SMSD_RunOnReceiveEnvironment(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Conf
 		setenv(name, buffer, 1);
 		sprintf(name, "SMS_%d_NUMBER", i + 1);
 		setenv(name, DecodeUnicodeConsole(sms->SMS[i].Number), 1);
+		sprintf(name, "SMS_%d_TEXT", i + 1);
+		setenv(name, "", 1);
 		if (sms->SMS[i].Coding != SMS_Coding_8bit && sms->SMS[i].UDH.Type != UDH_UserUDH) {
-			sprintf(name, "SMS_%d_TEXT", i + 1);
 			setenv(name, DecodeUnicodeConsole(sms->SMS[i].Text), 1);
+		}
+
+		sprintf(name, "SMS_%d_SENT_ID", i + 1);
+		setenv(name, "", 1);
+		if (SentIDs != NULL && (size_t)i < SentIDs->used &&
+		    is_receive && sms->SMS[i].PDU == SMS_Status_Report) {
+			setenv(name, SentIDs->data[i], 1);
+		}
+
+		SMSD_RunOnDateTimeEnvironment(i + 1, "", sms->SMS[i].DateTime);
+		if (is_receive && sms->SMS[i].PDU == SMS_Status_Report) {
+			SMSD_RunOnDateTimeEnvironment(i + 1, "SMSC_", sms->SMS[i].SMSCTime);
+		} else {
+			SMSD_RunOnDateTimeEnvironment(i + 1, "SMSC_", empty_datetime);
 		}
 	}
 
@@ -1185,6 +1318,16 @@ void SMSD_RunOnReceiveEnvironment(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Conf
 		sprintf(buffer, "%d", SMSInfo.EntriesNum);
 		setenv("DECODED_PARTS", buffer, 1);
 		for (i = 0; i < SMSInfo.EntriesNum; i++) {
+			sprintf(name, "DECODED_%d_TEXT", i + 1);
+			setenv(name, "", 1);
+			sprintf(name, "DECODED_%d_MMS_SENDER", i + 1);
+			setenv(name, "", 1);
+			sprintf(name, "DECODED_%d_MMS_TITLE", i + 1);
+			setenv(name, "", 1);
+			sprintf(name, "DECODED_%d_MMS_ADDRESS", i + 1);
+			setenv(name, "", 1);
+			sprintf(name, "DECODED_%d_MMS_SIZE", i + 1);
+			setenv(name, "", 1);
 			switch (SMSInfo.Entries[i].ID) {
 				case SMS_ConcatenatedTextLong:
 				case SMS_ConcatenatedAutoTextLong:
@@ -1224,7 +1367,7 @@ void SMSD_RunOnReceiveEnvironment(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Conf
  *
  * This is Windows variant.
  */
-gboolean SMSD_RunOn(const char *command, GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, const GSM_StringArray *arguments, const char *event)
+gboolean SMSD_RunOn(const char *command, GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, const GSM_StringArray *arguments, const GSM_StringArray *SentIDs, const char *event)
 {
 	BOOL ret;
 	STARTUPINFO si;
@@ -1238,9 +1381,7 @@ gboolean SMSD_RunOn(const char *command, GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 	}
 
 	/* Prepare environment */
-	if (sms != NULL) {
-		SMSD_RunOnReceiveEnvironment(sms, Config);
-	}
+	SMSD_RunOnEnvironment(sms, Config, SentIDs, event != NULL && strcmp(event, "receive") == 0);
 
 	ZeroMemory(&si, sizeof(si));
 	si.cb = sizeof(si);
@@ -1275,7 +1416,7 @@ gboolean SMSD_RunOn(const char *command, GSM_MultiSMSMessage *sms, GSM_SMSDConfi
  *
  * This is POSIX variant.
  */
-gboolean SMSD_RunOn(const char *command, GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, const GSM_StringArray *arguments, const char *event)
+gboolean SMSD_RunOn(const char *command, GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, const GSM_StringArray *arguments, const GSM_StringArray *SentIDs, const char *event)
 {
 	int pid;
 	int pipefd[2];
@@ -1364,9 +1505,7 @@ out:
 	close(pipefd[0]);
 
 	/* Prepare environment */
-	if (sms != NULL) {
-		SMSD_RunOnReceiveEnvironment(sms, Config);
-	}
+	SMSD_RunOnEnvironment(sms, Config, SentIDs, event != NULL && strcmp(event, "receive") == 0);
 
 	/* Calculate command line */
 	cmdline = SMSD_RunOnCommand(command, arguments);
@@ -1420,7 +1559,7 @@ static gboolean SMSD_RunOnSingle(const char *command, GSM_MultiSMSMessage *sms, 
 		return FALSE;
 	}
 
-	result = SMSD_RunOn(command, sms, Config, &arguments, event);
+	result = SMSD_RunOn(command, sms, Config, &arguments, NULL, event);
 	GSM_StringArray_Free(&arguments);
 	return result;
 }
@@ -1506,18 +1645,21 @@ GSM_Error SMSD_ProcessSMS(GSM_SMSDConfig *Config, GSM_MultiSMSMessage *sms)
 {
 	GSM_Error error = ERR_NONE;
 	GSM_StringArray locations;
+	GSM_StringArray sent_ids;
 
 	GSM_StringArray_New(&locations);
+	GSM_StringArray_New(&sent_ids);
 	/* Increase message counter */
 	Config->Status->Received += sms->Number;
 	/* Send message to the backend */
-	error = Config->Service->SaveInboxSMS(sms, Config, &locations);
+	error = Config->Service->SaveInboxSMS(sms, Config, &locations, &sent_ids);
 	/* RunOnReceive handling */
 	if (Config->RunOnReceive != NULL && error == ERR_NONE) {
-		SMSD_RunOn(Config->RunOnReceive, sms, Config, &locations, "receive");
+		SMSD_RunOn(Config->RunOnReceive, sms, Config, &locations, &sent_ids, "receive");
 	}
 	/* Free memory allocated by SaveInboxSMS */
 	GSM_StringArray_Free(&locations);
+	GSM_StringArray_Free(&sent_ids);
 	return error;
 }
 

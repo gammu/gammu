@@ -83,7 +83,8 @@ Added in version 1.38.2.
 
 .sp
 Value of \fBPhoneID\fP \%<#\:option-PhoneID>\&. Useful when running multiple instances
-(see Multiple modems \%<#\:smsd-multi>).
+(see Multiple modems \%<#\:smsd-multi>). This variable is available to all \fBRunOn\fP
+directives, including calls which do not provide message details.
 .UNINDENT
 .SS Per message variables
 .sp
@@ -111,6 +112,41 @@ Added in version 1.38.5.
 
 .sp
 Message Reference. If delivery status received, this variable contains TPMR of original message
+.UNINDENT
+.INDENT 0.0
+.TP
+.B SMS_1_SENT_ID
+For a delivery report matched by a database backend, the ID of the
+corresponding row in the \fBsentitems\fP table. The value is empty for other
+messages, when no matching sent message was found, and for non\-database
+backends.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B SMS_1_TIMESTAMP
+Message date and time as seconds since the Unix epoch. For a received
+message this is the service center timestamp. For a delivery report this is
+the time when the service center received the original message. The value
+is empty when the message does not contain a valid date and time.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B SMS_1_DATETIME
+The same value as \fBSMS_1_TIMESTAMP\fP, formatted as ISO 8601 with a
+timezone offset, for example \fB2024\-01\-02T03:04:05+01:30\fP\&.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B SMS_1_SMSC_TIMESTAMP
+For a delivery report, the discharge time as seconds since the Unix epoch.
+The value is empty for other messages or when the report does not contain a
+valid discharge time.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B SMS_1_SMSC_DATETIME
+The same value as \fBSMS_1_SMSC_TIMESTAMP\fP, formatted as ISO 8601
+with a timezone offset.
 .UNINDENT
 .SS Per part variables
 .sp

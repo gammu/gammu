@@ -53,7 +53,8 @@ Global variables
     .. versionadded:: 1.38.2
 
     Value of :config:option:`PhoneID`. Useful when running multiple instances
-    (see :ref:`smsd-multi`).
+    (see :ref:`smsd-multi`). This variable is available to all ``RunOn``
+    directives, including calls which do not provide message details.
 
 Per message variables
 +++++++++++++++++++++
@@ -78,6 +79,36 @@ message, where 1 is replaced by current number of message.
     .. versionadded:: 1.38.5
 
     Message Reference. If delivery status received, this variable contains TPMR of original message
+
+.. envvar:: SMS_1_SENT_ID
+
+    For a delivery report matched by a database backend, the ID of the
+    corresponding row in the ``sentitems`` table. The value is empty for other
+    messages, when no matching sent message was found, and for non-database
+    backends.
+
+.. envvar:: SMS_1_TIMESTAMP
+
+    Message date and time as seconds since the Unix epoch. For a received
+    message this is the service center timestamp. For a delivery report this is
+    the time when the service center received the original message. The value
+    is empty when the message does not contain a valid date and time.
+
+.. envvar:: SMS_1_DATETIME
+
+    The same value as :envvar:`SMS_1_TIMESTAMP`, formatted as ISO 8601 with a
+    timezone offset, for example ``2024-01-02T03:04:05+01:30``.
+
+.. envvar:: SMS_1_SMSC_TIMESTAMP
+
+    For a delivery report, the discharge time as seconds since the Unix epoch.
+    The value is empty for other messages or when the report does not contain a
+    valid discharge time.
+
+.. envvar:: SMS_1_SMSC_DATETIME
+
+    The same value as :envvar:`SMS_1_SMSC_TIMESTAMP`, formatted as ISO 8601
+    with a timezone offset.
 
 Per part variables
 ++++++++++++++++++

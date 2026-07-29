@@ -83,7 +83,7 @@ int main(int argc, char **argv)
 	EncodeUnicode(sms.SMS[0].Number, "123", 3);
 	memcpy(sms.SMS[0].Text, expected + 2, sizeof(expected) - 2);
 
-	error = SMSDFiles.SaveInboxSMS(&sms, &config, &locations);
+	error = SMSDFiles.SaveInboxSMS(&sms, &config, &locations, NULL);
 	if (error != ERR_NONE) {
 		fprintf(stderr, "Failed to save inbox message: %s\n", GSM_ErrorString(error));
 		result = 1;
