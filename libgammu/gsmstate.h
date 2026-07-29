@@ -1464,7 +1464,7 @@ struct _GSM_User {
 /**
  * Maximum number of concurrent configurations.
  */
-#define MAX_CONFIG_NUM		5
+#define MAX_CONFIG_NUM		6
 
 struct _GSM_StateMachine {
 	GSM_ConnectionType 	ConnectionType;				/**< Type of connection as int			*/
@@ -1479,7 +1479,7 @@ struct _GSM_StateMachine {
 	char			*LockFile;				/**< Lock file name for Unix 			*/
 	GSM_Debug_Info		di;					/**< Debug information				*/
 	gboolean			opened;					/**< Is connection opened ?			*/
-	GSM_Config		Config[MAX_CONFIG_NUM + 1];		/**< Configuration data */
+	GSM_Config		Config[MAX_CONFIG_NUM];			/**< Configuration data */
 	GSM_Config		*CurrentConfig;				/**< Config file (or Registry or...) variables 	*/
 	int			ConfigNum;				/**< Number of actual configurations */
 	int			ReplyNum;				/**< How many times make sth. 			*/
