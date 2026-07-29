@@ -1820,6 +1820,21 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config)
 		/* No outbox sms */
 		return error;
 	}
+	if (error == ERR_FILEALREADYEXIST || error == ERR_BUSY) {
+		if (error == ERR_FILEALREADYEXIST) {
+			SMSD_Log(DEBUG_ERROR, Config, "Outbox message %s conflicts with sentitems, leaving it queued without sending", Config->SMSID);
+		} else {
+			SMSD_Log(DEBUG_ERROR, Config, "Could not reconcile outbox message %s with sentitems, leaving it queued without sending", Config->SMSID);
+		}
+		/*
+		 * Do not let UpdateRetries copy modem state from the previously
+		 * processed message to an outbox entry which was never sent.
+		 */
+		Config->StatusCode = -1;
+		Config->Part = -1;
+		Config->Service->UpdateRetries(Config, Config->SMSID);
+		return error;
+	}
 	if (error != ERR_NONE) {
 		/* Unknown error - escape */
 		SMSD_Log(DEBUG_INFO, Config, "Error in outbox on '%s'", Config->SMSID);

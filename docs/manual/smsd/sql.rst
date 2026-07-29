@@ -319,6 +319,33 @@ are selected for default queries during initialization.
     ``%2``
         Number of multipart message
 
+.. config:option:: find_sent_item
+
+    Find an existing sent message before transmission. SMSD uses this to
+    reconcile messages which were written to ``sentitems`` but not removed
+    from ``outbox``, for example when the daemon stopped between these two
+    operations.
+
+    The selected columns and their order are mandatory. SMSD compares the
+    stored message identity and payload with the outbox message. A matching
+    successfully sent message is skipped; a different message using the same
+    ID is left in the outbox and reported as a conflict.
+
+    Default value:
+
+    .. code-block:: sql
+
+        SELECT Text, Coding, UDH, Class, TextDecoded, DestinationNumber,
+        InsertIntoDB, RelativeValidity, CreatorID, Status
+        FROM sentitems WHERE ID=%1 AND SequencePosition=%2
+
+    Query specific parameters:
+
+    ``%1``
+        ID of message
+    ``%2``
+        Number of multipart message
+
 .. config:option:: delete_outbox
 
     Remove messages from outbox after threir successful send.

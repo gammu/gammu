@@ -923,6 +923,174 @@ static GSM_Error SMSDSQL_UpdateRetries(GSM_SMSDConfig * Config, char *ID)
 	return ERR_NONE;
 }
 
+static gboolean SMSDSQL_StringEquals(const char *actual, const char *expected)
+{
+	return actual != NULL && strcmp(actual, expected) == 0;
+}
+
+static gboolean SMSDSQL_StatusWasSent(const char *status)
+{
+	if (status == NULL) {
+		return FALSE;
+	}
+
+	return strcmp(status, "SendingOK") == 0 ||
+		strcmp(status, "SendingOKNoReport") == 0 ||
+		strcmp(status, "DeliveryOK") == 0 ||
+		strcmp(status, "DeliveryFailed") == 0 ||
+		strcmp(status, "DeliveryPending") == 0 ||
+		strcmp(status, "DeliveryUnknown") == 0;
+}
+
+/*
+ * Checks whether a sentitems row belongs to the same outbox message.
+ *
+ * A matching successful row means the modem send and sentitems insert
+ * completed previously, but removing the outbox row did not. A different row
+ * with the same key means the outbox ID was reused. Both cases must be handled
+ * before talking to the modem.
+ */
+static GSM_Error SMSDSQL_ReconcileSentItem(
+	GSM_SMSMessage *sms,
+	GSM_SMSDConfig *Config,
+	char *ID,
+	int Part,
+	time_t InsertIntoDB,
+	gboolean *AlreadySent)
+{
+	SQL_result res;
+	struct GSM_SMSDdbobj *db = Config->db;
+	GSM_Error error;
+	SQL_Var vars[3] = {
+		{SQL_TYPE_STRING, {ID}},
+		{SQL_TYPE_INT, {NULL}},
+		{SQL_TYPE_NONE, {NULL}}};
+	char expected_text[(GSM_MAX_SMS_LENGTH + 1) * 4 + 1];
+	char expected_decoded[(GSM_MAX_SMS_LENGTH + 1) * 4 + 1];
+	char expected_udh[GSM_MAX_UDH_LENGTH * 2 + 1];
+	char expected_destination[GSM_MAX_NUMBER_LENGTH * 3 + 1];
+	const char *status;
+	long long sent_validity;
+	gboolean matches = TRUE;
+	gboolean was_sent;
+
+	*AlreadySent = FALSE;
+	vars[1].v.i = Part;
+
+	error = SMSDSQL_NamedQuery(
+		Config,
+		Config->SMSDSQL_queries[SQL_QUERY_FIND_SENT_ITEM],
+		NULL,
+		NULL,
+		vars,
+		&res,
+		FALSE);
+	if (error != ERR_NONE) {
+		SMSD_Log(DEBUG_ERROR, Config, "Error checking sent message state (%s)", __FUNCTION__);
+		return ERR_BUSY;
+	}
+	if (db->NextRow(Config, &res) != 1) {
+		db->FreeResult(Config, &res);
+		return ERR_EMPTY;
+	}
+
+	expected_text[0] = 0;
+	expected_decoded[0] = 0;
+	switch (sms->Coding) {
+		case SMS_Coding_Unicode_No_Compression:
+		case SMS_Coding_Default_No_Compression:
+			EncodeHexUnicode(expected_text, sms->Text, UnicodeLength(sms->Text));
+			EncodeUTF8(expected_decoded, sms->Text);
+			break;
+		case SMS_Coding_8bit:
+			EncodeHexBin(expected_text, sms->Text, sms->Length);
+			break;
+		default:
+			break;
+	}
+
+	if (sms->UDH.Type != UDH_NoUDH) {
+		EncodeHexBin(expected_udh, sms->UDH.Text, sms->UDH.Length);
+	} else {
+		expected_udh[0] = 0;
+	}
+
+	if (sms->Number[0] == '0' && sms->Number[1] == '0') {
+		expected_destination[0] = '+';
+		EncodeUTF8(expected_destination + 1, sms->Number + 2);
+	} else {
+		EncodeUTF8(expected_destination, sms->Number);
+	}
+
+	if (!SMSDSQL_StringEquals(db->GetString(Config, &res, 0), expected_text)) {
+		matches = FALSE;
+	}
+	if (!SMSDSQL_StringEquals(db->GetString(Config, &res, 1), GSM_SMSCodingToString(sms->Coding))) {
+		matches = FALSE;
+	}
+	if (!SMSDSQL_StringEquals(db->GetString(Config, &res, 2), expected_udh)) {
+		matches = FALSE;
+	}
+	if (db->GetNumber(Config, &res, 3) != sms->Class) {
+		matches = FALSE;
+	}
+	if (!SMSDSQL_StringEquals(db->GetString(Config, &res, 4), expected_decoded)) {
+		matches = FALSE;
+	}
+	if (!SMSDSQL_StringEquals(db->GetString(Config, &res, 5), expected_destination)) {
+		matches = FALSE;
+	}
+	if (db->GetDate(Config, &res, 6) != InsertIntoDB) {
+		matches = FALSE;
+	}
+	sent_validity = db->GetNumber(Config, &res, 7);
+	/*
+	 * -1 means the SMSC validity is inherited. In that case add_sent_info
+	 * stores the effective value obtained from the configured or phone SMSC,
+	 * which is not available while reconciling the outbox row.
+	 */
+	if (Config->relativevalidity != -1 && sent_validity != Config->relativevalidity) {
+		matches = FALSE;
+	}
+	if (!SMSDSQL_StringEquals(db->GetString(Config, &res, 8), Config->CreatorID)) {
+		matches = FALSE;
+	}
+	status = db->GetString(Config, &res, 9);
+	was_sent = SMSDSQL_StatusWasSent(status);
+
+	if (!matches) {
+		SMSD_Log(
+			DEBUG_ERROR,
+			Config,
+			"Refusing to send %s:%d: sentitems contains different message data for this key",
+			ID,
+			Part);
+		error = ERR_FILEALREADYEXIST;
+	} else if (!was_sent) {
+		SMSD_Log(
+			DEBUG_ERROR,
+			Config,
+			"Refusing to send %s:%d: sentitems already contains non-success status %s",
+			ID,
+			Part,
+			status == NULL ? "(null)" : status);
+		error = ERR_FILEALREADYEXIST;
+	} else {
+		SMSD_Log(
+			DEBUG_NOTICE,
+			Config,
+			"Found matching sentitems row for %s:%d with status %s, skipping duplicate transmission",
+			ID,
+			Part,
+			status);
+		*AlreadySent = TRUE;
+		error = ERR_NONE;
+	}
+
+	db->FreeResult(Config, &res);
+	return error;
+}
+
 /* Find one multi SMS to sending and return it (or return ERR_EMPTY)
  * There is also set ID for SMS
  */
@@ -942,6 +1110,7 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 	const char *q;
 	const char *status;
 	size_t udh_len;
+	gboolean already_sent;
 	SQL_Var vars[3];
 	GSM_Error error;
 
@@ -1110,8 +1279,22 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 			Config->SkipMessage[sms->Number] = FALSE;
 		}
 
-		sms->Number++;
 		db->FreeResult(Config, &res);
+		if (Config->SkipMessage[sms->Number] == FALSE) {
+			error = SMSDSQL_ReconcileSentItem(
+				&sms->SMS[sms->Number],
+				Config,
+				ID,
+				i,
+				timestamp,
+				&already_sent);
+			if (error == ERR_NONE && already_sent) {
+				Config->SkipMessage[sms->Number] = TRUE;
+			} else if (error != ERR_EMPTY) {
+				return error;
+			}
+		}
+		sms->Number++;
 		if (last) {
 			last = FALSE;
 			break;
@@ -1633,6 +1816,24 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 			", ", ESCAPE_FIELD("Status"),
 			", ", ESCAPE_FIELD("StatusCode"),
 			" FROM ", Config->table_outbox_multipart, " WHERE ",
+			ESCAPE_FIELD("ID"), "=%1 AND ",
+			ESCAPE_FIELD("SequencePosition"), "=%2", NULL) != ERR_NONE) {
+		return ERR_UNKNOWN;
+	}
+
+	if (SMSDSQL_option(Config, SQL_QUERY_FIND_SENT_ITEM, "find_sent_item",
+		"SELECT ",
+			ESCAPE_FIELD("Text"),
+			", ", ESCAPE_FIELD("Coding"),
+			", ", ESCAPE_FIELD("UDH"),
+			", ", ESCAPE_FIELD("Class"),
+			", ", ESCAPE_FIELD("TextDecoded"),
+			", ", ESCAPE_FIELD("DestinationNumber"),
+			", ", ESCAPE_FIELD("InsertIntoDB"),
+			", ", ESCAPE_FIELD("RelativeValidity"),
+			", ", ESCAPE_FIELD("CreatorID"),
+			", ", ESCAPE_FIELD("Status"),
+			" FROM ", Config->table_sentitems, " WHERE ",
 			ESCAPE_FIELD("ID"), "=%1 AND ",
 			ESCAPE_FIELD("SequencePosition"), "=%2", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
