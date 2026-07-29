@@ -942,13 +942,19 @@ static gboolean SMSDSQL_StatusWasSent(const char *status)
 		strcmp(status, "DeliveryUnknown") == 0;
 }
 
+static gboolean SMSDSQL_StatusWasSendingError(const char *status)
+{
+	return status != NULL && strcmp(status, "SendingError") == 0;
+}
+
 /*
  * Checks whether a sentitems row belongs to the same outbox message.
  *
  * A matching successful row means the modem send and sentitems insert
- * completed previously, but removing the outbox row did not. A different row
- * with the same key means the outbox ID was reused. Both cases must be handled
- * before talking to the modem.
+ * completed previously, but removing the outbox row did not. A matching
+ * SendingError row means max-retry handling recorded the failure, but did not
+ * remove the outbox row. A different row with the same key means the outbox ID
+ * was reused. All cases must be handled before talking to the modem.
  */
 static GSM_Error SMSDSQL_ReconcileSentItem(
 	GSM_SMSMessage *sms,
@@ -956,7 +962,7 @@ static GSM_Error SMSDSQL_ReconcileSentItem(
 	char *ID,
 	int Part,
 	time_t InsertIntoDB,
-	gboolean *AlreadySent)
+	gboolean *SkipSend)
 {
 	SQL_result res;
 	struct GSM_SMSDdbobj *db = Config->db;
@@ -974,7 +980,7 @@ static GSM_Error SMSDSQL_ReconcileSentItem(
 	gboolean matches = TRUE;
 	gboolean was_sent;
 
-	*AlreadySent = FALSE;
+	*SkipSend = FALSE;
 	vars[1].v.i = Part;
 
 	error = SMSDSQL_NamedQuery(
@@ -1066,6 +1072,15 @@ static GSM_Error SMSDSQL_ReconcileSentItem(
 			ID,
 			Part);
 		error = ERR_FILEALREADYEXIST;
+	} else if (SMSDSQL_StatusWasSendingError(status)) {
+		SMSD_Log(
+			DEBUG_NOTICE,
+			Config,
+			"Found matching sentitems failure for %s:%d, completing interrupted error cleanup",
+			ID,
+			Part);
+		*SkipSend = TRUE;
+		error = ERR_NONE;
 	} else if (!was_sent) {
 		SMSD_Log(
 			DEBUG_ERROR,
@@ -1083,7 +1098,7 @@ static GSM_Error SMSDSQL_ReconcileSentItem(
 			ID,
 			Part,
 			status);
-		*AlreadySent = TRUE;
+		*SkipSend = TRUE;
 		error = ERR_NONE;
 	}
 
@@ -1110,7 +1125,7 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 	const char *q;
 	const char *status;
 	size_t udh_len;
-	gboolean already_sent;
+	gboolean skip_send;
 	SQL_Var vars[3];
 	GSM_Error error;
 
@@ -1287,8 +1302,8 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 				ID,
 				i,
 				timestamp,
-				&already_sent);
-			if (error == ERR_NONE && already_sent) {
+				&skip_send);
+			if (error == ERR_NONE && skip_send) {
 				Config->SkipMessage[sms->Number] = TRUE;
 			} else if (error != ERR_EMPTY) {
 				return error;
