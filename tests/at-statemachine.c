@@ -14,11 +14,14 @@ static const char *test_data = "+CUSD: 2,\"Maaf, permintaan Anda tidak dapat kam
 
 static const char *second_test = "+CMTI: \"SM\",1\r\nAT+CPMS=\"SM\",\"SM\"\r\r\n+CPMS: 1,20,1,20,1,20\r\n\r\nOK\r\n";
 
+static const char *nwtime_test = "^NWTIME: 18/03/09,12:36:21+4,00\r\nAT+CPMS=\"SM\",\"SM\"\r\r\n+CPMS: 0,20,0,20,0,20\r\n\r\nOK\r\n";
+
 int main(int argc UNUSED, char **argv UNUSED)
 {
 	GSM_Debug_Info *debug_info;
 	GSM_Phone_ATGENData *Priv;
 	GSM_Phone_Data *Data;
+	GSM_SMSMemoryStatus SMSStatus;
 	GSM_StateMachine *s;
 	GSM_Protocol_ATData *d;
 	size_t i;
@@ -85,6 +88,22 @@ int main(int argc UNUSED, char **argv UNUSED)
 	}
 
 	test_result(s->MessagesCount == 6);
+
+	memset(&SMSStatus, 0, sizeof(SMSStatus));
+	Data->SMSStatus = &SMSStatus;
+	Data->RequestID = ID_GetSMSStatus;
+
+	/* Unsolicited Huawei network time must not contaminate a command reply. */
+	for (i = 0; i < strlen(nwtime_test); i++) {
+		error = AT_StateMachine(s, nwtime_test[i]);
+		gammu_test_result(error, "AT_StateMachine");
+	}
+
+	test_result(Data->RequestID == ID_None);
+	test_result(Data->DispatchError == ERR_NONE);
+	test_result(SMSStatus.SIMUsed == 0);
+	test_result(SMSStatus.SIMSize == 20);
+	test_result(s->MessagesCount == 8);
 
 	/* Free state machine */
 	GSM_FreeStateMachine(s);

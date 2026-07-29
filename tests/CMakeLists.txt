@@ -1022,6 +1022,12 @@ if (WITH_ATGEN)
     add_test(at-statemachine "${GAMMU_TEST_PATH}/at-statemachine${CMAKE_EXECUTABLE_SUFFIX}")
 endif (WITH_ATGEN)
 
+# Reply timeout
+add_executable(wait-reply-timeout wait-reply-timeout.c)
+add_coverage(wait-reply-timeout)
+target_link_libraries(wait-reply-timeout libGammu ${LIBINTL_LIBRARIES})
+add_test(wait-reply-timeout "${GAMMU_TEST_PATH}/wait-reply-timeout${CMAKE_EXECUTABLE_SUFFIX}")
+
 # Line parser tests
 add_executable(line-splitting line-splitting.c)
 add_coverage(line-splitting)
