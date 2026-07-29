@@ -966,6 +966,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 	}
 
 	Config->retries 	  = 0;
+	Config->SMSID[0] 	  = 0;
 	Config->prevSMSID[0] 	  = 0;
 	Config->relativevalidity  = -1;
 	Config->Status = NULL;
@@ -1813,6 +1814,8 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config)
 	for (i = 0; i < GSM_MAX_MULTI_SMS; i++) {
 		GSM_SetDefaultSMSData(&sms.SMS[i]);
 	}
+	sms.Number = 0;
+	Config->SMSID[0] = 0;
 
 	error = Config->Service->FindOutboxSMS(&sms, Config, Config->SMSID);
 
@@ -1823,11 +1826,13 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config)
 	if (error != ERR_NONE) {
 		/* Unknown error - escape */
 		SMSD_Log(DEBUG_INFO, Config, "Error in outbox on '%s'", Config->SMSID);
-		for (i = 0; i < sms.Number; i++) {
-			Config->Status->Failed++;
-			Config->Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_ERROR, -1);
+		if (Config->SMSID[0] != 0) {
+			for (i = 0; i < sms.Number; i++) {
+				Config->Status->Failed++;
+				Config->Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_ERROR, -1);
+			}
+			Config->Service->MoveSMS(&sms,Config, Config->SMSID, TRUE,FALSE);
 		}
-		Config->Service->MoveSMS(&sms,Config, Config->SMSID, TRUE,FALSE);
 		return error;
 	}
 

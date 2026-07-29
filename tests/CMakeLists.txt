@@ -1242,13 +1242,15 @@ add_test(smsd-files-unicode-write
     "${CMAKE_CURRENT_BINARY_DIR}/smsd-files-inbox/")
 set_tests_properties(smsd-files-unicode-write PROPERTIES SKIP_RETURN_CODE 77)
 
-file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/smsd-files-outbox-data")
-add_executable(smsd-files-outbox smsd-files-outbox.c)
-add_coverage(smsd-files-outbox)
-target_link_libraries(smsd-files-outbox libGammu ${LIBINTL_LIBRARIES} gsmsd)
-add_test(smsd-files-long-outbox-name
-    "${GAMMU_TEST_PATH}/smsd-files-outbox${CMAKE_EXECUTABLE_SUFFIX}"
-    "${CMAKE_CURRENT_BINARY_DIR}/smsd-files-outbox-data/")
+if (WIN32 OR (HAVE_DIRENT_H AND HAVE_SCANDIR AND HAVE_ALPHASORT))
+    file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/smsd-files-outbox-data")
+    add_executable(smsd-files-outbox smsd-files-outbox.c)
+    add_coverage(smsd-files-outbox)
+    target_link_libraries(smsd-files-outbox libGammu ${LIBINTL_LIBRARIES} gsmsd)
+    add_test(smsd-files-long-outbox-name
+        "${GAMMU_TEST_PATH}/smsd-files-outbox${CMAKE_EXECUTABLE_SUFFIX}"
+        "${CMAKE_CURRENT_BINARY_DIR}/smsd-files-outbox-data/")
+endif()
 
 if (NOT WIN32)
     add_executable(smsd-run-helper smsd-run-helper.c)

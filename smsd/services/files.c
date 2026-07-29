@@ -69,9 +69,9 @@ static void SMSDFiles_DecodeNumber(char *string)
 	}
 }
 
-static GSM_Error SMSDFiles_BuildPath(char *result, size_t result_size,
-				     const char *path, const char *name,
-				     GSM_SMSDConfig *Config)
+static GSM_Error SMSDFiles_ValidatePath(size_t result_size,
+					const char *path, const char *name,
+					GSM_SMSDConfig *Config)
 {
 	size_t path_length = strlen(path);
 	size_t name_length = strlen(name);
@@ -80,9 +80,21 @@ static GSM_Error SMSDFiles_BuildPath(char *result, size_t result_size,
 		SMSD_Log(DEBUG_ERROR, Config, "Path is too long: %s%s", path, name);
 		return ERR_CANTOPENFILE;
 	}
+	return ERR_NONE;
+}
 
-	memcpy(result, path, path_length);
-	memcpy(result + path_length, name, name_length + 1);
+static GSM_Error SMSDFiles_BuildPath(char *result, size_t result_size,
+				     const char *path, const char *name,
+				     GSM_SMSDConfig *Config)
+{
+	GSM_Error error;
+
+	error = SMSDFiles_ValidatePath(result_size, path, name, Config);
+	if (error != ERR_NONE) {
+		return error;
+	}
+
+	snprintf(result, result_size, "%s%s", path, name);
 	return ERR_NONE;
 }
 
@@ -327,6 +339,14 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConf
 	if (error != ERR_NONE) {
 		return error;
 	}
+	error = SMSDFiles_ValidatePath(sizeof(FullName), Config->sentsmspath, FileName, Config);
+	if (error != ERR_NONE) {
+		return error;
+	}
+	error = SMSDFiles_ValidatePath(sizeof(FullName), Config->errorsmspath, FileName, Config);
+	if (error != ERR_NONE) {
+		return error;
+	}
 
 	if (backup) {
 #ifdef GSM_ENABLE_BACKUP
@@ -492,6 +512,10 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConf
 			return ERR_UNKNOWN;
 		}
 
+		if (phlen > GSM_MAX_NUMBER_LENGTH) {
+			SMSD_Log(DEBUG_ERROR, Config, "Recipient in outbox filename is too long: %s", ID);
+			return ERR_INVALIDDATA;
+		}
 		SMSDFiles_DecodeNumber(pos1);
 		for (i = 0; i < sms->Number; i++) {
 			EncodeUnicode(sms->SMS[i].Number, pos1, phlen);
