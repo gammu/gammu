@@ -99,7 +99,8 @@ struct _GSM_SMSDConfig {
 	int		relativevalidity;
 	unsigned int 	retries;
 	int		currdeliveryreport;
-	unsigned char 	SMSID[200],	 prevSMSID[200];
+	unsigned char 	SMSID[GSM_MAX_FILENAME_LENGTH + 1],
+			prevSMSID[GSM_MAX_FILENAME_LENGTH + 1];
 	GSM_SMSC	SMSC, SMSCCache;
 	const char	*skipsmscnumber;
 	int		IgnoredMessages;

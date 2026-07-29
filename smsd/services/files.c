@@ -69,6 +69,23 @@ static void SMSDFiles_DecodeNumber(char *string)
 	}
 }
 
+static GSM_Error SMSDFiles_BuildPath(char *result, size_t result_size,
+				     const char *path, const char *name,
+				     GSM_SMSDConfig *Config)
+{
+	size_t path_length = strlen(path);
+	size_t name_length = strlen(name);
+
+	if (path_length >= result_size || name_length >= result_size - path_length) {
+		SMSD_Log(DEBUG_ERROR, Config, "Path is too long: %s%s", path, name);
+		return ERR_CANTOPENFILE;
+	}
+
+	memcpy(result, path, path_length);
+	memcpy(result + path_length, name, name_length + 1);
+	return ERR_NONE;
+}
+
 /* Save SMS from phone (called Inbox sms - it's in phone Inbox) somewhere */
 static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig * Config, GSM_StringArray *Locations)
 {
@@ -202,7 +219,7 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConf
 {
 	GSM_MultiPartSMSInfo SMSInfo;
 	GSM_WAPBookmark Bookmark;
-	char FileName[100], FullName[PATH_MAX];
+	char FileName[GSM_MAX_FILENAME_LENGTH + 1], FullName[PATH_MAX];
 	unsigned char Buffer[(GSM_MAX_SMS_LENGTH * GSM_MAX_MULTI_SMS + 1) * 2];
 	unsigned char Buffer2[(GSM_MAX_SMS_LENGTH * GSM_MAX_MULTI_SMS + 1) * 2];
 	FILE *File;
@@ -210,26 +227,35 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConf
 	size_t len, phlen;
 	char *pos1, *pos2, *options = NULL;
 	gboolean backup = FALSE;
+	GSM_Error error;
 #ifdef GSM_ENABLE_BACKUP
 	GSM_SMS_Backup *smsbackup;
-	GSM_Error error;
 #endif
 #ifdef WIN32
 	struct _finddata_t c_file;
 	intptr_t hFile;
 
-	strcpy(FullName, Config->outboxpath);
-	strcat(FullName, "OUT*.txt*");
+	error = SMSDFiles_BuildPath(FullName, sizeof(FullName), Config->outboxpath, "OUT*.txt*", Config);
+	if (error != ERR_NONE) {
+		return error;
+	}
 	hFile = _findfirst(FullName, &c_file);
 	if (hFile == -1) {
-		strcpy(FullName, Config->outboxpath);
-		strcat(FullName, "OUT*.smsbackup*");
+		error = SMSDFiles_BuildPath(FullName, sizeof(FullName), Config->outboxpath, "OUT*.smsbackup*", Config);
+		if (error != ERR_NONE) {
+			return error;
+		}
 		hFile = _findfirst(FullName, &c_file);
 		backup = TRUE;
 	}
 	if (hFile == -1) {
 		return ERR_EMPTY;
 	} else {
+		if (strlen(c_file.name) >= sizeof(FileName)) {
+			_findclose(hFile);
+			SMSD_Log(DEBUG_ERROR, Config, "Outbox filename is too long: %s", c_file.name);
+			return ERR_CANTOPENFILE;
+		}
 		strcpy(FileName, c_file.name);
 	}
 	_findclose(hFile);
@@ -238,7 +264,10 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConf
 	int cur_file, num_files;
 	char *pos;
 
-	strcpy(FullName, Config->outboxpath);
+	error = SMSDFiles_BuildPath(FullName, sizeof(FullName), Config->outboxpath, "", Config);
+	if (error != ERR_NONE) {
+		return error;
+	}
 
 	FullName[strlen(Config->outboxpath) - 1] = '\0';
 
@@ -271,7 +300,11 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConf
 	}
 	/* Remember file name */
 	if (cur_file < num_files) {
-		strcpy(FileName, namelist[cur_file]->d_name);
+		if (strlen(namelist[cur_file]->d_name) >= sizeof(FileName)) {
+			error = ERR_CANTOPENFILE;
+		} else {
+			strcpy(FileName, namelist[cur_file]->d_name);
+		}
 	}
 	/* Free scandir result */
 	for (i = 0; i < num_files; i++) {
@@ -283,11 +316,17 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConf
 	if (cur_file >= num_files) {
 		return ERR_EMPTY;
 	}
+	if (error != ERR_NONE) {
+		SMSD_Log(DEBUG_ERROR, Config, "Outbox filename exceeds the supported limit");
+		return error;
+	}
 #else
 	return ERR_NOTSUPPORTED;
 #endif
-	strcpy(FullName, Config->outboxpath);
-	strcat(FullName, FileName);
+	error = SMSDFiles_BuildPath(FullName, sizeof(FullName), Config->outboxpath, FileName, Config);
+	if (error != ERR_NONE) {
+		return error;
+	}
 
 	if (backup) {
 #ifdef GSM_ENABLE_BACKUP
@@ -502,11 +541,15 @@ static GSM_Error SMSDFiles_MoveSMS(GSM_MultiSMSMessage * sms UNUSED, GSM_SMSDCon
 	}
 
 	// Calculate source path
-	strcpy(ifilename, sourcepath);
-	strcat(ifilename, ID);
+	error = SMSDFiles_BuildPath(ifilename, sizeof(ifilename), sourcepath, ID, Config);
+	if (error != ERR_NONE) {
+		return error;
+	}
 	// Calculate destination path
-	strcpy(ofilename, destpath);
-	strcat(ofilename, ID);
+	error = SMSDFiles_BuildPath(ofilename, sizeof(ofilename), destpath, ID, Config);
+	if (error != ERR_NONE) {
+		return error;
+	}
 
 	// Do move only if paths are not same
 	if (strcmp(ifilename, ofilename) != 0) {
@@ -692,8 +735,10 @@ static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage * sms UNUSED, GSM_
 			 Config->SMSID, (Part == sms->Number ? "total" : "part"), Part, DecodeUnicodeString(sms->SMS[0].Number), TPMR);
 	}
 
-	strcpy(FullPath, Config->outboxpath);
-	strcat(FullPath, Config->SMSID);
+	error = SMSDFiles_BuildPath((char *)FullPath, sizeof(FullPath), Config->outboxpath, (char *)Config->SMSID, Config);
+	if (error != ERR_NONE) {
+		return error;
+	}
 
 	// Read file content
 	GSMFile.Buffer = NULL;
