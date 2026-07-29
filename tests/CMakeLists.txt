@@ -424,6 +424,12 @@ if (WITH_NOKIA6510)
     target_link_libraries(sms-nokia-18 libGammu ${LIBINTL_LIBRARIES})
     target_link_libraries(sms-nokia-18 messagedisplay)
     add_test(sms-nokia-18 "${GAMMU_TEST_PATH}/sms-nokia-18${CMAKE_EXECUTABLE_SUFFIX}")
+
+    add_executable(nokia-6510-netstatus nokia-6510-netstatus.c)
+    add_coverage(nokia-6510-netstatus)
+    target_link_libraries(nokia-6510-netstatus libGammu ${LIBINTL_LIBRARIES})
+    add_test(nokia-6510-netstatus
+        "${GAMMU_TEST_PATH}/nokia-6510-netstatus${CMAKE_EXECUTABLE_SUFFIX}")
 endif (WITH_NOKIA6510)
 
 if (WITH_NOKIA6110)
