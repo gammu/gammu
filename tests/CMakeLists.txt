@@ -1243,13 +1243,14 @@ add_test(smsd-files-unicode-write
 set_tests_properties(smsd-files-unicode-write PROPERTIES SKIP_RETURN_CODE 77)
 
 if (WIN32 OR (HAVE_DIRENT_H AND HAVE_SCANDIR AND HAVE_ALPHASORT))
-    file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/smsd-files-outbox-data")
+    # Leave room for long basenames within the Windows MAX_PATH limit.
+    file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/smsd-outbox")
     add_executable(smsd-files-outbox smsd-files-outbox.c)
     add_coverage(smsd-files-outbox)
     target_link_libraries(smsd-files-outbox libGammu ${LIBINTL_LIBRARIES} gsmsd)
     add_test(smsd-files-long-outbox-name
         "${GAMMU_TEST_PATH}/smsd-files-outbox${CMAKE_EXECUTABLE_SUFFIX}"
-        "${CMAKE_CURRENT_BINARY_DIR}/smsd-files-outbox-data/")
+        "${CMAKE_BINARY_DIR}/smsd-outbox/")
 endif()
 
 if (NOT WIN32)
