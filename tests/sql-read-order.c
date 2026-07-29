@@ -53,6 +53,7 @@ static gboolean sent_item_mismatch;
 static GSM_Error sent_item_query_error;
 static int outbox_relative_validity;
 static int sent_item_relative_validity;
+static int outbox_retries;
 static const char *outbox_status;
 static const char *sent_item_status;
 static char query_find_id[] = "find-id";
@@ -295,7 +296,7 @@ static long long mock_get_number(GSM_SMSDConfig *config UNUSED, SQL_result *resu
 			case 8:
 				return outbox_relative_validity;
 			case 11:
-				return 0;
+				return outbox_retries;
 			default:
 				break;
 		}
@@ -402,6 +403,7 @@ static void reset_mock(void)
 	sent_item_query_error = ERR_NONE;
 	outbox_relative_validity = SMS_VALID_Max_Time;
 	sent_item_relative_validity = SMS_VALID_Max_Time;
+	outbox_retries = 0;
 	outbox_status = "SendingOK";
 	sent_item_status = "SendingOKNoReport";
 }
@@ -515,6 +517,31 @@ static void test_inherited_sent_item_validity_is_skipped(void)
 	test_result(sent_item_fields == ((1ULL << 10) - 1));
 }
 
+static void test_matching_sending_error_is_skipped(void)
+{
+	GSM_SMSDConfig config;
+	GSM_MultiSMSMessage sms;
+	GSM_Error error;
+	char id[32];
+
+	reset_mock();
+	setup_config(&config);
+	memset(&sms, 0, sizeof(sms));
+	outbox_is_multipart = FALSE;
+	outbox_status = "Reserved";
+	outbox_retries = 2;
+	sent_item_present = TRUE;
+	sent_item_status = "SendingError";
+
+	error = SMSDSQL.FindOutboxSMS(&sms, &config, id);
+
+	test_result(error == ERR_NONE);
+	test_result(sms.Number == 1);
+	test_result(config.retries == 2);
+	test_result(config.SkipMessage[0] == TRUE);
+	test_result(sent_item_fields == ((1ULL << 10) - 1));
+}
+
 static void test_reused_sent_item_id_is_rejected(void)
 {
 	GSM_SMSDConfig config;
@@ -589,14 +616,23 @@ static int collision_move_calls;
 static int collision_update_calls;
 static int collision_update_status_code;
 static int collision_update_part;
+static int collision_find_number;
+static unsigned int collision_find_retries;
+static gboolean collision_find_skip;
+static gboolean collision_move_sent;
 static GSM_Error collision_find_error;
 
 static GSM_Error collision_find_outbox(
-	GSM_MultiSMSMessage *sms UNUSED,
-	GSM_SMSDConfig *config UNUSED,
+	GSM_MultiSMSMessage *sms,
+	GSM_SMSDConfig *config,
 	char *id)
 {
 	strcpy(id, "42");
+	sms->Number = collision_find_number;
+	config->retries = collision_find_retries;
+	if (collision_find_number > 0) {
+		config->SkipMessage[0] = collision_find_skip;
+	}
 	return collision_find_error;
 }
 
@@ -605,9 +641,10 @@ static GSM_Error collision_move(
 	GSM_SMSDConfig *config UNUSED,
 	char *id UNUSED,
 	gboolean always_delete UNUSED,
-	gboolean sent UNUSED)
+	gboolean sent)
 {
 	collision_move_calls++;
+	collision_move_sent = sent;
 	return ERR_NONE;
 }
 
@@ -662,6 +699,10 @@ static void check_send_error_is_left_queued(GSM_Error find_error)
 	collision_update_calls = 0;
 	collision_update_status_code = 0;
 	collision_update_part = 0;
+	collision_find_number = 0;
+	collision_find_retries = 0;
+	collision_find_skip = FALSE;
+	collision_move_sent = TRUE;
 	collision_find_error = find_error;
 
 	error = SMSD_SendSMS(&config);
@@ -672,6 +713,32 @@ static void check_send_error_is_left_queued(GSM_Error find_error)
 	test_result(collision_update_calls == 1);
 	test_result(collision_update_status_code == -1);
 	test_result(collision_update_part == -1);
+}
+
+static void test_send_finalized_failure_is_removed(void)
+{
+	GSM_SMSDConfig config;
+	GSM_Error error;
+
+	memset(&config, 0, sizeof(config));
+	config.Service = &collision_service;
+	config.maxretries = 1;
+	collision_add_calls = 0;
+	collision_move_calls = 0;
+	collision_update_calls = 0;
+	collision_find_number = 1;
+	collision_find_retries = 2;
+	collision_find_skip = TRUE;
+	collision_move_sent = TRUE;
+	collision_find_error = ERR_NONE;
+
+	error = SMSD_SendSMS(&config);
+
+	test_result(error == ERR_UNKNOWN);
+	test_result(collision_add_calls == 0);
+	test_result(collision_move_calls == 1);
+	test_result(collision_move_sent == FALSE);
+	test_result(collision_update_calls == 0);
 }
 
 static void test_send_collision_is_left_queued(void)
@@ -690,9 +757,11 @@ int main(void)
 	test_find_outbox_without_sent_item();
 	test_matching_sent_item_is_skipped();
 	test_inherited_sent_item_validity_is_skipped();
+	test_matching_sending_error_is_skipped();
 	test_reused_sent_item_id_is_rejected();
 	test_reconciliation_query_error_is_retryable();
 	test_delivery_report_order();
+	test_send_finalized_failure_is_removed();
 	test_send_collision_is_left_queued();
 	test_send_reconciliation_error_is_left_queued();
 	return 0;
