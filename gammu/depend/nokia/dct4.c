@@ -95,7 +95,7 @@ static DCT4_Feature DCT4Features[] = {
 	{DCT4_GEA1,			 "GEA1 support indication",	 {{1,"on"},{0,"off"},{0,""}}},
 	{DCT4_EOTD,			 "EOTD support",		 {{1,"on"},{0,"off"},{0,""}}},
 	{DCT4_WAP_PUSH,			 "WAP push",			 {{1,"on"},{0,"off"},{0,""}}},
-	{DCT4_USE_PREF_SIM_NET,		 "Use SIM preffered network list",{{1,"on"},{0,"off"},{0,""}}},
+	{DCT4_USE_PREF_SIM_NET,		 "Use SIM preferred network list",{{1,"on"},{0,"off"},{0,""}}},
 	{DCT4_JAVA_TCK,	                 "Java TCK support",             {{1,"on"},{0,"off"},{0,""}}},
 
 	{DCT4_ALS,		 	 "Alternate Line Service (ALS)", {{1,"on"},{0,"off"},{0,""}}},
