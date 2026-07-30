@@ -111,10 +111,13 @@ Inject unicode text message:
 .INDENT 3.5
 .sp
 .EX
-gammu\-smsd\-inject TEXT 123456 \-unicode \-text \(dqZkouška sirén\(dq
+gammu\-smsd\-inject TEXT 123456 \-unicode \-textutf8 \(dqZkouška sirén\(dq
 .EE
 .UNINDENT
 .UNINDENT
+.sp
+Use \fB\-textutf8\fP for UTF\-8 text supplied by applications or services, where
+the locale inherited by \fBgammu\-smsd\-inject\fP might not be configured.
 .sp
 Inject long text message:
 .INDENT 0.0

@@ -63,6 +63,19 @@ void DecodeUnicode(const unsigned char *src, char *dest);
 void EncodeUnicode(unsigned char *dest, const char *src, size_t len);
 
 /**
+ * Encodes string from local charset to unicode and reports conversion errors.
+ *
+ * Invalid input bytes are encoded as Unicode replacement characters and
+ * conversion continues, ensuring that the output is not silently truncated.
+ *
+ * \return TRUE if the complete input was valid in the current locale, FALSE
+ * otherwise.
+ *
+ * \ingroup Unicode
+ */
+gboolean EncodeUnicodeChecked(unsigned char *dest, const char *src, size_t len);
+
+/**
  * Decodes unicode file data with byte order mark (BOM).
  *
  * \ingroup Unicode
@@ -146,6 +159,15 @@ gboolean EncodeUTF8(char *dest, const unsigned char *src);
  * \ingroup Unicode
  */
 void DecodeUTF8(unsigned char *dest, const char *src, size_t len);
+
+/**
+ * Decode text from UTF-8 and report malformed input.
+ *
+ * \return TRUE if the complete input was valid UTF-8, FALSE otherwise.
+ *
+ * \ingroup Unicode
+ */
+gboolean DecodeUTF8Checked(unsigned char *dest, const char *src, size_t len);
 
 /**
  * Decode hex encoded binary text.

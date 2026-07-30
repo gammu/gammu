@@ -74,7 +74,10 @@ Inject unicode text message:
 
 .. code-block:: sh
 
-    gammu-smsd-inject TEXT 123456 -unicode -text "Zkouška sirén"
+    gammu-smsd-inject TEXT 123456 -unicode -textutf8 "Zkouška sirén"
+
+Use ``-textutf8`` for UTF-8 text supplied by applications or services, where
+the locale inherited by :program:`gammu-smsd-inject` might not be configured.
 
 Inject long text message:
 

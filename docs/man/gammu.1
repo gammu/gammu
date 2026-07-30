@@ -480,12 +480,17 @@ Added in version 1.38.5.
 .UNINDENT
 .INDENT 0.0
 .TP
-.B EMS [\-unicode] [\-16bit] [\-format lcrasbiut] [\-text text] [\-unicodefiletext file] [\-defsound ID] [\-defanimation ID] [\-tone10 file] [\-tone10long file] [\-tone12 file] [\-tone12long file] [\-toneSE file] [\-toneSElong file] [\-fixedbitmap file] [\-variablebitmap file] [\-variablebitmaplong file] [\-animation frames file1 ...] [\-protected number]
+.B EMS [\-unicode] [\-16bit] [\-format lcrasbiut] [\-text text] [\-textutf8 text] [\-unicodefiletext file] [\-defsound ID] [\-defanimation ID] [\-tone10 file] [\-tone10long file] [\-tone12 file] [\-tone12long file] [\-toneSE file] [\-toneSElong file] [\-fixedbitmap file] [\-variablebitmap file] [\-variablebitmaplong file] [\-animation frames file1 ...] [\-protected number]
 Saves EMS sequence. All format specific parameters (like \fB\-defsound\fP) can be used few times.
 .INDENT 7.0
 .TP
 .B \-text
 adds text
+.UNINDENT
+.INDENT 7.0
+.TP
+.B \-textutf8
+adds UTF\-8 text
 .UNINDENT
 .INDENT 7.0
 .TP
@@ -676,7 +681,7 @@ filesystem commands.
 .UNINDENT
 .INDENT 0.0
 .TP
-.B PICTURE file  [\-text text] [\-unicode] [\-alcatelbmmi]
+.B PICTURE file  [\-text text] [\-textutf8 text] [\-unicode] [\-alcatelbmmi]
 Read bitmap from 2 colors file (bmp, nlm, nsl, ngg, nol, wbmp, etc.), format
 into bitmap in Smart Messaging (72x28, 2 colors, called often Picture Image
 and saved with text) or Alcatel format and send/save over SMS.
@@ -715,7 +720,7 @@ it correctly later in phone composer (for example, in 33xx)
 .UNINDENT
 .INDENT 0.0
 .TP
-.B SMSTEMPLATE  [\-unicode] [\-text text] [\-unicodefiletext file] [\-defsound ID] [\-defanimation ID] [\-tone10 file] [\-tone10long file] [\-tone12 file] [\-tone12long file] [\-toneSE file] [\-toneSElong file] [\-variablebitmap file] [\-variablebitmaplong file] [\-animation frames file1 ...]
+.B SMSTEMPLATE  [\-unicode] [\-text text] [\-textutf8 text] [\-unicodefiletext file] [\-defsound ID] [\-defanimation ID] [\-tone10 file] [\-tone10long file] [\-tone12 file] [\-tone12long file] [\-toneSE file] [\-toneSElong file] [\-variablebitmap file] [\-variablebitmaplong file] [\-animation frames file1 ...]
 Saves a SMS template (for Alcatel phones).
 .UNINDENT
 .INDENT 0.0

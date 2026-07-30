@@ -5,7 +5,9 @@ Unicode
 .. doxygenfunction:: DecodeUnicodeString
 .. doxygenfunction:: DecodeUnicodeConsole
 .. doxygenfunction:: DecodeUnicode
+.. doxygenfunction:: DecodeUTF8Checked
 .. doxygenfunction:: EncodeUnicode
+.. doxygenfunction:: EncodeUnicodeChecked
 .. doxygenfunction:: ReadUnicodeFile
 .. doxygenfunction:: CopyUnicodeString
 .. doxygenfunction:: EncodeUTF8QuotedPrintable
