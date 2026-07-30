@@ -408,9 +408,9 @@ final processed state; false publishes the completed row
 .TP
 .B restore_inbox_groups
 Restore incomplete multipart groups after SMSD restarts. The default query
-selects recently inserted multipart rows, including earlier rows sharing
-their logical message identifier. SMSD discards complete and expired
-groups after reading the result.
+selects recently inserted multipart rows for the current phone, including
+earlier rows sharing their logical message identifier. SMSD discards
+complete and expired groups after reading the result.
 .sp
 The selected columns must remain in the documented order.
 .sp
@@ -420,9 +420,10 @@ Default value:
 .sp
 .EX
 SELECT MessageID, SenderNumber, SMSCNumber, UDH, SequencePosition,
-PartCount, InsertIntoDB FROM inbox WHERE PartCount > 1 AND MessageID IN
-(SELECT MessageID FROM inbox WHERE PartCount > 1 AND
-InsertIntoDB >= NOW() \- INTERVAL 600 SECOND)
+PartCount, InsertIntoDB FROM inbox WHERE PartCount > 1 AND
+RecipientID = %P AND MessageID IN (SELECT MessageID FROM inbox WHERE
+PartCount > 1 AND RecipientID = %P AND InsertIntoDB >= NOW() \-
+INTERVAL 600 SECOND)
 ORDER BY InsertIntoDB ASC, ID ASC
 .EE
 .UNINDENT

@@ -1062,8 +1062,8 @@ static void test_restore_inbox_groups(void)
 	reset_mock();
 	setup_config(&config);
 	restore_inbox_group_count = 1;
-	restore_inbox_groups[0].message_id = 200;
-	restore_inbox_groups[0].sender = "";
+	restore_inbox_groups[0].message_id = 4294967295LL;
+	restore_inbox_groups[0].sender = "+420123456";
 	restore_inbox_groups[0].smsc = "";
 	restore_inbox_groups[0].udh = "050003700201";
 	restore_inbox_groups[0].sequence_position = 1;
@@ -1075,9 +1075,13 @@ static void test_restore_inbox_groups(void)
 	test_result(inbox_group_count(&config) == 1);
 
 	prepare_multipart_inbox(&sms, 2);
+	EncodeUnicode(
+		sms.SMS[0].Number,
+		"00420123456",
+		strlen("00420123456"));
 	error = save_inbox_part(&sms, &config);
 	test_result(error == ERR_NONE);
-	test_result(inbox_metadata[0].message_id == 200);
+	test_result(inbox_metadata[0].message_id == 4294967295LL);
 	test_result(config.inbox_groups == NULL);
 
 	reset_mock();
