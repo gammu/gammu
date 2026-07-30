@@ -57,6 +57,7 @@ typedef struct {
 
 static ResultState states[4];
 static unsigned long long find_id_fields;
+static int find_day_mask;
 static unsigned long long outbox_body_fields;
 static unsigned long long outbox_multipart_fields;
 static unsigned long long sent_item_fields;
@@ -79,9 +80,9 @@ static unsigned long long next_inbox_id;
 static int inbox_insert_count;
 static int inbox_metadata_count;
 static int update_received_count;
-static char query_find_id[] = "find-id";
 static InboxInsert inbox_insert[128];
 static InboxMetadata inbox_metadata[128];
+static char query_find_id[] = "find-id-%1-%2";
 static char query_refresh[] = "refresh";
 static char query_outbox_body[] = "outbox-body";
 static char query_outbox_multipart[] = "outbox-multipart";
@@ -148,8 +149,10 @@ static GSM_Error mock_connect(GSM_SMSDConfig *config UNUSED)
 static GSM_Error mock_query(GSM_SMSDConfig *config UNUSED, const char *query, SQL_result *result)
 {
 	ResultKind kind;
+	int find_limit;
 
-	if (strcmp(query, "find-id") == 0) {
+	if (sscanf(query, "find-id-%d-%d", &find_limit, &find_day_mask) == 2) {
+		test_result(find_limit == 1);
 		kind = RESULT_FIND_ID;
 	} else if (strcmp(query, "refresh") == 0) {
 		kind = RESULT_REFRESH;
@@ -437,6 +440,7 @@ static void reset_mock(void)
 {
 	memset(states, 0, sizeof(states));
 	find_id_fields = 0;
+	find_day_mask = 0;
 	outbox_body_fields = 0;
 	outbox_multipart_fields = 0;
 	sent_item_fields = 0;
@@ -504,6 +508,10 @@ static void test_find_outbox_order(void)
 	test_result(sms.Number == 2);
 	test_result(config.SkipMessage[0] == TRUE);
 	test_result(config.SkipMessage[1] == TRUE);
+	test_result(SMSDSQL_DayMask(1) == 1);
+	test_result(SMSDSQL_DayMask(0) == 64);
+	test_result(find_day_mask >= 1 && find_day_mask <= 64);
+	test_result((find_day_mask & (find_day_mask - 1)) == 0);
 	test_result(find_id_fields == ((1ULL << 0) | (1ULL << 1)));
 	test_result(outbox_body_fields == ((1ULL << 13) - 1));
 	test_result(outbox_multipart_fields == (((1ULL << 6) - 1) | (1ULL << 7)));

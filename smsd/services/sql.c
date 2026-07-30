@@ -109,6 +109,25 @@ static const char *SMSDSQL_EscapeChar(GSM_SMSDConfig * Config)
 	}
 }
 
+int SMSDSQL_DayMask(int wday)
+{
+	if (wday < 0 || wday > 6) {
+		return 127;
+	}
+	return 1 << ((wday + 6) % 7);
+}
+
+static int SMSDSQL_CurrentDayMask(void)
+{
+	time_t now = time(NULL);
+	struct tm *current = localtime(&now);
+
+	if (current == NULL) {
+		return 127;
+	}
+	return SMSDSQL_DayMask(current->tm_wday);
+}
+
 const char rownum_clause_fallback[] = "";
 
 
@@ -1354,7 +1373,9 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 
 	vars[0].type = SQL_TYPE_INT;
 	vars[0].v.i = 1;
-	vars[1].type = SQL_TYPE_NONE;
+	vars[1].type = SQL_TYPE_INT;
+	vars[1].v.i = SMSDSQL_CurrentDayMask();
+	vars[2].type = SQL_TYPE_NONE;
 
 	while (TRUE) {
 		error = SMSDSQL_NamedQuery(Config, Config->SMSDSQL_queries[SQL_QUERY_FIND_OUTBOX_SMS_ID], NULL, NULL, vars, &res, FALSE);
@@ -2031,6 +2052,7 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 			" AND ", ESCAPE_FIELD("SendingTimeOut"), " < ", SMSDSQL_Now(Config),
 			" AND ", ESCAPE_FIELD("SendBefore"), " >= ", SMSDSQL_CurrentTime(Config),
 			" AND ", ESCAPE_FIELD("SendAfter"), " <= ", SMSDSQL_CurrentTime(Config),
+			" AND (", ESCAPE_FIELD("SendDays"), " & %2) <> 0",
 			" AND ( ", ESCAPE_FIELD("SenderID"), " is NULL OR ", ESCAPE_FIELD("SenderID"), " = '' OR ", ESCAPE_FIELD("SenderID"), " = %P )",
 			SMSDSQL_RownumClause(Config, "%1", TRUE),
 			" ORDER BY ", ESCAPE_FIELD("Priority"), " DESC, ", ESCAPE_FIELD("InsertIntoDB"), " ASC ", SMSDSQL_LimitClause(Config, "%1"), NULL) != ERR_NONE) {

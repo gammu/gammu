@@ -38,6 +38,7 @@ CREATE TABLE outbox (
   SendingDateTime NUMERIC NOT NULL DEFAULT (datetime('now', 'localtime')),
   SendBefore time NOT NULL DEFAULT '23:59:59',
   SendAfter time NOT NULL DEFAULT '00:00:00',
+  SendDays INTEGER NOT NULL DEFAULT 127,
   Text TEXT,
   DestinationNumber TEXT NOT NULL DEFAULT '',
   Coding TEXT NOT NULL DEFAULT 'Default_No_Compression',

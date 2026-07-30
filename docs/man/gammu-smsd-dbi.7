@@ -134,6 +134,7 @@ CREATE TABLE outbox (
   SendingDateTime NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq, \(aqlocaltime\(aq)),
   SendBefore time NOT NULL DEFAULT \(aq23:59:59\(aq,
   SendAfter time NOT NULL DEFAULT \(aq00:00:00\(aq,
+  SendDays INTEGER NOT NULL DEFAULT 127,
   Text TEXT,
   DestinationNumber TEXT NOT NULL DEFAULT \(aq\(aq,
   Coding TEXT NOT NULL DEFAULT \(aqDefault_No_Compression\(aq,

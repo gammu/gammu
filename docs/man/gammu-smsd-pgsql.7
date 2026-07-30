@@ -189,6 +189,7 @@ CREATE TABLE outbox (
   \(dqSendingDateTime\(dq timestamp NOT NULL DEFAULT LOCALTIMESTAMP(0),
   \(dqSendBefore\(dq time NOT NULL DEFAULT \(aq23:59:59\(aq,
   \(dqSendAfter\(dq time NOT NULL DEFAULT \(aq00:00:00\(aq,
+  \(dqSendDays\(dq integer NOT NULL DEFAULT 127,
   \(dqText\(dq text,
   \(dqDestinationNumber\(dq varchar(20) NOT NULL DEFAULT \(aq\(aq,
   \(dqCoding\(dq varchar(255) NOT NULL DEFAULT \(aqDefault_No_Compression\(aq,

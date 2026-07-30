@@ -65,6 +65,7 @@ CREATE TABLE `outbox` (
   `SendingDateTime` timestamp NOT NULL default '0000-00-00 00:00:00',
   `SendBefore` time NOT NULL DEFAULT '23:59:59',
   `SendAfter` time NOT NULL DEFAULT '00:00:00',
+  `SendDays` integer NOT NULL DEFAULT 127,
   `Text` text,
   `DestinationNumber` varchar(20) NOT NULL default '',
   `Coding` enum('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression') NOT NULL default 'Default_No_Compression',

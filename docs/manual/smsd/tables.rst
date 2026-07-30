@@ -151,6 +151,14 @@ Fields description:
 
     .. versionadded:: 1.29.90
 
+``SendDays`` (integer)
+    Bit mask of weekdays when the message can be sent. Monday is 1, Tuesday
+    is 2, Wednesday is 4, Thursday is 8, Friday is 16, Saturday is 32 and
+    Sunday is 64. Add the values to allow several days. The default value 127
+    allows every day and 0 prevents sending.
+
+    The weekday is evaluated in the local timezone of the SMSD process.
+
 ``Text`` (text)
     SMS text encoded using hex values in proper coding. If you want to use
     TextDecoded field, keep this NULL (or empty).
@@ -452,10 +460,13 @@ History of schema versions:
 
     * Added ``MessageID``, ``SequencePosition`` and ``PartCount`` fields to
       :ref:`inbox`.
+    * Added ``SendDays`` field to :ref:`outbox`.
 
     When upgrading an existing database, initialize ``MessageID`` to ``ID``
     for existing rows. Historical multipart relationships cannot be
-    reconstructed reliably from the concatenation reference alone.
+    reconstructed reliably from the concatenation reference alone. Add
+    ``SendDays`` with a default value of 127 so existing queued messages
+    remain eligible every day.
 
 17
 

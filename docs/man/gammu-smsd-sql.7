@@ -453,7 +453,9 @@ Default value:
 SELECT ID, InsertIntoDB, SendingDateTime, SenderID FROM outbox
 WHERE SendingDateTime < NOW() AND SendingTimeOut <  NOW() AND
 SendBefore >= CURTIME() AND SendAfter <= CURTIME() AND
-( SenderID is NULL OR SenderID = \(aq\(aq OR SenderID = %P ) ORDER BY InsertIntoDB ASC LIMIT %1
+(SendDays & %2) <> 0 AND
+( SenderID is NULL OR SenderID = \(aq\(aq OR SenderID = %P )
+ORDER BY Priority DESC, InsertIntoDB ASC LIMIT %1
 .EE
 .UNINDENT
 .UNINDENT
@@ -463,7 +465,14 @@ Query specific parameters:
 .TP
 .B \fB%1\fP
 limit of sms messages sended in one walk in loop
+.TP
+.B \fB%2\fP
+bit mask for the current weekday in the SMSD process local timezone,
+using Monday as 1 through Sunday as 64
 .UNINDENT
+.sp
+Custom queries need to use \fB%2\fP to enforce the outbox \%<#\:outbox>
+\fBSendDays\fP restriction.
 .UNINDENT
 .INDENT 0.0
 .TP
