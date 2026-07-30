@@ -58,7 +58,7 @@ typedef struct {
 	const char *udh;
 	int sequence_position;
 	int part_count;
-	time_t created;
+	long long age;
 } RestoreInboxGroup;
 
 typedef struct {
@@ -94,6 +94,7 @@ static unsigned long long next_inbox_id;
 static int inbox_insert_count;
 static int inbox_metadata_count;
 static int update_received_count;
+static GSM_Error update_received_error;
 static int restore_inbox_group_count;
 static InboxInsert inbox_insert[128];
 static InboxMetadata inbox_metadata[128];
@@ -206,6 +207,9 @@ static GSM_Error mock_query(GSM_SMSDConfig *config UNUSED, const char *query, SQ
 	} else if (strcmp(query, "restore-inbox-groups") == 0) {
 		kind = RESULT_RESTORE_INBOX_GROUPS;
 	} else if (strcmp(query, "update-received") == 0) {
+		if (update_received_error != ERR_NONE) {
+			return update_received_error;
+		}
 		kind = RESULT_UPDATE_RECEIVED;
 		update_received_count++;
 	} else {
@@ -423,6 +427,8 @@ static long long mock_get_number(GSM_SMSDConfig *config UNUSED, SQL_result *resu
 				return group->sequence_position;
 			case 5:
 				return group->part_count;
+			case 6:
+				return group->age;
 			default:
 				break;
 		}
@@ -445,10 +451,6 @@ static time_t mock_get_date(GSM_SMSDConfig *config UNUSED, SQL_result *result, u
 	if (state->kind == RESULT_DELIVERY_SELECT && field == 2) {
 		return delivery_time;
 	}
-	if (state->kind == RESULT_RESTORE_INBOX_GROUPS && field == 6) {
-		return restore_inbox_groups[state->row - 1].created;
-	}
-
 	fprintf(stderr, "Unexpected date field %u for result kind %d\n", field, state->kind);
 	exit(2);
 }
@@ -518,6 +520,7 @@ static void reset_mock(void)
 	inbox_insert_count = 0;
 	inbox_metadata_count = 0;
 	update_received_count = 0;
+	update_received_error = ERR_NONE;
 	restore_inbox_group_count = 0;
 	memset(inbox_insert, 0, sizeof(inbox_insert));
 	memset(inbox_metadata, 0, sizeof(inbox_metadata));
@@ -571,12 +574,34 @@ static void test_find_outbox_order(void)
 	test_result(SMSDSQL_DayMask(0) == 64);
 	test_result(strcmp(SMSDSQL_DayMaskPredicate(&config),
 			"(`SendDays` & %2) <> 0") == 0);
+	test_result(strcmp(SMSDSQL_TimeDiff(&config, "InsertIntoDB"),
+			"TIMESTAMPDIFF(SECOND, `InsertIntoDB`, NOW())") == 0);
+	config.sql = "pgsql";
+	test_result(strcmp(SMSDSQL_TimeDiff(&config, "InsertIntoDB"),
+			"CAST(EXTRACT(EPOCH FROM (now() - \"InsertIntoDB\")) "
+			"AS BIGINT)") == 0);
+	config.sql = "sqlite3";
+	test_result(strcmp(SMSDSQL_TimeDiff(&config, "InsertIntoDB"),
+			"CAST((julianday('now', 'localtime') - "
+			"julianday(InsertIntoDB)) * 86400 AS INTEGER)") == 0);
 	config.sql = "oracle";
 	test_result(strcmp(SMSDSQL_DayMaskPredicate(&config),
 			"BITAND(SendDays, %2) <> 0") == 0);
+	test_result(strcmp(SMSDSQL_TimeDiff(&config, "InsertIntoDB"),
+			"ROUND((CAST(CURRENT_TIMESTAMP AS DATE) - "
+			"CAST(InsertIntoDB AS DATE)) * 86400)") == 0);
 	config.sql = "access";
 	test_result(strcmp(SMSDSQL_DayMaskPredicate(&config),
 			"(SendDays AND %2) <> 0") == 0);
+	test_result(strcmp(SMSDSQL_TimeDiff(&config, "InsertIntoDB"),
+			"DateDiff('s', InsertIntoDB, Now())") == 0);
+	config.sql = "mssql";
+	test_result(strcmp(SMSDSQL_TimeDiff(&config, "InsertIntoDB"),
+			"DATEDIFF(second, \"InsertIntoDB\", CURRENT_TIMESTAMP)") == 0);
+	config.sql = NULL;
+	test_result(strcmp(SMSDSQL_TimeDiff(&config, "InsertIntoDB"),
+			"{fn TIMESTAMPDIFF(SQL_TSI_SECOND, InsertIntoDB, "
+			"CURRENT_TIMESTAMP)}") == 0);
 	test_result(find_day_mask >= 1 && find_day_mask <= 64);
 	test_result((find_day_mask & (find_day_mask - 1)) == 0);
 	test_result(find_id_fields == ((1ULL << 0) | (1ULL << 1)));
@@ -1057,7 +1082,6 @@ static void test_restore_inbox_groups(void)
 	GSM_SMSDConfig config;
 	GSM_MultiSMSMessage sms;
 	GSM_Error error;
-	time_t now = time(NULL);
 
 	reset_mock();
 	setup_config(&config);
@@ -1068,7 +1092,7 @@ static void test_restore_inbox_groups(void)
 	restore_inbox_groups[0].udh = "050003700201";
 	restore_inbox_groups[0].sequence_position = 1;
 	restore_inbox_groups[0].part_count = 2;
-	restore_inbox_groups[0].created = now;
+	restore_inbox_groups[0].age = 10;
 
 	error = SMSDSQL_RestoreInboxGroups(&config);
 	test_result(error == ERR_NONE);
@@ -1093,7 +1117,7 @@ static void test_restore_inbox_groups(void)
 	restore_inbox_groups[0].udh = "050003700201";
 	restore_inbox_groups[0].sequence_position = 1;
 	restore_inbox_groups[0].part_count = 2;
-	restore_inbox_groups[0].created = now;
+	restore_inbox_groups[0].age = 10;
 	restore_inbox_groups[1] = restore_inbox_groups[0];
 	restore_inbox_groups[1].udh = "050003700202";
 	restore_inbox_groups[1].sequence_position = 2;
@@ -1101,6 +1125,34 @@ static void test_restore_inbox_groups(void)
 	error = SMSDSQL_RestoreInboxGroups(&config);
 	test_result(error == ERR_NONE);
 	test_result(config.inbox_groups == NULL);
+}
+
+static void test_inbox_group_survives_post_insert_failure(void)
+{
+	GSM_SMSDConfig config;
+	GSM_MultiSMSMessage sms;
+	GSM_Error error;
+
+	reset_mock();
+	setup_config(&config);
+
+	prepare_multipart_inbox(&sms, 1);
+	error = save_inbox_part(&sms, &config);
+	test_result(error == ERR_NONE);
+	test_result(config.inbox_groups != NULL);
+
+	update_received_error = ERR_SQL;
+	prepare_multipart_inbox(&sms, 2);
+	error = save_inbox_part(&sms, &config);
+	test_result(error == ERR_SQL);
+	test_result(config.inbox_groups != NULL);
+	test_result(inbox_metadata[1].message_id == 101);
+
+	update_received_error = ERR_NONE;
+	error = save_inbox_part(&sms, &config);
+	test_result(error == ERR_NONE);
+	test_result(config.inbox_groups == NULL);
+	test_result(inbox_metadata[2].message_id == 101);
 }
 
 static void test_inbox_group_capacity(void)
@@ -1290,6 +1342,7 @@ int main(void)
 	test_inbox_polling_timeout_is_not_cached();
 	test_inbox_nokia_multipart_groups();
 	test_restore_inbox_groups();
+	test_inbox_group_survives_post_insert_failure();
 	test_inbox_group_capacity();
 	test_send_finalized_failure_is_removed();
 	test_send_collision_is_left_queued();

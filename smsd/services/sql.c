@@ -145,6 +145,58 @@ static const char *SMSDSQL_EscapeChar(GSM_SMSDConfig * Config)
 	}
 }
 
+const char *SMSDSQL_TimeDiff(GSM_SMSDConfig *Config, const char *field)
+{
+	const char *driver_name;
+	const char *escape_char;
+	static char result[256];
+
+	driver_name = SMSDSQL_SQLName(Config);
+	escape_char = SMSDSQL_EscapeChar(Config);
+
+	if (strcasecmp(driver_name, "mysql") == 0 ||
+	    strcasecmp(driver_name, "native_mysql") == 0) {
+		snprintf(result, sizeof(result),
+			"TIMESTAMPDIFF(SECOND, %s%s%s, NOW())",
+			escape_char, field, escape_char);
+	} else if (strcasecmp(driver_name, "pgsql") == 0 ||
+		   strcasecmp(driver_name, "native_pgsql") == 0) {
+		snprintf(result, sizeof(result),
+			"CAST(EXTRACT(EPOCH FROM (now() - %s%s%s)) AS BIGINT)",
+			escape_char, field, escape_char);
+	} else if (strncasecmp(driver_name, "sqlite", 6) == 0) {
+		snprintf(result, sizeof(result),
+			"CAST((julianday('now', 'localtime') - "
+			"julianday(%s%s%s)) * 86400 AS INTEGER)",
+			escape_char, field, escape_char);
+	} else if (strcasecmp(driver_name, "oracle") == 0) {
+		snprintf(result, sizeof(result),
+			"ROUND((CAST(CURRENT_TIMESTAMP AS DATE) - "
+			"CAST(%s%s%s AS DATE)) * 86400)",
+			escape_char, field, escape_char);
+	} else if (strcasecmp(driver_name, "freetds") == 0 ||
+		   strcasecmp(driver_name, "mssql") == 0 ||
+		   strcasecmp(driver_name, "sybase") == 0) {
+		snprintf(result, sizeof(result),
+			"DATEDIFF(second, %s%s%s, CURRENT_TIMESTAMP)",
+			escape_char, field, escape_char);
+	} else if (strcasecmp(driver_name, "access") == 0) {
+		snprintf(result, sizeof(result),
+			"DateDiff('s', %s%s%s, Now())",
+			escape_char, field, escape_char);
+	} else if (strcasecmp(Config->driver, "odbc") == 0) {
+		snprintf(result, sizeof(result),
+			"{fn TIMESTAMPDIFF(SQL_TSI_SECOND, %s%s%s, "
+			"CURRENT_TIMESTAMP)}",
+			escape_char, field, escape_char);
+	} else {
+		snprintf(result, sizeof(result),
+			"TIMESTAMPDIFF(SECOND, %s%s%s, NOW())",
+			escape_char, field, escape_char);
+	}
+	return result;
+}
+
 const char *SMSDSQL_DayMaskPredicate(GSM_SMSDConfig *Config)
 {
 	const char *driver_name;
@@ -996,8 +1048,9 @@ GSM_Error SMSDSQL_RestoreInboxGroups(GSM_SMSDConfig *Config)
 	const char *sender, *smsc, *udh;
 	unsigned long long message_id;
 	long long stored_message_id;
-	long long sequence_position, part_count;
+	long long sequence_position, part_count, age;
 	time_t created;
+	time_t restore_time = time(NULL);
 	size_t sender_length, smsc_length, udh_length;
 	gboolean valid;
 
@@ -1038,10 +1091,18 @@ GSM_Error SMSDSQL_RestoreInboxGroups(GSM_SMSDConfig *Config)
 		udh = db->GetString(Config, &res, 3);
 		sequence_position = db->GetNumber(Config, &res, 4);
 		part_count = db->GetNumber(Config, &res, 5);
-		created = db->GetDate(Config, &res, 6);
+		age = db->GetNumber(Config, &res, 6);
 
-		if (!valid || stored_message_id <= 0 || udh == NULL || created < 0) {
+		if (!valid || stored_message_id <= 0 || udh == NULL) {
 			continue;
+		}
+		if (age < 0) {
+			age = 0;
+		}
+		if ((unsigned long long)age > (unsigned long long)restore_time) {
+			created = 0;
+		} else {
+			created = restore_time - (time_t)age;
 		}
 		message_id = (unsigned long long)stored_message_id;
 		udh_length = strlen(udh);
@@ -1300,11 +1361,6 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 		}
 		db->FreeResult(Config, &res2);
 
-		if (inbox_group != NULL) {
-			SMSDSQL_RecordInboxPart(
-				Config, inbox_group, sequence_position);
-		}
-
 		snprintf(location, sizeof(location), "%llu", new_id);
 		if (!GSM_StringArray_Add(Locations, location)) {
 			return ERR_MOREMEMORY;
@@ -1319,6 +1375,11 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 
 		if (SentIDs != NULL && !GSM_StringArray_Add(SentIDs, "")) {
 			return ERR_MOREMEMORY;
+		}
+
+		if (inbox_group != NULL) {
+			SMSDSQL_RecordInboxPart(
+				Config, inbox_group, sequence_position);
 		}
 	}
 
@@ -2251,7 +2312,7 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 			", ", ESCAPE_FIELD("UDH"),
 			", ", ESCAPE_FIELD("SequencePosition"),
 			", ", ESCAPE_FIELD("PartCount"),
-			", ", ESCAPE_FIELD("InsertIntoDB"),
+			", ", SMSDSQL_TimeDiff(Config, "InsertIntoDB"),
 			" FROM ", Config->table_inbox,
 			" WHERE ", ESCAPE_FIELD("PartCount"), " > 1"
 			" AND ", ESCAPE_FIELD("RecipientID"), " = %P"

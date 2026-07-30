@@ -288,17 +288,19 @@ are selected for default queries during initialization.
     earlier rows sharing their logical message identifier. SMSD discards
     complete and expired groups after reading the result.
 
-    The selected columns must remain in the documented order.
+    The selected columns must remain in the documented order. The final column
+    is the row age in seconds, calculated by the database so that restoration
+    does not depend on the SMSD host and database server sharing a timezone.
 
     Default value:
 
     .. code-block:: sql
 
         SELECT MessageID, SenderNumber, SMSCNumber, UDH, SequencePosition,
-        PartCount, InsertIntoDB FROM inbox WHERE PartCount > 1 AND
-        RecipientID = %P AND MessageID IN (SELECT MessageID FROM inbox WHERE
-        PartCount > 1 AND RecipientID = %P AND InsertIntoDB >= NOW() -
-        INTERVAL 600 SECOND)
+        PartCount, TIMESTAMPDIFF(SECOND, InsertIntoDB, NOW()) FROM inbox WHERE
+        PartCount > 1 AND RecipientID = %P AND MessageID IN (SELECT MessageID
+        FROM inbox WHERE PartCount > 1 AND RecipientID = %P AND
+        InsertIntoDB >= NOW() - INTERVAL 600 SECOND)
         ORDER BY InsertIntoDB ASC, ID ASC
 
 .. config:option:: update_received
