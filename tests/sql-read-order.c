@@ -26,8 +26,26 @@ typedef enum {
 	RESULT_OUTBOX_MULTIPART,
 	RESULT_SENT_ITEM,
 	RESULT_DELIVERY_SELECT,
-	RESULT_DELIVERY_UPDATE
+	RESULT_DELIVERY_UPDATE,
+	RESULT_INBOX_INSERT,
+	RESULT_INBOX_METADATA,
+	RESULT_UPDATE_RECEIVED
 } ResultKind;
+
+typedef struct {
+	long long message_id;
+	int sequence_position;
+	int part_count;
+	char processed[6];
+} InboxInsert;
+
+typedef struct {
+	long long message_id;
+	int sequence_position;
+	int part_count;
+	long long row_id;
+	char processed[6];
+} InboxMetadata;
 
 typedef struct {
 	SQL_result *result;
@@ -57,6 +75,12 @@ static int sent_item_relative_validity;
 static int outbox_retries;
 static const char *outbox_status;
 static const char *sent_item_status;
+static unsigned long long next_inbox_id;
+static int inbox_insert_count;
+static int inbox_metadata_count;
+static int update_received_count;
+static InboxInsert inbox_insert[10];
+static InboxMetadata inbox_metadata[10];
 static char query_find_id[] = "find-id";
 static char query_refresh[] = "refresh";
 static char query_outbox_body[] = "outbox-body";
@@ -65,6 +89,9 @@ static char query_sent_item[] = "sent-item";
 static char query_delivery_select[] = "delivery-select";
 static char query_delivery_update[] = "delivery-update";
 static char query_delivery_update_other[] = "delivery-update-other";
+static char query_inbox_insert[] = "inbox-insert-%1-%2-%3-%4";
+static char query_inbox_metadata[] = "inbox-metadata-%1-%2-%3-%4-%5";
+static char query_update_received[] = "update-received";
 
 static ResultState *find_state(SQL_result *result)
 {
@@ -141,6 +168,24 @@ static GSM_Error mock_query(GSM_SMSDConfig *config UNUSED, const char *query, SQ
 	} else if (strcmp(query, "delivery-update") == 0 || strcmp(query, "delivery-update-other") == 0) {
 		kind = RESULT_DELIVERY_UPDATE;
 		delivery_update_seen = TRUE;
+	} else if (sscanf(query, "inbox-insert-%lld-%d-%d-%5s",
+			  &inbox_insert[inbox_insert_count].message_id,
+			  &inbox_insert[inbox_insert_count].sequence_position,
+			  &inbox_insert[inbox_insert_count].part_count,
+			  inbox_insert[inbox_insert_count].processed) == 4) {
+		kind = RESULT_INBOX_INSERT;
+		inbox_insert_count++;
+	} else if (sscanf(query, "inbox-metadata-%lld-%d-%d-%lld-%5s",
+			  &inbox_metadata[inbox_metadata_count].message_id,
+			  &inbox_metadata[inbox_metadata_count].sequence_position,
+			  &inbox_metadata[inbox_metadata_count].part_count,
+			  &inbox_metadata[inbox_metadata_count].row_id,
+			  inbox_metadata[inbox_metadata_count].processed) == 5) {
+		kind = RESULT_INBOX_METADATA;
+		inbox_metadata_count++;
+	} else if (strcmp(query, "update-received") == 0) {
+		kind = RESULT_UPDATE_RECEIVED;
+		update_received_count++;
 	} else {
 		fprintf(stderr, "Unexpected query: %s\n", query);
 		return ERR_BUG;
@@ -203,7 +248,7 @@ static int mock_next_row(GSM_SMSDConfig *config UNUSED, SQL_result *result)
 
 static unsigned long long mock_seq_id(GSM_SMSDConfig *config UNUSED, const char *id UNUSED)
 {
-	return 0;
+	return next_inbox_id++;
 }
 
 static unsigned long mock_affected_rows(GSM_SMSDConfig *config UNUSED, SQL_result *result)
@@ -409,6 +454,12 @@ static void reset_mock(void)
 	outbox_retries = 0;
 	outbox_status = "SendingOK";
 	sent_item_status = "SendingOKNoReport";
+	next_inbox_id = 101;
+	inbox_insert_count = 0;
+	inbox_metadata_count = 0;
+	update_received_count = 0;
+	memset(inbox_insert, 0, sizeof(inbox_insert));
+	memset(inbox_metadata, 0, sizeof(inbox_metadata));
 }
 
 static void setup_config(GSM_SMSDConfig *config)
@@ -420,6 +471,7 @@ static void setup_config(GSM_SMSDConfig *config)
 	config->backend_retries = 1;
 	config->skipsmscnumber = "";
 	config->deliveryreportdelay = 3600;
+	config->multiparttimeout = 600;
 
 	config->SMSDSQL_queries[SQL_QUERY_FIND_OUTBOX_SMS_ID] = query_find_id;
 	config->SMSDSQL_queries[SQL_QUERY_REFRESH_SEND_STATUS] = query_refresh;
@@ -429,6 +481,9 @@ static void setup_config(GSM_SMSDConfig *config)
 	config->SMSDSQL_queries[SQL_QUERY_SAVE_INBOX_SMS_SELECT] = query_delivery_select;
 	config->SMSDSQL_queries[SQL_QUERY_SAVE_INBOX_SMS_UPDATE_DELIVERED] = query_delivery_update;
 	config->SMSDSQL_queries[SQL_QUERY_SAVE_INBOX_SMS_UPDATE] = query_delivery_update_other;
+	config->SMSDSQL_queries[SQL_QUERY_SAVE_INBOX_SMS_INSERT] = query_inbox_insert;
+	config->SMSDSQL_queries[SQL_QUERY_SAVE_INBOX_SMS_UPDATE_METADATA] = query_inbox_metadata;
+	config->SMSDSQL_queries[SQL_QUERY_UPDATE_RECEIVED] = query_update_received;
 }
 
 static void test_find_outbox_order(void)
@@ -647,6 +702,116 @@ static void test_unmatched_delivery_report_id(void)
 	GSM_StringArray_Free(&sent_ids);
 }
 
+static void prepare_multipart_inbox(GSM_MultiSMSMessage *sms, int part)
+{
+	memset(sms, 0, sizeof(*sms));
+	sms->Number = 1;
+	GSM_SetDefaultSMSData(&sms->SMS[0]);
+	sms->SMS[0].PDU = SMS_Deliver;
+	sms->SMS[0].UDH.Type = UDH_ConcatenatedMessages;
+	sms->SMS[0].UDH.ID8bit = 0x70;
+	sms->SMS[0].UDH.ID16bit = -1;
+	sms->SMS[0].UDH.AllParts = 2;
+	sms->SMS[0].UDH.PartNumber = part;
+}
+
+static void test_inbox_message_metadata(void)
+{
+	GSM_SMSDConfig config;
+	GSM_MultiSMSMessage sms;
+	GSM_StringArray locations;
+	GSM_Error error;
+	int group, part;
+
+	reset_mock();
+	setup_config(&config);
+
+	for (group = 0; group < 2; group++) {
+		for (part = 1; part <= 2; part++) {
+			prepare_multipart_inbox(&sms, part);
+			GSM_StringArray_New(&locations);
+
+			error = SMSDSQL.SaveInboxSMS(&sms, &config, &locations, NULL);
+
+			test_result(error == ERR_NONE);
+			test_result(locations.used == 1);
+			GSM_StringArray_Free(&locations);
+		}
+	}
+
+	memset(&sms, 0, sizeof(sms));
+	sms.Number = 1;
+	GSM_SetDefaultSMSData(&sms.SMS[0]);
+	sms.SMS[0].PDU = SMS_Deliver;
+	GSM_StringArray_New(&locations);
+	error = SMSDSQL.SaveInboxSMS(&sms, &config, &locations, NULL);
+	test_result(error == ERR_NONE);
+	test_result(locations.used == 1);
+	GSM_StringArray_Free(&locations);
+
+	memset(&sms, 0, sizeof(sms));
+	sms.Number = 1;
+	GSM_SetDefaultSMSData(&sms.SMS[0]);
+	sms.SMS[0].PDU = SMS_Deliver;
+	sms.SMS[0].UDH.Type = UDH_ConcatenatedMessages;
+	sms.SMS[0].UDH.ID8bit = 0x70;
+	sms.SMS[0].UDH.ID16bit = -1;
+	sms.SMS[0].UDH.AllParts = 3;
+	sms.SMS[0].UDH.PartNumber = 2;
+	GSM_StringArray_New(&locations);
+	error = SMSDSQL.SaveInboxSMS(&sms, &config, &locations, NULL);
+	test_result(error == ERR_NONE);
+	test_result(locations.used == 1);
+	GSM_StringArray_Free(&locations);
+
+	test_result(inbox_insert_count == 6);
+	test_result(inbox_metadata_count == 6);
+	test_result(update_received_count == 6);
+
+	for (part = 0; part < inbox_insert_count; part++) {
+		test_result(strcmp(inbox_insert[part].processed, "TRUE") == 0);
+		test_result(strcmp(inbox_metadata[part].processed, "FALSE") == 0);
+	}
+	test_result(inbox_insert[0].message_id == 0);
+	test_result(inbox_insert[0].sequence_position == 1);
+	test_result(inbox_insert[0].part_count == 2);
+	test_result(inbox_insert[1].message_id == 101);
+	test_result(inbox_insert[1].sequence_position == 2);
+	test_result(inbox_insert[1].part_count == 2);
+	test_result(inbox_insert[2].message_id == 0);
+	test_result(inbox_insert[3].message_id == 103);
+	test_result(inbox_insert[4].message_id == 0);
+	test_result(inbox_insert[5].message_id == 0);
+
+	test_result(inbox_metadata[0].message_id == 101);
+	test_result(inbox_metadata[0].sequence_position == 1);
+	test_result(inbox_metadata[0].part_count == 2);
+	test_result(inbox_metadata[0].row_id == 101);
+	test_result(inbox_metadata[1].message_id == 101);
+	test_result(inbox_metadata[1].sequence_position == 2);
+	test_result(inbox_metadata[1].part_count == 2);
+	test_result(inbox_metadata[1].row_id == 102);
+
+	test_result(inbox_metadata[2].message_id == 103);
+	test_result(inbox_metadata[2].sequence_position == 1);
+	test_result(inbox_metadata[2].part_count == 2);
+	test_result(inbox_metadata[2].row_id == 103);
+	test_result(inbox_metadata[3].message_id == 103);
+	test_result(inbox_metadata[3].sequence_position == 2);
+	test_result(inbox_metadata[3].part_count == 2);
+	test_result(inbox_metadata[3].row_id == 104);
+
+	test_result(inbox_metadata[4].message_id == 105);
+	test_result(inbox_metadata[4].sequence_position == 1);
+	test_result(inbox_metadata[4].part_count == 1);
+	test_result(inbox_metadata[4].row_id == 105);
+
+	test_result(inbox_metadata[5].message_id == 106);
+	test_result(inbox_metadata[5].sequence_position == 2);
+	test_result(inbox_metadata[5].part_count == 3);
+	test_result(inbox_metadata[5].row_id == 106);
+}
+
 static int collision_add_calls;
 static int collision_move_calls;
 static int collision_update_calls;
@@ -798,6 +963,7 @@ int main(void)
 	test_reconciliation_query_error_is_retryable();
 	test_delivery_report_order();
 	test_unmatched_delivery_report_id();
+	test_inbox_message_metadata();
 	test_send_finalized_failure_is_removed();
 	test_send_collision_is_left_queued();
 	test_send_reconciliation_error_is_left_queued();

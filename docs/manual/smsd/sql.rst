@@ -236,7 +236,45 @@ are selected for default queries during initialization.
     .. code-block:: sql
 
         INSERT INTO inbox (ReceivingDateTime, Text, SenderNumber, Coding, SMSCNumber, UDH,
-        Class, TextDecoded, RecipientID) VALUES (%d, %E, %R, %c, %F, %u, %x, %T, %P)
+        Class, TextDecoded, RecipientID, Status, MessageID, SequencePosition, PartCount,
+        Processed) VALUES (%d, %E, %R, %c, %F, %u, %x, %T, %P, %e, %1, %2, %3, %4)
+
+    Query specific parameters:
+
+    ``%1``
+        logical message identifier, or 0 until the first physical row ID is known
+    ``%2``
+        sequence position of this physical part
+    ``%3``
+        expected number of physical parts
+    ``%4``
+        initial processed state; received rows are staged as processed until their
+        logical message identifier is finalized
+
+.. config:option:: save_inbox_sms_update_metadata
+
+    Finalize the logical message identifier and multipart metadata, then publish
+    the received physical message to inbox consumers.
+
+    Default value:
+
+    .. code-block:: sql
+
+        UPDATE inbox SET MessageID = %1, SequencePosition = %2, PartCount = %3,
+        Processed = %5 WHERE ID = %4
+
+    Query specific parameters:
+
+    ``%1``
+        ID of the first stored physical part of the logical message
+    ``%2``
+        sequence position of this physical part
+    ``%3``
+        expected number of physical parts
+    ``%4``
+        ID of this physical part
+    ``%5``
+        final processed state; false publishes the completed row
 
 .. config:option:: update_received
 

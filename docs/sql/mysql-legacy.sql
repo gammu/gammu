@@ -18,7 +18,7 @@ CREATE TABLE `gammu` (
 -- Dumping data for table `gammu`
 --
 
-INSERT INTO `gammu` (`Version`) VALUES (17);
+INSERT INTO `gammu` (`Version`) VALUES (18);
 
 -- --------------------------------------------------------
 
@@ -37,11 +37,16 @@ CREATE TABLE `inbox` (
   `Class` integer NOT NULL default '-1',
   `TextDecoded` text NOT NULL,
   `ID` integer unsigned NOT NULL auto_increment,
+  `MessageID` integer unsigned NOT NULL default 0,
+  `SequencePosition` integer NOT NULL default 1,
+  `PartCount` integer NOT NULL default 1,
   `RecipientID` text NOT NULL,
   `Processed` enum('false','true') NOT NULL default 'false',
   `Status` integer NOT NULL default '-1',
   PRIMARY KEY `ID` (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;
+
+CREATE INDEX inbox_message ON inbox(MessageID, SequencePosition);
 
 --
 -- Dumping data for table `inbox`

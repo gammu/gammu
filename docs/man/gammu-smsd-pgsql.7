@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "GAMMU-SMSD-PGSQL" "7" "Jul 25, 2026" "1.43.3" "Gammu"
+.TH "GAMMU-SMSD-PGSQL" "7" "Jul 30, 2026" "1.43.3" "Gammu"
 .SH NAME
 gammu-smsd-pgsql \- gammu-smsd(1) backend using PostgreSQL database server as a message storage
 .SH DESCRIPTION
@@ -134,7 +134,7 @@ CREATE TABLE gammu (
 \-\- Dumping data for table \(dqgammu\(dq
 \-\-
 
-INSERT INTO gammu (\(dqVersion\(dq) VALUES (17);
+INSERT INTO gammu (\(dqVersion\(dq) VALUES (18);
 
 \-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 
@@ -153,12 +153,17 @@ CREATE TABLE inbox (
   \(dqClass\(dq integer NOT NULL DEFAULT \-1,
   \(dqTextDecoded\(dq text NOT NULL DEFAULT \(aq\(aq,
   \(dqID\(dq serial PRIMARY KEY,
+  \(dqMessageID\(dq integer NOT NULL DEFAULT 0,
+  \(dqSequencePosition\(dq integer NOT NULL DEFAULT 1,
+  \(dqPartCount\(dq integer NOT NULL DEFAULT 1,
   \(dqRecipientID\(dq text NOT NULL,
   \(dqProcessed\(dq boolean NOT NULL DEFAULT FALSE,
   \(dqStatus\(dq integer NOT NULL DEFAULT \-1,
   CHECK (\(dqCoding\(dq IN
   (\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq))
 );
+
+CREATE INDEX inbox_message ON inbox(\(dqMessageID\(dq, \(dqSequencePosition\(dq);
 
 \-\-
 \-\- Dumping data for table \(dqinbox\(dq

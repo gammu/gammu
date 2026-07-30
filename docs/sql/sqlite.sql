@@ -2,7 +2,7 @@ CREATE TABLE gammu (
   Version INTEGER NOT NULL DEFAULT 0 PRIMARY KEY
 );
 
-INSERT INTO gammu (Version) VALUES (17);
+INSERT INTO gammu (Version) VALUES (18);
 
 CREATE TABLE inbox (
   UpdatedInDB NUMERIC NOT NULL DEFAULT (datetime('now', 'localtime')),
@@ -15,12 +15,17 @@ CREATE TABLE inbox (
   Class INTEGER NOT NULL DEFAULT -1,
   TextDecoded TEXT NOT NULL DEFAULT '',
   ID INTEGER PRIMARY KEY AUTOINCREMENT,
+  MessageID INTEGER NOT NULL DEFAULT 0,
+  SequencePosition INTEGER NOT NULL DEFAULT 1,
+  PartCount INTEGER NOT NULL DEFAULT 1,
   RecipientID TEXT NOT NULL,
   Processed TEXT NOT NULL DEFAULT 'false',
   Status INTEGER NOT NULL DEFAULT -1,
   CHECK (Coding IN
   ('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression'))
 );
+
+CREATE INDEX inbox_message ON inbox(MessageID, SequencePosition);
 
 CREATE TRIGGER update_inbox_time UPDATE ON inbox
   BEGIN

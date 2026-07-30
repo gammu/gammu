@@ -9,6 +9,8 @@
 #ifndef __sql_core_h_
 #define __sql_core_h_
 
+#include <time.h>
+
 #ifdef WIN32
 #  include <winsock2.h>
 #endif
@@ -99,6 +101,20 @@ typedef struct {
 	SQL_Val v;
 } SQL_Var;
 
+#define SMSD_SQL_MAX_INBOX_GROUPS GSM_MAX_MULTI_SMS
+
+typedef struct {
+	gboolean active;
+	GSM_UDH type;
+	int reference;
+	int part_count;
+	gboolean received_parts[GSM_MAX_MULTI_SMS];
+	unsigned char sender[(GSM_MAX_NUMBER_LENGTH + 1) * 2];
+	unsigned char smsc[(GSM_MAX_NUMBER_LENGTH + 1) * 2];
+	unsigned long long message_id;
+	time_t updated;
+} SMSD_SQLInboxGroup;
+
 /* configurable queries
  * NOTE: parameter sequence in select queries are mandatory !!!
  */
@@ -109,6 +125,7 @@ enum {
 	SQL_QUERY_SAVE_INBOX_SMS_UPDATE_DELIVERED,
 	SQL_QUERY_SAVE_INBOX_SMS_UPDATE,
 	SQL_QUERY_SAVE_INBOX_SMS_INSERT,
+	SQL_QUERY_SAVE_INBOX_SMS_UPDATE_METADATA,
 	SQL_QUERY_UPDATE_RECEIVED,
 	SQL_QUERY_REFRESH_SEND_STATUS,
 	SQL_QUERY_UPDATE_RETRIES,

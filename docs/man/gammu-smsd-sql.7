@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "GAMMU-SMSD-SQL" "7" "Jul 25, 2026" "1.43.3" "Gammu"
+.TH "GAMMU-SMSD-SQL" "7" "Jul 30, 2026" "1.43.3" "Gammu"
 .SH NAME
 gammu-smsd-sql \- gammu-smsd(1) backend using SQL abstraction layer to use any supported database as a message storage
 .SH DESCRIPTION
@@ -340,9 +340,63 @@ Default value:
 .sp
 .EX
 INSERT INTO inbox (ReceivingDateTime, Text, SenderNumber, Coding, SMSCNumber, UDH,
-Class, TextDecoded, RecipientID) VALUES (%d, %E, %R, %c, %F, %u, %x, %T, %P)
+Class, TextDecoded, RecipientID, Status, MessageID, SequencePosition, PartCount,
+Processed) VALUES (%d, %E, %R, %c, %F, %u, %x, %T, %P, %e, %1, %2, %3, %4)
 .EE
 .UNINDENT
+.UNINDENT
+.sp
+Query specific parameters:
+.INDENT 7.0
+.TP
+.B \fB%1\fP
+logical message identifier, or 0 until the first physical row ID is known
+.TP
+.B \fB%2\fP
+sequence position of this physical part
+.TP
+.B \fB%3\fP
+expected number of physical parts
+.TP
+.B \fB%4\fP
+initial processed state; received rows are staged as processed until their
+logical message identifier is finalized
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B save_inbox_sms_update_metadata
+Finalize the logical message identifier and multipart metadata, then publish
+the received physical message to inbox consumers.
+.sp
+Default value:
+.INDENT 7.0
+.INDENT 3.5
+.sp
+.EX
+UPDATE inbox SET MessageID = %1, SequencePosition = %2, PartCount = %3,
+Processed = %5 WHERE ID = %4
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Query specific parameters:
+.INDENT 7.0
+.TP
+.B \fB%1\fP
+ID of the first stored physical part of the logical message
+.TP
+.B \fB%2\fP
+sequence position of this physical part
+.TP
+.B \fB%3\fP
+expected number of physical parts
+.TP
+.B \fB%4\fP
+ID of this physical part
+.TP
+.B \fB%5\fP
+final processed state; false publishes the completed row
 .UNINDENT
 .UNINDENT
 .INDENT 0.0
@@ -446,6 +500,41 @@ Default value:
 .EX
 SELECT Text, Coding, UDH, Class, TextDecoded, ID, SequencePosition
 FROM outbox_multipart WHERE ID=%1 AND SequencePosition=%2
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Query specific parameters:
+.INDENT 7.0
+.TP
+.B \fB%1\fP
+ID of message
+.TP
+.B \fB%2\fP
+Number of multipart message
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B find_sent_item
+Find an existing sent message before transmission. SMSD uses this to
+reconcile messages which were written to \fBsentitems\fP but not removed
+from \fBoutbox\fP, for example when the daemon stopped between these two
+operations.
+.sp
+The selected columns and their order are mandatory. SMSD compares the
+stored message identity and payload with the outbox message. A matching
+successfully sent message is skipped; a different message using the same
+ID is left in the outbox and reported as a conflict.
+.sp
+Default value:
+.INDENT 7.0
+.INDENT 3.5
+.sp
+.EX
+SELECT Text, Coding, UDH, Class, TextDecoded, DestinationNumber,
+InsertIntoDB, RelativeValidity, CreatorID, Status
+FROM sentitems WHERE ID=%1 AND SequencePosition=%2
 .EE
 .UNINDENT
 .UNINDENT

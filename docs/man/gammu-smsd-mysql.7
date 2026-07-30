@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "GAMMU-SMSD-MYSQL" "7" "Jul 25, 2026" "1.43.3" "Gammu"
+.TH "GAMMU-SMSD-MYSQL" "7" "Jul 30, 2026" "1.43.3" "Gammu"
 .SH NAME
 gammu-smsd-mysql \- gammu-smsd(1) backend using MySQL database server as a message storage
 .SH DESCRIPTION
@@ -125,7 +125,7 @@ CREATE TABLE \(gagammu\(ga (
 \-\- Dumping data for table \(gagammu\(ga
 \-\-
 
-INSERT INTO \(gagammu\(ga (\(gaVersion\(ga) VALUES (17);
+INSERT INTO \(gagammu\(ga (\(gaVersion\(ga) VALUES (18);
 
 \-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 
@@ -144,11 +144,16 @@ CREATE TABLE \(gainbox\(ga (
   \(gaClass\(ga integer NOT NULL default \-1,
   \(gaTextDecoded\(ga text NOT NULL,
   \(gaID\(ga integer unsigned NOT NULL auto_increment,
+  \(gaMessageID\(ga integer unsigned NOT NULL default 0,
+  \(gaSequencePosition\(ga integer NOT NULL default 1,
+  \(gaPartCount\(ga integer NOT NULL default 1,
   \(gaRecipientID\(ga text NOT NULL,
   \(gaProcessed\(ga enum(\(aqfalse\(aq,\(aqtrue\(aq) NOT NULL default \(aqfalse\(aq,
   \(gaStatus\(ga integer NOT NULL default \-1,
   PRIMARY KEY \(gaID\(ga (\(gaID\(ga)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;
+
+CREATE INDEX inbox_message ON inbox(MessageID, SequencePosition);
 
 \-\-
 \-\- Dumping data for table \(gainbox\(ga
@@ -322,7 +327,7 @@ CREATE TABLE \(gagammu\(ga (
 \-\- Dumping data for table \(gagammu\(ga
 \-\-
 
-INSERT INTO \(gagammu\(ga (\(gaVersion\(ga) VALUES (17);
+INSERT INTO \(gagammu\(ga (\(gaVersion\(ga) VALUES (18);
 
 \-\- \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
 
@@ -341,11 +346,16 @@ CREATE TABLE \(gainbox\(ga (
   \(gaClass\(ga integer NOT NULL default \(aq\-1\(aq,
   \(gaTextDecoded\(ga text NOT NULL,
   \(gaID\(ga integer unsigned NOT NULL auto_increment,
+  \(gaMessageID\(ga integer unsigned NOT NULL default 0,
+  \(gaSequencePosition\(ga integer NOT NULL default 1,
+  \(gaPartCount\(ga integer NOT NULL default 1,
   \(gaRecipientID\(ga text NOT NULL,
   \(gaProcessed\(ga enum(\(aqfalse\(aq,\(aqtrue\(aq) NOT NULL default \(aqfalse\(aq,
   \(gaStatus\(ga integer NOT NULL default \(aq\-1\(aq,
   PRIMARY KEY \(gaID\(ga (\(gaID\(ga)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;
+
+CREATE INDEX inbox_message ON inbox(MessageID, SequencePosition);
 
 \-\-
 \-\- Dumping data for table \(gainbox\(ga

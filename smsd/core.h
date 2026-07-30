@@ -16,7 +16,7 @@
 #endif
 
 #define SMSD_SHM_VERSION (2)
-#define SMSD_DB_VERSION (17)
+#define SMSD_DB_VERSION (18)
 
 #include "log.h"
 
@@ -155,6 +155,7 @@ struct _GSM_SMSDConfig {
 	const char *table_outbox;
 	const char *table_outbox_multipart;
 	const char *table_phones;
+	SMSD_SQLInboxGroup inbox_groups[SMSD_SQL_MAX_INBOX_GROUPS];
 #endif
 
 	INI_Section 		*smsdcfgfile;
