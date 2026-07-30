@@ -23,7 +23,7 @@
 
 long long SMSDMySQL_GetNumber(GSM_SMSDConfig * Config, SQL_result *res, unsigned int field)
 {
-	return atoi(res->my.row[field]);
+	return strtoll(res->my.row[field], NULL, 10);
 }
 
 const char *SMSDMySQL_GetString(GSM_SMSDConfig * Config, SQL_result *res, unsigned int field)

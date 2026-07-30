@@ -48,7 +48,7 @@ const char now_plus_pgsql[] = "now() + interval '%d seconds'";
 const char now_plus_sqlite[] = "datetime('now', '+%d seconds', 'localtime')";
 const char now_plus_freetds[] = "DATEADD(second, %d, CURRENT_TIMESTAMP)";
 const char now_plus_access[] = "now()+#00:00:%d#";
-const char now_plus_oracle[] = "CURRENT_TIMESTAMP + INTERVAL '%d' SECOND";
+const char now_plus_oracle[] = "CURRENT_TIMESTAMP + NUMTODSINTERVAL(%d, 'SECOND')";
 const char now_plus_fallback[] = "NOW() + INTERVAL %d SECOND";
 
 const char now_minus_odbc[] = "{fn TIMESTAMPADD(SQL_TSI_SECOND, -%d, CURRENT_TIMESTAMP)}";
@@ -57,7 +57,7 @@ const char now_minus_pgsql[] = "now() - interval '%d seconds'";
 const char now_minus_sqlite[] = "datetime('now', '-%d seconds', 'localtime')";
 const char now_minus_freetds[] = "DATEADD(second, -%d, CURRENT_TIMESTAMP)";
 const char now_minus_access[] = "DateAdd('s', -%d, Now())";
-const char now_minus_oracle[] = "CURRENT_TIMESTAMP - INTERVAL '%d' SECOND";
+const char now_minus_oracle[] = "CURRENT_TIMESTAMP - NUMTODSINTERVAL(%d, 'SECOND')";
 const char now_minus_fallback[] = "NOW() - INTERVAL %d SECOND";
 
 
@@ -413,6 +413,20 @@ void SMSDSQL_Time2String(GSM_SMSDConfig * Config, time_t timestamp, char *static
   }
 }
 
+static void SMSDSQL_EncodeCanonicalNumber(
+	char *destination,
+	const unsigned char *number)
+{
+	EncodeUTF8(destination, number);
+	if (destination[0] == '0' && destination[1] == '0') {
+		destination[0] = '+';
+		memmove(
+			destination + 1,
+			destination + 2,
+			strlen(destination + 2) + 1);
+	}
+}
+
 static GSM_Error SMSDSQL_NamedQuery(GSM_SMSDConfig * Config, const char *sql_query, GSM_SMSMessage *sms,
 	GSM_MultiSMSMessage * smsmulti, const SQL_Var *params, SQL_result * res, gboolean retry)
 {
@@ -492,15 +506,10 @@ static GSM_Error SMSDSQL_NamedQuery(GSM_SMSDConfig * Config, const char *sql_que
 					switch (c) {
 						case 'R':
 							/*
-							 * Always store international numnbers with + prefix
+							 * Always store international numbers with + prefix
 							 * to allow easy matching later.
 							 */
-							if (sms->Number[0] == '0' && sms->Number[1] == '0') {
-								static_buff[0] = '+';
-								EncodeUTF8(static_buff + 1, sms->Number + 2);
-							} else {
-								EncodeUTF8(static_buff, sms->Number);
-							}
+							SMSDSQL_EncodeCanonicalNumber(static_buff, sms->Number);
 							to_print = static_buff;
 							break;
 						case 'F':
@@ -844,6 +853,18 @@ static gboolean SMSDSQL_UnicodeEqual(const unsigned char *first, const unsigned 
 		memcmp(first, second, first_length * 2) == 0;
 }
 
+static gboolean SMSDSQL_NumberEqual(
+	const unsigned char *first,
+	const unsigned char *second)
+{
+	char first_number[GSM_MAX_NUMBER_LENGTH * 3 + 1];
+	char second_number[GSM_MAX_NUMBER_LENGTH * 3 + 1];
+
+	SMSDSQL_EncodeCanonicalNumber(first_number, first);
+	SMSDSQL_EncodeCanonicalNumber(second_number, second);
+	return strcmp(first_number, second_number) == 0;
+}
+
 static gboolean SMSDSQL_InboxGroupMatches(
 	const SMSD_SQLInboxGroup *group,
 	const GSM_SMSMessage *sms)
@@ -852,7 +873,7 @@ static gboolean SMSDSQL_InboxGroupMatches(
 		group->type == sms->UDH.Type &&
 		group->reference == SMSDSQL_InboxReference(sms) &&
 		group->part_count == sms->UDH.AllParts &&
-		SMSDSQL_UnicodeEqual(group->sender, sms->Number) &&
+		SMSDSQL_NumberEqual(group->sender, sms->Number) &&
 		SMSDSQL_UnicodeEqual(group->smsc, sms->SMSC.Number));
 }
 
@@ -1471,12 +1492,7 @@ static GSM_Error SMSDSQL_ReconcileSentItem(
 		expected_udh[0] = 0;
 	}
 
-	if (sms->Number[0] == '0' && sms->Number[1] == '0') {
-		expected_destination[0] = '+';
-		EncodeUTF8(expected_destination + 1, sms->Number + 2);
-	} else {
-		EncodeUTF8(expected_destination, sms->Number);
-	}
+	SMSDSQL_EncodeCanonicalNumber(expected_destination, sms->Number);
 
 	if (!SMSDSQL_StringEquals(db->GetString(Config, &res, 0), expected_text)) {
 		matches = FALSE;
@@ -2238,10 +2254,12 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 			", ", ESCAPE_FIELD("InsertIntoDB"),
 			" FROM ", Config->table_inbox,
 			" WHERE ", ESCAPE_FIELD("PartCount"), " > 1"
+			" AND ", ESCAPE_FIELD("RecipientID"), " = %P"
 			" AND ", ESCAPE_FIELD("MessageID"), " IN (SELECT ",
 				ESCAPE_FIELD("MessageID"),
 				" FROM ", Config->table_inbox,
 				" WHERE ", ESCAPE_FIELD("PartCount"), " > 1"
+				" AND ", ESCAPE_FIELD("RecipientID"), " = %P"
 				" AND ", ESCAPE_FIELD("InsertIntoDB"), " >= ",
 					SMSDSQL_NowMinus(Config, Config->multiparttimeout),
 			") ORDER BY ", ESCAPE_FIELD("InsertIntoDB"), " ASC, ",
