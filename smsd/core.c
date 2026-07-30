@@ -749,7 +749,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 		strncpy(fullpath, filename, PATH_MAX);
 		fullpath[PATH_MAX] = 0;
 	}
-	Config->shm_key = ftok(fullpath, SMSD_SHM_KEY);
+	Config->shm_key = ftok(fullpath, SMSD_SHM_VERSION);
 	if (Config->shm_key < 0) {
 		fprintf(stderr, "Failed to generate SHM key!\n");
 		return FALSE;
