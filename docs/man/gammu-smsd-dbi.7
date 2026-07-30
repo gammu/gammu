@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "GAMMU-SMSD-DBI" "7" "Jul 25, 2026" "1.43.3" "Gammu"
+.TH "GAMMU-SMSD-DBI" "7" "Jul 30, 2026" "1.43.3" "Gammu"
 .SH NAME
 gammu-smsd-dbi \- gammu-smsd(1) backend using DBI abstraction layer to use any supported database as a message storage
 .SH DESCRIPTION
@@ -98,7 +98,7 @@ CREATE TABLE gammu (
   Version INTEGER NOT NULL DEFAULT 0 PRIMARY KEY
 );
 
-INSERT INTO gammu (Version) VALUES (17);
+INSERT INTO gammu (Version) VALUES (18);
 
 CREATE TABLE inbox (
   UpdatedInDB NUMERIC NOT NULL DEFAULT (datetime(\(aqnow\(aq, \(aqlocaltime\(aq)),
@@ -111,12 +111,17 @@ CREATE TABLE inbox (
   Class INTEGER NOT NULL DEFAULT \-1,
   TextDecoded TEXT NOT NULL DEFAULT \(aq\(aq,
   ID INTEGER PRIMARY KEY AUTOINCREMENT,
+  MessageID INTEGER NOT NULL DEFAULT 0,
+  SequencePosition INTEGER NOT NULL DEFAULT 1,
+  PartCount INTEGER NOT NULL DEFAULT 1,
   RecipientID TEXT NOT NULL,
   Processed TEXT NOT NULL DEFAULT \(aqfalse\(aq,
   Status INTEGER NOT NULL DEFAULT \-1,
   CHECK (Coding IN
   (\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq))
 );
+
+CREATE INDEX inbox_message ON inbox(MessageID, SequencePosition);
 
 CREATE TRIGGER update_inbox_time UPDATE ON inbox
   BEGIN

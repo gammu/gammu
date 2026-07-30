@@ -61,7 +61,7 @@ CREATE TABLE gammu (
 -- Dumping data for table "gammu"
 --
 
-INSERT INTO gammu ("Version") VALUES (17);
+INSERT INTO gammu ("Version") VALUES (18);
 
 -- --------------------------------------------------------
 
@@ -80,12 +80,17 @@ CREATE TABLE inbox (
   "Class" integer NOT NULL DEFAULT -1,
   "TextDecoded" text NOT NULL DEFAULT '',
   "ID" serial PRIMARY KEY,
+  "MessageID" integer NOT NULL DEFAULT 0,
+  "SequencePosition" integer NOT NULL DEFAULT 1,
+  "PartCount" integer NOT NULL DEFAULT 1,
   "RecipientID" text NOT NULL,
   "Processed" boolean NOT NULL DEFAULT FALSE,
   "Status" integer NOT NULL DEFAULT -1,
   CHECK ("Coding" IN
   ('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression'))
 );
+
+CREATE INDEX inbox_message ON inbox("MessageID", "SequencePosition");
 
 --
 -- Dumping data for table "inbox"

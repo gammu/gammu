@@ -76,7 +76,22 @@ Fields description:
     decoded SMS text (for Default Alphabet/Unicode SMS)
 
 ``ID`` (integer unsigned)
-    SMS identificator (for using with external applications)
+    Physical SMS part identifier (for using with external applications)
+
+``MessageID`` (integer unsigned)
+    Logical message identifier, using the ``ID`` of the first stored physical
+    part. All physical parts of one multipart message have the same value,
+    including parts delivered through separate callbacks within
+    :config:option:`MultipartTimeout`. For a single-part message, this is the
+    same as ``ID``.
+
+``SequencePosition`` (integer)
+    Position of this physical SMS within the logical message, starting at 1.
+
+``PartCount`` (integer)
+    Number of physical SMS parts expected for the logical message. This can be
+    greater than the number of stored rows when an incomplete multipart
+    message is processed after a timeout.
 
 ``RecipientID`` (text)
     which Gammu daemon has added it
@@ -432,6 +447,15 @@ History of database structure
     production environment.
 
 History of schema versions:
+
+18
+
+    * Added ``MessageID``, ``SequencePosition`` and ``PartCount`` fields to
+      :ref:`inbox`.
+
+    When upgrading an existing database, initialize ``MessageID`` to ``ID``
+    for existing rows. Historical multipart relationships cannot be
+    reconstructed reliably from the concatenation reference alone.
 
 17
 

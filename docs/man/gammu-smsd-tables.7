@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "GAMMU-SMSD-TABLES" "7" "Jul 25, 2026" "1.43.3" "Gammu"
+.TH "GAMMU-SMSD-TABLES" "7" "Jul 30, 2026" "1.43.3" "Gammu"
 .SH NAME
 gammu-smsd-tables \- description of tables for database backends of gammu-smsd(1)
 .sp
@@ -95,7 +95,22 @@ SMS class or \-1 (0 is flash SMS, 1 is normal one, 127 is USSD)
 decoded SMS text (for Default Alphabet/Unicode SMS)
 .TP
 .B \fBID\fP (integer unsigned)
-SMS identificator (for using with external applications)
+Physical SMS part identifier (for using with external applications)
+.TP
+.B \fBMessageID\fP (integer unsigned)
+Logical message identifier, using the \fBID\fP of the first stored physical
+part. All physical parts of one multipart message have the same value,
+including parts delivered through separate callbacks within
+\fBMultipartTimeout\fP \%<#\:option-MultipartTimeout>\&. For a single\-part message, this is the
+same as \fBID\fP\&.
+.TP
+.B \fBSequencePosition\fP (integer)
+Position of this physical SMS within the logical message, starting at 1.
+.TP
+.B \fBPartCount\fP (integer)
+Number of physical SMS parts expected for the logical message. This can be
+greater than the number of stored rows when an incomplete multipart
+message is processed after a timeout.
 .TP
 .B \fBRecipientID\fP (text)
 which Gammu daemon has added it
@@ -494,6 +509,21 @@ production environment.
 .sp
 History of schema versions:
 .sp
+18
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+Added \fBMessageID\fP, \fBSequencePosition\fP and \fBPartCount\fP fields to
+inbox\&.
+.UNINDENT
+.sp
+When upgrading an existing database, initialize \fBMessageID\fP to \fBID\fP
+for existing rows. Historical multipart relationships cannot be
+reconstructed reliably from the concatenation reference alone.
+.UNINDENT
+.UNINDENT
+.sp
 17
 .INDENT 0.0
 .INDENT 3.5
@@ -689,7 +719,7 @@ INSERT INTO outbox (
 Inserting multipart messages is a bit more tricky, you need to construct also
 UDH header and store it hexadecimally written into UDH field. Unless you have a
 good reason to do this manually, use gammu\-smsd\-inject \%<#\:gammu-smsd-inject>, C library
-(\fBSMSD_InjectSMS()\fP) or Python library
+(\fBSMSD_InjectSMS()\fP \%<#\:c\:.SMSD_InjectSMS>) or Python library
 (\fBgammu.smsd.SMSD.InjectSMS()\fP \%<#\:gammu\:.smsd\:.SMSD\:.InjectSMS>).
 .sp
 For long text message, the UDH starts with \fB050003\fP followed by byte as a

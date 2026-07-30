@@ -20,7 +20,7 @@ CREATE TABLE gammu (
   "Version" smallint NOT NULL DEFAULT 0 PRIMARY KEY
 );
 
-INSERT INTO gammu ("Version") VALUES (17);
+INSERT INTO gammu ("Version") VALUES (18);
 GO
 
 CREATE TABLE inbox (
@@ -34,12 +34,18 @@ CREATE TABLE inbox (
   "Class" integer NOT NULL DEFAULT -1,
   "TextDecoded" varchar(max) NOT NULL DEFAULT '',
   "ID" integer IDENTITY(1, 1) PRIMARY KEY,
+  "MessageID" integer NOT NULL DEFAULT 0,
+  "SequencePosition" integer NOT NULL DEFAULT 1,
+  "PartCount" integer NOT NULL DEFAULT 1,
   "RecipientID" varchar(max) NOT NULL,
   "Processed" bit NOT NULL DEFAULT 0,
   "Status" integer NOT NULL DEFAULT -1,
   CHECK ("Coding" IN
     ('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression'))
 );
+GO
+
+CREATE INDEX inbox_message ON inbox("MessageID", "SequencePosition");
 GO
 
 CREATE TRIGGER inbox_update_timestamp ON inbox AFTER UPDATE AS
