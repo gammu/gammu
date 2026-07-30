@@ -29,6 +29,7 @@ INSERT INTO `gammu` (`Version`) VALUES (18);
 CREATE TABLE `inbox` (
   `UpdatedInDB` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `ReceivingDateTime` timestamp NOT NULL default CURRENT_TIMESTAMP,
+  `InsertIntoDB` timestamp NOT NULL default CURRENT_TIMESTAMP,
   `Text` text NOT NULL,
   `SenderNumber` varchar(20) NOT NULL default '',
   `Coding` enum('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression') NOT NULL default 'Default_No_Compression',
@@ -47,6 +48,7 @@ CREATE TABLE `inbox` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;
 
 CREATE INDEX inbox_message ON inbox(MessageID, SequencePosition);
+CREATE INDEX inbox_insert ON inbox(InsertIntoDB);
 
 --
 -- Dumping data for table `inbox`

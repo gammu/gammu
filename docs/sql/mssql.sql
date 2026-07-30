@@ -26,6 +26,7 @@ GO
 CREATE TABLE inbox (
   "UpdatedInDB" datetime2(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   "ReceivingDateTime" datetime2(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "InsertIntoDB" datetime2(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   "Text" varchar(max) NOT NULL,
   "SenderNumber" varchar(20) NOT NULL DEFAULT '',
   "Coding" varchar(255) NOT NULL DEFAULT 'Default_No_Compression',
@@ -46,6 +47,8 @@ CREATE TABLE inbox (
 GO
 
 CREATE INDEX inbox_message ON inbox("MessageID", "SequencePosition");
+GO
+CREATE INDEX inbox_insert ON inbox("InsertIntoDB");
 GO
 
 CREATE TRIGGER inbox_update_timestamp ON inbox AFTER UPDATE AS

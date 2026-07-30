@@ -73,6 +73,10 @@ when somebody (daemon, user, etc.) updated it
 .B \fBReceivingDateTime\fP (timestamp)
 when SMS was received
 .TP
+.B \fBInsertIntoDB\fP (timestamp)
+Time when SMSD stored this physical part. SMSD uses the first part\(aqs value
+to preserve multipart grouping deadlines across restarts.
+.TP
 .B \fBText\fP (text)
 encoded SMS text (for all SMS)
 .TP
@@ -522,17 +526,17 @@ History of schema versions:
 .INDENT 3.5
 .INDENT 0.0
 .IP \(bu 2
-Added \fBMessageID\fP, \fBSequencePosition\fP and \fBPartCount\fP fields to
-inbox\&.
+Added \fBInsertIntoDB\fP, \fBMessageID\fP, \fBSequencePosition\fP and
+\fBPartCount\fP fields to inbox\&.
 .IP \(bu 2
 Added \fBSendDays\fP field to outbox\&.
 .UNINDENT
 .sp
 When upgrading an existing database, initialize \fBMessageID\fP to \fBID\fP
-for existing rows. Historical multipart relationships cannot be
-reconstructed reliably from the concatenation reference alone. Add
-\fBSendDays\fP with a default value of 127 so existing queued messages
-remain eligible every day.
+and \fBInsertIntoDB\fP to the migration time for existing rows. Historical
+multipart relationships cannot be reconstructed reliably from the
+concatenation reference alone. Add \fBSendDays\fP with a default value of
+127 so existing queued messages remain eligible every day.
 .UNINDENT
 .UNINDENT
 .sp

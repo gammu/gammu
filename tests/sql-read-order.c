@@ -17,6 +17,9 @@
 #include "common.h"
 
 GSM_Error SMSD_SendSMS(GSM_SMSDConfig *config);
+gboolean SMSD_CheckMultipart(
+	GSM_SMSDConfig *config,
+	GSM_MultiSMSMessage *multi_sms);
 
 typedef enum {
 	RESULT_NONE,
@@ -29,6 +32,7 @@ typedef enum {
 	RESULT_DELIVERY_UPDATE,
 	RESULT_INBOX_INSERT,
 	RESULT_INBOX_METADATA,
+	RESULT_RESTORE_INBOX_GROUPS,
 	RESULT_UPDATE_RECEIVED
 } ResultKind;
 
@@ -46,6 +50,16 @@ typedef struct {
 	long long row_id;
 	char processed[6];
 } InboxMetadata;
+
+typedef struct {
+	long long message_id;
+	const char *sender;
+	const char *smsc;
+	const char *udh;
+	int sequence_position;
+	int part_count;
+	time_t created;
+} RestoreInboxGroup;
 
 typedef struct {
 	SQL_result *result;
@@ -80,8 +94,10 @@ static unsigned long long next_inbox_id;
 static int inbox_insert_count;
 static int inbox_metadata_count;
 static int update_received_count;
+static int restore_inbox_group_count;
 static InboxInsert inbox_insert[128];
 static InboxMetadata inbox_metadata[128];
+static RestoreInboxGroup restore_inbox_groups[8];
 static char query_find_id[] = "find-id-%1-%2";
 static char query_refresh[] = "refresh";
 static char query_outbox_body[] = "outbox-body";
@@ -92,6 +108,7 @@ static char query_delivery_update[] = "delivery-update";
 static char query_delivery_update_other[] = "delivery-update-other";
 static char query_inbox_insert[] = "inbox-insert-%1-%2-%3-%4";
 static char query_inbox_metadata[] = "inbox-metadata-%1-%2-%3-%4-%5";
+static char query_restore_inbox_groups[] = "restore-inbox-groups";
 static char query_update_received[] = "update-received";
 
 static ResultState *find_state(SQL_result *result)
@@ -186,6 +203,8 @@ static GSM_Error mock_query(GSM_SMSDConfig *config UNUSED, const char *query, SQ
 			  inbox_metadata[inbox_metadata_count].processed) == 5) {
 		kind = RESULT_INBOX_METADATA;
 		inbox_metadata_count++;
+	} else if (strcmp(query, "restore-inbox-groups") == 0) {
+		kind = RESULT_RESTORE_INBOX_GROUPS;
 	} else if (strcmp(query, "update-received") == 0) {
 		kind = RESULT_UPDATE_RECEIVED;
 		update_received_count++;
@@ -226,7 +245,7 @@ static void mock_free_result(GSM_SMSDConfig *config UNUSED, SQL_result *result)
 		default:
 			break;
 	}
-	state->kind = RESULT_NONE;
+	state->result = NULL;
 }
 
 static int mock_next_row(GSM_SMSDConfig *config UNUSED, SQL_result *result)
@@ -244,6 +263,13 @@ static int mock_next_row(GSM_SMSDConfig *config UNUSED, SQL_result *result)
 			return multipart_queries == 1 && state->row++ == 0;
 		case RESULT_SENT_ITEM:
 			return sent_item_present && state->row++ == 0;
+		case RESULT_RESTORE_INBOX_GROUPS:
+			if (state->row < restore_inbox_group_count) {
+				state->row++;
+				state->last_field = -1;
+				return 1;
+			}
+			return 0;
 		default:
 			return 0;
 	}
@@ -324,6 +350,19 @@ static const char *mock_get_string(GSM_SMSDConfig *config UNUSED, SQL_result *re
 		if (field == 4) {
 			return "+420987654";
 		}
+	} else if (state->kind == RESULT_RESTORE_INBOX_GROUPS) {
+		RestoreInboxGroup *group = &restore_inbox_groups[state->row - 1];
+
+		switch (field) {
+			case 1:
+				return group->sender;
+			case 2:
+				return group->smsc;
+			case 3:
+				return group->udh;
+			default:
+				break;
+		}
 	}
 
 	fprintf(stderr, "Unexpected string field %u for result kind %d\n", field, state->kind);
@@ -374,6 +413,20 @@ static long long mock_get_number(GSM_SMSDConfig *config UNUSED, SQL_result *resu
 	if (state->kind == RESULT_DELIVERY_SELECT && field == 0) {
 		return 123;
 	}
+	if (state->kind == RESULT_RESTORE_INBOX_GROUPS) {
+		RestoreInboxGroup *group = &restore_inbox_groups[state->row - 1];
+
+		switch (field) {
+			case 0:
+				return group->message_id;
+			case 4:
+				return group->sequence_position;
+			case 5:
+				return group->part_count;
+			default:
+				break;
+		}
+	}
 
 	fprintf(stderr, "Unexpected numeric field %u for result kind %d\n", field, state->kind);
 	exit(2);
@@ -391,6 +444,9 @@ static time_t mock_get_date(GSM_SMSDConfig *config UNUSED, SQL_result *result, u
 	}
 	if (state->kind == RESULT_DELIVERY_SELECT && field == 2) {
 		return delivery_time;
+	}
+	if (state->kind == RESULT_RESTORE_INBOX_GROUPS && field == 6) {
+		return restore_inbox_groups[state->row - 1].created;
 	}
 
 	fprintf(stderr, "Unexpected date field %u for result kind %d\n", field, state->kind);
@@ -462,8 +518,10 @@ static void reset_mock(void)
 	inbox_insert_count = 0;
 	inbox_metadata_count = 0;
 	update_received_count = 0;
+	restore_inbox_group_count = 0;
 	memset(inbox_insert, 0, sizeof(inbox_insert));
 	memset(inbox_metadata, 0, sizeof(inbox_metadata));
+	memset(restore_inbox_groups, 0, sizeof(restore_inbox_groups));
 }
 
 static void setup_config(GSM_SMSDConfig *config)
@@ -487,6 +545,7 @@ static void setup_config(GSM_SMSDConfig *config)
 	config->SMSDSQL_queries[SQL_QUERY_SAVE_INBOX_SMS_UPDATE] = query_delivery_update_other;
 	config->SMSDSQL_queries[SQL_QUERY_SAVE_INBOX_SMS_INSERT] = query_inbox_insert;
 	config->SMSDSQL_queries[SQL_QUERY_SAVE_INBOX_SMS_UPDATE_METADATA] = query_inbox_metadata;
+	config->SMSDSQL_queries[SQL_QUERY_RESTORE_INBOX_GROUPS] = query_restore_inbox_groups;
 	config->SMSDSQL_queries[SQL_QUERY_UPDATE_RECEIVED] = query_update_received;
 }
 
@@ -915,6 +974,131 @@ static void test_inbox_group_fixed_timeout(void)
 	free_inbox_groups(&config);
 }
 
+static void test_inbox_group_cleanup_on_single_message(void)
+{
+	GSM_SMSDConfig config;
+	GSM_MultiSMSMessage sms;
+	GSM_Error error;
+
+	reset_mock();
+	setup_config(&config);
+
+	prepare_multipart_inbox(&sms, 1);
+	error = save_inbox_part(&sms, &config);
+	test_result(error == ERR_NONE);
+	test_result(config.inbox_groups != NULL);
+	config.inbox_groups->created =
+		time(NULL) - config.multiparttimeout;
+
+	memset(&sms, 0, sizeof(sms));
+	sms.Number = 1;
+	GSM_SetDefaultSMSData(&sms.SMS[0]);
+	sms.SMS[0].PDU = SMS_Deliver;
+	error = save_inbox_part(&sms, &config);
+	test_result(error == ERR_NONE);
+	test_result(config.inbox_groups == NULL);
+}
+
+static void test_inbox_polling_timeout_is_not_cached(void)
+{
+	GSM_SMSDConfig config;
+	GSM_MultiSMSMessage sms;
+	GSM_Error error;
+
+	reset_mock();
+	setup_config(&config);
+	prepare_multipart_inbox(&sms, 1);
+	config.IncompleteMessageID = sms.SMS[0].UDH.ID8bit;
+	config.IncompleteMessageTime = time(NULL) - config.multiparttimeout;
+
+	test_result(SMSD_CheckMultipart(&config, &sms) == TRUE);
+	test_result(config.ProcessingIncompleteMessage == TRUE);
+	error = save_inbox_part(&sms, &config);
+	test_result(error == ERR_NONE);
+	test_result(config.inbox_groups == NULL);
+	test_result(inbox_metadata[0].message_id == 101);
+}
+
+static void test_inbox_nokia_multipart_groups(void)
+{
+	static const GSM_UDH types[] = {
+		UDH_NokiaRingtoneLong,
+		UDH_NokiaOperatorLogoLong,
+		UDH_NokiaWAPLong,
+		UDH_NokiaCalendarLong,
+		UDH_NokiaProfileLong,
+		UDH_NokiaPhonebookLong,
+		UDH_MMSIndicatorLong
+	};
+	GSM_SMSDConfig config;
+	GSM_MultiSMSMessage sms;
+	GSM_Error error;
+	size_t i;
+	int part;
+
+	reset_mock();
+	setup_config(&config);
+
+	for (i = 0; i < sizeof(types) / sizeof(types[0]); i++) {
+		for (part = 1; part <= 2; part++) {
+			prepare_multipart_inbox(&sms, part);
+			sms.SMS[0].UDH.Type = types[i];
+			error = save_inbox_part(&sms, &config);
+			test_result(error == ERR_NONE);
+		}
+		test_result(inbox_metadata[2 * i].message_id == 101 + 2 * i);
+		test_result(inbox_metadata[2 * i + 1].message_id == 101 + 2 * i);
+	}
+	test_result(config.inbox_groups == NULL);
+}
+
+static void test_restore_inbox_groups(void)
+{
+	GSM_SMSDConfig config;
+	GSM_MultiSMSMessage sms;
+	GSM_Error error;
+	time_t now = time(NULL);
+
+	reset_mock();
+	setup_config(&config);
+	restore_inbox_group_count = 1;
+	restore_inbox_groups[0].message_id = 200;
+	restore_inbox_groups[0].sender = "";
+	restore_inbox_groups[0].smsc = "";
+	restore_inbox_groups[0].udh = "050003700201";
+	restore_inbox_groups[0].sequence_position = 1;
+	restore_inbox_groups[0].part_count = 2;
+	restore_inbox_groups[0].created = now;
+
+	error = SMSDSQL_RestoreInboxGroups(&config);
+	test_result(error == ERR_NONE);
+	test_result(inbox_group_count(&config) == 1);
+
+	prepare_multipart_inbox(&sms, 2);
+	error = save_inbox_part(&sms, &config);
+	test_result(error == ERR_NONE);
+	test_result(inbox_metadata[0].message_id == 200);
+	test_result(config.inbox_groups == NULL);
+
+	reset_mock();
+	setup_config(&config);
+	restore_inbox_group_count = 2;
+	restore_inbox_groups[0].message_id = 300;
+	restore_inbox_groups[0].sender = "";
+	restore_inbox_groups[0].smsc = "";
+	restore_inbox_groups[0].udh = "050003700201";
+	restore_inbox_groups[0].sequence_position = 1;
+	restore_inbox_groups[0].part_count = 2;
+	restore_inbox_groups[0].created = now;
+	restore_inbox_groups[1] = restore_inbox_groups[0];
+	restore_inbox_groups[1].udh = "050003700202";
+	restore_inbox_groups[1].sequence_position = 2;
+
+	error = SMSDSQL_RestoreInboxGroups(&config);
+	test_result(error == ERR_NONE);
+	test_result(config.inbox_groups == NULL);
+}
+
 static void test_inbox_group_capacity(void)
 {
 	GSM_SMSDConfig config;
@@ -1098,6 +1282,10 @@ int main(void)
 	test_inbox_message_metadata();
 	test_inbox_group_zero_timeout();
 	test_inbox_group_fixed_timeout();
+	test_inbox_group_cleanup_on_single_message();
+	test_inbox_polling_timeout_is_not_cached();
+	test_inbox_nokia_multipart_groups();
+	test_restore_inbox_groups();
 	test_inbox_group_capacity();
 	test_send_finalized_failure_is_removed();
 	test_send_collision_is_left_queued();
