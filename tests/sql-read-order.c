@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <limits.h>
 
 #include <gammu.h>
 #include <gammu-smsd.h>
@@ -550,6 +551,33 @@ static void setup_config(GSM_SMSDConfig *config)
 	config->SMSDSQL_queries[SQL_QUERY_SAVE_INBOX_SMS_UPDATE_METADATA] = query_inbox_metadata;
 	config->SMSDSQL_queries[SQL_QUERY_RESTORE_INBOX_GROUPS] = query_restore_inbox_groups;
 	config->SMSDSQL_queries[SQL_QUERY_UPDATE_RECEIVED] = query_update_received;
+}
+
+static void test_phone_status_timeout(void)
+{
+	GSM_SMSDConfig config;
+
+	setup_config(&config);
+
+	test_result(SMSDSQL_PhoneStatusTimeout(0) == 10);
+	test_result(SMSDSQL_PhoneStatusTimeout(60) == 70);
+	test_result(SMSDSQL_PhoneStatusTimeout(UINT_MAX) == INT_MAX);
+
+	config.sql = "mysql";
+	test_result(strcmp(SMSDSQL_NowPlus(&config, 70),
+			"(NOW() + INTERVAL 70 SECOND) + 0") == 0);
+	config.sql = "pgsql";
+	test_result(strcmp(SMSDSQL_NowPlus(&config, 70),
+			"now() + interval '70 seconds'") == 0);
+	config.sql = "sqlite3";
+	test_result(strcmp(SMSDSQL_NowPlus(&config, 70),
+			"datetime('now', '+70 seconds', 'localtime')") == 0);
+	config.sql = "access";
+	test_result(strcmp(SMSDSQL_NowPlus(&config, 70),
+			"DateAdd('s', 70, Now())") == 0);
+	config.sql = "mssql";
+	test_result(strcmp(SMSDSQL_NowPlus(&config, 70),
+			"DATEADD(second, 70, CURRENT_TIMESTAMP)") == 0);
 }
 
 static void test_find_outbox_order(void)
@@ -1430,6 +1458,7 @@ static void test_send_reconciliation_error_is_left_queued(void)
 
 int main(void)
 {
+	test_phone_status_timeout();
 	test_find_outbox_order();
 	test_find_outbox_without_sent_item();
 	test_matching_sent_item_is_skipped();

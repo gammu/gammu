@@ -21,6 +21,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <errno.h>
+#include <limits.h>
 #include <time.h>
 #ifdef WIN32
 #include <windows.h>
@@ -47,7 +48,7 @@ const char now_plus_mysql[] = "(NOW() + INTERVAL %d SECOND) + 0";
 const char now_plus_pgsql[] = "now() + interval '%d seconds'";
 const char now_plus_sqlite[] = "datetime('now', '+%d seconds', 'localtime')";
 const char now_plus_freetds[] = "DATEADD(second, %d, CURRENT_TIMESTAMP)";
-const char now_plus_access[] = "now()+#00:00:%d#";
+const char now_plus_access[] = "DateAdd('s', %d, Now())";
 const char now_plus_oracle[] = "CURRENT_TIMESTAMP + NUMTODSINTERVAL(%d, 'SECOND')";
 const char now_plus_fallback[] = "NOW() + INTERVAL %d SECOND";
 
@@ -61,7 +62,7 @@ const char now_minus_oracle[] = "CURRENT_TIMESTAMP - NUMTODSINTERVAL(%d, 'SECOND
 const char now_minus_fallback[] = "NOW() - INTERVAL %d SECOND";
 
 
-static const char *SMSDSQL_NowPlus(GSM_SMSDConfig * Config, int seconds)
+const char *SMSDSQL_NowPlus(GSM_SMSDConfig * Config, int seconds)
 {
 	const char *driver_name;
 	static char result[100];
@@ -86,6 +87,14 @@ static const char *SMSDSQL_NowPlus(GSM_SMSDConfig * Config, int seconds)
 		snprintf(result, sizeof(result), now_plus_fallback, seconds);
 	}
 	return result;
+}
+
+int SMSDSQL_PhoneStatusTimeout(unsigned int status_frequency)
+{
+	if (status_frequency > INT_MAX - 10) {
+		return INT_MAX;
+	}
+	return (int)status_frequency + 10;
 }
 
 static const char *SMSDSQL_NowMinus(GSM_SMSDConfig *Config, int seconds)
@@ -2193,7 +2202,7 @@ GSM_Error SMSDSQL_option(GSM_SMSDConfig *Config, int optint, const char *option,
  */
 GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 {
-	int locktime;
+	int locktime, phone_timeout;
 	const char *escape_char;
 
 	Config->inbox_groups = NULL;
@@ -2300,6 +2309,7 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 
 	locktime = Config->loopsleep * 8; /* reserve 8 sec per message */
 	locktime = locktime < 60 ? 60 : locktime; /* Minimum time reserve is 60 sec */
+	phone_timeout = SMSDSQL_PhoneStatusTimeout(Config->statusfrequency);
 
 	if (SMSDSQL_option(Config, SQL_QUERY_DELETE_PHONE, "delete_phone",
 		"DELETE FROM ", Config->table_phones, " WHERE ", ESCAPE_FIELD("IMEI"), " = %I", NULL) != ERR_NONE) {
@@ -2323,7 +2333,7 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 			") VALUES (%I, %S, %P, %O, %M, %1, %2, ",
 			SMSDSQL_Now(Config),
 			", ",
-			SMSDSQL_NowPlus(Config, 10),
+			SMSDSQL_NowPlus(Config, phone_timeout),
 			", %N, -1, -1)", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
 	}
@@ -2622,7 +2632,7 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 
 	if (SMSDSQL_option(Config, SQL_QUERY_REFRESH_PHONE_STATUS, "refresh_phone_status",
 		"UPDATE ", Config->table_phones, " SET ",
-			ESCAPE_FIELD("TimeOut"), "= ", SMSDSQL_NowPlus(Config, 10),
+			ESCAPE_FIELD("TimeOut"), "= ", SMSDSQL_NowPlus(Config, phone_timeout),
 			", ", ESCAPE_FIELD("Battery"), " = %1"
 			", ", ESCAPE_FIELD("Signal"), " = %2"
 			", ", ESCAPE_FIELD("NetCode"), " = %O"
