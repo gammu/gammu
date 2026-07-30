@@ -210,6 +210,9 @@ General parameters of SMS daemon
     The number of seconds between refreshing phone status (battery, signal) stored
     in shared memory and possibly in service backends. Use 0 to disable.
 
+    With the default SQL queries, the phone record expires ten seconds after
+    the next refresh is due.
+
     You might want to increase this for higher throughput.
 
     Default is 60.

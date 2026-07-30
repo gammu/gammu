@@ -172,8 +172,15 @@ are selected for default queries during initialization.
 
     .. code-block:: sql
 
-        INSERT INTO phones (IMEI, ID, Send, Receive, InsertIntoDB, TimeOut, Client, Battery, Signal)
-        VALUES (%I, %P, %1, %2, NOW(), (NOW() + INTERVAL 10 SECOND) + 0, %N, -1, -1)
+        INSERT INTO phones (IMEI, IMSI, ID, NetCode, NetName, Send, Receive,
+                            InsertIntoDB, TimeOut, Client, Battery, Signal)
+        VALUES (%I, %S, %P, %O, %M, %1, %2, NOW(),
+                (NOW() + INTERVAL 70 SECOND) + 0, %N, -1, -1)
+
+    The shown 70-second expiry uses the default 60-second
+    :config:option:`StatusFrequency` plus a ten-second grace period. The
+    generated default query follows the configured frequency. Custom queries
+    should provide an equivalent expiry interval.
 
     Query specific parameters:
 
@@ -538,14 +545,19 @@ are selected for default queries during initialization.
 
 .. config:option:: refresh_phone_status
 
-    Update phone status (battery, signal).
+    Update phone status (battery, signal, and network).
 
     Default value:
 
     .. code-block:: sql
 
-        UPDATE phones SET TimeOut= (NOW() + INTERVAL 10 SECOND) + 0,
-        Battery = %1, Signal = %2 WHERE IMEI = %I
+        UPDATE phones SET TimeOut = (NOW() + INTERVAL 70 SECOND) + 0,
+        Battery = %1, Signal = %2, NetCode = %O, NetName = %M
+        WHERE IMEI = %I
+
+    The expiry interval is generated from :config:option:`StatusFrequency`
+    plus a ten-second grace period, as described for :config:option:`insert_phone`.
+    Custom queries should keep ``TimeOut`` valid through the next refresh.
 
     Query specific parameters:
 

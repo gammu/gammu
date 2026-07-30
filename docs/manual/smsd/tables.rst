@@ -323,7 +323,10 @@ Fields description:
     when this record has been created (when phone has been connected)
 
 ``TimeOut`` (timestamp)
-    when this record expires
+    when this record expires. With the default SQL queries, this is ten seconds
+    after the next :config:option:`StatusFrequency` refresh is due. A record
+    with a value older than the database server's current time indicates a
+    stale SMSD phone heartbeat.
 
 ``Send`` (boolean)
     indicates whether SMSD is sending messages, depends on configuration directive :config:option:`Send`
@@ -337,6 +340,12 @@ Fields description:
 ``IMSI`` (text)
     SIM IMSI
 
+``NetCode`` (text)
+    code of the network the phone is registered to
+
+``NetName`` (text)
+    name of the network the phone is registered to
+
 ``Client`` (text)
     client name, usually string Gammu with version
 
@@ -347,12 +356,12 @@ Fields description:
     signal level in percent (or \-1 if unknown)
 
 ``Sent`` (integer)
-    Number of sent SMS messages (SMSD does not reset this counter, so it might
-    overflow).
+    Number of sent SMS messages since the SQL service created this phone
+    record. The default SQL queries recreate the record when SMSD starts.
 
 ``Received`` (integer)
-    Number of received SMS messages (SMSD does not reset this counter, so it might
-    overflow).
+    Number of received SMS messages since the SQL service created this phone
+    record. The default SQL queries recreate the record when SMSD starts.
 
 .. _sentitems:
 
