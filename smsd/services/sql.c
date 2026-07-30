@@ -120,12 +120,18 @@ int SMSDSQL_DayMask(int wday)
 static int SMSDSQL_CurrentDayMask(void)
 {
 	time_t now = time(NULL);
-	struct tm *current = localtime(&now);
+	struct tm current;
 
-	if (current == NULL) {
+#ifdef WIN32
+	if (localtime_s(&current, &now) != 0) {
 		return 127;
 	}
-	return SMSDSQL_DayMask(current->tm_wday);
+#else
+	if (localtime_r(&now, &current) == NULL) {
+		return 127;
+	}
+#endif
+	return SMSDSQL_DayMask(current.tm_wday);
 }
 
 const char rownum_clause_fallback[] = "";
