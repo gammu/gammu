@@ -155,7 +155,7 @@ struct _GSM_SMSDConfig {
 	const char *table_outbox;
 	const char *table_outbox_multipart;
 	const char *table_phones;
-	SMSD_SQLInboxGroup inbox_groups[SMSD_SQL_MAX_INBOX_GROUPS];
+	SMSD_SQLInboxGroup *inbox_groups;
 #endif
 
 	INI_Section 		*smsdcfgfile;

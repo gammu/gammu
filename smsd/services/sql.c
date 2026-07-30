@@ -583,8 +583,17 @@ static GSM_Error SMSDSQL_CheckTable(GSM_SMSDConfig * Config, const char *table)
 static GSM_Error SMSDSQL_Free(GSM_SMSDConfig * Config)
 {
 	int i;
+	SMSD_SQLInboxGroup *group, *next;
+
 	SMSD_Log(DEBUG_SQL, Config, "Disconnecting from SQL database.");
 	Config->db->Free(Config);
+	group = Config->inbox_groups;
+	while (group != NULL) {
+		next = group->next;
+		free(group);
+		group = next;
+	}
+	Config->inbox_groups = NULL;
 	/* free configuration */
 	for(i = 0; i < SQL_QUERY_LAST_NO; i++){
 		free(Config->SMSDSQL_queries[i]);
@@ -738,22 +747,18 @@ static SMSD_SQLInboxGroup *SMSDSQL_FindInboxGroup(
 	GSM_SMSDConfig *Config,
 	const GSM_SMSMessage *sms)
 {
-	SMSD_SQLInboxGroup *group;
+	SMSD_SQLInboxGroup *group, **link;
 	time_t now = time(NULL);
-	int i;
 
 	if (!SMSDSQL_IsGroupedInboxPart(sms) || SMSDSQL_InboxReference(sms) < 0) {
 		return NULL;
 	}
 
-	for (i = 0; i < SMSD_SQL_MAX_INBOX_GROUPS; i++) {
-		group = &Config->inbox_groups[i];
-		if (group->active &&
-		    Config->multiparttimeout > 0 &&
-		    difftime(now, group->updated) >= Config->multiparttimeout) {
-			memset(group, 0, sizeof(*group));
-		}
-		if (!group->active) {
+	link = &Config->inbox_groups;
+	while ((group = *link) != NULL) {
+		if (difftime(now, group->created) >= Config->multiparttimeout) {
+			*link = group->next;
+			free(group);
 			continue;
 		}
 		if (group->type == sms->UDH.Type &&
@@ -763,6 +768,7 @@ static SMSD_SQLInboxGroup *SMSDSQL_FindInboxGroup(
 		    SMSDSQL_UnicodeEqual(group->smsc, sms->SMSC.Number)) {
 			return group;
 		}
+		link = &group->next;
 	}
 	return NULL;
 }
@@ -772,54 +778,60 @@ static SMSD_SQLInboxGroup *SMSDSQL_NewInboxGroup(
 	const GSM_SMSMessage *sms,
 	unsigned long long message_id)
 {
-	SMSD_SQLInboxGroup *group = NULL, *oldest = NULL;
+	SMSD_SQLInboxGroup *group;
 	size_t length;
-	int i;
 
-	for (i = 0; i < SMSD_SQL_MAX_INBOX_GROUPS; i++) {
-		if (!Config->inbox_groups[i].active) {
-			group = &Config->inbox_groups[i];
-			break;
-		}
-		if (oldest == NULL ||
-		    Config->inbox_groups[i].updated < oldest->updated) {
-			oldest = &Config->inbox_groups[i];
-		}
-	}
+	group = calloc(1, sizeof(*group));
 	if (group == NULL) {
-		group = oldest;
+		return NULL;
 	}
 
-	memset(group, 0, sizeof(*group));
-	group->active = TRUE;
 	group->type = sms->UDH.Type;
 	group->reference = SMSDSQL_InboxReference(sms);
 	group->part_count = sms->UDH.AllParts;
 	group->message_id = message_id;
-	group->updated = time(NULL);
+	group->created = time(NULL);
 
 	length = UnicodeLength(sms->Number);
 	memcpy(group->sender, sms->Number, (length + 1) * 2);
 	length = UnicodeLength(sms->SMSC.Number);
 	memcpy(group->smsc, sms->SMSC.Number, (length + 1) * 2);
 
+	group->next = Config->inbox_groups;
+	Config->inbox_groups = group;
 	return group;
 }
 
+static void SMSDSQL_RemoveInboxGroup(
+	GSM_SMSDConfig *Config,
+	SMSD_SQLInboxGroup *group)
+{
+	SMSD_SQLInboxGroup **link = &Config->inbox_groups;
+
+	while (*link != NULL) {
+		if (*link == group) {
+			*link = group->next;
+			free(group);
+			return;
+		}
+		link = &(*link)->next;
+	}
+}
+
 static void SMSDSQL_RecordInboxPart(
+	GSM_SMSDConfig *Config,
 	SMSD_SQLInboxGroup *group,
 	int sequence_position)
 {
 	int i;
 
 	group->received_parts[sequence_position - 1] = TRUE;
-	group->updated = time(NULL);
 	for (i = 0; i < group->part_count; i++) {
 		if (!group->received_parts[i]) {
 			return;
 		}
 	}
-	memset(group, 0, sizeof(*group));
+	SMSDSQL_RemoveInboxGroup(Config, group);
 }
 
 /* Save SMS from phone (called Inbox sms - it's in phone Inbox) somewhere */
@@ -831,6 +843,7 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 	struct GSM_SMSDdbobj *db = Config->db;
 	const char *q, *status;
 	SMSD_SQLInboxGroup *inbox_group;
+	gboolean new_inbox_group;
 
 	char smstext[3 * GSM_MAX_SMS_LENGTH + 1];
 	char destinationnumber[3 * GSM_MAX_NUMBER_LENGTH + 1];
@@ -961,8 +974,17 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 		}
 
 		inbox_group = SMSDSQL_FindInboxGroup(Config, &sms->SMS[i]);
+		new_inbox_group = FALSE;
 		if (inbox_group != NULL) {
 			message_id = inbox_group->message_id;
+		} else if (SMSDSQL_IsGroupedInboxPart(&sms->SMS[i]) &&
+			   SMSDSQL_InboxReference(&sms->SMS[i]) >= 0) {
+			inbox_group = SMSDSQL_NewInboxGroup(
+				Config, &sms->SMS[i], message_id);
+			if (inbox_group == NULL) {
+				return ERR_MOREMEMORY;
+			}
+			new_inbox_group = TRUE;
 		}
 
 		vars[0].type = SQL_TYPE_INT;
@@ -972,7 +994,7 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 		vars[2].type = SQL_TYPE_INT;
 		vars[2].v.i = part_count;                  /* PartCount */
 		vars[3].type = SQL_TYPE_STRING;
-		vars[3].v.s = "TRUE";                      /* Processed */
+		vars[3].v.s = "true";                      /* Processed */
 		vars[4].type = SQL_TYPE_NONE;
 
 		error = SMSDSQL_NamedQuery(Config, Config->SMSDSQL_queries[SQL_QUERY_SAVE_INBOX_SMS_INSERT], &sms->SMS[i], sms, vars, &res, FALSE);
@@ -981,6 +1003,9 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 				error = SMSDSQL_NamedQuery(Config, Config->SMSDSQL_queries[SQL_QUERY_SAVE_INBOX_SMS_INSERT], &sms->SMS[i], sms, vars, &res, TRUE);
 			}
 			if (error != ERR_NONE) {
+				if (new_inbox_group) {
+					SMSDSQL_RemoveInboxGroup(Config, inbox_group);
+				}
 				SMSD_Log(DEBUG_INFO, Config, "Error writing to database (%s)", __FUNCTION__);
 				return error;
 			}
@@ -988,6 +1013,9 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 
 		new_id = db->SeqID(Config, "inbox_ID_seq");
 		if (new_id == 0) {
+			if (new_inbox_group) {
+				SMSDSQL_RemoveInboxGroup(Config, inbox_group);
+			}
 			SMSD_Log(DEBUG_INFO, Config, "Failed to get inserted row ID (%s)", __FUNCTION__);
 			return ERR_UNKNOWN;
 		}
@@ -997,6 +1025,9 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 
 		if (message_id == 0) {
 			message_id = new_id;
+		}
+		if (new_inbox_group) {
+			inbox_group->message_id = message_id;
 		}
 
 		vars[0].type = SQL_TYPE_INT;
@@ -1008,22 +1039,22 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 		vars[3].type = SQL_TYPE_INT;
 		vars[3].v.i = (long long)new_id;           /* ID */
 		vars[4].type = SQL_TYPE_STRING;
-		vars[4].v.s = "FALSE";                     /* Processed */
+		vars[4].v.s = "false";                     /* Processed */
 		vars[5].type = SQL_TYPE_NONE;
 
 		error = SMSDSQL_NamedQuery(Config, Config->SMSDSQL_queries[SQL_QUERY_SAVE_INBOX_SMS_UPDATE_METADATA], &sms->SMS[i], sms, vars, &res2, FALSE);
 		if (error != ERR_NONE) {
+			if (new_inbox_group) {
+				SMSDSQL_RemoveInboxGroup(Config, inbox_group);
+			}
 			SMSD_Log(DEBUG_INFO, Config, "Error updating received message metadata (%s)", __FUNCTION__);
 			return error;
 		}
 		db->FreeResult(Config, &res2);
 
-		if (SMSDSQL_IsGroupedInboxPart(&sms->SMS[i]) &&
-		    SMSDSQL_InboxReference(&sms->SMS[i]) >= 0) {
-			if (inbox_group == NULL) {
-				inbox_group = SMSDSQL_NewInboxGroup(Config, &sms->SMS[i], message_id);
-			}
-			SMSDSQL_RecordInboxPart(inbox_group, sequence_position);
+		if (inbox_group != NULL) {
+			SMSDSQL_RecordInboxPart(
+				Config, inbox_group, sequence_position);
 		}
 
 		snprintf(location, sizeof(location), "%llu", new_id);
@@ -1769,7 +1800,7 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 	int locktime;
 	const char *escape_char;
 
-	memset(Config->inbox_groups, 0, sizeof(Config->inbox_groups));
+	Config->inbox_groups = NULL;
 
 	Config->user = INI_GetValue(Config->smsdcfgfile, "smsd", "user", FALSE);
 	if (Config->user == NULL) {
