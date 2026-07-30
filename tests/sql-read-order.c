@@ -815,6 +815,41 @@ static void prepare_multipart_inbox(GSM_MultiSMSMessage *sms, int part)
 	sms->SMS[0].UDH.PartNumber = part;
 }
 
+static void prepare_user_udh_multipart_inbox(
+	GSM_MultiSMSMessage *sms,
+	int part,
+	gboolean reference_16bit)
+{
+	static const unsigned char udh_8bit[] = {
+		0x0b, 0x00, 0x03, 0x70, 0x02, 0x00,
+		0x05, 0x04, 0x23, 0xf0, 0x00, 0x00};
+	static const unsigned char udh_16bit[] = {
+		0x0c, 0x05, 0x04, 0x23, 0xf0, 0x00, 0x00,
+		0x08, 0x04, 0x00, 0x70, 0x02, 0x00};
+	const unsigned char *udh;
+	size_t udh_length;
+	size_t part_offset;
+
+	memset(sms, 0, sizeof(*sms));
+	sms->Number = 1;
+	GSM_SetDefaultSMSData(&sms->SMS[0]);
+	sms->SMS[0].PDU = SMS_Deliver;
+	if (reference_16bit) {
+		udh = udh_16bit;
+		udh_length = sizeof(udh_16bit);
+		part_offset = 12;
+	} else {
+		udh = udh_8bit;
+		udh_length = sizeof(udh_8bit);
+		part_offset = 5;
+	}
+	memcpy(sms->SMS[0].UDH.Text, udh, udh_length);
+	sms->SMS[0].UDH.Text[part_offset] = part;
+	sms->SMS[0].UDH.Length = udh_length;
+	GSM_DecodeUDHHeader(NULL, &sms->SMS[0].UDH);
+	test_result(sms->SMS[0].UDH.Type == UDH_UserUDH);
+}
+
 static GSM_Error save_inbox_part(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *config)
 {
 	GSM_StringArray locations;
@@ -1077,6 +1112,53 @@ static void test_inbox_nokia_multipart_groups(void)
 	test_result(config.inbox_groups == NULL);
 }
 
+static void test_inbox_user_udh_multipart_groups(void)
+{
+	GSM_SMSDConfig config;
+	GSM_MultiSMSMessage sms;
+	GSM_Error error;
+
+	reset_mock();
+	setup_config(&config);
+
+	prepare_user_udh_multipart_inbox(&sms, 1, FALSE);
+	error = save_inbox_part(&sms, &config);
+	test_result(error == ERR_NONE);
+	prepare_user_udh_multipart_inbox(&sms, 1, TRUE);
+	error = save_inbox_part(&sms, &config);
+	test_result(error == ERR_NONE);
+	prepare_user_udh_multipart_inbox(&sms, 2, FALSE);
+	error = save_inbox_part(&sms, &config);
+	test_result(error == ERR_NONE);
+	prepare_user_udh_multipart_inbox(&sms, 2, TRUE);
+	error = save_inbox_part(&sms, &config);
+	test_result(error == ERR_NONE);
+
+	test_result(inbox_metadata[0].message_id == 101);
+	test_result(inbox_metadata[0].sequence_position == 1);
+	test_result(inbox_metadata[0].part_count == 2);
+	test_result(inbox_metadata[1].message_id == 102);
+	test_result(inbox_metadata[1].sequence_position == 1);
+	test_result(inbox_metadata[1].part_count == 2);
+	test_result(inbox_metadata[2].message_id == 101);
+	test_result(inbox_metadata[2].sequence_position == 2);
+	test_result(inbox_metadata[2].part_count == 2);
+	test_result(inbox_metadata[3].message_id == 102);
+	test_result(inbox_metadata[3].sequence_position == 2);
+	test_result(inbox_metadata[3].part_count == 2);
+	test_result(config.inbox_groups == NULL);
+
+	prepare_user_udh_multipart_inbox(&sms, 1, FALSE);
+	sms.SMS[0].UDH.Text[0] = 4;
+	sms.SMS[0].UDH.Length = 5;
+	GSM_DecodeUDHHeader(NULL, &sms.SMS[0].UDH);
+	error = save_inbox_part(&sms, &config);
+	test_result(error == ERR_NONE);
+	test_result(inbox_metadata[4].message_id == 105);
+	test_result(inbox_metadata[4].part_count == 1);
+	test_result(config.inbox_groups == NULL);
+}
+
 static void test_restore_inbox_groups(void)
 {
 	GSM_SMSDConfig config;
@@ -1110,7 +1192,7 @@ static void test_restore_inbox_groups(void)
 
 	reset_mock();
 	setup_config(&config);
-	restore_inbox_group_count = 2;
+	restore_inbox_group_count = 3;
 	restore_inbox_groups[0].message_id = 300;
 	restore_inbox_groups[0].sender = "";
 	restore_inbox_groups[0].smsc = "";
@@ -1121,9 +1203,31 @@ static void test_restore_inbox_groups(void)
 	restore_inbox_groups[1] = restore_inbox_groups[0];
 	restore_inbox_groups[1].udh = "050003700202";
 	restore_inbox_groups[1].sequence_position = 2;
+	restore_inbox_groups[2] = restore_inbox_groups[1];
 
 	error = SMSDSQL_RestoreInboxGroups(&config);
 	test_result(error == ERR_NONE);
+	test_result(config.inbox_groups == NULL);
+
+	reset_mock();
+	setup_config(&config);
+	restore_inbox_group_count = 1;
+	restore_inbox_groups[0].message_id = 400;
+	restore_inbox_groups[0].sender = "";
+	restore_inbox_groups[0].smsc = "";
+	restore_inbox_groups[0].udh = "0B0003700201050423F00000";
+	restore_inbox_groups[0].sequence_position = 1;
+	restore_inbox_groups[0].part_count = 2;
+	restore_inbox_groups[0].age = 10;
+
+	error = SMSDSQL_RestoreInboxGroups(&config);
+	test_result(error == ERR_NONE);
+	test_result(config.inbox_groups != NULL);
+
+	prepare_user_udh_multipart_inbox(&sms, 2, FALSE);
+	error = save_inbox_part(&sms, &config);
+	test_result(error == ERR_NONE);
+	test_result(inbox_metadata[0].message_id == 400);
 	test_result(config.inbox_groups == NULL);
 }
 
@@ -1341,6 +1445,7 @@ int main(void)
 	test_inbox_group_cleanup_on_single_message();
 	test_inbox_polling_timeout_is_not_cached();
 	test_inbox_nokia_multipart_groups();
+	test_inbox_user_udh_multipart_groups();
 	test_restore_inbox_groups();
 	test_inbox_group_survives_post_insert_failure();
 	test_inbox_group_capacity();

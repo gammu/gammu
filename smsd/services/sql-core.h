@@ -104,6 +104,7 @@ typedef struct {
 typedef struct _SMSD_SQLInboxGroup {
 	GSM_UDH type;
 	int reference;
+	gboolean reference_16bit;
 	int part_count;
 	gboolean received_parts[GSM_MAX_MULTI_SMS];
 	unsigned char sender[(GSM_MAX_NUMBER_LENGTH + 1) * 2];
