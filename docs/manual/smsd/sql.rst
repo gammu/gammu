@@ -330,7 +330,8 @@ are selected for default queries during initialization.
         using Monday as 1 through Sunday as 64
 
     Custom queries need to use ``%2`` to enforce the :ref:`outbox`
-    ``SendDays`` restriction.
+    ``SendDays`` restriction. The default bitwise expression is adapted to
+    the configured SQL dialect.
 
 .. config:option:: find_outbox_body
 

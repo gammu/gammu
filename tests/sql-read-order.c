@@ -510,6 +510,14 @@ static void test_find_outbox_order(void)
 	test_result(config.SkipMessage[1] == TRUE);
 	test_result(SMSDSQL_DayMask(1) == 1);
 	test_result(SMSDSQL_DayMask(0) == 64);
+	test_result(strcmp(SMSDSQL_DayMaskPredicate(&config),
+			"(`SendDays` & %2) <> 0") == 0);
+	config.sql = "oracle";
+	test_result(strcmp(SMSDSQL_DayMaskPredicate(&config),
+			"BITAND(SendDays, %2) <> 0") == 0);
+	config.sql = "access";
+	test_result(strcmp(SMSDSQL_DayMaskPredicate(&config),
+			"(SendDays AND %2) <> 0") == 0);
 	test_result(find_day_mask >= 1 && find_day_mask <= 64);
 	test_result((find_day_mask & (find_day_mask - 1)) == 0);
 	test_result(find_id_fields == ((1ULL << 0) | (1ULL << 1)));
@@ -723,6 +731,18 @@ static void prepare_multipart_inbox(GSM_MultiSMSMessage *sms, int part)
 	sms->SMS[0].UDH.PartNumber = part;
 }
 
+static GSM_Error save_inbox_part(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *config)
+{
+	GSM_StringArray locations;
+	GSM_Error error;
+
+	GSM_StringArray_New(&locations);
+	error = SMSDSQL.SaveInboxSMS(sms, config, &locations, NULL);
+	test_result(error != ERR_NONE || locations.used == 1);
+	GSM_StringArray_Free(&locations);
+	return error;
+}
+
 static void free_inbox_groups(GSM_SMSDConfig *config)
 {
 	SMSD_SQLInboxGroup *group, *next;
@@ -856,11 +876,11 @@ static void test_inbox_group_zero_timeout(void)
 	config.multiparttimeout = 0;
 
 	prepare_multipart_inbox(&sms, 1);
-	error = SMSDSQL.SaveInboxSMS(&sms, &config, NULL, NULL);
+	error = save_inbox_part(&sms, &config);
 	test_result(error == ERR_NONE);
 
 	prepare_multipart_inbox(&sms, 2);
-	error = SMSDSQL.SaveInboxSMS(&sms, &config, NULL, NULL);
+	error = save_inbox_part(&sms, &config);
 	test_result(error == ERR_NONE);
 
 	test_result(inbox_metadata_count == 2);
@@ -879,14 +899,14 @@ static void test_inbox_group_fixed_timeout(void)
 	setup_config(&config);
 
 	prepare_multipart_inbox(&sms, 1);
-	error = SMSDSQL.SaveInboxSMS(&sms, &config, NULL, NULL);
+	error = save_inbox_part(&sms, &config);
 	test_result(error == ERR_NONE);
 	test_result(config.inbox_groups != NULL);
 	config.inbox_groups->created =
 		time(NULL) - config.multiparttimeout;
 
 	prepare_multipart_inbox(&sms, 2);
-	error = SMSDSQL.SaveInboxSMS(&sms, &config, NULL, NULL);
+	error = save_inbox_part(&sms, &config);
 	test_result(error == ERR_NONE);
 
 	test_result(inbox_metadata_count == 2);
@@ -908,14 +928,14 @@ static void test_inbox_group_capacity(void)
 	for (i = 0; i < GSM_MAX_MULTI_SMS + 1; i++) {
 		prepare_multipart_inbox(&sms, 1);
 		sms.SMS[0].UDH.ID8bit = i;
-		error = SMSDSQL.SaveInboxSMS(&sms, &config, NULL, NULL);
+		error = save_inbox_part(&sms, &config);
 		test_result(error == ERR_NONE);
 	}
 	test_result(inbox_group_count(&config) == GSM_MAX_MULTI_SMS + 1);
 
 	prepare_multipart_inbox(&sms, 2);
 	sms.SMS[0].UDH.ID8bit = 0;
-	error = SMSDSQL.SaveInboxSMS(&sms, &config, NULL, NULL);
+	error = save_inbox_part(&sms, &config);
 	test_result(error == ERR_NONE);
 
 	test_result(inbox_metadata_count == GSM_MAX_MULTI_SMS + 2);
