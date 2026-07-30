@@ -101,10 +101,7 @@ typedef struct {
 	SQL_Val v;
 } SQL_Var;
 
-#define SMSD_SQL_MAX_INBOX_GROUPS GSM_MAX_MULTI_SMS
-
-typedef struct {
-	gboolean active;
+typedef struct _SMSD_SQLInboxGroup {
 	GSM_UDH type;
 	int reference;
 	int part_count;
@@ -112,7 +109,8 @@ typedef struct {
 	unsigned char sender[(GSM_MAX_NUMBER_LENGTH + 1) * 2];
 	unsigned char smsc[(GSM_MAX_NUMBER_LENGTH + 1) * 2];
 	unsigned long long message_id;
-	time_t updated;
+	time_t created;
+	struct _SMSD_SQLInboxGroup *next;
 } SMSD_SQLInboxGroup;
 
 /* configurable queries

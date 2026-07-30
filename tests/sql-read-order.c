@@ -79,9 +79,9 @@ static unsigned long long next_inbox_id;
 static int inbox_insert_count;
 static int inbox_metadata_count;
 static int update_received_count;
-static InboxInsert inbox_insert[10];
-static InboxMetadata inbox_metadata[10];
 static char query_find_id[] = "find-id";
+static InboxInsert inbox_insert[128];
+static InboxMetadata inbox_metadata[128];
 static char query_refresh[] = "refresh";
 static char query_outbox_body[] = "outbox-body";
 static char query_outbox_multipart[] = "outbox-multipart";
@@ -715,6 +715,30 @@ static void prepare_multipart_inbox(GSM_MultiSMSMessage *sms, int part)
 	sms->SMS[0].UDH.PartNumber = part;
 }
 
+static void free_inbox_groups(GSM_SMSDConfig *config)
+{
+	SMSD_SQLInboxGroup *group, *next;
+
+	group = config->inbox_groups;
+	while (group != NULL) {
+		next = group->next;
+		free(group);
+		group = next;
+	}
+	config->inbox_groups = NULL;
+}
+
+static int inbox_group_count(const GSM_SMSDConfig *config)
+{
+	const SMSD_SQLInboxGroup *group;
+	int count = 0;
+
+	for (group = config->inbox_groups; group != NULL; group = group->next) {
+		count++;
+	}
+	return count;
+}
+
 static void test_inbox_message_metadata(void)
 {
 	GSM_SMSDConfig config;
@@ -769,8 +793,8 @@ static void test_inbox_message_metadata(void)
 	test_result(update_received_count == 6);
 
 	for (part = 0; part < inbox_insert_count; part++) {
-		test_result(strcmp(inbox_insert[part].processed, "TRUE") == 0);
-		test_result(strcmp(inbox_metadata[part].processed, "FALSE") == 0);
+		test_result(strcmp(inbox_insert[part].processed, "true") == 0);
+		test_result(strcmp(inbox_metadata[part].processed, "false") == 0);
 	}
 	test_result(inbox_insert[0].message_id == 0);
 	test_result(inbox_insert[0].sequence_position == 1);
@@ -810,6 +834,86 @@ static void test_inbox_message_metadata(void)
 	test_result(inbox_metadata[5].sequence_position == 2);
 	test_result(inbox_metadata[5].part_count == 3);
 	test_result(inbox_metadata[5].row_id == 106);
+	free_inbox_groups(&config);
+}
+
+static void test_inbox_group_zero_timeout(void)
+{
+	GSM_SMSDConfig config;
+	GSM_MultiSMSMessage sms;
+	GSM_Error error;
+
+	reset_mock();
+	setup_config(&config);
+	config.multiparttimeout = 0;
+
+	prepare_multipart_inbox(&sms, 1);
+	error = SMSDSQL.SaveInboxSMS(&sms, &config, NULL, NULL);
+	test_result(error == ERR_NONE);
+
+	prepare_multipart_inbox(&sms, 2);
+	error = SMSDSQL.SaveInboxSMS(&sms, &config, NULL, NULL);
+	test_result(error == ERR_NONE);
+
+	test_result(inbox_metadata_count == 2);
+	test_result(inbox_metadata[0].message_id == 101);
+	test_result(inbox_metadata[1].message_id == 102);
+	free_inbox_groups(&config);
+}
+
+static void test_inbox_group_fixed_timeout(void)
+{
+	GSM_SMSDConfig config;
+	GSM_MultiSMSMessage sms;
+	GSM_Error error;
+
+	reset_mock();
+	setup_config(&config);
+
+	prepare_multipart_inbox(&sms, 1);
+	error = SMSDSQL.SaveInboxSMS(&sms, &config, NULL, NULL);
+	test_result(error == ERR_NONE);
+	test_result(config.inbox_groups != NULL);
+	config.inbox_groups->created =
+		time(NULL) - config.multiparttimeout;
+
+	prepare_multipart_inbox(&sms, 2);
+	error = SMSDSQL.SaveInboxSMS(&sms, &config, NULL, NULL);
+	test_result(error == ERR_NONE);
+
+	test_result(inbox_metadata_count == 2);
+	test_result(inbox_metadata[0].message_id == 101);
+	test_result(inbox_metadata[1].message_id == 102);
+	free_inbox_groups(&config);
+}
+
+static void test_inbox_group_capacity(void)
+{
+	GSM_SMSDConfig config;
+	GSM_MultiSMSMessage sms;
+	GSM_Error error;
+	int i;
+
+	reset_mock();
+	setup_config(&config);
+
+	for (i = 0; i < GSM_MAX_MULTI_SMS + 1; i++) {
+		prepare_multipart_inbox(&sms, 1);
+		sms.SMS[0].UDH.ID8bit = i;
+		error = SMSDSQL.SaveInboxSMS(&sms, &config, NULL, NULL);
+		test_result(error == ERR_NONE);
+	}
+	test_result(inbox_group_count(&config) == GSM_MAX_MULTI_SMS + 1);
+
+	prepare_multipart_inbox(&sms, 2);
+	sms.SMS[0].UDH.ID8bit = 0;
+	error = SMSDSQL.SaveInboxSMS(&sms, &config, NULL, NULL);
+	test_result(error == ERR_NONE);
+
+	test_result(inbox_metadata_count == GSM_MAX_MULTI_SMS + 2);
+	test_result(inbox_metadata[GSM_MAX_MULTI_SMS + 1].message_id == 101);
+	test_result(inbox_group_count(&config) == GSM_MAX_MULTI_SMS);
+	free_inbox_groups(&config);
 }
 
 static int collision_add_calls;
@@ -964,6 +1068,9 @@ int main(void)
 	test_delivery_report_order();
 	test_unmatched_delivery_report_id();
 	test_inbox_message_metadata();
+	test_inbox_group_zero_timeout();
+	test_inbox_group_fixed_timeout();
+	test_inbox_group_capacity();
 	test_send_finalized_failure_is_removed();
 	test_send_collision_is_left_queued();
 	test_send_reconciliation_error_is_left_queued();
