@@ -316,12 +316,21 @@ are selected for default queries during initialization.
         SELECT ID, InsertIntoDB, SendingDateTime, SenderID FROM outbox
         WHERE SendingDateTime < NOW() AND SendingTimeOut <  NOW() AND
         SendBefore >= CURTIME() AND SendAfter <= CURTIME() AND
-        ( SenderID is NULL OR SenderID = '' OR SenderID = %P ) ORDER BY InsertIntoDB ASC LIMIT %1
+        (SendDays & %2) <> 0 AND
+        ( SenderID is NULL OR SenderID = '' OR SenderID = %P )
+        ORDER BY Priority DESC, InsertIntoDB ASC LIMIT %1
 
     Query specific parameters:
 
     ``%1``
         limit of sms messages sended in one walk in loop
+
+    ``%2``
+        bit mask for the current weekday in the SMSD process local timezone,
+        using Monday as 1 through Sunday as 64
+
+    Custom queries need to use ``%2`` to enforce the :ref:`outbox`
+    ``SendDays`` restriction.
 
 .. config:option:: find_outbox_body
 
