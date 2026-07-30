@@ -873,6 +873,7 @@ static gboolean SMSDSQL_IsGroupedInboxPart(const GSM_SMSMessage *sms)
 		case UDH_NokiaProfileLong:
 		case UDH_NokiaPhonebookLong:
 		case UDH_MMSIndicatorLong:
+		case UDH_UserUDH:
 			supported = TRUE;
 			break;
 		default:
@@ -888,12 +889,74 @@ static gboolean SMSDSQL_IsGroupedInboxPart(const GSM_SMSMessage *sms)
 		sms->UDH.AllParts <= GSM_MAX_MULTI_SMS);
 }
 
+static gboolean SMSDSQL_DecodeUserUDHConcat(GSM_UDHHeader *udh)
+{
+	size_t offset, length, ie_length;
+	int id8 = -1, id16 = -1, part_number = -1, all_parts = -1;
+	gboolean found = FALSE;
+
+	if (udh->Type != UDH_UserUDH ||
+	    udh->Length <= 1 ||
+	    udh->Length > GSM_MAX_UDH_LENGTH ||
+	    udh->Text[0] + 1 != udh->Length) {
+		return FALSE;
+	}
+
+	length = udh->Length;
+	offset = 1;
+	while (offset < length) {
+		if (length - offset < 2) {
+			return FALSE;
+		}
+		ie_length = udh->Text[offset + 1];
+		if (ie_length > length - offset - 2) {
+			return FALSE;
+		}
+
+		if (udh->Text[offset] == 0x00) {
+			if (ie_length != 3 || found) {
+				return FALSE;
+			}
+			id8 = udh->Text[offset + 2];
+			all_parts = udh->Text[offset + 3];
+			part_number = udh->Text[offset + 4];
+			found = TRUE;
+		} else if (udh->Text[offset] == 0x08) {
+			if (ie_length != 4 || found) {
+				return FALSE;
+			}
+			id16 = udh->Text[offset + 2] * 256 +
+				udh->Text[offset + 3];
+			all_parts = udh->Text[offset + 4];
+			part_number = udh->Text[offset + 5];
+			found = TRUE;
+		}
+		offset += ie_length + 2;
+	}
+
+	if (!found) {
+		return FALSE;
+	}
+	udh->ID8bit = id8;
+	udh->ID16bit = id16;
+	udh->PartNumber = part_number;
+	udh->AllParts = all_parts;
+	return TRUE;
+}
+
 static int SMSDSQL_InboxReference(const GSM_SMSMessage *sms)
 {
-	if (sms->UDH.Type == UDH_ConcatenatedMessages16bit) {
+	if (sms->UDH.Type == UDH_ConcatenatedMessages16bit ||
+	    (sms->UDH.Type == UDH_UserUDH && sms->UDH.ID16bit >= 0)) {
 		return sms->UDH.ID16bit;
 	}
 	return sms->UDH.ID8bit;
+}
+
+static gboolean SMSDSQL_InboxReferenceIs16bit(const GSM_SMSMessage *sms)
+{
+	return sms->UDH.Type == UDH_ConcatenatedMessages16bit ||
+		(sms->UDH.Type == UDH_UserUDH && sms->UDH.ID16bit >= 0);
 }
 
 static gboolean SMSDSQL_UnicodeEqual(const unsigned char *first, const unsigned char *second)
@@ -924,6 +987,7 @@ static gboolean SMSDSQL_InboxGroupMatches(
 	return (
 		group->type == sms->UDH.Type &&
 		group->reference == SMSDSQL_InboxReference(sms) &&
+		group->reference_16bit == SMSDSQL_InboxReferenceIs16bit(sms) &&
 		group->part_count == sms->UDH.AllParts &&
 		SMSDSQL_NumberEqual(group->sender, sms->Number) &&
 		SMSDSQL_UnicodeEqual(group->smsc, sms->SMSC.Number));
@@ -992,6 +1056,7 @@ static SMSD_SQLInboxGroup *SMSDSQL_NewInboxGroup(
 
 	group->type = sms->UDH.Type;
 	group->reference = SMSDSQL_InboxReference(sms);
+	group->reference_16bit = SMSDSQL_InboxReferenceIs16bit(sms);
 	group->part_count = sms->UDH.AllParts;
 	group->message_id = message_id;
 	group->created = created;
@@ -1022,20 +1087,43 @@ static void SMSDSQL_RemoveInboxGroup(
 	}
 }
 
+static gboolean SMSDSQL_InboxGroupIsComplete(
+	const SMSD_SQLInboxGroup *group)
+{
+	int i;
+
+	for (i = 0; i < group->part_count; i++) {
+		if (!group->received_parts[i]) {
+			return FALSE;
+		}
+	}
+	return TRUE;
+}
+
 static void SMSDSQL_RecordInboxPart(
 	GSM_SMSDConfig *Config,
 	SMSD_SQLInboxGroup *group,
 	int sequence_position)
 {
-	int i;
-
 	group->received_parts[sequence_position - 1] = TRUE;
-	for (i = 0; i < group->part_count; i++) {
-		if (!group->received_parts[i]) {
-			return;
-		}
+	if (SMSDSQL_InboxGroupIsComplete(group)) {
+		SMSDSQL_RemoveInboxGroup(Config, group);
 	}
-	SMSDSQL_RemoveInboxGroup(Config, group);
+}
+
+static void SMSDSQL_RemoveCompleteInboxGroups(GSM_SMSDConfig *Config)
+{
+	SMSD_SQLInboxGroup *group, **link;
+
+	link = &Config->inbox_groups;
+	while ((group = *link) != NULL) {
+		if (SMSDSQL_InboxGroupIsComplete(group)) {
+			*link = group->next;
+			free(group);
+			continue;
+		}
+		link = &group->next;
+	}
 }
 
 GSM_Error SMSDSQL_RestoreInboxGroups(GSM_SMSDConfig *Config)
@@ -1113,6 +1201,7 @@ GSM_Error SMSDSQL_RestoreInboxGroups(GSM_SMSDConfig *Config)
 		}
 		sms.UDH.Length = udh_length / 2;
 		GSM_DecodeUDHHeader(NULL, &sms.UDH);
+		SMSDSQL_DecodeUserUDHConcat(&sms.UDH);
 		if (!SMSDSQL_IsGroupedInboxPart(&sms) ||
 		    sms.UDH.PartNumber != sequence_position ||
 		    sms.UDH.AllParts != part_count ||
@@ -1133,10 +1222,10 @@ GSM_Error SMSDSQL_RestoreInboxGroups(GSM_SMSDConfig *Config)
 		} else if (created < group->created) {
 			group->created = created;
 		}
-		SMSDSQL_RecordInboxPart(
-			Config, group, (int)sequence_position);
+		group->received_parts[sequence_position - 1] = TRUE;
 	}
 	db->FreeResult(Config, &res);
+	SMSDSQL_RemoveCompleteInboxGroups(Config);
 	SMSDSQL_ExpireInboxGroups(Config, time(NULL));
 	return ERR_NONE;
 }
@@ -1270,6 +1359,7 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 		}
 		stored_part++;
 
+		SMSDSQL_DecodeUserUDHConcat(&sms->SMS[i].UDH);
 		if (sms->SMS[i].UDH.PartNumber > 0) {
 			sequence_position = sms->SMS[i].UDH.PartNumber;
 		} else {
