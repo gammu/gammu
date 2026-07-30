@@ -396,13 +396,17 @@ ____________
 
         .. versionadded:: 1.38.5
 
-    .. option:: EMS [-unicode] [-16bit] [-format lcrasbiut] [-text text] [-unicodefiletext file] [-defsound ID] [-defanimation ID] [-tone10 file] [-tone10long file] [-tone12 file] [-tone12long file] [-toneSE file] [-toneSElong file] [-fixedbitmap file] [-variablebitmap file] [-variablebitmaplong file] [-animation frames file1 ...] [-protected number]
+    .. option:: EMS [-unicode] [-16bit] [-format lcrasbiut] [-text text] [-textutf8 text] [-unicodefiletext file] [-defsound ID] [-defanimation ID] [-tone10 file] [-tone10long file] [-tone12 file] [-tone12long file] [-toneSE file] [-toneSElong file] [-fixedbitmap file] [-variablebitmap file] [-variablebitmaplong file] [-animation frames file1 ...] [-protected number]
 
         Saves EMS sequence. All format specific parameters (like :option:`-defsound`) can be used few times.
 
         .. option:: -text
 
             adds text
+
+        .. option:: -textutf8
+
+            adds UTF-8 text
 
         .. option:: -unicodefiletext
 
@@ -520,7 +524,7 @@ ____________
            filesystem commands.
 
 
-    .. option:: PICTURE file  [-text text] [-unicode] [-alcatelbmmi]
+    .. option:: PICTURE file  [-text text] [-textutf8 text] [-unicode] [-alcatelbmmi]
 
         Read bitmap from 2 colors file (bmp, nlm, nsl, ngg, nol, wbmp, etc.), format
         into bitmap in Smart Messaging (72x28, 2 colors, called often Picture Image
@@ -554,7 +558,7 @@ ____________
             it correctly later in phone composer (for example, in 33xx)
 
 
-    .. option:: SMSTEMPLATE  [-unicode] [-text text] [-unicodefiletext file] [-defsound ID] [-defanimation ID] [-tone10 file] [-tone10long file] [-tone12 file] [-tone12long file] [-toneSE file] [-toneSElong file] [-variablebitmap file] [-variablebitmaplong file] [-animation frames file1 ...]
+    .. option:: SMSTEMPLATE  [-unicode] [-text text] [-textutf8 text] [-unicodefiletext file] [-defsound ID] [-defanimation ID] [-tone10 file] [-tone10long file] [-tone12 file] [-tone12long file] [-toneSE file] [-toneSElong file] [-variablebitmap file] [-variablebitmaplong file] [-animation frames file1 ...]
 
         Saves a SMS template (for Alcatel phones).
 

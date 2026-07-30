@@ -27,6 +27,11 @@ set_tests_properties(gammu-help-all PROPERTIES
     PASS_REGULAR_EXPRESSION "batch"
     )
 
+add_test(gammu-help-sms "${CMAKE_CURRENT_BINARY_DIR}/gammu${CMAKE_EXECUTABLE_SUFFIX}" help sms)
+set_tests_properties(gammu-help-sms PROPERTIES
+    PASS_REGULAR_EXPRESSION "\\[-text text\\]\\[-textutf8 text\\]\\[-unicode\\]"
+    )
+
 add_test(gammu-nets "${CMAKE_CURRENT_BINARY_DIR}/gammu${CMAKE_EXECUTABLE_SUFFIX}" listnetworks)
 set_tests_properties(gammu-nets PROPERTIES
     PASS_REGULAR_EXPRESSION "901 29     Telenor"

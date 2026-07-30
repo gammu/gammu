@@ -837,9 +837,23 @@ set_tests_properties(sms-cmdline-TEXT-smsc PROPERTIES
 PASS_REGULAR_EXPRESSION "Remote number        : \"213\"")
 
 add_test(sms-cmdline-TEXT-textutf8 "${GAMMU_TEST_PATH}/sms-cmdline${CMAKE_EXECUTABLE_SUFFIX}"
-    TEXT 213 -unicode -textutf8 "Zkouška šíleně žlutého koně.")
+    TEXT 213 -unicode -textutf8 "valid")
 set_tests_properties(sms-cmdline-TEXT-textutf8 PROPERTIES
+    ENVIRONMENT "LC_ALL=C;GAMMU_TEST_UTF8=1"
     PASS_REGULAR_EXPRESSION "Coding               : Unicode \\(no compression\\)")
+
+add_test(sms-cmdline-TEXT-invalid-locale "${GAMMU_TEST_PATH}/sms-cmdline${CMAKE_EXECUTABLE_SUFFIX}"
+    TEXT 213 -text "invalid")
+set_tests_properties(sms-cmdline-TEXT-invalid-locale PROPERTIES
+    ENVIRONMENT "GAMMU_EXPECT_INVALIDDATA=locale"
+    SKIP_RETURN_CODE 77
+    PASS_REGULAR_EXPRESSION "invalid character for current locale")
+
+add_test(sms-cmdline-TEXT-invalid-utf8 "${GAMMU_TEST_PATH}/sms-cmdline${CMAKE_EXECUTABLE_SUFFIX}"
+    TEXT 213 -textutf8 "invalid")
+set_tests_properties(sms-cmdline-TEXT-invalid-utf8 PROPERTIES
+    ENVIRONMENT "GAMMU_EXPECT_INVALIDDATA=utf8"
+    PASS_REGULAR_EXPRESSION "invalid UTF-8 input")
 
 
 add_test(sms-cmdline-TEXT-16 "${GAMMU_TEST_PATH}/sms-cmdline${CMAKE_EXECUTABLE_SUFFIX}"
@@ -915,6 +929,12 @@ add_test(sms-cmdline-EMS-unicodefile "${GAMMU_TEST_PATH}/sms-cmdline${CMAKE_EXEC
 set_tests_properties(sms-cmdline-EMS-unicodefile PROPERTIES
     PASS_REGULAR_EXPRESSION "Coding               : Unicode \\(no compression\\)")
 
+add_test(sms-cmdline-EMS-textutf8 "${GAMMU_TEST_PATH}/sms-cmdline${CMAKE_EXECUTABLE_SUFFIX}"
+    EMS 213 -unicode -textutf8 "valid")
+set_tests_properties(sms-cmdline-EMS-textutf8 PROPERTIES
+    ENVIRONMENT "LC_ALL=C;GAMMU_TEST_UTF8=1"
+    PASS_REGULAR_EXPRESSION "Coding               : Unicode \\(no compression\\)")
+
 add_test(sms-cmdline-RINGTONE "${GAMMU_TEST_PATH}/sms-cmdline${CMAKE_EXECUTABLE_SUFFIX}"
     RINGTONE 54654654 ${RINGTONE_TEST_FILE})
 set_tests_properties(sms-cmdline-RINGTONE PROPERTIES
@@ -953,9 +973,21 @@ add_test(sms-cmdline-SMSTEMPLATE "${GAMMU_TEST_PATH}/sms-cmdline${CMAKE_EXECUTAB
 set_tests_properties(sms-cmdline-SMSTEMPLATE PROPERTIES
     PASS_REGULAR_EXPRESSION "User Data Header     : User UDH")
 
+add_test(sms-cmdline-SMSTEMPLATE-textutf8 "${GAMMU_TEST_PATH}/sms-cmdline${CMAKE_EXECUTABLE_SUFFIX}"
+    SMSTEMPLATE 213 -unicode -textutf8 "valid")
+set_tests_properties(sms-cmdline-SMSTEMPLATE-textutf8 PROPERTIES
+    ENVIRONMENT "LC_ALL=C;GAMMU_TEST_UTF8=1"
+    PASS_REGULAR_EXPRESSION "User Data Header     : User UDH")
+
 add_test(sms-cmdline-PICTURE "${GAMMU_TEST_PATH}/sms-cmdline${CMAKE_EXECUTABLE_SUFFIX}"
     PICTURE 213 ${LOGO_TEST_FILE})
 set_tests_properties(sms-cmdline-PICTURE PROPERTIES
+    PASS_REGULAR_EXPRESSION "###################   ##    ##     #     #     ##   ## ### ##   ###   ##")
+
+add_test(sms-cmdline-PICTURE-textutf8 "${GAMMU_TEST_PATH}/sms-cmdline${CMAKE_EXECUTABLE_SUFFIX}"
+    PICTURE 213 ${LOGO_TEST_FILE} -unicode -textutf8 "valid")
+set_tests_properties(sms-cmdline-PICTURE-textutf8 PROPERTIES
+    ENVIRONMENT "LC_ALL=C;GAMMU_TEST_UTF8=1"
     PASS_REGULAR_EXPRESSION "###################   ##    ##     #     #     ##   ## ### ##   ###   ##")
 
 add_test(sms-cmdline-OPERATOR "${GAMMU_TEST_PATH}/sms-cmdline${CMAKE_EXECUTABLE_SUFFIX}"

@@ -194,20 +194,43 @@ size_t UnicodeLength(const unsigned char *str)
 	return len;
 }
 
-/* Convert Unicode char saved in src to dest */
-int EncodeWithUnicodeAlphabet(const unsigned char *src, gammu_char_t *dest)
+static int EncodeWithUnicodeAlphabetChecked(const unsigned char *src,
+					    size_t len,
+					    gammu_char_t *dest,
+					    gboolean *valid)
 {
 	int retval;
 	wchar_t out = 0;
 
-	retval = mbtowc(&out, src, MB_CUR_MAX);
-	*dest = out;
+	retval = mbtowc(&out, (const char *)src,
+			len < MB_CUR_MAX ? len : MB_CUR_MAX);
 
 	switch (retval) {
-		case -1 :
-		case  0 : return 1;
-		default : return retval;
+		case -1:
+			/*
+			 * Do not insert a NUL on conversion errors as that
+			 * silently truncates the resulting Unicode string.
+			 */
+			*dest = 0xFFFD;
+			if (valid != NULL) {
+				*valid = FALSE;
+			}
+			/* Reset conversion state after an invalid sequence. */
+			mbtowc(NULL, NULL, 0);
+			return 1;
+		case 0:
+			*dest = out;
+			return 1;
+		default:
+			*dest = out;
+			return retval;
 	}
+}
+
+/* Convert Unicode char saved in src to dest */
+int EncodeWithUnicodeAlphabet(const unsigned char *src, gammu_char_t *dest)
+{
+	return EncodeWithUnicodeAlphabetChecked(src, MB_CUR_MAX, dest, NULL);
 }
 
 /* Convert Unicode char saved in src to dest */
@@ -333,19 +356,28 @@ size_t StoreUTF16 (unsigned char *dest, gammu_char_t wc)
 }
 
 /* Encode string to Unicode. Len is number of input chars */
-void EncodeUnicode (unsigned char *dest, const char *src, size_t len)
+gboolean EncodeUnicodeChecked(unsigned char *dest, const char *src, size_t len)
 {
 	size_t 		i_len = 0, o_len;
  	gammu_char_t 	wc;
+	gboolean	valid = TRUE;
 
 	for (o_len = 0; i_len < len; o_len++) {
-		i_len += EncodeWithUnicodeAlphabet(&src[i_len], &wc);
+		i_len += EncodeWithUnicodeAlphabetChecked(
+			(const unsigned char *)&src[i_len], len - i_len,
+			&wc, &valid);
 		if (StoreUTF16(dest + o_len * 2, wc)) {
 			o_len++;
 		}
  	}
 	dest[o_len*2]		= 0;
 	dest[(o_len*2)+1]	= 0;
+	return valid;
+}
+
+void EncodeUnicode (unsigned char *dest, const char *src, size_t len)
+{
+	EncodeUnicodeChecked(dest, src, len);
 }
 
 unsigned char EncodeWithBCDAlphabet(int value)
@@ -1930,6 +1962,9 @@ int DecodeWithUTF8Alphabet(const unsigned char *src, gammu_char_t *dest, size_t 
 		return 0;
 	}
 	src1 = src[1];
+	if ((src1 & 0xC0) != 0x80) {
+		return 0;
+	}
 
 	// 2-byte sequence
 	if ((src0 & 0xE0) == 0xC0) {
@@ -1945,6 +1980,9 @@ int DecodeWithUTF8Alphabet(const unsigned char *src, gammu_char_t *dest, size_t 
 		return 0;
 	}
 	src2 = src[2];
+	if ((src2 & 0xC0) != 0x80) {
+		return 0;
+	}
 
 	// 3-byte sequence (may include unpaired surrogates)
 	if ((src0 & 0xF0) == 0xE0) {
@@ -1961,6 +1999,9 @@ int DecodeWithUTF8Alphabet(const unsigned char *src, gammu_char_t *dest, size_t 
 		return 0;
 	}
 	src3 = src[3];
+	if ((src3 & 0xC0) != 0x80) {
+		return 0;
+	}
 
 	// 4-byte sequence
 	if ((src0 & 0xF8) == 0xF0) {
@@ -2037,7 +2078,7 @@ void DecodeUTF8QuotedPrintable(unsigned char *dest, const char *src, size_t len)
 	dest[j] = 0;
 }
 
-void DecodeUTF8(unsigned char *dest, const char *src, size_t len)
+gboolean DecodeUTF8Checked(unsigned char *dest, const char *src, size_t len)
 {
 	size_t 		i=0,j=0,z;
 	gammu_char_t		ret;
@@ -2045,7 +2086,9 @@ void DecodeUTF8(unsigned char *dest, const char *src, size_t len)
 	while (i < len) {
 		z = DecodeWithUTF8Alphabet(src+i, &ret, len - i);
 		if (z < 1) {
-			break;
+			dest[j++] = 0;
+			dest[j] = 0;
+			return FALSE;
 		}
 		i += z;
 		if (StoreUTF16(dest + j, ret)) {
@@ -2056,6 +2099,12 @@ void DecodeUTF8(unsigned char *dest, const char *src, size_t len)
 	}
 	dest[j++] = 0;
 	dest[j] = 0;
+	return TRUE;
+}
+
+void DecodeUTF8(unsigned char *dest, const char *src, size_t len)
+{
+	DecodeUTF8Checked(dest, src, len);
 }
 
 void DecodeXMLUTF8(unsigned char *dest, const char *src, size_t len)

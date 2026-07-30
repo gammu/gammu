@@ -94,6 +94,28 @@ ComposeMapEntry ComposeMap[] = {
 
 #define SEND_SAVE_SMS_BUFFER_SIZE 10000
 
+static GSM_Error EncodeMessageText(unsigned char *dest, const char *src,
+				   size_t len, gboolean utf8)
+{
+	if (utf8) {
+		if (!DecodeUTF8Checked(dest, src, len)) {
+			printf_err("%s\n",
+				   _("Cannot decode message text: invalid UTF-8 "
+				     "input."));
+			return ERR_INVALIDDATA;
+		}
+		return ERR_NONE;
+	}
+	if (!EncodeUnicodeChecked(dest, src, len)) {
+		printf_err("%s\n",
+			   _("Cannot convert message text to Unicode: invalid "
+			     "character for current locale. Use -textutf8 for "
+			     "UTF-8 input."));
+		return ERR_INVALIDDATA;
+	}
+	return ERR_NONE;
+}
+
 GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int argc, int typearg, char *argv[], GSM_StateMachine *sm)
 {
 	/**
@@ -123,6 +145,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 	gboolean				ReplyViaSameSMSC 	= FALSE;
 	int				MaxSMS			= -1;
 	gboolean				EMS16Bit		= FALSE;
+	gboolean				TextUTF8		= FALSE;
 	int frames_num;
 	ssize_t param_value;
 
@@ -670,11 +693,13 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			}
 			if (compose_type == COMPOSE_TEXT) {
 				if (strcasecmp(argv[i],"-text") == 0) {
+					TextUTF8 = FALSE;
 					nextlong = 26;
 					break;
 				}
 				if (strcasecmp(argv[i],"-textutf8") == 0) {
-					nextlong = 27;
+					TextUTF8 = TRUE;
+					nextlong = 26;
 					break;
 				}
 				if (strcasecmp(argv[i],"-inputunicode") == 0) {
@@ -747,6 +772,12 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			}
 			if (compose_type == COMPOSE_PICTURE) {
 				if (strcasecmp(argv[i],"-text") == 0) {
+					TextUTF8 = FALSE;
+					nextlong = 6;
+					break;
+				}
+				if (strcasecmp(argv[i],"-textutf8") == 0) {
+					TextUTF8 = TRUE;
 					nextlong = 6;
 					break;
 				}
@@ -799,6 +830,12 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 					break;
 				}
 				if (strcasecmp(argv[i],"-text") == 0) {
+					TextUTF8 = FALSE;
+					nextlong = 11;
+					break;
+				}
+				if (strcasecmp(argv[i],"-textutf8") == 0) {
+					TextUTF8 = TRUE;
 					nextlong = 11;
 					break;
 				}
@@ -914,6 +951,12 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 					break;
 				}
 				if (strcasecmp(argv[i],"-text") == 0) {
+					TextUTF8 = FALSE;
+					nextlong = 11;
+					break;
+				}
+				if (strcasecmp(argv[i],"-textutf8") == 0) {
+					TextUTF8 = TRUE;
 					nextlong = 11;
 					break;
 				}
@@ -1074,7 +1117,10 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			break;
 		case 6:	/* Picture Images - text */
 			BMP_AUTO_ALLOC(0);
-			EncodeUnicode(bitmap[0]->Bitmap[0].Text,argv[i],strlen(argv[i]));
+			error = EncodeMessageText(bitmap[0]->Bitmap[0].Text,
+						  argv[i], strlen(argv[i]),
+						  TextUTF8);
+			if (error != ERR_NONE) goto end_compose;
 			nextlong = 0;
 			break;
 		case 7:	/* Operator Logo - network code */
@@ -1145,7 +1191,10 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			nextlong = 0;
 			break;
 		case 11:/* EMS text from parameter */
-			EncodeUnicode(Buffer[SMSInfo.EntriesNum],argv[i],strlen(argv[i]));
+			error = EncodeMessageText(Buffer[SMSInfo.EntriesNum],
+						  argv[i], strlen(argv[i]),
+						  TextUTF8);
+			if (error != ERR_NONE) goto end_compose;
 			SMSInfo.Entries[SMSInfo.EntriesNum].ID 		= SMS_ConcatenatedTextLong;
 			SMSInfo.Entries[SMSInfo.EntriesNum].Buffer 	= Buffer[SMSInfo.EntriesNum];
 			SMSInfo.EntriesNum++;
@@ -1302,13 +1351,9 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			break;
 		case 26:/* text from parameter */
 			chars_read = strlen(argv[i]);
-			EncodeUnicode(Buffer[0], argv[i], chars_read);
-			HasText = TRUE;
-			nextlong = 0;
-			break;
-		case 27:/* utf-8 text from parameter */
-			chars_read = strlen(argv[i]);
-			DecodeUTF8(Buffer[0], argv[i], chars_read);
+			error = EncodeMessageText(Buffer[0], argv[i], chars_read,
+						  TextUTF8);
+			if (error != ERR_NONE) goto end_compose;
 			HasText = TRUE;
 			nextlong = 0;
 			break;
@@ -1355,7 +1400,9 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 				printf_warn("%s\n", _("No chars read, assuming it is okay!"));
 			}
 
-			EncodeUnicode(Buffer[0],InputBuffer,chars_read);
+			error = EncodeMessageText(Buffer[0], InputBuffer,
+						  chars_read, FALSE);
+			if (error != ERR_NONE) goto end_compose;
 		}
 
 		chars_read = UnicodeLength(Buffer[0]);
