@@ -109,6 +109,28 @@ static const char *SMSDSQL_EscapeChar(GSM_SMSDConfig * Config)
 	}
 }
 
+const char *SMSDSQL_DayMaskPredicate(GSM_SMSDConfig *Config)
+{
+	const char *driver_name;
+	const char *escape_char;
+	static char result[100];
+
+	driver_name = SMSDSQL_SQLName(Config);
+	escape_char = SMSDSQL_EscapeChar(Config);
+
+	if (strcasecmp(driver_name, "oracle") == 0) {
+		snprintf(result, sizeof(result), "BITAND(%sSendDays%s, %%2) <> 0",
+			escape_char, escape_char);
+	} else if (strcasecmp(driver_name, "access") == 0) {
+		snprintf(result, sizeof(result), "(%sSendDays%s AND %%2) <> 0",
+			escape_char, escape_char);
+	} else {
+		snprintf(result, sizeof(result), "(%sSendDays%s & %%2) <> 0",
+			escape_char, escape_char);
+	}
+	return result;
+}
+
 int SMSDSQL_DayMask(int wday)
 {
 	if (wday < 0 || wday > 6) {
@@ -2058,7 +2080,7 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 			" AND ", ESCAPE_FIELD("SendingTimeOut"), " < ", SMSDSQL_Now(Config),
 			" AND ", ESCAPE_FIELD("SendBefore"), " >= ", SMSDSQL_CurrentTime(Config),
 			" AND ", ESCAPE_FIELD("SendAfter"), " <= ", SMSDSQL_CurrentTime(Config),
-			" AND (", ESCAPE_FIELD("SendDays"), " & %2) <> 0",
+			" AND ", SMSDSQL_DayMaskPredicate(Config),
 			" AND ( ", ESCAPE_FIELD("SenderID"), " is NULL OR ", ESCAPE_FIELD("SenderID"), " = '' OR ", ESCAPE_FIELD("SenderID"), " = %P )",
 			SMSDSQL_RownumClause(Config, "%1", TRUE),
 			" ORDER BY ", ESCAPE_FIELD("Priority"), " DESC, ", ESCAPE_FIELD("InsertIntoDB"), " ASC ", SMSDSQL_LimitClause(Config, "%1"), NULL) != ERR_NONE) {

@@ -114,6 +114,7 @@ typedef struct _SMSD_SQLInboxGroup {
 } SMSD_SQLInboxGroup;
 
 int SMSDSQL_DayMask(int wday);
+const char *SMSDSQL_DayMaskPredicate(GSM_SMSDConfig *Config);
 
 /* configurable queries
  * NOTE: parameter sequence in select queries are mandatory !!!
