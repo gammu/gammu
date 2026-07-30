@@ -115,6 +115,7 @@ typedef struct _SMSD_SQLInboxGroup {
 
 int SMSDSQL_DayMask(int wday);
 const char *SMSDSQL_DayMaskPredicate(GSM_SMSDConfig *Config);
+const char *SMSDSQL_TimeDiff(GSM_SMSDConfig *Config, const char *field);
 GSM_Error SMSDSQL_RestoreInboxGroups(GSM_SMSDConfig *Config);
 
 /* configurable queries
