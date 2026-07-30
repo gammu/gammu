@@ -339,9 +339,10 @@ Default value:
 .INDENT 3.5
 .sp
 .EX
-INSERT INTO inbox (ReceivingDateTime, Text, SenderNumber, Coding, SMSCNumber, UDH,
-Class, TextDecoded, RecipientID, Status, MessageID, SequencePosition, PartCount,
-Processed) VALUES (%d, %E, %R, %c, %F, %u, %x, %T, %P, %e, %1, %2, %3, %4)
+INSERT INTO inbox (ReceivingDateTime, InsertIntoDB, Text, SenderNumber, Coding,
+SMSCNumber, UDH, Class, TextDecoded, RecipientID, Status, MessageID,
+SequencePosition, PartCount, Processed)
+VALUES (%d, NOW(), %E, %R, %c, %F, %u, %x, %T, %P, %e, %1, %2, %3, %4)
 .EE
 .UNINDENT
 .UNINDENT
@@ -362,6 +363,10 @@ expected number of physical parts
 initial processed state; received rows are staged as processed until their
 logical message identifier is finalized
 .UNINDENT
+.sp
+Custom queries must store the database server\(aqs current timestamp in
+\fBInsertIntoDB\fP so incomplete multipart groups can be restored without
+extending their original timeout.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -397,6 +402,30 @@ ID of this physical part
 .TP
 .B \fB%5\fP
 final processed state; false publishes the completed row
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B restore_inbox_groups
+Restore incomplete multipart groups after SMSD restarts. The default query
+selects recently inserted multipart rows, including earlier rows sharing
+their logical message identifier. SMSD discards complete and expired
+groups after reading the result.
+.sp
+The selected columns must remain in the documented order.
+.sp
+Default value:
+.INDENT 7.0
+.INDENT 3.5
+.sp
+.EX
+SELECT MessageID, SenderNumber, SMSCNumber, UDH, SequencePosition,
+PartCount, InsertIntoDB FROM inbox WHERE PartCount > 1 AND MessageID IN
+(SELECT MessageID FROM inbox WHERE PartCount > 1 AND
+InsertIntoDB >= NOW() \- INTERVAL 600 SECOND)
+ORDER BY InsertIntoDB ASC, ID ASC
+.EE
+.UNINDENT
 .UNINDENT
 .UNINDENT
 .INDENT 0.0

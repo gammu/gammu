@@ -72,6 +72,7 @@ INSERT INTO gammu ("Version") VALUES (18);
 CREATE TABLE inbox (
   "UpdatedInDB" timestamp(0) WITHOUT time zone NOT NULL DEFAULT LOCALTIMESTAMP(0),
   "ReceivingDateTime" timestamp(0) WITHOUT time zone NOT NULL DEFAULT LOCALTIMESTAMP(0),
+  "InsertIntoDB" timestamp(0) WITHOUT time zone NOT NULL DEFAULT LOCALTIMESTAMP(0),
   "Text" text NOT NULL,
   "SenderNumber" varchar(20) NOT NULL DEFAULT '',
   "Coding" varchar(255) NOT NULL DEFAULT 'Default_No_Compression',
@@ -91,6 +92,7 @@ CREATE TABLE inbox (
 );
 
 CREATE INDEX inbox_message ON inbox("MessageID", "SequencePosition");
+CREATE INDEX inbox_insert ON inbox("InsertIntoDB");
 
 --
 -- Dumping data for table "inbox"

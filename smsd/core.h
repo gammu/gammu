@@ -201,6 +201,7 @@ struct _GSM_SMSDConfig {
 	 */
 	int IncompleteMessageID;
 	time_t IncompleteMessageTime;
+	gboolean ProcessingIncompleteMessage;
 
 #ifdef HAVE_SHM
 	key_t shm_key;

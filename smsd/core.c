@@ -972,6 +972,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 	Config->Status = NULL;
 	Config->IncompleteMessageID = -1;
 	Config->IncompleteMessageTime = 0;
+	Config->ProcessingIncompleteMessage = FALSE;
 
 	return ERR_NONE;
 }
@@ -1654,6 +1655,7 @@ GSM_Error SMSD_ProcessSMS(GSM_SMSDConfig *Config, GSM_MultiSMSMessage *sms)
 	Config->Status->Received += sms->Number;
 	/* Send message to the backend */
 	error = Config->Service->SaveInboxSMS(sms, Config, &locations, &sent_ids);
+	Config->ProcessingIncompleteMessage = FALSE;
 	/* RunOnReceive handling */
 	if (Config->RunOnReceive != NULL && error == ERR_NONE) {
 		SMSD_RunOn(Config->RunOnReceive, sms, Config, &locations, &sent_ids, "receive");
@@ -1671,6 +1673,8 @@ gboolean SMSD_CheckMultipart(GSM_SMSDConfig *Config, GSM_MultiSMSMessage *MultiS
 {
 	gboolean same_id;
 	int current_id;
+
+	Config->ProcessingIncompleteMessage = FALSE;
 
 	/* Does the message have UDH (is multipart)? */
 	if (MultiSMS->SMS[0].UDH.Type == UDH_NoUDH || MultiSMS->SMS[0].UDH.AllParts == -1) {
@@ -1702,6 +1706,7 @@ gboolean SMSD_CheckMultipart(GSM_SMSDConfig *Config, GSM_MultiSMSMessage *MultiS
 			SMSD_Log(DEBUG_INFO, Config, "Incomplete multipart message 0x%02X, processing after timeout",
 				Config->IncompleteMessageID);
 			Config->IncompleteMessageID = -1;
+			Config->ProcessingIncompleteMessage = TRUE;
 		} else {
 			SMSD_Log(DEBUG_INFO, Config, "Incomplete multipart message 0x%02X, waiting for other parts (waited %.0f seconds)",
 				Config->IncompleteMessageID,

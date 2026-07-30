@@ -54,6 +54,10 @@ Fields description:
 ``ReceivingDateTime`` (timestamp)
     when SMS was received
 
+``InsertIntoDB`` (timestamp)
+    Time when SMSD stored this physical part. SMSD uses the first part's value
+    to preserve multipart grouping deadlines across restarts.
+
 ``Text`` (text)
     encoded SMS text (for all SMS)
 
@@ -458,15 +462,15 @@ History of schema versions:
 
 18
 
-    * Added ``MessageID``, ``SequencePosition`` and ``PartCount`` fields to
-      :ref:`inbox`.
+    * Added ``InsertIntoDB``, ``MessageID``, ``SequencePosition`` and
+      ``PartCount`` fields to :ref:`inbox`.
     * Added ``SendDays`` field to :ref:`outbox`.
 
     When upgrading an existing database, initialize ``MessageID`` to ``ID``
-    for existing rows. Historical multipart relationships cannot be
-    reconstructed reliably from the concatenation reference alone. Add
-    ``SendDays`` with a default value of 127 so existing queued messages
-    remain eligible every day.
+    and ``InsertIntoDB`` to the migration time for existing rows. Historical
+    multipart relationships cannot be reconstructed reliably from the
+    concatenation reference alone. Add ``SendDays`` with a default value of
+    127 so existing queued messages remain eligible every day.
 
 17
 

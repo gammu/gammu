@@ -145,6 +145,7 @@ INSERT INTO gammu (\(dqVersion\(dq) VALUES (18);
 CREATE TABLE inbox (
   \(dqUpdatedInDB\(dq timestamp(0) WITHOUT time zone NOT NULL DEFAULT LOCALTIMESTAMP(0),
   \(dqReceivingDateTime\(dq timestamp(0) WITHOUT time zone NOT NULL DEFAULT LOCALTIMESTAMP(0),
+  \(dqInsertIntoDB\(dq timestamp(0) WITHOUT time zone NOT NULL DEFAULT LOCALTIMESTAMP(0),
   \(dqText\(dq text NOT NULL,
   \(dqSenderNumber\(dq varchar(20) NOT NULL DEFAULT \(aq\(aq,
   \(dqCoding\(dq varchar(255) NOT NULL DEFAULT \(aqDefault_No_Compression\(aq,
@@ -164,6 +165,7 @@ CREATE TABLE inbox (
 );
 
 CREATE INDEX inbox_message ON inbox(\(dqMessageID\(dq, \(dqSequencePosition\(dq);
+CREATE INDEX inbox_insert ON inbox(\(dqInsertIntoDB\(dq);
 
 \-\-
 \-\- Dumping data for table \(dqinbox\(dq

@@ -235,9 +235,10 @@ are selected for default queries during initialization.
 
     .. code-block:: sql
 
-        INSERT INTO inbox (ReceivingDateTime, Text, SenderNumber, Coding, SMSCNumber, UDH,
-        Class, TextDecoded, RecipientID, Status, MessageID, SequencePosition, PartCount,
-        Processed) VALUES (%d, %E, %R, %c, %F, %u, %x, %T, %P, %e, %1, %2, %3, %4)
+        INSERT INTO inbox (ReceivingDateTime, InsertIntoDB, Text, SenderNumber, Coding,
+        SMSCNumber, UDH, Class, TextDecoded, RecipientID, Status, MessageID,
+        SequencePosition, PartCount, Processed)
+        VALUES (%d, NOW(), %E, %R, %c, %F, %u, %x, %T, %P, %e, %1, %2, %3, %4)
 
     Query specific parameters:
 
@@ -250,6 +251,10 @@ are selected for default queries during initialization.
     ``%4``
         initial processed state; received rows are staged as processed until their
         logical message identifier is finalized
+
+    Custom queries must store the database server's current timestamp in
+    ``InsertIntoDB`` so incomplete multipart groups can be restored without
+    extending their original timeout.
 
 .. config:option:: save_inbox_sms_update_metadata
 
@@ -275,6 +280,25 @@ are selected for default queries during initialization.
         ID of this physical part
     ``%5``
         final processed state; false publishes the completed row
+
+.. config:option:: restore_inbox_groups
+
+    Restore incomplete multipart groups after SMSD restarts. The default query
+    selects recently inserted multipart rows, including earlier rows sharing
+    their logical message identifier. SMSD discards complete and expired
+    groups after reading the result.
+
+    The selected columns must remain in the documented order.
+
+    Default value:
+
+    .. code-block:: sql
+
+        SELECT MessageID, SenderNumber, SMSCNumber, UDH, SequencePosition,
+        PartCount, InsertIntoDB FROM inbox WHERE PartCount > 1 AND MessageID IN
+        (SELECT MessageID FROM inbox WHERE PartCount > 1 AND
+        InsertIntoDB >= NOW() - INTERVAL 600 SECOND)
+        ORDER BY InsertIntoDB ASC, ID ASC
 
 .. config:option:: update_received
 

@@ -115,6 +115,7 @@ typedef struct _SMSD_SQLInboxGroup {
 
 int SMSDSQL_DayMask(int wday);
 const char *SMSDSQL_DayMaskPredicate(GSM_SMSDConfig *Config);
+GSM_Error SMSDSQL_RestoreInboxGroups(GSM_SMSDConfig *Config);
 
 /* configurable queries
  * NOTE: parameter sequence in select queries are mandatory !!!
@@ -127,6 +128,7 @@ enum {
 	SQL_QUERY_SAVE_INBOX_SMS_UPDATE,
 	SQL_QUERY_SAVE_INBOX_SMS_INSERT,
 	SQL_QUERY_SAVE_INBOX_SMS_UPDATE_METADATA,
+	SQL_QUERY_RESTORE_INBOX_GROUPS,
 	SQL_QUERY_UPDATE_RECEIVED,
 	SQL_QUERY_REFRESH_SEND_STATUS,
 	SQL_QUERY_UPDATE_RETRIES,

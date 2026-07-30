@@ -7,6 +7,7 @@ INSERT INTO gammu (Version) VALUES (18);
 CREATE TABLE inbox (
   UpdatedInDB NUMERIC NOT NULL DEFAULT (datetime('now', 'localtime')),
   ReceivingDateTime NUMERIC NOT NULL DEFAULT (datetime('now', 'localtime')),
+  InsertIntoDB NUMERIC NOT NULL DEFAULT (datetime('now', 'localtime')),
   Text TEXT NOT NULL,
   SenderNumber TEXT NOT NULL DEFAULT '',
   Coding TEXT NOT NULL DEFAULT 'Default_No_Compression',
@@ -26,6 +27,7 @@ CREATE TABLE inbox (
 );
 
 CREATE INDEX inbox_message ON inbox(MessageID, SequencePosition);
+CREATE INDEX inbox_insert ON inbox(InsertIntoDB);
 
 CREATE TRIGGER update_inbox_time UPDATE ON inbox
   BEGIN
