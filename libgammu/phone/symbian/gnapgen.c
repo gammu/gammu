@@ -1085,7 +1085,7 @@ static GSM_Error GNAPGEN_SetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry)
 					req[currentByte++] = 0x0b;
 					req[currentByte++] = 0x00;
 					req[currentByte++] = 0x02;
-				} else if (subMemoryEntry->Location == PBK_Location_Home) {
+				} else if (subMemoryEntry->Location == PBK_Location_Work) {
 					req[currentByte++] = 0x00;
 					req[currentByte++] = 0x0b;
 					req[currentByte++] = 0x00;
