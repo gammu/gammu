@@ -26,18 +26,20 @@ if(UNIX)
     if(MYSQL_CONFIG)
         message(STATUS "Using mysql-config: ${MYSQL_CONFIG}")
         # set INCLUDE_DIR
-        exec_program(${MYSQL_CONFIG}
-            ARGS --include
-            OUTPUT_VARIABLE MY_TMP)
+        execute_process(
+            COMMAND "${MYSQL_CONFIG}" --include
+            OUTPUT_VARIABLE MY_TMP
+            OUTPUT_STRIP_TRAILING_WHITESPACE)
 
         string(REGEX REPLACE "-I([^ ]+)( .*)?" "\\1" MY_TMP "${MY_TMP}")
 
         set(MYSQL_ADD_INCLUDE_DIR ${MY_TMP} CACHE FILEPATH INTERNAL)
 
         # set LIBRARY_DIR
-        exec_program(${MYSQL_CONFIG}
-            ARGS --libs
-            OUTPUT_VARIABLE MY_TMP)
+        execute_process(
+            COMMAND "${MYSQL_CONFIG}" --libs
+            OUTPUT_VARIABLE MY_TMP
+            OUTPUT_STRIP_TRAILING_WHITESPACE)
 
         set(MYSQL_ADD_LIBRARIES "")
 

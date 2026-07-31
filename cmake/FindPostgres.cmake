@@ -46,9 +46,10 @@ ELSE(WIN32)
 
     IF (POSTGRES_CONFIG)
       # set INCLUDE_DIR
-      EXEC_PROGRAM(${POSTGRES_CONFIG}
-        ARGS --includedir
-        OUTPUT_VARIABLE PG_TMP)
+      execute_process(
+        COMMAND "${POSTGRES_CONFIG}" --includedir
+        OUTPUT_VARIABLE PG_TMP
+        OUTPUT_STRIP_TRAILING_WHITESPACE)
     ELSE(POSTGRES_CONFIG)
       SET(PG_TMP /opt/postgresql)
     ENDIF(POSTGRES_CONFIG)
@@ -69,9 +70,14 @@ ELSE(WIN32)
       )
 
       # set LIBRARY_DIR
-      EXEC_PROGRAM(${POSTGRES_CONFIG}
-        ARGS --libdir
-        OUTPUT_VARIABLE PG_TMP)
+      IF (POSTGRES_CONFIG)
+        execute_process(
+          COMMAND "${POSTGRES_CONFIG}" --libdir
+          OUTPUT_VARIABLE PG_TMP
+          OUTPUT_STRIP_TRAILING_WHITESPACE)
+      ELSE(POSTGRES_CONFIG)
+        SET(PG_TMP /opt/postgresql)
+      ENDIF(POSTGRES_CONFIG)
       find_library(POSTGRES_LIBRARY pq
         PATHS
         ${PG_TMP}
