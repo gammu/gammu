@@ -24,7 +24,13 @@ jobs:
     - name: Configure build
       run: ./configure
     - name: Build HTML docs
-      run: make manual-html
+      run: |
+        set -o pipefail
+        make manual-html 2>&1 | tee sphinx.log
+        if grep -Fq "Cannot find function" sphinx.log; then
+          echo "::error::Breathe could not resolve one or more documented functions"
+          exit 1
+        fi
     - name: Build PDF docs
       run: make manual-pdf
     - name: Collect
