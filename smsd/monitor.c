@@ -17,6 +17,7 @@
 #endif
 
 #include "common.h"
+#include "log.h"
 
 #if !defined(WIN32) && (defined(HAVE_GETOPT) || defined(HAVE_GETOPT_LONG))
 #define HAVE_DEFAULT_CONFIG
@@ -190,6 +191,48 @@ void process_commandline(int argc, char **argv, SMSD_Parameters * params)
 #ifndef WIN32
 #endif
 
+static void print_status(GSM_SMSDConfig *config, const GSM_SMSDStatus *status,
+			 gboolean use_log)
+{
+	if (compact) {
+		printf("%s;%s;%s;%s;%d;%d;%d;%d;%d\n",
+		       status->Client,
+		       status->PhoneID,
+		       status->IMEI,
+		       status->IMSI,
+		       status->Sent,
+		       status->Received,
+		       status->Failed,
+		       status->Charge.BatteryPercent,
+		       status->Network.SignalPercent);
+		fflush(stdout);
+	} else if (use_log) {
+		SMSD_Log(DEBUG_INFO, config,
+			 "Status: Client=\"%s\", PhoneID=\"%s\", IMEI=\"%s\", IMSI=\"%s\", Sent=%d, Received=%d, Failed=%d, BatteryPercent=%d, NetworkSignal=%d",
+			 status->Client,
+			 status->PhoneID,
+			 status->IMEI,
+			 status->IMSI,
+			 status->Sent,
+			 status->Received,
+			 status->Failed,
+			 status->Charge.BatteryPercent,
+			 status->Network.SignalPercent);
+	} else {
+		printf("Client: %s\n", status->Client);
+		printf("PhoneID: %s\n", status->PhoneID);
+		printf("IMEI: %s\n", status->IMEI);
+		printf("IMSI: %s\n", status->IMSI);
+		printf("Sent: %d\n", status->Sent);
+		printf("Received: %d\n", status->Received);
+		printf("Failed: %d\n", status->Failed);
+		printf("BatterPercent: %d\n", status->Charge.BatteryPercent);
+		printf("NetworkSignal: %d\n", status->Network.SignalPercent);
+		printf("\n");
+		fflush(stdout);
+	}
+}
+
 int main(int argc, char **argv)
 {
 	GSM_Error error;
@@ -255,29 +298,7 @@ int main(int argc, char **argv)
 			SMSD_FreeConfig(config);
 			return 3;
 		}
-		if (compact) {
-			printf("%s;%s;%s;%s;%d;%d;%d;%d;%d\n",
-				 status.Client,
-				 status.PhoneID,
-				 status.IMEI,
-				 status.IMSI,
-				 status.Sent,
-				 status.Received,
-				 status.Failed,
-				 status.Charge.BatteryPercent,
-				 status.Network.SignalPercent);
-		} else {
-			printf("Client: %s\n", status.Client);
-			printf("PhoneID: %s\n", status.PhoneID);
-			printf("IMEI: %s\n", status.IMEI);
-			printf("IMSI: %s\n", status.IMSI);
-			printf("Sent: %d\n", status.Sent);
-			printf("Received: %d\n", status.Received);
-			printf("Failed: %d\n", status.Failed);
-			printf("BatterPercent: %d\n", status.Charge.BatteryPercent);
-			printf("NetworkSignal: %d\n", status.Network.SignalPercent);
-			printf("\n");
-		}
+		print_status(config, &status, params.use_log);
 		sleep(delay_seconds);
 	}
 
